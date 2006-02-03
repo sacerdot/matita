@@ -1,0 +1,193 @@
+(**************************************************************************)
+(*       ___	                                                            *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||       A.Asperti, C.Sacerdoti Coen,                          *)
+(*      ||A||       E.Tassi, S.Zacchiroli                                 *)
+(*      \   /                                                             *)
+(*       \ /        Matita is distributed under the terms of the          *)
+(*        v         GNU Lesser General Public License Version 2.1         *)
+(*                                                                        *)
+(**************************************************************************)
+
+set "baseuri" "cic:/matita/nat/log".
+
+include "datatypes/constructors.ma".
+include "nat/exp.ma".
+include "nat/lt_arith.ma".
+include "nat/primes.ma".
+
+(* this definition of log is based on pairs, with a remainder *)
+
+let rec p_ord_aux p n m \def
+  match n \mod m with
+  [ O \Rightarrow 
+    match p with
+      [ O \Rightarrow pair nat nat O n
+      | (S p) \Rightarrow 
+       match (p_ord_aux p (n / m) m) with
+       [ (pair q r) \Rightarrow pair nat nat (S q) r] ]
+  | (S a) \Rightarrow pair nat nat O n].
+  
+(* p_ord n m = <q,r> if m divides n q times, with remainder r *)
+definition p_ord \def \lambda n,m:nat.p_ord_aux n n m.
+
+theorem p_ord_aux_to_Prop: \forall p,n,m. O < m \to
+  match p_ord_aux p n m with
+  [ (pair q r) \Rightarrow n = m \sup q *r ].
+intro.
+elim p.
+change with 
+match (
+match n \mod m with
+  [ O \Rightarrow pair nat nat O n
+  | (S a) \Rightarrow pair nat nat O n] )
+with
+  [ (pair q r) \Rightarrow n = m \sup q * r ].
+apply (nat_case (n \mod m)).
+simplify.apply plus_n_O.
+intros.
+simplify.apply plus_n_O. 
+change with 
+match (
+match n1 \mod m with
+  [ O \Rightarrow 
+     match (p_ord_aux n (n1 / m) m) with
+       [ (pair q r) \Rightarrow pair nat nat (S q) r]
+  | (S a) \Rightarrow pair nat nat O n1] )
+with
+  [ (pair q r) \Rightarrow n1 = m \sup q * r].
+apply (nat_case1 (n1 \mod m)).intro.
+change with 
+match (
+ match (p_ord_aux n (n1 / m) m) with
+   [ (pair q r) \Rightarrow pair nat nat (S q) r])
+with
+  [ (pair q r) \Rightarrow n1 = m \sup q * r].
+generalize in match (H (n1 / m) m).
+elim (p_ord_aux n (n1 / m) m).
+simplify.
+rewrite > assoc_times.
+rewrite < H3.rewrite > (plus_n_O (m*(n1 / m))).
+rewrite < H2.
+rewrite > sym_times.
+rewrite < div_mod.reflexivity.
+assumption.assumption.
+intros.simplify.apply plus_n_O. 
+qed.
+
+theorem p_ord_aux_to_exp: \forall p,n,m,q,r. O < m \to
+  (pair nat nat q r) = p_ord_aux p n m \to n = m \sup q * r.
+intros.
+change with 
+match (pair nat nat q r) with
+  [ (pair q r) \Rightarrow n = m \sup q * r ].
+rewrite > H1.
+apply p_ord_aux_to_Prop.
+assumption.
+qed.
+(* questo va spostato in primes1.ma *)
+theorem p_ord_exp: \forall n,m,i. O < m \to n \mod m \neq O \to
+\forall p. i \le p \to p_ord_aux p (m \sup i * n) m = pair nat nat i n.
+intros 5.
+elim i.
+simplify.
+rewrite < plus_n_O.
+apply (nat_case p).
+change with
+ (match n \mod m with
+  [ O \Rightarrow pair nat nat O n
+  | (S a) \Rightarrow pair nat nat O n]
+  = pair nat nat O n).
+elim (n \mod m).simplify.reflexivity.simplify.reflexivity.
+intro.
+change with
+ (match n \mod m with
+  [ O \Rightarrow 
+       match (p_ord_aux m1 (n / m) m) with
+       [ (pair q r) \Rightarrow pair nat nat (S q) r]
+  | (S a) \Rightarrow pair nat nat O n]
+  = pair nat nat O n).
+cut (O < n \mod m \lor O = n \mod m).
+elim Hcut.apply (lt_O_n_elim (n \mod m) H3).
+intros. simplify.reflexivity.
+apply False_ind.
+apply H1.apply sym_eq.assumption.
+apply le_to_or_lt_eq.apply le_O_n.
+generalize in match H3.
+apply (nat_case p).intro.apply False_ind.apply (not_le_Sn_O n1 H4).
+intros.
+change with
+ (match ((m \sup (S n1) *n) \mod m) with
+  [ O \Rightarrow 
+       match (p_ord_aux m1 ((m \sup (S n1) *n) / m) m) with
+       [ (pair q r) \Rightarrow pair nat nat (S q) r]
+  | (S a) \Rightarrow pair nat nat O (m \sup (S n1) *n)]
+  = pair nat nat (S n1) n).
+cut (((m \sup (S n1)*n) \mod m) = O).
+rewrite > Hcut.
+change with
+(match (p_ord_aux m1 ((m \sup (S n1)*n) / m) m) with
+       [ (pair q r) \Rightarrow pair nat nat (S q) r] 
+  = pair nat nat (S n1) n). 
+cut ((m \sup (S n1) *n) / m = m \sup n1 *n).
+rewrite > Hcut1.
+rewrite > (H2 m1). simplify.reflexivity.
+apply le_S_S_to_le.assumption.
+(* div_exp *)
+change with ((m* m \sup n1 *n) / m = m \sup n1 * n).
+rewrite > assoc_times.
+apply (lt_O_n_elim m H).
+intro.apply div_times.
+(* mod_exp = O *)
+apply divides_to_mod_O.
+assumption.
+simplify.rewrite > assoc_times.
+apply (witness ? ? (m \sup n1 *n)).reflexivity.
+qed.
+
+theorem p_ord_aux_to_Prop1: \forall p,n,m. (S O) < m \to O < n \to n \le p \to
+  match p_ord_aux p n m with
+  [ (pair q r) \Rightarrow r \mod m \neq O].
+intro.elim p.absurd (O < n).assumption.
+apply le_to_not_lt.assumption.
+change with
+match 
+  (match n1 \mod m with
+    [ O \Rightarrow 
+        match (p_ord_aux n(n1 / m) m) with
+        [ (pair q r) \Rightarrow pair nat nat (S q) r]
+    | (S a) \Rightarrow pair nat nat O n1])
+with
+  [ (pair q r) \Rightarrow r \mod m \neq O].
+apply (nat_case1 (n1 \mod m)).intro.
+generalize in match (H (n1 / m) m).
+elim (p_ord_aux n (n1 / m) m).
+apply H5.assumption.
+apply eq_mod_O_to_lt_O_div.
+apply (trans_lt ? (S O)).unfold lt.apply le_n.
+assumption.assumption.assumption.
+apply le_S_S_to_le.
+apply (trans_le ? n1).change with (n1 / m < n1).
+apply lt_div_n_m_n.assumption.assumption.assumption.
+intros.
+change with (n1 \mod m \neq O).
+rewrite > H4.
+unfold Not.intro.
+apply (not_eq_O_S m1).
+rewrite > H5.reflexivity.
+qed.
+
+theorem p_ord_aux_to_not_mod_O: \forall p,n,m,q,r. (S O) < m \to O < n \to n \le p \to
+ pair nat nat q r = p_ord_aux p n m \to r \mod m \neq O.
+intros.
+change with 
+  match (pair nat nat q r) with
+  [ (pair q r) \Rightarrow r \mod m \neq O].
+rewrite > H3. 
+apply p_ord_aux_to_Prop1.
+assumption.assumption.assumption.
+qed.
+  

@@ -1,0 +1,29 @@
+SRC=$(shell find @ROOT@ -name "*.ma" -a -type f)
+TODO=$(SRC:%.ma=%.mo)
+
+MATITA_FLAGS=
+MATITA_FLAGS+=-noprofile
+NODB=false
+ifeq ($(NODB),true)
+	MATITA_FLAGS += -nodb
+endif
+
+MATITAC=@CC@
+MATITACLEAN=@CLEAN@
+MATITADEP=@DEP@
+
+all: $(TODO)
+
+clean:
+	$(MATITACLEAN) $(MATITA_FLAGS) $(SRC) 
+	rm -f $(TODO)
+
+%.moo:
+	($(MATITAC) $(MATITA_FLAGS) -q -I @ROOT@ $< | (grep -v "^make" || true))
+
+@DEPFILE@ : $(SRC)
+	$(MATITADEP) $(MATITA_FLAGS) -I '@ROOT@' $^ 1> @DEPFILE@ 
+
+# this is the depend for full targets like:
+# dir/dir/name.moo: dir/dir/name.ma dir/dep.moo
+-include @DEPFILE@

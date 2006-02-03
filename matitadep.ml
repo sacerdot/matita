@@ -1,0 +1,94 @@
+(* Copyright (C) 2005, HELM Team.
+ * 
+ * This file is part of HELM, an Hypertextual, Electronic
+ * Library of Mathematics, developed at the Computer Science
+ * Department, University of Bologna, Italy.
+ * 
+ * HELM is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ * 
+ * HELM is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with HELM; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston,
+ * MA  02111-1307, USA.
+ * 
+ * For details, see the HELM World-Wide-Web page,
+ * http://helm.cs.unibo.it/
+ *)
+
+(* $Id$ *)
+
+module GA = GrafiteAst 
+module U = UriManager
+
+let main () =
+  (* all are maps from "file" to "something" *)
+  let include_deps = Hashtbl.create (Array.length Sys.argv) in
+  let baseuri_of = Hashtbl.create (Array.length Sys.argv) in
+  let uri_deps = Hashtbl.create (Array.length Sys.argv) in
+  let buri alias = U.buri_of_uri (U.uri_of_string alias) in
+  let resolve alias current_buri =
+    let buri = buri alias in
+    if buri <> current_buri then Some buri else None in
+  MatitaInit.fill_registry ();
+  MatitaInit.parse_cmdline ();
+  MatitaInit.load_configuration_file ();
+  let include_paths =
+   Helm_registry.get_list Helm_registry.string "matita.includes" in
+  let basedir = Helm_registry.get "matita.basedir" in
+  List.iter
+   (fun ma_file -> 
+    let ic = open_in ma_file in
+    let istream = Ulexing.from_utf8_channel ic in
+    let dependencies = DependenciesParser.parse_dependencies istream in
+    close_in ic;
+    List.iter 
+     (function
+       | DependenciesParser.UriDep uri -> 
+          let uri = UriManager.string_of_uri uri in
+          if not (Http_getter_storage.is_legacy uri) then
+            Hashtbl.add uri_deps ma_file uri
+       | DependenciesParser.BaseuriDep uri -> 
+          let uri = Http_getter_misc.strip_trailing_slash uri in
+          Hashtbl.add baseuri_of ma_file uri
+       | DependenciesParser.IncludeDep path -> 
+          try 
+            let baseuri =
+              DependenciesParser.baseuri_of_script ~include_paths path in
+            if not (Http_getter_storage.is_legacy baseuri) then
+              let moo_file =
+                LibraryMisc.obj_file_of_baseuri ~basedir ~baseuri in
+              Hashtbl.add include_deps ma_file moo_file
+          with Sys_error _ -> 
+            HLog.warn 
+              ("Unable to find " ^ path ^ " that is included in " ^ ma_file)
+     ) dependencies
+   ) (Helm_registry.get_list Helm_registry.string "matita.args");
+  Hashtbl.iter 
+    (fun file alias -> 
+      let dep = resolve alias (Hashtbl.find baseuri_of file) in
+      match dep with 
+      | None -> ()
+      | Some u -> 
+         Hashtbl.add include_deps file
+          (LibraryMisc.obj_file_of_baseuri ~basedir ~baseuri:u))
+  uri_deps;
+  List.iter
+   (fun ma_file -> 
+    let deps = Hashtbl.find_all include_deps ma_file in
+    let deps = List.fast_sort Pervasives.compare deps in
+    let deps = HExtlib.list_uniq deps in
+    let deps = ma_file :: deps in
+    let baseuri = Hashtbl.find baseuri_of ma_file in
+    let moo = LibraryMisc.obj_file_of_baseuri ~basedir ~baseuri in
+     Printf.printf "%s: %s\n" moo (String.concat " " deps);
+     Printf.printf "%s: %s\n" (Pcre.replace ~pat:"ma$" ~templ:"mo" ma_file) moo)
+   (Helm_registry.get_list Helm_registry.string "matita.args")
+

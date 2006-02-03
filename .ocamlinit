@@ -1,0 +1,44 @@
+(* directories *)
+#directory "../ocaml/cic"
+#directory "../ocaml/cic_notation"
+#directory "../ocaml/cic_omdoc"
+#directory "../ocaml/cic_proof_checking"
+#directory "../ocaml/cic_textual_parser2"
+#directory "../ocaml/cic_transformations"
+#directory "../ocaml/cic_unification"
+#directory "../ocaml/getter"
+#directory "../ocaml/hbugs"
+#directory "../ocaml/mathql"
+#directory "../ocaml/mathql_generator"
+#directory "../ocaml/mathql_interpreter"
+#directory "../ocaml/metadata"
+#directory "../ocaml/paramodulation"
+#directory "../ocaml/registry"
+#directory "../ocaml/tactics"
+#directory "../ocaml/thread"
+#directory "../ocaml/urimanager"
+#directory "../ocaml/xml"
+#directory "../ocaml/xmldiff"
+
+(* custom printers *)
+let fppuri ppf uri =
+ let s = UriManager.string_of_uri uri in
+  Format.pp_print_string ppf s
+;;
+
+#install_printer CicMetaSubst.fppsubst;;
+#install_printer CicMetaSubst.fppterm;;
+#install_printer CicMetaSubst.fppmetasenv;;
+#install_printer fppuri;;
+
+(* utility functions *)
+let go = MatitacLib.interactive_loop;;
+
+(* let's go! *)
+let _ = 
+ at_exit (fun () -> MatitacLib.clean_exit None);
+ if Array.length Sys.argv > 1 then
+   MatitacLib.main `TOPLEVEL
+ else
+   MatitacLib.go ()
+;;

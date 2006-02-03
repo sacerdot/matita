@@ -1,0 +1,242 @@
+(* Copyright (C) 2005, HELM Team.
+ * 
+ * This file is part of HELM, an Hypertextual, Electronic
+ * Library of Mathematics, developed at the Computer Science
+ * Department, University of Bologna, Italy.
+ * 
+ * HELM is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ * 
+ * HELM is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with HELM; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston,
+ * MA  02111-1307, USA.
+ * 
+ * For details, see the HELM World-Wide-Web page,
+ * http://helm.cs.unibo.it/
+ *)
+
+(* $Id$ *)
+
+open Printf
+
+type thingsToInitilaize = 
+  ConfigurationFile | Db | Environment | Getter | Makelib | CmdLine | Registry
+  
+exception FailedToInitialize of thingsToInitilaize
+
+let wants s l = 
+  List.iter (
+    fun item -> 
+      if not (List.exists (fun x -> x = item) l) then
+        raise (FailedToInitialize item)) 
+  s
+
+let already_configured s l =
+  List.for_all (fun item -> List.exists (fun x -> x = item) l) s
+  
+let conffile = ref BuildTimeConf.matita_conf
+
+let registry_defaults =
+  [
+    "db.nodb",                  "false";
+    "matita.system",            "false";
+    "matita.debug",             "false";
+    "matita.external_editor",   "gvim -f -c 'go %p' %f";
+    "matita.preserve",          "false";
+    "matita.quiet",             "false";
+    "matita.profile",           "true";
+  ]
+
+let set_registry_values =
+  List.iter (fun key, value -> Helm_registry.set ~key ~value)
+
+let fill_registry init_status =
+  if not (already_configured [ Registry ] init_status) then begin
+    set_registry_values registry_defaults;
+    Registry :: init_status
+  end else
+    init_status
+
+let load_configuration init_status =
+  wants [ Registry ] init_status;
+  if not (already_configured [ConfigurationFile] init_status) then
+    begin
+      Helm_registry.load_from !conffile;
+      if not (Helm_registry.has "user.name") then begin
+        let login = (Unix.getpwuid (Unix.getuid ())).Unix.pw_name in
+        Helm_registry.set "user.name" login
+      end;
+      if Helm_registry.get_bool "matita.system" then
+        Helm_registry.set "user.home" BuildTimeConf.runtime_base_dir;
+      ConfigurationFile::init_status 
+    end
+  else
+    init_status
+
+let initialize_db init_status = 
+  wants [ ConfigurationFile; CmdLine ] init_status;
+  if not (already_configured [ Db ] init_status) then
+    begin
+      if not (Helm_registry.get_bool "matita.system") then
+        MetadataTypes.ownerize_tables (Helm_registry.get "matita.owner");
+      LibraryDb.create_owner_environment ();
+      Db::init_status
+    end
+  else
+    init_status
+
+let initialize_makelib init_status = 
+  wants [ConfigurationFile] init_status;
+  if not (already_configured [Makelib] init_status) then
+    begin
+      MatitamakeLib.initialize (); 
+      Makelib::init_status
+    end
+  else
+    init_status
+
+let initialize_environment init_status = 
+  wants [ConfigurationFile] init_status;
+  if not (already_configured [Getter;Environment] init_status) then
+    begin
+      Http_getter.init ();
+      CicEnvironment.set_trust (* environment trust *)
+        (let trust =
+          Helm_registry.get_opt_default Helm_registry.get_bool
+            ~default:true "matita.environment_trust" in
+         fun _ -> trust);
+      Getter::Environment::init_status
+    end
+  else
+    init_status 
+  
+let status = ref []
+
+let usages = Hashtbl.create 11
+let _ =
+  List.iter
+    (fun (name, s) -> Hashtbl.replace usages name s)
+    [ "matitac", 
+        sprintf "MatitaC v%s
+Usage: matitac [ OPTION ... ] FILE
+Options:"
+          BuildTimeConf.version;
+      "matita",
+        sprintf "Matita v%s
+Usage: matita [ OPTION ... ] [ FILE ... ]
+Options:"
+          BuildTimeConf.version;
+      "cicbrowser",
+        sprintf
+          "CIC Browser v%s
+Usage: cicbrowser [ URL | WHELP QUERY ]
+Options:"
+          BuildTimeConf.version;
+      "matitadep",
+        sprintf "MatitaDep v%s
+Usage: matitadep [ OPTION ... ] FILE ...
+Options:"
+          BuildTimeConf.version;
+      "matitaclean",
+        sprintf "MatitaClean v%s
+Usage: matitaclean all
+       matitaclean [ (FILE | URI) ... ]
+Options:"
+          BuildTimeConf.version;
+    ]
+let default_usage =
+  sprintf "Matita v%s\nUsage: matita [ ARG ]\nOptions:" BuildTimeConf.version
+
+let usage () =
+  let basename = Filename.basename Sys.argv.(0) in
+  let usage_key =
+    try Filename.chop_extension basename with Invalid_argument  _ -> basename
+  in
+  try Hashtbl.find usages usage_key with Not_found -> default_usage
+
+let parse_cmdline init_status =
+  if not (already_configured [CmdLine] init_status) then begin
+    let includes = ref [ BuildTimeConf.stdlib_dir ] in
+    let args = ref [] in
+    let add_l l = fun s -> l := s :: !l in
+    let arg_spec =
+      let std_arg_spec = [
+        "-I", Arg.String (add_l includes),
+          ("<path> Adds path to the list of searched paths for the "
+           ^ "include command");
+        "-conffile", Arg.Set_string conffile,
+          (Printf.sprintf "<filename> Read configuration from filename (default: %s)" 
+            BuildTimeConf.matita_conf);
+        "-q", Arg.Unit (fun () -> Helm_registry.set_bool "matita.quiet" true),
+          "Turn off verbose compilation";
+        "-preserve",
+          Arg.Unit (fun () -> Helm_registry.set_bool "matita.preserve" true),
+          "Turns off automatic baseuri cleaning";
+        "-nodb", Arg.Unit (fun () -> Helm_registry.set_bool "db.nodb" true),
+            ("Avoid using external database connection "
+             ^ "(WARNING: disable many features)");
+        "-system", Arg.Unit (fun () ->
+              Helm_registry.set_bool "matita.system" true),
+            ("Act on the system library instead of the user one"
+             ^ "(WARNING: not for the casual user)");
+        "-noprofile", 
+          Arg.Unit (fun () -> Helm_registry.set_bool "matita.profile" false),
+          "Turns off profiling printings";
+      ] in
+      let debug_arg_spec =
+        if BuildTimeConf.debug then
+          [ "-debug",
+            Arg.Unit (fun () -> Helm_registry.set_bool "matita.debug" true),
+              ("Do not catch top-level exception "
+              ^ "(useful for backtrace inspection)");
+          ]
+        else []
+      in
+      std_arg_spec @ debug_arg_spec
+    in
+    let set_list ~key l =
+      Helm_registry.set_list Helm_registry.of_string ~key ~value:(List.rev !l)
+    in
+    Arg.parse arg_spec (add_l args) (usage ());
+    set_list ~key:"matita.includes" includes;
+    set_list ~key:"matita.args" args;
+    HExtlib.set_profiling_printings 
+      (fun () -> Helm_registry.get_bool "matita.profile");
+    CmdLine :: init_status
+  end else
+    init_status
+
+let die_usage () =
+  print_endline (usage ());
+  exit 1
+
+let initialize_all () =
+  status := 
+    List.fold_left (fun s f -> f s) !status
+    [ fill_registry;
+        parse_cmdline; load_configuration; initialize_makelib;
+        initialize_db; initialize_environment ]
+(*     initialize_notation 
+      (initialize_environment 
+        (initialize_db 
+          (initialize_makelib
+            (load_configuration
+              (parse_cmdline !status))))) *)
+
+let load_configuration_file () =
+  status := load_configuration !status
+
+let parse_cmdline () =
+  status := parse_cmdline !status
+
+let fill_registry () =
+  status := fill_registry !status
+
