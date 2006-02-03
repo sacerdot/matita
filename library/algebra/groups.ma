@@ -206,14 +206,14 @@ simplify;
 ].
 qed.
 
-theorem ltb_elim: \forall n,m:nat. \forall P:bool \to Prop.
-(n < m \to (P true)) \to (n ≮ m \to (P false)) \to
+theorem ltb_elim: ∀n,m:nat. ∀P:bool → Prop.
+(n < m → (P true)) → (n ≮ m → (P false)) →
 P (ltb n m).
 intros.
 cut
 (match (ltb n m) with
-[ true  \Rightarrow n < m
-| false \Rightarrow n ≮ m] \to (P (ltb n m))).
+[ true  ⇒ n < m
+| false ⇒ n ≮ m] → (P (ltb n m))).
 apply Hcut.apply ltb_to_Prop.
 elim (ltb n m).
 apply ((H H2)).
@@ -239,7 +239,7 @@ assumption.
 qed.
 
 theorem le_pred_to_le:
- ∀n,m. O < m → pred n ≤ pred m \to n ≤ m.
+ ∀n,m. O < m → pred n ≤ pred m → n ≤ m.
 intros 2;
 elim n;
 [ apply le_O_n
@@ -309,7 +309,7 @@ theorem pigeonhole:
  ∀n:nat.∀f:nat→nat.
   (∀x,y.x≤n → y≤n → f x = f y → x=y) →
   (∀m. m ≤ n → f m ≤ n) →
-   ∀x. x≤n \to ∃y.f y = x ∧ y ≤ n.
+   ∀x. x≤n → ∃y.f y = x ∧ y ≤ n.
 intro;
 elim n;
 [ apply (ex_intro ? ? O);
@@ -367,8 +367,19 @@ elim n;
                 intro;
                 generalize in match (H1 ? ? ? ? H4);
                 [ intro;
-                |
-                |
+                  generalize in match (le_n_m_to_lt_m_Sn_to_eq_n_m ? ? H6 H5);
+                  intro;
+                  generalize in match (H1 ? ? ? ? H9);
+                  [ intro;
+                    rewrite > H10 in H7;
+                    elim (not_le_Sn_n ? H7)
+                  | rewrite > H8;
+                    apply le_n
+                  | apply le_n
+                  ]
+                | apply le_S;
+                  assumption
+                | apply le_n
                 ]
               ]
             | apply (ltn_to_ltO ? ? H4)
@@ -380,9 +391,10 @@ elim n;
         | apply Hcut1
         | apply le_S_S_to_le;
           rewrite < S_pred;
-          exact H3
+          [ assumption
+          | apply (ltn_to_ltO ? ? H4)
+          ]
         ]    
-        (* TODO: caso complicato, ma simile al terzo *) 
       | intros;
         apply (ex_intro ? ? (S n1));
         split;
@@ -562,7 +574,7 @@ elim n;
 ].
 qed.
 
-theorem foo:
+theorem finite_enumerable_SemiGroup_to_left_cancellable_to_right_cancellable_to_isMonoid:
  ∀G:finite_enumerable_SemiGroup.
   left_cancellable ? (op G) →
   right_cancellable ? (op G) →
@@ -606,5 +618,27 @@ cut (∀n.n ≤ order ? (is_finite_enumerable G) → ∃m.f m = n);
       apply (H1 ? ? ? GaxGax)
     ]
   ]
-| apply pigeonhole
+| intros;
+  elim (pigeonhole (order ? G) f ? ? ? H2);
+  [ apply (ex_intro ? ? a);
+    elim H3;
+    assumption
+  | intros;
+    change in H5 with (ι(G \sub O · G \sub x) = ι(G \sub O · G \sub y));
+    cut (G \sub (ι(G \sub O · G \sub x)) = G \sub (ι(G \sub O · G \sub y)));
+    [ rewrite > (repr_index_of ? ? (G \sub O · G \sub x))  in Hcut;
+      rewrite > (repr_index_of ? ? (G \sub O · G \sub y))  in Hcut;
+      generalize in match (H ? ? ? Hcut);
+      intro;
+      generalize in match (eq_f ? ? (index_of ? G) ? ? H6);
+      intro;
+      rewrite > index_of_repr in H7;
+      rewrite > index_of_repr in H7;
+      assumption
+    | apply eq_f;
+      assumption
+    ]
+  | intros;
+    apply index_of_sur
+  ] 
 ].
