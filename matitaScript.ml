@@ -42,7 +42,7 @@ let safe_substring s i j =
   try String.sub s i j with Invalid_argument _ -> assert false
 
 let heading_nl_RE = Pcre.regexp "^\\s*\n\\s*"
-let heading_nl_RE' = Pcre.regexp "^(\\s*\n\\s*)((.|\n)*)"
+let heading_nl_RE' = Pcre.regexp "^(\\s*\n\\s*)"
 let only_dust_RE = Pcre.regexp "^(\\s|\n|%%[^\n]*\n)*$"
 let multiline_RE = Pcre.regexp "^\n[^\n]+$"
 let newline_RE = Pcre.regexp "\n"
@@ -84,7 +84,10 @@ let eval_with_engine guistuff lexicon_status grafite_status user_goal
   let initial_space,parsed_text =
    try
     let pieces = Pcre.extract ~rex:heading_nl_RE' parsed_text in
-     pieces.(1), pieces.(2)
+    let p1 = pieces.(1) in
+    let p1_len = String.length p1 in
+    let rest = String.sub parsed_text p1_len (parsed_text_length - p1_len) in
+     p1, rest
    with
     Not_found -> "", parsed_text in
   let inital_space,new_grafite_status,new_lexicon_status,new_status_and_text_list' =
