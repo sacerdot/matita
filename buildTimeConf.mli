@@ -36,6 +36,7 @@ val debug                         : bool
 val default_font_size             : int
 val gtkmathview_conf              : string
 val gtkrc_file                    : string
+val help_dir                      : string
 val images_dir                    : string
 val lang_file                     : string
 val matita_conf                   : string

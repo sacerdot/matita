@@ -206,8 +206,11 @@ class gui () =
         ~website:"http://helm.cs.unibo.it"
         ()
       in
-      connect_menu_item main#contentsMenuItem
-       (fun () -> ignore (Sys.command "gnome-help ghelp:///home/claudio/miohelm/matita/help/C/matita.xml &"));
+      connect_menu_item main#contentsMenuItem (fun () ->
+        let cmd =
+          sprintf "gnome-help ghelp://%s/C/matita.xml &" BuildTimeConf.help_dir
+        in
+        ignore (Sys.command cmd));
       connect_menu_item main#aboutMenuItem about_dialog#present;
         (* findRepl win *)
       let show_find_Repl () = 
