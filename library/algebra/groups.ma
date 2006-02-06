@@ -21,13 +21,13 @@ include "nat/compare.ma".
 
 record PreGroup : Type ≝
  { premonoid:> PreMonoid;
-   opp: premonoid -> premonoid
+   inv: premonoid -> premonoid
  }.
 
 record isGroup (G:PreGroup) : Prop ≝
  { is_monoid: isMonoid G;
-   opp_is_left_inverse: is_left_inverse (mk_Monoid ? is_monoid) (opp G);
-   opp_is_right_inverse: is_right_inverse (mk_Monoid ? is_monoid) (opp G)
+   inv_is_left_inverse: is_left_inverse (mk_Monoid ? is_monoid) (inv G);
+   inv_is_right_inverse: is_right_inverse (mk_Monoid ? is_monoid) (inv G)
  }.
  
 record Group : Type ≝
@@ -54,10 +54,10 @@ interpretation "magma_of_group coercion" 'magma_of_group G =
  (cic:/matita/algebra/groups/Magma_of_Group.con G).
 
 notation "hvbox(x \sup (-1))" with precedence 89
-for @{ 'gopp $x }.
+for @{ 'ginv $x }.
 
-interpretation "Group inverse" 'gopp x =
- (cic:/matita/algebra/groups/opp.con _ x).
+interpretation "Group inverse" 'ginv x =
+ (cic:/matita/algebra/groups/inv.con _ x).
 
 definition left_cancellable ≝
  λT:Type. λop: T -> T -> T.
@@ -73,11 +73,11 @@ intros;
 unfold left_cancellable;
 unfold injective;
 intros (x y z);
-rewrite < (e_is_left_unit ? (is_monoid ? (group_properties G)));
-rewrite < (e_is_left_unit ? (is_monoid ? (group_properties G)) z);
-rewrite < (opp_is_left_inverse ? (group_properties G) x);
-rewrite > (associative ? (is_semi_group ? (is_monoid ? (group_properties G))));
-rewrite > (associative ? (is_semi_group ? (is_monoid ? (group_properties G))));
+rewrite < (e_is_left_unit ? (is_monoid ? G));
+rewrite < (e_is_left_unit ? (is_monoid ? G) z);
+rewrite < (inv_is_left_inverse ? G x);
+rewrite > (associative ? (is_semi_group ? (is_monoid ? G)));
+rewrite > (associative ? (is_semi_group ? (is_monoid ? G)));
 apply eq_f;
 assumption.
 qed.
@@ -90,555 +90,56 @@ unfold right_cancellable;
 unfold injective;
 simplify;fold simplify (op G); 
 intros (x y z);
-rewrite < (e_is_right_unit ? (is_monoid ? (group_properties G)));
-rewrite < (e_is_right_unit ? (is_monoid ? (group_properties G)) z);
-rewrite < (opp_is_right_inverse ? (group_properties G) x);
-rewrite < (associative ? (is_semi_group ? (is_monoid ? (group_properties G))));
-rewrite < (associative ? (is_semi_group ? (is_monoid ? (group_properties G))));
+rewrite < (e_is_right_unit ? (is_monoid ? G));
+rewrite < (e_is_right_unit ? (is_monoid ? G) z);
+rewrite < (inv_is_right_inverse ? G x);
+rewrite < (associative ? (is_semi_group ? (is_monoid ? G)));
+rewrite < (associative ? (is_semi_group ? (is_monoid ? G)));
 rewrite > H;
 reflexivity.
 qed.
 
-
-record finite_enumerable (T:Type) : Type ≝
- { order: nat;
-   repr: nat → T;
-   index_of: T → nat;
-   index_of_sur: ∀x.index_of x ≤ order;
-   index_of_repr: ∀n. n≤order → index_of (repr n) = n;
-   repr_index_of: ∀x. repr (index_of x) = x
- }.
- 
-notation "hvbox(C \sub i)" with precedence 89
-for @{ 'repr $C $i }.
-
-(* CSC: multiple interpretations in the same file are not considered in the
- right order
-interpretation "Finite_enumerable representation" 'repr C i =
- (cic:/matita/algebra/groups/repr.con C _ i).*)
- 
-notation < "hvbox(|C|)" with precedence 89
-for @{ 'card $C }.
-
-interpretation "Finite_enumerable order" 'card C =
- (cic:/matita/algebra/groups/order.con C _).
-
-record finite_enumerable_SemiGroup : Type ≝
- { semigroup:> SemiGroup;
-   is_finite_enumerable:> finite_enumerable semigroup
- }.
-
-notation < "S"
-for @{ 'semigroup_of_finite_enumerable_semigroup $S }.
-
-interpretation "Semigroup_of_finite_enumerable_semigroup"
- 'semigroup_of_finite_enumerable_semigroup S
-=
- (cic:/matita/algebra/groups/semigroup.con S).
-
-notation < "S"
-for @{ 'magma_of_finite_enumerable_semigroup $S }.
-
-interpretation "Magma_of_finite_enumerable_semigroup"
- 'magma_of_finite_enumerable_semigroup S
-=
- (cic:/matita/algebra/groups/Magma_of_finite_enumerable_SemiGroup.con S).
- 
-notation < "S"
-for @{ 'type_of_finite_enumerable_semigroup $S }.
-
-interpretation "Type_of_finite_enumerable_semigroup"
- 'type_of_finite_enumerable_semigroup S
-=
- (cic:/matita/algebra/groups/Type_of_finite_enumerable_SemiGroup.con S).
-
-interpretation "Finite_enumerable representation" 'repr S i =
- (cic:/matita/algebra/groups/repr.con S
-  (cic:/matita/algebra/groups/is_finite_enumerable.con S) i).
-
-notation "hvbox(ι e)" with precedence 60
-for @{ 'index_of_finite_enumerable_semigroup $e }.
-
-interpretation "Index_of_finite_enumerable representation"
- 'index_of_finite_enumerable_semigroup e
-=
- (cic:/matita/algebra/groups/index_of.con _
-  (cic:/matita/algebra/groups/is_finite_enumerable.con _) e).
-
-
-(* several definitions/theorems to be moved somewhere else *)
-
-definition ltb ≝ λn,m. leb n m ∧ notb (eqb n m).
-
-theorem not_eq_to_le_to_lt: ∀n,m. n≠m → n≤m → n<m.
+theorem inv_inv: ∀G:Group. ∀x:G. x \sup -1 \sup -1 = x.
 intros;
-elim (le_to_or_lt_eq ? ? H1);
-[ assumption
-| elim (H H2)
-].
+apply (eq_op_x_y_op_z_y_to_eq ? (x \sup -1));
+rewrite > (inv_is_right_inverse ? G);
+rewrite > (inv_is_left_inverse ? G);
+reflexivity.
 qed.
 
-theorem ltb_to_Prop :
- ∀n,m.
-  match ltb n m with
-  [ true ⇒ n < m
-  | false ⇒ n ≮ m
-  ].
+theorem eq_opxy_e_to_eq_x_invy:
+ ∀G:Group. ∀x,y:G. x·y=1 → x=y \sup -1.
 intros;
-unfold ltb;
-apply leb_elim;
-apply eqb_elim;
-intros;
-simplify;
-[ rewrite < H;
-  apply le_to_not_lt;
-  constructor 1
-| apply (not_eq_to_le_to_lt ? ? H H1)
-| rewrite < H;
-  apply le_to_not_lt;
-  constructor 1
-| apply le_to_not_lt;
-  generalize in match (not_le_to_lt ? ? H1);
-  clear H1;
-  intro;
-  apply lt_to_le;
-  assumption
-].
-qed.
-
-theorem ltb_elim: ∀n,m:nat. ∀P:bool → Prop.
-(n < m → (P true)) → (n ≮ m → (P false)) →
-P (ltb n m).
-intros.
-cut
-(match (ltb n m) with
-[ true  ⇒ n < m
-| false ⇒ n ≮ m] → (P (ltb n m))).
-apply Hcut.apply ltb_to_Prop.
-elim (ltb n m).
-apply ((H H2)).
-apply ((H1 H2)).
-qed.
-
-theorem Not_lt_n_n: ∀n. n ≮ n.
-intro;
-unfold Not;
-intro;
-unfold lt in H;
-apply (not_le_Sn_n ? H).
-qed.
-
-theorem eq_pred_to_eq:
- ∀n,m. O < n → O < m → pred n = pred m → n = m.
-intros;
-generalize in match (eq_f ? ? S ? ? H2);
-intro;
-rewrite < S_pred in H3;
-rewrite < S_pred in H3;
+apply (eq_op_x_y_op_z_y_to_eq ? y);
+rewrite > (inv_is_left_inverse ? G);
 assumption.
 qed.
 
-theorem le_pred_to_le:
- ∀n,m. O < m → pred n ≤ pred m → n ≤ m.
-intros 2;
-elim n;
-[ apply le_O_n
-| simplify in H2;
-  rewrite > (S_pred m);
-  [ apply le_S_S;
-    assumption
-  | assumption
-  ]
-].
-qed.
-
-theorem le_to_le_pred:
- ∀n,m. n ≤ m → pred n ≤ pred m.
-intros 2;
-elim n;
-[ simplify;
-  apply le_O_n
-| simplify;
-  generalize in match H1;
-  clear H1;
-  elim m;
-  [ elim (not_le_Sn_O ? H1)
-  | simplify;
-    apply le_S_S_to_le;
-    assumption
-  ]
-].
-qed.
-
-theorem lt_n_m_to_not_lt_m_Sn: ∀n,m. n < m → m ≮ S n.
+theorem eq_opxy_e_to_eq_invx_y:
+ ∀G:Group. ∀x,y:G. x·y=1 → x \sup -1=y.
 intros;
-unfold Not;
-intro;
-unfold lt in H;
-unfold lt in H1;
-generalize in match (le_S_S ? ? H);
-intro;
-generalize in match (transitive_le ? ? ? H2 H1);
-intro;
-apply (not_le_Sn_n ? H3).
-qed.
-
-theorem lt_S_S: ∀n,m. n < m → S n < S m.
-intros;
-unfold lt in H;
-apply (le_S_S ? ? H).
-qed.
-
-theorem lt_O_S: ∀n. O < S n.
-intro;
-unfold lt;
-apply le_S_S;
-apply le_O_n.
-qed.
-
-theorem le_n_m_to_lt_m_Sn_to_eq_n_m: ∀n,m. n ≤ m → m < S n → n=m.
-intros;
-unfold lt in H1;
-generalize in match (le_S_S_to_le ? ? H1);
-intro;
-apply cic:/matita/nat/orders/antisym_le.con;
+apply (eq_op_x_y_op_x_z_to_eq ? x);
+rewrite > (inv_is_right_inverse ? G);
+symmetry;
 assumption.
 qed.
 
-theorem pigeonhole:
- ∀n:nat.∀f:nat→nat.
-  (∀x,y.x≤n → y≤n → f x = f y → x=y) →
-  (∀m. m ≤ n → f m ≤ n) →
-   ∀x. x≤n → ∃y.f y = x ∧ y ≤ n.
-intro;
-elim n;
-[ apply (ex_intro ? ? O);
-  split;
-  [ rewrite < (le_n_O_to_eq ? H2);
-    rewrite < (le_n_O_to_eq ? (H1 O ?));
-    [ reflexivity
-    | apply le_n
-    ]
-  | apply le_n
-  ]
-| clear n;
-  letin f' ≝
-   (λx.
-    let fSn1 ≝ f (S n1) in
-     let fx ≝ f x in
-      match ltb fSn1 fx with
-      [ true ⇒ pred fx
-      | false ⇒ fx
-      ]);
-  cut (∀x,y. x ≤ n1 → y ≤ n1 → f' x = f' y → x=y);
-  [ cut (∀x. x ≤ n1 → f' x ≤ n1);
-    [ apply (nat_compare_elim (f (S n1)) x);
-      [ intro;
-        elim (H f' ? ? (pred x));
-        [ simplify in H5;
-          clear Hcut;
-          clear Hcut1;
-          clear f';
-          elim H5;
-          clear H5;
-          apply (ex_intro ? ? a);
-          split;
-          [ generalize in match (eq_f ? ? S ? ? H6);
-            clear H6;
-            intro;
-            rewrite < S_pred in H5;
-            [ generalize in match H4;
-              clear H4;
-              rewrite < H5;
-              clear H5;
-              apply (ltb_elim (f (S n1)) (f a));
-              [ simplify;
-                intros;
-                rewrite < S_pred;
-                [ reflexivity
-                | apply (ltn_to_ltO ? ? H4)
-                ]
-              | simplify;
-                intros;
-                generalize in match (not_lt_to_le ? ? H4);
-                clear H4;
-                intro;
-                generalize in match (le_n_m_to_lt_m_Sn_to_eq_n_m ? ? H6 H5);
-                intro;
-                generalize in match (H1 ? ? ? ? H4);
-                [ intro;
-                  generalize in match (le_n_m_to_lt_m_Sn_to_eq_n_m ? ? H6 H5);
-                  intro;
-                  generalize in match (H1 ? ? ? ? H9);
-                  [ intro;
-                    rewrite > H10 in H7;
-                    elim (not_le_Sn_n ? H7)
-                  | rewrite > H8;
-                    apply le_n
-                  | apply le_n
-                  ]
-                | apply le_S;
-                  assumption
-                | apply le_n
-                ]
-              ]
-            | apply (ltn_to_ltO ? ? H4)
-            ]
-          | apply le_S;
-            assumption
-          ]
-        | apply Hcut
-        | apply Hcut1
-        | apply le_S_S_to_le;
-          rewrite < S_pred;
-          [ assumption
-          | apply (ltn_to_ltO ? ? H4)
-          ]
-        ]    
-      | intros;
-        apply (ex_intro ? ? (S n1));
-        split;
-        [ assumption
-        | constructor 1
-        ] 
-      | intro;
-        elim (H f' ? ? x);
-        [ simplify in H5;
-          clear Hcut;
-          clear Hcut1;
-          clear f';
-          elim H5;
-          clear H5;
-          apply (ex_intro ? ? a);
-          split;
-          [ generalize in match H4;
-            clear H4;
-            rewrite < H6;
-            clear H6;
-            apply (ltb_elim (f (S n1)) (f a));
-            [ simplify;
-              intros;
-              generalize in match (lt_S_S ? ? H5);
-              intro;
-              rewrite < S_pred in H6;
-              [ elim (lt_n_m_to_not_lt_m_Sn ? ? H4 H6)
-              | apply (ltn_to_ltO ? ? H4)
-              ]
-            | simplify;
-              intros;
-              reflexivity
-            ]        
-          | apply le_S;
-            assumption
-          ]
-        | apply Hcut    
-        | apply Hcut1
-        | rewrite > (pred_Sn n1);
-          simplify;
-          generalize in match (H2 (S n1));
-          intro;
-          generalize in match (lt_to_le_to_lt ? ? ? H4 (H5 (le_n ?)));
-          intro;
-          unfold lt in H6;
-          apply le_S_S_to_le;
-          assumption
-        ]
-      ]
-    | unfold f';
-      simplify;
-      intro;
-      apply (ltb_elim (f (S n1)) (f x1));
-      simplify;
-      intros;
-      [ generalize in match (H2 x1);
-        intro;
-        change in match n1 with (pred (S n1));
-        apply le_to_le_pred;
-        apply H6;
-        apply le_S;
-        assumption
-      | generalize in match (H2 (S n1) (le_n ?));
-        intro;
-        generalize in match (not_lt_to_le ? ? H4);
-        intro;
-        generalize in match (transitive_le ? ? ? H7 H6);
-        intro;
-        cut (f x1 ≠ f (S n1));
-        [ generalize in match (not_eq_to_le_to_lt ? ? Hcut1 H7);
-          intro;
-          unfold lt in H9;
-          generalize in match (transitive_le ? ? ? H9 H6);
-          intro;
-          apply le_S_S_to_le;
-          assumption
-        | unfold Not;
-          intro;
-          generalize in match (H1 ? ? ? ? H9);
-          [ intro;
-            rewrite > H10 in H5;
-            apply (not_le_Sn_n ? H5)
-          | apply le_S;
-            assumption
-          | apply le_n
-          ]
-        ] 
-      ]
-    ]
-  | intros 4;
-    unfold f';
-    simplify;
-    apply (ltb_elim (f (S n1)) (f x1));
-    simplify;
-    apply (ltb_elim (f (S n1)) (f y));
-    simplify;
-    intros;
-    [ cut (f x1 = f y);
-      [ apply (H1 ? ? ? ? Hcut);
-        apply le_S;
-        assumption
-      | apply eq_pred_to_eq;
-        [ apply (ltn_to_ltO ? ? H7)
-        | apply (ltn_to_ltO ? ? H6)
-        | assumption
-        ]
-      ]         
-    | (* pred (f x1) = f y absurd since y ≠ S n1 and thus f y ≠ f (S n1)
-         so that f y < f (S n1) < f x1; hence pred (f x1) = f y is absurd *)
-       cut (y < S n1);
-       [ generalize in match (lt_to_not_eq ? ? Hcut);
-         intro;
-         cut (f y ≠ f (S n1));
-         [ cut (f y < f (S n1));
-           [ rewrite < H8 in Hcut2;
-             unfold lt in Hcut2;
-             unfold lt in H7;
-             generalize in match (le_S_S ? ? Hcut2);
-             intro;
-             generalize in match (transitive_le ? ? ? H10 H7);
-             intros;
-             rewrite < (S_pred (f x1)) in H11;
-              [ elim (not_le_Sn_n ? H11)
-              | fold simplify ((f (S n1)) < (f x1)) in H7;
-                apply (ltn_to_ltO ? ? H7)
-              ]
-           | apply not_eq_to_le_to_lt;
-             [ assumption
-             | apply not_lt_to_le;
-               assumption
-             ]
-           ]
-         | unfold Not;
-           intro;
-           apply H9;
-           apply (H1 ? ? ? ? H10);
-           [ apply lt_to_le;
-             assumption
-           | constructor 1
-           ]
-         ]
-       | unfold lt;
-         apply le_S_S;
-         assumption
-       ]
-    | (* f x1 = pred (f y) absurd since it implies S (f x1) = f y and
-         f x1 ≤ f (S n1) < f y = S (f x1) so that f x1 = f (S n1); by
-         injectivity x1 = S n1 that is absurd since x1 ≤ n1 *)
-       generalize in match (eq_f ? ? S ? ? H8);
-       intro;
-       rewrite < S_pred in H9;
-       [ rewrite < H9 in H6;
-         generalize in match (not_lt_to_le ? ? H7);
-         intro;
-         unfold lt in H6;
-         generalize in match (le_S_S ? ? H10);
-         intro;
-         generalize in match (antisym_le ? ? H11 H6);
-         intro;
-         generalize in match (inj_S ? ? H12);
-         intro;
-         generalize in match (H1 ? ? ? ? H13);
-         [ intro;
-           rewrite > H14 in H4;
-           elim (not_le_Sn_n ? H4)
-         | apply le_S;
-           assumption
-         | apply le_n
-         ]
-       | apply (ltn_to_ltO ? ? H6) 
-       ]
-    | apply (H1 ? ? ? ? H8);
-      apply le_S;
-      assumption
-    ]
-  ]
-].
+theorem eq_opxy_z_to_eq_x_opzinvy:
+ ∀G:Group. ∀x,y,z:G. x·y=z → x = z·y \sup -1.
+intros;
+apply (eq_op_x_y_op_z_y_to_eq ? y);
+rewrite > (associative ? (is_semi_group ? (is_monoid ? G)));
+rewrite > (inv_is_left_inverse ? G);
+rewrite > (e_is_right_unit ? (is_monoid ? G));
+assumption.
 qed.
 
-theorem finite_enumerable_SemiGroup_to_left_cancellable_to_right_cancellable_to_isMonoid:
- ∀G:finite_enumerable_SemiGroup.
-  left_cancellable ? (op G) →
-  right_cancellable ? (op G) →
-   ∃e:G. isMonoid (mk_PreMonoid G e).
+theorem eq_opxy_z_to_eq_y_opinvxz:
+ ∀G:Group. ∀x,y,z:G. x·y=z → y = x \sup -1·z.
 intros;
-letin f ≝ (λn.ι(G \sub O · G \sub n));
-cut (∀n.n ≤ order ? (is_finite_enumerable G) → ∃m.f m = n);
-[ letin EX ≝ (Hcut O ?);
-  [ apply le_O_n
-  | clearbody EX;
-    clear Hcut;
-    unfold f in EX;
-    elim EX;
-    clear EX;
-    letin HH ≝ (eq_f ? ? (repr ? (is_finite_enumerable G)) ? ? H2);
-    clearbody HH;
-    rewrite > (repr_index_of ? (is_finite_enumerable G)) in HH;
-    apply (ex_intro ? ? (G \sub a));
-    letin GOGO ≝ (refl_eq ? (repr ? (is_finite_enumerable G) O));
-    clearbody GOGO;
-    rewrite < HH in GOGO;
-    rewrite < HH in GOGO:(? ? % ?);
-    rewrite > (associative ? G) in GOGO;
-    letin GaGa ≝ (H ? ? ? GOGO);
-    clearbody GaGa;
-    clear GOGO;
-    constructor 1;
-    [ simplify;
-      apply (semigroup_properties G)
-    | unfold is_left_unit; intro;
-      letin GaxGax ≝ (refl_eq ? (G \sub a ·x));
-      clearbody GaxGax;
-      rewrite < GaGa in GaxGax:(? ? % ?);
-      rewrite > (associative ? (semigroup_properties G)) in GaxGax;
-      apply (H ? ? ? GaxGax)
-    | unfold is_right_unit; intro;
-      letin GaxGax ≝ (refl_eq ? (x·G \sub a));
-      clearbody GaxGax;
-      rewrite < GaGa in GaxGax:(? ? % ?);
-      rewrite < (associative ? (semigroup_properties G)) in GaxGax;
-      apply (H1 ? ? ? GaxGax)
-    ]
-  ]
-| intros;
-  elim (pigeonhole (order ? G) f ? ? ? H2);
-  [ apply (ex_intro ? ? a);
-    elim H3;
-    assumption
-  | intros;
-    change in H5 with (ι(G \sub O · G \sub x) = ι(G \sub O · G \sub y));
-    cut (G \sub (ι(G \sub O · G \sub x)) = G \sub (ι(G \sub O · G \sub y)));
-    [ rewrite > (repr_index_of ? ? (G \sub O · G \sub x))  in Hcut;
-      rewrite > (repr_index_of ? ? (G \sub O · G \sub y))  in Hcut;
-      generalize in match (H ? ? ? Hcut);
-      intro;
-      generalize in match (eq_f ? ? (index_of ? G) ? ? H6);
-      intro;
-      rewrite > index_of_repr in H7;
-      rewrite > index_of_repr in H7;
-      assumption
-    | apply eq_f;
-      assumption
-    ]
-  | intros;
-    apply index_of_sur
-  ] 
-].
+apply (eq_op_x_y_op_x_z_to_eq ? x);
+rewrite < (associative ? (is_semi_group ? (is_monoid ? G)));
+rewrite > (inv_is_right_inverse ? G);
+rewrite > (e_is_left_unit ? (is_monoid ? G));
+assumption.
+qed.
