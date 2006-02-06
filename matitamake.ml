@@ -29,6 +29,7 @@ module MK = MatitamakeLib ;;
 
 let main () =
   MatitaInit.fill_registry ();
+  MatitaInit.parse_cmdline ();
   MatitaInit.load_configuration_file ();
   MK.initialize ();
   let usage = ref (fun () -> ()) in
@@ -46,20 +47,17 @@ let main () =
         exit 1
     | Some d -> d
   in
-  let init_dev_doc = "
-\tParameters: name (the name of the development, required)
-\tDescription: tells matitamake that a new development radicated 
-\t\tin the current working directory should be handled."
-  in
   let init_dev args =
-    if List.length args <> 1 then !usage ();
-    match MK.initialize_development (List.hd args) (Unix.getcwd ()) with
+    let name, path =
+      match args with
+      | [ name; path ] when path.[0] = '/' -> name, path
+      | [ name; path ] -> name, Unix.getcwd () ^ "/" ^ path
+      | [ name ] -> name, Unix.getcwd ()
+      | _ -> !usage (); (* should not be reached *) assert false
+    in
+    match MK.initialize_development name path with
     | None -> exit 2
     | Some _ -> exit 0
-  in
-  let list_dev_doc = "
-\tParameters: 
-\tDescription: lists the known developments and their roots."
   in
   let list_dev args =
     if List.length args <> 0 then !usage ();
@@ -72,23 +70,12 @@ let main () =
           l;
         exit 0
   in
-  let destroy_dev_doc = "
-\tParameters: name (the name of the development to destroy, required)
-\tDescription: deletes a development (only from matitamake metadat, no
-\t\t.ma files will be deleted)."
-  in
   let destroy_dev args = 
     if List.length args <> 1 then !usage ();
     let name = (List.hd args) in
     let dev = dev_of_name name in
     MK.destroy_development dev; 
     exit 0
-  in
-  let clean_dev_doc = "
-\tParameters: name (the name of the development to destroy, optional)
-\t\tIf omitted the development that holds the current working 
-\t\tdirectory is used (if any).
-\tDescription: clean the develpoment."
   in
   let clean_dev args = 
     let dev = 
@@ -101,10 +88,6 @@ let main () =
     | true -> exit 0
     | false -> exit 1
   in
-  let build_dev_doc = "
-\tParameters: name (the name of the development to build, required)
-\tDescription: completely builds the develpoment."
-  in
   let build_dev args = 
     if List.length args <> 1 then !usage ();
     let name = (List.hd args) in
@@ -113,11 +96,6 @@ let main () =
     | true -> exit 0
     | false -> exit 1
   in
-  let nodb_doc = "
-\tParameters:
-\tDescription: avoid using external database connection."
-  in
-  let nodb _ = Helm_registry.set_bool "db.nodb" true in
   let target args = 
     if List.length args < 1 then !usage ();
     let dev = dev_for_dir (Unix.getcwd ()) in
@@ -127,37 +105,20 @@ let main () =
       args
   in
   let params = [
-    "-init", init_dev, init_dev_doc;
-    "-clean", clean_dev, clean_dev_doc;
-    "-list", list_dev, list_dev_doc;
-    "-destroy", destroy_dev, destroy_dev_doc;
-    "-build", build_dev, build_dev_doc;
-    "-nodb", nodb, nodb_doc;
-    "-h", (fun _ -> !usage()), "print this help screen";
-    "-help", (fun _ -> !usage()), "print this help screen";
+    "init", init_dev;
+    "clean", clean_dev;
+    "list", list_dev;
+    "destroy", destroy_dev;
+    "build", build_dev;
   ]
   in
-  usage := (fun () -> 
-    let p = prerr_endline in 
-    p "\nusage:";
-    p "\tmatitamake(.opt) [command [options]]\n";
-    p "\tmatitamake(.opt) [target]\n";
-    p "commands:";
-    List.iter (fun (n,_,d) -> p (Printf.sprintf "    %-10s%s" n d)) params;
-    p "\nIf target is omitted a 'all' will be used as the default.";
-    p "With -build you can build a development wherever it is.";
-    p "If you specify a target it implicitly refers to the development that";
-    p "holds the current working directory (if any).\n"; 
-    exit 1);
-  let rec parse args = 
+  usage := MatitaInit.die_usage;
+  let parse args = 
     match args with
-    | [] -> target ["all"]
-    | s::tl ->
-        try
-          let _,f,_ = List.find (fun (n,_,_) -> n = s) params in
-          f tl;
-          parse tl
+    | [] -> target [ "all" ]
+    | s :: tl ->
+        try (List.assoc s params) tl
         with Not_found -> if s.[0] = '-' then !usage () else target args
   in
-  parse (List.tl (Array.to_list Sys.argv))
+  parse (Helm_registry.get_list Helm_registry.string "matita.args")
 

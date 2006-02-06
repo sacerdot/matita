@@ -44,16 +44,17 @@ let already_configured s l =
   
 let conffile = ref BuildTimeConf.matita_conf
 
-let registry_defaults =
-  [
-    "db.nodb",                  "false";
-    "matita.system",            "false";
-    "matita.debug",             "false";
-    "matita.external_editor",   "gvim -f -c 'go %p' %f";
-    "matita.preserve",          "false";
-    "matita.quiet",             "false";
-    "matita.profile",           "true";
-  ]
+let registry_defaults = [
+  "db.nodb",                  "false";
+  "matita.debug",             "false";
+  "matita.external_editor",   "gvim -f -c 'go %p' %f";
+  "matita.preserve",          "false";
+  "matita.profile",           "true";
+  "matita.system",            "false";
+  "matita.verbosity",         "1";
+    (** verbosity level: 1 is the default, 0 is intuitively "quiet", > 1 is
+     * intuitively verbose *)
+]
 
 let set_registry_values =
   List.iter (fun key, value -> Helm_registry.set ~key ~value)
@@ -74,8 +75,6 @@ let load_configuration init_status =
         let login = (Unix.getpwuid (Unix.getuid ())).Unix.pw_name in
         Helm_registry.set "user.name" login
       end;
-      if Helm_registry.get_bool "matita.system" then
-        Helm_registry.set "user.home" BuildTimeConf.runtime_base_dir;
       ConfigurationFile::init_status 
     end
   else
@@ -120,7 +119,7 @@ let initialize_environment init_status =
   
 let status = ref []
 
-let usages = Hashtbl.create 11
+let usages = Hashtbl.create 11 (** app name (e.g. "matitac") -> usage string *)
 let _ =
   List.iter
     (fun (name, s) -> Hashtbl.replace usages name s)
@@ -151,6 +150,35 @@ Usage: matitaclean all
        matitaclean [ (FILE | URI) ... ]
 Options:"
           BuildTimeConf.version;
+      "matitamake",
+        sprintf "MatitaMake v%s
+Usage: matitamake [ OPTION ... ] (init | clean | list | destroy | build)
+  init
+    Parameters: name (the name of the development, required)
+    Description: tells matitamake that a new development radicated 
+      in the current working directory should be handled.
+  clean
+    Parameters: name (the name of the development to destroy, optional)
+      If omitted the development that holds the current working 
+      directory is used (if any).
+    Description: clean the develpoment.
+  list
+    Parameters: 
+    Description: lists the known developments and their roots.
+  destroy
+    Parameters: name (the name of the development to destroy, required)
+    Description: deletes a development (only from matitamake metadat, no
+      .ma files will be deleted).
+  build
+    Parameters: name (the name of the development to build, required)
+    Description: completely builds the develpoment.
+Notes:
+  If target is omitted an 'all' will be used as the default.
+  With -build you can build a development wherever it is.
+  If you specify a target it implicitly refers to the development that
+  holds the current working directory (if any).
+Options:"
+          BuildTimeConf.version;
     ]
 let default_usage =
   sprintf "Matita v%s\nUsage: matita [ ARG ]\nOptions:" BuildTimeConf.version
@@ -167,29 +195,39 @@ let parse_cmdline init_status =
     let includes = ref [ BuildTimeConf.stdlib_dir ] in
     let args = ref [] in
     let add_l l = fun s -> l := s :: !l in
+    let reduce_verbosity () =
+      Helm_registry.set_int "matita.verbosity"
+        (Helm_registry.get_int "matita.verbosity" - 1) in
+    let increase_verbosity () =
+      Helm_registry.set_int "matita.verbosity"
+        (Helm_registry.get_int "matita.verbosity" + 1) in
     let arg_spec =
       let std_arg_spec = [
         "-I", Arg.String (add_l includes),
           ("<path> Adds path to the list of searched paths for the "
            ^ "include command");
         "-conffile", Arg.Set_string conffile,
-          (Printf.sprintf "<filename> Read configuration from filename (default: %s)" 
+          (Printf.sprintf ("<filename> Read configuration from filename"
+             ^^ "\n    Default: %s")
             BuildTimeConf.matita_conf);
-        "-q", Arg.Unit (fun () -> Helm_registry.set_bool "matita.quiet" true),
-          "Turn off verbose compilation";
-        "-preserve",
-          Arg.Unit (fun () -> Helm_registry.set_bool "matita.preserve" true),
-          "Turns off automatic baseuri cleaning";
+        "-force",
+            Arg.Unit (fun () -> Helm_registry.set_bool "matita.force" true),
+            ("Force actions that would not be executed per default");
         "-nodb", Arg.Unit (fun () -> Helm_registry.set_bool "db.nodb" true),
-            ("Avoid using external database connection "
-             ^ "(WARNING: disable many features)");
-        "-system", Arg.Unit (fun () ->
-              Helm_registry.set_bool "matita.system" true),
-            ("Act on the system library instead of the user one"
-             ^ "(WARNING: not for the casual user)");
+            ("Avoid using external database connection"
+             ^ "\n    WARNING: disable many features");
         "-noprofile", 
           Arg.Unit (fun () -> Helm_registry.set_bool "matita.profile" false),
           "Turns off profiling printings";
+        "-preserve",
+          Arg.Unit (fun () -> Helm_registry.set_bool "matita.preserve" true),
+          "Turns off automatic baseuri cleaning";
+        "-q", Arg.Unit reduce_verbosity, "Reduce verbosity";
+        "-system", Arg.Unit (fun () ->
+              Helm_registry.set_bool "matita.system" true),
+            ("Act on the system library instead of the user one"
+             ^ "\n    WARNING: not for the casual user");
+        "-v", Arg.Unit increase_verbosity, "Increase verbosity";
       ] in
       let debug_arg_spec =
         if BuildTimeConf.debug then
@@ -221,9 +259,8 @@ let die_usage () =
 let initialize_all () =
   status := 
     List.fold_left (fun s f -> f s) !status
-    [ fill_registry;
-        parse_cmdline; load_configuration; initialize_makelib;
-        initialize_db; initialize_environment ]
+    [ fill_registry; parse_cmdline; load_configuration; initialize_makelib;
+      initialize_db; initialize_environment ]
 (*     initialize_notation 
       (initialize_environment 
         (initialize_db 
