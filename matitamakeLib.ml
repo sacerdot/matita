@@ -117,17 +117,18 @@ let dump_development devel =
 let list_known_developments () = 
   List.map (fun r -> r.name,r.root) !developments
 
-let am_i_opt () = 
-  if Pcre.pmatch ~pat:"\\.opt$" Sys.argv.(0) then ".opt" else ""
+let am_i_opt = lazy (
+  if Pcre.pmatch ~pat:"\\.opt$" Sys.argv.(0) then ".opt" else "")
   
 let rebuild_makefile development = 
   let makefilepath = makefile_for_development development in
   let template = 
     HExtlib.input_file BuildTimeConf.matitamake_makefile_template 
   in
-  let cc = BuildTimeConf.runtime_base_dir ^ "/matitac" ^ am_i_opt () in
-  let rm = BuildTimeConf.runtime_base_dir ^ "/matitaclean" ^ am_i_opt () in
-  let mm = BuildTimeConf.runtime_base_dir ^ "/matitadep" ^ am_i_opt () in
+  let ext = Lazy.force am_i_opt in
+  let cc = BuildTimeConf.runtime_base_dir ^ "/matitac" ^ ext in
+  let rm = BuildTimeConf.runtime_base_dir ^ "/matitaclean" ^ ext in
+  let mm = BuildTimeConf.runtime_base_dir ^ "/matitadep" ^ ext in
   let df = pool () ^ development.name ^ "/depend" in
   let template = Pcre.replace ~pat:"@ROOT@" ~templ:development.root template in
   let template = Pcre.replace ~pat:"@CC@" ~templ:cc template in
@@ -141,14 +142,16 @@ let initialize_development name dir =
   let name = Pcre.replace ~pat:" " ~templ:"_" name in 
   let dev = {name = name ; root = dir} in
   match development_for_dir dir with
-  | Some d ->
-      logger `Error 
-        ("Directory " ^ dir ^ " is already handled by development " ^ d.name);
-      logger `Error
-        ("Development " ^ d.name ^ " is rooted in " ^ d.root); 
-      logger `Error
-        (dir ^ " is a subdir of " ^ d.root);
-      None
+  | Some dev ->
+      if dir <> dev.root then begin
+        logger `Error 
+          (sprintf ("Dir \"%s\" is already handled by development \"%s\"\n"
+            ^^ "Development \"%s\" is rooted in \"%s\"\n"
+            ^^ "Dir \"%s\" is a sub-dir of \"%s\"")
+          dir dev.name dev.name dev.root dir dev.root);
+        None
+      end else (* requirement development alreay exists, do nothing *)
+        Some dev
   | None -> 
       dump_development dev;
       rebuild_makefile dev;
@@ -159,10 +162,10 @@ let make chdir args =
   let old = Unix.getcwd () in
   try
     Unix.chdir chdir;
-    let rc = 
-      Unix.system 
-        (String.concat " " ("make"::(List.map Filename.quote args)))
-    in
+    let cmd = String.concat " " ("make" :: List.map Filename.quote args) in
+    if Helm_registry.get_int "matita.verbosity" > 1 then
+      HLog.debug (sprintf "MATITAMAKE: %s" cmd);
+    let rc = Unix.system cmd in
     Unix.chdir old;
     match rc with
     | Unix.WEXITED 0 -> true
@@ -182,7 +185,7 @@ let call_make development target make =
   let flags = flags @ if nodb then ["NODB=true"] else [] in
   let flags =
     try
-      flags @ [ sprintf "MATITA_FLAGS=\"%s\"" (Sys.getenv "MATITA_FLAGS") ]
+      flags @ [ sprintf "MATITA_FLAGS=%s" (Sys.getenv "MATITA_FLAGS") ]
     with Not_found -> flags in
   make development.root 
     (["--no-print-directory"; "-s"; "-k"; "-f"; makefile; target]
