@@ -1133,7 +1133,7 @@ let interactive_uri_choice
   let gui = instance () in
   let nonvars_uris = lazy (List.filter (non UriManager.uri_is_var) uris) in
   if (selection_mode <> `SINGLE) &&
-    (Helm_registry.get_bool "matita.auto_disambiguation")
+    (Helm_registry.get_opt_default Helm_registry.get_bool ~default:true "matita.auto_disambiguation")
   then
     Lazy.force nonvars_uris
   else begin
