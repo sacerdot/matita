@@ -48,7 +48,7 @@ let run_script is eval_function  =
   in
   let slash_n_RE = Pcre.regexp "\\n" in
   let cb = 
-    if Helm_registry.get_bool "matita.quiet" then 
+    if Helm_registry.get_int "matita.verbosity" < 1 then 
       (fun _ _ -> ())
     else 
       (fun grafite_status stm ->
@@ -171,12 +171,12 @@ let main ~mode =
     | `Debug | `Message -> ()
     | `Warning | `Error -> origcb tag s
   in
-  if Helm_registry.get_bool "matita.quiet" then
+  if Helm_registry.get_int "matita.verbosity" < 1 then
     HLog.set_log_callback newcb;
   let matita_debug = Helm_registry.get_bool "matita.debug" in
   try
     let time = Unix.time () in
-    if Helm_registry.get_bool "matita.quiet" then
+    if Helm_registry.get_int "matita.verbosity" < 1 then
       origcb `Message ("compiling " ^ Filename.basename fname ^ "...")
     else
       HLog.message (sprintf "execution of %s started:" fname);
