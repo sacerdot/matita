@@ -299,7 +299,7 @@ distclean: clean
 tags: TAGS
 .PHONY: TAGS
 TAGS:
-	cd ..; otags -vi -r ocaml/ matita/
+	cd ..; otags -vi -r components/ matita/
 
 #.depend: matitaGeneratedGui.ml matitaGeneratedGui.mli *.ml *.mli
 
