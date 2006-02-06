@@ -4,7 +4,7 @@
     <key name="home">$(HOME)</key>
   </section>
   <section name="matita">
-    <key name="basedir">.matita</key>
+    <key name="basedir">@SRCROOT@/.matita</key>
     <key name="owner">nobody</key>
   </section>
   <section name="db">
@@ -16,7 +16,7 @@
     <key name="cache_dir">.matita/getter/cache</key>
     <key name="prefix">
       cic:/matita/
-      file://.matita/xml/matita/
+      file://$(matita.basedir)/xml/matita/
     </key>
     <key name="prefix">
       cic:/
