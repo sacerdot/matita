@@ -143,3 +143,37 @@ rewrite > (inv_is_right_inverse ? G);
 rewrite > (e_is_left_unit ? (is_monoid ? G));
 assumption.
 qed.
+
+(* Morphisms *)
+
+record morphism (G,G':Group) : Type ≝
+ { image: G → G';
+   f_morph: ∀x,y:G.image(x·y) = image x · image y
+ }.
+ 
+notation "hvbox(f˜ x)" with precedence 79
+for @{ 'morimage $f $x }.
+
+interpretation "Morphism image" 'morimage f x =
+ (cic:/matita/algebra/groups/image.con _ _ f x).
+ 
+theorem morphism_to_eq_f_1_1:
+ ∀G,G'.∀f:morphism G G'.f˜1 = 1.
+intros;
+apply (eq_op_x_y_op_z_y_to_eq G' (f˜1));
+rewrite > (e_is_left_unit ? (is_monoid ? G') ?);
+rewrite < (f_morph ? ? f);
+rewrite > (e_is_left_unit ? (is_monoid ? G));
+reflexivity.
+qed.
+ 
+theorem eq_image_inv_inv_image:
+ ∀G,G'.∀f:morphism G G'.
+  ∀x.f˜(x \sup -1) = (f˜x) \sup -1.
+intros;
+apply (eq_op_x_y_op_z_y_to_eq G' (f˜x));
+rewrite > (inv_is_left_inverse ? G');
+rewrite < (f_morph ? ? f);
+rewrite > (inv_is_left_inverse ? G);
+apply (morphism_to_eq_f_1_1 ? ? f).
+qed.
