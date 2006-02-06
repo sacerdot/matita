@@ -191,9 +191,18 @@ BEST=all
 endif
 
 stdlib:
-	MATITA_RT_BASE_DIR=`pwd` \
+	@echo "MATITACLEAN all"
+	$(H)./matitaclean -system -conffile `pwd`/matita.conf.xml.build all
+	@echo "MATITAMAKE init"
+	$(H)MATITA_RT_BASE_DIR=`pwd` \
 	MATITA_FLAGS="-system -conffile `pwd`/matita.conf.xml.build" \
-		./matitamake -init build_stdlib
+		./matitamake -conffile `pwd`/matita.conf.xml.build \
+			init build_stdlib `pwd`/library
+	@echo "MATITAMAKE build"
+	$(H)MATITA_RT_BASE_DIR=`pwd` \
+	MATITA_FLAGS="-system -conffile `pwd`/matita.conf.xml.build" \
+		./matitamake -conffile `pwd`/matita.conf.xml.build \
+			build build_stdlib
 
 #          MATITA_RT_BASE_DIR=`pwd` \
 		$(MAKE) MATITA_FLAGS="-system -conffile `pwd`/matita.conf.xml.build" -C library/ $(BEST)
