@@ -80,8 +80,6 @@ all: $(PROGRAMS)
 #  coq.moo.opt: library/legacy/coq.ma matitac.opt
 #          ./matitac.opt $(MATITA_FLAGS) $<
 
-ifeq ($(HAVE_OCAMLOPT),yes)
-
 CMXS = $(patsubst %.cmo,%.cmx,$(CMOS))
 CCMXS = $(patsubst %.cmo,%.cmx,$(CCMOS))
 MAINCMXS = $(patsubst %.cmo,%.cmx,$(MAINCMOS))
@@ -89,16 +87,14 @@ LIB_DEPS := $(shell $(OCAMLFIND) query -recursive -predicates "byte" -format "%d
 LIBX_DEPS := $(shell $(OCAMLFIND) query -recursive -predicates "native" -format "%d/%a" $(MATITA_REQUIRES))
 CLIB_DEPS := $(shell $(OCAMLFIND) query -recursive -predicates "byte" -format "%d/%a" $(MATITA_CREQUIRES))
 CLIBX_DEPS := $(shell $(OCAMLFIND) query -recursive -predicates "native" -format "%d/%a" $(MATITA_CREQUIRES))
-.PHONY: opt
-opt: $(PROGRAMS_OPT) coq.moo.opt
-.PHONY: upx
-upx: $(PROGRAMS_UPX) coq.moo.opt
+opt: $(PROGRAMS_OPT)
+upx: $(PROGRAMS_UPX)
+.PHONY: opt upx
 
+ifeq ($(HAVE_OCAMLOPT),yes)
+world: all opt
 else
-
-opt:
-	@echo "Native code compilation is disabled"
-
+world: all
 endif
 
 matita: matita.ml $(LIB_DEPS) $(CMOS)
@@ -159,6 +155,15 @@ clean:
 		$(PROGRAMS_UPX) \
 		$(NULL)
 
+.PHONY: distclean
+distclean: clean
+	$(MAKE) -C dist/ clean
+	rm -f matitaGeneratedGui.ml matitaGeneratedGui.mli
+	rm -f buildTimeConf.ml
+	rm -f matita.glade.bak matita.gladep.bak
+	rm -f matita.conf.xml.sample
+	rm -rf .matita
+
 TEST_DIRS = 				\
 	library 			\
 	tests 				\
@@ -184,28 +189,35 @@ cleantests.opt: $(foreach d,$(TEST_DIRS),$(d)-cleantests-opt)
 
 # {{{ Distribution stuff
 
-ifeq ($(wildcard matitac.opt),matitac.opt)
+ifeq ($(HAVE_OCAMLOPT),yes)
 BEST=opt
+BEST_EXT=.opt
 else
 BEST=all
+BEST_EXT=
 endif
 
-stdlib:
-	@echo "MATITACLEAN all"
-	$(H)./matitaclean -system -conffile `pwd`/matita.conf.xml.build all
-	@echo "MATITAMAKE init"
-	$(H)MATITA_RT_BASE_DIR=`pwd` \
-	MATITA_FLAGS="-system -conffile `pwd`/matita.conf.xml.build" \
-		./matitamake -conffile `pwd`/matita.conf.xml.build \
-			init build_stdlib `pwd`/library
-	@echo "MATITAMAKE build"
-	$(H)MATITA_RT_BASE_DIR=`pwd` \
-	MATITA_FLAGS="-system -conffile `pwd`/matita.conf.xml.build" \
-		./matitamake -conffile `pwd`/matita.conf.xml.build \
-			build build_stdlib
+ifeq ($(DISTRIBUTED),yes)
 
-#          MATITA_RT_BASE_DIR=`pwd` \
-		$(MAKE) MATITA_FLAGS="-system -conffile `pwd`/matita.conf.xml.build" -C library/ $(BEST)
+dist_library: dist_library@library
+dist_library_clean:
+	@echo "MATITACLEAN -system all"
+	$(H)./matitaclean$(BEST_EXT) \
+		-system -conffile `pwd`/matita.conf.xml.build all
+dist_library@%:
+	@echo "MATITAMAKE -system init"
+	$(H)MATITA_RT_BASE_DIR=`pwd` \
+		MATITA_FLAGS="-system -conffile `pwd`/matita.conf.xml.build" \
+		./matitamake$(BEST_EXT) -conffile `pwd`/matita.conf.xml.build \
+			init dist_$* `pwd`/$*
+	@echo "MATITAMAKE -system build"
+	$(H)MATITA_RT_BASE_DIR=`pwd` \
+		MATITA_FLAGS="-system -conffile `pwd`/matita.conf.xml.build" \
+		./matitamake$(BEST_EXT) -conffile `pwd`/matita.conf.xml.build \
+			build dist_$*
+	touch $@
+
+endif
 
 DEST = @RT_BASE_DIR@
 INSTALL_STUFF = 			\
@@ -253,7 +265,7 @@ PROGRAMS_STATIC = $(patsubst %,%.static,$(PROGRAMS_OPT))
 PROGRAMS_UPX = $(patsubst %,%.upx,$(PROGRAMS_STATIC))
 
 ifeq ($(HAVE_OCAMLOPT),yes)
-static: $(STATIC_LINK) $(PROGRAMS_STATIC) coq.moo.opt
+static: $(STATIC_LINK) $(PROGRAMS_STATIC)
 else
 upx:
 	@echo "Native code compilation is disabled"
@@ -289,14 +301,6 @@ cicbrowser.opt.static: matita.opt.static
 	@test -f $@ || ln -s $< $@
 cicbrowser.opt.static.upx: matita.opt.static.upx
 	@test -f $@ || ln -s $< $@
-
-.PHONY: distclean
-distclean: clean
-	$(MAKE) -C dist/ clean
-	rm -f matitaGeneratedGui.ml matitaGeneratedGui.mli
-	rm -f buildTimeConf.ml
-	rm -f matita.glade.bak matita.gladep.bak
-	rm -f matita.conf.xml.sample
 
 %.upx: %
 	cp $< $@
