@@ -177,3 +177,131 @@ rewrite < (f_morph ? ? f);
 rewrite > (inv_is_left_inverse ? G);
 apply (morphism_to_eq_f_1_1 ? ? f).
 qed.
+
+record monomorphism (G,G':Group) : Type ≝
+ { morphism: morphism G G';
+   injective: injective ? ? (image ? ? morphism)
+ }.
+
+(* Subgroups *)
+
+record subgroup (G:Group) : Type ≝
+ { group: Group;
+   embed: monomorphism group G
+ }.
+ 
+notation "hvbox(x \sub H)" with precedence 79
+for @{ 'subgroupimage $H $x }.
+
+interpretation "Subgroup image" 'subgroupimage H x =
+ (cic:/matita/algebra/groups/image.con _ _
+   (cic:/matita/algebra/groups/morphism.con _ _
+     (cic:/matita/algebra/groups/embed.con _ H))
+   x).
+
+definition belongs_to_subgroup ≝
+ λG.λH:subgroup G.λx:G.∃y.x=y \sub H.
+
+notation "hvbox(x ∈ H)" with precedence 79
+for @{ 'belongs_to $x $H }.
+
+interpretation "Belongs to subgroup" 'belongs_to x H =
+ (cic:/matita/algebra/groups/belongs_to_subgroup.con _ H x).
+
+(* Left cosets *)
+
+record left_coset (G:Group) : Type ≝
+ { element: G;
+   subgrp: subgroup G
+ }.
+
+(* Here I would prefer 'magma_op, but this breaks something in the next definition *)
+interpretation "Left_coset" 'times x C =
+ (cic:/matita/algebra/groups/left_coset.ind#xpointer(1/1/1) _ x C).
+
+definition belongs_to_left_coset ≝
+ λG:Group.λC:left_coset G.λx:G.
+  ∃y.x=(element ? C)·y \sub (subgrp ? C).
+
+interpretation "Belongs to left_coset" 'belongs_to x C =
+ (cic:/matita/algebra/groups/belongs_to_left_coset.con _ C x).
+
+definition left_coset_eq ≝
+ λG.λC,C':left_coset G.
+  ∀x.((element ? C)·x \sub (subgrp ? C)) ∈ C'.
+  
+interpretation "Left cosets equality" 'eq C C' =
+ (cic:/matita/algebra/groups/left_coset_eq.con _ C C').
+
+definition left_coset_disjoint ≝
+ λG.λC,C':left_coset G.
+  ∀x.¬(((element ? C)·x \sub (subgrp ? C)) ∈ C'). 
+
+notation "hvbox(a break ∥ b)"
+ non associative with precedence 45
+for @{ 'disjoint $a $b }.
+
+interpretation "Left cosets disjoint" 'disjoint C C' =
+ (cic:/matita/algebra/groups/left_coset_disjoint.con _ C C').
+
+(* The following should be a one-shot alias! *)
+alias symbol "belongs_to" (instance 0) = "Belongs to subgroup".
+theorem foo:
+ ∀G.∀x,y:(Type_of_Group G).∀H:subgroup G.
+  (x \sup -1 ·y) ∈ H → (mk_left_coset ? x H) = (mk_left_coset ? y H).
+intros;
+unfold left_coset_eq;
+simplify in ⊢ (? → ? ? ? (? ? ? (? ? ? (? ? ? (? ? %)) ?)));
+simplify in ⊢ (? → ? ? ? (? ? % ?));
+simplify in ⊢ (? % → ?);
+intros;
+unfold belongs_to_left_coset;
+simplify in ⊢ (? ? (λy:?.? ? ? (? ? ? (? ? ? (? ? ? (? ? %)) ?))));
+simplify in ⊢ (? ? (λy:? %.?));
+simplify in ⊢ (? ? (λy:?.? ? ? (? ? % ?)));
+unfold belongs_to_subgroup in H1;
+elim H1;
+clear H1;
+exists;
+[
+| 
+].
+qed.
+
+(*theorem foo:
+ \forall G:Group. \forall x1,x2:G. \forall H:subgroup G.
+  x1*x2^-1 \nin H \to x1*H does_not_overlap x2*H
+
+theorem foo:
+ \forall x:G. \forall H:subgroup G. x \in x*H
+
+definition disjoinct
+ (T: Type) (n:nat) (S: \forall x:nat. x < n -> {S:Type * (S -> T)})
+:=
+ \forall i,j:nat. i < n \to j < n \to ...
+
+
+check
+ (λG.λH,H':left_coset G.λx:Type_of_Group (group ? (subgrp ? H)). (embed ? (subgrp ? H) x)).
+
+definition left_coset_eq ≝
+ λG.λH,H':left_coset G.
+  ∀x:group ? (subgrp ? H).
+   ex (group ? (subgroup ? H')) (λy.
+    (element ? H)·(embed ? (subgrp ? H) x) =
+    (element ? H')·(embed ? (subgrp ? H') y)).
+ 
+(*record left_coset (G:Group) : Type ≝
+ { subgroup: Group;
+   subgroup_is_subgroup: subgroup ≤ G;
+   element: G
+ }.
+
+definition left_coset_eq ≝
+ λG.λH,H':left_coset G.
+  ∀x:subgroup ? H.
+   ex (subgroup ? H') (λy.
+    (element ? H)·(embed ? ? (subgroup_is_subgroup ? H) ˜ x) =
+    (element ? H')·(embed ? ? (subgroup_is_subgroup ? H') ˜ y)).
+*)
+*)
