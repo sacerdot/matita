@@ -15,11 +15,219 @@
 
       <para>You can get the &appname; source code in two ways:
 	<orderedlist>
-	  <listitem> <para>foo</para> </listitem>
-	  <listitem> <para>bar</para> </listitem>
+
+	  <listitem> <para> go to the <ulink type="http"
+		url="http://matita.cs.unibo.it/download.shtml">download
+		page</ulink> and get the <ulink type="http"
+		url="http://matita.cs.unibo.it/sources/matita-latest.tar.gz"
+		>latest released source tarball</ulink>;</para> </listitem>
+
+	  <listitem> <para> get the development sources from <ulink type="http"
+		url="http://helm.cs.unibo.it/websvn/listing.php?repname=helm&amp;path=%2F&amp;sc=0">our
+		SVN repository</ulink>. You will need the
+	      <application>components/</application> and
+	      <application>matita/</application> directories from the
+	      <filename>trunk/helm/software/</filename> directory, plus the
+	      <filename>configure</filename> and <filename>Makefile*</filename>
+	      stuff from the same directory.  </para>
+
+	      <para>In this case you will need to run
+		<command>autoconf</command> before proceding with the building
+		instructions below.</para> </listitem>
+
 	</orderedlist>
       </para>
       
+    </sect3>
+
+    <sect3 id="build_requirements">
+      <title>Requirements</title>
+
+      <para>In order to build &appname; from sources you will need some
+	tools and libraries. They are listed below.
+
+	<note>
+	  <title>Note for Debian users</title>
+
+	  <para>If you are running a <ulink type="http"
+	      url="http://www.debian.org">Debian GNU/Linux</ulink> distribution
+	    you can have APT install all the required tools and libraries by
+	    adding the following repository to your
+	    <filename>/etc/apt/sources.list</filename>: <programlisting>
+	      deb&nbsp;<ulink type="http"
+		url="http://people.debian.org/~zack">http://people.debian.org/~zack</ulink>&nbsp;unstable&nbsp;helm
+	  </programlisting> and installing the
+	  <application>helm-matita-deps</application> package.</para>
+
+	</note>
+
+	<variablelist>
+	  <title>Required tools and libraries</title>
+
+	  <varlistentry>
+	    <term>
+	      <application> <ulink type="http"
+		  url="http://caml.inria.fr">OCaml</ulink> </application>
+	    </term>
+	    <listitem>
+	      <para> the Objective Caml compiler, version 3.09 or above </para>
+	    </listitem>
+	  </varlistentry>
+
+	  <varlistentry>
+	    <term>
+	      <application> <ulink type="http"
+		  url="http://www.ocaml-programming.de/packages/">Findlib</ulink>
+	      </application>
+	    </term>
+	    <listitem>
+	      <para> OCaml package manager, version 1.1.1 or above</para>
+	    </listitem>
+	  </varlistentry>
+
+	  <varlistentry>
+	    <term>
+	      <application> <ulink type="http"
+		  url="http://www.xs4all.nl/~mmzeeman/ocaml/">OCaml
+		  Expat</ulink> </application>
+	    </term>
+	    <listitem>
+	      <para>OCaml bindings for the <application><ulink type="http"
+		    url="http://expat.sourceforge.net/">expat</ulink>
+		  library</application> </para>
+	    </listitem>
+	  </varlistentry>
+
+	  <varlistentry>
+	    <term>
+	      <application> <ulink type="http"
+		  url="http://gmetadom.sourceforge.net/">GMetaDOM</ulink>
+	      </application>
+	    </term>
+	    <listitem>
+	      <para>OCaml bindings for the <application><ulink type="http"
+		    url="http://gdome2.cs.unibo.it/">Gdome 2</ulink>
+		  library</application></para>
+	    </listitem>
+	  </varlistentry>
+
+	  <varlistentry>
+	    <term>
+	      <application> <ulink type="http"
+		  url="http://www.bononia.it/~zack/ocaml-http.en.html">OCaml
+		  HTTP</ulink> </application>
+	    </term>
+	    <listitem>
+	      <para> OCaml library to write HTTP daemons (and clients) </para>
+	    </listitem>
+	  </varlistentry>
+
+	  <varlistentry>
+	    <term>
+	      <application> <ulink type="http"
+		  url="http://wwwfun.kurims.kyoto-u.ac.jp/soft/lsl/lablgtk.html">LablGTK</ulink>
+	      </application>
+	    </term>
+	    <listitem>
+	      <para> OCaml bindings for the <application> <ulink type="http"
+		    url="http://www.gtk.org"> GTK+</ulink> library
+	      </application>, version 2.6.0 or above </para>
+	    </listitem>
+	  </varlistentry>
+
+	  <varlistentry>
+	    <term>
+	      <application> <ulink type="http"
+		  url="http://helm.cs.unibo.it/mml-widget/">GtkMathView</ulink>
+	      </application>
+	    </term>
+	    <term>
+	      <application> <ulink type="http"
+		  url="http://helm.cs.unibo.it/mml-widget/">LablGtkMathView</ulink>
+	      </application>
+	    </term>
+	    <listitem>
+	      <para> GTK+ widget to render <ulink type="http"
+		  url="http://www.w3.org/Math/">MathML</ulink> documents and its
+		OCaml bindings </para>
+	    </listitem>
+	  </varlistentry>
+
+	  <varlistentry>
+	    <term>
+	      <application> <ulink type="http"
+		  url="http://gtksourceview.sourceforge.net/">GtkSourceView</ulink>
+	      </application>
+	    </term>
+	    <term>
+	      <application> <ulink type="http"
+		  url="http://helm.cs.unibo.it/software/lablgtksourceview/">LablGtkSourceView</ulink>
+	      </application>
+	    </term>
+	    <listitem>
+	      <para> extension for the GTK+ text widget (adding the typical
+		features of source code editors) and its OCaml bindings </para>
+	    </listitem>
+	  </varlistentry>
+
+	  <varlistentry>
+	    <term>
+	      <application> <ulink type="http"
+		  url="http://www.mysql.com">MySQL</ulink> </application>
+	    </term>
+	    <term>
+	      <application> <ulink type="http"
+		  url="http://raevnos.pennmush.org/code/ocaml-mysql/">OCaml
+		  MySQL</ulink> </application>
+	    </term>
+	    <listitem>
+	      <para> SQL database and OCaml bindings for its client-side library
+	      </para>
+	      <para> The SQL database itself is not strictly needed to run
+		&appname;, but we stronly encourage its use since a lot of
+		features are disabled without it. Still, the OCaml bindings of
+		the library are needed at compile time.</para>
+	    </listitem>
+	  </varlistentry>
+
+	  <varlistentry>
+	    <term>
+	      <application> <ulink type="http"
+		  url="http://ocamlnet.sourceforge.net/">Ocamlnet</ulink>
+	      </application>
+	    </term>
+	    <listitem>
+	      <para> collection of OCaml libraries to deal with
+		application-level Internet protocols and conventions </para>
+	    </listitem>
+	  </varlistentry>
+
+	  <varlistentry>
+	    <term>
+	      <application> <ulink type="http"
+		  url="http://www.cduce.org/download.html#side">ulex</ulink>
+	      </application>
+	    </term>
+	    <listitem>
+	      <para> Unicode lexer generator for OCaml </para>
+	    </listitem>
+	  </varlistentry>
+
+	  <varlistentry>
+	    <term>
+	      <application> <ulink type="http"
+		  url="http://cristal.inria.fr/~xleroy/software.html#camlzip">CamlZip</ulink>
+	      </application>
+	    </term>
+	    <listitem>
+	      <para> OCaml library to access <filename>.gz</filename> files
+	      </para>
+	    </listitem>
+	  </varlistentry>
+
+	</variablelist> </para>
+
+
     </sect3>
 
   </sect2>

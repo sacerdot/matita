@@ -126,7 +126,7 @@
       <title>Feedback</title> 
       <para>To report a bug or make a suggestion regarding the &app;
 	application or this manual, follow the directions in the
-	<ulink url="http://bugs.mowgli.cs.unibo.it" type="help">HELM Bug
+	<ulink url="http://bugs.mowgli.cs.unibo.it" type="http">HELM Bug
 	  Tracking System Page</ulink>. 
       </para>
 <!-- Translators may also add here feedback address for translations -->
