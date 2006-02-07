@@ -13,6 +13,8 @@
   <!ENTITY app "<application>Matita</application>">
   <!ENTITY appname "Matita">
   <!ENTITY appversion SYSTEM "version.txt">
+
+  <!ENTITY TODO "<emphasis>TODO</emphasis>">
 ]>
 
 <!-- =============Document Header ============================= -->
