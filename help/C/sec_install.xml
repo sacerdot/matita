@@ -1,0 +1,27 @@
+
+<!-- ============= Installation ============================== -->
+
+<sect1 id="sec_install">
+  <title>Installation</title>
+
+  <sect2>
+    <title>Installing &appname; from sources</title>
+
+    <para>Currently, the only intended way to install &appname; is starting
+      from its source code.  </para>
+
+    <sect3>
+      <title>Getting the source code</title>
+
+      <para>You can get the &appname; source code in two ways:
+	<orderedlist>
+	  <listitem> <para>foo</para> </listitem>
+	  <listitem> <para>bar</para> </listitem>
+	</orderedlist>
+      </para>
+      
+    </sect3>
+
+  </sect2>
+</sect1>
+
