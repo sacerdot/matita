@@ -1,0 +1,189 @@
+
+<!-- ============ Tactics ====================== -->
+<sect1 id="tactics">
+ <title>Tactics</title>
+
+  <sect2 id="tac_absurd">
+    <title>absurd &lt;term&gt;</title>
+    <para>The tactic <command>absurd</command> </para>
+<para>
+</para>
+  </sect2>
+  <sect2 id="tac_apply">
+    <title>apply &lt;term&gt;</title>
+    <para>The tactic <command>apply</command> </para>
+  </sect2>
+  <sect2 id="tac_assumption">
+    <title>assumption</title>
+    <para>The tactic <command>assumption</command> </para>
+  </sect2>
+  <sect2 id="tac_auto">
+    <title>auto [depth=&lt;int&gt;] [width=&lt;int&gt;] [paramodulation] [full]</title>
+    <para>The tactic <command>auto</command> </para>
+  </sect2>
+  <sect2 id="tac_clear">
+    <title>clear &lt;id&gt;</title>
+    <para>The tactic <command>clear</command> </para>
+  </sect2>
+  <sect2 id="tac_clearbody">
+    <title>clearbody &lt;id&gt;</title>
+    <para>The tactic <command>clearbody</command> </para>
+  </sect2>
+  <sect2 id="tac_change">
+    <title>change &lt;pattern&gt; with &lt;term&gt;</title>
+    <para>The tactic <command>change</command> </para>
+  </sect2>
+  <sect2 id="tac_compare">
+    <title>compare &lt;term&gt;</title>
+    <para>The tactic <command>compare</command> </para>
+  </sect2>
+  <sect2 id="tac_constructor">
+    <title>constructor &lt;int&gt;</title>
+    <para>The tactic <command>constructor</command> </para>
+  </sect2>
+  <sect2 id="tac_contradiction">
+    <title>contradiction</title>
+    <para>The tactic <command>contradiction</command> </para>
+  </sect2>
+  <sect2 id="tac_cut">
+    <title>cut &lt;term&gt; [as &lt;id&gt;]</title>
+    <para>The tactic <command>cut</command> </para>
+  </sect2>
+  <sect2 id="tac_decide_equality">
+    <title>decide</title>
+    <para>The tactic <command>decide equality</command> </para>
+  </sect2>
+  <sect2 id="tac_decompose">
+    <title>decompose [&lt;ident list&gt;] &lt;ident&gt; [&lt;intros_spec&gt;]</title>
+    <para>The tactic <command>decompose</command> </para>
+  </sect2>
+  <sect2 id="tac_discriminate">
+    <title>discriminate &lt;term&gt;</title>
+    <para>The tactic <command>discriminate</command> </para>
+  </sect2>
+  <sect2 id="tac_elim">
+    <title>elim &lt;term&gt; [using &lt;term&gt;] [&lt;intros_spec&gt;]</title>
+    <para>The tactic <command>elim</command> </para>
+  </sect2>
+  <sect2 id="tac_elimType">
+    <title>elimType &lt;term&gt; [using &lt;term&gt;]</title>
+    <para>The tactic <command>elimType</command> </para>
+  </sect2>
+  <sect2 id="tac_exact">
+    <title>exact &lt;term&gt;</title>
+    <para>The tactic <command>exact</command> </para>
+  </sect2>
+  <sect2 id="tac_exists">
+    <title>exists</title>
+    <para>The tactic <command>exists</command> </para>
+  </sect2>
+  <sect2 id="tac_fail">
+    <title>fail</title>
+    <para>The tactic <command>fail</command> </para>
+  </sect2>
+  <sect2 id="tac_fold">
+    <title>fold &lt;reduction_kind&gt; &lt;term&gt; &lt;pattern&gt;</title>
+    <para>The tactic <command>fold</command> </para>
+  </sect2>
+  <sect2 id="tac_fourier">
+    <title>fourier</title>
+    <para>The tactic <command>fourier</command> </para>
+  </sect2>
+  <sect2 id="tac_fwd">
+    <title>fwd &lt;ident&gt; [&lt;ident list&gt;]</title>
+    <para>The tactic <command>fwd</command> </para>
+  </sect2>
+  <sect2 id="tac_generalize">
+    <title>generalize &lt;pattern&gt; [as &lt;id&gt;]</title>
+    <para>The tactic <command>generalize</command> </para>
+  </sect2>
+  <sect2 id="tac_id">
+    <title>id</title>
+    <para>The tactic <command>id</command> </para>
+  </sect2>
+  <sect2 id="tac_injection">
+    <title>injection &lt;term&gt;</title>
+    <para>The tactic <command>injection</command> </para>
+  </sect2>
+  <sect2 id="tac_intro">
+    <title>intro [&lt;ident&gt;]</title>
+    <para>The tactic <command>intro</command> </para>
+  </sect2>
+  <sect2 id="tac_intros">
+    <title>intros &lt;intros_spec&gt;</title>
+    <para>The tactic <command>intros</command> </para>
+  </sect2>
+  <sect2 id="tac_inversion">
+    <title>intros &lt;term&gt;</title>
+    <para>The tactic <command>intros</command> </para>
+  </sect2>
+  <sect2 id="tac_lapply">
+    <title>lapply [depth=&lt;int&gt;] &lt;term&gt; [to &lt;term list] [using &lt;ident&gt;]</title>
+    <para>The tactic <command>lapply</command> </para>
+  </sect2>
+  <sect2 id="tac_left">
+    <title>left</title>
+    <para>The tactic <command>left</command> </para>
+  </sect2>
+  <sect2 id="tac_letin">
+    <title>letin &lt;ident&gt; ≝ &lt;term&gt;</title>
+    <para>The tactic <command>letin</command> </para>
+  </sect2>
+  <sect2 id="tac_normalize">
+    <title>normalize &lt;pattern&gt;</title>
+    <para>The tactic <command>normalize</command> </para>
+  </sect2>
+  <sect2 id="tac_paramodulation">
+    <title>paramodulation &lt;pattern&gt;</title>
+    <para>The tactic <command>paramodulation</command> </para>
+  </sect2>
+  <sect2 id="tac_reduce">
+    <title>reduce &lt;pattern&gt;</title>
+    <para>The tactic <command>reduce</command> </para>
+  </sect2>
+  <sect2 id="tac_reflexivity">
+    <title>reflexivity</title>
+    <para>The tactic <command>reflexivity</command> </para>
+  </sect2>
+  <sect2 id="tac_replace">
+    <title>replace &lt;pattern&gt; with &lt;term&gt;</title>
+    <para>The tactic <command>replace</command> </para>
+  </sect2>
+  <sect2 id="tac_rewrite">
+    <title>rewrite {&lt;|&gt;} &lt;term&gt; &lt;pattern&gt;</title>
+    <para>The tactic <command>rewrite</command> </para>
+  </sect2>
+  <sect2 id="tac_right">
+    <title>right</title>
+    <para>The tactic <command>right</command> </para>
+  </sect2>
+  <sect2 id="tac_ring">
+    <title>ring</title>
+    <para>The tactic <command>ring</command> </para>
+  </sect2>
+  <sect2 id="tac_simplify">
+    <title>simplify &lt;pattern&gt;</title>
+    <para>The tactic <command>simplify</command> </para>
+  </sect2>
+  <sect2 id="tac_split">
+    <title>split</title>
+    <para>The tactic <command>split</command> </para>
+  </sect2>
+  <sect2 id="tac_symmetry">
+    <title>symmetry</title>
+    <para>The tactic <command>symmetry</command> </para>
+  </sect2>
+  <sect2 id="tac_transitivity">
+    <title>transitivity &lt;term&gt;</title>
+    <para>The tactic <command>transitivity</command> </para>
+  </sect2>
+  <sect2 id="tac_unfold">
+    <title>unfold [&lt;term&gt;] &lt;pattern&gt;</title>
+    <para>The tactic <command>unfold</command> </para>
+  </sect2>
+  <sect2 id="tac_whd">
+    <title>whd &lt;pattern&gt;</title>
+    <para>The tactic <command>whd</command> </para>
+  </sect2>
+
+</sect1>

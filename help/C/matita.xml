@@ -1,13 +1,17 @@
 <?xml version="1.0"?>
 <!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
     "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
-  <!ENTITY legal SYSTEM "legal.xml">
-  <!ENTITY appversion "0.0">
-  <!ENTITY manrevision "0.0">
+
+  <!ENTITY license SYSTEM "legal.xml">
+  <!ENTITY intro SYSTEM "intro.xml">
+  <!ENTITY terms SYSTEM "terms.xml">
+  <!ENTITY tactics SYSTEM "tactics.xml">
+
+  <!ENTITY manrevision "0">
   <!ENTITY date "February 2006">
   <!ENTITY app "<application>Matita</application>">
   <!ENTITY appname "Matita">
-  <!ENTITY version "0.0">
+  <!ENTITY appversion SYSTEM "../../dist/version.txt">
 ]>
 
 <!-- =============Document Header ============================= -->
@@ -15,7 +19,7 @@
 <!-- please do not change the id; for translations, change lang to -->
 <!-- appropriate code -->
 <articleinfo>
- <title>&app; Manual V&manrevision;</title>
+ <title>&app; V&appversion; Manual (rev. &manrevision;)</title>
 
  <copyright>
   <year>2006</year>
@@ -38,10 +42,9 @@
     </publisher> 
 -->
 
-   &legal;
-   <!-- This file  contains link to license for the documentation (GNU FDL), and 
-        other legal stuff such as "NO WARRANTY" statement. Please do not change 
-	any of this. -->
+    <legalnotice>
+      &license;
+    </legalnotice>
 
     <authorgroup> 
       <author> 
@@ -88,7 +91,7 @@
     
 <revhistory>
       <revision> 
-	<revnumber>&appname; Manual V&manrevision;</revnumber> 
+	<revnumber>&appname; V&appversion; Manual (rev. &manrevision;)</revnumber> 
 	<date>&date;</date> 
 	<revdescription> 
 	  <para role="author">The HELM team
@@ -120,10 +123,10 @@
     section altogether -->
     <legalnotice> 
       <title>Feedback</title> 
-      <para>To report a bug or make a suggestion regarding the &app; application or
-	this manual, follow the directions in the 
-	<ulink url="http://mowgli.cs.unibo.it/bugs"
-	  type="help">HELM Bugzilla Page</ulink>. 
+      <para>To report a bug or make a suggestion regarding the &app;
+	application or this manual, follow the directions in the
+	<ulink url="http://bugs.mowgli.cs.unibo.it" type="help">HELM Bug
+	  Tracking System Page</ulink>. 
       </para>
 <!-- Translators may also add here feedback address for translations -->
     </legalnotice>
@@ -135,257 +138,16 @@
   </indexterm>
 
 <!-- ============= Document Body ============================= -->
-<!-- ============= Introduction ============================== -->
-<sect1 id="intro">
- <title>Introduction</title>
- <sect2 id="what">
-  <title>What is Matita?</title>
-  
-  <para>
-  <application>Matita</application> is a proof assistant for ...
-  </para>
 
- </sect2>
-</sect1>
-
-<!-- =========== Terms, declarations and definitions ============ -->
-<sect1 id="terms_decl_def">
- <title>Terms, definitions, declarations and proofs</title>
- <sect2 id="terms">
- <title>Terms</title>
- </sect2>
- <sect2 id="definitions">
- <title>Definitions</title>
- </sect2>
- <sect2 id="declarations">
- <title>Declarations (of inductive types)</title>
- </sect2>
- <sect2 id="proofs">
- <title>Proofs</title>
- </sect2>
-</sect1>
-
-<!-- ============ Tactics ====================== -->
-<sect1 id="tactics">
- <title>Tactics</title>
-
-  <sect2 id="tac_absurd">
-    <title>absurd &lt;term&gt;</title>
-    <para>The tactic <command>absurd</command> </para>
-<para>
-<ulink url="#terms">ciao</ulink>
-</para>
-  </sect2>
-  <sect2 id="tac_apply">
-    <title>apply &lt;term&gt;</title>
-    <para>The tactic <command>apply</command> </para>
-  </sect2>
-  <sect2 id="tac_assumption">
-    <title>assumption</title>
-    <para>The tactic <command>assumption</command> </para>
-  </sect2>
-  <sect2 id="tac_auto">
-    <title>auto [depth=&lt;int&gt;] [width=&lt;int&gt;] [paramodulation] [full]</title>
-    <para>The tactic <command>auto</command> </para>
-  </sect2>
-  <sect2 id="tac_clear">
-    <title>clear &lt;id&gt;</title>
-    <para>The tactic <command>clear</command> </para>
-  </sect2>
-  <sect2 id="tac_clearbody">
-    <title>clearbody &lt;id&gt;</title>
-    <para>The tactic <command>clearbody</command> </para>
-  </sect2>
-  <sect2 id="tac_change">
-    <title>change &lt;pattern&gt; with &lt;term&gt;</title>
-    <para>The tactic <command>change</command> </para>
-  </sect2>
-  <sect2 id="tac_compare">
-    <title>compare &lt;term&gt;</title>
-    <para>The tactic <command>compare</command> </para>
-  </sect2>
-  <sect2 id="tac_constructor">
-    <title>constructor &lt;int&gt;</title>
-    <para>The tactic <command>constructor</command> </para>
-  </sect2>
-  <sect2 id="tac_contradiction">
-    <title>contradiction</title>
-    <para>The tactic <command>contradiction</command> </para>
-  </sect2>
-  <sect2 id="tac_cut">
-    <title>cut &lt;term&gt; [as &lt;id&gt;]</title>
-    <para>The tactic <command>cut</command> </para>
-  </sect2>
-  <sect2 id="tac_decide equality">
-    <title>decide</title>
-    <para>The tactic <command>decide equality</command> </para>
-  </sect2>
-  <sect2 id="tac_decompose">
-    <title>decompose [&lt;ident list&gt;] &lt;ident&gt; [&lt;intros_spec&gt;]</title>
-    <para>The tactic <command>decompose</command> </para>
-  </sect2>
-  <sect2 id="tac_discriminate">
-    <title>discriminate &lt;term&gt;</title>
-    <para>The tactic <command>discriminate</command> </para>
-  </sect2>
-  <sect2 id="tac_elim">
-    <title>elim &lt;term&gt; [using &lt;term&gt;] [&lt;intros_spec&gt;]</title>
-    <para>The tactic <command>elim</command> </para>
-  </sect2>
-  <sect2 id="tac_elimType">
-    <title>elimType &lt;term&gt; [using &lt;term&gt;]</title>
-    <para>The tactic <command>elimType</command> </para>
-  </sect2>
-  <sect2 id="tac_exact">
-    <title>exact &lt;term&gt;</title>
-    <para>The tactic <command>exact</command> </para>
-  </sect2>
-  <sect2 id="tac_exists">
-    <title>exists</title>
-    <para>The tactic <command>exists</command> </para>
-  </sect2>
-  <sect2 id="tac_fail">
-    <title>fail</title>
-    <para>The tactic <command>fail</command> </para>
-  </sect2>
-  <sect2 id="tac_fold">
-    <title>fold &lt;reduction_kind&gt; &lt;term&gt; &lt;pattern&gt;</title>
-    <para>The tactic <command>fold</command> </para>
-  </sect2>
-  <sect2 id="tac_fourier">
-    <title>fourier</title>
-    <para>The tactic <command>fourier</command> </para>
-  </sect2>
-  <sect2 id="tac_fwd">
-    <title>fwd &lt;ident&gt; [&lt;ident list&gt;]</title>
-    <para>The tactic <command>fwd</command> </para>
-  </sect2>
-  <sect2 id="tac_generalize">
-    <title>generalize &lt;pattern&gt; [as &lt;id&gt;]</title>
-    <para>The tactic <command>generalize</command> </para>
-  </sect2>
-  <sect2 id="tac_id">
-    <title>id</title>
-    <para>The tactic <command>id</command> </para>
-  </sect2>
-  <sect2 id="tac_injection">
-    <title>injection &lt;term&gt;</title>
-    <para>The tactic <command>injection</command> </para>
-  </sect2>
-  <sect2 id="tac_intro">
-    <title>intro [&lt;ident&gt;]</title>
-    <para>The tactic <command>intro</command> </para>
-  </sect2>
-  <sect2 id="tac_intros">
-    <title>intros &lt;intros_spec&gt;</title>
-    <para>The tactic <command>intros</command> </para>
-  </sect2>
-  <sect2 id="tac_inversion">
-    <title>intros &lt;term&gt;</title>
-    <para>The tactic <command>intros</command> </para>
-  </sect2>
-  <sect2 id="tac_lapply">
-    <title>lapply [depth=&lt;int&gt;] &lt;term&gt; [to &lt;term list] [using &lt;ident&gt;]</title>
-    <para>The tactic <command>lapply</command> </para>
-  </sect2>
-  <sect2 id="tac_left">
-    <title>left</title>
-    <para>The tactic <command>left</command> </para>
-  </sect2>
-  <sect2 id="tac_letin">
-    <title>letin &lt;ident&gt; ≝ &lt;term&gt;</title>
-    <para>The tactic <command>letin</command> </para>
-  </sect2>
-  <sect2 id="tac_normalize">
-    <title>normalize &lt;pattern&gt;</title>
-    <para>The tactic <command>normalize</command> </para>
-  </sect2>
-  <sect2 id="tac_paramodulation">
-    <title>paramodulation &lt;pattern&gt;</title>
-    <para>The tactic <command>paramodulation</command> </para>
-  </sect2>
-  <sect2 id="tac_reduce">
-    <title>reduce &lt;pattern&gt;</title>
-    <para>The tactic <command>reduce</command> </para>
-  </sect2>
-  <sect2 id="tac_reflexivity">
-    <title>reflexivity</title>
-    <para>The tactic <command>reflexivity</command> </para>
-  </sect2>
-  <sect2 id="tac_replace">
-    <title>replace &lt;pattern&gt; with &lt;term&gt;</title>
-    <para>The tactic <command>replace</command> </para>
-  </sect2>
-  <sect2 id="tac_rewrite">
-    <title>rewrite {&lt;|&gt;} &lt;term&gt; &lt;pattern&gt;</title>
-    <para>The tactic <command>rewrite</command> </para>
-  </sect2>
-  <sect2 id="tac_right">
-    <title>right</title>
-    <para>The tactic <command>right</command> </para>
-  </sect2>
-  <sect2 id="tac_ring">
-    <title>ring</title>
-    <para>The tactic <command>ring</command> </para>
-  </sect2>
-  <sect2 id="tac_simplify">
-    <title>simplify &lt;pattern&gt;</title>
-    <para>The tactic <command>simplify</command> </para>
-  </sect2>
-  <sect2 id="tac_split">
-    <title>split</title>
-    <para>The tactic <command>split</command> </para>
-  </sect2>
-  <sect2 id="tac_symmetry">
-    <title>symmetry</title>
-    <para>The tactic <command>symmetry</command> </para>
-  </sect2>
-  <sect2 id="tac_transitivity">
-    <title>transitivity &lt;term&gt;</title>
-    <para>The tactic <command>transitivity</command> </para>
-  </sect2>
-  <sect2 id="tac_unfold">
-    <title>unfold [&lt;term&gt;] &lt;pattern&gt;</title>
-    <para>The tactic <command>unfold</command> </para>
-  </sect2>
-  <sect2 id="tac_whd">
-    <title>whd &lt;pattern&gt;</title>
-    <para>The tactic <command>whd</command> </para>
-  </sect2>
-
-</sect1>
+&intro;
+&terms;
+&tactics;
 
  <!-- ============= Application License ============================= -->
 
  <sect1 id="license">
   <title>License</title>
-  <para>
-   This program is free software; you can redistribute it and/or
-   modify it under the terms of the <citetitle>GNU General Public
-   License</citetitle> as published by the Free Software Foundation;
-   either version 2 of the License, or (at your option) any later
-   version.
-  </para>
-  <para>
-   This program is distributed in the hope that it will be useful, but
-   WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   <citetitle>GNU General Public License</citetitle> for more details.
-  </para>
-  <para>
-   A copy of the <citetitle>GNU General Public License</citetitle> is
-   included as an appendix to the <citetitle>GNOME Users
-   Guide</citetitle>.  You may also obtain a copy of the
-   <citetitle>GNU General Public License</citetitle> from the Free
-   Software Foundation by visiting <ulink type="http"
-   url="http://www.fsf.org">their Web site</ulink> or by writing to
-   <address>
-    Free Software Foundation, Inc.
-    <street>59 Temple Place</street> - Suite 330
-    <city>Boston</city>, <state>MA</state> <postcode>02111-1307</postcode>
-    <country>USA</country>
-   </address>
-  </para>
+  &license;
  </sect1>
 </article>
 
