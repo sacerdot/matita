@@ -1,6 +1,6 @@
 
 <!-- ============ Tactics ====================== -->
-<sect1 id="tactics">
+<sect1 id="sec_tactics">
  <title>Tactics</title>
 
   <sect2 id="tac_absurd">
@@ -187,3 +187,4 @@
   </sect2>
 
 </sect1>
+

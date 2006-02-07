@@ -149,7 +149,7 @@
 
  <!-- ============= Application License ============================= -->
 
- <sect1 id="license">
+ <sect1 id="sec_license">
   <title>License</title>
   &license;
  </sect1>
