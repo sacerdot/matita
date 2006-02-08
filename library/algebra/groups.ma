@@ -244,6 +244,7 @@ for @{ 'disjoint $a $b }.
 interpretation "Left cosets disjoint" 'disjoint C C' =
  (cic:/matita/algebra/groups/left_coset_disjoint.con _ C C').
 
+(*
 (* The following should be a one-shot alias! *)
 alias symbol "belongs_to" (instance 0) = "Belongs to subgroup".
 theorem foo:
@@ -267,6 +268,7 @@ exists;
 | 
 ].
 qed.
+*)
 
 (*theorem foo:
  \forall G:Group. \forall x1,x2:G. \forall H:subgroup G.
