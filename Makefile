@@ -219,7 +219,7 @@ dist_library@%:
 
 endif
 
-DEST = @RT_BASE_DIR@
+DESTDIR = $(RT_BASE_DIR)
 INSTALL_STUFF = 			\
 	icons/ 				\
 	matita.gtkrc 			\
@@ -227,21 +227,35 @@ INSTALL_STUFF = 			\
 	matita.ma.templ 		\
 	core_notation.moo 		\
 	matita.conf.xml 		\
+	matita.conf.xml.user 		\
 	closed.xml 			\
 	gtkmathview.matita.conf.xml 	\
 	template_makefile.in 		\
-	library/ 			\
-	$(PROGRAMS_BYTE)		\
+	AUTHORS 			\
+	LICENSE 			\
 	$(NULL)
 ifeq ($(HAVE_OCAMLOPT),yes)
 INSTALL_STUFF += $(PROGRAMS_OPT)
+else
+INSTALL_STUFF += $(PROGRAMS_BYTE)
 endif
 
 install:
-	install -d $(DEST)
-	cp -a .matita/
-	cp -a $(INSTALL_STUFF) $(DEST)
+	# install main dir and executables
+	install -d $(DESTDIR)
+	cp -a $(INSTALL_STUFF) $(DESTDIR)
+	# install the library and corresponding scripts
+	if [ -d $(DESTDIR)/library ]; then rm -rf $(DESTDIR)/library; fi
+	cp -a .matita/xml/matita/ $(DESTDIR)/library/
+	if [ -d $(DESTDIR)/ma ]; then rm -rf $(DESTDIR)/ma; fi
+	install -d $(DESTDIR)/ma
+ifeq ($(HAVE_OCAMLOPT),yes)
+	for p in $(PROGRAMS_BYTE); do ln -s $$p.opt $(DESTDIR)/$$p; done
+endif
+	cp -a library/ $(DESTDIR)/ma/stdlib/
+	cp -a contribs/ $(DESTDIR)/ma/contribs/
 uninstall:
+	rm -rf $(DESTDIR)
 
 STATIC_LINK = dist/static_link/static_link
 # for matita
