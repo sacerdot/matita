@@ -10,14 +10,14 @@
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
-            <para><command>P</command> must have type <command>Type</command>.</para>
+            <para><command>P</command> must have type <command>Prop</command>.</para>
           </listitem>
         </varlistentry>
       <variablelist>
         <varlistentry>
           <term>Action:</term>
           <listitem>
-            <para>it closes the current goal by eliminating an
+            <para>it closes the current sequent by eliminating an
              absurd term.</para>
           </listitem>
         </varlistentry>
@@ -49,15 +49,17 @@
         <varlistentry>
           <term>Action:</term>
           <listitem>
-            <para>it closes the current goal by applying <command>t</command>.</para>
+            <para>it closes the current sequent by applying <command>t</command> to <command>n</command> implicit arguments (that become new sequents).</para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>New sequents to prove:</term>
           <listitem>
-            <para>it opens a new goal for each premise 
+            <para>it opens a new sequent for each premise 
              <command>T<subscript>i</subscript></command> that is not
-             instantiated by unification.</para>
+             instantiated by unification. <command>T<subscript>i</subscript></command> is
+             the conclusion of the <command>i</command>-th new sequent to
+             prove.</para>
           </listitem>
         </varlistentry>
       </variablelist>
@@ -65,71 +67,433 @@
   </sect2>
   <sect2 id="tac_assumption">
     <title>assumption</title>
-    <para>The tactic <command>assumption</command> </para>
+    <para><userinput>assumption</userinput></para>
+    <para>
+      <variablelist>
+        <varlistentry>
+          <term>Pre-conditions:</term>
+          <listitem>
+            <para>there must exist an hypothesis whose type can be unified with
+             the conclusion of the current sequent.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Action:</term>
+          <listitem>
+            <para>it closes the current sequent exploiting an hypothesis.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>New sequents to prove:</term>
+          <listitem>
+            <para>none</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </para>
   </sect2>
   <sect2 id="tac_auto">
     <title>auto [depth=&lt;int&gt;] [width=&lt;int&gt;] [paramodulation] [full]</title>
-    <para>The tactic <command>auto</command> </para>
+    <para><userinput>auto depth=d width=w paramodulation full</userinput></para>
+    <para>
+      <variablelist>
+        <varlistentry>
+          <term>Pre-conditions:</term>
+          <listitem>
+            <para>none, but the tactic may fail finding a proof if every
+             proof is in the search space that is pruned away. Pruning is
+             controlled by <command>d</command> and <command>w</command>.
+             Moreover, only lemmas whose type signature is a subset of the
+             signature of the current sequent are considered. The signature of
+             a sequent is ...TODO</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Action:</term>
+          <listitem>
+            <para>it closes the current sequent by repeated application of
+             rewriting steps (unless <command>paramodulation</command> is
+             omitted), hypothesis and lemmas in the library.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>New sequents to prove:</term>
+          <listitem>
+            <para>none</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </para>
   </sect2>
   <sect2 id="tac_clear">
     <title>clear &lt;id&gt;</title>
-    <para>The tactic <command>clear</command> </para>
+    <para><userinput>clear H</userinput></para>
+    <para>
+      <variablelist>
+        <varlistentry>
+          <term>Pre-conditions:</term>
+          <listitem>
+            <para><command>H</command> must be an hypothesis of the
+             current sequent to prove.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Action:</term>
+          <listitem>
+            <para>it hides the hypothesis <command>H</command> from the
+             current sequent.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>New sequents to prove:</term>
+          <listitem>
+            <para>none</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </para>
   </sect2>
   <sect2 id="tac_clearbody">
     <title>clearbody &lt;id&gt;</title>
-    <para>The tactic <command>clearbody</command> </para>
+    <para><userinput>clearbody H</userinput></para>
+    <para>
+      <variablelist>
+        <varlistentry>
+          <term>Pre-conditions:</term>
+          <listitem>
+            <para><command>H</command> must be an hypothesis of the
+             current sequent to prove.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Action:</term>
+          <listitem>
+            <para>it hides the definiens of a definition in the current
+             sequent context. Thus the definition becomes an hypothesis.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>New sequents to prove:</term>
+          <listitem>
+            <para>none.</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </para>
   </sect2>
   <sect2 id="tac_change">
     <title>change &lt;pattern&gt; with &lt;term&gt;</title>
-    <para>The tactic <command>change</command> </para>
-  </sect2>
-  <sect2 id="tac_compare">
-    <title>compare &lt;term&gt;</title>
-    <para>The tactic <command>compare</command> </para>
+    <para><userinput>change patt with t</userinput></para>
+    <para>
+      <variablelist>
+        <varlistentry>
+          <term>Pre-conditions:</term>
+          <listitem>
+            <para>each subterm matched by the pattern must be convertible
+             with the term <command>t</command> disambiguated in the context
+             of the matched subterm.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Action:</term>
+          <listitem>
+            <para>it replaces the subterms of the current sequent matched by
+             <command>patt</command> with the new term <command>t</command>.
+             For each subterm matched by the pattern, <command>t</command> is
+             disambiguated in the context of the subterm.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>New sequents to prove:</term>
+          <listitem>
+            <para>none.</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </para>
   </sect2>
   <sect2 id="tac_constructor">
     <title>constructor &lt;int&gt;</title>
-    <para>The tactic <command>constructor</command> </para>
+    <para><userinput>constructor n</userinput></para>
+    <para>
+      <variablelist>
+        <varlistentry>
+          <term>Pre-conditions:</term>
+          <listitem>
+            <para>the conclusion of the current sequent must be
+             an inductive type or the application of an inductive type.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Action:</term>
+          <listitem>
+            <para>it applies the <command>n</command>-th constructor of the
+             inductive type of the conclusion of the current sequent.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>New sequents to prove:</term>
+          <listitem>
+            <para>it opens a new sequent for each premise of the constructor
+             that can not be inferred by unification. For more details,
+             see the <command>apply</command> tactic.</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </para>
   </sect2>
   <sect2 id="tac_contradiction">
     <title>contradiction</title>
-    <para>The tactic <command>contradiction</command> </para>
+    <para><userinput>contradiction</userinput></para>
+    <para>
+      <variablelist>
+        <varlistentry>
+          <term>Pre-conditions:</term>
+          <listitem>
+            <para>there must be in the current context an hypothesis of type
+             <command>False</command>.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Action:</term>
+          <listitem>
+            <para>it closes the current sequent by applying an hypothesis of
+             type <command>False</command>.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>New sequents to prove:</term>
+          <listitem>
+            <para>none</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </para>
   </sect2>
   <sect2 id="tac_cut">
     <title>cut &lt;term&gt; [as &lt;id&gt;]</title>
-    <para>The tactic <command>cut</command> </para>
-  </sect2>
-  <sect2 id="tac_decide_equality">
-    <title>decide</title>
-    <para>The tactic <command>decide equality</command> </para>
+    <para><userinput>cut P as H</userinput></para>
+    <para>
+      <variablelist>
+        <varlistentry>
+          <term>Pre-conditions:</term>
+          <listitem>
+            <para><command>P</command> must have type <command>Prop</command>.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Action:</term>
+          <listitem>
+            <para>it closes the current sequent.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>New sequents to prove:</term>
+          <listitem>
+            <para>it opens two new sequents. The first one has an extra
+             hypothesis <command>H:P</command>. If <command>H</command> is
+             omitted, the name of the hypothesis is automatically generated.
+             The second sequent has conclusion <command>P</command> and
+             hypotheses the hypotheses of the current sequent to prove.</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </para>
   </sect2>
   <sect2 id="tac_decompose">
     <title>decompose [&lt;ident list&gt;] &lt;ident&gt; [&lt;intros_spec&gt;]</title>
-    <para>The tactic <command>decompose</command> </para>
+    <para><userinput>decompose ???</userinput></para>
+    <para>
+      <variablelist>
+        <varlistentry>
+          <term>Pre-conditions:</term>
+          <listitem>
+            <para>TODO.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Action:</term>
+          <listitem>
+            <para>TODO.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>New sequents to prove:</term>
+          <listitem>
+            <para>TODO.</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </para>
   </sect2>
   <sect2 id="tac_discriminate">
     <title>discriminate &lt;term&gt;</title>
-    <para>The tactic <command>discriminate</command> </para>
+    <para><userinput>discriminate p</userinput></para>
+    <para>
+      <variablelist>
+        <varlistentry>
+          <term>Pre-conditions:</term>
+          <listitem>
+            <para><command>p</command> must have type <command>K<subscript>1</subscript> t<subscript>1</subscript> ... t<subscript>n</subscript> = K'<subscript>1</subscript> t'<subscript>1</subscript> ... t'<subscript>m</subscript></command> where <command>K</command> and <command>K'</command> must be different constructors of the same inductive type and each argument list can be empty if
+its constructor takes no arguments.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Action:</term>
+          <listitem>
+            <para>it closes the current sequent by proving the absurdity of
+             <command>p</command>.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>New sequents to prove:</term>
+          <listitem>
+            <para>none.</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </para>
   </sect2>
   <sect2 id="tac_elim">
     <title>elim &lt;term&gt; [using &lt;term&gt;] [&lt;intros_spec&gt;]</title>
-    <para>The tactic <command>elim</command> </para>
+    <para><userinput>elim t using th hyps</userinput></para>
+    <para>
+      <variablelist>
+        <varlistentry>
+          <term>Pre-conditions:</term>
+          <listitem>
+            <para><command>t</command> must inhabit an inductive type and
+             <command>th</command> must be an elimination principle for that
+             inductive type. If <command>th</command> is omitted the appropriate
+             standard elimination principle is chosen.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Action:</term>
+          <listitem>
+            <para>it proceeds by cases on the values of <command>t</command>,
+             according to the elimination principle <command>th</command>.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>New sequents to prove:</term>
+          <listitem>
+            <para>it opens one new sequent for each case. The names of
+             the new hypotheses are picked by <command>hyps</command>, if
+             provided.</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </para>
   </sect2>
   <sect2 id="tac_elimType">
     <title>elimType &lt;term&gt; [using &lt;term&gt;]</title>
-    <para>The tactic <command>elimType</command> </para>
+    <para><userinput>elimType T using th</userinput></para>
+    <para>
+      <variablelist>
+        <varlistentry>
+          <term>Pre-conditions:</term>
+          <listitem>
+            <para><command>T</command> must be an inductive type.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Action:</term>
+          <listitem>
+            <para>TODO (severely bugged now).</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>New sequents to prove:</term>
+          <listitem>
+            <para>TODO</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </para>
   </sect2>
   <sect2 id="tac_exact">
     <title>exact &lt;term&gt;</title>
-    <para>The tactic <command>exact</command> </para>
+    <para><userinput>exact p</userinput></para>
+    <para>
+      <variablelist>
+        <varlistentry>
+          <term>Pre-conditions:</term>
+          <listitem>
+            <para>the type of <command>p</command> must be convertible
+             with the conclusion of the current sequent.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Action:</term>
+          <listitem>
+            <para>it closes the current sequent using <command>p</command>.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>New sequents to prove:</term>
+          <listitem>
+            <para>none.</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </para>
   </sect2>
   <sect2 id="tac_exists">
     <title>exists</title>
-    <para>The tactic <command>exists</command> </para>
+    <para><userinput>exists</userinput></para>
+    <para>
+      <variablelist>
+        <varlistentry>
+          <term>Pre-conditions:</term>
+          <listitem>
+            <para>the conclusion of the current sequent must be
+             an inductive type or the application of an inductive type.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Action:</term>
+          <listitem>
+            <para>equivalent to <command>constructor 1</command>.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>New sequents to prove:</term>
+          <listitem>
+            <para>it opens a new sequent for each premise of the first
+             constructor of the inductive type that is the conclusion of the
+             current sequent. For more details, see the <command>constructor</command> tactic.</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </para>
   </sect2>
   <sect2 id="tac_fail">
     <title>fail</title>
-    <para>The tactic <command>fail</command> </para>
+    <para><userinput>fail</userinput></para>
+    <para>
+      <variablelist>
+        <varlistentry>
+          <term>Pre-conditions:</term>
+          <listitem>
+            <para>none.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Action:</term>
+          <listitem>
+            <para>this tactic always fail.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>New sequents to prove:</term>
+          <listitem>
+            <para>N.A.</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </para>
   </sect2>
   <sect2 id="tac_fold">
     <title>fold &lt;reduction_kind&gt; &lt;term&gt; &lt;pattern&gt;</title>
