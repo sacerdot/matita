@@ -35,12 +35,19 @@ let fname =
 #require "pxp-engine";;
 #require "pxp-lex-utf8";;
 
-let xhtml_header =
+open Printf
+
+let xhtml_header title =
+  sprintf
 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">
 <html xmlns=\"http://www.w3.org/1999/xhtml\">
+  <head>
+    <title>%s</title>
+  </head>
   <body>
 "
+  title
 
 let xhtml_trailer =
 "  </body>
@@ -87,6 +94,10 @@ let slice doc =
   let secs =
     Pxp_document.find_all ~deeply:false
       (match_elt "div" "class" ~attr_value:"sect1" ()) article in
+  let title =
+    Pxp_document.find ~deeply:true
+      (fun node -> node#node_type = Pxp_document.T_element "title") doc#root in
+  title#data,
   titlepage :: toc :: secs
 
 let localize_ids secs =
@@ -109,12 +120,20 @@ let localize_ids secs =
 
 let fname_of_sec sec_name = sec_name ^ ".html"
 
-let get_sec_name sec =
+let get_sec_id sec =
   let id =
     try
       Pxp_document.find ~deeply:true (match_elt "a" "id" ()) sec
     with Not_found -> failwith "can't find section id" in
   id#required_string_attribute "id"
+
+let get_sec_title sec =
+  let h2 =
+    Pxp_document.find ~deeply:true
+      (match_elt "h2" "class" ~attr_value:"title" ()) sec in
+  let text =
+    List.find (fun node -> node#node_type = Pxp_document.T_data) h2#sub_nodes in
+  text#data
 
 let iter_xrefs f node =
   let a_s = Pxp_document.find_all ~deeply:true (match_elt "a" "href" ()) node in
@@ -141,7 +160,7 @@ let patch_toc sec_ids id2sec toc =
     toc
 
 let patch_sec sec_ids id2sec sec =
-  let sec_name = get_sec_name sec in
+  let sec_name = get_sec_id sec in
   iter_xrefs
     (fun node xref ->
       try
@@ -153,21 +172,21 @@ let patch_sec sec_ids id2sec sec =
     sec
 
 let open_formatter fname =
-  Unix.open_process_out (Printf.sprintf "xmllint --format -o %s -" fname)
+  Unix.open_process_out (sprintf "xmllint --format -o %s -" fname)
 
 let close_formatter oc = ignore (Unix.close_process_out oc)
 
-let output_index (titlepage: 'a node) (toc: 'a node) fname =
+let output_index title (titlepage: 'a node) (toc: 'a node) fname =
   let oc = open_formatter fname in
-  output_string oc xhtml_header;
+  output_string oc (xhtml_header title);
   titlepage#write (`Out_channel oc) `Enc_utf8;
   toc#write (`Out_channel oc) `Enc_utf8;
   output_string oc xhtml_trailer;
   close_formatter oc
 
-let output_sec (sec: 'a node) fname =
+let output_sec title (sec: 'a node) fname =
   let oc = open_formatter fname in
-  output_string oc xhtml_header;
+  output_string oc (xhtml_header (sprintf "%s - %s" title (get_sec_title sec)));
   sec#write (`Out_channel oc) `Enc_utf8;
   output_string oc xhtml_trailer;
   close_formatter oc
@@ -175,12 +194,14 @@ let output_sec (sec: 'a node) fname =
 let main () =
   let doc = parse_xml fname in
   match slice doc with
-  | titlepage :: toc :: secs ->
+  | title, (titlepage :: toc :: secs) ->
       let sec_ids, id2sec = localize_ids secs in
       patch_toc sec_ids id2sec toc;
       List.iter (patch_sec sec_ids id2sec) secs;
-      output_index titlepage toc "index.html";
-      List.iter (fun sec -> output_sec sec (get_sec_name sec ^ ".html")) secs
+      output_index title titlepage toc "index.html";
+      List.iter
+        (fun sec -> output_sec title sec (get_sec_id sec ^ ".html"))
+        secs
   | _ -> failwith "Unrecognized document structure"
 
 let _ = main ()
