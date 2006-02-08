@@ -346,7 +346,7 @@
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
-            <para><command>p</command> must have type <command>K<subscript>1</subscript> t<subscript>1</subscript> ... t<subscript>n</subscript> = K'<subscript>1</subscript> t'<subscript>1</subscript> ... t'<subscript>m</subscript></command> where <command>K</command> and <command>K'</command> must be different constructors of the same inductive type and each argument list can be empty if
+            <para><command>p</command> must have type <command>K t<subscript>1</subscript> ... t<subscript>n</subscript> = K' t'<subscript>1</subscript> ... t'<subscript>m</subscript></command> where <command>K</command> and <command>K'</command> must be different constructors of the same inductive type and each argument list can be empty if
 its constructor takes no arguments.</para>
           </listitem>
         </varlistentry>
@@ -604,42 +604,258 @@ its constructor takes no arguments.</para>
   <sect1 id="tac_generalize">
     <title>generalize &lt;pattern&gt; [as &lt;id&gt;]</title>
     <titleabbrev>generalize</titleabbrev>
-    <para>The tactic <command>generalize</command> </para>
+    <para><userinput>generalize patt as H</userinput></para>
+    <para>
+      <variablelist>
+        <varlistentry>
+          <term>Pre-conditions:</term>
+          <listitem>
+            <para>all the terms matched by <command>patt</command> must be
+             convertible and close in the context of the current sequent.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Action:</term>
+          <listitem>
+            <para>it closes the current sequent by applying a stronger
+             lemma that is proved using the new generated sequent.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>New sequents to prove:</term>
+          <listitem>
+            <para>it opens a new sequent where the current sequent conclusion
+             <command>G</command> is generalized to
+             <command>∀x.G{x/t}</command> where <command>{x/t}</command>
+             is a notation for the replacement with <command>x</command> of all
+             the occurrences of the term <command>t</command> matched by
+             <command>patt</command>. If <command>patt</command> matches no
+             subterm then <command>t</command> is defined as the
+             <command>wanted</command> part of the pattern.</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </para>
   </sect1>
   <sect1 id="tac_id">
     <title>id</title>
     <titleabbrev>id</titleabbrev>
-    <para>The tactic <command>id</command> </para>
+    <para><userinput>absurd P</userinput></para>
+    <para>
+      <variablelist>
+        <varlistentry>
+          <term>Pre-conditions:</term>
+          <listitem>
+            <para>none.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Action:</term>
+          <listitem>
+            <para>this identity tactic does nothing without failing.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>New sequents to prove:</term>
+          <listitem>
+            <para>none.</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </para>
   </sect1>
   <sect1 id="tac_injection">
     <title>injection &lt;term&gt;</title>
     <titleabbrev>injection</titleabbrev>
-    <para>The tactic <command>injection</command> </para>
+    <para><userinput>injection p</userinput></para>
+    <para>
+      <variablelist>
+        <varlistentry>
+          <term>Pre-conditions:</term>
+          <listitem>
+            <para><command>p</command> must have type <command>K t<subscript>1</subscript> ... t<subscript>n</subscript> = K t'<subscript>1</subscript> ... t'<subscript>n</subscript></command> where both argument lists are empty if
+<command>K</command> takes no arguments.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Action:</term>
+          <listitem>
+            <para>it derives new hypotheses by injectivity of
+             <command>K</command>.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>New sequents to prove:</term>
+          <listitem>
+            <para>the new sequent to prove is equal to the current sequent
+             with the additional hypotheses
+             <command>t<subscript>1</subscript>=t'<subscript>1</subscript></command> ... <command>t<subscript>n</subscript>=t'<subscript>n</subscript></command>.</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </para>
   </sect1>
   <sect1 id="tac_intro">
     <title>intro [&lt;ident&gt;]</title>
     <titleabbrev>intro</titleabbrev>
-    <para>The tactic <command>intro</command> </para>
+    <para><userinput>intro H</userinput></para>
+    <para>
+      <variablelist>
+        <varlistentry>
+          <term>Pre-conditions:</term>
+          <listitem>
+            <para>the conclusion of the sequent to prove must be an implication
+             or a universal quantification.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Action:</term>
+          <listitem>
+            <para>it applies the right introduction rule for implication,
+             closing the current sequent.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>New sequents to prove:</term>
+          <listitem>
+            <para>it opens a new sequent to prove adding to the hypothesis
+             the antecedent of the implication and setting the conclusion
+             to the consequent of the implicaiton. The name of the new
+             hypothesis is <command>H</command> if provided; otherwise it
+             is automatically generated.</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </para>
   </sect1>
   <sect1 id="tac_intros">
     <title>intros &lt;intros_spec&gt;</title>
     <titleabbrev>intros</titleabbrev>
-    <para>The tactic <command>intros</command> </para>
+    <para><userinput>intros hyps</userinput></para>
+    <para>
+      <variablelist>
+        <varlistentry>
+          <term>Pre-conditions:</term>
+          <listitem>
+            <para>If <command>hyps</command> specifies a number of hypotheses
+             to introduce, then the conclusion of the current sequent must
+             be formed by at least that number of imbricated implications
+             or universal quantifications.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Action:</term>
+          <listitem>
+            <para>it applies several times the right introduction rule for
+             implication, closing the current sequent.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>New sequents to prove:</term>
+          <listitem>
+            <para>it opens a new sequent to prove adding a number of new
+             hypotheses equal to the number of new hypotheses requested.
+             If the user does not request a precise number of new hypotheses,
+             it adds as many hypotheses as possible.
+             The name of each new hypothesis is either popped from the
+             user provided list of names, or it is automatically generated when
+             the list is (or becomes) empty.</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </para>
   </sect1>
   <sect1 id="tac_inversion">
     <title>inversion &lt;term&gt;</title>
     <titleabbrev>inversion</titleabbrev>
-    <para>The tactic <command>inversion</command> </para>
+    <para><userinput>inversion t</userinput></para>
+    <para>
+      <variablelist>
+        <varlistentry>
+          <term>Pre-conditions:</term>
+          <listitem>
+            <para>the type of the term <command>t</command> must be an inductive
+             type or the application of an inductive type.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Action:</term>
+          <listitem>
+            <para>it proceeds by cases on <command>t</command> paying attention
+             to the constraints imposed by the actual &quot;right arguments&quot;
+             of the inductive type.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>New sequents to prove:</term>
+          <listitem>
+            <para>it opens one new sequent to prove for each case in the
+             definition of the type of <command>t</command>. With respect to
+             a simple elimination, each new sequent has additional hypotheses
+             that states the equalities of the &quot;right parameters&quot;
+             of the inductive type with terms originally present in the
+             sequent to prove.</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </para>
   </sect1>
   <sect1 id="tac_lapply">
     <title>lapply [depth=&lt;int&gt;] &lt;term&gt; [to &lt;term list] [using &lt;ident&gt;]</title>
     <titleabbrev>lapply</titleabbrev>
-    <para>The tactic <command>lapply</command> </para>
+    <para><userinput>lapply ???</userinput></para>
+    <para>
+      <variablelist>
+        <varlistentry>
+          <term>Pre-conditions:</term>
+          <listitem>
+            <para>TODO.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Action:</term>
+          <listitem>
+            <para>TODO.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>New sequents to prove:</term>
+          <listitem>
+            <para>TODO.</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </para>
   </sect1>
   <sect1 id="tac_left">
     <title>left</title>
     <titleabbrev>left</titleabbrev>
-    <para>The tactic <command>left</command> </para>
+    <para><userinput>left </userinput></para>
+    <para>
+      <variablelist>
+        <varlistentry>
+          <term>Pre-conditions:</term>
+          <listitem>
+            <para>the conclusion of the current sequent must be
+             an inductive type or the application of an inductive type.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Action:</term>
+          <listitem>
+            <para>equivalent to <command>constructor 1</command>.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>New sequents to prove:</term>
+          <listitem>
+            <para>it opens a new sequent for each premise of the first
+             constructor of the inductive type that is the conclusion of the
+             current sequent. For more details, see the <command>constructor</command> tactic.</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </para>
   </sect1>
   <sect1 id="tac_letin">
     <title>letin &lt;ident&gt; ≝ &lt;term&gt;</title>
@@ -679,7 +895,33 @@ its constructor takes no arguments.</para>
   <sect1 id="tac_right">
     <title>right</title>
     <titleabbrev>right</titleabbrev>
-    <para>The tactic <command>right</command> </para>
+    <para><userinput>right </userinput></para>
+    <para>
+      <variablelist>
+        <varlistentry>
+          <term>Pre-conditions:</term>
+          <listitem>
+            <para>the conclusion of the current sequent must be
+             an inductive type or the application of an inductive type with
+             at least two constructors.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Action:</term>
+          <listitem>
+            <para>equivalent to <command>constructor 2</command>.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>New sequents to prove:</term>
+          <listitem>
+            <para>it opens a new sequent for each premise of the second
+             constructor of the inductive type that is the conclusion of the
+             current sequent. For more details, see the <command>constructor</command> tactic.</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </para>
   </sect1>
   <sect1 id="tac_ring">
     <title>ring</title>
