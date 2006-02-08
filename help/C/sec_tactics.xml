@@ -1,19 +1,19 @@
 
 <!-- ============ Tactics ====================== -->
-<sect1 id="sec_tactics">
+<chapter id="sec_tactics">
  <title>Tactics</title>
 
-  <sect2 id="tac_absurd">
+  <sect1 id="tac_absurd">
     <title>absurd &lt;term&gt;</title>
     <para><userinput>absurd P</userinput></para>
-    <para>
+     <para>
+      <variablelist>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
             <para><command>P</command> must have type <command>Prop</command>.</para>
           </listitem>
         </varlistentry>
-      <variablelist>
         <varlistentry>
           <term>Action:</term>
           <listitem>
@@ -29,9 +29,9 @@
           </listitem>
         </varlistentry>
       </variablelist>
-    </para>
-  </sect2>
-  <sect2 id="tac_apply">
+     </para>
+  </sect1>
+  <sect1 id="tac_apply">
     <title>apply &lt;term&gt;</title>
     <para><userinput>apply t</userinput></para>
     <para>
@@ -64,8 +64,8 @@
         </varlistentry>
       </variablelist>
     </para>
-  </sect2>
-  <sect2 id="tac_assumption">
+  </sect1>
+  <sect1 id="tac_assumption">
     <title>assumption</title>
     <para><userinput>assumption</userinput></para>
     <para>
@@ -91,8 +91,8 @@
         </varlistentry>
       </variablelist>
     </para>
-  </sect2>
-  <sect2 id="tac_auto">
+  </sect1>
+  <sect1 id="tac_auto">
     <title>auto [depth=&lt;int&gt;] [width=&lt;int&gt;] [paramodulation] [full]</title>
     <para><userinput>auto depth=d width=w paramodulation full</userinput></para>
     <para>
@@ -124,8 +124,8 @@
         </varlistentry>
       </variablelist>
     </para>
-  </sect2>
-  <sect2 id="tac_clear">
+  </sect1>
+  <sect1 id="tac_clear">
     <title>clear &lt;id&gt;</title>
     <para><userinput>clear H</userinput></para>
     <para>
@@ -152,8 +152,8 @@
         </varlistentry>
       </variablelist>
     </para>
-  </sect2>
-  <sect2 id="tac_clearbody">
+  </sect1>
+  <sect1 id="tac_clearbody">
     <title>clearbody &lt;id&gt;</title>
     <para><userinput>clearbody H</userinput></para>
     <para>
@@ -180,8 +180,8 @@
         </varlistentry>
       </variablelist>
     </para>
-  </sect2>
-  <sect2 id="tac_change">
+  </sect1>
+  <sect1 id="tac_change">
     <title>change &lt;pattern&gt; with &lt;term&gt;</title>
     <para><userinput>change patt with t</userinput></para>
     <para>
@@ -211,8 +211,8 @@
         </varlistentry>
       </variablelist>
     </para>
-  </sect2>
-  <sect2 id="tac_constructor">
+  </sect1>
+  <sect1 id="tac_constructor">
     <title>constructor &lt;int&gt;</title>
     <para><userinput>constructor n</userinput></para>
     <para>
@@ -241,8 +241,8 @@
         </varlistentry>
       </variablelist>
     </para>
-  </sect2>
-  <sect2 id="tac_contradiction">
+  </sect1>
+  <sect1 id="tac_contradiction">
     <title>contradiction</title>
     <para><userinput>contradiction</userinput></para>
     <para>
@@ -269,8 +269,8 @@
         </varlistentry>
       </variablelist>
     </para>
-  </sect2>
-  <sect2 id="tac_cut">
+  </sect1>
+  <sect1 id="tac_cut">
     <title>cut &lt;term&gt; [as &lt;id&gt;]</title>
     <para><userinput>cut P as H</userinput></para>
     <para>
@@ -299,8 +299,8 @@
         </varlistentry>
       </variablelist>
     </para>
-  </sect2>
-  <sect2 id="tac_decompose">
+  </sect1>
+  <sect1 id="tac_decompose">
     <title>decompose [&lt;ident list&gt;] &lt;ident&gt; [&lt;intros_spec&gt;]</title>
     <para><userinput>decompose ???</userinput></para>
     <para>
@@ -325,8 +325,8 @@
         </varlistentry>
       </variablelist>
     </para>
-  </sect2>
-  <sect2 id="tac_discriminate">
+  </sect1>
+  <sect1 id="tac_discriminate">
     <title>discriminate &lt;term&gt;</title>
     <para><userinput>discriminate p</userinput></para>
     <para>
@@ -353,8 +353,8 @@ its constructor takes no arguments.</para>
         </varlistentry>
       </variablelist>
     </para>
-  </sect2>
-  <sect2 id="tac_elim">
+  </sect1>
+  <sect1 id="tac_elim">
     <title>elim &lt;term&gt; [using &lt;term&gt;] [&lt;intros_spec&gt;]</title>
     <para><userinput>elim t using th hyps</userinput></para>
     <para>
@@ -386,8 +386,8 @@ its constructor takes no arguments.</para>
         </varlistentry>
       </variablelist>
     </para>
-  </sect2>
-  <sect2 id="tac_elimType">
+  </sect1>
+  <sect1 id="tac_elimType">
     <title>elimType &lt;term&gt; [using &lt;term&gt;]</title>
     <para><userinput>elimType T using th</userinput></para>
     <para>
@@ -412,8 +412,8 @@ its constructor takes no arguments.</para>
         </varlistentry>
       </variablelist>
     </para>
-  </sect2>
-  <sect2 id="tac_exact">
+  </sect1>
+  <sect1 id="tac_exact">
     <title>exact &lt;term&gt;</title>
     <para><userinput>exact p</userinput></para>
     <para>
@@ -439,8 +439,8 @@ its constructor takes no arguments.</para>
         </varlistentry>
       </variablelist>
     </para>
-  </sect2>
-  <sect2 id="tac_exists">
+  </sect1>
+  <sect1 id="tac_exists">
     <title>exists</title>
     <para><userinput>exists</userinput></para>
     <para>
@@ -468,8 +468,8 @@ its constructor takes no arguments.</para>
         </varlistentry>
       </variablelist>
     </para>
-  </sect2>
-  <sect2 id="tac_fail">
+  </sect1>
+  <sect1 id="tac_fail">
     <title>fail</title>
     <para><userinput>fail</userinput></para>
     <para>
@@ -494,8 +494,8 @@ its constructor takes no arguments.</para>
         </varlistentry>
       </variablelist>
     </para>
-  </sect2>
-  <sect2 id="tac_fold">
+  </sect1>
+  <sect1 id="tac_fold">
     <title>fold &lt;reduction_kind&gt; &lt;term&gt; &lt;pattern&gt;</title>
     <para><userinput>fold red t patt</userinput></para>
     <para>
@@ -525,8 +525,8 @@ its constructor takes no arguments.</para>
         </varlistentry>
       </variablelist>
     </para>
-  </sect2>
-  <sect2 id="tac_fourier">
+  </sect1>
+  <sect1 id="tac_fourier">
     <title>fourier</title>
     <para><userinput>fourier</userinput></para>
     <para>
@@ -554,8 +554,8 @@ its constructor takes no arguments.</para>
         </varlistentry>
       </variablelist>
     </para>
-  </sect2>
-  <sect2 id="tac_fwd">
+  </sect1>
+  <sect1 id="tac_fwd">
     <title>fwd &lt;ident&gt; [&lt;ident list&gt;]</title>
     <para><userinput>fwd ...TODO</userinput></para>
     <para>
@@ -580,99 +580,99 @@ its constructor takes no arguments.</para>
         </varlistentry>
       </variablelist>
     </para>
-  </sect2>
-  <sect2 id="tac_generalize">
+  </sect1>
+  <sect1 id="tac_generalize">
     <title>generalize &lt;pattern&gt; [as &lt;id&gt;]</title>
     <para>The tactic <command>generalize</command> </para>
-  </sect2>
-  <sect2 id="tac_id">
+  </sect1>
+  <sect1 id="tac_id">
     <title>id</title>
     <para>The tactic <command>id</command> </para>
-  </sect2>
-  <sect2 id="tac_injection">
+  </sect1>
+  <sect1 id="tac_injection">
     <title>injection &lt;term&gt;</title>
     <para>The tactic <command>injection</command> </para>
-  </sect2>
-  <sect2 id="tac_intro">
+  </sect1>
+  <sect1 id="tac_intro">
     <title>intro [&lt;ident&gt;]</title>
     <para>The tactic <command>intro</command> </para>
-  </sect2>
-  <sect2 id="tac_intros">
+  </sect1>
+  <sect1 id="tac_intros">
     <title>intros &lt;intros_spec&gt;</title>
     <para>The tactic <command>intros</command> </para>
-  </sect2>
-  <sect2 id="tac_inversion">
+  </sect1>
+  <sect1 id="tac_inversion">
     <title>intros &lt;term&gt;</title>
     <para>The tactic <command>intros</command> </para>
-  </sect2>
-  <sect2 id="tac_lapply">
+  </sect1>
+  <sect1 id="tac_lapply">
     <title>lapply [depth=&lt;int&gt;] &lt;term&gt; [to &lt;term list] [using &lt;ident&gt;]</title>
     <para>The tactic <command>lapply</command> </para>
-  </sect2>
-  <sect2 id="tac_left">
+  </sect1>
+  <sect1 id="tac_left">
     <title>left</title>
     <para>The tactic <command>left</command> </para>
-  </sect2>
-  <sect2 id="tac_letin">
+  </sect1>
+  <sect1 id="tac_letin">
     <title>letin &lt;ident&gt; ≝ &lt;term&gt;</title>
     <para>The tactic <command>letin</command> </para>
-  </sect2>
-  <sect2 id="tac_normalize">
+  </sect1>
+  <sect1 id="tac_normalize">
     <title>normalize &lt;pattern&gt;</title>
     <para>The tactic <command>normalize</command> </para>
-  </sect2>
-  <sect2 id="tac_paramodulation">
+  </sect1>
+  <sect1 id="tac_paramodulation">
     <title>paramodulation &lt;pattern&gt;</title>
     <para>The tactic <command>paramodulation</command> </para>
-  </sect2>
-  <sect2 id="tac_reduce">
+  </sect1>
+  <sect1 id="tac_reduce">
     <title>reduce &lt;pattern&gt;</title>
     <para>The tactic <command>reduce</command> </para>
-  </sect2>
-  <sect2 id="tac_reflexivity">
+  </sect1>
+  <sect1 id="tac_reflexivity">
     <title>reflexivity</title>
     <para>The tactic <command>reflexivity</command> </para>
-  </sect2>
-  <sect2 id="tac_replace">
+  </sect1>
+  <sect1 id="tac_replace">
     <title>replace &lt;pattern&gt; with &lt;term&gt;</title>
     <para>The tactic <command>replace</command> </para>
-  </sect2>
-  <sect2 id="tac_rewrite">
+  </sect1>
+  <sect1 id="tac_rewrite">
     <title>rewrite {&lt;|&gt;} &lt;term&gt; &lt;pattern&gt;</title>
     <para>The tactic <command>rewrite</command> </para>
-  </sect2>
-  <sect2 id="tac_right">
+  </sect1>
+  <sect1 id="tac_right">
     <title>right</title>
     <para>The tactic <command>right</command> </para>
-  </sect2>
-  <sect2 id="tac_ring">
+  </sect1>
+  <sect1 id="tac_ring">
     <title>ring</title>
     <para>The tactic <command>ring</command> </para>
-  </sect2>
-  <sect2 id="tac_simplify">
+  </sect1>
+  <sect1 id="tac_simplify">
     <title>simplify &lt;pattern&gt;</title>
     <para>The tactic <command>simplify</command> </para>
-  </sect2>
-  <sect2 id="tac_split">
+  </sect1>
+  <sect1 id="tac_split">
     <title>split</title>
     <para>The tactic <command>split</command> </para>
-  </sect2>
-  <sect2 id="tac_symmetry">
+  </sect1>
+  <sect1 id="tac_symmetry">
     <title>symmetry</title>
     <para>The tactic <command>symmetry</command> </para>
-  </sect2>
-  <sect2 id="tac_transitivity">
+  </sect1>
+  <sect1 id="tac_transitivity">
     <title>transitivity &lt;term&gt;</title>
     <para>The tactic <command>transitivity</command> </para>
-  </sect2>
-  <sect2 id="tac_unfold">
+  </sect1>
+  <sect1 id="tac_unfold">
     <title>unfold [&lt;term&gt;] &lt;pattern&gt;</title>
     <para>The tactic <command>unfold</command> </para>
-  </sect2>
-  <sect2 id="tac_whd">
+  </sect1>
+  <sect1 id="tac_whd">
     <title>whd &lt;pattern&gt;</title>
     <para>The tactic <command>whd</command> </para>
-  </sect2>
+  </sect1>
 
-</sect1>
+</chapter>
 

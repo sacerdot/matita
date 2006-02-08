@@ -1,16 +1,16 @@
 
 <!-- ============= Installation ============================== -->
 
-<sect1 id="sec_install">
+<chapter id="sec_install">
   <title>Installation</title>
 
-  <sect2>
+  <sect1 id="inst_from_src">
     <title>Installing &appname; from sources</title>
 
     <para>Currently, the only intended way to install &appname; is starting
       from its source code.  </para>
 
-    <sect3>
+    <sect2 id="get_source_code">
       <title>Getting the source code</title>
 
       <para>You can get the &appname; source code in two ways:
@@ -38,9 +38,9 @@
 	</orderedlist>
       </para>
       
-    </sect3>
+    </sect2>
 
-    <sect3 id="build_requirements">
+    <sect2 id="build_requirements">
       <title>Requirements</title>
 
       <para>In order to build &appname; from sources you will need some
@@ -227,9 +227,9 @@
 
 	</variablelist> </para>
 
-    </sect3>
+    </sect2>
 
-    <sect3 id="build_instructions">
+    <sect2 id="build_instructions">
       <title>Instructions</title>
 
       <para> Once you get the source code the installations steps should be
@@ -294,8 +294,8 @@
 
       </para>
       
-    </sect3>
+    </sect2>
 
-  </sect2>
-</sect1>
+  </sect1>
+</chapter>
 

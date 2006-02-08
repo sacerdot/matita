@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
-    "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
 
   <!ENTITY license SYSTEM "legal.xml">
   <!ENTITY install SYSTEM "sec_install.xml">
@@ -17,12 +17,13 @@
   <!ENTITY TODO "<emphasis>TODO</emphasis>">
 ]>
 
-<!-- =============Document Header ============================= -->
-<article id="index" lang="en">
+<?yelp:chunk-depth 3?>
+
+<book id="matita_manual" lang="en">
 <!-- please do not change the id; for translations, change lang to -->
 <!-- appropriate code -->
-<articleinfo>
- <title>&app; V&appversion; Manual (rev. &manrevision;)</title>
+<title>&app; V&appversion; Manual (rev. &manrevision;)</title>
+<bookinfo>
 
  <copyright>
   <year>2006</year>
@@ -44,10 +45,6 @@
       <publishername> GNOME Documentation Project </publishername> 
     </publisher> 
 -->
-
-    <legalnotice>
-      &license;
-    </legalnotice>
 
     <authorgroup> 
       <author> 
@@ -108,7 +105,7 @@
 	</revdescription> 
       </revision>
   <revision>
-   <revnumber>0.0</revnumber>
+   <revnumber>&manrevision;</revnumber>
    <date>4 February 2006</date>
    <authorinitials>HELM</authorinitials>
    <revremark>
@@ -120,6 +117,11 @@
 
     <releaseinfo>This manual describes version &appversion; of &appname;.
     </releaseinfo>
+
+    <legalnotice>
+      &license;
+    </legalnotice>
+
     <!-- The following feedback information only applies to appliactions
     listed in bugzilla.gnome.org and bugzilla.ximian.com. For other
     applications, please provide your own feedback info or remove thsi
@@ -134,11 +136,7 @@
 <!-- Translators may also add here feedback address for translations -->
     </legalnotice>
 
-</articleinfo>
-
-  <indexterm zone="index"> 
-    <primary>Matita</primary> 
-  </indexterm>
+</bookinfo>
 
 <!-- ============= Document Body ============================= -->
 
@@ -149,11 +147,11 @@
 
  <!-- ============= Application License ============================= -->
 
- <sect1 id="sec_license">
+ <chapter id="sec_license">
   <title>License</title>
   &license;
- </sect1>
-</article>
+ </chapter>
+</book>
 
 <!-- CSC: valid element tags
 <sect1 id="intro"> <title>Introduction</title> ...
