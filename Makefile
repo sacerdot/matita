@@ -209,12 +209,12 @@ dist_library@%:
 	$(H)MATITA_RT_BASE_DIR=`pwd` \
 		MATITA_FLAGS="-system -conffile `pwd`/matita.conf.xml.build" \
 		./matitamake$(BEST_EXT) -conffile `pwd`/matita.conf.xml.build \
-			init dist_$* `pwd`/$*
+			init $* `pwd`/$*
 	@echo "MATITAMAKE -system build"
 	$(H)MATITA_RT_BASE_DIR=`pwd` \
 		MATITA_FLAGS="-system -conffile `pwd`/matita.conf.xml.build" \
 		./matitamake$(BEST_EXT) -conffile `pwd`/matita.conf.xml.build \
-			build dist_$*
+			build $*
 	touch $@
 
 endif
