@@ -67,7 +67,7 @@
   </sect1>
   <sect1 id="tac_assumption">
     <title>assumption</title>
-    <para><userinput>assumption</userinput></para>
+    <para><userinput>assumption </userinput></para>
     <para>
       <variablelist>
         <varlistentry>
@@ -244,7 +244,7 @@
   </sect1>
   <sect1 id="tac_contradiction">
     <title>contradiction</title>
-    <para><userinput>contradiction</userinput></para>
+    <para><userinput>contradiction </userinput></para>
     <para>
       <variablelist>
         <varlistentry>
@@ -442,7 +442,7 @@ its constructor takes no arguments.</para>
   </sect1>
   <sect1 id="tac_exists">
     <title>exists</title>
-    <para><userinput>exists</userinput></para>
+    <para><userinput>exists </userinput></para>
     <para>
       <variablelist>
         <varlistentry>
@@ -470,7 +470,7 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_fail">
-    <title>fail</title>
+    <title>fail </title>
     <para><userinput>fail</userinput></para>
     <para>
       <variablelist>
@@ -528,7 +528,7 @@ its constructor takes no arguments.</para>
   </sect1>
   <sect1 id="tac_fourier">
     <title>fourier</title>
-    <para><userinput>fourier</userinput></para>
+    <para><userinput>fourier </userinput></para>
     <para>
       <variablelist>
         <varlistentry>
