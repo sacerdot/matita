@@ -4,7 +4,7 @@
     <key name="home">$(HOME)</key>
   </section>
   <section name="matita">
-    <key name="basedir">@SRCROOT@/.matita</key>
+    <key name="basedir">@SRCROOT@/matita/.matita</key>
     <key name="owner">nobody</key>
   </section>
   <section name="db">
