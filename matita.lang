@@ -87,11 +87,9 @@
     <keyword>clear</keyword>
     <keyword>clearbody</keyword>
     <keyword>change</keyword>
-    <keyword>compare</keyword>
     <keyword>constructor</keyword>
     <keyword>contradiction</keyword>
     <keyword>cut</keyword>
-    <keyword>decide</keyword> <keyword>equality</keyword> <!-- CSC: ??? -->
     <keyword>decompose</keyword>
     <keyword>discriminate</keyword>
     <keyword>elim</keyword>
