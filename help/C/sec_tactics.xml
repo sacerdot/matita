@@ -497,15 +497,89 @@ its constructor takes no arguments.</para>
   </sect2>
   <sect2 id="tac_fold">
     <title>fold &lt;reduction_kind&gt; &lt;term&gt; &lt;pattern&gt;</title>
-    <para>The tactic <command>fold</command> </para>
+    <para><userinput>fold red t patt</userinput></para>
+    <para>
+      <variablelist>
+        <varlistentry>
+          <term>Pre-conditions:</term>
+          <listitem>
+            <para>the pattern must not specify the wanted term.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Action:</term>
+          <listitem>
+            <para>first of all it locates all the subterms matched by
+             <command>patt</command>. In the context of each matched subterm
+             it disambiguates the term <command>t</command> and reduces it
+             to its <command>red</command> normal form; then it replaces with
+             <command>t</command> every occurrence of the normal form in the
+             matched subterm.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>New sequents to prove:</term>
+          <listitem>
+            <para>none.</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </para>
   </sect2>
   <sect2 id="tac_fourier">
     <title>fourier</title>
-    <para>The tactic <command>fourier</command> </para>
+    <para><userinput>fourier</userinput></para>
+    <para>
+      <variablelist>
+        <varlistentry>
+          <term>Pre-conditions:</term>
+          <listitem>
+            <para>the conclusion of the current sequent must be a linear
+             inequation over real numbers taken from standard library of
+             Coq. Moreover the inequations in the hypotheses must imply the
+             inequation in the conclusion of the current sequent.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Action:</term>
+          <listitem>
+            <para>it closes the current sequent by applying the Fourier method.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>New sequents to prove:</term>
+          <listitem>
+            <para>none.</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </para>
   </sect2>
   <sect2 id="tac_fwd">
     <title>fwd &lt;ident&gt; [&lt;ident list&gt;]</title>
-    <para>The tactic <command>fwd</command> </para>
+    <para><userinput>fwd ...TODO</userinput></para>
+    <para>
+      <variablelist>
+        <varlistentry>
+          <term>Pre-conditions:</term>
+          <listitem>
+            <para>TODO.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Action:</term>
+          <listitem>
+            <para>TODO.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>New sequents to prove:</term>
+          <listitem>
+            <para>TODO.</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </para>
   </sect2>
   <sect2 id="tac_generalize">
     <title>generalize &lt;pattern&gt; [as &lt;id&gt;]</title>
