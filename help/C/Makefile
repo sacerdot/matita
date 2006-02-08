@@ -20,9 +20,9 @@ txt-stamp: html-stamp
 %.txt: %.html
 	w3m -dump $< > $@
 %.html: %.xml
-	xsltproc $(XHTML_XSL) $< > $@
+	xsltproc $(XHTML_XSL) $< | xmllint --format - > $@
 %.fo: %.xml
-	xsltproc $(FO_XSL) $< > $@
+	xsltproc $(FO_XSL) $< | xmllint --format - > $@
 %.pdf: %.fo
 	fop $< $@
 clean:
