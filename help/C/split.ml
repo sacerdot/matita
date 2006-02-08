@@ -80,57 +80,57 @@ let match_elt tag attr_name ?attr_value () node =
      | None -> List.mem attr_name node#attribute_names)
 
 let slice doc =
-  let article =
+  let document =
     try
       Pxp_document.find ~deeply:true
-        (match_elt "div" "class" ~attr_value:"article" ()) doc#root
-     with Not_found -> failwith "Can't find article <div>" in
+        (match_elt "div" "class" ~attr_value:"book" ()) doc#root
+     with Not_found -> failwith "Can't find book <div>" in
   let titlepage =
     Pxp_document.find ~deeply:false
-      (match_elt "div" "class" ~attr_value:"titlepage" ()) article in
+      (match_elt "div" "class" ~attr_value:"titlepage" ()) document in
   let toc =
     Pxp_document.find ~deeply:false
-      (match_elt "div" "class" ~attr_value:"toc" ()) article in
-  let secs =
+      (match_elt "div" "class" ~attr_value:"toc" ()) document in
+  let parts =
     Pxp_document.find_all ~deeply:false
-      (match_elt "div" "class" ~attr_value:"sect1" ()) article in
+      (match_elt "div" "class" ~attr_value:"chapter" ()) document in
   let title =
     Pxp_document.find ~deeply:true
       (fun node -> node#node_type = Pxp_document.T_element "title") doc#root in
   title#data,
-  titlepage :: toc :: secs
+  titlepage :: toc :: parts
 
-let localize_ids secs =
-  let id2sec = Hashtbl.create 1023 in
-  let sec_ids = ref [] in
+let localize_ids parts =
+  let id2part = Hashtbl.create 1023 in
+  let part_ids = ref [] in
   List.iter
-    (fun sec ->
-      match Pxp_document.find_all ~deeply:true (match_elt "a" "id" ()) sec with
-      | sec_id :: ids ->
-          let sec_id = sec_id#required_string_attribute "id" in
-          sec_ids := sec_id :: !sec_ids;
+    (fun part ->
+      match Pxp_document.find_all ~deeply:true (match_elt "a" "id" ()) part with
+      | part_id :: ids ->
+          let part_id = part_id#required_string_attribute "id" in
+          part_ids := part_id :: !part_ids;
           List.iter
             (fun id ->
               let id = id#required_string_attribute "id" in
-              Hashtbl.add id2sec id sec_id)
+              Hashtbl.add id2part id part_id)
             ids
-      | _ -> failwith "can't find section id")
-    secs;
-  !sec_ids, id2sec
+      | _ -> failwith "can't find part id")
+    parts;
+  !part_ids, id2part
 
-let fname_of_sec sec_name = sec_name ^ ".html"
+let fname_of_part part_name = part_name ^ ".html"
 
-let get_sec_id sec =
+let get_part_id part =
   let id =
     try
-      Pxp_document.find ~deeply:true (match_elt "a" "id" ()) sec
-    with Not_found -> failwith "can't find section id" in
+      Pxp_document.find ~deeply:true (match_elt "a" "id" ()) part
+    with Not_found -> failwith "can't find part id" in
   id#required_string_attribute "id"
 
-let get_sec_title sec =
+let get_part_title part =
   let h2 =
     Pxp_document.find ~deeply:true
-      (match_elt "h2" "class" ~attr_value:"title" ()) sec in
+      (match_elt "h2" "class" ~attr_value:"title" ()) part in
   let text =
     List.find (fun node -> node#node_type = Pxp_document.T_data) h2#sub_nodes in
   text#data
@@ -146,30 +146,30 @@ let iter_xrefs f node =
         f node xref)
     a_s
 
-let patch_toc sec_ids id2sec toc =
+let patch_toc part_ids id2part toc =
   iter_xrefs
     (fun node xref ->
-      if List.mem xref sec_ids then
-        node#set_attribute "href" (Pxp_types.Value (fname_of_sec xref))
+      if List.mem xref part_ids then
+        node#set_attribute "href" (Pxp_types.Value (fname_of_part xref))
       else
         try
-          let sec = Hashtbl.find id2sec xref in
+          let part = Hashtbl.find id2part xref in
           node#set_attribute "href"
-            (Pxp_types.Value (fname_of_sec sec ^ "#" ^ xref))
+            (Pxp_types.Value (fname_of_part part ^ "#" ^ xref))
         with Not_found -> ())
     toc
 
-let patch_sec sec_ids id2sec sec =
-  let sec_name = get_sec_id sec in
+let patch_part part_ids id2part part =
+  let part_name = get_part_id part in
   iter_xrefs
     (fun node xref ->
       try
-        let xref_sec = Hashtbl.find id2sec xref in
-        if xref_sec <> sec_name then
+        let xref_part = Hashtbl.find id2part xref in
+        if xref_part <> part_name then
           node#set_attribute "href"
-            (Pxp_types.Value (fname_of_sec xref_sec ^ "#" ^ xref))
+            (Pxp_types.Value (fname_of_part xref_part ^ "#" ^ xref))
       with Not_found -> ())
-    sec
+    part
 
 let open_formatter fname =
   Unix.open_process_out (sprintf "xmllint --format -o %s -" fname)
@@ -184,24 +184,25 @@ let output_index title (titlepage: 'a node) (toc: 'a node) fname =
   output_string oc xhtml_trailer;
   close_formatter oc
 
-let output_sec title (sec: 'a node) fname =
+let output_part title (part: 'a node) fname =
   let oc = open_formatter fname in
-  output_string oc (xhtml_header (sprintf "%s - %s" title (get_sec_title sec)));
-  sec#write (`Out_channel oc) `Enc_utf8;
+  output_string oc
+    (xhtml_header (sprintf "%s - %s" title (get_part_title part)));
+  part#write (`Out_channel oc) `Enc_utf8;
   output_string oc xhtml_trailer;
   close_formatter oc
 
 let main () =
   let doc = parse_xml fname in
   match slice doc with
-  | title, (titlepage :: toc :: secs) ->
-      let sec_ids, id2sec = localize_ids secs in
-      patch_toc sec_ids id2sec toc;
-      List.iter (patch_sec sec_ids id2sec) secs;
+  | title, (titlepage :: toc :: parts) ->
+      let part_ids, id2part = localize_ids parts in
+      patch_toc part_ids id2part toc;
+      List.iter (patch_part part_ids id2part) parts;
       output_index title titlepage toc "index.html";
       List.iter
-        (fun sec -> output_sec title sec (get_sec_id sec ^ ".html"))
-        secs
+        (fun part -> output_part title part (get_part_id part ^ ".html"))
+        parts
   | _ -> failwith "Unrecognized document structure"
 
 let _ = main ()
