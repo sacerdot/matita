@@ -18,14 +18,14 @@
         <varlistentry>
           <term>Action:</term>
           <listitem>
-            <para>it closes the current sequent by eliminating an
+            <para>It closes the current sequent by eliminating an
              absurd term.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>New sequents to prove:</term>
           <listitem>
-            <para>it opens two new sequents of conclusion <command>P</command>
+            <para>It opens two new sequents of conclusion <command>P</command>
              and <command>¬P</command>.</para>
           </listitem>
         </varlistentry>
@@ -51,13 +51,13 @@
         <varlistentry>
           <term>Action:</term>
           <listitem>
-            <para>it closes the current sequent by applying <command>t</command> to <command>n</command> implicit arguments (that become new sequents).</para>
+            <para>It closes the current sequent by applying <command>t</command> to <command>n</command> implicit arguments (that become new sequents).</para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>New sequents to prove:</term>
           <listitem>
-            <para>it opens a new sequent for each premise 
+            <para>It opens a new sequent for each premise 
              <command>T<subscript>i</subscript></command> that is not
              instantiated by unification. <command>T<subscript>i</subscript></command> is
              the conclusion of the <command>i</command>-th new sequent to
@@ -76,20 +76,20 @@
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
-            <para>there must exist an hypothesis whose type can be unified with
+            <para>There must exist an hypothesis whose type can be unified with
              the conclusion of the current sequent.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>Action:</term>
           <listitem>
-            <para>it closes the current sequent exploiting an hypothesis.</para>
+            <para>It closes the current sequent exploiting an hypothesis.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>New sequents to prove:</term>
           <listitem>
-            <para>none</para>
+            <para>None</para>
           </listitem>
         </varlistentry>
       </variablelist>
@@ -104,7 +104,7 @@
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
-            <para>none, but the tactic may fail finding a proof if every
+            <para>None, but the tactic may fail finding a proof if every
              proof is in the search space that is pruned away. Pruning is
              controlled by <command>d</command> and <command>w</command>.
              Moreover, only lemmas whose type signature is a subset of the
@@ -115,7 +115,7 @@
         <varlistentry>
           <term>Action:</term>
           <listitem>
-            <para>it closes the current sequent by repeated application of
+            <para>It closes the current sequent by repeated application of
              rewriting steps (unless <command>paramodulation</command> is
              omitted), hypothesis and lemmas in the library.</para>
           </listitem>
@@ -123,7 +123,7 @@
         <varlistentry>
           <term>New sequents to prove:</term>
           <listitem>
-            <para>none</para>
+            <para>None</para>
           </listitem>
         </varlistentry>
       </variablelist>
@@ -145,14 +145,14 @@
         <varlistentry>
           <term>Action:</term>
           <listitem>
-            <para>it hides the hypothesis <command>H</command> from the
+            <para>It hides the hypothesis <command>H</command> from the
              current sequent.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>New sequents to prove:</term>
           <listitem>
-            <para>none</para>
+            <para>None</para>
           </listitem>
         </varlistentry>
       </variablelist>
@@ -174,14 +174,14 @@
         <varlistentry>
           <term>Action:</term>
           <listitem>
-            <para>it hides the definiens of a definition in the current
+            <para>It hides the definiens of a definition in the current
              sequent context. Thus the definition becomes an hypothesis.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>New sequents to prove:</term>
           <listitem>
-            <para>none.</para>
+            <para>None.</para>
           </listitem>
         </varlistentry>
       </variablelist>
@@ -196,7 +196,7 @@
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
-            <para>each subterm matched by the pattern must be convertible
+            <para>Each subterm matched by the pattern must be convertible
              with the term <command>t</command> disambiguated in the context
              of the matched subterm.</para>
           </listitem>
@@ -204,7 +204,7 @@
         <varlistentry>
           <term>Action:</term>
           <listitem>
-            <para>it replaces the subterms of the current sequent matched by
+            <para>It replaces the subterms of the current sequent matched by
              <command>patt</command> with the new term <command>t</command>.
              For each subterm matched by the pattern, <command>t</command> is
              disambiguated in the context of the subterm.</para>
@@ -213,7 +213,7 @@
         <varlistentry>
           <term>New sequents to prove:</term>
           <listitem>
-            <para>none.</para>
+            <para>None.</para>
           </listitem>
         </varlistentry>
       </variablelist>
@@ -228,7 +228,7 @@
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
-            <para>the conclusion of the current sequent must be
+            <para>The conclusion of the current sequent must be
              an inductive type or the application of an inductive type with
              at least <command>n</command> constructors.</para>
           </listitem>
@@ -236,14 +236,14 @@
         <varlistentry>
           <term>Action:</term>
           <listitem>
-            <para>it applies the <command>n</command>-th constructor of the
+            <para>It applies the <command>n</command>-th constructor of the
              inductive type of the conclusion of the current sequent.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>New sequents to prove:</term>
           <listitem>
-            <para>it opens a new sequent for each premise of the constructor
+            <para>It opens a new sequent for each premise of the constructor
              that can not be inferred by unification. For more details,
              see the <command>apply</command> tactic.</para>
           </listitem>
@@ -260,21 +260,21 @@
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
-            <para>there must be in the current context an hypothesis of type
+            <para>There must be in the current context an hypothesis of type
              <command>False</command>.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>Action:</term>
           <listitem>
-            <para>it closes the current sequent by applying an hypothesis of
+            <para>It closes the current sequent by applying an hypothesis of
              type <command>False</command>.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>New sequents to prove:</term>
           <listitem>
-            <para>none</para>
+            <para>None</para>
           </listitem>
         </varlistentry>
       </variablelist>
@@ -295,13 +295,13 @@
         <varlistentry>
           <term>Action:</term>
           <listitem>
-            <para>it closes the current sequent.</para>
+            <para>It closes the current sequent.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>New sequents to prove:</term>
           <listitem>
-            <para>it opens two new sequents. The first one has an extra
+            <para>It opens two new sequents. The first one has an extra
              hypothesis <command>H:P</command>. If <command>H</command> is
              omitted, the name of the hypothesis is automatically generated.
              The second sequent has conclusion <command>P</command> and
@@ -354,14 +354,14 @@ its constructor takes no arguments.</para>
         <varlistentry>
           <term>Action:</term>
           <listitem>
-            <para>it closes the current sequent by proving the absurdity of
+            <para>It closes the current sequent by proving the absurdity of
              <command>p</command>.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>New sequents to prove:</term>
           <listitem>
-            <para>none.</para>
+            <para>None.</para>
           </listitem>
         </varlistentry>
       </variablelist>
@@ -385,7 +385,7 @@ its constructor takes no arguments.</para>
         <varlistentry>
           <term>Action:</term>
           <listitem>
-            <para>it proceeds by cases on the values of <command>t</command>,
+            <para>It proceeds by cases on the values of <command>t</command>,
              according to the elimination principle <command>th</command>.
             </para>
           </listitem>
@@ -393,7 +393,7 @@ its constructor takes no arguments.</para>
         <varlistentry>
           <term>New sequents to prove:</term>
           <listitem>
-            <para>it opens one new sequent for each case. The names of
+            <para>It opens one new sequent for each case. The names of
              the new hypotheses are picked by <command>hyps</command>, if
              provided. If hyps specifies also a number of hypotheses that
              is less than the number of new hypotheses for a new sequent,
@@ -440,20 +440,20 @@ its constructor takes no arguments.</para>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
-            <para>the type of <command>p</command> must be convertible
+            <para>The type of <command>p</command> must be convertible
              with the conclusion of the current sequent.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>Action:</term>
           <listitem>
-            <para>it closes the current sequent using <command>p</command>.</para>
+            <para>It closes the current sequent using <command>p</command>.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>New sequents to prove:</term>
           <listitem>
-            <para>none.</para>
+            <para>None.</para>
           </listitem>
         </varlistentry>
       </variablelist>
@@ -468,7 +468,7 @@ its constructor takes no arguments.</para>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
-            <para>the conclusion of the current sequent must be
+            <para>The conclusion of the current sequent must be
              an inductive type or the application of an inductive type
              with at least one constructor.</para>
           </listitem>
@@ -476,13 +476,13 @@ its constructor takes no arguments.</para>
         <varlistentry>
           <term>Action:</term>
           <listitem>
-            <para>equivalent to <command>constructor 1</command>.</para>
+            <para>Equivalent to <command>constructor 1</command>.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>New sequents to prove:</term>
           <listitem>
-            <para>it opens a new sequent for each premise of the first
+            <para>It opens a new sequent for each premise of the first
              constructor of the inductive type that is the conclusion of the
              current sequent. For more details, see the <command>constructor</command> tactic.</para>
           </listitem>
@@ -499,13 +499,13 @@ its constructor takes no arguments.</para>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
-            <para>none.</para>
+            <para>None.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>Action:</term>
           <listitem>
-            <para>this tactic always fail.</para>
+            <para>This tactic always fail.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
@@ -526,13 +526,13 @@ its constructor takes no arguments.</para>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
-            <para>the pattern must not specify the wanted term.</para>
+            <para>The pattern must not specify the wanted term.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>Action:</term>
           <listitem>
-            <para>first of all it locates all the subterms matched by
+            <para>First of all it locates all the subterms matched by
              <command>patt</command>. In the context of each matched subterm
              it disambiguates the term <command>t</command> and reduces it
              to its <command>red</command> normal form; then it replaces with
@@ -543,7 +543,7 @@ its constructor takes no arguments.</para>
         <varlistentry>
           <term>New sequents to prove:</term>
           <listitem>
-            <para>none.</para>
+            <para>None.</para>
           </listitem>
         </varlistentry>
       </variablelist>
@@ -558,7 +558,7 @@ its constructor takes no arguments.</para>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
-            <para>the conclusion of the current sequent must be a linear
+            <para>The conclusion of the current sequent must be a linear
              inequation over real numbers taken from standard library of
              Coq. Moreover the inequations in the hypotheses must imply the
              inequation in the conclusion of the current sequent.</para>
@@ -567,13 +567,13 @@ its constructor takes no arguments.</para>
         <varlistentry>
           <term>Action:</term>
           <listitem>
-            <para>it closes the current sequent by applying the Fourier method.</para>
+            <para>It closes the current sequent by applying the Fourier method.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>New sequents to prove:</term>
           <listitem>
-            <para>none.</para>
+            <para>None.</para>
           </listitem>
         </varlistentry>
       </variablelist>
@@ -615,21 +615,21 @@ its constructor takes no arguments.</para>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
-            <para>all the terms matched by <command>patt</command> must be
+            <para>All the terms matched by <command>patt</command> must be
              convertible and close in the context of the current sequent.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>Action:</term>
           <listitem>
-            <para>it closes the current sequent by applying a stronger
+            <para>It closes the current sequent by applying a stronger
              lemma that is proved using the new generated sequent.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>New sequents to prove:</term>
           <listitem>
-            <para>it opens a new sequent where the current sequent conclusion
+            <para>It opens a new sequent where the current sequent conclusion
              <command>G</command> is generalized to
              <command>∀x.G{x/t}</command> where <command>{x/t}</command>
              is a notation for the replacement with <command>x</command> of all
@@ -651,19 +651,19 @@ its constructor takes no arguments.</para>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
-            <para>none.</para>
+            <para>None.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>Action:</term>
           <listitem>
-            <para>this identity tactic does nothing without failing.</para>
+            <para>This identity tactic does nothing without failing.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>New sequents to prove:</term>
           <listitem>
-            <para>none.</para>
+            <para>None.</para>
           </listitem>
         </varlistentry>
       </variablelist>
@@ -685,14 +685,14 @@ its constructor takes no arguments.</para>
         <varlistentry>
           <term>Action:</term>
           <listitem>
-            <para>it derives new hypotheses by injectivity of
+            <para>It derives new hypotheses by injectivity of
              <command>K</command>.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>New sequents to prove:</term>
           <listitem>
-            <para>the new sequent to prove is equal to the current sequent
+            <para>The new sequent to prove is equal to the current sequent
              with the additional hypotheses
              <command>t<subscript>1</subscript>=t'<subscript>1</subscript></command> ... <command>t<subscript>n</subscript>=t'<subscript>n</subscript></command>.</para>
           </listitem>
@@ -709,21 +709,21 @@ its constructor takes no arguments.</para>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
-            <para>the conclusion of the sequent to prove must be an implication
+            <para>The conclusion of the sequent to prove must be an implication
              or a universal quantification.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>Action:</term>
           <listitem>
-            <para>it applies the right introduction rule for implication,
+            <para>It applies the right introduction rule for implication,
              closing the current sequent.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>New sequents to prove:</term>
           <listitem>
-            <para>it opens a new sequent to prove adding to the hypothesis
+            <para>It opens a new sequent to prove adding to the hypothesis
              the antecedent of the implication and setting the conclusion
              to the consequent of the implicaiton. The name of the new
              hypothesis is <command>H</command> if provided; otherwise it
@@ -751,14 +751,14 @@ its constructor takes no arguments.</para>
         <varlistentry>
           <term>Action:</term>
           <listitem>
-            <para>it applies several times the right introduction rule for
+            <para>It applies several times the right introduction rule for
              implication, closing the current sequent.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>New sequents to prove:</term>
           <listitem>
-            <para>it opens a new sequent to prove adding a number of new
+            <para>It opens a new sequent to prove adding a number of new
              hypotheses equal to the number of new hypotheses requested.
              If the user does not request a precise number of new hypotheses,
              it adds as many hypotheses as possible.
@@ -779,14 +779,14 @@ its constructor takes no arguments.</para>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
-            <para>the type of the term <command>t</command> must be an inductive
+            <para>The type of the term <command>t</command> must be an inductive
              type or the application of an inductive type.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>Action:</term>
           <listitem>
-            <para>it proceeds by cases on <command>t</command> paying attention
+            <para>It proceeds by cases on <command>t</command> paying attention
              to the constraints imposed by the actual &quot;right arguments&quot;
              of the inductive type.</para>
           </listitem>
@@ -794,7 +794,7 @@ its constructor takes no arguments.</para>
         <varlistentry>
           <term>New sequents to prove:</term>
           <listitem>
-            <para>it opens one new sequent to prove for each case in the
+            <para>It opens one new sequent to prove for each case in the
              definition of the type of <command>t</command>. With respect to
              a simple elimination, each new sequent has additional hypotheses
              that states the equalities of the &quot;right parameters&quot;
@@ -841,7 +841,7 @@ its constructor takes no arguments.</para>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
-            <para>the conclusion of the current sequent must be
+            <para>The conclusion of the current sequent must be
              an inductive type or the application of an inductive type
              with at least one constructor.</para>
           </listitem>
@@ -849,13 +849,13 @@ its constructor takes no arguments.</para>
         <varlistentry>
           <term>Action:</term>
           <listitem>
-            <para>equivalent to <command>constructor 1</command>.</para>
+            <para>Equivalent to <command>constructor 1</command>.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>New sequents to prove:</term>
           <listitem>
-            <para>it opens a new sequent for each premise of the first
+            <para>It opens a new sequent for each premise of the first
              constructor of the inductive type that is the conclusion of the
              current sequent. For more details, see the <command>constructor</command> tactic.</para>
           </listitem>
@@ -872,20 +872,20 @@ its constructor takes no arguments.</para>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
-            <para>none.</para>
+            <para>None.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>Action:</term>
           <listitem>
-            <para>it adds to the context of the current sequent to prove a new
+            <para>It adds to the context of the current sequent to prove a new
              definition <command>x ≝ t</command>.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>New sequents to prove:</term>
           <listitem>
-            <para>none.</para>
+            <para>None.</para>
           </listitem>
         </varlistentry>
       </variablelist>
@@ -900,20 +900,20 @@ its constructor takes no arguments.</para>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
-            <para>none.</para>
+            <para>None.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>Action:</term>
           <listitem>
-            <para>it replaces all the terms matched by <command>patt</command>
+            <para>It replaces all the terms matched by <command>patt</command>
              with their βδιζ-normal form.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>New sequents to prove:</term>
           <listitem>
-            <para>none.</para>
+            <para>None.</para>
           </listitem>
         </varlistentry>
       </variablelist>
@@ -955,20 +955,20 @@ its constructor takes no arguments.</para>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
-            <para>none.</para>
+            <para>None.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>Action:</term>
           <listitem>
-            <para>it replaces all the terms matched by <command>patt</command>
+            <para>It replaces all the terms matched by <command>patt</command>
              with their βδιζ-normal form.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>New sequents to prove:</term>
           <listitem>
-            <para>none.</para>
+            <para>None.</para>
           </listitem>
         </varlistentry>
       </variablelist>
@@ -983,21 +983,21 @@ its constructor takes no arguments.</para>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
-            <para>the conclusion of the current sequent must be
+            <para>The conclusion of the current sequent must be
              <command>t=t</command> for some term <command>t</command></para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>Action:</term>
           <listitem>
-            <para>it closes the current sequent by reflexivity
+            <para>It closes the current sequent by reflexivity
              of equality.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>New sequents to prove:</term>
           <listitem>
-            <para>none.</para>
+            <para>None.</para>
           </listitem>
         </varlistentry>
       </variablelist>
@@ -1012,13 +1012,13 @@ its constructor takes no arguments.</para>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
-            <para>none.</para>
+            <para>None.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>Action:</term>
           <listitem>
-            <para>it replaces the subterms of the current sequent matched by
+            <para>It replaces the subterms of the current sequent matched by
              <command>patt</command> with the new term <command>t</command>.
              For each subterm matched by the pattern, <command>t</command> is
              disambiguated in the context of the subterm.</para>
@@ -1027,7 +1027,7 @@ its constructor takes no arguments.</para>
         <varlistentry>
           <term>New sequents to prove:</term>
           <listitem>
-            <para>for each matched term <command>t'</command> it opens
+            <para>For each matched term <command>t'</command> it opens
              a new sequent to prove whose conclusion is
              <command>t'=t</command>.</para>
           </listitem>
@@ -1051,7 +1051,7 @@ its constructor takes no arguments.</para>
         <varlistentry>
           <term>Action:</term>
           <listitem>
-            <para>it looks in every term matched by <command>patt</command>
+            <para>It looks in every term matched by <command>patt</command>
              for all the occurrences of the
              left hand side of the equality that <command>p</command> proves
              (resp. the right hand side if <command>dir</command> is
@@ -1062,7 +1062,7 @@ its constructor takes no arguments.</para>
         <varlistentry>
           <term>New sequents to prove:</term>
           <listitem>
-            <para>it opens one new sequent for each hypothesis of the
+            <para>It opens one new sequent for each hypothesis of the
              equality proved by <command>p</command> that is not closed
              by unification.</para>
           </listitem>
@@ -1079,7 +1079,7 @@ its constructor takes no arguments.</para>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
-            <para>the conclusion of the current sequent must be
+            <para>The conclusion of the current sequent must be
              an inductive type or the application of an inductive type with
              at least two constructors.</para>
           </listitem>
@@ -1087,13 +1087,13 @@ its constructor takes no arguments.</para>
         <varlistentry>
           <term>Action:</term>
           <listitem>
-            <para>equivalent to <command>constructor 2</command>.</para>
+            <para>Equivalent to <command>constructor 2</command>.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>New sequents to prove:</term>
           <listitem>
-            <para>it opens a new sequent for each premise of the second
+            <para>It opens a new sequent for each premise of the second
              constructor of the inductive type that is the conclusion of the
              current sequent. For more details, see the <command>constructor</command> tactic.</para>
           </listitem>
@@ -1110,7 +1110,7 @@ its constructor takes no arguments.</para>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
-            <para>the conclusion of the current sequent must be an
+            <para>The conclusion of the current sequent must be an
              equality over Coq's real numbers that can be proved using
              the ring properties of the real numbers only.</para>
           </listitem>
@@ -1118,7 +1118,7 @@ its constructor takes no arguments.</para>
         <varlistentry>
           <term>Action:</term>
           <listitem>
-            <para>it closes the current sequent veryfying the equality by
+            <para>It closes the current sequent veryfying the equality by
              means of computation (i.e. this is a reflexive tactic, implemented
              exploiting the &quot;two level reasoning&quot; technique).</para>
           </listitem>
@@ -1126,7 +1126,7 @@ its constructor takes no arguments.</para>
         <varlistentry>
           <term>New sequents to prove:</term>
           <listitem>
-            <para>none.</para>
+            <para>None.</para>
           </listitem>
         </varlistentry>
       </variablelist>
@@ -1141,20 +1141,20 @@ its constructor takes no arguments.</para>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
-            <para>none.</para>
+            <para>None.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>Action:</term>
           <listitem>
-            <para>it replaces all the terms matched by <command>patt</command>
+            <para>It replaces all the terms matched by <command>patt</command>
              with other convertible terms that are supposed to be simpler.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>New sequents to prove:</term>
           <listitem>
-            <para>none.</para>
+            <para>None.</para>
           </listitem>
         </varlistentry>
       </variablelist>
@@ -1169,7 +1169,7 @@ its constructor takes no arguments.</para>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
-            <para>the conclusion of the current sequent must be
+            <para>The conclusion of the current sequent must be
              an inductive type or the application of an inductive type with
              at least one constructor.</para>
           </listitem>
@@ -1177,13 +1177,13 @@ its constructor takes no arguments.</para>
         <varlistentry>
           <term>Action:</term>
           <listitem>
-            <para>equivalent to <command>constructor 1</command>.</para>
+            <para>Equivalent to <command>constructor 1</command>.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>New sequents to prove:</term>
           <listitem>
-            <para>it opens a new sequent for each premise of the first
+            <para>It opens a new sequent for each premise of the first
              constructor of the inductive type that is the conclusion of the
              current sequent. For more details, see the <command>constructor</command> tactic.</para>
           </listitem>
@@ -1201,20 +1201,20 @@ its constructor takes no arguments.</para>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
-            <para>the conclusion of the current proof must be an equality.</para>
+            <para>The conclusion of the current proof must be an equality.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>Action:</term>
           <listitem>
-            <para>it swaps the two sides of the equalityusing the symmetric
+            <para>It swaps the two sides of the equalityusing the symmetric
              property.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>New sequents to prove:</term>
           <listitem>
-            <para>none.</para>
+            <para>None.</para>
           </listitem>
         </varlistentry>
       </variablelist>
@@ -1229,19 +1229,19 @@ its constructor takes no arguments.</para>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
-            <para>the conclusion of the current proof must be an equality.</para>
+            <para>The conclusion of the current proof must be an equality.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>Action:</term>
           <listitem>
-            <para>it closes the current sequent by transitivity of the equality.</para>
+            <para>It closes the current sequent by transitivity of the equality.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>New sequents to prove:</term>
           <listitem>
-            <para>it opens two new sequents <command>l=t</command> and
+            <para>It opens two new sequents <command>l=t</command> and
              <command>t=r</command> where <command>l</command> and <command>r</command> are the left and right hand side of the equality in the conclusion of
 the current sequent to prove.</para>
           </listitem>
@@ -1258,13 +1258,13 @@ the current sequent to prove.</para>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
-            <para>none.</para>
+            <para>None.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>Action:</term>
           <listitem>
-            <para>it finds all the occurrences of <command>t</command>
+            <para>It finds all the occurrences of <command>t</command>
              (possibly applied to arguments) in the subterms matched by
              <command>patt</command>. Then it δ-expands each occurrence,
              also performing β-reduction of the obtained term. If
@@ -1275,7 +1275,7 @@ the current sequent to prove.</para>
         <varlistentry>
           <term>New sequents to prove:</term>
           <listitem>
-            <para>none.</para>
+            <para>None.</para>
           </listitem>
         </varlistentry>
       </variablelist>
@@ -1290,20 +1290,20 @@ the current sequent to prove.</para>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
-            <para>none.</para>
+            <para>None.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>Action:</term>
           <listitem>
-            <para>it replaces all the terms matched by <command>patt</command>
+            <para>It replaces all the terms matched by <command>patt</command>
              with their βδιζ-weak-head normal form.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>New sequents to prove:</term>
           <listitem>
-            <para>none.</para>
+            <para>None.</para>
           </listitem>
         </varlistentry>
       </variablelist>
