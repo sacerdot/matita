@@ -229,7 +229,8 @@
           <term>Pre-conditions:</term>
           <listitem>
             <para>the conclusion of the current sequent must be
-             an inductive type or the application of an inductive type.</para>
+             an inductive type or the application of an inductive type with
+             at least <command>n</command> constructors.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
@@ -465,7 +466,8 @@ its constructor takes no arguments.</para>
           <term>Pre-conditions:</term>
           <listitem>
             <para>the conclusion of the current sequent must be
-             an inductive type or the application of an inductive type.</para>
+             an inductive type or the application of an inductive type
+             with at least one constructor.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
@@ -837,7 +839,8 @@ its constructor takes no arguments.</para>
           <term>Pre-conditions:</term>
           <listitem>
             <para>the conclusion of the current sequent must be
-             an inductive type or the application of an inductive type.</para>
+             an inductive type or the application of an inductive type
+             with at least one constructor.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
@@ -971,17 +974,98 @@ its constructor takes no arguments.</para>
   <sect1 id="tac_reflexivity">
     <title>reflexivity</title>
     <titleabbrev>reflexivity</titleabbrev>
-    <para>The tactic <command>reflexivity</command> </para>
+    <para><userinput>reflexivity </userinput></para>
+    <para>
+      <variablelist>
+        <varlistentry>
+          <term>Pre-conditions:</term>
+          <listitem>
+            <para>the conclusion of the current sequent must be
+             <command>t=t</command> for some term <command>t</command></para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Action:</term>
+          <listitem>
+            <para>it closes the current sequent by reflexivity
+             of equality.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>New sequents to prove:</term>
+          <listitem>
+            <para>none.</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </para>
   </sect1>
   <sect1 id="tac_replace">
     <title>replace &lt;pattern&gt; with &lt;term&gt;</title>
-    <titleabbrev>replace</titleabbrev>
-    <para>The tactic <command>replace</command> </para>
+    <titleabbrev>change</titleabbrev>
+    <para><userinput>change patt with t</userinput></para>
+    <para>
+      <variablelist>
+        <varlistentry>
+          <term>Pre-conditions:</term>
+          <listitem>
+            <para>none.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Action:</term>
+          <listitem>
+            <para>it replaces the subterms of the current sequent matched by
+             <command>patt</command> with the new term <command>t</command>.
+             For each subterm matched by the pattern, <command>t</command> is
+             disambiguated in the context of the subterm.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>New sequents to prove:</term>
+          <listitem>
+            <para>for each matched term <command>t'</command> it opens
+             a new sequent to prove whose conclusion is
+             <command>t'=t</command>.</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </para>
   </sect1>
   <sect1 id="tac_rewrite">
     <title>rewrite {&lt;|&gt;} &lt;term&gt; &lt;pattern&gt;</title>
     <titleabbrev>rewrite</titleabbrev>
-    <para>The tactic <command>rewrite</command> </para>
+    <para><userinput>rewrite dir p patt</userinput></para>
+    <para>
+      <variablelist>
+        <varlistentry>
+          <term>Pre-conditions:</term>
+          <listitem>
+            <para><command>p</command> must be the proof of an equality,
+             possibly under some hypotheses.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Action:</term>
+          <listitem>
+            <para>it looks in every term matched by <command>patt</command>
+             for all the occurrences of the
+             left hand side of the equality that <command>p</command> proves
+             (resp. the right hand side if <command>dir</command> is
+             <command>&lt;</command>). Every occurence found is replaced with
+             the opposite side of the equality.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>New sequents to prove:</term>
+          <listitem>
+            <para>it opens one new sequent for each hypothesis of the
+             equality proved by <command>p</command> that is not closed
+             by unification.</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </para>
   </sect1>
   <sect1 id="tac_right">
     <title>right</title>
@@ -1017,7 +1101,33 @@ its constructor takes no arguments.</para>
   <sect1 id="tac_ring">
     <title>ring</title>
     <titleabbrev>ring</titleabbrev>
-    <para>The tactic <command>ring</command> </para>
+    <para><userinput>ring </userinput></para>
+    <para>
+      <variablelist>
+        <varlistentry>
+          <term>Pre-conditions:</term>
+          <listitem>
+            <para>the conclusion of the current sequent must be an
+             equality over Coq's real numbers that can be proved using
+             the ring properties of the real numbers only.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Action:</term>
+          <listitem>
+            <para>it closes the current sequent veryfying the equality by
+             means of computation (i.e. this is a reflexive tactic, implemented
+             exploiting the &quot;two level reasoning&quot; technique).</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>New sequents to prove:</term>
+          <listitem>
+            <para>none.</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </para>
   </sect1>
   <sect1 id="tac_simplify">
     <title>simplify &lt;pattern&gt;</title>
@@ -1050,22 +1160,123 @@ its constructor takes no arguments.</para>
   <sect1 id="tac_split">
     <title>split</title>
     <titleabbrev>split</titleabbrev>
-    <para>The tactic <command>split</command> </para>
+    <para><userinput>split </userinput></para>
+    <para>
+      <variablelist>
+        <varlistentry>
+          <term>Pre-conditions:</term>
+          <listitem>
+            <para>the conclusion of the current sequent must be
+             an inductive type or the application of an inductive type with
+             at least one constructor.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Action:</term>
+          <listitem>
+            <para>equivalent to <command>constructor 1</command>.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>New sequents to prove:</term>
+          <listitem>
+            <para>it opens a new sequent for each premise of the first
+             constructor of the inductive type that is the conclusion of the
+             current sequent. For more details, see the <command>constructor</command> tactic.</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </para>
   </sect1>
   <sect1 id="tac_symmetry">
     <title>symmetry</title>
     <titleabbrev>symmetry</titleabbrev>
     <para>The tactic <command>symmetry</command> </para>
+    <para><userinput>symmetry </userinput></para>
+    <para>
+      <variablelist>
+        <varlistentry>
+          <term>Pre-conditions:</term>
+          <listitem>
+            <para>the conclusion of the current proof must be an equality.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Action:</term>
+          <listitem>
+            <para>it swaps the two sides of the equalityusing the symmetric
+             property.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>New sequents to prove:</term>
+          <listitem>
+            <para>none.</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </para>
   </sect1>
   <sect1 id="tac_transitivity">
     <title>transitivity &lt;term&gt;</title>
     <titleabbrev>transitivity</titleabbrev>
-    <para>The tactic <command>transitivity</command> </para>
+    <para><userinput>transitivity t</userinput></para>
+    <para>
+      <variablelist>
+        <varlistentry>
+          <term>Pre-conditions:</term>
+          <listitem>
+            <para>the conclusion of the current proof must be an equality.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Action:</term>
+          <listitem>
+            <para>it closes the current sequent by transitivity of the equality.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>New sequents to prove:</term>
+          <listitem>
+            <para>it opens two new sequents <command>l=t</command> and
+             <command>t=r</command> where <command>l</command> and <command>r</command> are the left and right hand side of the equality in the conclusion of
+the current sequent to prove.</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </para>
   </sect1>
   <sect1 id="tac_unfold">
     <title>unfold [&lt;term&gt;] &lt;pattern&gt;</title>
     <titleabbrev>unfold</titleabbrev>
-    <para>The tactic <command>unfold</command> </para>
+    <para><userinput>unfold t patt</userinput></para>
+    <para>
+      <variablelist>
+        <varlistentry>
+          <term>Pre-conditions:</term>
+          <listitem>
+            <para>none.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Action:</term>
+          <listitem>
+            <para>it finds all the occurrences of <command>t</command>
+             (possibly applied to arguments) in the subterms matched by
+             <command>patt</command>. Then it δ-expands each occurrence,
+             also performing β-reduction of the obtained term. If
+             <command>t</command> is omitted it defaults to each
+             subterm matched by <command>patt</command>.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>New sequents to prove:</term>
+          <listitem>
+            <para>none.</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </para>
   </sect1>
   <sect1 id="tac_whd">
     <title>whd &lt;pattern&gt;</title>
