@@ -642,7 +642,7 @@ its constructor takes no arguments.</para>
   <sect1 id="tac_id">
     <title>id</title>
     <titleabbrev>id</titleabbrev>
-    <para><userinput>absurd P</userinput></para>
+    <para><userinput>id </userinput></para>
     <para>
       <variablelist>
         <varlistentry>
