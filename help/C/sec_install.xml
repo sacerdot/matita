@@ -5,7 +5,7 @@
   <title>Installation</title>
 
   <sect1 id="inst_from_src">
-    <title>Installing &appname; from sources</title>
+    <title>Installing from sources</title>
 
     <para>Currently, the only intended way to install &appname; is starting
       from its source code.  </para>
@@ -171,10 +171,7 @@
 	  </varlistentry>
 
 	  <varlistentry>
-	    <term>
-	      <application> <ulink type="http"
-		  url="http://www.mysql.com">MySQL</ulink> </application>
-	    </term>
+	    <term> &MYSQL; </term>
 	    <term>
 	      <application> <ulink type="http"
 		  url="http://raevnos.pennmush.org/code/ocaml-mysql/">OCaml
@@ -229,31 +226,102 @@
 
     </sect2>
 
+    <sect2 id="database_setup">
+      <title>Database setup</title>
+
+      <para> To fully exploit &appname; indexing and search capabilities you
+	will need a working &MYSQL; database. Detalied instructions on how to do
+	it can be found in the <ulink type="http"
+	  url="http://dev.mysql.com/doc/">MySQL documentation</ulink>. Here you
+	can find a quick howto. </para>
+
+      <para> In order to create a database you need administrator permissions on
+	your MySQL installation, usually the root account has them. Once you
+	have the permissions, a new database can be created executing
+	<userinput>mysqladmin create matita</userinput>
+	(<emphasis>matita</emphasis> is the default database name, you can
+	change it using the <parameter>db.user</parameter> key of the
+	configuration file). </para>
+
+      <para> Then you need to grant the necessary access permissions to the
+	database user of &appname;, typing <userinput>echo "grant all privileges
+	  on matita.* to helm;" | mysql matita</userinput> should do the trick
+	(<emphasis>helm</emphasis> is the default user name used by &appname; to
+	access the database, you can change it using the
+	<parameter>db.user</parameter> key of the configuration file).
+      </para>
+
+      <note>
+	<para> This way you create a database named <emphasis>matita</emphasis>
+	  on which anyone claiming to be the <emphasis>helm</emphasis> user can
+	  do everything (like adding dummy data or destroying the contained
+	  one). It is strongly suggested to apply more fine grained permissions,
+	  how to do it is out of the scope of this manual.</para>
+      </note>
+      
+    </sect2>
+
     <sect2 id="build_instructions">
-      <title>Instructions</title>
+      <title>Compiling and installing</title>
 
       <para> Once you get the source code the installations steps should be
 	quite familiar.</para>
 
       <para> First of all you need to configure the build process executing
 	<userinput>./configure</userinput>. This will check that all needed
-	tools and library are installed. You may need to pass on the command
-	line some of the parameters riported below:
+	tools and library are installed and prepare the sources for compilation
+	and installation. </para>
+	
+      <para> Quite a few (optional) arguments may be passed to the
+	<application>configure</application> command line to change build time
+	parameters. They are listed in the table below, together with their
+	default values.
 
-	<variablelist>
-	  <title><application>configure</application> parameters</title>
-
-	  <varlistentry>
-	    <term>&TODO;</term>
-	    <listitem><para>&TODO;</para></listitem>
-	  </varlistentry>
-
-	</variablelist>
+	<table frame="all">
+	  <title> <application>configure</application> command line
+	    arguments</title>
+	  <tgroup cols="3" align="left" colsep="1" rowsep="1">
+	    <thead>
+	      <row>
+		<entry align="center">Argument</entry>
+		<entry align="center">Default</entry>
+		<entry align="center">Description</entry>
+	      </row>
+	    </thead>
+	    <tbody>
+	      <row>
+		<entry>
+		  <userinput>--with-runtime-dir=<replaceable>dir</replaceable></userinput>
+		</entry>
+		<entry> <filename>/usr/local/matita/</filename> </entry>
+		<entry> <para> Runtime base directory where all &appname; stuff
+		    (executables, configuration files, standard
+		    library,&nbsp;...) will be installed </para> </entry>
+	      </row>
+	      <row>
+		<entry>
+		  <userinput>--with-dbhost=<replaceable>host</replaceable></userinput>
+		</entry>
+		<entry> localhost </entry>
+		<entry> <para>Default SQL server hostname. Will be used while
+		    building the standard library during the installation and to
+		    create the default &appname; configuration. May be changed
+		    later in configuration file.</para></entry>
+	      </row>
+	      <row>
+		<entry> <userinput>--enable-debug</userinput></entry>
+		<entry> disabled </entry>
+		<entry> <para> Enable debugging code. Not for the casual user.
+		  </para> </entry>
+	      </row>
+	    </tbody>
+	  </tgroup>
+	</table>
 
       </para>
 
-      <para> Then you will manage the build process using <application><ulink
-	    type="http"
+      <para> Then you will manage the build and install process using
+	<application><ulink type="http"
 	    url="http://www.gnu.org/software/make/">make</ulink></application>
 	as usual. Below are reported the targets you have to invoke in sequence
 	to build and install.
@@ -277,7 +345,8 @@
 		compiler to build the &appname; standard library. </para>
 	      <para>For this step you will need a working SQL database (for
 		indexing the standard library while you are compiling it). See
-		&TODO; for instructions on how to set it up.</para>
+		<ulink type="http" url="#database_setup">Database setup</ulink>
+		for instructions on how to set it up.</para>
 	    </listitem>
 	  </varlistentry>
 
