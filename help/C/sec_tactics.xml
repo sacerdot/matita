@@ -395,7 +395,10 @@ its constructor takes no arguments.</para>
           <listitem>
             <para>it opens one new sequent for each case. The names of
              the new hypotheses are picked by <command>hyps</command>, if
-             provided.</para>
+             provided. If hyps specifies also a number of hypotheses that
+             is less than the number of new hypotheses for a new sequent,
+             then the exceeding hypothesis will be kept as implications in
+             the conclusion of the sequent.</para>
           </listitem>
         </varlistentry>
       </variablelist>
