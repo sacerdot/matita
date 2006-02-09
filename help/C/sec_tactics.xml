@@ -402,9 +402,9 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_elimType">
-    <title>elimType &lt;term&gt; [using &lt;term&gt;]</title>
+    <title>elimType &lt;term&gt; [using &lt;term&gt;] [&lt;intros_spec&gt;]</title>
     <titleabbrev>elimType</titleabbrev>
-    <para><userinput>elimType T using th</userinput></para>
+    <para><userinput>elimType T using th hyps</userinput></para>
     <para>
       <variablelist>
         <varlistentry>
