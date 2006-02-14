@@ -44,8 +44,11 @@ svn co -N $SVNROOT > $SVNLOG 2>&1
 cd trunk 
 svn update -N helm >> $SVNLOG 2>&1
 cd helm
-svn update $SVNOPTIONS software/components >> $SVNLOG 2>&1
-svn update $SVNOPTIONS software/matita >> $SVNLOG 2>&1
+svn update -N software >> $SVNLOG 2>&1
+cd software
+svn update $SVNOPTIONS components >> $SVNLOG 2>&1
+svn update $SVNOPTIONS matita >> $SVNLOG 2>&1
+cd ..
 cd ..
 cd ..
 ln -s trunk/helm .
