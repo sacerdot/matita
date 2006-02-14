@@ -17,11 +17,6 @@ function compile {
   autoconf 1>/dev/null
   ./configure 1>/dev/null
   make all opt 1>/dev/null
-  cd $2
-  autoconf 1>/dev/null
-  ./configure 1>/dev/null
-  cp matita.conf.xml.sample matita.conf.xml
-  make all opt 1>/dev/null
   cd $LOCALOLD
 }
 
@@ -49,20 +44,20 @@ svn co -N $SVNROOT > $SVNLOG 2>&1
 cd trunk 
 svn update -N helm >> $SVNLOG 2>&1
 cd helm
-svn update $SVNOPTIONS ocaml >> $SVNLOG 2>&1
-svn update $SVNOPTIONS matita >> $SVNLOG 2>&1
+svn update $SVNOPTIONS software/components >> $SVNLOG 2>&1
+svn update $SVNOPTIONS software/matita >> $SVNLOG 2>&1
 cd ..
 cd ..
 ln -s trunk/helm .
 
 #compile
 export HOME="`pwd`/../$TMPDIRNAME.HOME"
-compile $PWD/helm/ocaml $PWD/helm/matita
+compile $PWD/helm/
 
 #run
-run_tests $PWD/helm/matita > LOG 2>/dev/null
+run_tests $PWD/helm/software/matita > LOG 2>/dev/null
 
-cat LOG | grep "\(OK\|FAIL\)" | grep "\(gc-on\|gc-off\)" | awk -f $PWD/helm/matita/scripts/insert.awk > INSERT.sql
+cat LOG | grep "\(OK\|FAIL\)" | grep "\(gc-on\|gc-off\)" | awk -f $PWD/helm/software/matita/scripts/insert.awk > INSERT.sql
 cat INSERT.sql | mysql -u helm -h mowgli.cs.unibo.it matita
 SVNREVISION=`cat $SVNLOG | grep revision | tail -n 1 | sed "s/.*revision \(\w\+\)./\1/"`
 echo "INSERT INTO bench_svn VALUES ('$MARK','$SVNREVISION')" | mysql -u helm -h mowgli.cs.unibo.it matita
