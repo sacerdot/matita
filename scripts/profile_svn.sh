@@ -55,7 +55,7 @@ ln -s trunk/helm .
 
 #compile
 export HOME="`pwd`/../$TMPDIRNAME.HOME"
-compile $PWD/helm/
+compile $PWD/helm/software/
 
 #run
 run_tests $PWD/helm/software/matita > LOG 2>/dev/null
