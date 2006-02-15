@@ -14,7 +14,7 @@ mkdir -p $TMPDIRNAME
 rm -rf $TMPDIRNAMEOLD
 cd $TMPDIRNAME
 rm -rf helm
-svn co ${SVNROOT}helm/matita/scripts/ > LOG.svn 2>&1
+svn co ${SVNROOT}helm/software/matita/scripts/ > LOG.svn 2>&1
 scripts/profile_svn.sh 2> LOG
 
 MARK=`echo "select distinct mark from bench where mark like '$TODAY%' order by mark" | mysql -u helm matita | tail -n 1`

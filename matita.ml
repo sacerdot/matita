@@ -141,6 +141,17 @@ let _ =
             (UriManager.name_of_uri u ^ ":"
              ^ CoercDb.name_of_carr s ^ " -> " ^ CoercDb.name_of_carr t))
         (CoercDb.to_list ()));
+    addDebugItem "show coercions graph" (fun _ ->
+      let str = CoercGraph.generate_dot_file () in
+      let filename, oc = Filename.open_temp_file "xx" ".dot" in
+      output_string oc str;
+      close_out oc;
+      let ps = Filename.temp_file "yy" ".png" in
+      ignore (Sys.command ("/usr/bin/dot -Tpng -o" ^ ps ^ " " ^ filename));
+      ignore (Sys.command ("/usr/bin/display " ^ ps));
+      Sys.remove ps;
+      Sys.remove filename);
+        
     addDebugItem "print top-level grammar entries"
       CicNotationParser.print_l2_pattern;
     addDebugItem "dump moo to stderr" (fun _ ->

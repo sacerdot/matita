@@ -25,7 +25,7 @@ record PreGroup : Type ≝
  }.
 
 record isGroup (G:PreGroup) : Prop ≝
- { is_monoid: isMonoid G;
+ { is_monoid:> isMonoid G;
    inv_is_left_inverse: is_left_inverse (mk_Monoid ? is_monoid) (inv G);
    inv_is_right_inverse: is_right_inverse (mk_Monoid ? is_monoid) (inv G)
  }.
@@ -73,11 +73,11 @@ intros;
 unfold left_cancellable;
 unfold injective;
 intros (x y z);
-rewrite < (e_is_left_unit ? (is_monoid ? G));
-rewrite < (e_is_left_unit ? (is_monoid ? G) z);
+rewrite < (e_is_left_unit ? G);
+rewrite < (e_is_left_unit ? G z);
 rewrite < (inv_is_left_inverse ? G x);
-rewrite > (associative ? (is_semi_group ? (is_monoid ? G)));
-rewrite > (associative ? (is_semi_group ? (is_monoid ? G)));
+rewrite > (associative ? (is_semi_group ? ( G)));
+rewrite > (associative ? (is_semi_group ? ( G)));
 apply eq_f;
 assumption.
 qed.
@@ -90,11 +90,11 @@ unfold right_cancellable;
 unfold injective;
 simplify;fold simplify (op G); 
 intros (x y z);
-rewrite < (e_is_right_unit ? (is_monoid ? G));
-rewrite < (e_is_right_unit ? (is_monoid ? G) z);
+rewrite < (e_is_right_unit ? ( G));
+rewrite < (e_is_right_unit ? ( G) z);
 rewrite < (inv_is_right_inverse ? G x);
-rewrite < (associative ? (is_semi_group ? (is_monoid ? G)));
-rewrite < (associative ? (is_semi_group ? (is_monoid ? G)));
+rewrite < (associative ? (is_semi_group ? ( G)));
+rewrite < (associative ? (is_semi_group ? ( G)));
 rewrite > H;
 reflexivity.
 qed.
@@ -128,9 +128,9 @@ theorem eq_opxy_z_to_eq_x_opzinvy:
  ∀G:Group. ∀x,y,z:G. x·y=z → x = z·y \sup -1.
 intros;
 apply (eq_op_x_y_op_z_y_to_eq ? y);
-rewrite > (associative ? (is_semi_group ? (is_monoid ? G)));
+rewrite > (associative ? G);
 rewrite > (inv_is_left_inverse ? G);
-rewrite > (e_is_right_unit ? (is_monoid ? G));
+rewrite > (e_is_right_unit ? G);
 assumption.
 qed.
 
@@ -138,7 +138,7 @@ theorem eq_opxy_z_to_eq_y_opinvxz:
  ∀G:Group. ∀x,y,z:G. x·y=z → y = x \sup -1·z.
 intros;
 apply (eq_op_x_y_op_x_z_to_eq ? x);
-rewrite < (associative ? (is_semi_group ? (is_monoid ? G)));
+rewrite < (associative ? G);
 rewrite > (inv_is_right_inverse ? G);
 rewrite > (e_is_left_unit ? (is_monoid ? G));
 assumption.
@@ -161,9 +161,9 @@ theorem morphism_to_eq_f_1_1:
  ∀G,G'.∀f:morphism G G'.f˜1 = 1.
 intros;
 apply (eq_op_x_y_op_z_y_to_eq G' (f˜1));
-rewrite > (e_is_left_unit ? (is_monoid ? G') ?);
+rewrite > (e_is_left_unit ? G' ?);
 rewrite < (f_morph ? ? f);
-rewrite > (e_is_left_unit ? (is_monoid ? G));
+rewrite > (e_is_left_unit ? G);
 reflexivity.
 qed.
  
@@ -264,7 +264,7 @@ unfold belongs_to_subgroup in H1;
 elim H1;
 clear H1;
 exists;
-[
+[apply ((a \sub H)\sup-1 · x1)
 | 
 ].
 qed.

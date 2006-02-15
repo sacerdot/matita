@@ -26,7 +26,7 @@ interpretation "premonoid magma coercion" 'pmmagma M =
  (cic:/matita/algebra/monoids/magma.con M).
 
 record isMonoid (M:PreMonoid) : Prop ≝
- { is_semi_group: isSemiGroup M;
+ { is_semi_group:> isSemiGroup M;
    e_is_left_unit:
     is_left_unit (mk_SemiGroup ? is_semi_group) (e M);
    e_is_right_unit:

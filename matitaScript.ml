@@ -417,7 +417,7 @@ class script  ~(source_view: GSourceView.source_view)
               () =
 let buffer = source_view#buffer in
 let source_buffer = source_view#source_buffer in
-let initial_statuses =
+let initial_statuses () =
  (* these include_paths are used only to load the initial notation *)
  let include_paths =
   Helm_registry.get_list Helm_registry.string "matita.includes" in
@@ -458,7 +458,7 @@ object (self)
 
   val mutable statements = []    (** executed statements *)
 
-  val mutable history = [ initial_statuses ]
+  val mutable history = [ initial_statuses () ]
     (** list of states before having executed statements. Head element of this
       * list is the current state, last element is the state at the beginning of
       * the script.
@@ -648,7 +648,7 @@ object (self)
 
   method private reset_buffer = 
     statements <- [];
-    history <- [ initial_statuses ];
+    history <- [ initial_statuses () ];
     userGoal <- None;
     self#notify;
     buffer#remove_tag locked_tag ~start:buffer#start_iter ~stop:buffer#end_iter;
