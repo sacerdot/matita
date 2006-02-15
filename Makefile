@@ -178,9 +178,9 @@ tests.opt: $(foreach d,$(TEST_DIRS),$(d)-test-opt)
 cleantests: $(foreach d,$(TEST_DIRS),$(d)-cleantests)
 cleantests.opt: $(foreach d,$(TEST_DIRS),$(d)-cleantests-opt)
 
-%-test: matitac matitadep matitaclean coq.moo
+%-test: matitac matitadep matitaclean 
 	-cd $* && make -k clean all
-%-test-opt: matitac.opt matitadep.opt matitaclean.opt coq.moo.opt
+%-test-opt: matitac.opt matitadep.opt matitaclean.opt
 	-cd $* && make -k clean.opt opt
 %-cleantests: matitaclean
 	-cd $* && make clean
