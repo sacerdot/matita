@@ -58,7 +58,7 @@ export HOME="`pwd`/../$TMPDIRNAME.HOME"
 compile $PWD/helm/software/
 
 #run
-run_tests $PWD/helm/software/matita > LOG 2>/dev/null
+run_tests $PWD/helm/software/matita > LOG 2>LOG.run_tests.err
 
 cat LOG | grep "\(OK\|FAIL\)" | grep "\(gc-on\|gc-off\)" | awk -f $PWD/helm/software/matita/scripts/insert.awk > INSERT.sql
 cat INSERT.sql | mysql -u helm -h mowgli.cs.unibo.it matita
