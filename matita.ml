@@ -147,8 +147,8 @@ let _ =
       output_string oc str;
       close_out oc;
       let ps = Filename.temp_file "yy" ".png" in
-      ignore (Sys.command ("/usr/bin/dot -Tpng -o" ^ ps ^ " " ^ filename));
-      ignore (Sys.command ("/usr/bin/display " ^ ps));
+      ignore (Unix.system ("/usr/bin/dot -Tpng -o" ^ ps ^ " " ^ filename));
+      ignore (Unix.system ("/usr/bin/display " ^ ps));
       Sys.remove ps;
       Sys.remove filename);
         
