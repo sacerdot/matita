@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/PREDICATIVE-TOPOLOGY/class_defs".
 
-include "../../library/logic/connectives.ma".
+include "logic/connectives.ma".
 
 (* ACZEL CATEGORIES:
    - We use typoids with a compatible membership relation
@@ -39,13 +39,39 @@ definition false_f \def \lambda (X:Type). \lambda (_:X). False.
 record Class: Type \def {
    class:> Type;
    cin: class \to Prop;
-   cle1: class \to class \to Prop
+   ceq: class \to class \to Prop;
+   cin_repl: \forall c1,c2. cin c1 \to ceq c1 c2 \to cin c2;
+   ceq_repl: \forall c1,c2,d1,d2. cin c1 \to
+      ceq c1 c2 \to ceq c1 d1 \to ceq c2 d2 \to ceq d1 d2;
+   ceq_refl: \forall c. cin c \to ceq c c
 }.
 
-inductive cle (C:Class) (c1:C): C \to Prop \def
-   | cle_refl: cin ? c1 \to cle ? c1 c1
-   | ceq_sing: \forall c2,c3. 
-               cle ? c1 c2 \to cin ? c3 \to cle1 ? c2 c3 \to cle ? c1 c3.
+(* external universal quantification *)
+inductive call (C:Class) (P:C \to Prop) : Prop \def
+   | call_intro: (\forall c. cin ? c \to P c) \to call C P.
 
-inductive ceq (C:Class) (c1:C) (c2:C): Prop \def
-   | ceq_intro: cle ? c1 c2 \to cle ? c2 c1 \to ceq ? c1 c2.
+inductive call2 (C1,C2:Class) (P:C1 \to C2 \to Prop) : Prop \def
+   | call2_intro: 
+      (\forall c1,c2. cin ? c1 \to cin ? c2 \to P c1 c2) \to call2 C1 C2 P.
+
+(* notations **************************************************************)
+
+(*CSC: the URI must disappear: there is a bug now *)
+interpretation "external for all" 'xforall \eta.x =
+  (cic:/matita/PREDICATIVE-TOPOLOGY/class_defs/call.ind#xpointer(1/1) _ x).
+
+notation > "hvbox(\xforall ident i opt (: ty) break . p)"
+  right associative with precedence 20
+for @{ 'xforall ${default
+  @{\lambda ${ident i} : $ty. $p}
+  @{\lambda ${ident i} . $p}}}.
+
+(*CSC: the URI must disappear: there is a bug now *)
+interpretation "external for all 2" 'xforall2 \eta.x \eta.y =
+  (cic:/matita/PREDICATIVE-TOPOLOGY/class_defs/call2.ind#xpointer(1/1) _ _ x y).
+
+notation > "hvbox(\xforall ident i1 opt (: ty1) ident i2 opt (: ty2) break . p)"
+  right associative with precedence 20
+for @{ 'xforall2 ${default
+  @{\lambda ${ident i1} : $ty1. \lambda ${ident i2} : $ty2. $p}
+  @{\lambda ${ident i1}, ${ident i2}. $p}}}.
