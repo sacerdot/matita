@@ -144,6 +144,19 @@ rewrite > (e_is_left_unit ? (is_monoid ? G));
 assumption.
 qed.
 
+theorem eq_inv_op_x_y_op_inv_y_inv_x:
+ ∀G:Group. ∀x,y:G. (x·y) \sup -1 = y \sup -1 · x \sup -1.
+intros;
+apply (eq_op_x_y_op_z_y_to_eq ? (x·y));
+rewrite > (inv_is_left_inverse ? G);
+rewrite < (associative ? G);
+rewrite > (associative ? G (y \sup -1));
+rewrite > (inv_is_left_inverse ? G);
+rewrite > (e_is_right_unit ? G);
+rewrite > (inv_is_left_inverse ? G);
+reflexivity.
+qed.
+
 (* Morphisms *)
 
 record morphism (G,G':Group) : Type ≝
@@ -179,7 +192,7 @@ apply (morphism_to_eq_f_1_1 ? ? f).
 qed.
 
 record monomorphism (G,G':Group) : Type ≝
- { morphism: morphism G G';
+ { morphism:> morphism G G';
    injective: injective ? ? (image ? ? morphism)
  }.
 
@@ -187,7 +200,7 @@ record monomorphism (G,G':Group) : Type ≝
 
 record subgroup (G:Group) : Type ≝
  { group: Group;
-   embed: monomorphism group G
+   embed:> monomorphism group G
  }.
  
 notation "hvbox(x \sub H)" with precedence 79
@@ -195,18 +208,16 @@ for @{ 'subgroupimage $H $x }.
 
 interpretation "Subgroup image" 'subgroupimage H x =
  (cic:/matita/algebra/groups/image.con _ _
-   (cic:/matita/algebra/groups/morphism.con _ _
-     (cic:/matita/algebra/groups/embed.con _ H))
-   x).
+   (cic:/matita/algebra/groups/morphism_of_subgroup.con _ H) x).
 
-definition belongs_to_subgroup ≝
+definition member_of_subgroup ≝
  λG.λH:subgroup G.λx:G.∃y.x=y \sub H.
 
-notation "hvbox(x ∈ H)" with precedence 79
-for @{ 'belongs_to $x $H }.
+notation "hvbox(x break ∈ H)" with precedence 79
+for @{ 'member_of $x $H }.
 
-interpretation "Belongs to subgroup" 'belongs_to x H =
- (cic:/matita/algebra/groups/belongs_to_subgroup.con _ H x).
+interpretation "Member of subgroup" 'member_of x H =
+ (cic:/matita/algebra/groups/member_of_subgroup.con _ H x).
 
 (* Left cosets *)
 
@@ -219,12 +230,12 @@ record left_coset (G:Group) : Type ≝
 interpretation "Left_coset" 'times x C =
  (cic:/matita/algebra/groups/left_coset.ind#xpointer(1/1/1) _ x C).
 
-definition belongs_to_left_coset ≝
+definition member_of_left_coset ≝
  λG:Group.λC:left_coset G.λx:G.
   ∃y.x=(element ? C)·y \sub (subgrp ? C).
 
-interpretation "Belongs to left_coset" 'belongs_to x C =
- (cic:/matita/algebra/groups/belongs_to_left_coset.con _ C x).
+interpretation "Member of left_coset" 'member_of x C =
+ (cic:/matita/algebra/groups/member_of_left_coset.con _ C x).
 
 definition left_coset_eq ≝
  λG.λC,C':left_coset G.
@@ -244,31 +255,31 @@ for @{ 'disjoint $a $b }.
 interpretation "Left cosets disjoint" 'disjoint C C' =
  (cic:/matita/algebra/groups/left_coset_disjoint.con _ C C').
 
-(*
 (* The following should be a one-shot alias! *)
-alias symbol "belongs_to" (instance 0) = "Belongs to subgroup".
-theorem foo:
- ∀G.∀x,y:(Type_of_Group G).∀H:subgroup G.
-  (x \sup -1 ·y) ∈ H → (mk_left_coset ? x H) = (mk_left_coset ? y H).
+alias symbol "member_of" (instance 0) = "Member of subgroup".
+theorem member_of_subgroup_op_inv_x_y_to_left_coset_eq:
+ ∀G.∀x,y.∀H:subgroup G. (x \sup -1 ·y) ∈ H → x*H = y*H.
 intros;
 unfold left_coset_eq;
-simplify in ⊢ (? → ? ? ? (? ? ? (? ? ? (? ? ? (? ? %)) ?)));
 simplify in ⊢ (? → ? ? ? (? ? % ?));
+simplify in ⊢ (? → ? ? ? (? ? ? (? ? ? (? ? %) ?)));
 simplify in ⊢ (? % → ?);
 intros;
-unfold belongs_to_left_coset;
-simplify in ⊢ (? ? (λy:?.? ? ? (? ? ? (? ? ? (? ? ? (? ? %)) ?))));
+unfold member_of_left_coset;
+simplify in ⊢ (? ? (λy:?.? ? ? (? ? ? (? ? ? (? ? %) ?))));
 simplify in ⊢ (? ? (λy:? %.?));
 simplify in ⊢ (? ? (λy:?.? ? ? (? ? % ?)));
-unfold belongs_to_subgroup in H1;
+unfold member_of_subgroup in H1;
 elim H1;
 clear H1;
 exists;
-[apply ((a \sub H)\sup-1 · x1)
-| 
+[ apply (a\sup-1 · x1)
+| rewrite > (f_morph ? ? (morphism ? ? H));
+  rewrite > (eq_image_inv_inv_image ? ? 
+  rewrite < H2;
+  rewrite > (eq_inv_op_x_y_op_inv_y_inv_x ? ? ? ? H2);
 ].
 qed.
-*)
 
 (*theorem foo:
  \forall G:Group. \forall x1,x2:G. \forall H:subgroup G.
