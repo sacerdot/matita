@@ -75,7 +75,7 @@ theorem is_left_inverse_to_is_right_inverse_to_eq:
  generalize in match (eq_f ? ? (λy.y·(r x)) ? ? H2);
  simplify; fold simplify (op M);
  intro; clear H2;
- generalize in match (associative ? (is_semi_group ? (monoid_properties M)));
+ generalize in match (op_associative ? (is_semi_group ? (monoid_properties M)));
  intro;
  rewrite > H2 in H3; clear H2;
  rewrite > H1 in H3;

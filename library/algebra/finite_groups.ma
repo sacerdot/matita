@@ -513,7 +513,7 @@ cut (∀n.n ≤ order ? (is_finite_enumerable G) → ∃m.f m = n);
     clearbody GOGO;
     rewrite < HH in GOGO;
     rewrite < HH in GOGO:(? ? % ?);
-    rewrite > (associative ? G) in GOGO;
+    rewrite > (op_associative ? G) in GOGO;
     letin GaGa ≝ (H ? ? ? GOGO);
     clearbody GaGa;
     clear GOGO;
@@ -524,13 +524,13 @@ cut (∀n.n ≤ order ? (is_finite_enumerable G) → ∃m.f m = n);
       letin GaxGax ≝ (refl_eq ? (G \sub a ·x));
       clearbody GaxGax;
       rewrite < GaGa in GaxGax:(? ? % ?);
-      rewrite > (associative ? (semigroup_properties G)) in GaxGax;
+      rewrite > (op_associative ? (semigroup_properties G)) in GaxGax;
       apply (H ? ? ? GaxGax)
     | unfold is_right_unit; intro;
       letin GaxGax ≝ (refl_eq ? (x·G \sub a));
       clearbody GaxGax;
       rewrite < GaGa in GaxGax:(? ? % ?);
-      rewrite < (associative ? (semigroup_properties G)) in GaxGax;
+      rewrite < (op_associative ? (semigroup_properties G)) in GaxGax;
       apply (H1 ? ? ? GaxGax)
     ]
   ]

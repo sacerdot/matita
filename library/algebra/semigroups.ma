@@ -37,7 +37,7 @@ interpretation "magma operation" 'magma_op a b =
 (* Semigroups *)
 
 record isSemiGroup (M:Magma) : Prop ≝
- { associative: associative ? (op M) }.
+ { op_associative: associative ? (op M) }.
 
 record SemiGroup : Type ≝
  { magma:> Magma;

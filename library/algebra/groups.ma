@@ -76,8 +76,8 @@ intros (x y z);
 rewrite < (e_is_left_unit ? G);
 rewrite < (e_is_left_unit ? G z);
 rewrite < (inv_is_left_inverse ? G x);
-rewrite > (associative ? (is_semi_group ? ( G)));
-rewrite > (associative ? (is_semi_group ? ( G)));
+rewrite > (op_associative ? G);
+rewrite > (op_associative ? G);
 apply eq_f;
 assumption.
 qed.
@@ -90,16 +90,16 @@ unfold right_cancellable;
 unfold injective;
 simplify;fold simplify (op G); 
 intros (x y z);
-rewrite < (e_is_right_unit ? ( G));
-rewrite < (e_is_right_unit ? ( G) z);
+rewrite < (e_is_right_unit ? G);
+rewrite < (e_is_right_unit ? G z);
 rewrite < (inv_is_right_inverse ? G x);
-rewrite < (associative ? (is_semi_group ? ( G)));
-rewrite < (associative ? (is_semi_group ? ( G)));
+rewrite < (op_associative ? G);
+rewrite < (op_associative ? G);
 rewrite > H;
 reflexivity.
 qed.
 
-theorem inv_inv: ∀G:Group. ∀x:G. x \sup -1 \sup -1 = x.
+theorem eq_inv_inv_x_x: ∀G:Group. ∀x:G. x \sup -1 \sup -1 = x.
 intros;
 apply (eq_op_x_y_op_z_y_to_eq ? (x \sup -1));
 rewrite > (inv_is_right_inverse ? G);
@@ -128,7 +128,7 @@ theorem eq_opxy_z_to_eq_x_opzinvy:
  ∀G:Group. ∀x,y,z:G. x·y=z → x = z·y \sup -1.
 intros;
 apply (eq_op_x_y_op_z_y_to_eq ? y);
-rewrite > (associative ? G);
+rewrite > (op_associative ? G);
 rewrite > (inv_is_left_inverse ? G);
 rewrite > (e_is_right_unit ? G);
 assumption.
@@ -138,9 +138,9 @@ theorem eq_opxy_z_to_eq_y_opinvxz:
  ∀G:Group. ∀x,y,z:G. x·y=z → y = x \sup -1·z.
 intros;
 apply (eq_op_x_y_op_x_z_to_eq ? x);
-rewrite < (associative ? G);
+rewrite < (op_associative ? G);
 rewrite > (inv_is_right_inverse ? G);
-rewrite > (e_is_left_unit ? (is_monoid ? G));
+rewrite > (e_is_left_unit ? G);
 assumption.
 qed.
 
@@ -149,8 +149,8 @@ theorem eq_inv_op_x_y_op_inv_y_inv_x:
 intros;
 apply (eq_op_x_y_op_z_y_to_eq ? (x·y));
 rewrite > (inv_is_left_inverse ? G);
-rewrite < (associative ? G);
-rewrite > (associative ? G (y \sup -1));
+rewrite < (op_associative ? G);
+rewrite > (op_associative ? G (y \sup -1));
 rewrite > (inv_is_left_inverse ? G);
 rewrite > (e_is_right_unit ? G);
 rewrite > (inv_is_left_inverse ? G);
@@ -173,9 +173,9 @@ interpretation "Morphism image" 'morimage f x =
 theorem morphism_to_eq_f_1_1:
  ∀G,G'.∀f:morphism G G'.f˜1 = 1.
 intros;
-apply (eq_op_x_y_op_z_y_to_eq G' (f˜1));
-rewrite > (e_is_left_unit ? G' ?);
-rewrite < (f_morph ? ? f);
+apply (eq_op_x_y_op_z_y_to_eq ? (f˜1));
+rewrite > (e_is_left_unit ? G');
+rewrite < f_morph;
 rewrite > (e_is_left_unit ? G);
 reflexivity.
 qed.
@@ -184,9 +184,9 @@ theorem eq_image_inv_inv_image:
  ∀G,G'.∀f:morphism G G'.
   ∀x.f˜(x \sup -1) = (f˜x) \sup -1.
 intros;
-apply (eq_op_x_y_op_z_y_to_eq G' (f˜x));
+apply (eq_op_x_y_op_z_y_to_eq ? (f˜x));
 rewrite > (inv_is_left_inverse ? G');
-rewrite < (f_morph ? ? f);
+rewrite < f_morph;
 rewrite > (inv_is_left_inverse ? G);
 apply (morphism_to_eq_f_1_1 ? ? f).
 qed.
@@ -199,9 +199,15 @@ record monomorphism (G,G':Group) : Type ≝
 (* Subgroups *)
 
 record subgroup (G:Group) : Type ≝
- { group: Group;
+ { group:> Group;
    embed:> monomorphism group G
  }.
+
+notation < "G"
+for @{ 'type_of_subgroup $G }.
+
+interpretation "Type_of_subgroup coercion" 'type_of_subgroup G =
+ (cic:/matita/algebra/groups/Type_of_subgroup.con _ G).
  
 notation "hvbox(x \sub H)" with precedence 79
 for @{ 'subgroupimage $H $x }.
@@ -263,21 +269,27 @@ intros;
 unfold left_coset_eq;
 simplify in ⊢ (? → ? ? ? (? ? % ?));
 simplify in ⊢ (? → ? ? ? (? ? ? (? ? ? (? ? %) ?)));
-simplify in ⊢ (? % → ?);
+simplify in ⊢ (? ? % → ?);
 intros;
 unfold member_of_left_coset;
 simplify in ⊢ (? ? (λy:?.? ? ? (? ? ? (? ? ? (? ? %) ?))));
-simplify in ⊢ (? ? (λy:? %.?));
+simplify in ⊢ (? ? (λy:? ? %.?));
 simplify in ⊢ (? ? (λy:?.? ? ? (? ? % ?)));
 unfold member_of_subgroup in H1;
 elim H1;
 clear H1;
 exists;
 [ apply (a\sup-1 · x1)
-| rewrite > (f_morph ? ? (morphism ? ? H));
-  rewrite > (eq_image_inv_inv_image ? ? 
+| rewrite > f_morph;
+  rewrite > eq_image_inv_inv_image; 
   rewrite < H2;
-  rewrite > (eq_inv_op_x_y_op_inv_y_inv_x ? ? ? ? H2);
+  rewrite > eq_inv_op_x_y_op_inv_y_inv_x;
+  rewrite > eq_inv_inv_x_x;
+  rewrite < (op_associative ? G);
+  rewrite < (op_associative ? G);
+  rewrite > (inv_is_right_inverse ? G);
+  rewrite > (e_is_left_unit ? G);
+  reflexivity
 ].
 qed.
 
