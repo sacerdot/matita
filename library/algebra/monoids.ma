@@ -21,10 +21,6 @@ record PreMonoid : Type ≝
    e: magma
  }.
 
-notation < "M" for @{ 'pmmagma $M }.
-interpretation "premonoid magma coercion" 'pmmagma M =
- (cic:/matita/algebra/monoids/magma.con M).
-
 record isMonoid (M:PreMonoid) : Prop ≝
  { is_semi_group:> isSemiGroup M;
    e_is_left_unit:
@@ -38,18 +34,6 @@ record Monoid : Type ≝
    monoid_properties:> isMonoid premonoid 
  }.
 
-notation < "M" for @{ 'semigroup $M }.
-interpretation "premonoid coercion" 'premonoid M =
- (cic:/matita/algebra/monoids/premonoid.con M).
- 
-notation < "M" for @{ 'typeofmonoid $M }.
-interpretation "premonoid coercion" 'typeofmonoid M =
- (cic:/matita/algebra/monoids/Type_of_Monoid.con M).
- 
-notation < "M" for @{ 'magmaofmonoid $M }.
-interpretation "premonoid coercion" 'magmaofmonoid M =
- (cic:/matita/algebra/monoids/Magma_of_Monoid.con M).
- 
 notation "1" with precedence 89
 for @{ 'munit }.
 

@@ -191,6 +191,10 @@ let _ =
       (fun _ ->
         CicNotation.set_active_notations
           (List.map fst (CicNotation.get_all_notations ())));
+    addDebugItem "enable coercions hiding"
+      (fun _ -> TermAcicContent.hide_coercions := true);
+    addDebugItem "disable coercions hiding"
+      (fun _ -> TermAcicContent.hide_coercions := false);
   end
   (** Debugging }}} *)
 

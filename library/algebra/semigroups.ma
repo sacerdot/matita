@@ -23,10 +23,6 @@ record Magma : Type ≝
    op: carrier → carrier → carrier
  }.
 
-notation < "M" for @{ 'carrier $M }.
-interpretation "carrier coercion" 'carrier S =
- (cic:/matita/algebra/semigroups/carrier.con S).
-
 notation "hvbox(a break \middot b)" 
   left associative with precedence 55
 for @{ 'magma_op $a $b }.
@@ -43,10 +39,6 @@ record SemiGroup : Type ≝
  { magma:> Magma;
    semigroup_properties:> isSemiGroup magma
  }.
- 
-notation < "S" for @{ 'magma $S }.
-interpretation "magma coercion" 'magma S =
- (cic:/matita/algebra/semigroups/magma.con S).
  
 definition is_left_unit ≝
  λS:SemiGroup. λe:S. ∀x:S. e·x = x.

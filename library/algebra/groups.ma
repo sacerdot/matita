@@ -35,24 +35,6 @@ record Group : Type ≝
    group_properties:> isGroup pregroup
  }.
 
-(*notation < "G"
-for @{ 'monoid $G }.
-
-interpretation "Monoid coercion" 'monoid G =
- (cic:/matita/algebra/groups/monoid.con G).*)
-
-notation < "G"
-for @{ 'type_of_group $G }.
-
-interpretation "Type_of_group coercion" 'type_of_group G =
- (cic:/matita/algebra/groups/Type_of_Group.con G).
-
-notation < "G"
-for @{ 'magma_of_group $G }.
-
-interpretation "magma_of_group coercion" 'magma_of_group G =
- (cic:/matita/algebra/groups/Magma_of_Group.con G).
-
 notation "hvbox(x \sup (-1))" with precedence 89
 for @{ 'ginv $x }.
 
@@ -203,12 +185,6 @@ record subgroup (G:Group) : Type ≝
    embed:> monomorphism group G
  }.
 
-notation < "G"
-for @{ 'type_of_subgroup $G }.
-
-interpretation "Type_of_subgroup coercion" 'type_of_subgroup G =
- (cic:/matita/algebra/groups/Type_of_subgroup.con _ G).
- 
 notation "hvbox(x \sub H)" with precedence 79
 for @{ 'subgroupimage $H $x }.
 

@@ -44,30 +44,6 @@ record finite_enumerable_SemiGroup : Type ≝
    is_finite_enumerable:> finite_enumerable semigroup
  }.
 
-notation < "S"
-for @{ 'semigroup_of_finite_enumerable_semigroup $S }.
-
-interpretation "Semigroup_of_finite_enumerable_semigroup"
- 'semigroup_of_finite_enumerable_semigroup S
-=
- (cic:/matita/algebra/finite_groups/semigroup.con S).
-
-notation < "S"
-for @{ 'magma_of_finite_enumerable_semigroup $S }.
-
-interpretation "Magma_of_finite_enumerable_semigroup"
- 'magma_of_finite_enumerable_semigroup S
-=
- (cic:/matita/algebra/finite_groups/Magma_of_finite_enumerable_SemiGroup.con S).
- 
-notation < "S"
-for @{ 'type_of_finite_enumerable_semigroup $S }.
-
-interpretation "Type_of_finite_enumerable_semigroup"
- 'type_of_finite_enumerable_semigroup S
-=
- (cic:/matita/algebra/finite_groups/Type_of_finite_enumerable_SemiGroup.con S).
-
 interpretation "Finite_enumerable representation" 'repr S i =
  (cic:/matita/algebra/finite_groups/repr.con S
   (cic:/matita/algebra/finite_groups/is_finite_enumerable.con S) i).
