@@ -243,14 +243,8 @@ theorem member_of_subgroup_op_inv_x_y_to_left_coset_eq:
  ∀G.∀x,y.∀H:subgroup G. (x \sup -1 ·y) ∈ H → x*H = y*H.
 intros;
 unfold left_coset_eq;
-simplify in ⊢ (? → ? ? ? (? ? % ?));
-simplify in ⊢ (? → ? ? ? (? ? ? (? ? ? (? ? %) ?)));
-simplify in ⊢ (? ? % → ?);
-intros;
-unfold member_of_left_coset;
-simplify in ⊢ (? ? (λy:?.? ? ? (? ? ? (? ? ? (? ? %) ?))));
-simplify in ⊢ (? ? (λy:? ? %.?));
-simplify in ⊢ (? ? (λy:?.? ? ? (? ? % ?)));
+simplify;
+intro;
 unfold member_of_subgroup in H1;
 elim H1;
 clear H1;
