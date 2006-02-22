@@ -1,6 +1,6 @@
 SRC=$(shell find . -name "*.ma" -a -type f)
 
-MATITA_FLAGS =
+MATITA_FLAGS = -I ../..
 NODB=false
 ifeq ($(NODB),true)
 	MATITA_FLAGS += -nodb
