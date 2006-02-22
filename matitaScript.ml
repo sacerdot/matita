@@ -803,6 +803,7 @@ object (self)
     try
       is_there_only_comments self#lexicon_status s
     with 
+    | HExtlib.Localized _
     | CicNotationParser.Parse_error _ -> false
     | Margin | End_of_file -> true
 
