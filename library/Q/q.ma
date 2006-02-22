@@ -199,9 +199,8 @@ intros.apply (fraction_elim2
   intros.simplify.unfold Not.intro.apply (not_eq_pp_cons m x f1).apply sym_eq. assumption.
   intros.simplify.unfold Not.intro.apply (not_eq_nn_cons m x f1).apply sym_eq. assumption.
   intros.
-   change in match (eqfb (cons x f1) (cons y g1)) 
-   with (andb (eqZb x y) (eqfb f1 g1)).
-    apply eqZb_elim.
+   simplify.
+   apply eqZb_elim.
       intro.generalize in match H.elim (eqfb f1 g1).
         simplify.apply eq_f2.assumption.
         apply H2.
