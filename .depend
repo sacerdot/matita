@@ -4,14 +4,18 @@ buildTimeConf.cmo: buildTimeConf.cmi
 buildTimeConf.cmx: buildTimeConf.cmi 
 dump_moo.cmo: buildTimeConf.cmi 
 dump_moo.cmx: buildTimeConf.cmx 
+gragrep.cmo: matitaInit.cmi buildTimeConf.cmi gragrep.cmi 
+gragrep.cmx: matitaInit.cmx buildTimeConf.cmx gragrep.cmi 
 matitaclean.cmo: matitaInit.cmi matitaclean.cmi 
 matitaclean.cmx: matitaInit.cmx matitaclean.cmi 
 matitacLib.cmo: matitaInit.cmi matitaExcPp.cmi matitaEngine.cmi \
     buildTimeConf.cmi matitacLib.cmi 
 matitacLib.cmx: matitaInit.cmx matitaExcPp.cmx matitaEngine.cmx \
     buildTimeConf.cmx matitacLib.cmi 
-matitac.cmo: matitamake.cmi matitadep.cmi matitaclean.cmi matitacLib.cmi 
-matitac.cmx: matitamake.cmx matitadep.cmx matitaclean.cmx matitacLib.cmx 
+matitac.cmo: matitamake.cmi matitadep.cmi matitaclean.cmi matitacLib.cmi \
+    gragrep.cmi 
+matitac.cmx: matitamake.cmx matitadep.cmx matitaclean.cmx matitacLib.cmx \
+    gragrep.cmx 
 matitadep.cmo: matitaInit.cmi matitadep.cmi 
 matitadep.cmx: matitaInit.cmx matitadep.cmi 
 matitaEngine.cmo: matitaEngine.cmi 

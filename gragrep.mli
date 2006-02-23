@@ -1,4 +1,4 @@
-(* Copyright (C) 2005, HELM Team.
+(* Copyright (C) 2006, HELM Team.
  * 
  * This file is part of HELM, an Hypertextual, Electronic
  * Library of Mathematics, developed at the Computer Science
@@ -23,20 +23,5 @@
  * http://helm.cs.unibo.it/
  *)
 
-(* $Id$ *)
-
-let main () =
-  match Filename.basename Sys.argv.(0) with
-  | "gragrep"     | "gragrep.opt"   -> Gragrep.main ()
-  | "matitadep"   | "matitadep.opt"   -> Matitadep.main ()
-  | "matitaclean" | "matitaclean.opt" -> Matitaclean.main ()
-  | "matitamake"  | "matitamake.opt"  -> Matitamake.main ()
-  | _ ->
-(*
-      let _ = Paramodulation.Saturation.init () in  *)
-(* ALB to link paramodulation *)
-      let _ = MatitacLib.main `COMPILER in
-      ()
-
-let _ = main ()
+val main: unit -> unit
 

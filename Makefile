@@ -53,13 +53,17 @@ MAINCMOS =			\
 	matitadep.cmo		\
 	matitaclean.cmo		\
 	matitamake.cmo		\
+	gragrep.cmo 		\
 	$(NULL)
-PROGRAMS_BYTE = matita matitac cicbrowser matitadep matitaclean matitamake dump_moo
+PROGRAMS_BYTE = \
+	matita matitac cicbrowser matitadep matitaclean matitamake
 PROGRAMS = $(PROGRAMS_BYTE) matitatop
 PROGRAMS_OPT = $(patsubst %,%.opt,$(PROGRAMS_BYTE))
+NOINST_PROGRAMS = dump_moo gragrep
+NOINST_PROGRAMS_OPT = $(patsubst %,%.opt,$(EXTRA_PROGRAMS))
 
 .PHONY: all
-all: $(PROGRAMS)
+all: $(PROGRAMS) $(NOINST_PROGRAMS)
 #  all: matita.conf.xml $(PROGRAMS) coq.moo
 
 #  matita.conf.xml: matita.conf.xml.sample
@@ -87,7 +91,7 @@ LIB_DEPS := $(shell $(OCAMLFIND) query -recursive -predicates "byte" -format "%d
 LIBX_DEPS := $(shell $(OCAMLFIND) query -recursive -predicates "native" -format "%d/%a" $(MATITA_REQUIRES))
 CLIB_DEPS := $(shell $(OCAMLFIND) query -recursive -predicates "byte" -format "%d/%a" $(MATITA_CREQUIRES))
 CLIBX_DEPS := $(shell $(OCAMLFIND) query -recursive -predicates "native" -format "%d/%a" $(MATITA_CREQUIRES))
-opt: $(PROGRAMS_OPT)
+opt: $(PROGRAMS_OPT) $(NOINST_PROGRAMS_OPT)
 upx: $(PROGRAMS_UPX)
 .PHONY: opt upx
 
@@ -137,6 +141,11 @@ matitamake: matitac
 matitamake.opt: matitac.opt
 	@test -f $@ || ln -s $< $@
 	
+gragrep: matitac
+	@test -f $@ || ln -s $< $@
+gragrep.opt: matitac.opt
+	@test -f $@ || ln -s $< $@
+	
 cicbrowser: matita
 	@test -f $@ || ln -s $< $@
 cicbrowser.opt: matita.opt
@@ -149,8 +158,8 @@ matitaGeneratedGui.ml matitaGeneratedGui.mli: matita.glade
 .PHONY: clean
 clean:
 	rm -rf *.cma *.cmo *.cmi *.cmx *.cmxa *.a *.o \
-		$(PROGRAMS) \
-		$(PROGRAMS_OPT) \
+		$(PROGRAMS) $(PROGRAMS_OPT) \
+		$(NOINST_PROGRAMS) $(NOINST_PROGRAMS_OPT) \
 		$(PROGRAMS_STATIC) \
 		$(PROGRAMS_UPX) \
 		$(NULL)
