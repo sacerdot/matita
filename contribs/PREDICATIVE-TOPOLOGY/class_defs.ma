@@ -12,6 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
+(* STATO: COMPILA *)
+
 (* Project started Wed Oct 12, 2005 ***************************************)
 
 set "baseuri" "cic:/matita/PREDICATIVE-TOPOLOGY/class_defs".

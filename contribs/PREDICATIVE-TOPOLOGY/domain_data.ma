@@ -12,10 +12,12 @@
 (*                                                                        *)
 (**************************************************************************)
 
+(* STATO: NON COMPILA: dev'essere aggiornato *)
+
 set "baseuri" "cic:/matita/PREDICATIVE-TOPOLOGY/domain_data".
 
-include "../../library/datatypes/constructors.ma".
-include "../../library/datatypes/bool.ma".
+include "datatypes/constructors.ma".
+include "datatypes/bool.ma".
 include "domain_defs.ma".
 
 (* QUANTIFICATION DOMAINS

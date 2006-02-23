@@ -12,6 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
+(* STATO: NON COMPILA: dev'essere aggiornato *)
+
 set "baseuri" "cic:/matita/PREDICATIVE-TOPOLOGY/class_eq".
 
 include "class_defs.ma".

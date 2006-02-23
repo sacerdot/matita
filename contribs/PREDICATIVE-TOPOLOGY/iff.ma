@@ -12,6 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
+(* STATO: COMPILA *)
+
 set "baseuri" "cic:/matita/logic/iff".
 
 include "../../library/logic/connectives.ma".

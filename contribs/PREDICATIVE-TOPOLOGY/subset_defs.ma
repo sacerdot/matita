@@ -12,6 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
+(* STATO: NON COMPILA: dev'essere aggiornato *)
+
 set "baseuri" "cic:/matita/PREDICATIVE-TOPOLOGY/subset_defs".
 
 include "domain_defs.ma".

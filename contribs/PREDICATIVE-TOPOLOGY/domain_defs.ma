@@ -12,6 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
+(* STATO: COMPILA *)
+
 set "baseuri" "cic:/matita/PREDICATIVE-TOPOLOGY/domain_defs".
 
 include "class_defs.ma".

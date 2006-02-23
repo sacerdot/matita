@@ -12,6 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
+(* STATO: NON COMPILA: perche' dipende da coa_defs *)
+
 set "baseuri" "cic:/matita/PREDICATIVE-TOPOLOGY/coa_props".
 
 include "coa_defs.ma".

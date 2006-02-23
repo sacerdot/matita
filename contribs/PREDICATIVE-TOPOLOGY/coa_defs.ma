@@ -12,6 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
+(* STATO: NON COMPILA: attendo che l'oggetto "pippo" venga accettato *) 
+
 set "baseuri" "cic:/matita/PREDICATIVE-TOPOLOGY/coa_defs".
 
 include "iff.ma".
