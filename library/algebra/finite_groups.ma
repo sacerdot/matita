@@ -516,7 +516,7 @@ cut (∀n.n ≤ order ? (is_finite_enumerable G) → ∃m.f m = n);
     elim H3;
     assumption
   | intros;
-    change in H5 with (ι(G \sub O · G \sub x) = ι(G \sub O · G \sub y));
+    simplify in H5;
     cut (G \sub (ι(G \sub O · G \sub x)) = G \sub (ι(G \sub O · G \sub y)));
     [ rewrite > (repr_index_of ? ? (G \sub O · G \sub x))  in Hcut;
       rewrite > (repr_index_of ? ? (G \sub O · G \sub y))  in Hcut;

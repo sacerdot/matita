@@ -266,7 +266,7 @@ variant inj_times_r : \forall n,p,q:nat.(S n)*p = (S n)*q \to p=q \def
 injective_times_r.
 
 theorem lt_O_to_injective_times_r: \forall n:nat. O < n \to injective nat nat (\lambda m:nat.n*m).
-change with (\forall n. O < n \to \forall p,q:nat.n*p = n*q \to p=q).
+simplify.
 intros 4.
 apply (lt_O_n_elim n H).intros.
 apply (inj_times_r m).assumption.
@@ -276,11 +276,11 @@ variant inj_times_r1:\forall n. O < n \to \forall p,q:nat.n*p = n*q \to p=q
 \def lt_O_to_injective_times_r.
 
 theorem injective_times_l: \forall n:nat.injective nat nat (\lambda m:nat.m*(S n)).
-change with (\forall n,p,q:nat.p*(S n) = q*(S n) \to p=q).
+simplify.
 intros.
-apply (inj_times_r n p q).
+apply (inj_times_r n x y).
 rewrite < sym_times.
-rewrite < (sym_times q).
+rewrite < (sym_times y).
 assumption.
 qed.
 
@@ -288,7 +288,7 @@ variant inj_times_l : \forall n,p,q:nat. p*(S n) = q*(S n) \to p=q \def
 injective_times_l.
 
 theorem lt_O_to_injective_times_l: \forall n:nat. O < n \to injective nat nat (\lambda m:nat.m*n).
-change with (\forall n. O < n \to \forall p,q:nat.p*n = q*n \to p=q).
+simplify.
 intros 4.
 apply (lt_O_n_elim n H).intros.
 apply (inj_times_l m).assumption.

@@ -199,7 +199,7 @@ elim Hcut3.
 assumption.
 apply False_ind.
 apply (prime_to_not_divides_fact p H (pred p)).
-change with (S (pred p) \le p).
+unfold lt.
 rewrite < S_pred.apply le_n.
 assumption.assumption.
 apply divides_times_to_divides. 
@@ -233,8 +233,7 @@ intros.cut (m=O).
 rewrite > Hcut3.rewrite < times_n_O.
 apply mod_O_n.apply sym_eq.apply le_n_O_to_eq.
 apply le_S_S_to_le.assumption.
-assumption.
-change with ((S O) \le pred p).
+assumption.unfold lt.
 apply le_S_S_to_le.rewrite < S_pred.
 unfold prime in H.elim H.assumption.assumption.
 unfold prime in H.elim H.apply (trans_lt ? (S O)).

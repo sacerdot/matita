@@ -38,34 +38,14 @@ theorem p_ord_aux_to_Prop: \forall p,n,m. O < m \to
   match p_ord_aux p n m with
   [ (pair q r) \Rightarrow n = m \sup q *r ].
 intro.
-elim p.
-change with 
-match (
-match n \mod m with
-  [ O \Rightarrow pair nat nat O n
-  | (S a) \Rightarrow pair nat nat O n] )
-with
-  [ (pair q r) \Rightarrow n = m \sup q * r ].
+elim p.simplify.
 apply (nat_case (n \mod m)).
 simplify.apply plus_n_O.
 intros.
-simplify.apply plus_n_O. 
-change with 
-match (
-match n1 \mod m with
-  [ O \Rightarrow 
-     match (p_ord_aux n (n1 / m) m) with
-       [ (pair q r) \Rightarrow pair nat nat (S q) r]
-  | (S a) \Rightarrow pair nat nat O n1] )
-with
-  [ (pair q r) \Rightarrow n1 = m \sup q * r].
+simplify.apply plus_n_O.
+simplify. 
 apply (nat_case1 (n1 \mod m)).intro.
-change with 
-match (
- match (p_ord_aux n (n1 / m) m) with
-   [ (pair q r) \Rightarrow pair nat nat (S q) r])
-with
-  [ (pair q r) \Rightarrow n1 = m \sup q * r].
+simplify.
 generalize in match (H (n1 / m) m).
 elim (p_ord_aux n (n1 / m) m).
 simplify.
@@ -96,20 +76,10 @@ elim i.
 simplify.
 rewrite < plus_n_O.
 apply (nat_case p).
-change with
- (match n \mod m with
-  [ O \Rightarrow pair nat nat O n
-  | (S a) \Rightarrow pair nat nat O n]
-  = pair nat nat O n).
+simplify.
 elim (n \mod m).simplify.reflexivity.simplify.reflexivity.
 intro.
-change with
- (match n \mod m with
-  [ O \Rightarrow 
-       match (p_ord_aux m1 (n / m) m) with
-       [ (pair q r) \Rightarrow pair nat nat (S q) r]
-  | (S a) \Rightarrow pair nat nat O n]
-  = pair nat nat O n).
+simplify.
 cut (O < n \mod m \lor O = n \mod m).
 elim Hcut.apply (lt_O_n_elim (n \mod m) H3).
 intros. simplify.reflexivity.
@@ -119,25 +89,16 @@ apply le_to_or_lt_eq.apply le_O_n.
 generalize in match H3.
 apply (nat_case p).intro.apply False_ind.apply (not_le_Sn_O n1 H4).
 intros.
-change with
- (match ((m \sup (S n1) *n) \mod m) with
-  [ O \Rightarrow 
-       match (p_ord_aux m1 ((m \sup (S n1) *n) / m) m) with
-       [ (pair q r) \Rightarrow pair nat nat (S q) r]
-  | (S a) \Rightarrow pair nat nat O (m \sup (S n1) *n)]
-  = pair nat nat (S n1) n).
+simplify. fold simplify (m \sup (S n1)).
 cut (((m \sup (S n1)*n) \mod m) = O).
 rewrite > Hcut.
-change with
-(match (p_ord_aux m1 ((m \sup (S n1)*n) / m) m) with
-       [ (pair q r) \Rightarrow pair nat nat (S q) r] 
-  = pair nat nat (S n1) n). 
+simplify.fold simplify (m \sup (S n1)).
 cut ((m \sup (S n1) *n) / m = m \sup n1 *n).
 rewrite > Hcut1.
 rewrite > (H2 m1). simplify.reflexivity.
 apply le_S_S_to_le.assumption.
 (* div_exp *)
-change with ((m* m \sup n1 *n) / m = m \sup n1 * n).
+simplify.
 rewrite > assoc_times.
 apply (lt_O_n_elim m H).
 intro.apply div_times.
@@ -153,15 +114,7 @@ theorem p_ord_aux_to_Prop1: \forall p,n,m. (S O) < m \to O < n \to n \le p \to
   [ (pair q r) \Rightarrow r \mod m \neq O].
 intro.elim p.absurd (O < n).assumption.
 apply le_to_not_lt.assumption.
-change with
-match 
-  (match n1 \mod m with
-    [ O \Rightarrow 
-        match (p_ord_aux n(n1 / m) m) with
-        [ (pair q r) \Rightarrow pair nat nat (S q) r]
-    | (S a) \Rightarrow pair nat nat O n1])
-with
-  [ (pair q r) \Rightarrow r \mod m \neq O].
+simplify.
 apply (nat_case1 (n1 \mod m)).intro.
 generalize in match (H (n1 / m) m).
 elim (p_ord_aux n (n1 / m) m).
@@ -172,8 +125,7 @@ assumption.assumption.assumption.
 apply le_S_S_to_le.
 apply (trans_le ? n1).change with (n1 / m < n1).
 apply lt_div_n_m_n.assumption.assumption.assumption.
-intros.
-change with (n1 \mod m \neq O).
+intros.simplify.
 rewrite > H4.
 unfold Not.intro.
 apply (not_eq_O_S m1).

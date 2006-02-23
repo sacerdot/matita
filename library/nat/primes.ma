@@ -199,11 +199,7 @@ theorem divides_b_to_Prop :
 match divides_b n m with
 [ true \Rightarrow n \divides m
 | false \Rightarrow n \ndivides m].
-intros.
-change with 
-match eqb (m \mod n) O with
-[ true \Rightarrow n \divides m
-| false \Rightarrow n \ndivides m].
+intros.unfold divides_b.
 apply eqb_elim.
 intro.simplify.apply mod_O_to_divides.assumption.assumption.
 intro.simplify.unfold Not.intro.apply H1.apply divides_to_mod_O.assumption.assumption.
@@ -235,7 +231,7 @@ qed.
 
 theorem decidable_divides: \forall n,m:nat.O < n \to
 decidable (n \divides m).
-intros.change with ((n \divides m) \lor n \ndivides m).
+intros.unfold decidable.
 cut 
 (match divides_b n m with
 [ true \Rightarrow n \divides m
@@ -328,7 +324,7 @@ theorem not_divides_S_fact: \forall n,i:nat.
 intros.
 apply divides_b_false_to_not_divides.
 apply (trans_lt O (S O)).apply (le_n (S O)).assumption.
-change with ((eqb ((S n!) \mod i) O) = false).
+unfold divides_b.
 rewrite > mod_S_fact.simplify.reflexivity.
 assumption.assumption.
 qed.
@@ -435,8 +431,7 @@ apply (nat_case n).intro.apply False_ind.apply (not_le_Sn_O (S O) H).
 intro.apply (nat_case m).intro. apply False_ind.apply (not_le_Sn_n (S O) H).
 intros.
 apply divides_b_false_to_not_divides.
-apply (trans_lt O (S O)).apply (le_n (S O)).assumption.
-change with ((eqb ((S(S m1)) \mod i) O) = false).
+apply (trans_lt O (S O)).apply (le_n (S O)).assumption.unfold divides_b.
 apply (lt_min_aux_to_false 
 (\lambda i:nat.eqb ((S(S m1)) \mod i) O) (S(S m1)) m1 i).
 cut ((S(S O)) = (S(S m1)-m1)).
@@ -448,7 +443,7 @@ qed.
 
 theorem prime_smallest_factor_n : 
 \forall n:nat. (S O) < n \to prime (smallest_factor n).
-intro. change with ((S(S O)) \le n \to (S O) < (smallest_factor n) \land 
+intro.change with ((S(S O)) \le n \to (S O) < (smallest_factor n) \land 
 (\forall m:nat. m \divides smallest_factor n \to (S O) < m \to  m = (smallest_factor n))).
 intro.split.
 apply lt_SO_smallest_factor.assumption.
@@ -525,11 +520,11 @@ match eqb (smallest_factor (S(S m1))) (S(S m1)) with
 [ true \Rightarrow prime (S(S m1))
 | false \Rightarrow \lnot (prime (S(S m1)))].
 apply (eqb_elim (smallest_factor (S(S m1))) (S(S m1))).
-intro.change with (prime (S(S m1))).
+intro.simplify.
 rewrite < H.
 apply prime_smallest_factor_n.
 unfold lt.apply le_S_S.apply le_S_S.apply le_O_n.
-intro.change with (\lnot (prime (S(S m1)))).
+intro.simplify.
 change with (prime (S(S m1)) \to False).
 intro.apply H.
 apply prime_to_smallest_factor.
@@ -557,7 +552,7 @@ apply primeb_to_Prop.
 qed.
 
 theorem decidable_prime : \forall n:nat.decidable (prime n).
-intro.change with ((prime n) \lor \lnot (prime n)).
+intro.unfold decidable.
 cut 
 (match primeb n with
 [ true \Rightarrow prime n

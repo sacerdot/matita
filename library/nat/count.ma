@@ -70,9 +70,7 @@ sigma m (\lambda a.(sigma n (\lambda b.f (b*(S m) + a)) O)) O.
 intro.elim n.simplify.
 rewrite < plus_n_O.
 apply eq_sigma.intros.reflexivity.
-change with 
-(sigma (m+(S n1)*(S m)) f O =
-sigma m (\lambda a.(f ((S(n1+O))*(S m)+a)) + (sigma n1 (\lambda b.f (b*(S m)+a)) O)) O).
+simplify.
 rewrite > sigma_f_g.
 rewrite < plus_n_O.
 rewrite < H.
@@ -158,8 +156,7 @@ apply (trans_eq ? ?
 (sigma m (\lambda n.(bool_to_nat (f2 n))*(bool_to_nat (f1 i))) O)).
 reflexivity.
 apply sym_eq. apply sigma_times.
-change in match (pred (S n)) with n.
-change in match (pred (S m)) with m.
+simplify.
 apply sym_eq. apply sigma_times.
 unfold permut.
 split.

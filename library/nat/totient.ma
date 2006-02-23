@@ -44,8 +44,7 @@ apply (count_times m m2 ? ? ?
 intros.unfold cr_pair.
 apply (le_to_lt_to_lt ? (pred ((S m)*(S m2)))).
 unfold min.
-apply le_min_aux_r.
-change with ((S (pred ((S m)*(S m2)))) \le ((S m)*(S m2))).
+apply le_min_aux_r.unfold lt.
 apply (nat_case ((S m)*(S m2))).apply le_n.
 intro.apply le_n.
 intros.

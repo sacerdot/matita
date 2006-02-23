@@ -215,14 +215,11 @@ generalize in match Hcut.
 apply andb_elim.
 apply eqb_elim.intro.
 rewrite > H3.
-change with 
-(eqb ((cr_pair m n a b) \mod n) b = true \to 
-a = a \land (cr_pair m n a b) \mod n = b).
+simplify.
 intro.split.reflexivity.
 apply eqb_true_to_eq.assumption.
 intro.
-change with (false = true \to 
-(cr_pair m n a b) \mod m = a \land (cr_pair m n a b) \mod n = b).
+simplify.
 intro.apply False_ind.
 apply not_eq_true_false.apply sym_eq.assumption.
 apply (f_min_aux_true 

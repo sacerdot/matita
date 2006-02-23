@@ -262,6 +262,7 @@ unfold symmetric2. intros.apply (fraction_elim2 (\lambda f,g.ftimes f g = ftimes
   intros.change with (frac (cons (x1 + neg m) f) = frac (cons (neg m + x1) f)).
    rewrite < sym_Zplus.reflexivity.
   intros.
+   (*CSC: simplify does something nasty here because of a redex in Zplus *)
    change with 
    (match ftimes f g with
    [ one \Rightarrow Z_to_ratio (x1 + y1)
@@ -278,6 +279,7 @@ intro.elim f.
    rewrite > Zplus_Zopp.reflexivity.
   change with (Z_to_ratio (neg n + - (neg n)) = one).
    rewrite > Zplus_Zopp.reflexivity.
+   (*CSC: simplify does something nasty here because of a redex in Zplus *)
 (* again: we would need something to help finding the right change *)
   change with 
   (match ftimes f1 (finv f1) with

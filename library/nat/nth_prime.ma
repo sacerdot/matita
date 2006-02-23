@@ -41,8 +41,8 @@ qed. *)
 theorem smallest_factor_fact: \forall n:nat.
 n < smallest_factor (S n!).
 intros.
-apply not_le_to_lt.
-change with (smallest_factor (S n!) \le n \to False).intro.
+apply not_le_to_lt.unfold Not.
+intro.
 apply (not_divides_S_fact n (smallest_factor(S n!))).
 apply lt_SO_smallest_factor.
 unfold lt.apply le_S_S.apply le_SO_fact.
@@ -63,8 +63,7 @@ split.split.
 apply smallest_factor_fact.
 apply le_smallest_factor_n.
 (* Andrea: ancora hint non lo trova *)
-apply prime_smallest_factor_n.
-change with ((S(S O)) \le S (S n1)!).
+apply prime_smallest_factor_n.unfold lt.
 apply le_S.apply le_SSO_fact.
 unfold lt.apply le_S_S.assumption.
 qed.
@@ -94,8 +93,7 @@ normalize.reflexivity.
 
 theorem prime_nth_prime : \forall n:nat.prime (nth_prime n).
 intro.
-apply (nat_case n).
-change with (prime (S(S O))).
+apply (nat_case n).simplify.
 apply (primeb_to_Prop (S(S O))).
 intro.
 change with
@@ -115,14 +113,13 @@ apply le_S_S.
 apply le_n_fact_n.
 apply le_smallest_factor_n.
 apply prime_to_primeb_true.
-apply prime_smallest_factor_n.
-change with ((S(S O)) \le S (nth_prime m)!).
+apply prime_smallest_factor_n.unfold lt.
 apply le_S_S.apply le_SO_fact.
 qed.
 
 (* properties of nth_prime *)
 theorem increasing_nth_prime: increasing nth_prime.
-change with (\forall n:nat. (nth_prime n) < (nth_prime (S n))).
+unfold increasing.
 intros.
 change with
 (let previous_prime \def (nth_prime n) in

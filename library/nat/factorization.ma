@@ -40,6 +40,7 @@ intros; apply divides_b_true_to_divides;
       | rewrite > H1;
         apply le_smallest_factor_n; ]
     | rewrite > H1;
+      (*CSC: simplify here does something nasty! *)
       change with (divides_b (smallest_factor n) n = true);
       apply divides_to_divides_b_true;
       [ apply (trans_lt ? (S O));
@@ -56,9 +57,7 @@ qed.
 
 theorem divides_to_max_prime_factor : \forall n,m. (S O) < n \to O < m \to n \divides m \to 
 max_prime_factor n \le max_prime_factor m.
-intros.change with
-((max n (\lambda p:nat.eqb (n \mod (nth_prime p)) O)) \le
-(max m (\lambda p:nat.eqb (m \mod (nth_prime p)) O))).
+intros.unfold max_prime_factor.
 apply f_m_to_le_max.
 apply (trans_le ? n).
 apply le_max_n.apply divides_to_le.assumption.assumption.
@@ -90,8 +89,7 @@ elim Hcut.assumption.
 absurd (nth_prime (max_prime_factor n) \divides r).
 rewrite < H4.
 apply divides_max_prime_factor_n.
-assumption.
-change with (nth_prime (max_prime_factor n) \divides r \to False).
+assumption.unfold Not.
 intro.
 cut (r \mod (nth_prime (max_prime_factor n)) \neq O).
 apply Hcut1.apply divides_to_mod_O.
@@ -280,7 +278,8 @@ theorem defactorize_factorize: \forall n:nat.defactorize (factorize n) = n.
 intro.
 apply (nat_case n).reflexivity.
 intro.apply (nat_case m).reflexivity.
-intro.change with  
+intro.(*CSC: simplify here does something really nasty *)
+change with  
 (let p \def (max (S(S m1)) (\lambda p:nat.eqb ((S(S m1)) \mod (nth_prime p)) O)) in
 defactorize (match p_ord (S(S m1)) (nth_prime p) with
 [ (pair q r) \Rightarrow 
@@ -296,11 +295,11 @@ apply (Hcut (fst ? ? (p_ord (S(S m1)) (nth_prime p)))
 apply sym_eq.apply eq_pair_fst_snd.
 intros.
 rewrite < H.
-change with 
-(defactorize_aux (factorize_aux p r (nf_last (pred q))) O = (S(S m1))).
+simplify.
 cut ((S(S m1)) = (nth_prime p) \sup q *r).
 cut (O<r).
 rewrite > defactorize_aux_factorize_aux.
+(*CSC: simplify here does something really nasty *)
 change with (r*(nth_prime p) \sup (S (pred q)) = (S(S m1))).
 cut ((S (pred q)) = q).
 rewrite > Hcut2.
@@ -318,6 +317,7 @@ apply (divides_max_prime_factor_n (S (S m1))).
 unfold lt.apply le_S_S.apply le_S_S. apply le_O_n.
 cut ((S(S m1)) = r).
 rewrite > Hcut3 in \vdash (? (? ? %)).
+(*CSC: simplify here does something really nasty *)
 change with (nth_prime p \divides r \to False).
 intro.
 apply (p_ord_aux_to_not_mod_O (S(S m1)) (S(S m1)) (nth_prime p) q r).
@@ -427,13 +427,11 @@ change with
 intro.absurd ((nth_prime i) = (nth_prime j)).
 apply (divides_exp_to_eq ? ? (S n)).
 apply prime_nth_prime.apply prime_nth_prime.
-assumption.
-change with ((nth_prime i) = (nth_prime j) \to False).
+assumption.unfold Not.
 intro.cut (i = j).
 apply (not_le_Sn_n i).rewrite > Hcut in \vdash (? ? %).assumption.
 apply (injective_nth_prime ? ? H2).
-change with 
-(nth_prime i \divides (nth_prime j) \sup n *(defactorize_aux n1 (S j)) \to False).
+unfold Not.simplify.
 intro.
 cut (nth_prime i \divides (nth_prime j) \sup n
 \lor nth_prime i \divides defactorize_aux n1 (S j)).
@@ -441,8 +439,7 @@ elim Hcut.
 absurd ((nth_prime i) = (nth_prime j)).
 apply (divides_exp_to_eq ? ? n).
 apply prime_nth_prime.apply prime_nth_prime.
-assumption.
-change with ((nth_prime i) = (nth_prime j) \to False).
+assumption.unfold Not.
 intro.
 cut (i = j).
 apply (not_le_Sn_n i).rewrite > Hcut1 in \vdash (? ? %).assumption.
@@ -466,8 +463,6 @@ rewrite < Hcut in \vdash (? ? %).
 simplify.apply le_S_S.
 apply le_plus_n.
 apply injective_nth_prime.
-(* uffa, perche' semplifica ? *)
-change with (nth_prime (S(max_p g)+i)= nth_prime i).
 apply (divides_exp_to_eq ? ? (S n)).
 apply prime_nth_prime.apply prime_nth_prime.
 rewrite > H.
@@ -547,16 +542,15 @@ qed.
 
 theorem injective_defactorize_aux: \forall i:nat.
 injective nat_fact nat (\lambda f.defactorize_aux f i).
-change with (\forall i:nat.\forall f,g:nat_fact.
-defactorize_aux f i = defactorize_aux g i \to f = g).
+simplify.
 intros.
-apply (eq_defactorize_aux_to_eq f g i H).
+apply (eq_defactorize_aux_to_eq x y i H).
 qed.
 
 theorem injective_defactorize: 
 injective nat_fact_all nat defactorize.
-change with (\forall f,g:nat_fact_all.
-defactorize f = defactorize g \to f = g).
+unfold injective.
+change with (\forall f,g.defactorize f = defactorize g \to f=g).
 intro.elim f.
 generalize in match H.elim g.
 (* zero - zero *)
@@ -612,8 +606,6 @@ theorem factorize_defactorize:
 \forall f,g: nat_fact_all. factorize (defactorize f) = f.
 intros.
 apply injective_defactorize.
-(* uffa: perche' semplifica ??? *)
-change with (defactorize(factorize (defactorize f)) = (defactorize f)).
 apply defactorize_factorize.
 qed.
 

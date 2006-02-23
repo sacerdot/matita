@@ -166,10 +166,9 @@ qed.
 theorem congruent_pi: \forall f:nat \to nat. \forall n,m,p:nat.O < p \to
 congruent (pi n f m) (pi n (\lambda m. mod (f m) p) m) p.
 intros.
-elim n.change with (congruent (f m) (f m \mod p) p).
+elim n. simplify.
 apply congruent_n_mod_n.assumption.
-change with (congruent ((f (S n1+m))*(pi n1 f m)) 
-(((f (S n1+m))\mod p)*(pi n1 (\lambda m.(f m) \mod p) m)) p).
+simplify.
 apply congruent_times.
 assumption.
 apply congruent_n_mod_n.assumption.

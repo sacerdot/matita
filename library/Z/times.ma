@@ -49,6 +49,7 @@ simplify.reflexivity.
 simplify.reflexivity.
 simplify.reflexivity.
 qed.
+
 theorem symmetric_Ztimes : symmetric Z Ztimes.
 change with (\forall x,y:Z. x*y = y*x).
 intros.elim x.rewrite > Ztimes_z_OZ.reflexivity.
@@ -68,7 +69,7 @@ variant sym_Ztimes : \forall x,y:Z. x*y = y*x
 \def symmetric_Ztimes.
 
 theorem associative_Ztimes: associative Z Ztimes.
-change with (\forall x,y,z:Z. (x*y)*z = x*(y*z)).
+unfold associative.
 intros.elim x.
   simplify.reflexivity. 
   elim y.

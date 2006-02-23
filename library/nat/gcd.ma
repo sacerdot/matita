@@ -67,21 +67,13 @@ gcd_aux p m n \divides m \land gcd_aux p m n \divides n.
 intro.elim p.
 absurd (O < n).assumption.apply le_to_not_lt.assumption.
 cut ((n1 \divides m) \lor (n1 \ndivides m)).
-change with 
-((match divides_b n1 m with
-[ true \Rightarrow n1
-| false \Rightarrow gcd_aux n n1 (m \mod n1)]) \divides m \land
-(match divides_b n1 m with
-[ true \Rightarrow n1
-| false \Rightarrow gcd_aux n n1 (m \mod n1)]) \divides n1).
+simplify.
 elim Hcut.rewrite > divides_to_divides_b_true.
 simplify.
 split.assumption.apply (witness n1 n1 (S O)).apply times_n_SO.
 assumption.assumption.
 rewrite > not_divides_to_divides_b_false.
-change with 
-(gcd_aux n n1 (m \mod n1) \divides m \land
-gcd_aux n n1 (m \mod n1) \divides n1).
+simplify.
 cut (gcd_aux n n1 (m \mod n1) \divides n1 \land
 gcd_aux n n1 (m \mod n1) \divides mod m n1).
 elim Hcut1.
@@ -106,6 +98,7 @@ qed.
 theorem divides_gcd_nm: \forall n,m.
 gcd n m \divides m \land gcd n m \divides n.
 intros.
+(*CSC: simplify simplifies too much because of a redex in gcd *)
 change with
 (match leb n m with
   [ true \Rightarrow 
@@ -172,18 +165,14 @@ theorem divides_gcd_aux: \forall p,m,n,d. O < n \to n \le m \to n \le p \to
 d \divides m \to d \divides n \to d \divides gcd_aux p m n. 
 intro.elim p.
 absurd (O < n).assumption.apply le_to_not_lt.assumption.
-change with
-(d \divides
-(match divides_b n1 m with
-[ true \Rightarrow n1
-| false \Rightarrow gcd_aux n n1 (m \mod n1)])).
+simplify.
 cut (n1 \divides m \lor n1 \ndivides m).
 elim Hcut.
 rewrite > divides_to_divides_b_true.
 simplify.assumption.
 assumption.assumption.
 rewrite > not_divides_to_divides_b_false.
-change with (d \divides gcd_aux n n1 (m \mod n1)).
+simplify.
 apply H.
 cut (O \lt m \mod n1 \lor O = m \mod n1).
 elim Hcut1.assumption.
@@ -205,6 +194,7 @@ qed.
 theorem divides_d_gcd: \forall m,n,d. 
 d \divides m \to d \divides n \to d \divides gcd n m. 
 intros.
+(*CSC: here simplify simplifies too much because of a redex in gcd *)
 change with
 (d \divides
 match leb n m with
@@ -239,15 +229,7 @@ elim p.
 absurd (O < n).assumption.apply le_to_not_lt.assumption.
 cut (O < m).
 cut (n1 \divides m \lor  n1 \ndivides m).
-change with
-(\exists a,b.
-a*n1 - b*m = match divides_b n1 m with
-[ true \Rightarrow n1
-| false \Rightarrow gcd_aux n n1 (m \mod n1)]
-\lor 
-b*m - a*n1 = match divides_b n1 m with
-[ true \Rightarrow n1
-| false \Rightarrow gcd_aux n n1 (m \mod n1)]).
+simplify.
 elim Hcut1.
 rewrite > divides_to_divides_b_true.
 simplify.
@@ -401,6 +383,7 @@ intros.unfold lt.apply le_S_S.apply le_O_n.
 qed.
 
 theorem symmetric_gcd: symmetric nat gcd.
+(*CSC: bug here: unfold symmetric does not work *)
 change with 
 (\forall n,m:nat. gcd n m = gcd m n).
 intros.
@@ -502,11 +485,11 @@ qed.
 
 theorem prime_to_gcd_SO: \forall n,m:nat. prime n \to n \ndivides m \to
 gcd n m = (S O).
-intros.unfold prime in H.change with (gcd n m = (S O)). 
+intros.unfold prime in H.
 elim H.
 apply antisym_le.
-apply not_lt_to_le.
-change with ((S (S O)) \le gcd n m \to False).intro.
+apply not_lt_to_le.unfold Not.unfold lt.
+intro.
 apply H1.rewrite < (H3 (gcd n m)).
 apply divides_gcd_m.
 apply divides_gcd_n.assumption.

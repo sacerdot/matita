@@ -68,7 +68,7 @@ interpretation "integer 'not less than'" 'nless x y =
   (cic:/matita/logic/connectives/Not.con (cic:/matita/Z/orders/Zlt.con x y)).
 
 theorem irreflexive_Zlt: irreflexive Z Zlt.
-change with (\forall x:Z. x < x \to False).
+unfold irreflexive.unfold Not.
 intro.elim x.exact H.
 cut (neg n < neg n \to False).
 apply Hcut.apply H.simplify.unfold lt.apply not_le_Sn_n.

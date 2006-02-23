@@ -30,7 +30,7 @@ monotonic_lt_plus_r.
 
 theorem monotonic_lt_plus_l: 
 \forall n:nat.monotonic nat lt (\lambda m.m+n).
-change with (\forall n,p,q:nat. p < q \to p + n < q + n).
+simplify.
 intros.
 rewrite < sym_plus. rewrite < (sym_plus n).
 apply lt_plus_r.assumption.
@@ -71,10 +71,9 @@ qed.
 (* times *)
 theorem monotonic_lt_times_r: 
 \forall n:nat.monotonic nat lt (\lambda m.(S n)*m).
-change with (\forall n,p,q:nat. p < q \to (S n) * p < (S n) * q).
+simplify.
 intros.elim n.
 simplify.rewrite < plus_n_O.rewrite < plus_n_O.assumption.
-change with (p + (S n1) * p < q + (S n1) * q).
 apply lt_plus.assumption.assumption.
 qed.
 
@@ -83,10 +82,9 @@ theorem lt_times_r: \forall n,p,q:nat. p < q \to (S n) * p < (S n) * q
 
 theorem monotonic_lt_times_l: 
 \forall m:nat.monotonic nat lt (\lambda n.n * (S m)).
-change with 
-(\forall n,p,q:nat. p < q \to p*(S n) < q*(S n)).
+simplify.
 intros.
-rewrite < sym_times.rewrite < (sym_times (S n)).
+rewrite < sym_times.rewrite < (sym_times (S m)).
 apply lt_times_r.assumption.
 qed.
 

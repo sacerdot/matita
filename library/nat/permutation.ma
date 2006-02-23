@@ -530,10 +530,7 @@ theorem eq_map_iter_i_transpose_l : \forall f:nat\to nat \to nat.associative nat
 symmetric2 nat nat f \to \forall g:nat \to nat. \forall n,k:nat. 
 map_iter_i (S k) g f n = map_iter_i (S k) (\lambda m. g (transpose (k+n) (S k+n) m)) f n.
 intros.apply (nat_case1 k).
-intros.simplify.
-change with
-(f (g (S n)) (g n) = 
-f (g (transpose n (S n) (S n))) (g (transpose n (S n) n))).
+intros.simplify.fold simplify (transpose n (S n) (S n)).
 rewrite > transpose_i_j_i.
 rewrite > transpose_i_j_j.
 apply H1.
@@ -698,18 +695,7 @@ apply H5.apply le_n.apply le_plus_n.apply le_n.
 apply (trans_eq ? ? (map_iter_i (S n) (\lambda m.
 (g(transpose (h (S n+n1)) (S n+n1) 
 (transpose (h (S n+n1)) (S n+n1) (h m)))) )f n1)).
-change with
-(f (g (transpose (h (S n+n1)) (S n+n1) (S n+n1)))
-(map_iter_i n (\lambda m.
-g (transpose (h (S n+n1)) (S n+n1) m)) f n1)
-=
-f 
-(g(transpose (h (S n+n1)) (S n+n1) 
-(transpose (h (S n+n1)) (S n+n1) (h (S n+n1)))))
-(map_iter_i n 
-(\lambda m.
-(g(transpose (h (S n+n1)) (S n+n1) 
-(transpose (h (S n+n1)) (S n+n1) (h m))))) f n1)).
+simplify.fold simplify (transpose (h (S n+n1)) (S n+n1) (S n+n1)).
 apply eq_f2.apply eq_f.
 rewrite > transpose_i_j_j.
 rewrite > transpose_i_j_i.

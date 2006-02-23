@@ -163,8 +163,7 @@ apply not_le_to_lt.exact H.
 qed.
 
 theorem le_to_not_lt: \forall n,m:nat. le n m \to Not (lt m n).
-intros.
-change with (Not (le (S m) n)).
+intros.unfold Not.unfold lt.
 apply lt_to_not_le.unfold lt.
 apply le_S_S.assumption.
 qed.
