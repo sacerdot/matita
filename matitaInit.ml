@@ -128,6 +128,11 @@ let _ =
 Usage: matitac [ OPTION ... ] FILE
 Options:"
           BuildTimeConf.version;
+      "gragrep",
+        sprintf "Grafite Grep v%s
+Usage: gragrep [ -r ] PATH
+Options:"
+          BuildTimeConf.version;
       "matita",
         sprintf "Matita v%s
 Usage: matita [ OPTION ... ] [ FILE ... ]
@@ -190,6 +195,9 @@ let usage () =
   in
   try Hashtbl.find usages usage_key with Not_found -> default_usage
 
+let extra_cmdline_specs = ref []
+let add_cmdline_spec l = extra_cmdline_specs := l @ !extra_cmdline_specs
+
 let parse_cmdline init_status =
   if not (already_configured [CmdLine] init_status) then begin
     let includes = ref [ BuildTimeConf.stdlib_dir ] in
@@ -238,7 +246,7 @@ let parse_cmdline init_status =
           ]
         else []
       in
-      std_arg_spec @ debug_arg_spec
+      std_arg_spec @ debug_arg_spec @ !extra_cmdline_specs
     in
     let set_list ~key l =
       Helm_registry.set_list Helm_registry.of_string ~key ~value:(List.rev !l)

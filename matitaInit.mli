@@ -36,3 +36,6 @@ val load_configuration_file: unit -> unit
   (** die nicely: exit with return code 1 printing usage error message *)
 val die_usage: unit -> 'a
 
+  (** add extra command line options *)
+val add_cmdline_spec: (Arg.key * Arg.spec * Arg.doc) list -> unit
+
