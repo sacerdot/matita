@@ -198,8 +198,15 @@ definition member_of_subgroup ≝
 notation "hvbox(x break ∈ H)" with precedence 79
 for @{ 'member_of $x $H }.
 
+notation "hvbox(x break ∉ H)" with precedence 79
+for @{ 'not_member_of $x $H }.
+
 interpretation "Member of subgroup" 'member_of x H =
  (cic:/matita/algebra/groups/member_of_subgroup.con _ H x).
+ 
+interpretation "Not member of subgroup" 'not_member_of x H =
+ (cic:/matita/logic/connectives/Not.con
+  (cic:/matita/algebra/groups/member_of_subgroup.con _ H x)).
 
 (* Left cosets *)
 
@@ -242,7 +249,6 @@ alias symbol "member_of" (instance 0) = "Member of subgroup".
 theorem member_of_subgroup_op_inv_x_y_to_left_coset_eq:
  ∀G.∀x,y.∀H:subgroup G. (x \sup -1 ·y) ∈ H → x*H = y*H.
 intros;
-unfold left_coset_eq;
 simplify;
 intro;
 unfold member_of_subgroup in H1;
@@ -263,40 +269,37 @@ exists;
 ].
 qed.
 
-(*theorem foo:
- \forall G:Group. \forall x1,x2:G. \forall H:subgroup G.
-  x1*x2^-1 \nin H \to x1*H does_not_overlap x2*H
+theorem Not_member_of_subgroup_to_left_coset_disjoint:
+ ∀G.∀x,y.∀H:subgroup G.(x \sup -1 ·y) ∉ H → x*H ∥ y*H.
+intros;
+simplify;
+unfold Not;
+intros (x');
+apply H1;
+unfold member_of_subgroup;
+elim H2;
+apply (ex_intro ? ? (x'·a \sup -1));
+rewrite > f_morph;
+apply (eq_op_x_y_op_z_y_to_eq ? (a \sub H));
+rewrite > (op_associative ? G);
+rewrite < H3;
+rewrite > (op_associative ? G);
+rewrite < f_morph;
+rewrite > (inv_is_left_inverse ? H);
+rewrite < (op_associative ? G);
+rewrite > (inv_is_left_inverse ? G);
+rewrite > (e_is_left_unit ? G);
+rewrite < (f_morph ? ? H);
+rewrite > (e_is_right_unit ? H);
+reflexivity.
+qed.
 
-theorem foo:
- \forall x:G. \forall H:subgroup G. x \in x*H
-
-definition disjoinct
- (T: Type) (n:nat) (S: \forall x:nat. x < n -> {S:Type * (S -> T)})
-:=
- \forall i,j:nat. i < n \to j < n \to ...
-
-
-check
- (λG.λH,H':left_coset G.λx:Type_of_Group (group ? (subgrp ? H)). (embed ? (subgrp ? H) x)).
-
-definition left_coset_eq ≝
- λG.λH,H':left_coset G.
-  ∀x:group ? (subgrp ? H).
-   ex (group ? (subgroup ? H')) (λy.
-    (element ? H)·(embed ? (subgrp ? H) x) =
-    (element ? H')·(embed ? (subgrp ? H') y)).
- 
-(*record left_coset (G:Group) : Type ≝
- { subgroup: Group;
-   subgroup_is_subgroup: subgroup ≤ G;
-   element: G
- }.
-
-definition left_coset_eq ≝
- λG.λH,H':left_coset G.
-  ∀x:subgroup ? H.
-   ex (subgroup ? H') (λy.
-    (element ? H)·(embed ? ? (subgroup_is_subgroup ? H) ˜ x) =
-    (element ? H')·(embed ? ? (subgroup_is_subgroup ? H') ˜ y)).
-*)
-*)
+theorem in_x_mk_left_coset_x_H:
+ ∀G.∀x:Type_of_Group G.∀H:subgroup G.x ∈ (x*H).
+intros;
+simplify;
+apply (ex_intro ? ? 1);
+rewrite > morphism_to_eq_f_1_1;
+rewrite > (e_is_right_unit ? G);
+reflexivity.
+qed.
