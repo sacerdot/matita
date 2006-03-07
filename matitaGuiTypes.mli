@@ -139,6 +139,8 @@ object
   method load_logo_with_qed: unit
   method load_sequents: GrafiteTypes.incomplete_proof -> unit
   method goto_sequent: int -> unit  (* to be called _after_ load_sequents *)
+
+  method cicMathView: cicMathView
 end
 
 class type cicBrowser =

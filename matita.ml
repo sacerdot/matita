@@ -103,9 +103,10 @@ let _ =
     gui#main#debugMenu#misc#show ();
     let addDebugItem ~label callback =
       let item =
-        GMenu.menu_item ~packing:gui#main#debugMenu_menu#append ~label ()
-      in
-      ignore (item#connect#activate callback)
+        GMenu.menu_item ~packing:gui#main#debugMenu_menu#append ~label () in
+      ignore (item#connect#activate callback) in
+    let addDebugSeparator () =
+      ignore (GMenu.separator_item ~packing:gui#main#debugMenu_menu#append ())
     in
     addDebugItem "dump environment to \"env.dump\"" (fun _ ->
       let oc = open_out "env.dump" in
@@ -124,9 +125,6 @@ let _ =
       List.iter (fun (u,_,_) -> 
         prerr_endline (UriManager.string_of_uri u)) 
         (CicEnvironment.list_obj ()));
-(*     addDebugItem "print selections" (fun () ->
-      let cicMathView = MatitaMathView.cicMathView_instance () in
-      List.iter HLog.debug (cicMathView#string_of_selections)); *)
     addDebugItem "dump script status" script#dump;
     addDebugItem "dump configuration file to ./foo.conf.xml" (fun _ ->
       Helm_registry.save_to "./foo.conf.xml");
@@ -134,24 +132,6 @@ let _ =
       (fun _ ->
          if script#onGoingProof () then
            HLog.debug (CicMetaSubst.ppmetasenv [] script#proofMetasenv));
-    addDebugItem "dump coercions Db" (fun _ ->
-      List.iter
-        (fun (s,t,u) -> 
-          HLog.debug
-            (UriManager.name_of_uri u ^ ":"
-             ^ CoercDb.name_of_carr s ^ " -> " ^ CoercDb.name_of_carr t))
-        (CoercDb.to_list ()));
-    addDebugItem "show coercions graph" (fun _ ->
-      let str = CoercGraph.generate_dot_file () in
-      let filename, oc = Filename.open_temp_file "xx" ".dot" in
-      output_string oc str;
-      close_out oc;
-      let ps = Filename.temp_file "yy" ".png" in
-      ignore (Unix.system ("/usr/bin/dot -Tpng -o" ^ ps ^ " " ^ filename));
-      ignore (Unix.system ("/usr/bin/display " ^ ps));
-      Sys.remove ps;
-      Sys.remove filename);
-        
     addDebugItem "print top-level grammar entries"
       CicNotationParser.print_l2_pattern;
     addDebugItem "dump moo to stderr" (fun _ ->
@@ -178,23 +158,46 @@ let _ =
             ["0"; "0"; "0"]; ["0"; "0"; "1"]; ["0"; "1"; "0"]; ["0"; "1"; "1"];
             ["1"; "0"; "0"]; ["1"; "0"; "1"]; ["1"; "1"; "0"]; ["1"; "1"; "1"]]
           ()))); *)
-    addDebugItem "rotate light bulbs"
+(*     addDebugItem "rotate light bulbs"
       (fun _ ->
          let nb = gui#main#hintNotebook in
-         nb#goto_page ((nb#current_page + 1) mod 3));
-    addDebugItem "print runtime dir"
-      (fun _ ->
-        prerr_endline BuildTimeConf.runtime_base_dir);
+         nb#goto_page ((nb#current_page + 1) mod 3)); *)
+    addDebugSeparator ();
     addDebugItem "disable all (pretty printing) notations"
       (fun _ -> CicNotation.set_active_notations []);
     addDebugItem "enable all (pretty printing) notations"
       (fun _ ->
         CicNotation.set_active_notations
           (List.map fst (CicNotation.get_all_notations ())));
+    addDebugSeparator ();
     addDebugItem "enable coercions hiding"
       (fun _ -> TermAcicContent.hide_coercions := true);
     addDebugItem "disable coercions hiding"
       (fun _ -> TermAcicContent.hide_coercions := false);
+    addDebugItem "dump coercions Db" (fun _ ->
+      List.iter
+        (fun (s,t,u) -> 
+          HLog.debug
+            (UriManager.name_of_uri u ^ ":"
+             ^ CoercDb.name_of_carr s ^ " -> " ^ CoercDb.name_of_carr t))
+        (CoercDb.to_list ()));
+    addDebugItem "show coercions graph" (fun _ ->
+      let str = CoercGraph.generate_dot_file () in
+      let filename, oc = Filename.open_temp_file "xx" ".dot" in
+      output_string oc str;
+      close_out oc;
+      let ps = Filename.temp_file "yy" ".png" in
+      ignore (Unix.system ("/usr/bin/dot -Tpng -o" ^ ps ^ " " ^ filename));
+      ignore (Unix.system ("/usr/bin/display " ^ ps));
+      Sys.remove ps;
+      Sys.remove filename);
+    addDebugSeparator ();
+    let mview () = (MatitaMathView.sequentsViewer_instance ())#cicMathView in
+(*     addDebugItem "save (sequent) MathML to matita.xml"
+      (fun _ -> ignore ((Gdome.domImplementation ())#saveDocumentToFile
+        ~doc:(HExtlib.unopt (mview ())#get_document) ~name:"matita.xml" ())); *)
+    addDebugItem "load (sequent) MathML from matita.xml"
+      (fun _ -> (mview ())#load_uri ~filename:"matita.xml");
   end
   (** Debugging }}} *)
 

@@ -538,6 +538,8 @@ class sequentsViewer ~(notebook:GPack.notebook) ~(cicMathView:cicMathView) () =
   object (self)
     inherit scriptAccessor
 
+    method cicMathView = cicMathView  (** clickableMathView accessor *)
+
     val mutable pages = 0
     val mutable switch_page_callback = None
     val mutable page2goal = []  (* associative list: page no -> goal no *)
