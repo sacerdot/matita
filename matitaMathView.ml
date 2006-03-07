@@ -154,6 +154,13 @@ type selected_term =
   | SelTerm of Cic.term * string option (* term, parent hypothesis (if any) *)
   | SelHyp of string * Cic.context (* hypothesis, context *)
 
+let href_of_elt elt =
+  let localName = href_ds in
+  if elt#hasAttributeNS ~namespaceURI:xlink_ns ~localName then
+    Some (elt#getAttributeNS ~namespaceURI:xlink_ns ~localName)#to_string
+  else
+    None
+
 class clickableMathView obj =
 let text_width = 80 in
 object (self)
@@ -166,12 +173,17 @@ object (self)
   method private set_cic_info info = _cic_info <- info
   method private cic_info = _cic_info
 
+  val normal_cursor = Gdk.Cursor.create `LEFT_PTR
+  val href_cursor = Gdk.Cursor.create `HAND1
+(*   val href_tooltips = GData.tooltips ~delay:1 () *)
+
   initializer
     self#set_font_size !current_font_size;
     ignore (self#connect#selection_changed self#choose_selection_cb);
     ignore (self#event#connect#button_press self#button_press_cb);
     ignore (self#event#connect#button_release self#button_release_cb);
     ignore (self#event#connect#selection_clear self#selection_clear_cb);
+    ignore (self#connect#element_over self#element_over_cb);
     ignore (self#coerce#misc#connect#selection_get self#selection_get_cb)
 
   val mutable button_press_x = -1.
@@ -207,6 +219,22 @@ object (self)
     end else if button = right_button then
       self#popup_contextual_menu (GdkEvent.Button.time gdk_button);
     false
+
+  method private element_over_cb (elt_opt, _, _, _) =
+    let win () = self#misc#window in
+    let leave_href () =
+      Gdk.Window.set_cursor (win ()) normal_cursor;
+(*       href_tooltips#disable (); *)
+    in
+    match elt_opt with
+    | Some elt ->
+        (match href_of_elt elt with
+        | Some text ->
+(*             href_tooltips#enable ();
+            href_tooltips#set_tip ~text (self :> GObj.widget); *)
+            Gdk.Window.set_cursor (win ()) href_cursor
+        | None -> leave_href ())
+    | None -> leave_href ()
 
     (** @return a pattern structure which contains pretty printed terms *)
   method private tactic_text_pattern_of_selection =
@@ -275,14 +303,9 @@ object (self)
           (match self#get_element_at x y with
           | None -> ()
           | Some elt ->
-              let localName = href_ds in
-              if elt#hasAttributeNS ~namespaceURI:xlink_ns ~localName then
-                self#invoke_href_callback
-                  (elt#getAttributeNS ~namespaceURI:xlink_ns
-                    ~localName)#to_string
-                  gdk_button
-              else
-                ignore (self#action_toggle elt));
+              (match href_of_elt elt with
+              | Some href -> self#invoke_href_callback href gdk_button
+              | None -> ignore (self#action_toggle elt)))
     end;
     false
 
