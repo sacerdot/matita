@@ -294,6 +294,7 @@ rewrite > (e_is_right_unit ? H);
 reflexivity.
 qed.
 
+(*CSC: here the coercion Type_of_Group cannot be omitted. Why? *)
 theorem in_x_mk_left_coset_x_H:
  ∀G.∀x:Type_of_Group G.∀H:subgroup G.x ∈ (x*H).
 intros;
@@ -302,4 +303,23 @@ apply (ex_intro ? ? 1);
 rewrite > morphism_to_eq_f_1_1;
 rewrite > (e_is_right_unit ? G);
 reflexivity.
+qed.
+
+(* Normal Subgroups *)
+
+record normal_subgroup (G:Group) : Type ≝
+ { ns_subgroup:> subgroup G;
+   normal:> ∀x:G.∀y:ns_subgroup.(x·y \sub ns_subgroup·x \sup -1) ∈ ns_subgroup
+ }.
+
+(*CSC: I have not defined yet right cosets 
+theorem foo:
+ ∀G.∀H:normal_subgroup G.∀x.x*H=H*x.
+*)
+
+theorem member_of_left_coset_mk_left_coset_x_H_a_to_member_of_left_coset_mk_left_coset_y_H_b_to_member_of_left_coset_mk_left_coset_op_x_y_H_op_a_b:
+ ∀G.∀H:normal_subgroup G.∀x,y,a,b.
+  a ∈ (x*H) → b ∈ (y*H) → (a·b) ∈ ((x·y)*H).
+intros;
+simplify;
 qed.
