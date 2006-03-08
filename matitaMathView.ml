@@ -154,10 +154,12 @@ type selected_term =
   | SelTerm of Cic.term * string option (* term, parent hypothesis (if any) *)
   | SelHyp of string * Cic.context (* hypothesis, context *)
 
-let href_of_elt elt =
+let hrefs_of_elt elt =
   let localName = href_ds in
   if elt#hasAttributeNS ~namespaceURI:xlink_ns ~localName then
-    Some (elt#getAttributeNS ~namespaceURI:xlink_ns ~localName)#to_string
+    let text =
+      (elt#getAttributeNS ~namespaceURI:xlink_ns ~localName)#to_string in
+    Some (HExtlib.split text)
   else
     None
 
@@ -175,7 +177,6 @@ object (self)
 
   val normal_cursor = Gdk.Cursor.create `LEFT_PTR
   val href_cursor = Gdk.Cursor.create `HAND1
-(*   val href_tooltips = GData.tooltips ~delay:1 () *)
 
   initializer
     self#set_font_size !current_font_size;
@@ -189,6 +190,9 @@ object (self)
   val mutable button_press_x = -1.
   val mutable button_press_y = -1.
   val mutable selection_changed = false
+  val mutable href_statusbar_msg:
+    (GMisc.statusbar_context * Gtk.statusbar_message) option = None
+    (* <statusbar ctxt, statusbar msg> *)
 
   method private selection_get_cb ctxt ~info ~time =
     let text =
@@ -224,16 +228,22 @@ object (self)
     let win () = self#misc#window in
     let leave_href () =
       Gdk.Window.set_cursor (win ()) normal_cursor;
-(*       href_tooltips#disable (); *)
+      HExtlib.iter_option (fun (ctxt, msg) -> ctxt#remove msg)
+        href_statusbar_msg
     in
     match elt_opt with
     | Some elt ->
-        (match href_of_elt elt with
-        | Some text ->
-(*             href_tooltips#enable ();
-            href_tooltips#set_tip ~text (self :> GObj.widget); *)
-            Gdk.Window.set_cursor (win ()) href_cursor
-        | None -> leave_href ())
+        (match hrefs_of_elt elt with
+        | Some ((_ :: _) as hrefs) ->
+            Gdk.Window.set_cursor (win ()) href_cursor;
+            let msg_text = (* now create statusbar msg and store it *)
+              match hrefs with
+              | [ href ] -> sprintf "Hyperlink to %s" href
+              | _ -> sprintf "Hyperlinks to: %s" (String.concat ", " hrefs) in
+            let ctxt = (get_gui ())#main#statusBar#new_context ~name:"href" in
+            let msg = ctxt#push msg_text in
+            href_statusbar_msg <- Some (ctxt, msg)
+        | _ -> leave_href ())
     | None -> leave_href ()
 
     (** @return a pattern structure which contains pretty printed terms *)
@@ -303,20 +313,20 @@ object (self)
           (match self#get_element_at x y with
           | None -> ()
           | Some elt ->
-              (match href_of_elt elt with
-              | Some href -> self#invoke_href_callback href gdk_button
+              (match hrefs_of_elt elt with
+              | Some hrefs -> self#invoke_href_callback hrefs gdk_button
               | None -> ignore (self#action_toggle elt)))
     end;
     false
 
-  method private invoke_href_callback href_value gdk_button =
+  method private invoke_href_callback hrefs gdk_button =
     let button = GdkEvent.Button.button gdk_button in
     if button = left_button then
       let time = GdkEvent.Button.time gdk_button in
       match href_callback with
       | None -> ()
       | Some f ->
-          (match HExtlib.split href_value with
+          (match hrefs with
           | [ uri ] ->  f uri
           | uris ->
               let menu = GMenu.menu () in
