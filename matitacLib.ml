@@ -103,8 +103,7 @@ let clean_exit n =
    | Some grafite_status ->
       try
        let baseuri = GrafiteTypes.get_string_option grafite_status "baseuri" in
-       let basedir = Helm_registry.get "matita.basedir" in
-       LibraryClean.clean_baseuris ~basedir ~verbose:false [baseuri];
+       LibraryClean.clean_baseuris ~verbose:false [baseuri];
        opt_exit n
       with GrafiteTypes.Option_error("baseuri", "not found") ->
        (* no baseuri ==> nothing to clean yet *)
@@ -158,6 +157,7 @@ let main ~mode =
   MatitaInit.initialize_all ();
   (* must be called after init since args are set by cmdline parsing *)
   let fname = fname () in
+  let system_mode =  Helm_registry.get_bool "matita.system" in
   let include_paths =
    Helm_registry.get_list Helm_registry.string "matita.includes" in
   grafite_status := Some (GrafiteSync.init ());
@@ -166,6 +166,7 @@ let main ~mode =
     BuildTimeConf.core_notation_script);
   Sys.catch_break true;
   let origcb = HLog.get_log_callback () in
+  let origcb t s = origcb t ((if system_mode then "[S] " else "") ^ s) in
   let newcb tag s =
     match tag with
     | `Debug | `Message -> ()
@@ -216,13 +217,16 @@ let main ~mode =
      end
     else
      begin
-       let basedir = Helm_registry.get "matita.basedir" in
        let baseuri =
         DependenciesParser.baseuri_of_script ~include_paths fname in
-       let moo_fname = LibraryMisc.obj_file_of_baseuri ~basedir ~baseuri in
-       let lexicon_fname= LibraryMisc.lexicon_file_of_baseuri ~basedir ~baseuri in
+       let moo_fname = 
+         LibraryMisc.obj_file_of_baseuri ~baseuri ~writable:true 
+       in
+       let lexicon_fname= 
+         LibraryMisc.lexicon_file_of_baseuri ~baseuri ~writable:true 
+       in
        let metadata_fname =
-        LibraryMisc.metadata_file_of_baseuri ~basedir ~baseuri
+        LibraryMisc.metadata_file_of_baseuri ~baseuri ~writable:true
        in
        GrafiteMarshal.save_moo moo_fname moo_content_rev;
        LibraryNoDb.save_metadata metadata_fname metadata;

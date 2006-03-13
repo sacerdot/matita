@@ -45,7 +45,8 @@ val phrase_sep                    : string
 val runtime_base_dir              : string
 val script_font                   : string
 val script_template               : string
-val stdlib_dir                    : string
+val stdlib_dir_devel              : string
+val stdlib_dir_installed          : string
 val undo_history_size             : int
 val version                       : string
 

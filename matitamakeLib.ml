@@ -163,8 +163,6 @@ let make chdir args =
   try
     Unix.chdir chdir;
     let cmd = String.concat " " ("make" :: List.map Filename.quote args) in
-    if Helm_registry.get_int "matita.verbosity" > 1 then
-      HLog.debug (sprintf "MATITAMAKE: %s" cmd);
     let rc = Unix.system cmd in
     Unix.chdir old;
     match rc with
@@ -175,7 +173,12 @@ let make chdir args =
     logger `Warning ("Unix Error: " ^ cmd ^ ": " ^ err);
     false
       
-let call_make development target make =
+let call_make ?matita_flags development target make =
+  let matita_flags = 
+    match matita_flags with 
+    | None -> (try Sys.getenv "MATITA_FLAGS" with Not_found -> "")
+    | Some s -> s 
+  in
   rebuild_makefile development;
   let makefile = makefile_for_development development in
   let nodb =
@@ -185,14 +188,19 @@ let call_make development target make =
   let flags = flags @ if nodb then ["NODB=true"] else [] in
   let flags =
     try
-      flags @ [ sprintf "MATITA_FLAGS=%s" (Sys.getenv "MATITA_FLAGS") ]
+      flags @ [ sprintf "MATITA_FLAGS=%s" matita_flags ]
     with Not_found -> flags in
-  make development.root 
-    (["--no-print-directory"; "-s"; "-k"; "-f"; makefile; target]
-    @ flags)
+  let args = 
+    ["--no-print-directory"; "-s"; "-k"; "-f"; makefile; target] @ flags 
+  in
+(*
+  prerr_endline 
+    ("callink make from "^development.root^" args: "^String.concat " " args);
+*)
+  make development.root args
       
-let build_development ?(target="all") development =
-  call_make development target make
+let build_development ?matita_flags ?(target="all") development =
+  call_make ?matita_flags development target make
 
 (* not really good vt100 *)
 let vt100 s =
@@ -257,15 +265,15 @@ let mk_maker refresh_cb =
     | Unix.Unix_error (_,"read",_)
     | Unix.Unix_error (_,"select",_) -> true)
 
-let build_development_in_bg ?(target="all") refresh_cb development =
-  call_make development target (mk_maker refresh_cb)
+let build_development_in_bg ?matita_flags ?(target="all") refresh_cb development =
+  call_make ?matita_flags development target (mk_maker refresh_cb)
 ;;
 
-let clean_development development =
-  call_make development "clean" make
+let clean_development ?matita_flags development =
+  call_make ?matita_flags development "clean" make
 
-let clean_development_in_bg refresh_cb development =
-  call_make development "clean" (mk_maker refresh_cb)
+let clean_development_in_bg ?matita_flags  refresh_cb development =
+  call_make development ?matita_flags  "clean" (mk_maker refresh_cb)
 
 let destroy_development_aux development clean_development =
   let delete_development development = 
@@ -298,12 +306,45 @@ let destroy_development_aux development clean_development =
     end;
   delete_development development 
  
-let destroy_development development = 
-  destroy_development_aux development clean_development
+let destroy_development ?matita_flags development = 
+  destroy_development_aux development (clean_development ?matita_flags)
 
-let destroy_development_in_bg refresh development = 
-  destroy_development_aux development (clean_development_in_bg refresh) 
+let destroy_development_in_bg ?matita_flags refresh development = 
+  destroy_development_aux development 
+    (clean_development_in_bg refresh ?matita_flags ) 
   
 let root_for_development development = development.root
 let name_for_development development = development.name
+
+let publish_development_bstract build clean devel = 
+  let matita_flags = "\"-system\"" in
+  HLog.message "cleaning the development before publishing";
+  if clean ~matita_flags:"" devel then
+    begin
+      HLog.message "rebuilding the development in 'system' space";
+      if build ~matita_flags devel then
+        begin
+          HLog.message "publishing succeded";
+          true
+        end
+      else
+        begin
+          HLog.error "building process failed, reverting";
+          if not (clean ~matita_flags devel) then
+            HLog.error "cleaning failed, end of the world (2)";
+          false
+        end
+    end
+  else
+    (HLog.error "unable to clean the development, publishing failed"; false)
+  
+let publish_development devel = 
+  publish_development_bstract 
+    (fun ~matita_flags devel -> build_development ~matita_flags devel) 
+    (fun ~matita_flags devel -> clean_development ~matita_flags devel) devel
+let publish_development_in_bg cb devel = 
+  publish_development_bstract 
+    (fun ~matita_flags devel -> build_development_in_bg cb ~matita_flags devel)
+    (fun ~matita_flags devel -> clean_development_in_bg cb ~matita_flags devel)
+    devel
 

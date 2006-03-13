@@ -102,28 +102,28 @@ world: all
 endif
 
 matita: matita.ml $(LIB_DEPS) $(CMOS)
-	@echo "OCAMLC $<"
+	@echo "  OCAMLC $<"
 	$(H)$(OCAMLC) $(PKGS) -linkpkg -o $@ $(CMOS) matita.ml
 matita.opt: matita.ml $(LIBX_DEPS) $(CMXS)
-	@echo "OCAMLOPT $<"
+	@echo "  OCAMLOPT $<"
 	$(H)$(OCAMLOPT) $(PKGS) -linkpkg -o $@ $(CMXS) matita.ml
 
 dump_moo: dump_moo.ml buildTimeConf.cmo
-	@echo "OCAMLC $<"
+	@echo "  OCAMLC $<"
 	$(H)$(OCAMLC) $(PKGS) -linkpkg -o $@ buildTimeConf.cmo $<
 dump_moo.opt: dump_moo.ml buildTimeConf.cmx
 	@echo "OCAMLOPT $<"
 	$(H)$(OCAMLOPT) $(PKGS) -linkpkg -o $@ buildTimeConf.cmx $<
 
 matitac: matitac.ml $(CLIB_DEPS) $(CCMOS) $(MAINCMOS)
-	@echo "OCAMLC $<"
+	@echo "  OCAMLC $<"
 	$(H)$(OCAMLC) $(CPKGS) -linkpkg -o $@ $(CCMOS) $(MAINCMOS) matitac.ml
 matitac.opt: matitac.ml $(CLIBX_DEPS) $(CCMXS) $(MAINCMXS)
-	@echo "OCAMLOPT $<"
+	@echo "  OCAMLOPT $<"
 	$(H)$(OCAMLOPT) $(CPKGS) -linkpkg -o $@ $(CCMXS) $(MAINCMXS) matitac.ml
 
 matitatop: matitatop.ml $(CLIB_DEPS) $(CCMOS)
-	@echo "OCAMLC $<"
+	@echo "  OCAMLC $<"
 	$(H)$(OCAMLC) $(CPKGS) -linkpkg -o $@ toplevellib.cma $(CCMOS) $<
 
 matitadep: matitac
@@ -209,21 +209,22 @@ endif
 ifeq ($(DISTRIBUTED),yes)
 
 dist_library: dist_library@library
-dist_library_clean:
-	@echo "MATITACLEAN -system all"
-	$(H)./matitaclean$(BEST_EXT) \
-		-system -conffile `pwd`/matita.conf.xml.build all
 dist_library@%:
-	@echo "MATITAMAKE -system init"
+	@echo "MATITAMAKE init $*"
 	$(H)MATITA_RT_BASE_DIR=`pwd` \
-		MATITA_FLAGS="-system -conffile `pwd`/matita.conf.xml.build" \
-		./matitamake$(BEST_EXT) -conffile `pwd`/matita.conf.xml.build \
+		MATITA_FLAGS="-conffile `pwd`/matita.conf.xml" \
+		./matitamake$(BEST_EXT) -conffile `pwd`/matita.conf.xml \
 			init $* `pwd`/$*
-	@echo "MATITAMAKE -system build"
+	@echo "MATITAMAKE publish $*"
 	$(H)MATITA_RT_BASE_DIR=`pwd` \
-		MATITA_FLAGS="-system -conffile `pwd`/matita.conf.xml.build" \
-		./matitamake$(BEST_EXT) -conffile `pwd`/matita.conf.xml.build \
-			build $*
+		MATITA_FLAGS="-conffile `pwd`/matita.conf.xml" \
+		./matitamake$(BEST_EXT) -conffile `pwd`/matita.conf.xml \
+			publish $*
+	@echo "MATITAMAKE destroy $*"
+	$(H)MATITA_RT_BASE_DIR=`pwd` \
+		MATITA_FLAGS="-conffile `pwd`/matita.conf.xml" \
+		./matitamake$(BEST_EXT) -conffile `pwd`/matita.conf.xml \
+			destroy $*
 	touch $@
 
 endif
@@ -236,33 +237,33 @@ INSTALL_STUFF = 			\
 	matita.ma.templ 		\
 	core_notation.moo 		\
 	matita.conf.xml 		\
-	matita.conf.xml.user 		\
 	closed.xml 			\
 	gtkmathview.matita.conf.xml 	\
 	template_makefile.in 		\
 	AUTHORS 			\
 	LICENSE 			\
 	$(NULL)
+
+
 ifeq ($(HAVE_OCAMLOPT),yes)
-INSTALL_STUFF += $(PROGRAMS_OPT)
+INSTALL_STUFF_BIN = $(PROGRAMS_OPT)
 else
-INSTALL_STUFF += $(PROGRAMS_BYTE)
+INSTALL_STUFF_BIN = $(PROGRAMS_BYTE)
 endif
 
-install:
-	# install main dir and executables
-	install -d $(DESTDIR)
+install: install_preliminaries 
+	#dist_library 
+
+install_preliminaries:
+	install -d $(DESTDIR)/ma/
 	cp -a $(INSTALL_STUFF) $(DESTDIR)
-	# install the library and corresponding scripts
-	if [ -d $(DESTDIR)/library ]; then rm -rf $(DESTDIR)/library; fi
-	cp -a .matita/xml/matita/ $(DESTDIR)/library/
-	if [ -d $(DESTDIR)/ma ]; then rm -rf $(DESTDIR)/ma; fi
-	install -d $(DESTDIR)/ma
+	install -s $(INSTALL_STUFF_BIN) $(DESTDIR)
 ifeq ($(HAVE_OCAMLOPT),yes)
-	for p in $(PROGRAMS_BYTE); do ln -s $$p.opt $(DESTDIR)/$$p; done
+	for p in $(PROGRAMS_BYTE); do ln -fs $$p.opt $(DESTDIR)/$$p; done
 endif
-	cp -a library/ $(DESTDIR)/ma/stdlib/
-	cp -a contribs/ $(DESTDIR)/ma/contribs/
+	cp -a library/ $(DESTDIR)/ma/standard-library
+	cp -a contribs/ $(DESTDIR)/ma/
+
 uninstall:
 	rm -rf $(DESTDIR)
 
@@ -346,16 +347,16 @@ depend:
 include .depend
 
 %.cmi: %.mli
-	@echo "OCAMLC $<"
+	@echo "  OCAMLC $<"
 	$(H)$(OCAMLC) $(PKGS) -c $<
 %.cmo %.cmi: %.ml
-	@echo "OCAMLC $<"
+	@echo "  OCAMLC $<"
 	$(H)$(OCAMLC) $(PKGS) -c $<
 %.cmx: %.ml
-	@echo "OCAMLOPT $<"
+	@echo "  OCAMLOPT $<"
 	$(H)$(OCAMLOPT) $(PKGS) -c $<
 %.annot: %.ml
-	@echo "OCAMLC -dtypes $<"
+	@echo "  OCAMLC -dtypes $<"
 	$(H)$(OCAMLC) -dtypes $(PKGS) -c $<
 
 $(CMOS): $(LIB_DEPS)

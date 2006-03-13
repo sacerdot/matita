@@ -29,13 +29,17 @@ type development
  * ask matitamake to recorder [dir] as the root for thedevelopment [name] *)
 val initialize_development: string -> string -> development option
 (* make target [default all] *)
-val build_development: ?target:string -> development -> bool
+val build_development: ?matita_flags:string -> ?target:string -> development -> bool
 (* make target [default all], the refresh cb is called after every output *)
 val build_development_in_bg: 
-  ?target:string -> (unit -> unit) -> development -> bool
+  ?matita_flags:string -> ?target:string -> (unit -> unit) -> development -> bool
 (* make clean *)
-val clean_development: development -> bool
-val clean_development_in_bg: (unit -> unit) -> development -> bool
+val clean_development: ?matita_flags:string -> development -> bool
+val clean_development_in_bg: ?matita_flags:string -> (unit -> unit) -> development -> bool
+
+val publish_development_in_bg: (unit -> unit) -> development -> bool
+val publish_development: development -> bool
+
 (* return the development that handles dir *)
 val development_for_dir: string -> development option
 (* return the development *)
@@ -43,8 +47,8 @@ val development_for_name: string -> development option
 (* return the known list of name, development_root *)
 val list_known_developments: unit -> (string * string ) list
 (* cleans the development, forgetting about it *)
-val destroy_development: development -> unit
-val destroy_development_in_bg: (unit -> unit) -> development -> unit
+val destroy_development: ?matita_flags:string -> development -> unit
+val destroy_development_in_bg: ?matita_flags:string -> (unit -> unit) -> development -> unit
 (* initiale internal data structures *)
 val initialize : unit -> unit
 (* gives back the root *)

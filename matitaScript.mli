@@ -24,7 +24,7 @@
  *)
 
 exception NoUnfinishedProof
-exception ActionCancelled
+exception ActionCancelled of string
 
 class type script =
 object

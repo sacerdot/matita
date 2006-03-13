@@ -96,6 +96,14 @@ let main () =
     | true -> exit 0
     | false -> exit 1
   in
+  let publish_dev args = 
+    if List.length args <> 1 then !usage ();
+    let name = (List.hd args) in
+    let dev = dev_of_name name in
+    match MK.publish_development dev with
+    | true -> exit 0
+    | false -> exit 1
+  in
   let target args = 
     if List.length args < 1 then !usage ();
     let dev = dev_for_dir (Unix.getcwd ()) in
@@ -110,6 +118,7 @@ let main () =
     "list", list_dev;
     "destroy", destroy_dev;
     "build", build_dev;
+    "publish", publish_dev;
   ]
   in
   usage := MatitaInit.die_usage;
@@ -117,8 +126,12 @@ let main () =
     match args with
     | [] -> target [ "all" ]
     | s :: tl ->
-        try (List.assoc s params) tl
-        with Not_found -> if s.[0] = '-' then !usage () else target args
+        let f, args = 
+          try 
+            (List.assoc s params), tl
+          with Not_found -> 
+            if s.[0] = '-' then (!usage ();assert false) else target, args
+        in
+        f args
   in
   parse (Helm_registry.get_list Helm_registry.string "matita.args")
-

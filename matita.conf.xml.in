@@ -57,11 +57,16 @@
     -->
     <key name="prefix">
       cic:/matita/
+      file://@RT_BASE_DIR@/stantard-library/
+      ro
+    </key>
+    <key name="prefix">
+      cic:/matita/
       file://$(user.home)/.matita/xml/matita/
     </key>
     <key name="prefix">
       cic:/
-      file:///projects/helm/library/coq_contribs/
+      file://@RT_BASE_DIR@/legacy-library/coq/
       legacy
     </key>
   </section>

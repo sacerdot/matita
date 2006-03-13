@@ -42,7 +42,6 @@ let main () =
   MatitaInit.load_configuration_file ();
   let include_paths =
    Helm_registry.get_list Helm_registry.string "matita.includes" in
-  let basedir = Helm_registry.get "matita.basedir" in
   List.iter
    (fun ma_file -> 
     let ic = open_in ma_file in
@@ -64,7 +63,7 @@ let main () =
               DependenciesParser.baseuri_of_script ~include_paths path in
             if not (Http_getter_storage.is_legacy baseuri) then
               let moo_file =
-                LibraryMisc.obj_file_of_baseuri ~basedir ~baseuri in
+                LibraryMisc.obj_file_of_baseuri ~baseuri ~writable:false in
               Hashtbl.add include_deps ma_file moo_file
           with Sys_error _ -> 
             HLog.warn 
@@ -78,7 +77,7 @@ let main () =
       | None -> ()
       | Some u -> 
          Hashtbl.add include_deps file
-          (LibraryMisc.obj_file_of_baseuri ~basedir ~baseuri:u))
+          (LibraryMisc.obj_file_of_baseuri ~baseuri:u ~writable:false))
   uri_deps;
   List.iter
    (fun ma_file -> 
@@ -87,7 +86,7 @@ let main () =
     let deps = HExtlib.list_uniq deps in
     let deps = ma_file :: deps in
     let baseuri = Hashtbl.find baseuri_of ma_file in
-    let moo = LibraryMisc.obj_file_of_baseuri ~basedir ~baseuri in
+    let moo = LibraryMisc.obj_file_of_baseuri ~baseuri ~writable:false in
      Printf.printf "%s: %s\n" moo (String.concat " " deps);
      Printf.printf "%s: %s\n" (Pcre.replace ~pat:"ma$" ~templ:"mo" ma_file) moo)
    (Helm_registry.get_list Helm_registry.string "matita.args")

@@ -316,10 +316,11 @@ record normal_subgroup (G:Group) : Type ≝
 theorem foo:
  ∀G.∀H:normal_subgroup G.∀x.x*H=H*x.
 *)
-
+(*
 theorem member_of_left_coset_mk_left_coset_x_H_a_to_member_of_left_coset_mk_left_coset_y_H_b_to_member_of_left_coset_mk_left_coset_op_x_y_H_op_a_b:
  ∀G.∀H:normal_subgroup G.∀x,y,a,b.
   a ∈ (x*H) → b ∈ (y*H) → (a·b) ∈ ((x·y)*H).
 intros;
 simplify;
 qed.
+*)

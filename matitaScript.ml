@@ -36,7 +36,7 @@ let debug_print = if debug then prerr_endline else ignore
   (** raised when one of the script margins (top or bottom) is reached *)
 exception Margin
 exception NoUnfinishedProof
-exception ActionCancelled
+exception ActionCancelled of string
 
 let safe_substring s i j =
   try String.sub s i j with Invalid_argument _ -> assert false
@@ -161,7 +161,7 @@ let wrap_with_developments guistuff f arg =
         else
           f arg
       in
-      let do_nothing () = raise ActionCancelled in
+      let do_nothing () = raise (ActionCancelled "Inclusion not performed") in
       let handle_with_devel d =
         let name = MatitamakeLib.name_for_development d in
         let title = "Unable to include " ^ what in
@@ -324,7 +324,9 @@ and eval_executable include_paths (buffer : GText.buffer) guistuff lexicon_statu
    begin
     match ex with
      | TA.Command (_,TA.Set (_,"baseuri",u)) ->
-        if not (GrafiteMisc.is_empty u) then
+        if  Http_getter_storage.is_read_only u then
+          raise (ActionCancelled ("baseuri " ^ u ^ " is readonly"));
+        if not (Http_getter_storage.is_empty u) then
          (match 
             guistuff.ask_confirmation 
               ~title:"Baseuri redefinition" 
@@ -333,9 +335,7 @@ and eval_executable include_paths (buffer : GText.buffer) guistuff lexicon_statu
                 "Do you want to redefine the corresponding "^
                 "part of the library?")
           with
-           | `YES ->
-               let basedir = Helm_registry.get "matita.basedir" in
-                LibraryClean.clean_baseuris ~basedir [u]
+           | `YES -> LibraryClean.clean_baseuris [u]
            | `NO -> ()
            | `CANCEL -> raise MatitaTypes.Cancel)
      | _ -> ()

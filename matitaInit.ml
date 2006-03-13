@@ -107,6 +107,8 @@ let initialize_environment init_status =
   if not (already_configured [Getter;Environment] init_status) then
     begin
       Http_getter.init ();
+      if Helm_registry.get_bool "matita.system" then
+        Http_getter_storage.activate_system_mode ();
       CicEnvironment.set_trust (* environment trust *)
         (let trust =
           Helm_registry.get_opt_default Helm_registry.get_bool
@@ -177,6 +179,11 @@ Usage: matitamake [ OPTION ... ] (init | clean | list | destroy | build)
   build
     Parameters: name (the name of the development to build, required)
     Description: completely builds the develpoment.
+  publish
+    Parameters: name (the name of the development to publish, required)
+    Description: cleans the development in the user space, rebuilds it
+      in the system space ('ro' repositories, that for this operation 
+      becames writable). 
 Notes:
   If target is omitted an 'all' will be used as the default.
   With -build you can build a development wherever it is.
@@ -200,7 +207,10 @@ let add_cmdline_spec l = extra_cmdline_specs := l @ !extra_cmdline_specs
 
 let parse_cmdline init_status =
   if not (already_configured [CmdLine] init_status) then begin
-    let includes = ref [ BuildTimeConf.stdlib_dir ] in
+    let includes = ref [ 
+      BuildTimeConf.stdlib_dir_installed ;
+      BuildTimeConf.stdlib_dir_devel ] 
+    in
     let args = ref [] in
     let add_l l = fun s -> l := s :: !l in
     let reduce_verbosity () =
@@ -284,4 +294,6 @@ let parse_cmdline () =
 
 let fill_registry () =
   status := fill_registry !status
+;;
 
+Inversion_principle.init ()

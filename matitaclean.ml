@@ -34,21 +34,31 @@ let clean_suffixes = [ ".moo"; ".lexicon"; ".metadata"; ".xml.gz" ]
 
 let main () =
   let _ = MatitaInit.initialize_all () in
-  let basedir = Helm_registry.get "matita.basedir" in
   match Helm_registry.get_list Helm_registry.string "matita.args" with
   | [ "all" ] ->
       LibraryDb.clean_owner_environment ();
-      let xmldir = basedir ^ "/xml" in
-      let clean_pat =
-        String.concat " -o "
-          (List.map (fun suf -> "-name \\*" ^ suf) clean_suffixes) in
-      let clean_cmd =
-        sprintf "find %s \\( %s \\) -exec rm \\{\\} \\; 2> /dev/null"
-          xmldir clean_pat in
-      ignore (Sys.command clean_cmd);
-      ignore 
-       (Sys.command ("find " ^ xmldir ^ 
-        " -type d -exec rmdir -p {} \\; 2> /dev/null"));
+      let prefixes = 
+        HExtlib.filter_map 
+          (fun s -> 
+            if String.sub s 0 5 = "file:" then 
+              Some (Str.replace_first (Str.regexp "^file://") "" s)
+            else
+              None)
+          (Http_getter_storage.list_writable_prefixes ())
+      in
+      List.iter 
+        (fun xmldir ->
+          let clean_pat =
+            String.concat " -o "
+              (List.map (fun suf -> "-name \\*" ^ suf) clean_suffixes) in
+          let clean_cmd =
+            sprintf "find %s \\( %s \\) -exec rm \\{\\} \\; 2> /dev/null"
+              xmldir clean_pat in
+          ignore (Sys.command clean_cmd);
+          ignore 
+           (Sys.command ("find " ^ xmldir ^ 
+            " -type d -exec rmdir -p {} \\; 2> /dev/null"))) 
+        prefixes;
       exit 0
   | [] -> MatitaInit.die_usage ()
   | files ->
@@ -70,4 +80,4 @@ let main () =
           in
            uri::uris_to_remove) [] files
      in
-      LibraryClean.clean_baseuris ~basedir uris_to_remove
+      LibraryClean.clean_baseuris uris_to_remove

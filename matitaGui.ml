@@ -66,19 +66,17 @@ class console ~(buffer: GText.buffer) () =
 let clean_current_baseuri grafite_status = 
     try  
       let baseuri = GrafiteTypes.get_string_option grafite_status "baseuri" in
-      let basedir = Helm_registry.get "matita.basedir" in
-      LibraryClean.clean_baseuris ~basedir [baseuri]
+      LibraryClean.clean_baseuris [baseuri]
     with GrafiteTypes.Option_error _ -> ()
 
 let ask_and_save_moo_if_needed parent fname lexicon_status grafite_status = 
-  let basedir = Helm_registry.get "matita.basedir" in
   let baseuri = DependenciesParser.baseuri_of_script ~include_paths:[] fname in
-  let moo_fname = LibraryMisc.obj_file_of_baseuri ~basedir ~baseuri in
+  let moo_fname = LibraryMisc.obj_file_of_baseuri ~baseuri ~writable:true in
   let save () =
     let metadata_fname =
-     LibraryMisc.metadata_file_of_baseuri ~basedir ~baseuri in
+     LibraryMisc.metadata_file_of_baseuri ~baseuri ~writable:true in
     let lexicon_fname =
-     LibraryMisc.lexicon_file_of_baseuri ~basedir ~baseuri
+     LibraryMisc.lexicon_file_of_baseuri ~baseuri ~writable:true
     in
      GrafiteMarshal.save_moo moo_fname
       grafite_status.GrafiteTypes.moo_content_rev;
@@ -472,6 +470,15 @@ class gui () =
                 (fun () -> MatitamakeLib.clean_development_in_bg refresh d)
               in
               ignore(clean ())));
+      connect_button develList#publishButton 
+        (locker (fun () -> 
+          match get_devel_selected () with
+          | None -> ()
+          | Some d -> 
+              let clean = locker 
+                (fun () -> MatitamakeLib.publish_development_in_bg refresh d)
+              in
+              ignore(clean ())));
       connect_button develList#closeButton 
         (fun () -> develList#toplevel#misc#hide());
       ignore(develList#toplevel#event#connect#delete 
@@ -613,7 +620,7 @@ class gui () =
       HLog.set_log_callback self#console#log_callback;
       GtkSignal.user_handler :=
         (function 
-        | MatitaScript.ActionCancelled -> () 
+        | MatitaScript.ActionCancelled s -> HLog.error s
         | exn ->
           if not (Helm_registry.get_bool "matita.debug") then
            let floc, msg = MatitaExcPp.to_string exn in
