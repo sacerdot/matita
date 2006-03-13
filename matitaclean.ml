@@ -32,10 +32,35 @@ module TA = GrafiteAst
 
 let clean_suffixes = [ ".moo"; ".lexicon"; ".metadata"; ".xml.gz" ]
 
+let ask_confirmation _ =
+  print_string "
+  You are trying to delete the whole standard library.
+  Since this may be a dangerous operation, you are asked to type
+    
+    yes, I'm sure
+    
+  verbatim and press enter.\n\n> ";
+  flush stdout;
+  let str = input_line stdin in
+  if str = "yes, I'm sure" then 
+    begin
+      print_string "deletion in progess...\n";
+      flush stdout
+    end
+  else 
+    begin
+      print_string "deletion cancelled.\n";
+      flush stdout;
+      exit 1
+    end
+;;
+
 let main () =
   let _ = MatitaInit.initialize_all () in
   match Helm_registry.get_list Helm_registry.string "matita.args" with
   | [ "all" ] ->
+      if Helm_registry.get_bool "matita.system" then
+        ask_confirmation ();
       LibraryDb.clean_owner_environment ();
       let prefixes = 
         HExtlib.filter_map 
