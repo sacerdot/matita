@@ -232,6 +232,7 @@ endif
 DESTDIR = $(RT_BASE_DIR)
 INSTALL_STUFF = 			\
 	icons/ 				\
+	help/ 				\
 	matita.gtkrc 			\
 	matita.lang 			\
 	matita.ma.templ 		\
