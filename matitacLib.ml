@@ -158,7 +158,7 @@ let pp_times fname bench_mode rc big_bang =
     begin
       let { Unix.tms_utime = u ; Unix.tms_stime = s} = Unix.times () in
       let r = Unix.gettimeofday () -. big_bang in
-      let extra = try Sys.getenv "DO_TESTS_EXTRA" with Not_found -> "" in
+      let extra = try Sys.getenv "BENCH_EXTRA_TEXT" with Not_found -> "" in
       let cc = 
         if Str.string_match (Str.regexp "opt$") Sys.argv.(0) 0 then 
           "matitac.opt" 
@@ -175,6 +175,15 @@ let pp_times fname bench_mode rc big_bang =
           Printf.sprintf "%2dm%02d.%02ds" minutes seconds cents
         in
         Printf.sprintf "%s %s %s" (fmt r) (fmt u) (fmt s)
+      in
+      let fname = 
+        match MatitamakeLib.development_for_dir (Filename.dirname fname) with
+        | None -> fname
+        | Some d -> 
+            let rootlen = String.length(MatitamakeLib.root_for_development d)in
+            let fnamelen = String.length fname in
+            assert (fnamelen > rootlen); 
+            String.sub fname rootlen (fnamelen - rootlen)           
       in
       let s = 
         Printf.sprintf "%s\t%-30s   %s\t%s\t%s" cc fname rc times extra 
@@ -209,12 +218,7 @@ let main ~mode =
   in
   if Helm_registry.get_int "matita.verbosity" < 1 then
     HLog.set_log_callback newcb;
-  if bench_mode then
-    begin
-    HLog.set_log_callback (fun _ _ -> ());
-    let out = open_out "/dev/null" in
-    Unix.dup2 (Unix.descr_of_out_channel out) (Unix.descr_of_out_channel stderr)
-    end;
+  if bench_mode then MatitaMisc.shutup ();
   let matita_debug = Helm_registry.get_bool "matita.debug" in
   try
     let time = Unix.time () in

@@ -333,7 +333,7 @@
 	    <term><userinput>world</userinput></term>
 	    <listitem>
 	      <para>builds components needed by &appname; and &appname; itself
-		(in bytecode only or in both bytecode and native code depending
+		(in bytecode or native code depending
 		on the availability of the OCaml native code compiler) </para>
 	    </listitem>
 	  </varlistentry>
@@ -343,10 +343,6 @@
 	    <listitem>
 	      <para>uses the (just built) <application>matitac</application>
 		compiler to build the &appname; standard library. </para>
-	      <para>For this step you will need a working SQL database (for
-		indexing the standard library while you are compiling it). See
-		<ulink type="http" url="#database_setup">Database setup</ulink>
-		for instructions on how to set it up.</para>
 	    </listitem>
 	  </varlistentry>
 
@@ -355,6 +351,11 @@
 	    <listitem>
 	      <para>installs &appname; related tools, standard library and the
 		needed runtime stuff in the proper places on the filesystem
+	      </para>
+	      <para>For this step you will need a working SQL database (for
+		indexing the standard library while you are compiling it). See
+		<ulink type="http" url="#database_setup">Database setup</ulink>
+		for instructions on how to set it up.
 	      </para>
 	    </listitem>
 	  </varlistentry>

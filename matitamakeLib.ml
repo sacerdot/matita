@@ -176,7 +176,9 @@ let make chdir args =
 let call_make ?matita_flags development target make =
   let matita_flags = 
     match matita_flags with 
-    | None -> (try Sys.getenv "MATITA_FLAGS" with Not_found -> "")
+    | None -> 
+        (try Sys.getenv "MATITA_FLAGS" with Not_found -> 
+           if Helm_registry.get_bool "matita.bench" then "-bench" else "")
     | Some s -> s 
   in
   rebuild_makefile development;
@@ -184,7 +186,7 @@ let call_make ?matita_flags development target make =
   let nodb =
     Helm_registry.get_opt_default Helm_registry.bool ~default:false "db.nodb"
   in
-  let flags = [] in
+  let flags = [] in 
   let flags = flags @ if nodb then ["NODB=true"] else [] in
   let flags =
     try

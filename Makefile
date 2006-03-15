@@ -67,7 +67,7 @@ all: $(PROGRAMS) $(NOINST_PROGRAMS)
 #  all: matita.conf.xml $(PROGRAMS) coq.moo
 
 #  matita.conf.xml: matita.conf.xml.sample
-#          @if diff matita.conf.xml.sample matita.conf.xml 1>/dev/null 2>/dev/null; then\
+#          $(H)if diff matita.conf.xml.sample matita.conf.xml 1>/dev/null 2>/dev/null; then\
 #                  touch matita.conf.xml;\
 #          else\
 #                  echo;\
@@ -96,68 +96,68 @@ upx: $(PROGRAMS_UPX)
 .PHONY: opt upx
 
 ifeq ($(HAVE_OCAMLOPT),yes)
-world: all opt
+world: depend.opt opt
 else
-world: all
+world: depend all
 endif
 
 matita: matita.ml $(LIB_DEPS) $(CMOS)
-	@echo "  OCAMLC $<"
+	$(H)echo "  OCAMLC $<"
 	$(H)$(OCAMLC) $(PKGS) -linkpkg -o $@ $(CMOS) matita.ml
 matita.opt: matita.ml $(LIBX_DEPS) $(CMXS)
-	@echo "  OCAMLOPT $<"
+	$(H)echo "  OCAMLOPT $<"
 	$(H)$(OCAMLOPT) $(PKGS) -linkpkg -o $@ $(CMXS) matita.ml
 
 dump_moo: dump_moo.ml buildTimeConf.cmo
-	@echo "  OCAMLC $<"
+	$(H)echo "  OCAMLC $<"
 	$(H)$(OCAMLC) $(PKGS) -linkpkg -o $@ buildTimeConf.cmo $<
 dump_moo.opt: dump_moo.ml buildTimeConf.cmx
-	@echo "OCAMLOPT $<"
+	$(H)echo "OCAMLOPT $<"
 	$(H)$(OCAMLOPT) $(PKGS) -linkpkg -o $@ buildTimeConf.cmx $<
 
 matitac: matitac.ml $(CLIB_DEPS) $(CCMOS) $(MAINCMOS)
-	@echo "  OCAMLC $<"
+	$(H)echo "  OCAMLC $<"
 	$(H)$(OCAMLC) $(CPKGS) -linkpkg -o $@ $(CCMOS) $(MAINCMOS) matitac.ml
 matitac.opt: matitac.ml $(CLIBX_DEPS) $(CCMXS) $(MAINCMXS)
-	@echo "  OCAMLOPT $<"
+	$(H)echo "  OCAMLOPT $<"
 	$(H)$(OCAMLOPT) $(CPKGS) -linkpkg -o $@ $(CCMXS) $(MAINCMXS) matitac.ml
 
 matitatop: matitatop.ml $(CLIB_DEPS) $(CCMOS)
-	@echo "  OCAMLC $<"
+	$(H)echo "  OCAMLC $<"
 	$(H)$(OCAMLC) $(CPKGS) -linkpkg -o $@ toplevellib.cma $(CCMOS) $<
 
 matitadep: matitac
-	@test -f $@ || ln -s $< $@
+	$(H)test -f $@ || ln -s $< $@
 matitadep.opt: matitac.opt
-	@test -f $@ || ln -s $< $@
+	$(H)test -f $@ || ln -s $< $@
 
 matitaclean: matitac
-	@test -f $@ || ln -s $< $@
+	$(H)test -f $@ || ln -s $< $@
 matitaclean.opt: matitac.opt
-	@test -f $@ || ln -s $< $@
+	$(H)test -f $@ || ln -s $< $@
 
 matitamake: matitac
-	@test -f $@ || ln -s $< $@
+	$(H)test -f $@ || ln -s $< $@
 matitamake.opt: matitac.opt
-	@test -f $@ || ln -s $< $@
+	$(H)test -f $@ || ln -s $< $@
 	
 gragrep: matitac
-	@test -f $@ || ln -s $< $@
+	$(H)test -f $@ || ln -s $< $@
 gragrep.opt: matitac.opt
-	@test -f $@ || ln -s $< $@
+	$(H)test -f $@ || ln -s $< $@
 	
 cicbrowser: matita
-	@test -f $@ || ln -s $< $@
+	$(H)test -f $@ || ln -s $< $@
 cicbrowser.opt: matita.opt
-	@test -f $@ || ln -s $< $@
+	$(H)test -f $@ || ln -s $< $@
 
 matitaGeneratedGui.ml matitaGeneratedGui.mli: matita.glade
-	$(LABLGLADECC) -embed $< > matitaGeneratedGui.ml
-	$(OCAMLC) $(PKGS) -i matitaGeneratedGui.ml > matitaGeneratedGui.mli
+	$(H)$(LABLGLADECC) -embed $< > matitaGeneratedGui.ml
+	$(H)#$(OCAMLC) $(PKGS) -i matitaGeneratedGui.ml > matitaGeneratedGui.mli
 
 .PHONY: clean
 clean:
-	rm -rf *.cma *.cmo *.cmi *.cmx *.cmxa *.a *.o \
+	$(H)rm -rf *.cma *.cmo *.cmi *.cmx *.cmxa *.a *.o \
 		$(PROGRAMS) $(PROGRAMS_OPT) \
 		$(NOINST_PROGRAMS) $(NOINST_PROGRAMS_OPT) \
 		$(PROGRAMS_STATIC) \
@@ -166,12 +166,12 @@ clean:
 
 .PHONY: distclean
 distclean: clean
-	$(MAKE) -C dist/ clean
-	rm -f matitaGeneratedGui.ml matitaGeneratedGui.mli
-	rm -f buildTimeConf.ml
-	rm -f matita.glade.bak matita.gladep.bak
-	rm -f matita.conf.xml.sample
-	rm -rf .matita
+	$(H)$(MAKE) -C dist/ clean
+	$(H)rm -f matitaGeneratedGui.ml matitaGeneratedGui.mli
+	$(H)rm -f buildTimeConf.ml
+	$(H)rm -f matita.glade.bak matita.gladep.bak
+	$(H)rm -f matita.conf.xml.sample
+	$(H)rm -rf .matita
 
 TEST_DIRS = 				\
 	library 			\
@@ -198,33 +198,16 @@ cleantests.opt: $(foreach d,$(TEST_DIRS),$(d)-cleantests-opt)
 
 # {{{ Distribution stuff
 
-ifeq ($(HAVE_OCAMLOPT),yes)
-BEST=opt
-BEST_EXT=.opt
-else
-BEST=all
-BEST_EXT=
-endif
-
 ifeq ($(DISTRIBUTED),yes)
 
-dist_library: dist_library@library
+dist_library: dist_library@standard-library
 dist_library@%:
-	@echo "MATITAMAKE init $*"
-	$(H)MATITA_RT_BASE_DIR=`pwd` \
-		MATITA_FLAGS="-conffile `pwd`/matita.conf.xml" \
-		./matitamake$(BEST_EXT) -conffile `pwd`/matita.conf.xml \
-			init $* `pwd`/$*
-	@echo "MATITAMAKE publish $*"
-	$(H)MATITA_RT_BASE_DIR=`pwd` \
-		MATITA_FLAGS="-conffile `pwd`/matita.conf.xml" \
-		./matitamake$(BEST_EXT) -conffile `pwd`/matita.conf.xml \
-			publish $*
-	@echo "MATITAMAKE destroy $*"
-	$(H)MATITA_RT_BASE_DIR=`pwd` \
-		MATITA_FLAGS="-conffile `pwd`/matita.conf.xml" \
-		./matitamake$(BEST_EXT) -conffile `pwd`/matita.conf.xml \
-			destroy $*
+	$(H)echo "MATITAMAKE init $*"
+	$(H)(cd $(DESTDIR) && ./matitamake init $* $(DESTDIR)/ma/$*)
+	$(H)echo "MATITAMAKE publish $*"
+	$(H)(cd $(DESTDIR) && ./matitamake publish $*)
+	$(H)echo "MATITAMAKE destroy $*"
+	$(H)(cd $(DESTDIR) && ./matitamake destroy $*)
 	touch $@
 
 endif
@@ -245,25 +228,36 @@ INSTALL_STUFF = 			\
 	LICENSE 			\
 	$(NULL)
 
-
+INSTALL_PROGRAMS= matita matitac
+INSTALL_PROGRAMS_LINKS_MATITA= cicbrowser 
+INSTALL_PROGRAMS_LINKS_MATITAC= matitadep matitamake matitaclean
 ifeq ($(HAVE_OCAMLOPT),yes)
-INSTALL_STUFF_BIN = $(PROGRAMS_OPT)
+INSTALL_STUFF_BIN = $(INSTALL_PROGRAMS:%=%.opt) 
 else
-INSTALL_STUFF_BIN = $(PROGRAMS_BYTE)
+INSTALL_STUFF_BIN = $(INSTALL_PROGRAMS)
 endif
 
-install: install_preliminaries 
-	#dist_library 
+install: install_preliminaries dist_library install_conclusion
 
 install_preliminaries:
 	install -d $(DESTDIR)/ma/
 	cp -a $(INSTALL_STUFF) $(DESTDIR)
-	install -s $(INSTALL_STUFF_BIN) $(DESTDIR)
 ifeq ($(HAVE_OCAMLOPT),yes)
-	for p in $(PROGRAMS_BYTE); do ln -fs $$p.opt $(DESTDIR)/$$p; done
+	install -s $(INSTALL_STUFF_BIN) $(DESTDIR)
+	for p in $(INSTALL_PROGRAMS); do ln -fs $$p.opt $(DESTDIR)/$$p; done
+else
+	install $(INSTALL_STUFF_BIN) $(DESTDIR)
 endif
+	for p in $(INSTALL_PROGRAMS_LINKS_MATITAC); do \
+		ln -fs matitac $(DESTDIR)/$$p;\
+	done
+	for p in $(INSTALL_PROGRAMS_LINKS_MATITA); do \
+		ln -fs matita $(DESTDIR)/$$p;\
+	done
 	cp -a library/ $(DESTDIR)/ma/standard-library
 	cp -a contribs/ $(DESTDIR)/ma/
+
+install_conclusion:
 
 uninstall:
 	rm -rf $(DESTDIR)
@@ -293,9 +287,9 @@ ifeq ($(HAVE_OCAMLOPT),yes)
 static: $(STATIC_LINK) $(PROGRAMS_STATIC)
 else
 upx:
-	@echo "Native code compilation is disabled"
+	$(H)echo "Native code compilation is disabled"
 static:
-	@echo "Native code compilation is disabled"
+	$(H)echo "Native code compilation is disabled"
 endif
 
 $(STATIC_LINK):
@@ -317,15 +311,15 @@ matitac.opt.static: $(STATIC_LINK) $(CLIBX_DEPS) $(CCMXS) $(MAINCMXS) matitac.ml
 		$(STATIC_EXTRA_CLIBS)
 	strip $@
 matitadep.opt.static: matitac.opt.static
-	@test -f $@ || ln -s $< $@
+	$(H)test -f $@ || ln -s $< $@
 matitaclean.opt.static: matitac.opt.static
-	@test -f $@ || ln -s $< $@
+	$(H)test -f $@ || ln -s $< $@
 matitamake.opt.static: matitac.opt.static
-	@test -f $@ || ln -s $< $@
+	$(H)test -f $@ || ln -s $< $@
 cicbrowser.opt.static: matita.opt.static
-	@test -f $@ || ln -s $< $@
+	$(H)test -f $@ || ln -s $< $@
 cicbrowser.opt.static.upx: matita.opt.static.upx
-	@test -f $@ || ln -s $< $@
+	$(H)test -f $@ || ln -s $< $@
 
 %.upx: %
 	cp $< $@
@@ -337,27 +331,36 @@ cicbrowser.opt.static.upx: matita.opt.static.upx
 tags: TAGS
 .PHONY: TAGS
 TAGS:
-	cd ..; otags -vi -r components/ matita/
+	$(H)cd ..; otags -vi -r components/ matita/
 
 #.depend: matitaGeneratedGui.ml matitaGeneratedGui.mli *.ml *.mli
 
 .PHONY: depend
+	
 depend:
-	$(OCAMLDEP) *.ml *.mli > .depend
+	$(H)echo "  OCAMLDEP"
+	$(H)$(OCAMLDEP) *.ml *.mli > .depend
+depend.opt:
+	$(H)echo "  OCAMLDEP -native"
+	$(H)$(OCAMLDEP) -native *.ml *.mli > .depend
 
-include .depend
+ifneq ($(MAKECMDGOALS), depend)
+ ifneq ($(MAKECMDGOALS), depend.opt)
+   include .depend   
+ endif
+endif
 
 %.cmi: %.mli
-	@echo "  OCAMLC $<"
+	$(H)echo "  OCAMLC $<"
 	$(H)$(OCAMLC) $(PKGS) -c $<
 %.cmo %.cmi: %.ml
-	@echo "  OCAMLC $<"
+	$(H)echo "  OCAMLC $<"
 	$(H)$(OCAMLC) $(PKGS) -c $<
 %.cmx: %.ml
-	@echo "  OCAMLOPT $<"
+	$(H)echo "  OCAMLOPT $<"
 	$(H)$(OCAMLOPT) $(PKGS) -c $<
 %.annot: %.ml
-	@echo "  OCAMLC -dtypes $<"
+	$(H)echo "  OCAMLC -dtypes $<"
 	$(H)$(OCAMLC) -dtypes $(PKGS) -c $<
 
 $(CMOS): $(LIB_DEPS)

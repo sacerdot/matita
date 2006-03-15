@@ -163,6 +163,8 @@ Options:"
 Usage: matitamake [ OPTION ... ] (init | clean | list | destroy | build)
   init
     Parameters: name (the name of the development, required)
+                root (the directory in which the delopment is rooted, 
+                      optional, default is current working directory)
     Description: tells matitamake that a new development radicated 
       in the current working directory should be handled.
   clean
@@ -240,7 +242,7 @@ let parse_cmdline init_status =
           "Turns off profiling printings";
         "-bench", 
           Arg.Unit (fun () -> Helm_registry.set_bool "matita.bench" true),
-          "Turns on timing prints";
+          "Turns on parsable output on stdout, that is timings for matitac...";
         "-preserve",
           Arg.Unit (fun () -> Helm_registry.set_bool "matita.preserve" true),
           "Turns off automatic baseuri cleaning";

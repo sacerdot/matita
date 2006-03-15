@@ -57,6 +57,7 @@ let ask_confirmation _ =
 
 let main () =
   let _ = MatitaInit.initialize_all () in
+  if Helm_registry.get_bool "matita.bench" then MatitaMisc.shutup ();
   match Helm_registry.get_list Helm_registry.string "matita.args" with
   | [ "all" ] ->
       if Helm_registry.get_bool "matita.system" then
