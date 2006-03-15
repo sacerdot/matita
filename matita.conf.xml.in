@@ -34,7 +34,7 @@
     -->
     <key name="host">@DBHOST@</key>
     <key name="user">helm</key>
-    <key name="database">prove-release</key>
+    <key name="database">matita</key>
   </section>
   <section name="getter">
     <!-- Cache dir for CIC XML documents downloaded from the net.
