@@ -153,11 +153,46 @@ let go () =
   Sys.catch_break true;
   interactive_loop ()
 
+let pp_times fname bench_mode rc big_bang = 
+  if bench_mode then
+    begin
+      let { Unix.tms_utime = u ; Unix.tms_stime = s} = Unix.times () in
+      let r = Unix.gettimeofday () -. big_bang in
+      let extra = try Sys.getenv "DO_TESTS_EXTRA" with Not_found -> "" in
+      let cc = 
+        if Str.string_match (Str.regexp "opt$") Sys.argv.(0) 0 then 
+          "matitac.opt" 
+        else 
+          "matitac" 
+      in
+      let rc = if rc then "OK" else "FAIL" in
+      let times = 
+        let fmt t = 
+          let seconds = int_of_float t in
+          let cents = int_of_float ((t -. floor t) *. 100.0) in
+          let minutes = seconds / 60 in
+          let seconds = seconds mod 60 in
+          Printf.sprintf "%2dm%02d.%02ds" minutes seconds cents
+        in
+        Printf.sprintf "%s %s %s" (fmt r) (fmt u) (fmt s)
+      in
+      let s = 
+        Printf.sprintf "%s\t%-30s   %s\t%s\t%s" cc fname rc times extra 
+      in
+      print_endline s;
+      flush stdout
+    end
+;;
+
 let main ~mode = 
+  let big_bang = Unix.gettimeofday () in
   MatitaInit.initialize_all ();
   (* must be called after init since args are set by cmdline parsing *)
   let fname = fname () in
   let system_mode =  Helm_registry.get_bool "matita.system" in
+  let bench_mode =  Helm_registry.get_bool "matita.bench" in
+  if bench_mode then
+    Helm_registry.set_int "matita.verbosity" 0;
   let include_paths =
    Helm_registry.get_list Helm_registry.string "matita.includes" in
   grafite_status := Some (GrafiteSync.init ());
@@ -174,10 +209,16 @@ let main ~mode =
   in
   if Helm_registry.get_int "matita.verbosity" < 1 then
     HLog.set_log_callback newcb;
+  if bench_mode then
+    begin
+    HLog.set_log_callback (fun _ _ -> ());
+    let out = open_out "/dev/null" in
+    Unix.dup2 (Unix.descr_of_out_channel out) (Unix.descr_of_out_channel stderr)
+    end;
   let matita_debug = Helm_registry.get_bool "matita.debug" in
   try
     let time = Unix.time () in
-    if Helm_registry.get_int "matita.verbosity" < 1 then
+    if Helm_registry.get_int "matita.verbosity" < 1 && not bench_mode then
       origcb `Message ("compiling " ^ Filename.basename fname ^ "...")
     else
       HLog.message (sprintf "execution of %s started:" fname);
@@ -213,6 +254,7 @@ let main ~mode =
      begin
       HLog.error
        "there are still incomplete proofs at the end of the script";
+      pp_times fname bench_mode true big_bang;
       clean_exit (Some 2)
      end
     else
@@ -233,18 +275,23 @@ let main ~mode =
        LexiconMarshal.save_lexicon lexicon_fname lexicon_content_rev;
        HLog.message 
          (sprintf "execution of %s completed in %s." fname (hou^min^sec));
+       pp_times fname bench_mode true big_bang;
        exit 0
      end
   with 
   | Sys.Break ->
       HLog.error "user break!";
+      pp_times fname bench_mode false big_bang;
       if mode = `COMPILER then
         clean_exit (Some ~-1)
       else
         pp_ocaml_mode ()
   | GrafiteEngine.Drop ->
       if mode = `COMPILER then 
-        clean_exit (Some 1)
+        begin
+          pp_times fname bench_mode false big_bang;
+          clean_exit (Some 1)
+        end
       else 
         pp_ocaml_mode ()
   | GrafiteEngine.Macro (floc,_) ->
@@ -252,20 +299,29 @@ let main ~mode =
       HLog.error
        (sprintf "A macro has been found in a script at %d-%d" x y);
       if mode = `COMPILER then 
-        clean_exit (Some 1)
+        begin
+          pp_times fname bench_mode false big_bang;
+          clean_exit (Some 1)
+        end
       else 
         pp_ocaml_mode ()
   | HExtlib.Localized (floc,CicNotationParser.Parse_error err) ->
      let (x, y) = HExtlib.loc_of_floc floc in
      HLog.error (sprintf "Parse error at %d-%d: %s" x y err);
      if mode = `COMPILER then
-       clean_exit (Some 1)
+       begin
+         pp_times fname bench_mode false big_bang;
+         clean_exit (Some 1)
+       end
      else
        pp_ocaml_mode ()
   | exn ->
       if matita_debug then raise exn;
       if mode = `COMPILER then 
-        clean_exit (Some 3)
+        begin
+          pp_times fname bench_mode false big_bang;
+          clean_exit (Some 3)
+        end
       else 
         pp_ocaml_mode ()
 

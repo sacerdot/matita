@@ -92,6 +92,29 @@ theorem cons_append_commute:
   reflexivity;
 qed.
 
+inductive permutation (A:Set) : list A -> list A -> Prop \def
+  | refl : \forall l:list A. permutation ? l l
+  | swap : \forall l:list A. \forall x,y:A. 
+              permutation ? (x :: y :: l) (y :: x :: l)
+  | trans : \forall l1,l2,l3:list A.
+              permutation ? l1 l2 -> permut1 ? l2 l3 -> permutation ? l1 l3
+with permut1 : list A -> list A -> Prop \def
+  | step : \forall l1,l2:list A. \forall x,y:A. 
+      permut1 ? (l1 @ (x :: y :: l2)) (l1 @ (y :: x :: l2)).
+
+include "nat/nat.ma".  
+   
+definition x1 \def S O.
+definition x2 \def S x1.
+definition x3 \def S x2.
+   
+theorem tmp : permutation nat (x1 :: x2 :: x3 :: []) (x1 :: x3 :: x2 :: []).
+  apply (trans ? (x1 :: x2 :: x3 :: []) (x1 :: x2 :: x3 :: []) ?).
+  apply refl.
+  apply (step ? (x1::[]) [] x2 x3).
+  qed. 
+
+
 (*
 theorem nil_append_nil_both:
   \forall A:Set.\forall l1,l2:list A.

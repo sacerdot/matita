@@ -52,6 +52,7 @@ let registry_defaults = [
   "matita.profile",           "true";
   "matita.system",            "false";
   "matita.verbosity",         "1";
+  "matita.bench",              "false";
     (** verbosity level: 1 is the default, 0 is intuitively "quiet", > 1 is
      * intuitively verbose *)
 ]
@@ -237,6 +238,9 @@ let parse_cmdline init_status =
         "-noprofile", 
           Arg.Unit (fun () -> Helm_registry.set_bool "matita.profile" false),
           "Turns off profiling printings";
+        "-bench", 
+          Arg.Unit (fun () -> Helm_registry.set_bool "matita.bench" true),
+          "Turns on timing prints";
         "-preserve",
           Arg.Unit (fun () -> Helm_registry.set_bool "matita.preserve" true),
           "Turns off automatic baseuri cleaning";
