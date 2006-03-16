@@ -12,9 +12,6 @@ do_tests.sh
   script used by ../Makefile to run matitac[.opt] on some tests. supports some
   options and prints out some informations neded my insert
 
-insert.awk  
-  creates the SQL INSERT statements for the output of profile_cvs.sh
-
 profile_svn.sh
   SVN co, compilation, run
 
