@@ -153,6 +153,7 @@ cicbrowser.opt: matita.opt
 
 matitaGeneratedGui.ml matitaGeneratedGui.mli: matita.glade
 	$(H)$(LABLGLADECC) -embed $< > matitaGeneratedGui.ml
+	$(H)rm -f matitaGeneratedGui.mli
 	$(H)#$(OCAMLC) $(PKGS) -i matitaGeneratedGui.ml > matitaGeneratedGui.mli
 
 .PHONY: clean
