@@ -175,11 +175,13 @@ let make chdir args =
       
 let call_make ?matita_flags development target make =
   let matita_flags = 
-    match matita_flags with 
-    | None -> 
-        (try Sys.getenv "MATITA_FLAGS" with Not_found -> 
-           if Helm_registry.get_bool "matita.bench" then "-bench" else "")
-    | Some s -> s 
+    let already_defined = 
+      match matita_flags with 
+      | None -> (try Sys.getenv "MATITA_FLAGS" with Not_found -> "")
+      | Some s -> s 
+    in
+    already_defined ^ 
+      if Helm_registry.get_bool "matita.bench" then "-bench" else ""
   in
   rebuild_makefile development;
   let makefile = makefile_for_development development in
@@ -190,15 +192,11 @@ let call_make ?matita_flags development target make =
   let flags = flags @ if nodb then ["NODB=true"] else [] in
   let flags =
     try
-      flags @ [ sprintf "MATITA_FLAGS=%s" matita_flags ]
+      flags @ [ sprintf "MATITA_FLAGS=\"%s\"" matita_flags ]
     with Not_found -> flags in
   let args = 
     ["--no-print-directory"; "-s"; "-k"; "-f"; makefile; target] @ flags 
   in
-(*
-  prerr_endline 
-    ("callink make from "^development.root^" args: "^String.concat " " args);
-*)
   make development.root args
       
 let build_development ?matita_flags ?(target="all") development =
@@ -240,7 +238,7 @@ let mk_maker refresh_cb =
     let err_r,err_w = Unix.pipe () in
     let pid = ref ~-1 in
     ignore(Sys.signal Sys.sigchld (Sys.Signal_ignore));
-    try 
+    try
       let argv = Array.of_list ("make"::args) in
       pid := Unix.create_process "make" argv Unix.stdin out_w err_w;
       Unix.close out_w;

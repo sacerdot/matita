@@ -1,9 +1,9 @@
 DROP TABLE bench;
 
 CREATE TABLE bench (
-	mark VARCHAR(100) NOT NULL,
-	time VARCHAR(8) NOT NULL,
-	timeuser VARCHAR(8) NOT NULL,
+	mark VARCHAR(30) NOT NULL,
+	time BIGINT NOT NULL,
+	timeuser BIGINT NOT NULL,
 	compilation ENUM('byte','opt') NOT NULL,
 	test VARCHAR(100) NOT NULL,
 	result ENUM('ok','fail') NOT NULL,

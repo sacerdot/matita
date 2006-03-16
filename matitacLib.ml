@@ -83,7 +83,9 @@ let run_script is eval_function  =
 let fname () =
   match Helm_registry.get_list Helm_registry.string "matita.args" with
   | [x] -> x
-  | _ -> MatitaInit.die_usage ()
+  | l -> 
+      prerr_endline ("Wrong commands: " ^ String.concat " " l);
+      MatitaInit.die_usage ()
 
 let pp_ocaml_mode () = 
   HLog.message "";
@@ -160,7 +162,7 @@ let pp_times fname bench_mode rc big_bang =
       let r = Unix.gettimeofday () -. big_bang in
       let extra = try Sys.getenv "BENCH_EXTRA_TEXT" with Not_found -> "" in
       let cc = 
-        if Str.string_match (Str.regexp "opt$") Sys.argv.(0) 0 then 
+        if Str.string_match (Str.regexp ".*opt$") Sys.argv.(0) 0 then 
           "matitac.opt" 
         else 
           "matitac" 
@@ -172,7 +174,7 @@ let pp_times fname bench_mode rc big_bang =
           let cents = int_of_float ((t -. floor t) *. 100.0) in
           let minutes = seconds / 60 in
           let seconds = seconds mod 60 in
-          Printf.sprintf "%2dm%02d.%02ds" minutes seconds cents
+          Printf.sprintf "%dm%02d.%02ds" minutes seconds cents
         in
         Printf.sprintf "%s %s %s" (fmt r) (fmt u) (fmt s)
       in
@@ -186,7 +188,7 @@ let pp_times fname bench_mode rc big_bang =
             String.sub fname rootlen (fnamelen - rootlen)           
       in
       let s = 
-        Printf.sprintf "%s\t%-30s   %s\t%s\t%s" cc fname rc times extra 
+        Printf.sprintf "%s %-35s %-4s %s %s" cc fname rc times extra 
       in
       print_endline s;
       flush stdout

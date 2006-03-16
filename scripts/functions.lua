@@ -1,0 +1,69 @@
+#!/usr/bin/lua5.1
+
+local tool_re = "^([%w%.]+)"
+local test_re = "([%w%./_]+)"
+local rc_re = "([%a]+)"
+local time_re = "(%d+m%d+%.%d+s)"
+local mark_re = "(%d+)"
+local opt_re = "(gc%-%a+)$"
+local sep = "%s+"
+
+local fmt = "INSERT bench "..
+	"(result, compilation, test, time, timeuser, mark, options) "..
+	"VALUES ('%s', '%s', '%s', %d, %d, '%s', '%s');\n"
+
+-- build the huge regex
+local re = tool_re .. sep .. test_re .. sep .. rc_re .. sep .. 
+	time_re .. sep ..time_re .. sep ..time_re .. sep .. 
+	mark_re .. sep .. opt_re 
+
+-- the string to cents of seconds function
+function convert(s)
+	local _,_,min,sec,cents = string.find(s,"(%d+)m(%d+)%.(%d+)s")
+	return min * 6000 + sec * 100 + cents
+end
+
+-- logfile to sql conversion
+function log2sql(file)
+local t = {}
+local f = io.stdin
+if file ~= "-" then 
+	f = io.open(file,"r")
+end
+for l in f:lines() do
+	local x,_,tool,test,rc,real,user,_,mark,opt = string.find(l,re)
+
+	if x == nil then
+		error("regex failed on " .. l)
+	end
+
+	-- check the result is valid
+	if tool ~= "matitac" and tool ~= "matitac.opt" then
+		error("unknown tool " .. tool)
+	else
+		if tool == "matitac" then tool = "byte" else tool = "opt" end
+	end
+	if rc ~= "OK" and rc ~= "FAIL" then
+		error("unknown result " .. rc)
+	else
+		rc = string.lower(rc)
+	end
+	if opt ~= "gc-on" and opt ~= "gc-off" then
+		error("unknown option "..opt)
+	end
+	real = convert(real)
+	user = convert(user)
+
+	-- print the sql statement
+	table.insert(t,string.format(fmt,rc,tool,test,real,user,mark,opt))
+end
+return table.concat(t)
+end
+
+-- call the desired function and print the result
+fun = arg[1]
+table.remove(arg,1)
+f = _G[fun] or error("no " .. fun .. " defined")
+print(f(unpack(arg)) or "")
+
+-- eof
