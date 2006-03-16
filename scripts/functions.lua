@@ -18,9 +18,17 @@ local re = tool_re .. sep .. test_re .. sep .. rc_re .. sep ..
 	mark_re .. sep .. opt_re 
 
 -- the string to cents of seconds function
-function convert(s)
+function s2t(s)
 	local _,_,min,sec,cents = string.find(s,"(%d+)m(%d+)%.(%d+)s")
 	return min * 6000 + sec * 100 + cents
+end
+function t2s(s)
+  s = tonumber(s)
+  local min, sec, cents
+  cents = s % 100
+  min = math.floor(s / 6000)
+  sec = math.floor((s - min * 6000 - cents) / 100)
+  return string.format("%dm%02d.%02ds",min,sec,cents)
 end
 
 -- logfile to sql conversion
@@ -51,13 +59,37 @@ for l in f:lines() do
 	if opt ~= "gc-on" and opt ~= "gc-off" then
 		error("unknown option "..opt)
 	end
-	real = convert(real)
-	user = convert(user)
+	real = s2t(real)
+	user = s2t(user)
 
 	-- print the sql statement
 	table.insert(t,string.format(fmt,rc,tool,test,real,user,mark,opt))
 end
 return table.concat(t)
+end
+
+-- proportions
+function proportion(x,y,a,b)
+  local rc
+  if x == "x" then
+    rc = y * a / b
+  elseif y == "x" then
+    rc = x * b / a
+  elseif a == "x" then
+    rc = x * b / y
+  elseif b == "x" then
+    rc = y * a / x
+  end
+  return string.format("%d",rc)
+end
+
+-- conversion from the old db to the new one
+function convertsql(file)
+  local f = io.open(file)
+  return string.gsub(f:read("*a"),time_re,
+    function(s)
+      return s2t(s)
+    end)
 end
 
 -- call the desired function and print the result

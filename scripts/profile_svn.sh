@@ -1,14 +1,19 @@
 #!/bin/bash
+
+#configuration
 MARK=`date +%Y%m%d%H%M`
 TMPDIRNAME=__${MARK}_compilation
 SVNROOT="svn+ssh://mowgli.cs.unibo.it/local/svn/helm/trunk/"
+MYSQL="mysql -u helm -h mowgli.cs.unibo.it matita"
+SVNLOG=$TMPDIRNAME/LOG.svn
 
+#helpers
 function testit {
   LOGTOOPT=/dev/null
   LOGTOBYTE=/dev/null
-  export DO_TESTS_EXTRA="$MARK\t$@"
-  make tests DO_TESTS_OPTS="-no-color -twice -keep-logs"
-  make tests.opt DO_TESTS_OPTS="-no-color -twice -keep-logs"
+  export BENCH_EXTRA_TEXT="$MARK\t$@"
+  make tests 
+  make tests.opt 
 }
 
 function compile {
@@ -24,22 +29,21 @@ function run_tests {
   LOCALOLD=$PWD
   cd $1
   ./matitaclean all
-  mkdir .matita
-  export OCAMLRUNPARAM='o=1000000'
+  export OCAMLRUNPARAM='o=100000'
   testit "gc-off"
   export OCAMLRUNPARAM=''
   testit "gc-on"
   cd $LOCALOLD
 }
 
+#initialization
 OLD=$PWD
 rm -rf $TMPDIRNAME
 mkdir $TMPDIRNAME
 mkdir $TMPDIRNAME.HOME
 cd $TMPDIRNAME
-SVNLOG=`pwd`/LOG.svn
 
-#svn
+#svn checkout
 svn co -N $SVNROOT > $SVNLOG 2>&1
 cd trunk 
 svn update -N helm >> $SVNLOG 2>&1
@@ -60,9 +64,15 @@ compile $PWD/helm/software/
 #run
 run_tests $PWD/helm/software/matita > LOG 2>LOG.run_tests.err
 
-cat LOG | grep "\(OK\|FAIL\)" | grep "\(gc-on\|gc-off\)" | awk -f $PWD/helm/software/matita/scripts/insert.awk > INSERT.sql
-cat INSERT.sql | mysql -u helm -h mowgli.cs.unibo.it matita
-SVNREVISION=`cat $SVNLOG | grep revision | tail -n 1 | sed "s/.*revision \(\w\+\)./\1/"`
-echo "INSERT INTO bench_svn VALUES ('$MARK','$SVNREVISION')" | mysql -u helm -h mowgli.cs.unibo.it matita
+#insert the db
+cat LOG | grep "\(OK\|FAIL\)" | grep "\(gc-on\|gc-off\)" | \
+  $PWD/helm/software/matita/scripts/functions.lua log2sql - > INSERT.sql
+cat INSERT.sql | $MYSQL
+
+#save the revision
+SVNREVISION=`svn info $PWD/helm/software/ | grep "^Revision:" | cut -d : -f 2`
+echo "INSERT INTO bench_svn VALUES ('$MARK','$SVNREVISION')" | $MYSQL
 cd $OLD
 #rm -rf $TMPDIRNAME
+
+#eof
