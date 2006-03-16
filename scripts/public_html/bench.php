@@ -17,27 +17,27 @@ $query_fail = urlencode(
 );
 $query_gc = urlencode(
   "GC usage @@@" .
-  "select bench.mark, SEC_TO_TIME(SUM(TIME_TO_SEC(bench.time)) - SUM(TIME_TO_SEC(bench1.time))) as gc_hoverhead from bench, bench as bench1 where bench.mark = bench1.mark and bench.test = bench1.test and bench.options = 'gc-on' and bench1.options = 'gc-off' and bench.compilation = bench1.compilation group by mark***"
+  "select bench.mark, SUM(bench.time) - SUM(bench1.time) as gc_hoverhead from bench, bench as bench1 where bench.mark = bench1.mark and bench.test = bench1.test and bench.options = 'gc-on' and bench1.options = 'gc-off' and bench.compilation = bench1.compilation group by mark***"
   . "###" . 
   "GC usage (opt)@@@" .
-  "select bench.mark, SEC_TO_TIME(SUM(TIME_TO_SEC(bench.time)) - SUM(TIME_TO_SEC(bench1.time))) as gc_hoverhead from bench, bench as bench1 where bench.mark = bench1.mark and bench.test = bench1.test and bench.options = 'gc-on' and bench1.options = 'gc-off' and bench.compilation = bench1.compilation and bench.compilation = 'opt' group by mark***"
+  "select bench.mark, SUM(bench.time) - SUM(bench1.time) as gc_hoverhead from bench, bench as bench1 where bench.mark = bench1.mark and bench.test = bench1.test and bench.options = 'gc-on' and bench1.options = 'gc-off' and bench.compilation = bench1.compilation and bench.compilation = 'opt' group by mark***"
   . "###" . 
   "GC usage (byte)@@@" .
-  "select bench.mark, SEC_TO_TIME(SUM(TIME_TO_SEC(bench.time)) - SUM(TIME_TO_SEC(bench1.time))) as gc_hoverhead from bench, bench as bench1 where bench.mark = bench1.mark and bench.test = bench1.test and bench.options = 'gc-on' and bench1.options = 'gc-off' and bench.compilation = bench1.compilation and bench.compilation = 'byte' group by mark***"
+  "select bench.mark, SUM(bench.time) - SUM(bench1.time) as gc_hoverhead from bench, bench as bench1 where bench.mark = bench1.mark and bench.test = bench1.test and bench.options = 'gc-on' and bench1.options = 'gc-off' and bench.compilation = bench1.compilation and bench.compilation = 'byte' group by mark***"
   
 );
 $query_auto = urlencode(
-  "Auto (with GC)@@@select mark, SEC_TO_TIME(SUM(TIME_TO_SEC(bench.time))) as time from bench where test='auto.ma' and options = 'gc-on' group by mark order by mark desc***"
+  "Auto (with GC)@@@select mark, SUM(bench.time) as time from bench where test='auto.ma' and options = 'gc-on' group by mark order by mark desc***"
   . "###" . 
-  "Auto (without GC)@@@select mark, SEC_TO_TIME(SUM(TIME_TO_SEC(bench.time))) as time from bench where test='auto.ma' and options = 'gc-off' group by mark order by mark desc***"
-  #  . "###" . 
-  # "GC overhead@@@select bench.mark, SEC_TO_TIME(SUM(TIME_TO_SEC(bench.time)) - SUM(TIME_TO_SEC(bench1.time))) as gc_hoverhead from bench, bench as bench1 where bench.mark = bench1.mark and bench.test = bench1.test and bench.options = 'gc-on' and bench1.options = 'gc-off' and bench.compilation = bench1.compilation and bench.test = 'auto.ma' group by mark"
+  "Auto (without GC)@@@select mark, SUM(bench.time) as time from bench where test='auto.ma' and options = 'gc-off' group by mark order by mark desc***"
+    . "###" . 
+   "GC overhead@@@select bench.mark, SUM(bench.time) - SUM(bench1.time) as gc_hoverhead from bench, bench as bench1 where bench.mark = bench1.mark and bench.test = bench1.test and bench.options = 'gc-on' and bench1.options = 'gc-off' and bench.compilation = bench1.compilation and bench.test = 'auto.ma' group by mark"
 );
 
-$query_csc = urlencode("Performances (byte and GC) per mark@@@select bench.mark ,bench_svn.revision as revision, SEC_TO_TIME(SUM(TIME_TO_SEC(bench.time))) as sum_time, SEC_TO_TIME(SUM(TIME_TO_SEC(bench.timeuser))) as sum_timeuser from bench, bench_svn where bench.options = 'gc-on' and bench.compilation = 'byte' and bench_svn.mark = bench.mark group by bench.mark order by bench.mark desc"
+$query_csc = urlencode("Performances (byte and GC) per mark@@@select bench.mark ,bench_svn.revision as revision, SUM(bench.time) as sum_time, SUM(bench.timeuser) as sum_timeuser from bench, bench_svn where bench.options = 'gc-on' and bench.compilation = 'byte' and bench_svn.mark = bench.mark group by bench.mark order by bench.mark desc"
 );
 
-$query_csc_opt = urlencode("Performances (opt and GC) per mark@@@select bench.mark,bench_svn.revision as revision, SEC_TO_TIME(SUM(TIME_TO_SEC(bench.time))) as sum_time, SEC_TO_TIME(SUM(TIME_TO_SEC(bench.timeuser))) as sum_timeuser from bench, bench_svn where bench.options = 'gc-on' and bench.compilation = 'opt' and bench_svn.mark = bench.mark group by bench.mark order by bench.mark desc"
+$query_csc_opt = urlencode("Performances (opt and GC) per mark@@@select bench.mark,bench_svn.revision as revision, SUM(bench.time) as sum_time, SUM(bench.timeuser) as sum_timeuser from bench, bench_svn where bench.options = 'gc-on' and bench.compilation = 'opt' and bench_svn.mark = bench.mark group by bench.mark order by bench.mark desc"
 );
 
 $query_total = urlencode(

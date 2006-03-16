@@ -22,6 +22,31 @@ function prettify($s) {
     return $s;
 }
   
+function printer($q){
+  static $i = 0;
+  if ( $i == 0) {
+      echo "<tr>";
+      foreach( $q as $name => $txt) {
+          echo "<th>$name</th>";
+        }
+      echo "</tr>\n";
+  } else {
+      $i=0;
+      foreach ($q as $k => $v) {
+        $i = $i + 1;
+        if ( $i%2 == 0)
+          echo "<tr class=\"even\">";      
+        else
+          echo "<tr class=\"odd\">";
+        foreach( $v as $name => $txt) {
+          echo "<td>" . prettify($txt) . "</td>";
+        }
+        echo "</tr>\n";      
+      }
+  }
+  $i++;
+}
+
 ?>
 <html>
   <head>
@@ -35,26 +60,7 @@ function prettify($s) {
     <tt><? print $q; ?></tt>
     </p>
     <table border=1>
-    <? 
-      $q = query($q);
-      echo "<tr>";
-      foreach( $q[0] as $name => $txt) {
-          echo "<th>$name</th>";
-        }
-      echo "</tr>\n";
-      $i=0;
-      foreach ($q as $k => $v) {
-        $i = $i + 1;
-        if ( $i%2 == 0)
-          echo "<tr class=\"even\">";      
-        else
-          echo "<tr class=\"odd\">";
-        foreach( $v as $name => $txt) {
-          echo "<td>" . prettify($txt) . "</td>";
-        }
-        echo "</tr>\n";      
-      }
-    ?>
+    <?  query($q,&$printer); ?>
     </table>
 <? } ?>
     <p><a href="bench.php">BACK to the query page</a></p>

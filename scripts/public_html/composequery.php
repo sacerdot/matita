@@ -23,7 +23,7 @@
   $gb = $_GET['groupby'];
   $limit = $_GET['limit'];
   if($gb != "--")
-    $what = "mark, SEC_TO_TIME(SUM(TIME_TO_SEC(time))) as sum_time, SEC_TO_TIME(SUM(TIME_TO_SEC(timeuser))) as sum_timeuser";
+    $what = "mark, SUM(time) as sum_time, SUM(timeuser) as sum_timeuser";
   else
     $what = "mark, time, timeuser, compilation, test, result, options";
   $clause = clause_for($c);
