@@ -1,5 +1,11 @@
 <?php
 
+function array_to_combo($a) {
+  foreach($a as $k => $v){
+    echo "<option value=\"{$v}\">{$v}</option>";
+  }
+}
+
 function query($q,$f) {
   $db = mysql_pconnect("localhost","helm");
   mysql_select_db("matita");
@@ -23,17 +29,6 @@ function time_2_cents($t) {
   $t_secs = $matches[2];
   $t_cents = $matches[3];
   return ((int) $t_cents) + ((int) $t_secs) * 100 + ((int)$t_minutes) * 6000 ;
-}
-
-function array_to_combo($l,$a) {
-  echo "<select name=\"$l\">";
-  echo "<option value=\"--\">--</option>";
-  foreach ($a as $k => $v) {
-    foreach( array_keys($v) as $k1 => $i) {
-      echo "<option value=\"{$v[$i]}\">{$v[$i]}</option>";
-    }
-  }
-  echo "</select>";
 }
 
 ?>

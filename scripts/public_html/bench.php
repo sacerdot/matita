@@ -97,45 +97,65 @@ function links_of($name,$q,$limits){
   <tr>
     <td>Marks:</td>
     <td> 
-      <? array_to_combo("mark",
-            query("select distinct mark from bench order by mark desc;")); ?>
+      <select name="mark">";
+        <option value="--">--</option>";
+        <?query("select distinct mark from bench order by mark desc;",
+            "array_to_combo");?>
+      </select>      
     </td>
   </tr>
   <tr>
     <td>Compilations:</td>
     <td> 
-      <? array_to_combo("compilation",
-           query("select distinct compilation from bench;")); ?>
+      <select name="compilation">";
+        <option value="--">--</option>";
+          <?query("select distinct compilation from bench;","array_to_combo");?>
+      </select>      
     </td>
   </tr>
   <tr>
     <td>Options:</td>
     <td>  
-      <?array_to_combo("options",query("select distinct options from bench;"));?>
+      <select name="options">";
+        <option value="--">--</option>";
+          <?query("select distinct options from bench;","array_to_combo");?>
+      </select>      
     </td>
   </tr>
   <tr>
     <td>Tests:</td>
     <td>    
-      <? array_to_combo("test",query("select distinct test from bench;")); ?>
+      <select name="test">";
+        <option value="--">--</option>";
+          <?query("select distinct test from bench;","array_to_combo");?>
+      </select>      
     </td>
   </tr>
   <tr>
     <td>Test results:</td>
     <td>
-      <? array_to_combo("result",query("select distinct result from bench;")); ?>
+      <select name="result">";
+        <option value="--">--</option>";
+          <?query("select distinct result from bench;","array_to_combo"); ?>
+      </select>      
     </td>
   </tr>
   <tr>
     <td>Group By: </td>
     <td>
-      <? array_to_combo("groupby",array(array("mark","options"))); ?>
+      <select name="groupby">";
+        <option value="--">--</option>";
+        <? array_to_combo(array("mark"));array_to_combo(array("options")); ?>
+      </select>      
     </td>
   </tr>
   <tr>
     <td>Limit: </td>
     <td>
-      <? array_to_combo("limit",array($limits)); ?>
+      <select name="limit">";
+        <option value="--">--</option>";
+      <? foreach(array($limits) as $l) {array_to_combo($l);} ?>
+      </select>      
     </td>
   </tr>
   <tr>
