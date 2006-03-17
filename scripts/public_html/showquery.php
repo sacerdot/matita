@@ -28,7 +28,7 @@ function prettify($s,$name) {
 }
   
 function printer($q){
-  static $i = 0;
+  global $i;
   echo "<tr>";
   if ( $i == 0) {
       foreach( $q as $name => $txt) {
@@ -54,7 +54,7 @@ function printer($q){
   </head>
   <body>
     <h1>QUERY results</h1>
-<? foreach( $qs as $name => $q) { ?>
+<? foreach( $qs as $name => $q) { $i=0;?>
     <h2><? echo $name; ?></h2>
     <p>
     <tt><? print $q; ?></tt>

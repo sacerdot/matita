@@ -1,5 +1,7 @@
 <?php
 
+$i = 0;
+  
 function array_to_combo($a) {
   foreach($a as $k => $v){
     echo "<option value=\"{$v}\">{$v}</option>";
