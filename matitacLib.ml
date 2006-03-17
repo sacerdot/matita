@@ -81,11 +81,17 @@ let run_script is eval_function  =
       raise exn
 
 let fname () =
-  match Helm_registry.get_list Helm_registry.string "matita.args" with
+  let rec aux = function
+  | ""::tl -> aux tl
   | [x] -> x
+  | [] -> MatitaInit.die_usage ()
   | l -> 
-      prerr_endline ("Wrong commands: " ^ String.concat " " l);
+      prerr_endline 
+        ("Wrong commands: " ^ 
+          String.concat " " (List.map (fun x -> "'" ^ x ^ "'") l));
       MatitaInit.die_usage ()
+  in
+  aux (Helm_registry.get_list Helm_registry.string "matita.args")
 
 let pp_ocaml_mode () = 
   HLog.message "";
@@ -187,9 +193,13 @@ let pp_times fname bench_mode rc big_bang =
             assert (fnamelen > rootlen); 
             String.sub fname rootlen (fnamelen - rootlen)           
       in
-      let s = 
-        Printf.sprintf "%s %-35s %-4s %s %s" cc fname rc times extra 
+      let fname = 
+        if fname.[0] = '/' then
+          String.sub fname 1 (String.length fname - 1)
+        else
+          fname
       in
+      let s = Printf.sprintf "%s %-35s %-4s %s %s" cc fname rc times extra in
       print_endline s;
       flush stdout
     end
@@ -268,13 +278,16 @@ let main ~mode =
        let baseuri =
         DependenciesParser.baseuri_of_script ~include_paths fname in
        let moo_fname = 
-         LibraryMisc.obj_file_of_baseuri ~baseuri ~writable:true 
+         LibraryMisc.obj_file_of_baseuri 
+           ~must_exist:false ~baseuri ~writable:true 
        in
        let lexicon_fname= 
-         LibraryMisc.lexicon_file_of_baseuri ~baseuri ~writable:true 
+         LibraryMisc.lexicon_file_of_baseuri 
+          ~must_exist:false ~baseuri ~writable:true 
        in
        let metadata_fname =
-        LibraryMisc.metadata_file_of_baseuri ~baseuri ~writable:true
+        LibraryMisc.metadata_file_of_baseuri 
+          ~must_exist:false ~baseuri ~writable:true
        in
        GrafiteMarshal.save_moo moo_fname moo_content_rev;
        LibraryNoDb.save_metadata metadata_fname metadata;

@@ -66,7 +66,12 @@
     </key>
     <key name="prefix">
       cic:/
-      file://@RT_BASE_DIR@/legacy-library/coq/
+      file://@RT_BASE_DIR@/xml/legacy-library/coq/
+      legacy
+    </key>
+    <key name="prefix">
+      cic:/
+      file:///projects/helm/library/coq_contribs/
       legacy
     </key>
   </section>

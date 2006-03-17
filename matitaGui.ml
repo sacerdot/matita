@@ -71,12 +71,15 @@ let clean_current_baseuri grafite_status =
 
 let ask_and_save_moo_if_needed parent fname lexicon_status grafite_status = 
   let baseuri = DependenciesParser.baseuri_of_script ~include_paths:[] fname in
-  let moo_fname = LibraryMisc.obj_file_of_baseuri ~baseuri ~writable:true in
+  let moo_fname = 
+    LibraryMisc.obj_file_of_baseuri ~must_exist:false ~baseuri ~writable:true in
   let save () =
     let metadata_fname =
-     LibraryMisc.metadata_file_of_baseuri ~baseuri ~writable:true in
+     LibraryMisc.metadata_file_of_baseuri 
+       ~must_exist:false ~baseuri ~writable:true in
     let lexicon_fname =
-     LibraryMisc.lexicon_file_of_baseuri ~baseuri ~writable:true
+     LibraryMisc.lexicon_file_of_baseuri 
+       ~must_exist:false ~baseuri ~writable:true
     in
      GrafiteMarshal.save_moo moo_fname
       grafite_status.GrafiteTypes.moo_content_rev;

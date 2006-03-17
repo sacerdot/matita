@@ -19,7 +19,11 @@ clean:
 	rm -f $(TODO)
 
 %.moo:
-	$(MATITAC) $(MATITA_FLAGS) -q -I @ROOT@ $<
+	if [ -z "$<" ]; then \
+		echo "missing dependencies for $@"; \
+	else \
+		$(MATITAC) $(MATITA_FLAGS) -q -I @ROOT@ $<; \
+	fi
 
 @DEPFILE@ : $(SRC)
 	$(MATITADEP) $(MATITA_FLAGS) -I '@ROOT@' $^ 1> @DEPFILE@ 

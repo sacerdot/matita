@@ -27,6 +27,17 @@
 
 module GA = GrafiteAst 
 module U = UriManager
+                
+let obj_file_of_baseuri writable baseuri = 
+  try 
+    LibraryMisc.obj_file_of_baseuri 
+     ~must_exist:true ~baseuri ~writable
+  with 
+  | Http_getter_types.Unresolvable_URI _ 
+  | Http_getter_types.Key_not_found _ ->  
+    LibraryMisc.obj_file_of_baseuri 
+     ~must_exist:false ~baseuri ~writable:true
+;;
 
 let main () =
   (* all are maps from "file" to "something" *)
@@ -45,8 +56,8 @@ let main () =
   List.iter
    (fun ma_file -> 
     let ic = open_in ma_file in
-    let istream = Ulexing.from_utf8_channel ic in
-    let dependencies = DependenciesParser.parse_dependencies istream in
+      let istream = Ulexing.from_utf8_channel ic in
+      let dependencies = DependenciesParser.parse_dependencies istream in
     close_in ic;
     List.iter 
      (function
@@ -62,8 +73,7 @@ let main () =
             let baseuri =
               DependenciesParser.baseuri_of_script ~include_paths path in
             if not (Http_getter_storage.is_legacy baseuri) then
-              let moo_file =
-                LibraryMisc.obj_file_of_baseuri ~baseuri ~writable:false in
+              let moo_file = obj_file_of_baseuri false baseuri in
               Hashtbl.add include_deps ma_file moo_file
           with Sys_error _ -> 
             HLog.warn 
@@ -76,8 +86,7 @@ let main () =
       match dep with 
       | None -> ()
       | Some u -> 
-         Hashtbl.add include_deps file
-          (LibraryMisc.obj_file_of_baseuri ~baseuri:u ~writable:false))
+         Hashtbl.add include_deps file (obj_file_of_baseuri false u))
   uri_deps;
   List.iter
    (fun ma_file -> 
@@ -86,8 +95,9 @@ let main () =
     let deps = HExtlib.list_uniq deps in
     let deps = ma_file :: deps in
     let baseuri = Hashtbl.find baseuri_of ma_file in
-    let moo = LibraryMisc.obj_file_of_baseuri ~baseuri ~writable:false in
-     Printf.printf "%s: %s\n" moo (String.concat " " deps);
-     Printf.printf "%s: %s\n" (Pcre.replace ~pat:"ma$" ~templ:"mo" ma_file) moo)
+    let moo = obj_file_of_baseuri true baseuri in
+    Printf.printf "%s: %s\n%s: %s\n%s: %s\n" moo (String.concat " " deps)
+      (Filename.basename (Pcre.replace ~pat:"ma$" ~templ:"mo" ma_file)) moo
+      (Pcre.replace ~pat:"ma$" ~templ:"mo" ma_file) moo)
    (Helm_registry.get_list Helm_registry.string "matita.args")
 

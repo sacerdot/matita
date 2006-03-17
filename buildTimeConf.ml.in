@@ -51,6 +51,8 @@ let matita_conf  = runtime_base_dir ^ "/matita.conf.xml"
 let closed_xml = runtime_base_dir ^ "/closed.xml"
 let gtkmathview_conf = runtime_base_dir ^ "/gtkmathview.matita.conf.xml"
 let matitamake_makefile_template = runtime_base_dir ^ "/template_makefile.in"
+let matitamake_makefile_template_devel = 
+  runtime_base_dir ^ "/template_makefile_devel.in"
 let stdlib_dir_devel = runtime_base_dir ^ "/library"
 let stdlib_dir_installed = runtime_base_dir ^ "/ma/standard-library"
 let help_dir = runtime_base_dir ^ "/help"

@@ -211,8 +211,8 @@ let add_cmdline_spec l = extra_cmdline_specs := l @ !extra_cmdline_specs
 let parse_cmdline init_status =
   if not (already_configured [CmdLine] init_status) then begin
     let includes = ref [ 
-      BuildTimeConf.stdlib_dir_installed ;
-      BuildTimeConf.stdlib_dir_devel ] 
+      BuildTimeConf.stdlib_dir_devel;
+      BuildTimeConf.stdlib_dir_installed ; ] 
     in
     let args = ref [] in
     let add_l l = fun s -> l := s :: !l in
@@ -269,6 +269,7 @@ let parse_cmdline init_status =
     in
     Arg.parse arg_spec (add_l args) (usage ());
     set_list ~key:"matita.includes" includes;
+    args := List.filter (fun x -> x <> "") !args;
     set_list ~key:"matita.args" args;
     HExtlib.set_profiling_printings 
       (fun () -> Helm_registry.get_bool "matita.profile");

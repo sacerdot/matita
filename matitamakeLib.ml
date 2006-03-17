@@ -137,26 +137,29 @@ let rebuild_makefile development =
   let template = Pcre.replace ~pat:"@CLEAN@" ~templ:rm template in
   HExtlib.output_file ~filename:makefilepath ~text:template
   
+let rebuild_makefile_devel development = 
+  let path = development.root ^ "/makefile" in
+  if not (Sys.file_exists path) then
+    begin
+      let template = 
+        HExtlib.input_file BuildTimeConf.matitamake_makefile_template_devel
+      in
+      let template = 
+        Pcre.replace ~pat:"@MATITA_RT_BASE_DIR@"
+          ~templ:BuildTimeConf.runtime_base_dir template
+      in
+      HExtlib.output_file ~filename:path ~text:template
+    end
+  
 (* creates a new development if possible *)
 let initialize_development name dir =
   let name = Pcre.replace ~pat:" " ~templ:"_" name in 
   let dev = {name = name ; root = dir} in
-  match development_for_dir dir with
-  | Some dev ->
-      if dir <> dev.root then begin
-        logger `Error 
-          (sprintf ("Dir \"%s\" is already handled by development \"%s\"\n"
-            ^^ "Development \"%s\" is rooted in \"%s\"\n"
-            ^^ "Dir \"%s\" is a sub-dir of \"%s\"")
-          dir dev.name dev.name dev.root dir dev.root);
-        None
-      end else (* requirement development alreay exists, do nothing *)
-        Some dev
-  | None -> 
-      dump_development dev;
-      rebuild_makefile dev;
-      developments := dev :: !developments;
-      Some dev
+  dump_development dev;
+  rebuild_makefile dev;
+  rebuild_makefile_devel dev;
+  developments := dev :: !developments;
+  Some dev
 
 let make chdir args = 
   let old = Unix.getcwd () in
@@ -197,6 +200,7 @@ let call_make ?matita_flags development target make =
   let args = 
     ["--no-print-directory"; "-s"; "-k"; "-f"; makefile; target] @ flags 
   in
+(*     prerr_endline (String.concat " " args);   *)
   make development.root args
       
 let build_development ?matita_flags ?(target="all") development =
@@ -239,6 +243,7 @@ let mk_maker refresh_cb =
     let pid = ref ~-1 in
     ignore(Sys.signal Sys.sigchld (Sys.Signal_ignore));
     try
+(*       prerr_endline (String.concat " " args); *)
       let argv = Array.of_list ("make"::args) in
       pid := Unix.create_process "make" argv Unix.stdin out_w err_w;
       Unix.close out_w;
