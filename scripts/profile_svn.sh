@@ -5,7 +5,7 @@ MARK=`date +%Y%m%d%H%M`
 TMPDIRNAME=__${MARK}_compilation
 SVNROOT="svn+ssh://mowgli.cs.unibo.it/local/svn/helm/trunk/"
 MYSQL="mysql -u helm -h mowgli.cs.unibo.it matita"
-SVNLOG=$TMPDIRNAME/LOG.svn
+SVNLOG=LOG.svn
 
 #helpers
 function testit {
