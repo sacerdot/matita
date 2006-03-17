@@ -29,22 +29,21 @@ function prettify($s,$name) {
   
 function printer($q){
   static $i = 0;
+  echo "<tr>";
   if ( $i == 0) {
-      echo "<tr>";
       foreach( $q as $name => $txt) {
           echo "<th>$name</th>";
-        }
-      echo "</tr>\n";
-  } else {
-      if ( $i%2 == 0)
-        echo "<tr class=\"even\">";      
-      else
-        echo "<tr class=\"odd\">";
-      foreach( $q as $name => $txt) {
-        echo "<td>" . prettify($txt,$name) . "</td>";
       }
-      echo "</tr>\n";      
   }
+  echo "</tr>\n";
+  if ( $i%2 == 0)
+     echo "<tr class=\"even\">";      
+  else
+     echo "<tr class=\"odd\">";
+  foreach( $q as $name => $txt) {
+     echo "<td>" . prettify($txt,$name) . "</td>";
+  }
+  echo "</tr>\n";      
   $i++;
 }
 
