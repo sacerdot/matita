@@ -18,7 +18,7 @@ function prettify($s,$name) {
     $hour = substr($s,8,2);
     $minute = substr($s,10,2);
     return $day . "/" . $month . "/" . $year . " " . $hour . ":" . $minute;
-  } else if ($name == "sum_time" || $name == "sum_timeuser" || $name == "time" || $name == "time_user" ){
+  } else if ($name == "sum_time" || $name == "sum_timeuser" || $name == "time" || $name == "time_user" || $name == "timeuser"){
     $min = floor($s / 6000);
     $sec = floor(($s - $min * 6000) / 100);
     $cents = $s % 100;
