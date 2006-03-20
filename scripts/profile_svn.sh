@@ -11,7 +11,7 @@ SVNLOG=LOG.svn
 function testit {
   LOGTOOPT=/dev/null
   LOGTOBYTE=/dev/null
-  export BENCH_EXTRA_TEXT="$MARK\t$@"
+  export BENCH_EXTRA_TEXT="$MARK $@"
   make tests 
   make tests.opt 
 }
