@@ -166,11 +166,15 @@ function links_of($name,$q,$limits){
 <h2>Custom Query - raw SQL</h2>
 <form action="showquery.php" method="get">
 <table>
+<tr><td>'bench' table description:</td></tr>
 </tr>
 <? query("describe bench","printer"); ?>
 </tr>
+<tr><td></td></tr>
+<tr><td>SQL (only one query, ';' if present must terminate the query, no characters allowed after it):</td></tr>
 <tr><td>
-<input type="text" size="50" name="query" value="select * from bench;"/></td>
+<textarea rows="10" cols="80" name="query"/>select SUM(time) from bench;</textarea>
+</td>
 </tr>
 <tr><td>
 <input type="submit" value="Submit" class="button" /></td>
