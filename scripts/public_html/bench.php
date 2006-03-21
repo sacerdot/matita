@@ -173,7 +173,17 @@ function links_of($name,$q,$limits){
 <tr><td></td></tr>
 <tr><td>SQL (only one query, ';' if present must terminate the query, no characters allowed after it):</td></tr>
 <tr><td>
-<textarea rows="10" cols="80" name="query"/>select SUM(time) from bench;</textarea>
+<textarea rows="10" cols="120" name="query"/>
+select 
+  b1.test as test, b1.timeuser as oldtime, b2.timeuser as newtime, b1.compilation as comp, b1.options as opts
+from 
+  bench as b1, bench as b2 
+where 
+  b1.test = b2.test and 
+  b1.options = b2.options and
+  b1.compilation = b2.compilation and 
+  b1.mark = '' and b2.mark= '' and
+  ABS(b1.timeuser - b2.timeuser) &gt; 100;</textarea>
 </td>
 </tr>
 <tr><td>

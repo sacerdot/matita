@@ -50,8 +50,9 @@ function printer($q){
 function query($q,$f) {
   $db = mysql_pconnect("localhost","helm");
   mysql_select_db("matita");
+  $q = preg_replace("/\n/"," ",$q);
   if (!preg_match("/^(select|describe)[^\n;]*;?$/i",$q)) {
-    echo "Query not allowed!";
+    die("Query not allowed!<pre>" . $q . "</pre>");
     return;
   }
   $rc = mysql_query($q,$db);
