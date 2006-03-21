@@ -22,6 +22,8 @@ alias id "eq_ind" = "cic:/Coq/Init/Logic/eq_ind.con".
 alias id "eq_ind_r" = "cic:/Coq/Init/Logic/eq_ind_r.con".
 alias id "sym_eq" = "cic:/Coq/Init/Logic/sym_eq.con".
 
+(* 
+
 theorem SKK:
   \forall A:Set.
   \forall app: A \to A \to A.
@@ -643,3 +645,5 @@ theorem bool5:
     (inv (mult x y)) = (add (inv x) (inv y)).
 intros.auto paramodulation.
 qed.
+
+*)
