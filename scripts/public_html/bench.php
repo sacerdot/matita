@@ -91,7 +91,7 @@ function links_of($name,$q,$limits){
       <? links_of("All table contents",$quey_all,$limits) ?>
       </ul>
     </p>
-    <h2>Custom Query</h2>
+    <h2>Custom Query - Simple Interface</h2>
     <form action="composequery.php" method="get">
     <table>
   <tr>
@@ -163,5 +163,20 @@ function links_of($name,$q,$limits){
   </tr>
  </table>
 </form>
+<h2>Custom Query - raw SQL</h2>
+<form action="showquery.php" method="get">
+<table>
+</tr>
+<? query("describe bench","printer"); ?>
+</tr>
+<tr><td>
+<input type="text" size="50" name="query" value="select * from bench;"/></td>
+</tr>
+<tr><td>
+<input type="submit" value="Submit" class="button" /></td>
+</tr>
+</table>
+</form>
+
 </body>
 </html>

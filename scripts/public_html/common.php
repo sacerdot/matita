@@ -8,9 +8,52 @@ function array_to_combo($a) {
   }
 }
 
+function prettify($s,$name) {
+  if (preg_match("/^[0-9]{12}$/",$s)) {
+    $year = substr($s,0,4);
+    $month = substr($s,4,2);
+    $day = substr($s,6,2);
+    $hour = substr($s,8,2);
+    $minute = substr($s,10,2);
+    return $day . "/" . $month . "/" . $year . " " . $hour . ":" . $minute;
+  } else if (preg_match("/time/",$name)){
+    $min = floor($s / 6000);
+    $sec = floor(($s - $min * 6000) / 100);
+    $cents = $s % 100;
+    return $min . "m" . $sec . "." . $cents . "s";
+  } else
+    return rtrim($s);
+}
+  
+
+function printer($q){
+  global $i;
+  echo "<tr>";
+  if ( $i == 0) {
+      foreach( $q as $name => $txt) {
+          echo "<th>$name</th>";
+      }
+  }
+  echo "</tr>\n";
+  if ( $i%2 == 0)
+     echo "<tr class=\"even\">";      
+  else
+     echo "<tr class=\"odd\">";
+  foreach( $q as $name => $txt) {
+     echo "<td>" . prettify($txt,$name) . "</td>";
+  }
+  echo "</tr>\n";      
+  $i++;
+}
+
+
 function query($q,$f) {
   $db = mysql_pconnect("localhost","helm");
   mysql_select_db("matita");
+  if (!preg_match("/^(select|describe)[^\n;]*;?$/i",$q)) {
+    echo "Query not allowed!";
+    return;
+  }
   $rc = mysql_query($q,$db);
   if(!$rc) {
     die("Query failed: " . mysql_error());
