@@ -171,8 +171,9 @@ function links_of($name,$q,$limits){
 <? query("describe bench","printer"); ?>
 </tr>
 <tr><td></td></tr>
-<tr><td>SQL (only one query, ';' if present must terminate the query, no characters allowed after it):</td></tr>
-<tr><td>
+<tr><td colspan="7">
+SQL (only one query, ';' if present must terminate the query, no characters allowed after it):</td></tr>
+<tr><td colspan="7">
 <textarea rows="10" cols="120" name="query"/>
 select 
   b1.test as test, b1.timeuser as oldtime, b2.timeuser as newtime, b1.compilation as comp, b1.options as opts
