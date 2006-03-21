@@ -268,9 +268,13 @@ object (self)
       GMenu.image_menu_item ?stock ?label ~packing:menu#append () in
     let check = add_menu_item ~label:"Check" () in
     let reductions_menu_item = GMenu.menu_item ~label:"βδιζ-reduce" () in
+    let tactics_menu_item = GMenu.menu_item ~label:"Apply tactic" () in
     menu#append reductions_menu_item;
+    menu#append tactics_menu_item;
     let reductions = GMenu.menu () in
+    let tactics = GMenu.menu () in
     reductions_menu_item#set_submenu reductions;
+    tactics_menu_item#set_submenu tactics;
     let normalize = add_menu_item ~menu:reductions ~label:"Normalize" () in
     let reduce = add_menu_item ~menu:reductions ~label:"Reduce" () in
     let simplify = add_menu_item ~menu:reductions ~label:"Simplify" () in
