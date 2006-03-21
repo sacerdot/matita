@@ -339,19 +339,15 @@
 	  </varlistentry>
 
 	  <varlistentry>
-	    <term><userinput>library</userinput></term>
-	    <listitem>
-	      <para>uses the (just built) <application>matitac</application>
-		compiler to build the &appname; standard library. </para>
-	    </listitem>
-	  </varlistentry>
-
-	  <varlistentry>
 	    <term><userinput>install</userinput></term>
 	    <listitem>
 	      <para>installs &appname; related tools, standard library and the
-		needed runtime stuff in the proper places on the filesystem
+		needed runtime stuff in the proper places on the filesystem.
 	      </para>
+	      <para>As a part of the installation process the &appname;
+		standard library will be compiled, thus testing that the just
+		built <application>matitac</application> compiler works
+		properly.</para>
 	      <para>For this step you will need a working SQL database (for
 		indexing the standard library while you are compiling it). See
 		<ulink type="http" url="#database_setup">Database setup</ulink>
