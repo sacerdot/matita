@@ -10,7 +10,7 @@
     if ($x[1] == NULL) {
       $qs["Unnamed"] = $x[0];
     } else {
-      $qs[$x[0]] = mysql_escape_string($x[1]);
+      $qs[$x[0]] = $x[1];
     }
   }
 
