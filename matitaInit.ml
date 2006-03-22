@@ -240,6 +240,9 @@ let parse_cmdline init_status =
         "-noprofile", 
           Arg.Unit (fun () -> Helm_registry.set_bool "matita.profile" false),
           "Turns off profiling printings";
+        "-profile-only",
+          Arg.String (fun rex -> Helm_registry.set "matita.profile_only" rex),
+          "Activates only profiler with label matching the provided regex";
         "-bench", 
           Arg.Unit (fun () -> Helm_registry.set_bool "matita.bench" true),
           "Turns on parsable output on stdout, that is timings for matitac...";
@@ -272,7 +275,12 @@ let parse_cmdline init_status =
     args := List.filter (fun x -> x <> "") !args;
     set_list ~key:"matita.args" args;
     HExtlib.set_profiling_printings 
-      (fun () -> Helm_registry.get_bool "matita.profile");
+      (fun s -> 
+        Helm_registry.get_bool "matita.profile" && 
+        Pcre.pmatch 
+          ~pat:(Helm_registry.get_opt_default 
+                  Helm_registry.string ~default:".*" "matita.profile_only") 
+          s);
     CmdLine :: init_status
   end else
     init_status
