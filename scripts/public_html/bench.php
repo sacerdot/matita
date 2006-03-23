@@ -34,10 +34,10 @@ $query_auto = urlencode(
    "GC overhead@@@select bench.mark, SUM(bench.time) - SUM(bench1.time) as gc_hoverhead from bench, bench as bench1 where bench.mark = bench1.mark and bench.test = bench1.test and bench.options = 'gc-on' and bench1.options = 'gc-off' and bench.compilation = bench1.compilation and bench.test = 'auto.ma' group by mark"
 );
 
-$query_csc = urlencode("Performances (byte and GC) per mark@@@select bench.mark ,bench_svn.revision as revision, SUM(bench.time) as sum_time, SUM(bench.timeuser) as sum_timeuser from bench, bench_svn where bench.options = 'gc-on' and bench.compilation = 'byte' and bench_svn.mark = bench.mark group by bench.mark order by bench.mark desc"
+$query_csc = urlencode("Performances (byte and GC) per mark@@@select bench.mark ,bench_svn.revision as revision, SUM(bench.time) as sum_time, SUM(bench.timeuser) as sum_timeuser, COUNT(DISTINCT bench.test) as performed_tests from bench, bench_svn where bench.options = 'gc-on' and bench.compilation = 'byte' and bench_svn.mark = bench.mark group by bench.mark order by bench.mark desc"
 );
 
-$query_csc_opt = urlencode("Performances (opt and GC) per mark@@@select bench.mark,bench_svn.revision as revision, SUM(bench.time) as sum_time, SUM(bench.timeuser) as sum_timeuser from bench, bench_svn where bench.options = 'gc-on' and bench.compilation = 'opt' and bench_svn.mark = bench.mark group by bench.mark order by bench.mark desc"
+$query_csc_opt = urlencode("Performances (opt and GC) per mark@@@select bench.mark,bench_svn.revision as revision, SUM(bench.time) as sum_time, SUM(bench.timeuser) as sum_timeuser, COUNT(DISTINCT bench.test) as performed_tests from bench, bench_svn where bench.options = 'gc-on' and bench.compilation = 'opt' and bench_svn.mark = bench.mark group by bench.mark order by bench.mark desc"
 );
 
 $query_total = urlencode(
