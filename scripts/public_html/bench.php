@@ -7,45 +7,176 @@
 //
 $limits = array("20","50","100");
   
-$quey_all = urlencode("Whole content:@@@select * from bench order by mark desc***");
-$query_fail = urlencode(
-  "Number of failures@@@" .
-  "select mark, count(distinct test) as fail_no from bench where result = 'fail' group by mark order by mark desc***"
-  . "###" . 
-  "Tests failed@@@" .
-  "select distinct mark, test, result from bench where result = 'fail' order by mark desc***" 
-);
-$query_gc = urlencode(
-  "GC usage @@@" .
-  "select bench.mark, SUM(bench.time) - SUM(bench1.time) as gc_hoverhead from bench, bench as bench1 where bench.mark = bench1.mark and bench.test = bench1.test and bench.options = 'gc-on' and bench1.options = 'gc-off' and bench.compilation = bench1.compilation group by mark***"
-  . "###" . 
-  "GC usage (opt)@@@" .
-  "select bench.mark, SUM(bench.time) - SUM(bench1.time) as gc_hoverhead from bench, bench as bench1 where bench.mark = bench1.mark and bench.test = bench1.test and bench.options = 'gc-on' and bench1.options = 'gc-off' and bench.compilation = bench1.compilation and bench.compilation = 'opt' group by mark***"
-  . "###" . 
-  "GC usage (byte)@@@" .
-  "select bench.mark, SUM(bench.time) - SUM(bench1.time) as gc_hoverhead from bench, bench as bench1 where bench.mark = bench1.mark and bench.test = bench1.test and bench.options = 'gc-on' and bench1.options = 'gc-off' and bench.compilation = bench1.compilation and bench.compilation = 'byte' group by mark***"
-  
-);
-$query_auto = urlencode(
-  "Auto (with GC)@@@select mark, SUM(bench.time) as time from bench where test='auto.ma' and options = 'gc-on' group by mark order by mark desc***"
-  . "###" . 
-  "Auto (without GC)@@@select mark, SUM(bench.time) as time from bench where test='auto.ma' and options = 'gc-off' group by mark order by mark desc***"
-    . "###" . 
-   "GC overhead@@@select bench.mark, SUM(bench.time) - SUM(bench1.time) as gc_hoverhead from bench, bench as bench1 where bench.mark = bench1.mark and bench.test = bench1.test and bench.options = 'gc-on' and bench1.options = 'gc-off' and bench.compilation = bench1.compilation and bench.test = 'auto.ma' group by mark"
-);
+$quey_all = urlencode("
+Whole content:
+@@@
+select * from bench order by mark desc***");
 
-$query_csc = urlencode("Performances (byte and GC) per mark@@@select bench.mark ,bench_svn.revision as revision, SUM(bench.time) as sum_time, SUM(bench.timeuser) as sum_timeuser, COUNT(DISTINCT bench.test) as performed_tests from bench, bench_svn where bench.options = 'gc-on' and bench.compilation = 'byte' and bench_svn.mark = bench.mark group by bench.mark order by bench.mark desc"
-);
+$query_fail = urlencode("
+Number of failures
+@@@
+select 
+  mark, count(distinct test) as fail_no 
+from bench 
+where result = 'fail' group by mark order by mark desc***
+###
+Tests failed
+@@@
+select distinct mark, test, result 
+from bench 
+where result = 'fail' order by mark desc***");
 
-$query_csc_opt = urlencode("Performances (opt and GC) per mark@@@select bench.mark,bench_svn.revision as revision, SUM(bench.time) as sum_time, SUM(bench.timeuser) as sum_timeuser, COUNT(DISTINCT bench.test) as performed_tests from bench, bench_svn where bench.options = 'gc-on' and bench.compilation = 'opt' and bench_svn.mark = bench.mark group by bench.mark order by bench.mark desc"
-);
+$query_gc = urlencode("
+GC usage 
+@@@
+select 
+  bench.mark, SUM(bench.time) - SUM(bench1.time) as gc_hoverhead 
+from bench, bench as bench1 
+where 
+  bench.mark = bench1.mark and 
+  bench.test = bench1.test and 
+  bench.options = 'gc-on' and
+  bench1.options = 'gc-off' and 
+  bench.compilation = bench1.compilation 
+group by mark***
+###
+GC usage (opt)
+@@@
+select 
+  bench.mark, SUM(bench.time) - SUM(bench1.time) as gc_hoverhead 
+from bench, bench as bench1
+where 
+  bench.mark = bench1.mark and 
+  bench.test = bench1.test and 
+  bench.options = 'gc-on' and 
+  bench1.options = 'gc-off' and 
+  bench.compilation = bench1.compilation and 
+  bench.compilation = 'opt' 
+group by mark***
+###
+GC usage (byte)
+@@@
+select 
+  bench.mark, SUM(bench.time) - SUM(bench1.time) as gc_hoverhead 
+from bench, bench as bench1 
+where 
+  bench.mark = bench1.mark and
+  bench.test = bench1.test and 
+  bench.options = 'gc-on' and 
+  bench1.options = 'gc-off' and 
+  bench.compilation = bench1.compilation and 
+  bench.compilation = 'byte' 
+group by mark***");
 
-$query_total = urlencode(
-  
-"Max N@@@select COUNT(DISTINCT test) as MAX from bench group by mark order by MAX desc LIMIT 0,1;"
-  . "###" .
-  "Number of compiled tests@@@select mark, COUNT(DISTINCT test) as N from bench group by mark order by mark desc***"
-);
+$query_auto = urlencode("
+Auto (with GC)
+@@@
+select 
+  mark, SUM(bench.time) as time 
+from 
+  bench 
+where 
+  test='auto.ma' and options = 'gc-on' 
+group by mark 
+order by mark desc***
+### 
+Auto (without GC)
+@@@
+select 
+  mark, SUM(bench.time) as time 
+from 
+  bench 
+where 
+  test='auto.ma' and options = 'gc-off' 
+group by mark 
+order by mark desc
+***
+### 
+GC overhead
+@@@
+select 
+  bench.mark, SUM(bench.time) - SUM(bench1.time) as gc_hoverhead 
+from 
+  bench, bench as bench1 
+where 
+  bench.mark = bench1.mark and 
+  bench.test = bench1.test and 
+  bench.options = 'gc-on' and 
+  bench1.options = 'gc-off' and 
+  bench.compilation = bench1.compilation and 
+  bench.test = 'auto.ma' 
+group by mark
+***");
+
+$query_csc = urlencode("
+Performances (byte and GC) per mark
+@@@
+select 
+  bench.mark,
+  bench_svn.revision as revision, 
+  SUM(bench.time) as sum_time,
+  SUM(bench.timeuser) as sum_timeuser, 
+  COUNT(DISTINCT bench.test) as performed_tests,
+  COUNT(DISTINCT bench1.test) as failed_tests
+from 
+  bench, bench_svn,bench as bench1 
+where 
+  bench.options = 'gc-on' and 
+  bench.compilation = 'byte' and 
+  bench_svn.mark = bench.mark and
+  bench1.result = 'fail' and
+  bench1.mark = bench.mark and
+  bench1.compilation = 'byte' and
+  bench1.options = 'gc-on'
+group by bench.mark
+order by bench.mark desc
+***");
+
+$query_csc_opt = urlencode("
+Performances (opt and GC) per mark
+@@@
+select 
+  bench.mark,
+  bench_svn.revision as revision, 
+  SUM(bench.time) as sum_time,
+  SUM(bench.timeuser) as sum_timeuser, 
+  COUNT(DISTINCT bench.test) as performed_tests,
+  COUNT(DISTINCT bench1.test) as failed_tests
+from 
+  bench, bench_svn,bench as bench1 
+where 
+  bench.options = 'gc-on' and 
+  bench.compilation = 'opt' and 
+  bench_svn.mark = bench.mark and
+  bench1.result = 'fail' and
+  bench1.mark = bench.mark and
+  bench1.compilation = 'opt' and
+  bench1.options = 'gc-on'
+group by bench.mark
+order by bench.mark desc
+***");
+
+$query_total = urlencode("
+Max N
+@@@
+select 
+  COUNT(DISTINCT test) as MAX 
+from 
+  bench 
+group by mark 
+order by MAX desc 
+LIMIT 0,1;
+###
+Number of compiled tests
+@@@
+select 
+  mark, 
+  COUNT(DISTINCT test) as N 
+from 
+  bench 
+group by mark 
+order by mark desc
+***");
 
 function minus1_to_all($s){
   if ($s == "-1") 
