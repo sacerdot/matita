@@ -47,7 +47,23 @@ fi
 CUR_TIME=`echo $SQLQTIME$MARK$SQLQGRMARK | $MYSQL`
 OLD_TIME=`echo $SQLQTIME$LASTMARK$SQLQGRMARK | $MYSQL`
 
-((DELTA=$CUR_CENTS-$OLD_CENTS))
+if [ -z "$CUR_TIME" -o -z "$OLD_TIME"]; then
+    cat <<EOT
+
+    Unable to calculate total time amounts:
+    
+      $SQLQTIME$MARK$SQLQGRMARK 
+      
+    or
+
+      $SQLQTIME$LASTMARK$SQLQGRMARK
+      
+    gave an empty result
+    
+EOT
+fi
+
+((DELTA=$CUR_TIME-$OLD_TIME))
 if [ $DELTA -lt 0 ]; then
   PERC=0
 else
