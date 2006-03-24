@@ -173,7 +173,7 @@ let pp_times fname bench_mode rc big_bang =
         else 
           "matitac" 
       in
-      let rc = if rc then "OK" else "FAIL" in
+      let rc = if rc then "[0;32mOK[0m" else "[0;31mFAIL[0m" in
       let times = 
         let fmt t = 
           let seconds = int_of_float t in
