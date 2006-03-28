@@ -120,7 +120,7 @@ theorem bool266:
   \forall x,y:A. (mult x (add (inv x) y)) = (mult x y).
 intros.auto paramodulation.
 qed.
-
+*)
 theorem bool507:
   \forall A:Set.
   \forall one:A.
@@ -141,7 +141,7 @@ theorem bool507:
   \forall x,y:A. zero = (mult x (mult (inv x) y)).
 intros.auto paramodulation.
 qed.
-
+(*
 theorem bool515:
   \forall A:Set.
   \forall one:A.
@@ -243,11 +243,6 @@ theorem bool557:
   \forall i2: (\forall x:A. (mult x one) = x).   
   \forall inv1: (\forall x:A. (add x (inv x)) = one).  
   \forall inv2: (\forall x:A. (mult x (inv x)) = zero). 
-  (*
-  \forall hint1: (\forall x,y:A. (add (inv x) (mult y x)) = (add (inv x) y)).
-  \forall hint2: \forall x,y:A.zero = (mult (inv x) (mult x y)). 
-  \forall hint2: (\forall x,y:A. zero = (mult (inv (add x y)) y)).
-  *)
   \forall x,y:A. 
     inv x =  (add (inv x) (inv (add y x))).
 intros.auto paramodulation.
@@ -270,11 +265,6 @@ theorem bool609:
   \forall i2: (\forall x:A. (mult x one) = x).   
   \forall inv1: (\forall x:A. (add x (inv x)) = one).  
   \forall inv2: (\forall x:A. (mult x (inv x)) = zero). 
-  (*
-  \forall hint1: (\forall x,y:A. (add (inv x) (mult y x)) = (add (inv x) y)).
-  \forall hint2: \forall x,y:A.zero = (mult (inv x) (mult x y)). 
-  \forall hint2: (\forall x,y:A. zero = (mult (inv (add x y)) y)).
-  *)
   \forall x,y:A. 
     inv x =  (add (inv (add y x)) (inv x)).
 intros.auto paramodulation.
@@ -378,7 +368,6 @@ theorem bool756simplified:
 intros;
 auto paramodulation.
 qed.
-(* 46 sec. *)
 
 theorem bool756:
   \forall A:Set.
@@ -411,8 +400,7 @@ cut (mult (add y x) (add x (add y z)) = add x (add y (mult x z)));
 [auto paramodulation
 |auto paramodulation]
 qed.
-(*  186 sec *)
-*)
+
 theorem bool756full:
   \forall A:Set.
   \forall one:A.
@@ -434,9 +422,7 @@ theorem bool756full:
     add x y = add x (add y (mult x z)).
 intros;auto paramodulation.
 qed.
-(* war=5; active 225, maxmeta 172568 *)
-(* war=4; active 249, maxmeta 223220 *)
-(*
+
 theorem bool1164:
   \forall A:Set.
   \forall one:A.
@@ -524,7 +510,7 @@ theorem bool1372:
   \forall x,y,z:A.
     add x (add y z) = add (add x z) y.
 intros.auto paramodulation.
-qed.*)
+qed.
 
 theorem bool381:
   \forall A:Set.
@@ -572,7 +558,6 @@ theorem bool5hint1:
     (inv (mult x y)) = (add (inv x) (inv y)).
 intros.auto paramodulation.
 qed.
-(* 90 *)
 
 theorem bool5hint2:
   \forall A:Set.
@@ -597,7 +582,6 @@ theorem bool5hint2:
     (inv (mult x y)) = (add (inv x) (inv y)).
 intros.auto paramodulation.
 qed.
-(* 41 *)
 
 theorem bool5hint3:
   \forall A:Set.
@@ -622,7 +606,6 @@ theorem bool5hint3:
     (inv (mult x y)) = (add (inv x) (inv y)).
 intros.auto paramodulation.
 qed.
-(* 41 *)
 
 theorem bool5:
   \forall A:Set.
@@ -647,3 +630,4 @@ intros.auto paramodulation.
 qed.
 
 *)
+
