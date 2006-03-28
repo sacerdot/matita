@@ -2,7 +2,7 @@
 
 local tool_re = "^([%w%.]+)"
 local test_re = "([%w%./_]+)"
-local rc_re = "([%a]+)"
+local rc_re = string.char(27).."%[%d+;%d+m([%a]+)"..string.char(27).."%[0m"
 local time_re = "(%d+m%d+%.%d+s)"
 local mark_re = "(%d+)"
 local opt_re = "(gc%-%a+)$"
@@ -42,7 +42,7 @@ for l in f:lines() do
 	local x,_,tool,test,rc,real,user,_,mark,opt = string.find(l,re)
 
 	if x == nil then
-		error("regex failed on " .. l)
+    error("regex failed on '"..l.."'")
 	end
 
 	-- check the result is valid
