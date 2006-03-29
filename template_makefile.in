@@ -26,7 +26,7 @@ clean:
 	fi
 
 @DEPFILE@ : $(SRC)
-	$(MATITADEP) $(MATITA_FLAGS) -I '@ROOT@' $^ 1> @DEPFILE@ 
+	$(MATITADEP) $(MATITA_FLAGS) -I '@ROOT@' $^ 1> @DEPFILE@ 2>@DEPFILE@.errors 
 
 # this is the depend for full targets like:
 # dir/dir/name.moo: dir/dir/name.ma dir/dep.moo

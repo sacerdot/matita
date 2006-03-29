@@ -177,7 +177,6 @@ distclean: clean
 TEST_DIRS = 				\
 	library 			\
 	tests 				\
-	tests/bad_tests 		\
 	contribs/LAMBDA-TYPES 		\
 	contribs/PREDICATIVE-TOPOLOGY 	\
 	$(NULL)
