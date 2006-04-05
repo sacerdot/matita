@@ -14,6 +14,9 @@ OCAMLC_FLAGS = $(OCAML_FLAGS) $(OCAML_THREADS_FLAGS)
 OCAMLC = $(OCAMLFIND) ocamlc $(OCAMLC_FLAGS) $(OCAML_DEBUG_FLAGS)
 OCAMLOPT = $(OCAMLFIND) opt $(OCAMLC_FLAGS)
 OCAMLDEP = $(OCAMLFIND) ocamldep $(OCAML_FLAGS)
+INSTALL_PROGRAMS= matita matitac
+INSTALL_PROGRAMS_LINKS_MATITA= cicbrowser 
+INSTALL_PROGRAMS_LINKS_MATITAC= matitadep matitamake matitaclean
 
 MATITA_FLAGS = -noprofile
 NODB=false
@@ -96,10 +99,17 @@ upx: $(PROGRAMS_UPX)
 .PHONY: opt upx
 
 ifeq ($(HAVE_OCAMLOPT),yes)
-world: depend.opt opt
+world: depend.opt opt links
 else
 world: depend all
 endif
+
+#links %.opt -> %
+links:
+	$(H)for X in $(INSTALL_PROGRAMS_LINKS_MATITAC) \
+			$(INSTALL_PROGRAMS_LINKS_MATITA); do\
+		ln -sf $$X.opt $$X;\
+	done
 
 matita: matita.ml $(LIB_DEPS) $(CMOS)
 	$(H)echo "  OCAMLC $<"
@@ -228,9 +238,6 @@ INSTALL_STUFF = 			\
 	LICENSE 			\
 	$(NULL)
 
-INSTALL_PROGRAMS= matita matitac
-INSTALL_PROGRAMS_LINKS_MATITA= cicbrowser 
-INSTALL_PROGRAMS_LINKS_MATITAC= matitadep matitamake matitaclean
 ifeq ($(HAVE_OCAMLOPT),yes)
 INSTALL_STUFF_BIN = $(INSTALL_PROGRAMS:%=%.opt) 
 else
