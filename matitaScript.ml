@@ -221,9 +221,15 @@ let rec eval_macro include_paths (buffer : GText.buffer) guistuff lexicon_status
   (* no idea why ocaml wants this *)
   let parsed_text_length = String.length parsed_text in
   let dbd = LibraryDb.instance () in
-  (* XXX use a real CIC -> string pretty printer *)
   let pp_macro = 
-    TAPp.pp_macro ~term_pp:(ApplyTransformation.txt_of_cic_term max_int [] []) 
+    let f t = ProofEngineReduction.replace 
+      ~equality:(fun _ t -> match t with Cic.Meta _ -> true | _ -> false)
+      ~what:[()] ~with_what:[Cic.Implicit None] ~where:t
+    in
+    let metasenv = GrafiteTypes.get_proof_metasenv grafite_status in
+    TAPp.pp_macro 
+      ~term_pp:(fun x -> 
+        ApplyTransformation.txt_of_cic_term max_int metasenv [] (f x))
   in
   match mac with
   (* WHELP's stuff *)
