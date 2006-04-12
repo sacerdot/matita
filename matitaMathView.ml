@@ -769,7 +769,9 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
       "^cic:/([^/]+/)*[^/]+\\.(con|ind|var)(#xpointer\\(\\d+(/\\d+)+\\))?$"
   in
   let dir_RE = Pcre.regexp "^cic:((/([^/]+/)*[^/]+(/)?)|/|)$" in
-  let whelp_query_RE = Pcre.regexp "^\\s*whelp\\s+([^\\s]+)\\s+(.*)$" in
+  let whelp_query_RE = Pcre.regexp
+    "^\\s*whelp\\s+([^\\s]+)\\s+(\"|\\()(.*)(\\)|\")$" 
+  in
   let do_not_execute_whelp_query = ref false in
   let is_whelp txt = Pcre.pmatch ~rex:whelp_RE txt in
   let is_uri txt = Pcre.pmatch ~rex:uri_RE txt in
@@ -793,7 +795,7 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
     let query, arg = 
       try
         let q = Pcre.extract ~rex:whelp_query_RE txt in
-        q.(1), q.(2)
+        q.(1), q.(3)
       with Not_found -> failwith "Malformed Whelp query"
     in
     activate_combo_query arg query;
@@ -839,7 +841,12 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
             with Not_found -> assert false
           in
           let input = win#queryInputText#text in
-          let statement = "whelp " ^ query ^ " (" ^ input ^ ")." in
+          let statement = 
+            if query = "locate" then
+                "whelp " ^ query ^ " \"" ^ input ^ "\"." 
+              else
+                "whelp " ^ query ^ " (" ^ input ^ ")." 
+          in
           (MatitaScript.current ())#advance ~statement ()
           end
       in
