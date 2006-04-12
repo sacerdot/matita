@@ -34,10 +34,10 @@ CMOS =				\
 	matitaExcPp.cmo 	\
 	matitaEngine.cmo	\
 	matitacLib.cmo		\
+	applyTransformation.cmo	\
 	matitaScript.cmo	\
 	matitaGeneratedGui.cmo	\
 	matitaGtkMisc.cmo	\
-	applyTransformation.cmo	\
 	matitaMathView.cmo 	\
 	matitaGui.cmo		\
 	$(NULL)
