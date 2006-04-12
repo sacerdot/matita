@@ -56,3 +56,7 @@ interpretation "Coq's real 'greater than'" 'gt x y = (cic:/Coq/Reals/Rdefinition
 interpretation "Coq's leibnitz's equality" 'eq x y = (cic:/Coq/Init/Logic/eq.ind#xpointer(1/1) _ x y).
 interpretation "Coq's not equal to (leibnitz)" 'neq x y = (cic:/Coq/Init/Logic/not.con (cic:/Coq/Init/Logic/eq.ind#xpointer(1/1) _ x y)).
 
+interpretation "Coq's natural 'not less or equal than'"
+ 'nleq x y = (cic:/Coq/Init/Logic/not.con 
+               (cic:/Coq/Init/Peano/le.ind#xpointer(1/1) x y)).
+
