@@ -30,7 +30,10 @@ open Printf
 (** Functions "imported" from Http_getter_misc *)
 
 let normalize_dir = Http_getter_misc.normalize_dir
-let strip_suffix = Http_getter_misc.strip_suffix
+let strip_suffix ~suffix s = 
+  try 
+    Http_getter_misc.strip_suffix ~suffix s
+  with Invalid_argument _ -> s
 
 let absolute_path file =
   if file.[0] = '/' then file else Unix.getcwd () ^ "/" ^ file

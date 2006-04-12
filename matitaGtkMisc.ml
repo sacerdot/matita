@@ -28,16 +28,18 @@
 exception PopupClosed
 open Printf
 
-let wrap_callback f = f
+let wrap_callback0 f = fun _ -> try f () with Not_found -> assert false
+let wrap_callback1 f = fun _ -> try f () with Not_found -> assert false
+let wrap_callback2 f = fun _ -> try f () with Not_found -> assert false
 
 let connect_button (button: #GButton.button) callback =
-  ignore (button#connect#clicked (wrap_callback callback))
+  ignore (button#connect#clicked (wrap_callback0 callback))
 
 let connect_toggle_button (button: #GButton.toggle_button) callback =
-  ignore (button#connect#toggled (wrap_callback callback))
+  ignore (button#connect#toggled (wrap_callback1 callback))
 
 let connect_menu_item (menu_item: #GMenu.menu_item) callback =
-  ignore (menu_item#connect#activate (wrap_callback callback))
+  ignore (menu_item#connect#activate (wrap_callback2 callback))
 
 let connect_key (ev:GObj.event_ops) ?(modifiers = []) ?(stop = false) key
   callback

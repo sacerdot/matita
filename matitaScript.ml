@@ -222,26 +222,24 @@ let rec eval_macro include_paths (buffer : GText.buffer) guistuff lexicon_status
   let parsed_text_length = String.length parsed_text in
   let dbd = LibraryDb.instance () in
   (* XXX use a real CIC -> string pretty printer *)
-  let pp_macro = TAPp.pp_macro ~term_pp:CicPp.ppterm in
+  let pp_macro = 
+    TAPp.pp_macro ~term_pp:(ApplyTransformation.txt_of_cic_term max_int [] []) 
+  in
   match mac with
   (* WHELP's stuff *)
   | TA.WMatch (loc, term) -> 
      let l =  Whelp.match_term ~dbd term in
-     let query_url =
-       MatitaMisc.strip_suffix ~suffix:"."
-         (HExtlib.trim_blanks unparsed_text)
-     in
-     let entry = `Whelp (query_url, l) in
+     let entry = `Whelp (pp_macro mac, l) in
      guistuff.mathviewer#show_uri_list ~reuse:true ~entry l;
      [], parsed_text_length
   | TA.WInstance (loc, term) ->
      let l = Whelp.instance ~dbd term in
-     let entry = `Whelp (pp_macro (TA.WInstance (loc, term)), l) in
+     let entry = `Whelp (pp_macro mac, l) in
      guistuff.mathviewer#show_uri_list ~reuse:true ~entry l;
      [], parsed_text_length
   | TA.WLocate (loc, s) -> 
      let l = Whelp.locate ~dbd s in
-     let entry = `Whelp (pp_macro (TA.WLocate (loc, s)), l) in
+     let entry = `Whelp (pp_macro mac, l) in
      guistuff.mathviewer#show_uri_list ~reuse:true ~entry l;
      [], parsed_text_length
   | TA.WElim (loc, term) ->
@@ -251,13 +249,13 @@ let rec eval_macro include_paths (buffer : GText.buffer) guistuff lexicon_status
        | _ -> failwith "Not a MutInd"
      in
      let l = Whelp.elim ~dbd uri in
-     let entry = `Whelp (pp_macro (TA.WElim (loc, term)), l) in
+     let entry = `Whelp (pp_macro mac, l) in
      guistuff.mathviewer#show_uri_list ~reuse:true ~entry l;
      [], parsed_text_length
   | TA.WHint (loc, term) ->
      let s = ((None,[0,[],term], Cic.Meta (0,[]) ,term),0) in
      let l = List.map fst (MQ.experimental_hint ~dbd s) in
-     let entry = `Whelp (pp_macro (TA.WHint (loc, term)), l) in
+     let entry = `Whelp (pp_macro mac, l) in
      guistuff.mathviewer#show_uri_list ~reuse:true ~entry l;
      [], parsed_text_length
   (* REAL macro *)
@@ -535,6 +533,7 @@ object (self)
       self#notify
     with 
     | Margin -> self#notify
+    | Not_found -> assert false
     | exc -> self#notify; raise exc
 
   method retract () =

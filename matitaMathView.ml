@@ -338,7 +338,8 @@ object (self)
                 (fun uri ->
                   let menu_item =
                     GMenu.menu_item ~label:uri ~packing:menu#append () in
-                  connect_menu_item menu_item (fun () -> f uri))
+                  connect_menu_item menu_item 
+                  (fun () -> try f uri with Not_found -> assert false))
                 uris;
               menu#popup ~button ~time)
 
@@ -424,6 +425,7 @@ object (self)
     let script = MatitaScript.current () in
     let metasenv =
       if script#onGoingProof () then script#proofMetasenv else [] in
+    (*
     let _, (acic_sequent, _, _, ids_to_inner_sorts, _) =
       Cic2acic.asequent_of_sequent metasenv cic_sequent in
     let _, _, _, annterm = acic_sequent in
@@ -432,6 +434,9 @@ object (self)
     let pped_ast = TermContentPres.pp_ast ast in
     let markup = CicNotationPres.render ids_to_uris pped_ast in
     BoxPp.render_to_string text_width markup
+    *)
+    ApplyTransformation.txt_of_cic_sequent_conclusion 
+      text_width metasenv cic_sequent
 
   method private pattern_of term context unsh_sequent =
     let context_len = List.length context in
@@ -765,6 +770,7 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
   in
   let dir_RE = Pcre.regexp "^cic:((/([^/]+/)*[^/]+(/)?)|/|)$" in
   let whelp_query_RE = Pcre.regexp "^\\s*whelp\\s+([^\\s]+)\\s+(.*)$" in
+  let do_not_execute_whelp_query = ref false in
   let is_whelp txt = Pcre.pmatch ~rex:whelp_RE txt in
   let is_uri txt = Pcre.pmatch ~rex:uri_RE txt in
   let is_dir txt = Pcre.pmatch ~rex:dir_RE txt in
@@ -779,17 +785,18 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
       | h::_ when String.lowercase h = q' -> i
       | _::tl -> aux (i+1) tl
     in
+    win#queryInputText#set_text input;
+    do_not_execute_whelp_query:=true;
     combo#set_active (aux 0 queries);
-    win#queryInputText#set_text input
   in
   let set_whelp_query txt =
     let query, arg = 
       try
         let q = Pcre.extract ~rex:whelp_query_RE txt in
         q.(1), q.(2)
-      with Invalid_argument _ -> failwith "Malformed Whelp query"
+      with Not_found -> failwith "Malformed Whelp query"
     in
-    activate_combo_query arg query
+    activate_combo_query arg query;
   in
   let toplevel = win#toplevel in
   let mathView = cicMathView ~packing:win#scrolledBrowser#add () in
@@ -822,10 +829,19 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
       activate_combo_query "" "locate";
       win#whelpBarComboVbox#add combo#coerce;
       let start_query () = 
-        let query = String.lowercase (List.nth queries combo#active) in
-        let input = win#queryInputText#text in
-        let statement = "whelp " ^ query ^ " " ^ input ^ "." in
-        (MatitaScript.current ())#advance ~statement ()
+        if !do_not_execute_whelp_query then
+          do_not_execute_whelp_query := false
+        else
+          begin
+          let query = 
+            try
+              String.lowercase (List.nth queries combo#active) 
+            with Not_found -> assert false
+          in
+          let input = win#queryInputText#text in
+          let statement = "whelp " ^ query ^ " (" ^ input ^ ")." in
+          (MatitaScript.current ())#advance ~statement ()
+          end
       in
       ignore(win#queryInputText#connect#activate ~callback:start_query);
       ignore(combo#connect#changed ~callback:start_query);

@@ -55,3 +55,8 @@ val mml_of_cic_object:
        (Cic.id, Cic2acic.sort_kind) Hashtbl.t * (* ids_to_inner_sorts *)
        (Cic.id, Cic2acic.anntypes) Hashtbl.t))  (* ids_to_inner_types *)
 
+val txt_of_cic_term: 
+  int -> Cic.metasenv -> Cic.context -> Cic.term -> string 
+val txt_of_cic_sequent_conclusion: 
+  int -> Cic.metasenv -> Cic.conjecture -> string
+
