@@ -93,7 +93,7 @@ let eval_ast ?do_heavy_checks ?clean_baseuri lexicon_status
         LexiconEngine.set_proof_aliases lexicon_status [k,value]
        in
         new_lexicon_status,
-         ((new_grafite_status,new_lexicon_status),Some (k,value))::acc
+         ((grafite_status,new_lexicon_status),Some (k,value))::acc
    ) (lexicon_status,[]) new_aliases
  in
   ((new_grafite_status,new_lexicon_status),None)::intermediate_states

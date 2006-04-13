@@ -439,3 +439,15 @@ let ask_record_choice ~(gui:#gui) ?(title= "") ?(message = "")
   GtkThread.main ();
   (match !record_no with Some n -> n | _ -> raise MatitaTypes.Cancel)
 
+let utf8_parsed_text s floc = 
+  let start, stop = HExtlib.loc_of_floc floc in
+  let start_bytes = Glib.Utf8.offset_to_pos s ~pos:0 ~off:start in
+  let stop_bytes = Glib.Utf8.offset_to_pos s ~pos:0 ~off:stop in
+  let bytes = stop_bytes - start_bytes in
+  String.sub s start_bytes bytes, bytes
+  
+let utf8_string_length s = 
+  if BuildTimeConf.debug then
+    assert(Glib.Utf8.validate s);
+  Glib.Utf8.length s
+    

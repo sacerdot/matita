@@ -62,6 +62,8 @@ let rec to_string =
      None, "Type checking assertion failed: " ^ Lazy.force msg
   | LibrarySync.AlreadyDefined s -> 
      None, "Already defined: " ^ UriManager.string_of_uri s
+  | CoercDb.EqCarrNotImplemented msg ->
+     None, ("EqCarrNotImplemented: " ^ Lazy.force msg)
   | GrafiteDisambiguator.DisambiguationError (offset,errorll) ->
      let rec aux n ?(dummy=false) (prev_msg,phases) =
       function

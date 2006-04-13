@@ -35,9 +35,9 @@ CMOS =				\
 	matitaEngine.cmo	\
 	matitacLib.cmo		\
 	applyTransformation.cmo	\
+	matitaGtkMisc.cmo	\
 	matitaScript.cmo	\
 	matitaGeneratedGui.cmo	\
-	matitaGtkMisc.cmo	\
 	matitaMathView.cmo 	\
 	matitaGui.cmo		\
 	$(NULL)
@@ -110,6 +110,8 @@ links:
 			$(INSTALL_PROGRAMS_LINKS_MATITA); do\
 		ln -sf $$X.opt $$X;\
 	done
+	$(H)ln -sf matita.opt matita
+	$(H)ln -sf matitac.opt matitac
 
 matita: matita.ml $(LIB_DEPS) $(CMOS)
 	$(H)echo "  OCAMLC $<"

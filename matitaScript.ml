@@ -77,72 +77,33 @@ type guistuff = {
 }
 
 let eval_with_engine guistuff lexicon_status grafite_status user_goal
- parsed_text st
+ skipped_txt nonskipped_txt st
 =
   let module TAPp = GrafiteAstPp in
-  let parsed_text_length = String.length parsed_text in
-  let initial_space,parsed_text =
-   try
-    let pieces = Pcre.extract ~rex:heading_nl_RE' parsed_text in
-    let p1 = pieces.(1) in
-    let p1_len = String.length p1 in
-    let rest = String.sub parsed_text p1_len (parsed_text_length - p1_len) in
-     p1, rest
-   with
-    Not_found -> "", parsed_text in
-  let inital_space,new_grafite_status,new_lexicon_status,new_status_and_text_list' =
-   (* the code commented out adds the "select" command if needed *)
-   initial_space,grafite_status,lexicon_status,[] in
-(* let loc, ex = 
-    match st with TA.Executable (loc,ex) -> loc, ex | _ -> assert false in
-    match grafite_status.proof_status with
-     | Incomplete_proof { stack = stack }
-      when not (List.mem user_goal (Continuationals.head_goals stack)) ->
-        let grafite_status =
-          MatitaEngine.eval_ast
-            ~do_heavy_checks:true grafite_status (goal_ast user_goal)
-        in
-        let initial_space = if initial_space = "" then "\n" else initial_space
-        in
-        "\n", grafite_status,
-        [ grafite_status,
-          initial_space ^ TAPp.pp_tactical (TA.Select (loc, [user_goal])) ]
-      | _ -> initial_space,grafite_status,[] in *)
+  let module DTE = DisambiguateTypes.Environment in
+  let module DP = DisambiguatePp in
+  let parsed_text_length =
+    String.length skipped_txt + String.length nonskipped_txt 
+  in
   let enriched_history_fragment =
    MatitaEngine.eval_ast ~do_heavy_checks:true
-    new_lexicon_status new_grafite_status st
+    lexicon_status grafite_status st
   in
-  let _,new_text_list_rev = 
-    let module DTE = DisambiguateTypes.Environment in
-    let module UM = UriManager in
-    List.fold_right (
-      fun (_,alias) (initial_space,acc) ->
+  let enriched_history_fragment = List.rev enriched_history_fragment in
+  (* really fragile *)
+  let res,_ = 
+    List.fold_left 
+      (fun (acc, to_prepend) (status,alias) ->
        match alias with
-          None -> initial_space,initial_space::acc
-        | Some (k,((v,_) as value)) ->
-           let new_text =
-            let initial_space =
-             if initial_space = "" then "\n" else initial_space
-            in
-             initial_space ^
-              DisambiguatePp.pp_environment
-               (DisambiguateTypes.Environment.add k value
-                 DisambiguateTypes.Environment.empty)
-           in
-            "\n",new_text::acc
-    ) enriched_history_fragment (initial_space,[]) in
-  let new_text_list_rev =
-   match enriched_history_fragment,new_text_list_rev with
-      (_,None)::_, initial_space::tl -> (initial_space ^ parsed_text)::tl
-    | _,_ -> assert false
+       | None -> (status,to_prepend ^ nonskipped_txt)::acc,""
+       | Some (k,((v,_) as value)) ->
+            let newtxt = DP.pp_environment (DTE.add k value DTE.empty) in
+            (status,to_prepend ^ newtxt ^ "\n")::acc, "")
+      ([],skipped_txt) enriched_history_fragment
   in
-   let res =
-    try
-     List.combine (fst (List.split enriched_history_fragment)) new_text_list_rev
-    with
-     Invalid_argument _ -> assert false
-   in
-    res,parsed_text_length
+  let res = (*List.combine (List.map fst (List.rev enriched_history_fragment))
+  strings*) res in 
+  res,parsed_text_length
 
 let wrap_with_developments guistuff f arg = 
   try 
@@ -201,11 +162,13 @@ let wrap_with_developments guistuff f arg =
 ;;
     
 let eval_with_engine
-     guistuff lexicon_status grafite_status user_goal parsed_text st
+     guistuff lexicon_status grafite_status user_goal 
+       skipped_txt nonskipped_txt st
 =
   wrap_with_developments guistuff
     (eval_with_engine 
-      guistuff lexicon_status grafite_status user_goal parsed_text) st
+      guistuff lexicon_status grafite_status user_goal 
+        skipped_txt nonskipped_txt) st
 ;;
 
 let pp_eager_statement_ast =
@@ -287,7 +250,7 @@ let rec eval_macro include_paths (buffer : GText.buffer) guistuff lexicon_status
           let text =
            comment parsed_text ^ "\n" ^
             pp_eager_statement_ast (ast HExtlib.dummy_floc) in
-          let text_len = String.length text in
+          let text_len = MatitaGtkMisc.utf8_string_length text in
           let loc = HExtlib.floc_of_loc (0,text_len) in
           let statement = `Ast (GrafiteParser.LSome (ast loc),text) in
           let res,_parsed_text_len =
@@ -319,7 +282,9 @@ let rec eval_macro include_paths (buffer : GText.buffer) guistuff lexicon_status
   | TA.Search_pat (_, search_kind, str) -> failwith "not implemented"
   | TA.Search_term (_, search_kind, term) -> failwith "not implemented"
                                 
-and eval_executable include_paths (buffer : GText.buffer) guistuff lexicon_status grafite_status user_goal unparsed_text parsed_text script loc ex
+and eval_executable include_paths (buffer : GText.buffer) guistuff
+lexicon_status grafite_status user_goal unparsed_text skipped_txt nonskipped_txt
+script ex loc
 =
  let module TAPp = GrafiteAstPp in
  let module MD = GrafiteDisambiguator in
@@ -345,7 +310,7 @@ and eval_executable include_paths (buffer : GText.buffer) guistuff lexicon_statu
      | _ -> ()
    end;
    eval_with_engine
-    guistuff lexicon_status grafite_status user_goal parsed_text
+    guistuff lexicon_status grafite_status user_goal skipped_txt nonskipped_txt
      (TA.Executable (loc, ex))
   with
      MatitaTypes.Cancel -> [], 0
@@ -356,7 +321,7 @@ and eval_executable include_paths (buffer : GText.buffer) guistuff lexicon_statu
         | Some n -> GrafiteTypes.get_proof_context grafite_status n in
       let grafite_status,macro = lazy_macro context in
        eval_macro include_paths buffer guistuff lexicon_status grafite_status
-        user_goal unparsed_text parsed_text script macro
+        user_goal unparsed_text (skipped_txt ^ nonskipped_txt) script macro
 
 and eval_statement include_paths (buffer : GText.buffer) guistuff lexicon_status
  grafite_status user_goal script statement
@@ -373,18 +338,22 @@ and eval_statement include_paths (buffer : GText.buffer) guistuff lexicon_status
           ast, text
     | `Ast (st, text) -> (lexicon_status, st), text
   in
-  let text_of_loc loc =
-    let parsed_text_length = snd (HExtlib.loc_of_floc loc) in
-    let parsed_text = safe_substring unparsed_text 0 parsed_text_length in
-    parsed_text, parsed_text_length
-  in
+  let text_of_loc floc = 
+    let nonskipped_txt,_ = MatitaGtkMisc.utf8_parsed_text unparsed_text floc in
+    let start, stop = HExtlib.loc_of_floc floc in 
+    let floc = HExtlib.floc_of_loc (0, start) in
+    let skipped_txt,_ = MatitaGtkMisc.utf8_parsed_text unparsed_text floc in
+    let floc = HExtlib.floc_of_loc (0, stop) in
+    let txt,len = MatitaGtkMisc.utf8_parsed_text unparsed_text floc in
+    txt,nonskipped_txt,skipped_txt,len
+  in 
   match st with
   | GrafiteParser.LNone loc ->
-      let parsed_text, parsed_text_length = text_of_loc loc in
+      let parsed_text, _, _, parsed_text_length = text_of_loc loc in
        [(grafite_status,lexicon_status),parsed_text],
         parsed_text_length
   | GrafiteParser.LSome (GrafiteAst.Comment (loc, _)) -> 
-      let parsed_text, parsed_text_length = text_of_loc loc in
+      let parsed_text, _, _, parsed_text_length = text_of_loc loc in
       let remain_len = String.length unparsed_text - parsed_text_length in
       let s = String.sub unparsed_text parsed_text_length remain_len in
       let s,len = 
@@ -404,9 +373,11 @@ and eval_statement include_paths (buffer : GText.buffer) guistuff lexicon_status
          (statuses,parsed_text ^ text)::tl,parsed_text_length + len
       | [] -> [], 0)
   | GrafiteParser.LSome (GrafiteAst.Executable (loc, ex)) ->
-     let parsed_text, parsed_text_length = text_of_loc loc in
+     let _, nonskipped, skipped, parsed_text_length = 
+       text_of_loc loc 
+     in
       eval_executable include_paths buffer guistuff lexicon_status
-       grafite_status user_goal unparsed_text parsed_text script loc ex
+       grafite_status user_goal unparsed_text skipped nonskipped script ex loc
   
 let fresh_script_id =
   let i = ref 0 in
@@ -506,12 +477,14 @@ object (self)
    if statement <> None then
      buffer#insert ~iter:start new_text
    else begin
-     if new_text <> String.sub s 0 parsed_len then begin
-       buffer#delete ~start ~stop:(start#copy#forward_chars parsed_len);
+     let parsed_text = String.sub s 0 parsed_len in
+     if new_text <> parsed_text then begin
+       let stop = start#copy#forward_chars (Glib.Utf8.length parsed_text) in
+       buffer#delete ~start ~stop;
        buffer#insert ~iter:start new_text;
      end;
    end;
-   self#moveMark (String.length new_text);
+   self#moveMark (Glib.Utf8.length  new_text);
    (* here we need to set the Goal in case we are going to cursor (or to
       bottom) and we will face a macro *)
    match self#grafite_status.proof_status with
@@ -547,7 +520,8 @@ object (self)
       let cmp,new_statements,new_history,(grafite_status,lexicon_status) =
        match statements,history with
           stat::statements, _::(status::_ as history) ->
-           String.length stat, statements, history, status
+           assert (Glib.Utf8.validate stat);
+           Glib.Utf8.length stat, statements, history, status
        | [],[_] -> raise Margin
        | _,_ -> assert false
       in
@@ -789,7 +763,6 @@ object (self)
   method goal = userGoal
 
   method eos = 
-    let s = self#getFuture in
     let rec is_there_only_comments lexicon_status s = 
       if Pcre.pmatch ~rex:only_dust_RE s then raise Margin;
       let lexicon_status,st =
@@ -798,7 +771,9 @@ object (self)
       in
       match st with
       | GrafiteParser.LSome (GrafiteAst.Comment (loc,_)) -> 
-          let parsed_text_length = snd (HExtlib.loc_of_floc loc) in
+          let _,parsed_text_length = 
+            MatitaGtkMisc.utf8_parsed_text s loc 
+          in
           let remain_len = String.length s - parsed_text_length in
           let next = String.sub s parsed_text_length remain_len in
           is_there_only_comments lexicon_status next
@@ -806,7 +781,7 @@ object (self)
       | GrafiteParser.LSome (GrafiteAst.Executable _) -> false
     in
     try
-      is_there_only_comments self#lexicon_status s
+      is_there_only_comments self#lexicon_status self#getFuture
     with 
     | HExtlib.Localized _
     | CicNotationParser.Parse_error _ -> false
