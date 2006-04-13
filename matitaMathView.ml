@@ -810,11 +810,12 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
     [ "dir", GdkPixbuf.from_file (MatitaMisc.image_path "matita-folder.png");
       "obj", GdkPixbuf.from_file (MatitaMisc.image_path "matita-object.png") ]
   in
+  let b = (not (Helm_registry.get_bool "matita.debug")) in
   let handle_error f =
     try
       f ()
     with exn ->
-      if not (Helm_registry.get_bool "matita.debug") then
+      if b then
         fail (snd (MatitaExcPp.to_string exn))
       else raise exn
   in
