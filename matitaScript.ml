@@ -101,8 +101,6 @@ let eval_with_engine guistuff lexicon_status grafite_status user_goal
             (status,to_prepend ^ newtxt ^ "\n")::acc, "")
       ([],skipped_txt) enriched_history_fragment
   in
-  let res = (*List.combine (List.map fst (List.rev enriched_history_fragment))
-  strings*) res in 
   res,parsed_text_length
 
 let wrap_with_developments guistuff f arg = 
@@ -362,7 +360,8 @@ and eval_statement include_paths (buffer : GText.buffer) guistuff lexicon_status
          grafite_status user_goal script (`Raw s)
        with
           HExtlib.Localized (floc, exn) ->
-           HExtlib.raise_localized_exception ~offset:parsed_text_length floc exn
+           HExtlib.raise_localized_exception 
+             ~offset:(MatitaGtkMisc.utf8_string_length parsed_text) floc exn
         | GrafiteDisambiguator.DisambiguationError (offset,errorll) ->
            raise
             (GrafiteDisambiguator.DisambiguationError
