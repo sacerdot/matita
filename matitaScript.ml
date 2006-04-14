@@ -718,7 +718,7 @@ object (self)
              self#_retract (icmp - len) lexicon_status grafite_status statements
               history
           | statement::tl1, _::tl2 ->
-             back_until_cursor (len - String.length statement) (tl1,tl2)
+             back_until_cursor (len - MatitaGtkMisc.utf8_string_length statement) (tl1,tl2)
           | _,_ -> assert false
         in
         (try
