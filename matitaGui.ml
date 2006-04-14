@@ -890,11 +890,12 @@ class gui () =
     method private nextLigature () =
       let iter = source_buffer#get_iter_at_mark `INSERT in
       let write_ligature len s =
+        assert(Glib.Utf8.validate s);
         source_buffer#delete ~start:iter ~stop:(iter#copy#backward_chars len);
         source_buffer#insert ~iter:(source_buffer#get_iter_at_mark `INSERT) s
       in
       let get_ligature word =
-        let len = String.length word in
+        let len = MatitaGtkMisc.utf8_string_length word in
         let aux_tex () =
           try
             for i = len - 1 downto 0 do
@@ -933,7 +934,7 @@ class gui () =
           (match CicNotationLexer.lookup_ligatures ligature with
           | [] -> ()
           | hd :: tl ->
-              write_ligature (String.length ligature) hd;
+              write_ligature (MatitaGtkMisc.utf8_string_length ligature) hd;
               next_ligatures <- tl @ [ hd ])
       | hd :: tl ->
           write_ligature 1 hd;
