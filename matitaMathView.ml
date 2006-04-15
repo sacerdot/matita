@@ -772,7 +772,6 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
   let whelp_query_RE = Pcre.regexp
     "^\\s*whelp\\s+([^\\s]+)\\s+(\"|\\()(.*)(\\)|\")$" 
   in
-  let do_not_execute_whelp_query = ref false in
   let is_whelp txt = Pcre.pmatch ~rex:whelp_RE txt in
   let is_uri txt = Pcre.pmatch ~rex:uri_RE txt in
   let is_dir txt = Pcre.pmatch ~rex:dir_RE txt in
@@ -788,7 +787,6 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
       | _::tl -> aux (i+1) tl
     in
     win#queryInputText#set_text input;
-    do_not_execute_whelp_query:=true;
     combo#set_active (aux 0 queries);
   in
   let set_whelp_query txt =
@@ -832,24 +830,18 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
       activate_combo_query "" "locate";
       win#whelpBarComboVbox#add combo#coerce;
       let start_query () = 
-        if !do_not_execute_whelp_query then
-          do_not_execute_whelp_query := false
-        else
-          begin
-          let query = 
-            try
-              String.lowercase (List.nth queries combo#active) 
-            with Not_found -> assert false
-          in
-          let input = win#queryInputText#text in
-          let statement = 
-            if query = "locate" then
-                "whelp " ^ query ^ " \"" ^ input ^ "\"." 
-              else
-                "whelp " ^ query ^ " (" ^ input ^ ")." 
-          in
-          (MatitaScript.current ())#advance ~statement ()
-          end
+       let query = 
+         try
+           String.lowercase (List.nth queries combo#active) 
+         with Not_found -> assert false in
+       let input = win#queryInputText#text in
+       let statement = 
+         if query = "locate" then
+             "whelp " ^ query ^ " \"" ^ input ^ "\"." 
+           else
+             "whelp " ^ query ^ " (" ^ input ^ ")." 
+       in
+        (MatitaScript.current ())#advance ~statement ()
       in
       ignore(win#queryInputText#connect#activate ~callback:start_query);
       ignore(combo#connect#changed ~callback:start_query);
