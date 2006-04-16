@@ -246,21 +246,24 @@ object (self)
         | _ -> leave_href ())
     | None -> leave_href ()
 
+
+  method private tactic_text_pattern_of_node node =
+   let id = id_of_node node in
+   let cic_info, unsh_sequent = self#get_cic_info id in
+   match self#get_term_by_id cic_info id with
+   | SelTerm (t, father_hyp) ->
+       let sequent = self#sequent_of_id ~paste_kind:`Pattern id in
+       let text = self#string_of_cic_sequent sequent in
+       (match father_hyp with
+       | None -> None, [], Some text
+       | Some hyp_name -> None, [ hyp_name, text ], None)
+   | SelHyp (hyp_name, _ctxt) -> None, [ hyp_name, "%" ], None
+
     (** @return a pattern structure which contains pretty printed terms *)
   method private tactic_text_pattern_of_selection =
     match self#get_selections with
     | [] -> assert false (* this method is invoked only if there's a sel. *)
-    | node :: _ ->
-        let id = id_of_node node in
-        let cic_info, unsh_sequent = self#get_cic_info id in
-        match self#get_term_by_id cic_info id with
-        | SelTerm (t, father_hyp) ->
-            let sequent = self#sequent_of_id ~paste_kind:`Pattern id in
-            let text = self#string_of_cic_sequent sequent in
-            (match father_hyp with
-            | None -> None, [], Some text
-            | Some hyp_name -> None, [ hyp_name, text ], None)
-        | SelHyp (hyp_name, _ctxt) -> None, [ hyp_name, "%" ], None
+    | node :: _ -> self#tactic_text_pattern_of_node node
 
   method private popup_contextual_menu time =
     let menu = GMenu.menu () in
@@ -417,8 +420,10 @@ object (self)
   method private string_of_node ~(paste_kind:paste_kind) node =
     if node#hasAttributeNS ~namespaceURI:helm_ns ~localName:xref_ds
     then
-      let id = id_of_node node in
-      self#string_of_cic_sequent (self#sequent_of_id ~paste_kind id)
+     let tactic_text_pattern =  self#tactic_text_pattern_of_node node in
+      GrafiteAstPp.pp_tactic_pattern
+       ~term_pp:(fun s -> s) ~lazy_term_pp:(fun _ -> assert false)
+       tactic_text_pattern
     else string_of_dom_node node
 
   method private string_of_cic_sequent cic_sequent =
