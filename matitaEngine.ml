@@ -30,7 +30,7 @@ open Printf
 let debug = false ;;
 let debug_print = if debug then prerr_endline else ignore ;;
 
-let disambiguate_tactic lexicon_status_ref grafite_status goal tac =
+let disambiguate_tactic text prefix_len lexicon_status_ref grafite_status goal tac =
  let metasenv,tac =
   GrafiteDisambiguate.disambiguate_tactic
    lexicon_status_ref
@@ -63,15 +63,15 @@ let disambiguate_macro lexicon_status_ref grafite_status macro context =
   GrafiteTypes.set_metasenv metasenv grafite_status,macro
 
 let eval_ast ?do_heavy_checks ?clean_baseuri lexicon_status
- grafite_status ast
+ grafite_status (text,prefix_len,ast)
 =
  let lexicon_status_ref = ref lexicon_status in
  let new_grafite_status,new_objs =
   GrafiteEngine.eval_ast
-   ~disambiguate_tactic:(disambiguate_tactic lexicon_status_ref)
+   ~disambiguate_tactic:(disambiguate_tactic text prefix_len lexicon_status_ref)
    ~disambiguate_command:(disambiguate_command lexicon_status_ref)
    ~disambiguate_macro:(disambiguate_macro lexicon_status_ref)
-   ?do_heavy_checks ?clean_baseuri grafite_status ast in
+   ?do_heavy_checks ?clean_baseuri grafite_status (text,prefix_len,ast) in
  let new_lexicon_status =
   LexiconSync.add_aliases_for_objs !lexicon_status_ref new_objs in
  let new_aliases =
@@ -99,7 +99,8 @@ let eval_ast ?do_heavy_checks ?clean_baseuri lexicon_status
   ((new_grafite_status,new_lexicon_status),None)::intermediate_states
 
 let eval_from_stream ~first_statement_only ~include_paths ?(prompt=false)
- ?do_heavy_checks ?clean_baseuri lexicon_status grafite_status str cb 
+ ?do_heavy_checks ?clean_baseuri lexicon_status grafite_status
+ str cb 
 =
  let rec loop lexicon_status grafite_status statuses =
   let loop =
@@ -121,7 +122,7 @@ let eval_from_stream ~first_statement_only ~include_paths ?(prompt=false)
           cb grafite_status ast;
           let new_statuses =
            eval_ast ?do_heavy_checks ?clean_baseuri lexicon_status
-            grafite_status ast in
+            grafite_status ("",0,ast) in
           let grafite_status,lexicon_status =
            match new_statuses with
               [] -> assert false
@@ -133,10 +134,3 @@ let eval_from_stream ~first_statement_only ~include_paths ?(prompt=false)
  in
   loop lexicon_status grafite_status []
 ;;
-
-let eval_string ~first_statement_only ~include_paths ?do_heavy_checks
- ?clean_baseuri lexicon_status status str
-=
- eval_from_stream ~first_statement_only ~include_paths ?do_heavy_checks
-  ?clean_baseuri lexicon_status status (Ulexing.from_utf8_string str)
-  (fun _ _ -> ())

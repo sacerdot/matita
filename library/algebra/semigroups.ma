@@ -18,7 +18,7 @@ include "higher_order_defs/functions.ma".
 
 (* Magmas *)
 
-record Magma : Type ≝
+record Magma : Type≝
  { carrier:> Type;
    op: carrier → carrier → carrier
  }.
@@ -32,10 +32,10 @@ interpretation "magma operation" 'magma_op a b =
 
 (* Semigroups *)
 
-record isSemiGroup (M:Magma) : Prop ≝
+record isSemiGroup (M:Magma) : Prop≝
  { op_associative: associative ? (op M) }.
 
-record SemiGroup : Type ≝
+record SemiGroup : Type≝
  { magma:> Magma;
    semigroup_properties:> isSemiGroup magma
  }.
@@ -51,6 +51,6 @@ theorem is_left_unit_to_is_right_unit_to_eq:
   is_left_unit ? e → is_right_unit ? e' → e=e'.
  intros;
  rewrite < (H e');
- rewrite < (H1 e) in \vdash (? ? % ?);
+ rewrite < (H1 e) in \vdash (? ? % ?).
  reflexivity.
 qed.

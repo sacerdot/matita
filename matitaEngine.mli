@@ -28,9 +28,10 @@ val eval_ast :
   ?clean_baseuri:bool ->
   LexiconEngine.status ->
   GrafiteTypes.status ->
-  (CicNotationPt.term, CicNotationPt.term,
+  string * int *
+  ((CicNotationPt.term, CicNotationPt.term,
    CicNotationPt.term GrafiteAst.reduction, CicNotationPt.obj, string)
-  GrafiteAst.statement ->
+   GrafiteAst.statement) ->
   ((GrafiteTypes.status * LexiconEngine.status) *
    (DisambiguateTypes.domain_item * DisambiguateTypes.codomain_item) option
   ) list
@@ -38,18 +39,9 @@ val eval_ast :
 
 (* heavy checks slow down the compilation process but give you some interesting
  * infos like if the theorem is a duplicate *)
-val eval_string :
-  first_statement_only:bool ->
-  include_paths:string list ->
-  ?do_heavy_checks:bool ->
-  ?clean_baseuri:bool ->
-  LexiconEngine.status ->
-  GrafiteTypes.status ->
-  string ->
-  ((GrafiteTypes.status * LexiconEngine.status) *
-   (DisambiguateTypes.domain_item * DisambiguateTypes.codomain_item) option
-  ) list
 
+(* should be used only by the compiler since it looses the
+   * disambiguation_context (text,prefix_len,_) *)
 val eval_from_stream :
   first_statement_only:bool ->
   include_paths:string list ->
@@ -66,3 +58,4 @@ val eval_from_stream :
   ((GrafiteTypes.status * LexiconEngine.status) *
    (DisambiguateTypes.domain_item * DisambiguateTypes.codomain_item) option
   ) list
+

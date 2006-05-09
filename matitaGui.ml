@@ -1256,7 +1256,8 @@ class interpModel =
         tree_store#get ~row:iter ~column:interp_no_col
     end
 
-let interactive_interp_choice () choices =
+let interactive_interp_choice () = 
+  fun text prefix_len choices ->
   let gui = instance () in
   assert (choices <> []);
   let dialog = gui#newRecordDialog () in
@@ -1284,6 +1285,127 @@ let interactive_interp_choice () choices =
   dialog#recordChoiceDialog#show ();
   GtkThread.main ();
   (match !interp_no with Some row -> [row] | _ -> raise MatitaTypes.Cancel)
+
+let interactive_string_choice 
+  text prefix_len ?(title = "") ?(msg = "") () ~id locs uris 
+=
+  let gui = instance () in
+    let dialog = gui#newUriDialog () in
+    dialog#uriEntryHBox#misc#hide ();
+    dialog#uriChoiceSelectedButton#misc#hide ();
+    dialog#uriChoiceAutoButton#misc#hide ();
+    dialog#uriChoiceConstantsButton#misc#hide ();
+    dialog#uriChoiceTreeView#selection#set_mode
+      (`SINGLE :> Gtk.Tags.selection_mode);
+    let model = new stringListModel dialog#uriChoiceTreeView in
+    let choices = ref None in
+    dialog#uriChoiceDialog#set_title title; 
+    let hack_len = MatitaGtkMisc.utf8_string_length text in
+    let rec colorize acc_len = function
+      | [] -> 
+          let floc = HExtlib.floc_of_loc (acc_len,hack_len) in
+          fst(MatitaGtkMisc.utf8_parsed_text text floc)
+      | he::tl -> 
+          let start, stop =  HExtlib.loc_of_floc he in
+          let floc1 = HExtlib.floc_of_loc (acc_len,start) in
+          let str1,_=MatitaGtkMisc.utf8_parsed_text text floc1 in
+          let str2,_ = MatitaGtkMisc.utf8_parsed_text text he in
+          str1 ^ "<b>" ^ str2 ^ "</b>" ^ colorize stop tl
+    in
+(*     List.iter (fun l -> let start, stop = HExtlib.loc_of_floc l in
+                Printf.eprintf "(%d,%d)" start stop) locs; *)
+    let locs = 
+      List.sort 
+        (fun loc1 loc2 -> 
+          fst (HExtlib.loc_of_floc loc1) - fst (HExtlib.loc_of_floc loc2)) 
+        locs 
+    in
+(*     prerr_endline "XXXXXXXXXXXXXXXXXXXX";
+    List.iter (fun l -> let start, stop = HExtlib.loc_of_floc l in
+                Printf.eprintf "(%d,%d)" start stop) locs;
+    prerr_endline "XXXXXXXXXXXXXXXXXXXX2"; *)
+    dialog#uriChoiceLabel#set_use_markup true;
+    let txt = colorize 0 locs in
+    let txt,_ = MatitaGtkMisc.utf8_parsed_text txt
+      (HExtlib.floc_of_loc (prefix_len,MatitaGtkMisc.utf8_string_length txt))
+    in
+    dialog#uriChoiceLabel#set_label txt;
+    List.iter model#easy_append uris;
+    let return v =
+      choices := v;
+      dialog#uriChoiceDialog#destroy ();
+      GMain.Main.quit ()
+    in
+    ignore (dialog#uriChoiceDialog#event#connect#delete (fun _ -> true));
+    connect_button dialog#uriChoiceForwardButton (fun _ ->
+      match model#easy_selection () with
+      | [] -> ()
+      | uris -> return (Some uris));
+    connect_button dialog#uriChoiceAbortButton (fun _ -> return None);
+    dialog#uriChoiceDialog#show ();
+    GtkThread.main ();
+    (match !choices with 
+    | None -> raise MatitaTypes.Cancel
+    | Some uris -> uris)
+
+let interactive_interp_choice () text prefix_len choices =
+(*  List.iter (fun (l,_,_) -> 
+   List.iter (fun l -> let start, stop = HExtlib.loc_of_floc l in
+   Printf.eprintf "(%d,%d)" start stop) l; prerr_endline "")
+   ((List.hd choices)); *)
+ let filter_choices filter =
+  let rec is_compatible filter =
+   function
+      [] -> true
+    | (_,id,dsc)::tl ->
+       try
+        if List.assoc id filter = dsc then
+         is_compatible filter tl
+        else
+         false
+       with
+        Not_found -> true
+  in
+   List.filter (fun (_,interp) -> is_compatible filter interp)
+ in
+ let rec get_choices id =
+  function
+     [] -> []
+   | (_,he)::tl ->
+      let _,_,dsc = List.find (fun (_,id',_) -> id = id') he in
+       dsc :: (List.filter (fun dsc' -> dsc <> dsc') (get_choices id tl))
+ in
+ let example_interp =
+  match choices with
+     [] -> assert false
+   | he::_ -> he in
+ let ask_user id locs choices =
+  interactive_string_choice
+   text prefix_len
+   ~title:"Ambiguous input"
+   ~msg:("Choose an interpretation for " ^ id) () ~id locs choices
+ in
+ let rec classify ids filter partial_interpretations =
+  match ids with
+     [] -> List.map fst partial_interpretations
+   | (locs,id,_)::tl ->
+      let choices = get_choices id partial_interpretations in
+      let chosen_dsc =
+       match choices with
+          [dsc] -> dsc
+        | _ ->
+          match ask_user id locs choices with
+             [x] -> x
+           | _ -> assert false
+      in
+      let filter = (id,chosen_dsc)::filter in
+      let compatible_interps = filter_choices filter partial_interpretations in
+       classify tl filter compatible_interps in
+ let enumerated_choices =
+  let idx = ref ~-1 in
+  List.map (fun interp -> incr idx; !idx,interp) choices
+ in
+  classify example_interp [] enumerated_choices
 
 let _ =
   (* disambiguator callbacks *)

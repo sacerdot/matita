@@ -16,7 +16,7 @@ set "baseuri" "cic:/matita/algebra/finite_groups/".
 
 include "algebra/groups.ma".
 
-record finite_enumerable (T:Type) : Type ≝
+record finite_enumerable (T:Type) : Type≝
  { order: nat;
    repr: nat → T;
    index_of: T → nat;
@@ -39,7 +39,7 @@ for @{ 'card $C }.
 interpretation "Finite_enumerable order" 'card C =
  (cic:/matita/algebra/finite_groups/order.con C _).
 
-record finite_enumerable_SemiGroup : Type ≝
+record finite_enumerable_SemiGroup : Type≝
  { semigroup:> SemiGroup;
    is_finite_enumerable:> finite_enumerable semigroup
  }.
@@ -60,7 +60,7 @@ interpretation "Index_of_finite_enumerable representation"
 
 (* several definitions/theorems to be moved somewhere else *)
 
-definition ltb ≝ λn,m. leb n m ∧ notb (eqb n m).
+definition ltb ≝λn,m. leb n m ∧ notb (eqb n m).
 
 theorem not_eq_to_le_to_lt: ∀n,m. n≠m → n≤m → n<m.
 intros;
@@ -216,8 +216,8 @@ elim n;
 | clear n;
   letin f' ≝
    (λx.
-    let fSn1 ≝ f (S n1) in
-     let fx ≝ f x in
+    let fSn1 ≝f (S n1) in
+     let fx ≝f x in
       match ltb fSn1 fx with
       [ true ⇒ pred fx
       | false ⇒ fx
@@ -465,45 +465,45 @@ elim n;
   ]
 ].
 qed.
-
+(* demo *)
 theorem finite_enumerable_SemiGroup_to_left_cancellable_to_right_cancellable_to_isMonoid:
  ∀G:finite_enumerable_SemiGroup.
   left_cancellable ? (op G) →
   right_cancellable ? (op G) →
    ∃e:G. isMonoid (mk_PreMonoid G e).
 intros;
-letin f ≝ (λn.ι(G \sub O · G \sub n));
+letin f ≝(λn.ι(G \sub O · G \sub n));
 cut (∀n.n ≤ order ? (is_finite_enumerable G) → ∃m.f m = n);
-[ letin EX ≝ (Hcut O ?);
+[ letin EX ≝(Hcut O ?);
   [ apply le_O_n
   | clearbody EX;
     clear Hcut;
     unfold f in EX;
     elim EX;
     clear EX;
-    letin HH ≝ (eq_f ? ? (repr ? (is_finite_enumerable G)) ? ? H2);
+    letin HH ≝(eq_f ? ? (repr ? (is_finite_enumerable G)) ? ? H2);
     clearbody HH;
     rewrite > (repr_index_of ? (is_finite_enumerable G)) in HH;
     apply (ex_intro ? ? (G \sub a));
-    letin GOGO ≝ (refl_eq ? (repr ? (is_finite_enumerable G) O));
+    letin GOGO ≝(refl_eq ? (repr ? (is_finite_enumerable G) O));
     clearbody GOGO;
     rewrite < HH in GOGO;
     rewrite < HH in GOGO:(? ? % ?);
     rewrite > (op_associative ? G) in GOGO;
-    letin GaGa ≝ (H ? ? ? GOGO);
+    letin GaGa ≝(H ? ? ? GOGO);
     clearbody GaGa;
     clear GOGO;
     constructor 1;
     [ simplify;
       apply (semigroup_properties G)
     | unfold is_left_unit; intro;
-      letin GaxGax ≝ (refl_eq ? (G \sub a ·x));
-      clearbody GaxGax;
+      letin GaxGax ≝(refl_eq ? (G \sub a ·x));
+      clearbody GaxGax; (* demo *)
       rewrite < GaGa in GaxGax:(? ? % ?);
       rewrite > (op_associative ? (semigroup_properties G)) in GaxGax;
       apply (H ? ? ? GaxGax)
     | unfold is_right_unit; intro;
-      letin GaxGax ≝ (refl_eq ? (x·G \sub a));
+      letin GaxGax ≝(refl_eq ? (x·G \sub a));
       clearbody GaxGax;
       rewrite < GaGa in GaxGax:(? ? % ?);
       rewrite < (op_associative ? (semigroup_properties G)) in GaxGax;

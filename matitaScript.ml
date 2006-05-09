@@ -85,9 +85,11 @@ let eval_with_engine guistuff lexicon_status grafite_status user_goal
   let parsed_text_length =
     String.length skipped_txt + String.length nonskipped_txt 
   in
+  let text = skipped_txt ^ nonskipped_txt in
+  let prefix_len = MatitaGtkMisc.utf8_string_length skipped_txt in
   let enriched_history_fragment =
    MatitaEngine.eval_ast ~do_heavy_checks:true
-    lexicon_status grafite_status st
+    lexicon_status grafite_status (text,prefix_len,st)
   in
   let enriched_history_fragment = List.rev enriched_history_fragment in
   (* really fragile *)

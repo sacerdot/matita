@@ -443,8 +443,14 @@ let utf8_parsed_text s floc =
   let start, stop = HExtlib.loc_of_floc floc in
   let start_bytes = Glib.Utf8.offset_to_pos s ~pos:0 ~off:start in
   let stop_bytes = Glib.Utf8.offset_to_pos s ~pos:0 ~off:stop in
+  assert(stop_bytes >= start_bytes);
   let bytes = stop_bytes - start_bytes in
-  String.sub s start_bytes bytes, bytes
+  try
+    String.sub s start_bytes bytes, bytes
+  with Invalid_argument _ -> 
+    Printf.eprintf "%s/%d/%d\n" s start_bytes bytes;
+    assert false
+    
   
 let utf8_string_length s = 
   if BuildTimeConf.debug then
