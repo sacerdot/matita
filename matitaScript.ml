@@ -772,9 +772,10 @@ object (self)
       in
       match st with
       | GrafiteParser.LSome (GrafiteAst.Comment (loc,_)) -> 
-          let _,parsed_text_length = 
-            MatitaGtkMisc.utf8_parsed_text s loc 
-          in
+          let _,parsed_text_length = MatitaGtkMisc.utf8_parsed_text s loc in
+          (* CSC: why +1 in the following lines ???? *)
+          let parsed_text_length = parsed_text_length + 1 in
+prerr_endline ("## " ^ string_of_int parsed_text_length);
           let remain_len = String.length s - parsed_text_length in
           let next = String.sub s parsed_text_length remain_len in
           is_there_only_comments lexicon_status next
@@ -784,6 +785,7 @@ object (self)
     try
       is_there_only_comments self#lexicon_status self#getFuture
     with 
+    | LexiconEngine.IncludedFileNotCompiled _
     | HExtlib.Localized _
     | CicNotationParser.Parse_error _ -> false
     | Margin | End_of_file -> true

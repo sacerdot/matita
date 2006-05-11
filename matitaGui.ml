@@ -70,47 +70,55 @@ let clean_current_baseuri grafite_status =
     with GrafiteTypes.Option_error _ -> ()
 
 let ask_and_save_moo_if_needed parent fname lexicon_status grafite_status = 
-  let baseuri = DependenciesParser.baseuri_of_script ~include_paths:[] fname in
-  let moo_fname = 
-    LibraryMisc.obj_file_of_baseuri ~must_exist:false ~baseuri ~writable:true in
-  let save () =
-    let metadata_fname =
-     LibraryMisc.metadata_file_of_baseuri 
-       ~must_exist:false ~baseuri ~writable:true in
-    let lexicon_fname =
-     LibraryMisc.lexicon_file_of_baseuri 
-       ~must_exist:false ~baseuri ~writable:true
-    in
-     GrafiteMarshal.save_moo moo_fname
-      grafite_status.GrafiteTypes.moo_content_rev;
-     LibraryNoDb.save_metadata metadata_fname
-      lexicon_status.LexiconEngine.metadata;
-     LexiconMarshal.save_lexicon lexicon_fname
-      lexicon_status.LexiconEngine.lexicon_content_rev
+  let baseuri =
+   try Some (GrafiteTypes.get_string_option grafite_status "baseuri")
+   with GrafiteTypes.Option_error _ -> None
   in
   if (MatitaScript.current ())#eos &&
-     grafite_status.GrafiteTypes.proof_status = GrafiteTypes.No_proof
+     grafite_status.GrafiteTypes.proof_status = GrafiteTypes.No_proof &&
+     baseuri <> None
   then
-    begin
-      let rc = 
-        MatitaGtkMisc.ask_confirmation
-        ~title:"A .moo can be generated"
-        ~message:(Printf.sprintf 
-          "%s can be generated for %s.\n<i>Should I generate it?</i>"
-          (Filename.basename moo_fname) (Filename.basename fname))
-        ~parent ()
+   begin
+    let baseuri = match baseuri with Some b -> b | None -> assert false in
+    let moo_fname = 
+     LibraryMisc.obj_file_of_baseuri ~must_exist:false ~baseuri
+      ~writable:true in
+    let save () =
+      let metadata_fname =
+       LibraryMisc.metadata_file_of_baseuri 
+         ~must_exist:false ~baseuri ~writable:true in
+      let lexicon_fname =
+       LibraryMisc.lexicon_file_of_baseuri 
+         ~must_exist:false ~baseuri ~writable:true
       in
-      let b = 
-        match rc with 
-        | `YES -> true 
-        | `NO -> false 
-        | `CANCEL -> raise MatitaTypes.Cancel 
-      in
-      if b then
-          save ()
-      else
-        clean_current_baseuri grafite_status
-    end
+       GrafiteMarshal.save_moo moo_fname
+        grafite_status.GrafiteTypes.moo_content_rev;
+       LibraryNoDb.save_metadata metadata_fname
+        lexicon_status.LexiconEngine.metadata;
+       LexiconMarshal.save_lexicon lexicon_fname
+        lexicon_status.LexiconEngine.lexicon_content_rev
+    in
+     begin
+       let rc = 
+         MatitaGtkMisc.ask_confirmation
+         ~title:"A .moo can be generated"
+         ~message:(Printf.sprintf 
+           "%s can be generated for %s.\n<i>Should I generate it?</i>"
+           (Filename.basename moo_fname) (Filename.basename fname))
+         ~parent ()
+       in
+       let b = 
+         match rc with 
+         | `YES -> true 
+         | `NO -> false 
+         | `CANCEL -> raise MatitaTypes.Cancel 
+       in
+       if b then
+           save ()
+       else
+         clean_current_baseuri grafite_status
+     end
+   end
   else
     clean_current_baseuri grafite_status 
     
