@@ -1,0 +1,6 @@
+
+1) in order to generated chunked html directly
+    XHTML_XSL=http://docbook.sourceforge.net/release/xsl/current/xhtml/chunk.xsl
+
+2) to obtain a better pdf, package db2latex-xsl
+
