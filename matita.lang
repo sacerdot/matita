@@ -21,6 +21,7 @@
     <keyword>fact</keyword>
     <keyword>remark</keyword>
     <keyword>variant</keyword>
+    <keyword>axiom</keyword>
   </keyword-list>
     
   <keyword-list _name = "Commands" style = "Keyword" case-sensitive="TRUE">
