@@ -5,89 +5,199 @@
   <title>Terms, axioms, definitions, declarations and proofs</title>
 
   <sect1 id="terms">
-    <title>Terms</title>
-    <!--<informaltable>
-     <tr>
-      <td>&lt;term&gt;</td>
-      <td>::=</td>
-      <td>&lt;id&gt;</td>
-      <td>identifier</td>
-     </tr>
-     <tr><td/><td>|</td><td>&lt;term&gt; &lt;term&gt;</td>
-      <td>application</td></tr>
-    </informaltable>-->
-	<table>
-	  <tgroup>
-            <thead />
-	    <tbody>
-	      <row>
-		<entry>&lt;term&gt;</entry>
-		<entry>::=</entry>
-		<entry>&lt;id&gt;</entry>
-		<entry>identifier</entry>
-	      </row>
-	      <row>
-		<entry/>
-		<entry>|</entry>
-		<entry>&lt;term&gt; &lt;term&gt;</entry>
-		<entry>application</entry>
-	      </row>
-	      <row>
-		<entry/>
-		<entry>|</entry>
-		<entry>λ&lt;id&gt;[: &lt;term&gt;].&lt;term&gt;</entry>
-		<entry>λ-abstraction</entry>
-	      </row>
-	      <row>
-		<entry/>
-		<entry>|</entry>
-		<entry>Π&lt;id&gt;[: &lt;term&gt;].&lt;term&gt;</entry>
-		<entry>dependent product meant to define a datatype</entry>
-	      </row>
-	      <row>
-		<entry/>
-		<entry>|</entry>
-		<entry>∀&lt;id&gt;[: &lt;term&gt;].&lt;term&gt;</entry>
-		<entry>dependent product meant to define a proposition</entry>
-	      </row>
-	      <row>
-		<entry/>
-		<entry>|</entry>
-		<entry>&lt;term&gt; → &lt;term&gt;</entry>
-		<entry>non-dependent product (logical implication or function space)</entry>
-	      </row>
-	      <row>
-		<entry/>
-		<entry>|</entry>
-		<entry>let [&lt;id&gt;|(&lt;id&gt;: &lt;term&gt;)] ≝ &lt;term&gt; in &lt;term&gt;</entry>
-		<entry>local definition</entry>
-	      </row>
-	      <row>
-		<entry/>
-		<entry>|</entry>
-		<entry>let [co]rec &lt;id&gt; ≝ &lt;term&gt; in &lt;term&gt;</entry>
-		<entry>local definition</entry>
-	      </row>
-	      <row>
-		<entry/>
-		<entry>|</entry>
-		<entry>...</entry>
-		<entry>&TODO;</entry>
-	      </row>
-	    </tbody>
-	  </tgroup>
-	</table>
+  <title>Terms</title>
+  <table>
+    <tgroup>
+     <thead />
+    <tbody>
+     <row>
+      <entry id="id">&id;</entry>
+      <entry>::=</entry>
+      <entry><emphasis>〈〈&TODO;〉〉</emphasis></entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </table>
+  <table>
+    <tgroup>
+     <thead />
+    <tbody>
+     <row>
+      <entry id="nat">&nat;</entry>
+      <entry>::=</entry>
+      <entry><emphasis>〈〈&TODO;〉〉</emphasis></entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </table>
+  <table>
+    <tgroup>
+     <thead />
+    <tbody>
+     <row>
+      <entry id="uri">&uri;</entry>
+      <entry>::=</entry>
+      <entry><emphasis>〈〈&TODO;〉〉</emphasis></entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </table>
+  <table>
+    <tgroup>
+     <thead />
+    <tbody>
+     <row>
+      <entry id="term">&term;</entry>
+      <entry>::=</entry>
+      <entry>&id;</entry>
+      <entry>identifier</entry>
+     </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
+      <entry>&uri;</entry>
+      <entry>a qualified reference</entry>
+     </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
+      <entry><emphasis role="bold">Prop</emphasis></entry>
+      <entry>the impredicative sort of propositions</entry>
+     </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
+      <entry><emphasis role="bold">Set</emphasis></entry>
+      <entry>the impredicate sort of datatypes</entry>
+     </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
+      <entry><emphasis role="bold">Type</emphasis></entry>
+      <entry>one predicatie sort of datatypes</entry>
+     </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
+      <entry>&term; &term;</entry>
+      <entry>application</entry>
+     </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
+      <entry><emphasis role="bold">λ</emphasis>&id;[<emphasis role="bold">:</emphasis> &term;]<emphasis role="bold">.</emphasis>&term;</entry>
+      <entry>λ-abstraction</entry>
+     </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
+      <entry><emphasis role="bold">Π</emphasis>&id;[<emphasis role="bold">:</emphasis> &term;]<emphasis role="bold">.</emphasis>&term;</entry>
+      <entry>dependent product meant to define a datatype</entry>
+     </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
+      <entry><emphasis role="bold">∀</emphasis>&id;[<emphasis role="bold">:</emphasis> &term;]<emphasis role="bold">.</emphasis>&term;</entry>
+      <entry>dependent product meant to define a proposition</entry>
+     </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
+      <entry>&term; <emphasis role="bold">→</emphasis> &term;</entry>
+      <entry>non-dependent product (logical implication or function space)</entry>
+     </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
+      <entry><emphasis role="bold">let</emphasis> [&id;|(&id;<emphasis role="bold">:</emphasis> &term;)] <emphasis role="bold">≝</emphasis> &term; <emphasis role="bold">in</emphasis> &term;</entry>
+      <entry>local definition</entry>
+     </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
+        <entry><emphasis role="bold">match</emphasis> &term; 
+        [ <emphasis role="bold">in</emphasis> &term; ]
+        [ <emphasis role="bold">return</emphasis> &term; ]
+        <emphasis role="bold">with</emphasis>
+      </entry>
+      <entry>case analysis</entry>
+     </row>
+     <row>
+      <entry/>
+      <entry/>
+      <entry>
+       <emphasis role="bold">[</emphasis> 
+       &term_pattern; <emphasis role="bold"> ⇒ </emphasis> &term;
+         [
+         <emphasis role="bold">|</emphasis>
+         &term_pattern; <emphasis role="bold"> ⇒ </emphasis> &term;
+         ]…<emphasis role="bold">]</emphasis> </entry>
+      <entry/>
+     </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
+      <entry><emphasis role="bold">let</emphasis>
+      [<emphasis role="bold">co</emphasis>]<emphasis role="bold">rec</emphasis>
+      &id; [&id;]… [<emphasis role="bold">on</emphasis> &nat;]
+      [<emphasis role="bold">:</emphasis> &term;]
+      <emphasis role="bold">≝</emphasis> &term;
+      </entry>
+      <entry>(co)recursive definitions</entry>
+     </row>
+     <row>
+      <entry/>
+      <entry/>
+      <entry>
+      [<emphasis role="bold">and</emphasis>
+      &id; [&id;]… [<emphasis role="bold">on</emphasis> &nat;]
+      [<emphasis role="bold">:</emphasis> &term;]
+      <emphasis role="bold">≝</emphasis> &term;]…
+      </entry>
+      <entry/>
+     </row>
+     <row>
+      <entry/>
+      <entry/>
+      <entry>
+      <emphasis role="bold">in</emphasis> &term;
+      </entry>
+      <entry/>
+     </row>
+    </tbody>
+   </tgroup>
+  </table>
+
+  <table>
+    <tgroup>
+     <thead />
+    <tbody>
+     <row>
+      <entry id="term_pattern">&term_pattern;</entry>
+      <entry>::=</entry>
+      <entry>&id;</entry>
+      <entry>0-ary constructor</entry>
+     </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
+      <entry><emphasis role="bold">(</emphasis>&id; &id; [&id;]…<emphasis role="bold">)</emphasis></entry>
+      <entry>n-ary constructor (binds the n arguments)</entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </table>
   </sect1>
 
   <sect1 id="axiom">
-    <title>axiom &lt;id&gt;: &lt;term&gt;</title>
+    <title>axiom &id;: &term;</title>
     <titleabbrev>axiom</titleabbrev>
     <para><userinput>axiom H: P</userinput></para>
     <para><command>H</command> is declared as an axiom that states <command>P</command></para>
   </sect1>
 
   <sect1 id="definition">
-    <title>definition &lt;id&gt;[: &lt;term&gt;] [≝ &lt;term&gt;]</title>
+    <title>definition &id;[: &term;] [≝ &term;]</title>
     <titleabbrev>definition</titleabbrev>
     <para><userinput>definition f: T ≝ t</userinput></para>
     <para><command>f</command> is defined as <command>t</command>;
@@ -102,7 +212,7 @@
   </sect1>
 
   <sect1 id="inductive">
-    <title>[co]inductive &lt;id&gt; (of inductive types)</title>
+    <title>[co]inductive &id; (of inductive types)</title>
     <titleabbrev>(co)inductive types declaration</titleabbrev>
     <para> &TODO; </para>
   </sect1>
@@ -110,7 +220,7 @@
   <sect1 id="proofs">
    <title>Proofs</title>
    <sect2 id="theorem">
-    <title>theorem &lt;id&gt;[: &lt;term&gt;] [≝ &lt;term&gt;]</title>
+    <title>theorem &id;[: &term;] [≝ &term;]</title>
     <titleabbrev>theorem</titleabbrev>
     <para><userinput>theorem f: P ≝ p</userinput></para>
     <para>Proves a new theorem <command>f</command> whose thesis is
@@ -127,7 +237,7 @@
     <para>Notice that the command is equivalent to <command>definition f: T ≝ t</command>.</para>
    </sect2>
    <sect2 id="variant">
-    <title>variant &lt;id&gt;[: &lt;term&gt;] [≝ &lt;term&gt;]</title>
+    <title>variant &id;[: &term;] [≝ &term;]</title>
     <titleabbrev>variant</titleabbrev>
     <para><userinput>variant f: T ≝ t</userinput></para>
     <para>Same as <command>theorem f: T ≝ t</command>, but it does not
@@ -135,19 +245,19 @@
      an alternative name or proof to a theorem.</para>
    </sect2>
    <sect2 id="lemma">
-    <title>lemma &lt;id&gt;[: &lt;term&gt;] [≝ &lt;term&gt;]</title>
+    <title>lemma &id;[: &term;] [≝ &term;]</title>
     <titleabbrev>lemma</titleabbrev>
     <para><userinput>lemma f: T ≝ t</userinput></para>
     <para>Same as <command>theorem f: T ≝ t</command></para>
    </sect2>
    <sect2 id="fact">
-    <title>fact &lt;id&gt;[: &lt;term&gt;] [≝ &lt;term&gt;]</title>
+    <title>fact &id;[: &term;] [≝ &term;]</title>
     <titleabbrev>fact</titleabbrev>
     <para><userinput>fact f: T ≝ t</userinput></para>
     <para>Same as <command>theorem f: T ≝ t</command></para>
    </sect2>
    <sect2 id="remark">
-    <title>remark &lt;id&gt;[: &lt;term&gt;] [≝ &lt;term&gt;]</title>
+    <title>remark &id;[: &term;] [≝ &term;]</title>
     <titleabbrev>remark</titleabbrev>
     <para><userinput>remark f: T ≝ t</userinput></para>
     <para>Same as <command>theorem f: T ≝ t</command></para>

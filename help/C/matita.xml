@@ -17,6 +17,13 @@
   <!ENTITY TODO "<emphasis>TODO</emphasis>">
   <!ENTITY MYSQL "<application> <ulink type='http'
       url='http://www.mysql.com'>MySQL</ulink> </application>">
+
+  <!-- Entities for BNF -->
+  <!ENTITY id "<emphasis><link linkend='id'>id</link></emphasis>">
+  <!ENTITY uri "<emphasis><link linkend='uri'>uri</link></emphasis>">
+  <!ENTITY nat "<emphasis><link linkend='nat'>nat</link></emphasis>">
+  <!ENTITY term "<emphasis><link linkend='term'>term</link></emphasis>">
+  <!ENTITY term_pattern "<emphasis><link linkend='term_pattern'>term_pattern</link></emphasis>">
 ]>
 
 <?yelp:chunk-depth 3?>
