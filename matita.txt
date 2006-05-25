@@ -1,3 +1,35 @@
+### 
+ Regole di eliminazione per tipi induttivi:
+ >   - as you point it out, unit implies small, hence the clause "if
+ >   Environ.engagement ..." is useles; revision 1.46 apparently missed
+ >   this point;
+ and I was wrong. Components of constructors that are arities in Prop
+ (i.e. of the form ... -> Prop) are considered as unit (at least in
+ Coq). Hence you can have non small unit types. The typical example is
+
+  Inductive T : Prop := C : Prop -> T.
+
+ As a consequence, my modification of the code of Indtypes.allowed_sorts
+ introduced a consistency hole (with elimination from T to Type, Prop
+ becomes equivalent to T and system Type:Type becomes a subsystem of
+ Coq). If you have a similar allowance in Matita, it may be problematic
+ too.
+
+
+
+** introdurre una tattica primitiva "enlarge_metasenv" che cambia il metasenv
+   aggiungendo nuove meta e tenendo traccia dei nuovi goal aperti; usarla
+   ovunque rimuovendo ProofEngineHelpers.compare_metasenv. Questo dovrebbe
+   anche permettere a lungo termine di rendere lo stato un tipo opaco.
+
+
+Possibile causa di rallentamenti:
+1. The last commit that fixed unification of compound coercions with
+   applied atomic coercions used to introduce too many compound coercions
+   at the end. In this commit we fix the problem in a brutal way by
+   mergin coercions every time CicMetaSubst.apply_subst is called.
+   To be refined later on.
+
   Ferruccio ha cambiato matita.lang:
   >      <keyword>iforall</keyword>
   >      <keyword>iexists</keyword>
