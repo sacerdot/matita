@@ -170,6 +170,11 @@ let _ =
         CicNotation.set_active_notations
           (List.map fst (CicNotation.get_all_notations ())));
     addDebugSeparator ();
+    addDebugItem "enable multiple disambiguation passes (default)"
+      (fun _ -> GrafiteDisambiguator.only_one_pass := false);
+    addDebugItem "enable only one disambiguation pass"
+      (fun _ -> GrafiteDisambiguator.only_one_pass := true);
+    addDebugSeparator ();
     addDebugItem "enable coercions hiding"
       (fun _ -> TermAcicContent.hide_coercions := true);
     addDebugItem "disable coercions hiding"
