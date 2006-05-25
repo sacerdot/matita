@@ -2,27 +2,156 @@
 <!-- =========== Terms, declarations and definitions ============ -->
 
 <chapter id="sec_terms">
-  <title>Terms, definitions, declarations and proofs</title>
+  <title>Terms, axioms, definitions, declarations and proofs</title>
 
   <sect1 id="terms">
     <title>Terms</title>
-    <para> &TODO; </para>
+    <!--<informaltable>
+     <tr>
+      <td>&lt;term&gt;</td>
+      <td>::=</td>
+      <td>&lt;id&gt;</td>
+      <td>identifier</td>
+     </tr>
+     <tr><td/><td>|</td><td>&lt;term&gt; &lt;term&gt;</td>
+      <td>application</td></tr>
+    </informaltable>-->
+	<table>
+	  <tgroup>
+            <thead />
+	    <tbody>
+	      <row>
+		<entry>&lt;term&gt;</entry>
+		<entry>::=</entry>
+		<entry>&lt;id&gt;</entry>
+		<entry>identifier</entry>
+	      </row>
+	      <row>
+		<entry/>
+		<entry>|</entry>
+		<entry>&lt;term&gt; &lt;term&gt;</entry>
+		<entry>application</entry>
+	      </row>
+	      <row>
+		<entry/>
+		<entry>|</entry>
+		<entry>λ&lt;id&gt;[: &lt;term&gt;].&lt;term&gt;</entry>
+		<entry>λ-abstraction</entry>
+	      </row>
+	      <row>
+		<entry/>
+		<entry>|</entry>
+		<entry>Π&lt;id&gt;[: &lt;term&gt;].&lt;term&gt;</entry>
+		<entry>dependent product meant to define a datatype</entry>
+	      </row>
+	      <row>
+		<entry/>
+		<entry>|</entry>
+		<entry>∀&lt;id&gt;[: &lt;term&gt;].&lt;term&gt;</entry>
+		<entry>dependent product meant to define a proposition</entry>
+	      </row>
+	      <row>
+		<entry/>
+		<entry>|</entry>
+		<entry>&lt;term&gt; → &lt;term&gt;</entry>
+		<entry>non-dependent product (logical implication or function space)</entry>
+	      </row>
+	      <row>
+		<entry/>
+		<entry>|</entry>
+		<entry>let [&lt;id&gt;|(&lt;id&gt;: &lt;term&gt;)] ≝ &lt;term&gt; in &lt;term&gt;</entry>
+		<entry>local definition</entry>
+	      </row>
+	      <row>
+		<entry/>
+		<entry>|</entry>
+		<entry>let [co]rec &lt;id&gt; ≝ &lt;term&gt; in &lt;term&gt;</entry>
+		<entry>local definition</entry>
+	      </row>
+	      <row>
+		<entry/>
+		<entry>|</entry>
+		<entry>...</entry>
+		<entry>&TODO;</entry>
+	      </row>
+	    </tbody>
+	  </tgroup>
+	</table>
   </sect1>
 
-  <sect1 id="definitions">
-    <title>Definitions</title>
-    <para> &TODO; </para>
+  <sect1 id="axiom">
+    <title>axiom &lt;id&gt;: &lt;term&gt;</title>
+    <titleabbrev>axiom</titleabbrev>
+    <para><userinput>axiom H: P</userinput></para>
+    <para><command>H</command> is declared as an axiom that states <command>P</command></para>
   </sect1>
 
-  <sect1 id="declarations">
-    <title>Declarations (of inductive types)</title>
-    <titleabbrev>Declarations</titleabbrev>
+  <sect1 id="definition">
+    <title>definition &lt;id&gt;[: &lt;term&gt;] [≝ &lt;term&gt;]</title>
+    <titleabbrev>definition</titleabbrev>
+    <para><userinput>definition f: T ≝ t</userinput></para>
+    <para><command>f</command> is defined as <command>t</command>;
+     <command>T</command> is its type. An error is raised if the type of
+     <command>t</command> is not convertible to <command>T</command>.</para>
+    <para><command>T</command> is inferred from <command>t</command> if
+      omitted.</para>
+    <para><command>t</command> can be omitted only if <command>T</command> is
+     given. In this case Matita enters in interactive mode and
+     <command>f</command> must be defined by means of tactics.</para>
+    <para>Notice that the command is equivalent to <command>theorem f: T ≝ t</command>.</para>
+  </sect1>
+
+  <sect1 id="inductive">
+    <title>[co]inductive &lt;id&gt; (of inductive types)</title>
+    <titleabbrev>(co)inductive types declaration</titleabbrev>
     <para> &TODO; </para>
   </sect1>
 
   <sect1 id="proofs">
-    <title>Proofs</title>
-    <para> &TODO; </para>
+   <title>Proofs</title>
+   <sect2 id="theorem">
+    <title>theorem &lt;id&gt;[: &lt;term&gt;] [≝ &lt;term&gt;]</title>
+    <titleabbrev>theorem</titleabbrev>
+    <para><userinput>theorem f: P ≝ p</userinput></para>
+    <para>Proves a new theorem <command>f</command> whose thesis is
+     <command>P</command>.</para>
+    <para>If <command>p</command> is provided, it must be a proof term for
+     <command>P</command>. Otherwise an interactive proof is started.</para>
+    <para><command>P</command> can be omitted only if the proof is not
+     interactive.</para>
+    <para>Proving a theorem already proved in the library is an error.
+     To provide an alternative name and proof for the same theorem, use
+     <command>variant f: P ≝ p</command>.</para>
+    <para>A warning is raised if the name of the theorem cannot be obtained
+      by mangling the name of the constants in its thesis.</para>
+    <para>Notice that the command is equivalent to <command>definition f: T ≝ t</command>.</para>
+   </sect2>
+   <sect2 id="variant">
+    <title>variant &lt;id&gt;[: &lt;term&gt;] [≝ &lt;term&gt;]</title>
+    <titleabbrev>variant</titleabbrev>
+    <para><userinput>variant f: T ≝ t</userinput></para>
+    <para>Same as <command>theorem f: T ≝ t</command>, but it does not
+     complain if the theorem has already been proved. To be used to give
+     an alternative name or proof to a theorem.</para>
+   </sect2>
+   <sect2 id="lemma">
+    <title>lemma &lt;id&gt;[: &lt;term&gt;] [≝ &lt;term&gt;]</title>
+    <titleabbrev>lemma</titleabbrev>
+    <para><userinput>lemma f: T ≝ t</userinput></para>
+    <para>Same as <command>theorem f: T ≝ t</command></para>
+   </sect2>
+   <sect2 id="fact">
+    <title>fact &lt;id&gt;[: &lt;term&gt;] [≝ &lt;term&gt;]</title>
+    <titleabbrev>fact</titleabbrev>
+    <para><userinput>fact f: T ≝ t</userinput></para>
+    <para>Same as <command>theorem f: T ≝ t</command></para>
+   </sect2>
+   <sect2 id="remark">
+    <title>remark &lt;id&gt;[: &lt;term&gt;] [≝ &lt;term&gt;]</title>
+    <titleabbrev>remark</titleabbrev>
+    <para><userinput>remark f: T ≝ t</userinput></para>
+    <para>Same as <command>theorem f: T ≝ t</command></para>
+   </sect2>
   </sect1>
 
 </chapter>
