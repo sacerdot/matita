@@ -4,6 +4,7 @@
 
   <!ENTITY license SYSTEM "legal.xml">
   <!ENTITY install SYSTEM "sec_install.xml">
+  <!ENTITY gettingstarted SYSTEM "sec_gettingstarted.xml">
   <!ENTITY intro SYSTEM "sec_intro.xml">
   <!ENTITY terms SYSTEM "sec_terms.xml">
   <!ENTITY tactics SYSTEM "sec_tactics.xml">
@@ -151,6 +152,7 @@
 
 &intro;
 &install;
+&gettingstarted;
 &terms;
 &tactics;
 

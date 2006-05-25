@@ -2,10 +2,23 @@
 <!-- =========== Terms, declarations and definitions ============ -->
 
 <chapter id="sec_terms">
-  <title>Terms, axioms, definitions, declarations and proofs</title>
-
-  <sect1 id="terms">
-  <title>Terms</title>
+  <title>Syntax</title>
+  <para>To describe syntax in this manual we use the following conventions:</para>
+  <orderedlist>
+   <listitem>Non terminal symbols are emphasized and have a link to their definition. E.g.: &term;</listitem>
+   <listitem>Terminal symbols are in bold. E.g.: <emphasis role="bold">theorem</emphasis></listitem>
+   <listitem>Optional sequences of elements are put in square brackets.
+    E.g.: [<emphasis role="bold">in</emphasis> &term;]</listitem>
+   <listitem>Alternatives are put in square brakets and they are separated
+    by vertical bars. E.g.: [<emphasis role="bold">&lt;</emphasis>|<emphasis role="bold">&gt;</emphasis>]</listitem>
+   <listitem>Repetition of sequences of elements are given by putting the
+    first sequence in square brackets, that are followed by three dots.
+    E.g.: [<emphasis role="bold">and</emphasis> &term;]…</listitem>
+  </orderedlist>
+  <sect1 id="terms_and_co">
+  <title>Terms &amp; co.</title>
+  <sect2 id="lexical">
+  <title>Lexical conventions</title>
   <table>
     <tgroup>
      <thead />
@@ -42,6 +55,9 @@
     </tbody>
    </tgroup>
   </table>
+  </sect2>
+  <sect2 id="terms">
+  <title>Terms</title>
   <table>
     <tgroup>
      <thead />
@@ -74,7 +90,7 @@
       <entry/>
       <entry>|</entry>
       <entry><emphasis role="bold">Type</emphasis></entry>
-      <entry>one predicatie sort of datatypes</entry>
+      <entry>one predicative sort of datatypes</entry>
      </row>
      <row>
       <entry/>
@@ -187,16 +203,18 @@
     </tbody>
    </tgroup>
   </table>
+  </sect2>
   </sect1>
 
-  <sect1 id="axiom">
+  <sect1 id="axiom_definition_declaration">
+   <title>Definitions and declarations</title>
+   <sect2 id="axiom">
     <title>axiom &id;: &term;</title>
     <titleabbrev>axiom</titleabbrev>
     <para><userinput>axiom H: P</userinput></para>
     <para><command>H</command> is declared as an axiom that states <command>P</command></para>
-  </sect1>
-
-  <sect1 id="definition">
+  </sect2>
+  <sect2 id="definition">
     <title>definition &id;[: &term;] [≝ &term;]</title>
     <titleabbrev>definition</titleabbrev>
     <para><userinput>definition f: T ≝ t</userinput></para>
@@ -209,12 +227,12 @@
      given. In this case Matita enters in interactive mode and
      <command>f</command> must be defined by means of tactics.</para>
     <para>Notice that the command is equivalent to <command>theorem f: T ≝ t</command>.</para>
-  </sect1>
-
-  <sect1 id="inductive">
+  </sect2>
+  <sect2 id="inductive">
     <title>[co]inductive &id; (of inductive types)</title>
     <titleabbrev>(co)inductive types declaration</titleabbrev>
     <para> &TODO; </para>
+  </sect2>
   </sect1>
 
   <sect1 id="proofs">
