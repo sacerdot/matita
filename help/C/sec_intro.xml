@@ -3,13 +3,80 @@
 
 <chapter id="sec_intro">
   <title>Introduction</title>
-  <sect1 id="what">
-    <title>What is Matita?</title>
+  <sect1 id="Features">
+    <title>Features</title>
 
     <para>
-      <application>Matita</application> is a proof assistant for ...
+      <application>Matita</application> is an interactive theorem prover
+      (or proof assistant) with the following characteristics:</para>
+
+    <itemizedlist>
+     <listitem>It is based on a variant of the Calculus of (co)Inductive
+      Constructions (CIC). CIC is also the logic of the Coq proof assistant.
+     </listitem>
+     <listitem>It adopts a procedural proof language, but it has a new
+      set of small step tacticals that improve proof structuring and debugging.
+     </listitem>
+     <listitem>It has a stand-alone graphical user interface (GUI) inspired by
+      CtCoq/Proof General. The GUI is implemented according to the state
+      of the art. In particular:
+      <itemizedlist>
+       <listitem>It is based and fully integrated with Gtk/Gnome.</listitem>
+       <listitem>An on-line help can be browsed via the Gnome documentation
+        browser.</listitem>
+       <listitem>Mathematical formulae are rendered in two dimensional
+        notation via MathML and Unicode.</listitem>
+      </itemizedlist>
+     </listitem>
+     <listitem>It integrates advanced browsing and searching procedures.
+     </listitem>
+     <listitem>It allows the use of the typical ambiguous mathematical notation
+      by means of a disambiguating parser.
+     </listitem>
+     <listitem>It is compatible with the library of Coq (definitions and
+      proof objects).
+     </listitem>
+    </itemizedlist>
+  </sect1>
+
+  <sect1 id="WrtCoq">
+    <title>Matita vs Coq</title>
+
+    <para>
+      The system shares a common look&amp;feel with the Coq proof assistant
+      and its graphical user interface. The two systems have the same logic,
+      very close proof languages and similar sets of tactics. Moreover,
+      Matita is compatible with the library of Coq.
+      From the user point of view the main lacking features
+      with respect to Coq are:
     </para>
+
+    <itemizedlist>
+     <listitem>proof extraction;</listitem>
+     <listitem>an extensible language of tactics;</listitem>
+     <listitem>automatic implicit arguments;</listitem>
+     <listitem>several ad-hoc decision procedures;</listitem>
+     <listitem>several rarely used variants for most of the tactics.</listitem>
+    </itemizedlist>
+
+    <para>
+      Still from the user point of view, the main differences with respect
+      to Coq are:
+    </para>
+
+    <itemizedlist>
+     <listitem>the language of tacticals that allows execution of partial
+      tactical application;</listitem>
+     <listitem>the unification of the concept of metavariable and existential
+      variable;</listitem>
+     <listitem>terms with subterms that cannot be inferred are always allowed
+      as arguments of tactics or other commands;</listitem>
+     <listitem>ambiguous terms are disambiguated by direct interaction
+      with the user;</listitem>
+     <listitem>theorems and definitions in the library are always accessible
+      without needing to require/include them; right now, only notation needs
+      to be included to become active, but we plan to remove this limitation.</listitem>
+    </itemizedlist>
 
   </sect1>
 </chapter>
-
