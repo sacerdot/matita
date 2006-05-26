@@ -20,7 +20,7 @@
   <sect2 id="lexical">
   <title>Lexical conventions</title>
   <table>
-    <tgroup>
+    <tgroup cols="4">
      <thead />
     <tbody>
      <row>
@@ -32,7 +32,7 @@
    </tgroup>
   </table>
   <table>
-    <tgroup>
+    <tgroup cols="4">
      <thead />
     <tbody>
      <row>
@@ -44,7 +44,7 @@
    </tgroup>
   </table>
   <table>
-    <tgroup>
+    <tgroup cols="4">
      <thead />
     <tbody>
      <row>
@@ -59,7 +59,7 @@
   <sect2 id="terms">
   <title>Terms</title>
   <table>
-    <tgroup>
+    <tgroup cols="4">
      <thead />
     <tbody>
      <row>
@@ -145,7 +145,7 @@
   </table>
 
   <table>
-    <tgroup>
+    <tgroup cols="4">
      <thead />
     <tbody>
      <row>
@@ -242,7 +242,7 @@
   </table>
 
   <table>
-    <tgroup>
+    <tgroup cols="4">
      <thead />
     <tbody>
      <row>
@@ -278,7 +278,7 @@
   </table>
 
   <table>
-    <tgroup>
+    <tgroup cols="4">
      <thead />
     <tbody>
      <row>
