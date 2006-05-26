@@ -65,8 +65,104 @@
      <row>
       <entry id="term">&term;</entry>
       <entry>::=</entry>
-      <entry>&id;</entry>
-      <entry>identifier</entry>
+      <entry>&sterm;</entry>
+      <entry>simple or delimited term</entry>
+     </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
+      <entry>&term; &term;</entry>
+      <entry>application</entry>
+     </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
+      <entry><emphasis role="bold">λ</emphasis>&args;<emphasis role="bold">.</emphasis>&term;</entry>
+      <entry>λ-abstraction</entry>
+     </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
+      <entry><emphasis role="bold">Π</emphasis>&args;<emphasis role="bold">.</emphasis>&term;</entry>
+      <entry>dependent product meant to define a datatype</entry>
+     </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
+      <entry><emphasis role="bold">∀</emphasis>&args;<emphasis role="bold">.</emphasis>&term;</entry>
+      <entry>dependent product meant to define a proposition</entry>
+     </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
+      <entry>&term; <emphasis role="bold">→</emphasis> &term;</entry>
+      <entry>non-dependent product (logical implication or function space)</entry>
+     </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
+      <entry><emphasis role="bold">let</emphasis> [&id;|(&id;<emphasis role="bold">:</emphasis> &term;)] <emphasis role="bold">≝</emphasis> &term; <emphasis role="bold">in</emphasis> &term;</entry>
+      <entry>local definition</entry>
+     </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
+      <entry><emphasis role="bold">let</emphasis>
+      [<emphasis role="bold">co</emphasis>]<emphasis role="bold">rec</emphasis>
+      &id; [&id;|<emphasis role="bold">(</emphasis>&id;[<emphasis role="bold">,</emphasis>&term;]… <emphasis role="bold">:</emphasis>&term;<emphasis role="bold">)</emphasis>]… [<emphasis role="bold">on</emphasis> &nat;]
+      [<emphasis role="bold">:</emphasis> &term;]
+      <emphasis role="bold">≝</emphasis> &term;
+      </entry>
+      <entry>(co)recursive definitions</entry>
+     </row>
+     <row>
+      <entry/>
+      <entry/>
+      <entry>
+      [<emphasis role="bold">and</emphasis>
+      [&id;|<emphasis role="bold">(</emphasis>&id;[<emphasis role="bold">,</emphasis>&term;]… <emphasis role="bold">:</emphasis>&term;<emphasis role="bold">)</emphasis>]… [<emphasis role="bold">on</emphasis> &nat;]
+      [<emphasis role="bold">:</emphasis> &term;]
+      <emphasis role="bold">≝</emphasis> &term;]…
+      </entry>
+      <entry/>
+     </row>
+     <row>
+      <entry/>
+      <entry/>
+      <entry>
+      <emphasis role="bold">in</emphasis> &term;
+      </entry>
+      <entry/>
+     </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
+      <entry>…</entry>
+      <entry>user provided notation</entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </table>
+
+  <table>
+    <tgroup>
+     <thead />
+    <tbody>
+     <row>
+      <entry id="sterm">&sterm;</entry>
+      <entry>::=</entry>
+      <entry><emphasis role="bold">(</emphasis>&term;<emphasis role="bold">)</emphasis></entry>
+      <entry/>
+     </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
+      <entry>&id;[<emphasis role="bold">\subst[</emphasis>
+       &id;<emphasis role="bold">≝</emphasis>&term;
+       [<emphasis role="bold">;</emphasis>&id;<emphasis role="bold">≝</emphasis>&term;]…
+       <emphasis role="bold">]</emphasis>]
+      </entry>
+      <entry>identifier with optional explicit named substitution</entry>
      </row>
      <row>
       <entry/>
@@ -95,38 +191,17 @@
      <row>
       <entry/>
       <entry>|</entry>
-      <entry>&term; &term;</entry>
-      <entry>application</entry>
+      <entry><emphasis role="bold">?</emphasis></entry>
+      <entry>implicit argument</entry>
      </row>
      <row>
       <entry/>
       <entry>|</entry>
-      <entry><emphasis role="bold">λ</emphasis>&id;[<emphasis role="bold">:</emphasis> &term;]<emphasis role="bold">.</emphasis>&term;</entry>
-      <entry>λ-abstraction</entry>
-     </row>
-     <row>
-      <entry/>
-      <entry>|</entry>
-      <entry><emphasis role="bold">Π</emphasis>&id;[<emphasis role="bold">:</emphasis> &term;]<emphasis role="bold">.</emphasis>&term;</entry>
-      <entry>dependent product meant to define a datatype</entry>
-     </row>
-     <row>
-      <entry/>
-      <entry>|</entry>
-      <entry><emphasis role="bold">∀</emphasis>&id;[<emphasis role="bold">:</emphasis> &term;]<emphasis role="bold">.</emphasis>&term;</entry>
-      <entry>dependent product meant to define a proposition</entry>
-     </row>
-     <row>
-      <entry/>
-      <entry>|</entry>
-      <entry>&term; <emphasis role="bold">→</emphasis> &term;</entry>
-      <entry>non-dependent product (logical implication or function space)</entry>
-     </row>
-     <row>
-      <entry/>
-      <entry>|</entry>
-      <entry><emphasis role="bold">let</emphasis> [&id;|(&id;<emphasis role="bold">:</emphasis> &term;)] <emphasis role="bold">≝</emphasis> &term; <emphasis role="bold">in</emphasis> &term;</entry>
-      <entry>local definition</entry>
+      <entry><emphasis role="bold">?n</emphasis>
+      [<emphasis role="bold">[</emphasis>
+      [<emphasis role="bold">_</emphasis>|&term;]…
+      <emphasis role="bold">]</emphasis>]</entry>
+      <entry>metavariable</entry>
      </row>
      <row>
       <entry/>
@@ -143,42 +218,24 @@
       <entry/>
       <entry>
        <emphasis role="bold">[</emphasis> 
-       &term_pattern; <emphasis role="bold"> ⇒ </emphasis> &term;
+       &match_pattern; <emphasis role="bold"> ⇒ </emphasis> &term;
          [
          <emphasis role="bold">|</emphasis>
-         &term_pattern; <emphasis role="bold"> ⇒ </emphasis> &term;
+         &match_pattern; <emphasis role="bold"> ⇒ </emphasis> &term;
          ]…<emphasis role="bold">]</emphasis> </entry>
       <entry/>
      </row>
      <row>
       <entry/>
       <entry>|</entry>
-      <entry><emphasis role="bold">let</emphasis>
-      [<emphasis role="bold">co</emphasis>]<emphasis role="bold">rec</emphasis>
-      &id; [&id;]… [<emphasis role="bold">on</emphasis> &nat;]
-      [<emphasis role="bold">:</emphasis> &term;]
-      <emphasis role="bold">≝</emphasis> &term;
-      </entry>
-      <entry>(co)recursive definitions</entry>
+      <entry><emphasis role="bold">(</emphasis>&term;<emphasis role="bold">:</emphasis>&term;<emphasis role="bold">)</emphasis></entry>
+      <entry>cast</entry>
      </row>
      <row>
       <entry/>
-      <entry/>
-      <entry>
-      [<emphasis role="bold">and</emphasis>
-      &id; [&id;]… [<emphasis role="bold">on</emphasis> &nat;]
-      [<emphasis role="bold">:</emphasis> &term;]
-      <emphasis role="bold">≝</emphasis> &term;]…
-      </entry>
-      <entry/>
-     </row>
-     <row>
-      <entry/>
-      <entry/>
-      <entry>
-      <emphasis role="bold">in</emphasis> &term;
-      </entry>
-      <entry/>
+      <entry>|</entry>
+      <entry>…</entry>
+      <entry>user provided notation at precedence 90</entry>
      </row>
     </tbody>
    </tgroup>
@@ -189,7 +246,29 @@
      <thead />
     <tbody>
      <row>
-      <entry id="term_pattern">&term_pattern;</entry>
+      <entry id="args">&args;</entry>
+      <entry>::=</entry>
+      <entry>
+       [<emphasis role="bold">(</emphasis>]<emphasis role="bold">_</emphasis>[<emphasis role="bold">:</emphasis> &term;][<emphasis role="bold">)</emphasis>]
+      </entry>
+      <entry>ignored argument</entry>
+     </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
+      <entry>[<emphasis role="bold">(</emphasis>]&id;[<emphasis role="bold">,</emphasis>&id;]…[<emphasis role="bold">:</emphasis> &term;][<emphasis role="bold">)</emphasis>]</entry>
+      <entry></entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </table>
+
+  <table>
+    <tgroup>
+     <thead />
+    <tbody>
+     <row>
+      <entry id="match_pattern">&match_pattern;</entry>
       <entry>::=</entry>
       <entry>&id;</entry>
       <entry>0-ary constructor</entry>
@@ -203,6 +282,7 @@
     </tbody>
    </tgroup>
   </table>
+
   </sect2>
   </sect1>
 

@@ -4,7 +4,7 @@
  <title>Tactics</title>
 
   <sect1 id="tac_absurd">
-    <title>absurd &term;</title>
+    <title>absurd &sterm;</title>
     <titleabbrev>absurd</titleabbrev>
     <para><userinput>absurd P</userinput></para>
      <para>
@@ -33,7 +33,7 @@
      </para>
   </sect1>
   <sect1 id="tac_apply">
-    <title>apply &term;</title>
+    <title>apply &sterm;</title>
     <titleabbrev>apply</titleabbrev>
     <para><userinput>apply t</userinput></para>
     <para>
@@ -188,7 +188,7 @@
     </para>
   </sect1>
   <sect1 id="tac_change">
-    <title>change &lt;pattern&gt; with &term;</title>
+    <title>change &lt;pattern&gt; with &sterm;</title>
     <titleabbrev>change</titleabbrev>
     <para><userinput>change patt with t</userinput></para>
     <para>
@@ -281,7 +281,7 @@
     </para>
   </sect1>
   <sect1 id="tac_cut">
-    <title>cut &term; [as &id;]</title>
+    <title>cut &sterm; [as &id;]</title>
     <titleabbrev>cut</titleabbrev>
     <para><userinput>cut P as H</userinput></para>
     <para>
@@ -339,7 +339,7 @@
     </para>
   </sect1>
   <sect1 id="tac_discriminate">
-    <title>discriminate &term;</title>
+    <title>discriminate &sterm;</title>
     <titleabbrev>discriminate</titleabbrev>
     <para><userinput>discriminate p</userinput></para>
     <para>
@@ -368,7 +368,7 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_elim">
-    <title>elim &term; [using &term;] [&lt;intros_spec&gt;]</title>
+    <title>elim &sterm; [using &sterm;] [&lt;intros_spec&gt;]</title>
     <titleabbrev>elim</titleabbrev>
     <para><userinput>elim t using th hyps</userinput></para>
     <para>
@@ -405,7 +405,7 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_elimType">
-    <title>elimType &term; [using &term;] [&lt;intros_spec&gt;]</title>
+    <title>elimType &sterm; [using &sterm;] [&lt;intros_spec&gt;]</title>
     <titleabbrev>elimType</titleabbrev>
     <para><userinput>elimType T using th hyps</userinput></para>
     <para>
@@ -432,7 +432,7 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_exact">
-    <title>exact &term;</title>
+    <title>exact &sterm;</title>
     <titleabbrev>exact</titleabbrev>
     <para><userinput>exact p</userinput></para>
     <para>
@@ -518,7 +518,7 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_fold">
-    <title>fold &lt;reduction_kind&gt; &term; &lt;pattern&gt;</title>
+    <title>fold &lt;reduction_kind&gt; &sterm; &lt;pattern&gt;</title>
     <titleabbrev>fold</titleabbrev>
     <para><userinput>fold red t patt</userinput></para>
     <para>
@@ -670,7 +670,7 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_injection">
-    <title>injection &term;</title>
+    <title>injection &sterm;</title>
     <titleabbrev>injection</titleabbrev>
     <para><userinput>injection p</userinput></para>
     <para>
@@ -771,7 +771,7 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_inversion">
-    <title>inversion &term;</title>
+    <title>inversion &sterm;</title>
     <titleabbrev>inversion</titleabbrev>
     <para><userinput>inversion t</userinput></para>
     <para>
@@ -806,7 +806,7 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_lapply">
-    <title>lapply [depth=&nat;] &term; [to &lt;term list&gt;] [using &id;]</title>
+    <title>lapply [depth=&nat;] &sterm; [to &lt;term list&gt;] [using &id;]</title>
     <titleabbrev>lapply</titleabbrev>
     <para><userinput>lapply ???</userinput></para>
     <para>
@@ -864,7 +864,7 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_letin">
-    <title>letin &id; ≝ &term;</title>
+    <title>letin &id; ≝ &sterm;</title>
     <titleabbrev>letin</titleabbrev>
     <para><userinput>letin x ≝ t</userinput></para>
     <para>
@@ -1004,7 +1004,7 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_replace">
-    <title>replace &lt;pattern&gt; with &term;</title>
+    <title>replace &lt;pattern&gt; with &sterm;</title>
     <titleabbrev>change</titleabbrev>
     <para><userinput>change patt with t</userinput></para>
     <para>
@@ -1036,7 +1036,7 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_rewrite">
-    <title>rewrite [&lt;|&gt;] &term; &lt;pattern&gt;</title>
+    <title>rewrite [&lt;|&gt;] &sterm; &lt;pattern&gt;</title>
     <titleabbrev>rewrite</titleabbrev>
     <para><userinput>rewrite dir p patt</userinput></para>
     <para>
@@ -1221,7 +1221,7 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_transitivity">
-    <title>transitivity &term;</title>
+    <title>transitivity &sterm;</title>
     <titleabbrev>transitivity</titleabbrev>
     <para><userinput>transitivity t</userinput></para>
     <para>
@@ -1250,7 +1250,7 @@ the current sequent to prove.</para>
     </para>
   </sect1>
   <sect1 id="tac_unfold">
-    <title>unfold [&term;] &lt;pattern&gt;</title>
+    <title>unfold [&sterm;] &lt;pattern&gt;</title>
     <titleabbrev>unfold</titleabbrev>
     <para><userinput>unfold t patt</userinput></para>
     <para>
