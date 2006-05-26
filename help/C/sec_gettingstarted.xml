@@ -26,8 +26,7 @@
      </listitem>
      <listitem>Typing one of the following ligatures (and opzionally converting
       the ligature to the Unicode character has described before):
-      &quot;:=&quot; (which stands for ≝); &quot;->&quot; (which stands for &quot;→&quot;);
-      &quot;->&quot; (which stands for &quot;⇒&quot;).
+      &quot;:=&quot; (which stands for ≝); &quot;->&quot; (which stands for &quot;→&quot;); &quot;=>&quot; (which stands for &quot;⇒&quot;).
      </listitem>
     </itemizedlist>
   </sect1>

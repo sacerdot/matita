@@ -158,8 +158,8 @@
       <entry/>
       <entry>|</entry>
       <entry>&id;[<emphasis role="bold">\subst[</emphasis>
-       &id;<emphasis role="bold">≝</emphasis>&term;
-       [<emphasis role="bold">;</emphasis>&id;<emphasis role="bold">≝</emphasis>&term;]…
+       &id;<emphasis role="bold">≔</emphasis>&term;
+       [<emphasis role="bold">;</emphasis>&id;<emphasis role="bold">≔</emphasis>&term;]…
        <emphasis role="bold">]</emphasis>]
       </entry>
       <entry>identifier with optional explicit named substitution</entry>
@@ -249,15 +249,29 @@
       <entry id="args">&args;</entry>
       <entry>::=</entry>
       <entry>
-       [<emphasis role="bold">(</emphasis>]<emphasis role="bold">_</emphasis>[<emphasis role="bold">:</emphasis> &term;][<emphasis role="bold">)</emphasis>]
+       <emphasis role="bold">_</emphasis>[<emphasis role="bold">:</emphasis> &term;]
       </entry>
       <entry>ignored argument</entry>
      </row>
      <row>
       <entry/>
       <entry>|</entry>
-      <entry>[<emphasis role="bold">(</emphasis>]&id;[<emphasis role="bold">,</emphasis>&id;]…[<emphasis role="bold">:</emphasis> &term;][<emphasis role="bold">)</emphasis>]</entry>
+      <entry>
+       <emphasis role="bold">(</emphasis><emphasis role="bold">_</emphasis>[<emphasis role="bold">:</emphasis> &term;]<emphasis role="bold">)</emphasis>
+      </entry>
+      <entry>ignored argument</entry>
+     </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
+      <entry>&id;[<emphasis role="bold">,</emphasis>&id;]…[<emphasis role="bold">:</emphasis> &term;]</entry>
       <entry></entry>
+     </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
+      <entry><emphasis role="bold">(</emphasis>&id;[<emphasis role="bold">,</emphasis>&id;]…[<emphasis role="bold">:</emphasis> &term;]<emphasis role="bold">)</emphasis></entry>
+      <entry/>
      </row>
     </tbody>
    </tgroup>
