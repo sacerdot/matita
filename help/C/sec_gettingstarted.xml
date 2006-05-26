@@ -3,10 +3,93 @@
 
 <chapter id="sec_gettingstarted">
   <title>Getting started</title>
+  <para> If you are already familiar with the Calculus of (co)Inductive
+  Constructions (CIC) and with interactive theorem provers with procedural
+  proof languages (expecially Coq), getting started with Matita is relatively
+  easy. You just need to learn how to type Unicode symbols, how to browse
+  and search the library and how to author a proof script.</para>
+
   <sect1 id="unicode">
    <title>How to type Unicode symbols</title>
+   Unicode characters can be typed in several ways:
+    <itemizedlist>
+     <listitem>Using the &quot;Shift+Ctrl+Unicode code&quot; standard
+      Gnome shortcut. E.g. Shift+Ctrl+3a9 generates &quot;Ω&quot;.
+     </listitem>
+     <listitem>Typing the ligature &quot;\name&quot; where &quot;name&quot;
+      is a standard Unicode or LaTeX name for the character. Pressing
+      &quot;Alt+L&quot; just after the last character of the name converts
+      the ligature to the Unicode symbol. This operation is
+      not required since Matita understands also the &quot;\name&quot;
+      sequences. E.g. &quot;\Omega&quot; followed by Alt+L generates
+      &quot;Ω&quot;.
+     </listitem>
+     <listitem>Typing one of the following ligatures (and opzionally converting
+      the ligature to the Unicode character has described before):
+      &quot;:=&quot; (which stands for ≝); &quot;->&quot; (which stands for &quot;→&quot;);
+      &quot;->&quot; (which stands for &quot;⇒&quot;).
+     </listitem>
+    </itemizedlist>
+  </sect1>
+  <sect1 id="cicbrowser">
+   <title>Browsing and searching</title>
+   <para>The CIC browser is used to browse and search the library.
+    You can open a new CIC browser selecting &quot;New Cic Browser&quot;
+    from the &quot;View&quot; menu of Matita, or by pressing &quot;F3&quot;.
+    The CIC browser is similar to a traditional Web browser.</para>
+   <sect2 id="browsinglib">
+    <title>Browsing the library</title>
+    <para>To browse the library, type in the location bar the absolute URI of
+    the theorem, definition or library fragment you are interested in.
+    &quot;cic:/&quot; is the root of the library. Contributions developed
+    in Matita are under &quot;cic:/matita&quot;; all the others are
+    part of the library of Coq.</para>
+    <para>Following the hyperlinks it is possible to navigate in the Web
+    of mathematical notions. Proof are rendered in pseudo-natural language
+    and mathematical notation is used for formulae. For now, mathematical
+    notation must be included in the current script to be activated, but we
+    plan to remove this limitation.</para>
+   </sect2>
+   <sect2 id="aboutproof">
+    <title>Looking at a proof under development</title>
+    <para>A proof under development is not yet part of the library.
+     The special URI &quot;about:proof&quot; can be used to browse the
+     proof currently under development, if there is one.
+     The &quot;home&quot; button of the CIC browser sets the location bar to
+     &quot;about:proof&quot;.
+    </para>
+   </sect2>
+   <sect2 id="whelp">
+    <title>Searching the library</title>
+    <para>The query bar of the CIC browser can be used to search the library
+     of Matita for theorems or definitions that match certain criteria.
+     The criteria is given by typing a term in the query bar and selecting
+     an action in the drop down menu right of it.</para>
+    <sect3 id="locate">
+     <title>Searching by name</title>
+     &TODO;
+    </sect3>
+    <sect3 id="hint">
+     <title>List of lemmas that can be applied</title>
+     &TODO;
+    </sect3>
+    <sect3 id="match">
+     <title>Searching by exact match</title>
+     &TODO;
+    </sect3>
+    <sect3 id="elim">
+     <title>List of elimination principles for a given type</title>
+     &TODO;
+    </sect3>
+    <sect3 id="instance">
+     <title>Searching by instantiation</title>
+     &TODO;
+    </sect3>
+   </sect2>
+  </sect1>
+  <sect1 id="authoring">
+   <title>Authoring</title>
    &TODO;
   </sect1>
-  &TODO;
 </chapter>
 

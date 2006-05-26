@@ -56,7 +56,12 @@
      <listitem>an extensible language of tactics;</listitem>
      <listitem>automatic implicit arguments;</listitem>
      <listitem>several ad-hoc decision procedures;</listitem>
-     <listitem>several rarely used variants for most of the tactics.</listitem>
+     <listitem>several rarely used variants for most of the tactics;</listitem>
+     <listitem>sections and local variables. To maintain compatibility
+      with the library of Coq, theorems defined inside sections are abstracted
+      by name over the section variables; their instances are explicitly
+      applied to actual arguments by means of explicit named
+      substitutions.</listitem>
     </itemizedlist>
 
     <para>
