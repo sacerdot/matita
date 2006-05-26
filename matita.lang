@@ -134,6 +134,8 @@
     <keyword>do</keyword>
     <keyword>repeat</keyword>
     <keyword>first</keyword>
+    <keyword>focus</keyword>
+    <keyword>unfocus</keyword>
   </keyword-list>
 
 
