@@ -1,0 +1,30 @@
+to generate the problems:
+
+  cd ../../../components/binaries/tptp2grafite/
+  make generate
+  cd ../../../matita/tests/TPTP
+  ./classify.sh
+
+to start a run:
+
+  be sure to have matitac.opt in ../../
+  ./try | tee logname
+
+if you have a file containing the list of files to execute, like 
+
+  ...
+  Unsatisfiable/BOO001-1.ma
+  Unsatisfiable/BOO002-1.ma
+  Unsatisfiable/BOO004-2.ma
+  Unsatisfiable/LCL113-2.ma
+  ...
+
+  you can run 
+  
+  ./try filewithproblemlist | tee logname
+
+logname format
+
+  log.SECONDS.DAY-MONTH.MESSAGE
+
+
