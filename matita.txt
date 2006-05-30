@@ -69,7 +69,6 @@ TODO
   - tattiche e fallimenti: una tattica che non progredisce dovrebbe fallire
   - comportamento di tutte le tattiche nei confronti dei let-in
   - elim con pattern
-  - assiomi (manca sintassi concreta e AST).
   - Dare errore significativo al posto di NotWellTypedInterpreation -> CSC
   - elim_intros_simpl e rewrite_simpl: ora non viene usata dal
                ^^^^^^           ^^^^^^
@@ -145,9 +144,10 @@ TODO
   - non chiudere transitivamente i moo ?? 
 
   DEMONI E ALTRO
-  - compilare Whelp
 
 DONE
+- compilare Whelp -> Gares, Zack, CSC
+- assiomi (manca sintassi concreta e AST) -> CSC
 - in MatitaEngine unificare/rimuovere eval_string, eval_from_stream e
   eval_from_stream_greedy -> CSC
 - menu contestuale (tasto dx) nel sequent viewer -> Zack
