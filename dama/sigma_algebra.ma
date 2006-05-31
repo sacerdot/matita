@@ -12,34 +12,29 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/topology/".
+set "baseuri" "cic:/matita/sigma_algebra/".
 
-include "sets.ma".
+include "topology.ma".
 
-record is_topology X (A: set X) (O: set (set X)) : Prop  ≝
- { top_subset: ∀B. B ∈ O → B ⊆ A;
-   top_empty: ∅︀ ∈ O;
-   top_full: A ∈ O;
-   top_intersection: ∀B,C. B ∈ O → C ∈ O → B ∩ C ∈ O;
-   top_countable_union:
-     ∀B.(∀i.(B \sub i) ∈ O) → (∪ \sub i (B \sub i)) ∈ O
- }.
- 
-record topological_space : Type ≝
- { top_carrier:> Type;
-   top_domain:> set top_carrier;
-   O: set (set top_carrier);
-   top_is_topological_space:> is_topology ? top_domain O
+record is_sigma_algebra (X:Type) (A: set X) (M: set (set X)) : Prop ≝
+ { siga_subset: ∀B.B ∈ M → B ⊆ A;
+   siga_full: A ∈ M;
+   siga_compl: ∀B.B ∈ M → B \sup c ∈ M;
+   siga_enumerable_union:
+    ∀B:seq (set X).(∀i.(B \sub i) ∈ M) → (∪ \sub i B \sub i) ∈ M
  }.
 
-(*definition is_continuous_map ≝
- λX,Y: topological_space.λf: X → Y.
-  ∀V. V ∈ O Y → (f \sup -1) V ∈ O X.*)
-definition is_continuous_map ≝
- λX,Y: topological_space.λf: X → Y.
-  ∀V. V ∈ O Y → inverse_image ? ? f V ∈ O X.
-
-record continuous_map (X,Y: topological_space) : Type ≝
- { cm_f:> X → Y;
-   cm_is_continuous_map: is_continuous_map ? ? cm_f
+record sigma_algebra : Type ≝
+ { siga_carrier:> Type;
+   siga_domain:> set siga_carrier;
+   M: set (set siga_carrier);
+   siga_is_sigma_algebra:> is_sigma_algebra ? siga_domain M
  }.
+
+(*definition is_measurable_map ≝
+ λX:sigma_algebra.λY:topological_space.λf:X → Y.
+  ∀V. V ∈ O Y → f \sup -1 V ∈ M X.*)
+definition is_measurable_map ≝
+ λX:sigma_algebra.λY:topological_space.λf:X → Y.
+  ∀V. V ∈ O Y → inverse_image ? ? f V ∈ M X.
+
