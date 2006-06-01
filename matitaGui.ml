@@ -903,7 +903,7 @@ class gui () =
         source_buffer#insert ~iter:(source_buffer#get_iter_at_mark `INSERT) s
       in
       let get_ligature word =
-        let len = MatitaGtkMisc.utf8_string_length word in
+        let len = String.length word in
         let aux_tex () =
           try
             for i = len - 1 downto 0 do

@@ -14,4 +14,18 @@
     </section>
   </section>
 -->
+<!--
+  <section name="gtk-backend">
+    <section name="pango-default-shaper">
+      <section name="variants">
+	<section name="normal">
+	  <key name="family">courier</key>
+	</section>
+	<section name="italic">
+	  <key name="family">courier</key>
+	</section>
+      </section>
+    </section>
+  </section>
+-->
 </math-engine-configuration>
