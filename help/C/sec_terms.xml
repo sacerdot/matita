@@ -282,6 +282,26 @@
      <thead />
     <tbody>
      <row>
+      <entry id="args2">&args2;</entry>
+      <entry>::=</entry>
+      <entry>&id;</entry>
+      <entry/>
+     </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
+      <entry><emphasis role="bold">(</emphasis>&id;[<emphasis role="bold">,</emphasis>&id;]…<emphasis role="bold">:</emphasis> &term;<emphasis role="bold">)</emphasis></entry>
+      <entry/>
+     </row>
+    </tbody>
+   </tgroup>
+  </table>
+
+  <table>
+    <tgroup cols="4">
+     <thead />
+    <tbody>
+     <row>
       <entry id="match_pattern">&match_pattern;</entry>
       <entry>::=</entry>
       <entry>&id;</entry>
@@ -303,13 +323,13 @@
   <sect1 id="axiom_definition_declaration">
    <title>Definitions and declarations</title>
    <sect2 id="axiom">
-    <title>axiom &id;: &term;</title>
+    <title><emphasis role="bold">axiom</emphasis> &id;<emphasis role="bold">:</emphasis> &term;</title>
     <titleabbrev>axiom</titleabbrev>
     <para><userinput>axiom H: P</userinput></para>
     <para><command>H</command> is declared as an axiom that states <command>P</command></para>
   </sect2>
   <sect2 id="definition">
-    <title>definition &id;[: &term;] [≝ &term;]</title>
+    <title><emphasis role="bold">definition</emphasis> &id;[<emphasis role="bold">:</emphasis> &term;] [<emphasis role="bold">≝</emphasis> &term;]</title>
     <titleabbrev>definition</titleabbrev>
     <para><userinput>definition f: T ≝ t</userinput></para>
     <para><command>f</command> is defined as <command>t</command>;
@@ -327,12 +347,38 @@
     <titleabbrev>(co)inductive types declaration</titleabbrev>
     <para> &TODO; </para>
   </sect2>
+  <sect2 id="record">
+    <title><emphasis role="bold">record</emphasis> &id; [&args2;]… <emphasis role="bold">:</emphasis> &term; <emphasis role="bold">≝</emphasis><emphasis role="bold">{</emphasis>[&id; [<emphasis role="bold">:</emphasis>|<emphasis role="bold">:&gt;</emphasis>] &term;] [<emphasis role="bold">;</emphasis>&id; [<emphasis role="bold">:</emphasis>|<emphasis role="bold">:&gt;</emphasis>] &term;]…<emphasis role="bold">}</emphasis></title>
+    <titleabbrev>record</titleabbrev>
+    <para><userinput>record id x y z: S ≝ { f1: T1; …; fn:Tn }</userinput></para>
+    <para>Declares a new record family <command>id</command> parameterized over
+     <command>x,y,z</command>.</para>
+    <para><command>S</command> is the type of the record
+     and it must be convertible to a sort.</para>
+    <para>Each field <command>fi</command> is declared by giving its type
+     <command>Ti</command>. A record without any field is admitted.</para>
+    <para>Elimination principles for the record are automatically generated
+     by Matita, if allowed by the typing rules of the calculus according to
+     the sort <command>S</command>. If generated,
+     they are named <command>id_ind</command>, <command>id_rec</command> and
+     <command>id_rect</command> according to the sort of their induction
+     predicate.</para> 
+    <para>For each field <command>fi</command> a record projection
+     <command>fi</command> is also automatically generated if projection
+     is allowed by the typing rules of the calculus according to the
+     sort <command>S</command>, the type <command>T1</command> and
+     the definability of depending record projections.</para>
+    <para>If the type of a field is declared with <command>:&gt;</command>,
+     the corresponding record projection becomes an implicit coercion.
+     This is just syntactic sugar and it has the same effect of declaring the
+     record projection as a coercion later on.</para>
+  </sect2>
   </sect1>
 
   <sect1 id="proofs">
    <title>Proofs</title>
    <sect2 id="theorem">
-    <title>theorem &id;[: &term;] [≝ &term;]</title>
+    <title><emphasis role="bold">theorem</emphasis> &id;[<emphasis role="bold">:</emphasis> &term;] [<emphasis role="bold">≝</emphasis> &term;]</title>
     <titleabbrev>theorem</titleabbrev>
     <para><userinput>theorem f: P ≝ p</userinput></para>
     <para>Proves a new theorem <command>f</command> whose thesis is
@@ -349,7 +395,7 @@
     <para>Notice that the command is equivalent to <command>definition f: T ≝ t</command>.</para>
    </sect2>
    <sect2 id="variant">
-    <title>variant &id;[: &term;] [≝ &term;]</title>
+    <title><emphasis role="bold">variant</emphasis> &id;[<emphasis role="bold">:</emphasis> &term;] [<emphasis role="bold">≝</emphasis> &term;]</title>
     <titleabbrev>variant</titleabbrev>
     <para><userinput>variant f: T ≝ t</userinput></para>
     <para>Same as <command>theorem f: T ≝ t</command>, but it does not
@@ -357,19 +403,19 @@
      an alternative name or proof to a theorem.</para>
    </sect2>
    <sect2 id="lemma">
-    <title>lemma &id;[: &term;] [≝ &term;]</title>
+    <title><emphasis role="bold">lemma</emphasis> &id;[<emphasis role="bold">:</emphasis> &term;] [<emphasis role="bold">≝</emphasis> &term;]</title>
     <titleabbrev>lemma</titleabbrev>
     <para><userinput>lemma f: T ≝ t</userinput></para>
     <para>Same as <command>theorem f: T ≝ t</command></para>
    </sect2>
    <sect2 id="fact">
-    <title>fact &id;[: &term;] [≝ &term;]</title>
+    <title><emphasis role="bold">fact</emphasis> &id;[<emphasis role="bold">:</emphasis> &term;] [<emphasis role="bold">≝</emphasis> &term;]</title>
     <titleabbrev>fact</titleabbrev>
     <para><userinput>fact f: T ≝ t</userinput></para>
     <para>Same as <command>theorem f: T ≝ t</command></para>
    </sect2>
    <sect2 id="remark">
-    <title>remark &id;[: &term;] [≝ &term;]</title>
+    <title><emphasis role="bold">remark</emphasis> &id;[<emphasis role="bold">:</emphasis> &term;] [<emphasis role="bold">≝</emphasis> &term;]</title>
     <titleabbrev>remark</titleabbrev>
     <para><userinput>remark f: T ≝ t</userinput></para>
     <para>Same as <command>theorem f: T ≝ t</command></para>

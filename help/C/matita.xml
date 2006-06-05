@@ -29,6 +29,7 @@
   <!ENTITY term "<emphasis><link linkend='term'>term</link></emphasis>">
   <!ENTITY match_pattern "<emphasis><link linkend='match_pattern'>match_pattern</link></emphasis>">
   <!ENTITY args "<emphasis><link linkend='args'>args</link></emphasis>">
+  <!ENTITY args2 "<emphasis><link linkend='args2'>args2</link></emphasis>">
   <!ENTITY sterm "<emphasis><link linkend='sterm'>sterm</link></emphasis>">
 ]>
 
