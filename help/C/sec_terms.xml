@@ -344,7 +344,7 @@
   </sect2>
   <sect2 id="inductive">
     <title>[<emphasis role="bold">inductive</emphasis>|<emphasis role="bold">coinductive</emphasis>] &id; [&args2;]… <emphasis role="bold">:</emphasis> &term; <emphasis role="bold">≝</emphasis> [<emphasis role="bold">|</emphasis>] [&id;<emphasis role="bold">:</emphasis>&term;] [<emphasis role="bold">|</emphasis> &id;<emphasis role="bold">:</emphasis>&term;]…
-[<emphasis role="bold">with</emphasis> &id; <emphasis role="bold">:</emphasis> &term; <emphasis role="bold">≝</emphasis> [<emphasis role="bold">|</emphasis>] [&id;<emphasis role="bold">:</emphasis>&term;] [<emphasis role="bold">|</emphasis> &id;<emphasis role="bold">:</emphasis>&term;]…]
+[<emphasis role="bold">with</emphasis> &id; <emphasis role="bold">:</emphasis> &term; <emphasis role="bold">≝</emphasis> [<emphasis role="bold">|</emphasis>] [&id;<emphasis role="bold">:</emphasis>&term;] [<emphasis role="bold">|</emphasis> &id;<emphasis role="bold">:</emphasis>&term;]…]…
 </title>
     <titleabbrev>(co)inductive types declaration</titleabbrev>
     <para><userinput>inductive i x y z: S ≝ k1:T1 | … | kn:Tn with i' : S' ≝ k1':T1' | … | km':Tm'</userinput></para>
