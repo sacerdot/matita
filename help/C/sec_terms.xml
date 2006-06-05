@@ -343,9 +343,30 @@
     <para>Notice that the command is equivalent to <command>theorem f: T ≝ t</command>.</para>
   </sect2>
   <sect2 id="inductive">
-    <title>[co]inductive &id; (of inductive types)</title>
+    <title>[<emphasis role="bold">inductive</emphasis>|<emphasis role="bold">coinductive</emphasis>] &id; [&args2;]… <emphasis role="bold">:</emphasis> &term; <emphasis role="bold">≝</emphasis> [<emphasis role="bold">|</emphasis>] [&id;<emphasis role="bold">:</emphasis>&term;] [<emphasis role="bold">|</emphasis> &id;<emphasis role="bold">:</emphasis>&term;]…
+[<emphasis role="bold">with</emphasis> &id; <emphasis role="bold">:</emphasis> &term; <emphasis role="bold">≝</emphasis> [<emphasis role="bold">|</emphasis>] [&id;<emphasis role="bold">:</emphasis>&term;] [<emphasis role="bold">|</emphasis> &id;<emphasis role="bold">:</emphasis>&term;]…]
+</title>
     <titleabbrev>(co)inductive types declaration</titleabbrev>
-    <para> &TODO; </para>
+    <para><userinput>inductive i x y z: S ≝ k1:T1 | … | kn:Tn with i' : S' ≝ k1':T1' | … | km':Tm'</userinput></para>
+    <para>Declares a family of two mutually inductive types
+     <command>i</command> and <command>i'</command> whose types are
+     <command>S</command> and <command>S'</command>, which must be convertible
+     to sorts.</para>
+    <para>The constructors <command>ki</command> of type <command>Ti</command>
+     and <command>ki'</command> of type <command>Ti'</command> are also
+     simultaneously declared. The declared types <command>i</command> and
+     <command>i'</command> may occur in the types of the constructors, but
+     only in strongly positive positions according to the rules of the
+     calculus.</para>
+    <para>The whole family is parameterized over the arguments <command>x,y,z</command>.</para>
+    <para>If the keyword <command>coinductive</command> is used, the declared
+     types are considered mutually coinductive.</para>
+    <para>Elimination principles for the record are automatically generated
+     by Matita, if allowed by the typing rules of the calculus according to
+     the sort <command>S</command>. If generated,
+     they are named <command>i_ind</command>, <command>i_rec</command> and
+     <command>i_rect</command> according to the sort of their induction
+     predicate.</para> 
   </sect2>
   <sect2 id="record">
     <title><emphasis role="bold">record</emphasis> &id; [&args2;]… <emphasis role="bold">:</emphasis> &term; <emphasis role="bold">≝</emphasis><emphasis role="bold">{</emphasis>[&id; [<emphasis role="bold">:</emphasis>|<emphasis role="bold">:&gt;</emphasis>] &term;] [<emphasis role="bold">;</emphasis>&id; [<emphasis role="bold">:</emphasis>|<emphasis role="bold">:&gt;</emphasis>] &term;]…<emphasis role="bold">}</emphasis></title>
@@ -360,8 +381,8 @@
     <para>Elimination principles for the record are automatically generated
      by Matita, if allowed by the typing rules of the calculus according to
      the sort <command>S</command>. If generated,
-     they are named <command>id_ind</command>, <command>id_rec</command> and
-     <command>id_rect</command> according to the sort of their induction
+     they are named <command>i_ind</command>, <command>i_rec</command> and
+     <command>i_rect</command> according to the sort of their induction
      predicate.</para> 
     <para>For each field <command>fi</command> a record projection
      <command>fi</command> is also automatically generated if projection
