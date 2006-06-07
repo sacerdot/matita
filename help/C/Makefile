@@ -16,6 +16,10 @@ clean:
 	rm -f matita.out matita.log matita.glo matita.dvi matita.idx
 	rm -f matita.aux matita.tex
 
+# test (dumb implementation)
+test:
+	SP_ENCODING=UTF-8 docbook2txt matita.xml
+
 # XHTMLs generation
 
 .PHONY: html
