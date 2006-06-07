@@ -5,62 +5,67 @@
   <title>Syntax</title>
   <para>To describe syntax in this manual we use the following conventions:</para>
   <orderedlist>
-   <listitem>Non terminal symbols are emphasized and have a link to their definition. E.g.: &term;</listitem>
-   <listitem>Terminal symbols are in bold. E.g.: <emphasis role="bold">theorem</emphasis></listitem>
-   <listitem>Optional sequences of elements are put in square brackets.
-    E.g.: [<emphasis role="bold">in</emphasis> &term;]</listitem>
-   <listitem>Alternatives are put in square brakets and they are separated
-    by vertical bars. E.g.: [<emphasis role="bold">&lt;</emphasis>|<emphasis role="bold">&gt;</emphasis>]</listitem>
-   <listitem>Repetition of sequences of elements are given by putting the
+    <listitem><para>Non terminal symbols are emphasized and have a link to their
+	definition. E.g.: &term;</para></listitem>
+    <listitem><para>Terminal symbols are in bold. E.g.:
+	<emphasis role="bold">theorem</emphasis></para></listitem>
+    <listitem><para>Optional sequences of elements are put in square brackets.
+	E.g.: [<emphasis role="bold">in</emphasis> &term;]</para></listitem>
+    <listitem><para>Alternatives are put in square brakets and they are
+	separated by vertical bars. E.g.: [<emphasis role="bold">&lt;</emphasis>|<emphasis role="bold">&gt;</emphasis>]</para></listitem>
+    <listitem><para>Repetition of sequences of elements are given by putting the
     first sequence in square brackets, that are followed by three dots.
-    E.g.: [<emphasis role="bold">and</emphasis> &term;]…</listitem>
+    E.g.: [<emphasis role="bold">and</emphasis> &term;]…</para></listitem>
   </orderedlist>
   <sect1 id="terms_and_co">
   <title>Terms &amp; co.</title>
   <sect2 id="lexical">
   <title>Lexical conventions</title>
-  <table>
-    <tgroup cols="4">
-     <thead />
-    <tbody>
-     <row>
-      <entry id="id">&id;</entry>
-      <entry>::=</entry>
-      <entry><emphasis>〈〈&TODO;〉〉</emphasis></entry>
-     </row>
-    </tbody>
-   </tgroup>
-  </table>
-  <table>
-    <tgroup cols="4">
-     <thead />
-    <tbody>
-     <row>
-      <entry id="nat">&nat;</entry>
-      <entry>::=</entry>
-      <entry><emphasis>〈〈&TODO;〉〉</emphasis></entry>
-     </row>
-    </tbody>
-   </tgroup>
-  </table>
-  <table>
-    <tgroup cols="4">
-     <thead />
-    <tbody>
-     <row>
-      <entry id="uri">&uri;</entry>
-      <entry>::=</entry>
-      <entry><emphasis>〈〈&TODO;〉〉</emphasis></entry>
-     </row>
-    </tbody>
-   </tgroup>
-  </table>
+  <para>
+    <table frame="all" rowsep="0" colsep="0">
+      <title>id</title>
+      <tgroup cols="4">
+      <tbody>
+       <row>
+	<entry id="id">&id;</entry>
+	<entry>::=</entry>
+	<entry><emphasis>〈〈&TODO;〉〉</emphasis></entry>
+       </row>
+      </tbody>
+     </tgroup>
+    </table>
+    <table frame="all" rowsep="0" colsep="0">
+      <title>nat</title>
+      <tgroup cols="4">
+      <tbody>
+       <row>
+	<entry id="nat">&nat;</entry>
+	<entry>::=</entry>
+	<entry><emphasis>〈〈&TODO;〉〉</emphasis></entry>
+       </row>
+      </tbody>
+     </tgroup>
+    </table>
+    <table frame="all" rowsep="0" colsep="0">
+      <title>uri</title>
+      <tgroup cols="4">
+      <tbody>
+       <row>
+	<entry id="uri">&uri;</entry>
+	<entry>::=</entry>
+	<entry><emphasis>〈〈&TODO;〉〉</emphasis></entry>
+       </row>
+      </tbody>
+     </tgroup>
+    </table>
+  </para>
   </sect2>
   <sect2 id="terms">
   <title>Terms</title>
-  <table>
+  <para>
+  <table frame="all" rowsep="0" colsep="0">
+    <title>Terms</title>
     <tgroup cols="4">
-     <thead />
     <tbody>
      <row>
       <entry id="term">&term;</entry>
@@ -144,9 +149,9 @@
    </tgroup>
   </table>
 
-  <table>
+  <table frame="all" rowsep="0" colsep="0">
+    <title>Simple terms</title>
     <tgroup cols="4">
-     <thead />
     <tbody>
      <row>
       <entry id="sterm">&sterm;</entry>
@@ -241,9 +246,9 @@
    </tgroup>
   </table>
 
-  <table>
+  <table frame="all" rowsep="0" colsep="0">
+    <title>Arguments</title>
     <tgroup cols="4">
-     <thead />
     <tbody>
      <row>
       <entry id="args">&args;</entry>
@@ -277,9 +282,9 @@
    </tgroup>
   </table>
 
-  <table>
+  <table frame="all" rowsep="0" colsep="0">
+    <title>Miscellaneous arguments</title>
     <tgroup cols="4">
-     <thead />
     <tbody>
      <row>
       <entry id="args2">&args2;</entry>
@@ -297,9 +302,9 @@
    </tgroup>
   </table>
 
-  <table>
+  <table frame="all" rowsep="0" colsep="0">
+    <title>Pattern matching</title>
     <tgroup cols="4">
-     <thead />
     <tbody>
      <row>
       <entry id="match_pattern">&match_pattern;</entry>
@@ -316,6 +321,7 @@
     </tbody>
    </tgroup>
   </table>
+  </para>
 
   </sect2>
   </sect1>

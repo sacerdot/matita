@@ -5,43 +5,44 @@
   <title>Introduction</title>
   <sect1 id="Features">
     <title>Features</title>
-
-    <para>
-      <application>Matita</application> is an interactive theorem prover
+    <para><application>Matita</application> is an interactive theorem prover
       (or proof assistant) with the following characteristics:</para>
-
     <itemizedlist>
-     <listitem>It is based on a variant of the Calculus of (co)Inductive
-      Constructions (CIC). CIC is also the logic of the Coq proof assistant.
-     </listitem>
-     <listitem>It adopts a procedural proof language, but it has a new
-      set of small step tacticals that improve proof structuring and debugging.
-     </listitem>
-     <listitem>It has a stand-alone graphical user interface (GUI) inspired by
-      CtCoq/Proof General. The GUI is implemented according to the state
-      of the art. In particular:
-      <itemizedlist>
-       <listitem>It is based and fully integrated with Gtk/Gnome.</listitem>
-       <listitem>An on-line help can be browsed via the Gnome documentation
-        browser.</listitem>
-       <listitem>Mathematical formulae are rendered in two dimensional
-        notation via MathML and Unicode.</listitem>
-      </itemizedlist>
-     </listitem>
-     <listitem>It integrates advanced browsing and searching procedures.
-     </listitem>
-     <listitem>It allows the use of the typical ambiguous mathematical notation
-      by means of a disambiguating parser.
-     </listitem>
-     <listitem>It is compatible with the library of Coq (definitions and
-      proof objects).
-     </listitem>
+      <listitem>
+        <para>It is based on a variant of the Calculus of (co)Inductive Constructions (CIC). CIC is also the logic of the Coq proof assistant.</para>
+      </listitem>
+      <listitem>
+        <para>It adopts a procedural proof language, but it has a new set of small step tacticals that improve proof structuring and debugging.</para>
+      </listitem>
+      <listitem>
+        <para>It has a stand-alone graphical user interface (GUI) inspired by
+CtCoq/Proof General. The GUI is implemented according to the state
+of the art. In particular:</para>
+        <itemizedlist>
+          <listitem>
+            <para>It is based and fully integrated with Gtk/Gnome.</para>
+          </listitem>
+          <listitem>
+            <para>An on-line help can be browsed via the Gnome documentation browser.</para>
+          </listitem>
+          <listitem>
+            <para>Mathematical formulae are rendered in two dimensional notation via MathML and Unicode.</para>
+          </listitem>
+        </itemizedlist>
+      </listitem>
+      <listitem>
+        <para>It integrates advanced browsing and searching procedures.</para>
+      </listitem>
+      <listitem>
+        <para>It allows the use of the typical ambiguous mathematical notation by means of a disambiguating parser.</para>
+      </listitem>
+      <listitem>
+        <para>It is compatible with the library of Coq (definitions and proof objects).</para>
+      </listitem>
     </itemizedlist>
   </sect1>
-
   <sect1 id="WrtCoq">
     <title>Matita vs Coq</title>
-
     <para>
       The system shares a common look&amp;feel with the Coq proof assistant
       and its graphical user interface. The two systems have the same logic,
@@ -50,38 +51,46 @@
       From the user point of view the main lacking features
       with respect to Coq are:
     </para>
-
     <itemizedlist>
-     <listitem>proof extraction;</listitem>
-     <listitem>an extensible language of tactics;</listitem>
-     <listitem>automatic implicit arguments;</listitem>
-     <listitem>several ad-hoc decision procedures;</listitem>
-     <listitem>several rarely used variants for most of the tactics;</listitem>
-     <listitem>sections and local variables. To maintain compatibility
-      with the library of Coq, theorems defined inside sections are abstracted
-      by name over the section variables; their instances are explicitly
-      applied to actual arguments by means of explicit named
-      substitutions.</listitem>
+      <listitem>
+        <para>proof extraction;</para>
+      </listitem>
+      <listitem>
+        <para>an extensible language of tactics;</para>
+      </listitem>
+      <listitem>
+        <para>automatic implicit arguments;</para>
+      </listitem>
+      <listitem>
+        <para>several ad-hoc decision procedures;</para>
+      </listitem>
+      <listitem>
+        <para>several rarely used variants for most of the tactics;</para>
+      </listitem>
+      <listitem>
+        <para>sections and local variables. To maintain compatibility with the library of Coq, theorems defined inside sections are abstracted by name over the section variables; their instances are explicitly applied to actual arguments by means of explicit named substitutions.</para>
+      </listitem>
     </itemizedlist>
-
     <para>
       Still from the user point of view, the main differences with respect
       to Coq are:
     </para>
-
     <itemizedlist>
-     <listitem>the language of tacticals that allows execution of partial
-      tactical application;</listitem>
-     <listitem>the unification of the concept of metavariable and existential
-      variable;</listitem>
-     <listitem>terms with subterms that cannot be inferred are always allowed
-      as arguments of tactics or other commands;</listitem>
-     <listitem>ambiguous terms are disambiguated by direct interaction
-      with the user;</listitem>
-     <listitem>theorems and definitions in the library are always accessible
-      without needing to require/include them; right now, only notation needs
-      to be included to become active, but we plan to remove this limitation.</listitem>
+      <listitem>
+        <para>the language of tacticals that allows execution of partial tactical application;</para>
+      </listitem>
+      <listitem>
+        <para>the unification of the concept of metavariable and existential variable;</para>
+      </listitem>
+      <listitem>
+        <para>terms with subterms that cannot be inferred are always allowed as arguments of tactics or other commands;</para>
+      </listitem>
+      <listitem>
+        <para>ambiguous terms are disambiguated by direct interaction with the user;</para>
+      </listitem>
+      <listitem>
+        <para>theorems and definitions in the library are always accessible without needing to require/include them; right now, only notation needs to be included to become active, but we plan to remove this limitation.</para>
+      </listitem>
     </itemizedlist>
-
   </sect1>
 </chapter>
