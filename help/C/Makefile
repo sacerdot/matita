@@ -1,11 +1,19 @@
+
+include ../../../Makefile.defs
+
 XSLTPROC=xsltproc
 XHTML_XSL=matita-xhtml.xsl
 FO_XSL=matita-fo.xsl
 TEX_XSL=matita-tex.xsl
+TEX_UNICODE_PATH=$(SRCROOT)/share/texmf/unicode
+TEX_ENV=TEXINPUTS=.:$(TEX_UNICODE_PATH):$(TEX_UNICODE_PATH)/data:
 MAIN=matita.xml
 
-# one of "fop", "pdflatex"
+# one of: "fop", "pdflatex"
 PDF_METHOD=pdflatex
+
+# one of: "docbook2tex", "xsl"
+TEX_METHOD=xsl
 
 all: html txt
 
@@ -47,14 +55,26 @@ pdf-stamp: $(patsubst %.xml,%.pdf,$(MAIN))
 
 %.fo: %.xml
 	xsltproc $(FO_XSL) $< | xmllint --format - > $@
+ifeq ($(TEX_METHOD),docbook2tex)
 %.tex: %.xml
+	docbook2tex $<
+else ifeq ($(TEX_METHOD),xsl)
+%.tex: %.xml $(TEX_XSL)
 	xsltproc $(TEX_XSL) $< > $@
+endif
 
 ifeq ($(PDF_METHOD),fop)
 %.pdf: %.fo
 	fop $< $@
 else ifeq ($(PDF_METHOD),pdflatex)
 %.pdf: %.tex
-	pdflatex $<
+	$(TEX_ENV) pdflatex $<
 endif
+
+%.dvi: %.tex
+	$(TEX_ENV) latex $<
+%.ps: %.dvi
+	dvips $<
+
+.PRECIOUS: matita.tex
 

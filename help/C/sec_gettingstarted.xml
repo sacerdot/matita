@@ -13,7 +13,7 @@
    <title>How to type Unicode symbols</title>
    <para>Unicode characters can be typed in several ways:</para>
     <itemizedlist>
-      <listitem><para>Using the &quot;Shift+Ctrl+Unicode code&quot; standard Gnome shortcut. E.g. Shift+Ctrl+3a9 generates &quot;Ω&quot;.</para>
+      <listitem><para>Using the &quot;Ctrl+Shift+Unicode code&quot; standard Gnome shortcut. E.g. Ctrl+Shift+3a9 generates &quot;Ω&quot;.</para>
      </listitem>
      <listitem><para>Typing the ligature &quot;\name&quot; where &quot;name&quot;
       is a standard Unicode or LaTeX name for the character. Pressing

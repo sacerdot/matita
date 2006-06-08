@@ -54,8 +54,8 @@
 	    you can have APT install all the required tools and libraries by
 	    adding the following repository to your
 	    <filename>/etc/apt/sources.list</filename>: <programlisting>
-	      deb&nbsp;<ulink type="http"
-		url="http://people.debian.org/~zack">http://people.debian.org/~zack</ulink>&nbsp;unstable&nbsp;helm
+	      deb <ulink type="http"
+		url="http://people.debian.org/~zack">http://people.debian.org/~zack</ulink> unstable helm
 	  </programlisting> and installing the
 	  <application>helm-matita-deps</application> package.</para>
 
@@ -202,7 +202,7 @@
 	  <varlistentry>
 	    <term>
 	      <application> <ulink type="http"
-		  url="http://www.cduce.org/download.html#side">ulex</ulink>
+		  url="http://www.cduce.org/download.html">ulex</ulink>
 	      </application>
 	    </term>
 	    <listitem>
@@ -213,7 +213,7 @@
 	  <varlistentry>
 	    <term>
 	      <application> <ulink type="http"
-		  url="http://cristal.inria.fr/~xleroy/software.html#camlzip">CamlZip</ulink>
+		  url="http://cristal.inria.fr/~xleroy/software.html">CamlZip</ulink>
 	      </application>
 	    </term>
 	    <listitem>
@@ -296,7 +296,7 @@
 		<entry> <filename>/usr/local/matita/</filename> </entry>
 		<entry> <para> Runtime base directory where all &appname; stuff
 		    (executables, configuration files, standard
-		    library,&nbsp;...) will be installed </para> </entry>
+		    library, ...) will be installed </para> </entry>
 	      </row>
 	      <row>
 		<entry>
