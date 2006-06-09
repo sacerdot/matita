@@ -13,8 +13,9 @@
 	E.g.: [<emphasis role="bold">in</emphasis> &term;]</para></listitem>
     <listitem><para>Alternatives are put in square brakets and they are
 	separated by vertical bars. E.g.: [<emphasis role="bold">&lt;</emphasis>|<emphasis role="bold">&gt;</emphasis>]</para></listitem>
-    <listitem><para>Repetition of sequences of elements are given by putting the
-    first sequence in square brackets, that are followed by three dots.
+    <listitem><para>Repetitions of a sequence of elements are given by putting the
+    sequence in square brackets, that are followed by three dots. The empty
+    sequence is a valid repetition.
     E.g.: [<emphasis role="bold">and</emphasis> &term;]…</para></listitem>
   </orderedlist>
   <sect1 id="terms_and_co">
@@ -29,7 +30,7 @@
        <row>
 	<entry id="id">&id;</entry>
 	<entry>::=</entry>
-	<entry><emphasis>〈〈&TODO;〉〉</emphasis></entry>
+        <entry><emphasis>〈〈any sequence of letters, underscores or valid <ulink url="http://www.w3.org/TR/2004/REC-xml-20040204/#NT-Digit">XML digits</ulink> prefixed by a latin letter ([a-zA-Z]) and post-fixed by a possible empty sequence of decorators ([?'`])〉〉</emphasis></entry>
        </row>
       </tbody>
      </tgroup>
@@ -41,7 +42,31 @@
        <row>
 	<entry id="nat">&nat;</entry>
 	<entry>::=</entry>
-	<entry><emphasis>〈〈&TODO;〉〉</emphasis></entry>
+	<entry><emphasis>〈〈any sequence of valid <ulink url="http://www.w3.org/TR/2004/REC-xml-20040204/#NT-Digit">XML digits</ulink></emphasis></entry>
+       </row>
+      </tbody>
+     </tgroup>
+    </table>
+    <table frame="all" rowsep="0" colsep="0">
+      <title>char</title>
+      <tgroup cols="4">
+      <tbody>
+       <row>
+	<entry id="char">&char;</entry>
+	<entry>::=</entry>
+	<entry>[<emphasis role="bold">a</emphasis>-<emphasis role="bold">zA</emphasis>-<emphasis role="bold">Z0</emphasis>-<emphasis role="bold">9_-</emphasis>]</entry>
+       </row>
+      </tbody>
+     </tgroup>
+    </table>
+    <table frame="all" rowsep="0" colsep="0">
+      <title>uri-step</title>
+      <tgroup cols="4">
+      <tbody>
+       <row>
+	<entry id="uri-step">&uri-step;</entry>
+	<entry>::=</entry>
+	<entry>&char;[&char;]…</entry>
        </row>
       </tbody>
      </tgroup>
@@ -53,7 +78,7 @@
        <row>
 	<entry id="uri">&uri;</entry>
 	<entry>::=</entry>
-	<entry><emphasis>〈〈&TODO;〉〉</emphasis></entry>
+	<entry>[<emphasis role="bold">cic:/</emphasis>|<emphasis role="bold">theory:/</emphasis>]&uri-step;[<emphasis role="bold">/</emphasis>&uri-step;]…<emphasis role="bold">.</emphasis>&id;[<emphasis role="bold">.</emphasis>&id;]…[<emphasis role="bold">#xpointer(</emphasis>&nat;<emphasis role="bold">/</emphasis>&nat;[<emphasis role="bold">/</emphasis>&nat;]…<emphasis role="bold">)</emphasis>]</entry>
        </row>
       </tbody>
      </tgroup>

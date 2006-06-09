@@ -25,6 +25,8 @@
   <!-- Entities for BNF -->
   <!ENTITY id "<emphasis><link linkend='id'>id</link></emphasis>">
   <!ENTITY uri "<emphasis><link linkend='uri'>uri</link></emphasis>">
+  <!ENTITY char "<emphasis><link linkend='char'>char</link></emphasis>">
+  <!ENTITY uri-step "<emphasis><link linkend='uri-step'>uri-step</link></emphasis>">
   <!ENTITY nat "<emphasis><link linkend='nat'>nat</link></emphasis>">
   <!ENTITY term "<emphasis><link linkend='term'>term</link></emphasis>">
   <!ENTITY match_pattern "<emphasis><link linkend='match_pattern'>match_pattern</link></emphasis>">
