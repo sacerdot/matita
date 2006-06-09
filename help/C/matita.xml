@@ -33,6 +33,9 @@
   <!ENTITY args "<emphasis><link linkend='args'>args</link></emphasis>">
   <!ENTITY args2 "<emphasis><link linkend='args2'>args2</link></emphasis>">
   <!ENTITY sterm "<emphasis><link linkend='sterm'>sterm</link></emphasis>">
+  <!ENTITY intros-spec "<emphasis><link linkend='intros-spec'>intros-spec</link></emphasis>">
+  <!ENTITY pattern "<emphasis><link linkend='pattern'>pattern</link></emphasis>">
+  <!ENTITY reduction-kind "<emphasis><link linkend='reduction-kind'>reduction-kind</link></emphasis>">
 ]>
 
 <?yelp:chunk-depth 3?>
