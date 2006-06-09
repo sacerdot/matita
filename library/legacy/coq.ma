@@ -14,6 +14,20 @@
 
 set "baseuri" "cic:/matita/legacy/coq/".
 
+default "equality"
+ cic:/Coq/Init/Logic/eq.ind
+ cic:/Coq/Init/Logic/sym_eq.con
+ cic:/Coq/Init/Logic/trans_eq.con
+ cic:/Coq/Init/Logic/eq_ind.con
+ cic:/Coq/Init/Logic/eq_ind_r.con. 
+
+default "true"
+ cic:/Coq/Init/Logic/True.ind. 
+default "false"
+ cic:/Coq/Init/Logic/False.ind. 
+default "absurd"
+ cic:/Coq/Init/Logic/absurd.con. 
+
 (* aritmetic operators *)
 
 interpretation "Coq's natural plus" 'plus x y = (cic:/Coq/Init/Peano/plus.con x y).
