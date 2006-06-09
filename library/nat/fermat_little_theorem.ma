@@ -187,63 +187,73 @@ qed.
 theorem congruent_exp_pred_SO: \forall p,a:nat. prime p \to \lnot divides p a \to
 congruent (exp a (pred p)) (S O) p. 
 intros.
-cut (O < a).
-cut (O < p).
-cut (O < pred p).
-apply divides_to_congruent.
-assumption.
-change with (O < exp a (pred p)).
-apply lt_O_exp.assumption.
-cut (divides p (exp a (pred p)-(S O)) \lor divides p (pred p)!).
-elim Hcut3.
-assumption.
-apply False_ind.
-apply (prime_to_not_divides_fact p H (pred p)).
-unfold lt.
-rewrite < S_pred.apply le_n.
-assumption.assumption.
-apply divides_times_to_divides. 
-assumption.
-rewrite > times_minus_l.
-rewrite > (sym_times (S O)).
-rewrite < times_n_SO.
-rewrite > (S_pred (pred p)).
-rewrite > eq_fact_pi.
-(* in \vdash (? ? (? % ?)). *)
-rewrite > exp_pi_l.
-apply congruent_to_divides.
-assumption. 
-apply (transitive_congruent p ? 
-(pi (pred (pred p)) (\lambda m. a*m \mod p) (S O))).
-apply (congruent_pi (\lambda m. a*m)).
-assumption.
-cut (pi (pred(pred p)) (\lambda m.m) (S O)
-= pi (pred(pred p)) (\lambda m.a*m \mod p) (S O)).
-rewrite > Hcut3.apply congruent_n_n.
-rewrite < eq_map_iter_i_pi.
-rewrite < eq_map_iter_i_pi.
-apply permut_to_eq_map_iter_i.
-apply assoc_times.
-apply sym_times.
-rewrite < plus_n_Sm.rewrite < plus_n_O.
-rewrite < S_pred.
-apply permut_mod.assumption.
-assumption.assumption.
-intros.cut (m=O).
-rewrite > Hcut3.rewrite < times_n_O.
-apply mod_O_n.apply sym_eq.apply le_n_O_to_eq.
-apply le_S_S_to_le.assumption.
-assumption.unfold lt.
-apply le_S_S_to_le.rewrite < S_pred.
-unfold prime in H.elim H.assumption.assumption.
-unfold prime in H.elim H.apply (trans_lt ? (S O)).
-unfold lt.apply le_n.assumption.
-cut (O < a \lor O = a).
-elim Hcut.assumption.
-apply False_ind.apply H1.
-rewrite < H2.
-apply (witness ? ? O).apply times_n_O.
-apply le_to_or_lt_eq.
-apply le_O_n.
+cut (O < a)
+  [cut (O < p)
+    [cut (O < pred p)
+      [apply divides_to_congruent
+        [assumption
+        |change with (O < exp a (pred p)).apply lt_O_exp.assumption
+        |cut (divides p (exp a (pred p)-(S O)) \lor divides p (pred p)!)
+          [elim Hcut3
+            [assumption
+            |apply False_ind.
+             apply (prime_to_not_divides_fact p H (pred p))
+              [unfold lt.rewrite < (S_pred ? Hcut1).apply le_n.
+              |assumption
+              ]
+            ]
+          |apply divides_times_to_divides
+           [assumption
+           |rewrite > times_minus_l.
+            rewrite > (sym_times (S O)).
+            rewrite < times_n_SO.
+            rewrite > (S_pred (pred p) Hcut2).
+            rewrite > eq_fact_pi.
+            rewrite > exp_pi_l.
+            apply congruent_to_divides
+              [assumption
+              | apply (transitive_congruent p ? 
+                        (pi (pred (pred p)) (\lambda m. a*m \mod p) (S O)))
+                [ apply (congruent_pi (\lambda m. a*m)).assumption
+                |cut (pi (pred(pred p)) (\lambda m.m) (S O)
+                       = pi (pred(pred p)) (\lambda m.a*m \mod p) (S O))
+                  [rewrite > Hcut3.apply congruent_n_n
+                  |rewrite < eq_map_iter_i_pi.
+                   rewrite < eq_map_iter_i_pi.
+                   apply permut_to_eq_map_iter_i
+                   [apply assoc_times
+                   |apply sym_times
+                   |rewrite < plus_n_Sm.
+                    rewrite < plus_n_O.
+                    rewrite < (S_pred ? Hcut2).
+                    apply permut_mod[assumption|assumption]
+                   |intros.
+                    cut (m=O)
+                     [rewrite > Hcut3.
+                      rewrite < times_n_O.
+                      apply mod_O_n.
+                     |apply sym_eq.apply le_n_O_to_eq.apply le_S_S_to_le.assumption
+                     ]
+                   ]
+                 ]
+               ]
+             ]
+           ]
+         ]
+       ]
+     |unfold lt.apply le_S_S_to_le.rewrite < (S_pred ? Hcut1).
+      unfold prime in H.elim H.assumption
+     ]
+   |unfold prime in H.elim H.
+    apply (trans_lt ? (S O))[unfold lt.apply le_n|assumption]
+   ]
+ |cut (O < a \lor O = a)
+   [elim Hcut
+     [assumption
+     |apply False_ind.apply H1.rewrite < H2.apply (witness ? ? O).apply times_n_O
+     ]
+   |apply le_to_or_lt_eq.apply le_O_n
+   ]
+ ]
 qed.
 

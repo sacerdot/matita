@@ -23,6 +23,13 @@ definition S_mod: nat \to nat \to nat \def
 definition congruent: nat \to nat \to nat \to Prop \def
 \lambda n,m,p:nat. mod n p = mod m p.
 
+interpretation "congruent" 'congruent n m p =
+  (cic:/matita/nat/congruence/congruent.con n m p).
+
+notation < "hvbox(n break \cong\sub p m)"
+  (*non associative*) with precedence 45
+for @{ 'congruent $n $m $p }.
+
 theorem congruent_n_n: \forall n,p:nat.congruent n n p.
 intros.unfold congruent.reflexivity.
 qed.
@@ -89,6 +96,18 @@ apply (div_mod_spec_to_eq2 n p (div n p) (mod n p) (r +(div m p)) (mod m p)).
 apply div_mod_spec_div_mod.assumption.
 constructor 1.
 apply lt_mod_m_m.assumption.
+(*cut (n = r * p + (m / p * p + m \mod p)).*)
+(*lapply (div_mod m p H). 
+rewrite > sym_times.
+rewrite > distr_times_plus.
+(*rewrite > (sym_times p (m/p)).*)
+(*rewrite > sym_times.*)
+rewrite > assoc_plus.
+auto paramodulation.
+rewrite < div_mod.
+assumption.
+assumption.
+*)
 rewrite > sym_times.
 rewrite > distr_times_plus.
 rewrite > sym_times.
