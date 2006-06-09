@@ -17,6 +17,10 @@
     sequence in square brackets, that are followed by three dots. The empty
     sequence is a valid repetition.
     E.g.: [<emphasis role="bold">and</emphasis> &term;]…</para></listitem>
+    <listitem><para>Characters belonging to a set of characters are given
+     by listing the set elements in square brackets. Hyphens are used to
+     specify ranges of characters in the set.
+     E.g.: [<emphasis role="bold">a</emphasis>-<emphasis role="bold">zA</emphasis>-<emphasis role="bold">Z0</emphasis>-<emphasis role="bold">9_-</emphasis>]</para></listitem>
   </orderedlist>
   <sect1 id="terms_and_co">
   <title>Terms &amp; co.</title>
