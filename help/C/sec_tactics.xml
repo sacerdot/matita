@@ -4,7 +4,7 @@
  <title>Tactics</title>
 
   <sect1 id="tac_absurd">
-    <title>absurd &sterm;</title>
+    <title><emphasis role="bold">absurd</emphasis> &sterm;</title>
     <titleabbrev>absurd</titleabbrev>
     <para><userinput>absurd P</userinput></para>
      <para>
@@ -33,7 +33,7 @@
      </para>
   </sect1>
   <sect1 id="tac_apply">
-    <title>apply &sterm;</title>
+    <title><emphasis role="bold">apply</emphasis> &sterm;</title>
     <titleabbrev>apply</titleabbrev>
     <para><userinput>apply t</userinput></para>
     <para>
@@ -68,7 +68,7 @@
     </para>
   </sect1>
   <sect1 id="tac_assumption">
-    <title>assumption</title>
+    <title><emphasis role="bold">assumption</emphasis></title>
     <titleabbrev>assumption</titleabbrev>
     <para><userinput>assumption </userinput></para>
     <para>
@@ -96,7 +96,7 @@
     </para>
   </sect1>
   <sect1 id="tac_auto">
-    <title>auto [depth=&nat;] [width=&nat;] [paramodulation] [full]</title>
+    <title><emphasis role="bold">auto</emphasis> [<emphasis role="bold">depth=</emphasis>&nat;] [<emphasis role="bold">width=</emphasis>&nat;] [<emphasis role="bold">paramodulation</emphasis>] [<emphasis role="bold">full</emphasis>]</title>
     <titleabbrev>auto</titleabbrev>
     <para><userinput>auto depth=d width=w paramodulation full</userinput></para>
     <para>
@@ -130,7 +130,7 @@
     </para>
   </sect1>
   <sect1 id="tac_clear">
-    <title>clear &id;</title>
+    <title><emphasis role="bold">clear</emphasis> &id;</title>
     <titleabbrev>clear</titleabbrev>
     <para><userinput>clear H</userinput></para>
     <para>
@@ -159,7 +159,7 @@
     </para>
   </sect1>
   <sect1 id="tac_clearbody">
-    <title>clearbody &id;</title>
+    <title><emphasis role="bold">clearbody</emphasis> &id;</title>
     <titleabbrev>clearbody</titleabbrev>
     <para><userinput>clearbody H</userinput></para>
     <para>
@@ -188,7 +188,7 @@
     </para>
   </sect1>
   <sect1 id="tac_change">
-    <title>change &lt;pattern&gt; with &sterm;</title>
+    <title><emphasis role="bold">change</emphasis> &lt;pattern&gt; <emphasis role="bold">with</emphasis> &sterm;</title>
     <titleabbrev>change</titleabbrev>
     <para><userinput>change patt with t</userinput></para>
     <para>
@@ -220,7 +220,7 @@
     </para>
   </sect1>
   <sect1 id="tac_constructor">
-    <title>constructor &nat;</title>
+    <title><emphasis role="bold">constructor</emphasis> &nat;</title>
     <titleabbrev>constructor</titleabbrev>
     <para><userinput>constructor n</userinput></para>
     <para>
@@ -252,7 +252,7 @@
     </para>
   </sect1>
   <sect1 id="tac_contradiction">
-    <title>contradiction</title>
+    <title><emphasis role="bold">contradiction</emphasis></title>
     <titleabbrev>contradiction</titleabbrev>
     <para><userinput>contradiction </userinput></para>
     <para>
@@ -281,7 +281,7 @@
     </para>
   </sect1>
   <sect1 id="tac_cut">
-    <title>cut &sterm; [as &id;]</title>
+    <title><emphasis role="bold">cut</emphasis> &sterm; [<emphasis role="bold">as</emphasis> &id;]</title>
     <titleabbrev>cut</titleabbrev>
     <para><userinput>cut P as H</userinput></para>
     <para>
@@ -312,7 +312,7 @@
     </para>
   </sect1>
   <sect1 id="tac_decompose">
-    <title>decompose &id; [&id;]… [&lt;intros_spec&gt;]</title>
+    <title><emphasis role="bold">decompose</emphasis> &id; [&id;]… [&lt;intros_spec&gt;]</title>
     <titleabbrev>decompose</titleabbrev>
     <para><userinput>decompose ???</userinput></para>
     <para>
@@ -339,7 +339,7 @@
     </para>
   </sect1>
   <sect1 id="tac_discriminate">
-    <title>discriminate &sterm;</title>
+    <title><emphasis role="bold">discriminate</emphasis> &sterm;</title>
     <titleabbrev>discriminate</titleabbrev>
     <para><userinput>discriminate p</userinput></para>
     <para>
@@ -368,7 +368,7 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_elim">
-    <title>elim &sterm; [using &sterm;] [&lt;intros_spec&gt;]</title>
+    <title><emphasis role="bold">elim</emphasis> &sterm; [<emphasis role="bold">using</emphasis> &sterm;] [&lt;intros_spec&gt;]</title>
     <titleabbrev>elim</titleabbrev>
     <para><userinput>elim t using th hyps</userinput></para>
     <para>
@@ -405,7 +405,7 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_elimType">
-    <title>elimType &sterm; [using &sterm;] [&lt;intros_spec&gt;]</title>
+    <title><emphasis role="bold">elimType</emphasis> &sterm; [<emphasis role="bold">using</emphasis> &sterm;] [&lt;intros_spec&gt;]</title>
     <titleabbrev>elimType</titleabbrev>
     <para><userinput>elimType T using th hyps</userinput></para>
     <para>
@@ -432,7 +432,7 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_exact">
-    <title>exact &sterm;</title>
+    <title><emphasis role="bold">exact</emphasis> &sterm;</title>
     <titleabbrev>exact</titleabbrev>
     <para><userinput>exact p</userinput></para>
     <para>
@@ -460,7 +460,7 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_exists">
-    <title>exists</title>
+    <title><emphasis role="bold">exists</emphasis></title>
     <titleabbrev>exists</titleabbrev>
     <para><userinput>exists </userinput></para>
     <para>
@@ -491,8 +491,8 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_fail">
-    <title>fail </title>
-    <titleabbrev>failt</titleabbrev>
+    <title><emphasis role="bold">fail</emphasis></title>
+    <titleabbrev>fail</titleabbrev>
     <para><userinput>fail</userinput></para>
     <para>
       <variablelist>
@@ -518,7 +518,7 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_fold">
-    <title>fold &lt;reduction_kind&gt; &sterm; &lt;pattern&gt;</title>
+    <title><emphasis role="bold">fold</emphasis> &lt;reduction_kind&gt; &sterm; &lt;pattern&gt;</title>
     <titleabbrev>fold</titleabbrev>
     <para><userinput>fold red t patt</userinput></para>
     <para>
@@ -550,7 +550,7 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_fourier">
-    <title>fourier</title>
+    <title><emphasis role="bold">fourier</emphasis></title>
     <titleabbrev>fourier</titleabbrev>
     <para><userinput>fourier </userinput></para>
     <para>
@@ -580,7 +580,7 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_fwd">
-    <title>fwd &id; [&lt;ident list&gt;]</title>
+    <title><emphasis role="bold">fwd</emphasis> &id; [&lt;ident list&gt;]</title>
     <titleabbrev>fwd</titleabbrev>
     <para><userinput>fwd ...TODO</userinput></para>
     <para>
@@ -607,7 +607,7 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_generalize">
-    <title>generalize &lt;pattern&gt; [as &id;]</title>
+    <title><emphasis role="bold">generalize</emphasis> &lt;pattern&gt; [<emphasis role="bold">as</emphasis> &id;]</title>
     <titleabbrev>generalize</titleabbrev>
     <para><userinput>generalize patt as H</userinput></para>
     <para>
@@ -643,7 +643,7 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_id">
-    <title>id</title>
+    <title><emphasis role="bold">id</emphasis></title>
     <titleabbrev>id</titleabbrev>
     <para><userinput>id </userinput></para>
     <para>
@@ -670,8 +670,8 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_injection">
-    <title>injection &sterm;</title>
-    <titleabbrev>injection</titleabbrev>
+    <title><emphasis role="bold">injection</emphasis> &sterm;</title>
+    <titleabbrev><emphasis role="bold">injection</emphasis></titleabbrev>
     <para><userinput>injection p</userinput></para>
     <para>
       <variablelist>
@@ -701,7 +701,7 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_intro">
-    <title>intro [&id;]</title>
+    <title><emphasis role="bold">intro</emphasis> [&id;]</title>
     <titleabbrev>intro</titleabbrev>
     <para><userinput>intro H</userinput></para>
     <para>
@@ -734,7 +734,7 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_intros">
-    <title>intros &lt;intros_spec&gt;</title>
+    <title><emphasis role="bold">intros</emphasis> &lt;intros_spec&gt;</title>
     <titleabbrev>intros</titleabbrev>
     <para><userinput>intros hyps</userinput></para>
     <para>
@@ -771,7 +771,7 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_inversion">
-    <title>inversion &sterm;</title>
+    <title><emphasis role="bold">inversion</emphasis> &sterm;</title>
     <titleabbrev>inversion</titleabbrev>
     <para><userinput>inversion t</userinput></para>
     <para>
@@ -806,7 +806,7 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_lapply">
-    <title>lapply [depth=&nat;] &sterm; [to &lt;term list&gt;] [using &id;]</title>
+    <title><emphasis role="bold">lapply</emphasis> [<emphasis role="bold">depth=</emphasis>&nat;] &sterm; [<emphasis role="bold">to</emphasis> &lt;term list&gt;] [<emphasis role="bold">using</emphasis> &id;]</title>
     <titleabbrev>lapply</titleabbrev>
     <para><userinput>lapply ???</userinput></para>
     <para>
@@ -833,7 +833,7 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_left">
-    <title>left</title>
+    <title><emphasis role="bold">left</emphasis></title>
     <titleabbrev>left</titleabbrev>
     <para><userinput>left </userinput></para>
     <para>
@@ -864,7 +864,7 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_letin">
-    <title>letin &id; ≝ &sterm;</title>
+    <title><emphasis role="bold">letin</emphasis> &id; <emphasis role="bold">≝</emphasis> &sterm;</title>
     <titleabbrev>letin</titleabbrev>
     <para><userinput>letin x ≝ t</userinput></para>
     <para>
@@ -892,7 +892,7 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_normalize">
-    <title>normalize &lt;pattern&gt;</title>
+    <title><emphasis role="bold">normalize</emphasis> &lt;pattern&gt;</title>
     <titleabbrev>normalize</titleabbrev>
     <para><userinput>normalize patt</userinput></para>
     <para>
@@ -920,7 +920,7 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_paramodulation">
-    <title>paramodulation &lt;pattern&gt;</title>
+    <title><emphasis role="bold">paramodulation</emphasis> &lt;pattern&gt;</title>
     <titleabbrev>paramodulation</titleabbrev>
     <para><userinput>paramodulation patt</userinput></para>
     <para>
@@ -947,7 +947,7 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_reduce">
-    <title>reduce &lt;pattern&gt;</title>
+    <title><emphasis role="bold">reduce</emphasis> &lt;pattern&gt;</title>
     <titleabbrev>reduce</titleabbrev>
     <para><userinput>reduce patt</userinput></para>
     <para>
@@ -975,7 +975,7 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_reflexivity">
-    <title>reflexivity</title>
+    <title><emphasis role="bold">reflexivity</emphasis></title>
     <titleabbrev>reflexivity</titleabbrev>
     <para><userinput>reflexivity </userinput></para>
     <para>
@@ -1004,7 +1004,7 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_replace">
-    <title>replace &lt;pattern&gt; with &sterm;</title>
+    <title><emphasis role="bold">replace</emphasis> &lt;pattern&gt; <emphasis role="bold">with</emphasis> &sterm;</title>
     <titleabbrev>change</titleabbrev>
     <para><userinput>change patt with t</userinput></para>
     <para>
@@ -1036,7 +1036,7 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_rewrite">
-    <title>rewrite [&lt;|&gt;] &sterm; &lt;pattern&gt;</title>
+    <title><emphasis role="bold">rewrite</emphasis> [<emphasis role="bold">&lt;</emphasis>|<emphasis role="bold">&gt;</emphasis>] &sterm; &lt;pattern&gt;</title>
     <titleabbrev>rewrite</titleabbrev>
     <para><userinput>rewrite dir p patt</userinput></para>
     <para>
@@ -1071,7 +1071,7 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_right">
-    <title>right</title>
+    <title><emphasis role="bold">right</emphasis></title>
     <titleabbrev>right</titleabbrev>
     <para><userinput>right </userinput></para>
     <para>
@@ -1102,7 +1102,7 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_ring">
-    <title>ring</title>
+    <title><emphasis role="bold">ring</emphasis></title>
     <titleabbrev>ring</titleabbrev>
     <para><userinput>ring </userinput></para>
     <para>
@@ -1133,7 +1133,7 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_simplify">
-    <title>simplify &lt;pattern&gt;</title>
+    <title><emphasis role="bold">simplify</emphasis> &lt;pattern&gt;</title>
     <titleabbrev>simplify</titleabbrev>
     <para><userinput>simplify patt</userinput></para>
     <para>
@@ -1161,7 +1161,7 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_split">
-    <title>split</title>
+    <title><emphasis role="bold">split</emphasis></title>
     <titleabbrev>split</titleabbrev>
     <para><userinput>split </userinput></para>
     <para>
@@ -1192,7 +1192,7 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_symmetry">
-    <title>symmetry</title>
+    <title><emphasis role="bold">symmetry</emphasis></title>
     <titleabbrev>symmetry</titleabbrev>
     <para>The tactic <command>symmetry</command> </para>
     <para><userinput>symmetry </userinput></para>
@@ -1221,7 +1221,7 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_transitivity">
-    <title>transitivity &sterm;</title>
+    <title><emphasis role="bold">transitivity</emphasis> &sterm;</title>
     <titleabbrev>transitivity</titleabbrev>
     <para><userinput>transitivity t</userinput></para>
     <para>
@@ -1250,7 +1250,7 @@ the current sequent to prove.</para>
     </para>
   </sect1>
   <sect1 id="tac_unfold">
-    <title>unfold [&sterm;] &lt;pattern&gt;</title>
+    <title><emphasis role="bold">unfold</emphasis> [&sterm;] &lt;pattern&gt;</title>
     <titleabbrev>unfold</titleabbrev>
     <para><userinput>unfold t patt</userinput></para>
     <para>
@@ -1282,7 +1282,7 @@ the current sequent to prove.</para>
     </para>
   </sect1>
   <sect1 id="tac_whd">
-    <title>whd &lt;pattern&gt;</title>
+    <title><emphasis role="bold">whd</emphasis> &lt;pattern&gt;</title>
     <titleabbrev>whd</titleabbrev>
     <para><userinput>whd patt</userinput></para>
     <para>
