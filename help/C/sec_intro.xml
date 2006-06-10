@@ -9,7 +9,7 @@
       (or proof assistant) with the following characteristics:</para>
     <itemizedlist>
       <listitem>
-        <para>It is based on a variant of the Calculus of (co)Inductive Constructions (CIC). CIC is also the logic of the Coq proof assistant.</para>
+        <para>It is based on a variant of the Calculus of (Co)Inductive Constructions (CIC). CIC is also the logic of the Coq proof assistant.</para>
       </listitem>
       <listitem>
         <para>It adopts a procedural proof language, but it has a new set of small step tacticals that improve proof structuring and debugging.</para>

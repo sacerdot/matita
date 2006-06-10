@@ -3,7 +3,7 @@
 
 <chapter id="sec_gettingstarted">
   <title>Getting started</title>
-  <para> If you are already familiar with the Calculus of (co)Inductive
+  <para> If you are already familiar with the Calculus of (Co)Inductive
   Constructions (CIC) and with interactive theorem provers with procedural
   proof languages (expecially Coq), getting started with Matita is relatively
   easy. You just need to learn how to type Unicode symbols, how to browse
