@@ -2,7 +2,8 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
 "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
 
-  <!ENTITY license SYSTEM "legal.xml">
+  <!ENTITY legal SYSTEM "legal.xml">
+  <!ENTITY license SYSTEM "sec_license.xml">
   <!ENTITY install SYSTEM "sec_install.xml">
   <!ENTITY gettingstarted SYSTEM "sec_gettingstarted.xml">
   <!ENTITY intro SYSTEM "sec_intro.xml">
@@ -12,8 +13,8 @@
   <!ENTITY othercommands SYSTEM "sec_commands.xml">
   <!ENTITY usernotation SYSTEM "sec_usernotation.xml">
 
-  <!ENTITY manrevision "0">
-  <!ENTITY date "February 2006">
+  <!ENTITY manrevision "1&alpha;">
+  <!ENTITY date "10/06/2006">
   <!ENTITY app "<application>Matita</application>">
   <!ENTITY appname "Matita">
   <!ENTITY appversion SYSTEM "version.txt">
@@ -41,31 +42,15 @@
 <?yelp:chunk-depth 3?>
 
 <book id="matita_manual" lang="en">
-<!-- please do not change the id; for translations, change lang to -->
-<!-- appropriate code -->
-<title>&app; V&appversion; Manual (rev. &manrevision;)</title>
-<bookinfo>
 
- <copyright>
-  <year>2006</year>
-  <holder>The HELM team.</holder>
- </copyright>
-<!-- translators: uncomment this:
+  <title>&app; V&appversion; User Manual (rev. &manrevision;)</title>
 
-  <copyright>
-   <year>2002</year>
-   <holder>ME-THE-TRANSLATOR (Latin translation)</holder>
-  </copyright>
+  <bookinfo>
 
-   -->
-<!-- An address can be added to the publisher information.  If a role is 
-     not specified, the publisher/author is the same for all versions of the 
-     document.  -->
-<!-- CSC:
-    <publisher> 
-      <publishername> GNOME Documentation Project </publishername> 
-    </publisher> 
--->
+    <copyright>
+      <year>2006</year>
+      <holder>The HELM team.</holder>
+    </copyright>
 
     <authorgroup> 
       <author> 
@@ -103,68 +88,23 @@
 	  <address> <email>fguidi@cs.unibo.it</email> </address> 
 	</affiliation> 
       </author>       
-<!-- This is appropriate place for other contributors: translators,
-      maintainers,  etc. Commented out by default.
-       <othercredit role="translator">
-	<firstname>Latin</firstname> 
-	<surname>Translator 1</surname> 
-	<affiliation> 
-	  <orgname>Latin Translation Team</orgname> 
-	  <address> <email>translator@gnome.org</email> </address> 
-	</affiliation>
-	<contrib>Latin translation</contrib>
-      </othercredit>
--->
     </authorgroup>
-    
-<revhistory>
-      <revision> 
-	<revnumber>&appname; V&appversion; Manual (rev. &manrevision;)</revnumber> 
-	<date>&date;</date> 
-	<revdescription> 
-	  <para role="author">The HELM team
-<!--
-	    <email>baudais@okstate.edu</email>
--->
-	  </para>
-<!--
-	  <para role="publisher">GNOME Documentation Project</para>
--->
-	</revdescription> 
-      </revision>
-  <revision>
-   <revnumber>&manrevision;</revnumber>
-   <date>4 February 2006</date>
-   <authorinitials>HELM</authorinitials>
-   <revremark>
-   First draft completed.
-   </revremark>
-  </revision>
-
- </revhistory>
-
-    <releaseinfo>This manual describes version &appversion; of &appname;.
-    </releaseinfo>
 
     <legalnotice>
-      &license;
+      <para> Both &appname; and this document are free software, you can
+	redistribute them and/or modify them under the terms of the GNU General
+	Public License as published by the Free Software Foundation.  See <xref
+	  linkend="sec_license" /> for more information. </para>
     </legalnotice>
 
-    <!-- The following feedback information only applies to appliactions
-    listed in bugzilla.gnome.org and bugzilla.ximian.com. For other
-    applications, please provide your own feedback info or remove thsi
-    section altogether -->
-    <legalnotice> 
-      <title>Feedback</title> 
-      <para>To report a bug or make a suggestion regarding the &app;
-	application or this manual, follow the directions in the
-	<ulink url="http://bugs.mowgli.cs.unibo.it" type="http">HELM Bug
-	  Tracking System Page</ulink>. 
-      </para>
-<!-- Translators may also add here feedback address for translations -->
-    </legalnotice>
+    <revhistory>
+      <revision>
+	<revnumber>&manrevision;</revnumber>
+	<date>&date;</date>
+      </revision>
+    </revhistory>
 
-</bookinfo>
+  </bookinfo>
 
 <!-- ============= Document Body ============================= -->
 
@@ -176,13 +116,8 @@
 &tactics;
 &tacticals;
 &othercommands;
+&license;
 
- <!-- ============= Application License ============================= -->
-
- <chapter id="sec_license">
-  <title>License</title>
-  &license;
- </chapter>
 </book>
 
 <!-- CSC: valid element tags
