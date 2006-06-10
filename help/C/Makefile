@@ -8,6 +8,16 @@ TEX_XSL=matita-tex.xsl
 TEX_UNICODE_PATH=$(SRCROOT)/share/texmf/unicode
 TEX_ENV=TEXINPUTS=.:$(TEX_UNICODE_PATH):$(TEX_UNICODE_PATH)/data:
 MAIN=matita.xml
+DEPENDENCES = \
+	legal.xml \
+	sec_install.xml \
+	sec_gettingstarted.xml \
+	sec_intro.xml \
+	sec_terms.xml \
+	sec_tactics.xml \
+	sec_tacticals.xml \
+	sec_commands.xml \
+	sec_usernotation.xml
 
 # one of: "fop", "pdflatex"
 PDF_METHOD=pdflatex
@@ -32,7 +42,7 @@ test:
 
 .PHONY: html
 html: html-stamp
-html-stamp: $(MAIN)
+html-stamp: $(MAIN) $(DEPENDENCES)
 	xsltproc $(XHTML_XSL) $<
 	touch $@
 
