@@ -847,11 +847,11 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_lapply">
-    <title><emphasis role="bold">lapply</emphasis> [<emphasis role="bold">depth=</emphasis>&nat;] &sterm; [<emphasis role="bold">to</emphasis> &sterm; [&sterm;]…] [<emphasis role="bold">using</emphasis> &id;]</title>
+    <title><emphasis role="bold">lapply</emphasis> [<emphasis role="bold">depth=</emphasis>&nat;] &sterm; [<emphasis role="bold">to</emphasis> &sterm; [&sterm;]…] [<emphasis role="bold">as</emphasis> &id;]</title>
     <titleabbrev>lapply</titleabbrev>
     <para><userinput>
      lapply depth=d t 
-     to t<subscript>1</subscript>, ..., t<subscript>n</subscript> using H
+     to t<subscript>1</subscript>, ..., t<subscript>n</subscript> as H
     </userinput></para>
     <para>
       <variablelist>
