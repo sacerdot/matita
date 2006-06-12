@@ -77,5 +77,9 @@ endif
 %.ps: %.dvi
 	dvips $<
 
+tex: $(patsubst %.xml,%.tex,$(MAIN))
+dvi: $(patsubst %.xml,%.dvi,$(MAIN))
+ps: $(patsubst %.xml,%.ps,$(MAIN))
+
 .PRECIOUS: matita.tex matita.dvi
 
