@@ -188,6 +188,7 @@
 	<entry>
 	  &id; [&id;|<emphasis role="bold">(</emphasis>&id;[<emphasis role="bold">,</emphasis>&term;]… <emphasis role="bold">:</emphasis>&term;<emphasis role="bold">)</emphasis>]…
 	</entry>
+	<entry />
       </row>
       <row>
 	<entry />
@@ -197,6 +198,7 @@
 	  [<emphasis role="bold">:</emphasis> &term;]
 	  <emphasis role="bold">≝</emphasis> &term;]
 	</entry>
+	<entry />
       </row>
     </tbody>
    </tgroup>
@@ -353,6 +355,7 @@
 	<entry id="grammar.match_branch">&match_branch;</entry>
 	<entry>::=</entry>
 	<entry>&match_pattern; <emphasis role="bold">⇒</emphasis> &term;</entry>
+	<entry />
       </row>
      <row>
       <entry id="grammar.match_pattern">&match_pattern;</entry>
