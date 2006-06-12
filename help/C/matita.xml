@@ -24,19 +24,21 @@
       url='http://www.mysql.com'>MySQL</ulink> </application>">
 
   <!-- Entities for BNF -->
-  <!ENTITY id "<emphasis><link linkend='id'>id</link></emphasis>">
-  <!ENTITY uri "<emphasis><link linkend='uri'>uri</link></emphasis>">
-  <!ENTITY char "<emphasis><link linkend='char'>char</link></emphasis>">
-  <!ENTITY uri-step "<emphasis><link linkend='uri-step'>uri-step</link></emphasis>">
-  <!ENTITY nat "<emphasis><link linkend='nat'>nat</link></emphasis>">
-  <!ENTITY term "<emphasis><link linkend='term'>term</link></emphasis>">
-  <!ENTITY match_pattern "<emphasis><link linkend='match_pattern'>match_pattern</link></emphasis>">
-  <!ENTITY args "<emphasis><link linkend='args'>args</link></emphasis>">
-  <!ENTITY args2 "<emphasis><link linkend='args2'>args2</link></emphasis>">
-  <!ENTITY sterm "<emphasis><link linkend='sterm'>sterm</link></emphasis>">
-  <!ENTITY intros-spec "<emphasis><link linkend='intros-spec'>intros-spec</link></emphasis>">
-  <!ENTITY pattern "<emphasis><link linkend='pattern'>pattern</link></emphasis>">
-  <!ENTITY reduction-kind "<emphasis><link linkend='reduction-kind'>reduction-kind</link></emphasis>">
+  <!ENTITY id "<emphasis><link linkend='grammar.id'>id</link></emphasis>">
+  <!ENTITY uri "<emphasis><link linkend='grammar.uri'>uri</link></emphasis>">
+  <!ENTITY char "<emphasis><link linkend='grammar.char'>char</link></emphasis>">
+  <!ENTITY uri-step "<emphasis><link linkend='grammar.uri-step'>uri-step</link></emphasis>">
+  <!ENTITY nat "<emphasis><link linkend='grammar.nat'>nat</link></emphasis>">
+  <!ENTITY term "<emphasis><link linkend='grammar.term'>term</link></emphasis>">
+  <!ENTITY rec_def "<emphasis><link linkend='grammar.rec_def'>rec_def</link></emphasis>">
+  <!ENTITY match_pattern "<emphasis><link linkend='grammar.match_pattern'>match_pattern</link></emphasis>">
+  <!ENTITY match_branch "<emphasis><link linkend='grammar.match_branch'>match_branch</link></emphasis>">
+  <!ENTITY args "<emphasis><link linkend='grammar.args'>args</link></emphasis>">
+  <!ENTITY args2 "<emphasis><link linkend='grammar.args2'>args2</link></emphasis>">
+  <!ENTITY sterm "<emphasis><link linkend='grammar.sterm'>sterm</link></emphasis>">
+  <!ENTITY intros-spec "<emphasis><link linkend='grammar.intros-spec'>intros-spec</link></emphasis>">
+  <!ENTITY pattern "<emphasis><link linkend='grammar.pattern'>pattern</link></emphasis>">
+  <!ENTITY reduction-kind "<emphasis><link linkend='grammar.reduction-kind'>reduction-kind</link></emphasis>">
 ]>
 
 <?yelp:chunk-depth 3?>

@@ -10,5 +10,22 @@
   <xsl:param name="latex.book.preamble.post">\usepackage{txfonts}
 \SetUnicodeOption{mathletters} % prefer math-mode letters
 </xsl:param>
+  <xsl:param name="ulink.show">0</xsl:param>
+
+  <!-- proper alignment of tables used for grammars -->
+
+  <xsl:template match="tgroup[../@role='grammar']">
+    <xsl:text>\begin{tabular}{rcll}
+</xsl:text>
+    <xsl:apply-templates />
+    <xsl:text>\end{tabular}
+</xsl:text>
+  </xsl:template>
+
+  <xsl:template match="variablelist/title">
+    <xsl:text>\paragraph*{</xsl:text>
+    <xsl:apply-templates />
+    <xsl:text>} </xsl:text>
+  </xsl:template>
 
 </xsl:stylesheet>

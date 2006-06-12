@@ -57,10 +57,10 @@ pdf-stamp: $(patsubst %.xml,%.pdf,$(MAIN))
 %.fo: %.xml
 	xsltproc $(FO_XSL) $< | xmllint --format - > $@
 ifeq ($(TEX_METHOD),docbook2tex)
-%.tex: %.xml
+%.tex: %.xml $(DEPS)
 	docbook2tex $<
 else ifeq ($(TEX_METHOD),xsl)
-%.tex: %.xml $(TEX_XSL)
+%.tex: %.xml $(TEX_XSL) $(DEPS)
 	xsltproc $(TEX_XSL) $< > $@
 endif
 
@@ -77,6 +77,5 @@ endif
 %.ps: %.dvi
 	dvips $<
 
-.PRECIOUS: matita.tex
-
+.PRECIOUS: matita.tex matita.dvi
 

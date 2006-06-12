@@ -274,57 +274,60 @@
 	
       <para> Quite a few (optional) arguments may be passed to the
 	<application>configure</application> command line to change build time
-	parameters. They are listed in the table below, together with their
-	default values.
+	parameters. They are listed below, together with their
+	default values: </para>
 
-	<table frame="all">
+	<variablelist>
 	  <title> <application>configure</application> command line
 	    arguments</title>
-	  <tgroup cols="3" align="left" colsep="1" rowsep="1">
-	    <thead>
-	      <row>
-		<entry align="center">Argument</entry>
-		<entry align="center">Default</entry>
-		<entry align="center">Description</entry>
-	      </row>
-	    </thead>
-	    <tbody>
-	      <row>
-		<entry>
-		  <userinput>--with-runtime-dir=<replaceable>dir</replaceable></userinput>
-		</entry>
-		<entry> <filename>/usr/local/matita/</filename> </entry>
-		<entry> <para> Runtime base directory where all &appname; stuff
-		    (executables, configuration files, standard
-		    library, ...) will be installed </para> </entry>
-	      </row>
-	      <row>
-		<entry>
-		  <userinput>--with-dbhost=<replaceable>host</replaceable></userinput>
-		</entry>
-		<entry> localhost </entry>
-		<entry> <para>Default SQL server hostname. Will be used while
-		    building the standard library during the installation and to
-		    create the default &appname; configuration. May be changed
-		    later in configuration file.</para></entry>
-	      </row>
-	      <row>
-		<entry> <userinput>--enable-debug</userinput></entry>
-		<entry> disabled </entry>
-		<entry> <para> Enable debugging code. Not for the casual user.
-		  </para> </entry>
-	      </row>
-	    </tbody>
-	  </tgroup>
-	</table>
 
-      </para>
+	  <varlistentry>
+	    <term>
+	      <userinput>--with-runtime-dir=<replaceable>dir</replaceable></userinput>
+	    </term>
+	    <listitem>
+	      <para>
+		(<emphasis>Default:</emphasis>
+		<filename>/usr/local/matita</filename>) Runtime base directory
+		where all &appname; stuff (executables, configuration files,
+		standard library, ...) will be installed
+	      </para>
+	    </listitem>
+	  </varlistentry>
+
+	  <varlistentry>
+	    <term>
+	      <userinput>--with-dbhost=<replaceable>host</replaceable></userinput>
+	    </term>
+	    <listitem>
+	      <para>
+		(<emphasis>Default:</emphasis> localhost) Default SQL server
+		hostname. Will be used while building the standard library
+		during the installation and to create the default &appname;
+		configuration. May be changed later in configuration file.
+	      </para>
+	    </listitem>
+	  </varlistentry>
+
+	  <varlistentry>
+	    <term>
+	      <userinput>--enable-debug</userinput>
+	    </term>
+	    <listitem>
+	      <para>
+		(<emphasis>Default:</emphasis> disabled) Enable debugging code.
+		Not for the casual user.
+	      </para>
+	    </listitem>
+	  </varlistentry>
+	</variablelist>
 
       <para> Then you will manage the build and install process using
 	<application><ulink type="http"
 	    url="http://www.gnu.org/software/make/">make</ulink></application>
 	as usual. Below are reported the targets you have to invoke in sequence
-	to build and install.
+	to build and install:
+      </para>
 
 	<variablelist>
 	  <title><application>make</application> targets</title>
@@ -357,8 +360,6 @@
 	  </varlistentry>
 
 	</variablelist>
-
-      </para>
       
     </sect2>
 
