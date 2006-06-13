@@ -46,7 +46,7 @@ txt-stamp: html-stamp
 	$(MAKE) $(TXTS)
 	touch $@
 %.txt: %.html
-	w3m -dump $< > $@
+	w3m -dump -no-graph $< > $@
 
 # PDF generation
 
