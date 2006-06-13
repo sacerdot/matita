@@ -224,7 +224,7 @@ dist_library@%:
 
 endif
 
-dist_pre:
+dist_pre: matitaGeneratedGui.ml matitaGeneratedGui.mli
 	$(MAKE) -C dist/ dist_pre
 
 DESTDIR = $(RT_BASE_DIR)
