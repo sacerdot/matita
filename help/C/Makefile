@@ -10,13 +10,15 @@ TEX_ENV=TEXINPUTS=.:$(TEX_UNICODE_PATH):$(TEX_UNICODE_PATH)/data:
 MAIN=matita.xml
 DEPS := $(wildcard *.xml)
 
+DESTDIR = /usr/local/share/doc/matita/
+
+all: html txt
+
 # one of: "fop", "pdflatex"
 PDF_METHOD=pdflatex
 
 # one of: "docbook2tex", "xsl"
 TEX_METHOD=xsl
-
-all: html txt
 
 clean:
 	rm -f *.html *.fo *.pdf
@@ -76,6 +78,14 @@ endif
 	$(TEX_ENV) latex $<
 %.ps: %.dvi
 	dvips $<
+
+# installation
+
+install: install-html
+install-html: html-stamp
+	cp *.html *.css $(DESTDIR)
+
+# shotcuts
 
 tex: $(patsubst %.xml,%.tex,$(MAIN))
 dvi: $(patsubst %.xml,%.dvi,$(MAIN))
