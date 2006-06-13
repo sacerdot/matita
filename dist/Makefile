@@ -2,6 +2,9 @@ MYSQL_FLAGS = --extended_insert --lock-tables=off --no-create-info
 DB = -u helm -h mowgli.cs.unibo.it matita
 TABLE_CREATOR = ../../ocaml/metadata/table_creator/table_creator
 TABLES := $(shell $(TABLE_CREATOR) list all)
+MANUAL_DIR = ../help/C
+WEB_DIR = ../../../www/matita
+
 all: static_link
 clean: static_link_clean
 .PHONY: static_link
@@ -15,3 +18,10 @@ matita_stdlib.sql:
 	mysqldump $(MYSQL_FLAGS) $(DB) $(TABLES) > $@
 %.gz: %
 	gzip -c $< > $@
+
+dist_pre: INSTALL README
+INSTALL: $(MANUAL_DIR)/txt-stamp
+	cp $(MANUAL_DIR)/sec_install.txt $@
+$(MANUAL_DIR)/txt-stamp:
+	$(MAKE) -C $(MANUAL_DIR) txt-stamp
+

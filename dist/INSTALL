@@ -1,3 +1,11 @@
+ 
+Tiny Matita logoMatita Home
+
+                           Chapter 2. Installation
+Prev                                                                      Next
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 Chapter 2. Installation
 
 Table of Contents
@@ -38,7 +46,7 @@ If you are running a Debian GNU/Linux distribution you can have APT install all
 the required tools and libraries by adding the following repository to your /
 etc/apt/sources.list:
 
-              deb http://people.debian.org/~zack unstable helm
+              deb http://people.debian.org/~zack unstable helm
 
 
 and installing the helm-matita-deps package.
@@ -132,49 +140,50 @@ This will check that all needed tools and library are installed and prepare the
 sources for compilation and installation.
 
 Quite a few (optional) arguments may be passed to the configure command line to
-change build time parameters. They are listed in the table below, together with
-their default values.
+change build time parameters. They are listed below, together with their
+default values:
 
-Table 2.1.  configure command line arguments
+configure command line arguments
 
-┌──────────────────┬─────────┬────────────────────────────────────────────────┐
-│     Argument     │ Default │                  Description                   │
-├──────────────────┼─────────┼────────────────────────────────────────────────┤
-│--with-runtime-dir│/usr/    │Runtime base directory where all Matita stuff   │
-│=dir              │local/   │(executables, configuration files, standard     │
-│                  │matita/  │library, ...) will be installed                 │
-├──────────────────┼─────────┼────────────────────────────────────────────────┤
-│                  │         │Default SQL server hostname. Will be used while │
-│                  │         │building the standard library during the        │
-│--with-dbhost=host│localhost│installation and to create the default Matita   │
-│                  │         │configuration. May be changed later in          │
-│                  │         │configuration file.                             │
-├──────────────────┼─────────┼────────────────────────────────────────────────┤
-│--enable-debug    │disabled │Enable debugging code. Not for the casual user. │
-└──────────────────┴─────────┴────────────────────────────────────────────────┘
+--with-runtime-dir=dir
+
+    (Default: /usr/local/matita) Runtime base directory where all Matita stuff
+    (executables, configuration files, standard library, ...) will be installed
+
+--with-dbhost=host
+
+    (Default: localhost) Default SQL server hostname. Will be used while
+    building the standard library during the installation and to create the
+    default Matita configuration. May be changed later in configuration file.
+
+--enable-debug
+
+    (Default: disabled) Enable debugging code. Not for the casual user.
 
 Then you will manage the build and install process using make as usual. Below
-are reported the targets you have to invoke in sequence to build and install.
+are reported the targets you have to invoke in sequence to build and install:
 
 make targets
 
 world
 
-    builds components needed by Matita and Matita itself (in bytecode only or
-    in both bytecode and native code depending on the availability of the OCaml
-    native code compiler)
+    builds components needed by Matita and Matita itself (in bytecode or native
+    code depending on the availability of the OCaml native code compiler)
 
-library
+install
 
-    uses the (just built) matitac compiler to build the Matita standard
-    library.
+    installs Matita related tools, standard library and the needed runtime
+    stuff in the proper places on the filesystem.
+
+    As a part of the installation process the Matita standard library will be
+    compiled, thus testing that the just built matitac compiler works properly.
 
     For this step you will need a working SQL database (for indexing the
     standard library while you are compiling it). See Database setup for
     instructions on how to set it up.
 
-install
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-    installs Matita related tools, standard library and the needed runtime
-    stuff in the proper places on the filesystem
+Prev                                                                       Next
+Matita vs Coq                        Home            Chapter 3. Getting started
 
