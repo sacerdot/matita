@@ -70,6 +70,13 @@
 	</affiliation> 
       </author> 
       <author> 
+	<firstname>Ferruccio</firstname> 
+	<surname>Guidi</surname> 
+	<affiliation> 
+	  <address> <email>fguidi@cs.unibo.it</email> </address> 
+	</affiliation> 
+      </author>       
+      <author> 
 	<firstname>Enrico</firstname> 
 	<surname>Tassi</surname> 
 	<affiliation> 
@@ -83,13 +90,6 @@
 	  <address> <email>zacchiro@cs.unibo.it</email> </address> 
 	</affiliation> 
       </author>
-      <author> 
-	<firstname>Ferruccio</firstname> 
-	<surname>Guidi</surname> 
-	<affiliation> 
-	  <address> <email>fguidi@cs.unibo.it</email> </address> 
-	</affiliation> 
-      </author>       
     </authorgroup>
 
     <legalnotice>
