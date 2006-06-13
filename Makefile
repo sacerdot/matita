@@ -224,6 +224,9 @@ dist_library@%:
 
 endif
 
+dist_pre:
+	$(MAKE) -C dist/ dist_pre
+
 DESTDIR = $(RT_BASE_DIR)
 INSTALL_STUFF = 			\
 	icons/ 				\
