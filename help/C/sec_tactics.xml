@@ -857,7 +857,7 @@ its constructor takes no arguments.</para>
   </sect1>
   <sect1 id="tac_injection">
     <title>injection</title>
-    <titleabbrev><emphasis role="bold">injection</emphasis></titleabbrev>
+    <titleabbrev>injection</titleabbrev>
     <para><userinput>injection p</userinput></para>
     <para>
       <variablelist>
