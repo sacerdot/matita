@@ -1,0 +1,182 @@
+<itemizedlist>
+  <listitem>
+    <para><link linkend="tac_absurd"><emphasis role="bold">absurd</emphasis></link> <emphasis><link linkend="grammar.sterm">sterm</link></emphasis></para>
+  </listitem>
+  <listitem>
+    <para><link linkend="tac_apply"><emphasis role="bold">apply</emphasis></link> <emphasis><link linkend="grammar.sterm">sterm</link></emphasis></para>
+  </listitem>
+  <listitem>
+    <para>
+      <link linkend="tac_assumption">
+        <emphasis role="bold">assumption</emphasis>
+      </link>
+    </para>
+  </listitem>
+  <listitem>
+    <para><link linkend="tac_auto"><emphasis role="bold">auto</emphasis></link> [<emphasis role="bold">depth=</emphasis><emphasis><link linkend="grammar.nat">nat</link></emphasis>] [<emphasis role="bold">width=</emphasis><emphasis><link linkend="grammar.nat">nat</link></emphasis>] [<emphasis role="bold">paramodulation</emphasis>] [<emphasis role="bold">full</emphasis>]</para>
+  </listitem>
+  <listitem>
+    <para><link linkend="tac_change"><emphasis role="bold">change</emphasis></link> <emphasis><link linkend="grammar.pattern">pattern</link></emphasis> <emphasis role="bold">with</emphasis> <emphasis><link linkend="grammar.sterm">sterm</link></emphasis></para>
+  </listitem>
+  <listitem>
+    <para><link linkend="tac_clear"><emphasis role="bold">clear</emphasis></link> <emphasis><link linkend="grammar.id">id</link></emphasis></para>
+  </listitem>
+  <listitem>
+    <para><link linkend="tac_clearbody"><emphasis role="bold">clearbody</emphasis></link> <emphasis><link linkend="grammar.id">id</link></emphasis></para>
+  </listitem>
+  <listitem>
+    <para><link linkend="tac_constructor"><emphasis role="bold">constructor</emphasis></link> <emphasis><link linkend="grammar.nat">nat</link></emphasis></para>
+  </listitem>
+  <listitem>
+    <para>
+      <link linkend="tac_contradiction">
+        <emphasis role="bold">contradiction</emphasis>
+      </link>
+    </para>
+  </listitem>
+  <listitem>
+    <para><link linkend="tac_cut"><emphasis role="bold">cut</emphasis></link> <emphasis><link linkend="grammar.sterm">sterm</link></emphasis> [<emphasis role="bold">as</emphasis> <emphasis><link linkend="grammar.id">id</link></emphasis>]</para>
+  </listitem>
+  <listitem>
+    <para><link linkend="tac_decompose"><emphasis role="bold">decompose</emphasis></link> <emphasis><link linkend="grammar.id">id</link></emphasis> [<emphasis><link linkend="grammar.id">id</link></emphasis>]… <emphasis><link linkend="grammar.intros-spec">intros-spec</link></emphasis></para>
+  </listitem>
+  <listitem>
+    <para><link linkend="tac_demodulation"><emphasis role="bold">demodulation</emphasis></link> <emphasis><link linkend="grammar.pattern">pattern</link></emphasis></para>
+  </listitem>
+  <listitem>
+    <para><link linkend="tac_discriminate"><emphasis role="bold">discriminate</emphasis></link> <emphasis><link linkend="grammar.sterm">sterm</link></emphasis></para>
+  </listitem>
+  <listitem>
+    <para><link linkend="tac_elim"><emphasis role="bold">elim</emphasis></link> <emphasis><link linkend="grammar.sterm">sterm</link></emphasis> [<emphasis role="bold">using</emphasis> <emphasis><link linkend="grammar.sterm">sterm</link></emphasis>] <emphasis><link linkend="grammar.intros-spec">intros-spec</link></emphasis></para>
+  </listitem>
+  <listitem>
+    <para><link linkend="tac_elimType"><emphasis role="bold">elimType</emphasis></link> <emphasis><link linkend="grammar.sterm">sterm</link></emphasis> [<emphasis role="bold">using</emphasis> <emphasis><link linkend="grammar.sterm">sterm</link></emphasis>] <emphasis><link linkend="grammar.intros-spec">intros-spec</link></emphasis></para>
+  </listitem>
+  <listitem>
+    <para><link linkend="tac_exact"><emphasis role="bold">exact</emphasis></link> <emphasis><link linkend="grammar.sterm">sterm</link></emphasis></para>
+  </listitem>
+  <listitem>
+    <para>
+      <link linkend="tac_exists">
+        <emphasis role="bold">exists</emphasis>
+      </link>
+    </para>
+  </listitem>
+  <listitem>
+    <para>
+      <link linkend="tac_fail">
+        <emphasis role="bold">fail</emphasis>
+      </link>
+    </para>
+  </listitem>
+  <listitem>
+    <para><link linkend="tac_fold"><emphasis role="bold">fold</emphasis></link> <emphasis><link linkend="grammar.reduction-kind">reduction-kind</link></emphasis> <emphasis><link linkend="grammar.sterm">sterm</link></emphasis> <emphasis><link linkend="grammar.pattern">pattern</link></emphasis></para>
+  </listitem>
+  <listitem>
+    <para>
+      <link linkend="tac_fourier">
+        <emphasis role="bold">fourier</emphasis>
+      </link>
+    </para>
+  </listitem>
+  <listitem>
+    <para><link linkend="tac_fwd"><emphasis role="bold">fwd</emphasis></link> <emphasis><link linkend="grammar.id">id</link></emphasis> [<emphasis role="bold">(</emphasis>[<emphasis><link linkend="grammar.id">id</link></emphasis>]…<emphasis role="bold">)</emphasis>]</para>
+  </listitem>
+  <listitem>
+    <para><link linkend="tac_generalize"><emphasis role="bold">generalize</emphasis></link> <emphasis><link linkend="grammar.pattern">pattern</link></emphasis> [<emphasis role="bold">as</emphasis> <emphasis><link linkend="grammar.id">id</link></emphasis>]</para>
+  </listitem>
+  <listitem>
+    <para>
+      <link linkend="tac_id">
+        <emphasis role="bold">id</emphasis>
+      </link>
+    </para>
+  </listitem>
+  <listitem>
+    <para><link linkend="tac_injection"><emphasis role="bold">injection</emphasis></link> <emphasis><link linkend="grammar.sterm">sterm</link></emphasis></para>
+  </listitem>
+  <listitem>
+    <para><link linkend="tac_intro"><emphasis role="bold">intro</emphasis></link> [<emphasis><link linkend="grammar.id">id</link></emphasis>]</para>
+  </listitem>
+  <listitem>
+    <para><link linkend="tac_intros"><emphasis role="bold">intros</emphasis></link> <emphasis><link linkend="grammar.intros-spec">intros-spec</link></emphasis></para>
+  </listitem>
+  <listitem>
+    <para><link linkend="tac_inversion"><emphasis role="bold">inversion</emphasis></link> <emphasis><link linkend="grammar.sterm">sterm</link></emphasis></para>
+  </listitem>
+  <listitem>
+    <para><link linkend="tac_lapply"><emphasis role="bold">lapply</emphasis></link> [<emphasis role="bold">depth=</emphasis><emphasis><link linkend="grammar.nat">nat</link></emphasis>] <emphasis><link linkend="grammar.sterm">sterm</link></emphasis> [<emphasis role="bold">to</emphasis> <emphasis><link linkend="grammar.sterm">sterm</link></emphasis> [<emphasis><link linkend="grammar.sterm">sterm</link></emphasis>]…] [<emphasis role="bold">as</emphasis> <emphasis><link linkend="grammar.id">id</link></emphasis>]</para>
+  </listitem>
+  <listitem>
+    <para>
+      <link linkend="tac_left">
+        <emphasis role="bold">left</emphasis>
+      </link>
+    </para>
+  </listitem>
+  <listitem>
+    <para><link linkend="tac_letin"><emphasis role="bold">letin</emphasis></link> <emphasis><link linkend="grammar.id">id</link></emphasis> <emphasis role="bold">≝</emphasis> <emphasis><link linkend="grammar.sterm">sterm</link></emphasis></para>
+  </listitem>
+  <listitem>
+    <para><link linkend="tac_normalize"><emphasis role="bold">normalize</emphasis></link> <emphasis><link linkend="grammar.pattern">pattern</link></emphasis></para>
+  </listitem>
+  <listitem>
+    <para><link linkend="tac_paramodulation"><emphasis role="bold">paramodulation</emphasis></link> <emphasis><link linkend="grammar.pattern">pattern</link></emphasis></para>
+  </listitem>
+  <listitem>
+    <para><link linkend="tac_reduce"><emphasis role="bold">reduce</emphasis></link> <emphasis><link linkend="grammar.pattern">pattern</link></emphasis></para>
+  </listitem>
+  <listitem>
+    <para>
+      <link linkend="tac_reflexivity">
+        <emphasis role="bold">reflexivity</emphasis>
+      </link>
+    </para>
+  </listitem>
+  <listitem>
+    <para><link linkend="tac_replace"><emphasis role="bold">replace</emphasis></link> <emphasis><link linkend="grammar.pattern">pattern</link></emphasis> <emphasis role="bold">with</emphasis> <emphasis><link linkend="grammar.sterm">sterm</link></emphasis></para>
+  </listitem>
+  <listitem>
+    <para><link linkend="tac_rewrite"><emphasis role="bold">rewrite</emphasis></link> [<emphasis role="bold">&lt;</emphasis>|<emphasis role="bold">&gt;</emphasis>] <emphasis><link linkend="grammar.sterm">sterm</link></emphasis> <emphasis><link linkend="grammar.pattern">pattern</link></emphasis></para>
+  </listitem>
+  <listitem>
+    <para>
+      <link linkend="tac_right">
+        <emphasis role="bold">right</emphasis>
+      </link>
+    </para>
+  </listitem>
+  <listitem>
+    <para>
+      <link linkend="tac_ring">
+        <emphasis role="bold">ring</emphasis>
+      </link>
+    </para>
+  </listitem>
+  <listitem>
+    <para><link linkend="tac_simplify"><emphasis role="bold">simplify</emphasis></link> <emphasis><link linkend="grammar.pattern">pattern</link></emphasis></para>
+  </listitem>
+  <listitem>
+    <para>
+      <link linkend="tac_split">
+        <emphasis role="bold">split</emphasis>
+      </link>
+    </para>
+  </listitem>
+  <listitem>
+    <para>
+      <link linkend="tac_symmetry">
+        <emphasis role="bold">symmetry</emphasis>
+      </link>
+    </para>
+  </listitem>
+  <listitem>
+    <para><link linkend="tac_transitivity"><emphasis role="bold">transitivity</emphasis></link> <emphasis><link linkend="grammar.sterm">sterm</link></emphasis></para>
+  </listitem>
+  <listitem>
+    <para><link linkend="tac_unfold"><emphasis role="bold">unfold</emphasis></link> [<emphasis><link linkend="grammar.sterm">sterm</link></emphasis>] <emphasis><link linkend="grammar.pattern">pattern</link></emphasis></para>
+  </listitem>
+  <listitem>
+    <para><link linkend="tac_whd"><emphasis role="bold">whd</emphasis></link> <emphasis><link linkend="grammar.pattern">pattern</link></emphasis></para>
+  </listitem>
+</itemizedlist>

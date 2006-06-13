@@ -13,6 +13,8 @@
   <!ENTITY othercommands SYSTEM "sec_commands.xml">
   <!ENTITY usernotation SYSTEM "sec_usernotation.xml">
 
+  <!ENTITY tacticref SYSTEM "tactic_quickref.xml">
+
   <!ENTITY manrevision "1&alpha;">
   <!ENTITY date "10/06/2006">
   <!ENTITY app "<application>Matita</application>">

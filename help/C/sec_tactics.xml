@@ -1,14 +1,27 @@
 
 <!-- ============ Tactics ====================== -->
 <chapter id="sec_tactics">
- <title>Tactics</title>
+  <title>Tactics</title>
+
+  <sect1 id="tactics_quickref">
+    <title>Quick reference card</title>
+    <para>
+      &tacticref;
+    </para>
+  </sect1>
 
   <sect1 id="tac_absurd">
-    <title><emphasis role="bold">absurd</emphasis> &sterm;</title>
+    <title>absurd</title>
     <titleabbrev>absurd</titleabbrev>
     <para><userinput>absurd P</userinput></para>
      <para>
       <variablelist>
+        <varlistentry role="tactic.synopsis">
+          <term>Synopsis:</term>
+          <listitem>
+            <para><emphasis role="bold">absurd</emphasis> &sterm;</para>
+          </listitem>
+        </varlistentry>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
@@ -33,11 +46,17 @@
      </para>
   </sect1>
   <sect1 id="tac_apply">
-    <title><emphasis role="bold">apply</emphasis> &sterm;</title>
+    <title>apply</title>
     <titleabbrev>apply</titleabbrev>
     <para><userinput>apply t</userinput></para>
     <para>
       <variablelist>
+        <varlistentry role="tactic.synopsis">
+          <term>Synopsis:</term>
+          <listitem>
+            <para><emphasis role="bold">apply</emphasis> &sterm;</para>
+          </listitem>
+        </varlistentry>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
@@ -68,11 +87,17 @@
     </para>
   </sect1>
   <sect1 id="tac_assumption">
-    <title><emphasis role="bold">assumption</emphasis></title>
+    <title>assumption</title>
     <titleabbrev>assumption</titleabbrev>
     <para><userinput>assumption </userinput></para>
     <para>
       <variablelist>
+        <varlistentry role="tactic.synopsis">
+          <term>Synopsis:</term>
+          <listitem>
+            <para><emphasis role="bold">assumption</emphasis></para>
+          </listitem>
+        </varlistentry>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
@@ -96,11 +121,17 @@
     </para>
   </sect1>
   <sect1 id="tac_auto">
-    <title><emphasis role="bold">auto</emphasis> [<emphasis role="bold">depth=</emphasis>&nat;] [<emphasis role="bold">width=</emphasis>&nat;] [<emphasis role="bold">paramodulation</emphasis>] [<emphasis role="bold">full</emphasis>]</title>
+    <title>auto</title>
     <titleabbrev>auto</titleabbrev>
     <para><userinput>auto depth=d width=w paramodulation full</userinput></para>
     <para>
       <variablelist>
+        <varlistentry role="tactic.synopsis">
+          <term>Synopsis:</term>
+          <listitem>
+            <para><emphasis role="bold">auto</emphasis> [<emphasis role="bold">depth=</emphasis>&nat;] [<emphasis role="bold">width=</emphasis>&nat;] [<emphasis role="bold">paramodulation</emphasis>] [<emphasis role="bold">full</emphasis>]</para>
+          </listitem>
+        </varlistentry>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
@@ -130,11 +161,17 @@
     </para>
   </sect1>
   <sect1 id="tac_clear">
-    <title><emphasis role="bold">clear</emphasis> &id;</title>
+    <title>clear</title>
     <titleabbrev>clear</titleabbrev>
     <para><userinput>clear H</userinput></para>
     <para>
       <variablelist>
+        <varlistentry role="tactic.synopsis">
+          <term>Synopsis:</term>
+          <listitem>
+            <para><emphasis role="bold">clear</emphasis> &id;</para>
+          </listitem>
+        </varlistentry>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
@@ -159,11 +196,17 @@
     </para>
   </sect1>
   <sect1 id="tac_clearbody">
-    <title><emphasis role="bold">clearbody</emphasis> &id;</title>
+    <title>clearbody</title>
     <titleabbrev>clearbody</titleabbrev>
     <para><userinput>clearbody H</userinput></para>
     <para>
       <variablelist>
+        <varlistentry role="tactic.synopsis">
+          <term>Synopsis:</term>
+          <listitem>
+            <para><emphasis role="bold">clearbody</emphasis> &id;</para>
+          </listitem>
+        </varlistentry>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
@@ -188,11 +231,17 @@
     </para>
   </sect1>
   <sect1 id="tac_change">
-    <title><emphasis role="bold">change</emphasis> &pattern; <emphasis role="bold">with</emphasis> &sterm;</title>
+    <title>change</title>
     <titleabbrev>change</titleabbrev>
     <para><userinput>change patt with t</userinput></para>
     <para>
       <variablelist>
+        <varlistentry role="tactic.synopsis">
+          <term>Synopsis:</term>
+          <listitem>
+            <para><emphasis role="bold">change</emphasis> &pattern; <emphasis role="bold">with</emphasis> &sterm;</para>
+          </listitem>
+        </varlistentry>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
@@ -220,11 +269,17 @@
     </para>
   </sect1>
   <sect1 id="tac_constructor">
-    <title><emphasis role="bold">constructor</emphasis> &nat;</title>
+    <title>constructor</title>
     <titleabbrev>constructor</titleabbrev>
     <para><userinput>constructor n</userinput></para>
     <para>
       <variablelist>
+        <varlistentry role="tactic.synopsis">
+          <term>Synopsis:</term>
+          <listitem>
+            <para><emphasis role="bold">constructor</emphasis> &nat;</para>
+          </listitem>
+        </varlistentry>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
@@ -252,11 +307,17 @@
     </para>
   </sect1>
   <sect1 id="tac_contradiction">
-    <title><emphasis role="bold">contradiction</emphasis></title>
+    <title>contradiction</title>
     <titleabbrev>contradiction</titleabbrev>
     <para><userinput>contradiction </userinput></para>
     <para>
       <variablelist>
+        <varlistentry role="tactic.synopsis">
+          <term>Synopsis:</term>
+          <listitem>
+            <para><emphasis role="bold">contradiction</emphasis></para>
+          </listitem>
+        </varlistentry>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
@@ -281,11 +342,17 @@
     </para>
   </sect1>
   <sect1 id="tac_cut">
-    <title><emphasis role="bold">cut</emphasis> &sterm; [<emphasis role="bold">as</emphasis> &id;]</title>
+    <title>cut</title>
     <titleabbrev>cut</titleabbrev>
     <para><userinput>cut P as H</userinput></para>
     <para>
       <variablelist>
+        <varlistentry role="tactic.synopsis">
+          <term>Synopsis:</term>
+          <listitem>
+            <para><emphasis role="bold">cut</emphasis> &sterm; [<emphasis role="bold">as</emphasis> &id;]</para>
+          </listitem>
+        </varlistentry>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
@@ -312,13 +379,19 @@
     </para>
   </sect1>
   <sect1 id="tac_decompose">
-    <title><emphasis role="bold">decompose</emphasis> &id; [&id;]… &intros-spec;</title>
+    <title>decompose</title>
     <titleabbrev>decompose</titleabbrev>
     <para><userinput>
      decompose (T<subscript>1</subscript> ... T<subscript>n</subscript>) H hips
     </userinput></para>
     <para>
       <variablelist>
+        <varlistentry role="tactic.synopsis">
+          <term>Synopsis:</term>
+          <listitem>
+            <para><emphasis role="bold">decompose</emphasis> &id; [&id;]… &intros-spec;</para>
+          </listitem>
+        </varlistentry>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
@@ -353,11 +426,17 @@
     </para>
   </sect1>
   <sect1 id="tac_demodulation">
-    <title><emphasis role="bold">demodulation</emphasis> &pattern;</title>
+    <title>demodulation</title>
     <titleabbrev>demodulation</titleabbrev>
     <para><userinput>demodulation patt</userinput></para>
     <para>
       <variablelist>
+        <varlistentry role="tactic.synopsis">
+          <term>Synopsis:</term>
+          <listitem>
+            <para><emphasis role="bold">demodulation</emphasis> &pattern;</para>
+          </listitem>
+        </varlistentry>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
@@ -380,11 +459,17 @@
     </para>
   </sect1>
   <sect1 id="tac_discriminate">
-    <title><emphasis role="bold">discriminate</emphasis> &sterm;</title>
+    <title>discriminate</title>
     <titleabbrev>discriminate</titleabbrev>
     <para><userinput>discriminate p</userinput></para>
     <para>
       <variablelist>
+        <varlistentry role="tactic.synopsis">
+          <term>Synopsis:</term>
+          <listitem>
+            <para><emphasis role="bold">discriminate</emphasis> &sterm;</para>
+          </listitem>
+        </varlistentry>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
@@ -409,11 +494,17 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_elim">
-    <title><emphasis role="bold">elim</emphasis> &sterm; [<emphasis role="bold">using</emphasis> &sterm;] &intros-spec;</title>
+    <title>elim</title>
     <titleabbrev>elim</titleabbrev>
     <para><userinput>elim t using th hyps</userinput></para>
     <para>
       <variablelist>
+        <varlistentry role="tactic.synopsis">
+          <term>Synopsis:</term>
+          <listitem>
+            <para><emphasis role="bold">elim</emphasis> &sterm; [<emphasis role="bold">using</emphasis> &sterm;] &intros-spec;</para>
+          </listitem>
+        </varlistentry>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
@@ -446,11 +537,17 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_elimType">
-    <title><emphasis role="bold">elimType</emphasis> &sterm; [<emphasis role="bold">using</emphasis> &sterm;] &intros-spec;</title>
+    <title>elimType</title>
     <titleabbrev>elimType</titleabbrev>
     <para><userinput>elimType T using th hyps</userinput></para>
     <para>
       <variablelist>
+        <varlistentry role="tactic.synopsis">
+          <term>Synopsis:</term>
+          <listitem>
+            <para><emphasis role="bold">elimType</emphasis> &sterm; [<emphasis role="bold">using</emphasis> &sterm;] &intros-spec;</para>
+          </listitem>
+        </varlistentry>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
@@ -473,11 +570,17 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_exact">
-    <title><emphasis role="bold">exact</emphasis> &sterm;</title>
+    <title>exact</title>
     <titleabbrev>exact</titleabbrev>
     <para><userinput>exact p</userinput></para>
     <para>
       <variablelist>
+        <varlistentry role="tactic.synopsis">
+          <term>Synopsis:</term>
+          <listitem>
+            <para><emphasis role="bold">exact</emphasis> &sterm;</para>
+          </listitem>
+        </varlistentry>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
@@ -501,11 +604,17 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_exists">
-    <title><emphasis role="bold">exists</emphasis></title>
+    <title>exists</title>
     <titleabbrev>exists</titleabbrev>
     <para><userinput>exists </userinput></para>
     <para>
       <variablelist>
+        <varlistentry role="tactic.synopsis">
+          <term>Synopsis:</term>
+          <listitem>
+            <para><emphasis role="bold">exists</emphasis></para>
+          </listitem>
+        </varlistentry>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
@@ -532,11 +641,17 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_fail">
-    <title><emphasis role="bold">fail</emphasis></title>
+    <title>fail</title>
     <titleabbrev>fail</titleabbrev>
     <para><userinput>fail</userinput></para>
     <para>
       <variablelist>
+        <varlistentry role="tactic.synopsis">
+          <term>Synopsis:</term>
+          <listitem>
+            <para><emphasis role="bold">fail</emphasis></para>
+          </listitem>
+        </varlistentry>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
@@ -559,11 +674,17 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_fold">
-    <title><emphasis role="bold">fold</emphasis> &reduction-kind; &sterm; &pattern;</title>
+    <title>fold</title>
     <titleabbrev>fold</titleabbrev>
     <para><userinput>fold red t patt</userinput></para>
     <para>
       <variablelist>
+        <varlistentry role="tactic.synopsis">
+          <term>Synopsis:</term>
+          <listitem>
+            <para><emphasis role="bold">fold</emphasis> &reduction-kind; &sterm; &pattern;</para>
+          </listitem>
+        </varlistentry>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
@@ -591,11 +712,17 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_fourier">
-    <title><emphasis role="bold">fourier</emphasis></title>
+    <title>fourier</title>
     <titleabbrev>fourier</titleabbrev>
     <para><userinput>fourier </userinput></para>
     <para>
       <variablelist>
+        <varlistentry role="tactic.synopsis">
+          <term>Synopsis:</term>
+          <listitem>
+            <para><emphasis role="bold">fourier</emphasis></para>
+          </listitem>
+        </varlistentry>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
@@ -621,11 +748,17 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_fwd">
-    <title><emphasis role="bold">fwd</emphasis> &id; [<emphasis role="bold">(</emphasis>[&id;]…<emphasis role="bold">)</emphasis>]</title>
+    <title>fwd</title>
     <titleabbrev>fwd</titleabbrev>
     <para><userinput>fwd ...TODO</userinput></para>
     <para>
       <variablelist>
+        <varlistentry role="tactic.synopsis">
+          <term>Synopsis:</term>
+          <listitem>
+            <para><emphasis role="bold">fwd</emphasis> &id; [<emphasis role="bold">(</emphasis>[&id;]…<emphasis role="bold">)</emphasis>]</para>
+          </listitem>
+        </varlistentry>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
@@ -648,11 +781,17 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_generalize">
-    <title><emphasis role="bold">generalize</emphasis> &pattern; [<emphasis role="bold">as</emphasis> &id;]</title>
+    <title>generalize</title>
     <titleabbrev>generalize</titleabbrev>
     <para><userinput>generalize patt as H</userinput></para>
     <para>
       <variablelist>
+        <varlistentry role="tactic.synopsis">
+          <term>Synopsis:</term>
+          <listitem>
+            <para><emphasis role="bold">generalize</emphasis> &pattern; [<emphasis role="bold">as</emphasis> &id;]</para>
+          </listitem>
+        </varlistentry>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
@@ -684,11 +823,17 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_id">
-    <title><emphasis role="bold">id</emphasis></title>
+    <title>id</title>
     <titleabbrev>id</titleabbrev>
     <para><userinput>id </userinput></para>
     <para>
       <variablelist>
+        <varlistentry role="tactic.synopsis">
+          <term>Synopsis:</term>
+          <listitem>
+            <para><emphasis role="bold">id</emphasis></para>
+          </listitem>
+        </varlistentry>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
@@ -711,11 +856,17 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_injection">
-    <title><emphasis role="bold">injection</emphasis> &sterm;</title>
+    <title>injection</title>
     <titleabbrev><emphasis role="bold">injection</emphasis></titleabbrev>
     <para><userinput>injection p</userinput></para>
     <para>
       <variablelist>
+        <varlistentry role="tactic.synopsis">
+          <term>Synopsis:</term>
+          <listitem>
+            <para><emphasis role="bold">injection</emphasis> &sterm;</para>
+          </listitem>
+        </varlistentry>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
@@ -742,11 +893,17 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_intro">
-    <title><emphasis role="bold">intro</emphasis> [&id;]</title>
+    <title>intro</title>
     <titleabbrev>intro</titleabbrev>
     <para><userinput>intro H</userinput></para>
     <para>
       <variablelist>
+        <varlistentry role="tactic.synopsis">
+          <term>Synopsis:</term>
+          <listitem>
+            <para><emphasis role="bold">intro</emphasis> [&id;]</para>
+          </listitem>
+        </varlistentry>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
@@ -775,11 +932,17 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_intros">
-    <title><emphasis role="bold">intros</emphasis> &intros-spec;</title>
+    <title>intros</title>
     <titleabbrev>intros</titleabbrev>
     <para><userinput>intros hyps</userinput></para>
     <para>
       <variablelist>
+        <varlistentry role="tactic.synopsis">
+          <term>Synopsis:</term>
+          <listitem>
+            <para><emphasis role="bold">intros</emphasis> &intros-spec;</para>
+          </listitem>
+        </varlistentry>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
@@ -812,11 +975,17 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_inversion">
-    <title><emphasis role="bold">inversion</emphasis> &sterm;</title>
+    <title>inversion</title>
     <titleabbrev>inversion</titleabbrev>
     <para><userinput>inversion t</userinput></para>
     <para>
       <variablelist>
+        <varlistentry role="tactic.synopsis">
+          <term>Synopsis:</term>
+          <listitem>
+            <para><emphasis role="bold">inversion</emphasis> &sterm;</para>
+          </listitem>
+        </varlistentry>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
@@ -847,7 +1016,7 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_lapply">
-    <title><emphasis role="bold">lapply</emphasis> [<emphasis role="bold">depth=</emphasis>&nat;] &sterm; [<emphasis role="bold">to</emphasis> &sterm; [&sterm;]…] [<emphasis role="bold">as</emphasis> &id;]</title>
+    <title>lapply</title>
     <titleabbrev>lapply</titleabbrev>
     <para><userinput>
      lapply depth=d t 
@@ -855,6 +1024,12 @@ its constructor takes no arguments.</para>
     </userinput></para>
     <para>
       <variablelist>
+        <varlistentry role="tactic.synopsis">
+          <term>Synopsis:</term>
+          <listitem>
+            <para><emphasis role="bold">lapply</emphasis> [<emphasis role="bold">depth=</emphasis>&nat;] &sterm; [<emphasis role="bold">to</emphasis> &sterm; [&sterm;]…] [<emphasis role="bold">as</emphasis> &id;]</para>
+          </listitem>
+        </varlistentry>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
@@ -877,11 +1052,17 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_left">
-    <title><emphasis role="bold">left</emphasis></title>
+    <title>left</title>
     <titleabbrev>left</titleabbrev>
     <para><userinput>left </userinput></para>
     <para>
       <variablelist>
+        <varlistentry role="tactic.synopsis">
+          <term>Synopsis:</term>
+          <listitem>
+            <para><emphasis role="bold">left</emphasis></para>
+          </listitem>
+        </varlistentry>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
@@ -908,11 +1089,17 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_letin">
-    <title><emphasis role="bold">letin</emphasis> &id; <emphasis role="bold">≝</emphasis> &sterm;</title>
+    <title>letin</title>
     <titleabbrev>letin</titleabbrev>
     <para><userinput>letin x ≝ t</userinput></para>
     <para>
       <variablelist>
+        <varlistentry role="tactic.synopsis">
+          <term>Synopsis:</term>
+          <listitem>
+            <para><emphasis role="bold">letin</emphasis> &id; <emphasis role="bold">≝</emphasis> &sterm;</para>
+          </listitem>
+        </varlistentry>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
@@ -936,11 +1123,17 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_normalize">
-    <title><emphasis role="bold">normalize</emphasis> &pattern;</title>
+    <title>normalize</title>
     <titleabbrev>normalize</titleabbrev>
     <para><userinput>normalize patt</userinput></para>
     <para>
       <variablelist>
+        <varlistentry role="tactic.synopsis">
+          <term>Synopsis:</term>
+          <listitem>
+            <para><emphasis role="bold">normalize</emphasis> &pattern;</para>
+          </listitem>
+        </varlistentry>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
@@ -964,11 +1157,17 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_paramodulation">
-    <title><emphasis role="bold">paramodulation</emphasis> &pattern;</title>
+    <title>paramodulation</title>
     <titleabbrev>paramodulation</titleabbrev>
     <para><userinput>paramodulation patt</userinput></para>
     <para>
       <variablelist>
+        <varlistentry role="tactic.synopsis">
+          <term>Synopsis:</term>
+          <listitem>
+            <para><emphasis role="bold">paramodulation</emphasis> &pattern;</para>
+          </listitem>
+        </varlistentry>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
@@ -991,11 +1190,17 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_reduce">
-    <title><emphasis role="bold">reduce</emphasis> &pattern;</title>
+    <title>reduce</title>
     <titleabbrev>reduce</titleabbrev>
     <para><userinput>reduce patt</userinput></para>
     <para>
       <variablelist>
+        <varlistentry role="tactic.synopsis">
+          <term>Synopsis:</term>
+          <listitem>
+            <para><emphasis role="bold">reduce</emphasis> &pattern;</para>
+          </listitem>
+        </varlistentry>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
@@ -1019,11 +1224,17 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_reflexivity">
-    <title><emphasis role="bold">reflexivity</emphasis></title>
+    <title>reflexivity</title>
     <titleabbrev>reflexivity</titleabbrev>
     <para><userinput>reflexivity </userinput></para>
     <para>
       <variablelist>
+        <varlistentry role="tactic.synopsis">
+          <term>Synopsis:</term>
+          <listitem>
+            <para><emphasis role="bold">reflexivity</emphasis></para>
+          </listitem>
+        </varlistentry>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
@@ -1048,11 +1259,17 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_replace">
-    <title><emphasis role="bold">replace</emphasis> &pattern; <emphasis role="bold">with</emphasis> &sterm;</title>
+    <title>replace</title>
     <titleabbrev>change</titleabbrev>
     <para><userinput>change patt with t</userinput></para>
     <para>
       <variablelist>
+        <varlistentry role="tactic.synopsis">
+          <term>Synopsis:</term>
+          <listitem>
+            <para><emphasis role="bold">replace</emphasis> &pattern; <emphasis role="bold">with</emphasis> &sterm;</para>
+          </listitem>
+        </varlistentry>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
@@ -1080,11 +1297,17 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_rewrite">
-    <title><emphasis role="bold">rewrite</emphasis> [<emphasis role="bold">&lt;</emphasis>|<emphasis role="bold">&gt;</emphasis>] &sterm; &pattern;</title>
+    <title>rewrite</title>
     <titleabbrev>rewrite</titleabbrev>
     <para><userinput>rewrite dir p patt</userinput></para>
     <para>
       <variablelist>
+        <varlistentry role="tactic.synopsis">
+          <term>Synopsis:</term>
+          <listitem>
+            <para><emphasis role="bold">rewrite</emphasis> [<emphasis role="bold">&lt;</emphasis>|<emphasis role="bold">&gt;</emphasis>] &sterm; &pattern;</para>
+          </listitem>
+        </varlistentry>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
@@ -1115,11 +1338,17 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_right">
-    <title><emphasis role="bold">right</emphasis></title>
+    <title>right</title>
     <titleabbrev>right</titleabbrev>
     <para><userinput>right </userinput></para>
     <para>
       <variablelist>
+        <varlistentry role="tactic.synopsis">
+          <term>Synopsis:</term>
+          <listitem>
+            <para><emphasis role="bold">right</emphasis></para>
+          </listitem>
+        </varlistentry>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
@@ -1146,11 +1375,17 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_ring">
-    <title><emphasis role="bold">ring</emphasis></title>
+    <title>ring</title>
     <titleabbrev>ring</titleabbrev>
     <para><userinput>ring </userinput></para>
     <para>
       <variablelist>
+        <varlistentry role="tactic.synopsis">
+          <term>Synopsis:</term>
+          <listitem>
+            <para><emphasis role="bold">ring</emphasis></para>
+          </listitem>
+        </varlistentry>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
@@ -1177,11 +1412,17 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_simplify">
-    <title><emphasis role="bold">simplify</emphasis> &pattern;</title>
+    <title>simplify</title>
     <titleabbrev>simplify</titleabbrev>
     <para><userinput>simplify patt</userinput></para>
     <para>
       <variablelist>
+        <varlistentry role="tactic.synopsis">
+          <term>Synopsis:</term>
+          <listitem>
+            <para><emphasis role="bold">simplify</emphasis> &pattern;</para>
+          </listitem>
+        </varlistentry>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
@@ -1205,11 +1446,17 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_split">
-    <title><emphasis role="bold">split</emphasis></title>
+    <title>split</title>
     <titleabbrev>split</titleabbrev>
     <para><userinput>split </userinput></para>
     <para>
       <variablelist>
+        <varlistentry role="tactic.synopsis">
+          <term>Synopsis:</term>
+          <listitem>
+            <para><emphasis role="bold">split</emphasis></para>
+          </listitem>
+        </varlistentry>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
@@ -1236,12 +1483,18 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_symmetry">
-    <title><emphasis role="bold">symmetry</emphasis></title>
+    <title>symmetry</title>
     <titleabbrev>symmetry</titleabbrev>
     <para>The tactic <command>symmetry</command> </para>
     <para><userinput>symmetry </userinput></para>
     <para>
       <variablelist>
+        <varlistentry role="tactic.synopsis">
+          <term>Synopsis:</term>
+          <listitem>
+            <para><emphasis role="bold">symmetry</emphasis></para>
+          </listitem>
+        </varlistentry>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
@@ -1265,11 +1518,17 @@ its constructor takes no arguments.</para>
     </para>
   </sect1>
   <sect1 id="tac_transitivity">
-    <title><emphasis role="bold">transitivity</emphasis> &sterm;</title>
+    <title>transitivity</title>
     <titleabbrev>transitivity</titleabbrev>
     <para><userinput>transitivity t</userinput></para>
     <para>
       <variablelist>
+        <varlistentry role="tactic.synopsis">
+          <term>Synopsis:</term>
+          <listitem>
+            <para><emphasis role="bold">transitivity</emphasis> &sterm;</para>
+          </listitem>
+        </varlistentry>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
@@ -1294,11 +1553,17 @@ the current sequent to prove.</para>
     </para>
   </sect1>
   <sect1 id="tac_unfold">
-    <title><emphasis role="bold">unfold</emphasis> [&sterm;] &pattern;</title>
+    <title>unfold</title>
     <titleabbrev>unfold</titleabbrev>
     <para><userinput>unfold t patt</userinput></para>
     <para>
       <variablelist>
+        <varlistentry role="tactic.synopsis">
+          <term>Synopsis:</term>
+          <listitem>
+            <para><emphasis role="bold">unfold</emphasis> [&sterm;] &pattern;</para>
+          </listitem>
+        </varlistentry>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
@@ -1326,11 +1591,17 @@ the current sequent to prove.</para>
     </para>
   </sect1>
   <sect1 id="tac_whd">
-    <title><emphasis role="bold">whd</emphasis> &pattern;</title>
+    <title>whd</title>
     <titleabbrev>whd</titleabbrev>
     <para><userinput>whd patt</userinput></para>
     <para>
       <variablelist>
+        <varlistentry role="tactic.synopsis">
+          <term>Synopsis:</term>
+          <listitem>
+            <para><emphasis role="bold">whd</emphasis> &pattern;</para>
+          </listitem>
+        </varlistentry>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>

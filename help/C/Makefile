@@ -2,9 +2,9 @@
 include ../../../Makefile.defs
 
 XSLTPROC=xsltproc
-XHTML_XSL=matita-xhtml.xsl
-FO_XSL=matita-fo.xsl
-TEX_XSL=matita-tex.xsl
+XHTML_XSL=xsl/matita-xhtml.xsl
+FO_XSL=xsl/matita-fo.xsl
+TEX_XSL=xsl/matita-tex.xsl
 TEX_UNICODE_PATH=$(SRCROOT)/share/texmf/unicode
 TEX_ENV=TEXINPUTS=.:$(TEX_UNICODE_PATH):$(TEX_UNICODE_PATH)/data:
 MAIN=matita.xml
@@ -12,7 +12,11 @@ DEPS := $(wildcard *.xml)
 
 DESTDIR = /usr/local/share/doc/matita/
 
-all: html txt
+all: quickref
+
+quickref: tactic_quickref.xml
+tactic_quickref.xml: xsl/tactic_quickref.xsl sec_tactics.xml
+	$(XSLTPROC) $< matita.xml > tactic_quickref.xml
 
 # one of: "fop", "pdflatex"
 PDF_METHOD=pdflatex
