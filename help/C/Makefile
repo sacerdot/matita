@@ -88,6 +88,8 @@ endif
 install: install-html
 install-html: html-stamp
 	cp *.html *.css $(DESTDIR)
+	test -d $(DESTDIR)/figures || mkdir $(DESTDIR)/figures
+	cp figures/* $(DESTDIR)/figures/
 
 # shotcuts
 
