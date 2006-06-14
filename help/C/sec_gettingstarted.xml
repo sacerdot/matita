@@ -110,7 +110,7 @@
    <figure><title>The Developments window</title>
      <mediaobject>
        <imageobject>
-         <imagedata fileref="developments.png" align="center"/> 
+         <imagedata fileref="figures/developments.png" align="center"/> 
        </imageobject>
        <textobject><phrase>Screenshot of the Developments window.</phrase></textobject>
      </mediaobject>
