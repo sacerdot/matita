@@ -73,7 +73,18 @@ match eqb n i with
       match eqb n j with
       [ true \Rightarrow i
       | false \Rightarrow n]].
-      
+
+notation < "(❲i↹j❳)n"
+  right associative with precedence 71 
+for @{ 'transposition $i $j $n}.
+
+notation < "(❲i \atop j❳)n"
+  right associative with precedence 71 
+for @{ 'transposition $i $j $n}.
+
+interpretation "natural transposition" 'transposition i j n =
+  (cic:/matita/nat/permutation/transpose.con i j n).
+
 lemma transpose_i_j_i: \forall i,j:nat. transpose i j i = j.
 intros.unfold transpose.
 rewrite > (eqb_n_n i).simplify. reflexivity.

@@ -57,7 +57,7 @@
     -->
     <key name="prefix">
       cic:/matita/
-      file://@RT_BASE_DIR@/xml/stantard-library/
+      file://@RT_BASE_DIR@/xml/standard-library/
       ro
     </key>
     <key name="prefix">
