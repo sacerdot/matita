@@ -49,3 +49,8 @@ div.matita_logo span {
   left: 65px;
   text-decoration: underline;
 }
+
+div.figure {
+  text-align: center;
+}
+
