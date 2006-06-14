@@ -282,11 +282,7 @@ let clean_development_in_bg ?matita_flags  refresh_cb development =
 
 let destroy_development_aux development clean_development =
   let delete_development development = 
-    let unlink file =
-      try 
-        Unix.unlink file 
-      with Unix.Unix_error _ -> logger `Debug ("Unable to delete " ^ file)
-    in
+    let unlink = HExtlib.safe_remove in
     let rmdir dir =
       try
         Unix.rmdir dir 
@@ -300,6 +296,7 @@ let destroy_development_aux development clean_development =
     unlink (makefile_for_development development);
     unlink (pool () ^ development.name ^ rootfile);
     unlink (pool () ^ development.name ^ "/depend");
+    unlink (pool () ^ development.name ^ "/depend.errors");
     rmdir (pool () ^ development.name);
     developments := 
       List.filter (fun d -> d.name <> development.name) !developments
