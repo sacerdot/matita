@@ -77,7 +77,7 @@ match n with
     min_aux (upper_bound - (S previous_prime)) upper_bound primeb].
     
 (* it works, but nth_prime 4 takes already a few minutes -
-it must compute factorial of 7 ...
+it must compute factorial of 7 ...*)
 
 theorem example11 : nth_prime (S(S O)) = (S(S(S(S(S O))))).
 normalize.reflexivity.
@@ -88,6 +88,11 @@ normalize.reflexivity.
 qed.
 
 theorem example13 : nth_prime (S(S(S(S O)))) = (S(S(S(S(S(S(S(S(S(S(S O))))))))))).
+normalize.reflexivity.
+qed.
+
+(*
+theorem example14 : nth_prime (S(S(S(S(S O))))) = (S(S(S(S(S(S(S(S(S(S(S O))))))))))).
 normalize.reflexivity.
 *) 
 

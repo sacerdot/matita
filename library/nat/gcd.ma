@@ -506,42 +506,52 @@ qed.
 theorem divides_times_to_divides: \forall n,p,q:nat.prime n \to n \divides p*q \to
 n \divides p \lor n \divides q.
 intros.
-cut (n \divides p \lor n \ndivides p).
-elim Hcut.
-left.assumption.
-right.
-cut (\exists a,b. a*n - b*p = (S O) \lor b*p - a*n = (S O)).
-elim Hcut1.elim H3.elim H4.
-(* first case *)
-rewrite > (times_n_SO q).rewrite < H5.
-rewrite > distr_times_minus.
-rewrite > (sym_times q (a1*p)).
-rewrite > (assoc_times a1).
-elim H1.rewrite > H6.
-rewrite < (sym_times n).rewrite < assoc_times.
-rewrite > (sym_times q).rewrite > assoc_times.
-rewrite < (assoc_times a1).rewrite < (sym_times n).
-rewrite > (assoc_times n).
-rewrite < distr_times_minus.
-apply (witness ? ? (q*a-a1*n2)).reflexivity.
-(* second case *)
-rewrite > (times_n_SO q).rewrite < H5.
-rewrite > distr_times_minus.
-rewrite > (sym_times q (a1*p)).
-rewrite > (assoc_times a1).
-elim H1.rewrite > H6.
-rewrite < sym_times.rewrite > assoc_times.
-rewrite < (assoc_times q).
-rewrite < (sym_times n).
-rewrite < distr_times_minus.
-apply (witness ? ? (n2*a1-q*a)).reflexivity.
-(* end second case *)
-rewrite < (prime_to_gcd_SO n p).
-apply eq_minus_gcd.
-assumption.assumption.
-apply (decidable_divides n p).
-apply (trans_lt ? (S O)).unfold lt.apply le_n.
-unfold prime in H.elim H. assumption.
+cut (n \divides p \lor n \ndivides p)
+  [elim Hcut
+    [left.assumption
+    |right.
+     cut (\exists a,b. a*n - b*p = (S O) \lor b*p - a*n = (S O))
+       [elim Hcut1.elim H3.elim H4
+         [(* first case *)
+          rewrite > (times_n_SO q).rewrite < H5.
+          rewrite > distr_times_minus.
+          rewrite > (sym_times q (a1*p)).
+          rewrite > (assoc_times a1).
+          elim H1.rewrite > H6.
+          (* applyS (witness n (n*(q*a-a1*n2)) (q*a-a1*n2))
+             reflexivity. *);
+          applyS (witness n ? ? (refl_eq ? ?)).
+          (*
+          rewrite < (sym_times n).rewrite < assoc_times.
+          rewrite > (sym_times q).rewrite > assoc_times.
+          rewrite < (assoc_times a1).rewrite < (sym_times n).
+          rewrite > (assoc_times n).
+          rewrite < distr_times_minus.
+          apply (witness ? ? (q*a-a1*n2)).reflexivity
+          *)
+         |(* second case *)
+          rewrite > (times_n_SO q).rewrite < H5.
+          rewrite > distr_times_minus.
+          rewrite > (sym_times q (a1*p)).
+          rewrite > (assoc_times a1).
+          elim H1.rewrite > H6.
+          rewrite < sym_times.rewrite > assoc_times.
+          rewrite < (assoc_times q).
+          rewrite < (sym_times n).
+          rewrite < distr_times_minus.
+          apply (witness ? ? (n2*a1-q*a)).reflexivity
+        ](* end second case *)
+     |rewrite < (prime_to_gcd_SO n p)
+       [apply eq_minus_gcd|assumption|assumption
+       ]
+     ]
+   ]
+ |apply (decidable_divides n p).
+  apply (trans_lt ? (S O))
+    [unfold lt.apply le_n
+    |unfold prime in H.elim H. assumption
+    ]
+  ]
 qed.
 
 theorem eq_gcd_times_SO: \forall m,n,p:nat. O < n \to O < p \to
