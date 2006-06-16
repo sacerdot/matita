@@ -8,6 +8,7 @@ fi
 
 mkdir -p logs
 
+i=1
 for X in $TODO; do
   echo -n "$X ... "
   LOGNAME=logs/log.`basename $X`
@@ -15,8 +16,9 @@ for X in $TODO; do
   RATING=`grep "Rating" $X | sed 's/v.*//' | sed 's/(\*//'`
   if [ `grep "Found a proof" $LOGNAME | wc -l` -gt 0 ]; then
     TIME=`grep "TIME NEEDED" $LOGNAME`
-    echo OK $TIME $RATING
+    echo OK $TIME $RATING $i
   else
-    echo FAIL $RATING
+    echo FAIL $RATING $i
   fi
+  i=`expr $i + 1`
 done
