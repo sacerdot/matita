@@ -41,6 +41,7 @@
   <!ENTITY intros-spec "<emphasis><link linkend='grammar.intros-spec'>intros-spec</link></emphasis>">
   <!ENTITY pattern "<emphasis><link linkend='grammar.pattern'>pattern</link></emphasis>">
   <!ENTITY reduction-kind "<emphasis><link linkend='grammar.reduction-kind'>reduction-kind</link></emphasis>">
+  <!ENTITY path "<emphasis><link linkend='grammar.path'>path</link></emphasis>">
 ]>
 
 <?yelp:chunk-depth 3?>

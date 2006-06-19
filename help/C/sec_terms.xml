@@ -245,6 +245,12 @@
      <row>
       <entry/>
       <entry>|</entry>
+      <entry><emphasis role="bold">CProp</emphasis></entry>
+      <entry>one fixed predicative sort of constructive propositions</entry>
+     </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
       <entry><emphasis role="bold">Type</emphasis></entry>
       <entry>one predicative sort of datatypes</entry>
      </row>
@@ -531,12 +537,98 @@
        <row>
 	<entry id="grammar.pattern">&pattern;</entry>
 	<entry>::=</entry>
-        <entry>&TODO;</entry>
+        <entry><emphasis role="bold">in</emphasis>
+          [&id;[<emphasis role="bold">:</emphasis> &path;]]…
+          [<emphasis role="bold">⊢</emphasis> &path;]]</entry>
+        <entry>simple pattern</entry>
+       </row>
+       <row>
+        <entry/>
+        <entry>|</entry>
+        <entry><emphasis role="bold">in match</emphasis> &term;
+          [<emphasis role="bold">in</emphasis>
+          [&id;[<emphasis role="bold">:</emphasis> &path;]]…
+          [<emphasis role="bold">⊢</emphasis> &path;]]</entry>
+        <entry>full pattern</entry>
        </row>
       </tbody>
      </tgroup>
     </table>
-        <para>&TODO;</para>
+    <table frame="topbot" rowsep="0" colsep="0" role="grammar">
+      <title>path</title>
+      <tgroup cols="4">
+      <tbody>
+       <row>
+	<entry id="grammar.path">&path;</entry>
+	<entry>::=</entry>
+        <entry><emphasis>〈〈any &sterm; whithout occurrences of <emphasis role="bold">Set</emphasis>, <emphasis role="bold">Prop</emphasis>, <emphasis role="bold">CProp</emphasis>, <emphasis role="bold">Type</emphasis>, &id;, &uri; and user provided notation; however, <emphasis role="bold">%</emphasis> is now an additional production for &sterm;〉〉</emphasis></entry>
+       </row>
+      </tbody>
+     </tgroup>
+    </table>
+    <para>A <emphasis>path</emphasis> locates zero or more subterms of a given term by mimicking the term structure up to:</para>
+    <orderedlist>
+      <listitem><para>Occurrences of the subterms to locate that are
+       represented by <emphasis role="bold">%</emphasis>.</para></listitem>
+      <listitem><para>Subterms without any occurrence of subterms to locate
+       that can be represented by <emphasis role="bold">?</emphasis>.
+       </para></listitem>
+    </orderedlist>
+    <para>For instance, the path
+      <userinput>∀_,_:?.(? ? % ?)→(? ? ? %)</userinput>
+       locates at once the subterms
+      <userinput>x+y</userinput> and <userinput>x*y</userinput> in the
+      term <userinput>∀x,y:nat.x+y=1→0=x*y</userinput>
+      (where the notation <userinput>A=B</userinput> hides the term
+      <userinput>(eq T A B)</userinput> for some type <userinput>T</userinput>).
+    </para>
+    <para>A <emphasis>simple pattern</emphasis> extends paths to locate
+     subterms in a whole sequent. In particular, the pattern
+     <userinput>in H: p  K: q ⊢ r</userinput> locates at once all the subterms
+     located by the pattern <userinput>r</userinput> in the conclusion of the
+     sequent and by the patterns <userinput>p</userinput> and
+     <userinput>q</userinput> in the hypotheses <userinput>H</userinput>
+     and <userinput>K</userinput> of the sequent.
+    </para>
+    <para>If no list of hypotheses is provided in a simple pattern, no subterm
+     is selected in the hypothesis. If the <userinput>⊢ p</userinput>
+     part of the pattern is not provided, no subterm will be matched in the
+     conclusion if at least one hypothesis is provided; otherwise the whole
+     conclusion is selected.
+    </para>
+    <para>Finally, a <emphasis>full pattern</emphasis> is interpreted in three
+     steps. In the first step the <userinput>match T in</userinput>
+     part is ignored and a set <emphasis>S</emphasis> of subterms is
+     located as for the case of
+     simple patterns. In the second step the term <userinput>T</userinput>
+     is parsed and interpreted in the context of each subterm
+     <emphasis>s ∈ S</emphasis>. In the last term for each
+     <emphasis>s ∈ S</emphasis> the interpreted term <userinput>T</userinput>
+     computed in the previous step is looked for. The final set of subterms
+     located by the full pattern is the set of occurrences of
+     the interpreted <userinput>T</userinput> in the subterms <emphasis>s</emphasis>.
+    </para>
+    <para>A full pattern can always be replaced by a simple pattern,
+      often at the cost of increased verbosity or decreased readability.</para>
+    <para>Example: the pattern
+      <userinput>⊢ in match x+y in ∀_,_:?.(? ? % ?)</userinput>
+      locates only the first occurrence of <userinput>x+y</userinput>
+      in the sequent <userinput>x,y: nat ⊢ ∀z,w:nat. (x+y) * (z+w) =
+      z * (x+y) + w * (x+y)</userinput>. The corresponding simple pattern
+      is <userinput>⊢ ∀_,_:?.(? ? (? % ?) ?)</userinput>.
+    </para>
+    <para>Every tactic that acts on subterms of the selected sequents have
+     a pattern argument for uniformity. To automatically generate a simple
+     pattern:</para>
+    <orderedlist>
+     <listitem><para>Select in the current goal the subterms to pass to the
+      tactic by using the mouse. In order to perform a multiple selection of
+      subterms, hold the Ctrl key while selecting every subterm after the
+      first one.</para></listitem>
+     <listitem><para>From the contextual menu select &quot;Copy&quot;.</para></listitem>
+     <listitem><para>From the &quot;Edit&quot; or the contextual menu select
+      &quot;Paste as pattern&quot;</para></listitem>
+    </orderedlist>
     </sect2>
 
     <sect2 id="reduction-kind">
