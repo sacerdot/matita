@@ -19,7 +19,3 @@ include "library/logic/equality.ma".
 inductive nat: Set \def
    | O: nat
    | S: nat \to nat.
-
-theorem eq_gen_O_S: \forall (P:Prop). \forall m2. O = S m2 \to P.
- intros. inversion H.
-

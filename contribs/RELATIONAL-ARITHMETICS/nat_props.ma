@@ -12,10 +12,19 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/RELATIONAL-ARITHMETICS/add_defs".
+set "baseuri" "cic:/matita/RELATIONAL-ARITHMETICS/nat_props".
 
+include "library/logic/equality.ma".
 include "nat_defs.ma".
 
-inductive add (p:nat): nat \to nat \to Prop \def
-   | add_O_2: add p O p
-   | add_S_2: \forall q, r. add p q r \to add p (S q) (S r).
+theorem eq_gen_O_S: \forall (P:Prop). \forall m2. O = S m2 \to P.
+ intros. discriminate H.
+qed.
+
+theorem eq_gen_S_O: \forall (P:Prop). \forall m1. S m1 = O \to P.
+ intros. discriminate H.
+qed.
+
+theorem eq_gen_S_S: \forall m1,m2. S m1 = S m2 \to m1 = m2.
+ intros. injection H. assumption.
+qed.
