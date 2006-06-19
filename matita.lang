@@ -4,14 +4,14 @@
 
   <escape-char>\</escape-char>
 
+  <block-comment _name = "Commented Code" style = "Comment">
+    <start-regex>\(\*\*[^\)]</start-regex>
+    <end-regex>[^\(]\*\*\)</end-regex>
+  </block-comment>
+
   <block-comment _name = "Block Comment" style = "Comment">
     <start-regex>\(\*</start-regex>
     <end-regex>\*\)</end-regex>
-  </block-comment>
-  
-  <block-comment _name = "Commented Code" style = "Comment">
-    <start-regex>\(\*\*</start-regex>
-    <end-regex>\*\*\)</end-regex>
   </block-comment>
 
   <keyword-list _name = "Theorem Kinds" style = "Keyword" case-sensitive="TRUE">
