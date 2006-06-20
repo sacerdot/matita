@@ -389,7 +389,11 @@
         <varlistentry role="tactic.synopsis">
           <term>Synopsis:</term>
           <listitem>
-            <para><emphasis role="bold">decompose</emphasis> &id; [&id;]… &intros-spec;</para>
+            <para>
+	     <emphasis role="bold">decompose</emphasis>
+	     [<emphasis role="bold">(</emphasis>[&id;]…<emphasis role="bold">)</emphasis>]
+	     &id; &intros-spec;
+	    </para>
           </listitem>
         </varlistentry>
         <varlistentry>
@@ -750,13 +754,13 @@ its constructor takes no arguments.</para>
   <sect1 id="tac_fwd">
     <title>fwd</title>
     <titleabbrev>fwd</titleabbrev>
-    <para><userinput>fwd H</userinput></para>
+    <para><userinput>fwd H as H<subscript>0</subscript> ... H<subscript>n</subscript></userinput></para>
     <para>
       <variablelist>
         <varlistentry role="tactic.synopsis">
           <term>Synopsis:</term>
           <listitem>
-            <para><emphasis role="bold">fwd</emphasis> &id; [<emphasis role="bold">(</emphasis>[&id;]…<emphasis role="bold">)</emphasis>]</para>
+            <para><emphasis role="bold">fwd</emphasis> &id; [<emphasis role="bold">as</emphasis> &id; [&id;]…]</para>
           </listitem>
         </varlistentry>
         <varlistentry>
@@ -775,16 +779,23 @@ its constructor takes no arguments.</para>
 	     This tactic is under development.
              It simplifies the current context by removing
 	     <command>H</command> using the following methods:
-	     forward application of a suitable simplification theorem (chosen
-             automatically) of which the type of <command>H</command> is a
-             premise, decomposition, rewriting. 
+	     forward application (by <command>lapply</command>) of a suitable
+	     simplification theorem, chosen automatically, of which the type
+	     of <command>H</command> is a premise, 
+	     decomposition (by <command>decompose</command>),
+	     rewriting (by <command>rewrite</command>).
+	     <command>H<subscript>0</subscript> ... H<subscript>n</subscript></command>
+	     are passed to the tactics <command>fwd</command> invokes, as
+             names for the premise they introduce.
 	    </para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>New sequents to prove:</term>
           <listitem>
-            <para>None.</para>
+            <para>
+	     The ones opened by the tactics <command>fwd</command> invokes.
+	    </para>
           </listitem>
         </varlistentry>
       </variablelist>
@@ -1043,19 +1054,39 @@ its constructor takes no arguments.</para>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
-            <para>TODO.</para>
+            <para>
+	     <command>t</command> must have at least <command>d</command>
+	     independent premises and <command>n</command> must not be
+	     greater than <command>d</command>.
+	    </para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>Action:</term>
           <listitem>
-            <para>TODO.</para>
+            <para>
+	     It invokes <command>letin H ≝ (t ? ... ?)</command>
+	     with enough <command>?</command>'s to reach the 
+	     <command>d</command>-th independent premise of
+	     <command>t</command>
+	     (<command>d</command> is maximum if unspecified).	     
+	     Then it istantiates (by <command>apply</command>) with
+	     t<subscript>1</subscript>, ..., t<subscript>n</subscript>
+	     the <command>?</command>'s corresponding to the first 
+	     <command>n</command> independent premises of
+	     <command>t</command>.
+	     Usually the other <command>?</command>'s preceding the 
+	     <command>n</command>-th independent premise of
+	     <command>t</command> are istantiated as a consequence.
+	    </para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>New sequents to prove:</term>
           <listitem>
-            <para>TODO.</para>
+            <para>
+	     The ones opened by the tactics <command>lapply</command> invokes.
+	    </para>
           </listitem>
         </varlistentry>
       </variablelist>

@@ -38,7 +38,11 @@
     <para><link linkend="tac_cut"><emphasis role="bold">cut</emphasis></link> <emphasis><link linkend="grammar.sterm">sterm</link></emphasis> [<emphasis role="bold">as</emphasis> <emphasis><link linkend="grammar.id">id</link></emphasis>]</para>
   </listitem>
   <listitem>
-    <para><link linkend="tac_decompose"><emphasis role="bold">decompose</emphasis></link> <emphasis><link linkend="grammar.id">id</link></emphasis> [<emphasis><link linkend="grammar.id">id</link></emphasis>]… <emphasis><link linkend="grammar.intros-spec">intros-spec</link></emphasis></para>
+    <para>
+	     <link linkend="tac_decompose"><emphasis role="bold">decompose</emphasis></link>
+	     [<emphasis role="bold">(</emphasis>[<emphasis><link linkend="grammar.id">id</link></emphasis>]…<emphasis role="bold">)</emphasis>]
+	     <emphasis><link linkend="grammar.id">id</link></emphasis> <emphasis><link linkend="grammar.intros-spec">intros-spec</link></emphasis>
+	    </para>
   </listitem>
   <listitem>
     <para><link linkend="tac_demodulation"><emphasis role="bold">demodulation</emphasis></link> <emphasis><link linkend="grammar.pattern">pattern</link></emphasis></para>
@@ -80,7 +84,7 @@
     </para>
   </listitem>
   <listitem>
-    <para><link linkend="tac_fwd"><emphasis role="bold">fwd</emphasis></link> <emphasis><link linkend="grammar.id">id</link></emphasis> [<emphasis role="bold">(</emphasis>[<emphasis><link linkend="grammar.id">id</link></emphasis>]…<emphasis role="bold">)</emphasis>]</para>
+    <para><link linkend="tac_fwd"><emphasis role="bold">fwd</emphasis></link> <emphasis><link linkend="grammar.id">id</link></emphasis> [<emphasis role="bold">as</emphasis> <emphasis><link linkend="grammar.id">id</link></emphasis> [<emphasis><link linkend="grammar.id">id</link></emphasis>]…]</para>
   </listitem>
   <listitem>
     <para><link linkend="tac_generalize"><emphasis role="bold">generalize</emphasis></link> <emphasis><link linkend="grammar.pattern">pattern</link></emphasis> [<emphasis role="bold">as</emphasis> <emphasis><link linkend="grammar.id">id</link></emphasis>]</para>
