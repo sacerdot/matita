@@ -750,7 +750,7 @@ its constructor takes no arguments.</para>
   <sect1 id="tac_fwd">
     <title>fwd</title>
     <titleabbrev>fwd</titleabbrev>
-    <para><userinput>fwd ...TODO</userinput></para>
+    <para><userinput>fwd H</userinput></para>
     <para>
       <variablelist>
         <varlistentry role="tactic.synopsis">
@@ -762,19 +762,29 @@ its constructor takes no arguments.</para>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
-            <para>TODO.</para>
+            <para>
+	       The type of <command>H</command> must be the premise of a
+               forward simplification theorem.
+	    </para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>Action:</term>
           <listitem>
-            <para>TODO.</para>
+            <para>
+	     This tactic is under development.
+             It simplifies the current context by removing
+	     <command>H</command> using the following methods:
+	     forward application of a suitable simplification theorem (chosen
+             automatically) of which the type of <command>H</command> is a
+             premise, decomposition, rewriting. 
+	    </para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>New sequents to prove:</term>
           <listitem>
-            <para>TODO.</para>
+            <para>None.</para>
           </listitem>
         </varlistentry>
       </variablelist>
