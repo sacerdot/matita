@@ -149,6 +149,17 @@ let _ =
             (MatitaScript.current ())#proofMetasenv));
         prerr_endline ("stack: " ^ Continuationals.Stack.pp
           (GrafiteTypes.get_stack (MatitaScript.current ())#grafite_status)));
+     addDebugItem "Print current proof term" 
+       (fun _ -> 
+        HLog.debug
+          (CicPp.ppterm 
+            (match 
+            (MatitaScript.current ())#grafite_status.GrafiteTypes.proof_status
+            with
+            | GrafiteTypes.No_proof -> (Cic.Implicit None)
+            | Incomplete_proof i -> let _,_,p,_ = i.GrafiteTypes.proof in p
+            | Proof p -> let _,_,p,_ = p in p
+            | Intermediate _ -> assert false)));
 (*     addDebugItem "ask record choice"
       (fun _ ->
         HLog.debug (string_of_int
