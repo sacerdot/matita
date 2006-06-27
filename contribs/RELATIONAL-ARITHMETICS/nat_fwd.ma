@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/RELATIONAL-ARITHMETICS/nat_gen".
+set "baseuri" "cic:/matita/RELATIONAL-ARITHMETICS/nat_fwd".
 
 include "library/logic/equality.ma".
 include "nat_defs.ma".

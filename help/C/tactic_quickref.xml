@@ -19,7 +19,10 @@
     <para><link linkend="tac_change"><emphasis role="bold">change</emphasis></link> <emphasis><link linkend="grammar.pattern">pattern</link></emphasis> <emphasis role="bold">with</emphasis> <emphasis><link linkend="grammar.sterm">sterm</link></emphasis></para>
   </listitem>
   <listitem>
-    <para><link linkend="tac_clear"><emphasis role="bold">clear</emphasis></link> <emphasis><link linkend="grammar.id">id</link></emphasis></para>
+    <para>
+	     <link linkend="tac_clear"><emphasis role="bold">clear</emphasis></link>
+	     <emphasis><link linkend="grammar.id">id</link></emphasis> [<emphasis><link linkend="grammar.id">id</link></emphasis>…]
+	    </para>
   </listitem>
   <listitem>
     <para><link linkend="tac_clearbody"><emphasis role="bold">clearbody</emphasis></link> <emphasis><link linkend="grammar.id">id</link></emphasis></para>
@@ -40,8 +43,11 @@
   <listitem>
     <para>
 	     <link linkend="tac_decompose"><emphasis role="bold">decompose</emphasis></link>
-	     [<emphasis role="bold">(</emphasis>[<emphasis><link linkend="grammar.id">id</link></emphasis>]…<emphasis role="bold">)</emphasis>]
-	     <emphasis><link linkend="grammar.id">id</link></emphasis> <emphasis><link linkend="grammar.intros-spec">intros-spec</link></emphasis>
+	     [<emphasis role="bold">(</emphasis>
+	     <emphasis><link linkend="grammar.id">id</link></emphasis>…
+	     <emphasis role="bold">)</emphasis>]
+	     [<emphasis><link linkend="grammar.id">id</link></emphasis>] 
+	     [<emphasis role="bold">as</emphasis> <emphasis><link linkend="grammar.id">id</link></emphasis>…]
 	    </para>
   </listitem>
   <listitem>
@@ -109,7 +115,16 @@
     <para><link linkend="tac_inversion"><emphasis role="bold">inversion</emphasis></link> <emphasis><link linkend="grammar.sterm">sterm</link></emphasis></para>
   </listitem>
   <listitem>
-    <para><link linkend="tac_lapply"><emphasis role="bold">lapply</emphasis></link> [<emphasis role="bold">depth=</emphasis><emphasis><link linkend="grammar.nat">nat</link></emphasis>] <emphasis><link linkend="grammar.sterm">sterm</link></emphasis> [<emphasis role="bold">to</emphasis> <emphasis><link linkend="grammar.sterm">sterm</link></emphasis> [<emphasis><link linkend="grammar.sterm">sterm</link></emphasis>]…] [<emphasis role="bold">as</emphasis> <emphasis><link linkend="grammar.id">id</link></emphasis>]</para>
+    <para>
+	     <link linkend="tac_lapply"><emphasis role="bold">lapply</emphasis></link> 
+	     [<emphasis role="bold">depth=</emphasis><emphasis><link linkend="grammar.nat">nat</link></emphasis>] 
+	     <emphasis><link linkend="grammar.sterm">sterm</link></emphasis> 
+	     [<emphasis role="bold">to</emphasis>
+	      <emphasis><link linkend="grammar.sterm">sterm</link></emphasis>
+	      [<emphasis role="bold">,</emphasis><emphasis><link linkend="grammar.sterm">sterm</link></emphasis>…]
+	     ] 
+	     [<emphasis role="bold">as</emphasis> <emphasis><link linkend="grammar.id">id</link></emphasis>]
+	    </para>
   </listitem>
   <listitem>
     <para>

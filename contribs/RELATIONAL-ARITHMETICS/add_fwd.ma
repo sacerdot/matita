@@ -1,4 +1,4 @@
-(**************************************************************************)
+clear(**************************************************************************)
 (*       ___                                                              *)
 (*      ||M||                                                             *)
 (*      ||A||       A project by Andrea Asperti                           *)
@@ -12,15 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/RELATIONAL-ARITHMETICS/add_gen".
+set "baseuri" "cic:/matita/RELATIONAL-ARITHMETICS/add_fwd".
 
-include "nat_gen.ma".
+include "nat_fwd.ma".
 include "add_defs.ma".
 
 (* primitive generation lemmas proved by elimination and inversion *)
 
 theorem add_gen_O_1: \forall q,r. add O q r \to q = r.
-  intros. elim H; clear H; clear q; clear r; intros;
+ intros. elim H; clear H q r; intros;
  [ reflexivity
  | clear H1. auto
  ].
@@ -28,18 +28,18 @@ qed.
 
 theorem add_gen_S_1: \forall p,q,r. add (S p) q r \to 
                      \exists s. r = (S s) \land add p q s.
- intros. elim H; clear H; clear q; clear r; intros;
+ intros. elim H; clear H q r; intros;
  [
- | clear H1. 
-  decompose H2.
-  rewrite > H1. clear H1. clear n2
+ | clear H1.
+   decompose.
+   rewrite > H1. clear H1 n2
  ]; apply ex_intro; [| auto || auto ]. (**)
 qed.
 
 theorem add_gen_O_2: \forall p,r. add p O r \to p = r.
  intros. inversion H; clear H; intros;
  [ auto
- | clear H. clear H1.
+ | clear H H1.
    lapply eq_gen_O_S to H2 as H0. apply H0
  ].
 qed.
@@ -48,18 +48,18 @@ theorem add_gen_S_2: \forall p,q,r. add p (S q) r \to
                      \exists s. r = (S s) \land add p q s.
  intros. inversion H; clear H; intros;
  [ lapply eq_gen_S_O to H as H0. apply H0
- | clear H1. clear H3. clear r.
+ | clear H1 H3 r.
    lapply eq_gen_S_S to H2 as H0. clear H2.
-   rewrite > H0. clear H0. clear q.
+   rewrite > H0. clear H0 q.
    apply ex_intro; [| auto ] (**)
  ].
 qed.
 
 theorem add_gen_O_3: \forall p,q. add p q O \to p = O \land q = O.
  intros. inversion H; clear H; intros;
- [ rewrite < H1. clear H1. clear p.
+ [ rewrite < H1. clear H1 p.
    auto
- | clear H. clear H1.
+ | clear H H1.
    lapply eq_gen_O_S to H3 as H0. apply H0
  ].
 qed.
@@ -68,10 +68,10 @@ theorem add_gen_S_3: \forall p,q,r. add p q (S r) \to
                      \exists s. p = S s \land add s q r \lor
                                 q = S s \land add p s r.
  intros. inversion H; clear H; intros;
- [ rewrite < H1. clear H1. clear p
+ [ rewrite < H1. clear H1 p
  | clear H1.
    lapply eq_gen_S_S to H3 as H0. clear H3.
-   rewrite > H0. clear H0. clear r.
+   rewrite > H0. clear H0 r.
  ]; apply ex_intro; [| auto || auto ] (**)
 qed.
 (*
@@ -80,11 +80,11 @@ qed.
 variant add_gen_O_3_alt: \forall p,q. add p q O \to p = O \land q = O.
  intros 2. elim q; clear q; intros;
  [ lapply add_gen_O_2 to H as H0. clear H.
-   rewrite > H0. clear H0. clear p.
+   rewrite > H0. clear H0 p.
    auto
  | clear H.
    lapply add_gen_S_2 to H1 as H0. clear H1.
-   decompose H0.
+   decompose.
    lapply eq_gen_O_S to H1 as H0. apply H0
  ].
 qed.
@@ -94,12 +94,12 @@ variant add_gen_S_3_alt: \forall p,q,r. add p q (S r) \to
                                     q = S s \land add p s r.
  intros 2. elim q; clear q; intros;
  [ lapply add_gen_O_2 to H as H0. clear H.
-   rewrite > H0. clear H0. clear p
+   rewrite > H0. clear H0 p
  | clear H.
    lapply add_gen_S_2 to H1 as H0. clear H1.
-   decompose H0.
+   decompose.
    lapply eq_gen_S_S to H1 as H0. clear H1.
-   rewrite > H0. clear H0. clear r.
+   rewrite > H0. clear H0 r.
  ]; apply ex_intro; [| auto || auto ]. (**)
 qed.
 *)
@@ -108,21 +108,21 @@ qed.
 theorem add_gen_eq_2_3: \forall p,q. add p q q \to p = O.
  intros 2. elim q; clear q; intros;
  [ lapply add_gen_O_2 to H as H0. clear H.
-   rewrite > H0. clear H0. clear p
+   rewrite > H0. clear H0 p
  | lapply add_gen_S_2 to H1 as H0. clear H1.
-   decompose H0.
+   decompose.
    lapply eq_gen_S_S to H2 as H0. clear H2.
-   rewrite < H0 in H3. clear H0. clear a
+   rewrite < H0 in H3. clear H0 a
  ]; auto.
 qed.
 
 theorem add_gen_eq_1_3: \forall p,q. add p q p \to q = O.
  intros 1. elim p; clear p; intros;
  [ lapply add_gen_O_1 to H as H0. clear H.
-   rewrite > H0. clear H0. clear q
+   rewrite > H0. clear H0 q
  | lapply add_gen_S_1 to H1 as H0. clear H1.
-   decompose H0.
+   decompose.
    lapply eq_gen_S_S to H2 as H0. clear H2.
-   rewrite < H0 in H3. clear H0. clear a
+   rewrite < H0 in H3. clear H0 a
  ]; auto.
 qed.

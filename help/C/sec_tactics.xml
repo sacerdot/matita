@@ -163,27 +163,40 @@
   <sect1 id="tac_clear">
     <title>clear</title>
     <titleabbrev>clear</titleabbrev>
-    <para><userinput>clear H</userinput></para>
+    <para><userinput>
+     clear H<subscript>1</subscript> ... H<subscript>m</subscript>
+    </userinput></para>
     <para>
       <variablelist>
         <varlistentry role="tactic.synopsis">
           <term>Synopsis:</term>
           <listitem>
-            <para><emphasis role="bold">clear</emphasis> &id;</para>
+            <para>
+	     <emphasis role="bold">clear</emphasis>
+	     &id; [&id;…]
+	    </para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
-            <para><command>H</command> must be an hypothesis of the
-             current sequent to prove.</para>
+            <para>
+	     <command>
+	      H<subscript>1</subscript> ... H<subscript>m</subscript>
+	     </command> must be hypotheses of the
+             current sequent to prove.
+	    </para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>Action:</term>
           <listitem>
-            <para>It hides the hypothesis <command>H</command> from the
-             current sequent.</para>
+            <para>
+	     It hides the hypotheses 
+             <command>
+	      H<subscript>1</subscript> ... H<subscript>m</subscript>
+             </command> from the current sequent.
+	    </para>
           </listitem>
         </varlistentry>
         <varlistentry>
@@ -382,7 +395,8 @@
     <title>decompose</title>
     <titleabbrev>decompose</titleabbrev>
     <para><userinput>
-     decompose (T<subscript>1</subscript> ... T<subscript>n</subscript>) H hips
+     decompose (T<subscript>1</subscript> ... T<subscript>n</subscript>) 
+     H as H<subscript>1</subscript> ... H<subscript>m</subscript>
     </userinput></para>
     <para>
       <variablelist>
@@ -391,8 +405,11 @@
           <listitem>
             <para>
 	     <emphasis role="bold">decompose</emphasis>
-	     [<emphasis role="bold">(</emphasis>[&id;]…<emphasis role="bold">)</emphasis>]
-	     &id; &intros-spec;
+	     [<emphasis role="bold">(</emphasis>
+	     &id;…
+	     <emphasis role="bold">)</emphasis>]
+	     [&id;] 
+	     [<emphasis role="bold">as</emphasis> &id;…]
 	    </para>
           </listitem>
         </varlistentry>
@@ -412,9 +429,13 @@
           <term>Action:</term>
           <listitem>
             <para>
-	     Runs <command>elim H hyps</command>, clears H and tries to run
-             itself recursively on each new identifier introduced by 
-	     <command>elim</command> in the opened sequents.
+	     Runs <command>
+	      elim H H<subscript>1</subscript> ... H<subscript>m</subscript>
+	     </command>, clears <command>H</command> and tries to run itself
+	     recursively on each new identifier introduced by 
+	     <command>elim</command> in the opened sequents. 
+	     If <command>H</command> is not provided tries this operation on
+	     each premise in the current context.
 	    </para>
           </listitem>
         </varlistentry>
@@ -1048,7 +1069,16 @@ its constructor takes no arguments.</para>
         <varlistentry role="tactic.synopsis">
           <term>Synopsis:</term>
           <listitem>
-            <para><emphasis role="bold">lapply</emphasis> [<emphasis role="bold">depth=</emphasis>&nat;] &sterm; [<emphasis role="bold">to</emphasis> &sterm; [&sterm;]…] [<emphasis role="bold">as</emphasis> &id;]</para>
+            <para>
+	     <emphasis role="bold">lapply</emphasis> 
+	     [<emphasis role="bold">depth=</emphasis>&nat;] 
+	     &sterm; 
+	     [<emphasis role="bold">to</emphasis>
+	      &sterm;
+	      [<emphasis role="bold">,</emphasis>&sterm;…]
+	     ] 
+	     [<emphasis role="bold">as</emphasis> &id;]
+	    </para>
           </listitem>
         </varlistentry>
         <varlistentry>
@@ -1065,12 +1095,12 @@ its constructor takes no arguments.</para>
           <term>Action:</term>
           <listitem>
             <para>
-	     It invokes <command>letin H ≝ (t ? ... ?)</command>
+	     Invokes <command>letin H ≝ (t ? ... ?)</command>
 	     with enough <command>?</command>'s to reach the 
 	     <command>d</command>-th independent premise of
 	     <command>t</command>
 	     (<command>d</command> is maximum if unspecified).	     
-	     Then it istantiates (by <command>apply</command>) with
+	     Then istantiates (by <command>apply</command>) with
 	     t<subscript>1</subscript>, ..., t<subscript>n</subscript>
 	     the <command>?</command>'s corresponding to the first 
 	     <command>n</command> independent premises of
