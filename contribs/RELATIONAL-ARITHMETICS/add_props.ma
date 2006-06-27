@@ -48,7 +48,6 @@ theorem add_shift_S_sx: \forall p,q,r. add p (S q) r \to add (S p) q r.
  auto.
 qed.
 
-
 theorem add_shift_S_dx: \forall p,q,r. add (S p) q r \to add p (S q) r.
  intros.
  lapply add_gen_S_1 to H as H0. clear H.
@@ -103,23 +102,4 @@ theorem add_conf: \forall p,q,r1. add p q r1 \to
    decompose H0.
    rewrite > H2. clear H2. clear r2.
  ]; auto.
-qed.
-
-
-
-theorem add_gen_eq_2_3: \forall p,q. add p q q \to p = O.
- intros 2. elim q; clear q; intros;
- [ lapply add_gen_O_2 to H as H0. clear H.
-   rewrite > H0. clear H0. clear p
- | lapply add_gen_S_2 to H1 as H0. clear H1.
-   decompose H0.
-   lapply eq_gen_S_S to H2 as H0. clear H2.
-   rewrite < H0 in H3. clear H0. clear a
- ]; auto.
-qed.
-
-theorem add_gen_eq_1_3: \forall p,q. add p q p \to q = O.
- intros. 
- lapply add_sym to H. clear H.
- auto.
 qed.

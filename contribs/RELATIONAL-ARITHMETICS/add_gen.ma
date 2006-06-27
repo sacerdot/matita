@@ -74,7 +74,7 @@ theorem add_gen_S_3: \forall p,q,r. add p q (S r) \to
    rewrite > H0. clear H0. clear r.
  ]; apply ex_intro; [| auto || auto ] (**)
 qed.
-
+(*
 (* alternative proofs invoking add_gen_2 *)
 
 variant add_gen_O_3_alt: \forall p,q. add p q O \to p = O \land q = O.
@@ -101,4 +101,28 @@ variant add_gen_S_3_alt: \forall p,q,r. add p q (S r) \to
    lapply eq_gen_S_S to H1 as H0. clear H1.
    rewrite > H0. clear H0. clear r.
  ]; apply ex_intro; [| auto || auto ]. (**)
+qed.
+*)
+(* other simplification lemmas *)
+
+theorem add_gen_eq_2_3: \forall p,q. add p q q \to p = O.
+ intros 2. elim q; clear q; intros;
+ [ lapply add_gen_O_2 to H as H0. clear H.
+   rewrite > H0. clear H0. clear p
+ | lapply add_gen_S_2 to H1 as H0. clear H1.
+   decompose H0.
+   lapply eq_gen_S_S to H2 as H0. clear H2.
+   rewrite < H0 in H3. clear H0. clear a
+ ]; auto.
+qed.
+
+theorem add_gen_eq_1_3: \forall p,q. add p q p \to q = O.
+ intros 1. elim p; clear p; intros;
+ [ lapply add_gen_O_1 to H as H0. clear H.
+   rewrite > H0. clear H0. clear q
+ | lapply add_gen_S_1 to H1 as H0. clear H1.
+   decompose H0.
+   lapply eq_gen_S_S to H2 as H0. clear H2.
+   rewrite < H0 in H3. clear H0. clear a
+ ]; auto.
 qed.
