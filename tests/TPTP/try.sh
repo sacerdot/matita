@@ -13,7 +13,7 @@ for X in $TODO; do
   echo -n "$X ... "
   LOGNAME=logs/log.`basename $X`
   ../../matitac.opt -nodb $X > $LOGNAME 2>&1
-  gzip $LOGNAME
+  gzip -f $LOGNAME
   RATING=`grep "Rating" $X | sed 's/v.*//' | sed 's/(\*//'`
   if [ `grep "Found a proof" $LOGNAME | wc -l` -gt 0 ]; then
     TIME=`grep "TIME NEEDED" $LOGNAME`
