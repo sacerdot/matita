@@ -21,5 +21,5 @@ for X in $TODO; do
     echo FAIL $RATING $i
   fi
   i=`expr $i + 1`
-  gzip -9 -f $LOGNAME
+  gzip -f $LOGNAME
 done
