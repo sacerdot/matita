@@ -1061,7 +1061,7 @@ its constructor takes no arguments.</para>
     <title>lapply</title>
     <titleabbrev>lapply</titleabbrev>
     <para><userinput>
-     lapply depth=d t 
+     lapply linear depth=d t 
      to t<subscript>1</subscript>, ..., t<subscript>n</subscript> as H
     </userinput></para>
     <para>
@@ -1071,6 +1071,7 @@ its constructor takes no arguments.</para>
           <listitem>
             <para>
 	     <emphasis role="bold">lapply</emphasis> 
+	     [<emphasis role="bold">linear</emphasis>]
 	     [<emphasis role="bold">depth=</emphasis>&nat;] 
 	     &sterm; 
 	     [<emphasis role="bold">to</emphasis>
@@ -1108,6 +1109,10 @@ its constructor takes no arguments.</para>
 	     Usually the other <command>?</command>'s preceding the 
 	     <command>n</command>-th independent premise of
 	     <command>t</command> are istantiated as a consequence.
+	     If the <command>linear</command> flag is specified and if 
+	     <command>t, t<subscript>1</subscript>, ..., t<subscript>n</subscript></command>
+	     are (applications of) premises in the current context, they are
+             <command>clear</command>ed. 
 	    </para>
           </listitem>
         </varlistentry>

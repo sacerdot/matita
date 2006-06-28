@@ -117,6 +117,7 @@
   <listitem>
     <para>
 	     <link linkend="tac_lapply"><emphasis role="bold">lapply</emphasis></link> 
+	     [<emphasis role="bold">linear</emphasis>]
 	     [<emphasis role="bold">depth=</emphasis><emphasis><link linkend="grammar.nat">nat</link></emphasis>] 
 	     <emphasis><link linkend="grammar.sterm">sterm</link></emphasis> 
 	     [<emphasis role="bold">to</emphasis>
