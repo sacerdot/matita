@@ -479,7 +479,7 @@
     <para>Notice that the command is equivalent to <command>definition f: T ≝ t</command>.</para>
    </sect2>
    <sect2 id="variant">
-    <title><emphasis role="bold">variant</emphasis> &id;[<emphasis role="bold">:</emphasis> &term;] [<emphasis role="bold">≝</emphasis> &term;]</title>
+    <title><emphasis role="bold">variant</emphasis> &id;<emphasis role="bold">:</emphasis> &term; <emphasis role="bold">≝</emphasis> &term;</title>
     <titleabbrev>variant</titleabbrev>
     <para><userinput>variant f: T ≝ t</userinput></para>
     <para>Same as <command>theorem f: T ≝ t</command>, but it does not
