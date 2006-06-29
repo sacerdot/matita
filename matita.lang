@@ -110,6 +110,7 @@
     <keyword>intros</keyword>
     <keyword>inversion</keyword>
     <keyword>lapply</keyword>
+    <keyword>linear</keyword>
     <keyword>left</keyword>
     <keyword>letin</keyword>
     <keyword>normalize</keyword>
