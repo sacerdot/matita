@@ -51,7 +51,11 @@
 	    </para>
   </listitem>
   <listitem>
-    <para><link linkend="tac_demodulation"><emphasis role="bold">demodulation</emphasis></link> <emphasis><link linkend="grammar.pattern">pattern</link></emphasis></para>
+    <para>
+      <link linkend="tac_demodulate">
+        <emphasis role="bold">demodulate</emphasis>
+      </link>
+    </para>
   </listitem>
   <listitem>
     <para><link linkend="tac_discriminate"><emphasis role="bold">discriminate</emphasis></link> <emphasis><link linkend="grammar.sterm">sterm</link></emphasis></para>

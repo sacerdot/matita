@@ -643,11 +643,6 @@
        <row>
 	<entry id="grammar.reduction-kind">&reduction-kind;</entry>
 	<entry>::=</entry>
-        <entry><emphasis role="bold">demodulate</emphasis></entry>
-       </row>
-       <row>
-        <entry/>
-        <entry>|</entry>
         <entry><emphasis role="bold">normalize</emphasis></entry>
         <entry>Computes the βδιζ-normal form</entry>
        </row>

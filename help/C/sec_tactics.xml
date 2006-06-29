@@ -450,16 +450,16 @@
       </variablelist>
     </para>
   </sect1>
-  <sect1 id="tac_demodulation">
-    <title>demodulation</title>
-    <titleabbrev>demodulation</titleabbrev>
-    <para><userinput>demodulation patt</userinput></para>
+  <sect1 id="tac_demodulate">
+    <title>demodulate</title>
+    <titleabbrev>demodulate</titleabbrev>
+    <para><userinput>demodulate</userinput></para>
     <para>
       <variablelist>
         <varlistentry role="tactic.synopsis">
           <term>Synopsis:</term>
           <listitem>
-            <para><emphasis role="bold">demodulation</emphasis> &pattern;</para>
+            <para><emphasis role="bold">demodulate</emphasis></para>
           </listitem>
         </varlistentry>
         <varlistentry>
