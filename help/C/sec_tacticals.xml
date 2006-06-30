@@ -3,10 +3,178 @@
 <chapter id="sec_tacticals">
  <title>Tacticals</title>
  <sect1>
-   <title>Introduction</title>
+   <title>Interactive proofs and definitions</title>
    <para>
-     &TODO;
+    An interactive definition is started by giving a
+    <link linkend="definition">definition</link> command omitting
+    the definiens.
+    An interactive proof is started by using one of the
+    <link linkend="proofs">proof commands</link> omitting
+    an explicit proof term.
    </para>
+   <para>An interactive proof or definition can and must be terminated by
+    a <link linkend="command_qed">qed</link> command when no more sequents are
+    left to prove. Between the command that starts the interactive session and
+    the qed command the user must provide a procedural proof script made
+    of <link linkend="sec_tactics">tactics</link> structured by means of
+    <link linkend="tacticals">tacticals</link>.</para>
+   <para>In the tradition of the LCF system, tacticals can be considered
+    higher order tactics. Their syntax is structured and they are executed
+    atomically. On the contrary, in Matita the syntax of several tacticals is
+    destructured into a sequence of tokens and tactics in such a way that is
+    is possible to stop execution after every single token or tactic.
+    The original semantics is preserved: the execution of the whole sequence
+    yields the result expected by the original LCF-like tactical.</para>
+ </sect1>
+ <sect1 id="tacticals">
+  <title>Tacticals</title>
+   <table frame="topbot" rowsep="0" colsep="0" role="grammar">
+     <title>proof script</title>
+     <tgroup cols="4">
+     <tbody>
+      <row>
+       <entry id="grammar.proofscript">&proofscript;</entry>
+       <entry>::=</entry>
+       <entry>&proofstep; [&proofstep;]…</entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </table>
+   <para>Every proof step can be immediately executed.</para>
+   <table frame="topbot" rowsep="0" colsep="0" role="grammar">
+     <title>proof steps</title>
+     <tgroup cols="4">
+     <tbody>
+      <row>
+       <entry id="grammar.proofstep">&proofstep;</entry>
+       <entry>::=</entry>
+       <entry>&LCFtactical;</entry>
+      </row>
+      <row>
+       <entry/>
+       <entry>|</entry>
+       <entry><emphasis role="bold">.</emphasis></entry>
+      </row>
+      <row>
+       <entry/>
+       <entry>|</entry>
+       <entry><emphasis role="bold">;</emphasis></entry>
+      </row>
+      <row>
+       <entry/>
+       <entry>|</entry>
+       <entry><emphasis role="bold">[</emphasis></entry>
+      </row>
+      <row>
+       <entry/>
+       <entry>|</entry>
+       <entry><emphasis role="bold">|</emphasis></entry>
+      </row>
+      <row>
+       <entry/>
+       <entry>|</entry>
+       <entry>&nat;[<emphasis role="bold">,</emphasis>&nat;]…<emphasis role="bold">:</emphasis></entry>
+      </row>
+      <row>
+       <entry/>
+       <entry>|</entry>
+       <entry><emphasis role="bold">*:</emphasis></entry>
+      </row>
+      <row>
+       <entry/>
+       <entry>|</entry>
+       <entry><emphasis role="bold">skip</emphasis></entry>
+      </row>
+      <row>
+       <entry/>
+       <entry>|</entry>
+       <entry><emphasis role="bold">]</emphasis></entry>
+      </row>
+      <row>
+       <entry/>
+       <entry>|</entry>
+       <entry><emphasis role="bold">focus</emphasis> &nat; [&nat;]…</entry>
+      </row>
+      <row>
+       <entry/>
+       <entry>|</entry>
+       <entry><emphasis role="bold">unfocus</emphasis></entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </table>
+   <table frame="topbot" rowsep="0" colsep="0" role="grammar">
+     <title>tactics and LCF tacticals</title>
+     <tgroup cols="4">
+     <tbody>
+      <row>
+       <entry id="grammar.LCFtactical">&LCFtactical;</entry>
+       <entry>::=</entry>
+       <entry>&tactic;</entry>
+      </row>
+      <row>
+       <entry/>
+       <entry>|</entry>
+       <entry>&LCFtactical; <emphasis role="bold">;</emphasis> &LCFtactical;</entry>
+      </row>
+      <row>
+       <entry/>
+       <entry>|</entry>
+       <entry>&LCFtactical;
+        <emphasis role="bold">[</emphasis>
+        [&LCFtactical;]
+        [<emphasis role="bold">|</emphasis> &LCFtactical;]…
+        <emphasis role="bold">]</emphasis>
+       </entry>
+      </row>
+      <row>
+       <entry/>
+       <entry>|</entry>
+       <entry><emphasis role="bold">do</emphasis> &nat;
+        &LCFtactical; <emphasis role="bold">end</emphasis>
+       </entry>
+      </row>
+      <row>
+       <entry/>
+       <entry>|</entry>
+       <entry><emphasis role="bold">repeat</emphasis>
+        &LCFtactical; <emphasis role="bold">end</emphasis>
+       </entry>
+      </row>
+      <row>
+       <entry/>
+       <entry>|</entry>
+       <entry>
+        <emphasis role="bold">first [</emphasis>
+        [&LCFtactical;]
+        [<emphasis role="bold">|</emphasis> &LCFtactical;]…
+        <emphasis role="bold">]</emphasis>
+       </entry>
+      </row>
+      <row>
+       <entry/>
+       <entry>|</entry>
+       <entry><emphasis role="bold">try</emphasis> &LCFtactical;</entry>
+      </row>
+      <row>
+       <entry/>
+       <entry>|</entry>
+       <entry>
+        <emphasis role="bold">solve [</emphasis>
+        [&LCFtactical;]
+        [<emphasis role="bold">|</emphasis> &LCFtactical;]…
+        <emphasis role="bold">]</emphasis>
+       </entry>
+      </row>
+      <row>
+       <entry/>
+       <entry>|</entry>
+       <entry><emphasis role="bold">(</emphasis>&LCFtactical;<emphasis role="bold">)</emphasis></entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </table>
+   <para>&TODO;</para>
  </sect1>
 </chapter>
 

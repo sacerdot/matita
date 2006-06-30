@@ -8,11 +8,16 @@
     />
 
   <xsl:template match="/">
-    <itemizedlist>
-      <xsl:apply-templates select="//varlistentry[@role='tactic.synopsis']">
-	<xsl:sort select="ancestor::sect1/title" />
-      </xsl:apply-templates>
-    </itemizedlist>
+    <table frame="topbot" rowsep="0" colsep="0" role="grammar">
+      <title>tactics</title>
+      <tgroup cols="3">
+      <tbody>
+       <xsl:apply-templates select="//varlistentry[@role='tactic.synopsis']">
+	 <xsl:sort select="ancestor::sect1/title" />
+       </xsl:apply-templates>
+      </tbody>
+     </tgroup>
+    </table>
   </xsl:template>
 
   <xsl:template match="varlistentry">
@@ -21,8 +26,26 @@
       <xsl:value-of select="ancestor::sect1/title" />
     </xsl:variable>
 
-    <listitem>
-      <para>
+    <row>
+      <entry>
+       <xsl:choose>
+        <xsl:when test="position()=1">
+         <xsl:attribute name="id">grammar.tactic</xsl:attribute>
+         <xsl:text disable-output-escaping='yes'>&amp;tactic;</xsl:text>
+        </xsl:when>
+       </xsl:choose>
+      </entry>
+      <entry>
+       <xsl:choose>
+        <xsl:when test="position()=1">
+         <xsl:text>::=</xsl:text>
+        </xsl:when>
+        <xsl:otherwise>
+         <xsl:text>|</xsl:text>
+        </xsl:otherwise>
+       </xsl:choose>
+      </entry>
+      <entry>
 	<xsl:for-each select="listitem/para/* | listitem/para/child::text()">
 	  <xsl:choose>
 
@@ -42,8 +65,8 @@
 
 	  </xsl:choose>
 	</xsl:for-each>
-      </para>
-    </listitem>
+      </entry>
+    </row>
 
   </xsl:template>
 
