@@ -1,5 +1,8 @@
 #!/bin/sh
 
+MATITAC=../../matitac.opt
+#MATITAC=../../matitac
+
 if [ -z "$1" ]; then
   TODO=Unsatisfiable/[A-Z]*.ma
 else
@@ -12,7 +15,7 @@ i=1
 for X in $TODO; do
   echo -n "$X ... "
   LOGNAME=logs/log.`basename $X`
-  ../../matitac.opt -nodb $X > $LOGNAME 2>&1
+  $MATITAC -nodb $X > $LOGNAME 2>&1
   RATING=`grep "Rating" $X | sed 's/v.*//' | sed 's/(\*//'`
   if [ `grep "Found a proof" $LOGNAME | wc -l` -gt 0 ]; then
     TIME=`grep "TIME NEEDED" $LOGNAME`

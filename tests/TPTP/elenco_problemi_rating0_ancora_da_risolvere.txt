@@ -1,0 +1,13 @@
+Unsatisfiable/COL023-1.ma
+Unsatisfiable/COL027-1.ma
+Unsatisfiable/COL052-1.ma
+Unsatisfiable/COL059-1.ma
+Unsatisfiable/GRP195-1.ma
+Unsatisfiable/GRP406-1.ma
+Unsatisfiable/GRP407-1.ma
+Unsatisfiable/GRP408-1.ma
+Unsatisfiable/GRP415-1.ma
+Unsatisfiable/LAT010-1.ma
+Unsatisfiable/LAT019-1.ma
+Unsatisfiable/LAT021-1.ma
+Unsatisfiable/LCL162-1.ma
