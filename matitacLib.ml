@@ -275,7 +275,7 @@ let main ~mode =
      end
     else
      begin
-       let baseuri =
+       let baseuri, _fullpathforfname =
         DependenciesParser.baseuri_of_script ~include_paths fname in
        let moo_fname = 
          LibraryMisc.obj_file_of_baseuri 

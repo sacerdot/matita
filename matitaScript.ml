@@ -106,59 +106,71 @@ let eval_with_engine guistuff lexicon_status grafite_status user_goal
   res,parsed_text_length
 
 let wrap_with_developments guistuff f arg = 
+  let compile_needed_and_go_on lexiconfile d exc =
+    let target = Pcre.replace ~pat:"lexicon$" ~templ:"moo" lexiconfile in
+    let target = Pcre.replace ~pat:"metadata$" ~templ:"moo" target in
+    let refresh_cb () = 
+      while Glib.Main.pending () do ignore(Glib.Main.iteration false); done
+    in
+    if not(MatitamakeLib.build_development_in_bg ~target refresh_cb d) then
+      raise exc
+    else
+      f arg
+  in
+  let do_nothing () = raise (ActionCancelled "Inclusion not performed") in
+  let check_if_file_is_exists f =
+    assert(Pcre.pmatch ~pat:"ma$" f);
+    let pwd = Sys.getcwd () in
+    let f_pwd = pwd ^ "/" ^ f in
+    if not (HExtlib.is_regular f_pwd) then
+      raise (ActionCancelled ("File "^f_pwd^" does not exists!"))
+    else
+      raise 
+        (ActionCancelled 
+          ("Internal error: "^f_pwd^" exists but I'm unable to include it!"))
+  in
+  let handle_with_devel d lexiconfile exc =
+    let name = MatitamakeLib.name_for_development d in
+    let title = "Unable to include " ^ lexiconfile in
+    let message = 
+      lexiconfile ^ " is handled by development <b>" ^ name ^ "</b>.\n\n" ^
+      "<i>Should I compile it and Its dependencies?</i>"
+    in
+    (match guistuff.ask_confirmation ~title ~message with
+    | `YES -> compile_needed_and_go_on lexiconfile d exc
+    | `NO -> raise exc
+    | `CANCEL -> do_nothing ())
+  in
+  let handle_without_devel mafilename exc =
+    let title = "Unable to include " ^ mafilename in
+    let message = 
+     mafilename ^ " is <b>not</b> handled by a development.\n" ^
+     "All dependencies are automatically solved for a development.\n\n" ^
+     "<i>Do you want to set up a development?</i>"
+    in
+    (match guistuff.ask_confirmation ~title ~message with
+    | `YES -> 
+        guistuff.develcreator ~containing:(Some (Filename.dirname mafilename));
+        do_nothing ()
+    | `NO -> raise exc
+    | `CANCEL -> do_nothing())
+  in
   try 
     f arg
   with
-  | DependenciesParser.UnableToInclude what 
-  | LexiconEngine.IncludedFileNotCompiled what 
-  | GrafiteEngine.IncludedFileNotCompiled what as exc ->
-      let compile_needed_and_go_on d =
-        let target = Pcre.replace ~pat:"lexicon$" ~templ:"moo" what in
-        let refresh_cb () = 
-          while Glib.Main.pending () do ignore(Glib.Main.iteration false); done
-        in
-        if not(MatitamakeLib.build_development_in_bg ~target refresh_cb d) then
-          raise exc
-        else
-          f arg
-      in
-      let do_nothing () = raise (ActionCancelled "Inclusion not performed") in
-      let handle_with_devel d =
-        let name = MatitamakeLib.name_for_development d in
-        let title = "Unable to include " ^ what in
-        let message = 
-          what ^ " is handled by development <b>" ^ name ^ "</b>.\n\n" ^
-          "<i>Should I compile it and Its dependencies?</i>"
-        in
-        (match guistuff.ask_confirmation ~title ~message with
-        | `YES -> compile_needed_and_go_on d
-        | `NO -> raise exc
-        | `CANCEL -> do_nothing ())
-      in
-      let handle_without_devel filename =
-        let title = "Unable to include " ^ what in
-        let message = 
-         what ^ " is <b>not</b> handled by a development.\n" ^
-         "All dependencies are automatically solved for a development.\n\n" ^
-         "<i>Do you want to set up a development?</i>"
-        in
-        (match guistuff.ask_confirmation ~title ~message with
-        | `YES -> 
-            (match filename with
-            | Some f -> 
-                guistuff.develcreator ~containing:(Some (Filename.dirname f))
-            | None -> guistuff.develcreator ~containing:None);
-            do_nothing ()
-        | `NO -> raise exc
-        | `CANCEL -> do_nothing())
-      in
-      match guistuff.filenamedata with
-      | None,None -> handle_without_devel None
-      | None,Some d -> handle_with_devel d
-      | Some f,_ ->
-          match MatitamakeLib.development_for_dir (Filename.dirname f) with
-          | None -> handle_without_devel (Some f)
-          | Some d -> handle_with_devel d
+  | DependenciesParser.UnableToInclude mafilename -> 
+      assert (Pcre.pmatch ~pat:"ma$" mafilename);
+      check_if_file_is_exists mafilename
+  | LexiconEngine.IncludedFileNotCompiled (xfilename,mafilename) 
+  | GrafiteEngine.IncludedFileNotCompiled (xfilename,mafilename) as exn ->
+      assert (Pcre.pmatch ~pat:"ma$" mafilename);
+      assert (Pcre.pmatch ~pat:"lexicon$" xfilename || 
+              Pcre.pmatch ~pat:"mo$" xfilename );
+      (* we know that someone was able to include the .ma, get the baseuri
+       * but was unable to get the compilation output 'xfilename' *)
+      match MatitamakeLib.development_for_dir (Filename.dirname mafilename) with
+      | None -> handle_without_devel mafilename exn
+      | Some d -> handle_with_devel d xfilename exn
 ;;
     
 let eval_with_engine

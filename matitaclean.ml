@@ -95,7 +95,7 @@ let main () =
             try
               UM.buri_of_uri (UM.uri_of_string suri)
             with UM.IllFormedUri _ ->
-              let u =
+              let u,_ =
                DependenciesParser.baseuri_of_script ~include_paths:[] suri in
               if String.length u < 5 || String.sub u 0 5 <> "cic:/" then begin
                 HLog.error (sprintf "File %s defines a bad baseuri: %s"

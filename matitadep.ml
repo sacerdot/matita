@@ -70,7 +70,7 @@ let main () =
           Hashtbl.add baseuri_of ma_file uri
        | DependenciesParser.IncludeDep path -> 
           try 
-            let baseuri =
+            let baseuri,_ =
               DependenciesParser.baseuri_of_script ~include_paths path in
             if not (Http_getter_storage.is_legacy baseuri) then
               let moo_file = obj_file_of_baseuri false baseuri in
