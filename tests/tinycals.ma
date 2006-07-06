@@ -1,0 +1,49 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+set "baseuri" "cic:/matita/test/tinycals".
+
+theorem prova: 
+  \forall A,B:Prop.
+  \forall H:A \to A \to A \to A \to A \to B.A \to B.
+intros.
+apply H;
+  [assumption 
+  |3,5:assumption;
+  4:assumption
+  |*:assumption
+  ]
+qed.
+
+theorem prova1: 
+  \forall A,B:Prop.
+  \forall H:A \to A \to A \to A \to A \to B.A \to B.
+intros.
+apply H;
+  [*:assumption
+  ]
+qed. 
+
+theorem prova2: 
+  \forall A,B:Prop.
+  \forall H:A \to A \to A \to A \to A \to B.A \to B.
+intros.
+apply H;
+  [2:assumption
+   |assumption
+   3,5:assumption
+   *:assumption
+  ]
+qed. 
+
