@@ -72,6 +72,11 @@ theorem eq_f: \forall  A,B:Type.\forall f:A\to B.
 intros.elim H.reflexivity.
 qed.
 
+theorem eq_f1: \forall  A,B:Type.\forall f:A\to B.
+\forall x,y:A. x=y \to f y = f x.
+intros.elim H.reflexivity.
+qed.
+
 theorem eq_f2: \forall  A,B,C:Type.\forall f:A\to B \to C.
 \forall x1,x2:A. \forall y1,y2:B.
 x1=x2 \to y1=y2 \to f x1 y1 = f x2 y2.
