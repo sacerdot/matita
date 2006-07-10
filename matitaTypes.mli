@@ -25,7 +25,7 @@
 
 exception Cancel
 
-type abouts = [ `Blank | `Current_proof | `Us ]
+type abouts = [ `Blank | `Current_proof | `Us | `Coercions]
 
 type mathViewer_entry =
   [ `About of abouts

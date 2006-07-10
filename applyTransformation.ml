@@ -78,7 +78,7 @@ let txt_of_cic_sequent_conclusion size metasenv sequent =
   let t, ids_to_uris = TermAcicContent.ast_of_acic ids_to_inner_sorts t in
   let t = TermContentPres.pp_ast t in
   let t = CicNotationPres.render ids_to_uris t in
-  BoxPp.render_to_string size t
+  BoxPp.render_to_string (function x::_ -> x | _ -> assert false) size t
 
 let txt_of_cic_term size metasenv context t = 
   let fake_sequent = (-1,context,t) in

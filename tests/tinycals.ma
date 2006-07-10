@@ -21,7 +21,7 @@ intros.
 apply H;
   [assumption 
   |3,5:assumption;
-  4:assumption
+  |4:assumption
   |*:assumption
   ]
 qed.
@@ -31,19 +31,21 @@ theorem prova1:
   \forall H:A \to A \to A \to A \to A \to B.A \to B.
 intros.
 apply H;
-  [*:assumption
-  ]
+  [*:assumption]
 qed. 
+
+include "logic/connectives.ma".
 
 theorem prova2: 
   \forall A,B:Prop.
-  \forall H:A \to A \to A \to A \to A \to B.A \to B.
+  \forall H:A \to A \to A \to (A \land A) \to A \to B.A \to B.
 intros.
 apply H;
   [2:assumption
-   |assumption
-   3,5:assumption
-   *:assumption
+  |4:split.assumption
+  |3,5:assumption
+  |*:assumption
   ]
+assumption.
 qed. 
 

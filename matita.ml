@@ -160,6 +160,20 @@ let _ =
             | Incomplete_proof i -> let _,_,p,_ = i.GrafiteTypes.proof in p
             | Proof p -> let _,_,p,_ = p in p
             | Intermediate _ -> assert false)));
+     addDebugItem "Print current proof (natural language) to stderr" 
+       (fun _ -> 
+        prerr_endline 
+          (ObjPp.obj_to_string 120 
+            (match 
+            (MatitaScript.current ())#grafite_status.GrafiteTypes.proof_status
+            with
+            | GrafiteTypes.No_proof -> assert false
+            | Incomplete_proof i -> 
+                let _,m,p,ty = i.GrafiteTypes.proof in 
+                Cic.CurrentProof ("current (incomplete) proof",m,p,ty,[],[])
+            | Proof (_,m,p,ty) -> 
+                Cic.CurrentProof ("current proof",m,p,ty,[],[])
+            | Intermediate _ -> assert false)));
 (*     addDebugItem "ask record choice"
       (fun _ ->
         HLog.debug (string_of_int
@@ -187,26 +201,19 @@ let _ =
       (fun _ -> GrafiteDisambiguator.only_one_pass := true);
     addDebugSeparator ();
     addDebugItem "enable coercions hiding"
-      (fun _ -> TermAcicContent.hide_coercions := true);
+      (fun _ -> Acic2content.hide_coercions := true);
     addDebugItem "disable coercions hiding"
-      (fun _ -> TermAcicContent.hide_coercions := false);
+      (fun _ -> Acic2content.hide_coercions := false);
+    addDebugItem "show coercions graph" (fun _ ->
+      let c = MatitaMathView.cicBrowser () in
+      c#load (`About `Coercions));
     addDebugItem "dump coercions Db" (fun _ ->
       List.iter
-        (fun (s,t,u) -> 
+      (fun (s,t,ul) -> 
           HLog.debug
-            (UriManager.name_of_uri u ^ ":"
+           ((String.concat "," (List.map UriManager.name_of_uri ul)) ^ ":"
              ^ CoercDb.name_of_carr s ^ " -> " ^ CoercDb.name_of_carr t))
         (CoercDb.to_list ()));
-    addDebugItem "show coercions graph" (fun _ ->
-      let str = CoercGraph.generate_dot_file () in
-      let filename, oc = Filename.open_temp_file "xx" ".dot" in
-      output_string oc str;
-      close_out oc;
-      let ps = Filename.temp_file "yy" ".png" in
-      ignore (Unix.system ("/usr/bin/dot -Tpng -o" ^ ps ^ " " ^ filename));
-      ignore (Unix.system ("/usr/bin/display " ^ ps));
-      Sys.remove ps;
-      Sys.remove filename);
     addDebugSeparator ();
     let mview () = (MatitaMathView.sequentsViewer_instance ())#cicMathView in
 (*     addDebugItem "save (sequent) MathML to matita.xml"

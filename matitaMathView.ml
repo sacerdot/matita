@@ -571,8 +571,8 @@ end
 let tab_label meta_markup =
   let rec aux =
     function
-    | `Current m -> sprintf "<b>%s</b>" (aux m)
     | `Closed m -> sprintf "<s>%s</s>" (aux m)
+    | `Current m -> sprintf "<b>%s</b>" (aux m)
     | `Shift (pos, m) -> sprintf "|<sub>%d</sub>: %s" pos (aux m)
     | `Meta n -> sprintf "?%d" n
   in
@@ -694,7 +694,8 @@ class sequentsViewer ~(notebook:GPack.notebook) ~(cicMathView:cicMathView) () =
         ~env:(fun depth tag (pos, sw) ->
           let markup =
             match depth, pos with
-            | 0, _ -> `Current (render_switch sw)
+            | 0, 0 -> `Current (render_switch sw)
+            | 0, _ -> `Shift (pos, `Current (render_switch sw))
             | 1, pos when Stack.head_tag stack = `BranchTag ->
                 `Shift (pos, render_switch sw)
             | _ -> render_switch sw
@@ -824,7 +825,18 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
   in
   let handle_error' f = (fun () -> handle_error (fun () -> f ())) in
   let load_easter_egg = lazy (
-    win#easterEggImage#set_file (MatitaMisc.image_path "meegg.png"))
+    win#browserImage#set_file (MatitaMisc.image_path "meegg.png"))
+  in
+  let load_coerchgraph () = 
+      let str = CoercGraph.generate_dot_file () in
+      let filename, oc = Filename.open_temp_file "xx" ".dot" in
+      output_string oc str;
+      close_out oc;
+      let ps = Filename.temp_file "yy" ".png" in
+      ignore (Unix.system ("/usr/bin/dot -Tpng -o" ^ ps ^ " " ^ filename));
+      Sys.remove filename;
+      at_exit (fun _ -> Sys.remove ps);
+      win#browserImage#set_file ps
   in
   object (self)
     inherit scriptAccessor
@@ -940,12 +952,14 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
       * @param uri string *)
     method private _load ?(force=false) entry =
       handle_error (fun () ->
-       if entry <> current_entry || entry = `About `Current_proof || force then
+       if entry <> current_entry || entry = `About `Current_proof || entry =
+         `About `Coercions || force then
         begin
           (match entry with
           | `About `Current_proof -> self#home ()
           | `About `Blank -> self#blank ()
           | `About `Us -> self#egg ()
+          | `About `Coercions -> self#coerchgraph ()
           | `Check term -> self#_loadCheck term
           | `Cic (term, metasenv) -> self#_loadTermCic term metasenv
           | `Dir dir -> self#_loadDir dir
@@ -968,6 +982,10 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
     method private egg () =
       win#mathOrListNotebook#goto_page 2;
       Lazy.force load_easter_egg
+
+    method private coerchgraph () =
+      win#mathOrListNotebook#goto_page 2;
+      load_coerchgraph ()
 
     method private home () =
       self#_showMath;

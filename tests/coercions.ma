@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 set "baseuri" "cic:/matita/tests/coercions/".
-include "legacy/coq.ma".
+include "nat/nat.ma".
 
 inductive pos: Set \def
 | one : pos
@@ -61,4 +61,26 @@ definition double2:
 \def 
   \lambda f:int \to int. \lambda x : pos .f (nat2int (pos2nat x)).
   
-  
+coercion cic:/matita/logic/equality/eq_f.con.  
+coercion cic:/matita/logic/equality/eq_f1.con.
+variant xxx : ? \def eq_f.
+coercion cic:/matita/tests/coercions/xxx.con.
+
+theorem coercion_svelta : \forall T,S:Type.\forall f:T \to S.\forall x,y:T.x=y \to f y = f x.
+  intros.
+  apply ((\lambda h:f y = f x.h) H).
+qed.
+
+variant pos2nat' : ? \def pos2nat.
+
+coercion cic:/matita/tests/coercions/xxx.con.
+
+inductive initial: Set \def iii : initial.
+
+definition i2pos: ? \def \lambda x:initial.one.
+
+coercion cic:/matita/tests/coercions/i2pos.con.
+
+coercion cic:/matita/tests/coercions/pos2nat'.con.
+
+
