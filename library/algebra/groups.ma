@@ -190,7 +190,7 @@ for @{ 'subgroupimage $H $x }.
 
 interpretation "Subgroup image" 'subgroupimage H x =
  (cic:/matita/algebra/groups/image.con _ _
-   (cic:/matita/algebra/groups/morphism_of_subgroup.con _ H) x).
+   (cic:/matita/algebra/groups/morphism_OF_subgroup.con _ H) x).
 
 definition member_of_subgroup ≝
  λG.λH:subgroup G.λx:G.∃y.x=y \sub H.
