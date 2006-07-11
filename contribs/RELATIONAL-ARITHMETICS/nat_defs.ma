@@ -14,6 +14,8 @@
 
 set "baseuri" "cic:/matita/RELATIONAL-ARITHMETICS/nat_defs".
 
+include "logic/equality.ma".
+
 inductive nat: Set \def
    | O: nat
    | S: nat \to nat.
