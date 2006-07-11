@@ -216,6 +216,10 @@
     </variablelist>
     </para>
  </sect2>
+   <sect2 id="authoringinterface">
+    <title>The authoring interface</title>
+    <para>&TODO;</para>
+   </sect2>
  </sect1>
 </chapter>
 
