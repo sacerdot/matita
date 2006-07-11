@@ -296,7 +296,7 @@ qed.
 
 (*CSC: here the coercion Type_of_Group cannot be omitted. Why? *)
 theorem in_x_mk_left_coset_x_H:
- ∀G.∀x:Type_of_Group G.∀H:subgroup G.x ∈ (x*H).
+ ∀G.∀x:Type_OF_Group G.∀H:subgroup G.x ∈ (x*H).
 intros;
 simplify;
 apply (ex_intro ? ? 1);
