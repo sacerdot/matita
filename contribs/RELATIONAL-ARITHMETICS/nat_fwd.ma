@@ -14,7 +14,7 @@
 
 set "baseuri" "cic:/matita/RELATIONAL-ARITHMETICS/nat_fwd".
 
-include "library/logic/equality.ma".
+include "logic/equality.ma".
 include "nat_defs.ma".
 
 theorem eq_gen_O_S: \forall (P:Prop). \forall m2. O = S m2 \to P.
