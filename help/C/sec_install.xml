@@ -364,5 +364,14 @@
     </sect2>
 
   </sect1>
+
+  <sect1 id="matita.conf.xml">
+    <title>Configuring Matita</title>
+    <para>
+    The file <emphasis>matita.conf.xml</emphasis>...
+    &TODO;
+    </para>
+  </sect1>
+
 </chapter>
 
