@@ -288,8 +288,6 @@ let rec eval_macro include_paths (buffer : GText.buffer) guistuff lexicon_status
       let t_and_ty = Cic.Cast (term,ty) in
       guistuff.mathviewer#show_entry (`Cic (t_and_ty,metasenv));
       [], parsed_text_length
-  (* TODO *)
-  | TA.Quit _ -> failwith "not implemented"
                                 
 and eval_executable include_paths (buffer : GText.buffer) guistuff
 lexicon_status grafite_status user_goal unparsed_text skipped_txt nonskipped_txt

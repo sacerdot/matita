@@ -141,10 +141,8 @@
 
 
   <keyword-list _name = "Matita Macro" style = "Others 3" case-sensitive="TRUE">
-    <keyword>print</keyword>
     <keyword>check</keyword>
     <keyword>hint</keyword>
-    <keyword>quit</keyword>
     <keyword>set</keyword>
   </keyword-list>
   
