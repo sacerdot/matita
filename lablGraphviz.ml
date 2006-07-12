@@ -66,11 +66,12 @@ class graphviz_impl ?packing gviz_cmd =
       ignore (Sys.command (sprintf "%s %s %s > %s"
         gviz_cmd png_flags fname tmp_png));
       image#set_file tmp_png;
+      HExtlib.safe_remove tmp_png;
       let tmp_map = tempfile () in
       ignore (Sys.command (sprintf "%s %s %s > %s"
         gviz_cmd map_flags fname tmp_map));
       self#load_map tmp_map;
-      HExtlib.safe_remove tmp_png
+      HExtlib.safe_remove tmp_map
 
     method private load_map fname =
       let areas = ref [] in
