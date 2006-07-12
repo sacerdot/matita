@@ -2,15 +2,244 @@
 <!-- ============ Commands ====================== -->
 <chapter id="sec_commands">
  <title>Other commands</title>
- <sect1>
-   <title>Introduction</title>
+ <sect1 id="command_alias">
+   <title>alias</title>
+   <para><userinput>alias id &quot;s&quot; = &quot;def&quot;</userinput></para>
+   <para><userinput>alias symbol &quot;s&quot; (instance n) = &quot;def&quot;</userinput></para>
+   <para><userinput>alias num (instance n) = &quot;def&quot;</userinput></para>
    <para>
-     &TODO;
+     <variablelist>
+       <varlistentry role="tactic.synopsis">
+         <term>Synopsis:</term>
+         <listitem>
+           <para><emphasis role="bold">alias</emphasis>
+            [<emphasis role="bold">id</emphasis> <emphasis role="bold">&quot;</emphasis>&string;<emphasis role="bold">&quot;</emphasis> <emphasis role="bold">=</emphasis> <emphasis role="bold">&quot;</emphasis>&string;<emphasis role="bold">&quot;</emphasis>
+            | <emphasis role="bold">symbol</emphasis> <emphasis role="bold">&quot;</emphasis>&string;<emphasis role="bold">&quot;</emphasis> [<emphasis role="bold">(instance</emphasis> &nat;<emphasis role="bold">)</emphasis>] <emphasis role="bold">=</emphasis> <emphasis role="bold">&quot;</emphasis>&string;<emphasis role="bold">&quot;</emphasis>
+            | <emphasis role="bold">num</emphasis> [<emphasis role="bold">(instance</emphasis> &nat;<emphasis role="bold">)</emphasis>] <emphasis role="bold">=</emphasis> <emphasis role="bold">&quot;</emphasis>&string;<emphasis role="bold">&quot;</emphasis>
+            ]
+           </para>
+         </listitem>
+       </varlistentry>
+       <varlistentry>
+         <term>Action:</term>
+         <listitem>
+           <para>Used to give an hint to the disambiguating parser.
+            When the parser is faced to the identifier (or symbol)
+            <command>s</command> or to any number, it will prefer
+            interpretations that &quot;map <command>s</command> (or the
+            number) to <command>def</command>&quot;. For identifiers,
+            &quot;def&quot; is the URI of the interpretation.
+            E.g.: <command>cic:/matita/nat/nat.ind#xpointer(1/1/1)</command>
+            for the first constructor of the first inductive type defined
+            in the block of inductive type(s)
+            <command>cic:/matita/nat/nat.ind</command>.
+            For symbols and numbers, &quot;def&quot; is the label used to
+            mark the wanted
+            <link linkend="interpretation">interpretation</link>.
+           </para>
+          <para>When a symbol or a number occurs several times in the
+           term to be parsed, it is possible to give an hint only for the
+           instance <command>n</command>. When the instance is omitted,
+           the hint is valid for every occurrence.
+          </para>
+          <para>
+           Hints are automatically inserted in the script by Matita every
+           time the user is interactively asked a question to disambiguate
+           a term. This way the user won't be posed the same question twice
+           when the script will be executed again.</para>
+         </listitem>
+       </varlistentry>
+     </variablelist>
+   </para>
+ </sect1>
+ <sect1 id="command_check">
+   <title>check</title>
+   <para><userinput></userinput></para>
+   <para>
+     <variablelist>
+       <varlistentry role="tactic.synopsis">
+         <term>Synopsis:</term>
+         <listitem>
+           <para><emphasis role="bold">check</emphasis>
+           </para>
+         </listitem>
+       </varlistentry>
+       <varlistentry>
+         <term>Action:</term>
+         <listitem>
+           <para>&TODO;</para>
+         </listitem>
+       </varlistentry>
+     </variablelist>
+   </para>
+ </sect1>
+ <sect1 id="command_coercion">
+   <title>coercion</title>
+   <para><userinput></userinput></para>
+   <para>
+     <variablelist>
+       <varlistentry role="tactic.synopsis">
+         <term>Synopsis:</term>
+         <listitem>
+           <para><emphasis role="bold">coercion</emphasis>
+           </para>
+         </listitem>
+       </varlistentry>
+       <varlistentry>
+         <term>Action:</term>
+         <listitem>
+           <para>&TODO;</para>
+         </listitem>
+       </varlistentry>
+     </variablelist>
+   </para>
+ </sect1>
+ <sect1 id="command_default">
+   <title>default</title>
+   <para><userinput></userinput></para>
+   <para>
+     <variablelist>
+       <varlistentry role="tactic.synopsis">
+         <term>Synopsis:</term>
+         <listitem>
+           <para><emphasis role="bold">default</emphasis>
+           </para>
+         </listitem>
+       </varlistentry>
+       <varlistentry>
+         <term>Action:</term>
+         <listitem>
+           <para>&TODO;</para>
+         </listitem>
+       </varlistentry>
+     </variablelist>
+   </para>
+ </sect1>
+ <sect1 id="command_hint">
+   <title>hint</title>
+   <para><userinput></userinput></para>
+   <para>
+     <variablelist>
+       <varlistentry role="tactic.synopsis">
+         <term>Synopsis:</term>
+         <listitem>
+           <para><emphasis role="bold">hint</emphasis>
+           </para>
+         </listitem>
+       </varlistentry>
+       <varlistentry>
+         <term>Action:</term>
+         <listitem>
+           <para>&TODO;</para>
+         </listitem>
+       </varlistentry>
+     </variablelist>
+   </para>
+ </sect1>
+ <sect1 id="command_include">
+   <title>include</title>
+   <para><userinput></userinput></para>
+   <para>
+     <variablelist>
+       <varlistentry role="tactic.synopsis">
+         <term>Synopsis:</term>
+         <listitem>
+           <para><emphasis role="bold">include</emphasis>
+           </para>
+         </listitem>
+       </varlistentry>
+       <varlistentry>
+         <term>Action:</term>
+         <listitem>
+           <para>&TODO;</para>
+         </listitem>
+       </varlistentry>
+     </variablelist>
+   </para>
+ </sect1>
+ <sect1 id="command_include_first">
+   <title>include'</title>
+   <para><userinput></userinput></para>
+   <para>
+     <variablelist>
+       <varlistentry role="tactic.synopsis">
+         <term>Synopsis:</term>
+         <listitem>
+           <para><emphasis role="bold">include'</emphasis>
+           </para>
+         </listitem>
+       </varlistentry>
+       <varlistentry>
+         <term>Action:</term>
+         <listitem>
+           <para>&TODO;</para>
+         </listitem>
+       </varlistentry>
+     </variablelist>
+   </para>
+ </sect1>
+ <sect1 id="command_set">
+   <title>set</title>
+   <para><userinput></userinput></para>
+   <para>
+     <variablelist>
+       <varlistentry role="tactic.synopsis">
+         <term>Synopsis:</term>
+         <listitem>
+           <para><emphasis role="bold">set</emphasis>
+           </para>
+         </listitem>
+       </varlistentry>
+       <varlistentry>
+         <term>Action:</term>
+         <listitem>
+           <para>&TODO;</para>
+         </listitem>
+       </varlistentry>
+     </variablelist>
+   </para>
+ </sect1>
+ <sect1 id="command_whelp">
+   <title>whelp</title>
+   <para><userinput></userinput></para>
+   <para>
+     <variablelist>
+       <varlistentry role="tactic.synopsis">
+         <term>Synopsis:</term>
+         <listitem>
+           <para><emphasis role="bold">whelp</emphasis>
+           </para>
+         </listitem>
+       </varlistentry>
+       <varlistentry>
+         <term>Action:</term>
+         <listitem>
+           <para>&TODO;</para>
+         </listitem>
+       </varlistentry>
+     </variablelist>
    </para>
  </sect1>
  <sect1 id="command_qed">
-   <title>Qed</title>
-   <para>&TODO;</para>
+   <title>qed</title>
+   <para><userinput></userinput></para>
+   <para>
+     <variablelist>
+       <varlistentry role="tactic.synopsis">
+         <term>Synopsis:</term>
+         <listitem>
+           <para><emphasis role="bold">qed</emphasis>
+           </para>
+         </listitem>
+       </varlistentry>
+       <varlistentry>
+         <term>Action:</term>
+         <listitem>
+           <para>&TODO;</para>
+         </listitem>
+       </varlistentry>
+     </variablelist>
+   </para>
  </sect1>
 </chapter>
 
