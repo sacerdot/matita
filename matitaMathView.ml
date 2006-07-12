@@ -246,7 +246,6 @@ object (self)
         | _ -> leave_href ())
     | None -> leave_href ()
 
-
   method private tactic_text_pattern_of_node node =
    let id = id_of_node node in
    let cic_info, unsh_sequent = self#get_cic_info id in
@@ -258,6 +257,16 @@ object (self)
        | None -> None, [], Some text
        | Some hyp_name -> None, [ hyp_name, text ], None)
    | SelHyp (hyp_name, _ctxt) -> None, [ hyp_name, "%" ], None
+
+  method private tactic_text_of_node node =
+   let id = id_of_node node in
+   let cic_info, unsh_sequent = self#get_cic_info id in
+   match self#get_term_by_id cic_info id with
+   | SelTerm (t, father_hyp) ->
+       let sequent = self#sequent_of_id ~paste_kind:`Term id in
+       let text = self#string_of_cic_sequent sequent in
+       text
+   | SelHyp (hyp_name, _ctxt) -> hyp_name
 
     (** @return a pattern structure which contains pretty printed terms *)
   method private tactic_text_pattern_of_selection =
@@ -420,10 +429,13 @@ object (self)
   method private string_of_node ~(paste_kind:paste_kind) node =
     if node#hasAttributeNS ~namespaceURI:helm_ns ~localName:xref_ds
     then
-     let tactic_text_pattern =  self#tactic_text_pattern_of_node node in
-      GrafiteAstPp.pp_tactic_pattern
-       ~term_pp:(fun s -> s) ~lazy_term_pp:(fun _ -> assert false)
-       tactic_text_pattern
+      match paste_kind with
+      | `Pattern ->
+          let tactic_text_pattern =  self#tactic_text_pattern_of_node node in
+          GrafiteAstPp.pp_tactic_pattern
+            ~term_pp:(fun s -> s) ~lazy_term_pp:(fun _ -> assert false)
+            tactic_text_pattern
+      | `Term -> self#tactic_text_of_node node
     else string_of_dom_node node
 
   method private string_of_cic_sequent cic_sequent =
