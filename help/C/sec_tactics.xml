@@ -86,6 +86,59 @@
       </variablelist>
     </para>
   </sect1>
+  <sect1 id="tac_applyS">
+    <title>applyS</title>
+    <titleabbrev>applyS</titleabbrev>
+    <para><userinput>applyS t</userinput></para>
+    <para>
+      <variablelist>
+        <varlistentry role="tactic.synopsis">
+          <term>Synopsis:</term>
+          <listitem>
+            <para><emphasis role="bold">applyS</emphasis> &sterm;</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Pre-conditions:</term>
+          <listitem>
+            <para><command>t</command> must have type
+             <command>T<subscript>1</subscript> → ... →
+              T<subscript>n</subscript> → G</command>.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Action:</term>
+          <listitem>
+            <para><command>applyS</command> is useful when
+             <command>apply</command> fails because the current goal
+             and the conclusion of the applied theorems are extensionally
+             equivalent up to instantiation of metavariables, but cannot
+             be unified. E.g. the goal is <command>P(n*O+m)</command> and
+             the theorem to be applied proves <command>∀m.P(m+O)</command>.
+            </para>
+            <para>
+             It tries to automatically rewrite the current goal using
+             <link linkend="tac_auto">auto paramodulation</link>
+             to make it unifiable with <command>G</command>.
+             Then it closes the current sequent by applying
+             <command>t</command> to <command>n</command>
+             implicit arguments (that become new sequents).
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>New sequents to prove:</term>
+          <listitem>
+            <para>It opens a new sequent for each premise 
+             <command>T<subscript>i</subscript></command> that is not
+             instantiated by unification. <command>T<subscript>i</subscript></command> is
+             the conclusion of the <command>i</command>-th new sequent to
+             prove.</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </para>
+  </sect1>
   <sect1 id="tac_assumption">
     <title>assumption</title>
     <titleabbrev>assumption</titleabbrev>

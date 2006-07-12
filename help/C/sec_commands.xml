@@ -9,7 +9,7 @@
    <para><userinput>alias num (instance n) = &quot;def&quot;</userinput></para>
    <para>
      <variablelist>
-       <varlistentry role="tactic.synopsis">
+       <varlistentry>
          <term>Synopsis:</term>
          <listitem>
            <para><emphasis role="bold">alias</emphasis>
@@ -57,7 +57,7 @@
    <para><userinput>check t</userinput></para>
    <para>
      <variablelist>
-       <varlistentry role="tactic.synopsis">
+       <varlistentry>
          <term>Synopsis:</term>
          <listitem>
            <para><emphasis role="bold">check</emphasis> &term;</para>
@@ -79,7 +79,7 @@
    <para><userinput>coercion u</userinput></para>
    <para>
      <variablelist>
-       <varlistentry role="tactic.synopsis">
+       <varlistentry>
          <term>Synopsis:</term>
          <listitem>
            <para><emphasis role="bold">coercion</emphasis> &uri;</para>
@@ -110,20 +110,82 @@
  </sect1>
  <sect1 id="command_default">
    <title>default</title>
-   <para><userinput></userinput></para>
+   <para><userinput>default &quot;s&quot; u<subscript>1</subscript> … u<subscript>n</subscript></userinput></para>
    <para>
      <variablelist>
-       <varlistentry role="tactic.synopsis">
+       <varlistentry>
          <term>Synopsis:</term>
          <listitem>
            <para><emphasis role="bold">default</emphasis>
+            &qstring; &uri; [&uri;]…
            </para>
          </listitem>
        </varlistentry>
        <varlistentry>
          <term>Action:</term>
          <listitem>
-           <para>&TODO;</para>
+           <para>It registers a cluster of related definitions and
+            theorems to be used by tactics and the rendering engine.
+            Some functionalities of Matita are not available when some
+            clusters have not been registered. Overloading a cluster
+            registration is possible: the last registration will be the
+            default one, but the previous ones are still in effect.</para>
+           <para>
+            <command>s</command> is an identifier of the cluster and
+            <command>u<subscript>1</subscript> … u<subscript>n</subscript></command>
+            are the URIs of the definitions and theorems of the cluster.
+            The number <command>n</command> of required URIs depends on the
+            cluster. The following clusters are supported.
+           </para>
+           <table>
+            <title>clusters</title>
+            <tgroup cols="5">
+            <thead>
+             <row>
+              <entry>name</entry>
+              <entry>expected object for 1st URI</entry>
+              <entry>expected object for 2nd URI</entry>
+              <entry>expected object for 3rd URI</entry>
+              <entry>expected object for 4th URI</entry>
+              <entry>expected object for 5th URI</entry>
+             </row>
+            </thead>
+            <tbody>
+             <row>
+              <entry>equality</entry>
+              <entry>an inductive type (say, of type <command>eq</command>) of type ∀A:Type.A <emphasis role="bold">→</emphasis> <emphasis role="bold">Prop</emphasis> with one family parameter and one constructor of type ∀x:A.eq A x</entry>
+              <entry>a theorem of type <emphasis role="bold">∀</emphasis>A.<emphasis role="bold">∀</emphasis>x,y:A.eq A x y <emphasis role="bold">→</emphasis> eq A y x</entry>
+              <entry>a theorem of type <emphasis role="bold">∀</emphasis>A.<emphasis role="bold">∀</emphasis>x,y,z:A.eq A x y <emphasis role="bold">→</emphasis> eq A y z <emphasis role="bold">→</emphasis> eq A x z</entry>
+              <entry><emphasis role="bold">∀</emphasis>A.<emphasis role="bold">∀</emphasis>a.<emphasis role="bold">∀</emphasis> P:A <emphasis role="bold">→</emphasis> <emphasis role="bold">Prop</emphasis>.P x <emphasis role="bold">→</emphasis> <emphasis role="bold">∀</emphasis>y.eq A x y <emphasis role="bold">→</emphasis> P y</entry>
+              <entry><emphasis role="bold">∀</emphasis>A.<emphasis role="bold">∀</emphasis>a.<emphasis role="bold">∀</emphasis> P:A <emphasis role="bold">→</emphasis> <emphasis role="bold">Prop</emphasis>.P x <emphasis role="bold">→</emphasis> <emphasis role="bold">∀</emphasis>y.eq A y x <emphasis role="bold">→</emphasis> P y</entry>
+             </row>
+             <row>
+              <entry>true</entry>
+              <entry>an inductive type of type <emphasis role="bold">Prop</emphasis> with only one constructor that has no arguments</entry>
+              <entry/>
+              <entry/>
+              <entry/>
+              <entry/>
+             </row>
+             <row>
+              <entry>false</entry>
+              <entry>an inductive type of type <emphasis role="bold">Prop</emphasis> without constructors</entry>
+              <entry/>
+              <entry/>
+              <entry/>
+              <entry/>
+             </row>
+             <row>
+              <entry>absurd</entry>
+              <entry>a theorem of type <emphasis role="bold">∀</emphasis>A:Prop.<emphasis role="bold">∀</emphasis>B:Prop.A <emphasis role="bold">→</emphasis> Not A <emphasis role="bold">→</emphasis> B</entry>
+              <entry/>
+              <entry/>
+              <entry/>
+              <entry/>
+             </row>
+            </tbody>
+            </tgroup>
+           </table>
          </listitem>
        </varlistentry>
      </variablelist>
@@ -134,7 +196,7 @@
    <para><userinput>hint</userinput></para>
    <para>
      <variablelist>
-       <varlistentry role="tactic.synopsis">
+       <varlistentry>
          <term>Synopsis:</term>
          <listitem>
            <para><emphasis role="bold">hint</emphasis>
@@ -160,7 +222,7 @@
    <para><userinput>include &quot;s&quot;</userinput></para>
    <para>
      <variablelist>
-       <varlistentry role="tactic.synopsis">
+       <varlistentry>
          <term>Synopsis:</term>
          <listitem>
            <para><emphasis role="bold">include</emphasis> &qstring;</para>
@@ -193,7 +255,7 @@
    <para><userinput></userinput></para>
    <para>
      <variablelist>
-       <varlistentry role="tactic.synopsis">
+       <varlistentry>
          <term>Synopsis:</term>
          <listitem>
            <para><emphasis role="bold">include'</emphasis> &qstring;</para>
@@ -213,7 +275,7 @@
    <para><userinput>set &quot;baseuri&quot; &quot;s&quot;</userinput></para>
    <para>
      <variablelist>
-       <varlistentry role="tactic.synopsis">
+       <varlistentry>
          <term>Synopsis:</term>
          <listitem>
            <para><emphasis role="bold">set</emphasis> &qstring; &qstring;</para>
@@ -240,20 +302,33 @@
  </sect1>
  <sect1 id="command_whelp">
    <title>whelp</title>
-   <para><userinput></userinput></para>
+   <para><userinput>whelp locate &quot;s&quot;</userinput></para>
+   <para><userinput>whelp hint t</userinput></para>
+   <para><userinput>whelp elim t</userinput></para>
+   <para><userinput>whelp match t</userinput></para>
+   <para><userinput>whelp instance t</userinput></para>
    <para>
      <variablelist>
-       <varlistentry role="tactic.synopsis">
+       <varlistentry>
          <term>Synopsis:</term>
          <listitem>
            <para><emphasis role="bold">whelp</emphasis>
+            [<emphasis role="bold">locate</emphasis> &qstring;
+            | <emphasis role="bold">hint</emphasis> &term;
+            | <emphasis role="bold">elim</emphasis> &term;
+            | <emphasis role="bold">match</emphasis> &term;
+            | <emphasis role="bold">instance</emphasis> &term;
+            ]
            </para>
          </listitem>
        </varlistentry>
        <varlistentry>
          <term>Action:</term>
          <listitem>
-           <para>&TODO;</para>
+           <para>Performs the corresponding <link linkend="whelp">query</link>,
+            showing the result in the CIC browser. The command is removed
+            from the script.
+           </para>
          </listitem>
        </varlistentry>
      </variablelist>
@@ -264,7 +339,7 @@
    <para><userinput></userinput></para>
    <para>
      <variablelist>
-       <varlistentry role="tactic.synopsis">
+       <varlistentry>
          <term>Synopsis:</term>
          <listitem>
            <para><emphasis role="bold">qed</emphasis>
