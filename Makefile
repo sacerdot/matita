@@ -39,6 +39,7 @@ CMOS =				\
 	matitaScript.cmo	\
 	matitaGeneratedGui.cmo	\
 	matitaMathView.cmo 	\
+	lablGraphviz.cmo	\
 	matitaGui.cmo		\
 	$(NULL)
 # objects for matitac (batch compiler)
