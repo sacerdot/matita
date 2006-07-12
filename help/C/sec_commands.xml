@@ -13,9 +13,9 @@
          <term>Synopsis:</term>
          <listitem>
            <para><emphasis role="bold">alias</emphasis>
-            [<emphasis role="bold">id</emphasis> <emphasis role="bold">&quot;</emphasis>&string;<emphasis role="bold">&quot;</emphasis> <emphasis role="bold">=</emphasis> <emphasis role="bold">&quot;</emphasis>&string;<emphasis role="bold">&quot;</emphasis>
-            | <emphasis role="bold">symbol</emphasis> <emphasis role="bold">&quot;</emphasis>&string;<emphasis role="bold">&quot;</emphasis> [<emphasis role="bold">(instance</emphasis> &nat;<emphasis role="bold">)</emphasis>] <emphasis role="bold">=</emphasis> <emphasis role="bold">&quot;</emphasis>&string;<emphasis role="bold">&quot;</emphasis>
-            | <emphasis role="bold">num</emphasis> [<emphasis role="bold">(instance</emphasis> &nat;<emphasis role="bold">)</emphasis>] <emphasis role="bold">=</emphasis> <emphasis role="bold">&quot;</emphasis>&string;<emphasis role="bold">&quot;</emphasis>
+            [<emphasis role="bold">id</emphasis> &qstring; <emphasis role="bold">=</emphasis> &qstring;
+            | <emphasis role="bold">symbol</emphasis> &qstring; [<emphasis role="bold">(instance</emphasis> &nat;<emphasis role="bold">)</emphasis>] <emphasis role="bold">=</emphasis> &qstring;
+            | <emphasis role="bold">num</emphasis> [<emphasis role="bold">(instance</emphasis> &nat;<emphasis role="bold">)</emphasis>] <emphasis role="bold">=</emphasis> &qstring;
             ]
            </para>
          </listitem>
@@ -60,8 +60,7 @@
        <varlistentry role="tactic.synopsis">
          <term>Synopsis:</term>
          <listitem>
-           <para><emphasis role="bold">check &term;</emphasis>
-           </para>
+           <para><emphasis role="bold">check</emphasis> &term;</para>
          </listitem>
        </varlistentry>
        <varlistentry>
@@ -83,8 +82,7 @@
        <varlistentry role="tactic.synopsis">
          <term>Synopsis:</term>
          <listitem>
-           <para><emphasis role="bold">coercion &uri;</emphasis>
-           </para>
+           <para><emphasis role="bold">coercion</emphasis> &uri;</para>
          </listitem>
        </varlistentry>
        <varlistentry>
@@ -159,41 +157,52 @@
  </sect1>
  <sect1 id="command_include">
    <title>include</title>
-   <para><userinput></userinput></para>
+   <para><userinput>include &quot;s&quot;</userinput></para>
    <para>
      <variablelist>
        <varlistentry role="tactic.synopsis">
          <term>Synopsis:</term>
          <listitem>
-           <para><emphasis role="bold">include</emphasis>
-           </para>
+           <para><emphasis role="bold">include</emphasis> &qstring;</para>
          </listitem>
        </varlistentry>
        <varlistentry>
          <term>Action:</term>
          <listitem>
-           <para>&TODO;</para>
+           <para>Every <link linkend="command_coercion">coercion</link>,
+            <link linkend="notation">notation</link> and
+            <link linkend="interpretation">interpretation</link> that was active
+            when the file <command>s</command> was compiled last time
+            is made active. The same happens for declarations of
+            <link linkend="command_default">default definitions and
+            theorems</link> and disambiguation
+            hints (<link linkend="command_alias">aliases</link>).
+            On the contrary, theorem and definitions declared in a file can be
+           immediately used without including it.</para>
+          <para>The file <command>s</command> is automatically compiled
+           if it is not compiled yet and if it is handled by a
+           <link linkend="developments">development</link>.
+          </para>
          </listitem>
        </varlistentry>
      </variablelist>
    </para>
  </sect1>
  <sect1 id="command_include_first">
-   <title>include'</title>
+   <title>include' &quot;s&quot;</title>
    <para><userinput></userinput></para>
    <para>
      <variablelist>
        <varlistentry role="tactic.synopsis">
          <term>Synopsis:</term>
          <listitem>
-           <para><emphasis role="bold">include'</emphasis>
-           </para>
+           <para><emphasis role="bold">include'</emphasis> &qstring;</para>
          </listitem>
        </varlistentry>
        <varlistentry>
          <term>Action:</term>
          <listitem>
-           <para>&TODO;</para>
+           <para>Not documented (&TODO;), do not use it.</para>
          </listitem>
        </varlistentry>
      </variablelist>
@@ -201,20 +210,29 @@
  </sect1>
  <sect1 id="command_set">
    <title>set</title>
-   <para><userinput></userinput></para>
+   <para><userinput>set &quot;baseuri&quot; &quot;s&quot;</userinput></para>
    <para>
      <variablelist>
        <varlistentry role="tactic.synopsis">
          <term>Synopsis:</term>
          <listitem>
-           <para><emphasis role="bold">set</emphasis>
-           </para>
+           <para><emphasis role="bold">set</emphasis> &qstring; &qstring;</para>
          </listitem>
        </varlistentry>
        <varlistentry>
          <term>Action:</term>
          <listitem>
-           <para>&TODO;</para>
+           <para>Sets to <command>s</command> the baseuri of all the
+            theorems and definitions stated in the current file.
+            The baseuri should be <command>a/b/c/foo</command>
+            if the file is named <command>foo</command> and it is in
+            the subtree <command>a/b/c</command> of the current
+            <link linkend="developments">development</link>.
+            This requirement is not enforced, but it could be in the future.
+           </para>
+           <para>Currently, <command>baseuri</command> is the only
+            property that can be set even if the parser accepts
+            arbitrary property names.</para>
          </listitem>
        </varlistentry>
      </variablelist>

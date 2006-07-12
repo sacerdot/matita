@@ -27,13 +27,13 @@
   <sect2 id="lexical">
   <title>Lexical conventions</title>
     <table frame="topbot" rowsep="0" colsep="0" role="grammar">
-      <title>string</title>
+      <title>qstring</title>
       <tgroup cols="4">
       <tbody>
        <row>
-	<entry id="grammar.string">&string;</entry>
+	<entry id="grammar.qstring">&qstring;</entry>
 	<entry>::=</entry>
-        <entry><emphasis>〈〈any sequence of characters excluded &quot;〉〉</emphasis></entry>
+        <entry><emphasis role="bold">&quot;</emphasis><emphasis>〈〈any sequence of characters excluded &quot;〉〉</emphasis><emphasis role="bold">&quot;</emphasis></entry>
        </row>
       </tbody>
      </tgroup>

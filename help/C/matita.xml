@@ -46,7 +46,7 @@
   <!ENTITY proofstep "<emphasis><link linkend='grammar.proofstep'>proof-step</link></emphasis>">
   <!ENTITY tactic "<emphasis><link linkend='grammar.tactic'>tactic</link></emphasis>">
   <!ENTITY LCFtactical "<emphasis><link linkend='grammar.LCFtactical'>LCF-tactical</link></emphasis>">
-  <!ENTITY string "<emphasis><link linkend='grammar.string'>string</link></emphasis>">
+  <!ENTITY qstring "<emphasis><link linkend='grammar.qstring'>qstring</link></emphasis>">
   <!ENTITY interpretation "<emphasis><link linkend='grammar.interpretation'>interpretation</link></emphasis>">
 ]>
 
