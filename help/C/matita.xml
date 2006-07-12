@@ -16,7 +16,7 @@
   <!ENTITY tacticref SYSTEM "tactic_quickref.xml">
 
   <!ENTITY manrevision "1&alpha;">
-  <!ENTITY date "14/06/2006">
+  <!ENTITY date "12/07/2006">
   <!ENTITY app "<application>Matita</application>">
   <!ENTITY appname "Matita">
   <!ENTITY appversion SYSTEM "version.txt">
