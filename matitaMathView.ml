@@ -795,6 +795,7 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
   let is_dir txt = Pcre.pmatch ~rex:dir_RE txt in
   let gui = get_gui () in
   let (win: MatitaGuiTypes.browserWin) = gui#newBrowserWin () in
+  let gviz = LablGraphviz.gDot ~packing:win#graphScrolledWin#add () in
   let queries = ["Locate";"Hint";"Match";"Elim";"Instance"] in
   let combo,_ = GEdit.combo_box_text ~strings:queries () in
   let activate_combo_query input q =
@@ -844,11 +845,8 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
       let filename, oc = Filename.open_temp_file "xx" ".dot" in
       output_string oc str;
       close_out oc;
-      let ps = Filename.temp_file "yy" ".png" in
-      ignore (Unix.system ("/usr/bin/dot -Tpng -o" ^ ps ^ " " ^ filename));
-      Sys.remove filename;
-      at_exit (fun _ -> Sys.remove ps);
-      win#browserImage#set_file ps
+      gviz#load_graph_from_file filename;
+      HExtlib.safe_remove filename
   in
   object (self)
     inherit scriptAccessor
@@ -901,6 +899,9 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
       mathView#set_href_callback (Some (fun uri ->
         handle_error (fun () ->
           self#load (`Uri (UriManager.uri_of_string uri)))));
+      gviz#connect_href (fun _ attrs ->
+        let uri = List.assoc "href" attrs in
+        self#load (`Uri (UriManager.uri_of_string uri)));
       self#_load (`About `Blank);
       toplevel#show ()
 
@@ -996,7 +997,7 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
       Lazy.force load_easter_egg
 
     method private coerchgraph () =
-      win#mathOrListNotebook#goto_page 2;
+      win#mathOrListNotebook#goto_page 3;
       load_coerchgraph ()
 
     method private home () =
