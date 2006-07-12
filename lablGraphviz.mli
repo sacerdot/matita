@@ -28,6 +28,8 @@
 (** {1 LablGtk "widget" for rendering Graphviz graphs and connecting to clicks
  * on nodes, edges, ...} *)
 
+type attribute = string * string  (* <key, value> pair *)
+
 class type graphviz_widget =
   object
 
@@ -45,7 +47,7 @@ class type graphviz_widget =
      * (e.g.: [ "shape","rect"; "href","http://foo.bar.com/";
      *          "title","foo"; "alt","description"; "coords","41,6,113,54" ] *)
     method connect_href:
-      (GdkEvent.Button.t -> (string * string) list -> unit) -> unit
+      (GdkEvent.Button.t -> attribute list -> unit) -> unit
 
       (** {3 low level access to embedded widgets}
        * Containment hierarchy:
@@ -63,4 +65,24 @@ val gNeato: ?packing:(GObj.widget -> unit) -> unit -> graphviz_widget
 val gTwopi: ?packing:(GObj.widget -> unit) -> unit -> graphviz_widget
 val gCirco: ?packing:(GObj.widget -> unit) -> unit -> graphviz_widget
 val gFdp: ?packing:(GObj.widget -> unit) -> unit -> graphviz_widget
+
+(** {2 Pretty printer for generating Graphviz markup} *)
+
+module Pp:
+  sig
+
+    module type GraphvizFormatter =
+      sig
+        val header: ?name:string -> Format.formatter -> unit
+        val node: string -> ?attrs:(attribute list) -> Format.formatter -> unit
+        val edge:
+          string -> string -> ?attrs:(attribute list) -> Format.formatter ->
+            unit
+        val raw: string -> Format.formatter -> unit
+        val trailer: Format.formatter -> unit
+      end
+
+    module Dot: GraphvizFormatter
+
+  end
 

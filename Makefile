@@ -27,6 +27,7 @@ endif
 # objects for matita (GTK GUI)
 CMOS =				\
 	buildTimeConf.cmo	\
+	lablGraphviz.cmo	\
 	matitaTypes.cmo		\
 	matitaMisc.cmo		\
 	matitamakeLib.cmo	\
@@ -39,7 +40,6 @@ CMOS =				\
 	matitaScript.cmo	\
 	matitaGeneratedGui.cmo	\
 	matitaMathView.cmo 	\
-	lablGraphviz.cmo	\
 	matitaGui.cmo		\
 	$(NULL)
 # objects for matitac (batch compiler)
