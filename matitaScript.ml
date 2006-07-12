@@ -290,7 +290,6 @@ let rec eval_macro include_paths (buffer : GText.buffer) guistuff lexicon_status
       [], parsed_text_length
   (* TODO *)
   | TA.Quit _ -> failwith "not implemented"
-  | TA.Print (_,kind) -> failwith "not implemented"
                                 
 and eval_executable include_paths (buffer : GText.buffer) guistuff
 lexicon_status grafite_status user_goal unparsed_text skipped_txt nonskipped_txt
