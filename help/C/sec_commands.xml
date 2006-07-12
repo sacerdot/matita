@@ -54,20 +54,22 @@
  </sect1>
  <sect1 id="command_check">
    <title>check</title>
-   <para><userinput></userinput></para>
+   <para><userinput>check t</userinput></para>
    <para>
      <variablelist>
        <varlistentry role="tactic.synopsis">
          <term>Synopsis:</term>
          <listitem>
-           <para><emphasis role="bold">check</emphasis>
+           <para><emphasis role="bold">check &term;</emphasis>
            </para>
          </listitem>
        </varlistentry>
        <varlistentry>
          <term>Action:</term>
          <listitem>
-           <para>&TODO;</para>
+           <para>Opens a CIC browser window that shows <command>t</command>
+            together with its type. The command is immediately removed from
+            the script.</para>
          </listitem>
        </varlistentry>
      </variablelist>
@@ -75,20 +77,34 @@
  </sect1>
  <sect1 id="command_coercion">
    <title>coercion</title>
-   <para><userinput></userinput></para>
+   <para><userinput>coercion u</userinput></para>
    <para>
      <variablelist>
        <varlistentry role="tactic.synopsis">
          <term>Synopsis:</term>
          <listitem>
-           <para><emphasis role="bold">coercion</emphasis>
+           <para><emphasis role="bold">coercion &uri;</emphasis>
            </para>
          </listitem>
        </varlistentry>
        <varlistentry>
          <term>Action:</term>
          <listitem>
-           <para>&TODO;</para>
+           <para>Declares <command>u</command> as an implicit coercion
+            from the type of its last argument (source)
+            to its codomain (target). Every time a term <command>x</command>
+            of type source is used with expected type target, Matita
+            automatically replaces <command>x</command> with
+            <command>(u ? … ? x)</command> to avoid a typing error.</para>
+           <para>Implicit coercions are not displayed to the user:
+            <command>(u ? … ? x)</command> is rendered simply
+            as <command>x</command>.</para>
+           <para>When a coercion <command>u</command> is declared
+            from source <command>s</command> to target <command>t</command>
+            and there is already a coercion <command>u'</command> of
+            target <command>s</command> or source <command>t</command>,
+            a composite implicit coercion is automatically computed
+            by Matita.</para>
          </listitem>
        </varlistentry>
      </variablelist>
@@ -117,7 +133,7 @@
  </sect1>
  <sect1 id="command_hint">
    <title>hint</title>
-   <para><userinput></userinput></para>
+   <para><userinput>hint</userinput></para>
    <para>
      <variablelist>
        <varlistentry role="tactic.synopsis">
@@ -130,7 +146,12 @@
        <varlistentry>
          <term>Action:</term>
          <listitem>
-           <para>&TODO;</para>
+           <para>Displays a list of theorems that can be successfully
+            applied to the current selected sequent. The command is
+            removed from the script, but the window that displays the
+            theorems allow to add to the script the application of the
+            selected theorem.
+           </para>
          </listitem>
        </varlistentry>
      </variablelist>
@@ -235,7 +256,10 @@
        <varlistentry>
          <term>Action:</term>
          <listitem>
-           <para>&TODO;</para>
+           <para>Saves and indexes the current interactive theorem or
+            definition.
+            In order to do this, the set of sequents still to be proved
+            must be empty.</para>
          </listitem>
        </varlistentry>
      </variablelist>
