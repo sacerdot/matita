@@ -66,23 +66,3 @@ val gTwopi: ?packing:(GObj.widget -> unit) -> unit -> graphviz_widget
 val gCirco: ?packing:(GObj.widget -> unit) -> unit -> graphviz_widget
 val gFdp: ?packing:(GObj.widget -> unit) -> unit -> graphviz_widget
 
-(** {2 Pretty printer for generating Graphviz markup} *)
-
-module Pp:
-  sig
-
-    module type GraphvizFormatter =
-      sig
-        val header: ?name:string -> Format.formatter -> unit
-        val node: string -> ?attrs:(attribute list) -> Format.formatter -> unit
-        val edge:
-          string -> string -> ?attrs:(attribute list) -> Format.formatter ->
-            unit
-        val raw: string -> Format.formatter -> unit
-        val trailer: Format.formatter -> unit
-      end
-
-    module Dot: GraphvizFormatter
-
-  end
-

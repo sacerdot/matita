@@ -118,39 +118,3 @@ let gTwopi = factory "twopi"
 let gCirco = factory "circo"
 let gFdp = factory "fdp"
 
-module Pp =
-  struct
-
-    module type GraphvizFormatter =
-      sig
-        val header: ?name:string -> Format.formatter -> unit
-        val node: string -> ?attrs:(attribute list) -> Format.formatter -> unit
-        val edge:
-          string -> string -> ?attrs:(attribute list) -> Format.formatter ->
-            unit
-        val raw: string -> Format.formatter -> unit
-        val trailer: Format.formatter -> unit
-      end
-
-    open Format
-
-    module Dot =
-      struct
-        let attribute fmt (k, v) = fprintf fmt "@[<hv2>%s=@,\"%s\",@]" k v
-        let attributes attrs fmt = List.iter (attribute fmt) attrs
-
-        let header ?(name = "g") fmt = fprintf fmt "@[<hv2>digraph %s {@," name
-        let node name ?(attrs = []) fmt =
-          fprintf fmt "@[<hov2>%s@ [" name;
-          attributes attrs fmt;
-          fprintf fmt "];@]@,"
-        let edge name1 name2 ?(attrs = []) fmt =
-          fprintf fmt "@[<hov2>%s ->@ %s@ [" name1 name2;
-          attributes attrs fmt;
-          fprintf fmt "];@]@,"
-        let raw s fmt = pp_print_string fmt s
-        let trailer fmt = fprintf fmt "@,}@]%!"
-      end
-
-  end
-
