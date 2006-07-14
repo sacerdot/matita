@@ -19,7 +19,8 @@ for X in $TODO; do
   RATING=`grep "Rating" $X | sed 's/v.*//' | sed 's/(\*//'`
   if [ `grep "Found a proof" $LOGNAME | wc -l` -gt 0 ]; then
     TIME=`grep "TIME NEEDED" $LOGNAME`
-    echo OK $TIME $RATING $i
+    MAXWEIGHT=`grep "max weight:" $LOGNAME`
+    echo OK $TIME $RATING $MAXWEIGHT $i
   else
     echo FAIL $RATING $i
   fi
