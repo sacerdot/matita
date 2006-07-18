@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/test/".
+set "baseuri" "cic:/matita/test/paramodulation/group".
 
 include "legacy/coq.ma".
 
