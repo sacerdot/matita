@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/tests/inversion/".
+set "baseuri" "cic:/matita/tests/inversion2/".
 include "legacy/coq.ma".
 
 inductive nat : Set \def
@@ -24,7 +24,7 @@ inductive le (n:nat) : nat \to Prop \def
    leO : le n n
  | leS : \forall m. le n m \to le n (S m).
  
-theorem le_inv:
+theorem le_inv2:
  \forall n,m.
   \forall P: nat -> nat -> Prop.
    ? -> ? -> le n m -> P n m.
