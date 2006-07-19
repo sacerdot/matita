@@ -787,9 +787,11 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
       "^cic:/([^/]+/)*[^/]+\\.(con|ind|var)(#xpointer\\(\\d+(/\\d+)+\\))?$"
   in
   let dir_RE = Pcre.regexp "^cic:((/([^/]+/)*[^/]+(/)?)|/|)$" in
+  let metadata_RE = Pcre.regexp "^metadata:/(deps)/(forward|backward)/(.*)$" in
   let whelp_query_RE = Pcre.regexp
     "^\\s*whelp\\s+([^\\s]+)\\s+(\"|\\()(.*)(\\)|\")$" 
   in
+  let is_metadata txt = Pcre.pmatch ~rex:metadata_RE txt in
   let is_whelp txt = Pcre.pmatch ~rex:whelp_RE txt in
   let is_uri txt = Pcre.pmatch ~rex:uri_RE txt in
   let is_dir txt = Pcre.pmatch ~rex:dir_RE txt in
@@ -842,7 +844,7 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
   in
   let load_coerchgraph () = 
       let str = CoercGraph.generate_dot_file () in
-      let filename, oc = Filename.open_temp_file "xx" ".dot" in
+      let filename, oc = Filename.open_temp_file "matita" ".dot" in
       output_string oc str;
       close_out oc;
       gviz#load_graph_from_file filename;
@@ -852,6 +854,11 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
     inherit scriptAccessor
     
     (* Whelp bar queries *)
+
+    val mutable gviz_graph = MetadataDeps.DepGraph.dummy
+    val mutable gviz_uri = UriManager.uri_of_string "cic:/dummy.con";
+
+    val dep_contextual_menu = GMenu.menu ()
 
     initializer
       activate_combo_query "" "locate";
@@ -899,13 +906,56 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
       mathView#set_href_callback (Some (fun uri ->
         handle_error (fun () ->
           self#load (`Uri (UriManager.uri_of_string uri)))));
-      gviz#connect_href (fun _ attrs ->
+      gviz#connect_href (fun button_ev attrs ->
+        let time = GdkEvent.Button.time button_ev in
         let uri = List.assoc "href" attrs in
-        self#load (`Uri (UriManager.uri_of_string uri)));
+        gviz_uri <- UriManager.uri_of_string uri;
+        match GdkEvent.Button.button button_ev with
+        | button when button = left_button -> self#load (`Uri gviz_uri)
+        | button when button = right_button ->
+            dep_contextual_menu#popup ~button ~time
+        | _ -> ());
+      connect_menu_item win#depGraphMenuItem (fun () ->
+        match self#currentCicUri with
+        | Some uri -> self#load (`Metadata (`Deps (`Fwd, uri)))
+        | None -> ());
+      connect_menu_item win#invDepGraphMenuItem (fun () ->
+        match self#currentCicUri with
+        | Some uri -> self#load (`Metadata (`Deps (`Back, uri)))
+        | None -> ());
+
+      (* fill dep graph contextual menu *)
+      let go_menu_item =
+        GMenu.image_menu_item ~label:"Browse it"
+          ~packing:dep_contextual_menu#append () in
+      let expand_menu_item =
+        GMenu.image_menu_item ~label:"Expand"
+          ~packing:dep_contextual_menu#append () in
+      let collapse_menu_item =
+        GMenu.image_menu_item ~label:"Collapse"
+          ~packing:dep_contextual_menu#append () in
+      dep_contextual_menu#append (go_menu_item :> GMenu.menu_item);
+      dep_contextual_menu#append (expand_menu_item :> GMenu.menu_item);
+      dep_contextual_menu#append (collapse_menu_item :> GMenu.menu_item);
+      connect_menu_item go_menu_item (fun () -> self#load (`Uri gviz_uri));
+      connect_menu_item expand_menu_item (fun () ->
+        MetadataDeps.DepGraph.expand gviz_uri gviz_graph;
+        self#redraw_gviz ~center_on:gviz_uri ());
+      connect_menu_item collapse_menu_item (fun () ->
+        MetadataDeps.DepGraph.collapse gviz_uri gviz_graph;
+        self#redraw_gviz ~center_on:gviz_uri ());
+
       self#_load (`About `Blank);
       toplevel#show ()
 
     val mutable current_entry = `About `Blank 
+
+      (** @return None if no object uri can be built from the current entry *)
+    method private currentCicUri =
+      match current_entry with
+      | `Uri uri
+      | `Metadata (`Deps (_, uri)) -> Some uri
+      | _ -> None
 
     val model =
       new MatitaGtkMisc.taggedStringListModel tags win#whelpResultTreeview
@@ -976,6 +1026,8 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
           | `Check term -> self#_loadCheck term
           | `Cic (term, metasenv) -> self#_loadTermCic term metasenv
           | `Dir dir -> self#_loadDir dir
+          | `Metadata (`Deps ((`Fwd | `Back) as dir, uri)) ->
+              self#dependencies dir uri ()
           | `Uri uri -> self#_loadUriManagerUri uri
           | `Whelp (query, results) -> 
               set_whelp_query query;
@@ -996,9 +1048,30 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
       win#mathOrListNotebook#goto_page 2;
       Lazy.force load_easter_egg
 
+    method private redraw_gviz ?center_on () =
+      let tmpfile, oc = Filename.open_temp_file "matita" ".dot" in
+      let fmt = Format.formatter_of_out_channel oc in
+      MetadataDeps.DepGraph.render fmt gviz_graph;
+      close_out oc;
+      gviz#load_graph_from_file tmpfile;
+      (match center_on with
+      | None -> ()
+      | Some uri -> gviz#center_on_href (UriManager.string_of_uri uri));
+      HExtlib.safe_remove tmpfile
+
+    method private dependencies direction uri () =
+      let dbd = LibraryDb.instance () in
+      let graph =
+        match direction with
+        | `Fwd -> MetadataDeps.DepGraph.direct_deps ~dbd uri
+        | `Back -> MetadataDeps.DepGraph.inverse_deps ~dbd uri in
+      gviz_graph <- graph;  (** XXX check this for memory consuption *)
+      self#redraw_gviz ~center_on:uri ();
+      win#mathOrListNotebook#goto_page 3
+
     method private coerchgraph () =
-      win#mathOrListNotebook#goto_page 3;
-      load_coerchgraph ()
+      load_coerchgraph ();
+      win#mathOrListNotebook#goto_page 3
 
     method private home () =
       self#_showMath;
@@ -1064,19 +1137,31 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
 
     (**  this is what the browser does when you enter a string an hit enter *)
     method loadInput txt =
+      let parse_metadata s =
+        let subs = Pcre.extract ~rex:metadata_RE s in
+        let uri = UriManager.uri_of_string ("cic:/" ^ subs.(3)) in
+        match subs.(1), subs.(2) with
+        | "deps", "forward" -> `Deps (`Fwd, uri)
+        | "deps", "backward" -> `Deps (`Back, uri)
+        | _ -> assert false
+      in
       let txt = HExtlib.trim_blanks txt in
+      (* (* ZACK: what the heck? *)
       let fix_uri txt =
         UriManager.string_of_uri
           (UriManager.strip_xpointer (UriManager.uri_of_string txt))
       in
+      *)
       if is_whelp txt then begin
         set_whelp_query txt;  
         (MatitaScript.current ())#advance ~statement:(txt ^ ".") ()
       end else begin
         let entry =
           match txt with
-          | txt when is_uri txt -> `Uri (UriManager.uri_of_string (fix_uri txt))
+          | txt when is_uri txt ->
+              `Uri (UriManager.uri_of_string ((*fix_uri*) txt))
           | txt when is_dir txt -> `Dir (MatitaMisc.normalize_dir txt)
+          | txt when is_metadata txt -> `Metadata (parse_metadata txt)
           | txt ->
              (try
                MatitaTypes.entry_of_string txt

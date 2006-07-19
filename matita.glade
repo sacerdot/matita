@@ -34,6 +34,114 @@
 	  <property name="spacing">0</property>
 
 	  <child>
+	    <widget class="GtkMenuBar" id="menubar2">
+	      <property name="visible">True</property>
+	      <property name="pack_direction">GTK_PACK_DIRECTION_LTR</property>
+	      <property name="child_pack_direction">GTK_PACK_DIRECTION_LTR</property>
+
+	      <child>
+		<widget class="GtkMenuItem" id="BrowserFileMenu">
+		  <property name="visible">True</property>
+		  <property name="label" translatable="yes">_File</property>
+		  <property name="use_underline">True</property>
+
+		  <child>
+		    <widget class="GtkMenu" id="BrowserFileMenu_menu">
+
+		      <child>
+			<widget class="GtkImageMenuItem" id="BrowserNewMenuItem">
+			  <property name="visible">True</property>
+			  <property name="label">gtk-new</property>
+			  <property name="use_stock">True</property>
+			</widget>
+		      </child>
+
+		      <child>
+			<widget class="GtkSeparatorMenuItem" id="separatormenuitem1">
+			  <property name="visible">True</property>
+			</widget>
+		      </child>
+
+		      <child>
+			<widget class="GtkImageMenuItem" id="BrowserCloseMenuItem">
+			  <property name="visible">True</property>
+			  <property name="label">gtk-close</property>
+			  <property name="use_stock">True</property>
+			</widget>
+		      </child>
+		    </widget>
+		  </child>
+		</widget>
+	      </child>
+
+	      <child>
+		<widget class="GtkMenuItem" id="BrowserEditMenu">
+		  <property name="visible">True</property>
+		  <property name="label" translatable="yes">_Edit</property>
+		  <property name="use_underline">True</property>
+
+		  <child>
+		    <widget class="GtkMenu" id="BrowserEditMenu_menu">
+
+		      <child>
+			<widget class="GtkImageMenuItem" id="BrowserCopyMenuItem">
+			  <property name="visible">True</property>
+			  <property name="label">gtk-copy</property>
+			  <property name="use_stock">True</property>
+			</widget>
+		      </child>
+		    </widget>
+		  </child>
+		</widget>
+	      </child>
+
+	      <child>
+		<widget class="GtkMenuItem" id="BrowserViewMenu">
+		  <property name="visible">True</property>
+		  <property name="label" translatable="yes">_View</property>
+		  <property name="use_underline">True</property>
+
+		  <child>
+		    <widget class="GtkMenu" id="BrowserViewMenu_menu">
+
+		      <child>
+			<widget class="GtkMenuItem" id="BrowserMetadataMenuItem">
+			  <property name="visible">True</property>
+			  <property name="label" translatable="yes">_Metadata</property>
+			  <property name="use_underline">True</property>
+			</widget>
+		      </child>
+
+		      <child>
+			<widget class="GtkMenuItem" id="DepGraphMenuItem">
+			  <property name="visible">True</property>
+			  <property name="tooltip" translatable="yes">View the graph of objects on which the current one depends on</property>
+			  <property name="label" translatable="yes">(Direct) Dependencies</property>
+			  <property name="use_underline">True</property>
+			</widget>
+		      </child>
+
+		      <child>
+			<widget class="GtkMenuItem" id="InvDepGraphMenuItem">
+			  <property name="visible">True</property>
+			  <property name="tooltip" translatable="yes">View the graph of objects which depends on the current one</property>
+			  <property name="label" translatable="yes">(Inverse) Dependencies</property>
+			  <property name="use_underline">True</property>
+			</widget>
+		      </child>
+		    </widget>
+		  </child>
+		</widget>
+	      </child>
+	    </widget>
+	    <packing>
+	      <property name="padding">0</property>
+	      <property name="expand">False</property>
+	      <property name="fill">False</property>
+	    </packing>
+	  </child>
+
+	  <child>
 	    <widget class="GtkFrame" id="frame2">
 	      <property name="visible">True</property>
 	      <property name="label_xalign">0</property>

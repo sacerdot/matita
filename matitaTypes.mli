@@ -32,6 +32,7 @@ type mathViewer_entry =
   | `Check of string
   | `Cic of Cic.term * Cic.metasenv
   | `Dir of string
+  | `Metadata of [ `Deps of [`Fwd | `Back] * UriManager.uri ]
   | `Uri of UriManager.uri
   | `Whelp of string * UriManager.uri list ]
 

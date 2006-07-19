@@ -43,6 +43,7 @@ type mathViewer_entry =
   | `Check of string (* term *)
   | `Cic of Cic.term * Cic.metasenv
   | `Dir of string (* "directory" in cic uris namespace *)
+  | `Metadata of [ `Deps of [`Fwd | `Back] * UriManager.uri ]
   | `Uri of UriManager.uri (* cic object uri *)
   | `Whelp of string * UriManager.uri list (* query and results *)
   ]
@@ -55,6 +56,16 @@ let string_of_entry = function
   | `Check _ -> "check:"
   | `Cic (_, _) -> "term:"
   | `Dir uri -> uri
+  | `Metadata meta ->
+      "metadata:/" ^
+      (match meta with
+      | `Deps (dir, uri) ->
+          "deps/" ^
+          let suri =
+            let suri = UriManager.string_of_uri uri in
+            let len = String.length suri in
+            String.sub suri 4 (len - 4) in (* strip "cic:" prefix *)
+          (match dir with | `Fwd -> "forward" | `Back -> "backward") ^ suri)
   | `Uri uri -> UriManager.string_of_uri uri
   | `Whelp (query, _) -> query
 
