@@ -252,6 +252,18 @@ let _ =
   end;
   try
     GtkThread.main ()
-  with Sys.Break -> ()
+  with Sys.Break ->
+   Sys.set_signal Sys.sigint
+    (Sys.Signal_handle
+      (fun _ ->
+        prerr_endline "Still cleaning the library: don't be impatient!"));
+   prerr_endline "Matita is cleaning up. Please wait.";
+   try
+    let baseuri =
+     GrafiteTypes.get_string_option
+      (MatitaScript.current ())#grafite_status "baseuri"
+    in
+     LibraryClean.clean_baseuris [baseuri]
+   with GrafiteTypes.Option_error _ -> ()
 
 (* vim:set foldmethod=marker: *)
