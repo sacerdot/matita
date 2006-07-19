@@ -49,6 +49,9 @@ class type graphviz_widget =
     method connect_href:
       (GdkEvent.Button.t -> attribute list -> unit) -> unit
 
+    (** Center the viewport on the node having the given href value, if any *)
+    method center_on_href: string -> unit
+
       (** {3 low level access to embedded widgets}
        * Containment hierarchy:
        *  viewport
