@@ -42,17 +42,30 @@ let obj_file_of_baseuri writable baseuri =
 let main () =
   (* all are maps from "file" to "something" *)
   let include_deps = Hashtbl.create (Array.length Sys.argv) in
+  let include_deps_dot = Hashtbl.create (Array.length Sys.argv) in
   let baseuri_of = Hashtbl.create (Array.length Sys.argv) in
+  let baseuri_of_inv = Hashtbl.create (Array.length Sys.argv) in
   let uri_deps = Hashtbl.create (Array.length Sys.argv) in
   let buri alias = U.buri_of_uri (U.uri_of_string alias) in
   let resolve alias current_buri =
     let buri = buri alias in
     if buri <> current_buri then Some buri else None in
   MatitaInit.fill_registry ();
+  let do_dot = ref false in
+  MatitaInit.add_cmdline_spec 
+    ["-dot",Arg.Unit (fun () -> do_dot:=true),
+      "Generate deps for dot instead of make"];
   MatitaInit.parse_cmdline ();
   MatitaInit.load_configuration_file ();
   let include_paths =
    Helm_registry.get_list Helm_registry.string "matita.includes" in
+  let args = Helm_registry.get_list Helm_registry.string "matita.args" in
+  if args = [] then
+    begin
+      prerr_endline "At least one .ma file must be specified";
+      exit 1
+    end;
+  let ma_files = args in
   List.iter
    (fun ma_file -> 
     let ic = open_in ma_file in
@@ -67,19 +80,21 @@ let main () =
             Hashtbl.add uri_deps ma_file uri
        | DependenciesParser.BaseuriDep uri -> 
           let uri = Http_getter_misc.strip_trailing_slash uri in
-          Hashtbl.add baseuri_of ma_file uri
+          Hashtbl.add baseuri_of ma_file uri;
+          Hashtbl.add baseuri_of_inv uri ma_file
        | DependenciesParser.IncludeDep path -> 
           try 
             let baseuri,_ =
               DependenciesParser.baseuri_of_script ~include_paths path in
             if not (Http_getter_storage.is_legacy baseuri) then
-              let moo_file = obj_file_of_baseuri false baseuri in
-              Hashtbl.add include_deps ma_file moo_file
+              (let moo_file = obj_file_of_baseuri false baseuri in
+              Hashtbl.add include_deps ma_file moo_file;
+              Hashtbl.add include_deps_dot ma_file baseuri)
           with Sys_error _ -> 
             HLog.warn 
-              ("Unable to find " ^ path ^ " that is included in " ^ ma_file)
-     ) dependencies
-   ) (Helm_registry.get_list Helm_registry.string "matita.args");
+              ("Unable to find " ^ path ^ " that is included in " ^ ma_file))
+     dependencies)
+   ma_files;
   Hashtbl.iter 
     (fun file alias -> 
       let dep = resolve alias (Hashtbl.find baseuri_of file) in
@@ -88,16 +103,41 @@ let main () =
       | Some u -> 
          Hashtbl.add include_deps file (obj_file_of_baseuri false u))
   uri_deps;
-  List.iter
-   (fun ma_file -> 
-    let deps = Hashtbl.find_all include_deps ma_file in
-    let deps = List.fast_sort Pervasives.compare deps in
-    let deps = HExtlib.list_uniq deps in
-    let deps = ma_file :: deps in
-    let baseuri = Hashtbl.find baseuri_of ma_file in
-    let moo = obj_file_of_baseuri true baseuri in
-    Printf.printf "%s: %s\n%s: %s\n%s: %s\n" moo (String.concat " " deps)
-      (Filename.basename (Pcre.replace ~pat:"ma$" ~templ:"mo" ma_file)) moo
-      (Pcre.replace ~pat:"ma$" ~templ:"mo" ma_file) moo)
-   (Helm_registry.get_list Helm_registry.string "matita.args")
-
+  if !do_dot then
+    begin
+      let fmt = Format.formatter_of_out_channel stdout in 
+      GraphvizPp.Dot.header (* ~graph_attrs:["rankdir","LR"] *) fmt;
+      List.iter
+       (fun ma_file -> 
+        let deps = Hashtbl.find_all include_deps_dot ma_file in
+        let deps = 
+          HExtlib.filter_map 
+            (fun u -> 
+              try Some (Hashtbl.find baseuri_of_inv u) 
+              with Not_found -> None) 
+            deps 
+        in
+        let deps = List.fast_sort Pervasives.compare deps in
+        let deps = HExtlib.list_uniq deps in
+        GraphvizPp.Dot.node ma_file fmt;
+        List.iter (fun dep -> GraphvizPp.Dot.edge ma_file dep fmt) deps)
+       ma_files;
+      GraphvizPp.Dot.trailer fmt;
+      close_out stdout
+    end
+  else
+    begin
+      List.iter
+       (fun ma_file -> 
+        let deps = Hashtbl.find_all include_deps ma_file in
+        let deps = List.fast_sort Pervasives.compare deps in
+        let deps = HExtlib.list_uniq deps in
+        let deps = ma_file :: deps in
+        let baseuri = Hashtbl.find baseuri_of ma_file in
+        let moo = obj_file_of_baseuri true baseuri in
+        Printf.printf "%s: %s\n%s: %s\n%s: %s\n" moo (String.concat " " deps)
+          (Filename.basename (Pcre.replace ~pat:"ma$" ~templ:"mo" ma_file)) moo
+          (Pcre.replace ~pat:"ma$" ~templ:"mo" ma_file) moo)
+        ma_files
+    end
+;;
