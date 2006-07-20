@@ -296,3 +296,17 @@ qed.
 
 variant inj_times_l1:\forall n. O < n \to \forall p,q:nat.p*n = q*n \to p=q
 \def lt_O_to_injective_times_l.
+
+(* n_divides computes the pair (div,mod) *)
+
+(* p is just an upper bound, acc is an accumulator *)
+let rec n_divides_aux p n m acc \def
+  match n \mod m with
+  [ O \Rightarrow 
+    match p with
+      [ O \Rightarrow pair nat nat acc n
+      | (S p) \Rightarrow n_divides_aux p (n / m) m (S acc)]
+  | (S a) \Rightarrow pair nat nat acc n].
+
+(* n_divides n m = <q,r> if m divides n q times, with remainder r *)
+definition n_divides \def \lambda n,m:nat.n_divides_aux n n m O.
