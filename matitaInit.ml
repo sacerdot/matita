@@ -136,6 +136,11 @@ Options:"
 Usage: gragrep [ -r ] PATH
 Options:"
           BuildTimeConf.version;
+      "matitaprover",
+        sprintf "Matita's prover v%s
+Usage: matitaprover [ -tptppath ] FILE.p
+Options:"
+          BuildTimeConf.version;
       "matita",
         sprintf "Matita v%s
 Usage: matita [ OPTION ... ] [ FILE ... ]

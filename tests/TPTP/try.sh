@@ -1,10 +1,18 @@
 #!/bin/sh
 
+prover=y
+
 MATITAC=../../matitac.opt
 #MATITAC=../../matitac
+MATITAPROVER=../../matitaprover.opt
+TPTPPATH=/home/tassi/helm/trunk/TPTP-v3.1.1/
 
 if [ -z "$1" ]; then
-  TODO=Unsatisfiable/[A-Z]*.ma
+  if [ $prover = 'y' ]; then
+    TODO=`cat elenco_unsatisfiable.txt`	  
+  else
+    TODO=Unsatisfiable/[A-Z]*.ma
+  fi
 else
   TODO=`cat $1`
 fi
@@ -15,8 +23,17 @@ i=1
 for X in $TODO; do
   echo -n "$X ... "
   LOGNAME=logs/log.`basename $X`
-  $MATITAC -nodb $X > $LOGNAME 2>&1
-  RATING=`grep "Rating" $X | sed 's/v.*//' | sed 's/(\*//'`
+  if [ $prover = 'y' ]; then
+    $MATITAPROVER -tptppath $TPTPPATH $X > $LOGNAME 2>&1
+  else
+    $MATITAC -nodb $X > $LOGNAME 2>&1
+  fi
+  if [ $prover = 'y' ]; then
+    BASE=`echo $X | cut -c 1-3`	  
+    RATING=`grep "Rating" $TPTPPATH/Problems/$BASE/$X | sed 's/v.*//' | sed 's/%//'`	  
+  else
+    RATING=`grep "Rating" $X | sed 's/v.*//' | sed 's/(\*//'`
+  fi
   if [ `grep "Found a proof" $LOGNAME | wc -l` -gt 0 ]; then
     TIME=`grep "TIME NEEDED" $LOGNAME`
     MAXWEIGHT=`grep "max weight:" $LOGNAME`

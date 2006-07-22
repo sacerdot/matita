@@ -16,7 +16,7 @@ OCAMLOPT = $(OCAMLFIND) opt $(OCAMLC_FLAGS)
 OCAMLDEP = $(OCAMLFIND) ocamldep $(OCAML_FLAGS)
 INSTALL_PROGRAMS= matita matitac
 INSTALL_PROGRAMS_LINKS_MATITA= cicbrowser 
-INSTALL_PROGRAMS_LINKS_MATITAC= matitadep matitamake matitaclean
+INSTALL_PROGRAMS_LINKS_MATITAC= matitadep matitamake matitaclean matitaprover
 
 MATITA_FLAGS = -noprofile
 NODB=false
@@ -52,6 +52,7 @@ CCMOS =				\
 	matitaExcPp.cmo 	\
 	matitaEngine.cmo	\
 	matitacLib.cmo		\
+	matitaprover.cmo        \
 	$(NULL)
 MAINCMOS =			\
 	matitadep.cmo		\
@@ -60,7 +61,7 @@ MAINCMOS =			\
 	gragrep.cmo 		\
 	$(NULL)
 PROGRAMS_BYTE = \
-	matita matitac cicbrowser matitadep matitaclean matitamake
+	matita matitac cicbrowser matitadep matitaclean matitamake matitaprover
 PROGRAMS = $(PROGRAMS_BYTE) matitatop
 PROGRAMS_OPT = $(patsubst %,%.opt,$(PROGRAMS_BYTE))
 NOINST_PROGRAMS = dump_moo gragrep
@@ -138,6 +139,11 @@ matitac.opt: matitac.ml $(CLIBX_DEPS) $(CCMXS) $(MAINCMXS)
 matitatop: matitatop.ml $(CLIB_DEPS) $(CCMOS)
 	$(H)echo "  OCAMLC $<"
 	$(H)$(OCAMLC) $(CPKGS) -linkpkg -o $@ toplevellib.cma $(CCMOS) $<
+
+matitaprover: matitac
+	$(H)test -f $@ || ln -s $< $@
+matitaprover.opt: matitac.opt
+	$(H)test -f $@ || ln -s $< $@
 
 matitadep: matitac
 	$(H)test -f $@ || ln -s $< $@
@@ -324,6 +330,8 @@ matitac.opt.static: $(STATIC_LINK) $(CLIBX_DEPS) $(CCMXS) $(MAINCMXS) matitac.ml
 		$(STATIC_EXTRA_CLIBS)
 	strip $@
 matitadep.opt.static: matitac.opt.static
+	$(H)test -f $@ || ln -s $< $@
+matitaprover.opt.static: matitac.opt.static
 	$(H)test -f $@ || ln -s $< $@
 matitaclean.opt.static: matitac.opt.static
 	$(H)test -f $@ || ln -s $< $@

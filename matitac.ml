@@ -31,6 +31,7 @@ let main () =
   | "matitadep"   | "matitadep.opt"   -> Matitadep.main ()
   | "matitaclean" | "matitaclean.opt" -> Matitaclean.main ()
   | "matitamake"  | "matitamake.opt"  -> Matitamake.main ()
+  | "matitaprover"  | "matitaprover.opt"  -> Matitaprover.main ()
   | _ ->
 (*
       let _ = Paramodulation.Saturation.init () in  *)
