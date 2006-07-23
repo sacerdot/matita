@@ -298,6 +298,14 @@ STATIC_CLIBS = \
 	gdome \
 	mysqlclient \
 	$(NULL)
+STATIC_CLIBS_PROVER = \
+        $(STATIC_CLIBS) \
+	z \
+	pcre \
+	expat \
+	xml2 \
+	glib-2.0 \
+	$(NULL)
 STATIC_EXTRA_CLIBS =
 PROGRAMS_STATIC = $(patsubst %,%.static,$(PROGRAMS_OPT))
 PROGRAMS_UPX = $(patsubst %,%.upx,$(PROGRAMS_STATIC))
@@ -329,9 +337,12 @@ matitac.opt.static: $(STATIC_LINK) $(CLIBX_DEPS) $(CCMXS) $(MAINCMXS) matitac.ml
 		$(OCAMLOPT) $(CPKGS) -linkpkg -o $@ $(CCMXS) $(MAINCMXS) matitac.ml \
 		$(STATIC_EXTRA_CLIBS)
 	strip $@
+matitaprover.opt.static: $(STATIC_LINK) $(CLIBX_DEPS) $(CCMXS) $(MAINCMXS) matitac.ml
+	$(STATIC_LINK) $(STATIC_CLIBS_PROVER) -- \
+		$(OCAMLOPT) $(CPKGS) -linkpkg -o $@ $(CCMXS) $(MAINCMXS) matitac.ml \
+		$(STATIC_EXTRA_CLIBS);
+	strip $@
 matitadep.opt.static: matitac.opt.static
-	$(H)test -f $@ || ln -s $< $@
-matitaprover.opt.static: matitac.opt.static
 	$(H)test -f $@ || ln -s $< $@
 matitaclean.opt.static: matitac.opt.static
 	$(H)test -f $@ || ln -s $< $@
