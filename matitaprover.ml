@@ -74,9 +74,9 @@ for @{ 'exists ${default
 "
 ;;
 
-let p_to_ma ~tptppath ~filename = 
+let p_to_ma ?timeout ~tptppath ~filename () = 
   let data = 
-     Tptp2grafite.tptp2grafite ~filename ~tptppath:tptppath
+     Tptp2grafite.tptp2grafite ?timeout ~filename ~tptppath:tptppath
      ~raw_preamble ()
   in
   data
@@ -85,9 +85,12 @@ let p_to_ma ~tptppath ~filename =
 let main () =
   MatitaInit.fill_registry ();
   let tptppath = ref "./" in
+  let timeout = ref 600 in
   MatitaInit.add_cmdline_spec
     ["-tptppath",Arg.String (fun s -> tptppath:= s),
-      "Where to find the Axioms/ and Problems/ directory"];
+       "Where to find the Axioms/ and Problems/ directory";
+     "-timeout", Arg.Int (fun x -> timeout := x),
+       "Timeout in seconds"];
   MatitaInit.parse_cmdline ();
   MatitaInit.load_configuration_file ();
   Helm_registry.set_bool "db.nodb" true;
@@ -99,7 +102,9 @@ let main () =
     | [file] -> file
     | _ -> prerr_endline "You must specify exactly one .p file."; exit 1
   in
-  let data = p_to_ma ~filename:inputfile ~tptppath:!tptppath in
+  let data = 
+    p_to_ma ~timeout:!timeout ~filename:inputfile ~tptppath:!tptppath ()
+  in
 (*   prerr_endline data; *)
   let is = Ulexing.from_utf8_string data in
   let gs = GrafiteSync.init () in

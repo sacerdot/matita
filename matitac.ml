@@ -26,13 +26,14 @@
 (* $Id$ *)
 
 let main () =
-  match Filename.basename Sys.argv.(0) with
-  | "gragrep"     | "gragrep.opt"   -> Gragrep.main ()
-  | "matitadep"   | "matitadep.opt"   -> Matitadep.main ()
-  | "matitaclean" | "matitaclean.opt" -> Matitaclean.main ()
-  | "matitamake"  | "matitamake.opt"  -> Matitamake.main ()
-  | "matitaprover"  | "matitaprover.opt"  -> Matitaprover.main ()
-  | _ ->
+ match Filename.basename Sys.argv.(0) with
+ |"gragrep"    |"gragrep.opt"    |"gragrep.opt.static"    ->Gragrep.main()
+ |"matitadep"  |"matitadep.opt"  |"matitadep.opt.static"  ->Matitadep.main()
+ |"matitaclean"|"matitaclean.opt"|"matitaclean.opt.static"->Matitaclean.main()
+ |"matitamake" |"matitamake.opt" |"matitamake.opt.static" ->Matitamake.main()
+ |"matitaprover"|"matitaprover.opt"
+ |"matitaprover.opt.static"->Matitaprover.main()
+ | _ ->
 (*
       let _ = Paramodulation.Saturation.init () in  *)
 (* ALB to link paramodulation *)

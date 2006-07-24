@@ -1013,7 +1013,7 @@ class gui () =
             Helm_registry.get_opt_default Helm_registry.string ~default:"./"
               "matita.tptppath"
           in
-          let data = Matitaprover.p_to_ma ~filename:file ~tptppath in
+          let data = Matitaprover.p_to_ma ~filename:file ~tptppath () in
           let filename = Pcre.replace ~pat:"\\.p$" ~templ:".ma" file in
           script#assignFileName filename;
           source_view#source_buffer#begin_not_undoable_action ();

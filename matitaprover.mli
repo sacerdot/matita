@@ -25,5 +25,5 @@
 
 val main: unit -> unit
 
-val p_to_ma: tptppath:string -> filename:string -> string
+val p_to_ma: ?timeout:int -> tptppath:string -> filename:string -> unit -> string
 
