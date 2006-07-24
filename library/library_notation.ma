@@ -26,7 +26,6 @@ include "nat/minimization.ma".
 include "nat/permutation.ma".
 include "nat/sigma_and_pi.ma".
 include "nat/factorization.ma".
-include "nat/primes1.ma".
 include "nat/times.ma".
 include "nat/fermat_little_theorem.ma".
 include "nat/nat.ma".
