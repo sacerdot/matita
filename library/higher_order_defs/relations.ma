@@ -16,18 +16,36 @@ set "baseuri" "cic:/matita/higher_order_defs/relations/".
 
 include "logic/connectives.ma".
 
-definition reflexive: \forall A:Type.\forall R:A \to A \to Prop.Prop
+definition relation : Type \to Type
+\def \lambda A:Type.A \to A \to Prop. 
+
+definition reflexive: \forall A:Type.\forall R :relation A.Prop
 \def 
 \lambda A.\lambda R.\forall x:A.R x x.
 
-definition symmetric: \forall A:Type.\forall R:A \to A \to Prop.Prop
+definition symmetric: \forall A:Type.\forall R: relation A.Prop
 \def 
 \lambda A.\lambda R.\forall x,y:A.R x y \to R y x.
 
-definition transitive: \forall A:Type.\forall R:A \to A \to Prop.Prop
+definition transitive: \forall A:Type.\forall R:relation A.Prop
 \def 
 \lambda A.\lambda R.\forall x,y,z:A.R x y \to R y z \to R x z.
 
-definition irreflexive: \forall A:Type.\forall R:A \to A \to Prop.Prop
+definition irreflexive: \forall A:Type.\forall R:relation A.Prop
 \def 
 \lambda A.\lambda R.\forall x:A.\lnot (R x x).
+
+definition cotransitive: \forall A:Type.\forall R:relation A.Prop
+\def
+\lambda A.\lambda R.\forall x,y:A.R x y \to \forall z:A. R x z \lor R z y.
+
+definition tight_apart: \forall A:Type.\forall eq,ap:relation A.Prop
+\def 
+\lambda A.\lambda eq,ap.\forall x,y:A. (\not (ap x y) \to eq x y) \land
+(eq x y \to \not (ap x y)).
+
+definition antisymmetric: \forall A:Type.\forall R:relation A.Prop
+\def 
+\lambda A.\lambda R.\forall x,y:A. R x y \to \not (R y x).
+
+

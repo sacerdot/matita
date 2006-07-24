@@ -36,3 +36,14 @@ qed.
 inductive Sum (A,B:Set) : Set \def
   inl : A \to Sum A B
 | inr : B \to Sum A B.
+
+inductive ProdT (A,B:Type) : Type \def
+pairT : A \to B \to ProdT A B.
+
+definition fstT \def \lambda A,B:Type.\lambda p: ProdT A B.
+match p with
+[(pairT a b) \Rightarrow a]. 
+
+definition sndT \def \lambda A,B:Type.\lambda p: ProdT A B.
+match p with
+[(pairT a b) \Rightarrow b].

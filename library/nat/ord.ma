@@ -12,12 +12,11 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/nat/log".
+set "baseuri" "cic:/matita/nat/ord".
 
 include "datatypes/constructors.ma".
 include "nat/exp.ma".
-include "nat/lt_arith.ma".
-include "nat/primes.ma".
+include "nat/gcd.ma".
 
 (* this definition of log is based on pairs, with a remainder *)
 
@@ -68,6 +67,7 @@ rewrite > H1.
 apply p_ord_aux_to_Prop.
 assumption.
 qed.
+
 (* questo va spostato in primes1.ma *)
 theorem p_ord_exp: \forall n,m,i. O < m \to n \mod m \neq O \to
 \forall p. i \le p \to p_ord_aux p (m \sup i * n) m = pair nat nat i n.
@@ -142,4 +142,101 @@ rewrite > H3.
 apply p_ord_aux_to_Prop1.
 assumption.assumption.assumption.
 qed.
-  
+
+theorem p_ord_exp1: \forall p,n,q,r. O < p \to \lnot p \divides r \to
+n = p \sup q * r \to p_ord n p = pair nat nat q r.
+intros.unfold p_ord.
+rewrite > H2.
+apply p_ord_exp
+ [assumption
+ |unfold.intro.apply H1.
+  apply mod_O_to_divides[assumption|assumption]
+ |apply (trans_le ? (p \sup q)).
+  cut ((S O) \lt p).
+  elim q.simplify.apply le_n_Sn.
+  simplify.
+  generalize in match H3.
+  apply (nat_case n1).simplify.
+  rewrite < times_n_SO.intro.assumption.
+  intros.
+  apply (trans_le ? (p*(S m))).
+  apply (trans_le ? ((S (S O))*(S m))).
+  simplify.rewrite > plus_n_Sm.
+  rewrite < plus_n_O.
+  apply le_plus_n.
+  apply le_times_l.
+  assumption.
+  apply le_times_r.assumption.
+  alias id "not_eq_to_le_to_lt" = "cic:/matita/algebra/finite_groups/not_eq_to_le_to_lt.con".
+apply not_eq_to_le_to_lt.
+  unfold.intro.apply H1.
+  rewrite < H3.
+  apply (witness ? r r ?).simplify.apply plus_n_O.
+  assumption.
+  rewrite > times_n_SO in \vdash (? % ?).
+  apply le_times_r.
+  change with (O \lt r).
+  apply not_eq_to_le_to_lt.
+  unfold.intro.
+  apply H1.rewrite < H3.
+  apply (witness ? ? O ?).rewrite < times_n_O.reflexivity.
+  apply le_O_n.
+  ]
+qed.
+
+theorem p_ord_to_exp1: \forall p,n,q,r. (S O) \lt p \to O \lt n \to p_ord n p = pair nat nat q r\to 
+\lnot p \divides r \land n = p \sup q * r.
+intros.
+unfold p_ord in H2.
+split.unfold.intro.
+apply (p_ord_aux_to_not_mod_O n n p q r).assumption.assumption.
+apply le_n.symmetry.assumption.
+apply divides_to_mod_O.apply (trans_lt ? (S O)).
+unfold.apply le_n.assumption.assumption.
+apply (p_ord_aux_to_exp n).apply (trans_lt ? (S O)).
+unfold.apply le_n.assumption.symmetry.assumption.
+qed.
+
+theorem p_ord_times: \forall p,a,b,qa,ra,qb,rb. prime p 
+\to O \lt a \to O \lt b 
+\to p_ord a p = pair nat nat qa ra  
+\to p_ord b p = pair nat nat qb rb
+\to p_ord (a*b) p = pair nat nat (qa + qb) (ra*rb).
+intros.
+cut ((S O) \lt p).
+elim (p_ord_to_exp1 ? ? ? ? Hcut H1 H3).
+elim (p_ord_to_exp1 ? ? ? ? Hcut H2 H4).
+apply p_ord_exp1.
+apply (trans_lt ? (S O)).unfold.apply le_n.assumption.
+unfold.intro.
+elim (divides_times_to_divides ? ? ? H H9).
+apply (absurd ? ? H10 H5).
+apply (absurd ? ? H10 H7).
+rewrite > H6.
+rewrite > H8.
+auto paramodulation.
+unfold prime in H. elim H. assumption.
+qed.
+
+theorem fst_p_ord_times: \forall p,a,b. prime p 
+\to O \lt a \to O \lt b 
+\to fst ? ? (p_ord (a*b) p) = (fst ? ? (p_ord a p)) + (fst ? ? (p_ord b p)).
+intros.
+rewrite > (p_ord_times p a b (fst ? ? (p_ord a p)) (snd ? ? (p_ord a p))
+(fst ? ? (p_ord b p)) (snd ? ? (p_ord b p)) H H1 H2).
+simplify.reflexivity.
+apply eq_pair_fst_snd.
+apply eq_pair_fst_snd.
+qed.
+
+theorem p_ord_p : \forall p:nat. (S O) \lt p \to p_ord p p = pair ? ? (S O) (S O).
+intros.
+apply p_ord_exp1.
+apply (trans_lt ? (S O)). unfold.apply le_n.assumption.
+unfold.intro.
+apply (absurd ? ? H).
+apply le_to_not_lt.
+apply divides_to_le.unfold.apply le_n.assumption.
+rewrite < times_n_SO.
+apply exp_n_SO.
+qed.

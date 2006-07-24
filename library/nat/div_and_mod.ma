@@ -14,6 +14,7 @@
 
 set "baseuri" "cic:/matita/nat/div_and_mod".
 
+include "datatypes/constructors.ma".
 include "nat/minus.ma".
 
 let rec mod_aux p m n: nat \def

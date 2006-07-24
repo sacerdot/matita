@@ -51,6 +51,13 @@ rewrite < plus_n_O.
 reflexivity.
 qed.
 
+theorem times_SSO_n : \forall n:nat. n + n = S (S O) * n.
+intros.
+simplify.
+rewrite < plus_n_O.
+reflexivity.
+qed.
+
 theorem symmetric_times : symmetric nat times. 
 unfold symmetric.
 intros.elim x.

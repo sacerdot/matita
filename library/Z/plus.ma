@@ -299,3 +299,7 @@ rewrite > nat_compare_n_n.
 simplify.apply refl_eq.
 qed.
 
+(* minus *)
+definition Zminus : Z \to Z \to Z \def \lambda x,y:Z. x + (-y).
+
+interpretation "integer minus" 'minus x y = (cic:/matita/Z/plus/Zminus.con x y).

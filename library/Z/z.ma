@@ -38,8 +38,8 @@ definition abs \def
 \lambda z.
  match z with 
 [ OZ \Rightarrow O
-| (pos n) \Rightarrow n
-| (neg n) \Rightarrow n].
+| (pos n) \Rightarrow (S n)
+| (neg n) \Rightarrow (S n)].
 
 definition OZ_test \def
 \lambda z.
@@ -64,6 +64,7 @@ qed.
 theorem injective_pos: injective nat Z pos.
 unfold injective.
 intros.
+apply inj_S.
 change with (abs (pos x) = abs (pos y)).
 apply eq_f.assumption.
 qed.
@@ -74,6 +75,7 @@ variant inj_pos : \forall n,m:nat. pos n = pos m \to n = m
 theorem injective_neg: injective nat Z neg.
 unfold injective.
 intros.
+apply inj_S.
 change with (abs (neg x) = abs (neg y)).
 apply eq_f.assumption.
 qed.
