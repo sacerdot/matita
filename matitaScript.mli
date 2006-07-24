@@ -54,6 +54,7 @@ object
 
   method assignFileName : string -> unit (* to the current active file *)
   method loadFromFile : string -> unit
+  method loadFromString : string -> unit
   method saveToFile : unit -> unit
   method filename : string
 

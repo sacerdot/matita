@@ -583,6 +583,11 @@ object (self)
     let grafite_status = self#grafite_status in
     List.iter (fun o -> o lexicon_status grafite_status) observers
 
+  method loadFromString s =
+    buffer#set_text s;
+    self#reset_buffer;
+    buffer#set_modified true
+
   method loadFromFile f =
     buffer#set_text (HExtlib.input_file f);
     self#reset_buffer;

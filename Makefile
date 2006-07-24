@@ -35,6 +35,7 @@ CMOS =				\
 	matitaExcPp.cmo 	\
 	matitaEngine.cmo	\
 	matitacLib.cmo		\
+	matitaprover.cmo        \
 	applyTransformation.cmo	\
 	matitaGtkMisc.cmo	\
 	matitaScript.cmo	\

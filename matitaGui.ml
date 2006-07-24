@@ -1007,16 +1007,34 @@ class gui () =
     method loadScript file =       
       let script = MatitaScript.current () in
       script#reset (); 
-      script#assignFileName file;
-      let content =
-       if Sys.file_exists file then file
-       else BuildTimeConf.script_template
-      in
-       source_view#source_buffer#begin_not_undoable_action ();
-       script#loadFromFile content;
-       source_view#source_buffer#end_not_undoable_action ();
-       console#message ("'"^file^"' loaded.");
-       self#_enableSaveTo file
+      if Pcre.pmatch ~pat:"\\.p$" file then
+        begin
+          let tptppath = 
+            Helm_registry.get_opt_default Helm_registry.string ~default:"./"
+              "matita.tptppath"
+          in
+          let data = Matitaprover.p_to_ma ~filename:file ~tptppath in
+          let filename = Pcre.replace ~pat:"\\.p$" ~templ:".ma" file in
+          script#assignFileName filename;
+          source_view#source_buffer#begin_not_undoable_action ();
+          script#loadFromString data;
+          source_view#source_buffer#end_not_undoable_action ();
+          console#message ("'"^filename^"' loaded.");
+          self#_enableSaveTo filename
+        end
+      else
+        begin
+          script#assignFileName file;
+          let content =
+           if Sys.file_exists file then file
+           else BuildTimeConf.script_template
+          in
+           source_view#source_buffer#begin_not_undoable_action ();
+           script#loadFromFile content;
+           source_view#source_buffer#end_not_undoable_action ();
+           console#message ("'"^file^"' loaded.");
+           self#_enableSaveTo file
+        end
       
     method setStar name b =
       let l = main#scriptLabel in

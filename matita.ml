@@ -32,7 +32,14 @@ open GrafiteTypes
 
 (** {2 Initialization} *)
 
-let _ = MatitaInit.initialize_all ()
+let _ = 
+  MatitaInit.add_cmdline_spec
+    ["-tptppath",Arg.String 
+      (fun s -> Helm_registry.set_string "matita.tptppath" s),
+      "Where to find the Axioms/ and Problems/ directory"];
+  MatitaInit.initialize_all ()
+;;
+
 (* let _ = Saturation.init () (* ALB to link paramodulation *) *)
 
 (** {2 GUI callbacks} *)

@@ -74,6 +74,14 @@ for @{ 'exists ${default
 "
 ;;
 
+let p_to_ma ~tptppath ~filename = 
+  let data = 
+     Tptp2grafite.tptp2grafite ~filename ~tptppath:tptppath
+     ~raw_preamble ()
+  in
+  data
+;;
+
 let main () =
   MatitaInit.fill_registry ();
   let tptppath = ref "./" in
@@ -91,10 +99,7 @@ let main () =
     | [file] -> file
     | _ -> prerr_endline "You must specify exactly one .p file."; exit 1
   in
-  let data = 
-     Tptp2grafite.tptp2grafite ~filename:inputfile ~tptppath:!tptppath
-     ~raw_preamble ()
-  in
+  let data = p_to_ma ~filename:inputfile ~tptppath:!tptppath in
 (*   prerr_endline data; *)
   let is = Ulexing.from_utf8_string data in
   let gs = GrafiteSync.init () in
