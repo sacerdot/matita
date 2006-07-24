@@ -65,7 +65,10 @@ default "equality"
  cic:/matita/logic/equality/sym_eq.con
  cic:/matita/logic/equality/trans_eq.con
  cic:/matita/logic/equality/eq_ind.con
- cic:/matita/logic/equality/eq_elim_r.con. 
+ cic:/matita/logic/equality/eq_elim_r.con
+ cic:/matita/logic/equality/eq_f.con
+ cic:/matita/logic/equality/eq_OF_eq.con. (* \x.sym (eq_f x) *)
+
  
 theorem eq_f: \forall  A,B:Type.\forall f:A\to B.
 \forall x,y:A. x=y \to f x = f y.
