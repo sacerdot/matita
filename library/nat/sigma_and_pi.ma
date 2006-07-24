@@ -16,6 +16,7 @@ set "baseuri" "cic:/matita/nat/sigma_and_pi".
 
 include "nat/factorial.ma".
 include "nat/exp.ma".
+include "nat/lt_arith.ma".
 
 let rec sigma n f m \def
   match n with 
