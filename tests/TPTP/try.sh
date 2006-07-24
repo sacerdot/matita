@@ -5,7 +5,7 @@ prover=y
 MATITAC=../../matitac.opt
 #MATITAC=../../matitac
 MATITAPROVER=../../matitaprover.opt
-TPTPPATH=/home/tassi/helm/trunk/TPTP-v3.1.1/
+TPTPPATH=/home/tassi/TPTP-v3.1.1/
 
 if [ -z "$1" ]; then
   if [ $prover = 'y' ]; then
