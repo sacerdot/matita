@@ -19,7 +19,9 @@ default "equality"
  cic:/Coq/Init/Logic/sym_eq.con
  cic:/Coq/Init/Logic/trans_eq.con
  cic:/Coq/Init/Logic/eq_ind.con
- cic:/Coq/Init/Logic/eq_ind_r.con. 
+ cic:/Coq/Init/Logic/eq_ind_r.con 
+ cic:/Coq/Init/Logic/f_equal.con 
+ cic:/Coq/Init/Logic/f_equal1.con. 
 
 default "true"
  cic:/Coq/Init/Logic/True.ind. 
@@ -73,4 +75,10 @@ interpretation "Coq's not equal to (leibnitz)" 'neq x y = (cic:/Coq/Init/Logic/n
 interpretation "Coq's natural 'not less or equal than'"
  'nleq x y = (cic:/Coq/Init/Logic/not.con 
                (cic:/Coq/Init/Peano/le.ind#xpointer(1/1) x y)).
+
+theorem f_equal1 : 
+  \forall A,B:Type. \forall f:A \to B. \forall x,y:A.
+  x = y \to f y = f x.
+  intros.elim H.reflexivity.
+qed.
 
