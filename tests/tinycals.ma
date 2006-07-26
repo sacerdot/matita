@@ -15,12 +15,14 @@
 set "baseuri" "cic:/matita/test/tinycals".
 
 theorem prova: 
-  \forall A,B:Prop.
-  \forall H:A \to A \to A \to A \to A \to B.A \to B.
+  \forall A,B,C:Prop.
+  \forall H:A \to A \to C \to A \to A \to B.A \to C \to B.
 intros.
 apply H;
   [assumption 
-  |3,5:assumption;
+  |3,5:
+   [ exact H2;
+   | exact H1 ]
   |4:assumption
   |*:assumption
   ]
