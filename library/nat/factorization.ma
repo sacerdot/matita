@@ -169,24 +169,23 @@ match f with
 | nfa_one \Rightarrow (S O)
 | (nfa_proper g) \Rightarrow defactorize_aux g O]. 
 
-theorem lt_O_defactorize_aux: \forall f:nat_fact.\forall i:nat.
-O < defactorize_aux f i.
-intro.elim f.simplify.unfold lt. 
-rewrite > times_n_SO.
-apply le_times.
-change with (O < nth_prime i).
-apply lt_O_nth_prime_n.
-change with (O < exp (nth_prime i) n).
-apply lt_O_exp.
-apply lt_O_nth_prime_n.
-simplify.unfold lt.
-rewrite > times_n_SO.
-apply le_times.
-change with (O < exp (nth_prime i) n).
-apply lt_O_exp.
-apply lt_O_nth_prime_n.
-change with (O < defactorize_aux n1 (S i)).
-apply H.
+theorem lt_O_defactorize_aux:
+ \forall f:nat_fact.
+ \forall i:nat.
+ O < defactorize_aux f i.
+intro; elim f;
+[1,2:
+  simplify; unfold lt;
+  rewrite > times_n_SO;
+  apply le_times;
+  [ change with (O < nth_prime i);
+    apply lt_O_nth_prime_n;
+  |2,3:
+    change with (O < exp (nth_prime i) n);
+    apply lt_O_exp;
+    apply lt_O_nth_prime_n;
+  | change with (O < defactorize_aux n1 (S i));
+    apply H; ] ]
 qed.
 
 theorem lt_SO_defactorize_aux: \forall f:nat_fact.\forall i:nat.
