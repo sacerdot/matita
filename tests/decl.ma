@@ -97,3 +97,59 @@ obtain (S n) = (S m) by (eq_f ? ? ? ? ? H).
              = n by (sym_eq ? ? ? L)
 done.
 qed.
+
+theorem easy5: ∀n:nat. n*O=O.
+assume n: nat.
+(* Bug here: False should be n*0=0 *)
+we proceed by induction on n to prove False. 
+ case O.
+   the thesis becomes (O*O=O).
+   by (refl_eq ? O) done.
+ case S (m:nat).
+  by induction hypothesis we know (m*O=O) (I).
+  the thesis becomes (S m * O = O).
+  (* Bug here: missing that is equivalent to *)
+  simplify.
+  by I done.
+qed.
+
+inductive tree : Type ≝
+   Empty: tree
+ | Node: tree → tree → tree.
+ 
+let rec size t ≝
+ match t with
+  [ Empty ⇒ O
+  | (Node t1 t2) ⇒ S ((size t1) + (size t2))
+  ].
+  
+theorem easy6: ∀t. O ≮ O → O < size t → t ≠ Empty. 
+ assume t: tree.
+ suppose (O ≮ O) (trivial).
+ (*Bug here: False should be something else *)
+ we proceed by induction on t to prove False.
+  case Empty.
+    the thesis becomes (O < size Empty → Empty ≠ Empty).
+     suppose (O < size Empty) (absurd).
+     (*Bug here: missing that is equivalent to *)
+     simplify in absurd.
+     (* Here the "natural" language is not natural at all *)
+     we proceed by induction on (trivial absurd) to prove False.
+  (*Bug here: this is what we want
+  case Node (t1:tree) (t2:tree).
+     by induction hypothesis we know (O < size t1 → t1 ≠ Empty) (Ht1).
+     by induction hypothesis we know (O < size t2 → t2 ≠ Empty) (Ht2). *)
+  (*This is the best we can do right now*)
+  case Node.
+   assume t1: tree.
+   by induction hypothesis we know (O < size t1 → t1 ≠ Empty) (Ht1).
+   assume t2: tree.
+   by induction hypothesis we know (O < size t2 → t2 ≠ Empty) (Ht2).
+   suppose (O < size (Node t1 t2)) (Hyp).
+   (*BUG: that is equivalent to missed here *)
+   unfold Not.
+   suppose (Node t1 t2 = Empty) (absurd).
+   (* Discriminate should really generate a theorem to be useful with
+      declarative tactics *)
+   discriminate absurd.
+qed.
