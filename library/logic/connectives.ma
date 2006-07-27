@@ -79,12 +79,6 @@ inductive ex (A:Type) (P:A \to Prop) : Prop \def
 interpretation "exists" 'exists \eta.x =
   (cic:/matita/logic/connectives/ex.ind#xpointer(1/1) _ x).
 
-notation < "hvbox(\exists ident i opt (: ty) break . p)"
-  right associative with precedence 20
-for @{ 'exists ${default
-  @{\lambda ${ident i} : $ty. $p)}
-  @{\lambda ${ident i} . $p}}}.
-
 inductive ex2 (A:Type) (P,Q:A \to Prop) : Prop \def
     ex_intro2: \forall x:A. P x \to Q x \to ex2 A P Q.
 
