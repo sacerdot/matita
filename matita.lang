@@ -153,6 +153,7 @@
     <keyword>know</keyword>
     <keyword>case</keyword>	    	 
     <keyword>obtain</keyword>	    	 
+    <keyword>done</keyword>	    	 
 </keyword-list>
 
   <keyword-list _name = "Tacticals" style = "Keyword" case-sensitive="TRUE">

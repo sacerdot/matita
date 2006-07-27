@@ -71,4 +71,29 @@ theorem easy2: ∀n,m. n * m = O → n = O ∨ m = O.
     ]
   ]
 qed.
-      
+
+
+theorem easy3: ∀A:Prop. (A ∧ ∃n:nat.n ≠ n) → True.
+ assume P: Prop.
+ suppose (P ∧ ∃m:nat.m ≠ m) (H).
+ by H we have P (H1) and (∃x:nat.x≠x) (H2).
+ (*BUG:
+ by H2 let q:nat such that (q ≠ q) (Ineq).
+ *)
+ (* the next line is wrong, but for the moment it does the job *)
+ by H2 let q:nat such that False (Ineq).
+ by I done.
+qed.
+
+theorem easy4: ∀n,m,p. n = m → S m = S p → n = S p → S n = n.
+assume n: nat.
+assume m:nat.
+assume p:nat.
+suppose (n=m) (H).
+suppose (S m = S p) (K).
+suppose (n = S p) (L).
+obtain (S n) = (S m) by (eq_f ? ? ? ? ? H).
+             = (S p) by K.
+             = n by (sym_eq ? ? ? L)
+done.
+qed.
