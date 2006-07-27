@@ -130,9 +130,8 @@ theorem easy6: ∀t. O ≮ O → O < size t → t ≠ Empty.
  we proceed by induction on t to prove False.
   case Empty.
     the thesis becomes (O < size Empty → Empty ≠ Empty).
-     suppose (O < size Empty) (absurd).
-     (*Bug here: missing that is equivalent to *)
-     simplify in absurd.
+     suppose (O < size Empty) (absurd)
+     that is equivalent to (O < O).
      (* Here the "natural" language is not natural at all *)
      we proceed by induction on (trivial absurd) to prove False.
   (*Bug here: this is what we want
@@ -145,11 +144,13 @@ theorem easy6: ∀t. O ≮ O → O < size t → t ≠ Empty.
    by induction hypothesis we know (O < size t1 → t1 ≠ Empty) (Ht1).
    assume t2: tree.
    by induction hypothesis we know (O < size t2 → t2 ≠ Empty) (Ht2).
-   suppose (O < size (Node t1 t2)) (Hyp).
-   (*BUG: that is equivalent to missed here *)
-   unfold Not.
-   suppose (Node t1 t2 = Empty) (absurd).
-   (* Discriminate should really generate a theorem to be useful with
-      declarative tactics *)
-   discriminate absurd.
+   suppose (O < size (Node t1 t2)) (useless).
+   we need to prove (Node t1 t2 ≠ Empty) (final)
+   or equivalently (Node t1 t2 = Empty → False).
+     suppose (Node t1 t2 = Empty) (absurd).
+     (* Discriminate should really generate a theorem to be useful with
+        declarative tactics *)
+     discriminate absurd.
+     by final
+   done.
 qed.
