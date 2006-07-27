@@ -127,7 +127,33 @@
     <keyword>transitivity</keyword>
     <keyword>unfold</keyword>
     <keyword>whd</keyword>
-  </keyword-list>
+    (* Tattiche Aggiunte *)
+    <keyword>assume</keyword>
+    <keyword>suppose</keyword>
+    <keyword>by</keyword>
+    <keyword>we</keyword> 
+    <keyword>prove</keyword>
+    <keyword>proved</keyword>
+    <keyword>need</keyword>
+    <keyword>proceed</keyword>
+    <keyword>induction</keyword>
+    <keyword>inductive</keyword>
+    <keyword>case</keyword>
+    <keyword>base</keyword>
+    <keyword>let</keyword>
+    <keyword>such</keyword>
+    <keyword>that</keyword>
+    <keyword>by</keyword>
+    <keyword>have</keyword>
+    <keyword>and</keyword>
+    <keyword>the</keyword>
+    <keyword>thesis</keyword>
+    <keyword>becomes</keyword>
+    <keyword>hypothesis</keyword>
+    <keyword>know</keyword>
+    <keyword>case</keyword>	    	 
+    <keyword>obtain</keyword>	    	 
+</keyword-list>
 
   <keyword-list _name = "Tacticals" style = "Keyword" case-sensitive="TRUE">
     <keyword>try</keyword>
