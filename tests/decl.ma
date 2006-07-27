@@ -72,6 +72,43 @@ theorem easy2: ∀n,m. n * m = O → n = O ∨ m = O.
   ]
 qed.
 
+theorem easy15: ∀n,m. n * m = O → n = O ∨ m = O.
+ assume n: nat.
+ assume m: nat.
+ (* base case *)
+ by _ we proved (O = O) (trivial).
+ by _ we proved (O = O ∨ m = O) (trivial2).
+ by _ we proved (O*m=O → O=O ∨ m=O) (base_case).
+ (* inductive case *)
+ we need to prove
+  (∀n1. (n1 * m = O → n1 = O ∨ m = O) → (S n1) * m = O → (S n1) = O ∨ m = O)
+  (inductive_case).
+   assume n1: nat.
+   suppose (n1 * m = O → n1 = O ∨ m = O) (inductive_hyp).
+   (* base case *)
+   by _ we proved (S n1 = O ∨ O = O) (pre_base_case2).
+   by _ we proved (S n1*O = O → S n1 = O ∨ O = O) (base_case2).
+   (* inductive case *)
+   we need to prove
+    (∀m1. (S n1 * m1 = O → S n1 = O ∨ m1 = O) →
+      (S n1 * S m1 = O → S n1 = O ∨ S m1 = O)) (inductive_hyp2).
+     assume m1: nat.
+     suppose (S n1 * m1 = O → S n1 = O ∨ m1 = O) (useless).
+     suppose (S n1 * S m1 = O) (absurd_hyp).
+     simplify in absurd_hyp.
+     by _ we proved (O = S (m1+n1*S m1)) (absurd_hyp').
+     (* BUG: automation failure *)
+     by (not_eq_O_S ? absurd_hyp') we proved False (the_absurd).
+     (* BUG: automation failure *)
+     by (False_ind ? the_absurd)
+   done.
+   (* the induction *)
+   by (nat_ind (λm.S n1 * m = O → S n1 = O ∨ m = O) base_case2 inductive_hyp2 m)
+ done.
+ (* the induction *)
+ by (nat_ind (λn.n*m=O → n=O ∨ m=O) base_case inductive_case n)
+done.
+qed.
 
 theorem easy3: ∀A:Prop. (A ∧ ∃n:nat.n ≠ n) → True.
  assume P: Prop.
@@ -95,6 +132,19 @@ suppose (n = S p) (L).
 obtain (S n) = (S m) by (eq_f ? ? ? ? ? H).
              = (S p) by K.
              = n by (sym_eq ? ? ? L)
+done.
+qed.
+
+theorem easy45: ∀n,m,p. n = m → S m = S p → n = S p → S n = n.
+assume n: nat.
+assume m:nat.
+assume p:nat.
+suppose (n=m) (H).
+suppose (S m = S p) (K).
+suppose (n = S p) (L).
+obtain (S n) = (S m) by _.
+             = (S p) by _.
+             = n by _
 done.
 qed.
 
