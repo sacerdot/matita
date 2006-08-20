@@ -14,6 +14,8 @@
 
 set "baseuri" "cic:/matita/RELATIONAL-ARITHMETICS/Nat_fwd".
 
+include "logic/equality.ma".
+
 include "Nat.ma".
 
 theorem eq_gen_zero_succ: \forall (P:Prop). \forall m2. zero = succ m2 \to P.

@@ -12,12 +12,12 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/RELATIONAL-ARITHMETICS/Plus".
+set "baseuri" "cic:/matita/RELATIONAL-ARITHMETICS/BEq".
 
 include "logic/equality.ma".
 
-include "Nat.ma".
+include "BNot.ma".
 
-inductive Plus (p:Nat): Nat \to Nat \to Prop \def
-   | Plus_zero_2: Plus p zero p
-   | Plus_succ_2: \forall q, r. Plus p q r \to Plus p (succ q) (succ r).
+inductive BEq (b1:Bool): Bool \to Bool \to Prop \def
+   | BEq_false: \forall b2. BNot b1 b2 \to BEq b1 false b2
+   | BEq_true : BEq b1 true b1.

@@ -12,12 +12,10 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/RELATIONAL-ARITHMETICS/Plus".
-
-include "logic/equality.ma".
+set "baseuri" "cic:/matita/RELATIONAL-ARITHMETICS/NLE".
 
 include "Nat.ma".
 
-inductive Plus (p:Nat): Nat \to Nat \to Prop \def
-   | Plus_zero_2: Plus p zero p
-   | Plus_succ_2: \forall q, r. Plus p q r \to Plus p (succ q) (succ r).
+inductive NLE: Nat \to Nat \to Prop \def
+   | NLE_zero: \forall q. NLE zero q
+   | NLE_succ: \forall p,q. NLE p q \to NLE (succ p) (succ q).
