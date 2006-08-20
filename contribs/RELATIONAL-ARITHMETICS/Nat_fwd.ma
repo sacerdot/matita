@@ -12,18 +12,18 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/RELATIONAL-ARITHMETICS/nat_fwd".
+set "baseuri" "cic:/matita/RELATIONAL-ARITHMETICS/Nat_fwd".
 
-include "nat_defs.ma".
+include "Nat.ma".
 
-theorem eq_gen_O_S: \forall (P:Prop). \forall m2. O = S m2 \to P.
+theorem eq_gen_zero_succ: \forall (P:Prop). \forall m2. zero = succ m2 \to P.
  intros. discriminate H.
 qed.
 
-theorem eq_gen_S_O: \forall (P:Prop). \forall m1. S m1 = O \to P.
+theorem eq_gen_succ_zero: \forall (P:Prop). \forall m1. succ m1 = zero \to P.
  intros. discriminate H.
 qed.
 
-theorem eq_gen_S_S: \forall m1,m2. S m1 = S m2 \to m1 = m2.
+theorem eq_gen_succ_succ: \forall m1,m2. succ m1 = succ m2 \to m1 = m2.
  intros. injection H. assumption.
 qed.

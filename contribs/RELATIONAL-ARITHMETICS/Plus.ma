@@ -12,10 +12,10 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/RELATIONAL-ARITHMETICS/nat_defs".
+set "baseuri" "cic:/matita/RELATIONAL-ARITHMETICS/Plus".
 
-include "logic/equality.ma".
+include "Nat.ma".
 
-inductive nat: Set \def
-   | O: nat
-   | S: nat \to nat.
+inductive Plus (p:Nat): Nat \to Nat \to Prop \def
+   | Plus_zero_2: Plus p zero p
+   | Plus_succ_2: \forall q, r. Plus p q r \to Plus p (succ q) (succ r).

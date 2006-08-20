@@ -12,10 +12,10 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/RELATIONAL-ARITHMETICS/add_defs".
+set "baseuri" "cic:/matita/RELATIONAL-ARITHMETICS/Nat".
 
-include "nat_defs.ma".
+include "logic/equality.ma".
 
-inductive add (p:nat): nat \to nat \to Prop \def
-   | add_O_2: add p O p
-   | add_S_2: \forall q, r. add p q r \to add p (S q) (S r).
+inductive Nat: Set \def
+   | zero: Nat
+   | succ: Nat \to Nat.
