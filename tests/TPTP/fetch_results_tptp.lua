@@ -36,7 +36,7 @@ function main(argv)
 		local f = io.open(logfilename,"w")
 		f:write(data)
 		f:close()
-		os.execute("gzip "..logfilename)
+		os.execute("gzip -f "..logfilename)
 	end
 end
 
