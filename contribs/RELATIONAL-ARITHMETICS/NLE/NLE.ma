@@ -12,9 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/RELATIONAL-ARITHMETICS/NLE".
+set "baseuri" "cic:/matita/RELATIONAL/NLE/defs".
 
-include "Nat.ma".
+include "Nat/Nat.ma".
 
 inductive NLE: Nat \to Nat \to Prop \def
    | NLE_zero: \forall q. NLE zero q

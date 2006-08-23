@@ -12,12 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/RELATIONAL-ARITHMETICS/BEq".
+set "baseuri" "cic:/matita/RELATIONAL/Nat/defs".
 
-include "logic/equality.ma".
-
-include "BNot.ma".
-
-inductive BEq (b1:Bool): Bool \to Bool \to Prop \def
-   | BEq_false: \forall b2. BNot b1 b2 \to BEq b1 false b2
-   | BEq_true : BEq b1 true b1.
+inductive Nat: Set \def
+   | zero: Nat
+   | succ: Nat \to Nat
+.

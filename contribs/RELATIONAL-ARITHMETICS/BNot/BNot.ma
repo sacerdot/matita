@@ -12,8 +12,11 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/RELATIONAL-ARITHMETICS/Nat".
+set "baseuri" "cic:/matita/RELATIONAL/BNot/defs".
 
-inductive Nat: Set \def
-   | zero: Nat
-   | succ: Nat \to Nat.
+include "Bool/Bool.ma".
+
+inductive BNot: Bool \to Bool \to Prop \def
+   | bnot_false: BNot false true
+   | bnot_true : BNot true false
+.

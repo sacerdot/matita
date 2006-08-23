@@ -12,10 +12,20 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/RELATIONAL-ARITHMETICS/BNot".
+set "baseuri" "cic:/matita/RELATIONAL/Nat/fwd".
 
-include "Bool.ma".
+include "logic/equality.ma".
 
-inductive BNot: Bool \to Bool \to Prop \def
-   | BNot_false: BNot false true
-   | BNot_true : BNot true false.
+include "Nat/Nat.ma".
+
+theorem eq_gen_zero_succ: \forall (P:Prop). \forall m2. zero = succ m2 \to P.
+ intros. discriminate H.
+qed.
+
+theorem eq_gen_succ_zero: \forall (P:Prop). \forall m1. succ m1 = zero \to P.
+ intros. discriminate H.
+qed.
+
+theorem eq_gen_succ_succ: \forall m1,m2. succ m1 = succ m2 \to m1 = m2.
+ intros. injection H. assumption.
+qed.

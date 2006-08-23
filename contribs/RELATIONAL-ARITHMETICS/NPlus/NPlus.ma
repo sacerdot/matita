@@ -12,12 +12,12 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/RELATIONAL-ARITHMETICS/NPlus".
+set "baseuri" "cic:/matita/RELATIONAL/NPlus/defs".
 
 include "logic/equality.ma".
 
-include "Nat.ma".
+include "Nat/Nat.ma".
 
 inductive NPlus (p:Nat): Nat \to Nat \to Prop \def
-   | NPlus_zero_2: NPlus p zero p
-   | NPlus_succ_2: \forall q, r. NPlus p q r \to NPlus p (succ q) (succ r).
+   | nplus_zero_2: NPlus p zero p
+   | nplus_succ_2: \forall q, r. NPlus p q r \to NPlus p (succ q) (succ r).

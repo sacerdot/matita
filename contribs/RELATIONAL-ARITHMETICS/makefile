@@ -1,6 +1,6 @@
 H=@
 
-RT_BASEDIR=/home/fguidi/svn/trunk/helm/software/matita/
+RT_BASEDIR=/home/fguidi/svn/software/matita/
 OPTIONS=-bench
 MMAKE=$(RT_BASEDIR)matitamake $(OPTIONS)
 CLEAN=$(RT_BASEDIR)matitaclean $(OPTIONS) 

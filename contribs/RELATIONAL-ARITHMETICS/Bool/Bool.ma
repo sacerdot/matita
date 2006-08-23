@@ -12,8 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/RELATIONAL-ARITHMETICS/Bool".
+set "baseuri" "cic:/matita/RELATIONAL/Bool/defs".
 
 inductive Bool: Set \def
    | false: Bool
-   | true: Bool.
+   | true: Bool
+.
