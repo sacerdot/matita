@@ -14,8 +14,8 @@
 
 set "baseuri" "cic:/matita/RELATIONAL/NPlus/fwd".
 
-include "Nat/Nat_fwd.ma".
-include "NPlus/NPlus.ma".
+include "Nat/fwd.ma".
+include "NPlus/defs.ma".
 
 (* primitive generation lemmas proved by elimination and inversion *)
 

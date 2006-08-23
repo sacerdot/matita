@@ -14,7 +14,7 @@
 
 set "baseuri" "cic:/matita/RELATIONAL/NPlus/props".
 
-include "NPlus/NPlus_fwd.ma".
+include "NPlus/fwd.ma".
 
 theorem nplus_zero_1: \forall q. NPlus zero q q.
  intros. elim q; clear q; auto.

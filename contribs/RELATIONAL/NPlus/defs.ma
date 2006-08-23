@@ -12,13 +12,12 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/RELATIONAL/BEq/defs".
+set "baseuri" "cic:/matita/RELATIONAL/NPlus/defs".
 
 include "logic/equality.ma".
 
-include "BNot/BNot.ma".
+include "Nat/defs.ma".
 
-inductive BEq (b1:Bool): Bool \to Bool \to Prop \def
-   | beq_false: \forall b2. BNot b1 b2 \to BEq b1 false b2
-   | beq_true : BEq b1 true b1
-.
+inductive NPlus (p:Nat): Nat \to Nat \to Prop \def
+   | nplus_zero_2: NPlus p zero p
+   | nplus_succ_2: \forall q, r. NPlus p q r \to NPlus p (succ q) (succ r).

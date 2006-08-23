@@ -12,12 +12,20 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/RELATIONAL/NPlus/defs".
+set "baseuri" "cic:/matita/RELATIONAL/Nat/fwd".
 
 include "logic/equality.ma".
 
-include "Nat/Nat.ma".
+include "Nat/defs.ma".
 
-inductive NPlus (p:Nat): Nat \to Nat \to Prop \def
-   | nplus_zero_2: NPlus p zero p
-   | nplus_succ_2: \forall q, r. NPlus p q r \to NPlus p (succ q) (succ r).
+theorem eq_gen_zero_succ: \forall (P:Prop). \forall m2. zero = succ m2 \to P.
+ intros. discriminate H.
+qed.
+
+theorem eq_gen_succ_zero: \forall (P:Prop). \forall m1. succ m1 = zero \to P.
+ intros. discriminate H.
+qed.
+
+theorem eq_gen_succ_succ: \forall m1,m2. succ m1 = succ m2 \to m1 = m2.
+ intros. injection H. assumption.
+qed.

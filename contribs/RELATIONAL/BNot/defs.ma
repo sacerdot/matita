@@ -14,7 +14,7 @@
 
 set "baseuri" "cic:/matita/RELATIONAL/BNot/defs".
 
-include "Bool/Bool.ma".
+include "Bool/defs.ma".
 
 inductive BNot: Bool \to Bool \to Prop \def
    | bnot_false: BNot false true

@@ -14,7 +14,7 @@
 
 set "baseuri" "cic:/matita/RELATIONAL/NLE/defs".
 
-include "Nat/Nat.ma".
+include "Nat/defs.ma".
 
 inductive NLE: Nat \to Nat \to Prop \def
    | NLE_zero: \forall q. NLE zero q

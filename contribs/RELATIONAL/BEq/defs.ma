@@ -12,20 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/RELATIONAL/Nat/fwd".
+set "baseuri" "cic:/matita/RELATIONAL/BEq/defs".
 
 include "logic/equality.ma".
 
-include "Nat/Nat.ma".
+include "BNot/defs.ma".
 
-theorem eq_gen_zero_succ: \forall (P:Prop). \forall m2. zero = succ m2 \to P.
- intros. discriminate H.
-qed.
-
-theorem eq_gen_succ_zero: \forall (P:Prop). \forall m1. succ m1 = zero \to P.
- intros. discriminate H.
-qed.
-
-theorem eq_gen_succ_succ: \forall m1,m2. succ m1 = succ m2 \to m1 = m2.
- intros. injection H. assumption.
-qed.
+inductive BEq (b1:Bool): Bool \to Bool \to Prop \def
+   | beq_false: \forall b2. BNot b1 b2 \to BEq b1 false b2
+   | beq_true : BEq b1 true b1
+.
