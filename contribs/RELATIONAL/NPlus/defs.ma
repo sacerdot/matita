@@ -21,3 +21,11 @@ include "Nat/defs.ma".
 inductive NPlus (p:Nat): Nat \to Nat \to Prop \def
    | nplus_zero_2: NPlus p zero p
    | nplus_succ_2: \forall q, r. NPlus p q r \to NPlus p (succ q) (succ r).
+
+(*CSC: the URI must disappear: there is a bug now *)
+interpretation "natural plus (relational)" 'rel_plus x y z = 
+   (cic:/matita/RELATIONAL/NPlus/defs/NPlus.ind#xpointer(1/1) x y z).
+
+notation "hvbox(a break + b break == c)" 
+  non associative with precedence 95
+for @{ 'rel_plus $a $b $c}.

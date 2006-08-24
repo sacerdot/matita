@@ -14,8 +14,20 @@
 
 set "baseuri" "cic:/matita/RELATIONAL/NLE/defs".
 
+include "logic/equality.ma".
+
 include "Nat/defs.ma".
 
 inductive NLE: Nat \to Nat \to Prop \def
    | NLE_zero: \forall q. NLE zero q
-   | NLE_succ: \forall p,q. NLE p q \to NLE (succ p) (succ q).
+   | NLE_succ: \forall p,q. NLE p q \to NLE (succ p) (succ q)
+.
+
+(*CSC: the URI must disappear: there is a bug now *)
+interpretation "natural 'less or equal to'" 'leq x y = 
+   (cic:/matita/RELATIONAL/NLE/defs/NLE.ind#xpointer(1/1) x y).
+
+(*CSC: the URI must disappear: there is a bug now *)
+interpretation "natural 'less than'" 'lt x y = 
+   (cic:/matita/RELATIONAL/NLE/defs/NLE.ind#xpointer(1/1) 
+      (cic:/matita/RELATIONAL/Nat/defs/Nat.ind#xpointer(1/1/2) x) y).
