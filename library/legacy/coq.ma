@@ -81,6 +81,10 @@ interpretation "Coq's natural 'not less or equal than'"
 alias id "or" = "cic:/Coq/Init/Logic/or.ind#xpointer(1/1)".
 alias id "nat" = "cic:/Coq/Init/Datatypes/nat.ind#xpointer(1/1)".
 alias id "eq" = "cic:/Coq/Init/Logic/eq.ind#xpointer(1/1)".
+alias id "plus" = "cic:/Coq/Init/Peano/plus.con".
+alias id "le_trans" = "cic:/Coq/Arith/Le/le_trans.con".
+alias id "le_plus_r" = "cic:/Coq/Arith/Plus/le_plus_r.con".
+alias id "le" = "cic:/Coq/Init/Peano/le.ind#xpointer(1/1)".
 
 (* theorems *)
 
