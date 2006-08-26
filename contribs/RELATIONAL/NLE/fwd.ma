@@ -20,7 +20,7 @@ include "Nat/fwd.ma".
 include "NLE/defs.ma".
 
 theorem nle_gen_succ_1: \forall x,y. x < y \to 
-                         \exists z. y = succ z \land x <= z.
+                        \exists z. y = succ z \land x <= z.
  intros. inversion H; clear H; intros;
  [ apply (eq_gen_succ_zero ? ? H)
  | lapply linear eq_gen_succ_succ to H2 as H0.
@@ -53,7 +53,7 @@ theorem nle_gen_zero_2: \forall x. x <= zero \to x = zero.
 qed.
 
 theorem nle_gen_succ_2: \forall y,x. x <= succ y \to
-                         x = zero \lor \exists z. x = succ z \land z <= y.
+                        x = zero \lor \exists z. x = succ z \land z <= y.
  intros 2; elim x; clear x; intros;
  [ auto
  | lapply linear nle_gen_succ_succ to H1.

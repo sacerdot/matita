@@ -19,6 +19,14 @@ include "logic/equality.ma".
 include "BNot/defs.ma".
 
 inductive BEq (b1:Bool): Bool \to Bool \to Prop \def
-   | beq_false: \forall b2. BNot b1 b2 \to BEq b1 false b2
+   | beq_false: \forall b2. (~b1 == b2) \to BEq b1 false b2
    | beq_true : BEq b1 true b1
 .
+
+(*CSC: the URI must disappear: there is a bug now *)
+interpretation "boolean coimplication predicate" 'rel_coimp x y z = 
+   (cic:/matita/RELATIONAL/BEq/defs/BEq.ind#xpointer(1/1) x y z).
+
+notation "hvbox(a break * b break == c)" 
+  non associative with precedence 95
+for @{ 'rel_coimp $a $b $c}.

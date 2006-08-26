@@ -12,20 +12,41 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/RELATIONAL/NPlus/defs".
+(* Project started Tue Aug 22, 2006 ***************************************)
 
-include "logic/equality.ma".
+set "baseuri" "cic:/matita/LAMBDA-TYPES/Unified/P/defs".
 
-include "Nat/defs.ma".
+(* POLARIZED TERMS
+   - Naming policy:
+     - natural numbers      : sorts h k, local references i j, lengths l
+     - boolean values       : a b
+     - generic binding items: x
+     - generic flat items   : y
+     - generic head items   : z
+     - terms                : p q
+*)
 
-inductive NPlus (p:Nat): Nat \to Nat \to Prop \def
-   | nplus_zero_2: NPlus p zero p
-   | nplus_succ_2: \forall q, r. NPlus p q r \to NPlus p (succ q) (succ r).
+include "../../RELATIONAL/Nat/defs.ma".
+include "../../RELATIONAL/Bool/defs.ma".
 
-(*CSC: the URI must disappear: there is a bug now *)
-interpretation "natural plus predicate" 'rel_plus x y z = 
-   (cic:/matita/RELATIONAL/NPlus/defs/NPlus.ind#xpointer(1/1) x y z).
+inductive Bind: Set \def
+   | abbr: Bind
+   | abst: Bind
+   | excl: Bind
+.
 
-notation "hvbox(a break + b break == c)" 
-  non associative with precedence 95
-for @{ 'rel_plus $a $b $c}.
+inductive Flat: Set \def
+   | appl: Flat
+   | cast: Flat
+.
+
+inductive Head: Set \def
+   | bind: Bind \to Head
+   | flat: Flat \to Head
+.
+
+inductive P: Set \def
+   | sort: Nat \to P
+   | lref: Nat \to P
+   | head: Bool \to Head \to P \to P \to P
+.

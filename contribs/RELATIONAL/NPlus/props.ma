@@ -21,7 +21,7 @@ theorem nplus_zero_1: \forall q. zero + q == q.
 qed.
 
 theorem nplus_succ_1: \forall p,q,r. NPlus p q r \to 
-                       (succ p) + q == (succ r).
+                      (succ p) + q == (succ r).
  intros 2. elim q; clear q;
  [ lapply linear nplus_gen_zero_2 to H as H0.
    rewrite > H0. clear H0 p
@@ -42,7 +42,7 @@ theorem nplus_sym: \forall p,q,r. (p + q == r) \to q + p == r.
 qed.
 
 theorem nplus_shift_succ_sx: \forall p,q,r. 
-                              (p + (succ q) == r) \to (succ p) + q == r.
+                             (p + (succ q) == r) \to (succ p) + q == r.
  intros.
  lapply linear nplus_gen_succ_2 to H as H0.
  decompose.
@@ -51,7 +51,7 @@ theorem nplus_shift_succ_sx: \forall p,q,r.
 qed.
 
 theorem nplus_shift_succ_dx: \forall p,q,r. 
-                              ((succ p) + q == r) \to p + (succ q) == r.
+                             ((succ p) + q == r) \to p + (succ q) == r.
  intros.
  lapply linear nplus_gen_succ_1 to H as H0.
  decompose.
@@ -60,8 +60,8 @@ theorem nplus_shift_succ_dx: \forall p,q,r.
 qed.
 
 theorem nplus_trans_1: \forall p,q1,r1. (p + q1 == r1) \to 
-                        \forall q2,r2. (r1 + q2 == r2) \to
-                        \exists q. (q1 + q2 == q) \land p + q == r2.
+                       \forall q2,r2. (r1 + q2 == r2) \to
+                       \exists q. (q1 + q2 == q) \land p + q == r2.
  intros 2; elim q1; clear q1; intros;
  [ lapply linear nplus_gen_zero_2 to H as H0.
    rewrite > H0. clear H0 p
@@ -77,8 +77,8 @@ theorem nplus_trans_1: \forall p,q1,r1. (p + q1 == r1) \to
 qed.
 
 theorem nplus_trans_2: \forall p1,q,r1. (p1 + q == r1) \to 
-                        \forall p2,r2. (p2 + r1 == r2) \to
-                        \exists p. (p1 + p2 == p) \land p + q == r2.
+                       \forall p2,r2. (p2 + r1 == r2) \to
+                       \exists p. (p1 + p2 == p) \land p + q == r2.
  intros 2; elim q; clear q; intros;
  [ lapply linear nplus_gen_zero_2 to H as H0.
    rewrite > H0. clear H0 p1
@@ -94,7 +94,7 @@ theorem nplus_trans_2: \forall p1,q,r1. (p1 + q == r1) \to
 qed.
 
 theorem nplus_conf: \forall p,q,r1. (p + q == r1) \to 
-                     \forall r2. (p + q == r2) \to r1 = r2.
+                    \forall r2. (p + q == r2) \to r1 = r2.
  intros 2. elim q; clear q; intros;
  [ lapply linear nplus_gen_zero_2 to H as H0.
    rewrite > H0 in H1. clear H0 p

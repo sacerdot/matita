@@ -117,5 +117,5 @@ notation "hvbox(a break \land b)"
 for @{ 'and $a $b }.
 
 notation "hvbox(\lnot a)" 
-  left associative with precedence 40
+  non associative with precedence 40
 for @{ 'not $a }.

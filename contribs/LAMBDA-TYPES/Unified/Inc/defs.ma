@@ -12,20 +12,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/RELATIONAL/NPlus/defs".
+set "baseuri" "cic:/matita/LAMBDA-TYPES/Unified/Inc/defs".
+
+(* DISPLACEMENT INCREMENT RELATION
+*)
 
 include "logic/equality.ma".
 
-include "Nat/defs.ma".
+include "P/defs.ma".
 
-inductive NPlus (p:Nat): Nat \to Nat \to Prop \def
-   | nplus_zero_2: NPlus p zero p
-   | nplus_succ_2: \forall q, r. NPlus p q r \to NPlus p (succ q) (succ r).
-
-(*CSC: the URI must disappear: there is a bug now *)
-interpretation "natural plus predicate" 'rel_plus x y z = 
-   (cic:/matita/RELATIONAL/NPlus/defs/NPlus.ind#xpointer(1/1) x y z).
-
-notation "hvbox(a break + b break == c)" 
-  non associative with precedence 95
-for @{ 'rel_plus $a $b $c}.
+inductive Inc (i:Nat): Bool \to Head \to Nat \to Prop \def
+   | inc_bind: \forall x. Inc i true (bind x) (succ i)
+   | inc_flat: \forall y. Inc i true (flat y) i   
+   | inc_neg : \forall z. Inc i false z i
+.

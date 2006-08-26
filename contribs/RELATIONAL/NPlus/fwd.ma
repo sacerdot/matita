@@ -27,7 +27,7 @@ theorem nplus_gen_zero_1: \forall q,r. (zero + q == r) \to q = r.
 qed.
 
 theorem nplus_gen_succ_1: \forall p,q,r. ((succ p) + q == r) \to 
-                           \exists s. r = (succ s) \land (p + q == s).
+                          \exists s. r = (succ s) \land p + q == s.
  intros. elim H; clear H q r; intros;
  [
  | clear H1.
@@ -45,7 +45,7 @@ theorem nplus_gen_zero_2: \forall p,r. (p + zero == r) \to p = r.
 qed.
 
 theorem nplus_gen_succ_2: \forall p,q,r. (p + (succ q) == r) \to 
-                           \exists s. r = (succ s) \land (p + q == s).
+                          \exists s. r = (succ s) \land p + q == s.
  intros. inversion H; clear H; intros;
  [ lapply eq_gen_succ_zero to H as H0. apply H0
  | clear H1 H3 r.
@@ -56,7 +56,7 @@ theorem nplus_gen_succ_2: \forall p,q,r. (p + (succ q) == r) \to
 qed.
 
 theorem nplus_gen_zero_3: \forall p,q. (p + q == zero) \to 
-                           p = zero \land q = zero.
+                          p = zero \land q = zero.
  intros. inversion H; clear H; intros;
  [ rewrite < H1. clear H1 p.
    auto
@@ -66,8 +66,8 @@ theorem nplus_gen_zero_3: \forall p,q. (p + q == zero) \to
 qed.
 
 theorem nplus_gen_succ_3: \forall p,q,r. (p + q == (succ r)) \to
-                           \exists s. p = succ s \land (s + q == r) \lor
-                                      q = succ s \land (p + s == r).
+                          \exists s. p = succ s \land (s + q == r) \lor
+                                     q = succ s \land p + s == r.
  intros. inversion H; clear H; intros;
  [ rewrite < H1. clear H1 p
  | clear H1.
@@ -79,7 +79,7 @@ qed.
 (* alternative proofs invoking nplus_gen_2 *)
 
 variant nplus_gen_zero_3_alt: \forall p,q. (p + q == zero) \to 
-                               p = zero \land q = zero.
+                              p = zero \land q = zero.
  intros 2. elim q; clear q; intros;
  [ lapply linear nplus_gen_zero_2 to H as H0.
    rewrite > H0. clear H0 p.
@@ -92,8 +92,8 @@ variant nplus_gen_zero_3_alt: \forall p,q. (p + q == zero) \to
 qed.
 
 variant nplus_gen_succ_3_alt: \forall p,q,r. (p + q == (succ r)) \to
-                               \exists s. p = succ s \land (s + q == r) \lor
-                                          q = succ s \land (p + s == r).
+                              \exists s. p = succ s \land (s + q == r) \lor
+                                         q = succ s \land p + s == r.
  intros 2. elim q; clear q; intros;
  [ lapply linear nplus_gen_zero_2 to H as H0.
    rewrite > H0. clear H0 p
