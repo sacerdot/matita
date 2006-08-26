@@ -76,6 +76,14 @@ interpretation "Coq's natural 'not less or equal than'"
  'nleq x y = (cic:/Coq/Init/Logic/not.con 
                (cic:/Coq/Init/Peano/le.ind#xpointer(1/1) x y)).
 
+(* aliases *)
+
+alias id "or" = "cic:/Coq/Init/Logic/or.ind#xpointer(1/1)".
+alias id "nat" = "cic:/Coq/Init/Datatypes/nat.ind#xpointer(1/1)".
+alias id "eq" = "cic:/Coq/Init/Logic/eq.ind#xpointer(1/1)".
+
+(* theorems *)
+
 theorem f_equal1 : 
   \forall A,B:Type. \forall f:A \to B. \forall x,y:A.
   x = y \to f y = f x.
