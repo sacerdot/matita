@@ -13,10 +13,13 @@
 (**************************************************************************)
 
 (* Problematic objects for disambiguation/typechecking ********************)
+(* FG: PLEASE COMMENT THE NON WORKING OBJECTS *****************************)
 
 set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/problems".
 
 include "legacy/coq.ma".
+
+(*
 
 (* Problem 1: disambiguation/typechecking very slow *)
 
@@ -101,3 +104,14 @@ theorem le_gen_S:
  \forall (m: nat).(\forall (x: nat).((le (S m) x) \to (ex2 nat (\lambda (n: nat).(eq nat x (S n))) (\lambda (n: nat).(le m n)))))
 \def
  \lambda (m: nat).(\lambda (x: nat).(\lambda (H: (le (S m) x)).(let H0 \def (match H return (\lambda (n: nat).((eq nat n x) \to (ex2 nat (\lambda (n0: nat).(eq nat x (S n0))) (\lambda (n0: nat).(le m n0))))) with [le_n \Rightarrow (\lambda (H0: (eq nat (S m) x)).(eq_ind nat (S m) (\lambda (n: nat).(ex2 nat (\lambda (n0: nat).(eq nat n (S n0))) (\lambda (n0: nat).(le m n0)))) (ex_intro2 nat (\lambda (n: nat).(eq nat (S m) (S n))) (\lambda (n: nat).(le m n)) m (refl_equal nat (S m)) (le_n m)) x H0)) | (le_S m0 H0) \Rightarrow (\lambda (H1: (eq nat (S m0) x)).(eq_ind nat (S m0) (\lambda (n: nat).((le (S m) m0) \to (ex2 nat (\lambda (n0: nat).(eq nat n (S n0))) (\lambda (n0: nat).(le m n0))))) (\lambda (H2: (le (S m) m0)).(ex_intro2 nat (\lambda (n: nat).(eq nat (S m0) (S n))) (\lambda (n: nat).(le m n)) m0 (refl_equal nat (S m0)) (le_S_n m m0 (le_S (S m) m0 H2)))) x H1 H0))]) in (H0 (refl_equal nat x))))).
+
+(* Problem 11: unguarded recursion in the following objects *)
+
+THeads, weight_map, CTail, lref_map, lifts, lifts1, next_plus, asucc, aplus,
+sns3, sc3
+
+(* Problem 12: assertion failure raised by type checker on this object *)
+
+tau1
+
+*)
