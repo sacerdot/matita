@@ -728,7 +728,7 @@ axiom aprem_repl: \forall (g: G).(\forall (a1: A).(\forall (a2: A).((leq g a1 a2
 
 axiom aprem_asucc: \forall (g: G).(\forall (a1: A).(\forall (a2: A).(\forall (i: nat).((aprem i a1 a2) \to (aprem i (asucc g a1) a2))))) .
 
-definition gz: G \def Build_G S lt_n_Sn.
+definition gz: G \def mk_G S lt_n_Sn.
 
 inductive leqz: A \to (A \to Prop) \def
 | leqz_sort: \forall (h1: nat).(\forall (h2: nat).(\forall (n1: nat).(\forall (n2: nat).((eq nat (plus h1 n2) (plus h2 n1)) \to (leqz (ASort h1 n1) (ASort h2 n2))))))
