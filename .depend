@@ -24,13 +24,13 @@ matitaEngine.cmo: matitaEngine.cmi
 matitaEngine.cmx: matitaEngine.cmi 
 matitaExcPp.cmo: matitaExcPp.cmi 
 matitaExcPp.cmx: matitaExcPp.cmi 
-matitaGtkMisc.cmo: matitaTypes.cmi matitaGeneratedGui.cmo buildTimeConf.cmi \
+matitaGtkMisc.cmo: matitaTypes.cmi matitaGeneratedGui.cmx buildTimeConf.cmi \
     matitaGtkMisc.cmi 
 matitaGtkMisc.cmx: matitaTypes.cmx matitaGeneratedGui.cmx buildTimeConf.cmx \
     matitaGtkMisc.cmi 
 matitaGui.cmo: matitaprover.cmi matitamakeLib.cmi matitaTypes.cmi \
     matitaScript.cmi matitaMisc.cmi matitaMathView.cmi matitaGtkMisc.cmi \
-    matitaGeneratedGui.cmo matitaExcPp.cmi buildTimeConf.cmi matitaGui.cmi 
+    matitaGeneratedGui.cmx matitaExcPp.cmi buildTimeConf.cmi matitaGui.cmi 
 matitaGui.cmx: matitaprover.cmx matitamakeLib.cmx matitaTypes.cmx \
     matitaScript.cmx matitaMisc.cmx matitaMathView.cmx matitaGtkMisc.cmx \
     matitaGeneratedGui.cmx matitaExcPp.cmx buildTimeConf.cmx matitaGui.cmi 
@@ -64,8 +64,8 @@ matitaScript.cmx: matitamakeLib.cmx matitaTypes.cmx matitaMisc.cmx \
     applyTransformation.cmx matitaScript.cmi 
 matitaTypes.cmo: matitaTypes.cmi 
 matitaTypes.cmx: matitaTypes.cmi 
-matitaGtkMisc.cmi: matitaGeneratedGui.cmo 
+matitaGtkMisc.cmi: matitaGeneratedGui.cmx 
 matitaGui.cmi: matitaGuiTypes.cmi 
-matitaGuiTypes.cmi: matitaTypes.cmi matitaGeneratedGui.cmo 
+matitaGuiTypes.cmi: matitaTypes.cmi matitaGeneratedGui.cmx 
 matitaMathView.cmi: matitaTypes.cmi matitaGuiTypes.cmi 
 matitaScript.cmi: matitaTypes.cmi 
