@@ -1,5 +1,5 @@
 (**************************************************************************)
-(*       ___	                                                            *)
+(*       ___	                                                          *)
 (*      ||M||                                                             *)
 (*      ||A||       A project by Andrea Asperti                           *)
 (*      ||T||                                                             *)
@@ -80,25 +80,6 @@ interpretation "Coq's natural 'not less or equal than'"
 
 (* FG: This is because "and" is a reserved keyword of the parser *)
 alias id "land" = "cic:/Coq/Init/Logic/and.ind#xpointer(1/1)".
-
-(* FG/CSC: These aliases should disappear: we would like to write something
- *         like: "disambiguate in cic:/Coq/*"
- *)
-alias id "True" = "cic:/Coq/Init/Logic/True.ind#xpointer(1/1)".
-alias id "or" = "cic:/Coq/Init/Logic/or.ind#xpointer(1/1)".
-alias id "nat" = "cic:/Coq/Init/Datatypes/nat.ind#xpointer(1/1)".
-alias id "eq" = "cic:/Coq/Init/Logic/eq.ind#xpointer(1/1)".
-alias id "plus" = "cic:/Coq/Init/Peano/plus.con".
-alias id "le_trans" = "cic:/Coq/Arith/Le/le_trans.con".
-alias id "le_plus_r" = "cic:/Coq/Arith/Plus/le_plus_r.con".
-alias id "le" = "cic:/Coq/Init/Peano/le.ind#xpointer(1/1)".
-alias id "ex" = "cic:/Coq/Init/Logic/ex.ind#xpointer(1/1)".
-alias id "ex2" = "cic:/Coq/Init/Logic/ex2.ind#xpointer(1/1)".
-alias id "true" = "cic:/Coq/Init/Datatypes/bool.ind#xpointer(1/1/1)".
-alias id "false" = "cic:/Coq/Init/Datatypes/bool.ind#xpointer(1/1/2)".
-alias id "bool" = "cic:/Coq/Init/Datatypes/bool.ind#xpointer(1/1)".
-alias id "O" = "cic:/Coq/Init/Datatypes/nat.ind#xpointer(1/1/1)".
-alias id "S" = "cic:/Coq/Init/Datatypes/nat.ind#xpointer(1/1/2)".
 
 (* theorems *)
 
