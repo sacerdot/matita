@@ -24,7 +24,7 @@ theorem nle_gen_succ_1: \forall x,y. x < y \to
  intros. inversion H; clear H; intros;
  [ apply (eq_gen_succ_zero ? ? H)
  | lapply linear eq_gen_succ_succ to H2 as H0.
-   rewrite > H0. clear H0.
+   subst.
    apply ex_intro; [|auto] (**)
  ].
 qed.
@@ -34,8 +34,7 @@ theorem nle_gen_succ_succ: \forall x,y. x < succ y \to x <= y.
  [ apply (eq_gen_succ_zero ? ? H)
  | lapply linear eq_gen_succ_succ to H2 as H0.
    lapply linear eq_gen_succ_succ to H3 as H2.
-   rewrite > H0. rewrite > H2. clear H0 H2.
-   auto
+   subst. auto
  ].
 qed.
 

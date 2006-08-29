@@ -28,11 +28,9 @@ theorem nle_lt_or_eq: \forall y,x. x <= y \to x < y \lor x = y.
  intros 1. elim y; clear y; intros;
  [ lapply linear nle_gen_zero_2 to H. auto
  | lapply linear nle_gen_succ_2 to H1. decompose;
-   [ rewrite > H1. clear H1. auto
+   [ subst. auto
    | lapply linear H to H3 as H0. decompose;
-     [ rewrite > H1. clear H1 x. auto
-     | rewrite < H. clear H n. auto
-     ]
+     subst; auto
    ]
  ].
 qed.

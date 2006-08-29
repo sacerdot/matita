@@ -32,7 +32,7 @@ theorem nplus_gen_succ_1: \forall p,q,r. ((succ p) + q == r) \to
  [
  | clear H1.
    decompose.
-   rewrite > H1. clear H1 n2
+   subst.
  ]; apply ex_intro; [| auto || auto ]. (**)
 qed.
 
@@ -50,7 +50,7 @@ theorem nplus_gen_succ_2: \forall p,q,r. (p + (succ q) == r) \to
  [ lapply eq_gen_succ_zero to H as H0. apply H0
  | clear H1 H3 r.
    lapply linear eq_gen_succ_succ to H2 as H0.
-   rewrite > H0. clear H0 q.
+   subst.
    apply ex_intro; [| auto ] (**)
  ].
 qed.
@@ -58,8 +58,7 @@ qed.
 theorem nplus_gen_zero_3: \forall p,q. (p + q == zero) \to 
                           p = zero \land q = zero.
  intros. inversion H; clear H; intros;
- [ rewrite < H1. clear H1 p.
-   auto
+ [ subst. auto
  | clear H H1.
    lapply eq_gen_zero_succ to H3 as H0. apply H0
  ].
@@ -69,10 +68,10 @@ theorem nplus_gen_succ_3: \forall p,q,r. (p + q == (succ r)) \to
                           \exists s. p = succ s \land (s + q == r) \lor
                                      q = succ s \land p + s == r.
  intros. inversion H; clear H; intros;
- [ rewrite < H1. clear H1 p
+ [ subst.
  | clear H1.
    lapply linear eq_gen_succ_succ to H3 as H0.
-   rewrite > H0. clear H0 r.
+   subst.
  ]; apply ex_intro; [| auto || auto ] (**)
 qed.
 (*
@@ -82,8 +81,7 @@ variant nplus_gen_zero_3_alt: \forall p,q. (p + q == zero) \to
                               p = zero \land q = zero.
  intros 2. elim q; clear q; intros;
  [ lapply linear nplus_gen_zero_2 to H as H0.
-   rewrite > H0. clear H0 p.
-   auto
+   subst. auto
  | clear H.
    lapply linear nplus_gen_succ_2 to H1 as H0.
    decompose.
@@ -96,12 +94,12 @@ variant nplus_gen_succ_3_alt: \forall p,q,r. (p + q == (succ r)) \to
                                          q = succ s \land p + s == r.
  intros 2. elim q; clear q; intros;
  [ lapply linear nplus_gen_zero_2 to H as H0.
-   rewrite > H0. clear H0 p
+   subst
  | clear H.
    lapply linear nplus_gen_succ_2 to H1 as H0.
    decompose.
    lapply linear eq_gen_succ_succ to H1 as H0.
-   rewrite > H0. clear H0 r.
+   subst
  ]; apply ex_intro; [| auto || auto ]. (**)
 qed.
 *)
@@ -110,21 +108,21 @@ qed.
 theorem nplus_gen_eq_2_3: \forall p,q. (p + q == q) \to p = zero.
  intros 2. elim q; clear q; intros;
  [ lapply linear nplus_gen_zero_2 to H as H0.
-   rewrite > H0. clear H0 p
+   subst
  | lapply linear nplus_gen_succ_2 to H1 as H0.
    decompose.
    lapply linear eq_gen_succ_succ to H2 as H0.
-   rewrite < H0 in H3. clear H0 a
+   subst
  ]; auto.
 qed.
 
 theorem nplus_gen_eq_1_3: \forall p,q. (p + q == p) \to q = zero.
  intros 1. elim p; clear p; intros;
  [ lapply linear nplus_gen_zero_1 to H as H0.
-   rewrite > H0. clear H0 q
+   subst
  | lapply linear nplus_gen_succ_1 to H1 as H0.
    decompose.
    lapply linear eq_gen_succ_succ to H2 as H0.
-   rewrite < H0 in H3. clear H0 a
+   subst
  ]; auto.
 qed.

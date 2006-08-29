@@ -21,11 +21,9 @@ theorem nat_dec_lt_ge: \forall x,y. x < y \lor y <= x.
  [ auto
  | decompose;
    [ lapply linear nle_gen_succ_1 to H1. decompose.
-     rewrite > H1. clear H1 n. auto
+     subst. auto
    | lapply linear nle_lt_or_eq to H1; decompose;
-     [ auto
-     | rewrite > H. clear H n. auto
-     ]
+     subst; auto
    ]
  ].
 qed.

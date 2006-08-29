@@ -19,9 +19,9 @@ include "nat/nat.ma".
 theorem pippo: \forall (P,Q,R:nat \to Prop).
                \forall x,y. x=y \to P x \to Q x \to R x.
                intros.
-               try rewrite > P in Q.  
+               rewrite > P in Q.  
 (*             
-theorem pippo2: \forall (P,Q,R:nat \to Prop).
-                \forall x,y. x=y \to P x \to Q x \to R x.
-                intros. rewrite > H in y.
+theorem pippo: \forall (P,Q,R:nat \to Prop).
+               \forall x,y. x=y \to P x \to Q x \to R x.
+               intros. rewrite > H in y.
 *)
