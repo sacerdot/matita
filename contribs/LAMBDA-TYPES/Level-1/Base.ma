@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/Base".
 
-include "legacy/coq.ma".
+include "Preamble.ma".
 
 theorem insert_eq:
  \forall (S: Set).(\forall (x: S).(\forall (P: ((S \to Prop))).(\forall (G: Prop).(((\forall (y: S).((P y) \to ((eq S y x) \to G)))) \to ((P x) \to G)))))
