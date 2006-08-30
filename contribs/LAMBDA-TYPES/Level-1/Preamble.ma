@@ -14,8 +14,32 @@
 
 set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/Preamble".
 
-include "legacy/coq.ma".
+(* FG: We should include legacy/coq.ma bit it is not working *)
+(* include "legacy/coq.ma".                                  *)
 
+default "equality"
+ cic:/Coq/Init/Logic/eq.ind
+ cic:/Coq/Init/Logic/sym_eq.con
+ cic:/Coq/Init/Logic/trans_eq.con
+ cic:/Coq/Init/Logic/eq_ind.con
+ cic:/Coq/Init/Logic/eq_ind_r.con
+ cic:/Coq/Init/Logic/f_equal.con
+ cic:/Coq/Init/Logic/f_equal1.con.
+       
+default "true"
+ cic:/Coq/Init/Logic/True.ind.
+
+default "false"
+ cic:/Coq/Init/Logic/False.ind.
+
+default "absurd"
+ cic:/Coq/Init/Logic/absurd.con.
+	  
+interpretation "Coq's natural plus" 'plus x y = (cic:/Coq/Init/Peano/plus.con x y).
+interpretation "Coq's natural 'less or equal to'" 'leq x y = (cic:/Coq/Init/Peano/le.ind#xpointer(1/1) x y).
+
+alias id "land" = "cic:/Coq/Init/Logic/and.ind#xpointer(1/1)".
+	  
 (* FG/CSC: These aliases should disappear: we would like to write something
  *         like: "disambiguate in cic:/Coq/*"
  *)
@@ -53,4 +77,12 @@ qed.
 
 theorem sym_not_eq: \forall A:Type. \forall x,y:A. x \neq y \to y \neq x.
  unfold not. intros. apply H. symmetry. assumption.
+qed.
+
+theorem plus_reg_l: \forall (n,m,p:nat). n + m = n + p \to m = p.
+ intros. apply plus_reg_l; auto.
+qed.
+
+theorem plus_le_reg_l: \forall p,n,m. p + n <= p + m \to n <= m.
+ intros. apply plus_le_reg_l; auto.
 qed.
