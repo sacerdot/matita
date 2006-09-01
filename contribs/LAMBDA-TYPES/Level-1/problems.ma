@@ -21,7 +21,7 @@ include "legacy/coq.ma".
 
 (*
 
-(* Problem 1: disambiguation/typechecking of may objects very slow *)
+(* Problem 1: generation of LambdaDelta.ma fails *)
 
 (* Problem 2: assertion failure raised by type checker on this object *)
 
