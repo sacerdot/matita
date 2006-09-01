@@ -34,7 +34,9 @@ default "false"
 
 default "absurd"
  cic:/Coq/Init/Logic/absurd.con.
-	  
+
+interpretation "Coq's leibnitz's equality" 'eq x y = (cic:/Coq/Init/Logic/eq.ind#xpointer(1/1) _ x y).
+interpretation "Coq's not equal to (leibnitz)" 'neq x y = (cic:/Coq/Init/Logic/not.con (cic:/Coq/Init/Logic/eq.ind#xpointer(1/1) _ x y)).
 interpretation "Coq's natural plus" 'plus x y = (cic:/Coq/Init/Peano/plus.con x y).
 interpretation "Coq's natural 'less or equal to'" 'leq x y = (cic:/Coq/Init/Peano/le.ind#xpointer(1/1) x y).
 
@@ -86,3 +88,5 @@ qed.
 theorem plus_le_reg_l: \forall p,n,m. p + n <= p + m \to n <= m.
  intros. apply plus_le_reg_l; auto.
 qed.
+
+definition sym_equal \def sym_eq.
