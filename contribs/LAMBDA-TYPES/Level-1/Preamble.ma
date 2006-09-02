@@ -67,6 +67,9 @@ alias id "False_ind" = "cic:/Coq/Init/Logic/False_ind.con".
 alias id "False" = "cic:/Coq/Init/Logic/False.ind#xpointer(1/1)".
 alias id "I" = "cic:/Coq/Init/Logic/True.ind#xpointer(1/1/1)".
 alias id "minus" = "cic:/Coq/Init/Peano/minus.con".
+alias id "le_n" = "cic:/Coq/Init/Peano/le.ind#xpointer(1/1/1)".
+alias id "le_antisym" = "cic:/Coq/Arith/Le/le_antisym.con".
+alias id "eq_ind_r" = "cic:/Coq/Init/Logic/eq_ind_r.con".
 
 theorem f_equal: \forall A,B:Type. \forall f:A \to B.
                  \forall x,y:A. x = y \to f x = f y.
