@@ -14,40 +14,35 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/T/defs".
+set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/tlt/defs".
 
-include "../Base/theory.ma".
+include "T/defs.ma".
 
-inductive B: Set \def
-| Abbr: B
-| Abst: B
-| Void: B.
-
-inductive F: Set \def
-| Appl: F
-| Cast: F.
-
-inductive K: Set \def
-| Bind: B \to K
-| Flat: F \to K.
-
-inductive T: Set \def
-| TSort: nat \to T
-| TLRef: nat \to T
-| THead: K \to (T \to (T \to T)).
-
-inductive TList: Set \def
-| TNil: TList
-| TCons: T \to (TList \to TList).
-
-definition THeads:
- K \to (TList \to (T \to T))
+definition wadd:
+ ((nat \to nat)) \to (nat \to (nat \to nat))
 \def
- let rec THeads (k: K) (us: TList) on us: (T \to T) \def (\lambda (t: 
-T).(match us with [TNil \Rightarrow t | (TCons u ul) \Rightarrow (THead k u 
-(THeads k ul t))])) in THeads.
+ \lambda (f: ((nat \to nat))).(\lambda (w: nat).(\lambda (n: nat).(match n 
+with [O \Rightarrow w | (S m) \Rightarrow (f m)]))).
 
-inductive C: Set \def
-| CSort: nat \to C
-| CHead: C \to (K \to (T \to C)).
+definition weight_map:
+ ((nat \to nat)) \to (T \to nat)
+\def
+ let rec weight_map (f: ((nat \to nat))) (t: T) on t: nat \def (match t with 
+[(TSort _) \Rightarrow O | (TLRef n) \Rightarrow (f n) | (THead k u t0) 
+\Rightarrow (match k with [(Bind b) \Rightarrow (match b with [Abbr 
+\Rightarrow (S (plus (weight_map f u) (weight_map (wadd f (S (weight_map f 
+u))) t0))) | Abst \Rightarrow (S (plus (weight_map f u) (weight_map (wadd f 
+O) t0))) | Void \Rightarrow (S (plus (weight_map f u) (weight_map (wadd f O) 
+t0)))]) | (Flat _) \Rightarrow (S (plus (weight_map f u) (weight_map f 
+t0)))])]) in weight_map.
+
+definition weight:
+ T \to nat
+\def
+ weight_map (\lambda (_: nat).O).
+
+definition tlt:
+ T \to (T \to Prop)
+\def
+ \lambda (t1: T).(\lambda (t2: T).(lt (weight t1) (weight t2))).
 

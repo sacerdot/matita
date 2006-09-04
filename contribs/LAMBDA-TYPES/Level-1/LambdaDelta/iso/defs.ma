@@ -14,40 +14,13 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/T/defs".
+set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/iso/defs".
 
-include "../Base/theory.ma".
+include "T/defs.ma".
 
-inductive B: Set \def
-| Abbr: B
-| Abst: B
-| Void: B.
-
-inductive F: Set \def
-| Appl: F
-| Cast: F.
-
-inductive K: Set \def
-| Bind: B \to K
-| Flat: F \to K.
-
-inductive T: Set \def
-| TSort: nat \to T
-| TLRef: nat \to T
-| THead: K \to (T \to (T \to T)).
-
-inductive TList: Set \def
-| TNil: TList
-| TCons: T \to (TList \to TList).
-
-definition THeads:
- K \to (TList \to (T \to T))
-\def
- let rec THeads (k: K) (us: TList) on us: (T \to T) \def (\lambda (t: 
-T).(match us with [TNil \Rightarrow t | (TCons u ul) \Rightarrow (THead k u 
-(THeads k ul t))])) in THeads.
-
-inductive C: Set \def
-| CSort: nat \to C
-| CHead: C \to (K \to (T \to C)).
+inductive iso: T \to (T \to Prop) \def
+| iso_sort: \forall (n1: nat).(\forall (n2: nat).(iso (TSort n1) (TSort n2)))
+| iso_lref: \forall (i1: nat).(\forall (i2: nat).(iso (TLRef i1) (TLRef i2)))
+| iso_head: \forall (k: K).(\forall (v1: T).(\forall (v2: T).(\forall (t1: 
+T).(\forall (t2: T).(iso (THead k v1 t1) (THead k v2 t2)))))).
 
