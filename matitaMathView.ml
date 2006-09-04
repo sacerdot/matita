@@ -797,7 +797,7 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
   let is_dir txt = Pcre.pmatch ~rex:dir_RE txt in
   let gui = get_gui () in
   let (win: MatitaGuiTypes.browserWin) = gui#newBrowserWin () in
-  let gviz = LablGraphviz.gDot ~packing:win#graphScrolledWin#add () in
+  let gviz = LablGraphviz.graphviz ~packing:win#graphScrolledWin#add () in
   let queries = ["Locate";"Hint";"Match";"Elim";"Instance"] in
   let combo,_ = GEdit.combo_box_text ~strings:queries () in
   let activate_combo_query input q =
@@ -1053,7 +1053,7 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
       let fmt = Format.formatter_of_out_channel oc in
       MetadataDeps.DepGraph.render fmt gviz_graph;
       close_out oc;
-      gviz#load_graph_from_file tmpfile;
+      gviz#load_graph_from_file ~gviz_cmd:"tred | dot" tmpfile;
       (match center_on with
       | None -> ()
       | Some uri -> gviz#center_on_href (UriManager.string_of_uri uri));

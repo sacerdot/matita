@@ -31,13 +31,12 @@ type attribute = string * string  (* <key, value> pair *)
 
 let png_flags = "-Tpng"
 let map_flags = "-Tcmapx"
-let tred_cmd = "tred" (* graphviz transitive reduction filter *)
 
 let tempfile () = Filename.temp_file "matita_" ""
 
 class type graphviz_widget =
   object
-    method load_graph_from_file: string -> unit
+    method load_graph_from_file: ?gviz_cmd:string -> string -> unit
     method connect_href:
       (GdkEvent.Button.t -> (string * string) list -> unit) -> unit
     method center_on_href: string -> unit
@@ -45,10 +44,10 @@ class type graphviz_widget =
     method as_viewport: GBin.viewport
   end
 
-class graphviz_impl ?packing gviz_cmd =
+class graphviz_impl ?packing () =
   let viewport = GBin.viewport ?packing () in
-  let mk_gviz_cmd flags src_fname dest_fname =
-    sprintf "cat %s | %s | %s %s > %s" src_fname tred_cmd gviz_cmd flags
+  let mk_gviz_cmd gviz_cmd flags src_fname dest_fname =
+    sprintf "cat %s | %s %s > %s" src_fname gviz_cmd flags
       dest_fname in
   let image =
     GMisc.image ~packing:viewport#add ~xalign:0. ~yalign:0. ~xpad:0 ~ypad:0 ()
@@ -70,9 +69,9 @@ class graphviz_impl ?packing gviz_cmd =
         (try href_cb button (self#find_href x y) with Not_found -> ());
         false))
 
-    method load_graph_from_file fname =
+    method load_graph_from_file ?(gviz_cmd = "dot") fname =
       let tmp_png = tempfile () in
-      let rc = Sys.command (mk_gviz_cmd png_flags fname tmp_png) in
+      let rc = Sys.command (mk_gviz_cmd gviz_cmd png_flags fname tmp_png) in
       if rc <> 0 then
         eprintf
           ("Graphviz command failed (exit code: %d) on the following graph:\n"
@@ -81,7 +80,7 @@ class graphviz_impl ?packing gviz_cmd =
       image#set_file tmp_png;
       HExtlib.safe_remove tmp_png;
       let tmp_map = tempfile () in
-      ignore (Sys.command (mk_gviz_cmd map_flags fname tmp_map));
+      ignore (Sys.command (mk_gviz_cmd gviz_cmd map_flags fname tmp_map));
       self#load_map tmp_map;
       HExtlib.safe_remove tmp_map
 
@@ -128,12 +127,6 @@ class graphviz_impl ?packing gviz_cmd =
 
   end
 
-let factory cmd ?packing () =
-  (new graphviz_impl ?packing cmd :> graphviz_widget)
-
-let gDot = factory "dot"
-let gNeato = factory "neato"
-let gTwopi = factory "twopi"
-let gCirco = factory "circo"
-let gFdp = factory "fdp"
+let graphviz ?packing () =
+  (new graphviz_impl ?packing () :> graphviz_widget)
 

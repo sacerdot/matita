@@ -60,6 +60,14 @@ theorem eq_elim_r:
 intros. elim (sym_eq ? ? ? H1).assumption.
 qed.
 
+theorem eq_f: \forall  A,B:Type.\forall f:A\to B.
+\forall x,y:A. x=y \to f x = f y.
+intros.elim H.reflexivity.
+qed.
+
+coercion cic:/matita/logic/equality/sym_eq.con.
+coercion cic:/matita/logic/equality/eq_f.con.
+
 default "equality"
  cic:/matita/logic/equality/eq.ind
  cic:/matita/logic/equality/sym_eq.con
@@ -67,19 +75,8 @@ default "equality"
  cic:/matita/logic/equality/eq_ind.con
  cic:/matita/logic/equality/eq_elim_r.con
  cic:/matita/logic/equality/eq_f.con
- cic:/matita/logic/equality/eq_f1.con. (* \x.sym (eq_f x) *)
-
+ cic:/matita/logic/equality/eq_OF_eq.con. (* \x.sym (eq_f x) *)
  
-theorem eq_f: \forall  A,B:Type.\forall f:A\to B.
-\forall x,y:A. x=y \to f x = f y.
-intros.elim H.reflexivity.
-qed.
-
-theorem eq_f1: \forall  A,B:Type.\forall f:A\to B.
-\forall x,y:A. x=y \to f y = f x.
-intros.elim H.reflexivity.
-qed.
-
 theorem eq_f2: \forall  A,B,C:Type.\forall f:A\to B \to C.
 \forall x1,x2:A. \forall y1,y2:B.
 x1=x2 \to y1=y2 \to f x1 y1 = f x2 y2.

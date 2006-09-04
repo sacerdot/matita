@@ -38,8 +38,13 @@ class type graphviz_widget =
       *    GtkImage widget
       * 2) render it to a (HTML) map, internalizing its data.
       * Remember that map entries are generated only for nodes, (edges, ...)
-      * that have an "href" (or "URL", a synonym) attribute *)
-    method load_graph_from_file: string -> unit
+      * that have an "href" (or "URL", a synonym) attribute 
+      * Interesting values for gviz_cmd are:
+      *   'neato'
+      *   'dot'
+      *   'tred | dot'
+      *)
+    method load_graph_from_file: ?gviz_cmd:string -> string -> unit
 
     (** Callback invoked when a click on a node listed in the map is received.
      * @param gdk's button event
@@ -63,9 +68,5 @@ class type graphviz_widget =
 
 (** {2 Constructors} *)
 
-val gDot: ?packing:(GObj.widget -> unit) -> unit -> graphviz_widget
-val gNeato: ?packing:(GObj.widget -> unit) -> unit -> graphviz_widget
-val gTwopi: ?packing:(GObj.widget -> unit) -> unit -> graphviz_widget
-val gCirco: ?packing:(GObj.widget -> unit) -> unit -> graphviz_widget
-val gFdp: ?packing:(GObj.widget -> unit) -> unit -> graphviz_widget
+val graphviz: ?packing:(GObj.widget -> unit) -> unit -> graphviz_widget
 

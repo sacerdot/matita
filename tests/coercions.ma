@@ -13,15 +13,13 @@
 (**************************************************************************)
 
 set "baseuri" "cic:/matita/tests/coercions/".
-include "nat/nat.ma".
+
+include "nat/compare.ma".
+include "datatypes/bool.ma".
 
 inductive pos: Set \def
 | one : pos
 | next : pos \to pos.
-
-inductive nat:Set \def
-| O : nat
-| S : nat \to nat.
 
 inductive int: Set \def
 | positive: nat \to int
@@ -60,11 +58,6 @@ definition double2:
   \forall f:int \to int. pos \to int 
 \def 
   \lambda f:int \to int. \lambda x : pos .f (nat2int (pos2nat x)).
-  
-coercion cic:/matita/logic/equality/eq_f.con.  
-coercion cic:/matita/logic/equality/eq_f1.con.
-variant xxx : ? \def eq_f.
-coercion cic:/matita/tests/coercions/xxx.con.
 
 theorem coercion_svelta : \forall T,S:Type.\forall f:T \to S.\forall x,y:T.x=y \to f y = f x.
   intros.
@@ -72,8 +65,6 @@ theorem coercion_svelta : \forall T,S:Type.\forall f:T \to S.\forall x,y:T.x=y \
 qed.
 
 variant pos2nat' : ? \def pos2nat.
-
-coercion cic:/matita/tests/coercions/xxx.con.
 
 inductive initial: Set \def iii : initial.
 
@@ -83,4 +74,39 @@ coercion cic:/matita/tests/coercions/i2pos.con.
 
 coercion cic:/matita/tests/coercions/pos2nat'.con.
 
+inductive listn (A:Type) : nat \to Type \def
+ | Nil : listn A O
+ | Next : \forall n.\forall l:listn A n.\forall a:A.listn A (S n).
+ 
+definition if : \forall A:Type.\forall b:bool.\forall a,c:A.A \def
+  \lambda A,b,a,c.
+  match b with
+  [ true \Rightarrow a
+  | false \Rightarrow c].  
+ 
+let rec ith (A:Type) (n,m:nat) (dummy:A) (l:listn A n) on l \def
+  match l with
+  [ Nil \Rightarrow dummy
+  | (Next w l x) \Rightarrow if A (eqb w m) x (ith A w m dummy l)].  
 
+definition listn2function: 
+  \forall A:Type.\forall dummy:A.\forall n.listn A n \to nat \to A
+\def
+  \lambda A,dummy,n,l,m.ith A n m dummy l.
+  
+definition natlist2map: ? \def listn2function nat O.
+  
+coercion cic:/matita/tests/coercions/natlist2map.con 1.
+definition map:  \forall n:nat.\forall l:listn nat n. nat \to nat \def
+  \lambda n:nat.\lambda l:listn nat n.\lambda m:nat.l m.
+  
+definition church: nat \to nat \to nat \def times.
+
+coercion cic:/matita/tests/coercions/church.con 1.
+
+definition mapmult:  \forall n:nat.\forall l:listn nat n. nat \to nat \to nat \def
+  \lambda n:nat.\lambda l:listn nat n.\lambda m,o:nat.l m o.
+
+  
+  
+ 
