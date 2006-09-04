@@ -98,9 +98,11 @@ let eval_ast ?do_heavy_checks ?clean_baseuri lexicon_status
  in
   ((new_grafite_status,new_lexicon_status),None)::intermediate_states
 
+exception TryingToAdd of string
+
 let eval_from_stream ~first_statement_only ~include_paths ?(prompt=false)
- ?do_heavy_checks ?clean_baseuri lexicon_status grafite_status
- str cb 
+ ?do_heavy_checks ?clean_baseuri ?(enforce_no_new_aliases=true)
+ lexicon_status grafite_status str cb 
 =
  let rec loop lexicon_status grafite_status statuses =
   let loop =
@@ -123,6 +125,18 @@ let eval_from_stream ~first_statement_only ~include_paths ?(prompt=false)
           let new_statuses =
            eval_ast ?do_heavy_checks ?clean_baseuri lexicon_status
             grafite_status ("",0,ast) in
+          if enforce_no_new_aliases then
+           List.iter 
+            (fun (_,alias) ->
+              match alias with
+                None -> ()
+              | Some (k,((v,_) as value)) ->
+                 let newtxt =
+                  DisambiguatePp.pp_environment
+                   (DisambiguateTypes.Environment.add k value
+                     DisambiguateTypes.Environment.empty)
+                 in
+                  raise (TryingToAdd newtxt)) new_statuses;
           let grafite_status,lexicon_status =
            match new_statuses with
               [] -> assert false
