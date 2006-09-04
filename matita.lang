@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE language SYSTEM "language.dtd">
 <language _name="grafite" version="1.0" _section="Sources" mimetypes="text/x-matita">
 
   <escape-char>\</escape-char>
@@ -128,7 +127,6 @@
     <keyword>transitivity</keyword>
     <keyword>unfold</keyword>
     <keyword>whd</keyword>
-    (* Tattiche Aggiunte *)
     <keyword>assume</keyword>
     <keyword>suppose</keyword>
     <keyword>by</keyword>
