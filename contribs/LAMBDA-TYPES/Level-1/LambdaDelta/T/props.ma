@@ -67,3 +67,12 @@ v (\lambda (t: T).((eq T (THead k t t1) t1) \to (\forall (P: Prop).P))) H0 t0
 H5) in (let H8 \def (eq_ind K k (\lambda (k: K).((eq T (THead k t0 t1) t1) 
 \to (\forall (P: Prop).P))) H7 k0 H6) in (H8 H4 P)))))) H3)) H2))))))))) t))).
 
+theorem tweight_lt:
+ \forall (t: T).(lt O (tweight t))
+\def
+ \lambda (t: T).(match t in T return (\lambda (t0: T).(lt O (tweight t0))) 
+with [(TSort _) \Rightarrow (le_n (S O)) | (TLRef _) \Rightarrow (le_n (S O)) 
+| (THead _ t0 t1) \Rightarrow (le_S_n (S O) (S (plus (tweight t0) (tweight 
+t1))) (le_n_S (S O) (S (plus (tweight t0) (tweight t1))) (le_n_S O (plus 
+(tweight t0) (tweight t1)) (le_O_n (plus (tweight t0) (tweight t1))))))]).
+
