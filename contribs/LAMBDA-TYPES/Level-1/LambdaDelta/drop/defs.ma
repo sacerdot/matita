@@ -14,19 +14,18 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/Base/theory".
+set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/drop/defs".
 
-include "ext/tactics.ma".
+include "C/defs.ma".
 
-include "ext/arith.ma".
+include "lift/defs.ma".
 
-include "types/defs.ma".
-
-include "types/props.ma".
-
-include "blt/defs.ma".
-
-include "blt/props.ma".
-
-include "ext/plist.ma".
+inductive drop: nat \to (nat \to (C \to (C \to Prop))) \def
+| drop_refl: \forall (c: C).(drop O O c c)
+| drop_drop: \forall (k: K).(\forall (h: nat).(\forall (c: C).(\forall (e: 
+C).((drop (r k h) O c e) \to (\forall (u: T).(drop (S h) O (CHead c k u) 
+e))))))
+| drop_skip: \forall (k: K).(\forall (h: nat).(\forall (d: nat).(\forall (c: 
+C).(\forall (e: C).((drop h (r k d) c e) \to (\forall (u: T).(drop h (S d) 
+(CHead c k (lift h (r k d) u)) (CHead e k u)))))))).
 

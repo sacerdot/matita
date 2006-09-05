@@ -14,19 +14,29 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/Base/theory".
+set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/lift1/defs".
 
-include "ext/tactics.ma".
+include "lift/defs.ma".
 
-include "ext/arith.ma".
+definition trans:
+ PList \to (nat \to nat)
+\def
+ let rec trans (hds: PList) on hds: (nat \to nat) \def (\lambda (i: 
+nat).(match hds with [PNil \Rightarrow i | (PCons h d hds0) \Rightarrow (let 
+j \def (trans hds0 i) in (match (blt j d) with [true \Rightarrow j | false 
+\Rightarrow (plus j h)]))])) in trans.
 
-include "types/defs.ma".
+definition lift1:
+ PList \to (T \to T)
+\def
+ let rec lift1 (hds: PList) on hds: (T \to T) \def (\lambda (t: T).(match hds 
+with [PNil \Rightarrow t | (PCons h d hds0) \Rightarrow (lift h d (lift1 hds0 
+t))])) in lift1.
 
-include "types/props.ma".
-
-include "blt/defs.ma".
-
-include "blt/props.ma".
-
-include "ext/plist.ma".
+definition lifts1:
+ PList \to (TList \to TList)
+\def
+ let rec lifts1 (hds: PList) (ts: TList) on ts: TList \def (match ts with 
+[TNil \Rightarrow TNil | (TCons t ts0) \Rightarrow (TCons (lift1 hds t) 
+(lifts1 hds ts0))]) in lifts1.
 

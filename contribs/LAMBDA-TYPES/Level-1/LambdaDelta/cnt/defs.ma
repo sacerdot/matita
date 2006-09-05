@@ -14,19 +14,12 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/Base/theory".
+set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/cnt/defs".
 
-include "ext/tactics.ma".
+include "T/defs.ma".
 
-include "ext/arith.ma".
-
-include "types/defs.ma".
-
-include "types/props.ma".
-
-include "blt/defs.ma".
-
-include "blt/props.ma".
-
-include "ext/plist.ma".
+inductive cnt: T \to Prop \def
+| cnt_sort: \forall (n: nat).(cnt (TSort n))
+| cnt_head: \forall (t: T).((cnt t) \to (\forall (k: K).(\forall (v: T).(cnt 
+(THead k v t))))).
 

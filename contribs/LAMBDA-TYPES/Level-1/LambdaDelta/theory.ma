@@ -26,6 +26,54 @@ include "s/defs.ma".
 
 include "s/props.ma".
 
+include "tlt/defs.ma".
+
+include "tlt/props.ma".
+
+include "iso/defs.ma".
+
+include "iso/fwd.ma".
+
+include "iso/props.ma".
+
+include "C/defs.ma".
+
+include "C/props.ma".
+
+include "r/defs.ma".
+
+include "r/props.ma".
+
+include "clen/defs.ma".
+
+include "flt/defs.ma".
+
+include "flt/props.ma".
+
+include "lift/defs.ma".
+
+include "lift/fwd.ma".
+
+include "lift/props.ma".
+
+include "lift/tlt.ma".
+
+include "lift1/defs.ma".
+
+include "lift1/fwd.ma".
+
+include "lift1/props.ma".
+
+include "cnt/defs.ma".
+
+include "cnt/props.ma".
+
+include "drop/defs.ma".
+
+include "drop/fwd.ma".
+
+include "drop/props.ma".
+
 include "G/defs.ma".
 
 include "next_plus/defs.ma".

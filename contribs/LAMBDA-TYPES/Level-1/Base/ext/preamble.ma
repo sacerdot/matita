@@ -108,6 +108,33 @@ alias id "refl_equal" = "cic:/Coq/Init/Logic/eq.ind#xpointer(1/1/1)".
 alias id "S" = "cic:/Coq/Init/Datatypes/nat.ind#xpointer(1/1/2)".
 alias id "true" = "cic:/Coq/Init/Datatypes/bool.ind#xpointer(1/1/1)".
 alias id "True" = "cic:/Coq/Init/Logic/True.ind#xpointer(1/1)".
+alias id "plus_lt_compat_r" = "cic:/Coq/Arith/Plus/plus_lt_compat_r.con".
+alias id "plus_n_O" = "cic:/Coq/Init/Peano/plus_n_O.con".
+alias id "plus_le_lt_compat" = "cic:/Coq/Arith/Plus/plus_le_lt_compat.con".
+alias id "lt_wf_ind" = "cic:/Coq/Arith/Wf_nat/lt_wf_ind.con".
+alias id "minus_Sn_m" = "cic:/Coq/Arith/Minus/minus_Sn_m.con".
+alias id "and_ind" = "cic:/Coq/Init/Logic/and_ind.con".
+alias id "le_lt_trans" = "cic:/Coq/Arith/Lt/le_lt_trans.con".
+alias id "lt_le_trans" = "cic:/Coq/Arith/Lt/lt_le_trans.con".
+alias id "le_lt_trans" = "cic:/Coq/Arith/Lt/le_lt_trans.con".
+alias id "plus_n_O" = "cic:/Coq/Init/Peano/plus_n_O.con".
+alias id "f_equal3" = "cic:/Coq/Init/Logic/f_equal3.con".
+alias id "S_pred" = "cic:/Coq/Arith/Lt/S_pred.con".
+alias id "lt_le_trans" = "cic:/Coq/Arith/Lt/lt_le_trans.con".
+alias id "plus_lt_compat_r" = "cic:/Coq/Arith/Plus/plus_lt_compat_r.con".
+alias id "le_plus_trans" = "cic:/Coq/Arith/Plus/le_plus_trans.con".
+alias id "f_equal2" = "cic:/Coq/Init/Logic/f_equal2.con".
+alias id "le_plus_trans" = "cic:/Coq/Arith/Plus/le_plus_trans.con".
+alias id "f_equal2" = "cic:/Coq/Init/Logic/f_equal2.con".
+alias id "plus_n_O" = "cic:/Coq/Init/Peano/plus_n_O.con".
+alias id "plus_n_O" = "cic:/Coq/Init/Peano/plus_n_O.con".
+alias id "lt_trans" = "cic:/Coq/Arith/Lt/lt_trans.con".
+alias id "minus_Sn_m" = "cic:/Coq/Arith/Minus/minus_Sn_m.con".
+alias id "ex_intro" = "cic:/Coq/Init/Logic/ex.ind#xpointer(1/1/1)".
+alias id "lt_trans" = "cic:/Coq/Arith/Lt/lt_trans.con".
+alias id "lt_n_Sn" = "cic:/Coq/Arith/Lt/lt_n_Sn.con".
+alias id "lt_le_trans" = "cic:/Coq/Arith/Lt/lt_le_trans.con".
+alias id "lt_wf_ind" = "cic:/Coq/Arith/Wf_nat/lt_wf_ind.con".
 
 theorem f_equal: \forall A,B:Type. \forall f:A \to B.
                  \forall x,y:A. x = y \to f x = f y.
