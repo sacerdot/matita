@@ -15,7 +15,7 @@
 set "baseuri" "cic:/matita/tests/coercions/".
 
 include "nat/compare.ma".
-include "datatypes/bool.ma".
+include "nat/times.ma".
 
 inductive pos: Set \def
 | one : pos
