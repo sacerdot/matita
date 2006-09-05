@@ -105,7 +105,8 @@ definition church: nat \to nat \to nat \def times.
 coercion cic:/matita/tests/coercions/church.con 1.
 
 definition mapmult:  \forall n:nat.\forall l:listn nat n. nat \to nat \to nat \def
-  \lambda n:nat.\lambda l:listn nat n.\lambda m,o:nat.l m o.
+  \lambda n:nat.\lambda l:listn nat n.\lambda m,o:nat.
+  l (m m) o (o o o).
 
   
   
