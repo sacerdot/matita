@@ -14,43 +14,25 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/T/defs".
+set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/Base/ext/plist".
 
-include "../Base/theory.ma".
+include "ext/preamble.ma".
 
-inductive B: Set \def
-| Abbr: B
-| Abst: B
-| Void: B.
+inductive PList: Set \def
+| PNil: PList
+| PCons: nat \to (nat \to (PList \to PList)).
 
-inductive F: Set \def
-| Appl: F
-| Cast: F.
-
-inductive K: Set \def
-| Bind: B \to K
-| Flat: F \to K.
-
-inductive T: Set \def
-| TSort: nat \to T
-| TLRef: nat \to T
-| THead: K \to (T \to (T \to T)).
-
-inductive TList: Set \def
-| TNil: TList
-| TCons: T \to (TList \to TList).
-
-definition THeads:
- K \to (TList \to (T \to T))
+definition PConsTail:
+ PList \to (nat \to (nat \to PList))
 \def
- let rec THeads (k: K) (us: TList) on us: (T \to T) \def (\lambda (t: 
-T).(match us with [TNil \Rightarrow t | (TCons u ul) \Rightarrow (THead k u 
-(THeads k ul t))])) in THeads.
+ let rec PConsTail (hds: PList) on hds: (nat \to (nat \to PList)) \def 
+(\lambda (h0: nat).(\lambda (d0: nat).(match hds with [PNil \Rightarrow 
+(PCons h0 d0 PNil) | (PCons h d hds0) \Rightarrow (PCons h d (PConsTail hds0 
+h0 d0))]))) in PConsTail.
 
-definition tweight:
- T \to nat
+definition Ss:
+ PList \to PList
 \def
- let rec tweight (t: T) on t: nat \def (match t with [(TSort _) \Rightarrow 
-(S O) | (TLRef _) \Rightarrow (S O) | (THead _ u t0) \Rightarrow (S (plus 
-(tweight u) (tweight t0)))]) in tweight.
+ let rec Ss (hds: PList) on hds: PList \def (match hds with [PNil \Rightarrow 
+PNil | (PCons h d hds0) \Rightarrow (PCons h (S d) (Ss hds0))]) in Ss.
 
