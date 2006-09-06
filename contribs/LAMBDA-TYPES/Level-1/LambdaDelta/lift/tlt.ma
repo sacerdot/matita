@@ -16,9 +16,9 @@
 
 set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/lift/tlt".
 
-include "lift/defs.ma".
+include "lift/fwd.ma".
 
-include "tlt/defs.ma".
+include "tlt/props.ma".
 
 theorem lift_weight_map:
  \forall (t: T).(\forall (h: nat).(\forall (d: nat).(\forall (f: ((nat \to 

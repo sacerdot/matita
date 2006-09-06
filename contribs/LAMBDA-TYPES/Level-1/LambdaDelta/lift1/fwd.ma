@@ -18,6 +18,8 @@ set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/lift1/fwd".
 
 include "lift1/defs.ma".
 
+include "lift/fwd.ma".
+
 theorem lift1_lref:
  \forall (hds: PList).(\forall (i: nat).(eq T (lift1 hds (TLRef i)) (TLRef 
 (trans hds i))))

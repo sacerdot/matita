@@ -20,6 +20,8 @@ include "C/defs.ma".
 
 include "lift/defs.ma".
 
+include "r/defs.ma".
+
 inductive drop: nat \to (nat \to (C \to (C \to Prop))) \def
 | drop_refl: \forall (c: C).(drop O O c c)
 | drop_drop: \forall (k: K).(\forall (h: nat).(\forall (c: C).(\forall (e: 

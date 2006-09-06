@@ -135,6 +135,7 @@ alias id "lt_trans" = "cic:/Coq/Arith/Lt/lt_trans.con".
 alias id "lt_n_Sn" = "cic:/Coq/Arith/Lt/lt_n_Sn.con".
 alias id "lt_le_trans" = "cic:/Coq/Arith/Lt/lt_le_trans.con".
 alias id "lt_wf_ind" = "cic:/Coq/Arith/Wf_nat/lt_wf_ind.con".
+alias id "bool_ind" = "cic:/Coq/Init/Datatypes/bool_ind.con".
 
 theorem f_equal: \forall A,B:Type. \forall f:A \to B.
                  \forall x,y:A. x = y \to f x = f y.

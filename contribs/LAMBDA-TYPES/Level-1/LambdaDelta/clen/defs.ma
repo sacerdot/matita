@@ -18,6 +18,8 @@ set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/clen/defs".
 
 include "C/defs.ma".
 
+include "s/defs.ma".
+
 definition clen:
  C \to nat
 \def

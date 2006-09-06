@@ -74,6 +74,10 @@ include "drop/fwd.ma".
 
 include "drop/props.ma".
 
+include "drop1/defs.ma".
+
+include "drop1/props.ma".
+
 include "G/defs.ma".
 
 include "next_plus/defs.ma".

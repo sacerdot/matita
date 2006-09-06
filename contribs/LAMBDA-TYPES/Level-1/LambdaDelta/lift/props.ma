@@ -18,6 +18,8 @@ set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/lift/props".
 
 include "lift/fwd.ma".
 
+include "s/props.ma".
+
 theorem thead_x_lift_y_y:
  \forall (k: K).(\forall (t: T).(\forall (v: T).(\forall (h: nat).(\forall 
 (d: nat).((eq T (THead k v (lift h d t)) t) \to (\forall (P: Prop).P))))))

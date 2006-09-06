@@ -18,7 +18,7 @@ set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/cnt/props".
 
 include "cnt/defs.ma".
 
-include "lift/defs.ma".
+include "lift/fwd.ma".
 
 theorem cnt_lift:
  \forall (t: T).((cnt t) \to (\forall (i: nat).(\forall (d: nat).(cnt (lift i 

@@ -16,9 +16,11 @@
 
 set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/drop/props".
 
-include "drop/defs.ma".
+include "drop/fwd.ma".
 
 include "lift/props.ma".
+
+include "r/props.ma".
 
 theorem drop_skip_bind:
  \forall (h: nat).(\forall (d: nat).(\forall (c: C).(\forall (e: C).((drop h 
