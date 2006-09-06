@@ -46,6 +46,8 @@ include "r/props.ma".
 
 include "clen/defs.ma".
 
+include "clen/getl.ma".
+
 include "flt/defs.ma".
 
 include "flt/props.ma".
@@ -77,6 +79,30 @@ include "drop/props.ma".
 include "drop1/defs.ma".
 
 include "drop1/props.ma".
+
+include "clear/defs.ma".
+
+include "clear/fwd.ma".
+
+include "clear/props.ma".
+
+include "clear/drop.ma".
+
+include "getl/defs.ma".
+
+include "getl/fwd.ma".
+
+include "getl/props.ma".
+
+include "getl/clear.ma".
+
+include "getl/drop.ma".
+
+include "getl/dec.ma".
+
+include "getl/flt.ma".
+
+include "cimp/defs.ma".
 
 include "G/defs.ma".
 
