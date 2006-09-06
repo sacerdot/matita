@@ -97,11 +97,15 @@ let main () =
    ma_files;
   Hashtbl.iter 
     (fun file alias -> 
-      let dep = resolve alias (Hashtbl.find baseuri_of file) in
-      match dep with 
-      | None -> ()
-      | Some u -> 
-         Hashtbl.add include_deps file (obj_file_of_baseuri false u))
+      try 
+        let dep = resolve alias (Hashtbl.find baseuri_of file) in
+        match dep with 
+        | None -> ()
+        | Some u -> 
+           Hashtbl.add include_deps file (obj_file_of_baseuri false u)
+      with Not_found -> 
+        prerr_endline ("File "^ file^" has no baseuri. Use set baseuri");
+        exit 1)
   uri_deps;
   if !do_dot then
     begin
@@ -129,15 +133,20 @@ let main () =
     begin
       List.iter
        (fun ma_file -> 
-        let deps = Hashtbl.find_all include_deps ma_file in
-        let deps = List.fast_sort Pervasives.compare deps in
-        let deps = HExtlib.list_uniq deps in
-        let deps = ma_file :: deps in
-        let baseuri = Hashtbl.find baseuri_of ma_file in
-        let moo = obj_file_of_baseuri true baseuri in
-        Printf.printf "%s: %s\n%s: %s\n%s: %s\n" moo (String.concat " " deps)
-          (Filename.basename (Pcre.replace ~pat:"ma$" ~templ:"mo" ma_file)) moo
-          (Pcre.replace ~pat:"ma$" ~templ:"mo" ma_file) moo)
+         try
+          let deps = Hashtbl.find_all include_deps ma_file in
+          let deps = List.fast_sort Pervasives.compare deps in
+          let deps = HExtlib.list_uniq deps in
+          let deps = ma_file :: deps in
+          let baseuri = Hashtbl.find baseuri_of ma_file in
+          let moo = obj_file_of_baseuri true baseuri in
+          Printf.printf "%s: %s\n%s: %s\n%s: %s\n" 
+            moo (String.concat " " deps)
+            (Filename.basename(Pcre.replace ~pat:"ma$" ~templ:"mo" ma_file)) moo
+            (Pcre.replace ~pat:"ma$" ~templ:"mo" ma_file) moo
+         with Not_found -> 
+           prerr_endline ("File "^ma_file^" has no baseuri. Use set baseuri");
+           exit 1)
         ma_files
     end
 ;;
