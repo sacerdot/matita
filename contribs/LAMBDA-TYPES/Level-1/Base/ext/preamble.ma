@@ -14,34 +14,8 @@
 
 set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/Base/ext/preamble".
 
-(* FG: We should include legacy/coq.ma bit it is not working *)
-(* include "legacy/coq.ma".                                  *)
+include "legacy/coq.ma".
 
-default "equality"
- cic:/Coq/Init/Logic/eq.ind
- cic:/Coq/Init/Logic/sym_eq.con
- cic:/Coq/Init/Logic/trans_eq.con
- cic:/Coq/Init/Logic/eq_ind.con
- cic:/Coq/Init/Logic/eq_ind_r.con
- cic:/Coq/Init/Logic/f_equal.con
- cic:/Coq/Init/Logic/f_equal1.con.
-       
-default "true"
- cic:/Coq/Init/Logic/True.ind.
-
-default "false"
- cic:/Coq/Init/Logic/False.ind.
-
-default "absurd"
- cic:/Coq/Init/Logic/absurd.con.
-
-interpretation "Coq's leibnitz's equality" 'eq x y = (cic:/Coq/Init/Logic/eq.ind#xpointer(1/1) _ x y).
-interpretation "Coq's not equal to (leibnitz)" 'neq x y = (cic:/Coq/Init/Logic/not.con (cic:/Coq/Init/Logic/eq.ind#xpointer(1/1) _ x y)).
-interpretation "Coq's natural plus" 'plus x y = (cic:/Coq/Init/Peano/plus.con x y).
-interpretation "Coq's natural 'less or equal to'" 'leq x y = (cic:/Coq/Init/Peano/le.ind#xpointer(1/1) x y).
-
-alias id "land" = "cic:/Coq/Init/Logic/and.ind#xpointer(1/1)".
-	  
 (* FG/CSC: These aliases should disappear: we would like to write something
  *         like: "disambiguate in cic:/Coq/*"
  *)
@@ -163,3 +137,12 @@ theorem plus_le_reg_l: \forall p,n,m. p + n <= p + m \to n <= m.
 qed.
 
 definition sym_equal \def sym_eq.
+
+default "equality"
+ cic:/Coq/Init/Logic/eq.ind
+ cic:/matita/LAMBDA-TYPES/Level-1/Base/ext/preamble/sym_eq.con
+ cic:/Coq/Init/Logic/trans_eq.con
+ cic:/Coq/Init/Logic/eq_ind.con
+ cic:/Coq/Init/Logic/eq_ind_r.con
+ cic:/matita/LAMBDA-TYPES/Level-1/Base/ext/preamble/f_equal.con
+ cic:/matita/legacy/coq/f_equal1.con.
