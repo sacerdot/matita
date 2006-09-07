@@ -16,6 +16,9 @@ set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/Base/ext/preamble".
 
 include' "legacy/coq.ma".
 
+(* FG: This is because "and" is a reserved keyword of the parser *)
+alias id "land" = "cic:/Coq/Init/Logic/and.ind#xpointer(1/1)".
+
 (* FG/CSC: These aliases should disappear: we would like to write something
  *         like: "disambiguate in cic:/Coq/*"
  *)
