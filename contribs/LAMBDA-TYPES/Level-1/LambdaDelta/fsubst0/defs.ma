@@ -12,21 +12,19 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* Problematic objects for disambiguation/typechecking ********************)
+(* This file was automatically generated: do not edit *********************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/problems".
+set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/fsubst0/defs".
 
-include "LambdaDelta/theory.ma".
+include "csubst0/defs.ma".
 
-(* Problem 1: disambiguation errors with these objects *)
+include "subst0/defs.ma".
 
-(*  iso_trans (in problems-1)
- *  drop1_getl_trans (in problems-2)
- *)
+inductive fsubst0 (i:nat) (v:T) (c1:C) (t1:T): C \to (T \to Prop) \def
+| fsubst0_snd: \forall (t2: T).((subst0 i v t1 t2) \to (fsubst0 i v c1 t1 c1 
+t2))
+| fsubst0_fst: \forall (c2: C).((csubst0 i v c1 c2) \to (fsubst0 i v c1 t1 c2 
+t1))
+| fsubst0_both: \forall (t2: T).((subst0 i v t1 t2) \to (\forall (c2: 
+C).((csubst0 i v c1 c2) \to (fsubst0 i v c1 t1 c2 t2)))).
 
-(* Problem 2: assertion failure raised by type checker on this object *)
-
-inductive tau1 (g:G) (c:C) (t1:T): T \to Prop \def
-| tau1_tau0: \forall (t2: T).((tau0 g c t1 t2) \to (tau1 g c t1 t2))
-| tau1_sing: \forall (t: T).((tau1 g c t1 t) \to (\forall (t2: T).((tau0 g c 
-t t2) \to (tau1 g c t1 t2)))).

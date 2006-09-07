@@ -12,21 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* Problematic objects for disambiguation/typechecking ********************)
+(* This file was automatically generated: do not edit *********************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/problems".
+set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/subst1/defs".
 
-include "LambdaDelta/theory.ma".
+include "subst0/defs.ma".
 
-(* Problem 1: disambiguation errors with these objects *)
+inductive subst1 (i:nat) (v:T) (t1:T): T \to Prop \def
+| subst1_refl: subst1 i v t1 t1
+| subst1_single: \forall (t2: T).((subst0 i v t1 t2) \to (subst1 i v t1 t2)).
 
-(*  iso_trans (in problems-1)
- *  drop1_getl_trans (in problems-2)
- *)
-
-(* Problem 2: assertion failure raised by type checker on this object *)
-
-inductive tau1 (g:G) (c:C) (t1:T): T \to Prop \def
-| tau1_tau0: \forall (t2: T).((tau0 g c t1 t2) \to (tau1 g c t1 t2))
-| tau1_sing: \forall (t: T).((tau1 g c t1 t) \to (\forall (t2: T).((tau0 g c 
-t t2) \to (tau1 g c t1 t2)))).

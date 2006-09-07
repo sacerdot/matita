@@ -12,21 +12,23 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* Problematic objects for disambiguation/typechecking ********************)
+(* This file was automatically generated: do not edit *********************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/problems".
+set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/csubst0/defs".
 
-include "LambdaDelta/theory.ma".
+include "subst0/defs.ma".
 
-(* Problem 1: disambiguation errors with these objects *)
+include "C/defs.ma".
 
-(*  iso_trans (in problems-1)
- *  drop1_getl_trans (in problems-2)
- *)
+inductive csubst0: nat \to (T \to (C \to (C \to Prop))) \def
+| csubst0_snd: \forall (k: K).(\forall (i: nat).(\forall (v: T).(\forall (u1: 
+T).(\forall (u2: T).((subst0 i v u1 u2) \to (\forall (c: C).(csubst0 (s k i) 
+v (CHead c k u1) (CHead c k u2))))))))
+| csubst0_fst: \forall (k: K).(\forall (i: nat).(\forall (c1: C).(\forall 
+(c2: C).(\forall (v: T).((csubst0 i v c1 c2) \to (\forall (u: T).(csubst0 (s 
+k i) v (CHead c1 k u) (CHead c2 k u))))))))
+| csubst0_both: \forall (k: K).(\forall (i: nat).(\forall (v: T).(\forall 
+(u1: T).(\forall (u2: T).((subst0 i v u1 u2) \to (\forall (c1: C).(\forall 
+(c2: C).((csubst0 i v c1 c2) \to (csubst0 (s k i) v (CHead c1 k u1) (CHead c2 
+k u2)))))))))).
 
-(* Problem 2: assertion failure raised by type checker on this object *)
-
-inductive tau1 (g:G) (c:C) (t1:T): T \to Prop \def
-| tau1_tau0: \forall (t2: T).((tau0 g c t1 t2) \to (tau1 g c t1 t2))
-| tau1_sing: \forall (t: T).((tau1 g c t1 t) \to (\forall (t2: T).((tau0 g c 
-t t2) \to (tau1 g c t1 t2)))).

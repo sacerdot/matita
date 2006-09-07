@@ -122,9 +122,45 @@ include "subst0/tlt.ma".
 
 include "subst0/dec.ma".
 
+include "subst1/defs.ma".
+
+include "subst1/fwd.ma".
+
+include "subst1/props.ma".
+
+include "subst1/subst1.ma".
+
+include "csubst0/defs.ma".
+
+include "csubst0/fwd.ma".
+
+include "csubst0/props.ma".
+
+include "csubst0/drop.ma".
+
+include "csubst0/clear.ma".
+
+include "csubst0/getl.ma".
+
+include "csubst1/defs.ma".
+
+include "csubst1/fwd.ma".
+
+include "csubst1/props.ma".
+
+include "csubst1/getl.ma".
+
+include "fsubst0/defs.ma".
+
+include "fsubst0/fwd.ma".
+
 include "G/defs.ma".
 
 include "next_plus/defs.ma".
 
 include "next_plus/props.ma".
+
+include "tau0/defs.ma".
+
+include "tau0/props.ma".
 

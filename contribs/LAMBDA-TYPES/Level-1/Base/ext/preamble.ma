@@ -22,6 +22,11 @@ alias id "land" = "cic:/Coq/Init/Logic/and.ind#xpointer(1/1)".
 (* FG/CSC: These aliases should disappear: we would like to write something
  *         like: "disambiguate in cic:/Coq/*"
  *)
+alias symbol "plus" = "Coq's natural plus".
+alias symbol "leq" = "Coq's natural 'less or equal to'".
+alias symbol "neq" = "Coq's not equal to (leibnitz)".
+alias symbol "eq" = "Coq's leibnitz's equality".
+
 alias id "bool" = "cic:/Coq/Init/Datatypes/bool.ind#xpointer(1/1)".
 alias id "conj" = "cic:/Coq/Init/Logic/and.ind#xpointer(1/1/1)".
 alias id "eq_add_S" = "cic:/Coq/Init/Peano/eq_add_S.con".
@@ -117,10 +122,7 @@ alias id "ex_ind" = "cic:/Coq/Init/Logic/ex_ind.con".
 alias id "plus_Snm_nSm" = "cic:/Coq/Arith/Plus/plus_Snm_nSm.con".
 alias id "plus_lt_le_compat" = "cic:/Coq/Arith/Plus/plus_lt_le_compat.con".
 alias id "plus_lt_compat" = "cic:/Coq/Arith/Plus/plus_lt_compat.con".
-alias symbol "plus" = "Coq's natural plus".
-alias symbol "leq" = "Coq's natural 'less or equal to'".
-alias symbol "neq" = "Coq's not equal to (leibnitz)".
-alias symbol "eq" = "Coq's leibnitz's equality".
+alias id "lt_S_n" = "cic:/Coq/Arith/Lt/lt_S_n.con".
 
 theorem f_equal: \forall A,B:Type. \forall f:A \to B.
                  \forall x,y:A. x = y \to f x = f y.
