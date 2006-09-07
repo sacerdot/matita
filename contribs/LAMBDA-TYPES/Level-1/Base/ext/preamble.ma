@@ -14,7 +14,7 @@
 
 set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/Base/ext/preamble".
 
-include "legacy/coq.ma".
+include' "legacy/coq.ma".
 
 (* FG/CSC: These aliases should disappear: we would like to write something
  *         like: "disambiguate in cic:/Coq/*"
@@ -114,6 +114,10 @@ alias id "ex_ind" = "cic:/Coq/Init/Logic/ex_ind.con".
 alias id "plus_Snm_nSm" = "cic:/Coq/Arith/Plus/plus_Snm_nSm.con".
 alias id "plus_lt_le_compat" = "cic:/Coq/Arith/Plus/plus_lt_le_compat.con".
 alias id "plus_lt_compat" = "cic:/Coq/Arith/Plus/plus_lt_compat.con".
+alias symbol "plus" = "Coq's natural plus".
+alias symbol "leq" = "Coq's natural 'less or equal to'".
+alias symbol "neq" = "Coq's not equal to (leibnitz)".
+alias symbol "eq" = "Coq's leibnitz's equality".
 
 theorem f_equal: \forall A,B:Type. \forall f:A \to B.
                  \forall x,y:A. x = y \to f x = f y.
