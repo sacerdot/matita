@@ -80,6 +80,8 @@ include "drop1/defs.ma".
 
 include "drop1/props.ma".
 
+include "drop1/getl.ma".
+
 include "clear/defs.ma".
 
 include "clear/fwd.ma".
@@ -98,11 +100,27 @@ include "getl/clear.ma".
 
 include "getl/drop.ma".
 
+include "getl/getl.ma".
+
 include "getl/dec.ma".
 
 include "getl/flt.ma".
 
 include "cimp/defs.ma".
+
+include "cimp/props.ma".
+
+include "subst0/defs.ma".
+
+include "subst0/fwd.ma".
+
+include "subst0/props.ma".
+
+include "subst0/subst0.ma".
+
+include "subst0/tlt.ma".
+
+include "subst0/dec.ma".
 
 include "G/defs.ma".
 

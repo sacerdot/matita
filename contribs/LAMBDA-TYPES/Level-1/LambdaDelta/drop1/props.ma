@@ -20,6 +20,8 @@ include "drop1/defs.ma".
 
 include "drop/props.ma".
 
+include "getl/defs.ma".
+
 theorem drop1_skip_bind:
  \forall (b: B).(\forall (e: C).(\forall (hds: PList).(\forall (c: 
 C).(\forall (u: T).((drop1 hds c e) \to (drop1 (Ss hds) (CHead c (Bind b) 

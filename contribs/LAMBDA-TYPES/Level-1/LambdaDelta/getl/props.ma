@@ -72,3 +72,20 @@ C).(\lambda (H1: (drop i O c x)).(\lambda (H2: (clear x (CHead d (Bind b)
 u))).(getl_intro i (CTail k v c) (CHead (CTail k v d) (Bind b) u) (CTail k v 
 x) (drop_ctail c x O i H1 k v) (clear_ctail b x d u H2 k v))))) H0))))))))).
 
+theorem getl_mono:
+ \forall (c: C).(\forall (x1: C).(\forall (h: nat).((getl h c x1) \to 
+(\forall (x2: C).((getl h c x2) \to (eq C x1 x2))))))
+\def
+ \lambda (c: C).(\lambda (x1: C).(\lambda (h: nat).(\lambda (H: (getl h c 
+x1)).(\lambda (x2: C).(\lambda (H0: (getl h c x2)).(let H1 \def (getl_gen_all 
+c x2 h H0) in (ex2_ind C (\lambda (e: C).(drop h O c e)) (\lambda (e: 
+C).(clear e x2)) (eq C x1 x2) (\lambda (x: C).(\lambda (H2: (drop h O c 
+x)).(\lambda (H3: (clear x x2)).(let H4 \def (getl_gen_all c x1 h H) in 
+(ex2_ind C (\lambda (e: C).(drop h O c e)) (\lambda (e: C).(clear e x1)) (eq 
+C x1 x2) (\lambda (x0: C).(\lambda (H5: (drop h O c x0)).(\lambda (H6: (clear 
+x0 x1)).(let H7 \def (eq_ind C x (\lambda (c0: C).(drop h O c c0)) H2 x0 
+(drop_mono c x O h H2 x0 H5)) in (let H8 \def (eq_ind_r C x0 (\lambda (c0: 
+C).(drop h O c c0)) H7 x (drop_mono c x O h H2 x0 H5)) in (let H9 \def 
+(eq_ind_r C x0 (\lambda (c: C).(clear c x1)) H6 x (drop_mono c x O h H2 x0 
+H5)) in (clear_mono x x1 H9 x2 H3))))))) H4))))) H1))))))).
+
