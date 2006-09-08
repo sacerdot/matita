@@ -12,22 +12,19 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* Problematic objects for disambiguation/typechecking ********************)
+(* This file was automatically generated: do not edit *********************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/problems".
+set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/asucc/defs".
 
-include "LambdaDelta/theory.ma".
+include "A/defs.ma".
 
-(* Problem 1: disambiguation errors with these objects *)
+include "G/defs.ma".
 
-(*  iso_trans (in problems-1)
- *  drop1_getl_trans (in problems-2)
- *  asucc_inj (in problems-3)
- *)
+definition asucc:
+ G \to (A \to A)
+\def
+ let rec asucc (g: G) (l: A) on l: A \def (match l with [(ASort n0 n) 
+\Rightarrow (match n0 with [O \Rightarrow (ASort O (next g n)) | (S h) 
+\Rightarrow (ASort h n)]) | (AHead a1 a2) \Rightarrow (AHead a1 (asucc g 
+a2))]) in asucc.
 
-(* Problem 2: assertion failure raised by type checker on this object *)
-
-inductive tau1 (g:G) (c:C) (t1:T): T \to Prop \def
-| tau1_tau0: \forall (t2: T).((tau0 g c t1 t2) \to (tau1 g c t1 t2))
-| tau1_sing: \forall (t: T).((tau1 g c t1 t) \to (\forall (t2: T).((tau0 g c 
-t t2) \to (tau1 g c t1 t2)))).

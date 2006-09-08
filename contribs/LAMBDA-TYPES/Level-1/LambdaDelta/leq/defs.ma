@@ -12,22 +12,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* Problematic objects for disambiguation/typechecking ********************)
+(* This file was automatically generated: do not edit *********************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/problems".
+set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/leq/defs".
 
-include "LambdaDelta/theory.ma".
+include "aplus/defs.ma".
 
-(* Problem 1: disambiguation errors with these objects *)
+inductive leq (g:G): A \to (A \to Prop) \def
+| leq_sort: \forall (h1: nat).(\forall (h2: nat).(\forall (n1: nat).(\forall 
+(n2: nat).(\forall (k: nat).((eq A (aplus g (ASort h1 n1) k) (aplus g (ASort 
+h2 n2) k)) \to (leq g (ASort h1 n1) (ASort h2 n2)))))))
+| leq_head: \forall (a1: A).(\forall (a2: A).((leq g a1 a2) \to (\forall (a3: 
+A).(\forall (a4: A).((leq g a3 a4) \to (leq g (AHead a1 a3) (AHead a2 
+a4))))))).
 
-(*  iso_trans (in problems-1)
- *  drop1_getl_trans (in problems-2)
- *  asucc_inj (in problems-3)
- *)
-
-(* Problem 2: assertion failure raised by type checker on this object *)
-
-inductive tau1 (g:G) (c:C) (t1:T): T \to Prop \def
-| tau1_tau0: \forall (t2: T).((tau0 g c t1 t2) \to (tau1 g c t1 t2))
-| tau1_sing: \forall (t: T).((tau1 g c t1 t) \to (\forall (t2: T).((tau0 g c 
-t t2) \to (tau1 g c t1 t2)))).

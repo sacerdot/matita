@@ -123,6 +123,7 @@ alias id "plus_Snm_nSm" = "cic:/Coq/Arith/Plus/plus_Snm_nSm.con".
 alias id "plus_lt_le_compat" = "cic:/Coq/Arith/Plus/plus_lt_le_compat.con".
 alias id "plus_lt_compat" = "cic:/Coq/Arith/Plus/plus_lt_compat.con".
 alias id "lt_S_n" = "cic:/Coq/Arith/Lt/lt_S_n.con".
+alias id "minus_n_n" = "cic:/Coq/Arith/Minus/minus_n_n.con".
 
 theorem f_equal: \forall A,B:Type. \forall f:A \to B.
                  \forall x,y:A. x = y \to f x = f y.

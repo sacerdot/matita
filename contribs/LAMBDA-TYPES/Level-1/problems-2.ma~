@@ -13,6 +13,7 @@
 (**************************************************************************)
 
 (* Problematic objects for disambiguation/typechecking ********************)
+(* FG: PLEASE COMMENT THE NON WORKING OBJECTS *****************************)
 
 set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/problems".
 

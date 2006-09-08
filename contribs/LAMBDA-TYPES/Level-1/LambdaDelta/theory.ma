@@ -164,3 +164,17 @@ include "tau0/defs.ma".
 
 include "tau0/props.ma".
 
+include "A/defs.ma".
+
+include "asucc/defs.ma".
+
+include "asucc/fwd.ma".
+
+include "aplus/defs.ma".
+
+include "aplus/props.ma".
+
+include "leq/defs.ma".
+
+include "leq/asucc.ma".
+
