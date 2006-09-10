@@ -176,5 +176,7 @@ include "aplus/props.ma".
 
 include "leq/defs.ma".
 
+include "leq/props.ma".
+
 include "leq/asucc.ma".
 

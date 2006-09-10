@@ -20,9 +20,7 @@ include "LambdaDelta/theory.ma".
 
 (* Problem 1: disambiguation errors with these objects *)
 
-(*  iso_trans (in problems-1)
- *  drop1_getl_trans (in problems-2)
- *  asucc_inj (in problems-3)
+(*  leq_trans (in problems-4)
  *)
 
 (* Problem 2: assertion failure raised by type checker on this object *)
