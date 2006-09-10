@@ -176,7 +176,35 @@ include "aplus/props.ma".
 
 include "leq/defs.ma".
 
+include "leq/fwd.ma".
+
 include "leq/props.ma".
 
 include "leq/asucc.ma".
+
+include "llt/defs.ma".
+
+include "llt/props.ma".
+
+include "aprem/defs.ma".
+
+include "aprem/props.ma".
+
+include "gz/defs.ma".
+
+include "gz/props.ma".
+
+include "arity/defs.ma".
+
+include "arity/fwd.ma".
+
+include "arity/props.ma".
+
+include "arity/subst0.ma".
+
+include "arity/lift1.ma".
+
+include "arity/cimp.ma".
+
+include "arity/aprem.ma".
 
