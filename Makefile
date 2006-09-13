@@ -197,9 +197,9 @@ distclean: clean
 TEST_DIRS = 				\
 	library 			\
 	tests 				\
-	contribs/LAMBDA-TYPES 		\
-	contribs/PREDICATIVE-TOPOLOGY 	\
 	$(NULL)
+#	contribs/LAMBDA-TYPES 		\
+#	contribs/PREDICATIVE-TOPOLOGY 	\
 
 .PHONY: tests tests.opt cleantests cleantests.opt
 tests: $(foreach d,$(TEST_DIRS),$(d)-test)
