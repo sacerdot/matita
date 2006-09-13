@@ -164,6 +164,12 @@ include "tau0/defs.ma".
 
 include "tau0/props.ma".
 
+include "tau1/defs.ma".
+
+include "tau1/props.ma".
+
+include "tau1/cnt.ma".
+
 include "A/defs.ma".
 
 include "asucc/defs.ma".
@@ -207,4 +213,36 @@ include "arity/lift1.ma".
 include "arity/cimp.ma".
 
 include "arity/aprem.ma".
+
+include "pr0/defs.ma".
+
+include "pr0/fwd.ma".
+
+include "pr0/props.ma".
+
+include "pr0/pr0.ma".
+
+include "pr0/subst1.ma".
+
+include "pr0/dec.ma".
+
+include "pr1/defs.ma".
+
+include "pr1/props.ma".
+
+include "pr1/pr1.ma".
+
+include "pr2/defs.ma".
+
+include "pr2/fwd.ma".
+
+include "pr2/props.ma".
+
+include "pr2/clen.ma".
+
+include "pr2/pr2.ma".
+
+include "pr2/subst1.ma".
+
+include "pr3/defs.ma".
 
