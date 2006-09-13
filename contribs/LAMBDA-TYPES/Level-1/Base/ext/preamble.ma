@@ -138,6 +138,12 @@ theorem sym_not_eq: \forall A:Type. \forall x,y:A. x \neq y \to y \neq x.
  unfold not. intros. apply H. symmetry. assumption.
 qed.
 
+theorem trans_eq : ∀A:Type.∀x,y,z:A.x=y→y=z→x=z.
+ intros;
+ transitivity y;
+ assumption.
+qed.
+
 theorem plus_reg_l: \forall (n,m,p:nat). n + m = n + p \to m = p.
  intros. apply plus_reg_l; auto.
 qed.
@@ -151,7 +157,7 @@ definition sym_equal \def sym_eq.
 default "equality"
  cic:/Coq/Init/Logic/eq.ind
  cic:/matita/LAMBDA-TYPES/Level-1/Base/ext/preamble/sym_eq.con
- cic:/Coq/Init/Logic/trans_eq.con
+ cic:/matita/LAMBDA-TYPES/Level-1/Base/ext/preamble/trans_eq.con
  cic:/Coq/Init/Logic/eq_ind.con
  cic:/Coq/Init/Logic/eq_ind_r.con
  cic:/matita/LAMBDA-TYPES/Level-1/Base/ext/preamble/f_equal.con
