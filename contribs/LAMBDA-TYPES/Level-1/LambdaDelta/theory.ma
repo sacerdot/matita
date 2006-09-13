@@ -232,6 +232,12 @@ include "pr1/props.ma".
 
 include "pr1/pr1.ma".
 
+include "wcpr0/defs.ma".
+
+include "wcpr0/fwd.ma".
+
+include "wcpr0/getl.ma".
+
 include "pr2/defs.ma".
 
 include "pr2/fwd.ma".
@@ -245,4 +251,18 @@ include "pr2/pr2.ma".
 include "pr2/subst1.ma".
 
 include "pr3/defs.ma".
+
+include "pr3/props.ma".
+
+include "pr3/fwd.ma".
+
+include "pr3/wcpr0.ma".
+
+include "pr3/pr1.ma".
+
+include "pr3/pr3.ma".
+
+include "pr3/subst1.ma".
+
+include "pr3/iso.ma".
 
