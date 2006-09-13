@@ -47,7 +47,7 @@ fi
 CUR_TIME=`echo $SQLQTIME$MARK$SQLQGRMARK | $MYSQL`
 OLD_TIME=`echo $SQLQTIME$LASTMARK$SQLQGRMARK | $MYSQL`
 
-if [ -z "$CUR_TIME" -o -z "$OLD_TIME"]; then
+if [ -z "$CUR_TIME" -o -z "$OLD_TIME" ]; then
     cat <<EOT
 
     Unable to calculate total time amounts:
@@ -63,13 +63,13 @@ if [ -z "$CUR_TIME" -o -z "$OLD_TIME"]; then
 EOT
 fi
 
-((DELTA=$CUR_TIME-$OLD_TIME))
-if [ $DELTA -lt 0 ]; then
+((DELTA= $CUR_TIME - $OLD_TIME))
+if [ "$DELTA" -lt 0 ]; then
   PERC=0
 else
   PREC=`scripts/functions.lua proportion $DELTA x $OLD_CENTS 100`
 fi
-if [ $PERC -ge 5 ]; then
+if [ "$PERC" -ge 5 ]; then
   cat <<EOT
   
   PERFORMANCE LOSS DETECTED (MARK $MARK vs MARK $LASTMARK)
@@ -86,7 +86,7 @@ fi
 CUR_FAIL=`echo $SQLQFAIL$MARK$SQLQFAIL2 | $MYSQL`
 OLD_FAIL=`echo $SQLQFAIL$LASTMARK$SQLQFAIL2 | $MYSQL`
 
-if [ $CUR_FAIL -gt $OLD_FAIL ]; then
+if [ "$CUR_FAIL" -gt "$OLD_FAIL" ]; then
   cat <<EOT
 
   MORE BROKEN TESTS DETECTED (MARK $MARK vs MARK $LASTMARK)
