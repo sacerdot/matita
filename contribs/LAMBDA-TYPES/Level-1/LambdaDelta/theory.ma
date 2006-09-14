@@ -266,3 +266,61 @@ include "pr3/subst1.ma".
 
 include "pr3/iso.ma".
 
+include "csuba/defs.ma".
+
+include "csuba/fwd.ma".
+
+include "csuba/props.ma".
+
+include "csuba/clear.ma".
+
+include "csuba/drop.ma".
+
+include "csuba/getl.ma".
+
+include "csuba/arity.ma".
+
+include "arity/pr3.ma".
+
+include "nf2/defs.ma".
+
+include "nf2/fwd.ma".
+
+include "nf2/props.ma".
+
+include "nf2/pr3.ma".
+
+include "nf2/lift1.ma".
+
+include "nf2/iso.ma".
+
+include "nf2/dec.ma".
+
+include "sn3/defs.ma".
+
+include "sn3/fwd.ma".
+
+include "sn3/nf2.ma".
+
+include "sn3/props.ma".
+
+include "sn3/lift1.ma".
+
+include "sc3/defs.ma".
+
+include "sc3/props.ma".
+
+include "ceqc/defs.ma".
+
+include "ceqc/props.ma".
+
+include "sc3/arity.ma".
+
+include "pc1/defs.ma".
+
+include "pc1/props.ma".
+
+include "pc3/defs.ma".
+
+include "pc3/props.ma".
+
