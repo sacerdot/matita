@@ -54,6 +54,13 @@ inductive ttree : Type → Type :=
    tempty: ttree nat
  | tnode : ∀A. ttree A → ttree A → ttree A.
 
+(* CSC: there is an undecidable unification problem here:
+    consider a constructor k : \forall x. f x -> i (g x)
+    The head of the outtype of the injection MutCase should be (f ?1)
+    such that (f ?1) unifies with (g d) [ where d is the Rel that binds
+    the corresponding right parameter in the outtype ]
+    Coq dodges the problem by generating an equality between sigma-types
+    (that state the existence of a ?1 such that ...)
 theorem injection_test3:
  ∀t,t'. tnode nat t tempty = tnode nat t' tempty → t = t'.
  intros;
@@ -67,7 +74,7 @@ theorem injection_test3:
    t = t'.
  intros;
  injection H;
- 
+*) 
 
 theorem injection_test4:
  ∀n,n',m,m'. k1 bool (S n) (S m) = k1 bool (S n') (S (S m')) → m = S m'.
@@ -75,5 +82,3 @@ theorem injection_test4:
  injection H;
  assumption.
 qed.
-
-
