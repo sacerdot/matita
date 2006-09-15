@@ -324,3 +324,55 @@ include "pc3/defs.ma".
 
 include "pc3/props.ma".
 
+include "pc3/pc1.ma".
+
+include "pc3/wcpr0.ma".
+
+include "pc3/left.ma".
+
+include "pc3/fwd.ma".
+
+include "pc3/fsubst0.ma".
+
+include "pc3/subst1.ma".
+
+include "ty3/defs.ma".
+
+include "ty3/fwd.ma".
+
+include "ty3/props.ma".
+
+include "ty3/fsubst0.ma".
+
+include "ty3/subst1.ma".
+
+include "csub3/defs.ma".
+
+include "csub3/fwd.ma".
+
+include "csub3/props.ma".
+
+include "csub3/clear.ma".
+
+include "csub3/drop.ma".
+
+include "csub3/getl.ma".
+
+include "csub3/pc3.ma".
+
+include "csub3/ty3.ma".
+
+include "ty3/pr3.ma".
+
+include "ty3/pr3_props.ma".
+
+include "ty3/tau0.ma".
+
+include "ty3/arity.ma".
+
+include "ty3/arity_props.ma".
+
+include "pc3/dec.ma".
+
+include "ty3/dec.ma".
+

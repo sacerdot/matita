@@ -43,7 +43,7 @@ False | (S _) \Rightarrow True])) I O H0) in (False_ind P H1))))) (\lambda
 (P: Prop).P)))).(or_ind (eq nat n n0) ((eq nat n n0) \to (\forall (P: 
 Prop).P)) (or (eq nat (S n) (S n0)) ((eq nat (S n) (S n0)) \to (\forall (P: 
 Prop).P))) (\lambda (H1: (eq nat n n0)).(let H2 \def (eq_ind_r nat n0 
-(\lambda (n0: nat).(or (eq nat (S n) n0) ((eq nat (S n) n0) \to (\forall (P: 
+(\lambda (n3: nat).(or (eq nat (S n) n3) ((eq nat (S n) n3) \to (\forall (P: 
 Prop).P)))) H0 n H1) in (eq_ind nat n (\lambda (n3: nat).(or (eq nat (S n) (S 
 n3)) ((eq nat (S n) (S n3)) \to (\forall (P: Prop).P)))) (or_introl (eq nat 
 (S n) (S n)) ((eq nat (S n) (S n)) \to (\forall (P: Prop).P)) (refl_equal nat 
@@ -51,11 +51,12 @@ n3)) ((eq nat (S n) (S n3)) \to (\forall (P: Prop).P)))) (or_introl (eq nat
 Prop).P)))).(or_intror (eq nat (S n) (S n0)) ((eq nat (S n) (S n0)) \to 
 (\forall (P: Prop).P)) (\lambda (H2: (eq nat (S n) (S n0))).(\lambda (P: 
 Prop).(let H3 \def (f_equal nat nat (\lambda (e: nat).(match e in nat return 
-(\lambda (_: nat).nat) with [O \Rightarrow n | (S n) \Rightarrow n])) (S n) 
-(S n0) H2) in (let H4 \def (eq_ind_r nat n0 (\lambda (n0: nat).((eq nat n n0) 
-\to (\forall (P: Prop).P))) H1 n H3) in (let H5 \def (eq_ind_r nat n0 
-(\lambda (n0: nat).(or (eq nat (S n) n0) ((eq nat (S n) n0) \to (\forall (P: 
-Prop).P)))) H0 n H3) in (H4 (refl_equal nat n) P)))))))) (H n0)))) n2)))) n1).
+(\lambda (_: nat).nat) with [O \Rightarrow n | (S n3) \Rightarrow n3])) (S n) 
+(S n0) H2) in (let H4 \def (eq_ind_r nat n0 (\lambda (n3: nat).((eq nat n n3) 
+\to (\forall (P0: Prop).P0))) H1 n H3) in (let H5 \def (eq_ind_r nat n0 
+(\lambda (n3: nat).(or (eq nat (S n) n3) ((eq nat (S n) n3) \to (\forall (P0: 
+Prop).P0)))) H0 n H3) in (H4 (refl_equal nat n) P)))))))) (H n0)))) n2)))) 
+n1).
 
 theorem simpl_plus_r:
  \forall (n: nat).(\forall (m: nat).(\forall (p: nat).((eq nat (plus m n) 
@@ -152,29 +153,29 @@ n) m) \to P))))
  \lambda (m: nat).(nat_ind (\lambda (n: nat).(\forall (n0: nat).(\forall (P: 
 Prop).((le n n0) \to ((le (S n0) n) \to P))))) (\lambda (n: nat).(\lambda (P: 
 Prop).(\lambda (_: (le O n)).(\lambda (H0: (le (S n) O)).(let H1 \def (match 
-H0 in le return (\lambda (n: nat).(\lambda (_: (le ? n)).((eq nat n O) \to 
+H0 in le return (\lambda (n0: nat).(\lambda (_: (le ? n0)).((eq nat n0 O) \to 
 P))) with [le_n \Rightarrow (\lambda (H1: (eq nat (S n) O)).(let H2 \def 
 (eq_ind nat (S n) (\lambda (e: nat).(match e in nat return (\lambda (_: 
 nat).Prop) with [O \Rightarrow False | (S _) \Rightarrow True])) I O H1) in 
-(False_ind P H2))) | (le_S m H1) \Rightarrow (\lambda (H2: (eq nat (S m) 
-O)).((let H3 \def (eq_ind nat (S m) (\lambda (e: nat).(match e in nat return 
+(False_ind P H2))) | (le_S m0 H1) \Rightarrow (\lambda (H2: (eq nat (S m0) 
+O)).((let H3 \def (eq_ind nat (S m0) (\lambda (e: nat).(match e in nat return 
 (\lambda (_: nat).Prop) with [O \Rightarrow False | (S _) \Rightarrow True])) 
-I O H2) in (False_ind ((le (S n) m) \to P) H3)) H1))]) in (H1 (refl_equal nat 
-O))))))) (\lambda (n: nat).(\lambda (H: ((\forall (n0: nat).(\forall (P: 
+I O H2) in (False_ind ((le (S n) m0) \to P) H3)) H1))]) in (H1 (refl_equal 
+nat O))))))) (\lambda (n: nat).(\lambda (H: ((\forall (n0: nat).(\forall (P: 
 Prop).((le n n0) \to ((le (S n0) n) \to P)))))).(\lambda (n0: nat).(nat_ind 
 (\lambda (n1: nat).(\forall (P: Prop).((le (S n) n1) \to ((le (S n1) (S n)) 
 \to P)))) (\lambda (P: Prop).(\lambda (H0: (le (S n) O)).(\lambda (_: (le (S 
-O) (S n))).(let H2 \def (match H0 in le return (\lambda (n: nat).(\lambda (_: 
-(le ? n)).((eq nat n O) \to P))) with [le_n \Rightarrow (\lambda (H2: (eq nat 
-(S n) O)).(let H3 \def (eq_ind nat (S n) (\lambda (e: nat).(match e in nat 
-return (\lambda (_: nat).Prop) with [O \Rightarrow False | (S _) \Rightarrow 
-True])) I O H2) in (False_ind P H3))) | (le_S m H2) \Rightarrow (\lambda (H3: 
-(eq nat (S m) O)).((let H4 \def (eq_ind nat (S m) (\lambda (e: nat).(match e 
+O) (S n))).(let H2 \def (match H0 in le return (\lambda (n1: nat).(\lambda 
+(_: (le ? n1)).((eq nat n1 O) \to P))) with [le_n \Rightarrow (\lambda (H2: 
+(eq nat (S n) O)).(let H3 \def (eq_ind nat (S n) (\lambda (e: nat).(match e 
 in nat return (\lambda (_: nat).Prop) with [O \Rightarrow False | (S _) 
-\Rightarrow True])) I O H3) in (False_ind ((le (S n) m) \to P) H4)) H2))]) in 
-(H2 (refl_equal nat O)))))) (\lambda (n1: nat).(\lambda (_: ((\forall (P: 
-Prop).((le (S n) n1) \to ((le (S n1) (S n)) \to P))))).(\lambda (P: 
-Prop).(\lambda (H1: (le (S n) (S n1))).(\lambda (H2: (le (S (S n1)) (S 
+\Rightarrow True])) I O H2) in (False_ind P H3))) | (le_S m0 H2) \Rightarrow 
+(\lambda (H3: (eq nat (S m0) O)).((let H4 \def (eq_ind nat (S m0) (\lambda 
+(e: nat).(match e in nat return (\lambda (_: nat).Prop) with [O \Rightarrow 
+False | (S _) \Rightarrow True])) I O H3) in (False_ind ((le (S n) m0) \to P) 
+H4)) H2))]) in (H2 (refl_equal nat O)))))) (\lambda (n1: nat).(\lambda (_: 
+((\forall (P: Prop).((le (S n) n1) \to ((le (S n1) (S n)) \to P))))).(\lambda 
+(P: Prop).(\lambda (H1: (le (S n) (S n1))).(\lambda (H2: (le (S (S n1)) (S 
 n))).(H n1 P (le_S_n n n1 H1) (le_S_n (S n1) n H2))))))) n0)))) m).
 
 theorem le_Sx_x:
@@ -293,9 +294,9 @@ p)) \to (lt n m))))
 \def
  \lambda (p: nat).(\lambda (n: nat).(\lambda (m: nat).(\lambda (H: (lt (plus 
 n p) (plus m p))).(plus_lt_reg_l n m p (let H0 \def (eq_ind nat (plus n p) 
-(\lambda (n: nat).(lt n (plus m p))) H (plus p n) (plus_comm n p)) in (let H1 
-\def (eq_ind nat (plus m p) (\lambda (n0: nat).(lt (plus p n) n0)) H0 (plus p 
-m) (plus_comm m p)) in H1)))))).
+(\lambda (n0: nat).(lt n0 (plus m p))) H (plus p n) (plus_comm n p)) in (let 
+H1 \def (eq_ind nat (plus m p) (\lambda (n0: nat).(lt (plus p n) n0)) H0 
+(plus p m) (plus_comm m p)) in H1)))))).
 
 theorem minus_x_Sy:
  \forall (x: nat).(\forall (y: nat).((lt y x) \to (eq nat (minus x y) (S 
@@ -525,8 +526,8 @@ nat).(nat_ind (\lambda (n: nat).(\forall (y1: nat).(\forall (y2: nat).((le O
 (y1: nat).(\lambda (y2: nat).(\lambda (_: (le O (S z0))).(\lambda (_: (le O 
 (S z0))).(\lambda (H1: (eq nat (S (plus z0 y1)) (S (plus z0 y2)))).(let H_y 
 \def (IH O O) in (let H2 \def (eq_ind_r nat (minus z0 O) (\lambda (n: 
-nat).(\forall (y1: nat).(\forall (y2: nat).((le O z0) \to ((le O z0) \to ((eq 
-nat (plus n y1) (plus n y2)) \to (eq nat y2 y1))))))) H_y z0 (minus_n_O z0)) 
+nat).(\forall (y3: nat).(\forall (y4: nat).((le O z0) \to ((le O z0) \to ((eq 
+nat (plus n y3) (plus n y4)) \to (eq nat y4 y3))))))) H_y z0 (minus_n_O z0)) 
 in (H2 y1 y2 (le_O_n z0) (le_O_n z0) (H2 (plus z0 y2) (plus z0 y1) (le_O_n 
 z0) (le_O_n z0) (f_equal nat nat (plus z0) (plus z0 y2) (plus z0 y1) 
 (sym_equal nat (plus z0 y1) (plus z0 y2) (eq_add_S (plus z0 y1) (plus z0 y2) 
@@ -537,14 +538,14 @@ y2)) \to (eq nat y2 (plus x3 y1))))))))).(\lambda (y1: nat).(\lambda (y2:
 nat).(\lambda (_: (le O (S z0))).(\lambda (H0: (le (S x3) (S z0))).(\lambda 
 (H1: (eq nat (S (plus z0 y1)) (plus (minus z0 x3) y2))).(let H_y \def (IH O 
 x3 (S y1)) in (let H2 \def (eq_ind_r nat (minus z0 O) (\lambda (n: 
-nat).(\forall (y2: nat).((le O z0) \to ((le x3 z0) \to ((eq nat (plus n (S 
-y1)) (plus (minus z0 x3) y2)) \to (eq nat y2 (plus x3 (S y1)))))))) H_y z0 
+nat).(\forall (y3: nat).((le O z0) \to ((le x3 z0) \to ((eq nat (plus n (S 
+y1)) (plus (minus z0 x3) y3)) \to (eq nat y3 (plus x3 (S y1)))))))) H_y z0 
 (minus_n_O z0)) in (let H3 \def (eq_ind_r nat (plus z0 (S y1)) (\lambda (n: 
-nat).(\forall (y2: nat).((le O z0) \to ((le x3 z0) \to ((eq nat n (plus 
-(minus z0 x3) y2)) \to (eq nat y2 (plus x3 (S y1)))))))) H2 (S (plus z0 y1)) 
+nat).(\forall (y3: nat).((le O z0) \to ((le x3 z0) \to ((eq nat n (plus 
+(minus z0 x3) y3)) \to (eq nat y3 (plus x3 (S y1)))))))) H2 (S (plus z0 y1)) 
 (plus_n_Sm z0 y1)) in (let H4 \def (eq_ind_r nat (plus x3 (S y1)) (\lambda 
-(n: nat).(\forall (y2: nat).((le O z0) \to ((le x3 z0) \to ((eq nat (S (plus 
-z0 y1)) (plus (minus z0 x3) y2)) \to (eq nat y2 n)))))) H3 (S (plus x3 y1)) 
+(n: nat).(\forall (y3: nat).((le O z0) \to ((le x3 z0) \to ((eq nat (S (plus 
+z0 y1)) (plus (minus z0 x3) y3)) \to (eq nat y3 n)))))) H3 (S (plus x3 y1)) 
 (plus_n_Sm x3 y1)) in (H4 y2 (le_O_n z0) (le_S_n x3 z0 H0) H1)))))))))))) 
 x2)) (\lambda (x2: nat).(\lambda (_: ((\forall (x3: nat).(\forall (y1: 
 nat).(\forall (y2: nat).((le x2 (S z0)) \to ((le x3 (S z0)) \to ((eq nat 
@@ -573,4 +574,14 @@ z0))).(\lambda (H0: (le (S x4) (S z0))).(\lambda (H1: (eq nat (plus (minus z0
 x2) y1) (plus (minus z0 x4) y2))).(f_equal nat nat S (plus x2 y2) (plus x4 
 y1) (IH x2 x4 y1 y2 (le_S_n x2 z0 H) (le_S_n x4 z0 H0) H1))))))))) x3)))) 
 x1)))) z).
+
+theorem le_S_minus:
+ \forall (d: nat).(\forall (h: nat).(\forall (n: nat).((le (plus d h) n) \to 
+(le d (S (minus n h))))))
+\def
+ \lambda (d: nat).(\lambda (h: nat).(\lambda (n: nat).(\lambda (H: (le (plus 
+d h) n)).(let H0 \def (le_trans d (plus d h) n (le_plus_l d h) H) in (let H1 
+\def (eq_ind nat n (\lambda (n0: nat).(le d n0)) H0 (plus (minus n h) h) 
+(le_plus_minus_sym h n (le_trans_plus_r d h n H))) in (le_S d (minus n h) 
+(le_minus d n h H))))))).
 

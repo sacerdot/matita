@@ -20,38 +20,7 @@ include "nf2/defs.ma".
 
 include "pr2/clen.ma".
 
-theorem nf2_gen_base__aux:
- \forall (k: K).(\forall (t: T).(\forall (u: T).((eq T (THead k u t) t) \to 
-(\forall (P: Prop).P))))
-\def
- \lambda (k: K).(\lambda (t: T).(T_ind (\lambda (t0: T).(\forall (u: T).((eq 
-T (THead k u t0) t0) \to (\forall (P: Prop).P)))) (\lambda (n: nat).(\lambda 
-(u: T).(\lambda (H: (eq T (THead k u (TSort n)) (TSort n))).(\lambda (P: 
-Prop).(let H0 \def (eq_ind T (THead k u (TSort n)) (\lambda (ee: T).(match ee 
-in T return (\lambda (_: T).Prop) with [(TSort _) \Rightarrow False | (TLRef 
-_) \Rightarrow False | (THead _ _ _) \Rightarrow True])) I (TSort n) H) in 
-(False_ind P H0)))))) (\lambda (n: nat).(\lambda (u: T).(\lambda (H: (eq T 
-(THead k u (TLRef n)) (TLRef n))).(\lambda (P: Prop).(let H0 \def (eq_ind T 
-(THead k u (TLRef n)) (\lambda (ee: T).(match ee in T return (\lambda (_: 
-T).Prop) with [(TSort _) \Rightarrow False | (TLRef _) \Rightarrow False | 
-(THead _ _ _) \Rightarrow True])) I (TLRef n) H) in (False_ind P H0)))))) 
-(\lambda (k0: K).(\lambda (t0: T).(\lambda (_: ((\forall (u: T).((eq T (THead 
-k u t0) t0) \to (\forall (P: Prop).P))))).(\lambda (t1: T).(\lambda (H0: 
-((\forall (u: T).((eq T (THead k u t1) t1) \to (\forall (P: 
-Prop).P))))).(\lambda (u: T).(\lambda (H1: (eq T (THead k u (THead k0 t0 t1)) 
-(THead k0 t0 t1))).(\lambda (P: Prop).(let H2 \def (f_equal T K (\lambda (e: 
-T).(match e in T return (\lambda (_: T).K) with [(TSort _) \Rightarrow k | 
-(TLRef _) \Rightarrow k | (THead k1 _ _) \Rightarrow k1])) (THead k u (THead 
-k0 t0 t1)) (THead k0 t0 t1) H1) in ((let H3 \def (f_equal T T (\lambda (e: 
-T).(match e in T return (\lambda (_: T).T) with [(TSort _) \Rightarrow u | 
-(TLRef _) \Rightarrow u | (THead _ t2 _) \Rightarrow t2])) (THead k u (THead 
-k0 t0 t1)) (THead k0 t0 t1) H1) in ((let H4 \def (f_equal T T (\lambda (e: 
-T).(match e in T return (\lambda (_: T).T) with [(TSort _) \Rightarrow (THead 
-k0 t0 t1) | (TLRef _) \Rightarrow (THead k0 t0 t1) | (THead _ _ t2) 
-\Rightarrow t2])) (THead k u (THead k0 t0 t1)) (THead k0 t0 t1) H1) in 
-(\lambda (_: (eq T u t0)).(\lambda (H6: (eq K k k0)).(let H7 \def (eq_ind K k 
-(\lambda (k1: K).(\forall (u0: T).((eq T (THead k1 u0 t1) t1) \to (\forall 
-(P0: Prop).P0)))) H0 k0 H6) in (H7 t0 H4 P))))) H3)) H2)))))))))) t)).
+include "T/props.ma".
 
 theorem nf2_gen_lref:
  \forall (c: C).(\forall (d: C).(\forall (u: T).(\forall (i: nat).((getl i c 
@@ -92,7 +61,7 @@ theorem nf2_gen_cast:
 t)) \to (\forall (P: Prop).P))))
 \def
  \lambda (c: C).(\lambda (u: T).(\lambda (t: T).(\lambda (H: (nf2 c (THead 
-(Flat Cast) u t))).(\lambda (P: Prop).(nf2_gen_base__aux (Flat Cast) t u (H t 
+(Flat Cast) u t))).(\lambda (P: Prop).(thead_x_y_y (Flat Cast) u t (H t 
 (pr2_free c (THead (Flat Cast) u t) t (pr0_epsilon t t (pr0_refl t) u))) 
 P))))).
 
