@@ -149,8 +149,8 @@ a (aplus gz (ASort h2 n2) k))) H0 (ASort O (plus (minus k h1) n1))
 (aplus_gz_le k h1 n1 H1)) in (let H4 \def (eq_ind A (aplus gz (ASort h2 n2) 
 k) (\lambda (a: A).(eq A (ASort O (plus (minus k h1) n1)) a)) H3 (ASort 
 (minus h2 k) n2) (aplus_gz_ge n2 k h2 (le_S_n k h2 (le_S (S k) h2 H2)))) in 
-(let H5 \def (sym_equal A (ASort O (plus (minus k h1) n1)) (ASort (minus h2 
-k) n2) H4) in (let H6 \def (eq_ind nat (minus h2 k) (\lambda (n: nat).(eq A 
+(let H5 \def (sym_eq A (ASort O (plus (minus k h1) n1)) (ASort (minus h2 k) 
+n2) H4) in (let H6 \def (eq_ind nat (minus h2 k) (\lambda (n: nat).(eq A 
 (ASort n n2) (ASort O (plus (minus k h1) n1)))) H5 (S (minus h2 (S k))) 
 (minus_x_Sy h2 k H2)) in (let H7 \def (eq_ind A (ASort (S (minus h2 (S k))) 
 n2) (\lambda (ee: A).(match ee in A return (\lambda (_: A).Prop) with [(ASort 

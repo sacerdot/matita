@@ -529,8 +529,8 @@ nat).(nat_ind (\lambda (n: nat).(\forall (y1: nat).(\forall (y2: nat).((le O
 nat).(\forall (y3: nat).(\forall (y4: nat).((le O z0) \to ((le O z0) \to ((eq 
 nat (plus n y3) (plus n y4)) \to (eq nat y4 y3))))))) H_y z0 (minus_n_O z0)) 
 in (H2 y1 y2 (le_O_n z0) (le_O_n z0) (H2 (plus z0 y2) (plus z0 y1) (le_O_n 
-z0) (le_O_n z0) (f_equal nat nat (plus z0) (plus z0 y2) (plus z0 y1) 
-(sym_equal nat (plus z0 y1) (plus z0 y2) (eq_add_S (plus z0 y1) (plus z0 y2) 
+z0) (le_O_n z0) (f_equal nat nat (plus z0) (plus z0 y2) (plus z0 y1) (sym_eq 
+nat (plus z0 y1) (plus z0 y2) (eq_add_S (plus z0 y1) (plus z0 y2) 
 H1)))))))))))) (\lambda (x3: nat).(\lambda (_: ((\forall (y1: nat).(\forall 
 (y2: nat).((le O (S z0)) \to ((le x3 (S z0)) \to ((eq nat (S (plus z0 y1)) 
 (plus (match x3 with [O \Rightarrow (S z0) | (S l) \Rightarrow (minus z0 l)]) 

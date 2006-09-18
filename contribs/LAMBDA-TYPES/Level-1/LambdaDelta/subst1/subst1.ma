@@ -176,11 +176,11 @@ y)).(subst1_ind i u t0 (\lambda (t: T).((eq T t (lift (S O) i t1)) \to
 (\lambda (H1: (eq T t0 (lift (S O) i t1))).(\lambda (t2: T).(\lambda (H2: 
 (subst1 i u t0 (lift (S O) i t2))).(let H3 \def (eq_ind T t0 (\lambda (t: 
 T).(subst1 i u t (lift (S O) i t2))) H2 (lift (S O) i t1) H1) in (let H4 \def 
-(sym_equal T (lift (S O) i t2) (lift (S O) i t1) (subst1_gen_lift_eq t1 u 
-(lift (S O) i t2) (S O) i i (le_n i) (eq_ind_r nat (plus (S O) i) (\lambda 
-(n: nat).(lt i n)) (le_n (plus (S O) i)) (plus i (S O)) (plus_comm i (S O))) 
-H3)) in (lift_inj t1 t2 (S O) i H4)))))) (\lambda (t2: T).(\lambda (H1: 
-(subst0 i u t0 t2)).(\lambda (H2: (eq T t2 (lift (S O) i t1))).(\lambda (t3: 
+(sym_eq T (lift (S O) i t2) (lift (S O) i t1) (subst1_gen_lift_eq t1 u (lift 
+(S O) i t2) (S O) i i (le_n i) (eq_ind_r nat (plus (S O) i) (\lambda (n: 
+nat).(lt i n)) (le_n (plus (S O) i)) (plus i (S O)) (plus_comm i (S O))) H3)) 
+in (lift_inj t1 t2 (S O) i H4)))))) (\lambda (t2: T).(\lambda (H1: (subst0 i 
+u t0 t2)).(\lambda (H2: (eq T t2 (lift (S O) i t1))).(\lambda (t3: 
 T).(\lambda (H3: (subst1 i u t0 (lift (S O) i t3))).(let H4 \def (eq_ind T t2 
 (\lambda (t: T).(subst0 i u t0 t)) H1 (lift (S O) i t1) H2) in (insert_eq T 
 (lift (S O) i t3) (\lambda (t: T).(subst1 i u t0 t)) (eq T t1 t3) (\lambda 

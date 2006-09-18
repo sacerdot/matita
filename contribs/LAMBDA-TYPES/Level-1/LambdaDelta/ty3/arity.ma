@@ -161,12 +161,12 @@ A).(\lambda (a2: A).(arity g (CHead c0 (Bind Abst) u) t a2))) (ex2 A (\lambda
 (THead (Flat Appl) w (THead (Bind Abst) u t)) (asucc g a1)))) (\lambda (x1: 
 A).(\lambda (x2: A).(\lambda (H11: (eq A (asucc g x0) (AHead x1 
 x2))).(\lambda (H12: (arity g c0 u (asucc g x1))).(\lambda (H13: (arity g 
-(CHead c0 (Bind Abst) u) t x2)).(let H14 \def (sym_equal A (asucc g x0) 
-(AHead x1 x2) H11) in (let H15 \def (asucc_gen_head g x1 x2 x0 H14) in 
-(ex2_ind A (\lambda (a0: A).(eq A x0 (AHead x1 a0))) (\lambda (a0: A).(eq A 
-x2 (asucc g a0))) (ex2 A (\lambda (a1: A).(arity g c0 (THead (Flat Appl) w v) 
-a1)) (\lambda (a1: A).(arity g c0 (THead (Flat Appl) w (THead (Bind Abst) u 
-t)) (asucc g a1)))) (\lambda (x3: A).(\lambda (H16: (eq A x0 (AHead x1 
+(CHead c0 (Bind Abst) u) t x2)).(let H14 \def (sym_eq A (asucc g x0) (AHead 
+x1 x2) H11) in (let H15 \def (asucc_gen_head g x1 x2 x0 H14) in (ex2_ind A 
+(\lambda (a0: A).(eq A x0 (AHead x1 a0))) (\lambda (a0: A).(eq A x2 (asucc g 
+a0))) (ex2 A (\lambda (a1: A).(arity g c0 (THead (Flat Appl) w v) a1)) 
+(\lambda (a1: A).(arity g c0 (THead (Flat Appl) w (THead (Bind Abst) u t)) 
+(asucc g a1)))) (\lambda (x3: A).(\lambda (H16: (eq A x0 (AHead x1 
 x3))).(\lambda (H17: (eq A x2 (asucc g x3))).(let H18 \def (eq_ind A x2 
 (\lambda (a: A).(arity g (CHead c0 (Bind Abst) u) t a)) H13 (asucc g x3) H17) 
 in (let H19 \def (eq_ind A x0 (\lambda (a: A).(arity g c0 v a)) H8 (AHead x1 

@@ -152,8 +152,6 @@ theorem plus_le_reg_l: \forall p,n,m. p + n <= p + m \to n <= m.
  intros. apply plus_le_reg_l; auto.
 qed.
 
-definition sym_equal \def sym_eq.
-
 default "equality"
  cic:/Coq/Init/Logic/eq.ind
  cic:/matita/LAMBDA-TYPES/Level-1/Base/ext/preamble/sym_eq.con

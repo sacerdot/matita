@@ -65,24 +65,24 @@ T).(\lambda (e: C).(\lambda (u: T).(\lambda (h: nat).(nat_ind (\lambda (n:
 nat).((drop n O (CHead c0 k t) (CHead e (Bind b) u)) \to (drop (S n) O (CHead 
 c0 k t) e))) (\lambda (H0: (drop O O (CHead c0 k t) (CHead e (Bind b) 
 u))).(let H1 \def (f_equal C C (\lambda (e0: C).(match e0 in C return 
-(\lambda (_: C).C) with [(CSort _) \Rightarrow c0 | (CHead c _ _) \Rightarrow 
-c])) (CHead c0 k t) (CHead e (Bind b) u) (drop_gen_refl (CHead c0 k t) (CHead 
-e (Bind b) u) H0)) in ((let H2 \def (f_equal C K (\lambda (e0: C).(match e0 
-in C return (\lambda (_: C).K) with [(CSort _) \Rightarrow k | (CHead _ k _) 
-\Rightarrow k])) (CHead c0 k t) (CHead e (Bind b) u) (drop_gen_refl (CHead c0 
-k t) (CHead e (Bind b) u) H0)) in ((let H3 \def (f_equal C T (\lambda (e0: 
-C).(match e0 in C return (\lambda (_: C).T) with [(CSort _) \Rightarrow t | 
-(CHead _ _ t) \Rightarrow t])) (CHead c0 k t) (CHead e (Bind b) u) 
-(drop_gen_refl (CHead c0 k t) (CHead e (Bind b) u) H0)) in (\lambda (H4: (eq 
-K k (Bind b))).(\lambda (H5: (eq C c0 e)).(eq_ind C c0 (\lambda (c1: C).(drop 
-(S O) O (CHead c0 k t) c1)) (eq_ind_r K (Bind b) (\lambda (k0: K).(drop (S O) 
-O (CHead c0 k0 t) c0)) (drop_drop (Bind b) O c0 c0 (drop_refl c0) t) k H4) e 
-H5)))) H2)) H1))) (\lambda (n: nat).(\lambda (_: (((drop n O (CHead c0 k t) 
-(CHead e (Bind b) u)) \to (drop (S n) O (CHead c0 k t) e)))).(\lambda (H1: 
-(drop (S n) O (CHead c0 k t) (CHead e (Bind b) u))).(drop_drop k (S n) c0 e 
-(eq_ind_r nat (S (r k n)) (\lambda (n0: nat).(drop n0 O c0 e)) (H e u (r k n) 
-(drop_gen_drop k c0 (CHead e (Bind b) u) t n H1)) (r k (S n)) (r_S k n)) 
-t)))) h)))))))) c)).
+(\lambda (_: C).C) with [(CSort _) \Rightarrow c0 | (CHead c1 _ _) 
+\Rightarrow c1])) (CHead c0 k t) (CHead e (Bind b) u) (drop_gen_refl (CHead 
+c0 k t) (CHead e (Bind b) u) H0)) in ((let H2 \def (f_equal C K (\lambda (e0: 
+C).(match e0 in C return (\lambda (_: C).K) with [(CSort _) \Rightarrow k | 
+(CHead _ k0 _) \Rightarrow k0])) (CHead c0 k t) (CHead e (Bind b) u) 
+(drop_gen_refl (CHead c0 k t) (CHead e (Bind b) u) H0)) in ((let H3 \def 
+(f_equal C T (\lambda (e0: C).(match e0 in C return (\lambda (_: C).T) with 
+[(CSort _) \Rightarrow t | (CHead _ _ t0) \Rightarrow t0])) (CHead c0 k t) 
+(CHead e (Bind b) u) (drop_gen_refl (CHead c0 k t) (CHead e (Bind b) u) H0)) 
+in (\lambda (H4: (eq K k (Bind b))).(\lambda (H5: (eq C c0 e)).(eq_ind C c0 
+(\lambda (c1: C).(drop (S O) O (CHead c0 k t) c1)) (eq_ind_r K (Bind b) 
+(\lambda (k0: K).(drop (S O) O (CHead c0 k0 t) c0)) (drop_drop (Bind b) O c0 
+c0 (drop_refl c0) t) k H4) e H5)))) H2)) H1))) (\lambda (n: nat).(\lambda (_: 
+(((drop n O (CHead c0 k t) (CHead e (Bind b) u)) \to (drop (S n) O (CHead c0 
+k t) e)))).(\lambda (H1: (drop (S n) O (CHead c0 k t) (CHead e (Bind b) 
+u))).(drop_drop k (S n) c0 e (eq_ind_r nat (S (r k n)) (\lambda (n0: 
+nat).(drop n0 O c0 e)) (H e u (r k n) (drop_gen_drop k c0 (CHead e (Bind b) 
+u) t n H1)) (r k (S n)) (r_S k n)) t)))) h)))))))) c)).
 
 theorem drop_ctail:
  \forall (c1: C).(\forall (c2: C).(\forall (d: nat).(\forall (h: nat).((drop 
@@ -126,17 +126,18 @@ c3)).(\lambda (k0: K).(\lambda (u: T).(ex3_2_ind C T (\lambda (e: C).(\lambda
 (drop h (S n) (CTail k0 u (CHead c2 k t)) (CTail k0 u c3)) (\lambda (x0: 
 C).(\lambda (x1: T).(\lambda (H1: (eq C c3 (CHead x0 k x1))).(\lambda (H2: 
 (eq T t (lift h (r k n) x1))).(\lambda (H3: (drop h (r k n) c2 x0)).(let H4 
-\def (eq_ind C c3 (\lambda (c: C).(\forall (h: nat).((drop h n (CHead c2 k t) 
-c) \to (\forall (k0: K).(\forall (u: T).(drop h n (CTail k0 u (CHead c2 k t)) 
-(CTail k0 u c))))))) H (CHead x0 k x1) H1) in (eq_ind_r C (CHead x0 k x1) 
-(\lambda (c: C).(drop h (S n) (CTail k0 u (CHead c2 k t)) (CTail k0 u c))) 
-(let H5 \def (eq_ind T t (\lambda (t: T).(\forall (h: nat).((drop h n (CHead 
-c2 k t) (CHead x0 k x1)) \to (\forall (k0: K).(\forall (u: T).(drop h n 
-(CTail k0 u (CHead c2 k t)) (CTail k0 u (CHead x0 k x1)))))))) H4 (lift h (r 
-k n) x1) H2) in (eq_ind_r T (lift h (r k n) x1) (\lambda (t0: T).(drop h (S 
-n) (CTail k0 u (CHead c2 k t0)) (CTail k0 u (CHead x0 k x1)))) (drop_skip k h 
-n (CTail k0 u c2) (CTail k0 u x0) (IHc x0 (r k n) h H3 k0 u) x1) t H2)) c3 
-H1))))))) (drop_gen_skip_l c2 c3 t h n k H0)))))))) d))))))) c1).
+\def (eq_ind C c3 (\lambda (c: C).(\forall (h0: nat).((drop h0 n (CHead c2 k 
+t) c) \to (\forall (k1: K).(\forall (u0: T).(drop h0 n (CTail k1 u0 (CHead c2 
+k t)) (CTail k1 u0 c))))))) H (CHead x0 k x1) H1) in (eq_ind_r C (CHead x0 k 
+x1) (\lambda (c: C).(drop h (S n) (CTail k0 u (CHead c2 k t)) (CTail k0 u 
+c))) (let H5 \def (eq_ind T t (\lambda (t0: T).(\forall (h0: nat).((drop h0 n 
+(CHead c2 k t0) (CHead x0 k x1)) \to (\forall (k1: K).(\forall (u0: T).(drop 
+h0 n (CTail k1 u0 (CHead c2 k t0)) (CTail k1 u0 (CHead x0 k x1)))))))) H4 
+(lift h (r k n) x1) H2) in (eq_ind_r T (lift h (r k n) x1) (\lambda (t0: 
+T).(drop h (S n) (CTail k0 u (CHead c2 k t0)) (CTail k0 u (CHead x0 k x1)))) 
+(drop_skip k h n (CTail k0 u c2) (CTail k0 u x0) (IHc x0 (r k n) h H3 k0 u) 
+x1) t H2)) c3 H1))))))) (drop_gen_skip_l c2 c3 t h n k H0)))))))) d))))))) 
+c1).
 
 theorem drop_mono:
  \forall (c: C).(\forall (x1: C).(\forall (d: nat).(\forall (h: nat).((drop h 
@@ -152,8 +153,8 @@ n))).(\lambda (H2: (eq nat h O)).(\lambda (H3: (eq nat d O)).(and3_ind (eq C
 x1 (CSort n)) (eq nat h O) (eq nat d O) (eq C x1 x2) (\lambda (H4: (eq C x1 
 (CSort n))).(\lambda (H5: (eq nat h O)).(\lambda (H6: (eq nat d O)).(eq_ind_r 
 C (CSort n) (\lambda (c0: C).(eq C x1 c0)) (let H7 \def (eq_ind nat h 
-(\lambda (n: nat).(eq nat n O)) H2 O H5) in (let H8 \def (eq_ind nat d 
-(\lambda (n: nat).(eq nat n O)) H3 O H6) in (eq_ind_r C (CSort n) (\lambda 
+(\lambda (n0: nat).(eq nat n0 O)) H2 O H5) in (let H8 \def (eq_ind nat d 
+(\lambda (n0: nat).(eq nat n0 O)) H3 O H6) in (eq_ind_r C (CSort n) (\lambda 
 (c0: C).(eq C c0 (CSort n))) (refl_equal C (CSort n)) x1 H4))) x2 H1)))) 
 (drop_gen_sort n h d x1 H))))) (drop_gen_sort n h d x2 H0))))))))) (\lambda 
 (c0: C).(\lambda (H: ((\forall (x1: C).(\forall (d: nat).(\forall (h: 
@@ -187,23 +188,24 @@ C).(\lambda (_: T).(drop h (r k n) c0 e))) (eq C x1 x2) (\lambda (x4:
 C).(\lambda (x5: T).(\lambda (H6: (eq C x1 (CHead x4 k x5))).(\lambda (H7: 
 (eq T t (lift h (r k n) x5))).(\lambda (H8: (drop h (r k n) c0 x4)).(eq_ind_r 
 C (CHead x0 k x3) (\lambda (c1: C).(eq C x1 c1)) (let H9 \def (eq_ind C x1 
-(\lambda (c: C).(\forall (h: nat).((drop h n (CHead c0 k t) c) \to (\forall 
-(x2: C).((drop h n (CHead c0 k t) x2) \to (eq C c x2)))))) H0 (CHead x4 k x5) 
-H6) in (eq_ind_r C (CHead x4 k x5) (\lambda (c1: C).(eq C c1 (CHead x0 k 
-x3))) (let H10 \def (eq_ind T t (\lambda (t: T).(\forall (h: nat).((drop h n 
-(CHead c0 k t) (CHead x4 k x5)) \to (\forall (x2: C).((drop h n (CHead c0 k 
-t) x2) \to (eq C (CHead x4 k x5) x2)))))) H9 (lift h (r k n) x5) H7) in (let 
-H11 \def (eq_ind T t (\lambda (t: T).(eq T t (lift h (r k n) x3))) H4 (lift h 
-(r k n) x5) H7) in (let H12 \def (eq_ind T x5 (\lambda (t: T).(\forall (h0: 
-nat).((drop h0 n (CHead c0 k (lift h (r k n) t)) (CHead x4 k t)) \to (\forall 
-(x2: C).((drop h0 n (CHead c0 k (lift h (r k n) t)) x2) \to (eq C (CHead x4 k 
-t) x2)))))) H10 x3 (lift_inj x5 x3 h (r k n) H11)) in (eq_ind_r T x3 (\lambda 
-(t0: T).(eq C (CHead x4 k t0) (CHead x0 k x3))) (sym_equal C (CHead x0 k x3) 
-(CHead x4 k x3) (sym_equal C (CHead x4 k x3) (CHead x0 k x3) (sym_equal C 
-(CHead x0 k x3) (CHead x4 k x3) (f_equal3 C K T C CHead x0 x4 k k x3 x3 (H x0 
-(r k n) h H5 x4 H8) (refl_equal K k) (refl_equal T x3))))) x5 (lift_inj x5 x3 
-h (r k n) H11))))) x1 H6)) x2 H3)))))) (drop_gen_skip_l c0 x1 t h n k 
-H1))))))) (drop_gen_skip_l c0 x2 t h n k H2)))))))) d))))))) c).
+(\lambda (c1: C).(\forall (h0: nat).((drop h0 n (CHead c0 k t) c1) \to 
+(\forall (x6: C).((drop h0 n (CHead c0 k t) x6) \to (eq C c1 x6)))))) H0 
+(CHead x4 k x5) H6) in (eq_ind_r C (CHead x4 k x5) (\lambda (c1: C).(eq C c1 
+(CHead x0 k x3))) (let H10 \def (eq_ind T t (\lambda (t0: T).(\forall (h0: 
+nat).((drop h0 n (CHead c0 k t0) (CHead x4 k x5)) \to (\forall (x6: C).((drop 
+h0 n (CHead c0 k t0) x6) \to (eq C (CHead x4 k x5) x6)))))) H9 (lift h (r k 
+n) x5) H7) in (let H11 \def (eq_ind T t (\lambda (t0: T).(eq T t0 (lift h (r 
+k n) x3))) H4 (lift h (r k n) x5) H7) in (let H12 \def (eq_ind T x5 (\lambda 
+(t0: T).(\forall (h0: nat).((drop h0 n (CHead c0 k (lift h (r k n) t0)) 
+(CHead x4 k t0)) \to (\forall (x6: C).((drop h0 n (CHead c0 k (lift h (r k n) 
+t0)) x6) \to (eq C (CHead x4 k t0) x6)))))) H10 x3 (lift_inj x5 x3 h (r k n) 
+H11)) in (eq_ind_r T x3 (\lambda (t0: T).(eq C (CHead x4 k t0) (CHead x0 k 
+x3))) (sym_eq C (CHead x0 k x3) (CHead x4 k x3) (sym_eq C (CHead x4 k x3) 
+(CHead x0 k x3) (sym_eq C (CHead x0 k x3) (CHead x4 k x3) (f_equal3 C K T C 
+CHead x0 x4 k k x3 x3 (H x0 (r k n) h H5 x4 H8) (refl_equal K k) (refl_equal 
+T x3))))) x5 (lift_inj x5 x3 h (r k n) H11))))) x1 H6)) x2 H3)))))) 
+(drop_gen_skip_l c0 x1 t h n k H1))))))) (drop_gen_skip_l c0 x2 t h n k 
+H2)))))))) d))))))) c).
 
 theorem drop_conf_lt:
  \forall (k: K).(\forall (i: nat).(\forall (u: T).(\forall (c0: C).(\forall 
@@ -221,8 +223,8 @@ T).(\forall (c0: C).(\forall (c: C).((drop n O c (CHead c0 k u)) \to (\forall
 T).(\lambda (e0: C).(drop h (r k d) c0 e0))))))))))))) (\lambda (u: 
 T).(\lambda (c0: C).(\lambda (c: C).(\lambda (H: (drop O O c (CHead c0 k 
 u))).(\lambda (e: C).(\lambda (h: nat).(\lambda (d: nat).(\lambda (H0: (drop 
-h (S (plus O d)) c e)).(let H1 \def (eq_ind C c (\lambda (c: C).(drop h (S 
-(plus O d)) c e)) H0 (CHead c0 k u) (drop_gen_refl c (CHead c0 k u) H)) in 
+h (S (plus O d)) c e)).(let H1 \def (eq_ind C c (\lambda (c1: C).(drop h (S 
+(plus O d)) c1 e)) H0 (CHead c0 k u) (drop_gen_refl c (CHead c0 k u) H)) in 
 (ex3_2_ind C T (\lambda (e0: C).(\lambda (v: T).(eq C e (CHead e0 k v)))) 
 (\lambda (_: C).(\lambda (v: T).(eq T u (lift h (r k (plus O d)) v)))) 
 (\lambda (e0: C).(\lambda (_: T).(drop h (r k (plus O d)) c0 e0))) (ex3_2 T C 
@@ -348,115 +350,115 @@ nat).((drop h d c e) \to ((le (plus d h) n) \to (drop (minus n h) O e
 a)))))))))) (\lambda (a: C).(\lambda (c: C).(\lambda (H: (drop O O c 
 a)).(\lambda (e: C).(\lambda (h: nat).(\lambda (d: nat).(\lambda (H0: (drop h 
 d c e)).(\lambda (H1: (le (plus d h) O)).(let H2 \def (eq_ind C c (\lambda 
-(c: C).(drop h d c e)) H0 a (drop_gen_refl c a H)) in (let H3 \def (match H1 
-in le return (\lambda (n: nat).(\lambda (_: (le ? n)).((eq nat n O) \to (drop 
-(minus O h) O e a)))) with [le_n \Rightarrow (\lambda (H: (eq nat (plus d h) 
-O)).(let H3 \def (f_equal nat nat (\lambda (e0: nat).e0) (plus d h) O H) in 
-(eq_ind nat (plus d h) (\lambda (n: nat).(drop (minus n h) n e a)) (eq_ind_r 
-nat O (\lambda (n: nat).(drop (minus n h) n e a)) (and_ind (eq nat d O) (eq 
-nat h O) (drop O O e a) (\lambda (H0: (eq nat d O)).(\lambda (H1: (eq nat h 
-O)).(let H2 \def (eq_ind nat d (\lambda (n: nat).(drop h n a e)) H2 O H0) in 
-(let H4 \def (eq_ind nat h (\lambda (n: nat).(drop n O a e)) H2 O H1) in 
-(eq_ind C a (\lambda (c: C).(drop O O c a)) (drop_refl a) e (drop_gen_refl a 
-e H4)))))) (plus_O d h H3)) (plus d h) H3) O H3))) | (le_S m H) \Rightarrow 
-(\lambda (H2: (eq nat (S m) O)).((let H0 \def (eq_ind nat (S m) (\lambda (e0: 
-nat).(match e0 in nat return (\lambda (_: nat).Prop) with [O \Rightarrow 
-False | (S _) \Rightarrow True])) I O H2) in (False_ind ((le (plus d h) m) 
-\to (drop (minus O h) O e a)) H0)) H))]) in (H3 (refl_equal nat O)))))))))))) 
-(\lambda (i0: nat).(\lambda (H: ((\forall (a: C).(\forall (c: C).((drop i0 O 
-c a) \to (\forall (e: C).(\forall (h: nat).(\forall (d: nat).((drop h d c e) 
-\to ((le (plus d h) i0) \to (drop (minus i0 h) O e a))))))))))).(\lambda (a: 
-C).(\lambda (c: C).(C_ind (\lambda (c0: C).((drop (S i0) O c0 a) \to (\forall 
-(e: C).(\forall (h: nat).(\forall (d: nat).((drop h d c0 e) \to ((le (plus d 
-h) (S i0)) \to (drop (minus (S i0) h) O e a)))))))) (\lambda (n: 
-nat).(\lambda (H0: (drop (S i0) O (CSort n) a)).(\lambda (e: C).(\lambda (h: 
-nat).(\lambda (d: nat).(\lambda (H1: (drop h d (CSort n) e)).(\lambda (H2: 
-(le (plus d h) (S i0))).(and3_ind (eq C e (CSort n)) (eq nat h O) (eq nat d 
-O) (drop (minus (S i0) h) O e a) (\lambda (H3: (eq C e (CSort n))).(\lambda 
-(H4: (eq nat h O)).(\lambda (H5: (eq nat d O)).(and3_ind (eq C a (CSort n)) 
-(eq nat (S i0) O) (eq nat O O) (drop (minus (S i0) h) O e a) (\lambda (H6: 
-(eq C a (CSort n))).(\lambda (H7: (eq nat (S i0) O)).(\lambda (_: (eq nat O 
-O)).(let H9 \def (eq_ind nat d (\lambda (n: nat).(le (plus n h) (S i0))) H2 O 
-H5) in (let H10 \def (eq_ind nat h (\lambda (n: nat).(le (plus O n) (S i0))) 
-H9 O H4) in (eq_ind_r nat O (\lambda (n0: nat).(drop (minus (S i0) n0) O e 
-a)) (eq_ind_r C (CSort n) (\lambda (c0: C).(drop (minus (S i0) O) O c0 a)) 
-(eq_ind_r C (CSort n) (\lambda (c0: C).(drop (minus (S i0) O) O (CSort n) 
-c0)) (let H11 \def (eq_ind nat (S i0) (\lambda (ee: nat).(match ee in nat 
-return (\lambda (_: nat).Prop) with [O \Rightarrow False | (S _) \Rightarrow 
-True])) I O H7) in (False_ind (drop (minus (S i0) O) O (CSort n) (CSort n)) 
-H11)) a H6) e H3) h H4)))))) (drop_gen_sort n (S i0) O a H0))))) 
-(drop_gen_sort n h d e H1))))))))) (\lambda (c0: C).(\lambda (H0: (((drop (S 
-i0) O c0 a) \to (\forall (e: C).(\forall (h: nat).(\forall (d: nat).((drop h 
-d c0 e) \to ((le (plus d h) (S i0)) \to (drop (minus (S i0) h) O e 
-a))))))))).(\lambda (k: K).(K_ind (\lambda (k0: K).(\forall (t: T).((drop (S 
-i0) O (CHead c0 k0 t) a) \to (\forall (e: C).(\forall (h: nat).(\forall (d: 
-nat).((drop h d (CHead c0 k0 t) e) \to ((le (plus d h) (S i0)) \to (drop 
-(minus (S i0) h) O e a))))))))) (\lambda (b: B).(\lambda (t: T).(\lambda (H1: 
-(drop (S i0) O (CHead c0 (Bind b) t) a)).(\lambda (e: C).(\lambda (h: 
-nat).(\lambda (d: nat).(\lambda (H2: (drop h d (CHead c0 (Bind b) t) 
+(c0: C).(drop h d c0 e)) H0 a (drop_gen_refl c a H)) in (let H3 \def (match 
+H1 in le return (\lambda (n: nat).(\lambda (_: (le ? n)).((eq nat n O) \to 
+(drop (minus O h) O e a)))) with [le_n \Rightarrow (\lambda (H3: (eq nat 
+(plus d h) O)).(let H4 \def (f_equal nat nat (\lambda (e0: nat).e0) (plus d 
+h) O H3) in (eq_ind nat (plus d h) (\lambda (n: nat).(drop (minus n h) n e 
+a)) (eq_ind_r nat O (\lambda (n: nat).(drop (minus n h) n e a)) (and_ind (eq 
+nat d O) (eq nat h O) (drop O O e a) (\lambda (H5: (eq nat d O)).(\lambda 
+(H6: (eq nat h O)).(let H7 \def (eq_ind nat d (\lambda (n: nat).(drop h n a 
+e)) H2 O H5) in (let H8 \def (eq_ind nat h (\lambda (n: nat).(drop n O a e)) 
+H7 O H6) in (eq_ind C a (\lambda (c0: C).(drop O O c0 a)) (drop_refl a) e 
+(drop_gen_refl a e H8)))))) (plus_O d h H4)) (plus d h) H4) O H4))) | (le_S m 
+H3) \Rightarrow (\lambda (H4: (eq nat (S m) O)).((let H5 \def (eq_ind nat (S 
+m) (\lambda (e0: nat).(match e0 in nat return (\lambda (_: nat).Prop) with [O 
+\Rightarrow False | (S _) \Rightarrow True])) I O H4) in (False_ind ((le 
+(plus d h) m) \to (drop (minus O h) O e a)) H5)) H3))]) in (H3 (refl_equal 
+nat O)))))))))))) (\lambda (i0: nat).(\lambda (H: ((\forall (a: C).(\forall 
+(c: C).((drop i0 O c a) \to (\forall (e: C).(\forall (h: nat).(\forall (d: 
+nat).((drop h d c e) \to ((le (plus d h) i0) \to (drop (minus i0 h) O e 
+a))))))))))).(\lambda (a: C).(\lambda (c: C).(C_ind (\lambda (c0: C).((drop 
+(S i0) O c0 a) \to (\forall (e: C).(\forall (h: nat).(\forall (d: nat).((drop 
+h d c0 e) \to ((le (plus d h) (S i0)) \to (drop (minus (S i0) h) O e 
+a)))))))) (\lambda (n: nat).(\lambda (H0: (drop (S i0) O (CSort n) 
+a)).(\lambda (e: C).(\lambda (h: nat).(\lambda (d: nat).(\lambda (H1: (drop h 
+d (CSort n) e)).(\lambda (H2: (le (plus d h) (S i0))).(and3_ind (eq C e 
+(CSort n)) (eq nat h O) (eq nat d O) (drop (minus (S i0) h) O e a) (\lambda 
+(H3: (eq C e (CSort n))).(\lambda (H4: (eq nat h O)).(\lambda (H5: (eq nat d 
+O)).(and3_ind (eq C a (CSort n)) (eq nat (S i0) O) (eq nat O O) (drop (minus 
+(S i0) h) O e a) (\lambda (H6: (eq C a (CSort n))).(\lambda (H7: (eq nat (S 
+i0) O)).(\lambda (_: (eq nat O O)).(let H9 \def (eq_ind nat d (\lambda (n0: 
+nat).(le (plus n0 h) (S i0))) H2 O H5) in (let H10 \def (eq_ind nat h 
+(\lambda (n0: nat).(le (plus O n0) (S i0))) H9 O H4) in (eq_ind_r nat O 
+(\lambda (n0: nat).(drop (minus (S i0) n0) O e a)) (eq_ind_r C (CSort n) 
+(\lambda (c0: C).(drop (minus (S i0) O) O c0 a)) (eq_ind_r C (CSort n) 
+(\lambda (c0: C).(drop (minus (S i0) O) O (CSort n) c0)) (let H11 \def 
+(eq_ind nat (S i0) (\lambda (ee: nat).(match ee in nat return (\lambda (_: 
+nat).Prop) with [O \Rightarrow False | (S _) \Rightarrow True])) I O H7) in 
+(False_ind (drop (minus (S i0) O) O (CSort n) (CSort n)) H11)) a H6) e H3) h 
+H4)))))) (drop_gen_sort n (S i0) O a H0))))) (drop_gen_sort n h d e 
+H1))))))))) (\lambda (c0: C).(\lambda (H0: (((drop (S i0) O c0 a) \to 
+(\forall (e: C).(\forall (h: nat).(\forall (d: nat).((drop h d c0 e) \to ((le 
+(plus d h) (S i0)) \to (drop (minus (S i0) h) O e a))))))))).(\lambda (k: 
+K).(K_ind (\lambda (k0: K).(\forall (t: T).((drop (S i0) O (CHead c0 k0 t) a) 
+\to (\forall (e: C).(\forall (h: nat).(\forall (d: nat).((drop h d (CHead c0 
+k0 t) e) \to ((le (plus d h) (S i0)) \to (drop (minus (S i0) h) O e 
+a))))))))) (\lambda (b: B).(\lambda (t: T).(\lambda (H1: (drop (S i0) O 
+(CHead c0 (Bind b) t) a)).(\lambda (e: C).(\lambda (h: nat).(\lambda (d: 
+nat).(\lambda (H2: (drop h d (CHead c0 (Bind b) t) e)).(\lambda (H3: (le 
+(plus d h) (S i0))).(nat_ind (\lambda (n: nat).((drop h n (CHead c0 (Bind b) 
+t) e) \to ((le (plus n h) (S i0)) \to (drop (minus (S i0) h) O e a)))) 
+(\lambda (H4: (drop h O (CHead c0 (Bind b) t) e)).(\lambda (H5: (le (plus O 
+h) (S i0))).(nat_ind (\lambda (n: nat).((drop n O (CHead c0 (Bind b) t) e) 
+\to ((le (plus O n) (S i0)) \to (drop (minus (S i0) n) O e a)))) (\lambda 
+(H6: (drop O O (CHead c0 (Bind b) t) e)).(\lambda (_: (le (plus O O) (S 
+i0))).(eq_ind C (CHead c0 (Bind b) t) (\lambda (c1: C).(drop (minus (S i0) O) 
+O c1 a)) (drop_drop (Bind b) i0 c0 a (drop_gen_drop (Bind b) c0 a t i0 H1) t) 
+e (drop_gen_refl (CHead c0 (Bind b) t) e H6)))) (\lambda (h0: nat).(\lambda 
+(_: (((drop h0 O (CHead c0 (Bind b) t) e) \to ((le (plus O h0) (S i0)) \to 
+(drop (minus (S i0) h0) O e a))))).(\lambda (H6: (drop (S h0) O (CHead c0 
+(Bind b) t) e)).(\lambda (H7: (le (plus O (S h0)) (S i0))).(H a c0 
+(drop_gen_drop (Bind b) c0 a t i0 H1) e h0 O (drop_gen_drop (Bind b) c0 e t 
+h0 H6) (le_S_n (plus O h0) i0 H7)))))) h H4 H5))) (\lambda (d0: nat).(\lambda 
+(_: (((drop h d0 (CHead c0 (Bind b) t) e) \to ((le (plus d0 h) (S i0)) \to 
+(drop (minus (S i0) h) O e a))))).(\lambda (H4: (drop h (S d0) (CHead c0 
+(Bind b) t) e)).(\lambda (H5: (le (plus (S d0) h) (S i0))).(ex3_2_ind C T 
+(\lambda (e0: C).(\lambda (v: T).(eq C e (CHead e0 (Bind b) v)))) (\lambda 
+(_: C).(\lambda (v: T).(eq T t (lift h (r (Bind b) d0) v)))) (\lambda (e0: 
+C).(\lambda (_: T).(drop h (r (Bind b) d0) c0 e0))) (drop (minus (S i0) h) O 
+e a) (\lambda (x0: C).(\lambda (x1: T).(\lambda (H6: (eq C e (CHead x0 (Bind 
+b) x1))).(\lambda (_: (eq T t (lift h (r (Bind b) d0) x1))).(\lambda (H8: 
+(drop h (r (Bind b) d0) c0 x0)).(eq_ind_r C (CHead x0 (Bind b) x1) (\lambda 
+(c1: C).(drop (minus (S i0) h) O c1 a)) (eq_ind nat (S (minus i0 h)) (\lambda 
+(n: nat).(drop n O (CHead x0 (Bind b) x1) a)) (drop_drop (Bind b) (minus i0 
+h) x0 a (H a c0 (drop_gen_drop (Bind b) c0 a t i0 H1) x0 h d0 H8 (le_S_n 
+(plus d0 h) i0 H5)) x1) (minus (S i0) h) (minus_Sn_m i0 h (le_trans_plus_r d0 
+h i0 (le_S_n (plus d0 h) i0 H5)))) e H6)))))) (drop_gen_skip_l c0 e t h d0 
+(Bind b) H4)))))) d H2 H3))))))))) (\lambda (f: F).(\lambda (t: T).(\lambda 
+(H1: (drop (S i0) O (CHead c0 (Flat f) t) a)).(\lambda (e: C).(\lambda (h: 
+nat).(\lambda (d: nat).(\lambda (H2: (drop h d (CHead c0 (Flat f) t) 
 e)).(\lambda (H3: (le (plus d h) (S i0))).(nat_ind (\lambda (n: nat).((drop h 
-n (CHead c0 (Bind b) t) e) \to ((le (plus n h) (S i0)) \to (drop (minus (S 
-i0) h) O e a)))) (\lambda (H4: (drop h O (CHead c0 (Bind b) t) e)).(\lambda 
+n (CHead c0 (Flat f) t) e) \to ((le (plus n h) (S i0)) \to (drop (minus (S 
+i0) h) O e a)))) (\lambda (H4: (drop h O (CHead c0 (Flat f) t) e)).(\lambda 
 (H5: (le (plus O h) (S i0))).(nat_ind (\lambda (n: nat).((drop n O (CHead c0 
-(Bind b) t) e) \to ((le (plus O n) (S i0)) \to (drop (minus (S i0) n) O e 
-a)))) (\lambda (H6: (drop O O (CHead c0 (Bind b) t) e)).(\lambda (_: (le 
-(plus O O) (S i0))).(eq_ind C (CHead c0 (Bind b) t) (\lambda (c1: C).(drop 
-(minus (S i0) O) O c1 a)) (drop_drop (Bind b) i0 c0 a (drop_gen_drop (Bind b) 
-c0 a t i0 H1) t) e (drop_gen_refl (CHead c0 (Bind b) t) e H6)))) (\lambda 
-(h0: nat).(\lambda (_: (((drop h0 O (CHead c0 (Bind b) t) e) \to ((le (plus O 
+(Flat f) t) e) \to ((le (plus O n) (S i0)) \to (drop (minus (S i0) n) O e 
+a)))) (\lambda (H6: (drop O O (CHead c0 (Flat f) t) e)).(\lambda (_: (le 
+(plus O O) (S i0))).(eq_ind C (CHead c0 (Flat f) t) (\lambda (c1: C).(drop 
+(minus (S i0) O) O c1 a)) (drop_drop (Flat f) i0 c0 a (drop_gen_drop (Flat f) 
+c0 a t i0 H1) t) e (drop_gen_refl (CHead c0 (Flat f) t) e H6)))) (\lambda 
+(h0: nat).(\lambda (_: (((drop h0 O (CHead c0 (Flat f) t) e) \to ((le (plus O 
 h0) (S i0)) \to (drop (minus (S i0) h0) O e a))))).(\lambda (H6: (drop (S h0) 
-O (CHead c0 (Bind b) t) e)).(\lambda (H7: (le (plus O (S h0)) (S i0))).(H a 
-c0 (drop_gen_drop (Bind b) c0 a t i0 H1) e h0 O (drop_gen_drop (Bind b) c0 e 
-t h0 H6) (le_S_n (plus O h0) i0 H7)))))) h H4 H5))) (\lambda (d0: 
-nat).(\lambda (_: (((drop h d0 (CHead c0 (Bind b) t) e) \to ((le (plus d0 h) 
-(S i0)) \to (drop (minus (S i0) h) O e a))))).(\lambda (H4: (drop h (S d0) 
-(CHead c0 (Bind b) t) e)).(\lambda (H5: (le (plus (S d0) h) (S 
-i0))).(ex3_2_ind C T (\lambda (e0: C).(\lambda (v: T).(eq C e (CHead e0 (Bind 
-b) v)))) (\lambda (_: C).(\lambda (v: T).(eq T t (lift h (r (Bind b) d0) 
-v)))) (\lambda (e0: C).(\lambda (_: T).(drop h (r (Bind b) d0) c0 e0))) (drop 
-(minus (S i0) h) O e a) (\lambda (x0: C).(\lambda (x1: T).(\lambda (H6: (eq C 
-e (CHead x0 (Bind b) x1))).(\lambda (_: (eq T t (lift h (r (Bind b) d0) 
-x1))).(\lambda (H8: (drop h (r (Bind b) d0) c0 x0)).(eq_ind_r C (CHead x0 
-(Bind b) x1) (\lambda (c1: C).(drop (minus (S i0) h) O c1 a)) (eq_ind nat (S 
-(minus i0 h)) (\lambda (n: nat).(drop n O (CHead x0 (Bind b) x1) a)) 
-(drop_drop (Bind b) (minus i0 h) x0 a (H a c0 (drop_gen_drop (Bind b) c0 a t 
-i0 H1) x0 h d0 H8 (le_S_n (plus d0 h) i0 H5)) x1) (minus (S i0) h) 
-(minus_Sn_m i0 h (le_trans_plus_r d0 h i0 (le_S_n (plus d0 h) i0 H5)))) e 
-H6)))))) (drop_gen_skip_l c0 e t h d0 (Bind b) H4)))))) d H2 H3))))))))) 
-(\lambda (f: F).(\lambda (t: T).(\lambda (H1: (drop (S i0) O (CHead c0 (Flat 
-f) t) a)).(\lambda (e: C).(\lambda (h: nat).(\lambda (d: nat).(\lambda (H2: 
-(drop h d (CHead c0 (Flat f) t) e)).(\lambda (H3: (le (plus d h) (S 
-i0))).(nat_ind (\lambda (n: nat).((drop h n (CHead c0 (Flat f) t) e) \to ((le 
-(plus n h) (S i0)) \to (drop (minus (S i0) h) O e a)))) (\lambda (H4: (drop h 
-O (CHead c0 (Flat f) t) e)).(\lambda (H5: (le (plus O h) (S i0))).(nat_ind 
-(\lambda (n: nat).((drop n O (CHead c0 (Flat f) t) e) \to ((le (plus O n) (S 
-i0)) \to (drop (minus (S i0) n) O e a)))) (\lambda (H6: (drop O O (CHead c0 
-(Flat f) t) e)).(\lambda (_: (le (plus O O) (S i0))).(eq_ind C (CHead c0 
-(Flat f) t) (\lambda (c1: C).(drop (minus (S i0) O) O c1 a)) (drop_drop (Flat 
-f) i0 c0 a (drop_gen_drop (Flat f) c0 a t i0 H1) t) e (drop_gen_refl (CHead 
-c0 (Flat f) t) e H6)))) (\lambda (h0: nat).(\lambda (_: (((drop h0 O (CHead 
-c0 (Flat f) t) e) \to ((le (plus O h0) (S i0)) \to (drop (minus (S i0) h0) O 
-e a))))).(\lambda (H6: (drop (S h0) O (CHead c0 (Flat f) t) e)).(\lambda (H7: 
-(le (plus O (S h0)) (S i0))).(H0 (drop_gen_drop (Flat f) c0 a t i0 H1) e (S 
-h0) O (drop_gen_drop (Flat f) c0 e t h0 H6) H7))))) h H4 H5))) (\lambda (d0: 
-nat).(\lambda (_: (((drop h d0 (CHead c0 (Flat f) t) e) \to ((le (plus d0 h) 
-(S i0)) \to (drop (minus (S i0) h) O e a))))).(\lambda (H4: (drop h (S d0) 
-(CHead c0 (Flat f) t) e)).(\lambda (H5: (le (plus (S d0) h) (S 
-i0))).(ex3_2_ind C T (\lambda (e0: C).(\lambda (v: T).(eq C e (CHead e0 (Flat 
-f) v)))) (\lambda (_: C).(\lambda (v: T).(eq T t (lift h (r (Flat f) d0) 
-v)))) (\lambda (e0: C).(\lambda (_: T).(drop h (r (Flat f) d0) c0 e0))) (drop 
-(minus (S i0) h) O e a) (\lambda (x0: C).(\lambda (x1: T).(\lambda (H6: (eq C 
-e (CHead x0 (Flat f) x1))).(\lambda (_: (eq T t (lift h (r (Flat f) d0) 
-x1))).(\lambda (H8: (drop h (r (Flat f) d0) c0 x0)).(eq_ind_r C (CHead x0 
-(Flat f) x1) (\lambda (c1: C).(drop (minus (S i0) h) O c1 a)) (let H9 \def 
-(eq_ind_r nat (minus (S i0) h) (\lambda (n: nat).(drop n O x0 a)) (H0 
-(drop_gen_drop (Flat f) c0 a t i0 H1) x0 h (S d0) H8 H5) (S (minus i0 h)) 
-(minus_Sn_m i0 h (le_trans_plus_r d0 h i0 (le_S_n (plus d0 h) i0 H5)))) in 
-(eq_ind nat (S (minus i0 h)) (\lambda (n: nat).(drop n O (CHead x0 (Flat f) 
-x1) a)) (drop_drop (Flat f) (minus i0 h) x0 a H9 x1) (minus (S i0) h) 
-(minus_Sn_m i0 h (le_trans_plus_r d0 h i0 (le_S_n (plus d0 h) i0 H5))))) e 
-H6)))))) (drop_gen_skip_l c0 e t h d0 (Flat f) H4)))))) d H2 H3))))))))) 
-k)))) c))))) i).
+O (CHead c0 (Flat f) t) e)).(\lambda (H7: (le (plus O (S h0)) (S i0))).(H0 
+(drop_gen_drop (Flat f) c0 a t i0 H1) e (S h0) O (drop_gen_drop (Flat f) c0 e 
+t h0 H6) H7))))) h H4 H5))) (\lambda (d0: nat).(\lambda (_: (((drop h d0 
+(CHead c0 (Flat f) t) e) \to ((le (plus d0 h) (S i0)) \to (drop (minus (S i0) 
+h) O e a))))).(\lambda (H4: (drop h (S d0) (CHead c0 (Flat f) t) e)).(\lambda 
+(H5: (le (plus (S d0) h) (S i0))).(ex3_2_ind C T (\lambda (e0: C).(\lambda 
+(v: T).(eq C e (CHead e0 (Flat f) v)))) (\lambda (_: C).(\lambda (v: T).(eq T 
+t (lift h (r (Flat f) d0) v)))) (\lambda (e0: C).(\lambda (_: T).(drop h (r 
+(Flat f) d0) c0 e0))) (drop (minus (S i0) h) O e a) (\lambda (x0: C).(\lambda 
+(x1: T).(\lambda (H6: (eq C e (CHead x0 (Flat f) x1))).(\lambda (_: (eq T t 
+(lift h (r (Flat f) d0) x1))).(\lambda (H8: (drop h (r (Flat f) d0) c0 
+x0)).(eq_ind_r C (CHead x0 (Flat f) x1) (\lambda (c1: C).(drop (minus (S i0) 
+h) O c1 a)) (let H9 \def (eq_ind_r nat (minus (S i0) h) (\lambda (n: 
+nat).(drop n O x0 a)) (H0 (drop_gen_drop (Flat f) c0 a t i0 H1) x0 h (S d0) 
+H8 H5) (S (minus i0 h)) (minus_Sn_m i0 h (le_trans_plus_r d0 h i0 (le_S_n 
+(plus d0 h) i0 H5)))) in (eq_ind nat (S (minus i0 h)) (\lambda (n: nat).(drop 
+n O (CHead x0 (Flat f) x1) a)) (drop_drop (Flat f) (minus i0 h) x0 a H9 x1) 
+(minus (S i0) h) (minus_Sn_m i0 h (le_trans_plus_r d0 h i0 (le_S_n (plus d0 
+h) i0 H5))))) e H6)))))) (drop_gen_skip_l c0 e t h d0 (Flat f) H4)))))) d H2 
+H3))))))))) k)))) c))))) i).
 
 theorem drop_conf_rev:
  \forall (j: nat).(\forall (e1: C).(\forall (e2: C).((drop j O e1 e2) \to 
@@ -645,14 +647,14 @@ nat).(\lambda (H: (drop h d c1 c2)).(\lambda (e2: C).(\lambda (H0: (drop O O
 c2 e2)).(\lambda (H1: (le d O)).(eq_ind C c2 (\lambda (c: C).(drop (plus O h) 
 O c1 c)) (let H2 \def (match H1 in le return (\lambda (n: nat).(\lambda (_: 
 (le ? n)).((eq nat n O) \to (drop (plus O h) O c1 c2)))) with [le_n 
-\Rightarrow (\lambda (H0: (eq nat d O)).(eq_ind nat O (\lambda (_: nat).(drop 
-(plus O h) O c1 c2)) (let H2 \def (eq_ind nat d (\lambda (n: nat).(le n O)) 
-H1 O H0) in (let H3 \def (eq_ind nat d (\lambda (n: nat).(drop h n c1 c2)) H 
-O H0) in H3)) d (sym_eq nat d O H0))) | (le_S m H0) \Rightarrow (\lambda (H2: 
-(eq nat (S m) O)).((let H1 \def (eq_ind nat (S m) (\lambda (e: nat).(match e 
+\Rightarrow (\lambda (H2: (eq nat d O)).(eq_ind nat O (\lambda (_: nat).(drop 
+(plus O h) O c1 c2)) (let H3 \def (eq_ind nat d (\lambda (n: nat).(le n O)) 
+H1 O H2) in (let H4 \def (eq_ind nat d (\lambda (n: nat).(drop h n c1 c2)) H 
+O H2) in H4)) d (sym_eq nat d O H2))) | (le_S m H2) \Rightarrow (\lambda (H3: 
+(eq nat (S m) O)).((let H4 \def (eq_ind nat (S m) (\lambda (e: nat).(match e 
 in nat return (\lambda (_: nat).Prop) with [O \Rightarrow False | (S _) 
-\Rightarrow True])) I O H2) in (False_ind ((le d m) \to (drop (plus O h) O c1 
-c2)) H1)) H0))]) in (H2 (refl_equal nat O))) e2 (drop_gen_refl c2 e2 
+\Rightarrow True])) I O H3) in (False_ind ((le d m) \to (drop (plus O h) O c1 
+c2)) H4)) H2))]) in (H2 (refl_equal nat O))) e2 (drop_gen_refl c2 e2 
 H0)))))))))) (\lambda (i0: nat).(\lambda (IHi: ((\forall (c1: C).(\forall 
 (c2: C).(\forall (d: nat).(\forall (h: nat).((drop h d c1 c2) \to (\forall 
 (e2: C).((drop i0 O c2 e2) \to ((le d i0) \to (drop (plus i0 h) O c1 
@@ -665,16 +667,16 @@ nat).(\lambda (H: (drop h d (CSort n) c2)).(\lambda (e2: C).(\lambda (H0:
 n)) (eq nat h O) (eq nat d O) (drop (S (plus i0 h)) O (CSort n) e2) (\lambda 
 (H2: (eq C c2 (CSort n))).(\lambda (H3: (eq nat h O)).(\lambda (H4: (eq nat d 
 O)).(eq_ind_r nat O (\lambda (n0: nat).(drop (S (plus i0 n0)) O (CSort n) 
-e2)) (let H5 \def (eq_ind nat d (\lambda (n: nat).(le n (S i0))) H1 O H4) in 
-(let H6 \def (eq_ind C c2 (\lambda (c: C).(drop (S i0) O c e2)) H0 (CSort n) 
-H2) in (and3_ind (eq C e2 (CSort n)) (eq nat (S i0) O) (eq nat O O) (drop (S 
-(plus i0 O)) O (CSort n) e2) (\lambda (H7: (eq C e2 (CSort n))).(\lambda (H8: 
-(eq nat (S i0) O)).(\lambda (_: (eq nat O O)).(eq_ind_r C (CSort n) (\lambda 
-(c: C).(drop (S (plus i0 O)) O (CSort n) c)) (let H10 \def (eq_ind nat (S i0) 
-(\lambda (ee: nat).(match ee in nat return (\lambda (_: nat).Prop) with [O 
-\Rightarrow False | (S _) \Rightarrow True])) I O H8) in (False_ind (drop (S 
-(plus i0 O)) O (CSort n) (CSort n)) H10)) e2 H7)))) (drop_gen_sort n (S i0) O 
-e2 H6)))) h H3)))) (drop_gen_sort n h d c2 H)))))))))) (\lambda (c2: 
+e2)) (let H5 \def (eq_ind nat d (\lambda (n0: nat).(le n0 (S i0))) H1 O H4) 
+in (let H6 \def (eq_ind C c2 (\lambda (c: C).(drop (S i0) O c e2)) H0 (CSort 
+n) H2) in (and3_ind (eq C e2 (CSort n)) (eq nat (S i0) O) (eq nat O O) (drop 
+(S (plus i0 O)) O (CSort n) e2) (\lambda (H7: (eq C e2 (CSort n))).(\lambda 
+(H8: (eq nat (S i0) O)).(\lambda (_: (eq nat O O)).(eq_ind_r C (CSort n) 
+(\lambda (c: C).(drop (S (plus i0 O)) O (CSort n) c)) (let H10 \def (eq_ind 
+nat (S i0) (\lambda (ee: nat).(match ee in nat return (\lambda (_: nat).Prop) 
+with [O \Rightarrow False | (S _) \Rightarrow True])) I O H8) in (False_ind 
+(drop (S (plus i0 O)) O (CSort n) (CSort n)) H10)) e2 H7)))) (drop_gen_sort n 
+(S i0) O e2 H6)))) h H3)))) (drop_gen_sort n h d c2 H)))))))))) (\lambda (c2: 
 C).(\lambda (IHc: ((\forall (c3: C).(\forall (d: nat).(\forall (h: 
 nat).((drop h d c2 c3) \to (\forall (e2: C).((drop (S i0) O c3 e2) \to ((le d 
 (S i0)) \to (drop (S (plus i0 h)) O c2 e2)))))))))).(\lambda (k: K).(\lambda 
@@ -710,21 +712,21 @@ v)))) (\lambda (_: C).(\lambda (v: T).(eq T t (lift h (r k d0) v)))) (\lambda
 (CHead c2 k t) e2) (\lambda (x0: C).(\lambda (x1: T).(\lambda (H2: (eq C c3 
 (CHead x0 k x1))).(\lambda (H3: (eq T t (lift h (r k d0) x1))).(\lambda (H4: 
 (drop h (r k d0) c2 x0)).(let H5 \def (eq_ind C c3 (\lambda (c: C).(\forall 
-(h: nat).((drop h d0 (CHead c2 k t) c) \to (\forall (e2: C).((drop (S i0) O c 
-e2) \to ((le d0 (S i0)) \to (drop (S (plus i0 h)) O (CHead c2 k t) e2))))))) 
-IHd (CHead x0 k x1) H2) in (let H6 \def (eq_ind C c3 (\lambda (c: C).(drop (S 
-i0) O c e2)) H0 (CHead x0 k x1) H2) in (let H7 \def (eq_ind T t (\lambda (t: 
-T).(\forall (h: nat).((drop h d0 (CHead c2 k t) (CHead x0 k x1)) \to (\forall 
-(e2: C).((drop (S i0) O (CHead x0 k x1) e2) \to ((le d0 (S i0)) \to (drop (S 
-(plus i0 h)) O (CHead c2 k t) e2))))))) H5 (lift h (r k d0) x1) H3) in 
-(eq_ind_r T (lift h (r k d0) x1) (\lambda (t0: T).(drop (S (plus i0 h)) O 
-(CHead c2 k t0) e2)) (drop_drop k (plus i0 h) c2 e2 (K_ind (\lambda (k0: 
-K).((drop h (r k0 d0) c2 x0) \to ((drop (r k0 i0) O x0 e2) \to (drop (r k0 
-(plus i0 h)) O c2 e2)))) (\lambda (b: B).(\lambda (H8: (drop h (r (Bind b) 
-d0) c2 x0)).(\lambda (H9: (drop (r (Bind b) i0) O x0 e2)).(IHi c2 x0 (r (Bind 
-b) d0) h H8 e2 H9 (le_S_n (r (Bind b) d0) i0 H1))))) (\lambda (f: F).(\lambda 
-(H8: (drop h (r (Flat f) d0) c2 x0)).(\lambda (H9: (drop (r (Flat f) i0) O x0 
-e2)).(IHc x0 (r (Flat f) d0) h H8 e2 H9 H1)))) k H4 (drop_gen_drop k x0 e2 x1 
-i0 H6)) (lift h (r k d0) x1)) t H3))))))))) (drop_gen_skip_l c2 c3 t h d0 k 
-H))))))))) d))))))) c1)))) i).
+(h0: nat).((drop h0 d0 (CHead c2 k t) c) \to (\forall (e3: C).((drop (S i0) O 
+c e3) \to ((le d0 (S i0)) \to (drop (S (plus i0 h0)) O (CHead c2 k t) 
+e3))))))) IHd (CHead x0 k x1) H2) in (let H6 \def (eq_ind C c3 (\lambda (c: 
+C).(drop (S i0) O c e2)) H0 (CHead x0 k x1) H2) in (let H7 \def (eq_ind T t 
+(\lambda (t0: T).(\forall (h0: nat).((drop h0 d0 (CHead c2 k t0) (CHead x0 k 
+x1)) \to (\forall (e3: C).((drop (S i0) O (CHead x0 k x1) e3) \to ((le d0 (S 
+i0)) \to (drop (S (plus i0 h0)) O (CHead c2 k t0) e3))))))) H5 (lift h (r k 
+d0) x1) H3) in (eq_ind_r T (lift h (r k d0) x1) (\lambda (t0: T).(drop (S 
+(plus i0 h)) O (CHead c2 k t0) e2)) (drop_drop k (plus i0 h) c2 e2 (K_ind 
+(\lambda (k0: K).((drop h (r k0 d0) c2 x0) \to ((drop (r k0 i0) O x0 e2) \to 
+(drop (r k0 (plus i0 h)) O c2 e2)))) (\lambda (b: B).(\lambda (H8: (drop h (r 
+(Bind b) d0) c2 x0)).(\lambda (H9: (drop (r (Bind b) i0) O x0 e2)).(IHi c2 x0 
+(r (Bind b) d0) h H8 e2 H9 (le_S_n (r (Bind b) d0) i0 H1))))) (\lambda (f: 
+F).(\lambda (H8: (drop h (r (Flat f) d0) c2 x0)).(\lambda (H9: (drop (r (Flat 
+f) i0) O x0 e2)).(IHc x0 (r (Flat f) d0) h H8 e2 H9 H1)))) k H4 
+(drop_gen_drop k x0 e2 x1 i0 H6)) (lift h (r k d0) x1)) t H3))))))))) 
+(drop_gen_skip_l c2 c3 t h d0 k H))))))))) d))))))) c1)))) i).
 

@@ -38,8 +38,8 @@ T).(subst0 i u1 (TLRef i) t)) (\lambda (t: T).(subst0 (plus i0 (S i)) u t
 u i0 (S i) H0 O (le_O_n i0))) (S (plus i0 i)) (sym_eq nat (S (plus i0 i)) 
 (plus i0 (S i)) (plus_n_Sm i0 i))))))))) (\lambda (v: T).(\lambda (u0: 
 T).(\lambda (u1: T).(\lambda (i: nat).(\lambda (_: (subst0 i v u1 
-u0)).(\lambda (H1: ((\forall (u2: T).(\forall (u: T).(\forall (i0: 
-nat).((subst0 i0 u u2 v) \to (ex2 T (\lambda (t: T).(subst0 i u2 u1 t)) 
+u0)).(\lambda (H1: ((\forall (u3: T).(\forall (u: T).(\forall (i0: 
+nat).((subst0 i0 u u3 v) \to (ex2 T (\lambda (t: T).(subst0 i u3 u1 t)) 
 (\lambda (t: T).(subst0 (S (plus i0 i)) u t u0))))))))).(\lambda (t: 
 T).(\lambda (k: K).(\lambda (u3: T).(\lambda (u: T).(\lambda (i0: 
 nat).(\lambda (H2: (subst0 i0 u u3 v)).(ex2_ind T (\lambda (t0: T).(subst0 i 
@@ -68,13 +68,13 @@ u0 x t0)) H5 (s k (S (plus i0 i))) (s_S k (plus i0 i))) in (ex_intro2 T
 (plus i0 i)) u0 t (THead k u t0))) (THead k u x) (subst0_snd k u1 x t3 i H3 
 u) (subst0_snd k u0 t0 x (S (plus i0 i)) H6 u))))))) (H1 u1 u0 i0 
 H2)))))))))))))) (\lambda (v: T).(\lambda (u1: T).(\lambda (u0: T).(\lambda 
-(i: nat).(\lambda (_: (subst0 i v u1 u0)).(\lambda (H1: ((\forall (u2: 
-T).(\forall (u: T).(\forall (i0: nat).((subst0 i0 u u2 v) \to (ex2 T (\lambda 
-(t: T).(subst0 i u2 u1 t)) (\lambda (t: T).(subst0 (S (plus i0 i)) u t 
+(i: nat).(\lambda (_: (subst0 i v u1 u0)).(\lambda (H1: ((\forall (u3: 
+T).(\forall (u: T).(\forall (i0: nat).((subst0 i0 u u3 v) \to (ex2 T (\lambda 
+(t: T).(subst0 i u3 u1 t)) (\lambda (t: T).(subst0 (S (plus i0 i)) u t 
 u0))))))))).(\lambda (k: K).(\lambda (t0: T).(\lambda (t3: T).(\lambda (_: 
-(subst0 (s k i) v t0 t3)).(\lambda (H3: ((\forall (u1: T).(\forall (u: 
-T).(\forall (i0: nat).((subst0 i0 u u1 v) \to (ex2 T (\lambda (t: T).(subst0 
-(s k i) u1 t0 t)) (\lambda (t: T).(subst0 (S (plus i0 (s k i))) u t 
+(subst0 (s k i) v t0 t3)).(\lambda (H3: ((\forall (u3: T).(\forall (u: 
+T).(\forall (i0: nat).((subst0 i0 u u3 v) \to (ex2 T (\lambda (t: T).(subst0 
+(s k i) u3 t0 t)) (\lambda (t: T).(subst0 (S (plus i0 (s k i))) u t 
 t3))))))))).(\lambda (u3: T).(\lambda (u: T).(\lambda (i0: nat).(\lambda (H4: 
 (subst0 i0 u u3 v)).(ex2_ind T (\lambda (t: T).(subst0 (s k i) u3 t0 t)) 
 (\lambda (t: T).(subst0 (S (plus i0 (s k i))) u t t3)) (ex2 T (\lambda (t: 
@@ -114,8 +114,8 @@ T).(subst0 i u1 (TLRef i) t)) (\lambda (t: T).(subst0 (plus i0 (S i)) u (lift
 (S i) H0 O (le_O_n i0))) (S (plus i0 i)) (sym_eq nat (S (plus i0 i)) (plus i0 
 (S i)) (plus_n_Sm i0 i))))))))) (\lambda (v: T).(\lambda (u0: T).(\lambda 
 (u1: T).(\lambda (i: nat).(\lambda (_: (subst0 i v u1 u0)).(\lambda (H1: 
-((\forall (u2: T).(\forall (u: T).(\forall (i0: nat).((subst0 i0 u v u2) \to 
-(ex2 T (\lambda (t: T).(subst0 i u2 u1 t)) (\lambda (t: T).(subst0 (S (plus 
+((\forall (u3: T).(\forall (u: T).(\forall (i0: nat).((subst0 i0 u v u3) \to 
+(ex2 T (\lambda (t: T).(subst0 i u3 u1 t)) (\lambda (t: T).(subst0 (S (plus 
 i0 i)) u u0 t))))))))).(\lambda (t: T).(\lambda (k: K).(\lambda (u3: 
 T).(\lambda (u: T).(\lambda (i0: nat).(\lambda (H2: (subst0 i0 u v 
 u3)).(ex2_ind T (\lambda (t0: T).(subst0 i u3 u1 t0)) (\lambda (t0: 
@@ -144,12 +144,12 @@ t3) t)) (\lambda (t: T).(subst0 (S (plus i0 i)) u0 (THead k u t0) t)) (THead
 k u x) (subst0_snd k u1 x t3 i H3 u) (subst0_snd k u0 x t0 (S (plus i0 i)) H6 
 u))))))) (H1 u1 u0 i0 H2)))))))))))))) (\lambda (v: T).(\lambda (u1: 
 T).(\lambda (u0: T).(\lambda (i: nat).(\lambda (_: (subst0 i v u1 
-u0)).(\lambda (H1: ((\forall (u2: T).(\forall (u: T).(\forall (i0: 
-nat).((subst0 i0 u v u2) \to (ex2 T (\lambda (t: T).(subst0 i u2 u1 t)) 
+u0)).(\lambda (H1: ((\forall (u3: T).(\forall (u: T).(\forall (i0: 
+nat).((subst0 i0 u v u3) \to (ex2 T (\lambda (t: T).(subst0 i u3 u1 t)) 
 (\lambda (t: T).(subst0 (S (plus i0 i)) u u0 t))))))))).(\lambda (k: 
 K).(\lambda (t0: T).(\lambda (t3: T).(\lambda (_: (subst0 (s k i) v t0 
-t3)).(\lambda (H3: ((\forall (u1: T).(\forall (u: T).(\forall (i0: 
-nat).((subst0 i0 u v u1) \to (ex2 T (\lambda (t: T).(subst0 (s k i) u1 t0 t)) 
+t3)).(\lambda (H3: ((\forall (u3: T).(\forall (u: T).(\forall (i0: 
+nat).((subst0 i0 u v u3) \to (ex2 T (\lambda (t: T).(subst0 (s k i) u3 t0 t)) 
 (\lambda (t: T).(subst0 (S (plus i0 (s k i))) u t3 t))))))))).(\lambda (u3: 
 T).(\lambda (u: T).(\lambda (i0: nat).(\lambda (H4: (subst0 i0 u v 
 u3)).(ex2_ind T (\lambda (t: T).(subst0 (s k i) u3 t0 t)) (\lambda (t: 
@@ -191,21 +191,21 @@ u2 t) t3)).(or3_ind (ex2 T (\lambda (u3: T).(eq T t3 (THead k u3 t)))
 (\lambda (u3: T).(\lambda (t4: T).(eq T t3 (THead k u3 t4)))) (\lambda (u3: 
 T).(\lambda (_: T).(subst0 i0 v0 u2 u3))) (\lambda (_: T).(\lambda (t4: 
 T).(subst0 (s k i0) v0 t t4)))) (subst0 i0 v0 (THead k u1 t) t3) (\lambda 
-(H3: (ex2 T (\lambda (u2: T).(eq T t3 (THead k u2 t))) (\lambda (u3: 
+(H3: (ex2 T (\lambda (u3: T).(eq T t3 (THead k u3 t))) (\lambda (u3: 
 T).(subst0 i0 v0 u2 u3)))).(ex2_ind T (\lambda (u3: T).(eq T t3 (THead k u3 
 t))) (\lambda (u3: T).(subst0 i0 v0 u2 u3)) (subst0 i0 v0 (THead k u1 t) t3) 
 (\lambda (x: T).(\lambda (H4: (eq T t3 (THead k x t))).(\lambda (H5: (subst0 
 i0 v0 u2 x)).(eq_ind_r T (THead k x t) (\lambda (t0: T).(subst0 i0 v0 (THead 
 k u1 t) t0)) (subst0_fst v0 x u1 i0 (H1 x H5) t k) t3 H4)))) H3)) (\lambda 
-(H3: (ex2 T (\lambda (t2: T).(eq T t3 (THead k u2 t2))) (\lambda (t2: 
-T).(subst0 (s k i0) v0 t t2)))).(ex2_ind T (\lambda (t4: T).(eq T t3 (THead k 
+(H3: (ex2 T (\lambda (t4: T).(eq T t3 (THead k u2 t4))) (\lambda (t4: 
+T).(subst0 (s k i0) v0 t t4)))).(ex2_ind T (\lambda (t4: T).(eq T t3 (THead k 
 u2 t4))) (\lambda (t4: T).(subst0 (s k i0) v0 t t4)) (subst0 i0 v0 (THead k 
 u1 t) t3) (\lambda (x: T).(\lambda (H4: (eq T t3 (THead k u2 x))).(\lambda 
 (H5: (subst0 (s k i0) v0 t x)).(eq_ind_r T (THead k u2 x) (\lambda (t0: 
 T).(subst0 i0 v0 (THead k u1 t) t0)) (subst0_both v0 u1 u2 i0 H0 k t x H5) t3 
-H4)))) H3)) (\lambda (H3: (ex3_2 T T (\lambda (u2: T).(\lambda (t2: T).(eq T 
-t3 (THead k u2 t2)))) (\lambda (u3: T).(\lambda (_: T).(subst0 i0 v0 u2 u3))) 
-(\lambda (_: T).(\lambda (t2: T).(subst0 (s k i0) v0 t t2))))).(ex3_2_ind T T 
+H4)))) H3)) (\lambda (H3: (ex3_2 T T (\lambda (u3: T).(\lambda (t4: T).(eq T 
+t3 (THead k u3 t4)))) (\lambda (u3: T).(\lambda (_: T).(subst0 i0 v0 u2 u3))) 
+(\lambda (_: T).(\lambda (t4: T).(subst0 (s k i0) v0 t t4))))).(ex3_2_ind T T 
 (\lambda (u3: T).(\lambda (t4: T).(eq T t3 (THead k u3 t4)))) (\lambda (u3: 
 T).(\lambda (_: T).(subst0 i0 v0 u2 u3))) (\lambda (_: T).(\lambda (t4: 
 T).(subst0 (s k i0) v0 t t4))) (subst0 i0 v0 (THead k u1 t) t3) (\lambda (x0: 
@@ -229,16 +229,16 @@ T t4 (THead k u2 t0))) (\lambda (u2: T).(subst0 i0 v0 u u2)) (subst0 i0 v0
 (THead k u t3) t4) (\lambda (x: T).(\lambda (H4: (eq T t4 (THead k x 
 t0))).(\lambda (H5: (subst0 i0 v0 u x)).(eq_ind_r T (THead k x t0) (\lambda 
 (t: T).(subst0 i0 v0 (THead k u t3) t)) (subst0_both v0 u x i0 H5 k t3 t0 H0) 
-t4 H4)))) H3)) (\lambda (H3: (ex2 T (\lambda (t2: T).(eq T t4 (THead k u 
-t2))) (\lambda (t2: T).(subst0 (s k i0) v0 t0 t2)))).(ex2_ind T (\lambda (t5: 
+t4 H4)))) H3)) (\lambda (H3: (ex2 T (\lambda (t5: T).(eq T t4 (THead k u 
+t5))) (\lambda (t5: T).(subst0 (s k i0) v0 t0 t5)))).(ex2_ind T (\lambda (t5: 
 T).(eq T t4 (THead k u t5))) (\lambda (t5: T).(subst0 (s k i0) v0 t0 t5)) 
 (subst0 i0 v0 (THead k u t3) t4) (\lambda (x: T).(\lambda (H4: (eq T t4 
 (THead k u x))).(\lambda (H5: (subst0 (s k i0) v0 t0 x)).(eq_ind_r T (THead k 
 u x) (\lambda (t: T).(subst0 i0 v0 (THead k u t3) t)) (subst0_snd k v0 x t3 
 i0 (H1 x H5) u) t4 H4)))) H3)) (\lambda (H3: (ex3_2 T T (\lambda (u2: 
-T).(\lambda (t2: T).(eq T t4 (THead k u2 t2)))) (\lambda (u2: T).(\lambda (_: 
-T).(subst0 i0 v0 u u2))) (\lambda (_: T).(\lambda (t2: T).(subst0 (s k i0) v0 
-t0 t2))))).(ex3_2_ind T T (\lambda (u2: T).(\lambda (t5: T).(eq T t4 (THead k 
+T).(\lambda (t5: T).(eq T t4 (THead k u2 t5)))) (\lambda (u2: T).(\lambda (_: 
+T).(subst0 i0 v0 u u2))) (\lambda (_: T).(\lambda (t5: T).(subst0 (s k i0) v0 
+t0 t5))))).(ex3_2_ind T T (\lambda (u2: T).(\lambda (t5: T).(eq T t4 (THead k 
 u2 t5)))) (\lambda (u2: T).(\lambda (_: T).(subst0 i0 v0 u u2))) (\lambda (_: 
 T).(\lambda (t5: T).(subst0 (s k i0) v0 t0 t5))) (subst0 i0 v0 (THead k u t3) 
 t4) (\lambda (x0: T).(\lambda (x1: T).(\lambda (H4: (eq T t4 (THead k x0 
@@ -257,22 +257,22 @@ v0 t3 t4) \to (subst0 (s k i0) v0 t0 t4))))).(\lambda (t4: T).(\lambda (H4:
 t5))) (ex3_2 T T (\lambda (u3: T).(\lambda (t5: T).(eq T t4 (THead k u3 
 t5)))) (\lambda (u3: T).(\lambda (_: T).(subst0 i0 v0 u2 u3))) (\lambda (_: 
 T).(\lambda (t5: T).(subst0 (s k i0) v0 t3 t5)))) (subst0 i0 v0 (THead k u1 
-t0) t4) (\lambda (H5: (ex2 T (\lambda (u2: T).(eq T t4 (THead k u2 t3))) 
+t0) t4) (\lambda (H5: (ex2 T (\lambda (u3: T).(eq T t4 (THead k u3 t3))) 
 (\lambda (u3: T).(subst0 i0 v0 u2 u3)))).(ex2_ind T (\lambda (u3: T).(eq T t4 
 (THead k u3 t3))) (\lambda (u3: T).(subst0 i0 v0 u2 u3)) (subst0 i0 v0 (THead 
 k u1 t0) t4) (\lambda (x: T).(\lambda (H6: (eq T t4 (THead k x t3))).(\lambda 
 (H7: (subst0 i0 v0 u2 x)).(eq_ind_r T (THead k x t3) (\lambda (t: T).(subst0 
 i0 v0 (THead k u1 t0) t)) (subst0_both v0 u1 x i0 (H1 x H7) k t0 t3 H2) t4 
-H6)))) H5)) (\lambda (H5: (ex2 T (\lambda (t2: T).(eq T t4 (THead k u2 t2))) 
-(\lambda (t2: T).(subst0 (s k i0) v0 t3 t2)))).(ex2_ind T (\lambda (t5: 
+H6)))) H5)) (\lambda (H5: (ex2 T (\lambda (t5: T).(eq T t4 (THead k u2 t5))) 
+(\lambda (t5: T).(subst0 (s k i0) v0 t3 t5)))).(ex2_ind T (\lambda (t5: 
 T).(eq T t4 (THead k u2 t5))) (\lambda (t5: T).(subst0 (s k i0) v0 t3 t5)) 
 (subst0 i0 v0 (THead k u1 t0) t4) (\lambda (x: T).(\lambda (H6: (eq T t4 
 (THead k u2 x))).(\lambda (H7: (subst0 (s k i0) v0 t3 x)).(eq_ind_r T (THead 
 k u2 x) (\lambda (t: T).(subst0 i0 v0 (THead k u1 t0) t)) (subst0_both v0 u1 
 u2 i0 H0 k t0 x (H3 x H7)) t4 H6)))) H5)) (\lambda (H5: (ex3_2 T T (\lambda 
-(u2: T).(\lambda (t2: T).(eq T t4 (THead k u2 t2)))) (\lambda (u3: 
-T).(\lambda (_: T).(subst0 i0 v0 u2 u3))) (\lambda (_: T).(\lambda (t2: 
-T).(subst0 (s k i0) v0 t3 t2))))).(ex3_2_ind T T (\lambda (u3: T).(\lambda 
+(u3: T).(\lambda (t5: T).(eq T t4 (THead k u3 t5)))) (\lambda (u3: 
+T).(\lambda (_: T).(subst0 i0 v0 u2 u3))) (\lambda (_: T).(\lambda (t5: 
+T).(subst0 (s k i0) v0 t3 t5))))).(ex3_2_ind T T (\lambda (u3: T).(\lambda 
 (t5: T).(eq T t4 (THead k u3 t5)))) (\lambda (u3: T).(\lambda (_: T).(subst0 
 i0 v0 u2 u3))) (\lambda (_: T).(\lambda (t5: T).(subst0 (s k i0) v0 t3 t5))) 
 (subst0 i0 v0 (THead k u1 t0) t4) (\lambda (x0: T).(\lambda (x1: T).(\lambda 
@@ -318,8 +318,8 @@ nat i i2))).(or3_ind (ex2 T (\lambda (u4: T).(eq T t2 (THead k u4 t)))
 T).(\lambda (_: T).(subst0 i2 u3 u0 u4))) (\lambda (_: T).(\lambda (t3: 
 T).(subst0 (s k i2) u3 t t3)))) (ex2 T (\lambda (t3: T).(subst0 i2 u3 (THead 
 k u2 t) t3)) (\lambda (t3: T).(subst0 i v t2 t3))) (\lambda (H4: (ex2 T 
-(\lambda (u2: T).(eq T t2 (THead k u2 t))) (\lambda (u2: T).(subst0 i2 u3 u0 
-u2)))).(ex2_ind T (\lambda (u4: T).(eq T t2 (THead k u4 t))) (\lambda (u4: 
+(\lambda (u4: T).(eq T t2 (THead k u4 t))) (\lambda (u4: T).(subst0 i2 u3 u0 
+u4)))).(ex2_ind T (\lambda (u4: T).(eq T t2 (THead k u4 t))) (\lambda (u4: 
 T).(subst0 i2 u3 u0 u4)) (ex2 T (\lambda (t3: T).(subst0 i2 u3 (THead k u2 t) 
 t3)) (\lambda (t3: T).(subst0 i v t2 t3))) (\lambda (x: T).(\lambda (H5: (eq 
 T t2 (THead k x t))).(\lambda (H6: (subst0 i2 u3 u0 x)).(eq_ind_r T (THead k 
@@ -332,7 +332,7 @@ k x t) t3))) (\lambda (x0: T).(\lambda (H7: (subst0 i2 u3 u2 x0)).(\lambda
 u2 t) t3)) (\lambda (t3: T).(subst0 i v (THead k x t) t3)) (THead k x0 t) 
 (subst0_fst u3 x0 u2 i2 H7 t k) (subst0_fst v x0 x i H8 t k))))) (H1 x u3 i2 
 H6 H3)) t2 H5)))) H4)) (\lambda (H4: (ex2 T (\lambda (t3: T).(eq T t2 (THead 
-k u0 t3))) (\lambda (t2: T).(subst0 (s k i2) u3 t t2)))).(ex2_ind T (\lambda 
+k u0 t3))) (\lambda (t3: T).(subst0 (s k i2) u3 t t3)))).(ex2_ind T (\lambda 
 (t3: T).(eq T t2 (THead k u0 t3))) (\lambda (t3: T).(subst0 (s k i2) u3 t 
 t3)) (ex2 T (\lambda (t3: T).(subst0 i2 u3 (THead k u2 t) t3)) (\lambda (t3: 
 T).(subst0 i v t2 t3))) (\lambda (x: T).(\lambda (H5: (eq T t2 (THead k u0 
@@ -341,10 +341,10 @@ x))).(\lambda (H6: (subst0 (s k i2) u3 t x)).(eq_ind_r T (THead k u0 x)
 (\lambda (t4: T).(subst0 i v t3 t4)))) (ex_intro2 T (\lambda (t3: T).(subst0 
 i2 u3 (THead k u2 t) t3)) (\lambda (t3: T).(subst0 i v (THead k u0 x) t3)) 
 (THead k u2 x) (subst0_snd k u3 x t i2 H6 u2) (subst0_fst v u2 u0 i H0 x k)) 
-t2 H5)))) H4)) (\lambda (H4: (ex3_2 T T (\lambda (u2: T).(\lambda (t3: T).(eq 
-T t2 (THead k u2 t3)))) (\lambda (u2: T).(\lambda (_: T).(subst0 i2 u3 u0 
-u2))) (\lambda (_: T).(\lambda (t2: T).(subst0 (s k i2) u3 t 
-t2))))).(ex3_2_ind T T (\lambda (u4: T).(\lambda (t3: T).(eq T t2 (THead k u4 
+t2 H5)))) H4)) (\lambda (H4: (ex3_2 T T (\lambda (u4: T).(\lambda (t3: T).(eq 
+T t2 (THead k u4 t3)))) (\lambda (u4: T).(\lambda (_: T).(subst0 i2 u3 u0 
+u4))) (\lambda (_: T).(\lambda (t3: T).(subst0 (s k i2) u3 t 
+t3))))).(ex3_2_ind T T (\lambda (u4: T).(\lambda (t3: T).(eq T t2 (THead k u4 
 t3)))) (\lambda (u4: T).(\lambda (_: T).(subst0 i2 u3 u0 u4))) (\lambda (_: 
 T).(\lambda (t3: T).(subst0 (s k i2) u3 t t3))) (ex2 T (\lambda (t3: 
 T).(subst0 i2 u3 (THead k u2 t) t3)) (\lambda (t3: T).(subst0 i v t2 t3))) 
@@ -373,7 +373,7 @@ t5))) (ex3_2 T T (\lambda (u3: T).(\lambda (t5: T).(eq T t4 (THead k u3
 t5)))) (\lambda (u3: T).(\lambda (_: T).(subst0 i2 u2 u u3))) (\lambda (_: 
 T).(\lambda (t5: T).(subst0 (s k i2) u2 t3 t5)))) (ex2 T (\lambda (t: 
 T).(subst0 i2 u2 (THead k u t2) t)) (\lambda (t: T).(subst0 i v t4 t))) 
-(\lambda (H4: (ex2 T (\lambda (u2: T).(eq T t4 (THead k u2 t3))) (\lambda 
+(\lambda (H4: (ex2 T (\lambda (u3: T).(eq T t4 (THead k u3 t3))) (\lambda 
 (u3: T).(subst0 i2 u2 u u3)))).(ex2_ind T (\lambda (u3: T).(eq T t4 (THead k 
 u3 t3))) (\lambda (u3: T).(subst0 i2 u2 u u3)) (ex2 T (\lambda (t: T).(subst0 
 i2 u2 (THead k u t2) t)) (\lambda (t: T).(subst0 i v t4 t))) (\lambda (x: 
@@ -383,8 +383,8 @@ T).(subst0 i2 u2 (THead k u t2) t5)) (\lambda (t5: T).(subst0 i v t t5))))
 (ex_intro2 T (\lambda (t: T).(subst0 i2 u2 (THead k u t2) t)) (\lambda (t: 
 T).(subst0 i v (THead k x t3) t)) (THead k x t2) (subst0_fst u2 x u i2 H6 t2 
 k) (subst0_snd k v t2 t3 i H0 x)) t4 H5)))) H4)) (\lambda (H4: (ex2 T 
-(\lambda (t2: T).(eq T t4 (THead k u t2))) (\lambda (t2: T).(subst0 (s k i2) 
-u2 t3 t2)))).(ex2_ind T (\lambda (t5: T).(eq T t4 (THead k u t5))) (\lambda 
+(\lambda (t5: T).(eq T t4 (THead k u t5))) (\lambda (t5: T).(subst0 (s k i2) 
+u2 t3 t5)))).(ex2_ind T (\lambda (t5: T).(eq T t4 (THead k u t5))) (\lambda 
 (t5: T).(subst0 (s k i2) u2 t3 t5)) (ex2 T (\lambda (t: T).(subst0 i2 u2 
 (THead k u t2) t)) (\lambda (t: T).(subst0 i v t4 t))) (\lambda (x: 
 T).(\lambda (H5: (eq T t4 (THead k u x))).(\lambda (H6: (subst0 (s k i2) u2 
@@ -398,9 +398,9 @@ T (\lambda (t: T).(subst0 i2 u2 (THead k u t2) t)) (\lambda (t: T).(subst0 i
 v (THead k u x) t)) (THead k u x0) (subst0_snd k u2 x0 t2 i2 H7 u) 
 (subst0_snd k v x0 x i H8 u))))) (H1 x u2 (s k i2) H6 (\lambda (H7: (eq nat 
 (s k i) (s k i2))).(H3 (s_inj k i i2 H7))))) t4 H5)))) H4)) (\lambda (H4: 
-(ex3_2 T T (\lambda (u2: T).(\lambda (t2: T).(eq T t4 (THead k u2 t2)))) 
+(ex3_2 T T (\lambda (u3: T).(\lambda (t5: T).(eq T t4 (THead k u3 t5)))) 
 (\lambda (u3: T).(\lambda (_: T).(subst0 i2 u2 u u3))) (\lambda (_: 
-T).(\lambda (t2: T).(subst0 (s k i2) u2 t3 t2))))).(ex3_2_ind T T (\lambda 
+T).(\lambda (t5: T).(subst0 (s k i2) u2 t3 t5))))).(ex3_2_ind T T (\lambda 
 (u3: T).(\lambda (t5: T).(eq T t4 (THead k u3 t5)))) (\lambda (u3: 
 T).(\lambda (_: T).(subst0 i2 u2 u u3))) (\lambda (_: T).(\lambda (t5: 
 T).(subst0 (s k i2) u2 t3 t5))) (ex2 T (\lambda (t: T).(subst0 i2 u2 (THead k 
@@ -423,8 +423,8 @@ T).(\forall (u3: T).(\forall (i2: nat).((subst0 i2 u3 u0 t2) \to ((not (eq
 nat i i2)) \to (ex2 T (\lambda (t: T).(subst0 i2 u3 u2 t)) (\lambda (t: 
 T).(subst0 i v t2 t)))))))))).(\lambda (k: K).(\lambda (t2: T).(\lambda (t3: 
 T).(\lambda (H2: (subst0 (s k i) v t2 t3)).(\lambda (H3: ((\forall (t4: 
-T).(\forall (u2: T).(\forall (i2: nat).((subst0 i2 u2 t2 t4) \to ((not (eq 
-nat (s k i) i2)) \to (ex2 T (\lambda (t: T).(subst0 i2 u2 t3 t)) (\lambda (t: 
+T).(\forall (u3: T).(\forall (i2: nat).((subst0 i2 u3 t2 t4) \to ((not (eq 
+nat (s k i) i2)) \to (ex2 T (\lambda (t: T).(subst0 i2 u3 t3 t)) (\lambda (t: 
 T).(subst0 (s k i) v t4 t)))))))))).(\lambda (t4: T).(\lambda (u3: 
 T).(\lambda (i2: nat).(\lambda (H4: (subst0 i2 u3 (THead k u0 t2) 
 t4)).(\lambda (H5: (not (eq nat i i2))).(or3_ind (ex2 T (\lambda (u4: T).(eq 
@@ -434,8 +434,8 @@ u3 t2 t5))) (ex3_2 T T (\lambda (u4: T).(\lambda (t5: T).(eq T t4 (THead k u4
 t5)))) (\lambda (u4: T).(\lambda (_: T).(subst0 i2 u3 u0 u4))) (\lambda (_: 
 T).(\lambda (t5: T).(subst0 (s k i2) u3 t2 t5)))) (ex2 T (\lambda (t: 
 T).(subst0 i2 u3 (THead k u2 t3) t)) (\lambda (t: T).(subst0 i v t4 t))) 
-(\lambda (H6: (ex2 T (\lambda (u2: T).(eq T t4 (THead k u2 t2))) (\lambda 
-(u2: T).(subst0 i2 u3 u0 u2)))).(ex2_ind T (\lambda (u4: T).(eq T t4 (THead k 
+(\lambda (H6: (ex2 T (\lambda (u4: T).(eq T t4 (THead k u4 t2))) (\lambda 
+(u4: T).(subst0 i2 u3 u0 u4)))).(ex2_ind T (\lambda (u4: T).(eq T t4 (THead k 
 u4 t2))) (\lambda (u4: T).(subst0 i2 u3 u0 u4)) (ex2 T (\lambda (t: 
 T).(subst0 i2 u3 (THead k u2 t3) t)) (\lambda (t: T).(subst0 i v t4 t))) 
 (\lambda (x: T).(\lambda (H7: (eq T t4 (THead k x t2))).(\lambda (H8: (subst0 
@@ -448,8 +448,8 @@ u3 u2 x0)).(\lambda (H10: (subst0 i v x x0)).(ex_intro2 T (\lambda (t:
 T).(subst0 i2 u3 (THead k u2 t3) t)) (\lambda (t: T).(subst0 i v (THead k x 
 t2) t)) (THead k x0 t3) (subst0_fst u3 x0 u2 i2 H9 t3 k) (subst0_both v x x0 
 i H10 k t2 t3 H2))))) (H1 x u3 i2 H8 H5)) t4 H7)))) H6)) (\lambda (H6: (ex2 T 
-(\lambda (t2: T).(eq T t4 (THead k u0 t2))) (\lambda (t3: T).(subst0 (s k i2) 
-u3 t2 t3)))).(ex2_ind T (\lambda (t5: T).(eq T t4 (THead k u0 t5))) (\lambda 
+(\lambda (t5: T).(eq T t4 (THead k u0 t5))) (\lambda (t5: T).(subst0 (s k i2) 
+u3 t2 t5)))).(ex2_ind T (\lambda (t5: T).(eq T t4 (THead k u0 t5))) (\lambda 
 (t5: T).(subst0 (s k i2) u3 t2 t5)) (ex2 T (\lambda (t: T).(subst0 i2 u3 
 (THead k u2 t3) t)) (\lambda (t: T).(subst0 i v t4 t))) (\lambda (x: 
 T).(\lambda (H7: (eq T t4 (THead k u0 x))).(\lambda (H8: (subst0 (s k i2) u3 
@@ -463,9 +463,9 @@ x0)).(ex_intro2 T (\lambda (t: T).(subst0 i2 u3 (THead k u2 t3) t)) (\lambda
 (t: T).(subst0 i v (THead k u0 x) t)) (THead k u2 x0) (subst0_snd k u3 x0 t3 
 i2 H9 u2) (subst0_both v u0 u2 i H0 k x x0 H10))))) (H3 x u3 (s k i2) H8 
 (\lambda (H9: (eq nat (s k i) (s k i2))).(H5 (s_inj k i i2 H9))))) t4 H7)))) 
-H6)) (\lambda (H6: (ex3_2 T T (\lambda (u2: T).(\lambda (t2: T).(eq T t4 
-(THead k u2 t2)))) (\lambda (u2: T).(\lambda (_: T).(subst0 i2 u3 u0 u2))) 
-(\lambda (_: T).(\lambda (t3: T).(subst0 (s k i2) u3 t2 t3))))).(ex3_2_ind T 
+H6)) (\lambda (H6: (ex3_2 T T (\lambda (u4: T).(\lambda (t5: T).(eq T t4 
+(THead k u4 t5)))) (\lambda (u4: T).(\lambda (_: T).(subst0 i2 u3 u0 u4))) 
+(\lambda (_: T).(\lambda (t5: T).(subst0 (s k i2) u3 t2 t5))))).(ex3_2_ind T 
 T (\lambda (u4: T).(\lambda (t5: T).(eq T t4 (THead k u4 t5)))) (\lambda (u4: 
 T).(\lambda (_: T).(subst0 i2 u3 u0 u4))) (\lambda (_: T).(\lambda (t5: 
 T).(subst0 (s k i2) u3 t2 t5))) (ex2 T (\lambda (t: T).(subst0 i2 u3 (THead k 
@@ -521,8 +521,8 @@ t3)))) (\lambda (u3: T).(\lambda (_: T).(subst0 i0 v u1 u3))) (\lambda (_:
 T).(\lambda (t3: T).(subst0 (s k i0) v t t3)))) (or4 (eq T (THead k u2 t) t2) 
 (ex2 T (\lambda (t3: T).(subst0 i0 v (THead k u2 t) t3)) (\lambda (t3: 
 T).(subst0 i0 v t2 t3))) (subst0 i0 v (THead k u2 t) t2) (subst0 i0 v t2 
-(THead k u2 t))) (\lambda (H3: (ex2 T (\lambda (u2: T).(eq T t2 (THead k u2 
-t))) (\lambda (u2: T).(subst0 i0 v u1 u2)))).(ex2_ind T (\lambda (u3: T).(eq 
+(THead k u2 t))) (\lambda (H3: (ex2 T (\lambda (u3: T).(eq T t2 (THead k u3 
+t))) (\lambda (u3: T).(subst0 i0 v u1 u3)))).(ex2_ind T (\lambda (u3: T).(eq 
 T t2 (THead k u3 t))) (\lambda (u3: T).(subst0 i0 v u1 u3)) (or4 (eq T (THead 
 k u2 t) t2) (ex2 T (\lambda (t3: T).(subst0 i0 v (THead k u2 t) t3)) (\lambda 
 (t3: T).(subst0 i0 v t2 t3))) (subst0 i0 v (THead k u2 t) t2) (subst0 i0 v t2 
@@ -543,77 +543,78 @@ t)) (subst0 i0 v (THead k x t) (THead k t3 t)))) (or4_intro0 (eq T (THead k x
 t) (THead k x t)) (ex2 T (\lambda (t3: T).(subst0 i0 v (THead k x t) t3)) 
 (\lambda (t3: T).(subst0 i0 v (THead k x t) t3))) (subst0 i0 v (THead k x t) 
 (THead k x t)) (subst0 i0 v (THead k x t) (THead k x t)) (refl_equal T (THead 
-k x t))) u2 H6)) (\lambda (H6: (ex2 T (\lambda (t: T).(subst0 i0 v u2 t)) 
-(\lambda (t: T).(subst0 i0 v x t)))).(ex2_ind T (\lambda (t3: T).(subst0 i0 v 
-u2 t3)) (\lambda (t3: T).(subst0 i0 v x t3)) (or4 (eq T (THead k u2 t) (THead 
-k x t)) (ex2 T (\lambda (t3: T).(subst0 i0 v (THead k u2 t) t3)) (\lambda 
-(t3: T).(subst0 i0 v (THead k x t) t3))) (subst0 i0 v (THead k u2 t) (THead k 
-x t)) (subst0 i0 v (THead k x t) (THead k u2 t))) (\lambda (x0: T).(\lambda 
-(H7: (subst0 i0 v u2 x0)).(\lambda (H8: (subst0 i0 v x x0)).(or4_intro1 (eq T 
-(THead k u2 t) (THead k x t)) (ex2 T (\lambda (t3: T).(subst0 i0 v (THead k 
-u2 t) t3)) (\lambda (t3: T).(subst0 i0 v (THead k x t) t3))) (subst0 i0 v 
-(THead k u2 t) (THead k x t)) (subst0 i0 v (THead k x t) (THead k u2 t)) 
+k x t))) u2 H6)) (\lambda (H6: (ex2 T (\lambda (t3: T).(subst0 i0 v u2 t3)) 
+(\lambda (t3: T).(subst0 i0 v x t3)))).(ex2_ind T (\lambda (t3: T).(subst0 i0 
+v u2 t3)) (\lambda (t3: T).(subst0 i0 v x t3)) (or4 (eq T (THead k u2 t) 
+(THead k x t)) (ex2 T (\lambda (t3: T).(subst0 i0 v (THead k u2 t) t3)) 
+(\lambda (t3: T).(subst0 i0 v (THead k x t) t3))) (subst0 i0 v (THead k u2 t) 
+(THead k x t)) (subst0 i0 v (THead k x t) (THead k u2 t))) (\lambda (x0: 
+T).(\lambda (H7: (subst0 i0 v u2 x0)).(\lambda (H8: (subst0 i0 v x 
+x0)).(or4_intro1 (eq T (THead k u2 t) (THead k x t)) (ex2 T (\lambda (t3: 
+T).(subst0 i0 v (THead k u2 t) t3)) (\lambda (t3: T).(subst0 i0 v (THead k x 
+t) t3))) (subst0 i0 v (THead k u2 t) (THead k x t)) (subst0 i0 v (THead k x 
+t) (THead k u2 t)) (ex_intro2 T (\lambda (t3: T).(subst0 i0 v (THead k u2 t) 
+t3)) (\lambda (t3: T).(subst0 i0 v (THead k x t) t3)) (THead k x0 t) 
+(subst0_fst v x0 u2 i0 H7 t k) (subst0_fst v x0 x i0 H8 t k)))))) H6)) 
+(\lambda (H6: (subst0 i0 v u2 x)).(or4_intro2 (eq T (THead k u2 t) (THead k x 
+t)) (ex2 T (\lambda (t3: T).(subst0 i0 v (THead k u2 t) t3)) (\lambda (t3: 
+T).(subst0 i0 v (THead k x t) t3))) (subst0 i0 v (THead k u2 t) (THead k x 
+t)) (subst0 i0 v (THead k x t) (THead k u2 t)) (subst0_fst v x u2 i0 H6 t 
+k))) (\lambda (H6: (subst0 i0 v x u2)).(or4_intro3 (eq T (THead k u2 t) 
+(THead k x t)) (ex2 T (\lambda (t3: T).(subst0 i0 v (THead k u2 t) t3)) 
+(\lambda (t3: T).(subst0 i0 v (THead k x t) t3))) (subst0 i0 v (THead k u2 t) 
+(THead k x t)) (subst0 i0 v (THead k x t) (THead k u2 t)) (subst0_fst v u2 x 
+i0 H6 t k))) (H1 x H5)) t2 H4)))) H3)) (\lambda (H3: (ex2 T (\lambda (t3: 
+T).(eq T t2 (THead k u1 t3))) (\lambda (t3: T).(subst0 (s k i0) v t 
+t3)))).(ex2_ind T (\lambda (t3: T).(eq T t2 (THead k u1 t3))) (\lambda (t3: 
+T).(subst0 (s k i0) v t t3)) (or4 (eq T (THead k u2 t) t2) (ex2 T (\lambda 
+(t3: T).(subst0 i0 v (THead k u2 t) t3)) (\lambda (t3: T).(subst0 i0 v t2 
+t3))) (subst0 i0 v (THead k u2 t) t2) (subst0 i0 v t2 (THead k u2 t))) 
+(\lambda (x: T).(\lambda (H4: (eq T t2 (THead k u1 x))).(\lambda (H5: (subst0 
+(s k i0) v t x)).(eq_ind_r T (THead k u1 x) (\lambda (t3: T).(or4 (eq T 
+(THead k u2 t) t3) (ex2 T (\lambda (t4: T).(subst0 i0 v (THead k u2 t) t4)) 
+(\lambda (t4: T).(subst0 i0 v t3 t4))) (subst0 i0 v (THead k u2 t) t3) 
+(subst0 i0 v t3 (THead k u2 t)))) (or4_ind (eq T u2 u2) (ex2 T (\lambda (t3: 
+T).(subst0 i0 v u2 t3)) (\lambda (t3: T).(subst0 i0 v u2 t3))) (subst0 i0 v 
+u2 u2) (subst0 i0 v u2 u2) (or4 (eq T (THead k u2 t) (THead k u1 x)) (ex2 T 
+(\lambda (t3: T).(subst0 i0 v (THead k u2 t) t3)) (\lambda (t3: T).(subst0 i0 
+v (THead k u1 x) t3))) (subst0 i0 v (THead k u2 t) (THead k u1 x)) (subst0 i0 
+v (THead k u1 x) (THead k u2 t))) (\lambda (_: (eq T u2 u2)).(or4_intro1 (eq 
+T (THead k u2 t) (THead k u1 x)) (ex2 T (\lambda (t3: T).(subst0 i0 v (THead 
+k u2 t) t3)) (\lambda (t3: T).(subst0 i0 v (THead k u1 x) t3))) (subst0 i0 v 
+(THead k u2 t) (THead k u1 x)) (subst0 i0 v (THead k u1 x) (THead k u2 t)) 
 (ex_intro2 T (\lambda (t3: T).(subst0 i0 v (THead k u2 t) t3)) (\lambda (t3: 
-T).(subst0 i0 v (THead k x t) t3)) (THead k x0 t) (subst0_fst v x0 u2 i0 H7 t 
-k) (subst0_fst v x0 x i0 H8 t k)))))) H6)) (\lambda (H6: (subst0 i0 v u2 
-x)).(or4_intro2 (eq T (THead k u2 t) (THead k x t)) (ex2 T (\lambda (t3: 
-T).(subst0 i0 v (THead k u2 t) t3)) (\lambda (t3: T).(subst0 i0 v (THead k x 
-t) t3))) (subst0 i0 v (THead k u2 t) (THead k x t)) (subst0 i0 v (THead k x 
-t) (THead k u2 t)) (subst0_fst v x u2 i0 H6 t k))) (\lambda (H6: (subst0 i0 v 
-x u2)).(or4_intro3 (eq T (THead k u2 t) (THead k x t)) (ex2 T (\lambda (t3: 
-T).(subst0 i0 v (THead k u2 t) t3)) (\lambda (t3: T).(subst0 i0 v (THead k x 
-t) t3))) (subst0 i0 v (THead k u2 t) (THead k x t)) (subst0 i0 v (THead k x 
-t) (THead k u2 t)) (subst0_fst v u2 x i0 H6 t k))) (H1 x H5)) t2 H4)))) H3)) 
-(\lambda (H3: (ex2 T (\lambda (t3: T).(eq T t2 (THead k u1 t3))) (\lambda 
-(t2: T).(subst0 (s k i0) v t t2)))).(ex2_ind T (\lambda (t3: T).(eq T t2 
-(THead k u1 t3))) (\lambda (t3: T).(subst0 (s k i0) v t t3)) (or4 (eq T 
-(THead k u2 t) t2) (ex2 T (\lambda (t3: T).(subst0 i0 v (THead k u2 t) t3)) 
-(\lambda (t3: T).(subst0 i0 v t2 t3))) (subst0 i0 v (THead k u2 t) t2) 
-(subst0 i0 v t2 (THead k u2 t))) (\lambda (x: T).(\lambda (H4: (eq T t2 
-(THead k u1 x))).(\lambda (H5: (subst0 (s k i0) v t x)).(eq_ind_r T (THead k 
-u1 x) (\lambda (t3: T).(or4 (eq T (THead k u2 t) t3) (ex2 T (\lambda (t4: 
-T).(subst0 i0 v (THead k u2 t) t4)) (\lambda (t4: T).(subst0 i0 v t3 t4))) 
-(subst0 i0 v (THead k u2 t) t3) (subst0 i0 v t3 (THead k u2 t)))) (or4_ind 
-(eq T u2 u2) (ex2 T (\lambda (t3: T).(subst0 i0 v u2 t3)) (\lambda (t3: 
-T).(subst0 i0 v u2 t3))) (subst0 i0 v u2 u2) (subst0 i0 v u2 u2) (or4 (eq T 
-(THead k u2 t) (THead k u1 x)) (ex2 T (\lambda (t3: T).(subst0 i0 v (THead k 
-u2 t) t3)) (\lambda (t3: T).(subst0 i0 v (THead k u1 x) t3))) (subst0 i0 v 
-(THead k u2 t) (THead k u1 x)) (subst0 i0 v (THead k u1 x) (THead k u2 t))) 
-(\lambda (_: (eq T u2 u2)).(or4_intro1 (eq T (THead k u2 t) (THead k u1 x)) 
+T).(subst0 i0 v (THead k u1 x) t3)) (THead k u2 x) (subst0_snd k v x t i0 H5 
+u2) (subst0_fst v u2 u1 i0 H0 x k)))) (\lambda (H6: (ex2 T (\lambda (t3: 
+T).(subst0 i0 v u2 t3)) (\lambda (t3: T).(subst0 i0 v u2 t3)))).(ex2_ind T 
+(\lambda (t3: T).(subst0 i0 v u2 t3)) (\lambda (t3: T).(subst0 i0 v u2 t3)) 
+(or4 (eq T (THead k u2 t) (THead k u1 x)) (ex2 T (\lambda (t3: T).(subst0 i0 
+v (THead k u2 t) t3)) (\lambda (t3: T).(subst0 i0 v (THead k u1 x) t3))) 
+(subst0 i0 v (THead k u2 t) (THead k u1 x)) (subst0 i0 v (THead k u1 x) 
+(THead k u2 t))) (\lambda (x0: T).(\lambda (_: (subst0 i0 v u2 x0)).(\lambda 
+(_: (subst0 i0 v u2 x0)).(or4_intro1 (eq T (THead k u2 t) (THead k u1 x)) 
 (ex2 T (\lambda (t3: T).(subst0 i0 v (THead k u2 t) t3)) (\lambda (t3: 
 T).(subst0 i0 v (THead k u1 x) t3))) (subst0 i0 v (THead k u2 t) (THead k u1 
 x)) (subst0 i0 v (THead k u1 x) (THead k u2 t)) (ex_intro2 T (\lambda (t3: 
 T).(subst0 i0 v (THead k u2 t) t3)) (\lambda (t3: T).(subst0 i0 v (THead k u1 
 x) t3)) (THead k u2 x) (subst0_snd k v x t i0 H5 u2) (subst0_fst v u2 u1 i0 
-H0 x k)))) (\lambda (H6: (ex2 T (\lambda (t: T).(subst0 i0 v u2 t)) (\lambda 
-(t: T).(subst0 i0 v u2 t)))).(ex2_ind T (\lambda (t3: T).(subst0 i0 v u2 t3)) 
-(\lambda (t3: T).(subst0 i0 v u2 t3)) (or4 (eq T (THead k u2 t) (THead k u1 
-x)) (ex2 T (\lambda (t3: T).(subst0 i0 v (THead k u2 t) t3)) (\lambda (t3: 
-T).(subst0 i0 v (THead k u1 x) t3))) (subst0 i0 v (THead k u2 t) (THead k u1 
-x)) (subst0 i0 v (THead k u1 x) (THead k u2 t))) (\lambda (x0: T).(\lambda 
-(_: (subst0 i0 v u2 x0)).(\lambda (_: (subst0 i0 v u2 x0)).(or4_intro1 (eq T 
-(THead k u2 t) (THead k u1 x)) (ex2 T (\lambda (t3: T).(subst0 i0 v (THead k 
-u2 t) t3)) (\lambda (t3: T).(subst0 i0 v (THead k u1 x) t3))) (subst0 i0 v 
-(THead k u2 t) (THead k u1 x)) (subst0 i0 v (THead k u1 x) (THead k u2 t)) 
-(ex_intro2 T (\lambda (t3: T).(subst0 i0 v (THead k u2 t) t3)) (\lambda (t3: 
-T).(subst0 i0 v (THead k u1 x) t3)) (THead k u2 x) (subst0_snd k v x t i0 H5 
-u2) (subst0_fst v u2 u1 i0 H0 x k)))))) H6)) (\lambda (_: (subst0 i0 v u2 
+H0 x k)))))) H6)) (\lambda (_: (subst0 i0 v u2 u2)).(or4_intro1 (eq T (THead 
+k u2 t) (THead k u1 x)) (ex2 T (\lambda (t3: T).(subst0 i0 v (THead k u2 t) 
+t3)) (\lambda (t3: T).(subst0 i0 v (THead k u1 x) t3))) (subst0 i0 v (THead k 
+u2 t) (THead k u1 x)) (subst0 i0 v (THead k u1 x) (THead k u2 t)) (ex_intro2 
+T (\lambda (t3: T).(subst0 i0 v (THead k u2 t) t3)) (\lambda (t3: T).(subst0 
+i0 v (THead k u1 x) t3)) (THead k u2 x) (subst0_snd k v x t i0 H5 u2) 
+(subst0_fst v u2 u1 i0 H0 x k)))) (\lambda (_: (subst0 i0 v u2 
 u2)).(or4_intro1 (eq T (THead k u2 t) (THead k u1 x)) (ex2 T (\lambda (t3: 
 T).(subst0 i0 v (THead k u2 t) t3)) (\lambda (t3: T).(subst0 i0 v (THead k u1 
 x) t3))) (subst0 i0 v (THead k u2 t) (THead k u1 x)) (subst0 i0 v (THead k u1 
 x) (THead k u2 t)) (ex_intro2 T (\lambda (t3: T).(subst0 i0 v (THead k u2 t) 
 t3)) (\lambda (t3: T).(subst0 i0 v (THead k u1 x) t3)) (THead k u2 x) 
-(subst0_snd k v x t i0 H5 u2) (subst0_fst v u2 u1 i0 H0 x k)))) (\lambda (_: 
-(subst0 i0 v u2 u2)).(or4_intro1 (eq T (THead k u2 t) (THead k u1 x)) (ex2 T 
-(\lambda (t3: T).(subst0 i0 v (THead k u2 t) t3)) (\lambda (t3: T).(subst0 i0 
-v (THead k u1 x) t3))) (subst0 i0 v (THead k u2 t) (THead k u1 x)) (subst0 i0 
-v (THead k u1 x) (THead k u2 t)) (ex_intro2 T (\lambda (t3: T).(subst0 i0 v 
-(THead k u2 t) t3)) (\lambda (t3: T).(subst0 i0 v (THead k u1 x) t3)) (THead 
-k u2 x) (subst0_snd k v x t i0 H5 u2) (subst0_fst v u2 u1 i0 H0 x k)))) (H1 
-u2 H0)) t2 H4)))) H3)) (\lambda (H3: (ex3_2 T T (\lambda (u2: T).(\lambda 
-(t3: T).(eq T t2 (THead k u2 t3)))) (\lambda (u2: T).(\lambda (_: T).(subst0 
-i0 v u1 u2))) (\lambda (_: T).(\lambda (t2: T).(subst0 (s k i0) v t 
-t2))))).(ex3_2_ind T T (\lambda (u3: T).(\lambda (t3: T).(eq T t2 (THead k u3 
+(subst0_snd k v x t i0 H5 u2) (subst0_fst v u2 u1 i0 H0 x k)))) (H1 u2 H0)) 
+t2 H4)))) H3)) (\lambda (H3: (ex3_2 T T (\lambda (u3: T).(\lambda (t3: T).(eq 
+T t2 (THead k u3 t3)))) (\lambda (u3: T).(\lambda (_: T).(subst0 i0 v u1 
+u3))) (\lambda (_: T).(\lambda (t3: T).(subst0 (s k i0) v t 
+t3))))).(ex3_2_ind T T (\lambda (u3: T).(\lambda (t3: T).(eq T t2 (THead k u3 
 t3)))) (\lambda (u3: T).(\lambda (_: T).(subst0 i0 v u1 u3))) (\lambda (_: 
 T).(\lambda (t3: T).(subst0 (s k i0) v t t3))) (or4 (eq T (THead k u2 t) t2) 
 (ex2 T (\lambda (t3: T).(subst0 i0 v (THead k u2 t) t3)) (\lambda (t3: 
@@ -636,9 +637,9 @@ x0 x1) (THead k t3 t)))) (or4_intro2 (eq T (THead k x0 t) (THead k x0 x1))
 (ex2 T (\lambda (t3: T).(subst0 i0 v (THead k x0 t) t3)) (\lambda (t3: 
 T).(subst0 i0 v (THead k x0 x1) t3))) (subst0 i0 v (THead k x0 t) (THead k x0 
 x1)) (subst0 i0 v (THead k x0 x1) (THead k x0 t)) (subst0_snd k v x1 t i0 H6 
-x0)) u2 H7)) (\lambda (H7: (ex2 T (\lambda (t: T).(subst0 i0 v u2 t)) 
-(\lambda (t: T).(subst0 i0 v x0 t)))).(ex2_ind T (\lambda (t3: T).(subst0 i0 
-v u2 t3)) (\lambda (t3: T).(subst0 i0 v x0 t3)) (or4 (eq T (THead k u2 t) 
+x0)) u2 H7)) (\lambda (H7: (ex2 T (\lambda (t3: T).(subst0 i0 v u2 t3)) 
+(\lambda (t3: T).(subst0 i0 v x0 t3)))).(ex2_ind T (\lambda (t3: T).(subst0 
+i0 v u2 t3)) (\lambda (t3: T).(subst0 i0 v x0 t3)) (or4 (eq T (THead k u2 t) 
 (THead k x0 x1)) (ex2 T (\lambda (t3: T).(subst0 i0 v (THead k u2 t) t3)) 
 (\lambda (t3: T).(subst0 i0 v (THead k x0 x1) t3))) (subst0 i0 v (THead k u2 
 t) (THead k x0 x1)) (subst0 i0 v (THead k x0 x1) (THead k u2 t))) (\lambda 
@@ -721,8 +722,8 @@ t3) t))) (subst0 i0 v (THead k u0 t2) (THead k x t3)) (subst0 i0 v (THead k x
 t3) (THead k u0 t2)) (ex_intro2 T (\lambda (t: T).(subst0 i0 v (THead k u0 
 t2) t)) (\lambda (t: T).(subst0 i0 v (THead k x t3) t)) (THead k x t2) 
 (subst0_fst v x u0 i0 H5 t2 k) (subst0_snd k v t2 t3 i0 H0 x)))) (H1 t2 H0)) 
-t4 H4)))) H3)) (\lambda (H3: (ex2 T (\lambda (t2: T).(eq T t4 (THead k u0 
-t2))) (\lambda (t2: T).(subst0 (s k i0) v t3 t2)))).(ex2_ind T (\lambda (t5: 
+t4 H4)))) H3)) (\lambda (H3: (ex2 T (\lambda (t5: T).(eq T t4 (THead k u0 
+t5))) (\lambda (t5: T).(subst0 (s k i0) v t3 t5)))).(ex2_ind T (\lambda (t5: 
 T).(eq T t4 (THead k u0 t5))) (\lambda (t5: T).(subst0 (s k i0) v t3 t5)) 
 (or4 (eq T (THead k u0 t2) t4) (ex2 T (\lambda (t: T).(subst0 i0 v (THead k 
 u0 t2) t)) (\lambda (t: T).(subst0 i0 v t4 t))) (subst0 i0 v (THead k u0 t2) 
@@ -766,9 +767,9 @@ x t2 i0 H6 u0))) (\lambda (H6: (subst0 (s k i0) v x t2)).(or4_intro3 (eq T
 u0 t2) t)) (\lambda (t: T).(subst0 i0 v (THead k u0 x) t))) (subst0 i0 v 
 (THead k u0 t2) (THead k u0 x)) (subst0 i0 v (THead k u0 x) (THead k u0 t2)) 
 (subst0_snd k v t2 x i0 H6 u0))) (H1 x H5)) t4 H4)))) H3)) (\lambda (H3: 
-(ex3_2 T T (\lambda (u2: T).(\lambda (t2: T).(eq T t4 (THead k u2 t2)))) 
+(ex3_2 T T (\lambda (u2: T).(\lambda (t5: T).(eq T t4 (THead k u2 t5)))) 
 (\lambda (u2: T).(\lambda (_: T).(subst0 i0 v u0 u2))) (\lambda (_: 
-T).(\lambda (t2: T).(subst0 (s k i0) v t3 t2))))).(ex3_2_ind T T (\lambda 
+T).(\lambda (t5: T).(subst0 (s k i0) v t3 t5))))).(ex3_2_ind T T (\lambda 
 (u2: T).(\lambda (t5: T).(eq T t4 (THead k u2 t5)))) (\lambda (u2: 
 T).(\lambda (_: T).(subst0 i0 v u0 u2))) (\lambda (_: T).(\lambda (t5: 
 T).(subst0 (s k i0) v t3 t5))) (or4 (eq T (THead k u0 t2) t4) (ex2 T (\lambda 
@@ -834,8 +835,8 @@ T).(\lambda (_: T).(subst0 i0 v u1 u3))) (\lambda (_: T).(\lambda (t5:
 T).(subst0 (s k i0) v t2 t5)))) (or4 (eq T (THead k u2 t3) t4) (ex2 T 
 (\lambda (t: T).(subst0 i0 v (THead k u2 t3) t)) (\lambda (t: T).(subst0 i0 v 
 t4 t))) (subst0 i0 v (THead k u2 t3) t4) (subst0 i0 v t4 (THead k u2 t3))) 
-(\lambda (H5: (ex2 T (\lambda (u2: T).(eq T t4 (THead k u2 t2))) (\lambda 
-(u2: T).(subst0 i0 v u1 u2)))).(ex2_ind T (\lambda (u3: T).(eq T t4 (THead k 
+(\lambda (H5: (ex2 T (\lambda (u3: T).(eq T t4 (THead k u3 t2))) (\lambda 
+(u3: T).(subst0 i0 v u1 u3)))).(ex2_ind T (\lambda (u3: T).(eq T t4 (THead k 
 u3 t2))) (\lambda (u3: T).(subst0 i0 v u1 u3)) (or4 (eq T (THead k u2 t3) t4) 
 (ex2 T (\lambda (t: T).(subst0 i0 v (THead k u2 t3) t)) (\lambda (t: 
 T).(subst0 i0 v t4 t))) (subst0 i0 v (THead k u2 t3) t4) (subst0 i0 v t4 
@@ -1002,8 +1003,8 @@ k v t3 t2 i0 H2 x)))) (\lambda (H9: (subst0 i0 v x u2)).(or4_intro3 (eq T
 u2 t3) t)) (\lambda (t: T).(subst0 i0 v (THead k x t2) t))) (subst0 i0 v 
 (THead k u2 t3) (THead k x t2)) (subst0 i0 v (THead k x t2) (THead k u2 t3)) 
 (subst0_both v x u2 i0 H9 k t2 t3 H2))) (H1 x H7))) (H3 t3 H2)) t4 H6)))) 
-H5)) (\lambda (H5: (ex2 T (\lambda (t2: T).(eq T t4 (THead k u1 t2))) 
-(\lambda (t3: T).(subst0 (s k i0) v t2 t3)))).(ex2_ind T (\lambda (t5: T).(eq 
+H5)) (\lambda (H5: (ex2 T (\lambda (t5: T).(eq T t4 (THead k u1 t5))) 
+(\lambda (t5: T).(subst0 (s k i0) v t2 t5)))).(ex2_ind T (\lambda (t5: T).(eq 
 T t4 (THead k u1 t5))) (\lambda (t5: T).(subst0 (s k i0) v t2 t5)) (or4 (eq T 
 (THead k u2 t3) t4) (ex2 T (\lambda (t: T).(subst0 i0 v (THead k u2 t3) t)) 
 (\lambda (t: T).(subst0 i0 v t4 t))) (subst0 i0 v (THead k u2 t3) t4) (subst0 
@@ -1159,10 +1160,10 @@ u2)).(or4_intro3 (eq T (THead k u2 t3) (THead k u1 x)) (ex2 T (\lambda (t:
 T).(subst0 i0 v (THead k u2 t3) t)) (\lambda (t: T).(subst0 i0 v (THead k u1 
 x) t))) (subst0 i0 v (THead k u2 t3) (THead k u1 x)) (subst0 i0 v (THead k u1 
 x) (THead k u2 t3)) (subst0_both v u1 u2 i0 H0 k x t3 H8))) (H1 u2 H0))) (H3 
-x H7)) t4 H6)))) H5)) (\lambda (H5: (ex3_2 T T (\lambda (u2: T).(\lambda (t2: 
-T).(eq T t4 (THead k u2 t2)))) (\lambda (u2: T).(\lambda (_: T).(subst0 i0 v 
-u1 u2))) (\lambda (_: T).(\lambda (t3: T).(subst0 (s k i0) v t2 
-t3))))).(ex3_2_ind T T (\lambda (u3: T).(\lambda (t5: T).(eq T t4 (THead k u3 
+x H7)) t4 H6)))) H5)) (\lambda (H5: (ex3_2 T T (\lambda (u3: T).(\lambda (t5: 
+T).(eq T t4 (THead k u3 t5)))) (\lambda (u3: T).(\lambda (_: T).(subst0 i0 v 
+u1 u3))) (\lambda (_: T).(\lambda (t5: T).(subst0 (s k i0) v t2 
+t5))))).(ex3_2_ind T T (\lambda (u3: T).(\lambda (t5: T).(eq T t4 (THead k u3 
 t5)))) (\lambda (u3: T).(\lambda (_: T).(subst0 i0 v u1 u3))) (\lambda (_: 
 T).(\lambda (t5: T).(subst0 (s k i0) v t2 t5))) (or4 (eq T (THead k u2 t3) 
 t4) (ex2 T (\lambda (t: T).(subst0 i0 v (THead k u2 t3) t)) (\lambda (t: 
@@ -1353,12 +1354,12 @@ t1)) (ex2 T (\lambda (t: T).(subst0 i u (lift (S O) i t2) t)) (\lambda (t:
 T).(subst0 i u (lift (S O) i t1) t))) (subst0 i u (lift (S O) i t2) (lift (S 
 O) i t1)) (subst0 i u (lift (S O) i t1) (lift (S O) i t2)) (eq T t1 t2) 
 (\lambda (H1: (eq T (lift (S O) i t2) (lift (S O) i t1))).(let H2 \def 
-(sym_equal T (lift (S O) i t2) (lift (S O) i t1) H1) in (lift_inj t1 t2 (S O) 
-i H2))) (\lambda (H1: (ex2 T (\lambda (t: T).(subst0 i u (lift (S O) i t2) 
-t)) (\lambda (t: T).(subst0 i u (lift (S O) i t1) t)))).(ex2_ind T (\lambda 
-(t: T).(subst0 i u (lift (S O) i t2) t)) (\lambda (t: T).(subst0 i u (lift (S 
-O) i t1) t)) (eq T t1 t2) (\lambda (x: T).(\lambda (_: (subst0 i u (lift (S 
-O) i t2) x)).(\lambda (H3: (subst0 i u (lift (S O) i t1) 
+(sym_eq T (lift (S O) i t2) (lift (S O) i t1) H1) in (lift_inj t1 t2 (S O) i 
+H2))) (\lambda (H1: (ex2 T (\lambda (t: T).(subst0 i u (lift (S O) i t2) t)) 
+(\lambda (t: T).(subst0 i u (lift (S O) i t1) t)))).(ex2_ind T (\lambda (t: 
+T).(subst0 i u (lift (S O) i t2) t)) (\lambda (t: T).(subst0 i u (lift (S O) 
+i t1) t)) (eq T t1 t2) (\lambda (x: T).(\lambda (_: (subst0 i u (lift (S O) i 
+t2) x)).(\lambda (H3: (subst0 i u (lift (S O) i t1) 
 x)).(subst0_gen_lift_false t1 u x (S O) i i (le_n i) (eq_ind_r nat (plus (S 
 O) i) (\lambda (n: nat).(lt i n)) (le_n (plus (S O) i)) (plus i (S O)) 
 (plus_comm i (S O))) H3 (eq T t1 t2))))) H1)) (\lambda (H1: (subst0 i u (lift 

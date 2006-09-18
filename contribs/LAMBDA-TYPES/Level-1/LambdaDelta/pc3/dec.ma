@@ -145,7 +145,7 @@ t0)) \to (\forall (P0: Prop).P0)))) H10 (THead (Bind Abst) x5 x6) H24) in
 x6) H24) in (let H29 \def (nf2_gen_abst c x5 x6 H28) in (and_ind (nf2 c x5) 
 (nf2 (CHead c (Bind Abst) x5) x6) P (\lambda (H30: (nf2 c x5)).(\lambda (_: 
 (nf2 (CHead c (Bind Abst) x5) x6)).(let H32 \def (nf2_pr3_confluence c x0 H8 
-x5 H30 u2 H7) in (H27 x6 (sym_equal T (THead (Bind Abst) x0 x6) (THead (Bind 
+x5 H30 u2 H7) in (H27 x6 (sym_eq T (THead (Bind Abst) x0 x6) (THead (Bind 
 Abst) x5 x6) (f_equal3 K T T T THead (Bind Abst) (Bind Abst) x0 x5 x6 x6 
 (refl_equal K (Bind Abst)) (H32 (pr3_t x3 u2 c H20 x5 H25)) (refl_equal T 
 x6))) P)))) H29))))))))) H23)))))))) H18))))))) (pr3_confluence c u1 x1 H13 x 

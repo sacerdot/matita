@@ -498,7 +498,7 @@ Appl) w v) (lift (S O) d y1)))) (\lambda (_: T).(\lambda (y2: T).(subst1 d u0
 (y1: T).(\lambda (y2: T).(ty3 g a y1 y2)))) (\lambda (x4: T).(\lambda (x5: 
 T).(\lambda (H15: (eq T (lift (S O) d x1) (THead (Bind Abst) x4 
 x5))).(\lambda (H16: (subst1 d u0 u x4)).(\lambda (H17: (subst1 (s (Bind 
-Abst) d) u0 t x5)).(let H18 \def (sym_equal T (lift (S O) d x1) (THead (Bind 
+Abst) d) u0 t x5)).(let H18 \def (sym_eq T (lift (S O) d x1) (THead (Bind 
 Abst) x4 x5) H15) in (ex3_2_ind T T (\lambda (y: T).(\lambda (z: T).(eq T x1 
 (THead (Bind Abst) y z)))) (\lambda (y: T).(\lambda (_: T).(eq T x4 (lift (S 
 O) d y)))) (\lambda (_: T).(\lambda (z: T).(eq T x5 (lift (S O) (S d) z)))) 
