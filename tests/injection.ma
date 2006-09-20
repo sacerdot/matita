@@ -77,7 +77,7 @@ theorem injection_test3:
 *) 
 
 theorem injection_test4:
- ∀n,n',m,m'. k1 bool (S n) (S m) = k1 bool (S n') (S (S m')) → m = S m'.
+ ∀n,n',m,m'. k1 bool (S n) (S (S m)) = k1 bool (S n') (S (S (S m'))) → m = S m'.
  intros;
  injection H;
  assumption.
