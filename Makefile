@@ -116,6 +116,10 @@ links:
 	$(H)ln -sf matita.opt matita
 	$(H)ln -sf matitac.opt matitac
 
+linkonly:
+	$(H)echo "  OCAMLC matita.ml"
+	$(H)$(OCAMLC) $(PKGS) -linkpkg -o matita $(CMOS) matita.ml
+.PHONY: linkonly
 matita: matita.ml $(LIB_DEPS) $(CMOS)
 	$(H)echo "  OCAMLC $<"
 	$(H)$(OCAMLC) $(PKGS) -linkpkg -o $@ $(CMOS) matita.ml
