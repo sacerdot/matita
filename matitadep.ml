@@ -51,10 +51,10 @@ let main () =
     let buri = buri alias in
     if buri <> current_buri then Some buri else None in
   MatitaInit.fill_registry ();
-  let do_dot = ref false in
+  let dot_file = ref "" in
   MatitaInit.add_cmdline_spec 
-    ["-dot",Arg.Unit (fun () -> do_dot:=true),
-      "Generate deps for dot instead of make"];
+    ["-dot", Arg.Set_string dot_file,
+      "<file> Save dependency graph in dot format to the given file"];
   MatitaInit.parse_cmdline ();
   MatitaInit.load_configuration_file ();
   let include_paths =
@@ -107,9 +107,10 @@ let main () =
         prerr_endline ("File "^ file^" has no baseuri. Use set baseuri");
         exit 1)
   uri_deps;
-  if !do_dot then
+  if !dot_file <> "" then (* generate dependency graph if required *)
     begin
-      let fmt = Format.formatter_of_out_channel stdout in 
+      let oc = open_out !dot_file in
+      let fmt = Format.formatter_of_out_channel oc in 
       GraphvizPp.Dot.header (* ~graph_attrs:["rankdir","LR"] *) fmt;
       List.iter
        (fun ma_file -> 
@@ -127,26 +128,23 @@ let main () =
         List.iter (fun dep -> GraphvizPp.Dot.edge ma_file dep fmt) deps)
        ma_files;
       GraphvizPp.Dot.trailer fmt;
-      close_out stdout
-    end
-  else
-    begin
-      List.iter
-       (fun ma_file -> 
-         try
-          let deps = Hashtbl.find_all include_deps ma_file in
-          let deps = List.fast_sort Pervasives.compare deps in
-          let deps = HExtlib.list_uniq deps in
-          let deps = ma_file :: deps in
-          let baseuri = Hashtbl.find baseuri_of ma_file in
-          let moo = obj_file_of_baseuri true baseuri in
-          Printf.printf "%s: %s\n%s: %s\n%s: %s\n" 
-            moo (String.concat " " deps)
-            (Filename.basename(Pcre.replace ~pat:"ma$" ~templ:"mo" ma_file)) moo
-            (Pcre.replace ~pat:"ma$" ~templ:"mo" ma_file) moo
-         with Not_found -> 
-           prerr_endline ("File "^ma_file^" has no baseuri. Use set baseuri");
-           exit 1)
-        ma_files
-    end
-;;
+      close_out oc
+    end;
+  List.iter (* (always) generate regular .depend output *)
+   (fun ma_file -> 
+     try
+      let deps = Hashtbl.find_all include_deps ma_file in
+      let deps = List.fast_sort Pervasives.compare deps in
+      let deps = HExtlib.list_uniq deps in
+      let deps = ma_file :: deps in
+      let baseuri = Hashtbl.find baseuri_of ma_file in
+      let moo = obj_file_of_baseuri true baseuri in
+      Printf.printf "%s: %s\n%s: %s\n%s: %s\n" 
+        moo (String.concat " " deps)
+        (Filename.basename(Pcre.replace ~pat:"ma$" ~templ:"mo" ma_file)) moo
+        (Pcre.replace ~pat:"ma$" ~templ:"mo" ma_file) moo
+     with Not_found -> 
+       prerr_endline ("File "^ma_file^" has no baseuri. Use set baseuri");
+       exit 1)
+    ma_files
+
