@@ -1000,6 +1000,7 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
      *)
     method private _showMath = win#mathOrListNotebook#goto_page 0
     method private _showList = win#mathOrListNotebook#goto_page 1
+    method private _showGviz = win#mathOrListNotebook#goto_page 3
 
     method private back () =
       try
@@ -1025,6 +1026,7 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
           | `About `Coercions -> self#coerchgraph ()
           | `Check term -> self#_loadCheck term
           | `Cic (term, metasenv) -> self#_loadTermCic term metasenv
+          | `Development d -> self#_showDevelDeps d
           | `Dir dir -> self#_loadDir dir
           | `Metadata (`Deps ((`Fwd | `Back) as dir, uri)) ->
               self#dependencies dir uri ()
@@ -1067,11 +1069,11 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
         | `Back -> MetadataDeps.DepGraph.inverse_deps ~dbd uri in
       gviz_graph <- graph;  (** XXX check this for memory consuption *)
       self#redraw_gviz ~center_on:uri ();
-      win#mathOrListNotebook#goto_page 3
+      self#_showGviz
 
     method private coerchgraph () =
       load_coerchgraph ();
-      win#mathOrListNotebook#goto_page 3
+      self#_showGviz
 
     method private home () =
       self#_showMath;
@@ -1110,6 +1112,16 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
     method private setEntry entry =
       win#browserUri#entry#set_text (MatitaTypes.string_of_entry entry);
       current_entry <- entry
+
+    method private _showDevelDeps d =
+      match MatitamakeLib.development_for_name d with
+      | None -> ()
+      | Some devel ->
+          (match MatitamakeLib.dot_for_development devel with
+          | None -> ()
+          | Some fname ->
+              gviz#load_graph_from_file ~gviz_cmd:"tred | dot" fname;
+              self#_showGviz)
 
     method private _loadObj obj =
       (* showMath must be done _before_ loading the document, since if the

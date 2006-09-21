@@ -42,6 +42,7 @@ type mathViewer_entry =
   [ `About of abouts  (* current proof *)
   | `Check of string (* term *)
   | `Cic of Cic.term * Cic.metasenv
+  | `Development of string
   | `Dir of string (* "directory" in cic uris namespace *)
   | `Metadata of [ `Deps of [`Fwd | `Back] * UriManager.uri ]
   | `Uri of UriManager.uri (* cic object uri *)
@@ -55,6 +56,7 @@ let string_of_entry = function
   | `About `Coercions -> "about:coercions"
   | `Check _ -> "check:"
   | `Cic (_, _) -> "term:"
+  | `Development d -> "devel:/" ^ d
   | `Dir uri -> uri
   | `Metadata meta ->
       "metadata:/" ^

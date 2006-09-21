@@ -33,7 +33,6 @@ let logger = fun mark ->
   | `Warning -> HLog.warn
   | `Debug -> HLog.debug
   | `Message -> HLog.message
-;;
 
 type development = 
   { root: string ; name: string }
@@ -83,7 +82,10 @@ let initialize () =
 let makefile_for_development devel =
   let develdir = pool () ^ devel.name in
   develdir ^ "/makefile"
-;;
+
+let dot_for_development devel = 
+  let dot_fname = pool () ^ devel.name ^ "/depend.dot" in
+  if Sys.file_exists dot_fname then Some dot_fname else None
 
 (* given a dir finds a development that is radicated in it or below *)
 let development_for_dir dir =
@@ -100,7 +102,6 @@ let development_for_dir dir =
   try
     Some (List.find (fun d -> is_prefix_of d.root dir) !developments)
   with Not_found -> None
-;;
 
 let development_for_name name =
   try 
@@ -112,7 +113,6 @@ let dump_development devel =
   let devel_dir = pool () ^ devel.name in 
   HExtlib.mkdir devel_dir;
   HExtlib.output_file ~filename:(devel_dir ^ rootfile) ~text:devel.root
-;;
 
 let list_known_developments () = 
   List.map (fun r -> r.name,r.root) !developments
@@ -272,7 +272,6 @@ let mk_maker refresh_cb =
 
 let build_development_in_bg ?matita_flags ?(target="all") refresh_cb development =
   call_make ?matita_flags development target (mk_maker refresh_cb)
-;;
 
 let clean_development ?matita_flags development =
   call_make ?matita_flags development "clean" make

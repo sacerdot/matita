@@ -486,10 +486,19 @@ class gui () =
           match get_devel_selected () with
           | None -> ()
           | Some d -> 
-              let clean = locker 
-                (fun () -> MatitamakeLib.publish_development_in_bg refresh d)
-              in
-              ignore(clean ())));
+              let publish = locker (fun () ->
+                MatitamakeLib.publish_development_in_bg refresh d) in
+              ignore(publish ())));
+      connect_button develList#graphButton (fun () -> 
+        match get_devel_selected () with
+        | None -> ()
+        | Some d ->
+            (match MatitamakeLib.dot_for_development d with
+            | None -> ()
+            | Some _ ->
+                let browser = MatitaMathView.cicBrowser () in
+                browser#load (`Development
+                  (MatitamakeLib.name_for_development d))));
       connect_button develList#closeButton 
         (fun () -> develList#toplevel#misc#hide());
       ignore(develList#toplevel#event#connect#delete 
