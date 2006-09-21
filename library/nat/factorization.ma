@@ -18,6 +18,133 @@ include "nat/ord.ma".
 include "nat/gcd.ma".
 include "nat/nth_prime.ma".
 
+
+theorem prova :
+  \forall n,m:nat.
+  \forall P:nat \to Prop.
+  \forall H:P (S (S O)).
+  \forall H:P (S (S (S O))).
+  \forall H1: \forall x.P x \to O = x.
+   O = S (S (S (S (S O)))).
+   intros.
+   auto paramodulation.
+ qed.
+ 
+theorem example2:
+\forall x: nat. (x+S O)*(x-S O) = x*x - S O.
+intro;
+apply (nat_case x);
+ [ auto paramodulation.|intro.auto paramodulation.]
+qed.
+
+theorem prova3:
+  \forall A:Set.
+  \forall m:A \to A \to A.
+  \forall divides: A \to A \to Prop.
+  \forall o,a,b,two:A.
+  \forall H1:\forall x.m o x = x.
+  \forall H1:\forall x.m x o = x.
+  \forall H1:\forall x,y,z.m x (m y z) = m (m x y) z.
+  \forall H1:\forall x.m x o = x.
+  \forall H2:\forall x,y.m x y = m y x.
+  \forall H3:\forall x,y,z. m x y = m x z \to y = z. 
+  (* \forall H4:\forall x,y.(\exists z.m x z = y) \to divides x y. *)
+  \forall H4:\forall x,y.(divides x y \to (\exists z.m x z = y)). 
+  \forall H4:\forall x,y,z.m x z = y \to divides x y.
+  \forall H4:\forall x,y.divides two (m x y) \to divides two x ∨ divides two y.
+  \forall H5:m a a = m two (m b b).
+  \forall H6:\forall x.divides x a \to divides x b \to x = o.
+  two = o.
+  intros.
+  cut (divides two a);
+    [2:elim (H8 a a);[assumption.|assumption|rewrite > H9.auto.]
+    |elim (H6 ? ? Hcut).
+     cut (divides two b);
+       [ apply (H10 ? Hcut Hcut1).
+       | elim (H8 b b);[assumption.|assumption|
+         apply (H7 ? ? (m a1 a1));
+         apply (H5 two ? ?);rewrite < H9.
+         rewrite < H11.rewrite < H2.
+         apply eq_f.rewrite > H2.rewrite > H4.reflexivity.
+         ]
+         ]
+         ]
+         qed.
+         
+theorem prova31:
+  \forall A:Set.
+  \forall m,f:A \to A \to A.
+  \forall divides: A \to A \to Prop.
+  \forall o,a,b,two:A.
+  \forall H1:\forall x.m o x = x.
+  \forall H1:\forall x.m x o = x.
+  \forall H1:\forall x,y,z.m x (m y z) = m (m x y) z.
+  \forall H1:\forall x.m x o = x.
+  \forall H2:\forall x,y.m x y = m y x.
+  \forall H3:\forall x,y,z. m x y = m x z \to y = z. 
+  (* \forall H4:\forall x,y.(\exists z.m x z = y) \to divides x y. *)
+  \forall H4:\forall x,y.(divides x y \to m x (f x y) = y). 
+  \forall H4:\forall x,y,z.m x z = y \to divides x y.
+  \forall H4:\forall x,y.divides two (m x y) \to divides two x ∨ divides two y.
+  \forall H5:m a a = m two (m b b).
+  \forall H6:\forall x.divides x a \to divides x b \to x = o.
+  two = o.
+  intros.
+  cut (divides two a);
+    [2:elim (H8 a a);[assumption.|assumption|rewrite > H9.auto.]
+    |(*elim (H6 ? ? Hcut). *)
+     cut (divides two b);
+       [ apply (H10 ? Hcut Hcut1).
+       | elim (H8 b b);[assumption.|assumption|
+       
+         apply (H7 ? ? (m (f two a) (f two a)));
+         apply (H5 two ? ?);
+         rewrite < H9.
+         rewrite < (H6 two a Hcut) in \vdash (? ? ? %).
+         rewrite < H2.apply eq_f.
+         rewrite < H4 in \vdash (? ? ? %).
+         rewrite > H2.reflexivity.
+         ]
+         ]
+         ]
+         qed.  
+           
+theorem prova32:
+  \forall A:Set.
+  \forall m,f:A \to A \to A.
+  \forall divides: A \to A \to Prop.
+  \forall o,a,b,two:A.
+  \forall H1:\forall x.m o x = x.
+  \forall H1:\forall x.m x o = x.
+  \forall H1:\forall x,y,z.m x (m y z) = m (m x y) z.
+  \forall H1:\forall x.m x o = x.
+  \forall H2:\forall x,y.m x y = m y x.
+  \forall H3:\forall x,y,z. m x y = m x z \to y = z. 
+  (* \forall H4:\forall x,y.(\exists z.m x z = y) \to divides x y. *)
+  \forall H4:\forall x,y.(divides x y \to m x (f x y) = y). 
+  \forall H4:\forall x,y,z.m x z = y \to divides x y.
+  \forall H4:\forall x.divides two (m x x) \to divides two x.
+  \forall H5:m a a = m two (m b b).
+  \forall H6:\forall x.divides x a \to divides x b \to x = o.
+  two = o.
+  intros.
+  cut (divides two a);[|apply H8;rewrite > H9.auto].
+  apply H10;
+  [ assumption.
+  | apply (H8 b);       
+         apply (H7 ? ? (m (f two a) (f two a)));
+         apply (H5 two ? ?);
+         auto paramodulation.
+         (*
+         rewrite < H9.
+         rewrite < (H6 two a Hcut) in \vdash (? ? ? %).
+         rewrite < H2.apply eq_f.
+         rewrite < H4 in \vdash (? ? ? %).
+         rewrite > H2.reflexivity.
+         *)
+  ]
+qed.
+             
 (* the following factorization algorithm looks for the largest prime
    factor. *)
 definition max_prime_factor \def \lambda n:nat.
@@ -46,13 +173,17 @@ intros; apply divides_b_true_to_divides;
       [ apply (trans_lt ? (S O));
         [ unfold lt; apply le_n;
         | apply lt_SO_smallest_factor; assumption; ]
-      | apply divides_smallest_factor_n;
+      | letin x \def le.auto.
+         (*       
+       apply divides_smallest_factor_n;
         apply (trans_lt ? (S O));
         [ unfold lt; apply le_n;
-        | assumption; ] ] ]
-  | apply prime_to_nth_prime;
+        | assumption; ] *) ] ]
+  | letin x \def prime. auto.
+    (* 
+    apply prime_to_nth_prime;
     apply prime_smallest_factor_n;
-    assumption; ] ]
+    assumption; *) ] ]
 qed.
 
 theorem divides_to_max_prime_factor : \forall n,m. (S O) < n \to O < m \to n \divides m \to 
@@ -66,15 +197,24 @@ apply divides_to_divides_b_true.
 cut (prime (nth_prime (max_prime_factor n))).
 apply lt_O_nth_prime_n.apply prime_nth_prime.
 cut (nth_prime (max_prime_factor n) \divides n).
-apply (transitive_divides ? n).
-apply divides_max_prime_factor_n.
-assumption.assumption.
-apply divides_b_true_to_divides.
-apply lt_O_nth_prime_n.
-apply divides_to_divides_b_true.
-apply lt_O_nth_prime_n.
-apply divides_max_prime_factor_n.
-assumption.
+auto.
+auto.
+(*
+  [ apply (transitive_divides ? n);
+    [ apply divides_max_prime_factor_n.
+      assumption.
+    | assumption. 
+    ]
+  | apply divides_b_true_to_divides;
+    [ apply lt_O_nth_prime_n.
+    | apply divides_to_divides_b_true;
+      [ apply lt_O_nth_prime_n.
+      | apply divides_max_prime_factor_n.
+        assumption.
+      ]
+    ]
+  ]
+*)  
 qed.
 
 theorem p_ord_to_lt_max_prime_factor: \forall n,p,q,r. O < n \to
@@ -91,20 +231,42 @@ rewrite < H4.
 apply divides_max_prime_factor_n.
 assumption.unfold Not.
 intro.
-cut (r \mod (nth_prime (max_prime_factor n)) \neq O).
-apply Hcut1.apply divides_to_mod_O.
-apply lt_O_nth_prime_n.assumption.
-apply (p_ord_aux_to_not_mod_O n n ? q r).
-apply lt_SO_nth_prime_n.assumption.
-apply le_n.
-rewrite < H1.assumption.
+cut (r \mod (nth_prime (max_prime_factor n)) \neq O);
+  [unfold Not in Hcut1.auto.
+    (*
+    apply Hcut1.apply divides_to_mod_O;
+    [ apply lt_O_nth_prime_n.
+    | assumption.
+    ]
+    *)
+  |letin z \def le.
+   cut(pair nat nat q r=p_ord_aux n n (nth_prime (max_prime_factor n)));
+   [2: rewrite < H1.assumption.|letin x \def le.auto width = 4]
+   (* CERCA COME MAI le_n non lo applica se lo trova come Const e non Rel *)
+  ].
+(*
+    apply (p_ord_aux_to_not_mod_O n n ? q r);
+    [ apply lt_SO_nth_prime_n.
+    | assumption.
+    | apply le_n.
+    | rewrite < H1.assumption.
+    ]
+  ].
+*)  
+cut (n=r*(nth_prime p)\sup(q));
+  [letin www \def le.letin www1 \def divides.
+   auto.
+(*
 apply (le_to_or_lt_eq (max_prime_factor r)  (max_prime_factor n)).
 apply divides_to_max_prime_factor.
 assumption.assumption.
 apply (witness r n ((nth_prime p) \sup q)).
+*)
+ |
 rewrite < sym_times.
 apply (p_ord_aux_to_exp n n ? q r).
 apply lt_O_nth_prime_n.assumption.
+]
 qed.
 
 theorem p_ord_to_lt_max_prime_factor1: \forall n,p,q,r. O < n \to
@@ -255,13 +417,13 @@ apply (nat_case n).
 left.split.assumption.reflexivity.
 intro.right.rewrite > Hcut2.
 simplify.unfold lt.apply le_S_S.apply le_O_n.
-cut (r \lt (S O) \or r=(S O)).
+cut (r < (S O) ∨ r=(S O)).
 elim Hcut2.absurd (O=r).
 apply le_n_O_to_eq.apply le_S_S_to_le.exact H5.
 unfold Not.intro.
 cut (O=n1).
 apply (not_le_Sn_O O).
-rewrite > Hcut3 in \vdash (? ? %).
+rewrite > Hcut3 in ⊢ (? ? %).
 assumption.rewrite > Hcut. 
 rewrite < H6.reflexivity.
 assumption.
