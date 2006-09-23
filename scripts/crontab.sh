@@ -1,4 +1,5 @@
 #!/bin/bash
+set -x
 
 #configuration
 TODAY=`date +%Y%m%d`
@@ -10,13 +11,10 @@ SHELLTIME2CENTSPHP=scripts/shell_time2cents.php
 SHELLADDERPHP=scripts/shell_adder.php
 COMMONPHP=scripts/public_html/common.php
 MYSQL="mysql -u helm -h mowgli.cs.unibo.it matita"
-SQLQMARK="select distinct mark from bench where mark like '"
-SQLQORD="' order by mark;"
-SQLQTIME="select SUM(timeuser) from bench where mark = \""
-SQLQGRMARK="\" group by mark;"
-SQLQFAIL="select count(distinct test) from bench where mark = \""
-SQLQFAIL1="select distinct test from bench where mark = \""
-SQLQFAIL2="\" and result = 'fail';"
+SQLQMARK="select distinct mark from bench where mark like '%s%%' order by mark;"
+SQLQTIME="select SUM(timeuser) from bench where mark = '%s' group by mark;"
+SQLQFAILCOUNT="select count(distinct test) from bench where mark = '%s' and result = 'fail';"
+SQLQFAIL="select distinct test from bench where mark = '%s' and result = 'fail';"
 URL="http://mowgli.cs.unibo.it/~tassi/bench.php"
 
 #initialization
@@ -30,8 +28,8 @@ svn co ${SVNROOT}helm/software/matita/scripts/ > LOG.svn 2>&1
 #run tests
 scripts/profile_svn.sh 2> LOG
 
-MARK=`echo $SQLQMARK$TODAY%$SQLQORD | $MYSQL | tail -n 1`
-LASTMARK=`echo $SQLQMARK$YESTERDAY%$SQLQORD | $MYSQL | tail -n 1`
+MARK=`printf "$SQLQMARK" "$TODAY" | $MYSQL | tail -n 1`
+LASTMARK=`printf "$SQLQMARK" "$YESTERDAY" | $MYSQL | tail -n 1`
 
 if [ -z "$MARK" ]; then
   echo "No benchmark records for $TODAY"
@@ -44,19 +42,19 @@ if [ -z "$LASTMARK" ]; then
 fi
 
 #check for slowdown
-CUR_TIME=`echo $SQLQTIME$MARK$SQLQGRMARK | $MYSQL`
-OLD_TIME=`echo $SQLQTIME$LASTMARK$SQLQGRMARK | $MYSQL`
+CUR_TIME=`printf "$SQLQTIME" "$MARK" | $MYSQL | tail -n 1`
+OLD_TIME=`printf "$SQLQTIME" "$LASTMARK" | $MYSQL | tail -n 1`
 
 if [ -z "$CUR_TIME" -o -z "$OLD_TIME" ]; then
     cat <<EOT
 
     Unable to calculate total time amounts:
     
-      $SQLQTIME$MARK$SQLQGRMARK 
+      `printf "$SQLQTIME" "$MARK"`
       
     or
 
-      $SQLQTIME$LASTMARK$SQLQGRMARK
+      `printf "$SQLQTIME" "$LASTMARK"`
       
     gave an empty result
     
@@ -67,35 +65,36 @@ fi
 if [ "$DELTA" -lt 0 ]; then
   PERC=0
 else
-  PREC=`scripts/functions.lua proportion $DELTA x $OLD_CENTS 100`
+  PREC=`lua50 scripts/functions.lua proportion $DELTA x $OLD_TIME 100`
 fi
 if [ "$PERC" -ge 5 ]; then
   cat <<EOT
   
-  PERFORMANCE LOSS DETECTED (MARK $MARK vs MARK $LASTMARK)
+  Performance loss detected (MARK $MARK vs MARK $LASTMARK)
   
-  Is `scripts/functions.lua t2s $CUR_TIME` 
-  
-  Was `scripts/functions.lua t2s $OLD_TIME`
+  Is: `lua50 scripts/functions.lua t2s $CUR_TIME` 
+  Was: `lua50 scripts/functions.lua t2s $OLD_TIME`
   
   For details: $URL
 EOT
 fi
 
 #check for more broken tests
-CUR_FAIL=`echo $SQLQFAIL$MARK$SQLQFAIL2 | $MYSQL`
-OLD_FAIL=`echo $SQLQFAIL$LASTMARK$SQLQFAIL2 | $MYSQL`
+CUR_FAIL=`printf "$SQLQFAILCOUNT" "$MARK" | $MYSQL | tail -n 1`
+OLD_FAIL=`printf "$SQLQFAILCOUNT" "$LASTMARK" | $MYSQL | tail -n 1`
 
 if [ "$CUR_FAIL" -gt "$OLD_FAIL" ]; then
   cat <<EOT
 
-  MORE BROKEN TESTS DETECTED (MARK $MARK vs MARK $LASTMARK)
+  More broken tests detected (MARK $MARK vs MARK $LASTMARK)
+  Is: $CUR_FAIL
+  Was: $OLD_FAIL 
   
   Now broken:
-`echo $SQLQFAIL1$MARK$SQLQFAIL2 | $MYSQL`
+`printf "$SQLQFAIL" "$MARK" | $MYSQL`
 
   Were broken:
-`echo $SQLQFAIL1$LASTMARK$SQLQFAIL2 | $MYSQL`
+`printf "$SQLQFAIL" "$LASTMARK" | $MYSQL`
   
   For details: $URL
 EOT
