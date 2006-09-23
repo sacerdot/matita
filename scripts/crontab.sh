@@ -1,5 +1,5 @@
 #!/bin/bash
-set -x
+#set -x
 
 #configuration
 TODAY=`date +%Y%m%d`
