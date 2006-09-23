@@ -65,15 +65,15 @@ fi
 if [ "$DELTA" -lt 0 ]; then
   PERC=0
 else
-  PREC=`lua50 scripts/functions.lua proportion $DELTA x $OLD_TIME 100`
+  PREC=`lua5.1 scripts/functions.lua proportion $DELTA x $OLD_TIME 100`
 fi
 if [ "$PERC" -ge 5 ]; then
   cat <<EOT
   
   Performance loss detected (MARK $MARK vs MARK $LASTMARK)
   
-  Is: `lua50 scripts/functions.lua t2s $CUR_TIME` 
-  Was: `lua50 scripts/functions.lua t2s $OLD_TIME`
+  Is: `lua5.1 scripts/functions.lua t2s $CUR_TIME` 
+  Was: `lua5.1 scripts/functions.lua t2s $OLD_TIME`
   
   For details: $URL
 EOT
