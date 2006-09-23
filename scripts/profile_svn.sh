@@ -59,6 +59,7 @@ ln -s trunk/helm .
 
 #compile
 export HOME="`pwd`/../$TMPDIRNAME.HOME"
+export USER="bench"
 compile $PWD/helm/software/
 
 #run
@@ -66,7 +67,7 @@ run_tests $PWD/helm/software/matita > LOG 2>LOG.run_tests.err
 
 #insert the db
 cat LOG | grep "\(OK\|FAIL\)" | grep "\(gc-on\|gc-off\)" | \
-  $PWD/helm/software/matita/scripts/functions.lua log2sql - > INSERT.sql
+  lua50 $PWD/helm/software/matita/scripts/functions.lua log2sql - > INSERT.sql
 cat INSERT.sql | $MYSQL
 
 #save the revision
