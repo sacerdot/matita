@@ -7,7 +7,7 @@
     <!-- User name. It is used down in this configuration file.  If left
     unspecified, name of the user executing matita will be used (as per
     getent) -->
-    <!-- <key name="name">foo</key> -->
+    <key name="name">$(USER)</key>
   </section>
   <section name="matita">
     <!-- Debug only. Stay away. -->
