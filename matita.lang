@@ -92,7 +92,7 @@
     <keyword>contradiction</keyword>
     <keyword>cut</keyword>
     <keyword>decompose</keyword>
-    <keyword>discriminate</keyword>
+    <keyword>destruct</keyword>
     <keyword>elim</keyword>
     <keyword>elimType</keyword>
     <keyword>exact</keyword>
@@ -104,7 +104,6 @@
     <keyword>generalize</keyword>
     <keyword>goal</keyword>
     <keyword>id</keyword>
-    <keyword>injection</keyword>
     <keyword>intro</keyword>
     <keyword>intros</keyword>
     <keyword>inversion</keyword>
