@@ -186,6 +186,7 @@ let call_make ?matita_flags development target make =
     already_defined ^ 
       if Helm_registry.get_bool "matita.bench" then "-bench" else ""
   in
+  let csc = try ["SRC=" ^ Sys.getenv "SRC"] with Not_found -> [] in
   rebuild_makefile development;
   let makefile = makefile_for_development development in
   let nodb =
@@ -197,6 +198,7 @@ let call_make ?matita_flags development target make =
     try
       flags @ [ sprintf "MATITA_FLAGS=\"%s\"" matita_flags ]
     with Not_found -> flags in
+  let flags = flags @ csc in
   let args = 
     ["--no-print-directory"; "-s"; "-k"; "-f"; makefile; target] @ flags 
   in
@@ -296,6 +298,7 @@ let destroy_development_aux development clean_development =
     unlink (pool () ^ development.name ^ rootfile);
     unlink (pool () ^ development.name ^ "/depend");
     unlink (pool () ^ development.name ^ "/depend.errors");
+    unlink (pool () ^ development.name ^ "/depend.dot");
     rmdir (pool () ^ development.name);
     developments := 
       List.filter (fun d -> d.name <> development.name) !developments
