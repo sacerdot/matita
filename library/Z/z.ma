@@ -55,9 +55,9 @@ match OZ_test z with
 intros.elim z.
 simplify.reflexivity.
 simplify. unfold Not. intros (H).
-discriminate H.
+destruct H.
 simplify. unfold Not. intros (H).
-discriminate H.
+destruct H.
 qed.
 
 (* discrimination *)
@@ -85,17 +85,17 @@ variant inj_neg : \forall n,m:nat. neg n = neg m \to n = m
 
 theorem not_eq_OZ_pos: \forall n:nat. OZ \neq pos n.
 unfold Not.intros (n H).
-discriminate H.
+destruct H.
 qed.
 
 theorem not_eq_OZ_neg :\forall n:nat. OZ \neq neg n.
 unfold Not.intros (n H).
-discriminate H.
+destruct H.
 qed.
 
 theorem not_eq_pos_neg :\forall n,m:nat. pos n \neq neg m.
 unfold Not.intros (n m H).
-discriminate H.
+destruct H.
 qed.
 
 theorem decidable_eq_Z : \forall x,y:Z. decidable (x=y).
@@ -117,7 +117,7 @@ elim x.
   (* goal: x=pos y=pos *)
     elim (decidable_eq_nat n n1:((n=n1) \lor ((n=n1) \to False))).
     left.apply eq_f.assumption.
-    right.unfold Not.intros (H_inj).apply H. injection H_inj. assumption.
+    right.unfold Not.intros (H_inj).apply H. destruct H_inj. assumption.
   (* goal: x=pos y=neg *)
     right.unfold Not.intro.apply (not_eq_pos_neg n n1). assumption.
 (* goal: x=neg *)

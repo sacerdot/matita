@@ -44,7 +44,7 @@ theorem nil_cons:
   intros;
   unfold Not;
   intros;
-  discriminate H.
+  destruct H.
 qed.
 
 let rec id_list A (l: list A) on l :=
