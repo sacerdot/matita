@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/SK/".
+set "baseuri" "cic:/matita/tests/bool/".
 
 include "legacy/coq.ma".
 
