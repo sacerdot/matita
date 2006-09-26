@@ -200,7 +200,7 @@ theorem easy6: ∀t. O ≮ O → O < size t → t ≠ Empty.
      suppose (Node t1 t2 = Empty) (absurd).
      (* Discriminate should really generate a theorem to be useful with
         declarative tactics *)
-     discriminate absurd.
+     destruct absurd.
      by final
    done.
 qed.
