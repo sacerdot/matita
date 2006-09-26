@@ -119,6 +119,8 @@ links:
 linkonly:
 	$(H)echo "  OCAMLC matita.ml"
 	$(H)$(OCAMLC) $(PKGS) -linkpkg -o matita $(CMOS) matita.ml
+	$(H)echo "  OCAMLC matitac.ml"
+	$(H)$(OCAMLC) $(CPKGS) -linkpkg -o matitac $(CCMOS) $(MAINCMOS) matitac.ml
 .PHONY: linkonly
 matita: matita.ml $(LIB_DEPS) $(CMOS)
 	$(H)echo "  OCAMLC $<"
