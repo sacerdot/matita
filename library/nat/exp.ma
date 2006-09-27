@@ -54,7 +54,7 @@ apply le_times.assumption.assumption.
 qed.
 
 theorem lt_m_exp_nm: \forall n,m:nat. (S O) < n \to m < n \sup m.
-intros.elim m.simplify.unfold lt.reflexivity.
+intros.elim m.simplify.unfold lt.apply le_n.
 simplify.unfold lt.
 apply (trans_le ? ((S(S O))*(S n1))).
 simplify.

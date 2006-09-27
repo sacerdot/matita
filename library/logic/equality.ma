@@ -62,7 +62,7 @@ qed.
 
 theorem eq_f: \forall  A,B:Type.\forall f:A\to B.
 \forall x,y:A. x=y \to f x = f y.
-intros.elim H.reflexivity.
+intros.elim H.apply refl_eq.
 qed.
 
 coercion cic:/matita/logic/equality/sym_eq.con.

@@ -17,6 +17,8 @@ include "logic/equality.ma".
 
 inductive void : Set \def.
 
+inductive unit : Set ≝ something: unit.
+
 inductive Prod (A,B:Set) : Set \def
 pair : A \to B \to Prod A B.
 

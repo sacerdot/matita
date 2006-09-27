@@ -146,8 +146,11 @@ let _ =
       let moo = grafite_status.moo_content_rev in
       List.iter
         (fun cmd ->
-          prerr_endline (GrafiteAstPp.pp_command ~obj_pp:(fun _ -> assert false)
-            cmd))
+          prerr_endline
+           (GrafiteAstPp.pp_command
+             ~term_pp:(fun _ -> assert false)
+             ~obj_pp:(fun _ -> assert false)
+             cmd))
         (List.rev moo));
     addDebugItem "print metasenv goals and stack to stderr"
       (fun _ ->

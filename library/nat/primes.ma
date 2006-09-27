@@ -416,8 +416,8 @@ qed.
   
 theorem le_smallest_factor_n : 
 \forall n:nat. smallest_factor n \le n.
-intro.apply (nat_case n).simplify.reflexivity.
-intro.apply (nat_case m).simplify.reflexivity.
+intro.apply (nat_case n).simplify.apply le_n.
+intro.apply (nat_case m).simplify.apply le_n.
 intro.apply divides_to_le.
 unfold lt.apply le_S_S.apply le_O_n.
 apply divides_smallest_factor_n.

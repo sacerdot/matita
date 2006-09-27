@@ -413,7 +413,7 @@ symmetric_gcd.
 
 theorem le_gcd_times: \forall m,n,p:nat. O< p \to gcd m n \le gcd m (n*p).
 intros.
-apply (nat_case n).reflexivity.
+apply (nat_case n).apply le_n.
 intro.
 apply divides_to_le.
 apply lt_O_gcd.

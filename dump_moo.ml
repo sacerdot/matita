@@ -51,7 +51,9 @@ let _ =
         List.iter
           (fun cmd ->
             printf "  %s\n%!"
-              (GrafiteAstPp.pp_command ~obj_pp:(fun _ -> assert false) cmd))
+              (GrafiteAstPp.pp_command
+                ~term_pp:(fun _ -> assert false)
+                ~obj_pp:(fun _ -> assert false) cmd))
           commands;
       end)
     (List.rev !moos)
