@@ -37,3 +37,8 @@ record paperino: Prop \def {
   pippo : paolo \to paolo;
   piero : True
 }.
+
+(* the following test used to show the following bug: the left
+   parameter A in the type of t was not unified with the left
+   parameter A in the type of the constructor of the record *)
+record t A : Type := { f : t A }.
