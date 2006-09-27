@@ -405,6 +405,11 @@ endif
 $(CMOS): $(LIB_DEPS)
 $(CMOS:%.cmo=%.cmx): $(LIBX_DEPS)
 
+deps.ps: deps.dot
+	dot -Tps -o $@ $<
+deps.dot: .depend
+	./dep2dot.rb < $< | tred > $@
+
 ifeq ($(MAKECMDGOALS),all)
    $(CMOS:%.cmo=%.cmi): $(LIB_DEPS)
 endif
