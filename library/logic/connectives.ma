@@ -82,3 +82,5 @@ interpretation "exists" 'exists \eta.x =
 inductive ex2 (A:Type) (P,Q:A \to Prop) : Prop \def
     ex_intro2: \forall x:A. P x \to Q x \to ex2 A P Q.
 
+definition iff :=
+ \lambda A,B. (A -> B) \land (B -> A).

@@ -17,8 +17,8 @@
 
 set "baseuri" "cic:/matita/technicalities/setoids".
 
-include "higher_order_defs/relations.ma".
 include "datatypes/constructors.ma".
+include "logic/connectives2.ma".
 
 (* DEFINITIONS OF Relation_Class AND n-ARY Morphism_Theory *)
 
@@ -145,70 +145,108 @@ qed.
 definition make_compatibility_goal :=
  λIn,Out,f. make_compatibility_goal_aux In Out f f.
 
-record Morphism_Theory In Out : Type :=
+record Morphism_Theory (In: Arguments) (Out: Relation_Class) : Type :=
  { Function : function_type_of_morphism_signature In Out;
    Compat : make_compatibility_goal In Out Function
  }.
 
 definition list_of_Leibniz_of_list_of_types: nelistT Type → Arguments.
- induction 1.
-   exact (singl (Leibniz ? a)).
-   exact (cons (Leibniz ? a) IHX).
+ intro;
+ elim n;
+  [ apply (singl ? (Leibniz ? t))
+  | apply (cons ? (Leibniz ? t) a)
+  ]
 qed.
 
 (* every function is a morphism from Leibniz+ to Leibniz *)
 definition morphism_theory_of_function :
- ∀(In: nelistT Type) (Out: Type).
+ ∀In: nelistT Type.∀Out: Type.
   let In' := list_of_Leibniz_of_list_of_types In in
   let Out' := Leibniz ? Out in
    function_type_of_morphism_signature In' Out' →
     Morphism_Theory In' Out'.
-  intros.
-  exists X.
-  induction In;  unfold make_compatibility_goal; simpl.
-    reflexivity.
-    intro; apply (IHIn (X x)).
+  intros;
+  apply (mk_Morphism_Theory ? ? f);
+  unfold In' in f; clear In';
+  unfold Out' in f; clear Out';
+  generalize in match f; clear f;
+  elim In;
+   [ unfold make_compatibility_goal;
+     simplify;
+     intros;
+     whd;
+     reflexivity
+   | simplify;
+     intro;
+     unfold In' in f;
+     unfold Out' in f;
+     exact (H (f1 x))
+   ]
 qed.
 
 (* THE iff RELATION CLASS *)
 
 definition Iff_Relation_Class : Relation_Class.
- eapply (@SymmetricReflexive unit ? iff).
- exact iff_sym.
- exact iff_refl.
+ apply (SymmetricReflexive unit ? iff);
+  [ exact symmetric_iff
+  | exact reflexive_iff
+  ]
 qed.
 
 (* THE impl RELATION CLASS *)
 
-definition impl (A B: Prop) := A → B.
+definition impl \def \lambda A,B:Prop. A → B.
 
-Theorem impl_refl: reflexive ? impl.
- hnf; unfold impl; tauto.
-Qed.
+theorem impl_refl: reflexive ? impl.
+ unfold reflexive;
+ intros;
+ unfold impl;
+ intro;
+ assumption.
+qed.
 
 definition Impl_Relation_Class : Relation_Class.
- eapply (@AsymmetricReflexive unit tt ? impl).
+ unfold Relation_Class;
+ apply (AsymmetricReflexive unit something ? impl);
  exact impl_refl.
 qed.
 
 (* UTILITY FUNCTIONS TO PROVE THAT EVERY TRANSITIVE RELATION IS A MORPHISM *)
 
 definition equality_morphism_of_symmetric_areflexive_transitive_relation:
- ∀(A: Type)(Aeq: relation A)(sym: symmetric ? Aeq)(trans: transitive ? Aeq).
-  let ASetoidClass := SymmetricAreflexive ? sym in
-   (Morphism_Theory (cons ASetoidClass (singl ASetoidClass)) Iff_Relation_Class).
- intros.
- exists Aeq.
- unfold make_compatibility_goal; simpl; split; eauto.
+ ∀A: Type.∀Aeq: relation A.∀sym: symmetric ? Aeq.∀trans: transitive ? Aeq.
+  let ASetoidClass := SymmetricAreflexive ? ? ? sym in
+   (Morphism_Theory (cons ? ASetoidClass (singl ? ASetoidClass))
+     Iff_Relation_Class).
+ intros;
+ apply mk_Morphism_Theory;
+  [ exact Aeq
+  | unfold make_compatibility_goal;
+    simplify;
+    intros;
+    split;
+    unfold transitive in H;
+    unfold symmetric in sym;
+    intro;
+    auto
+  ].
 qed.
 
 definition equality_morphism_of_symmetric_reflexive_transitive_relation:
- ∀(A: Type)(Aeq: relation A)(refl: reflexive ? Aeq)(sym: symmetric ? Aeq)
-  (trans: transitive ? Aeq). let ASetoidClass := SymmetricReflexive ? sym refl in
-   (Morphism_Theory (cons ASetoidClass (singl ASetoidClass)) Iff_Relation_Class).
- intros.
- exists Aeq.
- unfold make_compatibility_goal; simpl; split; eauto.
+ ∀A: Type.∀Aeq: relation A.∀refl: reflexive ? Aeq.∀sym: symmetric ? Aeq.
+  ∀trans: transitive ? Aeq.
+   let ASetoidClass := SymmetricReflexive ? ? ? sym refl in
+    (Morphism_Theory (cons ? ASetoidClass (singl ? ASetoidClass)) Iff_Relation_Class).
+ intros;
+ apply mk_Morphism_Theory;
+ reduce;
+  [ exact Aeq
+  | intros;
+    split;
+    intro;
+    unfold transitive in H;
+    auto
+  ]
 qed.
 
 definition equality_morphism_of_asymmetric_areflexive_transitive_relation:
