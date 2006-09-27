@@ -245,7 +245,8 @@ definition equality_morphism_of_symmetric_reflexive_transitive_relation:
     split;
     intro;
     unfold transitive in H;
-    auto
+    unfold symmetric in sym;
+    auto.
   ]
 qed.
 
