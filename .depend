@@ -40,12 +40,14 @@ matitamakeLib.cmo: buildTimeConf.cmi matitamakeLib.cmi
 matitamakeLib.cmx: buildTimeConf.cmx matitamakeLib.cmi 
 matitamake.cmo: matitamakeLib.cmi matitaInit.cmi matitamake.cmi 
 matitamake.cmx: matitamakeLib.cmx matitaInit.cmx matitamake.cmi 
-matitaMathView.cmo: matitaTypes.cmi matitaScript.cmi matitaMisc.cmi \
-    matitaGuiTypes.cmi matitaGtkMisc.cmi matitaExcPp.cmi lablGraphviz.cmi \
-    buildTimeConf.cmi applyTransformation.cmi matitaMathView.cmi 
-matitaMathView.cmx: matitaTypes.cmx matitaScript.cmx matitaMisc.cmx \
-    matitaGuiTypes.cmi matitaGtkMisc.cmx matitaExcPp.cmx lablGraphviz.cmx \
-    buildTimeConf.cmx applyTransformation.cmx matitaMathView.cmi 
+matitaMathView.cmo: matitamakeLib.cmi matitaTypes.cmi matitaScript.cmi \
+    matitaMisc.cmi matitaGuiTypes.cmi matitaGtkMisc.cmi matitaExcPp.cmi \
+    lablGraphviz.cmi buildTimeConf.cmi applyTransformation.cmi \
+    matitaMathView.cmi 
+matitaMathView.cmx: matitamakeLib.cmx matitaTypes.cmx matitaScript.cmx \
+    matitaMisc.cmx matitaGuiTypes.cmi matitaGtkMisc.cmx matitaExcPp.cmx \
+    lablGraphviz.cmx buildTimeConf.cmx applyTransformation.cmx \
+    matitaMathView.cmi 
 matitaMisc.cmo: buildTimeConf.cmi matitaMisc.cmi 
 matitaMisc.cmx: buildTimeConf.cmx matitaMisc.cmi 
 matita.cmo: matitaTypes.cmi matitaScript.cmi matitaMathView.cmi \
