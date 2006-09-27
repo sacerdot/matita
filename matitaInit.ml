@@ -219,6 +219,9 @@ let parse_cmdline init_status =
       BuildTimeConf.stdlib_dir_devel;
       BuildTimeConf.stdlib_dir_installed ; ] 
     in
+    let absolutize s =
+      if Pcre.pmatch ~pat:"^/" s then s else Sys.getcwd() ^"/"^s
+    in
     let args = ref [] in
     let add_l l = fun s -> l := s :: !l in
     let reduce_verbosity () =
@@ -273,11 +276,12 @@ let parse_cmdline init_status =
       std_arg_spec @ debug_arg_spec @ !extra_cmdline_specs
     in
     let set_list ~key l =
-      Helm_registry.set_list Helm_registry.of_string ~key ~value:(List.rev !l)
+      Helm_registry.set_list Helm_registry.of_string ~key ~value:(List.rev l)
     in
     Arg.parse arg_spec (add_l args) (usage ());
+    let includes = List.map absolutize !includes in
     set_list ~key:"matita.includes" includes;
-    args := List.filter (fun x -> x <> "") !args;
+    let args = List.filter (fun x -> x <> "") !args in
     set_list ~key:"matita.args" args;
     HExtlib.set_profiling_printings 
       (fun s -> 

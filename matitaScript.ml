@@ -129,11 +129,11 @@ let wrap_with_developments guistuff f arg =
         (ActionCancelled 
           ("Internal error: "^f_pwd^" exists but I'm unable to include it!"))
   in
-  let handle_with_devel d lexiconfile exc =
+  let handle_with_devel d lexiconfile mafile exc =
     let name = MatitamakeLib.name_for_development d in
     let title = "Unable to include " ^ lexiconfile in
     let message = 
-      lexiconfile ^ " is handled by development <b>" ^ name ^ "</b>.\n\n" ^
+      mafile ^ " is handled by development <b>" ^ name ^ "</b>.\n\n" ^
       "<i>Should I compile it and Its dependencies?</i>"
     in
     (match guistuff.ask_confirmation ~title ~message with
@@ -170,7 +170,7 @@ let wrap_with_developments guistuff f arg =
        * but was unable to get the compilation output 'xfilename' *)
       match MatitamakeLib.development_for_dir (Filename.dirname mafilename) with
       | None -> handle_without_devel mafilename exn
-      | Some d -> handle_with_devel d xfilename exn
+      | Some d -> handle_with_devel d xfilename mafilename exn
 ;;
     
 let eval_with_engine
