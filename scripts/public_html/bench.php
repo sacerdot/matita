@@ -112,48 +112,52 @@ $query_csc = urlencode("
 Performances (byte and GC) per mark
 @@@
 select 
-  bench.mark,
-  bench_svn.revision as revision, 
-  SUM(bench.time) as sum_time,
-  SUM(bench.timeuser) as sum_timeuser, 
-  COUNT(DISTINCT bench.test) as performed_tests,
-  COUNT(DISTINCT bench1.test) as failed_tests
+  bench_times.mark as mark,
+  bench_svn.revision,
+  bench_times.time         as time,
+  bench_times.timeuser     as timeuser,
+  bench_times_opt.time     as time_opt,
+  bench_times_opt.timeuser as timeuser_opt,
+  bench_times.tests     as tests,
+  bench_times_opt.tests as tests_opt,
+  bench_fails.count     as fail,
+  bench_fails_opt.count as fail_opt
 from 
-  bench, bench_svn,bench as bench1 
+  bench_svn, 
+  (select 
+    b1.mark as mark, SUM(b1.time) as time, 
+    SUM(b1.timeuser) as timeuser,COUNT(DISTINCT b1.test) as tests
+   from bench as b1
+   where 
+     b1.options = 'gc-on' and 
+     b1.compilation = 'opt' 
+     group by b1.mark) as bench_times_opt,
+  (select 
+    b1.mark as mark, SUM(b1.time) as time, 
+    SUM(b1.timeuser) as timeuser,COUNT(DISTINCT b1.test) as tests
+   from bench as b1
+   where 
+     b1.options = 'gc-on' and 
+     b1.compilation = 'byte' 
+     group by b1.mark) as bench_times,
+  (select b1.mark as mark, COUNT(DISTINCT b1.test) as count
+   from bench as b1
+   where 
+     b1.options = 'gc-on' and 
+     b1.compilation = 'byte' and b1.result = 'fail'
+     group by b1.mark) as bench_fails,
+  (select b1.mark as mark, COUNT(DISTINCT b1.test) as count
+   from bench as b1
+   where 
+     b1.options = 'gc-on' and 
+     b1.compilation = 'opt' and b1.result = 'fail'
+     group by b1.mark) as bench_fails_opt
 where 
-  bench.options = 'gc-on' and 
-  bench.compilation = 'byte' and 
-  bench_svn.mark = bench.mark and
-  bench1.result = 'fail' and
-  bench1.mark = bench.mark and
-  bench1.compilation = 'byte' and
-  bench1.options = 'gc-on'
-group by bench.mark
-order by bench.mark desc
-***");
-
-$query_csc_opt = urlencode("
-Performances (opt and GC) per mark
-@@@
-select 
-  bench.mark,
-  bench_svn.revision as revision, 
-  SUM(bench.time) as sum_time,
-  SUM(bench.timeuser) as sum_timeuser, 
-  COUNT(DISTINCT bench.test) as performed_tests,
-  COUNT(DISTINCT bench1.test) as failed_tests
-from 
-  bench, bench_svn,bench as bench1 
-where 
-  bench.options = 'gc-on' and 
-  bench.compilation = 'opt' and 
-  bench_svn.mark = bench.mark and
-  bench1.result = 'fail' and
-  bench1.mark = bench.mark and
-  bench1.compilation = 'opt' and
-  bench1.options = 'gc-on'
-group by bench.mark
-order by bench.mark desc
+  bench_times.mark = bench_fails.mark and 
+  bench_times_opt.mark = bench_fails_opt.mark and 
+  bench_times.mark = bench_times_opt.mark and 
+  bench_svn.mark = bench_times.mark 
+  order by bench_svn.mark desc
 ***");
 
 $query_total = urlencode("
@@ -216,8 +220,7 @@ function links_of($name,$q,$limits){
       <? links_of("Broken tests",$query_fail,$limits) ?>
       <? links_of("Garbage collector killer",$query_gc,$limits) ?>
       <? links_of("Auto performances",$query_auto,$limits) ?>
-      <? links_of("Global performances (bytecode)",$query_csc,$limits) ?>
-      <? links_of("Global performances (nativecode)",$query_csc_opt,$limits) ?>
+      <? links_of("Global performances",$query_csc,$limits) ?>
       <? links_of("Number of compiled tests",$query_total,$limits) ?>
       <? links_of("All table contents",$quey_all,$limits) ?>
       </ul>
