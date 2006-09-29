@@ -41,6 +41,15 @@ theorem trans_eq :
 intros.elim H1.assumption.
 qed.
 
+default \"equality\"
+ " ^ buri ^ "/eq.ind
+ " ^ buri ^ "/sym_eq.con
+ " ^ buri ^ "/trans_eq.con
+ " ^ buri ^ "/eq_ind.con
+ " ^ buri ^ "/eq_elim_r.con
+ " ^ buri ^ "/eq_f.con
+ " ^ buri ^ "/eq_f1.con.
+
 theorem eq_f: \\forall  A,B:Type.\\forall f:A\\to B.
   \\forall x,y:A. eq A x y \\to eq B (f x) (f y).
 intros.elim H.reflexivity.
@@ -50,15 +59,6 @@ theorem eq_f1: \\forall  A,B:Type.\\forall f:A\\to B.
   \\forall x,y:A. eq A x y \\to eq B (f y) (f x).
 intros.elim H.reflexivity.
 qed.
-
-default \"equality\"
- " ^ buri ^ "/eq.ind
- " ^ buri ^ "/sym_eq.con
- " ^ buri ^ "/trans_eq.con
- " ^ buri ^ "/eq_ind.con
- " ^ buri ^ "/eq_elim_r.con
- " ^ buri ^ "/eq_f.con
- " ^ buri ^ "/eq_f1.con.
 
 inductive ex (A:Type) (P:A \\to Prop) : Prop \\def
     ex_intro: \\forall x:A. P x \\to ex A P.
