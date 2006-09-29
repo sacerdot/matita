@@ -24,4 +24,4 @@ alias symbol "plus" (instance 0) = "Coq's natural plus".
 alias symbol "times" (instance 0) = "Coq's natural times".
 theorem a : \forall x,y:nat. x*x+(S y) = O - x.
 intros.
-auto depth = 3.
+auto depth = 4 width = 3 use_paramod = false.
