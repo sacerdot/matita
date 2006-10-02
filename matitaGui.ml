@@ -422,13 +422,26 @@ class gui () =
         develList#buttonsHbox#misc#set_sensitive true;
         source_view#set_editable true
       in
+      let worker_thread = ref None in
       let locker f () =
        let thread_main =
         fun () -> 
           lock_world ();
           try f ();unlock_world () with exc -> unlock_world (); raise exc
        in
-        ignore (Thread.create thread_main ()) in
+        worker_thread := Some (Thread.create thread_main ()) in
+      let kill_worker =
+       (* the following lines are from Xavier Leroy: http://alan.petitepomme.net/cwn/2005.11.08.html *)
+       let interrupt = ref None in
+       let force_interrupt n =
+         (* This function is called just before the thread's timeslice ends *)
+         if Some(Thread.id(Thread.self())) = !interrupt then
+          (interrupt := None; raise Sys.Break) in
+       let _ = Sys.signal Sys.sigvtalrm (Sys.Signal_handle force_interrupt) in
+        fun () ->
+         match !worker_thread with
+            None -> assert false
+          | Some t -> interrupt := Some (Thread.id t) in
       let keep_focus f =
         fun () ->
          try
@@ -801,6 +814,7 @@ class gui () =
       connect_button main#scriptTopButton top;
       connect_button main#scriptBottomButton bottom;
       connect_button main#scriptJumpButton jump;
+      connect_button main#scriptAbortButton kill_worker;
       connect_menu_item main#scriptAdvanceMenuItem advance;
       connect_menu_item main#scriptRetractMenuItem retract;
       connect_menu_item main#scriptTopMenuItem top;

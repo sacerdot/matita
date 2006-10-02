@@ -2295,185 +2295,237 @@
 			  <property name="spacing">0</property>
 
 			  <child>
-			    <widget class="GtkToolbar" id="buttonsToolbar">
+			    <widget class="GtkHBox" id="hbox28">
 			      <property name="visible">True</property>
-			      <property name="orientation">GTK_ORIENTATION_HORIZONTAL</property>
-			      <property name="toolbar_style">GTK_TOOLBAR_BOTH</property>
-			      <property name="tooltips">True</property>
-			      <property name="show_arrow">True</property>
+			      <property name="homogeneous">False</property>
+			      <property name="spacing">0</property>
 
 			      <child>
-				<widget class="GtkToolItem" id="toolitem25">
+				<widget class="GtkToolbar" id="buttonsToolbar">
 				  <property name="visible">True</property>
-				  <property name="visible_horizontal">True</property>
-				  <property name="visible_vertical">True</property>
-				  <property name="is_important">False</property>
+				  <property name="orientation">GTK_ORIENTATION_HORIZONTAL</property>
+				  <property name="toolbar_style">GTK_TOOLBAR_BOTH</property>
+				  <property name="tooltips">True</property>
+				  <property name="show_arrow">True</property>
 
 				  <child>
-				    <widget class="GtkButton" id="scriptTopButton">
+				    <widget class="GtkToolItem" id="toolitem41">
 				      <property name="visible">True</property>
-				      <property name="tooltip" translatable="yes">Restart</property>
-				      <property name="can_focus">True</property>
-				      <property name="relief">GTK_RELIEF_NONE</property>
-				      <property name="focus_on_click">True</property>
+				      <property name="visible_horizontal">True</property>
+				      <property name="visible_vertical">True</property>
+				      <property name="is_important">False</property>
 
 				      <child>
-					<widget class="GtkImage" id="image253">
+					<widget class="GtkButton" id="scriptTopButton">
 					  <property name="visible">True</property>
-					  <property name="stock">gtk-goto-top</property>
-					  <property name="icon_size">4</property>
-					  <property name="xalign">0.5</property>
-					  <property name="yalign">0.5</property>
-					  <property name="xpad">0</property>
-					  <property name="ypad">0</property>
+					  <property name="tooltip" translatable="yes">Restart</property>
+					  <property name="can_focus">True</property>
+					  <property name="relief">GTK_RELIEF_NONE</property>
+					  <property name="focus_on_click">True</property>
+
+					  <child>
+					    <widget class="GtkImage" id="image920">
+					      <property name="visible">True</property>
+					      <property name="stock">gtk-goto-top</property>
+					      <property name="icon_size">4</property>
+					      <property name="xalign">0.5</property>
+					      <property name="yalign">0.5</property>
+					      <property name="xpad">0</property>
+					      <property name="ypad">0</property>
+					    </widget>
+					  </child>
 					</widget>
 				      </child>
 				    </widget>
+				    <packing>
+				      <property name="expand">False</property>
+				      <property name="homogeneous">False</property>
+				    </packing>
+				  </child>
+
+				  <child>
+				    <widget class="GtkToolItem" id="toolitem42">
+				      <property name="visible">True</property>
+				      <property name="visible_horizontal">True</property>
+				      <property name="visible_vertical">True</property>
+				      <property name="is_important">False</property>
+
+				      <child>
+					<widget class="GtkButton" id="scriptRetractButton">
+					  <property name="visible">True</property>
+					  <property name="tooltip" translatable="yes">Retract 1 phrase</property>
+					  <property name="can_focus">True</property>
+					  <property name="relief">GTK_RELIEF_NONE</property>
+					  <property name="focus_on_click">True</property>
+
+					  <child>
+					    <widget class="GtkImage" id="image921">
+					      <property name="visible">True</property>
+					      <property name="stock">gtk-go-up</property>
+					      <property name="icon_size">4</property>
+					      <property name="xalign">0.5</property>
+					      <property name="yalign">0.5</property>
+					      <property name="xpad">0</property>
+					      <property name="ypad">0</property>
+					    </widget>
+					  </child>
+					</widget>
+				      </child>
+				    </widget>
+				    <packing>
+				      <property name="expand">False</property>
+				      <property name="homogeneous">False</property>
+				    </packing>
+				  </child>
+
+				  <child>
+				    <widget class="GtkToolItem" id="toolitem43">
+				      <property name="visible">True</property>
+				      <property name="visible_horizontal">True</property>
+				      <property name="visible_vertical">True</property>
+				      <property name="is_important">False</property>
+
+				      <child>
+					<widget class="GtkButton" id="scriptJumpButton">
+					  <property name="visible">True</property>
+					  <property name="tooltip" translatable="yes">Execute until point</property>
+					  <property name="can_focus">True</property>
+					  <property name="relief">GTK_RELIEF_NONE</property>
+					  <property name="focus_on_click">True</property>
+
+					  <child>
+					    <widget class="GtkImage" id="image922">
+					      <property name="visible">True</property>
+					      <property name="stock">gtk-jump-to</property>
+					      <property name="icon_size">4</property>
+					      <property name="xalign">0.5</property>
+					      <property name="yalign">0.5</property>
+					      <property name="xpad">0</property>
+					      <property name="ypad">0</property>
+					    </widget>
+					  </child>
+					</widget>
+				      </child>
+				    </widget>
+				    <packing>
+				      <property name="expand">False</property>
+				      <property name="homogeneous">False</property>
+				    </packing>
+				  </child>
+
+				  <child>
+				    <widget class="GtkToolItem" id="toolitem44">
+				      <property name="visible">True</property>
+				      <property name="visible_horizontal">True</property>
+				      <property name="visible_vertical">True</property>
+				      <property name="is_important">False</property>
+
+				      <child>
+					<widget class="GtkButton" id="scriptAdvanceButton">
+					  <property name="visible">True</property>
+					  <property name="tooltip" translatable="yes">Execute 1 phrase</property>
+					  <property name="can_focus">True</property>
+					  <property name="relief">GTK_RELIEF_NONE</property>
+					  <property name="focus_on_click">True</property>
+
+					  <child>
+					    <widget class="GtkImage" id="image923">
+					      <property name="visible">True</property>
+					      <property name="stock">gtk-go-down</property>
+					      <property name="icon_size">4</property>
+					      <property name="xalign">0.5</property>
+					      <property name="yalign">0.5</property>
+					      <property name="xpad">0</property>
+					      <property name="ypad">0</property>
+					    </widget>
+					  </child>
+					</widget>
+				      </child>
+				    </widget>
+				    <packing>
+				      <property name="expand">False</property>
+				      <property name="homogeneous">False</property>
+				    </packing>
+				  </child>
+
+				  <child>
+				    <widget class="GtkToolItem" id="toolitem45">
+				      <property name="visible">True</property>
+				      <property name="visible_horizontal">True</property>
+				      <property name="visible_vertical">True</property>
+				      <property name="is_important">False</property>
+
+				      <child>
+					<widget class="GtkButton" id="scriptBottomButton">
+					  <property name="visible">True</property>
+					  <property name="tooltip" translatable="yes">Execute all</property>
+					  <property name="can_focus">True</property>
+					  <property name="relief">GTK_RELIEF_NONE</property>
+					  <property name="focus_on_click">True</property>
+
+					  <child>
+					    <widget class="GtkImage" id="image924">
+					      <property name="visible">True</property>
+					      <property name="stock">gtk-goto-bottom</property>
+					      <property name="icon_size">4</property>
+					      <property name="xalign">0.5</property>
+					      <property name="yalign">0.5</property>
+					      <property name="xpad">0</property>
+					      <property name="ypad">0</property>
+					    </widget>
+					  </child>
+					</widget>
+				      </child>
+				    </widget>
+				    <packing>
+				      <property name="expand">False</property>
+				      <property name="homogeneous">False</property>
+				    </packing>
 				  </child>
 				</widget>
 				<packing>
-				  <property name="expand">False</property>
-				  <property name="homogeneous">False</property>
+				  <property name="padding">0</property>
+				  <property name="expand">True</property>
+				  <property name="fill">True</property>
 				</packing>
 			      </child>
 
 			      <child>
-				<widget class="GtkToolItem" id="toolitem26">
+				<widget class="GtkToolItem" id="toolitemxx">
 				  <property name="visible">True</property>
 				  <property name="visible_horizontal">True</property>
 				  <property name="visible_vertical">True</property>
 				  <property name="is_important">False</property>
 
 				  <child>
-				    <widget class="GtkButton" id="scriptRetractButton">
+				    <widget class="GtkButton" id="scriptAbortButton">
 				      <property name="visible">True</property>
-				      <property name="tooltip" translatable="yes">Retract 1 phrase</property>
+				      <property name="tooltip" translatable="yes">Abort</property>
 				      <property name="can_focus">True</property>
 				      <property name="relief">GTK_RELIEF_NONE</property>
 				      <property name="focus_on_click">True</property>
 
 				      <child>
-					<widget class="GtkImage" id="image254">
+					<widget class="GtkImage" id="image925">
 					  <property name="visible">True</property>
-					  <property name="stock">gtk-go-up</property>
+					  <property name="stock">gtk-cancel</property>
 					  <property name="icon_size">4</property>
 					  <property name="xalign">0.5</property>
 					  <property name="yalign">0.5</property>
 					  <property name="xpad">0</property>
 					  <property name="ypad">0</property>
+					  <accessibility>
+					    <atkproperty name="AtkObject::accessible_name" translatable="yes">abort</atkproperty>
+					  </accessibility>
 					</widget>
 				      </child>
 				    </widget>
 				  </child>
 				</widget>
 				<packing>
+				  <property name="padding">0</property>
 				  <property name="expand">False</property>
-				  <property name="homogeneous">False</property>
-				</packing>
-			      </child>
-
-			      <child>
-				<widget class="GtkToolItem" id="toolitem27">
-				  <property name="visible">True</property>
-				  <property name="visible_horizontal">True</property>
-				  <property name="visible_vertical">True</property>
-				  <property name="is_important">False</property>
-
-				  <child>
-				    <widget class="GtkButton" id="scriptJumpButton">
-				      <property name="visible">True</property>
-				      <property name="tooltip" translatable="yes">Execute until point</property>
-				      <property name="can_focus">True</property>
-				      <property name="relief">GTK_RELIEF_NONE</property>
-				      <property name="focus_on_click">True</property>
-
-				      <child>
-					<widget class="GtkImage" id="image255">
-					  <property name="visible">True</property>
-					  <property name="stock">gtk-jump-to</property>
-					  <property name="icon_size">4</property>
-					  <property name="xalign">0.5</property>
-					  <property name="yalign">0.5</property>
-					  <property name="xpad">0</property>
-					  <property name="ypad">0</property>
-					</widget>
-				      </child>
-				    </widget>
-				  </child>
-				</widget>
-				<packing>
-				  <property name="expand">False</property>
-				  <property name="homogeneous">False</property>
-				</packing>
-			      </child>
-
-			      <child>
-				<widget class="GtkToolItem" id="toolitem28">
-				  <property name="visible">True</property>
-				  <property name="visible_horizontal">True</property>
-				  <property name="visible_vertical">True</property>
-				  <property name="is_important">False</property>
-
-				  <child>
-				    <widget class="GtkButton" id="scriptAdvanceButton">
-				      <property name="visible">True</property>
-				      <property name="tooltip" translatable="yes">Execute 1 phrase</property>
-				      <property name="can_focus">True</property>
-				      <property name="relief">GTK_RELIEF_NONE</property>
-				      <property name="focus_on_click">True</property>
-
-				      <child>
-					<widget class="GtkImage" id="image256">
-					  <property name="visible">True</property>
-					  <property name="stock">gtk-go-down</property>
-					  <property name="icon_size">4</property>
-					  <property name="xalign">0.5</property>
-					  <property name="yalign">0.5</property>
-					  <property name="xpad">0</property>
-					  <property name="ypad">0</property>
-					</widget>
-				      </child>
-				    </widget>
-				  </child>
-				</widget>
-				<packing>
-				  <property name="expand">False</property>
-				  <property name="homogeneous">False</property>
-				</packing>
-			      </child>
-
-			      <child>
-				<widget class="GtkToolItem" id="toolitem29">
-				  <property name="visible">True</property>
-				  <property name="visible_horizontal">True</property>
-				  <property name="visible_vertical">True</property>
-				  <property name="is_important">False</property>
-
-				  <child>
-				    <widget class="GtkButton" id="scriptBottomButton">
-				      <property name="visible">True</property>
-				      <property name="tooltip" translatable="yes">Execute all</property>
-				      <property name="can_focus">True</property>
-				      <property name="relief">GTK_RELIEF_NONE</property>
-				      <property name="focus_on_click">True</property>
-
-				      <child>
-					<widget class="GtkImage" id="image257">
-					  <property name="visible">True</property>
-					  <property name="stock">gtk-goto-bottom</property>
-					  <property name="icon_size">4</property>
-					  <property name="xalign">0.5</property>
-					  <property name="yalign">0.5</property>
-					  <property name="xpad">0</property>
-					  <property name="ypad">0</property>
-					</widget>
-				      </child>
-				    </widget>
-				  </child>
-				</widget>
-				<packing>
-				  <property name="expand">False</property>
-				  <property name="homogeneous">False</property>
+				  <property name="fill">False</property>
 				</packing>
 			      </child>
 			    </widget>
@@ -4327,6 +4379,238 @@
 	  <property name="padding">0</property>
 	  <property name="expand">False</property>
 	  <property name="fill">True</property>
+	</packing>
+      </child>
+    </widget>
+  </child>
+</widget>
+
+<widget class="GtkWindow" id="window1">
+  <property name="visible">True</property>
+  <property name="title" translatable="yes">window1</property>
+  <property name="type">GTK_WINDOW_TOPLEVEL</property>
+  <property name="window_position">GTK_WIN_POS_NONE</property>
+  <property name="modal">False</property>
+  <property name="resizable">True</property>
+  <property name="destroy_with_parent">False</property>
+  <property name="decorated">True</property>
+  <property name="skip_taskbar_hint">False</property>
+  <property name="skip_pager_hint">False</property>
+  <property name="type_hint">GDK_WINDOW_TYPE_HINT_NORMAL</property>
+  <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
+  <property name="focus_on_map">True</property>
+  <property name="urgency_hint">False</property>
+
+  <child>
+    <widget class="GtkHBox" id="hbox27">
+      <property name="visible">True</property>
+      <property name="homogeneous">False</property>
+      <property name="spacing">0</property>
+
+      <child>
+	<widget class="GtkToolbar" id="toolbar1">
+	  <property name="visible">True</property>
+	  <property name="orientation">GTK_ORIENTATION_HORIZONTAL</property>
+	  <property name="toolbar_style">GTK_TOOLBAR_BOTH</property>
+	  <property name="tooltips">True</property>
+	  <property name="show_arrow">True</property>
+
+	  <child>
+	    <widget class="GtkToolItem" id="toolitem30">
+	      <property name="visible">True</property>
+	      <property name="visible_horizontal">True</property>
+	      <property name="visible_vertical">True</property>
+	      <property name="is_important">False</property>
+
+	      <child>
+		<widget class="GtkButton" id="button1">
+		  <property name="visible">True</property>
+		  <property name="tooltip" translatable="yes">Restart</property>
+		  <property name="can_focus">True</property>
+		  <property name="relief">GTK_RELIEF_NONE</property>
+		  <property name="focus_on_click">True</property>
+
+		  <child>
+		    <widget class="GtkImage" id="image909">
+		      <property name="visible">True</property>
+		      <property name="stock">gtk-goto-top</property>
+		      <property name="icon_size">4</property>
+		      <property name="xalign">0.5</property>
+		      <property name="yalign">0.5</property>
+		      <property name="xpad">0</property>
+		      <property name="ypad">0</property>
+		    </widget>
+		  </child>
+		</widget>
+	      </child>
+	    </widget>
+	    <packing>
+	      <property name="expand">False</property>
+	      <property name="homogeneous">False</property>
+	    </packing>
+	  </child>
+
+	  <child>
+	    <widget class="GtkToolItem" id="toolitem31">
+	      <property name="visible">True</property>
+	      <property name="visible_horizontal">True</property>
+	      <property name="visible_vertical">True</property>
+	      <property name="is_important">False</property>
+
+	      <child>
+		<widget class="GtkButton" id="button2">
+		  <property name="visible">True</property>
+		  <property name="tooltip" translatable="yes">Retract 1 phrase</property>
+		  <property name="can_focus">True</property>
+		  <property name="relief">GTK_RELIEF_NONE</property>
+		  <property name="focus_on_click">True</property>
+
+		  <child>
+		    <widget class="GtkImage" id="image910">
+		      <property name="visible">True</property>
+		      <property name="stock">gtk-go-up</property>
+		      <property name="icon_size">4</property>
+		      <property name="xalign">0.5</property>
+		      <property name="yalign">0.5</property>
+		      <property name="xpad">0</property>
+		      <property name="ypad">0</property>
+		    </widget>
+		  </child>
+		</widget>
+	      </child>
+	    </widget>
+	    <packing>
+	      <property name="expand">False</property>
+	      <property name="homogeneous">False</property>
+	    </packing>
+	  </child>
+
+	  <child>
+	    <widget class="GtkToolItem" id="toolitem32">
+	      <property name="visible">True</property>
+	      <property name="visible_horizontal">True</property>
+	      <property name="visible_vertical">True</property>
+	      <property name="is_important">False</property>
+
+	      <child>
+		<widget class="GtkButton" id="button3">
+		  <property name="visible">True</property>
+		  <property name="tooltip" translatable="yes">Execute until point</property>
+		  <property name="can_focus">True</property>
+		  <property name="relief">GTK_RELIEF_NONE</property>
+		  <property name="focus_on_click">True</property>
+
+		  <child>
+		    <widget class="GtkImage" id="image911">
+		      <property name="visible">True</property>
+		      <property name="stock">gtk-jump-to</property>
+		      <property name="icon_size">4</property>
+		      <property name="xalign">0.5</property>
+		      <property name="yalign">0.5</property>
+		      <property name="xpad">0</property>
+		      <property name="ypad">0</property>
+		    </widget>
+		  </child>
+		</widget>
+	      </child>
+	    </widget>
+	    <packing>
+	      <property name="expand">False</property>
+	      <property name="homogeneous">False</property>
+	    </packing>
+	  </child>
+
+	  <child>
+	    <widget class="GtkToolItem" id="toolitem33">
+	      <property name="visible">True</property>
+	      <property name="visible_horizontal">True</property>
+	      <property name="visible_vertical">True</property>
+	      <property name="is_important">False</property>
+
+	      <child>
+		<widget class="GtkButton" id="button4">
+		  <property name="visible">True</property>
+		  <property name="tooltip" translatable="yes">Execute 1 phrase</property>
+		  <property name="can_focus">True</property>
+		  <property name="relief">GTK_RELIEF_NONE</property>
+		  <property name="focus_on_click">True</property>
+
+		  <child>
+		    <widget class="GtkImage" id="image912">
+		      <property name="visible">True</property>
+		      <property name="stock">gtk-go-down</property>
+		      <property name="icon_size">4</property>
+		      <property name="xalign">0.5</property>
+		      <property name="yalign">0.5</property>
+		      <property name="xpad">0</property>
+		      <property name="ypad">0</property>
+		    </widget>
+		  </child>
+		</widget>
+	      </child>
+	    </widget>
+	    <packing>
+	      <property name="expand">False</property>
+	      <property name="homogeneous">False</property>
+	    </packing>
+	  </child>
+
+	  <child>
+	    <widget class="GtkToolItem" id="toolitem34">
+	      <property name="visible">True</property>
+	      <property name="visible_horizontal">True</property>
+	      <property name="visible_vertical">True</property>
+	      <property name="is_important">False</property>
+
+	      <child>
+		<widget class="GtkButton" id="button5">
+		  <property name="visible">True</property>
+		  <property name="tooltip" translatable="yes">Execute all</property>
+		  <property name="can_focus">True</property>
+		  <property name="relief">GTK_RELIEF_NONE</property>
+		  <property name="focus_on_click">True</property>
+
+		  <child>
+		    <widget class="GtkImage" id="image913">
+		      <property name="visible">True</property>
+		      <property name="stock">gtk-goto-bottom</property>
+		      <property name="icon_size">4</property>
+		      <property name="xalign">0.5</property>
+		      <property name="yalign">0.5</property>
+		      <property name="xpad">0</property>
+		      <property name="ypad">0</property>
+		    </widget>
+		  </child>
+		</widget>
+	      </child>
+	    </widget>
+	    <packing>
+	      <property name="expand">False</property>
+	      <property name="homogeneous">False</property>
+	    </packing>
+	  </child>
+	</widget>
+	<packing>
+	  <property name="padding">0</property>
+	  <property name="expand">True</property>
+	  <property name="fill">True</property>
+	</packing>
+      </child>
+
+      <child>
+	<widget class="GtkImage" id="image914">
+	  <property name="visible">True</property>
+	  <property name="stock">gtk-cancel</property>
+	  <property name="icon_size">4</property>
+	  <property name="xalign">0.5</property>
+	  <property name="yalign">0.5</property>
+	  <property name="xpad">0</property>
+	  <property name="ypad">0</property>
+	</widget>
+	<packing>
+	  <property name="padding">0</property>
+	  <property name="expand">False</property>
+	  <property name="fill">False</property>
 	</packing>
       </child>
     </widget>
