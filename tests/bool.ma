@@ -629,5 +629,5 @@ theorem bool5:
 intros.auto paramodulation.
 qed.
 
-*)
+*)*)
 
