@@ -437,7 +437,9 @@ class gui () =
          (* This function is called just before the thread's timeslice ends *)
          if Some(Thread.id(Thread.self())) = !interrupt then
           (interrupt := None; raise Sys.Break) in
+(*
        let _ = Sys.signal Sys.sigvtalrm (Sys.Signal_handle force_interrupt) in
+*)
         fun () ->
          match !worker_thread with
             None -> assert false
