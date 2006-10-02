@@ -30,5 +30,10 @@ qed.
 theorem prova2 :
  \forall n. S n \divides (S n)!.
 intros.
+(* o fare una List.rev quando si fa la make_passives... la tira su, 
+   ma tardi....
+letin www \def sym_times.
+clearbody www.
+*)
 applyS (witness ? ? ? (refl_eq ? ?)).
 qed.
