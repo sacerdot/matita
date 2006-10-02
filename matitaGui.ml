@@ -422,10 +422,13 @@ class gui () =
         develList#buttonsHbox#misc#set_sensitive true;
         source_view#set_editable true
       in
-      let locker f = 
+      let locker f () =
+       let thread_main =
         fun () -> 
           lock_world ();
-          try f ();unlock_world () with exc -> unlock_world (); raise exc in
+          try f ();unlock_world () with exc -> unlock_world (); raise exc
+       in
+        ignore (Thread.create thread_main ()) in
       let keep_focus f =
         fun () ->
          try
