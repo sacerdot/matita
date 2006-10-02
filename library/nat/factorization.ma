@@ -126,20 +126,13 @@ cut (r \mod (nth_prime (max_prime_factor n)) \neq O);
     ]
   ].
 *)  
-cut (n=r*(nth_prime p)\sup(q));
-  [letin www \def le.letin www1 \def divides.
-   auto.
-(*
 apply (le_to_or_lt_eq (max_prime_factor r)  (max_prime_factor n)).
 apply divides_to_max_prime_factor.
 assumption.assumption.
 apply (witness r n ((nth_prime p) \sup q)).
-*)
- |
 rewrite < sym_times.
 apply (p_ord_aux_to_exp n n ? q r).
 apply lt_O_nth_prime_n.assumption.
-]
 qed.
 
 theorem p_ord_to_lt_max_prime_factor1: \forall n,p,q,r. O < n \to
