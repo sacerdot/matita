@@ -415,11 +415,13 @@ class gui () =
       let lock_world _ =
         main#buttonsToolbar#misc#set_sensitive false;
         develList#buttonsHbox#misc#set_sensitive false;
+        main#scriptMenu#misc#set_sensitive false;
         source_view#set_editable false
       in
       let unlock_world _ =
         main#buttonsToolbar#misc#set_sensitive true;
         develList#buttonsHbox#misc#set_sensitive true;
+        main#scriptMenu#misc#set_sensitive true;
         source_view#set_editable true
       in
       let worker_thread = ref None in
