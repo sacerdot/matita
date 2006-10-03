@@ -1,6 +1,6 @@
 H=@
 
-RT_BASEDIR=/home/tassi/helm/software/matita/
+RT_BASEDIR=../
 OPTIONS=-bench
 MMAKE=$(RT_BASEDIR)matitamake $(OPTIONS)
 CLEAN=$(RT_BASEDIR)matitaclean $(OPTIONS) 
