@@ -550,7 +550,8 @@ object (self)
         ids_to_terms, ids_to_hypotheses, ids_to_father_ids,
         Hashtbl.create 1, None));
     if BuildTimeConf.debug then begin
-      let name = "sequent_viewer.xml" in
+      let name =
+       "/tmp/sequent_viewer_" ^ string_of_int (Unix.getuid ()) ^ ".xml" in
       HLog.debug ("load_sequent: dumping MathML to ./" ^ name);
       ignore (domImpl#saveDocumentToFile ~name ~doc:mathml ())
     end;
@@ -572,7 +573,8 @@ object (self)
         self#thaw
     |  _ ->
         if BuildTimeConf.debug then begin
-          let name = "cic_browser.xml" in
+          let name =
+           "/tmp/cic_browser_" ^ string_of_int (Unix.getuid ()) ^ ".xml" in
           HLog.debug ("cic_browser: dumping MathML to ./" ^ name);
           ignore (domImpl#saveDocumentToFile ~name ~doc:mathml ())
         end;
