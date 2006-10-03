@@ -17,6 +17,7 @@ set "baseuri" "cic:/matita/nat/ord".
 include "datatypes/constructors.ma".
 include "nat/exp.ma".
 include "nat/gcd.ma".
+include "nat/relevant_equations.ma". (* required by auto paramod *)
 
 (* this definition of log is based on pairs, with a remainder *)
 

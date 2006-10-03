@@ -30,10 +30,10 @@ qed.
 theorem prova2 :
  \forall n. S n \divides (S n)!.
 intros.
-(* o fare una List.rev quando si fa la make_passives... la tira su, 
-   ma tardi....
+(* se non trova subito sym_times poi si perde! *)
+(* alternativamente si puo' abilitare la are_convertible nella
+   is_identity, ma poi va peggio nel resto (conv lunghe) *)
 letin www \def sym_times.
 clearbody www.
-*)
 applyS (witness ? ? ? (refl_eq ? ?)).
 qed.

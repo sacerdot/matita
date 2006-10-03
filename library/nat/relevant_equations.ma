@@ -16,6 +16,8 @@ set "baseuri" "cic:/matita/nat/relevant_equations.ma".
 
 include "nat/times.ma".
 include "nat/minus.ma".
+include "nat/gcd.ma". 
+(* if gcd is compiled before this, the applys will take too much *)
 
 theorem times_plus_l: \forall n,m,p:nat. (n+m)*p = n*p + m*p.
 intros.
