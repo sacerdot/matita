@@ -114,7 +114,7 @@ theorem prove_p17b:
 \forall H17:\forall X:Univ.eq Univ (multiply identity X) X.eq Univ (greatest_lower_bound identity (least_upper_bound a identity)) identity
 .
 intros.
-auto paramodulation timeout=600.
+auto paramodulation timeout=100.
 try assumption.
 print proofterm.
 qed.

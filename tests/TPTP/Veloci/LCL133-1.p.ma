@@ -61,7 +61,7 @@ theorem prove_wajsberg_lemma:
 \forall H4:\forall X:Univ.eq Univ (implies truth X) X.eq Univ x y
 .
 intros.
-auto paramodulation timeout=600.
+auto paramodulation timeout=100.
 try assumption.
 print proofterm.
 qed.

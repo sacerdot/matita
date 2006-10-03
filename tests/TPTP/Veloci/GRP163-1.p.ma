@@ -113,7 +113,7 @@ theorem prove_ax_transb:
 \forall H16:\forall X:Univ.eq Univ (multiply identity X) X.eq Univ (greatest_lower_bound a c) a
 .
 intros.
-auto paramodulation timeout=600.
+auto paramodulation timeout=100.
 try assumption.
 print proofterm.
 qed.

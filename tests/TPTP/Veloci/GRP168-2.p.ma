@@ -114,7 +114,7 @@ theorem prove_p01b:
 \forall H15:\forall X:Univ.eq Univ (multiply identity X) X.eq Univ (greatest_lower_bound (multiply (inverse c) (multiply a c)) (multiply (inverse c) (multiply b c))) (multiply (inverse c) (multiply a c))
 .
 intros.
-auto paramodulation timeout=600.
+auto paramodulation timeout=100.
 try assumption.
 print proofterm.
 qed.

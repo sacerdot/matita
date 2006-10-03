@@ -36,7 +36,7 @@ theorem prove_equation:
 \forall H3:\forall X:Univ.\forall Y:Univ.\forall Z:Univ.eq Univ (f X (f Y Z)) (f (f X Y) (f X Z)).eq Univ (f (f n3 n2) u) (f (f u u) u)
 .
 intros.
-auto paramodulation timeout=600.
+auto paramodulation timeout=100.
 try assumption.
 print proofterm.
 qed.

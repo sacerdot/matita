@@ -112,7 +112,7 @@ theorem prove_ax_antisymb:
 \forall H16:\forall X:Univ.eq Univ (multiply identity X) X.eq Univ a b
 .
 intros.
-auto paramodulation timeout=600.
+auto paramodulation timeout=100.
 try assumption.
 print proofterm.
 qed.

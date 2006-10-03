@@ -34,7 +34,7 @@ theorem prove_these_axioms_1:
 \forall H3:\forall A:Univ.\forall B:Univ.\forall C:Univ.eq Univ (double_divide (double_divide identity A) (double_divide identity (double_divide (double_divide (double_divide A B) identity) (double_divide C B)))) C.eq Univ (multiply (inverse a1) a1) identity
 .
 intros.
-auto paramodulation timeout=600.
+auto paramodulation timeout=100.
 try assumption.
 print proofterm.
 qed.

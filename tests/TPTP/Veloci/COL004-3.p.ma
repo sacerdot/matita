@@ -36,7 +36,7 @@ theorem prove_u_combinator:
 \forall H1:\forall X:Univ.\forall Y:Univ.\forall Z:Univ.eq Univ (apply (apply (apply s X) Y) Z) (apply (apply X Z) (apply Y Z)).eq Univ (apply (apply (apply (apply s (apply k (apply s (apply (apply s k) k)))) (apply (apply s (apply (apply s k) k)) (apply (apply s k) k))) x) y) (apply y (apply (apply x x) y))
 .
 intros.
-auto paramodulation timeout=600.
+auto paramodulation timeout=100.
 try assumption.
 print proofterm.
 qed.

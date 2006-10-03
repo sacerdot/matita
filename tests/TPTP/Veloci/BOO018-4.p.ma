@@ -62,7 +62,7 @@ theorem prove_inverse_of_1_is_0:
 \forall H7:\forall X:Univ.\forall Y:Univ.eq Univ (add X Y) (add Y X).eq Univ (inverse multiplicative_identity) additive_identity
 .
 intros.
-auto paramodulation timeout=600.
+auto paramodulation timeout=100.
 try assumption.
 print proofterm.
 qed.

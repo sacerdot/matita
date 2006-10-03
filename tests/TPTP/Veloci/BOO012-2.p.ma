@@ -68,7 +68,7 @@ theorem prove_inverse_is_an_involution:
 \forall H13:\forall X:Univ.\forall Y:Univ.eq Univ (add X Y) (add Y X).eq Univ (inverse (inverse x)) x
 .
 intros.
-auto paramodulation timeout=600.
+auto paramodulation timeout=100.
 try assumption.
 print proofterm.
 qed.

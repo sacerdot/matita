@@ -112,7 +112,7 @@ theorem prove_p05b:
 \forall H16:\forall X:Univ.eq Univ (multiply identity X) X.eq Univ identity a
 .
 intros.
-auto paramodulation timeout=600.
+auto paramodulation timeout=100.
 try assumption.
 print proofterm.
 qed.

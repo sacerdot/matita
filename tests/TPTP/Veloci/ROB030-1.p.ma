@@ -64,7 +64,7 @@ exists[
 2:
 exists[
 2:
-auto paramodulation timeout=600.
+auto paramodulation timeout=100.
 try assumption.
 |
 skip]

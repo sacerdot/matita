@@ -31,7 +31,7 @@ theorem prove_these_axioms_1:
 \forall H0:\forall A:Univ.\forall B:Univ.\forall C:Univ.eq Univ (multiply (multiply (multiply A B) C) (inverse (multiply A C))) B.eq Univ (multiply (inverse a1) a1) (multiply (inverse b1) b1)
 .
 intros.
-auto paramodulation timeout=600.
+auto paramodulation timeout=100.
 try assumption.
 print proofterm.
 qed.

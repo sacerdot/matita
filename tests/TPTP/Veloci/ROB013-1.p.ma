@@ -58,7 +58,7 @@ theorem prove_result:
 \forall H3:\forall X:Univ.\forall Y:Univ.eq Univ (add X Y) (add Y X).eq Univ (negate (add c (negate (add (negate b) a)))) a
 .
 intros.
-auto paramodulation timeout=600.
+auto paramodulation timeout=100.
 try assumption.
 print proofterm.
 qed.

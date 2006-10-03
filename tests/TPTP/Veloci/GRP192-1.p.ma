@@ -111,7 +111,7 @@ theorem prove_p40a:
 \forall H15:\forall X:Univ.eq Univ (multiply identity X) X.eq Univ (multiply a b) (multiply b a)
 .
 intros.
-auto paramodulation timeout=600.
+auto paramodulation timeout=100.
 try assumption.
 print proofterm.
 qed.

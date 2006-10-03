@@ -109,7 +109,7 @@ theorem prove_ax_refla:
 \forall H14:\forall X:Univ.eq Univ (multiply identity X) X.eq Univ (least_upper_bound a a) a
 .
 intros.
-auto paramodulation timeout=600.
+auto paramodulation timeout=100.
 try assumption.
 print proofterm.
 qed.

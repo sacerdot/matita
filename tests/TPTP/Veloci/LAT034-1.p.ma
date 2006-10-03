@@ -39,7 +39,7 @@ theorem idempotence_of_meet:
 \forall H5:\forall X:Univ.\forall Y:Univ.eq Univ (meet X (join X Y)) X.eq Univ (meet xx xx) xx
 .
 intros.
-auto paramodulation timeout=600.
+auto paramodulation timeout=100.
 try assumption.
 print proofterm.
 qed.

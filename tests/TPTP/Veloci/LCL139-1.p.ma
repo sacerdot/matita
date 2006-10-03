@@ -59,7 +59,7 @@ theorem prove_wajsberg_lemma:
 \forall H3:\forall X:Univ.eq Univ (implies truth X) X.eq Univ (implies x (not truth)) (not x)
 .
 intros.
-auto paramodulation timeout=600.
+auto paramodulation timeout=100.
 try assumption.
 print proofterm.
 qed.

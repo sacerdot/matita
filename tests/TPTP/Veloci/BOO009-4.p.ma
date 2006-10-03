@@ -63,7 +63,7 @@ theorem prove_operation:
 \forall H7:\forall X:Univ.\forall Y:Univ.eq Univ (add X Y) (add Y X).eq Univ (multiply a (add a b)) a
 .
 intros.
-auto paramodulation timeout=600.
+auto paramodulation timeout=100.
 try assumption.
 print proofterm.
 qed.

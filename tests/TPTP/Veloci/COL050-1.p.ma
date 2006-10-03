@@ -47,7 +47,7 @@ theorem prove_all_fond_of_another:
 intros.
 exists[
 2:
-auto paramodulation timeout=600.
+auto paramodulation timeout=100.
 try assumption.
 |
 skip]

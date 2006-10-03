@@ -39,7 +39,7 @@ theorem prove_fixed_point:
 intros.
 exists[
 2:
-auto paramodulation timeout=600.
+auto paramodulation timeout=100.
 try assumption.
 |
 skip]

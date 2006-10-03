@@ -33,7 +33,7 @@ theorem prove_these_axioms_4:
 \forall H1:\forall A:Univ.\forall B:Univ.\forall C:Univ.eq Univ (divide (divide A (inverse (divide B (divide A C)))) C) B.eq Univ (multiply a b) (multiply b a)
 .
 intros.
-auto paramodulation timeout=600.
+auto paramodulation timeout=100.
 try assumption.
 print proofterm.
 qed.
