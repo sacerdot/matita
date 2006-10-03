@@ -29,8 +29,8 @@ function run_tests {
   LOCALOLD=$PWD
   cd $1
   ./matitaclean all
-  export OCAMLRUNPARAM='o=100000'
-  testit "gc-off"
+  #export OCAMLRUNPARAM='o=100000'
+  #testit "gc-off"
   export OCAMLRUNPARAM=''
   testit "gc-on"
   cd $LOCALOLD
