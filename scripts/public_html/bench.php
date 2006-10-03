@@ -140,18 +140,18 @@ from
      b1.options = 'gc-on' and 
      b1.compilation = 'byte' 
      group by b1.mark) as bench_times,
-  (select b1.mark as mark, COUNT(DISTINCT b1.test) as count
+  (select
+    b1.mark as mark,
+    SUM(if(b1.result='fail' and b1.compilation='byte' and b1.options='gc-on',1,0))
+    as count
    from bench as b1
-   where 
-     b1.options = 'gc-on' and 
-     b1.compilation = 'byte' and b1.result = 'fail'
-     group by b1.mark) as bench_fails,
-  (select b1.mark as mark, COUNT(DISTINCT b1.test) as count
+   group by b1.mark) as bench_fails,
+  (select
+    b1.mark as mark,
+    SUM(if(b1.result='fail' and b1.compilation='opt' and b1.options='gc-on',1,0))
+    as count
    from bench as b1
-   where 
-     b1.options = 'gc-on' and 
-     b1.compilation = 'opt' and b1.result = 'fail'
-     group by b1.mark) as bench_fails_opt
+   group by b1.mark) as bench_fails_opt
 where 
   bench_times.mark = bench_fails.mark and 
   bench_times_opt.mark = bench_fails_opt.mark and 
