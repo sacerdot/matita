@@ -1,7 +1,7 @@
 #!/usr/bin/lua5.1
 
 local tool_re = "^([%w%.]+)"
-local test_re = "([%w%./_]+)"
+local test_re = "([%w%./_-]+)"
 local rc_re = string.char(27).."%[%d+;%d+m([%a]+)"..string.char(27).."%[0m"
 local time_re = "(%d+m%d+%.%d+s)"
 local mark_re = "(%d+)"
