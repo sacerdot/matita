@@ -103,7 +103,7 @@ let eval_with_engine guistuff lexicon_status grafite_status user_goal
             (status,to_prepend ^ newtxt ^ "\n")::acc, "")
       ([],skipped_txt) enriched_history_fragment
   in
-  res,parsed_text_length
+  res,"",parsed_text_length
 
 let wrap_with_developments guistuff f arg = 
   let compile_needed_and_go_on lexiconfile d exc =
@@ -212,17 +212,17 @@ let rec eval_macro include_paths (buffer : GText.buffer) guistuff lexicon_status
      let l =  Whelp.match_term ~dbd term in
      let entry = `Whelp (pp_macro mac, l) in
      guistuff.mathviewer#show_uri_list ~reuse:true ~entry l;
-     [], parsed_text_length
+     [], "", parsed_text_length
   | TA.WInstance (loc, term) ->
      let l = Whelp.instance ~dbd term in
      let entry = `Whelp (pp_macro mac, l) in
      guistuff.mathviewer#show_uri_list ~reuse:true ~entry l;
-     [], parsed_text_length
+     [], "", parsed_text_length
   | TA.WLocate (loc, s) -> 
      let l = Whelp.locate ~dbd s in
      let entry = `Whelp (pp_macro mac, l) in
      guistuff.mathviewer#show_uri_list ~reuse:true ~entry l;
-     [], parsed_text_length
+     [], "", parsed_text_length
   | TA.WElim (loc, term) ->
      let uri =
        match term with
@@ -232,13 +232,13 @@ let rec eval_macro include_paths (buffer : GText.buffer) guistuff lexicon_status
      let l = Whelp.elim ~dbd uri in
      let entry = `Whelp (pp_macro mac, l) in
      guistuff.mathviewer#show_uri_list ~reuse:true ~entry l;
-     [], parsed_text_length
+     [], "", parsed_text_length
   | TA.WHint (loc, term) ->
      let s = ((None,[0,[],term], Cic.Meta (0,[]) ,term),0) in
      let l = List.map fst (MQ.experimental_hint ~dbd s) in
      let entry = `Whelp (pp_macro mac, l) in
      guistuff.mathviewer#show_uri_list ~reuse:true ~entry l;
-     [], parsed_text_length
+     [], "", parsed_text_length
   (* REAL macro *)
   | TA.Hint loc -> 
       let user_goal' =
@@ -251,7 +251,7 @@ let rec eval_macro include_paths (buffer : GText.buffer) guistuff lexicon_status
       let l = List.map fst (MQ.experimental_hint ~dbd proof_status) in
       let selected = guistuff.urichooser l in
       (match selected with
-      | [] -> [], parsed_text_length
+      | [] -> [], "", parsed_text_length
       | [uri] -> 
           let suri = UriManager.string_of_uri uri in
           let ast loc =
@@ -265,12 +265,12 @@ let rec eval_macro include_paths (buffer : GText.buffer) guistuff lexicon_status
           let text_len = MatitaGtkMisc.utf8_string_length text in
           let loc = HExtlib.floc_of_loc (0,text_len) in
           let statement = `Ast (GrafiteParser.LSome (ast loc),text) in
-          let res,_parsed_text_len =
+          let res,_,_parsed_text_len =
            eval_statement include_paths buffer guistuff lexicon_status
             grafite_status user_goal script statement
           in
            (* we need to replace all the parsed_text *)
-           res,String.length parsed_text
+           res,"",String.length parsed_text
       | _ -> 
           HLog.error 
             "The result of the urichooser should be only 1 uri, not:\n";
@@ -287,7 +287,54 @@ let rec eval_macro include_paths (buffer : GText.buffer) guistuff lexicon_status
       let ty,_ = CTC.type_of_aux' metasenv context term CicUniv.empty_ugraph in
       let t_and_ty = Cic.Cast (term,ty) in
       guistuff.mathviewer#show_entry (`Cic (t_and_ty,metasenv));
-      [], parsed_text_length
+      [], "", parsed_text_length
+  | TA.Inline (_,suri) ->
+     let dbd = LibraryDb.instance () in
+     let uris =
+      let sql_pat =
+       (Pcre.replace ~rex:(Pcre.regexp "_") ~templ:"\\_" suri) ^ "%" in
+      let query =
+       sprintf ("SELECT source FROM %s WHERE source LIKE \"%s\" UNION "^^
+                "SELECT source FROM %s WHERE source LIKE \"%s\"")
+         (MetadataTypes.name_tbl ()) sql_pat
+         MetadataTypes.library_name_tbl sql_pat in
+      let result = HMysql.exec dbd query in
+       HMysql.map result
+        (function cols ->
+          match cols.(0) with
+             Some s -> UriManager.uri_of_string s
+           | _ -> assert false)
+     in
+prerr_endline "Inizio sorting";
+      let sorted_uris = MetadataDeps.topological_sort ~dbd uris in
+prerr_endline "Fine sorting";
+      let sorted_uris_without_xpointer =
+       HExtlib.filter_map
+        (function uri ->
+          let s =
+           Pcre.replace ~rex:(Pcre.regexp "#xpointer\\(1/1\\)") ~templ:""
+            (UriManager.string_of_uri uri) in
+          try
+           ignore (Pcre.exec ~rex:(Pcre.regexp"#xpointer") s);
+           None
+          with
+           Not_found ->
+            Some (UriManager.uri_of_string s)
+        ) sorted_uris
+      in
+      let declarative =
+       String.concat "\n\n"
+        (List.map
+          (fun uri ->
+prerr_endline ("Stampo " ^ UriManager.string_of_uri uri);
+            try
+             ObjPp.obj_to_string 80
+              (fst (CicEnvironment.get_obj CicUniv.empty_ugraph uri))
+            with
+             _ (* BRRRRRRRRR *) -> "ERRORE IN STAMPA DI " ^ UriManager.string_of_uri uri
+          ) sorted_uris_without_xpointer)
+      in
+       [],declarative,String.length parsed_text
                                 
 and eval_executable include_paths (buffer : GText.buffer) guistuff
 lexicon_status grafite_status user_goal unparsed_text skipped_txt nonskipped_txt
@@ -320,7 +367,7 @@ script ex loc
     guistuff lexicon_status grafite_status user_goal skipped_txt nonskipped_txt
      (TA.Executable (loc, ex))
   with
-     MatitaTypes.Cancel -> [], 0
+     MatitaTypes.Cancel -> [], "", 0
    | GrafiteEngine.Macro (_loc,lazy_macro) ->
       let context =
        match user_goal with
@@ -357,13 +404,13 @@ and eval_statement include_paths (buffer : GText.buffer) guistuff lexicon_status
   match st with
   | GrafiteParser.LNone loc ->
       let parsed_text, _, _, parsed_text_length = text_of_loc loc in
-       [(grafite_status,lexicon_status),parsed_text],
+       [(grafite_status,lexicon_status),parsed_text],"",
         parsed_text_length
   | GrafiteParser.LSome (GrafiteAst.Comment (loc, _)) -> 
       let parsed_text, _, _, parsed_text_length = text_of_loc loc in
       let remain_len = String.length unparsed_text - parsed_text_length in
       let s = String.sub unparsed_text parsed_text_length remain_len in
-      let s,len = 
+      let s,text,len = 
        try
         eval_statement include_paths buffer guistuff lexicon_status
          grafite_status user_goal script (`Raw s)
@@ -376,10 +423,11 @@ and eval_statement include_paths (buffer : GText.buffer) guistuff lexicon_status
             (GrafiteDisambiguator.DisambiguationError
               (offset+parsed_text_length, errorll))
       in
+      assert (text=""); (* no macros inside comments, please! *)
       (match s with
       | (statuses,text)::tl ->
-         (statuses,parsed_text ^ text)::tl,parsed_text_length + len
-      | [] -> [], 0)
+         (statuses,parsed_text ^ text)::tl,"",parsed_text_length + len
+      | [] -> [], "", 0)
   | GrafiteParser.LSome (GrafiteAst.Executable (loc, ex)) ->
      let _, nonskipped, skipped, parsed_text_length = 
        text_of_loc loc 
@@ -468,7 +516,7 @@ object (self)
   method private _advance ?statement () =
    let s = match statement with Some s -> s | None -> self#getFuture in
    HLog.debug ("evaluating: " ^ first_line s ^ " ...");
-   let (entries, parsed_len) = 
+   let entries, newtext, parsed_len = 
     try
      eval_statement include_paths buffer guistuff self#lexicon_status
       self#grafite_status userGoal self (`Raw s)
@@ -492,7 +540,8 @@ object (self)
        buffer#insert ~iter:start new_text;
      end;
    end;
-   self#moveMark (Glib.Utf8.length  new_text);
+   self#moveMark (Glib.Utf8.length new_text);
+   buffer#insert ~iter:(buffer#get_iter_at_mark (`MARK locked_mark)) newtext;
    (* here we need to set the Goal in case we are going to cursor (or to
       bottom) and we will face a macro *)
    match self#grafite_status.proof_status with

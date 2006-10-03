@@ -171,6 +171,7 @@
 
 
   <keyword-list _name = "Matita Macro" style = "Others 3" case-sensitive="TRUE">
+    <keyword>inline</keyword>
     <keyword>check</keyword>
     <keyword>hint</keyword>
     <keyword>set</keyword>
