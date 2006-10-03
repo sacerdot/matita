@@ -425,11 +425,46 @@ class gui () =
         source_view#set_editable true
       in
       let worker_thread = ref None in
+      let notify_exn exn =
+       let floc, msg = MatitaExcPp.to_string exn in
+        begin
+         match floc with
+            None -> ()
+          | Some floc ->
+             let (x, y) = HExtlib.loc_of_floc floc in
+             let script = MatitaScript.current () in
+             let locked_mark = script#locked_mark in
+             let error_tag = script#error_tag in
+             let baseoffset =
+              (source_buffer#get_iter_at_mark (`MARK locked_mark))#offset in
+             let x' = baseoffset + x in
+             let y' = baseoffset + y in
+             let x_iter = source_buffer#get_iter (`OFFSET x') in
+             let y_iter = source_buffer#get_iter (`OFFSET y') in
+             source_buffer#apply_tag error_tag ~start:x_iter ~stop:y_iter;
+             let id = ref None in
+             id := Some (source_buffer#connect#changed ~callback:(fun () ->
+               source_buffer#remove_tag error_tag
+                 ~start:source_buffer#start_iter
+                 ~stop:source_buffer#end_iter;
+               match !id with
+               | None -> assert false (* a race condition occurred *)
+               | Some id ->
+                   (new GObj.gobject_ops source_buffer#as_buffer)#disconnect id));
+             source_buffer#place_cursor
+              (source_buffer#get_iter (`OFFSET x'));
+        end;
+        HLog.error msg in
       let locker f () =
        let thread_main =
         fun () -> 
           lock_world ();
-          try f ();unlock_world () with exc -> unlock_world (); raise exc
+          try
+           f ();
+           unlock_world ()
+          with exc ->
+           unlock_world ();
+           notify_exn exc
        in
         worker_thread := Some (Thread.create thread_main ()) in
       let kill_worker =
@@ -668,35 +703,7 @@ class gui () =
         | MatitaScript.ActionCancelled s -> HLog.error s
         | exn ->
           if not (Helm_registry.get_bool "matita.debug") then
-           let floc, msg = MatitaExcPp.to_string exn in
-            begin
-             match floc with
-                None -> ()
-              | Some floc ->
-                 let (x, y) = HExtlib.loc_of_floc floc in
-                 let script = MatitaScript.current () in
-                 let locked_mark = script#locked_mark in
-                 let error_tag = script#error_tag in
-                 let baseoffset =
-                  (source_buffer#get_iter_at_mark (`MARK locked_mark))#offset in
-                 let x' = baseoffset + x in
-                 let y' = baseoffset + y in
-                 let x_iter = source_buffer#get_iter (`OFFSET x') in
-                 let y_iter = source_buffer#get_iter (`OFFSET y') in
-                 source_buffer#apply_tag error_tag ~start:x_iter ~stop:y_iter;
-                 let id = ref None in
-                 id := Some (source_buffer#connect#changed ~callback:(fun () ->
-                   source_buffer#remove_tag error_tag
-                     ~start:source_buffer#start_iter
-                     ~stop:source_buffer#end_iter;
-                   match !id with
-                   | None -> assert false (* a race condition occurred *)
-                   | Some id ->
-                       (new GObj.gobject_ops source_buffer#as_buffer)#disconnect id));
-                 source_buffer#place_cursor
-                  (source_buffer#get_iter (`OFFSET x'));
-            end;
-            HLog.error msg
+           notify_exn exn
           else raise exn);
         (* script *)
       ignore (source_buffer#connect#mark_set (fun _ _ -> next_ligatures <- []));
