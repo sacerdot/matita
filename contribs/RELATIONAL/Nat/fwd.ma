@@ -19,13 +19,13 @@ include "logic/equality.ma".
 include "Nat/defs.ma".
 
 theorem eq_gen_zero_succ: \forall (P:Prop). \forall m2. zero = succ m2 \to P.
- intros. discriminate H.
+ intros. destruct H.
 qed.
 
 theorem eq_gen_succ_zero: \forall (P:Prop). \forall m1. succ m1 = zero \to P.
- intros. discriminate H.
+ intros. destruct H.
 qed.
 
 theorem eq_gen_succ_succ: \forall m1,m2. succ m1 = succ m2 \to m1 = m2.
- intros. injection H. assumption.
+ intros. destruct H. assumption.
 qed.
