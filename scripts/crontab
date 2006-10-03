@@ -1,4 +1,4 @@
 MAILTO=helm@mowgli.cs.unibo.it
-HOME=/home/tassi/
+HOME=/home/sacerdot/
 #SVNOPTIONS='-r {2006-01-09}'
-00 02 * * * sh /home/tassi/helm/software/matita/scripts/crontab.sh
+00 02 * * * sh /home/sacerdot/miohelm/matita/scripts/crontab.sh
