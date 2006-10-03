@@ -433,13 +433,18 @@ class gui () =
       let kill_worker =
        (* the following lines are from Xavier Leroy: http://alan.petitepomme.net/cwn/2005.11.08.html *)
        let interrupt = ref None in
+       let old_callback = ref (function _ -> ()) in
        let force_interrupt n =
          (* This function is called just before the thread's timeslice ends *)
+         !old_callback n;
          if Some(Thread.id(Thread.self())) = !interrupt then
           (interrupt := None; raise Sys.Break) in
-(*
-       let _ = Sys.signal Sys.sigvtalrm (Sys.Signal_handle force_interrupt) in
-*)
+       let _ =
+        match Sys.signal Sys.sigvtalrm (Sys.Signal_handle force_interrupt) with
+           Sys.Signal_handle f -> old_callback := f
+         | Sys.Signal_ignore
+         | Sys.Signal_default -> assert false
+       in
         fun () ->
          match !worker_thread with
             None -> assert false
