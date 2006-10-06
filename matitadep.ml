@@ -112,6 +112,29 @@ let main () =
       let oc = open_out !dot_file in
       let fmt = Format.formatter_of_out_channel oc in 
       GraphvizPp.Dot.header (* ~graph_attrs:["rankdir","LR"] *) fmt;
+      let gcp x y = 
+      (* explode and implode from the OCaml Expert FAQ. *)
+        let explode s =
+          let rec exp i l =
+            if i < 0 then l else exp (i - 1) (s.[i] :: l) in
+          exp (String.length s - 1) []
+        in      
+        let implode l =
+          let res = String.create (List.length l) in
+          let rec imp i = function
+          | [] -> res
+          | c :: l -> res.[i] <- c; imp (i + 1) l in
+          imp 0 l
+        in
+        let rec aux = function
+          | x::tl1,y::tl2 when x = y -> x::(aux (tl1,tl2))
+          | _ -> [] 
+        in
+        implode (aux (explode x,explode y))
+      in
+      let max_path = List.hd ma_files in 
+      let max_path = List.fold_left gcp max_path ma_files in
+      let short x = Pcre.replace ~pat:("^"^max_path) x in
       List.iter
        (fun ma_file -> 
         let deps = Hashtbl.find_all include_deps_dot ma_file in
@@ -124,8 +147,8 @@ let main () =
         in
         let deps = List.fast_sort Pervasives.compare deps in
         let deps = HExtlib.list_uniq deps in
-        GraphvizPp.Dot.node ma_file fmt;
-        List.iter (fun dep -> GraphvizPp.Dot.edge ma_file dep fmt) deps)
+        GraphvizPp.Dot.node (short ma_file) fmt;
+        List.iter (fun dep -> GraphvizPp.Dot.edge (short ma_file) (short dep) fmt) deps)
        ma_files;
       GraphvizPp.Dot.trailer fmt;
       close_out oc

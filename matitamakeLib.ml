@@ -202,7 +202,7 @@ let call_make ?matita_flags development target make =
   let args = 
     ["--no-print-directory"; "-s"; "-k"; "-f"; makefile; target] @ flags 
   in
-(*     prerr_endline (String.concat " " args);   *)
+ (*    prerr_endline (String.concat " " args);   *)
   make development.root args
       
 let build_development ?matita_flags ?(target="all") development =

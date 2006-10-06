@@ -1,5 +1,6 @@
-SRC=$(shell find @ROOT@ -name "*.ma" -a -type f | sed 's?^@ROOT@/??')
-TODO=$(SRC:%.ma=%.mo)
+SRC=$(shell find @ROOT@ -name "*.ma" -a -type f)
+SHORTSRC=$(echo $(SRC) | sed 's?^@ROOT@/??g')
+TODO=$(SHORTSRC:%.ma=%.mo)
 
 MATITA_FLAGS=
 MATITA_FLAGS+=-noprofile
@@ -32,4 +33,4 @@ clean:
 
 # this is the depend for full targets like:
 # dir/dir/name.moo: dir/dir/name.ma dir/dep.moo
--include @DEPFILE@
+include @DEPFILE@
