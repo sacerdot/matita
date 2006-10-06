@@ -1,6 +1,6 @@
 SRC=$(shell find @ROOT@ -name "*.ma" -a -type f)
 SHORTSRC=$(echo $(SRC) | sed 's?^@ROOT@/??g')
-TODO=$(SHORTSRC:%.ma=%.mo)
+TODO=$(SRC:%.ma=%.mo)
 
 MATITA_FLAGS=
 MATITA_FLAGS+=-noprofile
