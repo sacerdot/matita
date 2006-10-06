@@ -107,11 +107,6 @@ let main () =
         prerr_endline ("File "^ file^" has no baseuri. Use set baseuri");
         exit 1)
   uri_deps;
-  if !dot_file <> "" then (* generate dependency graph if required *)
-    begin
-      let oc = open_out !dot_file in
-      let fmt = Format.formatter_of_out_channel oc in 
-      GraphvizPp.Dot.header (* ~graph_attrs:["rankdir","LR"] *) fmt;
       let gcp x y = 
       (* explode and implode from the OCaml Expert FAQ. *)
         let explode s =
@@ -135,6 +130,11 @@ let main () =
       let max_path = List.hd ma_files in 
       let max_path = List.fold_left gcp max_path ma_files in
       let short x = Pcre.replace ~pat:("^"^max_path) x in
+  if !dot_file <> "" then (* generate dependency graph if required *)
+    begin
+      let oc = open_out !dot_file in
+      let fmt = Format.formatter_of_out_channel oc in 
+      GraphvizPp.Dot.header (* ~graph_attrs:["rankdir","LR"] *) fmt;
       List.iter
        (fun ma_file -> 
         let deps = Hashtbl.find_all include_deps_dot ma_file in
@@ -162,10 +162,11 @@ let main () =
       let deps = ma_file :: deps in
       let baseuri = Hashtbl.find baseuri_of ma_file in
       let moo = obj_file_of_baseuri true baseuri in
-      Printf.printf "%s: %s\n%s: %s\n%s: %s\n" 
+      Printf.printf "%s: %s\n%s: %s\n%s: %s\n%s: %s\n" 
         moo (String.concat " " deps)
         (Filename.basename(Pcre.replace ~pat:"ma$" ~templ:"mo" ma_file)) moo
         (Pcre.replace ~pat:"ma$" ~templ:"mo" ma_file) moo
+        (Pcre.replace ~pat:"ma$" ~templ:"mo" (short ma_file)) moo
      with Not_found -> 
        prerr_endline ("File "^ma_file^" has no baseuri. Use set baseuri");
        exit 1)
