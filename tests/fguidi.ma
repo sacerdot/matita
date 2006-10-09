@@ -46,7 +46,7 @@ intros. apply False_ind. cut (is_S O). auto new. elim H. exact I.
 qed.
 
 theorem eq_gen_S_O_cc: (\forall P:Prop. P) \to \forall x. (S x = O).
-intros. auto new.
+intros. apply H.
 qed.
 
 theorem eq_gen_S_S: \forall m,n. (S m) = (S n) \to m = n. 
