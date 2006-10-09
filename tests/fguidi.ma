@@ -42,11 +42,11 @@ definition pred: nat \to nat \def
       ]. 
 
 theorem eq_gen_S_O: \forall x. (S x = O) \to \forall P:Prop. P.
-intros. apply False_ind. cut (is_S O). auto paramodulation. elim H. exact I.
+intros. apply False_ind. cut (is_S O). auto new. elim H. exact I.
 qed.
 
 theorem eq_gen_S_O_cc: (\forall P:Prop. P) \to \forall x. (S x = O).
-intros. auto.
+intros. auto new.
 qed.
 
 theorem eq_gen_S_S: \forall m,n. (S m) = (S n) \to m = n. 
@@ -83,7 +83,7 @@ theorem le_gen_S_x_aux: \forall m,x,y. (le y x) \to (y = S m) \to
                         (\exists n. x = (S n) \land (le m n)).
 intros 4. elim H. 
 apply eq_gen_S_O. exact m. elim H1. auto paramodulation.
-cut (n = m). elim Hcut. apply ex_intro. exact n1. auto paramodulation. auto. (* paramodulation non trova la prova *)
+cut (n = m). elim Hcut. apply ex_intro. exact n1. auto paramodulation. auto new. (* paramodulation non trova la prova *)
 qed.
 
 theorem le_gen_S_x: \forall m,x. (le (S m) x) \to 

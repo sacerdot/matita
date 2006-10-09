@@ -30,7 +30,7 @@ theorem prova1:
   C.
   intros (A B C S a w h b wb).
   (* exact (h s (a b) b wb II). *)
-  auto width = 5 depth = 3. (* look at h parameters! *)
+  auto new width = 5 depth = 3. (* look at h parameters! *)
   qed.
   
 (* c'e' qualcosa di imperativo, se si cambia l'rdine delle ipotesi poi sclera *)

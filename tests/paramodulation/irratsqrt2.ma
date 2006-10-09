@@ -25,14 +25,14 @@ theorem prova :
   \forall H1: \forall x.P x \to O = x.
    O = S (S (S (S (S O)))).
    intros.
-   auto.
+   auto new.
  qed.
  
 theorem example2:
 \forall x: nat. (x+S O)*(x-S O) = x*x - S O.
 intro;
 apply (nat_case x);
- [ auto timeout = 1.|intro.auto timeout = 1.]
+ [ auto new timeout = 1.|intro.auto new timeout = 1.]
 qed.
 
 theorem irratsqrt2_byhand:
@@ -55,7 +55,7 @@ theorem irratsqrt2_byhand:
   two = o.
   intros.
   cut (divides two a);
-    [2:elim (H8 a a);[assumption.|assumption|rewrite > H9.auto.]
+    [2:elim (H8 a a);[assumption.|assumption|rewrite > H9.auto new.]
     |elim (H6 ? ? Hcut).
      cut (divides two b);
        [ apply (H10 ? Hcut Hcut1).
@@ -89,7 +89,7 @@ theorem irratsqrt2_byhand':
   two = o.
   intros.
   cut (divides two a);
-    [2:elim (H8 a a);[assumption.|assumption|rewrite > H9.auto.]
+    [2:elim (H8 a a);[assumption.|assumption|rewrite > H9.auto new.]
     |(*elim (H6 ? ? Hcut). *)
      cut (divides two b);
        [ apply (H10 ? Hcut Hcut1).
@@ -126,7 +126,7 @@ theorem irratsqrt2:
   \forall H6:\forall x.divides x a \to divides x b \to x = o.
   two = o.
 intros.
-auto depth = 5 timeout = 180.
+auto new depth = 5 timeout = 180.
 qed.
 
 (* time: 146s *)
@@ -136,19 +136,19 @@ qed.
 
   cut (divides two a);[|
     (* apply H8;apply (H7 two (m a a) (m b b));symmetry;assumption. *)
-    auto depth = 4 width = 3 use_paramod = false. ]
-  (*auto depth = 5.*)
+    auto new depth = 4 width = 3 use_paramod = false. ]
+  (*auto new depth = 5.*)
   
   apply H10;
   [ assumption.
-  |(*auto depth = 4.*) apply H8;   
-         (*auto.*)
+  |(*auto new depth = 4.*) apply H8;   
+         (*auto new.*)
          apply (H7 ? ? (m (f two a) (f two a)));
          apply (H5 two ? ?);
          cut ((\lambda x:A.m x (m two ?)=m x (m b b))?);
          [|||simplify;
          auto paramodulation.
-         (*auto.*)
+         (*auto new.*)
          rewrite < H9.
          rewrite < (H6 two a Hcut) in \vdash (? ? ? %).
          rewrite < H2.apply eq_f.

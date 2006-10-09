@@ -22,10 +22,11 @@ alias symbol "plus" = "Coq's natural plus".
 alias symbol "eq" = "Coq's leibnitz's equality".
 alias id "nat" = "cic:/Coq/Init/Datatypes/nat.ind#xpointer(1/1)".
 alias id "S" = "cic:/Coq/Init/Datatypes/nat.ind#xpointer(1/1/2)".
-
+alias id "O" = "cic:/Coq/Init/Datatypes/nat.ind#xpointer(1/1/1)".
 
 theorem p0 : \forall m:nat. m+O = m.
-intro. demodulate.
+intro. demodulate.reflexivity.
+qed.
 
 theorem p: \forall m.1*m = m.
 intros.demodulate.reflexivity.

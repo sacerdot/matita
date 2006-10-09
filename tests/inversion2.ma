@@ -59,5 +59,5 @@ theorem test_inversion: \forall n. le n O \to n=O.
   (* elim H. BUG DI UNSHARING *)
   (*apply (ledx_ind (\lambda x.\lambda y.  n=x \to O=y \to x=y) ? ? ? ? H).*)
     simplify. intros. reflexivity.    
-    simplify. intros. discriminate H3.
+    simplify. intros. destruct H3.
 qed.

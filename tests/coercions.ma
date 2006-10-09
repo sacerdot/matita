@@ -59,10 +59,14 @@ definition double2:
 \def 
   \lambda f:int \to int. \lambda x : pos .f (nat2int (pos2nat x)).
 
+(* This used to test eq_f as a coercion. However, posing both eq_f and sym_eq
+   as coercions made the qed time of some TPTP problems reach infty.
+   Thus eq_f is no longer a coercion (nor is sym_eq).
 theorem coercion_svelta : \forall T,S:Type.\forall f:T \to S.\forall x,y:T.x=y \to f y = f x.
   intros.
   apply ((\lambda h:f y = f x.h) H).
 qed.
+*)
 
 variant pos2nat' : ? \def pos2nat.
 

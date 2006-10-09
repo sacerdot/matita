@@ -30,7 +30,7 @@ theorem t: \forall x:nat. x * (x + 0) = (0 + x) * (x + x * 0).
  rewrite < (plus_n_O x).
  reflexivity.
  reflexivity.
- auto.
+ auto new.
 qed.
 
 (* This test tests "replace in match t" where t contains some metavariables *)
