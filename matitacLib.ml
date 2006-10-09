@@ -63,6 +63,7 @@ let run_script is eval_function  =
         in
         HLog.debug ("Executing: ``" ^ stm ^ "''"))
   in
+  let matita_debug = Helm_registry.get_bool "matita.debug" in
   try
    let grafite_status'', lexicon_status'' =
     match eval_function lexicon_status' grafite_status' is cb with
@@ -77,7 +78,8 @@ let run_script is eval_function  =
   | End_of_file
   | CicNotationParser.Parse_error _ as exn -> raise exn
   | exn -> 
-      HLog.error (snd (MatitaExcPp.to_string exn));
+      if not matita_debug then
+       HLog.error (snd (MatitaExcPp.to_string exn)) ;
       raise exn
 
 let fname () =
@@ -298,7 +300,8 @@ let main ~mode =
        exit 0
      end
   with 
-  | Sys.Break ->
+  | Sys.Break as exn ->
+     if matita_debug then raise exn;
       HLog.error "user break!";
       pp_times fname bench_mode false big_bang;
       if mode = `COMPILER then
