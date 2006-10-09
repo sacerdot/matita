@@ -48,6 +48,7 @@
   <!ENTITY LCFtactical "<emphasis><link linkend='grammar.LCFtactical'>LCF-tactical</link></emphasis>">
   <!ENTITY qstring "<emphasis><link linkend='grammar.qstring'>qstring</link></emphasis>">
   <!ENTITY interpretation "<emphasis><link linkend='grammar.interpretation'>interpretation</link></emphasis>">
+  <!ENTITY autoparams "<emphasis><link linkend='grammar.autoparams'>auto_params</link></emphasis>">
 ]>
 
 <?yelp:chunk-depth 3?>

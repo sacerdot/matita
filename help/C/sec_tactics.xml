@@ -89,13 +89,13 @@
   <sect1 id="tac_applyS">
     <title>applyS</title>
     <titleabbrev>applyS</titleabbrev>
-    <para><userinput>applyS t</userinput></para>
+    <para><userinput>applyS t auto_params</userinput></para>
     <para>
       <variablelist>
         <varlistentry role="tactic.synopsis">
           <term>Synopsis:</term>
           <listitem>
-            <para><emphasis role="bold">applyS</emphasis> &sterm;</para>
+            <para><emphasis role="bold">applyS</emphasis> &sterm; &autoparams;</para>
           </listitem>
         </varlistentry>
         <varlistentry>
@@ -123,6 +123,8 @@
              Then it closes the current sequent by applying
              <command>t</command> to <command>n</command>
              implicit arguments (that become new sequents).
+             The <command>auto_params</command> parameters are passed
+             directly to <command>auto paramodulation</command>.
             </para>
           </listitem>
         </varlistentry>
@@ -176,13 +178,13 @@
   <sect1 id="tac_auto">
     <title>auto</title>
     <titleabbrev>auto</titleabbrev>
-    <para><userinput>auto depth=d width=w paramodulation full</userinput></para>
+    <para><userinput>auto params</userinput></para>
     <para>
       <variablelist>
         <varlistentry role="tactic.synopsis">
           <term>Synopsis:</term>
           <listitem>
-            <para><emphasis role="bold">auto</emphasis> [<emphasis role="bold">depth=</emphasis>&nat;] [<emphasis role="bold">width=</emphasis>&nat;] [<emphasis role="bold">paramodulation</emphasis>] [<emphasis role="bold">full</emphasis>]</para>
+            <para><emphasis role="bold">auto</emphasis> &autoparams;</para>
           </listitem>
         </varlistentry>
         <varlistentry>
@@ -190,10 +192,10 @@
           <listitem>
             <para>None, but the tactic may fail finding a proof if every
              proof is in the search space that is pruned away. Pruning is
-             controlled by <command>d</command> and <command>w</command>.
+             controlled by the optional <command>params</command>.
              Moreover, only lemmas whose type signature is a subset of the
              signature of the current sequent are considered. The signature of
-             a sequent is ...TODO</para>
+             a sequent is ...&TODO;</para>
           </listitem>
         </varlistentry>
         <varlistentry>
