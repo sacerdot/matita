@@ -520,7 +520,7 @@ cut (n \divides p \lor n \ndivides p)
           elim H1.rewrite > H6.
           (* applyS (witness n (n*(q*a-a1*n2)) (q*a-a1*n2))
              reflexivity. *);
-          applyS (witness n ? ? (refl_eq ? ?)).
+          applyS (witness n ? ? (refl_eq ? ?)) timeout=50.
           (*
           rewrite < (sym_times n).rewrite < assoc_times.
           rewrite > (sym_times q).rewrite > assoc_times.
