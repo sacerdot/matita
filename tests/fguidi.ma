@@ -63,7 +63,7 @@ inductive le: nat \to nat \to Prop \def
    | le_succ: \forall m, n. (le m n) \to (le (S m) (S n)).
 
 theorem le_refl: \forall x. (le x x).
-intros. elim x. auto paramodulation. auto paramodulation.
+intros. elim x; auto new.
 qed.
 
 theorem le_gen_x_O_aux: \forall x, y. (le x y) \to (y =O) \to 
@@ -76,14 +76,14 @@ intros. apply le_gen_x_O_aux. exact O. auto paramodulation. auto paramodulation.
 qed.
 
 theorem le_gen_x_O_cc: \forall x. (x = O) \to (le x O).
-intros. elim H. auto paramodulation.
+intros. elim H. auto new.
 qed.
 
 theorem le_gen_S_x_aux: \forall m,x,y. (le y x) \to (y = S m) \to 
                         (\exists n. x = (S n) \land (le m n)).
 intros 4. elim H. 
 apply eq_gen_S_O. exact m. elim H1. auto paramodulation.
-cut (n = m). elim Hcut. apply ex_intro. exact n1. auto paramodulation. auto new. (* paramodulation non trova la prova *)
+cut (n = m). elim Hcut. apply ex_intro. exact n1. auto new.auto paramodulation.
 qed.
 
 theorem le_gen_S_x: \forall m,x. (le (S m) x) \to 
@@ -93,17 +93,18 @@ qed.
 
 theorem le_gen_S_x_cc: \forall m,x. (\exists n. x = (S n) \land (le m n)) \to
                        (le (S m) x).
-intros. elim H. elim H1. cut ((S x1) = x). elim Hcut. auto paramodulation. elim H2. auto paramodulation.
+intros. elim H. elim H1. cut ((S x1) = x). elim Hcut. auto new.
+elim H2. auto paramodulation.
 qed.
 
 theorem le_gen_S_S: \forall m,n. (le (S m) (S n)) \to (le m n).
 intros.
-lapply le_gen_S_x to H using H0. elim H0. elim H1. 
-lapply eq_gen_S_S to H2 using H4. rewrite > H4. assumption.
+lapply le_gen_S_x to H as H0. elim H0. elim H1. 
+lapply eq_gen_S_S to H2 as H4. rewrite > H4. assumption.
 qed.
 
 theorem le_gen_S_S_cc: \forall m,n. (le m n) \to (le (S m) (S n)).
-intros. auto paramodulation.
+intros. auto new.
 qed.
 
 (*
