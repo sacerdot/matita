@@ -23,10 +23,10 @@ theorem ceq_trans: \forall C. \xforall c1,c2. ceq C c1 c2 \to
 intros.
 
 (*
-apply ceq_intro; apply cle_trans; [|auto|auto||auto|auto].
+apply ceq_intro; apply cle_trans; [|auto new|auto new||auto new|auto new].
 qed.
 
 theorem ceq_sym: \forall C,c1,c2. ceq C c1 c2 \to ceq C c2 c1.
-intros; elim H; clear H.; auto.
+intros; elim H; clear H.; auto new.
 qed.
 *)
