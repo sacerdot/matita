@@ -422,7 +422,9 @@ class gui () =
         main#buttonsToolbar#misc#set_sensitive true;
         develList#buttonsHbox#misc#set_sensitive true;
         main#scriptMenu#misc#set_sensitive true;
-        source_view#set_editable true
+        source_view#set_editable true;
+        (*The next line seems sufficient to avoid some unknown race condition *)
+        GtkThread.sync (fun () -> ()) ()
       in
       let worker_thread = ref None in
       let notify_exn exn =
