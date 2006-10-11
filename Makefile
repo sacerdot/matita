@@ -203,9 +203,9 @@ distclean: clean
 TEST_DIRS = 				\
 	library 			\
 	tests 				\
+	contribs/RELATIONAL	 	\
 	contribs/LAMBDA-TYPES 		\
 	contribs/PREDICATIVE-TOPOLOGY 	\
-	contribs/RELATIONAL	 	\
 	$(NULL)
 
 .PHONY: tests tests.opt cleantests cleantests.opt
