@@ -463,8 +463,8 @@ class gui () =
            f ();
            unlock_world ()
           with exc ->
-           unlock_world ();
-           notify_exn exc
+           notify_exn exc;
+           unlock_world ()
        in
         worker_thread := Some (Thread.create thread_main ()) in
       let kill_worker =
