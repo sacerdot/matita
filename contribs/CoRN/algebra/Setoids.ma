@@ -1227,11 +1227,6 @@ qed.
 
 
 
-axiom proper_caseZ_diff_CS : \forall CS : CSetoid. \forall f : nat \to nat \to CS.
- (\forall m,n,p,q : nat. eq nat (plus m q) (plus n p) \to (f m n) = (f p q)) \to
- \forall m,n : nat. caseZ_diff CS (Zminus (Z_of_nat m) (Z_of_nat n)) f = (f m n).
-
-(*
 lemma proper_caseZ_diff_CS : \forall CS : CSetoid. \forall f : nat \to nat \to CS.
  (\forall m,n,p,q : nat. eq nat (plus m q) (plus n p) \to (f m n) = (f p q)) \to
  \forall m,n : nat. caseZ_diff CS (Zminus (Z_of_nat m) (Z_of_nat n)) f = (f m n).
@@ -1253,9 +1248,9 @@ apply f. apply n1. apply m1.
 apply eq_symmetric_unfolded.assumption.
 apply eq_symmetric_unfolded.assumption.
 apply H.
-auto.
+auto new.
 qed.
-*)
+
 (*
 Finally, we characterize functions defined on the natural numbers also as setoid functions, similarly to what we already did for predicates.
 *)
