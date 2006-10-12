@@ -15,7 +15,7 @@
 (* $Id: CSetoidFun.v,v 1.12 2004/09/22 11:06:10 loeb Exp $ *)
 
 set "baseuri" "cic:/matita/algebra/CoRN/SetoidFun".
-include "Setoids.ma".
+include "algebra/Setoids.ma".
 
 
 definition ap_fun : \forall A,B : CSetoid. \forall f,g : CSetoid_fun A B. Prop \def
