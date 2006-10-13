@@ -198,7 +198,7 @@
 	<entry id="grammar.rec_def">&rec_def;</entry>
 	<entry>::=</entry>
 	<entry>
-	  &id; [&id;|<emphasis role="bold">(</emphasis>&id;[<emphasis role="bold">,</emphasis>&term;]… <emphasis role="bold">:</emphasis>&term;<emphasis role="bold">)</emphasis>]…
+	  &id; [&id;|<emphasis role="bold">_</emphasis>|<emphasis role="bold">(</emphasis>&id;[<emphasis role="bold">,</emphasis>&id;]… <emphasis role="bold">:</emphasis>&term;<emphasis role="bold">)</emphasis>]…
 	</entry>
 	<entry />
       </row>
@@ -416,6 +416,10 @@
      given. In this case Matita enters in interactive mode and
      <command>f</command> must be defined by means of tactics.</para>
     <para>Notice that the command is equivalent to <command>theorem f: T ≝ t</command>.</para>
+  </sect2>
+  <sect2 id="letrec">
+    <title><emphasis role="bold">letrec</emphasis> &TODO;</title>
+    <titleabbrev>&TODO;</titleabbrev>
   </sect2>
   <sect2 id="inductive">
     <title>[<emphasis role="bold">inductive</emphasis>|<emphasis role="bold">coinductive</emphasis>] &id; [&args2;]… <emphasis role="bold">:</emphasis> &term; <emphasis role="bold">≝</emphasis> [<emphasis role="bold">|</emphasis>] [&id;<emphasis role="bold">:</emphasis>&term;] [<emphasis role="bold">|</emphasis> &id;<emphasis role="bold">:</emphasis>&term;]…
