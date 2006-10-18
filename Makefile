@@ -203,6 +203,7 @@ distclean: clean
 TEST_DIRS = 				\
 	library 			\
 	tests 				\
+	dama				\
 	contribs/CoRN	 	        \
 	contribs/RELATIONAL	 	\
 	contribs/LAMBDA-TYPES 		\
