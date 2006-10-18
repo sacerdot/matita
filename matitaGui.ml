@@ -150,26 +150,27 @@ class interpErrorModel =
           let idx = ref 0 in
           fun interp ->
             try
-              List.assoc "0" interp
+             let _,_,y = List.find (fun (_,x,y) -> x="0") interp in y
             with Not_found ->
               incr idx; string_of_int !idx
         in
         tree_store#clear ();
         let idx = ref ~-1 in
         List.iter
-          (fun _,interp,_,_ ->
+          (fun pass,env,_,_,_ ->
             incr idx;
             let interp_row = tree_store#append () in
             tree_store#set ~row:interp_row ~column:id_col
-              (name_of_interp interp);
+              ("Pass " ^ string_of_int pass ^
+               "; Interpretation " ^ name_of_interp env);
             tree_store#set ~row:interp_row ~column:interp_no_col !idx;
             List.iter
-              (fun (id, dsc) ->
+              (fun (_, id, dsc) ->
                 let row = tree_store#append ~parent:interp_row () in
                 tree_store#set ~row ~column:id_col id;
                 tree_store#set ~row ~column:dsc_col dsc;
                 tree_store#set ~row ~column:interp_no_col !idx)
-              interp)
+              env)
           choices
 
       method get_interp_no tree_path =
@@ -184,21 +185,15 @@ let rec interactive_error_interp ?(all_passes=false) source_buffer notify_exn
   let errorll' =
    if all_passes then errorll else List.rev (List.tl (List.tl (List.rev errorll))) in
   let choices =
+   let pass = ref 0 in
    List.flatten
     (List.map
-      (List.map
-        (fun (choices,offset,msg) ->
-          let textual_choices =
-           List.map
-            (fun (dom,(descr,_)) ->
-              DisambiguateTypes.string_of_domain_item dom, descr
-            ) choices
-          in
-           choices, textual_choices, offset, msg
-        )
+      (fun l ->
+        incr pass;
+        List.map (fun (env,diff,offset,msg) -> !pass, env, diff, offset, msg) l
       ) errorll') in
-  let choices_eq (_,c1,_,_) (_,c2,_,_) = c1 = c2 in
-  let choices_compare (_,c1,_,_) (_,c2,_,_) = compare c1 c2 in
+  let choices_eq (_,e1,_,_,_) (_,e2,_,_,_) = e1 = e2 in
+  let choices_compare (_,e1,_,_,_) (_,e2,_,_,_) = compare e1 e2 in
   (* Here we are doing a stable sort and list_uniq returns the latter
      "equal" element. I.e. we are showing the error corresponding to the
      most advanced disambiguation pass *)
@@ -208,10 +203,10 @@ let rec interactive_error_interp ?(all_passes=false) source_buffer notify_exn
   in
    match choices with
       [] -> assert false
-    | [interp,_,loffset,msg] ->
+    | [_,env,diff,loffset,msg] ->
         notify_exn
          (GrafiteDisambiguator.DisambiguationError
-           (offset,[[interp,loffset,msg]]));
+           (offset,[[env,diff,loffset,msg]]));
     | _::_ ->
        let dialog = new disambiguationErrors () in
        dialog#check_widgets ();
@@ -226,7 +221,7 @@ let rec interactive_error_interp ?(all_passes=false) source_buffer notify_exn
             None -> assert false
          | Some tp -> tp in
         let idx = model#get_interp_no tree_path in
-        let interp,_,loffset,msg = List.nth choices idx in
+        let _,env,diff,loffset,msg = List.nth choices idx in
         let script = MatitaScript.current () in
         let error_tag = script#error_tag in
          source_buffer#remove_tag error_tag
@@ -234,7 +229,7 @@ let rec interactive_error_interp ?(all_passes=false) source_buffer notify_exn
            ~stop:source_buffer#end_iter;
          notify_exn
           (GrafiteDisambiguator.DisambiguationError
-            (offset,[[interp,loffset,msg]]))
+            (offset,[[env,diff,loffset,msg]]))
          ));
        let return _ =
          dialog#disambiguationErrors#destroy ();
