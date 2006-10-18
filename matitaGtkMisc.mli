@@ -113,7 +113,6 @@ class taggedStringListModel:
 class type gui =
   object  (* minimal gui object requirements *)
     method newUriDialog:          unit -> MatitaGeneratedGui.uriChoiceDialog
-    method newRecordDialog:       unit -> MatitaGeneratedGui.recordChoiceDialog
     method newConfirmationDialog: unit -> MatitaGeneratedGui.confirmationDialog
     method newEmptyDialog:        unit -> MatitaGeneratedGui.emptyDialog
   end
@@ -138,16 +137,6 @@ val ask_text:
   ?title:string -> ?message:string ->
   ?multiline:bool -> ?default:string -> unit ->
     string
-
-  (** @param fields field names
-   * @param records list of records, each record is a list of [fields] strings
-   * @return number of the chosen record, 0 for the first one *)
-val ask_record_choice:
-  gui:#gui ->
-  ?title:string -> ?message:string ->
-  fields:string list -> records:string list list ->
-  unit ->
-    int
 
 val report_error:
   title:string -> message:string -> 

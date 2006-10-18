@@ -254,7 +254,6 @@ class recordModel (tree_view:GTree.view) =
 class type gui =
   object
     method newUriDialog:          unit -> MatitaGeneratedGui.uriChoiceDialog
-    method newRecordDialog:       unit -> MatitaGeneratedGui.recordChoiceDialog
     method newConfirmationDialog: unit -> MatitaGeneratedGui.confirmationDialog
     method newEmptyDialog:        unit -> MatitaGeneratedGui.emptyDialog
   end
@@ -394,50 +393,6 @@ let ask_text ~(gui:#gui) ?(title = "") ?(message = "") ?(multiline = false)
   dialog#emptyDialog#show ();
   GtkThread.main ();
   (match !result with None -> raise MatitaTypes.Cancel | Some r -> r)
-
-let ask_record_choice ~(gui:#gui) ?(title= "") ?(message = "")
-  ~fields ~records ()
-=
-  let fields = Array.of_list fields in
-  let fields_no = Array.length fields in
-  assert (fields_no > 0);
-  let dialog = gui#newRecordDialog () in
-  dialog#recordChoiceDialog#set_title title;
-  dialog#recordChoiceDialogLabel#set_label message;
-  let model = new recordModel dialog#recordChoiceTreeView in
-  dialog#recordChoiceTreeView#set_headers_visible true;
-  let combos =
-    Array.init fields_no
-      (fun _ -> GTree.store_of_list Gobject.Data.string ["a"; "b"; "c"])
-  in
-  let (store, col) = combos.(0) in
-  store#set ~row:(store#append ()) ~column:col "uno";
-  store#set ~row:(store#append ()) ~column:col "due";
-  let toggles = Array.init fields_no (fun _ -> false) in
-  Array.iteri
-    (fun i f -> model#easy_append f i toggles.(i))
-    fields;
-  let record_no = ref None in
-  let return _ =
-    dialog#recordChoiceDialog#destroy ();
-    GMain.Main.quit ()
-  in
-  let fail _ = record_no := None; return () in
-  ignore (dialog#recordChoiceDialog#event#connect#delete (fun _ -> true));
-  connect_button dialog#recordChoiceOkButton (fun _ ->
-    match !record_no with None -> () | Some _ -> return ());
-  connect_button dialog#recordChoiceCancelButton fail;
-(*   ignore (dialog#recordChoiceTreeView#connect#row_activated (fun path _ ->
-    interp_no := Some (model#get_interp_no path);
-    return ()));
-  let selection = dialog#recordChoiceTreeView#selection in
-  ignore (selection#connect#changed (fun _ ->
-    match selection#get_selected_rows with
-    | [path] -> interp_no := Some (model#get_interp_no path)
-    | _ -> assert false)); *)
-  dialog#recordChoiceDialog#show ();
-  GtkThread.main ();
-  (match !record_no with Some n -> n | _ -> raise MatitaTypes.Cancel)
 
 let utf8_parsed_text s floc = 
   let start, stop = HExtlib.loc_of_floc floc in
