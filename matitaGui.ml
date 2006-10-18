@@ -129,6 +129,129 @@ let ask_unsaved parent =
          "<i>Do you want to save the script before continuing?</i>")
     ()
 
+class interpErrorModel =
+  let cols = new GTree.column_list in
+  let id_col = cols#add Gobject.Data.string in
+  let dsc_col = cols#add Gobject.Data.string in
+  let interp_no_col = cols#add Gobject.Data.int in
+  let tree_store = GTree.tree_store cols in
+  let id_renderer = GTree.cell_renderer_text [], ["text", id_col] in
+  let dsc_renderer = GTree.cell_renderer_text [], ["text", dsc_col] in
+  let id_view_col = GTree.view_column ~renderer:id_renderer () in
+  let dsc_view_col = GTree.view_column ~renderer:dsc_renderer () in
+  fun tree_view choices ->
+    object
+      initializer
+        tree_view#set_model (Some (tree_store :> GTree.model));
+        ignore (tree_view#append_column id_view_col);
+        ignore (tree_view#append_column dsc_view_col);
+        let name_of_interp =
+          (* try to find a reasonable name for an interpretation *)
+          let idx = ref 0 in
+          fun interp ->
+            try
+              List.assoc "0" interp
+            with Not_found ->
+              incr idx; string_of_int !idx
+        in
+        tree_store#clear ();
+        let idx = ref ~-1 in
+        List.iter
+          (fun _,interp,_,_ ->
+            incr idx;
+            let interp_row = tree_store#append () in
+            tree_store#set ~row:interp_row ~column:id_col
+              (name_of_interp interp);
+            tree_store#set ~row:interp_row ~column:interp_no_col !idx;
+            List.iter
+              (fun (id, dsc) ->
+                let row = tree_store#append ~parent:interp_row () in
+                tree_store#set ~row ~column:id_col id;
+                tree_store#set ~row ~column:dsc_col dsc;
+                tree_store#set ~row ~column:interp_no_col !idx)
+              interp)
+          choices
+
+      method get_interp_no tree_path =
+        let iter = tree_store#get_iter tree_path in
+        tree_store#get ~row:iter ~column:interp_no_col
+    end
+
+
+let rec interactive_error_interp ?(all_passes=false) source_buffer notify_exn
+ offset errorll
+= 
+  let errorll' =
+   if all_passes then errorll else List.rev (List.tl (List.tl (List.rev errorll))) in
+  let choices =
+   List.flatten
+    (List.map
+      (List.map
+        (fun (choices,offset,msg) ->
+          let textual_choices =
+           List.map
+            (fun (dom,(descr,_)) ->
+              DisambiguateTypes.string_of_domain_item dom, descr
+            ) choices
+          in
+           choices, textual_choices, offset, msg
+        )
+      ) errorll') in
+  let choices_eq (_,c1,_,_) (_,c2,_,_) = c1 = c2 in
+  let choices_compare (_,c1,_,_) (_,c2,_,_) = compare c1 c2 in
+  (* Here we are doing a stable sort and list_uniq returns the latter
+     "equal" element. I.e. we are showing the error corresponding to the
+     most advanced disambiguation pass *)
+  let choices =
+   HExtlib.list_uniq ~eq:choices_eq
+    (List.stable_sort choices_compare choices)
+  in
+   match choices with
+      [] -> assert false
+    | [interp,_,loffset,msg] ->
+        notify_exn
+         (GrafiteDisambiguator.DisambiguationError
+           (offset,[[interp,loffset,msg]]));
+    | _::_ ->
+       let dialog = new disambiguationErrors () in
+       dialog#check_widgets ();
+       if all_passes then
+        dialog#disambiguationErrorsMoreErrors#misc#set_sensitive false;
+       let model = new interpErrorModel dialog#treeview choices in
+       dialog#disambiguationErrors#set_title "Interpretation choice";
+       dialog#disambiguationErrorsLabel#set_label "Choose an interpretation:";
+       ignore (dialog#treeview#connect#cursor_changed (fun _ ->
+        let tree_path =
+         match fst (dialog#treeview#get_cursor ()) with
+            None -> assert false
+         | Some tp -> tp in
+        let idx = model#get_interp_no tree_path in
+        let interp,_,loffset,msg = List.nth choices idx in
+        let script = MatitaScript.current () in
+        let error_tag = script#error_tag in
+         source_buffer#remove_tag error_tag
+           ~start:source_buffer#start_iter
+           ~stop:source_buffer#end_iter;
+         notify_exn
+          (GrafiteDisambiguator.DisambiguationError
+            (offset,[[interp,loffset,msg]]))
+         ));
+       let return _ =
+         dialog#disambiguationErrors#destroy ();
+         GMain.Main.quit ()
+       in
+       let fail _ = return () in
+       ignore (dialog#disambiguationErrors#event#connect#delete (fun _ -> true));
+       connect_button dialog#disambiguationErrorsOkButton (fun _ -> return ());
+       connect_button dialog#disambiguationErrorsMoreErrors
+        (fun _ -> return () ;
+          interactive_error_interp ~all_passes:true source_buffer notify_exn offset
+           errorll);
+       connect_button dialog#disambiguationErrorsCancelButton fail;
+       dialog#disambiguationErrors#show ();
+       GtkThread.main ()
+
+
 (** Selection handling
  * Two clipboards are used: "clipboard" and "primary".
  * "primary" is used by X, when you hit the middle button mouse is content is
@@ -464,9 +587,13 @@ class gui () =
           try
            f ();
            unlock_world ()
-          with exc ->
-           notify_exn exc;
-           unlock_world ()
+          with
+           | GrafiteDisambiguator.DisambiguationError (offset,errorll) ->
+              interactive_error_interp source_buffer notify_exn offset errorll ;
+              unlock_world ()
+           | exc ->
+              notify_exn exc;
+              unlock_world ()
        in
         worker_thread := Some (Thread.create thread_main ()) in
       let kill_worker =
@@ -1117,11 +1244,6 @@ class gui () =
       dialog#check_widgets ();
       dialog
 
-    method newRecordDialog () =
-      let dialog = new recordChoiceDialog () in
-      dialog#check_widgets ();
-      dialog
-
     method newConfirmationDialog () =
       let dialog = new confirmationDialog () in
       dialog#check_widgets ();
@@ -1325,36 +1447,6 @@ class interpModel =
         let iter = tree_store#get_iter tree_path in
         tree_store#get ~row:iter ~column:interp_no_col
     end
-
-let interactive_interp_choice () = 
-  fun text prefix_len choices ->
-  let gui = instance () in
-  assert (choices <> []);
-  let dialog = gui#newRecordDialog () in
-  let model = new interpModel dialog#recordChoiceTreeView choices in
-  dialog#recordChoiceDialog#set_title "Interpretation choice";
-  dialog#recordChoiceDialogLabel#set_label "Choose an interpretation:";
-  let interp_no = ref None in
-  let return _ =
-    dialog#recordChoiceDialog#destroy ();
-    GMain.Main.quit ()
-  in
-  let fail _ = interp_no := None; return () in
-  ignore (dialog#recordChoiceDialog#event#connect#delete (fun _ -> true));
-  connect_button dialog#recordChoiceOkButton (fun _ ->
-    match !interp_no with None -> () | Some _ -> return ());
-  connect_button dialog#recordChoiceCancelButton fail;
-  ignore (dialog#recordChoiceTreeView#connect#row_activated (fun path _ ->
-    interp_no := Some (model#get_interp_no path);
-    return ()));
-  let selection = dialog#recordChoiceTreeView#selection in
-  ignore (selection#connect#changed (fun _ ->
-    match selection#get_selected_rows with
-    | [path] -> interp_no := Some (model#get_interp_no path)
-    | _ -> assert false));
-  dialog#recordChoiceDialog#show ();
-  GtkThread.main ();
-  (match !interp_no with Some row -> [row] | _ -> raise MatitaTypes.Cancel)
 
 let interactive_string_choice 
   text prefix_len ?(title = "") ?(msg = "") () ~id locs uris 
