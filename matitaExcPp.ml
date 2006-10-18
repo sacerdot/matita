@@ -71,7 +71,7 @@ let rec to_string =
        | phase::tl ->
           let msg =
            String.concat "\n\n\n"
-            (List.map (fun (floc,msg) ->
+            (List.map (fun (_,floc,msg) ->
               let loc_descr =
                match floc with
                   None -> ""
@@ -88,7 +88,7 @@ let rec to_string =
              (aux (n+1) (msg,[n]) tl) in
      let loc =
       match errorll with
-         ((Some floc,_)::_)::_ ->
+         ((_,Some floc,_)::_)::_ ->
           let (x, y) = HExtlib.loc_of_floc floc in
           let x = x + offset in
           let y = y + offset in
