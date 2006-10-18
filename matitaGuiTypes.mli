@@ -62,7 +62,6 @@ object
 
   method newBrowserWin:         unit -> browserWin
   method newUriDialog:          unit -> MatitaGeneratedGui.uriChoiceDialog
-  method newRecordDialog:       unit -> MatitaGeneratedGui.recordChoiceDialog
   method newConfirmationDialog: unit -> MatitaGeneratedGui.confirmationDialog
   method newEmptyDialog:        unit -> MatitaGeneratedGui.emptyDialog
 
