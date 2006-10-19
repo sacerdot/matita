@@ -145,24 +145,14 @@ class interpErrorModel =
         tree_view#set_model (Some (tree_store :> GTree.model));
         ignore (tree_view#append_column id_view_col);
         ignore (tree_view#append_column dsc_view_col);
-        let name_of_interp =
-          (* try to find a reasonable name for an interpretation *)
-          let idx = ref 0 in
-          fun interp ->
-            try
-             let _,_,y = List.find (fun (_,x,y) -> x="0") interp in y
-            with Not_found ->
-              incr idx; string_of_int !idx
-        in
         tree_store#clear ();
         let idx = ref ~-1 in
         List.iter
-          (fun pass,env,_,_,_ ->
+          (fun passes,env,_,_,_ ->
             incr idx;
             let interp_row = tree_store#append () in
             tree_store#set ~row:interp_row ~column:id_col
-              ("Pass " ^ string_of_int pass ^
-               "; Interpretation " ^ name_of_interp env);
+              ("Passes " ^ String.concat " " (List.map string_of_int passes));
             tree_store#set ~row:interp_row ~column:interp_no_col !idx;
             List.iter
               (fun (_, id, dsc) ->
@@ -190,16 +180,25 @@ let rec interactive_error_interp ?(all_passes=false) source_buffer notify_exn
     (List.map
       (fun l ->
         incr pass;
-        List.map (fun (env,diff,offset,msg) -> !pass, env, diff, offset, msg) l
+        List.map
+         (fun (env,diff,offset,msg) -> [!pass], env, diff, offset, msg) l
       ) errorll') in
-  let choices_eq (_,e1,_,_,_) (_,e2,_,_,_) = e1 = e2 in
-  let choices_compare (_,e1,_,_,_) (_,e2,_,_,_) = compare e1 e2 in
   (* Here we are doing a stable sort and list_uniq returns the latter
      "equal" element. I.e. we are showing the error corresponding to the
      most advanced disambiguation pass *)
   let choices =
-   HExtlib.list_uniq ~eq:choices_eq
-    (List.stable_sort choices_compare choices)
+   let choices_compare (_,e1,_,_,m1) (_,e2,_,_,m2) = compare (e1,m1) (e2,m2) in
+   let choices_compare_by_passes (p1,_,_,_,_) (p2,_,_,_,_) = compare p1 p2 in
+   let rec uniq =
+    function
+       [] -> []
+     | h::[] -> [h]
+     | (p1,e1,_,_,_)::(p2,e2,d2,o2,m2)::tl when e1 = e2 ->
+         uniq ((p1@p2,e2,d2,o2,m2) :: tl) 
+     | h1::tl -> h1 :: uniq tl
+   in
+    List.sort choices_compare_by_passes
+     (uniq (List.stable_sort choices_compare choices))
   in
    match choices with
       [] -> assert false
@@ -213,8 +212,9 @@ let rec interactive_error_interp ?(all_passes=false) source_buffer notify_exn
        if all_passes then
         dialog#disambiguationErrorsMoreErrors#misc#set_sensitive false;
        let model = new interpErrorModel dialog#treeview choices in
-       dialog#disambiguationErrors#set_title "Interpretation choice";
-       dialog#disambiguationErrorsLabel#set_label "Choose an interpretation:";
+       dialog#disambiguationErrors#set_title "Disambiguation error";
+       dialog#disambiguationErrorsLabel#set_label
+        "Click on an interpretation to see the corresponding error message:";
        ignore (dialog#treeview#connect#cursor_changed (fun _ ->
         let tree_path =
          match fst (dialog#treeview#get_cursor ()) with
