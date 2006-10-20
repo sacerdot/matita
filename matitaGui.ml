@@ -187,7 +187,10 @@ let rec interactive_error_interp ?(all_passes=false) source_buffer notify_exn
      "equal" element. I.e. we are showing the error corresponding to the
      most advanced disambiguation pass *)
   let choices =
-   let choices_compare (_,e1,_,_,m1) (_,e2,_,_,m2) = compare (e1,m1) (e2,m2) in
+   let choices_compare (_,e1,_,_,m1) (_,e2,_,_,m2) =
+    let m1 = Lazy.force m1 in
+    let m2 = Lazy.force m2 in
+     compare (e1,m1) (e2,m2) in
    let choices_compare_by_passes (p1,_,_,_,_) (p2,_,_,_,_) = compare p1 p2 in
    let rec uniq =
     function
