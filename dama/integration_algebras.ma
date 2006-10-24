@@ -36,114 +36,148 @@ definition distributive_right ≝
 
 record is_abelian_group (C:Type) (plus:C→C→C) (zero:C) (opp:C→C) : Prop \def
  { (* abelian additive semigroup properties *)
-    plus_assoc: associative ? plus;
-    plus_comm: symmetric ? plus;
+    plus_assoc_: associative ? plus;
+    plus_comm_: symmetric ? plus;
     (* additive monoid properties *)
-    zero_neutral: left_neutral ? plus zero;
+    zero_neutral_: left_neutral ? plus zero;
     (* additive group properties *)
-    opp_inverse: left_inverse ? plus zero opp
+    opp_inverse_: left_inverse ? plus zero opp
  }.
 
-record is_ring (C:Type) (plus:C→C→C) (mult:C→C→C) (zero:C) (opp:C→C) : Prop
-≝
- { (* abelian group properties *)
-    abelian_group:> is_abelian_group ? plus zero opp;
-    (* multiplicative semigroup properties *)
-    mult_assoc: associative ? mult;
-    (* ring properties *)
-    mult_plus_distr_left: distributive_left C mult plus;
-    mult_plus_distr_right: distributive_right C mult plus
- }.
- 
-record ring : Type \def
- { r_carrier:> Type;
-   r_plus: r_carrier → r_carrier → r_carrier;
-   r_mult: r_carrier → r_carrier → r_carrier;
-   r_zero: r_carrier;
-   r_opp: r_carrier → r_carrier;
-   r_ring_properties:> is_ring ? r_plus r_mult r_zero r_opp
+record abelian_group : Type \def
+ { carrier:> Type;
+   plus: carrier → carrier → carrier;
+   zero: carrier;
+   opp: carrier → carrier;
+   ag_abelian_group_properties: is_abelian_group ? plus zero opp
  }.
 
 notation "0" with precedence 89
 for @{ 'zero }.
 
 interpretation "Ring zero" 'zero =
- (cic:/matita/integration_algebras/r_zero.con _).
+ (cic:/matita/integration_algebras/zero.con _).
 
 interpretation "Ring plus" 'plus a b =
- (cic:/matita/integration_algebras/r_plus.con _ a b).
-
-interpretation "Ring mult" 'times a b =
- (cic:/matita/integration_algebras/r_mult.con _ a b).
+ (cic:/matita/integration_algebras/plus.con _ a b).
 
 interpretation "Ring opp" 'uminus a =
- (cic:/matita/integration_algebras/r_opp.con _ a).
+ (cic:/matita/integration_algebras/opp.con _ a).
+ 
+theorem plus_assoc: ∀G:abelian_group. associative ? (plus G).
+ intro;
+ apply (plus_assoc_ ? ? ? ? (ag_abelian_group_properties G)).
+qed.
+
+theorem plus_comm: ∀G:abelian_group. symmetric ? (plus G).
+ intro;
+ apply (plus_comm_ ? ? ? ? (ag_abelian_group_properties G)).
+qed.
+
+theorem zero_neutral: ∀G:abelian_group. left_neutral ? (plus G) 0.
+ intro;
+ apply (zero_neutral_ ? ? ? ? (ag_abelian_group_properties G)).
+qed.
+
+theorem opp_inverse: ∀G:abelian_group. left_inverse ? (plus G) 0 (opp G).
+ intro;
+ apply (opp_inverse_ ? ? ? ? (ag_abelian_group_properties G)).
+qed.
+
+lemma cancellationlaw: ∀G:abelian_group.∀x,y,z:G. x+y=x+z → y=z. 
+intros;
+generalize in match (eq_f ? ? (λa.-x +a) ? ? H);
+intros; clear H;
+rewrite < plus_assoc in H1;
+rewrite < plus_assoc in H1;
+rewrite > opp_inverse in H1;
+rewrite > zero_neutral in H1;
+rewrite > zero_neutral in H1;
+assumption.
+qed.
+
+(****************************** rings *********************************)
+
+record is_ring (G:abelian_group) (mult:G→G→G) : Prop
+≝
+ {  (* multiplicative semigroup properties *)
+    mult_assoc_: associative ? mult;
+    (* ring properties *)
+    mult_plus_distr_left_: distributive_left ? mult (plus G);
+    mult_plus_distr_right_: distributive_right ? mult (plus G)
+ }.
+ 
+record ring : Type \def
+ { r_abelian_group:> abelian_group;
+   mult: r_abelian_group → r_abelian_group → r_abelian_group;
+   r_ring_properties: is_ring r_abelian_group mult
+ }.
+
+theorem mult_assoc: ∀R:ring.associative ? (mult R).
+ intros;
+ apply (mult_assoc_ ? ? (r_ring_properties R)).
+qed.
+
+theorem mult_plus_distr_left: ∀R:ring.distributive_left ? (mult R) (plus R).
+ intros;
+ apply (mult_plus_distr_left_ ? ? (r_ring_properties R)).
+qed.
+
+theorem mult_plus_distr_right: ∀R:ring.distributive_right ? (mult R) (plus R).
+ intros;
+ apply (mult_plus_distr_right_ ? ? (r_ring_properties R)).
+qed.
+
+interpretation "Ring mult" 'times a b =
+ (cic:/matita/integration_algebras/mult.con _ a b).
 
 lemma eq_mult_zero_x_zero: ∀R:ring.∀x:R.0*x=0.
  intros;
- generalize in match (zero_neutral ? ? ? ? R 0); intro;
+ generalize in match (zero_neutral R 0); intro;
  generalize in match (eq_f ? ? (λy.y*x) ? ? H); intro; clear H;
- rewrite > (mult_plus_distr_right ? ? ? ? ? R) in H1;
+ rewrite > mult_plus_distr_right in H1;
  generalize in match (eq_f ? ? (λy.-(0*x)+y) ? ? H1); intro; clear H1;
- rewrite < (plus_assoc ? ? ? ? R) in H;
- rewrite > (opp_inverse ? ? ? ? R) in H;
- rewrite > (zero_neutral ? ? ? ? R) in H;
+ rewrite < plus_assoc in H;
+ rewrite > opp_inverse in H;
+ rewrite > zero_neutral in H;
  assumption.
 qed.
 
 lemma eq_mult_x_zero_zero: ∀R:ring.∀x:R.x*0=0.
 intros;
-generalize in match (zero_neutral ? ? ? ? R 0);
+generalize in match (zero_neutral R 0);
 intro;
 generalize in match (eq_f ? ? (\lambda y.x*y) ? ? H); intro; clear H;
-rewrite > (mult_plus_distr_left ? ? ? ? ? R) in H1;
+rewrite > mult_plus_distr_left in H1;
 generalize in match (eq_f ? ? (\lambda y. (-(x*0)) +y) ? ? H1);intro;
 clear H1;
-rewrite < (plus_assoc ? ? ? ? R) in H;
-rewrite > (opp_inverse ? ? ? ? R) in H;
-rewrite > (zero_neutral ? ? ? ? R) in H;
-assumption.
-
-
-record is_field (C:Type) (plus:C→C→C) (mult:C→C→C) (zero,one:C) (opp:C→C)
- (inv:∀x:C.x ≠ zero →C)  : Prop
-≝
- {  (* ring properties *)
-    ring_properties:> is_ring ? plus mult zero opp;
-    (* multiplicative abelian properties *)
-    mult_comm: symmetric ? mult;
-    (* multiplicative monoid properties *)
-    one_neutral: left_neutral ? mult one;
-    (* multiplicative group properties *)
-    inv_inverse: ∀x.∀p: x ≠ zero. mult (inv x p) x = one;
-    (* integral domain *)
-    not_eq_zero_one: zero ≠ one
- }.
-
-lemma cancellationlaw: \forall R:ring. \forall x,y,z:R. 
-(x+y=x+z) \to (y=z). 
-intros;
-generalize in match (eq_f ? ? (\lambda a. (-x +a)) ? ? H);
-intros; clear H;
-rewrite < (plus_assoc ? ? ? ? R) in H1;
-rewrite < (plus_assoc ? ? ? ? R) in H1;
-rewrite > (opp_inverse ? ? ? ? R) in H1;
-rewrite > (zero_neutral ? ? ? ? R) in H1;
-rewrite > (zero_neutral ? ? ? ? R) in H1;
+rewrite < plus_assoc in H;
+rewrite > opp_inverse in H;
+rewrite > zero_neutral in H;
 assumption.
 qed.
+
+record is_field (R:ring) (one:R) (inv:∀x:R.x ≠ 0 → R) : Prop
+≝
+ {  (* multiplicative abelian properties *)
+    mult_comm_: symmetric ? (mult R);
+    (* multiplicative monoid properties *)
+    one_neutral_: left_neutral ? (mult R) one;
+    (* multiplicative group properties *)
+    inv_inverse_: ∀x.∀p: x ≠ 0. mult ? (inv x p) x = one;
+    (* integral domain *)
+    not_eq_zero_one_: (0 ≠ one)
+ }.
 
 
 lemma opp_opp: \forall R:ring. \forall x:R. (-(-x))=x.
 intros; 
 apply (cancellationlaw ? (-x) ? ?); 
-rewrite  > (opp_inverse ? ? ? ? R (x)); 
-rewrite > (plus_comm ? ? ? ? R);
-rewrite > (opp_inverse ? ? ? ? R);
+rewrite > (opp_inverse R x); 
+rewrite > plus_comm;
+rewrite > opp_inverse;
 reflexivity.
 qed.
-
-
 
 
 let rec sum (C:Type) (plus:C→C→C) (zero,one:C) (n:nat) on n  ≝
@@ -156,13 +190,8 @@ record field : Type \def
  { f_ring:> ring;
    one: f_ring;
    inv: ∀x:f_ring. x ≠ 0 → f_ring;
-   field_properties:>
-    is_field ? (r_plus f_ring) (r_mult f_ring) (r_zero f_ring) one
-     (r_opp f_ring) inv
+   field_properties: is_field f_ring one inv
  }.
-
-definition sum_field ≝
- λF:field. sum ? (r_plus F) (r_zero F) (one F).
  
 notation "1" with precedence 89
 for @{ 'one }.
@@ -170,23 +199,44 @@ for @{ 'one }.
 interpretation "Field one" 'one =
  (cic:/matita/integration_algebras/one.con _).
 
-record is_ordered_field_ch0 (C:Type) (plus,mult:C→C→C) (zero,one:C) (opp:C→C)
- (inv:∀x:C.x ≠ zero → C) (le:C→C→Prop) : Prop \def
- { (* field properties *)
-   of_is_field:> is_field C plus mult zero one opp inv;
-   of_mult_compat: ∀a,b. le zero a → le zero b → le zero (mult a b);
-   of_plus_compat: ∀a,b,c. le a b → le (plus a c) (plus b c);
+theorem mult_comm: ∀F:field.symmetric ? (mult F).
+ intro;
+ apply (mult_comm_ ? ? ? (field_properties F)).
+qed.
+
+theorem one_neutral: ∀F:field.left_neutral ? (mult F) 1.
+ intro;
+ apply (one_neutral_ ? ? ? (field_properties F)).
+qed.
+
+theorem inv_inverse: ∀F:field.∀x.∀p: x ≠ 0. mult ? (inv F x p) x = 1.
+ intro;
+ apply (inv_inverse_ ? ? ? (field_properties F)).
+qed.
+
+theorem not_eq_zero_one: ∀F:field.0 ≠ 1.
+ [2:
+   intro;
+   apply (not_eq_zero_one_ ? ? ? (field_properties F))
+ | skip
+ ]
+qed.
+
+definition sum_field ≝
+ λF:field. sum ? (plus F) (zero F) (one F).
+ 
+record is_ordered_field_ch0 (F:field) (le:F→F→Prop) : Prop \def
+ { of_mult_compat: ∀a,b. le 0 a → le 0 b → le 0 (a*b);
+   of_plus_compat: ∀a,b,c. le a b → le (a+c) (b+c);
    of_weak_tricotomy : ∀a,b. a≠b → le a b ∨ le b a;
    (* 0 characteristics *)
-   of_char0: ∀n. n > O → sum ? plus zero one n ≠ zero
+   of_char0: ∀n. n > O → sum ? (plus F) 0 1 n ≠ 0
  }.
  
 record ordered_field_ch0 : Type \def
  { of_field:> field;
    of_le: of_field → of_field → Prop;
-   of_ordered_field_properties:>
-    is_ordered_field_ch0 ? (r_plus of_field) (r_mult of_field) (r_zero of_field)
-     (one of_field) (r_opp of_field) (inv of_field) of_le
+   of_ordered_field_properties:> is_ordered_field_ch0 of_field of_le
  }.
 
 interpretation "Ordered field le" 'leq a b =
@@ -231,23 +281,23 @@ lemma not_eq_x_zero_to_lt_zero_mult_x_x:
 
 axiom not_eq_sum_field_zero: ∀F,n. n > O → sum_field F n ≠ 0.
 
-record is_vector_space (K: field) (C:Type) (plus:C→C→C) (zero:C) (opp:C→C)
- (emult:K→C→C) : Prop
+record is_vector_space (K: field) (G:abelian_group) (emult:K→G→G) : Prop
 ≝
- { (* abelian group properties *)
-   vs_abelian_group: is_abelian_group ? plus zero opp;
-   (* other properties *)
-   vs_nilpotent: ∀v. emult 0 v = zero;
+ { vs_nilpotent: ∀v. emult 0 v = 0;
    vs_neutral: ∀v. emult 1 v = v;
-   vs_distributive: ∀a,b,v. emult (a + b) v = plus (emult a v) (emult b v);
+   vs_distributive: ∀a,b,v. emult (a + b) v = (emult a v) + (emult b v);
    vs_associative: ∀a,b,v. emult (a * b) v = emult a (emult b v)
  }.
 
-record vector_space : Type \def
-{vs_ :
+record vector_space (K:field): Type \def
+{ vs_abelian_group :> abelian_group;
+  emult: K → vs_abelian_group → vs_abelian_group;
+  vs_vector_space_properties :> is_vector_space K vs_abelian_group emult
+}.
 
+interpretation "Vector space external product" 'times a b =
+ (cic:/matita/integration_algebras/emult.con _ _ a b).
 
-}
 record is_lattice (C:Type) (join,meet:C→C→C) : Prop \def
  { (* abelian semigroup properties *)
    l_comm_j: symmetric ? join;
@@ -259,58 +309,83 @@ record is_lattice (C:Type) (join,meet:C→C→C) : Prop \def
    l_adsorb_m_j: ∀f,g. meet f (join f g) = f
  }.
 
-(* This should be a let-in field of the riesz_space!!! *)
-definition le_ \def λC.λmeet:C→C→C.λf,g. meet f g = f.
-
-record is_riesz_space (K:ordered_field_ch0) (C:Type) (plus:C→C→C) (zero:C)
- (opp:C→C) (emult:K→C→C) (join,meet:C→C→C) : Prop \def
- { (* vector space properties *)
-   rs_vector_space: is_vector_space K C plus zero opp emult;
-   (* lattice properties *)
-   rs_lattice: is_lattice C join meet;
-   (* other properties *)
-   rs_compat_le_plus: ∀f,g,h. le_ ? meet f g → le_ ? meet (plus f h) (plus g h);
-   rs_compat_le_times: ∀a,f. 0≤a → le_ ? meet zero f → le_ ? meet zero (emult a f)  
+record lattice (C:Type) : Type \def
+ { join: C → C → C;
+   meet: C → C → C;
+   l_lattice_properties: is_lattice ? join meet
  }.
- 
-definition absolute_value \def λC:Type.λopp.λjoin:C→C→C.λf.join f (opp f).   
 
-record is_archimedean_riesz_space (K:ordered_field_ch0) (C:Type) (plus:C→C→C)
- (zero:C) (opp:C→C) (emult:K→C→C) (join,meet:C→C→C)
- :Prop \def
-  { ars_riesz_space: is_riesz_space ? ? plus zero opp emult join meet;
-    ars_archimedean: ∃u.∀n,a.∀p:n > O.
-     le_ C meet (absolute_value ? opp join a)
-      (emult (inv K (sum_field K n) (not_eq_sum_field_zero K n p)) u) →
-     a = zero
+definition le \def λC:Type.λL:lattice C.λf,g. meet ? L f g = f.
+
+interpretation "Lattice le" 'leq a b =
+ (cic:/matita/integration_algebras/le.con _ _ a b).
+
+definition carrier_of_lattice ≝
+ λC:Type.λL:lattice C.C.
+
+record is_riesz_space (K:ordered_field_ch0) (V:vector_space K)
+ (L:lattice (Type_OF_vector_space ? V))
+: Prop
+\def
+ { rs_compat_le_plus: ∀f,g,h. le ? L f g → le ? L (f+h) (g+h);
+   rs_compat_le_times: ∀a:K.∀f. of_le ? 0 a → le ? L 0 f → le ? L 0 (a*f)
+ }.
+
+record riesz_space : Type \def
+ { rs_ordered_field_ch0: ordered_field_ch0;
+   rs_vector_space:> vector_space rs_ordered_field_ch0;
+   rs_lattice:> lattice rs_vector_space;
+   rs_riesz_space_properties: is_riesz_space ? rs_vector_space rs_lattice
+ }.
+
+definition absolute_value \def λS:riesz_space.λf.join ? S f (-f).   
+
+record is_archimedean_riesz_space (S:riesz_space) : Prop
+\def
+  { ars_archimedean: ∃u.∀n.∀a.∀p:n > O.
+     le ? S
+      (absolute_value S a)
+      (emult ? S
+        (inv ? (sum_field (rs_ordered_field_ch0 S) n) (not_eq_sum_field_zero ? n p))
+        u) →
+     a = 0
   }.
 
-record is_algebra (K: field) (C:Type) (plus:C→C→C) (zero:C) (opp:C→C)
- (emult:K→C→C) (mult:C→C→C) : Prop
-≝
- { (* vector space properties *)
-   a_vector_space_properties: is_vector_space ? ? plus zero opp emult;
-   (* ring properties *)
-   a_ring: is_ring ? plus mult zero opp;
-   (* algebra properties *)
-   a_associative_left: ∀a,f,g. emult a (mult f g) = mult (emult a f) g;
-   a_associative_right: ∀a,f,g. emult a (mult f g) = mult f (emult a g)
+record archimedean_riesz_space : Type \def
+ { ars_riesz_space:> riesz_space;
+   ars_archimedean_property: is_archimedean_riesz_space ars_riesz_space
  }.
- 
- 
-record is_f_algebra (K: ordered_field_ch0) (C:Type) (plus: C\to C \to C) 
-(zero:C) (opp: C \to C) (emult: Type_OF_ordered_field_ch0 K\to C\to C) (mult: C\to C\to C) 
-(join,meet: C\to C\to C) : Prop
+
+record is_algebra (K: field) (V:vector_space K) (mult:V→V→V) : Prop
+≝
+ { (* ring properties *)
+   a_ring: is_ring V mult;
+   (* algebra properties *)
+   a_associative_left: ∀a,f,g. a * (mult f g) = mult (a * f) g;
+   a_associative_right: ∀a,f,g. a * (mult f g) = mult f (a * g)
+ }.
+
+record algebra (K: field) (V:vector_space K) : Type \def
+ { a_mult: V → V → V;
+   a_algebra_properties: is_algebra K V a_mult
+ }.
+
+interpretation "Algebra product" 'times a b =
+ (cic:/matita/integration_algebras/a_mult.con _ _ _ a b).
+
+record is_f_algebra (S:archimedean_riesz_space)
+ (A:algebra (rs_ordered_field_ch0 (ars_riesz_space S)) S) : Prop
 \def 
-{ archimedean_riesz_properties:> is_archimedean_riesz_space K C
- plus zero opp emult join meet ;          
-algebra_properties:> is_algebra ? ? plus zero opp emult mult;
-compat_mult_le: \forall f,g: C. le_ ? meet zero f \to le_ ? meet zero g \to
- le_ ? meet zero (mult f g);
-compat_mult_meet: \forall f,g,h. meet f g = zero \to meet (mult h f) g = zero
+{ compat_mult_le:
+   ∀f,g:S.
+    le ? S 0 f → le ? S 0 g → le ? S 0 (a_mult ? ? A f g);
+  compat_mult_meet:
+   ∀f,g,h:S.
+    meet ? S f g = 0 → meet ? S (a_mult ? ? A h f) g = 0
 }.
 
 record f_algebra : Type \def 
-{
-
-}
+{ fa_archimedean_riesz_space: archimedean_riesz_space;
+  fa_algebra: algebra ? fa_archimedean_riesz_space;
+  fa_f_algebra_properties: is_f_algebra fa_archimedean_riesz_space fa_algebra
+}.
