@@ -98,38 +98,63 @@ qed.
 
 (****************************** rings *********************************)
 
-record is_ring (G:abelian_group) (mult:G→G→G) : Prop
+record is_ring (G:abelian_group) (mult:G→G→G) (one:G) : Prop
 ≝
- {  (* multiplicative semigroup properties *)
+ {  (* multiplicative monoid properties *)
     mult_assoc_: associative ? mult;
+    one_neutral_left_: left_neutral ? mult one;
+    one_neutral_right_: right_neutral ? mult one;
     (* ring properties *)
     mult_plus_distr_left_: distributive_left ? mult (plus G);
-    mult_plus_distr_right_: distributive_right ? mult (plus G)
+    mult_plus_distr_right_: distributive_right ? mult (plus G);
+    not_eq_zero_one_: (0 ≠ one)
  }.
  
 record ring : Type \def
  { r_abelian_group:> abelian_group;
    mult: r_abelian_group → r_abelian_group → r_abelian_group;
-   r_ring_properties: is_ring r_abelian_group mult
+   one: r_abelian_group;
+   r_ring_properties: is_ring r_abelian_group mult one
  }.
 
 theorem mult_assoc: ∀R:ring.associative ? (mult R).
  intros;
- apply (mult_assoc_ ? ? (r_ring_properties R)).
+ apply (mult_assoc_ ? ? ? (r_ring_properties R)).
+qed.
+
+theorem one_neutral_left: ∀R:ring.left_neutral ? (mult R) (one R).
+ intros;
+ apply (one_neutral_left_ ? ? ? (r_ring_properties R)).
+qed.
+
+theorem one_neutral_right: ∀R:ring.right_neutral ? (mult R) (one R).
+ intros;
+ apply (one_neutral_right_ ? ? ? (r_ring_properties R)).
 qed.
 
 theorem mult_plus_distr_left: ∀R:ring.distributive_left ? (mult R) (plus R).
  intros;
- apply (mult_plus_distr_left_ ? ? (r_ring_properties R)).
+ apply (mult_plus_distr_left_ ? ? ? (r_ring_properties R)).
 qed.
 
 theorem mult_plus_distr_right: ∀R:ring.distributive_right ? (mult R) (plus R).
  intros;
- apply (mult_plus_distr_right_ ? ? (r_ring_properties R)).
+ apply (mult_plus_distr_right_ ? ? ? (r_ring_properties R)).
+qed.
+
+theorem not_eq_zero_one: ∀R:ring.0 ≠ one R.
+ intros;
+ apply (not_eq_zero_one_ ? ? ? (r_ring_properties R)).
 qed.
 
 interpretation "Ring mult" 'times a b =
  (cic:/matita/integration_algebras/mult.con _ a b).
+
+notation "1" with precedence 89
+for @{ 'one }.
+
+interpretation "Field one" 'one =
+ (cic:/matita/integration_algebras/one.con _).
 
 lemma eq_mult_zero_x_zero: ∀R:ring.∀x:R.0*x=0.
  intros;
@@ -157,18 +182,13 @@ rewrite > zero_neutral in H;
 assumption.
 qed.
 
-record is_field (R:ring) (one:R) (inv:∀x:R.x ≠ 0 → R) : Prop
+record is_field (R:ring) (inv:∀x:R.x ≠ 0 → R) : Prop
 ≝
  {  (* multiplicative abelian properties *)
     mult_comm_: symmetric ? (mult R);
-    (* multiplicative monoid properties *)
-    one_neutral_: left_neutral ? (mult R) one;
     (* multiplicative group properties *)
-    inv_inverse_: ∀x.∀p: x ≠ 0. mult ? (inv x p) x = one;
-    (* integral domain *)
-    not_eq_zero_one_: (0 ≠ one)
+    inv_inverse_: ∀x.∀p: x ≠ 0. mult ? (inv x p) x = 1
  }.
-
 
 lemma opp_opp: \forall R:ring. \forall x:R. (-(-x))=x.
 intros; 
@@ -188,38 +208,18 @@ let rec sum (C:Type) (plus:C→C→C) (zero,one:C) (n:nat) on n  ≝
 
 record field : Type \def
  { f_ring:> ring;
-   one: f_ring;
    inv: ∀x:f_ring. x ≠ 0 → f_ring;
-   field_properties: is_field f_ring one inv
+   field_properties: is_field f_ring inv
  }.
  
-notation "1" with precedence 89
-for @{ 'one }.
-
-interpretation "Field one" 'one =
- (cic:/matita/integration_algebras/one.con _).
-
 theorem mult_comm: ∀F:field.symmetric ? (mult F).
  intro;
- apply (mult_comm_ ? ? ? (field_properties F)).
-qed.
-
-theorem one_neutral: ∀F:field.left_neutral ? (mult F) 1.
- intro;
- apply (one_neutral_ ? ? ? (field_properties F)).
+ apply (mult_comm_ ? ? (field_properties F)).
 qed.
 
 theorem inv_inverse: ∀F:field.∀x.∀p: x ≠ 0. mult ? (inv F x p) x = 1.
  intro;
- apply (inv_inverse_ ? ? ? (field_properties F)).
-qed.
-
-theorem not_eq_zero_one: ∀F:field.0 ≠ 1.
- [2:
-   intro;
-   apply (not_eq_zero_one_ ? ? ? (field_properties F))
- | skip
- ]
+ apply (inv_inverse_ ? ? (field_properties F)).
 qed.
 
 definition sum_field ≝
@@ -356,10 +356,10 @@ record archimedean_riesz_space : Type \def
    ars_archimedean_property: is_archimedean_riesz_space ars_riesz_space
  }.
 
-record is_algebra (K: field) (V:vector_space K) (mult:V→V→V) : Prop
+record is_algebra (K: field) (V:vector_space K) (mult:V→V→V) (one:V) : Prop
 ≝
  { (* ring properties *)
-   a_ring: is_ring V mult;
+   a_ring: is_ring V mult one;
    (* algebra properties *)
    a_associative_left: ∀a,f,g. a * (mult f g) = mult (a * f) g;
    a_associative_right: ∀a,f,g. a * (mult f g) = mult f (a * g)
@@ -367,16 +367,20 @@ record is_algebra (K: field) (V:vector_space K) (mult:V→V→V) : Prop
 
 record algebra (K: field) (V:vector_space K) : Type \def
  { a_mult: V → V → V;
-   a_algebra_properties: is_algebra K V a_mult
+   a_one: V;
+   a_algebra_properties: is_algebra K V a_mult a_one
  }.
 
 interpretation "Algebra product" 'times a b =
  (cic:/matita/integration_algebras/a_mult.con _ _ _ a b).
 
+interpretation "Field one" 'one =
+ (cic:/matita/integration_algebras/a_one.con _).
+
 definition ring_of_algebra ≝
  λK.λV:vector_space K.λA:algebra ? V.
-  mk_ring V (a_mult ? ? A)
-   (a_ring ? ? ? (a_algebra_properties ? ? A)).
+  mk_ring V (a_mult ? ? A) (a_one ? ? A)
+   (a_ring ? ? ? ? (a_algebra_properties ? ? A)).
 
 coercion cic:/matita/integration_algebras/ring_of_algebra.con.
 
