@@ -373,6 +373,13 @@ record algebra (K: field) (V:vector_space K) : Type \def
 interpretation "Algebra product" 'times a b =
  (cic:/matita/integration_algebras/a_mult.con _ _ _ a b).
 
+definition ring_of_algebra ≝
+ λK.λV:vector_space K.λA:algebra ? V.
+  mk_ring V (a_mult ? ? A)
+   (a_ring ? ? ? (a_algebra_properties ? ? A)).
+
+coercion cic:/matita/integration_algebras/ring_of_algebra.con.
+
 record is_f_algebra (S:archimedean_riesz_space)
  (A:algebra (rs_ordered_field_ch0 (ars_riesz_space S)) S) : Prop
 \def 
@@ -385,7 +392,10 @@ record is_f_algebra (S:archimedean_riesz_space)
 }.
 
 record f_algebra : Type \def 
-{ fa_archimedean_riesz_space: archimedean_riesz_space;
-  fa_algebra: algebra ? fa_archimedean_riesz_space;
+{ fa_archimedean_riesz_space:> archimedean_riesz_space;
+  fa_algebra:> algebra ? fa_archimedean_riesz_space;
   fa_f_algebra_properties: is_f_algebra fa_archimedean_riesz_space fa_algebra
 }.
+
+(* to be proved; see footnote 2 in the paper by Spitters *)
+axiom symmetric_a_mult: ∀A:f_algebra. symmetric ? (a_mult ? ? A).
