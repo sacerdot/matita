@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/iso/props".
 
-include "iso/defs.ma".
+include "iso/fwd.ma".
 
 theorem iso_trans:
  \forall (t1: T).(\forall (t2: T).((iso t1 t2) \to (\forall (t3: T).((iso t2 
