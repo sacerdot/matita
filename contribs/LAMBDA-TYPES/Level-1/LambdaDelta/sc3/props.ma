@@ -223,75 +223,12 @@ c2 (lift1 p t) (H c2 t H0 H15) c n n0 H14))) c3 (sym_eq C c3 e H13))) c1
 H10))) h (sym_eq nat h n H9))) H8)) H7)) H5 H6 H2 H3))))]) in (H2 (refl_equal 
 PList (PCons n n0 p)) (refl_equal C c) (refl_equal C e))))))))))) hds)))).
 
-theorem sc3_abbr:
+axiom sc3_abbr:
  \forall (g: G).(\forall (a: A).(\forall (vs: TList).(\forall (i: 
 nat).(\forall (d: C).(\forall (v: T).(\forall (c: C).((sc3 g a c (THeads 
 (Flat Appl) vs (lift (S i) O v))) \to ((getl i c (CHead d (Bind Abbr) v)) \to 
 (sc3 g a c (THeads (Flat Appl) vs (TLRef i)))))))))))
-\def
- \lambda (g: G).(\lambda (a: A).(A_ind (\lambda (a0: A).(\forall (vs: 
-TList).(\forall (i: nat).(\forall (d: C).(\forall (v: T).(\forall (c: 
-C).((sc3 g a0 c (THeads (Flat Appl) vs (lift (S i) O v))) \to ((getl i c 
-(CHead d (Bind Abbr) v)) \to (sc3 g a0 c (THeads (Flat Appl) vs (TLRef 
-i))))))))))) (\lambda (n: nat).(\lambda (n0: nat).(\lambda (vs: 
-TList).(\lambda (i: nat).(\lambda (d: C).(\lambda (v: T).(\lambda (c: 
-C).(\lambda (H: (land (arity g c (THeads (Flat Appl) vs (lift (S i) O v)) 
-(ASort n n0)) (sn3 c (THeads (Flat Appl) vs (lift (S i) O v))))).(\lambda 
-(H0: (getl i c (CHead d (Bind Abbr) v))).(let H1 \def H in (and_ind (arity g 
-c (THeads (Flat Appl) vs (lift (S i) O v)) (ASort n n0)) (sn3 c (THeads (Flat 
-Appl) vs (lift (S i) O v))) (land (arity g c (THeads (Flat Appl) vs (TLRef 
-i)) (ASort n n0)) (sn3 c (THeads (Flat Appl) vs (TLRef i)))) (\lambda (H2: 
-(arity g c (THeads (Flat Appl) vs (lift (S i) O v)) (ASort n n0))).(\lambda 
-(H3: (sn3 c (THeads (Flat Appl) vs (lift (S i) O v)))).(conj (arity g c 
-(THeads (Flat Appl) vs (TLRef i)) (ASort n n0)) (sn3 c (THeads (Flat Appl) vs 
-(TLRef i))) (arity_appls_abbr g c d v i H0 vs (ASort n n0) H2) 
-(sn3_appls_abbr c d v i H0 vs H3)))) H1))))))))))) (\lambda (a0: A).(\lambda 
-(_: ((\forall (vs: TList).(\forall (i: nat).(\forall (d: C).(\forall (v: 
-T).(\forall (c: C).((sc3 g a0 c (THeads (Flat Appl) vs (lift (S i) O v))) \to 
-((getl i c (CHead d (Bind Abbr) v)) \to (sc3 g a0 c (THeads (Flat Appl) vs 
-(TLRef i)))))))))))).(\lambda (a1: A).(\lambda (H0: ((\forall (vs: 
-TList).(\forall (i: nat).(\forall (d: C).(\forall (v: T).(\forall (c: 
-C).((sc3 g a1 c (THeads (Flat Appl) vs (lift (S i) O v))) \to ((getl i c 
-(CHead d (Bind Abbr) v)) \to (sc3 g a1 c (THeads (Flat Appl) vs (TLRef 
-i)))))))))))).(\lambda (vs: TList).(\lambda (i: nat).(\lambda (d: C).(\lambda 
-(v: T).(\lambda (c: C).(\lambda (H1: (land (arity g c (THeads (Flat Appl) vs 
-(lift (S i) O v)) (AHead a0 a1)) (\forall (d0: C).(\forall (w: T).((sc3 g a0 
-d0 w) \to (\forall (is: PList).((drop1 is d0 c) \to (sc3 g a1 d0 (THead (Flat 
-Appl) w (lift1 is (THeads (Flat Appl) vs (lift (S i) O v)))))))))))).(\lambda 
-(H2: (getl i c (CHead d (Bind Abbr) v))).(let H3 \def H1 in (and_ind (arity g 
-c (THeads (Flat Appl) vs (lift (S i) O v)) (AHead a0 a1)) (\forall (d0: 
-C).(\forall (w: T).((sc3 g a0 d0 w) \to (\forall (is: PList).((drop1 is d0 c) 
-\to (sc3 g a1 d0 (THead (Flat Appl) w (lift1 is (THeads (Flat Appl) vs (lift 
-(S i) O v)))))))))) (land (arity g c (THeads (Flat Appl) vs (TLRef i)) (AHead 
-a0 a1)) (\forall (d0: C).(\forall (w: T).((sc3 g a0 d0 w) \to (\forall (is: 
-PList).((drop1 is d0 c) \to (sc3 g a1 d0 (THead (Flat Appl) w (lift1 is 
-(THeads (Flat Appl) vs (TLRef i))))))))))) (\lambda (H4: (arity g c (THeads 
-(Flat Appl) vs (lift (S i) O v)) (AHead a0 a1))).(\lambda (H5: ((\forall (d0: 
-C).(\forall (w: T).((sc3 g a0 d0 w) \to (\forall (is: PList).((drop1 is d0 c) 
-\to (sc3 g a1 d0 (THead (Flat Appl) w (lift1 is (THeads (Flat Appl) vs (lift 
-(S i) O v)))))))))))).(conj (arity g c (THeads (Flat Appl) vs (TLRef i)) 
-(AHead a0 a1)) (\forall (d0: C).(\forall (w: T).((sc3 g a0 d0 w) \to (\forall 
-(is: PList).((drop1 is d0 c) \to (sc3 g a1 d0 (THead (Flat Appl) w (lift1 is 
-(THeads (Flat Appl) vs (TLRef i)))))))))) (arity_appls_abbr g c d v i H2 vs 
-(AHead a0 a1) H4) (\lambda (d0: C).(\lambda (w: T).(\lambda (H6: (sc3 g a0 d0 
-w)).(\lambda (is: PList).(\lambda (H7: (drop1 is d0 c)).(let H_x \def 
-(drop1_getl_trans is c d0 H7 Abbr d v i H2) in (let H8 \def H_x in (ex_ind C 
-(\lambda (e2: C).(getl (trans is i) d0 (CHead e2 (Bind Abbr) (ctrans is i 
-v)))) (sc3 g a1 d0 (THead (Flat Appl) w (lift1 is (THeads (Flat Appl) vs 
-(TLRef i))))) (\lambda (x: C).(\lambda (H9: (getl (trans is i) d0 (CHead x 
-(Bind Abbr) (ctrans is i v)))).(let H_y \def (H0 (TCons w (lifts1 is vs))) in 
-(eq_ind_r T (THeads (Flat Appl) (lifts1 is vs) (lift1 is (TLRef i))) (\lambda 
-(t: T).(sc3 g a1 d0 (THead (Flat Appl) w t))) (eq_ind_r T (TLRef (trans is 
-i)) (\lambda (t: T).(sc3 g a1 d0 (THead (Flat Appl) w (THeads (Flat Appl) 
-(lifts1 is vs) t)))) (H_y (trans is i) x (ctrans is i v) d0 (eq_ind T (lift1 
-is (lift (S i) O v)) (\lambda (t: T).(sc3 g a1 d0 (THead (Flat Appl) w 
-(THeads (Flat Appl) (lifts1 is vs) t)))) (eq_ind T (lift1 is (THeads (Flat 
-Appl) vs (lift (S i) O v))) (\lambda (t: T).(sc3 g a1 d0 (THead (Flat Appl) w 
-t))) (H5 d0 w H6 is H7) (THeads (Flat Appl) (lifts1 is vs) (lift1 is (lift (S 
-i) O v))) (lifts1_flat Appl is (lift (S i) O v) vs)) (lift (S (trans is i)) O 
-(ctrans is i v)) (lift1_free is i v)) H9) (lift1 is (TLRef i)) (lift1_lref is 
-i)) (lift1 is (THeads (Flat Appl) vs (TLRef i))) (lifts1_flat Appl is (TLRef 
-i) vs))))) H8))))))))))) H3))))))))))))) a)).
+.
 
 theorem sc3_cast:
  \forall (g: G).(\forall (a: A).(\forall (vs: TList).(\forall (c: C).(\forall 
@@ -569,163 +506,19 @@ t)))))).(\lambda (H4: ((\forall (vs0: TList).(\forall (i0: nat).(let t \def
 ((nf2 c0 (TLRef i0)) \to ((sns3 c0 vs0) \to (sc3 g a c0 t)))))))))).(H4 vs i 
 c H H0 H1))) H2)))))))))).
 
-theorem sc3_bind:
+axiom sc3_bind:
  \forall (g: G).(\forall (b: B).((not (eq B b Abst)) \to (\forall (a1: 
 A).(\forall (a2: A).(\forall (vs: TList).(\forall (c: C).(\forall (v: 
 T).(\forall (t: T).((sc3 g a2 (CHead c (Bind b) v) (THeads (Flat Appl) (lifts 
 (S O) O vs) t)) \to ((sc3 g a1 c v) \to (sc3 g a2 c (THeads (Flat Appl) vs 
 (THead (Bind b) v t)))))))))))))
-\def
- \lambda (g: G).(\lambda (b: B).(\lambda (H: (not (eq B b Abst))).(\lambda 
-(a1: A).(\lambda (a2: A).(A_ind (\lambda (a: A).(\forall (vs: TList).(\forall 
-(c: C).(\forall (v: T).(\forall (t: T).((sc3 g a (CHead c (Bind b) v) (THeads 
-(Flat Appl) (lifts (S O) O vs) t)) \to ((sc3 g a1 c v) \to (sc3 g a c (THeads 
-(Flat Appl) vs (THead (Bind b) v t)))))))))) (\lambda (n: nat).(\lambda (n0: 
-nat).(\lambda (vs: TList).(\lambda (c: C).(\lambda (v: T).(\lambda (t: 
-T).(\lambda (H0: (land (arity g (CHead c (Bind b) v) (THeads (Flat Appl) 
-(lifts (S O) O vs) t) (ASort n n0)) (sn3 (CHead c (Bind b) v) (THeads (Flat 
-Appl) (lifts (S O) O vs) t)))).(\lambda (H1: (sc3 g a1 c v)).(let H2 \def H0 
-in (and_ind (arity g (CHead c (Bind b) v) (THeads (Flat Appl) (lifts (S O) O 
-vs) t) (ASort n n0)) (sn3 (CHead c (Bind b) v) (THeads (Flat Appl) (lifts (S 
-O) O vs) t)) (land (arity g c (THeads (Flat Appl) vs (THead (Bind b) v t)) 
-(ASort n n0)) (sn3 c (THeads (Flat Appl) vs (THead (Bind b) v t)))) (\lambda 
-(H3: (arity g (CHead c (Bind b) v) (THeads (Flat Appl) (lifts (S O) O vs) t) 
-(ASort n n0))).(\lambda (H4: (sn3 (CHead c (Bind b) v) (THeads (Flat Appl) 
-(lifts (S O) O vs) t))).(conj (arity g c (THeads (Flat Appl) vs (THead (Bind 
-b) v t)) (ASort n n0)) (sn3 c (THeads (Flat Appl) vs (THead (Bind b) v t))) 
-(arity_appls_bind g b H c v a1 (sc3_arity_gen g c v a1 H1) t vs (ASort n n0) 
-H3) (sn3_appls_bind b H c v (sc3_sn3 g a1 c v H1) vs t H4)))) H2)))))))))) 
-(\lambda (a: A).(\lambda (_: ((\forall (vs: TList).(\forall (c: C).(\forall 
-(v: T).(\forall (t: T).((sc3 g a (CHead c (Bind b) v) (THeads (Flat Appl) 
-(lifts (S O) O vs) t)) \to ((sc3 g a1 c v) \to (sc3 g a c (THeads (Flat Appl) 
-vs (THead (Bind b) v t))))))))))).(\lambda (a0: A).(\lambda (H1: ((\forall 
-(vs: TList).(\forall (c: C).(\forall (v: T).(\forall (t: T).((sc3 g a0 (CHead 
-c (Bind b) v) (THeads (Flat Appl) (lifts (S O) O vs) t)) \to ((sc3 g a1 c v) 
-\to (sc3 g a0 c (THeads (Flat Appl) vs (THead (Bind b) v 
-t))))))))))).(\lambda (vs: TList).(\lambda (c: C).(\lambda (v: T).(\lambda 
-(t: T).(\lambda (H2: (land (arity g (CHead c (Bind b) v) (THeads (Flat Appl) 
-(lifts (S O) O vs) t) (AHead a a0)) (\forall (d: C).(\forall (w: T).((sc3 g a 
-d w) \to (\forall (is: PList).((drop1 is d (CHead c (Bind b) v)) \to (sc3 g 
-a0 d (THead (Flat Appl) w (lift1 is (THeads (Flat Appl) (lifts (S O) O vs) 
-t))))))))))).(\lambda (H3: (sc3 g a1 c v)).(let H4 \def H2 in (and_ind (arity 
-g (CHead c (Bind b) v) (THeads (Flat Appl) (lifts (S O) O vs) t) (AHead a 
-a0)) (\forall (d: C).(\forall (w: T).((sc3 g a d w) \to (\forall (is: 
-PList).((drop1 is d (CHead c (Bind b) v)) \to (sc3 g a0 d (THead (Flat Appl) 
-w (lift1 is (THeads (Flat Appl) (lifts (S O) O vs) t))))))))) (land (arity g 
-c (THeads (Flat Appl) vs (THead (Bind b) v t)) (AHead a a0)) (\forall (d: 
-C).(\forall (w: T).((sc3 g a d w) \to (\forall (is: PList).((drop1 is d c) 
-\to (sc3 g a0 d (THead (Flat Appl) w (lift1 is (THeads (Flat Appl) vs (THead 
-(Bind b) v t))))))))))) (\lambda (H5: (arity g (CHead c (Bind b) v) (THeads 
-(Flat Appl) (lifts (S O) O vs) t) (AHead a a0))).(\lambda (H6: ((\forall (d: 
-C).(\forall (w: T).((sc3 g a d w) \to (\forall (is: PList).((drop1 is d 
-(CHead c (Bind b) v)) \to (sc3 g a0 d (THead (Flat Appl) w (lift1 is (THeads 
-(Flat Appl) (lifts (S O) O vs) t))))))))))).(conj (arity g c (THeads (Flat 
-Appl) vs (THead (Bind b) v t)) (AHead a a0)) (\forall (d: C).(\forall (w: 
-T).((sc3 g a d w) \to (\forall (is: PList).((drop1 is d c) \to (sc3 g a0 d 
-(THead (Flat Appl) w (lift1 is (THeads (Flat Appl) vs (THead (Bind b) v 
-t)))))))))) (arity_appls_bind g b H c v a1 (sc3_arity_gen g c v a1 H3) t vs 
-(AHead a a0) H5) (\lambda (d: C).(\lambda (w: T).(\lambda (H7: (sc3 g a d 
-w)).(\lambda (is: PList).(\lambda (H8: (drop1 is d c)).(let H_y \def (H1 
-(TCons w (lifts1 is vs))) in (eq_ind_r T (THeads (Flat Appl) (lifts1 is vs) 
-(lift1 is (THead (Bind b) v t))) (\lambda (t0: T).(sc3 g a0 d (THead (Flat 
-Appl) w t0))) (eq_ind_r T (THead (Bind b) (lift1 is v) (lift1 (Ss is) t)) 
-(\lambda (t0: T).(sc3 g a0 d (THead (Flat Appl) w (THeads (Flat Appl) (lifts1 
-is vs) t0)))) (H_y d (lift1 is v) (lift1 (Ss is) t) (eq_ind TList (lifts1 (Ss 
-is) (lifts (S O) O vs)) (\lambda (t0: TList).(sc3 g a0 (CHead d (Bind b) 
-(lift1 is v)) (THead (Flat Appl) (lift (S O) O w) (THeads (Flat Appl) t0 
-(lift1 (Ss is) t))))) (eq_ind T (lift1 (Ss is) (THeads (Flat Appl) (lifts (S 
-O) O vs) t)) (\lambda (t0: T).(sc3 g a0 (CHead d (Bind b) (lift1 is v)) 
-(THead (Flat Appl) (lift (S O) O w) t0))) (H6 (CHead d (Bind b) (lift1 is v)) 
-(lift (S O) O w) (sc3_lift g a d w H7 (CHead d (Bind b) (lift1 is v)) (S O) O 
-(drop_drop (Bind b) O d d (drop_refl d) (lift1 is v))) (Ss is) 
-(drop1_skip_bind b c is d v H8)) (THeads (Flat Appl) (lifts1 (Ss is) (lifts 
-(S O) O vs)) (lift1 (Ss is) t)) (lifts1_flat Appl (Ss is) t (lifts (S O) O 
-vs))) (lifts (S O) O (lifts1 is vs)) (lifts1_xhg is vs)) (sc3_lift1 g c a1 is 
-d v H3 H8)) (lift1 is (THead (Bind b) v t)) (lift1_bind b is v t)) (lift1 is 
-(THeads (Flat Appl) vs (THead (Bind b) v t))) (lifts1_flat Appl is (THead 
-(Bind b) v t) vs))))))))))) H4)))))))))))) a2))))).
+.
 
-theorem sc3_appl:
+axiom sc3_appl:
  \forall (g: G).(\forall (a1: A).(\forall (a2: A).(\forall (vs: 
 TList).(\forall (c: C).(\forall (v: T).(\forall (t: T).((sc3 g a2 c (THeads 
 (Flat Appl) vs (THead (Bind Abbr) v t))) \to ((sc3 g a1 c v) \to (\forall (w: 
 T).((sc3 g (asucc g a1) c w) \to (sc3 g a2 c (THeads (Flat Appl) vs (THead 
 (Flat Appl) v (THead (Bind Abst) w t))))))))))))))
-\def
- \lambda (g: G).(\lambda (a1: A).(\lambda (a2: A).(A_ind (\lambda (a: 
-A).(\forall (vs: TList).(\forall (c: C).(\forall (v: T).(\forall (t: T).((sc3 
-g a c (THeads (Flat Appl) vs (THead (Bind Abbr) v t))) \to ((sc3 g a1 c v) 
-\to (\forall (w: T).((sc3 g (asucc g a1) c w) \to (sc3 g a c (THeads (Flat 
-Appl) vs (THead (Flat Appl) v (THead (Bind Abst) w t))))))))))))) (\lambda 
-(n: nat).(\lambda (n0: nat).(\lambda (vs: TList).(\lambda (c: C).(\lambda (v: 
-T).(\lambda (t: T).(\lambda (H: (land (arity g c (THeads (Flat Appl) vs 
-(THead (Bind Abbr) v t)) (ASort n n0)) (sn3 c (THeads (Flat Appl) vs (THead 
-(Bind Abbr) v t))))).(\lambda (H0: (sc3 g a1 c v)).(\lambda (w: T).(\lambda 
-(H1: (sc3 g (asucc g a1) c w)).(let H2 \def H in (and_ind (arity g c (THeads 
-(Flat Appl) vs (THead (Bind Abbr) v t)) (ASort n n0)) (sn3 c (THeads (Flat 
-Appl) vs (THead (Bind Abbr) v t))) (land (arity g c (THeads (Flat Appl) vs 
-(THead (Flat Appl) v (THead (Bind Abst) w t))) (ASort n n0)) (sn3 c (THeads 
-(Flat Appl) vs (THead (Flat Appl) v (THead (Bind Abst) w t))))) (\lambda (H3: 
-(arity g c (THeads (Flat Appl) vs (THead (Bind Abbr) v t)) (ASort n 
-n0))).(\lambda (H4: (sn3 c (THeads (Flat Appl) vs (THead (Bind Abbr) v 
-t)))).(conj (arity g c (THeads (Flat Appl) vs (THead (Flat Appl) v (THead 
-(Bind Abst) w t))) (ASort n n0)) (sn3 c (THeads (Flat Appl) vs (THead (Flat 
-Appl) v (THead (Bind Abst) w t)))) (arity_appls_appl g c v a1 (sc3_arity_gen 
-g c v a1 H0) w (sc3_arity_gen g c w (asucc g a1) H1) t vs (ASort n n0) H3) 
-(sn3_appls_beta c v t vs H4 w (sc3_sn3 g (asucc g a1) c w H1))))) 
-H2)))))))))))) (\lambda (a: A).(\lambda (_: ((\forall (vs: TList).(\forall 
-(c: C).(\forall (v: T).(\forall (t: T).((sc3 g a c (THeads (Flat Appl) vs 
-(THead (Bind Abbr) v t))) \to ((sc3 g a1 c v) \to (\forall (w: T).((sc3 g 
-(asucc g a1) c w) \to (sc3 g a c (THeads (Flat Appl) vs (THead (Flat Appl) v 
-(THead (Bind Abst) w t)))))))))))))).(\lambda (a0: A).(\lambda (H0: ((\forall 
-(vs: TList).(\forall (c: C).(\forall (v: T).(\forall (t: T).((sc3 g a0 c 
-(THeads (Flat Appl) vs (THead (Bind Abbr) v t))) \to ((sc3 g a1 c v) \to 
-(\forall (w: T).((sc3 g (asucc g a1) c w) \to (sc3 g a0 c (THeads (Flat Appl) 
-vs (THead (Flat Appl) v (THead (Bind Abst) w t)))))))))))))).(\lambda (vs: 
-TList).(\lambda (c: C).(\lambda (v: T).(\lambda (t: T).(\lambda (H1: (land 
-(arity g c (THeads (Flat Appl) vs (THead (Bind Abbr) v t)) (AHead a a0)) 
-(\forall (d: C).(\forall (w: T).((sc3 g a d w) \to (\forall (is: 
-PList).((drop1 is d c) \to (sc3 g a0 d (THead (Flat Appl) w (lift1 is (THeads 
-(Flat Appl) vs (THead (Bind Abbr) v t)))))))))))).(\lambda (H2: (sc3 g a1 c 
-v)).(\lambda (w: T).(\lambda (H3: (sc3 g (asucc g a1) c w)).(let H4 \def H1 
-in (and_ind (arity g c (THeads (Flat Appl) vs (THead (Bind Abbr) v t)) (AHead 
-a a0)) (\forall (d: C).(\forall (w0: T).((sc3 g a d w0) \to (\forall (is: 
-PList).((drop1 is d c) \to (sc3 g a0 d (THead (Flat Appl) w0 (lift1 is 
-(THeads (Flat Appl) vs (THead (Bind Abbr) v t)))))))))) (land (arity g c 
-(THeads (Flat Appl) vs (THead (Flat Appl) v (THead (Bind Abst) w t))) (AHead 
-a a0)) (\forall (d: C).(\forall (w0: T).((sc3 g a d w0) \to (\forall (is: 
-PList).((drop1 is d c) \to (sc3 g a0 d (THead (Flat Appl) w0 (lift1 is 
-(THeads (Flat Appl) vs (THead (Flat Appl) v (THead (Bind Abst) w 
-t)))))))))))) (\lambda (H5: (arity g c (THeads (Flat Appl) vs (THead (Bind 
-Abbr) v t)) (AHead a a0))).(\lambda (H6: ((\forall (d: C).(\forall (w0: 
-T).((sc3 g a d w0) \to (\forall (is: PList).((drop1 is d c) \to (sc3 g a0 d 
-(THead (Flat Appl) w0 (lift1 is (THeads (Flat Appl) vs (THead (Bind Abbr) v 
-t)))))))))))).(conj (arity g c (THeads (Flat Appl) vs (THead (Flat Appl) v 
-(THead (Bind Abst) w t))) (AHead a a0)) (\forall (d: C).(\forall (w0: 
-T).((sc3 g a d w0) \to (\forall (is: PList).((drop1 is d c) \to (sc3 g a0 d 
-(THead (Flat Appl) w0 (lift1 is (THeads (Flat Appl) vs (THead (Flat Appl) v 
-(THead (Bind Abst) w t))))))))))) (arity_appls_appl g c v a1 (sc3_arity_gen g 
-c v a1 H2) w (sc3_arity_gen g c w (asucc g a1) H3) t vs (AHead a a0) H5) 
-(\lambda (d: C).(\lambda (w0: T).(\lambda (H7: (sc3 g a d w0)).(\lambda (is: 
-PList).(\lambda (H8: (drop1 is d c)).(eq_ind_r T (THeads (Flat Appl) (lifts1 
-is vs) (lift1 is (THead (Flat Appl) v (THead (Bind Abst) w t)))) (\lambda 
-(t0: T).(sc3 g a0 d (THead (Flat Appl) w0 t0))) (eq_ind_r T (THead (Flat 
-Appl) (lift1 is v) (lift1 is (THead (Bind Abst) w t))) (\lambda (t0: T).(sc3 
-g a0 d (THead (Flat Appl) w0 (THeads (Flat Appl) (lifts1 is vs) t0)))) 
-(eq_ind_r T (THead (Bind Abst) (lift1 is w) (lift1 (Ss is) t)) (\lambda (t0: 
-T).(sc3 g a0 d (THead (Flat Appl) w0 (THeads (Flat Appl) (lifts1 is vs) 
-(THead (Flat Appl) (lift1 is v) t0))))) (let H_y \def (H0 (TCons w0 (lifts1 
-is vs))) in (H_y d (lift1 is v) (lift1 (Ss is) t) (eq_ind T (lift1 is (THead 
-(Bind Abbr) v t)) (\lambda (t0: T).(sc3 g a0 d (THead (Flat Appl) w0 (THeads 
-(Flat Appl) (lifts1 is vs) t0)))) (eq_ind T (lift1 is (THeads (Flat Appl) vs 
-(THead (Bind Abbr) v t))) (\lambda (t0: T).(sc3 g a0 d (THead (Flat Appl) w0 
-t0))) (H6 d w0 H7 is H8) (THeads (Flat Appl) (lifts1 is vs) (lift1 is (THead 
-(Bind Abbr) v t))) (lifts1_flat Appl is (THead (Bind Abbr) v t) vs)) (THead 
-(Bind Abbr) (lift1 is v) (lift1 (Ss is) t)) (lift1_bind Abbr is v t)) 
-(sc3_lift1 g c a1 is d v H2 H8) (lift1 is w) (sc3_lift1 g c (asucc g a1) is d 
-w H3 H8))) (lift1 is (THead (Bind Abst) w t)) (lift1_bind Abst is w t)) 
-(lift1 is (THead (Flat Appl) v (THead (Bind Abst) w t))) (lift1_flat Appl is 
-v (THead (Bind Abst) w t))) (lift1 is (THeads (Flat Appl) vs (THead (Flat 
-Appl) v (THead (Bind Abst) w t)))) (lifts1_flat Appl is (THead (Flat Appl) v 
-(THead (Bind Abst) w t)) vs)))))))))) H4)))))))))))))) a2))).
+.
 
