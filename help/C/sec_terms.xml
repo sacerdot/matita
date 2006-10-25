@@ -387,6 +387,12 @@
       <entry><emphasis role="bold">(</emphasis>&id; &id; [&id;]…<emphasis role="bold">)</emphasis></entry>
       <entry>n-ary constructor (binds the n arguments)</entry>
      </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
+      <entry>&id; &id; [&id;]…</entry>
+      <entry>n-ary constructor (binds the n arguments)</entry>
+     </row>
     </tbody>
    </tgroup>
   </table>
