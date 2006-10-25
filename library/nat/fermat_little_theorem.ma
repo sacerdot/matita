@@ -220,7 +220,7 @@ cut (O < a)
                   [rewrite > Hcut3.apply congruent_n_n
                   |rewrite < eq_map_iter_i_pi.
                    rewrite < eq_map_iter_i_pi.
-                   apply permut_to_eq_map_iter_i
+                   apply (permut_to_eq_map_iter_i ? ? ? ? ? (λm.m))
                    [apply assoc_times
                    |apply sym_times
                    |rewrite < plus_n_Sm.
