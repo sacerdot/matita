@@ -33,16 +33,16 @@ TList).(\forall (u: T).((pr3 c (THeads (Flat Appl) vs (TLRef i)) u) \to (iso
 (\lambda (u: T).(\lambda (H0: (pr3 c (TLRef i) u)).(let H_y \def 
 (nf2_pr3_unfold c (TLRef i) u H0 H) in (let H1 \def (eq_ind_r T u (\lambda 
 (t: T).(pr3 c (TLRef i) t)) H0 (TLRef i) H_y) in (eq_ind T (TLRef i) (\lambda 
-(t: T).(iso (TLRef i) t)) (iso_lref i i) u H_y))))) (\lambda (t: T).(\lambda 
-(t0: TList).(\lambda (H0: ((\forall (u: T).((pr3 c (THeads (Flat Appl) t0 
-(TLRef i)) u) \to (iso (THeads (Flat Appl) t0 (TLRef i)) u))))).(\lambda (u: 
-T).(\lambda (H1: (pr3 c (THead (Flat Appl) t (THeads (Flat Appl) t0 (TLRef 
-i))) u)).(let H2 \def (pr3_gen_appl c t (THeads (Flat Appl) t0 (TLRef i)) u 
-H1) in (or3_ind (ex3_2 T T (\lambda (u2: T).(\lambda (t2: T).(eq T u (THead 
-(Flat Appl) u2 t2)))) (\lambda (u2: T).(\lambda (_: T).(pr3 c t u2))) 
-(\lambda (_: T).(\lambda (t2: T).(pr3 c (THeads (Flat Appl) t0 (TLRef i)) 
-t2)))) (ex4_4 T T T T (\lambda (_: T).(\lambda (_: T).(\lambda (u2: 
-T).(\lambda (t2: T).(pr3 c (THead (Bind Abbr) u2 t2) u))))) (\lambda (_: 
+(t: T).(iso (TLRef i) t)) (iso_refl (TLRef i)) u H_y))))) (\lambda (t: 
+T).(\lambda (t0: TList).(\lambda (H0: ((\forall (u: T).((pr3 c (THeads (Flat 
+Appl) t0 (TLRef i)) u) \to (iso (THeads (Flat Appl) t0 (TLRef i)) 
+u))))).(\lambda (u: T).(\lambda (H1: (pr3 c (THead (Flat Appl) t (THeads 
+(Flat Appl) t0 (TLRef i))) u)).(let H2 \def (pr3_gen_appl c t (THeads (Flat 
+Appl) t0 (TLRef i)) u H1) in (or3_ind (ex3_2 T T (\lambda (u2: T).(\lambda 
+(t2: T).(eq T u (THead (Flat Appl) u2 t2)))) (\lambda (u2: T).(\lambda (_: 
+T).(pr3 c t u2))) (\lambda (_: T).(\lambda (t2: T).(pr3 c (THeads (Flat Appl) 
+t0 (TLRef i)) t2)))) (ex4_4 T T T T (\lambda (_: T).(\lambda (_: T).(\lambda 
+(u2: T).(\lambda (t2: T).(pr3 c (THead (Bind Abbr) u2 t2) u))))) (\lambda (_: 
 T).(\lambda (_: T).(\lambda (u2: T).(\lambda (_: T).(pr3 c t u2))))) (\lambda 
 (y1: T).(\lambda (z1: T).(\lambda (_: T).(\lambda (_: T).(pr3 c (THeads (Flat 
 Appl) t0 (TLRef i)) (THead (Bind Abst) y1 z1)))))) (\lambda (_: T).(\lambda 
@@ -70,8 +70,8 @@ T).(\lambda (t2: T).(pr3 c (THeads (Flat Appl) t0 (TLRef i)) t2))) (iso
 T).(\lambda (x1: T).(\lambda (H4: (eq T u (THead (Flat Appl) x0 
 x1))).(\lambda (_: (pr3 c t x0)).(\lambda (_: (pr3 c (THeads (Flat Appl) t0 
 (TLRef i)) x1)).(eq_ind_r T (THead (Flat Appl) x0 x1) (\lambda (t1: T).(iso 
-(THead (Flat Appl) t (THeads (Flat Appl) t0 (TLRef i))) t1)) (iso_head (Flat 
-Appl) t x0 (THeads (Flat Appl) t0 (TLRef i)) x1) u H4)))))) H3)) (\lambda 
+(THead (Flat Appl) t (THeads (Flat Appl) t0 (TLRef i))) t1)) (iso_head t x0 
+(THeads (Flat Appl) t0 (TLRef i)) x1 (Flat Appl)) u H4)))))) H3)) (\lambda 
 (H3: (ex4_4 T T T T (\lambda (_: T).(\lambda (_: T).(\lambda (u2: T).(\lambda 
 (t2: T).(pr3 c (THead (Bind Abbr) u2 t2) u))))) (\lambda (_: T).(\lambda (_: 
 T).(\lambda (u2: T).(\lambda (_: T).(pr3 c t u2))))) (\lambda (y1: 

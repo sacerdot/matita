@@ -34,31 +34,30 @@ e1)).(clear_gen_sort e1 n H0 (ex2 C (\lambda (e2: C).(csuba g e1 e2))
 C).(\lambda (H0: (csuba g c3 c4)).(\lambda (H1: ((\forall (e1: C).((clear c3 
 e1) \to (ex2 C (\lambda (e2: C).(csuba g e1 e2)) (\lambda (e2: C).(clear c4 
 e2))))))).(\lambda (k: K).(\lambda (u: T).(\lambda (e1: C).(\lambda (H2: 
-(clear (CHead c3 k u) e1)).((match k in K return (\lambda (k0: K).((clear 
-(CHead c3 k0 u) e1) \to (ex2 C (\lambda (e2: C).(csuba g e1 e2)) (\lambda 
-(e2: C).(clear (CHead c4 k0 u) e2))))) with [(Bind b) \Rightarrow (\lambda 
-(H3: (clear (CHead c3 (Bind b) u) e1)).(eq_ind_r C (CHead c3 (Bind b) u) 
-(\lambda (c: C).(ex2 C (\lambda (e2: C).(csuba g c e2)) (\lambda (e2: 
-C).(clear (CHead c4 (Bind b) u) e2)))) (ex_intro2 C (\lambda (e2: C).(csuba g 
-(CHead c3 (Bind b) u) e2)) (\lambda (e2: C).(clear (CHead c4 (Bind b) u) e2)) 
-(CHead c4 (Bind b) u) (csuba_head g c3 c4 H0 (Bind b) u) (clear_bind b c4 u)) 
-e1 (clear_gen_bind b c3 e1 u H3))) | (Flat f) \Rightarrow (\lambda (H3: 
-(clear (CHead c3 (Flat f) u) e1)).(let H4 \def (H1 e1 (clear_gen_flat f c3 e1 
-u H3)) in (ex2_ind C (\lambda (e2: C).(csuba g e1 e2)) (\lambda (e2: 
-C).(clear c4 e2)) (ex2 C (\lambda (e2: C).(csuba g e1 e2)) (\lambda (e2: 
-C).(clear (CHead c4 (Flat f) u) e2))) (\lambda (x: C).(\lambda (H5: (csuba g 
-e1 x)).(\lambda (H6: (clear c4 x)).(ex_intro2 C (\lambda (e2: C).(csuba g e1 
-e2)) (\lambda (e2: C).(clear (CHead c4 (Flat f) u) e2)) x H5 (clear_flat c4 x 
-H6 f u))))) H4)))]) H2))))))))) (\lambda (c3: C).(\lambda (c4: C).(\lambda 
-(H0: (csuba g c3 c4)).(\lambda (_: ((\forall (e1: C).((clear c3 e1) \to (ex2 
-C (\lambda (e2: C).(csuba g e1 e2)) (\lambda (e2: C).(clear c4 
-e2))))))).(\lambda (t: T).(\lambda (a: A).(\lambda (H2: (arity g c3 t (asucc 
-g a))).(\lambda (u: T).(\lambda (H3: (arity g c4 u a)).(\lambda (e1: 
-C).(\lambda (H4: (clear (CHead c3 (Bind Abst) t) e1)).(eq_ind_r C (CHead c3 
-(Bind Abst) t) (\lambda (c: C).(ex2 C (\lambda (e2: C).(csuba g c e2)) 
-(\lambda (e2: C).(clear (CHead c4 (Bind Abbr) u) e2)))) (ex_intro2 C (\lambda 
-(e2: C).(csuba g (CHead c3 (Bind Abst) t) e2)) (\lambda (e2: C).(clear (CHead 
-c4 (Bind Abbr) u) e2)) (CHead c4 (Bind Abbr) u) (csuba_abst g c3 c4 H0 t a H2 
-u H3) (clear_bind Abbr c4 u)) e1 (clear_gen_bind Abst c3 e1 t H4))))))))))))) 
-c1 c2 H)))).
+(clear (CHead c3 k u) e1)).(K_ind (\lambda (k0: K).((clear (CHead c3 k0 u) 
+e1) \to (ex2 C (\lambda (e2: C).(csuba g e1 e2)) (\lambda (e2: C).(clear 
+(CHead c4 k0 u) e2))))) (\lambda (b: B).(\lambda (H3: (clear (CHead c3 (Bind 
+b) u) e1)).(eq_ind_r C (CHead c3 (Bind b) u) (\lambda (c: C).(ex2 C (\lambda 
+(e2: C).(csuba g c e2)) (\lambda (e2: C).(clear (CHead c4 (Bind b) u) e2)))) 
+(ex_intro2 C (\lambda (e2: C).(csuba g (CHead c3 (Bind b) u) e2)) (\lambda 
+(e2: C).(clear (CHead c4 (Bind b) u) e2)) (CHead c4 (Bind b) u) (csuba_head g 
+c3 c4 H0 (Bind b) u) (clear_bind b c4 u)) e1 (clear_gen_bind b c3 e1 u H3)))) 
+(\lambda (f: F).(\lambda (H3: (clear (CHead c3 (Flat f) u) e1)).(let H4 \def 
+(H1 e1 (clear_gen_flat f c3 e1 u H3)) in (ex2_ind C (\lambda (e2: C).(csuba g 
+e1 e2)) (\lambda (e2: C).(clear c4 e2)) (ex2 C (\lambda (e2: C).(csuba g e1 
+e2)) (\lambda (e2: C).(clear (CHead c4 (Flat f) u) e2))) (\lambda (x: 
+C).(\lambda (H5: (csuba g e1 x)).(\lambda (H6: (clear c4 x)).(ex_intro2 C 
+(\lambda (e2: C).(csuba g e1 e2)) (\lambda (e2: C).(clear (CHead c4 (Flat f) 
+u) e2)) x H5 (clear_flat c4 x H6 f u))))) H4)))) k H2))))))))) (\lambda (c3: 
+C).(\lambda (c4: C).(\lambda (H0: (csuba g c3 c4)).(\lambda (_: ((\forall 
+(e1: C).((clear c3 e1) \to (ex2 C (\lambda (e2: C).(csuba g e1 e2)) (\lambda 
+(e2: C).(clear c4 e2))))))).(\lambda (t: T).(\lambda (a: A).(\lambda (H2: 
+(arity g c3 t (asucc g a))).(\lambda (u: T).(\lambda (H3: (arity g c4 u 
+a)).(\lambda (e1: C).(\lambda (H4: (clear (CHead c3 (Bind Abst) t) 
+e1)).(eq_ind_r C (CHead c3 (Bind Abst) t) (\lambda (c: C).(ex2 C (\lambda 
+(e2: C).(csuba g c e2)) (\lambda (e2: C).(clear (CHead c4 (Bind Abbr) u) 
+e2)))) (ex_intro2 C (\lambda (e2: C).(csuba g (CHead c3 (Bind Abst) t) e2)) 
+(\lambda (e2: C).(clear (CHead c4 (Bind Abbr) u) e2)) (CHead c4 (Bind Abbr) 
+u) (csuba_abst g c3 c4 H0 t a H2 u H3) (clear_bind Abbr c4 u)) e1 
+(clear_gen_bind Abst c3 e1 t H4))))))))))))) c1 c2 H)))).
 

@@ -39,8 +39,8 @@ c) O) (\lambda (n: nat).(lt n (plus (cweight c) (tweight u)))) (lt_le_S (plus
 (plus_n_O (cweight c))))).
 
 theorem clt_wf__q_ind:
- \forall (P: ((C \to Prop))).(((\forall (n: nat).((\lambda (P: ((C \to 
-Prop))).(\lambda (n0: nat).(\forall (c: C).((eq nat (cweight c) n0) \to (P 
+ \forall (P: ((C \to Prop))).(((\forall (n: nat).((\lambda (P0: ((C \to 
+Prop))).(\lambda (n0: nat).(\forall (c: C).((eq nat (cweight c) n0) \to (P0 
 c))))) P n))) \to (\forall (c: C).(P c)))
 \def
  let Q \def (\lambda (P: ((C \to Prop))).(\lambda (n: nat).(\forall (c: 
@@ -59,12 +59,12 @@ Prop))).(\lambda (H: ((\forall (c: C).(((\forall (d: C).((lt (cweight d)
 (cweight c)) \to (P d)))) \to (P c))))).(\lambda (c: C).(clt_wf__q_ind 
 (\lambda (c0: C).(P c0)) (\lambda (n: nat).(lt_wf_ind n (Q (\lambda (c0: 
 C).(P c0))) (\lambda (n0: nat).(\lambda (H0: ((\forall (m: nat).((lt m n0) 
-\to (Q (\lambda (c: C).(P c)) m))))).(\lambda (c0: C).(\lambda (H1: (eq nat 
-(cweight c0) n0)).(let H2 \def (eq_ind_r nat n0 (\lambda (n: nat).(\forall 
-(m: nat).((lt m n) \to (\forall (c: C).((eq nat (cweight c) m) \to (P c)))))) 
-H0 (cweight c0) H1) in (H c0 (\lambda (d: C).(\lambda (H3: (lt (cweight d) 
-(cweight c0))).(H2 (cweight d) H3 d (refl_equal nat (cweight d))))))))))))) 
-c)))).
+\to (Q (\lambda (c0: C).(P c0)) m))))).(\lambda (c0: C).(\lambda (H1: (eq nat 
+(cweight c0) n0)).(let H2 \def (eq_ind_r nat n0 (\lambda (n1: nat).(\forall 
+(m: nat).((lt m n1) \to (\forall (c1: C).((eq nat (cweight c1) m) \to (P 
+c1)))))) H0 (cweight c0) H1) in (H c0 (\lambda (d: C).(\lambda (H3: (lt 
+(cweight d) (cweight c0))).(H2 (cweight d) H3 d (refl_equal nat (cweight 
+d))))))))))))) c)))).
 
 theorem chead_ctail:
  \forall (c: C).(\forall (t: T).(\forall (k: K).(ex_3 K C T (\lambda (h: 
@@ -106,16 +106,17 @@ c))))))) \to (\forall (c: C).(P c))))
  \lambda (P: ((C \to Prop))).(\lambda (H: ((\forall (n: nat).(P (CSort 
 n))))).(\lambda (H0: ((\forall (c: C).((P c) \to (\forall (k: K).(\forall (t: 
 T).(P (CTail k t c)))))))).(\lambda (c: C).(clt_wf_ind (\lambda (c0: C).(P 
-c0)) (\lambda (c0: C).(match c0 in C return (\lambda (c1: C).(((\forall (d: 
-C).((clt d c1) \to (P d)))) \to (P c1))) with [(CSort n) \Rightarrow (\lambda 
-(_: ((\forall (d: C).((clt d (CSort n)) \to (P d))))).(H n)) | (CHead c1 k t) 
-\Rightarrow (\lambda (H1: ((\forall (d: C).((clt d (CHead c1 k t)) \to (P 
-d))))).(let H_x \def (chead_ctail c1 t k) in (let H2 \def H_x in (ex_3_ind K 
-C T (\lambda (h: K).(\lambda (d: C).(\lambda (u: T).(eq C (CHead c1 k t) 
+c0)) (\lambda (c0: C).(C_ind (\lambda (c1: C).(((\forall (d: C).((clt d c1) 
+\to (P d)))) \to (P c1))) (\lambda (n: nat).(\lambda (_: ((\forall (d: 
+C).((clt d (CSort n)) \to (P d))))).(H n))) (\lambda (c1: C).(\lambda (_: 
+((((\forall (d: C).((clt d c1) \to (P d)))) \to (P c1)))).(\lambda (k: 
+K).(\lambda (t: T).(\lambda (H2: ((\forall (d: C).((clt d (CHead c1 k t)) \to 
+(P d))))).(let H_x \def (chead_ctail c1 t k) in (let H3 \def H_x in (ex_3_ind 
+K C T (\lambda (h: K).(\lambda (d: C).(\lambda (u: T).(eq C (CHead c1 k t) 
 (CTail h u d))))) (P (CHead c1 k t)) (\lambda (x0: K).(\lambda (x1: 
-C).(\lambda (x2: T).(\lambda (H3: (eq C (CHead c1 k t) (CTail x0 x2 
-x1))).(eq_ind_r C (CTail x0 x2 x1) (\lambda (c2: C).(P c2)) (let H4 \def 
-(eq_ind C (CHead c1 k t) (\lambda (c: C).(\forall (d: C).((clt d c) \to (P 
-d)))) H1 (CTail x0 x2 x1) H3) in (H0 x1 (H4 x1 (clt_thead x0 x2 x1)) x0 x2)) 
-(CHead c1 k t) H3))))) H2))))])) c)))).
+C).(\lambda (x2: T).(\lambda (H4: (eq C (CHead c1 k t) (CTail x0 x2 
+x1))).(eq_ind_r C (CTail x0 x2 x1) (\lambda (c2: C).(P c2)) (let H5 \def 
+(eq_ind C (CHead c1 k t) (\lambda (c2: C).(\forall (d: C).((clt d c2) \to (P 
+d)))) H2 (CTail x0 x2 x1) H4) in (H0 x1 (H5 x1 (clt_thead x0 x2 x1)) x0 x2)) 
+(CHead c1 k t) H4))))) H3)))))))) c0)) c)))).
 

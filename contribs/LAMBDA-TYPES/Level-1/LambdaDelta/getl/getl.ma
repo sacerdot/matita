@@ -43,10 +43,11 @@ nat).(\lambda (H: (getl h c1 c2)).(\lambda (e2: C).(\lambda (H0: (getl i c2
 e2)).(let H1 \def (getl_gen_all c2 e2 i H0) in (ex2_ind C (\lambda (e: 
 C).(drop i O c2 e)) (\lambda (e: C).(clear e e2)) (getl (plus i h) c1 e2) 
 (\lambda (x: C).(\lambda (H2: (drop i O c2 x)).(\lambda (H3: (clear x 
-e2)).((match i in nat return (\lambda (n: nat).((drop n O c2 x) \to (getl 
-(plus n h) c1 e2))) with [O \Rightarrow (\lambda (H4: (drop O O c2 x)).(let 
-H5 \def (eq_ind_r C x (\lambda (c: C).(clear c e2)) H3 c2 (drop_gen_refl c2 x 
-H4)) in (getl_clear_trans (plus O h) c1 c2 H e2 H5))) | (S n) \Rightarrow 
-(\lambda (H4: (drop (S n) O c2 x)).(let H_y \def (getl_drop_trans c1 c2 h H x 
-n H4) in (getl_intro (plus (S n) h) c1 e2 x H_y H3)))]) H2)))) H1)))))))).
+e2)).(nat_ind (\lambda (n: nat).((drop n O c2 x) \to (getl (plus n h) c1 
+e2))) (\lambda (H4: (drop O O c2 x)).(let H5 \def (eq_ind_r C x (\lambda (c: 
+C).(clear c e2)) H3 c2 (drop_gen_refl c2 x H4)) in (getl_clear_trans (plus O 
+h) c1 c2 H e2 H5))) (\lambda (i0: nat).(\lambda (_: (((drop i0 O c2 x) \to 
+(getl (plus i0 h) c1 e2)))).(\lambda (H4: (drop (S i0) O c2 x)).(let H_y \def 
+(getl_drop_trans c1 c2 h H x i0 H4) in (getl_intro (plus (S i0) h) c1 e2 x 
+H_y H3))))) i H2)))) H1)))))))).
 

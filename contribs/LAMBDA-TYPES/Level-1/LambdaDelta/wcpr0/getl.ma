@@ -261,94 +261,93 @@ k0 u3)) \to (ex3_2 C T (\lambda (e2: C).(\lambda (u4: T).(getl n (CHead c3 k
 u2) (CHead e2 k0 u4)))) (\lambda (e2: C).(\lambda (_: T).(wcpr0 e1 e2))) 
 (\lambda (_: C).(\lambda (u4: T).(pr0 u3 u4))))))))) (\lambda (e1: 
 C).(\lambda (u0: T).(\lambda (k0: K).(\lambda (H3: (getl O (CHead c0 k u1) 
-(CHead e1 k0 u0))).((match k in K return (\lambda (k1: K).((clear (CHead c0 
-k1 u1) (CHead e1 k0 u0)) \to (ex3_2 C T (\lambda (e2: C).(\lambda (u3: 
-T).(getl O (CHead c3 k1 u2) (CHead e2 k0 u3)))) (\lambda (e2: C).(\lambda (_: 
-T).(wcpr0 e1 e2))) (\lambda (_: C).(\lambda (u3: T).(pr0 u0 u3)))))) with 
-[(Bind b) \Rightarrow (\lambda (H4: (clear (CHead c0 (Bind b) u1) (CHead e1 
-k0 u0))).(let H5 \def (f_equal C C (\lambda (e: C).(match e in C return 
-(\lambda (_: C).C) with [(CSort _) \Rightarrow e1 | (CHead c _ _) \Rightarrow 
-c])) (CHead e1 k0 u0) (CHead c0 (Bind b) u1) (clear_gen_bind b c0 (CHead e1 
-k0 u0) u1 H4)) in ((let H6 \def (f_equal C K (\lambda (e: C).(match e in C 
-return (\lambda (_: C).K) with [(CSort _) \Rightarrow k0 | (CHead _ k1 _) 
-\Rightarrow k1])) (CHead e1 k0 u0) (CHead c0 (Bind b) u1) (clear_gen_bind b 
-c0 (CHead e1 k0 u0) u1 H4)) in ((let H7 \def (f_equal C T (\lambda (e: 
-C).(match e in C return (\lambda (_: C).T) with [(CSort _) \Rightarrow u0 | 
-(CHead _ _ t) \Rightarrow t])) (CHead e1 k0 u0) (CHead c0 (Bind b) u1) 
-(clear_gen_bind b c0 (CHead e1 k0 u0) u1 H4)) in (\lambda (H8: (eq K k0 (Bind 
-b))).(\lambda (H9: (eq C e1 c0)).(eq_ind_r K (Bind b) (\lambda (k1: K).(ex3_2 
-C T (\lambda (e2: C).(\lambda (u3: T).(getl O (CHead c3 (Bind b) u2) (CHead 
-e2 k1 u3)))) (\lambda (e2: C).(\lambda (_: T).(wcpr0 e1 e2))) (\lambda (_: 
-C).(\lambda (u3: T).(pr0 u0 u3))))) (eq_ind_r T u1 (\lambda (t: T).(ex3_2 C T 
-(\lambda (e2: C).(\lambda (u3: T).(getl O (CHead c3 (Bind b) u2) (CHead e2 
-(Bind b) u3)))) (\lambda (e2: C).(\lambda (_: T).(wcpr0 e1 e2))) (\lambda (_: 
-C).(\lambda (u3: T).(pr0 t u3))))) (eq_ind_r C c0 (\lambda (c: C).(ex3_2 C T 
-(\lambda (e2: C).(\lambda (u3: T).(getl O (CHead c3 (Bind b) u2) (CHead e2 
-(Bind b) u3)))) (\lambda (e2: C).(\lambda (_: T).(wcpr0 c e2))) (\lambda (_: 
-C).(\lambda (u3: T).(pr0 u1 u3))))) (ex3_2_intro C T (\lambda (e2: 
-C).(\lambda (u3: T).(getl O (CHead c3 (Bind b) u2) (CHead e2 (Bind b) u3)))) 
-(\lambda (e2: C).(\lambda (_: T).(wcpr0 c0 e2))) (\lambda (_: C).(\lambda 
-(u3: T).(pr0 u1 u3))) c3 u2 (getl_refl b c3 u2) H0 H2) e1 H9) u0 H7) k0 
-H8)))) H6)) H5))) | (Flat f) \Rightarrow (\lambda (H4: (clear (CHead c0 (Flat 
-f) u1) (CHead e1 k0 u0))).(let H5 \def (H1 O e1 u0 k0 (getl_intro O c0 (CHead 
-e1 k0 u0) c0 (drop_refl c0) (clear_gen_flat f c0 (CHead e1 k0 u0) u1 H4))) in 
-(ex3_2_ind C T (\lambda (e2: C).(\lambda (u3: T).(getl O c3 (CHead e2 k0 
-u3)))) (\lambda (e2: C).(\lambda (_: T).(wcpr0 e1 e2))) (\lambda (_: 
-C).(\lambda (u3: T).(pr0 u0 u3))) (ex3_2 C T (\lambda (e2: C).(\lambda (u3: 
-T).(getl O (CHead c3 (Flat f) u2) (CHead e2 k0 u3)))) (\lambda (e2: 
+(CHead e1 k0 u0))).(K_ind (\lambda (k1: K).((clear (CHead c0 k1 u1) (CHead e1 
+k0 u0)) \to (ex3_2 C T (\lambda (e2: C).(\lambda (u3: T).(getl O (CHead c3 k1 
+u2) (CHead e2 k0 u3)))) (\lambda (e2: C).(\lambda (_: T).(wcpr0 e1 e2))) 
+(\lambda (_: C).(\lambda (u3: T).(pr0 u0 u3)))))) (\lambda (b: B).(\lambda 
+(H4: (clear (CHead c0 (Bind b) u1) (CHead e1 k0 u0))).(let H5 \def (f_equal C 
+C (\lambda (e: C).(match e in C return (\lambda (_: C).C) with [(CSort _) 
+\Rightarrow e1 | (CHead c _ _) \Rightarrow c])) (CHead e1 k0 u0) (CHead c0 
+(Bind b) u1) (clear_gen_bind b c0 (CHead e1 k0 u0) u1 H4)) in ((let H6 \def 
+(f_equal C K (\lambda (e: C).(match e in C return (\lambda (_: C).K) with 
+[(CSort _) \Rightarrow k0 | (CHead _ k1 _) \Rightarrow k1])) (CHead e1 k0 u0) 
+(CHead c0 (Bind b) u1) (clear_gen_bind b c0 (CHead e1 k0 u0) u1 H4)) in ((let 
+H7 \def (f_equal C T (\lambda (e: C).(match e in C return (\lambda (_: C).T) 
+with [(CSort _) \Rightarrow u0 | (CHead _ _ t) \Rightarrow t])) (CHead e1 k0 
+u0) (CHead c0 (Bind b) u1) (clear_gen_bind b c0 (CHead e1 k0 u0) u1 H4)) in 
+(\lambda (H8: (eq K k0 (Bind b))).(\lambda (H9: (eq C e1 c0)).(eq_ind_r K 
+(Bind b) (\lambda (k1: K).(ex3_2 C T (\lambda (e2: C).(\lambda (u3: T).(getl 
+O (CHead c3 (Bind b) u2) (CHead e2 k1 u3)))) (\lambda (e2: C).(\lambda (_: 
+T).(wcpr0 e1 e2))) (\lambda (_: C).(\lambda (u3: T).(pr0 u0 u3))))) (eq_ind_r 
+T u1 (\lambda (t: T).(ex3_2 C T (\lambda (e2: C).(\lambda (u3: T).(getl O 
+(CHead c3 (Bind b) u2) (CHead e2 (Bind b) u3)))) (\lambda (e2: C).(\lambda 
+(_: T).(wcpr0 e1 e2))) (\lambda (_: C).(\lambda (u3: T).(pr0 t u3))))) 
+(eq_ind_r C c0 (\lambda (c: C).(ex3_2 C T (\lambda (e2: C).(\lambda (u3: 
+T).(getl O (CHead c3 (Bind b) u2) (CHead e2 (Bind b) u3)))) (\lambda (e2: 
+C).(\lambda (_: T).(wcpr0 c e2))) (\lambda (_: C).(\lambda (u3: T).(pr0 u1 
+u3))))) (ex3_2_intro C T (\lambda (e2: C).(\lambda (u3: T).(getl O (CHead c3 
+(Bind b) u2) (CHead e2 (Bind b) u3)))) (\lambda (e2: C).(\lambda (_: 
+T).(wcpr0 c0 e2))) (\lambda (_: C).(\lambda (u3: T).(pr0 u1 u3))) c3 u2 
+(getl_refl b c3 u2) H0 H2) e1 H9) u0 H7) k0 H8)))) H6)) H5)))) (\lambda (f: 
+F).(\lambda (H4: (clear (CHead c0 (Flat f) u1) (CHead e1 k0 u0))).(let H5 
+\def (H1 O e1 u0 k0 (getl_intro O c0 (CHead e1 k0 u0) c0 (drop_refl c0) 
+(clear_gen_flat f c0 (CHead e1 k0 u0) u1 H4))) in (ex3_2_ind C T (\lambda 
+(e2: C).(\lambda (u3: T).(getl O c3 (CHead e2 k0 u3)))) (\lambda (e2: 
 C).(\lambda (_: T).(wcpr0 e1 e2))) (\lambda (_: C).(\lambda (u3: T).(pr0 u0 
-u3)))) (\lambda (x0: C).(\lambda (x1: T).(\lambda (H6: (getl O c3 (CHead x0 
-k0 x1))).(\lambda (H7: (wcpr0 e1 x0)).(\lambda (H8: (pr0 u0 x1)).(ex3_2_intro 
-C T (\lambda (e2: C).(\lambda (u3: T).(getl O (CHead c3 (Flat f) u2) (CHead 
-e2 k0 u3)))) (\lambda (e2: C).(\lambda (_: T).(wcpr0 e1 e2))) (\lambda (_: 
-C).(\lambda (u3: T).(pr0 u0 u3))) x0 x1 (getl_flat c3 (CHead x0 k0 x1) O H6 f 
-u2) H7 H8)))))) H5)))]) (getl_gen_O (CHead c0 k u1) (CHead e1 k0 u0) H3)))))) 
-(K_ind (\lambda (k0: K).(\forall (n: nat).(((\forall (e1: C).(\forall (u3: 
-T).(\forall (k1: K).((getl n (CHead c0 k0 u1) (CHead e1 k1 u3)) \to (ex3_2 C 
-T (\lambda (e2: C).(\lambda (u4: T).(getl n (CHead c3 k0 u2) (CHead e2 k1 
-u4)))) (\lambda (e2: C).(\lambda (_: T).(wcpr0 e1 e2))) (\lambda (_: 
-C).(\lambda (u4: T).(pr0 u3 u4))))))))) \to (\forall (e1: C).(\forall (u3: 
-T).(\forall (k1: K).((getl (S n) (CHead c0 k0 u1) (CHead e1 k1 u3)) \to 
-(ex3_2 C T (\lambda (e2: C).(\lambda (u4: T).(getl (S n) (CHead c3 k0 u2) 
-(CHead e2 k1 u4)))) (\lambda (e2: C).(\lambda (_: T).(wcpr0 e1 e2))) (\lambda 
-(_: C).(\lambda (u4: T).(pr0 u3 u4))))))))))) (\lambda (b: B).(\lambda (n: 
-nat).(\lambda (_: ((\forall (e1: C).(\forall (u3: T).(\forall (k0: K).((getl 
-n (CHead c0 (Bind b) u1) (CHead e1 k0 u3)) \to (ex3_2 C T (\lambda (e2: 
-C).(\lambda (u4: T).(getl n (CHead c3 (Bind b) u2) (CHead e2 k0 u4)))) 
+u3))) (ex3_2 C T (\lambda (e2: C).(\lambda (u3: T).(getl O (CHead c3 (Flat f) 
+u2) (CHead e2 k0 u3)))) (\lambda (e2: C).(\lambda (_: T).(wcpr0 e1 e2))) 
+(\lambda (_: C).(\lambda (u3: T).(pr0 u0 u3)))) (\lambda (x0: C).(\lambda 
+(x1: T).(\lambda (H6: (getl O c3 (CHead x0 k0 x1))).(\lambda (H7: (wcpr0 e1 
+x0)).(\lambda (H8: (pr0 u0 x1)).(ex3_2_intro C T (\lambda (e2: C).(\lambda 
+(u3: T).(getl O (CHead c3 (Flat f) u2) (CHead e2 k0 u3)))) (\lambda (e2: 
+C).(\lambda (_: T).(wcpr0 e1 e2))) (\lambda (_: C).(\lambda (u3: T).(pr0 u0 
+u3))) x0 x1 (getl_flat c3 (CHead x0 k0 x1) O H6 f u2) H7 H8)))))) H5)))) k 
+(getl_gen_O (CHead c0 k u1) (CHead e1 k0 u0) H3)))))) (K_ind (\lambda (k0: 
+K).(\forall (n: nat).(((\forall (e1: C).(\forall (u3: T).(\forall (k1: 
+K).((getl n (CHead c0 k0 u1) (CHead e1 k1 u3)) \to (ex3_2 C T (\lambda (e2: 
+C).(\lambda (u4: T).(getl n (CHead c3 k0 u2) (CHead e2 k1 u4)))) (\lambda 
+(e2: C).(\lambda (_: T).(wcpr0 e1 e2))) (\lambda (_: C).(\lambda (u4: T).(pr0 
+u3 u4))))))))) \to (\forall (e1: C).(\forall (u3: T).(\forall (k1: K).((getl 
+(S n) (CHead c0 k0 u1) (CHead e1 k1 u3)) \to (ex3_2 C T (\lambda (e2: 
+C).(\lambda (u4: T).(getl (S n) (CHead c3 k0 u2) (CHead e2 k1 u4)))) (\lambda 
+(e2: C).(\lambda (_: T).(wcpr0 e1 e2))) (\lambda (_: C).(\lambda (u4: T).(pr0 
+u3 u4))))))))))) (\lambda (b: B).(\lambda (n: nat).(\lambda (_: ((\forall 
+(e1: C).(\forall (u3: T).(\forall (k0: K).((getl n (CHead c0 (Bind b) u1) 
+(CHead e1 k0 u3)) \to (ex3_2 C T (\lambda (e2: C).(\lambda (u4: T).(getl n 
+(CHead c3 (Bind b) u2) (CHead e2 k0 u4)))) (\lambda (e2: C).(\lambda (_: 
+T).(wcpr0 e1 e2))) (\lambda (_: C).(\lambda (u4: T).(pr0 u3 
+u4)))))))))).(\lambda (e1: C).(\lambda (u0: T).(\lambda (k0: K).(\lambda (H4: 
+(getl (S n) (CHead c0 (Bind b) u1) (CHead e1 k0 u0))).(let H5 \def (H1 n e1 
+u0 k0 (getl_gen_S (Bind b) c0 (CHead e1 k0 u0) u1 n H4)) in (ex3_2_ind C T 
+(\lambda (e2: C).(\lambda (u3: T).(getl n c3 (CHead e2 k0 u3)))) (\lambda 
+(e2: C).(\lambda (_: T).(wcpr0 e1 e2))) (\lambda (_: C).(\lambda (u3: T).(pr0 
+u0 u3))) (ex3_2 C T (\lambda (e2: C).(\lambda (u3: T).(getl (S n) (CHead c3 
+(Bind b) u2) (CHead e2 k0 u3)))) (\lambda (e2: C).(\lambda (_: T).(wcpr0 e1 
+e2))) (\lambda (_: C).(\lambda (u3: T).(pr0 u0 u3)))) (\lambda (x0: 
+C).(\lambda (x1: T).(\lambda (H6: (getl n c3 (CHead x0 k0 x1))).(\lambda (H7: 
+(wcpr0 e1 x0)).(\lambda (H8: (pr0 u0 x1)).(ex3_2_intro C T (\lambda (e2: 
+C).(\lambda (u3: T).(getl (S n) (CHead c3 (Bind b) u2) (CHead e2 k0 u3)))) 
 (\lambda (e2: C).(\lambda (_: T).(wcpr0 e1 e2))) (\lambda (_: C).(\lambda 
-(u4: T).(pr0 u3 u4)))))))))).(\lambda (e1: C).(\lambda (u0: T).(\lambda (k0: 
-K).(\lambda (H4: (getl (S n) (CHead c0 (Bind b) u1) (CHead e1 k0 u0))).(let 
-H5 \def (H1 n e1 u0 k0 (getl_gen_S (Bind b) c0 (CHead e1 k0 u0) u1 n H4)) in 
-(ex3_2_ind C T (\lambda (e2: C).(\lambda (u3: T).(getl n c3 (CHead e2 k0 
-u3)))) (\lambda (e2: C).(\lambda (_: T).(wcpr0 e1 e2))) (\lambda (_: 
-C).(\lambda (u3: T).(pr0 u0 u3))) (ex3_2 C T (\lambda (e2: C).(\lambda (u3: 
-T).(getl (S n) (CHead c3 (Bind b) u2) (CHead e2 k0 u3)))) (\lambda (e2: 
-C).(\lambda (_: T).(wcpr0 e1 e2))) (\lambda (_: C).(\lambda (u3: T).(pr0 u0 
-u3)))) (\lambda (x0: C).(\lambda (x1: T).(\lambda (H6: (getl n c3 (CHead x0 
-k0 x1))).(\lambda (H7: (wcpr0 e1 x0)).(\lambda (H8: (pr0 u0 x1)).(ex3_2_intro 
-C T (\lambda (e2: C).(\lambda (u3: T).(getl (S n) (CHead c3 (Bind b) u2) 
-(CHead e2 k0 u3)))) (\lambda (e2: C).(\lambda (_: T).(wcpr0 e1 e2))) (\lambda 
-(_: C).(\lambda (u3: T).(pr0 u0 u3))) x0 x1 (getl_head (Bind b) n c3 (CHead 
-x0 k0 x1) H6 u2) H7 H8)))))) H5))))))))) (\lambda (f: F).(\lambda (n: 
-nat).(\lambda (_: ((\forall (e1: C).(\forall (u3: T).(\forall (k0: K).((getl 
-n (CHead c0 (Flat f) u1) (CHead e1 k0 u3)) \to (ex3_2 C T (\lambda (e2: 
-C).(\lambda (u4: T).(getl n (CHead c3 (Flat f) u2) (CHead e2 k0 u4)))) 
-(\lambda (e2: C).(\lambda (_: T).(wcpr0 e1 e2))) (\lambda (_: C).(\lambda 
-(u4: T).(pr0 u3 u4)))))))))).(\lambda (e1: C).(\lambda (u0: T).(\lambda (k0: 
-K).(\lambda (H4: (getl (S n) (CHead c0 (Flat f) u1) (CHead e1 k0 u0))).(let 
-H5 \def (H1 (S n) e1 u0 k0 (getl_gen_S (Flat f) c0 (CHead e1 k0 u0) u1 n H4)) 
-in (ex3_2_ind C T (\lambda (e2: C).(\lambda (u3: T).(getl (S n) c3 (CHead e2 
-k0 u3)))) (\lambda (e2: C).(\lambda (_: T).(wcpr0 e1 e2))) (\lambda (_: 
-C).(\lambda (u3: T).(pr0 u0 u3))) (ex3_2 C T (\lambda (e2: C).(\lambda (u3: 
-T).(getl (S n) (CHead c3 (Flat f) u2) (CHead e2 k0 u3)))) (\lambda (e2: 
-C).(\lambda (_: T).(wcpr0 e1 e2))) (\lambda (_: C).(\lambda (u3: T).(pr0 u0 
-u3)))) (\lambda (x0: C).(\lambda (x1: T).(\lambda (H6: (getl (S n) c3 (CHead 
-x0 k0 x1))).(\lambda (H7: (wcpr0 e1 x0)).(\lambda (H8: (pr0 u0 
-x1)).(ex3_2_intro C T (\lambda (e2: C).(\lambda (u3: T).(getl (S n) (CHead c3 
+(u3: T).(pr0 u0 u3))) x0 x1 (getl_head (Bind b) n c3 (CHead x0 k0 x1) H6 u2) 
+H7 H8)))))) H5))))))))) (\lambda (f: F).(\lambda (n: nat).(\lambda (_: 
+((\forall (e1: C).(\forall (u3: T).(\forall (k0: K).((getl n (CHead c0 (Flat 
+f) u1) (CHead e1 k0 u3)) \to (ex3_2 C T (\lambda (e2: C).(\lambda (u4: 
+T).(getl n (CHead c3 (Flat f) u2) (CHead e2 k0 u4)))) (\lambda (e2: 
+C).(\lambda (_: T).(wcpr0 e1 e2))) (\lambda (_: C).(\lambda (u4: T).(pr0 u3 
+u4)))))))))).(\lambda (e1: C).(\lambda (u0: T).(\lambda (k0: K).(\lambda (H4: 
+(getl (S n) (CHead c0 (Flat f) u1) (CHead e1 k0 u0))).(let H5 \def (H1 (S n) 
+e1 u0 k0 (getl_gen_S (Flat f) c0 (CHead e1 k0 u0) u1 n H4)) in (ex3_2_ind C T 
+(\lambda (e2: C).(\lambda (u3: T).(getl (S n) c3 (CHead e2 k0 u3)))) (\lambda 
+(e2: C).(\lambda (_: T).(wcpr0 e1 e2))) (\lambda (_: C).(\lambda (u3: T).(pr0 
+u0 u3))) (ex3_2 C T (\lambda (e2: C).(\lambda (u3: T).(getl (S n) (CHead c3 
 (Flat f) u2) (CHead e2 k0 u3)))) (\lambda (e2: C).(\lambda (_: T).(wcpr0 e1 
-e2))) (\lambda (_: C).(\lambda (u3: T).(pr0 u0 u3))) x0 x1 (getl_head (Flat 
-f) n c3 (CHead x0 k0 x1) H6 u2) H7 H8)))))) H5))))))))) k) h)))))))))) c1 c2 
-H))).
+e2))) (\lambda (_: C).(\lambda (u3: T).(pr0 u0 u3)))) (\lambda (x0: 
+C).(\lambda (x1: T).(\lambda (H6: (getl (S n) c3 (CHead x0 k0 x1))).(\lambda 
+(H7: (wcpr0 e1 x0)).(\lambda (H8: (pr0 u0 x1)).(ex3_2_intro C T (\lambda (e2: 
+C).(\lambda (u3: T).(getl (S n) (CHead c3 (Flat f) u2) (CHead e2 k0 u3)))) 
+(\lambda (e2: C).(\lambda (_: T).(wcpr0 e1 e2))) (\lambda (_: C).(\lambda 
+(u3: T).(pr0 u0 u3))) x0 x1 (getl_head (Flat f) n c3 (CHead x0 k0 x1) H6 u2) 
+H7 H8)))))) H5))))))))) k) h)))))))))) c1 c2 H))).
 
 theorem wcpr0_getl_back:
  \forall (c1: C).(\forall (c2: C).((wcpr0 c2 c1) \to (\forall (h: 
@@ -379,92 +378,91 @@ k0 u3)) \to (ex3_2 C T (\lambda (e2: C).(\lambda (u4: T).(getl n (CHead c0 k
 u1) (CHead e2 k0 u4)))) (\lambda (e2: C).(\lambda (_: T).(wcpr0 e2 e1))) 
 (\lambda (_: C).(\lambda (u4: T).(pr0 u4 u3))))))))) (\lambda (e1: 
 C).(\lambda (u0: T).(\lambda (k0: K).(\lambda (H3: (getl O (CHead c3 k u2) 
-(CHead e1 k0 u0))).((match k in K return (\lambda (k1: K).((clear (CHead c3 
-k1 u2) (CHead e1 k0 u0)) \to (ex3_2 C T (\lambda (e2: C).(\lambda (u3: 
-T).(getl O (CHead c0 k1 u1) (CHead e2 k0 u3)))) (\lambda (e2: C).(\lambda (_: 
-T).(wcpr0 e2 e1))) (\lambda (_: C).(\lambda (u3: T).(pr0 u3 u0)))))) with 
-[(Bind b) \Rightarrow (\lambda (H4: (clear (CHead c3 (Bind b) u2) (CHead e1 
-k0 u0))).(let H5 \def (f_equal C C (\lambda (e: C).(match e in C return 
-(\lambda (_: C).C) with [(CSort _) \Rightarrow e1 | (CHead c _ _) \Rightarrow 
-c])) (CHead e1 k0 u0) (CHead c3 (Bind b) u2) (clear_gen_bind b c3 (CHead e1 
-k0 u0) u2 H4)) in ((let H6 \def (f_equal C K (\lambda (e: C).(match e in C 
-return (\lambda (_: C).K) with [(CSort _) \Rightarrow k0 | (CHead _ k1 _) 
-\Rightarrow k1])) (CHead e1 k0 u0) (CHead c3 (Bind b) u2) (clear_gen_bind b 
-c3 (CHead e1 k0 u0) u2 H4)) in ((let H7 \def (f_equal C T (\lambda (e: 
-C).(match e in C return (\lambda (_: C).T) with [(CSort _) \Rightarrow u0 | 
-(CHead _ _ t) \Rightarrow t])) (CHead e1 k0 u0) (CHead c3 (Bind b) u2) 
-(clear_gen_bind b c3 (CHead e1 k0 u0) u2 H4)) in (\lambda (H8: (eq K k0 (Bind 
-b))).(\lambda (H9: (eq C e1 c3)).(eq_ind_r K (Bind b) (\lambda (k1: K).(ex3_2 
-C T (\lambda (e2: C).(\lambda (u3: T).(getl O (CHead c0 (Bind b) u1) (CHead 
-e2 k1 u3)))) (\lambda (e2: C).(\lambda (_: T).(wcpr0 e2 e1))) (\lambda (_: 
-C).(\lambda (u3: T).(pr0 u3 u0))))) (eq_ind_r T u2 (\lambda (t: T).(ex3_2 C T 
-(\lambda (e2: C).(\lambda (u3: T).(getl O (CHead c0 (Bind b) u1) (CHead e2 
-(Bind b) u3)))) (\lambda (e2: C).(\lambda (_: T).(wcpr0 e2 e1))) (\lambda (_: 
-C).(\lambda (u3: T).(pr0 u3 t))))) (eq_ind_r C c3 (\lambda (c: C).(ex3_2 C T 
-(\lambda (e2: C).(\lambda (u3: T).(getl O (CHead c0 (Bind b) u1) (CHead e2 
-(Bind b) u3)))) (\lambda (e2: C).(\lambda (_: T).(wcpr0 e2 c))) (\lambda (_: 
-C).(\lambda (u3: T).(pr0 u3 u2))))) (ex3_2_intro C T (\lambda (e2: 
-C).(\lambda (u3: T).(getl O (CHead c0 (Bind b) u1) (CHead e2 (Bind b) u3)))) 
-(\lambda (e2: C).(\lambda (_: T).(wcpr0 e2 c3))) (\lambda (_: C).(\lambda 
-(u3: T).(pr0 u3 u2))) c0 u1 (getl_refl b c0 u1) H0 H2) e1 H9) u0 H7) k0 
-H8)))) H6)) H5))) | (Flat f) \Rightarrow (\lambda (H4: (clear (CHead c3 (Flat 
-f) u2) (CHead e1 k0 u0))).(let H5 \def (H1 O e1 u0 k0 (getl_intro O c3 (CHead 
-e1 k0 u0) c3 (drop_refl c3) (clear_gen_flat f c3 (CHead e1 k0 u0) u2 H4))) in 
-(ex3_2_ind C T (\lambda (e2: C).(\lambda (u3: T).(getl O c0 (CHead e2 k0 
-u3)))) (\lambda (e2: C).(\lambda (_: T).(wcpr0 e2 e1))) (\lambda (_: 
-C).(\lambda (u3: T).(pr0 u3 u0))) (ex3_2 C T (\lambda (e2: C).(\lambda (u3: 
-T).(getl O (CHead c0 (Flat f) u1) (CHead e2 k0 u3)))) (\lambda (e2: 
+(CHead e1 k0 u0))).(K_ind (\lambda (k1: K).((clear (CHead c3 k1 u2) (CHead e1 
+k0 u0)) \to (ex3_2 C T (\lambda (e2: C).(\lambda (u3: T).(getl O (CHead c0 k1 
+u1) (CHead e2 k0 u3)))) (\lambda (e2: C).(\lambda (_: T).(wcpr0 e2 e1))) 
+(\lambda (_: C).(\lambda (u3: T).(pr0 u3 u0)))))) (\lambda (b: B).(\lambda 
+(H4: (clear (CHead c3 (Bind b) u2) (CHead e1 k0 u0))).(let H5 \def (f_equal C 
+C (\lambda (e: C).(match e in C return (\lambda (_: C).C) with [(CSort _) 
+\Rightarrow e1 | (CHead c _ _) \Rightarrow c])) (CHead e1 k0 u0) (CHead c3 
+(Bind b) u2) (clear_gen_bind b c3 (CHead e1 k0 u0) u2 H4)) in ((let H6 \def 
+(f_equal C K (\lambda (e: C).(match e in C return (\lambda (_: C).K) with 
+[(CSort _) \Rightarrow k0 | (CHead _ k1 _) \Rightarrow k1])) (CHead e1 k0 u0) 
+(CHead c3 (Bind b) u2) (clear_gen_bind b c3 (CHead e1 k0 u0) u2 H4)) in ((let 
+H7 \def (f_equal C T (\lambda (e: C).(match e in C return (\lambda (_: C).T) 
+with [(CSort _) \Rightarrow u0 | (CHead _ _ t) \Rightarrow t])) (CHead e1 k0 
+u0) (CHead c3 (Bind b) u2) (clear_gen_bind b c3 (CHead e1 k0 u0) u2 H4)) in 
+(\lambda (H8: (eq K k0 (Bind b))).(\lambda (H9: (eq C e1 c3)).(eq_ind_r K 
+(Bind b) (\lambda (k1: K).(ex3_2 C T (\lambda (e2: C).(\lambda (u3: T).(getl 
+O (CHead c0 (Bind b) u1) (CHead e2 k1 u3)))) (\lambda (e2: C).(\lambda (_: 
+T).(wcpr0 e2 e1))) (\lambda (_: C).(\lambda (u3: T).(pr0 u3 u0))))) (eq_ind_r 
+T u2 (\lambda (t: T).(ex3_2 C T (\lambda (e2: C).(\lambda (u3: T).(getl O 
+(CHead c0 (Bind b) u1) (CHead e2 (Bind b) u3)))) (\lambda (e2: C).(\lambda 
+(_: T).(wcpr0 e2 e1))) (\lambda (_: C).(\lambda (u3: T).(pr0 u3 t))))) 
+(eq_ind_r C c3 (\lambda (c: C).(ex3_2 C T (\lambda (e2: C).(\lambda (u3: 
+T).(getl O (CHead c0 (Bind b) u1) (CHead e2 (Bind b) u3)))) (\lambda (e2: 
+C).(\lambda (_: T).(wcpr0 e2 c))) (\lambda (_: C).(\lambda (u3: T).(pr0 u3 
+u2))))) (ex3_2_intro C T (\lambda (e2: C).(\lambda (u3: T).(getl O (CHead c0 
+(Bind b) u1) (CHead e2 (Bind b) u3)))) (\lambda (e2: C).(\lambda (_: 
+T).(wcpr0 e2 c3))) (\lambda (_: C).(\lambda (u3: T).(pr0 u3 u2))) c0 u1 
+(getl_refl b c0 u1) H0 H2) e1 H9) u0 H7) k0 H8)))) H6)) H5)))) (\lambda (f: 
+F).(\lambda (H4: (clear (CHead c3 (Flat f) u2) (CHead e1 k0 u0))).(let H5 
+\def (H1 O e1 u0 k0 (getl_intro O c3 (CHead e1 k0 u0) c3 (drop_refl c3) 
+(clear_gen_flat f c3 (CHead e1 k0 u0) u2 H4))) in (ex3_2_ind C T (\lambda 
+(e2: C).(\lambda (u3: T).(getl O c0 (CHead e2 k0 u3)))) (\lambda (e2: 
 C).(\lambda (_: T).(wcpr0 e2 e1))) (\lambda (_: C).(\lambda (u3: T).(pr0 u3 
-u0)))) (\lambda (x0: C).(\lambda (x1: T).(\lambda (H6: (getl O c0 (CHead x0 
-k0 x1))).(\lambda (H7: (wcpr0 x0 e1)).(\lambda (H8: (pr0 x1 u0)).(ex3_2_intro 
-C T (\lambda (e2: C).(\lambda (u3: T).(getl O (CHead c0 (Flat f) u1) (CHead 
-e2 k0 u3)))) (\lambda (e2: C).(\lambda (_: T).(wcpr0 e2 e1))) (\lambda (_: 
-C).(\lambda (u3: T).(pr0 u3 u0))) x0 x1 (getl_flat c0 (CHead x0 k0 x1) O H6 f 
-u1) H7 H8)))))) H5)))]) (getl_gen_O (CHead c3 k u2) (CHead e1 k0 u0) H3)))))) 
-(K_ind (\lambda (k0: K).(\forall (n: nat).(((\forall (e1: C).(\forall (u3: 
-T).(\forall (k1: K).((getl n (CHead c3 k0 u2) (CHead e1 k1 u3)) \to (ex3_2 C 
-T (\lambda (e2: C).(\lambda (u4: T).(getl n (CHead c0 k0 u1) (CHead e2 k1 
-u4)))) (\lambda (e2: C).(\lambda (_: T).(wcpr0 e2 e1))) (\lambda (_: 
-C).(\lambda (u4: T).(pr0 u4 u3))))))))) \to (\forall (e1: C).(\forall (u3: 
-T).(\forall (k1: K).((getl (S n) (CHead c3 k0 u2) (CHead e1 k1 u3)) \to 
-(ex3_2 C T (\lambda (e2: C).(\lambda (u4: T).(getl (S n) (CHead c0 k0 u1) 
-(CHead e2 k1 u4)))) (\lambda (e2: C).(\lambda (_: T).(wcpr0 e2 e1))) (\lambda 
-(_: C).(\lambda (u4: T).(pr0 u4 u3))))))))))) (\lambda (b: B).(\lambda (n: 
-nat).(\lambda (_: ((\forall (e1: C).(\forall (u3: T).(\forall (k0: K).((getl 
-n (CHead c3 (Bind b) u2) (CHead e1 k0 u3)) \to (ex3_2 C T (\lambda (e2: 
-C).(\lambda (u4: T).(getl n (CHead c0 (Bind b) u1) (CHead e2 k0 u4)))) 
+u0))) (ex3_2 C T (\lambda (e2: C).(\lambda (u3: T).(getl O (CHead c0 (Flat f) 
+u1) (CHead e2 k0 u3)))) (\lambda (e2: C).(\lambda (_: T).(wcpr0 e2 e1))) 
+(\lambda (_: C).(\lambda (u3: T).(pr0 u3 u0)))) (\lambda (x0: C).(\lambda 
+(x1: T).(\lambda (H6: (getl O c0 (CHead x0 k0 x1))).(\lambda (H7: (wcpr0 x0 
+e1)).(\lambda (H8: (pr0 x1 u0)).(ex3_2_intro C T (\lambda (e2: C).(\lambda 
+(u3: T).(getl O (CHead c0 (Flat f) u1) (CHead e2 k0 u3)))) (\lambda (e2: 
+C).(\lambda (_: T).(wcpr0 e2 e1))) (\lambda (_: C).(\lambda (u3: T).(pr0 u3 
+u0))) x0 x1 (getl_flat c0 (CHead x0 k0 x1) O H6 f u1) H7 H8)))))) H5)))) k 
+(getl_gen_O (CHead c3 k u2) (CHead e1 k0 u0) H3)))))) (K_ind (\lambda (k0: 
+K).(\forall (n: nat).(((\forall (e1: C).(\forall (u3: T).(\forall (k1: 
+K).((getl n (CHead c3 k0 u2) (CHead e1 k1 u3)) \to (ex3_2 C T (\lambda (e2: 
+C).(\lambda (u4: T).(getl n (CHead c0 k0 u1) (CHead e2 k1 u4)))) (\lambda 
+(e2: C).(\lambda (_: T).(wcpr0 e2 e1))) (\lambda (_: C).(\lambda (u4: T).(pr0 
+u4 u3))))))))) \to (\forall (e1: C).(\forall (u3: T).(\forall (k1: K).((getl 
+(S n) (CHead c3 k0 u2) (CHead e1 k1 u3)) \to (ex3_2 C T (\lambda (e2: 
+C).(\lambda (u4: T).(getl (S n) (CHead c0 k0 u1) (CHead e2 k1 u4)))) (\lambda 
+(e2: C).(\lambda (_: T).(wcpr0 e2 e1))) (\lambda (_: C).(\lambda (u4: T).(pr0 
+u4 u3))))))))))) (\lambda (b: B).(\lambda (n: nat).(\lambda (_: ((\forall 
+(e1: C).(\forall (u3: T).(\forall (k0: K).((getl n (CHead c3 (Bind b) u2) 
+(CHead e1 k0 u3)) \to (ex3_2 C T (\lambda (e2: C).(\lambda (u4: T).(getl n 
+(CHead c0 (Bind b) u1) (CHead e2 k0 u4)))) (\lambda (e2: C).(\lambda (_: 
+T).(wcpr0 e2 e1))) (\lambda (_: C).(\lambda (u4: T).(pr0 u4 
+u3)))))))))).(\lambda (e1: C).(\lambda (u0: T).(\lambda (k0: K).(\lambda (H4: 
+(getl (S n) (CHead c3 (Bind b) u2) (CHead e1 k0 u0))).(let H5 \def (H1 n e1 
+u0 k0 (getl_gen_S (Bind b) c3 (CHead e1 k0 u0) u2 n H4)) in (ex3_2_ind C T 
+(\lambda (e2: C).(\lambda (u3: T).(getl n c0 (CHead e2 k0 u3)))) (\lambda 
+(e2: C).(\lambda (_: T).(wcpr0 e2 e1))) (\lambda (_: C).(\lambda (u3: T).(pr0 
+u3 u0))) (ex3_2 C T (\lambda (e2: C).(\lambda (u3: T).(getl (S n) (CHead c0 
+(Bind b) u1) (CHead e2 k0 u3)))) (\lambda (e2: C).(\lambda (_: T).(wcpr0 e2 
+e1))) (\lambda (_: C).(\lambda (u3: T).(pr0 u3 u0)))) (\lambda (x0: 
+C).(\lambda (x1: T).(\lambda (H6: (getl n c0 (CHead x0 k0 x1))).(\lambda (H7: 
+(wcpr0 x0 e1)).(\lambda (H8: (pr0 x1 u0)).(ex3_2_intro C T (\lambda (e2: 
+C).(\lambda (u3: T).(getl (S n) (CHead c0 (Bind b) u1) (CHead e2 k0 u3)))) 
 (\lambda (e2: C).(\lambda (_: T).(wcpr0 e2 e1))) (\lambda (_: C).(\lambda 
-(u4: T).(pr0 u4 u3)))))))))).(\lambda (e1: C).(\lambda (u0: T).(\lambda (k0: 
-K).(\lambda (H4: (getl (S n) (CHead c3 (Bind b) u2) (CHead e1 k0 u0))).(let 
-H5 \def (H1 n e1 u0 k0 (getl_gen_S (Bind b) c3 (CHead e1 k0 u0) u2 n H4)) in 
-(ex3_2_ind C T (\lambda (e2: C).(\lambda (u3: T).(getl n c0 (CHead e2 k0 
-u3)))) (\lambda (e2: C).(\lambda (_: T).(wcpr0 e2 e1))) (\lambda (_: 
-C).(\lambda (u3: T).(pr0 u3 u0))) (ex3_2 C T (\lambda (e2: C).(\lambda (u3: 
-T).(getl (S n) (CHead c0 (Bind b) u1) (CHead e2 k0 u3)))) (\lambda (e2: 
-C).(\lambda (_: T).(wcpr0 e2 e1))) (\lambda (_: C).(\lambda (u3: T).(pr0 u3 
-u0)))) (\lambda (x0: C).(\lambda (x1: T).(\lambda (H6: (getl n c0 (CHead x0 
-k0 x1))).(\lambda (H7: (wcpr0 x0 e1)).(\lambda (H8: (pr0 x1 u0)).(ex3_2_intro 
-C T (\lambda (e2: C).(\lambda (u3: T).(getl (S n) (CHead c0 (Bind b) u1) 
-(CHead e2 k0 u3)))) (\lambda (e2: C).(\lambda (_: T).(wcpr0 e2 e1))) (\lambda 
-(_: C).(\lambda (u3: T).(pr0 u3 u0))) x0 x1 (getl_head (Bind b) n c0 (CHead 
-x0 k0 x1) H6 u1) H7 H8)))))) H5))))))))) (\lambda (f: F).(\lambda (n: 
-nat).(\lambda (_: ((\forall (e1: C).(\forall (u3: T).(\forall (k0: K).((getl 
-n (CHead c3 (Flat f) u2) (CHead e1 k0 u3)) \to (ex3_2 C T (\lambda (e2: 
-C).(\lambda (u4: T).(getl n (CHead c0 (Flat f) u1) (CHead e2 k0 u4)))) 
-(\lambda (e2: C).(\lambda (_: T).(wcpr0 e2 e1))) (\lambda (_: C).(\lambda 
-(u4: T).(pr0 u4 u3)))))))))).(\lambda (e1: C).(\lambda (u0: T).(\lambda (k0: 
-K).(\lambda (H4: (getl (S n) (CHead c3 (Flat f) u2) (CHead e1 k0 u0))).(let 
-H5 \def (H1 (S n) e1 u0 k0 (getl_gen_S (Flat f) c3 (CHead e1 k0 u0) u2 n H4)) 
-in (ex3_2_ind C T (\lambda (e2: C).(\lambda (u3: T).(getl (S n) c0 (CHead e2 
-k0 u3)))) (\lambda (e2: C).(\lambda (_: T).(wcpr0 e2 e1))) (\lambda (_: 
-C).(\lambda (u3: T).(pr0 u3 u0))) (ex3_2 C T (\lambda (e2: C).(\lambda (u3: 
-T).(getl (S n) (CHead c0 (Flat f) u1) (CHead e2 k0 u3)))) (\lambda (e2: 
-C).(\lambda (_: T).(wcpr0 e2 e1))) (\lambda (_: C).(\lambda (u3: T).(pr0 u3 
-u0)))) (\lambda (x0: C).(\lambda (x1: T).(\lambda (H6: (getl (S n) c0 (CHead 
-x0 k0 x1))).(\lambda (H7: (wcpr0 x0 e1)).(\lambda (H8: (pr0 x1 
-u0)).(ex3_2_intro C T (\lambda (e2: C).(\lambda (u3: T).(getl (S n) (CHead c0 
+(u3: T).(pr0 u3 u0))) x0 x1 (getl_head (Bind b) n c0 (CHead x0 k0 x1) H6 u1) 
+H7 H8)))))) H5))))))))) (\lambda (f: F).(\lambda (n: nat).(\lambda (_: 
+((\forall (e1: C).(\forall (u3: T).(\forall (k0: K).((getl n (CHead c3 (Flat 
+f) u2) (CHead e1 k0 u3)) \to (ex3_2 C T (\lambda (e2: C).(\lambda (u4: 
+T).(getl n (CHead c0 (Flat f) u1) (CHead e2 k0 u4)))) (\lambda (e2: 
+C).(\lambda (_: T).(wcpr0 e2 e1))) (\lambda (_: C).(\lambda (u4: T).(pr0 u4 
+u3)))))))))).(\lambda (e1: C).(\lambda (u0: T).(\lambda (k0: K).(\lambda (H4: 
+(getl (S n) (CHead c3 (Flat f) u2) (CHead e1 k0 u0))).(let H5 \def (H1 (S n) 
+e1 u0 k0 (getl_gen_S (Flat f) c3 (CHead e1 k0 u0) u2 n H4)) in (ex3_2_ind C T 
+(\lambda (e2: C).(\lambda (u3: T).(getl (S n) c0 (CHead e2 k0 u3)))) (\lambda 
+(e2: C).(\lambda (_: T).(wcpr0 e2 e1))) (\lambda (_: C).(\lambda (u3: T).(pr0 
+u3 u0))) (ex3_2 C T (\lambda (e2: C).(\lambda (u3: T).(getl (S n) (CHead c0 
 (Flat f) u1) (CHead e2 k0 u3)))) (\lambda (e2: C).(\lambda (_: T).(wcpr0 e2 
-e1))) (\lambda (_: C).(\lambda (u3: T).(pr0 u3 u0))) x0 x1 (getl_head (Flat 
-f) n c0 (CHead x0 k0 x1) H6 u1) H7 H8)))))) H5))))))))) k) h)))))))))) c2 c1 
-H))).
+e1))) (\lambda (_: C).(\lambda (u3: T).(pr0 u3 u0)))) (\lambda (x0: 
+C).(\lambda (x1: T).(\lambda (H6: (getl (S n) c0 (CHead x0 k0 x1))).(\lambda 
+(H7: (wcpr0 x0 e1)).(\lambda (H8: (pr0 x1 u0)).(ex3_2_intro C T (\lambda (e2: 
+C).(\lambda (u3: T).(getl (S n) (CHead c0 (Flat f) u1) (CHead e2 k0 u3)))) 
+(\lambda (e2: C).(\lambda (_: T).(wcpr0 e2 e1))) (\lambda (_: C).(\lambda 
+(u3: T).(pr0 u3 u0))) x0 x1 (getl_head (Flat f) n c0 (CHead x0 k0 x1) H6 u1) 
+H7 H8)))))) H5))))))))) k) h)))))))))) c2 c1 H))).
 

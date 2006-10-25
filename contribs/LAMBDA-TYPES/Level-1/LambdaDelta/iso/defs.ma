@@ -21,6 +21,6 @@ include "T/defs.ma".
 inductive iso: T \to (T \to Prop) \def
 | iso_sort: \forall (n1: nat).(\forall (n2: nat).(iso (TSort n1) (TSort n2)))
 | iso_lref: \forall (i1: nat).(\forall (i2: nat).(iso (TLRef i1) (TLRef i2)))
-| iso_head: \forall (k: K).(\forall (v1: T).(\forall (v2: T).(\forall (t1: 
-T).(\forall (t2: T).(iso (THead k v1 t1) (THead k v2 t2)))))).
+| iso_head: \forall (v1: T).(\forall (v2: T).(\forall (t1: T).(\forall (t2: 
+T).(\forall (k: K).(iso (THead k v1 t1) (THead k v2 t2)))))).
 

@@ -144,35 +144,35 @@ g O) (\lambda (m: nat).(wadd_le f g H2 O O (le_n O) m)) (eq_ind nat
 (weight_map (wadd f O) (lift (S (S i)) O v)) (lift_weight_add_O O v (S i) 
 f)))))))))))))))) b)) (\lambda (_: F).(\lambda (v: T).(\lambda (t2: 
 T).(\lambda (t1: T).(\lambda (i: nat).(\lambda (_: (subst0 i v t1 
-t2)).(\lambda (H1: ((\forall (f: ((nat \to nat))).(\forall (g: ((nat \to 
-nat))).(((\forall (m: nat).(le (f m) (g m)))) \to ((lt (weight_map f (lift (S 
-i) O v)) (g i)) \to (le (weight_map f t2) (weight_map g t1)))))))).(\lambda 
-(u0: T).(\lambda (f0: ((nat \to nat))).(\lambda (g: ((nat \to nat))).(\lambda 
-(H2: ((\forall (m: nat).(le (f0 m) (g m))))).(\lambda (H3: (lt (weight_map f0 
-(lift (S i) O v)) (g i))).(lt_le_S (plus (weight_map f0 u0) (weight_map f0 
-t2)) (S (plus (weight_map g u0) (weight_map g t1))) (le_lt_n_Sm (plus 
-(weight_map f0 u0) (weight_map f0 t2)) (plus (weight_map g u0) (weight_map g 
-t1)) (plus_le_compat (weight_map f0 u0) (weight_map g u0) (weight_map f0 t2) 
-(weight_map g t1) (weight_le u0 f0 g H2) (H1 f0 g H2 H3)))))))))))))))) k)) 
-(\lambda (v: T).(\lambda (u1: T).(\lambda (u2: T).(\lambda (i: nat).(\lambda 
-(_: (subst0 i v u1 u2)).(\lambda (H1: ((\forall (f: ((nat \to nat))).(\forall 
-(g: ((nat \to nat))).(((\forall (m: nat).(le (f m) (g m)))) \to ((lt 
-(weight_map f (lift (S i) O v)) (g i)) \to (le (weight_map f u2) (weight_map 
-g u1)))))))).(\lambda (k: K).(K_ind (\lambda (k0: K).(\forall (t1: 
-T).(\forall (t2: T).((subst0 (s k0 i) v t1 t2) \to (((\forall (f: ((nat \to 
-nat))).(\forall (g: ((nat \to nat))).(((\forall (m: nat).(le (f m) (g m)))) 
-\to ((lt (weight_map f (lift (S (s k0 i)) O v)) (g (s k0 i))) \to (le 
-(weight_map f t2) (weight_map g t1))))))) \to (\forall (f: ((nat \to 
-nat))).(\forall (g: ((nat \to nat))).(((\forall (m: nat).(le (f m) (g m)))) 
-\to ((lt (weight_map f (lift (S i) O v)) (g i)) \to (le (weight_map f (THead 
-k0 u2 t2)) (weight_map g (THead k0 u1 t1)))))))))))) (\lambda (b: B).(B_ind 
-(\lambda (b0: B).(\forall (t1: T).(\forall (t2: T).((subst0 (s (Bind b0) i) v 
-t1 t2) \to (((\forall (f: ((nat \to nat))).(\forall (g: ((nat \to 
-nat))).(((\forall (m: nat).(le (f m) (g m)))) \to ((lt (weight_map f (lift (S 
-(s (Bind b0) i)) O v)) (g (s (Bind b0) i))) \to (le (weight_map f t2) 
-(weight_map g t1))))))) \to (\forall (f: ((nat \to nat))).(\forall (g: ((nat 
+t2)).(\lambda (H1: ((\forall (f0: ((nat \to nat))).(\forall (g: ((nat \to 
+nat))).(((\forall (m: nat).(le (f0 m) (g m)))) \to ((lt (weight_map f0 (lift 
+(S i) O v)) (g i)) \to (le (weight_map f0 t2) (weight_map g 
+t1)))))))).(\lambda (u0: T).(\lambda (f0: ((nat \to nat))).(\lambda (g: ((nat 
+\to nat))).(\lambda (H2: ((\forall (m: nat).(le (f0 m) (g m))))).(\lambda 
+(H3: (lt (weight_map f0 (lift (S i) O v)) (g i))).(lt_le_S (plus (weight_map 
+f0 u0) (weight_map f0 t2)) (S (plus (weight_map g u0) (weight_map g t1))) 
+(le_lt_n_Sm (plus (weight_map f0 u0) (weight_map f0 t2)) (plus (weight_map g 
+u0) (weight_map g t1)) (plus_le_compat (weight_map f0 u0) (weight_map g u0) 
+(weight_map f0 t2) (weight_map g t1) (weight_le u0 f0 g H2) (H1 f0 g H2 
+H3)))))))))))))))) k)) (\lambda (v: T).(\lambda (u1: T).(\lambda (u2: 
+T).(\lambda (i: nat).(\lambda (_: (subst0 i v u1 u2)).(\lambda (H1: ((\forall 
+(f: ((nat \to nat))).(\forall (g: ((nat \to nat))).(((\forall (m: nat).(le (f 
+m) (g m)))) \to ((lt (weight_map f (lift (S i) O v)) (g i)) \to (le 
+(weight_map f u2) (weight_map g u1)))))))).(\lambda (k: K).(K_ind (\lambda 
+(k0: K).(\forall (t1: T).(\forall (t2: T).((subst0 (s k0 i) v t1 t2) \to 
+(((\forall (f: ((nat \to nat))).(\forall (g: ((nat \to nat))).(((\forall (m: 
+nat).(le (f m) (g m)))) \to ((lt (weight_map f (lift (S (s k0 i)) O v)) (g (s 
+k0 i))) \to (le (weight_map f t2) (weight_map g t1))))))) \to (\forall (f: 
+((nat \to nat))).(\forall (g: ((nat \to nat))).(((\forall (m: nat).(le (f m) 
+(g m)))) \to ((lt (weight_map f (lift (S i) O v)) (g i)) \to (le (weight_map 
+f (THead k0 u2 t2)) (weight_map g (THead k0 u1 t1)))))))))))) (\lambda (b: 
+B).(B_ind (\lambda (b0: B).(\forall (t1: T).(\forall (t2: T).((subst0 (s 
+(Bind b0) i) v t1 t2) \to (((\forall (f: ((nat \to nat))).(\forall (g: ((nat 
 \to nat))).(((\forall (m: nat).(le (f m) (g m)))) \to ((lt (weight_map f 
-(lift (S i) O v)) (g i)) \to (le (weight_map f (THead (Bind b0) u2 t2)) 
+(lift (S (s (Bind b0) i)) O v)) (g (s (Bind b0) i))) \to (le (weight_map f 
+t2) (weight_map g t1))))))) \to (\forall (f: ((nat \to nat))).(\forall (g: 
+((nat \to nat))).(((\forall (m: nat).(le (f m) (g m)))) \to ((lt (weight_map 
+f (lift (S i) O v)) (g i)) \to (le (weight_map f (THead (Bind b0) u2 t2)) 
 (weight_map g (THead (Bind b0) u1 t1)))))))))))) (\lambda (t1: T).(\lambda 
 (t2: T).(\lambda (_: (subst0 (S i) v t1 t2)).(\lambda (H3: ((\forall (f: 
 ((nat \to nat))).(\forall (g: ((nat \to nat))).(((\forall (m: nat).(le (f m) 
@@ -218,9 +218,9 @@ O (le_n O) m)) (eq_ind nat (weight_map f (lift (S i) O v)) (\lambda (n:
 nat).(lt n (g i))) H5 (weight_map (wadd f O) (lift (S (S i)) O v)) 
 (lift_weight_add_O O v (S i) f))))))))))))) b)) (\lambda (_: F).(\lambda (t1: 
 T).(\lambda (t2: T).(\lambda (_: (subst0 i v t1 t2)).(\lambda (H3: ((\forall 
-(f: ((nat \to nat))).(\forall (g: ((nat \to nat))).(((\forall (m: nat).(le (f 
-m) (g m)))) \to ((lt (weight_map f (lift (S i) O v)) (g i)) \to (le 
-(weight_map f t2) (weight_map g t1)))))))).(\lambda (f0: ((nat \to 
+(f0: ((nat \to nat))).(\forall (g: ((nat \to nat))).(((\forall (m: nat).(le 
+(f0 m) (g m)))) \to ((lt (weight_map f0 (lift (S i) O v)) (g i)) \to (le 
+(weight_map f0 t2) (weight_map g t1)))))))).(\lambda (f0: ((nat \to 
 nat))).(\lambda (g: ((nat \to nat))).(\lambda (H4: ((\forall (m: nat).(le (f0 
 m) (g m))))).(\lambda (H5: (lt (weight_map f0 (lift (S i) O v)) (g 
 i))).(lt_le_S (plus (weight_map f0 u2) (weight_map f0 t2)) (S (plus 
@@ -351,54 +351,69 @@ f O) t2) (weight_map (wadd g O) t1) (weight_le u0 f g H2) (H1 (wadd f O)
 (weight_map (wadd f O) (lift (S (S i)) O v)) (lift_weight_add_O O v (S i) 
 f)))))))))))))))) b)) (\lambda (_: F).(\lambda (v: T).(\lambda (t2: 
 T).(\lambda (t1: T).(\lambda (i: nat).(\lambda (_: (subst0 i v t1 
-t2)).(\lambda (H1: ((\forall (f: ((nat \to nat))).(\forall (g: ((nat \to 
+t2)).(\lambda (H1: ((\forall (f0: ((nat \to nat))).(\forall (g: ((nat \to 
+nat))).(((\forall (m: nat).(le (f0 m) (g m)))) \to ((lt (weight_map f0 (lift 
+(S i) O v)) (g i)) \to (lt (weight_map f0 t2) (weight_map g 
+t1)))))))).(\lambda (u0: T).(\lambda (f0: ((nat \to nat))).(\lambda (g: ((nat 
+\to nat))).(\lambda (H2: ((\forall (m: nat).(le (f0 m) (g m))))).(\lambda 
+(H3: (lt (weight_map f0 (lift (S i) O v)) (g i))).(lt_n_S (plus (weight_map 
+f0 u0) (weight_map f0 t2)) (plus (weight_map g u0) (weight_map g t1)) 
+(plus_le_lt_compat (weight_map f0 u0) (weight_map g u0) (weight_map f0 t2) 
+(weight_map g t1) (weight_le u0 f0 g H2) (H1 f0 g H2 H3))))))))))))))) k)) 
+(\lambda (v: T).(\lambda (u1: T).(\lambda (u2: T).(\lambda (i: nat).(\lambda 
+(_: (subst0 i v u1 u2)).(\lambda (H1: ((\forall (f: ((nat \to nat))).(\forall 
+(g: ((nat \to nat))).(((\forall (m: nat).(le (f m) (g m)))) \to ((lt 
+(weight_map f (lift (S i) O v)) (g i)) \to (lt (weight_map f u2) (weight_map 
+g u1)))))))).(\lambda (k: K).(K_ind (\lambda (k0: K).(\forall (t1: 
+T).(\forall (t2: T).((subst0 (s k0 i) v t1 t2) \to (((\forall (f: ((nat \to 
+nat))).(\forall (g: ((nat \to nat))).(((\forall (m: nat).(le (f m) (g m)))) 
+\to ((lt (weight_map f (lift (S (s k0 i)) O v)) (g (s k0 i))) \to (lt 
+(weight_map f t2) (weight_map g t1))))))) \to (\forall (f: ((nat \to 
+nat))).(\forall (g: ((nat \to nat))).(((\forall (m: nat).(le (f m) (g m)))) 
+\to ((lt (weight_map f (lift (S i) O v)) (g i)) \to (lt (weight_map f (THead 
+k0 u2 t2)) (weight_map g (THead k0 u1 t1)))))))))))) (\lambda (b: B).(B_ind 
+(\lambda (b0: B).(\forall (t1: T).(\forall (t2: T).((subst0 (s (Bind b0) i) v 
+t1 t2) \to (((\forall (f: ((nat \to nat))).(\forall (g: ((nat \to 
 nat))).(((\forall (m: nat).(le (f m) (g m)))) \to ((lt (weight_map f (lift (S 
-i) O v)) (g i)) \to (lt (weight_map f t2) (weight_map g t1)))))))).(\lambda 
-(u0: T).(\lambda (f0: ((nat \to nat))).(\lambda (g: ((nat \to nat))).(\lambda 
-(H2: ((\forall (m: nat).(le (f0 m) (g m))))).(\lambda (H3: (lt (weight_map f0 
-(lift (S i) O v)) (g i))).(lt_n_S (plus (weight_map f0 u0) (weight_map f0 
-t2)) (plus (weight_map g u0) (weight_map g t1)) (plus_le_lt_compat 
-(weight_map f0 u0) (weight_map g u0) (weight_map f0 t2) (weight_map g t1) 
-(weight_le u0 f0 g H2) (H1 f0 g H2 H3))))))))))))))) k)) (\lambda (v: 
-T).(\lambda (u1: T).(\lambda (u2: T).(\lambda (i: nat).(\lambda (_: (subst0 i 
-v u1 u2)).(\lambda (H1: ((\forall (f: ((nat \to nat))).(\forall (g: ((nat \to 
-nat))).(((\forall (m: nat).(le (f m) (g m)))) \to ((lt (weight_map f (lift (S 
-i) O v)) (g i)) \to (lt (weight_map f u2) (weight_map g u1)))))))).(\lambda 
-(k: K).(K_ind (\lambda (k0: K).(\forall (t1: T).(\forall (t2: T).((subst0 (s 
-k0 i) v t1 t2) \to (((\forall (f: ((nat \to nat))).(\forall (g: ((nat \to 
-nat))).(((\forall (m: nat).(le (f m) (g m)))) \to ((lt (weight_map f (lift (S 
-(s k0 i)) O v)) (g (s k0 i))) \to (lt (weight_map f t2) (weight_map g 
-t1))))))) \to (\forall (f: ((nat \to nat))).(\forall (g: ((nat \to 
-nat))).(((\forall (m: nat).(le (f m) (g m)))) \to ((lt (weight_map f (lift (S 
-i) O v)) (g i)) \to (lt (weight_map f (THead k0 u2 t2)) (weight_map g (THead 
-k0 u1 t1)))))))))))) (\lambda (b: B).(B_ind (\lambda (b0: B).(\forall (t1: 
-T).(\forall (t2: T).((subst0 (s (Bind b0) i) v t1 t2) \to (((\forall (f: 
+(s (Bind b0) i)) O v)) (g (s (Bind b0) i))) \to (lt (weight_map f t2) 
+(weight_map g t1))))))) \to (\forall (f: ((nat \to nat))).(\forall (g: ((nat 
+\to nat))).(((\forall (m: nat).(le (f m) (g m)))) \to ((lt (weight_map f 
+(lift (S i) O v)) (g i)) \to (lt (weight_map f (THead (Bind b0) u2 t2)) 
+(weight_map g (THead (Bind b0) u1 t1)))))))))))) (\lambda (t1: T).(\lambda 
+(t2: T).(\lambda (H2: (subst0 (S i) v t1 t2)).(\lambda (_: ((\forall (f: 
 ((nat \to nat))).(\forall (g: ((nat \to nat))).(((\forall (m: nat).(le (f m) 
-(g m)))) \to ((lt (weight_map f (lift (S (s (Bind b0) i)) O v)) (g (s (Bind 
-b0) i))) \to (lt (weight_map f t2) (weight_map g t1))))))) \to (\forall (f: 
-((nat \to nat))).(\forall (g: ((nat \to nat))).(((\forall (m: nat).(le (f m) 
-(g m)))) \to ((lt (weight_map f (lift (S i) O v)) (g i)) \to (lt (weight_map 
-f (THead (Bind b0) u2 t2)) (weight_map g (THead (Bind b0) u1 t1)))))))))))) 
-(\lambda (t1: T).(\lambda (t2: T).(\lambda (H2: (subst0 (S i) v t1 
-t2)).(\lambda (_: ((\forall (f: ((nat \to nat))).(\forall (g: ((nat \to 
-nat))).(((\forall (m: nat).(le (f m) (g m)))) \to ((lt (weight_map f (lift (S 
-(S i)) O v)) (g (S i))) \to (lt (weight_map f t2) (weight_map g 
-t1)))))))).(\lambda (f: ((nat \to nat))).(\lambda (g: ((nat \to 
+(g m)))) \to ((lt (weight_map f (lift (S (S i)) O v)) (g (S i))) \to (lt 
+(weight_map f t2) (weight_map g t1)))))))).(\lambda (f: ((nat \to 
+nat))).(\lambda (g: ((nat \to nat))).(\lambda (H4: ((\forall (m: nat).(le (f 
+m) (g m))))).(\lambda (H5: (lt (weight_map f (lift (S i) O v)) (g 
+i))).(lt_n_S (plus (weight_map f u2) (weight_map (wadd f (S (weight_map f 
+u2))) t2)) (plus (weight_map g u1) (weight_map (wadd g (S (weight_map g u1))) 
+t1)) (plus_lt_le_compat (weight_map f u2) (weight_map g u1) (weight_map (wadd 
+f (S (weight_map f u2))) t2) (weight_map (wadd g (S (weight_map g u1))) t1) 
+(H1 f g H4 H5) (subst0_weight_le v t1 t2 (S i) H2 (wadd f (S (weight_map f 
+u2))) (wadd g (S (weight_map g u1))) (\lambda (m: nat).(wadd_le f g H4 (S 
+(weight_map f u2)) (S (weight_map g u1)) (le_S (S (weight_map f u2)) 
+(weight_map g u1) (lt_le_S (weight_map f u2) (weight_map g u1) (H1 f g H4 
+H5))) m)) (lt_le_S (weight_map (wadd f (S (weight_map f u2))) (lift (S (S i)) 
+O v)) (wadd g (S (weight_map g u1)) (S i)) (eq_ind nat (weight_map f (lift (S 
+i) O v)) (\lambda (n: nat).(lt n (g i))) H5 (weight_map (wadd f (S 
+(weight_map f u2))) (lift (S (S i)) O v)) (lift_weight_add_O (S (weight_map f 
+u2)) v (S i) f)))))))))))))) (\lambda (t1: T).(\lambda (t2: T).(\lambda (_: 
+(subst0 (S i) v t1 t2)).(\lambda (H3: ((\forall (f: ((nat \to nat))).(\forall 
+(g: ((nat \to nat))).(((\forall (m: nat).(le (f m) (g m)))) \to ((lt 
+(weight_map f (lift (S (S i)) O v)) (g (S i))) \to (lt (weight_map f t2) 
+(weight_map g t1)))))))).(\lambda (f: ((nat \to nat))).(\lambda (g: ((nat \to 
 nat))).(\lambda (H4: ((\forall (m: nat).(le (f m) (g m))))).(\lambda (H5: (lt 
 (weight_map f (lift (S i) O v)) (g i))).(lt_n_S (plus (weight_map f u2) 
-(weight_map (wadd f (S (weight_map f u2))) t2)) (plus (weight_map g u1) 
-(weight_map (wadd g (S (weight_map g u1))) t1)) (plus_lt_le_compat 
-(weight_map f u2) (weight_map g u1) (weight_map (wadd f (S (weight_map f 
-u2))) t2) (weight_map (wadd g (S (weight_map g u1))) t1) (H1 f g H4 H5) 
-(subst0_weight_le v t1 t2 (S i) H2 (wadd f (S (weight_map f u2))) (wadd g (S 
-(weight_map g u1))) (\lambda (m: nat).(wadd_le f g H4 (S (weight_map f u2)) 
-(S (weight_map g u1)) (le_S (S (weight_map f u2)) (weight_map g u1) (lt_le_S 
-(weight_map f u2) (weight_map g u1) (H1 f g H4 H5))) m)) (lt_le_S (weight_map 
-(wadd f (S (weight_map f u2))) (lift (S (S i)) O v)) (wadd g (S (weight_map g 
-u1)) (S i)) (eq_ind nat (weight_map f (lift (S i) O v)) (\lambda (n: nat).(lt 
-n (g i))) H5 (weight_map (wadd f (S (weight_map f u2))) (lift (S (S i)) O v)) 
-(lift_weight_add_O (S (weight_map f u2)) v (S i) f)))))))))))))) (\lambda 
-(t1: T).(\lambda (t2: T).(\lambda (_: (subst0 (S i) v t1 t2)).(\lambda (H3: 
+(weight_map (wadd f O) t2)) (plus (weight_map g u1) (weight_map (wadd g O) 
+t1)) (plus_lt_compat (weight_map f u2) (weight_map g u1) (weight_map (wadd f 
+O) t2) (weight_map (wadd g O) t1) (H1 f g H4 H5) (H3 (wadd f O) (wadd g O) 
+(\lambda (m: nat).(le_S_n (wadd f O m) (wadd g O m) (le_n_S (wadd f O m) 
+(wadd g O m) (wadd_le f g H4 O O (le_n O) m)))) (lt_le_S (weight_map (wadd f 
+O) (lift (S (S i)) O v)) (wadd g O (S i)) (eq_ind nat (weight_map f (lift (S 
+i) O v)) (\lambda (n: nat).(lt n (g i))) H5 (weight_map (wadd f O) (lift (S 
+(S i)) O v)) (lift_weight_add_O O v (S i) f)))))))))))))) (\lambda (t1: 
+T).(\lambda (t2: T).(\lambda (_: (subst0 (S i) v t1 t2)).(\lambda (H3: 
 ((\forall (f: ((nat \to nat))).(\forall (g: ((nat \to nat))).(((\forall (m: 
 nat).(le (f m) (g m)))) \to ((lt (weight_map f (lift (S (S i)) O v)) (g (S 
 i))) \to (lt (weight_map f t2) (weight_map g t1)))))))).(\lambda (f: ((nat 
@@ -412,31 +427,17 @@ m) (wadd g O m) (le_n_S (wadd f O m) (wadd g O m) (wadd_le f g H4 O O (le_n
 O) m)))) (lt_le_S (weight_map (wadd f O) (lift (S (S i)) O v)) (wadd g O (S 
 i)) (eq_ind nat (weight_map f (lift (S i) O v)) (\lambda (n: nat).(lt n (g 
 i))) H5 (weight_map (wadd f O) (lift (S (S i)) O v)) (lift_weight_add_O O v 
-(S i) f)))))))))))))) (\lambda (t1: T).(\lambda (t2: T).(\lambda (_: (subst0 
-(S i) v t1 t2)).(\lambda (H3: ((\forall (f: ((nat \to nat))).(\forall (g: 
-((nat \to nat))).(((\forall (m: nat).(le (f m) (g m)))) \to ((lt (weight_map 
-f (lift (S (S i)) O v)) (g (S i))) \to (lt (weight_map f t2) (weight_map g 
-t1)))))))).(\lambda (f: ((nat \to nat))).(\lambda (g: ((nat \to 
-nat))).(\lambda (H4: ((\forall (m: nat).(le (f m) (g m))))).(\lambda (H5: (lt 
-(weight_map f (lift (S i) O v)) (g i))).(lt_n_S (plus (weight_map f u2) 
-(weight_map (wadd f O) t2)) (plus (weight_map g u1) (weight_map (wadd g O) 
-t1)) (plus_lt_compat (weight_map f u2) (weight_map g u1) (weight_map (wadd f 
-O) t2) (weight_map (wadd g O) t1) (H1 f g H4 H5) (H3 (wadd f O) (wadd g O) 
-(\lambda (m: nat).(le_S_n (wadd f O m) (wadd g O m) (le_n_S (wadd f O m) 
-(wadd g O m) (wadd_le f g H4 O O (le_n O) m)))) (lt_le_S (weight_map (wadd f 
-O) (lift (S (S i)) O v)) (wadd g O (S i)) (eq_ind nat (weight_map f (lift (S 
-i) O v)) (\lambda (n: nat).(lt n (g i))) H5 (weight_map (wadd f O) (lift (S 
-(S i)) O v)) (lift_weight_add_O O v (S i) f)))))))))))))) b)) (\lambda (_: 
-F).(\lambda (t1: T).(\lambda (t2: T).(\lambda (_: (subst0 i v t1 
-t2)).(\lambda (H3: ((\forall (f: ((nat \to nat))).(\forall (g: ((nat \to 
-nat))).(((\forall (m: nat).(le (f m) (g m)))) \to ((lt (weight_map f (lift (S 
-i) O v)) (g i)) \to (lt (weight_map f t2) (weight_map g t1)))))))).(\lambda 
-(f0: ((nat \to nat))).(\lambda (g: ((nat \to nat))).(\lambda (H4: ((\forall 
-(m: nat).(le (f0 m) (g m))))).(\lambda (H5: (lt (weight_map f0 (lift (S i) O 
-v)) (g i))).(lt_n_S (plus (weight_map f0 u2) (weight_map f0 t2)) (plus 
-(weight_map g u1) (weight_map g t1)) (plus_lt_compat (weight_map f0 u2) 
-(weight_map g u1) (weight_map f0 t2) (weight_map g t1) (H1 f0 g H4 H5) (H3 f0 
-g H4 H5)))))))))))) k)))))))) d u t z H))))).
+(S i) f)))))))))))))) b)) (\lambda (_: F).(\lambda (t1: T).(\lambda (t2: 
+T).(\lambda (_: (subst0 i v t1 t2)).(\lambda (H3: ((\forall (f0: ((nat \to 
+nat))).(\forall (g: ((nat \to nat))).(((\forall (m: nat).(le (f0 m) (g m)))) 
+\to ((lt (weight_map f0 (lift (S i) O v)) (g i)) \to (lt (weight_map f0 t2) 
+(weight_map g t1)))))))).(\lambda (f0: ((nat \to nat))).(\lambda (g: ((nat 
+\to nat))).(\lambda (H4: ((\forall (m: nat).(le (f0 m) (g m))))).(\lambda 
+(H5: (lt (weight_map f0 (lift (S i) O v)) (g i))).(lt_n_S (plus (weight_map 
+f0 u2) (weight_map f0 t2)) (plus (weight_map g u1) (weight_map g t1)) 
+(plus_lt_compat (weight_map f0 u2) (weight_map g u1) (weight_map f0 t2) 
+(weight_map g t1) (H1 f0 g H4 H5) (H3 f0 g H4 H5)))))))))))) k)))))))) d u t 
+z H))))).
 
 theorem subst0_tlt_head:
  \forall (u: T).(\forall (t: T).(\forall (z: T).((subst0 O u t z) \to (tlt 

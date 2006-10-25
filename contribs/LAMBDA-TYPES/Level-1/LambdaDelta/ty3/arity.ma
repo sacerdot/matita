@@ -103,43 +103,42 @@ x0)).(\lambda (H11: (arity g (CHead c0 (Bind b) u) t4 (asucc g x0))).(let H_x
 \def (leq_asucc g x) in (let H12 \def H_x in (ex_ind A (\lambda (a0: A).(leq 
 g x (asucc g a0))) (ex2 A (\lambda (a1: A).(arity g c0 (THead (Bind b) u t3) 
 a1)) (\lambda (a1: A).(arity g c0 (THead (Bind b) u t4) (asucc g a1)))) 
-(\lambda (x1: A).(\lambda (H13: (leq g x (asucc g x1))).((match b in B return 
-(\lambda (b0: B).((ty3 g (CHead c0 (Bind b0) u) t4 t0) \to ((ex2 A (\lambda 
-(a1: A).(arity g (CHead c0 (Bind b0) u) t4 a1)) (\lambda (a1: A).(arity g 
-(CHead c0 (Bind b0) u) t0 (asucc g a1)))) \to ((arity g (CHead c0 (Bind b0) 
-u) t3 x0) \to ((arity g (CHead c0 (Bind b0) u) t4 (asucc g x0)) \to (ex2 A 
-(\lambda (a1: A).(arity g c0 (THead (Bind b0) u t3) a1)) (\lambda (a1: 
-A).(arity g c0 (THead (Bind b0) u t4) (asucc g a1))))))))) with [Abbr 
-\Rightarrow (\lambda (_: (ty3 g (CHead c0 (Bind Abbr) u) t4 t0)).(\lambda (_: 
-(ex2 A (\lambda (a1: A).(arity g (CHead c0 (Bind Abbr) u) t4 a1)) (\lambda 
-(a1: A).(arity g (CHead c0 (Bind Abbr) u) t0 (asucc g a1))))).(\lambda (H16: 
-(arity g (CHead c0 (Bind Abbr) u) t3 x0)).(\lambda (H17: (arity g (CHead c0 
-(Bind Abbr) u) t4 (asucc g x0))).(ex_intro2 A (\lambda (a1: A).(arity g c0 
-(THead (Bind Abbr) u t3) a1)) (\lambda (a1: A).(arity g c0 (THead (Bind Abbr) 
-u t4) (asucc g a1))) x0 (arity_bind g Abbr not_abbr_abst c0 u x H7 t3 x0 H16) 
-(arity_bind g Abbr not_abbr_abst c0 u x H7 t4 (asucc g x0) H17)))))) | Abst 
-\Rightarrow (\lambda (_: (ty3 g (CHead c0 (Bind Abst) u) t4 t0)).(\lambda (_: 
-(ex2 A (\lambda (a1: A).(arity g (CHead c0 (Bind Abst) u) t4 a1)) (\lambda 
-(a1: A).(arity g (CHead c0 (Bind Abst) u) t0 (asucc g a1))))).(\lambda (H16: 
-(arity g (CHead c0 (Bind Abst) u) t3 x0)).(\lambda (H17: (arity g (CHead c0 
-(Bind Abst) u) t4 (asucc g x0))).(ex_intro2 A (\lambda (a1: A).(arity g c0 
-(THead (Bind Abst) u t3) a1)) (\lambda (a1: A).(arity g c0 (THead (Bind Abst) 
-u t4) (asucc g a1))) (AHead x1 x0) (arity_head g c0 u x1 (arity_repl g c0 u x 
-H7 (asucc g x1) H13) t3 x0 H16) (arity_repl g c0 (THead (Bind Abst) u t4) 
-(AHead x1 (asucc g x0)) (arity_head g c0 u x1 (arity_repl g c0 u x H7 (asucc 
-g x1) H13) t4 (asucc g x0) H17) (asucc g (AHead x1 x0)) (leq_refl g (asucc g 
-(AHead x1 x0))))))))) | Void \Rightarrow (\lambda (_: (ty3 g (CHead c0 (Bind 
-Void) u) t4 t0)).(\lambda (_: (ex2 A (\lambda (a1: A).(arity g (CHead c0 
-(Bind Void) u) t4 a1)) (\lambda (a1: A).(arity g (CHead c0 (Bind Void) u) t0 
-(asucc g a1))))).(\lambda (H16: (arity g (CHead c0 (Bind Void) u) t3 
-x0)).(\lambda (H17: (arity g (CHead c0 (Bind Void) u) t4 (asucc g 
-x0))).(ex_intro2 A (\lambda (a1: A).(arity g c0 (THead (Bind Void) u t3) a1)) 
-(\lambda (a1: A).(arity g c0 (THead (Bind Void) u t4) (asucc g a1))) x0 
-(arity_bind g Void not_void_abst c0 u x H7 t3 x0 H16) (arity_bind g Void 
-not_void_abst c0 u x H7 t4 (asucc g x0) H17))))))]) H4 H5 H10 H11))) 
-H12)))))) H9))))) H6))))))))))))))) (\lambda (c0: C).(\lambda (w: T).(\lambda 
-(u: T).(\lambda (_: (ty3 g c0 w u)).(\lambda (H1: (ex2 A (\lambda (a1: 
-A).(arity g c0 w a1)) (\lambda (a1: A).(arity g c0 u (asucc g 
+(\lambda (x1: A).(\lambda (H13: (leq g x (asucc g x1))).(B_ind (\lambda (b0: 
+B).((ty3 g (CHead c0 (Bind b0) u) t4 t0) \to ((ex2 A (\lambda (a1: A).(arity 
+g (CHead c0 (Bind b0) u) t4 a1)) (\lambda (a1: A).(arity g (CHead c0 (Bind 
+b0) u) t0 (asucc g a1)))) \to ((arity g (CHead c0 (Bind b0) u) t3 x0) \to 
+((arity g (CHead c0 (Bind b0) u) t4 (asucc g x0)) \to (ex2 A (\lambda (a1: 
+A).(arity g c0 (THead (Bind b0) u t3) a1)) (\lambda (a1: A).(arity g c0 
+(THead (Bind b0) u t4) (asucc g a1))))))))) (\lambda (_: (ty3 g (CHead c0 
+(Bind Abbr) u) t4 t0)).(\lambda (_: (ex2 A (\lambda (a1: A).(arity g (CHead 
+c0 (Bind Abbr) u) t4 a1)) (\lambda (a1: A).(arity g (CHead c0 (Bind Abbr) u) 
+t0 (asucc g a1))))).(\lambda (H16: (arity g (CHead c0 (Bind Abbr) u) t3 
+x0)).(\lambda (H17: (arity g (CHead c0 (Bind Abbr) u) t4 (asucc g 
+x0))).(ex_intro2 A (\lambda (a1: A).(arity g c0 (THead (Bind Abbr) u t3) a1)) 
+(\lambda (a1: A).(arity g c0 (THead (Bind Abbr) u t4) (asucc g a1))) x0 
+(arity_bind g Abbr not_abbr_abst c0 u x H7 t3 x0 H16) (arity_bind g Abbr 
+not_abbr_abst c0 u x H7 t4 (asucc g x0) H17)))))) (\lambda (_: (ty3 g (CHead 
+c0 (Bind Abst) u) t4 t0)).(\lambda (_: (ex2 A (\lambda (a1: A).(arity g 
+(CHead c0 (Bind Abst) u) t4 a1)) (\lambda (a1: A).(arity g (CHead c0 (Bind 
+Abst) u) t0 (asucc g a1))))).(\lambda (H16: (arity g (CHead c0 (Bind Abst) u) 
+t3 x0)).(\lambda (H17: (arity g (CHead c0 (Bind Abst) u) t4 (asucc g 
+x0))).(ex_intro2 A (\lambda (a1: A).(arity g c0 (THead (Bind Abst) u t3) a1)) 
+(\lambda (a1: A).(arity g c0 (THead (Bind Abst) u t4) (asucc g a1))) (AHead 
+x1 x0) (arity_head g c0 u x1 (arity_repl g c0 u x H7 (asucc g x1) H13) t3 x0 
+H16) (arity_repl g c0 (THead (Bind Abst) u t4) (AHead x1 (asucc g x0)) 
+(arity_head g c0 u x1 (arity_repl g c0 u x H7 (asucc g x1) H13) t4 (asucc g 
+x0) H17) (asucc g (AHead x1 x0)) (leq_refl g (asucc g (AHead x1 x0))))))))) 
+(\lambda (_: (ty3 g (CHead c0 (Bind Void) u) t4 t0)).(\lambda (_: (ex2 A 
+(\lambda (a1: A).(arity g (CHead c0 (Bind Void) u) t4 a1)) (\lambda (a1: 
+A).(arity g (CHead c0 (Bind Void) u) t0 (asucc g a1))))).(\lambda (H16: 
+(arity g (CHead c0 (Bind Void) u) t3 x0)).(\lambda (H17: (arity g (CHead c0 
+(Bind Void) u) t4 (asucc g x0))).(ex_intro2 A (\lambda (a1: A).(arity g c0 
+(THead (Bind Void) u t3) a1)) (\lambda (a1: A).(arity g c0 (THead (Bind Void) 
+u t4) (asucc g a1))) x0 (arity_bind g Void not_void_abst c0 u x H7 t3 x0 H16) 
+(arity_bind g Void not_void_abst c0 u x H7 t4 (asucc g x0) H17)))))) b H4 H5 
+H10 H11))) H12)))))) H9))))) H6))))))))))))))) (\lambda (c0: C).(\lambda (w: 
+T).(\lambda (u: T).(\lambda (_: (ty3 g c0 w u)).(\lambda (H1: (ex2 A (\lambda 
+(a1: A).(arity g c0 w a1)) (\lambda (a1: A).(arity g c0 u (asucc g 
 a1))))).(\lambda (v: T).(\lambda (t: T).(\lambda (_: (ty3 g c0 v (THead (Bind 
 Abst) u t))).(\lambda (H3: (ex2 A (\lambda (a1: A).(arity g c0 v a1)) 
 (\lambda (a1: A).(arity g c0 (THead (Bind Abst) u t) (asucc g a1))))).(let H4 

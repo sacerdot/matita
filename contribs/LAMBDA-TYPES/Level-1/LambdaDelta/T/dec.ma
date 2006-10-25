@@ -97,10 +97,10 @@ Prop).P)))) (or_introl (eq K (Bind b) (Bind b)) ((eq K (Bind b) (Bind b)) \to
 b b0) \to (\forall (P: Prop).P)))).(or_intror (eq K (Bind b) (Bind b0)) ((eq 
 K (Bind b) (Bind b0)) \to (\forall (P: Prop).P)) (\lambda (H1: (eq K (Bind b) 
 (Bind b0))).(\lambda (P: Prop).(let H2 \def (f_equal K B (\lambda (e: 
-K).(match e in K return (\lambda (_: K).B) with [(Bind b) \Rightarrow b | 
+K).(match e in K return (\lambda (_: K).B) with [(Bind b1) \Rightarrow b1 | 
 (Flat _) \Rightarrow b])) (Bind b) (Bind b0) H1) in (let H3 \def (eq_ind_r B 
-b0 (\lambda (b0: B).((eq B b b0) \to (\forall (P: Prop).P))) H0 b H2) in (H3 
-(refl_equal B b) P))))))) H)))) (\lambda (f: F).(or_intror (eq K (Bind b) 
+b0 (\lambda (b1: B).((eq B b b1) \to (\forall (P0: Prop).P0))) H0 b H2) in 
+(H3 (refl_equal B b) P))))))) H)))) (\lambda (f: F).(or_intror (eq K (Bind b) 
 (Flat f)) ((eq K (Bind b) (Flat f)) \to (\forall (P: Prop).P)) (\lambda (H: 
 (eq K (Bind b) (Flat f))).(\lambda (P: Prop).(let H0 \def (eq_ind K (Bind b) 
 (\lambda (ee: K).(match ee in K return (\lambda (_: K).Prop) with [(Bind _) 
@@ -122,9 +122,9 @@ f) (Flat f)) \to (\forall (P: Prop).P)) (refl_equal K (Flat f))) f0 H0))
 (Flat f) (Flat f0)) ((eq K (Flat f) (Flat f0)) \to (\forall (P: Prop).P)) 
 (\lambda (H1: (eq K (Flat f) (Flat f0))).(\lambda (P: Prop).(let H2 \def 
 (f_equal K F (\lambda (e: K).(match e in K return (\lambda (_: K).F) with 
-[(Bind _) \Rightarrow f | (Flat f) \Rightarrow f])) (Flat f) (Flat f0) H1) in 
-(let H3 \def (eq_ind_r F f0 (\lambda (f0: F).((eq F f f0) \to (\forall (P: 
-Prop).P))) H0 f H2) in (H3 (refl_equal F f) P))))))) H)))) k2))) k1).
+[(Bind _) \Rightarrow f | (Flat f1) \Rightarrow f1])) (Flat f) (Flat f0) H1) 
+in (let H3 \def (eq_ind_r F f0 (\lambda (f1: F).((eq F f f1) \to (\forall 
+(P0: Prop).P0))) H0 f H2) in (H3 (refl_equal F f) P))))))) H)))) k2))) k1).
 
 theorem term_dec:
  \forall (t1: T).(\forall (t2: T).(or (eq T t1 t2) ((eq T t1 t2) \to (\forall 
@@ -144,11 +144,11 @@ n) (TSort n)) \to (\forall (P: Prop).P)) (refl_equal T (TSort n))) n0 H0))
 (TSort n) (TSort n0)) ((eq T (TSort n) (TSort n0)) \to (\forall (P: Prop).P)) 
 (\lambda (H1: (eq T (TSort n) (TSort n0))).(\lambda (P: Prop).(let H2 \def 
 (f_equal T nat (\lambda (e: T).(match e in T return (\lambda (_: T).nat) with 
-[(TSort n) \Rightarrow n | (TLRef _) \Rightarrow n | (THead _ _ _) 
+[(TSort n1) \Rightarrow n1 | (TLRef _) \Rightarrow n | (THead _ _ _) 
 \Rightarrow n])) (TSort n) (TSort n0) H1) in (let H3 \def (eq_ind_r nat n0 
-(\lambda (n0: nat).((eq nat n n0) \to (\forall (P: Prop).P))) H0 n H2) in (H3 
-(refl_equal nat n) P))))))) H)))) (\lambda (n0: nat).(or_intror (eq T (TSort 
-n) (TLRef n0)) ((eq T (TSort n) (TLRef n0)) \to (\forall (P: Prop).P)) 
+(\lambda (n1: nat).((eq nat n n1) \to (\forall (P0: Prop).P0))) H0 n H2) in 
+(H3 (refl_equal nat n) P))))))) H)))) (\lambda (n0: nat).(or_intror (eq T 
+(TSort n) (TLRef n0)) ((eq T (TSort n) (TLRef n0)) \to (\forall (P: Prop).P)) 
 (\lambda (H: (eq T (TSort n) (TLRef n0))).(\lambda (P: Prop).(let H0 \def 
 (eq_ind T (TSort n) (\lambda (ee: T).(match ee in T return (\lambda (_: 
 T).Prop) with [(TSort _) \Rightarrow True | (TLRef _) \Rightarrow False | 
@@ -180,9 +180,9 @@ nat n n0) \to (\forall (P: Prop).P)))).(or_intror (eq T (TLRef n) (TLRef n0))
 ((eq T (TLRef n) (TLRef n0)) \to (\forall (P: Prop).P)) (\lambda (H1: (eq T 
 (TLRef n) (TLRef n0))).(\lambda (P: Prop).(let H2 \def (f_equal T nat 
 (\lambda (e: T).(match e in T return (\lambda (_: T).nat) with [(TSort _) 
-\Rightarrow n | (TLRef n) \Rightarrow n | (THead _ _ _) \Rightarrow n])) 
-(TLRef n) (TLRef n0) H1) in (let H3 \def (eq_ind_r nat n0 (\lambda (n0: 
-nat).((eq nat n n0) \to (\forall (P: Prop).P))) H0 n H2) in (H3 (refl_equal 
+\Rightarrow n | (TLRef n1) \Rightarrow n1 | (THead _ _ _) \Rightarrow n])) 
+(TLRef n) (TLRef n0) H1) in (let H3 \def (eq_ind_r nat n0 (\lambda (n1: 
+nat).((eq nat n n1) \to (\forall (P0: Prop).P0))) H0 n H2) in (H3 (refl_equal 
 nat n) P))))))) H)))) (\lambda (k: K).(\lambda (t: T).(\lambda (_: (or (eq T 
 (TLRef n) t) ((eq T (TLRef n) t) \to (\forall (P: Prop).P)))).(\lambda (t0: 
 T).(\lambda (_: (or (eq T (TLRef n) t0) ((eq T (TLRef n) t0) \to (\forall (P: 
@@ -215,15 +215,15 @@ T (THead k t t0) t4) \to (\forall (P: Prop).P)))).(let H_x \def (H t3) in
 (let H3 \def H_x in (or_ind (eq T t t3) ((eq T t t3) \to (\forall (P: 
 Prop).P)) (or (eq T (THead k t t0) (THead k0 t3 t4)) ((eq T (THead k t t0) 
 (THead k0 t3 t4)) \to (\forall (P: Prop).P))) (\lambda (H4: (eq T t t3)).(let 
-H5 \def (eq_ind_r T t3 (\lambda (t1: T).(or (eq T (THead k t t0) t1) ((eq T 
-(THead k t t0) t1) \to (\forall (P: Prop).P)))) H1 t H4) in (eq_ind T t 
+H5 \def (eq_ind_r T t3 (\lambda (t5: T).(or (eq T (THead k t t0) t5) ((eq T 
+(THead k t t0) t5) \to (\forall (P: Prop).P)))) H1 t H4) in (eq_ind T t 
 (\lambda (t5: T).(or (eq T (THead k t t0) (THead k0 t5 t4)) ((eq T (THead k t 
 t0) (THead k0 t5 t4)) \to (\forall (P: Prop).P)))) (let H_x0 \def (H0 t4) in 
 (let H6 \def H_x0 in (or_ind (eq T t0 t4) ((eq T t0 t4) \to (\forall (P: 
 Prop).P)) (or (eq T (THead k t t0) (THead k0 t t4)) ((eq T (THead k t t0) 
 (THead k0 t t4)) \to (\forall (P: Prop).P))) (\lambda (H7: (eq T t0 t4)).(let 
-H8 \def (eq_ind_r T t4 (\lambda (t1: T).(or (eq T (THead k t t0) t1) ((eq T 
-(THead k t t0) t1) \to (\forall (P: Prop).P)))) H2 t0 H7) in (eq_ind T t0 
+H8 \def (eq_ind_r T t4 (\lambda (t5: T).(or (eq T (THead k t t0) t5) ((eq T 
+(THead k t t0) t5) \to (\forall (P: Prop).P)))) H2 t0 H7) in (eq_ind T t0 
 (\lambda (t5: T).(or (eq T (THead k t t0) (THead k0 t t5)) ((eq T (THead k t 
 t0) (THead k0 t t5)) \to (\forall (P: Prop).P)))) (let H_x1 \def 
 (terms_props__kind_dec k k0) in (let H9 \def H_x1 in (or_ind (eq K k k0) ((eq 
@@ -238,41 +238,41 @@ k0 H10)) (\lambda (H10: (((eq K k k0) \to (\forall (P: Prop).P)))).(or_intror
 \to (\forall (P: Prop).P)) (\lambda (H11: (eq T (THead k t t0) (THead k0 t 
 t0))).(\lambda (P: Prop).(let H12 \def (f_equal T K (\lambda (e: T).(match e 
 in T return (\lambda (_: T).K) with [(TSort _) \Rightarrow k | (TLRef _) 
-\Rightarrow k | (THead k _ _) \Rightarrow k])) (THead k t t0) (THead k0 t t0) 
-H11) in (let H13 \def (eq_ind_r K k0 (\lambda (k0: K).((eq K k k0) \to 
-(\forall (P: Prop).P))) H10 k H12) in (H13 (refl_equal K k) P))))))) H9))) t4 
-H7))) (\lambda (H7: (((eq T t0 t4) \to (\forall (P: Prop).P)))).(or_intror 
+\Rightarrow k | (THead k1 _ _) \Rightarrow k1])) (THead k t t0) (THead k0 t 
+t0) H11) in (let H13 \def (eq_ind_r K k0 (\lambda (k1: K).((eq K k k1) \to 
+(\forall (P0: Prop).P0))) H10 k H12) in (H13 (refl_equal K k) P))))))) H9))) 
+t4 H7))) (\lambda (H7: (((eq T t0 t4) \to (\forall (P: Prop).P)))).(or_intror 
 (eq T (THead k t t0) (THead k0 t t4)) ((eq T (THead k t t0) (THead k0 t t4)) 
 \to (\forall (P: Prop).P)) (\lambda (H8: (eq T (THead k t t0) (THead k0 t 
 t4))).(\lambda (P: Prop).(let H9 \def (f_equal T K (\lambda (e: T).(match e 
 in T return (\lambda (_: T).K) with [(TSort _) \Rightarrow k | (TLRef _) 
-\Rightarrow k | (THead k _ _) \Rightarrow k])) (THead k t t0) (THead k0 t t4) 
-H8) in ((let H10 \def (f_equal T T (\lambda (e: T).(match e in T return 
+\Rightarrow k | (THead k1 _ _) \Rightarrow k1])) (THead k t t0) (THead k0 t 
+t4) H8) in ((let H10 \def (f_equal T T (\lambda (e: T).(match e in T return 
 (\lambda (_: T).T) with [(TSort _) \Rightarrow t0 | (TLRef _) \Rightarrow t0 
-| (THead _ _ t) \Rightarrow t])) (THead k t t0) (THead k0 t t4) H8) in 
-(\lambda (_: (eq K k k0)).(let H12 \def (eq_ind_r T t4 (\lambda (t: T).((eq T 
-t0 t) \to (\forall (P: Prop).P))) H7 t0 H10) in (let H13 \def (eq_ind_r T t4 
-(\lambda (t1: T).(or (eq T (THead k t t0) t1) ((eq T (THead k t t0) t1) \to 
-(\forall (P: Prop).P)))) H2 t0 H10) in (H12 (refl_equal T t0) P))))) H9)))))) 
-H6))) t3 H4))) (\lambda (H4: (((eq T t t3) \to (\forall (P: 
+| (THead _ _ t5) \Rightarrow t5])) (THead k t t0) (THead k0 t t4) H8) in 
+(\lambda (_: (eq K k k0)).(let H12 \def (eq_ind_r T t4 (\lambda (t5: T).((eq 
+T t0 t5) \to (\forall (P0: Prop).P0))) H7 t0 H10) in (let H13 \def (eq_ind_r 
+T t4 (\lambda (t5: T).(or (eq T (THead k t t0) t5) ((eq T (THead k t t0) t5) 
+\to (\forall (P0: Prop).P0)))) H2 t0 H10) in (H12 (refl_equal T t0) P))))) 
+H9)))))) H6))) t3 H4))) (\lambda (H4: (((eq T t t3) \to (\forall (P: 
 Prop).P)))).(or_intror (eq T (THead k t t0) (THead k0 t3 t4)) ((eq T (THead k 
 t t0) (THead k0 t3 t4)) \to (\forall (P: Prop).P)) (\lambda (H5: (eq T (THead 
 k t t0) (THead k0 t3 t4))).(\lambda (P: Prop).(let H6 \def (f_equal T K 
 (\lambda (e: T).(match e in T return (\lambda (_: T).K) with [(TSort _) 
-\Rightarrow k | (TLRef _) \Rightarrow k | (THead k _ _) \Rightarrow k])) 
+\Rightarrow k | (TLRef _) \Rightarrow k | (THead k1 _ _) \Rightarrow k1])) 
 (THead k t t0) (THead k0 t3 t4) H5) in ((let H7 \def (f_equal T T (\lambda 
 (e: T).(match e in T return (\lambda (_: T).T) with [(TSort _) \Rightarrow t 
-| (TLRef _) \Rightarrow t | (THead _ t _) \Rightarrow t])) (THead k t t0) 
+| (TLRef _) \Rightarrow t | (THead _ t5 _) \Rightarrow t5])) (THead k t t0) 
 (THead k0 t3 t4) H5) in ((let H8 \def (f_equal T T (\lambda (e: T).(match e 
 in T return (\lambda (_: T).T) with [(TSort _) \Rightarrow t0 | (TLRef _) 
-\Rightarrow t0 | (THead _ _ t) \Rightarrow t])) (THead k t t0) (THead k0 t3 
+\Rightarrow t0 | (THead _ _ t5) \Rightarrow t5])) (THead k t t0) (THead k0 t3 
 t4) H5) in (\lambda (H9: (eq T t t3)).(\lambda (_: (eq K k k0)).(let H11 \def 
-(eq_ind_r T t4 (\lambda (t1: T).(or (eq T (THead k t t0) t1) ((eq T (THead k 
-t t0) t1) \to (\forall (P: Prop).P)))) H2 t0 H8) in (let H12 \def (eq_ind_r T 
-t3 (\lambda (t0: T).((eq T t t0) \to (\forall (P: Prop).P))) H4 t H9) in (let 
-H13 \def (eq_ind_r T t3 (\lambda (t1: T).(or (eq T (THead k t t0) t1) ((eq T 
-(THead k t t0) t1) \to (\forall (P: Prop).P)))) H1 t H9) in (H12 (refl_equal 
-T t) P))))))) H7)) H6)))))) H3)))))))) t2))))))) t1).
+(eq_ind_r T t4 (\lambda (t5: T).(or (eq T (THead k t t0) t5) ((eq T (THead k 
+t t0) t5) \to (\forall (P0: Prop).P0)))) H2 t0 H8) in (let H12 \def (eq_ind_r 
+T t3 (\lambda (t5: T).((eq T t t5) \to (\forall (P0: Prop).P0))) H4 t H9) in 
+(let H13 \def (eq_ind_r T t3 (\lambda (t5: T).(or (eq T (THead k t t0) t5) 
+((eq T (THead k t t0) t5) \to (\forall (P0: Prop).P0)))) H1 t H9) in (H12 
+(refl_equal T t) P))))))) H7)) H6)))))) H3)))))))) t2))))))) t1).
 
 theorem binder_dec:
  \forall (t: T).(or (ex_3 B T T (\lambda (b: B).(\lambda (w: T).(\lambda (u: 
@@ -299,115 +299,119 @@ T (TLRef n) (THead (Bind b) w u))).(\lambda (P: Prop).(let H0 \def (eq_ind T
 (TLRef n) (\lambda (ee: T).(match ee in T return (\lambda (_: T).Prop) with 
 [(TSort _) \Rightarrow False | (TLRef _) \Rightarrow True | (THead _ _ _) 
 \Rightarrow False])) I (THead (Bind b) w u) H) in (False_ind P H0))))))))) 
-(\lambda (k: K).(match k in K return (\lambda (k0: K).(\forall (t0: T).((or 
-(ex_3 B T T (\lambda (b: B).(\lambda (w: T).(\lambda (u: T).(eq T t0 (THead 
-(Bind b) w u)))))) (\forall (b: B).(\forall (w: T).(\forall (u: T).((eq T t0 
-(THead (Bind b) w u)) \to (\forall (P: Prop).P)))))) \to (\forall (t1: 
-T).((or (ex_3 B T T (\lambda (b: B).(\lambda (w: T).(\lambda (u: T).(eq T t1 
-(THead (Bind b) w u)))))) (\forall (b: B).(\forall (w: T).(\forall (u: 
-T).((eq T t1 (THead (Bind b) w u)) \to (\forall (P: Prop).P)))))) \to (or 
-(ex_3 B T T (\lambda (b: B).(\lambda (w: T).(\lambda (u: T).(eq T (THead k0 
-t0 t1) (THead (Bind b) w u)))))) (\forall (b: B).(\forall (w: T).(\forall (u: 
-T).((eq T (THead k0 t0 t1) (THead (Bind b) w u)) \to (\forall (P: 
-Prop).P))))))))))) with [(Bind b) \Rightarrow (\lambda (t0: T).(\lambda (_: 
-(or (ex_3 B T T (\lambda (b: B).(\lambda (w: T).(\lambda (u: T).(eq T t0 
+(\lambda (k: K).(K_ind (\lambda (k0: K).(\forall (t0: T).((or (ex_3 B T T 
+(\lambda (b: B).(\lambda (w: T).(\lambda (u: T).(eq T t0 (THead (Bind b) w 
+u)))))) (\forall (b: B).(\forall (w: T).(\forall (u: T).((eq T t0 (THead 
+(Bind b) w u)) \to (\forall (P: Prop).P)))))) \to (\forall (t1: T).((or (ex_3 
+B T T (\lambda (b: B).(\lambda (w: T).(\lambda (u: T).(eq T t1 (THead (Bind 
+b) w u)))))) (\forall (b: B).(\forall (w: T).(\forall (u: T).((eq T t1 (THead 
+(Bind b) w u)) \to (\forall (P: Prop).P)))))) \to (or (ex_3 B T T (\lambda 
+(b: B).(\lambda (w: T).(\lambda (u: T).(eq T (THead k0 t0 t1) (THead (Bind b) 
+w u)))))) (\forall (b: B).(\forall (w: T).(\forall (u: T).((eq T (THead k0 t0 
+t1) (THead (Bind b) w u)) \to (\forall (P: Prop).P))))))))))) (\lambda (b: 
+B).(\lambda (t0: T).(\lambda (_: (or (ex_3 B T T (\lambda (b0: B).(\lambda 
+(w: T).(\lambda (u: T).(eq T t0 (THead (Bind b0) w u)))))) (\forall (b0: 
+B).(\forall (w: T).(\forall (u: T).((eq T t0 (THead (Bind b0) w u)) \to 
+(\forall (P: Prop).P))))))).(\lambda (t1: T).(\lambda (_: (or (ex_3 B T T 
+(\lambda (b0: B).(\lambda (w: T).(\lambda (u: T).(eq T t1 (THead (Bind b0) w 
+u)))))) (\forall (b0: B).(\forall (w: T).(\forall (u: T).((eq T t1 (THead 
+(Bind b0) w u)) \to (\forall (P: Prop).P))))))).(or_introl (ex_3 B T T 
+(\lambda (b0: B).(\lambda (w: T).(\lambda (u: T).(eq T (THead (Bind b) t0 t1) 
+(THead (Bind b0) w u)))))) (\forall (b0: B).(\forall (w: T).(\forall (u: 
+T).((eq T (THead (Bind b) t0 t1) (THead (Bind b0) w u)) \to (\forall (P: 
+Prop).P))))) (ex_3_intro B T T (\lambda (b0: B).(\lambda (w: T).(\lambda (u: 
+T).(eq T (THead (Bind b) t0 t1) (THead (Bind b0) w u))))) b t0 t1 (refl_equal 
+T (THead (Bind b) t0 t1))))))))) (\lambda (f: F).(\lambda (t0: T).(\lambda 
+(_: (or (ex_3 B T T (\lambda (b: B).(\lambda (w: T).(\lambda (u: T).(eq T t0 
 (THead (Bind b) w u)))))) (\forall (b: B).(\forall (w: T).(\forall (u: 
 T).((eq T t0 (THead (Bind b) w u)) \to (\forall (P: Prop).P))))))).(\lambda 
 (t1: T).(\lambda (_: (or (ex_3 B T T (\lambda (b: B).(\lambda (w: T).(\lambda 
 (u: T).(eq T t1 (THead (Bind b) w u)))))) (\forall (b: B).(\forall (w: 
 T).(\forall (u: T).((eq T t1 (THead (Bind b) w u)) \to (\forall (P: 
-Prop).P))))))).(or_introl (ex_3 B T T (\lambda (b0: B).(\lambda (w: 
-T).(\lambda (u: T).(eq T (THead (Bind b) t0 t1) (THead (Bind b0) w u)))))) 
-(\forall (b0: B).(\forall (w: T).(\forall (u: T).((eq T (THead (Bind b) t0 
-t1) (THead (Bind b0) w u)) \to (\forall (P: Prop).P))))) (ex_3_intro B T T 
-(\lambda (b0: B).(\lambda (w: T).(\lambda (u: T).(eq T (THead (Bind b) t0 t1) 
-(THead (Bind b0) w u))))) b t0 t1 (refl_equal T (THead (Bind b) t0 t1)))))))) 
-| (Flat f) \Rightarrow (\lambda (t0: T).(\lambda (_: (or (ex_3 B T T (\lambda 
-(b: B).(\lambda (w: T).(\lambda (u: T).(eq T t0 (THead (Bind b) w u)))))) 
-(\forall (b: B).(\forall (w: T).(\forall (u: T).((eq T t0 (THead (Bind b) w 
-u)) \to (\forall (P: Prop).P))))))).(\lambda (t1: T).(\lambda (_: (or (ex_3 B 
-T T (\lambda (b: B).(\lambda (w: T).(\lambda (u: T).(eq T t1 (THead (Bind b) 
-w u)))))) (\forall (b: B).(\forall (w: T).(\forall (u: T).((eq T t1 (THead 
-(Bind b) w u)) \to (\forall (P: Prop).P))))))).(or_intror (ex_3 B T T 
-(\lambda (b: B).(\lambda (w: T).(\lambda (u: T).(eq T (THead (Flat f) t0 t1) 
-(THead (Bind b) w u)))))) (\forall (b: B).(\forall (w: T).(\forall (u: 
-T).((eq T (THead (Flat f) t0 t1) (THead (Bind b) w u)) \to (\forall (P: 
-Prop).P))))) (\lambda (b: B).(\lambda (w: T).(\lambda (u: T).(\lambda (H1: 
-(eq T (THead (Flat f) t0 t1) (THead (Bind b) w u))).(\lambda (P: Prop).(let 
-H2 \def (eq_ind T (THead (Flat f) t0 t1) (\lambda (ee: T).(match ee in T 
-return (\lambda (_: T).Prop) with [(TSort _) \Rightarrow False | (TLRef _) 
-\Rightarrow False | (THead k _ _) \Rightarrow (match k in K return (\lambda 
-(_: K).Prop) with [(Bind _) \Rightarrow False | (Flat _) \Rightarrow 
-True])])) I (THead (Bind b) w u) H1) in (False_ind P H2))))))))))))])) t).
+Prop).P))))))).(or_intror (ex_3 B T T (\lambda (b: B).(\lambda (w: 
+T).(\lambda (u: T).(eq T (THead (Flat f) t0 t1) (THead (Bind b) w u)))))) 
+(\forall (b: B).(\forall (w: T).(\forall (u: T).((eq T (THead (Flat f) t0 t1) 
+(THead (Bind b) w u)) \to (\forall (P: Prop).P))))) (\lambda (b: B).(\lambda 
+(w: T).(\lambda (u: T).(\lambda (H1: (eq T (THead (Flat f) t0 t1) (THead 
+(Bind b) w u))).(\lambda (P: Prop).(let H2 \def (eq_ind T (THead (Flat f) t0 
+t1) (\lambda (ee: T).(match ee in T return (\lambda (_: T).Prop) with [(TSort 
+_) \Rightarrow False | (TLRef _) \Rightarrow False | (THead k0 _ _) 
+\Rightarrow (match k0 in K return (\lambda (_: K).Prop) with [(Bind _) 
+\Rightarrow False | (Flat _) \Rightarrow True])])) I (THead (Bind b) w u) H1) 
+in (False_ind P H2))))))))))))) k)) t).
 
 theorem abst_dec:
  \forall (u: T).(\forall (v: T).(or (ex T (\lambda (t: T).(eq T u (THead 
 (Bind Abst) v t)))) (\forall (t: T).((eq T u (THead (Bind Abst) v t)) \to 
 (\forall (P: Prop).P)))))
 \def
- \lambda (u: T).(match u in T return (\lambda (t: T).(\forall (v: T).(or (ex 
-T (\lambda (t0: T).(eq T t (THead (Bind Abst) v t0)))) (\forall (t0: T).((eq 
-T t (THead (Bind Abst) v t0)) \to (\forall (P: Prop).P)))))) with [(TSort n) 
-\Rightarrow (\lambda (v: T).(or_intror (ex T (\lambda (t: T).(eq T (TSort n) 
-(THead (Bind Abst) v t)))) (\forall (t: T).((eq T (TSort n) (THead (Bind 
-Abst) v t)) \to (\forall (P: Prop).P))) (\lambda (t: T).(\lambda (H: (eq T 
-(TSort n) (THead (Bind Abst) v t))).(\lambda (P: Prop).(let H0 \def (eq_ind T 
-(TSort n) (\lambda (ee: T).(match ee in T return (\lambda (_: T).Prop) with 
-[(TSort _) \Rightarrow True | (TLRef _) \Rightarrow False | (THead _ _ _) 
-\Rightarrow False])) I (THead (Bind Abst) v t) H) in (False_ind P H0))))))) | 
-(TLRef n) \Rightarrow (\lambda (v: T).(or_intror (ex T (\lambda (t: T).(eq T 
-(TLRef n) (THead (Bind Abst) v t)))) (\forall (t: T).((eq T (TLRef n) (THead 
-(Bind Abst) v t)) \to (\forall (P: Prop).P))) (\lambda (t: T).(\lambda (H: 
-(eq T (TLRef n) (THead (Bind Abst) v t))).(\lambda (P: Prop).(let H0 \def 
-(eq_ind T (TLRef n) (\lambda (ee: T).(match ee in T return (\lambda (_: 
-T).Prop) with [(TSort _) \Rightarrow False | (TLRef _) \Rightarrow True | 
-(THead _ _ _) \Rightarrow False])) I (THead (Bind Abst) v t) H) in (False_ind 
-P H0))))))) | (THead k t t0) \Rightarrow (\lambda (v: T).(let H_x \def 
-(terms_props__kind_dec k (Bind Abst)) in (let H \def H_x in (or_ind (eq K k 
-(Bind Abst)) ((eq K k (Bind Abst)) \to (\forall (P: Prop).P)) (or (ex T 
-(\lambda (t1: T).(eq T (THead k t t0) (THead (Bind Abst) v t1)))) (\forall 
-(t1: T).((eq T (THead k t t0) (THead (Bind Abst) v t1)) \to (\forall (P: 
-Prop).P)))) (\lambda (H0: (eq K k (Bind Abst))).(eq_ind_r K (Bind Abst) 
-(\lambda (k0: K).(or (ex T (\lambda (t1: T).(eq T (THead k0 t t0) (THead 
-(Bind Abst) v t1)))) (\forall (t1: T).((eq T (THead k0 t t0) (THead (Bind 
-Abst) v t1)) \to (\forall (P: Prop).P))))) (let H_x0 \def (term_dec t v) in 
-(let H1 \def H_x0 in (or_ind (eq T t v) ((eq T t v) \to (\forall (P: 
-Prop).P)) (or (ex T (\lambda (t1: T).(eq T (THead (Bind Abst) t t0) (THead 
-(Bind Abst) v t1)))) (\forall (t1: T).((eq T (THead (Bind Abst) t t0) (THead 
-(Bind Abst) v t1)) \to (\forall (P: Prop).P)))) (\lambda (H2: (eq T t 
-v)).(eq_ind T t (\lambda (t1: T).(or (ex T (\lambda (t2: T).(eq T (THead 
-(Bind Abst) t t0) (THead (Bind Abst) t1 t2)))) (\forall (t2: T).((eq T (THead 
-(Bind Abst) t t0) (THead (Bind Abst) t1 t2)) \to (\forall (P: Prop).P))))) 
-(or_introl (ex T (\lambda (t1: T).(eq T (THead (Bind Abst) t t0) (THead (Bind 
-Abst) t t1)))) (\forall (t1: T).((eq T (THead (Bind Abst) t t0) (THead (Bind 
-Abst) t t1)) \to (\forall (P: Prop).P))) (ex_intro T (\lambda (t1: T).(eq T 
-(THead (Bind Abst) t t0) (THead (Bind Abst) t t1))) t0 (refl_equal T (THead 
-(Bind Abst) t t0)))) v H2)) (\lambda (H2: (((eq T t v) \to (\forall (P: 
-Prop).P)))).(or_intror (ex T (\lambda (t1: T).(eq T (THead (Bind Abst) t t0) 
-(THead (Bind Abst) v t1)))) (\forall (t1: T).((eq T (THead (Bind Abst) t t0) 
-(THead (Bind Abst) v t1)) \to (\forall (P: Prop).P))) (\lambda (t1: 
-T).(\lambda (H3: (eq T (THead (Bind Abst) t t0) (THead (Bind Abst) v 
-t1))).(\lambda (P: Prop).(let H4 \def (f_equal T T (\lambda (e: T).(match e 
-in T return (\lambda (_: T).T) with [(TSort _) \Rightarrow t | (TLRef _) 
-\Rightarrow t | (THead _ t _) \Rightarrow t])) (THead (Bind Abst) t t0) 
-(THead (Bind Abst) v t1) H3) in ((let H5 \def (f_equal T T (\lambda (e: 
+ \lambda (u: T).(T_ind (\lambda (t: T).(\forall (v: T).(or (ex T (\lambda 
+(t0: T).(eq T t (THead (Bind Abst) v t0)))) (\forall (t0: T).((eq T t (THead 
+(Bind Abst) v t0)) \to (\forall (P: Prop).P)))))) (\lambda (n: nat).(\lambda 
+(v: T).(or_intror (ex T (\lambda (t: T).(eq T (TSort n) (THead (Bind Abst) v 
+t)))) (\forall (t: T).((eq T (TSort n) (THead (Bind Abst) v t)) \to (\forall 
+(P: Prop).P))) (\lambda (t: T).(\lambda (H: (eq T (TSort n) (THead (Bind 
+Abst) v t))).(\lambda (P: Prop).(let H0 \def (eq_ind T (TSort n) (\lambda 
+(ee: T).(match ee in T return (\lambda (_: T).Prop) with [(TSort _) 
+\Rightarrow True | (TLRef _) \Rightarrow False | (THead _ _ _) \Rightarrow 
+False])) I (THead (Bind Abst) v t) H) in (False_ind P H0)))))))) (\lambda (n: 
+nat).(\lambda (v: T).(or_intror (ex T (\lambda (t: T).(eq T (TLRef n) (THead 
+(Bind Abst) v t)))) (\forall (t: T).((eq T (TLRef n) (THead (Bind Abst) v t)) 
+\to (\forall (P: Prop).P))) (\lambda (t: T).(\lambda (H: (eq T (TLRef n) 
+(THead (Bind Abst) v t))).(\lambda (P: Prop).(let H0 \def (eq_ind T (TLRef n) 
+(\lambda (ee: T).(match ee in T return (\lambda (_: T).Prop) with [(TSort _) 
+\Rightarrow False | (TLRef _) \Rightarrow True | (THead _ _ _) \Rightarrow 
+False])) I (THead (Bind Abst) v t) H) in (False_ind P H0)))))))) (\lambda (k: 
+K).(\lambda (t: T).(\lambda (_: ((\forall (v: T).(or (ex T (\lambda (t0: 
+T).(eq T t (THead (Bind Abst) v t0)))) (\forall (t0: T).((eq T t (THead (Bind 
+Abst) v t0)) \to (\forall (P: Prop).P))))))).(\lambda (t0: T).(\lambda (_: 
+((\forall (v: T).(or (ex T (\lambda (t1: T).(eq T t0 (THead (Bind Abst) v 
+t1)))) (\forall (t1: T).((eq T t0 (THead (Bind Abst) v t1)) \to (\forall (P: 
+Prop).P))))))).(\lambda (v: T).(let H_x \def (terms_props__kind_dec k (Bind 
+Abst)) in (let H1 \def H_x in (or_ind (eq K k (Bind Abst)) ((eq K k (Bind 
+Abst)) \to (\forall (P: Prop).P)) (or (ex T (\lambda (t1: T).(eq T (THead k t 
+t0) (THead (Bind Abst) v t1)))) (\forall (t1: T).((eq T (THead k t t0) (THead 
+(Bind Abst) v t1)) \to (\forall (P: Prop).P)))) (\lambda (H2: (eq K k (Bind 
+Abst))).(eq_ind_r K (Bind Abst) (\lambda (k0: K).(or (ex T (\lambda (t1: 
+T).(eq T (THead k0 t t0) (THead (Bind Abst) v t1)))) (\forall (t1: T).((eq T 
+(THead k0 t t0) (THead (Bind Abst) v t1)) \to (\forall (P: Prop).P))))) (let 
+H_x0 \def (term_dec t v) in (let H3 \def H_x0 in (or_ind (eq T t v) ((eq T t 
+v) \to (\forall (P: Prop).P)) (or (ex T (\lambda (t1: T).(eq T (THead (Bind 
+Abst) t t0) (THead (Bind Abst) v t1)))) (\forall (t1: T).((eq T (THead (Bind 
+Abst) t t0) (THead (Bind Abst) v t1)) \to (\forall (P: Prop).P)))) (\lambda 
+(H4: (eq T t v)).(eq_ind T t (\lambda (t1: T).(or (ex T (\lambda (t2: T).(eq 
+T (THead (Bind Abst) t t0) (THead (Bind Abst) t1 t2)))) (\forall (t2: T).((eq 
+T (THead (Bind Abst) t t0) (THead (Bind Abst) t1 t2)) \to (\forall (P: 
+Prop).P))))) (or_introl (ex T (\lambda (t1: T).(eq T (THead (Bind Abst) t t0) 
+(THead (Bind Abst) t t1)))) (\forall (t1: T).((eq T (THead (Bind Abst) t t0) 
+(THead (Bind Abst) t t1)) \to (\forall (P: Prop).P))) (ex_intro T (\lambda 
+(t1: T).(eq T (THead (Bind Abst) t t0) (THead (Bind Abst) t t1))) t0 
+(refl_equal T (THead (Bind Abst) t t0)))) v H4)) (\lambda (H4: (((eq T t v) 
+\to (\forall (P: Prop).P)))).(or_intror (ex T (\lambda (t1: T).(eq T (THead 
+(Bind Abst) t t0) (THead (Bind Abst) v t1)))) (\forall (t1: T).((eq T (THead 
+(Bind Abst) t t0) (THead (Bind Abst) v t1)) \to (\forall (P: Prop).P))) 
+(\lambda (t1: T).(\lambda (H5: (eq T (THead (Bind Abst) t t0) (THead (Bind 
+Abst) v t1))).(\lambda (P: Prop).(let H6 \def (f_equal T T (\lambda (e: 
+T).(match e in T return (\lambda (_: T).T) with [(TSort _) \Rightarrow t | 
+(TLRef _) \Rightarrow t | (THead _ t2 _) \Rightarrow t2])) (THead (Bind Abst) 
+t t0) (THead (Bind Abst) v t1) H5) in ((let H7 \def (f_equal T T (\lambda (e: 
 T).(match e in T return (\lambda (_: T).T) with [(TSort _) \Rightarrow t0 | 
-(TLRef _) \Rightarrow t0 | (THead _ _ t) \Rightarrow t])) (THead (Bind Abst) 
-t t0) (THead (Bind Abst) v t1) H3) in (\lambda (H6: (eq T t v)).(H2 H6 P))) 
-H4))))))) H1))) k H0)) (\lambda (H0: (((eq K k (Bind Abst)) \to (\forall (P: 
-Prop).P)))).(or_intror (ex T (\lambda (t1: T).(eq T (THead k t t0) (THead 
+(TLRef _) \Rightarrow t0 | (THead _ _ t2) \Rightarrow t2])) (THead (Bind 
+Abst) t t0) (THead (Bind Abst) v t1) H5) in (\lambda (H8: (eq T t v)).(H4 H8 
+P))) H6))))))) H3))) k H2)) (\lambda (H2: (((eq K k (Bind Abst)) \to (\forall 
+(P: Prop).P)))).(or_intror (ex T (\lambda (t1: T).(eq T (THead k t t0) (THead 
 (Bind Abst) v t1)))) (\forall (t1: T).((eq T (THead k t t0) (THead (Bind 
-Abst) v t1)) \to (\forall (P: Prop).P))) (\lambda (t1: T).(\lambda (H1: (eq T 
-(THead k t t0) (THead (Bind Abst) v t1))).(\lambda (P: Prop).(let H2 \def 
+Abst) v t1)) \to (\forall (P: Prop).P))) (\lambda (t1: T).(\lambda (H3: (eq T 
+(THead k t t0) (THead (Bind Abst) v t1))).(\lambda (P: Prop).(let H4 \def 
 (f_equal T K (\lambda (e: T).(match e in T return (\lambda (_: T).K) with 
-[(TSort _) \Rightarrow k | (TLRef _) \Rightarrow k | (THead k _ _) 
-\Rightarrow k])) (THead k t t0) (THead (Bind Abst) v t1) H1) in ((let H3 \def 
-(f_equal T T (\lambda (e: T).(match e in T return (\lambda (_: T).T) with 
-[(TSort _) \Rightarrow t | (TLRef _) \Rightarrow t | (THead _ t _) 
-\Rightarrow t])) (THead k t t0) (THead (Bind Abst) v t1) H1) in ((let H4 \def 
-(f_equal T T (\lambda (e: T).(match e in T return (\lambda (_: T).T) with 
-[(TSort _) \Rightarrow t0 | (TLRef _) \Rightarrow t0 | (THead _ _ t) 
-\Rightarrow t])) (THead k t t0) (THead (Bind Abst) v t1) H1) in (\lambda (_: 
-(eq T t v)).(\lambda (H6: (eq K k (Bind Abst))).(H0 H6 P)))) H3)) H2))))))) 
-H))))]).
+[(TSort _) \Rightarrow k | (TLRef _) \Rightarrow k | (THead k0 _ _) 
+\Rightarrow k0])) (THead k t t0) (THead (Bind Abst) v t1) H3) in ((let H5 
+\def (f_equal T T (\lambda (e: T).(match e in T return (\lambda (_: T).T) 
+with [(TSort _) \Rightarrow t | (TLRef _) \Rightarrow t | (THead _ t2 _) 
+\Rightarrow t2])) (THead k t t0) (THead (Bind Abst) v t1) H3) in ((let H6 
+\def (f_equal T T (\lambda (e: T).(match e in T return (\lambda (_: T).T) 
+with [(TSort _) \Rightarrow t0 | (TLRef _) \Rightarrow t0 | (THead _ _ t2) 
+\Rightarrow t2])) (THead k t t0) (THead (Bind Abst) v t1) H3) in (\lambda (_: 
+(eq T t v)).(\lambda (H8: (eq K k (Bind Abst))).(H2 H8 P)))) H5)) H4))))))) 
+H1))))))))) u).
 

@@ -45,9 +45,9 @@ T).(\lambda (x1: T).(\lambda (H3: (eq T u2 (THead (Flat Cast) x0
 x1))).(\lambda (_: (pr3 c v x0)).(\lambda (_: (pr3 c t x1)).(let H6 \def 
 (eq_ind T u2 (\lambda (t0: T).((iso (THead (Flat Cast) v t) t0) \to (\forall 
 (P: Prop).P))) H0 (THead (Flat Cast) x0 x1) H3) in (eq_ind_r T (THead (Flat 
-Cast) x0 x1) (\lambda (t0: T).(pr3 c t t0)) (H6 (iso_head (Flat Cast) v x0 t 
-x1) (pr3 c t (THead (Flat Cast) x0 x1))) u2 H3))))))) H2)) (\lambda (H2: (pr3 
-c t u2)).H2) H1))))) (\lambda (t0: T).(\lambda (t1: TList).(\lambda (H: 
+Cast) x0 x1) (\lambda (t0: T).(pr3 c t t0)) (H6 (iso_head v x0 t x1 (Flat 
+Cast)) (pr3 c t (THead (Flat Cast) x0 x1))) u2 H3))))))) H2)) (\lambda (H2: 
+(pr3 c t u2)).H2) H1))))) (\lambda (t0: T).(\lambda (t1: TList).(\lambda (H: 
 ((\forall (u2: T).((pr3 c (THeads (Flat Appl) t1 (THead (Flat Cast) v t)) u2) 
 \to ((((iso (THeads (Flat Appl) t1 (THead (Flat Cast) v t)) u2) \to (\forall 
 (P: Prop).P))) \to (pr3 c (THeads (Flat Appl) t1 t) u2)))))).(\lambda (u2: 
@@ -91,8 +91,8 @@ t1 (THead (Flat Cast) v t)) x1)).(let H7 \def (eq_ind T u2 (\lambda (t2:
 T).((iso (THead (Flat Appl) t0 (THeads (Flat Appl) t1 (THead (Flat Cast) v 
 t))) t2) \to (\forall (P: Prop).P))) H1 (THead (Flat Appl) x0 x1) H4) in 
 (eq_ind_r T (THead (Flat Appl) x0 x1) (\lambda (t2: T).(pr3 c (THead (Flat 
-Appl) t0 (THeads (Flat Appl) t1 t)) t2)) (H7 (iso_head (Flat Appl) t0 x0 
-(THeads (Flat Appl) t1 (THead (Flat Cast) v t)) x1) (pr3 c (THead (Flat Appl) 
+Appl) t0 (THeads (Flat Appl) t1 t)) t2)) (H7 (iso_head t0 x0 (THeads (Flat 
+Appl) t1 (THead (Flat Cast) v t)) x1 (Flat Appl)) (pr3 c (THead (Flat Appl) 
 t0 (THeads (Flat Appl) t1 t)) (THead (Flat Appl) x0 x1))) u2 H4))))))) H3)) 
 (\lambda (H3: (ex4_4 T T T T (\lambda (_: T).(\lambda (_: T).(\lambda (u3: 
 T).(\lambda (t2: T).(pr3 c (THead (Bind Abbr) u3 t2) u2))))) (\lambda (_: 

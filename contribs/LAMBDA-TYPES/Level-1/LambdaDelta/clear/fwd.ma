@@ -53,7 +53,7 @@ x)).((let H2 \def (f_equal C T (\lambda (e1: C).(match e1 in C return
 t])) (CHead e0 (Bind b0) u0) (CHead e (Bind b) u) H0) in ((let H3 \def 
 (f_equal C B (\lambda (e1: C).(match e1 in C return (\lambda (_: C).B) with 
 [(CSort _) \Rightarrow b0 | (CHead _ k _) \Rightarrow (match k in K return 
-(\lambda (_: K).B) with [(Bind b) \Rightarrow b | (Flat _) \Rightarrow 
+(\lambda (_: K).B) with [(Bind b1) \Rightarrow b1 | (Flat _) \Rightarrow 
 b0])])) (CHead e0 (Bind b0) u0) (CHead e (Bind b) u) H0) in ((let H4 \def 
 (f_equal C C (\lambda (e1: C).(match e1 in C return (\lambda (_: C).C) with 
 [(CSort _) \Rightarrow e0 | (CHead c _ _) \Rightarrow c])) (CHead e0 (Bind 
@@ -97,9 +97,9 @@ C).(match e1 in C return (\lambda (_: C).T) with [(CSort _) \Rightarrow u0 |
 H1) in ((let H4 \def (f_equal C F (\lambda (e1: C).(match e1 in C return 
 (\lambda (_: C).F) with [(CSort _) \Rightarrow f0 | (CHead _ k _) \Rightarrow 
 (match k in K return (\lambda (_: K).F) with [(Bind _) \Rightarrow f0 | (Flat 
-f) \Rightarrow f])])) (CHead e0 (Flat f0) u0) (CHead e (Flat f) u) H1) in 
+f1) \Rightarrow f1])])) (CHead e0 (Flat f0) u0) (CHead e (Flat f) u) H1) in 
 ((let H5 \def (f_equal C C (\lambda (e1: C).(match e1 in C return (\lambda 
-(_: C).C) with [(CSort _) \Rightarrow e0 | (CHead c _ _) \Rightarrow c])) 
+(_: C).C) with [(CSort _) \Rightarrow e0 | (CHead c0 _ _) \Rightarrow c0])) 
 (CHead e0 (Flat f0) u0) (CHead e (Flat f) u) H1) in (eq_ind C e (\lambda (c0: 
 C).((eq F f0 f) \to ((eq T u0 u) \to ((eq C c x) \to ((clear c0 c) \to (clear 
 e x)))))) (\lambda (H6: (eq F f0 f)).(eq_ind F f (\lambda (_: F).((eq T u0 u) 
@@ -128,9 +128,9 @@ T).(\lambda (H1: (eq C (CHead e0 (Bind b) u0) (CHead e (Flat f) u))).(let H2
 in (False_ind P H2)))))) (\lambda (e0: C).(\lambda (c: C).(\lambda (H1: 
 (clear e0 c)).(\lambda (H2: (((eq C c (CHead e (Flat f) u)) \to P))).(\lambda 
 (_: F).(\lambda (_: T).(\lambda (H3: (eq C c (CHead e (Flat f) u))).(let H4 
-\def (eq_ind C c (\lambda (c: C).((eq C c (CHead e (Flat f) u)) \to P)) H2 
-(CHead e (Flat f) u) H3) in (let H5 \def (eq_ind C c (\lambda (c: C).(clear 
-e0 c)) H1 (CHead e (Flat f) u) H3) in (H4 (refl_equal C (CHead e (Flat f) 
+\def (eq_ind C c (\lambda (c0: C).((eq C c0 (CHead e (Flat f) u)) \to P)) H2 
+(CHead e (Flat f) u) H3) in (let H5 \def (eq_ind C c (\lambda (c0: C).(clear 
+e0 c0)) H1 (CHead e (Flat f) u) H3) in (H4 (refl_equal C (CHead e (Flat f) 
 u)))))))))))) x y H0))) H)))))).
 
 theorem clear_gen_all:
@@ -144,13 +144,13 @@ B).(\lambda (e: C).(\lambda (u: T).(ex_3_intro B C T (\lambda (b0:
 B).(\lambda (e0: C).(\lambda (u0: T).(eq C (CHead e (Bind b) u) (CHead e0 
 (Bind b0) u0))))) b e u (refl_equal C (CHead e (Bind b) u)))))) (\lambda (e: 
 C).(\lambda (c: C).(\lambda (H0: (clear e c)).(\lambda (H1: (ex_3 B C T 
-(\lambda (b: B).(\lambda (e: C).(\lambda (u: T).(eq C c (CHead e (Bind b) 
+(\lambda (b: B).(\lambda (e0: C).(\lambda (u: T).(eq C c (CHead e0 (Bind b) 
 u))))))).(\lambda (_: F).(\lambda (_: T).(let H2 \def H1 in (ex_3_ind B C T 
 (\lambda (b: B).(\lambda (e0: C).(\lambda (u0: T).(eq C c (CHead e0 (Bind b) 
 u0))))) (ex_3 B C T (\lambda (b: B).(\lambda (e0: C).(\lambda (u0: T).(eq C c 
 (CHead e0 (Bind b) u0)))))) (\lambda (x0: B).(\lambda (x1: C).(\lambda (x2: 
 T).(\lambda (H3: (eq C c (CHead x1 (Bind x0) x2))).(let H4 \def (eq_ind C c 
-(\lambda (c: C).(clear e c)) H0 (CHead x1 (Bind x0) x2) H3) in (eq_ind_r C 
+(\lambda (c0: C).(clear e c0)) H0 (CHead x1 (Bind x0) x2) H3) in (eq_ind_r C 
 (CHead x1 (Bind x0) x2) (\lambda (c0: C).(ex_3 B C T (\lambda (b: B).(\lambda 
 (e0: C).(\lambda (u0: T).(eq C c0 (CHead e0 (Bind b) u0))))))) (ex_3_intro B 
 C T (\lambda (b: B).(\lambda (e0: C).(\lambda (u0: T).(eq C (CHead x1 (Bind 

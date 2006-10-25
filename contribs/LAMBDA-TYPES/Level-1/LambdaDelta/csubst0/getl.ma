@@ -34,9 +34,9 @@ c1 e n H1) in (ex2_ind C (\lambda (e0: C).(drop n O c1 e0)) (\lambda (e0:
 C).(clear e0 e)) (getl n c2 e) (\lambda (x: C).(\lambda (H3: (drop n O c1 
 x)).(\lambda (H4: (clear x e)).(lt_eq_gt_e i n (getl n c2 e) (\lambda (H5: 
 (lt i n)).(getl_intro n c2 e x (csubst0_drop_gt n i H5 c1 c2 v H0 x H3) H4)) 
-(\lambda (H5: (eq nat i n)).(let H6 \def (eq_ind_r nat n (\lambda (n: 
-nat).(drop n O c1 x)) H3 i H5) in (let H7 \def (eq_ind_r nat n (\lambda (n: 
-nat).(le i n)) H i H5) in (eq_ind nat i (\lambda (n0: nat).(getl n0 c2 e)) 
+(\lambda (H5: (eq nat i n)).(let H6 \def (eq_ind_r nat n (\lambda (n0: 
+nat).(drop n0 O c1 x)) H3 i H5) in (let H7 \def (eq_ind_r nat n (\lambda (n0: 
+nat).(le i n0)) H i H5) in (eq_ind nat i (\lambda (n0: nat).(getl n0 c2 e)) 
 (let H8 \def (csubst0_drop_eq i c1 c2 v H0 x H6) in (or4_ind (drop i O c2 x) 
 (ex3_4 F C T T (\lambda (f: F).(\lambda (e0: C).(\lambda (u: T).(\lambda (_: 
 T).(eq C x (CHead e0 (Flat f) u)))))) (\lambda (f: F).(\lambda (e0: 
@@ -221,70 +221,9 @@ T).(\lambda (_: T).(csubst0 (minus i (S n)) v e1 e2)))))))) (\lambda (x0:
 K).(\lambda (x1: C).(\lambda (x2: T).(\lambda (x3: T).(\lambda (H7: (eq C x 
 (CHead x1 x0 x2))).(\lambda (H8: (drop n O c2 (CHead x1 x0 x3))).(\lambda 
 (H9: (subst0 (minus i (s x0 n)) v x2 x3)).(let H10 \def (eq_ind C x (\lambda 
-(c: C).(clear c e)) H4 (CHead x1 x0 x2) H7) in ((match x0 in K return 
-(\lambda (k: K).((drop n O c2 (CHead x1 k x3)) \to ((subst0 (minus i (s k n)) 
-v x2 x3) \to ((clear (CHead x1 k x2) e) \to (or4 (getl n c2 e) (ex3_4 B C T T 
-(\lambda (b: B).(\lambda (e0: C).(\lambda (u: T).(\lambda (_: T).(eq C e 
-(CHead e0 (Bind b) u)))))) (\lambda (b: B).(\lambda (e0: C).(\lambda (_: 
-T).(\lambda (w: T).(getl n c2 (CHead e0 (Bind b) w)))))) (\lambda (_: 
-B).(\lambda (_: C).(\lambda (u: T).(\lambda (w: T).(subst0 (minus i (S n)) v 
-u w)))))) (ex3_4 B C C T (\lambda (b: B).(\lambda (e1: C).(\lambda (_: 
-C).(\lambda (u: T).(eq C e (CHead e1 (Bind b) u)))))) (\lambda (b: 
-B).(\lambda (_: C).(\lambda (e2: C).(\lambda (u: T).(getl n c2 (CHead e2 
-(Bind b) u)))))) (\lambda (_: B).(\lambda (e1: C).(\lambda (e2: C).(\lambda 
-(_: T).(csubst0 (minus i (S n)) v e1 e2)))))) (ex4_5 B C C T T (\lambda (b: 
-B).(\lambda (e1: C).(\lambda (_: C).(\lambda (u: T).(\lambda (_: T).(eq C e 
-(CHead e1 (Bind b) u))))))) (\lambda (b: B).(\lambda (_: C).(\lambda (e2: 
-C).(\lambda (_: T).(\lambda (w: T).(getl n c2 (CHead e2 (Bind b) w))))))) 
-(\lambda (_: B).(\lambda (_: C).(\lambda (_: C).(\lambda (u: T).(\lambda (w: 
-T).(subst0 (minus i (S n)) v u w)))))) (\lambda (_: B).(\lambda (e1: 
-C).(\lambda (e2: C).(\lambda (_: T).(\lambda (_: T).(csubst0 (minus i (S n)) 
-v e1 e2)))))))))))) with [(Bind b) \Rightarrow (\lambda (H11: (drop n O c2 
-(CHead x1 (Bind b) x3))).(\lambda (H12: (subst0 (minus i (s (Bind b) n)) v x2 
-x3)).(\lambda (H13: (clear (CHead x1 (Bind b) x2) e)).(eq_ind_r C (CHead x1 
-(Bind b) x2) (\lambda (c: C).(or4 (getl n c2 c) (ex3_4 B C T T (\lambda (b0: 
-B).(\lambda (e0: C).(\lambda (u: T).(\lambda (_: T).(eq C c (CHead e0 (Bind 
-b0) u)))))) (\lambda (b0: B).(\lambda (e0: C).(\lambda (_: T).(\lambda (w: 
-T).(getl n c2 (CHead e0 (Bind b0) w)))))) (\lambda (_: B).(\lambda (_: 
-C).(\lambda (u: T).(\lambda (w: T).(subst0 (minus i (S n)) v u w)))))) (ex3_4 
-B C C T (\lambda (b0: B).(\lambda (e1: C).(\lambda (_: C).(\lambda (u: T).(eq 
-C c (CHead e1 (Bind b0) u)))))) (\lambda (b0: B).(\lambda (_: C).(\lambda 
-(e2: C).(\lambda (u: T).(getl n c2 (CHead e2 (Bind b0) u)))))) (\lambda (_: 
-B).(\lambda (e1: C).(\lambda (e2: C).(\lambda (_: T).(csubst0 (minus i (S n)) 
-v e1 e2)))))) (ex4_5 B C C T T (\lambda (b0: B).(\lambda (e1: C).(\lambda (_: 
-C).(\lambda (u: T).(\lambda (_: T).(eq C c (CHead e1 (Bind b0) u))))))) 
-(\lambda (b0: B).(\lambda (_: C).(\lambda (e2: C).(\lambda (_: T).(\lambda 
-(w: T).(getl n c2 (CHead e2 (Bind b0) w))))))) (\lambda (_: B).(\lambda (_: 
-C).(\lambda (_: C).(\lambda (u: T).(\lambda (w: T).(subst0 (minus i (S n)) v 
-u w)))))) (\lambda (_: B).(\lambda (e1: C).(\lambda (e2: C).(\lambda (_: 
-T).(\lambda (_: T).(csubst0 (minus i (S n)) v e1 e2))))))))) (or4_intro1 
-(getl n c2 (CHead x1 (Bind b) x2)) (ex3_4 B C T T (\lambda (b0: B).(\lambda 
-(e0: C).(\lambda (u: T).(\lambda (_: T).(eq C (CHead x1 (Bind b) x2) (CHead 
-e0 (Bind b0) u)))))) (\lambda (b0: B).(\lambda (e0: C).(\lambda (_: 
-T).(\lambda (w: T).(getl n c2 (CHead e0 (Bind b0) w)))))) (\lambda (_: 
-B).(\lambda (_: C).(\lambda (u: T).(\lambda (w: T).(subst0 (minus i (S n)) v 
-u w)))))) (ex3_4 B C C T (\lambda (b0: B).(\lambda (e1: C).(\lambda (_: 
-C).(\lambda (u: T).(eq C (CHead x1 (Bind b) x2) (CHead e1 (Bind b0) u)))))) 
-(\lambda (b0: B).(\lambda (_: C).(\lambda (e2: C).(\lambda (u: T).(getl n c2 
-(CHead e2 (Bind b0) u)))))) (\lambda (_: B).(\lambda (e1: C).(\lambda (e2: 
-C).(\lambda (_: T).(csubst0 (minus i (S n)) v e1 e2)))))) (ex4_5 B C C T T 
-(\lambda (b0: B).(\lambda (e1: C).(\lambda (_: C).(\lambda (u: T).(\lambda 
-(_: T).(eq C (CHead x1 (Bind b) x2) (CHead e1 (Bind b0) u))))))) (\lambda 
-(b0: B).(\lambda (_: C).(\lambda (e2: C).(\lambda (_: T).(\lambda (w: 
-T).(getl n c2 (CHead e2 (Bind b0) w))))))) (\lambda (_: B).(\lambda (_: 
-C).(\lambda (_: C).(\lambda (u: T).(\lambda (w: T).(subst0 (minus i (S n)) v 
-u w)))))) (\lambda (_: B).(\lambda (e1: C).(\lambda (e2: C).(\lambda (_: 
-T).(\lambda (_: T).(csubst0 (minus i (S n)) v e1 e2))))))) (ex3_4_intro B C T 
-T (\lambda (b0: B).(\lambda (e0: C).(\lambda (u: T).(\lambda (_: T).(eq C 
-(CHead x1 (Bind b) x2) (CHead e0 (Bind b0) u)))))) (\lambda (b0: B).(\lambda 
-(e0: C).(\lambda (_: T).(\lambda (w: T).(getl n c2 (CHead e0 (Bind b0) 
-w)))))) (\lambda (_: B).(\lambda (_: C).(\lambda (u: T).(\lambda (w: 
-T).(subst0 (minus i (S n)) v u w))))) b x1 x2 x3 (refl_equal C (CHead x1 
-(Bind b) x2)) (getl_intro n c2 (CHead x1 (Bind b) x3) (CHead x1 (Bind b) x3) 
-H11 (clear_bind b x1 x3)) H12)) e (clear_gen_bind b x1 e x2 H13))))) | (Flat 
-f) \Rightarrow (\lambda (H11: (drop n O c2 (CHead x1 (Flat f) x3))).(\lambda 
-(_: (subst0 (minus i (s (Flat f) n)) v x2 x3)).(\lambda (H13: (clear (CHead 
-x1 (Flat f) x2) e)).(or4_intro0 (getl n c2 e) (ex3_4 B C T T (\lambda (b: 
+(c: C).(clear c e)) H4 (CHead x1 x0 x2) H7) in (K_ind (\lambda (k: K).((drop 
+n O c2 (CHead x1 k x3)) \to ((subst0 (minus i (s k n)) v x2 x3) \to ((clear 
+(CHead x1 k x2) e) \to (or4 (getl n c2 e) (ex3_4 B C T T (\lambda (b: 
 B).(\lambda (e0: C).(\lambda (u: T).(\lambda (_: T).(eq C e (CHead e0 (Bind 
 b) u)))))) (\lambda (b: B).(\lambda (e0: C).(\lambda (_: T).(\lambda (w: 
 T).(getl n c2 (CHead e0 (Bind b) w)))))) (\lambda (_: B).(\lambda (_: 
@@ -299,9 +238,70 @@ C).(\lambda (u: T).(\lambda (_: T).(eq C e (CHead e1 (Bind b) u)))))))
 T).(getl n c2 (CHead e2 (Bind b) w))))))) (\lambda (_: B).(\lambda (_: 
 C).(\lambda (_: C).(\lambda (u: T).(\lambda (w: T).(subst0 (minus i (S n)) v 
 u w)))))) (\lambda (_: B).(\lambda (e1: C).(\lambda (e2: C).(\lambda (_: 
-T).(\lambda (_: T).(csubst0 (minus i (S n)) v e1 e2))))))) (getl_intro n c2 e 
-(CHead x1 (Flat f) x3) H11 (clear_flat x1 e (clear_gen_flat f x1 e x2 H13) f 
-x3))))))]) H8 H9 H10))))))))) H6)) (\lambda (H6: (ex3_4 K C C T (\lambda (k: 
+T).(\lambda (_: T).(csubst0 (minus i (S n)) v e1 e2)))))))))))) (\lambda (b: 
+B).(\lambda (H11: (drop n O c2 (CHead x1 (Bind b) x3))).(\lambda (H12: 
+(subst0 (minus i (s (Bind b) n)) v x2 x3)).(\lambda (H13: (clear (CHead x1 
+(Bind b) x2) e)).(eq_ind_r C (CHead x1 (Bind b) x2) (\lambda (c: C).(or4 
+(getl n c2 c) (ex3_4 B C T T (\lambda (b0: B).(\lambda (e0: C).(\lambda (u: 
+T).(\lambda (_: T).(eq C c (CHead e0 (Bind b0) u)))))) (\lambda (b0: 
+B).(\lambda (e0: C).(\lambda (_: T).(\lambda (w: T).(getl n c2 (CHead e0 
+(Bind b0) w)))))) (\lambda (_: B).(\lambda (_: C).(\lambda (u: T).(\lambda 
+(w: T).(subst0 (minus i (S n)) v u w)))))) (ex3_4 B C C T (\lambda (b0: 
+B).(\lambda (e1: C).(\lambda (_: C).(\lambda (u: T).(eq C c (CHead e1 (Bind 
+b0) u)))))) (\lambda (b0: B).(\lambda (_: C).(\lambda (e2: C).(\lambda (u: 
+T).(getl n c2 (CHead e2 (Bind b0) u)))))) (\lambda (_: B).(\lambda (e1: 
+C).(\lambda (e2: C).(\lambda (_: T).(csubst0 (minus i (S n)) v e1 e2)))))) 
+(ex4_5 B C C T T (\lambda (b0: B).(\lambda (e1: C).(\lambda (_: C).(\lambda 
+(u: T).(\lambda (_: T).(eq C c (CHead e1 (Bind b0) u))))))) (\lambda (b0: 
+B).(\lambda (_: C).(\lambda (e2: C).(\lambda (_: T).(\lambda (w: T).(getl n 
+c2 (CHead e2 (Bind b0) w))))))) (\lambda (_: B).(\lambda (_: C).(\lambda (_: 
+C).(\lambda (u: T).(\lambda (w: T).(subst0 (minus i (S n)) v u w)))))) 
+(\lambda (_: B).(\lambda (e1: C).(\lambda (e2: C).(\lambda (_: T).(\lambda 
+(_: T).(csubst0 (minus i (S n)) v e1 e2))))))))) (or4_intro1 (getl n c2 
+(CHead x1 (Bind b) x2)) (ex3_4 B C T T (\lambda (b0: B).(\lambda (e0: 
+C).(\lambda (u: T).(\lambda (_: T).(eq C (CHead x1 (Bind b) x2) (CHead e0 
+(Bind b0) u)))))) (\lambda (b0: B).(\lambda (e0: C).(\lambda (_: T).(\lambda 
+(w: T).(getl n c2 (CHead e0 (Bind b0) w)))))) (\lambda (_: B).(\lambda (_: 
+C).(\lambda (u: T).(\lambda (w: T).(subst0 (minus i (S n)) v u w)))))) (ex3_4 
+B C C T (\lambda (b0: B).(\lambda (e1: C).(\lambda (_: C).(\lambda (u: T).(eq 
+C (CHead x1 (Bind b) x2) (CHead e1 (Bind b0) u)))))) (\lambda (b0: 
+B).(\lambda (_: C).(\lambda (e2: C).(\lambda (u: T).(getl n c2 (CHead e2 
+(Bind b0) u)))))) (\lambda (_: B).(\lambda (e1: C).(\lambda (e2: C).(\lambda 
+(_: T).(csubst0 (minus i (S n)) v e1 e2)))))) (ex4_5 B C C T T (\lambda (b0: 
+B).(\lambda (e1: C).(\lambda (_: C).(\lambda (u: T).(\lambda (_: T).(eq C 
+(CHead x1 (Bind b) x2) (CHead e1 (Bind b0) u))))))) (\lambda (b0: B).(\lambda 
+(_: C).(\lambda (e2: C).(\lambda (_: T).(\lambda (w: T).(getl n c2 (CHead e2 
+(Bind b0) w))))))) (\lambda (_: B).(\lambda (_: C).(\lambda (_: C).(\lambda 
+(u: T).(\lambda (w: T).(subst0 (minus i (S n)) v u w)))))) (\lambda (_: 
+B).(\lambda (e1: C).(\lambda (e2: C).(\lambda (_: T).(\lambda (_: T).(csubst0 
+(minus i (S n)) v e1 e2))))))) (ex3_4_intro B C T T (\lambda (b0: B).(\lambda 
+(e0: C).(\lambda (u: T).(\lambda (_: T).(eq C (CHead x1 (Bind b) x2) (CHead 
+e0 (Bind b0) u)))))) (\lambda (b0: B).(\lambda (e0: C).(\lambda (_: 
+T).(\lambda (w: T).(getl n c2 (CHead e0 (Bind b0) w)))))) (\lambda (_: 
+B).(\lambda (_: C).(\lambda (u: T).(\lambda (w: T).(subst0 (minus i (S n)) v 
+u w))))) b x1 x2 x3 (refl_equal C (CHead x1 (Bind b) x2)) (getl_intro n c2 
+(CHead x1 (Bind b) x3) (CHead x1 (Bind b) x3) H11 (clear_bind b x1 x3)) H12)) 
+e (clear_gen_bind b x1 e x2 H13)))))) (\lambda (f: F).(\lambda (H11: (drop n 
+O c2 (CHead x1 (Flat f) x3))).(\lambda (_: (subst0 (minus i (s (Flat f) n)) v 
+x2 x3)).(\lambda (H13: (clear (CHead x1 (Flat f) x2) e)).(or4_intro0 (getl n 
+c2 e) (ex3_4 B C T T (\lambda (b: B).(\lambda (e0: C).(\lambda (u: 
+T).(\lambda (_: T).(eq C e (CHead e0 (Bind b) u)))))) (\lambda (b: 
+B).(\lambda (e0: C).(\lambda (_: T).(\lambda (w: T).(getl n c2 (CHead e0 
+(Bind b) w)))))) (\lambda (_: B).(\lambda (_: C).(\lambda (u: T).(\lambda (w: 
+T).(subst0 (minus i (S n)) v u w)))))) (ex3_4 B C C T (\lambda (b: 
+B).(\lambda (e1: C).(\lambda (_: C).(\lambda (u: T).(eq C e (CHead e1 (Bind 
+b) u)))))) (\lambda (b: B).(\lambda (_: C).(\lambda (e2: C).(\lambda (u: 
+T).(getl n c2 (CHead e2 (Bind b) u)))))) (\lambda (_: B).(\lambda (e1: 
+C).(\lambda (e2: C).(\lambda (_: T).(csubst0 (minus i (S n)) v e1 e2)))))) 
+(ex4_5 B C C T T (\lambda (b: B).(\lambda (e1: C).(\lambda (_: C).(\lambda 
+(u: T).(\lambda (_: T).(eq C e (CHead e1 (Bind b) u))))))) (\lambda (b: 
+B).(\lambda (_: C).(\lambda (e2: C).(\lambda (_: T).(\lambda (w: T).(getl n 
+c2 (CHead e2 (Bind b) w))))))) (\lambda (_: B).(\lambda (_: C).(\lambda (_: 
+C).(\lambda (u: T).(\lambda (w: T).(subst0 (minus i (S n)) v u w)))))) 
+(\lambda (_: B).(\lambda (e1: C).(\lambda (e2: C).(\lambda (_: T).(\lambda 
+(_: T).(csubst0 (minus i (S n)) v e1 e2))))))) (getl_intro n c2 e (CHead x1 
+(Flat f) x3) H11 (clear_flat x1 e (clear_gen_flat f x1 e x2 H13) f x3))))))) 
+x0 H8 H9 H10))))))))) H6)) (\lambda (H6: (ex3_4 K C C T (\lambda (k: 
 K).(\lambda (e1: C).(\lambda (_: C).(\lambda (u: T).(eq C x (CHead e1 k 
 u)))))) (\lambda (k: K).(\lambda (_: C).(\lambda (e2: C).(\lambda (u: 
 T).(drop n O c2 (CHead e2 k u)))))) (\lambda (k: K).(\lambda (e1: C).(\lambda 
@@ -329,9 +329,88 @@ T).(\lambda (_: T).(csubst0 (minus i (S n)) v e1 e2)))))))) (\lambda (x0:
 K).(\lambda (x1: C).(\lambda (x2: C).(\lambda (x3: T).(\lambda (H7: (eq C x 
 (CHead x1 x0 x3))).(\lambda (H8: (drop n O c2 (CHead x2 x0 x3))).(\lambda 
 (H9: (csubst0 (minus i (s x0 n)) v x1 x2)).(let H10 \def (eq_ind C x (\lambda 
-(c: C).(clear c e)) H4 (CHead x1 x0 x3) H7) in ((match x0 in K return 
-(\lambda (k: K).((drop n O c2 (CHead x2 k x3)) \to ((csubst0 (minus i (s k 
-n)) v x1 x2) \to ((clear (CHead x1 k x3) e) \to (or4 (getl n c2 e) (ex3_4 B C 
+(c: C).(clear c e)) H4 (CHead x1 x0 x3) H7) in (K_ind (\lambda (k: K).((drop 
+n O c2 (CHead x2 k x3)) \to ((csubst0 (minus i (s k n)) v x1 x2) \to ((clear 
+(CHead x1 k x3) e) \to (or4 (getl n c2 e) (ex3_4 B C T T (\lambda (b: 
+B).(\lambda (e0: C).(\lambda (u: T).(\lambda (_: T).(eq C e (CHead e0 (Bind 
+b) u)))))) (\lambda (b: B).(\lambda (e0: C).(\lambda (_: T).(\lambda (w: 
+T).(getl n c2 (CHead e0 (Bind b) w)))))) (\lambda (_: B).(\lambda (_: 
+C).(\lambda (u: T).(\lambda (w: T).(subst0 (minus i (S n)) v u w)))))) (ex3_4 
+B C C T (\lambda (b: B).(\lambda (e1: C).(\lambda (_: C).(\lambda (u: T).(eq 
+C e (CHead e1 (Bind b) u)))))) (\lambda (b: B).(\lambda (_: C).(\lambda (e2: 
+C).(\lambda (u: T).(getl n c2 (CHead e2 (Bind b) u)))))) (\lambda (_: 
+B).(\lambda (e1: C).(\lambda (e2: C).(\lambda (_: T).(csubst0 (minus i (S n)) 
+v e1 e2)))))) (ex4_5 B C C T T (\lambda (b: B).(\lambda (e1: C).(\lambda (_: 
+C).(\lambda (u: T).(\lambda (_: T).(eq C e (CHead e1 (Bind b) u))))))) 
+(\lambda (b: B).(\lambda (_: C).(\lambda (e2: C).(\lambda (_: T).(\lambda (w: 
+T).(getl n c2 (CHead e2 (Bind b) w))))))) (\lambda (_: B).(\lambda (_: 
+C).(\lambda (_: C).(\lambda (u: T).(\lambda (w: T).(subst0 (minus i (S n)) v 
+u w)))))) (\lambda (_: B).(\lambda (e1: C).(\lambda (e2: C).(\lambda (_: 
+T).(\lambda (_: T).(csubst0 (minus i (S n)) v e1 e2)))))))))))) (\lambda (b: 
+B).(\lambda (H11: (drop n O c2 (CHead x2 (Bind b) x3))).(\lambda (H12: 
+(csubst0 (minus i (s (Bind b) n)) v x1 x2)).(\lambda (H13: (clear (CHead x1 
+(Bind b) x3) e)).(eq_ind_r C (CHead x1 (Bind b) x3) (\lambda (c: C).(or4 
+(getl n c2 c) (ex3_4 B C T T (\lambda (b0: B).(\lambda (e0: C).(\lambda (u: 
+T).(\lambda (_: T).(eq C c (CHead e0 (Bind b0) u)))))) (\lambda (b0: 
+B).(\lambda (e0: C).(\lambda (_: T).(\lambda (w: T).(getl n c2 (CHead e0 
+(Bind b0) w)))))) (\lambda (_: B).(\lambda (_: C).(\lambda (u: T).(\lambda 
+(w: T).(subst0 (minus i (S n)) v u w)))))) (ex3_4 B C C T (\lambda (b0: 
+B).(\lambda (e1: C).(\lambda (_: C).(\lambda (u: T).(eq C c (CHead e1 (Bind 
+b0) u)))))) (\lambda (b0: B).(\lambda (_: C).(\lambda (e2: C).(\lambda (u: 
+T).(getl n c2 (CHead e2 (Bind b0) u)))))) (\lambda (_: B).(\lambda (e1: 
+C).(\lambda (e2: C).(\lambda (_: T).(csubst0 (minus i (S n)) v e1 e2)))))) 
+(ex4_5 B C C T T (\lambda (b0: B).(\lambda (e1: C).(\lambda (_: C).(\lambda 
+(u: T).(\lambda (_: T).(eq C c (CHead e1 (Bind b0) u))))))) (\lambda (b0: 
+B).(\lambda (_: C).(\lambda (e2: C).(\lambda (_: T).(\lambda (w: T).(getl n 
+c2 (CHead e2 (Bind b0) w))))))) (\lambda (_: B).(\lambda (_: C).(\lambda (_: 
+C).(\lambda (u: T).(\lambda (w: T).(subst0 (minus i (S n)) v u w)))))) 
+(\lambda (_: B).(\lambda (e1: C).(\lambda (e2: C).(\lambda (_: T).(\lambda 
+(_: T).(csubst0 (minus i (S n)) v e1 e2))))))))) (or4_intro2 (getl n c2 
+(CHead x1 (Bind b) x3)) (ex3_4 B C T T (\lambda (b0: B).(\lambda (e0: 
+C).(\lambda (u: T).(\lambda (_: T).(eq C (CHead x1 (Bind b) x3) (CHead e0 
+(Bind b0) u)))))) (\lambda (b0: B).(\lambda (e0: C).(\lambda (_: T).(\lambda 
+(w: T).(getl n c2 (CHead e0 (Bind b0) w)))))) (\lambda (_: B).(\lambda (_: 
+C).(\lambda (u: T).(\lambda (w: T).(subst0 (minus i (S n)) v u w)))))) (ex3_4 
+B C C T (\lambda (b0: B).(\lambda (e1: C).(\lambda (_: C).(\lambda (u: T).(eq 
+C (CHead x1 (Bind b) x3) (CHead e1 (Bind b0) u)))))) (\lambda (b0: 
+B).(\lambda (_: C).(\lambda (e2: C).(\lambda (u: T).(getl n c2 (CHead e2 
+(Bind b0) u)))))) (\lambda (_: B).(\lambda (e1: C).(\lambda (e2: C).(\lambda 
+(_: T).(csubst0 (minus i (S n)) v e1 e2)))))) (ex4_5 B C C T T (\lambda (b0: 
+B).(\lambda (e1: C).(\lambda (_: C).(\lambda (u: T).(\lambda (_: T).(eq C 
+(CHead x1 (Bind b) x3) (CHead e1 (Bind b0) u))))))) (\lambda (b0: B).(\lambda 
+(_: C).(\lambda (e2: C).(\lambda (_: T).(\lambda (w: T).(getl n c2 (CHead e2 
+(Bind b0) w))))))) (\lambda (_: B).(\lambda (_: C).(\lambda (_: C).(\lambda 
+(u: T).(\lambda (w: T).(subst0 (minus i (S n)) v u w)))))) (\lambda (_: 
+B).(\lambda (e1: C).(\lambda (e2: C).(\lambda (_: T).(\lambda (_: T).(csubst0 
+(minus i (S n)) v e1 e2))))))) (ex3_4_intro B C C T (\lambda (b0: B).(\lambda 
+(e1: C).(\lambda (_: C).(\lambda (u: T).(eq C (CHead x1 (Bind b) x3) (CHead 
+e1 (Bind b0) u)))))) (\lambda (b0: B).(\lambda (_: C).(\lambda (e2: 
+C).(\lambda (u: T).(getl n c2 (CHead e2 (Bind b0) u)))))) (\lambda (_: 
+B).(\lambda (e1: C).(\lambda (e2: C).(\lambda (_: T).(csubst0 (minus i (S n)) 
+v e1 e2))))) b x1 x2 x3 (refl_equal C (CHead x1 (Bind b) x3)) (getl_intro n 
+c2 (CHead x2 (Bind b) x3) (CHead x2 (Bind b) x3) H11 (clear_bind b x2 x3)) 
+H12)) e (clear_gen_bind b x1 e x3 H13)))))) (\lambda (f: F).(\lambda (H11: 
+(drop n O c2 (CHead x2 (Flat f) x3))).(\lambda (H12: (csubst0 (minus i (s 
+(Flat f) n)) v x1 x2)).(\lambda (H13: (clear (CHead x1 (Flat f) x3) e)).(let 
+H14 \def (eq_ind nat (minus i n) (\lambda (n0: nat).(csubst0 n0 v x1 x2)) H12 
+(S (minus i (S n))) (minus_x_Sy i n H)) in (let H15 \def (csubst0_clear_S x1 
+x2 v (minus i (S n)) H14 e (clear_gen_flat f x1 e x3 H13)) in (or4_ind (clear 
+x2 e) (ex3_4 B C T T (\lambda (b: B).(\lambda (e0: C).(\lambda (u1: 
+T).(\lambda (_: T).(eq C e (CHead e0 (Bind b) u1)))))) (\lambda (b: 
+B).(\lambda (e0: C).(\lambda (_: T).(\lambda (u2: T).(clear x2 (CHead e0 
+(Bind b) u2)))))) (\lambda (_: B).(\lambda (_: C).(\lambda (u1: T).(\lambda 
+(u2: T).(subst0 (minus i (S n)) v u1 u2)))))) (ex3_4 B C C T (\lambda (b: 
+B).(\lambda (e1: C).(\lambda (_: C).(\lambda (u: T).(eq C e (CHead e1 (Bind 
+b) u)))))) (\lambda (b: B).(\lambda (_: C).(\lambda (e2: C).(\lambda (u: 
+T).(clear x2 (CHead e2 (Bind b) u)))))) (\lambda (_: B).(\lambda (e1: 
+C).(\lambda (e2: C).(\lambda (_: T).(csubst0 (minus i (S n)) v e1 e2)))))) 
+(ex4_5 B C C T T (\lambda (b: B).(\lambda (e1: C).(\lambda (_: C).(\lambda 
+(u1: T).(\lambda (_: T).(eq C e (CHead e1 (Bind b) u1))))))) (\lambda (b: 
+B).(\lambda (_: C).(\lambda (e2: C).(\lambda (_: T).(\lambda (u2: T).(clear 
+x2 (CHead e2 (Bind b) u2))))))) (\lambda (_: B).(\lambda (_: C).(\lambda (_: 
+C).(\lambda (u1: T).(\lambda (u2: T).(subst0 (minus i (S n)) v u1 u2)))))) 
+(\lambda (_: B).(\lambda (e1: C).(\lambda (e2: C).(\lambda (_: T).(\lambda 
+(_: T).(csubst0 (minus i (S n)) v e1 e2))))))) (or4 (getl n c2 e) (ex3_4 B C 
 T T (\lambda (b: B).(\lambda (e0: C).(\lambda (u: T).(\lambda (_: T).(eq C e 
 (CHead e0 (Bind b) u)))))) (\lambda (b: B).(\lambda (e0: C).(\lambda (_: 
 T).(\lambda (w: T).(getl n c2 (CHead e0 (Bind b) w)))))) (\lambda (_: 
@@ -347,114 +426,9 @@ C).(\lambda (_: T).(\lambda (w: T).(getl n c2 (CHead e2 (Bind b) w)))))))
 (\lambda (_: B).(\lambda (_: C).(\lambda (_: C).(\lambda (u: T).(\lambda (w: 
 T).(subst0 (minus i (S n)) v u w)))))) (\lambda (_: B).(\lambda (e1: 
 C).(\lambda (e2: C).(\lambda (_: T).(\lambda (_: T).(csubst0 (minus i (S n)) 
-v e1 e2)))))))))))) with [(Bind b) \Rightarrow (\lambda (H11: (drop n O c2 
-(CHead x2 (Bind b) x3))).(\lambda (H12: (csubst0 (minus i (s (Bind b) n)) v 
-x1 x2)).(\lambda (H13: (clear (CHead x1 (Bind b) x3) e)).(eq_ind_r C (CHead 
-x1 (Bind b) x3) (\lambda (c: C).(or4 (getl n c2 c) (ex3_4 B C T T (\lambda 
-(b0: B).(\lambda (e0: C).(\lambda (u: T).(\lambda (_: T).(eq C c (CHead e0 
-(Bind b0) u)))))) (\lambda (b0: B).(\lambda (e0: C).(\lambda (_: T).(\lambda 
-(w: T).(getl n c2 (CHead e0 (Bind b0) w)))))) (\lambda (_: B).(\lambda (_: 
-C).(\lambda (u: T).(\lambda (w: T).(subst0 (minus i (S n)) v u w)))))) (ex3_4 
-B C C T (\lambda (b0: B).(\lambda (e1: C).(\lambda (_: C).(\lambda (u: T).(eq 
-C c (CHead e1 (Bind b0) u)))))) (\lambda (b0: B).(\lambda (_: C).(\lambda 
-(e2: C).(\lambda (u: T).(getl n c2 (CHead e2 (Bind b0) u)))))) (\lambda (_: 
-B).(\lambda (e1: C).(\lambda (e2: C).(\lambda (_: T).(csubst0 (minus i (S n)) 
-v e1 e2)))))) (ex4_5 B C C T T (\lambda (b0: B).(\lambda (e1: C).(\lambda (_: 
-C).(\lambda (u: T).(\lambda (_: T).(eq C c (CHead e1 (Bind b0) u))))))) 
-(\lambda (b0: B).(\lambda (_: C).(\lambda (e2: C).(\lambda (_: T).(\lambda 
-(w: T).(getl n c2 (CHead e2 (Bind b0) w))))))) (\lambda (_: B).(\lambda (_: 
-C).(\lambda (_: C).(\lambda (u: T).(\lambda (w: T).(subst0 (minus i (S n)) v 
-u w)))))) (\lambda (_: B).(\lambda (e1: C).(\lambda (e2: C).(\lambda (_: 
-T).(\lambda (_: T).(csubst0 (minus i (S n)) v e1 e2))))))))) (or4_intro2 
-(getl n c2 (CHead x1 (Bind b) x3)) (ex3_4 B C T T (\lambda (b0: B).(\lambda 
-(e0: C).(\lambda (u: T).(\lambda (_: T).(eq C (CHead x1 (Bind b) x3) (CHead 
-e0 (Bind b0) u)))))) (\lambda (b0: B).(\lambda (e0: C).(\lambda (_: 
-T).(\lambda (w: T).(getl n c2 (CHead e0 (Bind b0) w)))))) (\lambda (_: 
-B).(\lambda (_: C).(\lambda (u: T).(\lambda (w: T).(subst0 (minus i (S n)) v 
-u w)))))) (ex3_4 B C C T (\lambda (b0: B).(\lambda (e1: C).(\lambda (_: 
-C).(\lambda (u: T).(eq C (CHead x1 (Bind b) x3) (CHead e1 (Bind b0) u)))))) 
-(\lambda (b0: B).(\lambda (_: C).(\lambda (e2: C).(\lambda (u: T).(getl n c2 
-(CHead e2 (Bind b0) u)))))) (\lambda (_: B).(\lambda (e1: C).(\lambda (e2: 
-C).(\lambda (_: T).(csubst0 (minus i (S n)) v e1 e2)))))) (ex4_5 B C C T T 
-(\lambda (b0: B).(\lambda (e1: C).(\lambda (_: C).(\lambda (u: T).(\lambda 
-(_: T).(eq C (CHead x1 (Bind b) x3) (CHead e1 (Bind b0) u))))))) (\lambda 
-(b0: B).(\lambda (_: C).(\lambda (e2: C).(\lambda (_: T).(\lambda (w: 
-T).(getl n c2 (CHead e2 (Bind b0) w))))))) (\lambda (_: B).(\lambda (_: 
-C).(\lambda (_: C).(\lambda (u: T).(\lambda (w: T).(subst0 (minus i (S n)) v 
-u w)))))) (\lambda (_: B).(\lambda (e1: C).(\lambda (e2: C).(\lambda (_: 
-T).(\lambda (_: T).(csubst0 (minus i (S n)) v e1 e2))))))) (ex3_4_intro B C C 
-T (\lambda (b0: B).(\lambda (e1: C).(\lambda (_: C).(\lambda (u: T).(eq C 
-(CHead x1 (Bind b) x3) (CHead e1 (Bind b0) u)))))) (\lambda (b0: B).(\lambda 
-(_: C).(\lambda (e2: C).(\lambda (u: T).(getl n c2 (CHead e2 (Bind b0) 
-u)))))) (\lambda (_: B).(\lambda (e1: C).(\lambda (e2: C).(\lambda (_: 
-T).(csubst0 (minus i (S n)) v e1 e2))))) b x1 x2 x3 (refl_equal C (CHead x1 
-(Bind b) x3)) (getl_intro n c2 (CHead x2 (Bind b) x3) (CHead x2 (Bind b) x3) 
-H11 (clear_bind b x2 x3)) H12)) e (clear_gen_bind b x1 e x3 H13))))) | (Flat 
-f) \Rightarrow (\lambda (H11: (drop n O c2 (CHead x2 (Flat f) x3))).(\lambda 
-(H12: (csubst0 (minus i (s (Flat f) n)) v x1 x2)).(\lambda (H13: (clear 
-(CHead x1 (Flat f) x3) e)).(let H14 \def (eq_ind nat (minus i n) (\lambda (n: 
-nat).(csubst0 n v x1 x2)) H12 (S (minus i (S n))) (minus_x_Sy i n H)) in (let 
-H15 \def (csubst0_clear_S x1 x2 v (minus i (S n)) H14 e (clear_gen_flat f x1 
-e x3 H13)) in (or4_ind (clear x2 e) (ex3_4 B C T T (\lambda (b: B).(\lambda 
-(e0: C).(\lambda (u1: T).(\lambda (_: T).(eq C e (CHead e0 (Bind b) u1)))))) 
-(\lambda (b: B).(\lambda (e0: C).(\lambda (_: T).(\lambda (u2: T).(clear x2 
-(CHead e0 (Bind b) u2)))))) (\lambda (_: B).(\lambda (_: C).(\lambda (u1: 
-T).(\lambda (u2: T).(subst0 (minus i (S n)) v u1 u2)))))) (ex3_4 B C C T 
-(\lambda (b: B).(\lambda (e1: C).(\lambda (_: C).(\lambda (u: T).(eq C e 
-(CHead e1 (Bind b) u)))))) (\lambda (b: B).(\lambda (_: C).(\lambda (e2: 
-C).(\lambda (u: T).(clear x2 (CHead e2 (Bind b) u)))))) (\lambda (_: 
-B).(\lambda (e1: C).(\lambda (e2: C).(\lambda (_: T).(csubst0 (minus i (S n)) 
-v e1 e2)))))) (ex4_5 B C C T T (\lambda (b: B).(\lambda (e1: C).(\lambda (_: 
-C).(\lambda (u1: T).(\lambda (_: T).(eq C e (CHead e1 (Bind b) u1))))))) 
-(\lambda (b: B).(\lambda (_: C).(\lambda (e2: C).(\lambda (_: T).(\lambda 
-(u2: T).(clear x2 (CHead e2 (Bind b) u2))))))) (\lambda (_: B).(\lambda (_: 
-C).(\lambda (_: C).(\lambda (u1: T).(\lambda (u2: T).(subst0 (minus i (S n)) 
-v u1 u2)))))) (\lambda (_: B).(\lambda (e1: C).(\lambda (e2: C).(\lambda (_: 
-T).(\lambda (_: T).(csubst0 (minus i (S n)) v e1 e2))))))) (or4 (getl n c2 e) 
-(ex3_4 B C T T (\lambda (b: B).(\lambda (e0: C).(\lambda (u: T).(\lambda (_: 
-T).(eq C e (CHead e0 (Bind b) u)))))) (\lambda (b: B).(\lambda (e0: 
-C).(\lambda (_: T).(\lambda (w: T).(getl n c2 (CHead e0 (Bind b) w)))))) 
-(\lambda (_: B).(\lambda (_: C).(\lambda (u: T).(\lambda (w: T).(subst0 
-(minus i (S n)) v u w)))))) (ex3_4 B C C T (\lambda (b: B).(\lambda (e1: 
-C).(\lambda (_: C).(\lambda (u: T).(eq C e (CHead e1 (Bind b) u)))))) 
-(\lambda (b: B).(\lambda (_: C).(\lambda (e2: C).(\lambda (u: T).(getl n c2 
-(CHead e2 (Bind b) u)))))) (\lambda (_: B).(\lambda (e1: C).(\lambda (e2: 
-C).(\lambda (_: T).(csubst0 (minus i (S n)) v e1 e2)))))) (ex4_5 B C C T T 
-(\lambda (b: B).(\lambda (e1: C).(\lambda (_: C).(\lambda (u: T).(\lambda (_: 
-T).(eq C e (CHead e1 (Bind b) u))))))) (\lambda (b: B).(\lambda (_: 
-C).(\lambda (e2: C).(\lambda (_: T).(\lambda (w: T).(getl n c2 (CHead e2 
-(Bind b) w))))))) (\lambda (_: B).(\lambda (_: C).(\lambda (_: C).(\lambda 
-(u: T).(\lambda (w: T).(subst0 (minus i (S n)) v u w)))))) (\lambda (_: 
-B).(\lambda (e1: C).(\lambda (e2: C).(\lambda (_: T).(\lambda (_: T).(csubst0 
-(minus i (S n)) v e1 e2)))))))) (\lambda (H16: (clear x2 e)).(or4_intro0 
-(getl n c2 e) (ex3_4 B C T T (\lambda (b: B).(\lambda (e0: C).(\lambda (u: 
-T).(\lambda (_: T).(eq C e (CHead e0 (Bind b) u)))))) (\lambda (b: 
-B).(\lambda (e0: C).(\lambda (_: T).(\lambda (w: T).(getl n c2 (CHead e0 
-(Bind b) w)))))) (\lambda (_: B).(\lambda (_: C).(\lambda (u: T).(\lambda (w: 
-T).(subst0 (minus i (S n)) v u w)))))) (ex3_4 B C C T (\lambda (b: 
-B).(\lambda (e1: C).(\lambda (_: C).(\lambda (u: T).(eq C e (CHead e1 (Bind 
-b) u)))))) (\lambda (b: B).(\lambda (_: C).(\lambda (e2: C).(\lambda (u: 
-T).(getl n c2 (CHead e2 (Bind b) u)))))) (\lambda (_: B).(\lambda (e1: 
-C).(\lambda (e2: C).(\lambda (_: T).(csubst0 (minus i (S n)) v e1 e2)))))) 
-(ex4_5 B C C T T (\lambda (b: B).(\lambda (e1: C).(\lambda (_: C).(\lambda 
-(u: T).(\lambda (_: T).(eq C e (CHead e1 (Bind b) u))))))) (\lambda (b: 
-B).(\lambda (_: C).(\lambda (e2: C).(\lambda (_: T).(\lambda (w: T).(getl n 
-c2 (CHead e2 (Bind b) w))))))) (\lambda (_: B).(\lambda (_: C).(\lambda (_: 
-C).(\lambda (u: T).(\lambda (w: T).(subst0 (minus i (S n)) v u w)))))) 
-(\lambda (_: B).(\lambda (e1: C).(\lambda (e2: C).(\lambda (_: T).(\lambda 
-(_: T).(csubst0 (minus i (S n)) v e1 e2))))))) (getl_intro n c2 e (CHead x2 
-(Flat f) x3) H11 (clear_flat x2 e H16 f x3)))) (\lambda (H16: (ex3_4 B C T T 
-(\lambda (b: B).(\lambda (e0: C).(\lambda (u1: T).(\lambda (_: T).(eq C e 
-(CHead e0 (Bind b) u1)))))) (\lambda (b: B).(\lambda (e: C).(\lambda (_: 
-T).(\lambda (u2: T).(clear x2 (CHead e (Bind b) u2)))))) (\lambda (_: 
-B).(\lambda (_: C).(\lambda (u1: T).(\lambda (u2: T).(subst0 (minus i (S n)) 
-v u1 u2))))))).(ex3_4_ind B C T T (\lambda (b: B).(\lambda (e0: C).(\lambda 
-(u1: T).(\lambda (_: T).(eq C e (CHead e0 (Bind b) u1)))))) (\lambda (b: 
-B).(\lambda (e0: C).(\lambda (_: T).(\lambda (u2: T).(clear x2 (CHead e0 
-(Bind b) u2)))))) (\lambda (_: B).(\lambda (_: C).(\lambda (u1: T).(\lambda 
-(u2: T).(subst0 (minus i (S n)) v u1 u2))))) (or4 (getl n c2 e) (ex3_4 B C T 
-T (\lambda (b: B).(\lambda (e0: C).(\lambda (u: T).(\lambda (_: T).(eq C e 
-(CHead e0 (Bind b) u)))))) (\lambda (b: B).(\lambda (e0: C).(\lambda (_: 
+v e1 e2)))))))) (\lambda (H16: (clear x2 e)).(or4_intro0 (getl n c2 e) (ex3_4 
+B C T T (\lambda (b: B).(\lambda (e0: C).(\lambda (u: T).(\lambda (_: T).(eq 
+C e (CHead e0 (Bind b) u)))))) (\lambda (b: B).(\lambda (e0: C).(\lambda (_: 
 T).(\lambda (w: T).(getl n c2 (CHead e0 (Bind b) w)))))) (\lambda (_: 
 B).(\lambda (_: C).(\lambda (u: T).(\lambda (w: T).(subst0 (minus i (S n)) v 
 u w)))))) (ex3_4 B C C T (\lambda (b: B).(\lambda (e1: C).(\lambda (_: 
@@ -468,59 +442,17 @@ C).(\lambda (_: T).(\lambda (w: T).(getl n c2 (CHead e2 (Bind b) w)))))))
 (\lambda (_: B).(\lambda (_: C).(\lambda (_: C).(\lambda (u: T).(\lambda (w: 
 T).(subst0 (minus i (S n)) v u w)))))) (\lambda (_: B).(\lambda (e1: 
 C).(\lambda (e2: C).(\lambda (_: T).(\lambda (_: T).(csubst0 (minus i (S n)) 
-v e1 e2)))))))) (\lambda (x4: B).(\lambda (x5: C).(\lambda (x6: T).(\lambda 
-(x7: T).(\lambda (H17: (eq C e (CHead x5 (Bind x4) x6))).(\lambda (H18: 
-(clear x2 (CHead x5 (Bind x4) x7))).(\lambda (H19: (subst0 (minus i (S n)) v 
-x6 x7)).(eq_ind_r C (CHead x5 (Bind x4) x6) (\lambda (c: C).(or4 (getl n c2 
-c) (ex3_4 B C T T (\lambda (b: B).(\lambda (e0: C).(\lambda (u: T).(\lambda 
-(_: T).(eq C c (CHead e0 (Bind b) u)))))) (\lambda (b: B).(\lambda (e0: 
-C).(\lambda (_: T).(\lambda (w: T).(getl n c2 (CHead e0 (Bind b) w)))))) 
-(\lambda (_: B).(\lambda (_: C).(\lambda (u: T).(\lambda (w: T).(subst0 
-(minus i (S n)) v u w)))))) (ex3_4 B C C T (\lambda (b: B).(\lambda (e1: 
-C).(\lambda (_: C).(\lambda (u: T).(eq C c (CHead e1 (Bind b) u)))))) 
-(\lambda (b: B).(\lambda (_: C).(\lambda (e2: C).(\lambda (u: T).(getl n c2 
-(CHead e2 (Bind b) u)))))) (\lambda (_: B).(\lambda (e1: C).(\lambda (e2: 
-C).(\lambda (_: T).(csubst0 (minus i (S n)) v e1 e2)))))) (ex4_5 B C C T T 
-(\lambda (b: B).(\lambda (e1: C).(\lambda (_: C).(\lambda (u: T).(\lambda (_: 
-T).(eq C c (CHead e1 (Bind b) u))))))) (\lambda (b: B).(\lambda (_: 
-C).(\lambda (e2: C).(\lambda (_: T).(\lambda (w: T).(getl n c2 (CHead e2 
-(Bind b) w))))))) (\lambda (_: B).(\lambda (_: C).(\lambda (_: C).(\lambda 
-(u: T).(\lambda (w: T).(subst0 (minus i (S n)) v u w)))))) (\lambda (_: 
-B).(\lambda (e1: C).(\lambda (e2: C).(\lambda (_: T).(\lambda (_: T).(csubst0 
-(minus i (S n)) v e1 e2))))))))) (or4_intro1 (getl n c2 (CHead x5 (Bind x4) 
-x6)) (ex3_4 B C T T (\lambda (b: B).(\lambda (e0: C).(\lambda (u: T).(\lambda 
-(_: T).(eq C (CHead x5 (Bind x4) x6) (CHead e0 (Bind b) u)))))) (\lambda (b: 
-B).(\lambda (e0: C).(\lambda (_: T).(\lambda (w: T).(getl n c2 (CHead e0 
-(Bind b) w)))))) (\lambda (_: B).(\lambda (_: C).(\lambda (u: T).(\lambda (w: 
-T).(subst0 (minus i (S n)) v u w)))))) (ex3_4 B C C T (\lambda (b: 
-B).(\lambda (e1: C).(\lambda (_: C).(\lambda (u: T).(eq C (CHead x5 (Bind x4) 
-x6) (CHead e1 (Bind b) u)))))) (\lambda (b: B).(\lambda (_: C).(\lambda (e2: 
-C).(\lambda (u: T).(getl n c2 (CHead e2 (Bind b) u)))))) (\lambda (_: 
-B).(\lambda (e1: C).(\lambda (e2: C).(\lambda (_: T).(csubst0 (minus i (S n)) 
-v e1 e2)))))) (ex4_5 B C C T T (\lambda (b: B).(\lambda (e1: C).(\lambda (_: 
-C).(\lambda (u: T).(\lambda (_: T).(eq C (CHead x5 (Bind x4) x6) (CHead e1 
-(Bind b) u))))))) (\lambda (b: B).(\lambda (_: C).(\lambda (e2: C).(\lambda 
-(_: T).(\lambda (w: T).(getl n c2 (CHead e2 (Bind b) w))))))) (\lambda (_: 
-B).(\lambda (_: C).(\lambda (_: C).(\lambda (u: T).(\lambda (w: T).(subst0 
-(minus i (S n)) v u w)))))) (\lambda (_: B).(\lambda (e1: C).(\lambda (e2: 
-C).(\lambda (_: T).(\lambda (_: T).(csubst0 (minus i (S n)) v e1 e2))))))) 
-(ex3_4_intro B C T T (\lambda (b: B).(\lambda (e0: C).(\lambda (u: 
-T).(\lambda (_: T).(eq C (CHead x5 (Bind x4) x6) (CHead e0 (Bind b) u)))))) 
-(\lambda (b: B).(\lambda (e0: C).(\lambda (_: T).(\lambda (w: T).(getl n c2 
-(CHead e0 (Bind b) w)))))) (\lambda (_: B).(\lambda (_: C).(\lambda (u: 
-T).(\lambda (w: T).(subst0 (minus i (S n)) v u w))))) x4 x5 x6 x7 (refl_equal 
-C (CHead x5 (Bind x4) x6)) (getl_intro n c2 (CHead x5 (Bind x4) x7) (CHead x2 
-(Flat f) x3) H11 (clear_flat x2 (CHead x5 (Bind x4) x7) H18 f x3)) H19)) e 
-H17)))))))) H16)) (\lambda (H16: (ex3_4 B C C T (\lambda (b: B).(\lambda (e1: 
-C).(\lambda (_: C).(\lambda (u: T).(eq C e (CHead e1 (Bind b) u)))))) 
-(\lambda (b: B).(\lambda (_: C).(\lambda (e2: C).(\lambda (u: T).(clear x2 
-(CHead e2 (Bind b) u)))))) (\lambda (_: B).(\lambda (e1: C).(\lambda (e2: 
-C).(\lambda (_: T).(csubst0 (minus i (S n)) v e1 e2))))))).(ex3_4_ind B C C T 
-(\lambda (b: B).(\lambda (e1: C).(\lambda (_: C).(\lambda (u: T).(eq C e 
-(CHead e1 (Bind b) u)))))) (\lambda (b: B).(\lambda (_: C).(\lambda (e2: 
-C).(\lambda (u: T).(clear x2 (CHead e2 (Bind b) u)))))) (\lambda (_: 
-B).(\lambda (e1: C).(\lambda (e2: C).(\lambda (_: T).(csubst0 (minus i (S n)) 
-v e1 e2))))) (or4 (getl n c2 e) (ex3_4 B C T T (\lambda (b: B).(\lambda (e0: 
+v e1 e2))))))) (getl_intro n c2 e (CHead x2 (Flat f) x3) H11 (clear_flat x2 e 
+H16 f x3)))) (\lambda (H16: (ex3_4 B C T T (\lambda (b: B).(\lambda (e0: 
+C).(\lambda (u1: T).(\lambda (_: T).(eq C e (CHead e0 (Bind b) u1)))))) 
+(\lambda (b: B).(\lambda (e0: C).(\lambda (_: T).(\lambda (u2: T).(clear x2 
+(CHead e0 (Bind b) u2)))))) (\lambda (_: B).(\lambda (_: C).(\lambda (u1: 
+T).(\lambda (u2: T).(subst0 (minus i (S n)) v u1 u2))))))).(ex3_4_ind B C T T 
+(\lambda (b: B).(\lambda (e0: C).(\lambda (u1: T).(\lambda (_: T).(eq C e 
+(CHead e0 (Bind b) u1)))))) (\lambda (b: B).(\lambda (e0: C).(\lambda (_: 
+T).(\lambda (u2: T).(clear x2 (CHead e0 (Bind b) u2)))))) (\lambda (_: 
+B).(\lambda (_: C).(\lambda (u1: T).(\lambda (u2: T).(subst0 (minus i (S n)) 
+v u1 u2))))) (or4 (getl n c2 e) (ex3_4 B C T T (\lambda (b: B).(\lambda (e0: 
 C).(\lambda (u: T).(\lambda (_: T).(eq C e (CHead e0 (Bind b) u)))))) 
 (\lambda (b: B).(\lambda (e0: C).(\lambda (_: T).(\lambda (w: T).(getl n c2 
 (CHead e0 (Bind b) w)))))) (\lambda (_: B).(\lambda (_: C).(\lambda (u: 
@@ -536,10 +468,10 @@ T).(getl n c2 (CHead e2 (Bind b) w))))))) (\lambda (_: B).(\lambda (_:
 C).(\lambda (_: C).(\lambda (u: T).(\lambda (w: T).(subst0 (minus i (S n)) v 
 u w)))))) (\lambda (_: B).(\lambda (e1: C).(\lambda (e2: C).(\lambda (_: 
 T).(\lambda (_: T).(csubst0 (minus i (S n)) v e1 e2)))))))) (\lambda (x4: 
-B).(\lambda (x5: C).(\lambda (x6: C).(\lambda (x7: T).(\lambda (H17: (eq C e 
-(CHead x5 (Bind x4) x7))).(\lambda (H18: (clear x2 (CHead x6 (Bind x4) 
-x7))).(\lambda (H19: (csubst0 (minus i (S n)) v x5 x6)).(eq_ind_r C (CHead x5 
-(Bind x4) x7) (\lambda (c: C).(or4 (getl n c2 c) (ex3_4 B C T T (\lambda (b: 
+B).(\lambda (x5: C).(\lambda (x6: T).(\lambda (x7: T).(\lambda (H17: (eq C e 
+(CHead x5 (Bind x4) x6))).(\lambda (H18: (clear x2 (CHead x5 (Bind x4) 
+x7))).(\lambda (H19: (subst0 (minus i (S n)) v x6 x7)).(eq_ind_r C (CHead x5 
+(Bind x4) x6) (\lambda (c: C).(or4 (getl n c2 c) (ex3_4 B C T T (\lambda (b: 
 B).(\lambda (e0: C).(\lambda (u: T).(\lambda (_: T).(eq C c (CHead e0 (Bind 
 b) u)))))) (\lambda (b: B).(\lambda (e0: C).(\lambda (_: T).(\lambda (w: 
 T).(getl n c2 (CHead e0 (Bind b) w)))))) (\lambda (_: B).(\lambda (_: 
@@ -554,41 +486,109 @@ C).(\lambda (u: T).(\lambda (_: T).(eq C c (CHead e1 (Bind b) u)))))))
 T).(getl n c2 (CHead e2 (Bind b) w))))))) (\lambda (_: B).(\lambda (_: 
 C).(\lambda (_: C).(\lambda (u: T).(\lambda (w: T).(subst0 (minus i (S n)) v 
 u w)))))) (\lambda (_: B).(\lambda (e1: C).(\lambda (e2: C).(\lambda (_: 
-T).(\lambda (_: T).(csubst0 (minus i (S n)) v e1 e2))))))))) (or4_intro2 
-(getl n c2 (CHead x5 (Bind x4) x7)) (ex3_4 B C T T (\lambda (b: B).(\lambda 
-(e0: C).(\lambda (u: T).(\lambda (_: T).(eq C (CHead x5 (Bind x4) x7) (CHead 
+T).(\lambda (_: T).(csubst0 (minus i (S n)) v e1 e2))))))))) (or4_intro1 
+(getl n c2 (CHead x5 (Bind x4) x6)) (ex3_4 B C T T (\lambda (b: B).(\lambda 
+(e0: C).(\lambda (u: T).(\lambda (_: T).(eq C (CHead x5 (Bind x4) x6) (CHead 
 e0 (Bind b) u)))))) (\lambda (b: B).(\lambda (e0: C).(\lambda (_: T).(\lambda 
 (w: T).(getl n c2 (CHead e0 (Bind b) w)))))) (\lambda (_: B).(\lambda (_: 
 C).(\lambda (u: T).(\lambda (w: T).(subst0 (minus i (S n)) v u w)))))) (ex3_4 
 B C C T (\lambda (b: B).(\lambda (e1: C).(\lambda (_: C).(\lambda (u: T).(eq 
-C (CHead x5 (Bind x4) x7) (CHead e1 (Bind b) u)))))) (\lambda (b: B).(\lambda 
+C (CHead x5 (Bind x4) x6) (CHead e1 (Bind b) u)))))) (\lambda (b: B).(\lambda 
 (_: C).(\lambda (e2: C).(\lambda (u: T).(getl n c2 (CHead e2 (Bind b) u)))))) 
 (\lambda (_: B).(\lambda (e1: C).(\lambda (e2: C).(\lambda (_: T).(csubst0 
 (minus i (S n)) v e1 e2)))))) (ex4_5 B C C T T (\lambda (b: B).(\lambda (e1: 
 C).(\lambda (_: C).(\lambda (u: T).(\lambda (_: T).(eq C (CHead x5 (Bind x4) 
-x7) (CHead e1 (Bind b) u))))))) (\lambda (b: B).(\lambda (_: C).(\lambda (e2: 
+x6) (CHead e1 (Bind b) u))))))) (\lambda (b: B).(\lambda (_: C).(\lambda (e2: 
 C).(\lambda (_: T).(\lambda (w: T).(getl n c2 (CHead e2 (Bind b) w))))))) 
 (\lambda (_: B).(\lambda (_: C).(\lambda (_: C).(\lambda (u: T).(\lambda (w: 
 T).(subst0 (minus i (S n)) v u w)))))) (\lambda (_: B).(\lambda (e1: 
 C).(\lambda (e2: C).(\lambda (_: T).(\lambda (_: T).(csubst0 (minus i (S n)) 
-v e1 e2))))))) (ex3_4_intro B C C T (\lambda (b: B).(\lambda (e1: C).(\lambda 
-(_: C).(\lambda (u: T).(eq C (CHead x5 (Bind x4) x7) (CHead e1 (Bind b) 
-u)))))) (\lambda (b: B).(\lambda (_: C).(\lambda (e2: C).(\lambda (u: 
-T).(getl n c2 (CHead e2 (Bind b) u)))))) (\lambda (_: B).(\lambda (e1: 
-C).(\lambda (e2: C).(\lambda (_: T).(csubst0 (minus i (S n)) v e1 e2))))) x4 
-x5 x6 x7 (refl_equal C (CHead x5 (Bind x4) x7)) (getl_intro n c2 (CHead x6 
-(Bind x4) x7) (CHead x2 (Flat f) x3) H11 (clear_flat x2 (CHead x6 (Bind x4) 
-x7) H18 f x3)) H19)) e H17)))))))) H16)) (\lambda (H16: (ex4_5 B C C T T 
-(\lambda (b: B).(\lambda (e1: C).(\lambda (_: C).(\lambda (u1: T).(\lambda 
-(_: T).(eq C e (CHead e1 (Bind b) u1))))))) (\lambda (b: B).(\lambda (_: 
-C).(\lambda (e2: C).(\lambda (_: T).(\lambda (u2: T).(clear x2 (CHead e2 
-(Bind b) u2))))))) (\lambda (_: B).(\lambda (_: C).(\lambda (_: C).(\lambda 
-(u1: T).(\lambda (u2: T).(subst0 (minus i (S n)) v u1 u2)))))) (\lambda (_: 
+v e1 e2))))))) (ex3_4_intro B C T T (\lambda (b: B).(\lambda (e0: C).(\lambda 
+(u: T).(\lambda (_: T).(eq C (CHead x5 (Bind x4) x6) (CHead e0 (Bind b) 
+u)))))) (\lambda (b: B).(\lambda (e0: C).(\lambda (_: T).(\lambda (w: 
+T).(getl n c2 (CHead e0 (Bind b) w)))))) (\lambda (_: B).(\lambda (_: 
+C).(\lambda (u: T).(\lambda (w: T).(subst0 (minus i (S n)) v u w))))) x4 x5 
+x6 x7 (refl_equal C (CHead x5 (Bind x4) x6)) (getl_intro n c2 (CHead x5 (Bind 
+x4) x7) (CHead x2 (Flat f) x3) H11 (clear_flat x2 (CHead x5 (Bind x4) x7) H18 
+f x3)) H19)) e H17)))))))) H16)) (\lambda (H16: (ex3_4 B C C T (\lambda (b: 
+B).(\lambda (e1: C).(\lambda (_: C).(\lambda (u: T).(eq C e (CHead e1 (Bind 
+b) u)))))) (\lambda (b: B).(\lambda (_: C).(\lambda (e2: C).(\lambda (u: 
+T).(clear x2 (CHead e2 (Bind b) u)))))) (\lambda (_: B).(\lambda (e1: 
+C).(\lambda (e2: C).(\lambda (_: T).(csubst0 (minus i (S n)) v e1 
+e2))))))).(ex3_4_ind B C C T (\lambda (b: B).(\lambda (e1: C).(\lambda (_: 
+C).(\lambda (u: T).(eq C e (CHead e1 (Bind b) u)))))) (\lambda (b: 
+B).(\lambda (_: C).(\lambda (e2: C).(\lambda (u: T).(clear x2 (CHead e2 (Bind 
+b) u)))))) (\lambda (_: B).(\lambda (e1: C).(\lambda (e2: C).(\lambda (_: 
+T).(csubst0 (minus i (S n)) v e1 e2))))) (or4 (getl n c2 e) (ex3_4 B C T T 
+(\lambda (b: B).(\lambda (e0: C).(\lambda (u: T).(\lambda (_: T).(eq C e 
+(CHead e0 (Bind b) u)))))) (\lambda (b: B).(\lambda (e0: C).(\lambda (_: 
+T).(\lambda (w: T).(getl n c2 (CHead e0 (Bind b) w)))))) (\lambda (_: 
+B).(\lambda (_: C).(\lambda (u: T).(\lambda (w: T).(subst0 (minus i (S n)) v 
+u w)))))) (ex3_4 B C C T (\lambda (b: B).(\lambda (e1: C).(\lambda (_: 
+C).(\lambda (u: T).(eq C e (CHead e1 (Bind b) u)))))) (\lambda (b: 
+B).(\lambda (_: C).(\lambda (e2: C).(\lambda (u: T).(getl n c2 (CHead e2 
+(Bind b) u)))))) (\lambda (_: B).(\lambda (e1: C).(\lambda (e2: C).(\lambda 
+(_: T).(csubst0 (minus i (S n)) v e1 e2)))))) (ex4_5 B C C T T (\lambda (b: 
+B).(\lambda (e1: C).(\lambda (_: C).(\lambda (u: T).(\lambda (_: T).(eq C e 
+(CHead e1 (Bind b) u))))))) (\lambda (b: B).(\lambda (_: C).(\lambda (e2: 
+C).(\lambda (_: T).(\lambda (w: T).(getl n c2 (CHead e2 (Bind b) w))))))) 
+(\lambda (_: B).(\lambda (_: C).(\lambda (_: C).(\lambda (u: T).(\lambda (w: 
+T).(subst0 (minus i (S n)) v u w)))))) (\lambda (_: B).(\lambda (e1: 
+C).(\lambda (e2: C).(\lambda (_: T).(\lambda (_: T).(csubst0 (minus i (S n)) 
+v e1 e2)))))))) (\lambda (x4: B).(\lambda (x5: C).(\lambda (x6: C).(\lambda 
+(x7: T).(\lambda (H17: (eq C e (CHead x5 (Bind x4) x7))).(\lambda (H18: 
+(clear x2 (CHead x6 (Bind x4) x7))).(\lambda (H19: (csubst0 (minus i (S n)) v 
+x5 x6)).(eq_ind_r C (CHead x5 (Bind x4) x7) (\lambda (c: C).(or4 (getl n c2 
+c) (ex3_4 B C T T (\lambda (b: B).(\lambda (e0: C).(\lambda (u: T).(\lambda 
+(_: T).(eq C c (CHead e0 (Bind b) u)))))) (\lambda (b: B).(\lambda (e0: 
+C).(\lambda (_: T).(\lambda (w: T).(getl n c2 (CHead e0 (Bind b) w)))))) 
+(\lambda (_: B).(\lambda (_: C).(\lambda (u: T).(\lambda (w: T).(subst0 
+(minus i (S n)) v u w)))))) (ex3_4 B C C T (\lambda (b: B).(\lambda (e1: 
+C).(\lambda (_: C).(\lambda (u: T).(eq C c (CHead e1 (Bind b) u)))))) 
+(\lambda (b: B).(\lambda (_: C).(\lambda (e2: C).(\lambda (u: T).(getl n c2 
+(CHead e2 (Bind b) u)))))) (\lambda (_: B).(\lambda (e1: C).(\lambda (e2: 
+C).(\lambda (_: T).(csubst0 (minus i (S n)) v e1 e2)))))) (ex4_5 B C C T T 
+(\lambda (b: B).(\lambda (e1: C).(\lambda (_: C).(\lambda (u: T).(\lambda (_: 
+T).(eq C c (CHead e1 (Bind b) u))))))) (\lambda (b: B).(\lambda (_: 
+C).(\lambda (e2: C).(\lambda (_: T).(\lambda (w: T).(getl n c2 (CHead e2 
+(Bind b) w))))))) (\lambda (_: B).(\lambda (_: C).(\lambda (_: C).(\lambda 
+(u: T).(\lambda (w: T).(subst0 (minus i (S n)) v u w)))))) (\lambda (_: 
 B).(\lambda (e1: C).(\lambda (e2: C).(\lambda (_: T).(\lambda (_: T).(csubst0 
-(minus i (S n)) v e1 e2)))))))).(ex4_5_ind B C C T T (\lambda (b: B).(\lambda 
-(e1: C).(\lambda (_: C).(\lambda (u1: T).(\lambda (_: T).(eq C e (CHead e1 
-(Bind b) u1))))))) (\lambda (b: B).(\lambda (_: C).(\lambda (e2: C).(\lambda 
-(_: T).(\lambda (u2: T).(clear x2 (CHead e2 (Bind b) u2))))))) (\lambda (_: 
+(minus i (S n)) v e1 e2))))))))) (or4_intro2 (getl n c2 (CHead x5 (Bind x4) 
+x7)) (ex3_4 B C T T (\lambda (b: B).(\lambda (e0: C).(\lambda (u: T).(\lambda 
+(_: T).(eq C (CHead x5 (Bind x4) x7) (CHead e0 (Bind b) u)))))) (\lambda (b: 
+B).(\lambda (e0: C).(\lambda (_: T).(\lambda (w: T).(getl n c2 (CHead e0 
+(Bind b) w)))))) (\lambda (_: B).(\lambda (_: C).(\lambda (u: T).(\lambda (w: 
+T).(subst0 (minus i (S n)) v u w)))))) (ex3_4 B C C T (\lambda (b: 
+B).(\lambda (e1: C).(\lambda (_: C).(\lambda (u: T).(eq C (CHead x5 (Bind x4) 
+x7) (CHead e1 (Bind b) u)))))) (\lambda (b: B).(\lambda (_: C).(\lambda (e2: 
+C).(\lambda (u: T).(getl n c2 (CHead e2 (Bind b) u)))))) (\lambda (_: 
+B).(\lambda (e1: C).(\lambda (e2: C).(\lambda (_: T).(csubst0 (minus i (S n)) 
+v e1 e2)))))) (ex4_5 B C C T T (\lambda (b: B).(\lambda (e1: C).(\lambda (_: 
+C).(\lambda (u: T).(\lambda (_: T).(eq C (CHead x5 (Bind x4) x7) (CHead e1 
+(Bind b) u))))))) (\lambda (b: B).(\lambda (_: C).(\lambda (e2: C).(\lambda 
+(_: T).(\lambda (w: T).(getl n c2 (CHead e2 (Bind b) w))))))) (\lambda (_: 
+B).(\lambda (_: C).(\lambda (_: C).(\lambda (u: T).(\lambda (w: T).(subst0 
+(minus i (S n)) v u w)))))) (\lambda (_: B).(\lambda (e1: C).(\lambda (e2: 
+C).(\lambda (_: T).(\lambda (_: T).(csubst0 (minus i (S n)) v e1 e2))))))) 
+(ex3_4_intro B C C T (\lambda (b: B).(\lambda (e1: C).(\lambda (_: 
+C).(\lambda (u: T).(eq C (CHead x5 (Bind x4) x7) (CHead e1 (Bind b) u)))))) 
+(\lambda (b: B).(\lambda (_: C).(\lambda (e2: C).(\lambda (u: T).(getl n c2 
+(CHead e2 (Bind b) u)))))) (\lambda (_: B).(\lambda (e1: C).(\lambda (e2: 
+C).(\lambda (_: T).(csubst0 (minus i (S n)) v e1 e2))))) x4 x5 x6 x7 
+(refl_equal C (CHead x5 (Bind x4) x7)) (getl_intro n c2 (CHead x6 (Bind x4) 
+x7) (CHead x2 (Flat f) x3) H11 (clear_flat x2 (CHead x6 (Bind x4) x7) H18 f 
+x3)) H19)) e H17)))))))) H16)) (\lambda (H16: (ex4_5 B C C T T (\lambda (b: 
+B).(\lambda (e1: C).(\lambda (_: C).(\lambda (u1: T).(\lambda (_: T).(eq C e 
+(CHead e1 (Bind b) u1))))))) (\lambda (b: B).(\lambda (_: C).(\lambda (e2: 
+C).(\lambda (_: T).(\lambda (u2: T).(clear x2 (CHead e2 (Bind b) u2))))))) 
+(\lambda (_: B).(\lambda (_: C).(\lambda (_: C).(\lambda (u1: T).(\lambda 
+(u2: T).(subst0 (minus i (S n)) v u1 u2)))))) (\lambda (_: B).(\lambda (e1: 
+C).(\lambda (e2: C).(\lambda (_: T).(\lambda (_: T).(csubst0 (minus i (S n)) 
+v e1 e2)))))))).(ex4_5_ind B C C T T (\lambda (b: B).(\lambda (e1: 
+C).(\lambda (_: C).(\lambda (u1: T).(\lambda (_: T).(eq C e (CHead e1 (Bind 
+b) u1))))))) (\lambda (b: B).(\lambda (_: C).(\lambda (e2: C).(\lambda (_: 
+T).(\lambda (u2: T).(clear x2 (CHead e2 (Bind b) u2))))))) (\lambda (_: 
 B).(\lambda (_: C).(\lambda (_: C).(\lambda (u1: T).(\lambda (u2: T).(subst0 
 (minus i (S n)) v u1 u2)))))) (\lambda (_: B).(\lambda (e1: C).(\lambda (e2: 
 C).(\lambda (_: T).(\lambda (_: T).(csubst0 (minus i (S n)) v e1 e2)))))) 
@@ -654,7 +654,7 @@ C).(\lambda (e2: C).(\lambda (_: T).(\lambda (_: T).(csubst0 (minus i (S n))
 v e1 e2)))))) x4 x5 x6 x7 x8 (refl_equal C (CHead x5 (Bind x4) x7)) 
 (getl_intro n c2 (CHead x6 (Bind x4) x8) (CHead x2 (Flat f) x3) H11 
 (clear_flat x2 (CHead x6 (Bind x4) x8) H18 f x3)) H19 H20)) e H17)))))))))) 
-H16)) H15))))))]) H8 H9 H10))))))))) H6)) (\lambda (H6: (ex4_5 K C C T T 
+H16)) H15))))))) x0 H8 H9 H10))))))))) H6)) (\lambda (H6: (ex4_5 K C C T T 
 (\lambda (k: K).(\lambda (e1: C).(\lambda (_: C).(\lambda (u: T).(\lambda (_: 
 T).(eq C x (CHead e1 k u))))))) (\lambda (k: K).(\lambda (_: C).(\lambda (e2: 
 C).(\lambda (_: T).(\lambda (w: T).(drop n O c2 (CHead e2 k w))))))) (\lambda 
@@ -688,36 +688,36 @@ C).(\lambda (u: T).(\lambda (w: T).(subst0 (minus i (S n)) v u w))))))
 C x (CHead x1 x0 x3))).(\lambda (H8: (drop n O c2 (CHead x2 x0 x4))).(\lambda 
 (H9: (subst0 (minus i (s x0 n)) v x3 x4)).(\lambda (H10: (csubst0 (minus i (s 
 x0 n)) v x1 x2)).(let H11 \def (eq_ind C x (\lambda (c: C).(clear c e)) H4 
-(CHead x1 x0 x3) H7) in ((match x0 in K return (\lambda (k: K).((drop n O c2 
-(CHead x2 k x4)) \to ((subst0 (minus i (s k n)) v x3 x4) \to ((csubst0 (minus 
-i (s k n)) v x1 x2) \to ((clear (CHead x1 k x3) e) \to (or4 (getl n c2 e) 
-(ex3_4 B C T T (\lambda (b: B).(\lambda (e0: C).(\lambda (u: T).(\lambda (_: 
-T).(eq C e (CHead e0 (Bind b) u)))))) (\lambda (b: B).(\lambda (e0: 
-C).(\lambda (_: T).(\lambda (w: T).(getl n c2 (CHead e0 (Bind b) w)))))) 
-(\lambda (_: B).(\lambda (_: C).(\lambda (u: T).(\lambda (w: T).(subst0 
-(minus i (S n)) v u w)))))) (ex3_4 B C C T (\lambda (b: B).(\lambda (e1: 
-C).(\lambda (_: C).(\lambda (u: T).(eq C e (CHead e1 (Bind b) u)))))) 
-(\lambda (b: B).(\lambda (_: C).(\lambda (e2: C).(\lambda (u: T).(getl n c2 
-(CHead e2 (Bind b) u)))))) (\lambda (_: B).(\lambda (e1: C).(\lambda (e2: 
-C).(\lambda (_: T).(csubst0 (minus i (S n)) v e1 e2)))))) (ex4_5 B C C T T 
-(\lambda (b: B).(\lambda (e1: C).(\lambda (_: C).(\lambda (u: T).(\lambda (_: 
-T).(eq C e (CHead e1 (Bind b) u))))))) (\lambda (b: B).(\lambda (_: 
-C).(\lambda (e2: C).(\lambda (_: T).(\lambda (w: T).(getl n c2 (CHead e2 
-(Bind b) w))))))) (\lambda (_: B).(\lambda (_: C).(\lambda (_: C).(\lambda 
-(u: T).(\lambda (w: T).(subst0 (minus i (S n)) v u w)))))) (\lambda (_: 
-B).(\lambda (e1: C).(\lambda (e2: C).(\lambda (_: T).(\lambda (_: T).(csubst0 
-(minus i (S n)) v e1 e2))))))))))))) with [(Bind b) \Rightarrow (\lambda 
-(H12: (drop n O c2 (CHead x2 (Bind b) x4))).(\lambda (H13: (subst0 (minus i 
-(s (Bind b) n)) v x3 x4)).(\lambda (H14: (csubst0 (minus i (s (Bind b) n)) v 
-x1 x2)).(\lambda (H15: (clear (CHead x1 (Bind b) x3) e)).(eq_ind_r C (CHead 
-x1 (Bind b) x3) (\lambda (c: C).(or4 (getl n c2 c) (ex3_4 B C T T (\lambda 
-(b0: B).(\lambda (e0: C).(\lambda (u: T).(\lambda (_: T).(eq C c (CHead e0 
-(Bind b0) u)))))) (\lambda (b0: B).(\lambda (e0: C).(\lambda (_: T).(\lambda 
-(w: T).(getl n c2 (CHead e0 (Bind b0) w)))))) (\lambda (_: B).(\lambda (_: 
-C).(\lambda (u: T).(\lambda (w: T).(subst0 (minus i (S n)) v u w)))))) (ex3_4 
-B C C T (\lambda (b0: B).(\lambda (e1: C).(\lambda (_: C).(\lambda (u: T).(eq 
-C c (CHead e1 (Bind b0) u)))))) (\lambda (b0: B).(\lambda (_: C).(\lambda 
-(e2: C).(\lambda (u: T).(getl n c2 (CHead e2 (Bind b0) u)))))) (\lambda (_: 
+(CHead x1 x0 x3) H7) in (K_ind (\lambda (k: K).((drop n O c2 (CHead x2 k x4)) 
+\to ((subst0 (minus i (s k n)) v x3 x4) \to ((csubst0 (minus i (s k n)) v x1 
+x2) \to ((clear (CHead x1 k x3) e) \to (or4 (getl n c2 e) (ex3_4 B C T T 
+(\lambda (b: B).(\lambda (e0: C).(\lambda (u: T).(\lambda (_: T).(eq C e 
+(CHead e0 (Bind b) u)))))) (\lambda (b: B).(\lambda (e0: C).(\lambda (_: 
+T).(\lambda (w: T).(getl n c2 (CHead e0 (Bind b) w)))))) (\lambda (_: 
+B).(\lambda (_: C).(\lambda (u: T).(\lambda (w: T).(subst0 (minus i (S n)) v 
+u w)))))) (ex3_4 B C C T (\lambda (b: B).(\lambda (e1: C).(\lambda (_: 
+C).(\lambda (u: T).(eq C e (CHead e1 (Bind b) u)))))) (\lambda (b: 
+B).(\lambda (_: C).(\lambda (e2: C).(\lambda (u: T).(getl n c2 (CHead e2 
+(Bind b) u)))))) (\lambda (_: B).(\lambda (e1: C).(\lambda (e2: C).(\lambda 
+(_: T).(csubst0 (minus i (S n)) v e1 e2)))))) (ex4_5 B C C T T (\lambda (b: 
+B).(\lambda (e1: C).(\lambda (_: C).(\lambda (u: T).(\lambda (_: T).(eq C e 
+(CHead e1 (Bind b) u))))))) (\lambda (b: B).(\lambda (_: C).(\lambda (e2: 
+C).(\lambda (_: T).(\lambda (w: T).(getl n c2 (CHead e2 (Bind b) w))))))) 
+(\lambda (_: B).(\lambda (_: C).(\lambda (_: C).(\lambda (u: T).(\lambda (w: 
+T).(subst0 (minus i (S n)) v u w)))))) (\lambda (_: B).(\lambda (e1: 
+C).(\lambda (e2: C).(\lambda (_: T).(\lambda (_: T).(csubst0 (minus i (S n)) 
+v e1 e2))))))))))))) (\lambda (b: B).(\lambda (H12: (drop n O c2 (CHead x2 
+(Bind b) x4))).(\lambda (H13: (subst0 (minus i (s (Bind b) n)) v x3 
+x4)).(\lambda (H14: (csubst0 (minus i (s (Bind b) n)) v x1 x2)).(\lambda 
+(H15: (clear (CHead x1 (Bind b) x3) e)).(eq_ind_r C (CHead x1 (Bind b) x3) 
+(\lambda (c: C).(or4 (getl n c2 c) (ex3_4 B C T T (\lambda (b0: B).(\lambda 
+(e0: C).(\lambda (u: T).(\lambda (_: T).(eq C c (CHead e0 (Bind b0) u)))))) 
+(\lambda (b0: B).(\lambda (e0: C).(\lambda (_: T).(\lambda (w: T).(getl n c2 
+(CHead e0 (Bind b0) w)))))) (\lambda (_: B).(\lambda (_: C).(\lambda (u: 
+T).(\lambda (w: T).(subst0 (minus i (S n)) v u w)))))) (ex3_4 B C C T 
+(\lambda (b0: B).(\lambda (e1: C).(\lambda (_: C).(\lambda (u: T).(eq C c 
+(CHead e1 (Bind b0) u)))))) (\lambda (b0: B).(\lambda (_: C).(\lambda (e2: 
+C).(\lambda (u: T).(getl n c2 (CHead e2 (Bind b0) u)))))) (\lambda (_: 
 B).(\lambda (e1: C).(\lambda (e2: C).(\lambda (_: T).(csubst0 (minus i (S n)) 
 v e1 e2)))))) (ex4_5 B C C T T (\lambda (b0: B).(\lambda (e1: C).(\lambda (_: 
 C).(\lambda (u: T).(\lambda (_: T).(eq C c (CHead e1 (Bind b0) u))))))) 
@@ -752,12 +752,12 @@ u w)))))) (\lambda (_: B).(\lambda (e1: C).(\lambda (e2: C).(\lambda (_:
 T).(\lambda (_: T).(csubst0 (minus i (S n)) v e1 e2)))))) b x1 x2 x3 x4 
 (refl_equal C (CHead x1 (Bind b) x3)) (getl_intro n c2 (CHead x2 (Bind b) x4) 
 (CHead x2 (Bind b) x4) H12 (clear_bind b x2 x4)) H13 H14)) e (clear_gen_bind 
-b x1 e x3 H15)))))) | (Flat f) \Rightarrow (\lambda (H12: (drop n O c2 (CHead 
-x2 (Flat f) x4))).(\lambda (_: (subst0 (minus i (s (Flat f) n)) v x3 
+b x1 e x3 H15))))))) (\lambda (f: F).(\lambda (H12: (drop n O c2 (CHead x2 
+(Flat f) x4))).(\lambda (_: (subst0 (minus i (s (Flat f) n)) v x3 
 x4)).(\lambda (H14: (csubst0 (minus i (s (Flat f) n)) v x1 x2)).(\lambda 
 (H15: (clear (CHead x1 (Flat f) x3) e)).(let H16 \def (eq_ind nat (minus i n) 
-(\lambda (n: nat).(csubst0 n v x1 x2)) H14 (S (minus i (S n))) (minus_x_Sy i 
-n H)) in (let H17 \def (csubst0_clear_S x1 x2 v (minus i (S n)) H16 e 
+(\lambda (n0: nat).(csubst0 n0 v x1 x2)) H14 (S (minus i (S n))) (minus_x_Sy 
+i n H)) in (let H17 \def (csubst0_clear_S x1 x2 v (minus i (S n)) H16 e 
 (clear_gen_flat f x1 e x3 H15)) in (or4_ind (clear x2 e) (ex3_4 B C T T 
 (\lambda (b: B).(\lambda (e0: C).(\lambda (u1: T).(\lambda (_: T).(eq C e 
 (CHead e0 (Bind b) u1)))))) (\lambda (b: B).(\lambda (e0: C).(\lambda (_: 
@@ -808,8 +808,8 @@ u w)))))) (\lambda (_: B).(\lambda (e1: C).(\lambda (e2: C).(\lambda (_:
 T).(\lambda (_: T).(csubst0 (minus i (S n)) v e1 e2))))))) (getl_intro n c2 e 
 (CHead x2 (Flat f) x4) H12 (clear_flat x2 e H18 f x4)))) (\lambda (H18: 
 (ex3_4 B C T T (\lambda (b: B).(\lambda (e0: C).(\lambda (u1: T).(\lambda (_: 
-T).(eq C e (CHead e0 (Bind b) u1)))))) (\lambda (b: B).(\lambda (e: 
-C).(\lambda (_: T).(\lambda (u2: T).(clear x2 (CHead e (Bind b) u2)))))) 
+T).(eq C e (CHead e0 (Bind b) u1)))))) (\lambda (b: B).(\lambda (e0: 
+C).(\lambda (_: T).(\lambda (u2: T).(clear x2 (CHead e0 (Bind b) u2)))))) 
 (\lambda (_: B).(\lambda (_: C).(\lambda (u1: T).(\lambda (u2: T).(subst0 
 (minus i (S n)) v u1 u2))))))).(ex3_4_ind B C T T (\lambda (b: B).(\lambda 
 (e0: C).(\lambda (u1: T).(\lambda (_: T).(eq C e (CHead e0 (Bind b) u1)))))) 
@@ -1018,7 +1018,7 @@ C).(\lambda (e2: C).(\lambda (_: T).(\lambda (_: T).(csubst0 (minus i (S n))
 v e1 e2)))))) x5 x6 x7 x8 x9 (refl_equal C (CHead x6 (Bind x5) x8)) 
 (getl_intro n c2 (CHead x7 (Bind x5) x9) (CHead x2 (Flat f) x4) H12 
 (clear_flat x2 (CHead x7 (Bind x5) x9) H20 f x4)) H21 H22)) e H19)))))))))) 
-H18)) H17)))))))]) H8 H9 H10 H11))))))))))) H6)) H5))))) H2)))))))))).
+H18)) H17)))))))) x0 H8 H9 H10 H11))))))))))) H6)) H5))))) H2)))))))))).
 
 theorem csubst0_getl_ge_back:
  \forall (i: nat).(\forall (n: nat).((le i n) \to (\forall (c1: C).(\forall 
@@ -1032,9 +1032,9 @@ c2 e n H1) in (ex2_ind C (\lambda (e0: C).(drop n O c2 e0)) (\lambda (e0:
 C).(clear e0 e)) (getl n c1 e) (\lambda (x: C).(\lambda (H3: (drop n O c2 
 x)).(\lambda (H4: (clear x e)).(lt_eq_gt_e i n (getl n c1 e) (\lambda (H5: 
 (lt i n)).(getl_intro n c1 e x (csubst0_drop_gt_back n i H5 c1 c2 v H0 x H3) 
-H4)) (\lambda (H5: (eq nat i n)).(let H6 \def (eq_ind_r nat n (\lambda (n: 
-nat).(drop n O c2 x)) H3 i H5) in (let H7 \def (eq_ind_r nat n (\lambda (n: 
-nat).(le i n)) H i H5) in (eq_ind nat i (\lambda (n0: nat).(getl n0 c1 e)) 
+H4)) (\lambda (H5: (eq nat i n)).(let H6 \def (eq_ind_r nat n (\lambda (n0: 
+nat).(drop n0 O c2 x)) H3 i H5) in (let H7 \def (eq_ind_r nat n (\lambda (n0: 
+nat).(le i n0)) H i H5) in (eq_ind nat i (\lambda (n0: nat).(getl n0 c1 e)) 
 (let H8 \def (csubst0_drop_eq_back i c1 c2 v H0 x H6) in (or4_ind (drop i O 
 c1 x) (ex3_4 F C T T (\lambda (f: F).(\lambda (e0: C).(\lambda (_: 
 T).(\lambda (u2: T).(eq C x (CHead e0 (Flat f) u2)))))) (\lambda (f: 

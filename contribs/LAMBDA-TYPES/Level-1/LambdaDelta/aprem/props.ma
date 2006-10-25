@@ -62,79 +62,80 @@ b2)) (\lambda (b1: A).(aprem i a0 b1)))))))).(\lambda (a4: A).(\lambda (a5:
 A).(\lambda (_: (leq g a4 a5)).(\lambda (H3: ((\forall (i: nat).(\forall (b2: 
 A).((aprem i a5 b2) \to (ex2 A (\lambda (b1: A).(leq g b1 b2)) (\lambda (b1: 
 A).(aprem i a4 b1)))))))).(\lambda (i: nat).(\lambda (b2: A).(\lambda (H4: 
-(aprem i (AHead a3 a5) b2)).((match i in nat return (\lambda (n: nat).((aprem 
-n (AHead a3 a5) b2) \to (ex2 A (\lambda (b1: A).(leq g b1 b2)) (\lambda (b1: 
-A).(aprem n (AHead a0 a4) b1))))) with [O \Rightarrow (\lambda (H5: (aprem O 
+(aprem i (AHead a3 a5) b2)).(nat_ind (\lambda (n: nat).((aprem n (AHead a3 
+a5) b2) \to (ex2 A (\lambda (b1: A).(leq g b1 b2)) (\lambda (b1: A).(aprem n 
+(AHead a0 a4) b1))))) (\lambda (H5: (aprem O (AHead a3 a5) b2)).(let H6 \def 
+(match H5 in aprem return (\lambda (n: nat).(\lambda (a: A).(\lambda (a6: 
+A).(\lambda (_: (aprem n a a6)).((eq nat n O) \to ((eq A a (AHead a3 a5)) \to 
+((eq A a6 b2) \to (ex2 A (\lambda (b1: A).(leq g b1 b2)) (\lambda (b1: 
+A).(aprem O (AHead a0 a4) b1)))))))))) with [(aprem_zero a6 a7) \Rightarrow 
+(\lambda (_: (eq nat O O)).(\lambda (H7: (eq A (AHead a6 a7) (AHead a3 
+a5))).(\lambda (H8: (eq A a6 b2)).((let H9 \def (f_equal A A (\lambda (e: 
+A).(match e in A return (\lambda (_: A).A) with [(ASort _ _) \Rightarrow a7 | 
+(AHead _ a) \Rightarrow a])) (AHead a6 a7) (AHead a3 a5) H7) in ((let H10 
+\def (f_equal A A (\lambda (e: A).(match e in A return (\lambda (_: A).A) 
+with [(ASort _ _) \Rightarrow a6 | (AHead a _) \Rightarrow a])) (AHead a6 a7) 
+(AHead a3 a5) H7) in (eq_ind A a3 (\lambda (a: A).((eq A a7 a5) \to ((eq A a 
+b2) \to (ex2 A (\lambda (b1: A).(leq g b1 b2)) (\lambda (b1: A).(aprem O 
+(AHead a0 a4) b1)))))) (\lambda (H11: (eq A a7 a5)).(eq_ind A a5 (\lambda (_: 
+A).((eq A a3 b2) \to (ex2 A (\lambda (b1: A).(leq g b1 b2)) (\lambda (b1: 
+A).(aprem O (AHead a0 a4) b1))))) (\lambda (H12: (eq A a3 b2)).(eq_ind A b2 
+(\lambda (_: A).(ex2 A (\lambda (b1: A).(leq g b1 b2)) (\lambda (b1: 
+A).(aprem O (AHead a0 a4) b1)))) (eq_ind A a3 (\lambda (a: A).(ex2 A (\lambda 
+(b1: A).(leq g b1 a)) (\lambda (b1: A).(aprem O (AHead a0 a4) b1)))) 
+(ex_intro2 A (\lambda (b1: A).(leq g b1 a3)) (\lambda (b1: A).(aprem O (AHead 
+a0 a4) b1)) a0 H0 (aprem_zero a0 a4)) b2 H12) a3 (sym_eq A a3 b2 H12))) a7 
+(sym_eq A a7 a5 H11))) a6 (sym_eq A a6 a3 H10))) H9)) H8)))) | (aprem_succ a6 
+a i0 H6 a7) \Rightarrow (\lambda (H7: (eq nat (S i0) O)).(\lambda (H8: (eq A 
+(AHead a7 a6) (AHead a3 a5))).(\lambda (H9: (eq A a b2)).((let H10 \def 
+(eq_ind nat (S i0) (\lambda (e: nat).(match e in nat return (\lambda (_: 
+nat).Prop) with [O \Rightarrow False | (S _) \Rightarrow True])) I O H7) in 
+(False_ind ((eq A (AHead a7 a6) (AHead a3 a5)) \to ((eq A a b2) \to ((aprem 
+i0 a6 a) \to (ex2 A (\lambda (b1: A).(leq g b1 b2)) (\lambda (b1: A).(aprem O 
+(AHead a0 a4) b1)))))) H10)) H8 H9 H6))))]) in (H6 (refl_equal nat O) 
+(refl_equal A (AHead a3 a5)) (refl_equal A b2)))) (\lambda (i0: nat).(\lambda 
+(_: (((aprem i0 (AHead a3 a5) b2) \to (ex2 A (\lambda (b1: A).(leq g b1 b2)) 
+(\lambda (b1: A).(aprem i0 (AHead a0 a4) b1)))))).(\lambda (H5: (aprem (S i0) 
 (AHead a3 a5) b2)).(let H6 \def (match H5 in aprem return (\lambda (n: 
 nat).(\lambda (a: A).(\lambda (a6: A).(\lambda (_: (aprem n a a6)).((eq nat n 
-O) \to ((eq A a (AHead a3 a5)) \to ((eq A a6 b2) \to (ex2 A (\lambda (b1: 
-A).(leq g b1 b2)) (\lambda (b1: A).(aprem O (AHead a0 a4) b1)))))))))) with 
-[(aprem_zero a6 a7) \Rightarrow (\lambda (_: (eq nat O O)).(\lambda (H7: (eq 
-A (AHead a6 a7) (AHead a3 a5))).(\lambda (H8: (eq A a6 b2)).((let H9 \def 
-(f_equal A A (\lambda (e: A).(match e in A return (\lambda (_: A).A) with 
-[(ASort _ _) \Rightarrow a7 | (AHead _ a) \Rightarrow a])) (AHead a6 a7) 
-(AHead a3 a5) H7) in ((let H10 \def (f_equal A A (\lambda (e: A).(match e in 
-A return (\lambda (_: A).A) with [(ASort _ _) \Rightarrow a6 | (AHead a _) 
-\Rightarrow a])) (AHead a6 a7) (AHead a3 a5) H7) in (eq_ind A a3 (\lambda (a: 
-A).((eq A a7 a5) \to ((eq A a b2) \to (ex2 A (\lambda (b1: A).(leq g b1 b2)) 
-(\lambda (b1: A).(aprem O (AHead a0 a4) b1)))))) (\lambda (H11: (eq A a7 
-a5)).(eq_ind A a5 (\lambda (_: A).((eq A a3 b2) \to (ex2 A (\lambda (b1: 
-A).(leq g b1 b2)) (\lambda (b1: A).(aprem O (AHead a0 a4) b1))))) (\lambda 
-(H12: (eq A a3 b2)).(eq_ind A b2 (\lambda (_: A).(ex2 A (\lambda (b1: A).(leq 
-g b1 b2)) (\lambda (b1: A).(aprem O (AHead a0 a4) b1)))) (eq_ind A a3 
-(\lambda (a: A).(ex2 A (\lambda (b1: A).(leq g b1 a)) (\lambda (b1: A).(aprem 
-O (AHead a0 a4) b1)))) (ex_intro2 A (\lambda (b1: A).(leq g b1 a3)) (\lambda 
-(b1: A).(aprem O (AHead a0 a4) b1)) a0 H0 (aprem_zero a0 a4)) b2 H12) a3 
-(sym_eq A a3 b2 H12))) a7 (sym_eq A a7 a5 H11))) a6 (sym_eq A a6 a3 H10))) 
-H9)) H8)))) | (aprem_succ a6 a i0 H6 a7) \Rightarrow (\lambda (H7: (eq nat (S 
-i0) O)).(\lambda (H8: (eq A (AHead a7 a6) (AHead a3 a5))).(\lambda (H9: (eq A 
-a b2)).((let H10 \def (eq_ind nat (S i0) (\lambda (e: nat).(match e in nat 
-return (\lambda (_: nat).Prop) with [O \Rightarrow False | (S _) \Rightarrow 
-True])) I O H7) in (False_ind ((eq A (AHead a7 a6) (AHead a3 a5)) \to ((eq A 
-a b2) \to ((aprem i0 a6 a) \to (ex2 A (\lambda (b1: A).(leq g b1 b2)) 
-(\lambda (b1: A).(aprem O (AHead a0 a4) b1)))))) H10)) H8 H9 H6))))]) in (H6 
-(refl_equal nat O) (refl_equal A (AHead a3 a5)) (refl_equal A b2)))) | (S n) 
-\Rightarrow (\lambda (H5: (aprem (S n) (AHead a3 a5) b2)).(let H6 \def (match 
-H5 in aprem return (\lambda (n0: nat).(\lambda (a: A).(\lambda (a6: 
-A).(\lambda (_: (aprem n0 a a6)).((eq nat n0 (S n)) \to ((eq A a (AHead a3 
-a5)) \to ((eq A a6 b2) \to (ex2 A (\lambda (b1: A).(leq g b1 b2)) (\lambda 
-(b1: A).(aprem (S n) (AHead a0 a4) b1)))))))))) with [(aprem_zero a6 a7) 
-\Rightarrow (\lambda (H6: (eq nat O (S n))).(\lambda (H7: (eq A (AHead a6 a7) 
-(AHead a3 a5))).(\lambda (H8: (eq A a6 b2)).((let H9 \def (eq_ind nat O 
-(\lambda (e: nat).(match e in nat return (\lambda (_: nat).Prop) with [O 
-\Rightarrow True | (S _) \Rightarrow False])) I (S n) H6) in (False_ind ((eq 
-A (AHead a6 a7) (AHead a3 a5)) \to ((eq A a6 b2) \to (ex2 A (\lambda (b1: 
-A).(leq g b1 b2)) (\lambda (b1: A).(aprem (S n) (AHead a0 a4) b1))))) H9)) H7 
-H8)))) | (aprem_succ a6 a i0 H6 a7) \Rightarrow (\lambda (H7: (eq nat (S i0) 
-(S n))).(\lambda (H8: (eq A (AHead a7 a6) (AHead a3 a5))).(\lambda (H9: (eq A 
-a b2)).((let H10 \def (f_equal nat nat (\lambda (e: nat).(match e in nat 
-return (\lambda (_: nat).nat) with [O \Rightarrow i0 | (S n0) \Rightarrow 
-n0])) (S i0) (S n) H7) in (eq_ind nat n (\lambda (n0: nat).((eq A (AHead a7 
-a6) (AHead a3 a5)) \to ((eq A a b2) \to ((aprem n0 a6 a) \to (ex2 A (\lambda 
-(b1: A).(leq g b1 b2)) (\lambda (b1: A).(aprem (S n) (AHead a0 a4) b1))))))) 
-(\lambda (H11: (eq A (AHead a7 a6) (AHead a3 a5))).(let H12 \def (f_equal A A 
-(\lambda (e: A).(match e in A return (\lambda (_: A).A) with [(ASort _ _) 
-\Rightarrow a6 | (AHead _ a8) \Rightarrow a8])) (AHead a7 a6) (AHead a3 a5) 
-H11) in ((let H13 \def (f_equal A A (\lambda (e: A).(match e in A return 
-(\lambda (_: A).A) with [(ASort _ _) \Rightarrow a7 | (AHead a8 _) 
-\Rightarrow a8])) (AHead a7 a6) (AHead a3 a5) H11) in (eq_ind A a3 (\lambda 
-(_: A).((eq A a6 a5) \to ((eq A a b2) \to ((aprem n a6 a) \to (ex2 A (\lambda 
-(b1: A).(leq g b1 b2)) (\lambda (b1: A).(aprem (S n) (AHead a0 a4) b1))))))) 
-(\lambda (H14: (eq A a6 a5)).(eq_ind A a5 (\lambda (a8: A).((eq A a b2) \to 
-((aprem n a8 a) \to (ex2 A (\lambda (b1: A).(leq g b1 b2)) (\lambda (b1: 
-A).(aprem (S n) (AHead a0 a4) b1)))))) (\lambda (H15: (eq A a b2)).(eq_ind A 
-b2 (\lambda (a8: A).((aprem n a5 a8) \to (ex2 A (\lambda (b1: A).(leq g b1 
-b2)) (\lambda (b1: A).(aprem (S n) (AHead a0 a4) b1))))) (\lambda (H16: 
-(aprem n a5 b2)).(let H_x \def (H3 n b2 H16) in (let H17 \def H_x in (ex2_ind 
-A (\lambda (b1: A).(leq g b1 b2)) (\lambda (b1: A).(aprem n a4 b1)) (ex2 A 
-(\lambda (b1: A).(leq g b1 b2)) (\lambda (b1: A).(aprem (S n) (AHead a0 a4) 
-b1))) (\lambda (x: A).(\lambda (H18: (leq g x b2)).(\lambda (H19: (aprem n a4 
-x)).(ex_intro2 A (\lambda (b1: A).(leq g b1 b2)) (\lambda (b1: A).(aprem (S 
-n) (AHead a0 a4) b1)) x H18 (aprem_succ a4 x n H19 a0))))) H17)))) a (sym_eq 
-A a b2 H15))) a6 (sym_eq A a6 a5 H14))) a7 (sym_eq A a7 a3 H13))) H12))) i0 
-(sym_eq nat i0 n H10))) H8 H9 H6))))]) in (H6 (refl_equal nat (S n)) 
-(refl_equal A (AHead a3 a5)) (refl_equal A b2))))]) H4)))))))))))) a1 a2 
-H)))).
+(S i0)) \to ((eq A a (AHead a3 a5)) \to ((eq A a6 b2) \to (ex2 A (\lambda 
+(b1: A).(leq g b1 b2)) (\lambda (b1: A).(aprem (S i0) (AHead a0 a4) 
+b1)))))))))) with [(aprem_zero a6 a7) \Rightarrow (\lambda (H6: (eq nat O (S 
+i0))).(\lambda (H7: (eq A (AHead a6 a7) (AHead a3 a5))).(\lambda (H8: (eq A 
+a6 b2)).((let H9 \def (eq_ind nat O (\lambda (e: nat).(match e in nat return 
+(\lambda (_: nat).Prop) with [O \Rightarrow True | (S _) \Rightarrow False])) 
+I (S i0) H6) in (False_ind ((eq A (AHead a6 a7) (AHead a3 a5)) \to ((eq A a6 
+b2) \to (ex2 A (\lambda (b1: A).(leq g b1 b2)) (\lambda (b1: A).(aprem (S i0) 
+(AHead a0 a4) b1))))) H9)) H7 H8)))) | (aprem_succ a6 a i1 H6 a7) \Rightarrow 
+(\lambda (H7: (eq nat (S i1) (S i0))).(\lambda (H8: (eq A (AHead a7 a6) 
+(AHead a3 a5))).(\lambda (H9: (eq A a b2)).((let H10 \def (f_equal nat nat 
+(\lambda (e: nat).(match e in nat return (\lambda (_: nat).nat) with [O 
+\Rightarrow i1 | (S n) \Rightarrow n])) (S i1) (S i0) H7) in (eq_ind nat i0 
+(\lambda (n: nat).((eq A (AHead a7 a6) (AHead a3 a5)) \to ((eq A a b2) \to 
+((aprem n a6 a) \to (ex2 A (\lambda (b1: A).(leq g b1 b2)) (\lambda (b1: 
+A).(aprem (S i0) (AHead a0 a4) b1))))))) (\lambda (H11: (eq A (AHead a7 a6) 
+(AHead a3 a5))).(let H12 \def (f_equal A A (\lambda (e: A).(match e in A 
+return (\lambda (_: A).A) with [(ASort _ _) \Rightarrow a6 | (AHead _ a8) 
+\Rightarrow a8])) (AHead a7 a6) (AHead a3 a5) H11) in ((let H13 \def (f_equal 
+A A (\lambda (e: A).(match e in A return (\lambda (_: A).A) with [(ASort _ _) 
+\Rightarrow a7 | (AHead a8 _) \Rightarrow a8])) (AHead a7 a6) (AHead a3 a5) 
+H11) in (eq_ind A a3 (\lambda (_: A).((eq A a6 a5) \to ((eq A a b2) \to 
+((aprem i0 a6 a) \to (ex2 A (\lambda (b1: A).(leq g b1 b2)) (\lambda (b1: 
+A).(aprem (S i0) (AHead a0 a4) b1))))))) (\lambda (H14: (eq A a6 a5)).(eq_ind 
+A a5 (\lambda (a8: A).((eq A a b2) \to ((aprem i0 a8 a) \to (ex2 A (\lambda 
+(b1: A).(leq g b1 b2)) (\lambda (b1: A).(aprem (S i0) (AHead a0 a4) b1)))))) 
+(\lambda (H15: (eq A a b2)).(eq_ind A b2 (\lambda (a8: A).((aprem i0 a5 a8) 
+\to (ex2 A (\lambda (b1: A).(leq g b1 b2)) (\lambda (b1: A).(aprem (S i0) 
+(AHead a0 a4) b1))))) (\lambda (H16: (aprem i0 a5 b2)).(let H_x \def (H3 i0 
+b2 H16) in (let H17 \def H_x in (ex2_ind A (\lambda (b1: A).(leq g b1 b2)) 
+(\lambda (b1: A).(aprem i0 a4 b1)) (ex2 A (\lambda (b1: A).(leq g b1 b2)) 
+(\lambda (b1: A).(aprem (S i0) (AHead a0 a4) b1))) (\lambda (x: A).(\lambda 
+(H18: (leq g x b2)).(\lambda (H19: (aprem i0 a4 x)).(ex_intro2 A (\lambda 
+(b1: A).(leq g b1 b2)) (\lambda (b1: A).(aprem (S i0) (AHead a0 a4) b1)) x 
+H18 (aprem_succ a4 x i0 H19 a0))))) H17)))) a (sym_eq A a b2 H15))) a6 
+(sym_eq A a6 a5 H14))) a7 (sym_eq A a7 a3 H13))) H12))) i1 (sym_eq nat i1 i0 
+H10))) H8 H9 H6))))]) in (H6 (refl_equal nat (S i0)) (refl_equal A (AHead a3 
+a5)) (refl_equal A b2)))))) i H4)))))))))))) a1 a2 H)))).
 
 theorem aprem_asucc:
  \forall (g: G).(\forall (a1: A).(\forall (a2: A).(\forall (i: nat).((aprem i 

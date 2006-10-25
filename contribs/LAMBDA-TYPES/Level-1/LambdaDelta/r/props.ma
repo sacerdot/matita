@@ -73,10 +73,9 @@ nat).(refl_equal nat i))))))) (\lambda (f: F).(\lambda (P: Prop).(\lambda (_:
 theorem s_r:
  \forall (k: K).(\forall (i: nat).(eq nat (s k (r k i)) (S i)))
 \def
- \lambda (k: K).(match k in K return (\lambda (k0: K).(\forall (i: nat).(eq 
-nat (s k0 (r k0 i)) (S i)))) with [(Bind _) \Rightarrow (\lambda (i: 
-nat).(refl_equal nat (S i))) | (Flat _) \Rightarrow (\lambda (i: 
-nat).(refl_equal nat (S i)))]).
+ \lambda (k: K).(K_ind (\lambda (k0: K).(\forall (i: nat).(eq nat (s k0 (r k0 
+i)) (S i)))) (\lambda (_: B).(\lambda (i: nat).(refl_equal nat (S i)))) 
+(\lambda (_: F).(\lambda (i: nat).(refl_equal nat (S i)))) k).
 
 theorem r_arith0:
  \forall (k: K).(\forall (i: nat).(eq nat (minus (r k (S i)) (S O)) (r k i)))

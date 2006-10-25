@@ -26,16 +26,17 @@ c)))
 \def
  \lambda (f: F).(\lambda (c: C).(\lambda (v: T).(\lambda (b: B).(\lambda (d1: 
 C).(\lambda (w: T).(\lambda (h: nat).(\lambda (H: (getl h (CHead c (Flat f) 
-v) (CHead d1 (Bind b) w))).((match h in nat return (\lambda (n: nat).((getl n 
-(CHead c (Flat f) v) (CHead d1 (Bind b) w)) \to (ex C (\lambda (d2: C).(getl 
-n c (CHead d2 (Bind b) w)))))) with [O \Rightarrow (\lambda (H0: (getl O 
-(CHead c (Flat f) v) (CHead d1 (Bind b) w))).(ex_intro C (\lambda (d2: 
-C).(getl O c (CHead d2 (Bind b) w))) d1 (getl_intro O c (CHead d1 (Bind b) w) 
-c (drop_refl c) (clear_gen_flat f c (CHead d1 (Bind b) w) v (getl_gen_O 
-(CHead c (Flat f) v) (CHead d1 (Bind b) w) H0))))) | (S n) \Rightarrow 
-(\lambda (H0: (getl (S n) (CHead c (Flat f) v) (CHead d1 (Bind b) 
-w))).(ex_intro C (\lambda (d2: C).(getl (S n) c (CHead d2 (Bind b) w))) d1 
-(getl_gen_S (Flat f) c (CHead d1 (Bind b) w) v n H0)))]) H)))))))).
+v) (CHead d1 (Bind b) w))).(nat_ind (\lambda (n: nat).((getl n (CHead c (Flat 
+f) v) (CHead d1 (Bind b) w)) \to (ex C (\lambda (d2: C).(getl n c (CHead d2 
+(Bind b) w)))))) (\lambda (H0: (getl O (CHead c (Flat f) v) (CHead d1 (Bind 
+b) w))).(ex_intro C (\lambda (d2: C).(getl O c (CHead d2 (Bind b) w))) d1 
+(getl_intro O c (CHead d1 (Bind b) w) c (drop_refl c) (clear_gen_flat f c 
+(CHead d1 (Bind b) w) v (getl_gen_O (CHead c (Flat f) v) (CHead d1 (Bind b) 
+w) H0))))) (\lambda (h0: nat).(\lambda (_: (((getl h0 (CHead c (Flat f) v) 
+(CHead d1 (Bind b) w)) \to (ex C (\lambda (d2: C).(getl h0 c (CHead d2 (Bind 
+b) w))))))).(\lambda (H0: (getl (S h0) (CHead c (Flat f) v) (CHead d1 (Bind 
+b) w))).(ex_intro C (\lambda (d2: C).(getl (S h0) c (CHead d2 (Bind b) w))) 
+d1 (getl_gen_S (Flat f) c (CHead d1 (Bind b) w) v h0 H0))))) h H)))))))).
 
 theorem cimp_flat_dx:
  \forall (f: F).(\forall (c: C).(\forall (v: T).(cimp c (CHead c (Flat f) 
@@ -55,37 +56,39 @@ C).(\forall (w: T).(\forall (h: nat).((getl h c1 (CHead d1 (Bind b) w)) \to
 (ex C (\lambda (d2: C).(getl h c2 (CHead d2 (Bind b) w))))))))))).(\lambda 
 (b: B).(\lambda (v: T).(\lambda (b0: B).(\lambda (d1: C).(\lambda (w: 
 T).(\lambda (h: nat).(\lambda (H0: (getl h (CHead c1 (Bind b) v) (CHead d1 
-(Bind b0) w))).((match h in nat return (\lambda (n: nat).((getl n (CHead c1 
-(Bind b) v) (CHead d1 (Bind b0) w)) \to (ex C (\lambda (d2: C).(getl n (CHead 
-c2 (Bind b) v) (CHead d2 (Bind b0) w)))))) with [O \Rightarrow (\lambda (H1: 
-(getl O (CHead c1 (Bind b) v) (CHead d1 (Bind b0) w))).(let H2 \def (f_equal 
-C C (\lambda (e: C).(match e in C return (\lambda (_: C).C) with [(CSort _) 
-\Rightarrow d1 | (CHead c _ _) \Rightarrow c])) (CHead d1 (Bind b0) w) (CHead 
+(Bind b0) w))).(nat_ind (\lambda (n: nat).((getl n (CHead c1 (Bind b) v) 
+(CHead d1 (Bind b0) w)) \to (ex C (\lambda (d2: C).(getl n (CHead c2 (Bind b) 
+v) (CHead d2 (Bind b0) w)))))) (\lambda (H1: (getl O (CHead c1 (Bind b) v) 
+(CHead d1 (Bind b0) w))).(let H2 \def (f_equal C C (\lambda (e: C).(match e 
+in C return (\lambda (_: C).C) with [(CSort _) \Rightarrow d1 | (CHead c _ _) 
+\Rightarrow c])) (CHead d1 (Bind b0) w) (CHead c1 (Bind b) v) (clear_gen_bind 
+b c1 (CHead d1 (Bind b0) w) v (getl_gen_O (CHead c1 (Bind b) v) (CHead d1 
+(Bind b0) w) H1))) in ((let H3 \def (f_equal C B (\lambda (e: C).(match e in 
+C return (\lambda (_: C).B) with [(CSort _) \Rightarrow b0 | (CHead _ k _) 
+\Rightarrow (match k in K return (\lambda (_: K).B) with [(Bind b1) 
+\Rightarrow b1 | (Flat _) \Rightarrow b0])])) (CHead d1 (Bind b0) w) (CHead 
 c1 (Bind b) v) (clear_gen_bind b c1 (CHead d1 (Bind b0) w) v (getl_gen_O 
-(CHead c1 (Bind b) v) (CHead d1 (Bind b0) w) H1))) in ((let H3 \def (f_equal 
-C B (\lambda (e: C).(match e in C return (\lambda (_: C).B) with [(CSort _) 
-\Rightarrow b0 | (CHead _ k _) \Rightarrow (match k in K return (\lambda (_: 
-K).B) with [(Bind b) \Rightarrow b | (Flat _) \Rightarrow b0])])) (CHead d1 
-(Bind b0) w) (CHead c1 (Bind b) v) (clear_gen_bind b c1 (CHead d1 (Bind b0) 
-w) v (getl_gen_O (CHead c1 (Bind b) v) (CHead d1 (Bind b0) w) H1))) in ((let 
-H4 \def (f_equal C T (\lambda (e: C).(match e in C return (\lambda (_: C).T) 
-with [(CSort _) \Rightarrow w | (CHead _ _ t) \Rightarrow t])) (CHead d1 
-(Bind b0) w) (CHead c1 (Bind b) v) (clear_gen_bind b c1 (CHead d1 (Bind b0) 
-w) v (getl_gen_O (CHead c1 (Bind b) v) (CHead d1 (Bind b0) w) H1))) in 
-(\lambda (H5: (eq B b0 b)).(\lambda (_: (eq C d1 c1)).(eq_ind_r T v (\lambda 
-(t: T).(ex C (\lambda (d2: C).(getl O (CHead c2 (Bind b) v) (CHead d2 (Bind 
-b0) t))))) (eq_ind_r B b (\lambda (b1: B).(ex C (\lambda (d2: C).(getl O 
-(CHead c2 (Bind b) v) (CHead d2 (Bind b1) v))))) (ex_intro C (\lambda (d2: 
-C).(getl O (CHead c2 (Bind b) v) (CHead d2 (Bind b) v))) c2 (getl_refl b c2 
-v)) b0 H5) w H4)))) H3)) H2))) | (S n) \Rightarrow (\lambda (H1: (getl (S n) 
-(CHead c1 (Bind b) v) (CHead d1 (Bind b0) w))).(let H_x \def (H b0 d1 w (r 
-(Bind b) n) (getl_gen_S (Bind b) c1 (CHead d1 (Bind b0) w) v n H1)) in (let 
-H2 \def H_x in (ex_ind C (\lambda (d2: C).(getl (r (Bind b) n) c2 (CHead d2 
-(Bind b0) w))) (ex C (\lambda (d2: C).(getl (S n) (CHead c2 (Bind b) v) 
-(CHead d2 (Bind b0) w)))) (\lambda (x: C).(\lambda (H3: (getl (r (Bind b) n) 
-c2 (CHead x (Bind b0) w))).(ex_intro C (\lambda (d2: C).(getl (S n) (CHead c2 
-(Bind b) v) (CHead d2 (Bind b0) w))) x (getl_head (Bind b) n c2 (CHead x 
-(Bind b0) w) H3 v)))) H2))))]) H0)))))))))).
+(CHead c1 (Bind b) v) (CHead d1 (Bind b0) w) H1))) in ((let H4 \def (f_equal 
+C T (\lambda (e: C).(match e in C return (\lambda (_: C).T) with [(CSort _) 
+\Rightarrow w | (CHead _ _ t) \Rightarrow t])) (CHead d1 (Bind b0) w) (CHead 
+c1 (Bind b) v) (clear_gen_bind b c1 (CHead d1 (Bind b0) w) v (getl_gen_O 
+(CHead c1 (Bind b) v) (CHead d1 (Bind b0) w) H1))) in (\lambda (H5: (eq B b0 
+b)).(\lambda (_: (eq C d1 c1)).(eq_ind_r T v (\lambda (t: T).(ex C (\lambda 
+(d2: C).(getl O (CHead c2 (Bind b) v) (CHead d2 (Bind b0) t))))) (eq_ind_r B 
+b (\lambda (b1: B).(ex C (\lambda (d2: C).(getl O (CHead c2 (Bind b) v) 
+(CHead d2 (Bind b1) v))))) (ex_intro C (\lambda (d2: C).(getl O (CHead c2 
+(Bind b) v) (CHead d2 (Bind b) v))) c2 (getl_refl b c2 v)) b0 H5) w H4)))) 
+H3)) H2))) (\lambda (h0: nat).(\lambda (_: (((getl h0 (CHead c1 (Bind b) v) 
+(CHead d1 (Bind b0) w)) \to (ex C (\lambda (d2: C).(getl h0 (CHead c2 (Bind 
+b) v) (CHead d2 (Bind b0) w))))))).(\lambda (H1: (getl (S h0) (CHead c1 (Bind 
+b) v) (CHead d1 (Bind b0) w))).(let H_x \def (H b0 d1 w (r (Bind b) h0) 
+(getl_gen_S (Bind b) c1 (CHead d1 (Bind b0) w) v h0 H1)) in (let H2 \def H_x 
+in (ex_ind C (\lambda (d2: C).(getl (r (Bind b) h0) c2 (CHead d2 (Bind b0) 
+w))) (ex C (\lambda (d2: C).(getl (S h0) (CHead c2 (Bind b) v) (CHead d2 
+(Bind b0) w)))) (\lambda (x: C).(\lambda (H3: (getl (r (Bind b) h0) c2 (CHead 
+x (Bind b0) w))).(ex_intro C (\lambda (d2: C).(getl (S h0) (CHead c2 (Bind b) 
+v) (CHead d2 (Bind b0) w))) x (getl_head (Bind b) h0 c2 (CHead x (Bind b0) w) 
+H3 v)))) H2)))))) h H0)))))))))).
 
 theorem cimp_getl_conf:
  \forall (c1: C).(\forall (c2: C).((cimp c1 c2) \to (\forall (b: B).(\forall 

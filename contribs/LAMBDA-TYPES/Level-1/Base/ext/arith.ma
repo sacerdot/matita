@@ -189,9 +189,10 @@ theorem minus_le:
 \def
  \lambda (x: nat).(nat_ind (\lambda (n: nat).(\forall (y: nat).(le (minus n 
 y) n))) (\lambda (_: nat).(le_n O)) (\lambda (n: nat).(\lambda (H: ((\forall 
-(y: nat).(le (minus n y) n)))).(\lambda (y: nat).(match y in nat return 
-(\lambda (n0: nat).(le (minus (S n) n0) (S n))) with [O \Rightarrow (le_n (S 
-n)) | (S n0) \Rightarrow (le_S (minus n n0) n (H n0))])))) x).
+(y: nat).(le (minus n y) n)))).(\lambda (y: nat).(nat_ind (\lambda (n0: 
+nat).(le (minus (S n) n0) (S n))) (le_n (S n)) (\lambda (n0: nat).(\lambda 
+(_: (le (match n0 with [O \Rightarrow (S n) | (S l) \Rightarrow (minus n l)]) 
+(S n))).(le_S (minus n n0) n (H n0)))) y)))) x).
 
 theorem le_plus_minus_sym:
  \forall (n: nat).(\forall (m: nat).((le n m) \to (eq nat m (plus (minus m n) 

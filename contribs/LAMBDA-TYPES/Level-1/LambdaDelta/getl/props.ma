@@ -49,14 +49,14 @@ theorem getl_flat:
 e)).(\lambda (f: F).(\lambda (u: T).(let H0 \def (getl_gen_all c e h H) in 
 (ex2_ind C (\lambda (e0: C).(drop h O c e0)) (\lambda (e0: C).(clear e0 e)) 
 (getl h (CHead c (Flat f) u) e) (\lambda (x: C).(\lambda (H1: (drop h O c 
-x)).(\lambda (H2: (clear x e)).((match h in nat return (\lambda (n: 
-nat).((drop n O c x) \to (getl n (CHead c (Flat f) u) e))) with [O 
-\Rightarrow (\lambda (H3: (drop O O c x)).(let H4 \def (eq_ind_r C x (\lambda 
-(c: C).(clear c e)) H2 c (drop_gen_refl c x H3)) in (getl_intro O (CHead c 
-(Flat f) u) e (CHead c (Flat f) u) (drop_refl (CHead c (Flat f) u)) 
-(clear_flat c e H4 f u)))) | (S n) \Rightarrow (\lambda (H3: (drop (S n) O c 
-x)).(getl_intro (S n) (CHead c (Flat f) u) e x (drop_drop (Flat f) n c x H3 
-u) H2))]) H1)))) H0))))))).
+x)).(\lambda (H2: (clear x e)).(nat_ind (\lambda (n: nat).((drop n O c x) \to 
+(getl n (CHead c (Flat f) u) e))) (\lambda (H3: (drop O O c x)).(let H4 \def 
+(eq_ind_r C x (\lambda (c0: C).(clear c0 e)) H2 c (drop_gen_refl c x H3)) in 
+(getl_intro O (CHead c (Flat f) u) e (CHead c (Flat f) u) (drop_refl (CHead c 
+(Flat f) u)) (clear_flat c e H4 f u)))) (\lambda (h0: nat).(\lambda (_: 
+(((drop h0 O c x) \to (getl h0 (CHead c (Flat f) u) e)))).(\lambda (H3: (drop 
+(S h0) O c x)).(getl_intro (S h0) (CHead c (Flat f) u) e x (drop_drop (Flat 
+f) h0 c x H3 u) H2)))) h H1)))) H0))))))).
 
 theorem getl_ctail:
  \forall (b: B).(\forall (c: C).(\forall (d: C).(\forall (u: T).(\forall (i: 
@@ -86,6 +86,6 @@ C x1 x2) (\lambda (x0: C).(\lambda (H5: (drop h O c x0)).(\lambda (H6: (clear
 x0 x1)).(let H7 \def (eq_ind C x (\lambda (c0: C).(drop h O c c0)) H2 x0 
 (drop_mono c x O h H2 x0 H5)) in (let H8 \def (eq_ind_r C x0 (\lambda (c0: 
 C).(drop h O c c0)) H7 x (drop_mono c x O h H2 x0 H5)) in (let H9 \def 
-(eq_ind_r C x0 (\lambda (c: C).(clear c x1)) H6 x (drop_mono c x O h H2 x0 
+(eq_ind_r C x0 (\lambda (c0: C).(clear c0 x1)) H6 x (drop_mono c x O h H2 x0 
 H5)) in (clear_mono x x1 H9 x2 H3))))))) H4))))) H1))))))).
 

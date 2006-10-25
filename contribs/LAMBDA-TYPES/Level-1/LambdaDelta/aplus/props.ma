@@ -179,42 +179,44 @@ h) a) \to (\forall (P: Prop).P))))
 nat).((eq A (aplus g (asucc g a0) h) a0) \to (\forall (P: Prop).P)))) 
 (\lambda (n: nat).(\lambda (n0: nat).(\lambda (h: nat).(\lambda (H: (eq A 
 (aplus g (match n with [O \Rightarrow (ASort O (next g n0)) | (S h0) 
-\Rightarrow (ASort h0 n0)]) h) (ASort n n0))).(\lambda (P: Prop).((match n in 
-nat return (\lambda (n1: nat).((eq A (aplus g (match n1 with [O \Rightarrow 
-(ASort O (next g n0)) | (S h0) \Rightarrow (ASort h0 n0)]) h) (ASort n1 n0)) 
-\to P)) with [O \Rightarrow (\lambda (H0: (eq A (aplus g (ASort O (next g 
-n0)) h) (ASort O n0))).(let H1 \def (eq_ind A (aplus g (ASort O (next g n0)) 
-h) (\lambda (a0: A).(eq A a0 (ASort O n0))) H0 (ASort (minus O h) (next_plus 
-g (next g n0) (minus h O))) (aplus_asort_simpl g h O (next g n0))) in (let H2 
-\def (f_equal A nat (\lambda (e: A).(match e in A return (\lambda (_: A).nat) 
-with [(ASort _ n1) \Rightarrow n1 | (AHead _ _) \Rightarrow ((let rec 
-next_plus (g0: G) (n1: nat) (i: nat) on i: nat \def (match i with [O 
-\Rightarrow n1 | (S i0) \Rightarrow (next g0 (next_plus g0 n1 i0))]) in 
-next_plus) g (next g n0) (minus h O))])) (ASort (minus O h) (next_plus g 
-(next g n0) (minus h O))) (ASort O n0) H1) in (let H3 \def (eq_ind_r nat 
-(minus h O) (\lambda (n1: nat).(eq nat (next_plus g (next g n0) n1) n0)) H2 h 
-(minus_n_O h)) in (le_lt_false (next_plus g (next g n0) h) n0 (eq_ind nat 
-(next_plus g (next g n0) h) (\lambda (n1: nat).(le (next_plus g (next g n0) 
-h) n1)) (le_n (next_plus g (next g n0) h)) n0 H3) (next_plus_lt g h n0) 
-P))))) | (S n1) \Rightarrow (\lambda (H0: (eq A (aplus g (ASort n1 n0) h) 
-(ASort (S n1) n0))).(let H1 \def (eq_ind A (aplus g (ASort n1 n0) h) (\lambda 
-(a0: A).(eq A a0 (ASort (S n1) n0))) H0 (ASort (minus n1 h) (next_plus g n0 
-(minus h n1))) (aplus_asort_simpl g h n1 n0)) in (let H2 \def (f_equal A nat 
-(\lambda (e: A).(match e in A return (\lambda (_: A).nat) with [(ASort n2 _) 
-\Rightarrow n2 | (AHead _ _) \Rightarrow ((let rec minus (n2: nat) on n2: 
-(nat \to nat) \def (\lambda (m: nat).(match n2 with [O \Rightarrow O | (S k) 
-\Rightarrow (match m with [O \Rightarrow (S k) | (S l) \Rightarrow (minus k 
-l)])])) in minus) n1 h)])) (ASort (minus n1 h) (next_plus g n0 (minus h n1))) 
-(ASort (S n1) n0) H1) in ((let H3 \def (f_equal A nat (\lambda (e: A).(match 
-e in A return (\lambda (_: A).nat) with [(ASort _ n2) \Rightarrow n2 | (AHead 
-_ _) \Rightarrow ((let rec next_plus (g0: G) (n2: nat) (i: nat) on i: nat 
-\def (match i with [O \Rightarrow n2 | (S i0) \Rightarrow (next g0 (next_plus 
-g0 n2 i0))]) in next_plus) g n0 (minus h n1))])) (ASort (minus n1 h) 
-(next_plus g n0 (minus h n1))) (ASort (S n1) n0) H1) in (\lambda (H4: (eq nat 
-(minus n1 h) (S n1))).(le_Sx_x n1 (eq_ind nat (minus n1 h) (\lambda (n2: 
-nat).(le n2 n1)) (minus_le n1 h) (S n1) H4) P))) H2))))]) H)))))) (\lambda 
-(a0: A).(\lambda (_: ((\forall (h: nat).((eq A (aplus g (asucc g a0) h) a0) 
-\to (\forall (P: Prop).P))))).(\lambda (a1: A).(\lambda (H0: ((\forall (h: 
+\Rightarrow (ASort h0 n0)]) h) (ASort n n0))).(\lambda (P: Prop).(nat_ind 
+(\lambda (n1: nat).((eq A (aplus g (match n1 with [O \Rightarrow (ASort O 
+(next g n0)) | (S h0) \Rightarrow (ASort h0 n0)]) h) (ASort n1 n0)) \to P)) 
+(\lambda (H0: (eq A (aplus g (ASort O (next g n0)) h) (ASort O n0))).(let H1 
+\def (eq_ind A (aplus g (ASort O (next g n0)) h) (\lambda (a0: A).(eq A a0 
+(ASort O n0))) H0 (ASort (minus O h) (next_plus g (next g n0) (minus h O))) 
+(aplus_asort_simpl g h O (next g n0))) in (let H2 \def (f_equal A nat 
+(\lambda (e: A).(match e in A return (\lambda (_: A).nat) with [(ASort _ n1) 
+\Rightarrow n1 | (AHead _ _) \Rightarrow ((let rec next_plus (g0: G) (n1: 
+nat) (i: nat) on i: nat \def (match i with [O \Rightarrow n1 | (S i0) 
+\Rightarrow (next g0 (next_plus g0 n1 i0))]) in next_plus) g (next g n0) 
+(minus h O))])) (ASort (minus O h) (next_plus g (next g n0) (minus h O))) 
+(ASort O n0) H1) in (let H3 \def (eq_ind_r nat (minus h O) (\lambda (n1: 
+nat).(eq nat (next_plus g (next g n0) n1) n0)) H2 h (minus_n_O h)) in 
+(le_lt_false (next_plus g (next g n0) h) n0 (eq_ind nat (next_plus g (next g 
+n0) h) (\lambda (n1: nat).(le (next_plus g (next g n0) h) n1)) (le_n 
+(next_plus g (next g n0) h)) n0 H3) (next_plus_lt g h n0) P))))) (\lambda 
+(n1: nat).(\lambda (_: (((eq A (aplus g (match n1 with [O \Rightarrow (ASort 
+O (next g n0)) | (S h0) \Rightarrow (ASort h0 n0)]) h) (ASort n1 n0)) \to 
+P))).(\lambda (H0: (eq A (aplus g (ASort n1 n0) h) (ASort (S n1) n0))).(let 
+H1 \def (eq_ind A (aplus g (ASort n1 n0) h) (\lambda (a0: A).(eq A a0 (ASort 
+(S n1) n0))) H0 (ASort (minus n1 h) (next_plus g n0 (minus h n1))) 
+(aplus_asort_simpl g h n1 n0)) in (let H2 \def (f_equal A nat (\lambda (e: 
+A).(match e in A return (\lambda (_: A).nat) with [(ASort n2 _) \Rightarrow 
+n2 | (AHead _ _) \Rightarrow ((let rec minus (n2: nat) on n2: (nat \to nat) 
+\def (\lambda (m: nat).(match n2 with [O \Rightarrow O | (S k) \Rightarrow 
+(match m with [O \Rightarrow (S k) | (S l) \Rightarrow (minus k l)])])) in 
+minus) n1 h)])) (ASort (minus n1 h) (next_plus g n0 (minus h n1))) (ASort (S 
+n1) n0) H1) in ((let H3 \def (f_equal A nat (\lambda (e: A).(match e in A 
+return (\lambda (_: A).nat) with [(ASort _ n2) \Rightarrow n2 | (AHead _ _) 
+\Rightarrow ((let rec next_plus (g0: G) (n2: nat) (i: nat) on i: nat \def 
+(match i with [O \Rightarrow n2 | (S i0) \Rightarrow (next g0 (next_plus g0 
+n2 i0))]) in next_plus) g n0 (minus h n1))])) (ASort (minus n1 h) (next_plus 
+g n0 (minus h n1))) (ASort (S n1) n0) H1) in (\lambda (H4: (eq nat (minus n1 
+h) (S n1))).(le_Sx_x n1 (eq_ind nat (minus n1 h) (\lambda (n2: nat).(le n2 
+n1)) (minus_le n1 h) (S n1) H4) P))) H2)))))) n H)))))) (\lambda (a0: 
+A).(\lambda (_: ((\forall (h: nat).((eq A (aplus g (asucc g a0) h) a0) \to 
+(\forall (P: Prop).P))))).(\lambda (a1: A).(\lambda (H0: ((\forall (h: 
 nat).((eq A (aplus g (asucc g a1) h) a1) \to (\forall (P: 
 Prop).P))))).(\lambda (h: nat).(\lambda (H1: (eq A (aplus g (AHead a0 (asucc 
 g a1)) h) (AHead a0 a1))).(\lambda (P: Prop).(let H2 \def (eq_ind A (aplus g 

@@ -54,25 +54,26 @@ Prop).P)))).(\lambda (t1: T).(\lambda (H0: (((eq T (THead k v t1) t1) \to
 (\forall (P: Prop).P)))).(\lambda (H1: (eq T (THead k v (THead k0 t0 t1)) 
 (THead k0 t0 t1))).(\lambda (P: Prop).(let H2 \def (f_equal T K (\lambda (e: 
 T).(match e in T return (\lambda (_: T).K) with [(TSort _) \Rightarrow k | 
-(TLRef _) \Rightarrow k | (THead k _ _) \Rightarrow k])) (THead k v (THead k0 
-t0 t1)) (THead k0 t0 t1) H1) in ((let H3 \def (f_equal T T (\lambda (e: 
+(TLRef _) \Rightarrow k | (THead k1 _ _) \Rightarrow k1])) (THead k v (THead 
+k0 t0 t1)) (THead k0 t0 t1) H1) in ((let H3 \def (f_equal T T (\lambda (e: 
 T).(match e in T return (\lambda (_: T).T) with [(TSort _) \Rightarrow v | 
-(TLRef _) \Rightarrow v | (THead _ t _) \Rightarrow t])) (THead k v (THead k0 
-t0 t1)) (THead k0 t0 t1) H1) in ((let H4 \def (f_equal T T (\lambda (e: 
+(TLRef _) \Rightarrow v | (THead _ t2 _) \Rightarrow t2])) (THead k v (THead 
+k0 t0 t1)) (THead k0 t0 t1) H1) in ((let H4 \def (f_equal T T (\lambda (e: 
 T).(match e in T return (\lambda (_: T).T) with [(TSort _) \Rightarrow (THead 
-k0 t0 t1) | (TLRef _) \Rightarrow (THead k0 t0 t1) | (THead _ _ t) 
-\Rightarrow t])) (THead k v (THead k0 t0 t1)) (THead k0 t0 t1) H1) in 
+k0 t0 t1) | (TLRef _) \Rightarrow (THead k0 t0 t1) | (THead _ _ t2) 
+\Rightarrow t2])) (THead k v (THead k0 t0 t1)) (THead k0 t0 t1) H1) in 
 (\lambda (H5: (eq T v t0)).(\lambda (H6: (eq K k k0)).(let H7 \def (eq_ind T 
-v (\lambda (t: T).((eq T (THead k t t1) t1) \to (\forall (P: Prop).P))) H0 t0 
-H5) in (let H8 \def (eq_ind K k (\lambda (k: K).((eq T (THead k t0 t1) t1) 
-\to (\forall (P: Prop).P))) H7 k0 H6) in (H8 H4 P)))))) H3)) H2))))))))) t))).
+v (\lambda (t2: T).((eq T (THead k t2 t1) t1) \to (\forall (P0: Prop).P0))) 
+H0 t0 H5) in (let H8 \def (eq_ind K k (\lambda (k1: K).((eq T (THead k1 t0 
+t1) t1) \to (\forall (P0: Prop).P0))) H7 k0 H6) in (H8 H4 P)))))) H3)) 
+H2))))))))) t))).
 
 theorem tweight_lt:
  \forall (t: T).(lt O (tweight t))
 \def
- \lambda (t: T).(match t in T return (\lambda (t0: T).(lt O (tweight t0))) 
-with [(TSort _) \Rightarrow (le_n (S O)) | (TLRef _) \Rightarrow (le_n (S O)) 
-| (THead _ t0 t1) \Rightarrow (le_S_n (S O) (S (plus (tweight t0) (tweight 
-t1))) (le_n_S (S O) (S (plus (tweight t0) (tweight t1))) (le_n_S O (plus 
-(tweight t0) (tweight t1)) (le_O_n (plus (tweight t0) (tweight t1))))))]).
+ \lambda (t: T).(T_ind (\lambda (t0: T).(lt O (tweight t0))) (\lambda (_: 
+nat).(le_n (S O))) (\lambda (_: nat).(le_n (S O))) (\lambda (_: K).(\lambda 
+(t0: T).(\lambda (H: (lt O (tweight t0))).(\lambda (t1: T).(\lambda (_: (lt O 
+(tweight t1))).(le_S (S O) (plus (tweight t0) (tweight t1)) (le_plus_trans (S 
+O) (tweight t0) (tweight t1) H))))))) t).
 
