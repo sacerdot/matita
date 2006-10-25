@@ -18,6 +18,14 @@ set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/iso/props".
 
 include "iso/fwd.ma".
 
+theorem iso_refl:
+ \forall (t: T).(iso t t)
+\def
+ \lambda (t: T).(T_ind (\lambda (t0: T).(iso t0 t0)) (\lambda (n: 
+nat).(iso_sort n n)) (\lambda (n: nat).(iso_lref n n)) (\lambda (k: 
+K).(\lambda (t0: T).(\lambda (_: (iso t0 t0)).(\lambda (t1: T).(\lambda (_: 
+(iso t1 t1)).(iso_head t0 t0 t1 t1 k)))))) t).
+
 theorem iso_trans:
  \forall (t1: T).(\forall (t2: T).((iso t1 t2) \to (\forall (t3: T).((iso t2 
 t3) \to (iso t1 t3)))))

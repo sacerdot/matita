@@ -20,7 +20,7 @@ include "nf2/pr3.ma".
 
 include "pr3/fwd.ma".
 
-include "iso/fwd.ma".
+include "iso/props.ma".
 
 theorem nf2_iso_appls_lref:
  \forall (c: C).(\forall (i: nat).((nf2 c (TLRef i)) \to (\forall (vs: 
