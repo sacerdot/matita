@@ -25,7 +25,7 @@ theorem nle_gen_succ_1: \forall x,y. x < y \to
  [ apply (eq_gen_succ_zero ? ? H)
  | lapply linear eq_gen_succ_succ to H2 as H0.
    subst.
-   apply ex_intro; [|auto new] (**)
+   apply ex_intro; [|auto new timeout=30] (**)
  ].
 qed.
 
@@ -34,7 +34,7 @@ theorem nle_gen_succ_succ: \forall x,y. x < succ y \to x <= y.
  [ apply (eq_gen_succ_zero ? ? H)
  | lapply linear eq_gen_succ_succ to H2 as H0.
    lapply linear eq_gen_succ_succ to H3 as H2.
-   subst. auto new
+   subst. auto new timeout=30
  ].
 qed.
 
@@ -46,7 +46,7 @@ qed.
 
 theorem nle_gen_zero_2: \forall x. x <= zero \to x = zero.
  intros 1. elim x; clear x; intros;
- [ auto new
+ [ auto new timeout=30
  | apply (nle_gen_succ_zero ? ? H1)
  ].
 qed.
@@ -54,8 +54,8 @@ qed.
 theorem nle_gen_succ_2: \forall y,x. x <= succ y \to
                         x = zero \lor \exists z. x = succ z \land z <= y.
  intros 2; elim x; clear x; intros;
- [ auto new
+ [ auto new timeout=30
  | lapply linear nle_gen_succ_succ to H1.
-   right. apply ex_intro; [|auto new] (**)
+   right. apply ex_intro; [|auto new timeout=30] (**)
  ].
 qed.
