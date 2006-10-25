@@ -22,7 +22,7 @@ include "NPlus/defs.ma".
 theorem nplus_gen_zero_1: \forall q,r. (zero + q == r) \to q = r.
  intros. elim H; clear H q r; intros;
  [ reflexivity
- | clear H1. auto new
+ | clear H1. auto new timeout=30
  ].
 qed.
 
@@ -33,12 +33,12 @@ theorem nplus_gen_succ_1: \forall p,q,r. ((succ p) + q == r) \to
  | clear H1.
    decompose.
    subst.
- ]; apply ex_intro; [| auto new || auto new ]. (**)
+ ]; apply ex_intro; [| auto new timeout=30 || auto new timeout=30 ]. (**)
 qed.
 
 theorem nplus_gen_zero_2: \forall p,r. (p + zero == r) \to p = r.
  intros. inversion H; clear H; intros;
- [ auto new
+ [ auto new timeout=30
  | clear H H1.
    lapply eq_gen_zero_succ to H2 as H0. apply H0
  ].
@@ -51,14 +51,14 @@ theorem nplus_gen_succ_2: \forall p,q,r. (p + (succ q) == r) \to
  | clear H1 H3 r.
    lapply linear eq_gen_succ_succ to H2 as H0.
    subst.
-   apply ex_intro; [| auto new ] (**)
+   apply ex_intro; [| auto new timeout=30 ] (**)
  ].
 qed.
 
 theorem nplus_gen_zero_3: \forall p,q. (p + q == zero) \to 
                           p = zero \land q = zero.
  intros. inversion H; clear H; intros;
- [ subst. auto new
+ [ subst. auto new timeout=30
  | clear H H1.
    lapply eq_gen_zero_succ to H3 as H0. apply H0
  ].
@@ -72,7 +72,7 @@ theorem nplus_gen_succ_3: \forall p,q,r. (p + q == (succ r)) \to
  | clear H1.
    lapply linear eq_gen_succ_succ to H3 as H0.
    subst.
- ]; apply ex_intro; [| auto new || auto new ] (**)
+ ]; apply ex_intro; [| auto new timeout=30 || auto new timeout=30 ] (**)
 qed.
 (*
 (* alternative proofs invoking nplus_gen_2 *)
@@ -81,7 +81,7 @@ variant nplus_gen_zero_3_alt: \forall p,q. (p + q == zero) \to
                               p = zero \land q = zero.
  intros 2. elim q; clear q; intros;
  [ lapply linear nplus_gen_zero_2 to H as H0.
-   subst. auto new
+   subst. auto new timeout=30
  | clear H.
    lapply linear nplus_gen_succ_2 to H1 as H0.
    decompose.
@@ -100,7 +100,7 @@ variant nplus_gen_succ_3_alt: \forall p,q,r. (p + q == (succ r)) \to
    decompose.
    lapply linear eq_gen_succ_succ to H1 as H0.
    subst
- ]; apply ex_intro; [| auto new || auto new ]. (**)
+ ]; apply ex_intro; [| auto new timeout=30 || auto new timeout=30 ]. (**)
 qed.
 *)
 (* other simplification lemmas *)
@@ -113,7 +113,7 @@ theorem nplus_gen_eq_2_3: \forall p,q. (p + q == q) \to p = zero.
    decompose.
    lapply linear eq_gen_succ_succ to H2 as H0.
    subst
- ]; auto new.
+ ]; auto new timeout=30.
 qed.
 
 theorem nplus_gen_eq_1_3: \forall p,q. (p + q == p) \to q = zero.
@@ -124,5 +124,5 @@ theorem nplus_gen_eq_1_3: \forall p,q. (p + q == p) \to q = zero.
    decompose.
    lapply linear eq_gen_succ_succ to H2 as H0.
    subst
- ]; auto new.
+ ]; auto new timeout=30.
 qed.
