@@ -247,25 +247,23 @@ definition lt \def λF:ordered_field_ch0.λa,b:F.a ≤ b ∧ a ≠ b.
 interpretation "Ordered field lt" 'lt a b =
  (cic:/matita/integration_algebras/lt.con _ a b).
 
-(*incompleto
 lemma le_zero_x_to_le_opp_x_zero: ∀F:ordered_field_ch0.∀x:F. 0 ≤ x → -x ≤ 0.
 intros;
- generalize in match (of_plus_compat ? ? ? ? ? ? ? ? F ? ? (-x) H); intro;
- rewrite > (zero_neutral ? ? ? ? F) in H1;
- rewrite > (plus_comm  ? ? ?  ? F) in H1;
- rewrite > (opp_inverse ? ? ? ? F) in H1;
- 
+ generalize in match (of_plus_compat ? ? F ? ? (-x) H); intro;
+ rewrite > zero_neutral in H1;
+ rewrite > plus_comm in H1;
+ rewrite > opp_inverse in H1;
  assumption.
-qed.*)
+qed.
 
-axiom le_x_zero_to_le_zero_opp_x: ∀F:ordered_field_ch0.∀x:F. x ≤ 0 → 0 ≤ -x.
-(* intros;
- generalize in match (of_plus_compat ? ? ? ? ? ? ? ? F ? ? (-x) H); intro;
- rewrite > (zero_neutral ? ? ? ? F) in H1;
- rewrite > (plus_comm ? ? ? ? F) in H1;
- rewrite > (opp_inverse ? ? ? ? F) in H1;
+lemma le_x_zero_to_le_zero_opp_x: ∀F:ordered_field_ch0.∀x:F. x ≤ 0 → 0 ≤ -x.
+ intros;
+ generalize in match (of_plus_compat ? ? F ? ? (-x) H); intro;
+ rewrite > zero_neutral in H1;
+ rewrite > plus_comm in H1;
+ rewrite > opp_inverse in H1;
  assumption.
-qed.*)
+qed.
 
 (*
 lemma eq_opp_x_times_opp_one_x: ∀F:ordered_field_ch0.∀x:F.-x = -1*x.
