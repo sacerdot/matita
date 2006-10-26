@@ -310,7 +310,7 @@ let rec interactive_error_interp ?(all_passes=false) source_buffer notify_exn
        let model = new interpErrorModel dialog#treeview choices in
        dialog#disambiguationErrors#set_title "Disambiguation error";
        dialog#disambiguationErrorsLabel#set_label
-        "Click on an interpretation to see the corresponding error message:";
+        "Click on an error to see the corresponding message:";
        ignore (dialog#treeview#connect#cursor_changed (fun _ ->
         let tree_path =
          match fst (dialog#treeview#get_cursor ()) with
