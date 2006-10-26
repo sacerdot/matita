@@ -1248,7 +1248,7 @@ apply f. apply n1. apply m1.
 apply eq_symmetric_unfolded.assumption.
 apply eq_symmetric_unfolded.assumption.
 apply H.
-auto new.
+auto new timeout=100.
 qed.
 
 (*

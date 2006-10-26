@@ -18,12 +18,12 @@ include "NLE/props.ma".
 
 theorem nat_dec_lt_ge: \forall x,y. x < y \lor y <= x.
  intros 2; elim y; clear y;
- [ auto new
+ [ auto new timeout=100
  | decompose;
    [ lapply linear nle_gen_succ_1 to H1. decompose.
-     subst. auto new depth=4
+     subst. auto new timeout=100 depth=4
    | lapply linear nle_lt_or_eq to H1; decompose;
-     subst; auto new
+     subst; auto new timeout=100
    ]
  ].
 qed.

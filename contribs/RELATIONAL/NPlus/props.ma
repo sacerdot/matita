@@ -17,7 +17,7 @@ set "baseuri" "cic:/matita/RELATIONAL/NPlus/props".
 include "NPlus/fwd.ma".
 
 theorem nplus_zero_1: \forall q. zero + q == q.
- intros. elim q; clear q; auto new.
+ intros. elim q; clear q; auto new timeout=100.
 qed.
 
 theorem nplus_succ_1: \forall p,q,r. NPlus p q r \to 
@@ -28,7 +28,7 @@ theorem nplus_succ_1: \forall p,q,r. NPlus p q r \to
  | lapply linear nplus_gen_succ_2 to H1 as H0.
    decompose.
    subst
- ]; auto new.
+ ]; auto new timeout=100.
 qed.
 
 theorem nplus_sym: \forall p,q,r. (p + q == r) \to q + p == r.
@@ -38,21 +38,21 @@ theorem nplus_sym: \forall p,q,r. (p + q == r) \to q + p == r.
  | lapply linear nplus_gen_succ_2 to H1 as H0.
    decompose.
    subst
- ]; auto new.
+ ]; auto new timeout=100.
 qed.
 
 theorem nplus_shift_succ_sx: \forall p,q,r. 
                              (p + (succ q) == r) \to (succ p) + q == r.
  intros.
  lapply linear nplus_gen_succ_2 to H as H0.
- decompose. subst. auto new.
+ decompose. subst. auto new timeout=100.
 qed.
 
 theorem nplus_shift_succ_dx: \forall p,q,r. 
                              ((succ p) + q == r) \to p + (succ q) == r.
  intros.
  lapply linear nplus_gen_succ_1 to H as H0.
- decompose. subst. auto new.
+ decompose. subst. auto new timeout=100.
 qed.
 
 theorem nplus_trans_1: \forall p,q1,r1. (p + q1 == r1) \to 
@@ -67,7 +67,7 @@ theorem nplus_trans_1: \forall p,q1,r1. (p + q1 == r1) \to
    decompose. subst.
    lapply linear H to H4, H3 as H0.
    decompose.
- ]; apply ex_intro; [| auto new || auto new ]. (**)
+ ]; apply ex_intro; [| auto new timeout=100 || auto new timeout=100 ]. (**)
 qed.
 
 theorem nplus_trans_2: \forall p1,q,r1. (p1 + q == r1) \to 
@@ -82,7 +82,7 @@ theorem nplus_trans_2: \forall p1,q,r1. (p1 + q == r1) \to
    decompose. subst.
    lapply linear H to H4, H3 as H0.
    decompose.
- ]; apply ex_intro; [| auto new || auto new ]. (**)
+ ]; apply ex_intro; [| auto new timeout=100 || auto new timeout=100 ]. (**)
 qed.
 
 theorem nplus_conf: \forall p,q,r1. (p + q == r1) \to 
@@ -94,5 +94,5 @@ theorem nplus_conf: \forall p,q,r1. (p + q == r1) \to
    decompose. subst.
    lapply linear nplus_gen_succ_2 to H2 as H0.
    decompose. subst.
- ]; auto new.
+ ]; auto new timeout=100.
 qed.
