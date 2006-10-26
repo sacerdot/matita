@@ -133,35 +133,98 @@ class interpErrorModel =
   let cols = new GTree.column_list in
   let id_col = cols#add Gobject.Data.string in
   let dsc_col = cols#add Gobject.Data.string in
-  let interp_no_col = cols#add Gobject.Data.int in
+  let interp_no_col = cols#add Gobject.Data.caml in
   let tree_store = GTree.tree_store cols in
   let id_renderer = GTree.cell_renderer_text [], ["text", id_col] in
   let dsc_renderer = GTree.cell_renderer_text [], ["text", dsc_col] in
   let id_view_col = GTree.view_column ~renderer:id_renderer () in
   let dsc_view_col = GTree.view_column ~renderer:dsc_renderer () in
-  fun tree_view choices ->
+  fun (tree_view: GTree.view) choices ->
     object
       initializer
         tree_view#set_model (Some (tree_store :> GTree.model));
         ignore (tree_view#append_column id_view_col);
         ignore (tree_view#append_column dsc_view_col);
         tree_store#clear ();
-        let idx = ref ~-1 in
+        let idx1 = ref ~-1 in
         List.iter
-          (fun passes,env,_,_,_ ->
-            incr idx;
-            let interp_row = tree_store#append () in
-            tree_store#set ~row:interp_row ~column:id_col
-              ("Passes " ^ String.concat " " (List.map string_of_int passes));
-            tree_store#set ~row:interp_row ~column:interp_no_col !idx;
-            List.iter
-              (fun (_, id, dsc) ->
-                let row = tree_store#append ~parent:interp_row () in
-                tree_store#set ~row ~column:id_col id;
-                tree_store#set ~row ~column:dsc_col dsc;
-                tree_store#set ~row ~column:interp_no_col !idx)
-              env)
-          choices
+          (fun _,lll ->
+            incr idx1;
+            let loc_row =
+             if List.length choices = 1 then
+              None
+             else
+              (let loc_row = tree_store#append () in
+                begin
+                 match lll with
+                    [passes,envs_and_diffs,_] ->
+                      tree_store#set ~row:loc_row ~column:id_col
+                       ("Error location " ^ string_of_int (!idx1+1) ^
+                        ", error message " ^ string_of_int (!idx1+1) ^ ".1" ^
+                        " (in passes " ^
+                        String.concat " " (List.map string_of_int passes) ^
+                        ")");
+                      tree_store#set ~row:loc_row ~column:interp_no_col
+                       (!idx1,Some 0,None);
+                  | _ ->
+                    tree_store#set ~row:loc_row ~column:id_col
+                     ("Error location " ^ string_of_int (!idx1+1));
+                    tree_store#set ~row:loc_row ~column:interp_no_col
+                     (!idx1,None,None);
+                end ;
+                Some loc_row) in
+            let idx2 = ref ~-1 in
+             List.iter
+              (fun passes,envs_and_diffs,_ ->
+                incr idx2;
+                let msg_row =
+                 if List.length lll = 1 then
+                  loc_row
+                 else
+                  let msg_row = tree_store#append ?parent:loc_row () in
+                   (tree_store#set ~row:msg_row ~column:id_col
+                     ("Error message " ^ string_of_int (!idx1+1) ^ "." ^
+                      string_of_int (!idx2+1) ^
+                      " (in passes " ^
+                      String.concat " " (List.map string_of_int passes) ^
+                      ")");
+                    tree_store#set ~row:msg_row ~column:interp_no_col
+                     (!idx1,Some !idx2,None);
+                    Some msg_row) in
+                let idx3 = ref ~-1 in
+                List.iter
+                 (fun (passes,env,_) ->
+                   incr idx3;
+                   let interp_row =
+                    match envs_and_diffs with
+                       _::_::_ ->
+                        let interp_row = tree_store#append ?parent:msg_row () in
+                        tree_store#set ~row:interp_row ~column:id_col
+                          ("Interpretation " ^ string_of_int (!idx3+1) ^
+                           " (in passes " ^
+                           String.concat " " (List.map string_of_int passes) ^
+                           ")");
+                        tree_store#set ~row:interp_row ~column:interp_no_col
+                         (!idx1,Some !idx2,Some !idx3);
+                        Some interp_row
+                     | [_] -> msg_row
+                     | [] -> assert false
+                   in
+                    List.iter
+                     (fun (_, id, dsc) ->
+                       let row = tree_store#append ?parent:interp_row () in
+                       tree_store#set ~row ~column:id_col id;
+                       tree_store#set ~row ~column:dsc_col dsc;
+                       tree_store#set ~row ~column:interp_no_col
+                        (!idx1,Some !idx2,Some !idx3)
+                     ) env
+                 ) envs_and_diffs
+              ) lll ;
+             if List.length lll > 1 then
+              HExtlib.iter_option
+               (fun p -> tree_view#expand_row (tree_store#get_path p))
+               loc_row
+          ) choices
 
       method get_interp_no tree_path =
         let iter = tree_store#get_iter tree_path in
@@ -181,34 +244,64 @@ let rec interactive_error_interp ?(all_passes=false) source_buffer notify_exn
       (fun l ->
         incr pass;
         List.map
-         (fun (env,diff,offset,msg) -> [!pass], env, diff, offset, msg) l
+         (fun (env,diff,offset,msg) ->
+           offset, [[!pass], [[!pass], env, diff], msg]) l
       ) errorll') in
   (* Here we are doing a stable sort and list_uniq returns the latter
      "equal" element. I.e. we are showing the error corresponding to the
      most advanced disambiguation pass *)
   let choices =
-   let choices_compare (_,e1,_,_,m1) (_,e2,_,_,m2) =
-    let m1 = Lazy.force m1 in
-    let m2 = Lazy.force m2 in
-     compare (e1,m1) (e2,m2) in
-   let choices_compare_by_passes (p1,_,_,_,_) (p2,_,_,_,_) = compare p1 p2 in
+   let choices_compare (o1,_) (o2,_) = compare o1 o2 in
+   let choices_compare_by_passes (p1,_,_) (p2,_,_) =
+    compare p1 p2 in
    let rec uniq =
     function
        [] -> []
      | h::[] -> [h]
-     | (p1,e1,_,_,_)::(p2,e2,d2,o2,m2)::tl when e1 = e2 ->
-         uniq ((p1@p2,e2,d2,o2,m2) :: tl) 
+     | (o1,res1)::(o2,res2)::tl when o1 = o2 ->
+        let merge_by_name errors =
+         let merge_by_env errors =
+          let choices_compare_by_env (_,e1,_) (_,e2,_) = compare e1 e2 in
+          let choices_compare_by_passes (p1,_,_) (p2,_,_) =
+           compare p1 p2 in
+          let rec uniq_by_env =
+           function
+              [] -> []
+            | h::[] -> [h]
+            | (p1,e1,_)::(p2,e2,d2)::tl when e1 = e2 ->
+                uniq_by_env ((p1@p2,e2,d2) :: tl) 
+            | h1::tl -> h1 :: uniq_by_env tl
+          in
+           List.sort choices_compare_by_passes
+            (uniq_by_env (List.stable_sort choices_compare_by_env errors))
+         in
+         let choices_compare_by_msg (_,_,m1) (_,_,m2) =
+          compare (Lazy.force m1) (Lazy.force m2) in
+         let rec uniq_by_msg =
+          function
+             [] -> []
+           | h::[] -> [h]
+           | (p1,i1,m1)::(p2,i2,m2)::tl when Lazy.force m1 = Lazy.force m2 ->
+               uniq_by_msg ((p1@p2,merge_by_env (i1@i2),m2) :: tl) 
+           | h1::tl -> h1 :: uniq_by_msg tl
+         in
+          List.sort choices_compare_by_msg
+           (uniq_by_msg (List.stable_sort choices_compare_by_msg errors))
+        in
+         let res = merge_by_name (res1@res2) in
+          uniq ((o1,res) :: tl)
      | h1::tl -> h1 :: uniq tl
    in
-    List.sort choices_compare_by_passes
+    List.map (fun o,l -> o,List.sort choices_compare_by_passes l)
      (uniq (List.stable_sort choices_compare choices))
   in
    match choices with
       [] -> assert false
-    | [_,env,diff,loffset,msg] ->
-        notify_exn
-         (GrafiteDisambiguator.DisambiguationError
-           (offset,[[env,diff,loffset,msg]]));
+    | [loffset,[_,envs_and_diffs,msg]] ->
+        let _,env,diff = List.hd envs_and_diffs in
+         notify_exn
+          (GrafiteDisambiguator.DisambiguationError
+            (offset,[[env,diff,loffset,msg]]));
     | _::_ ->
        let dialog = new disambiguationErrors () in
        dialog#check_widgets ();
@@ -223,8 +316,16 @@ let rec interactive_error_interp ?(all_passes=false) source_buffer notify_exn
          match fst (dialog#treeview#get_cursor ()) with
             None -> assert false
          | Some tp -> tp in
-        let idx = model#get_interp_no tree_path in
-        let _,env,diff,loffset,msg = List.nth choices idx in
+        let idx1,idx2,idx3 = model#get_interp_no tree_path in
+        let loffset,lll = List.nth choices idx1 in
+        let _,envs_and_diffs,msg =
+         match idx2 with
+            Some idx2 -> List.nth lll idx2
+          | None -> [],[],lazy "Multiple error messages. Please select one." in
+        let _,env,diff =
+         match idx3 with
+            Some idx3 -> List.nth envs_and_diffs idx3
+          | None -> [],[],[] (* dymmy value, used *) in
         let script = MatitaScript.current () in
         let error_tag = script#error_tag in
          source_buffer#remove_tag error_tag
