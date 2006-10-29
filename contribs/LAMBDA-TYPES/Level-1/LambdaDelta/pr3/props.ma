@@ -125,6 +125,16 @@ T).(\lambda (t4: T).(\lambda (H0: (pr2 c t4 t3)).(\lambda (t5: T).(\lambda
 c (Flat f) v) t3 t5))))).(\lambda (f: F).(\lambda (v: T).(pr3_sing (CHead c 
 (Flat f) v) t3 t4 (pr2_cflat c t4 t3 H0 f v) t5 (H2 f v)))))))))) t1 t2 H)))).
 
+theorem pr3_flat:
+ \forall (c: C).(\forall (u1: T).(\forall (u2: T).((pr3 c u1 u2) \to (\forall 
+(t1: T).(\forall (t2: T).((pr3 c t1 t2) \to (\forall (f: F).(pr3 c (THead 
+(Flat f) u1 t1) (THead (Flat f) u2 t2)))))))))
+\def
+ \lambda (c: C).(\lambda (u1: T).(\lambda (u2: T).(\lambda (H: (pr3 c u1 
+u2)).(\lambda (t1: T).(\lambda (t2: T).(\lambda (H0: (pr3 c t1 t2)).(\lambda 
+(f: F).(pr3_head_12 c u1 u2 H (Flat f) t1 t2 (pr3_cflat c t1 t2 H0 f 
+u2))))))))).
+
 theorem pr3_pr0_pr2_t:
  \forall (u1: T).(\forall (u2: T).((pr0 u1 u2) \to (\forall (c: C).(\forall 
 (t1: T).(\forall (t2: T).(\forall (k: K).((pr2 (CHead c k u2) t1 t2) \to (pr3 
