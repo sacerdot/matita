@@ -51,7 +51,7 @@ record abelian_group : Type \def
    opp: carrier → carrier;
    ag_abelian_group_properties: is_abelian_group ? plus zero opp
  }.
-
+ 
 notation "0" with precedence 89
 for @{ 'zero }.
 
@@ -63,6 +63,12 @@ interpretation "Ring plus" 'plus a b =
 
 interpretation "Ring opp" 'uminus a =
  (cic:/matita/integration_algebras/opp.con _ a).
+
+definition minus ≝
+ λG:abelian_group.λa,b:G. a + -b.
+
+interpretation "Ring minus" 'minus a b =
+ (cic:/matita/integration_algebras/minus.con _ a b).
  
 theorem plus_assoc: ∀G:abelian_group. associative ? (plus G).
  intro;
@@ -277,7 +283,8 @@ lemma not_eq_x_zero_to_lt_zero_mult_x_x:
     generalize in match (of_mult_compat ? ? ? ? ? ? ? ?  F ? ? H2 H2); intro;
 *)  
 
-axiom not_eq_sum_field_zero: ∀F,n. n > O → sum_field F n ≠ 0.
+(* The ordering is not necessary. *)
+axiom not_eq_sum_field_zero: ∀F:ordered_field_ch0.∀n. O<n → sum_field F n ≠ 0.
 
 record is_vector_space (K: field) (G:abelian_group) (emult:K→G→G) : Prop
 ≝
@@ -329,29 +336,28 @@ record is_riesz_space (K:ordered_field_ch0) (V:vector_space K)
    rs_compat_le_times: ∀a:K.∀f. of_le ? 0 a → le ? L 0 f → le ? L 0 (a*f)
  }.
 
-record riesz_space : Type \def
- { rs_ordered_field_ch0: ordered_field_ch0;
-   rs_vector_space:> vector_space rs_ordered_field_ch0;
+record riesz_space (K:ordered_field_ch0) : Type \def
+ { rs_vector_space:> vector_space K;
    rs_lattice:> lattice rs_vector_space;
    rs_riesz_space_properties: is_riesz_space ? rs_vector_space rs_lattice
  }.
 
-definition absolute_value \def λS:riesz_space.λf.join ? S f (-f).   
+definition absolute_value \def λK.λS:riesz_space K.λf.join ? S f (-f).   
 
-record is_archimedean_riesz_space (S:riesz_space) : Prop
+record is_archimedean_riesz_space (K) (S:riesz_space K) : Prop
 \def
   { ars_archimedean: ∃u.∀n.∀a.∀p:n > O.
      le ? S
-      (absolute_value S a)
+      (absolute_value ? S a)
       (emult ? S
-        (inv ? (sum_field (rs_ordered_field_ch0 S) n) (not_eq_sum_field_zero ? n p))
+        (inv ? (sum_field K n) (not_eq_sum_field_zero ? n p))
         u) →
      a = 0
   }.
 
-record archimedean_riesz_space : Type \def
- { ars_riesz_space:> riesz_space;
-   ars_archimedean_property: is_archimedean_riesz_space ars_riesz_space
+record archimedean_riesz_space (K:ordered_field_ch0) : Type \def
+ { ars_riesz_space:> riesz_space K;
+   ars_archimedean_property: is_archimedean_riesz_space ? ars_riesz_space
  }.
 
 record is_algebra (K: field) (V:vector_space K) (mult:V→V→V) (one:V) : Prop
@@ -372,8 +378,8 @@ record algebra (K: field) (V:vector_space K) : Type \def
 interpretation "Algebra product" 'times a b =
  (cic:/matita/integration_algebras/a_mult.con _ _ _ a b).
 
-interpretation "Field one" 'one =
- (cic:/matita/integration_algebras/a_one.con _).
+interpretation "Algebra one" 'one =
+ (cic:/matita/integration_algebras/a_one.con _ _ _).
 
 definition ring_of_algebra ≝
  λK.λV:vector_space K.λA:algebra ? V.
@@ -382,8 +388,7 @@ definition ring_of_algebra ≝
 
 coercion cic:/matita/integration_algebras/ring_of_algebra.con.
 
-record is_f_algebra (S:archimedean_riesz_space)
- (A:algebra (rs_ordered_field_ch0 (ars_riesz_space S)) S) : Prop
+record is_f_algebra (K) (S:archimedean_riesz_space K) (A:algebra ? S) : Prop
 \def 
 { compat_mult_le:
    ∀f,g:S.
@@ -393,11 +398,51 @@ record is_f_algebra (S:archimedean_riesz_space)
     meet ? S f g = 0 → meet ? S (a_mult ? ? A h f) g = 0
 }.
 
-record f_algebra : Type \def 
-{ fa_archimedean_riesz_space:> archimedean_riesz_space;
+record f_algebra (K:ordered_field_ch0) : Type \def 
+{ fa_archimedean_riesz_space:> archimedean_riesz_space K;
   fa_algebra:> algebra ? fa_archimedean_riesz_space;
-  fa_f_algebra_properties: is_f_algebra fa_archimedean_riesz_space fa_algebra
+  fa_f_algebra_properties: is_f_algebra ? fa_archimedean_riesz_space fa_algebra
 }.
 
 (* to be proved; see footnote 2 in the paper by Spitters *)
-axiom symmetric_a_mult: ∀A:f_algebra. symmetric ? (a_mult ? ? A).
+axiom symmetric_a_mult: ∀K.∀A:f_algebra K. symmetric ? (a_mult ? ? A).
+
+
+definition tends_to : ∀F:ordered_field_ch0.∀f:nat→F.∀l:F.Prop.
+ alias symbol "leq" = "Ordered field le".
+ alias id "le" = "cic:/matita/nat/orders/le.ind#xpointer(1/1)".
+ apply
+  (λF:ordered_field_ch0.λf:nat → F.λl:F.
+    ∀n:nat.∃m:nat.∀j:nat. le m j →
+     l - (inv F (sum_field F (S n)) ?) ≤ f j ∧
+     f j ≤ l + (inv F (sum_field F (S n)) ?));
+ apply not_eq_sum_field_zero;
+ unfold;
+ auto new.
+qed.
+
+record is_integral (K) (A:f_algebra K) (I:Type_OF_f_algebra ? A→K) : Prop
+\def
+ { i_positive: ∀f:Type_OF_f_algebra ? A. le ? (lattice_OF_f_algebra ? A) 0 f → of_le K 0 (I f);
+   i_linear1: ∀f,g:Type_OF_f_algebra ? A. I (f + g) = I f + I g;
+   i_linear2: ∀f:A.∀k:K. I (emult ? A k f) = k*(I f)
+ }.
+
+(* Here we are avoiding a construction (the quotient space to define
+   f=g iff I(|f-g|)=0 *)
+record is_integration_f_algebra (K) (A:f_algebra K) (I:Type_OF_f_algebra ? A→K) : Prop
+\def
+ { ifa_integral: is_integral ? ? I;
+   ifa_limit1:
+    ∀f:A. tends_to ? (λn.I(meet ? A f ((sum_field K n)*(a_one ? ? A)))) (I f);
+   ifa_limit2:
+    ∀f:A.
+     tends_to ?
+      (λn.
+        I (meet ? A f
+         ((inv ? (sum_field K (S n))
+           (not_eq_sum_field_zero K (S n) (le_S_S O n (le_O_n n)))
+         ) * (a_one ? ? A)))) 0;
+   ifa_quotient_space1:
+    ∀f,g:A. f=g → I(absolute_value ? A (f - g)) = 0
+ }.
