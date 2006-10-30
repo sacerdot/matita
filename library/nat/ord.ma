@@ -168,7 +168,7 @@ apply p_ord_exp
   apply le_times_l.
   assumption.
   apply le_times_r.assumption.
-  alias id "not_eq_to_le_to_lt" = "cic:/matita/algebra/finite_groups/not_eq_to_le_to_lt.con".
+alias id "not_eq_to_le_to_lt" = "cic:/matita/algebra/finite_groups/not_eq_to_le_to_lt.con".
 apply not_eq_to_le_to_lt.
   unfold.intro.apply H1.
   rewrite < H3.
@@ -213,9 +213,9 @@ unfold.intro.
 elim (divides_times_to_divides ? ? ? H H9).
 apply (absurd ? ? H10 H5).
 apply (absurd ? ? H10 H7).
-rewrite > H6.
-rewrite > H8.
-auto paramodulation.
+(* rewrite > H6.
+rewrite > H8. *)
+auto paramodulation library=yes.
 unfold prime in H. elim H. assumption.
 qed.
 
