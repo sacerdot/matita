@@ -16,7 +16,7 @@ set "baseuri" "cic:/matita/topology/".
 
 include "sets.ma".
 
-record is_topology X (A: set X) (O: set (set X)) : Prop  ≝
+record is_topology (X) (A: set X) (O: set (set X)) : Prop  ≝
  { top_subset: ∀B. B ∈ O → B ⊆ A;
    top_empty: ∅︀ ∈ O;
    top_full: A ∈ O;
