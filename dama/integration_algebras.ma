@@ -137,20 +137,6 @@ record f_algebra (K:ordered_field_ch0) : Type \def
 (* to be proved; see footnote 2 in the paper by Spitters *)
 axiom symmetric_a_mult: ∀K.∀A:f_algebra K. symmetric ? (a_mult ? ? A).
 
-
-definition tends_to : ∀F:ordered_field_ch0.∀f:nat→F.∀l:F.Prop.
- alias symbol "leq" = "Ordered field le".
- alias id "le" = "cic:/matita/nat/orders/le.ind#xpointer(1/1)".
- apply
-  (λF:ordered_field_ch0.λf:nat → F.λl:F.
-    ∀n:nat.∃m:nat.∀j:nat. le m j →
-     l - (inv F (sum_field F (S n)) ?) ≤ f j ∧
-     f j ≤ l + (inv F (sum_field F (S n)) ?));
- apply not_eq_sum_field_zero;
- unfold;
- auto new.
-qed.
-
 record is_integral (K) (A:f_algebra K) (I:Type_OF_f_algebra ? A→K) : Prop
 \def
  { i_positive: ∀f:Type_OF_f_algebra ? A. le ? (lattice_OF_f_algebra ? A) 0 f → of_le K 0 (I f);

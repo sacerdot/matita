@@ -17,6 +17,7 @@ set "baseuri" "cic:/matita/groups/".
 include "higher_order_defs/functions.ma".
 include "nat/nat.ma".
 include "nat/orders.ma".
+include "constructive_connectives.ma".
 
 definition left_neutral \def λC,op.λe:C. ∀x:C. op e x = x.
 

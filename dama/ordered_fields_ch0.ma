@@ -16,8 +16,14 @@ set "baseuri" "cic:/matita/ordered_fields_ch0/".
 
 include "fields.ma".
 
-record is_ordered_field_ch0 (F:field) (le:F→F→Prop) : Prop \def
- { of_mult_compat: ∀a,b. le 0 a → le 0 b → le 0 (a*b);
+record is_total_order_relation (C:Type) (le:C→C→Prop) : Type \def
+ { to_cotransitive: ∀x,y,z:C. le x y → le x z ∨ le z y;
+   to_antisimmetry: ∀x,y:C. le x y → le y x → x=y
+ }.
+
+record is_ordered_field_ch0 (F:field) (le:F→F→Prop) : Type \def
+ { of_total_order_relation:> is_total_order_relation ? le;
+   of_mult_compat: ∀a,b. le 0 a → le 0 b → le 0 (a*b);
    of_plus_compat: ∀a,b,c. le a b → le (a+c) (b+c);
    of_weak_tricotomy : ∀a,b. a≠b → le a b ∨ le b a;
    (* 0 characteristics *)
@@ -68,7 +74,50 @@ lemma not_eq_x_zero_to_lt_zero_mult_x_x:
     generalize in match (of_mult_compat ? ? ? ? ? ? ? ?  F ? ? H2 H2); intro;
 *)  
 
+axiom lt_zero_to_lt_inv_zero:
+ ∀F:ordered_field_ch0.∀x:F.∀p:x≠0. 0 < x → 0 < inv ? x p.
+ 
 (* The ordering is not necessary. *)
 axiom not_eq_sum_field_zero: ∀F:ordered_field_ch0.∀n. O<n → sum_field F n ≠ 0.
+axiom le_zero_sum_field: ∀F:ordered_field_ch0.∀n. O<n → 0 < sum_field F n.
 
+axiom lt_zero_to_le_inv_zero:
+ ∀F:ordered_field_ch0.∀n:nat.∀p:sum_field F n ≠ 0. 0 ≤ inv ? (sum_field F n) p.
 
+definition tends_to : ∀F:ordered_field_ch0.∀f:nat→F.∀l:F.Prop.
+ alias symbol "leq" = "Ordered field le".
+ alias id "le" = "cic:/matita/nat/orders/le.ind#xpointer(1/1)".
+ apply
+  (λF:ordered_field_ch0.λf:nat → F.λl:F.
+    ∀n:nat.∃m:nat.∀j:nat. le m j →
+     l - (inv F (sum_field F (S n)) ?) ≤ f j ∧
+     f j ≤ l + (inv F (sum_field F (S n)) ?));
+ apply not_eq_sum_field_zero;
+ unfold;
+ auto new.
+qed.
+
+(*
+definition is_cauchy_seq ≝
+ λF:ordered_field_ch0.λf:nat→F.
+  ∀eps:F. 0 < eps →
+   ∃n:nat.∀M. n ≤ M →
+    -eps ≤ f M - f n ∧ f M - f n ≤ eps.
+*)
+
+definition is_cauchy_seq : ∀F:ordered_field_ch0.∀f:nat→F.Prop.
+ apply
+  (λF:ordered_field_ch0.λf:nat→F.
+    ∀m:nat.
+     ∃n:nat.∀N. n ≤ N →
+      -(inv ? (sum_field F (S m)) ?) ≤ f N - f n ∧
+      f N - f n ≤ inv ? (sum_field F (S m)) ?);
+ apply not_eq_sum_field_zero;
+ unfold;
+ auto.
+qed.
+
+definition is_complete ≝
+ λF:ordered_field_ch0.
+  ∀f:nat→F. is_cauchy_seq ? f →
+   ∃l:F. tends_to ? f l.
