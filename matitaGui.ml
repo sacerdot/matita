@@ -236,7 +236,10 @@ let rec interactive_error_interp ?(all_passes=false) source_buffer notify_exn
  offset errorll
 = 
   let errorll' =
-   if all_passes then errorll else List.rev (List.tl (List.tl (List.rev errorll))) in
+   if all_passes then errorll else
+    (* We remove passes 1,2 and 5,6 *)
+    []::[]::
+     List.tl (List.tl (List.rev (List.tl (List.tl (List.rev errorll))))) in
   let choices =
    let pass = ref 0 in
    List.flatten
