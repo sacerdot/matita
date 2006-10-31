@@ -363,6 +363,9 @@ script ex loc
            | `CANCEL -> raise MatitaTypes.Cancel)
      | _ -> ()
    end;
+   ignore (buffer#move_mark (`NAME "beginning_of_statement")
+    ~where:((buffer#get_iter_at_mark (`NAME "locked"))#forward_chars
+       (Glib.Utf8.length skipped_txt))) ;
    eval_with_engine
     guistuff lexicon_status grafite_status user_goal skipped_txt nonskipped_txt
      (TA.Executable (loc, ex))
@@ -501,6 +504,9 @@ object (self)
   (** text mark and tag representing locked part of a script *)
   val locked_mark =
     buffer#create_mark ~name:"locked" ~left_gravity:true buffer#start_iter
+  val beginning_of_statement_mark =
+    buffer#create_mark ~name:"beginning_of_statement"
+     ~left_gravity:true buffer#start_iter
   val locked_tag = buffer#create_tag [`BACKGROUND "lightblue"; `EDITABLE false]
   val error_tag = buffer#create_tag [`UNDERLINE `SINGLE; `FOREGROUND "red"]
 

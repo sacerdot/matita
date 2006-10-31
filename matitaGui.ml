@@ -232,8 +232,7 @@ class interpErrorModel =
     end
 
 
-let rec interactive_error_interp ?(all_passes=false) source_buffer notify_exn
- offset errorll
+let rec interactive_error_interp ?(all_passes=false) (source_buffer:GSourceView.source_buffer) notify_exn offset errorll
 = 
   let errorll' =
    if all_passes then errorll else
@@ -314,37 +313,69 @@ let rec interactive_error_interp ?(all_passes=false) source_buffer notify_exn
        dialog#disambiguationErrors#set_title "Disambiguation error";
        dialog#disambiguationErrorsLabel#set_label
         "Click on an error to see the corresponding message:";
-       ignore (dialog#treeview#connect#cursor_changed (fun _ ->
-        let tree_path =
-         match fst (dialog#treeview#get_cursor ()) with
-            None -> assert false
-         | Some tp -> tp in
-        let idx1,idx2,idx3 = model#get_interp_no tree_path in
-        let loffset,lll = List.nth choices idx1 in
-        let _,envs_and_diffs,msg =
-         match idx2 with
-            Some idx2 -> List.nth lll idx2
-          | None -> [],[],lazy "Multiple error messages. Please select one." in
-        let _,env,diff =
-         match idx3 with
-            Some idx3 -> List.nth envs_and_diffs idx3
-          | None -> [],[],[] (* dymmy value, used *) in
-        let script = MatitaScript.current () in
-        let error_tag = script#error_tag in
-         source_buffer#remove_tag error_tag
-           ~start:source_buffer#start_iter
-           ~stop:source_buffer#end_iter;
-         notify_exn
-          (GrafiteDisambiguator.DisambiguationError
-            (offset,[[env,diff,loffset,msg]]))
-         ));
+       ignore (dialog#treeview#connect#cursor_changed
+        (fun _ ->
+          let tree_path =
+           match fst (dialog#treeview#get_cursor ()) with
+              None -> assert false
+           | Some tp -> tp in
+          let idx1,idx2,idx3 = model#get_interp_no tree_path in
+          let loffset,lll = List.nth choices idx1 in
+          let _,envs_and_diffs,msg =
+           match idx2 with
+              Some idx2 -> List.nth lll idx2
+            | None -> [],[],lazy "Multiple error messages. Please select one." in
+          let _,env,diff =
+           match idx3 with
+              Some idx3 -> List.nth envs_and_diffs idx3
+            | None -> [],[],[] (* dymmy value, used *) in
+          let script = MatitaScript.current () in
+          let error_tag = script#error_tag in
+           source_buffer#remove_tag error_tag
+             ~start:source_buffer#start_iter
+             ~stop:source_buffer#end_iter;
+           notify_exn
+            (GrafiteDisambiguator.DisambiguationError
+              (offset,[[env,diff,loffset,msg]]))
+           ));
        let return _ =
          dialog#disambiguationErrors#destroy ();
          GMain.Main.quit ()
        in
        let fail _ = return () in
-       ignore (dialog#disambiguationErrors#event#connect#delete (fun _ -> true));
-       connect_button dialog#disambiguationErrorsOkButton (fun _ -> return ());
+       ignore(dialog#disambiguationErrors#event#connect#delete (fun _ -> true));
+       connect_button dialog#disambiguationErrorsOkButton
+        (fun _ ->
+          let tree_path =
+           match fst (dialog#treeview#get_cursor ()) with
+              None -> assert false
+           | Some tp -> tp in
+          let idx1,idx2,idx3 = model#get_interp_no tree_path in
+          let diff =
+           match idx2,idx3 with
+              Some idx2, Some idx3 ->
+               let _,lll = List.nth choices idx1 in
+               let _,envs_and_diffs,_ = List.nth lll idx2 in
+               let _,_,diff = List.nth envs_and_diffs idx3 in
+                diff
+            | _,_ -> assert false
+          in
+           let newtxt =
+            String.concat "\n"
+             ("" ::
+               List.map
+                (fun k,value ->
+                  DisambiguatePp.pp_environment
+                   (DisambiguateTypes.Environment.add k value
+                     DisambiguateTypes.Environment.empty))
+                diff) ^ "\n"
+           in
+            source_buffer#insert
+             ~iter:
+               (source_buffer#get_iter_at_mark
+                (`NAME "beginning_of_statement")) newtxt ;
+            return ()
+        );
        connect_button dialog#disambiguationErrorsMoreErrors
         (fun _ -> return () ;
           interactive_error_interp ~all_passes:true source_buffer notify_exn offset
