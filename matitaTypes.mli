@@ -33,6 +33,7 @@ type mathViewer_entry =
   | `Cic of Cic.term * Cic.metasenv
   | `Development of string
   | `Dir of string
+  | `HBugs of [ `Tutors ]
   | `Metadata of [ `Deps of [`Fwd | `Back] * UriManager.uri ]
   | `Uri of UriManager.uri
   | `Whelp of string * UriManager.uri list ]

@@ -40,10 +40,11 @@ type abouts =
   
 type mathViewer_entry =
   [ `About of abouts  (* current proof *)
-  | `Check of string (* term *)
+  | `Check of string  (* term *)
   | `Cic of Cic.term * Cic.metasenv
   | `Development of string
-  | `Dir of string (* "directory" in cic uris namespace *)
+  | `Dir of string  (* "directory" in cic uris namespace *)
+  | `HBugs of [ `Tutors ] (* list of available HBugs tutors *)
   | `Metadata of [ `Deps of [`Fwd | `Back] * UriManager.uri ]
   | `Uri of UriManager.uri (* cic object uri *)
   | `Whelp of string * UriManager.uri list (* query and results *)
@@ -58,6 +59,7 @@ let string_of_entry = function
   | `Cic (_, _) -> "term:"
   | `Development d -> "devel:/" ^ d
   | `Dir uri -> uri
+  | `HBugs `Tutors -> "hbugs:/tutors/"
   | `Metadata meta ->
       "metadata:/" ^
       (match meta with

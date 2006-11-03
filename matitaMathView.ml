@@ -925,6 +925,10 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
         match self#currentCicUri with
         | Some uri -> self#load (`Metadata (`Deps (`Back, uri)))
         | None -> ());
+      connect_menu_item win#hBugsTutorsMenuItem (fun () ->
+        self#load (`HBugs `Tutors));
+      connect_menu_item win#browserUrlMenuItem (fun () ->
+        win#browserUri#entry#misc#grab_focus ());
 
       (* fill dep graph contextual menu *)
       let go_menu_item =
@@ -1000,9 +1004,10 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
      * 
      * Use only these functions to switch between the tabs
      *)
-    method private _showMath = win#mathOrListNotebook#goto_page 0
-    method private _showList = win#mathOrListNotebook#goto_page 1
-    method private _showGviz = win#mathOrListNotebook#goto_page 3
+    method private _showMath = win#mathOrListNotebook#goto_page  0
+    method private _showList = win#mathOrListNotebook#goto_page  1
+    method private _showGviz = win#mathOrListNotebook#goto_page  3
+    method private _showHBugs = win#mathOrListNotebook#goto_page 4
 
     method private back () =
       try
@@ -1030,6 +1035,7 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
           | `Cic (term, metasenv) -> self#_loadTermCic term metasenv
           | `Development d -> self#_showDevelDeps d
           | `Dir dir -> self#_loadDir dir
+          | `HBugs `Tutors -> self#_loadHBugsTutors
           | `Metadata (`Deps ((`Fwd | `Back) as dir, uri)) ->
               self#dependencies dir uri ()
           | `Uri uri -> self#_loadUriManagerUri uri
@@ -1111,6 +1117,9 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
       lastDir <- dir;
       self#_loadList l
 
+    method private _loadHBugsTutors =
+      self#_showHBugs
+
     method private setEntry entry =
       win#browserUri#entry#set_text (MatitaTypes.string_of_entry entry);
       current_entry <- entry
@@ -1176,6 +1185,7 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
               `Uri (UriManager.uri_of_string ((*fix_uri*) txt))
           | txt when is_dir txt -> `Dir (MatitaMisc.normalize_dir txt)
           | txt when is_metadata txt -> `Metadata (parse_metadata txt)
+          | "hbugs:/tutors/" -> `HBugs `Tutors
           | txt ->
              (try
                MatitaTypes.entry_of_string txt
