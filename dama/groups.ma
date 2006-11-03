@@ -103,3 +103,27 @@ rewrite > zero_neutral in H1;
 assumption.
 qed.
 
+theorem eq_opp_plus_plus_opp_opp: ∀G:abelian_group.∀x,y:G. -(x+y) = -x + -y.
+ intros;
+ apply (cancellationlaw ? (x+y));
+ rewrite < plus_comm;
+ rewrite > opp_inverse;
+ rewrite > plus_assoc;
+ rewrite > plus_comm in ⊢ (? ? ? (? ? ? (? ? ? %)));
+ rewrite < plus_assoc in ⊢ (? ? ? (? ? ? %));
+ rewrite > plus_comm;
+ rewrite > plus_comm in ⊢ (? ? ? (? ? (? ? % ?) ?));
+ rewrite > opp_inverse;
+ rewrite > zero_neutral;
+ rewrite > opp_inverse;
+ reflexivity.
+qed.
+
+theorem eq_opp_opp_x_x: ∀G:abelian_group.∀x:G.--x=x.
+ intros;
+ apply (cancellationlaw ? (-x));
+ rewrite > opp_inverse;
+ rewrite > plus_comm;
+ rewrite > opp_inverse;
+ reflexivity.
+qed.

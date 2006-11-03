@@ -21,6 +21,17 @@ record is_total_order_relation (C:Type) (le:C→C→Prop) : Type \def
    to_antisimmetry: ∀x,y:C. le x y → le y x → x=y
  }.
 
+theorem to_transitive: ∀C,le. is_total_order_relation C le → transitive ? le.
+ intros;
+ unfold transitive;
+ intros;
+ elim (to_cotransitive ? ? i ? ? z H);
+  [ assumption
+  | rewrite < (to_antisimmetry ? ? i ? ? H1 t);
+    assumption
+  ].
+qed.
+
 record is_ordered_field_ch0 (F:field) (le:F→F→Prop) : Type \def
  { of_total_order_relation:> is_total_order_relation ? le;
    of_mult_compat: ∀a,b. le 0 a → le 0 b → le 0 (a*b);
@@ -105,6 +116,8 @@ definition is_cauchy_seq ≝
     -eps ≤ f M - f n ∧ f M - f n ≤ eps.
 *)
 
+
+
 definition is_cauchy_seq : ∀F:ordered_field_ch0.∀f:nat→F.Prop.
  apply
   (λF:ordered_field_ch0.λf:nat→F.
@@ -120,4 +133,4 @@ qed.
 definition is_complete ≝
  λF:ordered_field_ch0.
   ∀f:nat→F. is_cauchy_seq ? f →
-   ∃l:F. tends_to ? f l.
+   ex F (λl:F. tends_to ? f l).
