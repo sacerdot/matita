@@ -27,12 +27,11 @@ record real: Type \def
    r_real_properties: is_real r_ordered_field_ch0
  }.
 
-(* serve l'esistenziale in CProp!
 definition lim: ∀R:real.∀f:nat→R.is_cauchy_seq R f → R.
  intros;
- elim H;
+ elim (r_complete ? (r_real_properties R) ? H);
+ exact a.
 qed.
-*)
 
 definition max_seq: ∀R:real.∀x,y:R. nat → R.
  intros (R x y);
@@ -70,12 +69,17 @@ theorem cauchy_max_seq: ∀R:real.∀x,y. is_cauchy_seq ? (max_seq R x y).
       rewrite > (plus_comm ? x (-x));
       rewrite > opp_inverse;
       split;
-       [ elim daemon (* da finire *)
+       [ apply (le_zero_x_to_le_opp_x_zero R ?); 
+         apply lt_zero_to_le_inv_zero
        | apply lt_zero_to_le_inv_zero
        ]
     | simplify;
       split;
-       [ elim daemon (* da finire *)
+       [  apply (to_transitive ? ? 
+       (of_total_order_relation ? ? R) ? 0 ?);
+         [ apply (le_zero_x_to_le_opp_x_zero R ?)
+         | assumption
+         ]        
        | assumption
        ]
     ]
@@ -87,7 +91,7 @@ theorem cauchy_max_seq: ∀R:real.∀x,y. is_cauchy_seq ? (max_seq R x y).
  (not_eq_sum_field_zero R (S m) (le_S_S O m (le_O_n m)))));
      [ simplify;
        split;
-       [ elim daemon (* da finire *)
+       [ elim daemon
        | generalize in match (le_zero_x_to_le_opp_x_zero R ? t1);
          intro;
          unfold minus in H1;
@@ -103,16 +107,18 @@ theorem cauchy_max_seq: ∀R:real.∀x,y. is_cauchy_seq ? (max_seq R x y).
        rewrite > (plus_comm ? y (-y));
        rewrite > opp_inverse;
        split;
-       [ elim daemon (* da finire *)
+       [ elim daemon
        | apply lt_zero_to_le_inv_zero
        ]
      ]
   ].
+  elim daemon.
 qed.
 
 definition max: ∀R:real.R → R → R.
  intros (R x y);
- elim (r_complete ? (r_real_properties R) ? ?);
-  [|| apply (cauchy_max_seq R x y) ]
+ apply (lim R (max_seq R x y));
+ apply cauchy_max_seq.
 qed.
- 
+
+definition abs \def λR.λx:Type_OF_real R. max R x (-x).
