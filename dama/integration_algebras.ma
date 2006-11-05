@@ -27,7 +27,7 @@ record is_vector_space (K: field) (G:abelian_group) (emult:K→G→G) : Prop
 record vector_space (K:field): Type \def
 { vs_abelian_group :> abelian_group;
   emult: K → vs_abelian_group → vs_abelian_group;
-  vs_vector_space_properties :> is_vector_space K vs_abelian_group emult
+  vs_vector_space_properties :> is_vector_space ? vs_abelian_group emult
 }.
 
 interpretation "Vector space external product" 'times a b =
@@ -39,8 +39,7 @@ record is_semi_norm (R:real) (V: vector_space R) (semi_norm:V→R) : Prop \def
    sn_triangle_inequality: ∀x,y:V. semi_norm (x + y) ≤ semi_norm x + semi_norm y
  }.
 
-record is_norm (R:real) (V:vector_space R) (norm:V → R)
- : Prop \def
+record is_norm (R:real) (V:vector_space R) (norm:V → R) : Prop \def
  { n_semi_norm:> is_semi_norm ? ? norm;
    n_properness: ∀x:V. norm x = 0 → x = 0
  }.
@@ -91,9 +90,7 @@ record is_archimedean_riesz_space (K) (S:riesz_space K) : Prop
   { ars_archimedean: ∃u.∀n.∀a.∀p:n > O.
      le ? S
       (absolute_value ? S a)
-      (emult ? S
-        (inv ? (sum_field K n) (not_eq_sum_field_zero ? n p))
-        u) →
+      ((inv ? (sum_field K n) (not_eq_sum_field_zero ? n p))* u) →
      a = 0
   }.
 
@@ -106,7 +103,7 @@ record is_integral (K) (R:archimedean_riesz_space K) (I:R→K) : Prop
 \def
  { i_positive: ∀f:R. le ? R 0 f → of_le K 0 (I f);
    i_linear1: ∀f,g:R. I (f + g) = I f + I g;
-   i_linear2: ∀f:R.∀k:K. I (emult ? R k f) = k*(I f)
+   i_linear2: ∀f:R.∀k:K. I (k*f) = k*(I f)
  }.
 
 definition is_weak_unit ≝
@@ -118,12 +115,14 @@ definition is_weak_unit ≝
   ∀x:V. meet x unit = 0 → u = 0.
 *) λR:real.λV:archimedean_riesz_space R.λe:V.True.
 
+(* Here we are avoiding a construction (the quotient space to define
+   f=g iff I(|f-g|)=0 *)
 record integration_riesz_space (R:real) : Type \def
  { irs_archimedean_riesz_space:> archimedean_riesz_space R;
    irs_unit: irs_archimedean_riesz_space;
    irs_weak_unit: is_weak_unit ? ? irs_unit;
    integral: irs_archimedean_riesz_space → R;
-   irs_integral_properties: is_integral R irs_archimedean_riesz_space integral;
+   irs_integral_properties: is_integral ? ? integral;
    irs_limit1:
     ∀f:irs_archimedean_riesz_space.
      tends_to ?
@@ -154,7 +153,7 @@ record is_algebra (K: field) (V:vector_space K) (mult:V→V→V) (one:V) : Prop
 
 record algebra (K: field) (V:vector_space K) (a_one:V) : Type \def
  { a_mult: V → V → V;
-   a_algebra_properties: is_algebra K V a_mult a_one
+   a_algebra_properties: is_algebra ? ? a_mult a_one
  }.
 
 interpretation "Algebra product" 'times a b =
@@ -188,8 +187,6 @@ Type \def
 axiom symmetric_a_mult:
  ∀K,R,one.∀A:f_algebra K R one. symmetric ? (a_mult ? ? ? A).
 
-(* Here we are avoiding a construction (the quotient space to define
-   f=g iff I(|f-g|)=0 *)
 record integration_f_algebra (R:real) : Type \def
  { ifa_integration_riesz_space:> integration_riesz_space R;
    ifa_f_algebra:>

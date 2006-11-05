@@ -90,9 +90,9 @@ lemma eq_mult_x_zero_zero: ∀R:ring.∀x:R.x*0=0.
 intros;
 generalize in match (zero_neutral R 0);
 intro;
-generalize in match (eq_f ? ? (\lambda y.x*y) ? ? H); intro; clear H;
+generalize in match (eq_f ? ? (λy.x*y) ? ? H); intro; clear H;
 rewrite > mult_plus_distr_left in H1;
-generalize in match (eq_f ? ? (\lambda y. (-(x*0)) +y) ? ? H1);intro;
+generalize in match (eq_f ? ? (λy. (-(x*0)) +y) ? ? H1);intro;
 clear H1;
 rewrite < plus_assoc in H;
 rewrite > opp_inverse in H;

@@ -21,7 +21,8 @@ record is_total_order_relation (C:Type) (le:C→C→Prop) : Type \def
    to_antisimmetry: ∀x,y:C. le x y → le y x → x=y
  }.
 
-theorem to_transitive: ∀C,le. is_total_order_relation C le → transitive ? le.
+theorem to_transitive:
+ ∀C.∀le:C→C→Prop. is_total_order_relation ? le → transitive ? le.
  intros;
  unfold transitive;
  intros;
@@ -44,7 +45,7 @@ record is_ordered_field_ch0 (F:field) (le:F→F→Prop) : Type \def
 record ordered_field_ch0 : Type \def
  { of_field:> field;
    of_le: of_field → of_field → Prop;
-   of_ordered_field_properties:> is_ordered_field_ch0 of_field of_le
+   of_ordered_field_properties:> is_ordered_field_ch0 ? of_le
  }.
 
 interpretation "Ordered field le" 'leq a b =
@@ -93,16 +94,14 @@ axiom not_eq_sum_field_zero: ∀F:ordered_field_ch0.∀n. O<n → sum_field F n 
 axiom le_zero_sum_field: ∀F:ordered_field_ch0.∀n. O<n → 0 < sum_field F n.
 
 axiom lt_zero_to_le_inv_zero:
- ∀F:ordered_field_ch0.∀n:nat.∀p:sum_field F n ≠ 0. 0 ≤ inv ? (sum_field F n) p.
+ ∀F:ordered_field_ch0.∀n:nat.∀p:sum_field F n ≠ 0. 0 ≤ inv ? (sum_field ? n) p.
 
 definition tends_to : ∀F:ordered_field_ch0.∀f:nat→F.∀l:F.Prop.
- alias symbol "leq" = "Ordered field le".
- alias id "le" = "cic:/matita/nat/orders/le.ind#xpointer(1/1)".
  apply
   (λF:ordered_field_ch0.λf:nat → F.λl:F.
-    ∀n:nat.∃m:nat.∀j:nat. le m j →
-     l - (inv F (sum_field F (S n)) ?) ≤ f j ∧
-     f j ≤ l + (inv F (sum_field F (S n)) ?));
+    ∀n:nat.∃m:nat.∀j:nat. m≤j →
+     l - (inv F (sum_field ? (S n)) ?) ≤ f j ∧
+     f j ≤ l + (inv F (sum_field ? (S n)) ?));
  apply not_eq_sum_field_zero;
  unfold;
  auto new.

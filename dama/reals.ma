@@ -18,7 +18,7 @@ include "ordered_fields_ch0.ma".
 
 record is_real (F:ordered_field_ch0) : Type
 ≝
- { r_archimedean: ∀x:F. ∃n:nat. x ≤ (sum_field F n);
+ { r_archimedean: ∀x:F. ∃n:nat. x ≤ (sum_field ? n);
    r_complete: is_complete F  
  }.
 
@@ -27,7 +27,7 @@ record real: Type \def
    r_real_properties: is_real r_ordered_field_ch0
  }.
 
-definition lim: ∀R:real.∀f:nat→R.is_cauchy_seq R f → R.
+definition lim: ∀R:real.∀f:nat→R.is_cauchy_seq ? f → R.
  intros;
  elim (r_complete ? (r_real_properties R) ? H);
  exact a.
@@ -35,7 +35,7 @@ qed.
 
 definition max_seq: ∀R:real.∀x,y:R. nat → R.
  intros (R x y);
- elim (to_cotransitive R (of_le R) R 0 (inv ? (sum_field R (S n)) ?) (x-y));
+ elim (to_cotransitive R (of_le R) R 0 (inv ? (sum_field ? (S n)) ?) (x-y));
   [ apply x
   | apply not_eq_sum_field_zero ;
     unfold;
@@ -47,7 +47,7 @@ qed.
 
 axiom daemon: False.
 
-theorem cauchy_max_seq: ∀R:real.∀x,y. is_cauchy_seq ? (max_seq R x y).
+theorem cauchy_max_seq: ∀R:real.∀x,y:R. is_cauchy_seq ? (max_seq ? x y).
  intros;
  unfold;
  intros;

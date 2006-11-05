@@ -24,7 +24,7 @@ record is_field (R:ring) (inv:∀x:R.x ≠ 0 → R) : Prop
     inv_inverse_: ∀x.∀p: x ≠ 0. mult ? (inv x p) x = 1
  }.
 
-lemma opp_opp: \forall R:ring. \forall x:R. (-(-x))=x.
+lemma opp_opp: ∀R:ring. ∀x:R. --x=x.
 intros; 
 apply (cancellationlaw ? (-x) ? ?); 
 rewrite > (opp_inverse R x); 
@@ -50,10 +50,10 @@ theorem mult_comm: ∀F:field.symmetric ? (mult F).
  apply (mult_comm_ ? ? (field_properties F)).
 qed.
 
-theorem inv_inverse: ∀F:field.∀x.∀p: x ≠ 0. mult ? (inv F x p) x = 1.
+theorem inv_inverse: ∀F:field.∀x:F.∀p: x ≠ 0. (inv ? x p)*x = 1.
  intro;
  apply (inv_inverse_ ? ? (field_properties F)).
 qed.
 
 definition sum_field ≝
- λF:field. sum ? (plus F) (zero F) (one F).
+ λF:field. sum ? (plus F) 0 1.
