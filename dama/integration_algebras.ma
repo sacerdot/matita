@@ -33,15 +33,13 @@ record vector_space (K:field): Type \def
 interpretation "Vector space external product" 'times a b =
  (cic:/matita/integration_algebras/emult.con _ _ a b).
 
-record is_semi_norm (R:real) (V: vector_space R)
- (semi_norm:Type_OF_vector_space ? V→R) : Prop
-\def
+record is_semi_norm (R:real) (V: vector_space R) (semi_norm:V→R) : Prop \def
  { sn_positive: ∀x:V. 0 ≤ semi_norm x;
    sn_omogeneous: ∀a:R.∀x:V. semi_norm (a*x) = (abs ? a) * semi_norm x;
    sn_triangle_inequality: ∀x,y:V. semi_norm (x + y) ≤ semi_norm x + semi_norm y
  }.
 
-record is_norm (R:real) (V:vector_space R) (norm:Type_OF_vector_space ? V → R)
+record is_norm (R:real) (V:vector_space R) (norm:V → R)
  : Prop \def
  { n_semi_norm:> is_semi_norm ? ? norm;
    n_properness: ∀x:V. norm x = 0 → x = 0
@@ -104,7 +102,7 @@ record archimedean_riesz_space (K:ordered_field_ch0) : Type \def
    ars_archimedean_property: is_archimedean_riesz_space ? ars_riesz_space
  }.
 
-record is_integral (K) (R:archimedean_riesz_space K) (I:Type_OF_archimedean_riesz_space ? R→K) : Prop
+record is_integral (K) (R:archimedean_riesz_space K) (I:R→K) : Prop
 \def
  { i_positive: ∀f:R. le ? R 0 f → of_le K 0 (I f);
    i_linear1: ∀f,g:R. I (f + g) = I f + I g;
@@ -122,9 +120,9 @@ definition is_weak_unit ≝
 
 record integration_riesz_space (R:real) : Type \def
  { irs_archimedean_riesz_space:> archimedean_riesz_space R;
-   irs_unit: Type_OF_archimedean_riesz_space ? irs_archimedean_riesz_space;
+   irs_unit: irs_archimedean_riesz_space;
    irs_weak_unit: is_weak_unit ? ? irs_unit;
-   integral: Type_OF_archimedean_riesz_space ? irs_archimedean_riesz_space → R;
+   integral: irs_archimedean_riesz_space → R;
    irs_integral_properties: is_integral R irs_archimedean_riesz_space integral;
    irs_limit1:
     ∀f:irs_archimedean_riesz_space.
@@ -163,7 +161,7 @@ interpretation "Algebra product" 'times a b =
  (cic:/matita/integration_algebras/a_mult.con _ _ _ a b).
 
 definition ring_of_algebra ≝
- λK.λV:vector_space K.λone:Type_OF_vector_space ? V.λA:algebra ? V one.
+ λK.λV:vector_space K.λone:V.λA:algebra ? V one.
   mk_ring V (a_mult ? ? ? A) one
    (a_ring ? ? ? ? (a_algebra_properties ? ? ? A)).
 
@@ -180,8 +178,7 @@ record is_f_algebra (K) (S:archimedean_riesz_space K) (one: S)
     meet ? S f g = 0 → meet ? S (a_mult ? ? ? A h f) g = 0
 }.
 
-record f_algebra (K:ordered_field_ch0) (R:archimedean_riesz_space K)
- (one:Type_OF_archimedean_riesz_space ? R) :
+record f_algebra (K:ordered_field_ch0) (R:archimedean_riesz_space K) (one:R) :
 Type \def 
 { fa_algebra:> algebra ? R one;
   fa_f_algebra_properties: is_f_algebra ? ? ? fa_algebra
