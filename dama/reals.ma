@@ -121,4 +121,4 @@ definition max: ∀R:real.R → R → R.
  apply cauchy_max_seq.
 qed.
 
-definition abs \def λR.λx:Type_OF_real R. max R x (-x).
+definition abs \def λR:real.λx:R. max R x (-x).
