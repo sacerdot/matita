@@ -39,10 +39,67 @@ record is_semi_norm (R:real) (V: vector_space R) (semi_norm:V→R) : Prop \def
    sn_triangle_inequality: ∀x,y:V. semi_norm (x + y) ≤ semi_norm x + semi_norm y
  }.
 
+theorem eq_semi_norm_zero_zero:
+ ∀R:real.∀V:vector_space R.∀semi_norm:V→R.
+  is_semi_norm ? ? semi_norm →
+   semi_norm 0 = 0.
+ intros;
+ (* facile *)
+ elim daemon.
+qed.
+
 record is_norm (R:real) (V:vector_space R) (norm:V → R) : Prop \def
  { n_semi_norm:> is_semi_norm ? ? norm;
    n_properness: ∀x:V. norm x = 0 → x = 0
  }.
+
+record is_semi_distance (R:real) (C:Type) (semi_d: C→C→R) : Prop \def
+ { sd_positive: ∀x,y:C. 0 ≤ semi_d x y;
+   sd_properness: \forall x:C. semi_d x x = 0; 
+   sd_triangle_inequality: ∀x,y,z:C. semi_d x z ≤ semi_d x y + semi_d z y
+ }.
+
+record is_distance (R:real) (C:Type) (d:C→C→R) : Prop \def
+ { d_semi_distance:> is_semi_distance ? ? d;
+   d_properness: ∀x,y:C. d x y = 0 → x=y
+ }.
+
+definition induced_distance ≝
+ λR:real.λV:vector_space R.λnorm:V→R.
+  λf,g:V.norm (f - g).
+
+theorem induced_distance_is_distance:
+ ∀R:real.∀V:vector_space R.∀norm:V→R.
+  is_norm ? ? norm → is_distance ? ? (induced_distance ? ? norm).
+ intros;
+ apply mk_is_distance;
+  [ apply mk_is_semi_distance;
+    [ unfold induced_distance;
+      intros;
+      apply sn_positive;
+      apply n_semi_norm;
+      assumption
+    | unfold induced_distance;
+      intros;
+      unfold minus;
+      rewrite < plus_comm;
+      rewrite > opp_inverse;
+      apply eq_semi_norm_zero_zero;
+      apply n_semi_norm;
+      assumption
+    | unfold induced_distance;
+      intros;
+      (* ??? *)
+      elim daemon
+    ]
+  | unfold induced_distance;
+    intros;
+    generalize in match (n_properness ? ? ? H ? H1);
+    intro;
+    (* facile *)
+    elim daemon
+  ].
+qed.
 
 record is_lattice (C:Type) (join,meet:C→C→C) : Prop \def
  { (* abelian semigroup properties *)
@@ -65,6 +122,11 @@ definition le \def λC:Type.λL:lattice C.λf,g. meet ? L f g = f.
 
 interpretation "Lattice le" 'leq a b =
  (cic:/matita/integration_algebras/le.con _ _ a b).
+
+definition lt \def λC:Type.λL:lattice C.λf,g. le ? L f g ∧ f ≠ g.
+
+interpretation "Lattice lt" 'lt a b =
+ (cic:/matita/integration_algebras/lt.con _ _ a b).
 
 definition carrier_of_lattice ≝
  λC:Type.λL:lattice C.C.
@@ -113,7 +175,10 @@ definition is_weak_unit ≝
    2. Fremlin proves |x|/\u=0 \to u=0. How do we remove the absolute value?
  λR:real.λV:archimedean_riesz_space R.λunit: V.
   ∀x:V. meet x unit = 0 → u = 0.
-*) λR:real.λV:archimedean_riesz_space R.λe:V.True.
+  3. Fremlin proves u > 0 implies x /\ u > 0  > 0 for Archimedean spaces
+   only. We pick this definition for now.
+*) λR:real.λV:archimedean_riesz_space R.λe:V.
+    ∀v:V. lt ? V 0 v → lt ? V 0 (meet ? V v e).
 
 (* Here we are avoiding a construction (the quotient space to define
    f=g iff I(|f-g|)=0 *)
@@ -139,8 +204,57 @@ record integration_riesz_space (R:real) : Type \def
          ) * irs_unit))) 0;
    irs_quotient_space1:
     ∀f,g:irs_archimedean_riesz_space.
-     f=g → integral (absolute_value ? irs_archimedean_riesz_space (f - g)) = 0
+     integral (absolute_value ? irs_archimedean_riesz_space (f - g)) = 0 → f=g
  }.
+
+definition induced_norm ≝
+ λR:real.λV:integration_riesz_space R.λf:V.
+  integral ? ? (absolute_value ? ? f).
+
+lemma induced_norm_is_norm:
+ ∀R:real.∀V:integration_riesz_space R.is_norm ? V (induced_norm ? V).
+ intros;
+ apply mk_is_norm;
+  [ apply mk_is_semi_norm;
+     [ unfold induced_norm;
+       intros;
+       apply i_positive;
+       [ apply (irs_integral_properties ? V)
+       | (* difficile *)
+         elim daemon
+       ]
+     | intros;
+       unfold induced_norm;
+       (* facile *)
+       elim daemon
+     | intros;
+       unfold induced_norm;
+       (* difficile *)
+       elim daemon
+     ]
+  | intros;
+    unfold induced_norm in H;
+    apply irs_quotient_space1;
+    unfold minus;
+    rewrite < plus_comm;
+    rewrite < eq_zero_opp_zero;
+    rewrite > zero_neutral;
+    assumption
+  ].
+qed.
+
+definition distance_induced_by_integral ≝
+ λR:real.λV:integration_riesz_space R.
+  induced_distance ? ? (induced_norm R V).
+
+theorem distance_induced_by_integral_is_distance:
+ ∀R:real.∀V:integration_riesz_space R.
+  is_distance ? ? (distance_induced_by_integral ? V).
+ intros;
+ unfold distance_induced_by_integral;
+ apply induced_distance_is_distance;
+ apply induced_norm_is_norm.
+qed.
 
 record is_algebra (K: field) (V:vector_space K) (mult:V→V→V) (one:V) : Prop
 ≝

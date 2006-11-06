@@ -127,3 +127,14 @@ theorem eq_opp_opp_x_x: ∀G:abelian_group.∀x:G.--x=x.
  rewrite > opp_inverse;
  reflexivity.
 qed.
+
+theorem eq_zero_opp_zero: ∀G:abelian_group.0=-0.
+ [ assumption
+ | intros;
+   apply (cancellationlaw ? 0);
+   rewrite < plus_comm in ⊢ (? ? ? %);
+   rewrite > opp_inverse;
+   rewrite > zero_neutral;
+   reflexivity
+ ].
+qed.

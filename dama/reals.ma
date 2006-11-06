@@ -122,3 +122,50 @@ definition max: ∀R:real.R → R → R.
 qed.
 
 definition abs \def λR:real.λx:R. max R x (-x).
+
+lemma comparison:
+ ∀R:real.∀f,g:nat→R. is_cauchy_seq ? f → is_cauchy_seq ? g →
+  (∀n:nat.f n ≤ g n) → lim ? f ? ≤ lim ? g ?.
+ [ assumption
+ | assumption
+ | intros;
+   elim daemon
+ ].
+qed.
+
+definition to_zero ≝
+ λR:real.λn.
+  -(inv R (sum_field R (S n))
+   (not_eq_sum_field_zero R (S n) (le_S_S O n (le_O_n n)))).
+  
+axiom is_cauchy_seq_to_zero: ∀R:real. is_cauchy_seq ? (to_zero R).
+
+lemma technical1: ∀R:real.lim R (to_zero R) (is_cauchy_seq_to_zero R) = 0.
+ intros;
+ unfold lim;
+ elim daemon.
+qed.
+ 
+lemma abs_x_ge_O: \forall R: real. \forall x:R. 0 ≤ abs R x.
+ intros;
+ unfold abs;
+ unfold max;
+ rewrite < technical1;
+ apply comparison;
+ intros;
+ unfold to_zero;
+ unfold max_seq;
+ elim
+     (to_cotransitive R (of_le R) R 0
+(inv R (sum_field R (S n))
+ (not_eq_sum_field_zero R (S n) (le_S_S O n (le_O_n n)))) (x--x)
+(lt_zero_to_le_inv_zero R (S n)
+ (not_eq_sum_field_zero R (S n) (le_S_S O n (le_O_n n)))));
+ [ simplify;
+   (* facile *)
+   elim daemon
+ | simplify;
+   (* facile *)
+   elim daemon
+ ].
+qed.
