@@ -14,92 +14,7 @@
 
 set "baseuri" "cic:/matita/integration_algebras/".
 
-include "reals.ma".
-
-record is_vector_space (K: field) (G:abelian_group) (emult:K→G→G) : Prop
-≝
- { vs_nilpotent: ∀v. emult 0 v = 0;
-   vs_neutral: ∀v. emult 1 v = v;
-   vs_distributive: ∀a,b,v. emult (a + b) v = (emult a v) + (emult b v);
-   vs_associative: ∀a,b,v. emult (a * b) v = emult a (emult b v)
- }.
-
-record vector_space (K:field): Type \def
-{ vs_abelian_group :> abelian_group;
-  emult: K → vs_abelian_group → vs_abelian_group;
-  vs_vector_space_properties :> is_vector_space ? vs_abelian_group emult
-}.
-
-interpretation "Vector space external product" 'times a b =
- (cic:/matita/integration_algebras/emult.con _ _ a b).
-
-record is_semi_norm (R:real) (V: vector_space R) (semi_norm:V→R) : Prop \def
- { sn_positive: ∀x:V. 0 ≤ semi_norm x;
-   sn_omogeneous: ∀a:R.∀x:V. semi_norm (a*x) = (abs ? a) * semi_norm x;
-   sn_triangle_inequality: ∀x,y:V. semi_norm (x + y) ≤ semi_norm x + semi_norm y
- }.
-
-theorem eq_semi_norm_zero_zero:
- ∀R:real.∀V:vector_space R.∀semi_norm:V→R.
-  is_semi_norm ? ? semi_norm →
-   semi_norm 0 = 0.
- intros;
- (* facile *)
- elim daemon.
-qed.
-
-record is_norm (R:real) (V:vector_space R) (norm:V → R) : Prop \def
- { n_semi_norm:> is_semi_norm ? ? norm;
-   n_properness: ∀x:V. norm x = 0 → x = 0
- }.
-
-record is_semi_distance (R:real) (C:Type) (semi_d: C→C→R) : Prop \def
- { sd_positive: ∀x,y:C. 0 ≤ semi_d x y;
-   sd_properness: \forall x:C. semi_d x x = 0; 
-   sd_triangle_inequality: ∀x,y,z:C. semi_d x z ≤ semi_d x y + semi_d z y
- }.
-
-record is_distance (R:real) (C:Type) (d:C→C→R) : Prop \def
- { d_semi_distance:> is_semi_distance ? ? d;
-   d_properness: ∀x,y:C. d x y = 0 → x=y
- }.
-
-definition induced_distance ≝
- λR:real.λV:vector_space R.λnorm:V→R.
-  λf,g:V.norm (f - g).
-
-theorem induced_distance_is_distance:
- ∀R:real.∀V:vector_space R.∀norm:V→R.
-  is_norm ? ? norm → is_distance ? ? (induced_distance ? ? norm).
- intros;
- apply mk_is_distance;
-  [ apply mk_is_semi_distance;
-    [ unfold induced_distance;
-      intros;
-      apply sn_positive;
-      apply n_semi_norm;
-      assumption
-    | unfold induced_distance;
-      intros;
-      unfold minus;
-      rewrite < plus_comm;
-      rewrite > opp_inverse;
-      apply eq_semi_norm_zero_zero;
-      apply n_semi_norm;
-      assumption
-    | unfold induced_distance;
-      intros;
-      (* ??? *)
-      elim daemon
-    ]
-  | unfold induced_distance;
-    intros;
-    generalize in match (n_properness ? ? ? H ? H1);
-    intro;
-    (* facile *)
-    elim daemon
-  ].
-qed.
+include "vector_spaces.ma".
 
 record is_lattice (C:Type) (join,meet:C→C→C) : Prop \def
  { (* abelian semigroup properties *)
@@ -146,6 +61,33 @@ record riesz_space (K:ordered_field_ch0) : Type \def
  }.
 
 definition absolute_value \def λK.λS:riesz_space K.λf.join ? S f (-f).   
+
+(*CSC: qui la notazione non fa capire!!! *)
+definition is_riesz_norm ≝
+ λR:real.λV:riesz_space R.λnorm:norm ? V.
+  ∀f,g:V. le ? V (absolute_value ? V f) (absolute_value ? V g) →
+   of_le R (norm f) (norm g).
+
+record riesz_norm (R:real) (V:riesz_space R) : Type ≝
+ { rn_norm:> norm ? V;
+   rn_riesz_norm_property: is_riesz_norm ? ? rn_norm
+ }.
+
+(*CSC: non fa la chiusura delle coercion verso funclass *)
+definition rn_function ≝
+ λR:real.λV:riesz_space R.λnorm:riesz_norm ? V.
+  n_function ? ? (rn_norm ? ? norm).
+
+coercion cic:/matita/integration_algebras/rn_function.con 1.
+
+(************************** L-SPACES *************************************)
+
+record is_l_space (R:real) (V:riesz_space R) (norm:riesz_norm ? V) : Prop ≝
+ { ls_banach: is_complete ? V (induced_distance ? ? norm);
+   ls_linear: ∀f,g:V. le ? V 0 f → le ? V 0 g → norm (f+g) = norm f + norm g
+ }.
+
+(******************** ARCHIMEDEAN RIESZ SPACES ***************************)
 
 record is_archimedean_riesz_space (K) (S:riesz_space K) : Prop
 \def
@@ -207,16 +149,16 @@ record integration_riesz_space (R:real) : Type \def
      integral (absolute_value ? irs_archimedean_riesz_space (f - g)) = 0 → f=g
  }.
 
-definition induced_norm ≝
+definition induced_norm_fun ≝
  λR:real.λV:integration_riesz_space R.λf:V.
   integral ? ? (absolute_value ? ? f).
 
 lemma induced_norm_is_norm:
- ∀R:real.∀V:integration_riesz_space R.is_norm ? V (induced_norm ? V).
+ ∀R:real.∀V:integration_riesz_space R.is_norm ? V (induced_norm_fun ? V).
  intros;
  apply mk_is_norm;
   [ apply mk_is_semi_norm;
-     [ unfold induced_norm;
+     [ unfold induced_norm_fun;
        intros;
        apply i_positive;
        [ apply (irs_integral_properties ? V)
@@ -224,16 +166,16 @@ lemma induced_norm_is_norm:
          elim daemon
        ]
      | intros;
-       unfold induced_norm;
+       unfold induced_norm_fun;
        (* facile *)
        elim daemon
      | intros;
-       unfold induced_norm;
+       unfold induced_norm_fun;
        (* difficile *)
        elim daemon
      ]
   | intros;
-    unfold induced_norm in H;
+    unfold induced_norm_fun in H;
     apply irs_quotient_space1;
     unfold minus;
     rewrite < plus_comm;
@@ -243,18 +185,61 @@ lemma induced_norm_is_norm:
   ].
 qed.
 
+definition induced_norm ≝
+ λR:real.λV:integration_riesz_space R.
+  mk_norm ? ? (induced_norm_fun ? V) (induced_norm_is_norm ? V).
+
+lemma is_riesz_norm_induced_norm:
+ ∀R:real.∀V:integration_riesz_space R.
+  is_riesz_norm ? ? (induced_norm ? V).
+ intros;
+ unfold is_riesz_norm;
+ intros;
+ unfold induced_norm;
+ simplify;
+ unfold induced_norm_fun;
+ (* difficile *)
+ elim daemon.
+qed.
+
+definition induced_riesz_norm ≝
+ λR:real.λV:integration_riesz_space R.
+  mk_riesz_norm ? ? (induced_norm ? V) (is_riesz_norm_induced_norm ? V).
+
 definition distance_induced_by_integral ≝
  λR:real.λV:integration_riesz_space R.
   induced_distance ? ? (induced_norm R V).
 
-theorem distance_induced_by_integral_is_distance:
- ∀R:real.∀V:integration_riesz_space R.
-  is_distance ? ? (distance_induced_by_integral ? V).
+definition is_complete_integration_riesz_space ≝
+ λR:real.λV:integration_riesz_space R.
+  is_complete ? ? (distance_induced_by_integral ? V).
+
+record complete_integration_riesz_space (R:real) : Type ≝
+ { cirz_integration_riesz_space:> integration_riesz_space R;
+   cirz_complete_integration_riesz_space_property:
+    is_complete_integration_riesz_space ? cirz_integration_riesz_space
+ }.
+
+(* now we prove that any complete integration riesz space is an L-space *)
+
+theorem is_l_space_l_space_induced_by_integral:
+ ∀R:real.∀V:complete_integration_riesz_space R.
+  is_l_space ? ? (induced_riesz_norm ? V).
  intros;
- unfold distance_induced_by_integral;
- apply induced_distance_is_distance;
- apply induced_norm_is_norm.
+ constructor 1;
+  [ apply cirz_complete_integration_riesz_space_property
+  | intros;
+    unfold induced_riesz_norm;
+    simplify;
+    unfold induced_norm;
+    simplify;
+    unfold induced_norm_fun;
+    (* difficile *)
+    elim daemon
+  ].
 qed.
+
+(**************************** f-ALGEBRAS ********************************)
 
 record is_algebra (K: field) (V:vector_space K) (mult:V→V→V) (one:V) : Prop
 ≝
