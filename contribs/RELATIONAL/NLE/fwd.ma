@@ -16,26 +16,24 @@ set "baseuri" "cic:/matita/RELATIONAL/NLE/fwd".
 
 include "logic/connectives.ma".
 
-include "Nat/fwd.ma". 
+include "NPlus/fwd.ma". 
 include "NLE/defs.ma".
 
 theorem nle_gen_succ_1: \forall x,y. x < y \to 
                         \exists z. y = succ z \land x <= z.
- intros. inversion H; clear H; intros;
- [ apply (eq_gen_succ_zero ? ? H)
- | lapply linear eq_gen_succ_succ to H2 as H0.
-   subst.
-   apply ex_intro; [|auto new timeout=30] (**)
- ].
+ unfold NLE. 
+ intros. decompose.
+ lapply linear nplus_gen_succ_2 to H1 as H.
+ decompose. subst.
+ apply ex_intro; auto. (**)
 qed.
 
+
 theorem nle_gen_succ_succ: \forall x,y. x < succ y \to x <= y.
- intros; inversion H; clear H; intros;
- [ apply (eq_gen_succ_zero ? ? H)
- | lapply linear eq_gen_succ_succ to H2 as H0.
-   lapply linear eq_gen_succ_succ to H3 as H2.
-   subst. auto new timeout=30
- ].
+ intros.
+ lapply linear nle_gen_succ_1 to H as H0. decompose H0.
+ lapply linear eq_gen_succ_succ to H1 as H. subst.
+ auto.
 qed.
 
 theorem nle_gen_succ_zero: \forall (P:Prop). \forall x. x < zero \to P.
