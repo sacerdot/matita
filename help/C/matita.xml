@@ -10,10 +10,12 @@
   <!ENTITY terms SYSTEM "sec_terms.xml">
   <!ENTITY tacticals SYSTEM "sec_tacticals.xml">
   <!ENTITY tactics SYSTEM "sec_tactics.xml">
+  <!ENTITY declarative_tactics SYSTEM "sec_declarative_tactics.xml">
   <!ENTITY othercommands SYSTEM "sec_commands.xml">
   <!ENTITY usernotation SYSTEM "sec_usernotation.xml">
 
-  <!ENTITY tacticref SYSTEM "tactic_quickref.xml">
+  <!ENTITY tacticref SYSTEM "tactics_quickref.xml">
+  <!ENTITY declarativetacticref SYSTEM "declarative_tactics_quickref.xml">
 
   <!ENTITY manrevision "1&alpha;">
   <!ENTITY date "12/07/2006">
@@ -127,6 +129,7 @@
 &usernotation;
 &tacticals;
 &tactics;
+&declarative_tactics;
 &othercommands;
 &license;
 

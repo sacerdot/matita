@@ -426,6 +426,7 @@
   <sect2 id="letrec">
     <title><emphasis role="bold">letrec</emphasis> &TODO;</title>
     <titleabbrev>&TODO;</titleabbrev>
+    <para>&TODO</para>
   </sect2>
   <sect2 id="inductive">
     <title>[<emphasis role="bold">inductive</emphasis>|<emphasis role="bold">coinductive</emphasis>] &id; [&args2;]… <emphasis role="bold">:</emphasis> &term; <emphasis role="bold">≝</emphasis> [<emphasis role="bold">|</emphasis>] [&id;<emphasis role="bold">:</emphasis>&term;] [<emphasis role="bold">|</emphasis> &id;<emphasis role="bold">:</emphasis>&term;]…

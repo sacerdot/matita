@@ -7,12 +7,14 @@
     omit-xml-declaration="yes"
     />
 
+  <xsl:param name="declarative" value=""/>
+
   <xsl:template match="/">
     <table frame="topbot" rowsep="0" colsep="0" role="grammar">
       <title>tactics</title>
       <tgroup cols="3">
       <tbody>
-       <xsl:apply-templates select="//varlistentry[@role='tactic.synopsis']">
+       <xsl:apply-templates select="//chapter[@id=concat('sec_',$declarative,'tactics')]//varlistentry[@role='tactic.synopsis']">
 	 <xsl:sort select="ancestor::sect1/title" />
        </xsl:apply-templates>
       </tbody>
@@ -30,7 +32,7 @@
       <entry>
        <xsl:choose>
         <xsl:when test="position()=1">
-         <xsl:attribute name="id">grammar.tactic</xsl:attribute>
+         <xsl:attribute name="id">grammar.<xsl:value-of select="$declarative"/>tactic</xsl:attribute>
          <xsl:text disable-output-escaping='yes'>&amp;tactic;</xsl:text>
         </xsl:when>
        </xsl:choose>

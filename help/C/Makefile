@@ -14,9 +14,12 @@ DESTDIR = /usr/local/share/doc/matita/
 
 all: quickref
 
-quickref: tactic_quickref.xml
-tactic_quickref.xml: xsl/tactic_quickref.xsl sec_tactics.xml
-	$(XSLTPROC) $< matita.xml > tactic_quickref.xml
+quickref: tactics_quickref.xml declarative_tactics_quickref.xml
+
+tactics_quickref.xml: xsl/tactic_quickref.xsl sec_tactics.xml
+	$(XSLTPROC) --param declarative "''" $< matita.xml > tactics_quickref.xml
+declarative_tactics_quickref.xml: xsl/tactic_quickref.xsl sec_declarative_tactics.xml
+	$(XSLTPROC) --param declarative "'declarative_'" $< matita.xml > declarative_tactics_quickref.xml
 
 # one of: "fop", "pdflatex"
 PDF_METHOD=pdflatex
@@ -40,7 +43,7 @@ test:
 .PHONY: html
 html: html-stamp
 html-stamp: $(MAIN) $(DEPS) $(XHTML_XSL)
-	xsltproc $(XHTML_XSL) $<
+	$(XSLTPROC) $(XHTML_XSL) $<
 	touch $@
 
 # TXTs generation
@@ -61,13 +64,13 @@ pdf-stamp: $(patsubst %.xml,%.pdf,$(MAIN))
 	touch $@
 
 %.fo: %.xml
-	xsltproc $(FO_XSL) $< | xmllint --format - > $@
+	$(XSLTPROC) $(FO_XSL) $< | xmllint --format - > $@
 ifeq ($(TEX_METHOD),docbook2tex)
 %.tex: %.xml $(DEPS)
 	docbook2tex $<
 else ifeq ($(TEX_METHOD),xsl)
 %.tex: %.xml $(TEX_XSL) $(DEPS)
-	xsltproc $(TEX_XSL) $< > $@
+	$(XSLTPROC) $(TEX_XSL) $< > $@
 endif
 
 ifeq ($(PDF_METHOD),fop)
