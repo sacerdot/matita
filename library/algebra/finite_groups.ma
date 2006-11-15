@@ -181,12 +181,13 @@ unfold lt in H;
 apply (le_S_S ? ? H).
 qed.
 
+(* moved to nat/order.ma 
 theorem lt_O_S: ∀n. O < S n.
 intro;
 unfold lt;
 apply le_S_S;
 apply le_O_n.
-qed.
+qed. *)
 
 theorem le_n_m_to_lt_m_Sn_to_eq_n_m: ∀n,m. n ≤ m → m < S n → n=m.
 intros;
