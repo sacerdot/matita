@@ -1,0 +1,97 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+set "baseuri" "cic:/matita/CoRN-Decl/algebra/CAbMonoids".
+
+(* INCLUDE
+CMonoids
+*)
+
+(* UNEXPORTED
+Section Abelian_Monoids.
+*)
+
+(*#*
+* Abelian Monoids
+Now we introduce commutativity and add some results.
+*)
+
+inline cic:/CoRN/algebra/CAbMonoids/is_CAbMonoid.con.
+
+inline cic:/CoRN/algebra/CAbMonoids/CAbMonoid.ind.
+
+(* UNEXPORTED
+Section AbMonoid_Axioms.
+*)
+
+inline cic:/CoRN/algebra/CAbMonoids/M.var.
+
+(*#*
+%\begin{convention}% Let [M] be an abelian monoid.
+%\end{convention}%
+*)
+
+inline cic:/CoRN/algebra/CAbMonoids/CAbMonoid_is_CAbMonoid.con.
+
+inline cic:/CoRN/algebra/CAbMonoids/cam_commutes.con.
+
+inline cic:/CoRN/algebra/CAbMonoids/cam_commutes_unfolded.con.
+
+(* UNEXPORTED
+End AbMonoid_Axioms.
+*)
+
+(* UNEXPORTED
+Section SubCAbMonoids.
+*)
+
+(*#*
+** Subgroups of an Abelian Monoid
+*)
+
+inline cic:/CoRN/algebra/CAbMonoids/M.var.
+
+inline cic:/CoRN/algebra/CAbMonoids/P.var.
+
+inline cic:/CoRN/algebra/CAbMonoids/Punit.var.
+
+inline cic:/CoRN/algebra/CAbMonoids/op_pres_P.var.
+
+(*#*
+%\begin{convention}%
+Let [M] be an Abelian Monoid and [P] be a ([CProp]-valued) predicate on [M]
+that contains [Zero] and is closed under [[+]] and [[--]].
+%\end{convention}%
+*)
+
+inline cic:/CoRN/algebra/CAbMonoids/subcrr.con.
+
+inline cic:/CoRN/algebra/CAbMonoids/isabgrp_scrr.con.
+
+inline cic:/CoRN/algebra/CAbMonoids/Build_SubCAbMonoid.con.
+
+(* UNEXPORTED
+End SubCAbMonoids.
+*)
+
+(* UNEXPORTED
+End Abelian_Monoids.
+*)
+
+(* UNEXPORTED
+Hint Resolve cam_commutes_unfolded: algebra.
+*)
+

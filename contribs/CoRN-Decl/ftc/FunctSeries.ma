@@ -1,0 +1,368 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+set "baseuri" "cic:/matita/CoRN-Decl/ftc/FunctSeries".
+
+(* $Id: FunctSeries.v,v 1.6 2004/04/23 10:00:58 lcf Exp $ *)
+
+(* INCLUDE
+FunctSequence
+*)
+
+(* INCLUDE
+Series
+*)
+
+(*#* printing fun_seq_part_sum %\ensuremath{\sum^n}% #&sum;<sup>n</sup># *)
+
+(*#* printing Fun_Series_Sum %\ensuremath{\sum_0^{\infty}}% #&sum;<sub>0</sub><sup>&infin;</sup># *)
+
+(* UNEXPORTED
+Section Definitions.
+*)
+
+(*#* *Series of Functions
+
+We now turn our attention to series of functions.  Like it was already
+the case for sequences, we will mainly rewrite the results we proved
+for series of real numbers in a different way.
+
+%\begin{convention}% Throughout this section:
+ - [a] and [b] will be real numbers and the interval [[a,b]] will be denoted
+by [I];
+ - [f, g] and [h] will denote sequences of continuous functions;
+ - [F, G] and [H] will denote continuous functions.
+
+%\end{convention}%
+
+** Definitions
+
+As before, we will consider only sequences of continuous functions
+defined in a compact interval.  For this, partial sums are defined and
+convergence is simply the convergence of the sequence of partial sums.
+*)
+
+inline cic:/CoRN/ftc/FunctSeries/a.var.
+
+inline cic:/CoRN/ftc/FunctSeries/b.var.
+
+inline cic:/CoRN/ftc/FunctSeries/Hab.var.
+
+(* begin hide *)
+
+inline cic:/CoRN/ftc/FunctSeries/I.con.
+
+(* end hide *)
+
+inline cic:/CoRN/ftc/FunctSeries/f.var.
+
+inline cic:/CoRN/ftc/FunctSeries/fun_seq_part_sum.con.
+
+inline cic:/CoRN/ftc/FunctSeries/fun_seq_part_sum_cont.con.
+
+inline cic:/CoRN/ftc/FunctSeries/fun_series_convergent.con.
+
+(*#*
+For what comes up next we need to know that the convergence of a
+series of functions implies pointwise convergence of the corresponding
+real number series.
+*)
+
+inline cic:/CoRN/ftc/FunctSeries/fun_series_conv_imp_conv.con.
+
+(*#* We then define the sum of the series as being the pointwise sum of
+the corresponding series.
+*)
+
+(* begin show *)
+
+inline cic:/CoRN/ftc/FunctSeries/H.var.
+
+(* end show *)
+
+(* begin hide *)
+
+inline cic:/CoRN/ftc/FunctSeries/contf.con.
+
+inline cic:/CoRN/ftc/FunctSeries/incf.con.
+
+(* end hide *)
+
+inline cic:/CoRN/ftc/FunctSeries/Fun_Series_Sum_strext.con.
+
+inline cic:/CoRN/ftc/FunctSeries/Fun_Series_Sum.con.
+
+(* UNEXPORTED
+End Definitions.
+*)
+
+(* UNEXPORTED
+Implicit Arguments Fun_Series_Sum [a b Hab f].
+*)
+
+(* UNEXPORTED
+Hint Resolve fun_seq_part_sum_cont: continuous.
+*)
+
+(* UNEXPORTED
+Section More_Definitions.
+*)
+
+inline cic:/CoRN/ftc/FunctSeries/a.var.
+
+inline cic:/CoRN/ftc/FunctSeries/b.var.
+
+inline cic:/CoRN/ftc/FunctSeries/Hab.var.
+
+inline cic:/CoRN/ftc/FunctSeries/f.var.
+
+(*#* A series can also be absolutely convergent. *)
+
+inline cic:/CoRN/ftc/FunctSeries/fun_series_abs_convergent.con.
+
+(* UNEXPORTED
+End More_Definitions.
+*)
+
+(* UNEXPORTED
+Section Operations.
+*)
+
+(* **Algebraic Properties
+
+All of these are analogous to the properties for series of real numbers, so we won't comment much about them.
+*)
+
+inline cic:/CoRN/ftc/FunctSeries/a.var.
+
+inline cic:/CoRN/ftc/FunctSeries/b.var.
+
+inline cic:/CoRN/ftc/FunctSeries/Hab.var.
+
+(* begin hide *)
+
+inline cic:/CoRN/ftc/FunctSeries/I.con.
+
+(* end hide *)
+
+inline cic:/CoRN/ftc/FunctSeries/fun_seq_part_sum_n.con.
+
+inline cic:/CoRN/ftc/FunctSeries/conv_fun_const_series.con.
+
+inline cic:/CoRN/ftc/FunctSeries/fun_const_series_sum.con.
+
+inline cic:/CoRN/ftc/FunctSeries/conv_zero_fun_series.con.
+
+inline cic:/CoRN/ftc/FunctSeries/Fun_Series_Sum_zero.con.
+
+(* begin show *)
+
+inline cic:/CoRN/ftc/FunctSeries/f.var.
+
+inline cic:/CoRN/ftc/FunctSeries/g.var.
+
+(* end show *)
+
+inline cic:/CoRN/ftc/FunctSeries/fun_series_convergent_wd.con.
+
+(* begin show *)
+
+inline cic:/CoRN/ftc/FunctSeries/convF.var.
+
+inline cic:/CoRN/ftc/FunctSeries/convG.var.
+
+(* end show *)
+
+inline cic:/CoRN/ftc/FunctSeries/Fun_Series_Sum_wd'.con.
+
+inline cic:/CoRN/ftc/FunctSeries/conv_fun_series_plus.con.
+
+inline cic:/CoRN/ftc/FunctSeries/Fun_Series_Sum_plus.con.
+
+inline cic:/CoRN/ftc/FunctSeries/conv_fun_series_minus.con.
+
+inline cic:/CoRN/ftc/FunctSeries/Fun_Series_Sum_min.con.
+
+(*#*
+%\begin{convention}% Let [c:IR].
+%\end{convention}%
+*)
+
+inline cic:/CoRN/ftc/FunctSeries/c.var.
+
+inline cic:/CoRN/ftc/FunctSeries/H.var.
+
+inline cic:/CoRN/ftc/FunctSeries/contH.var.
+
+inline cic:/CoRN/ftc/FunctSeries/conv_fun_series_scal.con.
+
+inline cic:/CoRN/ftc/FunctSeries/Fun_Series_Sum_scal.con.
+
+(* UNEXPORTED
+End Operations.
+*)
+
+(* UNEXPORTED
+Section More_Operations.
+*)
+
+inline cic:/CoRN/ftc/FunctSeries/a.var.
+
+inline cic:/CoRN/ftc/FunctSeries/b.var.
+
+inline cic:/CoRN/ftc/FunctSeries/Hab.var.
+
+(* begin hide *)
+
+inline cic:/CoRN/ftc/FunctSeries/I.con.
+
+(* end hide *)
+
+inline cic:/CoRN/ftc/FunctSeries/f.var.
+
+inline cic:/CoRN/ftc/FunctSeries/convF.var.
+
+inline cic:/CoRN/ftc/FunctSeries/conv_fun_series_inv.con.
+
+inline cic:/CoRN/ftc/FunctSeries/Fun_Series_Sum_inv.con.
+
+(* UNEXPORTED
+End More_Operations.
+*)
+
+(* UNEXPORTED
+Section Other_Results.
+*)
+
+inline cic:/CoRN/ftc/FunctSeries/a.var.
+
+inline cic:/CoRN/ftc/FunctSeries/b.var.
+
+inline cic:/CoRN/ftc/FunctSeries/Hab.var.
+
+inline cic:/CoRN/ftc/FunctSeries/f.var.
+
+inline cic:/CoRN/ftc/FunctSeries/convF.var.
+
+(*#*
+The following relate the sum series with the limit of the sequence of
+partial sums; as a corollary we get the continuity of the sum of the
+series.
+*)
+
+inline cic:/CoRN/ftc/FunctSeries/Fun_Series_Sum_char'.con.
+
+inline cic:/CoRN/ftc/FunctSeries/fun_series_conv.con.
+
+inline cic:/CoRN/ftc/FunctSeries/Fun_Series_Sum_cont.con.
+
+inline cic:/CoRN/ftc/FunctSeries/Fun_Series_Sum_char.con.
+
+inline cic:/CoRN/ftc/FunctSeries/Fun_Series_Sum_as_Lim.con.
+
+(* UNEXPORTED
+End Other_Results.
+*)
+
+(* UNEXPORTED
+Hint Resolve Fun_Series_Sum_cont: continuous.
+*)
+
+(* UNEXPORTED
+Section Convergence_Criteria.
+*)
+
+(*#* **Convergence Criteria
+
+Most of the convergence criteria for series of real numbers carry over to series of real-valued functions, so again we just present them without comments.
+*)
+
+inline cic:/CoRN/ftc/FunctSeries/a.var.
+
+inline cic:/CoRN/ftc/FunctSeries/b.var.
+
+inline cic:/CoRN/ftc/FunctSeries/Hab.var.
+
+(* begin hide *)
+
+inline cic:/CoRN/ftc/FunctSeries/I.con.
+
+(* end hide *)
+
+inline cic:/CoRN/ftc/FunctSeries/f.var.
+
+inline cic:/CoRN/ftc/FunctSeries/contF.var.
+
+(* UNEXPORTED
+Opaque Frestr.
+*)
+
+(* UNEXPORTED
+Transparent Frestr.
+*)
+
+(* UNEXPORTED
+Opaque FAbs.
+*)
+
+(* UNEXPORTED
+Transparent FAbs.
+*)
+
+(* UNEXPORTED
+Opaque fun_seq_part_sum.
+*)
+
+(* UNEXPORTED
+Opaque FAbs.
+*)
+
+(* UNEXPORTED
+Transparent FAbs.
+*)
+
+(* UNEXPORTED
+Opaque FAbs.
+*)
+
+(* UNEXPORTED
+Transparent fun_seq_part_sum.
+*)
+
+(* UNEXPORTED
+Opaque fun_seq_part_sum.
+*)
+
+inline cic:/CoRN/ftc/FunctSeries/fun_str_comparison.con.
+
+(* UNEXPORTED
+Transparent FAbs.
+*)
+
+inline cic:/CoRN/ftc/FunctSeries/fun_comparison.con.
+
+inline cic:/CoRN/ftc/FunctSeries/abs_imp_conv.con.
+
+(* UNEXPORTED
+Opaque FAbs.
+*)
+
+inline cic:/CoRN/ftc/FunctSeries/fun_ratio_test_conv.con.
+
+(* UNEXPORTED
+End Convergence_Criteria.
+*)
+

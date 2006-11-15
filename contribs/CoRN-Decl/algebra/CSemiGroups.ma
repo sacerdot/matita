@@ -1,0 +1,189 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+set "baseuri" "cic:/matita/CoRN-Decl/algebra/CSemiGroups".
+
+(* $Id: CSemiGroups.v,v 1.8 2004/04/22 14:49:43 lcf Exp $ *)
+
+(*#* printing [+] %\ensuremath+% #+# *)
+
+(*#* printing {+} %\ensuremath+% #+# *)
+
+(* INCLUDE
+CSetoidInc
+*)
+
+(* Begin_SpecReals *)
+
+(*#* *Semigroups
+
+**Definition of the notion of semigroup
+*)
+
+inline cic:/CoRN/algebra/CSemiGroups/is_CSemiGroup.con.
+
+inline cic:/CoRN/algebra/CSemiGroups/CSemiGroup.ind.
+
+(*#*
+%\begin{nameconvention}%
+In the %{\em %names%}% of lemmas, we will denote [[+]] with [plus].
+%\end{nameconvention}%
+*)
+
+(* UNEXPORTED
+Implicit Arguments csg_op [c].
+*)
+
+(* End_SpecReals *)
+
+(*#* **Semigroup axioms
+The axiomatic properties of a semi group.
+
+%\begin{convention}% Let [G] be a semi-group.
+%\end{convention}%
+*)
+
+(* UNEXPORTED
+Section CSemiGroup_axioms.
+*)
+
+inline cic:/CoRN/algebra/CSemiGroups/G.var.
+
+inline cic:/CoRN/algebra/CSemiGroups/CSemiGroup_is_CSemiGroup.con.
+
+inline cic:/CoRN/algebra/CSemiGroups/plus_assoc.con.
+
+(* UNEXPORTED
+End CSemiGroup_axioms.
+*)
+
+(* Begin_SpecReals *)
+
+(*#* **Semigroup basics
+
+%\begin{convention}%
+Let [G] be a semi-group.
+%\end{convention}%
+*)
+
+(* UNEXPORTED
+Section CSemiGroup_basics.
+*)
+
+inline cic:/CoRN/algebra/CSemiGroups/G.var.
+
+(* End_SpecReals *)
+
+inline cic:/CoRN/algebra/CSemiGroups/plus_assoc_unfolded.con.
+
+(* UNEXPORTED
+End CSemiGroup_basics.
+*)
+
+(* End_SpecReals *)
+
+(* UNEXPORTED
+Hint Resolve plus_assoc_unfolded: algebra.
+*)
+
+(*#* **Functional operations
+We can also define a similar addition operator, which will be denoted by [{+}], on partial functions.
+
+%\begin{convention}% Whenever possible, we will denote the functional construction corresponding to an algebraic operation by the same symbol enclosed in curly braces.
+%\end{convention}%
+
+At this stage, we will always consider automorphisms; we %{\em %could%}% treat this in a more general setting, but we feel that it wouldn't really be a useful effort.
+
+%\begin{convention}% Let [G:CSemiGroup] and [F,F':(PartFunct G)] and denote by [P] and [Q], respectively, the predicates characterizing their domains.
+%\end{convention}%
+*)
+
+(* UNEXPORTED
+Section Part_Function_Plus.
+*)
+
+inline cic:/CoRN/algebra/CSemiGroups/G.var.
+
+inline cic:/CoRN/algebra/CSemiGroups/F.var.
+
+inline cic:/CoRN/algebra/CSemiGroups/F'.var.
+
+(* begin hide *)
+
+inline cic:/CoRN/algebra/CSemiGroups/P.con.
+
+inline cic:/CoRN/algebra/CSemiGroups/Q.con.
+
+(* end hide *)
+
+inline cic:/CoRN/algebra/CSemiGroups/part_function_plus_strext.con.
+
+inline cic:/CoRN/algebra/CSemiGroups/Fplus.con.
+
+(*#*
+%\begin{convention}% Let [R:G->CProp].
+%\end{convention}%
+*)
+
+inline cic:/CoRN/algebra/CSemiGroups/R.var.
+
+inline cic:/CoRN/algebra/CSemiGroups/included_FPlus.con.
+
+inline cic:/CoRN/algebra/CSemiGroups/included_FPlus'.con.
+
+inline cic:/CoRN/algebra/CSemiGroups/included_FPlus''.con.
+
+(* UNEXPORTED
+End Part_Function_Plus.
+*)
+
+(* UNEXPORTED
+Implicit Arguments Fplus [G].
+*)
+
+(* UNEXPORTED
+Hint Resolve included_FPlus : included.
+*)
+
+(* UNEXPORTED
+Hint Immediate included_FPlus' included_FPlus'' : included.
+*)
+
+(*#* **Subsemigroups
+%\begin{convention}%
+Let [csg] a semi-group and [P] a non-empty
+predicate on the semi-group which is preserved by [[+]].
+%\end{convention}%
+*)
+
+(* UNEXPORTED
+Section SubCSemiGroups.
+*)
+
+inline cic:/CoRN/algebra/CSemiGroups/csg.var.
+
+inline cic:/CoRN/algebra/CSemiGroups/P.var.
+
+inline cic:/CoRN/algebra/CSemiGroups/op_pres_P.var.
+
+inline cic:/CoRN/algebra/CSemiGroups/subcrr.con.
+
+inline cic:/CoRN/algebra/CSemiGroups/Build_SubCSemiGroup.con.
+
+(* UNEXPORTED
+End SubCSemiGroups.
+*)
+
