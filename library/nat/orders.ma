@@ -192,6 +192,10 @@ apply H3. apply le_S_S. assumption.
 qed.
 
 (* lt and le trans *)
+theorem lt_O_S : \forall n:nat. O < S n.
+intro. unfold. apply le_S_S. apply le_O_n.
+qed.
+
 theorem lt_to_le_to_lt: \forall n,m,p:nat. lt n m \to le m p \to lt n p.
 intros.elim H1.
 assumption.unfold lt.apply le_S.assumption.
