@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/model/setoids/Zsetoid".
 
-include "CoRN.ma".
+include "CoRN_notation.ma".
 
 (* $Id: Zsetoid.v,v 1.5 2004/04/07 15:08:08 lcf Exp $ *)
 

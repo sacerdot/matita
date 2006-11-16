@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/reals/Bridges_LUB".
 
-include "CoRN.ma".
+include "CoRN_notation.ma".
 
 (* begin hide *)
 

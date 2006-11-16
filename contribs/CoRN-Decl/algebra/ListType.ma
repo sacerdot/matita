@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/algebra/ListType".
 
-include "CoRN.ma".
+include "CoRN_notation.ma".
 
 (* begin hide *)
 

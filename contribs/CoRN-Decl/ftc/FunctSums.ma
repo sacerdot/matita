@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/ftc/FunctSums".
 
-include "CoRN.ma".
+include "CoRN_notation.ma".
 
 (* $Id: FunctSums.v,v 1.5 2004/04/23 10:00:59 lcf Exp $ *)
 

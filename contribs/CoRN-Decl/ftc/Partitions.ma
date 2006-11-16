@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/ftc/Partitions".
 
-include "CoRN.ma".
+include "CoRN_notation.ma".
 
 (* $Id: Partitions.v,v 1.7 2004/04/23 10:01:00 lcf Exp $ *)
 

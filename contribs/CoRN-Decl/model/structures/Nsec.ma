@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/model/structures/Nsec".
 
-include "CoRN.ma".
+include "CoRN_notation.ma".
 
 (* $Id: Nsec.v,v 1.6 2004/04/06 15:46:05 lcf Exp $ *)
 

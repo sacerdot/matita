@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/transc/RealPowers".
 
-include "CoRN.ma".
+include "CoRN_notation.ma".
 
 (* $Id: RealPowers.v,v 1.5 2004/04/23 10:01:08 lcf Exp $ *)
 

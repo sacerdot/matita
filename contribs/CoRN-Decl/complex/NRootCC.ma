@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/complex/NRootCC".
 
-include "CoRN.ma".
+include "CoRN_notation.ma".
 
 (* $Id: NRootCC.v,v 1.9 2004/04/23 10:00:55 lcf Exp $ *)
 

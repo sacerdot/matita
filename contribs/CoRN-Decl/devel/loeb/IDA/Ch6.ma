@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/devel/loeb/IDA/Ch6".
 
-include "CoRN.ma".
+include "CoRN_notation.ma".
 
 include "algebra/CSemiGroups.ma".
 

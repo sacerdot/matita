@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/transc/InvTrigonom".
 
-include "CoRN.ma".
+include "CoRN_notation.ma".
 
 (* $Id: InvTrigonom.v,v 1.9 2004/04/23 10:01:07 lcf Exp $ *)
 

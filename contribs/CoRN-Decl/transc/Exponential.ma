@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/transc/Exponential".
 
-include "CoRN.ma".
+include "CoRN_notation.ma".
 
 (* $Id: Exponential.v,v 1.7 2004/04/23 10:01:07 lcf Exp $ *)
 

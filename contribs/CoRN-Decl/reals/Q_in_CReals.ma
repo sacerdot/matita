@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/reals/Q_in_CReals".
 
-include "CoRN.ma".
+include "CoRN_notation.ma".
 
 (* $Id: Q_in_CReals.v,v 1.10 2004/04/23 10:01:05 lcf Exp $ *)
 

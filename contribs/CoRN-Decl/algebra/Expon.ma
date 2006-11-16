@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/algebra/Expon".
 
-include "CoRN.ma".
+include "CoRN_notation.ma".
 
 (* $Id: Expon.v,v 1.5 2004/04/23 10:00:54 lcf Exp $ *)
 

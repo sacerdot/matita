@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/algebra/Basics".
 
-include "CoRN.ma".
+include "CoRN_notation.ma".
 
 (* $Id: Basics.v,v 1.7 2004/04/09 15:58:31 lcf Exp $ *)
 

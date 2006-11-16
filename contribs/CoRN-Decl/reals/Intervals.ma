@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/reals/Intervals".
 
-include "CoRN.ma".
+include "CoRN_notation.ma".
 
 (* $Id: Intervals.v,v 1.10 2004/04/23 10:01:04 lcf Exp $ *)
 

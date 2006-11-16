@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/model/non_examples/Npos_no_monoid".
 
-include "CoRN.ma".
+include "CoRN_notation.ma".
 
 (* $Id: Npos_no_monoid.v,v 1.5 2004/04/08 08:20:34 lcf Exp $ *)
 

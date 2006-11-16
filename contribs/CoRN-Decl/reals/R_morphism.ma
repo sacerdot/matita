@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/reals/R_morphism".
 
-include "CoRN.ma".
+include "CoRN_notation.ma".
 
 (* begin hide *)
 

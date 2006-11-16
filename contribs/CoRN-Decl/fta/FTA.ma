@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/fta/FTA".
 
-include "CoRN.ma".
+include "CoRN_notation.ma".
 
 (* $Id: FTA.v,v 1.6 2004/04/23 10:00:57 lcf Exp $ *)
 

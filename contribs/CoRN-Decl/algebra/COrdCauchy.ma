@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/algebra/COrdCauchy".
 
-include "CoRN.ma".
+include "CoRN_notation.ma".
 
 include "algebra/COrdAbs.ma".
 

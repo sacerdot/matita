@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/algebra/CSums".
 
-include "CoRN.ma".
+include "CoRN_notation.ma".
 
 (* $Id: CSums.v,v 1.8 2004/04/23 10:00:54 lcf Exp $ *)
 

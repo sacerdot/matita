@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/complex/CComplex".
 
-include "CoRN.ma".
+include "CoRN_notation.ma".
 
 (* $Id: CComplex.v,v 1.8 2004/04/23 10:00:55 lcf Exp $ *)
 

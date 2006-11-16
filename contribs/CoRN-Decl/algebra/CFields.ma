@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/algebra/CFields".
 
-include "CoRN.ma".
+include "CoRN_notation.ma".
 
 (* $Id: CFields.v,v 1.12 2004/04/23 10:00:52 lcf Exp $ *)
 

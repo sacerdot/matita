@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/model/rings/Zring".
 
-include "CoRN.ma".
+include "CoRN_notation.ma".
 
 (* $Id: Zring.v,v 1.6 2004/04/08 08:20:34 lcf Exp $ *)
 

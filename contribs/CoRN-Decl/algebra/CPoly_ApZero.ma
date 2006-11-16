@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/algebra/CPoly_ApZero".
 
-include "CoRN.ma".
+include "CoRN_notation.ma".
 
 (* $Id: CPoly_ApZero.v,v 1.3 2004/04/23 10:00:53 lcf Exp $ *)
 

@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/devel/loeb/per/lst2fun".
 
-include "CoRN.ma".
+include "CoRN_notation.ma".
 
 inline "cic:/CoRN/devel/loeb/per/lst2fun/F'.con".
 

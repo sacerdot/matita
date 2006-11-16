@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/tactics/AlgReflection".
 
-include "CoRN.ma".
+include "CoRN_notation.ma".
 
 (* $Id: AlgReflection.v,v 1.2 2004/03/26 16:07:03 lcf Exp $ *)
 

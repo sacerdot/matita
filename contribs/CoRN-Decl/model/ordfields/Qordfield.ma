@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/model/ordfields/Qordfield".
 
-include "CoRN.ma".
+include "CoRN_notation.ma".
 
 (* $Id: Qordfield.v,v 1.9 2004/04/23 10:01:03 lcf Exp $ *)
 

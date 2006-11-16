@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/algebra/COrdAbs".
 
-include "CoRN.ma".
+include "CoRN_notation.ma".
 
 include "algebra/COrdFields2.ma".
 

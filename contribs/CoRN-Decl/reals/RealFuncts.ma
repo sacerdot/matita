@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/reals/RealFuncts".
 
-include "CoRN.ma".
+include "CoRN_notation.ma".
 
 (* $Id: RealFuncts.v,v 1.4 2004/04/07 15:08:10 lcf Exp $ *)
 

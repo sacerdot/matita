@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/model/structures/Qsec".
 
-include "CoRN.ma".
+include "CoRN_notation.ma".
 
 (* $Id: Qsec.v,v 1.7 2004/04/08 08:20:35 lcf Exp $ *)
 

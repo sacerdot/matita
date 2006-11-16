@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/tactics/GroupReflection".
 
-include "CoRN.ma".
+include "CoRN_notation.ma".
 
 (* $Id: GroupReflection.v,v 1.3 2004/04/23 10:01:06 lcf Exp $ *)
 

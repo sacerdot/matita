@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/algebra/CVectorSpace".
 
-include "CoRN.ma".
+include "CoRN_notation.ma".
 
 (* $Id: CVectorSpace.v,v 1.4 2004/04/23 10:00:54 lcf Exp $ *)
 

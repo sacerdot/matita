@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/ftc/COrdLemmas".
 
-include "CoRN.ma".
+include "CoRN_notation.ma".
 
 (* $Id: COrdLemmas.v,v 1.2 2004/04/23 10:00:57 lcf Exp $ *)
 

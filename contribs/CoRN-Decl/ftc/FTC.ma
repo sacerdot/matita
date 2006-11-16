@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/ftc/FTC".
 
-include "CoRN.ma".
+include "CoRN_notation.ma".
 
 (* $Id: FTC.v,v 1.5 2004/04/23 10:00:58 lcf Exp $ *)
 

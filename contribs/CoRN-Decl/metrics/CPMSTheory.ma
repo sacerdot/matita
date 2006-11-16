@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/metrics/CPMSTheory".
 
-include "CoRN.ma".
+include "CoRN_notation.ma".
 
 (* $Id: CPMSTheory.v,v 1.6 2004/04/23 10:01:02 lcf Exp $ *)
 

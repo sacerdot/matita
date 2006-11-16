@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/transc/Pi".
 
-include "CoRN.ma".
+include "CoRN_notation.ma".
 
 include "transc/SinCos.ma".
 

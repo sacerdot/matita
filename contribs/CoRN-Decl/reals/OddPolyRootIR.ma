@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/reals/OddPolyRootIR".
 
-include "CoRN.ma".
+include "CoRN_notation.ma".
 
 (* $Id: OddPolyRootIR.v,v 1.5 2004/04/23 10:01:05 lcf Exp $ *)
 

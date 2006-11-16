@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/reals/CauchySeq".
 
-include "CoRN.ma".
+include "CoRN_notation.ma".
 
 (* $Id: CauchySeq.v,v 1.8 2004/04/23 10:01:04 lcf Exp $ *)
 

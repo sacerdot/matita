@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/reals/Series".
 
-include "CoRN.ma".
+include "CoRN_notation.ma".
 
 (* $Id: Series.v,v 1.6 2004/04/23 10:01:05 lcf Exp $ *)
 

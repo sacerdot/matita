@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/algebra/CPolynomials".
 
-include "CoRN.ma".
+include "CoRN_notation.ma".
 
 (* $Id: CPolynomials.v,v 1.9 2004/04/23 10:00:53 lcf Exp $ *)
 

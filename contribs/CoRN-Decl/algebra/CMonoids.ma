@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/algebra/CMonoids".
 
-include "CoRN.ma".
+include "CoRN_notation.ma".
 
 (* $Id: CMonoids.v,v 1.3 2004/04/07 15:07:57 lcf Exp $ *)
 

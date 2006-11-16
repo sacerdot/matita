@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/algebra/CSemiGroups".
 
-include "CoRN.ma".
+include "CoRN_notation.ma".
 
 (* $Id: CSemiGroups.v,v 1.8 2004/04/22 14:49:43 lcf Exp $ *)
 

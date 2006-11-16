@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/algebra/CRings".
 
-include "CoRN.ma".
+include "CoRN_notation.ma".
 
 (* $Id: CRings.v,v 1.8 2004/04/23 10:00:53 lcf Exp $ *)
 

@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/algebra/COrdFields".
 
-include "CoRN.ma".
+include "CoRN_notation.ma".
 
 (* $Id: COrdFields.v,v 1.6 2004/04/23 10:00:52 lcf Exp $ *)
 

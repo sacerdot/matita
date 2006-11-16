@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/metrics/Equiv".
 
-include "CoRN.ma".
+include "CoRN_notation.ma".
 
 (* $Id: Equiv.v,v 1.4 2004/04/23 10:01:02 lcf Exp $ *)
 

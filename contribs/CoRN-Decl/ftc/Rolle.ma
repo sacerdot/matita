@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/ftc/Rolle".
 
-include "CoRN.ma".
+include "CoRN_notation.ma".
 
 (* $Id: Rolle.v,v 1.6 2004/04/23 10:01:01 lcf Exp $ *)
 

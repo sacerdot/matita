@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/devel/loeb/per/csetfun".
 
-include "CoRN.ma".
+include "CoRN_notation.ma".
 
 include "algebra/CSetoids.ma".
 

@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/model/structures/Zsec".
 
-include "CoRN.ma".
+include "CoRN_notation.ma".
 
 (* $Id: Zsec.v,v 1.5 2004/04/06 15:46:05 lcf Exp $ *)
 

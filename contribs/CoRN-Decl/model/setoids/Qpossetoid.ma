@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/model/setoids/Qpossetoid".
 
-include "CoRN.ma".
+include "CoRN_notation.ma".
 
 (* $Id: Qpossetoid.v,v 1.4 2004/04/06 15:46:05 lcf Exp $ *)
 

@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/transc/PowerSeries".
 
-include "CoRN.ma".
+include "CoRN_notation.ma".
 
 (* $Id: PowerSeries.v,v 1.8 2004/04/23 10:01:08 lcf Exp $ *)
 

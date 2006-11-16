@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/complex/Complex_Exponential".
 
-include "CoRN.ma".
+include "CoRN_notation.ma".
 
 (* $Id: Complex_Exponential.v,v 1.4 2004/04/23 10:00:55 lcf Exp $ *)
 
