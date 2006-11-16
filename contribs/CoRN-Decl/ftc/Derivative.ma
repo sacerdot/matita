@@ -16,11 +16,11 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/ftc/Derivative".
 
+include "CoRN.ma".
+
 (* $Id: Derivative.v,v 1.7 2004/04/23 10:00:58 lcf Exp $ *)
 
-(* INCLUDE
-Continuity
-*)
+include "ftc/Continuity.ma".
 
 (* UNEXPORTED
 Section Definitions.
@@ -53,29 +53,29 @@ will be partial functions with domains respectively [P, P', Q, Q'] and
 %\end{convention}%
 *)
 
-inline cic:/CoRN/ftc/Derivative/a.var.
+inline "cic:/CoRN/ftc/Derivative/a.var".
 
-inline cic:/CoRN/ftc/Derivative/b.var.
+inline "cic:/CoRN/ftc/Derivative/b.var".
 
-inline cic:/CoRN/ftc/Derivative/Hab'.var.
-
-(* begin hide *)
-
-inline cic:/CoRN/ftc/Derivative/Hab.con.
-
-inline cic:/CoRN/ftc/Derivative/I.con.
-
-(* end hide *)
-
-inline cic:/CoRN/ftc/Derivative/F.var.
+inline "cic:/CoRN/ftc/Derivative/Hab'.var".
 
 (* begin hide *)
 
-inline cic:/CoRN/ftc/Derivative/P.con.
+inline "cic:/CoRN/ftc/Derivative/Hab.con".
+
+inline "cic:/CoRN/ftc/Derivative/I.con".
 
 (* end hide *)
 
-inline cic:/CoRN/ftc/Derivative/Derivative_I.con.
+inline "cic:/CoRN/ftc/Derivative/F.var".
+
+(* begin hide *)
+
+inline "cic:/CoRN/ftc/Derivative/P.con".
+
+(* end hide *)
+
+inline "cic:/CoRN/ftc/Derivative/Derivative_I.con".
 
 (* UNEXPORTED
 End Definitions.
@@ -92,17 +92,17 @@ Section Basic_Properties.
 (*#* **Basic Properties
 *)
 
-inline cic:/CoRN/ftc/Derivative/a.var.
+inline "cic:/CoRN/ftc/Derivative/a.var".
 
-inline cic:/CoRN/ftc/Derivative/b.var.
+inline "cic:/CoRN/ftc/Derivative/b.var".
 
-inline cic:/CoRN/ftc/Derivative/Hab'.var.
+inline "cic:/CoRN/ftc/Derivative/Hab'.var".
 
 (* begin hide *)
 
-inline cic:/CoRN/ftc/Derivative/Hab.con.
+inline "cic:/CoRN/ftc/Derivative/Hab.con".
 
-inline cic:/CoRN/ftc/Derivative/I.con.
+inline "cic:/CoRN/ftc/Derivative/I.con".
 
 (* end hide *)
 
@@ -110,7 +110,7 @@ inline cic:/CoRN/ftc/Derivative/I.con.
 Like we did for equality, we begin by stating a lemma that makes proofs of derivation easier in practice.
 *)
 
-inline cic:/CoRN/ftc/Derivative/Derivative_I_char.con.
+inline "cic:/CoRN/ftc/Derivative/Derivative_I_char.con".
 
 (* end hide *)
 
@@ -118,29 +118,29 @@ inline cic:/CoRN/ftc/Derivative/Derivative_I_char.con.
 Derivative is a well defined relation; we will make this explicit for both arguments:
 *)
 
-inline cic:/CoRN/ftc/Derivative/F.var.
+inline "cic:/CoRN/ftc/Derivative/F.var".
 
-inline cic:/CoRN/ftc/Derivative/G.var.
+inline "cic:/CoRN/ftc/Derivative/G.var".
 
-inline cic:/CoRN/ftc/Derivative/H.var.
+inline "cic:/CoRN/ftc/Derivative/H.var".
 
 (* begin hide *)
 
-inline cic:/CoRN/ftc/Derivative/P.con.
+inline "cic:/CoRN/ftc/Derivative/P.con".
 
-inline cic:/CoRN/ftc/Derivative/Q.con.
+inline "cic:/CoRN/ftc/Derivative/Q.con".
 
-inline cic:/CoRN/ftc/Derivative/R.con.
+inline "cic:/CoRN/ftc/Derivative/R.con".
 
 (* end hide *)
 
-inline cic:/CoRN/ftc/Derivative/Derivative_I_wdl.con.
+inline "cic:/CoRN/ftc/Derivative/Derivative_I_wdl.con".
 
-inline cic:/CoRN/ftc/Derivative/Derivative_I_wdr.con.
+inline "cic:/CoRN/ftc/Derivative/Derivative_I_wdr.con".
 
 (* begin hide *)
 
-inline cic:/CoRN/ftc/Derivative/Derivative_I_unique_lemma.con.
+inline "cic:/CoRN/ftc/Derivative/Derivative_I_unique_lemma.con".
 
 (* end hide *)
 
@@ -148,25 +148,25 @@ inline cic:/CoRN/ftc/Derivative/Derivative_I_unique_lemma.con.
 Derivative is unique.
 *)
 
-inline cic:/CoRN/ftc/Derivative/Derivative_I_unique.con.
+inline "cic:/CoRN/ftc/Derivative/Derivative_I_unique.con".
 
 (*#*
 Finally, the set where we are considering the relation is included in the domain of both functions.
 *)
 
-inline cic:/CoRN/ftc/Derivative/derivative_imp_inc.con.
+inline "cic:/CoRN/ftc/Derivative/derivative_imp_inc.con".
 
-inline cic:/CoRN/ftc/Derivative/derivative_imp_inc'.con.
+inline "cic:/CoRN/ftc/Derivative/derivative_imp_inc'.con".
 
 (*#*
 Any function that is or has a derivative is continuous.
 *)
 
-inline cic:/CoRN/ftc/Derivative/Hab''.var.
+inline "cic:/CoRN/ftc/Derivative/Hab''.var".
 
-inline cic:/CoRN/ftc/Derivative/deriv_imp_contin'_I.con.
+inline "cic:/CoRN/ftc/Derivative/deriv_imp_contin'_I.con".
 
-inline cic:/CoRN/ftc/Derivative/deriv_imp_contin_I.con.
+inline "cic:/CoRN/ftc/Derivative/deriv_imp_contin_I.con".
 
 (* UNEXPORTED
 End Basic_Properties.
@@ -176,5 +176,5 @@ End Basic_Properties.
 If [G] is the derivative of [F] in a given interval, then [G] is also the derivative of [F] in any smaller interval.
 *)
 
-inline cic:/CoRN/ftc/Derivative/included_imp_deriv.con.
+inline "cic:/CoRN/ftc/Derivative/included_imp_deriv.con".
 

@@ -16,6 +16,8 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/algebra/COrdFields".
 
+include "CoRN.ma".
+
 (* $Id: COrdFields.v,v 1.6 2004/04/23 10:00:52 lcf Exp $ *)
 
 (*#* printing [<] %\ensuremath<% #&lt;# *)
@@ -48,9 +50,7 @@ set "baseuri" "cic:/matita/CoRN-Decl/algebra/COrdFields".
 
 (*#* printing FortyEightNZ %\ensuremath{\mathbf{48}}% #48# *)
 
-(* INCLUDE
-FieldReflection
-*)
+include "tactics/FieldReflection.ma".
 
 (* ORDERED FIELDS *)
 
@@ -61,7 +61,7 @@ FieldReflection
 
 (* Begin_SpecReals *)
 
-inline cic:/CoRN/algebra/COrdFields/strictorder.ind.
+inline "cic:/CoRN/algebra/COrdFields/strictorder.ind".
 
 (* UNEXPORTED
 Implicit Arguments strictorder [A].
@@ -79,9 +79,11 @@ Implicit Arguments so_trans [A R].
 Implicit Arguments so_asym [A R].
 *)
 
-inline cic:/CoRN/algebra/COrdFields/is_COrdField.ind.
+inline "cic:/CoRN/algebra/COrdFields/is_COrdField.ind".
 
-inline cic:/CoRN/algebra/COrdFields/COrdField.ind.
+inline "cic:/CoRN/algebra/COrdFields/COrdField.ind".
+
+coercion "cic:/matita/CoRN-Decl/algebra/COrdFields/cof_crr.con" 0 (* compounds *).
 
 (*#*
 %\begin{nameconvention}%
@@ -94,7 +96,7 @@ is written as [pos].
 Implicit Arguments cof_less [c].
 *)
 
-inline cic:/CoRN/algebra/COrdFields/greater.con.
+inline "cic:/CoRN/algebra/COrdFields/greater.con".
 
 (* UNEXPORTED
 Implicit Arguments greater [F].
@@ -106,7 +108,7 @@ Implicit Arguments greater [F].
 Less or equal is defined as ``not greater than''.
 *)
 
-inline cic:/CoRN/algebra/COrdFields/leEq.con.
+inline "cic:/CoRN/algebra/COrdFields/leEq.con".
 
 (*#*
 %\begin{nameconvention}%
@@ -130,29 +132,29 @@ Let [F] be a field.
 %\end{convention}%
 *)
 
-inline cic:/CoRN/algebra/COrdFields/F.var.
+inline "cic:/CoRN/algebra/COrdFields/F.var".
 
-inline cic:/CoRN/algebra/COrdFields/COrdField_is_COrdField.con.
+inline "cic:/CoRN/algebra/COrdFields/COrdField_is_COrdField.con".
 
-inline cic:/CoRN/algebra/COrdFields/less_strorder.con.
+inline "cic:/CoRN/algebra/COrdFields/less_strorder.con".
 
-inline cic:/CoRN/algebra/COrdFields/less_transitive_unfolded.con.
+inline "cic:/CoRN/algebra/COrdFields/less_transitive_unfolded.con".
 
-inline cic:/CoRN/algebra/COrdFields/less_antisymmetric_unfolded.con.
+inline "cic:/CoRN/algebra/COrdFields/less_antisymmetric_unfolded.con".
 
-inline cic:/CoRN/algebra/COrdFields/less_irreflexive.con.
+inline "cic:/CoRN/algebra/COrdFields/less_irreflexive.con".
 
-inline cic:/CoRN/algebra/COrdFields/less_irreflexive_unfolded.con.
+inline "cic:/CoRN/algebra/COrdFields/less_irreflexive_unfolded.con".
 
-inline cic:/CoRN/algebra/COrdFields/plus_resp_less_rht.con.
+inline "cic:/CoRN/algebra/COrdFields/plus_resp_less_rht.con".
 
-inline cic:/CoRN/algebra/COrdFields/mult_resp_pos.con.
+inline "cic:/CoRN/algebra/COrdFields/mult_resp_pos.con".
 
-inline cic:/CoRN/algebra/COrdFields/less_conf_ap.con.
+inline "cic:/CoRN/algebra/COrdFields/less_conf_ap.con".
 
-inline cic:/CoRN/algebra/COrdFields/less_wdr.con.
+inline "cic:/CoRN/algebra/COrdFields/less_wdr.con".
 
-inline cic:/CoRN/algebra/COrdFields/less_wdl.con.
+inline "cic:/CoRN/algebra/COrdFields/less_wdl.con".
 
 (* UNEXPORTED
 End COrdField_axioms.
@@ -181,27 +183,27 @@ Let in the rest of this section (and all subsections)
 %\end{convention}%
 *)
 
-inline cic:/CoRN/algebra/COrdFields/R.var.
+inline "cic:/CoRN/algebra/COrdFields/R.var".
 
-inline cic:/CoRN/algebra/COrdFields/less_imp_ap.con.
+inline "cic:/CoRN/algebra/COrdFields/less_imp_ap.con".
 
-inline cic:/CoRN/algebra/COrdFields/Greater_imp_ap.con.
+inline "cic:/CoRN/algebra/COrdFields/Greater_imp_ap.con".
 
-inline cic:/CoRN/algebra/COrdFields/ap_imp_less.con.
+inline "cic:/CoRN/algebra/COrdFields/ap_imp_less.con".
 
 (*#*
 Now properties which can be derived.
 *)
 
-inline cic:/CoRN/algebra/COrdFields/less_cotransitive.con.
+inline "cic:/CoRN/algebra/COrdFields/less_cotransitive.con".
 
-inline cic:/CoRN/algebra/COrdFields/less_cotransitive_unfolded.con.
+inline "cic:/CoRN/algebra/COrdFields/less_cotransitive_unfolded.con".
 
-inline cic:/CoRN/algebra/COrdFields/pos_ap_zero.con.
+inline "cic:/CoRN/algebra/COrdFields/pos_ap_zero.con".
 
 (* Main characterization of less *)
 
-inline cic:/CoRN/algebra/COrdFields/leEq_not_eq.con.
+inline "cic:/CoRN/algebra/COrdFields/leEq_not_eq.con".
 
 (* UNEXPORTED
 End OrdField_basics.
@@ -218,13 +220,13 @@ Section Basic_Properties_of_leEq.
 (*#* ** Basic properties of [ [<=] ]
 *)
 
-inline cic:/CoRN/algebra/COrdFields/R.var.
+inline "cic:/CoRN/algebra/COrdFields/R.var".
 
-inline cic:/CoRN/algebra/COrdFields/leEq_wdr.con.
+inline "cic:/CoRN/algebra/COrdFields/leEq_wdr.con".
 
-inline cic:/CoRN/algebra/COrdFields/leEq_wdl.con.
+inline "cic:/CoRN/algebra/COrdFields/leEq_wdl.con".
 
-inline cic:/CoRN/algebra/COrdFields/leEq_reflexive.con.
+inline "cic:/CoRN/algebra/COrdFields/leEq_reflexive.con".
 
 (* UNEXPORTED
 Declare Left Step leEq_wdl.
@@ -234,19 +236,19 @@ Declare Left Step leEq_wdl.
 Declare Right Step leEq_wdr.
 *)
 
-inline cic:/CoRN/algebra/COrdFields/eq_imp_leEq.con.
+inline "cic:/CoRN/algebra/COrdFields/eq_imp_leEq.con".
 
-inline cic:/CoRN/algebra/COrdFields/leEq_imp_eq.con.
+inline "cic:/CoRN/algebra/COrdFields/leEq_imp_eq.con".
 
-inline cic:/CoRN/algebra/COrdFields/lt_equiv_imp_eq.con.
+inline "cic:/CoRN/algebra/COrdFields/lt_equiv_imp_eq.con".
 
-inline cic:/CoRN/algebra/COrdFields/less_leEq_trans.con.
+inline "cic:/CoRN/algebra/COrdFields/less_leEq_trans.con".
 
-inline cic:/CoRN/algebra/COrdFields/leEq_less_trans.con.
+inline "cic:/CoRN/algebra/COrdFields/leEq_less_trans.con".
 
-inline cic:/CoRN/algebra/COrdFields/leEq_transitive.con.
+inline "cic:/CoRN/algebra/COrdFields/leEq_transitive.con".
 
-inline cic:/CoRN/algebra/COrdFields/less_leEq.con.
+inline "cic:/CoRN/algebra/COrdFields/less_leEq.con".
 
 (* UNEXPORTED
 End Basic_Properties_of_leEq.
@@ -274,39 +276,35 @@ and so on. These are elements of [NonZeros], so that we can write
 e.g.%\% [x[/]TwoNZ].
 *)
 
-inline cic:/CoRN/algebra/COrdFields/R.var.
+inline "cic:/CoRN/algebra/COrdFields/R.var".
 
-inline cic:/CoRN/algebra/COrdFields/pos_one.con.
+inline "cic:/CoRN/algebra/COrdFields/pos_one.con".
 
-inline cic:/CoRN/algebra/COrdFields/nring_less_succ.con.
+inline "cic:/CoRN/algebra/COrdFields/nring_less_succ.con".
 
-inline cic:/CoRN/algebra/COrdFields/nring_less.con.
+inline "cic:/CoRN/algebra/COrdFields/nring_less.con".
 
-inline cic:/CoRN/algebra/COrdFields/nring_leEq.con.
+inline "cic:/CoRN/algebra/COrdFields/nring_leEq.con".
 
-inline cic:/CoRN/algebra/COrdFields/nring_apart.con.
+inline "cic:/CoRN/algebra/COrdFields/nring_apart.con".
 
-inline cic:/CoRN/algebra/COrdFields/nring_ap_zero.con.
+inline "cic:/CoRN/algebra/COrdFields/nring_ap_zero.con".
 
-inline cic:/CoRN/algebra/COrdFields/nring_ap_zero'.con.
+inline "cic:/CoRN/algebra/COrdFields/nring_ap_zero'.con".
 
-inline cic:/CoRN/algebra/COrdFields/nring_ap_zero_imp.con.
+inline "cic:/CoRN/algebra/COrdFields/nring_ap_zero_imp.con".
 
-inline cic:/CoRN/algebra/COrdFields/Snring.con.
+inline "cic:/CoRN/algebra/COrdFields/Snring.con".
 
-(* INCLUDE
-Transparent_algebra
-*)
+include "tactics/Transparent_algebra.ma".
 
-inline cic:/CoRN/algebra/COrdFields/pos_Snring.con.
+inline "cic:/CoRN/algebra/COrdFields/pos_Snring.con".
 
-inline cic:/CoRN/algebra/COrdFields/nringS_ap_zero.con.
+inline "cic:/CoRN/algebra/COrdFields/nringS_ap_zero.con".
 
-inline cic:/CoRN/algebra/COrdFields/nring_fac_ap_zero.con.
+inline "cic:/CoRN/algebra/COrdFields/nring_fac_ap_zero.con".
 
-(* INCLUDE
-Opaque_algebra
-*)
+include "tactics/Opaque_algebra.ma".
 
 (* UNEXPORTED
 Section up_to_four.
@@ -320,35 +318,35 @@ In the names of lemmas, we denote the numbers 0,1,2,3,4 and so on, by
 %\end{nameconvention}%
 *)
 
-inline cic:/CoRN/algebra/COrdFields/less_plusOne.con.
+inline "cic:/CoRN/algebra/COrdFields/less_plusOne.con".
 
-inline cic:/CoRN/algebra/COrdFields/zero_lt_posplus1.con.
+inline "cic:/CoRN/algebra/COrdFields/zero_lt_posplus1.con".
 
-inline cic:/CoRN/algebra/COrdFields/plus_one_ext_less.con.
+inline "cic:/CoRN/algebra/COrdFields/plus_one_ext_less.con".
 
-inline cic:/CoRN/algebra/COrdFields/one_less_two.con.
+inline "cic:/CoRN/algebra/COrdFields/one_less_two.con".
 
-inline cic:/CoRN/algebra/COrdFields/two_less_three.con.
+inline "cic:/CoRN/algebra/COrdFields/two_less_three.con".
 
-inline cic:/CoRN/algebra/COrdFields/three_less_four.con.
+inline "cic:/CoRN/algebra/COrdFields/three_less_four.con".
 
-inline cic:/CoRN/algebra/COrdFields/pos_two.con.
+inline "cic:/CoRN/algebra/COrdFields/pos_two.con".
 
-inline cic:/CoRN/algebra/COrdFields/one_less_three.con.
+inline "cic:/CoRN/algebra/COrdFields/one_less_three.con".
 
-inline cic:/CoRN/algebra/COrdFields/two_less_four.con.
+inline "cic:/CoRN/algebra/COrdFields/two_less_four.con".
 
-inline cic:/CoRN/algebra/COrdFields/pos_three.con.
+inline "cic:/CoRN/algebra/COrdFields/pos_three.con".
 
-inline cic:/CoRN/algebra/COrdFields/one_less_four.con.
+inline "cic:/CoRN/algebra/COrdFields/one_less_four.con".
 
-inline cic:/CoRN/algebra/COrdFields/pos_four.con.
+inline "cic:/CoRN/algebra/COrdFields/pos_four.con".
 
-inline cic:/CoRN/algebra/COrdFields/two_ap_zero.con.
+inline "cic:/CoRN/algebra/COrdFields/two_ap_zero.con".
 
-inline cic:/CoRN/algebra/COrdFields/three_ap_zero.con.
+inline "cic:/CoRN/algebra/COrdFields/three_ap_zero.con".
 
-inline cic:/CoRN/algebra/COrdFields/four_ap_zero.con.
+inline "cic:/CoRN/algebra/COrdFields/four_ap_zero.con".
 
 (* UNEXPORTED
 End up_to_four.
@@ -360,37 +358,37 @@ Section More_than_four.
 
 (*#* *** Properties of some other numbers *)
 
-inline cic:/CoRN/algebra/COrdFields/pos_six.con.
+inline "cic:/CoRN/algebra/COrdFields/pos_six.con".
 
-inline cic:/CoRN/algebra/COrdFields/pos_eight.con.
+inline "cic:/CoRN/algebra/COrdFields/pos_eight.con".
 
-inline cic:/CoRN/algebra/COrdFields/pos_nine.con.
+inline "cic:/CoRN/algebra/COrdFields/pos_nine.con".
 
-inline cic:/CoRN/algebra/COrdFields/pos_twelve.con.
+inline "cic:/CoRN/algebra/COrdFields/pos_twelve.con".
 
-inline cic:/CoRN/algebra/COrdFields/pos_sixteen.con.
+inline "cic:/CoRN/algebra/COrdFields/pos_sixteen.con".
 
-inline cic:/CoRN/algebra/COrdFields/pos_eighteen.con.
+inline "cic:/CoRN/algebra/COrdFields/pos_eighteen.con".
 
-inline cic:/CoRN/algebra/COrdFields/pos_twentyfour.con.
+inline "cic:/CoRN/algebra/COrdFields/pos_twentyfour.con".
 
-inline cic:/CoRN/algebra/COrdFields/pos_fortyeight.con.
+inline "cic:/CoRN/algebra/COrdFields/pos_fortyeight.con".
 
-inline cic:/CoRN/algebra/COrdFields/six_ap_zero.con.
+inline "cic:/CoRN/algebra/COrdFields/six_ap_zero.con".
 
-inline cic:/CoRN/algebra/COrdFields/eight_ap_zero.con.
+inline "cic:/CoRN/algebra/COrdFields/eight_ap_zero.con".
 
-inline cic:/CoRN/algebra/COrdFields/nine_ap_zero.con.
+inline "cic:/CoRN/algebra/COrdFields/nine_ap_zero.con".
 
-inline cic:/CoRN/algebra/COrdFields/twelve_ap_zero.con.
+inline "cic:/CoRN/algebra/COrdFields/twelve_ap_zero.con".
 
-inline cic:/CoRN/algebra/COrdFields/sixteen_ap_zero.con.
+inline "cic:/CoRN/algebra/COrdFields/sixteen_ap_zero.con".
 
-inline cic:/CoRN/algebra/COrdFields/eighteen_ap_zero.con.
+inline "cic:/CoRN/algebra/COrdFields/eighteen_ap_zero.con".
 
-inline cic:/CoRN/algebra/COrdFields/twentyfour_ap_zero.con.
+inline "cic:/CoRN/algebra/COrdFields/twentyfour_ap_zero.con".
 
-inline cic:/CoRN/algebra/COrdFields/fortyeight_ap_zero.con.
+inline "cic:/CoRN/algebra/COrdFields/fortyeight_ap_zero.con".
 
 (* UNEXPORTED
 End More_than_four.
@@ -416,15 +414,15 @@ Section consequences_of_infinity.
 *** Consequences of infinity
 *)
 
-inline cic:/CoRN/algebra/COrdFields/F.var.
+inline "cic:/CoRN/algebra/COrdFields/F.var".
 
-inline cic:/CoRN/algebra/COrdFields/square_eq.con.
+inline "cic:/CoRN/algebra/COrdFields/square_eq.con".
 
 (*#*
 Ordered fields have characteristic zero.
 *)
 
-inline cic:/CoRN/algebra/COrdFields/char0_OrdField.con.
+inline "cic:/CoRN/algebra/COrdFields/char0_OrdField.con".
 
 (* UNEXPORTED
 End consequences_of_infinity.
@@ -442,7 +440,7 @@ Section Properties_of_Ordering.
 ** Properties of [[<]]
 *)
 
-inline cic:/CoRN/algebra/COrdFields/R.var.
+inline "cic:/CoRN/algebra/COrdFields/R.var".
 
 (*#*
 We do not use a special predicate for positivity,
@@ -461,23 +459,23 @@ Section addition.
 
 *)
 
-inline cic:/CoRN/algebra/COrdFields/plus_resp_less_lft.con.
+inline "cic:/CoRN/algebra/COrdFields/plus_resp_less_lft.con".
 
-inline cic:/CoRN/algebra/COrdFields/inv_resp_less.con.
-
-(* UNEXPORTED
-Transparent cg_minus.
-*)
-
-inline cic:/CoRN/algebra/COrdFields/minus_resp_less.con.
+inline "cic:/CoRN/algebra/COrdFields/inv_resp_less.con".
 
 (* UNEXPORTED
 Transparent cg_minus.
 *)
 
-inline cic:/CoRN/algebra/COrdFields/minus_resp_less_rht.con.
+inline "cic:/CoRN/algebra/COrdFields/minus_resp_less.con".
 
-inline cic:/CoRN/algebra/COrdFields/plus_resp_less_both.con.
+(* UNEXPORTED
+Transparent cg_minus.
+*)
+
+inline "cic:/CoRN/algebra/COrdFields/minus_resp_less_rht.con".
+
+inline "cic:/CoRN/algebra/COrdFields/plus_resp_less_both.con".
 
 (*#*
 For versions of [plus_resp_less_both] where one [ [<] ] in the
@@ -487,9 +485,9 @@ Section~\ref{section:leEq-plus-minus}%.
 Cancellation laws
 *)
 
-inline cic:/CoRN/algebra/COrdFields/plus_cancel_less.con.
+inline "cic:/CoRN/algebra/COrdFields/plus_cancel_less.con".
 
-inline cic:/CoRN/algebra/COrdFields/inv_cancel_less.con.
+inline "cic:/CoRN/algebra/COrdFields/inv_cancel_less.con".
 
 (*#*
 
@@ -508,31 +506,31 @@ However, it is impractical to use these in
 Coq%(see the Coq shortcoming in Section~\ref{section:setoid-basics})%.
 *)
 
-inline cic:/CoRN/algebra/COrdFields/shift_less_plus.con.
+inline "cic:/CoRN/algebra/COrdFields/shift_less_plus.con".
 
-inline cic:/CoRN/algebra/COrdFields/shift_less_plus'.con.
+inline "cic:/CoRN/algebra/COrdFields/shift_less_plus'.con".
 
-inline cic:/CoRN/algebra/COrdFields/shift_less_minus.con.
+inline "cic:/CoRN/algebra/COrdFields/shift_less_minus.con".
 
-inline cic:/CoRN/algebra/COrdFields/shift_less_minus'.con.
+inline "cic:/CoRN/algebra/COrdFields/shift_less_minus'.con".
 
-inline cic:/CoRN/algebra/COrdFields/shift_plus_less.con.
+inline "cic:/CoRN/algebra/COrdFields/shift_plus_less.con".
 
-inline cic:/CoRN/algebra/COrdFields/shift_plus_less'.con.
+inline "cic:/CoRN/algebra/COrdFields/shift_plus_less'.con".
 
-inline cic:/CoRN/algebra/COrdFields/shift_minus_less.con.
+inline "cic:/CoRN/algebra/COrdFields/shift_minus_less.con".
 
-inline cic:/CoRN/algebra/COrdFields/shift_minus_less'.con.
+inline "cic:/CoRN/algebra/COrdFields/shift_minus_less'.con".
 
 (*#*
 Some special cases of laws for shifting.
 *)
 
-inline cic:/CoRN/algebra/COrdFields/shift_zero_less_minus.con.
+inline "cic:/CoRN/algebra/COrdFields/shift_zero_less_minus.con".
 
-inline cic:/CoRN/algebra/COrdFields/shift_zero_less_minus'.con.
+inline "cic:/CoRN/algebra/COrdFields/shift_zero_less_minus'.con".
 
-inline cic:/CoRN/algebra/COrdFields/qltone.con.
+inline "cic:/CoRN/algebra/COrdFields/qltone.con".
 
 (* UNEXPORTED
 End addition.
@@ -557,26 +555,26 @@ We do this to keep it easy to use such lemmas.
 
 *)
 
-inline cic:/CoRN/algebra/COrdFields/mult_resp_less.con.
+inline "cic:/CoRN/algebra/COrdFields/mult_resp_less.con".
 
-inline cic:/CoRN/algebra/COrdFields/recip_resp_pos.con.
+inline "cic:/CoRN/algebra/COrdFields/recip_resp_pos.con".
 
-inline cic:/CoRN/algebra/COrdFields/div_resp_less_rht.con.
+inline "cic:/CoRN/algebra/COrdFields/div_resp_less_rht.con".
 
-inline cic:/CoRN/algebra/COrdFields/div_resp_pos.con.
+inline "cic:/CoRN/algebra/COrdFields/div_resp_pos.con".
 
-inline cic:/CoRN/algebra/COrdFields/mult_resp_less_lft.con.
+inline "cic:/CoRN/algebra/COrdFields/mult_resp_less_lft.con".
 
-inline cic:/CoRN/algebra/COrdFields/mult_resp_less_both.con.
+inline "cic:/CoRN/algebra/COrdFields/mult_resp_less_both.con".
 
-inline cic:/CoRN/algebra/COrdFields/recip_resp_less.con.
+inline "cic:/CoRN/algebra/COrdFields/recip_resp_less.con".
 
-inline cic:/CoRN/algebra/COrdFields/div_resp_less.con.
+inline "cic:/CoRN/algebra/COrdFields/div_resp_less.con".
 
 (*#* Cancellation laws
 *)
 
-inline cic:/CoRN/algebra/COrdFields/mult_cancel_less.con.
+inline "cic:/CoRN/algebra/COrdFields/mult_cancel_less.con".
 
 (*#*
 Laws for shifting
@@ -585,30 +583,30 @@ Laws for shifting
 on plus and minus.%
 *)
 
-inline cic:/CoRN/algebra/COrdFields/shift_div_less.con.
+inline "cic:/CoRN/algebra/COrdFields/shift_div_less.con".
 
-inline cic:/CoRN/algebra/COrdFields/shift_div_less'.con.
+inline "cic:/CoRN/algebra/COrdFields/shift_div_less'.con".
 
-inline cic:/CoRN/algebra/COrdFields/shift_less_div.con.
+inline "cic:/CoRN/algebra/COrdFields/shift_less_div.con".
 
-inline cic:/CoRN/algebra/COrdFields/shift_less_mult.con.
+inline "cic:/CoRN/algebra/COrdFields/shift_less_mult.con".
 
-inline cic:/CoRN/algebra/COrdFields/shift_less_mult'.con.
+inline "cic:/CoRN/algebra/COrdFields/shift_less_mult'.con".
 
-inline cic:/CoRN/algebra/COrdFields/shift_mult_less.con.
+inline "cic:/CoRN/algebra/COrdFields/shift_mult_less.con".
 
 (*#* Other properties of multiplication and division
 *)
 
-inline cic:/CoRN/algebra/COrdFields/minusOne_less.con.
+inline "cic:/CoRN/algebra/COrdFields/minusOne_less.con".
 
-inline cic:/CoRN/algebra/COrdFields/swap_div.con.
+inline "cic:/CoRN/algebra/COrdFields/swap_div.con".
 
-inline cic:/CoRN/algebra/COrdFields/eps_div_less_eps.con.
+inline "cic:/CoRN/algebra/COrdFields/eps_div_less_eps.con".
 
-inline cic:/CoRN/algebra/COrdFields/pos_div_two.con.
+inline "cic:/CoRN/algebra/COrdFields/pos_div_two.con".
 
-inline cic:/CoRN/algebra/COrdFields/pos_div_two'.con.
+inline "cic:/CoRN/algebra/COrdFields/pos_div_two'.con".
 
 (*
 Apply mult_cancel_less with (Two::R).
@@ -619,29 +617,29 @@ Auto.
 Qed.
 *)
 
-inline cic:/CoRN/algebra/COrdFields/pos_div_three.con.
+inline "cic:/CoRN/algebra/COrdFields/pos_div_three.con".
 
-inline cic:/CoRN/algebra/COrdFields/pos_div_three'.con.
+inline "cic:/CoRN/algebra/COrdFields/pos_div_three'.con".
 
-inline cic:/CoRN/algebra/COrdFields/pos_div_four.con.
+inline "cic:/CoRN/algebra/COrdFields/pos_div_four.con".
 
-inline cic:/CoRN/algebra/COrdFields/pos_div_four'.con.
+inline "cic:/CoRN/algebra/COrdFields/pos_div_four'.con".
 
-inline cic:/CoRN/algebra/COrdFields/pos_div_six.con.
+inline "cic:/CoRN/algebra/COrdFields/pos_div_six.con".
 
-inline cic:/CoRN/algebra/COrdFields/pos_div_eight.con.
+inline "cic:/CoRN/algebra/COrdFields/pos_div_eight.con".
 
-inline cic:/CoRN/algebra/COrdFields/pos_div_nine.con.
+inline "cic:/CoRN/algebra/COrdFields/pos_div_nine.con".
 
-inline cic:/CoRN/algebra/COrdFields/pos_div_twelve.con.
+inline "cic:/CoRN/algebra/COrdFields/pos_div_twelve.con".
 
-inline cic:/CoRN/algebra/COrdFields/pos_div_sixteen.con.
+inline "cic:/CoRN/algebra/COrdFields/pos_div_sixteen.con".
 
-inline cic:/CoRN/algebra/COrdFields/pos_div_eighteen.con.
+inline "cic:/CoRN/algebra/COrdFields/pos_div_eighteen.con".
 
-inline cic:/CoRN/algebra/COrdFields/pos_div_twentyfour.con.
+inline "cic:/CoRN/algebra/COrdFields/pos_div_twentyfour.con".
 
-inline cic:/CoRN/algebra/COrdFields/pos_div_fortyeight.con.
+inline "cic:/CoRN/algebra/COrdFields/pos_div_fortyeight.con".
 
 (* UNEXPORTED
 End multiplication.
@@ -655,25 +653,25 @@ Section misc.
 *** Miscellaneous properties
 *)
 
-inline cic:/CoRN/algebra/COrdFields/nring_pos.con.
+inline "cic:/CoRN/algebra/COrdFields/nring_pos.con".
 
-inline cic:/CoRN/algebra/COrdFields/less_nring.con.
+inline "cic:/CoRN/algebra/COrdFields/less_nring.con".
 
-inline cic:/CoRN/algebra/COrdFields/pos_nring_fac.con.
+inline "cic:/CoRN/algebra/COrdFields/pos_nring_fac.con".
 
-inline cic:/CoRN/algebra/COrdFields/Smallest_less_Average.con.
+inline "cic:/CoRN/algebra/COrdFields/Smallest_less_Average.con".
 
-inline cic:/CoRN/algebra/COrdFields/Average_less_Greatest.con.
+inline "cic:/CoRN/algebra/COrdFields/Average_less_Greatest.con".
 
-inline cic:/CoRN/algebra/COrdFields/Sum_resp_less.con.
+inline "cic:/CoRN/algebra/COrdFields/Sum_resp_less.con".
 
-inline cic:/CoRN/algebra/COrdFields/Sumx_resp_less.con.
+inline "cic:/CoRN/algebra/COrdFields/Sumx_resp_less.con".
 
-inline cic:/CoRN/algebra/COrdFields/positive_Sum_two.con.
+inline "cic:/CoRN/algebra/COrdFields/positive_Sum_two.con".
 
-inline cic:/CoRN/algebra/COrdFields/positive_Sumx.con.
+inline "cic:/CoRN/algebra/COrdFields/positive_Sumx.con".
 
-inline cic:/CoRN/algebra/COrdFields/negative_Sumx.con.
+inline "cic:/CoRN/algebra/COrdFields/negative_Sumx.con".
 
 (* UNEXPORTED
 End misc.

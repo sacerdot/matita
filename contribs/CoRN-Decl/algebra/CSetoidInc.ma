@@ -16,13 +16,13 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/algebra/CSetoidInc".
 
+include "CoRN.ma".
+
 (* $Id: CSetoidInc.v,v 1.3 2004/04/22 14:49:43 lcf Exp $ *)
 
 (*#* printing included %\ensuremath{\subseteq}% #&sube;# *)
 
-(* INCLUDE
-CSetoidFun
-*)
+include "algebra/CSetoidFun.ma".
 
 (* UNEXPORTED
 Section inclusion.
@@ -32,35 +32,35 @@ Section inclusion.
 
 Let [S] be a setoid, and [P], [Q], [R] be predicates on [S]. *)
 
-inline cic:/CoRN/algebra/CSetoidInc/S.var.
+inline "cic:/CoRN/algebra/CSetoidInc/S.var".
 
-inline cic:/CoRN/algebra/CSetoidInc/included.con.
+inline "cic:/CoRN/algebra/CSetoidInc/included.con".
 
 (* UNEXPORTED
 Section Basics.
 *)
 
-inline cic:/CoRN/algebra/CSetoidInc/P.var.
+inline "cic:/CoRN/algebra/CSetoidInc/P.var".
 
-inline cic:/CoRN/algebra/CSetoidInc/Q.var.
+inline "cic:/CoRN/algebra/CSetoidInc/Q.var".
 
-inline cic:/CoRN/algebra/CSetoidInc/R.var.
+inline "cic:/CoRN/algebra/CSetoidInc/R.var".
 
-inline cic:/CoRN/algebra/CSetoidInc/included_refl.con.
+inline "cic:/CoRN/algebra/CSetoidInc/included_refl.con".
 
-inline cic:/CoRN/algebra/CSetoidInc/included_trans.con.
+inline "cic:/CoRN/algebra/CSetoidInc/included_trans.con".
 
-inline cic:/CoRN/algebra/CSetoidInc/included_conj.con.
+inline "cic:/CoRN/algebra/CSetoidInc/included_conj.con".
 
-inline cic:/CoRN/algebra/CSetoidInc/included_conj'.con.
+inline "cic:/CoRN/algebra/CSetoidInc/included_conj'.con".
 
-inline cic:/CoRN/algebra/CSetoidInc/included_conj''.con.
+inline "cic:/CoRN/algebra/CSetoidInc/included_conj''.con".
 
-inline cic:/CoRN/algebra/CSetoidInc/included_conj_lft.con.
+inline "cic:/CoRN/algebra/CSetoidInc/included_conj_lft.con".
 
-inline cic:/CoRN/algebra/CSetoidInc/included_conj_rht.con.
+inline "cic:/CoRN/algebra/CSetoidInc/included_conj_rht.con".
 
-inline cic:/CoRN/algebra/CSetoidInc/included_extend.con.
+inline "cic:/CoRN/algebra/CSetoidInc/included_extend.con".
 
 (* UNEXPORTED
 End Basics.
@@ -72,23 +72,23 @@ by [P] and [Q], respectively, the domains of [F] and [G].
 %\end{convention}%
 *)
 
-inline cic:/CoRN/algebra/CSetoidInc/F.var.
+inline "cic:/CoRN/algebra/CSetoidInc/F.var".
 
-inline cic:/CoRN/algebra/CSetoidInc/G.var.
+inline "cic:/CoRN/algebra/CSetoidInc/G.var".
 
 (* begin hide *)
 
-inline cic:/CoRN/algebra/CSetoidInc/P.con.
+inline "cic:/CoRN/algebra/CSetoidInc/P.con".
 
-inline cic:/CoRN/algebra/CSetoidInc/Q.con.
+inline "cic:/CoRN/algebra/CSetoidInc/Q.con".
 
 (* end hide *)
 
-inline cic:/CoRN/algebra/CSetoidInc/R.var.
+inline "cic:/CoRN/algebra/CSetoidInc/R.var".
 
-inline cic:/CoRN/algebra/CSetoidInc/included_FComp.con.
+inline "cic:/CoRN/algebra/CSetoidInc/included_FComp.con".
 
-inline cic:/CoRN/algebra/CSetoidInc/included_FComp'.con.
+inline "cic:/CoRN/algebra/CSetoidInc/included_FComp'.con".
 
 (* UNEXPORTED
 End inclusion.

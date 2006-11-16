@@ -16,15 +16,13 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/reals/Intervals".
 
+include "CoRN.ma".
+
 (* $Id: Intervals.v,v 1.10 2004/04/23 10:01:04 lcf Exp $ *)
 
-(* INCLUDE
-CSetoidInc
-*)
+include "algebra/CSetoidInc.ma".
 
-(* INCLUDE
-RealLists
-*)
+include "reals/RealLists.ma".
 
 (* UNEXPORTED
 Section Intervals.
@@ -41,7 +39,7 @@ points less or equal than [b] and greater or equal than [a].  We
 require [a [<=] b], as we want to work only in nonempty intervals.
 *)
 
-inline cic:/CoRN/reals/Intervals/compact.con.
+inline "cic:/CoRN/reals/Intervals/compact.con".
 
 (*#*
 %\begin{convention}% Let [a,b : IR] and [Hab : a [<=] b].
@@ -51,32 +49,32 @@ As expected, both [a] and [b] are members of [[a,b]].  Also they are
 members of the interval [[Min(a,b),Max(a,b)]].
 *)
 
-inline cic:/CoRN/reals/Intervals/a.var.
+inline "cic:/CoRN/reals/Intervals/a.var".
 
-inline cic:/CoRN/reals/Intervals/b.var.
+inline "cic:/CoRN/reals/Intervals/b.var".
 
-inline cic:/CoRN/reals/Intervals/Hab.var.
+inline "cic:/CoRN/reals/Intervals/Hab.var".
 
-inline cic:/CoRN/reals/Intervals/compact_inc_lft.con.
+inline "cic:/CoRN/reals/Intervals/compact_inc_lft.con".
 
-inline cic:/CoRN/reals/Intervals/compact_inc_rht.con.
+inline "cic:/CoRN/reals/Intervals/compact_inc_rht.con".
 
-inline cic:/CoRN/reals/Intervals/compact_Min_lft.con.
+inline "cic:/CoRN/reals/Intervals/compact_Min_lft.con".
 
-inline cic:/CoRN/reals/Intervals/compact_Min_rht.con.
+inline "cic:/CoRN/reals/Intervals/compact_Min_rht.con".
 
 (*#*
 As we will be interested in taking functions with domain in a compact
 interval, we want this predicate to be well defined.
 *)
 
-inline cic:/CoRN/reals/Intervals/compact_wd.con.
+inline "cic:/CoRN/reals/Intervals/compact_wd.con".
 
 (*#*
 Also, it will sometimes be necessary to rewrite the endpoints of an interval.
 *)
 
-inline cic:/CoRN/reals/Intervals/compact_wd'.con.
+inline "cic:/CoRN/reals/Intervals/compact_wd'.con".
 
 (*#*
 As we identify subsets with predicates, inclusion is simply implication.
@@ -88,7 +86,7 @@ and a well defined predicate [P] included in the domain of [F] and
 returns the restriction $F|_P$# of F to P#.
 *)
 
-inline cic:/CoRN/reals/Intervals/Frestr.con.
+inline "cic:/CoRN/reals/Intervals/Frestr.con".
 
 (* UNEXPORTED
 End Intervals.
@@ -102,15 +100,15 @@ Implicit Arguments Frestr [F P].
 Section More_Intervals.
 *)
 
-inline cic:/CoRN/reals/Intervals/included_refl'.con.
+inline "cic:/CoRN/reals/Intervals/included_refl'.con".
 
 (*#* We prove some inclusions of compact intervals.  *)
 
-inline cic:/CoRN/reals/Intervals/compact_map1.con.
+inline "cic:/CoRN/reals/Intervals/compact_map1.con".
 
-inline cic:/CoRN/reals/Intervals/compact_map2.con.
+inline "cic:/CoRN/reals/Intervals/compact_map2.con".
 
-inline cic:/CoRN/reals/Intervals/compact_map3.con.
+inline "cic:/CoRN/reals/Intervals/compact_map3.con".
 
 (* UNEXPORTED
 End More_Intervals.
@@ -137,7 +135,7 @@ to come.  The definition (equivalent to the classical one) states that
 Notice the use of lists for quantification.
 *)
 
-inline cic:/CoRN/reals/Intervals/totally_bounded.con.
+inline "cic:/CoRN/reals/Intervals/totally_bounded.con".
 
 (*#*
 This definition is classically, but not constructively, equivalent to
@@ -147,28 +145,28 @@ that we take the definition of totally bounded to be the relevant one
 and that we defined compacts as we did.
 *)
 
-inline cic:/CoRN/reals/Intervals/compact_is_totally_bounded.con.
+inline "cic:/CoRN/reals/Intervals/compact_is_totally_bounded.con".
 
 (*#*
 Suprema and infima will be needed throughout; we define them here both
 for arbitrary subsets of [IR] and for images of functions.
 *)
 
-inline cic:/CoRN/reals/Intervals/set_glb_IR.con.
+inline "cic:/CoRN/reals/Intervals/set_glb_IR.con".
 
-inline cic:/CoRN/reals/Intervals/set_lub_IR.con.
+inline "cic:/CoRN/reals/Intervals/set_lub_IR.con".
 
-inline cic:/CoRN/reals/Intervals/fun_image.con.
+inline "cic:/CoRN/reals/Intervals/fun_image.con".
 
-inline cic:/CoRN/reals/Intervals/fun_glb_IR.con.
+inline "cic:/CoRN/reals/Intervals/fun_glb_IR.con".
 
-inline cic:/CoRN/reals/Intervals/fun_lub_IR.con.
+inline "cic:/CoRN/reals/Intervals/fun_lub_IR.con".
 
 (* begin hide *)
 
-inline cic:/CoRN/reals/Intervals/aux_seq_lub.con.
+inline "cic:/CoRN/reals/Intervals/aux_seq_lub.con".
 
-inline cic:/CoRN/reals/Intervals/aux_seq_lub_prop.con.
+inline "cic:/CoRN/reals/Intervals/aux_seq_lub_prop.con".
 
 (* end hide *)
 
@@ -176,17 +174,17 @@ inline cic:/CoRN/reals/Intervals/aux_seq_lub_prop.con.
 The following are probably the most important results in this section.
 *)
 
-inline cic:/CoRN/reals/Intervals/totally_bounded_has_lub.con.
+inline "cic:/CoRN/reals/Intervals/totally_bounded_has_lub.con".
 
 (* begin hide *)
 
-inline cic:/CoRN/reals/Intervals/aux_seq_glb.con.
+inline "cic:/CoRN/reals/Intervals/aux_seq_glb.con".
 
-inline cic:/CoRN/reals/Intervals/aux_seq_glb_prop.con.
+inline "cic:/CoRN/reals/Intervals/aux_seq_glb_prop.con".
 
 (* end hide *)
 
-inline cic:/CoRN/reals/Intervals/totally_bounded_has_glb.con.
+inline "cic:/CoRN/reals/Intervals/totally_bounded_has_glb.con".
 
 (* UNEXPORTED
 End Totally_Bounded.
@@ -204,7 +202,7 @@ and explore some of its properties.
 The following characterization of inclusion can be very useful:
 *)
 
-inline cic:/CoRN/reals/Intervals/included_compact.con.
+inline "cic:/CoRN/reals/Intervals/included_compact.con".
 
 (*#*
 At several points in our future development of a theory we will need
@@ -221,33 +219,33 @@ a positive real number.
 %\end{convention}%
 *)
 
-inline cic:/CoRN/reals/Intervals/a.var.
+inline "cic:/CoRN/reals/Intervals/a.var".
 
-inline cic:/CoRN/reals/Intervals/b.var.
+inline "cic:/CoRN/reals/Intervals/b.var".
 
-inline cic:/CoRN/reals/Intervals/Hab.var.
+inline "cic:/CoRN/reals/Intervals/Hab.var".
 
 (* begin hide *)
 
-inline cic:/CoRN/reals/Intervals/I.con.
+inline "cic:/CoRN/reals/Intervals/I.con".
 
 (* end hide *)
 
-inline cic:/CoRN/reals/Intervals/Hab'.var.
+inline "cic:/CoRN/reals/Intervals/Hab'.var".
 
-inline cic:/CoRN/reals/Intervals/e.var.
+inline "cic:/CoRN/reals/Intervals/e.var".
 
-inline cic:/CoRN/reals/Intervals/He.var.
+inline "cic:/CoRN/reals/Intervals/He.var".
 
 (*#*
 We start by finding a natural number [n] such that [(b[-]a) [/] n [<] e].
 *)
 
-inline cic:/CoRN/reals/Intervals/compact_nat.con.
+inline "cic:/CoRN/reals/Intervals/compact_nat.con".
 
 (*#* Obviously such an [n] must be greater than zero.*)
 
-inline cic:/CoRN/reals/Intervals/pos_compact_nat.con.
+inline "cic:/CoRN/reals/Intervals/pos_compact_nat.con".
 
 (*#*
 We now define a sequence on [n] points in [[a,b]] by
@@ -255,25 +253,25 @@ We now define a sequence on [n] points in [[a,b]] by
 prove that all of its points are really in that interval.
 *)
 
-inline cic:/CoRN/reals/Intervals/compact_part.con.
+inline "cic:/CoRN/reals/Intervals/compact_part.con".
 
-inline cic:/CoRN/reals/Intervals/compact_part_hyp.con.
+inline "cic:/CoRN/reals/Intervals/compact_part_hyp.con".
 
 (*#*
 This sequence is strictly increasing and each two consecutive points
 are apart by less than [e].*)
 
-inline cic:/CoRN/reals/Intervals/compact_less.con.
+inline "cic:/CoRN/reals/Intervals/compact_less.con".
 
-inline cic:/CoRN/reals/Intervals/compact_leEq.con.
+inline "cic:/CoRN/reals/Intervals/compact_leEq.con".
 
 (*#* When we proceed to integration, this lemma will also be useful: *)
 
-inline cic:/CoRN/reals/Intervals/compact_partition_lemma.con.
+inline "cic:/CoRN/reals/Intervals/compact_partition_lemma.con".
 
 (*#* The next lemma provides an upper bound for the distance between two points in an interval: *)
 
-inline cic:/CoRN/reals/Intervals/compact_elements.con.
+inline "cic:/CoRN/reals/Intervals/compact_elements.con".
 
 (* UNEXPORTED
 Opaque Min Max.
@@ -281,21 +279,21 @@ Opaque Min Max.
 
 (*#* The following is a variation on the previous lemma: *)
 
-inline cic:/CoRN/reals/Intervals/compact_elements'.con.
+inline "cic:/CoRN/reals/Intervals/compact_elements'.con".
 
 (*#* The following lemma is a bit more specific: it shows that we can
 also estimate the distance from the center of a compact interval to
 any of its points. *)
 
-inline cic:/CoRN/reals/Intervals/compact_bnd_AbsIR.con.
+inline "cic:/CoRN/reals/Intervals/compact_bnd_AbsIR.con".
 
 (*#* Finally, two more useful lemmas to prove inclusion of compact
 intervals.  They will be necessary for the definition and proof of the
 elementary properties of the integral.  *)
 
-inline cic:/CoRN/reals/Intervals/included2_compact.con.
+inline "cic:/CoRN/reals/Intervals/included2_compact.con".
 
-inline cic:/CoRN/reals/Intervals/included3_compact.con.
+inline "cic:/CoRN/reals/Intervals/included3_compact.con".
 
 (* UNEXPORTED
 End Compact.

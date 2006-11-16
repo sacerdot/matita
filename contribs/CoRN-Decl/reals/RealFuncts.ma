@@ -16,11 +16,11 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/reals/RealFuncts".
 
+include "CoRN.ma".
+
 (* $Id: RealFuncts.v,v 1.4 2004/04/07 15:08:10 lcf Exp $ *)
 
-(* INCLUDE
-CReals1
-*)
+include "reals/CReals1.ma".
 
 (*#* * Continuity of Functions on Reals
 *)
@@ -41,9 +41,9 @@ Unset Strict Implicit.
 Section Continuity.
 *)
 
-inline cic:/CoRN/reals/RealFuncts/f.var.
+inline "cic:/CoRN/reals/RealFuncts/f.var".
 
-inline cic:/CoRN/reals/RealFuncts/f2.var.
+inline "cic:/CoRN/reals/RealFuncts/f2.var".
 
 (*#*
 Let [f] be a unary setoid operation on [IR] and
@@ -60,15 +60,15 @@ Intervals like $[a,b]$#[a,b]# are defined for arbitrary reals [a,b] (being
 $\emptyset$#&empty;# for [a [>] b]).
 *)
 
-inline cic:/CoRN/reals/RealFuncts/Intclr.con.
+inline "cic:/CoRN/reals/RealFuncts/Intclr.con".
 
-inline cic:/CoRN/reals/RealFuncts/Intolr.con.
+inline "cic:/CoRN/reals/RealFuncts/Intolr.con".
 
-inline cic:/CoRN/reals/RealFuncts/Intol.con.
+inline "cic:/CoRN/reals/RealFuncts/Intol.con".
 
-inline cic:/CoRN/reals/RealFuncts/Intcl.con.
+inline "cic:/CoRN/reals/RealFuncts/Intcl.con".
 
-inline cic:/CoRN/reals/RealFuncts/Intcr.con.
+inline "cic:/CoRN/reals/RealFuncts/Intcr.con".
 
 (*#* The limit of [f(x)] as [x] goes to [p = l], for both unary and binary
 functions:
@@ -80,11 +80,11 @@ forall e [>] Zero, exists d [>] Zero, forall (x : IR)
 ]]
 *)
 
-inline cic:/CoRN/reals/RealFuncts/funLim.con.
+inline "cic:/CoRN/reals/RealFuncts/funLim.con".
 
 (*#* The definition of limit of [f] in [p] using Cauchy sequences. *)
 
-inline cic:/CoRN/reals/RealFuncts/funLim_Cauchy.con.
+inline "cic:/CoRN/reals/RealFuncts/funLim_Cauchy.con".
 
 (*#* The first definition implies the second one. *)
 
@@ -113,40 +113,40 @@ forall e [>] Zero, exists d [>] Zero, forall (x : IR)
 ]]
 *)
 
-inline cic:/CoRN/reals/RealFuncts/funLim2.con.
+inline "cic:/CoRN/reals/RealFuncts/funLim2.con".
 
 (*#* The function [f] is continuous at [p] if the limit of [f(x)] as
 [x] goes to [p] is [f(p)].  This is the [eps [/] delta] definition.
 We also give the definition with limits of Cauchy sequences.
 *)
 
-inline cic:/CoRN/reals/RealFuncts/continAt.con.
+inline "cic:/CoRN/reals/RealFuncts/continAt.con".
 
-inline cic:/CoRN/reals/RealFuncts/continAtCauchy.con.
+inline "cic:/CoRN/reals/RealFuncts/continAtCauchy.con".
 
-inline cic:/CoRN/reals/RealFuncts/continAt2.con.
+inline "cic:/CoRN/reals/RealFuncts/continAt2.con".
 
 (*
 Ax_iom continAt_prop1 :(p:IR)(continAt p)->(continAtCauchy p).
 *)
 
-inline cic:/CoRN/reals/RealFuncts/contin.con.
+inline "cic:/CoRN/reals/RealFuncts/contin.con".
 
-inline cic:/CoRN/reals/RealFuncts/continCauchy.con.
+inline "cic:/CoRN/reals/RealFuncts/continCauchy.con".
 
-inline cic:/CoRN/reals/RealFuncts/contin2.con.
+inline "cic:/CoRN/reals/RealFuncts/contin2.con".
 
 (*#*
 Continuous on a closed, resp.%\% open, resp.%\% left open, resp.%\% left closed
 interval *)
 
-inline cic:/CoRN/reals/RealFuncts/continOnc.con.
+inline "cic:/CoRN/reals/RealFuncts/continOnc.con".
 
-inline cic:/CoRN/reals/RealFuncts/continOno.con.
+inline "cic:/CoRN/reals/RealFuncts/continOno.con".
 
-inline cic:/CoRN/reals/RealFuncts/continOnol.con.
+inline "cic:/CoRN/reals/RealFuncts/continOnol.con".
 
-inline cic:/CoRN/reals/RealFuncts/continOncl.con.
+inline "cic:/CoRN/reals/RealFuncts/continOncl.con".
 
 (*
 Section Sequence_and_function_limits.

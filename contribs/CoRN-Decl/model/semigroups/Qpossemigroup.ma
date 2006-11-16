@@ -16,19 +16,17 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/model/semigroups/Qpossemigroup".
 
+include "CoRN.ma".
+
 (* $Id: Qpossemigroup.v,v 1.6 2004/04/08 08:20:35 lcf Exp $ *)
 
-(* INCLUDE
-Qpossetoid
-*)
+include "model/setoids/Qpossetoid.ma".
 
-(* INCLUDE
-CSemiGroups
-*)
+include "algebra/CSemiGroups.ma".
 
 (*#* **Example of a semi-group: $\langle$#&lang;#[Qpos],[[*]]$\rangle$#&rang;#
 The positive rationals form with the multiplication a CSemiGroup.
 *)
 
-inline cic:/CoRN/model/semigroups/Qpossemigroup/Qpos_mult_as_CSemiGroup.con.
+inline "cic:/CoRN/model/semigroups/Qpossemigroup/Qpos_mult_as_CSemiGroup.con".
 

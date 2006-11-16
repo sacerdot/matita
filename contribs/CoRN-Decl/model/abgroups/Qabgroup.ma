@@ -16,15 +16,13 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/model/abgroups/Qabgroup".
 
+include "CoRN.ma".
+
 (* $Id: Qabgroup.v,v 1.5 2004/04/08 08:20:31 lcf Exp $ *)
 
-(* INCLUDE
-Qgroup
-*)
+include "model/groups/Qgroup.ma".
 
-(* INCLUDE
-CAbGroups
-*)
+include "algebra/CAbGroups.ma".
 
 (*#* **Example of an abelian group: $\langle$#&lang;#[Q],[[+]]$\rangle$#&rang;#
 *)
@@ -33,7 +31,7 @@ CAbGroups
 CAbGroup.
 *)
 
-inline cic:/CoRN/model/abgroups/Qabgroup/Q_is_CAbGroup.con.
+inline "cic:/CoRN/model/abgroups/Qabgroup/Q_is_CAbGroup.con".
 
-inline cic:/CoRN/model/abgroups/Qabgroup/Q_as_CAbGroup.con.
+inline "cic:/CoRN/model/abgroups/Qabgroup/Q_as_CAbGroup.con".
 

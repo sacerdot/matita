@@ -16,11 +16,11 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/ftc/PartInterval".
 
+include "CoRN.ma".
+
 (* $Id: PartInterval.v,v 1.6 2004/04/23 10:01:00 lcf Exp $ *)
 
-(* INCLUDE
-IntervalFunct
-*)
+include "ftc/IntervalFunct.ma".
 
 (* UNEXPORTED
 Section Conversion.
@@ -45,25 +45,25 @@ that [I [=] [a,b]] is included in the domain of [F].
 %\end{convention}%
 *)
 
-inline cic:/CoRN/ftc/PartInterval/F.var.
+inline "cic:/CoRN/ftc/PartInterval/F.var".
 
-inline cic:/CoRN/ftc/PartInterval/a.var.
+inline "cic:/CoRN/ftc/PartInterval/a.var".
 
-inline cic:/CoRN/ftc/PartInterval/b.var.
+inline "cic:/CoRN/ftc/PartInterval/b.var".
 
-inline cic:/CoRN/ftc/PartInterval/Hab.var.
+inline "cic:/CoRN/ftc/PartInterval/Hab.var".
 
 (* begin hide *)
 
-inline cic:/CoRN/ftc/PartInterval/I.con.
+inline "cic:/CoRN/ftc/PartInterval/I.con".
 
 (* end hide *)
 
-inline cic:/CoRN/ftc/PartInterval/Hf.var.
+inline "cic:/CoRN/ftc/PartInterval/Hf.var".
 
-inline cic:/CoRN/ftc/PartInterval/IntPartIR_strext.con.
+inline "cic:/CoRN/ftc/PartInterval/IntPartIR_strext.con".
 
-inline cic:/CoRN/ftc/PartInterval/IntPartIR.con.
+inline "cic:/CoRN/ftc/PartInterval/IntPartIR.con".
 
 (* UNEXPORTED
 End Conversion.
@@ -82,23 +82,23 @@ To go the other way around, we simply take a setoid function [f] with
 domain [[a,b]] and build the corresponding partial function.
 *)
 
-inline cic:/CoRN/ftc/PartInterval/a.var.
+inline "cic:/CoRN/ftc/PartInterval/a.var".
 
-inline cic:/CoRN/ftc/PartInterval/b.var.
+inline "cic:/CoRN/ftc/PartInterval/b.var".
 
-inline cic:/CoRN/ftc/PartInterval/Hab.var.
+inline "cic:/CoRN/ftc/PartInterval/Hab.var".
 
 (* begin hide *)
 
-inline cic:/CoRN/ftc/PartInterval/I.con.
+inline "cic:/CoRN/ftc/PartInterval/I.con".
 
 (* end hide *)
 
-inline cic:/CoRN/ftc/PartInterval/f.var.
+inline "cic:/CoRN/ftc/PartInterval/f.var".
 
-inline cic:/CoRN/ftc/PartInterval/PartInt_strext.con.
+inline "cic:/CoRN/ftc/PartInterval/PartInt_strext.con".
 
-inline cic:/CoRN/ftc/PartInterval/PartInt.con.
+inline "cic:/CoRN/ftc/PartInterval/PartInt.con".
 
 (* UNEXPORTED
 End AntiConversion.
@@ -116,7 +116,7 @@ Section Inverses.
 In one direction these operators are inverses.
 *)
 
-inline cic:/CoRN/ftc/PartInterval/int_part_int.con.
+inline "cic:/CoRN/ftc/PartInterval/int_part_int.con".
 
 (* UNEXPORTED
 End Inverses.
@@ -137,57 +137,57 @@ type [I->IR] equal respectively to [F] and [G] in [I].
 %\end{convention}%
 *)
 
-inline cic:/CoRN/ftc/PartInterval/F.var.
+inline "cic:/CoRN/ftc/PartInterval/F.var".
 
-inline cic:/CoRN/ftc/PartInterval/G.var.
+inline "cic:/CoRN/ftc/PartInterval/G.var".
 
-inline cic:/CoRN/ftc/PartInterval/a.var.
+inline "cic:/CoRN/ftc/PartInterval/a.var".
 
-inline cic:/CoRN/ftc/PartInterval/b.var.
+inline "cic:/CoRN/ftc/PartInterval/b.var".
 
-inline cic:/CoRN/ftc/PartInterval/c.var.
+inline "cic:/CoRN/ftc/PartInterval/c.var".
 
-inline cic:/CoRN/ftc/PartInterval/Hab.var.
+inline "cic:/CoRN/ftc/PartInterval/Hab.var".
 
 (* begin hide *)
 
-inline cic:/CoRN/ftc/PartInterval/I.con.
+inline "cic:/CoRN/ftc/PartInterval/I.con".
 
 (* end hide *)
 
-inline cic:/CoRN/ftc/PartInterval/f.var.
+inline "cic:/CoRN/ftc/PartInterval/f.var".
 
-inline cic:/CoRN/ftc/PartInterval/g.var.
+inline "cic:/CoRN/ftc/PartInterval/g.var".
 
-inline cic:/CoRN/ftc/PartInterval/Ff.var.
+inline "cic:/CoRN/ftc/PartInterval/Ff.var".
 
-inline cic:/CoRN/ftc/PartInterval/Gg.var.
+inline "cic:/CoRN/ftc/PartInterval/Gg.var".
 
-inline cic:/CoRN/ftc/PartInterval/part_int_const.con.
+inline "cic:/CoRN/ftc/PartInterval/part_int_const.con".
 
-inline cic:/CoRN/ftc/PartInterval/part_int_id.con.
+inline "cic:/CoRN/ftc/PartInterval/part_int_id.con".
 
-inline cic:/CoRN/ftc/PartInterval/part_int_plus.con.
+inline "cic:/CoRN/ftc/PartInterval/part_int_plus.con".
 
-inline cic:/CoRN/ftc/PartInterval/part_int_inv.con.
+inline "cic:/CoRN/ftc/PartInterval/part_int_inv.con".
 
-inline cic:/CoRN/ftc/PartInterval/part_int_minus.con.
+inline "cic:/CoRN/ftc/PartInterval/part_int_minus.con".
 
-inline cic:/CoRN/ftc/PartInterval/part_int_mult.con.
+inline "cic:/CoRN/ftc/PartInterval/part_int_mult.con".
 
-inline cic:/CoRN/ftc/PartInterval/part_int_nth.con.
+inline "cic:/CoRN/ftc/PartInterval/part_int_nth.con".
 
 (* begin show *)
 
-inline cic:/CoRN/ftc/PartInterval/HG.var.
+inline "cic:/CoRN/ftc/PartInterval/HG.var".
 
-inline cic:/CoRN/ftc/PartInterval/Hg.var.
+inline "cic:/CoRN/ftc/PartInterval/Hg.var".
 
 (* end show *)
 
-inline cic:/CoRN/ftc/PartInterval/part_int_recip.con.
+inline "cic:/CoRN/ftc/PartInterval/part_int_recip.con".
 
-inline cic:/CoRN/ftc/PartInterval/part_int_div.con.
+inline "cic:/CoRN/ftc/PartInterval/part_int_div.con".
 
 (* UNEXPORTED
 End Equivalences.

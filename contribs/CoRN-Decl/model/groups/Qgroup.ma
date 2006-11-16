@@ -16,21 +16,19 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/model/groups/Qgroup".
 
+include "CoRN.ma".
+
 (* $Id: Qgroup.v,v 1.5 2004/04/08 08:20:32 lcf Exp $ *)
 
-(* INCLUDE
-Qmonoid
-*)
+include "model/monoids/Qmonoid.ma".
 
-(* INCLUDE
-CGroups
-*)
+include "algebra/CGroups.ma".
 
 (*#* **Example of a group: $\langle$#&lang;#[Q],[[+]]$\rangle$#&rang;#
 The rational numbers with addition form a group. The inverse function is taking the opposite.
 *)
 
-inline cic:/CoRN/model/groups/Qgroup/Q_is_CGroup.con.
+inline "cic:/CoRN/model/groups/Qgroup/Q_is_CGroup.con".
 
-inline cic:/CoRN/model/groups/Qgroup/Q_as_CGroup.con.
+inline "cic:/CoRN/model/groups/Qgroup/Q_as_CGroup.con".
 

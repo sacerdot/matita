@@ -16,41 +16,33 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/model/rings/Qring".
 
+include "CoRN.ma".
+
 (* $Id: Qring.v,v 1.8 2004/04/23 10:01:03 lcf Exp $ *)
 
-(* INCLUDE
-Qabgroup
-*)
+include "model/abgroups/Qabgroup.ma".
 
-(* INCLUDE
-CRings
-*)
+include "algebra/CRings.ma".
 
-(* INCLUDE
-Zring
-*)
+include "model/rings/Zring.ma".
 
 (*#* **Example of a ring: $\langle$#&lang;#[Q],[[+]],[[*]]$\rangle$#&rang;#
 Because [Q] forms an abelian group with addition, a monoid with 
 multiplication and it satisfies the distributive law, it is a ring.
 *)
 
-inline cic:/CoRN/model/rings/Qring/Q_mult_plus_is_dist.con.
+inline "cic:/CoRN/model/rings/Qring/Q_mult_plus_is_dist.con".
 
-inline cic:/CoRN/model/rings/Qring/Q_is_CRing.con.
+inline "cic:/CoRN/model/rings/Qring/Q_is_CRing.con".
 
-inline cic:/CoRN/model/rings/Qring/Q_as_CRing.con.
+inline "cic:/CoRN/model/rings/Qring/Q_as_CRing.con".
 
 (*#* The following lemmas are used in the proof that [Q] is Archimeadian.
 *)
 
-inline cic:/CoRN/model/rings/Qring/injz_Nring.con.
+inline "cic:/CoRN/model/rings/Qring/injz_Nring.con".
 
-inline cic:/CoRN/model/rings/Qring/injZ_eq.con.
+inline "cic:/CoRN/model/rings/Qring/injZ_eq.con".
 
-(* INCLUDE
-ZArith
-*)
-
-inline cic:/CoRN/model/rings/Qring/nring_Q.con.
+inline "cic:/CoRN/model/rings/Qring/nring_Q.con".
 

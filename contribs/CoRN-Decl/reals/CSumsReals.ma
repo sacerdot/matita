@@ -16,11 +16,11 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/reals/CSumsReals".
 
+include "CoRN.ma".
+
 (* $Id: CSumsReals.v,v 1.5 2004/04/23 10:01:04 lcf Exp $ *)
 
-(* INCLUDE
-CReals1
-*)
+include "reals/CReals1.ma".
 
 (*#* * Sums over Reals
 
@@ -36,15 +36,15 @@ $\Sigma_{m\leq i \leq n}~c^k = \frac{c^{n+1}-c^m}{c-1}.$
 Section Sums_over_Reals.
 *)
 
-inline cic:/CoRN/reals/CSumsReals/c.var.
+inline "cic:/CoRN/reals/CSumsReals/c.var".
 
-inline cic:/CoRN/reals/CSumsReals/Sum0_c_exp.con.
+inline "cic:/CoRN/reals/CSumsReals/Sum0_c_exp.con".
 
 (* UNEXPORTED
 Hint Resolve Sum0_c_exp.
 *)
 
-inline cic:/CoRN/reals/CSumsReals/Sum_c_exp.con.
+inline "cic:/CoRN/reals/CSumsReals/Sum_c_exp.con".
 
 (* UNEXPORTED
 Hint Resolve Sum_c_exp.
@@ -52,7 +52,7 @@ Hint Resolve Sum_c_exp.
 
 (*#* The following formulation is often more useful if [c [<] 1]. *)
 
-inline cic:/CoRN/reals/CSumsReals/Sum_c_exp'.con.
+inline "cic:/CoRN/reals/CSumsReals/Sum_c_exp'.con".
 
 (* UNEXPORTED
 Hint Resolve Sum_c_exp'.
@@ -66,29 +66,29 @@ End Sums_over_Reals.
 Hint Resolve Sum0_c_exp Sum_c_exp Sum_c_exp': algebra.
 *)
 
-inline cic:/CoRN/reals/CSumsReals/diff_is_Sum0.con.
+inline "cic:/CoRN/reals/CSumsReals/diff_is_Sum0.con".
 
-inline cic:/CoRN/reals/CSumsReals/diff_is_sum.con.
+inline "cic:/CoRN/reals/CSumsReals/diff_is_sum.con".
 
-inline cic:/CoRN/reals/CSumsReals/Sum0_pres_less.con.
+inline "cic:/CoRN/reals/CSumsReals/Sum0_pres_less.con".
 
-inline cic:/CoRN/reals/CSumsReals/Sum_pres_less.con.
+inline "cic:/CoRN/reals/CSumsReals/Sum_pres_less.con".
 
-inline cic:/CoRN/reals/CSumsReals/Sum_pres_leEq.con.
+inline "cic:/CoRN/reals/CSumsReals/Sum_pres_leEq.con".
 
-inline cic:/CoRN/reals/CSumsReals/Sum0_comm_scal.con.
+inline "cic:/CoRN/reals/CSumsReals/Sum0_comm_scal.con".
 
 (* UNEXPORTED
 Hint Resolve Sum0_comm_scal: algebra.
 *)
 
-inline cic:/CoRN/reals/CSumsReals/Sum_comm_scal.con.
+inline "cic:/CoRN/reals/CSumsReals/Sum_comm_scal.con".
 
-inline cic:/CoRN/reals/CSumsReals/Sum0_comm_scal'.con.
+inline "cic:/CoRN/reals/CSumsReals/Sum0_comm_scal'.con".
 
-inline cic:/CoRN/reals/CSumsReals/Sum_comm_scal'.con.
+inline "cic:/CoRN/reals/CSumsReals/Sum_comm_scal'.con".
 
-inline cic:/CoRN/reals/CSumsReals/Sumx_comm_scal'.con.
+inline "cic:/CoRN/reals/CSumsReals/Sumx_comm_scal'.con".
 
-inline cic:/CoRN/reals/CSumsReals/Sum2_comm_scal'.con.
+inline "cic:/CoRN/reals/CSumsReals/Sum2_comm_scal'.con".
 

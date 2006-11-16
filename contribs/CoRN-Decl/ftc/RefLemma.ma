@@ -16,19 +16,15 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/ftc/RefLemma".
 
+include "CoRN.ma".
+
 (* $Id: RefLemma.v,v 1.7 2004/04/23 10:01:00 lcf Exp $ *)
 
-(* INCLUDE
-RefSeparating
-*)
+include "ftc/RefSeparating.ma".
 
-(* INCLUDE
-RefSeparated
-*)
+include "ftc/RefSeparated.ma".
 
-(* INCLUDE
-RefSepRef
-*)
+include "ftc/RefSepRef.ma".
 
 (* UNEXPORTED
 Section Refinement_Lemma.
@@ -85,27 +81,27 @@ Using the results from these files, we prove our main lemma in several steps
 %\end{convention}%
 *)
 
-inline cic:/CoRN/ftc/RefLemma/a.var.
+inline "cic:/CoRN/ftc/RefLemma/a.var".
 
-inline cic:/CoRN/ftc/RefLemma/b.var.
+inline "cic:/CoRN/ftc/RefLemma/b.var".
 
-inline cic:/CoRN/ftc/RefLemma/Hab.var.
+inline "cic:/CoRN/ftc/RefLemma/Hab.var".
 
 (* begin hide *)
 
-inline cic:/CoRN/ftc/RefLemma/I.con.
+inline "cic:/CoRN/ftc/RefLemma/I.con".
 
 (* end hide *)
 
-inline cic:/CoRN/ftc/RefLemma/F.var.
+inline "cic:/CoRN/ftc/RefLemma/F.var".
 
-inline cic:/CoRN/ftc/RefLemma/contF.var.
+inline "cic:/CoRN/ftc/RefLemma/contF.var".
 
-inline cic:/CoRN/ftc/RefLemma/incF.var.
+inline "cic:/CoRN/ftc/RefLemma/incF.var".
 
 (* begin hide *)
 
-inline cic:/CoRN/ftc/RefLemma/contF'.con.
+inline "cic:/CoRN/ftc/RefLemma/contF'.con".
 
 (* end hide *)
 
@@ -128,87 +124,87 @@ respectively.
 %\end{convention}%
 *)
 
-inline cic:/CoRN/ftc/RefLemma/e.var.
+inline "cic:/CoRN/ftc/RefLemma/e.var".
 
-inline cic:/CoRN/ftc/RefLemma/He.var.
-
-(* begin hide *)
-
-inline cic:/CoRN/ftc/RefLemma/d.con.
-
-(* end hide *)
-
-inline cic:/CoRN/ftc/RefLemma/m.var.
-
-inline cic:/CoRN/ftc/RefLemma/n.var.
-
-inline cic:/CoRN/ftc/RefLemma/P.var.
-
-inline cic:/CoRN/ftc/RefLemma/HMesh.var.
-
-inline cic:/CoRN/ftc/RefLemma/Q.var.
-
-inline cic:/CoRN/ftc/RefLemma/Href.var.
-
-inline cic:/CoRN/ftc/RefLemma/fP.var.
-
-inline cic:/CoRN/ftc/RefLemma/HfP.var.
-
-inline cic:/CoRN/ftc/RefLemma/HfP'.var.
-
-inline cic:/CoRN/ftc/RefLemma/fQ.var.
-
-inline cic:/CoRN/ftc/RefLemma/HfQ.var.
-
-inline cic:/CoRN/ftc/RefLemma/HfQ'.var.
+inline "cic:/CoRN/ftc/RefLemma/He.var".
 
 (* begin hide *)
 
-inline cic:/CoRN/ftc/RefLemma/sub.con.
-
-inline cic:/CoRN/ftc/RefLemma/RL_sub_0.con.
-
-inline cic:/CoRN/ftc/RefLemma/RL_sub_n.con.
-
-inline cic:/CoRN/ftc/RefLemma/RL_sub_mon.con.
-
-inline cic:/CoRN/ftc/RefLemma/RL_sub_mon'.con.
-
-inline cic:/CoRN/ftc/RefLemma/RL_sub_hyp.con.
-
-inline cic:/CoRN/ftc/RefLemma/RL_sub_S.con.
-
-inline cic:/CoRN/ftc/RefLemma/H.con.
-
-inline cic:/CoRN/ftc/RefLemma/H'.con.
-
-inline cic:/CoRN/ftc/RefLemma/H0.con.
-
-inline cic:/CoRN/ftc/RefLemma/RL_sub_SS.con.
-
-inline cic:/CoRN/ftc/RefLemma/RL_h.con.
-
-inline cic:/CoRN/ftc/RefLemma/RL_g.con.
-
-inline cic:/CoRN/ftc/RefLemma/ref_calc1.con.
-
-inline cic:/CoRN/ftc/RefLemma/ref_calc2.con.
-
-inline cic:/CoRN/ftc/RefLemma/ref_calc3.con.
-
-inline cic:/CoRN/ftc/RefLemma/ref_calc4.con.
-
-inline cic:/CoRN/ftc/RefLemma/ref_calc5.con.
-
-inline cic:/CoRN/ftc/RefLemma/ref_calc6.con.
-
-inline cic:/CoRN/ftc/RefLemma/ref_calc7.con.
-
-inline cic:/CoRN/ftc/RefLemma/ref_calc8.con.
+inline "cic:/CoRN/ftc/RefLemma/d.con".
 
 (* end hide *)
 
-inline cic:/CoRN/ftc/RefLemma/first_refinement_lemma.con.
+inline "cic:/CoRN/ftc/RefLemma/m.var".
+
+inline "cic:/CoRN/ftc/RefLemma/n.var".
+
+inline "cic:/CoRN/ftc/RefLemma/P.var".
+
+inline "cic:/CoRN/ftc/RefLemma/HMesh.var".
+
+inline "cic:/CoRN/ftc/RefLemma/Q.var".
+
+inline "cic:/CoRN/ftc/RefLemma/Href.var".
+
+inline "cic:/CoRN/ftc/RefLemma/fP.var".
+
+inline "cic:/CoRN/ftc/RefLemma/HfP.var".
+
+inline "cic:/CoRN/ftc/RefLemma/HfP'.var".
+
+inline "cic:/CoRN/ftc/RefLemma/fQ.var".
+
+inline "cic:/CoRN/ftc/RefLemma/HfQ.var".
+
+inline "cic:/CoRN/ftc/RefLemma/HfQ'.var".
+
+(* begin hide *)
+
+inline "cic:/CoRN/ftc/RefLemma/sub.con".
+
+inline "cic:/CoRN/ftc/RefLemma/RL_sub_0.con".
+
+inline "cic:/CoRN/ftc/RefLemma/RL_sub_n.con".
+
+inline "cic:/CoRN/ftc/RefLemma/RL_sub_mon.con".
+
+inline "cic:/CoRN/ftc/RefLemma/RL_sub_mon'.con".
+
+inline "cic:/CoRN/ftc/RefLemma/RL_sub_hyp.con".
+
+inline "cic:/CoRN/ftc/RefLemma/RL_sub_S.con".
+
+inline "cic:/CoRN/ftc/RefLemma/H.con".
+
+inline "cic:/CoRN/ftc/RefLemma/H'.con".
+
+inline "cic:/CoRN/ftc/RefLemma/H0.con".
+
+inline "cic:/CoRN/ftc/RefLemma/RL_sub_SS.con".
+
+inline "cic:/CoRN/ftc/RefLemma/RL_h.con".
+
+inline "cic:/CoRN/ftc/RefLemma/RL_g.con".
+
+inline "cic:/CoRN/ftc/RefLemma/ref_calc1.con".
+
+inline "cic:/CoRN/ftc/RefLemma/ref_calc2.con".
+
+inline "cic:/CoRN/ftc/RefLemma/ref_calc3.con".
+
+inline "cic:/CoRN/ftc/RefLemma/ref_calc4.con".
+
+inline "cic:/CoRN/ftc/RefLemma/ref_calc5.con".
+
+inline "cic:/CoRN/ftc/RefLemma/ref_calc6.con".
+
+inline "cic:/CoRN/ftc/RefLemma/ref_calc7.con".
+
+inline "cic:/CoRN/ftc/RefLemma/ref_calc8.con".
+
+(* end hide *)
+
+inline "cic:/CoRN/ftc/RefLemma/first_refinement_lemma.con".
 
 (* UNEXPORTED
 End First_Refinement_Lemma.
@@ -234,55 +230,55 @@ and [R], respectively.
 %\end{convention}%
 *)
 
-inline cic:/CoRN/ftc/RefLemma/n.var.
+inline "cic:/CoRN/ftc/RefLemma/n.var".
 
-inline cic:/CoRN/ftc/RefLemma/j.var.
+inline "cic:/CoRN/ftc/RefLemma/j.var".
 
-inline cic:/CoRN/ftc/RefLemma/k.var.
+inline "cic:/CoRN/ftc/RefLemma/k.var".
 
-inline cic:/CoRN/ftc/RefLemma/P.var.
+inline "cic:/CoRN/ftc/RefLemma/P.var".
 
-inline cic:/CoRN/ftc/RefLemma/Q.var.
+inline "cic:/CoRN/ftc/RefLemma/Q.var".
 
-inline cic:/CoRN/ftc/RefLemma/R.var.
+inline "cic:/CoRN/ftc/RefLemma/R.var".
 
-inline cic:/CoRN/ftc/RefLemma/HrefP.var.
+inline "cic:/CoRN/ftc/RefLemma/HrefP.var".
 
-inline cic:/CoRN/ftc/RefLemma/HrefR.var.
+inline "cic:/CoRN/ftc/RefLemma/HrefR.var".
 
-inline cic:/CoRN/ftc/RefLemma/e.var.
+inline "cic:/CoRN/ftc/RefLemma/e.var".
 
-inline cic:/CoRN/ftc/RefLemma/e'.var.
+inline "cic:/CoRN/ftc/RefLemma/e'.var".
 
-inline cic:/CoRN/ftc/RefLemma/He.var.
+inline "cic:/CoRN/ftc/RefLemma/He.var".
 
-inline cic:/CoRN/ftc/RefLemma/He'.var.
+inline "cic:/CoRN/ftc/RefLemma/He'.var".
 
 (* begin hide *)
 
-inline cic:/CoRN/ftc/RefLemma/d.con.
+inline "cic:/CoRN/ftc/RefLemma/d.con".
 
-inline cic:/CoRN/ftc/RefLemma/d'.con.
+inline "cic:/CoRN/ftc/RefLemma/d'.con".
 
 (* end hide *)
 
-inline cic:/CoRN/ftc/RefLemma/HMeshP.var.
+inline "cic:/CoRN/ftc/RefLemma/HMeshP.var".
 
-inline cic:/CoRN/ftc/RefLemma/HMeshR.var.
+inline "cic:/CoRN/ftc/RefLemma/HMeshR.var".
 
-inline cic:/CoRN/ftc/RefLemma/fP.var.
+inline "cic:/CoRN/ftc/RefLemma/fP.var".
 
-inline cic:/CoRN/ftc/RefLemma/HfP.var.
+inline "cic:/CoRN/ftc/RefLemma/HfP.var".
 
-inline cic:/CoRN/ftc/RefLemma/HfP'.var.
+inline "cic:/CoRN/ftc/RefLemma/HfP'.var".
 
-inline cic:/CoRN/ftc/RefLemma/fR.var.
+inline "cic:/CoRN/ftc/RefLemma/fR.var".
 
-inline cic:/CoRN/ftc/RefLemma/HfR.var.
+inline "cic:/CoRN/ftc/RefLemma/HfR.var".
 
-inline cic:/CoRN/ftc/RefLemma/HfR'.var.
+inline "cic:/CoRN/ftc/RefLemma/HfR'.var".
 
-inline cic:/CoRN/ftc/RefLemma/second_refinement_lemma.con.
+inline "cic:/CoRN/ftc/RefLemma/second_refinement_lemma.con".
 
 (* UNEXPORTED
 End Second_Refinement_Lemma.
@@ -308,117 +304,117 @@ respectively;
 %\end{convention}%
 *)
 
-inline cic:/CoRN/ftc/RefLemma/n.var.
+inline "cic:/CoRN/ftc/RefLemma/n.var".
 
-inline cic:/CoRN/ftc/RefLemma/m.var.
+inline "cic:/CoRN/ftc/RefLemma/m.var".
 
-inline cic:/CoRN/ftc/RefLemma/P.var.
+inline "cic:/CoRN/ftc/RefLemma/P.var".
 
-inline cic:/CoRN/ftc/RefLemma/R.var.
+inline "cic:/CoRN/ftc/RefLemma/R.var".
 
-inline cic:/CoRN/ftc/RefLemma/e.var.
+inline "cic:/CoRN/ftc/RefLemma/e.var".
 
-inline cic:/CoRN/ftc/RefLemma/e'.var.
+inline "cic:/CoRN/ftc/RefLemma/e'.var".
 
-inline cic:/CoRN/ftc/RefLemma/He.var.
+inline "cic:/CoRN/ftc/RefLemma/He.var".
 
-inline cic:/CoRN/ftc/RefLemma/He'.var.
-
-(* begin hide *)
-
-inline cic:/CoRN/ftc/RefLemma/d.con.
-
-inline cic:/CoRN/ftc/RefLemma/d'.con.
-
-(* end hide *)
-
-inline cic:/CoRN/ftc/RefLemma/HMeshP.var.
-
-inline cic:/CoRN/ftc/RefLemma/HMeshR.var.
-
-inline cic:/CoRN/ftc/RefLemma/fP.var.
-
-inline cic:/CoRN/ftc/RefLemma/HfP.var.
-
-inline cic:/CoRN/ftc/RefLemma/HfP'.var.
-
-inline cic:/CoRN/ftc/RefLemma/fR.var.
-
-inline cic:/CoRN/ftc/RefLemma/HfR.var.
-
-inline cic:/CoRN/ftc/RefLemma/HfR'.var.
-
-inline cic:/CoRN/ftc/RefLemma/Hab'.var.
-
-inline cic:/CoRN/ftc/RefLemma/beta.var.
-
-inline cic:/CoRN/ftc/RefLemma/Hbeta.var.
+inline "cic:/CoRN/ftc/RefLemma/He'.var".
 
 (* begin hide *)
 
-inline cic:/CoRN/ftc/RefLemma/alpha.con.
+inline "cic:/CoRN/ftc/RefLemma/d.con".
 
-inline cic:/CoRN/ftc/RefLemma/RL_alpha.con.
-
-inline cic:/CoRN/ftc/RefLemma/csi1.con.
-
-inline cic:/CoRN/ftc/RefLemma/RL_csi1.con.
-
-inline cic:/CoRN/ftc/RefLemma/delta1.con.
-
-inline cic:/CoRN/ftc/RefLemma/RL_delta1.con.
-
-inline cic:/CoRN/ftc/RefLemma/P'.con.
-
-inline cic:/CoRN/ftc/RefLemma/RL_P'_sep.con.
-
-inline cic:/CoRN/ftc/RefLemma/RL_P'_Mesh.con.
-
-inline cic:/CoRN/ftc/RefLemma/fP'.con.
-
-inline cic:/CoRN/ftc/RefLemma/RL_fP'_in_P'.con.
-
-inline cic:/CoRN/ftc/RefLemma/RL_P'_P_sum.con.
-
-inline cic:/CoRN/ftc/RefLemma/csi2.con.
-
-inline cic:/CoRN/ftc/RefLemma/RL_csi2.con.
-
-inline cic:/CoRN/ftc/RefLemma/delta2.con.
-
-inline cic:/CoRN/ftc/RefLemma/RL_delta2.con.
-
-inline cic:/CoRN/ftc/RefLemma/R'.con.
-
-inline cic:/CoRN/ftc/RefLemma/RL_R'_sep.con.
-
-inline cic:/CoRN/ftc/RefLemma/RL_R'_Mesh.con.
-
-inline cic:/CoRN/ftc/RefLemma/fR'.con.
-
-inline cic:/CoRN/ftc/RefLemma/RL_fR'_in_R'.con.
-
-inline cic:/CoRN/ftc/RefLemma/RL_R'_R_sum.con.
-
-inline cic:/CoRN/ftc/RefLemma/csi3.con.
-
-inline cic:/CoRN/ftc/RefLemma/RL_csi3.con.
-
-inline cic:/CoRN/ftc/RefLemma/Q.con.
-
-inline cic:/CoRN/ftc/RefLemma/RL_Q_Mesh.con.
-
-inline cic:/CoRN/ftc/RefLemma/RL_Q_sep.con.
-
-inline cic:/CoRN/ftc/RefLemma/fQ.con.
-
-inline cic:/CoRN/ftc/RefLemma/RL_fQ_in_Q.con.
-
-inline cic:/CoRN/ftc/RefLemma/RL_Q_P'_sum.con.
+inline "cic:/CoRN/ftc/RefLemma/d'.con".
 
 (* end hide *)
 
-inline cic:/CoRN/ftc/RefLemma/third_refinement_lemma.con.
+inline "cic:/CoRN/ftc/RefLemma/HMeshP.var".
+
+inline "cic:/CoRN/ftc/RefLemma/HMeshR.var".
+
+inline "cic:/CoRN/ftc/RefLemma/fP.var".
+
+inline "cic:/CoRN/ftc/RefLemma/HfP.var".
+
+inline "cic:/CoRN/ftc/RefLemma/HfP'.var".
+
+inline "cic:/CoRN/ftc/RefLemma/fR.var".
+
+inline "cic:/CoRN/ftc/RefLemma/HfR.var".
+
+inline "cic:/CoRN/ftc/RefLemma/HfR'.var".
+
+inline "cic:/CoRN/ftc/RefLemma/Hab'.var".
+
+inline "cic:/CoRN/ftc/RefLemma/beta.var".
+
+inline "cic:/CoRN/ftc/RefLemma/Hbeta.var".
+
+(* begin hide *)
+
+inline "cic:/CoRN/ftc/RefLemma/alpha.con".
+
+inline "cic:/CoRN/ftc/RefLemma/RL_alpha.con".
+
+inline "cic:/CoRN/ftc/RefLemma/csi1.con".
+
+inline "cic:/CoRN/ftc/RefLemma/RL_csi1.con".
+
+inline "cic:/CoRN/ftc/RefLemma/delta1.con".
+
+inline "cic:/CoRN/ftc/RefLemma/RL_delta1.con".
+
+inline "cic:/CoRN/ftc/RefLemma/P'.con".
+
+inline "cic:/CoRN/ftc/RefLemma/RL_P'_sep.con".
+
+inline "cic:/CoRN/ftc/RefLemma/RL_P'_Mesh.con".
+
+inline "cic:/CoRN/ftc/RefLemma/fP'.con".
+
+inline "cic:/CoRN/ftc/RefLemma/RL_fP'_in_P'.con".
+
+inline "cic:/CoRN/ftc/RefLemma/RL_P'_P_sum.con".
+
+inline "cic:/CoRN/ftc/RefLemma/csi2.con".
+
+inline "cic:/CoRN/ftc/RefLemma/RL_csi2.con".
+
+inline "cic:/CoRN/ftc/RefLemma/delta2.con".
+
+inline "cic:/CoRN/ftc/RefLemma/RL_delta2.con".
+
+inline "cic:/CoRN/ftc/RefLemma/R'.con".
+
+inline "cic:/CoRN/ftc/RefLemma/RL_R'_sep.con".
+
+inline "cic:/CoRN/ftc/RefLemma/RL_R'_Mesh.con".
+
+inline "cic:/CoRN/ftc/RefLemma/fR'.con".
+
+inline "cic:/CoRN/ftc/RefLemma/RL_fR'_in_R'.con".
+
+inline "cic:/CoRN/ftc/RefLemma/RL_R'_R_sum.con".
+
+inline "cic:/CoRN/ftc/RefLemma/csi3.con".
+
+inline "cic:/CoRN/ftc/RefLemma/RL_csi3.con".
+
+inline "cic:/CoRN/ftc/RefLemma/Q.con".
+
+inline "cic:/CoRN/ftc/RefLemma/RL_Q_Mesh.con".
+
+inline "cic:/CoRN/ftc/RefLemma/RL_Q_sep.con".
+
+inline "cic:/CoRN/ftc/RefLemma/fQ.con".
+
+inline "cic:/CoRN/ftc/RefLemma/RL_fQ_in_Q.con".
+
+inline "cic:/CoRN/ftc/RefLemma/RL_Q_P'_sum.con".
+
+(* end hide *)
+
+inline "cic:/CoRN/ftc/RefLemma/third_refinement_lemma.con".
 
 (* UNEXPORTED
 End Third_Refinement_Lemma.
@@ -430,9 +426,9 @@ Section Fourth_Refinement_Lemma.
 
 (* begin hide *)
 
-inline cic:/CoRN/ftc/RefLemma/Fa.con.
+inline "cic:/CoRN/ftc/RefLemma/Fa.con".
 
-inline cic:/CoRN/ftc/RefLemma/RL_sum_lemma_aux.con.
+inline "cic:/CoRN/ftc/RefLemma/RL_sum_lemma_aux.con".
 
 (* end hide *)
 
@@ -441,53 +437,53 @@ Finally, this is inequality (2.6.7) exactly as stated (same conventions as
 above)
 *)
 
-inline cic:/CoRN/ftc/RefLemma/n.var.
+inline "cic:/CoRN/ftc/RefLemma/n.var".
 
-inline cic:/CoRN/ftc/RefLemma/m.var.
+inline "cic:/CoRN/ftc/RefLemma/m.var".
 
-inline cic:/CoRN/ftc/RefLemma/P.var.
+inline "cic:/CoRN/ftc/RefLemma/P.var".
 
-inline cic:/CoRN/ftc/RefLemma/R.var.
+inline "cic:/CoRN/ftc/RefLemma/R.var".
 
-inline cic:/CoRN/ftc/RefLemma/e.var.
+inline "cic:/CoRN/ftc/RefLemma/e.var".
 
-inline cic:/CoRN/ftc/RefLemma/e'.var.
+inline "cic:/CoRN/ftc/RefLemma/e'.var".
 
-inline cic:/CoRN/ftc/RefLemma/He.var.
+inline "cic:/CoRN/ftc/RefLemma/He.var".
 
-inline cic:/CoRN/ftc/RefLemma/He'.var.
+inline "cic:/CoRN/ftc/RefLemma/He'.var".
 
 (* begin hide *)
 
-inline cic:/CoRN/ftc/RefLemma/d.con.
+inline "cic:/CoRN/ftc/RefLemma/d.con".
 
-inline cic:/CoRN/ftc/RefLemma/d'.con.
+inline "cic:/CoRN/ftc/RefLemma/d'.con".
 
 (* end hide *)
 
-inline cic:/CoRN/ftc/RefLemma/HMeshP.var.
+inline "cic:/CoRN/ftc/RefLemma/HMeshP.var".
 
-inline cic:/CoRN/ftc/RefLemma/HMeshR.var.
+inline "cic:/CoRN/ftc/RefLemma/HMeshR.var".
 
-inline cic:/CoRN/ftc/RefLemma/fP.var.
+inline "cic:/CoRN/ftc/RefLemma/fP.var".
 
-inline cic:/CoRN/ftc/RefLemma/HfP.var.
+inline "cic:/CoRN/ftc/RefLemma/HfP.var".
 
-inline cic:/CoRN/ftc/RefLemma/HfP'.var.
+inline "cic:/CoRN/ftc/RefLemma/HfP'.var".
 
-inline cic:/CoRN/ftc/RefLemma/fR.var.
+inline "cic:/CoRN/ftc/RefLemma/fR.var".
 
-inline cic:/CoRN/ftc/RefLemma/HfR.var.
+inline "cic:/CoRN/ftc/RefLemma/HfR.var".
 
-inline cic:/CoRN/ftc/RefLemma/HfR'.var.
+inline "cic:/CoRN/ftc/RefLemma/HfR'.var".
 
 (* begin show *)
 
-inline cic:/CoRN/ftc/RefLemma/Hab'.var.
+inline "cic:/CoRN/ftc/RefLemma/Hab'.var".
 
 (* end show *)
 
-inline cic:/CoRN/ftc/RefLemma/fourth_refinement_lemma.con.
+inline "cic:/CoRN/ftc/RefLemma/fourth_refinement_lemma.con".
 
 (* UNEXPORTED
 End Fourth_Refinement_Lemma.
@@ -499,47 +495,47 @@ Section Main_Refinement_Lemma.
 
 (*#* We finish by presenting Theorem 9. *)
 
-inline cic:/CoRN/ftc/RefLemma/n.var.
+inline "cic:/CoRN/ftc/RefLemma/n.var".
 
-inline cic:/CoRN/ftc/RefLemma/m.var.
+inline "cic:/CoRN/ftc/RefLemma/m.var".
 
-inline cic:/CoRN/ftc/RefLemma/P.var.
+inline "cic:/CoRN/ftc/RefLemma/P.var".
 
-inline cic:/CoRN/ftc/RefLemma/R.var.
+inline "cic:/CoRN/ftc/RefLemma/R.var".
 
-inline cic:/CoRN/ftc/RefLemma/e.var.
+inline "cic:/CoRN/ftc/RefLemma/e.var".
 
-inline cic:/CoRN/ftc/RefLemma/e'.var.
+inline "cic:/CoRN/ftc/RefLemma/e'.var".
 
-inline cic:/CoRN/ftc/RefLemma/He.var.
+inline "cic:/CoRN/ftc/RefLemma/He.var".
 
-inline cic:/CoRN/ftc/RefLemma/He'.var.
+inline "cic:/CoRN/ftc/RefLemma/He'.var".
 
 (* begin hide *)
 
-inline cic:/CoRN/ftc/RefLemma/d.con.
+inline "cic:/CoRN/ftc/RefLemma/d.con".
 
-inline cic:/CoRN/ftc/RefLemma/d'.con.
+inline "cic:/CoRN/ftc/RefLemma/d'.con".
 
 (* end hide *)
 
-inline cic:/CoRN/ftc/RefLemma/HMeshP.var.
+inline "cic:/CoRN/ftc/RefLemma/HMeshP.var".
 
-inline cic:/CoRN/ftc/RefLemma/HMeshR.var.
+inline "cic:/CoRN/ftc/RefLemma/HMeshR.var".
 
-inline cic:/CoRN/ftc/RefLemma/fP.var.
+inline "cic:/CoRN/ftc/RefLemma/fP.var".
 
-inline cic:/CoRN/ftc/RefLemma/HfP.var.
+inline "cic:/CoRN/ftc/RefLemma/HfP.var".
 
-inline cic:/CoRN/ftc/RefLemma/HfP'.var.
+inline "cic:/CoRN/ftc/RefLemma/HfP'.var".
 
-inline cic:/CoRN/ftc/RefLemma/fR.var.
+inline "cic:/CoRN/ftc/RefLemma/fR.var".
 
-inline cic:/CoRN/ftc/RefLemma/HfR.var.
+inline "cic:/CoRN/ftc/RefLemma/HfR.var".
 
-inline cic:/CoRN/ftc/RefLemma/HfR'.var.
+inline "cic:/CoRN/ftc/RefLemma/HfR'.var".
 
-inline cic:/CoRN/ftc/RefLemma/refinement_lemma.con.
+inline "cic:/CoRN/ftc/RefLemma/refinement_lemma.con".
 
 (* UNEXPORTED
 End Main_Refinement_Lemma.

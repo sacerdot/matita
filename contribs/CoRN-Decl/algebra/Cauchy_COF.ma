@@ -16,15 +16,13 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/algebra/Cauchy_COF".
 
+include "CoRN.ma".
+
 (* $Id: Cauchy_COF.v,v 1.8 2004/04/23 10:00:54 lcf Exp $ *)
 
-(* INCLUDE
-COrdCauchy
-*)
+include "algebra/COrdCauchy.ma".
 
-(* INCLUDE
-RingReflection
-*)
+include "tactics/RingReflection.ma".
 
 (*#*
 * The Field of Cauchy Sequences
@@ -40,7 +38,7 @@ field [F], we can define a new ordered field of Cauchy sequences over [F].
 Section Structure.
 *)
 
-inline cic:/CoRN/algebra/Cauchy_COF/F.var.
+inline "cic:/CoRN/algebra/Cauchy_COF/F.var".
 
 (*#*
 ** Setoid Structure
@@ -52,31 +50,31 @@ onwards [(y n) [-] (x n)] is greater than some fixed, positive
 than the other, equality is the negation of the apartness.
 *)
 
-inline cic:/CoRN/algebra/Cauchy_COF/R_Set.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/R_Set.con".
 
 (* UNEXPORTED
 Section CSetoid_Structure.
 *)
 
-inline cic:/CoRN/algebra/Cauchy_COF/R_lt.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/R_lt.con".
 
-inline cic:/CoRN/algebra/Cauchy_COF/R_ap.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/R_ap.con".
 
-inline cic:/CoRN/algebra/Cauchy_COF/R_eq.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/R_eq.con".
 
-inline cic:/CoRN/algebra/Cauchy_COF/R_lt_cotrans.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/R_lt_cotrans.con".
 
-inline cic:/CoRN/algebra/Cauchy_COF/R_ap_cotrans.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/R_ap_cotrans.con".
 
-inline cic:/CoRN/algebra/Cauchy_COF/R_ap_symmetric.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/R_ap_symmetric.con".
 
-inline cic:/CoRN/algebra/Cauchy_COF/R_lt_irreflexive.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/R_lt_irreflexive.con".
 
-inline cic:/CoRN/algebra/Cauchy_COF/R_ap_irreflexive.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/R_ap_irreflexive.con".
 
-inline cic:/CoRN/algebra/Cauchy_COF/R_ap_eq_tight.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/R_ap_eq_tight.con".
 
-inline cic:/CoRN/algebra/Cauchy_COF/R_CSetoid.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/R_CSetoid.con".
 
 (* UNEXPORTED
 End CSetoid_Structure.
@@ -92,27 +90,27 @@ The group structure is just the expected one; the lemmas which
 are specifically proved are just the necessary ones to get the group axioms.
 *)
 
-inline cic:/CoRN/algebra/Cauchy_COF/R_plus.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/R_plus.con".
 
-inline cic:/CoRN/algebra/Cauchy_COF/R_zero.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/R_zero.con".
 
-inline cic:/CoRN/algebra/Cauchy_COF/R_plus_lft_ext.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/R_plus_lft_ext.con".
 
-inline cic:/CoRN/algebra/Cauchy_COF/R_plus_assoc.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/R_plus_assoc.con".
 
-inline cic:/CoRN/algebra/Cauchy_COF/R_zero_lft_unit.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/R_zero_lft_unit.con".
 
-inline cic:/CoRN/algebra/Cauchy_COF/R_plus_comm.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/R_plus_comm.con".
 
-inline cic:/CoRN/algebra/Cauchy_COF/R_inv.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/R_inv.con".
 
-inline cic:/CoRN/algebra/Cauchy_COF/R_inv_is_inv.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/R_inv_is_inv.con".
 
-inline cic:/CoRN/algebra/Cauchy_COF/R_inv_ext.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/R_inv_ext.con".
 
-inline cic:/CoRN/algebra/Cauchy_COF/Rinv.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/Rinv.con".
 
-inline cic:/CoRN/algebra/Cauchy_COF/R_CAbGroup.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/R_CAbGroup.con".
 
 (* UNEXPORTED
 End Group_Structure.
@@ -126,35 +124,35 @@ Section Ring_Structure.
 Same comments as previously.
 *)
 
-inline cic:/CoRN/algebra/Cauchy_COF/R_mult.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/R_mult.con".
 
-inline cic:/CoRN/algebra/Cauchy_COF/R_one.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/R_one.con".
 
-inline cic:/CoRN/algebra/Cauchy_COF/R_one_ap_zero.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/R_one_ap_zero.con".
 
-inline cic:/CoRN/algebra/Cauchy_COF/R_mult_dist_plus.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/R_mult_dist_plus.con".
 
-inline cic:/CoRN/algebra/Cauchy_COF/R_mult_dist_minus.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/R_mult_dist_minus.con".
 
-inline cic:/CoRN/algebra/Cauchy_COF/R_one_rht_unit.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/R_one_rht_unit.con".
 
-inline cic:/CoRN/algebra/Cauchy_COF/R_mult_comm.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/R_mult_comm.con".
 
-inline cic:/CoRN/algebra/Cauchy_COF/R_mult_ap_zero'.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/R_mult_ap_zero'.con".
 
-inline cic:/CoRN/algebra/Cauchy_COF/R_mult_lft_ext.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/R_mult_lft_ext.con".
 
-inline cic:/CoRN/algebra/Cauchy_COF/R_mult_rht_ext.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/R_mult_rht_ext.con".
 
-inline cic:/CoRN/algebra/Cauchy_COF/R_mult_strext.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/R_mult_strext.con".
 
-inline cic:/CoRN/algebra/Cauchy_COF/Rmult.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/Rmult.con".
 
-inline cic:/CoRN/algebra/Cauchy_COF/R_mult_assoc.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/R_mult_assoc.con".
 
-inline cic:/CoRN/algebra/Cauchy_COF/R_one_lft_unit.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/R_one_lft_unit.con".
 
-inline cic:/CoRN/algebra/Cauchy_COF/R_CRing.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/R_CRing.con".
 
 (* UNEXPORTED
 End Ring_Structure.
@@ -170,17 +168,17 @@ that our ring is actually an integral domain.  The rest then follows
 quite straightforwardly.
 *)
 
-inline cic:/CoRN/algebra/Cauchy_COF/R_integral_domain.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/R_integral_domain.con".
 
-inline cic:/CoRN/algebra/Cauchy_COF/R_recip.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/R_recip.con".
 
-inline cic:/CoRN/algebra/Cauchy_COF/R_recip_inverse.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/R_recip_inverse.con".
 
-inline cic:/CoRN/algebra/Cauchy_COF/R_recip_strext.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/R_recip_strext.con".
 
-inline cic:/CoRN/algebra/Cauchy_COF/R_recip_inverse'.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/R_recip_inverse'.con".
 
-inline cic:/CoRN/algebra/Cauchy_COF/R_CField.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/R_CField.con".
 
 (* UNEXPORTED
 End Field_Structure.
@@ -195,19 +193,19 @@ Finally, we extend the field structure with the ordering we
 defined at the beginning.
 *)
 
-inline cic:/CoRN/algebra/Cauchy_COF/R_lt_strext.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/R_lt_strext.con".
 
-inline cic:/CoRN/algebra/Cauchy_COF/Rlt.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/Rlt.con".
 
-inline cic:/CoRN/algebra/Cauchy_COF/Rlt_transitive.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/Rlt_transitive.con".
 
-inline cic:/CoRN/algebra/Cauchy_COF/Rlt_strict.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/Rlt_strict.con".
 
-inline cic:/CoRN/algebra/Cauchy_COF/R_plus_resp_lt.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/R_plus_resp_lt.con".
 
-inline cic:/CoRN/algebra/Cauchy_COF/R_mult_resp_lt.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/R_mult_resp_lt.con".
 
-inline cic:/CoRN/algebra/Cauchy_COF/R_COrdField.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/R_COrdField.con".
 
 (* UNEXPORTED
 End Order.
@@ -222,19 +220,19 @@ Auxiliary characterizations of the main relations on [R_Set].
 Section Auxiliary.
 *)
 
-inline cic:/CoRN/algebra/Cauchy_COF/Rlt_alt_1.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/Rlt_alt_1.con".
 
-inline cic:/CoRN/algebra/Cauchy_COF/Rlt_alt_2.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/Rlt_alt_2.con".
 
-inline cic:/CoRN/algebra/Cauchy_COF/R_ap_alt_1.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/R_ap_alt_1.con".
 
-inline cic:/CoRN/algebra/Cauchy_COF/Eq_alt_1.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/Eq_alt_1.con".
 
-inline cic:/CoRN/algebra/Cauchy_COF/R_ap_alt_2.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/R_ap_alt_2.con".
 
-inline cic:/CoRN/algebra/Cauchy_COF/Eq_alt_2_1.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/Eq_alt_2_1.con".
 
-inline cic:/CoRN/algebra/Cauchy_COF/Eq_alt_2_2.con.
+inline "cic:/CoRN/algebra/Cauchy_COF/Eq_alt_2_2.con".
 
 (* UNEXPORTED
 End Auxiliary.

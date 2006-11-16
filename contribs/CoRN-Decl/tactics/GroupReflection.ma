@@ -16,63 +16,61 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/tactics/GroupReflection".
 
+include "CoRN.ma".
+
 (* $Id: GroupReflection.v,v 1.3 2004/04/23 10:01:06 lcf Exp $ *)
 
 (* begin hide *)
 
-(* INCLUDE
-CAbGroups
-*)
+include "algebra/CAbGroups.ma".
 
-(* INCLUDE
-AlgReflection
-*)
+include "tactics/AlgReflection.ma".
 
 (* UNEXPORTED
 Section Group_Interpretation_Function.
 *)
 
-inline cic:/CoRN/tactics/GroupReflection/G.var.
+inline "cic:/CoRN/tactics/GroupReflection/G.var".
 
-inline cic:/CoRN/tactics/GroupReflection/val.var.
+inline "cic:/CoRN/tactics/GroupReflection/val.var".
 
-inline cic:/CoRN/tactics/GroupReflection/unop.var.
+inline "cic:/CoRN/tactics/GroupReflection/unop.var".
 
-inline cic:/CoRN/tactics/GroupReflection/binop.var.
+inline "cic:/CoRN/tactics/GroupReflection/binop.var".
 
-inline cic:/CoRN/tactics/GroupReflection/pfun.var.
+inline "cic:/CoRN/tactics/GroupReflection/pfun.var".
 
-inline cic:/CoRN/tactics/GroupReflection/interpG.ind.
+inline "cic:/CoRN/tactics/GroupReflection/interpG.ind".
 
-inline cic:/CoRN/tactics/GroupReflection/wfG.con.
+inline "cic:/CoRN/tactics/GroupReflection/wfG.con".
 
-inline cic:/CoRN/tactics/GroupReflection/xexprG.ind.
+inline "cic:/CoRN/tactics/GroupReflection/xexprG.ind".
 
-inline cic:/CoRN/tactics/GroupReflection/xforgetG.con.
+inline "cic:/CoRN/tactics/GroupReflection/xforgetG.con".
 
-inline cic:/CoRN/tactics/GroupReflection/xinterpG.con.
+inline "cic:/CoRN/tactics/GroupReflection/xinterpG.con".
 
-inline cic:/CoRN/tactics/GroupReflection/xexprG2interpG.con.
+inline "cic:/CoRN/tactics/GroupReflection/xexprG2interpG.con".
 
-inline cic:/CoRN/tactics/GroupReflection/xexprG_diagram_commutes.con.
+inline "cic:/CoRN/tactics/GroupReflection/xexprG_diagram_commutes.con".
 
-inline cic:/CoRN/tactics/GroupReflection/xexprG2wfG.con.
+inline "cic:/CoRN/tactics/GroupReflection/xexprG2wfG.con".
 
-inline cic:/CoRN/tactics/GroupReflection/fexprG.ind.
+inline "cic:/CoRN/tactics/GroupReflection/fexprG.ind".
 
-inline cic:/CoRN/tactics/GroupReflection/fexprG_var.con.
+inline "cic:/CoRN/tactics/GroupReflection/fexprG_var.con".
 
-inline cic:/CoRN/tactics/GroupReflection/fexprG_zero.con.
+inline "cic:/CoRN/tactics/GroupReflection/fexprG_zero.con".
 
-inline cic:/CoRN/tactics/GroupReflection/fexprG_plus.con.
+inline "cic:/CoRN/tactics/GroupReflection/fexprG_plus.con".
 
-inline cic:/CoRN/tactics/GroupReflection/fexprG_mult_int.con.
+inline "cic:/CoRN/tactics/GroupReflection/fexprG_mult_int.con".
 
-inline cic:/CoRN/tactics/GroupReflection/fforgetG.con.
+inline "cic:/CoRN/tactics/GroupReflection/fforgetG.con".
 
-inline cic:/CoRN/tactics/GroupReflection/fexprG2interp.con.
+inline "cic:/CoRN/tactics/GroupReflection/fexprG2interp.con".
 
-inline cic:/CoRN/tactics/GroupReflection/fexprG2wf.con.
+inline "cic:/CoRN/tactics/GroupReflection/fexprG2wf.con".
 
 (* UNEXPORTED
 Opaque csg_crr.
@@ -126,9 +124,9 @@ Opaque cg_inv.
 Opaque cg_minus.
 *)
 
-inline cic:/CoRN/tactics/GroupReflection/refl_interpG.con.
+inline "cic:/CoRN/tactics/GroupReflection/refl_interpG.con".
 
-inline cic:/CoRN/tactics/GroupReflection/interpG_wd.con.
+inline "cic:/CoRN/tactics/GroupReflection/interpG_wd.con".
 
 (* UNEXPORTED
 End Group_Interpretation_Function.
@@ -138,15 +136,15 @@ End Group_Interpretation_Function.
 Section Group_NormCorrect.
 *)
 
-inline cic:/CoRN/tactics/GroupReflection/G.var.
+inline "cic:/CoRN/tactics/GroupReflection/G.var".
 
-inline cic:/CoRN/tactics/GroupReflection/val.var.
+inline "cic:/CoRN/tactics/GroupReflection/val.var".
 
-inline cic:/CoRN/tactics/GroupReflection/unop.var.
+inline "cic:/CoRN/tactics/GroupReflection/unop.var".
 
-inline cic:/CoRN/tactics/GroupReflection/binop.var.
+inline "cic:/CoRN/tactics/GroupReflection/binop.var".
 
-inline cic:/CoRN/tactics/GroupReflection/pfun.var.
+inline "cic:/CoRN/tactics/GroupReflection/pfun.var".
 
 (*
 four kinds of exprs:
@@ -162,13 +160,13 @@ M: sorted on V
 P: sorted on M, all M's not an I
 *)
 
-inline cic:/CoRN/tactics/GroupReflection/MI_mult_comm_int.con.
+inline "cic:/CoRN/tactics/GroupReflection/MI_mult_comm_int.con".
 
 (* UNEXPORTED
 Opaque Zmult.
 *)
 
-inline cic:/CoRN/tactics/GroupReflection/MI_mult_corr_G.con.
+inline "cic:/CoRN/tactics/GroupReflection/MI_mult_corr_G.con".
 
 (* UNEXPORTED
 Transparent Zmult.
@@ -178,13 +176,13 @@ Transparent Zmult.
 Opaque MI_mult.
 *)
 
-inline cic:/CoRN/tactics/GroupReflection/MV_mult_corr_G.con.
+inline "cic:/CoRN/tactics/GroupReflection/MV_mult_corr_G.con".
 
 (* UNEXPORTED
 Opaque MV_mult.
 *)
 
-inline cic:/CoRN/tactics/GroupReflection/MM_mult_corr_G.con.
+inline "cic:/CoRN/tactics/GroupReflection/MM_mult_corr_G.con".
 
 (* UNEXPORTED
 Transparent MV_mult MI_mult.
@@ -194,7 +192,7 @@ Transparent MV_mult MI_mult.
 Opaque MV_mult.
 *)
 
-inline cic:/CoRN/tactics/GroupReflection/MM_plus_corr_G.con.
+inline "cic:/CoRN/tactics/GroupReflection/MM_plus_corr_G.con".
 
 (* UNEXPORTED
 Transparent MV_mult.
@@ -204,7 +202,7 @@ Transparent MV_mult.
 Opaque MM_plus.
 *)
 
-inline cic:/CoRN/tactics/GroupReflection/PM_plus_corr_G.con.
+inline "cic:/CoRN/tactics/GroupReflection/PM_plus_corr_G.con".
 
 (* UNEXPORTED
 Transparent MM_plus.
@@ -214,7 +212,7 @@ Transparent MM_plus.
 Opaque PM_plus.
 *)
 
-inline cic:/CoRN/tactics/GroupReflection/PP_plus_corr_G.con.
+inline "cic:/CoRN/tactics/GroupReflection/PP_plus_corr_G.con".
 
 (* UNEXPORTED
 Transparent PM_plus.
@@ -224,17 +222,17 @@ Transparent PM_plus.
 Opaque PM_plus MM_mult MI_mult.
 *)
 
-inline cic:/CoRN/tactics/GroupReflection/PM_mult_corr_G.con.
+inline "cic:/CoRN/tactics/GroupReflection/PM_mult_corr_G.con".
 
 (* UNEXPORTED
 Opaque PM_mult.
 *)
 
-inline cic:/CoRN/tactics/GroupReflection/PP_mult_corr_G.con.
+inline "cic:/CoRN/tactics/GroupReflection/PP_mult_corr_G.con".
 
-inline cic:/CoRN/tactics/GroupReflection/NormG_corr_G.con.
+inline "cic:/CoRN/tactics/GroupReflection/NormG_corr_G.con".
 
-inline cic:/CoRN/tactics/GroupReflection/Tactic_lemmaG.con.
+inline "cic:/CoRN/tactics/GroupReflection/Tactic_lemmaG.con".
 
 (* UNEXPORTED
 End Group_NormCorrect.

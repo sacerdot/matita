@@ -16,17 +16,15 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/ftc/FTC".
 
+include "CoRN.ma".
+
 (* $Id: FTC.v,v 1.5 2004/04/23 10:00:58 lcf Exp $ *)
 
 (*#* printing [-S-] %\ensuremath{\int}% #&int;# *)
 
-(* INCLUDE
-MoreIntegrals
-*)
+include "ftc/MoreIntegrals.ma".
 
-(* INCLUDE
-CalculusTheorems
-*)
+include "ftc/CalculusTheorems.ma".
 
 (* UNEXPORTED
 Opaque Min.
@@ -53,21 +51,21 @@ and [a] be a point in [I].
 %\end{convention}%
 *)
 
-inline cic:/CoRN/ftc/FTC/I.var.
+inline "cic:/CoRN/ftc/FTC/I.var".
 
-inline cic:/CoRN/ftc/FTC/F.var.
+inline "cic:/CoRN/ftc/FTC/F.var".
 
-inline cic:/CoRN/ftc/FTC/contF.var.
+inline "cic:/CoRN/ftc/FTC/contF.var".
 
-inline cic:/CoRN/ftc/FTC/a.var.
+inline "cic:/CoRN/ftc/FTC/a.var".
 
-inline cic:/CoRN/ftc/FTC/Ha.var.
+inline "cic:/CoRN/ftc/FTC/Ha.var".
 
-inline cic:/CoRN/ftc/FTC/prim_lemma.con.
+inline "cic:/CoRN/ftc/FTC/prim_lemma.con".
 
-inline cic:/CoRN/ftc/FTC/Fprim_strext.con.
+inline "cic:/CoRN/ftc/FTC/Fprim_strext.con".
 
-inline cic:/CoRN/ftc/FTC/Fprim.con.
+inline "cic:/CoRN/ftc/FTC/Fprim.con".
 
 (* UNEXPORTED
 End Indefinite_Integral.
@@ -92,41 +90,41 @@ indefinite integral of [F] from [x0].
 %\end{convention}%
 *)
 
-inline cic:/CoRN/ftc/FTC/J.var.
+inline "cic:/CoRN/ftc/FTC/J.var".
 
-inline cic:/CoRN/ftc/FTC/F.var.
+inline "cic:/CoRN/ftc/FTC/F.var".
 
-inline cic:/CoRN/ftc/FTC/contF.var.
+inline "cic:/CoRN/ftc/FTC/contF.var".
 
-inline cic:/CoRN/ftc/FTC/x0.var.
+inline "cic:/CoRN/ftc/FTC/x0.var".
 
-inline cic:/CoRN/ftc/FTC/Hx0.var.
+inline "cic:/CoRN/ftc/FTC/Hx0.var".
 
 (* begin hide *)
 
-inline cic:/CoRN/ftc/FTC/G.con.
+inline "cic:/CoRN/ftc/FTC/G.con".
 
 (* end hide *)
 
-inline cic:/CoRN/ftc/FTC/Continuous_prim.con.
+inline "cic:/CoRN/ftc/FTC/Continuous_prim.con".
 
 (*#*
 The derivative of [G] is simply [F].
 *)
 
-inline cic:/CoRN/ftc/FTC/pJ.var.
+inline "cic:/CoRN/ftc/FTC/pJ.var".
 
-inline cic:/CoRN/ftc/FTC/FTC1.con.
+inline "cic:/CoRN/ftc/FTC/FTC1.con".
 
 (*#*
 Any other function [G0] with derivative [F] must differ from [G] by a constant.
 *)
 
-inline cic:/CoRN/ftc/FTC/G0.var.
+inline "cic:/CoRN/ftc/FTC/G0.var".
 
-inline cic:/CoRN/ftc/FTC/derG0.var.
+inline "cic:/CoRN/ftc/FTC/derG0.var".
 
-inline cic:/CoRN/ftc/FTC/FTC2.con.
+inline "cic:/CoRN/ftc/FTC/FTC2.con".
 
 (*#*
 The following is another statement of the Fundamental Theorem of Calculus, also known as Barrow's rule.
@@ -134,7 +132,7 @@ The following is another statement of the Fundamental Theorem of Calculus, also 
 
 (* begin hide *)
 
-inline cic:/CoRN/ftc/FTC/G0_inc.con.
+inline "cic:/CoRN/ftc/FTC/G0_inc.con".
 
 (* end hide *)
 
@@ -142,7 +140,7 @@ inline cic:/CoRN/ftc/FTC/G0_inc.con.
 Opaque G.
 *)
 
-inline cic:/CoRN/ftc/FTC/Barrow.con.
+inline "cic:/CoRN/ftc/FTC/Barrow.con".
 
 (* end hide *)
 
@@ -178,15 +176,15 @@ then the sequence of their primitives also converges, and the limit
 commutes with the indefinite integral.
 *)
 
-inline cic:/CoRN/ftc/FTC/J.var.
+inline "cic:/CoRN/ftc/FTC/J.var".
 
-inline cic:/CoRN/ftc/FTC/f.var.
+inline "cic:/CoRN/ftc/FTC/f.var".
 
-inline cic:/CoRN/ftc/FTC/F.var.
+inline "cic:/CoRN/ftc/FTC/F.var".
 
-inline cic:/CoRN/ftc/FTC/contf.var.
+inline "cic:/CoRN/ftc/FTC/contf.var".
 
-inline cic:/CoRN/ftc/FTC/contF.var.
+inline "cic:/CoRN/ftc/FTC/contF.var".
 
 (* UNEXPORTED
 Section Compact.
@@ -202,45 +200,45 @@ continuous in [[a,b]], $x0\in[a,b]$#x0&isin;[a,b]#; denote by
 %\end{convention}%
 *)
 
-inline cic:/CoRN/ftc/FTC/a.var.
+inline "cic:/CoRN/ftc/FTC/a.var".
 
-inline cic:/CoRN/ftc/FTC/b.var.
+inline "cic:/CoRN/ftc/FTC/b.var".
 
-inline cic:/CoRN/ftc/FTC/Hab.var.
+inline "cic:/CoRN/ftc/FTC/Hab.var".
 
-inline cic:/CoRN/ftc/FTC/contIf.var.
+inline "cic:/CoRN/ftc/FTC/contIf.var".
 
-inline cic:/CoRN/ftc/FTC/contIF.var.
+inline "cic:/CoRN/ftc/FTC/contIF.var".
 
 (* begin show *)
 
-inline cic:/CoRN/ftc/FTC/convF.var.
+inline "cic:/CoRN/ftc/FTC/convF.var".
 
 (* end show *)
 
-inline cic:/CoRN/ftc/FTC/x0.var.
+inline "cic:/CoRN/ftc/FTC/x0.var".
 
-inline cic:/CoRN/ftc/FTC/Hx0.var.
+inline "cic:/CoRN/ftc/FTC/Hx0.var".
 
-inline cic:/CoRN/ftc/FTC/Hx0'.var.
+inline "cic:/CoRN/ftc/FTC/Hx0'.var".
 
 (* begin hide *)
 
-inline cic:/CoRN/ftc/FTC/g.con.
+inline "cic:/CoRN/ftc/FTC/g.con".
 
-inline cic:/CoRN/ftc/FTC/G.con.
+inline "cic:/CoRN/ftc/FTC/G.con".
 
 (* end hide *)
 
 (* begin show *)
 
-inline cic:/CoRN/ftc/FTC/contg.var.
+inline "cic:/CoRN/ftc/FTC/contg.var".
 
-inline cic:/CoRN/ftc/FTC/contG.var.
+inline "cic:/CoRN/ftc/FTC/contG.var".
 
 (* end show *)
 
-inline cic:/CoRN/ftc/FTC/fun_lim_seq_integral.con.
+inline "cic:/CoRN/ftc/FTC/fun_lim_seq_integral.con".
 
 (* UNEXPORTED
 End Compact.
@@ -250,9 +248,9 @@ End Compact.
 And now we can generalize it step by step.
 *)
 
-inline cic:/CoRN/ftc/FTC/limit_of_integral.con.
+inline "cic:/CoRN/ftc/FTC/limit_of_integral.con".
 
-inline cic:/CoRN/ftc/FTC/limit_of_Integral.con.
+inline "cic:/CoRN/ftc/FTC/limit_of_Integral.con".
 
 (* UNEXPORTED
 Section General.
@@ -264,27 +262,27 @@ Finally, with [x0, g, G] as before,
 
 (* begin show *)
 
-inline cic:/CoRN/ftc/FTC/convF.var.
+inline "cic:/CoRN/ftc/FTC/convF.var".
 
 (* end show *)
 
-inline cic:/CoRN/ftc/FTC/x0.var.
+inline "cic:/CoRN/ftc/FTC/x0.var".
 
-inline cic:/CoRN/ftc/FTC/Hx0.var.
+inline "cic:/CoRN/ftc/FTC/Hx0.var".
 
 (* begin hide *)
 
-inline cic:/CoRN/ftc/FTC/g.con.
+inline "cic:/CoRN/ftc/FTC/g.con".
 
-inline cic:/CoRN/ftc/FTC/G.con.
+inline "cic:/CoRN/ftc/FTC/G.con".
 
 (* end hide *)
 
-inline cic:/CoRN/ftc/FTC/contg.var.
+inline "cic:/CoRN/ftc/FTC/contg.var".
 
-inline cic:/CoRN/ftc/FTC/contG.var.
+inline "cic:/CoRN/ftc/FTC/contG.var".
 
-inline cic:/CoRN/ftc/FTC/fun_lim_seq_integral_IR.con.
+inline "cic:/CoRN/ftc/FTC/fun_lim_seq_integral_IR.con".
 
 (* UNEXPORTED
 End General.
@@ -305,33 +303,33 @@ Similar results hold for the sequence of derivatives of a converging sequence; t
 %\end{convention}%
 *)
 
-inline cic:/CoRN/ftc/FTC/J.var.
+inline "cic:/CoRN/ftc/FTC/J.var".
 
-inline cic:/CoRN/ftc/FTC/pJ.var.
+inline "cic:/CoRN/ftc/FTC/pJ.var".
 
-inline cic:/CoRN/ftc/FTC/f.var.
+inline "cic:/CoRN/ftc/FTC/f.var".
 
-inline cic:/CoRN/ftc/FTC/g.var.
+inline "cic:/CoRN/ftc/FTC/g.var".
 
-inline cic:/CoRN/ftc/FTC/F.var.
+inline "cic:/CoRN/ftc/FTC/F.var".
 
-inline cic:/CoRN/ftc/FTC/G.var.
+inline "cic:/CoRN/ftc/FTC/G.var".
 
-inline cic:/CoRN/ftc/FTC/contf.var.
+inline "cic:/CoRN/ftc/FTC/contf.var".
 
-inline cic:/CoRN/ftc/FTC/contF.var.
+inline "cic:/CoRN/ftc/FTC/contF.var".
 
-inline cic:/CoRN/ftc/FTC/convF.var.
+inline "cic:/CoRN/ftc/FTC/convF.var".
 
-inline cic:/CoRN/ftc/FTC/contg.var.
+inline "cic:/CoRN/ftc/FTC/contg.var".
 
-inline cic:/CoRN/ftc/FTC/contG.var.
+inline "cic:/CoRN/ftc/FTC/contG.var".
 
-inline cic:/CoRN/ftc/FTC/convG.var.
+inline "cic:/CoRN/ftc/FTC/convG.var".
 
-inline cic:/CoRN/ftc/FTC/derf.var.
+inline "cic:/CoRN/ftc/FTC/derf.var".
 
-inline cic:/CoRN/ftc/FTC/fun_lim_seq_derivative.con.
+inline "cic:/CoRN/ftc/FTC/fun_lim_seq_derivative.con".
 
 (* UNEXPORTED
 End Limit_of_Derivative_Seq.
@@ -345,25 +343,25 @@ Section Derivative_Series.
 As a very important case of this result, we get a rule for deriving series.
 *)
 
-inline cic:/CoRN/ftc/FTC/J.var.
+inline "cic:/CoRN/ftc/FTC/J.var".
 
-inline cic:/CoRN/ftc/FTC/pJ.var.
+inline "cic:/CoRN/ftc/FTC/pJ.var".
 
-inline cic:/CoRN/ftc/FTC/f.var.
+inline "cic:/CoRN/ftc/FTC/f.var".
 
-inline cic:/CoRN/ftc/FTC/g.var.
+inline "cic:/CoRN/ftc/FTC/g.var".
 
 (* begin show *)
 
-inline cic:/CoRN/ftc/FTC/convF.var.
+inline "cic:/CoRN/ftc/FTC/convF.var".
 
-inline cic:/CoRN/ftc/FTC/convG.var.
+inline "cic:/CoRN/ftc/FTC/convG.var".
 
 (* end show *)
 
-inline cic:/CoRN/ftc/FTC/derF.var.
+inline "cic:/CoRN/ftc/FTC/derF.var".
 
-inline cic:/CoRN/ftc/FTC/Derivative_FSeries.con.
+inline "cic:/CoRN/ftc/FTC/Derivative_FSeries.con".
 
 (* UNEXPORTED
 End Derivative_Series.

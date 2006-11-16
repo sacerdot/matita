@@ -16,21 +16,17 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/tactics/DiffTactics3".
 
+include "CoRN.ma".
+
 (* $Id: DiffTactics3.v,v 1.1.1.1 2004/02/05 16:25:44 lionelm Exp $ *)
 
 (* begin hide *)
 
-(* INCLUDE
-MoreFunSeries
-*)
+include "ftc/MoreFunSeries.ma".
 
-(* INCLUDE
-Composition
-*)
+include "ftc/Composition.ma".
 
-(* INCLUDE
-DiffTactics2
-*)
+include "tactics/DiffTactics2.ma".
 
 (* UNEXPORTED
 Ltac Deriv_substR :=
@@ -41,7 +37,7 @@ Ltac Deriv_substR :=
   end.
 *)
 
-inline cic:/CoRN/tactics/DiffTactics3/symbPF.ind.
+inline "cic:/CoRN/tactics/DiffTactics3/symbPF.ind".
 
 (*
   | ssum0     : nat->(nat->symbPF)->symbPF
@@ -49,9 +45,9 @@ inline cic:/CoRN/tactics/DiffTactics3/symbPF.ind.
   | ssum      : nat->nat->(nat->symbPF)->symbPF
 *)
 
-inline cic:/CoRN/tactics/DiffTactics3/symb_to_PartIR.con.
+inline "cic:/CoRN/tactics/DiffTactics3/symb_to_PartIR.con".
 
-inline cic:/CoRN/tactics/DiffTactics3/symbPF_deriv.con.
+inline "cic:/CoRN/tactics/DiffTactics3/symbPF_deriv.con".
 
 (* UNEXPORTED
 Ltac PartIR_to_symbPF f :=

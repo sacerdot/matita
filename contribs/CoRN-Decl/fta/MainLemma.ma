@@ -16,6 +16,8 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/fta/MainLemma".
 
+include "CoRN.ma".
+
 (* $Id: MainLemma.v,v 1.3 2004/04/23 10:00:57 lcf Exp $ *)
 
 (*#* printing two_n %\ensuremath{2n}% #2n# *)
@@ -24,13 +26,9 @@ set "baseuri" "cic:/matita/CoRN-Decl/fta/MainLemma".
 
 (*#* printing Smaller %\ensuremath{\frac13^{2n^2}}% *)
 
-(* INCLUDE
-CSumsReals
-*)
+include "reals/CSumsReals.ma".
 
-(* INCLUDE
-KeyLemma
-*)
+include "fta/KeyLemma.ma".
 
 (*#* ** Main Lemma
 *)
@@ -47,25 +45,25 @@ Let [a : nat->IR], [n : nat], [a_0 : IR]  and [eps : IR] such that [0 < n],
 %\end{convention}%
 *)
 
-inline cic:/CoRN/fta/MainLemma/a.var.
+inline "cic:/CoRN/fta/MainLemma/a.var".
 
-inline cic:/CoRN/fta/MainLemma/n.var.
+inline "cic:/CoRN/fta/MainLemma/n.var".
 
-inline cic:/CoRN/fta/MainLemma/gt_n_0.var.
+inline "cic:/CoRN/fta/MainLemma/gt_n_0.var".
 
-inline cic:/CoRN/fta/MainLemma/eps.var.
+inline "cic:/CoRN/fta/MainLemma/eps.var".
 
-inline cic:/CoRN/fta/MainLemma/eps_pos.var.
+inline "cic:/CoRN/fta/MainLemma/eps_pos.var".
 
-inline cic:/CoRN/fta/MainLemma/a_nonneg.var.
+inline "cic:/CoRN/fta/MainLemma/a_nonneg.var".
 
-inline cic:/CoRN/fta/MainLemma/a_n_1.var.
+inline "cic:/CoRN/fta/MainLemma/a_n_1.var".
 
-inline cic:/CoRN/fta/MainLemma/a_0.var.
+inline "cic:/CoRN/fta/MainLemma/a_0.var".
 
-inline cic:/CoRN/fta/MainLemma/eps_le_a_0.var.
+inline "cic:/CoRN/fta/MainLemma/eps_le_a_0.var".
 
-inline cic:/CoRN/fta/MainLemma/a_0_pos.con.
+inline "cic:/CoRN/fta/MainLemma/a_0_pos.con".
 
 (*#* 
 %\begin{convention}% We define the following local abbreviations:
@@ -78,49 +76,49 @@ inline cic:/CoRN/fta/MainLemma/a_0_pos.con.
 
 (* begin hide *)
 
-inline cic:/CoRN/fta/MainLemma/two_n.con.
+inline "cic:/CoRN/fta/MainLemma/two_n.con".
 
-inline cic:/CoRN/fta/MainLemma/Small.con.
+inline "cic:/CoRN/fta/MainLemma/Small.con".
 
-inline cic:/CoRN/fta/MainLemma/Smaller.con.
-
-(* end hide *)
-
-inline cic:/CoRN/fta/MainLemma/Main_1a'.con.
+inline "cic:/CoRN/fta/MainLemma/Smaller.con".
 
 (* end hide *)
 
-inline cic:/CoRN/fta/MainLemma/Main_1b'.con.
+inline "cic:/CoRN/fta/MainLemma/Main_1a'.con".
 
 (* end hide *)
 
-inline cic:/CoRN/fta/MainLemma/Main_1a.con.
+inline "cic:/CoRN/fta/MainLemma/Main_1b'.con".
 
 (* end hide *)
 
-inline cic:/CoRN/fta/MainLemma/Main_1b.con.
+inline "cic:/CoRN/fta/MainLemma/Main_1a.con".
 
 (* end hide *)
 
-inline cic:/CoRN/fta/MainLemma/Main_1.con.
+inline "cic:/CoRN/fta/MainLemma/Main_1b.con".
 
 (* end hide *)
 
-inline cic:/CoRN/fta/MainLemma/Main_2'.con.
-
-inline cic:/CoRN/fta/MainLemma/Main_2.con.
+inline "cic:/CoRN/fta/MainLemma/Main_1.con".
 
 (* end hide *)
 
-inline cic:/CoRN/fta/MainLemma/Main_3a.con.
+inline "cic:/CoRN/fta/MainLemma/Main_2'.con".
+
+inline "cic:/CoRN/fta/MainLemma/Main_2.con".
 
 (* end hide *)
 
-inline cic:/CoRN/fta/MainLemma/Main_3.con.
+inline "cic:/CoRN/fta/MainLemma/Main_3a.con".
 
 (* end hide *)
 
-inline cic:/CoRN/fta/MainLemma/Main.con.
+inline "cic:/CoRN/fta/MainLemma/Main_3.con".
+
+(* end hide *)
+
+inline "cic:/CoRN/fta/MainLemma/Main.con".
 
 (* end hide *)
 

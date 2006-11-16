@@ -16,15 +16,15 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/reals/NRootIR".
 
+include "CoRN.ma".
+
 (* $Id: NRootIR.v,v 1.5 2004/04/23 10:01:05 lcf Exp $ *)
 
 (*#* printing NRoot %\ensuremath{\sqrt[n]{\cdot}}% *)
 
 (*#* printing sqrt %\ensuremath{\sqrt{\cdot}}% *)
 
-(* INCLUDE
-OddPolyRootIR
-*)
+include "reals/OddPolyRootIR.ma".
 
 (*#* * Roots of Real Numbers *)
 
@@ -39,21 +39,21 @@ Section NRoot.
 %\end{convention}%
 *)
 
-inline cic:/CoRN/reals/NRootIR/n.var.
+inline "cic:/CoRN/reals/NRootIR/n.var".
 
-inline cic:/CoRN/reals/NRootIR/n_pos.var.
+inline "cic:/CoRN/reals/NRootIR/n_pos.var".
 
-inline cic:/CoRN/reals/NRootIR/c.var.
+inline "cic:/CoRN/reals/NRootIR/c.var".
 
-inline cic:/CoRN/reals/NRootIR/c_nonneg.var.
+inline "cic:/CoRN/reals/NRootIR/c_nonneg.var".
 
 (* begin hide *)
 
-inline cic:/CoRN/reals/NRootIR/p.con.
+inline "cic:/CoRN/reals/NRootIR/p.con".
 
 (* end hide *)
 
-inline cic:/CoRN/reals/NRootIR/CnrootIR.con.
+inline "cic:/CoRN/reals/NRootIR/CnrootIR.con".
 
 (* UNEXPORTED
 End NRoot.
@@ -75,42 +75,42 @@ prove its main properties:
 Section Nth_Root.
 *)
 
-inline cic:/CoRN/reals/NRootIR/nroot.con.
+inline "cic:/CoRN/reals/NRootIR/nroot.con".
 
-inline cic:/CoRN/reals/NRootIR/NRoot.con.
+inline "cic:/CoRN/reals/NRootIR/NRoot.con".
 
-inline cic:/CoRN/reals/NRootIR/NRoot_power.con.
+inline "cic:/CoRN/reals/NRootIR/NRoot_power.con".
 
 (* UNEXPORTED
 Hint Resolve NRoot_power: algebra.
 *)
 
-inline cic:/CoRN/reals/NRootIR/NRoot_nonneg.con.
+inline "cic:/CoRN/reals/NRootIR/NRoot_nonneg.con".
 
-inline cic:/CoRN/reals/NRootIR/NRoot_pos.con.
+inline "cic:/CoRN/reals/NRootIR/NRoot_pos.con".
 
-inline cic:/CoRN/reals/NRootIR/NRoot_power'.con.
+inline "cic:/CoRN/reals/NRootIR/NRoot_power'.con".
 
-inline cic:/CoRN/reals/NRootIR/NRoot_pres_less.con.
+inline "cic:/CoRN/reals/NRootIR/NRoot_pres_less.con".
 
-inline cic:/CoRN/reals/NRootIR/NRoot_less_one.con.
+inline "cic:/CoRN/reals/NRootIR/NRoot_less_one.con".
 
-inline cic:/CoRN/reals/NRootIR/NRoot_cancel.con.
+inline "cic:/CoRN/reals/NRootIR/NRoot_cancel.con".
 
 (*#* %\begin{convention}% Let [x,y] be nonnegative real numbers.
 %\end{convention}% *)
 
-inline cic:/CoRN/reals/NRootIR/x.var.
+inline "cic:/CoRN/reals/NRootIR/x.var".
 
-inline cic:/CoRN/reals/NRootIR/y.var.
+inline "cic:/CoRN/reals/NRootIR/y.var".
 
-inline cic:/CoRN/reals/NRootIR/Hx.var.
+inline "cic:/CoRN/reals/NRootIR/Hx.var".
 
-inline cic:/CoRN/reals/NRootIR/Hy.var.
+inline "cic:/CoRN/reals/NRootIR/Hy.var".
 
-inline cic:/CoRN/reals/NRootIR/NRoot_wd.con.
+inline "cic:/CoRN/reals/NRootIR/NRoot_wd.con".
 
-inline cic:/CoRN/reals/NRootIR/NRoot_unique.con.
+inline "cic:/CoRN/reals/NRootIR/NRoot_unique.con".
 
 (* UNEXPORTED
 End Nth_Root.
@@ -124,7 +124,7 @@ Implicit Arguments NRoot [x n].
 Hint Resolve NRoot_power NRoot_power': algebra.
 *)
 
-inline cic:/CoRN/reals/NRootIR/NRoot_resp_leEq.con.
+inline "cic:/CoRN/reals/NRootIR/NRoot_resp_leEq.con".
 
 (*#**********************************)
 
@@ -136,41 +136,41 @@ Section Square_root.
 
 (*#* ** Square root *)
 
-inline cic:/CoRN/reals/NRootIR/sqrt.con.
+inline "cic:/CoRN/reals/NRootIR/sqrt.con".
 
-inline cic:/CoRN/reals/NRootIR/sqrt_sqr.con.
+inline "cic:/CoRN/reals/NRootIR/sqrt_sqr.con".
 
 (* UNEXPORTED
 Hint Resolve sqrt_sqr: algebra.
 *)
 
-inline cic:/CoRN/reals/NRootIR/sqrt_nonneg.con.
+inline "cic:/CoRN/reals/NRootIR/sqrt_nonneg.con".
 
-inline cic:/CoRN/reals/NRootIR/sqrt_wd.con.
+inline "cic:/CoRN/reals/NRootIR/sqrt_wd.con".
 
 (* UNEXPORTED
 Hint Resolve sqrt_wd: algebra_c.
 *)
 
-inline cic:/CoRN/reals/NRootIR/sqrt_to_nonneg.con.
+inline "cic:/CoRN/reals/NRootIR/sqrt_to_nonneg.con".
 
-inline cic:/CoRN/reals/NRootIR/sqrt_to_nonpos.con.
+inline "cic:/CoRN/reals/NRootIR/sqrt_to_nonpos.con".
 
-inline cic:/CoRN/reals/NRootIR/sqrt_mult.con.
+inline "cic:/CoRN/reals/NRootIR/sqrt_mult.con".
 
 (* UNEXPORTED
 Hint Resolve sqrt_mult: algebra.
 *)
 
-inline cic:/CoRN/reals/NRootIR/sqrt_mult_wd.con.
+inline "cic:/CoRN/reals/NRootIR/sqrt_mult_wd.con".
 
-inline cic:/CoRN/reals/NRootIR/sqrt_less.con.
+inline "cic:/CoRN/reals/NRootIR/sqrt_less.con".
 
-inline cic:/CoRN/reals/NRootIR/sqrt_less'.con.
+inline "cic:/CoRN/reals/NRootIR/sqrt_less'.con".
 
-inline cic:/CoRN/reals/NRootIR/sqrt_resp_leEq.con.
+inline "cic:/CoRN/reals/NRootIR/sqrt_resp_leEq.con".
 
-inline cic:/CoRN/reals/NRootIR/sqrt_resp_less.con.
+inline "cic:/CoRN/reals/NRootIR/sqrt_resp_less.con".
 
 (* UNEXPORTED
 End Square_root.
@@ -194,53 +194,53 @@ With the help of square roots, we can prove some more properties of absolute
 values in [IR].
 *)
 
-inline cic:/CoRN/reals/NRootIR/AbsIR_sqrt_sqr.con.
+inline "cic:/CoRN/reals/NRootIR/AbsIR_sqrt_sqr.con".
 
 (* UNEXPORTED
 Hint Resolve AbsIR_sqrt_sqr: algebra.
 *)
 
-inline cic:/CoRN/reals/NRootIR/AbsIR_resp_mult.con.
+inline "cic:/CoRN/reals/NRootIR/AbsIR_resp_mult.con".
 
-inline cic:/CoRN/reals/NRootIR/AbsIR_mult_pos.con.
+inline "cic:/CoRN/reals/NRootIR/AbsIR_mult_pos.con".
 
-inline cic:/CoRN/reals/NRootIR/AbsIR_mult_pos'.con.
+inline "cic:/CoRN/reals/NRootIR/AbsIR_mult_pos'.con".
 
-inline cic:/CoRN/reals/NRootIR/AbsIR_nexp.con.
+inline "cic:/CoRN/reals/NRootIR/AbsIR_nexp.con".
 
-inline cic:/CoRN/reals/NRootIR/AbsIR_nexp_op.con.
+inline "cic:/CoRN/reals/NRootIR/AbsIR_nexp_op.con".
 
-inline cic:/CoRN/reals/NRootIR/AbsIR_less_square.con.
+inline "cic:/CoRN/reals/NRootIR/AbsIR_less_square.con".
 
-inline cic:/CoRN/reals/NRootIR/AbsIR_leEq_square.con.
+inline "cic:/CoRN/reals/NRootIR/AbsIR_leEq_square.con".
 
-inline cic:/CoRN/reals/NRootIR/AbsIR_division.con.
+inline "cic:/CoRN/reals/NRootIR/AbsIR_division.con".
 
 (*#* Some special cases. *)
 
-inline cic:/CoRN/reals/NRootIR/AbsIR_recip.con.
+inline "cic:/CoRN/reals/NRootIR/AbsIR_recip.con".
 
-inline cic:/CoRN/reals/NRootIR/AbsIR_div_two.con.
+inline "cic:/CoRN/reals/NRootIR/AbsIR_div_two.con".
 
 (*#* Cauchy-Schwartz for IR and variants on that subject. *)
 
-inline cic:/CoRN/reals/NRootIR/triangle_IR.con.
+inline "cic:/CoRN/reals/NRootIR/triangle_IR.con".
 
-inline cic:/CoRN/reals/NRootIR/triangle_SumIR.con.
+inline "cic:/CoRN/reals/NRootIR/triangle_SumIR.con".
 
-inline cic:/CoRN/reals/NRootIR/triangle_IR_minus.con.
+inline "cic:/CoRN/reals/NRootIR/triangle_IR_minus.con".
 
-inline cic:/CoRN/reals/NRootIR/weird_triangleIR.con.
+inline "cic:/CoRN/reals/NRootIR/weird_triangleIR.con".
 
-inline cic:/CoRN/reals/NRootIR/triangle_IR_minus'.con.
+inline "cic:/CoRN/reals/NRootIR/triangle_IR_minus'.con".
 
-inline cic:/CoRN/reals/NRootIR/triangle_SumxIR.con.
+inline "cic:/CoRN/reals/NRootIR/triangle_SumxIR.con".
 
-inline cic:/CoRN/reals/NRootIR/triangle_Sum2IR.con.
+inline "cic:/CoRN/reals/NRootIR/triangle_Sum2IR.con".
 
-inline cic:/CoRN/reals/NRootIR/AbsIR_str_bnd_AbsIR.con.
+inline "cic:/CoRN/reals/NRootIR/AbsIR_str_bnd_AbsIR.con".
 
-inline cic:/CoRN/reals/NRootIR/AbsIR_bnd_AbsIR.con.
+inline "cic:/CoRN/reals/NRootIR/AbsIR_bnd_AbsIR.con".
 
 (* UNEXPORTED
 End Absolute_Props.
@@ -257,11 +257,11 @@ Cauchy sequence that is never zero and whose Limit is not zero is also a
 Cauchy sequence.
 *)
 
-inline cic:/CoRN/reals/NRootIR/Cauchy_Lim_recip.con.
+inline "cic:/CoRN/reals/NRootIR/Cauchy_Lim_recip.con".
 
-inline cic:/CoRN/reals/NRootIR/Cauchy_recip.con.
+inline "cic:/CoRN/reals/NRootIR/Cauchy_recip.con".
 
-inline cic:/CoRN/reals/NRootIR/Lim_recip.con.
+inline "cic:/CoRN/reals/NRootIR/Lim_recip.con".
 
 (* UNEXPORTED
 End Consequences.

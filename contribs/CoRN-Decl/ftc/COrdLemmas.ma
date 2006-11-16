@@ -16,11 +16,11 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/ftc/COrdLemmas".
 
+include "CoRN.ma".
+
 (* $Id: COrdLemmas.v,v 1.2 2004/04/23 10:00:57 lcf Exp $ *)
 
-(* INCLUDE
-COrdCauchy
-*)
+include "algebra/COrdCauchy.ma".
 
 (* UNEXPORTED
 Section Lemmas.
@@ -39,39 +39,39 @@ the proof that any two partitions with no common point have a common
 refinement).
 *)
 
-inline cic:/CoRN/ftc/COrdLemmas/F.var.
+inline "cic:/CoRN/ftc/COrdLemmas/F.var".
 
-inline cic:/CoRN/ftc/COrdLemmas/om_fun_lt.con.
+inline "cic:/CoRN/ftc/COrdLemmas/om_fun_lt.con".
 
-inline cic:/CoRN/ftc/COrdLemmas/om_fun.con.
+inline "cic:/CoRN/ftc/COrdLemmas/om_fun.con".
 
-inline cic:/CoRN/ftc/COrdLemmas/om_fun_1.con.
+inline "cic:/CoRN/ftc/COrdLemmas/om_fun_1.con".
 
-inline cic:/CoRN/ftc/COrdLemmas/om_fun_2a.con.
+inline "cic:/CoRN/ftc/COrdLemmas/om_fun_2a.con".
 
-inline cic:/CoRN/ftc/COrdLemmas/om_fun_2.con.
+inline "cic:/CoRN/ftc/COrdLemmas/om_fun_2.con".
 
-inline cic:/CoRN/ftc/COrdLemmas/om_fun_3a.con.
+inline "cic:/CoRN/ftc/COrdLemmas/om_fun_3a.con".
 
-inline cic:/CoRN/ftc/COrdLemmas/om_fun_3b.con.
+inline "cic:/CoRN/ftc/COrdLemmas/om_fun_3b.con".
 
-inline cic:/CoRN/ftc/COrdLemmas/om_fun_4a.con.
+inline "cic:/CoRN/ftc/COrdLemmas/om_fun_4a.con".
 
-inline cic:/CoRN/ftc/COrdLemmas/om_fun_4b.con.
+inline "cic:/CoRN/ftc/COrdLemmas/om_fun_4b.con".
 
-inline cic:/CoRN/ftc/COrdLemmas/om_fun_4c.con.
+inline "cic:/CoRN/ftc/COrdLemmas/om_fun_4c.con".
 
-inline cic:/CoRN/ftc/COrdLemmas/om_fun_4d.con.
+inline "cic:/CoRN/ftc/COrdLemmas/om_fun_4d.con".
 
 (* begin hide *)
 
-inline cic:/CoRN/ftc/COrdLemmas/f.var.
+inline "cic:/CoRN/ftc/COrdLemmas/f.var".
 
-inline cic:/CoRN/ftc/COrdLemmas/f0.var.
+inline "cic:/CoRN/ftc/COrdLemmas/f0.var".
 
-inline cic:/CoRN/ftc/COrdLemmas/f_mon.var.
+inline "cic:/CoRN/ftc/COrdLemmas/f_mon.var".
 
-inline cic:/CoRN/ftc/COrdLemmas/h.var.
+inline "cic:/CoRN/ftc/COrdLemmas/h.var".
 
 (* end hide *)
 
@@ -83,17 +83,17 @@ structure of the arguments is analyzed in more detail.
 
 (* begin show *)
 
-inline cic:/CoRN/ftc/COrdLemmas/Sumx_Sum_Sum
+inline "cic:/CoRN/ftc/COrdLemmas/Sumx_Sum_Sum
  (* end show *)
- (* begin hide *).con.
+ (* begin hide *).con".
 
 (* end hide *)
 
 (* begin show *)
 
-inline cic:/CoRN/ftc/COrdLemmas/str_Sumx_Sum_Sum
+inline "cic:/CoRN/ftc/COrdLemmas/str_Sumx_Sum_Sum
  (* end show *)
- (* begin hide *).con.
+ (* begin hide *).con".
 
 (* UNEXPORTED
 End Lemmas.
@@ -103,17 +103,17 @@ End Lemmas.
 Section More_Lemmas.
 *)
 
-inline cic:/CoRN/ftc/COrdLemmas/f'.con.
+inline "cic:/CoRN/ftc/COrdLemmas/f'.con".
 
 (* end hide *)
 
-inline cic:/CoRN/ftc/COrdLemmas/F.var.
+inline "cic:/CoRN/ftc/COrdLemmas/F.var".
 
 (* begin show *)
 
-inline cic:/CoRN/ftc/COrdLemmas/str_Sumx_Sum_Sum'
+inline "cic:/CoRN/ftc/COrdLemmas/str_Sumx_Sum_Sum'
  (* end show *)
- (* begin hide *).con.
+ (* begin hide *).con".
 
 (* end hide *)
 

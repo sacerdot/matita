@@ -16,15 +16,13 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/reals/Cauchy_CReals".
 
+include "CoRN.ma".
+
 (* $Id: Cauchy_CReals.v,v 1.5 2004/04/23 10:01:04 lcf Exp $ *)
 
-(* INCLUDE
-Cauchy_COF
-*)
+include "algebra/Cauchy_COF.ma".
 
-(* INCLUDE
-CReals
-*)
+include "reals/CReals.ma".
 
 (* UNEXPORTED
 Section R_CReals.
@@ -42,91 +40,91 @@ We start by showing how to inject the rational numbers in the field of Cauchy se
 %\end{convention}%
 *)
 
-inline cic:/CoRN/reals/Cauchy_CReals/F.var.
+inline "cic:/CoRN/reals/Cauchy_CReals/F.var".
 
-inline cic:/CoRN/reals/Cauchy_CReals/inject_Q.con.
+inline "cic:/CoRN/reals/Cauchy_CReals/inject_Q.con".
 
-inline cic:/CoRN/reals/Cauchy_CReals/ing_eq.con.
+inline "cic:/CoRN/reals/Cauchy_CReals/ing_eq.con".
 
-inline cic:/CoRN/reals/Cauchy_CReals/ing_plus.con.
+inline "cic:/CoRN/reals/Cauchy_CReals/ing_plus.con".
 
-inline cic:/CoRN/reals/Cauchy_CReals/ing_min.con.
+inline "cic:/CoRN/reals/Cauchy_CReals/ing_min.con".
 
-inline cic:/CoRN/reals/Cauchy_CReals/ing_lt.con.
+inline "cic:/CoRN/reals/Cauchy_CReals/ing_lt.con".
 
-inline cic:/CoRN/reals/Cauchy_CReals/ing_ap.con.
+inline "cic:/CoRN/reals/Cauchy_CReals/ing_ap.con".
 
-inline cic:/CoRN/reals/Cauchy_CReals/ing_cancel_eq.con.
+inline "cic:/CoRN/reals/Cauchy_CReals/ing_cancel_eq.con".
 
-inline cic:/CoRN/reals/Cauchy_CReals/ing_cancel_less.con.
+inline "cic:/CoRN/reals/Cauchy_CReals/ing_cancel_less.con".
 
-inline cic:/CoRN/reals/Cauchy_CReals/ing_le.con.
+inline "cic:/CoRN/reals/Cauchy_CReals/ing_le.con".
 
-inline cic:/CoRN/reals/Cauchy_CReals/ing_cancel_leEq.con.
+inline "cic:/CoRN/reals/Cauchy_CReals/ing_cancel_leEq.con".
 
-inline cic:/CoRN/reals/Cauchy_CReals/ing_cancel_AbsSmall.con.
+inline "cic:/CoRN/reals/Cauchy_CReals/ing_cancel_AbsSmall.con".
 
-inline cic:/CoRN/reals/Cauchy_CReals/ing_One.con.
+inline "cic:/CoRN/reals/Cauchy_CReals/ing_One.con".
 
-inline cic:/CoRN/reals/Cauchy_CReals/ing_nring'.con.
+inline "cic:/CoRN/reals/Cauchy_CReals/ing_nring'.con".
 
-inline cic:/CoRN/reals/Cauchy_CReals/ing_nring.con.
+inline "cic:/CoRN/reals/Cauchy_CReals/ing_nring.con".
 
-inline cic:/CoRN/reals/Cauchy_CReals/ing_mult.con.
+inline "cic:/CoRN/reals/Cauchy_CReals/ing_mult.con".
 
 (* UNEXPORTED
 Opaque R_COrdField.
 *)
 
-inline cic:/CoRN/reals/Cauchy_CReals/ing_div_three.con.
+inline "cic:/CoRN/reals/Cauchy_CReals/ing_div_three.con".
 
 (* UNEXPORTED
 Transparent R_COrdField.
 *)
 
-inline cic:/CoRN/reals/Cauchy_CReals/ing_n.con.
+inline "cic:/CoRN/reals/Cauchy_CReals/ing_n.con".
 
-inline cic:/CoRN/reals/Cauchy_CReals/expand_Q_R.con.
+inline "cic:/CoRN/reals/Cauchy_CReals/expand_Q_R.con".
 
-inline cic:/CoRN/reals/Cauchy_CReals/conv_modulus.con.
+inline "cic:/CoRN/reals/Cauchy_CReals/conv_modulus.con".
 
-inline cic:/CoRN/reals/Cauchy_CReals/T.con.
+inline "cic:/CoRN/reals/Cauchy_CReals/T.con".
 
 (*#* We now assume our original field is archimedean and prove that the
 resulting one is, too.
 *)
 
-inline cic:/CoRN/reals/Cauchy_CReals/F_is_archemaedian.var.
+inline "cic:/CoRN/reals/Cauchy_CReals/F_is_archemaedian.var".
 
-inline cic:/CoRN/reals/Cauchy_CReals/R_is_archemaedian.con.
+inline "cic:/CoRN/reals/Cauchy_CReals/R_is_archemaedian.con".
 
 (* begin hide *)
 
-inline cic:/CoRN/reals/Cauchy_CReals/PT.con.
+inline "cic:/CoRN/reals/Cauchy_CReals/PT.con".
 
 (* end hide *)
 
-inline cic:/CoRN/reals/Cauchy_CReals/modulus_property.con.
+inline "cic:/CoRN/reals/Cauchy_CReals/modulus_property.con".
 
-inline cic:/CoRN/reals/Cauchy_CReals/modulus_property_2.con.
+inline "cic:/CoRN/reals/Cauchy_CReals/modulus_property_2.con".
 
-inline cic:/CoRN/reals/Cauchy_CReals/expand_Q_R_2.con.
+inline "cic:/CoRN/reals/Cauchy_CReals/expand_Q_R_2.con".
 
-inline cic:/CoRN/reals/Cauchy_CReals/CS_seq_diagonal.con.
+inline "cic:/CoRN/reals/Cauchy_CReals/CS_seq_diagonal.con".
 
 (*#* ** Cauchy Completeness
 We can also define a limit operator.
 *)
 
-inline cic:/CoRN/reals/Cauchy_CReals/Q_dense_in_R.con.
+inline "cic:/CoRN/reals/Cauchy_CReals/Q_dense_in_R.con".
 
-inline cic:/CoRN/reals/Cauchy_CReals/LimR_CauchySeq.con.
+inline "cic:/CoRN/reals/Cauchy_CReals/LimR_CauchySeq.con".
 
-inline cic:/CoRN/reals/Cauchy_CReals/R_is_complete.con.
+inline "cic:/CoRN/reals/Cauchy_CReals/R_is_complete.con".
 
-inline cic:/CoRN/reals/Cauchy_CReals/R_is_CReals.con.
+inline "cic:/CoRN/reals/Cauchy_CReals/R_is_CReals.con".
 
-inline cic:/CoRN/reals/Cauchy_CReals/R_as_CReals.con.
+inline "cic:/CoRN/reals/Cauchy_CReals/R_as_CReals.con".
 
 (* UNEXPORTED
 End R_CReals.

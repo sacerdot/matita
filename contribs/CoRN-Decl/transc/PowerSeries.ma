@@ -16,6 +16,8 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/transc/PowerSeries".
 
+include "CoRN.ma".
+
 (* $Id: PowerSeries.v,v 1.8 2004/04/23 10:01:08 lcf Exp $ *)
 
 (*#* printing Exp %\ensuremath{\exp}% *)
@@ -28,9 +30,7 @@ set "baseuri" "cic:/matita/CoRN-Decl/transc/PowerSeries".
 
 (*#* printing Tan %\ensuremath{\tan}% *)
 
-(* INCLUDE
-FTC
-*)
+include "ftc/FTC.ma".
 
 (*#* *More on Power Series
 
@@ -50,15 +50,15 @@ Let [a : nat -> IR].
 %\end{convention}%
 *)
 
-inline cic:/CoRN/transc/PowerSeries/J.var.
+inline "cic:/CoRN/transc/PowerSeries/J.var".
 
-inline cic:/CoRN/transc/PowerSeries/x0.var.
+inline "cic:/CoRN/transc/PowerSeries/x0.var".
 
-inline cic:/CoRN/transc/PowerSeries/Hx0.var.
+inline "cic:/CoRN/transc/PowerSeries/Hx0.var".
 
-inline cic:/CoRN/transc/PowerSeries/a.var.
+inline "cic:/CoRN/transc/PowerSeries/a.var".
 
-inline cic:/CoRN/transc/PowerSeries/FPowerSeries.con.
+inline "cic:/CoRN/transc/PowerSeries/FPowerSeries.con".
 
 (*#*
 The most important convergence criterium specifically for power series
@@ -67,39 +67,39 @@ is the Dirichlet criterium.
 
 (* begin show *)
 
-inline cic:/CoRN/transc/PowerSeries/Ha.var.
+inline "cic:/CoRN/transc/PowerSeries/Ha.var".
 
-inline cic:/CoRN/transc/PowerSeries/r.con.
+inline "cic:/CoRN/transc/PowerSeries/r.con".
 
-inline cic:/CoRN/transc/PowerSeries/Hr.con.
+inline "cic:/CoRN/transc/PowerSeries/Hr.con".
 
 (* end show *)
 
-inline cic:/CoRN/transc/PowerSeries/Dirichlet_crit.con.
+inline "cic:/CoRN/transc/PowerSeries/Dirichlet_crit.con".
 
 (*#*
 When defining a function using its Taylor series as a motivation, the following operator can be of use.
 *)
 
-inline cic:/CoRN/transc/PowerSeries/FPowerSeries'.con.
+inline "cic:/CoRN/transc/PowerSeries/FPowerSeries'.con".
 
 (*#*
 This function is also continuous and has a good convergence ratio.
 *)
 
-inline cic:/CoRN/transc/PowerSeries/FPowerSeries'_cont.con.
+inline "cic:/CoRN/transc/PowerSeries/FPowerSeries'_cont.con".
 
-inline cic:/CoRN/transc/PowerSeries/included_FPowerSeries'.con.
+inline "cic:/CoRN/transc/PowerSeries/included_FPowerSeries'.con".
 
 (* begin show *)
 
-inline cic:/CoRN/transc/PowerSeries/Ha'.var.
+inline "cic:/CoRN/transc/PowerSeries/Ha'.var".
 
 (* end show *)
 
-inline cic:/CoRN/transc/PowerSeries/FPowerSeries'_conv'.con.
+inline "cic:/CoRN/transc/PowerSeries/FPowerSeries'_conv'.con".
 
-inline cic:/CoRN/transc/PowerSeries/FPowerSeries'_conv.con.
+inline "cic:/CoRN/transc/PowerSeries/FPowerSeries'_conv.con".
 
 (* UNEXPORTED
 End Power_Series.
@@ -119,31 +119,31 @@ respectively by [a] and by [fun n => (a (S n))].
 %\end{convention}%
 *)
 
-inline cic:/CoRN/transc/PowerSeries/x0.var.
+inline "cic:/CoRN/transc/PowerSeries/x0.var".
 
-inline cic:/CoRN/transc/PowerSeries/a.var.
+inline "cic:/CoRN/transc/PowerSeries/a.var".
 
 (* begin hide *)
 
-inline cic:/CoRN/transc/PowerSeries/F.con.
+inline "cic:/CoRN/transc/PowerSeries/F.con".
 
-inline cic:/CoRN/transc/PowerSeries/G.con.
+inline "cic:/CoRN/transc/PowerSeries/G.con".
 
 (* end hide *)
 
 (* begin show *)
 
-inline cic:/CoRN/transc/PowerSeries/Hf.var.
+inline "cic:/CoRN/transc/PowerSeries/Hf.var".
 
-inline cic:/CoRN/transc/PowerSeries/Hf'.var.
+inline "cic:/CoRN/transc/PowerSeries/Hf'.var".
 
-inline cic:/CoRN/transc/PowerSeries/Hg.var.
+inline "cic:/CoRN/transc/PowerSeries/Hg.var".
 
 (* end show *)
 
 (*#* We get a comparison test for power series. *)
 
-inline cic:/CoRN/transc/PowerSeries/FPowerSeries'_comp.con.
+inline "cic:/CoRN/transc/PowerSeries/FPowerSeries'_comp.con".
 
 (*#* And a rule for differentiation. *)
 
@@ -151,7 +151,7 @@ inline cic:/CoRN/transc/PowerSeries/FPowerSeries'_comp.con.
 Opaque nring fac.
 *)
 
-inline cic:/CoRN/transc/PowerSeries/Derivative_FPowerSeries1'.con.
+inline "cic:/CoRN/transc/PowerSeries/Derivative_FPowerSeries1'.con".
 
 (* UNEXPORTED
 End More_on_PowerSeries.
@@ -168,55 +168,55 @@ series, and prove their convergence.  Tangent is defined as the
 quotient of sine over cosine.
 *)
 
-inline cic:/CoRN/transc/PowerSeries/Exp_ps.con.
+inline "cic:/CoRN/transc/PowerSeries/Exp_ps.con".
 
-inline cic:/CoRN/transc/PowerSeries/sin_seq.con.
+inline "cic:/CoRN/transc/PowerSeries/sin_seq.con".
 
-inline cic:/CoRN/transc/PowerSeries/sin_ps.con.
+inline "cic:/CoRN/transc/PowerSeries/sin_ps.con".
 
-inline cic:/CoRN/transc/PowerSeries/cos_seq.con.
+inline "cic:/CoRN/transc/PowerSeries/cos_seq.con".
 
-inline cic:/CoRN/transc/PowerSeries/cos_ps.con.
+inline "cic:/CoRN/transc/PowerSeries/cos_ps.con".
 
-inline cic:/CoRN/transc/PowerSeries/Exp_conv'.con.
+inline "cic:/CoRN/transc/PowerSeries/Exp_conv'.con".
 
-inline cic:/CoRN/transc/PowerSeries/Exp_conv.con.
+inline "cic:/CoRN/transc/PowerSeries/Exp_conv.con".
 
-inline cic:/CoRN/transc/PowerSeries/sin_conv.con.
+inline "cic:/CoRN/transc/PowerSeries/sin_conv.con".
 
-inline cic:/CoRN/transc/PowerSeries/cos_conv.con.
+inline "cic:/CoRN/transc/PowerSeries/cos_conv.con".
 
-inline cic:/CoRN/transc/PowerSeries/Expon.con.
+inline "cic:/CoRN/transc/PowerSeries/Expon.con".
 
-inline cic:/CoRN/transc/PowerSeries/Sine.con.
+inline "cic:/CoRN/transc/PowerSeries/Sine.con".
 
-inline cic:/CoRN/transc/PowerSeries/Cosine.con.
+inline "cic:/CoRN/transc/PowerSeries/Cosine.con".
 
-inline cic:/CoRN/transc/PowerSeries/Tang.con.
+inline "cic:/CoRN/transc/PowerSeries/Tang.con".
 
 (*#*
 Some auxiliary domain results.
 *)
 
-inline cic:/CoRN/transc/PowerSeries/Exp_domain.con.
+inline "cic:/CoRN/transc/PowerSeries/Exp_domain.con".
 
-inline cic:/CoRN/transc/PowerSeries/sin_domain.con.
+inline "cic:/CoRN/transc/PowerSeries/sin_domain.con".
 
-inline cic:/CoRN/transc/PowerSeries/cos_domain.con.
+inline "cic:/CoRN/transc/PowerSeries/cos_domain.con".
 
-inline cic:/CoRN/transc/PowerSeries/included_Exp.con.
+inline "cic:/CoRN/transc/PowerSeries/included_Exp.con".
 
-inline cic:/CoRN/transc/PowerSeries/included_Sin.con.
+inline "cic:/CoRN/transc/PowerSeries/included_Sin.con".
 
-inline cic:/CoRN/transc/PowerSeries/included_Cos.con.
+inline "cic:/CoRN/transc/PowerSeries/included_Cos.con".
 
 (*#*
 Definition of the logarithm.
 *)
 
-inline cic:/CoRN/transc/PowerSeries/log_defn_lemma.con.
+inline "cic:/CoRN/transc/PowerSeries/log_defn_lemma.con".
 
-inline cic:/CoRN/transc/PowerSeries/Logarithm.con.
+inline "cic:/CoRN/transc/PowerSeries/Logarithm.con".
 
 (* UNEXPORTED
 End Definitions.
@@ -230,13 +230,13 @@ Hint Resolve included_Exp included_Sin included_Cos: included.
 As most of these functions are total, it makes sense to treat them as setoid functions on the reals.  In the case of logarithm and tangent, this is not possible; however, we still define some abbreviations for aesthetical reasons.
 *)
 
-inline cic:/CoRN/transc/PowerSeries/Exp.con.
+inline "cic:/CoRN/transc/PowerSeries/Exp.con".
 
-inline cic:/CoRN/transc/PowerSeries/Sin.con.
+inline "cic:/CoRN/transc/PowerSeries/Sin.con".
 
-inline cic:/CoRN/transc/PowerSeries/Cos.con.
+inline "cic:/CoRN/transc/PowerSeries/Cos.con".
 
-inline cic:/CoRN/transc/PowerSeries/Log.con.
+inline "cic:/CoRN/transc/PowerSeries/Log.con".
 
-inline cic:/CoRN/transc/PowerSeries/Tan.con.
+inline "cic:/CoRN/transc/PowerSeries/Tan.con".
 

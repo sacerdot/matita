@@ -16,9 +16,9 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/transc/Pi".
 
-(* INCLUDE
-SinCos
-*)
+include "CoRN.ma".
+
+include "transc/SinCos.ma".
 
 (* UNEXPORTED
 Section Properties_of_Pi.
@@ -31,7 +31,7 @@ Section Properties_of_Pi.
 [Pi] is defined as twice the first positive zero of the cosine.  In order to do this, we follow the construction described in Bishop 1969, section 7.
 *)
 
-inline cic:/CoRN/transc/Pi/pi_seq.con.
+inline "cic:/CoRN/transc/Pi/pi_seq.con".
 
 (* UNEXPORTED
 Opaque Cosine.
@@ -43,7 +43,7 @@ Opaque Cosine.
 Opaque Sine.
 *)
 
-inline cic:/CoRN/transc/Pi/pi_seq_lemma.con.
+inline "cic:/CoRN/transc/Pi/pi_seq_lemma.con".
 
 (* end hide *)
 
@@ -53,64 +53,64 @@ This sequence is nonnegative and the cosine of any number between
 sequence is strictly increasing.
 *)
 
-inline cic:/CoRN/transc/Pi/pi_seq_nonneg.con.
+inline "cic:/CoRN/transc/Pi/pi_seq_nonneg.con".
 
-inline cic:/CoRN/transc/Pi/cos_pi_seq_pos.con.
+inline "cic:/CoRN/transc/Pi/cos_pi_seq_pos.con".
 
-inline cic:/CoRN/transc/Pi/pi_seq_incr.con.
+inline "cic:/CoRN/transc/Pi/pi_seq_incr.con".
 
 (*#* Trivial---but useful---consequences. *)
 
-inline cic:/CoRN/transc/Pi/sin_pi_seq_mon.con.
+inline "cic:/CoRN/transc/Pi/sin_pi_seq_mon.con".
 
-inline cic:/CoRN/transc/Pi/sin_pi_seq_nonneg.con.
+inline "cic:/CoRN/transc/Pi/sin_pi_seq_nonneg.con".
 
-inline cic:/CoRN/transc/Pi/sin_pi_seq_gt_one.con.
+inline "cic:/CoRN/transc/Pi/sin_pi_seq_gt_one.con".
 
-inline cic:/CoRN/transc/Pi/cos_pi_seq_mon.con.
+inline "cic:/CoRN/transc/Pi/cos_pi_seq_mon.con".
 
 (* begin hide *)
 
-inline cic:/CoRN/transc/Pi/pi_seq_gt_one.con.
+inline "cic:/CoRN/transc/Pi/pi_seq_gt_one.con".
 
 (* UNEXPORTED
 Opaque Sine Cosine.
 *)
 
-inline cic:/CoRN/transc/Pi/pi_seq_bnd.con.
+inline "cic:/CoRN/transc/Pi/pi_seq_bnd.con".
 
-inline cic:/CoRN/transc/Pi/pi_seq_bnd'.con.
+inline "cic:/CoRN/transc/Pi/pi_seq_bnd'.con".
 
-inline cic:/CoRN/transc/Pi/pi_seq_bnd''.con.
+inline "cic:/CoRN/transc/Pi/pi_seq_bnd''.con".
 
 (* end hide *)
 
 (*#* An auxiliary result. *)
 
-inline cic:/CoRN/transc/Pi/Sin_One_pos.con.
+inline "cic:/CoRN/transc/Pi/Sin_One_pos.con".
 
 (*#* We can now prove that this is a Cauchy sequence.  We define [Pi] as 
 twice its limit.
 *)
 
-inline cic:/CoRN/transc/Pi/pi_seq_Cauchy.con.
+inline "cic:/CoRN/transc/Pi/pi_seq_Cauchy.con".
 
-inline cic:/CoRN/transc/Pi/Pi.con.
+inline "cic:/CoRN/transc/Pi/Pi.con".
 
 (*#*
 For $x\in[0,\frac{\pi}2)$#x&isin;[0,&pi;/2)#, [(Cos x) [>] 0];
 $\cos(\frac{pi}2)=0$#cos(&pi;/2)=0#.
 *)
 
-inline cic:/CoRN/transc/Pi/pos_cos.con.
+inline "cic:/CoRN/transc/Pi/pos_cos.con".
 
-inline cic:/CoRN/transc/Pi/Cos_HalfPi.con.
+inline "cic:/CoRN/transc/Pi/Cos_HalfPi.con".
 
 (*#* Convergence to [Pi [/] Two] is increasing; therefore, [Pi] is positive. *)
 
-inline cic:/CoRN/transc/Pi/HalfPi_gt_pi_seq.con.
+inline "cic:/CoRN/transc/Pi/HalfPi_gt_pi_seq.con".
 
-inline cic:/CoRN/transc/Pi/pos_Pi.con.
+inline "cic:/CoRN/transc/Pi/pos_Pi.con".
 
 (* UNEXPORTED
 End Properties_of_Pi.
@@ -139,45 +139,45 @@ A summary of what is being proved is simply:
 [PiSolve] will prove any of these inequalities.
 *)
 
-inline cic:/CoRN/transc/Pi/pos_HalfPi.con.
+inline "cic:/CoRN/transc/Pi/pos_HalfPi.con".
 
-inline cic:/CoRN/transc/Pi/pos_QuarterPi.con.
+inline "cic:/CoRN/transc/Pi/pos_QuarterPi.con".
 
-inline cic:/CoRN/transc/Pi/QuarterPi_less_HalfPi.con.
+inline "cic:/CoRN/transc/Pi/QuarterPi_less_HalfPi.con".
 
-inline cic:/CoRN/transc/Pi/HalfPi_less_Pi.con.
+inline "cic:/CoRN/transc/Pi/HalfPi_less_Pi.con".
 
-inline cic:/CoRN/transc/Pi/QuarterPi_less_Pi.con.
+inline "cic:/CoRN/transc/Pi/QuarterPi_less_Pi.con".
 
-inline cic:/CoRN/transc/Pi/neg_invPi.con.
+inline "cic:/CoRN/transc/Pi/neg_invPi.con".
 
-inline cic:/CoRN/transc/Pi/neg_invHalfPi.con.
+inline "cic:/CoRN/transc/Pi/neg_invHalfPi.con".
 
-inline cic:/CoRN/transc/Pi/neg_invQuarterPi.con.
+inline "cic:/CoRN/transc/Pi/neg_invQuarterPi.con".
 
-inline cic:/CoRN/transc/Pi/invHalfPi_less_invQuarterPi.con.
+inline "cic:/CoRN/transc/Pi/invHalfPi_less_invQuarterPi.con".
 
-inline cic:/CoRN/transc/Pi/invPi_less_invHalfPi.con.
+inline "cic:/CoRN/transc/Pi/invPi_less_invHalfPi.con".
 
-inline cic:/CoRN/transc/Pi/invPi_less_invQuarterPi.con.
+inline "cic:/CoRN/transc/Pi/invPi_less_invQuarterPi.con".
 
-inline cic:/CoRN/transc/Pi/invPi_less_Pi.con.
+inline "cic:/CoRN/transc/Pi/invPi_less_Pi.con".
 
-inline cic:/CoRN/transc/Pi/invPi_less_HalfPi.con.
+inline "cic:/CoRN/transc/Pi/invPi_less_HalfPi.con".
 
-inline cic:/CoRN/transc/Pi/invPi_less_QuarterPi.con.
+inline "cic:/CoRN/transc/Pi/invPi_less_QuarterPi.con".
 
-inline cic:/CoRN/transc/Pi/invHalfPi_less_Pi.con.
+inline "cic:/CoRN/transc/Pi/invHalfPi_less_Pi.con".
 
-inline cic:/CoRN/transc/Pi/invHalfPi_less_HalfPi.con.
+inline "cic:/CoRN/transc/Pi/invHalfPi_less_HalfPi.con".
 
-inline cic:/CoRN/transc/Pi/invHalfPi_less_QuarterPi.con.
+inline "cic:/CoRN/transc/Pi/invHalfPi_less_QuarterPi.con".
 
-inline cic:/CoRN/transc/Pi/invQuarterPi_less_Pi.con.
+inline "cic:/CoRN/transc/Pi/invQuarterPi_less_Pi.con".
 
-inline cic:/CoRN/transc/Pi/invQuarterPi_less_HalfPi.con.
+inline "cic:/CoRN/transc/Pi/invQuarterPi_less_HalfPi.con".
 
-inline cic:/CoRN/transc/Pi/invQuarterPi_less_QuarterPi.con.
+inline "cic:/CoRN/transc/Pi/invQuarterPi_less_QuarterPi.con".
 
 (* UNEXPORTED
 End Pi_and_Order.
@@ -210,23 +210,23 @@ We now move back to trigonometric identities: sine, cosine and tangent of
 the double.
 *)
 
-inline cic:/CoRN/transc/Pi/Cos_double.con.
+inline "cic:/CoRN/transc/Pi/Cos_double.con".
 
-inline cic:/CoRN/transc/Pi/Sin_double.con.
+inline "cic:/CoRN/transc/Pi/Sin_double.con".
 
-inline cic:/CoRN/transc/Pi/Tan_double.con.
+inline "cic:/CoRN/transc/Pi/Tan_double.con".
 
 (* begin hide *)
 
-inline cic:/CoRN/transc/Pi/sqrt_lemma.con.
+inline "cic:/CoRN/transc/Pi/sqrt_lemma.con".
 
 (* end hide *)
 
 (*#* Value of trigonometric functions at [Pi[/]Four]. *)
 
-inline cic:/CoRN/transc/Pi/Cos_QuarterPi.con.
+inline "cic:/CoRN/transc/Pi/Cos_QuarterPi.con".
 
-inline cic:/CoRN/transc/Pi/Sin_QuarterPi.con.
+inline "cic:/CoRN/transc/Pi/Sin_QuarterPi.con".
 
 (* UNEXPORTED
 Hint Resolve Sin_QuarterPi Cos_QuarterPi: algebra.
@@ -236,31 +236,31 @@ Hint Resolve Sin_QuarterPi Cos_QuarterPi: algebra.
 Opaque Sine Cosine.
 *)
 
-inline cic:/CoRN/transc/Pi/Tan_QuarterPi.con.
+inline "cic:/CoRN/transc/Pi/Tan_QuarterPi.con".
 
 (*#* Shifting sine and cosine by [Pi[/]Two] and [Pi]. *)
 
-inline cic:/CoRN/transc/Pi/Sin_HalfPi.con.
+inline "cic:/CoRN/transc/Pi/Sin_HalfPi.con".
 
 (* UNEXPORTED
 Hint Resolve Sin_HalfPi: algebra.
 *)
 
-inline cic:/CoRN/transc/Pi/Sin_plus_HalfPi.con.
+inline "cic:/CoRN/transc/Pi/Sin_plus_HalfPi.con".
 
-inline cic:/CoRN/transc/Pi/Sin_HalfPi_minus.con.
+inline "cic:/CoRN/transc/Pi/Sin_HalfPi_minus.con".
 
-inline cic:/CoRN/transc/Pi/Cos_plus_HalfPi.con.
+inline "cic:/CoRN/transc/Pi/Cos_plus_HalfPi.con".
 
-inline cic:/CoRN/transc/Pi/Cos_HalfPi_minus.con.
+inline "cic:/CoRN/transc/Pi/Cos_HalfPi_minus.con".
 
-inline cic:/CoRN/transc/Pi/Sin_Pi.con.
+inline "cic:/CoRN/transc/Pi/Sin_Pi.con".
 
-inline cic:/CoRN/transc/Pi/Cos_Pi.con.
+inline "cic:/CoRN/transc/Pi/Cos_Pi.con".
 
-inline cic:/CoRN/transc/Pi/Sin_plus_Pi.con.
+inline "cic:/CoRN/transc/Pi/Sin_plus_Pi.con".
 
-inline cic:/CoRN/transc/Pi/Cos_plus_Pi.con.
+inline "cic:/CoRN/transc/Pi/Cos_plus_Pi.con".
 
 (* UNEXPORTED
 Hint Resolve Sin_plus_Pi Cos_plus_Pi: algebra.
@@ -268,11 +268,11 @@ Hint Resolve Sin_plus_Pi Cos_plus_Pi: algebra.
 
 (*#* Sine and cosine have period [Two Pi], tangent has period [Pi]. *)
 
-inline cic:/CoRN/transc/Pi/Sin_periodic.con.
+inline "cic:/CoRN/transc/Pi/Sin_periodic.con".
 
-inline cic:/CoRN/transc/Pi/Cos_periodic.con.
+inline "cic:/CoRN/transc/Pi/Cos_periodic.con".
 
-inline cic:/CoRN/transc/Pi/Tan_periodic.con.
+inline "cic:/CoRN/transc/Pi/Tan_periodic.con".
 
 (* UNEXPORTED
 End Sin_And_Cos.

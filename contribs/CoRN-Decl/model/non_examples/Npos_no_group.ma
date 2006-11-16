@@ -16,24 +16,22 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/model/non_examples/Npos_no_group".
 
+include "CoRN.ma".
+
 (* $Id: Npos_no_group.v,v 1.6 2004/04/08 08:20:33 lcf Exp $ *)
 
-(* INCLUDE
-CGroups
-*)
+include "algebra/CGroups.ma".
 
-(* INCLUDE
-Nposmonoid
-*)
+include "model/monoids/Nposmonoid.ma".
 
 (*#* **Non-example of a group: $\langle$#&lang;#[Npos],[[+]]$\rangle$#&rang;#
 There is no inverse for multiplication on the positive natural numbers.
 *)
 
-inline cic:/CoRN/model/non_examples/Npos_no_group/no_inverse_Nposmult.con.
+inline "cic:/CoRN/model/non_examples/Npos_no_group/no_inverse_Nposmult.con".
 
 (*#* Hence the natural numbers with multiplication do not form a group.
 *)
 
-inline cic:/CoRN/model/non_examples/Npos_no_group/no_group_Nposmult.con.
+inline "cic:/CoRN/model/non_examples/Npos_no_group/no_group_Nposmult.con".
 

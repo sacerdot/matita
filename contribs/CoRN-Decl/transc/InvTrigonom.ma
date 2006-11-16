@@ -16,19 +16,15 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/transc/InvTrigonom".
 
+include "CoRN.ma".
+
 (* $Id: InvTrigonom.v,v 1.9 2004/04/23 10:01:07 lcf Exp $ *)
 
-(* INCLUDE
-RealPowers
-*)
+include "transc/RealPowers.ma".
 
-(* INCLUDE
-TrigMon
-*)
+include "transc/TrigMon.ma".
 
-(* INCLUDE
-StrongIVT
-*)
+include "ftc/StrongIVT.ma".
 
 (*#* printing ArcSin %\ensuremath{\arcsin}% *)
 
@@ -55,17 +51,17 @@ Arccosine is defined in terms of arcsine by the relation
 Opaque Sine Cosine Expon Logarithm.
 *)
 
-inline cic:/CoRN/transc/InvTrigonom/ArcSin_def_lemma.con.
+inline "cic:/CoRN/transc/InvTrigonom/ArcSin_def_lemma.con".
 
-inline cic:/CoRN/transc/InvTrigonom/ArcSin_def_zero.con.
+inline "cic:/CoRN/transc/InvTrigonom/ArcSin_def_zero.con".
 
-inline cic:/CoRN/transc/InvTrigonom/ArcSin.con.
+inline "cic:/CoRN/transc/InvTrigonom/ArcSin.con".
 
-inline cic:/CoRN/transc/InvTrigonom/ArcSin_domain.con.
+inline "cic:/CoRN/transc/InvTrigonom/ArcSin_domain.con".
 
-inline cic:/CoRN/transc/InvTrigonom/Continuous_ArcSin.con.
+inline "cic:/CoRN/transc/InvTrigonom/Continuous_ArcSin.con".
 
-inline cic:/CoRN/transc/InvTrigonom/Derivative_ArcSin.con.
+inline "cic:/CoRN/transc/InvTrigonom/Derivative_ArcSin.con".
 
 (* UNEXPORTED
 Hint Resolve Derivative_ArcSin: derivate.
@@ -78,28 +74,28 @@ Hint Resolve Continuous_ArcSin: continuous.
 (*#* ***Arccosine
 *)
 
-inline cic:/CoRN/transc/InvTrigonom/ArcCos.con.
+inline "cic:/CoRN/transc/InvTrigonom/ArcCos.con".
 
-inline cic:/CoRN/transc/InvTrigonom/ArcCos_domain.con.
+inline "cic:/CoRN/transc/InvTrigonom/ArcCos_domain.con".
 
-inline cic:/CoRN/transc/InvTrigonom/Continuous_ArcCos.con.
+inline "cic:/CoRN/transc/InvTrigonom/Continuous_ArcCos.con".
 
-inline cic:/CoRN/transc/InvTrigonom/Derivative_ArcCos.con.
+inline "cic:/CoRN/transc/InvTrigonom/Derivative_ArcCos.con".
 
 (*#* ***Arctangent
 *)
 
-inline cic:/CoRN/transc/InvTrigonom/ArcTan_def_lemma.con.
+inline "cic:/CoRN/transc/InvTrigonom/ArcTan_def_lemma.con".
 
-inline cic:/CoRN/transc/InvTrigonom/ArcTang.con.
+inline "cic:/CoRN/transc/InvTrigonom/ArcTang.con".
 
-inline cic:/CoRN/transc/InvTrigonom/ArcTan_domain.con.
+inline "cic:/CoRN/transc/InvTrigonom/ArcTan_domain.con".
 
-inline cic:/CoRN/transc/InvTrigonom/ArcTan.con.
+inline "cic:/CoRN/transc/InvTrigonom/ArcTan.con".
 
-inline cic:/CoRN/transc/InvTrigonom/Continuous_ArcTan.con.
+inline "cic:/CoRN/transc/InvTrigonom/Continuous_ArcTan.con".
 
-inline cic:/CoRN/transc/InvTrigonom/Derivative_ArcTan.con.
+inline "cic:/CoRN/transc/InvTrigonom/Derivative_ArcTan.con".
 
 (* UNEXPORTED
 Hint Resolve Derivative_ArcCos Derivative_ArcTan: derivate.
@@ -120,59 +116,59 @@ We now prove that this functions are in fact inverses to the corresponding trigo
 ***Sine and Arcsine
 *)
 
-inline cic:/CoRN/transc/InvTrigonom/maps_Sin.con.
+inline "cic:/CoRN/transc/InvTrigonom/maps_Sin.con".
 
-inline cic:/CoRN/transc/InvTrigonom/ArcSin_Sin_inv.con.
+inline "cic:/CoRN/transc/InvTrigonom/ArcSin_Sin_inv.con".
 
 (* UNEXPORTED
 Opaque ArcSin.
 *)
 
-inline cic:/CoRN/transc/InvTrigonom/ArcSin_Sin.con.
+inline "cic:/CoRN/transc/InvTrigonom/ArcSin_Sin.con".
 
 (* UNEXPORTED
 Transparent ArcSin.
 *)
 
-inline cic:/CoRN/transc/InvTrigonom/ArcSin_range.con.
+inline "cic:/CoRN/transc/InvTrigonom/ArcSin_range.con".
 
 (* UNEXPORTED
 Transparent ArcSin.
 *)
 
-inline cic:/CoRN/transc/InvTrigonom/Sin_ArcSin.con.
+inline "cic:/CoRN/transc/InvTrigonom/Sin_ArcSin.con".
 
-inline cic:/CoRN/transc/InvTrigonom/Sin_ArcSin_inv.con.
+inline "cic:/CoRN/transc/InvTrigonom/Sin_ArcSin_inv.con".
 
-inline cic:/CoRN/transc/InvTrigonom/ArcSin_resp_leEq.con.
+inline "cic:/CoRN/transc/InvTrigonom/ArcSin_resp_leEq.con".
 
 (*#* ***Cosine and Arcosine
 *)
 
-inline cic:/CoRN/transc/InvTrigonom/ArcCos_Cos.con.
+inline "cic:/CoRN/transc/InvTrigonom/ArcCos_Cos.con".
 
-inline cic:/CoRN/transc/InvTrigonom/Cos_ArcCos.con.
+inline "cic:/CoRN/transc/InvTrigonom/Cos_ArcCos.con".
 
-inline cic:/CoRN/transc/InvTrigonom/ArcCos_Cos_inv.con.
+inline "cic:/CoRN/transc/InvTrigonom/ArcCos_Cos_inv.con".
 
-inline cic:/CoRN/transc/InvTrigonom/Cos_ArcCos_inv.con.
+inline "cic:/CoRN/transc/InvTrigonom/Cos_ArcCos_inv.con".
 
 (* UNEXPORTED
 Opaque ArcSin.
 *)
 
-inline cic:/CoRN/transc/InvTrigonom/ArcCos_resp_leEq.con.
+inline "cic:/CoRN/transc/InvTrigonom/ArcCos_resp_leEq.con".
 
 (*#* ***Tangent and Arctangent
 *)
 
-inline cic:/CoRN/transc/InvTrigonom/maps_Tan.con.
+inline "cic:/CoRN/transc/InvTrigonom/maps_Tan.con".
 
 (* UNEXPORTED
 Opaque Tang.
 *)
 
-inline cic:/CoRN/transc/InvTrigonom/ArcTan_Tan_inv.con.
+inline "cic:/CoRN/transc/InvTrigonom/ArcTan_Tan_inv.con".
 
 (* UNEXPORTED
 Transparent Tang.
@@ -182,7 +178,7 @@ Transparent Tang.
 Opaque ArcTang.
 *)
 
-inline cic:/CoRN/transc/InvTrigonom/ArcTan_Tan.con.
+inline "cic:/CoRN/transc/InvTrigonom/ArcTan_Tan.con".
 
 (* UNEXPORTED
 Opaque iprop.
@@ -196,7 +192,7 @@ Transparent iprop.
 Opaque Cos.
 *)
 
-inline cic:/CoRN/transc/InvTrigonom/Tan_ilim.con.
+inline "cic:/CoRN/transc/InvTrigonom/Tan_ilim.con".
 
 (* UNEXPORTED
 Opaque Min.
@@ -210,65 +206,65 @@ Transparent Cos.
 Section ArcTan_Range.
 *)
 
-inline cic:/CoRN/transc/InvTrigonom/x.var.
+inline "cic:/CoRN/transc/InvTrigonom/x.var".
 
 (* begin hide *)
 
-inline cic:/CoRN/transc/InvTrigonom/min.con.
+inline "cic:/CoRN/transc/InvTrigonom/min.con".
 
-inline cic:/CoRN/transc/InvTrigonom/max.con.
+inline "cic:/CoRN/transc/InvTrigonom/max.con".
 
-inline cic:/CoRN/transc/InvTrigonom/min1.con.
+inline "cic:/CoRN/transc/InvTrigonom/min1.con".
 
-inline cic:/CoRN/transc/InvTrigonom/min2.con.
+inline "cic:/CoRN/transc/InvTrigonom/min2.con".
 
-inline cic:/CoRN/transc/InvTrigonom/min3.con.
+inline "cic:/CoRN/transc/InvTrigonom/min3.con".
 
-inline cic:/CoRN/transc/InvTrigonom/min4.con.
+inline "cic:/CoRN/transc/InvTrigonom/min4.con".
 
-inline cic:/CoRN/transc/InvTrigonom/max1.con.
+inline "cic:/CoRN/transc/InvTrigonom/max1.con".
 
-inline cic:/CoRN/transc/InvTrigonom/max2.con.
+inline "cic:/CoRN/transc/InvTrigonom/max2.con".
 
-inline cic:/CoRN/transc/InvTrigonom/max3.con.
+inline "cic:/CoRN/transc/InvTrigonom/max3.con".
 
-inline cic:/CoRN/transc/InvTrigonom/max4.con.
+inline "cic:/CoRN/transc/InvTrigonom/max4.con".
 
-inline cic:/CoRN/transc/InvTrigonom/min5.con.
+inline "cic:/CoRN/transc/InvTrigonom/min5.con".
 
-inline cic:/CoRN/transc/InvTrigonom/min6.con.
+inline "cic:/CoRN/transc/InvTrigonom/min6.con".
 
-inline cic:/CoRN/transc/InvTrigonom/max5.con.
+inline "cic:/CoRN/transc/InvTrigonom/max5.con".
 
-inline cic:/CoRN/transc/InvTrigonom/max6.con.
+inline "cic:/CoRN/transc/InvTrigonom/max6.con".
 
-inline cic:/CoRN/transc/InvTrigonom/a.con.
+inline "cic:/CoRN/transc/InvTrigonom/a.con".
 
-inline cic:/CoRN/transc/InvTrigonom/a1.con.
+inline "cic:/CoRN/transc/InvTrigonom/a1.con".
 
-inline cic:/CoRN/transc/InvTrigonom/a2.con.
+inline "cic:/CoRN/transc/InvTrigonom/a2.con".
 
-inline cic:/CoRN/transc/InvTrigonom/a3.con.
+inline "cic:/CoRN/transc/InvTrigonom/a3.con".
 
-inline cic:/CoRN/transc/InvTrigonom/a4.con.
+inline "cic:/CoRN/transc/InvTrigonom/a4.con".
 
-inline cic:/CoRN/transc/InvTrigonom/a5.con.
+inline "cic:/CoRN/transc/InvTrigonom/a5.con".
 
-inline cic:/CoRN/transc/InvTrigonom/b.con.
+inline "cic:/CoRN/transc/InvTrigonom/b.con".
 
-inline cic:/CoRN/transc/InvTrigonom/b1.con.
+inline "cic:/CoRN/transc/InvTrigonom/b1.con".
 
-inline cic:/CoRN/transc/InvTrigonom/b2.con.
+inline "cic:/CoRN/transc/InvTrigonom/b2.con".
 
-inline cic:/CoRN/transc/InvTrigonom/b3.con.
+inline "cic:/CoRN/transc/InvTrigonom/b3.con".
 
-inline cic:/CoRN/transc/InvTrigonom/b4.con.
+inline "cic:/CoRN/transc/InvTrigonom/b4.con".
 
-inline cic:/CoRN/transc/InvTrigonom/b5.con.
+inline "cic:/CoRN/transc/InvTrigonom/b5.con".
 
-inline cic:/CoRN/transc/InvTrigonom/ab.con.
+inline "cic:/CoRN/transc/InvTrigonom/ab.con".
 
-inline cic:/CoRN/transc/InvTrigonom/ArcTan_range_lemma.con.
+inline "cic:/CoRN/transc/InvTrigonom/ArcTan_range_lemma.con".
 
 (* end hide *)
 
@@ -276,7 +272,7 @@ inline cic:/CoRN/transc/InvTrigonom/ArcTan_range_lemma.con.
 Transparent ArcTang.
 *)
 
-inline cic:/CoRN/transc/InvTrigonom/ArcTan_range.con.
+inline "cic:/CoRN/transc/InvTrigonom/ArcTan_range.con".
 
 (* UNEXPORTED
 End ArcTan_Range.
@@ -286,13 +282,13 @@ End ArcTan_Range.
 Transparent ArcTang.
 *)
 
-inline cic:/CoRN/transc/InvTrigonom/Tan_ArcTan.con.
+inline "cic:/CoRN/transc/InvTrigonom/Tan_ArcTan.con".
 
 (* UNEXPORTED
 Opaque ArcTang.
 *)
 
-inline cic:/CoRN/transc/InvTrigonom/Tan_ArcTan_inv.con.
+inline "cic:/CoRN/transc/InvTrigonom/Tan_ArcTan_inv.con".
 
 (* UNEXPORTED
 End Inverses.

@@ -16,13 +16,13 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/algebra/CVectorSpace".
 
+include "CoRN.ma".
+
 (* $Id: CVectorSpace.v,v 1.4 2004/04/23 10:00:54 lcf Exp $ *)
 
 (*#* printing ['] %{'}% #'# *)
 
-(* INCLUDE
-CFields
-*)
+include "algebra/CFields.ma".
 
 (*#*
 * Vector Spaces
@@ -42,7 +42,9 @@ Unset Strict Implicit.
 
 (* end hide *)
 
-inline cic:/CoRN/algebra/CVectorSpace/VSpace.ind.
+inline "cic:/CoRN/algebra/CVectorSpace/VSpace.ind".
+
+coercion "cic:/matita/CoRN-Decl/algebra/CVectorSpace/vs_vs.con" 0 (* compounds *).
 
 (* begin hide *)
 
@@ -74,43 +76,43 @@ Let [F] be a fiels and let [V] be a vector space over [F]
 Section VS_basics.
 *)
 
-inline cic:/CoRN/algebra/CVectorSpace/F.var.
+inline "cic:/CoRN/algebra/CVectorSpace/F.var".
 
-inline cic:/CoRN/algebra/CVectorSpace/V.var.
+inline "cic:/CoRN/algebra/CVectorSpace/V.var".
 
-inline cic:/CoRN/algebra/CVectorSpace/vs_op_zero.con.
+inline "cic:/CoRN/algebra/CVectorSpace/vs_op_zero.con".
 
-inline cic:/CoRN/algebra/CVectorSpace/zero_vs_op.con.
+inline "cic:/CoRN/algebra/CVectorSpace/zero_vs_op.con".
 
 (* UNEXPORTED
 Hint Resolve vs_op_zero zero_vs_op: algebra.
 *)
 
-inline cic:/CoRN/algebra/CVectorSpace/vs_op_inv_V.con.
+inline "cic:/CoRN/algebra/CVectorSpace/vs_op_inv_V.con".
 
-inline cic:/CoRN/algebra/CVectorSpace/vs_op_inv_S.con.
+inline "cic:/CoRN/algebra/CVectorSpace/vs_op_inv_S.con".
 
 (* UNEXPORTED
 Hint Resolve vs_op_inv_V vs_op_inv_S: algebra.
 *)
 
-inline cic:/CoRN/algebra/CVectorSpace/vs_inv_assoc.con.
+inline "cic:/CoRN/algebra/CVectorSpace/vs_inv_assoc.con".
 
 (* UNEXPORTED
 Hint Resolve vs_inv_assoc: algebra.
 *)
 
-inline cic:/CoRN/algebra/CVectorSpace/ap_zero_vs_op_l.con.
+inline "cic:/CoRN/algebra/CVectorSpace/ap_zero_vs_op_l.con".
 
-inline cic:/CoRN/algebra/CVectorSpace/ap_zero_vs_op_r.con.
+inline "cic:/CoRN/algebra/CVectorSpace/ap_zero_vs_op_r.con".
 
 (* note this is the same proof as mult_resp_ap_zero *)
 
-inline cic:/CoRN/algebra/CVectorSpace/vs_op_resp_ap_rht.con.
+inline "cic:/CoRN/algebra/CVectorSpace/vs_op_resp_ap_rht.con".
 
-inline cic:/CoRN/algebra/CVectorSpace/vs_op_resp_ap_zero.con.
+inline "cic:/CoRN/algebra/CVectorSpace/vs_op_resp_ap_zero.con".
 
-inline cic:/CoRN/algebra/CVectorSpace/vs_op_resp_ap_lft.con.
+inline "cic:/CoRN/algebra/CVectorSpace/vs_op_resp_ap_lft.con".
 
 (* UNEXPORTED
 End VS_basics.

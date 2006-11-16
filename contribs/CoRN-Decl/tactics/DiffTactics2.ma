@@ -16,27 +16,27 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/tactics/DiffTactics2".
 
+include "CoRN.ma".
+
 (* $Id: DiffTactics2.v,v 1.1.1.1 2004/02/05 16:25:45 lionelm Exp $ *)
 
 (* begin hide *)
 
-(* INCLUDE
-Differentiability
-*)
+include "ftc/Differentiability.ma".
 
 (* UNEXPORTED
 Section Automatizing_Continuity.
 *)
 
-inline cic:/CoRN/tactics/DiffTactics2/a.var.
+inline "cic:/CoRN/tactics/DiffTactics2/a.var".
 
-inline cic:/CoRN/tactics/DiffTactics2/b.var.
+inline "cic:/CoRN/tactics/DiffTactics2/b.var".
 
-inline cic:/CoRN/tactics/DiffTactics2/cont_function.ind.
+inline "cic:/CoRN/tactics/DiffTactics2/cont_function.ind".
 
-inline cic:/CoRN/tactics/DiffTactics2/cont_to_pfunct.con.
+inline "cic:/CoRN/tactics/DiffTactics2/cont_to_pfunct.con".
 
-inline cic:/CoRN/tactics/DiffTactics2/continuous_cont.con.
+inline "cic:/CoRN/tactics/DiffTactics2/continuous_cont.con".
 
 (* UNEXPORTED
 End Automatizing_Continuity.
@@ -98,19 +98,19 @@ Ltac New_Contin :=
 Section Automatizing_Derivatives.
 *)
 
-inline cic:/CoRN/tactics/DiffTactics2/a.var.
+inline "cic:/CoRN/tactics/DiffTactics2/a.var".
 
-inline cic:/CoRN/tactics/DiffTactics2/b.var.
+inline "cic:/CoRN/tactics/DiffTactics2/b.var".
 
-inline cic:/CoRN/tactics/DiffTactics2/deriv_function.ind.
+inline "cic:/CoRN/tactics/DiffTactics2/deriv_function.ind".
 
-inline cic:/CoRN/tactics/DiffTactics2/deriv_to_pfunct.con.
+inline "cic:/CoRN/tactics/DiffTactics2/deriv_to_pfunct.con".
 
-inline cic:/CoRN/tactics/DiffTactics2/deriv_deriv.con.
+inline "cic:/CoRN/tactics/DiffTactics2/deriv_deriv.con".
 
-inline cic:/CoRN/tactics/DiffTactics2/deriv_restr.con.
+inline "cic:/CoRN/tactics/DiffTactics2/deriv_restr.con".
 
-inline cic:/CoRN/tactics/DiffTactics2/diffble_restr.con.
+inline "cic:/CoRN/tactics/DiffTactics2/diffble_restr.con".
 
 (* UNEXPORTED
 End Automatizing_Derivatives.

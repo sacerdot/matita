@@ -16,29 +16,27 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/model/monoids/Nposmonoid".
 
+include "CoRN.ma".
+
 (* $Id: Nposmonoid.v,v 1.6 2004/04/08 08:20:33 lcf Exp $ *)
 
-(* INCLUDE
-Npossemigroup
-*)
+include "model/semigroups/Npossemigroup.ma".
 
-(* INCLUDE
-CMonoids
-*)
+include "algebra/CMonoids.ma".
 
 (*#* **Example of a monoid: $\langle$#&lang;#[Npos],[[*]]$\rangle$#&rang;#
 One is the right unit as well as the left unit of the multiplication on the
 positive natural numbers.
 *)
 
-inline cic:/CoRN/model/monoids/Nposmonoid/rhtunitNpos.con.
+inline "cic:/CoRN/model/monoids/Nposmonoid/rhtunitNpos.con".
 
-inline cic:/CoRN/model/monoids/Nposmonoid/lftunitNpos.con.
+inline "cic:/CoRN/model/monoids/Nposmonoid/lftunitNpos.con".
 
 (*#* So, the positive natural numbers with multiplication form a CMonoid.
 *)
 
-inline cic:/CoRN/model/monoids/Nposmonoid/Nposmult_is_CMonoid.con.
+inline "cic:/CoRN/model/monoids/Nposmonoid/Nposmult_is_CMonoid.con".
 
-inline cic:/CoRN/model/monoids/Nposmonoid/Nposmult_as_CMonoid.con.
+inline "cic:/CoRN/model/monoids/Nposmonoid/Nposmult_as_CMonoid.con".
 

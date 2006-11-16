@@ -16,19 +16,17 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/algebra/CPoly_ApZero".
 
+include "CoRN.ma".
+
 (* $Id: CPoly_ApZero.v,v 1.3 2004/04/23 10:00:53 lcf Exp $ *)
 
-(* INCLUDE
-CPoly_Degree
-*)
+include "algebra/CPoly_Degree.ma".
 
-(* INCLUDE
-COrdFields2
-*)
+include "algebra/COrdFields2.ma".
 
 (*#* * Polynomials apart from zero *)
 
-inline cic:/CoRN/algebra/CPoly_ApZero/distinct1.con.
+inline "cic:/CoRN/algebra/CPoly_ApZero/distinct1.con".
 
 (* UNEXPORTED
 Implicit Arguments distinct1 [A].
@@ -47,87 +45,83 @@ has degree at most [n].
 %\end{convention}%
 *)
 
-inline cic:/CoRN/algebra/CPoly_ApZero/R.var.
+inline "cic:/CoRN/algebra/CPoly_ApZero/R.var".
 
-inline cic:/CoRN/algebra/CPoly_ApZero/a_.var.
+inline "cic:/CoRN/algebra/CPoly_ApZero/a_.var".
 
-inline cic:/CoRN/algebra/CPoly_ApZero/distinct_a_.var.
+inline "cic:/CoRN/algebra/CPoly_ApZero/distinct_a_.var".
 
-inline cic:/CoRN/algebra/CPoly_ApZero/f.var.
+inline "cic:/CoRN/algebra/CPoly_ApZero/f.var".
 
-inline cic:/CoRN/algebra/CPoly_ApZero/n.var.
+inline "cic:/CoRN/algebra/CPoly_ApZero/n.var".
 
-inline cic:/CoRN/algebra/CPoly_ApZero/degree_f.var.
+inline "cic:/CoRN/algebra/CPoly_ApZero/degree_f.var".
 
 (* begin hide *)
 
 (* end hide *)
 
-(* INCLUDE
-Transparent_algebra
-*)
+include "tactics/Transparent_algebra.ma".
 
-inline cic:/CoRN/algebra/CPoly_ApZero/poly_linear_shifted.con.
+inline "cic:/CoRN/algebra/CPoly_ApZero/poly_linear_shifted.con".
 
-(* INCLUDE
-Opaque_algebra
-*)
+include "tactics/Opaque_algebra.ma".
 
-inline cic:/CoRN/algebra/CPoly_ApZero/poly_linear_factor.con.
+inline "cic:/CoRN/algebra/CPoly_ApZero/poly_linear_factor.con".
 
-inline cic:/CoRN/algebra/CPoly_ApZero/zero_poly.con.
+inline "cic:/CoRN/algebra/CPoly_ApZero/zero_poly.con".
 
-inline cic:/CoRN/algebra/CPoly_ApZero/identical_poly.con.
+inline "cic:/CoRN/algebra/CPoly_ApZero/identical_poly.con".
 
-inline cic:/CoRN/algebra/CPoly_ApZero/poly_01_factor'.con.
+inline "cic:/CoRN/algebra/CPoly_ApZero/poly_01_factor'.con".
 
-inline cic:/CoRN/algebra/CPoly_ApZero/poly_01_factor'_degree.con.
+inline "cic:/CoRN/algebra/CPoly_ApZero/poly_01_factor'_degree.con".
 
-inline cic:/CoRN/algebra/CPoly_ApZero/poly_01_factor'_zero.con.
+inline "cic:/CoRN/algebra/CPoly_ApZero/poly_01_factor'_zero.con".
 
-inline cic:/CoRN/algebra/CPoly_ApZero/poly_01_factor'_apzero.con.
+inline "cic:/CoRN/algebra/CPoly_ApZero/poly_01_factor'_apzero.con".
 
 (* UNEXPORTED
 Hint Resolve poly_01_factor'_zero.
 *)
 
-inline cic:/CoRN/algebra/CPoly_ApZero/poly_01_factor.con.
+inline "cic:/CoRN/algebra/CPoly_ApZero/poly_01_factor.con".
 
-inline cic:/CoRN/algebra/CPoly_ApZero/poly_01_factor_degree.con.
+inline "cic:/CoRN/algebra/CPoly_ApZero/poly_01_factor_degree.con".
 
-inline cic:/CoRN/algebra/CPoly_ApZero/poly_01_factor_zero.con.
+inline "cic:/CoRN/algebra/CPoly_ApZero/poly_01_factor_zero.con".
 
-inline cic:/CoRN/algebra/CPoly_ApZero/poly_01_factor_one.con.
+inline "cic:/CoRN/algebra/CPoly_ApZero/poly_01_factor_one.con".
 
 (* UNEXPORTED
 Hint Resolve poly_01_factor_zero poly_01_factor_one: algebra.
 *)
 
-inline cic:/CoRN/algebra/CPoly_ApZero/poly_01.con.
+inline "cic:/CoRN/algebra/CPoly_ApZero/poly_01.con".
 
-inline cic:/CoRN/algebra/CPoly_ApZero/poly_01_degree'.con.
+inline "cic:/CoRN/algebra/CPoly_ApZero/poly_01_degree'.con".
 
-inline cic:/CoRN/algebra/CPoly_ApZero/poly_01_degree.con.
+inline "cic:/CoRN/algebra/CPoly_ApZero/poly_01_degree.con".
 
-inline cic:/CoRN/algebra/CPoly_ApZero/poly_01_zero.con.
+inline "cic:/CoRN/algebra/CPoly_ApZero/poly_01_zero.con".
 
-inline cic:/CoRN/algebra/CPoly_ApZero/poly_01_one.con.
+inline "cic:/CoRN/algebra/CPoly_ApZero/poly_01_one.con".
 
 (* UNEXPORTED
 Hint Resolve poly_01_zero poly_01_one: algebra.
 *)
 
-inline cic:/CoRN/algebra/CPoly_ApZero/poly_representation''.con.
+inline "cic:/CoRN/algebra/CPoly_ApZero/poly_representation''.con".
 
-inline cic:/CoRN/algebra/CPoly_ApZero/poly_representation'.con.
+inline "cic:/CoRN/algebra/CPoly_ApZero/poly_representation'.con".
 
-inline cic:/CoRN/algebra/CPoly_ApZero/poly_representation.con.
+inline "cic:/CoRN/algebra/CPoly_ApZero/poly_representation.con".
 
 (* UNEXPORTED
 Hint Resolve poly_representation: algebra.
 *)
 
-inline cic:/CoRN/algebra/CPoly_ApZero/Cpoly_choose_apzero.con.
+inline "cic:/CoRN/algebra/CPoly_ApZero/Cpoly_choose_apzero.con".
 
 (* UNEXPORTED
 End Poly_Representation.
@@ -142,11 +136,11 @@ If we are in a field of characteristic zero, the previous result can be
 strengthened.
 *)
 
-inline cic:/CoRN/algebra/CPoly_ApZero/R.var.
+inline "cic:/CoRN/algebra/CPoly_ApZero/R.var".
 
 (* begin show *)
 
-inline cic:/CoRN/algebra/CPoly_ApZero/H.var.
+inline "cic:/CoRN/algebra/CPoly_ApZero/H.var".
 
 (* end show *)
 
@@ -154,13 +148,13 @@ inline cic:/CoRN/algebra/CPoly_ApZero/H.var.
 
 (* end hide *)
 
-inline cic:/CoRN/algebra/CPoly_ApZero/poly_apzero.con.
+inline "cic:/CoRN/algebra/CPoly_ApZero/poly_apzero.con".
 
 (*#*
 Also, in this situation polynomials are extensional functions.
 *)
 
-inline cic:/CoRN/algebra/CPoly_ApZero/poly_extensional.con.
+inline "cic:/CoRN/algebra/CPoly_ApZero/poly_extensional.con".
 
 (* UNEXPORTED
 End Characteristic_zero.
@@ -174,13 +168,13 @@ End Characteristic_zero.
 Section Poly_ApZero_Interval.
 *)
 
-inline cic:/CoRN/algebra/CPoly_ApZero/R.var.
+inline "cic:/CoRN/algebra/CPoly_ApZero/R.var".
 
 (* begin hide *)
 
 (* end hide *)
 
-inline cic:/CoRN/algebra/CPoly_ApZero/Cpoly_apzero_interval.con.
+inline "cic:/CoRN/algebra/CPoly_ApZero/Cpoly_apzero_interval.con".
 
 (* UNEXPORTED
 End Poly_ApZero_Interval.

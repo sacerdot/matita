@@ -16,17 +16,15 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/model/structures/Qpossec".
 
+include "CoRN.ma".
+
 (* $Id: Qpossec.v,v 1.5 2004/04/06 15:46:05 lcf Exp $ *)
 
 (*#* printing Qpos $\mathbb{Q}^{+}$ #Q<SUP>+</SUP># *)
 
-(* INCLUDE
-Qsec
-*)
+include "model/structures/Qsec.ma".
 
-(* INCLUDE
-CLogic
-*)
+include "algebra/CLogic.ma".
 
 (*#* **About [Qpos]
 We will prove some lemmas concerning rationals bigger than 0.
@@ -35,28 +33,28 @@ We will prove some lemmas concerning rationals bigger than 0.
 One, two and four are all bigger than zero.
 *)
 
-inline cic:/CoRN/model/structures/Qpossec/pos_QONE.con.
+inline "cic:/CoRN/model/structures/Qpossec/pos_QONE.con".
 
-inline cic:/CoRN/model/structures/Qpossec/pos_QTWO.con.
+inline "cic:/CoRN/model/structures/Qpossec/pos_QTWO.con".
 
-inline cic:/CoRN/model/structures/Qpossec/pos_QFOUR.con.
+inline "cic:/CoRN/model/structures/Qpossec/pos_QFOUR.con".
 
 (*#* A positive rational is not zero.
 *)
 
-inline cic:/CoRN/model/structures/Qpossec/pos_imp_nonzero.con.
+inline "cic:/CoRN/model/structures/Qpossec/pos_imp_nonzero.con".
 
 (*#* ***Multiplication
 The product of two positive rationals is again positive.
 *)
 
-inline cic:/CoRN/model/structures/Qpossec/Qmult_pres_pos0.con.
+inline "cic:/CoRN/model/structures/Qpossec/Qmult_pres_pos0.con".
 
 (*#* ***Inverse
 The inverse of a positive rational is again positive.
 *)
 
-inline cic:/CoRN/model/structures/Qpossec/inv_pres_pos0.con.
+inline "cic:/CoRN/model/structures/Qpossec/inv_pres_pos0.con".
 
 (*#* ***Special multiplication
 Now we will investigate the function $(x,y) \mapsto xy/2$#(x,y)
@@ -64,9 +62,9 @@ Now we will investigate the function $(x,y) \mapsto xy/2$#(x,y)
 \mapsto 4/x$ #x &#x21A6; 4/x#.
 *)
 
-inline cic:/CoRN/model/structures/Qpossec/QTWOpos_is_rht_unit0.con.
+inline "cic:/CoRN/model/structures/Qpossec/QTWOpos_is_rht_unit0.con".
 
-inline cic:/CoRN/model/structures/Qpossec/QTWOpos_is_left_unit0.con.
+inline "cic:/CoRN/model/structures/Qpossec/QTWOpos_is_left_unit0.con".
 
-inline cic:/CoRN/model/structures/Qpossec/multdiv2_is_inv.con.
+inline "cic:/CoRN/model/structures/Qpossec/multdiv2_is_inv.con".
 

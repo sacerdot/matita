@@ -16,17 +16,15 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/ftc/PartFunEquality".
 
+include "CoRN.ma".
+
 (* $Id: PartFunEquality.v,v 1.8 2004/04/23 10:00:59 lcf Exp $ *)
 
 (*#* printing Feq %\ensuremath{\approx}% #&asymp;# *)
 
-(* INCLUDE
-Intervals
-*)
+include "reals/Intervals.ma".
 
-(* INCLUDE
-DiffTactics1
-*)
+include "tactics/DiffTactics1.ma".
 
 (* UNEXPORTED
 Section Definitions.
@@ -42,7 +40,7 @@ given predicate rather than to the predicate itself.  The following
 definition makes this possible.
 *)
 
-inline cic:/CoRN/ftc/PartFunEquality/subset.con.
+inline "cic:/CoRN/ftc/PartFunEquality/subset.con".
 
 (*#*
 The core of our work will revolve around the following fundamental
@@ -54,7 +52,7 @@ it is easier to consider a generic case%.}%.  This file is concerned
 with proving the main properties of this equality relation.
 *)
 
-inline cic:/CoRN/ftc/PartFunEquality/Feq.con.
+inline "cic:/CoRN/ftc/PartFunEquality/Feq.con".
 
 (*#*
 Notice that, because the quantification over the proofs is universal,
@@ -89,32 +87,32 @@ by [P] and [Q], respectively, the domains of [F] and [G].
 %\end{convention}%
 *)
 
-inline cic:/CoRN/ftc/PartFunEquality/I.var.
+inline "cic:/CoRN/ftc/PartFunEquality/I.var".
 
-inline cic:/CoRN/ftc/PartFunEquality/F.var.
+inline "cic:/CoRN/ftc/PartFunEquality/F.var".
 
-inline cic:/CoRN/ftc/PartFunEquality/G.var.
+inline "cic:/CoRN/ftc/PartFunEquality/G.var".
 
 (* begin hide *)
 
-inline cic:/CoRN/ftc/PartFunEquality/P.con.
+inline "cic:/CoRN/ftc/PartFunEquality/P.con".
 
-inline cic:/CoRN/ftc/PartFunEquality/Q.con.
+inline "cic:/CoRN/ftc/PartFunEquality/Q.con".
 
 (* end hide *)
 
-inline cic:/CoRN/ftc/PartFunEquality/R.var.
+inline "cic:/CoRN/ftc/PartFunEquality/R.var".
 
 (*#*
 We start with two lemmas which make it much easier to prove and use
 this definition:
 *)
 
-inline cic:/CoRN/ftc/PartFunEquality/eq_imp_Feq.con.
+inline "cic:/CoRN/ftc/PartFunEquality/eq_imp_Feq.con".
 
-inline cic:/CoRN/ftc/PartFunEquality/Feq_imp_eq.con.
+inline "cic:/CoRN/ftc/PartFunEquality/Feq_imp_eq.con".
 
-inline cic:/CoRN/ftc/PartFunEquality/included_IR.con.
+inline "cic:/CoRN/ftc/PartFunEquality/included_IR.con".
 
 (* UNEXPORTED
 End Equality_Results.
@@ -132,7 +130,7 @@ Section Some_More.
 If two function coincide on a given subset then they coincide in any smaller subset.
 *)
 
-inline cic:/CoRN/ftc/PartFunEquality/included_Feq.con.
+inline "cic:/CoRN/ftc/PartFunEquality/included_Feq.con".
 
 (* UNEXPORTED
 End Some_More.
@@ -158,17 +156,17 @@ the domain of [F].
 %\end{convention}%
 *)
 
-inline cic:/CoRN/ftc/PartFunEquality/I.var.
+inline "cic:/CoRN/ftc/PartFunEquality/I.var".
 
-inline cic:/CoRN/ftc/PartFunEquality/F.var.
+inline "cic:/CoRN/ftc/PartFunEquality/F.var".
 
 (* begin hide *)
 
-inline cic:/CoRN/ftc/PartFunEquality/P.con.
+inline "cic:/CoRN/ftc/PartFunEquality/P.con".
 
 (* end hide *)
 
-inline cic:/CoRN/ftc/PartFunEquality/bnd_away_zero.con.
+inline "cic:/CoRN/ftc/PartFunEquality/bnd_away_zero.con".
 
 (*#*
 If [F] is bounded away from zero in [I] then [F] is necessarily apart from zero in [I]; also this means that [I] is included in the domain of [{1/}F].
@@ -176,15 +174,15 @@ If [F] is bounded away from zero in [I] then [F] is necessarily apart from zero 
 
 (* begin show *)
 
-inline cic:/CoRN/ftc/PartFunEquality/Hf.var.
+inline "cic:/CoRN/ftc/PartFunEquality/Hf.var".
 
 (* end show *)
 
-inline cic:/CoRN/ftc/PartFunEquality/bnd_imp_ap_zero.con.
+inline "cic:/CoRN/ftc/PartFunEquality/bnd_imp_ap_zero.con".
 
-inline cic:/CoRN/ftc/PartFunEquality/bnd_imp_inc_recip.con.
+inline "cic:/CoRN/ftc/PartFunEquality/bnd_imp_inc_recip.con".
 
-inline cic:/CoRN/ftc/PartFunEquality/bnd_imp_inc_div.con.
+inline "cic:/CoRN/ftc/PartFunEquality/bnd_imp_inc_div.con".
 
 (* UNEXPORTED
 End Definitions.
@@ -197,31 +195,31 @@ Boundedness away from zero is preserved through restriction of the set.
 %\end{convention}%
 *)
 
-inline cic:/CoRN/ftc/PartFunEquality/F.var.
+inline "cic:/CoRN/ftc/PartFunEquality/F.var".
 
-inline cic:/CoRN/ftc/PartFunEquality/P.var.
+inline "cic:/CoRN/ftc/PartFunEquality/P.var".
 
-inline cic:/CoRN/ftc/PartFunEquality/Q.var.
+inline "cic:/CoRN/ftc/PartFunEquality/Q.var".
 
-inline cic:/CoRN/ftc/PartFunEquality/included_imp_bnd.con.
+inline "cic:/CoRN/ftc/PartFunEquality/included_imp_bnd.con".
 
-inline cic:/CoRN/ftc/PartFunEquality/FRestr_bnd.con.
+inline "cic:/CoRN/ftc/PartFunEquality/FRestr_bnd.con".
 
 (*#*
 A function is said to be bounded away from zero everywhere if it is bounded away from zero in every compact subinterval of its domain; a similar definition is made for arbitrary sets, which will be necessary for future work.
 *)
 
-inline cic:/CoRN/ftc/PartFunEquality/bnd_away_zero_everywhere.con.
+inline "cic:/CoRN/ftc/PartFunEquality/bnd_away_zero_everywhere.con".
 
-inline cic:/CoRN/ftc/PartFunEquality/bnd_away_zero_in_P.con.
+inline "cic:/CoRN/ftc/PartFunEquality/bnd_away_zero_in_P.con".
 
 (*#*
 An immediate consequence:
 *)
 
-inline cic:/CoRN/ftc/PartFunEquality/bnd_in_P_imp_ap_zero.con.
+inline "cic:/CoRN/ftc/PartFunEquality/bnd_in_P_imp_ap_zero.con".
 
-inline cic:/CoRN/ftc/PartFunEquality/FRestr_bnd'.con.
+inline "cic:/CoRN/ftc/PartFunEquality/FRestr_bnd'.con".
 
 (* UNEXPORTED
 End Away_from_Zero.
@@ -263,23 +261,23 @@ partial functions.
 %\end{convention}%
 *)
 
-inline cic:/CoRN/ftc/PartFunEquality/I.var.
+inline "cic:/CoRN/ftc/PartFunEquality/I.var".
 
 (* UNEXPORTED
 Section Feq_Equivalence.
 *)
 
-inline cic:/CoRN/ftc/PartFunEquality/F.var.
+inline "cic:/CoRN/ftc/PartFunEquality/F.var".
 
-inline cic:/CoRN/ftc/PartFunEquality/G.var.
+inline "cic:/CoRN/ftc/PartFunEquality/G.var".
 
-inline cic:/CoRN/ftc/PartFunEquality/H.var.
+inline "cic:/CoRN/ftc/PartFunEquality/H.var".
 
-inline cic:/CoRN/ftc/PartFunEquality/Feq_reflexive.con.
+inline "cic:/CoRN/ftc/PartFunEquality/Feq_reflexive.con".
 
-inline cic:/CoRN/ftc/PartFunEquality/Feq_symmetric.con.
+inline "cic:/CoRN/ftc/PartFunEquality/Feq_symmetric.con".
 
-inline cic:/CoRN/ftc/PartFunEquality/Feq_transitive.con.
+inline "cic:/CoRN/ftc/PartFunEquality/Feq_transitive.con".
 
 (* UNEXPORTED
 End Feq_Equivalence.
@@ -293,31 +291,31 @@ Section Operations.
 Also it is preserved through application of functional constructors and restriction.
 *)
 
-inline cic:/CoRN/ftc/PartFunEquality/F.var.
+inline "cic:/CoRN/ftc/PartFunEquality/F.var".
 
-inline cic:/CoRN/ftc/PartFunEquality/F'.var.
+inline "cic:/CoRN/ftc/PartFunEquality/F'.var".
 
-inline cic:/CoRN/ftc/PartFunEquality/G.var.
+inline "cic:/CoRN/ftc/PartFunEquality/G.var".
 
-inline cic:/CoRN/ftc/PartFunEquality/G'.var.
+inline "cic:/CoRN/ftc/PartFunEquality/G'.var".
 
-inline cic:/CoRN/ftc/PartFunEquality/Feq_plus.con.
+inline "cic:/CoRN/ftc/PartFunEquality/Feq_plus.con".
 
-inline cic:/CoRN/ftc/PartFunEquality/Feq_inv.con.
+inline "cic:/CoRN/ftc/PartFunEquality/Feq_inv.con".
 
-inline cic:/CoRN/ftc/PartFunEquality/Feq_minus.con.
+inline "cic:/CoRN/ftc/PartFunEquality/Feq_minus.con".
 
-inline cic:/CoRN/ftc/PartFunEquality/Feq_mult.con.
+inline "cic:/CoRN/ftc/PartFunEquality/Feq_mult.con".
 
-inline cic:/CoRN/ftc/PartFunEquality/Feq_nth.con.
+inline "cic:/CoRN/ftc/PartFunEquality/Feq_nth.con".
 
-inline cic:/CoRN/ftc/PartFunEquality/Feq_recip.con.
+inline "cic:/CoRN/ftc/PartFunEquality/Feq_recip.con".
 
-inline cic:/CoRN/ftc/PartFunEquality/Feq_recip'.con.
+inline "cic:/CoRN/ftc/PartFunEquality/Feq_recip'.con".
 
-inline cic:/CoRN/ftc/PartFunEquality/Feq_div.con.
+inline "cic:/CoRN/ftc/PartFunEquality/Feq_div.con".
 
-inline cic:/CoRN/ftc/PartFunEquality/Feq_div'.con.
+inline "cic:/CoRN/ftc/PartFunEquality/Feq_div'.con".
 
 (*#*
 Notice that in the case of division we only need to require boundedness away from zero for one of the functions (as they are equal); thus the two last lemmas are stated in two different ways, as according to the context one or the other condition may be easier to prove.
@@ -325,13 +323,13 @@ Notice that in the case of division we only need to require boundedness away fro
 The restriction of a function is well defined.
 *)
 
-inline cic:/CoRN/ftc/PartFunEquality/FRestr_wd.con.
+inline "cic:/CoRN/ftc/PartFunEquality/FRestr_wd.con".
 
 (*#*
 The image of a set is extensional.
 *)
 
-inline cic:/CoRN/ftc/PartFunEquality/fun_image_wd.con.
+inline "cic:/CoRN/ftc/PartFunEquality/fun_image_wd.con".
 
 (* UNEXPORTED
 End Operations.
@@ -357,27 +355,27 @@ equality relation.
 %\end{convention}%
 *)
 
-inline cic:/CoRN/ftc/PartFunEquality/F.var.
+inline "cic:/CoRN/ftc/PartFunEquality/F.var".
 
 (* begin hide *)
 
-inline cic:/CoRN/ftc/PartFunEquality/P.con.
+inline "cic:/CoRN/ftc/PartFunEquality/P.con".
 
 (* end hide *)
 
-inline cic:/CoRN/ftc/PartFunEquality/Q.var.
+inline "cic:/CoRN/ftc/PartFunEquality/Q.var".
 
-inline cic:/CoRN/ftc/PartFunEquality/H.var.
+inline "cic:/CoRN/ftc/PartFunEquality/H.var".
 
-inline cic:/CoRN/ftc/PartFunEquality/Hf.var.
+inline "cic:/CoRN/ftc/PartFunEquality/Hf.var".
 
-inline cic:/CoRN/ftc/PartFunEquality/FNth_zero.con.
+inline "cic:/CoRN/ftc/PartFunEquality/FNth_zero.con".
 
-inline cic:/CoRN/ftc/PartFunEquality/n.var.
+inline "cic:/CoRN/ftc/PartFunEquality/n.var".
 
-inline cic:/CoRN/ftc/PartFunEquality/H'.var.
+inline "cic:/CoRN/ftc/PartFunEquality/H'.var".
 
-inline cic:/CoRN/ftc/PartFunEquality/FNth_mult.con.
+inline "cic:/CoRN/ftc/PartFunEquality/FNth_mult.con".
 
 (* UNEXPORTED
 End Nth_Power.
@@ -393,25 +391,25 @@ is included in the domain of [F].
 %\end{convention}%
 *)
 
-inline cic:/CoRN/ftc/PartFunEquality/a.var.
+inline "cic:/CoRN/ftc/PartFunEquality/a.var".
 
-inline cic:/CoRN/ftc/PartFunEquality/b.var.
+inline "cic:/CoRN/ftc/PartFunEquality/b.var".
 
-inline cic:/CoRN/ftc/PartFunEquality/Hab.var.
+inline "cic:/CoRN/ftc/PartFunEquality/Hab.var".
 
 (* begin hide *)
 
-inline cic:/CoRN/ftc/PartFunEquality/I.con.
+inline "cic:/CoRN/ftc/PartFunEquality/I.con".
 
 (* end hide *)
 
-inline cic:/CoRN/ftc/PartFunEquality/F.var.
+inline "cic:/CoRN/ftc/PartFunEquality/F.var".
 
-inline cic:/CoRN/ftc/PartFunEquality/incF.var.
+inline "cic:/CoRN/ftc/PartFunEquality/incF.var".
 
-inline cic:/CoRN/ftc/PartFunEquality/FNth_zero'.con.
+inline "cic:/CoRN/ftc/PartFunEquality/FNth_zero'.con".
 
-inline cic:/CoRN/ftc/PartFunEquality/FNth_mult'.con.
+inline "cic:/CoRN/ftc/PartFunEquality/FNth_mult'.con".
 
 (* UNEXPORTED
 End Strong_Nth_Power.

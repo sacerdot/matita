@@ -16,11 +16,11 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/transc/TrigMon".
 
+include "CoRN.ma".
+
 (* $Id: TrigMon.v,v 1.9 2004/04/23 10:01:08 lcf Exp $ *)
 
-(* INCLUDE
-Pi
-*)
+include "transc/Pi.ma".
 
 (* UNEXPORTED
 Opaque Sine Cosine.
@@ -32,42 +32,42 @@ $(-\frac{\pi}2,\frac{\pi}2)$#(-&pi;/2,&pi;/2)#, sine in
 $(0,\pi)$#(0,&pi;)# and tangent in $(0,\frac{\pi}2)$#0,&pi;/2)#.
 *)
 
-inline cic:/CoRN/transc/TrigMon/Cos_pos.con.
+inline "cic:/CoRN/transc/TrigMon/Cos_pos.con".
 
-inline cic:/CoRN/transc/TrigMon/Sin_pos.con.
+inline "cic:/CoRN/transc/TrigMon/Sin_pos.con".
 
-inline cic:/CoRN/transc/TrigMon/Tan_pos.con.
+inline "cic:/CoRN/transc/TrigMon/Tan_pos.con".
 
-inline cic:/CoRN/transc/TrigMon/Cos_nonneg.con.
+inline "cic:/CoRN/transc/TrigMon/Cos_nonneg.con".
 
-inline cic:/CoRN/transc/TrigMon/Sin_nonneg.con.
+inline "cic:/CoRN/transc/TrigMon/Sin_nonneg.con".
 
 (*#* Consequences. *)
 
-inline cic:/CoRN/transc/TrigMon/Abs_Sin_less_One.con.
+inline "cic:/CoRN/transc/TrigMon/Abs_Sin_less_One.con".
 
-inline cic:/CoRN/transc/TrigMon/Abs_Cos_less_One.con.
+inline "cic:/CoRN/transc/TrigMon/Abs_Cos_less_One.con".
 
 (*#*
 Sine is (strictly) increasing in [[ [--]Pi[/]Two,Pi[/]Two]]; cosine
 is (strictly) decreasing in [[Zero,Pi]].
 *)
 
-inline cic:/CoRN/transc/TrigMon/Sin_resp_leEq.con.
+inline "cic:/CoRN/transc/TrigMon/Sin_resp_leEq.con".
 
-inline cic:/CoRN/transc/TrigMon/Cos_resp_leEq.con.
+inline "cic:/CoRN/transc/TrigMon/Cos_resp_leEq.con".
 
 (* begin hide *)
 
-inline cic:/CoRN/transc/TrigMon/Cos_resp_less_aux.con.
+inline "cic:/CoRN/transc/TrigMon/Cos_resp_less_aux.con".
 
-inline cic:/CoRN/transc/TrigMon/Cos_resp_less_aux'.con.
+inline "cic:/CoRN/transc/TrigMon/Cos_resp_less_aux'.con".
 
 (* end hide *)
 
-inline cic:/CoRN/transc/TrigMon/Cos_resp_less.con.
+inline "cic:/CoRN/transc/TrigMon/Cos_resp_less.con".
 
-inline cic:/CoRN/transc/TrigMon/Sin_resp_less.con.
+inline "cic:/CoRN/transc/TrigMon/Sin_resp_less.con".
 
 (* UNEXPORTED
 Section Tangent.
@@ -79,19 +79,19 @@ Finally, two formulas for the derivative of the tangent function and
 monotonicity properties.
 *)
 
-inline cic:/CoRN/transc/TrigMon/bnd_Cos.con.
+inline "cic:/CoRN/transc/TrigMon/bnd_Cos.con".
 
 (* UNEXPORTED
 Opaque Sine Cosine.
 *)
 
-inline cic:/CoRN/transc/TrigMon/Derivative_Tan_1.con.
+inline "cic:/CoRN/transc/TrigMon/Derivative_Tan_1.con".
 
-inline cic:/CoRN/transc/TrigMon/Derivative_Tan_2.con.
+inline "cic:/CoRN/transc/TrigMon/Derivative_Tan_2.con".
 
-inline cic:/CoRN/transc/TrigMon/Tan_resp_less.con.
+inline "cic:/CoRN/transc/TrigMon/Tan_resp_less.con".
 
-inline cic:/CoRN/transc/TrigMon/Tan_resp_leEq.con.
+inline "cic:/CoRN/transc/TrigMon/Tan_resp_leEq.con".
 
 (* UNEXPORTED
 End Tangent.

@@ -16,15 +16,13 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/model/semigroups/Nsemigroup".
 
+include "CoRN.ma".
+
 (* $Id: Nsemigroup.v,v 1.6 2004/04/08 08:20:34 lcf Exp $ *)
 
-(* INCLUDE
-Nsetoid
-*)
+include "model/setoids/Nsetoid.ma".
 
-(* INCLUDE
-CSemiGroups
-*)
+include "algebra/CSemiGroups.ma".
 
 (*#* **Example of a semi-group: $\langle$#&lang;#[nat],[[+]]$\rangle$#&rang;#
 *)
@@ -32,5 +30,5 @@ CSemiGroups
 (*#* Because addition is associative, the natural numbers form a CSemiGroup.
 *)
 
-inline cic:/CoRN/model/semigroups/Nsemigroup/nat_as_CSemiGroup.con.
+inline "cic:/CoRN/model/semigroups/Nsemigroup/nat_as_CSemiGroup.con".
 

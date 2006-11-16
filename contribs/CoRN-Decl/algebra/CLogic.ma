@@ -16,6 +16,8 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/algebra/CLogic".
 
+include "CoRN.ma".
+
 (* $Id: CLogic.v,v 1.10 2004/04/09 15:58:31 lcf Exp $ *)
 
 (*#* printing Not %\ensuremath\neg% #~# *)
@@ -36,29 +38,7 @@ set "baseuri" "cic:/matita/CoRN-Decl/algebra/CLogic".
 
 (*#* printing and %\ensuremath{\mathrel\wedge}% *)
 
-(* INCLUDE
-Compare_dec
-*)
-
-(* INCLUDE
-Basics
-*)
-
-(* INCLUDE
-ZArith
-*)
-
-(* INCLUDE
-ZArithRing
-*)
-
-(* INCLUDE
-Div2
-*)
-
-(* INCLUDE
-Wf_nat
-*)
+include "algebra/Basics.ma".
 
 (*#* *Extending the Coq Logic
 Because notions of apartness and order have computational meaning, we
@@ -98,7 +78,7 @@ propositions, such as [(le m n)], we have to introduce a [CProp]-valued
 version.
 *)
 
-inline cic:/CoRN/algebra/CLogic/CProp.con.
+inline "cic:/CoRN/algebra/CLogic/CProp.con".
 
 (* UNEXPORTED
 Section Basics.
@@ -109,53 +89,53 @@ Here we treat conversion from [Prop] to [CProp] and vice versa,
 and some basic connectives in [CProp].
 *)
 
-inline cic:/CoRN/algebra/CLogic/Not.con.
+inline "cic:/CoRN/algebra/CLogic/Not.con".
 
-inline cic:/CoRN/algebra/CLogic/CAnd.ind.
+inline "cic:/CoRN/algebra/CLogic/CAnd.ind".
 
-inline cic:/CoRN/algebra/CLogic/Iff.con.
+inline "cic:/CoRN/algebra/CLogic/Iff.con".
 
-inline cic:/CoRN/algebra/CLogic/CFalse.ind.
+inline "cic:/CoRN/algebra/CLogic/CFalse.ind".
 
-inline cic:/CoRN/algebra/CLogic/CTrue.ind.
+inline "cic:/CoRN/algebra/CLogic/CTrue.ind".
 
-inline cic:/CoRN/algebra/CLogic/proj1_sigT.con.
+inline "cic:/CoRN/algebra/CLogic/proj1_sigT.con".
 
-inline cic:/CoRN/algebra/CLogic/proj2_sigT.con.
+inline "cic:/CoRN/algebra/CLogic/proj2_sigT.con".
 
-inline cic:/CoRN/algebra/CLogic/sig2T.ind.
+inline "cic:/CoRN/algebra/CLogic/sig2T.ind".
 
-inline cic:/CoRN/algebra/CLogic/proj1_sig2T.con.
+inline "cic:/CoRN/algebra/CLogic/proj1_sig2T.con".
 
-inline cic:/CoRN/algebra/CLogic/proj2a_sig2T.con.
+inline "cic:/CoRN/algebra/CLogic/proj2a_sig2T.con".
 
-inline cic:/CoRN/algebra/CLogic/proj2b_sig2T.con.
+inline "cic:/CoRN/algebra/CLogic/proj2b_sig2T.con".
 
-inline cic:/CoRN/algebra/CLogic/toCProp.ind.
+inline "cic:/CoRN/algebra/CLogic/toCProp.ind".
 
-inline cic:/CoRN/algebra/CLogic/toCProp_e.con.
+inline "cic:/CoRN/algebra/CLogic/toCProp_e.con".
 
-inline cic:/CoRN/algebra/CLogic/CNot.con.
+inline "cic:/CoRN/algebra/CLogic/CNot.con".
 
-inline cic:/CoRN/algebra/CLogic/Ccontrapos'.con.
+inline "cic:/CoRN/algebra/CLogic/Ccontrapos'.con".
 
-inline cic:/CoRN/algebra/CLogic/COr.ind.
+inline "cic:/CoRN/algebra/CLogic/COr.ind".
 
 (*#* 
 Some lemmas to make it possible to use [Step] when reasoning with
 biimplications.*)
 
-inline cic:/CoRN/algebra/CLogic/Iff_left.con.
+inline "cic:/CoRN/algebra/CLogic/Iff_left.con".
 
-inline cic:/CoRN/algebra/CLogic/Iff_right.con.
+inline "cic:/CoRN/algebra/CLogic/Iff_right.con".
 
-inline cic:/CoRN/algebra/CLogic/Iff_refl.con.
+inline "cic:/CoRN/algebra/CLogic/Iff_refl.con".
 
-inline cic:/CoRN/algebra/CLogic/Iff_sym.con.
+inline "cic:/CoRN/algebra/CLogic/Iff_sym.con".
 
-inline cic:/CoRN/algebra/CLogic/Iff_trans.con.
+inline "cic:/CoRN/algebra/CLogic/Iff_trans.con".
 
-inline cic:/CoRN/algebra/CLogic/Iff_imp_imp.con.
+inline "cic:/CoRN/algebra/CLogic/Iff_imp_imp.con".
 
 (* UNEXPORTED
 Declare Right Step Iff_right.
@@ -177,9 +157,9 @@ End Basics.
 
 (* end hide *)
 
-inline cic:/CoRN/algebra/CLogic/not_r_cor_rect.con.
+inline "cic:/CoRN/algebra/CLogic/not_r_cor_rect.con".
 
-inline cic:/CoRN/algebra/CLogic/not_l_cor_rect.con.
+inline "cic:/CoRN/algebra/CLogic/not_l_cor_rect.con".
 
 (* begin hide *)
 
@@ -214,9 +194,9 @@ Section Choice.
 Let [P] be a predicate on $\NN^2$#N times N#.
 *)
 
-inline cic:/CoRN/algebra/CLogic/P.var.
+inline "cic:/CoRN/algebra/CLogic/P.var".
 
-inline cic:/CoRN/algebra/CLogic/choice.con.
+inline "cic:/CoRN/algebra/CLogic/choice.con".
 
 (* UNEXPORTED
 End Choice.
@@ -230,9 +210,9 @@ Section Logical_Remarks.
 when [A], [B] and [C] are non trivial.
 *)
 
-inline cic:/CoRN/algebra/CLogic/CNot_Not_or.con.
+inline "cic:/CoRN/algebra/CLogic/CNot_Not_or.con".
 
-inline cic:/CoRN/algebra/CLogic/CdeMorgan_ex_all.con.
+inline "cic:/CoRN/algebra/CLogic/CdeMorgan_ex_all.con".
 
 (* UNEXPORTED
 End Logical_Remarks.
@@ -249,19 +229,19 @@ Similar to Relations.v in Coq's standard library.
 %\end{convention}%
 *)
 
-inline cic:/CoRN/algebra/CLogic/A.var.
+inline "cic:/CoRN/algebra/CLogic/A.var".
 
-inline cic:/CoRN/algebra/CLogic/Crelation.con.
+inline "cic:/CoRN/algebra/CLogic/Crelation.con".
 
-inline cic:/CoRN/algebra/CLogic/R.var.
+inline "cic:/CoRN/algebra/CLogic/R.var".
 
-inline cic:/CoRN/algebra/CLogic/Creflexive.con.
+inline "cic:/CoRN/algebra/CLogic/Creflexive.con".
 
-inline cic:/CoRN/algebra/CLogic/Ctransitive.con.
+inline "cic:/CoRN/algebra/CLogic/Ctransitive.con".
 
-inline cic:/CoRN/algebra/CLogic/Csymmetric.con.
+inline "cic:/CoRN/algebra/CLogic/Csymmetric.con".
 
-inline cic:/CoRN/algebra/CLogic/Cequiv.con.
+inline "cic:/CoRN/algebra/CLogic/Cequiv.con".
 
 (* UNEXPORTED
 End CRelation_Definition.
@@ -278,25 +258,25 @@ Analogous.
 %\end{convention}%
 *)
 
-inline cic:/CoRN/algebra/CLogic/A.var.
+inline "cic:/CoRN/algebra/CLogic/A.var".
 
-inline cic:/CoRN/algebra/CLogic/Trelation.con.
+inline "cic:/CoRN/algebra/CLogic/Trelation.con".
 
-inline cic:/CoRN/algebra/CLogic/R.var.
+inline "cic:/CoRN/algebra/CLogic/R.var".
 
-inline cic:/CoRN/algebra/CLogic/Treflexive.con.
+inline "cic:/CoRN/algebra/CLogic/Treflexive.con".
 
-inline cic:/CoRN/algebra/CLogic/Ttransitive.con.
+inline "cic:/CoRN/algebra/CLogic/Ttransitive.con".
 
-inline cic:/CoRN/algebra/CLogic/Tsymmetric.con.
+inline "cic:/CoRN/algebra/CLogic/Tsymmetric.con".
 
-inline cic:/CoRN/algebra/CLogic/Tequiv.con.
+inline "cic:/CoRN/algebra/CLogic/Tequiv.con".
 
 (* UNEXPORTED
 End TRelation_Definition.
 *)
 
-inline cic:/CoRN/algebra/CLogic/eqs.ind.
+inline "cic:/CoRN/algebra/CLogic/eqs.ind".
 
 (* UNEXPORTED
 Section le_odd.
@@ -305,45 +285,45 @@ Section le_odd.
 (*#* ** The relation [le], [lt], [odd] and [even] in [CProp]
 *)
 
-inline cic:/CoRN/algebra/CLogic/Cle.ind.
+inline "cic:/CoRN/algebra/CLogic/Cle.ind".
 
-inline cic:/CoRN/algebra/CLogic/Cnat_double_ind.con.
+inline "cic:/CoRN/algebra/CLogic/Cnat_double_ind.con".
 
-inline cic:/CoRN/algebra/CLogic/my_Cle_ind.con.
+inline "cic:/CoRN/algebra/CLogic/my_Cle_ind.con".
 
-inline cic:/CoRN/algebra/CLogic/Cle_n_S.con.
+inline "cic:/CoRN/algebra/CLogic/Cle_n_S.con".
 
-inline cic:/CoRN/algebra/CLogic/toCle.con.
+inline "cic:/CoRN/algebra/CLogic/toCle.con".
 
 (* UNEXPORTED
 Hint Resolve toCle.
 *)
 
-inline cic:/CoRN/algebra/CLogic/Cle_to.con.
+inline "cic:/CoRN/algebra/CLogic/Cle_to.con".
 
-inline cic:/CoRN/algebra/CLogic/Clt.con.
+inline "cic:/CoRN/algebra/CLogic/Clt.con".
 
-inline cic:/CoRN/algebra/CLogic/toCProp_lt.con.
+inline "cic:/CoRN/algebra/CLogic/toCProp_lt.con".
 
-inline cic:/CoRN/algebra/CLogic/Clt_to.con.
+inline "cic:/CoRN/algebra/CLogic/Clt_to.con".
 
-inline cic:/CoRN/algebra/CLogic/Cle_le_S_eq.con.
+inline "cic:/CoRN/algebra/CLogic/Cle_le_S_eq.con".
 
-inline cic:/CoRN/algebra/CLogic/Cnat_total_order.con.
+inline "cic:/CoRN/algebra/CLogic/Cnat_total_order.con".
 
-inline cic:/CoRN/algebra/CLogic/Codd.ind.
+inline "cic:/CoRN/algebra/CLogic/Codd.ind".
 
-inline cic:/CoRN/algebra/CLogic/Codd_even_to.con.
+inline "cic:/CoRN/algebra/CLogic/Codd_even_to.con".
 
-inline cic:/CoRN/algebra/CLogic/Codd_to.con.
+inline "cic:/CoRN/algebra/CLogic/Codd_to.con".
 
-inline cic:/CoRN/algebra/CLogic/Ceven_to.con.
+inline "cic:/CoRN/algebra/CLogic/Ceven_to.con".
 
-inline cic:/CoRN/algebra/CLogic/to_Codd_even.con.
+inline "cic:/CoRN/algebra/CLogic/to_Codd_even.con".
 
-inline cic:/CoRN/algebra/CLogic/to_Codd.con.
+inline "cic:/CoRN/algebra/CLogic/to_Codd.con".
 
-inline cic:/CoRN/algebra/CLogic/to_Ceven.con.
+inline "cic:/CoRN/algebra/CLogic/to_Ceven.con".
 
 (* UNEXPORTED
 End le_odd.
@@ -356,17 +336,17 @@ Section Misc.
 (*#* **Miscellaneous
 *)
 
-inline cic:/CoRN/algebra/CLogic/CZ_exh.con.
+inline "cic:/CoRN/algebra/CLogic/CZ_exh.con".
 
-inline cic:/CoRN/algebra/CLogic/Cnats_Z_ind.con.
+inline "cic:/CoRN/algebra/CLogic/Cnats_Z_ind.con".
 
-inline cic:/CoRN/algebra/CLogic/Cdiff_Z_ind.con.
+inline "cic:/CoRN/algebra/CLogic/Cdiff_Z_ind.con".
 
-inline cic:/CoRN/algebra/CLogic/Cpred_succ_Z_ind.con.
+inline "cic:/CoRN/algebra/CLogic/Cpred_succ_Z_ind.con".
 
-inline cic:/CoRN/algebra/CLogic/not_r_sum_rec.con.
+inline "cic:/CoRN/algebra/CLogic/not_r_sum_rec.con".
 
-inline cic:/CoRN/algebra/CLogic/not_l_sum_rec.con.
+inline "cic:/CoRN/algebra/CLogic/not_l_sum_rec.con".
 
 (* UNEXPORTED
 End Misc.
@@ -381,9 +361,9 @@ write them in that form but we will single out the preservation of the
 setoid equality.
 *)
 
-inline cic:/CoRN/algebra/CLogic/nat_less_n_pred.con.
+inline "cic:/CoRN/algebra/CLogic/nat_less_n_pred.con".
 
-inline cic:/CoRN/algebra/CLogic/nat_less_n_pred'.con.
+inline "cic:/CoRN/algebra/CLogic/nat_less_n_pred'.con".
 
 (* UNEXPORTED
 Implicit Arguments nat_less_n_pred [n].
@@ -403,14 +383,14 @@ We begin by proving that this case distinction is decidable.
 Next, we prove the usual results about sums of even and odd numbers:
 *)
 
-inline cic:/CoRN/algebra/CLogic/even_plus_n_n.con.
+inline "cic:/CoRN/algebra/CLogic/even_plus_n_n.con".
 
-inline cic:/CoRN/algebra/CLogic/even_or_odd_plus.con.
+inline "cic:/CoRN/algebra/CLogic/even_or_odd_plus.con".
 
 (*#* Finally, we prove that an arbitrary natural number can be written in some canonical way.
 *)
 
-inline cic:/CoRN/algebra/CLogic/even_or_odd_plus_gt.con.
+inline "cic:/CoRN/algebra/CLogic/even_or_odd_plus_gt.con".
 
 (* UNEXPORTED
 End Odd_and_Even.
@@ -436,27 +416,27 @@ definitions.  Giving a name to these results allows us to use them in
 definitions keeping conciseness.
 *)
 
-inline cic:/CoRN/algebra/CLogic/Clt_le_weak.con.
+inline "cic:/CoRN/algebra/CLogic/Clt_le_weak.con".
 
-inline cic:/CoRN/algebra/CLogic/lt_5.con.
+inline "cic:/CoRN/algebra/CLogic/lt_5.con".
 
-inline cic:/CoRN/algebra/CLogic/lt_8.con.
+inline "cic:/CoRN/algebra/CLogic/lt_8.con".
 
-inline cic:/CoRN/algebra/CLogic/pred_lt.con.
+inline "cic:/CoRN/algebra/CLogic/pred_lt.con".
 
-inline cic:/CoRN/algebra/CLogic/lt_10.con.
+inline "cic:/CoRN/algebra/CLogic/lt_10.con".
 
-inline cic:/CoRN/algebra/CLogic/lt_pred'.con.
+inline "cic:/CoRN/algebra/CLogic/lt_pred'.con".
 
-inline cic:/CoRN/algebra/CLogic/le_1.con.
+inline "cic:/CoRN/algebra/CLogic/le_1.con".
 
-inline cic:/CoRN/algebra/CLogic/le_2.con.
+inline "cic:/CoRN/algebra/CLogic/le_2.con".
 
-inline cic:/CoRN/algebra/CLogic/plus_eq_one_imp_eq_zero.con.
+inline "cic:/CoRN/algebra/CLogic/plus_eq_one_imp_eq_zero.con".
 
-inline cic:/CoRN/algebra/CLogic/not_not_lt.con.
+inline "cic:/CoRN/algebra/CLogic/not_not_lt.con".
 
-inline cic:/CoRN/algebra/CLogic/plus_pred_pred_plus.con.
+inline "cic:/CoRN/algebra/CLogic/plus_pred_pred_plus.con".
 
 (*#* We now prove some properties of functions on the natural numbers.
 
@@ -464,7 +444,7 @@ inline cic:/CoRN/algebra/CLogic/plus_pred_pred_plus.con.
 %\end{convention}%
 *)
 
-inline cic:/CoRN/algebra/CLogic/h.var.
+inline "cic:/CoRN/algebra/CLogic/h.var".
 
 (*#*
 First we characterize monotonicity by a local condition: if [h(n) < h(n+1)]
@@ -472,17 +452,17 @@ for every natural number [n] then [h] is monotonous.  An analogous result
 holds for weak monotonicity.
 *)
 
-inline cic:/CoRN/algebra/CLogic/nat_local_mon_imp_mon.con.
+inline "cic:/CoRN/algebra/CLogic/nat_local_mon_imp_mon.con".
 
-inline cic:/CoRN/algebra/CLogic/nat_local_mon_imp_mon_le.con.
+inline "cic:/CoRN/algebra/CLogic/nat_local_mon_imp_mon_le.con".
 
 (*#* A strictly increasing function is injective: *)
 
-inline cic:/CoRN/algebra/CLogic/nat_mon_imp_inj.con.
+inline "cic:/CoRN/algebra/CLogic/nat_mon_imp_inj.con".
 
 (*#* And (not completely trivial) a function that preserves [lt] also preserves [le]. *)
 
-inline cic:/CoRN/algebra/CLogic/nat_mon_imp_mon'.con.
+inline "cic:/CoRN/algebra/CLogic/nat_mon_imp_mon'.con".
 
 (*#*
 The last lemmas in this section state that a monotonous function in the
@@ -491,9 +471,9 @@ natural number [n] there is an [i] such that [h(i) <= n<(n+1) <= h(i+1)].
 These are useful for integration.
 *)
 
-inline cic:/CoRN/algebra/CLogic/mon_fun_covers.con.
+inline "cic:/CoRN/algebra/CLogic/mon_fun_covers.con".
 
-inline cic:/CoRN/algebra/CLogic/weird_mon_covers.con.
+inline "cic:/CoRN/algebra/CLogic/weird_mon_covers.con".
 
 (* UNEXPORTED
 End Natural_Numbers.
@@ -503,7 +483,7 @@ End Natural_Numbers.
 Useful for the Fundamental Theorem of Algebra.
 *)
 
-inline cic:/CoRN/algebra/CLogic/kseq_prop.con.
+inline "cic:/CoRN/algebra/CLogic/kseq_prop.con".
 
 (* UNEXPORTED
 Section Predicates_to_CProp.
@@ -517,23 +497,23 @@ for [CProp]- and [Prop]-valued predicates.  We begin by presenting the
 results for [CProp]-valued predicates:
 *)
 
-inline cic:/CoRN/algebra/CLogic/even_induction.con.
+inline "cic:/CoRN/algebra/CLogic/even_induction.con".
 
-inline cic:/CoRN/algebra/CLogic/odd_induction.con.
+inline "cic:/CoRN/algebra/CLogic/odd_induction.con".
 
-inline cic:/CoRN/algebra/CLogic/four_induction.con.
+inline "cic:/CoRN/algebra/CLogic/four_induction.con".
 
-inline cic:/CoRN/algebra/CLogic/nat_complete_double_induction.con.
+inline "cic:/CoRN/algebra/CLogic/nat_complete_double_induction.con".
 
-inline cic:/CoRN/algebra/CLogic/odd_double_ind.con.
+inline "cic:/CoRN/algebra/CLogic/odd_double_ind.con".
 
 (*#* For subsetoid predicates in the natural numbers we can eliminate
 disjunction (and existential quantification) as follows.
 *)
 
-inline cic:/CoRN/algebra/CLogic/finite_or_elim.con.
+inline "cic:/CoRN/algebra/CLogic/finite_or_elim.con".
 
-inline cic:/CoRN/algebra/CLogic/str_finite_or_elim.con.
+inline "cic:/CoRN/algebra/CLogic/str_finite_or_elim.con".
 
 (* UNEXPORTED
 End Predicates_to_CProp.
@@ -547,13 +527,13 @@ Section Predicates_to_Prop.
 completeness's sake.
 *)
 
-inline cic:/CoRN/algebra/CLogic/even_ind.con.
+inline "cic:/CoRN/algebra/CLogic/even_ind.con".
 
-inline cic:/CoRN/algebra/CLogic/odd_ind.con.
+inline "cic:/CoRN/algebra/CLogic/odd_ind.con".
 
-inline cic:/CoRN/algebra/CLogic/nat_complete_double_ind.con.
+inline "cic:/CoRN/algebra/CLogic/nat_complete_double_ind.con".
 
-inline cic:/CoRN/algebra/CLogic/four_ind.con.
+inline "cic:/CoRN/algebra/CLogic/four_ind.con".
 
 (* UNEXPORTED
 End Predicates_to_Prop.
@@ -572,41 +552,41 @@ Tactic Notation "ElimCompare" constr(c) constr(d) :=  elim_compare c d.
 
 (* end hide *)
 
-inline cic:/CoRN/algebra/CLogic/Zlts.con.
+inline "cic:/CoRN/algebra/CLogic/Zlts.con".
 
-inline cic:/CoRN/algebra/CLogic/toCProp_Zlt.con.
+inline "cic:/CoRN/algebra/CLogic/toCProp_Zlt.con".
 
-inline cic:/CoRN/algebra/CLogic/CZlt_to.con.
+inline "cic:/CoRN/algebra/CLogic/CZlt_to.con".
 
-inline cic:/CoRN/algebra/CLogic/Zsgn_1.con.
+inline "cic:/CoRN/algebra/CLogic/Zsgn_1.con".
 
-inline cic:/CoRN/algebra/CLogic/Zsgn_2.con.
+inline "cic:/CoRN/algebra/CLogic/Zsgn_2.con".
 
-inline cic:/CoRN/algebra/CLogic/Zsgn_3.con.
+inline "cic:/CoRN/algebra/CLogic/Zsgn_3.con".
 
 (*#* The following have unusual names, in line with the series of lemmata in
 fast_integers.v.
 *)
 
-inline cic:/CoRN/algebra/CLogic/ZL4'.con.
+inline "cic:/CoRN/algebra/CLogic/ZL4'.con".
 
-inline cic:/CoRN/algebra/CLogic/ZL9.con.
+inline "cic:/CoRN/algebra/CLogic/ZL9.con".
 
-inline cic:/CoRN/algebra/CLogic/Zsgn_4.con.
+inline "cic:/CoRN/algebra/CLogic/Zsgn_4.con".
 
-inline cic:/CoRN/algebra/CLogic/Zsgn_5.con.
+inline "cic:/CoRN/algebra/CLogic/Zsgn_5.con".
 
-inline cic:/CoRN/algebra/CLogic/nat_nat_pos.con.
+inline "cic:/CoRN/algebra/CLogic/nat_nat_pos.con".
 
-inline cic:/CoRN/algebra/CLogic/S_predn.con.
+inline "cic:/CoRN/algebra/CLogic/S_predn.con".
 
-inline cic:/CoRN/algebra/CLogic/absolu_1.con.
+inline "cic:/CoRN/algebra/CLogic/absolu_1.con".
 
-inline cic:/CoRN/algebra/CLogic/absolu_2.con.
+inline "cic:/CoRN/algebra/CLogic/absolu_2.con".
 
-inline cic:/CoRN/algebra/CLogic/Zgt_mult_conv_absorb_l.con.
+inline "cic:/CoRN/algebra/CLogic/Zgt_mult_conv_absorb_l.con".
 
-inline cic:/CoRN/algebra/CLogic/Zgt_mult_reg_absorb_l.con.
+inline "cic:/CoRN/algebra/CLogic/Zgt_mult_reg_absorb_l.con".
 
-inline cic:/CoRN/algebra/CLogic/Zmult_Sm_Sn.con.
+inline "cic:/CoRN/algebra/CLogic/Zmult_Sm_Sn.con".
 

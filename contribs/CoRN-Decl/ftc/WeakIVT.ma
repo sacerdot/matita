@@ -16,6 +16,8 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/ftc/WeakIVT".
 
+include "CoRN.ma".
+
 (* $Id: WeakIVT.v,v 1.9 2004/04/23 10:01:01 lcf Exp $ *)
 
 (*#* printing ** %\ensuremath\times% #&times;# *)
@@ -24,9 +26,7 @@ set "baseuri" "cic:/matita/CoRN-Decl/ftc/WeakIVT".
 
 (* end hide *)
 
-(* INCLUDE
-Continuity
-*)
+include "ftc/Continuity.ma".
 
 (*#* *IVT for Partial Functions
 
@@ -43,21 +43,21 @@ will prove them here.
 Section Lemma1.
 *)
 
-inline cic:/CoRN/ftc/WeakIVT/a.var.
+inline "cic:/CoRN/ftc/WeakIVT/a.var".
 
-inline cic:/CoRN/ftc/WeakIVT/b.var.
+inline "cic:/CoRN/ftc/WeakIVT/b.var".
 
-inline cic:/CoRN/ftc/WeakIVT/Hab.var.
+inline "cic:/CoRN/ftc/WeakIVT/Hab.var".
 
 (* begin hide *)
 
-inline cic:/CoRN/ftc/WeakIVT/I.con.
+inline "cic:/CoRN/ftc/WeakIVT/I.con".
 
 (* end hide *)
 
-inline cic:/CoRN/ftc/WeakIVT/F.var.
+inline "cic:/CoRN/ftc/WeakIVT/F.var".
 
-inline cic:/CoRN/ftc/WeakIVT/contF.var.
+inline "cic:/CoRN/ftc/WeakIVT/contF.var".
 
 (*#* **First Lemmas
 
@@ -70,7 +70,7 @@ We begin by proving that, if [f(a) [<] f(b)], then for every [y] in
 enough to [z].
 *)
 
-inline cic:/CoRN/ftc/WeakIVT/Weak_IVT_ap_lft.con.
+inline "cic:/CoRN/ftc/WeakIVT/Weak_IVT_ap_lft.con".
 
 (* UNEXPORTED
 End Lemma1.
@@ -80,27 +80,27 @@ End Lemma1.
 Section Lemma2.
 *)
 
-inline cic:/CoRN/ftc/WeakIVT/a.var.
+inline "cic:/CoRN/ftc/WeakIVT/a.var".
 
-inline cic:/CoRN/ftc/WeakIVT/b.var.
+inline "cic:/CoRN/ftc/WeakIVT/b.var".
 
-inline cic:/CoRN/ftc/WeakIVT/Hab.var.
+inline "cic:/CoRN/ftc/WeakIVT/Hab.var".
 
 (* begin hide *)
 
-inline cic:/CoRN/ftc/WeakIVT/I.con.
+inline "cic:/CoRN/ftc/WeakIVT/I.con".
 
 (* end hide *)
 
-inline cic:/CoRN/ftc/WeakIVT/F.var.
+inline "cic:/CoRN/ftc/WeakIVT/F.var".
 
-inline cic:/CoRN/ftc/WeakIVT/contF.var.
+inline "cic:/CoRN/ftc/WeakIVT/contF.var".
 
 (*#*
 If [f(b) [<] f(a)], a similar result holds:
 *)
 
-inline cic:/CoRN/ftc/WeakIVT/Weak_IVT_ap_rht.con.
+inline "cic:/CoRN/ftc/WeakIVT/Weak_IVT_ap_rht.con".
 
 (* UNEXPORTED
 End Lemma2.
@@ -118,53 +118,53 @@ these assumptions, we can build two sequences of values which
 converge to [x0] such that [f(x0) [=] z].
 *)
 
-inline cic:/CoRN/ftc/WeakIVT/a.var.
+inline "cic:/CoRN/ftc/WeakIVT/a.var".
 
-inline cic:/CoRN/ftc/WeakIVT/b.var.
+inline "cic:/CoRN/ftc/WeakIVT/b.var".
 
-inline cic:/CoRN/ftc/WeakIVT/Hab'.var.
+inline "cic:/CoRN/ftc/WeakIVT/Hab'.var".
 
-inline cic:/CoRN/ftc/WeakIVT/Hab.var.
+inline "cic:/CoRN/ftc/WeakIVT/Hab.var".
 
 (* begin hide *)
 
-inline cic:/CoRN/ftc/WeakIVT/I.con.
+inline "cic:/CoRN/ftc/WeakIVT/I.con".
 
 (* end hide *)
 
-inline cic:/CoRN/ftc/WeakIVT/F.var.
+inline "cic:/CoRN/ftc/WeakIVT/F.var".
 
-inline cic:/CoRN/ftc/WeakIVT/contF.var.
+inline "cic:/CoRN/ftc/WeakIVT/contF.var".
 
 (* begin hide *)
 
-inline cic:/CoRN/ftc/WeakIVT/incF.con.
+inline "cic:/CoRN/ftc/WeakIVT/incF.con".
 
 (* end hide *)
 
 (* begin show *)
 
-inline cic:/CoRN/ftc/WeakIVT/incrF.var.
+inline "cic:/CoRN/ftc/WeakIVT/incrF.var".
 
 (* end show *)
 
 (* begin hide *)
 
-inline cic:/CoRN/ftc/WeakIVT/Ha.con.
+inline "cic:/CoRN/ftc/WeakIVT/Ha.con".
 
-inline cic:/CoRN/ftc/WeakIVT/Hb.con.
+inline "cic:/CoRN/ftc/WeakIVT/Hb.con".
 
-inline cic:/CoRN/ftc/WeakIVT/HFab'.con.
+inline "cic:/CoRN/ftc/WeakIVT/HFab'.con".
 
 (* end hide *)
 
 (* begin show *)
 
-inline cic:/CoRN/ftc/WeakIVT/z.var.
+inline "cic:/CoRN/ftc/WeakIVT/z.var".
 
-inline cic:/CoRN/ftc/WeakIVT/Haz.var.
+inline "cic:/CoRN/ftc/WeakIVT/Haz.var".
 
-inline cic:/CoRN/ftc/WeakIVT/Hzb.var.
+inline "cic:/CoRN/ftc/WeakIVT/Hzb.var".
 
 (* end show *)
 
@@ -173,7 +173,7 @@ we can find [x' [<] y'] such that $|x'-y'|=\frac23|x-y|$#|x'-y'|=2/3|x-y|#
 and [x' [<=] z [<=] y'].
 *)
 
-inline cic:/CoRN/ftc/WeakIVT/IVT_seq_lemma.con.
+inline "cic:/CoRN/ftc/WeakIVT/IVT_seq_lemma.con".
 
 (* end hide *)
 
@@ -181,51 +181,51 @@ inline cic:/CoRN/ftc/WeakIVT/IVT_seq_lemma.con.
 We now iterate this construction.
 *)
 
-inline cic:/CoRN/ftc/WeakIVT/IVT_aux_seq_type.ind.
+inline "cic:/CoRN/ftc/WeakIVT/IVT_aux_seq_type.ind".
 
-inline cic:/CoRN/ftc/WeakIVT/IVT_iter.con.
+inline "cic:/CoRN/ftc/WeakIVT/IVT_iter.con".
 
-inline cic:/CoRN/ftc/WeakIVT/IVT_seq.con.
+inline "cic:/CoRN/ftc/WeakIVT/IVT_seq.con".
 
 (*#*
 We now define the sequences built from this iteration, starting with [a] and [b].
 *)
 
-inline cic:/CoRN/ftc/WeakIVT/a_seq.con.
+inline "cic:/CoRN/ftc/WeakIVT/a_seq.con".
 
-inline cic:/CoRN/ftc/WeakIVT/b_seq.con.
+inline "cic:/CoRN/ftc/WeakIVT/b_seq.con".
 
-inline cic:/CoRN/ftc/WeakIVT/a_seq_I.con.
+inline "cic:/CoRN/ftc/WeakIVT/a_seq_I.con".
 
-inline cic:/CoRN/ftc/WeakIVT/b_seq_I.con.
+inline "cic:/CoRN/ftc/WeakIVT/b_seq_I.con".
 
-inline cic:/CoRN/ftc/WeakIVT/a_seq_less_b_seq.con.
+inline "cic:/CoRN/ftc/WeakIVT/a_seq_less_b_seq.con".
 
-inline cic:/CoRN/ftc/WeakIVT/a_seq_leEq_z.con.
+inline "cic:/CoRN/ftc/WeakIVT/a_seq_leEq_z.con".
 
-inline cic:/CoRN/ftc/WeakIVT/z_leEq_b_seq.con.
+inline "cic:/CoRN/ftc/WeakIVT/z_leEq_b_seq.con".
 
-inline cic:/CoRN/ftc/WeakIVT/a_seq_mon.con.
+inline "cic:/CoRN/ftc/WeakIVT/a_seq_mon.con".
 
-inline cic:/CoRN/ftc/WeakIVT/b_seq_mon.con.
+inline "cic:/CoRN/ftc/WeakIVT/b_seq_mon.con".
 
-inline cic:/CoRN/ftc/WeakIVT/a_seq_b_seq_dist_n.con.
+inline "cic:/CoRN/ftc/WeakIVT/a_seq_b_seq_dist_n.con".
 
-inline cic:/CoRN/ftc/WeakIVT/a_seq_b_seq_dist.con.
+inline "cic:/CoRN/ftc/WeakIVT/a_seq_b_seq_dist.con".
 
-inline cic:/CoRN/ftc/WeakIVT/a_seq_Cauchy.con.
+inline "cic:/CoRN/ftc/WeakIVT/a_seq_Cauchy.con".
 
-inline cic:/CoRN/ftc/WeakIVT/b_seq_Cauchy.con.
+inline "cic:/CoRN/ftc/WeakIVT/b_seq_Cauchy.con".
 
-inline cic:/CoRN/ftc/WeakIVT/xa.con.
+inline "cic:/CoRN/ftc/WeakIVT/xa.con".
 
-inline cic:/CoRN/ftc/WeakIVT/xb.con.
+inline "cic:/CoRN/ftc/WeakIVT/xb.con".
 
-inline cic:/CoRN/ftc/WeakIVT/a_seq_b_seq_lim.con.
+inline "cic:/CoRN/ftc/WeakIVT/a_seq_b_seq_lim.con".
 
-inline cic:/CoRN/ftc/WeakIVT/xa_in_interval.con.
+inline "cic:/CoRN/ftc/WeakIVT/xa_in_interval.con".
 
-inline cic:/CoRN/ftc/WeakIVT/IVT_I.con.
+inline "cic:/CoRN/ftc/WeakIVT/IVT_I.con".
 
 (* UNEXPORTED
 End IVT.

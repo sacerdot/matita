@@ -16,67 +16,59 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/devel/loeb/per/csetfun".
 
-(* INCLUDE
-CSetoids
-*)
+include "CoRN.ma".
 
-(* INCLUDE
-CSetoidFun
-*)
+include "algebra/CSetoids.ma".
 
-inline cic:/CoRN/devel/loeb/per/csetfun/ap_fun.con.
+include "algebra/CSetoidFun.ma".
 
-inline cic:/CoRN/devel/loeb/per/csetfun/eq_fun.con.
+inline "cic:/CoRN/devel/loeb/per/csetfun/ap_fun.con".
 
-inline cic:/CoRN/devel/loeb/per/csetfun/irrefl_apfun.con.
+inline "cic:/CoRN/devel/loeb/per/csetfun/eq_fun.con".
 
-inline cic:/CoRN/devel/loeb/per/csetfun/cotrans_apfun.con.
+inline "cic:/CoRN/devel/loeb/per/csetfun/irrefl_apfun.con".
 
-inline cic:/CoRN/devel/loeb/per/csetfun/ta_apfun.con.
+inline "cic:/CoRN/devel/loeb/per/csetfun/cotrans_apfun.con".
 
-inline cic:/CoRN/devel/loeb/per/csetfun/sym_apfun.con.
+inline "cic:/CoRN/devel/loeb/per/csetfun/ta_apfun.con".
 
-inline cic:/CoRN/devel/loeb/per/csetfun/FS_is_CSetoid.con.
+inline "cic:/CoRN/devel/loeb/per/csetfun/sym_apfun.con".
 
-inline cic:/CoRN/devel/loeb/per/csetfun/FS_as_CSetoid.con.
+inline "cic:/CoRN/devel/loeb/per/csetfun/FS_is_CSetoid.con".
+
+inline "cic:/CoRN/devel/loeb/per/csetfun/FS_as_CSetoid.con".
 
 (* UNEXPORTED
 Print associative.
 *)
 
-inline cic:/CoRN/devel/loeb/per/csetfun/comp.con.
+inline "cic:/CoRN/devel/loeb/per/csetfun/comp.con".
 
-inline cic:/CoRN/devel/loeb/per/csetfun/comp_as_bin_op.con.
+inline "cic:/CoRN/devel/loeb/per/csetfun/comp_as_bin_op.con".
 
-inline cic:/CoRN/devel/loeb/per/csetfun/assoc_comp.con.
+inline "cic:/CoRN/devel/loeb/per/csetfun/assoc_comp.con".
 
-(* INCLUDE
-CSemiGroups
-*)
+include "algebra/CSemiGroups.ma".
 
-inline cic:/CoRN/devel/loeb/per/csetfun/FS_as_CSemiGroup.con.
+inline "cic:/CoRN/devel/loeb/per/csetfun/FS_as_CSemiGroup.con".
 
-(* INCLUDE
-CMonoids
-*)
+include "algebra/CMonoids.ma".
 
-inline cic:/CoRN/devel/loeb/per/csetfun/FS_id.con.
+inline "cic:/CoRN/devel/loeb/per/csetfun/FS_id.con".
 
-inline cic:/CoRN/devel/loeb/per/csetfun/id_is_rht_unit.con.
+inline "cic:/CoRN/devel/loeb/per/csetfun/id_is_rht_unit.con".
 
-inline cic:/CoRN/devel/loeb/per/csetfun/id_is_lft_unit.con.
+inline "cic:/CoRN/devel/loeb/per/csetfun/id_is_lft_unit.con".
 
-inline cic:/CoRN/devel/loeb/per/csetfun/FS_is_CMonoid.con.
+inline "cic:/CoRN/devel/loeb/per/csetfun/FS_is_CMonoid.con".
 
-inline cic:/CoRN/devel/loeb/per/csetfun/FS_as_CMonoid.con.
+inline "cic:/CoRN/devel/loeb/per/csetfun/FS_as_CMonoid.con".
 
-inline cic:/CoRN/devel/loeb/per/csetfun/PS_as_CMonoid.con.
+inline "cic:/CoRN/devel/loeb/per/csetfun/PS_as_CMonoid.con".
 
-(* INCLUDE
-CGroups
-*)
+include "algebra/CGroups.ma".
 
-inline cic:/CoRN/devel/loeb/per/csetfun/Inv_is_bij.con.
+inline "cic:/CoRN/devel/loeb/per/csetfun/Inv_is_bij.con".
 
 (* Lemma Inv_is_bij :
  forall (A B : CSetoid) (f : CSetoid_fun A B) (H : bijective f),
@@ -130,13 +122,13 @@ set (H6 := ap_imp_neq B (f0 x) (f0 b) H4) in *.
 intuition.
 Qed.*)
 
-inline cic:/CoRN/devel/loeb/per/csetfun/PS_Inv.con.
+inline "cic:/CoRN/devel/loeb/per/csetfun/PS_Inv.con".
 
-inline cic:/CoRN/devel/loeb/per/csetfun/Inv_as_un_op.con.
+inline "cic:/CoRN/devel/loeb/per/csetfun/Inv_as_un_op.con".
 
-inline cic:/CoRN/devel/loeb/per/csetfun/PS_is_CGroup.con.
+inline "cic:/CoRN/devel/loeb/per/csetfun/PS_is_CGroup.con".
 
-inline cic:/CoRN/devel/loeb/per/csetfun/PS_as_CGroup.con.
+inline "cic:/CoRN/devel/loeb/per/csetfun/PS_as_CGroup.con".
 
 (* In het algemeen niet Abels! *)
 

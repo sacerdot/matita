@@ -16,13 +16,13 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/algebra/CMonoids".
 
+include "CoRN.ma".
+
 (* $Id: CMonoids.v,v 1.3 2004/04/07 15:07:57 lcf Exp $ *)
 
 (*#* printing Zero %\ensuremath{\mathbf0}% #0# *)
 
-(* INCLUDE
-CSemiGroups
-*)
+include "algebra/CSemiGroups.ma".
 
 (* Begin_SpecReals *)
 
@@ -31,11 +31,11 @@ CSemiGroups
 ** Definition of monoids
 *)
 
-inline cic:/CoRN/algebra/CMonoids/is_rht_unit.con.
+inline "cic:/CoRN/algebra/CMonoids/is_rht_unit.con".
 
 (* End_SpecReals *)
 
-inline cic:/CoRN/algebra/CMonoids/is_lft_unit.con.
+inline "cic:/CoRN/algebra/CMonoids/is_lft_unit.con".
 
 (* UNEXPORTED
 Implicit Arguments is_lft_unit [S].
@@ -47,9 +47,11 @@ Implicit Arguments is_lft_unit [S].
 Implicit Arguments is_rht_unit [S].
 *)
 
-inline cic:/CoRN/algebra/CMonoids/is_CMonoid.ind.
+inline "cic:/CoRN/algebra/CMonoids/is_CMonoid.ind".
 
-inline cic:/CoRN/algebra/CMonoids/CMonoid.ind.
+inline "cic:/CoRN/algebra/CMonoids/CMonoid.ind".
+
+coercion "cic:/matita/CoRN-Decl/algebra/CMonoids/cm_crr.con" 0 (* compounds *).
 
 (*#*
 %\begin{nameconvention}%
@@ -68,7 +70,7 @@ In lemmas we will continue to write [x [#] Zero], rather than
 e.g. for the setoid of non-zeros.
 *)
 
-inline cic:/CoRN/algebra/CMonoids/nonZeroP.con.
+inline "cic:/CoRN/algebra/CMonoids/nonZeroP.con".
 
 (* End_SpecReals *)
 
@@ -86,13 +88,13 @@ Implicit Arguments nonZeroP [M].
 Section CMonoid_axioms.
 *)
 
-inline cic:/CoRN/algebra/CMonoids/M.var.
+inline "cic:/CoRN/algebra/CMonoids/M.var".
 
-inline cic:/CoRN/algebra/CMonoids/CMonoid_is_CMonoid.con.
+inline "cic:/CoRN/algebra/CMonoids/CMonoid_is_CMonoid.con".
 
-inline cic:/CoRN/algebra/CMonoids/cm_rht_unit.con.
+inline "cic:/CoRN/algebra/CMonoids/cm_rht_unit.con".
 
-inline cic:/CoRN/algebra/CMonoids/cm_lft_unit.con.
+inline "cic:/CoRN/algebra/CMonoids/cm_lft_unit.con".
 
 (* UNEXPORTED
 End CMonoid_axioms.
@@ -108,19 +110,19 @@ End CMonoid_axioms.
 Section CMonoid_basics.
 *)
 
-inline cic:/CoRN/algebra/CMonoids/M.var.
+inline "cic:/CoRN/algebra/CMonoids/M.var".
 
-inline cic:/CoRN/algebra/CMonoids/cm_rht_unit_unfolded.con.
+inline "cic:/CoRN/algebra/CMonoids/cm_rht_unit_unfolded.con".
 
-inline cic:/CoRN/algebra/CMonoids/cm_lft_unit_unfolded.con.
+inline "cic:/CoRN/algebra/CMonoids/cm_lft_unit_unfolded.con".
 
 (* UNEXPORTED
 Hint Resolve cm_rht_unit_unfolded cm_lft_unit_unfolded: algebra.
 *)
 
-inline cic:/CoRN/algebra/CMonoids/cm_unit_unique_lft.con.
+inline "cic:/CoRN/algebra/CMonoids/cm_unit_unique_lft.con".
 
-inline cic:/CoRN/algebra/CMonoids/cm_unit_unique_rht.con.
+inline "cic:/CoRN/algebra/CMonoids/cm_unit_unique_rht.con".
 
 (* Begin_SpecReals *)
 
@@ -128,7 +130,7 @@ inline cic:/CoRN/algebra/CMonoids/cm_unit_unique_rht.con.
 The proof component of the monoid is irrelevant.
 *)
 
-inline cic:/CoRN/algebra/CMonoids/is_CMonoid_proof_irr.con.
+inline "cic:/CoRN/algebra/CMonoids/is_CMonoid_proof_irr.con".
 
 (* End_SpecReals *)
 
@@ -143,17 +145,17 @@ Let [P] a predicate on [M] containing [Zero] and closed under [[+]].
 Section SubCMonoids.
 *)
 
-inline cic:/CoRN/algebra/CMonoids/P.var.
+inline "cic:/CoRN/algebra/CMonoids/P.var".
 
-inline cic:/CoRN/algebra/CMonoids/Punit.var.
+inline "cic:/CoRN/algebra/CMonoids/Punit.var".
 
-inline cic:/CoRN/algebra/CMonoids/op_pres_P.var.
+inline "cic:/CoRN/algebra/CMonoids/op_pres_P.var".
 
-inline cic:/CoRN/algebra/CMonoids/subcrr.con.
+inline "cic:/CoRN/algebra/CMonoids/subcrr.con".
 
-inline cic:/CoRN/algebra/CMonoids/ismon_scrr.con.
+inline "cic:/CoRN/algebra/CMonoids/ismon_scrr.con".
 
-inline cic:/CoRN/algebra/CMonoids/Build_SubCMonoid.con.
+inline "cic:/CoRN/algebra/CMonoids/Build_SubCMonoid.con".
 
 (* UNEXPORTED
 End SubCMonoids.

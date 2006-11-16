@@ -16,26 +16,24 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/model/semigroups/Zsemigroup".
 
+include "CoRN.ma".
+
 (* $Id: Zsemigroup.v,v 1.6 2004/04/08 08:20:35 lcf Exp $ *)
 
-(* INCLUDE
-Zsetoid
-*)
+include "model/setoids/Zsetoid.ma".
 
-(* INCLUDE
-CSemiGroups
-*)
+include "algebra/CSemiGroups.ma".
 
 (*#* **Examples of semi-groups: $\langle$#&lang;#[Z],[[+]]$\rangle$#&rang;# and $\langle$#&lang;#[Z],[[*]]$\rangle$#&rang;#
 ***$\langle$#&lang;#[Z],[[+]]$\rangle$#&rang;#
 *)
 
-inline cic:/CoRN/model/semigroups/Zsemigroup/Z_as_CSemiGroup.con.
+inline "cic:/CoRN/model/semigroups/Zsemigroup/Z_as_CSemiGroup.con".
 
 (*#* The term [Z_as_CSemiGroup] is of type [CSemiGroup]. Hence we have proven that [Z] is a constructive semi-group. *)
 
 (*#* ***$\langle$#&lang;#[Z],[[*]]$\rangle$#&rang;#
 *)
 
-inline cic:/CoRN/model/semigroups/Zsemigroup/Z_mul_as_CSemiGroup.con.
+inline "cic:/CoRN/model/semigroups/Zsemigroup/Z_mul_as_CSemiGroup.con".
 

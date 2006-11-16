@@ -16,6 +16,8 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/reals/Bridges_iso".
 
+include "CoRN.ma".
+
 (* begin hide *)
 
 (* file        : bridges_gives_our.v                               *)
@@ -32,89 +34,87 @@ set "baseuri" "cic:/matita/CoRN-Decl/reals/Bridges_iso".
 
 (* description : Bridges' proof of Cauchy completeness in TCS-219  *)
 
-(* INCLUDE
-Bridges_LUB
-*)
+include "reals/Bridges_LUB.ma".
 
 (* This lemma comes from lemmas.v of Martijn Oostdijk *)
 
-inline cic:/CoRN/reals/Bridges_iso/le_witness_informative.con.
+inline "cic:/CoRN/reals/Bridges_iso/le_witness_informative.con".
 
 (* UNEXPORTED
 Section bridges_axioms_imply_ours.
 *)
 
-inline cic:/CoRN/reals/Bridges_iso/OF.var.
+inline "cic:/CoRN/reals/Bridges_iso/OF.var".
 
-inline cic:/CoRN/reals/Bridges_iso/lubp.var.
+inline "cic:/CoRN/reals/Bridges_iso/lubp.var".
 
-inline cic:/CoRN/reals/Bridges_iso/is_Archimedes.var.
+inline "cic:/CoRN/reals/Bridges_iso/is_Archimedes.var".
 
-inline cic:/CoRN/reals/Bridges_iso/is_Archimedes'.con.
+inline "cic:/CoRN/reals/Bridges_iso/is_Archimedes'.con".
 
 (* UNEXPORTED
 Section proofs_in_TCS.
 *)
 
-inline cic:/CoRN/reals/Bridges_iso/leEq_geEq.con.
+inline "cic:/CoRN/reals/Bridges_iso/leEq_geEq.con".
 
-inline cic:/CoRN/reals/Bridges_iso/glbp.con.
+inline "cic:/CoRN/reals/Bridges_iso/glbp.con".
 
 (* UNEXPORTED
 Section supremum.
 *)
 
-inline cic:/CoRN/reals/Bridges_iso/P.var.
+inline "cic:/CoRN/reals/Bridges_iso/P.var".
 
-inline cic:/CoRN/reals/Bridges_iso/inequality1.con.
+inline "cic:/CoRN/reals/Bridges_iso/inequality1.con".
 
-inline cic:/CoRN/reals/Bridges_iso/inequality2.con.
+inline "cic:/CoRN/reals/Bridges_iso/inequality2.con".
 
-inline cic:/CoRN/reals/Bridges_iso/inequality3.con.
+inline "cic:/CoRN/reals/Bridges_iso/inequality3.con".
 
-inline cic:/CoRN/reals/Bridges_iso/inequality4.con.
+inline "cic:/CoRN/reals/Bridges_iso/inequality4.con".
 
-inline cic:/CoRN/reals/Bridges_iso/Hum.con.
+inline "cic:/CoRN/reals/Bridges_iso/Hum.con".
 
-inline cic:/CoRN/reals/Bridges_iso/bound_tk1.con.
+inline "cic:/CoRN/reals/Bridges_iso/bound_tk1.con".
 
-inline cic:/CoRN/reals/Bridges_iso/bound_tk2.con.
+inline "cic:/CoRN/reals/Bridges_iso/bound_tk2.con".
 
-inline cic:/CoRN/reals/Bridges_iso/trick.con.
+inline "cic:/CoRN/reals/Bridges_iso/trick.con".
 
-inline cic:/CoRN/reals/Bridges_iso/trick'.con.
+inline "cic:/CoRN/reals/Bridges_iso/trick'.con".
 
-inline cic:/CoRN/reals/Bridges_iso/up_bound_for_n_element.con.
+inline "cic:/CoRN/reals/Bridges_iso/up_bound_for_n_element.con".
 
-inline cic:/CoRN/reals/Bridges_iso/low_bound_for_n_element.con.
+inline "cic:/CoRN/reals/Bridges_iso/low_bound_for_n_element.con".
 
-inline cic:/CoRN/reals/Bridges_iso/saghf.con.
+inline "cic:/CoRN/reals/Bridges_iso/saghf.con".
 
-inline cic:/CoRN/reals/Bridges_iso/Psaghf.con.
+inline "cic:/CoRN/reals/Bridges_iso/Psaghf.con".
 
-inline cic:/CoRN/reals/Bridges_iso/kaf.con.
+inline "cic:/CoRN/reals/Bridges_iso/kaf.con".
 
-inline cic:/CoRN/reals/Bridges_iso/Pkaf.con.
+inline "cic:/CoRN/reals/Bridges_iso/Pkaf.con".
 
-inline cic:/CoRN/reals/Bridges_iso/is_finite_P.var.
+inline "cic:/CoRN/reals/Bridges_iso/is_finite_P.var".
 
-inline cic:/CoRN/reals/Bridges_iso/card.con.
+inline "cic:/CoRN/reals/Bridges_iso/card.con".
 
-inline cic:/CoRN/reals/Bridges_iso/Pcard1.con.
+inline "cic:/CoRN/reals/Bridges_iso/Pcard1.con".
 
-inline cic:/CoRN/reals/Bridges_iso/seq.con.
+inline "cic:/CoRN/reals/Bridges_iso/seq.con".
 
-inline cic:/CoRN/reals/Bridges_iso/Pseq1.con.
+inline "cic:/CoRN/reals/Bridges_iso/Pseq1.con".
 
-inline cic:/CoRN/reals/Bridges_iso/Pseq1_unfolded.con.
+inline "cic:/CoRN/reals/Bridges_iso/Pseq1_unfolded.con".
 
-inline cic:/CoRN/reals/Bridges_iso/indeks.con.
+inline "cic:/CoRN/reals/Bridges_iso/indeks.con".
 
-inline cic:/CoRN/reals/Bridges_iso/Pindeks.con.
+inline "cic:/CoRN/reals/Bridges_iso/Pindeks.con".
 
-inline cic:/CoRN/reals/Bridges_iso/is_onto_seq_P.var.
+inline "cic:/CoRN/reals/Bridges_iso/is_onto_seq_P.var".
 
-inline cic:/CoRN/reals/Bridges_iso/P_is_inhabited.con.
+inline "cic:/CoRN/reals/Bridges_iso/P_is_inhabited.con".
 
 (*
 Lemma bounded_quantifier:(N:nat;phi,psi:nat->Prop)
@@ -185,13 +185,13 @@ Proof.
 Qed. 
 *)
 
-inline cic:/CoRN/reals/Bridges_iso/bounded_quantifier_informative.con.
+inline "cic:/CoRN/reals/Bridges_iso/bounded_quantifier_informative.con".
 
-inline cic:/CoRN/reals/Bridges_iso/bridges_lemma1a.con.
+inline "cic:/CoRN/reals/Bridges_iso/bridges_lemma1a.con".
 
-inline cic:/CoRN/reals/Bridges_iso/P_is_strongly_extensional.var.
+inline "cic:/CoRN/reals/Bridges_iso/P_is_strongly_extensional.var".
 
-inline cic:/CoRN/reals/Bridges_iso/bridges_lemma1b.con.
+inline "cic:/CoRN/reals/Bridges_iso/bridges_lemma1b.con".
 
 (* UNEXPORTED
 End supremum.
@@ -209,97 +209,97 @@ End supremum.
 Section Every_Cauchy_Sequence_is_bounded.
 *)
 
-inline cic:/CoRN/reals/Bridges_iso/seq2set.con.
+inline "cic:/CoRN/reals/Bridges_iso/seq2set.con".
 
-inline cic:/CoRN/reals/Bridges_iso/g.var.
+inline "cic:/CoRN/reals/Bridges_iso/g.var".
 
-inline cic:/CoRN/reals/Bridges_iso/g_.con.
+inline "cic:/CoRN/reals/Bridges_iso/g_.con".
 
-inline cic:/CoRN/reals/Bridges_iso/pg.con.
+inline "cic:/CoRN/reals/Bridges_iso/pg.con".
 
-inline cic:/CoRN/reals/Bridges_iso/P.con.
+inline "cic:/CoRN/reals/Bridges_iso/P.con".
 
-inline cic:/CoRN/reals/Bridges_iso/fin_is_fin.con.
+inline "cic:/CoRN/reals/Bridges_iso/fin_is_fin.con".
 
-inline cic:/CoRN/reals/Bridges_iso/card_fin.con.
+inline "cic:/CoRN/reals/Bridges_iso/card_fin.con".
 
-inline cic:/CoRN/reals/Bridges_iso/finite_seq.con.
+inline "cic:/CoRN/reals/Bridges_iso/finite_seq.con".
 
-inline cic:/CoRN/reals/Bridges_iso/bridges_lemma2a.con.
+inline "cic:/CoRN/reals/Bridges_iso/bridges_lemma2a.con".
 
-inline cic:/CoRN/reals/Bridges_iso/sup.con.
+inline "cic:/CoRN/reals/Bridges_iso/sup.con".
 
-inline cic:/CoRN/reals/Bridges_iso/Psup.con.
+inline "cic:/CoRN/reals/Bridges_iso/Psup.con".
 
-inline cic:/CoRN/reals/Bridges_iso/Psup_proj1.con.
+inline "cic:/CoRN/reals/Bridges_iso/Psup_proj1.con".
 
-inline cic:/CoRN/reals/Bridges_iso/Psup_unfolded1.con.
+inline "cic:/CoRN/reals/Bridges_iso/Psup_unfolded1.con".
 
-inline cic:/CoRN/reals/Bridges_iso/Psup_unfolded2.con.
+inline "cic:/CoRN/reals/Bridges_iso/Psup_unfolded2.con".
 
-inline cic:/CoRN/reals/Bridges_iso/bridges_lemma2b.con.
+inline "cic:/CoRN/reals/Bridges_iso/bridges_lemma2b.con".
 
-inline cic:/CoRN/reals/Bridges_iso/inf.con.
+inline "cic:/CoRN/reals/Bridges_iso/inf.con".
 
-inline cic:/CoRN/reals/Bridges_iso/Pinf.con.
+inline "cic:/CoRN/reals/Bridges_iso/Pinf.con".
 
-inline cic:/CoRN/reals/Bridges_iso/Pinf_proj1.con.
+inline "cic:/CoRN/reals/Bridges_iso/Pinf_proj1.con".
 
-inline cic:/CoRN/reals/Bridges_iso/Pinf_unfolded1.con.
+inline "cic:/CoRN/reals/Bridges_iso/Pinf_unfolded1.con".
 
-inline cic:/CoRN/reals/Bridges_iso/Pinf_unfolded2.con.
+inline "cic:/CoRN/reals/Bridges_iso/Pinf_unfolded2.con".
 
 (* I tried very much not to mention this lemma! *)
 
-inline cic:/CoRN/reals/Bridges_iso/sup_leEq.con.
+inline "cic:/CoRN/reals/Bridges_iso/sup_leEq.con".
 
-inline cic:/CoRN/reals/Bridges_iso/inf_geEq.con.
+inline "cic:/CoRN/reals/Bridges_iso/inf_geEq.con".
 
-inline cic:/CoRN/reals/Bridges_iso/tail_is_Cauchy.con.
+inline "cic:/CoRN/reals/Bridges_iso/tail_is_Cauchy.con".
 
-inline cic:/CoRN/reals/Bridges_iso/tail_seq.con.
+inline "cic:/CoRN/reals/Bridges_iso/tail_seq.con".
 
 (* UNEXPORTED
 End Every_Cauchy_Sequence_is_bounded.
 *)
 
-inline cic:/CoRN/reals/Bridges_iso/g.var.
+inline "cic:/CoRN/reals/Bridges_iso/g.var".
 
-inline cic:/CoRN/reals/Bridges_iso/g_.con.
+inline "cic:/CoRN/reals/Bridges_iso/g_.con".
 
-inline cic:/CoRN/reals/Bridges_iso/pg.con.
+inline "cic:/CoRN/reals/Bridges_iso/pg.con".
 
-inline cic:/CoRN/reals/Bridges_iso/sup_tail.con.
+inline "cic:/CoRN/reals/Bridges_iso/sup_tail.con".
 
-inline cic:/CoRN/reals/Bridges_iso/sup_tail_leEq.con.
+inline "cic:/CoRN/reals/Bridges_iso/sup_tail_leEq.con".
 
-inline cic:/CoRN/reals/Bridges_iso/sup_tail_is_Cauchy.con.
+inline "cic:/CoRN/reals/Bridges_iso/sup_tail_is_Cauchy.con".
 
-inline cic:/CoRN/reals/Bridges_iso/sup_tail_as_Cauchy.con.
+inline "cic:/CoRN/reals/Bridges_iso/sup_tail_as_Cauchy.con".
 
-inline cic:/CoRN/reals/Bridges_iso/L.con.
+inline "cic:/CoRN/reals/Bridges_iso/L.con".
 
-inline cic:/CoRN/reals/Bridges_iso/sup_tail_decrease.con.
+inline "cic:/CoRN/reals/Bridges_iso/sup_tail_decrease.con".
 
-inline cic:/CoRN/reals/Bridges_iso/L_less_sup_n.con.
+inline "cic:/CoRN/reals/Bridges_iso/L_less_sup_n.con".
 
-inline cic:/CoRN/reals/Bridges_iso/Psup_unfolded2_informative.con.
+inline "cic:/CoRN/reals/Bridges_iso/Psup_unfolded2_informative.con".
 
-inline cic:/CoRN/reals/Bridges_iso/Pinf_unfolded2_informative.con.
+inline "cic:/CoRN/reals/Bridges_iso/Pinf_unfolded2_informative.con".
 
-inline cic:/CoRN/reals/Bridges_iso/convergent_subseq.con.
+inline "cic:/CoRN/reals/Bridges_iso/convergent_subseq.con".
 
 (* very elegant proof almost as short as text version! *)
 
-inline cic:/CoRN/reals/Bridges_iso/lubp_gives_Cauchy.con.
+inline "cic:/CoRN/reals/Bridges_iso/lubp_gives_Cauchy.con".
 
 (* UNEXPORTED
 End proofs_in_TCS.
 *)
 
-inline cic:/CoRN/reals/Bridges_iso/Bridges_R_is_CReals.con.
+inline "cic:/CoRN/reals/Bridges_iso/Bridges_R_is_CReals.con".
 
-inline cic:/CoRN/reals/Bridges_iso/Bridges_R_as_CReals.con.
+inline "cic:/CoRN/reals/Bridges_iso/Bridges_R_as_CReals.con".
 
 (* UNEXPORTED
 End bridges_axioms_imply_ours.

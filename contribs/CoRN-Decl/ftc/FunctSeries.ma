@@ -16,15 +16,13 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/ftc/FunctSeries".
 
+include "CoRN.ma".
+
 (* $Id: FunctSeries.v,v 1.6 2004/04/23 10:00:58 lcf Exp $ *)
 
-(* INCLUDE
-FunctSequence
-*)
+include "ftc/FunctSequence.ma".
 
-(* INCLUDE
-Series
-*)
+include "reals/Series.ma".
 
 (*#* printing fun_seq_part_sum %\ensuremath{\sum^n}% #&sum;<sup>n</sup># *)
 
@@ -55,25 +53,25 @@ defined in a compact interval.  For this, partial sums are defined and
 convergence is simply the convergence of the sequence of partial sums.
 *)
 
-inline cic:/CoRN/ftc/FunctSeries/a.var.
+inline "cic:/CoRN/ftc/FunctSeries/a.var".
 
-inline cic:/CoRN/ftc/FunctSeries/b.var.
+inline "cic:/CoRN/ftc/FunctSeries/b.var".
 
-inline cic:/CoRN/ftc/FunctSeries/Hab.var.
+inline "cic:/CoRN/ftc/FunctSeries/Hab.var".
 
 (* begin hide *)
 
-inline cic:/CoRN/ftc/FunctSeries/I.con.
+inline "cic:/CoRN/ftc/FunctSeries/I.con".
 
 (* end hide *)
 
-inline cic:/CoRN/ftc/FunctSeries/f.var.
+inline "cic:/CoRN/ftc/FunctSeries/f.var".
 
-inline cic:/CoRN/ftc/FunctSeries/fun_seq_part_sum.con.
+inline "cic:/CoRN/ftc/FunctSeries/fun_seq_part_sum.con".
 
-inline cic:/CoRN/ftc/FunctSeries/fun_seq_part_sum_cont.con.
+inline "cic:/CoRN/ftc/FunctSeries/fun_seq_part_sum_cont.con".
 
-inline cic:/CoRN/ftc/FunctSeries/fun_series_convergent.con.
+inline "cic:/CoRN/ftc/FunctSeries/fun_series_convergent.con".
 
 (*#*
 For what comes up next we need to know that the convergence of a
@@ -81,7 +79,7 @@ series of functions implies pointwise convergence of the corresponding
 real number series.
 *)
 
-inline cic:/CoRN/ftc/FunctSeries/fun_series_conv_imp_conv.con.
+inline "cic:/CoRN/ftc/FunctSeries/fun_series_conv_imp_conv.con".
 
 (*#* We then define the sum of the series as being the pointwise sum of
 the corresponding series.
@@ -89,21 +87,21 @@ the corresponding series.
 
 (* begin show *)
 
-inline cic:/CoRN/ftc/FunctSeries/H.var.
+inline "cic:/CoRN/ftc/FunctSeries/H.var".
 
 (* end show *)
 
 (* begin hide *)
 
-inline cic:/CoRN/ftc/FunctSeries/contf.con.
+inline "cic:/CoRN/ftc/FunctSeries/contf.con".
 
-inline cic:/CoRN/ftc/FunctSeries/incf.con.
+inline "cic:/CoRN/ftc/FunctSeries/incf.con".
 
 (* end hide *)
 
-inline cic:/CoRN/ftc/FunctSeries/Fun_Series_Sum_strext.con.
+inline "cic:/CoRN/ftc/FunctSeries/Fun_Series_Sum_strext.con".
 
-inline cic:/CoRN/ftc/FunctSeries/Fun_Series_Sum.con.
+inline "cic:/CoRN/ftc/FunctSeries/Fun_Series_Sum.con".
 
 (* UNEXPORTED
 End Definitions.
@@ -121,17 +119,17 @@ Hint Resolve fun_seq_part_sum_cont: continuous.
 Section More_Definitions.
 *)
 
-inline cic:/CoRN/ftc/FunctSeries/a.var.
+inline "cic:/CoRN/ftc/FunctSeries/a.var".
 
-inline cic:/CoRN/ftc/FunctSeries/b.var.
+inline "cic:/CoRN/ftc/FunctSeries/b.var".
 
-inline cic:/CoRN/ftc/FunctSeries/Hab.var.
+inline "cic:/CoRN/ftc/FunctSeries/Hab.var".
 
-inline cic:/CoRN/ftc/FunctSeries/f.var.
+inline "cic:/CoRN/ftc/FunctSeries/f.var".
 
 (*#* A series can also be absolutely convergent. *)
 
-inline cic:/CoRN/ftc/FunctSeries/fun_series_abs_convergent.con.
+inline "cic:/CoRN/ftc/FunctSeries/fun_series_abs_convergent.con".
 
 (* UNEXPORTED
 End More_Definitions.
@@ -146,70 +144,70 @@ Section Operations.
 All of these are analogous to the properties for series of real numbers, so we won't comment much about them.
 *)
 
-inline cic:/CoRN/ftc/FunctSeries/a.var.
+inline "cic:/CoRN/ftc/FunctSeries/a.var".
 
-inline cic:/CoRN/ftc/FunctSeries/b.var.
+inline "cic:/CoRN/ftc/FunctSeries/b.var".
 
-inline cic:/CoRN/ftc/FunctSeries/Hab.var.
+inline "cic:/CoRN/ftc/FunctSeries/Hab.var".
 
 (* begin hide *)
 
-inline cic:/CoRN/ftc/FunctSeries/I.con.
+inline "cic:/CoRN/ftc/FunctSeries/I.con".
 
 (* end hide *)
 
-inline cic:/CoRN/ftc/FunctSeries/fun_seq_part_sum_n.con.
+inline "cic:/CoRN/ftc/FunctSeries/fun_seq_part_sum_n.con".
 
-inline cic:/CoRN/ftc/FunctSeries/conv_fun_const_series.con.
+inline "cic:/CoRN/ftc/FunctSeries/conv_fun_const_series.con".
 
-inline cic:/CoRN/ftc/FunctSeries/fun_const_series_sum.con.
+inline "cic:/CoRN/ftc/FunctSeries/fun_const_series_sum.con".
 
-inline cic:/CoRN/ftc/FunctSeries/conv_zero_fun_series.con.
+inline "cic:/CoRN/ftc/FunctSeries/conv_zero_fun_series.con".
 
-inline cic:/CoRN/ftc/FunctSeries/Fun_Series_Sum_zero.con.
-
-(* begin show *)
-
-inline cic:/CoRN/ftc/FunctSeries/f.var.
-
-inline cic:/CoRN/ftc/FunctSeries/g.var.
-
-(* end show *)
-
-inline cic:/CoRN/ftc/FunctSeries/fun_series_convergent_wd.con.
+inline "cic:/CoRN/ftc/FunctSeries/Fun_Series_Sum_zero.con".
 
 (* begin show *)
 
-inline cic:/CoRN/ftc/FunctSeries/convF.var.
+inline "cic:/CoRN/ftc/FunctSeries/f.var".
 
-inline cic:/CoRN/ftc/FunctSeries/convG.var.
+inline "cic:/CoRN/ftc/FunctSeries/g.var".
 
 (* end show *)
 
-inline cic:/CoRN/ftc/FunctSeries/Fun_Series_Sum_wd'.con.
+inline "cic:/CoRN/ftc/FunctSeries/fun_series_convergent_wd.con".
 
-inline cic:/CoRN/ftc/FunctSeries/conv_fun_series_plus.con.
+(* begin show *)
 
-inline cic:/CoRN/ftc/FunctSeries/Fun_Series_Sum_plus.con.
+inline "cic:/CoRN/ftc/FunctSeries/convF.var".
 
-inline cic:/CoRN/ftc/FunctSeries/conv_fun_series_minus.con.
+inline "cic:/CoRN/ftc/FunctSeries/convG.var".
 
-inline cic:/CoRN/ftc/FunctSeries/Fun_Series_Sum_min.con.
+(* end show *)
+
+inline "cic:/CoRN/ftc/FunctSeries/Fun_Series_Sum_wd'.con".
+
+inline "cic:/CoRN/ftc/FunctSeries/conv_fun_series_plus.con".
+
+inline "cic:/CoRN/ftc/FunctSeries/Fun_Series_Sum_plus.con".
+
+inline "cic:/CoRN/ftc/FunctSeries/conv_fun_series_minus.con".
+
+inline "cic:/CoRN/ftc/FunctSeries/Fun_Series_Sum_min.con".
 
 (*#*
 %\begin{convention}% Let [c:IR].
 %\end{convention}%
 *)
 
-inline cic:/CoRN/ftc/FunctSeries/c.var.
+inline "cic:/CoRN/ftc/FunctSeries/c.var".
 
-inline cic:/CoRN/ftc/FunctSeries/H.var.
+inline "cic:/CoRN/ftc/FunctSeries/H.var".
 
-inline cic:/CoRN/ftc/FunctSeries/contH.var.
+inline "cic:/CoRN/ftc/FunctSeries/contH.var".
 
-inline cic:/CoRN/ftc/FunctSeries/conv_fun_series_scal.con.
+inline "cic:/CoRN/ftc/FunctSeries/conv_fun_series_scal.con".
 
-inline cic:/CoRN/ftc/FunctSeries/Fun_Series_Sum_scal.con.
+inline "cic:/CoRN/ftc/FunctSeries/Fun_Series_Sum_scal.con".
 
 (* UNEXPORTED
 End Operations.
@@ -219,25 +217,25 @@ End Operations.
 Section More_Operations.
 *)
 
-inline cic:/CoRN/ftc/FunctSeries/a.var.
+inline "cic:/CoRN/ftc/FunctSeries/a.var".
 
-inline cic:/CoRN/ftc/FunctSeries/b.var.
+inline "cic:/CoRN/ftc/FunctSeries/b.var".
 
-inline cic:/CoRN/ftc/FunctSeries/Hab.var.
+inline "cic:/CoRN/ftc/FunctSeries/Hab.var".
 
 (* begin hide *)
 
-inline cic:/CoRN/ftc/FunctSeries/I.con.
+inline "cic:/CoRN/ftc/FunctSeries/I.con".
 
 (* end hide *)
 
-inline cic:/CoRN/ftc/FunctSeries/f.var.
+inline "cic:/CoRN/ftc/FunctSeries/f.var".
 
-inline cic:/CoRN/ftc/FunctSeries/convF.var.
+inline "cic:/CoRN/ftc/FunctSeries/convF.var".
 
-inline cic:/CoRN/ftc/FunctSeries/conv_fun_series_inv.con.
+inline "cic:/CoRN/ftc/FunctSeries/conv_fun_series_inv.con".
 
-inline cic:/CoRN/ftc/FunctSeries/Fun_Series_Sum_inv.con.
+inline "cic:/CoRN/ftc/FunctSeries/Fun_Series_Sum_inv.con".
 
 (* UNEXPORTED
 End More_Operations.
@@ -247,15 +245,15 @@ End More_Operations.
 Section Other_Results.
 *)
 
-inline cic:/CoRN/ftc/FunctSeries/a.var.
+inline "cic:/CoRN/ftc/FunctSeries/a.var".
 
-inline cic:/CoRN/ftc/FunctSeries/b.var.
+inline "cic:/CoRN/ftc/FunctSeries/b.var".
 
-inline cic:/CoRN/ftc/FunctSeries/Hab.var.
+inline "cic:/CoRN/ftc/FunctSeries/Hab.var".
 
-inline cic:/CoRN/ftc/FunctSeries/f.var.
+inline "cic:/CoRN/ftc/FunctSeries/f.var".
 
-inline cic:/CoRN/ftc/FunctSeries/convF.var.
+inline "cic:/CoRN/ftc/FunctSeries/convF.var".
 
 (*#*
 The following relate the sum series with the limit of the sequence of
@@ -263,15 +261,15 @@ partial sums; as a corollary we get the continuity of the sum of the
 series.
 *)
 
-inline cic:/CoRN/ftc/FunctSeries/Fun_Series_Sum_char'.con.
+inline "cic:/CoRN/ftc/FunctSeries/Fun_Series_Sum_char'.con".
 
-inline cic:/CoRN/ftc/FunctSeries/fun_series_conv.con.
+inline "cic:/CoRN/ftc/FunctSeries/fun_series_conv.con".
 
-inline cic:/CoRN/ftc/FunctSeries/Fun_Series_Sum_cont.con.
+inline "cic:/CoRN/ftc/FunctSeries/Fun_Series_Sum_cont.con".
 
-inline cic:/CoRN/ftc/FunctSeries/Fun_Series_Sum_char.con.
+inline "cic:/CoRN/ftc/FunctSeries/Fun_Series_Sum_char.con".
 
-inline cic:/CoRN/ftc/FunctSeries/Fun_Series_Sum_as_Lim.con.
+inline "cic:/CoRN/ftc/FunctSeries/Fun_Series_Sum_as_Lim.con".
 
 (* UNEXPORTED
 End Other_Results.
@@ -290,21 +288,21 @@ Section Convergence_Criteria.
 Most of the convergence criteria for series of real numbers carry over to series of real-valued functions, so again we just present them without comments.
 *)
 
-inline cic:/CoRN/ftc/FunctSeries/a.var.
+inline "cic:/CoRN/ftc/FunctSeries/a.var".
 
-inline cic:/CoRN/ftc/FunctSeries/b.var.
+inline "cic:/CoRN/ftc/FunctSeries/b.var".
 
-inline cic:/CoRN/ftc/FunctSeries/Hab.var.
+inline "cic:/CoRN/ftc/FunctSeries/Hab.var".
 
 (* begin hide *)
 
-inline cic:/CoRN/ftc/FunctSeries/I.con.
+inline "cic:/CoRN/ftc/FunctSeries/I.con".
 
 (* end hide *)
 
-inline cic:/CoRN/ftc/FunctSeries/f.var.
+inline "cic:/CoRN/ftc/FunctSeries/f.var".
 
-inline cic:/CoRN/ftc/FunctSeries/contF.var.
+inline "cic:/CoRN/ftc/FunctSeries/contF.var".
 
 (* UNEXPORTED
 Opaque Frestr.
@@ -346,21 +344,21 @@ Transparent fun_seq_part_sum.
 Opaque fun_seq_part_sum.
 *)
 
-inline cic:/CoRN/ftc/FunctSeries/fun_str_comparison.con.
+inline "cic:/CoRN/ftc/FunctSeries/fun_str_comparison.con".
 
 (* UNEXPORTED
 Transparent FAbs.
 *)
 
-inline cic:/CoRN/ftc/FunctSeries/fun_comparison.con.
+inline "cic:/CoRN/ftc/FunctSeries/fun_comparison.con".
 
-inline cic:/CoRN/ftc/FunctSeries/abs_imp_conv.con.
+inline "cic:/CoRN/ftc/FunctSeries/abs_imp_conv.con".
 
 (* UNEXPORTED
 Opaque FAbs.
 *)
 
-inline cic:/CoRN/ftc/FunctSeries/fun_ratio_test_conv.con.
+inline "cic:/CoRN/ftc/FunctSeries/fun_ratio_test_conv.con".
 
 (* UNEXPORTED
 End Convergence_Criteria.

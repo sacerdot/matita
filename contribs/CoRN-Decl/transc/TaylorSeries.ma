@@ -16,15 +16,13 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/transc/TaylorSeries".
 
+include "CoRN.ma".
+
 (* $Id: TaylorSeries.v,v 1.7 2004/04/23 10:01:08 lcf Exp $ *)
 
-(* INCLUDE
-PowerSeries
-*)
+include "transc/PowerSeries.ma".
 
-(* INCLUDE
-Taylor
-*)
+include "ftc/Taylor.ma".
 
 (*#* *Taylor Series
 
@@ -45,19 +43,19 @@ point of [J].
 Section Definitions.
 *)
 
-inline cic:/CoRN/transc/TaylorSeries/J.var.
+inline "cic:/CoRN/transc/TaylorSeries/J.var".
 
-inline cic:/CoRN/transc/TaylorSeries/pJ.var.
+inline "cic:/CoRN/transc/TaylorSeries/pJ.var".
 
-inline cic:/CoRN/transc/TaylorSeries/F.var.
+inline "cic:/CoRN/transc/TaylorSeries/F.var".
 
-inline cic:/CoRN/transc/TaylorSeries/diffF.var.
+inline "cic:/CoRN/transc/TaylorSeries/diffF.var".
 
-inline cic:/CoRN/transc/TaylorSeries/a.var.
+inline "cic:/CoRN/transc/TaylorSeries/a.var".
 
-inline cic:/CoRN/transc/TaylorSeries/Ha.var.
+inline "cic:/CoRN/transc/TaylorSeries/Ha.var".
 
-inline cic:/CoRN/transc/TaylorSeries/Taylor_Series'.con.
+inline "cic:/CoRN/transc/TaylorSeries/Taylor_Series'.con".
 
 (*#*
 %\begin{convention}% Assume also that [f] is the sequence of
@@ -65,11 +63,11 @@ derivatives of [F].
 %\end{convention}%
 *)
 
-inline cic:/CoRN/transc/TaylorSeries/f.var.
+inline "cic:/CoRN/transc/TaylorSeries/f.var".
 
-inline cic:/CoRN/transc/TaylorSeries/derF.var.
+inline "cic:/CoRN/transc/TaylorSeries/derF.var".
 
-inline cic:/CoRN/transc/TaylorSeries/Taylor_Series.con.
+inline "cic:/CoRN/transc/TaylorSeries/Taylor_Series.con".
 
 (* UNEXPORTED
 Opaque N_Deriv.
@@ -77,9 +75,9 @@ Opaque N_Deriv.
 
 (*#* Characterizations of the Taylor remainder. *)
 
-inline cic:/CoRN/transc/TaylorSeries/Taylor_Rem_char.con.
+inline "cic:/CoRN/transc/TaylorSeries/Taylor_Rem_char.con".
 
-inline cic:/CoRN/transc/TaylorSeries/abs_Taylor_Rem_char.con.
+inline "cic:/CoRN/transc/TaylorSeries/abs_Taylor_Rem_char.con".
 
 (* UNEXPORTED
 End Definitions.
@@ -97,27 +95,27 @@ derivatives of [F] that guarantees convergence of its Taylor series to
 [F].
 *)
 
-inline cic:/CoRN/transc/TaylorSeries/H.var.
+inline "cic:/CoRN/transc/TaylorSeries/H.var".
 
-inline cic:/CoRN/transc/TaylorSeries/F.var.
+inline "cic:/CoRN/transc/TaylorSeries/F.var".
 
-inline cic:/CoRN/transc/TaylorSeries/a.var.
+inline "cic:/CoRN/transc/TaylorSeries/a.var".
 
-inline cic:/CoRN/transc/TaylorSeries/Ha.var.
+inline "cic:/CoRN/transc/TaylorSeries/Ha.var".
 
-inline cic:/CoRN/transc/TaylorSeries/f.var.
+inline "cic:/CoRN/transc/TaylorSeries/f.var".
 
-inline cic:/CoRN/transc/TaylorSeries/derF.var.
+inline "cic:/CoRN/transc/TaylorSeries/derF.var".
 
-inline cic:/CoRN/transc/TaylorSeries/Taylor_Series_imp_cont.con.
+inline "cic:/CoRN/transc/TaylorSeries/Taylor_Series_imp_cont.con".
 
-inline cic:/CoRN/transc/TaylorSeries/Taylor_Series_lemma_cont.con.
+inline "cic:/CoRN/transc/TaylorSeries/Taylor_Series_lemma_cont.con".
 
-inline cic:/CoRN/transc/TaylorSeries/Taylor_bnd.con.
+inline "cic:/CoRN/transc/TaylorSeries/Taylor_bnd.con".
 
 (* begin show *)
 
-inline cic:/CoRN/transc/TaylorSeries/bndf.var.
+inline "cic:/CoRN/transc/TaylorSeries/bndf.var".
 
 (* end show *)
 
@@ -127,15 +125,15 @@ Opaque nexp_op fac.
 
 (* begin hide *)
 
-inline cic:/CoRN/transc/TaylorSeries/H1.con.
+inline "cic:/CoRN/transc/TaylorSeries/H1.con".
 
 (* UNEXPORTED
 Transparent nexp_op.
 *)
 
-inline cic:/CoRN/transc/TaylorSeries/Taylor_Series_conv_lemma1.con.
+inline "cic:/CoRN/transc/TaylorSeries/Taylor_Series_conv_lemma1.con".
 
-inline cic:/CoRN/transc/TaylorSeries/Taylor_Series_conv_lemma2.con.
+inline "cic:/CoRN/transc/TaylorSeries/Taylor_Series_conv_lemma2.con".
 
 (* end hide *)
 
@@ -149,7 +147,7 @@ Transparent nexp_op.
 Opaque nexp_op.
 *)
 
-inline cic:/CoRN/transc/TaylorSeries/Taylor_Series_conv_IR.con.
+inline "cic:/CoRN/transc/TaylorSeries/Taylor_Series_conv_IR.con".
 
 (* begin hide *)
 
@@ -157,13 +155,13 @@ inline cic:/CoRN/transc/TaylorSeries/Taylor_Series_conv_IR.con.
 Transparent nexp_op.
 *)
 
-inline cic:/CoRN/transc/TaylorSeries/Taylor_majoration_lemma.con.
+inline "cic:/CoRN/transc/TaylorSeries/Taylor_majoration_lemma.con".
 
 (* UNEXPORTED
 Opaque N_Deriv fac.
 *)
 
-inline cic:/CoRN/transc/TaylorSeries/Taylor_Series_conv_lemma3.con.
+inline "cic:/CoRN/transc/TaylorSeries/Taylor_Series_conv_lemma3.con".
 
 (* end hide *)
 
@@ -175,7 +173,7 @@ will separately assume convergence.
 
 (* begin show *)
 
-inline cic:/CoRN/transc/TaylorSeries/Hf.var.
+inline "cic:/CoRN/transc/TaylorSeries/Hf.var".
 
 (* end show *)
 
@@ -187,7 +185,7 @@ Transparent fac.
 Opaque mult.
 *)
 
-inline cic:/CoRN/transc/TaylorSeries/Taylor_Series_conv_to_fun.con.
+inline "cic:/CoRN/transc/TaylorSeries/Taylor_Series_conv_to_fun.con".
 
 (* UNEXPORTED
 End Convergence_in_IR.
@@ -202,7 +200,7 @@ The condition for the previous lemma is not very easy to prove.  We
 give some helpful lemmas.
 *)
 
-inline cic:/CoRN/transc/TaylorSeries/Taylor_bnd_trans.con.
+inline "cic:/CoRN/transc/TaylorSeries/Taylor_bnd_trans.con".
 
 (* begin hide *)
 
@@ -210,11 +208,11 @@ inline cic:/CoRN/transc/TaylorSeries/Taylor_bnd_trans.con.
 Opaque nexp_op.
 *)
 
-inline cic:/CoRN/transc/TaylorSeries/convergence_lemma.con.
+inline "cic:/CoRN/transc/TaylorSeries/convergence_lemma.con".
 
 (* end hide *)
 
-inline cic:/CoRN/transc/TaylorSeries/bnd_imp_Taylor_bnd.con.
+inline "cic:/CoRN/transc/TaylorSeries/bnd_imp_Taylor_bnd.con".
 
 (*#*
 Finally, a uniqueness criterium: two functions [F] and [G] are equal,
@@ -222,37 +220,37 @@ provided that their derivatives coincide at a given point and their
 Taylor series converge to themselves.
 *)
 
-inline cic:/CoRN/transc/TaylorSeries/F.var.
+inline "cic:/CoRN/transc/TaylorSeries/F.var".
 
-inline cic:/CoRN/transc/TaylorSeries/G.var.
+inline "cic:/CoRN/transc/TaylorSeries/G.var".
 
-inline cic:/CoRN/transc/TaylorSeries/a.var.
+inline "cic:/CoRN/transc/TaylorSeries/a.var".
 
-inline cic:/CoRN/transc/TaylorSeries/f.var.
+inline "cic:/CoRN/transc/TaylorSeries/f.var".
 
-inline cic:/CoRN/transc/TaylorSeries/g.var.
+inline "cic:/CoRN/transc/TaylorSeries/g.var".
 
-inline cic:/CoRN/transc/TaylorSeries/derF.var.
+inline "cic:/CoRN/transc/TaylorSeries/derF.var".
 
-inline cic:/CoRN/transc/TaylorSeries/derG.var.
+inline "cic:/CoRN/transc/TaylorSeries/derG.var".
 
-inline cic:/CoRN/transc/TaylorSeries/bndf.var.
+inline "cic:/CoRN/transc/TaylorSeries/bndf.var".
 
-inline cic:/CoRN/transc/TaylorSeries/bndg.var.
+inline "cic:/CoRN/transc/TaylorSeries/bndg.var".
 
 (* begin show *)
 
-inline cic:/CoRN/transc/TaylorSeries/Heq.var.
+inline "cic:/CoRN/transc/TaylorSeries/Heq.var".
 
 (* end show *)
 
 (* begin hide *)
 
-inline cic:/CoRN/transc/TaylorSeries/Hf.con.
+inline "cic:/CoRN/transc/TaylorSeries/Hf.con".
 
 (* end hide *)
 
-inline cic:/CoRN/transc/TaylorSeries/Taylor_unique_crit.con.
+inline "cic:/CoRN/transc/TaylorSeries/Taylor_unique_crit.con".
 
 (* UNEXPORTED
 End Other_Results.

@@ -16,6 +16,8 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/reals/CauchySeq".
 
+include "CoRN.ma".
+
 (* $Id: CauchySeq.v,v 1.8 2004/04/23 10:01:04 lcf Exp $ *)
 
 (*#* printing IR %\ensuremath{\mathbb R}% *)
@@ -28,9 +30,7 @@ set "baseuri" "cic:/matita/CoRN-Decl/reals/CauchySeq".
 
 (*#* printing AbsIR %\ensuremath{|\cdot|_{\mathbb R}}% *)
 
-(* INCLUDE
-CReals
-*)
+include "reals/CReals.ma".
 
 (*#* *Real Number Structures
 %\begin{convention}% Let [IR] be a structure for real numbers.
@@ -43,11 +43,9 @@ Definition IR : CReals := Concrete_R.
 Opaque IR.
 *)
 
-inline cic:/CoRN/reals/CauchySeq/IR.var.
+inline "cic:/CoRN/reals/CauchySeq/IR.var".
 
-(* INCLUDE
-Transparent_algebra
-*)
+include "tactics/Transparent_algebra.ma".
 
 (* begin hide *)
 
@@ -59,21 +57,21 @@ Section CReals_axioms.
 
 (*#* ** [CReals] axioms *)
 
-inline cic:/CoRN/reals/CauchySeq/CReals_is_CReals.con.
+inline "cic:/CoRN/reals/CauchySeq/CReals_is_CReals.con".
 
 (*#* First properties which follow trivially from the axioms.  *)
 
-inline cic:/CoRN/reals/CauchySeq/Lim_Cauchy.con.
+inline "cic:/CoRN/reals/CauchySeq/Lim_Cauchy.con".
 
-inline cic:/CoRN/reals/CauchySeq/Archimedes.con.
+inline "cic:/CoRN/reals/CauchySeq/Archimedes.con".
 
-inline cic:/CoRN/reals/CauchySeq/Archimedes'.con.
+inline "cic:/CoRN/reals/CauchySeq/Archimedes'.con".
 
 (*#* A stronger version, which often comes in useful.  *)
 
-inline cic:/CoRN/reals/CauchySeq/str_Archimedes.con.
+inline "cic:/CoRN/reals/CauchySeq/str_Archimedes.con".
 
-inline cic:/CoRN/reals/CauchySeq/CauchySeqR.con.
+inline "cic:/CoRN/reals/CauchySeq/CauchySeqR.con".
 
 (* UNEXPORTED
 End CReals_axioms.
@@ -136,19 +134,19 @@ and [[<=]] being a negative statement, this makes proofs
 sometimes easier and program extraction much more efficient.
 *)
 
-inline cic:/CoRN/reals/CauchySeq/Cauchy_prop1.con.
+inline "cic:/CoRN/reals/CauchySeq/Cauchy_prop1.con".
 
-inline cic:/CoRN/reals/CauchySeq/Cauchy_Lim_prop2.con.
+inline "cic:/CoRN/reals/CauchySeq/Cauchy_Lim_prop2.con".
 
-inline cic:/CoRN/reals/CauchySeq/Cauchy_prop2.con.
+inline "cic:/CoRN/reals/CauchySeq/Cauchy_prop2.con".
 
-inline cic:/CoRN/reals/CauchySeq/Cauchy_Lim_prop3.con.
+inline "cic:/CoRN/reals/CauchySeq/Cauchy_Lim_prop3.con".
 
-inline cic:/CoRN/reals/CauchySeq/Cauchy_prop3.con.
+inline "cic:/CoRN/reals/CauchySeq/Cauchy_prop3.con".
 
-inline cic:/CoRN/reals/CauchySeq/Cauchy_Lim_prop4.con.
+inline "cic:/CoRN/reals/CauchySeq/Cauchy_Lim_prop4.con".
 
-inline cic:/CoRN/reals/CauchySeq/Cauchy_prop4.con.
+inline "cic:/CoRN/reals/CauchySeq/Cauchy_prop4.con".
 
 (* UNEXPORTED
 End Cauchy_Defs.
@@ -162,39 +160,39 @@ Section Inequalities.
 
 The next lemma is equal to lemma [Lim_Cauchy].  *)
 
-inline cic:/CoRN/reals/CauchySeq/Cauchy_complete.con.
+inline "cic:/CoRN/reals/CauchySeq/Cauchy_complete.con".
 
-inline cic:/CoRN/reals/CauchySeq/less_Lim_so_less_seq.con.
+inline "cic:/CoRN/reals/CauchySeq/less_Lim_so_less_seq.con".
 
-inline cic:/CoRN/reals/CauchySeq/Lim_less_so_seq_less.con.
+inline "cic:/CoRN/reals/CauchySeq/Lim_less_so_seq_less.con".
 
-inline cic:/CoRN/reals/CauchySeq/Lim_less_Lim_so_seq_less_seq.con.
+inline "cic:/CoRN/reals/CauchySeq/Lim_less_Lim_so_seq_less_seq.con".
 
 (*#* The next lemma follows from [less_Lim_so_less_seq] with [y := (y[+] (Lim seq)) [/]TwoNZ].  *)
 
-inline cic:/CoRN/reals/CauchySeq/less_Lim_so.con.
+inline "cic:/CoRN/reals/CauchySeq/less_Lim_so.con".
 
-inline cic:/CoRN/reals/CauchySeq/Lim_less_so.con.
+inline "cic:/CoRN/reals/CauchySeq/Lim_less_so.con".
 
-inline cic:/CoRN/reals/CauchySeq/leEq_seq_so_leEq_Lim.con.
+inline "cic:/CoRN/reals/CauchySeq/leEq_seq_so_leEq_Lim.con".
 
-inline cic:/CoRN/reals/CauchySeq/str_leEq_seq_so_leEq_Lim.con.
+inline "cic:/CoRN/reals/CauchySeq/str_leEq_seq_so_leEq_Lim.con".
 
-inline cic:/CoRN/reals/CauchySeq/Lim_leEq_Lim.con.
+inline "cic:/CoRN/reals/CauchySeq/Lim_leEq_Lim.con".
 
-inline cic:/CoRN/reals/CauchySeq/seq_leEq_so_Lim_leEq.con.
+inline "cic:/CoRN/reals/CauchySeq/seq_leEq_so_Lim_leEq.con".
 
-inline cic:/CoRN/reals/CauchySeq/str_seq_leEq_so_Lim_leEq.con.
+inline "cic:/CoRN/reals/CauchySeq/str_seq_leEq_so_Lim_leEq.con".
 
-inline cic:/CoRN/reals/CauchySeq/Limits_unique.con.
+inline "cic:/CoRN/reals/CauchySeq/Limits_unique.con".
 
-inline cic:/CoRN/reals/CauchySeq/Lim_wd.con.
+inline "cic:/CoRN/reals/CauchySeq/Lim_wd.con".
 
-inline cic:/CoRN/reals/CauchySeq/Lim_strext.con.
+inline "cic:/CoRN/reals/CauchySeq/Lim_strext.con".
 
-inline cic:/CoRN/reals/CauchySeq/Lim_ap_imp_seq_ap.con.
+inline "cic:/CoRN/reals/CauchySeq/Lim_ap_imp_seq_ap.con".
 
-inline cic:/CoRN/reals/CauchySeq/Lim_ap_imp_seq_ap'.con.
+inline "cic:/CoRN/reals/CauchySeq/Lim_ap_imp_seq_ap'.con".
 
 (* UNEXPORTED
 End Inequalities.
@@ -206,47 +204,47 @@ Section Equiv_Cauchy.
 
 (*#* *** Equivalence of formulations of Cauchy *)
 
-inline cic:/CoRN/reals/CauchySeq/Cauchy_prop1_prop.con.
+inline "cic:/CoRN/reals/CauchySeq/Cauchy_prop1_prop.con".
 
-inline cic:/CoRN/reals/CauchySeq/Cauchy_prop2_prop.con.
+inline "cic:/CoRN/reals/CauchySeq/Cauchy_prop2_prop.con".
 
-inline cic:/CoRN/reals/CauchySeq/Cauchy_Lim_prop3_prop2.con.
+inline "cic:/CoRN/reals/CauchySeq/Cauchy_Lim_prop3_prop2.con".
 
-inline cic:/CoRN/reals/CauchySeq/Cauchy_prop3_prop2.con.
+inline "cic:/CoRN/reals/CauchySeq/Cauchy_prop3_prop2.con".
 
-inline cic:/CoRN/reals/CauchySeq/Cauchy_prop3_prop.con.
+inline "cic:/CoRN/reals/CauchySeq/Cauchy_prop3_prop.con".
 
-inline cic:/CoRN/reals/CauchySeq/Build_CauchySeq1.con.
+inline "cic:/CoRN/reals/CauchySeq/Build_CauchySeq1.con".
 
-inline cic:/CoRN/reals/CauchySeq/Cauchy_Lim_prop4_prop3.con.
+inline "cic:/CoRN/reals/CauchySeq/Cauchy_Lim_prop4_prop3.con".
 
-inline cic:/CoRN/reals/CauchySeq/Cauchy_Lim_prop4_prop2.con.
+inline "cic:/CoRN/reals/CauchySeq/Cauchy_Lim_prop4_prop2.con".
 
-inline cic:/CoRN/reals/CauchySeq/Cauchy_prop4_prop3.con.
+inline "cic:/CoRN/reals/CauchySeq/Cauchy_prop4_prop3.con".
 
-inline cic:/CoRN/reals/CauchySeq/Cauchy_prop4_prop.con.
+inline "cic:/CoRN/reals/CauchySeq/Cauchy_prop4_prop.con".
 
-inline cic:/CoRN/reals/CauchySeq/Build_CauchySeq4.con.
+inline "cic:/CoRN/reals/CauchySeq/Build_CauchySeq4.con".
 
-inline cic:/CoRN/reals/CauchySeq/Build_CauchySeq4_y.con.
+inline "cic:/CoRN/reals/CauchySeq/Build_CauchySeq4_y.con".
 
-inline cic:/CoRN/reals/CauchySeq/Lim_CauchySeq4.con.
+inline "cic:/CoRN/reals/CauchySeq/Lim_CauchySeq4.con".
 
-inline cic:/CoRN/reals/CauchySeq/Build_CauchySeq2.con.
+inline "cic:/CoRN/reals/CauchySeq/Build_CauchySeq2.con".
 
-inline cic:/CoRN/reals/CauchySeq/Build_CauchySeq2_y.con.
+inline "cic:/CoRN/reals/CauchySeq/Build_CauchySeq2_y.con".
 
-inline cic:/CoRN/reals/CauchySeq/Lim_CauchySeq2.con.
+inline "cic:/CoRN/reals/CauchySeq/Lim_CauchySeq2.con".
 
 (*#* Well definedness. *)
 
-inline cic:/CoRN/reals/CauchySeq/Cauchy_prop_wd.con.
+inline "cic:/CoRN/reals/CauchySeq/Cauchy_prop_wd.con".
 
-inline cic:/CoRN/reals/CauchySeq/Cauchy_Lim_prop2_wd.con.
+inline "cic:/CoRN/reals/CauchySeq/Cauchy_Lim_prop2_wd.con".
 
-inline cic:/CoRN/reals/CauchySeq/Lim_wd'.con.
+inline "cic:/CoRN/reals/CauchySeq/Lim_wd'.con".
 
-inline cic:/CoRN/reals/CauchySeq/Lim_unique.con.
+inline "cic:/CoRN/reals/CauchySeq/Lim_unique.con".
 
 (* UNEXPORTED
 End Equiv_Cauchy.
@@ -263,33 +261,33 @@ Some of these lemmas are now obsolete, because they were reproved for arbitrary 
 We begin by defining the constant sequence and proving that it is Cauchy with the expected limit.
 *)
 
-inline cic:/CoRN/reals/CauchySeq/Cauchy_const.con.
+inline "cic:/CoRN/reals/CauchySeq/Cauchy_const.con".
 
-inline cic:/CoRN/reals/CauchySeq/Lim_const.con.
+inline "cic:/CoRN/reals/CauchySeq/Lim_const.con".
 
-inline cic:/CoRN/reals/CauchySeq/Cauchy_Lim_plus.con.
+inline "cic:/CoRN/reals/CauchySeq/Cauchy_Lim_plus.con".
 
-inline cic:/CoRN/reals/CauchySeq/Cauchy_plus.con.
+inline "cic:/CoRN/reals/CauchySeq/Cauchy_plus.con".
 
-inline cic:/CoRN/reals/CauchySeq/Lim_plus.con.
+inline "cic:/CoRN/reals/CauchySeq/Lim_plus.con".
 
-inline cic:/CoRN/reals/CauchySeq/Cauchy_Lim_inv.con.
+inline "cic:/CoRN/reals/CauchySeq/Cauchy_Lim_inv.con".
 
-inline cic:/CoRN/reals/CauchySeq/Cauchy_inv.con.
+inline "cic:/CoRN/reals/CauchySeq/Cauchy_inv.con".
 
-inline cic:/CoRN/reals/CauchySeq/Lim_inv.con.
+inline "cic:/CoRN/reals/CauchySeq/Lim_inv.con".
 
-inline cic:/CoRN/reals/CauchySeq/Cauchy_Lim_minus.con.
+inline "cic:/CoRN/reals/CauchySeq/Cauchy_Lim_minus.con".
 
-inline cic:/CoRN/reals/CauchySeq/Cauchy_minus.con.
+inline "cic:/CoRN/reals/CauchySeq/Cauchy_minus.con".
 
-inline cic:/CoRN/reals/CauchySeq/Lim_minus.con.
+inline "cic:/CoRN/reals/CauchySeq/Lim_minus.con".
 
-inline cic:/CoRN/reals/CauchySeq/Cauchy_Lim_mult.con.
+inline "cic:/CoRN/reals/CauchySeq/Cauchy_Lim_mult.con".
 
-inline cic:/CoRN/reals/CauchySeq/Cauchy_mult.con.
+inline "cic:/CoRN/reals/CauchySeq/Cauchy_mult.con".
 
-inline cic:/CoRN/reals/CauchySeq/Lim_mult.con.
+inline "cic:/CoRN/reals/CauchySeq/Lim_mult.con".
 
 (* UNEXPORTED
 End Cauchy_props.

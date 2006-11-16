@@ -16,21 +16,19 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/model/groups/Qposgroup".
 
+include "CoRN.ma".
+
 (* $Id: Qposgroup.v,v 1.6 2004/04/08 08:20:32 lcf Exp $ *)
 
-(* INCLUDE
-Qposmonoid
-*)
+include "model/monoids/Qposmonoid.ma".
 
-(* INCLUDE
-CGroups
-*)
+include "algebra/CGroups.ma".
 
 (*#* **Example of a group: $\langle$#&lang;#[Qpos],[[*]]$\rangle$#&rang;#
 The positive rational numbers form a multiplicative group.
 *)
 
-inline cic:/CoRN/model/groups/Qposgroup/Qpos_is_CGroup.con.
+inline "cic:/CoRN/model/groups/Qposgroup/Qpos_is_CGroup.con".
 
-inline cic:/CoRN/model/groups/Qposgroup/Qpos_as_CGroup.con.
+inline "cic:/CoRN/model/groups/Qposgroup/Qpos_as_CGroup.con".
 

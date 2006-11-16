@@ -16,9 +16,9 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/algebra/CAbGroups".
 
-(* INCLUDE
-CGroups
-*)
+include "CoRN.ma".
+
+include "algebra/CGroups.ma".
 
 (* UNEXPORTED
 Section Abelian_Groups.
@@ -29,26 +29,28 @@ Section Abelian_Groups.
 Now we introduce commutativity and add some results.
 *)
 
-inline cic:/CoRN/algebra/CAbGroups/is_CAbGroup.con.
+inline "cic:/CoRN/algebra/CAbGroups/is_CAbGroup.con".
 
-inline cic:/CoRN/algebra/CAbGroups/CAbGroup.ind.
+inline "cic:/CoRN/algebra/CAbGroups/CAbGroup.ind".
+
+coercion "cic:/matita/CoRN-Decl/algebra/CAbGroups/cag_crr.con" 0 (* compounds *).
 
 (* UNEXPORTED
 Section AbGroup_Axioms.
 *)
 
-inline cic:/CoRN/algebra/CAbGroups/G.var.
+inline "cic:/CoRN/algebra/CAbGroups/G.var".
 
 (*#*
 %\begin{convention}% Let [G] be an Abelian Group.
 %\end{convention}%
 *)
 
-inline cic:/CoRN/algebra/CAbGroups/CAbGroup_is_CAbGroup.con.
+inline "cic:/CoRN/algebra/CAbGroups/CAbGroup_is_CAbGroup.con".
 
-inline cic:/CoRN/algebra/CAbGroups/cag_commutes.con.
+inline "cic:/CoRN/algebra/CAbGroups/cag_commutes.con".
 
-inline cic:/CoRN/algebra/CAbGroups/cag_commutes_unfolded.con.
+inline "cic:/CoRN/algebra/CAbGroups/cag_commutes_unfolded.con".
 
 (* UNEXPORTED
 End AbGroup_Axioms.
@@ -62,15 +64,15 @@ Section SubCAbGroups.
 ** Subgroups of an Abelian Group
 *)
 
-inline cic:/CoRN/algebra/CAbGroups/G.var.
+inline "cic:/CoRN/algebra/CAbGroups/G.var".
 
-inline cic:/CoRN/algebra/CAbGroups/P.var.
+inline "cic:/CoRN/algebra/CAbGroups/P.var".
 
-inline cic:/CoRN/algebra/CAbGroups/Punit.var.
+inline "cic:/CoRN/algebra/CAbGroups/Punit.var".
 
-inline cic:/CoRN/algebra/CAbGroups/op_pres_P.var.
+inline "cic:/CoRN/algebra/CAbGroups/op_pres_P.var".
 
-inline cic:/CoRN/algebra/CAbGroups/inv_pres_P.var.
+inline "cic:/CoRN/algebra/CAbGroups/inv_pres_P.var".
 
 (*#*
 %\begin{convention}%
@@ -79,11 +81,11 @@ that contains [Zero] and is closed under [[+]] and [[--]].
 %\end{convention}%
 *)
 
-inline cic:/CoRN/algebra/CAbGroups/subcrr.con.
+inline "cic:/CoRN/algebra/CAbGroups/subcrr.con".
 
-inline cic:/CoRN/algebra/CAbGroups/isabgrp_scrr.con.
+inline "cic:/CoRN/algebra/CAbGroups/isabgrp_scrr.con".
 
-inline cic:/CoRN/algebra/CAbGroups/Build_SubCAbGroup.con.
+inline "cic:/CoRN/algebra/CAbGroups/Build_SubCAbGroup.con".
 
 (* UNEXPORTED
 End SubCAbGroups.
@@ -101,28 +103,28 @@ Section Various.
 Hint Resolve cag_commutes_unfolded: algebra.
 *)
 
-inline cic:/CoRN/algebra/CAbGroups/G.var.
+inline "cic:/CoRN/algebra/CAbGroups/G.var".
 
 (*#*
 %\begin{convention}% Let [G] be an Abelian Group.
 %\end{convention}%
 *)
 
-inline cic:/CoRN/algebra/CAbGroups/cag_op_inv.con.
+inline "cic:/CoRN/algebra/CAbGroups/cag_op_inv.con".
 
 (* UNEXPORTED
 Hint Resolve cag_op_inv: algebra.
 *)
 
-inline cic:/CoRN/algebra/CAbGroups/assoc_1.con.
+inline "cic:/CoRN/algebra/CAbGroups/assoc_1.con".
 
-inline cic:/CoRN/algebra/CAbGroups/minus_plus.con.
+inline "cic:/CoRN/algebra/CAbGroups/minus_plus.con".
 
-inline cic:/CoRN/algebra/CAbGroups/op_lft_resp_ap.con.
+inline "cic:/CoRN/algebra/CAbGroups/op_lft_resp_ap.con".
 
-inline cic:/CoRN/algebra/CAbGroups/cag_ap_cancel_lft.con.
+inline "cic:/CoRN/algebra/CAbGroups/cag_ap_cancel_lft.con".
 
-inline cic:/CoRN/algebra/CAbGroups/plus_cancel_ap_lft.con.
+inline "cic:/CoRN/algebra/CAbGroups/plus_cancel_ap_lft.con".
 
 (* UNEXPORTED
 End Various.
@@ -161,11 +163,11 @@ as a left unit, and a unary setoid
 function [inv] which inverts elements respective to [plus].
 *)
 
-inline cic:/CoRN/algebra/CAbGroups/S.var.
+inline "cic:/CoRN/algebra/CAbGroups/S.var".
 
-inline cic:/CoRN/algebra/CAbGroups/unit.var.
+inline "cic:/CoRN/algebra/CAbGroups/unit.var".
 
-inline cic:/CoRN/algebra/CAbGroups/plus.var.
+inline "cic:/CoRN/algebra/CAbGroups/plus.var".
 
 (*#*
 %\begin{convention}%
@@ -177,35 +179,35 @@ for [plus] and [(inv x)] is a right-inverse of [x] w.r.t.%\% [plus].
 %\end{convention}%
 *)
 
-inline cic:/CoRN/algebra/CAbGroups/plus_lext.var.
+inline "cic:/CoRN/algebra/CAbGroups/plus_lext.var".
 
-inline cic:/CoRN/algebra/CAbGroups/plus_lunit.var.
+inline "cic:/CoRN/algebra/CAbGroups/plus_lunit.var".
 
-inline cic:/CoRN/algebra/CAbGroups/plus_comm.var.
+inline "cic:/CoRN/algebra/CAbGroups/plus_comm.var".
 
-inline cic:/CoRN/algebra/CAbGroups/plus_assoc.var.
+inline "cic:/CoRN/algebra/CAbGroups/plus_assoc.var".
 
-inline cic:/CoRN/algebra/CAbGroups/inv.var.
+inline "cic:/CoRN/algebra/CAbGroups/inv.var".
 
-inline cic:/CoRN/algebra/CAbGroups/inv_inv.var.
+inline "cic:/CoRN/algebra/CAbGroups/inv_inv.var".
 
-inline cic:/CoRN/algebra/CAbGroups/plus_rext.con.
+inline "cic:/CoRN/algebra/CAbGroups/plus_rext.con".
 
-inline cic:/CoRN/algebra/CAbGroups/plus_runit.con.
+inline "cic:/CoRN/algebra/CAbGroups/plus_runit.con".
 
-inline cic:/CoRN/algebra/CAbGroups/plus_is_fun.con.
+inline "cic:/CoRN/algebra/CAbGroups/plus_is_fun.con".
 
-inline cic:/CoRN/algebra/CAbGroups/inv_inv'.con.
+inline "cic:/CoRN/algebra/CAbGroups/inv_inv'.con".
 
-inline cic:/CoRN/algebra/CAbGroups/plus_fun.con.
+inline "cic:/CoRN/algebra/CAbGroups/plus_fun.con".
 
-inline cic:/CoRN/algebra/CAbGroups/Build_CSemiGroup'.con.
+inline "cic:/CoRN/algebra/CAbGroups/Build_CSemiGroup'.con".
 
-inline cic:/CoRN/algebra/CAbGroups/Build_CMonoid'.con.
+inline "cic:/CoRN/algebra/CAbGroups/Build_CMonoid'.con".
 
-inline cic:/CoRN/algebra/CAbGroups/Build_CGroup'.con.
+inline "cic:/CoRN/algebra/CAbGroups/Build_CGroup'.con".
 
-inline cic:/CoRN/algebra/CAbGroups/Build_CAbGroup'.con.
+inline "cic:/CoRN/algebra/CAbGroups/Build_CAbGroup'.con".
 
 (* UNEXPORTED
 End Nice_Char.
@@ -220,29 +222,29 @@ For reflection the following is needed; hopefully it is also useful.
 Section Group_Extras.
 *)
 
-inline cic:/CoRN/algebra/CAbGroups/G.var.
+inline "cic:/CoRN/algebra/CAbGroups/G.var".
 
-inline cic:/CoRN/algebra/CAbGroups/nmult.con.
+inline "cic:/CoRN/algebra/CAbGroups/nmult.con".
 
-inline cic:/CoRN/algebra/CAbGroups/nmult_wd.con.
+inline "cic:/CoRN/algebra/CAbGroups/nmult_wd.con".
 
-inline cic:/CoRN/algebra/CAbGroups/nmult_one.con.
+inline "cic:/CoRN/algebra/CAbGroups/nmult_one.con".
 
-inline cic:/CoRN/algebra/CAbGroups/nmult_Zero.con.
+inline "cic:/CoRN/algebra/CAbGroups/nmult_Zero.con".
 
-inline cic:/CoRN/algebra/CAbGroups/nmult_plus.con.
+inline "cic:/CoRN/algebra/CAbGroups/nmult_plus.con".
 
-inline cic:/CoRN/algebra/CAbGroups/nmult_mult.con.
+inline "cic:/CoRN/algebra/CAbGroups/nmult_mult.con".
 
-inline cic:/CoRN/algebra/CAbGroups/nmult_inv.con.
+inline "cic:/CoRN/algebra/CAbGroups/nmult_inv.con".
 
-inline cic:/CoRN/algebra/CAbGroups/nmult_plus'.con.
+inline "cic:/CoRN/algebra/CAbGroups/nmult_plus'.con".
 
 (* UNEXPORTED
 Hint Resolve nmult_wd nmult_Zero nmult_inv nmult_plus nmult_plus': algebra.
 *)
 
-inline cic:/CoRN/algebra/CAbGroups/zmult.con.
+inline "cic:/CoRN/algebra/CAbGroups/zmult.con".
 
 (*
 Lemma Zeq_imp_nat_eq : forall m n:nat, m = n -> m = n.
@@ -260,27 +262,27 @@ auto with zarith.
 Qed.
 *)
 
-inline cic:/CoRN/algebra/CAbGroups/zmult_char.con.
+inline "cic:/CoRN/algebra/CAbGroups/zmult_char.con".
 
-inline cic:/CoRN/algebra/CAbGroups/zmult_wd.con.
+inline "cic:/CoRN/algebra/CAbGroups/zmult_wd.con".
 
-inline cic:/CoRN/algebra/CAbGroups/zmult_one.con.
+inline "cic:/CoRN/algebra/CAbGroups/zmult_one.con".
 
-inline cic:/CoRN/algebra/CAbGroups/zmult_min_one.con.
+inline "cic:/CoRN/algebra/CAbGroups/zmult_min_one.con".
 
-inline cic:/CoRN/algebra/CAbGroups/zmult_zero.con.
+inline "cic:/CoRN/algebra/CAbGroups/zmult_zero.con".
 
-inline cic:/CoRN/algebra/CAbGroups/zmult_Zero.con.
+inline "cic:/CoRN/algebra/CAbGroups/zmult_Zero.con".
 
 (* UNEXPORTED
 Hint Resolve zmult_zero: algebra.
 *)
 
-inline cic:/CoRN/algebra/CAbGroups/zmult_plus.con.
+inline "cic:/CoRN/algebra/CAbGroups/zmult_plus.con".
 
-inline cic:/CoRN/algebra/CAbGroups/zmult_mult.con.
+inline "cic:/CoRN/algebra/CAbGroups/zmult_mult.con".
 
-inline cic:/CoRN/algebra/CAbGroups/zmult_plus'.con.
+inline "cic:/CoRN/algebra/CAbGroups/zmult_plus'.con".
 
 (* UNEXPORTED
 End Group_Extras.

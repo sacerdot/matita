@@ -16,11 +16,11 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/metrics/Equiv".
 
+include "CoRN.ma".
+
 (* $Id: Equiv.v,v 1.4 2004/04/23 10:01:02 lcf Exp $ *)
 
-(* INCLUDE
-IR_CPMSpace
-*)
+include "metrics/IR_CPMSpace.ma".
 
 (* UNEXPORTED
 Section equivalent.
@@ -34,31 +34,31 @@ We say that two pseudo metric spaces are equivalent, when there exists a
 bijective, structure-preserving function between them.
 *)
 
-inline cic:/CoRN/metrics/Equiv/equivalent_psmetric.con.
+inline "cic:/CoRN/metrics/Equiv/equivalent_psmetric.con".
 
-inline cic:/CoRN/metrics/Equiv/isopsmetry.con.
+inline "cic:/CoRN/metrics/Equiv/isopsmetry.con".
 
 (* UNEXPORTED
 Implicit Arguments isopsmetry [X Y].
 *)
 
-inline cic:/CoRN/metrics/Equiv/isopsmetry_imp_bij.con.
+inline "cic:/CoRN/metrics/Equiv/isopsmetry_imp_bij.con".
 
-inline cic:/CoRN/metrics/Equiv/isopsmetry_imp_lipschitz.con.
+inline "cic:/CoRN/metrics/Equiv/isopsmetry_imp_lipschitz.con".
 
-inline cic:/CoRN/metrics/Equiv/id_is_isopsmetry.con.
+inline "cic:/CoRN/metrics/Equiv/id_is_isopsmetry.con".
 
-inline cic:/CoRN/metrics/Equiv/comp_resp_isopsmetry.con.
+inline "cic:/CoRN/metrics/Equiv/comp_resp_isopsmetry.con".
 
-inline cic:/CoRN/metrics/Equiv/inv_isopsmetry.con.
+inline "cic:/CoRN/metrics/Equiv/inv_isopsmetry.con".
 
-inline cic:/CoRN/metrics/Equiv/MSequivalent.con.
+inline "cic:/CoRN/metrics/Equiv/MSequivalent.con".
 
 (*#*
 Not all pseudo metric spaces are equivalent:
 *)
 
-inline cic:/CoRN/metrics/Equiv/MSequivalent_discr.con.
+inline "cic:/CoRN/metrics/Equiv/MSequivalent_discr.con".
 
 (* UNEXPORTED
 End equivalent.

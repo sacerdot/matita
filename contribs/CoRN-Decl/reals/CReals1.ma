@@ -16,19 +16,15 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/reals/CReals1".
 
+include "CoRN.ma".
+
 (* $Id: CReals1.v,v 1.4 2004/04/23 10:01:04 lcf Exp $ *)
 
-(* INCLUDE
-Max_AbsIR
-*)
+include "reals/Max_AbsIR.ma".
 
-(* INCLUDE
-Expon
-*)
+include "algebra/Expon.ma".
 
-(* INCLUDE
-CPoly_ApZero
-*)
+include "algebra/CPoly_ApZero.ma".
 
 (* UNEXPORTED
 Section More_Cauchy_Props.
@@ -42,20 +38,20 @@ more useful properties about them.
 The sequence defined by $x_n=\frac2{n+1}$#x(n)=2/(n+1)#.
 *)
 
-inline cic:/CoRN/reals/CReals1/twice_inv_seq_Lim.con.
+inline "cic:/CoRN/reals/CReals1/twice_inv_seq_Lim.con".
 
-inline cic:/CoRN/reals/CReals1/twice_inv_seq.con.
+inline "cic:/CoRN/reals/CReals1/twice_inv_seq.con".
 
 (*#* 
 Next, we prove that the sequence of absolute values of a Cauchy 
 sequence is also Cauchy.
 *)
 
-inline cic:/CoRN/reals/CReals1/Cauchy_Lim_abs.con.
+inline "cic:/CoRN/reals/CReals1/Cauchy_Lim_abs.con".
 
-inline cic:/CoRN/reals/CReals1/Cauchy_abs.con.
+inline "cic:/CoRN/reals/CReals1/Cauchy_abs.con".
 
-inline cic:/CoRN/reals/CReals1/Lim_abs.con.
+inline "cic:/CoRN/reals/CReals1/Lim_abs.con".
 
 (* UNEXPORTED
 End More_Cauchy_Props.
@@ -81,35 +77,35 @@ Finally, for some of our results it is important to assume that
 [seq2] is monotonous.
 *)
 
-inline cic:/CoRN/reals/CReals1/seq1.var.
+inline "cic:/CoRN/reals/CReals1/seq1.var".
 
-inline cic:/CoRN/reals/CReals1/seq2.var.
+inline "cic:/CoRN/reals/CReals1/seq2.var".
 
-inline cic:/CoRN/reals/CReals1/f.var.
+inline "cic:/CoRN/reals/CReals1/f.var".
 
-inline cic:/CoRN/reals/CReals1/monF.var.
+inline "cic:/CoRN/reals/CReals1/monF.var".
 
-inline cic:/CoRN/reals/CReals1/crescF.var.
+inline "cic:/CoRN/reals/CReals1/crescF.var".
 
-inline cic:/CoRN/reals/CReals1/subseq.var.
+inline "cic:/CoRN/reals/CReals1/subseq.var".
 
-inline cic:/CoRN/reals/CReals1/mon_seq2.var.
+inline "cic:/CoRN/reals/CReals1/mon_seq2.var".
 
-inline cic:/CoRN/reals/CReals1/unbnd_f.con.
+inline "cic:/CoRN/reals/CReals1/unbnd_f.con".
 
 (* begin hide *)
 
-inline cic:/CoRN/reals/CReals1/mon_F'.con.
+inline "cic:/CoRN/reals/CReals1/mon_F'.con".
 
 (* end hide *)
 
-inline cic:/CoRN/reals/CReals1/conv_subseq_imp_conv_seq.con.
+inline "cic:/CoRN/reals/CReals1/conv_subseq_imp_conv_seq.con".
 
-inline cic:/CoRN/reals/CReals1/Cprop2_seq_imp_Cprop2_subseq.con.
+inline "cic:/CoRN/reals/CReals1/Cprop2_seq_imp_Cprop2_subseq.con".
 
-inline cic:/CoRN/reals/CReals1/conv_seq_imp_conv_subseq.con.
+inline "cic:/CoRN/reals/CReals1/conv_seq_imp_conv_subseq.con".
 
-inline cic:/CoRN/reals/CReals1/Cprop2_subseq_imp_Cprop2_seq.con.
+inline "cic:/CoRN/reals/CReals1/Cprop2_subseq_imp_Cprop2_seq.con".
 
 (* UNEXPORTED
 End Subsequences.
@@ -119,23 +115,23 @@ End Subsequences.
 Section Cauchy_Subsequences.
 *)
 
-inline cic:/CoRN/reals/CReals1/seq1.var.
+inline "cic:/CoRN/reals/CReals1/seq1.var".
 
-inline cic:/CoRN/reals/CReals1/seq2.var.
+inline "cic:/CoRN/reals/CReals1/seq2.var".
 
-inline cic:/CoRN/reals/CReals1/f.var.
+inline "cic:/CoRN/reals/CReals1/f.var".
 
-inline cic:/CoRN/reals/CReals1/monF.var.
+inline "cic:/CoRN/reals/CReals1/monF.var".
 
-inline cic:/CoRN/reals/CReals1/crescF.var.
+inline "cic:/CoRN/reals/CReals1/crescF.var".
 
-inline cic:/CoRN/reals/CReals1/subseq.var.
+inline "cic:/CoRN/reals/CReals1/subseq.var".
 
-inline cic:/CoRN/reals/CReals1/mon_seq2.var.
+inline "cic:/CoRN/reals/CReals1/mon_seq2.var".
 
-inline cic:/CoRN/reals/CReals1/Lim_seq_eq_Lim_subseq.con.
+inline "cic:/CoRN/reals/CReals1/Lim_seq_eq_Lim_subseq.con".
 
-inline cic:/CoRN/reals/CReals1/Lim_subseq_eq_Lim_seq.con.
+inline "cic:/CoRN/reals/CReals1/Lim_subseq_eq_Lim_seq.con".
 
 (* UNEXPORTED
 End Cauchy_Subsequences.
@@ -150,13 +146,13 @@ Section Properties_of_Exponentiation.
 Finally, we prove that [x[^]n] grows to infinity if [x [>] One].
 *)
 
-inline cic:/CoRN/reals/CReals1/power_big'.con.
+inline "cic:/CoRN/reals/CReals1/power_big'.con".
 
-inline cic:/CoRN/reals/CReals1/power_big.con.
+inline "cic:/CoRN/reals/CReals1/power_big.con".
 
-inline cic:/CoRN/reals/CReals1/qi_yields_zero.con.
+inline "cic:/CoRN/reals/CReals1/qi_yields_zero.con".
 
-inline cic:/CoRN/reals/CReals1/qi_lim_zero.con.
+inline "cic:/CoRN/reals/CReals1/qi_lim_zero.con".
 
 (* UNEXPORTED
 End Properties_of_Exponentiation.
@@ -164,9 +160,9 @@ End Properties_of_Exponentiation.
 
 (*#* *** [IR] has characteristic zero *)
 
-inline cic:/CoRN/reals/CReals1/char0_IR.con.
+inline "cic:/CoRN/reals/CReals1/char0_IR.con".
 
-inline cic:/CoRN/reals/CReals1/poly_apzero_IR.con.
+inline "cic:/CoRN/reals/CReals1/poly_apzero_IR.con".
 
-inline cic:/CoRN/reals/CReals1/poly_IR_extensional.con.
+inline "cic:/CoRN/reals/CReals1/poly_IR_extensional.con".
 

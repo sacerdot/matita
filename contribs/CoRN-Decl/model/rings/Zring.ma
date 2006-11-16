@@ -16,26 +16,24 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/model/rings/Zring".
 
+include "CoRN.ma".
+
 (* $Id: Zring.v,v 1.6 2004/04/08 08:20:34 lcf Exp $ *)
 
-(* INCLUDE
-Zabgroup
-*)
+include "model/abgroups/Zabgroup.ma".
 
-(* INCLUDE
-CRings
-*)
+include "algebra/CRings.ma".
 
 (*#* **Example of a ring: $\langle$#&lang;#[Z],[[+]],[[*]]$\rangle$#&rang;#
 
 The multiplication and the addition are distributive.
 *)
 
-inline cic:/CoRN/model/rings/Zring/Z_mult_plus_is_dist.con.
+inline "cic:/CoRN/model/rings/Zring/Z_mult_plus_is_dist.con".
 
-inline cic:/CoRN/model/rings/Zring/Z_is_CRing.con.
+inline "cic:/CoRN/model/rings/Zring/Z_is_CRing.con".
 
-inline cic:/CoRN/model/rings/Zring/Z_as_CRing.con.
+inline "cic:/CoRN/model/rings/Zring/Z_as_CRing.con".
 
 (*#* The term [Z_as_CRing] is of type [CRing]. Hence we have proven that [Z] is a constructive ring. *)
 

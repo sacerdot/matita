@@ -16,15 +16,15 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/transc/RealPowers".
 
+include "CoRN.ma".
+
 (* $Id: RealPowers.v,v 1.5 2004/04/23 10:01:08 lcf Exp $ *)
 
 (*#* printing [!] %\ensuremath{\hat{\ }}% #^# *)
 
 (*#* printing {!} %\ensuremath{\hat{\ }}% #^# *)
 
-(* INCLUDE
-Exponential
-*)
+include "transc/Exponential.ma".
 
 (* UNEXPORTED
 Opaque Expon.
@@ -39,7 +39,7 @@ $x^y=e^{y\times\log(x)}$#x<sup>y</sup>=e<sup>y*log(x)</sup>#, whenever
 [x [>] 0], inspired by the rules for manipulating these expressions.
 *)
 
-inline cic:/CoRN/transc/RealPowers/power.con.
+inline "cic:/CoRN/transc/RealPowers/power.con".
 
 (*#*
 This definition yields a well defined, strongly extensional function
@@ -48,29 +48,29 @@ still has all the good properties of that operation; when [x [=] e] it
 coincides with the exponential function.
 *)
 
-inline cic:/CoRN/transc/RealPowers/power_wd.con.
+inline "cic:/CoRN/transc/RealPowers/power_wd.con".
 
-inline cic:/CoRN/transc/RealPowers/power_strext.con.
+inline "cic:/CoRN/transc/RealPowers/power_strext.con".
 
-inline cic:/CoRN/transc/RealPowers/power_plus.con.
+inline "cic:/CoRN/transc/RealPowers/power_plus.con".
 
-inline cic:/CoRN/transc/RealPowers/power_inv.con.
+inline "cic:/CoRN/transc/RealPowers/power_inv.con".
 
 (* UNEXPORTED
 Hint Resolve power_wd power_plus power_inv: algebra.
 *)
 
-inline cic:/CoRN/transc/RealPowers/power_minus.con.
+inline "cic:/CoRN/transc/RealPowers/power_minus.con".
 
-inline cic:/CoRN/transc/RealPowers/power_nat.con.
+inline "cic:/CoRN/transc/RealPowers/power_nat.con".
 
 (* UNEXPORTED
 Hint Resolve power_minus power_nat: algebra.
 *)
 
-inline cic:/CoRN/transc/RealPowers/power_zero.con.
+inline "cic:/CoRN/transc/RealPowers/power_zero.con".
 
-inline cic:/CoRN/transc/RealPowers/power_one.con.
+inline "cic:/CoRN/transc/RealPowers/power_one.con".
 
 (* UNEXPORTED
 Hint Resolve power_zero power_one: algebra.
@@ -80,45 +80,45 @@ Hint Resolve power_zero power_one: algebra.
 Opaque nexp_op.
 *)
 
-inline cic:/CoRN/transc/RealPowers/power_int.con.
+inline "cic:/CoRN/transc/RealPowers/power_int.con".
 
 (* UNEXPORTED
 Hint Resolve power_int: algebra.
 *)
 
-inline cic:/CoRN/transc/RealPowers/Exp_power.con.
+inline "cic:/CoRN/transc/RealPowers/Exp_power.con".
 
-inline cic:/CoRN/transc/RealPowers/mult_power.con.
+inline "cic:/CoRN/transc/RealPowers/mult_power.con".
 
-inline cic:/CoRN/transc/RealPowers/recip_power.con.
+inline "cic:/CoRN/transc/RealPowers/recip_power.con".
 
 (* UNEXPORTED
 Hint Resolve Exp_power mult_power recip_power: algebra.
 *)
 
-inline cic:/CoRN/transc/RealPowers/div_power.con.
+inline "cic:/CoRN/transc/RealPowers/div_power.con".
 
 (* UNEXPORTED
 Hint Resolve div_power: algebra.
 *)
 
-inline cic:/CoRN/transc/RealPowers/power_ap_zero.con.
+inline "cic:/CoRN/transc/RealPowers/power_ap_zero.con".
 
-inline cic:/CoRN/transc/RealPowers/power_mult.con.
+inline "cic:/CoRN/transc/RealPowers/power_mult.con".
 
-inline cic:/CoRN/transc/RealPowers/power_pos.con.
+inline "cic:/CoRN/transc/RealPowers/power_pos.con".
 
 (* UNEXPORTED
 Hint Resolve power_mult: algebra.
 *)
 
-inline cic:/CoRN/transc/RealPowers/power_recip.con.
+inline "cic:/CoRN/transc/RealPowers/power_recip.con".
 
 (* UNEXPORTED
 Hint Resolve power_recip: algebra.
 *)
 
-inline cic:/CoRN/transc/RealPowers/power_div.con.
+inline "cic:/CoRN/transc/RealPowers/power_div.con".
 
 (* UNEXPORTED
 Hint Resolve power_div: algebra.
@@ -137,17 +137,17 @@ on partial functions which preserves continuity.
 %\end{convention}%
 *)
 
-inline cic:/CoRN/transc/RealPowers/J.var.
+inline "cic:/CoRN/transc/RealPowers/J.var".
 
-inline cic:/CoRN/transc/RealPowers/F.var.
+inline "cic:/CoRN/transc/RealPowers/F.var".
 
-inline cic:/CoRN/transc/RealPowers/G.var.
+inline "cic:/CoRN/transc/RealPowers/G.var".
 
-inline cic:/CoRN/transc/RealPowers/FPower.con.
+inline "cic:/CoRN/transc/RealPowers/FPower.con".
 
-inline cic:/CoRN/transc/RealPowers/FPower_domain.con.
+inline "cic:/CoRN/transc/RealPowers/FPower_domain.con".
 
-inline cic:/CoRN/transc/RealPowers/Continuous_power.con.
+inline "cic:/CoRN/transc/RealPowers/Continuous_power.con".
 
 (* UNEXPORTED
 End Power_Function.
@@ -163,7 +163,7 @@ Opaque Expon Logarithm.
 
 (*#* From global continuity we can obviously get local continuity: *)
 
-inline cic:/CoRN/transc/RealPowers/continuous_I_power.con.
+inline "cic:/CoRN/transc/RealPowers/continuous_I_power.con".
 
 (*#* The rule for differentiation is a must. *)
 
@@ -175,9 +175,9 @@ Transparent Logarithm.
 Opaque Logarithm.
 *)
 
-inline cic:/CoRN/transc/RealPowers/Derivative_power.con.
+inline "cic:/CoRN/transc/RealPowers/Derivative_power.con".
 
-inline cic:/CoRN/transc/RealPowers/Diffble_power.con.
+inline "cic:/CoRN/transc/RealPowers/Diffble_power.con".
 
 (* UNEXPORTED
 End More_on_Power_Function.

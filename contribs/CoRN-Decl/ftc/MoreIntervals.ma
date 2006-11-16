@@ -16,11 +16,11 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/ftc/MoreIntervals".
 
+include "CoRN.ma".
+
 (* $Id: MoreIntervals.v,v 1.6 2004/04/23 10:00:59 lcf Exp $ *)
 
-(* INCLUDE
-NthDerivative
-*)
+include "ftc/NthDerivative.ma".
 
 (* UNEXPORTED
 Opaque Min Max.
@@ -101,15 +101,17 @@ from this point on we can work with any kind of intervals in exactly
 the same way.
 *)
 
-inline cic:/CoRN/ftc/MoreIntervals/interval.ind.
+inline "cic:/CoRN/ftc/MoreIntervals/interval.ind".
 
 (*#*
 To each interval a predicate (set) is assigned by the following map:
 *)
 
-inline cic:/CoRN/ftc/MoreIntervals/iprop.con.
+inline "cic:/CoRN/ftc/MoreIntervals/iprop.con".
 
 (* begin hide *)
+
+coercion "cic:/matita/CoRN-Decl/ftc/MoreIntervals/iprop.con" 0 (* compounds *).
 
 (* end hide *)
 
@@ -121,67 +123,67 @@ We now define what it means for an interval to be nonvoid, proper,
 finite and compact in the obvious way.
 *)
 
-inline cic:/CoRN/ftc/MoreIntervals/nonvoid.con.
+inline "cic:/CoRN/ftc/MoreIntervals/nonvoid.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/proper.con.
+inline "cic:/CoRN/ftc/MoreIntervals/proper.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/finite.con.
+inline "cic:/CoRN/ftc/MoreIntervals/finite.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/compact_.con.
+inline "cic:/CoRN/ftc/MoreIntervals/compact_.con".
 
 (*#* Finite intervals have a left end and a right end. *)
 
-inline cic:/CoRN/ftc/MoreIntervals/left_end.con.
+inline "cic:/CoRN/ftc/MoreIntervals/left_end.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/right_end.con.
+inline "cic:/CoRN/ftc/MoreIntervals/right_end.con".
 
 (*#*
 Some trivia: compact intervals are finite; proper intervals are nonvoid; an interval is nonvoid iff it contains some point.
 *)
 
-inline cic:/CoRN/ftc/MoreIntervals/compact_finite.con.
+inline "cic:/CoRN/ftc/MoreIntervals/compact_finite.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/proper_nonvoid.con.
+inline "cic:/CoRN/ftc/MoreIntervals/proper_nonvoid.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/nonvoid_point.con.
+inline "cic:/CoRN/ftc/MoreIntervals/nonvoid_point.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/nonvoid_char.con.
+inline "cic:/CoRN/ftc/MoreIntervals/nonvoid_char.con".
 
 (*#*
 For practical reasons it helps to define left end and right end of compact intervals.
 *)
 
-inline cic:/CoRN/ftc/MoreIntervals/Lend.con.
+inline "cic:/CoRN/ftc/MoreIntervals/Lend.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/Rend.con.
+inline "cic:/CoRN/ftc/MoreIntervals/Rend.con".
 
 (*#* In a compact interval, the left end is always less than or equal
 to the right end.
 *)
 
-inline cic:/CoRN/ftc/MoreIntervals/Lend_leEq_Rend.con.
+inline "cic:/CoRN/ftc/MoreIntervals/Lend_leEq_Rend.con".
 
 (*#*
 Some nice characterizations of inclusion:
 *)
 
-inline cic:/CoRN/ftc/MoreIntervals/compact_included.con.
+inline "cic:/CoRN/ftc/MoreIntervals/compact_included.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/included_interval'.con.
+inline "cic:/CoRN/ftc/MoreIntervals/included_interval'.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/included_interval.con.
+inline "cic:/CoRN/ftc/MoreIntervals/included_interval.con".
 
 (*#*
 A weirder inclusion result.
 *)
 
-inline cic:/CoRN/ftc/MoreIntervals/included3_interval.con.
+inline "cic:/CoRN/ftc/MoreIntervals/included3_interval.con".
 
 (*#*
 Finally, all intervals are characterized by well defined predicates.
 *)
 
-inline cic:/CoRN/ftc/MoreIntervals/iprop_wd.con.
+inline "cic:/CoRN/ftc/MoreIntervals/iprop_wd.con".
 
 (* UNEXPORTED
 End Intervals.
@@ -214,25 +216,25 @@ such that [P(x)] holds.
 %\end{convention}%
 *)
 
-inline cic:/CoRN/ftc/MoreIntervals/P.var.
+inline "cic:/CoRN/ftc/MoreIntervals/P.var".
 
-inline cic:/CoRN/ftc/MoreIntervals/wdP.var.
+inline "cic:/CoRN/ftc/MoreIntervals/wdP.var".
 
-inline cic:/CoRN/ftc/MoreIntervals/x.var.
+inline "cic:/CoRN/ftc/MoreIntervals/x.var".
 
-inline cic:/CoRN/ftc/MoreIntervals/Hx.var.
+inline "cic:/CoRN/ftc/MoreIntervals/Hx.var".
 
-inline cic:/CoRN/ftc/MoreIntervals/compact_single.con.
+inline "cic:/CoRN/ftc/MoreIntervals/compact_single.con".
 
 (*#*
 This interval contains [x] and only (elements equal to) [x]; furthermore, for every (well-defined) [P], if $x\in P$#x&isin;P# then $[x,x]\subseteq P$#[x,x]&sube;P#.
 *)
 
-inline cic:/CoRN/ftc/MoreIntervals/compact_single_prop.con.
+inline "cic:/CoRN/ftc/MoreIntervals/compact_single_prop.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/compact_single_pt.con.
+inline "cic:/CoRN/ftc/MoreIntervals/compact_single_pt.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/compact_single_inc.con.
+inline "cic:/CoRN/ftc/MoreIntervals/compact_single_inc.con".
 
 (* UNEXPORTED
 End Single_Compact_Interval.
@@ -242,7 +244,7 @@ End Single_Compact_Interval.
 The special case of intervals is worth singling out, as one of the hypothesis becomes a theorem.
 *)
 
-inline cic:/CoRN/ftc/MoreIntervals/compact_single_iprop.con.
+inline "cic:/CoRN/ftc/MoreIntervals/compact_single_iprop.con".
 
 (*#*
 Now for more interesting and important results.
@@ -258,49 +260,49 @@ Section Proper_Compact_with_One_or_Two_Points.
 
 (* begin hide *)
 
-inline cic:/CoRN/ftc/MoreIntervals/cip1'.con.
+inline "cic:/CoRN/ftc/MoreIntervals/cip1'.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/cip1''.con.
+inline "cic:/CoRN/ftc/MoreIntervals/cip1''.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/cip1'''.con.
+inline "cic:/CoRN/ftc/MoreIntervals/cip1'''.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/cip1''''.con.
+inline "cic:/CoRN/ftc/MoreIntervals/cip1''''.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/cip2.con.
+inline "cic:/CoRN/ftc/MoreIntervals/cip2.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/cip2'.con.
+inline "cic:/CoRN/ftc/MoreIntervals/cip2'.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/cip2''.con.
+inline "cic:/CoRN/ftc/MoreIntervals/cip2''.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/cip2'''.con.
+inline "cic:/CoRN/ftc/MoreIntervals/cip2'''.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/cip3.con.
+inline "cic:/CoRN/ftc/MoreIntervals/cip3.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/cip3'.con.
+inline "cic:/CoRN/ftc/MoreIntervals/cip3'.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/cip3''.con.
+inline "cic:/CoRN/ftc/MoreIntervals/cip3''.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/cip3'''.con.
+inline "cic:/CoRN/ftc/MoreIntervals/cip3'''.con".
 
 (* end hide *)
 
-inline cic:/CoRN/ftc/MoreIntervals/compact_in_interval.con.
+inline "cic:/CoRN/ftc/MoreIntervals/compact_in_interval.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/compact_compact_in_interval.con.
+inline "cic:/CoRN/ftc/MoreIntervals/compact_compact_in_interval.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/proper_compact_in_interval.con.
+inline "cic:/CoRN/ftc/MoreIntervals/proper_compact_in_interval.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/proper_compact_in_interval'.con.
+inline "cic:/CoRN/ftc/MoreIntervals/proper_compact_in_interval'.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/included_compact_in_interval.con.
+inline "cic:/CoRN/ftc/MoreIntervals/included_compact_in_interval.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/iprop_compact_in_interval.con.
+inline "cic:/CoRN/ftc/MoreIntervals/iprop_compact_in_interval.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/iprop_compact_in_interval'.con.
+inline "cic:/CoRN/ftc/MoreIntervals/iprop_compact_in_interval'.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/iprop_compact_in_interval_inc1.con.
+inline "cic:/CoRN/ftc/MoreIntervals/iprop_compact_in_interval_inc1.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/iprop_compact_in_interval_inc2.con.
+inline "cic:/CoRN/ftc/MoreIntervals/iprop_compact_in_interval_inc2.con".
 
 (*#*
 If [x [=] y] then the construction yields the same interval whether we
@@ -309,43 +311,43 @@ stage, which is why we formalized this result as a functional
 definition rather than as an existential formula.
 *)
 
-inline cic:/CoRN/ftc/MoreIntervals/compact_in_interval_wd1.con.
+inline "cic:/CoRN/ftc/MoreIntervals/compact_in_interval_wd1.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/compact_in_interval_wd2.con.
+inline "cic:/CoRN/ftc/MoreIntervals/compact_in_interval_wd2.con".
 
 (*#*
 We can make an analogous construction for two points.
 *)
 
-inline cic:/CoRN/ftc/MoreIntervals/compact_in_interval2.con.
+inline "cic:/CoRN/ftc/MoreIntervals/compact_in_interval2.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/compact_compact_in_interval2.con.
+inline "cic:/CoRN/ftc/MoreIntervals/compact_compact_in_interval2.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/proper_compact_in_interval2.con.
+inline "cic:/CoRN/ftc/MoreIntervals/proper_compact_in_interval2.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/proper_compact_in_interval2'.con.
+inline "cic:/CoRN/ftc/MoreIntervals/proper_compact_in_interval2'.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/included_compact_in_interval2.con.
+inline "cic:/CoRN/ftc/MoreIntervals/included_compact_in_interval2.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/iprop_compact_in_interval2x.con.
+inline "cic:/CoRN/ftc/MoreIntervals/iprop_compact_in_interval2x.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/iprop_compact_in_interval2y.con.
+inline "cic:/CoRN/ftc/MoreIntervals/iprop_compact_in_interval2y.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/iprop_compact_in_interval2x'.con.
+inline "cic:/CoRN/ftc/MoreIntervals/iprop_compact_in_interval2x'.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/iprop_compact_in_interval2y'.con.
+inline "cic:/CoRN/ftc/MoreIntervals/iprop_compact_in_interval2y'.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/iprop_compact_in_interval2_inc1.con.
+inline "cic:/CoRN/ftc/MoreIntervals/iprop_compact_in_interval2_inc1.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/iprop_compact_in_interval2_inc2.con.
+inline "cic:/CoRN/ftc/MoreIntervals/iprop_compact_in_interval2_inc2.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/compact_in_interval_x_lft.con.
+inline "cic:/CoRN/ftc/MoreIntervals/compact_in_interval_x_lft.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/compact_in_interval_y_lft.con.
+inline "cic:/CoRN/ftc/MoreIntervals/compact_in_interval_y_lft.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/compact_in_interval_x_rht.con.
+inline "cic:/CoRN/ftc/MoreIntervals/compact_in_interval_x_rht.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/compact_in_interval_y_rht.con.
+inline "cic:/CoRN/ftc/MoreIntervals/compact_in_interval_y_rht.con".
 
 (* UNEXPORTED
 End Proper_Compact_with_One_or_Two_Points.
@@ -355,9 +357,9 @@ End Proper_Compact_with_One_or_Two_Points.
 Compact intervals are exactly compact intervals(!).
 *)
 
-inline cic:/CoRN/ftc/MoreIntervals/interval_compact_inc.con.
+inline "cic:/CoRN/ftc/MoreIntervals/interval_compact_inc.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/compact_interval_inc.con.
+inline "cic:/CoRN/ftc/MoreIntervals/compact_interval_inc.con".
 
 (*#*
 A generalization of the previous results: if $[a,b]\subseteq J$#[a,b]&sube;J#
@@ -365,7 +367,7 @@ and [J] is proper, then we can find a proper interval [[a',b']] such that
 $[a,b]\subseteq[a',b']\subseteq J$#[a,b]&sube;[a',b']&sube;J#.
 *)
 
-inline cic:/CoRN/ftc/MoreIntervals/compact_proper_in_interval.con.
+inline "cic:/CoRN/ftc/MoreIntervals/compact_proper_in_interval.con".
 
 (* UNEXPORTED
 End Compact_Constructions.
@@ -387,19 +389,19 @@ previously defined concepts.
 %\end{convention}%
 *)
 
-inline cic:/CoRN/ftc/MoreIntervals/n.var.
+inline "cic:/CoRN/ftc/MoreIntervals/n.var".
 
-inline cic:/CoRN/ftc/MoreIntervals/I.var.
+inline "cic:/CoRN/ftc/MoreIntervals/I.var".
 
-inline cic:/CoRN/ftc/MoreIntervals/Continuous.con.
+inline "cic:/CoRN/ftc/MoreIntervals/Continuous.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/Derivative.con.
+inline "cic:/CoRN/ftc/MoreIntervals/Derivative.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/Diffble.con.
+inline "cic:/CoRN/ftc/MoreIntervals/Diffble.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/Derivative_n.con.
+inline "cic:/CoRN/ftc/MoreIntervals/Derivative_n.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/Diffble_n.con.
+inline "cic:/CoRN/ftc/MoreIntervals/Diffble_n.con".
 
 (* UNEXPORTED
 End Functions.
@@ -413,17 +415,17 @@ Section Reflexivity_Properties.
 In the case of compact intervals, this definitions collapse to the old ones.
 *)
 
-inline cic:/CoRN/ftc/MoreIntervals/Continuous_Int.con.
+inline "cic:/CoRN/ftc/MoreIntervals/Continuous_Int.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/Int_Continuous.con.
+inline "cic:/CoRN/ftc/MoreIntervals/Int_Continuous.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/Derivative_Int.con.
+inline "cic:/CoRN/ftc/MoreIntervals/Derivative_Int.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/Int_Derivative.con.
+inline "cic:/CoRN/ftc/MoreIntervals/Int_Derivative.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/Diffble_Int.con.
+inline "cic:/CoRN/ftc/MoreIntervals/Diffble_Int.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/Int_Diffble.con.
+inline "cic:/CoRN/ftc/MoreIntervals/Int_Diffble.con".
 
 (* UNEXPORTED
 End Reflexivity_Properties.
@@ -437,11 +439,11 @@ Section Lemmas.
 Interestingly, inclusion and equality in an interval are also characterizable in a similar way:
 *)
 
-inline cic:/CoRN/ftc/MoreIntervals/included_imp_inc.con.
+inline "cic:/CoRN/ftc/MoreIntervals/included_imp_inc.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/included_Feq''.con.
+inline "cic:/CoRN/ftc/MoreIntervals/included_Feq''.con".
 
-inline cic:/CoRN/ftc/MoreIntervals/included_Feq'.con.
+inline "cic:/CoRN/ftc/MoreIntervals/included_Feq'.con".
 
 (* UNEXPORTED
 End Lemmas.

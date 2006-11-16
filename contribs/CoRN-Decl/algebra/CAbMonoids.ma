@@ -16,9 +16,9 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/algebra/CAbMonoids".
 
-(* INCLUDE
-CMonoids
-*)
+include "CoRN.ma".
+
+include "algebra/CMonoids.ma".
 
 (* UNEXPORTED
 Section Abelian_Monoids.
@@ -29,26 +29,28 @@ Section Abelian_Monoids.
 Now we introduce commutativity and add some results.
 *)
 
-inline cic:/CoRN/algebra/CAbMonoids/is_CAbMonoid.con.
+inline "cic:/CoRN/algebra/CAbMonoids/is_CAbMonoid.con".
 
-inline cic:/CoRN/algebra/CAbMonoids/CAbMonoid.ind.
+inline "cic:/CoRN/algebra/CAbMonoids/CAbMonoid.ind".
+
+coercion "cic:/matita/CoRN-Decl/algebra/CAbMonoids/cam_crr.con" 0 (* compounds *).
 
 (* UNEXPORTED
 Section AbMonoid_Axioms.
 *)
 
-inline cic:/CoRN/algebra/CAbMonoids/M.var.
+inline "cic:/CoRN/algebra/CAbMonoids/M.var".
 
 (*#*
 %\begin{convention}% Let [M] be an abelian monoid.
 %\end{convention}%
 *)
 
-inline cic:/CoRN/algebra/CAbMonoids/CAbMonoid_is_CAbMonoid.con.
+inline "cic:/CoRN/algebra/CAbMonoids/CAbMonoid_is_CAbMonoid.con".
 
-inline cic:/CoRN/algebra/CAbMonoids/cam_commutes.con.
+inline "cic:/CoRN/algebra/CAbMonoids/cam_commutes.con".
 
-inline cic:/CoRN/algebra/CAbMonoids/cam_commutes_unfolded.con.
+inline "cic:/CoRN/algebra/CAbMonoids/cam_commutes_unfolded.con".
 
 (* UNEXPORTED
 End AbMonoid_Axioms.
@@ -62,13 +64,13 @@ Section SubCAbMonoids.
 ** Subgroups of an Abelian Monoid
 *)
 
-inline cic:/CoRN/algebra/CAbMonoids/M.var.
+inline "cic:/CoRN/algebra/CAbMonoids/M.var".
 
-inline cic:/CoRN/algebra/CAbMonoids/P.var.
+inline "cic:/CoRN/algebra/CAbMonoids/P.var".
 
-inline cic:/CoRN/algebra/CAbMonoids/Punit.var.
+inline "cic:/CoRN/algebra/CAbMonoids/Punit.var".
 
-inline cic:/CoRN/algebra/CAbMonoids/op_pres_P.var.
+inline "cic:/CoRN/algebra/CAbMonoids/op_pres_P.var".
 
 (*#*
 %\begin{convention}%
@@ -77,11 +79,11 @@ that contains [Zero] and is closed under [[+]] and [[--]].
 %\end{convention}%
 *)
 
-inline cic:/CoRN/algebra/CAbMonoids/subcrr.con.
+inline "cic:/CoRN/algebra/CAbMonoids/subcrr.con".
 
-inline cic:/CoRN/algebra/CAbMonoids/isabgrp_scrr.con.
+inline "cic:/CoRN/algebra/CAbMonoids/isabgrp_scrr.con".
 
-inline cic:/CoRN/algebra/CAbMonoids/Build_SubCAbMonoid.con.
+inline "cic:/CoRN/algebra/CAbMonoids/Build_SubCAbMonoid.con".
 
 (* UNEXPORTED
 End SubCAbMonoids.

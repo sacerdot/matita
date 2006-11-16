@@ -16,64 +16,66 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/reals/R_morphism".
 
+include "CoRN.ma".
+
 (* begin hide *)
 
 (* In this file a notion of morphism between two arbitrary real number 
    structures, is introduced together with te proofs that this notion of 
    morphism preserves the basic algebraic structure. *)
 
-(* INCLUDE
-CReals
-*)
+include "reals/CReals.ma".
 
 (* This comes from CReals1.v *)
 
-inline cic:/CoRN/reals/R_morphism/Cauchy_Lim_prop2.con.
+inline "cic:/CoRN/reals/R_morphism/Cauchy_Lim_prop2.con".
 
 (* UNEXPORTED
 Section morphism.
 *)
 
-inline cic:/CoRN/reals/R_morphism/R1.var.
+inline "cic:/CoRN/reals/R_morphism/R1.var".
 
-inline cic:/CoRN/reals/R_morphism/R2.var.
+inline "cic:/CoRN/reals/R_morphism/R2.var".
 
 (* UNEXPORTED
 Section morphism_details.
 *)
 
-inline cic:/CoRN/reals/R_morphism/phi.var.
+inline "cic:/CoRN/reals/R_morphism/phi.var".
 
-inline cic:/CoRN/reals/R_morphism/p1.var.
+inline "cic:/CoRN/reals/R_morphism/p1.var".
 
-inline cic:/CoRN/reals/R_morphism/p2.var.
+inline "cic:/CoRN/reals/R_morphism/p2.var".
 
-inline cic:/CoRN/reals/R_morphism/f1.var.
+inline "cic:/CoRN/reals/R_morphism/f1.var".
 
-inline cic:/CoRN/reals/R_morphism/f2.var.
+inline "cic:/CoRN/reals/R_morphism/f2.var".
 
-inline cic:/CoRN/reals/R_morphism/g1.var.
+inline "cic:/CoRN/reals/R_morphism/g1.var".
 
-inline cic:/CoRN/reals/R_morphism/g2.var.
+inline "cic:/CoRN/reals/R_morphism/g2.var".
 
-inline cic:/CoRN/reals/R_morphism/fun_pres_relation.con.
+inline "cic:/CoRN/reals/R_morphism/fun_pres_relation.con".
 
-inline cic:/CoRN/reals/R_morphism/fun_pres_un_fun.con.
+inline "cic:/CoRN/reals/R_morphism/fun_pres_un_fun.con".
 
-inline cic:/CoRN/reals/R_morphism/fun_pres_bin_fun.con.
+inline "cic:/CoRN/reals/R_morphism/fun_pres_bin_fun.con".
 
 (*
 Definition fun_pres_partial_fun:=(x:R1;H1:x[#]Zero;H2:(phi x)[#]Zero)
 (phi (nzinj R1 (i1 (nzpro R1 x H1))))[=](nzinj R2 (i2 (nzpro R2 (phi x) H2))).
 *)
 
-inline cic:/CoRN/reals/R_morphism/fun_pres_Lim.con.
+inline "cic:/CoRN/reals/R_morphism/fun_pres_Lim.con".
 
 (* UNEXPORTED
 End morphism_details.
 *)
 
-inline cic:/CoRN/reals/R_morphism/Homomorphism.ind.
+inline "cic:/CoRN/reals/R_morphism/Homomorphism.ind".
+
+coercion "cic:/matita/CoRN-Decl/reals/R_morphism/map.con" 0 (* compounds *).
 
 (* This might be useful later... 
 Definition Homo_as_CSetoid_fun:=
@@ -84,39 +86,39 @@ Definition Homo_as_CSetoid_fun:=
           ).
 *****************)
 
-inline cic:/CoRN/reals/R_morphism/map_strext_unfolded.con.
+inline "cic:/CoRN/reals/R_morphism/map_strext_unfolded.con".
 
-inline cic:/CoRN/reals/R_morphism/map_wd_unfolded.con.
+inline "cic:/CoRN/reals/R_morphism/map_wd_unfolded.con".
 
-inline cic:/CoRN/reals/R_morphism/map_pres_less_unfolded.con.
+inline "cic:/CoRN/reals/R_morphism/map_pres_less_unfolded.con".
 
-inline cic:/CoRN/reals/R_morphism/map_pres_plus_unfolded.con.
+inline "cic:/CoRN/reals/R_morphism/map_pres_plus_unfolded.con".
 
-inline cic:/CoRN/reals/R_morphism/map_pres_mult_unfolded.con.
+inline "cic:/CoRN/reals/R_morphism/map_pres_mult_unfolded.con".
 
 (* Now we start to derive some useful properties of a Homomorphism *)
 
-inline cic:/CoRN/reals/R_morphism/map_pres_zero.con.
+inline "cic:/CoRN/reals/R_morphism/map_pres_zero.con".
 
-inline cic:/CoRN/reals/R_morphism/map_pres_zero_unfolded.con.
+inline "cic:/CoRN/reals/R_morphism/map_pres_zero_unfolded.con".
 
-inline cic:/CoRN/reals/R_morphism/map_pres_minus.con.
+inline "cic:/CoRN/reals/R_morphism/map_pres_minus.con".
 
-inline cic:/CoRN/reals/R_morphism/map_pres_minus_unfolded.con.
+inline "cic:/CoRN/reals/R_morphism/map_pres_minus_unfolded.con".
 
-inline cic:/CoRN/reals/R_morphism/map_pres_apartness.con.
+inline "cic:/CoRN/reals/R_morphism/map_pres_apartness.con".
 
 (* Merely a useful special case *)
 
-inline cic:/CoRN/reals/R_morphism/map_pres_ap_zero.con.
+inline "cic:/CoRN/reals/R_morphism/map_pres_ap_zero.con".
 
-inline cic:/CoRN/reals/R_morphism/map_pres_one.con.
+inline "cic:/CoRN/reals/R_morphism/map_pres_one.con".
 
-inline cic:/CoRN/reals/R_morphism/map_pres_one_unfolded.con.
+inline "cic:/CoRN/reals/R_morphism/map_pres_one_unfolded.con".
 
 (* I will not use the following lemma *)
 
-inline cic:/CoRN/reals/R_morphism/map_pres_inv_unfolded.con.
+inline "cic:/CoRN/reals/R_morphism/map_pres_inv_unfolded.con".
 
 (* UNEXPORTED
 End morphism.
@@ -126,29 +128,29 @@ End morphism.
 Section composition.
 *)
 
-inline cic:/CoRN/reals/R_morphism/R1.var.
+inline "cic:/CoRN/reals/R_morphism/R1.var".
 
-inline cic:/CoRN/reals/R_morphism/R2.var.
+inline "cic:/CoRN/reals/R_morphism/R2.var".
 
-inline cic:/CoRN/reals/R_morphism/R3.var.
+inline "cic:/CoRN/reals/R_morphism/R3.var".
 
-inline cic:/CoRN/reals/R_morphism/f.var.
+inline "cic:/CoRN/reals/R_morphism/f.var".
 
-inline cic:/CoRN/reals/R_morphism/g.var.
+inline "cic:/CoRN/reals/R_morphism/g.var".
 
-inline cic:/CoRN/reals/R_morphism/compose.con.
+inline "cic:/CoRN/reals/R_morphism/compose.con".
 
-inline cic:/CoRN/reals/R_morphism/compose_strext.con.
+inline "cic:/CoRN/reals/R_morphism/compose_strext.con".
 
-inline cic:/CoRN/reals/R_morphism/compose_pres_less.con.
+inline "cic:/CoRN/reals/R_morphism/compose_pres_less.con".
 
-inline cic:/CoRN/reals/R_morphism/compose_pres_plus.con.
+inline "cic:/CoRN/reals/R_morphism/compose_pres_plus.con".
 
-inline cic:/CoRN/reals/R_morphism/compose_pres_mult.con.
+inline "cic:/CoRN/reals/R_morphism/compose_pres_mult.con".
 
-inline cic:/CoRN/reals/R_morphism/compose_pres_Lim.con.
+inline "cic:/CoRN/reals/R_morphism/compose_pres_Lim.con".
 
-inline cic:/CoRN/reals/R_morphism/Compose.con.
+inline "cic:/CoRN/reals/R_morphism/Compose.con".
 
 (* UNEXPORTED
 End composition.
@@ -158,25 +160,25 @@ End composition.
 Section isomorphism.
 *)
 
-inline cic:/CoRN/reals/R_morphism/R1.var.
+inline "cic:/CoRN/reals/R_morphism/R1.var".
 
-inline cic:/CoRN/reals/R_morphism/R2.var.
+inline "cic:/CoRN/reals/R_morphism/R2.var".
 
 (* UNEXPORTED
 Section identity_map.
 *)
 
-inline cic:/CoRN/reals/R_morphism/R3.var.
+inline "cic:/CoRN/reals/R_morphism/R3.var".
 
-inline cic:/CoRN/reals/R_morphism/f.var.
+inline "cic:/CoRN/reals/R_morphism/f.var".
 
-inline cic:/CoRN/reals/R_morphism/map_is_id.con.
+inline "cic:/CoRN/reals/R_morphism/map_is_id.con".
 
 (* UNEXPORTED
 End identity_map.
 *)
 
-inline cic:/CoRN/reals/R_morphism/Isomorphism.ind.
+inline "cic:/CoRN/reals/R_morphism/Isomorphism.ind".
 
 (* UNEXPORTED
 End isomorphism.
@@ -186,13 +188,13 @@ End isomorphism.
 Section surjective_map.
 *)
 
-inline cic:/CoRN/reals/R_morphism/R1.var.
+inline "cic:/CoRN/reals/R_morphism/R1.var".
 
-inline cic:/CoRN/reals/R_morphism/R2.var.
+inline "cic:/CoRN/reals/R_morphism/R2.var".
 
-inline cic:/CoRN/reals/R_morphism/f.var.
+inline "cic:/CoRN/reals/R_morphism/f.var".
 
-inline cic:/CoRN/reals/R_morphism/map_is_surjective.con.
+inline "cic:/CoRN/reals/R_morphism/map_is_surjective.con".
 
 (* UNEXPORTED
 End surjective_map.
@@ -202,29 +204,29 @@ End surjective_map.
 Section simplification.
 *)
 
-inline cic:/CoRN/reals/R_morphism/R1.var.
+inline "cic:/CoRN/reals/R_morphism/R1.var".
 
-inline cic:/CoRN/reals/R_morphism/R2.var.
+inline "cic:/CoRN/reals/R_morphism/R2.var".
 
-inline cic:/CoRN/reals/R_morphism/f.var.
+inline "cic:/CoRN/reals/R_morphism/f.var".
 
-inline cic:/CoRN/reals/R_morphism/H1.var.
+inline "cic:/CoRN/reals/R_morphism/H1.var".
 
-inline cic:/CoRN/reals/R_morphism/f_well_def.con.
+inline "cic:/CoRN/reals/R_morphism/f_well_def.con".
 
 (* UNEXPORTED
 Section with_less.
 *)
 
-inline cic:/CoRN/reals/R_morphism/H2.var.
+inline "cic:/CoRN/reals/R_morphism/H2.var".
 
-inline cic:/CoRN/reals/R_morphism/less_pres_f.con.
+inline "cic:/CoRN/reals/R_morphism/less_pres_f.con".
 
-inline cic:/CoRN/reals/R_morphism/leEq_pres_f.con.
+inline "cic:/CoRN/reals/R_morphism/leEq_pres_f.con".
 
-inline cic:/CoRN/reals/R_morphism/f_pres_leEq.con.
+inline "cic:/CoRN/reals/R_morphism/f_pres_leEq.con".
 
-inline cic:/CoRN/reals/R_morphism/f_pres_apartness.con.
+inline "cic:/CoRN/reals/R_morphism/f_pres_apartness.con".
 
 (* UNEXPORTED
 End with_less.
@@ -234,13 +236,13 @@ End with_less.
 Section with_plus.
 *)
 
-inline cic:/CoRN/reals/R_morphism/H3.var.
+inline "cic:/CoRN/reals/R_morphism/H3.var".
 
-inline cic:/CoRN/reals/R_morphism/f_pres_Zero.con.
+inline "cic:/CoRN/reals/R_morphism/f_pres_Zero.con".
 
-inline cic:/CoRN/reals/R_morphism/f_pres_minus.con.
+inline "cic:/CoRN/reals/R_morphism/f_pres_minus.con".
 
-inline cic:/CoRN/reals/R_morphism/f_pres_min.con.
+inline "cic:/CoRN/reals/R_morphism/f_pres_min.con".
 
 (* UNEXPORTED
 End with_plus.
@@ -250,19 +252,19 @@ End with_plus.
 Section with_plus_less.
 *)
 
-inline cic:/CoRN/reals/R_morphism/H2.var.
+inline "cic:/CoRN/reals/R_morphism/H2.var".
 
-inline cic:/CoRN/reals/R_morphism/H3.var.
+inline "cic:/CoRN/reals/R_morphism/H3.var".
 
-inline cic:/CoRN/reals/R_morphism/f_pres_ap_zero.con.
+inline "cic:/CoRN/reals/R_morphism/f_pres_ap_zero.con".
 
 (* UNEXPORTED
 Section surjectivity_helps.
 *)
 
-inline cic:/CoRN/reals/R_morphism/f_surj.var.
+inline "cic:/CoRN/reals/R_morphism/f_surj.var".
 
-inline cic:/CoRN/reals/R_morphism/f_pres_Lim.con.
+inline "cic:/CoRN/reals/R_morphism/f_pres_Lim.con".
 
 (* UNEXPORTED
 End surjectivity_helps.
@@ -272,13 +274,13 @@ End surjectivity_helps.
 Section with_mult_plus_less.
 *)
 
-inline cic:/CoRN/reals/R_morphism/H4.var.
+inline "cic:/CoRN/reals/R_morphism/H4.var".
 
-inline cic:/CoRN/reals/R_morphism/f_pres_one.con.
+inline "cic:/CoRN/reals/R_morphism/f_pres_one.con".
 
-inline cic:/CoRN/reals/R_morphism/f_pres_inv.con.
+inline "cic:/CoRN/reals/R_morphism/f_pres_inv.con".
 
-inline cic:/CoRN/reals/R_morphism/simplified_Homomorphism.con.
+inline "cic:/CoRN/reals/R_morphism/simplified_Homomorphism.con".
 
 (* UNEXPORTED
 End with_mult_plus_less.

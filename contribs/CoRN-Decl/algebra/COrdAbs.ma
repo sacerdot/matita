@@ -16,9 +16,9 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/algebra/COrdAbs".
 
-(* INCLUDE
-COrdFields2
-*)
+include "CoRN.ma".
+
+include "algebra/COrdFields2.ma".
 
 (*#*
 ** Properties of [AbsSmall]
@@ -26,7 +26,7 @@ COrdFields2
 
 (* Begin_SpecReals *)
 
-inline cic:/CoRN/algebra/COrdAbs/AbsSmall.con.
+inline "cic:/CoRN/algebra/COrdAbs/AbsSmall.con".
 
 (* UNEXPORTED
 Implicit Arguments AbsSmall [R].
@@ -43,15 +43,15 @@ Section AbsSmall_properties.
 %\end{convention}%
 *)
 
-inline cic:/CoRN/algebra/COrdAbs/R.var.
+inline "cic:/CoRN/algebra/COrdAbs/R.var".
 
-inline cic:/CoRN/algebra/COrdAbs/AbsSmall_wdr.con.
+inline "cic:/CoRN/algebra/COrdAbs/AbsSmall_wdr.con".
 
-inline cic:/CoRN/algebra/COrdAbs/AbsSmall_wdr_unfolded.con.
+inline "cic:/CoRN/algebra/COrdAbs/AbsSmall_wdr_unfolded.con".
 
-inline cic:/CoRN/algebra/COrdAbs/AbsSmall_wdl.con.
+inline "cic:/CoRN/algebra/COrdAbs/AbsSmall_wdl.con".
 
-inline cic:/CoRN/algebra/COrdAbs/AbsSmall_wdl_unfolded.con.
+inline "cic:/CoRN/algebra/COrdAbs/AbsSmall_wdl_unfolded.con".
 
 (* UNEXPORTED
 Declare Left Step AbsSmall_wdl_unfolded.
@@ -65,41 +65,41 @@ Declare Right Step AbsSmall_wdr_unfolded.
 
 (* end hide *)
 
-inline cic:/CoRN/algebra/COrdAbs/AbsSmall_leEq_trans.con.
+inline "cic:/CoRN/algebra/COrdAbs/AbsSmall_leEq_trans.con".
 
-inline cic:/CoRN/algebra/COrdAbs/zero_AbsSmall.con.
+inline "cic:/CoRN/algebra/COrdAbs/zero_AbsSmall.con".
 
-inline cic:/CoRN/algebra/COrdAbs/AbsSmall_trans.con.
+inline "cic:/CoRN/algebra/COrdAbs/AbsSmall_trans.con".
 
-inline cic:/CoRN/algebra/COrdAbs/leEq_imp_AbsSmall.con.
+inline "cic:/CoRN/algebra/COrdAbs/leEq_imp_AbsSmall.con".
 
-inline cic:/CoRN/algebra/COrdAbs/inv_resp_AbsSmall.con.
+inline "cic:/CoRN/algebra/COrdAbs/inv_resp_AbsSmall.con".
 
-inline cic:/CoRN/algebra/COrdAbs/AbsSmall_minus.con.
+inline "cic:/CoRN/algebra/COrdAbs/AbsSmall_minus.con".
 
-inline cic:/CoRN/algebra/COrdAbs/AbsSmall_plus.con.
+inline "cic:/CoRN/algebra/COrdAbs/AbsSmall_plus.con".
 
-inline cic:/CoRN/algebra/COrdAbs/AbsSmall_eps_div_two.con.
+inline "cic:/CoRN/algebra/COrdAbs/AbsSmall_eps_div_two.con".
 
-inline cic:/CoRN/algebra/COrdAbs/AbsSmall_x_plus_delta.con.
+inline "cic:/CoRN/algebra/COrdAbs/AbsSmall_x_plus_delta.con".
 
-inline cic:/CoRN/algebra/COrdAbs/AbsSmall_x_minus_delta.con.
+inline "cic:/CoRN/algebra/COrdAbs/AbsSmall_x_minus_delta.con".
 
-inline cic:/CoRN/algebra/COrdAbs/AbsSmall_x_plus_eps_div2.con.
+inline "cic:/CoRN/algebra/COrdAbs/AbsSmall_x_plus_eps_div2.con".
 
-inline cic:/CoRN/algebra/COrdAbs/AbsSmall_x_minus_eps_div2.con.
+inline "cic:/CoRN/algebra/COrdAbs/AbsSmall_x_minus_eps_div2.con".
 
-inline cic:/CoRN/algebra/COrdAbs/AbsSmall_intermediate.con.
+inline "cic:/CoRN/algebra/COrdAbs/AbsSmall_intermediate.con".
 
-inline cic:/CoRN/algebra/COrdAbs/AbsSmall_eps_div2.con.
+inline "cic:/CoRN/algebra/COrdAbs/AbsSmall_eps_div2.con".
 
-inline cic:/CoRN/algebra/COrdAbs/AbsSmall_nonneg.con.
+inline "cic:/CoRN/algebra/COrdAbs/AbsSmall_nonneg.con".
 
-inline cic:/CoRN/algebra/COrdAbs/AbsSmall_mult.con.
+inline "cic:/CoRN/algebra/COrdAbs/AbsSmall_mult.con".
 
-inline cic:/CoRN/algebra/COrdAbs/AbsSmall_cancel_mult.con.
+inline "cic:/CoRN/algebra/COrdAbs/AbsSmall_cancel_mult.con".
 
-inline cic:/CoRN/algebra/COrdAbs/AbsSmall_approach_zero.con.
+inline "cic:/CoRN/algebra/COrdAbs/AbsSmall_approach_zero.con".
 
 (* UNEXPORTED
 End AbsSmall_properties.
@@ -115,9 +115,9 @@ Declare Right Step AbsSmall_wdr_unfolded.
 
 (*#* ** Properties of [AbsBig] *)
 
-inline cic:/CoRN/algebra/COrdAbs/absBig.con.
+inline "cic:/CoRN/algebra/COrdAbs/absBig.con".
 
-inline cic:/CoRN/algebra/COrdAbs/AbsBigSmall_minus.con.
+inline "cic:/CoRN/algebra/COrdAbs/AbsBigSmall_minus.con".
 
 (* UNEXPORTED
 Section absBig_wd_properties.
@@ -128,15 +128,15 @@ Section absBig_wd_properties.
 %\end{convention}%
 *)
 
-inline cic:/CoRN/algebra/COrdAbs/R.var.
+inline "cic:/CoRN/algebra/COrdAbs/R.var".
 
-inline cic:/CoRN/algebra/COrdAbs/AbsBig_wdr.con.
+inline "cic:/CoRN/algebra/COrdAbs/AbsBig_wdr.con".
 
-inline cic:/CoRN/algebra/COrdAbs/AbsBig_wdl.con.
+inline "cic:/CoRN/algebra/COrdAbs/AbsBig_wdl.con".
 
-inline cic:/CoRN/algebra/COrdAbs/AbsBig_wdr_unfolded.con.
+inline "cic:/CoRN/algebra/COrdAbs/AbsBig_wdr_unfolded.con".
 
-inline cic:/CoRN/algebra/COrdAbs/AbsBig_wdl_unfolded.con.
+inline "cic:/CoRN/algebra/COrdAbs/AbsBig_wdl_unfolded.con".
 
 (* UNEXPORTED
 End absBig_wd_properties.

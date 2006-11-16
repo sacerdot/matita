@@ -30,27 +30,7 @@ Notation Proj1 := (proj1 (B:=_)).
 Notation Proj2 := (proj2 (B:=_)).
 *)
 
-(* COERCION
-Z_of_nat
-*)
-
-(* From algebra/CAbGroups *************************************************)
-
-(* COERCION
-cag_crr   
-*)
-
-(* From algebra/CAbMonoids ************************************************)
-
-(* COERCION
-cam_crr   
-*)
-
 (* From algebra/CFields ***************************************************)
-
-(* COERCION
-cf_crr   
-*)
 
 (* NOTATION
 Notation "x [/] y [//] Hy" := (cf_div x y Hy) (at level 80).
@@ -65,10 +45,6 @@ Infix "{/}" := Fdiv (at level 41, no associativity).
 *)
 
 (* From algebra/CGroups ***************************************************)
-
-(* COERCION
-cg_crr   
-*)
 
 (* NOTATION
 Notation "[--] x" := (cg_inv x) (at level 2, right associativity).
@@ -121,10 +97,6 @@ Notation ProjT2 := (proj2_sigT _ _).
 
 (* From algebra/CMonoids **************************************************)
 
-(* COERCION
-cm_crr   
-*)
-
 (* NOTATION
 Notation Zero := (cm_unit _).
 *)
@@ -139,17 +111,7 @@ Notation ZeroR := (Zero:R).
 Notation AbsBig := (absBig _).
 *)
 
-(* From algebra/COrdCauchy ************************************************)
-
-(* COERCION
-CS_seq   
-*)
-
 (* From algebra/COrdFields ************************************************)
-
-(* COERCION
-cof_crr   
-*)
 
 (* NOTATION
 Infix "[<]" := cof_less (at level 70, no associativity).
@@ -295,10 +257,6 @@ Notation Cpoly_cring := (cpoly_cring CR).
 
 (* From algebra/CRings ****************************************************)
 
-(* COERCION
-cr_crr   
-*)
-
 (* NOTATION
 Notation One := (cr_one _).
 *)
@@ -369,10 +327,6 @@ Infix "{^}" := Fnth (at level 30, right associativity).
 
 (* From algebra/CSemiGroups ***********************************************)
 
-(* COERCION
-csg_crr   
-*)
-
 (* NOTATION
 Infix "[+]" := csg_op (at level 50, left associativity).
 *)
@@ -387,16 +341,8 @@ Infix "{+}" := Fplus (at level 50, left associativity).
 Notation Conj := (conjP _).
 *)
 
-(* COERCION
-bpfpfun 
-*)
-
 (* NOTATION
 Notation BDom := (bpfdom _ _).
-*)
-
-(* COERCION
-pfpfun 
 *)
 
 (* NOTATION
@@ -429,10 +375,6 @@ Notation Prj2 := (prj2 _ _ _ _).
 
 (* From algebra/CSetoids **************************************************)
 
-(* COERCION
-cs_crr   
-*)
-
 (* NOTATION
 Infix "[=]" := cs_eq (at level 70, no associativity).
 *)
@@ -445,51 +387,7 @@ Infix "[#]" := cs_ap (at level 70, no associativity).
 Infix "[~=]" := cs_neq (at level 70, no associativity).
 *)
 
-(* COERCION
-csp_pred   
-*)
-
-(* COERCION
-csp'_pred   
-*)
-
-(* COERCION
-csr_rel    
-*)
-
-(* COERCION
-Ccsr_rel    
-*)
-
-(* COERCION
-csf_fun    
-*)
-
-(* COERCION
-csbf_fun    
-*)
-
-(* COERCION
-un_op_fun
-*)
-
-(* COERCION
-bin_op_bin_fun
-*)
-
-(* COERCION
-outer_op_bin_fun
-*)
-
-(* COERCION
-scs_elem 
-*)
-
 (* From algebra/CVectorSpace **********************************************)
-
-(* COERCION
-vs_vs    
-*)
 
 (* NOTATION
 Infix "[']" := vs_op (at level 30, no associativity).
@@ -511,22 +409,6 @@ Notation CCX := (cpoly_cring CC).
 Infix "[+I*]" := cc_set_CC (at level 48, no associativity).
 *)
 
-(* From fta/CC_Props ******************************************************)
-
-(* COERCION
-CC_seq   
-*)
-
-(* From fta/FTAreg ********************************************************)
-
-(* COERCION
-z_el    
-*)
-
-(* COERCION
-Kntup     
-*)
-
 (* From ftc/FTC ***********************************************************)
 
 (* NOTATION
@@ -537,18 +419,6 @@ Notation "[-S-] F" := (Fprim F) (at level 20).
 
 (* NOTATION
 Notation Integral := (integral _ _ Hab).
-*)
-
-(* From ftc/MoreIntervals *************************************************)
-
-(* COERCION
-iprop
-*)
-
-(* From ftc/Partitions ****************************************************)
-
-(* COERCION
-Pts    
 *)
 
 (* From ftc/RefLemma ******************************************************)
@@ -625,17 +495,7 @@ Notation B := (Build_subcsetoid_crr IR _ _ TL_compact_b).
 Infix "**" := prodT (at level 20).
 *)
 
-(* From metrics/CMetricSpaces *********************************************)
-
-(* COERCION
-scms_crr 
-*)
-
 (* From metrics/CPseudoMSpaces ********************************************)
-
-(* COERCION
-cms_crr 
-*)
 
 (* NOTATION
 Infix "[-d]" := cms_d (at level 68, left associativity).
@@ -673,18 +533,10 @@ Infix "{*Q}" := Qmult (no associativity, at level 80).
 Notation "{-Q}" := Qopp (at level 1, left associativity).
 *)
 
-(* COERCION
-inject_Z
-*)
-
 (* From model/structures/Zsec *********************************************)
 
 (* NOTATION
 Infix "{#Z}" := ap_Z (no associativity, at level 90).
-*)
-
-(* COERCION
-Zpos
 *)
 
 (* From reals/Bridges_LUB *************************************************)
@@ -695,22 +547,8 @@ Notation "( p , q )" := (pairT p q).
 
 (* From reals/CMetricFields ***********************************************)
 
-(* COERCION
-cmf_crr   
-*)
-
 (* NOTATION
 Notation MAbs := (cmf_abs _).
-*)
-
-(* COERCION
-MCS_seq   
-*)
-
-(* From reals/CReals ******************************************************)
-
-(* COERCION
-crl_crr   
 *)
 
 (* From reals/CauchySeq ***************************************************)
@@ -753,24 +591,8 @@ Notation FRestr := (Frestr (compact_wd _ _ _)).
 
 (* From reals/Q_dense *****************************************************)
 
-(* COERCION
-pair_crr 
-*)
-
 (* NOTATION
 Notation "( A , B )" := (pairT A B).
-*)
-
-(* From reals/Q_in_CReals *************************************************)
-
-(* COERCION
-nat_of_P
-*)
-
-(* From reals/R_morphism **************************************************)
-
-(* COERCION
-map 
 *)
 
 (* From tactics/FieldReflection *******************************************)
@@ -799,15 +621,5 @@ Notation "x [!] y [//] Hy" := (power x y Hy) (at level 20).
 
 (* NOTATION
 Notation "F {!} G" := (FPower F G) (at level 20).
-*)
-
-(* From devel/loeb/per/lst2fun ********************************************)
-
-(* COERCION
-F_crr
-*)
-
-(* COERCION
-to_nat
 *)
 

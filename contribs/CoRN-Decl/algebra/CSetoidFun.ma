@@ -16,11 +16,11 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/algebra/CSetoidFun".
 
+include "CoRN.ma".
+
 (* $Id: CSetoidFun.v,v 1.10 2004/04/23 10:00:53 lcf Exp $ *)
 
-(* INCLUDE
-CSetoids
-*)
+include "algebra/CSetoids.ma".
 
 (* UNEXPORTED
 Section unary_function_composition.
@@ -32,17 +32,17 @@ Let [S1],  [S2] and [S3] be setoids, [f] a
 setoid function from [S1] to [S2], and [g] from [S2]
 to [S3] in the following definition of composition.  *)
 
-inline cic:/CoRN/algebra/CSetoidFun/S1.var.
+inline "cic:/CoRN/algebra/CSetoidFun/S1.var".
 
-inline cic:/CoRN/algebra/CSetoidFun/S2.var.
+inline "cic:/CoRN/algebra/CSetoidFun/S2.var".
 
-inline cic:/CoRN/algebra/CSetoidFun/S3.var.
+inline "cic:/CoRN/algebra/CSetoidFun/S3.var".
 
-inline cic:/CoRN/algebra/CSetoidFun/f.var.
+inline "cic:/CoRN/algebra/CSetoidFun/f.var".
 
-inline cic:/CoRN/algebra/CSetoidFun/g.var.
+inline "cic:/CoRN/algebra/CSetoidFun/g.var".
 
-inline cic:/CoRN/algebra/CSetoidFun/compose_CSetoid_fun.con.
+inline "cic:/CoRN/algebra/CSetoidFun/compose_CSetoid_fun.con".
 
 (* UNEXPORTED
 End unary_function_composition.
@@ -52,11 +52,11 @@ End unary_function_composition.
 Section unary_and_binary_function_composition.
 *)
 
-inline cic:/CoRN/algebra/CSetoidFun/compose_CSetoid_bin_un_fun.con.
+inline "cic:/CoRN/algebra/CSetoidFun/compose_CSetoid_bin_un_fun.con".
 
-inline cic:/CoRN/algebra/CSetoidFun/compose_CSetoid_bin_fun.con.
+inline "cic:/CoRN/algebra/CSetoidFun/compose_CSetoid_bin_fun.con".
 
-inline cic:/CoRN/algebra/CSetoidFun/compose_CSetoid_un_bin_fun.con.
+inline "cic:/CoRN/algebra/CSetoidFun/compose_CSetoid_un_bin_fun.con".
 
 (* UNEXPORTED
 End unary_and_binary_function_composition.
@@ -69,9 +69,9 @@ End unary_and_binary_function_composition.
 Section function_projection.
 *)
 
-inline cic:/CoRN/algebra/CSetoidFun/proj_bin_fun.con.
+inline "cic:/CoRN/algebra/CSetoidFun/proj_bin_fun.con".
 
-inline cic:/CoRN/algebra/CSetoidFun/projected_bin_fun.con.
+inline "cic:/CoRN/algebra/CSetoidFun/projected_bin_fun.con".
 
 (* UNEXPORTED
 End function_projection.
@@ -81,13 +81,13 @@ End function_projection.
 Section BinProj.
 *)
 
-inline cic:/CoRN/algebra/CSetoidFun/S.var.
+inline "cic:/CoRN/algebra/CSetoidFun/S.var".
 
-inline cic:/CoRN/algebra/CSetoidFun/binproj1.con.
+inline "cic:/CoRN/algebra/CSetoidFun/binproj1.con".
 
-inline cic:/CoRN/algebra/CSetoidFun/binproj1_strext.con.
+inline "cic:/CoRN/algebra/CSetoidFun/binproj1_strext.con".
 
-inline cic:/CoRN/algebra/CSetoidFun/cs_binproj1.con.
+inline "cic:/CoRN/algebra/CSetoidFun/cs_binproj1.con".
 
 (* UNEXPORTED
 End BinProj.
@@ -102,11 +102,11 @@ End BinProj.
 Section CombiningOperations.
 *)
 
-inline cic:/CoRN/algebra/CSetoidFun/S1.var.
+inline "cic:/CoRN/algebra/CSetoidFun/S1.var".
 
-inline cic:/CoRN/algebra/CSetoidFun/S2.var.
+inline "cic:/CoRN/algebra/CSetoidFun/S2.var".
 
-inline cic:/CoRN/algebra/CSetoidFun/S3.var.
+inline "cic:/CoRN/algebra/CSetoidFun/S3.var".
 
 (*#*
 In the following definition, we assume [f] is a setoid function from
@@ -118,11 +118,11 @@ Then [opOnFun] is the composition [op] after [f].
 Section CombiningUnaryOperations.
 *)
 
-inline cic:/CoRN/algebra/CSetoidFun/f.var.
+inline "cic:/CoRN/algebra/CSetoidFun/f.var".
 
-inline cic:/CoRN/algebra/CSetoidFun/op.var.
+inline "cic:/CoRN/algebra/CSetoidFun/op.var".
 
-inline cic:/CoRN/algebra/CSetoidFun/opOnFun.con.
+inline "cic:/CoRN/algebra/CSetoidFun/opOnFun.con".
 
 (* UNEXPORTED
 End CombiningUnaryOperations.
@@ -173,23 +173,23 @@ welldefinedness.
 %\end{convention}%
 *)
 
-inline cic:/CoRN/algebra/CSetoidFun/S.var.
+inline "cic:/CoRN/algebra/CSetoidFun/S.var".
 
 (* UNEXPORTED
 Section Conjunction.
 *)
 
-inline cic:/CoRN/algebra/CSetoidFun/P.var.
+inline "cic:/CoRN/algebra/CSetoidFun/P.var".
 
-inline cic:/CoRN/algebra/CSetoidFun/Q.var.
+inline "cic:/CoRN/algebra/CSetoidFun/Q.var".
 
-inline cic:/CoRN/algebra/CSetoidFun/conjP.con.
+inline "cic:/CoRN/algebra/CSetoidFun/conjP.con".
 
-inline cic:/CoRN/algebra/CSetoidFun/prj1.con.
+inline "cic:/CoRN/algebra/CSetoidFun/prj1.con".
 
-inline cic:/CoRN/algebra/CSetoidFun/prj2.con.
+inline "cic:/CoRN/algebra/CSetoidFun/prj2.con".
 
-inline cic:/CoRN/algebra/CSetoidFun/conj_wd.con.
+inline "cic:/CoRN/algebra/CSetoidFun/conj_wd.con".
 
 (* UNEXPORTED
 End Conjunction.
@@ -199,21 +199,21 @@ End Conjunction.
 Section Disjunction.
 *)
 
-inline cic:/CoRN/algebra/CSetoidFun/P.var.
+inline "cic:/CoRN/algebra/CSetoidFun/P.var".
 
-inline cic:/CoRN/algebra/CSetoidFun/Q.var.
+inline "cic:/CoRN/algebra/CSetoidFun/Q.var".
 
 (*#*
 Although at this stage we never use it, for completeness's sake we also treat disjunction (corresponding to union of subsets).
 *)
 
-inline cic:/CoRN/algebra/CSetoidFun/disj.con.
+inline "cic:/CoRN/algebra/CSetoidFun/disj.con".
 
-inline cic:/CoRN/algebra/CSetoidFun/inj1.con.
+inline "cic:/CoRN/algebra/CSetoidFun/inj1.con".
 
-inline cic:/CoRN/algebra/CSetoidFun/inj2.con.
+inline "cic:/CoRN/algebra/CSetoidFun/inj2.con".
 
-inline cic:/CoRN/algebra/CSetoidFun/disj_wd.con.
+inline "cic:/CoRN/algebra/CSetoidFun/disj_wd.con".
 
 (* UNEXPORTED
 End Disjunction.
@@ -227,19 +227,19 @@ Section Extension.
 The next definition is a bit tricky, and is useful for choosing among the elements that satisfy a predicate [P] those that also satisfy [R] in the case where [R] is only defined for elements satisfying [P]---consider [R] to be a condition on the image of an object via a function with domain [P].  We chose to call this operation [extension].
 *)
 
-inline cic:/CoRN/algebra/CSetoidFun/P.var.
+inline "cic:/CoRN/algebra/CSetoidFun/P.var".
 
-inline cic:/CoRN/algebra/CSetoidFun/R.var.
+inline "cic:/CoRN/algebra/CSetoidFun/R.var".
 
-inline cic:/CoRN/algebra/CSetoidFun/extend.con.
+inline "cic:/CoRN/algebra/CSetoidFun/extend.con".
 
-inline cic:/CoRN/algebra/CSetoidFun/ext1.con.
+inline "cic:/CoRN/algebra/CSetoidFun/ext1.con".
 
-inline cic:/CoRN/algebra/CSetoidFun/ext2_a.con.
+inline "cic:/CoRN/algebra/CSetoidFun/ext2_a.con".
 
-inline cic:/CoRN/algebra/CSetoidFun/ext2.con.
+inline "cic:/CoRN/algebra/CSetoidFun/ext2.con".
 
-inline cic:/CoRN/algebra/CSetoidFun/extension_wd.con.
+inline "cic:/CoRN/algebra/CSetoidFun/extension_wd.con".
 
 (* UNEXPORTED
 End Extension.
@@ -270,7 +270,9 @@ Implicit Arguments ext2 [S P R x].
 We are now ready to define the concept of partial function between arbitrary setoids.
 *)
 
-inline cic:/CoRN/algebra/CSetoidFun/BinPartFunct.ind.
+inline "cic:/CoRN/algebra/CSetoidFun/BinPartFunct.ind".
+
+coercion "cic:/matita/CoRN-Decl/algebra/CSetoidFun/bpfpfun.con" 0 (* compounds *).
 
 (* UNEXPORTED
 Implicit Arguments bpfpfun [S1 S2].
@@ -280,11 +282,13 @@ Implicit Arguments bpfpfun [S1 S2].
 The next lemma states that every partial function is well defined.
 *)
 
-inline cic:/CoRN/algebra/CSetoidFun/bpfwdef.con.
+inline "cic:/CoRN/algebra/CSetoidFun/bpfwdef.con".
 
 (*#* Similar for automorphisms. *)
 
-inline cic:/CoRN/algebra/CSetoidFun/PartFunct.ind.
+inline "cic:/CoRN/algebra/CSetoidFun/PartFunct.ind".
+
+coercion "cic:/matita/CoRN-Decl/algebra/CSetoidFun/pfpfun.con" 0 (* compounds *).
 
 (* UNEXPORTED
 Implicit Arguments pfpfun [S].
@@ -294,7 +298,7 @@ Implicit Arguments pfpfun [S].
 The next lemma states that every partial function is well defined.
 *)
 
-inline cic:/CoRN/algebra/CSetoidFun/pfwdef.con.
+inline "cic:/CoRN/algebra/CSetoidFun/pfwdef.con".
 
 (*#*
 A few characteristics of this definition should be explained:
@@ -348,13 +352,13 @@ Hint Resolve CI: core.
 Section CSetoid_Ops.
 *)
 
-inline cic:/CoRN/algebra/CSetoidFun/S.var.
+inline "cic:/CoRN/algebra/CSetoidFun/S.var".
 
 (*#*
 To begin with, we want to be able to ``see'' each total function as a partial function.
 *)
 
-inline cic:/CoRN/algebra/CSetoidFun/total_eq_part.con.
+inline "cic:/CoRN/algebra/CSetoidFun/total_eq_part.con".
 
 (* UNEXPORTED
 Section Part_Function_Const.
@@ -367,9 +371,9 @@ In any setoid we can also define constant functions (one for each element of the
 %\end{convention}%
 *)
 
-inline cic:/CoRN/algebra/CSetoidFun/c.var.
+inline "cic:/CoRN/algebra/CSetoidFun/c.var".
 
-inline cic:/CoRN/algebra/CSetoidFun/Fconst.con.
+inline "cic:/CoRN/algebra/CSetoidFun/Fconst.con".
 
 (* UNEXPORTED
 End Part_Function_Const.
@@ -379,7 +383,7 @@ End Part_Function_Const.
 Section Part_Function_Id.
 *)
 
-inline cic:/CoRN/algebra/CSetoidFun/Fid.con.
+inline "cic:/CoRN/algebra/CSetoidFun/Fid.con".
 
 (* UNEXPORTED
 End Part_Function_Id.
@@ -398,25 +402,25 @@ If we have two setoid functions [F] and [G] we can always compose them.  The dom
 Section Part_Function_Composition.
 *)
 
-inline cic:/CoRN/algebra/CSetoidFun/G.var.
+inline "cic:/CoRN/algebra/CSetoidFun/G.var".
 
-inline cic:/CoRN/algebra/CSetoidFun/F.var.
+inline "cic:/CoRN/algebra/CSetoidFun/F.var".
 
 (* begin hide *)
 
-inline cic:/CoRN/algebra/CSetoidFun/P.con.
+inline "cic:/CoRN/algebra/CSetoidFun/P.con".
 
-inline cic:/CoRN/algebra/CSetoidFun/Q.con.
+inline "cic:/CoRN/algebra/CSetoidFun/Q.con".
 
 (* end hide *)
 
-inline cic:/CoRN/algebra/CSetoidFun/R.con.
+inline "cic:/CoRN/algebra/CSetoidFun/R.con".
 
-inline cic:/CoRN/algebra/CSetoidFun/part_function_comp_strext.con.
+inline "cic:/CoRN/algebra/CSetoidFun/part_function_comp_strext.con".
 
-inline cic:/CoRN/algebra/CSetoidFun/part_function_comp_dom_wd.con.
+inline "cic:/CoRN/algebra/CSetoidFun/part_function_comp_dom_wd.con".
 
-inline cic:/CoRN/algebra/CSetoidFun/Fcomp.con.
+inline "cic:/CoRN/algebra/CSetoidFun/Fcomp.con".
 
 (* UNEXPORTED
 End Part_Function_Composition.
@@ -435,31 +439,31 @@ End CSetoid_Ops.
 Section BinPart_Function_Composition.
 *)
 
-inline cic:/CoRN/algebra/CSetoidFun/S1.var.
+inline "cic:/CoRN/algebra/CSetoidFun/S1.var".
 
-inline cic:/CoRN/algebra/CSetoidFun/S2.var.
+inline "cic:/CoRN/algebra/CSetoidFun/S2.var".
 
-inline cic:/CoRN/algebra/CSetoidFun/S3.var.
+inline "cic:/CoRN/algebra/CSetoidFun/S3.var".
 
-inline cic:/CoRN/algebra/CSetoidFun/G.var.
+inline "cic:/CoRN/algebra/CSetoidFun/G.var".
 
-inline cic:/CoRN/algebra/CSetoidFun/F.var.
+inline "cic:/CoRN/algebra/CSetoidFun/F.var".
 
 (* begin hide *)
 
-inline cic:/CoRN/algebra/CSetoidFun/P.con.
+inline "cic:/CoRN/algebra/CSetoidFun/P.con".
 
-inline cic:/CoRN/algebra/CSetoidFun/Q.con.
+inline "cic:/CoRN/algebra/CSetoidFun/Q.con".
 
 (* end hide *)
 
-inline cic:/CoRN/algebra/CSetoidFun/R.con.
+inline "cic:/CoRN/algebra/CSetoidFun/R.con".
 
-inline cic:/CoRN/algebra/CSetoidFun/bin_part_function_comp_strext.con.
+inline "cic:/CoRN/algebra/CSetoidFun/bin_part_function_comp_strext.con".
 
-inline cic:/CoRN/algebra/CSetoidFun/bin_part_function_comp_dom_wd.con.
+inline "cic:/CoRN/algebra/CSetoidFun/bin_part_function_comp_dom_wd.con".
 
-inline cic:/CoRN/algebra/CSetoidFun/BinFcomp.con.
+inline "cic:/CoRN/algebra/CSetoidFun/BinFcomp.con".
 
 (* UNEXPORTED
 End BinPart_Function_Composition.
@@ -485,11 +489,11 @@ Section bijections.
 
 (*#* **Bijections *)
 
-inline cic:/CoRN/algebra/CSetoidFun/injective.con.
+inline "cic:/CoRN/algebra/CSetoidFun/injective.con".
 
-inline cic:/CoRN/algebra/CSetoidFun/injective_weak.con.
+inline "cic:/CoRN/algebra/CSetoidFun/injective_weak.con".
 
-inline cic:/CoRN/algebra/CSetoidFun/surjective.con.
+inline "cic:/CoRN/algebra/CSetoidFun/surjective.con".
 
 (* UNEXPORTED
 Implicit Arguments injective [A B].
@@ -503,43 +507,43 @@ Implicit Arguments injective_weak [A B].
 Implicit Arguments surjective [A B].
 *)
 
-inline cic:/CoRN/algebra/CSetoidFun/injective_imp_injective_weak.con.
+inline "cic:/CoRN/algebra/CSetoidFun/injective_imp_injective_weak.con".
 
-inline cic:/CoRN/algebra/CSetoidFun/bijective.con.
+inline "cic:/CoRN/algebra/CSetoidFun/bijective.con".
 
 (* UNEXPORTED
 Implicit Arguments bijective [A B].
 *)
 
-inline cic:/CoRN/algebra/CSetoidFun/id_is_bij.con.
+inline "cic:/CoRN/algebra/CSetoidFun/id_is_bij.con".
 
-inline cic:/CoRN/algebra/CSetoidFun/comp_resp_bij.con.
+inline "cic:/CoRN/algebra/CSetoidFun/comp_resp_bij.con".
 
-inline cic:/CoRN/algebra/CSetoidFun/inv.con.
+inline "cic:/CoRN/algebra/CSetoidFun/inv.con".
 
 (* UNEXPORTED
 Implicit Arguments inv [A B].
 *)
 
-inline cic:/CoRN/algebra/CSetoidFun/invfun.con.
+inline "cic:/CoRN/algebra/CSetoidFun/invfun.con".
 
 (* UNEXPORTED
 Implicit Arguments invfun [A B].
 *)
 
-inline cic:/CoRN/algebra/CSetoidFun/inv1.con.
+inline "cic:/CoRN/algebra/CSetoidFun/inv1.con".
 
-inline cic:/CoRN/algebra/CSetoidFun/inv2.con.
+inline "cic:/CoRN/algebra/CSetoidFun/inv2.con".
 
-inline cic:/CoRN/algebra/CSetoidFun/inv_strext.con.
+inline "cic:/CoRN/algebra/CSetoidFun/inv_strext.con".
 
-inline cic:/CoRN/algebra/CSetoidFun/Inv.con.
+inline "cic:/CoRN/algebra/CSetoidFun/Inv.con".
 
 (* UNEXPORTED
 Implicit Arguments Inv [A B].
 *)
 
-inline cic:/CoRN/algebra/CSetoidFun/Inv_bij.con.
+inline "cic:/CoRN/algebra/CSetoidFun/Inv_bij.con".
 
 (* UNEXPORTED
 End bijections.

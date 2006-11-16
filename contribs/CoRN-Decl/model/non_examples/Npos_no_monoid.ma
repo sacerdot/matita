@@ -16,25 +16,23 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/model/non_examples/Npos_no_monoid".
 
+include "CoRN.ma".
+
 (* $Id: Npos_no_monoid.v,v 1.5 2004/04/08 08:20:34 lcf Exp $ *)
 
-(* INCLUDE
-Npossemigroup
-*)
+include "model/semigroups/Npossemigroup.ma".
 
-(* INCLUDE
-CMonoids
-*)
+include "algebra/CMonoids.ma".
 
 (*#* **Non-example of a monoid: $\langle$#&lang;#[Npos],[[+]]$\rangle$#&rang;#
 There is no right unit for the addition on the positive natural numbers.
 *)
 
-inline cic:/CoRN/model/non_examples/Npos_no_monoid/no_rht_unit_Npos.con.
+inline "cic:/CoRN/model/non_examples/Npos_no_monoid/no_rht_unit_Npos.con".
 
 (*#* Therefore the set of positive natural numbers doesn't form a group with 
 addition.
 *)
 
-inline cic:/CoRN/model/non_examples/Npos_no_monoid/no_monoid_Npos.con.
+inline "cic:/CoRN/model/non_examples/Npos_no_monoid/no_monoid_Npos.con".
 

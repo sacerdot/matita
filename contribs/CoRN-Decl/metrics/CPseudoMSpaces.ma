@@ -16,11 +16,11 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/metrics/CPseudoMSpaces".
 
+include "CoRN.ma".
+
 (* $Id: CPseudoMSpaces.v,v 1.3 2004/04/23 10:01:02 lcf Exp $ *)
 
-(* INCLUDE
-Intervals
-*)
+include "reals/Intervals.ma".
 
 (*#* *Metric Spaces
 *)
@@ -35,9 +35,9 @@ Let [A : CSetoid], [d : (CSetoid_bin_fun A A IR)].
 %\end{convention}%
 *)
 
-inline cic:/CoRN/metrics/CPseudoMSpaces/A.var.
+inline "cic:/CoRN/metrics/CPseudoMSpaces/A.var".
 
-inline cic:/CoRN/metrics/CPseudoMSpaces/d.var.
+inline "cic:/CoRN/metrics/CPseudoMSpaces/d.var".
 
 (* UNEXPORTED
 Set Implicit Arguments.
@@ -47,13 +47,13 @@ Set Implicit Arguments.
 Unset Strict Implicit.
 *)
 
-inline cic:/CoRN/metrics/CPseudoMSpaces/com.con.
+inline "cic:/CoRN/metrics/CPseudoMSpaces/com.con".
 
-inline cic:/CoRN/metrics/CPseudoMSpaces/nneg.con.
+inline "cic:/CoRN/metrics/CPseudoMSpaces/nneg.con".
 
-inline cic:/CoRN/metrics/CPseudoMSpaces/pos_imp_ap.con.
+inline "cic:/CoRN/metrics/CPseudoMSpaces/pos_imp_ap.con".
 
-inline cic:/CoRN/metrics/CPseudoMSpaces/tri_ineq.con.
+inline "cic:/CoRN/metrics/CPseudoMSpaces/tri_ineq.con".
 
 (* UNEXPORTED
 Set Strict Implicit.
@@ -63,9 +63,9 @@ Set Strict Implicit.
 Unset Implicit Arguments.
 *)
 
-inline cic:/CoRN/metrics/CPseudoMSpaces/diag_zero.con.
+inline "cic:/CoRN/metrics/CPseudoMSpaces/diag_zero.con".
 
-inline cic:/CoRN/metrics/CPseudoMSpaces/apdiag_imp_grzero.con.
+inline "cic:/CoRN/metrics/CPseudoMSpaces/apdiag_imp_grzero.con".
 
 (* UNEXPORTED
 End Relations.
@@ -83,9 +83,11 @@ A pseudo metric space consists of a setoid and a %''pseudo metric''% #"pseudo me
 %''distance''% #"distance"#, a binairy function that fulfils certain properties.
 *)
 
-inline cic:/CoRN/metrics/CPseudoMSpaces/is_CPsMetricSpace.ind.
+inline "cic:/CoRN/metrics/CPseudoMSpaces/is_CPsMetricSpace.ind".
 
-inline cic:/CoRN/metrics/CPseudoMSpaces/CPsMetricSpace.ind.
+inline "cic:/CoRN/metrics/CPseudoMSpaces/CPsMetricSpace.ind".
+
+coercion "cic:/matita/CoRN-Decl/metrics/CPseudoMSpaces/cms_crr.con" 0 (* compounds *).
 
 (* UNEXPORTED
 End Definition_PsMS0.
@@ -105,17 +107,17 @@ Let [A] be a pseudo metric space.
 %\end{convention}%
 *)
 
-inline cic:/CoRN/metrics/CPseudoMSpaces/A.var.
+inline "cic:/CoRN/metrics/CPseudoMSpaces/A.var".
 
-inline cic:/CoRN/metrics/CPseudoMSpaces/CPsMetricSpace_is_CPsMetricSpace.con.
+inline "cic:/CoRN/metrics/CPseudoMSpaces/CPsMetricSpace_is_CPsMetricSpace.con".
 
-inline cic:/CoRN/metrics/CPseudoMSpaces/d_com.con.
+inline "cic:/CoRN/metrics/CPseudoMSpaces/d_com.con".
 
-inline cic:/CoRN/metrics/CPseudoMSpaces/d_nneg.con.
+inline "cic:/CoRN/metrics/CPseudoMSpaces/d_nneg.con".
 
-inline cic:/CoRN/metrics/CPseudoMSpaces/d_pos_imp_ap.con.
+inline "cic:/CoRN/metrics/CPseudoMSpaces/d_pos_imp_ap.con".
 
-inline cic:/CoRN/metrics/CPseudoMSpaces/d_tri_ineq.con.
+inline "cic:/CoRN/metrics/CPseudoMSpaces/d_tri_ineq.con".
 
 (* UNEXPORTED
 End PsMS_axioms.
@@ -131,20 +133,20 @@ Let [Y] be a pseudo metric space.
 %\end{convention}%
 *)
 
-inline cic:/CoRN/metrics/CPseudoMSpaces/Y.var.
+inline "cic:/CoRN/metrics/CPseudoMSpaces/Y.var".
 
-inline cic:/CoRN/metrics/CPseudoMSpaces/rev_tri_ineq.con.
+inline "cic:/CoRN/metrics/CPseudoMSpaces/rev_tri_ineq.con".
 
 (*#*
 Instead of taking [pos_imp_ap] as axiom, 
 we could as well have taken [diag_zero]. 
 *)
 
-inline cic:/CoRN/metrics/CPseudoMSpaces/diag_zero_imp_pos_imp_ap.con.
+inline "cic:/CoRN/metrics/CPseudoMSpaces/diag_zero_imp_pos_imp_ap.con".
 
-inline cic:/CoRN/metrics/CPseudoMSpaces/pos_imp_ap_imp_diag_zero.con.
+inline "cic:/CoRN/metrics/CPseudoMSpaces/pos_imp_ap_imp_diag_zero.con".
 
-inline cic:/CoRN/metrics/CPseudoMSpaces/is_CPsMetricSpace_diag_zero.con.
+inline "cic:/CoRN/metrics/CPseudoMSpaces/is_CPsMetricSpace_diag_zero.con".
 
 (* UNEXPORTED
 End PsMS_basics.
@@ -162,23 +164,23 @@ Every setoid forms with the binary function that always returns zero,
 a pseudo metric space. 
 *)
 
-inline cic:/CoRN/metrics/CPseudoMSpaces/zero_fun.con.
+inline "cic:/CoRN/metrics/CPseudoMSpaces/zero_fun.con".
 
-inline cic:/CoRN/metrics/CPseudoMSpaces/zero_fun_strext.con.
+inline "cic:/CoRN/metrics/CPseudoMSpaces/zero_fun_strext.con".
 
-inline cic:/CoRN/metrics/CPseudoMSpaces/Zero_fun.con.
+inline "cic:/CoRN/metrics/CPseudoMSpaces/Zero_fun.con".
 
-inline cic:/CoRN/metrics/CPseudoMSpaces/zero_fun_com.con.
+inline "cic:/CoRN/metrics/CPseudoMSpaces/zero_fun_com.con".
 
-inline cic:/CoRN/metrics/CPseudoMSpaces/zero_fun_nneg.con.
+inline "cic:/CoRN/metrics/CPseudoMSpaces/zero_fun_nneg.con".
 
-inline cic:/CoRN/metrics/CPseudoMSpaces/zero_fun_pos_imp_ap.con.
+inline "cic:/CoRN/metrics/CPseudoMSpaces/zero_fun_pos_imp_ap.con".
 
-inline cic:/CoRN/metrics/CPseudoMSpaces/zero_fun_tri_ineq.con.
+inline "cic:/CoRN/metrics/CPseudoMSpaces/zero_fun_tri_ineq.con".
 
-inline cic:/CoRN/metrics/CPseudoMSpaces/zf_is_CPsMetricSpace.con.
+inline "cic:/CoRN/metrics/CPseudoMSpaces/zf_is_CPsMetricSpace.con".
 
-inline cic:/CoRN/metrics/CPseudoMSpaces/zf_as_CPsMetricSpace.con.
+inline "cic:/CoRN/metrics/CPseudoMSpaces/zf_as_CPsMetricSpace.con".
 
 (* UNEXPORTED
 End Zerof.

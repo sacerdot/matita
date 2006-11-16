@@ -16,11 +16,11 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/fta/CPoly_Shift".
 
+include "CoRN.ma".
+
 (* $Id: CPoly_Shift.v,v 1.4 2004/04/23 10:00:56 lcf Exp $ *)
 
-(* INCLUDE
-CComplex
-*)
+include "complex/CComplex.ma".
 
 (*#* * Shifting polynomials
 This can be done for [CRings] in general, but we do it here
@@ -32,23 +32,23 @@ and we only need it for [CC].
 Section Poly_Shifted.
 *)
 
-inline cic:/CoRN/fta/CPoly_Shift/Shift.con.
+inline "cic:/CoRN/fta/CPoly_Shift/Shift.con".
 
-inline cic:/CoRN/fta/CPoly_Shift/Shift_apply.con.
+inline "cic:/CoRN/fta/CPoly_Shift/Shift_apply.con".
 
 (* UNEXPORTED
 Hint Resolve Shift_apply: algebra.
 *)
 
-inline cic:/CoRN/fta/CPoly_Shift/Shift_wdr.con.
+inline "cic:/CoRN/fta/CPoly_Shift/Shift_wdr.con".
 
-inline cic:/CoRN/fta/CPoly_Shift/Shift_shift.con.
+inline "cic:/CoRN/fta/CPoly_Shift/Shift_shift.con".
 
-inline cic:/CoRN/fta/CPoly_Shift/Shift_mult.con.
+inline "cic:/CoRN/fta/CPoly_Shift/Shift_mult.con".
 
-inline cic:/CoRN/fta/CPoly_Shift/Shift_degree_le.con.
+inline "cic:/CoRN/fta/CPoly_Shift/Shift_degree_le.con".
 
-inline cic:/CoRN/fta/CPoly_Shift/Shift_monic.con.
+inline "cic:/CoRN/fta/CPoly_Shift/Shift_monic.con".
 
 (* UNEXPORTED
 End Poly_Shifted.

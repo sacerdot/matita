@@ -16,15 +16,13 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/fta/FTA".
 
+include "CoRN.ma".
+
 (* $Id: FTA.v,v 1.6 2004/04/23 10:00:57 lcf Exp $ *)
 
-(* INCLUDE
-CPoly_Rev
-*)
+include "fta/CPoly_Rev.ma".
 
-(* INCLUDE
-FTAreg
-*)
+include "fta/FTAreg.ma".
 
 (*#* * Fundamental Theorem of Algebra
 %\begin{convention}% Let [n:nat] and [f] be a complex polynomial of
@@ -36,13 +34,13 @@ degree [(S n)].
 Section FTA_reg'.
 *)
 
-inline cic:/CoRN/fta/FTA/f.var.
+inline "cic:/CoRN/fta/FTA/f.var".
 
-inline cic:/CoRN/fta/FTA/n.var.
+inline "cic:/CoRN/fta/FTA/n.var".
 
-inline cic:/CoRN/fta/FTA/f_degree.var.
+inline "cic:/CoRN/fta/FTA/f_degree.var".
 
-inline cic:/CoRN/fta/FTA/FTA_reg'.con.
+inline "cic:/CoRN/fta/FTA/FTA_reg'.con".
 
 (* UNEXPORTED
 End FTA_reg'.
@@ -59,25 +57,25 @@ less than or equal to [(S n)] and [c] be a complex number such that
 Section FTA_1.
 *)
 
-inline cic:/CoRN/fta/FTA/f.var.
+inline "cic:/CoRN/fta/FTA/f.var".
 
-inline cic:/CoRN/fta/FTA/n.var.
+inline "cic:/CoRN/fta/FTA/n.var".
 
-inline cic:/CoRN/fta/FTA/f_degree.var.
+inline "cic:/CoRN/fta/FTA/f_degree.var".
 
-inline cic:/CoRN/fta/FTA/c.var.
+inline "cic:/CoRN/fta/FTA/c.var".
 
-inline cic:/CoRN/fta/FTA/f_c.var.
+inline "cic:/CoRN/fta/FTA/f_c.var".
 
-inline cic:/CoRN/fta/FTA/FTA_1a.con.
+inline "cic:/CoRN/fta/FTA/FTA_1a.con".
 
-inline cic:/CoRN/fta/FTA/g.con.
+inline "cic:/CoRN/fta/FTA/g.con".
 
-inline cic:/CoRN/fta/FTA/FTA_1b.con.
+inline "cic:/CoRN/fta/FTA/FTA_1b.con".
 
-inline cic:/CoRN/fta/FTA/FTA_1.con.
+inline "cic:/CoRN/fta/FTA/FTA_1.con".
 
-inline cic:/CoRN/fta/FTA/FTA_1'.con.
+inline "cic:/CoRN/fta/FTA/FTA_1'.con".
 
 (* UNEXPORTED
 End FTA_1.
@@ -87,11 +85,11 @@ End FTA_1.
 Section Fund_Thm_Alg.
 *)
 
-inline cic:/CoRN/fta/FTA/FTA'.con.
+inline "cic:/CoRN/fta/FTA/FTA'.con".
 
-inline cic:/CoRN/fta/FTA/FTA.con.
+inline "cic:/CoRN/fta/FTA/FTA.con".
 
-inline cic:/CoRN/fta/FTA/FTA_a_la_Henk.con.
+inline "cic:/CoRN/fta/FTA/FTA_a_la_Henk.con".
 
 (* UNEXPORTED
 End Fund_Thm_Alg.

@@ -16,11 +16,11 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/transc/Trigonometric".
 
+include "CoRN.ma".
+
 (* $Id: Trigonometric.v,v 1.5 2004/04/23 10:01:08 lcf Exp $ *)
 
-(* INCLUDE
-TaylorSeries
-*)
+include "transc/TaylorSeries.ma".
 
 (*#* *The Trigonometric Functions
 
@@ -33,7 +33,7 @@ Section Lemmas.
 
 (*#* First, we need a lemma on mappings. *)
 
-inline cic:/CoRN/transc/Trigonometric/maps_translation.con.
+inline "cic:/CoRN/transc/Trigonometric/maps_translation.con".
 
 (* UNEXPORTED
 End Lemmas.
@@ -45,9 +45,9 @@ Section Sine_and_Cosine.
 
 (*#* Sine, cosine and tangent at [Zero]. *)
 
-inline cic:/CoRN/transc/Trigonometric/Sin_zero.con.
+inline "cic:/CoRN/transc/Trigonometric/Sin_zero.con".
 
-inline cic:/CoRN/transc/Trigonometric/Cos_zero.con.
+inline "cic:/CoRN/transc/Trigonometric/Cos_zero.con".
 
 (* UNEXPORTED
 Hint Resolve Sin_zero Cos_zero: algebra.
@@ -57,7 +57,7 @@ Hint Resolve Sin_zero Cos_zero: algebra.
 Opaque Sine Cosine.
 *)
 
-inline cic:/CoRN/transc/Trigonometric/Tan_zero.con.
+inline "cic:/CoRN/transc/Trigonometric/Tan_zero.con".
 
 (* UNEXPORTED
 Transparent Sine Cosine.
@@ -67,21 +67,21 @@ Transparent Sine Cosine.
 Continuity of sine and cosine are trivial.
 *)
 
-inline cic:/CoRN/transc/Trigonometric/Continuous_Sin.con.
+inline "cic:/CoRN/transc/Trigonometric/Continuous_Sin.con".
 
-inline cic:/CoRN/transc/Trigonometric/Continuous_Cos.con.
+inline "cic:/CoRN/transc/Trigonometric/Continuous_Cos.con".
 
 (*#*
 The rules for the derivative of the sine and cosine function; we begin by proving that their defining sequences can be expressed in terms of one another.
 *)
 
-inline cic:/CoRN/transc/Trigonometric/cos_sin_seq.con.
+inline "cic:/CoRN/transc/Trigonometric/cos_sin_seq.con".
 
-inline cic:/CoRN/transc/Trigonometric/sin_cos_seq.con.
+inline "cic:/CoRN/transc/Trigonometric/sin_cos_seq.con".
 
-inline cic:/CoRN/transc/Trigonometric/Derivative_Sin.con.
+inline "cic:/CoRN/transc/Trigonometric/Derivative_Sin.con".
 
-inline cic:/CoRN/transc/Trigonometric/Derivative_Cos.con.
+inline "cic:/CoRN/transc/Trigonometric/Derivative_Cos.con".
 
 (* UNEXPORTED
 Hint Resolve Derivative_Sin Derivative_Cos: derivate.
@@ -110,13 +110,13 @@ situations).
 
 (* begin hide *)
 
-inline cic:/CoRN/transc/Trigonometric/F.con.
+inline "cic:/CoRN/transc/Trigonometric/F.con".
 
-inline cic:/CoRN/transc/Trigonometric/G.con.
+inline "cic:/CoRN/transc/Trigonometric/G.con".
 
-inline cic:/CoRN/transc/Trigonometric/F'.con.
+inline "cic:/CoRN/transc/Trigonometric/F'.con".
 
-inline cic:/CoRN/transc/Trigonometric/G'.con.
+inline "cic:/CoRN/transc/Trigonometric/G'.con".
 
 (* end hide *)
 
@@ -156,7 +156,7 @@ Opaque FAbs.
 Transparent FAbs.
 *)
 
-inline cic:/CoRN/transc/Trigonometric/Sin_plus_Taylor_bnd_lft.con.
+inline "cic:/CoRN/transc/Trigonometric/Sin_plus_Taylor_bnd_lft.con".
 
 (* UNEXPORTED
 Opaque FAbs.
@@ -190,15 +190,15 @@ Opaque FAbs.
 Transparent FAbs.
 *)
 
-inline cic:/CoRN/transc/Trigonometric/Sin_plus_Taylor_bnd_rht.con.
+inline "cic:/CoRN/transc/Trigonometric/Sin_plus_Taylor_bnd_rht.con".
 
-inline cic:/CoRN/transc/Trigonometric/Sin_plus_eq.con.
+inline "cic:/CoRN/transc/Trigonometric/Sin_plus_eq.con".
 
-inline cic:/CoRN/transc/Trigonometric/Sin_plus_der_lft.con.
+inline "cic:/CoRN/transc/Trigonometric/Sin_plus_der_lft.con".
 
-inline cic:/CoRN/transc/Trigonometric/Sin_plus_der_rht.con.
+inline "cic:/CoRN/transc/Trigonometric/Sin_plus_der_rht.con".
 
-inline cic:/CoRN/transc/Trigonometric/Sin_plus_fun.con.
+inline "cic:/CoRN/transc/Trigonometric/Sin_plus_fun.con".
 
 (* UNEXPORTED
 End Sine_of_Sum.
@@ -208,7 +208,7 @@ End Sine_of_Sum.
 Opaque Sine Cosine.
 *)
 
-inline cic:/CoRN/transc/Trigonometric/Cos_plus_fun.con.
+inline "cic:/CoRN/transc/Trigonometric/Cos_plus_fun.con".
 
 (* UNEXPORTED
 End Sine_and_Cosine.

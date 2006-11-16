@@ -16,11 +16,11 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/reals/RealLists".
 
+include "CoRN.ma".
+
 (* $Id: RealLists.v,v 1.4 2004/04/23 10:01:05 lcf Exp $ *)
 
-(* INCLUDE
-CReals1
-*)
+include "reals/CReals1.ma".
 
 (* UNEXPORTED
 Section Lists.
@@ -37,16 +37,16 @@ Notice that some of the properties listed below only make sense in the context w
 We start by defining maximum and minimum of lists of reals and two membership predicates. The value of these functions for the empty list is arbitrarily set to 0, but it will be irrelevant, as we will never work with empty lists.
 *)
 
-inline cic:/CoRN/reals/RealLists/maxlist.con.
+inline "cic:/CoRN/reals/RealLists/maxlist.con".
 
-inline cic:/CoRN/reals/RealLists/minlist.con.
+inline "cic:/CoRN/reals/RealLists/minlist.con".
 
-inline cic:/CoRN/reals/RealLists/member.con.
+inline "cic:/CoRN/reals/RealLists/member.con".
 
 (*#*
 Sometimes the length of the list has to be restricted; the next definition provides an easy way to do that. *)
 
-inline cic:/CoRN/reals/RealLists/length_leEq.con.
+inline "cic:/CoRN/reals/RealLists/length_leEq.con".
 
 (*#* Length is preserved by mapping. *)
 
@@ -54,7 +54,7 @@ inline cic:/CoRN/reals/RealLists/length_leEq.con.
 Implicit Arguments map [A B].
 *)
 
-inline cic:/CoRN/reals/RealLists/map_pres_length.con.
+inline "cic:/CoRN/reals/RealLists/map_pres_length.con".
 
 (*#* 
 Often we want to map partial functions through a list; this next operator provides a way to do that, and is proved to be correct. *)
@@ -63,42 +63,42 @@ Often we want to map partial functions through a list; this next operator provid
 Implicit Arguments cons [A].
 *)
 
-inline cic:/CoRN/reals/RealLists/map2.con.
+inline "cic:/CoRN/reals/RealLists/map2.con".
 
-inline cic:/CoRN/reals/RealLists/map2_wd.con.
+inline "cic:/CoRN/reals/RealLists/map2_wd.con".
 
-inline cic:/CoRN/reals/RealLists/map2_pres_member.con.
+inline "cic:/CoRN/reals/RealLists/map2_pres_member.con".
 
 (*#*
 As [maxlist] and [minlist] are generalizations of [Max] and [Min] to finite sets of real numbers, they have the expected properties: *)
 
-inline cic:/CoRN/reals/RealLists/maxlist_greater.con.
+inline "cic:/CoRN/reals/RealLists/maxlist_greater.con".
 
 (* begin hide *)
 
-inline cic:/CoRN/reals/RealLists/maxlist_aux.con.
+inline "cic:/CoRN/reals/RealLists/maxlist_aux.con".
 
 (* end hide *)
 
-inline cic:/CoRN/reals/RealLists/maxlist_leEq_eps.con.
+inline "cic:/CoRN/reals/RealLists/maxlist_leEq_eps.con".
 
-inline cic:/CoRN/reals/RealLists/maxlist_less.con.
+inline "cic:/CoRN/reals/RealLists/maxlist_less.con".
 
-inline cic:/CoRN/reals/RealLists/maxlist_leEq.con.
+inline "cic:/CoRN/reals/RealLists/maxlist_leEq.con".
 
-inline cic:/CoRN/reals/RealLists/minlist_smaller.con.
+inline "cic:/CoRN/reals/RealLists/minlist_smaller.con".
 
 (* begin hide *)
 
-inline cic:/CoRN/reals/RealLists/minlist_aux.con.
+inline "cic:/CoRN/reals/RealLists/minlist_aux.con".
 
 (* end hide *)
 
-inline cic:/CoRN/reals/RealLists/minlist_leEq_eps.con.
+inline "cic:/CoRN/reals/RealLists/minlist_leEq_eps.con".
 
-inline cic:/CoRN/reals/RealLists/less_minlist.con.
+inline "cic:/CoRN/reals/RealLists/less_minlist.con".
 
-inline cic:/CoRN/reals/RealLists/leEq_minlist.con.
+inline "cic:/CoRN/reals/RealLists/leEq_minlist.con".
 
 (* UNEXPORTED
 End Lists.

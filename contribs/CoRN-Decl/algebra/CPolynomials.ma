@@ -16,6 +16,8 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/algebra/CPolynomials".
 
+include "CoRN.ma".
+
 (* $Id: CPolynomials.v,v 1.9 2004/04/23 10:00:53 lcf Exp $ *)
 
 (*#* printing _X_ %\ensuremath{x}% *)
@@ -28,9 +30,7 @@ set "baseuri" "cic:/matita/CoRN-Decl/algebra/CPolynomials".
 
 (*#* printing FX %\ensuremath{F[x]}% #F[x]# *)
 
-(* INCLUDE
-RingReflection
-*)
+include "tactics/RingReflection.ma".
 
 (*#* * Polynomials
 The first section only proves the polynomials form a ring, and nothing more
@@ -50,7 +50,7 @@ Section CPoly_CRing.
 %\end{convention}%
 *)
 
-inline cic:/CoRN/algebra/CPolynomials/CR.var.
+inline "cic:/CoRN/algebra/CPolynomials/CR.var".
 
 (*#*
 The intuition behind the type [cpoly] is the following
@@ -60,54 +60,54 @@ The intuition behind the type [cpoly] is the following
 
 *)
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly.ind.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly.ind".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_constant.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_constant.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_one.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_one.con".
 
 (*#*
 Some useful induction lemmas for doubly quantified propositions.
 *)
 
-inline cic:/CoRN/algebra/CPolynomials/Ccpoly_double_ind0.con.
+inline "cic:/CoRN/algebra/CPolynomials/Ccpoly_double_ind0.con".
 
-inline cic:/CoRN/algebra/CPolynomials/Ccpoly_double_sym_ind0.con.
+inline "cic:/CoRN/algebra/CPolynomials/Ccpoly_double_sym_ind0.con".
 
-inline cic:/CoRN/algebra/CPolynomials/Ccpoly_double_ind0'.con.
+inline "cic:/CoRN/algebra/CPolynomials/Ccpoly_double_ind0'.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_double_ind0.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_double_ind0.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_double_sym_ind0.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_double_sym_ind0.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_double_ind0'.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_double_ind0'.con".
 
 (*#* *** The polynomials form a setoid
 *)
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_eq_zero.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_eq_zero.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_eq.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_eq.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_eq_p_zero.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_eq_p_zero.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_ap_zero.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_ap_zero.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_ap.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_ap.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_ap_p_zero.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_ap_p_zero.con".
 
-inline cic:/CoRN/algebra/CPolynomials/irreflexive_cpoly_ap.con.
+inline "cic:/CoRN/algebra/CPolynomials/irreflexive_cpoly_ap.con".
 
-inline cic:/CoRN/algebra/CPolynomials/symmetric_cpoly_ap.con.
+inline "cic:/CoRN/algebra/CPolynomials/symmetric_cpoly_ap.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cotransitive_cpoly_ap.con.
+inline "cic:/CoRN/algebra/CPolynomials/cotransitive_cpoly_ap.con".
 
-inline cic:/CoRN/algebra/CPolynomials/tight_apart_cpoly_ap.con.
+inline "cic:/CoRN/algebra/CPolynomials/tight_apart_cpoly_ap.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_is_CSetoid.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_is_CSetoid.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_csetoid.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_csetoid.con".
 
 (*#*
 Now that we know that the polynomials form a setoid, we can use the
@@ -119,203 +119,203 @@ the most basic properties of equality and apartness
 in terms of these generators.
 *)
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_zero_cs.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_zero_cs.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_linear_cs.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_linear_cs.con".
 
-inline cic:/CoRN/algebra/CPolynomials/Ccpoly_ind_cs.con.
+inline "cic:/CoRN/algebra/CPolynomials/Ccpoly_ind_cs.con".
 
-inline cic:/CoRN/algebra/CPolynomials/Ccpoly_double_ind0_cs.con.
+inline "cic:/CoRN/algebra/CPolynomials/Ccpoly_double_ind0_cs.con".
 
-inline cic:/CoRN/algebra/CPolynomials/Ccpoly_double_sym_ind0_cs.con.
+inline "cic:/CoRN/algebra/CPolynomials/Ccpoly_double_sym_ind0_cs.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_ind_cs.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_ind_cs.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_double_ind0_cs.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_double_ind0_cs.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_double_sym_ind0_cs.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_double_sym_ind0_cs.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_lin_eq_zero_.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_lin_eq_zero_.con".
 
-inline cic:/CoRN/algebra/CPolynomials/_cpoly_lin_eq_zero.con.
+inline "cic:/CoRN/algebra/CPolynomials/_cpoly_lin_eq_zero.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_zero_eq_lin_.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_zero_eq_lin_.con".
 
-inline cic:/CoRN/algebra/CPolynomials/_cpoly_zero_eq_lin.con.
+inline "cic:/CoRN/algebra/CPolynomials/_cpoly_zero_eq_lin.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_lin_eq_lin_.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_lin_eq_lin_.con".
 
-inline cic:/CoRN/algebra/CPolynomials/_cpoly_lin_eq_lin.con.
+inline "cic:/CoRN/algebra/CPolynomials/_cpoly_lin_eq_lin.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_lin_ap_zero_.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_lin_ap_zero_.con".
 
-inline cic:/CoRN/algebra/CPolynomials/_cpoly_lin_ap_zero.con.
+inline "cic:/CoRN/algebra/CPolynomials/_cpoly_lin_ap_zero.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_lin_ap_zero.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_lin_ap_zero.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_zero_ap_lin_.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_zero_ap_lin_.con".
 
-inline cic:/CoRN/algebra/CPolynomials/_cpoly_zero_ap_lin.con.
+inline "cic:/CoRN/algebra/CPolynomials/_cpoly_zero_ap_lin.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_zero_ap_lin.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_zero_ap_lin.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_lin_ap_lin_.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_lin_ap_lin_.con".
 
-inline cic:/CoRN/algebra/CPolynomials/_cpoly_lin_ap_lin.con.
+inline "cic:/CoRN/algebra/CPolynomials/_cpoly_lin_ap_lin.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_lin_ap_lin.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_lin_ap_lin.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_linear_strext.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_linear_strext.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_linear_wd.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_linear_wd.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_linear_fun.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_linear_fun.con".
 
-inline cic:/CoRN/algebra/CPolynomials/Ccpoly_double_comp_ind.con.
+inline "cic:/CoRN/algebra/CPolynomials/Ccpoly_double_comp_ind.con".
 
-inline cic:/CoRN/algebra/CPolynomials/Ccpoly_triple_comp_ind.con.
+inline "cic:/CoRN/algebra/CPolynomials/Ccpoly_triple_comp_ind.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_double_comp_ind.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_double_comp_ind.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_triple_comp_ind.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_triple_comp_ind.con".
 
 (*#*
 *** The polynomials form a semi-group and a monoid
 *)
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_plus.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_plus.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_plus_cs.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_plus_cs.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_zero_plus.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_zero_plus.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_plus_zero.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_plus_zero.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_lin_plus_lin.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_lin_plus_lin.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_plus_commutative.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_plus_commutative.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_plus_q_ap_q.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_plus_q_ap_q.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_p_plus_ap_p.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_p_plus_ap_p.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_ap_zero_plus.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_ap_zero_plus.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_plus_op_strext.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_plus_op_strext.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_plus_op_wd.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_plus_op_wd.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_plus_op.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_plus_op.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_plus_associative.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_plus_associative.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_csemi_grp.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_csemi_grp.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_cm_proof.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_cm_proof.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_cmonoid.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_cmonoid.con".
 
 (*#* *** The polynomials form a group
 *)
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_inv.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_inv.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_inv_cs.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_inv_cs.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_inv_zero.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_inv_zero.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_inv_lin.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_inv_lin.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_inv_op_strext.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_inv_op_strext.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_inv_op_wd.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_inv_op_wd.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_inv_op.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_inv_op.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_cg_proof.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_cg_proof.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_cgroup.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_cgroup.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_cag_proof.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_cag_proof.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_cabgroup.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_cabgroup.con".
 
 (*#* *** The polynomials form a ring
 *)
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_mult_cr.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_mult_cr.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_mult.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_mult.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_mult_cr_cs.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_mult_cr_cs.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_zero_mult_cr.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_zero_mult_cr.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_lin_mult_cr.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_lin_mult_cr.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_mult_cr_zero.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_mult_cr_zero.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_mult_cr_strext.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_mult_cr_strext.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_mult_cr_wd.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_mult_cr_wd.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_mult_cs.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_mult_cs.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_zero_mult.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_zero_mult.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_lin_mult.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_lin_mult.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_mult_op_strext.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_mult_op_strext.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_mult_op_wd.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_mult_op_wd.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_mult_op.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_mult_op.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_mult_cr_dist.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_mult_cr_dist.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_cr_dist.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_cr_dist.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_mult_cr_assoc_mult_cr.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_mult_cr_assoc_mult_cr.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_mult_cr_assoc_mult.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_mult_cr_assoc_mult.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_mult_zero.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_mult_zero.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_mult_lin.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_mult_lin.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_mult_commutative.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_mult_commutative.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_mult_dist_rht.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_mult_dist_rht.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_mult_assoc.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_mult_assoc.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_mult_cr_one.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_mult_cr_one.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_one_mult.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_one_mult.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_mult_one.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_mult_one.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_mult_monoid.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_mult_monoid.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_cr_non_triv.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_cr_non_triv.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_is_CRing.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_is_CRing.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_cring.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_cring.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_constant_strext.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_constant_strext.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_constant_wd.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_constant_wd.con".
 
-inline cic:/CoRN/algebra/CPolynomials/_C_.con.
+inline "cic:/CoRN/algebra/CPolynomials/_C_.con".
 
-inline cic:/CoRN/algebra/CPolynomials/_X_.con.
+inline "cic:/CoRN/algebra/CPolynomials/_X_.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_x_minus_c.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_x_minus_c.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_x_minus_c_strext.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_x_minus_c_strext.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_x_minus_c_wd.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_x_minus_c_wd.con".
 
 (* UNEXPORTED
 End CPoly_CRing.
@@ -329,7 +329,7 @@ Implicit Arguments _C_ [CR].
 Implicit Arguments _X_ [CR].
 *)
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_linear_fun'.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_linear_fun'.con".
 
 (* UNEXPORTED
 Implicit Arguments cpoly_linear_fun' [CR].
@@ -350,69 +350,69 @@ elements of the ring.
 %\end{convention}%
 *)
 
-inline cic:/CoRN/algebra/CPolynomials/CR.var.
+inline "cic:/CoRN/algebra/CPolynomials/CR.var".
 
 (* UNEXPORTED
 Section helpful_section.
 *)
 
-inline cic:/CoRN/algebra/CPolynomials/p.var.
+inline "cic:/CoRN/algebra/CPolynomials/p.var".
 
-inline cic:/CoRN/algebra/CPolynomials/q.var.
+inline "cic:/CoRN/algebra/CPolynomials/q.var".
 
-inline cic:/CoRN/algebra/CPolynomials/c.var.
+inline "cic:/CoRN/algebra/CPolynomials/c.var".
 
-inline cic:/CoRN/algebra/CPolynomials/d.var.
+inline "cic:/CoRN/algebra/CPolynomials/d.var".
 
-inline cic:/CoRN/algebra/CPolynomials/linear_eq_zero_.con.
+inline "cic:/CoRN/algebra/CPolynomials/linear_eq_zero_.con".
 
-inline cic:/CoRN/algebra/CPolynomials/_linear_eq_zero.con.
+inline "cic:/CoRN/algebra/CPolynomials/_linear_eq_zero.con".
 
-inline cic:/CoRN/algebra/CPolynomials/zero_eq_linear_.con.
+inline "cic:/CoRN/algebra/CPolynomials/zero_eq_linear_.con".
 
-inline cic:/CoRN/algebra/CPolynomials/_zero_eq_linear.con.
+inline "cic:/CoRN/algebra/CPolynomials/_zero_eq_linear.con".
 
-inline cic:/CoRN/algebra/CPolynomials/linear_eq_linear_.con.
+inline "cic:/CoRN/algebra/CPolynomials/linear_eq_linear_.con".
 
-inline cic:/CoRN/algebra/CPolynomials/_linear_eq_linear.con.
+inline "cic:/CoRN/algebra/CPolynomials/_linear_eq_linear.con".
 
-inline cic:/CoRN/algebra/CPolynomials/linear_ap_zero_.con.
+inline "cic:/CoRN/algebra/CPolynomials/linear_ap_zero_.con".
 
-inline cic:/CoRN/algebra/CPolynomials/_linear_ap_zero.con.
+inline "cic:/CoRN/algebra/CPolynomials/_linear_ap_zero.con".
 
-inline cic:/CoRN/algebra/CPolynomials/linear_ap_zero.con.
+inline "cic:/CoRN/algebra/CPolynomials/linear_ap_zero.con".
 
-inline cic:/CoRN/algebra/CPolynomials/zero_ap_linear_.con.
+inline "cic:/CoRN/algebra/CPolynomials/zero_ap_linear_.con".
 
-inline cic:/CoRN/algebra/CPolynomials/_zero_ap_linear.con.
+inline "cic:/CoRN/algebra/CPolynomials/_zero_ap_linear.con".
 
-inline cic:/CoRN/algebra/CPolynomials/zero_ap_linear.con.
+inline "cic:/CoRN/algebra/CPolynomials/zero_ap_linear.con".
 
-inline cic:/CoRN/algebra/CPolynomials/linear_ap_linear_.con.
+inline "cic:/CoRN/algebra/CPolynomials/linear_ap_linear_.con".
 
-inline cic:/CoRN/algebra/CPolynomials/_linear_ap_linear.con.
+inline "cic:/CoRN/algebra/CPolynomials/_linear_ap_linear.con".
 
-inline cic:/CoRN/algebra/CPolynomials/linear_ap_linear.con.
+inline "cic:/CoRN/algebra/CPolynomials/linear_ap_linear.con".
 
 (* UNEXPORTED
 End helpful_section.
 *)
 
-inline cic:/CoRN/algebra/CPolynomials/Ccpoly_induc.con.
+inline "cic:/CoRN/algebra/CPolynomials/Ccpoly_induc.con".
 
-inline cic:/CoRN/algebra/CPolynomials/Ccpoly_double_sym_ind.con.
+inline "cic:/CoRN/algebra/CPolynomials/Ccpoly_double_sym_ind.con".
 
-inline cic:/CoRN/algebra/CPolynomials/Cpoly_double_comp_ind.con.
+inline "cic:/CoRN/algebra/CPolynomials/Cpoly_double_comp_ind.con".
 
-inline cic:/CoRN/algebra/CPolynomials/Cpoly_triple_comp_ind.con.
+inline "cic:/CoRN/algebra/CPolynomials/Cpoly_triple_comp_ind.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_induc.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_induc.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_double_sym_ind.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_double_sym_ind.con".
 
-inline cic:/CoRN/algebra/CPolynomials/poly_double_comp_ind.con.
+inline "cic:/CoRN/algebra/CPolynomials/poly_double_comp_ind.con".
 
-inline cic:/CoRN/algebra/CPolynomials/poly_triple_comp_ind.con.
+inline "cic:/CoRN/algebra/CPolynomials/poly_triple_comp_ind.con".
 
 (* UNEXPORTED
 Transparent cpoly_cring.
@@ -426,13 +426,13 @@ Transparent cpoly_cgroup.
 Transparent cpoly_csetoid.
 *)
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_apply.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_apply.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_apply_strext.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_apply_strext.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_apply_wd.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_apply_wd.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_apply_fun.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_apply_fun.con".
 
 (* UNEXPORTED
 End CPoly_CRing_ctd.
@@ -462,29 +462,29 @@ Let [R] be a ring and write [RX] for the ring of polynomials over [R].
 Section Poly_properties.
 *)
 
-inline cic:/CoRN/algebra/CPolynomials/R.var.
+inline "cic:/CoRN/algebra/CPolynomials/R.var".
 
 (*#*
 *** Constant and identity
 *)
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_X_.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_X_.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_C_.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_C_.con".
 
 (* UNEXPORTED
 Hint Resolve cpoly_X_ cpoly_C_: algebra.
 *)
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_const_eq.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_const_eq.con".
 
-inline cic:/CoRN/algebra/CPolynomials/_c_zero.con.
+inline "cic:/CoRN/algebra/CPolynomials/_c_zero.con".
 
-inline cic:/CoRN/algebra/CPolynomials/_c_one.con.
+inline "cic:/CoRN/algebra/CPolynomials/_c_one.con".
 
-inline cic:/CoRN/algebra/CPolynomials/_c_mult.con.
+inline "cic:/CoRN/algebra/CPolynomials/_c_mult.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_lin.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_lin.con".
 
 (* UNEXPORTED
 Hint Resolve cpoly_lin: algebra.
@@ -492,19 +492,19 @@ Hint Resolve cpoly_lin: algebra.
 
 (* SUPERFLUOUS *)
 
-inline cic:/CoRN/algebra/CPolynomials/poly_linear.con.
+inline "cic:/CoRN/algebra/CPolynomials/poly_linear.con".
 
 (* UNEXPORTED
 Hint Resolve _c_zero: algebra.
 *)
 
-inline cic:/CoRN/algebra/CPolynomials/poly_c_apzero.con.
+inline "cic:/CoRN/algebra/CPolynomials/poly_c_apzero.con".
 
-inline cic:/CoRN/algebra/CPolynomials/_c_mult_lin.con.
+inline "cic:/CoRN/algebra/CPolynomials/_c_mult_lin.con".
 
 (* SUPERFLUOUS ? *)
 
-inline cic:/CoRN/algebra/CPolynomials/lin_mult.con.
+inline "cic:/CoRN/algebra/CPolynomials/lin_mult.con".
 
 (* UNEXPORTED
 Hint Resolve lin_mult: algebra.
@@ -513,57 +513,57 @@ Hint Resolve lin_mult: algebra.
 (*#* *** Application of polynomials
 *)
 
-inline cic:/CoRN/algebra/CPolynomials/poly_eq_zero.con.
+inline "cic:/CoRN/algebra/CPolynomials/poly_eq_zero.con".
 
-inline cic:/CoRN/algebra/CPolynomials/apply_wd.con.
+inline "cic:/CoRN/algebra/CPolynomials/apply_wd.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpolyap_pres_eq.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpolyap_pres_eq.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpolyap_strext.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpolyap_strext.con".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_csetoid_op.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_csetoid_op.con".
 
-inline cic:/CoRN/algebra/CPolynomials/_c_apply.con.
+inline "cic:/CoRN/algebra/CPolynomials/_c_apply.con".
 
-inline cic:/CoRN/algebra/CPolynomials/_x_apply.con.
+inline "cic:/CoRN/algebra/CPolynomials/_x_apply.con".
 
-inline cic:/CoRN/algebra/CPolynomials/plus_apply.con.
+inline "cic:/CoRN/algebra/CPolynomials/plus_apply.con".
 
-inline cic:/CoRN/algebra/CPolynomials/inv_apply.con.
+inline "cic:/CoRN/algebra/CPolynomials/inv_apply.con".
 
 (* UNEXPORTED
 Hint Resolve plus_apply inv_apply: algebra.
 *)
 
-inline cic:/CoRN/algebra/CPolynomials/minus_apply.con.
+inline "cic:/CoRN/algebra/CPolynomials/minus_apply.con".
 
-inline cic:/CoRN/algebra/CPolynomials/_c_mult_apply.con.
+inline "cic:/CoRN/algebra/CPolynomials/_c_mult_apply.con".
 
 (* UNEXPORTED
 Hint Resolve _c_mult_apply: algebra.
 *)
 
-inline cic:/CoRN/algebra/CPolynomials/mult_apply.con.
+inline "cic:/CoRN/algebra/CPolynomials/mult_apply.con".
 
 (* UNEXPORTED
 Hint Resolve mult_apply: algebra.
 *)
 
-inline cic:/CoRN/algebra/CPolynomials/one_apply.con.
+inline "cic:/CoRN/algebra/CPolynomials/one_apply.con".
 
 (* UNEXPORTED
 Hint Resolve one_apply: algebra.
 *)
 
-inline cic:/CoRN/algebra/CPolynomials/nexp_apply.con.
+inline "cic:/CoRN/algebra/CPolynomials/nexp_apply.con".
 
 (* SUPERFLUOUS *)
 
-inline cic:/CoRN/algebra/CPolynomials/poly_inv_apply.con.
+inline "cic:/CoRN/algebra/CPolynomials/poly_inv_apply.con".
 
-inline cic:/CoRN/algebra/CPolynomials/Sum0_cpoly_ap.con.
+inline "cic:/CoRN/algebra/CPolynomials/Sum0_cpoly_ap.con".
 
-inline cic:/CoRN/algebra/CPolynomials/Sum_cpoly_ap.con.
+inline "cic:/CoRN/algebra/CPolynomials/Sum_cpoly_ap.con".
 
 (* UNEXPORTED
 End Poly_properties.
@@ -576,9 +576,9 @@ End Poly_properties.
 Section Poly_Prop_Induction.
 *)
 
-inline cic:/CoRN/algebra/CPolynomials/CR.var.
+inline "cic:/CoRN/algebra/CPolynomials/CR.var".
 
-inline cic:/CoRN/algebra/CPolynomials/cpoly_double_ind.con.
+inline "cic:/CoRN/algebra/CPolynomials/cpoly_double_ind.con".
 
 (* UNEXPORTED
 End Poly_Prop_Induction.

@@ -16,85 +16,81 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/complex/Complex_Exponential".
 
+include "CoRN.ma".
+
 (* $Id: Complex_Exponential.v,v 1.4 2004/04/23 10:00:55 lcf Exp $ *)
 
 (*#* printing ExpCC %\ensuremath{\exp_{\mathbb C}}% *)
 
-(* INCLUDE
-AbsCC
-*)
+include "complex/AbsCC.ma".
 
-(* INCLUDE
-Exponential
-*)
+include "transc/Exponential.ma".
 
-(* INCLUDE
-Pi
-*)
+include "transc/Pi.ma".
 
 (*#* ** The Complex Exponential *)
 
-inline cic:/CoRN/complex/Complex_Exponential/ExpCC.con.
+inline "cic:/CoRN/complex/Complex_Exponential/ExpCC.con".
 
-inline cic:/CoRN/complex/Complex_Exponential/ExpCC_wd.con.
+inline "cic:/CoRN/complex/Complex_Exponential/ExpCC_wd.con".
 
 (* begin hide *)
 
-inline cic:/CoRN/complex/Complex_Exponential/ExpCC_equation_aid_1.con.
+inline "cic:/CoRN/complex/Complex_Exponential/ExpCC_equation_aid_1.con".
 
-inline cic:/CoRN/complex/Complex_Exponential/ExpCC_equation_aid_2.con.
+inline "cic:/CoRN/complex/Complex_Exponential/ExpCC_equation_aid_2.con".
 
-inline cic:/CoRN/complex/Complex_Exponential/ExpCC_equation_aid_3.con.
+inline "cic:/CoRN/complex/Complex_Exponential/ExpCC_equation_aid_3.con".
 
-inline cic:/CoRN/complex/Complex_Exponential/ExpCC_equation_aid_4.con.
+inline "cic:/CoRN/complex/Complex_Exponential/ExpCC_equation_aid_4.con".
 
 (* end hide *)
 
-inline cic:/CoRN/complex/Complex_Exponential/ExpCC_plus.con.
+inline "cic:/CoRN/complex/Complex_Exponential/ExpCC_plus.con".
 
 (* UNEXPORTED
 Hint Resolve ExpCC_plus: algebra.
 *)
 
-inline cic:/CoRN/complex/Complex_Exponential/ExpCC_Zero.con.
+inline "cic:/CoRN/complex/Complex_Exponential/ExpCC_Zero.con".
 
 (* UNEXPORTED
 Hint Resolve ExpCC_Zero: algebra.
 *)
 
-inline cic:/CoRN/complex/Complex_Exponential/ExpCC_inv_aid.con.
+inline "cic:/CoRN/complex/Complex_Exponential/ExpCC_inv_aid.con".
 
 (* UNEXPORTED
 Hint Resolve ExpCC_inv_aid: algebra.
 *)
 
-inline cic:/CoRN/complex/Complex_Exponential/ExpCC_ap_zero.con.
+inline "cic:/CoRN/complex/Complex_Exponential/ExpCC_ap_zero.con".
 
-inline cic:/CoRN/complex/Complex_Exponential/ExpCC_inv.con.
+inline "cic:/CoRN/complex/Complex_Exponential/ExpCC_inv.con".
 
 (* UNEXPORTED
 Hint Resolve ExpCC_inv: algebra.
 *)
 
-inline cic:/CoRN/complex/Complex_Exponential/ExpCC_pow.con.
+inline "cic:/CoRN/complex/Complex_Exponential/ExpCC_pow.con".
 
 (* UNEXPORTED
 Hint Resolve ExpCC_pow: algebra.
 *)
 
-inline cic:/CoRN/complex/Complex_Exponential/AbsCC_ExpCC.con.
+inline "cic:/CoRN/complex/Complex_Exponential/AbsCC_ExpCC.con".
 
 (* UNEXPORTED
 Hint Resolve AbsCC_ExpCC: algebra.
 *)
 
-inline cic:/CoRN/complex/Complex_Exponential/ExpCC_Periodic.con.
+inline "cic:/CoRN/complex/Complex_Exponential/ExpCC_Periodic.con".
 
 (* UNEXPORTED
 Hint Resolve ExpCC_Periodic: algebra.
 *)
 
-inline cic:/CoRN/complex/Complex_Exponential/ExpCC_Exp.con.
+inline "cic:/CoRN/complex/Complex_Exponential/ExpCC_Exp.con".
 
 (* UNEXPORTED
 Hint Resolve ExpCC_Exp: algebra.
@@ -104,5 +100,5 @@ Hint Resolve ExpCC_Exp: algebra.
 Opaque Sin Cos Exp.
 *)
 
-inline cic:/CoRN/complex/Complex_Exponential/Euler.con.
+inline "cic:/CoRN/complex/Complex_Exponential/Euler.con".
 

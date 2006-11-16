@@ -16,24 +16,22 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/model/semigroups/Qsemigroup".
 
+include "CoRN.ma".
+
 (* $Id: Qsemigroup.v,v 1.6 2004/04/08 08:20:35 lcf Exp $ *)
 
-(* INCLUDE
-Qsetoid
-*)
+include "model/setoids/Qsetoid.ma".
 
-(* INCLUDE
-CSemiGroups
-*)
+include "algebra/CSemiGroups.ma".
 
 (*#* **Examples of semi-groups: $\langle$#&lang;#[Q],[[+]]$\rangle$#&rang;# and $\langle$#&lang;#[Q],[[*]]$\rangle$#&rang;#
 ***$\langle$#&lang;#[Q],[[+]]$\rangle$#&rang;#
 *)
 
-inline cic:/CoRN/model/semigroups/Qsemigroup/Q_as_CSemiGroup.con.
+inline "cic:/CoRN/model/semigroups/Qsemigroup/Q_as_CSemiGroup.con".
 
 (*#* ***$\langle$#&lang;#[Q],[[*]]$\rangle$#&rang;#
 *)
 
-inline cic:/CoRN/model/semigroups/Qsemigroup/Q_mul_as_CSemiGroup.con.
+inline "cic:/CoRN/model/semigroups/Qsemigroup/Q_mul_as_CSemiGroup.con".
 

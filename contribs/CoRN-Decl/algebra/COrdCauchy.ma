@@ -16,9 +16,9 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/algebra/COrdCauchy".
 
-(* INCLUDE
-COrdAbs
-*)
+include "CoRN.ma".
+
+include "algebra/COrdAbs.ma".
 
 (* Begin_SpecReals *)
 
@@ -31,7 +31,7 @@ Section OrdField_Cauchy.
 %\end{convention}%
 *)
 
-inline cic:/CoRN/algebra/COrdCauchy/R.var.
+inline "cic:/CoRN/algebra/COrdCauchy/R.var".
 
 (* begin hide *)
 
@@ -45,7 +45,7 @@ Unset Strict Implicit.
 
 (* end hide *)
 
-inline cic:/CoRN/algebra/COrdCauchy/Cauchy_prop.con.
+inline "cic:/CoRN/algebra/COrdCauchy/Cauchy_prop.con".
 
 (* begin hide *)
 
@@ -68,9 +68,11 @@ Implicit arguments turned off, because Coq makes a mess of it in combination
 with the coercions
 *)
 
-inline cic:/CoRN/algebra/COrdCauchy/CauchySeq.ind.
+inline "cic:/CoRN/algebra/COrdCauchy/CauchySeq.ind".
 
-inline cic:/CoRN/algebra/COrdCauchy/SeqLimit.con.
+coercion "cic:/matita/CoRN-Decl/algebra/COrdCauchy/CS_seq.con" 0 (* compounds *).
+
+inline "cic:/CoRN/algebra/COrdCauchy/SeqLimit.con".
 
 (* End_SpecReals *)
 
@@ -84,28 +86,28 @@ hold).
 %\end{convention}%
 *)
 
-inline cic:/CoRN/algebra/COrdCauchy/CS_seq_bounded.con.
+inline "cic:/CoRN/algebra/COrdCauchy/CS_seq_bounded.con".
 
-inline cic:/CoRN/algebra/COrdCauchy/CS_seq_const.con.
+inline "cic:/CoRN/algebra/COrdCauchy/CS_seq_const.con".
 
 (*#*
 %\begin{convention}% Assume [f] and [g] are Cauchy sequences on [R].
 %\end{convention}%
 *)
 
-inline cic:/CoRN/algebra/COrdCauchy/f.var.
+inline "cic:/CoRN/algebra/COrdCauchy/f.var".
 
-inline cic:/CoRN/algebra/COrdCauchy/g.var.
+inline "cic:/CoRN/algebra/COrdCauchy/g.var".
 
-inline cic:/CoRN/algebra/COrdCauchy/Hf.var.
+inline "cic:/CoRN/algebra/COrdCauchy/Hf.var".
 
-inline cic:/CoRN/algebra/COrdCauchy/Hg.var.
+inline "cic:/CoRN/algebra/COrdCauchy/Hg.var".
 
-inline cic:/CoRN/algebra/COrdCauchy/CS_seq_plus.con.
+inline "cic:/CoRN/algebra/COrdCauchy/CS_seq_plus.con".
 
-inline cic:/CoRN/algebra/COrdCauchy/CS_seq_inv.con.
+inline "cic:/CoRN/algebra/COrdCauchy/CS_seq_inv.con".
 
-inline cic:/CoRN/algebra/COrdCauchy/CS_seq_mult.con.
+inline "cic:/CoRN/algebra/COrdCauchy/CS_seq_mult.con".
 
 (*#*
 We now assume that [f] is, from some point onwards, greater than
@@ -119,19 +121,19 @@ Let [e] be a postive element of [R] and let [N:nat] be such that from
 %\end{convention}%
 *)
 
-inline cic:/CoRN/algebra/COrdCauchy/e.var.
+inline "cic:/CoRN/algebra/COrdCauchy/e.var".
 
-inline cic:/CoRN/algebra/COrdCauchy/He.var.
+inline "cic:/CoRN/algebra/COrdCauchy/He.var".
 
-inline cic:/CoRN/algebra/COrdCauchy/N.var.
+inline "cic:/CoRN/algebra/COrdCauchy/N.var".
 
-inline cic:/CoRN/algebra/COrdCauchy/f_bnd.var.
+inline "cic:/CoRN/algebra/COrdCauchy/f_bnd.var".
 
-inline cic:/CoRN/algebra/COrdCauchy/CS_seq_recip_def.con.
+inline "cic:/CoRN/algebra/COrdCauchy/CS_seq_recip_def.con".
 
-inline cic:/CoRN/algebra/COrdCauchy/CS_seq_recip_seq.con.
+inline "cic:/CoRN/algebra/COrdCauchy/CS_seq_recip_seq.con".
 
-inline cic:/CoRN/algebra/COrdCauchy/CS_seq_recip.con.
+inline "cic:/CoRN/algebra/COrdCauchy/CS_seq_recip.con".
 
 (* UNEXPORTED
 End OrdField_Cauchy.
@@ -146,13 +148,13 @@ The following lemma does not require the sequence to be Cauchy, but it fits
 well here anyway.
 *)
 
-inline cic:/CoRN/algebra/COrdCauchy/maj_upto_eps.con.
+inline "cic:/CoRN/algebra/COrdCauchy/maj_upto_eps.con".
 
 (* UNEXPORTED
 Section Mult_AbsSmall.
 *)
 
-inline cic:/CoRN/algebra/COrdCauchy/R.var.
+inline "cic:/CoRN/algebra/COrdCauchy/R.var".
 
 (*#*
 ** [AbsSmall] revisited
@@ -160,13 +162,13 @@ inline cic:/CoRN/algebra/COrdCauchy/R.var.
 %\end{convention}%
 *)
 
-inline cic:/CoRN/algebra/COrdCauchy/mult_AbsSmall'_rht.con.
+inline "cic:/CoRN/algebra/COrdCauchy/mult_AbsSmall'_rht.con".
 
-inline cic:/CoRN/algebra/COrdCauchy/mult_AbsSmall_rht.con.
+inline "cic:/CoRN/algebra/COrdCauchy/mult_AbsSmall_rht.con".
 
-inline cic:/CoRN/algebra/COrdCauchy/mult_AbsSmall_lft.con.
+inline "cic:/CoRN/algebra/COrdCauchy/mult_AbsSmall_lft.con".
 
-inline cic:/CoRN/algebra/COrdCauchy/mult_AbsSmall.con.
+inline "cic:/CoRN/algebra/COrdCauchy/mult_AbsSmall.con".
 
 (* UNEXPORTED
 End Mult_AbsSmall.
@@ -176,7 +178,7 @@ End Mult_AbsSmall.
 Section Mult_Continuous.
 *)
 
-inline cic:/CoRN/algebra/COrdCauchy/R.var.
+inline "cic:/CoRN/algebra/COrdCauchy/R.var".
 
 (*#*
 ** Multiplication is continuous
@@ -184,15 +186,15 @@ inline cic:/CoRN/algebra/COrdCauchy/R.var.
 %\end{convention}%
 *)
 
-inline cic:/CoRN/algebra/COrdCauchy/smaller.con.
+inline "cic:/CoRN/algebra/COrdCauchy/smaller.con".
 
-inline cic:/CoRN/algebra/COrdCauchy/estimate_abs.con.
+inline "cic:/CoRN/algebra/COrdCauchy/estimate_abs.con".
 
-inline cic:/CoRN/algebra/COrdCauchy/mult_contin.con.
+inline "cic:/CoRN/algebra/COrdCauchy/mult_contin.con".
 
 (*#* Addition is also continuous. *)
 
-inline cic:/CoRN/algebra/COrdCauchy/plus_contin.con.
+inline "cic:/CoRN/algebra/COrdCauchy/plus_contin.con".
 
 (* UNEXPORTED
 End Mult_Continuous.
@@ -212,20 +214,20 @@ characterize them in some way.
 %\end{convention}%
 *)
 
-inline cic:/CoRN/algebra/COrdCauchy/R.var.
+inline "cic:/CoRN/algebra/COrdCauchy/R.var".
 
 (*#*
 We begin by characterizing the preservation of less (less or equal)
 in terms of preservation of less or equal (less).
 *)
 
-inline cic:/CoRN/algebra/COrdCauchy/resp_less_char'.con.
+inline "cic:/CoRN/algebra/COrdCauchy/resp_less_char'.con".
 
-inline cic:/CoRN/algebra/COrdCauchy/resp_less_char.con.
+inline "cic:/CoRN/algebra/COrdCauchy/resp_less_char.con".
 
-inline cic:/CoRN/algebra/COrdCauchy/resp_leEq_char'.con.
+inline "cic:/CoRN/algebra/COrdCauchy/resp_leEq_char'.con".
 
-inline cic:/CoRN/algebra/COrdCauchy/resp_leEq_char.con.
+inline "cic:/CoRN/algebra/COrdCauchy/resp_leEq_char.con".
 
 (*#*
 Next, we see different characterizations of monotonous functions from
@@ -236,45 +238,45 @@ is monotonous iff [f(i) [<] f(i+1)] for every [i].
 Also, strictly monotonous functions are injective.
 *)
 
-inline cic:/CoRN/algebra/COrdCauchy/local_mon_imp_mon.con.
+inline "cic:/CoRN/algebra/COrdCauchy/local_mon_imp_mon.con".
 
-inline cic:/CoRN/algebra/COrdCauchy/local_mon_imp_mon'.con.
+inline "cic:/CoRN/algebra/COrdCauchy/local_mon_imp_mon'.con".
 
-inline cic:/CoRN/algebra/COrdCauchy/local_mon'_imp_mon'.con.
+inline "cic:/CoRN/algebra/COrdCauchy/local_mon'_imp_mon'.con".
 
-inline cic:/CoRN/algebra/COrdCauchy/mon_imp_mon'.con.
+inline "cic:/CoRN/algebra/COrdCauchy/mon_imp_mon'.con".
 
-inline cic:/CoRN/algebra/COrdCauchy/mon_imp_inj.con.
+inline "cic:/CoRN/algebra/COrdCauchy/mon_imp_inj.con".
 
-inline cic:/CoRN/algebra/COrdCauchy/local_mon_imp_mon_lt.con.
+inline "cic:/CoRN/algebra/COrdCauchy/local_mon_imp_mon_lt.con".
 
-inline cic:/CoRN/algebra/COrdCauchy/local_mon_imp_mon'_lt.con.
+inline "cic:/CoRN/algebra/COrdCauchy/local_mon_imp_mon'_lt.con".
 
-inline cic:/CoRN/algebra/COrdCauchy/local_mon'_imp_mon'_lt.con.
+inline "cic:/CoRN/algebra/COrdCauchy/local_mon'_imp_mon'_lt.con".
 
-inline cic:/CoRN/algebra/COrdCauchy/local_mon'_imp_mon'2_lt.con.
+inline "cic:/CoRN/algebra/COrdCauchy/local_mon'_imp_mon'2_lt.con".
 
-inline cic:/CoRN/algebra/COrdCauchy/mon_imp_mon'_lt.con.
+inline "cic:/CoRN/algebra/COrdCauchy/mon_imp_mon'_lt.con".
 
-inline cic:/CoRN/algebra/COrdCauchy/mon_imp_inj_lt.con.
+inline "cic:/CoRN/algebra/COrdCauchy/mon_imp_inj_lt.con".
 
-inline cic:/CoRN/algebra/COrdCauchy/local_mon_imp_mon_le.con.
+inline "cic:/CoRN/algebra/COrdCauchy/local_mon_imp_mon_le.con".
 
-inline cic:/CoRN/algebra/COrdCauchy/local_mon_imp_mon'_le.con.
+inline "cic:/CoRN/algebra/COrdCauchy/local_mon_imp_mon'_le.con".
 
-inline cic:/CoRN/algebra/COrdCauchy/local_mon'_imp_mon'_le.con.
+inline "cic:/CoRN/algebra/COrdCauchy/local_mon'_imp_mon'_le.con".
 
-inline cic:/CoRN/algebra/COrdCauchy/local_mon'_imp_mon'2_le.con.
+inline "cic:/CoRN/algebra/COrdCauchy/local_mon'_imp_mon'2_le.con".
 
-inline cic:/CoRN/algebra/COrdCauchy/mon_imp_mon'_le.con.
+inline "cic:/CoRN/algebra/COrdCauchy/mon_imp_mon'_le.con".
 
-inline cic:/CoRN/algebra/COrdCauchy/mon_imp_inj_le.con.
+inline "cic:/CoRN/algebra/COrdCauchy/mon_imp_inj_le.con".
 
 (*#*
 A similar result for %{\em %partial%}% functions.
 *)
 
-inline cic:/CoRN/algebra/COrdCauchy/part_mon_imp_mon'.con.
+inline "cic:/CoRN/algebra/COrdCauchy/part_mon_imp_mon'.con".
 
 (* UNEXPORTED
 End Monotonous_functions.

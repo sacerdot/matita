@@ -16,11 +16,11 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/ftc/TaylorLemma".
 
+include "CoRN.ma".
+
 (* $Id: TaylorLemma.v,v 1.8 2004/04/23 10:01:01 lcf Exp $ *)
 
-(* INCLUDE
-Rolle
-*)
+include "ftc/Rolle.ma".
 
 (* UNEXPORTED
 Opaque Min.
@@ -44,31 +44,31 @@ define the nth order derivative of [F] in the interval
 [[Min(a,b),Max(a,b)]].
 *)
 
-inline cic:/CoRN/ftc/TaylorLemma/a.var.
+inline "cic:/CoRN/ftc/TaylorLemma/a.var".
 
-inline cic:/CoRN/ftc/TaylorLemma/b.var.
+inline "cic:/CoRN/ftc/TaylorLemma/b.var".
 
-inline cic:/CoRN/ftc/TaylorLemma/Hap.var.
+inline "cic:/CoRN/ftc/TaylorLemma/Hap.var".
 
 (* begin hide *)
 
-inline cic:/CoRN/ftc/TaylorLemma/Hab'.con.
+inline "cic:/CoRN/ftc/TaylorLemma/Hab'.con".
 
-inline cic:/CoRN/ftc/TaylorLemma/Hab.con.
+inline "cic:/CoRN/ftc/TaylorLemma/Hab.con".
 
-inline cic:/CoRN/ftc/TaylorLemma/I.con.
+inline "cic:/CoRN/ftc/TaylorLemma/I.con".
 
 (* end hide *)
 
-inline cic:/CoRN/ftc/TaylorLemma/F.var.
+inline "cic:/CoRN/ftc/TaylorLemma/F.var".
 
-inline cic:/CoRN/ftc/TaylorLemma/Ha.var.
+inline "cic:/CoRN/ftc/TaylorLemma/Ha.var".
 
-inline cic:/CoRN/ftc/TaylorLemma/Hb.var.
+inline "cic:/CoRN/ftc/TaylorLemma/Hb.var".
 
 (* begin show *)
 
-inline cic:/CoRN/ftc/TaylorLemma/fi.con.
+inline "cic:/CoRN/ftc/TaylorLemma/fi.con".
 
 (* end show *)
 
@@ -79,7 +79,7 @@ $f_i=f^{(i)}$#f<sub>i</sub>=f<sup>(i)</sup>#.
 
 (* begin hide *)
 
-inline cic:/CoRN/ftc/TaylorLemma/Taylor_lemma1.con.
+inline "cic:/CoRN/ftc/TaylorLemma/Taylor_lemma1.con".
 
 (* end hide *)
 
@@ -94,41 +94,41 @@ corresponding to [a] and [b].
 
 (* begin hide *)
 
-inline cic:/CoRN/ftc/TaylorLemma/TL_compact_a.con.
+inline "cic:/CoRN/ftc/TaylorLemma/TL_compact_a.con".
 
-inline cic:/CoRN/ftc/TaylorLemma/TL_compact_b.con.
+inline "cic:/CoRN/ftc/TaylorLemma/TL_compact_b.con".
 
 (* end hide *)
 
 (* begin show *)
 
-inline cic:/CoRN/ftc/TaylorLemma/funct_i.con.
+inline "cic:/CoRN/ftc/TaylorLemma/funct_i.con".
 
 (* end show *)
 
 (* begin hide *)
 
-inline cic:/CoRN/ftc/TaylorLemma/funct_i'.con.
+inline "cic:/CoRN/ftc/TaylorLemma/funct_i'.con".
 
-inline cic:/CoRN/ftc/TaylorLemma/TL_a_i.con.
+inline "cic:/CoRN/ftc/TaylorLemma/TL_a_i.con".
 
-inline cic:/CoRN/ftc/TaylorLemma/TL_b_i.con.
+inline "cic:/CoRN/ftc/TaylorLemma/TL_b_i.con".
 
-inline cic:/CoRN/ftc/TaylorLemma/TL_x_i.con.
+inline "cic:/CoRN/ftc/TaylorLemma/TL_x_i.con".
 
-inline cic:/CoRN/ftc/TaylorLemma/TL_a_i'.con.
+inline "cic:/CoRN/ftc/TaylorLemma/TL_a_i'.con".
 
-inline cic:/CoRN/ftc/TaylorLemma/TL_b_i'.con.
+inline "cic:/CoRN/ftc/TaylorLemma/TL_b_i'.con".
 
-inline cic:/CoRN/ftc/TaylorLemma/TL_x_i'.con.
+inline "cic:/CoRN/ftc/TaylorLemma/TL_x_i'.con".
 
-inline cic:/CoRN/ftc/TaylorLemma/Taylor_lemma2.con.
+inline "cic:/CoRN/ftc/TaylorLemma/Taylor_lemma2.con".
 
-inline cic:/CoRN/ftc/TaylorLemma/Taylor_lemma2'.con.
+inline "cic:/CoRN/ftc/TaylorLemma/Taylor_lemma2'.con".
 
-inline cic:/CoRN/ftc/TaylorLemma/Taylor_lemma3.con.
+inline "cic:/CoRN/ftc/TaylorLemma/Taylor_lemma3.con".
 
-inline cic:/CoRN/ftc/TaylorLemma/Taylor_lemma3'.con.
+inline "cic:/CoRN/ftc/TaylorLemma/Taylor_lemma3'.con".
 
 (* end hide *)
 
@@ -137,13 +137,13 @@ Adding the previous expressions up to a given bound [n] gives us the
 Taylor sum of order [n].
 *)
 
-inline cic:/CoRN/ftc/TaylorLemma/Taylor_seq'.con.
+inline "cic:/CoRN/ftc/TaylorLemma/Taylor_seq'.con".
 
 (* begin hide *)
 
-inline cic:/CoRN/ftc/TaylorLemma/Taylor_seq'_aux.con.
+inline "cic:/CoRN/ftc/TaylorLemma/Taylor_seq'_aux.con".
 
-inline cic:/CoRN/ftc/TaylorLemma/TL_lemma_a.con.
+inline "cic:/CoRN/ftc/TaylorLemma/TL_lemma_a.con".
 
 (* end hide *)
 
@@ -151,21 +151,21 @@ inline cic:/CoRN/ftc/TaylorLemma/TL_lemma_a.con.
 It is easy to show that [b] is in the domain of this series, which allows us to write down the Taylor remainder around [b].
 *)
 
-inline cic:/CoRN/ftc/TaylorLemma/TL_lemma_b.con.
+inline "cic:/CoRN/ftc/TaylorLemma/TL_lemma_b.con".
 
 (* begin hide *)
 
-inline cic:/CoRN/ftc/TaylorLemma/TL_lemma_a'.con.
+inline "cic:/CoRN/ftc/TaylorLemma/TL_lemma_a'.con".
 
-inline cic:/CoRN/ftc/TaylorLemma/TL_lemma_b'.con.
+inline "cic:/CoRN/ftc/TaylorLemma/TL_lemma_b'.con".
 
 (* end hide *)
 
-inline cic:/CoRN/ftc/TaylorLemma/Taylor_rem.con.
+inline "cic:/CoRN/ftc/TaylorLemma/Taylor_rem.con".
 
 (* begin hide *)
 
-inline cic:/CoRN/ftc/TaylorLemma/g.con.
+inline "cic:/CoRN/ftc/TaylorLemma/g.con".
 
 (* UNEXPORTED
 Opaque Taylor_seq'_aux Taylor_rem.
@@ -191,7 +191,7 @@ Opaque funct_i'.
 Opaque funct_i.
 *)
 
-inline cic:/CoRN/ftc/TaylorLemma/Taylor_lemma4.con.
+inline "cic:/CoRN/ftc/TaylorLemma/Taylor_lemma4.con".
 
 (* UNEXPORTED
 Transparent funct_i funct_i'.
@@ -213,15 +213,15 @@ Opaque FSumx.
 Opaque funct_i'.
 *)
 
-inline cic:/CoRN/ftc/TaylorLemma/Taylor_lemma5.con.
+inline "cic:/CoRN/ftc/TaylorLemma/Taylor_lemma5.con".
 
 (* UNEXPORTED
 Transparent funct_i' FSumx.
 *)
 
-inline cic:/CoRN/ftc/TaylorLemma/funct_aux.con.
+inline "cic:/CoRN/ftc/TaylorLemma/funct_aux.con".
 
-inline cic:/CoRN/ftc/TaylorLemma/Taylor_lemma6.con.
+inline "cic:/CoRN/ftc/TaylorLemma/Taylor_lemma6.con".
 
 (* UNEXPORTED
 Ltac Lazy_Included :=
@@ -245,9 +245,9 @@ Ltac Lazy_Eq :=
    | apply csf_wd_unfolded ]; Algebra.
 *)
 
-inline cic:/CoRN/ftc/TaylorLemma/Taylor_lemma7.con.
+inline "cic:/CoRN/ftc/TaylorLemma/Taylor_lemma7.con".
 
-inline cic:/CoRN/ftc/TaylorLemma/Taylor_lemma8.con.
+inline "cic:/CoRN/ftc/TaylorLemma/Taylor_lemma8.con".
 
 (* UNEXPORTED
 Opaque funct_aux.
@@ -257,15 +257,15 @@ Opaque funct_aux.
 Transparent funct_aux.
 *)
 
-inline cic:/CoRN/ftc/TaylorLemma/Taylor_lemma9.con.
+inline "cic:/CoRN/ftc/TaylorLemma/Taylor_lemma9.con".
 
-inline cic:/CoRN/ftc/TaylorLemma/g'.con.
+inline "cic:/CoRN/ftc/TaylorLemma/g'.con".
 
 (* UNEXPORTED
 Opaque Taylor_rem funct_aux.
 *)
 
-inline cic:/CoRN/ftc/TaylorLemma/Taylor_lemma10.con.
+inline "cic:/CoRN/ftc/TaylorLemma/Taylor_lemma10.con".
 
 (* UNEXPORTED
 Transparent Taylor_rem funct_aux.
@@ -280,25 +280,25 @@ Now Taylor's theorem.
 %\end{convention}%
 *)
 
-inline cic:/CoRN/ftc/TaylorLemma/e.var.
+inline "cic:/CoRN/ftc/TaylorLemma/e.var".
 
-inline cic:/CoRN/ftc/TaylorLemma/He.var.
+inline "cic:/CoRN/ftc/TaylorLemma/He.var".
 
 (* begin hide *)
 
-inline cic:/CoRN/ftc/TaylorLemma/Taylor_lemma11.con.
+inline "cic:/CoRN/ftc/TaylorLemma/Taylor_lemma11.con".
 
 (* end hide *)
 
 (* begin show *)
 
-inline cic:/CoRN/ftc/TaylorLemma/deriv_Sn'.con.
+inline "cic:/CoRN/ftc/TaylorLemma/deriv_Sn'.con".
 
 (* end show *)
 
 (* begin hide *)
 
-inline cic:/CoRN/ftc/TaylorLemma/TLH.con.
+inline "cic:/CoRN/ftc/TaylorLemma/TLH.con".
 
 (* end hide *)
 
@@ -314,7 +314,7 @@ Opaque Taylor_rem.
 Transparent Taylor_rem funct_aux.
 *)
 
-inline cic:/CoRN/ftc/TaylorLemma/Taylor_lemma.con.
+inline "cic:/CoRN/ftc/TaylorLemma/Taylor_lemma.con".
 
 (* UNEXPORTED
 End Taylor_Defs.

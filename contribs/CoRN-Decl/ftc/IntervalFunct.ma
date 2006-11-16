@@ -16,11 +16,11 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/ftc/IntervalFunct".
 
+include "CoRN.ma".
+
 (* $Id: IntervalFunct.v,v 1.5 2004/04/08 15:28:06 lcf Exp $ *)
 
-(* INCLUDE
-PartFunEquality
-*)
+include "ftc/PartFunEquality.ma".
 
 (* UNEXPORTED
 Section Operations.
@@ -47,21 +47,21 @@ type [I -> IR].
 %\end{convention}%
 *)
 
-inline cic:/CoRN/ftc/IntervalFunct/a.var.
+inline "cic:/CoRN/ftc/IntervalFunct/a.var".
 
-inline cic:/CoRN/ftc/IntervalFunct/b.var.
+inline "cic:/CoRN/ftc/IntervalFunct/b.var".
 
-inline cic:/CoRN/ftc/IntervalFunct/Hab.var.
+inline "cic:/CoRN/ftc/IntervalFunct/Hab.var".
 
 (* begin hide *)
 
-inline cic:/CoRN/ftc/IntervalFunct/I.con.
+inline "cic:/CoRN/ftc/IntervalFunct/I.con".
 
 (* end hide *)
 
-inline cic:/CoRN/ftc/IntervalFunct/f.var.
+inline "cic:/CoRN/ftc/IntervalFunct/f.var".
 
-inline cic:/CoRN/ftc/IntervalFunct/g.var.
+inline "cic:/CoRN/ftc/IntervalFunct/g.var".
 
 (* UNEXPORTED
 Section Const.
@@ -74,39 +74,39 @@ Constant and identity functions are defined.
 %\end{convention}%
 *)
 
-inline cic:/CoRN/ftc/IntervalFunct/c.var.
+inline "cic:/CoRN/ftc/IntervalFunct/c.var".
 
-inline cic:/CoRN/ftc/IntervalFunct/IConst_strext.con.
+inline "cic:/CoRN/ftc/IntervalFunct/IConst_strext.con".
 
-inline cic:/CoRN/ftc/IntervalFunct/IConst.con.
+inline "cic:/CoRN/ftc/IntervalFunct/IConst.con".
 
 (* UNEXPORTED
 End Const.
 *)
 
-inline cic:/CoRN/ftc/IntervalFunct/IId_strext.con.
+inline "cic:/CoRN/ftc/IntervalFunct/IId_strext.con".
 
-inline cic:/CoRN/ftc/IntervalFunct/IId.con.
+inline "cic:/CoRN/ftc/IntervalFunct/IId.con".
 
 (*#*
 Next, we define addition, algebraic inverse, subtraction and product of functions.
 *)
 
-inline cic:/CoRN/ftc/IntervalFunct/IPlus_strext.con.
+inline "cic:/CoRN/ftc/IntervalFunct/IPlus_strext.con".
 
-inline cic:/CoRN/ftc/IntervalFunct/IPlus.con.
+inline "cic:/CoRN/ftc/IntervalFunct/IPlus.con".
 
-inline cic:/CoRN/ftc/IntervalFunct/IInv_strext.con.
+inline "cic:/CoRN/ftc/IntervalFunct/IInv_strext.con".
 
-inline cic:/CoRN/ftc/IntervalFunct/IInv.con.
+inline "cic:/CoRN/ftc/IntervalFunct/IInv.con".
 
-inline cic:/CoRN/ftc/IntervalFunct/IMinus_strext.con.
+inline "cic:/CoRN/ftc/IntervalFunct/IMinus_strext.con".
 
-inline cic:/CoRN/ftc/IntervalFunct/IMinus.con.
+inline "cic:/CoRN/ftc/IntervalFunct/IMinus.con".
 
-inline cic:/CoRN/ftc/IntervalFunct/IMult_strext.con.
+inline "cic:/CoRN/ftc/IntervalFunct/IMult_strext.con".
 
-inline cic:/CoRN/ftc/IntervalFunct/IMult.con.
+inline "cic:/CoRN/ftc/IntervalFunct/IMult.con".
 
 (* UNEXPORTED
 Section Nth_Power.
@@ -116,11 +116,11 @@ Section Nth_Power.
 Exponentiation to a natural power [n] is also useful.
 *)
 
-inline cic:/CoRN/ftc/IntervalFunct/n.var.
+inline "cic:/CoRN/ftc/IntervalFunct/n.var".
 
-inline cic:/CoRN/ftc/IntervalFunct/INth_strext.con.
+inline "cic:/CoRN/ftc/IntervalFunct/INth_strext.con".
 
-inline cic:/CoRN/ftc/IntervalFunct/INth.con.
+inline "cic:/CoRN/ftc/IntervalFunct/INth.con".
 
 (* UNEXPORTED
 End Nth_Power.
@@ -136,17 +136,17 @@ Section Recip_Div.
 
 (* begin show *)
 
-inline cic:/CoRN/ftc/IntervalFunct/Hg.var.
+inline "cic:/CoRN/ftc/IntervalFunct/Hg.var".
 
 (* end show *)
 
-inline cic:/CoRN/ftc/IntervalFunct/IRecip_strext.con.
+inline "cic:/CoRN/ftc/IntervalFunct/IRecip_strext.con".
 
-inline cic:/CoRN/ftc/IntervalFunct/IRecip.con.
+inline "cic:/CoRN/ftc/IntervalFunct/IRecip.con".
 
-inline cic:/CoRN/ftc/IntervalFunct/IDiv_strext.con.
+inline "cic:/CoRN/ftc/IntervalFunct/IDiv_strext.con".
 
-inline cic:/CoRN/ftc/IntervalFunct/IDiv.con.
+inline "cic:/CoRN/ftc/IntervalFunct/IDiv.con".
 
 (* UNEXPORTED
 End Recip_Div.
@@ -156,9 +156,9 @@ End Recip_Div.
 Absolute value will also be needed at some point.
 *)
 
-inline cic:/CoRN/ftc/IntervalFunct/IAbs_strext.con.
+inline "cic:/CoRN/ftc/IntervalFunct/IAbs_strext.con".
 
-inline cic:/CoRN/ftc/IntervalFunct/IAbs.con.
+inline "cic:/CoRN/ftc/IntervalFunct/IAbs.con".
 
 (* UNEXPORTED
 End Operations.
@@ -186,39 +186,39 @@ compact interval [[a',b']], and let [g] be a setoid function of type
 Section Composition.
 *)
 
-inline cic:/CoRN/ftc/IntervalFunct/a.var.
+inline "cic:/CoRN/ftc/IntervalFunct/a.var".
 
-inline cic:/CoRN/ftc/IntervalFunct/b.var.
+inline "cic:/CoRN/ftc/IntervalFunct/b.var".
 
-inline cic:/CoRN/ftc/IntervalFunct/Hab.var.
-
-(* begin hide *)
-
-inline cic:/CoRN/ftc/IntervalFunct/I.con.
-
-(* end hide *)
-
-inline cic:/CoRN/ftc/IntervalFunct/a'.var.
-
-inline cic:/CoRN/ftc/IntervalFunct/b'.var.
-
-inline cic:/CoRN/ftc/IntervalFunct/Hab'.var.
+inline "cic:/CoRN/ftc/IntervalFunct/Hab.var".
 
 (* begin hide *)
 
-inline cic:/CoRN/ftc/IntervalFunct/I'.con.
+inline "cic:/CoRN/ftc/IntervalFunct/I.con".
 
 (* end hide *)
 
-inline cic:/CoRN/ftc/IntervalFunct/f.var.
+inline "cic:/CoRN/ftc/IntervalFunct/a'.var".
 
-inline cic:/CoRN/ftc/IntervalFunct/g.var.
+inline "cic:/CoRN/ftc/IntervalFunct/b'.var".
 
-inline cic:/CoRN/ftc/IntervalFunct/Hfg.var.
+inline "cic:/CoRN/ftc/IntervalFunct/Hab'.var".
 
-inline cic:/CoRN/ftc/IntervalFunct/IComp_strext.con.
+(* begin hide *)
 
-inline cic:/CoRN/ftc/IntervalFunct/IComp.con.
+inline "cic:/CoRN/ftc/IntervalFunct/I'.con".
+
+(* end hide *)
+
+inline "cic:/CoRN/ftc/IntervalFunct/f.var".
+
+inline "cic:/CoRN/ftc/IntervalFunct/g.var".
+
+inline "cic:/CoRN/ftc/IntervalFunct/Hfg.var".
+
+inline "cic:/CoRN/ftc/IntervalFunct/IComp_strext.con".
+
+inline "cic:/CoRN/ftc/IntervalFunct/IComp.con".
 
 (* UNEXPORTED
 End Composition.

@@ -16,6 +16,8 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/algebra/ListType".
 
+include "CoRN.ma".
+
 (* begin hide *)
 
 (*#**********************************************************************)
@@ -48,41 +50,37 @@ This file contains a variant of the development of lists in the standard
 library of Coq but moved to the Type level.
 *)
 
-(* INCLUDE
-Le
-*)
-
 (* UNEXPORTED
 Section List.
 *)
 
-inline cic:/CoRN/algebra/ListType/A.var.
+inline "cic:/CoRN/algebra/ListType/A.var".
 
-inline cic:/CoRN/algebra/ListType/list.ind.
+inline "cic:/CoRN/algebra/ListType/list.ind".
 
-inline cic:/CoRN/algebra/ListType/app.con.
+inline "cic:/CoRN/algebra/ListType/app.con".
 
-inline cic:/CoRN/algebra/ListType/app_nil_end.con.
+inline "cic:/CoRN/algebra/ListType/app_nil_end.con".
 
 (* UNEXPORTED
 Hint Resolve app_nil_end: list v62.
 *)
 
-inline cic:/CoRN/algebra/ListType/app_ass.con.
+inline "cic:/CoRN/algebra/ListType/app_ass.con".
 
 (* UNEXPORTED
 Hint Resolve app_ass: list v62.
 *)
 
-inline cic:/CoRN/algebra/ListType/ass_app.con.
+inline "cic:/CoRN/algebra/ListType/ass_app.con".
 
 (* UNEXPORTED
 Hint Resolve ass_app: list v62.
 *)
 
-inline cic:/CoRN/algebra/ListType/tail.con.
+inline "cic:/CoRN/algebra/ListType/tail.con".
 
-inline cic:/CoRN/algebra/ListType/nil_cons.con.
+inline "cic:/CoRN/algebra/ListType/nil_cons.con".
 
 (*#***************************************)
 
@@ -90,7 +88,7 @@ inline cic:/CoRN/algebra/ListType/nil_cons.con.
 
 (*#***************************************)
 
-inline cic:/CoRN/algebra/ListType/length.con.
+inline "cic:/CoRN/algebra/ListType/length.con".
 
 (*#*****************************)
 
@@ -102,33 +100,33 @@ inline cic:/CoRN/algebra/ListType/length.con.
 Section length_order.
 *)
 
-inline cic:/CoRN/algebra/ListType/lel.con.
+inline "cic:/CoRN/algebra/ListType/lel.con".
 
 (* UNEXPORTED
 Hint Unfold lel: list.
 *)
 
-inline cic:/CoRN/algebra/ListType/a.var.
+inline "cic:/CoRN/algebra/ListType/a.var".
 
-inline cic:/CoRN/algebra/ListType/b.var.
+inline "cic:/CoRN/algebra/ListType/b.var".
 
-inline cic:/CoRN/algebra/ListType/l.var.
+inline "cic:/CoRN/algebra/ListType/l.var".
 
-inline cic:/CoRN/algebra/ListType/m.var.
+inline "cic:/CoRN/algebra/ListType/m.var".
 
-inline cic:/CoRN/algebra/ListType/n.var.
+inline "cic:/CoRN/algebra/ListType/n.var".
 
-inline cic:/CoRN/algebra/ListType/lel_refl.con.
+inline "cic:/CoRN/algebra/ListType/lel_refl.con".
 
-inline cic:/CoRN/algebra/ListType/lel_trans.con.
+inline "cic:/CoRN/algebra/ListType/lel_trans.con".
 
-inline cic:/CoRN/algebra/ListType/lel_cons_cons.con.
+inline "cic:/CoRN/algebra/ListType/lel_cons_cons.con".
 
-inline cic:/CoRN/algebra/ListType/lel_cons.con.
+inline "cic:/CoRN/algebra/ListType/lel_cons.con".
 
-inline cic:/CoRN/algebra/ListType/lel_tail.con.
+inline "cic:/CoRN/algebra/ListType/lel_tail.con".
 
-inline cic:/CoRN/algebra/ListType/lel_nil.con.
+inline "cic:/CoRN/algebra/ListType/lel_nil.con".
 
 (* UNEXPORTED
 End length_order.
@@ -139,71 +137,71 @@ Hint Resolve lel_refl lel_cons_cons lel_cons lel_nil lel_nil nil_cons: list
   v62.
 *)
 
-inline cic:/CoRN/algebra/ListType/In.con.
+inline "cic:/CoRN/algebra/ListType/In.con".
 
-inline cic:/CoRN/algebra/ListType/in_eq.con.
+inline "cic:/CoRN/algebra/ListType/in_eq.con".
 
 (* UNEXPORTED
 Hint Resolve in_eq: list v62.
 *)
 
-inline cic:/CoRN/algebra/ListType/in_cons.con.
+inline "cic:/CoRN/algebra/ListType/in_cons.con".
 
 (* UNEXPORTED
 Hint Resolve in_cons: list v62.
 *)
 
-inline cic:/CoRN/algebra/ListType/in_app_or.con.
+inline "cic:/CoRN/algebra/ListType/in_app_or.con".
 
 (* UNEXPORTED
 Hint Immediate in_app_or: list v62.
 *)
 
-inline cic:/CoRN/algebra/ListType/in_or_app.con.
+inline "cic:/CoRN/algebra/ListType/in_or_app.con".
 
 (* UNEXPORTED
 Hint Resolve in_or_app: list v62.
 *)
 
-inline cic:/CoRN/algebra/ListType/incl.con.
+inline "cic:/CoRN/algebra/ListType/incl.con".
 
 (* UNEXPORTED
 Hint Unfold incl: list v62.
 *)
 
-inline cic:/CoRN/algebra/ListType/incl_refl.con.
+inline "cic:/CoRN/algebra/ListType/incl_refl.con".
 
 (* UNEXPORTED
 Hint Resolve incl_refl: list v62.
 *)
 
-inline cic:/CoRN/algebra/ListType/incl_tl.con.
+inline "cic:/CoRN/algebra/ListType/incl_tl.con".
 
 (* UNEXPORTED
 Hint Immediate incl_tl: list v62.
 *)
 
-inline cic:/CoRN/algebra/ListType/incl_tran.con.
+inline "cic:/CoRN/algebra/ListType/incl_tran.con".
 
-inline cic:/CoRN/algebra/ListType/incl_appl.con.
+inline "cic:/CoRN/algebra/ListType/incl_appl.con".
 
 (* UNEXPORTED
 Hint Immediate incl_appl: list v62.
 *)
 
-inline cic:/CoRN/algebra/ListType/incl_appr.con.
+inline "cic:/CoRN/algebra/ListType/incl_appr.con".
 
 (* UNEXPORTED
 Hint Immediate incl_appr: list v62.
 *)
 
-inline cic:/CoRN/algebra/ListType/incl_cons.con.
+inline "cic:/CoRN/algebra/ListType/incl_cons.con".
 
 (* UNEXPORTED
 Hint Resolve incl_cons: list v62.
 *)
 
-inline cic:/CoRN/algebra/ListType/incl_app.con.
+inline "cic:/CoRN/algebra/ListType/incl_app.con".
 
 (* UNEXPORTED
 End List.
@@ -225,13 +223,13 @@ Implicit Arguments cons [A].
 Section Map.
 *)
 
-inline cic:/CoRN/algebra/ListType/A.var.
+inline "cic:/CoRN/algebra/ListType/A.var".
 
-inline cic:/CoRN/algebra/ListType/B.var.
+inline "cic:/CoRN/algebra/ListType/B.var".
 
-inline cic:/CoRN/algebra/ListType/f.var.
+inline "cic:/CoRN/algebra/ListType/f.var".
 
-inline cic:/CoRN/algebra/ListType/map.con.
+inline "cic:/CoRN/algebra/ListType/map.con".
 
 (* UNEXPORTED
 End Map.

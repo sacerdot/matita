@@ -16,71 +16,67 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/tactics/FieldReflection".
 
+include "CoRN.ma".
+
 (* $Id: FieldReflection.v,v 1.4 2004/04/23 10:01:06 lcf Exp $ *)
 
 (* begin hide *)
 
-(* INCLUDE
-CFields
-*)
+include "algebra/CFields.ma".
 
-(* INCLUDE
-AlgReflection
-*)
+include "tactics/AlgReflection.ma".
 
 (* UNEXPORTED
 Section Field_Interpretation_Function.
 *)
 
-inline cic:/CoRN/tactics/FieldReflection/F.var.
+inline "cic:/CoRN/tactics/FieldReflection/F.var".
 
-inline cic:/CoRN/tactics/FieldReflection/val.var.
+inline "cic:/CoRN/tactics/FieldReflection/val.var".
 
-inline cic:/CoRN/tactics/FieldReflection/unop.var.
+inline "cic:/CoRN/tactics/FieldReflection/unop.var".
 
-inline cic:/CoRN/tactics/FieldReflection/binop.var.
+inline "cic:/CoRN/tactics/FieldReflection/binop.var".
 
-inline cic:/CoRN/tactics/FieldReflection/pfun.var.
+inline "cic:/CoRN/tactics/FieldReflection/pfun.var".
 
-inline cic:/CoRN/tactics/FieldReflection/interpF.ind.
+inline "cic:/CoRN/tactics/FieldReflection/interpF.ind".
 
-inline cic:/CoRN/tactics/FieldReflection/wfF.con.
+inline "cic:/CoRN/tactics/FieldReflection/wfF.con".
 
-inline cic:/CoRN/tactics/FieldReflection/xexprF.ind.
+inline "cic:/CoRN/tactics/FieldReflection/xexprF.ind".
 
-inline cic:/CoRN/tactics/FieldReflection/xforgetF.con.
+inline "cic:/CoRN/tactics/FieldReflection/xforgetF.con".
 
-inline cic:/CoRN/tactics/FieldReflection/xinterpF.con.
+inline "cic:/CoRN/tactics/FieldReflection/xinterpF.con".
 
-inline cic:/CoRN/tactics/FieldReflection/xexprF2interpF.con.
+inline "cic:/CoRN/tactics/FieldReflection/xexprF2interpF.con".
 
-inline cic:/CoRN/tactics/FieldReflection/xexprF_diagram_commutes.con.
+inline "cic:/CoRN/tactics/FieldReflection/xexprF_diagram_commutes.con".
 
-inline cic:/CoRN/tactics/FieldReflection/xexprF2wfF.con.
+inline "cic:/CoRN/tactics/FieldReflection/xexprF2wfF.con".
 
-inline cic:/CoRN/tactics/FieldReflection/fexprF.ind.
+inline "cic:/CoRN/tactics/FieldReflection/fexprF.ind".
 
-inline cic:/CoRN/tactics/FieldReflection/fexprF_var.con.
+inline "cic:/CoRN/tactics/FieldReflection/fexprF_var.con".
 
-inline cic:/CoRN/tactics/FieldReflection/fexprF_int.con.
+inline "cic:/CoRN/tactics/FieldReflection/fexprF_int.con".
 
-inline cic:/CoRN/tactics/FieldReflection/fexprF_plus.con.
+inline "cic:/CoRN/tactics/FieldReflection/fexprF_plus.con".
 
-inline cic:/CoRN/tactics/FieldReflection/fexprF_mult.con.
+inline "cic:/CoRN/tactics/FieldReflection/fexprF_mult.con".
 
-inline cic:/CoRN/tactics/FieldReflection/fforgetF.con.
+inline "cic:/CoRN/tactics/FieldReflection/fforgetF.con".
 
-inline cic:/CoRN/tactics/FieldReflection/fexprF2interpF.con.
+inline "cic:/CoRN/tactics/FieldReflection/fexprF2interpF.con".
 
-inline cic:/CoRN/tactics/FieldReflection/fexprF2wfF.con.
+inline "cic:/CoRN/tactics/FieldReflection/fexprF2wfF.con".
 
-(* INCLUDE
-Opaque_algebra
-*)
+include "tactics/Opaque_algebra.ma".
 
-inline cic:/CoRN/tactics/FieldReflection/refl_interpF.con.
+inline "cic:/CoRN/tactics/FieldReflection/refl_interpF.con".
 
-inline cic:/CoRN/tactics/FieldReflection/interpF_wd.con.
+inline "cic:/CoRN/tactics/FieldReflection/interpF_wd.con".
 
 (* UNEXPORTED
 End Field_Interpretation_Function.
@@ -90,15 +86,15 @@ End Field_Interpretation_Function.
 Section Field_NormCorrect.
 *)
 
-inline cic:/CoRN/tactics/FieldReflection/F.var.
+inline "cic:/CoRN/tactics/FieldReflection/F.var".
 
-inline cic:/CoRN/tactics/FieldReflection/val.var.
+inline "cic:/CoRN/tactics/FieldReflection/val.var".
 
-inline cic:/CoRN/tactics/FieldReflection/unop.var.
+inline "cic:/CoRN/tactics/FieldReflection/unop.var".
 
-inline cic:/CoRN/tactics/FieldReflection/binop.var.
+inline "cic:/CoRN/tactics/FieldReflection/binop.var".
 
-inline cic:/CoRN/tactics/FieldReflection/pfun.var.
+inline "cic:/CoRN/tactics/FieldReflection/pfun.var".
 
 (*
 four kinds of exprs:
@@ -118,7 +114,7 @@ P: sorted on M, all M's not an I
 Opaque Zmult.
 *)
 
-inline cic:/CoRN/tactics/FieldReflection/MI_mult_corr_F.con.
+inline "cic:/CoRN/tactics/FieldReflection/MI_mult_corr_F.con".
 
 (* UNEXPORTED
 Transparent Zmult.
@@ -128,7 +124,7 @@ Transparent Zmult.
 Opaque MI_mult.
 *)
 
-inline cic:/CoRN/tactics/FieldReflection/MV_mult_corr_F.con.
+inline "cic:/CoRN/tactics/FieldReflection/MV_mult_corr_F.con".
 
 (* UNEXPORTED
 Transparent MI_mult.
@@ -138,7 +134,7 @@ Transparent MI_mult.
 Opaque MV_mult MI_mult.
 *)
 
-inline cic:/CoRN/tactics/FieldReflection/MM_mult_corr_F.con.
+inline "cic:/CoRN/tactics/FieldReflection/MM_mult_corr_F.con".
 
 (* UNEXPORTED
 Transparent MV_mult MI_mult.
@@ -148,7 +144,7 @@ Transparent MV_mult MI_mult.
 Opaque MV_mult.
 *)
 
-inline cic:/CoRN/tactics/FieldReflection/MM_plus_corr_F.con.
+inline "cic:/CoRN/tactics/FieldReflection/MM_plus_corr_F.con".
 
 (* UNEXPORTED
 Transparent MV_mult.
@@ -158,7 +154,7 @@ Transparent MV_mult.
 Opaque MM_plus.
 *)
 
-inline cic:/CoRN/tactics/FieldReflection/PM_plus_corr_F.con.
+inline "cic:/CoRN/tactics/FieldReflection/PM_plus_corr_F.con".
 
 (* UNEXPORTED
 Transparent MM_plus.
@@ -168,7 +164,7 @@ Transparent MM_plus.
 Opaque PM_plus.
 *)
 
-inline cic:/CoRN/tactics/FieldReflection/PP_plus_corr_F.con.
+inline "cic:/CoRN/tactics/FieldReflection/PP_plus_corr_F.con".
 
 (* UNEXPORTED
 Transparent PM_plus.
@@ -178,37 +174,37 @@ Transparent PM_plus.
 Opaque PM_plus MM_mult MI_mult.
 *)
 
-inline cic:/CoRN/tactics/FieldReflection/PM_mult_corr_F.con.
+inline "cic:/CoRN/tactics/FieldReflection/PM_mult_corr_F.con".
 
 (* UNEXPORTED
 Opaque PM_mult.
 *)
 
-inline cic:/CoRN/tactics/FieldReflection/PP_mult_corr_F.con.
+inline "cic:/CoRN/tactics/FieldReflection/PP_mult_corr_F.con".
 
 (* UNEXPORTED
 Transparent PP_plus PM_mult PP_mult PM_plus MI_mult.
 *)
 
-inline cic:/CoRN/tactics/FieldReflection/FF_plus_corr_F.con.
+inline "cic:/CoRN/tactics/FieldReflection/FF_plus_corr_F.con".
 
-inline cic:/CoRN/tactics/FieldReflection/FF_mult_corr_F.con.
+inline "cic:/CoRN/tactics/FieldReflection/FF_mult_corr_F.con".
 
 (* UNEXPORTED
 Transparent FF_div.
 *)
 
-inline cic:/CoRN/tactics/FieldReflection/FF_div_corr_F.con.
+inline "cic:/CoRN/tactics/FieldReflection/FF_div_corr_F.con".
 
-inline cic:/CoRN/tactics/FieldReflection/NormF_corr.con.
+inline "cic:/CoRN/tactics/FieldReflection/NormF_corr.con".
 
-inline cic:/CoRN/tactics/FieldReflection/Norm_wfF.con.
+inline "cic:/CoRN/tactics/FieldReflection/Norm_wfF.con".
 
-inline cic:/CoRN/tactics/FieldReflection/expr_is_zero_corr_F.con.
+inline "cic:/CoRN/tactics/FieldReflection/expr_is_zero_corr_F.con".
 
-inline cic:/CoRN/tactics/FieldReflection/Tactic_lemma_zero_F.con.
+inline "cic:/CoRN/tactics/FieldReflection/Tactic_lemma_zero_F.con".
 
-inline cic:/CoRN/tactics/FieldReflection/Tactic_lemmaF.con.
+inline "cic:/CoRN/tactics/FieldReflection/Tactic_lemmaF.con".
 
 (* UNEXPORTED
 End Field_NormCorrect.

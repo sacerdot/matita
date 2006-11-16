@@ -16,63 +16,61 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/tactics/RingReflection".
 
+include "CoRN.ma".
+
 (* $Id: RingReflection.v,v 1.4 2004/04/23 10:01:06 lcf Exp $ *)
 
 (* begin hide *)
 
-(* INCLUDE
-CRings
-*)
+include "algebra/CRings.ma".
 
-(* INCLUDE
-AlgReflection
-*)
+include "tactics/AlgReflection.ma".
 
 (* UNEXPORTED
 Section Ring_Interpretation_Function.
 *)
 
-inline cic:/CoRN/tactics/RingReflection/R.var.
+inline "cic:/CoRN/tactics/RingReflection/R.var".
 
-inline cic:/CoRN/tactics/RingReflection/val.var.
+inline "cic:/CoRN/tactics/RingReflection/val.var".
 
-inline cic:/CoRN/tactics/RingReflection/unop.var.
+inline "cic:/CoRN/tactics/RingReflection/unop.var".
 
-inline cic:/CoRN/tactics/RingReflection/binop.var.
+inline "cic:/CoRN/tactics/RingReflection/binop.var".
 
-inline cic:/CoRN/tactics/RingReflection/pfun.var.
+inline "cic:/CoRN/tactics/RingReflection/pfun.var".
 
-inline cic:/CoRN/tactics/RingReflection/interpR.ind.
+inline "cic:/CoRN/tactics/RingReflection/interpR.ind".
 
-inline cic:/CoRN/tactics/RingReflection/wfR.con.
+inline "cic:/CoRN/tactics/RingReflection/wfR.con".
 
-inline cic:/CoRN/tactics/RingReflection/xexprR.ind.
+inline "cic:/CoRN/tactics/RingReflection/xexprR.ind".
 
-inline cic:/CoRN/tactics/RingReflection/xforgetR.con.
+inline "cic:/CoRN/tactics/RingReflection/xforgetR.con".
 
-inline cic:/CoRN/tactics/RingReflection/xinterpR.con.
+inline "cic:/CoRN/tactics/RingReflection/xinterpR.con".
 
-inline cic:/CoRN/tactics/RingReflection/xexprR2interpR.con.
+inline "cic:/CoRN/tactics/RingReflection/xexprR2interpR.con".
 
-inline cic:/CoRN/tactics/RingReflection/xexprR_diagram_commutes.con.
+inline "cic:/CoRN/tactics/RingReflection/xexprR_diagram_commutes.con".
 
-inline cic:/CoRN/tactics/RingReflection/xexprR2wfR.con.
+inline "cic:/CoRN/tactics/RingReflection/xexprR2wfR.con".
 
-inline cic:/CoRN/tactics/RingReflection/fexprR.ind.
+inline "cic:/CoRN/tactics/RingReflection/fexprR.ind".
 
-inline cic:/CoRN/tactics/RingReflection/fexprR_var.con.
+inline "cic:/CoRN/tactics/RingReflection/fexprR_var.con".
 
-inline cic:/CoRN/tactics/RingReflection/fexprR_int.con.
+inline "cic:/CoRN/tactics/RingReflection/fexprR_int.con".
 
-inline cic:/CoRN/tactics/RingReflection/fexprR_plus.con.
+inline "cic:/CoRN/tactics/RingReflection/fexprR_plus.con".
 
-inline cic:/CoRN/tactics/RingReflection/fexprR_mult.con.
+inline "cic:/CoRN/tactics/RingReflection/fexprR_mult.con".
 
-inline cic:/CoRN/tactics/RingReflection/fforgetR.con.
+inline "cic:/CoRN/tactics/RingReflection/fforgetR.con".
 
-inline cic:/CoRN/tactics/RingReflection/fexprR2interp.con.
+inline "cic:/CoRN/tactics/RingReflection/fexprR2interp.con".
 
-inline cic:/CoRN/tactics/RingReflection/fexprR2wf.con.
+inline "cic:/CoRN/tactics/RingReflection/fexprR2wf.con".
 
 (* UNEXPORTED
 Opaque csg_crr.
@@ -142,9 +140,9 @@ Opaque cr_mult.
 Opaque nexp_op.
 *)
 
-inline cic:/CoRN/tactics/RingReflection/refl_interpR.con.
+inline "cic:/CoRN/tactics/RingReflection/refl_interpR.con".
 
-inline cic:/CoRN/tactics/RingReflection/interpR_wd.con.
+inline "cic:/CoRN/tactics/RingReflection/interpR_wd.con".
 
 (* UNEXPORTED
 End Ring_Interpretation_Function.
@@ -154,15 +152,15 @@ End Ring_Interpretation_Function.
 Section Ring_NormCorrect.
 *)
 
-inline cic:/CoRN/tactics/RingReflection/R.var.
+inline "cic:/CoRN/tactics/RingReflection/R.var".
 
-inline cic:/CoRN/tactics/RingReflection/val.var.
+inline "cic:/CoRN/tactics/RingReflection/val.var".
 
-inline cic:/CoRN/tactics/RingReflection/unop.var.
+inline "cic:/CoRN/tactics/RingReflection/unop.var".
 
-inline cic:/CoRN/tactics/RingReflection/binop.var.
+inline "cic:/CoRN/tactics/RingReflection/binop.var".
 
-inline cic:/CoRN/tactics/RingReflection/pfun.var.
+inline "cic:/CoRN/tactics/RingReflection/pfun.var".
 
 (*
 four kinds of exprs:
@@ -182,7 +180,7 @@ P: sorted on M, all M's not an I
 Opaque Zmult.
 *)
 
-inline cic:/CoRN/tactics/RingReflection/MI_mult_corr_R.con.
+inline "cic:/CoRN/tactics/RingReflection/MI_mult_corr_R.con".
 
 (* UNEXPORTED
 Transparent Zmult.
@@ -192,7 +190,7 @@ Transparent Zmult.
 Opaque MI_mult.
 *)
 
-inline cic:/CoRN/tactics/RingReflection/MV_mult_corr_R.con.
+inline "cic:/CoRN/tactics/RingReflection/MV_mult_corr_R.con".
 
 (* UNEXPORTED
 Transparent MI_mult.
@@ -202,7 +200,7 @@ Transparent MI_mult.
 Opaque MV_mult MI_mult.
 *)
 
-inline cic:/CoRN/tactics/RingReflection/MM_mult_corr_R.con.
+inline "cic:/CoRN/tactics/RingReflection/MM_mult_corr_R.con".
 
 (* UNEXPORTED
 Transparent MV_mult MI_mult.
@@ -212,7 +210,7 @@ Transparent MV_mult MI_mult.
 Opaque MV_mult.
 *)
 
-inline cic:/CoRN/tactics/RingReflection/MM_plus_corr_R.con.
+inline "cic:/CoRN/tactics/RingReflection/MM_plus_corr_R.con".
 
 (* UNEXPORTED
 Transparent MV_mult.
@@ -222,7 +220,7 @@ Transparent MV_mult.
 Opaque MM_plus.
 *)
 
-inline cic:/CoRN/tactics/RingReflection/PM_plus_corr_R.con.
+inline "cic:/CoRN/tactics/RingReflection/PM_plus_corr_R.con".
 
 (* UNEXPORTED
 Transparent MM_plus.
@@ -232,7 +230,7 @@ Transparent MM_plus.
 Opaque PM_plus.
 *)
 
-inline cic:/CoRN/tactics/RingReflection/PP_plus_corr_R.con.
+inline "cic:/CoRN/tactics/RingReflection/PP_plus_corr_R.con".
 
 (* UNEXPORTED
 Transparent PM_plus.
@@ -242,13 +240,13 @@ Transparent PM_plus.
 Opaque PM_plus MM_mult MI_mult.
 *)
 
-inline cic:/CoRN/tactics/RingReflection/PM_mult_corr_R.con.
+inline "cic:/CoRN/tactics/RingReflection/PM_mult_corr_R.con".
 
 (* UNEXPORTED
 Opaque PM_mult.
 *)
 
-inline cic:/CoRN/tactics/RingReflection/PP_mult_corr_R.con.
+inline "cic:/CoRN/tactics/RingReflection/PP_mult_corr_R.con".
 
 (*
 Transparent PP_plus PM_mult PP_mult PM_plus MI_mult.
@@ -310,9 +308,9 @@ Step_final x2.
 Qed.
 *)
 
-inline cic:/CoRN/tactics/RingReflection/NormR_corr.con.
+inline "cic:/CoRN/tactics/RingReflection/NormR_corr.con".
 
-inline cic:/CoRN/tactics/RingReflection/Tactic_lemmaR.con.
+inline "cic:/CoRN/tactics/RingReflection/Tactic_lemmaR.con".
 
 (* UNEXPORTED
 End Ring_NormCorrect.
