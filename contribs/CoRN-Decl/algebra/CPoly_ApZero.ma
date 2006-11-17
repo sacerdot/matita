@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/algebra/CPoly_ApZero".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: CPoly_ApZero.v,v 1.3 2004/04/23 10:00:53 lcf Exp $ *)
 
@@ -58,6 +58,10 @@ inline "cic:/CoRN/algebra/CPoly_ApZero/n.var".
 inline "cic:/CoRN/algebra/CPoly_ApZero/degree_f.var".
 
 (* begin hide *)
+
+(* NOTATION
+Notation RX := (cpoly_cring R).
+*)
 
 (* end hide *)
 
@@ -146,6 +150,10 @@ inline "cic:/CoRN/algebra/CPoly_ApZero/H.var".
 
 (* begin hide *)
 
+(* NOTATION
+Notation RX := (cpoly_cring R).
+*)
+
 (* end hide *)
 
 inline "cic:/CoRN/algebra/CPoly_ApZero/poly_apzero.con".
@@ -171,6 +179,10 @@ Section Poly_ApZero_Interval.
 inline "cic:/CoRN/algebra/CPoly_ApZero/R.var".
 
 (* begin hide *)
+
+(* NOTATION
+Notation RX := (cpoly_cring R).
+*)
 
 (* end hide *)
 

@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/algebra/CAbGroups".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 include "algebra/CGroups.ma".
 
@@ -33,7 +33,7 @@ inline "cic:/CoRN/algebra/CAbGroups/is_CAbGroup.con".
 
 inline "cic:/CoRN/algebra/CAbGroups/CAbGroup.ind".
 
-coercion "cic:/matita/CoRN-Decl/algebra/CAbGroups/cag_crr.con" 0 (* compounds *).
+coercion cic:/matita/CoRN-Decl/algebra/CAbGroups/cag_crr.con 0 (* compounds *).
 
 (* UNEXPORTED
 Section AbGroup_Axioms.

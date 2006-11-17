@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/transc/RealPowers".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: RealPowers.v,v 1.5 2004/04/23 10:01:08 lcf Exp $ *)
 
@@ -40,6 +40,10 @@ $x^y=e^{y\times\log(x)}$#x<sup>y</sup>=e<sup>y*log(x)</sup>#, whenever
 *)
 
 inline "cic:/CoRN/transc/RealPowers/power.con".
+
+(* NOTATION
+Notation "x [!] y [//] Hy" := (power x y Hy) (at level 20).
+*)
 
 (*#*
 This definition yields a well defined, strongly extensional function
@@ -151,6 +155,10 @@ inline "cic:/CoRN/transc/RealPowers/Continuous_power.con".
 
 (* UNEXPORTED
 End Power_Function.
+*)
+
+(* NOTATION
+Notation "F {!} G" := (FPower F G) (at level 20).
 *)
 
 (* UNEXPORTED

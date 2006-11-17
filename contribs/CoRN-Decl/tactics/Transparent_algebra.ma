@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/tactics/Transparent_algebra".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: Transparent_algebra.v,v 1.1 2004/02/11 10:56:58 lcf Exp $ *)
 

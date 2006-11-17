@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/algebra/CPoly_NthCoeff".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: CPoly_NthCoeff.v,v 1.6 2004/04/23 10:00:53 lcf Exp $ *)
 
@@ -38,6 +38,10 @@ Section NthCoeff_def.
 inline "cic:/CoRN/algebra/CPoly_NthCoeff/R.var".
 
 (* begin hide *)
+
+(* NOTATION
+Notation RX := (cpoly_cring R).
+*)
 
 (* end hide *)
 
@@ -114,6 +118,10 @@ Section NthCoeff_props.
 inline "cic:/CoRN/algebra/CPoly_NthCoeff/R.var".
 
 (* begin hide *)
+
+(* NOTATION
+Notation RX := (cpoly_cring R).
+*)
 
 (* end hide *)
 

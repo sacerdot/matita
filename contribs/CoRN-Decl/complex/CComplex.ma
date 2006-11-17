@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/complex/CComplex".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: CComplex.v,v 1.8 2004/04/23 10:00:55 lcf Exp $ *)
 
@@ -194,9 +194,17 @@ End Complex_Numbers.
 
 (* begin hide *)
 
+(* NOTATION
+Notation CCX := (cpoly_cring CC).
+*)
+
 (* end hide *)
 
 inline "cic:/CoRN/complex/CComplex/II.con".
+
+(* NOTATION
+Infix "[+I*]" := cc_set_CC (at level 48, no associativity).
+*)
 
 (*#* ** Properties of [II] *)
 

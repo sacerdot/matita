@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/model/structures/Nsec".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: Nsec.v,v 1.6 2004/04/06 15:46:05 lcf Exp $ *)
 
@@ -38,6 +38,10 @@ inline "cic:/CoRN/model/structures/Nsec/S_O.con".
 *)
 
 inline "cic:/CoRN/model/structures/Nsec/ap_nat.con".
+
+(* NOTATION
+Infix "{#N}" := ap_nat (no associativity, at level 90).
+*)
 
 inline "cic:/CoRN/model/structures/Nsec/ap_nat_irreflexive0.con".
 

@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/algebra/COrdCauchy".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 include "algebra/COrdAbs.ma".
 
@@ -70,7 +70,7 @@ with the coercions
 
 inline "cic:/CoRN/algebra/COrdCauchy/CauchySeq.ind".
 
-coercion "cic:/matita/CoRN-Decl/algebra/COrdCauchy/CS_seq.con" 0 (* compounds *).
+coercion cic:/matita/CoRN-Decl/algebra/COrdCauchy/CS_seq.con 0 (* compounds *).
 
 inline "cic:/CoRN/algebra/COrdCauchy/SeqLimit.con".
 

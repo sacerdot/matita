@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/tactics/GroupReflection".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: GroupReflection.v,v 1.3 2004/04/23 10:01:06 lcf Exp $ *)
 
@@ -145,6 +145,10 @@ inline "cic:/CoRN/tactics/GroupReflection/unop.var".
 inline "cic:/CoRN/tactics/GroupReflection/binop.var".
 
 inline "cic:/CoRN/tactics/GroupReflection/pfun.var".
+
+(* NOTATION
+Notation II := (interpG G val unop binop pfun).
+*)
 
 (*
 four kinds of exprs:

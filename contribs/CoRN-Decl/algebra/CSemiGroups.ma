@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/algebra/CSemiGroups".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: CSemiGroups.v,v 1.8 2004/04/22 14:49:43 lcf Exp $ *)
 
@@ -37,7 +37,7 @@ inline "cic:/CoRN/algebra/CSemiGroups/is_CSemiGroup.con".
 
 inline "cic:/CoRN/algebra/CSemiGroups/CSemiGroup.ind".
 
-coercion "cic:/matita/CoRN-Decl/algebra/CSemiGroups/csg_crr.con" 0 (* compounds *).
+coercion cic:/matita/CoRN-Decl/algebra/CSemiGroups/csg_crr.con 0 (* compounds *).
 
 (*#*
 %\begin{nameconvention}%
@@ -47,6 +47,10 @@ In the %{\em %names%}% of lemmas, we will denote [[+]] with [plus].
 
 (* UNEXPORTED
 Implicit Arguments csg_op [c].
+*)
+
+(* NOTATION
+Infix "[+]" := csg_op (at level 50, left associativity).
 *)
 
 (* End_SpecReals *)
@@ -154,6 +158,10 @@ End Part_Function_Plus.
 
 (* UNEXPORTED
 Implicit Arguments Fplus [G].
+*)
+
+(* NOTATION
+Infix "{+}" := Fplus (at level 50, left associativity).
 *)
 
 (* UNEXPORTED

@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/algebra/CPoly_Degree".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: CPoly_Degree.v,v 1.5 2004/04/23 10:00:53 lcf Exp $ *)
 
@@ -39,6 +39,10 @@ Section Degree_def.
 inline "cic:/CoRN/algebra/CPoly_Degree/R.var".
 
 (* begin hide *)
+
+(* NOTATION
+Notation RX := (cpoly_cring R).
+*)
 
 (* end hide *)
 
@@ -107,6 +111,10 @@ Section Degree_props.
 inline "cic:/CoRN/algebra/CPoly_Degree/R.var".
 
 (* begin hide *)
+
+(* NOTATION
+Notation RX := (cpoly_cring R).
+*)
 
 (* end hide *)
 
@@ -217,6 +225,10 @@ polynomials over [F].
 inline "cic:/CoRN/algebra/CPoly_Degree/F.var".
 
 (* begin hide *)
+
+(* NOTATION
+Notation FX := (cpoly_cring F).
+*)
 
 (* end hide *)
 

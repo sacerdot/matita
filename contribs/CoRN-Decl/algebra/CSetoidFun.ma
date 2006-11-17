@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/algebra/CSetoidFun".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: CSetoidFun.v,v 1.10 2004/04/23 10:00:53 lcf Exp $ *)
 
@@ -249,6 +249,10 @@ End Extension.
 End SubSets_of_G.
 *)
 
+(* NOTATION
+Notation Conj := (conjP _).
+*)
+
 (* UNEXPORTED
 Implicit Arguments disj [S].
 *)
@@ -272,7 +276,11 @@ We are now ready to define the concept of partial function between arbitrary set
 
 inline "cic:/CoRN/algebra/CSetoidFun/BinPartFunct.ind".
 
-coercion "cic:/matita/CoRN-Decl/algebra/CSetoidFun/bpfpfun.con" 0 (* compounds *).
+coercion cic:/matita/CoRN-Decl/algebra/CSetoidFun/bpfpfun.con 0 (* compounds *).
+
+(* NOTATION
+Notation BDom := (bpfdom _ _).
+*)
 
 (* UNEXPORTED
 Implicit Arguments bpfpfun [S1 S2].
@@ -288,7 +296,15 @@ inline "cic:/CoRN/algebra/CSetoidFun/bpfwdef.con".
 
 inline "cic:/CoRN/algebra/CSetoidFun/PartFunct.ind".
 
-coercion "cic:/matita/CoRN-Decl/algebra/CSetoidFun/pfpfun.con" 0 (* compounds *).
+coercion cic:/matita/CoRN-Decl/algebra/CSetoidFun/pfpfun.con 0 (* compounds *).
+
+(* NOTATION
+Notation Dom := (pfdom _).
+*)
+
+(* NOTATION
+Notation Part := (pfpfun _).
+*)
 
 (* UNEXPORTED
 Implicit Arguments pfpfun [S].
@@ -475,8 +491,20 @@ End BinPart_Function_Composition.
 Implicit Arguments Fconst [S].
 *)
 
+(* NOTATION
+Notation "[-C-] x" := (Fconst x) (at level 2, right associativity).
+*)
+
+(* NOTATION
+Notation FId := (Fid _).
+*)
+
 (* UNEXPORTED
 Implicit Arguments Fcomp [S].
+*)
+
+(* NOTATION
+Infix "[o]" := Fcomp (at level 65, no associativity).
 *)
 
 (* UNEXPORTED
@@ -579,5 +607,13 @@ Implicit Arguments Inv [A B].
 
 (* UNEXPORTED
 Implicit Arguments conj_wd [S P Q].
+*)
+
+(* NOTATION
+Notation Prj1 := (prj1 _ _ _ _).
+*)
+
+(* NOTATION
+Notation Prj2 := (prj2 _ _ _ _).
 *)
 

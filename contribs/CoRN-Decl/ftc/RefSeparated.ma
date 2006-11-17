@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/ftc/RefSeparated".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: RefSeparated.v,v 1.8 2004/04/23 10:01:00 lcf Exp $ *)
 
@@ -159,6 +159,15 @@ inline "cic:/CoRN/ftc/RefSeparated/sep__sep_points.con".
 inline "cic:/CoRN/ftc/RefSeparated/sep__sep_points_lemma.con".
 
 inline "cic:/CoRN/ftc/RefSeparated/sep__sep_aux.con".
+
+(* NOTATION
+Notation just1 := (incF _ (Pts_part_lemma _ _ _ _ _ _ gP _ _)).
+*)
+
+(* NOTATION
+Notation just2 :=
+  (incF _ (Pts_part_lemma _ _ _ _ _ _ sep__sep_points_lemma _ _)).
+*)
 
 inline "cic:/CoRN/ftc/RefSeparated/sep__sep_Sum.con".
 

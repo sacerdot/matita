@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/model/groups/Qposgroup".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: Qposgroup.v,v 1.6 2004/04/08 08:20:32 lcf Exp $ *)
 

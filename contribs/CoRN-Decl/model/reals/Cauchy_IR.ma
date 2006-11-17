@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/model/reals/Cauchy_IR".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: Cauchy_IR.v,v 1.2 2004/04/06 15:46:03 lcf Exp $ *)
 

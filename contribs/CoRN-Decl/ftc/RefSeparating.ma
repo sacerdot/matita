@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/ftc/RefSeparating".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: RefSeparating.v,v 1.7 2004/04/23 10:01:01 lcf Exp $ *)
 
@@ -98,6 +98,10 @@ inline "cic:/CoRN/ftc/RefSeparating/RS'_m1.con".
 
 inline "cic:/CoRN/ftc/RefSeparating/RS'_m.con".
 
+(* NOTATION
+Notation m := RS'_m.
+*)
+
 inline "cic:/CoRN/ftc/RefSeparating/sep__part_length.con".
 
 inline "cic:/CoRN/ftc/RefSeparating/RS'_m_m1.con".
@@ -147,6 +151,19 @@ inline "cic:/CoRN/ftc/RefSeparating/RS'_Hsep_S.con".
 inline "cic:/CoRN/ftc/RefSeparating/RS'_Hsep.con".
 
 inline "cic:/CoRN/ftc/RefSeparating/RS'_h.con".
+
+(* NOTATION
+Notation h := RS'_h.
+*)
+
+(* NOTATION
+Notation just1 := (incF _ (Pts_part_lemma _ _ _ _ _ _ gP _ _)).
+*)
+
+(* NOTATION
+Notation just2 :=
+  (incF _ (Pts_part_lemma _ _ _ _ _ _ sep__part_pts_in_Partition _ _)).
+*)
 
 inline "cic:/CoRN/ftc/RefSeparating/sep__part_suRS'_m1.con".
 

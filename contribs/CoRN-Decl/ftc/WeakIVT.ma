@@ -16,13 +16,17 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/ftc/WeakIVT".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: WeakIVT.v,v 1.9 2004/04/23 10:01:01 lcf Exp $ *)
 
 (*#* printing ** %\ensuremath\times% #&times;# *)
 
 (* begin hide *)
+
+(* NOTATION
+Infix "**" := prodT (at level 20).
+*)
 
 (* end hide *)
 

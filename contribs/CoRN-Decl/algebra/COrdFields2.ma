@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/algebra/COrdFields2".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 include "algebra/COrdFields.ma".
 
@@ -251,6 +251,14 @@ Section PosP_properties.
 inline "cic:/CoRN/algebra/COrdFields2/R.var".
 
 (* begin hide *)
+
+(* NOTATION
+Notation ZeroR := (Zero:R).
+*)
+
+(* NOTATION
+Notation OneR := (One:R).
+*)
 
 (* end hide *)
 

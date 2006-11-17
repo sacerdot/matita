@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/ftc/MoreIntervals".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: MoreIntervals.v,v 1.6 2004/04/23 10:00:59 lcf Exp $ *)
 
@@ -111,7 +111,7 @@ inline "cic:/CoRN/ftc/MoreIntervals/iprop.con".
 
 (* begin hide *)
 
-coercion "cic:/matita/CoRN-Decl/ftc/MoreIntervals/iprop.con" 0 (* compounds *).
+coercion cic:/matita/CoRN-Decl/ftc/MoreIntervals/iprop.con 0 (* compounds *).
 
 (* end hide *)
 

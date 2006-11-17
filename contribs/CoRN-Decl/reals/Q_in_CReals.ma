@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/reals/Q_in_CReals".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: Q_in_CReals.v,v 1.10 2004/04/23 10:01:05 lcf Exp $ *)
 
@@ -59,7 +59,7 @@ inline "cic:/CoRN/reals/Q_in_CReals/Archimedes'.con".
 
 (*#**************************************)
 
-coercion "cic:/matita/CoRN-Decl/reals/Q_in_CReals/nat_of_P.con" 0 (* compounds *).
+coercion cic:/matita/CoRN-Decl/reals/Q_in_CReals/nat_of_P.con 0 (* compounds *).
 
 (* end hide *)
 

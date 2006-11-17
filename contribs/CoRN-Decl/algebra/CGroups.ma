@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/algebra/CGroups".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: CGroups.v,v 1.9 2004/04/23 10:00:52 lcf Exp $ *)
 
@@ -47,7 +47,7 @@ inline "cic:/CoRN/algebra/CGroups/is_CGroup.con".
 
 inline "cic:/CoRN/algebra/CGroups/CGroup.ind".
 
-coercion "cic:/matita/CoRN-Decl/algebra/CGroups/cg_crr.con" 0 (* compounds *).
+coercion cic:/matita/CoRN-Decl/algebra/CGroups/cg_crr.con 0 (* compounds *).
 
 (* End_SpecReals *)
 
@@ -55,6 +55,10 @@ coercion "cic:/matita/CoRN-Decl/algebra/CGroups/cg_crr.con" 0 (* compounds *).
 
 (* UNEXPORTED
 Implicit Arguments cg_inv [c].
+*)
+
+(* NOTATION
+Notation "[--] x" := (cg_inv x) (at level 2, right associativity).
 *)
 
 inline "cic:/CoRN/algebra/CGroups/cg_minus.con".
@@ -68,6 +72,10 @@ and [ [-] ] with [minus].
 
 (* UNEXPORTED
 Implicit Arguments cg_minus [G].
+*)
+
+(* NOTATION
+Infix "[-]" := cg_minus (at level 50, left associativity).
 *)
 
 (* End_SpecReals *)
@@ -377,8 +385,16 @@ End CGroup_Ops.
 Implicit Arguments Finv [G].
 *)
 
+(* NOTATION
+Notation "{--} x" := (Finv x) (at level 2, right associativity).
+*)
+
 (* UNEXPORTED
 Implicit Arguments Fminus [G].
+*)
+
+(* NOTATION
+Infix "{-}" := Fminus (at level 50, left associativity).
 *)
 
 (* UNEXPORTED

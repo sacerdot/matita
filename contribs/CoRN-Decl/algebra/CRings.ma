@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/algebra/CRings".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: CRings.v,v 1.8 2004/04/23 10:00:53 lcf Exp $ *)
 
@@ -83,13 +83,17 @@ inline "cic:/CoRN/algebra/CRings/is_CRing.ind".
 
 inline "cic:/CoRN/algebra/CRings/CRing.ind".
 
-coercion "cic:/matita/CoRN-Decl/algebra/CRings/cr_crr.con" 0 (* compounds *).
+coercion cic:/matita/CoRN-Decl/algebra/CRings/cr_crr.con 0 (* compounds *).
 
 inline "cic:/CoRN/algebra/CRings/cr_plus.con".
 
 inline "cic:/CoRN/algebra/CRings/cr_inv.con".
 
 inline "cic:/CoRN/algebra/CRings/cr_minus.con".
+
+(* NOTATION
+Notation One := (cr_one _).
+*)
 
 (* End_SpecReals *)
 
@@ -104,6 +108,10 @@ and [[*]] with [mult].
 
 (* UNEXPORTED
 Implicit Arguments cr_mult [c].
+*)
+
+(* NOTATION
+Infix "[*]" := cr_mult (at level 40, left associativity).
 *)
 
 (* UNEXPORTED
@@ -356,6 +364,10 @@ End exponentiation.
 
 (* End_SpecReals *)
 
+(* NOTATION
+Notation "x [^] n" := (nexp_op _ n x) (at level 20).
+*)
+
 (* UNEXPORTED
 Implicit Arguments nexp_op [R].
 *)
@@ -409,6 +421,50 @@ Implicit Arguments nring [R].
 *)
 
 (* End_SpecReals *)
+
+(* NOTATION
+Notation Two := (nring 2).
+*)
+
+(* NOTATION
+Notation Three := (nring 3).
+*)
+
+(* NOTATION
+Notation Four := (nring 4).
+*)
+
+(* NOTATION
+Notation Six := (nring 6).
+*)
+
+(* NOTATION
+Notation Eight := (nring 8).
+*)
+
+(* NOTATION
+Notation Twelve := (nring 12).
+*)
+
+(* NOTATION
+Notation Sixteen := (nring 16).
+*)
+
+(* NOTATION
+Notation Nine := (nring 9).
+*)
+
+(* NOTATION
+Notation Eighteen := (nring 18).
+*)
+
+(* NOTATION
+Notation TwentyFour := (nring 24).
+*)
+
+(* NOTATION
+Notation FortyEight := (nring 48).
+*)
 
 inline "cic:/CoRN/algebra/CRings/one_plus_one.con".
 
@@ -902,12 +958,24 @@ inline "cic:/CoRN/algebra/CRings/Fscalmult.con".
 Implicit Arguments Fmult [R].
 *)
 
+(* NOTATION
+Infix "{*}" := Fmult (at level 40, left associativity).
+*)
+
 (* UNEXPORTED
 Implicit Arguments Fscalmult [R].
 *)
 
+(* NOTATION
+Infix "{**}" := Fscalmult (at level 40, left associativity).
+*)
+
 (* UNEXPORTED
 Implicit Arguments Fnth [R].
+*)
+
+(* NOTATION
+Infix "{^}" := Fnth (at level 30, right associativity).
 *)
 
 (* UNEXPORTED

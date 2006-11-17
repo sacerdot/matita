@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/fta/CC_Props".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: CC_Props.v,v 1.3 2004/04/23 10:00:56 lcf Exp $ *)
 
@@ -41,7 +41,7 @@ inline "cic:/CoRN/fta/CC_Props/CC_Cauchy_prop.con".
 
 inline "cic:/CoRN/fta/CC_Props/CC_CauchySeq.ind".
 
-coercion "cic:/matita/CoRN-Decl/fta/CC_Props/CC_seq.con" 0 (* compounds *).
+coercion cic:/matita/CoRN-Decl/fta/CC_Props/CC_seq.con 0 (* compounds *).
 
 inline "cic:/CoRN/fta/CC_Props/re_is_Cauchy.con".
 

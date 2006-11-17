@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/ftc/Differentiability".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: Differentiability.v,v 1.5 2004/04/20 22:38:49 hinderer Exp $ *)
 

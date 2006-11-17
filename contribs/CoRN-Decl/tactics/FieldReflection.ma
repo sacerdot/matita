@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/tactics/FieldReflection".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: FieldReflection.v,v 1.4 2004/04/23 10:01:06 lcf Exp $ *)
 
@@ -95,6 +95,10 @@ inline "cic:/CoRN/tactics/FieldReflection/unop.var".
 inline "cic:/CoRN/tactics/FieldReflection/binop.var".
 
 inline "cic:/CoRN/tactics/FieldReflection/pfun.var".
+
+(* NOTATION
+Notation II := (interpF F val unop binop pfun).
+*)
 
 (*
 four kinds of exprs:

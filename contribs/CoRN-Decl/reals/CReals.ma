@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/reals/CReals".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: CReals.v,v 1.2 2004/04/05 11:35:38 lcf Exp $ *)
 
@@ -39,7 +39,7 @@ inline "cic:/CoRN/reals/CReals/is_CReals.ind".
 
 inline "cic:/CoRN/reals/CReals/CReals.ind".
 
-coercion "cic:/matita/CoRN-Decl/reals/CReals/crl_crr.con" 0 (* compounds *).
+coercion cic:/matita/CoRN-Decl/reals/CReals/crl_crr.con 0 (* compounds *).
 
 (* End_SpecReals *)
 

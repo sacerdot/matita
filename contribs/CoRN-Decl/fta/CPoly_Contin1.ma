@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/fta/CPoly_Contin1".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: CPoly_Contin1.v,v 1.3 2004/04/23 10:00:56 lcf Exp $ *)
 

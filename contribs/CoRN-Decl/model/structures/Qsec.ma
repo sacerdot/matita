@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/model/structures/Qsec".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: Qsec.v,v 1.7 2004/04/08 08:20:35 lcf Exp $ *)
 
@@ -72,6 +72,30 @@ inline "cic:/CoRN/model/structures/Qsec/Qinv.con".
 
 (* UNEXPORTED
 End Q.
+*)
+
+(* NOTATION
+Infix "{=Q}" := Qeq (no associativity, at level 90).
+*)
+
+(* NOTATION
+Infix "{#Q}" := Qap (no associativity, at level 90).
+*)
+
+(* NOTATION
+Infix "{<Q}" := Qlt (no associativity, at level 90).
+*)
+
+(* NOTATION
+Infix "{+Q}" := Qplus (no associativity, at level 85).
+*)
+
+(* NOTATION
+Infix "{*Q}" := Qmult (no associativity, at level 80).
+*)
+
+(* NOTATION
+Notation "{-Q}" := Qopp (at level 1, left associativity).
 *)
 
 (*#* ***Constants
@@ -228,7 +252,7 @@ We consider the injection [inject_Z] from [Z] to [Q] as a coercion.
 
 inline "cic:/CoRN/model/structures/Qsec/inject_Z.con".
 
-coercion "cic:/matita/CoRN-Decl/model/structures/Qsec/inject_Z.con" 0 (* compounds *).
+coercion cic:/matita/CoRN-Decl/model/structures/Qsec/inject_Z.con 0 (* compounds *).
 
 inline "cic:/CoRN/model/structures/Qsec/injz_plus.con".
 

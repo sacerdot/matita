@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/ftc/Rolle".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: Rolle.v,v 1.6 2004/04/23 10:01:01 lcf Exp $ *)
 
@@ -111,6 +111,10 @@ inline "cic:/CoRN/ftc/Rolle/Rolle_lemma1.con".
 inline "cic:/CoRN/ftc/Rolle/incF'.con".
 
 inline "cic:/CoRN/ftc/Rolle/fcp'.con".
+
+(* NOTATION
+Notation cp := (compact_part a b Hab' d Hd).
+*)
 
 inline "cic:/CoRN/ftc/Rolle/Rolle_lemma4.con".
 

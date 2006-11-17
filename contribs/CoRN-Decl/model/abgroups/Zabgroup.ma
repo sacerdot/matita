@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/model/abgroups/Zabgroup".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: Zabgroup.v,v 1.5 2004/04/08 08:20:32 lcf Exp $ *)
 

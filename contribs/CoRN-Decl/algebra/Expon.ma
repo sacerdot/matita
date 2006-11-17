@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/algebra/Expon".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: Expon.v,v 1.5 2004/04/23 10:00:54 lcf Exp $ *)
 
@@ -114,6 +114,10 @@ End Zexp_def.
 
 (* UNEXPORTED
 Implicit Arguments zexp [R].
+*)
+
+(* NOTATION
+Notation "( x [//] Hx ) [^^] n" := (zexp x Hx n) (at level 0).
 *)
 
 (*#* **Properties of [zexp]

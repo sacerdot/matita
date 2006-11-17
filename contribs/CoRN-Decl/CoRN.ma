@@ -14,7 +14,7 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-set "baseuri" "cic:/matita/CoRN-Decl/CoRN_notation".
+set "baseuri" "cic:/matita/CoRN-Decl/CoRN".
 
 (* From algebra/Basics ****************************************************)
 
@@ -30,7 +30,19 @@ Notation Proj1 := (proj1 (B:=_)).
 Notation Proj2 := (proj2 (B:=_)).
 *)
 
+coercion cic:/Coq/ZArith/BinInt/Z_of_nat.con 0 (* compounds *).
+
+(* From algebra/CAbGroups *************************************************)
+
+coercion cic:/CoRN/algebra/CAbGroups/cag_crr.con 0 (* compounds *).
+
+(* From algebra/CAbMonoids ************************************************)
+
+coercion cic:/CoRN/algebra/CAbMonoids/cam_crr.con 0 (* compounds *).
+
 (* From algebra/CFields ***************************************************)
+
+coercion cic:/CoRN/algebra/CFields/cf_crr.con 0 (* compounds *).
 
 (* NOTATION
 Notation "x [/] y [//] Hy" := (cf_div x y Hy) (at level 80).
@@ -45,6 +57,8 @@ Infix "{/}" := Fdiv (at level 41, no associativity).
 *)
 
 (* From algebra/CGroups ***************************************************)
+
+coercion cic:/CoRN/algebra/CGroups/cg_crr.con 0 (* compounds *).
 
 (* NOTATION
 Notation "[--] x" := (cg_inv x) (at level 2, right associativity).
@@ -97,6 +111,8 @@ Notation ProjT2 := (proj2_sigT _ _).
 
 (* From algebra/CMonoids **************************************************)
 
+coercion cic:/CoRN/algebra/CMonoids/cm_crr.con 0 (* compounds *).
+
 (* NOTATION
 Notation Zero := (cm_unit _).
 *)
@@ -111,7 +127,13 @@ Notation ZeroR := (Zero:R).
 Notation AbsBig := (absBig _).
 *)
 
+(* From algebra/COrdCauchy ************************************************)
+
+coercion cic:/CoRN/algebra/COrdCauchy/CS_seq.con 0 (* compounds *).
+
 (* From algebra/COrdFields ************************************************)
+
+coercion cic:/CoRN/algebra/COrdFields/cof_crr.con 0 (* compounds *).
 
 (* NOTATION
 Infix "[<]" := cof_less (at level 70, no associativity).
@@ -257,6 +279,8 @@ Notation Cpoly_cring := (cpoly_cring CR).
 
 (* From algebra/CRings ****************************************************)
 
+coercion cic:/CoRN/algebra/CRings/cr_crr.con 0 (* compounds *).
+
 (* NOTATION
 Notation One := (cr_one _).
 *)
@@ -327,6 +351,8 @@ Infix "{^}" := Fnth (at level 30, right associativity).
 
 (* From algebra/CSemiGroups ***********************************************)
 
+coercion cic:/CoRN/algebra/CSemiGroups/csg_crr.con 0 (* compounds *).
+
 (* NOTATION
 Infix "[+]" := csg_op (at level 50, left associativity).
 *)
@@ -341,9 +367,13 @@ Infix "{+}" := Fplus (at level 50, left associativity).
 Notation Conj := (conjP _).
 *)
 
+coercion cic:/CoRN/algebra/CSetoidFun/bpfpfun.con 0 (* compounds *).
+
 (* NOTATION
 Notation BDom := (bpfdom _ _).
 *)
+
+coercion cic:/CoRN/algebra/CSetoidFun/pfpfun.con 0 (* compounds *).
 
 (* NOTATION
 Notation Dom := (pfdom _).
@@ -375,6 +405,8 @@ Notation Prj2 := (prj2 _ _ _ _).
 
 (* From algebra/CSetoids **************************************************)
 
+coercion cic:/CoRN/algebra/CSetoids/cs_crr.con 0 (* compounds *).
+
 (* NOTATION
 Infix "[=]" := cs_eq (at level 70, no associativity).
 *)
@@ -387,7 +419,29 @@ Infix "[#]" := cs_ap (at level 70, no associativity).
 Infix "[~=]" := cs_neq (at level 70, no associativity).
 *)
 
+coercion cic:/CoRN/algebra/CSetoids/csp_pred.con 0 (* compounds *).
+
+coercion cic:/CoRN/algebra/CSetoids/csp'_pred.con 0 (* compounds *).
+
+coercion cic:/CoRN/algebra/CSetoids/csr_rel.con 0 (* compounds *).
+
+coercion cic:/CoRN/algebra/CSetoids/Ccsr_rel.con 0 (* compounds *).
+
+coercion cic:/CoRN/algebra/CSetoids/csf_fun.con 0 (* compounds *).
+
+coercion cic:/CoRN/algebra/CSetoids/csbf_fun.con 0 (* compounds *).
+
+coercion cic:/CoRN/algebra/CSetoids/un_op_fun.con 0 (* compounds *).
+
+coercion cic:/CoRN/algebra/CSetoids/bin_op_bin_fun.con 0 (* compounds *).
+
+coercion cic:/CoRN/algebra/CSetoids/outer_op_bin_fun.con 0 (* compounds *).
+
+coercion cic:/CoRN/algebra/CSetoids/scs_elem.con 0 (* compounds *).
+
 (* From algebra/CVectorSpace **********************************************)
+
+coercion cic:/CoRN/algebra/CVectorSpace/vs_vs.con 0 (* compounds *).
 
 (* NOTATION
 Infix "[']" := vs_op (at level 30, no associativity).
@@ -409,6 +463,16 @@ Notation CCX := (cpoly_cring CC).
 Infix "[+I*]" := cc_set_CC (at level 48, no associativity).
 *)
 
+(* From fta/CC_Props ******************************************************)
+
+coercion cic:/CoRN/fta/CC_Props/CC_seq.con 0 (* compounds *).
+
+(* From fta/FTAreg ********************************************************)
+
+coercion cic:/CoRN/fta/FTAreg/z_el.con 0 (* compounds *).
+
+coercion cic:/CoRN/fta/FTAreg/Kntup.con 0 (* compounds *).
+
 (* From ftc/FTC ***********************************************************)
 
 (* NOTATION
@@ -420,6 +484,14 @@ Notation "[-S-] F" := (Fprim F) (at level 20).
 (* NOTATION
 Notation Integral := (integral _ _ Hab).
 *)
+
+(* From ftc/MoreIntervals *************************************************)
+
+coercion cic:/CoRN/ftc/MoreIntervals/iprop.con 0 (* compounds *).
+
+(* From ftc/Partitions ****************************************************)
+
+coercion cic:/CoRN/ftc/Partitions/Pts.con 0 (* compounds *).
 
 (* From ftc/RefLemma ******************************************************)
 
@@ -495,7 +567,13 @@ Notation B := (Build_subcsetoid_crr IR _ _ TL_compact_b).
 Infix "**" := prodT (at level 20).
 *)
 
+(* From metrics/CMetricSpaces *********************************************)
+
+coercion cic:/CoRN/metrics/CMetricSpaces/scms_crr.con 0 (* compounds *).
+
 (* From metrics/CPseudoMSpaces ********************************************)
+
+coercion cic:/CoRN/metrics/CPseudoMSpaces/cms_crr.con 0 (* compounds *).
 
 (* NOTATION
 Infix "[-d]" := cms_d (at level 68, left associativity).
@@ -533,11 +611,15 @@ Infix "{*Q}" := Qmult (no associativity, at level 80).
 Notation "{-Q}" := Qopp (at level 1, left associativity).
 *)
 
+coercion cic:/CoRN/model/structures/Qsec/inject_Z.con 0 (* compounds *).
+
 (* From model/structures/Zsec *********************************************)
 
 (* NOTATION
 Infix "{#Z}" := ap_Z (no associativity, at level 90).
 *)
+
+coercion cic:/CoRN/model/structures/Zsec/Zpos.con 0 (* compounds *).
 
 (* From reals/Bridges_LUB *************************************************)
 
@@ -547,9 +629,17 @@ Notation "( p , q )" := (pairT p q).
 
 (* From reals/CMetricFields ***********************************************)
 
+coercion cic:/CoRN/reals/CMetricFields/cmf_crr.con 0 (* compounds *).
+
 (* NOTATION
 Notation MAbs := (cmf_abs _).
 *)
+
+coercion cic:/CoRN/reals/CMetricFields/MCS_seq.con 0 (* compounds *).
+
+(* From reals/CReals ******************************************************)
+
+coercion cic:/CoRN/reals/CReals/crl_crr.con 0 (* compounds *).
 
 (* From reals/CauchySeq ***************************************************)
 
@@ -591,9 +681,19 @@ Notation FRestr := (Frestr (compact_wd _ _ _)).
 
 (* From reals/Q_dense *****************************************************)
 
+coercion cic:/CoRN/reals/Q_dense/pair_crr.con 0 (* compounds *).
+
 (* NOTATION
 Notation "( A , B )" := (pairT A B).
 *)
+
+(* From reals/Q_in_CReals *************************************************)
+
+coercion cic:/CoRN/reals/Q_in_CReals/nat_of_P.con 0 (* compounds *).
+
+(* From reals/R_morphism **************************************************)
+
+coercion cic:/CoRN/reals/R_morphism/map.con 0 (* compounds *).
 
 (* From tactics/FieldReflection *******************************************)
 
@@ -622,4 +722,10 @@ Notation "x [!] y [//] Hy" := (power x y Hy) (at level 20).
 (* NOTATION
 Notation "F {!} G" := (FPower F G) (at level 20).
 *)
+
+(* From devel/loeb/per/lst2fun ********************************************)
+
+coercion cic:/CoRN/devel/loeb/per/lst2fun/F_crr.con 0 (* compounds *).
+
+coercion cic:/CoRN/devel/loeb/per/lst2fun/to_nat.con 0 (* compounds *).
 

@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/reals/CauchySeq".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: CauchySeq.v,v 1.8 2004/04/23 10:01:04 lcf Exp $ *)
 
@@ -45,9 +45,29 @@ Opaque IR.
 
 inline "cic:/CoRN/reals/CauchySeq/IR.var".
 
+(* NOTATION
+Notation PartIR := (PartFunct IR).
+*)
+
+(* NOTATION
+Notation ProjIR1 := (prj1 IR _ _ _).
+*)
+
+(* NOTATION
+Notation ProjIR2 := (prj2 IR _ _ _).
+*)
+
 include "tactics/Transparent_algebra.ma".
 
 (* begin hide *)
+
+(* NOTATION
+Notation ZeroR := (Zero:IR).
+*)
+
+(* NOTATION
+Notation OneR := (One:IR).
+*)
 
 (* end hide *)
 

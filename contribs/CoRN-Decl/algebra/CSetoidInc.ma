@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/algebra/CSetoidInc".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: CSetoidInc.v,v 1.3 2004/04/22 14:49:43 lcf Exp $ *)
 

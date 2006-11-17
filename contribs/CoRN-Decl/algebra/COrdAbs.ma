@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/algebra/COrdAbs".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 include "algebra/COrdFields2.ma".
 
@@ -62,6 +62,10 @@ Declare Right Step AbsSmall_wdr_unfolded.
 *)
 
 (* begin hide *)
+
+(* NOTATION
+Notation ZeroR := (Zero:R).
+*)
 
 (* end hide *)
 
@@ -116,6 +120,10 @@ Declare Right Step AbsSmall_wdr_unfolded.
 (*#* ** Properties of [AbsBig] *)
 
 inline "cic:/CoRN/algebra/COrdAbs/absBig.con".
+
+(* NOTATION
+Notation AbsBig := (absBig _).
+*)
 
 inline "cic:/CoRN/algebra/COrdAbs/AbsBigSmall_minus.con".
 

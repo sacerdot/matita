@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/tactics/RingReflection".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: RingReflection.v,v 1.4 2004/04/23 10:01:06 lcf Exp $ *)
 
@@ -161,6 +161,10 @@ inline "cic:/CoRN/tactics/RingReflection/unop.var".
 inline "cic:/CoRN/tactics/RingReflection/binop.var".
 
 inline "cic:/CoRN/tactics/RingReflection/pfun.var".
+
+(* NOTATION
+Notation II := (interpR R val unop binop pfun).
+*)
 
 (*
 four kinds of exprs:

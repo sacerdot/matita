@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/reals/Q_dense".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* begin hide *)
 
@@ -34,7 +34,7 @@ inline "cic:/CoRN/reals/Q_dense/OF.var".
 
 inline "cic:/CoRN/reals/Q_dense/Interval.ind".
 
-coercion "cic:/matita/CoRN-Decl/reals/Q_dense/pair_crr.con" 0 (* compounds *).
+coercion cic:/matita/CoRN-Decl/reals/Q_dense/pair_crr.con 0 (* compounds *).
 
 inline "cic:/CoRN/reals/Q_dense/Length.con".
 
@@ -108,6 +108,10 @@ inline "cic:/CoRN/reals/Q_dense/cotrans_analyze_strong.con".
 inline "cic:/CoRN/reals/Q_dense/trichotomy.con".
 
 inline "cic:/CoRN/reals/Q_dense/trichotomy_strong1.con".
+
+(* NOTATION
+Notation "( A , B )" := (pairT A B).
+*)
 
 inline "cic:/CoRN/reals/Q_dense/if_cotrans.con".
 

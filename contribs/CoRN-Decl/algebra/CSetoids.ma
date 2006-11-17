@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/algebra/CSetoids".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id.v,v 1.18 2002/11/25 14:43:42 lcf Exp $ *)
 
@@ -131,7 +131,7 @@ inline "cic:/CoRN/algebra/CSetoids/is_CSetoid.ind".
 
 inline "cic:/CoRN/algebra/CSetoids/CSetoid.ind".
 
-coercion "cic:/matita/CoRN-Decl/algebra/CSetoids/cs_crr.con" 0 (* compounds *).
+coercion cic:/matita/CoRN-Decl/algebra/CSetoids/cs_crr.con 0 (* compounds *).
 
 (* UNEXPORTED
 Implicit Arguments cs_eq [c].
@@ -141,12 +141,24 @@ Implicit Arguments cs_eq [c].
 Implicit Arguments cs_ap [c].
 *)
 
+(* NOTATION
+Infix "[=]" := cs_eq (at level 70, no associativity).
+*)
+
+(* NOTATION
+Infix "[#]" := cs_ap (at level 70, no associativity).
+*)
+
 (* End_SpecReals *)
 
 inline "cic:/CoRN/algebra/CSetoids/cs_neq.con".
 
 (* UNEXPORTED
 Implicit Arguments cs_neq [S].
+*)
+
+(* NOTATION
+Infix "[~=]" := cs_neq (at level 70, no associativity).
 *)
 
 (*#*
@@ -364,7 +376,7 @@ End CSetoidPredicates.
 
 inline "cic:/CoRN/algebra/CSetoids/CSetoid_predicate.ind".
 
-coercion "cic:/matita/CoRN-Decl/algebra/CSetoids/csp_pred.con" 0 (* compounds *).
+coercion cic:/matita/CoRN-Decl/algebra/CSetoids/csp_pred.con 0 (* compounds *).
 
 inline "cic:/CoRN/algebra/CSetoids/csp_wd.con".
 
@@ -388,7 +400,7 @@ End CSetoidPPredicates.
 
 inline "cic:/CoRN/algebra/CSetoids/CSetoid_predicate'.ind".
 
-coercion "cic:/matita/CoRN-Decl/algebra/CSetoids/csp'_pred.con" 0 (* compounds *).
+coercion cic:/matita/CoRN-Decl/algebra/CSetoids/csp'_pred.con 0 (* compounds *).
 
 inline "cic:/CoRN/algebra/CSetoids/csp'_wd.con".
 
@@ -434,7 +446,7 @@ The type of relations over a setoid.  *)
 
 inline "cic:/CoRN/algebra/CSetoids/CSetoid_relation.ind".
 
-coercion "cic:/matita/CoRN-Decl/algebra/CSetoids/csr_rel.con" 0 (* compounds *).
+coercion cic:/matita/CoRN-Decl/algebra/CSetoids/csr_rel.con 0 (* compounds *).
 
 (*#* ***[CProp] Relations
 %\begin{convention}%
@@ -478,7 +490,7 @@ The type of relations over a setoid.  *)
 
 inline "cic:/CoRN/algebra/CSetoids/CCSetoid_relation.ind".
 
-coercion "cic:/matita/CoRN-Decl/algebra/CSetoids/Ccsr_rel.con" 0 (* compounds *).
+coercion cic:/matita/CoRN-Decl/algebra/CSetoids/Ccsr_rel.con 0 (* compounds *).
 
 inline "cic:/CoRN/algebra/CSetoids/Ccsr_wdr.con".
 
@@ -564,7 +576,7 @@ End unary_functions.
 
 inline "cic:/CoRN/algebra/CSetoids/CSetoid_fun.ind".
 
-coercion "cic:/matita/CoRN-Decl/algebra/CSetoids/csf_fun.con" 0 (* compounds *).
+coercion cic:/matita/CoRN-Decl/algebra/CSetoids/csf_fun.con 0 (* compounds *).
 
 inline "cic:/CoRN/algebra/CSetoids/csf_wd.con".
 
@@ -602,7 +614,7 @@ End binary_functions.
 
 inline "cic:/CoRN/algebra/CSetoids/CSetoid_bin_fun.ind".
 
-coercion "cic:/matita/CoRN-Decl/algebra/CSetoids/csbf_fun.con" 0 (* compounds *).
+coercion cic:/matita/CoRN-Decl/algebra/CSetoids/csbf_fun.con 0 (* compounds *).
 
 inline "cic:/CoRN/algebra/CSetoids/csbf_wd.con".
 
@@ -677,7 +689,7 @@ inline "cic:/CoRN/algebra/CSetoids/id_un_op.con".
 
 (* begin hide *)
 
-coercion "cic:/matita/CoRN-Decl/algebra/CSetoids/un_op_fun.con" 0 (* compounds *).
+coercion cic:/matita/CoRN-Decl/algebra/CSetoids/un_op_fun.con 0 (* compounds *).
 
 (* end hide *)
 
@@ -713,7 +725,7 @@ inline "cic:/CoRN/algebra/CSetoids/cs_bin_op_strext.con".
 
 (* begin hide *)
 
-coercion "cic:/matita/CoRN-Decl/algebra/CSetoids/bin_op_bin_fun.con" 0 (* compounds *).
+coercion cic:/matita/CoRN-Decl/algebra/CSetoids/bin_op_bin_fun.con 0 (* compounds *).
 
 (* end hide *)
 
@@ -791,7 +803,7 @@ inline "cic:/CoRN/algebra/CSetoids/csoo_strext.con".
 
 (* begin hide *)
 
-coercion "cic:/matita/CoRN-Decl/algebra/CSetoids/outer_op_bin_fun.con" 0 (* compounds *).
+coercion cic:/matita/CoRN-Decl/algebra/CSetoids/outer_op_bin_fun.con 0 (* compounds *).
 
 (* end hide *)
 
@@ -823,7 +835,7 @@ inline "cic:/CoRN/algebra/CSetoids/P.var".
 
 inline "cic:/CoRN/algebra/CSetoids/subcsetoid_crr.ind".
 
-coercion "cic:/matita/CoRN-Decl/algebra/CSetoids/scs_elem.con" 0 (* compounds *).
+coercion cic:/matita/CoRN-Decl/algebra/CSetoids/scs_elem.con 0 (* compounds *).
 
 (*#* Though [scs_elem] is declared as a coercion, it does not satisfy the
 uniform inheritance condition and will not be inserted.  However it will

@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/metrics/CMetricSpaces".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: CMetricSpaces.v,v 1.4 2004/04/23 10:01:01 lcf Exp $ *)
 
@@ -33,7 +33,7 @@ Section Definition_MS.
 
 inline "cic:/CoRN/metrics/CMetricSpaces/CMetricSpace.ind".
 
-coercion "cic:/matita/CoRN-Decl/metrics/CMetricSpaces/scms_crr.con" 0 (* compounds *).
+coercion cic:/matita/CoRN-Decl/metrics/CMetricSpaces/scms_crr.con 0 (* compounds *).
 
 (* UNEXPORTED
 End Definition_MS.

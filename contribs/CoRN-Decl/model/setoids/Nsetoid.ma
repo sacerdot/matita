@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/model/setoids/Nsetoid".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: Nsetoid.v,v 1.4 2004/04/06 15:46:04 lcf Exp $ *)
 

@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/ftc/Partitions".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: Partitions.v,v 1.7 2004/04/23 10:01:00 lcf Exp $ *)
 
@@ -52,7 +52,7 @@ coercion);
 
 inline "cic:/CoRN/ftc/Partitions/Partition.ind".
 
-coercion "cic:/matita/CoRN-Decl/ftc/Partitions/Pts.con" 0 (* compounds *).
+coercion cic:/matita/CoRN-Decl/ftc/Partitions/Pts.con 0 (* compounds *).
 
 (*#* Two immediate consequences of this are that [ai [<=] aj] whenever
 [i < j] and that [ai] is in [[a,b]] for all [i].

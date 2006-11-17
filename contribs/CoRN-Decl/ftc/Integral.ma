@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/ftc/Integral".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: Integral.v,v 1.10 2004/04/23 10:00:59 lcf Exp $ *)
 
@@ -159,6 +159,10 @@ inline "cic:/CoRN/ftc/Integral/Hab.var".
 inline "cic:/CoRN/ftc/Integral/I.con".
 
 (* end hide *)
+
+(* NOTATION
+Notation Integral := (integral _ _ Hab).
+*)
 
 (* UNEXPORTED
 Section Well_Definedness.

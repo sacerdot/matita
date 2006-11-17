@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/tactics/DiffTactics1".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* begin hide *)
 

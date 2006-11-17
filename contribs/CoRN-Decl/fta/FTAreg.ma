@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/fta/FTAreg".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: FTAreg.v,v 1.4 2004/04/23 10:00:57 lcf Exp $ *)
 
@@ -73,11 +73,11 @@ inline "cic:/CoRN/fta/FTAreg/p0ltc0.var".
 
 inline "cic:/CoRN/fta/FTAreg/Knes_tup.ind".
 
-coercion "cic:/matita/CoRN-Decl/fta/FTAreg/z_el.con" 0 (* compounds *).
+coercion cic:/matita/CoRN-Decl/fta/FTAreg/z_el.con 0 (* compounds *).
 
 inline "cic:/CoRN/fta/FTAreg/Knes_tupp.ind".
 
-coercion "cic:/matita/CoRN-Decl/fta/FTAreg/Kntup.con" 0 (* compounds *).
+coercion cic:/matita/CoRN-Decl/fta/FTAreg/Kntup.con 0 (* compounds *).
 
 inline "cic:/CoRN/fta/FTAreg/Knes_fun.con".
 

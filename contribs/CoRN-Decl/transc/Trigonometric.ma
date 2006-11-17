@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/transc/Trigonometric".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: Trigonometric.v,v 1.5 2004/04/23 10:01:08 lcf Exp $ *)
 

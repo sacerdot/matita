@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/ftc/FunctSequence".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: FunctSequence.v,v 1.5 2004/04/23 10:00:58 lcf Exp $ *)
 

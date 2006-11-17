@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/transc/TaylorSeries".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: TaylorSeries.v,v 1.7 2004/04/23 10:01:08 lcf Exp $ *)
 

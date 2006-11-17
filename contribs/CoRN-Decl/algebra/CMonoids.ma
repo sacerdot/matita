@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/algebra/CMonoids".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: CMonoids.v,v 1.3 2004/04/07 15:07:57 lcf Exp $ *)
 
@@ -51,7 +51,7 @@ inline "cic:/CoRN/algebra/CMonoids/is_CMonoid.ind".
 
 inline "cic:/CoRN/algebra/CMonoids/CMonoid.ind".
 
-coercion "cic:/matita/CoRN-Decl/algebra/CMonoids/cm_crr.con" 0 (* compounds *).
+coercion cic:/matita/CoRN-Decl/algebra/CMonoids/cm_crr.con 0 (* compounds *).
 
 (*#*
 %\begin{nameconvention}%
@@ -68,6 +68,10 @@ The predicate "non-zero" is defined.
 In lemmas we will continue to write [x [#] Zero], rather than
 [(nonZeroP x)], but the predicate is useful for some high-level definitions,
 e.g. for the setoid of non-zeros.
+*)
+
+(* NOTATION
+Notation Zero := (cm_unit _).
 *)
 
 inline "cic:/CoRN/algebra/CMonoids/nonZeroP.con".

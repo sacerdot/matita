@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/ftc/RefLemma".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: RefLemma.v,v 1.7 2004/04/23 10:01:00 lcf Exp $ *)
 
@@ -186,7 +186,23 @@ inline "cic:/CoRN/ftc/RefLemma/RL_h.con".
 
 inline "cic:/CoRN/ftc/RefLemma/RL_g.con".
 
+(* NOTATION
+Notation g := RL_g.
+*)
+
+(* NOTATION
+Notation h := RL_h.
+*)
+
 inline "cic:/CoRN/ftc/RefLemma/ref_calc1.con".
+
+(* NOTATION
+Notation just1 := (incF _ (Pts_part_lemma _ _ _ _ _ _ HfP _ _)).
+*)
+
+(* NOTATION
+Notation just2 := (incF _ (Pts_part_lemma _ _ _ _ _ _ HfQ _ _)).
+*)
 
 inline "cic:/CoRN/ftc/RefLemma/ref_calc2.con".
 
@@ -427,6 +443,10 @@ Section Fourth_Refinement_Lemma.
 (* begin hide *)
 
 inline "cic:/CoRN/ftc/RefLemma/Fa.con".
+
+(* NOTATION
+Notation just := (fun z => incF _ (Pts_part_lemma _ _ _ _ _ _ z _ _)).
+*)
 
 inline "cic:/CoRN/ftc/RefLemma/RL_sum_lemma_aux.con".
 

@@ -16,13 +16,13 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/devel/loeb/per/lst2fun".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 inline "cic:/CoRN/devel/loeb/per/lst2fun/F'.con".
 
 inline "cic:/CoRN/devel/loeb/per/lst2fun/F.ind".
 
-coercion "cic:/matita/CoRN-Decl/devel/loeb/per/lst2fun/F_crr.con" 0 (* compounds *).
+coercion cic:/matita/CoRN-Decl/devel/loeb/per/lst2fun/F_crr.con 0 (* compounds *).
 
 inline "cic:/CoRN/devel/loeb/per/lst2fun/to_nat.con".
 
@@ -30,7 +30,7 @@ inline "cic:/CoRN/devel/loeb/per/lst2fun/to_nat.con".
 Implicit Arguments to_nat [n].
 *)
 
-coercion "cic:/matita/CoRN-Decl/devel/loeb/per/lst2fun/to_nat.con" 0 (* compounds *).
+coercion cic:/matita/CoRN-Decl/devel/loeb/per/lst2fun/to_nat.con 0 (* compounds *).
 
 include "algebra/CSetoids.ma".
 

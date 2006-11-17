@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/fta/KneserLemma".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: KneserLemma.v,v 1.7 2004/04/23 10:00:57 lcf Exp $ *)
 

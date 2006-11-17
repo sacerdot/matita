@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/algebra/CFields".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: CFields.v,v 1.12 2004/04/23 10:00:52 lcf Exp $ *)
 
@@ -125,7 +125,7 @@ inline "cic:/CoRN/algebra/CFields/is_CField.con".
 
 inline "cic:/CoRN/algebra/CFields/CField.ind".
 
-coercion "cic:/matita/CoRN-Decl/algebra/CFields/cf_crr.con" 0 (* compounds *).
+coercion cic:/matita/CoRN-Decl/algebra/CFields/cf_crr.con 0 (* compounds *).
 
 (* End_SpecReals *)
 
@@ -147,6 +147,10 @@ inline "cic:/CoRN/algebra/CFields/cf_div.con".
 
 (* UNEXPORTED
 Implicit Arguments cf_div [F].
+*)
+
+(* NOTATION
+Notation "x [/] y [//] Hy" := (cf_div x y Hy) (at level 80).
 *)
 
 (*#*
@@ -559,8 +563,16 @@ End CField_Ops.
 Implicit Arguments Frecip [X].
 *)
 
+(* NOTATION
+Notation "{1/} x" := (Frecip x) (at level 2, right associativity).
+*)
+
 (* UNEXPORTED
 Implicit Arguments Fdiv [X].
+*)
+
+(* NOTATION
+Infix "{/}" := Fdiv (at level 41, no associativity).
 *)
 
 (* UNEXPORTED

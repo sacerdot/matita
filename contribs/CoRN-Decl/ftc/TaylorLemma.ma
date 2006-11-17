@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/ftc/TaylorLemma".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: TaylorLemma.v,v 1.8 2004/04/23 10:01:01 lcf Exp $ *)
 
@@ -97,6 +97,14 @@ corresponding to [a] and [b].
 inline "cic:/CoRN/ftc/TaylorLemma/TL_compact_a.con".
 
 inline "cic:/CoRN/ftc/TaylorLemma/TL_compact_b.con".
+
+(* NOTATION
+Notation A := (Build_subcsetoid_crr IR _ _ TL_compact_a).
+*)
+
+(* NOTATION
+Notation B := (Build_subcsetoid_crr IR _ _ TL_compact_b).
+*)
 
 (* end hide *)
 

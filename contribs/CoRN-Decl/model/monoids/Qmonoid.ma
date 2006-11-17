@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/model/monoids/Qmonoid".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: Qmonoid.v,v 1.7 2004/04/08 08:20:33 lcf Exp $ *)
 

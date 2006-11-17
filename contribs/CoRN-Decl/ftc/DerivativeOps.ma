@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/ftc/DerivativeOps".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: DerivativeOps.v,v 1.3 2004/04/23 10:00:58 lcf Exp $ *)
 

@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/algebra/CAbMonoids".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 include "algebra/CMonoids.ma".
 
@@ -33,7 +33,7 @@ inline "cic:/CoRN/algebra/CAbMonoids/is_CAbMonoid.con".
 
 inline "cic:/CoRN/algebra/CAbMonoids/CAbMonoid.ind".
 
-coercion "cic:/matita/CoRN-Decl/algebra/CAbMonoids/cam_crr.con" 0 (* compounds *).
+coercion cic:/matita/CoRN-Decl/algebra/CAbMonoids/cam_crr.con 0 (* compounds *).
 
 (* UNEXPORTED
 Section AbMonoid_Axioms.

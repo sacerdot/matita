@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/ftc/Continuity".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: Continuity.v,v 1.6 2004/04/23 10:00:58 lcf Exp $ *)
 

@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/metrics/ContFunctions".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: ContFunctions.v,v 1.3 2004/04/23 10:01:02 lcf Exp $ *)
 

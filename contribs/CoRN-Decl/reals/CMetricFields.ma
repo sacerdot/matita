@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/reals/CMetricFields".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: CMetricFields.v,v 1.6 2004/04/23 10:01:03 lcf Exp $ *)
 
@@ -32,10 +32,14 @@ inline "cic:/CoRN/reals/CMetricFields/is_CMetricField.ind".
 
 inline "cic:/CoRN/reals/CMetricFields/CMetricField.ind".
 
-coercion "cic:/matita/CoRN-Decl/reals/CMetricFields/cmf_crr.con" 0 (* compounds *).
+coercion cic:/matita/CoRN-Decl/reals/CMetricFields/cmf_crr.con 0 (* compounds *).
 
 (* UNEXPORTED
 End CMetric_Fields.
+*)
+
+(* NOTATION
+Notation MAbs := (cmf_abs _).
 *)
 
 (* UNEXPORTED
@@ -69,7 +73,7 @@ inline "cic:/CoRN/reals/CMetricFields/MCauchy_prop.con".
 
 inline "cic:/CoRN/reals/CMetricFields/MCauchySeq.ind".
 
-coercion "cic:/matita/CoRN-Decl/reals/CMetricFields/MCS_seq.con" 0 (* compounds *).
+coercion cic:/matita/CoRN-Decl/reals/CMetricFields/MCS_seq.con 0 (* compounds *).
 
 inline "cic:/CoRN/reals/CMetricFields/MseqLimit.con".
 

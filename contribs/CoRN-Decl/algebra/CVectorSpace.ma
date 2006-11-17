@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/algebra/CVectorSpace".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: CVectorSpace.v,v 1.4 2004/04/23 10:00:54 lcf Exp $ *)
 
@@ -44,7 +44,7 @@ Unset Strict Implicit.
 
 inline "cic:/CoRN/algebra/CVectorSpace/VSpace.ind".
 
-coercion "cic:/matita/CoRN-Decl/algebra/CVectorSpace/vs_vs.con" 0 (* compounds *).
+coercion cic:/matita/CoRN-Decl/algebra/CVectorSpace/vs_vs.con 0 (* compounds *).
 
 (* begin hide *)
 
@@ -64,6 +64,10 @@ Hint Resolve vs_assoc vs_unit vs_distl vs_distr: algebra.
 
 (* UNEXPORTED
 Implicit Arguments vs_op [F v].
+*)
+
+(* NOTATION
+Infix "[']" := vs_op (at level 30, no associativity).
 *)
 
 (*#*

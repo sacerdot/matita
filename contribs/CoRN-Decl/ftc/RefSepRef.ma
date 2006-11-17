@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/ftc/RefSepRef".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: RefSepRef.v,v 1.6 2004/04/23 10:01:00 lcf Exp $ *)
 

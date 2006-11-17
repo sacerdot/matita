@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/reals/R_morphism".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* begin hide *)
 
@@ -75,7 +75,7 @@ End morphism_details.
 
 inline "cic:/CoRN/reals/R_morphism/Homomorphism.ind".
 
-coercion "cic:/matita/CoRN-Decl/reals/R_morphism/map.con" 0 (* compounds *).
+coercion cic:/matita/CoRN-Decl/reals/R_morphism/map.con 0 (* compounds *).
 
 (* This might be useful later... 
 Definition Homo_as_CSetoid_fun:=

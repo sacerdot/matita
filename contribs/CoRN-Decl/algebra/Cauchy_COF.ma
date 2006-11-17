@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/algebra/Cauchy_COF".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: Cauchy_COF.v,v 1.8 2004/04/23 10:00:54 lcf Exp $ *)
 

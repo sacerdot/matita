@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/model/semigroups/Zsemigroup".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: Zsemigroup.v,v 1.6 2004/04/08 08:20:35 lcf Exp $ *)
 

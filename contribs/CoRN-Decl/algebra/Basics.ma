@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/algebra/Basics".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: Basics.v,v 1.7 2004/04/09 15:58:31 lcf Exp $ *)
 
@@ -73,6 +73,18 @@ Transparent sym_eq.
 
 (* UNEXPORTED
 Transparent f_equal.
+*)
+
+(* NOTATION
+Notation Pair := (pair (B:=_)).
+*)
+
+(* NOTATION
+Notation Proj1 := (proj1 (B:=_)).
+*)
+
+(* NOTATION
+Notation Proj2 := (proj2 (B:=_)).
 *)
 
 (* Following only needed in finite, but tha's now obsolete
@@ -132,7 +144,7 @@ coercion. *)
 
 (* begin hide *)
 
-coercion "cic:/matita/CoRN-Decl/algebra/Basics/Z_of_nat.con" 0 (* compounds *).
+coercion cic:/Coq/ZArith/BinInt/Z_of_nat.con 0 (* compounds *).
 
 (* end hide *)
 

@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/model/structures/Zsec".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: Zsec.v,v 1.5 2004/04/06 15:46:05 lcf Exp $ *)
 
@@ -34,6 +34,10 @@ We define the apartness as the negation of the Leibniz equality:
 *)
 
 inline "cic:/CoRN/model/structures/Zsec/ap_Z.con".
+
+(* NOTATION
+Infix "{#Z}" := ap_Z (no associativity, at level 90).
+*)
 
 (*#* Some properties of apartness:
 *)
@@ -70,7 +74,7 @@ inline "cic:/CoRN/model/structures/Zsec/Zpos.con".
 
 (* begin hide *)
 
-coercion "cic:/matita/CoRN-Decl/model/structures/Zsec/Zpos.con" 0 (* compounds *).
+coercion cic:/matita/CoRN-Decl/model/structures/Zsec/Zpos.con 0 (* compounds *).
 
 (* end hide *)
 

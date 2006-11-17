@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/algebra/COrdFields".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: COrdFields.v,v 1.6 2004/04/23 10:00:52 lcf Exp $ *)
 
@@ -83,7 +83,7 @@ inline "cic:/CoRN/algebra/COrdFields/is_COrdField.ind".
 
 inline "cic:/CoRN/algebra/COrdFields/COrdField.ind".
 
-coercion "cic:/matita/CoRN-Decl/algebra/COrdFields/cof_crr.con" 0 (* compounds *).
+coercion cic:/matita/CoRN-Decl/algebra/COrdFields/cof_crr.con 0 (* compounds *).
 
 (*#*
 %\begin{nameconvention}%
@@ -96,10 +96,18 @@ is written as [pos].
 Implicit Arguments cof_less [c].
 *)
 
+(* NOTATION
+Infix "[<]" := cof_less (at level 70, no associativity).
+*)
+
 inline "cic:/CoRN/algebra/COrdFields/greater.con".
 
 (* UNEXPORTED
 Implicit Arguments greater [F].
+*)
+
+(* NOTATION
+Infix "[>]" := greater (at level 70, no associativity).
 *)
 
 (* End_SpecReals *)
@@ -119,6 +127,10 @@ In the names of lemmas, [ [<=] ] is written as [leEq] and
 
 (* UNEXPORTED
 Implicit Arguments leEq [F].
+*)
+
+(* NOTATION
+Infix "[<=]" := leEq (at level 70, no associativity).
 *)
 
 (* UNEXPORTED
@@ -404,6 +416,54 @@ Declare Left Step leEq_wdl.
 
 (* UNEXPORTED
 Declare Right Step leEq_wdr.
+*)
+
+(* NOTATION
+Notation " x [/]OneNZ" := (x[/] One[//]ring_non_triv _) (at level 20).
+*)
+
+(* NOTATION
+Notation " x [/]TwoNZ" := (x[/] Two[//]two_ap_zero _) (at level 20).
+*)
+
+(* NOTATION
+Notation " x [/]ThreeNZ" := (x[/] Three[//]three_ap_zero _) (at level 20).
+*)
+
+(* NOTATION
+Notation " x [/]FourNZ" := (x[/] Four[//]four_ap_zero _) (at level 20).
+*)
+
+(* NOTATION
+Notation " x [/]SixNZ" := (x[/] Six[//]six_ap_zero _) (at level 20).
+*)
+
+(* NOTATION
+Notation " x [/]EightNZ" := (x[/] Eight[//]eight_ap_zero _) (at level 20).
+*)
+
+(* NOTATION
+Notation " x [/]NineNZ" := (x[/] Nine[//]nine_ap_zero _) (at level 20).
+*)
+
+(* NOTATION
+Notation " x [/]TwelveNZ" := (x[/] Twelve[//]twelve_ap_zero _) (at level 20).
+*)
+
+(* NOTATION
+Notation " x [/]SixteenNZ" := (x[/] Sixteen[//]sixteen_ap_zero _) (at level 20).
+*)
+
+(* NOTATION
+Notation " x [/]EighteenNZ" := (x[/] Eighteen[//]eighteen_ap_zero _) (at level 20).
+*)
+
+(* NOTATION
+Notation " x [/]TwentyFourNZ" := (x[/] TwentyFour[//]twentyfour_ap_zero _) (at level 20).
+*)
+
+(* NOTATION
+Notation " x [/]FortyEightNZ" := (x[/] FortyEight[//]fortyeight_ap_zero _) (at level 20).
 *)
 
 (* UNEXPORTED

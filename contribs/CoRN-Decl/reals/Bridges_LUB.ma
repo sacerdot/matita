@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/reals/Bridges_LUB".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* begin hide *)
 
@@ -125,6 +125,10 @@ inline "cic:/CoRN/reals/Bridges_LUB/Real_Interval.con".
 inline "cic:/CoRN/reals/Bridges_LUB/dcotrans_analyze.con".
 
 inline "cic:/CoRN/reals/Bridges_LUB/dcotrans_analyze_strong.con".
+
+(* NOTATION
+Notation "( p , q )" := (pairT p q).
+*)
 
 inline "cic:/CoRN/reals/Bridges_LUB/dif_cotrans.con".
 

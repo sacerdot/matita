@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/reals/Cauchy_CReals".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: Cauchy_CReals.v,v 1.5 2004/04/23 10:01:04 lcf Exp $ *)
 
@@ -41,6 +41,10 @@ We start by showing how to inject the rational numbers in the field of Cauchy se
 *)
 
 inline "cic:/CoRN/reals/Cauchy_CReals/F.var".
+
+(* NOTATION
+Notation "'R_COrdField''" := (R_COrdField F).
+*)
 
 inline "cic:/CoRN/reals/Cauchy_CReals/inject_Q.con".
 

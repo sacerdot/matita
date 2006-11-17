@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/tactics/Opaque_algebra".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: Opaque_algebra.v,v 1.1 2004/02/11 10:56:57 lcf Exp $ *)
 

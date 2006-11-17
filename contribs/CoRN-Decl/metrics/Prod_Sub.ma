@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/metrics/Prod_Sub".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: Prod_Sub.v,v 1.4 2004/04/23 10:01:02 lcf Exp $ *)
 

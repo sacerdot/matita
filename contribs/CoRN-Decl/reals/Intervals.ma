@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/reals/Intervals".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: Intervals.v,v 1.10 2004/04/23 10:01:04 lcf Exp $ *)
 
@@ -92,8 +92,16 @@ inline "cic:/CoRN/reals/Intervals/Frestr.con".
 End Intervals.
 *)
 
+(* NOTATION
+Notation Compact := (compact _ _).
+*)
+
 (* UNEXPORTED
 Implicit Arguments Frestr [F P].
+*)
+
+(* NOTATION
+Notation FRestr := (Frestr (compact_wd _ _ _)).
 *)
 
 (* UNEXPORTED

@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/algebra/CPolynomials".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: CPolynomials.v,v 1.9 2004/04/23 10:00:53 lcf Exp $ *)
 
@@ -335,6 +335,10 @@ inline "cic:/CoRN/algebra/CPolynomials/cpoly_linear_fun'.con".
 Implicit Arguments cpoly_linear_fun' [CR].
 *)
 
+(* NOTATION
+Infix "[+X*]" := cpoly_linear_fun' (at level 50, left associativity).
+*)
+
 (*#* ** Apartness, equality, and induction
 %\label{section:poly-equality}%
 *)
@@ -351,6 +355,10 @@ elements of the ring.
 *)
 
 inline "cic:/CoRN/algebra/CPolynomials/CR.var".
+
+(* NOTATION
+Notation RX := (cpoly_cring CR).
+*)
 
 (* UNEXPORTED
 Section helpful_section.
@@ -451,6 +459,10 @@ In the names of lemmas, we write [apply].
 Implicit Arguments cpoly_apply_fun [CR].
 *)
 
+(* NOTATION
+Infix "!" := cpoly_apply_fun (at level 1, no associativity).
+*)
+
 (*#*
 ** Basic properties of polynomials
 %\begin{convention}%
@@ -463,6 +475,10 @@ Section Poly_properties.
 *)
 
 inline "cic:/CoRN/algebra/CPolynomials/R.var".
+
+(* NOTATION
+Notation RX := (cpoly_cring R).
+*)
 
 (*#*
 *** Constant and identity
@@ -577,6 +593,22 @@ Section Poly_Prop_Induction.
 *)
 
 inline "cic:/CoRN/algebra/CPolynomials/CR.var".
+
+(* NOTATION
+Notation Cpoly := (cpoly CR).
+*)
+
+(* NOTATION
+Notation Cpoly_zero := (cpoly_zero CR).
+*)
+
+(* NOTATION
+Notation Cpoly_linear := (cpoly_linear CR).
+*)
+
+(* NOTATION
+Notation Cpoly_cring := (cpoly_cring CR).
+*)
 
 inline "cic:/CoRN/algebra/CPolynomials/cpoly_double_ind.con".
 

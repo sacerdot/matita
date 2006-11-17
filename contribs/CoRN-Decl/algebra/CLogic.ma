@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/algebra/CLogic".
 
-include "CoRN_notation.ma".
+include "CoRN.ma".
 
 (* $Id: CLogic.v,v 1.10 2004/04/09 15:58:31 lcf Exp $ *)
 
@@ -125,6 +125,10 @@ inline "cic:/CoRN/algebra/CLogic/COr.ind".
 Some lemmas to make it possible to use [Step] when reasoning with
 biimplications.*)
 
+(* NOTATION
+Infix "IFF" := Iff (at level 60, right associativity).
+*)
+
 inline "cic:/CoRN/algebra/CLogic/Iff_left.con".
 
 inline "cic:/CoRN/algebra/CLogic/Iff_right.con".
@@ -155,6 +159,14 @@ End Basics.
 
 (* begin hide *)
 
+(* NOTATION
+Infix "or" := COr (at level 85, right associativity).
+*)
+
+(* NOTATION
+Infix "and" := CAnd (at level 80, right associativity).
+*)
+
 (* end hide *)
 
 inline "cic:/CoRN/algebra/CLogic/not_r_cor_rect.con".
@@ -162,6 +174,17 @@ inline "cic:/CoRN/algebra/CLogic/not_r_cor_rect.con".
 inline "cic:/CoRN/algebra/CLogic/not_l_cor_rect.con".
 
 (* begin hide *)
+
+(* NOTATION
+Notation "{ x : A  |  P }" := (sigT (fun x : A => P):CProp)
+  (at level 0, x at level 99) : type_scope.
+*)
+
+(* NOTATION
+Notation "{ x : A  |  P  |  Q }" :=
+  (sig2T A (fun x : A => P) (fun x : A => Q)) (at level 0, x at level 99) :
+  type_scope.
+*)
 
 (* end hide *)
 
@@ -589,4 +612,12 @@ inline "cic:/CoRN/algebra/CLogic/Zgt_mult_conv_absorb_l.con".
 inline "cic:/CoRN/algebra/CLogic/Zgt_mult_reg_absorb_l.con".
 
 inline "cic:/CoRN/algebra/CLogic/Zmult_Sm_Sn.con".
+
+(* NOTATION
+Notation ProjT1 := (proj1_sigT _ _).
+*)
+
+(* NOTATION
+Notation ProjT2 := (proj2_sigT _ _).
+*)
 
