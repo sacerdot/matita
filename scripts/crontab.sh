@@ -65,7 +65,7 @@ fi
 if [ "$DELTA" -lt 0 ]; then
   PERC=0
 else
-  PREC=`lua5.1 scripts/functions.lua proportion $DELTA x $OLD_TIME 100`
+  PERC=`lua5.1 scripts/functions.lua proportion $DELTA x $OLD_TIME 100`
 fi
 if [ "$PERC" -ge 5 ]; then
   cat <<EOT
