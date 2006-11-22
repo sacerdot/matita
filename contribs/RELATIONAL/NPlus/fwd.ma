@@ -40,14 +40,14 @@ theorem nplus_gen_zero_2: \forall p,r. (p + zero == r) \to p = r.
  intros. inversion H; clear H; intros;
  [ auto new timeout=30
  | clear H H1.
-   lapply eq_gen_zero_succ to H2 as H0. apply H0
+   lapply eq_gen_zero_succ to H2 as H0. decompose.
  ].
 qed.
 
 theorem nplus_gen_succ_2: \forall p,q,r. (p + (succ q) == r) \to 
                           \exists s. r = (succ s) \land p + q == s.
  intros. inversion H; clear H; intros;
- [ lapply eq_gen_succ_zero to H as H0. apply H0
+ [ lapply eq_gen_succ_zero to H as H0. decompose.
  | clear H1 H3 r.
    lapply linear eq_gen_succ_succ to H2 as H0.
    subst.
@@ -60,7 +60,7 @@ theorem nplus_gen_zero_3: \forall p,q. (p + q == zero) \to
  intros. inversion H; clear H; intros;
  [ subst. auto new timeout=30
  | clear H H1.
-   lapply eq_gen_zero_succ to H3 as H0. apply H0
+   lapply eq_gen_zero_succ to H3 as H0. decompose.
  ].
 qed.
 

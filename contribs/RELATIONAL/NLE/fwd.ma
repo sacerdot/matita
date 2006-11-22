@@ -36,16 +36,16 @@ theorem nle_gen_succ_succ: \forall x,y. x < succ y \to x <= y.
  auto.
 qed.
 
-theorem nle_gen_succ_zero: \forall (P:Prop). \forall x. x < zero \to P.
+theorem nle_gen_succ_zero: \forall x. x < zero \to False.
  intros.
  lapply linear nle_gen_succ_1 to H. decompose.
- apply (eq_gen_zero_succ ? ? H1).
+ lapply linear eq_gen_zero_succ to H1. decompose.
 qed.
 
 theorem nle_gen_zero_2: \forall x. x <= zero \to x = zero.
  intros 1. elim x; clear x; intros;
  [ auto new timeout=30
- | apply (nle_gen_succ_zero ? ? H1)
+ | lapply linear nle_gen_succ_zero to H1. decompose.
  ].
 qed.
 
