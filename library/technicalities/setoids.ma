@@ -246,10 +246,11 @@ definition equality_morphism_of_symmetric_reflexive_transitive_relation:
     intro;
     unfold transitive in H;
     unfold symmetric in sym;
-    auto.
+    auto depth=4.
   ]
 qed.
 
+(*
 definition equality_morphism_of_asymmetric_areflexive_transitive_relation:
  ∀(A: Type)(Aeq: relation A)(trans: transitive ? Aeq).
   let ASetoidClass1 := AsymmetricAreflexive Contravariant Aeq in
@@ -257,7 +258,7 @@ definition equality_morphism_of_asymmetric_areflexive_transitive_relation:
    (Morphism_Theory (cons ASetoidClass1 (singl ASetoidClass2)) Impl_Relation_Class).
  intros.
  exists Aeq.
- unfold make_compatibility_goal; simpl; unfold impl; eauto.
+ unfold make_compatibility_goal; simpl; unfold impl; auto.
 qed.
 
 definition equality_morphism_of_asymmetric_reflexive_transitive_relation:
@@ -745,3 +746,4 @@ Ltac refl_st := match goal with
 definition gen_st : ∀A : Set. Setoid_Theory ? (@eq A).
 Proof. constructor; congruence. Qed.
 
+*)
