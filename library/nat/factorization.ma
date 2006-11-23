@@ -52,7 +52,7 @@ intros; apply divides_b_true_to_divides;
         apply (trans_lt ? (S O));
         [ unfold lt; apply le_n;
         | assumption; ] *) ] ]
-  | letin x \def prime. auto new.
+  | auto. 
     (* 
     apply prime_to_nth_prime;
     apply prime_smallest_factor_n;
@@ -70,8 +70,8 @@ apply divides_to_divides_b_true.
 cut (prime (nth_prime (max_prime_factor n))).
 apply lt_O_nth_prime_n.apply prime_nth_prime.
 cut (nth_prime (max_prime_factor n) \divides n).
-auto new.
-auto new.
+auto.
+auto.
 (*
   [ apply (transitive_divides ? n);
     [ apply divides_max_prime_factor_n.

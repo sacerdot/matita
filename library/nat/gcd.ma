@@ -39,16 +39,18 @@ definition gcd : nat \to nat \to nat \def
 theorem divides_mod: \forall p,m,n:nat. O < n \to p \divides m \to p \divides n \to
 p \divides (m \mod n).
 intros.elim H1.elim H2.
-apply (witness ? ? (n2 - n1*(m / n))).
+(* apply (witness ? ? (n2 - n1*(m / n))). *)
+apply witness[|
 rewrite > distr_times_minus.
-rewrite < H3.
+rewrite < H3 in \vdash (? ? ? (? % ?)).
 rewrite < assoc_times.
-rewrite < H4.
-apply sym_eq.
-apply plus_to_minus.
+rewrite < H4 in \vdash (? ? ? (? ? (? % ?))).
+apply sym_eq.apply plus_to_minus.
 rewrite > sym_times.
-apply div_mod.
-assumption.
+letin x \def div.
+rewrite < (div_mod ? ? H).
+reflexivity.
+]
 qed.
 
 theorem divides_mod_to_divides: \forall p,m,n:nat. O < n \to

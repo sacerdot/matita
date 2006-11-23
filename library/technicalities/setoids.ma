@@ -228,7 +228,7 @@ definition equality_morphism_of_symmetric_areflexive_transitive_relation:
     unfold transitive in H;
     unfold symmetric in sym;
     intro;
-    auto
+    auto new
   ].
 qed.
 

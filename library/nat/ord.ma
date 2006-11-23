@@ -215,7 +215,7 @@ apply (absurd ? ? H10 H5).
 apply (absurd ? ? H10 H7).
 (* rewrite > H6.
 rewrite > H8. *)
-auto paramodulation library=yes.
+auto paramodulation.
 unfold prime in H. elim H. assumption.
 qed.
 
