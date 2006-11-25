@@ -36,6 +36,7 @@ type abouts =
   | `Current_proof
   | `Us
   | `Coercions
+  | `CoercionsFull
   ]
   
 type mathViewer_entry =
@@ -54,7 +55,8 @@ let string_of_entry = function
   | `About `Blank -> "about:blank"
   | `About `Current_proof -> "about:proof"
   | `About `Us -> "about:us"
-  | `About `Coercions -> "about:coercions"
+  | `About `Coercions -> "about:coercions?tred=true"
+  | `About `CoercionsFull -> "about:coercions"
   | `Check _ -> "check:"
   | `Cic (_, _) -> "term:"
   | `Development d -> "devel:/" ^ d
@@ -77,7 +79,8 @@ let entry_of_string = function
   | "about:blank" -> `About `Blank
   | "about:proof" -> `About `Current_proof
   | "about:us"    -> `About `Us
-  | "about:coercions"    -> `About `Coercions
+  | "about:coercions?tred=true"    -> `About `Coercions
+  | "about:coercions"    -> `About `CoercionsFull
   | _ ->  (* only about entries supported ATM *)
       raise (Invalid_argument "entry_of_string")
 

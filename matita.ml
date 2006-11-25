@@ -198,6 +198,22 @@ let _ =
          let nb = gui#main#hintNotebook in
          nb#goto_page ((nb#current_page + 1) mod 3)); *)
     addDebugSeparator ();
+(*
+    addDebugItem "meets between L and R" 
+      (fun _ -> 
+        let l = CoercDb.coerc_carr_of_term (CicUtil.term_of_uri
+          (UriManager.uri_of_string "cic:/matita/test/L.ind#xpointer(1/1)" )) 
+        in
+        let r = CoercDb.coerc_carr_of_term (CicUtil.term_of_uri
+          (UriManager.uri_of_string "cic:/matita/test/R.ind#xpointer(1/1)" )) 
+        in
+        let meets = CoercGraph.meets l r in
+        prerr_endline "MEETS:";
+        List.iter (fun carr -> prerr_endline (CicPp.ppterm (CoercDb.term_of_carr
+        carr))) meets
+    );
+    addDebugSeparator ();
+*)
     addDebugItem "disable all (pretty printing) notations"
       (fun _ -> CicNotation.set_active_notations []);
     addDebugItem "enable all (pretty printing) notations"
@@ -217,6 +233,9 @@ let _ =
     addDebugItem "show coercions graph" (fun _ ->
       let c = MatitaMathView.cicBrowser () in
       c#load (`About `Coercions));
+    addDebugItem "show coercions graph (full)" (fun _ ->
+      let c = MatitaMathView.cicBrowser () in
+      c#load (`About `CoercionsFull));
     addDebugItem "dump coercions Db" (fun _ ->
       List.iter
       (fun (s,t,ul) -> 

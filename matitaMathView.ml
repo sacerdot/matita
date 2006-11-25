@@ -844,12 +844,15 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
   let load_easter_egg = lazy (
     win#browserImage#set_file (MatitaMisc.image_path "meegg.png"))
   in
-  let load_coerchgraph () = 
+  let load_coerchgraph tred () = 
       let str = CoercGraph.generate_dot_file () in
       let filename, oc = Filename.open_temp_file "matita" ".dot" in
       output_string oc str;
       close_out oc;
-      gviz#load_graph_from_file filename;
+      if tred then
+        gviz#load_graph_from_file ~gviz_cmd:"tred|dot" filename
+      else
+        gviz#load_graph_from_file filename;
       HExtlib.safe_remove filename
   in
   object (self)
@@ -1024,13 +1027,14 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
     method private _load ?(force=false) entry =
       handle_error (fun () ->
        if entry <> current_entry || entry = `About `Current_proof || entry =
-         `About `Coercions || force then
+         `About `Coercions || entry = `About `CoercionsFull || force then
         begin
           (match entry with
           | `About `Current_proof -> self#home ()
           | `About `Blank -> self#blank ()
           | `About `Us -> self#egg ()
-          | `About `Coercions -> self#coerchgraph ()
+          | `About `CoercionsFull -> self#coerchgraph false ()
+          | `About `Coercions -> self#coerchgraph true ()
           | `Check term -> self#_loadCheck term
           | `Cic (term, metasenv) -> self#_loadTermCic term metasenv
           | `Development d -> self#_showDevelDeps d
@@ -1079,8 +1083,8 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
       self#redraw_gviz ~center_on:uri ();
       self#_showGviz
 
-    method private coerchgraph () =
-      load_coerchgraph ();
+    method private coerchgraph tred () =
+      load_coerchgraph tred ();
       self#_showGviz
 
     method private home () =
