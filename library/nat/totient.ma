@@ -31,71 +31,88 @@ qed.
 theorem totient_times: \forall n,m:nat. (gcd m n) = (S O) \to
 totient (n*m) = (totient n)*(totient m).
 intro.
-apply (nat_case n).
-intro.simplify.intro.reflexivity.
-intros 2.apply (nat_case m1).
-rewrite < sym_times.
-rewrite < (sym_times (totient O)).
-simplify.intro.reflexivity.
-intros.
-unfold totient.
-apply (count_times m m2 ? ? ? 
-(\lambda b,a. cr_pair (S m) (S m2) a b) (\lambda x. x \mod (S m)) (\lambda x. x \mod (S m2))).
-intros.unfold cr_pair.
-apply (le_to_lt_to_lt ? (pred ((S m)*(S m2)))).
-unfold min.
-apply le_min_aux_r.unfold lt.
-apply (nat_case ((S m)*(S m2))).apply le_n.
-intro.apply le_n.
-intros.
-generalize in match (mod_cr_pair (S m) (S m2) a b H1 H2 H).
-intro.elim H3.
-apply H4.
-intros.
-generalize in match (mod_cr_pair (S m) (S m2) a b H1 H2 H).
-intro.elim H3.
-apply H5.
-intros.
-generalize in match (mod_cr_pair (S m) (S m2) a b H1 H2 H).
-intro.elim H3.
-apply eqb_elim.
-intro.
-rewrite > eq_to_eqb_true.
-rewrite > eq_to_eqb_true.
-reflexivity.
-rewrite < H4.
-rewrite > sym_gcd.
-rewrite > gcd_mod.
-apply (gcd_times_SO_to_gcd_SO ? ? (S m2)).
-unfold lt.apply le_S_S.apply le_O_n.
-unfold lt.apply le_S_S.apply le_O_n.
-assumption.
-unfold lt.apply le_S_S.apply le_O_n.
-rewrite < H5.
-rewrite > sym_gcd.
-rewrite > gcd_mod.
-apply (gcd_times_SO_to_gcd_SO ? ? (S m)).
-unfold lt.apply le_S_S.apply le_O_n.
-unfold lt.apply le_S_S.apply le_O_n.
-rewrite > sym_times.
-assumption.
-unfold lt.apply le_S_S.apply le_O_n.
-intro.
-apply eqb_elim.
-intro.apply eqb_elim.
-intro.apply False_ind.
-apply H6.
-apply eq_gcd_times_SO.
-unfold lt.apply le_S_S.apply le_O_n.
-unfold lt.apply le_S_S.apply le_O_n.
-rewrite < gcd_mod.
-rewrite > H4.
-rewrite > sym_gcd.assumption.
-unfold lt.apply le_S_S.apply le_O_n.
-rewrite < gcd_mod.
-rewrite > H5.
-rewrite > sym_gcd.assumption.
-unfold lt.apply le_S_S.apply le_O_n.
-intro.reflexivity.
-intro.reflexivity.
+apply (nat_case n)
+  [intros.simplify.reflexivity
+  |intros 2.apply (nat_case m1)
+    [rewrite < sym_times.
+     rewrite < (sym_times (totient O)).
+     simplify.intro.reflexivity.
+     |intros.
+      unfold totient.
+      apply (count_times m m2 ? ? ? 
+             (\lambda b,a. cr_pair (S m) (S m2) a b) 
+             (\lambda x. x \mod (S m)) (\lambda x. x \mod (S m2)))
+       [intros.unfold cr_pair.
+        apply (le_to_lt_to_lt ? (pred ((S m)*(S m2))))
+          [unfold min.
+           apply le_min_aux_r
+          |unfold lt.
+           apply (nat_case ((S m)*(S m2)))
+            [apply le_n|intro.apply le_n]
+          ]
+       |intros.
+        generalize in match (mod_cr_pair (S m) (S m2) a b H1 H2 H).
+        intro.elim H3.
+        apply H4
+       |intros.
+        generalize in match (mod_cr_pair (S m) (S m2) a b H1 H2 H).
+        intro.elim H3.
+        apply H5
+       |intros.
+        generalize in match (mod_cr_pair (S m) (S m2) a b H1 H2 H).
+        intro.elim H3.
+        apply eqb_elim
+          [intro.
+           rewrite > eq_to_eqb_true
+             [rewrite > eq_to_eqb_true
+               [reflexivity
+               |rewrite < H4.
+                rewrite > sym_gcd.
+                rewrite > gcd_mod
+                  [apply (gcd_times_SO_to_gcd_SO ? ? (S m2))
+                    [unfold lt.apply le_S_S.apply le_O_n
+                    |unfold lt.apply le_S_S.apply le_O_n
+                    |assumption
+                    ]
+                  |unfold lt.apply le_S_S.apply le_O_n
+                  ]
+               ]           
+            |rewrite < H5.
+             rewrite > sym_gcd.
+             rewrite > gcd_mod
+               [apply (gcd_times_SO_to_gcd_SO ? ? (S m))
+                  [unfold lt.apply le_S_S.apply le_O_n
+                  |unfold lt.apply le_S_S.apply le_O_n
+                  |rewrite > sym_times.assumption
+                  ]
+               |unfold lt.apply le_S_S.apply le_O_n
+               ]
+            ]
+          |intro.
+           apply eqb_elim
+           [intro.apply eqb_elim
+              [intro.apply False_ind.
+               apply H6.
+               apply eq_gcd_times_SO
+                 [unfold lt.apply le_S_S.apply le_O_n.
+                 |unfold lt.apply le_S_S.apply le_O_n.
+                 |rewrite < gcd_mod
+                    [rewrite > H4.
+                     rewrite > sym_gcd.assumption
+                    |unfold lt.apply le_S_S.apply le_O_n
+                    ]
+                 |rewrite < gcd_mod
+                    [rewrite > H5.
+                     rewrite > sym_gcd.assumption
+                    |unfold lt.apply le_S_S.apply le_O_n
+                    ]
+                 ]
+              |intro.reflexivity
+              ]
+           |intro.reflexivity
+           ]
+         ]
+       ]
+     ]
+   ]
 qed.
