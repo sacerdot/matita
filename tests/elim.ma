@@ -76,5 +76,5 @@ theorem t': \forall x,y. \forall H: sum x y O.
  simplify. intros.
  generalize in match H1.
  rewrite < H2; rewrite < H3.intro.
- rewrite > H4.auto new.
+ rewrite > H4.auto new library.
 qed.

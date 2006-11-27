@@ -42,7 +42,7 @@ theorem t: \forall x,y. \forall H: sum x y O.
  simplify. intros.
  generalize in match H1.
  rewrite < H2; rewrite < H3.intro.
- rewrite > H4.auto new.
+ rewrite > H4.auto new library.
 qed.
 
 theorem t1: \forall x,y. sum x y O \to x = y.
@@ -57,5 +57,5 @@ apply (sum_ind ? (\lambda a,b,K. y=a \to O=b \to x=a) ? ? ? s).*)
 inversion s.
 intros.simplify.
 intros.
-rewrite > H. rewrite < H2.  auto new.
+rewrite > H. rewrite < H2.  auto new library.
 qed.
