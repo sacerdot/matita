@@ -36,22 +36,22 @@ theorem eq_ind':
     [refl_eq \Rightarrow H]).
 qed.
  
-theorem reflexive_eq : \forall A:Type. reflexive A (eq A).
-simplify.intros.apply refl_eq.
-qed.
+variant reflexive_eq : \forall A:Type. reflexive A (eq A)
+\def refl_eq.
+(* simplify.intros.apply refl_eq. *)
     
 theorem symmetric_eq: \forall A:Type. symmetric A (eq A).
 unfold symmetric.intros.elim H. apply refl_eq.
 qed.
 
-theorem sym_eq : \forall A:Type.\forall x,y:A. x=y  \to y=x
+variant sym_eq : \forall A:Type.\forall x,y:A. x=y  \to y=x
 \def symmetric_eq.
 
 theorem transitive_eq : \forall A:Type. transitive A (eq A).
 unfold transitive.intros.elim H1.assumption.
 qed.
 
-theorem trans_eq : \forall A:Type.\forall x,y,z:A. x=y  \to y=z \to x=z
+variant trans_eq : \forall A:Type.\forall x,y,z:A. x=y  \to y=z \to x=z
 \def transitive_eq.
 
 theorem eq_elim_r:
@@ -77,8 +77,8 @@ coercion cic:/matita/logic/equality/eq_f.con.
 
 default "equality"
  cic:/matita/logic/equality/eq.ind
- cic:/matita/logic/equality/sym_eq.con
- cic:/matita/logic/equality/trans_eq.con
+ cic:/matita/logic/equality/symmetric_eq.con
+ cic:/matita/logic/equality/transitive_eq.con
  cic:/matita/logic/equality/eq_ind.con
  cic:/matita/logic/equality/eq_elim_r.con
  cic:/matita/logic/equality/eq_f.con
