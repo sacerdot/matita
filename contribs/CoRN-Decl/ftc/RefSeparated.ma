@@ -27,68 +27,68 @@ include "ftc/COrdLemmas.ma".
 include "ftc/Partitions.ma".
 
 (* UNEXPORTED
-Section Separating__Separated.
+Section Separating__Separated
 *)
 
-inline "cic:/CoRN/ftc/RefSeparated/a.var".
+inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/a.var" "Separating__Separated__".
 
-inline "cic:/CoRN/ftc/RefSeparated/b.var".
+inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/b.var" "Separating__Separated__".
 
-inline "cic:/CoRN/ftc/RefSeparated/Hab.var".
+inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/Hab.var" "Separating__Separated__".
 
-inline "cic:/CoRN/ftc/RefSeparated/I.con".
+inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/I.con" "Separating__Separated__".
 
-inline "cic:/CoRN/ftc/RefSeparated/F.var".
+inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/F.var" "Separating__Separated__".
 
-inline "cic:/CoRN/ftc/RefSeparated/contF.var".
+inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/contF.var" "Separating__Separated__".
 
-inline "cic:/CoRN/ftc/RefSeparated/incF.var".
+inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/incF.var" "Separating__Separated__".
 
-inline "cic:/CoRN/ftc/RefSeparated/Hab'.var".
+inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/Hab'.var" "Separating__Separated__".
 
-inline "cic:/CoRN/ftc/RefSeparated/m.var".
+inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/m.var" "Separating__Separated__".
 
-inline "cic:/CoRN/ftc/RefSeparated/n.var".
+inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/n.var" "Separating__Separated__".
 
-inline "cic:/CoRN/ftc/RefSeparated/P.var".
+inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/P.var" "Separating__Separated__".
 
-inline "cic:/CoRN/ftc/RefSeparated/R.var".
+inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/R.var" "Separating__Separated__".
 
-inline "cic:/CoRN/ftc/RefSeparated/HP.var".
+inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/HP.var" "Separating__Separated__".
 
-inline "cic:/CoRN/ftc/RefSeparated/HR.var".
+inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/HR.var" "Separating__Separated__".
 
 inline "cic:/CoRN/ftc/RefSeparated/RS_pos_n.con".
 
 inline "cic:/CoRN/ftc/RefSeparated/RS_pos_m.con".
 
-inline "cic:/CoRN/ftc/RefSeparated/alpha.var".
+inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/alpha.var" "Separating__Separated__".
 
-inline "cic:/CoRN/ftc/RefSeparated/Halpha.var".
+inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/Halpha.var" "Separating__Separated__".
 
-inline "cic:/CoRN/ftc/RefSeparated/e.con".
+inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/e.con" "Separating__Separated__".
 
 inline "cic:/CoRN/ftc/RefSeparated/RS_He.con".
 
-inline "cic:/CoRN/ftc/RefSeparated/contF'.con".
+inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/contF'.con" "Separating__Separated__".
 
-inline "cic:/CoRN/ftc/RefSeparated/d.con".
+inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/d.con" "Separating__Separated__".
 
 inline "cic:/CoRN/ftc/RefSeparated/RS_Hd.con".
 
 inline "cic:/CoRN/ftc/RefSeparated/RS_Hd'.con".
 
-inline "cic:/CoRN/ftc/RefSeparated/csi.var".
+inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/csi.var" "Separating__Separated__".
 
-inline "cic:/CoRN/ftc/RefSeparated/Hcsi.var".
+inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/Hcsi.var" "Separating__Separated__".
 
-inline "cic:/CoRN/ftc/RefSeparated/M.con".
+inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/M.con" "Separating__Separated__".
 
-inline "cic:/CoRN/ftc/RefSeparated/deltaP.con".
+inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/deltaP.con" "Separating__Separated__".
 
-inline "cic:/CoRN/ftc/RefSeparated/deltaR.con".
+inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/deltaR.con" "Separating__Separated__".
 
-inline "cic:/CoRN/ftc/RefSeparated/delta.con".
+inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/delta.con" "Separating__Separated__".
 
 inline "cic:/CoRN/ftc/RefSeparated/RS_delta_deltaP.con".
 
@@ -101,24 +101,24 @@ inline "cic:/CoRN/ftc/RefSeparated/RS_delta_d.con".
 inline "cic:/CoRN/ftc/RefSeparated/RS_delta_pos.con".
 
 (* UNEXPORTED
-Section Defining_ai'.
+Section Defining_ai'
 *)
 
-inline "cic:/CoRN/ftc/RefSeparated/i.var".
+inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/Defining_ai'/i.var" "Separating__Separated__Defining_ai'__".
 
-inline "cic:/CoRN/ftc/RefSeparated/Hi.var".
+inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/Defining_ai'/Hi.var" "Separating__Separated__Defining_ai'__".
 
 inline "cic:/CoRN/ftc/RefSeparated/separation_conseq.con".
 
-inline "cic:/CoRN/ftc/RefSeparated/pred1.con".
+inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/Defining_ai'/pred1.con" "Separating__Separated__Defining_ai'__".
 
-inline "cic:/CoRN/ftc/RefSeparated/pred2.con".
+inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/Defining_ai'/pred2.con" "Separating__Separated__Defining_ai'__".
 
 inline "cic:/CoRN/ftc/RefSeparated/sep__sep_aux_lemma.con".
 
-inline "cic:/CoRN/ftc/RefSeparated/Hi0.var".
+inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/Defining_ai'/Hi0.var" "Separating__Separated__Defining_ai'__".
 
-inline "cic:/CoRN/ftc/RefSeparated/Hin.var".
+inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/Defining_ai'/Hin.var" "Separating__Separated__Defining_ai'__".
 
 inline "cic:/CoRN/ftc/RefSeparated/sep__sep_fun_i.con".
 
@@ -129,7 +129,7 @@ inline "cic:/CoRN/ftc/RefSeparated/sep__sep_less.con".
 inline "cic:/CoRN/ftc/RefSeparated/sep__sep_ap.con".
 
 (* UNEXPORTED
-End Defining_ai'.
+End Defining_ai'
 *)
 
 inline "cic:/CoRN/ftc/RefSeparated/sep__sep_fun.con".
@@ -150,9 +150,9 @@ inline "cic:/CoRN/ftc/RefSeparated/sep__sep_part.con".
 
 inline "cic:/CoRN/ftc/RefSeparated/sep__sep_lemma.con".
 
-inline "cic:/CoRN/ftc/RefSeparated/g.var".
+inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/g.var" "Separating__Separated__".
 
-inline "cic:/CoRN/ftc/RefSeparated/gP.var".
+inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/gP.var" "Separating__Separated__".
 
 inline "cic:/CoRN/ftc/RefSeparated/sep__sep_points.con".
 
@@ -174,7 +174,7 @@ inline "cic:/CoRN/ftc/RefSeparated/sep__sep_Sum.con".
 inline "cic:/CoRN/ftc/RefSeparated/sep__sep_Mesh.con".
 
 (* UNEXPORTED
-End Separating__Separated.
+End Separating__Separated
 *)
 
 (* end hide *)

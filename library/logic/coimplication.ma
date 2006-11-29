@@ -12,49 +12,36 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* This file was automatically generated: do not edit *********************)
+set "baseuri" "cic:/matita/logic/coimplication".
 
-set "baseuri" "cic:/matita/CoRN-Decl/fta/CPoly_Contin1".
+include "logic/connectives.ma".
 
-include "CoRN.ma".
+definition Iff : Prop \to Prop \to Prop \def
+   \lambda A,B. (A \to B) \land (B \to A).
+   
+ (*CSC: the URI must disappear: there is a bug now *)
+interpretation "logical iff" 'iff x y = (cic:/matita/logic/coimplication/Iff.con x y).
 
-(* $Id: CPoly_Contin1.v,v 1.3 2004/04/23 10:00:56 lcf Exp $ *)
+notation > "hvbox(a break \liff b)" 
+  left associative with precedence 25
+for @{ 'iff $a $b }.
 
-include "fta/CC_Props.ma".
+notation < "hvbox(a break \leftrightarrow b)" 
+  left associative with precedence 25
+for @{ 'iff $a $b }.
 
-(*#* * Continuity of complex polynomials
-*)
+theorem iff_intro: \forall A,B. (A \to B) \to (B \to A) \to (A \liff B).
+ unfold Iff. intros. split; intros; auto.
+qed.
 
-(* UNEXPORTED
-Section Mult_CC_Continuous
-*)
+theorem iff_refl: \forall A. A \liff A.
+ intros. apply iff_intro; intros; auto.
+qed.
 
-inline "cic:/CoRN/fta/CPoly_Contin1/mult_absCC.con".
+theorem iff_sym: \forall A,B. A \liff B \to B \liff A.
+ intros. decompose. apply iff_intro; intros; auto.
+qed.
 
-inline "cic:/CoRN/fta/CPoly_Contin1/estimate_absCC.con".
-
-inline "cic:/CoRN/fta/CPoly_Contin1/mult_CC_contin.con".
-
-(* UNEXPORTED
-End Mult_CC_Continuous
-*)
-
-(* UNEXPORTED
-Section CPoly_CC_Continuous
-*)
-
-(*#*
-%\begin{convention}% Let [g] be a polynomial over the complex numbers.
-%\end{convention}%
-*)
-
-inline "cic:/CoRN/fta/CPoly_Contin1/CPoly_CC_Continuous/g.var" "CPoly_CC_Continuous__".
-
-inline "cic:/CoRN/fta/CPoly_Contin1/cpoly_CC_contin.con".
-
-inline "cic:/CoRN/fta/CPoly_Contin1/contin_polyCC.con".
-
-(* UNEXPORTED
-End CPoly_CC_Continuous
-*)
-
+theorem iff_trans: \forall A,B,C. A \liff B \to B \liff C \to A \liff C.
+ intros. decompose. apply iff_intro; intros; auto.
+qed.

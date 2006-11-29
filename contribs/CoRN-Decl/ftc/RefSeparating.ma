@@ -27,50 +27,50 @@ include "ftc/COrdLemmas.ma".
 include "ftc/Partitions.ma".
 
 (* UNEXPORTED
-Section Separating_Partition.
+Section Separating_Partition
 *)
 
-inline "cic:/CoRN/ftc/RefSeparating/a.var".
+inline "cic:/CoRN/ftc/RefSeparating/Separating_Partition/a.var" "Separating_Partition__".
 
-inline "cic:/CoRN/ftc/RefSeparating/b.var".
+inline "cic:/CoRN/ftc/RefSeparating/Separating_Partition/b.var" "Separating_Partition__".
 
-inline "cic:/CoRN/ftc/RefSeparating/Hab.var".
+inline "cic:/CoRN/ftc/RefSeparating/Separating_Partition/Hab.var" "Separating_Partition__".
 
-inline "cic:/CoRN/ftc/RefSeparating/I.con".
+inline "cic:/CoRN/ftc/RefSeparating/Separating_Partition/I.con" "Separating_Partition__".
 
-inline "cic:/CoRN/ftc/RefSeparating/F.var".
+inline "cic:/CoRN/ftc/RefSeparating/Separating_Partition/F.var" "Separating_Partition__".
 
-inline "cic:/CoRN/ftc/RefSeparating/contF.var".
+inline "cic:/CoRN/ftc/RefSeparating/Separating_Partition/contF.var" "Separating_Partition__".
 
-inline "cic:/CoRN/ftc/RefSeparating/incF.var".
+inline "cic:/CoRN/ftc/RefSeparating/Separating_Partition/incF.var" "Separating_Partition__".
 
-inline "cic:/CoRN/ftc/RefSeparating/Hab'.var".
+inline "cic:/CoRN/ftc/RefSeparating/Separating_Partition/Hab'.var" "Separating_Partition__".
 
-inline "cic:/CoRN/ftc/RefSeparating/n.var".
+inline "cic:/CoRN/ftc/RefSeparating/Separating_Partition/n.var" "Separating_Partition__".
 
-inline "cic:/CoRN/ftc/RefSeparating/P.var".
+inline "cic:/CoRN/ftc/RefSeparating/Separating_Partition/P.var" "Separating_Partition__".
 
-inline "cic:/CoRN/ftc/RefSeparating/alpha.var".
+inline "cic:/CoRN/ftc/RefSeparating/Separating_Partition/alpha.var" "Separating_Partition__".
 
-inline "cic:/CoRN/ftc/RefSeparating/Halpha.var".
+inline "cic:/CoRN/ftc/RefSeparating/Separating_Partition/Halpha.var" "Separating_Partition__".
 
-inline "cic:/CoRN/ftc/RefSeparating/csi.var".
+inline "cic:/CoRN/ftc/RefSeparating/Separating_Partition/csi.var" "Separating_Partition__".
 
-inline "cic:/CoRN/ftc/RefSeparating/Hcsi.var".
+inline "cic:/CoRN/ftc/RefSeparating/Separating_Partition/Hcsi.var" "Separating_Partition__".
 
-inline "cic:/CoRN/ftc/RefSeparating/M.con".
+inline "cic:/CoRN/ftc/RefSeparating/Separating_Partition/M.con" "Separating_Partition__".
 
 inline "cic:/CoRN/ftc/RefSeparating/RS'_pos_n.con".
 
 inline "cic:/CoRN/ftc/RefSeparating/SPap_n.con".
 
-inline "cic:/CoRN/ftc/RefSeparating/delta.con".
+inline "cic:/CoRN/ftc/RefSeparating/Separating_Partition/delta.con" "Separating_Partition__".
 
 inline "cic:/CoRN/ftc/RefSeparating/RS'_delta_pos.con".
 
 inline "cic:/CoRN/ftc/RefSeparating/RS'_delta_csi.con".
 
-inline "cic:/CoRN/ftc/RefSeparating/Hab''.var".
+inline "cic:/CoRN/ftc/RefSeparating/Separating_Partition/Hab''.var" "Separating_Partition__".
 
 inline "cic:/CoRN/ftc/RefSeparating/sep__part_lemma.con".
 
@@ -134,11 +134,11 @@ inline "cic:/CoRN/ftc/RefSeparating/sep__part_mon.con".
 
 inline "cic:/CoRN/ftc/RefSeparating/sep__part_mon_Mesh.con".
 
-inline "cic:/CoRN/ftc/RefSeparating/g.var".
+inline "cic:/CoRN/ftc/RefSeparating/Separating_Partition/g.var" "Separating_Partition__".
 
-inline "cic:/CoRN/ftc/RefSeparating/gP.var".
+inline "cic:/CoRN/ftc/RefSeparating/Separating_Partition/gP.var" "Separating_Partition__".
 
-inline "cic:/CoRN/ftc/RefSeparating/gP'.var".
+inline "cic:/CoRN/ftc/RefSeparating/Separating_Partition/gP'.var" "Separating_Partition__".
 
 inline "cic:/CoRN/ftc/RefSeparating/sep__part_pts.con".
 
@@ -178,7 +178,7 @@ inline "cic:/CoRN/ftc/RefSeparating/sep__part_aux.con".
 inline "cic:/CoRN/ftc/RefSeparating/sep__part_Sum.con".
 
 (* UNEXPORTED
-End Separating_Partition.
+End Separating_Partition
 *)
 
 (* end hide *)

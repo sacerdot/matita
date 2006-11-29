@@ -23,7 +23,7 @@ include "CoRN.ma".
 include "transc/Trigonometric.ma".
 
 (* UNEXPORTED
-Section Sum_and_so_on.
+Section Sum_and_so_on
 *)
 
 (* UNEXPORTED
@@ -32,13 +32,13 @@ Opaque Sine Cosine.
 
 (* begin hide *)
 
-inline "cic:/CoRN/transc/SinCos/F.con".
+inline "cic:/CoRN/transc/SinCos/Sum_and_so_on/F.con" "Sum_and_so_on__".
 
-inline "cic:/CoRN/transc/SinCos/G.con".
+inline "cic:/CoRN/transc/SinCos/Sum_and_so_on/G.con" "Sum_and_so_on__".
 
-inline "cic:/CoRN/transc/SinCos/F'.con".
+inline "cic:/CoRN/transc/SinCos/Sum_and_so_on/F'.con" "Sum_and_so_on__".
 
-inline "cic:/CoRN/transc/SinCos/G'.con".
+inline "cic:/CoRN/transc/SinCos/Sum_and_so_on/G'.con" "Sum_and_so_on__".
 
 (* end hide *)
 
@@ -103,7 +103,7 @@ Hint Resolve FFT: algebra.
 inline "cic:/CoRN/transc/SinCos/FFT'.con".
 
 (* UNEXPORTED
-End Sum_and_so_on.
+End Sum_and_so_on
 *)
 
 (* UNEXPORTED
@@ -124,7 +124,7 @@ Opaque Min Sine Cosine.
 *)
 
 (* UNEXPORTED
-Section Basic_Properties.
+Section Basic_Properties
 *)
 
 (*#* **Basic properties
@@ -167,7 +167,7 @@ inline "cic:/CoRN/transc/SinCos/Sin_less_One.con".
 inline "cic:/CoRN/transc/SinCos/AbsIR_Sin_less_One.con".
 
 (* UNEXPORTED
-End Basic_Properties.
+End Basic_Properties
 *)
 
 (* UNEXPORTED

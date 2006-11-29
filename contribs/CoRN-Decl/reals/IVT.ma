@@ -23,7 +23,7 @@ include "CoRN.ma".
 include "reals/CPoly_Contin.ma".
 
 (* UNEXPORTED
-Section Nested_Intervals.
+Section Nested_Intervals
 *)
 
 (*#* * Intermediate Value Theorem
@@ -39,17 +39,17 @@ Section Nested_Intervals.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/reals/IVT/a.var".
+inline "cic:/CoRN/reals/IVT/Nested_Intervals/a.var" "Nested_Intervals__".
 
-inline "cic:/CoRN/reals/IVT/b.var".
+inline "cic:/CoRN/reals/IVT/Nested_Intervals/b.var" "Nested_Intervals__".
 
-inline "cic:/CoRN/reals/IVT/a_mon.var".
+inline "cic:/CoRN/reals/IVT/Nested_Intervals/a_mon.var" "Nested_Intervals__".
 
-inline "cic:/CoRN/reals/IVT/b_mon.var".
+inline "cic:/CoRN/reals/IVT/Nested_Intervals/b_mon.var" "Nested_Intervals__".
 
-inline "cic:/CoRN/reals/IVT/a_b.var".
+inline "cic:/CoRN/reals/IVT/Nested_Intervals/a_b.var" "Nested_Intervals__".
 
-inline "cic:/CoRN/reals/IVT/b_a.var".
+inline "cic:/CoRN/reals/IVT/Nested_Intervals/b_a.var" "Nested_Intervals__".
 
 inline "cic:/CoRN/reals/IVT/a_mon'.con".
 
@@ -61,7 +61,7 @@ inline "cic:/CoRN/reals/IVT/intervals_cauchy.con".
 
 (* begin hide *)
 
-inline "cic:/CoRN/reals/IVT/a'.con".
+inline "cic:/CoRN/reals/IVT/Nested_Intervals/a'.con" "Nested_Intervals__".
 
 (* end hide *)
 
@@ -71,9 +71,9 @@ inline "cic:/CoRN/reals/IVT/Cnested_intervals_limit.con".
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/reals/IVT/f.var".
+inline "cic:/CoRN/reals/IVT/Nested_Intervals/f.var" "Nested_Intervals__".
 
-inline "cic:/CoRN/reals/IVT/f_contin.var".
+inline "cic:/CoRN/reals/IVT/Nested_Intervals/f_contin.var" "Nested_Intervals__".
 
 inline "cic:/CoRN/reals/IVT/f_contin_pos.con".
 
@@ -81,35 +81,35 @@ inline "cic:/CoRN/reals/IVT/f_contin_neg.con".
 
 (*#* Assume also that [forall i, f (a i) [<=] Zero [<=] f (b i)]. *)
 
-inline "cic:/CoRN/reals/IVT/f_a.var".
+inline "cic:/CoRN/reals/IVT/Nested_Intervals/f_a.var" "Nested_Intervals__".
 
-inline "cic:/CoRN/reals/IVT/f_b.var".
+inline "cic:/CoRN/reals/IVT/Nested_Intervals/f_b.var" "Nested_Intervals__".
 
 inline "cic:/CoRN/reals/IVT/Cnested_intervals_zero.con".
 
 (* UNEXPORTED
-End Nested_Intervals.
+End Nested_Intervals
 *)
 
 (* UNEXPORTED
-Section Bisection.
+Section Bisection
 *)
 
 (*#* ** Bissections *)
 
-inline "cic:/CoRN/reals/IVT/f.var".
+inline "cic:/CoRN/reals/IVT/Bisection/f.var" "Bisection__".
 
-inline "cic:/CoRN/reals/IVT/f_apzero_interval.var".
+inline "cic:/CoRN/reals/IVT/Bisection/f_apzero_interval.var" "Bisection__".
 
-inline "cic:/CoRN/reals/IVT/a.var".
+inline "cic:/CoRN/reals/IVT/Bisection/a.var" "Bisection__".
 
-inline "cic:/CoRN/reals/IVT/b.var".
+inline "cic:/CoRN/reals/IVT/Bisection/b.var" "Bisection__".
 
-inline "cic:/CoRN/reals/IVT/a_b.var".
+inline "cic:/CoRN/reals/IVT/Bisection/a_b.var" "Bisection__".
 
-inline "cic:/CoRN/reals/IVT/f_a.var".
+inline "cic:/CoRN/reals/IVT/Bisection/f_a.var" "Bisection__".
 
-inline "cic:/CoRN/reals/IVT/f_b.var".
+inline "cic:/CoRN/reals/IVT/Bisection/f_b.var" "Bisection__".
 
 (*#*
 %\begin{convention}% Let [Small] denote [Two[/]ThreeNZ], [lft] be [(Two[*]a[+]b) [/]ThreeNZ] and [rht] be [(a[+]Two[*]b) [/]ThreeNZ].
@@ -118,11 +118,11 @@ inline "cic:/CoRN/reals/IVT/f_b.var".
 
 (* begin hide *)
 
-inline "cic:/CoRN/reals/IVT/Small.con".
+inline "cic:/CoRN/reals/IVT/Bisection/Small.con" "Bisection__".
 
-inline "cic:/CoRN/reals/IVT/lft.con".
+inline "cic:/CoRN/reals/IVT/Bisection/lft.con" "Bisection__".
 
-inline "cic:/CoRN/reals/IVT/rht.con".
+inline "cic:/CoRN/reals/IVT/Bisection/rht.con" "Bisection__".
 
 (* end hide *)
 
@@ -143,20 +143,20 @@ Hint Resolve smaller_lft smaller_rht: algebra.
 inline "cic:/CoRN/reals/IVT/Cbisect'.con".
 
 (* UNEXPORTED
-End Bisection.
+End Bisection
 *)
 
 (* UNEXPORTED
-Section Bisect_Interval.
+Section Bisect_Interval
 *)
 
-inline "cic:/CoRN/reals/IVT/f.var".
+inline "cic:/CoRN/reals/IVT/Bisect_Interval/f.var" "Bisect_Interval__".
 
-inline "cic:/CoRN/reals/IVT/C_f_apzero_interval.var".
+inline "cic:/CoRN/reals/IVT/Bisect_Interval/C_f_apzero_interval.var" "Bisect_Interval__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/reals/IVT/Small.con".
+inline "cic:/CoRN/reals/IVT/Bisect_Interval/Small.con" "Bisect_Interval__".
 
 (* end hide *)
 
@@ -169,44 +169,44 @@ inline "cic:/CoRN/reals/IVT/bisect.con".
 inline "cic:/CoRN/reals/IVT/bisect_prop.con".
 
 (* UNEXPORTED
-End Bisect_Interval.
+End Bisect_Interval
 *)
 
 (* UNEXPORTED
-Section IVT_Op.
+Section IVT_Op
 *)
 
 (*#* ** IVT for operations
 Same conventions as before.
 *)
 
-inline "cic:/CoRN/reals/IVT/f.var".
+inline "cic:/CoRN/reals/IVT/IVT_Op/f.var" "IVT_Op__".
 
-inline "cic:/CoRN/reals/IVT/f_contin.var".
+inline "cic:/CoRN/reals/IVT/IVT_Op/f_contin.var" "IVT_Op__".
 
-inline "cic:/CoRN/reals/IVT/f_apzero_interval.var".
+inline "cic:/CoRN/reals/IVT/IVT_Op/f_apzero_interval.var" "IVT_Op__".
 
-inline "cic:/CoRN/reals/IVT/a.var".
+inline "cic:/CoRN/reals/IVT/IVT_Op/a.var" "IVT_Op__".
 
-inline "cic:/CoRN/reals/IVT/b.var".
+inline "cic:/CoRN/reals/IVT/IVT_Op/b.var" "IVT_Op__".
 
-inline "cic:/CoRN/reals/IVT/a_b.var".
+inline "cic:/CoRN/reals/IVT/IVT_Op/a_b.var" "IVT_Op__".
 
-inline "cic:/CoRN/reals/IVT/f_a.var".
+inline "cic:/CoRN/reals/IVT/IVT_Op/f_a.var" "IVT_Op__".
 
-inline "cic:/CoRN/reals/IVT/f_b.var".
+inline "cic:/CoRN/reals/IVT/IVT_Op/f_b.var" "IVT_Op__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/reals/IVT/Small.con".
+inline "cic:/CoRN/reals/IVT/IVT_Op/Small.con" "IVT_Op__".
 
 (* end hide *)
 
 inline "cic:/CoRN/reals/IVT/interval_sequence.con".
 
-inline "cic:/CoRN/reals/IVT/a_.con".
+inline "cic:/CoRN/reals/IVT/IVT_Op/a_.con" "IVT_Op__".
 
-inline "cic:/CoRN/reals/IVT/b_.con".
+inline "cic:/CoRN/reals/IVT/IVT_Op/b_.con" "IVT_Op__".
 
 inline "cic:/CoRN/reals/IVT/intervals_smaller.con".
 
@@ -219,11 +219,11 @@ inline "cic:/CoRN/reals/IVT/intervals_small.con".
 inline "cic:/CoRN/reals/IVT/Civt_op.con".
 
 (* UNEXPORTED
-End IVT_Op.
+End IVT_Op
 *)
 
 (* UNEXPORTED
-Section IVT_Poly.
+Section IVT_Poly
 *)
 
 (*#* ** IVT for polynomials *)
@@ -231,6 +231,6 @@ Section IVT_Poly.
 inline "cic:/CoRN/reals/IVT/Civt_poly.con".
 
 (* UNEXPORTED
-End IVT_Poly.
+End IVT_Poly
 *)
 

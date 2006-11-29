@@ -26,7 +26,7 @@ include "complex/CComplex.ma".
 ** Properties of [AbsCC] *)
 
 (* UNEXPORTED
-Section AbsCC_properties.
+Section AbsCC_properties
 *)
 
 inline "cic:/CoRN/complex/AbsCC/AbsCC_nonneg.con".
@@ -83,7 +83,7 @@ inline "cic:/CoRN/complex/AbsCC/AbsCC_small_imp_eq.con".
 
 (* begin hide *)
 
-inline "cic:/CoRN/complex/AbsCC/l_1_1_2.con".
+inline "cic:/CoRN/complex/AbsCC/AbsCC_properties/l_1_1_2.con" "AbsCC_properties__".
 
 (* end hide *)
 
@@ -99,7 +99,7 @@ Hint Resolve AbsCC_square_Re_Im: algebra.
 
 (* begin hide *)
 
-inline "cic:/CoRN/complex/AbsCC/l_1_2_3_CC.con".
+inline "cic:/CoRN/complex/AbsCC/AbsCC_properties/l_1_2_3_CC.con" "AbsCC_properties__".
 
 (* end hide *)
 
@@ -139,16 +139,16 @@ inline "cic:/CoRN/complex/AbsCC/Cexis_AFS_CC.con".
 
 (* begin hide *)
 
-inline "cic:/CoRN/complex/AbsCC/l_4_1_2.con".
+inline "cic:/CoRN/complex/AbsCC/AbsCC_properties/l_4_1_2.con" "AbsCC_properties__".
 
-inline "cic:/CoRN/complex/AbsCC/l_4_2_3.con".
+inline "cic:/CoRN/complex/AbsCC/AbsCC_properties/l_4_2_3.con" "AbsCC_properties__".
 
-inline "cic:/CoRN/complex/AbsCC/l_4_3_4.con".
+inline "cic:/CoRN/complex/AbsCC/AbsCC_properties/l_4_3_4.con" "AbsCC_properties__".
 
 (* end hide *)
 
 (* UNEXPORTED
-End AbsCC_properties.
+End AbsCC_properties
 *)
 
 (* UNEXPORTED

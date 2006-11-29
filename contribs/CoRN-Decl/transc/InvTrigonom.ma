@@ -106,7 +106,7 @@ Hint Resolve Continuous_ArcCos Continuous_ArcTan: continuous.
 *)
 
 (* UNEXPORTED
-Section Inverses.
+Section Inverses
 *)
 
 (*#* **Composition properties
@@ -203,66 +203,66 @@ Transparent Cos.
 *)
 
 (* UNEXPORTED
-Section ArcTan_Range.
+Section ArcTan_Range
 *)
 
-inline "cic:/CoRN/transc/InvTrigonom/x.var".
+inline "cic:/CoRN/transc/InvTrigonom/Inverses/ArcTan_Range/x.var" "Inverses__ArcTan_Range__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/transc/InvTrigonom/min.con".
+inline "cic:/CoRN/transc/InvTrigonom/Inverses/ArcTan_Range/min.con" "Inverses__ArcTan_Range__".
 
-inline "cic:/CoRN/transc/InvTrigonom/max.con".
+inline "cic:/CoRN/transc/InvTrigonom/Inverses/ArcTan_Range/max.con" "Inverses__ArcTan_Range__".
 
-inline "cic:/CoRN/transc/InvTrigonom/min1.con".
+inline "cic:/CoRN/transc/InvTrigonom/Inverses/ArcTan_Range/min1.con" "Inverses__ArcTan_Range__".
 
-inline "cic:/CoRN/transc/InvTrigonom/min2.con".
+inline "cic:/CoRN/transc/InvTrigonom/Inverses/ArcTan_Range/min2.con" "Inverses__ArcTan_Range__".
 
-inline "cic:/CoRN/transc/InvTrigonom/min3.con".
+inline "cic:/CoRN/transc/InvTrigonom/Inverses/ArcTan_Range/min3.con" "Inverses__ArcTan_Range__".
 
-inline "cic:/CoRN/transc/InvTrigonom/min4.con".
+inline "cic:/CoRN/transc/InvTrigonom/Inverses/ArcTan_Range/min4.con" "Inverses__ArcTan_Range__".
 
-inline "cic:/CoRN/transc/InvTrigonom/max1.con".
+inline "cic:/CoRN/transc/InvTrigonom/Inverses/ArcTan_Range/max1.con" "Inverses__ArcTan_Range__".
 
-inline "cic:/CoRN/transc/InvTrigonom/max2.con".
+inline "cic:/CoRN/transc/InvTrigonom/Inverses/ArcTan_Range/max2.con" "Inverses__ArcTan_Range__".
 
-inline "cic:/CoRN/transc/InvTrigonom/max3.con".
+inline "cic:/CoRN/transc/InvTrigonom/Inverses/ArcTan_Range/max3.con" "Inverses__ArcTan_Range__".
 
-inline "cic:/CoRN/transc/InvTrigonom/max4.con".
+inline "cic:/CoRN/transc/InvTrigonom/Inverses/ArcTan_Range/max4.con" "Inverses__ArcTan_Range__".
 
-inline "cic:/CoRN/transc/InvTrigonom/min5.con".
+inline "cic:/CoRN/transc/InvTrigonom/Inverses/ArcTan_Range/min5.con" "Inverses__ArcTan_Range__".
 
-inline "cic:/CoRN/transc/InvTrigonom/min6.con".
+inline "cic:/CoRN/transc/InvTrigonom/Inverses/ArcTan_Range/min6.con" "Inverses__ArcTan_Range__".
 
-inline "cic:/CoRN/transc/InvTrigonom/max5.con".
+inline "cic:/CoRN/transc/InvTrigonom/Inverses/ArcTan_Range/max5.con" "Inverses__ArcTan_Range__".
 
-inline "cic:/CoRN/transc/InvTrigonom/max6.con".
+inline "cic:/CoRN/transc/InvTrigonom/Inverses/ArcTan_Range/max6.con" "Inverses__ArcTan_Range__".
 
-inline "cic:/CoRN/transc/InvTrigonom/a.con".
+inline "cic:/CoRN/transc/InvTrigonom/Inverses/ArcTan_Range/a.con" "Inverses__ArcTan_Range__".
 
-inline "cic:/CoRN/transc/InvTrigonom/a1.con".
+inline "cic:/CoRN/transc/InvTrigonom/Inverses/ArcTan_Range/a1.con" "Inverses__ArcTan_Range__".
 
-inline "cic:/CoRN/transc/InvTrigonom/a2.con".
+inline "cic:/CoRN/transc/InvTrigonom/Inverses/ArcTan_Range/a2.con" "Inverses__ArcTan_Range__".
 
-inline "cic:/CoRN/transc/InvTrigonom/a3.con".
+inline "cic:/CoRN/transc/InvTrigonom/Inverses/ArcTan_Range/a3.con" "Inverses__ArcTan_Range__".
 
-inline "cic:/CoRN/transc/InvTrigonom/a4.con".
+inline "cic:/CoRN/transc/InvTrigonom/Inverses/ArcTan_Range/a4.con" "Inverses__ArcTan_Range__".
 
-inline "cic:/CoRN/transc/InvTrigonom/a5.con".
+inline "cic:/CoRN/transc/InvTrigonom/Inverses/ArcTan_Range/a5.con" "Inverses__ArcTan_Range__".
 
-inline "cic:/CoRN/transc/InvTrigonom/b.con".
+inline "cic:/CoRN/transc/InvTrigonom/Inverses/ArcTan_Range/b.con" "Inverses__ArcTan_Range__".
 
-inline "cic:/CoRN/transc/InvTrigonom/b1.con".
+inline "cic:/CoRN/transc/InvTrigonom/Inverses/ArcTan_Range/b1.con" "Inverses__ArcTan_Range__".
 
-inline "cic:/CoRN/transc/InvTrigonom/b2.con".
+inline "cic:/CoRN/transc/InvTrigonom/Inverses/ArcTan_Range/b2.con" "Inverses__ArcTan_Range__".
 
-inline "cic:/CoRN/transc/InvTrigonom/b3.con".
+inline "cic:/CoRN/transc/InvTrigonom/Inverses/ArcTan_Range/b3.con" "Inverses__ArcTan_Range__".
 
-inline "cic:/CoRN/transc/InvTrigonom/b4.con".
+inline "cic:/CoRN/transc/InvTrigonom/Inverses/ArcTan_Range/b4.con" "Inverses__ArcTan_Range__".
 
-inline "cic:/CoRN/transc/InvTrigonom/b5.con".
+inline "cic:/CoRN/transc/InvTrigonom/Inverses/ArcTan_Range/b5.con" "Inverses__ArcTan_Range__".
 
-inline "cic:/CoRN/transc/InvTrigonom/ab.con".
+inline "cic:/CoRN/transc/InvTrigonom/Inverses/ArcTan_Range/ab.con" "Inverses__ArcTan_Range__".
 
 inline "cic:/CoRN/transc/InvTrigonom/ArcTan_range_lemma.con".
 
@@ -275,7 +275,7 @@ Transparent ArcTang.
 inline "cic:/CoRN/transc/InvTrigonom/ArcTan_range.con".
 
 (* UNEXPORTED
-End ArcTan_Range.
+End ArcTan_Range
 *)
 
 (* UNEXPORTED
@@ -291,6 +291,6 @@ Opaque ArcTang.
 inline "cic:/CoRN/transc/InvTrigonom/Tan_ArcTan_inv.con".
 
 (* UNEXPORTED
-End Inverses.
+End Inverses
 *)
 

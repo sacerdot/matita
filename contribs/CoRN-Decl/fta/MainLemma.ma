@@ -34,7 +34,7 @@ include "fta/KeyLemma.ma".
 *)
 
 (* UNEXPORTED
-Section Main_Lemma.
+Section Main_Lemma
 *)
 
 (*#*
@@ -45,23 +45,23 @@ Let [a : nat->IR], [n : nat], [a_0 : IR]  and [eps : IR] such that [0 < n],
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/fta/MainLemma/a.var".
+inline "cic:/CoRN/fta/MainLemma/Main_Lemma/a.var" "Main_Lemma__".
 
-inline "cic:/CoRN/fta/MainLemma/n.var".
+inline "cic:/CoRN/fta/MainLemma/Main_Lemma/n.var" "Main_Lemma__".
 
-inline "cic:/CoRN/fta/MainLemma/gt_n_0.var".
+inline "cic:/CoRN/fta/MainLemma/Main_Lemma/gt_n_0.var" "Main_Lemma__".
 
-inline "cic:/CoRN/fta/MainLemma/eps.var".
+inline "cic:/CoRN/fta/MainLemma/Main_Lemma/eps.var" "Main_Lemma__".
 
-inline "cic:/CoRN/fta/MainLemma/eps_pos.var".
+inline "cic:/CoRN/fta/MainLemma/Main_Lemma/eps_pos.var" "Main_Lemma__".
 
-inline "cic:/CoRN/fta/MainLemma/a_nonneg.var".
+inline "cic:/CoRN/fta/MainLemma/Main_Lemma/a_nonneg.var" "Main_Lemma__".
 
-inline "cic:/CoRN/fta/MainLemma/a_n_1.var".
+inline "cic:/CoRN/fta/MainLemma/Main_Lemma/a_n_1.var" "Main_Lemma__".
 
-inline "cic:/CoRN/fta/MainLemma/a_0.var".
+inline "cic:/CoRN/fta/MainLemma/Main_Lemma/a_0.var" "Main_Lemma__".
 
-inline "cic:/CoRN/fta/MainLemma/eps_le_a_0.var".
+inline "cic:/CoRN/fta/MainLemma/Main_Lemma/eps_le_a_0.var" "Main_Lemma__".
 
 inline "cic:/CoRN/fta/MainLemma/a_0_pos.con".
 
@@ -76,11 +76,11 @@ inline "cic:/CoRN/fta/MainLemma/a_0_pos.con".
 
 (* begin hide *)
 
-inline "cic:/CoRN/fta/MainLemma/two_n.con".
+inline "cic:/CoRN/fta/MainLemma/Main_Lemma/two_n.con" "Main_Lemma__".
 
-inline "cic:/CoRN/fta/MainLemma/Small.con".
+inline "cic:/CoRN/fta/MainLemma/Main_Lemma/Small.con" "Main_Lemma__".
 
-inline "cic:/CoRN/fta/MainLemma/Smaller.con".
+inline "cic:/CoRN/fta/MainLemma/Main_Lemma/Smaller.con" "Main_Lemma__".
 
 (* end hide *)
 
@@ -123,6 +123,6 @@ inline "cic:/CoRN/fta/MainLemma/Main.con".
 (* end hide *)
 
 (* UNEXPORTED
-End Main_Lemma.
+End Main_Lemma
 *)
 

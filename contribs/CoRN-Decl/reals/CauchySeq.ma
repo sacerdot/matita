@@ -72,7 +72,7 @@ Notation OneR := (One:IR).
 (* end hide *)
 
 (* UNEXPORTED
-Section CReals_axioms.
+Section CReals_axioms
 *)
 
 (*#* ** [CReals] axioms *)
@@ -94,11 +94,11 @@ inline "cic:/CoRN/reals/CauchySeq/str_Archimedes.con".
 inline "cic:/CoRN/reals/CauchySeq/CauchySeqR.con".
 
 (* UNEXPORTED
-End CReals_axioms.
+End CReals_axioms
 *)
 
 (* UNEXPORTED
-Section Cauchy_Defs.
+Section Cauchy_Defs
 *)
 
 (*#* ** Cauchy sequences
@@ -169,11 +169,11 @@ inline "cic:/CoRN/reals/CauchySeq/Cauchy_Lim_prop4.con".
 inline "cic:/CoRN/reals/CauchySeq/Cauchy_prop4.con".
 
 (* UNEXPORTED
-End Cauchy_Defs.
+End Cauchy_Defs
 *)
 
 (* UNEXPORTED
-Section Inequalities.
+Section Inequalities
 *)
 
 (*#* *** Inequalities of Limits
@@ -215,11 +215,11 @@ inline "cic:/CoRN/reals/CauchySeq/Lim_ap_imp_seq_ap.con".
 inline "cic:/CoRN/reals/CauchySeq/Lim_ap_imp_seq_ap'.con".
 
 (* UNEXPORTED
-End Inequalities.
+End Inequalities
 *)
 
 (* UNEXPORTED
-Section Equiv_Cauchy.
+Section Equiv_Cauchy
 *)
 
 (*#* *** Equivalence of formulations of Cauchy *)
@@ -267,11 +267,11 @@ inline "cic:/CoRN/reals/CauchySeq/Lim_wd'.con".
 inline "cic:/CoRN/reals/CauchySeq/Lim_unique.con".
 
 (* UNEXPORTED
-End Equiv_Cauchy.
+End Equiv_Cauchy
 *)
 
 (* UNEXPORTED
-Section Cauchy_props.
+Section Cauchy_props
 *)
 
 (*#* *** Properties of Cauchy sequences
@@ -310,6 +310,6 @@ inline "cic:/CoRN/reals/CauchySeq/Cauchy_mult.con".
 inline "cic:/CoRN/reals/CauchySeq/Lim_mult.con".
 
 (* UNEXPORTED
-End Cauchy_props.
+End Cauchy_props
 *)
 

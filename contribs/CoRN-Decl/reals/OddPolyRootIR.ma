@@ -25,7 +25,7 @@ include "reals/IVT.ma".
 (*#* * Roots of polynomials of odd degree *)
 
 (* UNEXPORTED
-Section CPoly_Big.
+Section CPoly_Big
 *)
 
 (*#* ** Monic polynomials are positive near infinity
@@ -33,11 +33,11 @@ Section CPoly_Big.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/reals/OddPolyRootIR/R.var".
+inline "cic:/CoRN/reals/OddPolyRootIR/CPoly_Big/R.var" "CPoly_Big__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/reals/OddPolyRootIR/RX.con".
+inline "cic:/CoRN/reals/OddPolyRootIR/CPoly_Big/RX.con" "CPoly_Big__".
 
 (* end hide *)
 
@@ -50,11 +50,11 @@ inline "cic:/CoRN/reals/OddPolyRootIR/cpoly_pos.con".
 inline "cic:/CoRN/reals/OddPolyRootIR/Ccpoly_pos'.con".
 
 (* UNEXPORTED
-End CPoly_Big.
+End CPoly_Big
 *)
 
 (* UNEXPORTED
-Section Flip_Poly.
+Section Flip_Poly
 *)
 
 (*#* **Flipping a polynomial
@@ -62,11 +62,11 @@ Section Flip_Poly.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/reals/OddPolyRootIR/R.var".
+inline "cic:/CoRN/reals/OddPolyRootIR/Flip_Poly/R.var" "Flip_Poly__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/reals/OddPolyRootIR/RX.con".
+inline "cic:/CoRN/reals/OddPolyRootIR/Flip_Poly/RX.con" "Flip_Poly__".
 
 (* end hide *)
 
@@ -83,7 +83,7 @@ Hint Resolve flip_coefficient: algebra.
 inline "cic:/CoRN/reals/OddPolyRootIR/flip_odd.con".
 
 (* UNEXPORTED
-End Flip_Poly.
+End Flip_Poly
 *)
 
 (* UNEXPORTED
@@ -91,7 +91,7 @@ Hint Resolve flip_poly: algebra.
 *)
 
 (* UNEXPORTED
-Section OddPoly_Signs.
+Section OddPoly_Signs
 *)
 
 (*#* ** Sign of a polynomial of odd degree
@@ -99,11 +99,11 @@ Section OddPoly_Signs.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/reals/OddPolyRootIR/R.var".
+inline "cic:/CoRN/reals/OddPolyRootIR/OddPoly_Signs/R.var" "OddPoly_Signs__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/reals/OddPolyRootIR/RX.con".
+inline "cic:/CoRN/reals/OddPolyRootIR/OddPoly_Signs/RX.con" "OddPoly_Signs__".
 
 (* end hide *)
 
@@ -114,11 +114,11 @@ inline "cic:/CoRN/reals/OddPolyRootIR/oddpoly_pos'.con".
 inline "cic:/CoRN/reals/OddPolyRootIR/oddpoly_neg.con".
 
 (* UNEXPORTED
-End OddPoly_Signs.
+End OddPoly_Signs
 *)
 
 (* UNEXPORTED
-Section Poly_Norm.
+Section Poly_Norm
 *)
 
 (*#* ** The norm of a polynomial
@@ -127,11 +127,11 @@ this field.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/reals/OddPolyRootIR/R.var".
+inline "cic:/CoRN/reals/OddPolyRootIR/Poly_Norm/R.var" "Poly_Norm__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/reals/OddPolyRootIR/RX.con".
+inline "cic:/CoRN/reals/OddPolyRootIR/Poly_Norm/RX.con" "Poly_Norm__".
 
 (* end hide *)
 
@@ -144,11 +144,11 @@ inline "cic:/CoRN/reals/OddPolyRootIR/poly_norm_monic.con".
 inline "cic:/CoRN/reals/OddPolyRootIR/poly_norm_apply.con".
 
 (* UNEXPORTED
-End Poly_Norm.
+End Poly_Norm
 *)
 
 (* UNEXPORTED
-Section OddPoly_Root.
+Section OddPoly_Root
 *)
 
 (*#* ** Roots of polynomials of odd degree
@@ -161,6 +161,6 @@ inline "cic:/CoRN/reals/OddPolyRootIR/oddpoly_root.con".
 inline "cic:/CoRN/reals/OddPolyRootIR/realpolyn_oddhaszero.con".
 
 (* UNEXPORTED
-End OddPoly_Root.
+End OddPoly_Root
 *)
 

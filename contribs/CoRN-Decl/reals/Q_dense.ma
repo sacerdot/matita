@@ -27,10 +27,10 @@ include "reals/Q_in_CReals.ma".
 inline "cic:/CoRN/reals/Q_dense/or_not_and.con".
 
 (* UNEXPORTED
-Section Interval_definition.
+Section Interval_definition
 *)
 
-inline "cic:/CoRN/reals/Q_dense/OF.var".
+inline "cic:/CoRN/reals/Q_dense/Interval_definition/OF.var" "Interval_definition__".
 
 inline "cic:/CoRN/reals/Q_dense/Interval.ind".
 
@@ -39,7 +39,7 @@ coercion cic:/matita/CoRN-Decl/reals/Q_dense/pair_crr.con 0 (* compounds *).
 inline "cic:/CoRN/reals/Q_dense/Length.con".
 
 (* UNEXPORTED
-End Interval_definition.
+End Interval_definition
 *)
 
 inline "cic:/CoRN/reals/Q_dense/Rat_Interval.con".
@@ -60,10 +60,10 @@ Qed.
 *)
 
 (* UNEXPORTED
-Section COrdField_extra.
+Section COrdField_extra
 *)
 
-inline "cic:/CoRN/reals/Q_dense/OF.var".
+inline "cic:/CoRN/reals/Q_dense/COrdField_extra/OF.var" "COrdField_extra__".
 
 inline "cic:/CoRN/reals/Q_dense/AbsSmall_pos_reflexive.con".
 
@@ -72,18 +72,18 @@ inline "cic:/CoRN/reals/Q_dense/AbsSmall_neg_reflexive.con".
 inline "cic:/CoRN/reals/Q_dense/AbsSmall_subinterval.con".
 
 (* UNEXPORTED
-End COrdField_extra.
+End COrdField_extra
 *)
 
 (* UNEXPORTED
-Section Rational_sequence.
+Section Rational_sequence
 *)
 
 include "tactics/Opaque_algebra.ma".
 
 (*#*** WARNING: A file is being loaded *****)
 
-inline "cic:/CoRN/reals/Q_dense/R1.var".
+inline "cic:/CoRN/reals/Q_dense/Rational_sequence/R1.var" "Rational_sequence__".
 
 inline "cic:/CoRN/reals/Q_dense/start_l.con".
 
@@ -162,7 +162,7 @@ inline "cic:/CoRN/reals/Q_dense/G_conversion_rate_resp_x.con".
 inline "cic:/CoRN/reals/Q_dense/x_is_SeqLimit_G.con".
 
 (* UNEXPORTED
-End Rational_sequence.
+End Rational_sequence
 *)
 
 (* end hide *)

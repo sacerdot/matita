@@ -70,7 +70,7 @@ inline "cic:/CoRN/transc/TrigMon/Cos_resp_less.con".
 inline "cic:/CoRN/transc/TrigMon/Sin_resp_less.con".
 
 (* UNEXPORTED
-Section Tangent.
+Section Tangent
 *)
 
 (*#* **Derivative of Tangent
@@ -94,7 +94,7 @@ inline "cic:/CoRN/transc/TrigMon/Tan_resp_less.con".
 inline "cic:/CoRN/transc/TrigMon/Tan_resp_leEq.con".
 
 (* UNEXPORTED
-End Tangent.
+End Tangent
 *)
 
 (* UNEXPORTED

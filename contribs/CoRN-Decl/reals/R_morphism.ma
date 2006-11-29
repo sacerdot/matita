@@ -31,30 +31,30 @@ include "reals/CReals.ma".
 inline "cic:/CoRN/reals/R_morphism/Cauchy_Lim_prop2.con".
 
 (* UNEXPORTED
-Section morphism.
+Section morphism
 *)
 
-inline "cic:/CoRN/reals/R_morphism/R1.var".
+inline "cic:/CoRN/reals/R_morphism/morphism/R1.var" "morphism__".
 
-inline "cic:/CoRN/reals/R_morphism/R2.var".
+inline "cic:/CoRN/reals/R_morphism/morphism/R2.var" "morphism__".
 
 (* UNEXPORTED
-Section morphism_details.
+Section morphism_details
 *)
 
-inline "cic:/CoRN/reals/R_morphism/phi.var".
+inline "cic:/CoRN/reals/R_morphism/morphism/morphism_details/phi.var" "morphism__morphism_details__".
 
-inline "cic:/CoRN/reals/R_morphism/p1.var".
+inline "cic:/CoRN/reals/R_morphism/morphism/morphism_details/p1.var" "morphism__morphism_details__".
 
-inline "cic:/CoRN/reals/R_morphism/p2.var".
+inline "cic:/CoRN/reals/R_morphism/morphism/morphism_details/p2.var" "morphism__morphism_details__".
 
-inline "cic:/CoRN/reals/R_morphism/f1.var".
+inline "cic:/CoRN/reals/R_morphism/morphism/morphism_details/f1.var" "morphism__morphism_details__".
 
-inline "cic:/CoRN/reals/R_morphism/f2.var".
+inline "cic:/CoRN/reals/R_morphism/morphism/morphism_details/f2.var" "morphism__morphism_details__".
 
-inline "cic:/CoRN/reals/R_morphism/g1.var".
+inline "cic:/CoRN/reals/R_morphism/morphism/morphism_details/g1.var" "morphism__morphism_details__".
 
-inline "cic:/CoRN/reals/R_morphism/g2.var".
+inline "cic:/CoRN/reals/R_morphism/morphism/morphism_details/g2.var" "morphism__morphism_details__".
 
 inline "cic:/CoRN/reals/R_morphism/fun_pres_relation.con".
 
@@ -70,7 +70,7 @@ Definition fun_pres_partial_fun:=(x:R1;H1:x[#]Zero;H2:(phi x)[#]Zero)
 inline "cic:/CoRN/reals/R_morphism/fun_pres_Lim.con".
 
 (* UNEXPORTED
-End morphism_details.
+End morphism_details
 *)
 
 inline "cic:/CoRN/reals/R_morphism/Homomorphism.ind".
@@ -121,22 +121,22 @@ inline "cic:/CoRN/reals/R_morphism/map_pres_one_unfolded.con".
 inline "cic:/CoRN/reals/R_morphism/map_pres_inv_unfolded.con".
 
 (* UNEXPORTED
-End morphism.
+End morphism
 *)
 
 (* UNEXPORTED
-Section composition.
+Section composition
 *)
 
-inline "cic:/CoRN/reals/R_morphism/R1.var".
+inline "cic:/CoRN/reals/R_morphism/composition/R1.var" "composition__".
 
-inline "cic:/CoRN/reals/R_morphism/R2.var".
+inline "cic:/CoRN/reals/R_morphism/composition/R2.var" "composition__".
 
-inline "cic:/CoRN/reals/R_morphism/R3.var".
+inline "cic:/CoRN/reals/R_morphism/composition/R3.var" "composition__".
 
-inline "cic:/CoRN/reals/R_morphism/f.var".
+inline "cic:/CoRN/reals/R_morphism/composition/f.var" "composition__".
 
-inline "cic:/CoRN/reals/R_morphism/g.var".
+inline "cic:/CoRN/reals/R_morphism/composition/g.var" "composition__".
 
 inline "cic:/CoRN/reals/R_morphism/compose.con".
 
@@ -153,72 +153,72 @@ inline "cic:/CoRN/reals/R_morphism/compose_pres_Lim.con".
 inline "cic:/CoRN/reals/R_morphism/Compose.con".
 
 (* UNEXPORTED
-End composition.
+End composition
 *)
 
 (* UNEXPORTED
-Section isomorphism.
+Section isomorphism
 *)
 
-inline "cic:/CoRN/reals/R_morphism/R1.var".
+inline "cic:/CoRN/reals/R_morphism/isomorphism/R1.var" "isomorphism__".
 
-inline "cic:/CoRN/reals/R_morphism/R2.var".
+inline "cic:/CoRN/reals/R_morphism/isomorphism/R2.var" "isomorphism__".
 
 (* UNEXPORTED
-Section identity_map.
+Section identity_map
 *)
 
-inline "cic:/CoRN/reals/R_morphism/R3.var".
+inline "cic:/CoRN/reals/R_morphism/isomorphism/identity_map/R3.var" "isomorphism__identity_map__".
 
-inline "cic:/CoRN/reals/R_morphism/f.var".
+inline "cic:/CoRN/reals/R_morphism/isomorphism/identity_map/f.var" "isomorphism__identity_map__".
 
 inline "cic:/CoRN/reals/R_morphism/map_is_id.con".
 
 (* UNEXPORTED
-End identity_map.
+End identity_map
 *)
 
 inline "cic:/CoRN/reals/R_morphism/Isomorphism.ind".
 
 (* UNEXPORTED
-End isomorphism.
+End isomorphism
 *)
 
 (* UNEXPORTED
-Section surjective_map.
+Section surjective_map
 *)
 
-inline "cic:/CoRN/reals/R_morphism/R1.var".
+inline "cic:/CoRN/reals/R_morphism/surjective_map/R1.var" "surjective_map__".
 
-inline "cic:/CoRN/reals/R_morphism/R2.var".
+inline "cic:/CoRN/reals/R_morphism/surjective_map/R2.var" "surjective_map__".
 
-inline "cic:/CoRN/reals/R_morphism/f.var".
+inline "cic:/CoRN/reals/R_morphism/surjective_map/f.var" "surjective_map__".
 
 inline "cic:/CoRN/reals/R_morphism/map_is_surjective.con".
 
 (* UNEXPORTED
-End surjective_map.
+End surjective_map
 *)
 
 (* UNEXPORTED
-Section simplification.
+Section simplification
 *)
 
-inline "cic:/CoRN/reals/R_morphism/R1.var".
+inline "cic:/CoRN/reals/R_morphism/simplification/R1.var" "simplification__".
 
-inline "cic:/CoRN/reals/R_morphism/R2.var".
+inline "cic:/CoRN/reals/R_morphism/simplification/R2.var" "simplification__".
 
-inline "cic:/CoRN/reals/R_morphism/f.var".
+inline "cic:/CoRN/reals/R_morphism/simplification/f.var" "simplification__".
 
-inline "cic:/CoRN/reals/R_morphism/H1.var".
+inline "cic:/CoRN/reals/R_morphism/simplification/H1.var" "simplification__".
 
 inline "cic:/CoRN/reals/R_morphism/f_well_def.con".
 
 (* UNEXPORTED
-Section with_less.
+Section with_less
 *)
 
-inline "cic:/CoRN/reals/R_morphism/H2.var".
+inline "cic:/CoRN/reals/R_morphism/simplification/with_less/H2.var" "simplification__with_less__".
 
 inline "cic:/CoRN/reals/R_morphism/less_pres_f.con".
 
@@ -229,14 +229,14 @@ inline "cic:/CoRN/reals/R_morphism/f_pres_leEq.con".
 inline "cic:/CoRN/reals/R_morphism/f_pres_apartness.con".
 
 (* UNEXPORTED
-End with_less.
+End with_less
 *)
 
 (* UNEXPORTED
-Section with_plus.
+Section with_plus
 *)
 
-inline "cic:/CoRN/reals/R_morphism/H3.var".
+inline "cic:/CoRN/reals/R_morphism/simplification/with_plus/H3.var" "simplification__with_plus__".
 
 inline "cic:/CoRN/reals/R_morphism/f_pres_Zero.con".
 
@@ -245,36 +245,36 @@ inline "cic:/CoRN/reals/R_morphism/f_pres_minus.con".
 inline "cic:/CoRN/reals/R_morphism/f_pres_min.con".
 
 (* UNEXPORTED
-End with_plus.
+End with_plus
 *)
 
 (* UNEXPORTED
-Section with_plus_less.
+Section with_plus_less
 *)
 
-inline "cic:/CoRN/reals/R_morphism/H2.var".
+inline "cic:/CoRN/reals/R_morphism/simplification/with_plus_less/H2.var" "simplification__with_plus_less__".
 
-inline "cic:/CoRN/reals/R_morphism/H3.var".
+inline "cic:/CoRN/reals/R_morphism/simplification/with_plus_less/H3.var" "simplification__with_plus_less__".
 
 inline "cic:/CoRN/reals/R_morphism/f_pres_ap_zero.con".
 
 (* UNEXPORTED
-Section surjectivity_helps.
+Section surjectivity_helps
 *)
 
-inline "cic:/CoRN/reals/R_morphism/f_surj.var".
+inline "cic:/CoRN/reals/R_morphism/simplification/with_plus_less/surjectivity_helps/f_surj.var" "simplification__with_plus_less__surjectivity_helps__".
 
 inline "cic:/CoRN/reals/R_morphism/f_pres_Lim.con".
 
 (* UNEXPORTED
-End surjectivity_helps.
+End surjectivity_helps
 *)
 
 (* UNEXPORTED
-Section with_mult_plus_less.
+Section with_mult_plus_less
 *)
 
-inline "cic:/CoRN/reals/R_morphism/H4.var".
+inline "cic:/CoRN/reals/R_morphism/simplification/with_plus_less/with_mult_plus_less/H4.var" "simplification__with_plus_less__with_mult_plus_less__".
 
 inline "cic:/CoRN/reals/R_morphism/f_pres_one.con".
 
@@ -283,15 +283,15 @@ inline "cic:/CoRN/reals/R_morphism/f_pres_inv.con".
 inline "cic:/CoRN/reals/R_morphism/simplified_Homomorphism.con".
 
 (* UNEXPORTED
-End with_mult_plus_less.
+End with_mult_plus_less
 *)
 
 (* UNEXPORTED
-End with_plus_less.
+End with_plus_less
 *)
 
 (* UNEXPORTED
-End simplification.
+End simplification
 *)
 
 (* end hide *)

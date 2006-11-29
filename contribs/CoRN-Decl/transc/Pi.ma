@@ -21,7 +21,7 @@ include "CoRN.ma".
 include "transc/SinCos.ma".
 
 (* UNEXPORTED
-Section Properties_of_Pi.
+Section Properties_of_Pi
 *)
 
 (*#* printing Pi %\ensuremath{\pi}% #&pi;# *)
@@ -113,7 +113,7 @@ inline "cic:/CoRN/transc/Pi/HalfPi_gt_pi_seq.con".
 inline "cic:/CoRN/transc/Pi/pos_Pi.con".
 
 (* UNEXPORTED
-End Properties_of_Pi.
+End Properties_of_Pi
 *)
 
 (* UNEXPORTED
@@ -121,7 +121,7 @@ Hint Resolve Cos_HalfPi: algebra.
 *)
 
 (* UNEXPORTED
-Section Pi_and_Order.
+Section Pi_and_Order
 *)
 
 (*#* **Properties of Pi
@@ -180,7 +180,7 @@ inline "cic:/CoRN/transc/Pi/invQuarterPi_less_HalfPi.con".
 inline "cic:/CoRN/transc/Pi/invQuarterPi_less_QuarterPi.con".
 
 (* UNEXPORTED
-End Pi_and_Order.
+End Pi_and_Order
 *)
 
 (* UNEXPORTED
@@ -201,7 +201,7 @@ Ltac PiSolve := try apply less_leEq; auto with piorder.
 (* end hide *)
 
 (* UNEXPORTED
-Section Sin_And_Cos.
+Section Sin_And_Cos
 *)
 
 (*#* **More formulas
@@ -275,7 +275,7 @@ inline "cic:/CoRN/transc/Pi/Cos_periodic.con".
 inline "cic:/CoRN/transc/Pi/Tan_periodic.con".
 
 (* UNEXPORTED
-End Sin_And_Cos.
+End Sin_And_Cos
 *)
 
 (* UNEXPORTED

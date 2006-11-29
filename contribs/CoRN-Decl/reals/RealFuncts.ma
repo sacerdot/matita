@@ -38,12 +38,12 @@ Unset Strict Implicit.
 (* end hide *)
 
 (* UNEXPORTED
-Section Continuity.
+Section Continuity
 *)
 
-inline "cic:/CoRN/reals/RealFuncts/f.var".
+inline "cic:/CoRN/reals/RealFuncts/Continuity/f.var" "Continuity__".
 
-inline "cic:/CoRN/reals/RealFuncts/f2.var".
+inline "cic:/CoRN/reals/RealFuncts/Continuity/f2.var" "Continuity__".
 
 (*#*
 Let [f] be a unary setoid operation on [IR] and
@@ -247,7 +247,7 @@ End Monotonic_functions.
 *)
 
 (* UNEXPORTED
-End Continuity.
+End Continuity
 *)
 
 (* begin hide *)

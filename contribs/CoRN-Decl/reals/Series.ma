@@ -31,7 +31,7 @@ include "reals/CSumsReals.ma".
 include "reals/NRootIR.ma".
 
 (* UNEXPORTED
-Section Definitions.
+Section Definitions
 *)
 
 (*#* *Series of Real Numbers
@@ -45,7 +45,7 @@ To each such sequence we can assign a sequence of partial sums.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/reals/Series/x.var".
+inline "cic:/CoRN/reals/Series/Definitions/x.var" "Definitions__".
 
 inline "cic:/CoRN/reals/Series/seq_part_sum.con".
 
@@ -92,25 +92,25 @@ inline "cic:/CoRN/reals/Series/series_seq_Lim.con".
 inline "cic:/CoRN/reals/Series/series_seq_Lim'.con".
 
 (* UNEXPORTED
-End Definitions.
+End Definitions
 *)
 
 (* UNEXPORTED
-Section More_Definitions.
+Section More_Definitions
 *)
 
-inline "cic:/CoRN/reals/Series/x.var".
+inline "cic:/CoRN/reals/Series/More_Definitions/x.var" "More_Definitions__".
 
 (*#* We also define absolute convergence. *)
 
 inline "cic:/CoRN/reals/Series/abs_convergent.con".
 
 (* UNEXPORTED
-End More_Definitions.
+End More_Definitions
 *)
 
 (* UNEXPORTED
-Section Power_Series.
+Section Power_Series
 *)
 
 (*#* **Power Series
@@ -129,11 +129,11 @@ we can also compute its sum.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/reals/Series/c.var".
+inline "cic:/CoRN/reals/Series/Power_Series/c.var" "Power_Series__".
 
-inline "cic:/CoRN/reals/Series/H0c.var".
+inline "cic:/CoRN/reals/Series/Power_Series/H0c.var" "Power_Series__".
 
-inline "cic:/CoRN/reals/Series/Hc1.var".
+inline "cic:/CoRN/reals/Series/Power_Series/Hc1.var" "Power_Series__".
 
 inline "cic:/CoRN/reals/Series/c_exp_Lim.con".
 
@@ -144,11 +144,11 @@ inline "cic:/CoRN/reals/Series/power_series_conv.con".
 inline "cic:/CoRN/reals/Series/power_series_sum.con".
 
 (* UNEXPORTED
-End Power_Series.
+End Power_Series
 *)
 
 (* UNEXPORTED
-Section Operations.
+Section Operations
 *)
 
 (*#* **Operations
@@ -168,13 +168,13 @@ of two convergent series.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/reals/Series/x.var".
+inline "cic:/CoRN/reals/Series/Operations/x.var" "Operations__".
 
-inline "cic:/CoRN/reals/Series/y.var".
+inline "cic:/CoRN/reals/Series/Operations/y.var" "Operations__".
 
-inline "cic:/CoRN/reals/Series/convX.var".
+inline "cic:/CoRN/reals/Series/Operations/convX.var" "Operations__".
 
-inline "cic:/CoRN/reals/Series/convY.var".
+inline "cic:/CoRN/reals/Series/Operations/convY.var" "Operations__".
 
 inline "cic:/CoRN/reals/Series/convergent_wd.con".
 
@@ -190,23 +190,23 @@ inline "cic:/CoRN/reals/Series/series_sum_minus.con".
 
 (*#* Multiplication by a scalar [c] is also permitted. *)
 
-inline "cic:/CoRN/reals/Series/c.var".
+inline "cic:/CoRN/reals/Series/Operations/c.var" "Operations__".
 
 inline "cic:/CoRN/reals/Series/conv_series_mult_scal.con".
 
 inline "cic:/CoRN/reals/Series/series_sum_mult_scal.con".
 
 (* UNEXPORTED
-End Operations.
+End Operations
 *)
 
 (* UNEXPORTED
-Section More_Operations.
+Section More_Operations
 *)
 
-inline "cic:/CoRN/reals/Series/x.var".
+inline "cic:/CoRN/reals/Series/More_Operations/x.var" "More_Operations__".
 
-inline "cic:/CoRN/reals/Series/convX.var".
+inline "cic:/CoRN/reals/Series/More_Operations/convX.var" "More_Operations__".
 
 (*#* As a corollary, we get the series of the inverses. *)
 
@@ -215,11 +215,11 @@ inline "cic:/CoRN/reals/Series/conv_series_inv.con".
 inline "cic:/CoRN/reals/Series/series_sum_inv.con".
 
 (* UNEXPORTED
-End More_Operations.
+End More_Operations
 *)
 
 (* UNEXPORTED
-Section Almost_Everywhere.
+Section Almost_Everywhere
 *)
 
 (*#* ** Almost Everywhere
@@ -230,13 +230,13 @@ and derive an important corollary for series.
 Let [x,y : nat->IR] be equal after some natural number.
 *)
 
-inline "cic:/CoRN/reals/Series/x.var".
+inline "cic:/CoRN/reals/Series/Almost_Everywhere/x.var" "Almost_Everywhere__".
 
-inline "cic:/CoRN/reals/Series/y.var".
+inline "cic:/CoRN/reals/Series/Almost_Everywhere/y.var" "Almost_Everywhere__".
 
 inline "cic:/CoRN/reals/Series/aew_eq.con".
 
-inline "cic:/CoRN/reals/Series/aew_equal.var".
+inline "cic:/CoRN/reals/Series/Almost_Everywhere/aew_equal.var" "Almost_Everywhere__".
 
 inline "cic:/CoRN/reals/Series/aew_Cauchy.con".
 
@@ -245,29 +245,29 @@ inline "cic:/CoRN/reals/Series/aew_Cauchy2.con".
 inline "cic:/CoRN/reals/Series/aew_series_conv.con".
 
 (* UNEXPORTED
-End Almost_Everywhere.
+End Almost_Everywhere
 *)
 
 (* UNEXPORTED
-Section Cauchy_Almost_Everywhere.
+Section Cauchy_Almost_Everywhere
 *)
 
 (*#* Suppose furthermore that [x,y] are Cauchy sequences. *)
 
-inline "cic:/CoRN/reals/Series/x.var".
+inline "cic:/CoRN/reals/Series/Cauchy_Almost_Everywhere/x.var" "Cauchy_Almost_Everywhere__".
 
-inline "cic:/CoRN/reals/Series/y.var".
+inline "cic:/CoRN/reals/Series/Cauchy_Almost_Everywhere/y.var" "Cauchy_Almost_Everywhere__".
 
-inline "cic:/CoRN/reals/Series/aew_equal.var".
+inline "cic:/CoRN/reals/Series/Cauchy_Almost_Everywhere/aew_equal.var" "Cauchy_Almost_Everywhere__".
 
 inline "cic:/CoRN/reals/Series/aew_Lim.con".
 
 (* UNEXPORTED
-End Cauchy_Almost_Everywhere.
+End Cauchy_Almost_Everywhere
 *)
 
 (* UNEXPORTED
-Section Convergence_Criteria.
+Section Convergence_Criteria
 *)
 
 (*#* **Convergence Criteria
@@ -276,7 +276,7 @@ Section Convergence_Criteria.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/reals/Series/x.var".
+inline "cic:/CoRN/reals/Series/Convergence_Criteria/x.var" "Convergence_Criteria__".
 
 (*#* We include the comparison test for series, both in a strong and in a less 
 general (but simpler) form.
@@ -299,25 +299,25 @@ inline "cic:/CoRN/reals/Series/tail_series.con".
 inline "cic:/CoRN/reals/Series/join_series.con".
 
 (* UNEXPORTED
-End Convergence_Criteria.
+End Convergence_Criteria
 *)
 
 (* UNEXPORTED
-Section More_CC.
+Section More_CC
 *)
 
-inline "cic:/CoRN/reals/Series/x.var".
+inline "cic:/CoRN/reals/Series/More_CC/x.var" "More_CC__".
 
 inline "cic:/CoRN/reals/Series/ratio_test_conv.con".
 
 inline "cic:/CoRN/reals/Series/ratio_test_div.con".
 
 (* UNEXPORTED
-End More_CC.
+End More_CC
 *)
 
 (* UNEXPORTED
-Section Alternate_Series.
+Section Alternate_Series
 *)
 
 (*#* **Alternate Series
@@ -326,36 +326,36 @@ Alternate series are a special case.  Suppose that [x] is nonnegative and
 decreasing convergent to 0.
 *)
 
-inline "cic:/CoRN/reals/Series/x.var".
+inline "cic:/CoRN/reals/Series/Alternate_Series/x.var" "Alternate_Series__".
 
-inline "cic:/CoRN/reals/Series/pos_x.var".
+inline "cic:/CoRN/reals/Series/Alternate_Series/pos_x.var" "Alternate_Series__".
 
-inline "cic:/CoRN/reals/Series/Lim_x.var".
+inline "cic:/CoRN/reals/Series/Alternate_Series/Lim_x.var" "Alternate_Series__".
 
-inline "cic:/CoRN/reals/Series/mon_x.var".
+inline "cic:/CoRN/reals/Series/Alternate_Series/mon_x.var" "Alternate_Series__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/reals/Series/y.con".
+inline "cic:/CoRN/reals/Series/Alternate_Series/y.con" "Alternate_Series__".
 
-inline "cic:/CoRN/reals/Series/alternate_lemma1.con".
+inline "cic:/CoRN/reals/Series/Alternate_Series/alternate_lemma1.con" "Alternate_Series__".
 
-inline "cic:/CoRN/reals/Series/alternate_lemma2.con".
+inline "cic:/CoRN/reals/Series/Alternate_Series/alternate_lemma2.con" "Alternate_Series__".
 
-inline "cic:/CoRN/reals/Series/alternate_lemma3.con".
+inline "cic:/CoRN/reals/Series/Alternate_Series/alternate_lemma3.con" "Alternate_Series__".
 
-inline "cic:/CoRN/reals/Series/alternate_lemma4.con".
+inline "cic:/CoRN/reals/Series/Alternate_Series/alternate_lemma4.con" "Alternate_Series__".
 
 (* end hide *)
 
 inline "cic:/CoRN/reals/Series/alternate_series_conv.con".
 
 (* UNEXPORTED
-End Alternate_Series.
+End Alternate_Series
 *)
 
 (* UNEXPORTED
-Section Important_Numbers.
+Section Important_Numbers
 *)
 
 (*#* **Important Numbers
@@ -377,6 +377,6 @@ inline "cic:/CoRN/reals/Series/pi_series_conv.con".
 inline "cic:/CoRN/reals/Series/pi.con".
 
 (* UNEXPORTED
-End Important_Numbers.
+End Important_Numbers
 *)
 

@@ -29,21 +29,21 @@ include "ftc/RefLemma.ma".
 (* begin hide *)
 
 (* UNEXPORTED
-Section Lemmas.
+Section Lemmas
 *)
 
-inline "cic:/CoRN/ftc/Integral/Sumx_wd_weird.con".
+inline "cic:/CoRN/ftc/Integral/Lemmas/Sumx_wd_weird.con" "Lemmas__".
 
 inline "cic:/CoRN/ftc/Integral/Sumx_weird_lemma.con".
 
 (* UNEXPORTED
-End Lemmas.
+End Lemmas
 *)
 
 (* end hide *)
 
 (* UNEXPORTED
-Section Integral.
+Section Integral
 *)
 
 (*#* *Integral
@@ -59,26 +59,26 @@ continuous functions in [I].
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/Integral/a.var".
+inline "cic:/CoRN/ftc/Integral/Integral/a.var" "Integral__".
 
-inline "cic:/CoRN/ftc/Integral/b.var".
+inline "cic:/CoRN/ftc/Integral/Integral/b.var" "Integral__".
 
-inline "cic:/CoRN/ftc/Integral/Hab.var".
+inline "cic:/CoRN/ftc/Integral/Integral/Hab.var" "Integral__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/Integral/I.con".
+inline "cic:/CoRN/ftc/Integral/Integral/I.con" "Integral__".
 
-inline "cic:/CoRN/ftc/Integral/F.var".
+inline "cic:/CoRN/ftc/Integral/Integral/F.var" "Integral__".
 
-inline "cic:/CoRN/ftc/Integral/contF.var".
+inline "cic:/CoRN/ftc/Integral/Integral/contF.var" "Integral__".
 
-inline "cic:/CoRN/ftc/Integral/contF'.con".
+inline "cic:/CoRN/ftc/Integral/Integral/contF'.con" "Integral__".
 
 (* end hide *)
 
 (* UNEXPORTED
-Section Darboux_Sum.
+Section Darboux_Sum
 *)
 
 inline "cic:/CoRN/ftc/Integral/integral_seq.con".
@@ -88,11 +88,11 @@ inline "cic:/CoRN/ftc/Integral/Cauchy_Darboux_Seq.con".
 inline "cic:/CoRN/ftc/Integral/integral.con".
 
 (* UNEXPORTED
-End Darboux_Sum.
+End Darboux_Sum
 *)
 
 (* UNEXPORTED
-Section Integral_Thm.
+Section Integral_Thm
 *)
 
 (*#*
@@ -106,57 +106,57 @@ respecting [P].
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/Integral/n.var".
+inline "cic:/CoRN/ftc/Integral/Integral/Integral_Thm/n.var" "Integral__Integral_Thm__".
 
-inline "cic:/CoRN/ftc/Integral/P.var".
+inline "cic:/CoRN/ftc/Integral/Integral/Integral_Thm/P.var" "Integral__Integral_Thm__".
 
-inline "cic:/CoRN/ftc/Integral/e.var".
+inline "cic:/CoRN/ftc/Integral/Integral/Integral_Thm/e.var" "Integral__Integral_Thm__".
 
-inline "cic:/CoRN/ftc/Integral/He.var".
+inline "cic:/CoRN/ftc/Integral/Integral/Integral_Thm/He.var" "Integral__Integral_Thm__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/Integral/d.con".
+inline "cic:/CoRN/ftc/Integral/Integral/Integral_Thm/d.con" "Integral__Integral_Thm__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/Integral/HmeshP.var".
+inline "cic:/CoRN/ftc/Integral/Integral/Integral_Thm/HmeshP.var" "Integral__Integral_Thm__".
 
-inline "cic:/CoRN/ftc/Integral/fP.var".
+inline "cic:/CoRN/ftc/Integral/Integral/Integral_Thm/fP.var" "Integral__Integral_Thm__".
 
-inline "cic:/CoRN/ftc/Integral/HfP.var".
+inline "cic:/CoRN/ftc/Integral/Integral/Integral_Thm/HfP.var" "Integral__Integral_Thm__".
 
-inline "cic:/CoRN/ftc/Integral/HfP'.var".
+inline "cic:/CoRN/ftc/Integral/Integral/Integral_Thm/HfP'.var" "Integral__Integral_Thm__".
 
-inline "cic:/CoRN/ftc/Integral/incF.var".
+inline "cic:/CoRN/ftc/Integral/Integral/Integral_Thm/incF.var" "Integral__Integral_Thm__".
 
 inline "cic:/CoRN/ftc/Integral/partition_Sum_conv_integral.con".
 
 (* UNEXPORTED
-End Integral_Thm.
+End Integral_Thm
 *)
 
 (* UNEXPORTED
-End Integral.
+End Integral
 *)
 
 (* UNEXPORTED
-Section Basic_Properties.
+Section Basic_Properties
 *)
 
 (*#*
 The usual extensionality and strong extensionality results hold.
 *)
 
-inline "cic:/CoRN/ftc/Integral/a.var".
+inline "cic:/CoRN/ftc/Integral/Basic_Properties/a.var" "Basic_Properties__".
 
-inline "cic:/CoRN/ftc/Integral/b.var".
+inline "cic:/CoRN/ftc/Integral/Basic_Properties/b.var" "Basic_Properties__".
 
-inline "cic:/CoRN/ftc/Integral/Hab.var".
+inline "cic:/CoRN/ftc/Integral/Basic_Properties/Hab.var" "Basic_Properties__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/Integral/I.con".
+inline "cic:/CoRN/ftc/Integral/Basic_Properties/I.con" "Basic_Properties__".
 
 (* end hide *)
 
@@ -165,16 +165,16 @@ Notation Integral := (integral _ _ Hab).
 *)
 
 (* UNEXPORTED
-Section Well_Definedness.
+Section Well_Definedness
 *)
 
-inline "cic:/CoRN/ftc/Integral/F.var".
+inline "cic:/CoRN/ftc/Integral/Basic_Properties/Well_Definedness/F.var" "Basic_Properties__Well_Definedness__".
 
-inline "cic:/CoRN/ftc/Integral/G.var".
+inline "cic:/CoRN/ftc/Integral/Basic_Properties/Well_Definedness/G.var" "Basic_Properties__Well_Definedness__".
 
-inline "cic:/CoRN/ftc/Integral/contF.var".
+inline "cic:/CoRN/ftc/Integral/Basic_Properties/Well_Definedness/contF.var" "Basic_Properties__Well_Definedness__".
 
-inline "cic:/CoRN/ftc/Integral/contG.var".
+inline "cic:/CoRN/ftc/Integral/Basic_Properties/Well_Definedness/contG.var" "Basic_Properties__Well_Definedness__".
 
 inline "cic:/CoRN/ftc/Integral/integral_strext.con".
 
@@ -185,11 +185,11 @@ inline "cic:/CoRN/ftc/Integral/integral_wd.con".
 inline "cic:/CoRN/ftc/Integral/integral_wd'.con".
 
 (* UNEXPORTED
-End Well_Definedness.
+End Well_Definedness
 *)
 
 (* UNEXPORTED
-Section Linearity_and_Monotonicity.
+Section Linearity_and_Monotonicity
 *)
 
 (* UNEXPORTED
@@ -202,13 +202,13 @@ The integral is a linear and monotonous function; in order to prove these facts 
 
 inline "cic:/CoRN/ftc/Integral/integral_one.con".
 
-inline "cic:/CoRN/ftc/Integral/F.var".
+inline "cic:/CoRN/ftc/Integral/Basic_Properties/Linearity_and_Monotonicity/F.var" "Basic_Properties__Linearity_and_Monotonicity__".
 
-inline "cic:/CoRN/ftc/Integral/G.var".
+inline "cic:/CoRN/ftc/Integral/Basic_Properties/Linearity_and_Monotonicity/G.var" "Basic_Properties__Linearity_and_Monotonicity__".
 
-inline "cic:/CoRN/ftc/Integral/contF.var".
+inline "cic:/CoRN/ftc/Integral/Basic_Properties/Linearity_and_Monotonicity/contF.var" "Basic_Properties__Linearity_and_Monotonicity__".
 
-inline "cic:/CoRN/ftc/Integral/contG.var".
+inline "cic:/CoRN/ftc/Integral/Basic_Properties/Linearity_and_Monotonicity/contG.var" "Basic_Properties__Linearity_and_Monotonicity__".
 
 inline "cic:/CoRN/ftc/Integral/integral_comm_scal.con".
 
@@ -221,20 +221,20 @@ Transparent Even_Partition.
 inline "cic:/CoRN/ftc/Integral/integral_empty.con".
 
 (* UNEXPORTED
-End Linearity_and_Monotonicity.
+End Linearity_and_Monotonicity
 *)
 
 (* UNEXPORTED
-Section Linearity_and_Monotonicity'.
+Section Linearity_and_Monotonicity'
 *)
 
-inline "cic:/CoRN/ftc/Integral/F.var".
+inline "cic:/CoRN/ftc/Integral/Basic_Properties/Linearity_and_Monotonicity'/F.var" "Basic_Properties__Linearity_and_Monotonicity'__".
 
-inline "cic:/CoRN/ftc/Integral/G.var".
+inline "cic:/CoRN/ftc/Integral/Basic_Properties/Linearity_and_Monotonicity'/G.var" "Basic_Properties__Linearity_and_Monotonicity'__".
 
-inline "cic:/CoRN/ftc/Integral/contF.var".
+inline "cic:/CoRN/ftc/Integral/Basic_Properties/Linearity_and_Monotonicity'/contF.var" "Basic_Properties__Linearity_and_Monotonicity'__".
 
-inline "cic:/CoRN/ftc/Integral/contG.var".
+inline "cic:/CoRN/ftc/Integral/Basic_Properties/Linearity_and_Monotonicity'/contG.var" "Basic_Properties__Linearity_and_Monotonicity'__".
 
 (*#*
 %\begin{convention}% Let [alpha, beta : IR] and assume that
@@ -242,17 +242,17 @@ inline "cic:/CoRN/ftc/Integral/contG.var".
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/Integral/alpha.var".
+inline "cic:/CoRN/ftc/Integral/Basic_Properties/Linearity_and_Monotonicity'/alpha.var" "Basic_Properties__Linearity_and_Monotonicity'__".
 
-inline "cic:/CoRN/ftc/Integral/beta.var".
+inline "cic:/CoRN/ftc/Integral/Basic_Properties/Linearity_and_Monotonicity'/beta.var" "Basic_Properties__Linearity_and_Monotonicity'__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/Integral/h.con".
+inline "cic:/CoRN/ftc/Integral/Basic_Properties/Linearity_and_Monotonicity'/h.con" "Basic_Properties__Linearity_and_Monotonicity'__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/Integral/contH.var".
+inline "cic:/CoRN/ftc/Integral/Basic_Properties/Linearity_and_Monotonicity'/contH.var" "Basic_Properties__Linearity_and_Monotonicity'__".
 
 inline "cic:/CoRN/ftc/Integral/linear_integral.con".
 
@@ -267,20 +267,20 @@ Transparent nring.
 *)
 
 (* UNEXPORTED
-End Linearity_and_Monotonicity'.
+End Linearity_and_Monotonicity'
 *)
 
 (* UNEXPORTED
-Section Corollaries.
+Section Corollaries
 *)
 
-inline "cic:/CoRN/ftc/Integral/F.var".
+inline "cic:/CoRN/ftc/Integral/Basic_Properties/Corollaries/F.var" "Basic_Properties__Corollaries__".
 
-inline "cic:/CoRN/ftc/Integral/G.var".
+inline "cic:/CoRN/ftc/Integral/Basic_Properties/Corollaries/G.var" "Basic_Properties__Corollaries__".
 
-inline "cic:/CoRN/ftc/Integral/contF.var".
+inline "cic:/CoRN/ftc/Integral/Basic_Properties/Corollaries/contF.var" "Basic_Properties__Corollaries__".
 
-inline "cic:/CoRN/ftc/Integral/contG.var".
+inline "cic:/CoRN/ftc/Integral/Basic_Properties/Corollaries/contG.var" "Basic_Properties__Corollaries__".
 
 (*#*
 As corollaries we can calculate integrals of group operations applied to functions.
@@ -303,11 +303,11 @@ inline "cic:/CoRN/ftc/Integral/ub_integral.con".
 inline "cic:/CoRN/ftc/Integral/integral_leEq_norm.con".
 
 (* UNEXPORTED
-End Corollaries.
+End Corollaries
 *)
 
 (* UNEXPORTED
-Section Integral_Sum.
+Section Integral_Sum
 *)
 
 (*#*
@@ -319,22 +319,22 @@ $c\in[a,b]$#c&isin;[a,b]#.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/Integral/F.var".
+inline "cic:/CoRN/ftc/Integral/Basic_Properties/Integral_Sum/F.var" "Basic_Properties__Integral_Sum__".
 
-inline "cic:/CoRN/ftc/Integral/c.var".
+inline "cic:/CoRN/ftc/Integral/Basic_Properties/Integral_Sum/c.var" "Basic_Properties__Integral_Sum__".
 
-inline "cic:/CoRN/ftc/Integral/Hac.var".
+inline "cic:/CoRN/ftc/Integral/Basic_Properties/Integral_Sum/Hac.var" "Basic_Properties__Integral_Sum__".
 
-inline "cic:/CoRN/ftc/Integral/Hcb.var".
+inline "cic:/CoRN/ftc/Integral/Basic_Properties/Integral_Sum/Hcb.var" "Basic_Properties__Integral_Sum__".
 
-inline "cic:/CoRN/ftc/Integral/Hab'.var".
+inline "cic:/CoRN/ftc/Integral/Basic_Properties/Integral_Sum/Hab'.var" "Basic_Properties__Integral_Sum__".
 
-inline "cic:/CoRN/ftc/Integral/Hac'.var".
+inline "cic:/CoRN/ftc/Integral/Basic_Properties/Integral_Sum/Hac'.var" "Basic_Properties__Integral_Sum__".
 
-inline "cic:/CoRN/ftc/Integral/Hcb'.var".
+inline "cic:/CoRN/ftc/Integral/Basic_Properties/Integral_Sum/Hcb'.var" "Basic_Properties__Integral_Sum__".
 
 (* UNEXPORTED
-Section Partition_Join.
+Section Partition_Join
 *)
 
 (*#*
@@ -349,13 +349,13 @@ inequality).
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/Integral/n.var".
+inline "cic:/CoRN/ftc/Integral/Basic_Properties/Integral_Sum/Partition_Join/n.var" "Basic_Properties__Integral_Sum__Partition_Join__".
 
-inline "cic:/CoRN/ftc/Integral/m.var".
+inline "cic:/CoRN/ftc/Integral/Basic_Properties/Integral_Sum/Partition_Join/m.var" "Basic_Properties__Integral_Sum__Partition_Join__".
 
-inline "cic:/CoRN/ftc/Integral/P.var".
+inline "cic:/CoRN/ftc/Integral/Basic_Properties/Integral_Sum/Partition_Join/P.var" "Basic_Properties__Integral_Sum__Partition_Join__".
 
-inline "cic:/CoRN/ftc/Integral/Q.var".
+inline "cic:/CoRN/ftc/Integral/Basic_Properties/Integral_Sum/Partition_Join/Q.var" "Basic_Properties__Integral_Sum__Partition_Join__".
 
 (* begin hide *)
 
@@ -392,17 +392,17 @@ inline "cic:/CoRN/ftc/Integral/partition_join.con".
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/Integral/fP.var".
+inline "cic:/CoRN/ftc/Integral/Basic_Properties/Integral_Sum/Partition_Join/fP.var" "Basic_Properties__Integral_Sum__Partition_Join__".
 
-inline "cic:/CoRN/ftc/Integral/HfP.var".
+inline "cic:/CoRN/ftc/Integral/Basic_Properties/Integral_Sum/Partition_Join/HfP.var" "Basic_Properties__Integral_Sum__Partition_Join__".
 
-inline "cic:/CoRN/ftc/Integral/HfP'.var".
+inline "cic:/CoRN/ftc/Integral/Basic_Properties/Integral_Sum/Partition_Join/HfP'.var" "Basic_Properties__Integral_Sum__Partition_Join__".
 
-inline "cic:/CoRN/ftc/Integral/fQ.var".
+inline "cic:/CoRN/ftc/Integral/Basic_Properties/Integral_Sum/Partition_Join/fQ.var" "Basic_Properties__Integral_Sum__Partition_Join__".
 
-inline "cic:/CoRN/ftc/Integral/HfQ.var".
+inline "cic:/CoRN/ftc/Integral/Basic_Properties/Integral_Sum/Partition_Join/HfQ.var" "Basic_Properties__Integral_Sum__Partition_Join__".
 
-inline "cic:/CoRN/ftc/Integral/HfQ'.var".
+inline "cic:/CoRN/ftc/Integral/Basic_Properties/Integral_Sum/Partition_Join/HfQ'.var" "Basic_Properties__Integral_Sum__Partition_Join__".
 
 (* begin hide *)
 
@@ -455,7 +455,7 @@ inline "cic:/CoRN/ftc/Integral/partition_join_Sum_lemma.con".
 inline "cic:/CoRN/ftc/Integral/partition_join_mesh.con".
 
 (* UNEXPORTED
-End Partition_Join.
+End Partition_Join
 *)
 
 (*#*
@@ -469,7 +469,7 @@ Opaque Even_Partition.
 inline "cic:/CoRN/ftc/Integral/integral_plus_integral.con".
 
 (* UNEXPORTED
-End Integral_Sum.
+End Integral_Sum
 *)
 
 (* UNEXPORTED
@@ -477,7 +477,7 @@ Transparent Even_Partition.
 *)
 
 (* UNEXPORTED
-End Basic_Properties.
+End Basic_Properties
 *)
 
 (*#*

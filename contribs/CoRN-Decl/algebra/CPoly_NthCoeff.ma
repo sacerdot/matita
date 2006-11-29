@@ -32,10 +32,10 @@ polynomials over [R].
 *)
 
 (* UNEXPORTED
-Section NthCoeff_def.
+Section NthCoeff_def
 *)
 
-inline "cic:/CoRN/algebra/CPoly_NthCoeff/R.var".
+inline "cic:/CoRN/algebra/CPoly_NthCoeff/NthCoeff_def/R.var" "NthCoeff_def__".
 
 (* begin hide *)
 
@@ -94,7 +94,7 @@ The [cpoly_zero] case should be [c [=] Zero] in order to be extensional.
 inline "cic:/CoRN/algebra/CPoly_NthCoeff/nth_coeff_S.con".
 
 (* UNEXPORTED
-End NthCoeff_def.
+End NthCoeff_def
 *)
 
 (* UNEXPORTED
@@ -110,12 +110,12 @@ Hint Resolve nth_coeff_wd: algebra_c.
 *)
 
 (* UNEXPORTED
-Section NthCoeff_props.
+Section NthCoeff_props
 *)
 
 (*#* ** Properties of [nth_coeff] *)
 
-inline "cic:/CoRN/algebra/CPoly_NthCoeff/R.var".
+inline "cic:/CoRN/algebra/CPoly_NthCoeff/NthCoeff_props/R.var" "NthCoeff_props__".
 
 (* begin hide *)
 
@@ -187,7 +187,7 @@ inline "cic:/CoRN/algebra/CPoly_NthCoeff/nth_coeff_nexp_neq.con".
 inline "cic:/CoRN/algebra/CPoly_NthCoeff/nth_coeff_mult.con".
 
 (* UNEXPORTED
-End NthCoeff_props.
+End NthCoeff_props
 *)
 
 (* UNEXPORTED

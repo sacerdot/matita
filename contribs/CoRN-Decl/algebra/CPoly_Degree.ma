@@ -33,10 +33,10 @@ over [R].
 *)
 
 (* UNEXPORTED
-Section Degree_def.
+Section Degree_def
 *)
 
-inline "cic:/CoRN/algebra/CPoly_Degree/R.var".
+inline "cic:/CoRN/algebra/CPoly_Degree/Degree_def/R.var" "Degree_def__".
 
 (* begin hide *)
 
@@ -85,7 +85,7 @@ inline "cic:/CoRN/algebra/CPoly_Degree/even_cpoly.con".
 inline "cic:/CoRN/algebra/CPoly_Degree/regular.con".
 
 (* UNEXPORTED
-End Degree_def.
+End Degree_def
 *)
 
 (* UNEXPORTED
@@ -105,10 +105,10 @@ Implicit Arguments lth_of_poly [R].
 *)
 
 (* UNEXPORTED
-Section Degree_props.
+Section Degree_props
 *)
 
-inline "cic:/CoRN/algebra/CPoly_Degree/R.var".
+inline "cic:/CoRN/algebra/CPoly_Degree/Degree_props/R.var" "Degree_props__".
 
 (* begin hide *)
 
@@ -201,7 +201,7 @@ inline "cic:/CoRN/algebra/CPoly_Degree/monic_one.con".
 inline "cic:/CoRN/algebra/CPoly_Degree/monic_apzero.con".
 
 (* UNEXPORTED
-End Degree_props.
+End Degree_props
 *)
 
 (* UNEXPORTED
@@ -213,7 +213,7 @@ Hint Resolve degree_mult_aux: algebra.
 *)
 
 (* UNEXPORTED
-Section degree_props_Field.
+Section degree_props_Field
 *)
 
 (*#* ** Degrees of polynomials over a field
@@ -222,7 +222,7 @@ polynomials over [F].
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CPoly_Degree/F.var".
+inline "cic:/CoRN/algebra/CPoly_Degree/degree_props_Field/F.var" "degree_props_Field__".
 
 (* begin hide *)
 
@@ -241,6 +241,6 @@ inline "cic:/CoRN/algebra/CPoly_Degree/degree_le_mult_imp.con".
 inline "cic:/CoRN/algebra/CPoly_Degree/degree_mult_imp.con".
 
 (* UNEXPORTED
-End degree_props_Field.
+End degree_props_Field
 *)
 

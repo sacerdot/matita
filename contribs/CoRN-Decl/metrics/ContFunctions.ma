@@ -23,7 +23,7 @@ include "CoRN.ma".
 include "metrics/CPseudoMSpaces.ma".
 
 (* UNEXPORTED
-Section Continuous_functions.
+Section Continuous_functions
 *)
 
 (*#* **Continuous functions, uniformly continuous functions and Lipschitz functions
@@ -32,9 +32,9 @@ Let [A] and [B] be pseudo metric spaces.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/metrics/ContFunctions/A.var".
+inline "cic:/CoRN/metrics/ContFunctions/Continuous_functions/A.var" "Continuous_functions__".
 
-inline "cic:/CoRN/metrics/ContFunctions/B.var".
+inline "cic:/CoRN/metrics/ContFunctions/Continuous_functions/B.var" "Continuous_functions__".
 
 (*#*
 We will look at some notions of continuous functions.
@@ -55,7 +55,7 @@ inline "cic:/CoRN/metrics/ContFunctions/lipschitz.con".
 inline "cic:/CoRN/metrics/ContFunctions/lipschitz'.con".
 
 (* UNEXPORTED
-End Continuous_functions.
+End Continuous_functions
 *)
 
 (* UNEXPORTED
@@ -87,7 +87,7 @@ Implicit Arguments lipschitz' [A B].
 *)
 
 (* UNEXPORTED
-Section Lemmas.
+Section Lemmas
 *)
 
 (* begin hide *)
@@ -120,11 +120,11 @@ inline "cic:/CoRN/metrics/ContFunctions/uni_continuous_imp_continuous.con".
 inline "cic:/CoRN/metrics/ContFunctions/lipschitz_imp_uni_continuous.con".
 
 (* UNEXPORTED
-End Lemmas.
+End Lemmas
 *)
 
 (* UNEXPORTED
-Section Identity.
+Section Identity
 *)
 
 (*#* **Identity 
@@ -142,11 +142,11 @@ inline "cic:/CoRN/metrics/ContFunctions/id_is_uni_continuous.con".
 inline "cic:/CoRN/metrics/ContFunctions/id_is_continuous.con".
 
 (* UNEXPORTED
-End Identity.
+End Identity
 *)
 
 (* UNEXPORTED
-Section Constant.
+Section Constant
 *)
 
 (*#* **Constant functions
@@ -160,9 +160,9 @@ Any constant function is Lipschitz.
 Hence it is uniformly continuous and continuous.
 *)
 
-inline "cic:/CoRN/metrics/ContFunctions/B.var".
+inline "cic:/CoRN/metrics/ContFunctions/Constant/B.var" "Constant__".
 
-inline "cic:/CoRN/metrics/ContFunctions/X.var".
+inline "cic:/CoRN/metrics/ContFunctions/Constant/X.var" "Constant__".
 
 inline "cic:/CoRN/metrics/ContFunctions/const_fun_is_lipschitz.con".
 
@@ -171,11 +171,11 @@ inline "cic:/CoRN/metrics/ContFunctions/const_fun_is_uni_continuous.con".
 inline "cic:/CoRN/metrics/ContFunctions/const_fun_is_continuous.con".
 
 (* UNEXPORTED
-End Constant.
+End Constant
 *)
 
 (* UNEXPORTED
-Section Composition.
+Section Composition
 *)
 
 (*#* **Composition
@@ -191,15 +191,15 @@ The composition of two Lipschitz/uniformly continous/continuous functions is
 again Lipschitz/uniformly continuous/continuous.
 *)
 
-inline "cic:/CoRN/metrics/ContFunctions/X.var".
+inline "cic:/CoRN/metrics/ContFunctions/Composition/X.var" "Composition__".
 
-inline "cic:/CoRN/metrics/ContFunctions/B.var".
+inline "cic:/CoRN/metrics/ContFunctions/Composition/B.var" "Composition__".
 
-inline "cic:/CoRN/metrics/ContFunctions/f.var".
+inline "cic:/CoRN/metrics/ContFunctions/Composition/f.var" "Composition__".
 
-inline "cic:/CoRN/metrics/ContFunctions/C.var".
+inline "cic:/CoRN/metrics/ContFunctions/Composition/C.var" "Composition__".
 
-inline "cic:/CoRN/metrics/ContFunctions/g.var".
+inline "cic:/CoRN/metrics/ContFunctions/Composition/g.var" "Composition__".
 
 inline "cic:/CoRN/metrics/ContFunctions/comp_resp_lipschitz.con".
 
@@ -208,11 +208,11 @@ inline "cic:/CoRN/metrics/ContFunctions/comp_resp_uni_continuous.con".
 inline "cic:/CoRN/metrics/ContFunctions/comp_resp_continuous.con".
 
 (* UNEXPORTED
-End Composition.
+End Composition
 *)
 
 (* UNEXPORTED
-Section Limit.
+Section Limit
 *)
 
 (*#* **Limit
@@ -243,6 +243,6 @@ Implicit Arguments seqcontinuous' [A B].
 inline "cic:/CoRN/metrics/ContFunctions/continuous'_imp_seqcontinuous'.con".
 
 (* UNEXPORTED
-End Limit.
+End Limit
 *)
 

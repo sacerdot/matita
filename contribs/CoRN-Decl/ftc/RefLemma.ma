@@ -27,7 +27,7 @@ include "ftc/RefSeparated.ma".
 include "ftc/RefSepRef.ma".
 
 (* UNEXPORTED
-Section Refinement_Lemma.
+Section Refinement_Lemma
 *)
 
 (*#* *The Refinement Lemmas
@@ -81,32 +81,32 @@ Using the results from these files, we prove our main lemma in several steps
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/RefLemma/a.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/a.var" "Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/b.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/b.var" "Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/Hab.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Hab.var" "Refinement_Lemma__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/RefLemma/I.con".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/I.con" "Refinement_Lemma__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/RefLemma/F.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/F.var" "Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/contF.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/contF.var" "Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/incF.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/incF.var" "Refinement_Lemma__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/RefLemma/contF'.con".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/contF'.con" "Refinement_Lemma__".
 
 (* end hide *)
 
 (* UNEXPORTED
-Section First_Refinement_Lemma.
+Section First_Refinement_Lemma
 *)
 
 (*#*
@@ -124,43 +124,43 @@ respectively.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/RefLemma/e.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/First_Refinement_Lemma/e.var" "Refinement_Lemma__First_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/He.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/First_Refinement_Lemma/He.var" "Refinement_Lemma__First_Refinement_Lemma__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/RefLemma/d.con".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/First_Refinement_Lemma/d.con" "Refinement_Lemma__First_Refinement_Lemma__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/RefLemma/m.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/First_Refinement_Lemma/m.var" "Refinement_Lemma__First_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/n.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/First_Refinement_Lemma/n.var" "Refinement_Lemma__First_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/P.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/First_Refinement_Lemma/P.var" "Refinement_Lemma__First_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/HMesh.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/First_Refinement_Lemma/HMesh.var" "Refinement_Lemma__First_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/Q.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/First_Refinement_Lemma/Q.var" "Refinement_Lemma__First_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/Href.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/First_Refinement_Lemma/Href.var" "Refinement_Lemma__First_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/fP.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/First_Refinement_Lemma/fP.var" "Refinement_Lemma__First_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/HfP.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/First_Refinement_Lemma/HfP.var" "Refinement_Lemma__First_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/HfP'.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/First_Refinement_Lemma/HfP'.var" "Refinement_Lemma__First_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/fQ.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/First_Refinement_Lemma/fQ.var" "Refinement_Lemma__First_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/HfQ.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/First_Refinement_Lemma/HfQ.var" "Refinement_Lemma__First_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/HfQ'.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/First_Refinement_Lemma/HfQ'.var" "Refinement_Lemma__First_Refinement_Lemma__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/RefLemma/sub.con".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/First_Refinement_Lemma/sub.con" "Refinement_Lemma__First_Refinement_Lemma__".
 
 inline "cic:/CoRN/ftc/RefLemma/RL_sub_0.con".
 
@@ -174,11 +174,11 @@ inline "cic:/CoRN/ftc/RefLemma/RL_sub_hyp.con".
 
 inline "cic:/CoRN/ftc/RefLemma/RL_sub_S.con".
 
-inline "cic:/CoRN/ftc/RefLemma/H.con".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/First_Refinement_Lemma/H.con" "Refinement_Lemma__First_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/H'.con".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/First_Refinement_Lemma/H'.con" "Refinement_Lemma__First_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/H0.con".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/First_Refinement_Lemma/H0.con" "Refinement_Lemma__First_Refinement_Lemma__".
 
 inline "cic:/CoRN/ftc/RefLemma/RL_sub_SS.con".
 
@@ -223,11 +223,11 @@ inline "cic:/CoRN/ftc/RefLemma/ref_calc8.con".
 inline "cic:/CoRN/ftc/RefLemma/first_refinement_lemma.con".
 
 (* UNEXPORTED
-End First_Refinement_Lemma.
+End First_Refinement_Lemma
 *)
 
 (* UNEXPORTED
-Section Second_Refinement_Lemma.
+Section Second_Refinement_Lemma
 *)
 
 (*#*
@@ -246,62 +246,62 @@ and [R], respectively.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/RefLemma/n.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/n.var" "Refinement_Lemma__Second_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/j.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/j.var" "Refinement_Lemma__Second_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/k.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/k.var" "Refinement_Lemma__Second_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/P.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/P.var" "Refinement_Lemma__Second_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/Q.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/Q.var" "Refinement_Lemma__Second_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/R.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/R.var" "Refinement_Lemma__Second_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/HrefP.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/HrefP.var" "Refinement_Lemma__Second_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/HrefR.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/HrefR.var" "Refinement_Lemma__Second_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/e.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/e.var" "Refinement_Lemma__Second_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/e'.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/e'.var" "Refinement_Lemma__Second_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/He.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/He.var" "Refinement_Lemma__Second_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/He'.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/He'.var" "Refinement_Lemma__Second_Refinement_Lemma__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/RefLemma/d.con".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/d.con" "Refinement_Lemma__Second_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/d'.con".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/d'.con" "Refinement_Lemma__Second_Refinement_Lemma__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/RefLemma/HMeshP.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/HMeshP.var" "Refinement_Lemma__Second_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/HMeshR.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/HMeshR.var" "Refinement_Lemma__Second_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/fP.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/fP.var" "Refinement_Lemma__Second_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/HfP.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/HfP.var" "Refinement_Lemma__Second_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/HfP'.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/HfP'.var" "Refinement_Lemma__Second_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/fR.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/fR.var" "Refinement_Lemma__Second_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/HfR.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/HfR.var" "Refinement_Lemma__Second_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/HfR'.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/HfR'.var" "Refinement_Lemma__Second_Refinement_Lemma__".
 
 inline "cic:/CoRN/ftc/RefLemma/second_refinement_lemma.con".
 
 (* UNEXPORTED
-End Second_Refinement_Lemma.
+End Second_Refinement_Lemma
 *)
 
 (* UNEXPORTED
-Section Third_Refinement_Lemma.
+Section Third_Refinement_Lemma
 *)
 
 (*#*
@@ -320,109 +320,109 @@ respectively;
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/RefLemma/n.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/n.var" "Refinement_Lemma__Third_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/m.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/m.var" "Refinement_Lemma__Third_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/P.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/P.var" "Refinement_Lemma__Third_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/R.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/R.var" "Refinement_Lemma__Third_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/e.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/e.var" "Refinement_Lemma__Third_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/e'.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/e'.var" "Refinement_Lemma__Third_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/He.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/He.var" "Refinement_Lemma__Third_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/He'.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/He'.var" "Refinement_Lemma__Third_Refinement_Lemma__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/RefLemma/d.con".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/d.con" "Refinement_Lemma__Third_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/d'.con".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/d'.con" "Refinement_Lemma__Third_Refinement_Lemma__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/RefLemma/HMeshP.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/HMeshP.var" "Refinement_Lemma__Third_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/HMeshR.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/HMeshR.var" "Refinement_Lemma__Third_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/fP.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/fP.var" "Refinement_Lemma__Third_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/HfP.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/HfP.var" "Refinement_Lemma__Third_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/HfP'.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/HfP'.var" "Refinement_Lemma__Third_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/fR.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/fR.var" "Refinement_Lemma__Third_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/HfR.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/HfR.var" "Refinement_Lemma__Third_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/HfR'.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/HfR'.var" "Refinement_Lemma__Third_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/Hab'.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/Hab'.var" "Refinement_Lemma__Third_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/beta.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/beta.var" "Refinement_Lemma__Third_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/Hbeta.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/Hbeta.var" "Refinement_Lemma__Third_Refinement_Lemma__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/RefLemma/alpha.con".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/alpha.con" "Refinement_Lemma__Third_Refinement_Lemma__".
 
 inline "cic:/CoRN/ftc/RefLemma/RL_alpha.con".
 
-inline "cic:/CoRN/ftc/RefLemma/csi1.con".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/csi1.con" "Refinement_Lemma__Third_Refinement_Lemma__".
 
 inline "cic:/CoRN/ftc/RefLemma/RL_csi1.con".
 
-inline "cic:/CoRN/ftc/RefLemma/delta1.con".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/delta1.con" "Refinement_Lemma__Third_Refinement_Lemma__".
 
 inline "cic:/CoRN/ftc/RefLemma/RL_delta1.con".
 
-inline "cic:/CoRN/ftc/RefLemma/P'.con".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/P'.con" "Refinement_Lemma__Third_Refinement_Lemma__".
 
 inline "cic:/CoRN/ftc/RefLemma/RL_P'_sep.con".
 
 inline "cic:/CoRN/ftc/RefLemma/RL_P'_Mesh.con".
 
-inline "cic:/CoRN/ftc/RefLemma/fP'.con".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/fP'.con" "Refinement_Lemma__Third_Refinement_Lemma__".
 
 inline "cic:/CoRN/ftc/RefLemma/RL_fP'_in_P'.con".
 
 inline "cic:/CoRN/ftc/RefLemma/RL_P'_P_sum.con".
 
-inline "cic:/CoRN/ftc/RefLemma/csi2.con".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/csi2.con" "Refinement_Lemma__Third_Refinement_Lemma__".
 
 inline "cic:/CoRN/ftc/RefLemma/RL_csi2.con".
 
-inline "cic:/CoRN/ftc/RefLemma/delta2.con".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/delta2.con" "Refinement_Lemma__Third_Refinement_Lemma__".
 
 inline "cic:/CoRN/ftc/RefLemma/RL_delta2.con".
 
-inline "cic:/CoRN/ftc/RefLemma/R'.con".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/R'.con" "Refinement_Lemma__Third_Refinement_Lemma__".
 
 inline "cic:/CoRN/ftc/RefLemma/RL_R'_sep.con".
 
 inline "cic:/CoRN/ftc/RefLemma/RL_R'_Mesh.con".
 
-inline "cic:/CoRN/ftc/RefLemma/fR'.con".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/fR'.con" "Refinement_Lemma__Third_Refinement_Lemma__".
 
 inline "cic:/CoRN/ftc/RefLemma/RL_fR'_in_R'.con".
 
 inline "cic:/CoRN/ftc/RefLemma/RL_R'_R_sum.con".
 
-inline "cic:/CoRN/ftc/RefLemma/csi3.con".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/csi3.con" "Refinement_Lemma__Third_Refinement_Lemma__".
 
 inline "cic:/CoRN/ftc/RefLemma/RL_csi3.con".
 
-inline "cic:/CoRN/ftc/RefLemma/Q.con".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/Q.con" "Refinement_Lemma__Third_Refinement_Lemma__".
 
 inline "cic:/CoRN/ftc/RefLemma/RL_Q_Mesh.con".
 
 inline "cic:/CoRN/ftc/RefLemma/RL_Q_sep.con".
 
-inline "cic:/CoRN/ftc/RefLemma/fQ.con".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/fQ.con" "Refinement_Lemma__Third_Refinement_Lemma__".
 
 inline "cic:/CoRN/ftc/RefLemma/RL_fQ_in_Q.con".
 
@@ -433,16 +433,16 @@ inline "cic:/CoRN/ftc/RefLemma/RL_Q_P'_sum.con".
 inline "cic:/CoRN/ftc/RefLemma/third_refinement_lemma.con".
 
 (* UNEXPORTED
-End Third_Refinement_Lemma.
+End Third_Refinement_Lemma
 *)
 
 (* UNEXPORTED
-Section Fourth_Refinement_Lemma.
+Section Fourth_Refinement_Lemma
 *)
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/RefLemma/Fa.con".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/Fa.con" "Refinement_Lemma__Fourth_Refinement_Lemma__".
 
 (* NOTATION
 Notation just := (fun z => incF _ (Pts_part_lemma _ _ _ _ _ _ z _ _)).
@@ -457,111 +457,111 @@ Finally, this is inequality (2.6.7) exactly as stated (same conventions as
 above)
 *)
 
-inline "cic:/CoRN/ftc/RefLemma/n.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/n.var" "Refinement_Lemma__Fourth_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/m.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/m.var" "Refinement_Lemma__Fourth_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/P.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/P.var" "Refinement_Lemma__Fourth_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/R.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/R.var" "Refinement_Lemma__Fourth_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/e.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/e.var" "Refinement_Lemma__Fourth_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/e'.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/e'.var" "Refinement_Lemma__Fourth_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/He.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/He.var" "Refinement_Lemma__Fourth_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/He'.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/He'.var" "Refinement_Lemma__Fourth_Refinement_Lemma__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/RefLemma/d.con".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/d.con" "Refinement_Lemma__Fourth_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/d'.con".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/d'.con" "Refinement_Lemma__Fourth_Refinement_Lemma__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/RefLemma/HMeshP.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/HMeshP.var" "Refinement_Lemma__Fourth_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/HMeshR.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/HMeshR.var" "Refinement_Lemma__Fourth_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/fP.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/fP.var" "Refinement_Lemma__Fourth_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/HfP.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/HfP.var" "Refinement_Lemma__Fourth_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/HfP'.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/HfP'.var" "Refinement_Lemma__Fourth_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/fR.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/fR.var" "Refinement_Lemma__Fourth_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/HfR.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/HfR.var" "Refinement_Lemma__Fourth_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/HfR'.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/HfR'.var" "Refinement_Lemma__Fourth_Refinement_Lemma__".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/RefLemma/Hab'.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/Hab'.var" "Refinement_Lemma__Fourth_Refinement_Lemma__".
 
 (* end show *)
 
 inline "cic:/CoRN/ftc/RefLemma/fourth_refinement_lemma.con".
 
 (* UNEXPORTED
-End Fourth_Refinement_Lemma.
+End Fourth_Refinement_Lemma
 *)
 
 (* UNEXPORTED
-Section Main_Refinement_Lemma.
+Section Main_Refinement_Lemma
 *)
 
 (*#* We finish by presenting Theorem 9. *)
 
-inline "cic:/CoRN/ftc/RefLemma/n.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Main_Refinement_Lemma/n.var" "Refinement_Lemma__Main_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/m.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Main_Refinement_Lemma/m.var" "Refinement_Lemma__Main_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/P.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Main_Refinement_Lemma/P.var" "Refinement_Lemma__Main_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/R.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Main_Refinement_Lemma/R.var" "Refinement_Lemma__Main_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/e.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Main_Refinement_Lemma/e.var" "Refinement_Lemma__Main_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/e'.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Main_Refinement_Lemma/e'.var" "Refinement_Lemma__Main_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/He.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Main_Refinement_Lemma/He.var" "Refinement_Lemma__Main_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/He'.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Main_Refinement_Lemma/He'.var" "Refinement_Lemma__Main_Refinement_Lemma__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/RefLemma/d.con".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Main_Refinement_Lemma/d.con" "Refinement_Lemma__Main_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/d'.con".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Main_Refinement_Lemma/d'.con" "Refinement_Lemma__Main_Refinement_Lemma__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/RefLemma/HMeshP.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Main_Refinement_Lemma/HMeshP.var" "Refinement_Lemma__Main_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/HMeshR.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Main_Refinement_Lemma/HMeshR.var" "Refinement_Lemma__Main_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/fP.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Main_Refinement_Lemma/fP.var" "Refinement_Lemma__Main_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/HfP.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Main_Refinement_Lemma/HfP.var" "Refinement_Lemma__Main_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/HfP'.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Main_Refinement_Lemma/HfP'.var" "Refinement_Lemma__Main_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/fR.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Main_Refinement_Lemma/fR.var" "Refinement_Lemma__Main_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/HfR.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Main_Refinement_Lemma/HfR.var" "Refinement_Lemma__Main_Refinement_Lemma__".
 
-inline "cic:/CoRN/ftc/RefLemma/HfR'.var".
+inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Main_Refinement_Lemma/HfR'.var" "Refinement_Lemma__Main_Refinement_Lemma__".
 
 inline "cic:/CoRN/ftc/RefLemma/refinement_lemma.con".
 
 (* UNEXPORTED
-End Main_Refinement_Lemma.
+End Main_Refinement_Lemma
 *)
 
 (* UNEXPORTED
-End Refinement_Lemma.
+End Refinement_Lemma
 *)
 

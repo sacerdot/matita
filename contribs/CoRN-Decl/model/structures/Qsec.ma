@@ -47,7 +47,7 @@ also define apartness, order, addition, multiplication, opposite,
 inverse an de constants 0 and 1.  *)
 
 (* UNEXPORTED
-Section Q.
+Section Q
 *)
 
 inline "cic:/CoRN/model/structures/Qsec/Q.ind".
@@ -71,7 +71,7 @@ inline "cic:/CoRN/model/structures/Qsec/QONE.con".
 inline "cic:/CoRN/model/structures/Qsec/Qinv.con".
 
 (* UNEXPORTED
-End Q.
+End Q
 *)
 
 (* NOTATION

@@ -31,19 +31,19 @@ degree [(S n)].
 *)
 
 (* UNEXPORTED
-Section FTA_reg'.
+Section FTA_reg'
 *)
 
-inline "cic:/CoRN/fta/FTA/f.var".
+inline "cic:/CoRN/fta/FTA/FTA_reg'/f.var" "FTA_reg'__".
 
-inline "cic:/CoRN/fta/FTA/n.var".
+inline "cic:/CoRN/fta/FTA/FTA_reg'/n.var" "FTA_reg'__".
 
-inline "cic:/CoRN/fta/FTA/f_degree.var".
+inline "cic:/CoRN/fta/FTA/FTA_reg'/f_degree.var" "FTA_reg'__".
 
 inline "cic:/CoRN/fta/FTA/FTA_reg'.con".
 
 (* UNEXPORTED
-End FTA_reg'.
+End FTA_reg'
 *)
 
 (*#*
@@ -54,22 +54,22 @@ less than or equal to [(S n)] and [c] be a complex number such that
 *)
 
 (* UNEXPORTED
-Section FTA_1.
+Section FTA_1
 *)
 
-inline "cic:/CoRN/fta/FTA/f.var".
+inline "cic:/CoRN/fta/FTA/FTA_1/f.var" "FTA_1__".
 
-inline "cic:/CoRN/fta/FTA/n.var".
+inline "cic:/CoRN/fta/FTA/FTA_1/n.var" "FTA_1__".
 
-inline "cic:/CoRN/fta/FTA/f_degree.var".
+inline "cic:/CoRN/fta/FTA/FTA_1/f_degree.var" "FTA_1__".
 
-inline "cic:/CoRN/fta/FTA/c.var".
+inline "cic:/CoRN/fta/FTA/FTA_1/c.var" "FTA_1__".
 
-inline "cic:/CoRN/fta/FTA/f_c.var".
+inline "cic:/CoRN/fta/FTA/FTA_1/f_c.var" "FTA_1__".
 
 inline "cic:/CoRN/fta/FTA/FTA_1a.con".
 
-inline "cic:/CoRN/fta/FTA/g.con".
+inline "cic:/CoRN/fta/FTA/FTA_1/g.con" "FTA_1__".
 
 inline "cic:/CoRN/fta/FTA/FTA_1b.con".
 
@@ -78,11 +78,11 @@ inline "cic:/CoRN/fta/FTA/FTA_1.con".
 inline "cic:/CoRN/fta/FTA/FTA_1'.con".
 
 (* UNEXPORTED
-End FTA_1.
+End FTA_1
 *)
 
 (* UNEXPORTED
-Section Fund_Thm_Alg.
+Section Fund_Thm_Alg
 *)
 
 inline "cic:/CoRN/fta/FTA/FTA'.con".
@@ -92,6 +92,6 @@ inline "cic:/CoRN/fta/FTA/FTA.con".
 inline "cic:/CoRN/fta/FTA/FTA_a_la_Henk.con".
 
 (* UNEXPORTED
-End Fund_Thm_Alg.
+End Fund_Thm_Alg
 *)
 

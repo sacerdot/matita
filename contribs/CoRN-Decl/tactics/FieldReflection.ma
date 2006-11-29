@@ -27,18 +27,18 @@ include "algebra/CFields.ma".
 include "tactics/AlgReflection.ma".
 
 (* UNEXPORTED
-Section Field_Interpretation_Function.
+Section Field_Interpretation_Function
 *)
 
-inline "cic:/CoRN/tactics/FieldReflection/F.var".
+inline "cic:/CoRN/tactics/FieldReflection/Field_Interpretation_Function/F.var" "Field_Interpretation_Function__".
 
-inline "cic:/CoRN/tactics/FieldReflection/val.var".
+inline "cic:/CoRN/tactics/FieldReflection/Field_Interpretation_Function/val.var" "Field_Interpretation_Function__".
 
-inline "cic:/CoRN/tactics/FieldReflection/unop.var".
+inline "cic:/CoRN/tactics/FieldReflection/Field_Interpretation_Function/unop.var" "Field_Interpretation_Function__".
 
-inline "cic:/CoRN/tactics/FieldReflection/binop.var".
+inline "cic:/CoRN/tactics/FieldReflection/Field_Interpretation_Function/binop.var" "Field_Interpretation_Function__".
 
-inline "cic:/CoRN/tactics/FieldReflection/pfun.var".
+inline "cic:/CoRN/tactics/FieldReflection/Field_Interpretation_Function/pfun.var" "Field_Interpretation_Function__".
 
 inline "cic:/CoRN/tactics/FieldReflection/interpF.ind".
 
@@ -79,22 +79,22 @@ inline "cic:/CoRN/tactics/FieldReflection/refl_interpF.con".
 inline "cic:/CoRN/tactics/FieldReflection/interpF_wd.con".
 
 (* UNEXPORTED
-End Field_Interpretation_Function.
+End Field_Interpretation_Function
 *)
 
 (* UNEXPORTED
-Section Field_NormCorrect.
+Section Field_NormCorrect
 *)
 
-inline "cic:/CoRN/tactics/FieldReflection/F.var".
+inline "cic:/CoRN/tactics/FieldReflection/Field_NormCorrect/F.var" "Field_NormCorrect__".
 
-inline "cic:/CoRN/tactics/FieldReflection/val.var".
+inline "cic:/CoRN/tactics/FieldReflection/Field_NormCorrect/val.var" "Field_NormCorrect__".
 
-inline "cic:/CoRN/tactics/FieldReflection/unop.var".
+inline "cic:/CoRN/tactics/FieldReflection/Field_NormCorrect/unop.var" "Field_NormCorrect__".
 
-inline "cic:/CoRN/tactics/FieldReflection/binop.var".
+inline "cic:/CoRN/tactics/FieldReflection/Field_NormCorrect/binop.var" "Field_NormCorrect__".
 
-inline "cic:/CoRN/tactics/FieldReflection/pfun.var".
+inline "cic:/CoRN/tactics/FieldReflection/Field_NormCorrect/pfun.var" "Field_NormCorrect__".
 
 (* NOTATION
 Notation II := (interpF F val unop binop pfun).
@@ -211,7 +211,7 @@ inline "cic:/CoRN/tactics/FieldReflection/Tactic_lemma_zero_F.con".
 inline "cic:/CoRN/tactics/FieldReflection/Tactic_lemmaF.con".
 
 (* UNEXPORTED
-End Field_NormCorrect.
+End Field_NormCorrect
 *)
 
 (* end hide *)

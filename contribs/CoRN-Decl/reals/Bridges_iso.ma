@@ -41,19 +41,19 @@ include "reals/Bridges_LUB.ma".
 inline "cic:/CoRN/reals/Bridges_iso/le_witness_informative.con".
 
 (* UNEXPORTED
-Section bridges_axioms_imply_ours.
+Section bridges_axioms_imply_ours
 *)
 
-inline "cic:/CoRN/reals/Bridges_iso/OF.var".
+inline "cic:/CoRN/reals/Bridges_iso/bridges_axioms_imply_ours/OF.var" "bridges_axioms_imply_ours__".
 
-inline "cic:/CoRN/reals/Bridges_iso/lubp.var".
+inline "cic:/CoRN/reals/Bridges_iso/bridges_axioms_imply_ours/lubp.var" "bridges_axioms_imply_ours__".
 
-inline "cic:/CoRN/reals/Bridges_iso/is_Archimedes.var".
+inline "cic:/CoRN/reals/Bridges_iso/bridges_axioms_imply_ours/is_Archimedes.var" "bridges_axioms_imply_ours__".
 
 inline "cic:/CoRN/reals/Bridges_iso/is_Archimedes'.con".
 
 (* UNEXPORTED
-Section proofs_in_TCS.
+Section proofs_in_TCS
 *)
 
 inline "cic:/CoRN/reals/Bridges_iso/leEq_geEq.con".
@@ -61,10 +61,10 @@ inline "cic:/CoRN/reals/Bridges_iso/leEq_geEq.con".
 inline "cic:/CoRN/reals/Bridges_iso/glbp.con".
 
 (* UNEXPORTED
-Section supremum.
+Section supremum
 *)
 
-inline "cic:/CoRN/reals/Bridges_iso/P.var".
+inline "cic:/CoRN/reals/Bridges_iso/bridges_axioms_imply_ours/proofs_in_TCS/supremum/P.var" "bridges_axioms_imply_ours__proofs_in_TCS__supremum__".
 
 inline "cic:/CoRN/reals/Bridges_iso/inequality1.con".
 
@@ -96,7 +96,7 @@ inline "cic:/CoRN/reals/Bridges_iso/kaf.con".
 
 inline "cic:/CoRN/reals/Bridges_iso/Pkaf.con".
 
-inline "cic:/CoRN/reals/Bridges_iso/is_finite_P.var".
+inline "cic:/CoRN/reals/Bridges_iso/bridges_axioms_imply_ours/proofs_in_TCS/supremum/is_finite_P.var" "bridges_axioms_imply_ours__proofs_in_TCS__supremum__".
 
 inline "cic:/CoRN/reals/Bridges_iso/card.con".
 
@@ -112,7 +112,7 @@ inline "cic:/CoRN/reals/Bridges_iso/indeks.con".
 
 inline "cic:/CoRN/reals/Bridges_iso/Pindeks.con".
 
-inline "cic:/CoRN/reals/Bridges_iso/is_onto_seq_P.var".
+inline "cic:/CoRN/reals/Bridges_iso/bridges_axioms_imply_ours/proofs_in_TCS/supremum/is_onto_seq_P.var" "bridges_axioms_imply_ours__proofs_in_TCS__supremum__".
 
 inline "cic:/CoRN/reals/Bridges_iso/P_is_inhabited.con".
 
@@ -189,12 +189,12 @@ inline "cic:/CoRN/reals/Bridges_iso/bounded_quantifier_informative.con".
 
 inline "cic:/CoRN/reals/Bridges_iso/bridges_lemma1a.con".
 
-inline "cic:/CoRN/reals/Bridges_iso/P_is_strongly_extensional.var".
+inline "cic:/CoRN/reals/Bridges_iso/bridges_axioms_imply_ours/proofs_in_TCS/supremum/P_is_strongly_extensional.var" "bridges_axioms_imply_ours__proofs_in_TCS__supremum__".
 
 inline "cic:/CoRN/reals/Bridges_iso/bridges_lemma1b.con".
 
 (* UNEXPORTED
-End supremum.
+End supremum
 *)
 
 (*#**********************************)
@@ -206,18 +206,18 @@ End supremum.
 (*#**********************************)
 
 (* UNEXPORTED
-Section Every_Cauchy_Sequence_is_bounded.
+Section Every_Cauchy_Sequence_is_bounded
 *)
 
 inline "cic:/CoRN/reals/Bridges_iso/seq2set.con".
 
-inline "cic:/CoRN/reals/Bridges_iso/g.var".
+inline "cic:/CoRN/reals/Bridges_iso/bridges_axioms_imply_ours/proofs_in_TCS/Every_Cauchy_Sequence_is_bounded/g.var" "bridges_axioms_imply_ours__proofs_in_TCS__Every_Cauchy_Sequence_is_bounded__".
 
-inline "cic:/CoRN/reals/Bridges_iso/g_.con".
+inline "cic:/CoRN/reals/Bridges_iso/bridges_axioms_imply_ours/proofs_in_TCS/Every_Cauchy_Sequence_is_bounded/g_.con" "bridges_axioms_imply_ours__proofs_in_TCS__Every_Cauchy_Sequence_is_bounded__".
 
-inline "cic:/CoRN/reals/Bridges_iso/pg.con".
+inline "cic:/CoRN/reals/Bridges_iso/bridges_axioms_imply_ours/proofs_in_TCS/Every_Cauchy_Sequence_is_bounded/pg.con" "bridges_axioms_imply_ours__proofs_in_TCS__Every_Cauchy_Sequence_is_bounded__".
 
-inline "cic:/CoRN/reals/Bridges_iso/P.con".
+inline "cic:/CoRN/reals/Bridges_iso/bridges_axioms_imply_ours/proofs_in_TCS/Every_Cauchy_Sequence_is_bounded/P.con" "bridges_axioms_imply_ours__proofs_in_TCS__Every_Cauchy_Sequence_is_bounded__".
 
 inline "cic:/CoRN/reals/Bridges_iso/fin_is_fin.con".
 
@@ -260,16 +260,16 @@ inline "cic:/CoRN/reals/Bridges_iso/tail_is_Cauchy.con".
 inline "cic:/CoRN/reals/Bridges_iso/tail_seq.con".
 
 (* UNEXPORTED
-End Every_Cauchy_Sequence_is_bounded.
+End Every_Cauchy_Sequence_is_bounded
 *)
 
-inline "cic:/CoRN/reals/Bridges_iso/g.var".
+inline "cic:/CoRN/reals/Bridges_iso/bridges_axioms_imply_ours/proofs_in_TCS/g.var" "bridges_axioms_imply_ours__proofs_in_TCS__".
 
-inline "cic:/CoRN/reals/Bridges_iso/g_.con".
+inline "cic:/CoRN/reals/Bridges_iso/bridges_axioms_imply_ours/proofs_in_TCS/g_.con" "bridges_axioms_imply_ours__proofs_in_TCS__".
 
-inline "cic:/CoRN/reals/Bridges_iso/pg.con".
+inline "cic:/CoRN/reals/Bridges_iso/bridges_axioms_imply_ours/proofs_in_TCS/pg.con" "bridges_axioms_imply_ours__proofs_in_TCS__".
 
-inline "cic:/CoRN/reals/Bridges_iso/sup_tail.con".
+inline "cic:/CoRN/reals/Bridges_iso/bridges_axioms_imply_ours/proofs_in_TCS/sup_tail.con" "bridges_axioms_imply_ours__proofs_in_TCS__".
 
 inline "cic:/CoRN/reals/Bridges_iso/sup_tail_leEq.con".
 
@@ -277,7 +277,7 @@ inline "cic:/CoRN/reals/Bridges_iso/sup_tail_is_Cauchy.con".
 
 inline "cic:/CoRN/reals/Bridges_iso/sup_tail_as_Cauchy.con".
 
-inline "cic:/CoRN/reals/Bridges_iso/L.con".
+inline "cic:/CoRN/reals/Bridges_iso/bridges_axioms_imply_ours/proofs_in_TCS/L.con" "bridges_axioms_imply_ours__proofs_in_TCS__".
 
 inline "cic:/CoRN/reals/Bridges_iso/sup_tail_decrease.con".
 
@@ -294,7 +294,7 @@ inline "cic:/CoRN/reals/Bridges_iso/convergent_subseq.con".
 inline "cic:/CoRN/reals/Bridges_iso/lubp_gives_Cauchy.con".
 
 (* UNEXPORTED
-End proofs_in_TCS.
+End proofs_in_TCS
 *)
 
 inline "cic:/CoRN/reals/Bridges_iso/Bridges_R_is_CReals.con".
@@ -302,7 +302,7 @@ inline "cic:/CoRN/reals/Bridges_iso/Bridges_R_is_CReals.con".
 inline "cic:/CoRN/reals/Bridges_iso/Bridges_R_as_CReals.con".
 
 (* UNEXPORTED
-End bridges_axioms_imply_ours.
+End bridges_axioms_imply_ours
 *)
 
 (* end hide *)

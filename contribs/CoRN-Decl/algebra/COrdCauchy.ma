@@ -23,7 +23,7 @@ include "algebra/COrdAbs.ma".
 (* Begin_SpecReals *)
 
 (* UNEXPORTED
-Section OrdField_Cauchy.
+Section OrdField_Cauchy
 *)
 
 (*#* **Cauchy sequences
@@ -31,7 +31,7 @@ Section OrdField_Cauchy.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/COrdCauchy/R.var".
+inline "cic:/CoRN/algebra/COrdCauchy/OrdField_Cauchy/R.var" "OrdField_Cauchy__".
 
 (* begin hide *)
 
@@ -95,13 +95,13 @@ inline "cic:/CoRN/algebra/COrdCauchy/CS_seq_const.con".
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/COrdCauchy/f.var".
+inline "cic:/CoRN/algebra/COrdCauchy/OrdField_Cauchy/f.var" "OrdField_Cauchy__".
 
-inline "cic:/CoRN/algebra/COrdCauchy/g.var".
+inline "cic:/CoRN/algebra/COrdCauchy/OrdField_Cauchy/g.var" "OrdField_Cauchy__".
 
-inline "cic:/CoRN/algebra/COrdCauchy/Hf.var".
+inline "cic:/CoRN/algebra/COrdCauchy/OrdField_Cauchy/Hf.var" "OrdField_Cauchy__".
 
-inline "cic:/CoRN/algebra/COrdCauchy/Hg.var".
+inline "cic:/CoRN/algebra/COrdCauchy/OrdField_Cauchy/Hg.var" "OrdField_Cauchy__".
 
 inline "cic:/CoRN/algebra/COrdCauchy/CS_seq_plus.con".
 
@@ -121,13 +121,13 @@ Let [e] be a postive element of [R] and let [N:nat] be such that from
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/COrdCauchy/e.var".
+inline "cic:/CoRN/algebra/COrdCauchy/OrdField_Cauchy/e.var" "OrdField_Cauchy__".
 
-inline "cic:/CoRN/algebra/COrdCauchy/He.var".
+inline "cic:/CoRN/algebra/COrdCauchy/OrdField_Cauchy/He.var" "OrdField_Cauchy__".
 
-inline "cic:/CoRN/algebra/COrdCauchy/N.var".
+inline "cic:/CoRN/algebra/COrdCauchy/OrdField_Cauchy/N.var" "OrdField_Cauchy__".
 
-inline "cic:/CoRN/algebra/COrdCauchy/f_bnd.var".
+inline "cic:/CoRN/algebra/COrdCauchy/OrdField_Cauchy/f_bnd.var" "OrdField_Cauchy__".
 
 inline "cic:/CoRN/algebra/COrdCauchy/CS_seq_recip_def.con".
 
@@ -136,7 +136,7 @@ inline "cic:/CoRN/algebra/COrdCauchy/CS_seq_recip_seq.con".
 inline "cic:/CoRN/algebra/COrdCauchy/CS_seq_recip.con".
 
 (* UNEXPORTED
-End OrdField_Cauchy.
+End OrdField_Cauchy
 *)
 
 (* UNEXPORTED
@@ -151,10 +151,10 @@ well here anyway.
 inline "cic:/CoRN/algebra/COrdCauchy/maj_upto_eps.con".
 
 (* UNEXPORTED
-Section Mult_AbsSmall.
+Section Mult_AbsSmall
 *)
 
-inline "cic:/CoRN/algebra/COrdCauchy/R.var".
+inline "cic:/CoRN/algebra/COrdCauchy/Mult_AbsSmall/R.var" "Mult_AbsSmall__".
 
 (*#*
 ** [AbsSmall] revisited
@@ -171,14 +171,14 @@ inline "cic:/CoRN/algebra/COrdCauchy/mult_AbsSmall_lft.con".
 inline "cic:/CoRN/algebra/COrdCauchy/mult_AbsSmall.con".
 
 (* UNEXPORTED
-End Mult_AbsSmall.
+End Mult_AbsSmall
 *)
 
 (* UNEXPORTED
-Section Mult_Continuous.
+Section Mult_Continuous
 *)
 
-inline "cic:/CoRN/algebra/COrdCauchy/R.var".
+inline "cic:/CoRN/algebra/COrdCauchy/Mult_Continuous/R.var" "Mult_Continuous__".
 
 (*#*
 ** Multiplication is continuous
@@ -197,11 +197,11 @@ inline "cic:/CoRN/algebra/COrdCauchy/mult_contin.con".
 inline "cic:/CoRN/algebra/COrdCauchy/plus_contin.con".
 
 (* UNEXPORTED
-End Mult_Continuous.
+End Mult_Continuous
 *)
 
 (* UNEXPORTED
-Section Monotonous_functions.
+Section Monotonous_functions
 *)
 
 (*#*
@@ -214,7 +214,7 @@ characterize them in some way.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/COrdCauchy/R.var".
+inline "cic:/CoRN/algebra/COrdCauchy/Monotonous_functions/R.var" "Monotonous_functions__".
 
 (*#*
 We begin by characterizing the preservation of less (less or equal)
@@ -279,6 +279,6 @@ A similar result for %{\em %partial%}% functions.
 inline "cic:/CoRN/algebra/COrdCauchy/part_mon_imp_mon'.con".
 
 (* UNEXPORTED
-End Monotonous_functions.
+End Monotonous_functions
 *)
 

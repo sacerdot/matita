@@ -23,7 +23,7 @@ include "CoRN.ma".
 include "ftc/IntervalFunct.ma".
 
 (* UNEXPORTED
-Section Conversion.
+Section Conversion
 *)
 
 (*#* *Correspondence
@@ -45,28 +45,28 @@ that [I [=] [a,b]] is included in the domain of [F].
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/PartInterval/F.var".
+inline "cic:/CoRN/ftc/PartInterval/Conversion/F.var" "Conversion__".
 
-inline "cic:/CoRN/ftc/PartInterval/a.var".
+inline "cic:/CoRN/ftc/PartInterval/Conversion/a.var" "Conversion__".
 
-inline "cic:/CoRN/ftc/PartInterval/b.var".
+inline "cic:/CoRN/ftc/PartInterval/Conversion/b.var" "Conversion__".
 
-inline "cic:/CoRN/ftc/PartInterval/Hab.var".
+inline "cic:/CoRN/ftc/PartInterval/Conversion/Hab.var" "Conversion__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/PartInterval/I.con".
+inline "cic:/CoRN/ftc/PartInterval/Conversion/I.con" "Conversion__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/PartInterval/Hf.var".
+inline "cic:/CoRN/ftc/PartInterval/Conversion/Hf.var" "Conversion__".
 
 inline "cic:/CoRN/ftc/PartInterval/IntPartIR_strext.con".
 
 inline "cic:/CoRN/ftc/PartInterval/IntPartIR.con".
 
 (* UNEXPORTED
-End Conversion.
+End Conversion
 *)
 
 (* UNEXPORTED
@@ -74,7 +74,7 @@ Implicit Arguments IntPartIR [F a b Hab].
 *)
 
 (* UNEXPORTED
-Section AntiConversion.
+Section AntiConversion
 *)
 
 (*#*
@@ -82,26 +82,26 @@ To go the other way around, we simply take a setoid function [f] with
 domain [[a,b]] and build the corresponding partial function.
 *)
 
-inline "cic:/CoRN/ftc/PartInterval/a.var".
+inline "cic:/CoRN/ftc/PartInterval/AntiConversion/a.var" "AntiConversion__".
 
-inline "cic:/CoRN/ftc/PartInterval/b.var".
+inline "cic:/CoRN/ftc/PartInterval/AntiConversion/b.var" "AntiConversion__".
 
-inline "cic:/CoRN/ftc/PartInterval/Hab.var".
+inline "cic:/CoRN/ftc/PartInterval/AntiConversion/Hab.var" "AntiConversion__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/PartInterval/I.con".
+inline "cic:/CoRN/ftc/PartInterval/AntiConversion/I.con" "AntiConversion__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/PartInterval/f.var".
+inline "cic:/CoRN/ftc/PartInterval/AntiConversion/f.var" "AntiConversion__".
 
 inline "cic:/CoRN/ftc/PartInterval/PartInt_strext.con".
 
 inline "cic:/CoRN/ftc/PartInterval/PartInt.con".
 
 (* UNEXPORTED
-End AntiConversion.
+End AntiConversion
 *)
 
 (* UNEXPORTED
@@ -109,7 +109,7 @@ Implicit Arguments PartInt [a b Hab].
 *)
 
 (* UNEXPORTED
-Section Inverses.
+Section Inverses
 *)
 
 (*#*
@@ -119,11 +119,11 @@ In one direction these operators are inverses.
 inline "cic:/CoRN/ftc/PartInterval/int_part_int.con".
 
 (* UNEXPORTED
-End Inverses.
+End Inverses
 *)
 
 (* UNEXPORTED
-Section Equivalences.
+Section Equivalences
 *)
 
 (*#* **Mappings Preserve Operations
@@ -137,31 +137,31 @@ type [I->IR] equal respectively to [F] and [G] in [I].
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/PartInterval/F.var".
+inline "cic:/CoRN/ftc/PartInterval/Equivalences/F.var" "Equivalences__".
 
-inline "cic:/CoRN/ftc/PartInterval/G.var".
+inline "cic:/CoRN/ftc/PartInterval/Equivalences/G.var" "Equivalences__".
 
-inline "cic:/CoRN/ftc/PartInterval/a.var".
+inline "cic:/CoRN/ftc/PartInterval/Equivalences/a.var" "Equivalences__".
 
-inline "cic:/CoRN/ftc/PartInterval/b.var".
+inline "cic:/CoRN/ftc/PartInterval/Equivalences/b.var" "Equivalences__".
 
-inline "cic:/CoRN/ftc/PartInterval/c.var".
+inline "cic:/CoRN/ftc/PartInterval/Equivalences/c.var" "Equivalences__".
 
-inline "cic:/CoRN/ftc/PartInterval/Hab.var".
+inline "cic:/CoRN/ftc/PartInterval/Equivalences/Hab.var" "Equivalences__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/PartInterval/I.con".
+inline "cic:/CoRN/ftc/PartInterval/Equivalences/I.con" "Equivalences__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/PartInterval/f.var".
+inline "cic:/CoRN/ftc/PartInterval/Equivalences/f.var" "Equivalences__".
 
-inline "cic:/CoRN/ftc/PartInterval/g.var".
+inline "cic:/CoRN/ftc/PartInterval/Equivalences/g.var" "Equivalences__".
 
-inline "cic:/CoRN/ftc/PartInterval/Ff.var".
+inline "cic:/CoRN/ftc/PartInterval/Equivalences/Ff.var" "Equivalences__".
 
-inline "cic:/CoRN/ftc/PartInterval/Gg.var".
+inline "cic:/CoRN/ftc/PartInterval/Equivalences/Gg.var" "Equivalences__".
 
 inline "cic:/CoRN/ftc/PartInterval/part_int_const.con".
 
@@ -179,9 +179,9 @@ inline "cic:/CoRN/ftc/PartInterval/part_int_nth.con".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/PartInterval/HG.var".
+inline "cic:/CoRN/ftc/PartInterval/Equivalences/HG.var" "Equivalences__".
 
-inline "cic:/CoRN/ftc/PartInterval/Hg.var".
+inline "cic:/CoRN/ftc/PartInterval/Equivalences/Hg.var" "Equivalences__".
 
 (* end show *)
 
@@ -190,6 +190,6 @@ inline "cic:/CoRN/ftc/PartInterval/part_int_recip.con".
 inline "cic:/CoRN/ftc/PartInterval/part_int_div.con".
 
 (* UNEXPORTED
-End Equivalences.
+End Equivalences
 *)
 

@@ -288,7 +288,7 @@ let rec eval_macro include_paths (buffer : GText.buffer) guistuff lexicon_status
       let t_and_ty = Cic.Cast (term,ty) in
       guistuff.mathviewer#show_entry (`Cic (t_and_ty,metasenv));
       [], "", parsed_text_length
-  | TA.Inline (_,suri) ->
+  | TA.Inline (_,suri,prefix) ->
      let dbd = LibraryDb.instance () in
      let uris =
       let sql_pat =

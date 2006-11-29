@@ -25,7 +25,7 @@ include "ftc/Continuity.ma".
 (*#* printing Partition_Sum %\ensuremath{\sum_P}% #&sum;<sub>P</sub># *)
 
 (* UNEXPORTED
-Section Definitions.
+Section Definitions
 *)
 
 (*#* *Partitions
@@ -104,22 +104,22 @@ inline "cic:/CoRN/ftc/Partitions/even_part_2.con".
 inline "cic:/CoRN/ftc/Partitions/Even_Partition.con".
 
 (* UNEXPORTED
-Section Refinements.
+Section Refinements
 *)
 
-inline "cic:/CoRN/ftc/Partitions/a.var".
+inline "cic:/CoRN/ftc/Partitions/Definitions/Refinements/a.var" "Definitions__Refinements__".
 
-inline "cic:/CoRN/ftc/Partitions/b.var".
+inline "cic:/CoRN/ftc/Partitions/Definitions/Refinements/b.var" "Definitions__Refinements__".
 
-inline "cic:/CoRN/ftc/Partitions/Hab.var".
+inline "cic:/CoRN/ftc/Partitions/Definitions/Refinements/Hab.var" "Definitions__Refinements__".
 
-inline "cic:/CoRN/ftc/Partitions/m.var".
+inline "cic:/CoRN/ftc/Partitions/Definitions/Refinements/m.var" "Definitions__Refinements__".
 
-inline "cic:/CoRN/ftc/Partitions/n.var".
+inline "cic:/CoRN/ftc/Partitions/Definitions/Refinements/n.var" "Definitions__Refinements__".
 
-inline "cic:/CoRN/ftc/Partitions/P.var".
+inline "cic:/CoRN/ftc/Partitions/Definitions/Refinements/P.var" "Definitions__Refinements__".
 
-inline "cic:/CoRN/ftc/Partitions/Q.var".
+inline "cic:/CoRN/ftc/Partitions/Definitions/Refinements/Q.var" "Definitions__Refinements__".
 
 (*#*
 We now define what it means for a partition [Q] to be a refinement of
@@ -146,7 +146,7 @@ inline "cic:/CoRN/ftc/Partitions/Pts_part_lemma.con".
 inline "cic:/CoRN/ftc/Partitions/Partition_Sum.con".
 
 (* UNEXPORTED
-End Refinements.
+End Refinements
 *)
 
 (* UNEXPORTED
@@ -165,20 +165,20 @@ We now formalize some trivial and helpful constructions.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/Partitions/a.var".
+inline "cic:/CoRN/ftc/Partitions/Definitions/a.var" "Definitions__".
 
-inline "cic:/CoRN/ftc/Partitions/b.var".
+inline "cic:/CoRN/ftc/Partitions/Definitions/b.var" "Definitions__".
 
-inline "cic:/CoRN/ftc/Partitions/Hab.var".
+inline "cic:/CoRN/ftc/Partitions/Definitions/Hab.var" "Definitions__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/Partitions/I.con".
+inline "cic:/CoRN/ftc/Partitions/Definitions/I.con" "Definitions__".
 
 (* end hide *)
 
 (* UNEXPORTED
-Section Getting_Points.
+Section Getting_Points
 *)
 
 (*#*
@@ -190,9 +190,9 @@ partition.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/Partitions/m.var".
+inline "cic:/CoRN/ftc/Partitions/Definitions/Getting_Points/m.var" "Definitions__Getting_Points__".
 
-inline "cic:/CoRN/ftc/Partitions/Q.var".
+inline "cic:/CoRN/ftc/Partitions/Definitions/Getting_Points/Q.var" "Definitions__Getting_Points__".
 
 inline "cic:/CoRN/ftc/Partitions/Partition_imp_points.con".
 
@@ -201,21 +201,21 @@ inline "cic:/CoRN/ftc/Partitions/Partition_imp_points_1.con".
 inline "cic:/CoRN/ftc/Partitions/Partition_imp_points_2.con".
 
 (* UNEXPORTED
-End Getting_Points.
+End Getting_Points
 *)
 
 (*#*
 As a corollary, given any continuous function [F] and a natural number we have an immediate choice of a sum of [F] in [[a,b]].
 *)
 
-inline "cic:/CoRN/ftc/Partitions/F.var".
+inline "cic:/CoRN/ftc/Partitions/Definitions/F.var" "Definitions__".
 
-inline "cic:/CoRN/ftc/Partitions/contF.var".
+inline "cic:/CoRN/ftc/Partitions/Definitions/contF.var" "Definitions__".
 
 inline "cic:/CoRN/ftc/Partitions/Even_Partition_Sum.con".
 
 (* UNEXPORTED
-End Definitions.
+End Definitions
 *)
 
 (* UNEXPORTED
@@ -267,7 +267,7 @@ Hint Resolve start finish: algebra.
 *)
 
 (* UNEXPORTED
-Section Lemmas.
+Section Lemmas
 *)
 
 (*#* ** Properties of the mesh
@@ -300,21 +300,21 @@ with [n] points.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/Partitions/a.var".
+inline "cic:/CoRN/ftc/Partitions/Lemmas/a.var" "Lemmas__".
 
-inline "cic:/CoRN/ftc/Partitions/b.var".
+inline "cic:/CoRN/ftc/Partitions/Lemmas/b.var" "Lemmas__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/Partitions/I.con".
+inline "cic:/CoRN/ftc/Partitions/Lemmas/I.con" "Lemmas__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/Partitions/Hab.var".
+inline "cic:/CoRN/ftc/Partitions/Lemmas/Hab.var" "Lemmas__".
 
-inline "cic:/CoRN/ftc/Partitions/n.var".
+inline "cic:/CoRN/ftc/Partitions/Lemmas/n.var" "Lemmas__".
 
-inline "cic:/CoRN/ftc/Partitions/P.var".
+inline "cic:/CoRN/ftc/Partitions/Lemmas/P.var" "Lemmas__".
 
 inline "cic:/CoRN/ftc/Partitions/Mesh_lemma.con".
 
@@ -323,11 +323,11 @@ inline "cic:/CoRN/ftc/Partitions/AntiMesh_lemma.con".
 inline "cic:/CoRN/ftc/Partitions/Mesh_leEq.con".
 
 (* UNEXPORTED
-End Lemmas.
+End Lemmas
 *)
 
 (* UNEXPORTED
-Section Even_Partitions.
+Section Even_Partitions
 *)
 
 (*#* More technical stuff.  Two equal partitions have the same mesh.
@@ -348,17 +348,17 @@ inline "cic:/CoRN/ftc/Partitions/even_partition_Mesh.con".
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/Partitions/a.var".
+inline "cic:/CoRN/ftc/Partitions/Even_Partitions/a.var" "Even_Partitions__".
 
-inline "cic:/CoRN/ftc/Partitions/b.var".
+inline "cic:/CoRN/ftc/Partitions/Even_Partitions/b.var" "Even_Partitions__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/Partitions/I.con".
+inline "cic:/CoRN/ftc/Partitions/Even_Partitions/I.con" "Even_Partitions__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/Partitions/Hab.var".
+inline "cic:/CoRN/ftc/Partitions/Even_Partitions/Hab.var" "Even_Partitions__".
 
 (*#*
 An interesting property: in a partition, if [ai [<] aj] then [i < j].
@@ -377,30 +377,30 @@ denote by [P] and [Q] the even partitions with, respectively, [m] and
 Even partitions always have a common refinement.
 *)
 
-inline "cic:/CoRN/ftc/Partitions/m.var".
+inline "cic:/CoRN/ftc/Partitions/Even_Partitions/m.var" "Even_Partitions__".
 
-inline "cic:/CoRN/ftc/Partitions/n.var".
+inline "cic:/CoRN/ftc/Partitions/Even_Partitions/n.var" "Even_Partitions__".
 
-inline "cic:/CoRN/ftc/Partitions/Hm.var".
+inline "cic:/CoRN/ftc/Partitions/Even_Partitions/Hm.var" "Even_Partitions__".
 
-inline "cic:/CoRN/ftc/Partitions/Hn.var".
+inline "cic:/CoRN/ftc/Partitions/Even_Partitions/Hn.var" "Even_Partitions__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/Partitions/P.con".
+inline "cic:/CoRN/ftc/Partitions/Even_Partitions/P.con" "Even_Partitions__".
 
-inline "cic:/CoRN/ftc/Partitions/Q.con".
+inline "cic:/CoRN/ftc/Partitions/Even_Partitions/Q.con" "Even_Partitions__".
 
 (* end hide *)
 
 inline "cic:/CoRN/ftc/Partitions/even_partition_refinement.con".
 
 (* UNEXPORTED
-End Even_Partitions.
+End Even_Partitions
 *)
 
 (* UNEXPORTED
-Section More_Definitions.
+Section More_Definitions
 *)
 
 (*#* ** Separation
@@ -408,11 +408,11 @@ Section More_Definitions.
 Some auxiliary definitions.  A partition is said to be separated if all its points are distinct.
 *)
 
-inline "cic:/CoRN/ftc/Partitions/a.var".
+inline "cic:/CoRN/ftc/Partitions/More_Definitions/a.var" "More_Definitions__".
 
-inline "cic:/CoRN/ftc/Partitions/b.var".
+inline "cic:/CoRN/ftc/Partitions/More_Definitions/b.var" "More_Definitions__".
 
-inline "cic:/CoRN/ftc/Partitions/Hab.var".
+inline "cic:/CoRN/ftc/Partitions/More_Definitions/Hab.var" "More_Definitions__".
 
 inline "cic:/CoRN/ftc/Partitions/_Separated.con".
 
@@ -426,18 +426,18 @@ respectively, [n] and [m] points.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/Partitions/n.var".
+inline "cic:/CoRN/ftc/Partitions/More_Definitions/n.var" "More_Definitions__".
 
-inline "cic:/CoRN/ftc/Partitions/m.var".
+inline "cic:/CoRN/ftc/Partitions/More_Definitions/m.var" "More_Definitions__".
 
-inline "cic:/CoRN/ftc/Partitions/P.var".
+inline "cic:/CoRN/ftc/Partitions/More_Definitions/P.var" "More_Definitions__".
 
-inline "cic:/CoRN/ftc/Partitions/Q.var".
+inline "cic:/CoRN/ftc/Partitions/More_Definitions/Q.var" "More_Definitions__".
 
 inline "cic:/CoRN/ftc/Partitions/Separated.con".
 
 (* UNEXPORTED
-End More_Definitions.
+End More_Definitions
 *)
 
 (* UNEXPORTED
@@ -449,20 +449,20 @@ Implicit Arguments Separated [a b Hab n m].
 *)
 
 (* UNEXPORTED
-Section Sep_Partitions.
+Section Sep_Partitions
 *)
 
-inline "cic:/CoRN/ftc/Partitions/a.var".
+inline "cic:/CoRN/ftc/Partitions/Sep_Partitions/a.var" "Sep_Partitions__".
 
-inline "cic:/CoRN/ftc/Partitions/b.var".
+inline "cic:/CoRN/ftc/Partitions/Sep_Partitions/b.var" "Sep_Partitions__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/Partitions/I.con".
+inline "cic:/CoRN/ftc/Partitions/Sep_Partitions/I.con" "Sep_Partitions__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/Partitions/Hab.var".
+inline "cic:/CoRN/ftc/Partitions/Sep_Partitions/Hab.var" "Sep_Partitions__".
 
 (*#*
 The antimesh of a separated partition is always positive.
@@ -483,6 +483,6 @@ inline "cic:/CoRN/ftc/Partitions/_Separated_imp_length_zero.con".
 inline "cic:/CoRN/ftc/Partitions/partition_less_imp_gt_zero.con".
 
 (* UNEXPORTED
-End Sep_Partitions.
+End Sep_Partitions
 *)
 

@@ -35,10 +35,10 @@ field [F], we can define a new ordered field of Cauchy sequences over [F].
 *)
 
 (* UNEXPORTED
-Section Structure.
+Section Structure
 *)
 
-inline "cic:/CoRN/algebra/Cauchy_COF/F.var".
+inline "cic:/CoRN/algebra/Cauchy_COF/Structure/F.var" "Structure__".
 
 (*#*
 ** Setoid Structure
@@ -53,7 +53,7 @@ than the other, equality is the negation of the apartness.
 inline "cic:/CoRN/algebra/Cauchy_COF/R_Set.con".
 
 (* UNEXPORTED
-Section CSetoid_Structure.
+Section CSetoid_Structure
 *)
 
 inline "cic:/CoRN/algebra/Cauchy_COF/R_lt.con".
@@ -77,11 +77,11 @@ inline "cic:/CoRN/algebra/Cauchy_COF/R_ap_eq_tight.con".
 inline "cic:/CoRN/algebra/Cauchy_COF/R_CSetoid.con".
 
 (* UNEXPORTED
-End CSetoid_Structure.
+End CSetoid_Structure
 *)
 
 (* UNEXPORTED
-Section Group_Structure.
+Section Group_Structure
 *)
 
 (*#*
@@ -113,11 +113,11 @@ inline "cic:/CoRN/algebra/Cauchy_COF/Rinv.con".
 inline "cic:/CoRN/algebra/Cauchy_COF/R_CAbGroup.con".
 
 (* UNEXPORTED
-End Group_Structure.
+End Group_Structure
 *)
 
 (* UNEXPORTED
-Section Ring_Structure.
+Section Ring_Structure
 *)
 
 (*#* ** Ring Structure
@@ -155,11 +155,11 @@ inline "cic:/CoRN/algebra/Cauchy_COF/R_one_lft_unit.con".
 inline "cic:/CoRN/algebra/Cauchy_COF/R_CRing.con".
 
 (* UNEXPORTED
-End Ring_Structure.
+End Ring_Structure
 *)
 
 (* UNEXPORTED
-Section Field_Structure.
+Section Field_Structure
 *)
 
 (*#* ** Field Structure
@@ -181,11 +181,11 @@ inline "cic:/CoRN/algebra/Cauchy_COF/R_recip_inverse'.con".
 inline "cic:/CoRN/algebra/Cauchy_COF/R_CField.con".
 
 (* UNEXPORTED
-End Field_Structure.
+End Field_Structure
 *)
 
 (* UNEXPORTED
-Section Order.
+Section Order
 *)
 
 (*#* ** Order Structure
@@ -208,7 +208,7 @@ inline "cic:/CoRN/algebra/Cauchy_COF/R_mult_resp_lt.con".
 inline "cic:/CoRN/algebra/Cauchy_COF/R_COrdField.con".
 
 (* UNEXPORTED
-End Order.
+End Order
 *)
 
 (*#*
@@ -217,7 +217,7 @@ Auxiliary characterizations of the main relations on [R_Set].
 *)
 
 (* UNEXPORTED
-Section Auxiliary.
+Section Auxiliary
 *)
 
 inline "cic:/CoRN/algebra/Cauchy_COF/Rlt_alt_1.con".
@@ -235,10 +235,10 @@ inline "cic:/CoRN/algebra/Cauchy_COF/Eq_alt_2_1.con".
 inline "cic:/CoRN/algebra/Cauchy_COF/Eq_alt_2_2.con".
 
 (* UNEXPORTED
-End Auxiliary.
+End Auxiliary
 *)
 
 (* UNEXPORTED
-End Structure.
+End Structure
 *)
 

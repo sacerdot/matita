@@ -27,11 +27,11 @@ include "CoRN.ma".
 include "reals/CauchySeq.ma".
 
 (* UNEXPORTED
-Section Maximum.
+Section Maximum
 *)
 
 (* UNEXPORTED
-Section Max_function.
+Section Max_function
 *)
 
 (*#* ** Maximum, Minimum and Absolute Value
@@ -42,9 +42,9 @@ Let [x] and [y] be reals
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/reals/Max_AbsIR/x.var".
+inline "cic:/CoRN/reals/Max_AbsIR/Maximum/Max_function/x.var" "Maximum__Max_function__".
 
-inline "cic:/CoRN/reals/Max_AbsIR/y.var".
+inline "cic:/CoRN/reals/Max_AbsIR/Maximum/Max_function/y.var" "Maximum__Max_function__".
 
 inline "cic:/CoRN/reals/Max_AbsIR/Max_seq.con".
 
@@ -77,7 +77,7 @@ inline "cic:/CoRN/reals/Max_AbsIR/rht_leEq_MAX.con".
 inline "cic:/CoRN/reals/Max_AbsIR/less_MAX_imp.con".
 
 (* UNEXPORTED
-End Max_function.
+End Max_function
 *)
 
 inline "cic:/CoRN/reals/Max_AbsIR/MAX_strext.con".
@@ -85,7 +85,7 @@ inline "cic:/CoRN/reals/Max_AbsIR/MAX_strext.con".
 inline "cic:/CoRN/reals/Max_AbsIR/MAX_wd.con".
 
 (* UNEXPORTED
-Section properties_of_Max.
+Section properties_of_Max
 *)
 
 (*#* *** Maximum *)
@@ -123,11 +123,11 @@ inline "cic:/CoRN/reals/Max_AbsIR/pos_max_one.con".
 inline "cic:/CoRN/reals/Max_AbsIR/x_div_Max_leEq_x.con".
 
 (* UNEXPORTED
-End properties_of_Max.
+End properties_of_Max
 *)
 
 (* UNEXPORTED
-End Maximum.
+End Maximum
 *)
 
 (* UNEXPORTED
@@ -135,7 +135,7 @@ Hint Resolve Max_id: algebra.
 *)
 
 (* UNEXPORTED
-Section Minimum.
+Section Minimum
 *)
 
 (*#* *** Mininum
@@ -178,9 +178,9 @@ inline "cic:/CoRN/reals/Max_AbsIR/Min_is_lft_imp_leEq.con".
 
 inline "cic:/CoRN/reals/Max_AbsIR/leEq_Min_plus_eps.con".
 
-inline "cic:/CoRN/reals/Max_AbsIR/a.var".
+inline "cic:/CoRN/reals/Max_AbsIR/Minimum/a.var" "Minimum__".
 
-inline "cic:/CoRN/reals/Max_AbsIR/b.var".
+inline "cic:/CoRN/reals/Max_AbsIR/Minimum/b.var" "Minimum__".
 
 inline "cic:/CoRN/reals/Max_AbsIR/Min_leEq_Max.con".
 
@@ -195,13 +195,13 @@ inline "cic:/CoRN/reals/Max_AbsIR/ap_imp_Min_less_Max.con".
 inline "cic:/CoRN/reals/Max_AbsIR/Min_less_Max_imp_ap.con".
 
 (* UNEXPORTED
-End Minimum.
+End Minimum
 *)
 
 (*#**********************************)
 
 (* UNEXPORTED
-Section Absolute.
+Section Absolute
 *)
 
 (*#**********************************)
@@ -271,7 +271,7 @@ inline "cic:/CoRN/reals/Max_AbsIR/AbsIR_str_bnd.con".
 inline "cic:/CoRN/reals/Max_AbsIR/AbsIR_bnd.con".
 
 (* UNEXPORTED
-End Absolute.
+End Absolute
 *)
 
 (* UNEXPORTED
@@ -279,7 +279,7 @@ Hint Resolve AbsIRz_isz: algebra.
 *)
 
 (* UNEXPORTED
-Section Part_Function_Max.
+Section Part_Function_Max
 *)
 
 (*#* *** Functional Operators
@@ -291,15 +291,15 @@ Let [F,G:PartIR] and denote by [P] and [Q] their respective domains.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/reals/Max_AbsIR/F.var".
+inline "cic:/CoRN/reals/Max_AbsIR/Part_Function_Max/F.var" "Part_Function_Max__".
 
-inline "cic:/CoRN/reals/Max_AbsIR/G.var".
+inline "cic:/CoRN/reals/Max_AbsIR/Part_Function_Max/G.var" "Part_Function_Max__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/reals/Max_AbsIR/P.con".
+inline "cic:/CoRN/reals/Max_AbsIR/Part_Function_Max/P.con" "Part_Function_Max__".
 
-inline "cic:/CoRN/reals/Max_AbsIR/Q.con".
+inline "cic:/CoRN/reals/Max_AbsIR/Part_Function_Max/Q.con" "Part_Function_Max__".
 
 (* end hide *)
 
@@ -308,22 +308,22 @@ inline "cic:/CoRN/reals/Max_AbsIR/part_function_Max_strext.con".
 inline "cic:/CoRN/reals/Max_AbsIR/FMax.con".
 
 (* UNEXPORTED
-End Part_Function_Max.
+End Part_Function_Max
 *)
 
 (* UNEXPORTED
-Section Part_Function_Abs.
+Section Part_Function_Abs
 *)
 
-inline "cic:/CoRN/reals/Max_AbsIR/F.var".
+inline "cic:/CoRN/reals/Max_AbsIR/Part_Function_Abs/F.var" "Part_Function_Abs__".
 
-inline "cic:/CoRN/reals/Max_AbsIR/G.var".
+inline "cic:/CoRN/reals/Max_AbsIR/Part_Function_Abs/G.var" "Part_Function_Abs__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/reals/Max_AbsIR/P.con".
+inline "cic:/CoRN/reals/Max_AbsIR/Part_Function_Abs/P.con" "Part_Function_Abs__".
 
-inline "cic:/CoRN/reals/Max_AbsIR/Q.con".
+inline "cic:/CoRN/reals/Max_AbsIR/Part_Function_Abs/Q.con" "Part_Function_Abs__".
 
 (* end hide *)
 
@@ -344,7 +344,7 @@ Transparent Max.
 inline "cic:/CoRN/reals/Max_AbsIR/FAbs_char.con".
 
 (* UNEXPORTED
-End Part_Function_Abs.
+End Part_Function_Abs
 *)
 
 (* UNEXPORTED
@@ -360,18 +360,18 @@ Hint Resolve FAbs_char': algebra.
 *)
 
 (* UNEXPORTED
-Section Inclusion.
+Section Inclusion
 *)
 
-inline "cic:/CoRN/reals/Max_AbsIR/F.var".
+inline "cic:/CoRN/reals/Max_AbsIR/Inclusion/F.var" "Inclusion__".
 
-inline "cic:/CoRN/reals/Max_AbsIR/G.var".
+inline "cic:/CoRN/reals/Max_AbsIR/Inclusion/G.var" "Inclusion__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/reals/Max_AbsIR/P.con".
+inline "cic:/CoRN/reals/Max_AbsIR/Inclusion/P.con" "Inclusion__".
 
-inline "cic:/CoRN/reals/Max_AbsIR/Q.con".
+inline "cic:/CoRN/reals/Max_AbsIR/Inclusion/Q.con" "Inclusion__".
 
 (* end hide *)
 
@@ -380,7 +380,7 @@ inline "cic:/CoRN/reals/Max_AbsIR/Q.con".
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/reals/Max_AbsIR/R.var".
+inline "cic:/CoRN/reals/Max_AbsIR/Inclusion/R.var" "Inclusion__".
 
 inline "cic:/CoRN/reals/Max_AbsIR/included_FMax.con".
 
@@ -399,7 +399,7 @@ inline "cic:/CoRN/reals/Max_AbsIR/included_FAbs.con".
 inline "cic:/CoRN/reals/Max_AbsIR/included_FAbs'.con".
 
 (* UNEXPORTED
-End Inclusion.
+End Inclusion
 *)
 
 (* UNEXPORTED

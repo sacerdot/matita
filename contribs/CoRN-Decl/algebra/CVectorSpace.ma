@@ -77,12 +77,12 @@ Let [F] be a fiels and let [V] be a vector space over [F]
 *)
 
 (* UNEXPORTED
-Section VS_basics.
+Section VS_basics
 *)
 
-inline "cic:/CoRN/algebra/CVectorSpace/F.var".
+inline "cic:/CoRN/algebra/CVectorSpace/VS_basics/F.var" "VS_basics__".
 
-inline "cic:/CoRN/algebra/CVectorSpace/V.var".
+inline "cic:/CoRN/algebra/CVectorSpace/VS_basics/V.var" "VS_basics__".
 
 inline "cic:/CoRN/algebra/CVectorSpace/vs_op_zero.con".
 
@@ -119,7 +119,7 @@ inline "cic:/CoRN/algebra/CVectorSpace/vs_op_resp_ap_zero.con".
 inline "cic:/CoRN/algebra/CVectorSpace/vs_op_resp_ap_lft.con".
 
 (* UNEXPORTED
-End VS_basics.
+End VS_basics
 *)
 
 (* UNEXPORTED

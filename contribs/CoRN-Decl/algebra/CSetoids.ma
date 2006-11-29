@@ -93,10 +93,10 @@ Notice that their type depends on the main logical connective.
 *)
 
 (* UNEXPORTED
-Section Properties_of_relations.
+Section Properties_of_relations
 *)
 
-inline "cic:/CoRN/algebra/CSetoids/A.var".
+inline "cic:/CoRN/algebra/CSetoids/Properties_of_relations/A.var" "Properties_of_relations__".
 
 inline "cic:/CoRN/algebra/CSetoids/irreflexive.con".
 
@@ -107,7 +107,7 @@ inline "cic:/CoRN/algebra/CSetoids/tight_apart.con".
 inline "cic:/CoRN/algebra/CSetoids/antisymmetric.con".
 
 (* UNEXPORTED
-End Properties_of_relations.
+End Properties_of_relations
 *)
 
 (* begin hide *)
@@ -177,10 +177,10 @@ Let [S] be a setoid.
 (* Begin_SpecReals *)
 
 (* UNEXPORTED
-Section CSetoid_axioms.
+Section CSetoid_axioms
 *)
 
-inline "cic:/CoRN/algebra/CSetoids/S.var".
+inline "cic:/CoRN/algebra/CSetoids/CSetoid_axioms/S.var" "CSetoid_axioms__".
 
 inline "cic:/CoRN/algebra/CSetoids/CSetoid_is_CSetoid.con".
 
@@ -193,7 +193,7 @@ inline "cic:/CoRN/algebra/CSetoids/ap_cotransitive.con".
 inline "cic:/CoRN/algebra/CSetoids/ap_tight.con".
 
 (* UNEXPORTED
-End CSetoid_axioms.
+End CSetoid_axioms
 *)
 
 (* End_SpecReals *)
@@ -206,10 +206,10 @@ End CSetoid_axioms.
 (* Begin_SpecReals *)
 
 (* UNEXPORTED
-Section CSetoid_basics.
+Section CSetoid_basics
 *)
 
-inline "cic:/CoRN/algebra/CSetoids/S.var".
+inline "cic:/CoRN/algebra/CSetoids/CSetoid_basics/S.var" "CSetoid_basics__".
 
 (* End_SpecReals *)
 
@@ -285,13 +285,13 @@ inline "cic:/CoRN/algebra/CSetoids/eq_imp_not_neq.con".
 (* Begin_SpecReals *)
 
 (* UNEXPORTED
-End CSetoid_basics.
+End CSetoid_basics
 *)
 
 (* End_SpecReals *)
 
 (* UNEXPORTED
-Section product_csetoid.
+Section product_csetoid
 *)
 
 (*#* **The product of setoids *)
@@ -305,7 +305,7 @@ inline "cic:/CoRN/algebra/CSetoids/prodcsetoid_is_CSetoid.con".
 inline "cic:/CoRN/algebra/CSetoids/ProdCSetoid.con".
 
 (* UNEXPORTED
-End product_csetoid.
+End product_csetoid
 *)
 
 (* UNEXPORTED
@@ -345,10 +345,10 @@ on predicates and relations.
 *)
 
 (* UNEXPORTED
-Section CSetoid_relations_and_predicates.
+Section CSetoid_relations_and_predicates
 *)
 
-inline "cic:/CoRN/algebra/CSetoids/S.var".
+inline "cic:/CoRN/algebra/CSetoids/CSetoid_relations_and_predicates/S.var" "CSetoid_relations_and_predicates__".
 
 (* End_SpecReals *)
 
@@ -361,17 +361,17 @@ At this stage, we consider [CProp]- and [Prop]-valued predicates on setoids.
 *)
 
 (* UNEXPORTED
-Section CSetoidPredicates.
+Section CSetoidPredicates
 *)
 
-inline "cic:/CoRN/algebra/CSetoids/P.var".
+inline "cic:/CoRN/algebra/CSetoids/CSetoid_relations_and_predicates/CSetoidPredicates/P.var" "CSetoid_relations_and_predicates__CSetoidPredicates__".
 
 inline "cic:/CoRN/algebra/CSetoids/pred_strong_ext.con".
 
 inline "cic:/CoRN/algebra/CSetoids/pred_wd.con".
 
 (* UNEXPORTED
-End CSetoidPredicates.
+End CSetoidPredicates
 *)
 
 inline "cic:/CoRN/algebra/CSetoids/CSetoid_predicate.ind".
@@ -383,17 +383,17 @@ inline "cic:/CoRN/algebra/CSetoids/csp_wd.con".
 (*#* Similar, with [Prop] instead of [CProp]. *)
 
 (* UNEXPORTED
-Section CSetoidPPredicates.
+Section CSetoidPPredicates
 *)
 
-inline "cic:/CoRN/algebra/CSetoids/P.var".
+inline "cic:/CoRN/algebra/CSetoids/CSetoid_relations_and_predicates/CSetoidPPredicates/P.var" "CSetoid_relations_and_predicates__CSetoidPPredicates__".
 
 inline "cic:/CoRN/algebra/CSetoids/pred_strong_ext'.con".
 
 inline "cic:/CoRN/algebra/CSetoids/pred_wd'.con".
 
 (* UNEXPORTED
-End CSetoidPPredicates.
+End CSetoidPPredicates
 *)
 
 (*#* ***Definition of a setoid predicate *)
@@ -412,10 +412,10 @@ Let [R] be a relation on (the carrier of) [S].
 %\end{convention}% *)
 
 (* UNEXPORTED
-Section CsetoidRelations.
+Section CsetoidRelations
 *)
 
-inline "cic:/CoRN/algebra/CSetoids/R.var".
+inline "cic:/CoRN/algebra/CSetoids/CSetoid_relations_and_predicates/CsetoidRelations/R.var" "CSetoid_relations_and_predicates__CsetoidRelations__".
 
 inline "cic:/CoRN/algebra/CSetoids/rel_wdr.con".
 
@@ -438,7 +438,7 @@ inline "cic:/CoRN/algebra/CSetoids/rel_strextarg_imp_strext.con".
 (* Begin_SpecReals *)
 
 (* UNEXPORTED
-End CsetoidRelations.
+End CsetoidRelations
 *)
 
 (*#* ***Definition of a setoid relation
@@ -455,10 +455,10 @@ Let [R] be a relation on (the carrier of) [S].
 *)
 
 (* UNEXPORTED
-Section CCsetoidRelations.
+Section CCsetoidRelations
 *)
 
-inline "cic:/CoRN/algebra/CSetoids/R.var".
+inline "cic:/CoRN/algebra/CSetoids/CSetoid_relations_and_predicates/CCsetoidRelations/R.var" "CSetoid_relations_and_predicates__CCsetoidRelations__".
 
 inline "cic:/CoRN/algebra/CSetoids/Crel_wdr.con".
 
@@ -481,7 +481,7 @@ inline "cic:/CoRN/algebra/CSetoids/Crel_strextarg_imp_strext.con".
 (* Begin_SpecReals *)
 
 (* UNEXPORTED
-End CCsetoidRelations.
+End CCsetoidRelations
 *)
 
 (*#* ***Definition of a [CProp] setoid relation
@@ -513,7 +513,7 @@ inline "cic:/CoRN/algebra/CSetoids/predS_well_def.con".
 (* Begin_SpecReals *)
 
 (* UNEXPORTED
-End CSetoid_relations_and_predicates.
+End CSetoid_relations_and_predicates
 *)
 
 (* UNEXPORTED
@@ -540,17 +540,17 @@ First we consider unary functions.  *)
 (* Begin_SpecReals *)
 
 (* UNEXPORTED
-Section CSetoid_functions.
+Section CSetoid_functions
 *)
 
-inline "cic:/CoRN/algebra/CSetoids/S1.var".
+inline "cic:/CoRN/algebra/CSetoids/CSetoid_functions/S1.var" "CSetoid_functions__".
 
-inline "cic:/CoRN/algebra/CSetoids/S2.var".
+inline "cic:/CoRN/algebra/CSetoids/CSetoid_functions/S2.var" "CSetoid_functions__".
 
-inline "cic:/CoRN/algebra/CSetoids/S3.var".
+inline "cic:/CoRN/algebra/CSetoids/CSetoid_functions/S3.var" "CSetoid_functions__".
 
 (* UNEXPORTED
-Section unary_functions.
+Section unary_functions
 *)
 
 (*#*
@@ -558,7 +558,7 @@ In the following two definitions,
 [f] is a function from (the carrier of) [S1] to
 (the carrier of) [S2].  *)
 
-inline "cic:/CoRN/algebra/CSetoids/f.var".
+inline "cic:/CoRN/algebra/CSetoids/CSetoid_functions/unary_functions/f.var" "CSetoid_functions__unary_functions__".
 
 inline "cic:/CoRN/algebra/CSetoids/fun_wd.con".
 
@@ -571,7 +571,7 @@ inline "cic:/CoRN/algebra/CSetoids/fun_strext_imp_wd.con".
 (* Begin_SpecReals *)
 
 (* UNEXPORTED
-End unary_functions.
+End unary_functions
 *)
 
 inline "cic:/CoRN/algebra/CSetoids/CSetoid_fun.ind".
@@ -587,7 +587,7 @@ inline "cic:/CoRN/algebra/CSetoids/Const_CSetoid_fun.con".
 (* Begin_SpecReals *)
 
 (* UNEXPORTED
-Section binary_functions.
+Section binary_functions
 *)
 
 (*#*
@@ -596,7 +596,7 @@ In the following two definitions,
 [f] is a function from [S1] and [S2] to [S3].
 *)
 
-inline "cic:/CoRN/algebra/CSetoids/f.var".
+inline "cic:/CoRN/algebra/CSetoids/CSetoid_functions/binary_functions/f.var" "CSetoid_functions__binary_functions__".
 
 inline "cic:/CoRN/algebra/CSetoids/bin_fun_wd.con".
 
@@ -609,7 +609,7 @@ inline "cic:/CoRN/algebra/CSetoids/bin_fun_strext_imp_wd.con".
 (* Begin_SpecReals *)
 
 (* UNEXPORTED
-End binary_functions.
+End binary_functions
 *)
 
 inline "cic:/CoRN/algebra/CSetoids/CSetoid_bin_fun.ind".
@@ -625,7 +625,7 @@ inline "cic:/CoRN/algebra/CSetoids/csf_strext_unfolded.con".
 inline "cic:/CoRN/algebra/CSetoids/csbf_wd_unfolded.con".
 
 (* UNEXPORTED
-End CSetoid_functions.
+End CSetoid_functions
 *)
 
 (* End_SpecReals *)
@@ -658,10 +658,10 @@ Let [S] be a setoid.
 *)
 
 (* UNEXPORTED
-Section csetoid_inner_ops.
+Section csetoid_inner_ops
 *)
 
-inline "cic:/CoRN/algebra/CSetoids/S.var".
+inline "cic:/CoRN/algebra/CSetoids/csetoid_inner_ops/S.var" "csetoid_inner_ops__".
 
 (*#* Properties of binary operations *)
 
@@ -750,7 +750,7 @@ inline "cic:/CoRN/algebra/CSetoids/bin_op2un_op_lft.con".
 (* Begin_SpecReals *)
 
 (* UNEXPORTED
-End csetoid_inner_ops.
+End csetoid_inner_ops
 *)
 
 (* End_SpecReals *)
@@ -778,12 +778,12 @@ Let [S1] and [S2] be setoids.
 *)
 
 (* UNEXPORTED
-Section csetoid_outer_ops.
+Section csetoid_outer_ops
 *)
 
-inline "cic:/CoRN/algebra/CSetoids/S1.var".
+inline "cic:/CoRN/algebra/CSetoids/csetoid_outer_ops/S1.var" "csetoid_outer_ops__".
 
-inline "cic:/CoRN/algebra/CSetoids/S2.var".
+inline "cic:/CoRN/algebra/CSetoids/csetoid_outer_ops/S2.var" "csetoid_outer_ops__".
 
 (*#*
 Well-defined outer operations on a setoid.
@@ -810,7 +810,7 @@ coercion cic:/matita/CoRN-Decl/algebra/CSetoids/outer_op_bin_fun.con 0 (* compou
 inline "cic:/CoRN/algebra/CSetoids/csoo_wd_unfolded.con".
 
 (* UNEXPORTED
-End csetoid_outer_ops.
+End csetoid_outer_ops
 *)
 
 (* UNEXPORTED
@@ -826,12 +826,12 @@ Let [S] be a setoid, and [P] a predicate on the carrier of [S].
 *)
 
 (* UNEXPORTED
-Section SubCSetoids.
+Section SubCSetoids
 *)
 
-inline "cic:/CoRN/algebra/CSetoids/S.var".
+inline "cic:/CoRN/algebra/CSetoids/SubCSetoids/S.var" "SubCSetoids__".
 
-inline "cic:/CoRN/algebra/CSetoids/P.var".
+inline "cic:/CoRN/algebra/CSetoids/SubCSetoids/P.var" "SubCSetoids__".
 
 inline "cic:/CoRN/algebra/CSetoids/subcsetoid_crr.ind".
 
@@ -869,10 +869,10 @@ Let [f] be a unary setoid operation on [S].
 *)
 
 (* UNEXPORTED
-Section SubCSetoid_unary_operations.
+Section SubCSetoid_unary_operations
 *)
 
-inline "cic:/CoRN/algebra/CSetoids/f.var".
+inline "cic:/CoRN/algebra/CSetoids/SubCSetoids/SubCSetoid_unary_operations/f.var" "SubCSetoids__SubCSetoid_unary_operations__".
 
 inline "cic:/CoRN/algebra/CSetoids/un_op_pres_pred.con".
 
@@ -881,7 +881,7 @@ inline "cic:/CoRN/algebra/CSetoids/un_op_pres_pred.con".
 Assume [pr:un_op_pres_pred].
 %\end{convention}% *)
 
-inline "cic:/CoRN/algebra/CSetoids/pr.var".
+inline "cic:/CoRN/algebra/CSetoids/SubCSetoids/SubCSetoid_unary_operations/pr.var" "SubCSetoids__SubCSetoid_unary_operations__".
 
 inline "cic:/CoRN/algebra/CSetoids/restr_un_op.con".
 
@@ -892,7 +892,7 @@ inline "cic:/CoRN/algebra/CSetoids/restr_un_op_strext.con".
 inline "cic:/CoRN/algebra/CSetoids/Build_SubCSetoid_un_op.con".
 
 (* UNEXPORTED
-End SubCSetoid_unary_operations.
+End SubCSetoid_unary_operations
 *)
 
 (*#* ***Subsetoid binary operations
@@ -902,10 +902,10 @@ Let [f] be a binary setoid operation on [S].
 *)
 
 (* UNEXPORTED
-Section SubCSetoid_binary_operations.
+Section SubCSetoid_binary_operations
 *)
 
-inline "cic:/CoRN/algebra/CSetoids/f.var".
+inline "cic:/CoRN/algebra/CSetoids/SubCSetoids/SubCSetoid_binary_operations/f.var" "SubCSetoids__SubCSetoid_binary_operations__".
 
 inline "cic:/CoRN/algebra/CSetoids/bin_op_pres_pred.con".
 
@@ -915,7 +915,7 @@ Assume [bin_op_pres_pred].
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CSetoids/pr.var".
+inline "cic:/CoRN/algebra/CSetoids/SubCSetoids/SubCSetoid_binary_operations/pr.var" "SubCSetoids__SubCSetoid_binary_operations__".
 
 inline "cic:/CoRN/algebra/CSetoids/restr_bin_op.con".
 
@@ -928,13 +928,13 @@ inline "cic:/CoRN/algebra/CSetoids/Build_SubCSetoid_bin_op.con".
 inline "cic:/CoRN/algebra/CSetoids/restr_f_assoc.con".
 
 (* UNEXPORTED
-End SubCSetoid_binary_operations.
+End SubCSetoid_binary_operations
 *)
 
 (* Begin_SpecReals *)
 
 (* UNEXPORTED
-End SubCSetoids.
+End SubCSetoids
 *)
 
 (* End_SpecReals *)

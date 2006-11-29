@@ -31,7 +31,7 @@ include "reals/NRootIR.ma".
 *)
 
 (* UNEXPORTED
-Section Key_Lemma.
+Section Key_Lemma
 *)
 
 (*#*
@@ -41,23 +41,23 @@ and [eps : IR] such that [(Zero [<] eps)] and [(eps [<=] a_0)].
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/fta/KeyLemma/a.var".
+inline "cic:/CoRN/fta/KeyLemma/Key_Lemma/a.var" "Key_Lemma__".
 
-inline "cic:/CoRN/fta/KeyLemma/n.var".
+inline "cic:/CoRN/fta/KeyLemma/Key_Lemma/n.var" "Key_Lemma__".
 
-inline "cic:/CoRN/fta/KeyLemma/gt_n_0.var".
+inline "cic:/CoRN/fta/KeyLemma/Key_Lemma/gt_n_0.var" "Key_Lemma__".
 
-inline "cic:/CoRN/fta/KeyLemma/eps.var".
+inline "cic:/CoRN/fta/KeyLemma/Key_Lemma/eps.var" "Key_Lemma__".
 
-inline "cic:/CoRN/fta/KeyLemma/eps_pos.var".
+inline "cic:/CoRN/fta/KeyLemma/Key_Lemma/eps_pos.var" "Key_Lemma__".
 
-inline "cic:/CoRN/fta/KeyLemma/a_nonneg.var".
+inline "cic:/CoRN/fta/KeyLemma/Key_Lemma/a_nonneg.var" "Key_Lemma__".
 
-inline "cic:/CoRN/fta/KeyLemma/a_n_1.var".
+inline "cic:/CoRN/fta/KeyLemma/Key_Lemma/a_n_1.var" "Key_Lemma__".
 
-inline "cic:/CoRN/fta/KeyLemma/a_0.var".
+inline "cic:/CoRN/fta/KeyLemma/Key_Lemma/a_0.var" "Key_Lemma__".
 
-inline "cic:/CoRN/fta/KeyLemma/eps_le_a_0.var".
+inline "cic:/CoRN/fta/KeyLemma/Key_Lemma/eps_le_a_0.var" "Key_Lemma__".
 
 inline "cic:/CoRN/fta/KeyLemma/a_0_eps_nonneg.con".
 
@@ -158,7 +158,7 @@ inline "cic:/CoRN/fta/KeyLemma/Key.con".
 (* end hide *)
 
 (* UNEXPORTED
-End Key_Lemma.
+End Key_Lemma
 *)
 
 (* UNEXPORTED

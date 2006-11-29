@@ -23,7 +23,7 @@ include "CoRN.ma".
 include "reals/CReals1.ma".
 
 (* UNEXPORTED
-Section CMetric_Fields.
+Section CMetric_Fields
 *)
 
 (*#* *Metric Fields *)
@@ -35,7 +35,7 @@ inline "cic:/CoRN/reals/CMetricFields/CMetricField.ind".
 coercion cic:/matita/CoRN-Decl/reals/CMetricFields/cmf_crr.con 0 (* compounds *).
 
 (* UNEXPORTED
-End CMetric_Fields.
+End CMetric_Fields
 *)
 
 (* NOTATION
@@ -43,7 +43,7 @@ Notation MAbs := (cmf_abs _).
 *)
 
 (* UNEXPORTED
-Section basics.
+Section basics
 *)
 
 inline "cic:/CoRN/reals/CMetricFields/MAbs_one.con".
@@ -55,14 +55,14 @@ inline "cic:/CoRN/reals/CMetricFields/MAbs_one_recip_one.con".
 (* end hide *)
 
 (* UNEXPORTED
-End basics.
+End basics
 *)
 
 (* UNEXPORTED
-Section CMetric_Field_Cauchy.
+Section CMetric_Field_Cauchy
 *)
 
-inline "cic:/CoRN/reals/CMetricFields/F.var".
+inline "cic:/CoRN/reals/CMetricFields/CMetric_Field_Cauchy/F.var" "CMetric_Field_Cauchy__".
 
 (*#*
 %\begin{convention}% Let [F:CMetricField].
@@ -80,7 +80,7 @@ inline "cic:/CoRN/reals/CMetricFields/MseqLimit.con".
 inline "cic:/CoRN/reals/CMetricFields/is_MCauchyCompl.con".
 
 (* UNEXPORTED
-End CMetric_Field_Cauchy.
+End CMetric_Field_Cauchy
 *)
 
 (* UNEXPORTED

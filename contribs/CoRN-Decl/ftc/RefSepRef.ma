@@ -27,32 +27,32 @@ include "ftc/COrdLemmas.ma".
 include "ftc/Partitions.ma".
 
 (* UNEXPORTED
-Section Refining_Separated.
+Section Refining_Separated
 *)
 
-inline "cic:/CoRN/ftc/RefSepRef/a.var".
+inline "cic:/CoRN/ftc/RefSepRef/Refining_Separated/a.var" "Refining_Separated__".
 
-inline "cic:/CoRN/ftc/RefSepRef/b.var".
+inline "cic:/CoRN/ftc/RefSepRef/Refining_Separated/b.var" "Refining_Separated__".
 
-inline "cic:/CoRN/ftc/RefSepRef/Hab.var".
+inline "cic:/CoRN/ftc/RefSepRef/Refining_Separated/Hab.var" "Refining_Separated__".
 
-inline "cic:/CoRN/ftc/RefSepRef/I.con".
+inline "cic:/CoRN/ftc/RefSepRef/Refining_Separated/I.con" "Refining_Separated__".
 
-inline "cic:/CoRN/ftc/RefSepRef/F.var".
+inline "cic:/CoRN/ftc/RefSepRef/Refining_Separated/F.var" "Refining_Separated__".
 
-inline "cic:/CoRN/ftc/RefSepRef/contF.var".
+inline "cic:/CoRN/ftc/RefSepRef/Refining_Separated/contF.var" "Refining_Separated__".
 
-inline "cic:/CoRN/ftc/RefSepRef/incF.var".
+inline "cic:/CoRN/ftc/RefSepRef/Refining_Separated/incF.var" "Refining_Separated__".
 
-inline "cic:/CoRN/ftc/RefSepRef/m.var".
+inline "cic:/CoRN/ftc/RefSepRef/Refining_Separated/m.var" "Refining_Separated__".
 
-inline "cic:/CoRN/ftc/RefSepRef/n.var".
+inline "cic:/CoRN/ftc/RefSepRef/Refining_Separated/n.var" "Refining_Separated__".
 
-inline "cic:/CoRN/ftc/RefSepRef/P.var".
+inline "cic:/CoRN/ftc/RefSepRef/Refining_Separated/P.var" "Refining_Separated__".
 
-inline "cic:/CoRN/ftc/RefSepRef/R.var".
+inline "cic:/CoRN/ftc/RefSepRef/Refining_Separated/R.var" "Refining_Separated__".
 
-inline "cic:/CoRN/ftc/RefSepRef/HPR.var".
+inline "cic:/CoRN/ftc/RefSepRef/Refining_Separated/HPR.var" "Refining_Separated__".
 
 inline "cic:/CoRN/ftc/RefSepRef/RSR_HP.con".
 
@@ -68,9 +68,9 @@ inline "cic:/CoRN/ftc/RefSepRef/RSR_nm0.con".
 
 inline "cic:/CoRN/ftc/RefSepRef/RSR_H'.con".
 
-inline "cic:/CoRN/ftc/RefSepRef/f'.con".
+inline "cic:/CoRN/ftc/RefSepRef/Refining_Separated/f'.con" "Refining_Separated__".
 
-inline "cic:/CoRN/ftc/RefSepRef/g'.con".
+inline "cic:/CoRN/ftc/RefSepRef/Refining_Separated/g'.con" "Refining_Separated__".
 
 inline "cic:/CoRN/ftc/RefSepRef/RSR_f'_nlnf.con".
 
@@ -82,7 +82,7 @@ inline "cic:/CoRN/ftc/RefSepRef/RSR_g'_mon.con".
 
 inline "cic:/CoRN/ftc/RefSepRef/RSR_f'_ap_g'.con".
 
-inline "cic:/CoRN/ftc/RefSepRef/h.con".
+inline "cic:/CoRN/ftc/RefSepRef/Refining_Separated/h.con" "Refining_Separated__".
 
 inline "cic:/CoRN/ftc/RefSepRef/RSR_h_nlnf.con".
 
@@ -141,7 +141,7 @@ inline "cic:/CoRN/ftc/RefSepRef/RSR_auxR_lemma2.con".
 inline "cic:/CoRN/ftc/RefSepRef/Separated_Refinement_rht.con".
 
 (* UNEXPORTED
-End Refining_Separated.
+End Refining_Separated
 *)
 
 (* end hide *)

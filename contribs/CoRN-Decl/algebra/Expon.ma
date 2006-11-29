@@ -33,10 +33,10 @@ include "tactics/Transparent_algebra.ma".
 *)
 
 (* UNEXPORTED
-Section More_Nexp.
+Section More_Nexp
 *)
 
-inline "cic:/CoRN/algebra/Expon/R.var".
+inline "cic:/CoRN/algebra/Expon/More_Nexp/R.var" "More_Nexp__".
 
 inline "cic:/CoRN/algebra/Expon/nexp_resp_ap_zero.con".
 
@@ -79,7 +79,7 @@ inline "cic:/CoRN/algebra/Expon/nexp_resp_le.con".
 inline "cic:/CoRN/algebra/Expon/bin_less_un.con".
 
 (* UNEXPORTED
-End More_Nexp.
+End More_Nexp
 *)
 
 (* UNEXPORTED
@@ -96,10 +96,10 @@ Implicit Arguments nexp_resp_ap_zero [R x].
 *)
 
 (* UNEXPORTED
-Section Zexp_def.
+Section Zexp_def
 *)
 
-inline "cic:/CoRN/algebra/Expon/R.var".
+inline "cic:/CoRN/algebra/Expon/Zexp_def/R.var" "Zexp_def__".
 
 (*#*
 It would be nicer to define [zexp] using [caseZdiff], but we already
@@ -109,7 +109,7 @@ have most properties now.
 inline "cic:/CoRN/algebra/Expon/zexp.con".
 
 (* UNEXPORTED
-End Zexp_def.
+End Zexp_def
 *)
 
 (* UNEXPORTED
@@ -126,10 +126,10 @@ Notation "( x [//] Hx ) [^^] n" := (zexp x Hx n) (at level 0).
 *)
 
 (* UNEXPORTED
-Section Zexp_properties.
+Section Zexp_properties
 *)
 
-inline "cic:/CoRN/algebra/Expon/R.var".
+inline "cic:/CoRN/algebra/Expon/Zexp_properties/R.var" "Zexp_properties__".
 
 inline "cic:/CoRN/algebra/Expon/zexp_zero.con".
 
@@ -258,7 +258,7 @@ Hint Resolve zexp_funny': algebra.
 inline "cic:/CoRN/algebra/Expon/zexp_pos.con".
 
 (* UNEXPORTED
-End Zexp_properties.
+End Zexp_properties
 *)
 
 (* UNEXPORTED
@@ -273,16 +273,16 @@ Hint Resolve zexp_wd: algebra_c.
 *)
 
 (* UNEXPORTED
-Section Root_Unique.
+Section Root_Unique
 *)
 
-inline "cic:/CoRN/algebra/Expon/R.var".
+inline "cic:/CoRN/algebra/Expon/Root_Unique/R.var" "Root_Unique__".
 
 inline "cic:/CoRN/algebra/Expon/root_unique.con".
 
 inline "cic:/CoRN/algebra/Expon/root_one.con".
 
 (* UNEXPORTED
-End Root_Unique.
+End Root_Unique
 *)
 

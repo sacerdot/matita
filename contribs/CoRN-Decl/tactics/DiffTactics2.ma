@@ -25,12 +25,12 @@ include "CoRN.ma".
 include "ftc/Differentiability.ma".
 
 (* UNEXPORTED
-Section Automatizing_Continuity.
+Section Automatizing_Continuity
 *)
 
-inline "cic:/CoRN/tactics/DiffTactics2/a.var".
+inline "cic:/CoRN/tactics/DiffTactics2/Automatizing_Continuity/a.var" "Automatizing_Continuity__".
 
-inline "cic:/CoRN/tactics/DiffTactics2/b.var".
+inline "cic:/CoRN/tactics/DiffTactics2/Automatizing_Continuity/b.var" "Automatizing_Continuity__".
 
 inline "cic:/CoRN/tactics/DiffTactics2/cont_function.ind".
 
@@ -39,7 +39,7 @@ inline "cic:/CoRN/tactics/DiffTactics2/cont_to_pfunct.con".
 inline "cic:/CoRN/tactics/DiffTactics2/continuous_cont.con".
 
 (* UNEXPORTED
-End Automatizing_Continuity.
+End Automatizing_Continuity
 *)
 
 (* UNEXPORTED
@@ -95,12 +95,12 @@ Ltac New_Contin :=
 *)
 
 (* UNEXPORTED
-Section Automatizing_Derivatives.
+Section Automatizing_Derivatives
 *)
 
-inline "cic:/CoRN/tactics/DiffTactics2/a.var".
+inline "cic:/CoRN/tactics/DiffTactics2/Automatizing_Derivatives/a.var" "Automatizing_Derivatives__".
 
-inline "cic:/CoRN/tactics/DiffTactics2/b.var".
+inline "cic:/CoRN/tactics/DiffTactics2/Automatizing_Derivatives/b.var" "Automatizing_Derivatives__".
 
 inline "cic:/CoRN/tactics/DiffTactics2/deriv_function.ind".
 
@@ -113,7 +113,7 @@ inline "cic:/CoRN/tactics/DiffTactics2/deriv_restr.con".
 inline "cic:/CoRN/tactics/DiffTactics2/diffble_restr.con".
 
 (* UNEXPORTED
-End Automatizing_Derivatives.
+End Automatizing_Derivatives
 *)
 
 (* UNEXPORTED

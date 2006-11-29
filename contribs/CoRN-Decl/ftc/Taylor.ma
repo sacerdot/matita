@@ -27,7 +27,7 @@ Opaque Min Max N_Deriv.
 *)
 
 (* UNEXPORTED
-Section More_Taylor_Defs.
+Section More_Taylor_Defs
 *)
 
 (*#* **General case
@@ -39,31 +39,31 @@ The generalization to arbitrary intervals just needs a few more definitions.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/Taylor/I.var".
+inline "cic:/CoRN/ftc/Taylor/More_Taylor_Defs/I.var" "More_Taylor_Defs__".
 
-inline "cic:/CoRN/ftc/Taylor/pI.var".
+inline "cic:/CoRN/ftc/Taylor/More_Taylor_Defs/pI.var" "More_Taylor_Defs__".
 
-inline "cic:/CoRN/ftc/Taylor/F.var".
+inline "cic:/CoRN/ftc/Taylor/More_Taylor_Defs/F.var" "More_Taylor_Defs__".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/Taylor/deriv_Sn.con".
+inline "cic:/CoRN/ftc/Taylor/More_Taylor_Defs/deriv_Sn.con" "More_Taylor_Defs__".
 
 (* end show *)
 
-inline "cic:/CoRN/ftc/Taylor/a.var".
+inline "cic:/CoRN/ftc/Taylor/More_Taylor_Defs/a.var" "More_Taylor_Defs__".
 
-inline "cic:/CoRN/ftc/Taylor/b.var".
+inline "cic:/CoRN/ftc/Taylor/More_Taylor_Defs/b.var" "More_Taylor_Defs__".
 
-inline "cic:/CoRN/ftc/Taylor/Ha.var".
+inline "cic:/CoRN/ftc/Taylor/More_Taylor_Defs/Ha.var" "More_Taylor_Defs__".
 
-inline "cic:/CoRN/ftc/Taylor/Hb.var".
+inline "cic:/CoRN/ftc/Taylor/More_Taylor_Defs/Hb.var" "More_Taylor_Defs__".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/Taylor/fi.con".
+inline "cic:/CoRN/ftc/Taylor/More_Taylor_Defs/fi.con" "More_Taylor_Defs__".
 
-inline "cic:/CoRN/ftc/Taylor/funct_i.con".
+inline "cic:/CoRN/ftc/Taylor/More_Taylor_Defs/funct_i.con" "More_Taylor_Defs__".
 
 (* end show *)
 
@@ -88,11 +88,11 @@ inline "cic:/CoRN/ftc/Taylor/Taylor_lemma_ap.con".
 inline "cic:/CoRN/ftc/Taylor/Taylor'.con".
 
 (* UNEXPORTED
-End More_Taylor_Defs.
+End More_Taylor_Defs
 *)
 
 (* UNEXPORTED
-Section Taylor_Theorem.
+Section Taylor_Theorem
 *)
 
 (*#*
@@ -104,41 +104,41 @@ order up to [n] and [F'] be the nth-derivative of [F].
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/Taylor/I.var".
+inline "cic:/CoRN/ftc/Taylor/Taylor_Theorem/I.var" "Taylor_Theorem__".
 
-inline "cic:/CoRN/ftc/Taylor/pI.var".
+inline "cic:/CoRN/ftc/Taylor/Taylor_Theorem/pI.var" "Taylor_Theorem__".
 
-inline "cic:/CoRN/ftc/Taylor/F.var".
+inline "cic:/CoRN/ftc/Taylor/Taylor_Theorem/F.var" "Taylor_Theorem__".
 
-inline "cic:/CoRN/ftc/Taylor/n.var".
+inline "cic:/CoRN/ftc/Taylor/Taylor_Theorem/n.var" "Taylor_Theorem__".
 
-inline "cic:/CoRN/ftc/Taylor/f.var".
+inline "cic:/CoRN/ftc/Taylor/Taylor_Theorem/f.var" "Taylor_Theorem__".
 
-inline "cic:/CoRN/ftc/Taylor/goodF.var".
+inline "cic:/CoRN/ftc/Taylor/Taylor_Theorem/goodF.var" "Taylor_Theorem__".
 
-inline "cic:/CoRN/ftc/Taylor/goodF'.var".
+inline "cic:/CoRN/ftc/Taylor/Taylor_Theorem/goodF'.var" "Taylor_Theorem__".
 
-inline "cic:/CoRN/ftc/Taylor/derF.var".
+inline "cic:/CoRN/ftc/Taylor/Taylor_Theorem/derF.var" "Taylor_Theorem__".
 
-inline "cic:/CoRN/ftc/Taylor/F'.var".
+inline "cic:/CoRN/ftc/Taylor/Taylor_Theorem/F'.var" "Taylor_Theorem__".
 
-inline "cic:/CoRN/ftc/Taylor/derF'.var".
+inline "cic:/CoRN/ftc/Taylor/Taylor_Theorem/derF'.var" "Taylor_Theorem__".
 
-inline "cic:/CoRN/ftc/Taylor/a.var".
+inline "cic:/CoRN/ftc/Taylor/Taylor_Theorem/a.var" "Taylor_Theorem__".
 
-inline "cic:/CoRN/ftc/Taylor/b.var".
+inline "cic:/CoRN/ftc/Taylor/Taylor_Theorem/b.var" "Taylor_Theorem__".
 
-inline "cic:/CoRN/ftc/Taylor/Ha.var".
+inline "cic:/CoRN/ftc/Taylor/Taylor_Theorem/Ha.var" "Taylor_Theorem__".
 
-inline "cic:/CoRN/ftc/Taylor/Hb.var".
+inline "cic:/CoRN/ftc/Taylor/Taylor_Theorem/Hb.var" "Taylor_Theorem__".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/Taylor/funct_i.con".
+inline "cic:/CoRN/ftc/Taylor/Taylor_Theorem/funct_i.con" "Taylor_Theorem__".
 
 inline "cic:/CoRN/ftc/Taylor/Taylor_Seq.con".
 
-inline "cic:/CoRN/ftc/Taylor/deriv_Sn.con".
+inline "cic:/CoRN/ftc/Taylor/Taylor_Theorem/deriv_Sn.con" "Taylor_Theorem__".
 
 (* end show *)
 
@@ -151,6 +151,6 @@ Transparent N_Deriv.
 inline "cic:/CoRN/ftc/Taylor/Taylor.con".
 
 (* UNEXPORTED
-End Taylor_Theorem.
+End Taylor_Theorem
 *)
 

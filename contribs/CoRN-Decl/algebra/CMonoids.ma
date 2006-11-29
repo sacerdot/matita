@@ -89,10 +89,10 @@ Implicit Arguments nonZeroP [M].
 *)
 
 (* UNEXPORTED
-Section CMonoid_axioms.
+Section CMonoid_axioms
 *)
 
-inline "cic:/CoRN/algebra/CMonoids/M.var".
+inline "cic:/CoRN/algebra/CMonoids/CMonoid_axioms/M.var" "CMonoid_axioms__".
 
 inline "cic:/CoRN/algebra/CMonoids/CMonoid_is_CMonoid.con".
 
@@ -101,7 +101,7 @@ inline "cic:/CoRN/algebra/CMonoids/cm_rht_unit.con".
 inline "cic:/CoRN/algebra/CMonoids/cm_lft_unit.con".
 
 (* UNEXPORTED
-End CMonoid_axioms.
+End CMonoid_axioms
 *)
 
 (*#*
@@ -111,10 +111,10 @@ End CMonoid_axioms.
 *)
 
 (* UNEXPORTED
-Section CMonoid_basics.
+Section CMonoid_basics
 *)
 
-inline "cic:/CoRN/algebra/CMonoids/M.var".
+inline "cic:/CoRN/algebra/CMonoids/CMonoid_basics/M.var" "CMonoid_basics__".
 
 inline "cic:/CoRN/algebra/CMonoids/cm_rht_unit_unfolded.con".
 
@@ -146,27 +146,27 @@ Let [P] a predicate on [M] containing [Zero] and closed under [[+]].
 *)
 
 (* UNEXPORTED
-Section SubCMonoids.
+Section SubCMonoids
 *)
 
-inline "cic:/CoRN/algebra/CMonoids/P.var".
+inline "cic:/CoRN/algebra/CMonoids/CMonoid_basics/SubCMonoids/P.var" "CMonoid_basics__SubCMonoids__".
 
-inline "cic:/CoRN/algebra/CMonoids/Punit.var".
+inline "cic:/CoRN/algebra/CMonoids/CMonoid_basics/SubCMonoids/Punit.var" "CMonoid_basics__SubCMonoids__".
 
-inline "cic:/CoRN/algebra/CMonoids/op_pres_P.var".
+inline "cic:/CoRN/algebra/CMonoids/CMonoid_basics/SubCMonoids/op_pres_P.var" "CMonoid_basics__SubCMonoids__".
 
-inline "cic:/CoRN/algebra/CMonoids/subcrr.con".
+inline "cic:/CoRN/algebra/CMonoids/CMonoid_basics/SubCMonoids/subcrr.con" "CMonoid_basics__SubCMonoids__".
 
 inline "cic:/CoRN/algebra/CMonoids/ismon_scrr.con".
 
 inline "cic:/CoRN/algebra/CMonoids/Build_SubCMonoid.con".
 
 (* UNEXPORTED
-End SubCMonoids.
+End SubCMonoids
 *)
 
 (* UNEXPORTED
-End CMonoid_basics.
+End CMonoid_basics
 *)
 
 (* UNEXPORTED

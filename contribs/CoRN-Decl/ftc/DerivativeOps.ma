@@ -23,7 +23,7 @@ include "CoRN.ma".
 include "ftc/Derivative.ma".
 
 (* UNEXPORTED
-Section Lemmas.
+Section Lemmas
 *)
 
 (*#* **Algebraic Operations
@@ -38,36 +38,36 @@ context.%}.%
 We begin with some technical stuff that will be necessary for division.
 *)
 
-inline "cic:/CoRN/ftc/DerivativeOps/a.var".
+inline "cic:/CoRN/ftc/DerivativeOps/Lemmas/a.var" "Lemmas__".
 
-inline "cic:/CoRN/ftc/DerivativeOps/b.var".
+inline "cic:/CoRN/ftc/DerivativeOps/Lemmas/b.var" "Lemmas__".
 
-inline "cic:/CoRN/ftc/DerivativeOps/Hab.var".
+inline "cic:/CoRN/ftc/DerivativeOps/Lemmas/Hab.var" "Lemmas__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/DerivativeOps/I.con".
+inline "cic:/CoRN/ftc/DerivativeOps/Lemmas/I.con" "Lemmas__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/DerivativeOps/F.var".
+inline "cic:/CoRN/ftc/DerivativeOps/Lemmas/F.var" "Lemmas__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/DerivativeOps/P.con".
+inline "cic:/CoRN/ftc/DerivativeOps/Lemmas/P.con" "Lemmas__".
 
 (* end hide *)
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/DerivativeOps/Fbnd.var".
+inline "cic:/CoRN/ftc/DerivativeOps/Lemmas/Fbnd.var" "Lemmas__".
 
 (* end show *)
 
 inline "cic:/CoRN/ftc/DerivativeOps/bnd_away_zero_square.con".
 
 (* UNEXPORTED
-End Lemmas.
+End Lemmas
 *)
 
 (* UNEXPORTED
@@ -75,7 +75,7 @@ Hint Resolve bnd_away_zero_square: included.
 *)
 
 (* UNEXPORTED
-Section Local_Results.
+Section Local_Results
 *)
 
 (*#* **Local Results
@@ -83,17 +83,17 @@ Section Local_Results.
 We can now derive all the usual rules for deriving constant and identity functions, sums, inverses and products of functions with a known derivative.
 *)
 
-inline "cic:/CoRN/ftc/DerivativeOps/a.var".
+inline "cic:/CoRN/ftc/DerivativeOps/Local_Results/a.var" "Local_Results__".
 
-inline "cic:/CoRN/ftc/DerivativeOps/b.var".
+inline "cic:/CoRN/ftc/DerivativeOps/Local_Results/b.var" "Local_Results__".
 
-inline "cic:/CoRN/ftc/DerivativeOps/Hab'.var".
+inline "cic:/CoRN/ftc/DerivativeOps/Local_Results/Hab'.var" "Local_Results__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/DerivativeOps/Hab.con".
+inline "cic:/CoRN/ftc/DerivativeOps/Local_Results/Hab.con" "Local_Results__".
 
-inline "cic:/CoRN/ftc/DerivativeOps/I.con".
+inline "cic:/CoRN/ftc/DerivativeOps/Local_Results/I.con" "Local_Results__".
 
 (* end hide *)
 
@@ -101,17 +101,17 @@ inline "cic:/CoRN/ftc/DerivativeOps/Derivative_I_const.con".
 
 inline "cic:/CoRN/ftc/DerivativeOps/Derivative_I_id.con".
 
-inline "cic:/CoRN/ftc/DerivativeOps/F.var".
+inline "cic:/CoRN/ftc/DerivativeOps/Local_Results/F.var" "Local_Results__".
 
-inline "cic:/CoRN/ftc/DerivativeOps/F'.var".
+inline "cic:/CoRN/ftc/DerivativeOps/Local_Results/F'.var" "Local_Results__".
 
-inline "cic:/CoRN/ftc/DerivativeOps/G.var".
+inline "cic:/CoRN/ftc/DerivativeOps/Local_Results/G.var" "Local_Results__".
 
-inline "cic:/CoRN/ftc/DerivativeOps/G'.var".
+inline "cic:/CoRN/ftc/DerivativeOps/Local_Results/G'.var" "Local_Results__".
 
-inline "cic:/CoRN/ftc/DerivativeOps/derF.var".
+inline "cic:/CoRN/ftc/DerivativeOps/Local_Results/derF.var" "Local_Results__".
 
-inline "cic:/CoRN/ftc/DerivativeOps/derG.var".
+inline "cic:/CoRN/ftc/DerivativeOps/Local_Results/derG.var" "Local_Results__".
 
 inline "cic:/CoRN/ftc/DerivativeOps/Derivative_I_plus.con".
 
@@ -125,14 +125,14 @@ As was the case for continuity, the rule for the reciprocal function has a side 
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/DerivativeOps/Fbnd.var".
+inline "cic:/CoRN/ftc/DerivativeOps/Local_Results/Fbnd.var" "Local_Results__".
 
 (* end show *)
 
 inline "cic:/CoRN/ftc/DerivativeOps/Derivative_I_recip.con".
 
 (* UNEXPORTED
-End Local_Results.
+End Local_Results
 *)
 
 (* UNEXPORTED
@@ -145,34 +145,34 @@ Hint Resolve Derivative_I_const Derivative_I_id Derivative_I_plus
 *)
 
 (* UNEXPORTED
-Section Corolaries.
+Section Corolaries
 *)
 
-inline "cic:/CoRN/ftc/DerivativeOps/a.var".
+inline "cic:/CoRN/ftc/DerivativeOps/Corolaries/a.var" "Corolaries__".
 
-inline "cic:/CoRN/ftc/DerivativeOps/b.var".
+inline "cic:/CoRN/ftc/DerivativeOps/Corolaries/b.var" "Corolaries__".
 
-inline "cic:/CoRN/ftc/DerivativeOps/Hab'.var".
+inline "cic:/CoRN/ftc/DerivativeOps/Corolaries/Hab'.var" "Corolaries__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/DerivativeOps/Hab.con".
+inline "cic:/CoRN/ftc/DerivativeOps/Corolaries/Hab.con" "Corolaries__".
 
-inline "cic:/CoRN/ftc/DerivativeOps/I.con".
+inline "cic:/CoRN/ftc/DerivativeOps/Corolaries/I.con" "Corolaries__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/DerivativeOps/F.var".
+inline "cic:/CoRN/ftc/DerivativeOps/Corolaries/F.var" "Corolaries__".
 
-inline "cic:/CoRN/ftc/DerivativeOps/F'.var".
+inline "cic:/CoRN/ftc/DerivativeOps/Corolaries/F'.var" "Corolaries__".
 
-inline "cic:/CoRN/ftc/DerivativeOps/G.var".
+inline "cic:/CoRN/ftc/DerivativeOps/Corolaries/G.var" "Corolaries__".
 
-inline "cic:/CoRN/ftc/DerivativeOps/G'.var".
+inline "cic:/CoRN/ftc/DerivativeOps/Corolaries/G'.var" "Corolaries__".
 
-inline "cic:/CoRN/ftc/DerivativeOps/derF.var".
+inline "cic:/CoRN/ftc/DerivativeOps/Corolaries/derF.var" "Corolaries__".
 
-inline "cic:/CoRN/ftc/DerivativeOps/derG.var".
+inline "cic:/CoRN/ftc/DerivativeOps/Corolaries/derG.var" "Corolaries__".
 
 (*#*
 From this lemmas the rules for the other algebraic operations follow directly.
@@ -184,12 +184,12 @@ inline "cic:/CoRN/ftc/DerivativeOps/Derivative_I_scal.con".
 
 inline "cic:/CoRN/ftc/DerivativeOps/Derivative_I_nth.con".
 
-inline "cic:/CoRN/ftc/DerivativeOps/Gbnd.var".
+inline "cic:/CoRN/ftc/DerivativeOps/Corolaries/Gbnd.var" "Corolaries__".
 
 inline "cic:/CoRN/ftc/DerivativeOps/Derivative_I_div.con".
 
 (* UNEXPORTED
-End Corolaries.
+End Corolaries
 *)
 
 (* UNEXPORTED
@@ -198,24 +198,24 @@ Hint Resolve Derivative_I_minus Derivative_I_nth Derivative_I_scal
 *)
 
 (* UNEXPORTED
-Section Derivative_Sums.
+Section Derivative_Sums
 *)
 
 (*#* The derivation rules for families of functions are easily proved by
 induction using the constant and addition rules.
 *)
 
-inline "cic:/CoRN/ftc/DerivativeOps/a.var".
+inline "cic:/CoRN/ftc/DerivativeOps/Derivative_Sums/a.var" "Derivative_Sums__".
 
-inline "cic:/CoRN/ftc/DerivativeOps/b.var".
+inline "cic:/CoRN/ftc/DerivativeOps/Derivative_Sums/b.var" "Derivative_Sums__".
 
-inline "cic:/CoRN/ftc/DerivativeOps/Hab.var".
+inline "cic:/CoRN/ftc/DerivativeOps/Derivative_Sums/Hab.var" "Derivative_Sums__".
 
-inline "cic:/CoRN/ftc/DerivativeOps/Hab'.var".
+inline "cic:/CoRN/ftc/DerivativeOps/Derivative_Sums/Hab'.var" "Derivative_Sums__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/DerivativeOps/I.con".
+inline "cic:/CoRN/ftc/DerivativeOps/Derivative_Sums/I.con" "Derivative_Sums__".
 
 (* end hide *)
 
@@ -226,7 +226,7 @@ inline "cic:/CoRN/ftc/DerivativeOps/Derivative_I_Sumx.con".
 inline "cic:/CoRN/ftc/DerivativeOps/Derivative_I_Sum.con".
 
 (* UNEXPORTED
-End Derivative_Sums.
+End Derivative_Sums
 *)
 
 (* UNEXPORTED

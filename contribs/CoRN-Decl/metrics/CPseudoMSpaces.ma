@@ -26,7 +26,7 @@ include "reals/Intervals.ma".
 *)
 
 (* UNEXPORTED
-Section Relations.
+Section Relations
 *)
 
 (*#* **Relations necessary for Pseudo Metric Spaces and Metric Spaces
@@ -35,9 +35,9 @@ Let [A : CSetoid], [d : (CSetoid_bin_fun A A IR)].
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/metrics/CPseudoMSpaces/A.var".
+inline "cic:/CoRN/metrics/CPseudoMSpaces/Relations/A.var" "Relations__".
 
-inline "cic:/CoRN/metrics/CPseudoMSpaces/d.var".
+inline "cic:/CoRN/metrics/CPseudoMSpaces/Relations/d.var" "Relations__".
 
 (* UNEXPORTED
 Set Implicit Arguments.
@@ -68,11 +68,11 @@ inline "cic:/CoRN/metrics/CPseudoMSpaces/diag_zero.con".
 inline "cic:/CoRN/metrics/CPseudoMSpaces/apdiag_imp_grzero.con".
 
 (* UNEXPORTED
-End Relations.
+End Relations
 *)
 
 (* UNEXPORTED
-Section Definition_PsMS0.
+Section Definition_PsMS0
 *)
 
 (*#* **Definition of Pseudo Metric Space
@@ -90,7 +90,7 @@ inline "cic:/CoRN/metrics/CPseudoMSpaces/CPsMetricSpace.ind".
 coercion cic:/matita/CoRN-Decl/metrics/CPseudoMSpaces/cms_crr.con 0 (* compounds *).
 
 (* UNEXPORTED
-End Definition_PsMS0.
+End Definition_PsMS0
 *)
 
 (* UNEXPORTED
@@ -102,7 +102,7 @@ Infix "[-d]" := cms_d (at level 68, left associativity).
 *)
 
 (* UNEXPORTED
-Section PsMS_axioms.
+Section PsMS_axioms
 *)
 
 (*#* **Pseudo Metric Space axioms
@@ -111,7 +111,7 @@ Let [A] be a pseudo metric space.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/metrics/CPseudoMSpaces/A.var".
+inline "cic:/CoRN/metrics/CPseudoMSpaces/PsMS_axioms/A.var" "PsMS_axioms__".
 
 inline "cic:/CoRN/metrics/CPseudoMSpaces/CPsMetricSpace_is_CPsMetricSpace.con".
 
@@ -124,11 +124,11 @@ inline "cic:/CoRN/metrics/CPseudoMSpaces/d_pos_imp_ap.con".
 inline "cic:/CoRN/metrics/CPseudoMSpaces/d_tri_ineq.con".
 
 (* UNEXPORTED
-End PsMS_axioms.
+End PsMS_axioms
 *)
 
 (* UNEXPORTED
-Section PsMS_basics.
+Section PsMS_basics
 *)
 
 (*#* **Pseudo Metric Space basics
@@ -137,7 +137,7 @@ Let [Y] be a pseudo metric space.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/metrics/CPseudoMSpaces/Y.var".
+inline "cic:/CoRN/metrics/CPseudoMSpaces/PsMS_basics/Y.var" "PsMS_basics__".
 
 inline "cic:/CoRN/metrics/CPseudoMSpaces/rev_tri_ineq.con".
 
@@ -153,11 +153,11 @@ inline "cic:/CoRN/metrics/CPseudoMSpaces/pos_imp_ap_imp_diag_zero.con".
 inline "cic:/CoRN/metrics/CPseudoMSpaces/is_CPsMetricSpace_diag_zero.con".
 
 (* UNEXPORTED
-End PsMS_basics.
+End PsMS_basics
 *)
 
 (* UNEXPORTED
-Section Zerof.
+Section Zerof
 *)
 
 (*#* **Zero function
@@ -187,6 +187,6 @@ inline "cic:/CoRN/metrics/CPseudoMSpaces/zf_is_CPsMetricSpace.con".
 inline "cic:/CoRN/metrics/CPseudoMSpaces/zf_as_CPsMetricSpace.con".
 
 (* UNEXPORTED
-End Zerof.
+End Zerof
 *)
 

@@ -23,7 +23,7 @@ include "CoRN.ma".
 include "algebra/COrdCauchy.ma".
 
 (* UNEXPORTED
-Section Lemmas.
+Section Lemmas
 *)
 
 (*#* *Lemmas for Integration
@@ -39,7 +39,7 @@ the proof that any two partitions with no common point have a common
 refinement).
 *)
 
-inline "cic:/CoRN/ftc/COrdLemmas/F.var".
+inline "cic:/CoRN/ftc/COrdLemmas/Lemmas/F.var" "Lemmas__".
 
 inline "cic:/CoRN/ftc/COrdLemmas/om_fun_lt.con".
 
@@ -65,13 +65,13 @@ inline "cic:/CoRN/ftc/COrdLemmas/om_fun_4d.con".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/COrdLemmas/f.var".
+inline "cic:/CoRN/ftc/COrdLemmas/Lemmas/f.var" "Lemmas__".
 
-inline "cic:/CoRN/ftc/COrdLemmas/f0.var".
+inline "cic:/CoRN/ftc/COrdLemmas/Lemmas/f0.var" "Lemmas__".
 
-inline "cic:/CoRN/ftc/COrdLemmas/f_mon.var".
+inline "cic:/CoRN/ftc/COrdLemmas/Lemmas/f_mon.var" "Lemmas__".
 
-inline "cic:/CoRN/ftc/COrdLemmas/h.var".
+inline "cic:/CoRN/ftc/COrdLemmas/Lemmas/h.var" "Lemmas__".
 
 (* end hide *)
 
@@ -96,18 +96,18 @@ inline "cic:/CoRN/ftc/COrdLemmas/str_Sumx_Sum_Sum
  (* begin hide *).con".
 
 (* UNEXPORTED
-End Lemmas.
+End Lemmas
 *)
 
 (* UNEXPORTED
-Section More_Lemmas.
+Section More_Lemmas
 *)
 
-inline "cic:/CoRN/ftc/COrdLemmas/f'.con".
+inline "cic:/CoRN/ftc/COrdLemmas/More_Lemmas/f'.con" "More_Lemmas__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/COrdLemmas/F.var".
+inline "cic:/CoRN/ftc/COrdLemmas/More_Lemmas/F.var" "More_Lemmas__".
 
 (* begin show *)
 
@@ -118,6 +118,6 @@ inline "cic:/CoRN/ftc/COrdLemmas/str_Sumx_Sum_Sum'
 (* end hide *)
 
 (* UNEXPORTED
-End More_Lemmas.
+End More_Lemmas
 *)
 

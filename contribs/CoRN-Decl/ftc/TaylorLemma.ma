@@ -27,7 +27,7 @@ Opaque Min.
 *)
 
 (* UNEXPORTED
-Section Taylor_Defs.
+Section Taylor_Defs
 *)
 
 (*#* *Taylor's Theorem
@@ -44,31 +44,31 @@ define the nth order derivative of [F] in the interval
 [[Min(a,b),Max(a,b)]].
 *)
 
-inline "cic:/CoRN/ftc/TaylorLemma/a.var".
+inline "cic:/CoRN/ftc/TaylorLemma/Taylor_Defs/a.var" "Taylor_Defs__".
 
-inline "cic:/CoRN/ftc/TaylorLemma/b.var".
+inline "cic:/CoRN/ftc/TaylorLemma/Taylor_Defs/b.var" "Taylor_Defs__".
 
-inline "cic:/CoRN/ftc/TaylorLemma/Hap.var".
+inline "cic:/CoRN/ftc/TaylorLemma/Taylor_Defs/Hap.var" "Taylor_Defs__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/TaylorLemma/Hab'.con".
+inline "cic:/CoRN/ftc/TaylorLemma/Taylor_Defs/Hab'.con" "Taylor_Defs__".
 
-inline "cic:/CoRN/ftc/TaylorLemma/Hab.con".
+inline "cic:/CoRN/ftc/TaylorLemma/Taylor_Defs/Hab.con" "Taylor_Defs__".
 
-inline "cic:/CoRN/ftc/TaylorLemma/I.con".
+inline "cic:/CoRN/ftc/TaylorLemma/Taylor_Defs/I.con" "Taylor_Defs__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/TaylorLemma/F.var".
+inline "cic:/CoRN/ftc/TaylorLemma/Taylor_Defs/F.var" "Taylor_Defs__".
 
-inline "cic:/CoRN/ftc/TaylorLemma/Ha.var".
+inline "cic:/CoRN/ftc/TaylorLemma/Taylor_Defs/Ha.var" "Taylor_Defs__".
 
-inline "cic:/CoRN/ftc/TaylorLemma/Hb.var".
+inline "cic:/CoRN/ftc/TaylorLemma/Taylor_Defs/Hb.var" "Taylor_Defs__".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/TaylorLemma/fi.con".
+inline "cic:/CoRN/ftc/TaylorLemma/Taylor_Defs/fi.con" "Taylor_Defs__".
 
 (* end show *)
 
@@ -94,9 +94,9 @@ corresponding to [a] and [b].
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/TaylorLemma/TL_compact_a.con".
+inline "cic:/CoRN/ftc/TaylorLemma/Taylor_Defs/TL_compact_a.con" "Taylor_Defs__".
 
-inline "cic:/CoRN/ftc/TaylorLemma/TL_compact_b.con".
+inline "cic:/CoRN/ftc/TaylorLemma/Taylor_Defs/TL_compact_b.con" "Taylor_Defs__".
 
 (* NOTATION
 Notation A := (Build_subcsetoid_crr IR _ _ TL_compact_a).
@@ -110,13 +110,13 @@ Notation B := (Build_subcsetoid_crr IR _ _ TL_compact_b).
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/TaylorLemma/funct_i.con".
+inline "cic:/CoRN/ftc/TaylorLemma/Taylor_Defs/funct_i.con" "Taylor_Defs__".
 
 (* end show *)
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/TaylorLemma/funct_i'.con".
+inline "cic:/CoRN/ftc/TaylorLemma/Taylor_Defs/funct_i'.con" "Taylor_Defs__".
 
 inline "cic:/CoRN/ftc/TaylorLemma/TL_a_i.con".
 
@@ -149,7 +149,7 @@ inline "cic:/CoRN/ftc/TaylorLemma/Taylor_seq'.con".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/TaylorLemma/Taylor_seq'_aux.con".
+inline "cic:/CoRN/ftc/TaylorLemma/Taylor_Defs/Taylor_seq'_aux.con" "Taylor_Defs__".
 
 inline "cic:/CoRN/ftc/TaylorLemma/TL_lemma_a.con".
 
@@ -173,7 +173,7 @@ inline "cic:/CoRN/ftc/TaylorLemma/Taylor_rem.con".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/TaylorLemma/g.con".
+inline "cic:/CoRN/ftc/TaylorLemma/Taylor_Defs/g.con" "Taylor_Defs__".
 
 (* UNEXPORTED
 Opaque Taylor_seq'_aux Taylor_rem.
@@ -227,7 +227,7 @@ inline "cic:/CoRN/ftc/TaylorLemma/Taylor_lemma5.con".
 Transparent funct_i' FSumx.
 *)
 
-inline "cic:/CoRN/ftc/TaylorLemma/funct_aux.con".
+inline "cic:/CoRN/ftc/TaylorLemma/Taylor_Defs/funct_aux.con" "Taylor_Defs__".
 
 inline "cic:/CoRN/ftc/TaylorLemma/Taylor_lemma6.con".
 
@@ -267,7 +267,7 @@ Transparent funct_aux.
 
 inline "cic:/CoRN/ftc/TaylorLemma/Taylor_lemma9.con".
 
-inline "cic:/CoRN/ftc/TaylorLemma/g'.con".
+inline "cic:/CoRN/ftc/TaylorLemma/Taylor_Defs/g'.con" "Taylor_Defs__".
 
 (* UNEXPORTED
 Opaque Taylor_rem funct_aux.
@@ -288,9 +288,9 @@ Now Taylor's theorem.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/TaylorLemma/e.var".
+inline "cic:/CoRN/ftc/TaylorLemma/Taylor_Defs/e.var" "Taylor_Defs__".
 
-inline "cic:/CoRN/ftc/TaylorLemma/He.var".
+inline "cic:/CoRN/ftc/TaylorLemma/Taylor_Defs/He.var" "Taylor_Defs__".
 
 (* begin hide *)
 
@@ -300,7 +300,7 @@ inline "cic:/CoRN/ftc/TaylorLemma/Taylor_lemma11.con".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/TaylorLemma/deriv_Sn'.con".
+inline "cic:/CoRN/ftc/TaylorLemma/Taylor_Defs/deriv_Sn'.con" "Taylor_Defs__".
 
 (* end show *)
 
@@ -325,6 +325,6 @@ Transparent Taylor_rem funct_aux.
 inline "cic:/CoRN/ftc/TaylorLemma/Taylor_lemma.con".
 
 (* UNEXPORTED
-End Taylor_Defs.
+End Taylor_Defs
 *)
 

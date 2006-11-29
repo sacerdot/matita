@@ -87,15 +87,15 @@ Infix "[-]" := cg_minus (at level 50, left associativity).
 *)
 
 (* UNEXPORTED
-Section CGroup_axioms.
+Section CGroup_axioms
 *)
 
-inline "cic:/CoRN/algebra/CGroups/G.var".
+inline "cic:/CoRN/algebra/CGroups/CGroup_axioms/G.var" "CGroup_axioms__".
 
 inline "cic:/CoRN/algebra/CGroups/cg_inverse.con".
 
 (* UNEXPORTED
-End CGroup_axioms.
+End CGroup_axioms
 *)
 
 (*#*
@@ -106,10 +106,10 @@ General properties of groups.
 *)
 
 (* UNEXPORTED
-Section CGroup_basics.
+Section CGroup_basics
 *)
 
-inline "cic:/CoRN/algebra/CGroups/G.var".
+inline "cic:/CoRN/algebra/CGroups/CGroup_basics/G.var" "CGroup_basics__".
 
 inline "cic:/CoRN/algebra/CGroups/cg_rht_inv_unfolded.con".
 
@@ -188,31 +188,31 @@ inline "cic:/CoRN/algebra/CGroups/x_minus_x.con".
 *)
 
 (* UNEXPORTED
-Section SubCGroups.
+Section SubCGroups
 *)
 
-inline "cic:/CoRN/algebra/CGroups/P.var".
+inline "cic:/CoRN/algebra/CGroups/CGroup_basics/SubCGroups/P.var" "CGroup_basics__SubCGroups__".
 
-inline "cic:/CoRN/algebra/CGroups/Punit.var".
+inline "cic:/CoRN/algebra/CGroups/CGroup_basics/SubCGroups/Punit.var" "CGroup_basics__SubCGroups__".
 
-inline "cic:/CoRN/algebra/CGroups/op_pres_P.var".
+inline "cic:/CoRN/algebra/CGroups/CGroup_basics/SubCGroups/op_pres_P.var" "CGroup_basics__SubCGroups__".
 
-inline "cic:/CoRN/algebra/CGroups/inv_pres_P.var".
+inline "cic:/CoRN/algebra/CGroups/CGroup_basics/SubCGroups/inv_pres_P.var" "CGroup_basics__SubCGroups__".
 
-inline "cic:/CoRN/algebra/CGroups/subcrr.con".
+inline "cic:/CoRN/algebra/CGroups/CGroup_basics/SubCGroups/subcrr.con" "CGroup_basics__SubCGroups__".
 
-inline "cic:/CoRN/algebra/CGroups/subinv.con".
+inline "cic:/CoRN/algebra/CGroups/CGroup_basics/SubCGroups/subinv.con" "CGroup_basics__SubCGroups__".
 
 inline "cic:/CoRN/algebra/CGroups/isgrp_scrr.con".
 
 inline "cic:/CoRN/algebra/CGroups/Build_SubCGroup.con".
 
 (* UNEXPORTED
-End SubCGroups.
+End SubCGroups
 *)
 
 (* UNEXPORTED
-End CGroup_basics.
+End CGroup_basics
 *)
 
 (* UNEXPORTED
@@ -238,10 +238,10 @@ Hint Resolve cg_minus_wd: algebra_c.
 *)
 
 (* UNEXPORTED
-Section Assoc_properties.
+Section Assoc_properties
 *)
 
-inline "cic:/CoRN/algebra/CGroups/G.var".
+inline "cic:/CoRN/algebra/CGroups/Assoc_properties/G.var" "Assoc_properties__".
 
 inline "cic:/CoRN/algebra/CGroups/assoc_2.con".
 
@@ -252,7 +252,7 @@ inline "cic:/CoRN/algebra/CGroups/cg_cancel_mixed.con".
 inline "cic:/CoRN/algebra/CGroups/plus_resp_eq.con".
 
 (* UNEXPORTED
-End Assoc_properties.
+End Assoc_properties
 *)
 
 (* UNEXPORTED
@@ -268,10 +268,10 @@ Specific properties of apartness.
 *)
 
 (* UNEXPORTED
-Section cgroups_apartness.
+Section cgroups_apartness
 *)
 
-inline "cic:/CoRN/algebra/CGroups/G.var".
+inline "cic:/CoRN/algebra/CGroups/cgroups_apartness/G.var" "cgroups_apartness__".
 
 inline "cic:/CoRN/algebra/CGroups/cg_add_ap_zero.con".
 
@@ -296,7 +296,7 @@ inline "cic:/CoRN/algebra/CGroups/minus_resp_ap_lft.con".
 inline "cic:/CoRN/algebra/CGroups/minus_cancel_ap_rht.con".
 
 (* UNEXPORTED
-End cgroups_apartness.
+End cgroups_apartness
 *)
 
 (* UNEXPORTED
@@ -308,7 +308,7 @@ Hint Resolve minus_ap_zero zero_minus_apart inv_resp_ap_zero: algebra.
 *)
 
 (* UNEXPORTED
-Section CGroup_Ops.
+Section CGroup_Ops
 *)
 
 (*#*
@@ -322,22 +322,22 @@ by [P] and [Q].
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CGroups/G.var".
+inline "cic:/CoRN/algebra/CGroups/CGroup_Ops/G.var" "CGroup_Ops__".
 
-inline "cic:/CoRN/algebra/CGroups/F.var".
+inline "cic:/CoRN/algebra/CGroups/CGroup_Ops/F.var" "CGroup_Ops__".
 
-inline "cic:/CoRN/algebra/CGroups/F'.var".
+inline "cic:/CoRN/algebra/CGroups/CGroup_Ops/F'.var" "CGroup_Ops__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/algebra/CGroups/P.con".
+inline "cic:/CoRN/algebra/CGroups/CGroup_Ops/P.con" "CGroup_Ops__".
 
-inline "cic:/CoRN/algebra/CGroups/Q.con".
+inline "cic:/CoRN/algebra/CGroups/CGroup_Ops/Q.con" "CGroup_Ops__".
 
 (* end hide *)
 
 (* UNEXPORTED
-Section Part_Function_Inv.
+Section Part_Function_Inv
 *)
 
 inline "cic:/CoRN/algebra/CGroups/part_function_inv_strext.con".
@@ -345,11 +345,11 @@ inline "cic:/CoRN/algebra/CGroups/part_function_inv_strext.con".
 inline "cic:/CoRN/algebra/CGroups/Finv.con".
 
 (* UNEXPORTED
-End Part_Function_Inv.
+End Part_Function_Inv
 *)
 
 (* UNEXPORTED
-Section Part_Function_Minus.
+Section Part_Function_Minus
 *)
 
 inline "cic:/CoRN/algebra/CGroups/part_function_minus_strext.con".
@@ -357,7 +357,7 @@ inline "cic:/CoRN/algebra/CGroups/part_function_minus_strext.con".
 inline "cic:/CoRN/algebra/CGroups/Fminus.con".
 
 (* UNEXPORTED
-End Part_Function_Minus.
+End Part_Function_Minus
 *)
 
 (*#*
@@ -365,7 +365,7 @@ End Part_Function_Minus.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CGroups/R.var".
+inline "cic:/CoRN/algebra/CGroups/CGroup_Ops/R.var" "CGroup_Ops__".
 
 inline "cic:/CoRN/algebra/CGroups/included_FInv.con".
 
@@ -378,7 +378,7 @@ inline "cic:/CoRN/algebra/CGroups/included_FMinus'.con".
 inline "cic:/CoRN/algebra/CGroups/included_FMinus''.con".
 
 (* UNEXPORTED
-End CGroup_Ops.
+End CGroup_Ops
 *)
 
 (* UNEXPORTED

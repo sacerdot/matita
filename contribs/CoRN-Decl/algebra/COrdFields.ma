@@ -134,7 +134,7 @@ Infix "[<=]" := leEq (at level 70, no associativity).
 *)
 
 (* UNEXPORTED
-Section COrdField_axioms.
+Section COrdField_axioms
 *)
 
 (*#*
@@ -144,7 +144,7 @@ Let [F] be a field.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/COrdFields/F.var".
+inline "cic:/CoRN/algebra/COrdFields/COrdField_axioms/F.var" "COrdField_axioms__".
 
 inline "cic:/CoRN/algebra/COrdFields/COrdField_is_COrdField.con".
 
@@ -169,7 +169,7 @@ inline "cic:/CoRN/algebra/COrdFields/less_wdr.con".
 inline "cic:/CoRN/algebra/COrdFields/less_wdl.con".
 
 (* UNEXPORTED
-End COrdField_axioms.
+End COrdField_axioms
 *)
 
 (* UNEXPORTED
@@ -181,7 +181,7 @@ Declare Right Step less_wdr.
 *)
 
 (* UNEXPORTED
-Section OrdField_basics.
+Section OrdField_basics
 *)
 
 (*#*
@@ -195,7 +195,7 @@ Let in the rest of this section (and all subsections)
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/COrdFields/R.var".
+inline "cic:/CoRN/algebra/COrdFields/OrdField_basics/R.var" "OrdField_basics__".
 
 inline "cic:/CoRN/algebra/COrdFields/less_imp_ap.con".
 
@@ -218,13 +218,13 @@ inline "cic:/CoRN/algebra/COrdFields/pos_ap_zero.con".
 inline "cic:/CoRN/algebra/COrdFields/leEq_not_eq.con".
 
 (* UNEXPORTED
-End OrdField_basics.
+End OrdField_basics
 *)
 
 (*#**********************************)
 
 (* UNEXPORTED
-Section Basic_Properties_of_leEq.
+Section Basic_Properties_of_leEq
 *)
 
 (*#**********************************)
@@ -232,7 +232,7 @@ Section Basic_Properties_of_leEq.
 (*#* ** Basic properties of [ [<=] ]
 *)
 
-inline "cic:/CoRN/algebra/COrdFields/R.var".
+inline "cic:/CoRN/algebra/COrdFields/Basic_Properties_of_leEq/R.var" "Basic_Properties_of_leEq__".
 
 inline "cic:/CoRN/algebra/COrdFields/leEq_wdr.con".
 
@@ -263,7 +263,7 @@ inline "cic:/CoRN/algebra/COrdFields/leEq_transitive.con".
 inline "cic:/CoRN/algebra/COrdFields/less_leEq.con".
 
 (* UNEXPORTED
-End Basic_Properties_of_leEq.
+End Basic_Properties_of_leEq
 *)
 
 (* UNEXPORTED
@@ -275,7 +275,7 @@ Declare Right Step leEq_wdr.
 *)
 
 (* UNEXPORTED
-Section infinity_of_cordfields.
+Section infinity_of_cordfields
 *)
 
 (*#*
@@ -288,7 +288,7 @@ and so on. These are elements of [NonZeros], so that we can write
 e.g.%\% [x[/]TwoNZ].
 *)
 
-inline "cic:/CoRN/algebra/COrdFields/R.var".
+inline "cic:/CoRN/algebra/COrdFields/infinity_of_cordfields/R.var" "infinity_of_cordfields__".
 
 inline "cic:/CoRN/algebra/COrdFields/pos_one.con".
 
@@ -319,7 +319,7 @@ inline "cic:/CoRN/algebra/COrdFields/nring_fac_ap_zero.con".
 include "tactics/Opaque_algebra.ma".
 
 (* UNEXPORTED
-Section up_to_four.
+Section up_to_four
 *)
 
 (*#*
@@ -361,11 +361,11 @@ inline "cic:/CoRN/algebra/COrdFields/three_ap_zero.con".
 inline "cic:/CoRN/algebra/COrdFields/four_ap_zero.con".
 
 (* UNEXPORTED
-End up_to_four.
+End up_to_four
 *)
 
 (* UNEXPORTED
-Section More_than_four.
+Section More_than_four
 *)
 
 (*#* *** Properties of some other numbers *)
@@ -403,11 +403,11 @@ inline "cic:/CoRN/algebra/COrdFields/twentyfour_ap_zero.con".
 inline "cic:/CoRN/algebra/COrdFields/fortyeight_ap_zero.con".
 
 (* UNEXPORTED
-End More_than_four.
+End More_than_four
 *)
 
 (* UNEXPORTED
-End infinity_of_cordfields.
+End infinity_of_cordfields
 *)
 
 (* UNEXPORTED
@@ -467,14 +467,14 @@ Notation " x [/]FortyEightNZ" := (x[/] FortyEight[//]fortyeight_ap_zero _) (at l
 *)
 
 (* UNEXPORTED
-Section consequences_of_infinity.
+Section consequences_of_infinity
 *)
 
 (*#*
 *** Consequences of infinity
 *)
 
-inline "cic:/CoRN/algebra/COrdFields/F.var".
+inline "cic:/CoRN/algebra/COrdFields/consequences_of_infinity/F.var" "consequences_of_infinity__".
 
 inline "cic:/CoRN/algebra/COrdFields/square_eq.con".
 
@@ -485,13 +485,13 @@ Ordered fields have characteristic zero.
 inline "cic:/CoRN/algebra/COrdFields/char0_OrdField.con".
 
 (* UNEXPORTED
-End consequences_of_infinity.
+End consequences_of_infinity
 *)
 
 (*#**********************************)
 
 (* UNEXPORTED
-Section Properties_of_Ordering.
+Section Properties_of_Ordering
 *)
 
 (*#**********************************)
@@ -500,7 +500,7 @@ Section Properties_of_Ordering.
 ** Properties of [[<]]
 *)
 
-inline "cic:/CoRN/algebra/COrdFields/R.var".
+inline "cic:/CoRN/algebra/COrdFields/Properties_of_Ordering/R.var" "Properties_of_Ordering__".
 
 (*#*
 We do not use a special predicate for positivity,
@@ -511,7 +511,7 @@ Reasons: it is more natural; in ordinary mathematics we also write [Zero [<] x]
 *)
 
 (* UNEXPORTED
-Section addition.
+Section addition
 *)
 
 (*#*
@@ -593,11 +593,11 @@ inline "cic:/CoRN/algebra/COrdFields/shift_zero_less_minus'.con".
 inline "cic:/CoRN/algebra/COrdFields/qltone.con".
 
 (* UNEXPORTED
-End addition.
+End addition
 *)
 
 (* UNEXPORTED
-Section multiplication.
+Section multiplication
 *)
 
 (*#*
@@ -702,11 +702,11 @@ inline "cic:/CoRN/algebra/COrdFields/pos_div_twentyfour.con".
 inline "cic:/CoRN/algebra/COrdFields/pos_div_fortyeight.con".
 
 (* UNEXPORTED
-End multiplication.
+End multiplication
 *)
 
 (* UNEXPORTED
-Section misc.
+Section misc
 *)
 
 (*#*
@@ -734,10 +734,10 @@ inline "cic:/CoRN/algebra/COrdFields/positive_Sumx.con".
 inline "cic:/CoRN/algebra/COrdFields/negative_Sumx.con".
 
 (* UNEXPORTED
-End misc.
+End misc
 *)
 
 (* UNEXPORTED
-End Properties_of_Ordering.
+End Properties_of_Ordering
 *)
 

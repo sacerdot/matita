@@ -33,10 +33,10 @@ $\Sigma_{m\leq i \leq n}~c^k = \frac{c^{n+1}-c^m}{c-1}.$
 *)
 
 (* UNEXPORTED
-Section Sums_over_Reals.
+Section Sums_over_Reals
 *)
 
-inline "cic:/CoRN/reals/CSumsReals/c.var".
+inline "cic:/CoRN/reals/CSumsReals/Sums_over_Reals/c.var" "Sums_over_Reals__".
 
 inline "cic:/CoRN/reals/CSumsReals/Sum0_c_exp.con".
 
@@ -59,7 +59,7 @@ Hint Resolve Sum_c_exp'.
 *)
 
 (* UNEXPORTED
-End Sums_over_Reals.
+End Sums_over_Reals
 *)
 
 (* UNEXPORTED

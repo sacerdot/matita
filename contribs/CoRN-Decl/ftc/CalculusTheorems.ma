@@ -29,7 +29,7 @@ Opaque Min Max.
 *)
 
 (* UNEXPORTED
-Section Various_Theorems.
+Section Various_Theorems
 *)
 
 (*#* *Calculus Theorems
@@ -118,6 +118,6 @@ Transparent nring.
 inline "cic:/CoRN/ftc/CalculusTheorems/nexp_resp_leEq_odd.con".
 
 (* UNEXPORTED
-End Various_Theorems.
+End Various_Theorems
 *)
 

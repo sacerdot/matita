@@ -21,7 +21,7 @@ include "CoRN.ma".
 include "algebra/CMonoids.ma".
 
 (* UNEXPORTED
-Section Abelian_Monoids.
+Section Abelian_Monoids
 *)
 
 (*#*
@@ -36,10 +36,10 @@ inline "cic:/CoRN/algebra/CAbMonoids/CAbMonoid.ind".
 coercion cic:/matita/CoRN-Decl/algebra/CAbMonoids/cam_crr.con 0 (* compounds *).
 
 (* UNEXPORTED
-Section AbMonoid_Axioms.
+Section AbMonoid_Axioms
 *)
 
-inline "cic:/CoRN/algebra/CAbMonoids/M.var".
+inline "cic:/CoRN/algebra/CAbMonoids/Abelian_Monoids/AbMonoid_Axioms/M.var" "Abelian_Monoids__AbMonoid_Axioms__".
 
 (*#*
 %\begin{convention}% Let [M] be an abelian monoid.
@@ -53,24 +53,24 @@ inline "cic:/CoRN/algebra/CAbMonoids/cam_commutes.con".
 inline "cic:/CoRN/algebra/CAbMonoids/cam_commutes_unfolded.con".
 
 (* UNEXPORTED
-End AbMonoid_Axioms.
+End AbMonoid_Axioms
 *)
 
 (* UNEXPORTED
-Section SubCAbMonoids.
+Section SubCAbMonoids
 *)
 
 (*#*
 ** Subgroups of an Abelian Monoid
 *)
 
-inline "cic:/CoRN/algebra/CAbMonoids/M.var".
+inline "cic:/CoRN/algebra/CAbMonoids/Abelian_Monoids/SubCAbMonoids/M.var" "Abelian_Monoids__SubCAbMonoids__".
 
-inline "cic:/CoRN/algebra/CAbMonoids/P.var".
+inline "cic:/CoRN/algebra/CAbMonoids/Abelian_Monoids/SubCAbMonoids/P.var" "Abelian_Monoids__SubCAbMonoids__".
 
-inline "cic:/CoRN/algebra/CAbMonoids/Punit.var".
+inline "cic:/CoRN/algebra/CAbMonoids/Abelian_Monoids/SubCAbMonoids/Punit.var" "Abelian_Monoids__SubCAbMonoids__".
 
-inline "cic:/CoRN/algebra/CAbMonoids/op_pres_P.var".
+inline "cic:/CoRN/algebra/CAbMonoids/Abelian_Monoids/SubCAbMonoids/op_pres_P.var" "Abelian_Monoids__SubCAbMonoids__".
 
 (*#*
 %\begin{convention}%
@@ -79,18 +79,18 @@ that contains [Zero] and is closed under [[+]] and [[--]].
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CAbMonoids/subcrr.con".
+inline "cic:/CoRN/algebra/CAbMonoids/Abelian_Monoids/SubCAbMonoids/subcrr.con" "Abelian_Monoids__SubCAbMonoids__".
 
 inline "cic:/CoRN/algebra/CAbMonoids/isabgrp_scrr.con".
 
 inline "cic:/CoRN/algebra/CAbMonoids/Build_SubCAbMonoid.con".
 
 (* UNEXPORTED
-End SubCAbMonoids.
+End SubCAbMonoids
 *)
 
 (* UNEXPORTED
-End Abelian_Monoids.
+End Abelian_Monoids
 *)
 
 (* UNEXPORTED

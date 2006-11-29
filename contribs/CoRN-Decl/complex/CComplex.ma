@@ -41,7 +41,7 @@ include "reals/NRootIR.ma".
 *)
 
 (* UNEXPORTED
-Section Complex_Numbers.
+Section Complex_Numbers
 *)
 
 inline "cic:/CoRN/complex/CComplex/CC_set.ind".
@@ -189,7 +189,7 @@ inline "cic:/CoRN/complex/CComplex/AbsCC.con".
 inline "cic:/CoRN/complex/CComplex/TwoCC_ap_zero.con".
 
 (* UNEXPORTED
-End Complex_Numbers.
+End Complex_Numbers
 *)
 
 (* begin hide *)
@@ -209,7 +209,7 @@ Infix "[+I*]" := cc_set_CC (at level 48, no associativity).
 (*#* ** Properties of [II] *)
 
 (* UNEXPORTED
-Section I_properties.
+Section I_properties
 *)
 
 inline "cic:/CoRN/complex/CComplex/I_square.con".
@@ -251,7 +251,7 @@ inline "cic:/CoRN/complex/CComplex/Im_resp_inv.con".
 inline "cic:/CoRN/complex/CComplex/cc_calculate_square.con".
 
 (* UNEXPORTED
-End I_properties.
+End I_properties
 *)
 
 (* UNEXPORTED
@@ -266,7 +266,7 @@ Hint Resolve I_wd Re_wd Im_wd: algebra_c.
 (*#* ** Properties of conjugation *)
 
 (* UNEXPORTED
-Section Conj_properties.
+Section Conj_properties
 *)
 
 inline "cic:/CoRN/complex/CComplex/CC_conj_plus.con".
@@ -292,7 +292,7 @@ Hint Resolve CC_conj_one: algebra.
 inline "cic:/CoRN/complex/CComplex/CC_conj_nexp.con".
 
 (* UNEXPORTED
-End Conj_properties.
+End Conj_properties
 *)
 
 (* UNEXPORTED
@@ -303,7 +303,7 @@ Hint Resolve CC_conj_plus CC_conj_mult CC_conj_nexp CC_conj_conj
 (*#* ** Properties of the real axis *)
 
 (* UNEXPORTED
-Section cc_IR_properties.
+Section cc_IR_properties
 *)
 
 inline "cic:/CoRN/complex/CComplex/Re_cc_IR.con".
@@ -353,7 +353,7 @@ inline "cic:/CoRN/complex/CComplex/cc_IR_nring.con".
 inline "cic:/CoRN/complex/CComplex/cc_IR_nexp.con".
 
 (* UNEXPORTED
-End cc_IR_properties.
+End cc_IR_properties
 *)
 
 (* UNEXPORTED

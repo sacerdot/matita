@@ -81,7 +81,7 @@ version.
 inline "cic:/CoRN/algebra/CLogic/CProp.con".
 
 (* UNEXPORTED
-Section Basics.
+Section Basics
 *)
 
 (*#* ** Basics
@@ -154,7 +154,7 @@ Hint Resolve Iff_trans Iff_sym Iff_refl Iff_right Iff_left Iff_imp_imp : algebra
 *)
 
 (* UNEXPORTED
-End Basics.
+End Basics
 *)
 
 (* begin hide *)
@@ -210,23 +210,23 @@ Hint Resolve CI CAnd_intro Cinleft Cinright existT exist2T: core.
 *)
 
 (* UNEXPORTED
-Section Choice.
+Section Choice
 *)
 
 (* **Choice
 Let [P] be a predicate on $\NN^2$#N times N#.
 *)
 
-inline "cic:/CoRN/algebra/CLogic/P.var".
+inline "cic:/CoRN/algebra/CLogic/Choice/P.var" "Choice__".
 
 inline "cic:/CoRN/algebra/CLogic/choice.con".
 
 (* UNEXPORTED
-End Choice.
+End Choice
 *)
 
 (* UNEXPORTED
-Section Logical_Remarks.
+Section Logical_Remarks
 *)
 
 (*#* We prove a few logical results which are helpful to have as lemmas
@@ -238,11 +238,11 @@ inline "cic:/CoRN/algebra/CLogic/CNot_Not_or.con".
 inline "cic:/CoRN/algebra/CLogic/CdeMorgan_ex_all.con".
 
 (* UNEXPORTED
-End Logical_Remarks.
+End Logical_Remarks
 *)
 
 (* UNEXPORTED
-Section CRelation_Definition.
+Section CRelation_Definition
 *)
 
 (*#* ** [CProp]-valued Relations
@@ -252,11 +252,11 @@ Similar to Relations.v in Coq's standard library.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CLogic/A.var".
+inline "cic:/CoRN/algebra/CLogic/CRelation_Definition/A.var" "CRelation_Definition__".
 
 inline "cic:/CoRN/algebra/CLogic/Crelation.con".
 
-inline "cic:/CoRN/algebra/CLogic/R.var".
+inline "cic:/CoRN/algebra/CLogic/CRelation_Definition/R.var" "CRelation_Definition__".
 
 inline "cic:/CoRN/algebra/CLogic/Creflexive.con".
 
@@ -267,11 +267,11 @@ inline "cic:/CoRN/algebra/CLogic/Csymmetric.con".
 inline "cic:/CoRN/algebra/CLogic/Cequiv.con".
 
 (* UNEXPORTED
-End CRelation_Definition.
+End CRelation_Definition
 *)
 
 (* UNEXPORTED
-Section TRelation_Definition.
+Section TRelation_Definition
 *)
 
 (*#* ** [Prop]-valued Relations
@@ -281,11 +281,11 @@ Analogous.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CLogic/A.var".
+inline "cic:/CoRN/algebra/CLogic/TRelation_Definition/A.var" "TRelation_Definition__".
 
 inline "cic:/CoRN/algebra/CLogic/Trelation.con".
 
-inline "cic:/CoRN/algebra/CLogic/R.var".
+inline "cic:/CoRN/algebra/CLogic/TRelation_Definition/R.var" "TRelation_Definition__".
 
 inline "cic:/CoRN/algebra/CLogic/Treflexive.con".
 
@@ -296,13 +296,13 @@ inline "cic:/CoRN/algebra/CLogic/Tsymmetric.con".
 inline "cic:/CoRN/algebra/CLogic/Tequiv.con".
 
 (* UNEXPORTED
-End TRelation_Definition.
+End TRelation_Definition
 *)
 
 inline "cic:/CoRN/algebra/CLogic/eqs.ind".
 
 (* UNEXPORTED
-Section le_odd.
+Section le_odd
 *)
 
 (*#* ** The relation [le], [lt], [odd] and [even] in [CProp]
@@ -349,11 +349,11 @@ inline "cic:/CoRN/algebra/CLogic/to_Codd.con".
 inline "cic:/CoRN/algebra/CLogic/to_Ceven.con".
 
 (* UNEXPORTED
-End le_odd.
+End le_odd
 *)
 
 (* UNEXPORTED
-Section Misc.
+Section Misc
 *)
 
 (*#* **Miscellaneous
@@ -372,7 +372,7 @@ inline "cic:/CoRN/algebra/CLogic/not_r_sum_rec.con".
 inline "cic:/CoRN/algebra/CLogic/not_l_sum_rec.con".
 
 (* UNEXPORTED
-End Misc.
+End Misc
 *)
 
 (*#* **Results about the natural numbers
@@ -397,7 +397,7 @@ Implicit Arguments nat_less_n_pred' [n].
 *)
 
 (* UNEXPORTED
-Section Odd_and_Even.
+Section Odd_and_Even
 *)
 
 (*#*
@@ -416,7 +416,7 @@ inline "cic:/CoRN/algebra/CLogic/even_or_odd_plus.con".
 inline "cic:/CoRN/algebra/CLogic/even_or_odd_plus_gt.con".
 
 (* UNEXPORTED
-End Odd_and_Even.
+End Odd_and_Even
 *)
 
 (* UNEXPORTED
@@ -428,7 +428,7 @@ Hint Resolve toCle: core.
 *)
 
 (* UNEXPORTED
-Section Natural_Numbers.
+Section Natural_Numbers
 *)
 
 (*#* **Algebraic Properties
@@ -467,7 +467,7 @@ inline "cic:/CoRN/algebra/CLogic/plus_pred_pred_plus.con".
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CLogic/h.var".
+inline "cic:/CoRN/algebra/CLogic/Natural_Numbers/h.var" "Natural_Numbers__".
 
 (*#*
 First we characterize monotonicity by a local condition: if [h(n) < h(n+1)]
@@ -499,7 +499,7 @@ inline "cic:/CoRN/algebra/CLogic/mon_fun_covers.con".
 inline "cic:/CoRN/algebra/CLogic/weird_mon_covers.con".
 
 (* UNEXPORTED
-End Natural_Numbers.
+End Natural_Numbers
 *)
 
 (*#*
@@ -509,7 +509,7 @@ Useful for the Fundamental Theorem of Algebra.
 inline "cic:/CoRN/algebra/CLogic/kseq_prop.con".
 
 (* UNEXPORTED
-Section Predicates_to_CProp.
+Section Predicates_to_CProp
 *)
 
 (*#* **Logical Properties
@@ -539,11 +539,11 @@ inline "cic:/CoRN/algebra/CLogic/finite_or_elim.con".
 inline "cic:/CoRN/algebra/CLogic/str_finite_or_elim.con".
 
 (* UNEXPORTED
-End Predicates_to_CProp.
+End Predicates_to_CProp
 *)
 
 (* UNEXPORTED
-Section Predicates_to_Prop.
+Section Predicates_to_Prop
 *)
 
 (*#* Finally, analogous results for [Prop]-valued predicates are presented for
@@ -559,7 +559,7 @@ inline "cic:/CoRN/algebra/CLogic/nat_complete_double_ind.con".
 inline "cic:/CoRN/algebra/CLogic/four_ind.con".
 
 (* UNEXPORTED
-End Predicates_to_Prop.
+End Predicates_to_Prop
 *)
 
 (*#* **Integers

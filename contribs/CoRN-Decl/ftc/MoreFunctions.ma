@@ -29,7 +29,7 @@ Opaque Min Max.
 *)
 
 (* UNEXPORTED
-Section Basic_Results.
+Section Basic_Results
 *)
 
 (*#* *More about Functions
@@ -44,7 +44,7 @@ arbitrary intervals.
 **Continuity
 *)
 
-inline "cic:/CoRN/ftc/MoreFunctions/I.var".
+inline "cic:/CoRN/ftc/MoreFunctions/Basic_Results/I.var" "Basic_Results__".
 
 (*#*
 Trivial stuff.
@@ -57,17 +57,17 @@ inline "cic:/CoRN/ftc/MoreFunctions/Continuous_imp_inc.con".
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/MoreFunctions/cI.var".
+inline "cic:/CoRN/ftc/MoreFunctions/Basic_Results/cI.var" "Basic_Results__".
 
-inline "cic:/CoRN/ftc/MoreFunctions/F.var".
+inline "cic:/CoRN/ftc/MoreFunctions/Basic_Results/F.var" "Basic_Results__".
 
-inline "cic:/CoRN/ftc/MoreFunctions/contF.var".
+inline "cic:/CoRN/ftc/MoreFunctions/Basic_Results/contF.var" "Basic_Results__".
 
 inline "cic:/CoRN/ftc/MoreFunctions/continuous_compact.con".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/MoreFunctions/Hinc.var".
+inline "cic:/CoRN/ftc/MoreFunctions/Basic_Results/Hinc.var" "Basic_Results__".
 
 (* end show *)
 
@@ -78,7 +78,7 @@ inline "cic:/CoRN/ftc/MoreFunctions/FNorm.con".
 inline "cic:/CoRN/ftc/MoreFunctions/FNorm_bnd_AbsIR.con".
 
 (* UNEXPORTED
-End Basic_Results.
+End Basic_Results
 *)
 
 (* UNEXPORTED
@@ -86,26 +86,26 @@ Hint Resolve Continuous_imp_inc: included.
 *)
 
 (* UNEXPORTED
-Section Other_Results.
+Section Other_Results
 *)
 
 (*#*
 The usual stuff.
 *)
 
-inline "cic:/CoRN/ftc/MoreFunctions/I.var".
+inline "cic:/CoRN/ftc/MoreFunctions/Other_Results/I.var" "Other_Results__".
 
-inline "cic:/CoRN/ftc/MoreFunctions/F.var".
+inline "cic:/CoRN/ftc/MoreFunctions/Other_Results/F.var" "Other_Results__".
 
-inline "cic:/CoRN/ftc/MoreFunctions/G.var".
+inline "cic:/CoRN/ftc/MoreFunctions/Other_Results/G.var" "Other_Results__".
 
 inline "cic:/CoRN/ftc/MoreFunctions/Continuous_wd.con".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/MoreFunctions/contF.var".
+inline "cic:/CoRN/ftc/MoreFunctions/Other_Results/contF.var" "Other_Results__".
 
-inline "cic:/CoRN/ftc/MoreFunctions/contG.var".
+inline "cic:/CoRN/ftc/MoreFunctions/Other_Results/contG.var" "Other_Results__".
 
 (* end show *)
 
@@ -134,7 +134,7 @@ inline "cic:/CoRN/ftc/MoreFunctions/Continuous_abs.con".
 inline "cic:/CoRN/ftc/MoreFunctions/Continuous_recip.con".
 
 (* UNEXPORTED
-End Other_Results.
+End Other_Results
 *)
 
 (* UNEXPORTED
@@ -148,27 +148,27 @@ Hint Immediate included_imp_Continuous Included_imp_Continuous: continuous.
 *)
 
 (* UNEXPORTED
-Section Corollaries.
+Section Corollaries
 *)
 
-inline "cic:/CoRN/ftc/MoreFunctions/I.var".
+inline "cic:/CoRN/ftc/MoreFunctions/Corollaries/I.var" "Corollaries__".
 
-inline "cic:/CoRN/ftc/MoreFunctions/cI.var".
+inline "cic:/CoRN/ftc/MoreFunctions/Corollaries/cI.var" "Corollaries__".
 
-inline "cic:/CoRN/ftc/MoreFunctions/F.var".
+inline "cic:/CoRN/ftc/MoreFunctions/Corollaries/F.var" "Corollaries__".
 
-inline "cic:/CoRN/ftc/MoreFunctions/G.var".
+inline "cic:/CoRN/ftc/MoreFunctions/Corollaries/G.var" "Corollaries__".
 
-inline "cic:/CoRN/ftc/MoreFunctions/contF.var".
+inline "cic:/CoRN/ftc/MoreFunctions/Corollaries/contF.var" "Corollaries__".
 
-inline "cic:/CoRN/ftc/MoreFunctions/contG.var".
+inline "cic:/CoRN/ftc/MoreFunctions/Corollaries/contG.var" "Corollaries__".
 
 inline "cic:/CoRN/ftc/MoreFunctions/Continuous_div.con".
 
 inline "cic:/CoRN/ftc/MoreFunctions/FNorm_wd.con".
 
 (* UNEXPORTED
-End Corollaries.
+End Corollaries
 *)
 
 (* UNEXPORTED
@@ -176,10 +176,10 @@ Hint Resolve Continuous_div: continuous.
 *)
 
 (* UNEXPORTED
-Section Sums.
+Section Sums
 *)
 
-inline "cic:/CoRN/ftc/MoreFunctions/I.var".
+inline "cic:/CoRN/ftc/MoreFunctions/Sums/I.var" "Sums__".
 
 inline "cic:/CoRN/ftc/MoreFunctions/Continuous_Sumx.con".
 
@@ -188,16 +188,16 @@ inline "cic:/CoRN/ftc/MoreFunctions/Continuous_Sumx.con".
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/MoreFunctions/f.var".
+inline "cic:/CoRN/ftc/MoreFunctions/Sums/f.var" "Sums__".
 
-inline "cic:/CoRN/ftc/MoreFunctions/contF.var".
+inline "cic:/CoRN/ftc/MoreFunctions/Sums/contF.var" "Sums__".
 
 inline "cic:/CoRN/ftc/MoreFunctions/Continuous_Sum0.con".
 
 inline "cic:/CoRN/ftc/MoreFunctions/Continuous_Sum.con".
 
 (* UNEXPORTED
-End Sums.
+End Sums
 *)
 
 (* UNEXPORTED
@@ -205,7 +205,7 @@ Hint Resolve Continuous_Sum0 Continuous_Sumx Continuous_Sum: continuous.
 *)
 
 (* UNEXPORTED
-Section Basic_Properties.
+Section Basic_Properties
 *)
 
 (*#* **Derivative
@@ -216,15 +216,15 @@ Derivative is not that much different.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/MoreFunctions/I.var".
+inline "cic:/CoRN/ftc/MoreFunctions/Basic_Properties/I.var" "Basic_Properties__".
 
-inline "cic:/CoRN/ftc/MoreFunctions/pI.var".
+inline "cic:/CoRN/ftc/MoreFunctions/Basic_Properties/pI.var" "Basic_Properties__".
 
-inline "cic:/CoRN/ftc/MoreFunctions/F.var".
+inline "cic:/CoRN/ftc/MoreFunctions/Basic_Properties/F.var" "Basic_Properties__".
 
-inline "cic:/CoRN/ftc/MoreFunctions/G.var".
+inline "cic:/CoRN/ftc/MoreFunctions/Basic_Properties/G.var" "Basic_Properties__".
 
-inline "cic:/CoRN/ftc/MoreFunctions/H.var".
+inline "cic:/CoRN/ftc/MoreFunctions/Basic_Properties/H.var" "Basic_Properties__".
 
 inline "cic:/CoRN/ftc/MoreFunctions/Derivative_wdl.con".
 
@@ -241,7 +241,7 @@ inline "cic:/CoRN/ftc/MoreFunctions/Derivative_imp_Continuous.con".
 inline "cic:/CoRN/ftc/MoreFunctions/Derivative_imp_Continuous'.con".
 
 (* UNEXPORTED
-End Basic_Properties.
+End Basic_Properties
 *)
 
 (* UNEXPORTED
@@ -254,29 +254,29 @@ Hint Immediate Derivative_imp_Continuous Derivative_imp_Continuous':
 *)
 
 (* UNEXPORTED
-Section More_Results.
+Section More_Results
 *)
 
-inline "cic:/CoRN/ftc/MoreFunctions/I.var".
+inline "cic:/CoRN/ftc/MoreFunctions/More_Results/I.var" "More_Results__".
 
-inline "cic:/CoRN/ftc/MoreFunctions/pI.var".
+inline "cic:/CoRN/ftc/MoreFunctions/More_Results/pI.var" "More_Results__".
 
 (*#*
 %\begin{convention}% Assume that [F'] and [G'] are derivatives of [F] and [G], respectively, in [I].
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/MoreFunctions/F.var".
+inline "cic:/CoRN/ftc/MoreFunctions/More_Results/F.var" "More_Results__".
 
-inline "cic:/CoRN/ftc/MoreFunctions/F'.var".
+inline "cic:/CoRN/ftc/MoreFunctions/More_Results/F'.var" "More_Results__".
 
-inline "cic:/CoRN/ftc/MoreFunctions/G.var".
+inline "cic:/CoRN/ftc/MoreFunctions/More_Results/G.var" "More_Results__".
 
-inline "cic:/CoRN/ftc/MoreFunctions/G'.var".
+inline "cic:/CoRN/ftc/MoreFunctions/More_Results/G'.var" "More_Results__".
 
-inline "cic:/CoRN/ftc/MoreFunctions/derF.var".
+inline "cic:/CoRN/ftc/MoreFunctions/More_Results/derF.var" "More_Results__".
 
-inline "cic:/CoRN/ftc/MoreFunctions/derG.var".
+inline "cic:/CoRN/ftc/MoreFunctions/More_Results/derG.var" "More_Results__".
 
 inline "cic:/CoRN/ftc/MoreFunctions/included_imp_Derivative.con".
 
@@ -301,58 +301,58 @@ inline "cic:/CoRN/ftc/MoreFunctions/Derivative_nth.con".
 inline "cic:/CoRN/ftc/MoreFunctions/Derivative_recip.con".
 
 (* UNEXPORTED
-End More_Results.
+End More_Results
 *)
 
 (* UNEXPORTED
-Section More_Corollaries.
+Section More_Corollaries
 *)
 
-inline "cic:/CoRN/ftc/MoreFunctions/I.var".
+inline "cic:/CoRN/ftc/MoreFunctions/More_Corollaries/I.var" "More_Corollaries__".
 
-inline "cic:/CoRN/ftc/MoreFunctions/pI.var".
+inline "cic:/CoRN/ftc/MoreFunctions/More_Corollaries/pI.var" "More_Corollaries__".
 
-inline "cic:/CoRN/ftc/MoreFunctions/F.var".
+inline "cic:/CoRN/ftc/MoreFunctions/More_Corollaries/F.var" "More_Corollaries__".
 
-inline "cic:/CoRN/ftc/MoreFunctions/F'.var".
+inline "cic:/CoRN/ftc/MoreFunctions/More_Corollaries/F'.var" "More_Corollaries__".
 
-inline "cic:/CoRN/ftc/MoreFunctions/G.var".
+inline "cic:/CoRN/ftc/MoreFunctions/More_Corollaries/G.var" "More_Corollaries__".
 
-inline "cic:/CoRN/ftc/MoreFunctions/G'.var".
+inline "cic:/CoRN/ftc/MoreFunctions/More_Corollaries/G'.var" "More_Corollaries__".
 
-inline "cic:/CoRN/ftc/MoreFunctions/derF.var".
+inline "cic:/CoRN/ftc/MoreFunctions/More_Corollaries/derF.var" "More_Corollaries__".
 
-inline "cic:/CoRN/ftc/MoreFunctions/derG.var".
+inline "cic:/CoRN/ftc/MoreFunctions/More_Corollaries/derG.var" "More_Corollaries__".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/MoreFunctions/Gbnd.var".
+inline "cic:/CoRN/ftc/MoreFunctions/More_Corollaries/Gbnd.var" "More_Corollaries__".
 
 (* end show *)
 
 inline "cic:/CoRN/ftc/MoreFunctions/Derivative_div.con".
 
 (* UNEXPORTED
-End More_Corollaries.
+End More_Corollaries
 *)
 
 (* UNEXPORTED
-Section More_Sums.
+Section More_Sums
 *)
 
-inline "cic:/CoRN/ftc/MoreFunctions/I.var".
+inline "cic:/CoRN/ftc/MoreFunctions/More_Sums/I.var" "More_Sums__".
 
-inline "cic:/CoRN/ftc/MoreFunctions/pI.var".
+inline "cic:/CoRN/ftc/MoreFunctions/More_Sums/pI.var" "More_Sums__".
 
 inline "cic:/CoRN/ftc/MoreFunctions/Derivative_Sumx.con".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/MoreFunctions/f.var".
+inline "cic:/CoRN/ftc/MoreFunctions/More_Sums/f.var" "More_Sums__".
 
-inline "cic:/CoRN/ftc/MoreFunctions/f'.var".
+inline "cic:/CoRN/ftc/MoreFunctions/More_Sums/f'.var" "More_Sums__".
 
-inline "cic:/CoRN/ftc/MoreFunctions/derF.var".
+inline "cic:/CoRN/ftc/MoreFunctions/More_Sums/derF.var" "More_Sums__".
 
 (* end show *)
 
@@ -361,11 +361,11 @@ inline "cic:/CoRN/ftc/MoreFunctions/Derivative_Sum0.con".
 inline "cic:/CoRN/ftc/MoreFunctions/Derivative_Sum.con".
 
 (* UNEXPORTED
-End More_Sums.
+End More_Sums
 *)
 
 (* UNEXPORTED
-Section Diffble_Basic_Properties.
+Section Diffble_Basic_Properties
 *)
 
 (*#* **Differentiability
@@ -373,9 +373,9 @@ Section Diffble_Basic_Properties.
 Mutatis mutandis for differentiability.
 *)
 
-inline "cic:/CoRN/ftc/MoreFunctions/I.var".
+inline "cic:/CoRN/ftc/MoreFunctions/Diffble_Basic_Properties/I.var" "Diffble_Basic_Properties__".
 
-inline "cic:/CoRN/ftc/MoreFunctions/pI.var".
+inline "cic:/CoRN/ftc/MoreFunctions/Diffble_Basic_Properties/pI.var" "Diffble_Basic_Properties__".
 
 inline "cic:/CoRN/ftc/MoreFunctions/Diffble_imp_inc.con".
 
@@ -383,13 +383,13 @@ inline "cic:/CoRN/ftc/MoreFunctions/Derivative_imp_Diffble.con".
 
 inline "cic:/CoRN/ftc/MoreFunctions/Diffble_wd.con".
 
-inline "cic:/CoRN/ftc/MoreFunctions/F.var".
+inline "cic:/CoRN/ftc/MoreFunctions/Diffble_Basic_Properties/F.var" "Diffble_Basic_Properties__".
 
-inline "cic:/CoRN/ftc/MoreFunctions/G.var".
+inline "cic:/CoRN/ftc/MoreFunctions/Diffble_Basic_Properties/G.var" "Diffble_Basic_Properties__".
 
-inline "cic:/CoRN/ftc/MoreFunctions/diffF.var".
+inline "cic:/CoRN/ftc/MoreFunctions/Diffble_Basic_Properties/diffF.var" "Diffble_Basic_Properties__".
 
-inline "cic:/CoRN/ftc/MoreFunctions/diffG.var".
+inline "cic:/CoRN/ftc/MoreFunctions/Diffble_Basic_Properties/diffG.var" "Diffble_Basic_Properties__".
 
 (*#*
 %\begin{convention}% Assume [F] and [G] are differentiable in [I].
@@ -419,7 +419,7 @@ inline "cic:/CoRN/ftc/MoreFunctions/Diffble_scal.con".
 inline "cic:/CoRN/ftc/MoreFunctions/Diffble_recip.con".
 
 (* UNEXPORTED
-End Diffble_Basic_Properties.
+End Diffble_Basic_Properties
 *)
 
 (* UNEXPORTED
@@ -427,20 +427,20 @@ Hint Immediate Diffble_imp_inc: included.
 *)
 
 (* UNEXPORTED
-Section Diffble_Corollaries.
+Section Diffble_Corollaries
 *)
 
-inline "cic:/CoRN/ftc/MoreFunctions/I.var".
+inline "cic:/CoRN/ftc/MoreFunctions/Diffble_Corollaries/I.var" "Diffble_Corollaries__".
 
-inline "cic:/CoRN/ftc/MoreFunctions/pI.var".
+inline "cic:/CoRN/ftc/MoreFunctions/Diffble_Corollaries/pI.var" "Diffble_Corollaries__".
 
-inline "cic:/CoRN/ftc/MoreFunctions/F.var".
+inline "cic:/CoRN/ftc/MoreFunctions/Diffble_Corollaries/F.var" "Diffble_Corollaries__".
 
-inline "cic:/CoRN/ftc/MoreFunctions/G.var".
+inline "cic:/CoRN/ftc/MoreFunctions/Diffble_Corollaries/G.var" "Diffble_Corollaries__".
 
-inline "cic:/CoRN/ftc/MoreFunctions/diffF.var".
+inline "cic:/CoRN/ftc/MoreFunctions/Diffble_Corollaries/diffF.var" "Diffble_Corollaries__".
 
-inline "cic:/CoRN/ftc/MoreFunctions/diffG.var".
+inline "cic:/CoRN/ftc/MoreFunctions/Diffble_Corollaries/diffG.var" "Diffble_Corollaries__".
 
 inline "cic:/CoRN/ftc/MoreFunctions/Diffble_div.con".
 
@@ -451,11 +451,11 @@ inline "cic:/CoRN/ftc/MoreFunctions/Diffble_Sumx.con".
 inline "cic:/CoRN/ftc/MoreFunctions/Diffble_Sum.con".
 
 (* UNEXPORTED
-End Diffble_Corollaries.
+End Diffble_Corollaries
 *)
 
 (* UNEXPORTED
-Section Nth_Derivative.
+Section Nth_Derivative
 *)
 
 (*#* **Nth Derivative
@@ -463,12 +463,12 @@ Section Nth_Derivative.
 Higher order derivatives pose more interesting problems.  It turns out that it really becomes necessary to generalize our [n_deriv] operator to any interval.
 *)
 
-inline "cic:/CoRN/ftc/MoreFunctions/I.var".
+inline "cic:/CoRN/ftc/MoreFunctions/Nth_Derivative/I.var" "Nth_Derivative__".
 
-inline "cic:/CoRN/ftc/MoreFunctions/pI.var".
+inline "cic:/CoRN/ftc/MoreFunctions/Nth_Derivative/pI.var" "Nth_Derivative__".
 
 (* UNEXPORTED
-Section Definitions.
+Section Definitions
 *)
 
 (*#*
@@ -476,11 +476,11 @@ Section Definitions.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/MoreFunctions/n.var".
+inline "cic:/CoRN/ftc/MoreFunctions/Nth_Derivative/Definitions/n.var" "Nth_Derivative__Definitions__".
 
-inline "cic:/CoRN/ftc/MoreFunctions/F.var".
+inline "cic:/CoRN/ftc/MoreFunctions/Nth_Derivative/Definitions/F.var" "Nth_Derivative__Definitions__".
 
-inline "cic:/CoRN/ftc/MoreFunctions/diffF.var".
+inline "cic:/CoRN/ftc/MoreFunctions/Nth_Derivative/Definitions/diffF.var" "Nth_Derivative__Definitions__".
 
 inline "cic:/CoRN/ftc/MoreFunctions/N_Deriv_fun.con".
 
@@ -496,11 +496,11 @@ inline "cic:/CoRN/ftc/MoreFunctions/N_Deriv_wd.con".
 inline "cic:/CoRN/ftc/MoreFunctions/N_Deriv.con".
 
 (* UNEXPORTED
-End Definitions.
+End Definitions
 *)
 
 (* UNEXPORTED
-Section Basic_Results.
+Section Basic_Results
 *)
 
 (*#*
@@ -542,11 +542,11 @@ inline "cic:/CoRN/ftc/MoreFunctions/Included_imp_Diffble_n.con".
 inline "cic:/CoRN/ftc/MoreFunctions/Derivative_n_plus.con".
 
 (* UNEXPORTED
-End Basic_Results.
+End Basic_Results
 *)
 
 (* UNEXPORTED
-Section More_Results.
+Section More_Results
 *)
 
 (*#*
@@ -570,22 +570,22 @@ inline "cic:/CoRN/ftc/MoreFunctions/Derivative_n_O.con".
 inline "cic:/CoRN/ftc/MoreFunctions/Derivative_n_Sn.con".
 
 (* UNEXPORTED
-End More_Results.
+End More_Results
 *)
 
 (* UNEXPORTED
-Section Derivating_Diffble.
+Section Derivating_Diffble
 *)
 
 (*#*
 As a special case we get a differentiation operator%\ldots%#...#
 *)
 
-inline "cic:/CoRN/ftc/MoreFunctions/F.var".
+inline "cic:/CoRN/ftc/MoreFunctions/Nth_Derivative/Derivating_Diffble/F.var" "Nth_Derivative__Derivating_Diffble__".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/MoreFunctions/diffF.var".
+inline "cic:/CoRN/ftc/MoreFunctions/Nth_Derivative/Derivating_Diffble/diffF.var" "Nth_Derivative__Derivating_Diffble__".
 
 (* end show *)
 
@@ -594,11 +594,11 @@ inline "cic:/CoRN/ftc/MoreFunctions/Diffble_imp_Diffble_n.con".
 inline "cic:/CoRN/ftc/MoreFunctions/Deriv.con".
 
 (* UNEXPORTED
-End Derivating_Diffble.
+End Derivating_Diffble
 *)
 
 (* UNEXPORTED
-Section Corollaries.
+Section Corollaries
 *)
 
 (*#*
@@ -620,11 +620,11 @@ inline "cic:/CoRN/ftc/MoreFunctions/Derivative_n_imp_Continuous.con".
 inline "cic:/CoRN/ftc/MoreFunctions/Derivative_n_imp_Continuous'.con".
 
 (* UNEXPORTED
-End Corollaries.
+End Corollaries
 *)
 
 (* UNEXPORTED
-End Nth_Derivative.
+End Nth_Derivative
 *)
 
 (* UNEXPORTED

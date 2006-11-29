@@ -23,7 +23,7 @@ include "CoRN.ma".
 include "ftc/Continuity.ma".
 
 (* UNEXPORTED
-Section Definitions.
+Section Definitions
 *)
 
 (*#* *Derivatives
@@ -53,32 +53,32 @@ will be partial functions with domains respectively [P, P', Q, Q'] and
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/Derivative/a.var".
+inline "cic:/CoRN/ftc/Derivative/Definitions/a.var" "Definitions__".
 
-inline "cic:/CoRN/ftc/Derivative/b.var".
+inline "cic:/CoRN/ftc/Derivative/Definitions/b.var" "Definitions__".
 
-inline "cic:/CoRN/ftc/Derivative/Hab'.var".
+inline "cic:/CoRN/ftc/Derivative/Definitions/Hab'.var" "Definitions__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/Derivative/Hab.con".
+inline "cic:/CoRN/ftc/Derivative/Definitions/Hab.con" "Definitions__".
 
-inline "cic:/CoRN/ftc/Derivative/I.con".
+inline "cic:/CoRN/ftc/Derivative/Definitions/I.con" "Definitions__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/Derivative/F.var".
+inline "cic:/CoRN/ftc/Derivative/Definitions/F.var" "Definitions__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/Derivative/P.con".
+inline "cic:/CoRN/ftc/Derivative/Definitions/P.con" "Definitions__".
 
 (* end hide *)
 
 inline "cic:/CoRN/ftc/Derivative/Derivative_I.con".
 
 (* UNEXPORTED
-End Definitions.
+End Definitions
 *)
 
 (* UNEXPORTED
@@ -86,23 +86,23 @@ Implicit Arguments Derivative_I [a b].
 *)
 
 (* UNEXPORTED
-Section Basic_Properties.
+Section Basic_Properties
 *)
 
 (*#* **Basic Properties
 *)
 
-inline "cic:/CoRN/ftc/Derivative/a.var".
+inline "cic:/CoRN/ftc/Derivative/Basic_Properties/a.var" "Basic_Properties__".
 
-inline "cic:/CoRN/ftc/Derivative/b.var".
+inline "cic:/CoRN/ftc/Derivative/Basic_Properties/b.var" "Basic_Properties__".
 
-inline "cic:/CoRN/ftc/Derivative/Hab'.var".
+inline "cic:/CoRN/ftc/Derivative/Basic_Properties/Hab'.var" "Basic_Properties__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/Derivative/Hab.con".
+inline "cic:/CoRN/ftc/Derivative/Basic_Properties/Hab.con" "Basic_Properties__".
 
-inline "cic:/CoRN/ftc/Derivative/I.con".
+inline "cic:/CoRN/ftc/Derivative/Basic_Properties/I.con" "Basic_Properties__".
 
 (* end hide *)
 
@@ -118,19 +118,19 @@ inline "cic:/CoRN/ftc/Derivative/Derivative_I_char.con".
 Derivative is a well defined relation; we will make this explicit for both arguments:
 *)
 
-inline "cic:/CoRN/ftc/Derivative/F.var".
+inline "cic:/CoRN/ftc/Derivative/Basic_Properties/F.var" "Basic_Properties__".
 
-inline "cic:/CoRN/ftc/Derivative/G.var".
+inline "cic:/CoRN/ftc/Derivative/Basic_Properties/G.var" "Basic_Properties__".
 
-inline "cic:/CoRN/ftc/Derivative/H.var".
+inline "cic:/CoRN/ftc/Derivative/Basic_Properties/H.var" "Basic_Properties__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/Derivative/P.con".
+inline "cic:/CoRN/ftc/Derivative/Basic_Properties/P.con" "Basic_Properties__".
 
-inline "cic:/CoRN/ftc/Derivative/Q.con".
+inline "cic:/CoRN/ftc/Derivative/Basic_Properties/Q.con" "Basic_Properties__".
 
-inline "cic:/CoRN/ftc/Derivative/R.con".
+inline "cic:/CoRN/ftc/Derivative/Basic_Properties/R.con" "Basic_Properties__".
 
 (* end hide *)
 
@@ -140,7 +140,7 @@ inline "cic:/CoRN/ftc/Derivative/Derivative_I_wdr.con".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/Derivative/Derivative_I_unique_lemma.con".
+inline "cic:/CoRN/ftc/Derivative/Basic_Properties/Derivative_I_unique_lemma.con" "Basic_Properties__".
 
 (* end hide *)
 
@@ -162,14 +162,14 @@ inline "cic:/CoRN/ftc/Derivative/derivative_imp_inc'.con".
 Any function that is or has a derivative is continuous.
 *)
 
-inline "cic:/CoRN/ftc/Derivative/Hab''.var".
+inline "cic:/CoRN/ftc/Derivative/Basic_Properties/Hab''.var" "Basic_Properties__".
 
 inline "cic:/CoRN/ftc/Derivative/deriv_imp_contin'_I.con".
 
 inline "cic:/CoRN/ftc/Derivative/deriv_imp_contin_I.con".
 
 (* UNEXPORTED
-End Basic_Properties.
+End Basic_Properties
 *)
 
 (*#*

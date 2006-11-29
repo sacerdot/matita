@@ -25,7 +25,7 @@ include "tactics/DiffTactics2.ma".
 include "ftc/MoreFunctions.ma".
 
 (* UNEXPORTED
-Section Rolle.
+Section Rolle
 *)
 
 (*#* *Rolle's Theorem
@@ -42,189 +42,189 @@ We now begin to work with partial functions.  We begin by stating and proving Ro
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/Rolle/a.var".
+inline "cic:/CoRN/ftc/Rolle/Rolle/a.var" "Rolle__".
 
-inline "cic:/CoRN/ftc/Rolle/b.var".
+inline "cic:/CoRN/ftc/Rolle/Rolle/b.var" "Rolle__".
 
-inline "cic:/CoRN/ftc/Rolle/Hab'.var".
+inline "cic:/CoRN/ftc/Rolle/Rolle/Hab'.var" "Rolle__".
 
-inline "cic:/CoRN/ftc/Rolle/Hab.con".
+inline "cic:/CoRN/ftc/Rolle/Rolle/Hab.con" "Rolle__".
 
-inline "cic:/CoRN/ftc/Rolle/I.con".
+inline "cic:/CoRN/ftc/Rolle/Rolle/I.con" "Rolle__".
 
-inline "cic:/CoRN/ftc/Rolle/F.var".
+inline "cic:/CoRN/ftc/Rolle/Rolle/F.var" "Rolle__".
 
-inline "cic:/CoRN/ftc/Rolle/F'.var".
+inline "cic:/CoRN/ftc/Rolle/Rolle/F'.var" "Rolle__".
 
-inline "cic:/CoRN/ftc/Rolle/derF.var".
+inline "cic:/CoRN/ftc/Rolle/Rolle/derF.var" "Rolle__".
 
-inline "cic:/CoRN/ftc/Rolle/Ha.var".
+inline "cic:/CoRN/ftc/Rolle/Rolle/Ha.var" "Rolle__".
 
-inline "cic:/CoRN/ftc/Rolle/Hb.var".
+inline "cic:/CoRN/ftc/Rolle/Rolle/Hb.var" "Rolle__".
 
 (* end hide *)
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/Rolle/Fab.var".
+inline "cic:/CoRN/ftc/Rolle/Rolle/Fab.var" "Rolle__".
 
 (* end show *)
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/Rolle/e.var".
+inline "cic:/CoRN/ftc/Rolle/Rolle/e.var" "Rolle__".
 
-inline "cic:/CoRN/ftc/Rolle/He.var".
+inline "cic:/CoRN/ftc/Rolle/Rolle/He.var" "Rolle__".
 
-inline "cic:/CoRN/ftc/Rolle/contF'.con".
+inline "cic:/CoRN/ftc/Rolle/Rolle/contF'.con" "Rolle__".
 
-inline "cic:/CoRN/ftc/Rolle/derivF.con".
+inline "cic:/CoRN/ftc/Rolle/Rolle/derivF.con" "Rolle__".
 
-inline "cic:/CoRN/ftc/Rolle/Rolle_lemma2.con".
+inline "cic:/CoRN/ftc/Rolle/Rolle/Rolle_lemma2.con" "Rolle__".
 
-inline "cic:/CoRN/ftc/Rolle/df.con".
+inline "cic:/CoRN/ftc/Rolle/Rolle/df.con" "Rolle__".
 
-inline "cic:/CoRN/ftc/Rolle/Hdf.con".
+inline "cic:/CoRN/ftc/Rolle/Rolle/Hdf.con" "Rolle__".
 
-inline "cic:/CoRN/ftc/Rolle/Hf.con".
+inline "cic:/CoRN/ftc/Rolle/Rolle/Hf.con" "Rolle__".
 
-inline "cic:/CoRN/ftc/Rolle/Rolle_lemma3.con".
+inline "cic:/CoRN/ftc/Rolle/Rolle/Rolle_lemma3.con" "Rolle__".
 
-inline "cic:/CoRN/ftc/Rolle/df'.con".
+inline "cic:/CoRN/ftc/Rolle/Rolle/df'.con" "Rolle__".
 
-inline "cic:/CoRN/ftc/Rolle/Hdf'.con".
+inline "cic:/CoRN/ftc/Rolle/Rolle/Hdf'.con" "Rolle__".
 
-inline "cic:/CoRN/ftc/Rolle/Hf'.con".
+inline "cic:/CoRN/ftc/Rolle/Rolle/Hf'.con" "Rolle__".
 
-inline "cic:/CoRN/ftc/Rolle/d.con".
+inline "cic:/CoRN/ftc/Rolle/Rolle/d.con" "Rolle__".
 
-inline "cic:/CoRN/ftc/Rolle/Hd.con".
+inline "cic:/CoRN/ftc/Rolle/Rolle/Hd.con" "Rolle__".
 
-inline "cic:/CoRN/ftc/Rolle/incF.con".
+inline "cic:/CoRN/ftc/Rolle/Rolle/incF.con" "Rolle__".
 
-inline "cic:/CoRN/ftc/Rolle/n.con".
+inline "cic:/CoRN/ftc/Rolle/Rolle/n.con" "Rolle__".
 
-inline "cic:/CoRN/ftc/Rolle/fcp.con".
+inline "cic:/CoRN/ftc/Rolle/Rolle/fcp.con" "Rolle__".
 
-inline "cic:/CoRN/ftc/Rolle/Rolle_lemma1.con".
+inline "cic:/CoRN/ftc/Rolle/Rolle/Rolle_lemma1.con" "Rolle__".
 
-inline "cic:/CoRN/ftc/Rolle/incF'.con".
+inline "cic:/CoRN/ftc/Rolle/Rolle/incF'.con" "Rolle__".
 
-inline "cic:/CoRN/ftc/Rolle/fcp'.con".
+inline "cic:/CoRN/ftc/Rolle/Rolle/fcp'.con" "Rolle__".
 
 (* NOTATION
 Notation cp := (compact_part a b Hab' d Hd).
 *)
 
-inline "cic:/CoRN/ftc/Rolle/Rolle_lemma4.con".
+inline "cic:/CoRN/ftc/Rolle/Rolle/Rolle_lemma4.con" "Rolle__".
 
-inline "cic:/CoRN/ftc/Rolle/Rolle_lemma5.con".
+inline "cic:/CoRN/ftc/Rolle/Rolle/Rolle_lemma5.con" "Rolle__".
 
-inline "cic:/CoRN/ftc/Rolle/Rolle_lemma6.con".
+inline "cic:/CoRN/ftc/Rolle/Rolle/Rolle_lemma6.con" "Rolle__".
 
-inline "cic:/CoRN/ftc/Rolle/Rolle_lemma7.con".
+inline "cic:/CoRN/ftc/Rolle/Rolle/Rolle_lemma7.con" "Rolle__".
 
-inline "cic:/CoRN/ftc/Rolle/j.con".
+inline "cic:/CoRN/ftc/Rolle/Rolle/j.con" "Rolle__".
 
-inline "cic:/CoRN/ftc/Rolle/Hj.con".
+inline "cic:/CoRN/ftc/Rolle/Rolle/Hj.con" "Rolle__".
 
-inline "cic:/CoRN/ftc/Rolle/Hj'.con".
+inline "cic:/CoRN/ftc/Rolle/Rolle/Hj'.con" "Rolle__".
 
-inline "cic:/CoRN/ftc/Rolle/k.con".
+inline "cic:/CoRN/ftc/Rolle/Rolle/k.con" "Rolle__".
 
-inline "cic:/CoRN/ftc/Rolle/Hk.con".
+inline "cic:/CoRN/ftc/Rolle/Rolle/Hk.con" "Rolle__".
 
-inline "cic:/CoRN/ftc/Rolle/Hk'.con".
+inline "cic:/CoRN/ftc/Rolle/Rolle/Hk'.con" "Rolle__".
 
-inline "cic:/CoRN/ftc/Rolle/Rolle_lemma8.con".
+inline "cic:/CoRN/ftc/Rolle/Rolle/Rolle_lemma8.con" "Rolle__".
 
-inline "cic:/CoRN/ftc/Rolle/Rolle_lemma9.con".
+inline "cic:/CoRN/ftc/Rolle/Rolle/Rolle_lemma9.con" "Rolle__".
 
-inline "cic:/CoRN/ftc/Rolle/Rolle_lemma10.con".
+inline "cic:/CoRN/ftc/Rolle/Rolle/Rolle_lemma10.con" "Rolle__".
 
-inline "cic:/CoRN/ftc/Rolle/Rolle_lemma11.con".
+inline "cic:/CoRN/ftc/Rolle/Rolle/Rolle_lemma11.con" "Rolle__".
 
-inline "cic:/CoRN/ftc/Rolle/Rolle_lemma12.con".
+inline "cic:/CoRN/ftc/Rolle/Rolle/Rolle_lemma12.con" "Rolle__".
 
-inline "cic:/CoRN/ftc/Rolle/Rolle_lemma13.con".
+inline "cic:/CoRN/ftc/Rolle/Rolle/Rolle_lemma13.con" "Rolle__".
 
-inline "cic:/CoRN/ftc/Rolle/Rolle_lemma15.con".
+inline "cic:/CoRN/ftc/Rolle/Rolle/Rolle_lemma15.con" "Rolle__".
 
 (* end hide *)
 
 inline "cic:/CoRN/ftc/Rolle/Rolle.con".
 
 (* UNEXPORTED
-End Rolle.
+End Rolle
 *)
 
 (* UNEXPORTED
-Section Law_of_the_Mean.
+Section Law_of_the_Mean
 *)
 
 (*#*
 The following is a simple corollary:
 *)
 
-inline "cic:/CoRN/ftc/Rolle/a.var".
+inline "cic:/CoRN/ftc/Rolle/Law_of_the_Mean/a.var" "Law_of_the_Mean__".
 
-inline "cic:/CoRN/ftc/Rolle/b.var".
+inline "cic:/CoRN/ftc/Rolle/Law_of_the_Mean/b.var" "Law_of_the_Mean__".
 
-inline "cic:/CoRN/ftc/Rolle/Hab'.var".
+inline "cic:/CoRN/ftc/Rolle/Law_of_the_Mean/Hab'.var" "Law_of_the_Mean__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/Rolle/Hab.con".
+inline "cic:/CoRN/ftc/Rolle/Law_of_the_Mean/Hab.con" "Law_of_the_Mean__".
 
-inline "cic:/CoRN/ftc/Rolle/I.con".
+inline "cic:/CoRN/ftc/Rolle/Law_of_the_Mean/I.con" "Law_of_the_Mean__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/Rolle/F.var".
+inline "cic:/CoRN/ftc/Rolle/Law_of_the_Mean/F.var" "Law_of_the_Mean__".
 
-inline "cic:/CoRN/ftc/Rolle/F'.var".
+inline "cic:/CoRN/ftc/Rolle/Law_of_the_Mean/F'.var" "Law_of_the_Mean__".
 
-inline "cic:/CoRN/ftc/Rolle/HF.var".
+inline "cic:/CoRN/ftc/Rolle/Law_of_the_Mean/HF.var" "Law_of_the_Mean__".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/Rolle/HA.var".
+inline "cic:/CoRN/ftc/Rolle/Law_of_the_Mean/HA.var" "Law_of_the_Mean__".
 
-inline "cic:/CoRN/ftc/Rolle/HB.var".
+inline "cic:/CoRN/ftc/Rolle/Law_of_the_Mean/HB.var" "Law_of_the_Mean__".
 
 (* end show *)
 
 inline "cic:/CoRN/ftc/Rolle/Law_of_the_Mean_I.con".
 
 (* UNEXPORTED
-End Law_of_the_Mean.
+End Law_of_the_Mean
 *)
 
 (* UNEXPORTED
-Section Corollaries.
+Section Corollaries
 *)
 
 (*#*
 We can also state these theorems without expliciting the derivative of [F].
 *)
 
-inline "cic:/CoRN/ftc/Rolle/a.var".
+inline "cic:/CoRN/ftc/Rolle/Corollaries/a.var" "Corollaries__".
 
-inline "cic:/CoRN/ftc/Rolle/b.var".
+inline "cic:/CoRN/ftc/Rolle/Corollaries/b.var" "Corollaries__".
 
-inline "cic:/CoRN/ftc/Rolle/Hab'.var".
+inline "cic:/CoRN/ftc/Rolle/Corollaries/Hab'.var" "Corollaries__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/Rolle/Hab.con".
+inline "cic:/CoRN/ftc/Rolle/Corollaries/Hab.con" "Corollaries__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/Rolle/F.var".
+inline "cic:/CoRN/ftc/Rolle/Corollaries/F.var" "Corollaries__".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/Rolle/HF.var".
+inline "cic:/CoRN/ftc/Rolle/Corollaries/HF.var" "Corollaries__".
 
 (* end show *)
 
@@ -233,11 +233,11 @@ inline "cic:/CoRN/ftc/Rolle/Rolle'.con".
 inline "cic:/CoRN/ftc/Rolle/Law_of_the_Mean'_I.con".
 
 (* UNEXPORTED
-End Corollaries.
+End Corollaries
 *)
 
 (* UNEXPORTED
-Section Generalizations.
+Section Generalizations
 *)
 
 (*#*
@@ -250,25 +250,25 @@ state it also in this form.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/Rolle/I.var".
+inline "cic:/CoRN/ftc/Rolle/Generalizations/I.var" "Generalizations__".
 
-inline "cic:/CoRN/ftc/Rolle/pI.var".
+inline "cic:/CoRN/ftc/Rolle/Generalizations/pI.var" "Generalizations__".
 
-inline "cic:/CoRN/ftc/Rolle/F.var".
+inline "cic:/CoRN/ftc/Rolle/Generalizations/F.var" "Generalizations__".
 
-inline "cic:/CoRN/ftc/Rolle/F'.var".
+inline "cic:/CoRN/ftc/Rolle/Generalizations/F'.var" "Generalizations__".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/Rolle/derF.var".
+inline "cic:/CoRN/ftc/Rolle/Generalizations/derF.var" "Generalizations__".
 
 (* end show *)
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/Rolle/incF.con".
+inline "cic:/CoRN/ftc/Rolle/Generalizations/incF.con" "Generalizations__".
 
-inline "cic:/CoRN/ftc/Rolle/incF'.con".
+inline "cic:/CoRN/ftc/Rolle/Generalizations/incF'.con" "Generalizations__".
 
 (* end hide *)
 
@@ -281,6 +281,6 @@ We further generalize the mean law by writing as an explicit bound.
 inline "cic:/CoRN/ftc/Rolle/Law_of_the_Mean_ineq.con".
 
 (* UNEXPORTED
-End Generalizations.
+End Generalizations
 *)
 

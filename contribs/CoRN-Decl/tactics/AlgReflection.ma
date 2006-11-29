@@ -25,7 +25,7 @@ include "CoRN.ma".
 include "algebra/CLogic.ma".
 
 (* UNEXPORTED
-Section Syntactic_Expressions.
+Section Syntactic_Expressions
 *)
 
 inline "cic:/CoRN/tactics/AlgReflection/varindex.con".
@@ -51,11 +51,11 @@ inline "cic:/CoRN/tactics/AlgReflection/expr_minus.con".
 inline "cic:/CoRN/tactics/AlgReflection/expr_power.con".
 
 (* UNEXPORTED
-End Syntactic_Expressions.
+End Syntactic_Expressions
 *)
 
 (* UNEXPORTED
-Section Normalization_Function.
+Section Normalization_Function
 *)
 
 inline "cic:/CoRN/tactics/AlgReflection/eq_nat.con".
@@ -111,11 +111,11 @@ inline "cic:/CoRN/tactics/AlgReflection/NormF.con".
 inline "cic:/CoRN/tactics/AlgReflection/expr_is_zero.con".
 
 (* UNEXPORTED
-End Normalization_Function.
+End Normalization_Function
 *)
 
 (* UNEXPORTED
-Section Correctness_Results.
+Section Correctness_Results
 *)
 
 inline "cic:/CoRN/tactics/AlgReflection/eq_nat_corr.con".
@@ -125,7 +125,7 @@ inline "cic:/CoRN/tactics/AlgReflection/eq_int_corr.con".
 inline "cic:/CoRN/tactics/AlgReflection/eq_expr_corr.con".
 
 (* UNEXPORTED
-End Correctness_Results.
+End Correctness_Results
 *)
 
 (* end hide *)

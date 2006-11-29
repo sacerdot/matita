@@ -23,7 +23,7 @@ include "CoRN.ma".
 include "metrics/Prod_Sub.ma".
 
 (* UNEXPORTED
-Section lists.
+Section lists
 *)
 
 (*#* **Lists
@@ -67,11 +67,11 @@ of the list of images of elements of $l$ #<I>l</I>#.
 inline "cic:/CoRN/metrics/CPMSTheory/map_member.con".
 
 (* UNEXPORTED
-End lists.
+End lists
 *)
 
 (* UNEXPORTED
-Section loc_and_bound.
+Section loc_and_bound
 *)
 
 (*#* **Pseudo Metric Space theory
@@ -223,6 +223,6 @@ all points that are in some sense close to $P$#<I>P</I>#.
 inline "cic:/CoRN/metrics/CPMSTheory/well_contained.con".
 
 (* UNEXPORTED
-End loc_and_bound.
+End loc_and_bound
 *)
 

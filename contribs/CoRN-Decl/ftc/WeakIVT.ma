@@ -44,24 +44,24 @@ will prove them here.
 *)
 
 (* UNEXPORTED
-Section Lemma1.
+Section Lemma1
 *)
 
-inline "cic:/CoRN/ftc/WeakIVT/a.var".
+inline "cic:/CoRN/ftc/WeakIVT/Lemma1/a.var" "Lemma1__".
 
-inline "cic:/CoRN/ftc/WeakIVT/b.var".
+inline "cic:/CoRN/ftc/WeakIVT/Lemma1/b.var" "Lemma1__".
 
-inline "cic:/CoRN/ftc/WeakIVT/Hab.var".
+inline "cic:/CoRN/ftc/WeakIVT/Lemma1/Hab.var" "Lemma1__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/WeakIVT/I.con".
+inline "cic:/CoRN/ftc/WeakIVT/Lemma1/I.con" "Lemma1__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/WeakIVT/F.var".
+inline "cic:/CoRN/ftc/WeakIVT/Lemma1/F.var" "Lemma1__".
 
-inline "cic:/CoRN/ftc/WeakIVT/contF.var".
+inline "cic:/CoRN/ftc/WeakIVT/Lemma1/contF.var" "Lemma1__".
 
 (*#* **First Lemmas
 
@@ -77,28 +77,28 @@ enough to [z].
 inline "cic:/CoRN/ftc/WeakIVT/Weak_IVT_ap_lft.con".
 
 (* UNEXPORTED
-End Lemma1.
+End Lemma1
 *)
 
 (* UNEXPORTED
-Section Lemma2.
+Section Lemma2
 *)
 
-inline "cic:/CoRN/ftc/WeakIVT/a.var".
+inline "cic:/CoRN/ftc/WeakIVT/Lemma2/a.var" "Lemma2__".
 
-inline "cic:/CoRN/ftc/WeakIVT/b.var".
+inline "cic:/CoRN/ftc/WeakIVT/Lemma2/b.var" "Lemma2__".
 
-inline "cic:/CoRN/ftc/WeakIVT/Hab.var".
+inline "cic:/CoRN/ftc/WeakIVT/Lemma2/Hab.var" "Lemma2__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/WeakIVT/I.con".
+inline "cic:/CoRN/ftc/WeakIVT/Lemma2/I.con" "Lemma2__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/WeakIVT/F.var".
+inline "cic:/CoRN/ftc/WeakIVT/Lemma2/F.var" "Lemma2__".
 
-inline "cic:/CoRN/ftc/WeakIVT/contF.var".
+inline "cic:/CoRN/ftc/WeakIVT/Lemma2/contF.var" "Lemma2__".
 
 (*#*
 If [f(b) [<] f(a)], a similar result holds:
@@ -107,11 +107,11 @@ If [f(b) [<] f(a)], a similar result holds:
 inline "cic:/CoRN/ftc/WeakIVT/Weak_IVT_ap_rht.con".
 
 (* UNEXPORTED
-End Lemma2.
+End Lemma2
 *)
 
 (* UNEXPORTED
-Section IVT.
+Section IVT
 *)
 
 (*#* **The IVT
@@ -122,53 +122,53 @@ these assumptions, we can build two sequences of values which
 converge to [x0] such that [f(x0) [=] z].
 *)
 
-inline "cic:/CoRN/ftc/WeakIVT/a.var".
+inline "cic:/CoRN/ftc/WeakIVT/IVT/a.var" "IVT__".
 
-inline "cic:/CoRN/ftc/WeakIVT/b.var".
+inline "cic:/CoRN/ftc/WeakIVT/IVT/b.var" "IVT__".
 
-inline "cic:/CoRN/ftc/WeakIVT/Hab'.var".
+inline "cic:/CoRN/ftc/WeakIVT/IVT/Hab'.var" "IVT__".
 
-inline "cic:/CoRN/ftc/WeakIVT/Hab.var".
+inline "cic:/CoRN/ftc/WeakIVT/IVT/Hab.var" "IVT__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/WeakIVT/I.con".
+inline "cic:/CoRN/ftc/WeakIVT/IVT/I.con" "IVT__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/WeakIVT/F.var".
+inline "cic:/CoRN/ftc/WeakIVT/IVT/F.var" "IVT__".
 
-inline "cic:/CoRN/ftc/WeakIVT/contF.var".
+inline "cic:/CoRN/ftc/WeakIVT/IVT/contF.var" "IVT__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/WeakIVT/incF.con".
+inline "cic:/CoRN/ftc/WeakIVT/IVT/incF.con" "IVT__".
 
 (* end hide *)
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/WeakIVT/incrF.var".
+inline "cic:/CoRN/ftc/WeakIVT/IVT/incrF.var" "IVT__".
 
 (* end show *)
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/WeakIVT/Ha.con".
+inline "cic:/CoRN/ftc/WeakIVT/IVT/Ha.con" "IVT__".
 
-inline "cic:/CoRN/ftc/WeakIVT/Hb.con".
+inline "cic:/CoRN/ftc/WeakIVT/IVT/Hb.con" "IVT__".
 
-inline "cic:/CoRN/ftc/WeakIVT/HFab'.con".
+inline "cic:/CoRN/ftc/WeakIVT/IVT/HFab'.con" "IVT__".
 
 (* end hide *)
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/WeakIVT/z.var".
+inline "cic:/CoRN/ftc/WeakIVT/IVT/z.var" "IVT__".
 
-inline "cic:/CoRN/ftc/WeakIVT/Haz.var".
+inline "cic:/CoRN/ftc/WeakIVT/IVT/Haz.var" "IVT__".
 
-inline "cic:/CoRN/ftc/WeakIVT/Hzb.var".
+inline "cic:/CoRN/ftc/WeakIVT/IVT/Hzb.var" "IVT__".
 
 (* end show *)
 
@@ -221,9 +221,9 @@ inline "cic:/CoRN/ftc/WeakIVT/a_seq_Cauchy.con".
 
 inline "cic:/CoRN/ftc/WeakIVT/b_seq_Cauchy.con".
 
-inline "cic:/CoRN/ftc/WeakIVT/xa.con".
+inline "cic:/CoRN/ftc/WeakIVT/IVT/xa.con" "IVT__".
 
-inline "cic:/CoRN/ftc/WeakIVT/xb.con".
+inline "cic:/CoRN/ftc/WeakIVT/IVT/xb.con" "IVT__".
 
 inline "cic:/CoRN/ftc/WeakIVT/a_seq_b_seq_lim.con".
 
@@ -232,6 +232,6 @@ inline "cic:/CoRN/ftc/WeakIVT/xa_in_interval.con".
 inline "cic:/CoRN/ftc/WeakIVT/IVT_I.con".
 
 (* UNEXPORTED
-End IVT.
+End IVT
 *)
 

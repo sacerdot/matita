@@ -36,7 +36,7 @@ Properties of non-zero complex numbers
 *)
 
 (* UNEXPORTED
-Section CC_ap_zero.
+Section CC_ap_zero
 *)
 
 inline "cic:/CoRN/complex/NRootCC/cc_ap_zero.con".
@@ -44,25 +44,25 @@ inline "cic:/CoRN/complex/NRootCC/cc_ap_zero.con".
 inline "cic:/CoRN/complex/NRootCC/C_cc_ap_zero.con".
 
 (* UNEXPORTED
-End CC_ap_zero.
+End CC_ap_zero
 *)
 
 (*#* Weird lemma. *)
 
 (* UNEXPORTED
-Section Imag_to_Real.
+Section Imag_to_Real
 *)
 
 inline "cic:/CoRN/complex/NRootCC/imag_to_real.con".
 
 (* UNEXPORTED
-End Imag_to_Real.
+End Imag_to_Real
 *)
 
 (*#* ** Roots of the imaginary unit *)
 
 (* UNEXPORTED
-Section NRootI.
+Section NRootI
 *)
 
 inline "cic:/CoRN/complex/NRootCC/sqrt_Half.con".
@@ -86,20 +86,20 @@ inline "cic:/CoRN/complex/NRootCC/nroot_minus_I.con".
 inline "cic:/CoRN/complex/NRootCC/nroot_minus_I_nexp.con".
 
 (* UNEXPORTED
-End NRootI.
+End NRootI
 *)
 
 (*#* ** Roots of complex numbers *)
 
 (* UNEXPORTED
-Section NRootCC_1.
+Section NRootCC_1
 *)
 
 (*#* We define the nth root of a complex number with a non zero imaginary part.
 *)
 
 (* UNEXPORTED
-Section NRootCC_1_ap_real.
+Section NRootCC_1_ap_real
 *)
 
 (*#*
@@ -109,15 +109,15 @@ Define [c2 := a[^]2[+]b[^]2], [c := sqrt c2], [a'2 := (c[+]a) [*]Half],
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/complex/NRootCC/a.var".
+inline "cic:/CoRN/complex/NRootCC/NRootCC_1/NRootCC_1_ap_real/a.var" "NRootCC_1__NRootCC_1_ap_real__".
 
-inline "cic:/CoRN/complex/NRootCC/b.var".
+inline "cic:/CoRN/complex/NRootCC/NRootCC_1/NRootCC_1_ap_real/b.var" "NRootCC_1__NRootCC_1_ap_real__".
 
-inline "cic:/CoRN/complex/NRootCC/b_.var".
+inline "cic:/CoRN/complex/NRootCC/NRootCC_1/NRootCC_1_ap_real/b_.var" "NRootCC_1__NRootCC_1_ap_real__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/complex/NRootCC/c2.con".
+inline "cic:/CoRN/complex/NRootCC/NRootCC_1/NRootCC_1_ap_real/c2.con" "NRootCC_1__NRootCC_1_ap_real__".
 
 (* end hide *)
 
@@ -125,9 +125,9 @@ inline "cic:/CoRN/complex/NRootCC/nrCC1_c2pos.con".
 
 (* begin hide *)
 
-inline "cic:/CoRN/complex/NRootCC/c.con".
+inline "cic:/CoRN/complex/NRootCC/NRootCC_1/NRootCC_1_ap_real/c.con" "NRootCC_1__NRootCC_1_ap_real__".
 
-inline "cic:/CoRN/complex/NRootCC/a'2.con".
+inline "cic:/CoRN/complex/NRootCC/NRootCC_1/NRootCC_1_ap_real/a'2.con" "NRootCC_1__NRootCC_1_ap_real__".
 
 (* end hide *)
 
@@ -135,9 +135,9 @@ inline "cic:/CoRN/complex/NRootCC/nrCC1_a'2pos.con".
 
 (* begin hide *)
 
-inline "cic:/CoRN/complex/NRootCC/a'.con".
+inline "cic:/CoRN/complex/NRootCC/NRootCC_1/NRootCC_1_ap_real/a'.con" "NRootCC_1__NRootCC_1_ap_real__".
 
-inline "cic:/CoRN/complex/NRootCC/b'2.con".
+inline "cic:/CoRN/complex/NRootCC/NRootCC_1/NRootCC_1_ap_real/b'2.con" "NRootCC_1__NRootCC_1_ap_real__".
 
 (* end hide *)
 
@@ -145,7 +145,7 @@ inline "cic:/CoRN/complex/NRootCC/nrCC1_b'2pos.con".
 
 (* begin hide *)
 
-inline "cic:/CoRN/complex/NRootCC/b'.con".
+inline "cic:/CoRN/complex/NRootCC/NRootCC_1/NRootCC_1_ap_real/b'.con" "NRootCC_1__NRootCC_1_ap_real__".
 
 (* end hide *)
 
@@ -182,14 +182,14 @@ inline "cic:/CoRN/complex/NRootCC/nrootCC_1_lower.con".
 inline "cic:/CoRN/complex/NRootCC/nrootCC_1_ap_real.con".
 
 (* UNEXPORTED
-End NRootCC_1_ap_real.
+End NRootCC_1_ap_real
 *)
 
 (*#* We now define the nth root of a complex number with a non zero real part.
 *)
 
 (* UNEXPORTED
-Section NRootCC_1_ap_imag.
+Section NRootCC_1_ap_imag
 *)
 
 (*#*
@@ -198,19 +198,19 @@ Section NRootCC_1_ap_imag.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/complex/NRootCC/a.var".
+inline "cic:/CoRN/complex/NRootCC/NRootCC_1/NRootCC_1_ap_imag/a.var" "NRootCC_1__NRootCC_1_ap_imag__".
 
-inline "cic:/CoRN/complex/NRootCC/b.var".
+inline "cic:/CoRN/complex/NRootCC/NRootCC_1/NRootCC_1_ap_imag/b.var" "NRootCC_1__NRootCC_1_ap_imag__".
 
-inline "cic:/CoRN/complex/NRootCC/a_.var".
+inline "cic:/CoRN/complex/NRootCC/NRootCC_1/NRootCC_1_ap_imag/a_.var" "NRootCC_1__NRootCC_1_ap_imag__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/complex/NRootCC/c'.con".
+inline "cic:/CoRN/complex/NRootCC/NRootCC_1/NRootCC_1_ap_imag/c'.con" "NRootCC_1__NRootCC_1_ap_imag__".
 
-inline "cic:/CoRN/complex/NRootCC/a'.con".
+inline "cic:/CoRN/complex/NRootCC/NRootCC_1/NRootCC_1_ap_imag/a'.con" "NRootCC_1__NRootCC_1_ap_imag__".
 
-inline "cic:/CoRN/complex/NRootCC/b'.con".
+inline "cic:/CoRN/complex/NRootCC/NRootCC_1/NRootCC_1_ap_imag/b'.con" "NRootCC_1__NRootCC_1_ap_imag__".
 
 (* end hide *)
 
@@ -221,7 +221,7 @@ Hint Resolve sqrt_I_nexp: algebra.
 inline "cic:/CoRN/complex/NRootCC/nrootCC_1_ap_imag.con".
 
 (* UNEXPORTED
-End NRootCC_1_ap_imag.
+End NRootCC_1_ap_imag
 *)
 
 (*#* We now define the roots of arbitrary non zero complex numbers. *)
@@ -229,11 +229,11 @@ End NRootCC_1_ap_imag.
 inline "cic:/CoRN/complex/NRootCC/nrootCC_1.con".
 
 (* UNEXPORTED
-End NRootCC_1.
+End NRootCC_1
 *)
 
 (* UNEXPORTED
-Section NRootCC_2.
+Section NRootCC_2
 *)
 
 (*#*
@@ -241,24 +241,24 @@ Section NRootCC_2.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/complex/NRootCC/n.var".
+inline "cic:/CoRN/complex/NRootCC/NRootCC_2/n.var" "NRootCC_2__".
 
-inline "cic:/CoRN/complex/NRootCC/c.var".
+inline "cic:/CoRN/complex/NRootCC/NRootCC_2/c.var" "NRootCC_2__".
 
-inline "cic:/CoRN/complex/NRootCC/z.var".
+inline "cic:/CoRN/complex/NRootCC/NRootCC_2/z.var" "NRootCC_2__".
 
-inline "cic:/CoRN/complex/NRootCC/c_.var".
+inline "cic:/CoRN/complex/NRootCC/NRootCC_2/c_.var" "NRootCC_2__".
 
 inline "cic:/CoRN/complex/NRootCC/nrootCC_2'.con".
 
 inline "cic:/CoRN/complex/NRootCC/nrootCC_2.con".
 
 (* UNEXPORTED
-End NRootCC_2.
+End NRootCC_2
 *)
 
 (* UNEXPORTED
-Section NRootCC_3.
+Section NRootCC_3
 *)
 
 inline "cic:/CoRN/complex/NRootCC/Im_poly.con".
@@ -272,13 +272,13 @@ inline "cic:/CoRN/complex/NRootCC/nrCC3_a2.con".
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/complex/NRootCC/a.var".
+inline "cic:/CoRN/complex/NRootCC/NRootCC_3/a.var" "NRootCC_3__".
 
-inline "cic:/CoRN/complex/NRootCC/b.var".
+inline "cic:/CoRN/complex/NRootCC/NRootCC_3/b.var" "NRootCC_3__".
 
-inline "cic:/CoRN/complex/NRootCC/b_.var".
+inline "cic:/CoRN/complex/NRootCC/NRootCC_3/b_.var" "NRootCC_3__".
 
-inline "cic:/CoRN/complex/NRootCC/n.var".
+inline "cic:/CoRN/complex/NRootCC/NRootCC_3/n.var" "NRootCC_3__".
 
 inline "cic:/CoRN/complex/NRootCC/nrCC3_poly''.con".
 
@@ -339,11 +339,11 @@ Hint Resolve nrCC3_a9: algebra.
 inline "cic:/CoRN/complex/NRootCC/nrootCC_3_degree.con".
 
 (* UNEXPORTED
-End NRootCC_3.
+End NRootCC_3
 *)
 
 (* UNEXPORTED
-Section NRootCC_3'.
+Section NRootCC_3'
 *)
 
 (*#*
@@ -351,11 +351,11 @@ Section NRootCC_3'.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/complex/NRootCC/c.var".
+inline "cic:/CoRN/complex/NRootCC/NRootCC_3'/c.var" "NRootCC_3'__".
 
-inline "cic:/CoRN/complex/NRootCC/n.var".
+inline "cic:/CoRN/complex/NRootCC/NRootCC_3'/n.var" "NRootCC_3'__".
 
-inline "cic:/CoRN/complex/NRootCC/n_.var".
+inline "cic:/CoRN/complex/NRootCC/NRootCC_3'/n_.var" "NRootCC_3'__".
 
 inline "cic:/CoRN/complex/NRootCC/nrootCC_3'_poly.con".
 
@@ -364,15 +364,15 @@ inline "cic:/CoRN/complex/NRootCC/nrootCC_3'.con".
 inline "cic:/CoRN/complex/NRootCC/nrootCC_3'_degree.con".
 
 (* UNEXPORTED
-End NRootCC_3'.
+End NRootCC_3'
 *)
 
 (* UNEXPORTED
-Section NRootCC_4.
+Section NRootCC_4
 *)
 
 (* UNEXPORTED
-Section NRootCC_4_ap_real.
+Section NRootCC_4_ap_real
 *)
 
 (*#*
@@ -381,24 +381,24 @@ Section NRootCC_4_ap_real.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/complex/NRootCC/a.var".
+inline "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/a.var" "NRootCC_4__NRootCC_4_ap_real__".
 
-inline "cic:/CoRN/complex/NRootCC/b.var".
+inline "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/b.var" "NRootCC_4__NRootCC_4_ap_real__".
 
-inline "cic:/CoRN/complex/NRootCC/b_.var".
+inline "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/b_.var" "NRootCC_4__NRootCC_4_ap_real__".
 
-inline "cic:/CoRN/complex/NRootCC/n.var".
+inline "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/n.var" "NRootCC_4__NRootCC_4_ap_real__".
 
-inline "cic:/CoRN/complex/NRootCC/n_.var".
+inline "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/n_.var" "NRootCC_4__NRootCC_4_ap_real__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/complex/NRootCC/c.con".
+inline "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/c.con" "NRootCC_4__NRootCC_4_ap_real__".
 
 (* end hide *)
 
 (* UNEXPORTED
-Section NRootCC_4_solutions.
+Section NRootCC_4_solutions
 *)
 
 (* UNEXPORTED
@@ -412,11 +412,11 @@ inline "cic:/CoRN/complex/NRootCC/nrCC4_a1.con".
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/complex/NRootCC/r2'.var".
+inline "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/NRootCC_4_solutions/r2'.var" "NRootCC_4__NRootCC_4_ap_real__NRootCC_4_solutions__".
 
-inline "cic:/CoRN/complex/NRootCC/c2.var".
+inline "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/NRootCC_4_solutions/c2.var" "NRootCC_4__NRootCC_4_ap_real__NRootCC_4_solutions__".
 
-inline "cic:/CoRN/complex/NRootCC/r2'_.var".
+inline "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/NRootCC_4_solutions/r2'_.var" "NRootCC_4__NRootCC_4_ap_real__NRootCC_4_solutions__".
 
 (* UNEXPORTED
 Hint Resolve nrootCC_3': algebra.
@@ -425,11 +425,11 @@ Hint Resolve nrootCC_3': algebra.
 inline "cic:/CoRN/complex/NRootCC/nrCC4_a1'.con".
 
 (* UNEXPORTED
-End NRootCC_4_solutions.
+End NRootCC_4_solutions
 *)
 
 (* UNEXPORTED
-Section NRootCC_4_equations.
+Section NRootCC_4_equations
 *)
 
 (*#*
@@ -439,13 +439,13 @@ and [(y2[*] (r[^] (2) [+]One)) [^]n [=] a[^] (2) [+]b[^] (2)].
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/complex/NRootCC/r.var".
+inline "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/NRootCC_4_equations/r.var" "NRootCC_4__NRootCC_4_ap_real__NRootCC_4_equations__".
 
-inline "cic:/CoRN/complex/NRootCC/r_property.var".
+inline "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/NRootCC_4_equations/r_property.var" "NRootCC_4__NRootCC_4_ap_real__NRootCC_4_equations__".
 
-inline "cic:/CoRN/complex/NRootCC/y2.var".
+inline "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/NRootCC_4_equations/y2.var" "NRootCC_4__NRootCC_4_ap_real__NRootCC_4_equations__".
 
-inline "cic:/CoRN/complex/NRootCC/y2_property.var".
+inline "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/NRootCC_4_equations/y2_property.var" "NRootCC_4__NRootCC_4_ap_real__NRootCC_4_equations__".
 
 inline "cic:/CoRN/complex/NRootCC/nrCC4_a2.con".
 
@@ -455,11 +455,11 @@ inline "cic:/CoRN/complex/NRootCC/nrCC4_a4.con".
 
 inline "cic:/CoRN/complex/NRootCC/nrCC4_y.con".
 
-inline "cic:/CoRN/complex/NRootCC/y.con".
+inline "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/NRootCC_4_equations/y.con" "NRootCC_4__NRootCC_4_ap_real__NRootCC_4_equations__".
 
 inline "cic:/CoRN/complex/NRootCC/nrCC4_x.con".
 
-inline "cic:/CoRN/complex/NRootCC/x.con".
+inline "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/NRootCC_4_equations/x.con" "NRootCC_4__NRootCC_4_ap_real__NRootCC_4_equations__".
 
 inline "cic:/CoRN/complex/NRootCC/nrCC4_a5.con".
 
@@ -467,7 +467,7 @@ inline "cic:/CoRN/complex/NRootCC/nrCC4_a6.con".
 
 inline "cic:/CoRN/complex/NRootCC/nrCC4_z.con".
 
-inline "cic:/CoRN/complex/NRootCC/z.con".
+inline "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/NRootCC_4_equations/z.con" "NRootCC_4__NRootCC_4_ap_real__NRootCC_4_equations__".
 
 inline "cic:/CoRN/complex/NRootCC/nrCC4_a7.con".
 
@@ -480,7 +480,7 @@ inline "cic:/CoRN/complex/NRootCC/nrCC4_a8.con".
 inline "cic:/CoRN/complex/NRootCC/nrCC4_a9.con".
 
 (* UNEXPORTED
-End NRootCC_4_equations.
+End NRootCC_4_equations
 *)
 
 inline "cic:/CoRN/complex/NRootCC/nrCC4_a10.con".
@@ -488,11 +488,11 @@ inline "cic:/CoRN/complex/NRootCC/nrCC4_a10.con".
 inline "cic:/CoRN/complex/NRootCC/nrootCC_4_ap_real.con".
 
 (* UNEXPORTED
-End NRootCC_4_ap_real.
+End NRootCC_4_ap_real
 *)
 
 (* UNEXPORTED
-Section NRootCC_4_ap_imag.
+Section NRootCC_4_ap_imag
 *)
 
 (*#*
@@ -501,23 +501,23 @@ and [(odd n)]; define [c' := (a[+I*]b) [*]II := a'[+I*]b'].
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/complex/NRootCC/a.var".
+inline "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_imag/a.var" "NRootCC_4__NRootCC_4_ap_imag__".
 
-inline "cic:/CoRN/complex/NRootCC/b.var".
+inline "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_imag/b.var" "NRootCC_4__NRootCC_4_ap_imag__".
 
-inline "cic:/CoRN/complex/NRootCC/a_.var".
+inline "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_imag/a_.var" "NRootCC_4__NRootCC_4_ap_imag__".
 
-inline "cic:/CoRN/complex/NRootCC/n.var".
+inline "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_imag/n.var" "NRootCC_4__NRootCC_4_ap_imag__".
 
-inline "cic:/CoRN/complex/NRootCC/n_.var".
+inline "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_imag/n_.var" "NRootCC_4__NRootCC_4_ap_imag__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/complex/NRootCC/c'.con".
+inline "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_imag/c'.con" "NRootCC_4__NRootCC_4_ap_imag__".
 
-inline "cic:/CoRN/complex/NRootCC/a'.con".
+inline "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_imag/a'.con" "NRootCC_4__NRootCC_4_ap_imag__".
 
-inline "cic:/CoRN/complex/NRootCC/b'.con".
+inline "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_imag/b'.con" "NRootCC_4__NRootCC_4_ap_imag__".
 
 (* end hide *)
 
@@ -530,19 +530,19 @@ Hint Resolve nroot_minus_I_nexp: algebra.
 inline "cic:/CoRN/complex/NRootCC/nrootCC_4_ap_imag.con".
 
 (* UNEXPORTED
-End NRootCC_4_ap_imag.
+End NRootCC_4_ap_imag
 *)
 
 inline "cic:/CoRN/complex/NRootCC/nrootCC_4.con".
 
 (* UNEXPORTED
-End NRootCC_4.
+End NRootCC_4
 *)
 
 (*#* Finally, the general definition of nth root. *)
 
 (* UNEXPORTED
-Section NRootCC_5.
+Section NRootCC_5
 *)
 
 inline "cic:/CoRN/complex/NRootCC/nrCC_5a2.con".
@@ -558,16 +558,16 @@ Hint Resolve nrCC_5a3: algebra.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/complex/NRootCC/c.var".
+inline "cic:/CoRN/complex/NRootCC/NRootCC_5/c.var" "NRootCC_5__".
 
-inline "cic:/CoRN/complex/NRootCC/c_.var".
+inline "cic:/CoRN/complex/NRootCC/NRootCC_5/c_.var" "NRootCC_5__".
 
 inline "cic:/CoRN/complex/NRootCC/nrCC_5a4.con".
 
 inline "cic:/CoRN/complex/NRootCC/nrootCC_5.con".
 
 (* UNEXPORTED
-End NRootCC_5.
+End NRootCC_5
 *)
 
 (*#* Final definition *)

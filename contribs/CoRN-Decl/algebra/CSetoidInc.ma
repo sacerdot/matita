@@ -25,26 +25,26 @@ include "CoRN.ma".
 include "algebra/CSetoidFun.ma".
 
 (* UNEXPORTED
-Section inclusion.
+Section inclusion
 *)
 
 (*#* ** Inclusion
 
 Let [S] be a setoid, and [P], [Q], [R] be predicates on [S]. *)
 
-inline "cic:/CoRN/algebra/CSetoidInc/S.var".
+inline "cic:/CoRN/algebra/CSetoidInc/inclusion/S.var" "inclusion__".
 
 inline "cic:/CoRN/algebra/CSetoidInc/included.con".
 
 (* UNEXPORTED
-Section Basics.
+Section Basics
 *)
 
-inline "cic:/CoRN/algebra/CSetoidInc/P.var".
+inline "cic:/CoRN/algebra/CSetoidInc/inclusion/Basics/P.var" "inclusion__Basics__".
 
-inline "cic:/CoRN/algebra/CSetoidInc/Q.var".
+inline "cic:/CoRN/algebra/CSetoidInc/inclusion/Basics/Q.var" "inclusion__Basics__".
 
-inline "cic:/CoRN/algebra/CSetoidInc/R.var".
+inline "cic:/CoRN/algebra/CSetoidInc/inclusion/Basics/R.var" "inclusion__Basics__".
 
 inline "cic:/CoRN/algebra/CSetoidInc/included_refl.con".
 
@@ -63,7 +63,7 @@ inline "cic:/CoRN/algebra/CSetoidInc/included_conj_rht.con".
 inline "cic:/CoRN/algebra/CSetoidInc/included_extend.con".
 
 (* UNEXPORTED
-End Basics.
+End Basics
 *)
 
 (*#*
@@ -72,26 +72,26 @@ by [P] and [Q], respectively, the domains of [F] and [G].
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CSetoidInc/F.var".
+inline "cic:/CoRN/algebra/CSetoidInc/inclusion/F.var" "inclusion__".
 
-inline "cic:/CoRN/algebra/CSetoidInc/G.var".
+inline "cic:/CoRN/algebra/CSetoidInc/inclusion/G.var" "inclusion__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/algebra/CSetoidInc/P.con".
+inline "cic:/CoRN/algebra/CSetoidInc/inclusion/P.con" "inclusion__".
 
-inline "cic:/CoRN/algebra/CSetoidInc/Q.con".
+inline "cic:/CoRN/algebra/CSetoidInc/inclusion/Q.con" "inclusion__".
 
 (* end hide *)
 
-inline "cic:/CoRN/algebra/CSetoidInc/R.var".
+inline "cic:/CoRN/algebra/CSetoidInc/inclusion/R.var" "inclusion__".
 
 inline "cic:/CoRN/algebra/CSetoidInc/included_FComp.con".
 
 inline "cic:/CoRN/algebra/CSetoidInc/included_FComp'.con".
 
 (* UNEXPORTED
-End inclusion.
+End inclusion
 *)
 
 (* UNEXPORTED

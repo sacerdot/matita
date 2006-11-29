@@ -35,7 +35,7 @@ include "model/monoids/Nmonoid.ma".
 include "model/rings/Zring.ma".
 
 (* UNEXPORTED
-Section Rational_sequence_prelogue.
+Section Rational_sequence_prelogue
 *)
 
 (*#*
@@ -43,7 +43,7 @@ Section Rational_sequence_prelogue.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/reals/Q_in_CReals/R1.var".
+inline "cic:/CoRN/reals/Q_in_CReals/Rational_sequence_prelogue/R1.var" "Rational_sequence_prelogue__".
 
 (* We clone these proofs from CReals1.v just because there IR is an axiom *)
 
@@ -165,6 +165,6 @@ is a rational number between any two real numbers. *)
 inline "cic:/CoRN/reals/Q_in_CReals/Q_dense_in_CReals.con".
 
 (* UNEXPORTED
-End Rational_sequence_prelogue.
+End Rational_sequence_prelogue
 *)
 

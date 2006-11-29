@@ -69,7 +69,7 @@ inline "cic:/CoRN/fta/CC_Props/CC_SeqLimit_unq.con".
 *)
 
 (* UNEXPORTED
-Section Continuity_for_CC.
+Section Continuity_for_CC
 *)
 
 (*#*
@@ -77,7 +77,7 @@ Section Continuity_for_CC.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/fta/CC_Props/f.var".
+inline "cic:/CoRN/fta/CC_Props/Continuity_for_CC/f.var" "Continuity_for_CC__".
 
 (* (CSetoid_un_op CC). *)
 
@@ -94,7 +94,7 @@ inline "cic:/CoRN/fta/CC_Props/f_seq.con".
 inline "cic:/CoRN/fta/CC_Props/poly_pres_lim.con".
 
 (* UNEXPORTED
-End Continuity_for_CC.
+End Continuity_for_CC
 *)
 
 inline "cic:/CoRN/fta/CC_Props/seq_yields_zero.con".

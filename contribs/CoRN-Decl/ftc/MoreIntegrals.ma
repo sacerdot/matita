@@ -25,7 +25,7 @@ include "ftc/Integral.ma".
 include "ftc/MoreFunctions.ma".
 
 (* UNEXPORTED
-Section Lemmas.
+Section Lemmas
 *)
 
 (*#* printing Integral %\ensuremath{\int}% #&int;# *)
@@ -48,22 +48,22 @@ partial functions continuous in [[Min(a,b),Max(a,b)]].
 Before we define the new integral we need to some trivial interval inclusions.
 *)
 
-inline "cic:/CoRN/ftc/MoreIntegrals/a.var".
+inline "cic:/CoRN/ftc/MoreIntegrals/Lemmas/a.var" "Lemmas__".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/b.var".
+inline "cic:/CoRN/ftc/MoreIntegrals/Lemmas/b.var" "Lemmas__".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/Hab.var".
+inline "cic:/CoRN/ftc/MoreIntegrals/Lemmas/Hab.var" "Lemmas__".
 
 inline "cic:/CoRN/ftc/MoreIntegrals/compact_inc_Min_lft.con".
 
 inline "cic:/CoRN/ftc/MoreIntegrals/compact_inc_Min_rht.con".
 
 (* UNEXPORTED
-End Lemmas.
+End Lemmas
 *)
 
 (* UNEXPORTED
-Section Definitions.
+Section Definitions
 *)
 
 (*#*
@@ -74,15 +74,15 @@ classical definition, and it collapses to the old one in the case [a
  [<=]  b].
 *)
 
-inline "cic:/CoRN/ftc/MoreIntegrals/a.var".
+inline "cic:/CoRN/ftc/MoreIntegrals/Definitions/a.var" "Definitions__".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/b.var".
+inline "cic:/CoRN/ftc/MoreIntegrals/Definitions/b.var" "Definitions__".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/Hab.var".
+inline "cic:/CoRN/ftc/MoreIntegrals/Definitions/Hab.var" "Definitions__".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/F.var".
+inline "cic:/CoRN/ftc/MoreIntegrals/Definitions/F.var" "Definitions__".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/HF.var".
+inline "cic:/CoRN/ftc/MoreIntegrals/Definitions/HF.var" "Definitions__".
 
 inline "cic:/CoRN/ftc/MoreIntegrals/Integral_inc1.con".
 
@@ -93,7 +93,7 @@ inline "cic:/CoRN/ftc/MoreIntegrals/Integral.con".
 inline "cic:/CoRN/ftc/MoreIntegrals/Integral_integral.con".
 
 (* UNEXPORTED
-End Definitions.
+End Definitions
 *)
 
 (* UNEXPORTED
@@ -101,7 +101,7 @@ Implicit Arguments Integral [a b Hab F].
 *)
 
 (* UNEXPORTED
-Section Properties_of_Integral.
+Section Properties_of_Integral
 *)
 
 (*#* **Properties of the Integral
@@ -110,19 +110,19 @@ All our old properties carry over to this new definition---and some
 new ones, too.  We begin with (strong) extensionality.
 *)
 
-inline "cic:/CoRN/ftc/MoreIntegrals/a.var".
+inline "cic:/CoRN/ftc/MoreIntegrals/Properties_of_Integral/a.var" "Properties_of_Integral__".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/b.var".
+inline "cic:/CoRN/ftc/MoreIntegrals/Properties_of_Integral/b.var" "Properties_of_Integral__".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/Hab.var".
+inline "cic:/CoRN/ftc/MoreIntegrals/Properties_of_Integral/Hab.var" "Properties_of_Integral__".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/F.var".
+inline "cic:/CoRN/ftc/MoreIntegrals/Properties_of_Integral/F.var" "Properties_of_Integral__".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/G.var".
+inline "cic:/CoRN/ftc/MoreIntegrals/Properties_of_Integral/G.var" "Properties_of_Integral__".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/contF.var".
+inline "cic:/CoRN/ftc/MoreIntegrals/Properties_of_Integral/contF.var" "Properties_of_Integral__".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/contG.var".
+inline "cic:/CoRN/ftc/MoreIntegrals/Properties_of_Integral/contG.var" "Properties_of_Integral__".
 
 inline "cic:/CoRN/ftc/MoreIntegrals/Integral_strext.con".
 
@@ -161,11 +161,11 @@ And the norm provides an upper bound for the absolute value of the integral.
 inline "cic:/CoRN/ftc/MoreIntegrals/Integral_leEq_norm.con".
 
 (* UNEXPORTED
-End Properties_of_Integral.
+End Properties_of_Integral
 *)
 
 (* UNEXPORTED
-Section More_Properties.
+Section More_Properties
 *)
 
 (*#*
@@ -183,77 +183,77 @@ And now we can prove the addition law for domains with our general operator.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/MoreIntegrals/a.var".
+inline "cic:/CoRN/ftc/MoreIntegrals/More_Properties/a.var" "More_Properties__".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/b.var".
+inline "cic:/CoRN/ftc/MoreIntegrals/More_Properties/b.var" "More_Properties__".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/c.var".
+inline "cic:/CoRN/ftc/MoreIntegrals/More_Properties/c.var" "More_Properties__".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/MoreIntegrals/Hab'.var".
+inline "cic:/CoRN/ftc/MoreIntegrals/More_Properties/Hab'.var" "More_Properties__".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/Hac'.var".
+inline "cic:/CoRN/ftc/MoreIntegrals/More_Properties/Hac'.var" "More_Properties__".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/Hcb'.var".
+inline "cic:/CoRN/ftc/MoreIntegrals/More_Properties/Hcb'.var" "More_Properties__".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/Habc'.var".
+inline "cic:/CoRN/ftc/MoreIntegrals/More_Properties/Habc'.var" "More_Properties__".
 
 (* end show *)
 
-inline "cic:/CoRN/ftc/MoreIntegrals/F.var".
+inline "cic:/CoRN/ftc/MoreIntegrals/More_Properties/F.var" "More_Properties__".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/MoreIntegrals/Hab.var".
+inline "cic:/CoRN/ftc/MoreIntegrals/More_Properties/Hab.var" "More_Properties__".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/Hac.var".
+inline "cic:/CoRN/ftc/MoreIntegrals/More_Properties/Hac.var" "More_Properties__".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/Hcb.var".
+inline "cic:/CoRN/ftc/MoreIntegrals/More_Properties/Hcb.var" "More_Properties__".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/Habc.var".
+inline "cic:/CoRN/ftc/MoreIntegrals/More_Properties/Habc.var" "More_Properties__".
 
 (* end show *)
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/MoreIntegrals/le_abc_ab.con".
+inline "cic:/CoRN/ftc/MoreIntegrals/More_Properties/le_abc_ab.con" "More_Properties__".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/le_abc_ac.con".
+inline "cic:/CoRN/ftc/MoreIntegrals/More_Properties/le_abc_ac.con" "More_Properties__".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/le_abc_cb.con".
+inline "cic:/CoRN/ftc/MoreIntegrals/More_Properties/le_abc_cb.con" "More_Properties__".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/le_abc_a.con".
+inline "cic:/CoRN/ftc/MoreIntegrals/More_Properties/le_abc_a.con" "More_Properties__".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/le_abc_b.con".
+inline "cic:/CoRN/ftc/MoreIntegrals/More_Properties/le_abc_b.con" "More_Properties__".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/le_abc_c.con".
+inline "cic:/CoRN/ftc/MoreIntegrals/More_Properties/le_abc_c.con" "More_Properties__".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/le_ab_a.con".
+inline "cic:/CoRN/ftc/MoreIntegrals/More_Properties/le_ab_a.con" "More_Properties__".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/le_cb_c.con".
+inline "cic:/CoRN/ftc/MoreIntegrals/More_Properties/le_cb_c.con" "More_Properties__".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/le_ac_a.con".
+inline "cic:/CoRN/ftc/MoreIntegrals/More_Properties/le_ac_a.con" "More_Properties__".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/le_ab_b.con".
+inline "cic:/CoRN/ftc/MoreIntegrals/More_Properties/le_ab_b.con" "More_Properties__".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/le_cb_b.con".
+inline "cic:/CoRN/ftc/MoreIntegrals/More_Properties/le_cb_b.con" "More_Properties__".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/le_ac_c.con".
+inline "cic:/CoRN/ftc/MoreIntegrals/More_Properties/le_ac_c.con" "More_Properties__".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/Habc_abc.con".
+inline "cic:/CoRN/ftc/MoreIntegrals/More_Properties/Habc_abc.con" "More_Properties__".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/Habc_ab.con".
+inline "cic:/CoRN/ftc/MoreIntegrals/More_Properties/Habc_ab.con" "More_Properties__".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/Habc_ac.con".
+inline "cic:/CoRN/ftc/MoreIntegrals/More_Properties/Habc_ac.con" "More_Properties__".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/Habc_cb.con".
+inline "cic:/CoRN/ftc/MoreIntegrals/More_Properties/Habc_cb.con" "More_Properties__".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/Habc_a.con".
+inline "cic:/CoRN/ftc/MoreIntegrals/More_Properties/Habc_a.con" "More_Properties__".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/Habc_b.con".
+inline "cic:/CoRN/ftc/MoreIntegrals/More_Properties/Habc_b.con" "More_Properties__".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/Habc_c.con".
+inline "cic:/CoRN/ftc/MoreIntegrals/More_Properties/Habc_c.con" "More_Properties__".
 
 (* end hide *)
 
@@ -265,22 +265,22 @@ continuity of [F] in the interval [[Min(a,b,c),Max(a,b,c)]]) must be assumed.
 *)
 
 (* UNEXPORTED
-End More_Properties.
+End More_Properties
 *)
 
 (* UNEXPORTED
-Section Corollaries.
+Section Corollaries
 *)
 
-inline "cic:/CoRN/ftc/MoreIntegrals/a.var".
+inline "cic:/CoRN/ftc/MoreIntegrals/Corollaries/a.var" "Corollaries__".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/b.var".
+inline "cic:/CoRN/ftc/MoreIntegrals/Corollaries/b.var" "Corollaries__".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/Hab.var".
+inline "cic:/CoRN/ftc/MoreIntegrals/Corollaries/Hab.var" "Corollaries__".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/F.var".
+inline "cic:/CoRN/ftc/MoreIntegrals/Corollaries/F.var" "Corollaries__".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/contF.var".
+inline "cic:/CoRN/ftc/MoreIntegrals/Corollaries/contF.var" "Corollaries__".
 
 (*#* As a corollary, we get the following rule: *)
 
@@ -293,7 +293,7 @@ inline "cic:/CoRN/ftc/MoreIntegrals/Integral_less_norm.con".
 inline "cic:/CoRN/ftc/MoreIntegrals/ub_Integral.con".
 
 (* UNEXPORTED
-End Corollaries.
+End Corollaries
 *)
 
 inline "cic:/CoRN/ftc/MoreIntegrals/Integral_ap_zero.con".

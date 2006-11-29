@@ -25,7 +25,7 @@ include "algebra/Cauchy_COF.ma".
 include "reals/CReals.ma".
 
 (* UNEXPORTED
-Section R_CReals.
+Section R_CReals
 *)
 
 (*#* * The Real Number Structure
@@ -40,7 +40,7 @@ We start by showing how to inject the rational numbers in the field of Cauchy se
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/reals/Cauchy_CReals/F.var".
+inline "cic:/CoRN/reals/Cauchy_CReals/R_CReals/F.var" "R_CReals__".
 
 (* NOTATION
 Notation "'R_COrdField''" := (R_COrdField F).
@@ -92,19 +92,19 @@ inline "cic:/CoRN/reals/Cauchy_CReals/expand_Q_R.con".
 
 inline "cic:/CoRN/reals/Cauchy_CReals/conv_modulus.con".
 
-inline "cic:/CoRN/reals/Cauchy_CReals/T.con".
+inline "cic:/CoRN/reals/Cauchy_CReals/R_CReals/T.con" "R_CReals__".
 
 (*#* We now assume our original field is archimedean and prove that the
 resulting one is, too.
 *)
 
-inline "cic:/CoRN/reals/Cauchy_CReals/F_is_archemaedian.var".
+inline "cic:/CoRN/reals/Cauchy_CReals/R_CReals/F_is_archemaedian.var" "R_CReals__".
 
 inline "cic:/CoRN/reals/Cauchy_CReals/R_is_archemaedian.con".
 
 (* begin hide *)
 
-inline "cic:/CoRN/reals/Cauchy_CReals/PT.con".
+inline "cic:/CoRN/reals/Cauchy_CReals/R_CReals/PT.con" "R_CReals__".
 
 (* end hide *)
 
@@ -131,6 +131,6 @@ inline "cic:/CoRN/reals/Cauchy_CReals/R_is_CReals.con".
 inline "cic:/CoRN/reals/Cauchy_CReals/R_as_CReals.con".
 
 (* UNEXPORTED
-End R_CReals.
+End R_CReals
 *)
 

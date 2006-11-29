@@ -28,7 +28,7 @@ In this section, we explore the properties of the trigonometric functions which 
 *)
 
 (* UNEXPORTED
-Section Lemmas.
+Section Lemmas
 *)
 
 (*#* First, we need a lemma on mappings. *)
@@ -36,11 +36,11 @@ Section Lemmas.
 inline "cic:/CoRN/transc/Trigonometric/maps_translation.con".
 
 (* UNEXPORTED
-End Lemmas.
+End Lemmas
 *)
 
 (* UNEXPORTED
-Section Sine_and_Cosine.
+Section Sine_and_Cosine
 *)
 
 (*#* Sine, cosine and tangent at [Zero]. *)
@@ -92,7 +92,7 @@ Hint Resolve Continuous_Sin Continuous_Cos: continuous.
 *)
 
 (* UNEXPORTED
-Section Sine_of_Sum.
+Section Sine_of_Sum
 *)
 
 (*#*
@@ -110,13 +110,13 @@ situations).
 
 (* begin hide *)
 
-inline "cic:/CoRN/transc/Trigonometric/F.con".
+inline "cic:/CoRN/transc/Trigonometric/Sine_and_Cosine/Sine_of_Sum/F.con" "Sine_and_Cosine__Sine_of_Sum__".
 
-inline "cic:/CoRN/transc/Trigonometric/G.con".
+inline "cic:/CoRN/transc/Trigonometric/Sine_and_Cosine/Sine_of_Sum/G.con" "Sine_and_Cosine__Sine_of_Sum__".
 
-inline "cic:/CoRN/transc/Trigonometric/F'.con".
+inline "cic:/CoRN/transc/Trigonometric/Sine_and_Cosine/Sine_of_Sum/F'.con" "Sine_and_Cosine__Sine_of_Sum__".
 
-inline "cic:/CoRN/transc/Trigonometric/G'.con".
+inline "cic:/CoRN/transc/Trigonometric/Sine_and_Cosine/Sine_of_Sum/G'.con" "Sine_and_Cosine__Sine_of_Sum__".
 
 (* end hide *)
 
@@ -201,7 +201,7 @@ inline "cic:/CoRN/transc/Trigonometric/Sin_plus_der_rht.con".
 inline "cic:/CoRN/transc/Trigonometric/Sin_plus_fun.con".
 
 (* UNEXPORTED
-End Sine_of_Sum.
+End Sine_of_Sum
 *)
 
 (* UNEXPORTED
@@ -211,6 +211,6 @@ Opaque Sine Cosine.
 inline "cic:/CoRN/transc/Trigonometric/Cos_plus_fun.con".
 
 (* UNEXPORTED
-End Sine_and_Cosine.
+End Sine_and_Cosine
 *)
 

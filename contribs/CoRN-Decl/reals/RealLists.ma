@@ -23,7 +23,7 @@ include "CoRN.ma".
 include "reals/CReals1.ma".
 
 (* UNEXPORTED
-Section Lists.
+Section Lists
 *)
 
 (*#* * Lists of Real Numbers
@@ -76,7 +76,7 @@ inline "cic:/CoRN/reals/RealLists/maxlist_greater.con".
 
 (* begin hide *)
 
-inline "cic:/CoRN/reals/RealLists/maxlist_aux.con".
+inline "cic:/CoRN/reals/RealLists/Lists/maxlist_aux.con" "Lists__".
 
 (* end hide *)
 
@@ -90,7 +90,7 @@ inline "cic:/CoRN/reals/RealLists/minlist_smaller.con".
 
 (* begin hide *)
 
-inline "cic:/CoRN/reals/RealLists/minlist_aux.con".
+inline "cic:/CoRN/reals/RealLists/Lists/minlist_aux.con" "Lists__".
 
 (* end hide *)
 
@@ -101,6 +101,6 @@ inline "cic:/CoRN/reals/RealLists/less_minlist.con".
 inline "cic:/CoRN/reals/RealLists/leEq_minlist.con".
 
 (* UNEXPORTED
-End Lists.
+End Lists
 *)
 

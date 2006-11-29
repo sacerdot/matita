@@ -27,7 +27,7 @@ include "algebra/COrdFields.ma".
 (*#**********************************)
 
 (* UNEXPORTED
-Section Properties_of_leEq.
+Section Properties_of_leEq
 *)
 
 (*#**********************************)
@@ -38,10 +38,10 @@ Section Properties_of_leEq.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/COrdFields2/R.var".
+inline "cic:/CoRN/algebra/COrdFields2/Properties_of_leEq/R.var" "Properties_of_leEq__".
 
 (* UNEXPORTED
-Section addition.
+Section addition
 *)
 
 (*#*
@@ -105,11 +105,11 @@ inline "cic:/CoRN/algebra/COrdFields2/shift_zero_leEq_minus.con".
 inline "cic:/CoRN/algebra/COrdFields2/shift_zero_leEq_minus'.con".
 
 (* UNEXPORTED
-End addition.
+End addition
 *)
 
 (* UNEXPORTED
-Section multiplication.
+Section multiplication
 *)
 
 (*#*
@@ -171,11 +171,11 @@ inline "cic:/CoRN/algebra/COrdFields2/nonneg_div_four.con".
 inline "cic:/CoRN/algebra/COrdFields2/nonneg_div_four'.con".
 
 (* UNEXPORTED
-End multiplication.
+End multiplication
 *)
 
 (* UNEXPORTED
-Section misc.
+Section misc
 *)
 
 (*#*
@@ -225,19 +225,19 @@ inline "cic:/CoRN/algebra/COrdFields2/approach_zero.con".
 inline "cic:/CoRN/algebra/COrdFields2/approach_zero_weak.con".
 
 (* UNEXPORTED
-End misc.
+End misc
 *)
 
 inline "cic:/CoRN/algebra/COrdFields2/equal_less_leEq.con".
 
 (* UNEXPORTED
-End Properties_of_leEq.
+End Properties_of_leEq
 *)
 
 (*#**********************************)
 
 (* UNEXPORTED
-Section PosP_properties.
+Section PosP_properties
 *)
 
 (*#**********************************)
@@ -248,7 +248,7 @@ Section PosP_properties.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/COrdFields2/R.var".
+inline "cic:/CoRN/algebra/COrdFields2/PosP_properties/R.var" "PosP_properties__".
 
 (* begin hide *)
 
@@ -289,7 +289,7 @@ inline "cic:/CoRN/algebra/COrdFields2/square_eq_pos.con".
 inline "cic:/CoRN/algebra/COrdFields2/square_eq_neg.con".
 
 (* UNEXPORTED
-End PosP_properties.
+End PosP_properties
 *)
 
 (* UNEXPORTED
@@ -309,10 +309,10 @@ Implicit Arguments one_div_succ [R].
 *)
 
 (* UNEXPORTED
-Section One_div_succ_properties.
+Section One_div_succ_properties
 *)
 
-inline "cic:/CoRN/algebra/COrdFields2/R.var".
+inline "cic:/CoRN/algebra/COrdFields2/One_div_succ_properties/R.var" "One_div_succ_properties__".
 
 inline "cic:/CoRN/algebra/COrdFields2/one_div_succ_resp_leEq.con".
 
@@ -321,7 +321,7 @@ inline "cic:/CoRN/algebra/COrdFields2/one_div_succ_pos.con".
 inline "cic:/CoRN/algebra/COrdFields2/one_div_succ_resp_less.con".
 
 (* UNEXPORTED
-End One_div_succ_properties.
+End One_div_succ_properties
 *)
 
 (*#*
@@ -335,7 +335,7 @@ Implicit Arguments Half [R].
 *)
 
 (* UNEXPORTED
-Section Half_properties.
+Section Half_properties
 *)
 
 (*#*
@@ -344,7 +344,7 @@ Let [R] be an ordered field.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/COrdFields2/R.var".
+inline "cic:/CoRN/algebra/COrdFields2/Half_properties/R.var" "Half_properties__".
 
 inline "cic:/CoRN/algebra/COrdFields2/half_1.con".
 
@@ -363,7 +363,7 @@ inline "cic:/CoRN/algebra/COrdFields2/half_lt1.con".
 inline "cic:/CoRN/algebra/COrdFields2/half_3.con".
 
 (* UNEXPORTED
-End Half_properties.
+End Half_properties
 *)
 
 (* UNEXPORTED

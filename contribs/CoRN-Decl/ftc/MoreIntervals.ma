@@ -27,7 +27,7 @@ Opaque Min Max.
 *)
 
 (* UNEXPORTED
-Section Intervals.
+Section Intervals
 *)
 
 (*#* printing realline %\ensuremath{\RR}% #(-&infin;,+&infin;)# *)
@@ -186,7 +186,7 @@ Finally, all intervals are characterized by well defined predicates.
 inline "cic:/CoRN/ftc/MoreIntervals/iprop_wd.con".
 
 (* UNEXPORTED
-End Intervals.
+End Intervals
 *)
 
 (* UNEXPORTED
@@ -198,11 +198,11 @@ Implicit Arguments Rend [I].
 *)
 
 (* UNEXPORTED
-Section Compact_Constructions.
+Section Compact_Constructions
 *)
 
 (* UNEXPORTED
-Section Single_Compact_Interval.
+Section Single_Compact_Interval
 *)
 
 (*#* **Constructions with Compact Intervals
@@ -216,13 +216,13 @@ such that [P(x)] holds.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/MoreIntervals/P.var".
+inline "cic:/CoRN/ftc/MoreIntervals/Compact_Constructions/Single_Compact_Interval/P.var" "Compact_Constructions__Single_Compact_Interval__".
 
-inline "cic:/CoRN/ftc/MoreIntervals/wdP.var".
+inline "cic:/CoRN/ftc/MoreIntervals/Compact_Constructions/Single_Compact_Interval/wdP.var" "Compact_Constructions__Single_Compact_Interval__".
 
-inline "cic:/CoRN/ftc/MoreIntervals/x.var".
+inline "cic:/CoRN/ftc/MoreIntervals/Compact_Constructions/Single_Compact_Interval/x.var" "Compact_Constructions__Single_Compact_Interval__".
 
-inline "cic:/CoRN/ftc/MoreIntervals/Hx.var".
+inline "cic:/CoRN/ftc/MoreIntervals/Compact_Constructions/Single_Compact_Interval/Hx.var" "Compact_Constructions__Single_Compact_Interval__".
 
 inline "cic:/CoRN/ftc/MoreIntervals/compact_single.con".
 
@@ -237,7 +237,7 @@ inline "cic:/CoRN/ftc/MoreIntervals/compact_single_pt.con".
 inline "cic:/CoRN/ftc/MoreIntervals/compact_single_inc.con".
 
 (* UNEXPORTED
-End Single_Compact_Interval.
+End Single_Compact_Interval
 *)
 
 (*#*
@@ -255,34 +255,34 @@ I$#x&isin;[a,b]&sube;I#.
 *)
 
 (* UNEXPORTED
-Section Proper_Compact_with_One_or_Two_Points.
+Section Proper_Compact_with_One_or_Two_Points
 *)
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/MoreIntervals/cip1'.con".
+inline "cic:/CoRN/ftc/MoreIntervals/Compact_Constructions/Proper_Compact_with_One_or_Two_Points/cip1'.con" "Compact_Constructions__Proper_Compact_with_One_or_Two_Points__".
 
-inline "cic:/CoRN/ftc/MoreIntervals/cip1''.con".
+inline "cic:/CoRN/ftc/MoreIntervals/Compact_Constructions/Proper_Compact_with_One_or_Two_Points/cip1''.con" "Compact_Constructions__Proper_Compact_with_One_or_Two_Points__".
 
-inline "cic:/CoRN/ftc/MoreIntervals/cip1'''.con".
+inline "cic:/CoRN/ftc/MoreIntervals/Compact_Constructions/Proper_Compact_with_One_or_Two_Points/cip1'''.con" "Compact_Constructions__Proper_Compact_with_One_or_Two_Points__".
 
-inline "cic:/CoRN/ftc/MoreIntervals/cip1''''.con".
+inline "cic:/CoRN/ftc/MoreIntervals/Compact_Constructions/Proper_Compact_with_One_or_Two_Points/cip1''''.con" "Compact_Constructions__Proper_Compact_with_One_or_Two_Points__".
 
-inline "cic:/CoRN/ftc/MoreIntervals/cip2.con".
+inline "cic:/CoRN/ftc/MoreIntervals/Compact_Constructions/Proper_Compact_with_One_or_Two_Points/cip2.con" "Compact_Constructions__Proper_Compact_with_One_or_Two_Points__".
 
-inline "cic:/CoRN/ftc/MoreIntervals/cip2'.con".
+inline "cic:/CoRN/ftc/MoreIntervals/Compact_Constructions/Proper_Compact_with_One_or_Two_Points/cip2'.con" "Compact_Constructions__Proper_Compact_with_One_or_Two_Points__".
 
-inline "cic:/CoRN/ftc/MoreIntervals/cip2''.con".
+inline "cic:/CoRN/ftc/MoreIntervals/Compact_Constructions/Proper_Compact_with_One_or_Two_Points/cip2''.con" "Compact_Constructions__Proper_Compact_with_One_or_Two_Points__".
 
-inline "cic:/CoRN/ftc/MoreIntervals/cip2'''.con".
+inline "cic:/CoRN/ftc/MoreIntervals/Compact_Constructions/Proper_Compact_with_One_or_Two_Points/cip2'''.con" "Compact_Constructions__Proper_Compact_with_One_or_Two_Points__".
 
-inline "cic:/CoRN/ftc/MoreIntervals/cip3.con".
+inline "cic:/CoRN/ftc/MoreIntervals/Compact_Constructions/Proper_Compact_with_One_or_Two_Points/cip3.con" "Compact_Constructions__Proper_Compact_with_One_or_Two_Points__".
 
-inline "cic:/CoRN/ftc/MoreIntervals/cip3'.con".
+inline "cic:/CoRN/ftc/MoreIntervals/Compact_Constructions/Proper_Compact_with_One_or_Two_Points/cip3'.con" "Compact_Constructions__Proper_Compact_with_One_or_Two_Points__".
 
-inline "cic:/CoRN/ftc/MoreIntervals/cip3''.con".
+inline "cic:/CoRN/ftc/MoreIntervals/Compact_Constructions/Proper_Compact_with_One_or_Two_Points/cip3''.con" "Compact_Constructions__Proper_Compact_with_One_or_Two_Points__".
 
-inline "cic:/CoRN/ftc/MoreIntervals/cip3'''.con".
+inline "cic:/CoRN/ftc/MoreIntervals/Compact_Constructions/Proper_Compact_with_One_or_Two_Points/cip3'''.con" "Compact_Constructions__Proper_Compact_with_One_or_Two_Points__".
 
 (* end hide *)
 
@@ -350,7 +350,7 @@ inline "cic:/CoRN/ftc/MoreIntervals/compact_in_interval_x_rht.con".
 inline "cic:/CoRN/ftc/MoreIntervals/compact_in_interval_y_rht.con".
 
 (* UNEXPORTED
-End Proper_Compact_with_One_or_Two_Points.
+End Proper_Compact_with_One_or_Two_Points
 *)
 
 (*#*
@@ -370,11 +370,11 @@ $[a,b]\subseteq[a',b']\subseteq J$#[a,b]&sube;[a',b']&sube;J#.
 inline "cic:/CoRN/ftc/MoreIntervals/compact_proper_in_interval.con".
 
 (* UNEXPORTED
-End Compact_Constructions.
+End Compact_Constructions
 *)
 
 (* UNEXPORTED
-Section Functions.
+Section Functions
 *)
 
 (*#* **Properties of Functions in Intervals
@@ -389,9 +389,9 @@ previously defined concepts.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/MoreIntervals/n.var".
+inline "cic:/CoRN/ftc/MoreIntervals/Functions/n.var" "Functions__".
 
-inline "cic:/CoRN/ftc/MoreIntervals/I.var".
+inline "cic:/CoRN/ftc/MoreIntervals/Functions/I.var" "Functions__".
 
 inline "cic:/CoRN/ftc/MoreIntervals/Continuous.con".
 
@@ -404,11 +404,11 @@ inline "cic:/CoRN/ftc/MoreIntervals/Derivative_n.con".
 inline "cic:/CoRN/ftc/MoreIntervals/Diffble_n.con".
 
 (* UNEXPORTED
-End Functions.
+End Functions
 *)
 
 (* UNEXPORTED
-Section Reflexivity_Properties.
+Section Reflexivity_Properties
 *)
 
 (*#*
@@ -428,11 +428,11 @@ inline "cic:/CoRN/ftc/MoreIntervals/Diffble_Int.con".
 inline "cic:/CoRN/ftc/MoreIntervals/Int_Diffble.con".
 
 (* UNEXPORTED
-End Reflexivity_Properties.
+End Reflexivity_Properties
 *)
 
 (* UNEXPORTED
-Section Lemmas.
+Section Lemmas
 *)
 
 (*#*
@@ -446,7 +446,7 @@ inline "cic:/CoRN/ftc/MoreIntervals/included_Feq''.con".
 inline "cic:/CoRN/ftc/MoreIntervals/included_Feq'.con".
 
 (* UNEXPORTED
-End Lemmas.
+End Lemmas
 *)
 
 (* UNEXPORTED

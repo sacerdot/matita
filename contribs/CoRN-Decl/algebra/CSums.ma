@@ -39,10 +39,10 @@ include "algebra/CAbGroups.ma".
 *)
 
 (* UNEXPORTED
-Section Sums.
+Section Sums
 *)
 
-inline "cic:/CoRN/algebra/CSums/G.var".
+inline "cic:/CoRN/algebra/CSums/Sums/G.var" "Sums__".
 
 (* Sum1 and Sum use subtraction *)
 
@@ -189,7 +189,7 @@ inline "cic:/CoRN/algebra/CSums/Sum_big_shift.con".
 inline "cic:/CoRN/algebra/CSums/Sumx_Sum0.con".
 
 (* UNEXPORTED
-End Sums.
+End Sums
 *)
 
 (* UNEXPORTED
@@ -216,10 +216,10 @@ often referred to as ``Mengolli Sums''.
 *)
 
 (* UNEXPORTED
-Section More_Sums.
+Section More_Sums
 *)
 
-inline "cic:/CoRN/algebra/CSums/G.var".
+inline "cic:/CoRN/algebra/CSums/More_Sums/G.var" "More_Sums__".
 
 inline "cic:/CoRN/algebra/CSums/Mengolli_Sum.con".
 
@@ -230,7 +230,7 @@ inline "cic:/CoRN/algebra/CSums/str_Mengolli_Sum_gen.con".
 inline "cic:/CoRN/algebra/CSums/Sumx_to_Sum.con".
 
 (* UNEXPORTED
-End More_Sums.
+End More_Sums
 *)
 
 (* UNEXPORTED

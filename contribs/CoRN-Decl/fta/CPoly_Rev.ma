@@ -26,7 +26,7 @@ include "algebra/CPoly_Degree.ma".
 *)
 
 (* UNEXPORTED
-Section Monomials.
+Section Monomials
 *)
 
 (*#*
@@ -35,11 +35,11 @@ polynomials over this ring.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/fta/CPoly_Rev/R.var".
+inline "cic:/CoRN/fta/CPoly_Rev/Monomials/R.var" "Monomials__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/fta/CPoly_Rev/RX.con".
+inline "cic:/CoRN/fta/CPoly_Rev/Monomials/RX.con" "Monomials__".
 
 (* end hide *)
 
@@ -78,7 +78,7 @@ inline "cic:/CoRN/fta/CPoly_Rev/monom_mult.con".
 inline "cic:/CoRN/fta/CPoly_Rev/monom_sum.con".
 
 (* UNEXPORTED
-End Monomials.
+End Monomials
 *)
 
 (* UNEXPORTED
@@ -90,14 +90,14 @@ Implicit Arguments monom [R].
 *)
 
 (* UNEXPORTED
-Section Poly_Reverse.
+Section Poly_Reverse
 *)
 
-inline "cic:/CoRN/fta/CPoly_Rev/R.var".
+inline "cic:/CoRN/fta/CPoly_Rev/Poly_Reverse/R.var" "Poly_Reverse__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/fta/CPoly_Rev/RX.con".
+inline "cic:/CoRN/fta/CPoly_Rev/Poly_Reverse/RX.con" "Poly_Reverse__".
 
 (* end hide *)
 
@@ -162,7 +162,7 @@ inline "cic:/CoRN/fta/CPoly_Rev/Rev_sum.con".
 inline "cic:/CoRN/fta/CPoly_Rev/Rev_mult.con".
 
 (* UNEXPORTED
-End Poly_Reverse.
+End Poly_Reverse
 *)
 
 (* UNEXPORTED

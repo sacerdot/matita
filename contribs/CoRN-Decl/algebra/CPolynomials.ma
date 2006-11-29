@@ -42,7 +42,7 @@ equality and induction of polynomials.
 *)
 
 (* UNEXPORTED
-Section CPoly_CRing.
+Section CPoly_CRing
 *)
 
 (*#*
@@ -50,7 +50,7 @@ Section CPoly_CRing.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CPolynomials/CR.var".
+inline "cic:/CoRN/algebra/CPolynomials/CPoly_CRing/CR.var" "CPoly_CRing__".
 
 (*#*
 The intuition behind the type [cpoly] is the following
@@ -119,9 +119,9 @@ the most basic properties of equality and apartness
 in terms of these generators.
 *)
 
-inline "cic:/CoRN/algebra/CPolynomials/cpoly_zero_cs.con".
+inline "cic:/CoRN/algebra/CPolynomials/CPoly_CRing/cpoly_zero_cs.con" "CPoly_CRing__".
 
-inline "cic:/CoRN/algebra/CPolynomials/cpoly_linear_cs.con".
+inline "cic:/CoRN/algebra/CPolynomials/CPoly_CRing/cpoly_linear_cs.con" "CPoly_CRing__".
 
 inline "cic:/CoRN/algebra/CPolynomials/Ccpoly_ind_cs.con".
 
@@ -318,7 +318,7 @@ inline "cic:/CoRN/algebra/CPolynomials/cpoly_x_minus_c_strext.con".
 inline "cic:/CoRN/algebra/CPolynomials/cpoly_x_minus_c_wd.con".
 
 (* UNEXPORTED
-End CPoly_CRing.
+End CPoly_CRing
 *)
 
 (* UNEXPORTED
@@ -344,7 +344,7 @@ Infix "[+X*]" := cpoly_linear_fun' (at level 50, left associativity).
 *)
 
 (* UNEXPORTED
-Section CPoly_CRing_ctd.
+Section CPoly_CRing_ctd
 *)
 
 (*#*
@@ -354,23 +354,23 @@ elements of the ring.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CPolynomials/CR.var".
+inline "cic:/CoRN/algebra/CPolynomials/CPoly_CRing_ctd/CR.var" "CPoly_CRing_ctd__".
 
 (* NOTATION
 Notation RX := (cpoly_cring CR).
 *)
 
 (* UNEXPORTED
-Section helpful_section.
+Section helpful_section
 *)
 
-inline "cic:/CoRN/algebra/CPolynomials/p.var".
+inline "cic:/CoRN/algebra/CPolynomials/CPoly_CRing_ctd/helpful_section/p.var" "CPoly_CRing_ctd__helpful_section__".
 
-inline "cic:/CoRN/algebra/CPolynomials/q.var".
+inline "cic:/CoRN/algebra/CPolynomials/CPoly_CRing_ctd/helpful_section/q.var" "CPoly_CRing_ctd__helpful_section__".
 
-inline "cic:/CoRN/algebra/CPolynomials/c.var".
+inline "cic:/CoRN/algebra/CPolynomials/CPoly_CRing_ctd/helpful_section/c.var" "CPoly_CRing_ctd__helpful_section__".
 
-inline "cic:/CoRN/algebra/CPolynomials/d.var".
+inline "cic:/CoRN/algebra/CPolynomials/CPoly_CRing_ctd/helpful_section/d.var" "CPoly_CRing_ctd__helpful_section__".
 
 inline "cic:/CoRN/algebra/CPolynomials/linear_eq_zero_.con".
 
@@ -403,7 +403,7 @@ inline "cic:/CoRN/algebra/CPolynomials/_linear_ap_linear.con".
 inline "cic:/CoRN/algebra/CPolynomials/linear_ap_linear.con".
 
 (* UNEXPORTED
-End helpful_section.
+End helpful_section
 *)
 
 inline "cic:/CoRN/algebra/CPolynomials/Ccpoly_induc.con".
@@ -443,7 +443,7 @@ inline "cic:/CoRN/algebra/CPolynomials/cpoly_apply_wd.con".
 inline "cic:/CoRN/algebra/CPolynomials/cpoly_apply_fun.con".
 
 (* UNEXPORTED
-End CPoly_CRing_ctd.
+End CPoly_CRing_ctd
 *)
 
 (*#*
@@ -471,10 +471,10 @@ Let [R] be a ring and write [RX] for the ring of polynomials over [R].
 *)
 
 (* UNEXPORTED
-Section Poly_properties.
+Section Poly_properties
 *)
 
-inline "cic:/CoRN/algebra/CPolynomials/R.var".
+inline "cic:/CoRN/algebra/CPolynomials/Poly_properties/R.var" "Poly_properties__".
 
 (* NOTATION
 Notation RX := (cpoly_cring R).
@@ -582,17 +582,17 @@ inline "cic:/CoRN/algebra/CPolynomials/Sum0_cpoly_ap.con".
 inline "cic:/CoRN/algebra/CPolynomials/Sum_cpoly_ap.con".
 
 (* UNEXPORTED
-End Poly_properties.
+End Poly_properties
 *)
 
 (*#* ** Induction properties of polynomials for [Prop]
 *)
 
 (* UNEXPORTED
-Section Poly_Prop_Induction.
+Section Poly_Prop_Induction
 *)
 
-inline "cic:/CoRN/algebra/CPolynomials/CR.var".
+inline "cic:/CoRN/algebra/CPolynomials/Poly_Prop_Induction/CR.var" "Poly_Prop_Induction__".
 
 (* NOTATION
 Notation Cpoly := (cpoly CR).
@@ -613,7 +613,7 @@ Notation Cpoly_cring := (cpoly_cring CR).
 inline "cic:/CoRN/algebra/CPolynomials/cpoly_double_ind.con".
 
 (* UNEXPORTED
-End Poly_Prop_Induction.
+End Poly_Prop_Induction
 *)
 
 (* UNEXPORTED

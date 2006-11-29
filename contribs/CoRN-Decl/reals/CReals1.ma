@@ -27,7 +27,7 @@ include "algebra/Expon.ma".
 include "algebra/CPoly_ApZero.ma".
 
 (* UNEXPORTED
-Section More_Cauchy_Props.
+Section More_Cauchy_Props
 *)
 
 (*#* **Miscellaneous
@@ -54,11 +54,11 @@ inline "cic:/CoRN/reals/CReals1/Cauchy_abs.con".
 inline "cic:/CoRN/reals/CReals1/Lim_abs.con".
 
 (* UNEXPORTED
-End More_Cauchy_Props.
+End More_Cauchy_Props
 *)
 
 (* UNEXPORTED
-Section Subsequences.
+Section Subsequences
 *)
 
 (*#* *** Subsequences
@@ -77,25 +77,25 @@ Finally, for some of our results it is important to assume that
 [seq2] is monotonous.
 *)
 
-inline "cic:/CoRN/reals/CReals1/seq1.var".
+inline "cic:/CoRN/reals/CReals1/Subsequences/seq1.var" "Subsequences__".
 
-inline "cic:/CoRN/reals/CReals1/seq2.var".
+inline "cic:/CoRN/reals/CReals1/Subsequences/seq2.var" "Subsequences__".
 
-inline "cic:/CoRN/reals/CReals1/f.var".
+inline "cic:/CoRN/reals/CReals1/Subsequences/f.var" "Subsequences__".
 
-inline "cic:/CoRN/reals/CReals1/monF.var".
+inline "cic:/CoRN/reals/CReals1/Subsequences/monF.var" "Subsequences__".
 
-inline "cic:/CoRN/reals/CReals1/crescF.var".
+inline "cic:/CoRN/reals/CReals1/Subsequences/crescF.var" "Subsequences__".
 
-inline "cic:/CoRN/reals/CReals1/subseq.var".
+inline "cic:/CoRN/reals/CReals1/Subsequences/subseq.var" "Subsequences__".
 
-inline "cic:/CoRN/reals/CReals1/mon_seq2.var".
+inline "cic:/CoRN/reals/CReals1/Subsequences/mon_seq2.var" "Subsequences__".
 
 inline "cic:/CoRN/reals/CReals1/unbnd_f.con".
 
 (* begin hide *)
 
-inline "cic:/CoRN/reals/CReals1/mon_F'.con".
+inline "cic:/CoRN/reals/CReals1/Subsequences/mon_F'.con" "Subsequences__".
 
 (* end hide *)
 
@@ -108,37 +108,37 @@ inline "cic:/CoRN/reals/CReals1/conv_seq_imp_conv_subseq.con".
 inline "cic:/CoRN/reals/CReals1/Cprop2_subseq_imp_Cprop2_seq.con".
 
 (* UNEXPORTED
-End Subsequences.
+End Subsequences
 *)
 
 (* UNEXPORTED
-Section Cauchy_Subsequences.
+Section Cauchy_Subsequences
 *)
 
-inline "cic:/CoRN/reals/CReals1/seq1.var".
+inline "cic:/CoRN/reals/CReals1/Cauchy_Subsequences/seq1.var" "Cauchy_Subsequences__".
 
-inline "cic:/CoRN/reals/CReals1/seq2.var".
+inline "cic:/CoRN/reals/CReals1/Cauchy_Subsequences/seq2.var" "Cauchy_Subsequences__".
 
-inline "cic:/CoRN/reals/CReals1/f.var".
+inline "cic:/CoRN/reals/CReals1/Cauchy_Subsequences/f.var" "Cauchy_Subsequences__".
 
-inline "cic:/CoRN/reals/CReals1/monF.var".
+inline "cic:/CoRN/reals/CReals1/Cauchy_Subsequences/monF.var" "Cauchy_Subsequences__".
 
-inline "cic:/CoRN/reals/CReals1/crescF.var".
+inline "cic:/CoRN/reals/CReals1/Cauchy_Subsequences/crescF.var" "Cauchy_Subsequences__".
 
-inline "cic:/CoRN/reals/CReals1/subseq.var".
+inline "cic:/CoRN/reals/CReals1/Cauchy_Subsequences/subseq.var" "Cauchy_Subsequences__".
 
-inline "cic:/CoRN/reals/CReals1/mon_seq2.var".
+inline "cic:/CoRN/reals/CReals1/Cauchy_Subsequences/mon_seq2.var" "Cauchy_Subsequences__".
 
 inline "cic:/CoRN/reals/CReals1/Lim_seq_eq_Lim_subseq.con".
 
 inline "cic:/CoRN/reals/CReals1/Lim_subseq_eq_Lim_seq.con".
 
 (* UNEXPORTED
-End Cauchy_Subsequences.
+End Cauchy_Subsequences
 *)
 
 (* UNEXPORTED
-Section Properties_of_Exponentiation.
+Section Properties_of_Exponentiation
 *)
 
 (*#* *** More properties of Exponentiation
@@ -155,7 +155,7 @@ inline "cic:/CoRN/reals/CReals1/qi_yields_zero.con".
 inline "cic:/CoRN/reals/CReals1/qi_lim_zero.con".
 
 (* UNEXPORTED
-End Properties_of_Exponentiation.
+End Properties_of_Exponentiation
 *)
 
 (*#* *** [IR] has characteristic zero *)

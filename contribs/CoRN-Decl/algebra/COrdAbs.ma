@@ -35,7 +35,7 @@ Implicit Arguments AbsSmall [R].
 (* End_SpecReals *)
 
 (* UNEXPORTED
-Section AbsSmall_properties.
+Section AbsSmall_properties
 *)
 
 (*#*
@@ -43,7 +43,7 @@ Section AbsSmall_properties.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/COrdAbs/R.var".
+inline "cic:/CoRN/algebra/COrdAbs/AbsSmall_properties/R.var" "AbsSmall_properties__".
 
 inline "cic:/CoRN/algebra/COrdAbs/AbsSmall_wdr.con".
 
@@ -106,7 +106,7 @@ inline "cic:/CoRN/algebra/COrdAbs/AbsSmall_cancel_mult.con".
 inline "cic:/CoRN/algebra/COrdAbs/AbsSmall_approach_zero.con".
 
 (* UNEXPORTED
-End AbsSmall_properties.
+End AbsSmall_properties
 *)
 
 (* UNEXPORTED
@@ -128,7 +128,7 @@ Notation AbsBig := (absBig _).
 inline "cic:/CoRN/algebra/COrdAbs/AbsBigSmall_minus.con".
 
 (* UNEXPORTED
-Section absBig_wd_properties.
+Section absBig_wd_properties
 *)
 
 (*#*
@@ -136,7 +136,7 @@ Section absBig_wd_properties.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/COrdAbs/R.var".
+inline "cic:/CoRN/algebra/COrdAbs/absBig_wd_properties/R.var" "absBig_wd_properties__".
 
 inline "cic:/CoRN/algebra/COrdAbs/AbsBig_wdr.con".
 
@@ -147,7 +147,7 @@ inline "cic:/CoRN/algebra/COrdAbs/AbsBig_wdr_unfolded.con".
 inline "cic:/CoRN/algebra/COrdAbs/AbsBig_wdl_unfolded.con".
 
 (* UNEXPORTED
-End absBig_wd_properties.
+End absBig_wd_properties
 *)
 
 (* UNEXPORTED

@@ -23,7 +23,7 @@ include "CoRN.ma".
 include "metrics/ContFunctions.ma".
 
 (* UNEXPORTED
-Section Reals.
+Section Reals
 *)
 
 (*#* **Real numbers
@@ -63,7 +63,7 @@ inline "cic:/CoRN/metrics/IR_CPMSpace/IR_dIR_is_CPsMetricSpace.con".
 
 inline "cic:/CoRN/metrics/IR_CPMSpace/IR_as_CPsMetricSpace.con".
 
-inline "cic:/CoRN/metrics/IR_CPMSpace/X.var".
+inline "cic:/CoRN/metrics/IR_CPMSpace/Reals/X.var" "Reals__".
 
 inline "cic:/CoRN/metrics/IR_CPMSpace/rev_tri_ineq'.con".
 
@@ -78,11 +78,11 @@ inline "cic:/CoRN/metrics/IR_CPMSpace/d_is_uni_continuous.con".
 inline "cic:/CoRN/metrics/IR_CPMSpace/d_is_continuous.con".
 
 (* UNEXPORTED
-End Reals.
+End Reals
 *)
 
 (* UNEXPORTED
-Section Addition.
+Section Addition
 *)
 
 (*#* **Addition of continuous functions
@@ -100,6 +100,6 @@ inline "cic:/CoRN/metrics/IR_CPMSpace/plus_resp_uni_continuous.con".
 inline "cic:/CoRN/metrics/IR_CPMSpace/plus_resp_continuous.con".
 
 (* UNEXPORTED
-End Addition.
+End Addition
 *)
 

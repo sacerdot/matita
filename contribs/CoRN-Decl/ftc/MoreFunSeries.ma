@@ -27,7 +27,7 @@ include "ftc/MoreFunctions.ma".
 (*#* printing FSeries_Sum %\ensuremath{\sum_{\infty}}% #&sum;'<sub>&infin;</sub># *)
 
 (* UNEXPORTED
-Section Definitions.
+Section Definitions
 *)
 
 (*#* *More on Sequences and Series
@@ -52,15 +52,15 @@ Some of the definitions do not make sense in this more general setting
 but the ones which do we simply adapt in the usual way.
 *)
 
-inline "cic:/CoRN/ftc/MoreFunSeries/J.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/Definitions/J.var" "Definitions__".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/f.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/Definitions/f.var" "Definitions__".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/F.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/Definitions/F.var" "Definitions__".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/contf.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/Definitions/contf.var" "Definitions__".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/contF.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/Definitions/contF.var" "Definitions__".
 
 inline "cic:/CoRN/ftc/MoreFunSeries/Cauchy_fun_seq_IR.con".
 
@@ -83,26 +83,26 @@ inline "cic:/CoRN/ftc/MoreFunSeries/Cauchy_fun_seq2_seq_IR.con".
 inline "cic:/CoRN/ftc/MoreFunSeries/Cauchy_fun_real_IR.con".
 
 (* UNEXPORTED
-End Definitions.
+End Definitions
 *)
 
 (* UNEXPORTED
-Section More_Definitions.
+Section More_Definitions
 *)
 
 (*#*
 Limit is defined and works in the same way as before.
 *)
 
-inline "cic:/CoRN/ftc/MoreFunSeries/J.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/More_Definitions/J.var" "More_Definitions__".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/f.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/More_Definitions/f.var" "More_Definitions__".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/contf.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/More_Definitions/contf.var" "More_Definitions__".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/MoreFunSeries/conv.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/More_Definitions/conv.var" "More_Definitions__".
 
 (* end show *)
 
@@ -111,11 +111,11 @@ inline "cic:/CoRN/ftc/MoreFunSeries/Cauchy_fun_seq_Lim_IR.con".
 inline "cic:/CoRN/ftc/MoreFunSeries/Cauchy_fun_seq_Lim_char.con".
 
 (* UNEXPORTED
-End More_Definitions.
+End More_Definitions
 *)
 
 (* UNEXPORTED
-Section Irrelevance_of_Proofs.
+Section Irrelevance_of_Proofs
 *)
 
 (*#* ***Basic Properties
@@ -123,25 +123,25 @@ Section Irrelevance_of_Proofs.
 Proofs are irrelevant as before---they just have to be present.
 *)
 
-inline "cic:/CoRN/ftc/MoreFunSeries/J.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/Irrelevance_of_Proofs/J.var" "Irrelevance_of_Proofs__".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/f.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/Irrelevance_of_Proofs/f.var" "Irrelevance_of_Proofs__".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/MoreFunSeries/contf.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/Irrelevance_of_Proofs/contf.var" "Irrelevance_of_Proofs__".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/contf0.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/Irrelevance_of_Proofs/contf0.var" "Irrelevance_of_Proofs__".
 
 (* end show *)
 
-inline "cic:/CoRN/ftc/MoreFunSeries/F.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/Irrelevance_of_Proofs/F.var" "Irrelevance_of_Proofs__".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/MoreFunSeries/contF.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/Irrelevance_of_Proofs/contF.var" "Irrelevance_of_Proofs__".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/contF0.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/Irrelevance_of_Proofs/contF0.var" "Irrelevance_of_Proofs__".
 
 (* end show *)
 
@@ -152,7 +152,7 @@ inline "cic:/CoRN/ftc/MoreFunSeries/Cauchy_fun_seq2_wd_IR.con".
 inline "cic:/CoRN/ftc/MoreFunSeries/conv_fun_seq_wd_IR.con".
 
 (* UNEXPORTED
-End Irrelevance_of_Proofs.
+End Irrelevance_of_Proofs
 *)
 
 (* UNEXPORTED
@@ -160,42 +160,42 @@ Opaque Cauchy_fun_seq_Lim_IR.
 *)
 
 (* UNEXPORTED
-Section More_Properties.
+Section More_Properties
 *)
 
-inline "cic:/CoRN/ftc/MoreFunSeries/J.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/More_Properties/J.var" "More_Properties__".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/f.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/More_Properties/f.var" "More_Properties__".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/g.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/More_Properties/g.var" "More_Properties__".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/MoreFunSeries/contf.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/More_Properties/contf.var" "More_Properties__".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/contf0.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/More_Properties/contf0.var" "More_Properties__".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/contg.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/More_Properties/contg.var" "More_Properties__".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/contg0.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/More_Properties/contg0.var" "More_Properties__".
 
 (* end show *)
 
 inline "cic:/CoRN/ftc/MoreFunSeries/Cauchy_conv_fun_seq'_IR.con".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/F.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/More_Properties/F.var" "More_Properties__".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/G.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/More_Properties/G.var" "More_Properties__".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/MoreFunSeries/contF.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/More_Properties/contF.var" "More_Properties__".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/contF0.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/More_Properties/contF0.var" "More_Properties__".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/contG.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/More_Properties/contG.var" "More_Properties__".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/contG0.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/More_Properties/contG0.var" "More_Properties__".
 
 (* end show *)
 
@@ -214,7 +214,7 @@ inline "cic:/CoRN/ftc/MoreFunSeries/Cauchy_conv_fun_seq_IR.con".
 inline "cic:/CoRN/ftc/MoreFunSeries/conv_Cauchy_fun_seq_IR.con".
 
 (* UNEXPORTED
-End More_Properties.
+End More_Properties
 *)
 
 (* UNEXPORTED
@@ -222,7 +222,7 @@ Hint Resolve Cauchy_cont_Lim_IR: continuous.
 *)
 
 (* UNEXPORTED
-Section Algebraic_Properties.
+Section Algebraic_Properties
 *)
 
 (*#* ***Algebraic Properties
@@ -230,15 +230,15 @@ Section Algebraic_Properties.
 Algebraic operations still work well.
 *)
 
-inline "cic:/CoRN/ftc/MoreFunSeries/J.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/Algebraic_Properties/J.var" "Algebraic_Properties__".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/f.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/Algebraic_Properties/f.var" "Algebraic_Properties__".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/g.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/Algebraic_Properties/g.var" "Algebraic_Properties__".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/contf.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/Algebraic_Properties/contf.var" "Algebraic_Properties__".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/contg.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/Algebraic_Properties/contg.var" "Algebraic_Properties__".
 
 inline "cic:/CoRN/ftc/MoreFunSeries/FLim_unique_IR.con".
 
@@ -248,19 +248,19 @@ inline "cic:/CoRN/ftc/MoreFunSeries/fun_Lim_seq_const_IR.con".
 
 inline "cic:/CoRN/ftc/MoreFunSeries/fun_Cauchy_prop_const_IR.con".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/F.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/Algebraic_Properties/F.var" "Algebraic_Properties__".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/G.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/Algebraic_Properties/G.var" "Algebraic_Properties__".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/contF.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/Algebraic_Properties/contF.var" "Algebraic_Properties__".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/contG.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/Algebraic_Properties/contG.var" "Algebraic_Properties__".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/MoreFunSeries/convF.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/Algebraic_Properties/convF.var" "Algebraic_Properties__".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/convG.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/Algebraic_Properties/convG.var" "Algebraic_Properties__".
 
 (* end show *)
 
@@ -271,32 +271,32 @@ inline "cic:/CoRN/ftc/MoreFunSeries/fun_Lim_seq_minus'_IR.con".
 inline "cic:/CoRN/ftc/MoreFunSeries/fun_Lim_seq_mult'_IR.con".
 
 (* UNEXPORTED
-End Algebraic_Properties.
+End Algebraic_Properties
 *)
 
 (* UNEXPORTED
-Section More_Algebraic_Properties.
+Section More_Algebraic_Properties
 *)
 
 (*#*
 If we work with the limit function things fit in just as well.
 *)
 
-inline "cic:/CoRN/ftc/MoreFunSeries/J.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/More_Algebraic_Properties/J.var" "More_Algebraic_Properties__".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/f.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/More_Algebraic_Properties/f.var" "More_Algebraic_Properties__".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/g.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/More_Algebraic_Properties/g.var" "More_Algebraic_Properties__".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/contf.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/More_Algebraic_Properties/contf.var" "More_Algebraic_Properties__".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/contg.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/More_Algebraic_Properties/contg.var" "More_Algebraic_Properties__".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/MoreFunSeries/Hf.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/More_Algebraic_Properties/Hf.var" "More_Algebraic_Properties__".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/Hg.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/More_Algebraic_Properties/Hg.var" "More_Algebraic_Properties__".
 
 (* end show *)
 
@@ -317,11 +317,11 @@ inline "cic:/CoRN/ftc/MoreFunSeries/fun_Lim_seq_mult_IR.con".
 inline "cic:/CoRN/ftc/MoreFunSeries/fun_Cauchy_prop_mult.con".
 
 (* UNEXPORTED
-End More_Algebraic_Properties.
+End More_Algebraic_Properties
 *)
 
 (* UNEXPORTED
-Section Other.
+Section Other
 *)
 
 (*#* ***Miscellaneous
@@ -340,11 +340,11 @@ Another interesting fact: if a sequence of constant functions converges then it 
 inline "cic:/CoRN/ftc/MoreFunSeries/fun_const_Lim.con".
 
 (* UNEXPORTED
-End Other.
+End Other
 *)
 
 (* UNEXPORTED
-Section Series_Definitions.
+Section Series_Definitions
 *)
 
 (*#* **Series
@@ -354,9 +354,9 @@ We now consider series of functions defined in arbitrary intervals.
 Convergence is defined as expected---through convergence in every compact interval.
 *)
 
-inline "cic:/CoRN/ftc/MoreFunSeries/J.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/Series_Definitions/J.var" "Series_Definitions__".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/f.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/Series_Definitions/f.var" "Series_Definitions__".
 
 inline "cic:/CoRN/ftc/MoreFunSeries/fun_series_convergent_IR.con".
 
@@ -364,7 +364,7 @@ inline "cic:/CoRN/ftc/MoreFunSeries/fun_series_conv_imp_conv_IR.con".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/MoreFunSeries/H.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/Series_Definitions/H.var" "Series_Definitions__".
 
 (* end show *)
 
@@ -374,7 +374,7 @@ inline "cic:/CoRN/ftc/MoreFunSeries/fun_series_inc_IR.con".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/MoreFunSeries/h.con".
+inline "cic:/CoRN/ftc/MoreFunSeries/Series_Definitions/h.con" "Series_Definitions__".
 
 (* end hide *)
 
@@ -385,7 +385,7 @@ inline "cic:/CoRN/ftc/MoreFunSeries/FSeries_Sum.con".
 inline "cic:/CoRN/ftc/MoreFunSeries/FSeries_Sum_char.con".
 
 (* UNEXPORTED
-End Series_Definitions.
+End Series_Definitions
 *)
 
 (* UNEXPORTED
@@ -393,12 +393,12 @@ Implicit Arguments FSeries_Sum [J f].
 *)
 
 (* UNEXPORTED
-Section More_Series_Definitions.
+Section More_Series_Definitions
 *)
 
-inline "cic:/CoRN/ftc/MoreFunSeries/J.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/More_Series_Definitions/J.var" "More_Series_Definitions__".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/f.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/More_Series_Definitions/f.var" "More_Series_Definitions__".
 
 (*#*
 Absolute convergence still exists.
@@ -407,20 +407,20 @@ Absolute convergence still exists.
 inline "cic:/CoRN/ftc/MoreFunSeries/fun_series_abs_convergent_IR.con".
 
 (* UNEXPORTED
-End More_Series_Definitions.
+End More_Series_Definitions
 *)
 
 (* UNEXPORTED
-Section Convergence_Results.
+Section Convergence_Results
 *)
 
 (*#*
 As before, any series converges to its sum.
 *)
 
-inline "cic:/CoRN/ftc/MoreFunSeries/J.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/Convergence_Results/J.var" "Convergence_Results__".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/f.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/Convergence_Results/f.var" "Convergence_Results__".
 
 inline "cic:/CoRN/ftc/MoreFunSeries/FSeries_conv.con".
 
@@ -431,7 +431,7 @@ inline "cic:/CoRN/ftc/MoreFunSeries/convergent_imp_Continuous.con".
 inline "cic:/CoRN/ftc/MoreFunSeries/Continuous_FSeries_Sum.con".
 
 (* UNEXPORTED
-End Convergence_Results.
+End Convergence_Results
 *)
 
 (* UNEXPORTED
@@ -443,7 +443,7 @@ Hint Resolve convergent_imp_Continuous Continuous_FSeries_Sum: continuous.
 *)
 
 (* UNEXPORTED
-Section Operations.
+Section Operations
 *)
 
 (*#* **Algebraic Operations
@@ -451,7 +451,7 @@ Section Operations.
 Convergence is well defined and preserved by operations.
 *)
 
-inline "cic:/CoRN/ftc/MoreFunSeries/J.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/Operations/J.var" "Operations__".
 
 inline "cic:/CoRN/ftc/MoreFunSeries/conv_fun_const_series_IR.con".
 
@@ -461,17 +461,17 @@ inline "cic:/CoRN/ftc/MoreFunSeries/conv_zero_fun_series_IR.con".
 
 inline "cic:/CoRN/ftc/MoreFunSeries/FSeries_Sum_zero_IR.con".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/f.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/Operations/f.var" "Operations__".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/g.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/Operations/g.var" "Operations__".
 
 inline "cic:/CoRN/ftc/MoreFunSeries/fun_series_convergent_wd_IR.con".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/MoreFunSeries/convF.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/Operations/convF.var" "Operations__".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/convG.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/Operations/convG.var" "Operations__".
 
 (* end show *)
 
@@ -494,22 +494,22 @@ inline "cic:/CoRN/ftc/MoreFunSeries/FSeries_Sum_minus.con".
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/MoreFunSeries/c.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/Operations/c.var" "Operations__".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/H.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/Operations/H.var" "Operations__".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/contH.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/Operations/contH.var" "Operations__".
 
 inline "cic:/CoRN/ftc/MoreFunSeries/FSeries_Sum_scal_conv.con".
 
 inline "cic:/CoRN/ftc/MoreFunSeries/FSeries_Sum_scal.con".
 
 (* UNEXPORTED
-End Operations.
+End Operations
 *)
 
 (* UNEXPORTED
-Section Convergence_Criteria.
+Section Convergence_Criteria
 *)
 
 (*#* ***Convergence Criteria
@@ -518,11 +518,11 @@ The most important tests for convergence of series still apply: the
 comparison test (in both versions) and the ratio test.
 *)
 
-inline "cic:/CoRN/ftc/MoreFunSeries/J.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/Convergence_Criteria/J.var" "Convergence_Criteria__".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/f.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/Convergence_Criteria/f.var" "Convergence_Criteria__".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/contF.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/Convergence_Criteria/contF.var" "Convergence_Criteria__".
 
 inline "cic:/CoRN/ftc/MoreFunSeries/fun_str_comparison_IR.con".
 
@@ -533,11 +533,11 @@ inline "cic:/CoRN/ftc/MoreFunSeries/abs_imp_conv_IR.con".
 inline "cic:/CoRN/ftc/MoreFunSeries/fun_ratio_test_conv_IR.con".
 
 (* UNEXPORTED
-End Convergence_Criteria.
+End Convergence_Criteria
 *)
 
 (* UNEXPORTED
-Section Insert_Series.
+Section Insert_Series
 *)
 
 (*#* ***Translation
@@ -549,11 +549,11 @@ $f_i$#f<sub>i</sub># and inserting the null function in the first
 position.  This does not affect convergence or the sum of the series.
 *)
 
-inline "cic:/CoRN/ftc/MoreFunSeries/J.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/Insert_Series/J.var" "Insert_Series__".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/f.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/Insert_Series/f.var" "Insert_Series__".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/convF.var".
+inline "cic:/CoRN/ftc/MoreFunSeries/Insert_Series/convF.var" "Insert_Series__".
 
 inline "cic:/CoRN/ftc/MoreFunSeries/insert_series.con".
 
@@ -566,6 +566,6 @@ inline "cic:/CoRN/ftc/MoreFunSeries/insert_series_conv.con".
 inline "cic:/CoRN/ftc/MoreFunSeries/insert_series_sum.con".
 
 (* UNEXPORTED
-End Insert_Series.
+End Insert_Series
 *)
 

@@ -25,7 +25,7 @@ include "ftc/PartInterval.ma".
 include "ftc/DerivativeOps.ma".
 
 (* UNEXPORTED
-Section Definitions.
+Section Definitions
 *)
 
 (*#* *Differentiability
@@ -61,7 +61,7 @@ problems.
 inline "cic:/CoRN/ftc/Differentiability/Diffble_I.con".
 
 (* UNEXPORTED
-End Definitions.
+End Definitions
 *)
 
 (* UNEXPORTED
@@ -69,7 +69,7 @@ Implicit Arguments Diffble_I [a b].
 *)
 
 (* UNEXPORTED
-Section Local_Properties.
+Section Local_Properties
 *)
 
 (*#*
@@ -84,17 +84,17 @@ inline "cic:/CoRN/ftc/Differentiability/included_imp_diffble.con".
 A function differentiable in an interval is everywhere defined in that interval.
 *)
 
-inline "cic:/CoRN/ftc/Differentiability/a.var".
+inline "cic:/CoRN/ftc/Differentiability/Local_Properties/a.var" "Local_Properties__".
 
-inline "cic:/CoRN/ftc/Differentiability/b.var".
+inline "cic:/CoRN/ftc/Differentiability/Local_Properties/b.var" "Local_Properties__".
 
-inline "cic:/CoRN/ftc/Differentiability/Hab'.var".
+inline "cic:/CoRN/ftc/Differentiability/Local_Properties/Hab'.var" "Local_Properties__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/Differentiability/Hab.con".
+inline "cic:/CoRN/ftc/Differentiability/Local_Properties/Hab.con" "Local_Properties__".
 
-inline "cic:/CoRN/ftc/Differentiability/I.con".
+inline "cic:/CoRN/ftc/Differentiability/Local_Properties/I.con" "Local_Properties__".
 
 (* end hide *)
 
@@ -107,7 +107,7 @@ If a function has a derivative in an interval then it is differentiable in that 
 inline "cic:/CoRN/ftc/Differentiability/deriv_imp_Diffble_I.con".
 
 (* UNEXPORTED
-End Local_Properties.
+End Local_Properties
 *)
 
 (* UNEXPORTED
@@ -115,29 +115,29 @@ Hint Resolve diffble_imp_inc: included.
 *)
 
 (* UNEXPORTED
-Section Operations.
+Section Operations
 *)
 
 (*#*
 All the algebraic results carry on.
 *)
 
-inline "cic:/CoRN/ftc/Differentiability/a.var".
+inline "cic:/CoRN/ftc/Differentiability/Operations/a.var" "Operations__".
 
-inline "cic:/CoRN/ftc/Differentiability/b.var".
+inline "cic:/CoRN/ftc/Differentiability/Operations/b.var" "Operations__".
 
-inline "cic:/CoRN/ftc/Differentiability/Hab'.var".
+inline "cic:/CoRN/ftc/Differentiability/Operations/Hab'.var" "Operations__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/Differentiability/Hab.con".
+inline "cic:/CoRN/ftc/Differentiability/Operations/Hab.con" "Operations__".
 
-inline "cic:/CoRN/ftc/Differentiability/I.con".
+inline "cic:/CoRN/ftc/Differentiability/Operations/I.con" "Operations__".
 
 (* end hide *)
 
 (* UNEXPORTED
-Section Constants.
+Section Constants
 *)
 
 inline "cic:/CoRN/ftc/Differentiability/Diffble_I_const.con".
@@ -145,32 +145,32 @@ inline "cic:/CoRN/ftc/Differentiability/Diffble_I_const.con".
 inline "cic:/CoRN/ftc/Differentiability/Diffble_I_id.con".
 
 (* UNEXPORTED
-End Constants.
+End Constants
 *)
 
 (* UNEXPORTED
-Section Well_Definedness.
+Section Well_Definedness
 *)
 
-inline "cic:/CoRN/ftc/Differentiability/F.var".
+inline "cic:/CoRN/ftc/Differentiability/Operations/Well_Definedness/F.var" "Operations__Well_Definedness__".
 
-inline "cic:/CoRN/ftc/Differentiability/H.var".
+inline "cic:/CoRN/ftc/Differentiability/Operations/Well_Definedness/H.var" "Operations__Well_Definedness__".
 
-inline "cic:/CoRN/ftc/Differentiability/diffF.var".
+inline "cic:/CoRN/ftc/Differentiability/Operations/Well_Definedness/diffF.var" "Operations__Well_Definedness__".
 
 inline "cic:/CoRN/ftc/Differentiability/Diffble_I_wd.con".
 
 (* UNEXPORTED
-End Well_Definedness.
+End Well_Definedness
 *)
 
-inline "cic:/CoRN/ftc/Differentiability/F.var".
+inline "cic:/CoRN/ftc/Differentiability/Operations/F.var" "Operations__".
 
-inline "cic:/CoRN/ftc/Differentiability/G.var".
+inline "cic:/CoRN/ftc/Differentiability/Operations/G.var" "Operations__".
 
-inline "cic:/CoRN/ftc/Differentiability/diffF.var".
+inline "cic:/CoRN/ftc/Differentiability/Operations/diffF.var" "Operations__".
 
-inline "cic:/CoRN/ftc/Differentiability/diffG.var".
+inline "cic:/CoRN/ftc/Differentiability/Operations/diffG.var" "Operations__".
 
 inline "cic:/CoRN/ftc/Differentiability/Diffble_I_plus.con".
 
@@ -180,41 +180,41 @@ inline "cic:/CoRN/ftc/Differentiability/Diffble_I_mult.con".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/Differentiability/Gbnd.var".
+inline "cic:/CoRN/ftc/Differentiability/Operations/Gbnd.var" "Operations__".
 
 (* end show *)
 
 inline "cic:/CoRN/ftc/Differentiability/Diffble_I_recip.con".
 
 (* UNEXPORTED
-End Operations.
+End Operations
 *)
 
 (* UNEXPORTED
-Section Corollaries.
+Section Corollaries
 *)
 
-inline "cic:/CoRN/ftc/Differentiability/a.var".
+inline "cic:/CoRN/ftc/Differentiability/Corollaries/a.var" "Corollaries__".
 
-inline "cic:/CoRN/ftc/Differentiability/b.var".
+inline "cic:/CoRN/ftc/Differentiability/Corollaries/b.var" "Corollaries__".
 
-inline "cic:/CoRN/ftc/Differentiability/Hab'.var".
+inline "cic:/CoRN/ftc/Differentiability/Corollaries/Hab'.var" "Corollaries__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/Differentiability/Hab.con".
+inline "cic:/CoRN/ftc/Differentiability/Corollaries/Hab.con" "Corollaries__".
 
-inline "cic:/CoRN/ftc/Differentiability/I.con".
+inline "cic:/CoRN/ftc/Differentiability/Corollaries/I.con" "Corollaries__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/Differentiability/F.var".
+inline "cic:/CoRN/ftc/Differentiability/Corollaries/F.var" "Corollaries__".
 
-inline "cic:/CoRN/ftc/Differentiability/G.var".
+inline "cic:/CoRN/ftc/Differentiability/Corollaries/G.var" "Corollaries__".
 
-inline "cic:/CoRN/ftc/Differentiability/diffF.var".
+inline "cic:/CoRN/ftc/Differentiability/Corollaries/diffF.var" "Corollaries__".
 
-inline "cic:/CoRN/ftc/Differentiability/diffG.var".
+inline "cic:/CoRN/ftc/Differentiability/Corollaries/diffG.var" "Corollaries__".
 
 inline "cic:/CoRN/ftc/Differentiability/Diffble_I_minus.con".
 
@@ -222,16 +222,16 @@ inline "cic:/CoRN/ftc/Differentiability/Diffble_I_scal.con".
 
 inline "cic:/CoRN/ftc/Differentiability/Diffble_I_nth.con".
 
-inline "cic:/CoRN/ftc/Differentiability/Gbnd.var".
+inline "cic:/CoRN/ftc/Differentiability/Corollaries/Gbnd.var" "Corollaries__".
 
 inline "cic:/CoRN/ftc/Differentiability/Diffble_I_div.con".
 
 (* UNEXPORTED
-End Corollaries.
+End Corollaries
 *)
 
 (* UNEXPORTED
-Section Other_Properties.
+Section Other_Properties
 *)
 
 (*#*
@@ -239,11 +239,11 @@ Differentiability of families of functions is proved by
 induction using the constant and addition rules.
 *)
 
-inline "cic:/CoRN/ftc/Differentiability/a.var".
+inline "cic:/CoRN/ftc/Differentiability/Other_Properties/a.var" "Other_Properties__".
 
-inline "cic:/CoRN/ftc/Differentiability/b.var".
+inline "cic:/CoRN/ftc/Differentiability/Other_Properties/b.var" "Other_Properties__".
 
-inline "cic:/CoRN/ftc/Differentiability/Hab'.var".
+inline "cic:/CoRN/ftc/Differentiability/Other_Properties/Hab'.var" "Other_Properties__".
 
 inline "cic:/CoRN/ftc/Differentiability/Diffble_I_Sum0.con".
 
@@ -252,7 +252,7 @@ inline "cic:/CoRN/ftc/Differentiability/Diffble_I_Sumx.con".
 inline "cic:/CoRN/ftc/Differentiability/Diffble_I_Sum.con".
 
 (* UNEXPORTED
-End Other_Properties.
+End Other_Properties
 *)
 
 (*#*

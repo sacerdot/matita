@@ -25,7 +25,7 @@ include "metrics/Prod_Sub.ma".
 include "metrics/Equiv.ma".
 
 (* UNEXPORTED
-Section Definition_MS.
+Section Definition_MS
 *)
 
 (*#* **Definition of Metric Space
@@ -36,11 +36,11 @@ inline "cic:/CoRN/metrics/CMetricSpaces/CMetricSpace.ind".
 coercion cic:/matita/CoRN-Decl/metrics/CMetricSpaces/scms_crr.con 0 (* compounds *).
 
 (* UNEXPORTED
-End Definition_MS.
+End Definition_MS
 *)
 
 (* UNEXPORTED
-Section MS_basics.
+Section MS_basics
 *)
 
 (*#* **Metric Space basics
@@ -53,11 +53,11 @@ inline "cic:/CoRN/metrics/CMetricSpaces/d_zero_imp_eq.con".
 inline "cic:/CoRN/metrics/CMetricSpaces/is_CMetricSpace_diag_zero.con".
 
 (* UNEXPORTED
-End MS_basics.
+End MS_basics
 *)
 
 (* UNEXPORTED
-Section prodandsub.
+Section prodandsub
 *)
 
 (*#* **Product-Metric-Spaces and Sub-Metric-Spaces
@@ -88,11 +88,11 @@ Implicit Arguments SubMetricSpace [X].
 *)
 
 (* UNEXPORTED
-End prodandsub.
+End prodandsub
 *)
 
 (* UNEXPORTED
-Section Zeroff.
+Section Zeroff
 *)
 
 (*#* **Pseudo Metric Spaces vs Metric Spaces
@@ -167,11 +167,11 @@ inline "cic:/CoRN/metrics/CMetricSpaces/Emb.con".
 inline "cic:/CoRN/metrics/CMetricSpaces/Quotient_pres_CMetricSpace.con".
 
 (* UNEXPORTED
-End Zeroff.
+End Zeroff
 *)
 
 (* UNEXPORTED
-Section Limitt.
+Section Limitt
 *)
 
 (*#* **Limit
@@ -200,6 +200,6 @@ inline "cic:/CoRN/metrics/CMetricSpaces/d_wd.con".
 inline "cic:/CoRN/metrics/CMetricSpaces/unique_MSseqLim.con".
 
 (* UNEXPORTED
-End Limitt.
+End Limitt
 *)
 

@@ -129,7 +129,7 @@ Hint Resolve power_div: algebra.
 *)
 
 (* UNEXPORTED
-Section Power_Function.
+Section Power_Function
 *)
 
 (*#* **Power Function
@@ -141,11 +141,11 @@ on partial functions which preserves continuity.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/transc/RealPowers/J.var".
+inline "cic:/CoRN/transc/RealPowers/Power_Function/J.var" "Power_Function__".
 
-inline "cic:/CoRN/transc/RealPowers/F.var".
+inline "cic:/CoRN/transc/RealPowers/Power_Function/F.var" "Power_Function__".
 
-inline "cic:/CoRN/transc/RealPowers/G.var".
+inline "cic:/CoRN/transc/RealPowers/Power_Function/G.var" "Power_Function__".
 
 inline "cic:/CoRN/transc/RealPowers/FPower.con".
 
@@ -154,7 +154,7 @@ inline "cic:/CoRN/transc/RealPowers/FPower_domain.con".
 inline "cic:/CoRN/transc/RealPowers/Continuous_power.con".
 
 (* UNEXPORTED
-End Power_Function.
+End Power_Function
 *)
 
 (* NOTATION
@@ -162,7 +162,7 @@ Notation "F {!} G" := (FPower F G) (at level 20).
 *)
 
 (* UNEXPORTED
-Section More_on_Power_Function.
+Section More_on_Power_Function
 *)
 
 (* UNEXPORTED
@@ -188,7 +188,7 @@ inline "cic:/CoRN/transc/RealPowers/Derivative_power.con".
 inline "cic:/CoRN/transc/RealPowers/Diffble_power.con".
 
 (* UNEXPORTED
-End More_on_Power_Function.
+End More_on_Power_Function
 *)
 
 (* UNEXPORTED

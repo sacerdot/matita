@@ -23,7 +23,7 @@ include "CoRN.ma".
 include "metrics/IR_CPMSpace.ma".
 
 (* UNEXPORTED
-Section equivalent.
+Section equivalent
 *)
 
 (*#* **Equivalent Pseudo Metric Spaces
@@ -61,6 +61,6 @@ Not all pseudo metric spaces are equivalent:
 inline "cic:/CoRN/metrics/Equiv/MSequivalent_discr.con".
 
 (* UNEXPORTED
-End equivalent.
+End equivalent
 *)
 

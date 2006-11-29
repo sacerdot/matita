@@ -23,7 +23,7 @@ include "CoRN.ma".
 include "ftc/Differentiability.ma".
 
 (* UNEXPORTED
-Section Nth_Derivative.
+Section Nth_Derivative
 *)
 
 (*#* *Nth Derivative
@@ -42,17 +42,17 @@ We now study higher order differentiability.
 We first define what we mean by the derivative of order [n] of a function.
 *)
 
-inline "cic:/CoRN/ftc/NthDerivative/a.var".
+inline "cic:/CoRN/ftc/NthDerivative/Nth_Derivative/a.var" "Nth_Derivative__".
 
-inline "cic:/CoRN/ftc/NthDerivative/b.var".
+inline "cic:/CoRN/ftc/NthDerivative/Nth_Derivative/b.var" "Nth_Derivative__".
 
-inline "cic:/CoRN/ftc/NthDerivative/Hab'.var".
+inline "cic:/CoRN/ftc/NthDerivative/Nth_Derivative/Hab'.var" "Nth_Derivative__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/NthDerivative/Hab.con".
+inline "cic:/CoRN/ftc/NthDerivative/Nth_Derivative/Hab.con" "Nth_Derivative__".
 
-inline "cic:/CoRN/ftc/NthDerivative/I.con".
+inline "cic:/CoRN/ftc/NthDerivative/Nth_Derivative/I.con" "Nth_Derivative__".
 
 (* end hide *)
 
@@ -68,7 +68,7 @@ to be [n] times differentiable instead of quantifying over the
 inline "cic:/CoRN/ftc/NthDerivative/Diffble_I_n.con".
 
 (* UNEXPORTED
-End Nth_Derivative.
+End Nth_Derivative
 *)
 
 (* UNEXPORTED
@@ -80,7 +80,7 @@ Implicit Arguments Diffble_I_n [a b].
 *)
 
 (* UNEXPORTED
-Section Trivia.
+Section Trivia
 *)
 
 (*#* **Trivia
@@ -88,17 +88,17 @@ Section Trivia.
 These are the expected extensionality and uniqueness results.
 *)
 
-inline "cic:/CoRN/ftc/NthDerivative/a.var".
+inline "cic:/CoRN/ftc/NthDerivative/Trivia/a.var" "Trivia__".
 
-inline "cic:/CoRN/ftc/NthDerivative/b.var".
+inline "cic:/CoRN/ftc/NthDerivative/Trivia/b.var" "Trivia__".
 
-inline "cic:/CoRN/ftc/NthDerivative/Hab'.var".
+inline "cic:/CoRN/ftc/NthDerivative/Trivia/Hab'.var" "Trivia__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/NthDerivative/Hab.con".
+inline "cic:/CoRN/ftc/NthDerivative/Trivia/Hab.con" "Trivia__".
 
-inline "cic:/CoRN/ftc/NthDerivative/I.con".
+inline "cic:/CoRN/ftc/NthDerivative/Trivia/I.con" "Trivia__".
 
 (* end hide *)
 
@@ -111,11 +111,11 @@ inline "cic:/CoRN/ftc/NthDerivative/Derivative_I_n_wdl.con".
 inline "cic:/CoRN/ftc/NthDerivative/Derivative_I_n_unique.con".
 
 (* UNEXPORTED
-End Trivia.
+End Trivia
 *)
 
 (* UNEXPORTED
-Section Basic_Results.
+Section Basic_Results
 *)
 
 (*#* **Basic Results
@@ -126,17 +126,17 @@ the relation of [n] times derivative, but focus rather on the
 definition of [Diffble_I_n].
 *)
 
-inline "cic:/CoRN/ftc/NthDerivative/a.var".
+inline "cic:/CoRN/ftc/NthDerivative/Basic_Results/a.var" "Basic_Results__".
 
-inline "cic:/CoRN/ftc/NthDerivative/b.var".
+inline "cic:/CoRN/ftc/NthDerivative/Basic_Results/b.var" "Basic_Results__".
 
-inline "cic:/CoRN/ftc/NthDerivative/Hab'.var".
+inline "cic:/CoRN/ftc/NthDerivative/Basic_Results/Hab'.var" "Basic_Results__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/NthDerivative/Hab.con".
+inline "cic:/CoRN/ftc/NthDerivative/Basic_Results/Hab.con" "Basic_Results__".
 
-inline "cic:/CoRN/ftc/NthDerivative/I.con".
+inline "cic:/CoRN/ftc/NthDerivative/Basic_Results/I.con" "Basic_Results__".
 
 (* end hide *)
 
@@ -187,7 +187,7 @@ inline "cic:/CoRN/ftc/NthDerivative/Derivative_I_n_imp_inc.con".
 inline "cic:/CoRN/ftc/NthDerivative/Derivative_I_n_imp_inc'.con".
 
 (* UNEXPORTED
-Section aux.
+Section aux
 *)
 
 (*#*
@@ -196,11 +196,11 @@ First order differentiability is just a special case.
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/NthDerivative/F.var".
+inline "cic:/CoRN/ftc/NthDerivative/Basic_Results/aux/F.var" "Basic_Results__aux__".
 
-inline "cic:/CoRN/ftc/NthDerivative/diffF.var".
+inline "cic:/CoRN/ftc/NthDerivative/Basic_Results/aux/diffF.var" "Basic_Results__aux__".
 
-inline "cic:/CoRN/ftc/NthDerivative/diffFn.var".
+inline "cic:/CoRN/ftc/NthDerivative/Basic_Results/aux/diffFn.var" "Basic_Results__aux__".
 
 (* end show *)
 
@@ -209,7 +209,7 @@ inline "cic:/CoRN/ftc/NthDerivative/deriv_1_deriv.con".
 inline "cic:/CoRN/ftc/NthDerivative/deriv_1_deriv'.con".
 
 (* UNEXPORTED
-End aux.
+End aux
 *)
 
 (*#*
@@ -227,24 +227,24 @@ And finally we have an addition rule for the order of the derivative.
 inline "cic:/CoRN/ftc/NthDerivative/Derivative_I_n_plus.con".
 
 (* UNEXPORTED
-End Basic_Results.
+End Basic_Results
 *)
 
 (* UNEXPORTED
-Section More_Results.
+Section More_Results
 *)
 
-inline "cic:/CoRN/ftc/NthDerivative/a.var".
+inline "cic:/CoRN/ftc/NthDerivative/More_Results/a.var" "More_Results__".
 
-inline "cic:/CoRN/ftc/NthDerivative/b.var".
+inline "cic:/CoRN/ftc/NthDerivative/More_Results/b.var" "More_Results__".
 
-inline "cic:/CoRN/ftc/NthDerivative/Hab'.var".
+inline "cic:/CoRN/ftc/NthDerivative/More_Results/Hab'.var" "More_Results__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/NthDerivative/Hab.con".
+inline "cic:/CoRN/ftc/NthDerivative/More_Results/Hab.con" "More_Results__".
 
-inline "cic:/CoRN/ftc/NthDerivative/I.con".
+inline "cic:/CoRN/ftc/NthDerivative/More_Results/I.con" "More_Results__".
 
 (* end hide *)
 
@@ -279,11 +279,11 @@ inline "cic:/CoRN/ftc/NthDerivative/n_Sn_deriv.con".
 inline "cic:/CoRN/ftc/NthDerivative/n_deriv_plus.con".
 
 (* UNEXPORTED
-End More_Results.
+End More_Results
 *)
 
 (* UNEXPORTED
-Section More_on_n_deriv.
+Section More_on_n_deriv
 *)
 
 (*#*
@@ -297,6 +297,6 @@ inline "cic:/CoRN/ftc/NthDerivative/n_deriv_I_wd''.con".
 inline "cic:/CoRN/ftc/NthDerivative/n_deriv_I_strext'.con".
 
 (* UNEXPORTED
-End More_on_n_deriv.
+End More_on_n_deriv
 *)
 

@@ -115,7 +115,7 @@ Infix "[*]" := cr_mult (at level 40, left associativity).
 *)
 
 (* UNEXPORTED
-Section CRing_axioms.
+Section CRing_axioms
 *)
 
 (*#*
@@ -124,7 +124,7 @@ Section CRing_axioms.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CRings/R.var".
+inline "cic:/CoRN/algebra/CRings/CRing_axioms/R.var" "CRing_axioms__".
 
 inline "cic:/CoRN/algebra/CRings/CRing_is_CRing.con".
 
@@ -149,11 +149,11 @@ inline "cic:/CoRN/algebra/CRings/mult_wdr.con".
 (* Begin_SpecReals *)
 
 (* UNEXPORTED
-End CRing_axioms.
+End CRing_axioms
 *)
 
 (* UNEXPORTED
-Section Ring_constructions.
+Section Ring_constructions
 *)
 
 (*#*
@@ -163,7 +163,7 @@ Let [R] be a ring.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CRings/R.var".
+inline "cic:/CoRN/algebra/CRings/Ring_constructions/R.var" "Ring_constructions__".
 
 (*#*
 The multiplicative monoid of a ring is defined as follows.
@@ -172,13 +172,13 @@ The multiplicative monoid of a ring is defined as follows.
 inline "cic:/CoRN/algebra/CRings/Build_multCMonoid.con".
 
 (* UNEXPORTED
-End Ring_constructions.
+End Ring_constructions
 *)
 
 (* End_SpecReals *)
 
 (* UNEXPORTED
-Section Ring_unfolded.
+Section Ring_unfolded
 *)
 
 (*#*
@@ -187,11 +187,11 @@ Section Ring_unfolded.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CRings/R.var".
+inline "cic:/CoRN/algebra/CRings/Ring_unfolded/R.var" "Ring_unfolded__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/algebra/CRings/mmR.con".
+inline "cic:/CoRN/algebra/CRings/Ring_unfolded/mmR.con" "Ring_unfolded__".
 
 (* end hide *)
 
@@ -216,7 +216,7 @@ Hint Resolve ring_dist_unfolded: algebra.
 inline "cic:/CoRN/algebra/CRings/ring_distl_unfolded.con".
 
 (* UNEXPORTED
-End Ring_unfolded.
+End Ring_unfolded
 *)
 
 (* UNEXPORTED
@@ -232,7 +232,7 @@ Hint Resolve ring_dist_unfolded ring_distl_unfolded: algebra.
 *)
 
 (* UNEXPORTED
-Section Ring_basics.
+Section Ring_basics
 *)
 
 (*#*
@@ -241,7 +241,7 @@ Section Ring_basics.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CRings/R.var".
+inline "cic:/CoRN/algebra/CRings/Ring_basics/R.var" "Ring_basics__".
 
 inline "cic:/CoRN/algebra/CRings/one_ap_zero.con".
 
@@ -302,7 +302,7 @@ Hint Resolve ring_distl_minus: algebra.
 *)
 
 (* UNEXPORTED
-End Ring_basics.
+End Ring_basics
 *)
 
 (* UNEXPORTED
@@ -334,7 +334,7 @@ especially geared towards CReals.
 *)
 
 (* UNEXPORTED
-Section exponentiation.
+Section exponentiation
 *)
 
 (*#*
@@ -344,7 +344,7 @@ Let [R] be a ring.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CRings/R.var".
+inline "cic:/CoRN/algebra/CRings/exponentiation/R.var" "exponentiation__".
 
 (* End_SpecReals *)
 
@@ -359,7 +359,7 @@ inline "cic:/CoRN/algebra/CRings/nexp_op.con".
 (* Begin_SpecReals *)
 
 (* UNEXPORTED
-End exponentiation.
+End exponentiation
 *)
 
 (* End_SpecReals *)
@@ -375,7 +375,7 @@ Implicit Arguments nexp_op [R].
 (* Begin_SpecReals *)
 
 (* UNEXPORTED
-Section nat_injection.
+Section nat_injection
 *)
 
 (*#*
@@ -384,7 +384,7 @@ Section nat_injection.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CRings/R.var".
+inline "cic:/CoRN/algebra/CRings/nat_injection/R.var" "nat_injection__".
 
 (*#*
 The injection of Coq natural numbers into a ring is called [nring].
@@ -405,7 +405,7 @@ inline "cic:/CoRN/algebra/CRings/nring_comm_mult.con".
 (* Begin_SpecReals *)
 
 (* UNEXPORTED
-End nat_injection.
+End nat_injection
 *)
 
 (* End_SpecReals *)
@@ -481,7 +481,7 @@ In a ring of characteristic zero, [nring] is really an injection.
 inline "cic:/CoRN/algebra/CRings/nring_different.con".
 
 (* UNEXPORTED
-Section int_injection.
+Section int_injection
 *)
 
 (*#*
@@ -491,7 +491,7 @@ Let [R] be a ring.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CRings/R.var".
+inline "cic:/CoRN/algebra/CRings/int_injection/R.var" "int_injection__".
 
 (*#*
 The injection of Coq integers into a ring is called [zring]. Again,
@@ -621,7 +621,7 @@ inline "cic:/CoRN/algebra/CRings/zring_one.con".
 inline "cic:/CoRN/algebra/CRings/zring_inv_one.con".
 
 (* UNEXPORTED
-End int_injection.
+End int_injection
 *)
 
 (* UNEXPORTED
@@ -635,7 +635,7 @@ Hint Resolve pring_convert zring_zero zring_diff zring_plus_nat zring_inv_nat
 *)
 
 (* UNEXPORTED
-Section Ring_sums.
+Section Ring_sums
 *)
 
 (*#*
@@ -644,14 +644,14 @@ Section Ring_sums.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CRings/R.var".
+inline "cic:/CoRN/algebra/CRings/Ring_sums/R.var" "Ring_sums__".
 
 (*#*
 *** Infinite Ring sums
 *)
 
 (* UNEXPORTED
-Section infinite_ring_sums.
+Section infinite_ring_sums
 *)
 
 inline "cic:/CoRN/algebra/CRings/Sum_upto.con".
@@ -670,11 +670,11 @@ inline "cic:/CoRN/algebra/CRings/seq_from.con".
 inline "cic:/CoRN/algebra/CRings/Sum_from_upto_alt.con".
 
 (* UNEXPORTED
-End infinite_ring_sums.
+End infinite_ring_sums
 *)
 
 (* UNEXPORTED
-Section ring_sums_over_lists.
+Section ring_sums_over_lists
 *)
 
 (*#* *** Ring Sums over Lists
@@ -689,11 +689,11 @@ inline "cic:/CoRN/algebra/CRings/list_sum_upto_O.con".
 inline "cic:/CoRN/algebra/CRings/List_Sum_from_upto.con".
 
 (* UNEXPORTED
-End ring_sums_over_lists.
+End ring_sums_over_lists
 *)
 
 (* UNEXPORTED
-End Ring_sums.
+End Ring_sums
 *)
 
 (*#*
@@ -704,10 +704,10 @@ Let [R] be a ring.
 *)
 
 (* UNEXPORTED
-Section Dist_properties.
+Section Dist_properties
 *)
 
-inline "cic:/CoRN/algebra/CRings/R.var".
+inline "cic:/CoRN/algebra/CRings/Dist_properties/R.var" "Dist_properties__".
 
 inline "cic:/CoRN/algebra/CRings/dist_1b.con".
 
@@ -744,7 +744,7 @@ inline "cic:/CoRN/algebra/CRings/mult_distr_sum_rht.con".
 inline "cic:/CoRN/algebra/CRings/sumx_const.con".
 
 (* UNEXPORTED
-End Dist_properties.
+End Dist_properties
 *)
 
 (* UNEXPORTED
@@ -760,10 +760,10 @@ Let [R] be a ring.
 *)
 
 (* UNEXPORTED
-Section NExp_properties.
+Section NExp_properties
 *)
 
-inline "cic:/CoRN/algebra/CRings/R.var".
+inline "cic:/CoRN/algebra/CRings/NExp_properties/R.var" "NExp_properties__".
 
 inline "cic:/CoRN/algebra/CRings/nexp_wd.con".
 
@@ -864,7 +864,7 @@ Hint Resolve nexp_funny': algebra.
 *)
 
 (* UNEXPORTED
-End NExp_properties.
+End NExp_properties
 *)
 
 (* UNEXPORTED
@@ -875,7 +875,7 @@ Hint Resolve nexp_wd nexp_Sn nexp_plus one_nexp mult_nexp nexp_mult zero_nexp
 *)
 
 (* UNEXPORTED
-Section CRing_Ops.
+Section CRing_Ops
 *)
 
 (*#*
@@ -889,22 +889,22 @@ respectively [P] and [Q].
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CRings/R.var".
+inline "cic:/CoRN/algebra/CRings/CRing_Ops/R.var" "CRing_Ops__".
 
-inline "cic:/CoRN/algebra/CRings/F.var".
+inline "cic:/CoRN/algebra/CRings/CRing_Ops/F.var" "CRing_Ops__".
 
-inline "cic:/CoRN/algebra/CRings/G.var".
+inline "cic:/CoRN/algebra/CRings/CRing_Ops/G.var" "CRing_Ops__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/algebra/CRings/P.con".
+inline "cic:/CoRN/algebra/CRings/CRing_Ops/P.con" "CRing_Ops__".
 
-inline "cic:/CoRN/algebra/CRings/Q.con".
+inline "cic:/CoRN/algebra/CRings/CRing_Ops/Q.con" "CRing_Ops__".
 
 (* end hide *)
 
 (* UNEXPORTED
-Section Part_Function_Mult.
+Section Part_Function_Mult
 *)
 
 inline "cic:/CoRN/algebra/CRings/part_function_mult_strext.con".
@@ -912,21 +912,21 @@ inline "cic:/CoRN/algebra/CRings/part_function_mult_strext.con".
 inline "cic:/CoRN/algebra/CRings/Fmult.con".
 
 (* UNEXPORTED
-End Part_Function_Mult.
+End Part_Function_Mult
 *)
 
 (* UNEXPORTED
-Section Part_Function_Nth_Power.
+Section Part_Function_Nth_Power
 *)
 
-inline "cic:/CoRN/algebra/CRings/n.var".
+inline "cic:/CoRN/algebra/CRings/CRing_Ops/Part_Function_Nth_Power/n.var" "CRing_Ops__Part_Function_Nth_Power__".
 
 inline "cic:/CoRN/algebra/CRings/part_function_nth_strext.con".
 
 inline "cic:/CoRN/algebra/CRings/Fnth.con".
 
 (* UNEXPORTED
-End Part_Function_Nth_Power.
+End Part_Function_Nth_Power
 *)
 
 (*#*
@@ -934,7 +934,7 @@ End Part_Function_Nth_Power.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CRings/R'.var".
+inline "cic:/CoRN/algebra/CRings/CRing_Ops/R'.var" "CRing_Ops__".
 
 inline "cic:/CoRN/algebra/CRings/included_FMult.con".
 
@@ -942,14 +942,14 @@ inline "cic:/CoRN/algebra/CRings/included_FMult'.con".
 
 inline "cic:/CoRN/algebra/CRings/included_FMult''.con".
 
-inline "cic:/CoRN/algebra/CRings/n.var".
+inline "cic:/CoRN/algebra/CRings/CRing_Ops/n.var" "CRing_Ops__".
 
 inline "cic:/CoRN/algebra/CRings/included_FNth.con".
 
 inline "cic:/CoRN/algebra/CRings/included_FNth'.con".
 
 (* UNEXPORTED
-End CRing_Ops.
+End CRing_Ops
 *)
 
 inline "cic:/CoRN/algebra/CRings/Fscalmult.con".
@@ -979,27 +979,27 @@ Infix "{^}" := Fnth (at level 30, right associativity).
 *)
 
 (* UNEXPORTED
-Section ScalarMultiplication.
+Section ScalarMultiplication
 *)
 
-inline "cic:/CoRN/algebra/CRings/R.var".
+inline "cic:/CoRN/algebra/CRings/ScalarMultiplication/R.var" "ScalarMultiplication__".
 
-inline "cic:/CoRN/algebra/CRings/F.var".
+inline "cic:/CoRN/algebra/CRings/ScalarMultiplication/F.var" "ScalarMultiplication__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/algebra/CRings/P.con".
+inline "cic:/CoRN/algebra/CRings/ScalarMultiplication/P.con" "ScalarMultiplication__".
 
 (* end hide *)
 
-inline "cic:/CoRN/algebra/CRings/R'.var".
+inline "cic:/CoRN/algebra/CRings/ScalarMultiplication/R'.var" "ScalarMultiplication__".
 
 inline "cic:/CoRN/algebra/CRings/included_FScalMult.con".
 
 inline "cic:/CoRN/algebra/CRings/included_FScalMult'.con".
 
 (* UNEXPORTED
-End ScalarMultiplication.
+End ScalarMultiplication
 *)
 
 (* UNEXPORTED

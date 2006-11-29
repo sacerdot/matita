@@ -29,7 +29,7 @@ include "reals/OddPolyRootIR.ma".
 (*#* * Roots of Real Numbers *)
 
 (* UNEXPORTED
-Section NRoot.
+Section NRoot
 *)
 
 (*#* ** Existence of roots
@@ -39,24 +39,24 @@ Section NRoot.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/reals/NRootIR/n.var".
+inline "cic:/CoRN/reals/NRootIR/NRoot/n.var" "NRoot__".
 
-inline "cic:/CoRN/reals/NRootIR/n_pos.var".
+inline "cic:/CoRN/reals/NRootIR/NRoot/n_pos.var" "NRoot__".
 
-inline "cic:/CoRN/reals/NRootIR/c.var".
+inline "cic:/CoRN/reals/NRootIR/NRoot/c.var" "NRoot__".
 
-inline "cic:/CoRN/reals/NRootIR/c_nonneg.var".
+inline "cic:/CoRN/reals/NRootIR/NRoot/c_nonneg.var" "NRoot__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/reals/NRootIR/p.con".
+inline "cic:/CoRN/reals/NRootIR/NRoot/p.con" "NRoot__".
 
 (* end hide *)
 
 inline "cic:/CoRN/reals/NRootIR/CnrootIR.con".
 
 (* UNEXPORTED
-End NRoot.
+End NRoot
 *)
 
 (*#* We define the root of order [n] for any nonnegative real number and 
@@ -72,7 +72,7 @@ prove its main properties:
 *)
 
 (* UNEXPORTED
-Section Nth_Root.
+Section Nth_Root
 *)
 
 inline "cic:/CoRN/reals/NRootIR/nroot.con".
@@ -100,20 +100,20 @@ inline "cic:/CoRN/reals/NRootIR/NRoot_cancel.con".
 (*#* %\begin{convention}% Let [x,y] be nonnegative real numbers.
 %\end{convention}% *)
 
-inline "cic:/CoRN/reals/NRootIR/x.var".
+inline "cic:/CoRN/reals/NRootIR/Nth_Root/x.var" "Nth_Root__".
 
-inline "cic:/CoRN/reals/NRootIR/y.var".
+inline "cic:/CoRN/reals/NRootIR/Nth_Root/y.var" "Nth_Root__".
 
-inline "cic:/CoRN/reals/NRootIR/Hx.var".
+inline "cic:/CoRN/reals/NRootIR/Nth_Root/Hx.var" "Nth_Root__".
 
-inline "cic:/CoRN/reals/NRootIR/Hy.var".
+inline "cic:/CoRN/reals/NRootIR/Nth_Root/Hy.var" "Nth_Root__".
 
 inline "cic:/CoRN/reals/NRootIR/NRoot_wd.con".
 
 inline "cic:/CoRN/reals/NRootIR/NRoot_unique.con".
 
 (* UNEXPORTED
-End Nth_Root.
+End Nth_Root
 *)
 
 (* UNEXPORTED
@@ -129,7 +129,7 @@ inline "cic:/CoRN/reals/NRootIR/NRoot_resp_leEq.con".
 (*#**********************************)
 
 (* UNEXPORTED
-Section Square_root.
+Section Square_root
 *)
 
 (*#**********************************)
@@ -173,7 +173,7 @@ inline "cic:/CoRN/reals/NRootIR/sqrt_resp_leEq.con".
 inline "cic:/CoRN/reals/NRootIR/sqrt_resp_less.con".
 
 (* UNEXPORTED
-End Square_root.
+End Square_root
 *)
 
 (* UNEXPORTED
@@ -185,7 +185,7 @@ Hint Resolve sqrt_sqr sqrt_mult: algebra.
 *)
 
 (* UNEXPORTED
-Section Absolute_Props.
+Section Absolute_Props
 *)
 
 (*#* ** More on absolute value
@@ -243,11 +243,11 @@ inline "cic:/CoRN/reals/NRootIR/AbsIR_str_bnd_AbsIR.con".
 inline "cic:/CoRN/reals/NRootIR/AbsIR_bnd_AbsIR.con".
 
 (* UNEXPORTED
-End Absolute_Props.
+End Absolute_Props
 *)
 
 (* UNEXPORTED
-Section Consequences.
+Section Consequences
 *)
 
 (*#* **Cauchy sequences
@@ -264,6 +264,6 @@ inline "cic:/CoRN/reals/NRootIR/Cauchy_recip.con".
 inline "cic:/CoRN/reals/NRootIR/Lim_recip.con".
 
 (* UNEXPORTED
-End Consequences.
+End Consequences
 *)
 

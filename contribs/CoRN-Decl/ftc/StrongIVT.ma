@@ -25,7 +25,7 @@ include "ftc/WeakIVT.ma".
 include "ftc/CalculusTheorems.ma".
 
 (* UNEXPORTED
-Section IVT'.
+Section IVT'
 *)
 
 (*#* ** Strong IVT for partial functions
@@ -36,55 +36,55 @@ part, we will simply do that, repeating the previous construction.
 The same notations and conventions apply as before.
 *)
 
-inline "cic:/CoRN/ftc/StrongIVT/a.var".
+inline "cic:/CoRN/ftc/StrongIVT/IVT'/a.var" "IVT'__".
 
-inline "cic:/CoRN/ftc/StrongIVT/b.var".
+inline "cic:/CoRN/ftc/StrongIVT/IVT'/b.var" "IVT'__".
 
-inline "cic:/CoRN/ftc/StrongIVT/Hab'.var".
+inline "cic:/CoRN/ftc/StrongIVT/IVT'/Hab'.var" "IVT'__".
 
-inline "cic:/CoRN/ftc/StrongIVT/Hab.var".
+inline "cic:/CoRN/ftc/StrongIVT/IVT'/Hab.var" "IVT'__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/StrongIVT/I.con".
+inline "cic:/CoRN/ftc/StrongIVT/IVT'/I.con" "IVT'__".
 
-inline "cic:/CoRN/ftc/StrongIVT/I'.con".
+inline "cic:/CoRN/ftc/StrongIVT/IVT'/I'.con" "IVT'__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/StrongIVT/F.var".
+inline "cic:/CoRN/ftc/StrongIVT/IVT'/F.var" "IVT'__".
 
-inline "cic:/CoRN/ftc/StrongIVT/contF.var".
+inline "cic:/CoRN/ftc/StrongIVT/IVT'/contF.var" "IVT'__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/StrongIVT/incF.con".
+inline "cic:/CoRN/ftc/StrongIVT/IVT'/incF.con" "IVT'__".
 
 (* end hide *)
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/StrongIVT/incrF.var".
+inline "cic:/CoRN/ftc/StrongIVT/IVT'/incrF.var" "IVT'__".
 
 (* end show *)
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/StrongIVT/Ha.con".
+inline "cic:/CoRN/ftc/StrongIVT/IVT'/Ha.con" "IVT'__".
 
-inline "cic:/CoRN/ftc/StrongIVT/Hb.con".
+inline "cic:/CoRN/ftc/StrongIVT/IVT'/Hb.con" "IVT'__".
 
-inline "cic:/CoRN/ftc/StrongIVT/HFab'.con".
+inline "cic:/CoRN/ftc/StrongIVT/IVT'/HFab'.con" "IVT'__".
 
 (* end hide *)
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/StrongIVT/z.var".
+inline "cic:/CoRN/ftc/StrongIVT/IVT'/z.var" "IVT'__".
 
-inline "cic:/CoRN/ftc/StrongIVT/Haz.var".
+inline "cic:/CoRN/ftc/StrongIVT/IVT'/Haz.var" "IVT'__".
 
-inline "cic:/CoRN/ftc/StrongIVT/Hzb.var".
+inline "cic:/CoRN/ftc/StrongIVT/IVT'/Hzb.var" "IVT'__".
 
 (* end show *)
 
@@ -124,9 +124,9 @@ inline "cic:/CoRN/ftc/StrongIVT/a'_seq_Cauchy.con".
 
 inline "cic:/CoRN/ftc/StrongIVT/b'_seq_Cauchy.con".
 
-inline "cic:/CoRN/ftc/StrongIVT/xa.con".
+inline "cic:/CoRN/ftc/StrongIVT/IVT'/xa.con" "IVT'__".
 
-inline "cic:/CoRN/ftc/StrongIVT/xb.con".
+inline "cic:/CoRN/ftc/StrongIVT/IVT'/xb.con" "IVT'__".
 
 inline "cic:/CoRN/ftc/StrongIVT/a'_seq_b'_seq_lim.con".
 
@@ -135,7 +135,7 @@ inline "cic:/CoRN/ftc/StrongIVT/xa'_in_interval.con".
 inline "cic:/CoRN/ftc/StrongIVT/IVT'_I.con".
 
 (* UNEXPORTED
-End IVT'.
+End IVT'
 *)
 
 (*#* **Other formulations

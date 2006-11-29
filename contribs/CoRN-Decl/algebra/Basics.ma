@@ -221,31 +221,31 @@ inline "cic:/CoRN/algebra/Basics/Zgt_not_eq.con".
 inline "cic:/CoRN/algebra/Basics/Zmult_absorb.con".
 
 (* UNEXPORTED
-Section Well_foundedT.
+Section Well_foundedT
 *)
 
-inline "cic:/CoRN/algebra/Basics/A.var".
+inline "cic:/CoRN/algebra/Basics/Well_foundedT/A.var" "Well_foundedT__".
 
-inline "cic:/CoRN/algebra/Basics/R.var".
+inline "cic:/CoRN/algebra/Basics/Well_foundedT/R.var" "Well_foundedT__".
 
 (*#* The accessibility predicate is defined to be non-informative *)
 
 inline "cic:/CoRN/algebra/Basics/Acc.ind".
 
 (* UNEXPORTED
-End Well_foundedT.
+End Well_foundedT
 *)
 
 (* UNEXPORTED
-Section AccT.
+Section AccT
 *)
 
-inline "cic:/CoRN/algebra/Basics/A.var".
+inline "cic:/CoRN/algebra/Basics/AccT/A.var" "AccT__".
 
 inline "cic:/CoRN/algebra/Basics/well_founded.con".
 
 (* UNEXPORTED
-End AccT.
+End AccT
 *)
 
 (* UNEXPORTED
@@ -253,44 +253,44 @@ Implicit Arguments Acc [A].
 *)
 
 (* UNEXPORTED
-Section IndT.
+Section IndT
 *)
 
-inline "cic:/CoRN/algebra/Basics/A.var".
+inline "cic:/CoRN/algebra/Basics/IndT/A.var" "IndT__".
 
-inline "cic:/CoRN/algebra/Basics/R.var".
+inline "cic:/CoRN/algebra/Basics/IndT/R.var" "IndT__".
 
 (* UNEXPORTED
-Section AccIter.
+Section AccIter
 *)
 
-inline "cic:/CoRN/algebra/Basics/P.var".
+inline "cic:/CoRN/algebra/Basics/IndT/AccIter/P.var" "IndT__AccIter__".
 
-inline "cic:/CoRN/algebra/Basics/F.var".
+inline "cic:/CoRN/algebra/Basics/IndT/AccIter/F.var" "IndT__AccIter__".
 
 inline "cic:/CoRN/algebra/Basics/Acc_inv.con".
 
 inline "cic:/CoRN/algebra/Basics/Acc_iter.con".
 
 (* UNEXPORTED
-End AccIter.
+End AccIter
 *)
 
-inline "cic:/CoRN/algebra/Basics/Rwf.var".
+inline "cic:/CoRN/algebra/Basics/IndT/Rwf.var" "IndT__".
 
 inline "cic:/CoRN/algebra/Basics/well_founded_induction_type.con".
 
 (* UNEXPORTED
-End IndT.
+End IndT
 *)
 
 (* UNEXPORTED
-Section InductionT.
+Section InductionT
 *)
 
-inline "cic:/CoRN/algebra/Basics/A.var".
+inline "cic:/CoRN/algebra/Basics/InductionT/A.var" "InductionT__".
 
-inline "cic:/CoRN/algebra/Basics/f.var".
+inline "cic:/CoRN/algebra/Basics/InductionT/f.var" "InductionT__".
 
 inline "cic:/CoRN/algebra/Basics/ltof.con".
 
@@ -299,16 +299,16 @@ inline "cic:/CoRN/algebra/Basics/well_founded_ltof.con".
 inline "cic:/CoRN/algebra/Basics/induction_ltof2T.con".
 
 (* UNEXPORTED
-End InductionT.
+End InductionT
 *)
 
 (* UNEXPORTED
-Section InductionTT.
+Section InductionTT
 *)
 
 inline "cic:/CoRN/algebra/Basics/lt_wf_rect.con".
 
 (* UNEXPORTED
-End InductionTT.
+End InductionTT
 *)
 

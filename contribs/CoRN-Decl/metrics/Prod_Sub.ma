@@ -23,7 +23,7 @@ include "CoRN.ma".
 include "metrics/IR_CPMSpace.ma".
 
 (* UNEXPORTED
-Section prodpsmetrics.
+Section prodpsmetrics
 *)
 
 (*#* **Product-Pseudo-Metric-Spaces
@@ -48,11 +48,11 @@ inline "cic:/CoRN/metrics/Prod_Sub/prod0cpsmetricspace_is_CPsMetricSpace.con".
 inline "cic:/CoRN/metrics/Prod_Sub/Prod0CPsMetricSpace.con".
 
 (* UNEXPORTED
-End prodpsmetrics.
+End prodpsmetrics
 *)
 
 (* UNEXPORTED
-Section subpsmetrics.
+Section subpsmetrics
 *)
 
 (*#* **Sub-Pseudo-Metric-Spaces
@@ -126,6 +126,6 @@ Implicit Arguments dsub'_as_cs_fun [X].
 inline "cic:/CoRN/metrics/Prod_Sub/dsub'_uni_continuous''.con".
 
 (* UNEXPORTED
-End subpsmetrics.
+End subpsmetrics
 *)
 

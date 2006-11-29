@@ -29,7 +29,7 @@ and we only need it for [CC].
 *)
 
 (* UNEXPORTED
-Section Poly_Shifted.
+Section Poly_Shifted
 *)
 
 inline "cic:/CoRN/fta/CPoly_Shift/Shift.con".
@@ -51,7 +51,7 @@ inline "cic:/CoRN/fta/CPoly_Shift/Shift_degree_le.con".
 inline "cic:/CoRN/fta/CPoly_Shift/Shift_monic.con".
 
 (* UNEXPORTED
-End Poly_Shifted.
+End Poly_Shifted
 *)
 
 (* UNEXPORTED

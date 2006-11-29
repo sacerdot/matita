@@ -39,20 +39,20 @@ include "reals/iso_CReals.ma".
 include "algebra/Expon.ma".
 
 (* UNEXPORTED
-Section LUBP.
+Section LUBP
 *)
 
-inline "cic:/CoRN/reals/Bridges_LUB/R1.var".
+inline "cic:/CoRN/reals/Bridges_LUB/LUBP/R1.var" "LUBP__".
 
 (* SUBSECTION ON GENRAL DEFINITIONS *)
 
 (* UNEXPORTED
-Section lub_definitions.
+Section lub_definitions
 *)
 
-inline "cic:/CoRN/reals/Bridges_LUB/OF.var".
+inline "cic:/CoRN/reals/Bridges_LUB/LUBP/lub_definitions/OF.var" "LUBP__lub_definitions__".
 
-inline "cic:/CoRN/reals/Bridges_LUB/SS.var".
+inline "cic:/CoRN/reals/Bridges_LUB/LUBP/lub_definitions/SS.var" "LUBP__lub_definitions__".
 
 inline "cic:/CoRN/reals/Bridges_LUB/member.con".
 
@@ -79,38 +79,38 @@ inline "cic:/CoRN/reals/Bridges_LUB/infimum.con".
 inline "cic:/CoRN/reals/Bridges_LUB/Pinfimum.con".
 
 (* UNEXPORTED
-End lub_definitions.
+End lub_definitions
 *)
 
 (* MAIN SECTION *)
 
 (* UNEXPORTED
-Section upper_bound_sequence.
+Section upper_bound_sequence
 *)
 
-inline "cic:/CoRN/reals/Bridges_LUB/A.var".
+inline "cic:/CoRN/reals/Bridges_LUB/LUBP/upper_bound_sequence/A.var" "LUBP__upper_bound_sequence__".
 
-inline "cic:/CoRN/reals/Bridges_LUB/is_inhabitted.var".
+inline "cic:/CoRN/reals/Bridges_LUB/LUBP/upper_bound_sequence/is_inhabitted.var" "LUBP__upper_bound_sequence__".
 
-inline "cic:/CoRN/reals/Bridges_LUB/bounded_above.var".
+inline "cic:/CoRN/reals/Bridges_LUB/LUBP/upper_bound_sequence/bounded_above.var" "LUBP__upper_bound_sequence__".
 
-inline "cic:/CoRN/reals/Bridges_LUB/located.var".
+inline "cic:/CoRN/reals/Bridges_LUB/LUBP/upper_bound_sequence/located.var" "LUBP__upper_bound_sequence__".
 
-inline "cic:/CoRN/reals/Bridges_LUB/s.con".
+inline "cic:/CoRN/reals/Bridges_LUB/LUBP/upper_bound_sequence/s.con" "LUBP__upper_bound_sequence__".
 
-inline "cic:/CoRN/reals/Bridges_LUB/Ps.con".
+inline "cic:/CoRN/reals/Bridges_LUB/LUBP/upper_bound_sequence/Ps.con" "LUBP__upper_bound_sequence__".
 
-inline "cic:/CoRN/reals/Bridges_LUB/b0.con".
+inline "cic:/CoRN/reals/Bridges_LUB/LUBP/upper_bound_sequence/b0.con" "LUBP__upper_bound_sequence__".
 
-inline "cic:/CoRN/reals/Bridges_LUB/Pb0.con".
+inline "cic:/CoRN/reals/Bridges_LUB/LUBP/upper_bound_sequence/Pb0.con" "LUBP__upper_bound_sequence__".
 
 inline "cic:/CoRN/reals/Bridges_LUB/b0_is_upper_bound.con".
 
 inline "cic:/CoRN/reals/Bridges_LUB/s_inhabits_A.con".
 
-inline "cic:/CoRN/reals/Bridges_LUB/dstart_l.con".
+inline "cic:/CoRN/reals/Bridges_LUB/LUBP/upper_bound_sequence/dstart_l.con" "LUBP__upper_bound_sequence__".
 
-inline "cic:/CoRN/reals/Bridges_LUB/dstart_r.con".
+inline "cic:/CoRN/reals/Bridges_LUB/LUBP/upper_bound_sequence/dstart_r.con" "LUBP__upper_bound_sequence__".
 
 inline "cic:/CoRN/reals/Bridges_LUB/dl_less_dr.con".
 
@@ -136,11 +136,11 @@ inline "cic:/CoRN/reals/Bridges_LUB/dif_cotrans_strong.con".
 
 inline "cic:/CoRN/reals/Bridges_LUB/dIntrvl.con".
 
-inline "cic:/CoRN/reals/Bridges_LUB/U.con".
+inline "cic:/CoRN/reals/Bridges_LUB/LUBP/upper_bound_sequence/U.con" "LUBP__upper_bound_sequence__".
 
-inline "cic:/CoRN/reals/Bridges_LUB/V.con".
+inline "cic:/CoRN/reals/Bridges_LUB/LUBP/upper_bound_sequence/V.con" "LUBP__upper_bound_sequence__".
 
-inline "cic:/CoRN/reals/Bridges_LUB/W.con".
+inline "cic:/CoRN/reals/Bridges_LUB/LUBP/upper_bound_sequence/W.con" "LUBP__upper_bound_sequence__".
 
 inline "cic:/CoRN/reals/Bridges_LUB/delta_dIntrvl.con".
 
@@ -170,7 +170,7 @@ inline "cic:/CoRN/reals/Bridges_LUB/CS_seq_U.con".
 
 inline "cic:/CoRN/reals/Bridges_LUB/U_as_CauchySeq.con".
 
-inline "cic:/CoRN/reals/Bridges_LUB/B.con".
+inline "cic:/CoRN/reals/Bridges_LUB/LUBP/upper_bound_sequence/B.con" "LUBP__upper_bound_sequence__".
 
 inline "cic:/CoRN/reals/Bridges_LUB/U_minus_V.con".
 
@@ -209,11 +209,11 @@ inline "cic:/CoRN/reals/Bridges_LUB/A_bounds_V_n.con".
 inline "cic:/CoRN/reals/Bridges_LUB/cauchy_gives_lub.con".
 
 (* UNEXPORTED
-End upper_bound_sequence.
+End upper_bound_sequence
 *)
 
 (* UNEXPORTED
-End LUBP.
+End LUBP
 *)
 
 (* end hide *)

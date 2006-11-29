@@ -33,7 +33,7 @@ Implicit Arguments distinct1 [A].
 *)
 
 (* UNEXPORTED
-Section Poly_Representation.
+Section Poly_Representation
 *)
 
 (*#*
@@ -45,17 +45,17 @@ has degree at most [n].
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CPoly_ApZero/R.var".
+inline "cic:/CoRN/algebra/CPoly_ApZero/Poly_Representation/R.var" "Poly_Representation__".
 
-inline "cic:/CoRN/algebra/CPoly_ApZero/a_.var".
+inline "cic:/CoRN/algebra/CPoly_ApZero/Poly_Representation/a_.var" "Poly_Representation__".
 
-inline "cic:/CoRN/algebra/CPoly_ApZero/distinct_a_.var".
+inline "cic:/CoRN/algebra/CPoly_ApZero/Poly_Representation/distinct_a_.var" "Poly_Representation__".
 
-inline "cic:/CoRN/algebra/CPoly_ApZero/f.var".
+inline "cic:/CoRN/algebra/CPoly_ApZero/Poly_Representation/f.var" "Poly_Representation__".
 
-inline "cic:/CoRN/algebra/CPoly_ApZero/n.var".
+inline "cic:/CoRN/algebra/CPoly_ApZero/Poly_Representation/n.var" "Poly_Representation__".
 
-inline "cic:/CoRN/algebra/CPoly_ApZero/degree_f.var".
+inline "cic:/CoRN/algebra/CPoly_ApZero/Poly_Representation/degree_f.var" "Poly_Representation__".
 
 (* begin hide *)
 
@@ -128,11 +128,11 @@ Hint Resolve poly_representation: algebra.
 inline "cic:/CoRN/algebra/CPoly_ApZero/Cpoly_choose_apzero.con".
 
 (* UNEXPORTED
-End Poly_Representation.
+End Poly_Representation
 *)
 
 (* UNEXPORTED
-Section Characteristic_zero.
+Section Characteristic_zero
 *)
 
 (*#*
@@ -140,11 +140,11 @@ If we are in a field of characteristic zero, the previous result can be
 strengthened.
 *)
 
-inline "cic:/CoRN/algebra/CPoly_ApZero/R.var".
+inline "cic:/CoRN/algebra/CPoly_ApZero/Characteristic_zero/R.var" "Characteristic_zero__".
 
 (* begin show *)
 
-inline "cic:/CoRN/algebra/CPoly_ApZero/H.var".
+inline "cic:/CoRN/algebra/CPoly_ApZero/Characteristic_zero/H.var" "Characteristic_zero__".
 
 (* end show *)
 
@@ -165,7 +165,7 @@ Also, in this situation polynomials are extensional functions.
 inline "cic:/CoRN/algebra/CPoly_ApZero/poly_extensional.con".
 
 (* UNEXPORTED
-End Characteristic_zero.
+End Characteristic_zero
 *)
 
 (*#*
@@ -173,10 +173,10 @@ End Characteristic_zero.
 *)
 
 (* UNEXPORTED
-Section Poly_ApZero_Interval.
+Section Poly_ApZero_Interval
 *)
 
-inline "cic:/CoRN/algebra/CPoly_ApZero/R.var".
+inline "cic:/CoRN/algebra/CPoly_ApZero/Poly_ApZero_Interval/R.var" "Poly_ApZero_Interval__".
 
 (* begin hide *)
 
@@ -189,6 +189,6 @@ Notation RX := (cpoly_cring R).
 inline "cic:/CoRN/algebra/CPoly_ApZero/Cpoly_apzero_interval.con".
 
 (* UNEXPORTED
-End Poly_ApZero_Interval.
+End Poly_ApZero_Interval
 *)
 

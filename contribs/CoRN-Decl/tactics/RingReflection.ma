@@ -27,18 +27,18 @@ include "algebra/CRings.ma".
 include "tactics/AlgReflection.ma".
 
 (* UNEXPORTED
-Section Ring_Interpretation_Function.
+Section Ring_Interpretation_Function
 *)
 
-inline "cic:/CoRN/tactics/RingReflection/R.var".
+inline "cic:/CoRN/tactics/RingReflection/Ring_Interpretation_Function/R.var" "Ring_Interpretation_Function__".
 
-inline "cic:/CoRN/tactics/RingReflection/val.var".
+inline "cic:/CoRN/tactics/RingReflection/Ring_Interpretation_Function/val.var" "Ring_Interpretation_Function__".
 
-inline "cic:/CoRN/tactics/RingReflection/unop.var".
+inline "cic:/CoRN/tactics/RingReflection/Ring_Interpretation_Function/unop.var" "Ring_Interpretation_Function__".
 
-inline "cic:/CoRN/tactics/RingReflection/binop.var".
+inline "cic:/CoRN/tactics/RingReflection/Ring_Interpretation_Function/binop.var" "Ring_Interpretation_Function__".
 
-inline "cic:/CoRN/tactics/RingReflection/pfun.var".
+inline "cic:/CoRN/tactics/RingReflection/Ring_Interpretation_Function/pfun.var" "Ring_Interpretation_Function__".
 
 inline "cic:/CoRN/tactics/RingReflection/interpR.ind".
 
@@ -145,22 +145,22 @@ inline "cic:/CoRN/tactics/RingReflection/refl_interpR.con".
 inline "cic:/CoRN/tactics/RingReflection/interpR_wd.con".
 
 (* UNEXPORTED
-End Ring_Interpretation_Function.
+End Ring_Interpretation_Function
 *)
 
 (* UNEXPORTED
-Section Ring_NormCorrect.
+Section Ring_NormCorrect
 *)
 
-inline "cic:/CoRN/tactics/RingReflection/R.var".
+inline "cic:/CoRN/tactics/RingReflection/Ring_NormCorrect/R.var" "Ring_NormCorrect__".
 
-inline "cic:/CoRN/tactics/RingReflection/val.var".
+inline "cic:/CoRN/tactics/RingReflection/Ring_NormCorrect/val.var" "Ring_NormCorrect__".
 
-inline "cic:/CoRN/tactics/RingReflection/unop.var".
+inline "cic:/CoRN/tactics/RingReflection/Ring_NormCorrect/unop.var" "Ring_NormCorrect__".
 
-inline "cic:/CoRN/tactics/RingReflection/binop.var".
+inline "cic:/CoRN/tactics/RingReflection/Ring_NormCorrect/binop.var" "Ring_NormCorrect__".
 
-inline "cic:/CoRN/tactics/RingReflection/pfun.var".
+inline "cic:/CoRN/tactics/RingReflection/Ring_NormCorrect/pfun.var" "Ring_NormCorrect__".
 
 (* NOTATION
 Notation II := (interpR R val unop binop pfun).
@@ -317,7 +317,7 @@ inline "cic:/CoRN/tactics/RingReflection/NormR_corr.con".
 inline "cic:/CoRN/tactics/RingReflection/Tactic_lemmaR.con".
 
 (* UNEXPORTED
-End Ring_NormCorrect.
+End Ring_NormCorrect
 *)
 
 (* end hide *)

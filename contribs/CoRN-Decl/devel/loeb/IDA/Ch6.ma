@@ -48,7 +48,7 @@ inline "cic:/CoRN/devel/loeb/IDA/Ch6/plus3.con".
 
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/on.con".
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/ex_3_ary.con".
+inline "cic:/CoRN/devel/loeb/IDA/Ch6/ex_3_ary.con" "__".
 
 (* blz 65 Example 1 *)
 
@@ -80,23 +80,23 @@ include "model/setoids/Qsetoid.ma".
 (* blz 66 Examples 2 *)
 
 (* UNEXPORTED
-Section p66E2.
+Section p66E2
 *)
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/X.var".
+inline "cic:/CoRN/devel/loeb/IDA/Ch6/p66E2/X.var" "p66E2__".
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/f.var".
+inline "cic:/CoRN/devel/loeb/IDA/Ch6/p66E2/f.var" "p66E2__".
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/g.var".
+inline "cic:/CoRN/devel/loeb/IDA/Ch6/p66E2/g.var" "p66E2__".
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/h.var".
+inline "cic:/CoRN/devel/loeb/IDA/Ch6/p66E2/h.var" "p66E2__".
 
 (* Check comp_as_bin_op.*)
 
 (* Check assoc_comp.*)
 
 (* UNEXPORTED
-End p66E2.
+End p66E2
 *)
 
 (* blz 66 Example 2eblok 1 *)
@@ -114,10 +114,10 @@ inline "cic:/CoRN/devel/loeb/IDA/Ch6/FS_is_CSemiGroup.con".
 (* blz 66 Example % 4 *)
 
 (* UNEXPORTED
-Section p66E2b4.
+Section p66E2b4
 *)
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/A.var".
+inline "cic:/CoRN/devel/loeb/IDA/Ch6/p66E2b4/A.var" "p66E2b4__".
 
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/Astar.con".
 
@@ -154,7 +154,7 @@ inline "cic:/CoRN/devel/loeb/IDA/Ch6/Astar_is_CSemiGroup.con".
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/Astar_as_CSemiGroup.con".
 
 (* UNEXPORTED
-End p66E2b4.
+End p66E2b4
 *)
 
 (* Definition 5 *)
@@ -170,15 +170,15 @@ inline "cic:/CoRN/devel/loeb/IDA/Ch6/is_unit_Z_0.con".
 (* blz 67 Remark 2 *)
 
 (* UNEXPORTED
-Section p67R2.
+Section p67R2
 *)
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/X.var".
+inline "cic:/CoRN/devel/loeb/IDA/Ch6/p67R2/X.var" "p67R2__".
 
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/is_unit_FS_id.con".
 
 (* UNEXPORTED
-End p67R2.
+End p67R2
 *)
 
 (* blz 67 Remark 3 *)
@@ -208,7 +208,7 @@ include "model/monoids/Zmonoid.ma".
 (* blz 68 Example blok1 1 *)
 
 (* UNEXPORTED
-Section p68E1b1.
+Section p68E1b1
 *)
 
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/M1.ind".
@@ -280,7 +280,7 @@ inline "cic:/CoRN/devel/loeb/IDA/Ch6/M2_as_CMonoid.con".
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/two_element_CMonoids.con".
 
 (* UNEXPORTED
-End p68E1b1.
+End p68E1b1
 *)
 
 (* blz 68 Example blok2 1 *)
@@ -298,12 +298,12 @@ End p68E1b1.
 include "algebra/CMonoids.ma".
 
 (* UNEXPORTED
-Section D9S.
+Section D9S
 *)
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/M1.var".
+inline "cic:/CoRN/devel/loeb/IDA/Ch6/D9S/M1.var" "D9S__".
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/M2.var".
+inline "cic:/CoRN/devel/loeb/IDA/Ch6/D9S/M2.var" "D9S__".
 
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/dprod.con".
 
@@ -316,16 +316,16 @@ inline "cic:/CoRN/devel/loeb/IDA/Ch6/direct_product_is_CSemiGroup.con".
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/direct_product_as_CSemiGroup.con".
 
 (* UNEXPORTED
-End D9S.
+End D9S
 *)
 
 (* UNEXPORTED
-Section D9M.
+Section D9M
 *)
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/M1.var".
+inline "cic:/CoRN/devel/loeb/IDA/Ch6/D9M/M1.var" "D9M__".
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/M2.var".
+inline "cic:/CoRN/devel/loeb/IDA/Ch6/D9M/M2.var" "D9M__".
 
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/e1e2_is_rht_unit.con".
 
@@ -336,42 +336,42 @@ inline "cic:/CoRN/devel/loeb/IDA/Ch6/direct_product_is_CMonoid.con".
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/direct_product_as_CMonoid.con".
 
 (* UNEXPORTED
-End D9M.
+End D9M
 *)
 
 (* blz 69 Example *)
 
 (* UNEXPORTED
-Section p69E1.
+Section p69E1
 *)
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/PM1M2.con".
+inline "cic:/CoRN/devel/loeb/IDA/Ch6/p69E1/PM1M2.con" "p69E1__".
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/uu.con".
+inline "cic:/CoRN/devel/loeb/IDA/Ch6/p69E1/uu.con" "p69E1__".
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/e1u.con".
+inline "cic:/CoRN/devel/loeb/IDA/Ch6/p69E1/e1u.con" "p69E1__".
 
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/ex_69.con".
 
 (* UNEXPORTED
-End p69E1.
+End p69E1
 *)
 
 (* Theorem 11 *)
 
 (* UNEXPORTED
-Section Th11.
+Section Th11
 *)
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/M.var".
+inline "cic:/CoRN/devel/loeb/IDA/Ch6/Th11/M.var" "Th11__".
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/I.var".
+inline "cic:/CoRN/devel/loeb/IDA/Ch6/Th11/I.var" "Th11__".
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/C.var".
+inline "cic:/CoRN/devel/loeb/IDA/Ch6/Th11/C.var" "Th11__".
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/Cunit.var".
+inline "cic:/CoRN/devel/loeb/IDA/Ch6/Th11/Cunit.var" "Th11__".
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/op_pres_C.var".
+inline "cic:/CoRN/devel/loeb/IDA/Ch6/Th11/op_pres_C.var" "Th11__".
 
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/K.con".
 
@@ -380,16 +380,16 @@ inline "cic:/CoRN/devel/loeb/IDA/Ch6/op_pres_K.con".
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/K_is_Monoid.con".
 
 (* UNEXPORTED
-End Th11.
+End Th11
 *)
 
 (* Theorem 12 *)
 
 (* UNEXPORTED
-Section Th12.
+Section Th12
 *)
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/A.var".
+inline "cic:/CoRN/devel/loeb/IDA/Ch6/Th12/A.var" "Th12__".
 
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/nil_is_rht_unit.con".
 
@@ -400,18 +400,18 @@ inline "cic:/CoRN/devel/loeb/IDA/Ch6/free_monoid_is_CMonoid.con".
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/free_monoid_as_CMonoid.con".
 
 (* UNEXPORTED
-End Th12.
+End Th12
 *)
 
 (* blz 70 text *)
 
 (* UNEXPORTED
-Section p70text.
+Section p70text
 *)
 
 include "devel/loeb/per/lst2fun.ma".
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/A.con".
+inline "cic:/CoRN/devel/loeb/IDA/Ch6/p70text/A.con" "p70text__".
 
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/ZerolessOne.con".
 
@@ -428,44 +428,44 @@ inline "cic:/CoRN/devel/loeb/IDA/Ch6/to_word_bijective.con".
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/pres_plus_to_word.con".
 
 (* UNEXPORTED
-End p70text.
+End p70text
 *)
 
 (* Definition 13 *)
 
 (* UNEXPORTED
-Section Th13.
+Section Th13
 *)
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/M1.var".
+inline "cic:/CoRN/devel/loeb/IDA/Ch6/Th13/M1.var" "Th13__".
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/M2.var".
+inline "cic:/CoRN/devel/loeb/IDA/Ch6/Th13/M2.var" "Th13__".
 
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/morphism.con".
 
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/isomorphism.con".
 
 (* UNEXPORTED
-End Th13.
+End Th13
 *)
 
 (* blz 71 Example 1 *)
 
 (* UNEXPORTED
-Section p71E1.
+Section p71E1
 *)
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/M.var".
+inline "cic:/CoRN/devel/loeb/IDA/Ch6/p71E1/M.var" "p71E1__".
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/c.var".
+inline "cic:/CoRN/devel/loeb/IDA/Ch6/p71E1/c.var" "p71E1__".
 
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/power_CMonoid.con".
 
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/power_CMonoid_CSetoid.con".
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/is_generated_by.var".
+inline "cic:/CoRN/devel/loeb/IDA/Ch6/p71E1/is_generated_by.var" "p71E1__".
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/f.con".
+inline "cic:/CoRN/devel/loeb/IDA/Ch6/p71E1/f.con" "p71E1__".
 
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/f_strext.con".
 
@@ -474,11 +474,11 @@ inline "cic:/CoRN/devel/loeb/IDA/Ch6/f_as_CSetoid_fun.con".
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/surjective_f.con".
 
 (* UNEXPORTED
-End p71E1.
+End p71E1
 *)
 
 (* UNEXPORTED
-Section p71E1'.
+Section p71E1'
 *)
 
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/M1_is_generated_by_u.con".
@@ -486,18 +486,18 @@ inline "cic:/CoRN/devel/loeb/IDA/Ch6/M1_is_generated_by_u.con".
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/not_injective_f.con".
 
 (* UNEXPORTED
-End p71E1'.
+End p71E1'
 *)
 
 (* Print to_word_bijective.*)
 
 (* UNEXPORTED
-Section p71E2.
+Section p71E2
 *)
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/A.var".
+inline "cic:/CoRN/devel/loeb/IDA/Ch6/p71E2/A.var" "p71E2__".
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/L.con".
+inline "cic:/CoRN/devel/loeb/IDA/Ch6/p71E2/L.con" "p71E2__".
 
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/L_strext.con".
 
@@ -506,63 +506,63 @@ inline "cic:/CoRN/devel/loeb/IDA/Ch6/L_as_CSetoid_fun.con".
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/L_is_morphism.con".
 
 (* UNEXPORTED
-End p71E2.
+End p71E2
 *)
 
 (* blz 71 Remark 1 *)
 
 (* UNEXPORTED
-Section p71R1.
+Section p71R1
 *)
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/S1.var".
+inline "cic:/CoRN/devel/loeb/IDA/Ch6/p71R1/S1.var" "p71R1__".
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/S2.var".
+inline "cic:/CoRN/devel/loeb/IDA/Ch6/p71R1/S2.var" "p71R1__".
 
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/morphism_of_CSemiGroups.con".
 
 (* UNEXPORTED
-End p71R1.
+End p71R1
 *)
 
 (* UNEXPORTED
-Section p71R2.
+Section p71R2
 *)
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/M.var".
+inline "cic:/CoRN/devel/loeb/IDA/Ch6/p71R2/M.var" "p71R2__".
 
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/automorphism.con".
 
 (* UNEXPORTED
-End p71R2.
+End p71R2
 *)
 
 (* Theorem 14 *)
 
 (* UNEXPORTED
-Section Th14.
+Section Th14
 *)
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/M1.var".
+inline "cic:/CoRN/devel/loeb/IDA/Ch6/Th14/M1.var" "Th14__".
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/M2.var".
+inline "cic:/CoRN/devel/loeb/IDA/Ch6/Th14/M2.var" "Th14__".
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/f.var".
+inline "cic:/CoRN/devel/loeb/IDA/Ch6/Th14/f.var" "Th14__".
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/isof.var".
+inline "cic:/CoRN/devel/loeb/IDA/Ch6/Th14/isof.var" "Th14__".
 
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/iso_imp_bij.con".
 
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/iso_inv.con".
 
 (* UNEXPORTED
-End Th14.
+End Th14
 *)
 
 (* blz 71 Examples 2eblok 1 *)
 
 (* UNEXPORTED
-Section p71E2b1.
+Section p71E2b1
 *)
 
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/isomorphic.con".
@@ -570,18 +570,18 @@ inline "cic:/CoRN/devel/loeb/IDA/Ch6/isomorphic.con".
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/not_isomorphic_M1_M2.con".
 
 (* UNEXPORTED
-End p71E2b1.
+End p71E2b1
 *)
 
 (* UNEXPORTED
-Section p71E2b2.
+Section p71E2b2
 *)
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/M1.var".
+inline "cic:/CoRN/devel/loeb/IDA/Ch6/p71E2b2/M1.var" "p71E2b2__".
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/M2.var".
+inline "cic:/CoRN/devel/loeb/IDA/Ch6/p71E2b2/M2.var" "p71E2b2__".
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/f.con".
+inline "cic:/CoRN/devel/loeb/IDA/Ch6/p71E2b2/f.con" "p71E2b2__".
 
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/f_strext'.con".
 
@@ -590,18 +590,18 @@ inline "cic:/CoRN/devel/loeb/IDA/Ch6/f_as_CSetoid_fun'.con".
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/isomorphic_PM1M2_PM2M1.con".
 
 (* UNEXPORTED
-End p71E2b2.
+End p71E2b2
 *)
 
 (* UNEXPORTED
-Section Th15.
+Section Th15
 *)
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/M.var".
+inline "cic:/CoRN/devel/loeb/IDA/Ch6/Th15/M.var" "Th15__".
 
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/cm_Sum.con".
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/D.var".
+inline "cic:/CoRN/devel/loeb/IDA/Ch6/Th15/D.var" "Th15__".
 
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/member.con".
 
@@ -622,6 +622,6 @@ inline "cic:/CoRN/devel/loeb/IDA/Ch6/op_pres_Dbrack.con".
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/Dbrack_as_CMonoid.con".
 
 (* UNEXPORTED
-End Th15.
+End Th15
 *)
 

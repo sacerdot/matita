@@ -29,7 +29,7 @@ include "reals/Series.ma".
 (*#* printing Fun_Series_Sum %\ensuremath{\sum_0^{\infty}}% #&sum;<sub>0</sub><sup>&infin;</sup># *)
 
 (* UNEXPORTED
-Section Definitions.
+Section Definitions
 *)
 
 (*#* *Series of Functions
@@ -53,19 +53,19 @@ defined in a compact interval.  For this, partial sums are defined and
 convergence is simply the convergence of the sequence of partial sums.
 *)
 
-inline "cic:/CoRN/ftc/FunctSeries/a.var".
+inline "cic:/CoRN/ftc/FunctSeries/Definitions/a.var" "Definitions__".
 
-inline "cic:/CoRN/ftc/FunctSeries/b.var".
+inline "cic:/CoRN/ftc/FunctSeries/Definitions/b.var" "Definitions__".
 
-inline "cic:/CoRN/ftc/FunctSeries/Hab.var".
+inline "cic:/CoRN/ftc/FunctSeries/Definitions/Hab.var" "Definitions__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/FunctSeries/I.con".
+inline "cic:/CoRN/ftc/FunctSeries/Definitions/I.con" "Definitions__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/FunctSeries/f.var".
+inline "cic:/CoRN/ftc/FunctSeries/Definitions/f.var" "Definitions__".
 
 inline "cic:/CoRN/ftc/FunctSeries/fun_seq_part_sum.con".
 
@@ -87,15 +87,15 @@ the corresponding series.
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/FunctSeries/H.var".
+inline "cic:/CoRN/ftc/FunctSeries/Definitions/H.var" "Definitions__".
 
 (* end show *)
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/FunctSeries/contf.con".
+inline "cic:/CoRN/ftc/FunctSeries/Definitions/contf.con" "Definitions__".
 
-inline "cic:/CoRN/ftc/FunctSeries/incf.con".
+inline "cic:/CoRN/ftc/FunctSeries/Definitions/incf.con" "Definitions__".
 
 (* end hide *)
 
@@ -104,7 +104,7 @@ inline "cic:/CoRN/ftc/FunctSeries/Fun_Series_Sum_strext.con".
 inline "cic:/CoRN/ftc/FunctSeries/Fun_Series_Sum.con".
 
 (* UNEXPORTED
-End Definitions.
+End Definitions
 *)
 
 (* UNEXPORTED
@@ -116,27 +116,27 @@ Hint Resolve fun_seq_part_sum_cont: continuous.
 *)
 
 (* UNEXPORTED
-Section More_Definitions.
+Section More_Definitions
 *)
 
-inline "cic:/CoRN/ftc/FunctSeries/a.var".
+inline "cic:/CoRN/ftc/FunctSeries/More_Definitions/a.var" "More_Definitions__".
 
-inline "cic:/CoRN/ftc/FunctSeries/b.var".
+inline "cic:/CoRN/ftc/FunctSeries/More_Definitions/b.var" "More_Definitions__".
 
-inline "cic:/CoRN/ftc/FunctSeries/Hab.var".
+inline "cic:/CoRN/ftc/FunctSeries/More_Definitions/Hab.var" "More_Definitions__".
 
-inline "cic:/CoRN/ftc/FunctSeries/f.var".
+inline "cic:/CoRN/ftc/FunctSeries/More_Definitions/f.var" "More_Definitions__".
 
 (*#* A series can also be absolutely convergent. *)
 
 inline "cic:/CoRN/ftc/FunctSeries/fun_series_abs_convergent.con".
 
 (* UNEXPORTED
-End More_Definitions.
+End More_Definitions
 *)
 
 (* UNEXPORTED
-Section Operations.
+Section Operations
 *)
 
 (* **Algebraic Properties
@@ -144,15 +144,15 @@ Section Operations.
 All of these are analogous to the properties for series of real numbers, so we won't comment much about them.
 *)
 
-inline "cic:/CoRN/ftc/FunctSeries/a.var".
+inline "cic:/CoRN/ftc/FunctSeries/Operations/a.var" "Operations__".
 
-inline "cic:/CoRN/ftc/FunctSeries/b.var".
+inline "cic:/CoRN/ftc/FunctSeries/Operations/b.var" "Operations__".
 
-inline "cic:/CoRN/ftc/FunctSeries/Hab.var".
+inline "cic:/CoRN/ftc/FunctSeries/Operations/Hab.var" "Operations__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/FunctSeries/I.con".
+inline "cic:/CoRN/ftc/FunctSeries/Operations/I.con" "Operations__".
 
 (* end hide *)
 
@@ -168,9 +168,9 @@ inline "cic:/CoRN/ftc/FunctSeries/Fun_Series_Sum_zero.con".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/FunctSeries/f.var".
+inline "cic:/CoRN/ftc/FunctSeries/Operations/f.var" "Operations__".
 
-inline "cic:/CoRN/ftc/FunctSeries/g.var".
+inline "cic:/CoRN/ftc/FunctSeries/Operations/g.var" "Operations__".
 
 (* end show *)
 
@@ -178,9 +178,9 @@ inline "cic:/CoRN/ftc/FunctSeries/fun_series_convergent_wd.con".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/FunctSeries/convF.var".
+inline "cic:/CoRN/ftc/FunctSeries/Operations/convF.var" "Operations__".
 
-inline "cic:/CoRN/ftc/FunctSeries/convG.var".
+inline "cic:/CoRN/ftc/FunctSeries/Operations/convG.var" "Operations__".
 
 (* end show *)
 
@@ -199,61 +199,61 @@ inline "cic:/CoRN/ftc/FunctSeries/Fun_Series_Sum_min.con".
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/FunctSeries/c.var".
+inline "cic:/CoRN/ftc/FunctSeries/Operations/c.var" "Operations__".
 
-inline "cic:/CoRN/ftc/FunctSeries/H.var".
+inline "cic:/CoRN/ftc/FunctSeries/Operations/H.var" "Operations__".
 
-inline "cic:/CoRN/ftc/FunctSeries/contH.var".
+inline "cic:/CoRN/ftc/FunctSeries/Operations/contH.var" "Operations__".
 
 inline "cic:/CoRN/ftc/FunctSeries/conv_fun_series_scal.con".
 
 inline "cic:/CoRN/ftc/FunctSeries/Fun_Series_Sum_scal.con".
 
 (* UNEXPORTED
-End Operations.
+End Operations
 *)
 
 (* UNEXPORTED
-Section More_Operations.
+Section More_Operations
 *)
 
-inline "cic:/CoRN/ftc/FunctSeries/a.var".
+inline "cic:/CoRN/ftc/FunctSeries/More_Operations/a.var" "More_Operations__".
 
-inline "cic:/CoRN/ftc/FunctSeries/b.var".
+inline "cic:/CoRN/ftc/FunctSeries/More_Operations/b.var" "More_Operations__".
 
-inline "cic:/CoRN/ftc/FunctSeries/Hab.var".
+inline "cic:/CoRN/ftc/FunctSeries/More_Operations/Hab.var" "More_Operations__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/FunctSeries/I.con".
+inline "cic:/CoRN/ftc/FunctSeries/More_Operations/I.con" "More_Operations__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/FunctSeries/f.var".
+inline "cic:/CoRN/ftc/FunctSeries/More_Operations/f.var" "More_Operations__".
 
-inline "cic:/CoRN/ftc/FunctSeries/convF.var".
+inline "cic:/CoRN/ftc/FunctSeries/More_Operations/convF.var" "More_Operations__".
 
 inline "cic:/CoRN/ftc/FunctSeries/conv_fun_series_inv.con".
 
 inline "cic:/CoRN/ftc/FunctSeries/Fun_Series_Sum_inv.con".
 
 (* UNEXPORTED
-End More_Operations.
+End More_Operations
 *)
 
 (* UNEXPORTED
-Section Other_Results.
+Section Other_Results
 *)
 
-inline "cic:/CoRN/ftc/FunctSeries/a.var".
+inline "cic:/CoRN/ftc/FunctSeries/Other_Results/a.var" "Other_Results__".
 
-inline "cic:/CoRN/ftc/FunctSeries/b.var".
+inline "cic:/CoRN/ftc/FunctSeries/Other_Results/b.var" "Other_Results__".
 
-inline "cic:/CoRN/ftc/FunctSeries/Hab.var".
+inline "cic:/CoRN/ftc/FunctSeries/Other_Results/Hab.var" "Other_Results__".
 
-inline "cic:/CoRN/ftc/FunctSeries/f.var".
+inline "cic:/CoRN/ftc/FunctSeries/Other_Results/f.var" "Other_Results__".
 
-inline "cic:/CoRN/ftc/FunctSeries/convF.var".
+inline "cic:/CoRN/ftc/FunctSeries/Other_Results/convF.var" "Other_Results__".
 
 (*#*
 The following relate the sum series with the limit of the sequence of
@@ -272,7 +272,7 @@ inline "cic:/CoRN/ftc/FunctSeries/Fun_Series_Sum_char.con".
 inline "cic:/CoRN/ftc/FunctSeries/Fun_Series_Sum_as_Lim.con".
 
 (* UNEXPORTED
-End Other_Results.
+End Other_Results
 *)
 
 (* UNEXPORTED
@@ -280,7 +280,7 @@ Hint Resolve Fun_Series_Sum_cont: continuous.
 *)
 
 (* UNEXPORTED
-Section Convergence_Criteria.
+Section Convergence_Criteria
 *)
 
 (*#* **Convergence Criteria
@@ -288,21 +288,21 @@ Section Convergence_Criteria.
 Most of the convergence criteria for series of real numbers carry over to series of real-valued functions, so again we just present them without comments.
 *)
 
-inline "cic:/CoRN/ftc/FunctSeries/a.var".
+inline "cic:/CoRN/ftc/FunctSeries/Convergence_Criteria/a.var" "Convergence_Criteria__".
 
-inline "cic:/CoRN/ftc/FunctSeries/b.var".
+inline "cic:/CoRN/ftc/FunctSeries/Convergence_Criteria/b.var" "Convergence_Criteria__".
 
-inline "cic:/CoRN/ftc/FunctSeries/Hab.var".
+inline "cic:/CoRN/ftc/FunctSeries/Convergence_Criteria/Hab.var" "Convergence_Criteria__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/FunctSeries/I.con".
+inline "cic:/CoRN/ftc/FunctSeries/Convergence_Criteria/I.con" "Convergence_Criteria__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/FunctSeries/f.var".
+inline "cic:/CoRN/ftc/FunctSeries/Convergence_Criteria/f.var" "Convergence_Criteria__".
 
-inline "cic:/CoRN/ftc/FunctSeries/contF.var".
+inline "cic:/CoRN/ftc/FunctSeries/Convergence_Criteria/contF.var" "Convergence_Criteria__".
 
 (* UNEXPORTED
 Opaque Frestr.
@@ -361,6 +361,6 @@ Opaque FAbs.
 inline "cic:/CoRN/ftc/FunctSeries/fun_ratio_test_conv.con".
 
 (* UNEXPORTED
-End Convergence_Criteria.
+End Convergence_Criteria
 *)
 

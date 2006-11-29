@@ -51,10 +51,10 @@ library of Coq but moved to the Type level.
 *)
 
 (* UNEXPORTED
-Section List.
+Section List
 *)
 
-inline "cic:/CoRN/algebra/ListType/A.var".
+inline "cic:/CoRN/algebra/ListType/List/A.var" "List__".
 
 inline "cic:/CoRN/algebra/ListType/list.ind".
 
@@ -97,7 +97,7 @@ inline "cic:/CoRN/algebra/ListType/length.con".
 (*#*****************************)
 
 (* UNEXPORTED
-Section length_order.
+Section length_order
 *)
 
 inline "cic:/CoRN/algebra/ListType/lel.con".
@@ -106,15 +106,15 @@ inline "cic:/CoRN/algebra/ListType/lel.con".
 Hint Unfold lel: list.
 *)
 
-inline "cic:/CoRN/algebra/ListType/a.var".
+inline "cic:/CoRN/algebra/ListType/List/length_order/a.var" "List__length_order__".
 
-inline "cic:/CoRN/algebra/ListType/b.var".
+inline "cic:/CoRN/algebra/ListType/List/length_order/b.var" "List__length_order__".
 
-inline "cic:/CoRN/algebra/ListType/l.var".
+inline "cic:/CoRN/algebra/ListType/List/length_order/l.var" "List__length_order__".
 
-inline "cic:/CoRN/algebra/ListType/m.var".
+inline "cic:/CoRN/algebra/ListType/List/length_order/m.var" "List__length_order__".
 
-inline "cic:/CoRN/algebra/ListType/n.var".
+inline "cic:/CoRN/algebra/ListType/List/length_order/n.var" "List__length_order__".
 
 inline "cic:/CoRN/algebra/ListType/lel_refl.con".
 
@@ -129,7 +129,7 @@ inline "cic:/CoRN/algebra/ListType/lel_tail.con".
 inline "cic:/CoRN/algebra/ListType/lel_nil.con".
 
 (* UNEXPORTED
-End length_order.
+End length_order
 *)
 
 (* UNEXPORTED
@@ -204,7 +204,7 @@ Hint Resolve incl_cons: list v62.
 inline "cic:/CoRN/algebra/ListType/incl_app.con".
 
 (* UNEXPORTED
-End List.
+End List
 *)
 
 (* UNEXPORTED
@@ -220,19 +220,19 @@ Implicit Arguments cons [A].
 *)
 
 (* UNEXPORTED
-Section Map.
+Section Map
 *)
 
-inline "cic:/CoRN/algebra/ListType/A.var".
+inline "cic:/CoRN/algebra/ListType/Map/A.var" "Map__".
 
-inline "cic:/CoRN/algebra/ListType/B.var".
+inline "cic:/CoRN/algebra/ListType/Map/B.var" "Map__".
 
-inline "cic:/CoRN/algebra/ListType/f.var".
+inline "cic:/CoRN/algebra/ListType/Map/f.var" "Map__".
 
 inline "cic:/CoRN/algebra/ListType/map.con".
 
 (* UNEXPORTED
-End Map.
+End Map
 *)
 
 (* UNEXPORTED

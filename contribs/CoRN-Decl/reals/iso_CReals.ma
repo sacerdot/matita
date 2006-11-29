@@ -58,12 +58,12 @@ inline "cic:/CoRN/reals/iso_CReals/Lim_pres_mult.con".
 inline "cic:/CoRN/reals/iso_CReals/G_pres_mult.con".
 
 (* UNEXPORTED
-Section Concrete_iso_between_Creals.
+Section Concrete_iso_between_Creals
 *)
 
-inline "cic:/CoRN/reals/iso_CReals/R1.var".
+inline "cic:/CoRN/reals/iso_CReals/Concrete_iso_between_Creals/R1.var" "Concrete_iso_between_Creals__".
 
-inline "cic:/CoRN/reals/iso_CReals/R2.var".
+inline "cic:/CoRN/reals/iso_CReals/Concrete_iso_between_Creals/R2.var" "Concrete_iso_between_Creals__".
 
 inline "cic:/CoRN/reals/iso_CReals/image_Cauchy12.con".
 
@@ -118,7 +118,7 @@ inline "cic:/CoRN/reals/iso_CReals/g21_inverse_rht.con".
 inline "cic:/CoRN/reals/iso_CReals/Canonic_Isomorphism_between_CReals.con".
 
 (* UNEXPORTED
-End Concrete_iso_between_Creals.
+End Concrete_iso_between_Creals
 *)
 
 (* end hide *)

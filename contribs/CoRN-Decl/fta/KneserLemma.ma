@@ -33,7 +33,7 @@ include "fta/MainLemma.ma".
 (*#* ** Kneser Lemma *)
 
 (* UNEXPORTED
-Section Kneser_Lemma.
+Section Kneser_Lemma
 *)
 
 (*#*
@@ -43,25 +43,25 @@ such that [0 < n], [b_0 := b 0], [b_n := (b n) [=] One] and
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/fta/KneserLemma/b.var".
+inline "cic:/CoRN/fta/KneserLemma/Kneser_Lemma/b.var" "Kneser_Lemma__".
 
-inline "cic:/CoRN/fta/KneserLemma/n.var".
+inline "cic:/CoRN/fta/KneserLemma/Kneser_Lemma/n.var" "Kneser_Lemma__".
 
-inline "cic:/CoRN/fta/KneserLemma/gt_n_0.var".
+inline "cic:/CoRN/fta/KneserLemma/Kneser_Lemma/gt_n_0.var" "Kneser_Lemma__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/fta/KneserLemma/b_0.con".
+inline "cic:/CoRN/fta/KneserLemma/Kneser_Lemma/b_0.con" "Kneser_Lemma__".
 
-inline "cic:/CoRN/fta/KneserLemma/b_n.con".
+inline "cic:/CoRN/fta/KneserLemma/Kneser_Lemma/b_n.con" "Kneser_Lemma__".
 
 (* end hide *)
 
-inline "cic:/CoRN/fta/KneserLemma/b_n_1.var".
+inline "cic:/CoRN/fta/KneserLemma/Kneser_Lemma/b_n_1.var" "Kneser_Lemma__".
 
-inline "cic:/CoRN/fta/KneserLemma/c.var".
+inline "cic:/CoRN/fta/KneserLemma/Kneser_Lemma/c.var" "Kneser_Lemma__".
 
-inline "cic:/CoRN/fta/KneserLemma/b_0_lt_c.var".
+inline "cic:/CoRN/fta/KneserLemma/Kneser_Lemma/b_0_lt_c.var" "Kneser_Lemma__".
 
 (*#* 
 %\begin{convention}% We define the following local abbreviations:
@@ -77,21 +77,21 @@ inline "cic:/CoRN/fta/KneserLemma/b_0_lt_c.var".
 
 (* begin hide *)
 
-inline "cic:/CoRN/fta/KneserLemma/two_n.con".
+inline "cic:/CoRN/fta/KneserLemma/Kneser_Lemma/two_n.con" "Kneser_Lemma__".
 
-inline "cic:/CoRN/fta/KneserLemma/Small.con".
+inline "cic:/CoRN/fta/KneserLemma/Kneser_Lemma/Small.con" "Kneser_Lemma__".
 
-inline "cic:/CoRN/fta/KneserLemma/Smaller.con".
+inline "cic:/CoRN/fta/KneserLemma/Kneser_Lemma/Smaller.con" "Kneser_Lemma__".
 
-inline "cic:/CoRN/fta/KneserLemma/Smallest.con".
+inline "cic:/CoRN/fta/KneserLemma/Kneser_Lemma/Smallest.con" "Kneser_Lemma__".
 
-inline "cic:/CoRN/fta/KneserLemma/q.con".
+inline "cic:/CoRN/fta/KneserLemma/Kneser_Lemma/q.con" "Kneser_Lemma__".
 
 (* end hide *)
 
 inline "cic:/CoRN/fta/KneserLemma/b_0'_exists.con".
 
-inline "cic:/CoRN/fta/KneserLemma/eta_0.con".
+inline "cic:/CoRN/fta/KneserLemma/Kneser_Lemma/eta_0.con" "Kneser_Lemma__".
 
 inline "cic:/CoRN/fta/KneserLemma/eta_0_pos.con".
 
@@ -107,7 +107,7 @@ inline "cic:/CoRN/fta/KneserLemma/eps_exists.con".
 
 (* begin hide *)
 
-inline "cic:/CoRN/fta/KneserLemma/a.con".
+inline "cic:/CoRN/fta/KneserLemma/Kneser_Lemma/a.con" "Kneser_Lemma__".
 
 (* end hide *)
 
@@ -138,7 +138,7 @@ inline "cic:/CoRN/fta/KneserLemma/Kneser_2.con".
 inline "cic:/CoRN/fta/KneserLemma/Kneser_3.con".
 
 (* UNEXPORTED
-End Kneser_Lemma.
+End Kneser_Lemma
 *)
 
 inline "cic:/CoRN/fta/KneserLemma/Kneser.con".

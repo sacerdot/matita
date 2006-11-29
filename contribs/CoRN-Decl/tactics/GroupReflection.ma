@@ -27,18 +27,18 @@ include "algebra/CAbGroups.ma".
 include "tactics/AlgReflection.ma".
 
 (* UNEXPORTED
-Section Group_Interpretation_Function.
+Section Group_Interpretation_Function
 *)
 
-inline "cic:/CoRN/tactics/GroupReflection/G.var".
+inline "cic:/CoRN/tactics/GroupReflection/Group_Interpretation_Function/G.var" "Group_Interpretation_Function__".
 
-inline "cic:/CoRN/tactics/GroupReflection/val.var".
+inline "cic:/CoRN/tactics/GroupReflection/Group_Interpretation_Function/val.var" "Group_Interpretation_Function__".
 
-inline "cic:/CoRN/tactics/GroupReflection/unop.var".
+inline "cic:/CoRN/tactics/GroupReflection/Group_Interpretation_Function/unop.var" "Group_Interpretation_Function__".
 
-inline "cic:/CoRN/tactics/GroupReflection/binop.var".
+inline "cic:/CoRN/tactics/GroupReflection/Group_Interpretation_Function/binop.var" "Group_Interpretation_Function__".
 
-inline "cic:/CoRN/tactics/GroupReflection/pfun.var".
+inline "cic:/CoRN/tactics/GroupReflection/Group_Interpretation_Function/pfun.var" "Group_Interpretation_Function__".
 
 inline "cic:/CoRN/tactics/GroupReflection/interpG.ind".
 
@@ -129,22 +129,22 @@ inline "cic:/CoRN/tactics/GroupReflection/refl_interpG.con".
 inline "cic:/CoRN/tactics/GroupReflection/interpG_wd.con".
 
 (* UNEXPORTED
-End Group_Interpretation_Function.
+End Group_Interpretation_Function
 *)
 
 (* UNEXPORTED
-Section Group_NormCorrect.
+Section Group_NormCorrect
 *)
 
-inline "cic:/CoRN/tactics/GroupReflection/G.var".
+inline "cic:/CoRN/tactics/GroupReflection/Group_NormCorrect/G.var" "Group_NormCorrect__".
 
-inline "cic:/CoRN/tactics/GroupReflection/val.var".
+inline "cic:/CoRN/tactics/GroupReflection/Group_NormCorrect/val.var" "Group_NormCorrect__".
 
-inline "cic:/CoRN/tactics/GroupReflection/unop.var".
+inline "cic:/CoRN/tactics/GroupReflection/Group_NormCorrect/unop.var" "Group_NormCorrect__".
 
-inline "cic:/CoRN/tactics/GroupReflection/binop.var".
+inline "cic:/CoRN/tactics/GroupReflection/Group_NormCorrect/binop.var" "Group_NormCorrect__".
 
-inline "cic:/CoRN/tactics/GroupReflection/pfun.var".
+inline "cic:/CoRN/tactics/GroupReflection/Group_NormCorrect/pfun.var" "Group_NormCorrect__".
 
 (* NOTATION
 Notation II := (interpG G val unop binop pfun).
@@ -239,7 +239,7 @@ inline "cic:/CoRN/tactics/GroupReflection/NormG_corr_G.con".
 inline "cic:/CoRN/tactics/GroupReflection/Tactic_lemmaG.con".
 
 (* UNEXPORTED
-End Group_NormCorrect.
+End Group_NormCorrect
 *)
 
 (* end hide *)

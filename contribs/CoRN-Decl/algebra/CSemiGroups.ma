@@ -63,17 +63,17 @@ The axiomatic properties of a semi group.
 *)
 
 (* UNEXPORTED
-Section CSemiGroup_axioms.
+Section CSemiGroup_axioms
 *)
 
-inline "cic:/CoRN/algebra/CSemiGroups/G.var".
+inline "cic:/CoRN/algebra/CSemiGroups/CSemiGroup_axioms/G.var" "CSemiGroup_axioms__".
 
 inline "cic:/CoRN/algebra/CSemiGroups/CSemiGroup_is_CSemiGroup.con".
 
 inline "cic:/CoRN/algebra/CSemiGroups/plus_assoc.con".
 
 (* UNEXPORTED
-End CSemiGroup_axioms.
+End CSemiGroup_axioms
 *)
 
 (* Begin_SpecReals *)
@@ -86,17 +86,17 @@ Let [G] be a semi-group.
 *)
 
 (* UNEXPORTED
-Section CSemiGroup_basics.
+Section CSemiGroup_basics
 *)
 
-inline "cic:/CoRN/algebra/CSemiGroups/G.var".
+inline "cic:/CoRN/algebra/CSemiGroups/CSemiGroup_basics/G.var" "CSemiGroup_basics__".
 
 (* End_SpecReals *)
 
 inline "cic:/CoRN/algebra/CSemiGroups/plus_assoc_unfolded.con".
 
 (* UNEXPORTED
-End CSemiGroup_basics.
+End CSemiGroup_basics
 *)
 
 (* End_SpecReals *)
@@ -118,20 +118,20 @@ At this stage, we will always consider automorphisms; we %{\em %could%}% treat t
 *)
 
 (* UNEXPORTED
-Section Part_Function_Plus.
+Section Part_Function_Plus
 *)
 
-inline "cic:/CoRN/algebra/CSemiGroups/G.var".
+inline "cic:/CoRN/algebra/CSemiGroups/Part_Function_Plus/G.var" "Part_Function_Plus__".
 
-inline "cic:/CoRN/algebra/CSemiGroups/F.var".
+inline "cic:/CoRN/algebra/CSemiGroups/Part_Function_Plus/F.var" "Part_Function_Plus__".
 
-inline "cic:/CoRN/algebra/CSemiGroups/F'.var".
+inline "cic:/CoRN/algebra/CSemiGroups/Part_Function_Plus/F'.var" "Part_Function_Plus__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/algebra/CSemiGroups/P.con".
+inline "cic:/CoRN/algebra/CSemiGroups/Part_Function_Plus/P.con" "Part_Function_Plus__".
 
-inline "cic:/CoRN/algebra/CSemiGroups/Q.con".
+inline "cic:/CoRN/algebra/CSemiGroups/Part_Function_Plus/Q.con" "Part_Function_Plus__".
 
 (* end hide *)
 
@@ -144,7 +144,7 @@ inline "cic:/CoRN/algebra/CSemiGroups/Fplus.con".
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CSemiGroups/R.var".
+inline "cic:/CoRN/algebra/CSemiGroups/Part_Function_Plus/R.var" "Part_Function_Plus__".
 
 inline "cic:/CoRN/algebra/CSemiGroups/included_FPlus.con".
 
@@ -153,7 +153,7 @@ inline "cic:/CoRN/algebra/CSemiGroups/included_FPlus'.con".
 inline "cic:/CoRN/algebra/CSemiGroups/included_FPlus''.con".
 
 (* UNEXPORTED
-End Part_Function_Plus.
+End Part_Function_Plus
 *)
 
 (* UNEXPORTED
@@ -180,20 +180,20 @@ predicate on the semi-group which is preserved by [[+]].
 *)
 
 (* UNEXPORTED
-Section SubCSemiGroups.
+Section SubCSemiGroups
 *)
 
-inline "cic:/CoRN/algebra/CSemiGroups/csg.var".
+inline "cic:/CoRN/algebra/CSemiGroups/SubCSemiGroups/csg.var" "SubCSemiGroups__".
 
-inline "cic:/CoRN/algebra/CSemiGroups/P.var".
+inline "cic:/CoRN/algebra/CSemiGroups/SubCSemiGroups/P.var" "SubCSemiGroups__".
 
-inline "cic:/CoRN/algebra/CSemiGroups/op_pres_P.var".
+inline "cic:/CoRN/algebra/CSemiGroups/SubCSemiGroups/op_pres_P.var" "SubCSemiGroups__".
 
-inline "cic:/CoRN/algebra/CSemiGroups/subcrr.con".
+inline "cic:/CoRN/algebra/CSemiGroups/SubCSemiGroups/subcrr.con" "SubCSemiGroups__".
 
 inline "cic:/CoRN/algebra/CSemiGroups/Build_SubCSemiGroup.con".
 
 (* UNEXPORTED
-End SubCSemiGroups.
+End SubCSemiGroups
 *)
 

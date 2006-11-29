@@ -23,11 +23,11 @@ include "CoRN.ma".
 include "ftc/MoreFunctions.ma".
 
 (* UNEXPORTED
-Section Maps_into_Compacts.
+Section Maps_into_Compacts
 *)
 
 (* UNEXPORTED
-Section Part_Funct.
+Section Part_Funct
 *)
 
 (*#* *Composition
@@ -53,31 +53,31 @@ mapped into another compact interval.  We define this concept for
 partial functions, and prove some trivial results.
 *)
 
-inline "cic:/CoRN/ftc/Composition/F.var".
+inline "cic:/CoRN/ftc/Composition/Maps_into_Compacts/Part_Funct/F.var" "Maps_into_Compacts__Part_Funct__".
 
-inline "cic:/CoRN/ftc/Composition/G.var".
+inline "cic:/CoRN/ftc/Composition/Maps_into_Compacts/Part_Funct/G.var" "Maps_into_Compacts__Part_Funct__".
 
-inline "cic:/CoRN/ftc/Composition/a.var".
+inline "cic:/CoRN/ftc/Composition/Maps_into_Compacts/Part_Funct/a.var" "Maps_into_Compacts__Part_Funct__".
 
-inline "cic:/CoRN/ftc/Composition/b.var".
+inline "cic:/CoRN/ftc/Composition/Maps_into_Compacts/Part_Funct/b.var" "Maps_into_Compacts__Part_Funct__".
 
-inline "cic:/CoRN/ftc/Composition/Hab.var".
+inline "cic:/CoRN/ftc/Composition/Maps_into_Compacts/Part_Funct/Hab.var" "Maps_into_Compacts__Part_Funct__".
 
-inline "cic:/CoRN/ftc/Composition/c.var".
+inline "cic:/CoRN/ftc/Composition/Maps_into_Compacts/Part_Funct/c.var" "Maps_into_Compacts__Part_Funct__".
 
-inline "cic:/CoRN/ftc/Composition/d.var".
+inline "cic:/CoRN/ftc/Composition/Maps_into_Compacts/Part_Funct/d.var" "Maps_into_Compacts__Part_Funct__".
 
-inline "cic:/CoRN/ftc/Composition/Hcd.var".
+inline "cic:/CoRN/ftc/Composition/Maps_into_Compacts/Part_Funct/Hcd.var" "Maps_into_Compacts__Part_Funct__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/Composition/I.con".
+inline "cic:/CoRN/ftc/Composition/Maps_into_Compacts/Part_Funct/I.con" "Maps_into_Compacts__Part_Funct__".
 
 (* end hide *)
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/Composition/Hf.var".
+inline "cic:/CoRN/ftc/Composition/Maps_into_Compacts/Part_Funct/Hf.var" "Maps_into_Compacts__Part_Funct__".
 
 (* end show *)
 
@@ -85,7 +85,7 @@ inline "cic:/CoRN/ftc/Composition/maps_into_compacts.con".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/Composition/maps.var".
+inline "cic:/CoRN/ftc/Composition/Maps_into_Compacts/Part_Funct/maps.var" "Maps_into_Compacts__Part_Funct__".
 
 (* end show *)
 
@@ -98,15 +98,15 @@ inline "cic:/CoRN/ftc/Composition/maps_lemma_less.con".
 inline "cic:/CoRN/ftc/Composition/maps_lemma_inc.con".
 
 (* UNEXPORTED
-End Part_Funct.
+End Part_Funct
 *)
 
 (* UNEXPORTED
-End Maps_into_Compacts.
+End Maps_into_Compacts
 *)
 
 (* UNEXPORTED
-Section Mapping.
+Section Mapping
 *)
 
 (*#*
@@ -114,40 +114,40 @@ As was the case for division of partial functions, this condition
 completely characterizes the domain of the composite function.
 *)
 
-inline "cic:/CoRN/ftc/Composition/F.var".
+inline "cic:/CoRN/ftc/Composition/Mapping/F.var" "Mapping__".
 
-inline "cic:/CoRN/ftc/Composition/G.var".
+inline "cic:/CoRN/ftc/Composition/Mapping/G.var" "Mapping__".
 
-inline "cic:/CoRN/ftc/Composition/a.var".
+inline "cic:/CoRN/ftc/Composition/Mapping/a.var" "Mapping__".
 
-inline "cic:/CoRN/ftc/Composition/b.var".
+inline "cic:/CoRN/ftc/Composition/Mapping/b.var" "Mapping__".
 
-inline "cic:/CoRN/ftc/Composition/Hab.var".
+inline "cic:/CoRN/ftc/Composition/Mapping/Hab.var" "Mapping__".
 
-inline "cic:/CoRN/ftc/Composition/c.var".
+inline "cic:/CoRN/ftc/Composition/Mapping/c.var" "Mapping__".
 
-inline "cic:/CoRN/ftc/Composition/d.var".
+inline "cic:/CoRN/ftc/Composition/Mapping/d.var" "Mapping__".
 
-inline "cic:/CoRN/ftc/Composition/Hcd.var".
+inline "cic:/CoRN/ftc/Composition/Mapping/Hcd.var" "Mapping__".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/Composition/Hf.var".
+inline "cic:/CoRN/ftc/Composition/Mapping/Hf.var" "Mapping__".
 
-inline "cic:/CoRN/ftc/Composition/Hg.var".
+inline "cic:/CoRN/ftc/Composition/Mapping/Hg.var" "Mapping__".
 
-inline "cic:/CoRN/ftc/Composition/maps.var".
+inline "cic:/CoRN/ftc/Composition/Mapping/maps.var" "Mapping__".
 
 (* end show *)
 
 inline "cic:/CoRN/ftc/Composition/included_comp.con".
 
 (* UNEXPORTED
-End Mapping.
+End Mapping
 *)
 
 (* UNEXPORTED
-Section Interval_Continuity.
+Section Interval_Continuity
 *)
 
 (*#* **Continuity
@@ -155,46 +155,46 @@ Section Interval_Continuity.
 We now prove that the composition of two continuous partial functions is continuous.
 *)
 
-inline "cic:/CoRN/ftc/Composition/a.var".
+inline "cic:/CoRN/ftc/Composition/Interval_Continuity/a.var" "Interval_Continuity__".
 
-inline "cic:/CoRN/ftc/Composition/b.var".
+inline "cic:/CoRN/ftc/Composition/Interval_Continuity/b.var" "Interval_Continuity__".
 
-inline "cic:/CoRN/ftc/Composition/Hab.var".
+inline "cic:/CoRN/ftc/Composition/Interval_Continuity/Hab.var" "Interval_Continuity__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/Composition/I.con".
+inline "cic:/CoRN/ftc/Composition/Interval_Continuity/I.con" "Interval_Continuity__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/Composition/c.var".
+inline "cic:/CoRN/ftc/Composition/Interval_Continuity/c.var" "Interval_Continuity__".
 
-inline "cic:/CoRN/ftc/Composition/d.var".
+inline "cic:/CoRN/ftc/Composition/Interval_Continuity/d.var" "Interval_Continuity__".
 
-inline "cic:/CoRN/ftc/Composition/Hcd.var".
+inline "cic:/CoRN/ftc/Composition/Interval_Continuity/Hcd.var" "Interval_Continuity__".
 
-inline "cic:/CoRN/ftc/Composition/F.var".
+inline "cic:/CoRN/ftc/Composition/Interval_Continuity/F.var" "Interval_Continuity__".
 
-inline "cic:/CoRN/ftc/Composition/G.var".
+inline "cic:/CoRN/ftc/Composition/Interval_Continuity/G.var" "Interval_Continuity__".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/Composition/contF.var".
+inline "cic:/CoRN/ftc/Composition/Interval_Continuity/contF.var" "Interval_Continuity__".
 
-inline "cic:/CoRN/ftc/Composition/contG.var".
+inline "cic:/CoRN/ftc/Composition/Interval_Continuity/contG.var" "Interval_Continuity__".
 
-inline "cic:/CoRN/ftc/Composition/Hmap.var".
+inline "cic:/CoRN/ftc/Composition/Interval_Continuity/Hmap.var" "Interval_Continuity__".
 
 (* end show *)
 
 inline "cic:/CoRN/ftc/Composition/Continuous_I_comp.con".
 
 (* UNEXPORTED
-End Interval_Continuity.
+End Interval_Continuity
 *)
 
 (* UNEXPORTED
-Section Derivative.
+Section Derivative
 *)
 
 (*#* **Derivative
@@ -202,43 +202,43 @@ Section Derivative.
 We now work with the derivative relation and prove the chain rule for partial functions.
 *)
 
-inline "cic:/CoRN/ftc/Composition/F.var".
+inline "cic:/CoRN/ftc/Composition/Derivative/F.var" "Derivative__".
 
-inline "cic:/CoRN/ftc/Composition/F'.var".
+inline "cic:/CoRN/ftc/Composition/Derivative/F'.var" "Derivative__".
 
-inline "cic:/CoRN/ftc/Composition/G.var".
+inline "cic:/CoRN/ftc/Composition/Derivative/G.var" "Derivative__".
 
-inline "cic:/CoRN/ftc/Composition/G'.var".
+inline "cic:/CoRN/ftc/Composition/Derivative/G'.var" "Derivative__".
 
-inline "cic:/CoRN/ftc/Composition/a.var".
+inline "cic:/CoRN/ftc/Composition/Derivative/a.var" "Derivative__".
 
-inline "cic:/CoRN/ftc/Composition/b.var".
+inline "cic:/CoRN/ftc/Composition/Derivative/b.var" "Derivative__".
 
-inline "cic:/CoRN/ftc/Composition/Hab'.var".
+inline "cic:/CoRN/ftc/Composition/Derivative/Hab'.var" "Derivative__".
 
-inline "cic:/CoRN/ftc/Composition/c.var".
+inline "cic:/CoRN/ftc/Composition/Derivative/c.var" "Derivative__".
 
-inline "cic:/CoRN/ftc/Composition/d.var".
+inline "cic:/CoRN/ftc/Composition/Derivative/d.var" "Derivative__".
 
-inline "cic:/CoRN/ftc/Composition/Hcd'.var".
+inline "cic:/CoRN/ftc/Composition/Derivative/Hcd'.var" "Derivative__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/Composition/Hab.con".
+inline "cic:/CoRN/ftc/Composition/Derivative/Hab.con" "Derivative__".
 
-inline "cic:/CoRN/ftc/Composition/Hcd.con".
+inline "cic:/CoRN/ftc/Composition/Derivative/Hcd.con" "Derivative__".
 
-inline "cic:/CoRN/ftc/Composition/I.con".
+inline "cic:/CoRN/ftc/Composition/Derivative/I.con" "Derivative__".
 
 (* end hide *)
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/Composition/derF.var".
+inline "cic:/CoRN/ftc/Composition/Derivative/derF.var" "Derivative__".
 
-inline "cic:/CoRN/ftc/Composition/derG.var".
+inline "cic:/CoRN/ftc/Composition/Derivative/derG.var" "Derivative__".
 
-inline "cic:/CoRN/ftc/Composition/Hmap.var".
+inline "cic:/CoRN/ftc/Composition/Derivative/Hmap.var" "Derivative__".
 
 (* end show *)
 
@@ -255,11 +255,11 @@ The next lemma will be useful when we move on to differentiability.
 inline "cic:/CoRN/ftc/Composition/Diffble_I_comp_aux.con".
 
 (* UNEXPORTED
-End Derivative.
+End Derivative
 *)
 
 (* UNEXPORTED
-Section Differentiability.
+Section Differentiability
 *)
 
 (*#* **Differentiability
@@ -267,50 +267,50 @@ Section Differentiability.
 Finally, we move on to differentiability.
 *)
 
-inline "cic:/CoRN/ftc/Composition/F.var".
+inline "cic:/CoRN/ftc/Composition/Differentiability/F.var" "Differentiability__".
 
-inline "cic:/CoRN/ftc/Composition/G.var".
+inline "cic:/CoRN/ftc/Composition/Differentiability/G.var" "Differentiability__".
 
-inline "cic:/CoRN/ftc/Composition/a.var".
+inline "cic:/CoRN/ftc/Composition/Differentiability/a.var" "Differentiability__".
 
-inline "cic:/CoRN/ftc/Composition/b.var".
+inline "cic:/CoRN/ftc/Composition/Differentiability/b.var" "Differentiability__".
 
-inline "cic:/CoRN/ftc/Composition/Hab'.var".
+inline "cic:/CoRN/ftc/Composition/Differentiability/Hab'.var" "Differentiability__".
 
-inline "cic:/CoRN/ftc/Composition/c.var".
+inline "cic:/CoRN/ftc/Composition/Differentiability/c.var" "Differentiability__".
 
-inline "cic:/CoRN/ftc/Composition/d.var".
+inline "cic:/CoRN/ftc/Composition/Differentiability/d.var" "Differentiability__".
 
-inline "cic:/CoRN/ftc/Composition/Hcd'.var".
+inline "cic:/CoRN/ftc/Composition/Differentiability/Hcd'.var" "Differentiability__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/Composition/Hab.con".
+inline "cic:/CoRN/ftc/Composition/Differentiability/Hab.con" "Differentiability__".
 
-inline "cic:/CoRN/ftc/Composition/Hcd.con".
+inline "cic:/CoRN/ftc/Composition/Differentiability/Hcd.con" "Differentiability__".
 
-inline "cic:/CoRN/ftc/Composition/I.con".
+inline "cic:/CoRN/ftc/Composition/Differentiability/I.con" "Differentiability__".
 
 (* end hide *)
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/Composition/diffF.var".
+inline "cic:/CoRN/ftc/Composition/Differentiability/diffF.var" "Differentiability__".
 
-inline "cic:/CoRN/ftc/Composition/diffG.var".
+inline "cic:/CoRN/ftc/Composition/Differentiability/diffG.var" "Differentiability__".
 
-inline "cic:/CoRN/ftc/Composition/Hmap.var".
+inline "cic:/CoRN/ftc/Composition/Differentiability/Hmap.var" "Differentiability__".
 
 (* end show *)
 
 inline "cic:/CoRN/ftc/Composition/Diffble_I_comp.con".
 
 (* UNEXPORTED
-End Differentiability.
+End Differentiability
 *)
 
 (* UNEXPORTED
-Section Generalized_Intervals.
+Section Generalized_Intervals
 *)
 
 (*#* **Generalizations
@@ -321,13 +321,13 @@ We now generalize this results to arbitrary intervals.  We begin by generalizing
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/Composition/I.var".
+inline "cic:/CoRN/ftc/Composition/Generalized_Intervals/I.var" "Generalized_Intervals__".
 
-inline "cic:/CoRN/ftc/Composition/J.var".
+inline "cic:/CoRN/ftc/Composition/Generalized_Intervals/J.var" "Generalized_Intervals__".
 
-inline "cic:/CoRN/ftc/Composition/pI.var".
+inline "cic:/CoRN/ftc/Composition/Generalized_Intervals/pI.var" "Generalized_Intervals__".
 
-inline "cic:/CoRN/ftc/Composition/pJ.var".
+inline "cic:/CoRN/ftc/Composition/Generalized_Intervals/pJ.var" "Generalized_Intervals__".
 
 inline "cic:/CoRN/ftc/Composition/maps_compacts_into.con".
 
@@ -337,17 +337,17 @@ Now everything comes naturally:
 
 inline "cic:/CoRN/ftc/Composition/comp_inc_lemma.con".
 
-inline "cic:/CoRN/ftc/Composition/F.var".
+inline "cic:/CoRN/ftc/Composition/Generalized_Intervals/F.var" "Generalized_Intervals__".
 
-inline "cic:/CoRN/ftc/Composition/F'.var".
+inline "cic:/CoRN/ftc/Composition/Generalized_Intervals/F'.var" "Generalized_Intervals__".
 
-inline "cic:/CoRN/ftc/Composition/G.var".
+inline "cic:/CoRN/ftc/Composition/Generalized_Intervals/G.var" "Generalized_Intervals__".
 
-inline "cic:/CoRN/ftc/Composition/G'.var".
+inline "cic:/CoRN/ftc/Composition/Generalized_Intervals/G'.var" "Generalized_Intervals__".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/Composition/Hmap.var".
+inline "cic:/CoRN/ftc/Composition/Generalized_Intervals/Hmap.var" "Generalized_Intervals__".
 
 (* end show *)
 
@@ -355,18 +355,18 @@ inline "cic:/CoRN/ftc/Composition/Continuous_comp.con".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/Composition/Hmap'.var".
+inline "cic:/CoRN/ftc/Composition/Generalized_Intervals/Hmap'.var" "Generalized_Intervals__".
 
 (* end show *)
 
 inline "cic:/CoRN/ftc/Composition/Derivative_comp.con".
 
 (* UNEXPORTED
-End Generalized_Intervals.
+End Generalized_Intervals
 *)
 
 (* UNEXPORTED
-Section Corollaries.
+Section Corollaries
 *)
 
 (*#*
@@ -390,7 +390,7 @@ As a corollary, we get the generalization of differentiability property.
 inline "cic:/CoRN/ftc/Composition/Diffble_comp.con".
 
 (* UNEXPORTED
-End Corollaries.
+End Corollaries
 *)
 
 (* UNEXPORTED

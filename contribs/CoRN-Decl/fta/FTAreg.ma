@@ -33,12 +33,12 @@ include "fta/CPoly_Contin1.ma".
 *)
 
 (* UNEXPORTED
-Section Seq_Exists.
+Section Seq_Exists
 *)
 
-inline "cic:/CoRN/fta/FTAreg/n.var".
+inline "cic:/CoRN/fta/FTAreg/Seq_Exists/n.var" "Seq_Exists__".
 
-inline "cic:/CoRN/fta/FTAreg/lt0n.var".
+inline "cic:/CoRN/fta/FTAreg/Seq_Exists/lt0n.var" "Seq_Exists__".
 
 (*#*
 %\begin{convention}% Let [qK] be a real between 0 and 1, with
@@ -52,24 +52,24 @@ Let [p] be a monic polynomial over the complex numbers with degree
 *)
 
 (* UNEXPORTED
-Section Kneser_Sequence.
+Section Kneser_Sequence
 *)
 
-inline "cic:/CoRN/fta/FTAreg/qK.var".
+inline "cic:/CoRN/fta/FTAreg/Seq_Exists/Kneser_Sequence/qK.var" "Seq_Exists__Kneser_Sequence__".
 
-inline "cic:/CoRN/fta/FTAreg/zltq.var".
+inline "cic:/CoRN/fta/FTAreg/Seq_Exists/Kneser_Sequence/zltq.var" "Seq_Exists__Kneser_Sequence__".
 
-inline "cic:/CoRN/fta/FTAreg/qlt1.var".
+inline "cic:/CoRN/fta/FTAreg/Seq_Exists/Kneser_Sequence/qlt1.var" "Seq_Exists__Kneser_Sequence__".
 
-inline "cic:/CoRN/fta/FTAreg/q_prop.var".
+inline "cic:/CoRN/fta/FTAreg/Seq_Exists/Kneser_Sequence/q_prop.var" "Seq_Exists__Kneser_Sequence__".
 
-inline "cic:/CoRN/fta/FTAreg/p.var".
+inline "cic:/CoRN/fta/FTAreg/Seq_Exists/Kneser_Sequence/p.var" "Seq_Exists__Kneser_Sequence__".
 
-inline "cic:/CoRN/fta/FTAreg/mp.var".
+inline "cic:/CoRN/fta/FTAreg/Seq_Exists/Kneser_Sequence/mp.var" "Seq_Exists__Kneser_Sequence__".
 
-inline "cic:/CoRN/fta/FTAreg/c0.var".
+inline "cic:/CoRN/fta/FTAreg/Seq_Exists/Kneser_Sequence/c0.var" "Seq_Exists__Kneser_Sequence__".
 
-inline "cic:/CoRN/fta/FTAreg/p0ltc0.var".
+inline "cic:/CoRN/fta/FTAreg/Seq_Exists/Kneser_Sequence/p0ltc0.var" "Seq_Exists__Kneser_Sequence__".
 
 inline "cic:/CoRN/fta/FTAreg/Knes_tup.ind".
 
@@ -96,11 +96,11 @@ inline "cic:/CoRN/fta/FTAreg/sK_it.con".
 inline "cic:/CoRN/fta/FTAreg/sK_prop2.con".
 
 (* UNEXPORTED
-End Kneser_Sequence.
+End Kneser_Sequence
 *)
 
 (* UNEXPORTED
-Section Seq_Exists_Main.
+Section Seq_Exists_Main
 *)
 
 (*#* **Main results
@@ -109,66 +109,66 @@ Section Seq_Exists_Main.
 inline "cic:/CoRN/fta/FTAreg/seq_exists.con".
 
 (* UNEXPORTED
-End Seq_Exists_Main.
+End Seq_Exists_Main
 *)
 
 (* UNEXPORTED
-End Seq_Exists.
+End Seq_Exists
 *)
 
 (* UNEXPORTED
-Section N_Exists.
+Section N_Exists
 *)
 
-inline "cic:/CoRN/fta/FTAreg/n.var".
+inline "cic:/CoRN/fta/FTAreg/N_Exists/n.var" "N_Exists__".
 
-inline "cic:/CoRN/fta/FTAreg/lt0n.var".
+inline "cic:/CoRN/fta/FTAreg/N_Exists/lt0n.var" "N_Exists__".
 
-inline "cic:/CoRN/fta/FTAreg/q.var".
+inline "cic:/CoRN/fta/FTAreg/N_Exists/q.var" "N_Exists__".
 
-inline "cic:/CoRN/fta/FTAreg/zleq.var".
+inline "cic:/CoRN/fta/FTAreg/N_Exists/zleq.var" "N_Exists__".
 
-inline "cic:/CoRN/fta/FTAreg/qlt1.var".
+inline "cic:/CoRN/fta/FTAreg/N_Exists/qlt1.var" "N_Exists__".
 
-inline "cic:/CoRN/fta/FTAreg/c.var".
+inline "cic:/CoRN/fta/FTAreg/N_Exists/c.var" "N_Exists__".
 
-inline "cic:/CoRN/fta/FTAreg/zltc.var".
+inline "cic:/CoRN/fta/FTAreg/N_Exists/zltc.var" "N_Exists__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/fta/FTAreg/q_.con".
+inline "cic:/CoRN/fta/FTAreg/N_Exists/q_.con" "N_Exists__".
 
 (* end hide *)
 
-inline "cic:/CoRN/fta/FTAreg/e.var".
+inline "cic:/CoRN/fta/FTAreg/N_Exists/e.var" "N_Exists__".
 
-inline "cic:/CoRN/fta/FTAreg/zlte.var".
+inline "cic:/CoRN/fta/FTAreg/N_Exists/zlte.var" "N_Exists__".
 
 inline "cic:/CoRN/fta/FTAreg/N_exists.con".
 
 (* UNEXPORTED
-End N_Exists.
+End N_Exists
 *)
 
 (* UNEXPORTED
-Section Seq_is_CC_CAuchy.
+Section Seq_is_CC_CAuchy
 *)
 
 (*#* ** The Kneser sequence is Cauchy in [CC] *)
 
-inline "cic:/CoRN/fta/FTAreg/n.var".
+inline "cic:/CoRN/fta/FTAreg/Seq_is_CC_CAuchy/n.var" "Seq_is_CC_CAuchy__".
 
-inline "cic:/CoRN/fta/FTAreg/lt0n.var".
+inline "cic:/CoRN/fta/FTAreg/Seq_is_CC_CAuchy/lt0n.var" "Seq_is_CC_CAuchy__".
 
-inline "cic:/CoRN/fta/FTAreg/q.var".
+inline "cic:/CoRN/fta/FTAreg/Seq_is_CC_CAuchy/q.var" "Seq_is_CC_CAuchy__".
 
-inline "cic:/CoRN/fta/FTAreg/zleq.var".
+inline "cic:/CoRN/fta/FTAreg/Seq_is_CC_CAuchy/zleq.var" "Seq_is_CC_CAuchy__".
 
-inline "cic:/CoRN/fta/FTAreg/qlt1.var".
+inline "cic:/CoRN/fta/FTAreg/Seq_is_CC_CAuchy/qlt1.var" "Seq_is_CC_CAuchy__".
 
-inline "cic:/CoRN/fta/FTAreg/c.var".
+inline "cic:/CoRN/fta/FTAreg/Seq_is_CC_CAuchy/c.var" "Seq_is_CC_CAuchy__".
 
-inline "cic:/CoRN/fta/FTAreg/zltc.var".
+inline "cic:/CoRN/fta/FTAreg/Seq_is_CC_CAuchy/zltc.var" "Seq_is_CC_CAuchy__".
 
 (*#* %\begin{convention}% Let:
  - [q_] prove [q[-]One [#] Zero]
@@ -181,15 +181,15 @@ inline "cic:/CoRN/fta/FTAreg/zltc.var".
 
 (* begin hide *)
 
-inline "cic:/CoRN/fta/FTAreg/q_.con".
+inline "cic:/CoRN/fta/FTAreg/Seq_is_CC_CAuchy/q_.con" "Seq_is_CC_CAuchy__".
 
-inline "cic:/CoRN/fta/FTAreg/nrtq.con".
+inline "cic:/CoRN/fta/FTAreg/Seq_is_CC_CAuchy/nrtq.con" "Seq_is_CC_CAuchy__".
 
-inline "cic:/CoRN/fta/FTAreg/nrtc.con".
+inline "cic:/CoRN/fta/FTAreg/Seq_is_CC_CAuchy/nrtc.con" "Seq_is_CC_CAuchy__".
 
-inline "cic:/CoRN/fta/FTAreg/nrtqlt1.con".
+inline "cic:/CoRN/fta/FTAreg/Seq_is_CC_CAuchy/nrtqlt1.con" "Seq_is_CC_CAuchy__".
 
-inline "cic:/CoRN/fta/FTAreg/nrtq_.con".
+inline "cic:/CoRN/fta/FTAreg/Seq_is_CC_CAuchy/nrtq_.con" "Seq_is_CC_CAuchy__".
 
 (* end hide *)
 
@@ -210,7 +210,7 @@ inline "cic:/CoRN/fta/FTAreg/SublemmaIm.con".
 inline "cic:/CoRN/fta/FTAreg/seq_is_CC_Cauchy.con".
 
 (* UNEXPORTED
-End Seq_is_CC_CAuchy.
+End Seq_is_CC_CAuchy
 *)
 
 inline "cic:/CoRN/fta/FTAreg/FTA_monic.con".

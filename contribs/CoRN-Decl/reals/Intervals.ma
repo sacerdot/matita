@@ -25,7 +25,7 @@ include "algebra/CSetoidInc.ma".
 include "reals/RealLists.ma".
 
 (* UNEXPORTED
-Section Intervals.
+Section Intervals
 *)
 
 (*#* * Intervals
@@ -49,11 +49,11 @@ As expected, both [a] and [b] are members of [[a,b]].  Also they are
 members of the interval [[Min(a,b),Max(a,b)]].
 *)
 
-inline "cic:/CoRN/reals/Intervals/a.var".
+inline "cic:/CoRN/reals/Intervals/Intervals/a.var" "Intervals__".
 
-inline "cic:/CoRN/reals/Intervals/b.var".
+inline "cic:/CoRN/reals/Intervals/Intervals/b.var" "Intervals__".
 
-inline "cic:/CoRN/reals/Intervals/Hab.var".
+inline "cic:/CoRN/reals/Intervals/Intervals/Hab.var" "Intervals__".
 
 inline "cic:/CoRN/reals/Intervals/compact_inc_lft.con".
 
@@ -89,7 +89,7 @@ returns the restriction $F|_P$# of F to P#.
 inline "cic:/CoRN/reals/Intervals/Frestr.con".
 
 (* UNEXPORTED
-End Intervals.
+End Intervals
 *)
 
 (* NOTATION
@@ -105,7 +105,7 @@ Notation FRestr := (Frestr (compact_wd _ _ _)).
 *)
 
 (* UNEXPORTED
-Section More_Intervals.
+Section More_Intervals
 *)
 
 inline "cic:/CoRN/reals/Intervals/included_refl'.con".
@@ -119,7 +119,7 @@ inline "cic:/CoRN/reals/Intervals/compact_map2.con".
 inline "cic:/CoRN/reals/Intervals/compact_map3.con".
 
 (* UNEXPORTED
-End More_Intervals.
+End More_Intervals
 *)
 
 (* UNEXPORTED
@@ -127,7 +127,7 @@ Hint Resolve included_refl' compact_map1 compact_map2 compact_map3 : included.
 *)
 
 (* UNEXPORTED
-Section Totally_Bounded.
+Section Totally_Bounded
 *)
 
 (*#* ** Totally Bounded
@@ -172,9 +172,9 @@ inline "cic:/CoRN/reals/Intervals/fun_lub_IR.con".
 
 (* begin hide *)
 
-inline "cic:/CoRN/reals/Intervals/aux_seq_lub.con".
+inline "cic:/CoRN/reals/Intervals/Totally_Bounded/aux_seq_lub.con" "Totally_Bounded__".
 
-inline "cic:/CoRN/reals/Intervals/aux_seq_lub_prop.con".
+inline "cic:/CoRN/reals/Intervals/Totally_Bounded/aux_seq_lub_prop.con" "Totally_Bounded__".
 
 (* end hide *)
 
@@ -186,20 +186,20 @@ inline "cic:/CoRN/reals/Intervals/totally_bounded_has_lub.con".
 
 (* begin hide *)
 
-inline "cic:/CoRN/reals/Intervals/aux_seq_glb.con".
+inline "cic:/CoRN/reals/Intervals/Totally_Bounded/aux_seq_glb.con" "Totally_Bounded__".
 
-inline "cic:/CoRN/reals/Intervals/aux_seq_glb_prop.con".
+inline "cic:/CoRN/reals/Intervals/Totally_Bounded/aux_seq_glb_prop.con" "Totally_Bounded__".
 
 (* end hide *)
 
 inline "cic:/CoRN/reals/Intervals/totally_bounded_has_glb.con".
 
 (* UNEXPORTED
-End Totally_Bounded.
+End Totally_Bounded
 *)
 
 (* UNEXPORTED
-Section Compact.
+Section Compact
 *)
 
 (*#* ** Compact sets
@@ -227,23 +227,23 @@ a positive real number.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/reals/Intervals/a.var".
+inline "cic:/CoRN/reals/Intervals/Compact/a.var" "Compact__".
 
-inline "cic:/CoRN/reals/Intervals/b.var".
+inline "cic:/CoRN/reals/Intervals/Compact/b.var" "Compact__".
 
-inline "cic:/CoRN/reals/Intervals/Hab.var".
+inline "cic:/CoRN/reals/Intervals/Compact/Hab.var" "Compact__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/reals/Intervals/I.con".
+inline "cic:/CoRN/reals/Intervals/Compact/I.con" "Compact__".
 
 (* end hide *)
 
-inline "cic:/CoRN/reals/Intervals/Hab'.var".
+inline "cic:/CoRN/reals/Intervals/Compact/Hab'.var" "Compact__".
 
-inline "cic:/CoRN/reals/Intervals/e.var".
+inline "cic:/CoRN/reals/Intervals/Compact/e.var" "Compact__".
 
-inline "cic:/CoRN/reals/Intervals/He.var".
+inline "cic:/CoRN/reals/Intervals/Compact/He.var" "Compact__".
 
 (*#*
 We start by finding a natural number [n] such that [(b[-]a) [/] n [<] e].
@@ -304,7 +304,7 @@ inline "cic:/CoRN/reals/Intervals/included2_compact.con".
 inline "cic:/CoRN/reals/Intervals/included3_compact.con".
 
 (* UNEXPORTED
-End Compact.
+End Compact
 *)
 
 (* UNEXPORTED

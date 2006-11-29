@@ -27,7 +27,7 @@ include "reals/NRootIR.ma".
 include "ftc/FunctSums.ma".
 
 (* UNEXPORTED
-Section Definitions_and_Basic_Results.
+Section Definitions_and_Basic_Results
 *)
 
 (*#* *Continuity
@@ -54,23 +54,23 @@ respectively [P, Q] and [R].
 Here we define continuity and prove some basic properties of continuous functions.
 *)
 
-inline "cic:/CoRN/ftc/Continuity/a.var".
+inline "cic:/CoRN/ftc/Continuity/Definitions_and_Basic_Results/a.var" "Definitions_and_Basic_Results__".
 
-inline "cic:/CoRN/ftc/Continuity/b.var".
+inline "cic:/CoRN/ftc/Continuity/Definitions_and_Basic_Results/b.var" "Definitions_and_Basic_Results__".
 
-inline "cic:/CoRN/ftc/Continuity/Hab.var".
+inline "cic:/CoRN/ftc/Continuity/Definitions_and_Basic_Results/Hab.var" "Definitions_and_Basic_Results__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/Continuity/I.con".
+inline "cic:/CoRN/ftc/Continuity/Definitions_and_Basic_Results/I.con" "Definitions_and_Basic_Results__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/Continuity/F.var".
+inline "cic:/CoRN/ftc/Continuity/Definitions_and_Basic_Results/F.var" "Definitions_and_Basic_Results__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/Continuity/P.con".
+inline "cic:/CoRN/ftc/Continuity/Definitions_and_Basic_Results/P.con" "Definitions_and_Basic_Results__".
 
 (* end hide *)
 
@@ -88,11 +88,11 @@ inline "cic:/CoRN/ftc/Continuity/contin_prop.con".
 Assume [F] to be continuous in [I].  Then it has a least upper bound and a greater lower bound on [I].
 *)
 
-inline "cic:/CoRN/ftc/Continuity/contF.var".
+inline "cic:/CoRN/ftc/Continuity/Definitions_and_Basic_Results/contF.var" "Definitions_and_Basic_Results__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/Continuity/Hinc'.con".
+inline "cic:/CoRN/ftc/Continuity/Definitions_and_Basic_Results/Hinc'.con" "Definitions_and_Basic_Results__".
 
 (* end hide *)
 
@@ -153,7 +153,7 @@ inline "cic:/CoRN/ftc/Continuity/leEq_Norm_Funct.con".
 inline "cic:/CoRN/ftc/Continuity/less_Norm_Funct.con".
 
 (* UNEXPORTED
-End Definitions_and_Basic_Results.
+End Definitions_and_Basic_Results
 *)
 
 (* UNEXPORTED
@@ -165,7 +165,7 @@ Implicit Arguments Norm_Funct [a b Hab F].
 *)
 
 (* UNEXPORTED
-Section Local_Results.
+Section Local_Results
 *)
 
 (*#* **Algebraic Properties
@@ -173,33 +173,33 @@ Section Local_Results.
 We now state and prove some results about continuous functions.  Assume that [I] is included in the domain of both [F] and [G].
 *)
 
-inline "cic:/CoRN/ftc/Continuity/a.var".
+inline "cic:/CoRN/ftc/Continuity/Local_Results/a.var" "Local_Results__".
 
-inline "cic:/CoRN/ftc/Continuity/b.var".
+inline "cic:/CoRN/ftc/Continuity/Local_Results/b.var" "Local_Results__".
 
-inline "cic:/CoRN/ftc/Continuity/Hab.var".
-
-(* begin hide *)
-
-inline "cic:/CoRN/ftc/Continuity/I.con".
-
-(* end hide *)
-
-inline "cic:/CoRN/ftc/Continuity/F.var".
-
-inline "cic:/CoRN/ftc/Continuity/G.var".
+inline "cic:/CoRN/ftc/Continuity/Local_Results/Hab.var" "Local_Results__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/Continuity/P.con".
-
-inline "cic:/CoRN/ftc/Continuity/Q.con".
+inline "cic:/CoRN/ftc/Continuity/Local_Results/I.con" "Local_Results__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/Continuity/incF.var".
+inline "cic:/CoRN/ftc/Continuity/Local_Results/F.var" "Local_Results__".
 
-inline "cic:/CoRN/ftc/Continuity/incG.var".
+inline "cic:/CoRN/ftc/Continuity/Local_Results/G.var" "Local_Results__".
+
+(* begin hide *)
+
+inline "cic:/CoRN/ftc/Continuity/Local_Results/P.con" "Local_Results__".
+
+inline "cic:/CoRN/ftc/Continuity/Local_Results/Q.con" "Local_Results__".
+
+(* end hide *)
+
+inline "cic:/CoRN/ftc/Continuity/Local_Results/incF.var" "Local_Results__".
+
+inline "cic:/CoRN/ftc/Continuity/Local_Results/incG.var" "Local_Results__".
 
 (*#*
 The first result does not require the function to be continuous; however, its preconditions are easily verified by continuous functions, which justifies its inclusion in this section.
@@ -235,9 +235,9 @@ inline "cic:/CoRN/ftc/Continuity/Continuous_I_id.con".
 Assume [F] and [G] are continuous in [I].  Then functions derived from these through algebraic operations are also continuous, provided (in the case of reciprocal and division) some extra conditions are met.
 *)
 
-inline "cic:/CoRN/ftc/Continuity/contF.var".
+inline "cic:/CoRN/ftc/Continuity/Local_Results/contF.var" "Local_Results__".
 
-inline "cic:/CoRN/ftc/Continuity/contG.var".
+inline "cic:/CoRN/ftc/Continuity/Local_Results/contG.var" "Local_Results__".
 
 inline "cic:/CoRN/ftc/Continuity/Continuous_I_plus.con".
 
@@ -257,16 +257,16 @@ inline "cic:/CoRN/ftc/Continuity/Continuous_I_max.con".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/Continuity/Hg'.var".
+inline "cic:/CoRN/ftc/Continuity/Local_Results/Hg'.var" "Local_Results__".
 
-inline "cic:/CoRN/ftc/Continuity/Hg''.var".
+inline "cic:/CoRN/ftc/Continuity/Local_Results/Hg''.var" "Local_Results__".
 
 (* end show *)
 
 inline "cic:/CoRN/ftc/Continuity/Continuous_I_recip.con".
 
 (* UNEXPORTED
-End Local_Results.
+End Local_Results
 *)
 
 (* UNEXPORTED
@@ -274,36 +274,36 @@ Hint Resolve contin_imp_inc: included.
 *)
 
 (* UNEXPORTED
-Section Corolaries.
+Section Corolaries
 *)
 
-inline "cic:/CoRN/ftc/Continuity/a.var".
+inline "cic:/CoRN/ftc/Continuity/Corolaries/a.var" "Corolaries__".
 
-inline "cic:/CoRN/ftc/Continuity/b.var".
+inline "cic:/CoRN/ftc/Continuity/Corolaries/b.var" "Corolaries__".
 
-inline "cic:/CoRN/ftc/Continuity/Hab.var".
-
-(* begin hide *)
-
-inline "cic:/CoRN/ftc/Continuity/I.con".
-
-(* end hide *)
-
-inline "cic:/CoRN/ftc/Continuity/F.var".
-
-inline "cic:/CoRN/ftc/Continuity/G.var".
+inline "cic:/CoRN/ftc/Continuity/Corolaries/Hab.var" "Corolaries__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/Continuity/P.con".
-
-inline "cic:/CoRN/ftc/Continuity/Q.con".
+inline "cic:/CoRN/ftc/Continuity/Corolaries/I.con" "Corolaries__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/Continuity/contF.var".
+inline "cic:/CoRN/ftc/Continuity/Corolaries/F.var" "Corolaries__".
 
-inline "cic:/CoRN/ftc/Continuity/contG.var".
+inline "cic:/CoRN/ftc/Continuity/Corolaries/G.var" "Corolaries__".
+
+(* begin hide *)
+
+inline "cic:/CoRN/ftc/Continuity/Corolaries/P.con" "Corolaries__".
+
+inline "cic:/CoRN/ftc/Continuity/Corolaries/Q.con" "Corolaries__".
+
+(* end hide *)
+
+inline "cic:/CoRN/ftc/Continuity/Corolaries/contF.var" "Corolaries__".
+
+inline "cic:/CoRN/ftc/Continuity/Corolaries/contG.var" "Corolaries__".
 
 (*#*
 The corresponding properties for subtraction, division and
@@ -322,39 +322,39 @@ inline "cic:/CoRN/ftc/Continuity/Continuous_I_min.con".
 
 inline "cic:/CoRN/ftc/Continuity/Continuous_I_abs.con".
 
-inline "cic:/CoRN/ftc/Continuity/Hg'.var".
+inline "cic:/CoRN/ftc/Continuity/Corolaries/Hg'.var" "Corolaries__".
 
-inline "cic:/CoRN/ftc/Continuity/Hg''.var".
+inline "cic:/CoRN/ftc/Continuity/Corolaries/Hg''.var" "Corolaries__".
 
 inline "cic:/CoRN/ftc/Continuity/Continuous_I_div.con".
 
 (* UNEXPORTED
-End Corolaries.
+End Corolaries
 *)
 
 (* UNEXPORTED
-Section Other.
+Section Other
 *)
 
 (* UNEXPORTED
-Section Sums.
+Section Sums
 *)
 
 (*#*
 We finally prove that the sum of an arbitrary family of continuous functions is still a continuous function.
 *)
 
-inline "cic:/CoRN/ftc/Continuity/a.var".
+inline "cic:/CoRN/ftc/Continuity/Other/Sums/a.var" "Other__Sums__".
 
-inline "cic:/CoRN/ftc/Continuity/b.var".
+inline "cic:/CoRN/ftc/Continuity/Other/Sums/b.var" "Other__Sums__".
 
-inline "cic:/CoRN/ftc/Continuity/Hab.var".
+inline "cic:/CoRN/ftc/Continuity/Other/Sums/Hab.var" "Other__Sums__".
 
-inline "cic:/CoRN/ftc/Continuity/Hab'.var".
+inline "cic:/CoRN/ftc/Continuity/Other/Sums/Hab'.var" "Other__Sums__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/Continuity/I.con".
+inline "cic:/CoRN/ftc/Continuity/Other/Sums/I.con" "Other__Sums__".
 
 (* end hide *)
 
@@ -365,7 +365,7 @@ inline "cic:/CoRN/ftc/Continuity/Continuous_I_Sumx.con".
 inline "cic:/CoRN/ftc/Continuity/Continuous_I_Sum.con".
 
 (* UNEXPORTED
-End Sums.
+End Sums
 *)
 
 (*#*
@@ -395,7 +395,7 @@ The value of the norm is covariant with the length of the interval.
 inline "cic:/CoRN/ftc/Continuity/included_imp_norm_leEq.con".
 
 (* UNEXPORTED
-End Other.
+End Other
 *)
 
 (* UNEXPORTED

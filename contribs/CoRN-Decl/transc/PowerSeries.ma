@@ -40,7 +40,7 @@ prove some important properties of these entities.
 *)
 
 (* UNEXPORTED
-Section Power_Series.
+Section Power_Series
 *)
 
 (*#* **General results
@@ -50,13 +50,13 @@ Let [a : nat -> IR].
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/transc/PowerSeries/J.var".
+inline "cic:/CoRN/transc/PowerSeries/Power_Series/J.var" "Power_Series__".
 
-inline "cic:/CoRN/transc/PowerSeries/x0.var".
+inline "cic:/CoRN/transc/PowerSeries/Power_Series/x0.var" "Power_Series__".
 
-inline "cic:/CoRN/transc/PowerSeries/Hx0.var".
+inline "cic:/CoRN/transc/PowerSeries/Power_Series/Hx0.var" "Power_Series__".
 
-inline "cic:/CoRN/transc/PowerSeries/a.var".
+inline "cic:/CoRN/transc/PowerSeries/Power_Series/a.var" "Power_Series__".
 
 inline "cic:/CoRN/transc/PowerSeries/FPowerSeries.con".
 
@@ -67,11 +67,11 @@ is the Dirichlet criterium.
 
 (* begin show *)
 
-inline "cic:/CoRN/transc/PowerSeries/Ha.var".
+inline "cic:/CoRN/transc/PowerSeries/Power_Series/Ha.var" "Power_Series__".
 
-inline "cic:/CoRN/transc/PowerSeries/r.con".
+inline "cic:/CoRN/transc/PowerSeries/Power_Series/r.con" "Power_Series__".
 
-inline "cic:/CoRN/transc/PowerSeries/Hr.con".
+inline "cic:/CoRN/transc/PowerSeries/Power_Series/Hr.con" "Power_Series__".
 
 (* end show *)
 
@@ -93,7 +93,7 @@ inline "cic:/CoRN/transc/PowerSeries/included_FPowerSeries'.con".
 
 (* begin show *)
 
-inline "cic:/CoRN/transc/PowerSeries/Ha'.var".
+inline "cic:/CoRN/transc/PowerSeries/Power_Series/Ha'.var" "Power_Series__".
 
 (* end show *)
 
@@ -102,7 +102,7 @@ inline "cic:/CoRN/transc/PowerSeries/FPowerSeries'_conv'.con".
 inline "cic:/CoRN/transc/PowerSeries/FPowerSeries'_conv.con".
 
 (* UNEXPORTED
-End Power_Series.
+End Power_Series
 *)
 
 (* UNEXPORTED
@@ -110,7 +110,7 @@ Hint Resolve FPowerSeries'_cont: continuous.
 *)
 
 (* UNEXPORTED
-Section More_on_PowerSeries.
+Section More_on_PowerSeries
 *)
 
 (*#*
@@ -119,25 +119,25 @@ respectively by [a] and by [fun n => (a (S n))].
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/transc/PowerSeries/x0.var".
+inline "cic:/CoRN/transc/PowerSeries/More_on_PowerSeries/x0.var" "More_on_PowerSeries__".
 
-inline "cic:/CoRN/transc/PowerSeries/a.var".
+inline "cic:/CoRN/transc/PowerSeries/More_on_PowerSeries/a.var" "More_on_PowerSeries__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/transc/PowerSeries/F.con".
+inline "cic:/CoRN/transc/PowerSeries/More_on_PowerSeries/F.con" "More_on_PowerSeries__".
 
-inline "cic:/CoRN/transc/PowerSeries/G.con".
+inline "cic:/CoRN/transc/PowerSeries/More_on_PowerSeries/G.con" "More_on_PowerSeries__".
 
 (* end hide *)
 
 (* begin show *)
 
-inline "cic:/CoRN/transc/PowerSeries/Hf.var".
+inline "cic:/CoRN/transc/PowerSeries/More_on_PowerSeries/Hf.var" "More_on_PowerSeries__".
 
-inline "cic:/CoRN/transc/PowerSeries/Hf'.var".
+inline "cic:/CoRN/transc/PowerSeries/More_on_PowerSeries/Hf'.var" "More_on_PowerSeries__".
 
-inline "cic:/CoRN/transc/PowerSeries/Hg.var".
+inline "cic:/CoRN/transc/PowerSeries/More_on_PowerSeries/Hg.var" "More_on_PowerSeries__".
 
 (* end show *)
 
@@ -154,11 +154,11 @@ Opaque nring fac.
 inline "cic:/CoRN/transc/PowerSeries/Derivative_FPowerSeries1'.con".
 
 (* UNEXPORTED
-End More_on_PowerSeries.
+End More_on_PowerSeries
 *)
 
 (* UNEXPORTED
-Section Definitions.
+Section Definitions
 *)
 
 (*#* **Function definitions through power series
@@ -219,7 +219,7 @@ inline "cic:/CoRN/transc/PowerSeries/log_defn_lemma.con".
 inline "cic:/CoRN/transc/PowerSeries/Logarithm.con".
 
 (* UNEXPORTED
-End Definitions.
+End Definitions
 *)
 
 (* UNEXPORTED

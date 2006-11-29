@@ -185,21 +185,21 @@ write [e[/] (Snring n)] and [e[/]TwoNZ], [e[/]ThreeNZ] and so on.
 *)
 
 (* UNEXPORTED
-Section Field_axioms.
+Section Field_axioms
 *)
 
-inline "cic:/CoRN/algebra/CFields/F.var".
+inline "cic:/CoRN/algebra/CFields/Field_axioms/F.var" "Field_axioms__".
 
 inline "cic:/CoRN/algebra/CFields/CField_is_CField.con".
 
 inline "cic:/CoRN/algebra/CFields/rcpcl_is_inverse.con".
 
 (* UNEXPORTED
-End Field_axioms.
+End Field_axioms
 *)
 
 (* UNEXPORTED
-Section Field_basics.
+Section Field_basics
 *)
 
 (*#* ** Field basics
@@ -207,7 +207,7 @@ Section Field_basics.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CFields/F.var".
+inline "cic:/CoRN/algebra/CFields/Field_basics/F.var" "Field_basics__".
 
 inline "cic:/CoRN/algebra/CFields/rcpcl_is_inverse_unfolded.con".
 
@@ -220,7 +220,7 @@ Hint Resolve field_mult_inv: algebra.
 inline "cic:/CoRN/algebra/CFields/field_mult_inv_op.con".
 
 (* UNEXPORTED
-End Field_basics.
+End Field_basics
 *)
 
 (* UNEXPORTED
@@ -228,7 +228,7 @@ Hint Resolve field_mult_inv field_mult_inv_op: algebra.
 *)
 
 (* UNEXPORTED
-Section Field_multiplication.
+Section Field_multiplication
 *)
 
 (*#*
@@ -237,7 +237,7 @@ Section Field_multiplication.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CFields/F.var".
+inline "cic:/CoRN/algebra/CFields/Field_multiplication/F.var" "Field_multiplication__".
 
 inline "cic:/CoRN/algebra/CFields/mult_resp_ap_zero.con".
 
@@ -262,11 +262,11 @@ inline "cic:/CoRN/algebra/CFields/square_eq_weak.con".
 inline "cic:/CoRN/algebra/CFields/cond_square_eq.con".
 
 (* UNEXPORTED
-End Field_multiplication.
+End Field_multiplication
 *)
 
 (* UNEXPORTED
-Section x_square.
+Section x_square
 *)
 
 inline "cic:/CoRN/algebra/CFields/x_xminone.con".
@@ -274,7 +274,7 @@ inline "cic:/CoRN/algebra/CFields/x_xminone.con".
 inline "cic:/CoRN/algebra/CFields/square_id.con".
 
 (* UNEXPORTED
-End x_square.
+End x_square
 *)
 
 (* UNEXPORTED
@@ -282,7 +282,7 @@ Hint Resolve mult_resp_ap_zero: algebra.
 *)
 
 (* UNEXPORTED
-Section Rcpcl_properties.
+Section Rcpcl_properties
 *)
 
 (*#*
@@ -291,7 +291,7 @@ Section Rcpcl_properties.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CFields/F.var".
+inline "cic:/CoRN/algebra/CFields/Rcpcl_properties/F.var" "Rcpcl_properties__".
 
 inline "cic:/CoRN/algebra/CFields/inv_one.con".
 
@@ -304,11 +304,11 @@ inline "cic:/CoRN/algebra/CFields/f_rcpcl_resp_ap_zero.con".
 inline "cic:/CoRN/algebra/CFields/f_rcpcl_f_rcpcl.con".
 
 (* UNEXPORTED
-End Rcpcl_properties.
+End Rcpcl_properties
 *)
 
 (* UNEXPORTED
-Section MultipGroup.
+Section MultipGroup
 *)
 
 (*#*
@@ -317,7 +317,7 @@ Section MultipGroup.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CFields/F.var".
+inline "cic:/CoRN/algebra/CFields/MultipGroup/F.var" "MultipGroup__".
 
 (*#*
 The multiplicative monoid of NonZeros.
@@ -332,11 +332,11 @@ inline "cic:/CoRN/algebra/CFields/plus_nonzeros_eq_mult_dom.con".
 inline "cic:/CoRN/algebra/CFields/cfield_to_mult_cgroup.con".
 
 (* UNEXPORTED
-End MultipGroup.
+End MultipGroup
 *)
 
 (* UNEXPORTED
-Section Div_properties.
+Section Div_properties
 *)
 
 (*#*
@@ -350,7 +350,7 @@ In the names of lemmas, we denote [[/]] by [div], and
 %\end{nameconvention}%
 *)
 
-inline "cic:/CoRN/algebra/CFields/F.var".
+inline "cic:/CoRN/algebra/CFields/Div_properties/F.var" "Div_properties__".
 
 inline "cic:/CoRN/algebra/CFields/div_prop.con".
 
@@ -429,7 +429,7 @@ inline "cic:/CoRN/algebra/CFields/eq_div.con".
 inline "cic:/CoRN/algebra/CFields/div_strext.con".
 
 (* UNEXPORTED
-End Div_properties.
+End Div_properties
 *)
 
 (* UNEXPORTED
@@ -445,10 +445,10 @@ Hint Resolve div_1 div_1' div_1'' div_wd x_div_x x_div_one div_div div_div2
 *)
 
 (* UNEXPORTED
-Section Mult_Cancel_Ap_Zero.
+Section Mult_Cancel_Ap_Zero
 *)
 
-inline "cic:/CoRN/algebra/CFields/F.var".
+inline "cic:/CoRN/algebra/CFields/Mult_Cancel_Ap_Zero/F.var" "Mult_Cancel_Ap_Zero__".
 
 inline "cic:/CoRN/algebra/CFields/mult_cancel_ap_zero_lft.con".
 
@@ -459,11 +459,11 @@ inline "cic:/CoRN/algebra/CFields/recip_ap_zero.con".
 inline "cic:/CoRN/algebra/CFields/recip_resp_ap.con".
 
 (* UNEXPORTED
-End Mult_Cancel_Ap_Zero.
+End Mult_Cancel_Ap_Zero
 *)
 
 (* UNEXPORTED
-Section CField_Ops.
+Section CField_Ops
 *)
 
 (*#*
@@ -480,31 +480,31 @@ Let [X] be a Field and [F,G:(PartFunct X)] have domains respectively
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CFields/X.var".
+inline "cic:/CoRN/algebra/CFields/CField_Ops/X.var" "CField_Ops__".
 
-inline "cic:/CoRN/algebra/CFields/F.var".
+inline "cic:/CoRN/algebra/CFields/CField_Ops/F.var" "CField_Ops__".
 
-inline "cic:/CoRN/algebra/CFields/G.var".
+inline "cic:/CoRN/algebra/CFields/CField_Ops/G.var" "CField_Ops__".
 
 (* begin hide *)
 
-inline "cic:/CoRN/algebra/CFields/P.con".
+inline "cic:/CoRN/algebra/CFields/CField_Ops/P.con" "CField_Ops__".
 
-inline "cic:/CoRN/algebra/CFields/Q.con".
+inline "cic:/CoRN/algebra/CFields/CField_Ops/Q.con" "CField_Ops__".
 
 (* end hide *)
 
 (* UNEXPORTED
-Section Part_Function_Recip.
+Section Part_Function_Recip
 *)
 
 (*#*
 Some auxiliary notions are helpful in defining the domain.
 *)
 
-inline "cic:/CoRN/algebra/CFields/R.con".
+inline "cic:/CoRN/algebra/CFields/CField_Ops/Part_Function_Recip/R.con" "CField_Ops__Part_Function_Recip__".
 
-inline "cic:/CoRN/algebra/CFields/Ext2R.con".
+inline "cic:/CoRN/algebra/CFields/CField_Ops/Part_Function_Recip/Ext2R.con" "CField_Ops__Part_Function_Recip__".
 
 inline "cic:/CoRN/algebra/CFields/part_function_recip_strext.con".
 
@@ -513,20 +513,20 @@ inline "cic:/CoRN/algebra/CFields/part_function_recip_pred_wd.con".
 inline "cic:/CoRN/algebra/CFields/Frecip.con".
 
 (* UNEXPORTED
-End Part_Function_Recip.
+End Part_Function_Recip
 *)
 
 (* UNEXPORTED
-Section Part_Function_Div.
+Section Part_Function_Div
 *)
 
 (*#*
 For division things work out almost in the same way.
 *)
 
-inline "cic:/CoRN/algebra/CFields/R.con".
+inline "cic:/CoRN/algebra/CFields/CField_Ops/Part_Function_Div/R.con" "CField_Ops__Part_Function_Div__".
 
-inline "cic:/CoRN/algebra/CFields/Ext2R.con".
+inline "cic:/CoRN/algebra/CFields/CField_Ops/Part_Function_Div/Ext2R.con" "CField_Ops__Part_Function_Div__".
 
 inline "cic:/CoRN/algebra/CFields/part_function_div_strext.con".
 
@@ -535,7 +535,7 @@ inline "cic:/CoRN/algebra/CFields/part_function_div_pred_wd.con".
 inline "cic:/CoRN/algebra/CFields/Fdiv.con".
 
 (* UNEXPORTED
-End Part_Function_Div.
+End Part_Function_Div
 *)
 
 (*#*
@@ -543,7 +543,7 @@ End Part_Function_Div.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CFields/R.var".
+inline "cic:/CoRN/algebra/CFields/CField_Ops/R.var" "CField_Ops__".
 
 inline "cic:/CoRN/algebra/CFields/included_FRecip.con".
 
@@ -556,7 +556,7 @@ inline "cic:/CoRN/algebra/CFields/included_FDiv'.con".
 inline "cic:/CoRN/algebra/CFields/included_FDiv''.con".
 
 (* UNEXPORTED
-End CField_Ops.
+End CField_Ops
 *)
 
 (* UNEXPORTED
