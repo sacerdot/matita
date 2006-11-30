@@ -1,6 +1,6 @@
 <!-- ================= Tactics ========================= -->
 <chapter id="sec_declarative_tactics">
-  <title> Tactics Declarative</title>
+  <title>Declarative Tactics</title>
 
   <sect1
   id="declarative_tactics_quickref">
@@ -325,15 +325,15 @@
   </sect1> 
 
   <sect1 id="tac_obtain">
-    <title>obtain</title>
-    <titleabbrev>obtain</titleabbrev>
-    <para><userinput>obtain t=t by [t|_]</userinput></para>
+    <title>obtain/conclude</title>
+    <titleabbrev>obtain/conclude</titleabbrev>
+    <para><userinput>obtain H t=t by [t|_] done</userinput></para>
     <para>
       <variablelist>
          <varlistentry role="tactic.synopsis">
 	   <term>Synopsis:</term>
 	   <listitem>
-	     <para><emphasis role="bold">obtain</emphasis> &term; <emphasis role="bold">=</emphasis> &term; <emphasis role="bold">by</emphasis> [ &term; | _ ]</para>
+	     <para>[<emphasis role="bold">obtain</emphasis> &id; | <emphasis role="bold">conclude</emphasis> &term;] <emphasis role="bold">=</emphasis> &term; <emphasis role="bold">by</emphasis> [ &term; | <emphasis role="bold">_</emphasis> [<emphasis role="bold">(</emphasis>&autoparams;<emphasis role="bold">)</emphasis>]] [<emphasis role="bold">done</emphasis>]</para>
 	   </listitem>
 	 </varlistentry>
 	 <varlistentry>
