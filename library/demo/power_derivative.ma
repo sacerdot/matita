@@ -41,6 +41,11 @@ interpretation "None" 'one =
 
 interpretation "Rplus" 'plus x y =
  (cic:/matita/demo/power_derivative/Rplus.con x y).
+
+notation "hvbox(a break \middot b)" 
+  left associative with precedence 55
+for @{ 'times $a $b }.
+
 interpretation "Rmult" 'times x y =
  (cic:/matita/demo/power_derivative/Rmult.con x y).
 
@@ -48,7 +53,7 @@ definition Fplus ≝
  λf,g:R→R.λx:R.f x + g x.
  
 definition Fmult ≝
- λf,g:R→R.λx:R.f x * g x.
+ λf,g:R→R.λx:R.f x · g x.
 
 interpretation "Fplus" 'plus x y =
  (cic:/matita/demo/power_derivative/Fplus.con x y).
@@ -69,7 +74,7 @@ interpretation "Ntwo" 'two =
 let rec Rpower (x:R) (n:nat) on n ≝
  match n with
   [ O ⇒ 1
-  | S n ⇒ x * (Rpower x n)
+  | S n ⇒ x · (Rpower x n)
   ].
 
 interpretation "Rpower" 'exp x n =
@@ -110,7 +115,7 @@ coercion cic:/matita/demo/power_derivative/costante.con 1.
 axiom f_eq_extensional:
  ∀f,g:R→R.(∀x:R.f x = g x) → f=g.
 
-lemma Fmult_one_f: ∀f:R→R.1*f=f.
+lemma Fmult_one_f: ∀f:R→R.1·f=f.
  intro;
  unfold Fmult;
  simplify;
@@ -119,7 +124,7 @@ lemma Fmult_one_f: ∀f:R→R.1*f=f.
  auto.
 qed.
 
-lemma Fmult_zero_f: ∀f:R→R.0*f=0.
+lemma Fmult_zero_f: ∀f:R→R.0·f=0.
  intro;
  unfold Fmult;
  simplify;
@@ -159,7 +164,7 @@ lemma Fmult_Fplus_distr: distributive ? Fmult Fplus.
 qed.
 
 lemma monomio_product:
- ∀n,m.monomio (n+m) = monomio n * monomio m.
+ ∀n,m.monomio (n+m) = monomio n · monomio m.
  intros;
  unfold monomio;
  unfold Fmult;
@@ -172,10 +177,10 @@ lemma monomio_product:
   | simplify;
     apply f_eq_extensional;
     intro;
-    cut (x\sup (n1+m) = x \sup n1 * x \sup m);
+    cut (x\sup (n1+m) = x \sup n1 · x \sup m);
      [ rewrite > Hcut;
        auto
-     | change in ⊢ (? ? % ?) with ((λx:R.(x)\sup(n1+m)) x);
+     | change in ⊢ (? ? % ?) with ((λx:R.x\sup(n1+m)) x);
        rewrite > H;
        reflexivity
      ]
@@ -240,28 +245,28 @@ interpretation "Rmonomio" 'monomio n =
 
 axiom derivative_x0: D[x \sup 0] = 0.
 axiom derivative_x1: D[x] = 1.
-axiom derivative_mult: ∀f,g:R→R. D[f*g] = D[f]*g + f*D[g].
+axiom derivative_mult: ∀f,g:R→R. D[f·g] = D[f]·g + f·D[g].
 
 alias symbol "times" = "Fmult".
 
-theorem derivative_power: ∀n:nat. D[x \sup n] = n*x \sup (pred n).
+theorem derivative_power: ∀n:nat. D[x \sup n] = n·x \sup (pred n).
  assume n:nat.
  we proceed by induction on n to prove
- (D[x \sup n] = n*x \sup (pred n)).
+ (D[x \sup n] = n · x \sup (pred n)).
  case O.
-   the thesis becomes (D[x \sup 0] = 0*x \sup (pred 0)).
+   the thesis becomes (D[x \sup 0] = 0·x \sup (pred 0)).
    by _
   done.
  case S (m:nat).
   by induction hypothesis we know
-   (D[x \sup m] = m*x \sup (pred m)) (H).
+   (D[x \sup m] = m·x \sup (pred m)) (H).
   the thesis becomes
-   (D[x \sup (1+m)] = (1+m)*x \sup m).
+   (D[x \sup (1+m)] = (1+m) · x \sup m).
   we need to prove
-   (m * (x \sup (1+ pred m)) = m * x \sup m) (Ppred).
+   (m · (x \sup (1+ pred m)) = m · x \sup m) (Ppred).
    by _ we proved (0 < m ∨ 0=m) (cases).
    we proceed by induction on cases
-   to prove (m * (x \sup (1+ pred m)) = m * x \sup m).
+   to prove (m · (x \sup (1+ pred m)) = m · x \sup m).
     case left.
       suppose (0 < m) (m_pos).
       by (S_pred m m_pos) we proved (m = 1 + pred m) (H1).
@@ -271,13 +276,13 @@ theorem derivative_power: ∀n:nat. D[x \sup n] = n*x \sup (pred n).
       suppose (0=m) (m_zero). by _ done.
   conclude
      (D[x \sup (1+m)])
-   = (D[x * x \sup m]) by _.
-   = (D[x] * x \sup m + x * D[x \sup m]) by _.
-   = (x \sup m + x * (m * x \sup (pred m))) by _.
+   = (D[x · x \sup m]) by _.
+   = (D[x] · x \sup m + x · D[x \sup m]) by _.
+   = (x \sup m + x · (m · x \sup (pred m))) by _.
 clear H.
-   = (x \sup m + m * (x \sup (1 + pred m))) by _.
-   = (x \sup m + m * x \sup m) by _.
-   = ((1+m)*x \sup m) by _ (timeout=30)
+   = (x \sup m + m · (x \sup (1 + pred m))) by _.
+   = (x \sup m + m · x \sup m) by _.
+   = ((1+m) · x \sup m) by _ (timeout=30)
   done.
 qed.
 
@@ -299,26 +304,26 @@ for @{ 'derivative $p}.
 interpretation "Rderivative" 'derivative f =
  (cic:/matita/demo/power_derivative/derivative.con f).
 
-theorem derivative_power': ∀n:nat. D[x \sup (1+n)] = (1+n)*x \sup n.
+theorem derivative_power': ∀n:nat. D[x \sup (1+n)] = (1+n) · x \sup n.
  assume n:nat.
  we proceed by induction on n to prove
- (D[x \sup (1+n)] = (1+n)*x \sup n).
+ (D[x \sup (1+n)] = (1+n) · x \sup n).
  case O.
-   the thesis becomes (D[x \sup 1] = 1*x \sup 0).
+   the thesis becomes (D[x \sup 1] = 1 · x \sup 0).
    by _
   done.
  case S (m:nat).
   by induction hypothesis we know
-   (D[x \sup (1+m)] = (1+m)*x \sup m) (H).
+   (D[x \sup (1+m)] = (1+m) · x \sup m) (H).
   the thesis becomes
-   (D[x \sup (2+m)] = (2+m)*x \sup (1+m)).
+   (D[x \sup (2+m)] = (2+m) · x \sup (1+m)).
   conclude
      (D[x \sup (2+m)])
-   = (D[x \sup 1 * x \sup (1+m)]) by _.
-   = (D[x \sup 1] * x \sup (1+m) + x * D[x \sup (1+m)]) by _.
-   = (x \sup (1+m) + x * (costante (1+m) * x \sup m)) by _.
+   = (D[x \sup 1 · x \sup (1+m)]) by _.
+   = (D[x \sup 1] · x \sup (1+m) + x · D[x \sup (1+m)]) by _.
+   = (x \sup (1+m) + x · (costante (1+m) · x \sup m)) by _.
 clear H.
-   = (x \sup (1+m) + costante (1+m) * x \sup (1+m)) by _.
-   = (x \sup (1+m) * (costante (2 + m))) by _
+   = (x \sup (1+m) + costante (1+m) · x \sup (1+m)) by _.
+   = (x \sup (1+m) · (costante (2 + m))) by _
   done.
 qed.
