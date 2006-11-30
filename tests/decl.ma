@@ -129,7 +129,7 @@ assume p:nat.
 suppose (n=m) (H).
 suppose (S m = S p) (K).
 suppose (n = S p) (L).
-obtain (S n) = (S m) by (eq_f ? ? ? ? ? H).
+conclude (S n) = (S m) by (eq_f ? ? ? ? ? H).
              = (S p) by K.
              = n by (sym_eq ? ? ? L)
 done.
@@ -142,7 +142,7 @@ assume p:nat.
 suppose (n=m) (H).
 suppose (S m = S p) (K).
 suppose (n = S p) (L).
-obtain (S n) = (S m) by _.
+conclude (S n) = (S m) by _.
              = (S p) by _.
              = n by _
 done.
