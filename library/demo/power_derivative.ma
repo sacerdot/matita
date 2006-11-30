@@ -281,6 +281,7 @@ clear H.
   done.
 qed.
 
+(*
 notation "hvbox(\frac 'd' ('d' ident i) break p)"
   right associative with precedence 90
 for @{ 'derivative ${default
@@ -288,6 +289,14 @@ for @{ 'derivative ${default
   @{\lambda ${ident i} . $p}}}.
 
 interpretation "Rderivative" 'derivative \eta.f =
+ (cic:/matita/demo/power_derivative/derivative.con f).
+*)
+
+notation "hvbox(\frac 'd' ('d' 'x') break p)"
+  right associative with precedence 90
+for @{ 'derivative $p}.
+
+interpretation "Rderivative" 'derivative f =
  (cic:/matita/demo/power_derivative/derivative.con f).
 
 theorem derivative_power': ∀n:nat. D[x \sup (1+n)] = (1+n)*x \sup n.
