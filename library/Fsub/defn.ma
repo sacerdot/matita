@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/library/Fsub/defn".
+set "baseuri" "cic:/matita/Fsub/defn".
 include "logic/equality.ma".
 include "nat/nat.ma".
 include "datatypes/bool.ma".
@@ -996,38 +996,8 @@ intros 3.elim G 0
 qed.
 
 (*** some exotic inductions and related lemmas ***) 
-(* FIXME : use nat_elim1 instead *)
 
-lemma nat_ind_strong: \forall P:nat \to Prop.
-                      (P O) \to
-                      (\forall m.(\forall n.(n < m) \to (P n)) \to (P m)) \to
-                      \forall n.(P n).
-cut (\forall P:nat \to Prop.\forall n.
-       (P O) \to (\forall m.(P m) \to (P (S m))) \to (P n))
-  [intros;cut ((\lambda l.\forall m.(m < (S l)) \to (P m)) n)
-     [simplify in Hcut1;apply Hcut1;unfold;constructor 1
-     |cut (\forall m:nat.(m < (S O)) \to (P m))
-        [cut (\forall n.
-                ((\lambda l.\forall m.(m < (S l)) \to (P m)) n) \to
-                ((\lambda l.\forall m.(m < (S l)) \to (P m)) (S n)))
-           [apply (Hcut ? ? Hcut1 Hcut2)
-           |simplify;intros 2;lapply (H1 ? H2);intros;unfold in H3;
-            lapply (le_S_S_to_le ? ? H3);
-            lapply (le_to_or_lt_eq ? ? Hletin1);
-            elim Hletin2
-              [apply (H2 ? H4)
-              |rewrite > H4;assumption]]
-        |intros;unfold in H2;lapply (le_S_S_to_le ? ? H2);
-         generalize in match Hletin;elim m
-           [assumption
-           |absurd ((S n1) \leq O)
-              [assumption|apply not_le_Sn_O]]]]
-  |intros 2;elim n
-     [assumption
-     |apply (H2 ? (H H1 H2))]]
-qed.
-
-(* TODO : relocate the following 2 lemmas *)
+(* TODO : relocate the following 3 lemmas *)
 
 lemma max_case : \forall m,n.(max m n) = match (leb m n) with
       [ false \Rightarrow n
