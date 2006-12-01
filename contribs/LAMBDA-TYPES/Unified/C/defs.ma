@@ -12,16 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/tests".
+set "baseuri" "cic:/matita/LAMBDA-TYPES/Unified/C/defs".
 
-include "nat/nat.ma".
-
-theorem pippo: \forall (P,Q,R:nat \to Prop).
-               \forall x,y. x=y \to P x \to Q x \to R x.
-               intros.
-               rewrite > P in Q.  
-(*             
-theorem pippo: \forall (P,Q,R:nat \to Prop).
-               \forall x,y. x=y \to P x \to Q x \to R x.
-               intros. rewrite > H in y.
+(* FLAT CONTEXTS
+   - Naming policy:
+     - contexts: c d
 *)
+
+include "P/defs.ma".
+
+inductive C: Set \def
+   | top  : C
+   | entry: C \to Bind \to P \to C
+.
