@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/test/tinycals".
+set "baseuri" "cic:/matita/tests/tinycals".
 
 theorem prova: 
   \forall A,B,C:Prop.

@@ -94,15 +94,15 @@ notation "hvbox(s break \mapsto t)"
   right associative with precedence 55
   for @{ 'arrow $s $t }.
 
-interpretation "universal type" 'forall S T = (cic:/matita/test/Typ.ind#xpointer(1/1/5) S T).
+interpretation "universal type" 'forall S T = (cic:/matita/Fsub/defn/Typ.ind#xpointer(1/1/5) S T).
 
-interpretation "bound var" 'var x = (cic:/matita/test/Typ.ind#xpointer(1/1/1) x).
+interpretation "bound var" 'var x = (cic:/matita/Fsub/defn/Typ.ind#xpointer(1/1/1) x).
 
-interpretation "bound tvar" 'tvar x = (cic:/matita/test/Typ.ind#xpointer(1/1/3) x).
+interpretation "bound tvar" 'tvar x = (cic:/matita/Fsub/defn/Typ.ind#xpointer(1/1/3) x).
 
-interpretation "bound tname" 'tname x = (cic:/matita/test/Typ.ind#xpointer(1/1/2) x).
+interpretation "bound tname" 'tname x = (cic:/matita/Fsub/defn/Typ.ind#xpointer(1/1/2) x).
 
-interpretation "arrow type" 'arrow S T = (cic:/matita/test/Typ.ind#xpointer(1/1/4) S T). 
+interpretation "arrow type" 'arrow S T = (cic:/matita/Fsub/defn/Typ.ind#xpointer(1/1/4) S T). 
 
 (*** Various kinds of substitution, not all will be used probably ***)
 

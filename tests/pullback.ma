@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/test/".
+set "baseuri" "cic:/matita/tests/pullback".
 
 inductive T : Type \def t : T.
 inductive L : Type \def l : L.
@@ -31,12 +31,12 @@ definition P2_to_L : P2 \to L \def \lambda x.l.
 definition P2_to_R : P2 \to R \def \lambda x.r.
 definition P1_to_P1 : P1 \to P1 \def \lambda x.p1.
 
-coercion cic:/matita/test/L_to_T.con.
-coercion cic:/matita/test/R_to_T.con.
-coercion cic:/matita/test/P1_to_L.con.
-coercion cic:/matita/test/P1_to_R1.con.
-coercion cic:/matita/test/R1_to_R.con.
-coercion cic:/matita/test/R1_to_P2.con.
-coercion cic:/matita/test/P2_to_L.con.
-coercion cic:/matita/test/P2_to_R.con.
-coercion cic:/matita/test/P1_to_P1.con.
+coercion cic:/matita/tests/pullback/L_to_T.con.
+coercion cic:/matita/tests/pullback/R_to_T.con.
+coercion cic:/matita/tests/pullback/P1_to_L.con.
+coercion cic:/matita/tests/pullback/P1_to_R1.con.
+coercion cic:/matita/tests/pullback/R1_to_R.con.
+coercion cic:/matita/tests/pullback/R1_to_P2.con.
+coercion cic:/matita/tests/pullback/P2_to_L.con.
+coercion cic:/matita/tests/pullback/P2_to_R.con.
+coercion cic:/matita/tests/pullback/P1_to_P1.con.

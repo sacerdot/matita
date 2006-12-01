@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/test/dependent_injection/".
+set "baseuri" "cic:/matita/tests/dependent_injection".
 
 include "legacy/coq.ma".
 

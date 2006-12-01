@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/test/applys".
+set "baseuri" "cic:/matita/tests/applys".
 
 include "nat/div_and_mod.ma".
 include "nat/factorial.ma".

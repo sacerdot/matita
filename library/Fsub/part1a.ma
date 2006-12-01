@@ -13,10 +13,10 @@
 (**************************************************************************)
 
 set "baseuri" "cic:/matita/Fsub/part1a/".
-include "library/logic/equality.ma".
-include "library/nat/nat.ma".
-include "library/datatypes/bool.ma".
-include "library/nat/compare.ma".
+include "logic/equality.ma".
+include "nat/nat.ma".
+include "datatypes/bool.ma".
+include "nat/compare.ma".
 include "Fsub/defn.ma".
 
 theorem JS_Refl : \forall T,G.(WFType G T) \to (WFEnv G) \to (JSubtype G T T).
