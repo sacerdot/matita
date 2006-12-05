@@ -71,7 +71,7 @@ let rec to_string =
        | phase::tl ->
           let msg =
            String.concat "\n\n\n"
-            (List.map (fun (_,_,floc,msg) ->
+            (List.map (fun (_,_,floc,msg,significant) ->
               let loc_descr =
                match floc with
                   None -> ""
@@ -79,7 +79,8 @@ let rec to_string =
                    let (x, y) = HExtlib.loc_of_floc floc in
                     sprintf " at %d-%d" (x+offset) (y+offset)
               in
-               "*Error" ^ loc_descr ^ ": " ^ Lazy.force msg) phase)
+               "*" ^ (if not significant then "(Ignorable) " else "")
+               ^ "Error" ^ loc_descr ^ ": " ^ Lazy.force msg) phase)
           in
            if msg = prev_msg then
             aux (n+1) (msg,phases@[n]) tl
@@ -88,7 +89,7 @@ let rec to_string =
              (aux (n+1) (msg,[n]) tl) in
      let loc =
       match errorll with
-         ((_,_,Some floc,_)::_)::_ ->
+         ((_,_,Some floc,_,_)::_)::_ ->
           let (x, y) = HExtlib.loc_of_floc floc in
           let x = x + offset in
           let y = y + offset in

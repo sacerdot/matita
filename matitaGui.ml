@@ -157,7 +157,7 @@ class interpErrorModel =
               (let loc_row = tree_store#append () in
                 begin
                  match lll with
-                    [passes,envs_and_diffs,_] ->
+                    [passes,envs_and_diffs,_,_] ->
                       tree_store#set ~row:loc_row ~column:id_col
                        ("Error location " ^ string_of_int (!idx1+1) ^
                         ", error message " ^ string_of_int (!idx1+1) ^ ".1" ^
@@ -175,7 +175,7 @@ class interpErrorModel =
                 Some loc_row) in
             let idx2 = ref ~-1 in
              List.iter
-              (fun passes,envs_and_diffs,_ ->
+              (fun passes,envs_and_diffs,_,_ ->
                 incr idx2;
                 let msg_row =
                  if List.length lll = 1 then
@@ -235,10 +235,14 @@ class interpErrorModel =
 let rec interactive_error_interp ?(all_passes=false) (source_buffer:GSourceView.source_buffer) notify_exn offset errorll
 = 
   let errorll' =
+   let remove_non_significant =
+     List.filter (fun (_env,_diff,_loc,_msg,significant) -> significant) in
    if all_passes then errorll else
     (* We remove passes 1,2 and 5,6 *)
-    []::[]::
-     List.tl (List.tl (List.rev (List.tl (List.tl (List.rev errorll))))) in
+     []::[]
+     ::(remove_non_significant (List.nth errorll 2))
+     ::(remove_non_significant (List.nth errorll 3))
+     ::[]::[] in
   let choices =
    let pass = ref 0 in
    List.flatten
@@ -246,15 +250,15 @@ let rec interactive_error_interp ?(all_passes=false) (source_buffer:GSourceView.
       (fun l ->
         incr pass;
         List.map
-         (fun (env,diff,offset,msg) ->
-           offset, [[!pass], [[!pass], env, diff], msg]) l
+         (fun (env,diff,offset,msg,significant) ->
+           offset, [[!pass], [[!pass], env, diff], msg, significant]) l
       ) errorll') in
   (* Here we are doing a stable sort and list_uniq returns the latter
      "equal" element. I.e. we are showing the error corresponding to the
      most advanced disambiguation pass *)
   let choices =
    let choices_compare (o1,_) (o2,_) = compare o1 o2 in
-   let choices_compare_by_passes (p1,_,_) (p2,_,_) =
+   let choices_compare_by_passes (p1,_,_,_) (p2,_,_,_) =
     compare p1 p2 in
    let rec uniq =
     function
@@ -277,14 +281,15 @@ let rec interactive_error_interp ?(all_passes=false) (source_buffer:GSourceView.
            List.sort choices_compare_by_passes
             (uniq_by_env (List.stable_sort choices_compare_by_env errors))
          in
-         let choices_compare_by_msg (_,_,m1) (_,_,m2) =
+         let choices_compare_by_msg (_,_,m1,_) (_,_,m2,_) =
           compare (Lazy.force m1) (Lazy.force m2) in
          let rec uniq_by_msg =
           function
              [] -> []
            | h::[] -> [h]
-           | (p1,i1,m1)::(p2,i2,m2)::tl when Lazy.force m1 = Lazy.force m2 ->
-               uniq_by_msg ((p1@p2,merge_by_env (i1@i2),m2) :: tl) 
+           | (p1,i1,m1,s1)::(p2,i2,m2,s2)::tl
+             when Lazy.force m1 = Lazy.force m2 && s1 = s2 ->
+               uniq_by_msg ((p1@p2,merge_by_env (i1@i2),m2,s2) :: tl)
            | h1::tl -> h1 :: uniq_by_msg tl
          in
           List.sort choices_compare_by_msg
@@ -299,11 +304,11 @@ let rec interactive_error_interp ?(all_passes=false) (source_buffer:GSourceView.
   in
    match choices with
       [] -> assert false
-    | [loffset,[_,envs_and_diffs,msg]] ->
+    | [loffset,[_,envs_and_diffs,msg,significant]] ->
         let _,env,diff = List.hd envs_and_diffs in
          notify_exn
           (GrafiteDisambiguator.DisambiguationError
-            (offset,[[env,diff,loffset,msg]]));
+            (offset,[[env,diff,loffset,msg,significant]]));
     | _::_ ->
        let dialog = new disambiguationErrors () in
        dialog#check_widgets ();
@@ -321,10 +326,12 @@ let rec interactive_error_interp ?(all_passes=false) (source_buffer:GSourceView.
            | Some tp -> tp in
           let idx1,idx2,idx3 = model#get_interp_no tree_path in
           let loffset,lll = List.nth choices idx1 in
-          let _,envs_and_diffs,msg =
+          let _,envs_and_diffs,msg,significant =
            match idx2 with
               Some idx2 -> List.nth lll idx2
-            | None -> [],[],lazy "Multiple error messages. Please select one." in
+            | None ->
+                [],[],lazy "Multiple error messages. Please select one.",true
+          in
           let _,env,diff =
            match idx3 with
               Some idx3 -> List.nth envs_and_diffs idx3
@@ -336,7 +343,7 @@ let rec interactive_error_interp ?(all_passes=false) (source_buffer:GSourceView.
              ~stop:source_buffer#end_iter;
            notify_exn
             (GrafiteDisambiguator.DisambiguationError
-              (offset,[[env,diff,loffset,msg]]))
+              (offset,[[env,diff,loffset,msg,significant]]))
            ));
        let return _ =
          dialog#disambiguationErrors#destroy ();
@@ -355,7 +362,7 @@ let rec interactive_error_interp ?(all_passes=false) (source_buffer:GSourceView.
            match idx2,idx3 with
               Some idx2, Some idx3 ->
                let _,lll = List.nth choices idx1 in
-               let _,envs_and_diffs,_ = List.nth lll idx2 in
+               let _,envs_and_diffs,_,_ = List.nth lll idx2 in
                let _,_,diff = List.nth envs_and_diffs idx3 in
                 diff
             | _,_ -> assert false
