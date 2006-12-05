@@ -74,7 +74,7 @@ inline "cic:/CoRN/model/structures/Zsec/Zpos.con".
 
 (* begin hide *)
 
-coercion cic:/matita/CoRN-Decl/model/structures/Zsec/Zpos.con 0 (* compounds *).
+coercion cic:/Coq/ZArith/BinInt/Z.ind#xpointer(1/1/2) 0 (* compounds *).
 
 (* end hide *)
 

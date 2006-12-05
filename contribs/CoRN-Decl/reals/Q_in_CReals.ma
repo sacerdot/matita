@@ -59,7 +59,7 @@ inline "cic:/CoRN/reals/Q_in_CReals/Archimedes'.con".
 
 (*#**************************************)
 
-coercion cic:/matita/CoRN-Decl/reals/Q_in_CReals/nat_of_P.con 0 (* compounds *).
+coercion cic:/Coq/NArith/BinPos/nat_of_P.con 0 (* compounds *).
 
 (* end hide *)
 

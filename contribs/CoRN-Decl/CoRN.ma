@@ -619,7 +619,7 @@ coercion cic:/CoRN/model/structures/Qsec/inject_Z.con 0 (* compounds *).
 Infix "{#Z}" := ap_Z (no associativity, at level 90).
 *)
 
-coercion cic:/CoRN/model/structures/Zsec/Zpos.con 0 (* compounds *).
+coercion cic:/Coq/ZArith/BinInt/Z.ind#xpointer(1/1/2) 0 (* compounds *).
 
 (* From reals/Bridges_LUB *************************************************)
 
@@ -689,7 +689,7 @@ Notation "( A , B )" := (pairT A B).
 
 (* From reals/Q_in_CReals *************************************************)
 
-coercion cic:/CoRN/reals/Q_in_CReals/nat_of_P.con 0 (* compounds *).
+coercion cic:/Coq/NArith/BinPos/nat_of_P.con 0 (* compounds *).
 
 (* From reals/R_morphism **************************************************)
 
