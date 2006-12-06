@@ -319,8 +319,8 @@ theorem derivative_power': ∀n:nat. D[x \sup (1+n)] = (1+n) · x \sup n.
    (D[x \sup (2+m)] = (2+m) · x \sup (1+m)).
   conclude
      (D[x \sup (2+m)])
-   = (D[x \sup 1 · x \sup (1+m)]) by _.
-   = (D[x \sup 1] · x \sup (1+m) + x · D[x \sup (1+m)]) by _.
+   = (D[x · x \sup (1+m)]) by _.
+   = (D[x] · x \sup (1+m) + x · D[x \sup (1+m)]) by _.
    = (x \sup (1+m) + x · (costante (1+m) · x \sup m)) by _.
 clear H.
    = (x \sup (1+m) + costante (1+m) · x \sup (1+m)) by _.
