@@ -20,7 +20,7 @@ include "G/defs.ma".
 
 include "pc3/defs.ma".
 
-inductive ty3 (g:G): C \to (T \to (T \to Prop)) \def
+inductive ty3 (g: G): C \to (T \to (T \to Prop)) \def
 | ty3_conv: \forall (c: C).(\forall (t2: T).(\forall (t: T).((ty3 g c t2 t) 
 \to (\forall (u: T).(\forall (t1: T).((ty3 g c u t1) \to ((pc3 c t1 t2) \to 
 (ty3 g c u t2))))))))

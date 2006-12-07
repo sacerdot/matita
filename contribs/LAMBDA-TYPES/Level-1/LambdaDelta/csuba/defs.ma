@@ -18,7 +18,7 @@ set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/csuba/defs".
 
 include "arity/defs.ma".
 
-inductive csuba (g:G): C \to (C \to Prop) \def
+inductive csuba (g: G): C \to (C \to Prop) \def
 | csuba_sort: \forall (n: nat).(csuba g (CSort n) (CSort n))
 | csuba_head: \forall (c1: C).(\forall (c2: C).((csuba g c1 c2) \to (\forall 
 (k: K).(\forall (u: T).(csuba g (CHead c1 k u) (CHead c2 k u))))))

@@ -14,18 +14,32 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/sn3/defs".
+set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/Base/plist/defs".
 
-include "pr3/defs.ma".
+include "ext/preamble.ma".
 
-inductive sn3 (c: C): T \to Prop \def
-| sn3_sing: \forall (t1: T).(((\forall (t2: T).((((eq T t1 t2) \to (\forall 
-(P: Prop).P))) \to ((pr3 c t1 t2) \to (sn3 c t2))))) \to (sn3 c t1)).
+inductive PList: Set \def
+| PNil: PList
+| PCons: nat \to (nat \to (PList \to PList)).
 
-definition sns3:
- C \to (TList \to Prop)
+definition PConsTail:
+ PList \to (nat \to (nat \to PList))
 \def
- let rec sns3 (c: C) (ts: TList) on ts: Prop \def (match ts with [TNil 
-\Rightarrow True | (TCons t ts0) \Rightarrow (land (sn3 c t) (sns3 c ts0))]) 
-in sns3.
+ let rec PConsTail (hds: PList) on hds: (nat \to (nat \to PList)) \def 
+(\lambda (h0: nat).(\lambda (d0: nat).(match hds with [PNil \Rightarrow 
+(PCons h0 d0 PNil) | (PCons h d hds0) \Rightarrow (PCons h d (PConsTail hds0 
+h0 d0))]))) in PConsTail.
+
+definition Ss:
+ PList \to PList
+\def
+ let rec Ss (hds: PList) on hds: PList \def (match hds with [PNil \Rightarrow 
+PNil | (PCons h d hds0) \Rightarrow (PCons h (S d) (Ss hds0))]) in Ss.
+
+definition papp:
+ PList \to (PList \to PList)
+\def
+ let rec papp (a: PList) on a: (PList \to PList) \def (\lambda (b: 
+PList).(match a with [PNil \Rightarrow b | (PCons h d a0) \Rightarrow (PCons 
+h d (papp a0 b))])) in papp.
 

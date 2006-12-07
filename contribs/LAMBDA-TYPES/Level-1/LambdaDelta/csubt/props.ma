@@ -14,18 +14,14 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/sn3/defs".
+set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/csubt/props".
 
-include "pr3/defs.ma".
+include "csubt/defs.ma".
 
-inductive sn3 (c: C): T \to Prop \def
-| sn3_sing: \forall (t1: T).(((\forall (t2: T).((((eq T t1 t2) \to (\forall 
-(P: Prop).P))) \to ((pr3 c t1 t2) \to (sn3 c t2))))) \to (sn3 c t1)).
-
-definition sns3:
- C \to (TList \to Prop)
+theorem csubt_refl:
+ \forall (g: G).(\forall (c: C).(csubt g c c))
 \def
- let rec sns3 (c: C) (ts: TList) on ts: Prop \def (match ts with [TNil 
-\Rightarrow True | (TCons t ts0) \Rightarrow (land (sn3 c t) (sns3 c ts0))]) 
-in sns3.
+ \lambda (g: G).(\lambda (c: C).(C_ind (\lambda (c0: C).(csubt g c0 c0)) 
+(\lambda (n: nat).(csubt_sort g n)) (\lambda (c0: C).(\lambda (H: (csubt g c0 
+c0)).(\lambda (k: K).(\lambda (t: T).(csubt_head g c0 c0 H k t))))) c)).
 

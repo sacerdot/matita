@@ -14,25 +14,25 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/Base/ext/plist".
+set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/csubc/csuba".
 
-include "ext/preamble.ma".
+include "csubc/defs.ma".
 
-inductive PList: Set \def
-| PNil: PList
-| PCons: nat \to (nat \to (PList \to PList)).
+include "sc3/props.ma".
 
-definition PConsTail:
- PList \to (nat \to (nat \to PList))
+include "csuba/defs.ma".
+
+theorem csubc_csuba:
+ \forall (g: G).(\forall (c1: C).(\forall (c2: C).((csubc g c1 c2) \to (csuba 
+g c1 c2))))
 \def
- let rec PConsTail (hds: PList) on hds: (nat \to (nat \to PList)) \def 
-(\lambda (h0: nat).(\lambda (d0: nat).(match hds with [PNil \Rightarrow 
-(PCons h0 d0 PNil) | (PCons h d hds0) \Rightarrow (PCons h d (PConsTail hds0 
-h0 d0))]))) in PConsTail.
-
-definition Ss:
- PList \to PList
-\def
- let rec Ss (hds: PList) on hds: PList \def (match hds with [PNil \Rightarrow 
-PNil | (PCons h d hds0) \Rightarrow (PCons h (S d) (Ss hds0))]) in Ss.
+ \lambda (g: G).(\lambda (c1: C).(\lambda (c2: C).(\lambda (H: (csubc g c1 
+c2)).(csubc_ind g (\lambda (c: C).(\lambda (c0: C).(csuba g c c0))) (\lambda 
+(n: nat).(csuba_refl g (CSort n))) (\lambda (c3: C).(\lambda (c4: C).(\lambda 
+(_: (csubc g c3 c4)).(\lambda (H1: (csuba g c3 c4)).(\lambda (k: K).(\lambda 
+(v: T).(csuba_head g c3 c4 H1 k v))))))) (\lambda (c3: C).(\lambda (c4: 
+C).(\lambda (_: (csubc g c3 c4)).(\lambda (H1: (csuba g c3 c4)).(\lambda (v: 
+T).(\lambda (a: A).(\lambda (H2: (sc3 g (asucc g a) c3 v)).(\lambda (w: 
+T).(\lambda (H3: (sc3 g a c4 w)).(csuba_abst g c3 c4 H1 v a (sc3_arity_gen g 
+c3 v (asucc g a) H2) w (sc3_arity_gen g c4 w a H3))))))))))) c1 c2 H)))).
 

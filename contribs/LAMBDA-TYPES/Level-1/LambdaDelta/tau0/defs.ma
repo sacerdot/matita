@@ -20,7 +20,7 @@ include "G/defs.ma".
 
 include "getl/defs.ma".
 
-inductive tau0 (g:G): C \to (T \to (T \to Prop)) \def
+inductive tau0 (g: G): C \to (T \to (T \to Prop)) \def
 | tau0_sort: \forall (c: C).(\forall (n: nat).(tau0 g c (TSort n) (TSort 
 (next g n))))
 | tau0_abbr: \forall (c: C).(\forall (d: C).(\forall (v: T).(\forall (i: 

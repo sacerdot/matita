@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/ty3/pr3".
 
-include "csub3/ty3.ma".
+include "csubt/ty3.ma".
 
 include "ty3/subst1.ma".
 
@@ -427,9 +427,9 @@ t0))))).(ty3_conv g c2 (THead (Flat Appl) w (THead (Bind Abst) u t0)) (THead
 (Flat Appl) w (THead (Bind Abst) u x0)) (ty3_appl g c2 w u (H1 c2 H4 w 
 (pr0_refl w)) (THead (Bind Abst) u t0) x0 (ty3_bind g c2 u x1 H20 Abst t0 x0 
 H21 x2 H22)) (THead (Bind Abbr) v2 t4) (THead (Bind Abbr) v2 x3) (ty3_bind g 
-c2 v2 u (H1 c2 H4 v2 H14) Abbr t4 x3 (csub3_ty3_ld g c2 v2 u0 (ty3_conv g c2 
+c2 v2 u (H1 c2 H4 v2 H14) Abbr t4 x3 (csubt_ty3_ld g c2 v2 u0 (ty3_conv g c2 
 u0 x4 H24 v2 u (H1 c2 H4 v2 H14) (pc3_s c2 u u0 H27)) t4 x3 H25) x5 
-(csub3_ty3_ld g c2 v2 u0 (ty3_conv g c2 u0 x4 H24 v2 u (H1 c2 H4 v2 H14) 
+(csubt_ty3_ld g c2 v2 u0 (ty3_conv g c2 u0 x4 H24 v2 u (H1 c2 H4 v2 H14) 
 (pc3_s c2 u u0 H27)) x3 x5 H26)) (pc3_t (THead (Bind Abbr) v2 t0) c2 (THead 
 (Bind Abbr) v2 x3) (pc3_head_2 c2 v2 x3 t0 (Bind Abbr) (H28 Abbr v2)) (THead 
 (Flat Appl) w (THead (Bind Abst) u t0)) (pc3_pr2_x c2 (THead (Bind Abbr) v2 

@@ -59,6 +59,16 @@ Abst \Rightarrow False | Void \Rightarrow True])) I Abst H) in (False_ind P
 H0))))) (or_introl (eq B Void Void) ((eq B Void Void) \to (\forall (P: 
 Prop).P)) (refl_equal B Void)) b2)) b1).
 
+theorem bind_dec_not:
+ \forall (b1: B).(\forall (b2: B).(or (eq B b1 b2) (not (eq B b1 b2))))
+\def
+ \lambda (b1: B).(\lambda (b2: B).(let H_x \def (terms_props__bind_dec b1 b2) 
+in (let H \def H_x in (or_ind (eq B b1 b2) ((eq B b1 b2) \to (\forall (P: 
+Prop).P)) (or (eq B b1 b2) ((eq B b1 b2) \to False)) (\lambda (H0: (eq B b1 
+b2)).(or_introl (eq B b1 b2) ((eq B b1 b2) \to False) H0)) (\lambda (H0: 
+(((eq B b1 b2) \to (\forall (P: Prop).P)))).(or_intror (eq B b1 b2) ((eq B b1 
+b2) \to False) (\lambda (H1: (eq B b1 b2)).(H0 H1 False)))) H)))).
+
 theorem terms_props__flat_dec:
  \forall (f1: F).(\forall (f2: F).(or (eq F f1 f2) ((eq F f1 f2) \to (\forall 
 (P: Prop).P))))

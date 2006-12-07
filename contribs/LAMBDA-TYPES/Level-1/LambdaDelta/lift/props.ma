@@ -16,6 +16,8 @@
 
 set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/lift/props".
 
+include "tlist/defs.ma".
+
 include "lift/fwd.ma".
 
 include "s/props.ma".
@@ -115,6 +117,20 @@ theorem lift_lref_gt:
 (lift (S O) d (TLRef (pred n))) (lift_lref_ge (pred n) (S O) d (le_S_n d 
 (pred n) (eq_ind nat n (\lambda (n0: nat).(le (S d) n0)) H (S (pred n)) 
 (S_pred n d H))))))).
+
+theorem lifts_tapp:
+ \forall (h: nat).(\forall (d: nat).(\forall (v: T).(\forall (vs: TList).(eq 
+TList (lifts h d (TApp vs v)) (TApp (lifts h d vs) (lift h d v))))))
+\def
+ \lambda (h: nat).(\lambda (d: nat).(\lambda (v: T).(\lambda (vs: 
+TList).(TList_ind (\lambda (t: TList).(eq TList (lifts h d (TApp t v)) (TApp 
+(lifts h d t) (lift h d v)))) (refl_equal TList (TCons (lift h d v) TNil)) 
+(\lambda (t: T).(\lambda (t0: TList).(\lambda (H: (eq TList (lifts h d (TApp 
+t0 v)) (TApp (lifts h d t0) (lift h d v)))).(eq_ind_r TList (TApp (lifts h d 
+t0) (lift h d v)) (\lambda (t1: TList).(eq TList (TCons (lift h d t) t1) 
+(TCons (lift h d t) (TApp (lifts h d t0) (lift h d v))))) (refl_equal TList 
+(TCons (lift h d t) (TApp (lifts h d t0) (lift h d v)))) (lifts h d (TApp t0 
+v)) H)))) vs)))).
 
 theorem lift_inj:
  \forall (x: T).(\forall (t: T).(\forall (h: nat).(\forall (d: nat).((eq T 

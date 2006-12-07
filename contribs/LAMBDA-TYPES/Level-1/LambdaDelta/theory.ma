@@ -26,6 +26,10 @@ include "s/defs.ma".
 
 include "s/props.ma".
 
+include "tlist/defs.ma".
+
+include "tlist/props.ma".
+
 include "tlt/defs.ma".
 
 include "tlt/props.ma".
@@ -310,9 +314,21 @@ include "sc3/defs.ma".
 
 include "sc3/props.ma".
 
-include "ceqc/defs.ma".
+include "csubc/defs.ma".
 
-include "ceqc/props.ma".
+include "csubc/props.ma".
+
+include "csubc/csuba.ma".
+
+include "csubc/drop.ma".
+
+include "csubc/drop1.ma".
+
+include "csubc/clear.ma".
+
+include "csubc/getl.ma".
+
+include "csubc/arity.ma".
 
 include "sc3/arity.ma".
 
@@ -346,21 +362,21 @@ include "ty3/fsubst0.ma".
 
 include "ty3/subst1.ma".
 
-include "csub3/defs.ma".
+include "csubt/defs.ma".
 
-include "csub3/fwd.ma".
+include "csubt/fwd.ma".
 
-include "csub3/props.ma".
+include "csubt/props.ma".
 
-include "csub3/clear.ma".
+include "csubt/clear.ma".
 
-include "csub3/drop.ma".
+include "csubt/drop.ma".
 
-include "csub3/getl.ma".
+include "csubt/getl.ma".
 
-include "csub3/pc3.ma".
+include "csubt/pc3.ma".
 
-include "csub3/ty3.ma".
+include "csubt/ty3.ma".
 
 include "ty3/pr3.ma".
 

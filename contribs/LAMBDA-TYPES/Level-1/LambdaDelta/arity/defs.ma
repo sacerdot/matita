@@ -20,7 +20,7 @@ include "leq/defs.ma".
 
 include "getl/defs.ma".
 
-inductive arity (g:G): C \to (T \to (A \to Prop)) \def
+inductive arity (g: G): C \to (T \to (A \to Prop)) \def
 | arity_sort: \forall (c: C).(\forall (n: nat).(arity g c (TSort n) (ASort O 
 n)))
 | arity_abbr: \forall (c: C).(\forall (d: C).(\forall (u: T).(\forall (i: 

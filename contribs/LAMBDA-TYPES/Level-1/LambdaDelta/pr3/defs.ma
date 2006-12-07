@@ -18,7 +18,7 @@ set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/pr3/defs".
 
 include "pr2/defs.ma".
 
-inductive pr3 (c:C): T \to (T \to Prop) \def
+inductive pr3 (c: C): T \to (T \to Prop) \def
 | pr3_refl: \forall (t: T).(pr3 c t t)
 | pr3_sing: \forall (t2: T).(\forall (t1: T).((pr2 c t1 t2) \to (\forall (t3: 
 T).((pr3 c t2 t3) \to (pr3 c t1 t3))))).

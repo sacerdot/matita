@@ -18,6 +18,8 @@ set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/lift/defs".
 
 include "T/defs.ma".
 
+include "tlist/defs.ma".
+
 include "s/defs.ma".
 
 definition lref_map:

@@ -163,3 +163,72 @@ PList hds0 p H11))) d0 (sym_eq nat d0 n0 H10))) h0 (sym_eq nat h0 n H9)))
 H8)) H7)) H5 H6 H2 H3))))]) in (H2 (refl_equal PList (PCons n n0 p)) 
 (refl_equal C c1) (refl_equal C c2))))))))) hds)))))).
 
+theorem drop1_trans:
+ \forall (is1: PList).(\forall (c1: C).(\forall (c0: C).((drop1 is1 c1 c0) 
+\to (\forall (is2: PList).(\forall (c2: C).((drop1 is2 c0 c2) \to (drop1 
+(papp is1 is2) c1 c2)))))))
+\def
+ \lambda (is1: PList).(PList_ind (\lambda (p: PList).(\forall (c1: 
+C).(\forall (c0: C).((drop1 p c1 c0) \to (\forall (is2: PList).(\forall (c2: 
+C).((drop1 is2 c0 c2) \to (drop1 (papp p is2) c1 c2)))))))) (\lambda (c1: 
+C).(\lambda (c0: C).(\lambda (H: (drop1 PNil c1 c0)).(\lambda (is2: 
+PList).(\lambda (c2: C).(\lambda (H0: (drop1 is2 c0 c2)).(let H1 \def (match 
+H in drop1 return (\lambda (p: PList).(\lambda (c: C).(\lambda (c3: 
+C).(\lambda (_: (drop1 p c c3)).((eq PList p PNil) \to ((eq C c c1) \to ((eq 
+C c3 c0) \to (drop1 is2 c1 c2)))))))) with [(drop1_nil c) \Rightarrow 
+(\lambda (_: (eq PList PNil PNil)).(\lambda (H2: (eq C c c1)).(\lambda (H3: 
+(eq C c c0)).(eq_ind C c1 (\lambda (c3: C).((eq C c3 c0) \to (drop1 is2 c1 
+c2))) (\lambda (H4: (eq C c1 c0)).(eq_ind C c0 (\lambda (c3: C).(drop1 is2 c3 
+c2)) (let H5 \def (eq_ind_r C c0 (\lambda (c3: C).(drop1 is2 c3 c2)) H0 c1 
+H4) in (eq_ind C c1 (\lambda (c3: C).(drop1 is2 c3 c2)) H5 c0 H4)) c1 (sym_eq 
+C c1 c0 H4))) c (sym_eq C c c1 H2) H3)))) | (drop1_cons c3 c4 h d H1 c5 hds 
+H2) \Rightarrow (\lambda (H3: (eq PList (PCons h d hds) PNil)).(\lambda (H4: 
+(eq C c3 c1)).(\lambda (H5: (eq C c5 c0)).((let H6 \def (eq_ind PList (PCons 
+h d hds) (\lambda (e: PList).(match e in PList return (\lambda (_: 
+PList).Prop) with [PNil \Rightarrow False | (PCons _ _ _) \Rightarrow True])) 
+I PNil H3) in (False_ind ((eq C c3 c1) \to ((eq C c5 c0) \to ((drop h d c3 
+c4) \to ((drop1 hds c4 c5) \to (drop1 is2 c1 c2))))) H6)) H4 H5 H1 H2))))]) 
+in (H1 (refl_equal PList PNil) (refl_equal C c1) (refl_equal C c0))))))))) 
+(\lambda (n: nat).(\lambda (n0: nat).(\lambda (p: PList).(\lambda (H: 
+((\forall (c1: C).(\forall (c0: C).((drop1 p c1 c0) \to (\forall (is2: 
+PList).(\forall (c2: C).((drop1 is2 c0 c2) \to (drop1 (papp p is2) c1 
+c2))))))))).(\lambda (c1: C).(\lambda (c0: C).(\lambda (H0: (drop1 (PCons n 
+n0 p) c1 c0)).(\lambda (is2: PList).(\lambda (c2: C).(\lambda (H1: (drop1 is2 
+c0 c2)).(let H2 \def (match H0 in drop1 return (\lambda (p0: PList).(\lambda 
+(c: C).(\lambda (c3: C).(\lambda (_: (drop1 p0 c c3)).((eq PList p0 (PCons n 
+n0 p)) \to ((eq C c c1) \to ((eq C c3 c0) \to (drop1 (PCons n n0 (papp p 
+is2)) c1 c2)))))))) with [(drop1_nil c) \Rightarrow (\lambda (H2: (eq PList 
+PNil (PCons n n0 p))).(\lambda (H3: (eq C c c1)).(\lambda (H4: (eq C c 
+c0)).((let H5 \def (eq_ind PList PNil (\lambda (e: PList).(match e in PList 
+return (\lambda (_: PList).Prop) with [PNil \Rightarrow True | (PCons _ _ _) 
+\Rightarrow False])) I (PCons n n0 p) H2) in (False_ind ((eq C c c1) \to ((eq 
+C c c0) \to (drop1 (PCons n n0 (papp p is2)) c1 c2))) H5)) H3 H4)))) | 
+(drop1_cons c3 c4 h d H2 c5 hds H3) \Rightarrow (\lambda (H4: (eq PList 
+(PCons h d hds) (PCons n n0 p))).(\lambda (H5: (eq C c3 c1)).(\lambda (H6: 
+(eq C c5 c0)).((let H7 \def (f_equal PList PList (\lambda (e: PList).(match e 
+in PList return (\lambda (_: PList).PList) with [PNil \Rightarrow hds | 
+(PCons _ _ p0) \Rightarrow p0])) (PCons h d hds) (PCons n n0 p) H4) in ((let 
+H8 \def (f_equal PList nat (\lambda (e: PList).(match e in PList return 
+(\lambda (_: PList).nat) with [PNil \Rightarrow d | (PCons _ n1 _) 
+\Rightarrow n1])) (PCons h d hds) (PCons n n0 p) H4) in ((let H9 \def 
+(f_equal PList nat (\lambda (e: PList).(match e in PList return (\lambda (_: 
+PList).nat) with [PNil \Rightarrow h | (PCons n1 _ _) \Rightarrow n1])) 
+(PCons h d hds) (PCons n n0 p) H4) in (eq_ind nat n (\lambda (n1: nat).((eq 
+nat d n0) \to ((eq PList hds p) \to ((eq C c3 c1) \to ((eq C c5 c0) \to 
+((drop n1 d c3 c4) \to ((drop1 hds c4 c5) \to (drop1 (PCons n n0 (papp p 
+is2)) c1 c2)))))))) (\lambda (H10: (eq nat d n0)).(eq_ind nat n0 (\lambda 
+(n1: nat).((eq PList hds p) \to ((eq C c3 c1) \to ((eq C c5 c0) \to ((drop n 
+n1 c3 c4) \to ((drop1 hds c4 c5) \to (drop1 (PCons n n0 (papp p is2)) c1 
+c2))))))) (\lambda (H11: (eq PList hds p)).(eq_ind PList p (\lambda (p0: 
+PList).((eq C c3 c1) \to ((eq C c5 c0) \to ((drop n n0 c3 c4) \to ((drop1 p0 
+c4 c5) \to (drop1 (PCons n n0 (papp p is2)) c1 c2)))))) (\lambda (H12: (eq C 
+c3 c1)).(eq_ind C c1 (\lambda (c: C).((eq C c5 c0) \to ((drop n n0 c c4) \to 
+((drop1 p c4 c5) \to (drop1 (PCons n n0 (papp p is2)) c1 c2))))) (\lambda 
+(H13: (eq C c5 c0)).(eq_ind C c0 (\lambda (c: C).((drop n n0 c1 c4) \to 
+((drop1 p c4 c) \to (drop1 (PCons n n0 (papp p is2)) c1 c2)))) (\lambda (H14: 
+(drop n n0 c1 c4)).(\lambda (H15: (drop1 p c4 c0)).(drop1_cons c1 c4 n n0 H14 
+c2 (papp p is2) (H c4 c0 H15 is2 c2 H1)))) c5 (sym_eq C c5 c0 H13))) c3 
+(sym_eq C c3 c1 H12))) hds (sym_eq PList hds p H11))) d (sym_eq nat d n0 
+H10))) h (sym_eq nat h n H9))) H8)) H7)) H5 H6 H2 H3))))]) in (H2 (refl_equal 
+PList (PCons n n0 p)) (refl_equal C c1) (refl_equal C c0))))))))))))) is1).
+

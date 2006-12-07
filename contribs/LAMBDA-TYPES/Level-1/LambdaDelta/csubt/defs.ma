@@ -14,18 +14,18 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/sn3/defs".
+set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/csubt/defs".
 
-include "pr3/defs.ma".
+include "ty3/defs.ma".
 
-inductive sn3 (c: C): T \to Prop \def
-| sn3_sing: \forall (t1: T).(((\forall (t2: T).((((eq T t1 t2) \to (\forall 
-(P: Prop).P))) \to ((pr3 c t1 t2) \to (sn3 c t2))))) \to (sn3 c t1)).
-
-definition sns3:
- C \to (TList \to Prop)
-\def
- let rec sns3 (c: C) (ts: TList) on ts: Prop \def (match ts with [TNil 
-\Rightarrow True | (TCons t ts0) \Rightarrow (land (sn3 c t) (sns3 c ts0))]) 
-in sns3.
+inductive csubt (g: G): C \to (C \to Prop) \def
+| csubt_sort: \forall (n: nat).(csubt g (CSort n) (CSort n))
+| csubt_head: \forall (c1: C).(\forall (c2: C).((csubt g c1 c2) \to (\forall 
+(k: K).(\forall (u: T).(csubt g (CHead c1 k u) (CHead c2 k u))))))
+| csubt_void: \forall (c1: C).(\forall (c2: C).((csubt g c1 c2) \to (\forall 
+(b: B).((not (eq B b Void)) \to (\forall (u1: T).(\forall (u2: T).(csubt g 
+(CHead c1 (Bind Void) u1) (CHead c2 (Bind b) u2))))))))
+| csubt_abst: \forall (c1: C).(\forall (c2: C).((csubt g c1 c2) \to (\forall 
+(u: T).(\forall (t: T).((ty3 g c2 u t) \to (csubt g (CHead c1 (Bind Abst) t) 
+(CHead c2 (Bind Abbr) u))))))).
 

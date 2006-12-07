@@ -14,18 +14,20 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/sn3/defs".
+set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/Base/plist/props".
 
-include "pr3/defs.ma".
+include "plist/defs.ma".
 
-inductive sn3 (c: C): T \to Prop \def
-| sn3_sing: \forall (t1: T).(((\forall (t2: T).((((eq T t1 t2) \to (\forall 
-(P: Prop).P))) \to ((pr3 c t1 t2) \to (sn3 c t2))))) \to (sn3 c t1)).
-
-definition sns3:
- C \to (TList \to Prop)
+theorem papp_ss:
+ \forall (is1: PList).(\forall (is2: PList).(eq PList (papp (Ss is1) (Ss 
+is2)) (Ss (papp is1 is2))))
 \def
- let rec sns3 (c: C) (ts: TList) on ts: Prop \def (match ts with [TNil 
-\Rightarrow True | (TCons t ts0) \Rightarrow (land (sn3 c t) (sns3 c ts0))]) 
-in sns3.
+ \lambda (is1: PList).(PList_ind (\lambda (p: PList).(\forall (is2: 
+PList).(eq PList (papp (Ss p) (Ss is2)) (Ss (papp p is2))))) (\lambda (is2: 
+PList).(refl_equal PList (Ss is2))) (\lambda (n: nat).(\lambda (n0: 
+nat).(\lambda (p: PList).(\lambda (H: ((\forall (is2: PList).(eq PList (papp 
+(Ss p) (Ss is2)) (Ss (papp p is2)))))).(\lambda (is2: PList).(eq_ind_r PList 
+(Ss (papp p is2)) (\lambda (p0: PList).(eq PList (PCons n (S n0) p0) (PCons n 
+(S n0) (Ss (papp p is2))))) (refl_equal PList (PCons n (S n0) (Ss (papp p 
+is2)))) (papp (Ss p) (Ss is2)) (H is2))))))) is1).
 

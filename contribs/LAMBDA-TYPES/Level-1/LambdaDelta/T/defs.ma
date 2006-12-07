@@ -36,17 +36,6 @@ inductive T: Set \def
 | TLRef: nat \to T
 | THead: K \to (T \to (T \to T)).
 
-inductive TList: Set \def
-| TNil: TList
-| TCons: T \to (TList \to TList).
-
-definition THeads:
- K \to (TList \to (T \to T))
-\def
- let rec THeads (k: K) (us: TList) on us: (T \to T) \def (\lambda (t: 
-T).(match us with [TNil \Rightarrow t | (TCons u ul) \Rightarrow (THead k u 
-(THeads k ul t))])) in THeads.
-
 definition tweight:
  T \to nat
 \def

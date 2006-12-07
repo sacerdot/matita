@@ -18,7 +18,7 @@ set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/subst1/defs".
 
 include "subst0/defs.ma".
 
-inductive subst1 (i:nat) (v:T) (t1:T): T \to Prop \def
+inductive subst1 (i: nat) (v: T) (t1: T): T \to Prop \def
 | subst1_refl: subst1 i v t1 t1
 | subst1_single: \forall (t2: T).((subst0 i v t1 t2) \to (subst1 i v t1 t2)).
 

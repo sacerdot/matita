@@ -18,6 +18,8 @@ set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/iso/fwd".
 
 include "iso/defs.ma".
 
+include "tlist/defs.ma".
+
 theorem iso_flats_lref_bind_false:
  \forall (f: F).(\forall (b: B).(\forall (i: nat).(\forall (v: T).(\forall 
 (t: T).(\forall (vs: TList).((iso (THeads (Flat f) vs (TLRef i)) (THead (Bind 

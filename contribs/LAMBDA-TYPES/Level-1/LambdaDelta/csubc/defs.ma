@@ -14,18 +14,16 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/csub3/defs".
+set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/csubc/defs".
 
-include "ty3/defs.ma".
+include "sc3/defs.ma".
 
-inductive csub3 (g:G): C \to (C \to Prop) \def
-| csub3_sort: \forall (n: nat).(csub3 g (CSort n) (CSort n))
-| csub3_head: \forall (c1: C).(\forall (c2: C).((csub3 g c1 c2) \to (\forall 
-(k: K).(\forall (u: T).(csub3 g (CHead c1 k u) (CHead c2 k u))))))
-| csub3_void: \forall (c1: C).(\forall (c2: C).((csub3 g c1 c2) \to (\forall 
-(b: B).((not (eq B b Void)) \to (\forall (u1: T).(\forall (u2: T).(csub3 g 
-(CHead c1 (Bind Void) u1) (CHead c2 (Bind b) u2))))))))
-| csub3_abst: \forall (c1: C).(\forall (c2: C).((csub3 g c1 c2) \to (\forall 
-(u: T).(\forall (t: T).((ty3 g c2 u t) \to (csub3 g (CHead c1 (Bind Abst) t) 
-(CHead c2 (Bind Abbr) u))))))).
+inductive csubc (g: G): C \to (C \to Prop) \def
+| csubc_sort: \forall (n: nat).(csubc g (CSort n) (CSort n))
+| csubc_head: \forall (c1: C).(\forall (c2: C).((csubc g c1 c2) \to (\forall 
+(k: K).(\forall (v: T).(csubc g (CHead c1 k v) (CHead c2 k v))))))
+| csubc_abst: \forall (c1: C).(\forall (c2: C).((csubc g c1 c2) \to (\forall 
+(v: T).(\forall (a: A).((sc3 g (asucc g a) c1 v) \to (\forall (w: T).((sc3 g 
+a c2 w) \to (csubc g (CHead c1 (Bind Abst) v) (CHead c2 (Bind Abbr) 
+w))))))))).
 

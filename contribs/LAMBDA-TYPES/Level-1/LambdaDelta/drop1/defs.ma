@@ -26,12 +26,12 @@ inductive drop1: PList \to (C \to (C \to Prop)) \def
 nat).((drop h d c1 c2) \to (\forall (c3: C).(\forall (hds: PList).((drop1 hds 
 c2 c3) \to (drop1 (PCons h d hds) c1 c3)))))))).
 
-definition ctrans:
- PList \to (nat \to (T \to T))
+definition ptrans:
+ PList \to (nat \to PList)
 \def
- let rec ctrans (hds: PList) on hds: (nat \to (T \to T)) \def (\lambda (i: 
-nat).(\lambda (t: T).(match hds with [PNil \Rightarrow t | (PCons h d hds0) 
-\Rightarrow (let j \def (trans hds0 i) in (let u \def (ctrans hds0 i t) in 
-(match (blt j d) with [true \Rightarrow (lift h (minus d (S j)) u) | false 
-\Rightarrow u])))]))) in ctrans.
+ let rec ptrans (hds: PList) on hds: (nat \to PList) \def (\lambda (i: 
+nat).(match hds with [PNil \Rightarrow PNil | (PCons h d hds0) \Rightarrow 
+(let j \def (trans hds0 i) in (let q \def (ptrans hds0 i) in (match (blt j d) 
+with [true \Rightarrow (PCons h (minus d (S j)) q) | false \Rightarrow 
+q])))])) in ptrans.
 

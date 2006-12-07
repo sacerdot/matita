@@ -18,7 +18,7 @@ set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/leq/defs".
 
 include "aplus/defs.ma".
 
-inductive leq (g:G): A \to (A \to Prop) \def
+inductive leq (g: G): A \to (A \to Prop) \def
 | leq_sort: \forall (h1: nat).(\forall (h2: nat).(\forall (n1: nat).(\forall 
 (n2: nat).(\forall (k: nat).((eq A (aplus g (ASort h1 n1) k) (aplus g (ASort 
 h2 n2) k)) \to (leq g (ASort h1 n1) (ASort h2 n2)))))))

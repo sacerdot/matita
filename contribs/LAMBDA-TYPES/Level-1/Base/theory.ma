@@ -28,5 +28,7 @@ include "blt/defs.ma".
 
 include "blt/props.ma".
 
-include "ext/plist.ma".
+include "plist/defs.ma".
+
+include "plist/props.ma".
 

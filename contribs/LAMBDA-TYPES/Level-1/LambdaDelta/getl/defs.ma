@@ -20,7 +20,7 @@ include "drop/defs.ma".
 
 include "clear/defs.ma".
 
-inductive getl (h:nat) (c1:C) (c2:C): Prop \def
+inductive getl (h: nat) (c1: C) (c2: C): Prop \def
 | getl_intro: \forall (e: C).((drop h O c1 e) \to ((clear e c2) \to (getl h 
 c1 c2))).
 

@@ -18,7 +18,7 @@ set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/tau1/defs".
 
 include "tau0/defs.ma".
 
-inductive tau1 (g:G) (c:C) (t1:T): T \to Prop \def
+inductive tau1 (g: G) (c: C) (t1: T): T \to Prop \def
 | tau1_tau0: \forall (t2: T).((tau0 g c t1 t2) \to (tau1 g c t1 t2))
 | tau1_sing: \forall (t: T).((tau1 g c t1 t) \to (\forall (t2: T).((tau0 g c 
 t t2) \to (tau1 g c t1 t2)))).

@@ -24,7 +24,7 @@ definition pc3:
  \lambda (c: C).(\lambda (t1: T).(\lambda (t2: T).(ex2 T (\lambda (t: T).(pr3 
 c t1 t)) (\lambda (t: T).(pr3 c t2 t))))).
 
-inductive pc3_left (c:C): T \to (T \to Prop) \def
+inductive pc3_left (c: C): T \to (T \to Prop) \def
 | pc3_left_r: \forall (t: T).(pc3_left c t t)
 | pc3_left_ur: \forall (t1: T).(\forall (t2: T).((pr2 c t1 t2) \to (\forall 
 (t3: T).((pc3_left c t2 t3) \to (pc3_left c t1 t3)))))

@@ -20,20 +20,28 @@ include "lift1/defs.ma".
 
 include "lift/fwd.ma".
 
+theorem lift1_sort:
+ \forall (n: nat).(\forall (is: PList).(eq T (lift1 is (TSort n)) (TSort n)))
+\def
+ \lambda (n: nat).(\lambda (is: PList).(PList_ind (\lambda (p: PList).(eq T 
+(lift1 p (TSort n)) (TSort n))) (refl_equal T (TSort n)) (\lambda (n0: 
+nat).(\lambda (n1: nat).(\lambda (p: PList).(\lambda (H: (eq T (lift1 p 
+(TSort n)) (TSort n))).(eq_ind_r T (TSort n) (\lambda (t: T).(eq T (lift n0 
+n1 t) (TSort n))) (refl_equal T (TSort n)) (lift1 p (TSort n)) H))))) is)).
+
 theorem lift1_lref:
  \forall (hds: PList).(\forall (i: nat).(eq T (lift1 hds (TLRef i)) (TLRef 
 (trans hds i))))
 \def
  \lambda (hds: PList).(PList_ind (\lambda (p: PList).(\forall (i: nat).(eq T 
 (lift1 p (TLRef i)) (TLRef (trans p i))))) (\lambda (i: nat).(refl_equal T 
-(TLRef (trans PNil i)))) (\lambda (h: nat).(\lambda (d: nat).(\lambda (p: 
-PList).(\lambda (H: ((\forall (i: nat).(eq T (lift1 p (TLRef i)) (TLRef 
-(trans p i)))))).(\lambda (i: nat).(eq_ind_r T (TLRef (trans p i)) (\lambda 
-(t: T).(eq T (lift h d t) (TLRef (match (blt (trans p i) d) with [true 
-\Rightarrow (trans p i) | false \Rightarrow (plus (trans p i) h)])))) 
-(refl_equal T (TLRef (match (blt (trans p i) d) with [true \Rightarrow (trans 
-p i) | false \Rightarrow (plus (trans p i) h)]))) (lift1 p (TLRef i)) (H 
-i))))))) hds).
+(TLRef i))) (\lambda (n: nat).(\lambda (n0: nat).(\lambda (p: PList).(\lambda 
+(H: ((\forall (i: nat).(eq T (lift1 p (TLRef i)) (TLRef (trans p 
+i)))))).(\lambda (i: nat).(eq_ind_r T (TLRef (trans p i)) (\lambda (t: T).(eq 
+T (lift n n0 t) (TLRef (match (blt (trans p i) n0) with [true \Rightarrow 
+(trans p i) | false \Rightarrow (plus (trans p i) n)])))) (refl_equal T 
+(TLRef (match (blt (trans p i) n0) with [true \Rightarrow (trans p i) | false 
+\Rightarrow (plus (trans p i) n)]))) (lift1 p (TLRef i)) (H i))))))) hds).
 
 theorem lift1_bind:
  \forall (b: B).(\forall (hds: PList).(\forall (u: T).(\forall (t: T).(eq T 
@@ -43,18 +51,18 @@ hds) t))))))
  \lambda (b: B).(\lambda (hds: PList).(PList_ind (\lambda (p: PList).(\forall 
 (u: T).(\forall (t: T).(eq T (lift1 p (THead (Bind b) u t)) (THead (Bind b) 
 (lift1 p u) (lift1 (Ss p) t)))))) (\lambda (u: T).(\lambda (t: T).(refl_equal 
-T (THead (Bind b) (lift1 PNil u) (lift1 (Ss PNil) t))))) (\lambda (h: 
-nat).(\lambda (d: nat).(\lambda (p: PList).(\lambda (H: ((\forall (u: 
-T).(\forall (t: T).(eq T (lift1 p (THead (Bind b) u t)) (THead (Bind b) 
-(lift1 p u) (lift1 (Ss p) t))))))).(\lambda (u: T).(\lambda (t: T).(eq_ind_r 
-T (THead (Bind b) (lift1 p u) (lift1 (Ss p) t)) (\lambda (t0: T).(eq T (lift 
-h d t0) (THead (Bind b) (lift h d (lift1 p u)) (lift h (S d) (lift1 (Ss p) 
-t))))) (eq_ind_r T (THead (Bind b) (lift h d (lift1 p u)) (lift h (S d) 
-(lift1 (Ss p) t))) (\lambda (t0: T).(eq T t0 (THead (Bind b) (lift h d (lift1 
-p u)) (lift h (S d) (lift1 (Ss p) t))))) (refl_equal T (THead (Bind b) (lift 
-h d (lift1 p u)) (lift h (S d) (lift1 (Ss p) t)))) (lift h d (THead (Bind b) 
-(lift1 p u) (lift1 (Ss p) t))) (lift_bind b (lift1 p u) (lift1 (Ss p) t) h 
-d)) (lift1 p (THead (Bind b) u t)) (H u t)))))))) hds)).
+T (THead (Bind b) u t)))) (\lambda (n: nat).(\lambda (n0: nat).(\lambda (p: 
+PList).(\lambda (H: ((\forall (u: T).(\forall (t: T).(eq T (lift1 p (THead 
+(Bind b) u t)) (THead (Bind b) (lift1 p u) (lift1 (Ss p) t))))))).(\lambda 
+(u: T).(\lambda (t: T).(eq_ind_r T (THead (Bind b) (lift1 p u) (lift1 (Ss p) 
+t)) (\lambda (t0: T).(eq T (lift n n0 t0) (THead (Bind b) (lift n n0 (lift1 p 
+u)) (lift n (S n0) (lift1 (Ss p) t))))) (eq_ind_r T (THead (Bind b) (lift n 
+n0 (lift1 p u)) (lift n (S n0) (lift1 (Ss p) t))) (\lambda (t0: T).(eq T t0 
+(THead (Bind b) (lift n n0 (lift1 p u)) (lift n (S n0) (lift1 (Ss p) t))))) 
+(refl_equal T (THead (Bind b) (lift n n0 (lift1 p u)) (lift n (S n0) (lift1 
+(Ss p) t)))) (lift n n0 (THead (Bind b) (lift1 p u) (lift1 (Ss p) t))) 
+(lift_bind b (lift1 p u) (lift1 (Ss p) t) n n0)) (lift1 p (THead (Bind b) u 
+t)) (H u t)))))))) hds)).
 
 theorem lift1_flat:
  \forall (f: F).(\forall (hds: PList).(\forall (u: T).(\forall (t: T).(eq T 
@@ -64,17 +72,17 @@ t))))))
  \lambda (f: F).(\lambda (hds: PList).(PList_ind (\lambda (p: PList).(\forall 
 (u: T).(\forall (t: T).(eq T (lift1 p (THead (Flat f) u t)) (THead (Flat f) 
 (lift1 p u) (lift1 p t)))))) (\lambda (u: T).(\lambda (t: T).(refl_equal T 
-(THead (Flat f) (lift1 PNil u) (lift1 PNil t))))) (\lambda (h: nat).(\lambda 
-(d: nat).(\lambda (p: PList).(\lambda (H: ((\forall (u: T).(\forall (t: 
-T).(eq T (lift1 p (THead (Flat f) u t)) (THead (Flat f) (lift1 p u) (lift1 p 
-t))))))).(\lambda (u: T).(\lambda (t: T).(eq_ind_r T (THead (Flat f) (lift1 p 
-u) (lift1 p t)) (\lambda (t0: T).(eq T (lift h d t0) (THead (Flat f) (lift h 
-d (lift1 p u)) (lift h d (lift1 p t))))) (eq_ind_r T (THead (Flat f) (lift h 
-d (lift1 p u)) (lift h d (lift1 p t))) (\lambda (t0: T).(eq T t0 (THead (Flat 
-f) (lift h d (lift1 p u)) (lift h d (lift1 p t))))) (refl_equal T (THead 
-(Flat f) (lift h d (lift1 p u)) (lift h d (lift1 p t)))) (lift h d (THead 
-(Flat f) (lift1 p u) (lift1 p t))) (lift_flat f (lift1 p u) (lift1 p t) h d)) 
-(lift1 p (THead (Flat f) u t)) (H u t)))))))) hds)).
+(THead (Flat f) u t)))) (\lambda (n: nat).(\lambda (n0: nat).(\lambda (p: 
+PList).(\lambda (H: ((\forall (u: T).(\forall (t: T).(eq T (lift1 p (THead 
+(Flat f) u t)) (THead (Flat f) (lift1 p u) (lift1 p t))))))).(\lambda (u: 
+T).(\lambda (t: T).(eq_ind_r T (THead (Flat f) (lift1 p u) (lift1 p t)) 
+(\lambda (t0: T).(eq T (lift n n0 t0) (THead (Flat f) (lift n n0 (lift1 p u)) 
+(lift n n0 (lift1 p t))))) (eq_ind_r T (THead (Flat f) (lift n n0 (lift1 p 
+u)) (lift n n0 (lift1 p t))) (\lambda (t0: T).(eq T t0 (THead (Flat f) (lift 
+n n0 (lift1 p u)) (lift n n0 (lift1 p t))))) (refl_equal T (THead (Flat f) 
+(lift n n0 (lift1 p u)) (lift n n0 (lift1 p t)))) (lift n n0 (THead (Flat f) 
+(lift1 p u) (lift1 p t))) (lift_flat f (lift1 p u) (lift1 p t) n n0)) (lift1 
+p (THead (Flat f) u t)) (H u t)))))))) hds)).
 
 theorem lift1_cons_tail:
  \forall (t: T).(\forall (h: nat).(\forall (d: nat).(\forall (hds: PList).(eq 

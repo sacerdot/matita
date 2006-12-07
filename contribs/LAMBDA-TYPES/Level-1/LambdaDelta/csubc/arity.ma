@@ -14,14 +14,25 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/csub3/props".
+set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/csubc/arity".
 
-include "csub3/defs.ma".
+include "csubc/csuba.ma".
 
-theorem csub3_refl:
- \forall (g: G).(\forall (c: C).(csub3 g c c))
+include "arity/defs.ma".
+
+theorem csubc_arity_conf:
+ \forall (g: G).(\forall (c1: C).(\forall (c2: C).((csubc g c1 c2) \to 
+(\forall (t: T).(\forall (a: A).((arity g c1 t a) \to (arity g c2 t a)))))))
 \def
- \lambda (g: G).(\lambda (c: C).(C_ind (\lambda (c0: C).(csub3 g c0 c0)) 
-(\lambda (n: nat).(csub3_sort g n)) (\lambda (c0: C).(\lambda (H: (csub3 g c0 
-c0)).(\lambda (k: K).(\lambda (t: T).(csub3_head g c0 c0 H k t))))) c)).
+ \lambda (g: G).(\lambda (c1: C).(\lambda (c2: C).(\lambda (H: (csubc g c1 
+c2)).(\lambda (t: T).(\lambda (a: A).(\lambda (H0: (arity g c1 t 
+a)).(csuba_arity g c1 t a H0 c2 (csubc_csuba g c1 c2 H)))))))).
+
+theorem csubc_arity_trans:
+ \forall (g: G).(\forall (c1: C).(\forall (c2: C).((csubc g c1 c2) \to 
+(\forall (t: T).(\forall (a: A).((arity g c2 t a) \to (arity g c1 t a)))))))
+\def
+ \lambda (g: G).(\lambda (c1: C).(\lambda (c2: C).(\lambda (H: (csubc g c1 
+c2)).(\lambda (t: T).(\lambda (a: A).(\lambda (H0: (arity g c2 t 
+a)).(csuba_arity_rev g c2 t a H0 c1 (csubc_csuba g c1 c2 H)))))))).
 
