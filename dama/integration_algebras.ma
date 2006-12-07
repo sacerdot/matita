@@ -146,7 +146,7 @@ record integration_riesz_space (R:real) : Type \def
          ) * irs_unit))) 0;
    irs_quotient_space1:
     ∀f,g:irs_archimedean_riesz_space.
-     integral (absolute_value ? irs_archimedean_riesz_space (f - g)) = 0 → f=g
+     integral (absolute_value irs_archimedean_riesz_space (f - g)) = 0 → f=g
  }.
 
 definition induced_norm_fun ≝

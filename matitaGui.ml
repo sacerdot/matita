@@ -238,11 +238,13 @@ let rec interactive_error_interp ?(all_passes=false) (source_buffer:GSourceView.
    let remove_non_significant =
      List.filter (fun (_env,_diff,_loc,_msg,significant) -> significant) in
    if all_passes then errorll else
+     let safe_list_nth l n = try List.nth l n with Failure _ -> [] in
     (* We remove passes 1,2 and 5,6 *)
      []::[]
-     ::(remove_non_significant (List.nth errorll 2))
-     ::(remove_non_significant (List.nth errorll 3))
-     ::[]::[] in
+     ::(remove_non_significant (safe_list_nth errorll 2))
+     ::(remove_non_significant (safe_list_nth errorll 3))
+     ::[]::[]
+   in
   let choices =
    let pass = ref 0 in
    List.flatten
