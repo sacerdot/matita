@@ -20,18 +20,20 @@ clean: preall
 cleanall: preall
 	$(H)$(XXX) MATITA_FLAGS=$(MATITA_FLAGS) $(MCLEAN) all
 
-all.opt opt: preall
+all.opt opt: preall.opt
 	$(H)$(XXX) MATITA_FLAGS=$(MATITA_FLAGS) $(MMAKEO) build $(devel)
-clean.opt: preall
+clean.opt: preall.opt
 	$(H)$(XXX) MATITA_FLAGS=$(MATITA_FLAGS) $(MMAKEO) clean $(devel)
-cleanall.opt: preall
+cleanall.opt: preall.opt
 	$(H)$(XXX) MATITA_FLAGS=$(MATITA_FLAGS) $(MCLEANO) all
 
 %.mo: preall
 	$(H)$(XXX) MATITA_FLAGS=$(MATITA_FLAGS) $(MMAKE) $@
-%.mo.opt: preall
+%.mo.opt: preall.opt
 	$(H)$(XXX) MATITA_FLAGS=$(MATITA_FLAGS) $(MMAKEO) $@
 	
 preall:
 	$(H)$(XXX) MATITA_FLAGS=$(MATITA_FLAGS) $(MMAKE) init $(devel)
 
+preall.opt:
+	$(H)$(XXX) MATITA_FLAGS=$(MATITA_FLAGS) $(MMAKEO) init $(devel)

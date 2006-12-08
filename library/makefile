@@ -9,25 +9,31 @@ CLEANO=$(RT_BASEDIR)matitaclean.opt $(OPTIONS)
 
 devel:=$(shell basename `pwd`)
 
-all: preall
-	$(H)MATITA_FLAGS=$(MATITA_FLAGS) $(MMAKE) build $(devel)
-clean: preall
-	$(H)MATITA_FLAGS=$(MATITA_FLAGS) $(MMAKE) clean $(devel)
-cleanall: preall
-	$(H)MATITA_FLAGS=$(MATITA_FLAGS) $(MCLEAN) all
+ifneq "$(SRC)" ""
+  XXX="SRC=$(SRC)"
+endif
 
-all.opt opt: preall
-	$(H)MATITA_FLAGS=$(MATITA_FLAGS) $(MMAKEO) build $(devel)
-clean.opt: preall
-	$(H)MATITA_FLAGS=$(MATITA_FLAGS) $(MMAKEO) clean $(devel)
-cleanall.opt: preall
-	$(H)MATITA_FLAGS=$(MATITA_FLAGS) $(MCLEANO) all
+all: preall
+	$(H)$(XXX) MATITA_FLAGS=$(MATITA_FLAGS) $(MMAKE) build $(devel)
+clean: preall
+	$(H)$(XXX) MATITA_FLAGS=$(MATITA_FLAGS) $(MMAKE) clean $(devel)
+cleanall: preall
+	$(H)$(XXX) MATITA_FLAGS=$(MATITA_FLAGS) $(MCLEAN) all
+
+all.opt opt: preall.opt
+	$(H)$(XXX) MATITA_FLAGS=$(MATITA_FLAGS) $(MMAKEO) build $(devel)
+clean.opt: preall.opt
+	$(H)$(XXX) MATITA_FLAGS=$(MATITA_FLAGS) $(MMAKEO) clean $(devel)
+cleanall.opt: preall.opt
+	$(H)$(XXX) MATITA_FLAGS=$(MATITA_FLAGS) $(MCLEANO) all
 
 %.mo: preall
-	$(H)MATITA_FLAGS=$(MATITA_FLAGS) $(MMAKE) $@
-%.mo.opt: preall
-	$(H)MATITA_FLAGS=$(MATITA_FLAGS) $(MMAKEO) $@
+	$(H)$(XXX) MATITA_FLAGS=$(MATITA_FLAGS) $(MMAKE) $@
+%.mo.opt: preall.opt
+	$(H)$(XXX) MATITA_FLAGS=$(MATITA_FLAGS) $(MMAKEO) $@
 	
 preall:
-	$(H)MATITA_FLAGS=$(MATITA_FLAGS) $(MMAKE) init $(devel)
+	$(H)$(XXX) MATITA_FLAGS=$(MATITA_FLAGS) $(MMAKE) init $(devel)
 
+preall.opt:
+	$(H)$(XXX) MATITA_FLAGS=$(MATITA_FLAGS) $(MMAKEO) init $(devel)
