@@ -301,8 +301,31 @@ let rec interactive_error_interp ?(all_passes=false) (source_buffer:GSourceView.
           uniq ((o1,res) :: tl)
      | h1::tl -> h1 :: uniq tl
    in
-    List.map (fun o,l -> o,List.sort choices_compare_by_passes l)
-     (uniq (List.stable_sort choices_compare choices))
+   (* Errors in phase 3 that are not also in phase 4 are filtered out *)
+   let filter_phase_3 choices =
+    if all_passes then choices
+    else
+     let filter =
+      HExtlib.filter_map
+       (function
+           (loffset,messages) ->
+              let filtered_messages =
+               HExtlib.filter_map
+                (function
+                    [3],_,_,_ -> None
+                  | item -> Some item
+                ) messages
+              in
+               if filtered_messages = [] then
+                None
+               else
+                Some (loffset,filtered_messages))
+     in
+      filter choices
+   in
+    filter_phase_3
+     (List.map (fun o,l -> o,List.sort choices_compare_by_passes l)
+       (uniq (List.stable_sort choices_compare choices)))
   in
    match choices with
       [] -> assert false
