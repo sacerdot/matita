@@ -173,7 +173,7 @@ let _ =
      addDebugItem "Print current proof (natural language) to stderr" 
        (fun _ -> 
         prerr_endline 
-          (ObjPp.obj_to_string 120 
+          (ObjPp.obj_to_string 120 GrafiteAst.Declarative "" 
             (match 
             (MatitaScript.current ())#grafite_status.GrafiteTypes.proof_status
             with

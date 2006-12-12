@@ -288,7 +288,7 @@ let rec eval_macro include_paths (buffer : GText.buffer) guistuff lexicon_status
       let t_and_ty = Cic.Cast (term,ty) in
       guistuff.mathviewer#show_entry (`Cic (t_and_ty,metasenv));
       [], "", parsed_text_length
-  | TA.Inline (_,suri,prefix) ->
+  | TA.Inline (_,style,suri,prefix) ->
      let dbd = LibraryDb.instance () in
      let uris =
       let sql_pat =
@@ -328,7 +328,7 @@ prerr_endline "Fine sorting";
           (fun uri ->
 prerr_endline ("Stampo " ^ UriManager.string_of_uri uri);
             try
-             ObjPp.obj_to_string 80
+             ObjPp.obj_to_string 78 style prefix (* FG: mi pare meglio 78 *)
               (fst (CicEnvironment.get_obj CicUniv.empty_ugraph uri))
             with
              _ (* BRRRRRRRRR *) -> "ERRORE IN STAMPA DI " ^ UriManager.string_of_uri uri
