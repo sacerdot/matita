@@ -30,7 +30,7 @@ val eval_ast :
   GrafiteTypes.status ->
   string * int *
   ((CicNotationPt.term, CicNotationPt.term,
-   CicNotationPt.term GrafiteAst.reduction, CicNotationPt.obj, string)
+   CicNotationPt.term GrafiteAst.reduction, CicNotationPt.term CicNotationPt.obj, string)
    GrafiteAst.statement) ->
   ((GrafiteTypes.status * LexiconEngine.status) *
    (DisambiguateTypes.domain_item * DisambiguateTypes.codomain_item) option
@@ -54,7 +54,7 @@ val eval_from_stream :
   Ulexing.lexbuf ->
   (GrafiteTypes.status ->
    (CicNotationPt.term, CicNotationPt.term,
-    CicNotationPt.term GrafiteAst.reduction, CicNotationPt.obj, string)
+    CicNotationPt.term GrafiteAst.reduction, CicNotationPt.term CicNotationPt.obj, string)
    GrafiteAst.statement -> unit) ->
   ((GrafiteTypes.status * LexiconEngine.status) *
    (DisambiguateTypes.domain_item * DisambiguateTypes.codomain_item) option

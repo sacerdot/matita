@@ -33,7 +33,7 @@ exception AttemptToInsertAnAlias
 
 let pp_ast_statement =
   GrafiteAstPp.pp_statement ~term_pp:CicNotationPp.pp_term
-    ~lazy_term_pp:CicNotationPp.pp_term ~obj_pp:CicNotationPp.pp_obj
+    ~lazy_term_pp:CicNotationPp.pp_term ~obj_pp:(CicNotationPp.pp_obj CicNotationPp.pp_term)
 
 (** {2 Initialization} *)
 
