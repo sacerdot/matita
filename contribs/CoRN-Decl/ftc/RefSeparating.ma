@@ -30,33 +30,33 @@ include "ftc/Partitions.ma".
 Section Separating_Partition
 *)
 
-inline "cic:/CoRN/ftc/RefSeparating/Separating_Partition/a.var" "Separating_Partition__".
+alias id "a" = "cic:/CoRN/ftc/RefSeparating/Separating_Partition/a.var".
 
-inline "cic:/CoRN/ftc/RefSeparating/Separating_Partition/b.var" "Separating_Partition__".
+alias id "b" = "cic:/CoRN/ftc/RefSeparating/Separating_Partition/b.var".
 
-inline "cic:/CoRN/ftc/RefSeparating/Separating_Partition/Hab.var" "Separating_Partition__".
+alias id "Hab" = "cic:/CoRN/ftc/RefSeparating/Separating_Partition/Hab.var".
 
 inline "cic:/CoRN/ftc/RefSeparating/Separating_Partition/I.con" "Separating_Partition__".
 
-inline "cic:/CoRN/ftc/RefSeparating/Separating_Partition/F.var" "Separating_Partition__".
+alias id "F" = "cic:/CoRN/ftc/RefSeparating/Separating_Partition/F.var".
 
-inline "cic:/CoRN/ftc/RefSeparating/Separating_Partition/contF.var" "Separating_Partition__".
+alias id "contF" = "cic:/CoRN/ftc/RefSeparating/Separating_Partition/contF.var".
 
-inline "cic:/CoRN/ftc/RefSeparating/Separating_Partition/incF.var" "Separating_Partition__".
+alias id "incF" = "cic:/CoRN/ftc/RefSeparating/Separating_Partition/incF.var".
 
-inline "cic:/CoRN/ftc/RefSeparating/Separating_Partition/Hab'.var" "Separating_Partition__".
+alias id "Hab'" = "cic:/CoRN/ftc/RefSeparating/Separating_Partition/Hab'.var".
 
-inline "cic:/CoRN/ftc/RefSeparating/Separating_Partition/n.var" "Separating_Partition__".
+alias id "n" = "cic:/CoRN/ftc/RefSeparating/Separating_Partition/n.var".
 
-inline "cic:/CoRN/ftc/RefSeparating/Separating_Partition/P.var" "Separating_Partition__".
+alias id "P" = "cic:/CoRN/ftc/RefSeparating/Separating_Partition/P.var".
 
-inline "cic:/CoRN/ftc/RefSeparating/Separating_Partition/alpha.var" "Separating_Partition__".
+alias id "alpha" = "cic:/CoRN/ftc/RefSeparating/Separating_Partition/alpha.var".
 
-inline "cic:/CoRN/ftc/RefSeparating/Separating_Partition/Halpha.var" "Separating_Partition__".
+alias id "Halpha" = "cic:/CoRN/ftc/RefSeparating/Separating_Partition/Halpha.var".
 
-inline "cic:/CoRN/ftc/RefSeparating/Separating_Partition/csi.var" "Separating_Partition__".
+alias id "csi" = "cic:/CoRN/ftc/RefSeparating/Separating_Partition/csi.var".
 
-inline "cic:/CoRN/ftc/RefSeparating/Separating_Partition/Hcsi.var" "Separating_Partition__".
+alias id "Hcsi" = "cic:/CoRN/ftc/RefSeparating/Separating_Partition/Hcsi.var".
 
 inline "cic:/CoRN/ftc/RefSeparating/Separating_Partition/M.con" "Separating_Partition__".
 
@@ -70,7 +70,7 @@ inline "cic:/CoRN/ftc/RefSeparating/RS'_delta_pos.con".
 
 inline "cic:/CoRN/ftc/RefSeparating/RS'_delta_csi.con".
 
-inline "cic:/CoRN/ftc/RefSeparating/Separating_Partition/Hab''.var" "Separating_Partition__".
+alias id "Hab''" = "cic:/CoRN/ftc/RefSeparating/Separating_Partition/Hab''.var".
 
 inline "cic:/CoRN/ftc/RefSeparating/sep__part_lemma.con".
 
@@ -134,11 +134,11 @@ inline "cic:/CoRN/ftc/RefSeparating/sep__part_mon.con".
 
 inline "cic:/CoRN/ftc/RefSeparating/sep__part_mon_Mesh.con".
 
-inline "cic:/CoRN/ftc/RefSeparating/Separating_Partition/g.var" "Separating_Partition__".
+alias id "g" = "cic:/CoRN/ftc/RefSeparating/Separating_Partition/g.var".
 
-inline "cic:/CoRN/ftc/RefSeparating/Separating_Partition/gP.var" "Separating_Partition__".
+alias id "gP" = "cic:/CoRN/ftc/RefSeparating/Separating_Partition/gP.var".
 
-inline "cic:/CoRN/ftc/RefSeparating/Separating_Partition/gP'.var" "Separating_Partition__".
+alias id "gP'" = "cic:/CoRN/ftc/RefSeparating/Separating_Partition/gP'.var".
 
 inline "cic:/CoRN/ftc/RefSeparating/sep__part_pts.con".
 

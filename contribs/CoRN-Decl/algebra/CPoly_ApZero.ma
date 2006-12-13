@@ -45,17 +45,17 @@ has degree at most [n].
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CPoly_ApZero/Poly_Representation/R.var" "Poly_Representation__".
+alias id "R" = "cic:/CoRN/algebra/CPoly_ApZero/Poly_Representation/R.var".
 
-inline "cic:/CoRN/algebra/CPoly_ApZero/Poly_Representation/a_.var" "Poly_Representation__".
+alias id "a_" = "cic:/CoRN/algebra/CPoly_ApZero/Poly_Representation/a_.var".
 
-inline "cic:/CoRN/algebra/CPoly_ApZero/Poly_Representation/distinct_a_.var" "Poly_Representation__".
+alias id "distinct_a_" = "cic:/CoRN/algebra/CPoly_ApZero/Poly_Representation/distinct_a_.var".
 
-inline "cic:/CoRN/algebra/CPoly_ApZero/Poly_Representation/f.var" "Poly_Representation__".
+alias id "f" = "cic:/CoRN/algebra/CPoly_ApZero/Poly_Representation/f.var".
 
-inline "cic:/CoRN/algebra/CPoly_ApZero/Poly_Representation/n.var" "Poly_Representation__".
+alias id "n" = "cic:/CoRN/algebra/CPoly_ApZero/Poly_Representation/n.var".
 
-inline "cic:/CoRN/algebra/CPoly_ApZero/Poly_Representation/degree_f.var" "Poly_Representation__".
+alias id "degree_f" = "cic:/CoRN/algebra/CPoly_ApZero/Poly_Representation/degree_f.var".
 
 (* begin hide *)
 
@@ -140,11 +140,11 @@ If we are in a field of characteristic zero, the previous result can be
 strengthened.
 *)
 
-inline "cic:/CoRN/algebra/CPoly_ApZero/Characteristic_zero/R.var" "Characteristic_zero__".
+alias id "R" = "cic:/CoRN/algebra/CPoly_ApZero/Characteristic_zero/R.var".
 
 (* begin show *)
 
-inline "cic:/CoRN/algebra/CPoly_ApZero/Characteristic_zero/H.var" "Characteristic_zero__".
+alias id "H" = "cic:/CoRN/algebra/CPoly_ApZero/Characteristic_zero/H.var".
 
 (* end show *)
 
@@ -176,7 +176,7 @@ End Characteristic_zero
 Section Poly_ApZero_Interval
 *)
 
-inline "cic:/CoRN/algebra/CPoly_ApZero/Poly_ApZero_Interval/R.var" "Poly_ApZero_Interval__".
+alias id "R" = "cic:/CoRN/algebra/CPoly_ApZero/Poly_ApZero_Interval/R.var".
 
 (* begin hide *)
 

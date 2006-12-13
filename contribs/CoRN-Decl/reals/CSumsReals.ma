@@ -36,7 +36,7 @@ $\Sigma_{m\leq i \leq n}~c^k = \frac{c^{n+1}-c^m}{c-1}.$
 Section Sums_over_Reals
 *)
 
-inline "cic:/CoRN/reals/CSumsReals/Sums_over_Reals/c.var" "Sums_over_Reals__".
+alias id "c" = "cic:/CoRN/reals/CSumsReals/Sums_over_Reals/c.var".
 
 inline "cic:/CoRN/reals/CSumsReals/Sum0_c_exp.con".
 

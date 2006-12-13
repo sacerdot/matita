@@ -49,11 +49,11 @@ As expected, both [a] and [b] are members of [[a,b]].  Also they are
 members of the interval [[Min(a,b),Max(a,b)]].
 *)
 
-inline "cic:/CoRN/reals/Intervals/Intervals/a.var" "Intervals__".
+alias id "a" = "cic:/CoRN/reals/Intervals/Intervals/a.var".
 
-inline "cic:/CoRN/reals/Intervals/Intervals/b.var" "Intervals__".
+alias id "b" = "cic:/CoRN/reals/Intervals/Intervals/b.var".
 
-inline "cic:/CoRN/reals/Intervals/Intervals/Hab.var" "Intervals__".
+alias id "Hab" = "cic:/CoRN/reals/Intervals/Intervals/Hab.var".
 
 inline "cic:/CoRN/reals/Intervals/compact_inc_lft.con".
 
@@ -227,11 +227,11 @@ a positive real number.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/reals/Intervals/Compact/a.var" "Compact__".
+alias id "a" = "cic:/CoRN/reals/Intervals/Compact/a.var".
 
-inline "cic:/CoRN/reals/Intervals/Compact/b.var" "Compact__".
+alias id "b" = "cic:/CoRN/reals/Intervals/Compact/b.var".
 
-inline "cic:/CoRN/reals/Intervals/Compact/Hab.var" "Compact__".
+alias id "Hab" = "cic:/CoRN/reals/Intervals/Compact/Hab.var".
 
 (* begin hide *)
 
@@ -239,11 +239,11 @@ inline "cic:/CoRN/reals/Intervals/Compact/I.con" "Compact__".
 
 (* end hide *)
 
-inline "cic:/CoRN/reals/Intervals/Compact/Hab'.var" "Compact__".
+alias id "Hab'" = "cic:/CoRN/reals/Intervals/Compact/Hab'.var".
 
-inline "cic:/CoRN/reals/Intervals/Compact/e.var" "Compact__".
+alias id "e" = "cic:/CoRN/reals/Intervals/Compact/e.var".
 
-inline "cic:/CoRN/reals/Intervals/Compact/He.var" "Compact__".
+alias id "He" = "cic:/CoRN/reals/Intervals/Compact/He.var".
 
 (*#*
 We start by finding a natural number [n] such that [(b[-]a) [/] n [<] e].

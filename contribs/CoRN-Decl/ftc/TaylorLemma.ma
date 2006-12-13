@@ -44,11 +44,11 @@ define the nth order derivative of [F] in the interval
 [[Min(a,b),Max(a,b)]].
 *)
 
-inline "cic:/CoRN/ftc/TaylorLemma/Taylor_Defs/a.var" "Taylor_Defs__".
+alias id "a" = "cic:/CoRN/ftc/TaylorLemma/Taylor_Defs/a.var".
 
-inline "cic:/CoRN/ftc/TaylorLemma/Taylor_Defs/b.var" "Taylor_Defs__".
+alias id "b" = "cic:/CoRN/ftc/TaylorLemma/Taylor_Defs/b.var".
 
-inline "cic:/CoRN/ftc/TaylorLemma/Taylor_Defs/Hap.var" "Taylor_Defs__".
+alias id "Hap" = "cic:/CoRN/ftc/TaylorLemma/Taylor_Defs/Hap.var".
 
 (* begin hide *)
 
@@ -60,11 +60,11 @@ inline "cic:/CoRN/ftc/TaylorLemma/Taylor_Defs/I.con" "Taylor_Defs__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/TaylorLemma/Taylor_Defs/F.var" "Taylor_Defs__".
+alias id "F" = "cic:/CoRN/ftc/TaylorLemma/Taylor_Defs/F.var".
 
-inline "cic:/CoRN/ftc/TaylorLemma/Taylor_Defs/Ha.var" "Taylor_Defs__".
+alias id "Ha" = "cic:/CoRN/ftc/TaylorLemma/Taylor_Defs/Ha.var".
 
-inline "cic:/CoRN/ftc/TaylorLemma/Taylor_Defs/Hb.var" "Taylor_Defs__".
+alias id "Hb" = "cic:/CoRN/ftc/TaylorLemma/Taylor_Defs/Hb.var".
 
 (* begin show *)
 
@@ -288,9 +288,9 @@ Now Taylor's theorem.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/TaylorLemma/Taylor_Defs/e.var" "Taylor_Defs__".
+alias id "e" = "cic:/CoRN/ftc/TaylorLemma/Taylor_Defs/e.var".
 
-inline "cic:/CoRN/ftc/TaylorLemma/Taylor_Defs/He.var" "Taylor_Defs__".
+alias id "He" = "cic:/CoRN/ftc/TaylorLemma/Taylor_Defs/He.var".
 
 (* begin hide *)
 

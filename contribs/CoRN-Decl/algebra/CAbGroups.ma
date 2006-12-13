@@ -39,7 +39,7 @@ coercion cic:/matita/CoRN-Decl/algebra/CAbGroups/cag_crr.con 0 (* compounds *).
 Section AbGroup_Axioms
 *)
 
-inline "cic:/CoRN/algebra/CAbGroups/Abelian_Groups/AbGroup_Axioms/G.var" "Abelian_Groups__AbGroup_Axioms__".
+alias id "G" = "cic:/CoRN/algebra/CAbGroups/Abelian_Groups/AbGroup_Axioms/G.var".
 
 (*#*
 %\begin{convention}% Let [G] be an Abelian Group.
@@ -64,15 +64,15 @@ Section SubCAbGroups
 ** Subgroups of an Abelian Group
 *)
 
-inline "cic:/CoRN/algebra/CAbGroups/Abelian_Groups/SubCAbGroups/G.var" "Abelian_Groups__SubCAbGroups__".
+alias id "G" = "cic:/CoRN/algebra/CAbGroups/Abelian_Groups/SubCAbGroups/G.var".
 
-inline "cic:/CoRN/algebra/CAbGroups/Abelian_Groups/SubCAbGroups/P.var" "Abelian_Groups__SubCAbGroups__".
+alias id "P" = "cic:/CoRN/algebra/CAbGroups/Abelian_Groups/SubCAbGroups/P.var".
 
-inline "cic:/CoRN/algebra/CAbGroups/Abelian_Groups/SubCAbGroups/Punit.var" "Abelian_Groups__SubCAbGroups__".
+alias id "Punit" = "cic:/CoRN/algebra/CAbGroups/Abelian_Groups/SubCAbGroups/Punit.var".
 
-inline "cic:/CoRN/algebra/CAbGroups/Abelian_Groups/SubCAbGroups/op_pres_P.var" "Abelian_Groups__SubCAbGroups__".
+alias id "op_pres_P" = "cic:/CoRN/algebra/CAbGroups/Abelian_Groups/SubCAbGroups/op_pres_P.var".
 
-inline "cic:/CoRN/algebra/CAbGroups/Abelian_Groups/SubCAbGroups/inv_pres_P.var" "Abelian_Groups__SubCAbGroups__".
+alias id "inv_pres_P" = "cic:/CoRN/algebra/CAbGroups/Abelian_Groups/SubCAbGroups/inv_pres_P.var".
 
 (*#*
 %\begin{convention}%
@@ -103,7 +103,7 @@ Section Various
 Hint Resolve cag_commutes_unfolded: algebra.
 *)
 
-inline "cic:/CoRN/algebra/CAbGroups/Abelian_Groups/Various/G.var" "Abelian_Groups__Various__".
+alias id "G" = "cic:/CoRN/algebra/CAbGroups/Abelian_Groups/Various/G.var".
 
 (*#*
 %\begin{convention}% Let [G] be an Abelian Group.
@@ -163,11 +163,11 @@ as a left unit, and a unary setoid
 function [inv] which inverts elements respective to [plus].
 *)
 
-inline "cic:/CoRN/algebra/CAbGroups/Nice_Char/S.var" "Nice_Char__".
+alias id "S" = "cic:/CoRN/algebra/CAbGroups/Nice_Char/S.var".
 
-inline "cic:/CoRN/algebra/CAbGroups/Nice_Char/unit.var" "Nice_Char__".
+alias id "unit" = "cic:/CoRN/algebra/CAbGroups/Nice_Char/unit.var".
 
-inline "cic:/CoRN/algebra/CAbGroups/Nice_Char/plus.var" "Nice_Char__".
+alias id "plus" = "cic:/CoRN/algebra/CAbGroups/Nice_Char/plus.var".
 
 (*#*
 %\begin{convention}%
@@ -179,17 +179,17 @@ for [plus] and [(inv x)] is a right-inverse of [x] w.r.t.%\% [plus].
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CAbGroups/Nice_Char/plus_lext.var" "Nice_Char__".
+alias id "plus_lext" = "cic:/CoRN/algebra/CAbGroups/Nice_Char/plus_lext.var".
 
-inline "cic:/CoRN/algebra/CAbGroups/Nice_Char/plus_lunit.var" "Nice_Char__".
+alias id "plus_lunit" = "cic:/CoRN/algebra/CAbGroups/Nice_Char/plus_lunit.var".
 
-inline "cic:/CoRN/algebra/CAbGroups/Nice_Char/plus_comm.var" "Nice_Char__".
+alias id "plus_comm" = "cic:/CoRN/algebra/CAbGroups/Nice_Char/plus_comm.var".
 
-inline "cic:/CoRN/algebra/CAbGroups/Nice_Char/plus_assoc.var" "Nice_Char__".
+alias id "plus_assoc" = "cic:/CoRN/algebra/CAbGroups/Nice_Char/plus_assoc.var".
 
-inline "cic:/CoRN/algebra/CAbGroups/Nice_Char/inv.var" "Nice_Char__".
+alias id "inv" = "cic:/CoRN/algebra/CAbGroups/Nice_Char/inv.var".
 
-inline "cic:/CoRN/algebra/CAbGroups/Nice_Char/inv_inv.var" "Nice_Char__".
+alias id "inv_inv" = "cic:/CoRN/algebra/CAbGroups/Nice_Char/inv_inv.var".
 
 inline "cic:/CoRN/algebra/CAbGroups/plus_rext.con".
 
@@ -222,7 +222,7 @@ For reflection the following is needed; hopefully it is also useful.
 Section Group_Extras
 *)
 
-inline "cic:/CoRN/algebra/CAbGroups/Group_Extras/G.var" "Group_Extras__".
+alias id "G" = "cic:/CoRN/algebra/CAbGroups/Group_Extras/G.var".
 
 inline "cic:/CoRN/algebra/CAbGroups/nmult.con".
 

@@ -38,7 +38,7 @@ field [F], we can define a new ordered field of Cauchy sequences over [F].
 Section Structure
 *)
 
-inline "cic:/CoRN/algebra/Cauchy_COF/Structure/F.var" "Structure__".
+alias id "F" = "cic:/CoRN/algebra/Cauchy_COF/Structure/F.var".
 
 (*#*
 ** Setoid Structure

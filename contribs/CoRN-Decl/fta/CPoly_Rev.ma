@@ -35,7 +35,7 @@ polynomials over this ring.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/fta/CPoly_Rev/Monomials/R.var" "Monomials__".
+alias id "R" = "cic:/CoRN/fta/CPoly_Rev/Monomials/R.var".
 
 (* begin hide *)
 
@@ -93,7 +93,7 @@ Implicit Arguments monom [R].
 Section Poly_Reverse
 *)
 
-inline "cic:/CoRN/fta/CPoly_Rev/Poly_Reverse/R.var" "Poly_Reverse__".
+alias id "R" = "cic:/CoRN/fta/CPoly_Rev/Poly_Reverse/R.var".
 
 (* begin hide *)
 

@@ -53,21 +53,21 @@ mapped into another compact interval.  We define this concept for
 partial functions, and prove some trivial results.
 *)
 
-inline "cic:/CoRN/ftc/Composition/Maps_into_Compacts/Part_Funct/F.var" "Maps_into_Compacts__Part_Funct__".
+alias id "F" = "cic:/CoRN/ftc/Composition/Maps_into_Compacts/Part_Funct/F.var".
 
-inline "cic:/CoRN/ftc/Composition/Maps_into_Compacts/Part_Funct/G.var" "Maps_into_Compacts__Part_Funct__".
+alias id "G" = "cic:/CoRN/ftc/Composition/Maps_into_Compacts/Part_Funct/G.var".
 
-inline "cic:/CoRN/ftc/Composition/Maps_into_Compacts/Part_Funct/a.var" "Maps_into_Compacts__Part_Funct__".
+alias id "a" = "cic:/CoRN/ftc/Composition/Maps_into_Compacts/Part_Funct/a.var".
 
-inline "cic:/CoRN/ftc/Composition/Maps_into_Compacts/Part_Funct/b.var" "Maps_into_Compacts__Part_Funct__".
+alias id "b" = "cic:/CoRN/ftc/Composition/Maps_into_Compacts/Part_Funct/b.var".
 
-inline "cic:/CoRN/ftc/Composition/Maps_into_Compacts/Part_Funct/Hab.var" "Maps_into_Compacts__Part_Funct__".
+alias id "Hab" = "cic:/CoRN/ftc/Composition/Maps_into_Compacts/Part_Funct/Hab.var".
 
-inline "cic:/CoRN/ftc/Composition/Maps_into_Compacts/Part_Funct/c.var" "Maps_into_Compacts__Part_Funct__".
+alias id "c" = "cic:/CoRN/ftc/Composition/Maps_into_Compacts/Part_Funct/c.var".
 
-inline "cic:/CoRN/ftc/Composition/Maps_into_Compacts/Part_Funct/d.var" "Maps_into_Compacts__Part_Funct__".
+alias id "d" = "cic:/CoRN/ftc/Composition/Maps_into_Compacts/Part_Funct/d.var".
 
-inline "cic:/CoRN/ftc/Composition/Maps_into_Compacts/Part_Funct/Hcd.var" "Maps_into_Compacts__Part_Funct__".
+alias id "Hcd" = "cic:/CoRN/ftc/Composition/Maps_into_Compacts/Part_Funct/Hcd.var".
 
 (* begin hide *)
 
@@ -77,7 +77,7 @@ inline "cic:/CoRN/ftc/Composition/Maps_into_Compacts/Part_Funct/I.con" "Maps_int
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/Composition/Maps_into_Compacts/Part_Funct/Hf.var" "Maps_into_Compacts__Part_Funct__".
+alias id "Hf" = "cic:/CoRN/ftc/Composition/Maps_into_Compacts/Part_Funct/Hf.var".
 
 (* end show *)
 
@@ -85,7 +85,7 @@ inline "cic:/CoRN/ftc/Composition/maps_into_compacts.con".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/Composition/Maps_into_Compacts/Part_Funct/maps.var" "Maps_into_Compacts__Part_Funct__".
+alias id "maps" = "cic:/CoRN/ftc/Composition/Maps_into_Compacts/Part_Funct/maps.var".
 
 (* end show *)
 
@@ -114,29 +114,29 @@ As was the case for division of partial functions, this condition
 completely characterizes the domain of the composite function.
 *)
 
-inline "cic:/CoRN/ftc/Composition/Mapping/F.var" "Mapping__".
+alias id "F" = "cic:/CoRN/ftc/Composition/Mapping/F.var".
 
-inline "cic:/CoRN/ftc/Composition/Mapping/G.var" "Mapping__".
+alias id "G" = "cic:/CoRN/ftc/Composition/Mapping/G.var".
 
-inline "cic:/CoRN/ftc/Composition/Mapping/a.var" "Mapping__".
+alias id "a" = "cic:/CoRN/ftc/Composition/Mapping/a.var".
 
-inline "cic:/CoRN/ftc/Composition/Mapping/b.var" "Mapping__".
+alias id "b" = "cic:/CoRN/ftc/Composition/Mapping/b.var".
 
-inline "cic:/CoRN/ftc/Composition/Mapping/Hab.var" "Mapping__".
+alias id "Hab" = "cic:/CoRN/ftc/Composition/Mapping/Hab.var".
 
-inline "cic:/CoRN/ftc/Composition/Mapping/c.var" "Mapping__".
+alias id "c" = "cic:/CoRN/ftc/Composition/Mapping/c.var".
 
-inline "cic:/CoRN/ftc/Composition/Mapping/d.var" "Mapping__".
+alias id "d" = "cic:/CoRN/ftc/Composition/Mapping/d.var".
 
-inline "cic:/CoRN/ftc/Composition/Mapping/Hcd.var" "Mapping__".
+alias id "Hcd" = "cic:/CoRN/ftc/Composition/Mapping/Hcd.var".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/Composition/Mapping/Hf.var" "Mapping__".
+alias id "Hf" = "cic:/CoRN/ftc/Composition/Mapping/Hf.var".
 
-inline "cic:/CoRN/ftc/Composition/Mapping/Hg.var" "Mapping__".
+alias id "Hg" = "cic:/CoRN/ftc/Composition/Mapping/Hg.var".
 
-inline "cic:/CoRN/ftc/Composition/Mapping/maps.var" "Mapping__".
+alias id "maps" = "cic:/CoRN/ftc/Composition/Mapping/maps.var".
 
 (* end show *)
 
@@ -155,11 +155,11 @@ Section Interval_Continuity
 We now prove that the composition of two continuous partial functions is continuous.
 *)
 
-inline "cic:/CoRN/ftc/Composition/Interval_Continuity/a.var" "Interval_Continuity__".
+alias id "a" = "cic:/CoRN/ftc/Composition/Interval_Continuity/a.var".
 
-inline "cic:/CoRN/ftc/Composition/Interval_Continuity/b.var" "Interval_Continuity__".
+alias id "b" = "cic:/CoRN/ftc/Composition/Interval_Continuity/b.var".
 
-inline "cic:/CoRN/ftc/Composition/Interval_Continuity/Hab.var" "Interval_Continuity__".
+alias id "Hab" = "cic:/CoRN/ftc/Composition/Interval_Continuity/Hab.var".
 
 (* begin hide *)
 
@@ -167,23 +167,23 @@ inline "cic:/CoRN/ftc/Composition/Interval_Continuity/I.con" "Interval_Continuit
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/Composition/Interval_Continuity/c.var" "Interval_Continuity__".
+alias id "c" = "cic:/CoRN/ftc/Composition/Interval_Continuity/c.var".
 
-inline "cic:/CoRN/ftc/Composition/Interval_Continuity/d.var" "Interval_Continuity__".
+alias id "d" = "cic:/CoRN/ftc/Composition/Interval_Continuity/d.var".
 
-inline "cic:/CoRN/ftc/Composition/Interval_Continuity/Hcd.var" "Interval_Continuity__".
+alias id "Hcd" = "cic:/CoRN/ftc/Composition/Interval_Continuity/Hcd.var".
 
-inline "cic:/CoRN/ftc/Composition/Interval_Continuity/F.var" "Interval_Continuity__".
+alias id "F" = "cic:/CoRN/ftc/Composition/Interval_Continuity/F.var".
 
-inline "cic:/CoRN/ftc/Composition/Interval_Continuity/G.var" "Interval_Continuity__".
+alias id "G" = "cic:/CoRN/ftc/Composition/Interval_Continuity/G.var".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/Composition/Interval_Continuity/contF.var" "Interval_Continuity__".
+alias id "contF" = "cic:/CoRN/ftc/Composition/Interval_Continuity/contF.var".
 
-inline "cic:/CoRN/ftc/Composition/Interval_Continuity/contG.var" "Interval_Continuity__".
+alias id "contG" = "cic:/CoRN/ftc/Composition/Interval_Continuity/contG.var".
 
-inline "cic:/CoRN/ftc/Composition/Interval_Continuity/Hmap.var" "Interval_Continuity__".
+alias id "Hmap" = "cic:/CoRN/ftc/Composition/Interval_Continuity/Hmap.var".
 
 (* end show *)
 
@@ -202,25 +202,25 @@ Section Derivative
 We now work with the derivative relation and prove the chain rule for partial functions.
 *)
 
-inline "cic:/CoRN/ftc/Composition/Derivative/F.var" "Derivative__".
+alias id "F" = "cic:/CoRN/ftc/Composition/Derivative/F.var".
 
-inline "cic:/CoRN/ftc/Composition/Derivative/F'.var" "Derivative__".
+alias id "F'" = "cic:/CoRN/ftc/Composition/Derivative/F'.var".
 
-inline "cic:/CoRN/ftc/Composition/Derivative/G.var" "Derivative__".
+alias id "G" = "cic:/CoRN/ftc/Composition/Derivative/G.var".
 
-inline "cic:/CoRN/ftc/Composition/Derivative/G'.var" "Derivative__".
+alias id "G'" = "cic:/CoRN/ftc/Composition/Derivative/G'.var".
 
-inline "cic:/CoRN/ftc/Composition/Derivative/a.var" "Derivative__".
+alias id "a" = "cic:/CoRN/ftc/Composition/Derivative/a.var".
 
-inline "cic:/CoRN/ftc/Composition/Derivative/b.var" "Derivative__".
+alias id "b" = "cic:/CoRN/ftc/Composition/Derivative/b.var".
 
-inline "cic:/CoRN/ftc/Composition/Derivative/Hab'.var" "Derivative__".
+alias id "Hab'" = "cic:/CoRN/ftc/Composition/Derivative/Hab'.var".
 
-inline "cic:/CoRN/ftc/Composition/Derivative/c.var" "Derivative__".
+alias id "c" = "cic:/CoRN/ftc/Composition/Derivative/c.var".
 
-inline "cic:/CoRN/ftc/Composition/Derivative/d.var" "Derivative__".
+alias id "d" = "cic:/CoRN/ftc/Composition/Derivative/d.var".
 
-inline "cic:/CoRN/ftc/Composition/Derivative/Hcd'.var" "Derivative__".
+alias id "Hcd'" = "cic:/CoRN/ftc/Composition/Derivative/Hcd'.var".
 
 (* begin hide *)
 
@@ -234,11 +234,11 @@ inline "cic:/CoRN/ftc/Composition/Derivative/I.con" "Derivative__".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/Composition/Derivative/derF.var" "Derivative__".
+alias id "derF" = "cic:/CoRN/ftc/Composition/Derivative/derF.var".
 
-inline "cic:/CoRN/ftc/Composition/Derivative/derG.var" "Derivative__".
+alias id "derG" = "cic:/CoRN/ftc/Composition/Derivative/derG.var".
 
-inline "cic:/CoRN/ftc/Composition/Derivative/Hmap.var" "Derivative__".
+alias id "Hmap" = "cic:/CoRN/ftc/Composition/Derivative/Hmap.var".
 
 (* end show *)
 
@@ -267,21 +267,21 @@ Section Differentiability
 Finally, we move on to differentiability.
 *)
 
-inline "cic:/CoRN/ftc/Composition/Differentiability/F.var" "Differentiability__".
+alias id "F" = "cic:/CoRN/ftc/Composition/Differentiability/F.var".
 
-inline "cic:/CoRN/ftc/Composition/Differentiability/G.var" "Differentiability__".
+alias id "G" = "cic:/CoRN/ftc/Composition/Differentiability/G.var".
 
-inline "cic:/CoRN/ftc/Composition/Differentiability/a.var" "Differentiability__".
+alias id "a" = "cic:/CoRN/ftc/Composition/Differentiability/a.var".
 
-inline "cic:/CoRN/ftc/Composition/Differentiability/b.var" "Differentiability__".
+alias id "b" = "cic:/CoRN/ftc/Composition/Differentiability/b.var".
 
-inline "cic:/CoRN/ftc/Composition/Differentiability/Hab'.var" "Differentiability__".
+alias id "Hab'" = "cic:/CoRN/ftc/Composition/Differentiability/Hab'.var".
 
-inline "cic:/CoRN/ftc/Composition/Differentiability/c.var" "Differentiability__".
+alias id "c" = "cic:/CoRN/ftc/Composition/Differentiability/c.var".
 
-inline "cic:/CoRN/ftc/Composition/Differentiability/d.var" "Differentiability__".
+alias id "d" = "cic:/CoRN/ftc/Composition/Differentiability/d.var".
 
-inline "cic:/CoRN/ftc/Composition/Differentiability/Hcd'.var" "Differentiability__".
+alias id "Hcd'" = "cic:/CoRN/ftc/Composition/Differentiability/Hcd'.var".
 
 (* begin hide *)
 
@@ -295,11 +295,11 @@ inline "cic:/CoRN/ftc/Composition/Differentiability/I.con" "Differentiability__"
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/Composition/Differentiability/diffF.var" "Differentiability__".
+alias id "diffF" = "cic:/CoRN/ftc/Composition/Differentiability/diffF.var".
 
-inline "cic:/CoRN/ftc/Composition/Differentiability/diffG.var" "Differentiability__".
+alias id "diffG" = "cic:/CoRN/ftc/Composition/Differentiability/diffG.var".
 
-inline "cic:/CoRN/ftc/Composition/Differentiability/Hmap.var" "Differentiability__".
+alias id "Hmap" = "cic:/CoRN/ftc/Composition/Differentiability/Hmap.var".
 
 (* end show *)
 
@@ -321,13 +321,13 @@ We now generalize this results to arbitrary intervals.  We begin by generalizing
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/Composition/Generalized_Intervals/I.var" "Generalized_Intervals__".
+alias id "I" = "cic:/CoRN/ftc/Composition/Generalized_Intervals/I.var".
 
-inline "cic:/CoRN/ftc/Composition/Generalized_Intervals/J.var" "Generalized_Intervals__".
+alias id "J" = "cic:/CoRN/ftc/Composition/Generalized_Intervals/J.var".
 
-inline "cic:/CoRN/ftc/Composition/Generalized_Intervals/pI.var" "Generalized_Intervals__".
+alias id "pI" = "cic:/CoRN/ftc/Composition/Generalized_Intervals/pI.var".
 
-inline "cic:/CoRN/ftc/Composition/Generalized_Intervals/pJ.var" "Generalized_Intervals__".
+alias id "pJ" = "cic:/CoRN/ftc/Composition/Generalized_Intervals/pJ.var".
 
 inline "cic:/CoRN/ftc/Composition/maps_compacts_into.con".
 
@@ -337,17 +337,17 @@ Now everything comes naturally:
 
 inline "cic:/CoRN/ftc/Composition/comp_inc_lemma.con".
 
-inline "cic:/CoRN/ftc/Composition/Generalized_Intervals/F.var" "Generalized_Intervals__".
+alias id "F" = "cic:/CoRN/ftc/Composition/Generalized_Intervals/F.var".
 
-inline "cic:/CoRN/ftc/Composition/Generalized_Intervals/F'.var" "Generalized_Intervals__".
+alias id "F'" = "cic:/CoRN/ftc/Composition/Generalized_Intervals/F'.var".
 
-inline "cic:/CoRN/ftc/Composition/Generalized_Intervals/G.var" "Generalized_Intervals__".
+alias id "G" = "cic:/CoRN/ftc/Composition/Generalized_Intervals/G.var".
 
-inline "cic:/CoRN/ftc/Composition/Generalized_Intervals/G'.var" "Generalized_Intervals__".
+alias id "G'" = "cic:/CoRN/ftc/Composition/Generalized_Intervals/G'.var".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/Composition/Generalized_Intervals/Hmap.var" "Generalized_Intervals__".
+alias id "Hmap" = "cic:/CoRN/ftc/Composition/Generalized_Intervals/Hmap.var".
 
 (* end show *)
 
@@ -355,7 +355,7 @@ inline "cic:/CoRN/ftc/Composition/Continuous_comp.con".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/Composition/Generalized_Intervals/Hmap'.var" "Generalized_Intervals__".
+alias id "Hmap'" = "cic:/CoRN/ftc/Composition/Generalized_Intervals/Hmap'.var".
 
 (* end show *)
 

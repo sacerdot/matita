@@ -53,11 +53,11 @@ will be partial functions with domains respectively [P, P', Q, Q'] and
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/Derivative/Definitions/a.var" "Definitions__".
+alias id "a" = "cic:/CoRN/ftc/Derivative/Definitions/a.var".
 
-inline "cic:/CoRN/ftc/Derivative/Definitions/b.var" "Definitions__".
+alias id "b" = "cic:/CoRN/ftc/Derivative/Definitions/b.var".
 
-inline "cic:/CoRN/ftc/Derivative/Definitions/Hab'.var" "Definitions__".
+alias id "Hab'" = "cic:/CoRN/ftc/Derivative/Definitions/Hab'.var".
 
 (* begin hide *)
 
@@ -67,7 +67,7 @@ inline "cic:/CoRN/ftc/Derivative/Definitions/I.con" "Definitions__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/Derivative/Definitions/F.var" "Definitions__".
+alias id "F" = "cic:/CoRN/ftc/Derivative/Definitions/F.var".
 
 (* begin hide *)
 
@@ -92,11 +92,11 @@ Section Basic_Properties
 (*#* **Basic Properties
 *)
 
-inline "cic:/CoRN/ftc/Derivative/Basic_Properties/a.var" "Basic_Properties__".
+alias id "a" = "cic:/CoRN/ftc/Derivative/Basic_Properties/a.var".
 
-inline "cic:/CoRN/ftc/Derivative/Basic_Properties/b.var" "Basic_Properties__".
+alias id "b" = "cic:/CoRN/ftc/Derivative/Basic_Properties/b.var".
 
-inline "cic:/CoRN/ftc/Derivative/Basic_Properties/Hab'.var" "Basic_Properties__".
+alias id "Hab'" = "cic:/CoRN/ftc/Derivative/Basic_Properties/Hab'.var".
 
 (* begin hide *)
 
@@ -118,11 +118,11 @@ inline "cic:/CoRN/ftc/Derivative/Derivative_I_char.con".
 Derivative is a well defined relation; we will make this explicit for both arguments:
 *)
 
-inline "cic:/CoRN/ftc/Derivative/Basic_Properties/F.var" "Basic_Properties__".
+alias id "F" = "cic:/CoRN/ftc/Derivative/Basic_Properties/F.var".
 
-inline "cic:/CoRN/ftc/Derivative/Basic_Properties/G.var" "Basic_Properties__".
+alias id "G" = "cic:/CoRN/ftc/Derivative/Basic_Properties/G.var".
 
-inline "cic:/CoRN/ftc/Derivative/Basic_Properties/H.var" "Basic_Properties__".
+alias id "H" = "cic:/CoRN/ftc/Derivative/Basic_Properties/H.var".
 
 (* begin hide *)
 
@@ -162,7 +162,7 @@ inline "cic:/CoRN/ftc/Derivative/derivative_imp_inc'.con".
 Any function that is or has a derivative is continuous.
 *)
 
-inline "cic:/CoRN/ftc/Derivative/Basic_Properties/Hab''.var" "Basic_Properties__".
+alias id "Hab''" = "cic:/CoRN/ftc/Derivative/Basic_Properties/Hab''.var".
 
 inline "cic:/CoRN/ftc/Derivative/deriv_imp_contin'_I.con".
 

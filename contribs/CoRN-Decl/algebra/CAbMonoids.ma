@@ -39,7 +39,7 @@ coercion cic:/matita/CoRN-Decl/algebra/CAbMonoids/cam_crr.con 0 (* compounds *).
 Section AbMonoid_Axioms
 *)
 
-inline "cic:/CoRN/algebra/CAbMonoids/Abelian_Monoids/AbMonoid_Axioms/M.var" "Abelian_Monoids__AbMonoid_Axioms__".
+alias id "M" = "cic:/CoRN/algebra/CAbMonoids/Abelian_Monoids/AbMonoid_Axioms/M.var".
 
 (*#*
 %\begin{convention}% Let [M] be an abelian monoid.
@@ -64,13 +64,13 @@ Section SubCAbMonoids
 ** Subgroups of an Abelian Monoid
 *)
 
-inline "cic:/CoRN/algebra/CAbMonoids/Abelian_Monoids/SubCAbMonoids/M.var" "Abelian_Monoids__SubCAbMonoids__".
+alias id "M" = "cic:/CoRN/algebra/CAbMonoids/Abelian_Monoids/SubCAbMonoids/M.var".
 
-inline "cic:/CoRN/algebra/CAbMonoids/Abelian_Monoids/SubCAbMonoids/P.var" "Abelian_Monoids__SubCAbMonoids__".
+alias id "P" = "cic:/CoRN/algebra/CAbMonoids/Abelian_Monoids/SubCAbMonoids/P.var".
 
-inline "cic:/CoRN/algebra/CAbMonoids/Abelian_Monoids/SubCAbMonoids/Punit.var" "Abelian_Monoids__SubCAbMonoids__".
+alias id "Punit" = "cic:/CoRN/algebra/CAbMonoids/Abelian_Monoids/SubCAbMonoids/Punit.var".
 
-inline "cic:/CoRN/algebra/CAbMonoids/Abelian_Monoids/SubCAbMonoids/op_pres_P.var" "Abelian_Monoids__SubCAbMonoids__".
+alias id "op_pres_P" = "cic:/CoRN/algebra/CAbMonoids/Abelian_Monoids/SubCAbMonoids/op_pres_P.var".
 
 (*#*
 %\begin{convention}%

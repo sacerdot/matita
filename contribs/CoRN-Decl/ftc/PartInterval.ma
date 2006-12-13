@@ -45,13 +45,13 @@ that [I [=] [a,b]] is included in the domain of [F].
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/PartInterval/Conversion/F.var" "Conversion__".
+alias id "F" = "cic:/CoRN/ftc/PartInterval/Conversion/F.var".
 
-inline "cic:/CoRN/ftc/PartInterval/Conversion/a.var" "Conversion__".
+alias id "a" = "cic:/CoRN/ftc/PartInterval/Conversion/a.var".
 
-inline "cic:/CoRN/ftc/PartInterval/Conversion/b.var" "Conversion__".
+alias id "b" = "cic:/CoRN/ftc/PartInterval/Conversion/b.var".
 
-inline "cic:/CoRN/ftc/PartInterval/Conversion/Hab.var" "Conversion__".
+alias id "Hab" = "cic:/CoRN/ftc/PartInterval/Conversion/Hab.var".
 
 (* begin hide *)
 
@@ -59,7 +59,7 @@ inline "cic:/CoRN/ftc/PartInterval/Conversion/I.con" "Conversion__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/PartInterval/Conversion/Hf.var" "Conversion__".
+alias id "Hf" = "cic:/CoRN/ftc/PartInterval/Conversion/Hf.var".
 
 inline "cic:/CoRN/ftc/PartInterval/IntPartIR_strext.con".
 
@@ -82,11 +82,11 @@ To go the other way around, we simply take a setoid function [f] with
 domain [[a,b]] and build the corresponding partial function.
 *)
 
-inline "cic:/CoRN/ftc/PartInterval/AntiConversion/a.var" "AntiConversion__".
+alias id "a" = "cic:/CoRN/ftc/PartInterval/AntiConversion/a.var".
 
-inline "cic:/CoRN/ftc/PartInterval/AntiConversion/b.var" "AntiConversion__".
+alias id "b" = "cic:/CoRN/ftc/PartInterval/AntiConversion/b.var".
 
-inline "cic:/CoRN/ftc/PartInterval/AntiConversion/Hab.var" "AntiConversion__".
+alias id "Hab" = "cic:/CoRN/ftc/PartInterval/AntiConversion/Hab.var".
 
 (* begin hide *)
 
@@ -94,7 +94,7 @@ inline "cic:/CoRN/ftc/PartInterval/AntiConversion/I.con" "AntiConversion__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/PartInterval/AntiConversion/f.var" "AntiConversion__".
+alias id "f" = "cic:/CoRN/ftc/PartInterval/AntiConversion/f.var".
 
 inline "cic:/CoRN/ftc/PartInterval/PartInt_strext.con".
 
@@ -137,17 +137,17 @@ type [I->IR] equal respectively to [F] and [G] in [I].
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/PartInterval/Equivalences/F.var" "Equivalences__".
+alias id "F" = "cic:/CoRN/ftc/PartInterval/Equivalences/F.var".
 
-inline "cic:/CoRN/ftc/PartInterval/Equivalences/G.var" "Equivalences__".
+alias id "G" = "cic:/CoRN/ftc/PartInterval/Equivalences/G.var".
 
-inline "cic:/CoRN/ftc/PartInterval/Equivalences/a.var" "Equivalences__".
+alias id "a" = "cic:/CoRN/ftc/PartInterval/Equivalences/a.var".
 
-inline "cic:/CoRN/ftc/PartInterval/Equivalences/b.var" "Equivalences__".
+alias id "b" = "cic:/CoRN/ftc/PartInterval/Equivalences/b.var".
 
-inline "cic:/CoRN/ftc/PartInterval/Equivalences/c.var" "Equivalences__".
+alias id "c" = "cic:/CoRN/ftc/PartInterval/Equivalences/c.var".
 
-inline "cic:/CoRN/ftc/PartInterval/Equivalences/Hab.var" "Equivalences__".
+alias id "Hab" = "cic:/CoRN/ftc/PartInterval/Equivalences/Hab.var".
 
 (* begin hide *)
 
@@ -155,13 +155,13 @@ inline "cic:/CoRN/ftc/PartInterval/Equivalences/I.con" "Equivalences__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/PartInterval/Equivalences/f.var" "Equivalences__".
+alias id "f" = "cic:/CoRN/ftc/PartInterval/Equivalences/f.var".
 
-inline "cic:/CoRN/ftc/PartInterval/Equivalences/g.var" "Equivalences__".
+alias id "g" = "cic:/CoRN/ftc/PartInterval/Equivalences/g.var".
 
-inline "cic:/CoRN/ftc/PartInterval/Equivalences/Ff.var" "Equivalences__".
+alias id "Ff" = "cic:/CoRN/ftc/PartInterval/Equivalences/Ff.var".
 
-inline "cic:/CoRN/ftc/PartInterval/Equivalences/Gg.var" "Equivalences__".
+alias id "Gg" = "cic:/CoRN/ftc/PartInterval/Equivalences/Gg.var".
 
 inline "cic:/CoRN/ftc/PartInterval/part_int_const.con".
 
@@ -179,9 +179,9 @@ inline "cic:/CoRN/ftc/PartInterval/part_int_nth.con".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/PartInterval/Equivalences/HG.var" "Equivalences__".
+alias id "HG" = "cic:/CoRN/ftc/PartInterval/Equivalences/HG.var".
 
-inline "cic:/CoRN/ftc/PartInterval/Equivalences/Hg.var" "Equivalences__".
+alias id "Hg" = "cic:/CoRN/ftc/PartInterval/Equivalences/Hg.var".
 
 (* end show *)
 

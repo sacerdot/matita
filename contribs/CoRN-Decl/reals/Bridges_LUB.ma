@@ -42,7 +42,7 @@ include "algebra/Expon.ma".
 Section LUBP
 *)
 
-inline "cic:/CoRN/reals/Bridges_LUB/LUBP/R1.var" "LUBP__".
+alias id "R1" = "cic:/CoRN/reals/Bridges_LUB/LUBP/R1.var".
 
 (* SUBSECTION ON GENRAL DEFINITIONS *)
 
@@ -50,9 +50,9 @@ inline "cic:/CoRN/reals/Bridges_LUB/LUBP/R1.var" "LUBP__".
 Section lub_definitions
 *)
 
-inline "cic:/CoRN/reals/Bridges_LUB/LUBP/lub_definitions/OF.var" "LUBP__lub_definitions__".
+alias id "OF" = "cic:/CoRN/reals/Bridges_LUB/LUBP/lub_definitions/OF.var".
 
-inline "cic:/CoRN/reals/Bridges_LUB/LUBP/lub_definitions/SS.var" "LUBP__lub_definitions__".
+alias id "SS" = "cic:/CoRN/reals/Bridges_LUB/LUBP/lub_definitions/SS.var".
 
 inline "cic:/CoRN/reals/Bridges_LUB/member.con".
 
@@ -88,13 +88,13 @@ End lub_definitions
 Section upper_bound_sequence
 *)
 
-inline "cic:/CoRN/reals/Bridges_LUB/LUBP/upper_bound_sequence/A.var" "LUBP__upper_bound_sequence__".
+alias id "A" = "cic:/CoRN/reals/Bridges_LUB/LUBP/upper_bound_sequence/A.var".
 
-inline "cic:/CoRN/reals/Bridges_LUB/LUBP/upper_bound_sequence/is_inhabitted.var" "LUBP__upper_bound_sequence__".
+alias id "is_inhabitted" = "cic:/CoRN/reals/Bridges_LUB/LUBP/upper_bound_sequence/is_inhabitted.var".
 
-inline "cic:/CoRN/reals/Bridges_LUB/LUBP/upper_bound_sequence/bounded_above.var" "LUBP__upper_bound_sequence__".
+alias id "bounded_above" = "cic:/CoRN/reals/Bridges_LUB/LUBP/upper_bound_sequence/bounded_above.var".
 
-inline "cic:/CoRN/reals/Bridges_LUB/LUBP/upper_bound_sequence/located.var" "LUBP__upper_bound_sequence__".
+alias id "located" = "cic:/CoRN/reals/Bridges_LUB/LUBP/upper_bound_sequence/located.var".
 
 inline "cic:/CoRN/reals/Bridges_LUB/LUBP/upper_bound_sequence/s.con" "LUBP__upper_bound_sequence__".
 

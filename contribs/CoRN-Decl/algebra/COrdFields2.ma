@@ -38,7 +38,7 @@ Section Properties_of_leEq
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/COrdFields2/Properties_of_leEq/R.var" "Properties_of_leEq__".
+alias id "R" = "cic:/CoRN/algebra/COrdFields2/Properties_of_leEq/R.var".
 
 (* UNEXPORTED
 Section addition
@@ -248,7 +248,7 @@ Section PosP_properties
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/COrdFields2/PosP_properties/R.var" "PosP_properties__".
+alias id "R" = "cic:/CoRN/algebra/COrdFields2/PosP_properties/R.var".
 
 (* begin hide *)
 
@@ -312,7 +312,7 @@ Implicit Arguments one_div_succ [R].
 Section One_div_succ_properties
 *)
 
-inline "cic:/CoRN/algebra/COrdFields2/One_div_succ_properties/R.var" "One_div_succ_properties__".
+alias id "R" = "cic:/CoRN/algebra/COrdFields2/One_div_succ_properties/R.var".
 
 inline "cic:/CoRN/algebra/COrdFields2/one_div_succ_resp_leEq.con".
 
@@ -344,7 +344,7 @@ Let [R] be an ordered field.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/COrdFields2/Half_properties/R.var" "Half_properties__".
+alias id "R" = "cic:/CoRN/algebra/COrdFields2/Half_properties/R.var".
 
 inline "cic:/CoRN/algebra/COrdFields2/half_1.con".
 

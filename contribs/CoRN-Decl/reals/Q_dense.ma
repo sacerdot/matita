@@ -30,7 +30,7 @@ inline "cic:/CoRN/reals/Q_dense/or_not_and.con".
 Section Interval_definition
 *)
 
-inline "cic:/CoRN/reals/Q_dense/Interval_definition/OF.var" "Interval_definition__".
+alias id "OF" = "cic:/CoRN/reals/Q_dense/Interval_definition/OF.var".
 
 inline "cic:/CoRN/reals/Q_dense/Interval.ind".
 
@@ -63,7 +63,7 @@ Qed.
 Section COrdField_extra
 *)
 
-inline "cic:/CoRN/reals/Q_dense/COrdField_extra/OF.var" "COrdField_extra__".
+alias id "OF" = "cic:/CoRN/reals/Q_dense/COrdField_extra/OF.var".
 
 inline "cic:/CoRN/reals/Q_dense/AbsSmall_pos_reflexive.con".
 
@@ -83,7 +83,7 @@ include "tactics/Opaque_algebra.ma".
 
 (*#*** WARNING: A file is being loaded *****)
 
-inline "cic:/CoRN/reals/Q_dense/Rational_sequence/R1.var" "Rational_sequence__".
+alias id "R1" = "cic:/CoRN/reals/Q_dense/Rational_sequence/R1.var".
 
 inline "cic:/CoRN/reals/Q_dense/start_l.con".
 

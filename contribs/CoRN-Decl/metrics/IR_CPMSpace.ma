@@ -63,7 +63,7 @@ inline "cic:/CoRN/metrics/IR_CPMSpace/IR_dIR_is_CPsMetricSpace.con".
 
 inline "cic:/CoRN/metrics/IR_CPMSpace/IR_as_CPsMetricSpace.con".
 
-inline "cic:/CoRN/metrics/IR_CPMSpace/Reals/X.var" "Reals__".
+alias id "X" = "cic:/CoRN/metrics/IR_CPMSpace/Reals/X.var".
 
 inline "cic:/CoRN/metrics/IR_CPMSpace/rev_tri_ineq'.con".
 

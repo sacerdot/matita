@@ -43,7 +43,7 @@ Definition IR : CReals := Concrete_R.
 Opaque IR.
 *)
 
-inline "cic:/CoRN/reals/CauchySeq/IR.var".
+alias id "IR" = "cic:/CoRN/reals/CauchySeq/IR.var".
 
 (* NOTATION
 Notation PartIR := (PartFunct IR).

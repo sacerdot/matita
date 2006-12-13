@@ -141,11 +141,11 @@ on partial functions which preserves continuity.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/transc/RealPowers/Power_Function/J.var" "Power_Function__".
+alias id "J" = "cic:/CoRN/transc/RealPowers/Power_Function/J.var".
 
-inline "cic:/CoRN/transc/RealPowers/Power_Function/F.var" "Power_Function__".
+alias id "F" = "cic:/CoRN/transc/RealPowers/Power_Function/F.var".
 
-inline "cic:/CoRN/transc/RealPowers/Power_Function/G.var" "Power_Function__".
+alias id "G" = "cic:/CoRN/transc/RealPowers/Power_Function/G.var".
 
 inline "cic:/CoRN/transc/RealPowers/FPower.con".
 

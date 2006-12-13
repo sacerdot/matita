@@ -16,6 +16,8 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/CoRN".
 
+include "preamble.ma".
+
 (* From algebra/Basics ****************************************************)
 
 (* NOTATION

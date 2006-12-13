@@ -42,9 +42,9 @@ Let [x] and [y] be reals
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/reals/Max_AbsIR/Maximum/Max_function/x.var" "Maximum__Max_function__".
+alias id "x" = "cic:/CoRN/reals/Max_AbsIR/Maximum/Max_function/x.var".
 
-inline "cic:/CoRN/reals/Max_AbsIR/Maximum/Max_function/y.var" "Maximum__Max_function__".
+alias id "y" = "cic:/CoRN/reals/Max_AbsIR/Maximum/Max_function/y.var".
 
 inline "cic:/CoRN/reals/Max_AbsIR/Max_seq.con".
 
@@ -178,9 +178,9 @@ inline "cic:/CoRN/reals/Max_AbsIR/Min_is_lft_imp_leEq.con".
 
 inline "cic:/CoRN/reals/Max_AbsIR/leEq_Min_plus_eps.con".
 
-inline "cic:/CoRN/reals/Max_AbsIR/Minimum/a.var" "Minimum__".
+alias id "a" = "cic:/CoRN/reals/Max_AbsIR/Minimum/a.var".
 
-inline "cic:/CoRN/reals/Max_AbsIR/Minimum/b.var" "Minimum__".
+alias id "b" = "cic:/CoRN/reals/Max_AbsIR/Minimum/b.var".
 
 inline "cic:/CoRN/reals/Max_AbsIR/Min_leEq_Max.con".
 
@@ -291,9 +291,9 @@ Let [F,G:PartIR] and denote by [P] and [Q] their respective domains.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/reals/Max_AbsIR/Part_Function_Max/F.var" "Part_Function_Max__".
+alias id "F" = "cic:/CoRN/reals/Max_AbsIR/Part_Function_Max/F.var".
 
-inline "cic:/CoRN/reals/Max_AbsIR/Part_Function_Max/G.var" "Part_Function_Max__".
+alias id "G" = "cic:/CoRN/reals/Max_AbsIR/Part_Function_Max/G.var".
 
 (* begin hide *)
 
@@ -315,9 +315,9 @@ End Part_Function_Max
 Section Part_Function_Abs
 *)
 
-inline "cic:/CoRN/reals/Max_AbsIR/Part_Function_Abs/F.var" "Part_Function_Abs__".
+alias id "F" = "cic:/CoRN/reals/Max_AbsIR/Part_Function_Abs/F.var".
 
-inline "cic:/CoRN/reals/Max_AbsIR/Part_Function_Abs/G.var" "Part_Function_Abs__".
+alias id "G" = "cic:/CoRN/reals/Max_AbsIR/Part_Function_Abs/G.var".
 
 (* begin hide *)
 
@@ -363,9 +363,9 @@ Hint Resolve FAbs_char': algebra.
 Section Inclusion
 *)
 
-inline "cic:/CoRN/reals/Max_AbsIR/Inclusion/F.var" "Inclusion__".
+alias id "F" = "cic:/CoRN/reals/Max_AbsIR/Inclusion/F.var".
 
-inline "cic:/CoRN/reals/Max_AbsIR/Inclusion/G.var" "Inclusion__".
+alias id "G" = "cic:/CoRN/reals/Max_AbsIR/Inclusion/G.var".
 
 (* begin hide *)
 
@@ -380,7 +380,7 @@ inline "cic:/CoRN/reals/Max_AbsIR/Inclusion/Q.con" "Inclusion__".
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/reals/Max_AbsIR/Inclusion/R.var" "Inclusion__".
+alias id "R" = "cic:/CoRN/reals/Max_AbsIR/Inclusion/R.var".
 
 inline "cic:/CoRN/reals/Max_AbsIR/included_FMax.con".
 

@@ -50,7 +50,7 @@ Section CPoly_CRing
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CPolynomials/CPoly_CRing/CR.var" "CPoly_CRing__".
+alias id "CR" = "cic:/CoRN/algebra/CPolynomials/CPoly_CRing/CR.var".
 
 (*#*
 The intuition behind the type [cpoly] is the following
@@ -354,7 +354,7 @@ elements of the ring.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CPolynomials/CPoly_CRing_ctd/CR.var" "CPoly_CRing_ctd__".
+alias id "CR" = "cic:/CoRN/algebra/CPolynomials/CPoly_CRing_ctd/CR.var".
 
 (* NOTATION
 Notation RX := (cpoly_cring CR).
@@ -364,13 +364,13 @@ Notation RX := (cpoly_cring CR).
 Section helpful_section
 *)
 
-inline "cic:/CoRN/algebra/CPolynomials/CPoly_CRing_ctd/helpful_section/p.var" "CPoly_CRing_ctd__helpful_section__".
+alias id "p" = "cic:/CoRN/algebra/CPolynomials/CPoly_CRing_ctd/helpful_section/p.var".
 
-inline "cic:/CoRN/algebra/CPolynomials/CPoly_CRing_ctd/helpful_section/q.var" "CPoly_CRing_ctd__helpful_section__".
+alias id "q" = "cic:/CoRN/algebra/CPolynomials/CPoly_CRing_ctd/helpful_section/q.var".
 
-inline "cic:/CoRN/algebra/CPolynomials/CPoly_CRing_ctd/helpful_section/c.var" "CPoly_CRing_ctd__helpful_section__".
+alias id "c" = "cic:/CoRN/algebra/CPolynomials/CPoly_CRing_ctd/helpful_section/c.var".
 
-inline "cic:/CoRN/algebra/CPolynomials/CPoly_CRing_ctd/helpful_section/d.var" "CPoly_CRing_ctd__helpful_section__".
+alias id "d" = "cic:/CoRN/algebra/CPolynomials/CPoly_CRing_ctd/helpful_section/d.var".
 
 inline "cic:/CoRN/algebra/CPolynomials/linear_eq_zero_.con".
 
@@ -474,7 +474,7 @@ Let [R] be a ring and write [RX] for the ring of polynomials over [R].
 Section Poly_properties
 *)
 
-inline "cic:/CoRN/algebra/CPolynomials/Poly_properties/R.var" "Poly_properties__".
+alias id "R" = "cic:/CoRN/algebra/CPolynomials/Poly_properties/R.var".
 
 (* NOTATION
 Notation RX := (cpoly_cring R).
@@ -592,7 +592,7 @@ End Poly_properties
 Section Poly_Prop_Induction
 *)
 
-inline "cic:/CoRN/algebra/CPolynomials/Poly_Prop_Induction/CR.var" "Poly_Prop_Induction__".
+alias id "CR" = "cic:/CoRN/algebra/CPolynomials/Poly_Prop_Induction/CR.var".
 
 (* NOTATION
 Notation Cpoly := (cpoly CR).

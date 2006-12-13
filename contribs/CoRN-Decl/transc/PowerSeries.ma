@@ -50,13 +50,13 @@ Let [a : nat -> IR].
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/transc/PowerSeries/Power_Series/J.var" "Power_Series__".
+alias id "J" = "cic:/CoRN/transc/PowerSeries/Power_Series/J.var".
 
-inline "cic:/CoRN/transc/PowerSeries/Power_Series/x0.var" "Power_Series__".
+alias id "x0" = "cic:/CoRN/transc/PowerSeries/Power_Series/x0.var".
 
-inline "cic:/CoRN/transc/PowerSeries/Power_Series/Hx0.var" "Power_Series__".
+alias id "Hx0" = "cic:/CoRN/transc/PowerSeries/Power_Series/Hx0.var".
 
-inline "cic:/CoRN/transc/PowerSeries/Power_Series/a.var" "Power_Series__".
+alias id "a" = "cic:/CoRN/transc/PowerSeries/Power_Series/a.var".
 
 inline "cic:/CoRN/transc/PowerSeries/FPowerSeries.con".
 
@@ -67,7 +67,7 @@ is the Dirichlet criterium.
 
 (* begin show *)
 
-inline "cic:/CoRN/transc/PowerSeries/Power_Series/Ha.var" "Power_Series__".
+alias id "Ha" = "cic:/CoRN/transc/PowerSeries/Power_Series/Ha.var".
 
 inline "cic:/CoRN/transc/PowerSeries/Power_Series/r.con" "Power_Series__".
 
@@ -93,7 +93,7 @@ inline "cic:/CoRN/transc/PowerSeries/included_FPowerSeries'.con".
 
 (* begin show *)
 
-inline "cic:/CoRN/transc/PowerSeries/Power_Series/Ha'.var" "Power_Series__".
+alias id "Ha'" = "cic:/CoRN/transc/PowerSeries/Power_Series/Ha'.var".
 
 (* end show *)
 
@@ -119,9 +119,9 @@ respectively by [a] and by [fun n => (a (S n))].
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/transc/PowerSeries/More_on_PowerSeries/x0.var" "More_on_PowerSeries__".
+alias id "x0" = "cic:/CoRN/transc/PowerSeries/More_on_PowerSeries/x0.var".
 
-inline "cic:/CoRN/transc/PowerSeries/More_on_PowerSeries/a.var" "More_on_PowerSeries__".
+alias id "a" = "cic:/CoRN/transc/PowerSeries/More_on_PowerSeries/a.var".
 
 (* begin hide *)
 
@@ -133,11 +133,11 @@ inline "cic:/CoRN/transc/PowerSeries/More_on_PowerSeries/G.con" "More_on_PowerSe
 
 (* begin show *)
 
-inline "cic:/CoRN/transc/PowerSeries/More_on_PowerSeries/Hf.var" "More_on_PowerSeries__".
+alias id "Hf" = "cic:/CoRN/transc/PowerSeries/More_on_PowerSeries/Hf.var".
 
-inline "cic:/CoRN/transc/PowerSeries/More_on_PowerSeries/Hf'.var" "More_on_PowerSeries__".
+alias id "Hf'" = "cic:/CoRN/transc/PowerSeries/More_on_PowerSeries/Hf'.var".
 
-inline "cic:/CoRN/transc/PowerSeries/More_on_PowerSeries/Hg.var" "More_on_PowerSeries__".
+alias id "Hg" = "cic:/CoRN/transc/PowerSeries/More_on_PowerSeries/Hg.var".
 
 (* end show *)
 

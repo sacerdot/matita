@@ -31,7 +31,7 @@ Section OrdField_Cauchy
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/COrdCauchy/OrdField_Cauchy/R.var" "OrdField_Cauchy__".
+alias id "R" = "cic:/CoRN/algebra/COrdCauchy/OrdField_Cauchy/R.var".
 
 (* begin hide *)
 
@@ -95,13 +95,13 @@ inline "cic:/CoRN/algebra/COrdCauchy/CS_seq_const.con".
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/COrdCauchy/OrdField_Cauchy/f.var" "OrdField_Cauchy__".
+alias id "f" = "cic:/CoRN/algebra/COrdCauchy/OrdField_Cauchy/f.var".
 
-inline "cic:/CoRN/algebra/COrdCauchy/OrdField_Cauchy/g.var" "OrdField_Cauchy__".
+alias id "g" = "cic:/CoRN/algebra/COrdCauchy/OrdField_Cauchy/g.var".
 
-inline "cic:/CoRN/algebra/COrdCauchy/OrdField_Cauchy/Hf.var" "OrdField_Cauchy__".
+alias id "Hf" = "cic:/CoRN/algebra/COrdCauchy/OrdField_Cauchy/Hf.var".
 
-inline "cic:/CoRN/algebra/COrdCauchy/OrdField_Cauchy/Hg.var" "OrdField_Cauchy__".
+alias id "Hg" = "cic:/CoRN/algebra/COrdCauchy/OrdField_Cauchy/Hg.var".
 
 inline "cic:/CoRN/algebra/COrdCauchy/CS_seq_plus.con".
 
@@ -121,13 +121,13 @@ Let [e] be a postive element of [R] and let [N:nat] be such that from
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/COrdCauchy/OrdField_Cauchy/e.var" "OrdField_Cauchy__".
+alias id "e" = "cic:/CoRN/algebra/COrdCauchy/OrdField_Cauchy/e.var".
 
-inline "cic:/CoRN/algebra/COrdCauchy/OrdField_Cauchy/He.var" "OrdField_Cauchy__".
+alias id "He" = "cic:/CoRN/algebra/COrdCauchy/OrdField_Cauchy/He.var".
 
-inline "cic:/CoRN/algebra/COrdCauchy/OrdField_Cauchy/N.var" "OrdField_Cauchy__".
+alias id "N" = "cic:/CoRN/algebra/COrdCauchy/OrdField_Cauchy/N.var".
 
-inline "cic:/CoRN/algebra/COrdCauchy/OrdField_Cauchy/f_bnd.var" "OrdField_Cauchy__".
+alias id "f_bnd" = "cic:/CoRN/algebra/COrdCauchy/OrdField_Cauchy/f_bnd.var".
 
 inline "cic:/CoRN/algebra/COrdCauchy/CS_seq_recip_def.con".
 
@@ -154,7 +154,7 @@ inline "cic:/CoRN/algebra/COrdCauchy/maj_upto_eps.con".
 Section Mult_AbsSmall
 *)
 
-inline "cic:/CoRN/algebra/COrdCauchy/Mult_AbsSmall/R.var" "Mult_AbsSmall__".
+alias id "R" = "cic:/CoRN/algebra/COrdCauchy/Mult_AbsSmall/R.var".
 
 (*#*
 ** [AbsSmall] revisited
@@ -178,7 +178,7 @@ End Mult_AbsSmall
 Section Mult_Continuous
 *)
 
-inline "cic:/CoRN/algebra/COrdCauchy/Mult_Continuous/R.var" "Mult_Continuous__".
+alias id "R" = "cic:/CoRN/algebra/COrdCauchy/Mult_Continuous/R.var".
 
 (*#*
 ** Multiplication is continuous
@@ -214,7 +214,7 @@ characterize them in some way.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/COrdCauchy/Monotonous_functions/R.var" "Monotonous_functions__".
+alias id "R" = "cic:/CoRN/algebra/COrdCauchy/Monotonous_functions/R.var".
 
 (*#*
 We begin by characterizing the preservation of less (less or equal)

@@ -54,11 +54,11 @@ respectively [P, Q] and [R].
 Here we define continuity and prove some basic properties of continuous functions.
 *)
 
-inline "cic:/CoRN/ftc/Continuity/Definitions_and_Basic_Results/a.var" "Definitions_and_Basic_Results__".
+alias id "a" = "cic:/CoRN/ftc/Continuity/Definitions_and_Basic_Results/a.var".
 
-inline "cic:/CoRN/ftc/Continuity/Definitions_and_Basic_Results/b.var" "Definitions_and_Basic_Results__".
+alias id "b" = "cic:/CoRN/ftc/Continuity/Definitions_and_Basic_Results/b.var".
 
-inline "cic:/CoRN/ftc/Continuity/Definitions_and_Basic_Results/Hab.var" "Definitions_and_Basic_Results__".
+alias id "Hab" = "cic:/CoRN/ftc/Continuity/Definitions_and_Basic_Results/Hab.var".
 
 (* begin hide *)
 
@@ -66,7 +66,7 @@ inline "cic:/CoRN/ftc/Continuity/Definitions_and_Basic_Results/I.con" "Definitio
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/Continuity/Definitions_and_Basic_Results/F.var" "Definitions_and_Basic_Results__".
+alias id "F" = "cic:/CoRN/ftc/Continuity/Definitions_and_Basic_Results/F.var".
 
 (* begin hide *)
 
@@ -88,7 +88,7 @@ inline "cic:/CoRN/ftc/Continuity/contin_prop.con".
 Assume [F] to be continuous in [I].  Then it has a least upper bound and a greater lower bound on [I].
 *)
 
-inline "cic:/CoRN/ftc/Continuity/Definitions_and_Basic_Results/contF.var" "Definitions_and_Basic_Results__".
+alias id "contF" = "cic:/CoRN/ftc/Continuity/Definitions_and_Basic_Results/contF.var".
 
 (* begin hide *)
 
@@ -173,11 +173,11 @@ Section Local_Results
 We now state and prove some results about continuous functions.  Assume that [I] is included in the domain of both [F] and [G].
 *)
 
-inline "cic:/CoRN/ftc/Continuity/Local_Results/a.var" "Local_Results__".
+alias id "a" = "cic:/CoRN/ftc/Continuity/Local_Results/a.var".
 
-inline "cic:/CoRN/ftc/Continuity/Local_Results/b.var" "Local_Results__".
+alias id "b" = "cic:/CoRN/ftc/Continuity/Local_Results/b.var".
 
-inline "cic:/CoRN/ftc/Continuity/Local_Results/Hab.var" "Local_Results__".
+alias id "Hab" = "cic:/CoRN/ftc/Continuity/Local_Results/Hab.var".
 
 (* begin hide *)
 
@@ -185,9 +185,9 @@ inline "cic:/CoRN/ftc/Continuity/Local_Results/I.con" "Local_Results__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/Continuity/Local_Results/F.var" "Local_Results__".
+alias id "F" = "cic:/CoRN/ftc/Continuity/Local_Results/F.var".
 
-inline "cic:/CoRN/ftc/Continuity/Local_Results/G.var" "Local_Results__".
+alias id "G" = "cic:/CoRN/ftc/Continuity/Local_Results/G.var".
 
 (* begin hide *)
 
@@ -197,9 +197,9 @@ inline "cic:/CoRN/ftc/Continuity/Local_Results/Q.con" "Local_Results__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/Continuity/Local_Results/incF.var" "Local_Results__".
+alias id "incF" = "cic:/CoRN/ftc/Continuity/Local_Results/incF.var".
 
-inline "cic:/CoRN/ftc/Continuity/Local_Results/incG.var" "Local_Results__".
+alias id "incG" = "cic:/CoRN/ftc/Continuity/Local_Results/incG.var".
 
 (*#*
 The first result does not require the function to be continuous; however, its preconditions are easily verified by continuous functions, which justifies its inclusion in this section.
@@ -235,9 +235,9 @@ inline "cic:/CoRN/ftc/Continuity/Continuous_I_id.con".
 Assume [F] and [G] are continuous in [I].  Then functions derived from these through algebraic operations are also continuous, provided (in the case of reciprocal and division) some extra conditions are met.
 *)
 
-inline "cic:/CoRN/ftc/Continuity/Local_Results/contF.var" "Local_Results__".
+alias id "contF" = "cic:/CoRN/ftc/Continuity/Local_Results/contF.var".
 
-inline "cic:/CoRN/ftc/Continuity/Local_Results/contG.var" "Local_Results__".
+alias id "contG" = "cic:/CoRN/ftc/Continuity/Local_Results/contG.var".
 
 inline "cic:/CoRN/ftc/Continuity/Continuous_I_plus.con".
 
@@ -257,9 +257,9 @@ inline "cic:/CoRN/ftc/Continuity/Continuous_I_max.con".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/Continuity/Local_Results/Hg'.var" "Local_Results__".
+alias id "Hg'" = "cic:/CoRN/ftc/Continuity/Local_Results/Hg'.var".
 
-inline "cic:/CoRN/ftc/Continuity/Local_Results/Hg''.var" "Local_Results__".
+alias id "Hg''" = "cic:/CoRN/ftc/Continuity/Local_Results/Hg''.var".
 
 (* end show *)
 
@@ -277,11 +277,11 @@ Hint Resolve contin_imp_inc: included.
 Section Corolaries
 *)
 
-inline "cic:/CoRN/ftc/Continuity/Corolaries/a.var" "Corolaries__".
+alias id "a" = "cic:/CoRN/ftc/Continuity/Corolaries/a.var".
 
-inline "cic:/CoRN/ftc/Continuity/Corolaries/b.var" "Corolaries__".
+alias id "b" = "cic:/CoRN/ftc/Continuity/Corolaries/b.var".
 
-inline "cic:/CoRN/ftc/Continuity/Corolaries/Hab.var" "Corolaries__".
+alias id "Hab" = "cic:/CoRN/ftc/Continuity/Corolaries/Hab.var".
 
 (* begin hide *)
 
@@ -289,9 +289,9 @@ inline "cic:/CoRN/ftc/Continuity/Corolaries/I.con" "Corolaries__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/Continuity/Corolaries/F.var" "Corolaries__".
+alias id "F" = "cic:/CoRN/ftc/Continuity/Corolaries/F.var".
 
-inline "cic:/CoRN/ftc/Continuity/Corolaries/G.var" "Corolaries__".
+alias id "G" = "cic:/CoRN/ftc/Continuity/Corolaries/G.var".
 
 (* begin hide *)
 
@@ -301,9 +301,9 @@ inline "cic:/CoRN/ftc/Continuity/Corolaries/Q.con" "Corolaries__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/Continuity/Corolaries/contF.var" "Corolaries__".
+alias id "contF" = "cic:/CoRN/ftc/Continuity/Corolaries/contF.var".
 
-inline "cic:/CoRN/ftc/Continuity/Corolaries/contG.var" "Corolaries__".
+alias id "contG" = "cic:/CoRN/ftc/Continuity/Corolaries/contG.var".
 
 (*#*
 The corresponding properties for subtraction, division and
@@ -322,9 +322,9 @@ inline "cic:/CoRN/ftc/Continuity/Continuous_I_min.con".
 
 inline "cic:/CoRN/ftc/Continuity/Continuous_I_abs.con".
 
-inline "cic:/CoRN/ftc/Continuity/Corolaries/Hg'.var" "Corolaries__".
+alias id "Hg'" = "cic:/CoRN/ftc/Continuity/Corolaries/Hg'.var".
 
-inline "cic:/CoRN/ftc/Continuity/Corolaries/Hg''.var" "Corolaries__".
+alias id "Hg''" = "cic:/CoRN/ftc/Continuity/Corolaries/Hg''.var".
 
 inline "cic:/CoRN/ftc/Continuity/Continuous_I_div.con".
 
@@ -344,13 +344,13 @@ Section Sums
 We finally prove that the sum of an arbitrary family of continuous functions is still a continuous function.
 *)
 
-inline "cic:/CoRN/ftc/Continuity/Other/Sums/a.var" "Other__Sums__".
+alias id "a" = "cic:/CoRN/ftc/Continuity/Other/Sums/a.var".
 
-inline "cic:/CoRN/ftc/Continuity/Other/Sums/b.var" "Other__Sums__".
+alias id "b" = "cic:/CoRN/ftc/Continuity/Other/Sums/b.var".
 
-inline "cic:/CoRN/ftc/Continuity/Other/Sums/Hab.var" "Other__Sums__".
+alias id "Hab" = "cic:/CoRN/ftc/Continuity/Other/Sums/Hab.var".
 
-inline "cic:/CoRN/ftc/Continuity/Other/Sums/Hab'.var" "Other__Sums__".
+alias id "Hab'" = "cic:/CoRN/ftc/Continuity/Other/Sums/Hab'.var".
 
 (* begin hide *)
 

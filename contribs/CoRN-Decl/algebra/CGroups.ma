@@ -90,7 +90,7 @@ Infix "[-]" := cg_minus (at level 50, left associativity).
 Section CGroup_axioms
 *)
 
-inline "cic:/CoRN/algebra/CGroups/CGroup_axioms/G.var" "CGroup_axioms__".
+alias id "G" = "cic:/CoRN/algebra/CGroups/CGroup_axioms/G.var".
 
 inline "cic:/CoRN/algebra/CGroups/cg_inverse.con".
 
@@ -109,7 +109,7 @@ General properties of groups.
 Section CGroup_basics
 *)
 
-inline "cic:/CoRN/algebra/CGroups/CGroup_basics/G.var" "CGroup_basics__".
+alias id "G" = "cic:/CoRN/algebra/CGroups/CGroup_basics/G.var".
 
 inline "cic:/CoRN/algebra/CGroups/cg_rht_inv_unfolded.con".
 
@@ -191,13 +191,13 @@ inline "cic:/CoRN/algebra/CGroups/x_minus_x.con".
 Section SubCGroups
 *)
 
-inline "cic:/CoRN/algebra/CGroups/CGroup_basics/SubCGroups/P.var" "CGroup_basics__SubCGroups__".
+alias id "P" = "cic:/CoRN/algebra/CGroups/CGroup_basics/SubCGroups/P.var".
 
-inline "cic:/CoRN/algebra/CGroups/CGroup_basics/SubCGroups/Punit.var" "CGroup_basics__SubCGroups__".
+alias id "Punit" = "cic:/CoRN/algebra/CGroups/CGroup_basics/SubCGroups/Punit.var".
 
-inline "cic:/CoRN/algebra/CGroups/CGroup_basics/SubCGroups/op_pres_P.var" "CGroup_basics__SubCGroups__".
+alias id "op_pres_P" = "cic:/CoRN/algebra/CGroups/CGroup_basics/SubCGroups/op_pres_P.var".
 
-inline "cic:/CoRN/algebra/CGroups/CGroup_basics/SubCGroups/inv_pres_P.var" "CGroup_basics__SubCGroups__".
+alias id "inv_pres_P" = "cic:/CoRN/algebra/CGroups/CGroup_basics/SubCGroups/inv_pres_P.var".
 
 inline "cic:/CoRN/algebra/CGroups/CGroup_basics/SubCGroups/subcrr.con" "CGroup_basics__SubCGroups__".
 
@@ -241,7 +241,7 @@ Hint Resolve cg_minus_wd: algebra_c.
 Section Assoc_properties
 *)
 
-inline "cic:/CoRN/algebra/CGroups/Assoc_properties/G.var" "Assoc_properties__".
+alias id "G" = "cic:/CoRN/algebra/CGroups/Assoc_properties/G.var".
 
 inline "cic:/CoRN/algebra/CGroups/assoc_2.con".
 
@@ -271,7 +271,7 @@ Specific properties of apartness.
 Section cgroups_apartness
 *)
 
-inline "cic:/CoRN/algebra/CGroups/cgroups_apartness/G.var" "cgroups_apartness__".
+alias id "G" = "cic:/CoRN/algebra/CGroups/cgroups_apartness/G.var".
 
 inline "cic:/CoRN/algebra/CGroups/cg_add_ap_zero.con".
 
@@ -322,11 +322,11 @@ by [P] and [Q].
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CGroups/CGroup_Ops/G.var" "CGroup_Ops__".
+alias id "G" = "cic:/CoRN/algebra/CGroups/CGroup_Ops/G.var".
 
-inline "cic:/CoRN/algebra/CGroups/CGroup_Ops/F.var" "CGroup_Ops__".
+alias id "F" = "cic:/CoRN/algebra/CGroups/CGroup_Ops/F.var".
 
-inline "cic:/CoRN/algebra/CGroups/CGroup_Ops/F'.var" "CGroup_Ops__".
+alias id "F'" = "cic:/CoRN/algebra/CGroups/CGroup_Ops/F'.var".
 
 (* begin hide *)
 
@@ -365,7 +365,7 @@ End Part_Function_Minus
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CGroups/CGroup_Ops/R.var" "CGroup_Ops__".
+alias id "R" = "cic:/CoRN/algebra/CGroups/CGroup_Ops/R.var".
 
 inline "cic:/CoRN/algebra/CGroups/included_FInv.con".
 

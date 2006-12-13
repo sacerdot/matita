@@ -217,7 +217,7 @@ Section Choice
 Let [P] be a predicate on $\NN^2$#N times N#.
 *)
 
-inline "cic:/CoRN/algebra/CLogic/Choice/P.var" "Choice__".
+alias id "P" = "cic:/CoRN/algebra/CLogic/Choice/P.var".
 
 inline "cic:/CoRN/algebra/CLogic/choice.con".
 
@@ -252,11 +252,11 @@ Similar to Relations.v in Coq's standard library.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CLogic/CRelation_Definition/A.var" "CRelation_Definition__".
+alias id "A" = "cic:/CoRN/algebra/CLogic/CRelation_Definition/A.var".
 
 inline "cic:/CoRN/algebra/CLogic/Crelation.con".
 
-inline "cic:/CoRN/algebra/CLogic/CRelation_Definition/R.var" "CRelation_Definition__".
+alias id "R" = "cic:/CoRN/algebra/CLogic/CRelation_Definition/R.var".
 
 inline "cic:/CoRN/algebra/CLogic/Creflexive.con".
 
@@ -281,11 +281,11 @@ Analogous.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CLogic/TRelation_Definition/A.var" "TRelation_Definition__".
+alias id "A" = "cic:/CoRN/algebra/CLogic/TRelation_Definition/A.var".
 
 inline "cic:/CoRN/algebra/CLogic/Trelation.con".
 
-inline "cic:/CoRN/algebra/CLogic/TRelation_Definition/R.var" "TRelation_Definition__".
+alias id "R" = "cic:/CoRN/algebra/CLogic/TRelation_Definition/R.var".
 
 inline "cic:/CoRN/algebra/CLogic/Treflexive.con".
 
@@ -467,7 +467,7 @@ inline "cic:/CoRN/algebra/CLogic/plus_pred_pred_plus.con".
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CLogic/Natural_Numbers/h.var" "Natural_Numbers__".
+alias id "h" = "cic:/CoRN/algebra/CLogic/Natural_Numbers/h.var".
 
 (*#*
 First we characterize monotonicity by a local condition: if [h(n) < h(n+1)]

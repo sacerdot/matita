@@ -39,13 +39,13 @@ Section NRoot
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/reals/NRootIR/NRoot/n.var" "NRoot__".
+alias id "n" = "cic:/CoRN/reals/NRootIR/NRoot/n.var".
 
-inline "cic:/CoRN/reals/NRootIR/NRoot/n_pos.var" "NRoot__".
+alias id "n_pos" = "cic:/CoRN/reals/NRootIR/NRoot/n_pos.var".
 
-inline "cic:/CoRN/reals/NRootIR/NRoot/c.var" "NRoot__".
+alias id "c" = "cic:/CoRN/reals/NRootIR/NRoot/c.var".
 
-inline "cic:/CoRN/reals/NRootIR/NRoot/c_nonneg.var" "NRoot__".
+alias id "c_nonneg" = "cic:/CoRN/reals/NRootIR/NRoot/c_nonneg.var".
 
 (* begin hide *)
 
@@ -100,13 +100,13 @@ inline "cic:/CoRN/reals/NRootIR/NRoot_cancel.con".
 (*#* %\begin{convention}% Let [x,y] be nonnegative real numbers.
 %\end{convention}% *)
 
-inline "cic:/CoRN/reals/NRootIR/Nth_Root/x.var" "Nth_Root__".
+alias id "x" = "cic:/CoRN/reals/NRootIR/Nth_Root/x.var".
 
-inline "cic:/CoRN/reals/NRootIR/Nth_Root/y.var" "Nth_Root__".
+alias id "y" = "cic:/CoRN/reals/NRootIR/Nth_Root/y.var".
 
-inline "cic:/CoRN/reals/NRootIR/Nth_Root/Hx.var" "Nth_Root__".
+alias id "Hx" = "cic:/CoRN/reals/NRootIR/Nth_Root/Hx.var".
 
-inline "cic:/CoRN/reals/NRootIR/Nth_Root/Hy.var" "Nth_Root__".
+alias id "Hy" = "cic:/CoRN/reals/NRootIR/Nth_Root/Hy.var".
 
 inline "cic:/CoRN/reals/NRootIR/NRoot_wd.con".
 

@@ -36,9 +36,9 @@ include "fta/CPoly_Contin1.ma".
 Section Seq_Exists
 *)
 
-inline "cic:/CoRN/fta/FTAreg/Seq_Exists/n.var" "Seq_Exists__".
+alias id "n" = "cic:/CoRN/fta/FTAreg/Seq_Exists/n.var".
 
-inline "cic:/CoRN/fta/FTAreg/Seq_Exists/lt0n.var" "Seq_Exists__".
+alias id "lt0n" = "cic:/CoRN/fta/FTAreg/Seq_Exists/lt0n.var".
 
 (*#*
 %\begin{convention}% Let [qK] be a real between 0 and 1, with
@@ -55,21 +55,21 @@ Let [p] be a monic polynomial over the complex numbers with degree
 Section Kneser_Sequence
 *)
 
-inline "cic:/CoRN/fta/FTAreg/Seq_Exists/Kneser_Sequence/qK.var" "Seq_Exists__Kneser_Sequence__".
+alias id "qK" = "cic:/CoRN/fta/FTAreg/Seq_Exists/Kneser_Sequence/qK.var".
 
-inline "cic:/CoRN/fta/FTAreg/Seq_Exists/Kneser_Sequence/zltq.var" "Seq_Exists__Kneser_Sequence__".
+alias id "zltq" = "cic:/CoRN/fta/FTAreg/Seq_Exists/Kneser_Sequence/zltq.var".
 
-inline "cic:/CoRN/fta/FTAreg/Seq_Exists/Kneser_Sequence/qlt1.var" "Seq_Exists__Kneser_Sequence__".
+alias id "qlt1" = "cic:/CoRN/fta/FTAreg/Seq_Exists/Kneser_Sequence/qlt1.var".
 
-inline "cic:/CoRN/fta/FTAreg/Seq_Exists/Kneser_Sequence/q_prop.var" "Seq_Exists__Kneser_Sequence__".
+alias id "q_prop" = "cic:/CoRN/fta/FTAreg/Seq_Exists/Kneser_Sequence/q_prop.var".
 
-inline "cic:/CoRN/fta/FTAreg/Seq_Exists/Kneser_Sequence/p.var" "Seq_Exists__Kneser_Sequence__".
+alias id "p" = "cic:/CoRN/fta/FTAreg/Seq_Exists/Kneser_Sequence/p.var".
 
-inline "cic:/CoRN/fta/FTAreg/Seq_Exists/Kneser_Sequence/mp.var" "Seq_Exists__Kneser_Sequence__".
+alias id "mp" = "cic:/CoRN/fta/FTAreg/Seq_Exists/Kneser_Sequence/mp.var".
 
-inline "cic:/CoRN/fta/FTAreg/Seq_Exists/Kneser_Sequence/c0.var" "Seq_Exists__Kneser_Sequence__".
+alias id "c0" = "cic:/CoRN/fta/FTAreg/Seq_Exists/Kneser_Sequence/c0.var".
 
-inline "cic:/CoRN/fta/FTAreg/Seq_Exists/Kneser_Sequence/p0ltc0.var" "Seq_Exists__Kneser_Sequence__".
+alias id "p0ltc0" = "cic:/CoRN/fta/FTAreg/Seq_Exists/Kneser_Sequence/p0ltc0.var".
 
 inline "cic:/CoRN/fta/FTAreg/Knes_tup.ind".
 
@@ -120,19 +120,19 @@ End Seq_Exists
 Section N_Exists
 *)
 
-inline "cic:/CoRN/fta/FTAreg/N_Exists/n.var" "N_Exists__".
+alias id "n" = "cic:/CoRN/fta/FTAreg/N_Exists/n.var".
 
-inline "cic:/CoRN/fta/FTAreg/N_Exists/lt0n.var" "N_Exists__".
+alias id "lt0n" = "cic:/CoRN/fta/FTAreg/N_Exists/lt0n.var".
 
-inline "cic:/CoRN/fta/FTAreg/N_Exists/q.var" "N_Exists__".
+alias id "q" = "cic:/CoRN/fta/FTAreg/N_Exists/q.var".
 
-inline "cic:/CoRN/fta/FTAreg/N_Exists/zleq.var" "N_Exists__".
+alias id "zleq" = "cic:/CoRN/fta/FTAreg/N_Exists/zleq.var".
 
-inline "cic:/CoRN/fta/FTAreg/N_Exists/qlt1.var" "N_Exists__".
+alias id "qlt1" = "cic:/CoRN/fta/FTAreg/N_Exists/qlt1.var".
 
-inline "cic:/CoRN/fta/FTAreg/N_Exists/c.var" "N_Exists__".
+alias id "c" = "cic:/CoRN/fta/FTAreg/N_Exists/c.var".
 
-inline "cic:/CoRN/fta/FTAreg/N_Exists/zltc.var" "N_Exists__".
+alias id "zltc" = "cic:/CoRN/fta/FTAreg/N_Exists/zltc.var".
 
 (* begin hide *)
 
@@ -140,9 +140,9 @@ inline "cic:/CoRN/fta/FTAreg/N_Exists/q_.con" "N_Exists__".
 
 (* end hide *)
 
-inline "cic:/CoRN/fta/FTAreg/N_Exists/e.var" "N_Exists__".
+alias id "e" = "cic:/CoRN/fta/FTAreg/N_Exists/e.var".
 
-inline "cic:/CoRN/fta/FTAreg/N_Exists/zlte.var" "N_Exists__".
+alias id "zlte" = "cic:/CoRN/fta/FTAreg/N_Exists/zlte.var".
 
 inline "cic:/CoRN/fta/FTAreg/N_exists.con".
 
@@ -156,19 +156,19 @@ Section Seq_is_CC_CAuchy
 
 (*#* ** The Kneser sequence is Cauchy in [CC] *)
 
-inline "cic:/CoRN/fta/FTAreg/Seq_is_CC_CAuchy/n.var" "Seq_is_CC_CAuchy__".
+alias id "n" = "cic:/CoRN/fta/FTAreg/Seq_is_CC_CAuchy/n.var".
 
-inline "cic:/CoRN/fta/FTAreg/Seq_is_CC_CAuchy/lt0n.var" "Seq_is_CC_CAuchy__".
+alias id "lt0n" = "cic:/CoRN/fta/FTAreg/Seq_is_CC_CAuchy/lt0n.var".
 
-inline "cic:/CoRN/fta/FTAreg/Seq_is_CC_CAuchy/q.var" "Seq_is_CC_CAuchy__".
+alias id "q" = "cic:/CoRN/fta/FTAreg/Seq_is_CC_CAuchy/q.var".
 
-inline "cic:/CoRN/fta/FTAreg/Seq_is_CC_CAuchy/zleq.var" "Seq_is_CC_CAuchy__".
+alias id "zleq" = "cic:/CoRN/fta/FTAreg/Seq_is_CC_CAuchy/zleq.var".
 
-inline "cic:/CoRN/fta/FTAreg/Seq_is_CC_CAuchy/qlt1.var" "Seq_is_CC_CAuchy__".
+alias id "qlt1" = "cic:/CoRN/fta/FTAreg/Seq_is_CC_CAuchy/qlt1.var".
 
-inline "cic:/CoRN/fta/FTAreg/Seq_is_CC_CAuchy/c.var" "Seq_is_CC_CAuchy__".
+alias id "c" = "cic:/CoRN/fta/FTAreg/Seq_is_CC_CAuchy/c.var".
 
-inline "cic:/CoRN/fta/FTAreg/Seq_is_CC_CAuchy/zltc.var" "Seq_is_CC_CAuchy__".
+alias id "zltc" = "cic:/CoRN/fta/FTAreg/Seq_is_CC_CAuchy/zltc.var".
 
 (*#* %\begin{convention}% Let:
  - [q_] prove [q[-]One [#] Zero]

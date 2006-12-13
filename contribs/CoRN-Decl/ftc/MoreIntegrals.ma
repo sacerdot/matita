@@ -48,11 +48,11 @@ partial functions continuous in [[Min(a,b),Max(a,b)]].
 Before we define the new integral we need to some trivial interval inclusions.
 *)
 
-inline "cic:/CoRN/ftc/MoreIntegrals/Lemmas/a.var" "Lemmas__".
+alias id "a" = "cic:/CoRN/ftc/MoreIntegrals/Lemmas/a.var".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/Lemmas/b.var" "Lemmas__".
+alias id "b" = "cic:/CoRN/ftc/MoreIntegrals/Lemmas/b.var".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/Lemmas/Hab.var" "Lemmas__".
+alias id "Hab" = "cic:/CoRN/ftc/MoreIntegrals/Lemmas/Hab.var".
 
 inline "cic:/CoRN/ftc/MoreIntegrals/compact_inc_Min_lft.con".
 
@@ -74,15 +74,15 @@ classical definition, and it collapses to the old one in the case [a
  [<=]  b].
 *)
 
-inline "cic:/CoRN/ftc/MoreIntegrals/Definitions/a.var" "Definitions__".
+alias id "a" = "cic:/CoRN/ftc/MoreIntegrals/Definitions/a.var".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/Definitions/b.var" "Definitions__".
+alias id "b" = "cic:/CoRN/ftc/MoreIntegrals/Definitions/b.var".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/Definitions/Hab.var" "Definitions__".
+alias id "Hab" = "cic:/CoRN/ftc/MoreIntegrals/Definitions/Hab.var".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/Definitions/F.var" "Definitions__".
+alias id "F" = "cic:/CoRN/ftc/MoreIntegrals/Definitions/F.var".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/Definitions/HF.var" "Definitions__".
+alias id "HF" = "cic:/CoRN/ftc/MoreIntegrals/Definitions/HF.var".
 
 inline "cic:/CoRN/ftc/MoreIntegrals/Integral_inc1.con".
 
@@ -110,19 +110,19 @@ All our old properties carry over to this new definition---and some
 new ones, too.  We begin with (strong) extensionality.
 *)
 
-inline "cic:/CoRN/ftc/MoreIntegrals/Properties_of_Integral/a.var" "Properties_of_Integral__".
+alias id "a" = "cic:/CoRN/ftc/MoreIntegrals/Properties_of_Integral/a.var".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/Properties_of_Integral/b.var" "Properties_of_Integral__".
+alias id "b" = "cic:/CoRN/ftc/MoreIntegrals/Properties_of_Integral/b.var".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/Properties_of_Integral/Hab.var" "Properties_of_Integral__".
+alias id "Hab" = "cic:/CoRN/ftc/MoreIntegrals/Properties_of_Integral/Hab.var".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/Properties_of_Integral/F.var" "Properties_of_Integral__".
+alias id "F" = "cic:/CoRN/ftc/MoreIntegrals/Properties_of_Integral/F.var".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/Properties_of_Integral/G.var" "Properties_of_Integral__".
+alias id "G" = "cic:/CoRN/ftc/MoreIntegrals/Properties_of_Integral/G.var".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/Properties_of_Integral/contF.var" "Properties_of_Integral__".
+alias id "contF" = "cic:/CoRN/ftc/MoreIntegrals/Properties_of_Integral/contF.var".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/Properties_of_Integral/contG.var" "Properties_of_Integral__".
+alias id "contG" = "cic:/CoRN/ftc/MoreIntegrals/Properties_of_Integral/contG.var".
 
 inline "cic:/CoRN/ftc/MoreIntegrals/Integral_strext.con".
 
@@ -183,35 +183,35 @@ And now we can prove the addition law for domains with our general operator.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/MoreIntegrals/More_Properties/a.var" "More_Properties__".
+alias id "a" = "cic:/CoRN/ftc/MoreIntegrals/More_Properties/a.var".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/More_Properties/b.var" "More_Properties__".
+alias id "b" = "cic:/CoRN/ftc/MoreIntegrals/More_Properties/b.var".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/More_Properties/c.var" "More_Properties__".
+alias id "c" = "cic:/CoRN/ftc/MoreIntegrals/More_Properties/c.var".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/MoreIntegrals/More_Properties/Hab'.var" "More_Properties__".
+alias id "Hab'" = "cic:/CoRN/ftc/MoreIntegrals/More_Properties/Hab'.var".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/More_Properties/Hac'.var" "More_Properties__".
+alias id "Hac'" = "cic:/CoRN/ftc/MoreIntegrals/More_Properties/Hac'.var".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/More_Properties/Hcb'.var" "More_Properties__".
+alias id "Hcb'" = "cic:/CoRN/ftc/MoreIntegrals/More_Properties/Hcb'.var".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/More_Properties/Habc'.var" "More_Properties__".
+alias id "Habc'" = "cic:/CoRN/ftc/MoreIntegrals/More_Properties/Habc'.var".
 
 (* end show *)
 
-inline "cic:/CoRN/ftc/MoreIntegrals/More_Properties/F.var" "More_Properties__".
+alias id "F" = "cic:/CoRN/ftc/MoreIntegrals/More_Properties/F.var".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/MoreIntegrals/More_Properties/Hab.var" "More_Properties__".
+alias id "Hab" = "cic:/CoRN/ftc/MoreIntegrals/More_Properties/Hab.var".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/More_Properties/Hac.var" "More_Properties__".
+alias id "Hac" = "cic:/CoRN/ftc/MoreIntegrals/More_Properties/Hac.var".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/More_Properties/Hcb.var" "More_Properties__".
+alias id "Hcb" = "cic:/CoRN/ftc/MoreIntegrals/More_Properties/Hcb.var".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/More_Properties/Habc.var" "More_Properties__".
+alias id "Habc" = "cic:/CoRN/ftc/MoreIntegrals/More_Properties/Habc.var".
 
 (* end show *)
 
@@ -272,15 +272,15 @@ End More_Properties
 Section Corollaries
 *)
 
-inline "cic:/CoRN/ftc/MoreIntegrals/Corollaries/a.var" "Corollaries__".
+alias id "a" = "cic:/CoRN/ftc/MoreIntegrals/Corollaries/a.var".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/Corollaries/b.var" "Corollaries__".
+alias id "b" = "cic:/CoRN/ftc/MoreIntegrals/Corollaries/b.var".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/Corollaries/Hab.var" "Corollaries__".
+alias id "Hab" = "cic:/CoRN/ftc/MoreIntegrals/Corollaries/Hab.var".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/Corollaries/F.var" "Corollaries__".
+alias id "F" = "cic:/CoRN/ftc/MoreIntegrals/Corollaries/F.var".
 
-inline "cic:/CoRN/ftc/MoreIntegrals/Corollaries/contF.var" "Corollaries__".
+alias id "contF" = "cic:/CoRN/ftc/MoreIntegrals/Corollaries/contF.var".
 
 (*#* As a corollary, we get the following rule: *)
 

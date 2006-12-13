@@ -32,7 +32,7 @@ Section inclusion
 
 Let [S] be a setoid, and [P], [Q], [R] be predicates on [S]. *)
 
-inline "cic:/CoRN/algebra/CSetoidInc/inclusion/S.var" "inclusion__".
+alias id "S" = "cic:/CoRN/algebra/CSetoidInc/inclusion/S.var".
 
 inline "cic:/CoRN/algebra/CSetoidInc/included.con".
 
@@ -40,11 +40,11 @@ inline "cic:/CoRN/algebra/CSetoidInc/included.con".
 Section Basics
 *)
 
-inline "cic:/CoRN/algebra/CSetoidInc/inclusion/Basics/P.var" "inclusion__Basics__".
+alias id "P" = "cic:/CoRN/algebra/CSetoidInc/inclusion/Basics/P.var".
 
-inline "cic:/CoRN/algebra/CSetoidInc/inclusion/Basics/Q.var" "inclusion__Basics__".
+alias id "Q" = "cic:/CoRN/algebra/CSetoidInc/inclusion/Basics/Q.var".
 
-inline "cic:/CoRN/algebra/CSetoidInc/inclusion/Basics/R.var" "inclusion__Basics__".
+alias id "R" = "cic:/CoRN/algebra/CSetoidInc/inclusion/Basics/R.var".
 
 inline "cic:/CoRN/algebra/CSetoidInc/included_refl.con".
 
@@ -72,9 +72,9 @@ by [P] and [Q], respectively, the domains of [F] and [G].
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CSetoidInc/inclusion/F.var" "inclusion__".
+alias id "F" = "cic:/CoRN/algebra/CSetoidInc/inclusion/F.var".
 
-inline "cic:/CoRN/algebra/CSetoidInc/inclusion/G.var" "inclusion__".
+alias id "G" = "cic:/CoRN/algebra/CSetoidInc/inclusion/G.var".
 
 (* begin hide *)
 
@@ -84,7 +84,7 @@ inline "cic:/CoRN/algebra/CSetoidInc/inclusion/Q.con" "inclusion__".
 
 (* end hide *)
 
-inline "cic:/CoRN/algebra/CSetoidInc/inclusion/R.var" "inclusion__".
+alias id "R" = "cic:/CoRN/algebra/CSetoidInc/inclusion/R.var".
 
 inline "cic:/CoRN/algebra/CSetoidInc/included_FComp.con".
 

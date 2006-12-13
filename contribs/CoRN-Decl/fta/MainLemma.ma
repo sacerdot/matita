@@ -45,23 +45,23 @@ Let [a : nat->IR], [n : nat], [a_0 : IR]  and [eps : IR] such that [0 < n],
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/fta/MainLemma/Main_Lemma/a.var" "Main_Lemma__".
+alias id "a" = "cic:/CoRN/fta/MainLemma/Main_Lemma/a.var".
 
-inline "cic:/CoRN/fta/MainLemma/Main_Lemma/n.var" "Main_Lemma__".
+alias id "n" = "cic:/CoRN/fta/MainLemma/Main_Lemma/n.var".
 
-inline "cic:/CoRN/fta/MainLemma/Main_Lemma/gt_n_0.var" "Main_Lemma__".
+alias id "gt_n_0" = "cic:/CoRN/fta/MainLemma/Main_Lemma/gt_n_0.var".
 
-inline "cic:/CoRN/fta/MainLemma/Main_Lemma/eps.var" "Main_Lemma__".
+alias id "eps" = "cic:/CoRN/fta/MainLemma/Main_Lemma/eps.var".
 
-inline "cic:/CoRN/fta/MainLemma/Main_Lemma/eps_pos.var" "Main_Lemma__".
+alias id "eps_pos" = "cic:/CoRN/fta/MainLemma/Main_Lemma/eps_pos.var".
 
-inline "cic:/CoRN/fta/MainLemma/Main_Lemma/a_nonneg.var" "Main_Lemma__".
+alias id "a_nonneg" = "cic:/CoRN/fta/MainLemma/Main_Lemma/a_nonneg.var".
 
-inline "cic:/CoRN/fta/MainLemma/Main_Lemma/a_n_1.var" "Main_Lemma__".
+alias id "a_n_1" = "cic:/CoRN/fta/MainLemma/Main_Lemma/a_n_1.var".
 
-inline "cic:/CoRN/fta/MainLemma/Main_Lemma/a_0.var" "Main_Lemma__".
+alias id "a_0" = "cic:/CoRN/fta/MainLemma/Main_Lemma/a_0.var".
 
-inline "cic:/CoRN/fta/MainLemma/Main_Lemma/eps_le_a_0.var" "Main_Lemma__".
+alias id "eps_le_a_0" = "cic:/CoRN/fta/MainLemma/Main_Lemma/eps_le_a_0.var".
 
 inline "cic:/CoRN/fta/MainLemma/a_0_pos.con".
 

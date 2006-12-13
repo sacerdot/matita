@@ -144,7 +144,7 @@ Let [F] be a field.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/COrdFields/COrdField_axioms/F.var" "COrdField_axioms__".
+alias id "F" = "cic:/CoRN/algebra/COrdFields/COrdField_axioms/F.var".
 
 inline "cic:/CoRN/algebra/COrdFields/COrdField_is_COrdField.con".
 
@@ -195,7 +195,7 @@ Let in the rest of this section (and all subsections)
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/COrdFields/OrdField_basics/R.var" "OrdField_basics__".
+alias id "R" = "cic:/CoRN/algebra/COrdFields/OrdField_basics/R.var".
 
 inline "cic:/CoRN/algebra/COrdFields/less_imp_ap.con".
 
@@ -232,7 +232,7 @@ Section Basic_Properties_of_leEq
 (*#* ** Basic properties of [ [<=] ]
 *)
 
-inline "cic:/CoRN/algebra/COrdFields/Basic_Properties_of_leEq/R.var" "Basic_Properties_of_leEq__".
+alias id "R" = "cic:/CoRN/algebra/COrdFields/Basic_Properties_of_leEq/R.var".
 
 inline "cic:/CoRN/algebra/COrdFields/leEq_wdr.con".
 
@@ -288,7 +288,7 @@ and so on. These are elements of [NonZeros], so that we can write
 e.g.%\% [x[/]TwoNZ].
 *)
 
-inline "cic:/CoRN/algebra/COrdFields/infinity_of_cordfields/R.var" "infinity_of_cordfields__".
+alias id "R" = "cic:/CoRN/algebra/COrdFields/infinity_of_cordfields/R.var".
 
 inline "cic:/CoRN/algebra/COrdFields/pos_one.con".
 
@@ -474,7 +474,7 @@ Section consequences_of_infinity
 *** Consequences of infinity
 *)
 
-inline "cic:/CoRN/algebra/COrdFields/consequences_of_infinity/F.var" "consequences_of_infinity__".
+alias id "F" = "cic:/CoRN/algebra/COrdFields/consequences_of_infinity/F.var".
 
 inline "cic:/CoRN/algebra/COrdFields/square_eq.con".
 
@@ -500,7 +500,7 @@ Section Properties_of_Ordering
 ** Properties of [[<]]
 *)
 
-inline "cic:/CoRN/algebra/COrdFields/Properties_of_Ordering/R.var" "Properties_of_Ordering__".
+alias id "R" = "cic:/CoRN/algebra/COrdFields/Properties_of_Ordering/R.var".
 
 (*#*
 We do not use a special predicate for positivity,

@@ -12,7 +12,12 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/tests".
+set "baseuri" "cic:/matita/CoRN-Decl/preamble".
 
-inline procedural
-   "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/pr0/props/pr0_subst0.con".
+include "legacy/coq.ma".
+
+alias id "refl_equal" = "cic:/Coq/Init/Logic/eq.ind#xpointer(1/1/1)".
+alias id "False" = "cic:/Coq/Init/Logic/False.ind#xpointer(1/1)".
+alias id "True" = "cic:/Coq/Init/Logic/True.ind#xpointer(1/1)".
+alias id "I" = "cic:/Coq/Init/Logic/True.ind#xpointer(1/1/1)".
+alias id "sym_eq" = "cic:/Coq/Init/Logic/sym_eq.con".	

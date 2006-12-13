@@ -107,19 +107,19 @@ inline "cic:/CoRN/ftc/Partitions/Even_Partition.con".
 Section Refinements
 *)
 
-inline "cic:/CoRN/ftc/Partitions/Definitions/Refinements/a.var" "Definitions__Refinements__".
+alias id "a" = "cic:/CoRN/ftc/Partitions/Definitions/Refinements/a.var".
 
-inline "cic:/CoRN/ftc/Partitions/Definitions/Refinements/b.var" "Definitions__Refinements__".
+alias id "b" = "cic:/CoRN/ftc/Partitions/Definitions/Refinements/b.var".
 
-inline "cic:/CoRN/ftc/Partitions/Definitions/Refinements/Hab.var" "Definitions__Refinements__".
+alias id "Hab" = "cic:/CoRN/ftc/Partitions/Definitions/Refinements/Hab.var".
 
-inline "cic:/CoRN/ftc/Partitions/Definitions/Refinements/m.var" "Definitions__Refinements__".
+alias id "m" = "cic:/CoRN/ftc/Partitions/Definitions/Refinements/m.var".
 
-inline "cic:/CoRN/ftc/Partitions/Definitions/Refinements/n.var" "Definitions__Refinements__".
+alias id "n" = "cic:/CoRN/ftc/Partitions/Definitions/Refinements/n.var".
 
-inline "cic:/CoRN/ftc/Partitions/Definitions/Refinements/P.var" "Definitions__Refinements__".
+alias id "P" = "cic:/CoRN/ftc/Partitions/Definitions/Refinements/P.var".
 
-inline "cic:/CoRN/ftc/Partitions/Definitions/Refinements/Q.var" "Definitions__Refinements__".
+alias id "Q" = "cic:/CoRN/ftc/Partitions/Definitions/Refinements/Q.var".
 
 (*#*
 We now define what it means for a partition [Q] to be a refinement of
@@ -165,11 +165,11 @@ We now formalize some trivial and helpful constructions.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/Partitions/Definitions/a.var" "Definitions__".
+alias id "a" = "cic:/CoRN/ftc/Partitions/Definitions/a.var".
 
-inline "cic:/CoRN/ftc/Partitions/Definitions/b.var" "Definitions__".
+alias id "b" = "cic:/CoRN/ftc/Partitions/Definitions/b.var".
 
-inline "cic:/CoRN/ftc/Partitions/Definitions/Hab.var" "Definitions__".
+alias id "Hab" = "cic:/CoRN/ftc/Partitions/Definitions/Hab.var".
 
 (* begin hide *)
 
@@ -190,9 +190,9 @@ partition.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/Partitions/Definitions/Getting_Points/m.var" "Definitions__Getting_Points__".
+alias id "m" = "cic:/CoRN/ftc/Partitions/Definitions/Getting_Points/m.var".
 
-inline "cic:/CoRN/ftc/Partitions/Definitions/Getting_Points/Q.var" "Definitions__Getting_Points__".
+alias id "Q" = "cic:/CoRN/ftc/Partitions/Definitions/Getting_Points/Q.var".
 
 inline "cic:/CoRN/ftc/Partitions/Partition_imp_points.con".
 
@@ -208,9 +208,9 @@ End Getting_Points
 As a corollary, given any continuous function [F] and a natural number we have an immediate choice of a sum of [F] in [[a,b]].
 *)
 
-inline "cic:/CoRN/ftc/Partitions/Definitions/F.var" "Definitions__".
+alias id "F" = "cic:/CoRN/ftc/Partitions/Definitions/F.var".
 
-inline "cic:/CoRN/ftc/Partitions/Definitions/contF.var" "Definitions__".
+alias id "contF" = "cic:/CoRN/ftc/Partitions/Definitions/contF.var".
 
 inline "cic:/CoRN/ftc/Partitions/Even_Partition_Sum.con".
 
@@ -300,9 +300,9 @@ with [n] points.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/Partitions/Lemmas/a.var" "Lemmas__".
+alias id "a" = "cic:/CoRN/ftc/Partitions/Lemmas/a.var".
 
-inline "cic:/CoRN/ftc/Partitions/Lemmas/b.var" "Lemmas__".
+alias id "b" = "cic:/CoRN/ftc/Partitions/Lemmas/b.var".
 
 (* begin hide *)
 
@@ -310,11 +310,11 @@ inline "cic:/CoRN/ftc/Partitions/Lemmas/I.con" "Lemmas__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/Partitions/Lemmas/Hab.var" "Lemmas__".
+alias id "Hab" = "cic:/CoRN/ftc/Partitions/Lemmas/Hab.var".
 
-inline "cic:/CoRN/ftc/Partitions/Lemmas/n.var" "Lemmas__".
+alias id "n" = "cic:/CoRN/ftc/Partitions/Lemmas/n.var".
 
-inline "cic:/CoRN/ftc/Partitions/Lemmas/P.var" "Lemmas__".
+alias id "P" = "cic:/CoRN/ftc/Partitions/Lemmas/P.var".
 
 inline "cic:/CoRN/ftc/Partitions/Mesh_lemma.con".
 
@@ -348,9 +348,9 @@ inline "cic:/CoRN/ftc/Partitions/even_partition_Mesh.con".
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/Partitions/Even_Partitions/a.var" "Even_Partitions__".
+alias id "a" = "cic:/CoRN/ftc/Partitions/Even_Partitions/a.var".
 
-inline "cic:/CoRN/ftc/Partitions/Even_Partitions/b.var" "Even_Partitions__".
+alias id "b" = "cic:/CoRN/ftc/Partitions/Even_Partitions/b.var".
 
 (* begin hide *)
 
@@ -358,7 +358,7 @@ inline "cic:/CoRN/ftc/Partitions/Even_Partitions/I.con" "Even_Partitions__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/Partitions/Even_Partitions/Hab.var" "Even_Partitions__".
+alias id "Hab" = "cic:/CoRN/ftc/Partitions/Even_Partitions/Hab.var".
 
 (*#*
 An interesting property: in a partition, if [ai [<] aj] then [i < j].
@@ -377,13 +377,13 @@ denote by [P] and [Q] the even partitions with, respectively, [m] and
 Even partitions always have a common refinement.
 *)
 
-inline "cic:/CoRN/ftc/Partitions/Even_Partitions/m.var" "Even_Partitions__".
+alias id "m" = "cic:/CoRN/ftc/Partitions/Even_Partitions/m.var".
 
-inline "cic:/CoRN/ftc/Partitions/Even_Partitions/n.var" "Even_Partitions__".
+alias id "n" = "cic:/CoRN/ftc/Partitions/Even_Partitions/n.var".
 
-inline "cic:/CoRN/ftc/Partitions/Even_Partitions/Hm.var" "Even_Partitions__".
+alias id "Hm" = "cic:/CoRN/ftc/Partitions/Even_Partitions/Hm.var".
 
-inline "cic:/CoRN/ftc/Partitions/Even_Partitions/Hn.var" "Even_Partitions__".
+alias id "Hn" = "cic:/CoRN/ftc/Partitions/Even_Partitions/Hn.var".
 
 (* begin hide *)
 
@@ -408,11 +408,11 @@ Section More_Definitions
 Some auxiliary definitions.  A partition is said to be separated if all its points are distinct.
 *)
 
-inline "cic:/CoRN/ftc/Partitions/More_Definitions/a.var" "More_Definitions__".
+alias id "a" = "cic:/CoRN/ftc/Partitions/More_Definitions/a.var".
 
-inline "cic:/CoRN/ftc/Partitions/More_Definitions/b.var" "More_Definitions__".
+alias id "b" = "cic:/CoRN/ftc/Partitions/More_Definitions/b.var".
 
-inline "cic:/CoRN/ftc/Partitions/More_Definitions/Hab.var" "More_Definitions__".
+alias id "Hab" = "cic:/CoRN/ftc/Partitions/More_Definitions/Hab.var".
 
 inline "cic:/CoRN/ftc/Partitions/_Separated.con".
 
@@ -426,13 +426,13 @@ respectively, [n] and [m] points.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/Partitions/More_Definitions/n.var" "More_Definitions__".
+alias id "n" = "cic:/CoRN/ftc/Partitions/More_Definitions/n.var".
 
-inline "cic:/CoRN/ftc/Partitions/More_Definitions/m.var" "More_Definitions__".
+alias id "m" = "cic:/CoRN/ftc/Partitions/More_Definitions/m.var".
 
-inline "cic:/CoRN/ftc/Partitions/More_Definitions/P.var" "More_Definitions__".
+alias id "P" = "cic:/CoRN/ftc/Partitions/More_Definitions/P.var".
 
-inline "cic:/CoRN/ftc/Partitions/More_Definitions/Q.var" "More_Definitions__".
+alias id "Q" = "cic:/CoRN/ftc/Partitions/More_Definitions/Q.var".
 
 inline "cic:/CoRN/ftc/Partitions/Separated.con".
 
@@ -452,9 +452,9 @@ Implicit Arguments Separated [a b Hab n m].
 Section Sep_Partitions
 *)
 
-inline "cic:/CoRN/ftc/Partitions/Sep_Partitions/a.var" "Sep_Partitions__".
+alias id "a" = "cic:/CoRN/ftc/Partitions/Sep_Partitions/a.var".
 
-inline "cic:/CoRN/ftc/Partitions/Sep_Partitions/b.var" "Sep_Partitions__".
+alias id "b" = "cic:/CoRN/ftc/Partitions/Sep_Partitions/b.var".
 
 (* begin hide *)
 
@@ -462,7 +462,7 @@ inline "cic:/CoRN/ftc/Partitions/Sep_Partitions/I.con" "Sep_Partitions__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/Partitions/Sep_Partitions/Hab.var" "Sep_Partitions__".
+alias id "Hab" = "cic:/CoRN/ftc/Partitions/Sep_Partitions/Hab.var".
 
 (*#*
 The antimesh of a separated partition is always positive.

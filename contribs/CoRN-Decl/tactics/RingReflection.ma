@@ -30,15 +30,15 @@ include "tactics/AlgReflection.ma".
 Section Ring_Interpretation_Function
 *)
 
-inline "cic:/CoRN/tactics/RingReflection/Ring_Interpretation_Function/R.var" "Ring_Interpretation_Function__".
+alias id "R" = "cic:/CoRN/tactics/RingReflection/Ring_Interpretation_Function/R.var".
 
-inline "cic:/CoRN/tactics/RingReflection/Ring_Interpretation_Function/val.var" "Ring_Interpretation_Function__".
+alias id "val" = "cic:/CoRN/tactics/RingReflection/Ring_Interpretation_Function/val.var".
 
-inline "cic:/CoRN/tactics/RingReflection/Ring_Interpretation_Function/unop.var" "Ring_Interpretation_Function__".
+alias id "unop" = "cic:/CoRN/tactics/RingReflection/Ring_Interpretation_Function/unop.var".
 
-inline "cic:/CoRN/tactics/RingReflection/Ring_Interpretation_Function/binop.var" "Ring_Interpretation_Function__".
+alias id "binop" = "cic:/CoRN/tactics/RingReflection/Ring_Interpretation_Function/binop.var".
 
-inline "cic:/CoRN/tactics/RingReflection/Ring_Interpretation_Function/pfun.var" "Ring_Interpretation_Function__".
+alias id "pfun" = "cic:/CoRN/tactics/RingReflection/Ring_Interpretation_Function/pfun.var".
 
 inline "cic:/CoRN/tactics/RingReflection/interpR.ind".
 
@@ -152,15 +152,15 @@ End Ring_Interpretation_Function
 Section Ring_NormCorrect
 *)
 
-inline "cic:/CoRN/tactics/RingReflection/Ring_NormCorrect/R.var" "Ring_NormCorrect__".
+alias id "R" = "cic:/CoRN/tactics/RingReflection/Ring_NormCorrect/R.var".
 
-inline "cic:/CoRN/tactics/RingReflection/Ring_NormCorrect/val.var" "Ring_NormCorrect__".
+alias id "val" = "cic:/CoRN/tactics/RingReflection/Ring_NormCorrect/val.var".
 
-inline "cic:/CoRN/tactics/RingReflection/Ring_NormCorrect/unop.var" "Ring_NormCorrect__".
+alias id "unop" = "cic:/CoRN/tactics/RingReflection/Ring_NormCorrect/unop.var".
 
-inline "cic:/CoRN/tactics/RingReflection/Ring_NormCorrect/binop.var" "Ring_NormCorrect__".
+alias id "binop" = "cic:/CoRN/tactics/RingReflection/Ring_NormCorrect/binop.var".
 
-inline "cic:/CoRN/tactics/RingReflection/Ring_NormCorrect/pfun.var" "Ring_NormCorrect__".
+alias id "pfun" = "cic:/CoRN/tactics/RingReflection/Ring_NormCorrect/pfun.var".
 
 (* NOTATION
 Notation II := (interpR R val unop binop pfun).

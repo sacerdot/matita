@@ -61,9 +61,9 @@ inline "cic:/CoRN/reals/iso_CReals/G_pres_mult.con".
 Section Concrete_iso_between_Creals
 *)
 
-inline "cic:/CoRN/reals/iso_CReals/Concrete_iso_between_Creals/R1.var" "Concrete_iso_between_Creals__".
+alias id "R1" = "cic:/CoRN/reals/iso_CReals/Concrete_iso_between_Creals/R1.var".
 
-inline "cic:/CoRN/reals/iso_CReals/Concrete_iso_between_Creals/R2.var" "Concrete_iso_between_Creals__".
+alias id "R2" = "cic:/CoRN/reals/iso_CReals/Concrete_iso_between_Creals/R2.var".
 
 inline "cic:/CoRN/reals/iso_CReals/image_Cauchy12.con".
 

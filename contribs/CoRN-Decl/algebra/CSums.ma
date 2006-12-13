@@ -42,7 +42,7 @@ include "algebra/CAbGroups.ma".
 Section Sums
 *)
 
-inline "cic:/CoRN/algebra/CSums/Sums/G.var" "Sums__".
+alias id "G" = "cic:/CoRN/algebra/CSums/Sums/G.var".
 
 (* Sum1 and Sum use subtraction *)
 
@@ -219,7 +219,7 @@ often referred to as ``Mengolli Sums''.
 Section More_Sums
 *)
 
-inline "cic:/CoRN/algebra/CSums/More_Sums/G.var" "More_Sums__".
+alias id "G" = "cic:/CoRN/algebra/CSums/More_Sums/G.var".
 
 inline "cic:/CoRN/algebra/CSums/Mengolli_Sum.con".
 

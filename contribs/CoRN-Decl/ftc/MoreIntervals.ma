@@ -216,13 +216,13 @@ such that [P(x)] holds.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/MoreIntervals/Compact_Constructions/Single_Compact_Interval/P.var" "Compact_Constructions__Single_Compact_Interval__".
+alias id "P" = "cic:/CoRN/ftc/MoreIntervals/Compact_Constructions/Single_Compact_Interval/P.var".
 
-inline "cic:/CoRN/ftc/MoreIntervals/Compact_Constructions/Single_Compact_Interval/wdP.var" "Compact_Constructions__Single_Compact_Interval__".
+alias id "wdP" = "cic:/CoRN/ftc/MoreIntervals/Compact_Constructions/Single_Compact_Interval/wdP.var".
 
-inline "cic:/CoRN/ftc/MoreIntervals/Compact_Constructions/Single_Compact_Interval/x.var" "Compact_Constructions__Single_Compact_Interval__".
+alias id "x" = "cic:/CoRN/ftc/MoreIntervals/Compact_Constructions/Single_Compact_Interval/x.var".
 
-inline "cic:/CoRN/ftc/MoreIntervals/Compact_Constructions/Single_Compact_Interval/Hx.var" "Compact_Constructions__Single_Compact_Interval__".
+alias id "Hx" = "cic:/CoRN/ftc/MoreIntervals/Compact_Constructions/Single_Compact_Interval/Hx.var".
 
 inline "cic:/CoRN/ftc/MoreIntervals/compact_single.con".
 
@@ -389,9 +389,9 @@ previously defined concepts.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/MoreIntervals/Functions/n.var" "Functions__".
+alias id "n" = "cic:/CoRN/ftc/MoreIntervals/Functions/n.var".
 
-inline "cic:/CoRN/ftc/MoreIntervals/Functions/I.var" "Functions__".
+alias id "I" = "cic:/CoRN/ftc/MoreIntervals/Functions/I.var".
 
 inline "cic:/CoRN/ftc/MoreIntervals/Continuous.con".
 

@@ -38,11 +38,11 @@ context.%}.%
 We begin with some technical stuff that will be necessary for division.
 *)
 
-inline "cic:/CoRN/ftc/DerivativeOps/Lemmas/a.var" "Lemmas__".
+alias id "a" = "cic:/CoRN/ftc/DerivativeOps/Lemmas/a.var".
 
-inline "cic:/CoRN/ftc/DerivativeOps/Lemmas/b.var" "Lemmas__".
+alias id "b" = "cic:/CoRN/ftc/DerivativeOps/Lemmas/b.var".
 
-inline "cic:/CoRN/ftc/DerivativeOps/Lemmas/Hab.var" "Lemmas__".
+alias id "Hab" = "cic:/CoRN/ftc/DerivativeOps/Lemmas/Hab.var".
 
 (* begin hide *)
 
@@ -50,7 +50,7 @@ inline "cic:/CoRN/ftc/DerivativeOps/Lemmas/I.con" "Lemmas__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/DerivativeOps/Lemmas/F.var" "Lemmas__".
+alias id "F" = "cic:/CoRN/ftc/DerivativeOps/Lemmas/F.var".
 
 (* begin hide *)
 
@@ -60,7 +60,7 @@ inline "cic:/CoRN/ftc/DerivativeOps/Lemmas/P.con" "Lemmas__".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/DerivativeOps/Lemmas/Fbnd.var" "Lemmas__".
+alias id "Fbnd" = "cic:/CoRN/ftc/DerivativeOps/Lemmas/Fbnd.var".
 
 (* end show *)
 
@@ -83,11 +83,11 @@ Section Local_Results
 We can now derive all the usual rules for deriving constant and identity functions, sums, inverses and products of functions with a known derivative.
 *)
 
-inline "cic:/CoRN/ftc/DerivativeOps/Local_Results/a.var" "Local_Results__".
+alias id "a" = "cic:/CoRN/ftc/DerivativeOps/Local_Results/a.var".
 
-inline "cic:/CoRN/ftc/DerivativeOps/Local_Results/b.var" "Local_Results__".
+alias id "b" = "cic:/CoRN/ftc/DerivativeOps/Local_Results/b.var".
 
-inline "cic:/CoRN/ftc/DerivativeOps/Local_Results/Hab'.var" "Local_Results__".
+alias id "Hab'" = "cic:/CoRN/ftc/DerivativeOps/Local_Results/Hab'.var".
 
 (* begin hide *)
 
@@ -101,17 +101,17 @@ inline "cic:/CoRN/ftc/DerivativeOps/Derivative_I_const.con".
 
 inline "cic:/CoRN/ftc/DerivativeOps/Derivative_I_id.con".
 
-inline "cic:/CoRN/ftc/DerivativeOps/Local_Results/F.var" "Local_Results__".
+alias id "F" = "cic:/CoRN/ftc/DerivativeOps/Local_Results/F.var".
 
-inline "cic:/CoRN/ftc/DerivativeOps/Local_Results/F'.var" "Local_Results__".
+alias id "F'" = "cic:/CoRN/ftc/DerivativeOps/Local_Results/F'.var".
 
-inline "cic:/CoRN/ftc/DerivativeOps/Local_Results/G.var" "Local_Results__".
+alias id "G" = "cic:/CoRN/ftc/DerivativeOps/Local_Results/G.var".
 
-inline "cic:/CoRN/ftc/DerivativeOps/Local_Results/G'.var" "Local_Results__".
+alias id "G'" = "cic:/CoRN/ftc/DerivativeOps/Local_Results/G'.var".
 
-inline "cic:/CoRN/ftc/DerivativeOps/Local_Results/derF.var" "Local_Results__".
+alias id "derF" = "cic:/CoRN/ftc/DerivativeOps/Local_Results/derF.var".
 
-inline "cic:/CoRN/ftc/DerivativeOps/Local_Results/derG.var" "Local_Results__".
+alias id "derG" = "cic:/CoRN/ftc/DerivativeOps/Local_Results/derG.var".
 
 inline "cic:/CoRN/ftc/DerivativeOps/Derivative_I_plus.con".
 
@@ -125,7 +125,7 @@ As was the case for continuity, the rule for the reciprocal function has a side 
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/DerivativeOps/Local_Results/Fbnd.var" "Local_Results__".
+alias id "Fbnd" = "cic:/CoRN/ftc/DerivativeOps/Local_Results/Fbnd.var".
 
 (* end show *)
 
@@ -148,11 +148,11 @@ Hint Resolve Derivative_I_const Derivative_I_id Derivative_I_plus
 Section Corolaries
 *)
 
-inline "cic:/CoRN/ftc/DerivativeOps/Corolaries/a.var" "Corolaries__".
+alias id "a" = "cic:/CoRN/ftc/DerivativeOps/Corolaries/a.var".
 
-inline "cic:/CoRN/ftc/DerivativeOps/Corolaries/b.var" "Corolaries__".
+alias id "b" = "cic:/CoRN/ftc/DerivativeOps/Corolaries/b.var".
 
-inline "cic:/CoRN/ftc/DerivativeOps/Corolaries/Hab'.var" "Corolaries__".
+alias id "Hab'" = "cic:/CoRN/ftc/DerivativeOps/Corolaries/Hab'.var".
 
 (* begin hide *)
 
@@ -162,17 +162,17 @@ inline "cic:/CoRN/ftc/DerivativeOps/Corolaries/I.con" "Corolaries__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/DerivativeOps/Corolaries/F.var" "Corolaries__".
+alias id "F" = "cic:/CoRN/ftc/DerivativeOps/Corolaries/F.var".
 
-inline "cic:/CoRN/ftc/DerivativeOps/Corolaries/F'.var" "Corolaries__".
+alias id "F'" = "cic:/CoRN/ftc/DerivativeOps/Corolaries/F'.var".
 
-inline "cic:/CoRN/ftc/DerivativeOps/Corolaries/G.var" "Corolaries__".
+alias id "G" = "cic:/CoRN/ftc/DerivativeOps/Corolaries/G.var".
 
-inline "cic:/CoRN/ftc/DerivativeOps/Corolaries/G'.var" "Corolaries__".
+alias id "G'" = "cic:/CoRN/ftc/DerivativeOps/Corolaries/G'.var".
 
-inline "cic:/CoRN/ftc/DerivativeOps/Corolaries/derF.var" "Corolaries__".
+alias id "derF" = "cic:/CoRN/ftc/DerivativeOps/Corolaries/derF.var".
 
-inline "cic:/CoRN/ftc/DerivativeOps/Corolaries/derG.var" "Corolaries__".
+alias id "derG" = "cic:/CoRN/ftc/DerivativeOps/Corolaries/derG.var".
 
 (*#*
 From this lemmas the rules for the other algebraic operations follow directly.
@@ -184,7 +184,7 @@ inline "cic:/CoRN/ftc/DerivativeOps/Derivative_I_scal.con".
 
 inline "cic:/CoRN/ftc/DerivativeOps/Derivative_I_nth.con".
 
-inline "cic:/CoRN/ftc/DerivativeOps/Corolaries/Gbnd.var" "Corolaries__".
+alias id "Gbnd" = "cic:/CoRN/ftc/DerivativeOps/Corolaries/Gbnd.var".
 
 inline "cic:/CoRN/ftc/DerivativeOps/Derivative_I_div.con".
 
@@ -205,13 +205,13 @@ Section Derivative_Sums
 induction using the constant and addition rules.
 *)
 
-inline "cic:/CoRN/ftc/DerivativeOps/Derivative_Sums/a.var" "Derivative_Sums__".
+alias id "a" = "cic:/CoRN/ftc/DerivativeOps/Derivative_Sums/a.var".
 
-inline "cic:/CoRN/ftc/DerivativeOps/Derivative_Sums/b.var" "Derivative_Sums__".
+alias id "b" = "cic:/CoRN/ftc/DerivativeOps/Derivative_Sums/b.var".
 
-inline "cic:/CoRN/ftc/DerivativeOps/Derivative_Sums/Hab.var" "Derivative_Sums__".
+alias id "Hab" = "cic:/CoRN/ftc/DerivativeOps/Derivative_Sums/Hab.var".
 
-inline "cic:/CoRN/ftc/DerivativeOps/Derivative_Sums/Hab'.var" "Derivative_Sums__".
+alias id "Hab'" = "cic:/CoRN/ftc/DerivativeOps/Derivative_Sums/Hab'.var".
 
 (* begin hide *)
 

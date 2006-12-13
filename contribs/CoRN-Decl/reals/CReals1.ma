@@ -77,19 +77,19 @@ Finally, for some of our results it is important to assume that
 [seq2] is monotonous.
 *)
 
-inline "cic:/CoRN/reals/CReals1/Subsequences/seq1.var" "Subsequences__".
+alias id "seq1" = "cic:/CoRN/reals/CReals1/Subsequences/seq1.var".
 
-inline "cic:/CoRN/reals/CReals1/Subsequences/seq2.var" "Subsequences__".
+alias id "seq2" = "cic:/CoRN/reals/CReals1/Subsequences/seq2.var".
 
-inline "cic:/CoRN/reals/CReals1/Subsequences/f.var" "Subsequences__".
+alias id "f" = "cic:/CoRN/reals/CReals1/Subsequences/f.var".
 
-inline "cic:/CoRN/reals/CReals1/Subsequences/monF.var" "Subsequences__".
+alias id "monF" = "cic:/CoRN/reals/CReals1/Subsequences/monF.var".
 
-inline "cic:/CoRN/reals/CReals1/Subsequences/crescF.var" "Subsequences__".
+alias id "crescF" = "cic:/CoRN/reals/CReals1/Subsequences/crescF.var".
 
-inline "cic:/CoRN/reals/CReals1/Subsequences/subseq.var" "Subsequences__".
+alias id "subseq" = "cic:/CoRN/reals/CReals1/Subsequences/subseq.var".
 
-inline "cic:/CoRN/reals/CReals1/Subsequences/mon_seq2.var" "Subsequences__".
+alias id "mon_seq2" = "cic:/CoRN/reals/CReals1/Subsequences/mon_seq2.var".
 
 inline "cic:/CoRN/reals/CReals1/unbnd_f.con".
 
@@ -115,19 +115,19 @@ End Subsequences
 Section Cauchy_Subsequences
 *)
 
-inline "cic:/CoRN/reals/CReals1/Cauchy_Subsequences/seq1.var" "Cauchy_Subsequences__".
+alias id "seq1" = "cic:/CoRN/reals/CReals1/Cauchy_Subsequences/seq1.var".
 
-inline "cic:/CoRN/reals/CReals1/Cauchy_Subsequences/seq2.var" "Cauchy_Subsequences__".
+alias id "seq2" = "cic:/CoRN/reals/CReals1/Cauchy_Subsequences/seq2.var".
 
-inline "cic:/CoRN/reals/CReals1/Cauchy_Subsequences/f.var" "Cauchy_Subsequences__".
+alias id "f" = "cic:/CoRN/reals/CReals1/Cauchy_Subsequences/f.var".
 
-inline "cic:/CoRN/reals/CReals1/Cauchy_Subsequences/monF.var" "Cauchy_Subsequences__".
+alias id "monF" = "cic:/CoRN/reals/CReals1/Cauchy_Subsequences/monF.var".
 
-inline "cic:/CoRN/reals/CReals1/Cauchy_Subsequences/crescF.var" "Cauchy_Subsequences__".
+alias id "crescF" = "cic:/CoRN/reals/CReals1/Cauchy_Subsequences/crescF.var".
 
-inline "cic:/CoRN/reals/CReals1/Cauchy_Subsequences/subseq.var" "Cauchy_Subsequences__".
+alias id "subseq" = "cic:/CoRN/reals/CReals1/Cauchy_Subsequences/subseq.var".
 
-inline "cic:/CoRN/reals/CReals1/Cauchy_Subsequences/mon_seq2.var" "Cauchy_Subsequences__".
+alias id "mon_seq2" = "cic:/CoRN/reals/CReals1/Cauchy_Subsequences/mon_seq2.var".
 
 inline "cic:/CoRN/reals/CReals1/Lim_seq_eq_Lim_subseq.con".
 

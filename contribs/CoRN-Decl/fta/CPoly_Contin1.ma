@@ -48,7 +48,7 @@ Section CPoly_CC_Continuous
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/fta/CPoly_Contin1/CPoly_CC_Continuous/g.var" "CPoly_CC_Continuous__".
+alias id "g" = "cic:/CoRN/fta/CPoly_Contin1/CPoly_CC_Continuous/g.var".
 
 inline "cic:/CoRN/fta/CPoly_Contin1/cpoly_CC_contin.con".
 

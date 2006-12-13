@@ -36,7 +36,7 @@ over [R].
 Section Degree_def
 *)
 
-inline "cic:/CoRN/algebra/CPoly_Degree/Degree_def/R.var" "Degree_def__".
+alias id "R" = "cic:/CoRN/algebra/CPoly_Degree/Degree_def/R.var".
 
 (* begin hide *)
 
@@ -108,7 +108,7 @@ Implicit Arguments lth_of_poly [R].
 Section Degree_props
 *)
 
-inline "cic:/CoRN/algebra/CPoly_Degree/Degree_props/R.var" "Degree_props__".
+alias id "R" = "cic:/CoRN/algebra/CPoly_Degree/Degree_props/R.var".
 
 (* begin hide *)
 
@@ -222,7 +222,7 @@ polynomials over [F].
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CPoly_Degree/degree_props_Field/F.var" "degree_props_Field__".
+alias id "F" = "cic:/CoRN/algebra/CPoly_Degree/degree_props_Field/F.var".
 
 (* begin hide *)
 

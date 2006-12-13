@@ -87,11 +87,11 @@ by [P] and [Q], respectively, the domains of [F] and [G].
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/PartFunEquality/Equality_Results/I.var" "Equality_Results__".
+alias id "I" = "cic:/CoRN/ftc/PartFunEquality/Equality_Results/I.var".
 
-inline "cic:/CoRN/ftc/PartFunEquality/Equality_Results/F.var" "Equality_Results__".
+alias id "F" = "cic:/CoRN/ftc/PartFunEquality/Equality_Results/F.var".
 
-inline "cic:/CoRN/ftc/PartFunEquality/Equality_Results/G.var" "Equality_Results__".
+alias id "G" = "cic:/CoRN/ftc/PartFunEquality/Equality_Results/G.var".
 
 (* begin hide *)
 
@@ -101,7 +101,7 @@ inline "cic:/CoRN/ftc/PartFunEquality/Equality_Results/Q.con" "Equality_Results_
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/PartFunEquality/Equality_Results/R.var" "Equality_Results__".
+alias id "R" = "cic:/CoRN/ftc/PartFunEquality/Equality_Results/R.var".
 
 (*#*
 We start with two lemmas which make it much easier to prove and use
@@ -156,9 +156,9 @@ the domain of [F].
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/PartFunEquality/Away_from_Zero/Definitions/I.var" "Away_from_Zero__Definitions__".
+alias id "I" = "cic:/CoRN/ftc/PartFunEquality/Away_from_Zero/Definitions/I.var".
 
-inline "cic:/CoRN/ftc/PartFunEquality/Away_from_Zero/Definitions/F.var" "Away_from_Zero__Definitions__".
+alias id "F" = "cic:/CoRN/ftc/PartFunEquality/Away_from_Zero/Definitions/F.var".
 
 (* begin hide *)
 
@@ -174,7 +174,7 @@ If [F] is bounded away from zero in [I] then [F] is necessarily apart from zero 
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/PartFunEquality/Away_from_Zero/Definitions/Hf.var" "Away_from_Zero__Definitions__".
+alias id "Hf" = "cic:/CoRN/ftc/PartFunEquality/Away_from_Zero/Definitions/Hf.var".
 
 (* end show *)
 
@@ -195,11 +195,11 @@ Boundedness away from zero is preserved through restriction of the set.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/PartFunEquality/Away_from_Zero/F.var" "Away_from_Zero__".
+alias id "F" = "cic:/CoRN/ftc/PartFunEquality/Away_from_Zero/F.var".
 
-inline "cic:/CoRN/ftc/PartFunEquality/Away_from_Zero/P.var" "Away_from_Zero__".
+alias id "P" = "cic:/CoRN/ftc/PartFunEquality/Away_from_Zero/P.var".
 
-inline "cic:/CoRN/ftc/PartFunEquality/Away_from_Zero/Q.var" "Away_from_Zero__".
+alias id "Q" = "cic:/CoRN/ftc/PartFunEquality/Away_from_Zero/Q.var".
 
 inline "cic:/CoRN/ftc/PartFunEquality/included_imp_bnd.con".
 
@@ -261,17 +261,17 @@ partial functions.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/PartFunEquality/More_on_Equality/I.var" "More_on_Equality__".
+alias id "I" = "cic:/CoRN/ftc/PartFunEquality/More_on_Equality/I.var".
 
 (* UNEXPORTED
 Section Feq_Equivalence
 *)
 
-inline "cic:/CoRN/ftc/PartFunEquality/More_on_Equality/Feq_Equivalence/F.var" "More_on_Equality__Feq_Equivalence__".
+alias id "F" = "cic:/CoRN/ftc/PartFunEquality/More_on_Equality/Feq_Equivalence/F.var".
 
-inline "cic:/CoRN/ftc/PartFunEquality/More_on_Equality/Feq_Equivalence/G.var" "More_on_Equality__Feq_Equivalence__".
+alias id "G" = "cic:/CoRN/ftc/PartFunEquality/More_on_Equality/Feq_Equivalence/G.var".
 
-inline "cic:/CoRN/ftc/PartFunEquality/More_on_Equality/Feq_Equivalence/H.var" "More_on_Equality__Feq_Equivalence__".
+alias id "H" = "cic:/CoRN/ftc/PartFunEquality/More_on_Equality/Feq_Equivalence/H.var".
 
 inline "cic:/CoRN/ftc/PartFunEquality/Feq_reflexive.con".
 
@@ -291,13 +291,13 @@ Section Operations
 Also it is preserved through application of functional constructors and restriction.
 *)
 
-inline "cic:/CoRN/ftc/PartFunEquality/More_on_Equality/Operations/F.var" "More_on_Equality__Operations__".
+alias id "F" = "cic:/CoRN/ftc/PartFunEquality/More_on_Equality/Operations/F.var".
 
-inline "cic:/CoRN/ftc/PartFunEquality/More_on_Equality/Operations/F'.var" "More_on_Equality__Operations__".
+alias id "F'" = "cic:/CoRN/ftc/PartFunEquality/More_on_Equality/Operations/F'.var".
 
-inline "cic:/CoRN/ftc/PartFunEquality/More_on_Equality/Operations/G.var" "More_on_Equality__Operations__".
+alias id "G" = "cic:/CoRN/ftc/PartFunEquality/More_on_Equality/Operations/G.var".
 
-inline "cic:/CoRN/ftc/PartFunEquality/More_on_Equality/Operations/G'.var" "More_on_Equality__Operations__".
+alias id "G'" = "cic:/CoRN/ftc/PartFunEquality/More_on_Equality/Operations/G'.var".
 
 inline "cic:/CoRN/ftc/PartFunEquality/Feq_plus.con".
 
@@ -355,7 +355,7 @@ equality relation.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/PartFunEquality/Nth_Power/F.var" "Nth_Power__".
+alias id "F" = "cic:/CoRN/ftc/PartFunEquality/Nth_Power/F.var".
 
 (* begin hide *)
 
@@ -363,17 +363,17 @@ inline "cic:/CoRN/ftc/PartFunEquality/Nth_Power/P.con" "Nth_Power__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/PartFunEquality/Nth_Power/Q.var" "Nth_Power__".
+alias id "Q" = "cic:/CoRN/ftc/PartFunEquality/Nth_Power/Q.var".
 
-inline "cic:/CoRN/ftc/PartFunEquality/Nth_Power/H.var" "Nth_Power__".
+alias id "H" = "cic:/CoRN/ftc/PartFunEquality/Nth_Power/H.var".
 
-inline "cic:/CoRN/ftc/PartFunEquality/Nth_Power/Hf.var" "Nth_Power__".
+alias id "Hf" = "cic:/CoRN/ftc/PartFunEquality/Nth_Power/Hf.var".
 
 inline "cic:/CoRN/ftc/PartFunEquality/FNth_zero.con".
 
-inline "cic:/CoRN/ftc/PartFunEquality/Nth_Power/n.var" "Nth_Power__".
+alias id "n" = "cic:/CoRN/ftc/PartFunEquality/Nth_Power/n.var".
 
-inline "cic:/CoRN/ftc/PartFunEquality/Nth_Power/H'.var" "Nth_Power__".
+alias id "H'" = "cic:/CoRN/ftc/PartFunEquality/Nth_Power/H'.var".
 
 inline "cic:/CoRN/ftc/PartFunEquality/FNth_mult.con".
 
@@ -391,11 +391,11 @@ is included in the domain of [F].
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/PartFunEquality/Strong_Nth_Power/a.var" "Strong_Nth_Power__".
+alias id "a" = "cic:/CoRN/ftc/PartFunEquality/Strong_Nth_Power/a.var".
 
-inline "cic:/CoRN/ftc/PartFunEquality/Strong_Nth_Power/b.var" "Strong_Nth_Power__".
+alias id "b" = "cic:/CoRN/ftc/PartFunEquality/Strong_Nth_Power/b.var".
 
-inline "cic:/CoRN/ftc/PartFunEquality/Strong_Nth_Power/Hab.var" "Strong_Nth_Power__".
+alias id "Hab" = "cic:/CoRN/ftc/PartFunEquality/Strong_Nth_Power/Hab.var".
 
 (* begin hide *)
 
@@ -403,9 +403,9 @@ inline "cic:/CoRN/ftc/PartFunEquality/Strong_Nth_Power/I.con" "Strong_Nth_Power_
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/PartFunEquality/Strong_Nth_Power/F.var" "Strong_Nth_Power__".
+alias id "F" = "cic:/CoRN/ftc/PartFunEquality/Strong_Nth_Power/F.var".
 
-inline "cic:/CoRN/ftc/PartFunEquality/Strong_Nth_Power/incF.var" "Strong_Nth_Power__".
+alias id "incF" = "cic:/CoRN/ftc/PartFunEquality/Strong_Nth_Power/incF.var".
 
 inline "cic:/CoRN/ftc/PartFunEquality/FNth_zero'.con".
 

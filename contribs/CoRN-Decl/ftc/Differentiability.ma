@@ -84,11 +84,11 @@ inline "cic:/CoRN/ftc/Differentiability/included_imp_diffble.con".
 A function differentiable in an interval is everywhere defined in that interval.
 *)
 
-inline "cic:/CoRN/ftc/Differentiability/Local_Properties/a.var" "Local_Properties__".
+alias id "a" = "cic:/CoRN/ftc/Differentiability/Local_Properties/a.var".
 
-inline "cic:/CoRN/ftc/Differentiability/Local_Properties/b.var" "Local_Properties__".
+alias id "b" = "cic:/CoRN/ftc/Differentiability/Local_Properties/b.var".
 
-inline "cic:/CoRN/ftc/Differentiability/Local_Properties/Hab'.var" "Local_Properties__".
+alias id "Hab'" = "cic:/CoRN/ftc/Differentiability/Local_Properties/Hab'.var".
 
 (* begin hide *)
 
@@ -122,11 +122,11 @@ Section Operations
 All the algebraic results carry on.
 *)
 
-inline "cic:/CoRN/ftc/Differentiability/Operations/a.var" "Operations__".
+alias id "a" = "cic:/CoRN/ftc/Differentiability/Operations/a.var".
 
-inline "cic:/CoRN/ftc/Differentiability/Operations/b.var" "Operations__".
+alias id "b" = "cic:/CoRN/ftc/Differentiability/Operations/b.var".
 
-inline "cic:/CoRN/ftc/Differentiability/Operations/Hab'.var" "Operations__".
+alias id "Hab'" = "cic:/CoRN/ftc/Differentiability/Operations/Hab'.var".
 
 (* begin hide *)
 
@@ -152,11 +152,11 @@ End Constants
 Section Well_Definedness
 *)
 
-inline "cic:/CoRN/ftc/Differentiability/Operations/Well_Definedness/F.var" "Operations__Well_Definedness__".
+alias id "F" = "cic:/CoRN/ftc/Differentiability/Operations/Well_Definedness/F.var".
 
-inline "cic:/CoRN/ftc/Differentiability/Operations/Well_Definedness/H.var" "Operations__Well_Definedness__".
+alias id "H" = "cic:/CoRN/ftc/Differentiability/Operations/Well_Definedness/H.var".
 
-inline "cic:/CoRN/ftc/Differentiability/Operations/Well_Definedness/diffF.var" "Operations__Well_Definedness__".
+alias id "diffF" = "cic:/CoRN/ftc/Differentiability/Operations/Well_Definedness/diffF.var".
 
 inline "cic:/CoRN/ftc/Differentiability/Diffble_I_wd.con".
 
@@ -164,13 +164,13 @@ inline "cic:/CoRN/ftc/Differentiability/Diffble_I_wd.con".
 End Well_Definedness
 *)
 
-inline "cic:/CoRN/ftc/Differentiability/Operations/F.var" "Operations__".
+alias id "F" = "cic:/CoRN/ftc/Differentiability/Operations/F.var".
 
-inline "cic:/CoRN/ftc/Differentiability/Operations/G.var" "Operations__".
+alias id "G" = "cic:/CoRN/ftc/Differentiability/Operations/G.var".
 
-inline "cic:/CoRN/ftc/Differentiability/Operations/diffF.var" "Operations__".
+alias id "diffF" = "cic:/CoRN/ftc/Differentiability/Operations/diffF.var".
 
-inline "cic:/CoRN/ftc/Differentiability/Operations/diffG.var" "Operations__".
+alias id "diffG" = "cic:/CoRN/ftc/Differentiability/Operations/diffG.var".
 
 inline "cic:/CoRN/ftc/Differentiability/Diffble_I_plus.con".
 
@@ -180,7 +180,7 @@ inline "cic:/CoRN/ftc/Differentiability/Diffble_I_mult.con".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/Differentiability/Operations/Gbnd.var" "Operations__".
+alias id "Gbnd" = "cic:/CoRN/ftc/Differentiability/Operations/Gbnd.var".
 
 (* end show *)
 
@@ -194,11 +194,11 @@ End Operations
 Section Corollaries
 *)
 
-inline "cic:/CoRN/ftc/Differentiability/Corollaries/a.var" "Corollaries__".
+alias id "a" = "cic:/CoRN/ftc/Differentiability/Corollaries/a.var".
 
-inline "cic:/CoRN/ftc/Differentiability/Corollaries/b.var" "Corollaries__".
+alias id "b" = "cic:/CoRN/ftc/Differentiability/Corollaries/b.var".
 
-inline "cic:/CoRN/ftc/Differentiability/Corollaries/Hab'.var" "Corollaries__".
+alias id "Hab'" = "cic:/CoRN/ftc/Differentiability/Corollaries/Hab'.var".
 
 (* begin hide *)
 
@@ -208,13 +208,13 @@ inline "cic:/CoRN/ftc/Differentiability/Corollaries/I.con" "Corollaries__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/Differentiability/Corollaries/F.var" "Corollaries__".
+alias id "F" = "cic:/CoRN/ftc/Differentiability/Corollaries/F.var".
 
-inline "cic:/CoRN/ftc/Differentiability/Corollaries/G.var" "Corollaries__".
+alias id "G" = "cic:/CoRN/ftc/Differentiability/Corollaries/G.var".
 
-inline "cic:/CoRN/ftc/Differentiability/Corollaries/diffF.var" "Corollaries__".
+alias id "diffF" = "cic:/CoRN/ftc/Differentiability/Corollaries/diffF.var".
 
-inline "cic:/CoRN/ftc/Differentiability/Corollaries/diffG.var" "Corollaries__".
+alias id "diffG" = "cic:/CoRN/ftc/Differentiability/Corollaries/diffG.var".
 
 inline "cic:/CoRN/ftc/Differentiability/Diffble_I_minus.con".
 
@@ -222,7 +222,7 @@ inline "cic:/CoRN/ftc/Differentiability/Diffble_I_scal.con".
 
 inline "cic:/CoRN/ftc/Differentiability/Diffble_I_nth.con".
 
-inline "cic:/CoRN/ftc/Differentiability/Corollaries/Gbnd.var" "Corollaries__".
+alias id "Gbnd" = "cic:/CoRN/ftc/Differentiability/Corollaries/Gbnd.var".
 
 inline "cic:/CoRN/ftc/Differentiability/Diffble_I_div.con".
 
@@ -239,11 +239,11 @@ Differentiability of families of functions is proved by
 induction using the constant and addition rules.
 *)
 
-inline "cic:/CoRN/ftc/Differentiability/Other_Properties/a.var" "Other_Properties__".
+alias id "a" = "cic:/CoRN/ftc/Differentiability/Other_Properties/a.var".
 
-inline "cic:/CoRN/ftc/Differentiability/Other_Properties/b.var" "Other_Properties__".
+alias id "b" = "cic:/CoRN/ftc/Differentiability/Other_Properties/b.var".
 
-inline "cic:/CoRN/ftc/Differentiability/Other_Properties/Hab'.var" "Other_Properties__".
+alias id "Hab'" = "cic:/CoRN/ftc/Differentiability/Other_Properties/Hab'.var".
 
 inline "cic:/CoRN/ftc/Differentiability/Diffble_I_Sum0.con".
 

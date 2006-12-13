@@ -35,7 +35,7 @@ polynomials over [R].
 Section NthCoeff_def
 *)
 
-inline "cic:/CoRN/algebra/CPoly_NthCoeff/NthCoeff_def/R.var" "NthCoeff_def__".
+alias id "R" = "cic:/CoRN/algebra/CPoly_NthCoeff/NthCoeff_def/R.var".
 
 (* begin hide *)
 
@@ -115,7 +115,7 @@ Section NthCoeff_props
 
 (*#* ** Properties of [nth_coeff] *)
 
-inline "cic:/CoRN/algebra/CPoly_NthCoeff/NthCoeff_props/R.var" "NthCoeff_props__".
+alias id "R" = "cic:/CoRN/algebra/CPoly_NthCoeff/NthCoeff_props/R.var".
 
 (* begin hide *)
 

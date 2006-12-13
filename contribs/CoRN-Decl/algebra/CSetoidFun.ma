@@ -32,15 +32,15 @@ Let [S1],  [S2] and [S3] be setoids, [f] a
 setoid function from [S1] to [S2], and [g] from [S2]
 to [S3] in the following definition of composition.  *)
 
-inline "cic:/CoRN/algebra/CSetoidFun/unary_function_composition/S1.var" "unary_function_composition__".
+alias id "S1" = "cic:/CoRN/algebra/CSetoidFun/unary_function_composition/S1.var".
 
-inline "cic:/CoRN/algebra/CSetoidFun/unary_function_composition/S2.var" "unary_function_composition__".
+alias id "S2" = "cic:/CoRN/algebra/CSetoidFun/unary_function_composition/S2.var".
 
-inline "cic:/CoRN/algebra/CSetoidFun/unary_function_composition/S3.var" "unary_function_composition__".
+alias id "S3" = "cic:/CoRN/algebra/CSetoidFun/unary_function_composition/S3.var".
 
-inline "cic:/CoRN/algebra/CSetoidFun/unary_function_composition/f.var" "unary_function_composition__".
+alias id "f" = "cic:/CoRN/algebra/CSetoidFun/unary_function_composition/f.var".
 
-inline "cic:/CoRN/algebra/CSetoidFun/unary_function_composition/g.var" "unary_function_composition__".
+alias id "g" = "cic:/CoRN/algebra/CSetoidFun/unary_function_composition/g.var".
 
 inline "cic:/CoRN/algebra/CSetoidFun/compose_CSetoid_fun.con".
 
@@ -81,7 +81,7 @@ End function_projection
 Section BinProj
 *)
 
-inline "cic:/CoRN/algebra/CSetoidFun/BinProj/S.var" "BinProj__".
+alias id "S" = "cic:/CoRN/algebra/CSetoidFun/BinProj/S.var".
 
 inline "cic:/CoRN/algebra/CSetoidFun/binproj1.con".
 
@@ -102,11 +102,11 @@ End BinProj
 Section CombiningOperations
 *)
 
-inline "cic:/CoRN/algebra/CSetoidFun/CombiningOperations/S1.var" "CombiningOperations__".
+alias id "S1" = "cic:/CoRN/algebra/CSetoidFun/CombiningOperations/S1.var".
 
-inline "cic:/CoRN/algebra/CSetoidFun/CombiningOperations/S2.var" "CombiningOperations__".
+alias id "S2" = "cic:/CoRN/algebra/CSetoidFun/CombiningOperations/S2.var".
 
-inline "cic:/CoRN/algebra/CSetoidFun/CombiningOperations/S3.var" "CombiningOperations__".
+alias id "S3" = "cic:/CoRN/algebra/CSetoidFun/CombiningOperations/S3.var".
 
 (*#*
 In the following definition, we assume [f] is a setoid function from
@@ -118,9 +118,9 @@ Then [opOnFun] is the composition [op] after [f].
 Section CombiningUnaryOperations
 *)
 
-inline "cic:/CoRN/algebra/CSetoidFun/CombiningOperations/CombiningUnaryOperations/f.var" "CombiningOperations__CombiningUnaryOperations__".
+alias id "f" = "cic:/CoRN/algebra/CSetoidFun/CombiningOperations/CombiningUnaryOperations/f.var".
 
-inline "cic:/CoRN/algebra/CSetoidFun/CombiningOperations/CombiningUnaryOperations/op.var" "CombiningOperations__CombiningUnaryOperations__".
+alias id "op" = "cic:/CoRN/algebra/CSetoidFun/CombiningOperations/CombiningUnaryOperations/op.var".
 
 inline "cic:/CoRN/algebra/CSetoidFun/opOnFun.con".
 
@@ -173,15 +173,15 @@ welldefinedness.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CSetoidFun/SubSets_of_G/S.var" "SubSets_of_G__".
+alias id "S" = "cic:/CoRN/algebra/CSetoidFun/SubSets_of_G/S.var".
 
 (* UNEXPORTED
 Section Conjunction
 *)
 
-inline "cic:/CoRN/algebra/CSetoidFun/SubSets_of_G/Conjunction/P.var" "SubSets_of_G__Conjunction__".
+alias id "P" = "cic:/CoRN/algebra/CSetoidFun/SubSets_of_G/Conjunction/P.var".
 
-inline "cic:/CoRN/algebra/CSetoidFun/SubSets_of_G/Conjunction/Q.var" "SubSets_of_G__Conjunction__".
+alias id "Q" = "cic:/CoRN/algebra/CSetoidFun/SubSets_of_G/Conjunction/Q.var".
 
 inline "cic:/CoRN/algebra/CSetoidFun/conjP.con".
 
@@ -199,9 +199,9 @@ End Conjunction
 Section Disjunction
 *)
 
-inline "cic:/CoRN/algebra/CSetoidFun/SubSets_of_G/Disjunction/P.var" "SubSets_of_G__Disjunction__".
+alias id "P" = "cic:/CoRN/algebra/CSetoidFun/SubSets_of_G/Disjunction/P.var".
 
-inline "cic:/CoRN/algebra/CSetoidFun/SubSets_of_G/Disjunction/Q.var" "SubSets_of_G__Disjunction__".
+alias id "Q" = "cic:/CoRN/algebra/CSetoidFun/SubSets_of_G/Disjunction/Q.var".
 
 (*#*
 Although at this stage we never use it, for completeness's sake we also treat disjunction (corresponding to union of subsets).
@@ -227,9 +227,9 @@ Section Extension
 The next definition is a bit tricky, and is useful for choosing among the elements that satisfy a predicate [P] those that also satisfy [R] in the case where [R] is only defined for elements satisfying [P]---consider [R] to be a condition on the image of an object via a function with domain [P].  We chose to call this operation [extension].
 *)
 
-inline "cic:/CoRN/algebra/CSetoidFun/SubSets_of_G/Extension/P.var" "SubSets_of_G__Extension__".
+alias id "P" = "cic:/CoRN/algebra/CSetoidFun/SubSets_of_G/Extension/P.var".
 
-inline "cic:/CoRN/algebra/CSetoidFun/SubSets_of_G/Extension/R.var" "SubSets_of_G__Extension__".
+alias id "R" = "cic:/CoRN/algebra/CSetoidFun/SubSets_of_G/Extension/R.var".
 
 inline "cic:/CoRN/algebra/CSetoidFun/extend.con".
 
@@ -368,7 +368,7 @@ Hint Resolve CI: core.
 Section CSetoid_Ops
 *)
 
-inline "cic:/CoRN/algebra/CSetoidFun/CSetoid_Ops/S.var" "CSetoid_Ops__".
+alias id "S" = "cic:/CoRN/algebra/CSetoidFun/CSetoid_Ops/S.var".
 
 (*#*
 To begin with, we want to be able to ``see'' each total function as a partial function.
@@ -387,7 +387,7 @@ In any setoid we can also define constant functions (one for each element of the
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CSetoidFun/CSetoid_Ops/Part_Function_Const/c.var" "CSetoid_Ops__Part_Function_Const__".
+alias id "c" = "cic:/CoRN/algebra/CSetoidFun/CSetoid_Ops/Part_Function_Const/c.var".
 
 inline "cic:/CoRN/algebra/CSetoidFun/Fconst.con".
 
@@ -418,9 +418,9 @@ If we have two setoid functions [F] and [G] we can always compose them.  The dom
 Section Part_Function_Composition
 *)
 
-inline "cic:/CoRN/algebra/CSetoidFun/CSetoid_Ops/Part_Function_Composition/G.var" "CSetoid_Ops__Part_Function_Composition__".
+alias id "G" = "cic:/CoRN/algebra/CSetoidFun/CSetoid_Ops/Part_Function_Composition/G.var".
 
-inline "cic:/CoRN/algebra/CSetoidFun/CSetoid_Ops/Part_Function_Composition/F.var" "CSetoid_Ops__Part_Function_Composition__".
+alias id "F" = "cic:/CoRN/algebra/CSetoidFun/CSetoid_Ops/Part_Function_Composition/F.var".
 
 (* begin hide *)
 
@@ -455,15 +455,15 @@ End CSetoid_Ops
 Section BinPart_Function_Composition
 *)
 
-inline "cic:/CoRN/algebra/CSetoidFun/BinPart_Function_Composition/S1.var" "BinPart_Function_Composition__".
+alias id "S1" = "cic:/CoRN/algebra/CSetoidFun/BinPart_Function_Composition/S1.var".
 
-inline "cic:/CoRN/algebra/CSetoidFun/BinPart_Function_Composition/S2.var" "BinPart_Function_Composition__".
+alias id "S2" = "cic:/CoRN/algebra/CSetoidFun/BinPart_Function_Composition/S2.var".
 
-inline "cic:/CoRN/algebra/CSetoidFun/BinPart_Function_Composition/S3.var" "BinPart_Function_Composition__".
+alias id "S3" = "cic:/CoRN/algebra/CSetoidFun/BinPart_Function_Composition/S3.var".
 
-inline "cic:/CoRN/algebra/CSetoidFun/BinPart_Function_Composition/G.var" "BinPart_Function_Composition__".
+alias id "G" = "cic:/CoRN/algebra/CSetoidFun/BinPart_Function_Composition/G.var".
 
-inline "cic:/CoRN/algebra/CSetoidFun/BinPart_Function_Composition/F.var" "BinPart_Function_Composition__".
+alias id "F" = "cic:/CoRN/algebra/CSetoidFun/BinPart_Function_Composition/F.var".
 
 (* begin hide *)
 

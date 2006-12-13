@@ -124,7 +124,7 @@ Section CRing_axioms
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CRings/CRing_axioms/R.var" "CRing_axioms__".
+alias id "R" = "cic:/CoRN/algebra/CRings/CRing_axioms/R.var".
 
 inline "cic:/CoRN/algebra/CRings/CRing_is_CRing.con".
 
@@ -163,7 +163,7 @@ Let [R] be a ring.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CRings/Ring_constructions/R.var" "Ring_constructions__".
+alias id "R" = "cic:/CoRN/algebra/CRings/Ring_constructions/R.var".
 
 (*#*
 The multiplicative monoid of a ring is defined as follows.
@@ -187,7 +187,7 @@ Section Ring_unfolded
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CRings/Ring_unfolded/R.var" "Ring_unfolded__".
+alias id "R" = "cic:/CoRN/algebra/CRings/Ring_unfolded/R.var".
 
 (* begin hide *)
 
@@ -241,7 +241,7 @@ Section Ring_basics
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CRings/Ring_basics/R.var" "Ring_basics__".
+alias id "R" = "cic:/CoRN/algebra/CRings/Ring_basics/R.var".
 
 inline "cic:/CoRN/algebra/CRings/one_ap_zero.con".
 
@@ -344,7 +344,7 @@ Let [R] be a ring.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CRings/exponentiation/R.var" "exponentiation__".
+alias id "R" = "cic:/CoRN/algebra/CRings/exponentiation/R.var".
 
 (* End_SpecReals *)
 
@@ -384,7 +384,7 @@ Section nat_injection
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CRings/nat_injection/R.var" "nat_injection__".
+alias id "R" = "cic:/CoRN/algebra/CRings/nat_injection/R.var".
 
 (*#*
 The injection of Coq natural numbers into a ring is called [nring].
@@ -491,7 +491,7 @@ Let [R] be a ring.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CRings/int_injection/R.var" "int_injection__".
+alias id "R" = "cic:/CoRN/algebra/CRings/int_injection/R.var".
 
 (*#*
 The injection of Coq integers into a ring is called [zring]. Again,
@@ -644,7 +644,7 @@ Section Ring_sums
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CRings/Ring_sums/R.var" "Ring_sums__".
+alias id "R" = "cic:/CoRN/algebra/CRings/Ring_sums/R.var".
 
 (*#*
 *** Infinite Ring sums
@@ -707,7 +707,7 @@ Let [R] be a ring.
 Section Dist_properties
 *)
 
-inline "cic:/CoRN/algebra/CRings/Dist_properties/R.var" "Dist_properties__".
+alias id "R" = "cic:/CoRN/algebra/CRings/Dist_properties/R.var".
 
 inline "cic:/CoRN/algebra/CRings/dist_1b.con".
 
@@ -763,7 +763,7 @@ Let [R] be a ring.
 Section NExp_properties
 *)
 
-inline "cic:/CoRN/algebra/CRings/NExp_properties/R.var" "NExp_properties__".
+alias id "R" = "cic:/CoRN/algebra/CRings/NExp_properties/R.var".
 
 inline "cic:/CoRN/algebra/CRings/nexp_wd.con".
 
@@ -889,11 +889,11 @@ respectively [P] and [Q].
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CRings/CRing_Ops/R.var" "CRing_Ops__".
+alias id "R" = "cic:/CoRN/algebra/CRings/CRing_Ops/R.var".
 
-inline "cic:/CoRN/algebra/CRings/CRing_Ops/F.var" "CRing_Ops__".
+alias id "F" = "cic:/CoRN/algebra/CRings/CRing_Ops/F.var".
 
-inline "cic:/CoRN/algebra/CRings/CRing_Ops/G.var" "CRing_Ops__".
+alias id "G" = "cic:/CoRN/algebra/CRings/CRing_Ops/G.var".
 
 (* begin hide *)
 
@@ -919,7 +919,7 @@ End Part_Function_Mult
 Section Part_Function_Nth_Power
 *)
 
-inline "cic:/CoRN/algebra/CRings/CRing_Ops/Part_Function_Nth_Power/n.var" "CRing_Ops__Part_Function_Nth_Power__".
+alias id "n" = "cic:/CoRN/algebra/CRings/CRing_Ops/Part_Function_Nth_Power/n.var".
 
 inline "cic:/CoRN/algebra/CRings/part_function_nth_strext.con".
 
@@ -934,7 +934,7 @@ End Part_Function_Nth_Power
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CRings/CRing_Ops/R'.var" "CRing_Ops__".
+alias id "R'" = "cic:/CoRN/algebra/CRings/CRing_Ops/R'.var".
 
 inline "cic:/CoRN/algebra/CRings/included_FMult.con".
 
@@ -942,7 +942,7 @@ inline "cic:/CoRN/algebra/CRings/included_FMult'.con".
 
 inline "cic:/CoRN/algebra/CRings/included_FMult''.con".
 
-inline "cic:/CoRN/algebra/CRings/CRing_Ops/n.var" "CRing_Ops__".
+alias id "n" = "cic:/CoRN/algebra/CRings/CRing_Ops/n.var".
 
 inline "cic:/CoRN/algebra/CRings/included_FNth.con".
 
@@ -982,9 +982,9 @@ Infix "{^}" := Fnth (at level 30, right associativity).
 Section ScalarMultiplication
 *)
 
-inline "cic:/CoRN/algebra/CRings/ScalarMultiplication/R.var" "ScalarMultiplication__".
+alias id "R" = "cic:/CoRN/algebra/CRings/ScalarMultiplication/R.var".
 
-inline "cic:/CoRN/algebra/CRings/ScalarMultiplication/F.var" "ScalarMultiplication__".
+alias id "F" = "cic:/CoRN/algebra/CRings/ScalarMultiplication/F.var".
 
 (* begin hide *)
 
@@ -992,7 +992,7 @@ inline "cic:/CoRN/algebra/CRings/ScalarMultiplication/P.con" "ScalarMultiplicati
 
 (* end hide *)
 
-inline "cic:/CoRN/algebra/CRings/ScalarMultiplication/R'.var" "ScalarMultiplication__".
+alias id "R'" = "cic:/CoRN/algebra/CRings/ScalarMultiplication/R'.var".
 
 inline "cic:/CoRN/algebra/CRings/included_FScalMult.con".
 

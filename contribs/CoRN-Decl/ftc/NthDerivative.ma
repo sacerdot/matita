@@ -42,11 +42,11 @@ We now study higher order differentiability.
 We first define what we mean by the derivative of order [n] of a function.
 *)
 
-inline "cic:/CoRN/ftc/NthDerivative/Nth_Derivative/a.var" "Nth_Derivative__".
+alias id "a" = "cic:/CoRN/ftc/NthDerivative/Nth_Derivative/a.var".
 
-inline "cic:/CoRN/ftc/NthDerivative/Nth_Derivative/b.var" "Nth_Derivative__".
+alias id "b" = "cic:/CoRN/ftc/NthDerivative/Nth_Derivative/b.var".
 
-inline "cic:/CoRN/ftc/NthDerivative/Nth_Derivative/Hab'.var" "Nth_Derivative__".
+alias id "Hab'" = "cic:/CoRN/ftc/NthDerivative/Nth_Derivative/Hab'.var".
 
 (* begin hide *)
 
@@ -88,11 +88,11 @@ Section Trivia
 These are the expected extensionality and uniqueness results.
 *)
 
-inline "cic:/CoRN/ftc/NthDerivative/Trivia/a.var" "Trivia__".
+alias id "a" = "cic:/CoRN/ftc/NthDerivative/Trivia/a.var".
 
-inline "cic:/CoRN/ftc/NthDerivative/Trivia/b.var" "Trivia__".
+alias id "b" = "cic:/CoRN/ftc/NthDerivative/Trivia/b.var".
 
-inline "cic:/CoRN/ftc/NthDerivative/Trivia/Hab'.var" "Trivia__".
+alias id "Hab'" = "cic:/CoRN/ftc/NthDerivative/Trivia/Hab'.var".
 
 (* begin hide *)
 
@@ -126,11 +126,11 @@ the relation of [n] times derivative, but focus rather on the
 definition of [Diffble_I_n].
 *)
 
-inline "cic:/CoRN/ftc/NthDerivative/Basic_Results/a.var" "Basic_Results__".
+alias id "a" = "cic:/CoRN/ftc/NthDerivative/Basic_Results/a.var".
 
-inline "cic:/CoRN/ftc/NthDerivative/Basic_Results/b.var" "Basic_Results__".
+alias id "b" = "cic:/CoRN/ftc/NthDerivative/Basic_Results/b.var".
 
-inline "cic:/CoRN/ftc/NthDerivative/Basic_Results/Hab'.var" "Basic_Results__".
+alias id "Hab'" = "cic:/CoRN/ftc/NthDerivative/Basic_Results/Hab'.var".
 
 (* begin hide *)
 
@@ -196,11 +196,11 @@ First order differentiability is just a special case.
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/NthDerivative/Basic_Results/aux/F.var" "Basic_Results__aux__".
+alias id "F" = "cic:/CoRN/ftc/NthDerivative/Basic_Results/aux/F.var".
 
-inline "cic:/CoRN/ftc/NthDerivative/Basic_Results/aux/diffF.var" "Basic_Results__aux__".
+alias id "diffF" = "cic:/CoRN/ftc/NthDerivative/Basic_Results/aux/diffF.var".
 
-inline "cic:/CoRN/ftc/NthDerivative/Basic_Results/aux/diffFn.var" "Basic_Results__aux__".
+alias id "diffFn" = "cic:/CoRN/ftc/NthDerivative/Basic_Results/aux/diffFn.var".
 
 (* end show *)
 
@@ -234,11 +234,11 @@ End Basic_Results
 Section More_Results
 *)
 
-inline "cic:/CoRN/ftc/NthDerivative/More_Results/a.var" "More_Results__".
+alias id "a" = "cic:/CoRN/ftc/NthDerivative/More_Results/a.var".
 
-inline "cic:/CoRN/ftc/NthDerivative/More_Results/b.var" "More_Results__".
+alias id "b" = "cic:/CoRN/ftc/NthDerivative/More_Results/b.var".
 
-inline "cic:/CoRN/ftc/NthDerivative/More_Results/Hab'.var" "More_Results__".
+alias id "Hab'" = "cic:/CoRN/ftc/NthDerivative/More_Results/Hab'.var".
 
 (* begin hide *)
 

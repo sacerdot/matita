@@ -43,7 +43,7 @@ Section AbsSmall_properties
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/COrdAbs/AbsSmall_properties/R.var" "AbsSmall_properties__".
+alias id "R" = "cic:/CoRN/algebra/COrdAbs/AbsSmall_properties/R.var".
 
 inline "cic:/CoRN/algebra/COrdAbs/AbsSmall_wdr.con".
 
@@ -136,7 +136,7 @@ Section absBig_wd_properties
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/COrdAbs/absBig_wd_properties/R.var" "absBig_wd_properties__".
+alias id "R" = "cic:/CoRN/algebra/COrdAbs/absBig_wd_properties/R.var".
 
 inline "cic:/CoRN/algebra/COrdAbs/AbsBig_wdr.con".
 

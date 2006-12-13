@@ -51,15 +51,15 @@ and [a] be a point in [I].
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/FTC/Indefinite_Integral/I.var" "Indefinite_Integral__".
+alias id "I" = "cic:/CoRN/ftc/FTC/Indefinite_Integral/I.var".
 
-inline "cic:/CoRN/ftc/FTC/Indefinite_Integral/F.var" "Indefinite_Integral__".
+alias id "F" = "cic:/CoRN/ftc/FTC/Indefinite_Integral/F.var".
 
-inline "cic:/CoRN/ftc/FTC/Indefinite_Integral/contF.var" "Indefinite_Integral__".
+alias id "contF" = "cic:/CoRN/ftc/FTC/Indefinite_Integral/contF.var".
 
-inline "cic:/CoRN/ftc/FTC/Indefinite_Integral/a.var" "Indefinite_Integral__".
+alias id "a" = "cic:/CoRN/ftc/FTC/Indefinite_Integral/a.var".
 
-inline "cic:/CoRN/ftc/FTC/Indefinite_Integral/Ha.var" "Indefinite_Integral__".
+alias id "Ha" = "cic:/CoRN/ftc/FTC/Indefinite_Integral/Ha.var".
 
 inline "cic:/CoRN/ftc/FTC/prim_lemma.con".
 
@@ -94,15 +94,15 @@ indefinite integral of [F] from [x0].
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/FTC/FTC/J.var" "FTC__".
+alias id "J" = "cic:/CoRN/ftc/FTC/FTC/J.var".
 
-inline "cic:/CoRN/ftc/FTC/FTC/F.var" "FTC__".
+alias id "F" = "cic:/CoRN/ftc/FTC/FTC/F.var".
 
-inline "cic:/CoRN/ftc/FTC/FTC/contF.var" "FTC__".
+alias id "contF" = "cic:/CoRN/ftc/FTC/FTC/contF.var".
 
-inline "cic:/CoRN/ftc/FTC/FTC/x0.var" "FTC__".
+alias id "x0" = "cic:/CoRN/ftc/FTC/FTC/x0.var".
 
-inline "cic:/CoRN/ftc/FTC/FTC/Hx0.var" "FTC__".
+alias id "Hx0" = "cic:/CoRN/ftc/FTC/FTC/Hx0.var".
 
 (* begin hide *)
 
@@ -116,7 +116,7 @@ inline "cic:/CoRN/ftc/FTC/Continuous_prim.con".
 The derivative of [G] is simply [F].
 *)
 
-inline "cic:/CoRN/ftc/FTC/FTC/pJ.var" "FTC__".
+alias id "pJ" = "cic:/CoRN/ftc/FTC/FTC/pJ.var".
 
 inline "cic:/CoRN/ftc/FTC/FTC1.con".
 
@@ -124,9 +124,9 @@ inline "cic:/CoRN/ftc/FTC/FTC1.con".
 Any other function [G0] with derivative [F] must differ from [G] by a constant.
 *)
 
-inline "cic:/CoRN/ftc/FTC/FTC/G0.var" "FTC__".
+alias id "G0" = "cic:/CoRN/ftc/FTC/FTC/G0.var".
 
-inline "cic:/CoRN/ftc/FTC/FTC/derG0.var" "FTC__".
+alias id "derG0" = "cic:/CoRN/ftc/FTC/FTC/derG0.var".
 
 inline "cic:/CoRN/ftc/FTC/FTC2.con".
 
@@ -180,15 +180,15 @@ then the sequence of their primitives also converges, and the limit
 commutes with the indefinite integral.
 *)
 
-inline "cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/J.var" "Limit_of_Integral_Seq__".
+alias id "J" = "cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/J.var".
 
-inline "cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/f.var" "Limit_of_Integral_Seq__".
+alias id "f" = "cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/f.var".
 
-inline "cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/F.var" "Limit_of_Integral_Seq__".
+alias id "F" = "cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/F.var".
 
-inline "cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/contf.var" "Limit_of_Integral_Seq__".
+alias id "contf" = "cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/contf.var".
 
-inline "cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/contF.var" "Limit_of_Integral_Seq__".
+alias id "contF" = "cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/contF.var".
 
 (* UNEXPORTED
 Section Compact
@@ -204,27 +204,27 @@ continuous in [[a,b]], $x0\in[a,b]$#x0&isin;[a,b]#; denote by
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/Compact/a.var" "Limit_of_Integral_Seq__Compact__".
+alias id "a" = "cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/Compact/a.var".
 
-inline "cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/Compact/b.var" "Limit_of_Integral_Seq__Compact__".
+alias id "b" = "cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/Compact/b.var".
 
-inline "cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/Compact/Hab.var" "Limit_of_Integral_Seq__Compact__".
+alias id "Hab" = "cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/Compact/Hab.var".
 
-inline "cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/Compact/contIf.var" "Limit_of_Integral_Seq__Compact__".
+alias id "contIf" = "cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/Compact/contIf.var".
 
-inline "cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/Compact/contIF.var" "Limit_of_Integral_Seq__Compact__".
+alias id "contIF" = "cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/Compact/contIF.var".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/Compact/convF.var" "Limit_of_Integral_Seq__Compact__".
+alias id "convF" = "cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/Compact/convF.var".
 
 (* end show *)
 
-inline "cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/Compact/x0.var" "Limit_of_Integral_Seq__Compact__".
+alias id "x0" = "cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/Compact/x0.var".
 
-inline "cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/Compact/Hx0.var" "Limit_of_Integral_Seq__Compact__".
+alias id "Hx0" = "cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/Compact/Hx0.var".
 
-inline "cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/Compact/Hx0'.var" "Limit_of_Integral_Seq__Compact__".
+alias id "Hx0'" = "cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/Compact/Hx0'.var".
 
 (* begin hide *)
 
@@ -236,9 +236,9 @@ inline "cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/Compact/G.con" "Limit_of_Integra
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/Compact/contg.var" "Limit_of_Integral_Seq__Compact__".
+alias id "contg" = "cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/Compact/contg.var".
 
-inline "cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/Compact/contG.var" "Limit_of_Integral_Seq__Compact__".
+alias id "contG" = "cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/Compact/contG.var".
 
 (* end show *)
 
@@ -266,13 +266,13 @@ Finally, with [x0, g, G] as before,
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/General/convF.var" "Limit_of_Integral_Seq__General__".
+alias id "convF" = "cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/General/convF.var".
 
 (* end show *)
 
-inline "cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/General/x0.var" "Limit_of_Integral_Seq__General__".
+alias id "x0" = "cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/General/x0.var".
 
-inline "cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/General/Hx0.var" "Limit_of_Integral_Seq__General__".
+alias id "Hx0" = "cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/General/Hx0.var".
 
 (* begin hide *)
 
@@ -282,9 +282,9 @@ inline "cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/General/G.con" "Limit_of_Integra
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/General/contg.var" "Limit_of_Integral_Seq__General__".
+alias id "contg" = "cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/General/contg.var".
 
-inline "cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/General/contG.var" "Limit_of_Integral_Seq__General__".
+alias id "contG" = "cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/General/contG.var".
 
 inline "cic:/CoRN/ftc/FTC/fun_lim_seq_integral_IR.con".
 
@@ -307,31 +307,31 @@ Similar results hold for the sequence of derivatives of a converging sequence; t
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/FTC/Limit_of_Derivative_Seq/J.var" "Limit_of_Derivative_Seq__".
+alias id "J" = "cic:/CoRN/ftc/FTC/Limit_of_Derivative_Seq/J.var".
 
-inline "cic:/CoRN/ftc/FTC/Limit_of_Derivative_Seq/pJ.var" "Limit_of_Derivative_Seq__".
+alias id "pJ" = "cic:/CoRN/ftc/FTC/Limit_of_Derivative_Seq/pJ.var".
 
-inline "cic:/CoRN/ftc/FTC/Limit_of_Derivative_Seq/f.var" "Limit_of_Derivative_Seq__".
+alias id "f" = "cic:/CoRN/ftc/FTC/Limit_of_Derivative_Seq/f.var".
 
-inline "cic:/CoRN/ftc/FTC/Limit_of_Derivative_Seq/g.var" "Limit_of_Derivative_Seq__".
+alias id "g" = "cic:/CoRN/ftc/FTC/Limit_of_Derivative_Seq/g.var".
 
-inline "cic:/CoRN/ftc/FTC/Limit_of_Derivative_Seq/F.var" "Limit_of_Derivative_Seq__".
+alias id "F" = "cic:/CoRN/ftc/FTC/Limit_of_Derivative_Seq/F.var".
 
-inline "cic:/CoRN/ftc/FTC/Limit_of_Derivative_Seq/G.var" "Limit_of_Derivative_Seq__".
+alias id "G" = "cic:/CoRN/ftc/FTC/Limit_of_Derivative_Seq/G.var".
 
-inline "cic:/CoRN/ftc/FTC/Limit_of_Derivative_Seq/contf.var" "Limit_of_Derivative_Seq__".
+alias id "contf" = "cic:/CoRN/ftc/FTC/Limit_of_Derivative_Seq/contf.var".
 
-inline "cic:/CoRN/ftc/FTC/Limit_of_Derivative_Seq/contF.var" "Limit_of_Derivative_Seq__".
+alias id "contF" = "cic:/CoRN/ftc/FTC/Limit_of_Derivative_Seq/contF.var".
 
-inline "cic:/CoRN/ftc/FTC/Limit_of_Derivative_Seq/convF.var" "Limit_of_Derivative_Seq__".
+alias id "convF" = "cic:/CoRN/ftc/FTC/Limit_of_Derivative_Seq/convF.var".
 
-inline "cic:/CoRN/ftc/FTC/Limit_of_Derivative_Seq/contg.var" "Limit_of_Derivative_Seq__".
+alias id "contg" = "cic:/CoRN/ftc/FTC/Limit_of_Derivative_Seq/contg.var".
 
-inline "cic:/CoRN/ftc/FTC/Limit_of_Derivative_Seq/contG.var" "Limit_of_Derivative_Seq__".
+alias id "contG" = "cic:/CoRN/ftc/FTC/Limit_of_Derivative_Seq/contG.var".
 
-inline "cic:/CoRN/ftc/FTC/Limit_of_Derivative_Seq/convG.var" "Limit_of_Derivative_Seq__".
+alias id "convG" = "cic:/CoRN/ftc/FTC/Limit_of_Derivative_Seq/convG.var".
 
-inline "cic:/CoRN/ftc/FTC/Limit_of_Derivative_Seq/derf.var" "Limit_of_Derivative_Seq__".
+alias id "derf" = "cic:/CoRN/ftc/FTC/Limit_of_Derivative_Seq/derf.var".
 
 inline "cic:/CoRN/ftc/FTC/fun_lim_seq_derivative.con".
 
@@ -347,23 +347,23 @@ Section Derivative_Series
 As a very important case of this result, we get a rule for deriving series.
 *)
 
-inline "cic:/CoRN/ftc/FTC/Derivative_Series/J.var" "Derivative_Series__".
+alias id "J" = "cic:/CoRN/ftc/FTC/Derivative_Series/J.var".
 
-inline "cic:/CoRN/ftc/FTC/Derivative_Series/pJ.var" "Derivative_Series__".
+alias id "pJ" = "cic:/CoRN/ftc/FTC/Derivative_Series/pJ.var".
 
-inline "cic:/CoRN/ftc/FTC/Derivative_Series/f.var" "Derivative_Series__".
+alias id "f" = "cic:/CoRN/ftc/FTC/Derivative_Series/f.var".
 
-inline "cic:/CoRN/ftc/FTC/Derivative_Series/g.var" "Derivative_Series__".
+alias id "g" = "cic:/CoRN/ftc/FTC/Derivative_Series/g.var".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/FTC/Derivative_Series/convF.var" "Derivative_Series__".
+alias id "convF" = "cic:/CoRN/ftc/FTC/Derivative_Series/convF.var".
 
-inline "cic:/CoRN/ftc/FTC/Derivative_Series/convG.var" "Derivative_Series__".
+alias id "convG" = "cic:/CoRN/ftc/FTC/Derivative_Series/convG.var".
 
 (* end show *)
 
-inline "cic:/CoRN/ftc/FTC/Derivative_Series/derF.var" "Derivative_Series__".
+alias id "derF" = "cic:/CoRN/ftc/FTC/Derivative_Series/derF.var".
 
 inline "cic:/CoRN/ftc/FTC/Derivative_FSeries.con".
 

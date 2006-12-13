@@ -54,7 +54,7 @@ library of Coq but moved to the Type level.
 Section List
 *)
 
-inline "cic:/CoRN/algebra/ListType/List/A.var" "List__".
+alias id "A" = "cic:/CoRN/algebra/ListType/List/A.var".
 
 inline "cic:/CoRN/algebra/ListType/list.ind".
 
@@ -106,15 +106,15 @@ inline "cic:/CoRN/algebra/ListType/lel.con".
 Hint Unfold lel: list.
 *)
 
-inline "cic:/CoRN/algebra/ListType/List/length_order/a.var" "List__length_order__".
+alias id "a" = "cic:/CoRN/algebra/ListType/List/length_order/a.var".
 
-inline "cic:/CoRN/algebra/ListType/List/length_order/b.var" "List__length_order__".
+alias id "b" = "cic:/CoRN/algebra/ListType/List/length_order/b.var".
 
-inline "cic:/CoRN/algebra/ListType/List/length_order/l.var" "List__length_order__".
+alias id "l" = "cic:/CoRN/algebra/ListType/List/length_order/l.var".
 
-inline "cic:/CoRN/algebra/ListType/List/length_order/m.var" "List__length_order__".
+alias id "m" = "cic:/CoRN/algebra/ListType/List/length_order/m.var".
 
-inline "cic:/CoRN/algebra/ListType/List/length_order/n.var" "List__length_order__".
+alias id "n" = "cic:/CoRN/algebra/ListType/List/length_order/n.var".
 
 inline "cic:/CoRN/algebra/ListType/lel_refl.con".
 
@@ -223,11 +223,11 @@ Implicit Arguments cons [A].
 Section Map
 *)
 
-inline "cic:/CoRN/algebra/ListType/Map/A.var" "Map__".
+alias id "A" = "cic:/CoRN/algebra/ListType/Map/A.var".
 
-inline "cic:/CoRN/algebra/ListType/Map/B.var" "Map__".
+alias id "B" = "cic:/CoRN/algebra/ListType/Map/B.var".
 
-inline "cic:/CoRN/algebra/ListType/Map/f.var" "Map__".
+alias id "f" = "cic:/CoRN/algebra/ListType/Map/f.var".
 
 inline "cic:/CoRN/algebra/ListType/map.con".
 

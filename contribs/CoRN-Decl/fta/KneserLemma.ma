@@ -43,11 +43,11 @@ such that [0 < n], [b_0 := b 0], [b_n := (b n) [=] One] and
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/fta/KneserLemma/Kneser_Lemma/b.var" "Kneser_Lemma__".
+alias id "b" = "cic:/CoRN/fta/KneserLemma/Kneser_Lemma/b.var".
 
-inline "cic:/CoRN/fta/KneserLemma/Kneser_Lemma/n.var" "Kneser_Lemma__".
+alias id "n" = "cic:/CoRN/fta/KneserLemma/Kneser_Lemma/n.var".
 
-inline "cic:/CoRN/fta/KneserLemma/Kneser_Lemma/gt_n_0.var" "Kneser_Lemma__".
+alias id "gt_n_0" = "cic:/CoRN/fta/KneserLemma/Kneser_Lemma/gt_n_0.var".
 
 (* begin hide *)
 
@@ -57,11 +57,11 @@ inline "cic:/CoRN/fta/KneserLemma/Kneser_Lemma/b_n.con" "Kneser_Lemma__".
 
 (* end hide *)
 
-inline "cic:/CoRN/fta/KneserLemma/Kneser_Lemma/b_n_1.var" "Kneser_Lemma__".
+alias id "b_n_1" = "cic:/CoRN/fta/KneserLemma/Kneser_Lemma/b_n_1.var".
 
-inline "cic:/CoRN/fta/KneserLemma/Kneser_Lemma/c.var" "Kneser_Lemma__".
+alias id "c" = "cic:/CoRN/fta/KneserLemma/Kneser_Lemma/c.var".
 
-inline "cic:/CoRN/fta/KneserLemma/Kneser_Lemma/b_0_lt_c.var" "Kneser_Lemma__".
+alias id "b_0_lt_c" = "cic:/CoRN/fta/KneserLemma/Kneser_Lemma/b_0_lt_c.var".
 
 (*#* 
 %\begin{convention}% We define the following local abbreviations:

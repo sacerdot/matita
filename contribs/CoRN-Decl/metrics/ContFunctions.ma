@@ -32,9 +32,9 @@ Let [A] and [B] be pseudo metric spaces.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/metrics/ContFunctions/Continuous_functions/A.var" "Continuous_functions__".
+alias id "A" = "cic:/CoRN/metrics/ContFunctions/Continuous_functions/A.var".
 
-inline "cic:/CoRN/metrics/ContFunctions/Continuous_functions/B.var" "Continuous_functions__".
+alias id "B" = "cic:/CoRN/metrics/ContFunctions/Continuous_functions/B.var".
 
 (*#*
 We will look at some notions of continuous functions.
@@ -160,9 +160,9 @@ Any constant function is Lipschitz.
 Hence it is uniformly continuous and continuous.
 *)
 
-inline "cic:/CoRN/metrics/ContFunctions/Constant/B.var" "Constant__".
+alias id "B" = "cic:/CoRN/metrics/ContFunctions/Constant/B.var".
 
-inline "cic:/CoRN/metrics/ContFunctions/Constant/X.var" "Constant__".
+alias id "X" = "cic:/CoRN/metrics/ContFunctions/Constant/X.var".
 
 inline "cic:/CoRN/metrics/ContFunctions/const_fun_is_lipschitz.con".
 
@@ -191,15 +191,15 @@ The composition of two Lipschitz/uniformly continous/continuous functions is
 again Lipschitz/uniformly continuous/continuous.
 *)
 
-inline "cic:/CoRN/metrics/ContFunctions/Composition/X.var" "Composition__".
+alias id "X" = "cic:/CoRN/metrics/ContFunctions/Composition/X.var".
 
-inline "cic:/CoRN/metrics/ContFunctions/Composition/B.var" "Composition__".
+alias id "B" = "cic:/CoRN/metrics/ContFunctions/Composition/B.var".
 
-inline "cic:/CoRN/metrics/ContFunctions/Composition/f.var" "Composition__".
+alias id "f" = "cic:/CoRN/metrics/ContFunctions/Composition/f.var".
 
-inline "cic:/CoRN/metrics/ContFunctions/Composition/C.var" "Composition__".
+alias id "C" = "cic:/CoRN/metrics/ContFunctions/Composition/C.var".
 
-inline "cic:/CoRN/metrics/ContFunctions/Composition/g.var" "Composition__".
+alias id "g" = "cic:/CoRN/metrics/ContFunctions/Composition/g.var".
 
 inline "cic:/CoRN/metrics/ContFunctions/comp_resp_lipschitz.con".
 

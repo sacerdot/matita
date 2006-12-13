@@ -44,7 +44,7 @@ arbitrary intervals.
 **Continuity
 *)
 
-inline "cic:/CoRN/ftc/MoreFunctions/Basic_Results/I.var" "Basic_Results__".
+alias id "I" = "cic:/CoRN/ftc/MoreFunctions/Basic_Results/I.var".
 
 (*#*
 Trivial stuff.
@@ -57,17 +57,17 @@ inline "cic:/CoRN/ftc/MoreFunctions/Continuous_imp_inc.con".
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/MoreFunctions/Basic_Results/cI.var" "Basic_Results__".
+alias id "cI" = "cic:/CoRN/ftc/MoreFunctions/Basic_Results/cI.var".
 
-inline "cic:/CoRN/ftc/MoreFunctions/Basic_Results/F.var" "Basic_Results__".
+alias id "F" = "cic:/CoRN/ftc/MoreFunctions/Basic_Results/F.var".
 
-inline "cic:/CoRN/ftc/MoreFunctions/Basic_Results/contF.var" "Basic_Results__".
+alias id "contF" = "cic:/CoRN/ftc/MoreFunctions/Basic_Results/contF.var".
 
 inline "cic:/CoRN/ftc/MoreFunctions/continuous_compact.con".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/MoreFunctions/Basic_Results/Hinc.var" "Basic_Results__".
+alias id "Hinc" = "cic:/CoRN/ftc/MoreFunctions/Basic_Results/Hinc.var".
 
 (* end show *)
 
@@ -93,19 +93,19 @@ Section Other_Results
 The usual stuff.
 *)
 
-inline "cic:/CoRN/ftc/MoreFunctions/Other_Results/I.var" "Other_Results__".
+alias id "I" = "cic:/CoRN/ftc/MoreFunctions/Other_Results/I.var".
 
-inline "cic:/CoRN/ftc/MoreFunctions/Other_Results/F.var" "Other_Results__".
+alias id "F" = "cic:/CoRN/ftc/MoreFunctions/Other_Results/F.var".
 
-inline "cic:/CoRN/ftc/MoreFunctions/Other_Results/G.var" "Other_Results__".
+alias id "G" = "cic:/CoRN/ftc/MoreFunctions/Other_Results/G.var".
 
 inline "cic:/CoRN/ftc/MoreFunctions/Continuous_wd.con".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/MoreFunctions/Other_Results/contF.var" "Other_Results__".
+alias id "contF" = "cic:/CoRN/ftc/MoreFunctions/Other_Results/contF.var".
 
-inline "cic:/CoRN/ftc/MoreFunctions/Other_Results/contG.var" "Other_Results__".
+alias id "contG" = "cic:/CoRN/ftc/MoreFunctions/Other_Results/contG.var".
 
 (* end show *)
 
@@ -151,17 +151,17 @@ Hint Immediate included_imp_Continuous Included_imp_Continuous: continuous.
 Section Corollaries
 *)
 
-inline "cic:/CoRN/ftc/MoreFunctions/Corollaries/I.var" "Corollaries__".
+alias id "I" = "cic:/CoRN/ftc/MoreFunctions/Corollaries/I.var".
 
-inline "cic:/CoRN/ftc/MoreFunctions/Corollaries/cI.var" "Corollaries__".
+alias id "cI" = "cic:/CoRN/ftc/MoreFunctions/Corollaries/cI.var".
 
-inline "cic:/CoRN/ftc/MoreFunctions/Corollaries/F.var" "Corollaries__".
+alias id "F" = "cic:/CoRN/ftc/MoreFunctions/Corollaries/F.var".
 
-inline "cic:/CoRN/ftc/MoreFunctions/Corollaries/G.var" "Corollaries__".
+alias id "G" = "cic:/CoRN/ftc/MoreFunctions/Corollaries/G.var".
 
-inline "cic:/CoRN/ftc/MoreFunctions/Corollaries/contF.var" "Corollaries__".
+alias id "contF" = "cic:/CoRN/ftc/MoreFunctions/Corollaries/contF.var".
 
-inline "cic:/CoRN/ftc/MoreFunctions/Corollaries/contG.var" "Corollaries__".
+alias id "contG" = "cic:/CoRN/ftc/MoreFunctions/Corollaries/contG.var".
 
 inline "cic:/CoRN/ftc/MoreFunctions/Continuous_div.con".
 
@@ -179,7 +179,7 @@ Hint Resolve Continuous_div: continuous.
 Section Sums
 *)
 
-inline "cic:/CoRN/ftc/MoreFunctions/Sums/I.var" "Sums__".
+alias id "I" = "cic:/CoRN/ftc/MoreFunctions/Sums/I.var".
 
 inline "cic:/CoRN/ftc/MoreFunctions/Continuous_Sumx.con".
 
@@ -188,9 +188,9 @@ inline "cic:/CoRN/ftc/MoreFunctions/Continuous_Sumx.con".
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/MoreFunctions/Sums/f.var" "Sums__".
+alias id "f" = "cic:/CoRN/ftc/MoreFunctions/Sums/f.var".
 
-inline "cic:/CoRN/ftc/MoreFunctions/Sums/contF.var" "Sums__".
+alias id "contF" = "cic:/CoRN/ftc/MoreFunctions/Sums/contF.var".
 
 inline "cic:/CoRN/ftc/MoreFunctions/Continuous_Sum0.con".
 
@@ -216,15 +216,15 @@ Derivative is not that much different.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/MoreFunctions/Basic_Properties/I.var" "Basic_Properties__".
+alias id "I" = "cic:/CoRN/ftc/MoreFunctions/Basic_Properties/I.var".
 
-inline "cic:/CoRN/ftc/MoreFunctions/Basic_Properties/pI.var" "Basic_Properties__".
+alias id "pI" = "cic:/CoRN/ftc/MoreFunctions/Basic_Properties/pI.var".
 
-inline "cic:/CoRN/ftc/MoreFunctions/Basic_Properties/F.var" "Basic_Properties__".
+alias id "F" = "cic:/CoRN/ftc/MoreFunctions/Basic_Properties/F.var".
 
-inline "cic:/CoRN/ftc/MoreFunctions/Basic_Properties/G.var" "Basic_Properties__".
+alias id "G" = "cic:/CoRN/ftc/MoreFunctions/Basic_Properties/G.var".
 
-inline "cic:/CoRN/ftc/MoreFunctions/Basic_Properties/H.var" "Basic_Properties__".
+alias id "H" = "cic:/CoRN/ftc/MoreFunctions/Basic_Properties/H.var".
 
 inline "cic:/CoRN/ftc/MoreFunctions/Derivative_wdl.con".
 
@@ -257,26 +257,26 @@ Hint Immediate Derivative_imp_Continuous Derivative_imp_Continuous':
 Section More_Results
 *)
 
-inline "cic:/CoRN/ftc/MoreFunctions/More_Results/I.var" "More_Results__".
+alias id "I" = "cic:/CoRN/ftc/MoreFunctions/More_Results/I.var".
 
-inline "cic:/CoRN/ftc/MoreFunctions/More_Results/pI.var" "More_Results__".
+alias id "pI" = "cic:/CoRN/ftc/MoreFunctions/More_Results/pI.var".
 
 (*#*
 %\begin{convention}% Assume that [F'] and [G'] are derivatives of [F] and [G], respectively, in [I].
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/MoreFunctions/More_Results/F.var" "More_Results__".
+alias id "F" = "cic:/CoRN/ftc/MoreFunctions/More_Results/F.var".
 
-inline "cic:/CoRN/ftc/MoreFunctions/More_Results/F'.var" "More_Results__".
+alias id "F'" = "cic:/CoRN/ftc/MoreFunctions/More_Results/F'.var".
 
-inline "cic:/CoRN/ftc/MoreFunctions/More_Results/G.var" "More_Results__".
+alias id "G" = "cic:/CoRN/ftc/MoreFunctions/More_Results/G.var".
 
-inline "cic:/CoRN/ftc/MoreFunctions/More_Results/G'.var" "More_Results__".
+alias id "G'" = "cic:/CoRN/ftc/MoreFunctions/More_Results/G'.var".
 
-inline "cic:/CoRN/ftc/MoreFunctions/More_Results/derF.var" "More_Results__".
+alias id "derF" = "cic:/CoRN/ftc/MoreFunctions/More_Results/derF.var".
 
-inline "cic:/CoRN/ftc/MoreFunctions/More_Results/derG.var" "More_Results__".
+alias id "derG" = "cic:/CoRN/ftc/MoreFunctions/More_Results/derG.var".
 
 inline "cic:/CoRN/ftc/MoreFunctions/included_imp_Derivative.con".
 
@@ -308,25 +308,25 @@ End More_Results
 Section More_Corollaries
 *)
 
-inline "cic:/CoRN/ftc/MoreFunctions/More_Corollaries/I.var" "More_Corollaries__".
+alias id "I" = "cic:/CoRN/ftc/MoreFunctions/More_Corollaries/I.var".
 
-inline "cic:/CoRN/ftc/MoreFunctions/More_Corollaries/pI.var" "More_Corollaries__".
+alias id "pI" = "cic:/CoRN/ftc/MoreFunctions/More_Corollaries/pI.var".
 
-inline "cic:/CoRN/ftc/MoreFunctions/More_Corollaries/F.var" "More_Corollaries__".
+alias id "F" = "cic:/CoRN/ftc/MoreFunctions/More_Corollaries/F.var".
 
-inline "cic:/CoRN/ftc/MoreFunctions/More_Corollaries/F'.var" "More_Corollaries__".
+alias id "F'" = "cic:/CoRN/ftc/MoreFunctions/More_Corollaries/F'.var".
 
-inline "cic:/CoRN/ftc/MoreFunctions/More_Corollaries/G.var" "More_Corollaries__".
+alias id "G" = "cic:/CoRN/ftc/MoreFunctions/More_Corollaries/G.var".
 
-inline "cic:/CoRN/ftc/MoreFunctions/More_Corollaries/G'.var" "More_Corollaries__".
+alias id "G'" = "cic:/CoRN/ftc/MoreFunctions/More_Corollaries/G'.var".
 
-inline "cic:/CoRN/ftc/MoreFunctions/More_Corollaries/derF.var" "More_Corollaries__".
+alias id "derF" = "cic:/CoRN/ftc/MoreFunctions/More_Corollaries/derF.var".
 
-inline "cic:/CoRN/ftc/MoreFunctions/More_Corollaries/derG.var" "More_Corollaries__".
+alias id "derG" = "cic:/CoRN/ftc/MoreFunctions/More_Corollaries/derG.var".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/MoreFunctions/More_Corollaries/Gbnd.var" "More_Corollaries__".
+alias id "Gbnd" = "cic:/CoRN/ftc/MoreFunctions/More_Corollaries/Gbnd.var".
 
 (* end show *)
 
@@ -340,19 +340,19 @@ End More_Corollaries
 Section More_Sums
 *)
 
-inline "cic:/CoRN/ftc/MoreFunctions/More_Sums/I.var" "More_Sums__".
+alias id "I" = "cic:/CoRN/ftc/MoreFunctions/More_Sums/I.var".
 
-inline "cic:/CoRN/ftc/MoreFunctions/More_Sums/pI.var" "More_Sums__".
+alias id "pI" = "cic:/CoRN/ftc/MoreFunctions/More_Sums/pI.var".
 
 inline "cic:/CoRN/ftc/MoreFunctions/Derivative_Sumx.con".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/MoreFunctions/More_Sums/f.var" "More_Sums__".
+alias id "f" = "cic:/CoRN/ftc/MoreFunctions/More_Sums/f.var".
 
-inline "cic:/CoRN/ftc/MoreFunctions/More_Sums/f'.var" "More_Sums__".
+alias id "f'" = "cic:/CoRN/ftc/MoreFunctions/More_Sums/f'.var".
 
-inline "cic:/CoRN/ftc/MoreFunctions/More_Sums/derF.var" "More_Sums__".
+alias id "derF" = "cic:/CoRN/ftc/MoreFunctions/More_Sums/derF.var".
 
 (* end show *)
 
@@ -373,9 +373,9 @@ Section Diffble_Basic_Properties
 Mutatis mutandis for differentiability.
 *)
 
-inline "cic:/CoRN/ftc/MoreFunctions/Diffble_Basic_Properties/I.var" "Diffble_Basic_Properties__".
+alias id "I" = "cic:/CoRN/ftc/MoreFunctions/Diffble_Basic_Properties/I.var".
 
-inline "cic:/CoRN/ftc/MoreFunctions/Diffble_Basic_Properties/pI.var" "Diffble_Basic_Properties__".
+alias id "pI" = "cic:/CoRN/ftc/MoreFunctions/Diffble_Basic_Properties/pI.var".
 
 inline "cic:/CoRN/ftc/MoreFunctions/Diffble_imp_inc.con".
 
@@ -383,13 +383,13 @@ inline "cic:/CoRN/ftc/MoreFunctions/Derivative_imp_Diffble.con".
 
 inline "cic:/CoRN/ftc/MoreFunctions/Diffble_wd.con".
 
-inline "cic:/CoRN/ftc/MoreFunctions/Diffble_Basic_Properties/F.var" "Diffble_Basic_Properties__".
+alias id "F" = "cic:/CoRN/ftc/MoreFunctions/Diffble_Basic_Properties/F.var".
 
-inline "cic:/CoRN/ftc/MoreFunctions/Diffble_Basic_Properties/G.var" "Diffble_Basic_Properties__".
+alias id "G" = "cic:/CoRN/ftc/MoreFunctions/Diffble_Basic_Properties/G.var".
 
-inline "cic:/CoRN/ftc/MoreFunctions/Diffble_Basic_Properties/diffF.var" "Diffble_Basic_Properties__".
+alias id "diffF" = "cic:/CoRN/ftc/MoreFunctions/Diffble_Basic_Properties/diffF.var".
 
-inline "cic:/CoRN/ftc/MoreFunctions/Diffble_Basic_Properties/diffG.var" "Diffble_Basic_Properties__".
+alias id "diffG" = "cic:/CoRN/ftc/MoreFunctions/Diffble_Basic_Properties/diffG.var".
 
 (*#*
 %\begin{convention}% Assume [F] and [G] are differentiable in [I].
@@ -430,17 +430,17 @@ Hint Immediate Diffble_imp_inc: included.
 Section Diffble_Corollaries
 *)
 
-inline "cic:/CoRN/ftc/MoreFunctions/Diffble_Corollaries/I.var" "Diffble_Corollaries__".
+alias id "I" = "cic:/CoRN/ftc/MoreFunctions/Diffble_Corollaries/I.var".
 
-inline "cic:/CoRN/ftc/MoreFunctions/Diffble_Corollaries/pI.var" "Diffble_Corollaries__".
+alias id "pI" = "cic:/CoRN/ftc/MoreFunctions/Diffble_Corollaries/pI.var".
 
-inline "cic:/CoRN/ftc/MoreFunctions/Diffble_Corollaries/F.var" "Diffble_Corollaries__".
+alias id "F" = "cic:/CoRN/ftc/MoreFunctions/Diffble_Corollaries/F.var".
 
-inline "cic:/CoRN/ftc/MoreFunctions/Diffble_Corollaries/G.var" "Diffble_Corollaries__".
+alias id "G" = "cic:/CoRN/ftc/MoreFunctions/Diffble_Corollaries/G.var".
 
-inline "cic:/CoRN/ftc/MoreFunctions/Diffble_Corollaries/diffF.var" "Diffble_Corollaries__".
+alias id "diffF" = "cic:/CoRN/ftc/MoreFunctions/Diffble_Corollaries/diffF.var".
 
-inline "cic:/CoRN/ftc/MoreFunctions/Diffble_Corollaries/diffG.var" "Diffble_Corollaries__".
+alias id "diffG" = "cic:/CoRN/ftc/MoreFunctions/Diffble_Corollaries/diffG.var".
 
 inline "cic:/CoRN/ftc/MoreFunctions/Diffble_div.con".
 
@@ -463,9 +463,9 @@ Section Nth_Derivative
 Higher order derivatives pose more interesting problems.  It turns out that it really becomes necessary to generalize our [n_deriv] operator to any interval.
 *)
 
-inline "cic:/CoRN/ftc/MoreFunctions/Nth_Derivative/I.var" "Nth_Derivative__".
+alias id "I" = "cic:/CoRN/ftc/MoreFunctions/Nth_Derivative/I.var".
 
-inline "cic:/CoRN/ftc/MoreFunctions/Nth_Derivative/pI.var" "Nth_Derivative__".
+alias id "pI" = "cic:/CoRN/ftc/MoreFunctions/Nth_Derivative/pI.var".
 
 (* UNEXPORTED
 Section Definitions
@@ -476,11 +476,11 @@ Section Definitions
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/MoreFunctions/Nth_Derivative/Definitions/n.var" "Nth_Derivative__Definitions__".
+alias id "n" = "cic:/CoRN/ftc/MoreFunctions/Nth_Derivative/Definitions/n.var".
 
-inline "cic:/CoRN/ftc/MoreFunctions/Nth_Derivative/Definitions/F.var" "Nth_Derivative__Definitions__".
+alias id "F" = "cic:/CoRN/ftc/MoreFunctions/Nth_Derivative/Definitions/F.var".
 
-inline "cic:/CoRN/ftc/MoreFunctions/Nth_Derivative/Definitions/diffF.var" "Nth_Derivative__Definitions__".
+alias id "diffF" = "cic:/CoRN/ftc/MoreFunctions/Nth_Derivative/Definitions/diffF.var".
 
 inline "cic:/CoRN/ftc/MoreFunctions/N_Deriv_fun.con".
 
@@ -581,11 +581,11 @@ Section Derivating_Diffble
 As a special case we get a differentiation operator%\ldots%#...#
 *)
 
-inline "cic:/CoRN/ftc/MoreFunctions/Nth_Derivative/Derivating_Diffble/F.var" "Nth_Derivative__Derivating_Diffble__".
+alias id "F" = "cic:/CoRN/ftc/MoreFunctions/Nth_Derivative/Derivating_Diffble/F.var".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/MoreFunctions/Nth_Derivative/Derivating_Diffble/diffF.var" "Nth_Derivative__Derivating_Diffble__".
+alias id "diffF" = "cic:/CoRN/ftc/MoreFunctions/Nth_Derivative/Derivating_Diffble/diffF.var".
 
 (* end show *)
 

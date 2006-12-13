@@ -28,9 +28,9 @@ include "ftc/Differentiability.ma".
 Section Automatizing_Continuity
 *)
 
-inline "cic:/CoRN/tactics/DiffTactics2/Automatizing_Continuity/a.var" "Automatizing_Continuity__".
+alias id "a" = "cic:/CoRN/tactics/DiffTactics2/Automatizing_Continuity/a.var".
 
-inline "cic:/CoRN/tactics/DiffTactics2/Automatizing_Continuity/b.var" "Automatizing_Continuity__".
+alias id "b" = "cic:/CoRN/tactics/DiffTactics2/Automatizing_Continuity/b.var".
 
 inline "cic:/CoRN/tactics/DiffTactics2/cont_function.ind".
 
@@ -98,9 +98,9 @@ Ltac New_Contin :=
 Section Automatizing_Derivatives
 *)
 
-inline "cic:/CoRN/tactics/DiffTactics2/Automatizing_Derivatives/a.var" "Automatizing_Derivatives__".
+alias id "a" = "cic:/CoRN/tactics/DiffTactics2/Automatizing_Derivatives/a.var".
 
-inline "cic:/CoRN/tactics/DiffTactics2/Automatizing_Derivatives/b.var" "Automatizing_Derivatives__".
+alias id "b" = "cic:/CoRN/tactics/DiffTactics2/Automatizing_Derivatives/b.var".
 
 inline "cic:/CoRN/tactics/DiffTactics2/deriv_function.ind".
 

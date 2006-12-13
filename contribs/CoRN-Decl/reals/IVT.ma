@@ -39,17 +39,17 @@ Section Nested_Intervals
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/reals/IVT/Nested_Intervals/a.var" "Nested_Intervals__".
+alias id "a" = "cic:/CoRN/reals/IVT/Nested_Intervals/a.var".
 
-inline "cic:/CoRN/reals/IVT/Nested_Intervals/b.var" "Nested_Intervals__".
+alias id "b" = "cic:/CoRN/reals/IVT/Nested_Intervals/b.var".
 
-inline "cic:/CoRN/reals/IVT/Nested_Intervals/a_mon.var" "Nested_Intervals__".
+alias id "a_mon" = "cic:/CoRN/reals/IVT/Nested_Intervals/a_mon.var".
 
-inline "cic:/CoRN/reals/IVT/Nested_Intervals/b_mon.var" "Nested_Intervals__".
+alias id "b_mon" = "cic:/CoRN/reals/IVT/Nested_Intervals/b_mon.var".
 
-inline "cic:/CoRN/reals/IVT/Nested_Intervals/a_b.var" "Nested_Intervals__".
+alias id "a_b" = "cic:/CoRN/reals/IVT/Nested_Intervals/a_b.var".
 
-inline "cic:/CoRN/reals/IVT/Nested_Intervals/b_a.var" "Nested_Intervals__".
+alias id "b_a" = "cic:/CoRN/reals/IVT/Nested_Intervals/b_a.var".
 
 inline "cic:/CoRN/reals/IVT/a_mon'.con".
 
@@ -71,9 +71,9 @@ inline "cic:/CoRN/reals/IVT/Cnested_intervals_limit.con".
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/reals/IVT/Nested_Intervals/f.var" "Nested_Intervals__".
+alias id "f" = "cic:/CoRN/reals/IVT/Nested_Intervals/f.var".
 
-inline "cic:/CoRN/reals/IVT/Nested_Intervals/f_contin.var" "Nested_Intervals__".
+alias id "f_contin" = "cic:/CoRN/reals/IVT/Nested_Intervals/f_contin.var".
 
 inline "cic:/CoRN/reals/IVT/f_contin_pos.con".
 
@@ -81,9 +81,9 @@ inline "cic:/CoRN/reals/IVT/f_contin_neg.con".
 
 (*#* Assume also that [forall i, f (a i) [<=] Zero [<=] f (b i)]. *)
 
-inline "cic:/CoRN/reals/IVT/Nested_Intervals/f_a.var" "Nested_Intervals__".
+alias id "f_a" = "cic:/CoRN/reals/IVT/Nested_Intervals/f_a.var".
 
-inline "cic:/CoRN/reals/IVT/Nested_Intervals/f_b.var" "Nested_Intervals__".
+alias id "f_b" = "cic:/CoRN/reals/IVT/Nested_Intervals/f_b.var".
 
 inline "cic:/CoRN/reals/IVT/Cnested_intervals_zero.con".
 
@@ -97,19 +97,19 @@ Section Bisection
 
 (*#* ** Bissections *)
 
-inline "cic:/CoRN/reals/IVT/Bisection/f.var" "Bisection__".
+alias id "f" = "cic:/CoRN/reals/IVT/Bisection/f.var".
 
-inline "cic:/CoRN/reals/IVT/Bisection/f_apzero_interval.var" "Bisection__".
+alias id "f_apzero_interval" = "cic:/CoRN/reals/IVT/Bisection/f_apzero_interval.var".
 
-inline "cic:/CoRN/reals/IVT/Bisection/a.var" "Bisection__".
+alias id "a" = "cic:/CoRN/reals/IVT/Bisection/a.var".
 
-inline "cic:/CoRN/reals/IVT/Bisection/b.var" "Bisection__".
+alias id "b" = "cic:/CoRN/reals/IVT/Bisection/b.var".
 
-inline "cic:/CoRN/reals/IVT/Bisection/a_b.var" "Bisection__".
+alias id "a_b" = "cic:/CoRN/reals/IVT/Bisection/a_b.var".
 
-inline "cic:/CoRN/reals/IVT/Bisection/f_a.var" "Bisection__".
+alias id "f_a" = "cic:/CoRN/reals/IVT/Bisection/f_a.var".
 
-inline "cic:/CoRN/reals/IVT/Bisection/f_b.var" "Bisection__".
+alias id "f_b" = "cic:/CoRN/reals/IVT/Bisection/f_b.var".
 
 (*#*
 %\begin{convention}% Let [Small] denote [Two[/]ThreeNZ], [lft] be [(Two[*]a[+]b) [/]ThreeNZ] and [rht] be [(a[+]Two[*]b) [/]ThreeNZ].
@@ -150,9 +150,9 @@ End Bisection
 Section Bisect_Interval
 *)
 
-inline "cic:/CoRN/reals/IVT/Bisect_Interval/f.var" "Bisect_Interval__".
+alias id "f" = "cic:/CoRN/reals/IVT/Bisect_Interval/f.var".
 
-inline "cic:/CoRN/reals/IVT/Bisect_Interval/C_f_apzero_interval.var" "Bisect_Interval__".
+alias id "C_f_apzero_interval" = "cic:/CoRN/reals/IVT/Bisect_Interval/C_f_apzero_interval.var".
 
 (* begin hide *)
 
@@ -180,21 +180,21 @@ Section IVT_Op
 Same conventions as before.
 *)
 
-inline "cic:/CoRN/reals/IVT/IVT_Op/f.var" "IVT_Op__".
+alias id "f" = "cic:/CoRN/reals/IVT/IVT_Op/f.var".
 
-inline "cic:/CoRN/reals/IVT/IVT_Op/f_contin.var" "IVT_Op__".
+alias id "f_contin" = "cic:/CoRN/reals/IVT/IVT_Op/f_contin.var".
 
-inline "cic:/CoRN/reals/IVT/IVT_Op/f_apzero_interval.var" "IVT_Op__".
+alias id "f_apzero_interval" = "cic:/CoRN/reals/IVT/IVT_Op/f_apzero_interval.var".
 
-inline "cic:/CoRN/reals/IVT/IVT_Op/a.var" "IVT_Op__".
+alias id "a" = "cic:/CoRN/reals/IVT/IVT_Op/a.var".
 
-inline "cic:/CoRN/reals/IVT/IVT_Op/b.var" "IVT_Op__".
+alias id "b" = "cic:/CoRN/reals/IVT/IVT_Op/b.var".
 
-inline "cic:/CoRN/reals/IVT/IVT_Op/a_b.var" "IVT_Op__".
+alias id "a_b" = "cic:/CoRN/reals/IVT/IVT_Op/a_b.var".
 
-inline "cic:/CoRN/reals/IVT/IVT_Op/f_a.var" "IVT_Op__".
+alias id "f_a" = "cic:/CoRN/reals/IVT/IVT_Op/f_a.var".
 
-inline "cic:/CoRN/reals/IVT/IVT_Op/f_b.var" "IVT_Op__".
+alias id "f_b" = "cic:/CoRN/reals/IVT/IVT_Op/f_b.var".
 
 (* begin hide *)
 

@@ -30,15 +30,15 @@ include "tactics/AlgReflection.ma".
 Section Field_Interpretation_Function
 *)
 
-inline "cic:/CoRN/tactics/FieldReflection/Field_Interpretation_Function/F.var" "Field_Interpretation_Function__".
+alias id "F" = "cic:/CoRN/tactics/FieldReflection/Field_Interpretation_Function/F.var".
 
-inline "cic:/CoRN/tactics/FieldReflection/Field_Interpretation_Function/val.var" "Field_Interpretation_Function__".
+alias id "val" = "cic:/CoRN/tactics/FieldReflection/Field_Interpretation_Function/val.var".
 
-inline "cic:/CoRN/tactics/FieldReflection/Field_Interpretation_Function/unop.var" "Field_Interpretation_Function__".
+alias id "unop" = "cic:/CoRN/tactics/FieldReflection/Field_Interpretation_Function/unop.var".
 
-inline "cic:/CoRN/tactics/FieldReflection/Field_Interpretation_Function/binop.var" "Field_Interpretation_Function__".
+alias id "binop" = "cic:/CoRN/tactics/FieldReflection/Field_Interpretation_Function/binop.var".
 
-inline "cic:/CoRN/tactics/FieldReflection/Field_Interpretation_Function/pfun.var" "Field_Interpretation_Function__".
+alias id "pfun" = "cic:/CoRN/tactics/FieldReflection/Field_Interpretation_Function/pfun.var".
 
 inline "cic:/CoRN/tactics/FieldReflection/interpF.ind".
 
@@ -86,15 +86,15 @@ End Field_Interpretation_Function
 Section Field_NormCorrect
 *)
 
-inline "cic:/CoRN/tactics/FieldReflection/Field_NormCorrect/F.var" "Field_NormCorrect__".
+alias id "F" = "cic:/CoRN/tactics/FieldReflection/Field_NormCorrect/F.var".
 
-inline "cic:/CoRN/tactics/FieldReflection/Field_NormCorrect/val.var" "Field_NormCorrect__".
+alias id "val" = "cic:/CoRN/tactics/FieldReflection/Field_NormCorrect/val.var".
 
-inline "cic:/CoRN/tactics/FieldReflection/Field_NormCorrect/unop.var" "Field_NormCorrect__".
+alias id "unop" = "cic:/CoRN/tactics/FieldReflection/Field_NormCorrect/unop.var".
 
-inline "cic:/CoRN/tactics/FieldReflection/Field_NormCorrect/binop.var" "Field_NormCorrect__".
+alias id "binop" = "cic:/CoRN/tactics/FieldReflection/Field_NormCorrect/binop.var".
 
-inline "cic:/CoRN/tactics/FieldReflection/Field_NormCorrect/pfun.var" "Field_NormCorrect__".
+alias id "pfun" = "cic:/CoRN/tactics/FieldReflection/Field_NormCorrect/pfun.var".
 
 (* NOTATION
 Notation II := (interpF F val unop binop pfun).

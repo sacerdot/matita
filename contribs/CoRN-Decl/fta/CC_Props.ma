@@ -77,7 +77,7 @@ Section Continuity_for_CC
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/fta/CC_Props/Continuity_for_CC/f.var" "Continuity_for_CC__".
+alias id "f" = "cic:/CoRN/fta/CC_Props/Continuity_for_CC/f.var".
 
 (* (CSetoid_un_op CC). *)
 

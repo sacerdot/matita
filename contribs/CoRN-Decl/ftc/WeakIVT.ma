@@ -47,11 +47,11 @@ will prove them here.
 Section Lemma1
 *)
 
-inline "cic:/CoRN/ftc/WeakIVT/Lemma1/a.var" "Lemma1__".
+alias id "a" = "cic:/CoRN/ftc/WeakIVT/Lemma1/a.var".
 
-inline "cic:/CoRN/ftc/WeakIVT/Lemma1/b.var" "Lemma1__".
+alias id "b" = "cic:/CoRN/ftc/WeakIVT/Lemma1/b.var".
 
-inline "cic:/CoRN/ftc/WeakIVT/Lemma1/Hab.var" "Lemma1__".
+alias id "Hab" = "cic:/CoRN/ftc/WeakIVT/Lemma1/Hab.var".
 
 (* begin hide *)
 
@@ -59,9 +59,9 @@ inline "cic:/CoRN/ftc/WeakIVT/Lemma1/I.con" "Lemma1__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/WeakIVT/Lemma1/F.var" "Lemma1__".
+alias id "F" = "cic:/CoRN/ftc/WeakIVT/Lemma1/F.var".
 
-inline "cic:/CoRN/ftc/WeakIVT/Lemma1/contF.var" "Lemma1__".
+alias id "contF" = "cic:/CoRN/ftc/WeakIVT/Lemma1/contF.var".
 
 (*#* **First Lemmas
 
@@ -84,11 +84,11 @@ End Lemma1
 Section Lemma2
 *)
 
-inline "cic:/CoRN/ftc/WeakIVT/Lemma2/a.var" "Lemma2__".
+alias id "a" = "cic:/CoRN/ftc/WeakIVT/Lemma2/a.var".
 
-inline "cic:/CoRN/ftc/WeakIVT/Lemma2/b.var" "Lemma2__".
+alias id "b" = "cic:/CoRN/ftc/WeakIVT/Lemma2/b.var".
 
-inline "cic:/CoRN/ftc/WeakIVT/Lemma2/Hab.var" "Lemma2__".
+alias id "Hab" = "cic:/CoRN/ftc/WeakIVT/Lemma2/Hab.var".
 
 (* begin hide *)
 
@@ -96,9 +96,9 @@ inline "cic:/CoRN/ftc/WeakIVT/Lemma2/I.con" "Lemma2__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/WeakIVT/Lemma2/F.var" "Lemma2__".
+alias id "F" = "cic:/CoRN/ftc/WeakIVT/Lemma2/F.var".
 
-inline "cic:/CoRN/ftc/WeakIVT/Lemma2/contF.var" "Lemma2__".
+alias id "contF" = "cic:/CoRN/ftc/WeakIVT/Lemma2/contF.var".
 
 (*#*
 If [f(b) [<] f(a)], a similar result holds:
@@ -122,13 +122,13 @@ these assumptions, we can build two sequences of values which
 converge to [x0] such that [f(x0) [=] z].
 *)
 
-inline "cic:/CoRN/ftc/WeakIVT/IVT/a.var" "IVT__".
+alias id "a" = "cic:/CoRN/ftc/WeakIVT/IVT/a.var".
 
-inline "cic:/CoRN/ftc/WeakIVT/IVT/b.var" "IVT__".
+alias id "b" = "cic:/CoRN/ftc/WeakIVT/IVT/b.var".
 
-inline "cic:/CoRN/ftc/WeakIVT/IVT/Hab'.var" "IVT__".
+alias id "Hab'" = "cic:/CoRN/ftc/WeakIVT/IVT/Hab'.var".
 
-inline "cic:/CoRN/ftc/WeakIVT/IVT/Hab.var" "IVT__".
+alias id "Hab" = "cic:/CoRN/ftc/WeakIVT/IVT/Hab.var".
 
 (* begin hide *)
 
@@ -136,9 +136,9 @@ inline "cic:/CoRN/ftc/WeakIVT/IVT/I.con" "IVT__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/WeakIVT/IVT/F.var" "IVT__".
+alias id "F" = "cic:/CoRN/ftc/WeakIVT/IVT/F.var".
 
-inline "cic:/CoRN/ftc/WeakIVT/IVT/contF.var" "IVT__".
+alias id "contF" = "cic:/CoRN/ftc/WeakIVT/IVT/contF.var".
 
 (* begin hide *)
 
@@ -148,7 +148,7 @@ inline "cic:/CoRN/ftc/WeakIVT/IVT/incF.con" "IVT__".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/WeakIVT/IVT/incrF.var" "IVT__".
+alias id "incrF" = "cic:/CoRN/ftc/WeakIVT/IVT/incrF.var".
 
 (* end show *)
 
@@ -164,11 +164,11 @@ inline "cic:/CoRN/ftc/WeakIVT/IVT/HFab'.con" "IVT__".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/WeakIVT/IVT/z.var" "IVT__".
+alias id "z" = "cic:/CoRN/ftc/WeakIVT/IVT/z.var".
 
-inline "cic:/CoRN/ftc/WeakIVT/IVT/Haz.var" "IVT__".
+alias id "Haz" = "cic:/CoRN/ftc/WeakIVT/IVT/Haz.var".
 
-inline "cic:/CoRN/ftc/WeakIVT/IVT/Hzb.var" "IVT__".
+alias id "Hzb" = "cic:/CoRN/ftc/WeakIVT/IVT/Hzb.var".
 
 (* end show *)
 

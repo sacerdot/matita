@@ -40,7 +40,7 @@ We start by showing how to inject the rational numbers in the field of Cauchy se
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/reals/Cauchy_CReals/R_CReals/F.var" "R_CReals__".
+alias id "F" = "cic:/CoRN/reals/Cauchy_CReals/R_CReals/F.var".
 
 (* NOTATION
 Notation "'R_COrdField''" := (R_COrdField F).
@@ -98,7 +98,7 @@ inline "cic:/CoRN/reals/Cauchy_CReals/R_CReals/T.con" "R_CReals__".
 resulting one is, too.
 *)
 
-inline "cic:/CoRN/reals/Cauchy_CReals/R_CReals/F_is_archemaedian.var" "R_CReals__".
+alias id "F_is_archemaedian" = "cic:/CoRN/reals/Cauchy_CReals/R_CReals/F_is_archemaedian.var".
 
 inline "cic:/CoRN/reals/Cauchy_CReals/R_is_archemaedian.con".
 

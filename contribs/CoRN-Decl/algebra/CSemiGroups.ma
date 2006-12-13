@@ -66,7 +66,7 @@ The axiomatic properties of a semi group.
 Section CSemiGroup_axioms
 *)
 
-inline "cic:/CoRN/algebra/CSemiGroups/CSemiGroup_axioms/G.var" "CSemiGroup_axioms__".
+alias id "G" = "cic:/CoRN/algebra/CSemiGroups/CSemiGroup_axioms/G.var".
 
 inline "cic:/CoRN/algebra/CSemiGroups/CSemiGroup_is_CSemiGroup.con".
 
@@ -89,7 +89,7 @@ Let [G] be a semi-group.
 Section CSemiGroup_basics
 *)
 
-inline "cic:/CoRN/algebra/CSemiGroups/CSemiGroup_basics/G.var" "CSemiGroup_basics__".
+alias id "G" = "cic:/CoRN/algebra/CSemiGroups/CSemiGroup_basics/G.var".
 
 (* End_SpecReals *)
 
@@ -121,11 +121,11 @@ At this stage, we will always consider automorphisms; we %{\em %could%}% treat t
 Section Part_Function_Plus
 *)
 
-inline "cic:/CoRN/algebra/CSemiGroups/Part_Function_Plus/G.var" "Part_Function_Plus__".
+alias id "G" = "cic:/CoRN/algebra/CSemiGroups/Part_Function_Plus/G.var".
 
-inline "cic:/CoRN/algebra/CSemiGroups/Part_Function_Plus/F.var" "Part_Function_Plus__".
+alias id "F" = "cic:/CoRN/algebra/CSemiGroups/Part_Function_Plus/F.var".
 
-inline "cic:/CoRN/algebra/CSemiGroups/Part_Function_Plus/F'.var" "Part_Function_Plus__".
+alias id "F'" = "cic:/CoRN/algebra/CSemiGroups/Part_Function_Plus/F'.var".
 
 (* begin hide *)
 
@@ -144,7 +144,7 @@ inline "cic:/CoRN/algebra/CSemiGroups/Fplus.con".
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CSemiGroups/Part_Function_Plus/R.var" "Part_Function_Plus__".
+alias id "R" = "cic:/CoRN/algebra/CSemiGroups/Part_Function_Plus/R.var".
 
 inline "cic:/CoRN/algebra/CSemiGroups/included_FPlus.con".
 
@@ -183,11 +183,11 @@ predicate on the semi-group which is preserved by [[+]].
 Section SubCSemiGroups
 *)
 
-inline "cic:/CoRN/algebra/CSemiGroups/SubCSemiGroups/csg.var" "SubCSemiGroups__".
+alias id "csg" = "cic:/CoRN/algebra/CSemiGroups/SubCSemiGroups/csg.var".
 
-inline "cic:/CoRN/algebra/CSemiGroups/SubCSemiGroups/P.var" "SubCSemiGroups__".
+alias id "P" = "cic:/CoRN/algebra/CSemiGroups/SubCSemiGroups/P.var".
 
-inline "cic:/CoRN/algebra/CSemiGroups/SubCSemiGroups/op_pres_P.var" "SubCSemiGroups__".
+alias id "op_pres_P" = "cic:/CoRN/algebra/CSemiGroups/SubCSemiGroups/op_pres_P.var".
 
 inline "cic:/CoRN/algebra/CSemiGroups/SubCSemiGroups/subcrr.con" "SubCSemiGroups__".
 

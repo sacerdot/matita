@@ -53,11 +53,11 @@ defined in a compact interval.  For this, partial sums are defined and
 convergence is simply the convergence of the sequence of partial sums.
 *)
 
-inline "cic:/CoRN/ftc/FunctSeries/Definitions/a.var" "Definitions__".
+alias id "a" = "cic:/CoRN/ftc/FunctSeries/Definitions/a.var".
 
-inline "cic:/CoRN/ftc/FunctSeries/Definitions/b.var" "Definitions__".
+alias id "b" = "cic:/CoRN/ftc/FunctSeries/Definitions/b.var".
 
-inline "cic:/CoRN/ftc/FunctSeries/Definitions/Hab.var" "Definitions__".
+alias id "Hab" = "cic:/CoRN/ftc/FunctSeries/Definitions/Hab.var".
 
 (* begin hide *)
 
@@ -65,7 +65,7 @@ inline "cic:/CoRN/ftc/FunctSeries/Definitions/I.con" "Definitions__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/FunctSeries/Definitions/f.var" "Definitions__".
+alias id "f" = "cic:/CoRN/ftc/FunctSeries/Definitions/f.var".
 
 inline "cic:/CoRN/ftc/FunctSeries/fun_seq_part_sum.con".
 
@@ -87,7 +87,7 @@ the corresponding series.
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/FunctSeries/Definitions/H.var" "Definitions__".
+alias id "H" = "cic:/CoRN/ftc/FunctSeries/Definitions/H.var".
 
 (* end show *)
 
@@ -119,13 +119,13 @@ Hint Resolve fun_seq_part_sum_cont: continuous.
 Section More_Definitions
 *)
 
-inline "cic:/CoRN/ftc/FunctSeries/More_Definitions/a.var" "More_Definitions__".
+alias id "a" = "cic:/CoRN/ftc/FunctSeries/More_Definitions/a.var".
 
-inline "cic:/CoRN/ftc/FunctSeries/More_Definitions/b.var" "More_Definitions__".
+alias id "b" = "cic:/CoRN/ftc/FunctSeries/More_Definitions/b.var".
 
-inline "cic:/CoRN/ftc/FunctSeries/More_Definitions/Hab.var" "More_Definitions__".
+alias id "Hab" = "cic:/CoRN/ftc/FunctSeries/More_Definitions/Hab.var".
 
-inline "cic:/CoRN/ftc/FunctSeries/More_Definitions/f.var" "More_Definitions__".
+alias id "f" = "cic:/CoRN/ftc/FunctSeries/More_Definitions/f.var".
 
 (*#* A series can also be absolutely convergent. *)
 
@@ -144,11 +144,11 @@ Section Operations
 All of these are analogous to the properties for series of real numbers, so we won't comment much about them.
 *)
 
-inline "cic:/CoRN/ftc/FunctSeries/Operations/a.var" "Operations__".
+alias id "a" = "cic:/CoRN/ftc/FunctSeries/Operations/a.var".
 
-inline "cic:/CoRN/ftc/FunctSeries/Operations/b.var" "Operations__".
+alias id "b" = "cic:/CoRN/ftc/FunctSeries/Operations/b.var".
 
-inline "cic:/CoRN/ftc/FunctSeries/Operations/Hab.var" "Operations__".
+alias id "Hab" = "cic:/CoRN/ftc/FunctSeries/Operations/Hab.var".
 
 (* begin hide *)
 
@@ -168,9 +168,9 @@ inline "cic:/CoRN/ftc/FunctSeries/Fun_Series_Sum_zero.con".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/FunctSeries/Operations/f.var" "Operations__".
+alias id "f" = "cic:/CoRN/ftc/FunctSeries/Operations/f.var".
 
-inline "cic:/CoRN/ftc/FunctSeries/Operations/g.var" "Operations__".
+alias id "g" = "cic:/CoRN/ftc/FunctSeries/Operations/g.var".
 
 (* end show *)
 
@@ -178,9 +178,9 @@ inline "cic:/CoRN/ftc/FunctSeries/fun_series_convergent_wd.con".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/FunctSeries/Operations/convF.var" "Operations__".
+alias id "convF" = "cic:/CoRN/ftc/FunctSeries/Operations/convF.var".
 
-inline "cic:/CoRN/ftc/FunctSeries/Operations/convG.var" "Operations__".
+alias id "convG" = "cic:/CoRN/ftc/FunctSeries/Operations/convG.var".
 
 (* end show *)
 
@@ -199,11 +199,11 @@ inline "cic:/CoRN/ftc/FunctSeries/Fun_Series_Sum_min.con".
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/FunctSeries/Operations/c.var" "Operations__".
+alias id "c" = "cic:/CoRN/ftc/FunctSeries/Operations/c.var".
 
-inline "cic:/CoRN/ftc/FunctSeries/Operations/H.var" "Operations__".
+alias id "H" = "cic:/CoRN/ftc/FunctSeries/Operations/H.var".
 
-inline "cic:/CoRN/ftc/FunctSeries/Operations/contH.var" "Operations__".
+alias id "contH" = "cic:/CoRN/ftc/FunctSeries/Operations/contH.var".
 
 inline "cic:/CoRN/ftc/FunctSeries/conv_fun_series_scal.con".
 
@@ -217,11 +217,11 @@ End Operations
 Section More_Operations
 *)
 
-inline "cic:/CoRN/ftc/FunctSeries/More_Operations/a.var" "More_Operations__".
+alias id "a" = "cic:/CoRN/ftc/FunctSeries/More_Operations/a.var".
 
-inline "cic:/CoRN/ftc/FunctSeries/More_Operations/b.var" "More_Operations__".
+alias id "b" = "cic:/CoRN/ftc/FunctSeries/More_Operations/b.var".
 
-inline "cic:/CoRN/ftc/FunctSeries/More_Operations/Hab.var" "More_Operations__".
+alias id "Hab" = "cic:/CoRN/ftc/FunctSeries/More_Operations/Hab.var".
 
 (* begin hide *)
 
@@ -229,9 +229,9 @@ inline "cic:/CoRN/ftc/FunctSeries/More_Operations/I.con" "More_Operations__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/FunctSeries/More_Operations/f.var" "More_Operations__".
+alias id "f" = "cic:/CoRN/ftc/FunctSeries/More_Operations/f.var".
 
-inline "cic:/CoRN/ftc/FunctSeries/More_Operations/convF.var" "More_Operations__".
+alias id "convF" = "cic:/CoRN/ftc/FunctSeries/More_Operations/convF.var".
 
 inline "cic:/CoRN/ftc/FunctSeries/conv_fun_series_inv.con".
 
@@ -245,15 +245,15 @@ End More_Operations
 Section Other_Results
 *)
 
-inline "cic:/CoRN/ftc/FunctSeries/Other_Results/a.var" "Other_Results__".
+alias id "a" = "cic:/CoRN/ftc/FunctSeries/Other_Results/a.var".
 
-inline "cic:/CoRN/ftc/FunctSeries/Other_Results/b.var" "Other_Results__".
+alias id "b" = "cic:/CoRN/ftc/FunctSeries/Other_Results/b.var".
 
-inline "cic:/CoRN/ftc/FunctSeries/Other_Results/Hab.var" "Other_Results__".
+alias id "Hab" = "cic:/CoRN/ftc/FunctSeries/Other_Results/Hab.var".
 
-inline "cic:/CoRN/ftc/FunctSeries/Other_Results/f.var" "Other_Results__".
+alias id "f" = "cic:/CoRN/ftc/FunctSeries/Other_Results/f.var".
 
-inline "cic:/CoRN/ftc/FunctSeries/Other_Results/convF.var" "Other_Results__".
+alias id "convF" = "cic:/CoRN/ftc/FunctSeries/Other_Results/convF.var".
 
 (*#*
 The following relate the sum series with the limit of the sequence of
@@ -288,11 +288,11 @@ Section Convergence_Criteria
 Most of the convergence criteria for series of real numbers carry over to series of real-valued functions, so again we just present them without comments.
 *)
 
-inline "cic:/CoRN/ftc/FunctSeries/Convergence_Criteria/a.var" "Convergence_Criteria__".
+alias id "a" = "cic:/CoRN/ftc/FunctSeries/Convergence_Criteria/a.var".
 
-inline "cic:/CoRN/ftc/FunctSeries/Convergence_Criteria/b.var" "Convergence_Criteria__".
+alias id "b" = "cic:/CoRN/ftc/FunctSeries/Convergence_Criteria/b.var".
 
-inline "cic:/CoRN/ftc/FunctSeries/Convergence_Criteria/Hab.var" "Convergence_Criteria__".
+alias id "Hab" = "cic:/CoRN/ftc/FunctSeries/Convergence_Criteria/Hab.var".
 
 (* begin hide *)
 
@@ -300,9 +300,9 @@ inline "cic:/CoRN/ftc/FunctSeries/Convergence_Criteria/I.con" "Convergence_Crite
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/FunctSeries/Convergence_Criteria/f.var" "Convergence_Criteria__".
+alias id "f" = "cic:/CoRN/ftc/FunctSeries/Convergence_Criteria/f.var".
 
-inline "cic:/CoRN/ftc/FunctSeries/Convergence_Criteria/contF.var" "Convergence_Criteria__".
+alias id "contF" = "cic:/CoRN/ftc/FunctSeries/Convergence_Criteria/contF.var".
 
 (* UNEXPORTED
 Opaque Frestr.

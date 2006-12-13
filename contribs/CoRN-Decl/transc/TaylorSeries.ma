@@ -43,17 +43,17 @@ point of [J].
 Section Definitions
 *)
 
-inline "cic:/CoRN/transc/TaylorSeries/Definitions/J.var" "Definitions__".
+alias id "J" = "cic:/CoRN/transc/TaylorSeries/Definitions/J.var".
 
-inline "cic:/CoRN/transc/TaylorSeries/Definitions/pJ.var" "Definitions__".
+alias id "pJ" = "cic:/CoRN/transc/TaylorSeries/Definitions/pJ.var".
 
-inline "cic:/CoRN/transc/TaylorSeries/Definitions/F.var" "Definitions__".
+alias id "F" = "cic:/CoRN/transc/TaylorSeries/Definitions/F.var".
 
-inline "cic:/CoRN/transc/TaylorSeries/Definitions/diffF.var" "Definitions__".
+alias id "diffF" = "cic:/CoRN/transc/TaylorSeries/Definitions/diffF.var".
 
-inline "cic:/CoRN/transc/TaylorSeries/Definitions/a.var" "Definitions__".
+alias id "a" = "cic:/CoRN/transc/TaylorSeries/Definitions/a.var".
 
-inline "cic:/CoRN/transc/TaylorSeries/Definitions/Ha.var" "Definitions__".
+alias id "Ha" = "cic:/CoRN/transc/TaylorSeries/Definitions/Ha.var".
 
 inline "cic:/CoRN/transc/TaylorSeries/Taylor_Series'.con".
 
@@ -63,9 +63,9 @@ derivatives of [F].
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/transc/TaylorSeries/Definitions/f.var" "Definitions__".
+alias id "f" = "cic:/CoRN/transc/TaylorSeries/Definitions/f.var".
 
-inline "cic:/CoRN/transc/TaylorSeries/Definitions/derF.var" "Definitions__".
+alias id "derF" = "cic:/CoRN/transc/TaylorSeries/Definitions/derF.var".
 
 inline "cic:/CoRN/transc/TaylorSeries/Taylor_Series.con".
 
@@ -95,17 +95,17 @@ derivatives of [F] that guarantees convergence of its Taylor series to
 [F].
 *)
 
-inline "cic:/CoRN/transc/TaylorSeries/Convergence_in_IR/H.var" "Convergence_in_IR__".
+alias id "H" = "cic:/CoRN/transc/TaylorSeries/Convergence_in_IR/H.var".
 
-inline "cic:/CoRN/transc/TaylorSeries/Convergence_in_IR/F.var" "Convergence_in_IR__".
+alias id "F" = "cic:/CoRN/transc/TaylorSeries/Convergence_in_IR/F.var".
 
-inline "cic:/CoRN/transc/TaylorSeries/Convergence_in_IR/a.var" "Convergence_in_IR__".
+alias id "a" = "cic:/CoRN/transc/TaylorSeries/Convergence_in_IR/a.var".
 
-inline "cic:/CoRN/transc/TaylorSeries/Convergence_in_IR/Ha.var" "Convergence_in_IR__".
+alias id "Ha" = "cic:/CoRN/transc/TaylorSeries/Convergence_in_IR/Ha.var".
 
-inline "cic:/CoRN/transc/TaylorSeries/Convergence_in_IR/f.var" "Convergence_in_IR__".
+alias id "f" = "cic:/CoRN/transc/TaylorSeries/Convergence_in_IR/f.var".
 
-inline "cic:/CoRN/transc/TaylorSeries/Convergence_in_IR/derF.var" "Convergence_in_IR__".
+alias id "derF" = "cic:/CoRN/transc/TaylorSeries/Convergence_in_IR/derF.var".
 
 inline "cic:/CoRN/transc/TaylorSeries/Taylor_Series_imp_cont.con".
 
@@ -115,7 +115,7 @@ inline "cic:/CoRN/transc/TaylorSeries/Taylor_bnd.con".
 
 (* begin show *)
 
-inline "cic:/CoRN/transc/TaylorSeries/Convergence_in_IR/bndf.var" "Convergence_in_IR__".
+alias id "bndf" = "cic:/CoRN/transc/TaylorSeries/Convergence_in_IR/bndf.var".
 
 (* end show *)
 
@@ -173,7 +173,7 @@ will separately assume convergence.
 
 (* begin show *)
 
-inline "cic:/CoRN/transc/TaylorSeries/Convergence_in_IR/Hf.var" "Convergence_in_IR__".
+alias id "Hf" = "cic:/CoRN/transc/TaylorSeries/Convergence_in_IR/Hf.var".
 
 (* end show *)
 
@@ -220,27 +220,27 @@ provided that their derivatives coincide at a given point and their
 Taylor series converge to themselves.
 *)
 
-inline "cic:/CoRN/transc/TaylorSeries/Other_Results/F.var" "Other_Results__".
+alias id "F" = "cic:/CoRN/transc/TaylorSeries/Other_Results/F.var".
 
-inline "cic:/CoRN/transc/TaylorSeries/Other_Results/G.var" "Other_Results__".
+alias id "G" = "cic:/CoRN/transc/TaylorSeries/Other_Results/G.var".
 
-inline "cic:/CoRN/transc/TaylorSeries/Other_Results/a.var" "Other_Results__".
+alias id "a" = "cic:/CoRN/transc/TaylorSeries/Other_Results/a.var".
 
-inline "cic:/CoRN/transc/TaylorSeries/Other_Results/f.var" "Other_Results__".
+alias id "f" = "cic:/CoRN/transc/TaylorSeries/Other_Results/f.var".
 
-inline "cic:/CoRN/transc/TaylorSeries/Other_Results/g.var" "Other_Results__".
+alias id "g" = "cic:/CoRN/transc/TaylorSeries/Other_Results/g.var".
 
-inline "cic:/CoRN/transc/TaylorSeries/Other_Results/derF.var" "Other_Results__".
+alias id "derF" = "cic:/CoRN/transc/TaylorSeries/Other_Results/derF.var".
 
-inline "cic:/CoRN/transc/TaylorSeries/Other_Results/derG.var" "Other_Results__".
+alias id "derG" = "cic:/CoRN/transc/TaylorSeries/Other_Results/derG.var".
 
-inline "cic:/CoRN/transc/TaylorSeries/Other_Results/bndf.var" "Other_Results__".
+alias id "bndf" = "cic:/CoRN/transc/TaylorSeries/Other_Results/bndf.var".
 
-inline "cic:/CoRN/transc/TaylorSeries/Other_Results/bndg.var" "Other_Results__".
+alias id "bndg" = "cic:/CoRN/transc/TaylorSeries/Other_Results/bndg.var".
 
 (* begin show *)
 
-inline "cic:/CoRN/transc/TaylorSeries/Other_Results/Heq.var" "Other_Results__".
+alias id "Heq" = "cic:/CoRN/transc/TaylorSeries/Other_Results/Heq.var".
 
 (* end show *)
 

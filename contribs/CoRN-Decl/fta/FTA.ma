@@ -34,11 +34,11 @@ degree [(S n)].
 Section FTA_reg'
 *)
 
-inline "cic:/CoRN/fta/FTA/FTA_reg'/f.var" "FTA_reg'__".
+alias id "f" = "cic:/CoRN/fta/FTA/FTA_reg'/f.var".
 
-inline "cic:/CoRN/fta/FTA/FTA_reg'/n.var" "FTA_reg'__".
+alias id "n" = "cic:/CoRN/fta/FTA/FTA_reg'/n.var".
 
-inline "cic:/CoRN/fta/FTA/FTA_reg'/f_degree.var" "FTA_reg'__".
+alias id "f_degree" = "cic:/CoRN/fta/FTA/FTA_reg'/f_degree.var".
 
 inline "cic:/CoRN/fta/FTA/FTA_reg'.con".
 
@@ -57,15 +57,15 @@ less than or equal to [(S n)] and [c] be a complex number such that
 Section FTA_1
 *)
 
-inline "cic:/CoRN/fta/FTA/FTA_1/f.var" "FTA_1__".
+alias id "f" = "cic:/CoRN/fta/FTA/FTA_1/f.var".
 
-inline "cic:/CoRN/fta/FTA/FTA_1/n.var" "FTA_1__".
+alias id "n" = "cic:/CoRN/fta/FTA/FTA_1/n.var".
 
-inline "cic:/CoRN/fta/FTA/FTA_1/f_degree.var" "FTA_1__".
+alias id "f_degree" = "cic:/CoRN/fta/FTA/FTA_1/f_degree.var".
 
-inline "cic:/CoRN/fta/FTA/FTA_1/c.var" "FTA_1__".
+alias id "c" = "cic:/CoRN/fta/FTA/FTA_1/c.var".
 
-inline "cic:/CoRN/fta/FTA/FTA_1/f_c.var" "FTA_1__".
+alias id "f_c" = "cic:/CoRN/fta/FTA/FTA_1/f_c.var".
 
 inline "cic:/CoRN/fta/FTA/FTA_1a.con".
 

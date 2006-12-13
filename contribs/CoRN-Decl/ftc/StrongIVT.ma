@@ -36,13 +36,13 @@ part, we will simply do that, repeating the previous construction.
 The same notations and conventions apply as before.
 *)
 
-inline "cic:/CoRN/ftc/StrongIVT/IVT'/a.var" "IVT'__".
+alias id "a" = "cic:/CoRN/ftc/StrongIVT/IVT'/a.var".
 
-inline "cic:/CoRN/ftc/StrongIVT/IVT'/b.var" "IVT'__".
+alias id "b" = "cic:/CoRN/ftc/StrongIVT/IVT'/b.var".
 
-inline "cic:/CoRN/ftc/StrongIVT/IVT'/Hab'.var" "IVT'__".
+alias id "Hab'" = "cic:/CoRN/ftc/StrongIVT/IVT'/Hab'.var".
 
-inline "cic:/CoRN/ftc/StrongIVT/IVT'/Hab.var" "IVT'__".
+alias id "Hab" = "cic:/CoRN/ftc/StrongIVT/IVT'/Hab.var".
 
 (* begin hide *)
 
@@ -52,9 +52,9 @@ inline "cic:/CoRN/ftc/StrongIVT/IVT'/I'.con" "IVT'__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/StrongIVT/IVT'/F.var" "IVT'__".
+alias id "F" = "cic:/CoRN/ftc/StrongIVT/IVT'/F.var".
 
-inline "cic:/CoRN/ftc/StrongIVT/IVT'/contF.var" "IVT'__".
+alias id "contF" = "cic:/CoRN/ftc/StrongIVT/IVT'/contF.var".
 
 (* begin hide *)
 
@@ -64,7 +64,7 @@ inline "cic:/CoRN/ftc/StrongIVT/IVT'/incF.con" "IVT'__".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/StrongIVT/IVT'/incrF.var" "IVT'__".
+alias id "incrF" = "cic:/CoRN/ftc/StrongIVT/IVT'/incrF.var".
 
 (* end show *)
 
@@ -80,11 +80,11 @@ inline "cic:/CoRN/ftc/StrongIVT/IVT'/HFab'.con" "IVT'__".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/StrongIVT/IVT'/z.var" "IVT'__".
+alias id "z" = "cic:/CoRN/ftc/StrongIVT/IVT'/z.var".
 
-inline "cic:/CoRN/ftc/StrongIVT/IVT'/Haz.var" "IVT'__".
+alias id "Haz" = "cic:/CoRN/ftc/StrongIVT/IVT'/Haz.var".
 
-inline "cic:/CoRN/ftc/StrongIVT/IVT'/Hzb.var" "IVT'__".
+alias id "Hzb" = "cic:/CoRN/ftc/StrongIVT/IVT'/Hzb.var".
 
 (* end show *)
 

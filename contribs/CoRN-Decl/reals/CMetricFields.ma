@@ -62,7 +62,7 @@ End basics
 Section CMetric_Field_Cauchy
 *)
 
-inline "cic:/CoRN/reals/CMetricFields/CMetric_Field_Cauchy/F.var" "CMetric_Field_Cauchy__".
+alias id "F" = "cic:/CoRN/reals/CMetricFields/CMetric_Field_Cauchy/F.var".
 
 (*#*
 %\begin{convention}% Let [F:CMetricField].

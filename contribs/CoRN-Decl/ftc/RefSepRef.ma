@@ -30,29 +30,29 @@ include "ftc/Partitions.ma".
 Section Refining_Separated
 *)
 
-inline "cic:/CoRN/ftc/RefSepRef/Refining_Separated/a.var" "Refining_Separated__".
+alias id "a" = "cic:/CoRN/ftc/RefSepRef/Refining_Separated/a.var".
 
-inline "cic:/CoRN/ftc/RefSepRef/Refining_Separated/b.var" "Refining_Separated__".
+alias id "b" = "cic:/CoRN/ftc/RefSepRef/Refining_Separated/b.var".
 
-inline "cic:/CoRN/ftc/RefSepRef/Refining_Separated/Hab.var" "Refining_Separated__".
+alias id "Hab" = "cic:/CoRN/ftc/RefSepRef/Refining_Separated/Hab.var".
 
 inline "cic:/CoRN/ftc/RefSepRef/Refining_Separated/I.con" "Refining_Separated__".
 
-inline "cic:/CoRN/ftc/RefSepRef/Refining_Separated/F.var" "Refining_Separated__".
+alias id "F" = "cic:/CoRN/ftc/RefSepRef/Refining_Separated/F.var".
 
-inline "cic:/CoRN/ftc/RefSepRef/Refining_Separated/contF.var" "Refining_Separated__".
+alias id "contF" = "cic:/CoRN/ftc/RefSepRef/Refining_Separated/contF.var".
 
-inline "cic:/CoRN/ftc/RefSepRef/Refining_Separated/incF.var" "Refining_Separated__".
+alias id "incF" = "cic:/CoRN/ftc/RefSepRef/Refining_Separated/incF.var".
 
-inline "cic:/CoRN/ftc/RefSepRef/Refining_Separated/m.var" "Refining_Separated__".
+alias id "m" = "cic:/CoRN/ftc/RefSepRef/Refining_Separated/m.var".
 
-inline "cic:/CoRN/ftc/RefSepRef/Refining_Separated/n.var" "Refining_Separated__".
+alias id "n" = "cic:/CoRN/ftc/RefSepRef/Refining_Separated/n.var".
 
-inline "cic:/CoRN/ftc/RefSepRef/Refining_Separated/P.var" "Refining_Separated__".
+alias id "P" = "cic:/CoRN/ftc/RefSepRef/Refining_Separated/P.var".
 
-inline "cic:/CoRN/ftc/RefSepRef/Refining_Separated/R.var" "Refining_Separated__".
+alias id "R" = "cic:/CoRN/ftc/RefSepRef/Refining_Separated/R.var".
 
-inline "cic:/CoRN/ftc/RefSepRef/Refining_Separated/HPR.var" "Refining_Separated__".
+alias id "HPR" = "cic:/CoRN/ftc/RefSepRef/Refining_Separated/HPR.var".
 
 inline "cic:/CoRN/ftc/RefSepRef/RSR_HP.con".
 

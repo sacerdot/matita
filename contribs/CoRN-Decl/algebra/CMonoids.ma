@@ -92,7 +92,7 @@ Implicit Arguments nonZeroP [M].
 Section CMonoid_axioms
 *)
 
-inline "cic:/CoRN/algebra/CMonoids/CMonoid_axioms/M.var" "CMonoid_axioms__".
+alias id "M" = "cic:/CoRN/algebra/CMonoids/CMonoid_axioms/M.var".
 
 inline "cic:/CoRN/algebra/CMonoids/CMonoid_is_CMonoid.con".
 
@@ -114,7 +114,7 @@ End CMonoid_axioms
 Section CMonoid_basics
 *)
 
-inline "cic:/CoRN/algebra/CMonoids/CMonoid_basics/M.var" "CMonoid_basics__".
+alias id "M" = "cic:/CoRN/algebra/CMonoids/CMonoid_basics/M.var".
 
 inline "cic:/CoRN/algebra/CMonoids/cm_rht_unit_unfolded.con".
 
@@ -149,11 +149,11 @@ Let [P] a predicate on [M] containing [Zero] and closed under [[+]].
 Section SubCMonoids
 *)
 
-inline "cic:/CoRN/algebra/CMonoids/CMonoid_basics/SubCMonoids/P.var" "CMonoid_basics__SubCMonoids__".
+alias id "P" = "cic:/CoRN/algebra/CMonoids/CMonoid_basics/SubCMonoids/P.var".
 
-inline "cic:/CoRN/algebra/CMonoids/CMonoid_basics/SubCMonoids/Punit.var" "CMonoid_basics__SubCMonoids__".
+alias id "Punit" = "cic:/CoRN/algebra/CMonoids/CMonoid_basics/SubCMonoids/Punit.var".
 
-inline "cic:/CoRN/algebra/CMonoids/CMonoid_basics/SubCMonoids/op_pres_P.var" "CMonoid_basics__SubCMonoids__".
+alias id "op_pres_P" = "cic:/CoRN/algebra/CMonoids/CMonoid_basics/SubCMonoids/op_pres_P.var".
 
 inline "cic:/CoRN/algebra/CMonoids/CMonoid_basics/SubCMonoids/subcrr.con" "CMonoid_basics__SubCMonoids__".
 

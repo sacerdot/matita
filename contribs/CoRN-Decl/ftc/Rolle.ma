@@ -42,39 +42,39 @@ We now begin to work with partial functions.  We begin by stating and proving Ro
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/Rolle/Rolle/a.var" "Rolle__".
+alias id "a" = "cic:/CoRN/ftc/Rolle/Rolle/a.var".
 
-inline "cic:/CoRN/ftc/Rolle/Rolle/b.var" "Rolle__".
+alias id "b" = "cic:/CoRN/ftc/Rolle/Rolle/b.var".
 
-inline "cic:/CoRN/ftc/Rolle/Rolle/Hab'.var" "Rolle__".
+alias id "Hab'" = "cic:/CoRN/ftc/Rolle/Rolle/Hab'.var".
 
 inline "cic:/CoRN/ftc/Rolle/Rolle/Hab.con" "Rolle__".
 
 inline "cic:/CoRN/ftc/Rolle/Rolle/I.con" "Rolle__".
 
-inline "cic:/CoRN/ftc/Rolle/Rolle/F.var" "Rolle__".
+alias id "F" = "cic:/CoRN/ftc/Rolle/Rolle/F.var".
 
-inline "cic:/CoRN/ftc/Rolle/Rolle/F'.var" "Rolle__".
+alias id "F'" = "cic:/CoRN/ftc/Rolle/Rolle/F'.var".
 
-inline "cic:/CoRN/ftc/Rolle/Rolle/derF.var" "Rolle__".
+alias id "derF" = "cic:/CoRN/ftc/Rolle/Rolle/derF.var".
 
-inline "cic:/CoRN/ftc/Rolle/Rolle/Ha.var" "Rolle__".
+alias id "Ha" = "cic:/CoRN/ftc/Rolle/Rolle/Ha.var".
 
-inline "cic:/CoRN/ftc/Rolle/Rolle/Hb.var" "Rolle__".
+alias id "Hb" = "cic:/CoRN/ftc/Rolle/Rolle/Hb.var".
 
 (* end hide *)
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/Rolle/Rolle/Fab.var" "Rolle__".
+alias id "Fab" = "cic:/CoRN/ftc/Rolle/Rolle/Fab.var".
 
 (* end show *)
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/Rolle/Rolle/e.var" "Rolle__".
+alias id "e" = "cic:/CoRN/ftc/Rolle/Rolle/e.var".
 
-inline "cic:/CoRN/ftc/Rolle/Rolle/He.var" "Rolle__".
+alias id "He" = "cic:/CoRN/ftc/Rolle/Rolle/He.var".
 
 inline "cic:/CoRN/ftc/Rolle/Rolle/contF'.con" "Rolle__".
 
@@ -166,11 +166,11 @@ Section Law_of_the_Mean
 The following is a simple corollary:
 *)
 
-inline "cic:/CoRN/ftc/Rolle/Law_of_the_Mean/a.var" "Law_of_the_Mean__".
+alias id "a" = "cic:/CoRN/ftc/Rolle/Law_of_the_Mean/a.var".
 
-inline "cic:/CoRN/ftc/Rolle/Law_of_the_Mean/b.var" "Law_of_the_Mean__".
+alias id "b" = "cic:/CoRN/ftc/Rolle/Law_of_the_Mean/b.var".
 
-inline "cic:/CoRN/ftc/Rolle/Law_of_the_Mean/Hab'.var" "Law_of_the_Mean__".
+alias id "Hab'" = "cic:/CoRN/ftc/Rolle/Law_of_the_Mean/Hab'.var".
 
 (* begin hide *)
 
@@ -180,17 +180,17 @@ inline "cic:/CoRN/ftc/Rolle/Law_of_the_Mean/I.con" "Law_of_the_Mean__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/Rolle/Law_of_the_Mean/F.var" "Law_of_the_Mean__".
+alias id "F" = "cic:/CoRN/ftc/Rolle/Law_of_the_Mean/F.var".
 
-inline "cic:/CoRN/ftc/Rolle/Law_of_the_Mean/F'.var" "Law_of_the_Mean__".
+alias id "F'" = "cic:/CoRN/ftc/Rolle/Law_of_the_Mean/F'.var".
 
-inline "cic:/CoRN/ftc/Rolle/Law_of_the_Mean/HF.var" "Law_of_the_Mean__".
+alias id "HF" = "cic:/CoRN/ftc/Rolle/Law_of_the_Mean/HF.var".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/Rolle/Law_of_the_Mean/HA.var" "Law_of_the_Mean__".
+alias id "HA" = "cic:/CoRN/ftc/Rolle/Law_of_the_Mean/HA.var".
 
-inline "cic:/CoRN/ftc/Rolle/Law_of_the_Mean/HB.var" "Law_of_the_Mean__".
+alias id "HB" = "cic:/CoRN/ftc/Rolle/Law_of_the_Mean/HB.var".
 
 (* end show *)
 
@@ -208,11 +208,11 @@ Section Corollaries
 We can also state these theorems without expliciting the derivative of [F].
 *)
 
-inline "cic:/CoRN/ftc/Rolle/Corollaries/a.var" "Corollaries__".
+alias id "a" = "cic:/CoRN/ftc/Rolle/Corollaries/a.var".
 
-inline "cic:/CoRN/ftc/Rolle/Corollaries/b.var" "Corollaries__".
+alias id "b" = "cic:/CoRN/ftc/Rolle/Corollaries/b.var".
 
-inline "cic:/CoRN/ftc/Rolle/Corollaries/Hab'.var" "Corollaries__".
+alias id "Hab'" = "cic:/CoRN/ftc/Rolle/Corollaries/Hab'.var".
 
 (* begin hide *)
 
@@ -220,11 +220,11 @@ inline "cic:/CoRN/ftc/Rolle/Corollaries/Hab.con" "Corollaries__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/Rolle/Corollaries/F.var" "Corollaries__".
+alias id "F" = "cic:/CoRN/ftc/Rolle/Corollaries/F.var".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/Rolle/Corollaries/HF.var" "Corollaries__".
+alias id "HF" = "cic:/CoRN/ftc/Rolle/Corollaries/HF.var".
 
 (* end show *)
 
@@ -250,17 +250,17 @@ state it also in this form.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/Rolle/Generalizations/I.var" "Generalizations__".
+alias id "I" = "cic:/CoRN/ftc/Rolle/Generalizations/I.var".
 
-inline "cic:/CoRN/ftc/Rolle/Generalizations/pI.var" "Generalizations__".
+alias id "pI" = "cic:/CoRN/ftc/Rolle/Generalizations/pI.var".
 
-inline "cic:/CoRN/ftc/Rolle/Generalizations/F.var" "Generalizations__".
+alias id "F" = "cic:/CoRN/ftc/Rolle/Generalizations/F.var".
 
-inline "cic:/CoRN/ftc/Rolle/Generalizations/F'.var" "Generalizations__".
+alias id "F'" = "cic:/CoRN/ftc/Rolle/Generalizations/F'.var".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/Rolle/Generalizations/derF.var" "Generalizations__".
+alias id "derF" = "cic:/CoRN/ftc/Rolle/Generalizations/derF.var".
 
 (* end show *)
 

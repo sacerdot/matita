@@ -224,9 +224,9 @@ inline "cic:/CoRN/algebra/Basics/Zmult_absorb.con".
 Section Well_foundedT
 *)
 
-inline "cic:/CoRN/algebra/Basics/Well_foundedT/A.var" "Well_foundedT__".
+alias id "A" = "cic:/CoRN/algebra/Basics/Well_foundedT/A.var".
 
-inline "cic:/CoRN/algebra/Basics/Well_foundedT/R.var" "Well_foundedT__".
+alias id "R" = "cic:/CoRN/algebra/Basics/Well_foundedT/R.var".
 
 (*#* The accessibility predicate is defined to be non-informative *)
 
@@ -240,7 +240,7 @@ End Well_foundedT
 Section AccT
 *)
 
-inline "cic:/CoRN/algebra/Basics/AccT/A.var" "AccT__".
+alias id "A" = "cic:/CoRN/algebra/Basics/AccT/A.var".
 
 inline "cic:/CoRN/algebra/Basics/well_founded.con".
 
@@ -256,17 +256,17 @@ Implicit Arguments Acc [A].
 Section IndT
 *)
 
-inline "cic:/CoRN/algebra/Basics/IndT/A.var" "IndT__".
+alias id "A" = "cic:/CoRN/algebra/Basics/IndT/A.var".
 
-inline "cic:/CoRN/algebra/Basics/IndT/R.var" "IndT__".
+alias id "R" = "cic:/CoRN/algebra/Basics/IndT/R.var".
 
 (* UNEXPORTED
 Section AccIter
 *)
 
-inline "cic:/CoRN/algebra/Basics/IndT/AccIter/P.var" "IndT__AccIter__".
+alias id "P" = "cic:/CoRN/algebra/Basics/IndT/AccIter/P.var".
 
-inline "cic:/CoRN/algebra/Basics/IndT/AccIter/F.var" "IndT__AccIter__".
+alias id "F" = "cic:/CoRN/algebra/Basics/IndT/AccIter/F.var".
 
 inline "cic:/CoRN/algebra/Basics/Acc_inv.con".
 
@@ -276,7 +276,7 @@ inline "cic:/CoRN/algebra/Basics/Acc_iter.con".
 End AccIter
 *)
 
-inline "cic:/CoRN/algebra/Basics/IndT/Rwf.var" "IndT__".
+alias id "Rwf" = "cic:/CoRN/algebra/Basics/IndT/Rwf.var".
 
 inline "cic:/CoRN/algebra/Basics/well_founded_induction_type.con".
 
@@ -288,9 +288,9 @@ End IndT
 Section InductionT
 *)
 
-inline "cic:/CoRN/algebra/Basics/InductionT/A.var" "InductionT__".
+alias id "A" = "cic:/CoRN/algebra/Basics/InductionT/A.var".
 
-inline "cic:/CoRN/algebra/Basics/InductionT/f.var" "InductionT__".
+alias id "f" = "cic:/CoRN/algebra/Basics/InductionT/f.var".
 
 inline "cic:/CoRN/algebra/Basics/ltof.con".
 

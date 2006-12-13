@@ -39,11 +39,11 @@ The generalization to arbitrary intervals just needs a few more definitions.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/Taylor/More_Taylor_Defs/I.var" "More_Taylor_Defs__".
+alias id "I" = "cic:/CoRN/ftc/Taylor/More_Taylor_Defs/I.var".
 
-inline "cic:/CoRN/ftc/Taylor/More_Taylor_Defs/pI.var" "More_Taylor_Defs__".
+alias id "pI" = "cic:/CoRN/ftc/Taylor/More_Taylor_Defs/pI.var".
 
-inline "cic:/CoRN/ftc/Taylor/More_Taylor_Defs/F.var" "More_Taylor_Defs__".
+alias id "F" = "cic:/CoRN/ftc/Taylor/More_Taylor_Defs/F.var".
 
 (* begin show *)
 
@@ -51,13 +51,13 @@ inline "cic:/CoRN/ftc/Taylor/More_Taylor_Defs/deriv_Sn.con" "More_Taylor_Defs__"
 
 (* end show *)
 
-inline "cic:/CoRN/ftc/Taylor/More_Taylor_Defs/a.var" "More_Taylor_Defs__".
+alias id "a" = "cic:/CoRN/ftc/Taylor/More_Taylor_Defs/a.var".
 
-inline "cic:/CoRN/ftc/Taylor/More_Taylor_Defs/b.var" "More_Taylor_Defs__".
+alias id "b" = "cic:/CoRN/ftc/Taylor/More_Taylor_Defs/b.var".
 
-inline "cic:/CoRN/ftc/Taylor/More_Taylor_Defs/Ha.var" "More_Taylor_Defs__".
+alias id "Ha" = "cic:/CoRN/ftc/Taylor/More_Taylor_Defs/Ha.var".
 
-inline "cic:/CoRN/ftc/Taylor/More_Taylor_Defs/Hb.var" "More_Taylor_Defs__".
+alias id "Hb" = "cic:/CoRN/ftc/Taylor/More_Taylor_Defs/Hb.var".
 
 (* begin show *)
 
@@ -104,33 +104,33 @@ order up to [n] and [F'] be the nth-derivative of [F].
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/Taylor/Taylor_Theorem/I.var" "Taylor_Theorem__".
+alias id "I" = "cic:/CoRN/ftc/Taylor/Taylor_Theorem/I.var".
 
-inline "cic:/CoRN/ftc/Taylor/Taylor_Theorem/pI.var" "Taylor_Theorem__".
+alias id "pI" = "cic:/CoRN/ftc/Taylor/Taylor_Theorem/pI.var".
 
-inline "cic:/CoRN/ftc/Taylor/Taylor_Theorem/F.var" "Taylor_Theorem__".
+alias id "F" = "cic:/CoRN/ftc/Taylor/Taylor_Theorem/F.var".
 
-inline "cic:/CoRN/ftc/Taylor/Taylor_Theorem/n.var" "Taylor_Theorem__".
+alias id "n" = "cic:/CoRN/ftc/Taylor/Taylor_Theorem/n.var".
 
-inline "cic:/CoRN/ftc/Taylor/Taylor_Theorem/f.var" "Taylor_Theorem__".
+alias id "f" = "cic:/CoRN/ftc/Taylor/Taylor_Theorem/f.var".
 
-inline "cic:/CoRN/ftc/Taylor/Taylor_Theorem/goodF.var" "Taylor_Theorem__".
+alias id "goodF" = "cic:/CoRN/ftc/Taylor/Taylor_Theorem/goodF.var".
 
-inline "cic:/CoRN/ftc/Taylor/Taylor_Theorem/goodF'.var" "Taylor_Theorem__".
+alias id "goodF'" = "cic:/CoRN/ftc/Taylor/Taylor_Theorem/goodF'.var".
 
-inline "cic:/CoRN/ftc/Taylor/Taylor_Theorem/derF.var" "Taylor_Theorem__".
+alias id "derF" = "cic:/CoRN/ftc/Taylor/Taylor_Theorem/derF.var".
 
-inline "cic:/CoRN/ftc/Taylor/Taylor_Theorem/F'.var" "Taylor_Theorem__".
+alias id "F'" = "cic:/CoRN/ftc/Taylor/Taylor_Theorem/F'.var".
 
-inline "cic:/CoRN/ftc/Taylor/Taylor_Theorem/derF'.var" "Taylor_Theorem__".
+alias id "derF'" = "cic:/CoRN/ftc/Taylor/Taylor_Theorem/derF'.var".
 
-inline "cic:/CoRN/ftc/Taylor/Taylor_Theorem/a.var" "Taylor_Theorem__".
+alias id "a" = "cic:/CoRN/ftc/Taylor/Taylor_Theorem/a.var".
 
-inline "cic:/CoRN/ftc/Taylor/Taylor_Theorem/b.var" "Taylor_Theorem__".
+alias id "b" = "cic:/CoRN/ftc/Taylor/Taylor_Theorem/b.var".
 
-inline "cic:/CoRN/ftc/Taylor/Taylor_Theorem/Ha.var" "Taylor_Theorem__".
+alias id "Ha" = "cic:/CoRN/ftc/Taylor/Taylor_Theorem/Ha.var".
 
-inline "cic:/CoRN/ftc/Taylor/Taylor_Theorem/Hb.var" "Taylor_Theorem__".
+alias id "Hb" = "cic:/CoRN/ftc/Taylor/Taylor_Theorem/Hb.var".
 
 (* begin show *)
 

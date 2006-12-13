@@ -33,7 +33,7 @@ Section CPoly_Big
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/reals/OddPolyRootIR/CPoly_Big/R.var" "CPoly_Big__".
+alias id "R" = "cic:/CoRN/reals/OddPolyRootIR/CPoly_Big/R.var".
 
 (* begin hide *)
 
@@ -62,7 +62,7 @@ Section Flip_Poly
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/reals/OddPolyRootIR/Flip_Poly/R.var" "Flip_Poly__".
+alias id "R" = "cic:/CoRN/reals/OddPolyRootIR/Flip_Poly/R.var".
 
 (* begin hide *)
 
@@ -99,7 +99,7 @@ Section OddPoly_Signs
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/reals/OddPolyRootIR/OddPoly_Signs/R.var" "OddPoly_Signs__".
+alias id "R" = "cic:/CoRN/reals/OddPolyRootIR/OddPoly_Signs/R.var".
 
 (* begin hide *)
 
@@ -127,7 +127,7 @@ this field.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/reals/OddPolyRootIR/Poly_Norm/R.var" "Poly_Norm__".
+alias id "R" = "cic:/CoRN/reals/OddPolyRootIR/Poly_Norm/R.var".
 
 (* begin hide *)
 

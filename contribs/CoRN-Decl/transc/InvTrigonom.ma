@@ -206,7 +206,7 @@ Transparent Cos.
 Section ArcTan_Range
 *)
 
-inline "cic:/CoRN/transc/InvTrigonom/Inverses/ArcTan_Range/x.var" "Inverses__ArcTan_Range__".
+alias id "x" = "cic:/CoRN/transc/InvTrigonom/Inverses/ArcTan_Range/x.var".
 
 (* begin hide *)
 

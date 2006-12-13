@@ -83,13 +83,13 @@ include "model/setoids/Qsetoid.ma".
 Section p66E2
 *)
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/p66E2/X.var" "p66E2__".
+alias id "X" = "cic:/CoRN/devel/loeb/IDA/Ch6/p66E2/X.var".
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/p66E2/f.var" "p66E2__".
+alias id "f" = "cic:/CoRN/devel/loeb/IDA/Ch6/p66E2/f.var".
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/p66E2/g.var" "p66E2__".
+alias id "g" = "cic:/CoRN/devel/loeb/IDA/Ch6/p66E2/g.var".
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/p66E2/h.var" "p66E2__".
+alias id "h" = "cic:/CoRN/devel/loeb/IDA/Ch6/p66E2/h.var".
 
 (* Check comp_as_bin_op.*)
 
@@ -117,7 +117,7 @@ inline "cic:/CoRN/devel/loeb/IDA/Ch6/FS_is_CSemiGroup.con".
 Section p66E2b4
 *)
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/p66E2b4/A.var" "p66E2b4__".
+alias id "A" = "cic:/CoRN/devel/loeb/IDA/Ch6/p66E2b4/A.var".
 
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/Astar.con".
 
@@ -173,7 +173,7 @@ inline "cic:/CoRN/devel/loeb/IDA/Ch6/is_unit_Z_0.con".
 Section p67R2
 *)
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/p67R2/X.var" "p67R2__".
+alias id "X" = "cic:/CoRN/devel/loeb/IDA/Ch6/p67R2/X.var".
 
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/is_unit_FS_id.con".
 
@@ -301,9 +301,9 @@ include "algebra/CMonoids.ma".
 Section D9S
 *)
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/D9S/M1.var" "D9S__".
+alias id "M1" = "cic:/CoRN/devel/loeb/IDA/Ch6/D9S/M1.var".
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/D9S/M2.var" "D9S__".
+alias id "M2" = "cic:/CoRN/devel/loeb/IDA/Ch6/D9S/M2.var".
 
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/dprod.con".
 
@@ -323,9 +323,9 @@ End D9S
 Section D9M
 *)
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/D9M/M1.var" "D9M__".
+alias id "M1" = "cic:/CoRN/devel/loeb/IDA/Ch6/D9M/M1.var".
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/D9M/M2.var" "D9M__".
+alias id "M2" = "cic:/CoRN/devel/loeb/IDA/Ch6/D9M/M2.var".
 
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/e1e2_is_rht_unit.con".
 
@@ -363,15 +363,15 @@ End p69E1
 Section Th11
 *)
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/Th11/M.var" "Th11__".
+alias id "M" = "cic:/CoRN/devel/loeb/IDA/Ch6/Th11/M.var".
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/Th11/I.var" "Th11__".
+alias id "I" = "cic:/CoRN/devel/loeb/IDA/Ch6/Th11/I.var".
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/Th11/C.var" "Th11__".
+alias id "C" = "cic:/CoRN/devel/loeb/IDA/Ch6/Th11/C.var".
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/Th11/Cunit.var" "Th11__".
+alias id "Cunit" = "cic:/CoRN/devel/loeb/IDA/Ch6/Th11/Cunit.var".
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/Th11/op_pres_C.var" "Th11__".
+alias id "op_pres_C" = "cic:/CoRN/devel/loeb/IDA/Ch6/Th11/op_pres_C.var".
 
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/K.con".
 
@@ -389,7 +389,7 @@ End Th11
 Section Th12
 *)
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/Th12/A.var" "Th12__".
+alias id "A" = "cic:/CoRN/devel/loeb/IDA/Ch6/Th12/A.var".
 
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/nil_is_rht_unit.con".
 
@@ -437,9 +437,9 @@ End p70text
 Section Th13
 *)
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/Th13/M1.var" "Th13__".
+alias id "M1" = "cic:/CoRN/devel/loeb/IDA/Ch6/Th13/M1.var".
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/Th13/M2.var" "Th13__".
+alias id "M2" = "cic:/CoRN/devel/loeb/IDA/Ch6/Th13/M2.var".
 
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/morphism.con".
 
@@ -455,15 +455,15 @@ End Th13
 Section p71E1
 *)
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/p71E1/M.var" "p71E1__".
+alias id "M" = "cic:/CoRN/devel/loeb/IDA/Ch6/p71E1/M.var".
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/p71E1/c.var" "p71E1__".
+alias id "c" = "cic:/CoRN/devel/loeb/IDA/Ch6/p71E1/c.var".
 
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/power_CMonoid.con".
 
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/power_CMonoid_CSetoid.con".
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/p71E1/is_generated_by.var" "p71E1__".
+alias id "is_generated_by" = "cic:/CoRN/devel/loeb/IDA/Ch6/p71E1/is_generated_by.var".
 
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/p71E1/f.con" "p71E1__".
 
@@ -495,7 +495,7 @@ End p71E1'
 Section p71E2
 *)
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/p71E2/A.var" "p71E2__".
+alias id "A" = "cic:/CoRN/devel/loeb/IDA/Ch6/p71E2/A.var".
 
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/p71E2/L.con" "p71E2__".
 
@@ -515,9 +515,9 @@ End p71E2
 Section p71R1
 *)
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/p71R1/S1.var" "p71R1__".
+alias id "S1" = "cic:/CoRN/devel/loeb/IDA/Ch6/p71R1/S1.var".
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/p71R1/S2.var" "p71R1__".
+alias id "S2" = "cic:/CoRN/devel/loeb/IDA/Ch6/p71R1/S2.var".
 
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/morphism_of_CSemiGroups.con".
 
@@ -529,7 +529,7 @@ End p71R1
 Section p71R2
 *)
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/p71R2/M.var" "p71R2__".
+alias id "M" = "cic:/CoRN/devel/loeb/IDA/Ch6/p71R2/M.var".
 
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/automorphism.con".
 
@@ -543,13 +543,13 @@ End p71R2
 Section Th14
 *)
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/Th14/M1.var" "Th14__".
+alias id "M1" = "cic:/CoRN/devel/loeb/IDA/Ch6/Th14/M1.var".
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/Th14/M2.var" "Th14__".
+alias id "M2" = "cic:/CoRN/devel/loeb/IDA/Ch6/Th14/M2.var".
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/Th14/f.var" "Th14__".
+alias id "f" = "cic:/CoRN/devel/loeb/IDA/Ch6/Th14/f.var".
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/Th14/isof.var" "Th14__".
+alias id "isof" = "cic:/CoRN/devel/loeb/IDA/Ch6/Th14/isof.var".
 
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/iso_imp_bij.con".
 
@@ -577,9 +577,9 @@ End p71E2b1
 Section p71E2b2
 *)
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/p71E2b2/M1.var" "p71E2b2__".
+alias id "M1" = "cic:/CoRN/devel/loeb/IDA/Ch6/p71E2b2/M1.var".
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/p71E2b2/M2.var" "p71E2b2__".
+alias id "M2" = "cic:/CoRN/devel/loeb/IDA/Ch6/p71E2b2/M2.var".
 
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/p71E2b2/f.con" "p71E2b2__".
 
@@ -597,11 +597,11 @@ End p71E2b2
 Section Th15
 *)
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/Th15/M.var" "Th15__".
+alias id "M" = "cic:/CoRN/devel/loeb/IDA/Ch6/Th15/M.var".
 
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/cm_Sum.con".
 
-inline "cic:/CoRN/devel/loeb/IDA/Ch6/Th15/D.var" "Th15__".
+alias id "D" = "cic:/CoRN/devel/loeb/IDA/Ch6/Th15/D.var".
 
 inline "cic:/CoRN/devel/loeb/IDA/Ch6/member.con".
 

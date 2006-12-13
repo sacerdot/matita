@@ -80,9 +80,9 @@ Let [F] be a fiels and let [V] be a vector space over [F]
 Section VS_basics
 *)
 
-inline "cic:/CoRN/algebra/CVectorSpace/VS_basics/F.var" "VS_basics__".
+alias id "F" = "cic:/CoRN/algebra/CVectorSpace/VS_basics/F.var".
 
-inline "cic:/CoRN/algebra/CVectorSpace/VS_basics/V.var" "VS_basics__".
+alias id "V" = "cic:/CoRN/algebra/CVectorSpace/VS_basics/V.var".
 
 inline "cic:/CoRN/algebra/CVectorSpace/vs_op_zero.con".
 

@@ -30,41 +30,41 @@ include "ftc/Partitions.ma".
 Section Separating__Separated
 *)
 
-inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/a.var" "Separating__Separated__".
+alias id "a" = "cic:/CoRN/ftc/RefSeparated/Separating__Separated/a.var".
 
-inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/b.var" "Separating__Separated__".
+alias id "b" = "cic:/CoRN/ftc/RefSeparated/Separating__Separated/b.var".
 
-inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/Hab.var" "Separating__Separated__".
+alias id "Hab" = "cic:/CoRN/ftc/RefSeparated/Separating__Separated/Hab.var".
 
 inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/I.con" "Separating__Separated__".
 
-inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/F.var" "Separating__Separated__".
+alias id "F" = "cic:/CoRN/ftc/RefSeparated/Separating__Separated/F.var".
 
-inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/contF.var" "Separating__Separated__".
+alias id "contF" = "cic:/CoRN/ftc/RefSeparated/Separating__Separated/contF.var".
 
-inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/incF.var" "Separating__Separated__".
+alias id "incF" = "cic:/CoRN/ftc/RefSeparated/Separating__Separated/incF.var".
 
-inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/Hab'.var" "Separating__Separated__".
+alias id "Hab'" = "cic:/CoRN/ftc/RefSeparated/Separating__Separated/Hab'.var".
 
-inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/m.var" "Separating__Separated__".
+alias id "m" = "cic:/CoRN/ftc/RefSeparated/Separating__Separated/m.var".
 
-inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/n.var" "Separating__Separated__".
+alias id "n" = "cic:/CoRN/ftc/RefSeparated/Separating__Separated/n.var".
 
-inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/P.var" "Separating__Separated__".
+alias id "P" = "cic:/CoRN/ftc/RefSeparated/Separating__Separated/P.var".
 
-inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/R.var" "Separating__Separated__".
+alias id "R" = "cic:/CoRN/ftc/RefSeparated/Separating__Separated/R.var".
 
-inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/HP.var" "Separating__Separated__".
+alias id "HP" = "cic:/CoRN/ftc/RefSeparated/Separating__Separated/HP.var".
 
-inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/HR.var" "Separating__Separated__".
+alias id "HR" = "cic:/CoRN/ftc/RefSeparated/Separating__Separated/HR.var".
 
 inline "cic:/CoRN/ftc/RefSeparated/RS_pos_n.con".
 
 inline "cic:/CoRN/ftc/RefSeparated/RS_pos_m.con".
 
-inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/alpha.var" "Separating__Separated__".
+alias id "alpha" = "cic:/CoRN/ftc/RefSeparated/Separating__Separated/alpha.var".
 
-inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/Halpha.var" "Separating__Separated__".
+alias id "Halpha" = "cic:/CoRN/ftc/RefSeparated/Separating__Separated/Halpha.var".
 
 inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/e.con" "Separating__Separated__".
 
@@ -78,9 +78,9 @@ inline "cic:/CoRN/ftc/RefSeparated/RS_Hd.con".
 
 inline "cic:/CoRN/ftc/RefSeparated/RS_Hd'.con".
 
-inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/csi.var" "Separating__Separated__".
+alias id "csi" = "cic:/CoRN/ftc/RefSeparated/Separating__Separated/csi.var".
 
-inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/Hcsi.var" "Separating__Separated__".
+alias id "Hcsi" = "cic:/CoRN/ftc/RefSeparated/Separating__Separated/Hcsi.var".
 
 inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/M.con" "Separating__Separated__".
 
@@ -104,9 +104,9 @@ inline "cic:/CoRN/ftc/RefSeparated/RS_delta_pos.con".
 Section Defining_ai'
 *)
 
-inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/Defining_ai'/i.var" "Separating__Separated__Defining_ai'__".
+alias id "i" = "cic:/CoRN/ftc/RefSeparated/Separating__Separated/Defining_ai'/i.var".
 
-inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/Defining_ai'/Hi.var" "Separating__Separated__Defining_ai'__".
+alias id "Hi" = "cic:/CoRN/ftc/RefSeparated/Separating__Separated/Defining_ai'/Hi.var".
 
 inline "cic:/CoRN/ftc/RefSeparated/separation_conseq.con".
 
@@ -116,9 +116,9 @@ inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/Defining_ai'/pred2.con"
 
 inline "cic:/CoRN/ftc/RefSeparated/sep__sep_aux_lemma.con".
 
-inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/Defining_ai'/Hi0.var" "Separating__Separated__Defining_ai'__".
+alias id "Hi0" = "cic:/CoRN/ftc/RefSeparated/Separating__Separated/Defining_ai'/Hi0.var".
 
-inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/Defining_ai'/Hin.var" "Separating__Separated__Defining_ai'__".
+alias id "Hin" = "cic:/CoRN/ftc/RefSeparated/Separating__Separated/Defining_ai'/Hin.var".
 
 inline "cic:/CoRN/ftc/RefSeparated/sep__sep_fun_i.con".
 
@@ -150,9 +150,9 @@ inline "cic:/CoRN/ftc/RefSeparated/sep__sep_part.con".
 
 inline "cic:/CoRN/ftc/RefSeparated/sep__sep_lemma.con".
 
-inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/g.var" "Separating__Separated__".
+alias id "g" = "cic:/CoRN/ftc/RefSeparated/Separating__Separated/g.var".
 
-inline "cic:/CoRN/ftc/RefSeparated/Separating__Separated/gP.var" "Separating__Separated__".
+alias id "gP" = "cic:/CoRN/ftc/RefSeparated/Separating__Separated/gP.var".
 
 inline "cic:/CoRN/ftc/RefSeparated/sep__sep_points.con".
 

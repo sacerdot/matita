@@ -109,11 +109,11 @@ Define [c2 := a[^]2[+]b[^]2], [c := sqrt c2], [a'2 := (c[+]a) [*]Half],
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/complex/NRootCC/NRootCC_1/NRootCC_1_ap_real/a.var" "NRootCC_1__NRootCC_1_ap_real__".
+alias id "a" = "cic:/CoRN/complex/NRootCC/NRootCC_1/NRootCC_1_ap_real/a.var".
 
-inline "cic:/CoRN/complex/NRootCC/NRootCC_1/NRootCC_1_ap_real/b.var" "NRootCC_1__NRootCC_1_ap_real__".
+alias id "b" = "cic:/CoRN/complex/NRootCC/NRootCC_1/NRootCC_1_ap_real/b.var".
 
-inline "cic:/CoRN/complex/NRootCC/NRootCC_1/NRootCC_1_ap_real/b_.var" "NRootCC_1__NRootCC_1_ap_real__".
+alias id "b_" = "cic:/CoRN/complex/NRootCC/NRootCC_1/NRootCC_1_ap_real/b_.var".
 
 (* begin hide *)
 
@@ -198,11 +198,11 @@ Section NRootCC_1_ap_imag
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/complex/NRootCC/NRootCC_1/NRootCC_1_ap_imag/a.var" "NRootCC_1__NRootCC_1_ap_imag__".
+alias id "a" = "cic:/CoRN/complex/NRootCC/NRootCC_1/NRootCC_1_ap_imag/a.var".
 
-inline "cic:/CoRN/complex/NRootCC/NRootCC_1/NRootCC_1_ap_imag/b.var" "NRootCC_1__NRootCC_1_ap_imag__".
+alias id "b" = "cic:/CoRN/complex/NRootCC/NRootCC_1/NRootCC_1_ap_imag/b.var".
 
-inline "cic:/CoRN/complex/NRootCC/NRootCC_1/NRootCC_1_ap_imag/a_.var" "NRootCC_1__NRootCC_1_ap_imag__".
+alias id "a_" = "cic:/CoRN/complex/NRootCC/NRootCC_1/NRootCC_1_ap_imag/a_.var".
 
 (* begin hide *)
 
@@ -241,13 +241,13 @@ Section NRootCC_2
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/complex/NRootCC/NRootCC_2/n.var" "NRootCC_2__".
+alias id "n" = "cic:/CoRN/complex/NRootCC/NRootCC_2/n.var".
 
-inline "cic:/CoRN/complex/NRootCC/NRootCC_2/c.var" "NRootCC_2__".
+alias id "c" = "cic:/CoRN/complex/NRootCC/NRootCC_2/c.var".
 
-inline "cic:/CoRN/complex/NRootCC/NRootCC_2/z.var" "NRootCC_2__".
+alias id "z" = "cic:/CoRN/complex/NRootCC/NRootCC_2/z.var".
 
-inline "cic:/CoRN/complex/NRootCC/NRootCC_2/c_.var" "NRootCC_2__".
+alias id "c_" = "cic:/CoRN/complex/NRootCC/NRootCC_2/c_.var".
 
 inline "cic:/CoRN/complex/NRootCC/nrootCC_2'.con".
 
@@ -272,13 +272,13 @@ inline "cic:/CoRN/complex/NRootCC/nrCC3_a2.con".
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/complex/NRootCC/NRootCC_3/a.var" "NRootCC_3__".
+alias id "a" = "cic:/CoRN/complex/NRootCC/NRootCC_3/a.var".
 
-inline "cic:/CoRN/complex/NRootCC/NRootCC_3/b.var" "NRootCC_3__".
+alias id "b" = "cic:/CoRN/complex/NRootCC/NRootCC_3/b.var".
 
-inline "cic:/CoRN/complex/NRootCC/NRootCC_3/b_.var" "NRootCC_3__".
+alias id "b_" = "cic:/CoRN/complex/NRootCC/NRootCC_3/b_.var".
 
-inline "cic:/CoRN/complex/NRootCC/NRootCC_3/n.var" "NRootCC_3__".
+alias id "n" = "cic:/CoRN/complex/NRootCC/NRootCC_3/n.var".
 
 inline "cic:/CoRN/complex/NRootCC/nrCC3_poly''.con".
 
@@ -351,11 +351,11 @@ Section NRootCC_3'
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/complex/NRootCC/NRootCC_3'/c.var" "NRootCC_3'__".
+alias id "c" = "cic:/CoRN/complex/NRootCC/NRootCC_3'/c.var".
 
-inline "cic:/CoRN/complex/NRootCC/NRootCC_3'/n.var" "NRootCC_3'__".
+alias id "n" = "cic:/CoRN/complex/NRootCC/NRootCC_3'/n.var".
 
-inline "cic:/CoRN/complex/NRootCC/NRootCC_3'/n_.var" "NRootCC_3'__".
+alias id "n_" = "cic:/CoRN/complex/NRootCC/NRootCC_3'/n_.var".
 
 inline "cic:/CoRN/complex/NRootCC/nrootCC_3'_poly.con".
 
@@ -381,15 +381,15 @@ Section NRootCC_4_ap_real
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/a.var" "NRootCC_4__NRootCC_4_ap_real__".
+alias id "a" = "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/a.var".
 
-inline "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/b.var" "NRootCC_4__NRootCC_4_ap_real__".
+alias id "b" = "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/b.var".
 
-inline "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/b_.var" "NRootCC_4__NRootCC_4_ap_real__".
+alias id "b_" = "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/b_.var".
 
-inline "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/n.var" "NRootCC_4__NRootCC_4_ap_real__".
+alias id "n" = "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/n.var".
 
-inline "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/n_.var" "NRootCC_4__NRootCC_4_ap_real__".
+alias id "n_" = "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/n_.var".
 
 (* begin hide *)
 
@@ -412,11 +412,11 @@ inline "cic:/CoRN/complex/NRootCC/nrCC4_a1.con".
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/NRootCC_4_solutions/r2'.var" "NRootCC_4__NRootCC_4_ap_real__NRootCC_4_solutions__".
+alias id "r2'" = "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/NRootCC_4_solutions/r2'.var".
 
-inline "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/NRootCC_4_solutions/c2.var" "NRootCC_4__NRootCC_4_ap_real__NRootCC_4_solutions__".
+alias id "c2" = "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/NRootCC_4_solutions/c2.var".
 
-inline "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/NRootCC_4_solutions/r2'_.var" "NRootCC_4__NRootCC_4_ap_real__NRootCC_4_solutions__".
+alias id "r2'_" = "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/NRootCC_4_solutions/r2'_.var".
 
 (* UNEXPORTED
 Hint Resolve nrootCC_3': algebra.
@@ -439,13 +439,13 @@ and [(y2[*] (r[^] (2) [+]One)) [^]n [=] a[^] (2) [+]b[^] (2)].
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/NRootCC_4_equations/r.var" "NRootCC_4__NRootCC_4_ap_real__NRootCC_4_equations__".
+alias id "r" = "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/NRootCC_4_equations/r.var".
 
-inline "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/NRootCC_4_equations/r_property.var" "NRootCC_4__NRootCC_4_ap_real__NRootCC_4_equations__".
+alias id "r_property" = "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/NRootCC_4_equations/r_property.var".
 
-inline "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/NRootCC_4_equations/y2.var" "NRootCC_4__NRootCC_4_ap_real__NRootCC_4_equations__".
+alias id "y2" = "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/NRootCC_4_equations/y2.var".
 
-inline "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/NRootCC_4_equations/y2_property.var" "NRootCC_4__NRootCC_4_ap_real__NRootCC_4_equations__".
+alias id "y2_property" = "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/NRootCC_4_equations/y2_property.var".
 
 inline "cic:/CoRN/complex/NRootCC/nrCC4_a2.con".
 
@@ -501,15 +501,15 @@ and [(odd n)]; define [c' := (a[+I*]b) [*]II := a'[+I*]b'].
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_imag/a.var" "NRootCC_4__NRootCC_4_ap_imag__".
+alias id "a" = "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_imag/a.var".
 
-inline "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_imag/b.var" "NRootCC_4__NRootCC_4_ap_imag__".
+alias id "b" = "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_imag/b.var".
 
-inline "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_imag/a_.var" "NRootCC_4__NRootCC_4_ap_imag__".
+alias id "a_" = "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_imag/a_.var".
 
-inline "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_imag/n.var" "NRootCC_4__NRootCC_4_ap_imag__".
+alias id "n" = "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_imag/n.var".
 
-inline "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_imag/n_.var" "NRootCC_4__NRootCC_4_ap_imag__".
+alias id "n_" = "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_imag/n_.var".
 
 (* begin hide *)
 
@@ -558,9 +558,9 @@ Hint Resolve nrCC_5a3: algebra.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/complex/NRootCC/NRootCC_5/c.var" "NRootCC_5__".
+alias id "c" = "cic:/CoRN/complex/NRootCC/NRootCC_5/c.var".
 
-inline "cic:/CoRN/complex/NRootCC/NRootCC_5/c_.var" "NRootCC_5__".
+alias id "c_" = "cic:/CoRN/complex/NRootCC/NRootCC_5/c_.var".
 
 inline "cic:/CoRN/complex/NRootCC/nrCC_5a4.con".
 

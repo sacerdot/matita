@@ -30,15 +30,15 @@ include "tactics/AlgReflection.ma".
 Section Group_Interpretation_Function
 *)
 
-inline "cic:/CoRN/tactics/GroupReflection/Group_Interpretation_Function/G.var" "Group_Interpretation_Function__".
+alias id "G" = "cic:/CoRN/tactics/GroupReflection/Group_Interpretation_Function/G.var".
 
-inline "cic:/CoRN/tactics/GroupReflection/Group_Interpretation_Function/val.var" "Group_Interpretation_Function__".
+alias id "val" = "cic:/CoRN/tactics/GroupReflection/Group_Interpretation_Function/val.var".
 
-inline "cic:/CoRN/tactics/GroupReflection/Group_Interpretation_Function/unop.var" "Group_Interpretation_Function__".
+alias id "unop" = "cic:/CoRN/tactics/GroupReflection/Group_Interpretation_Function/unop.var".
 
-inline "cic:/CoRN/tactics/GroupReflection/Group_Interpretation_Function/binop.var" "Group_Interpretation_Function__".
+alias id "binop" = "cic:/CoRN/tactics/GroupReflection/Group_Interpretation_Function/binop.var".
 
-inline "cic:/CoRN/tactics/GroupReflection/Group_Interpretation_Function/pfun.var" "Group_Interpretation_Function__".
+alias id "pfun" = "cic:/CoRN/tactics/GroupReflection/Group_Interpretation_Function/pfun.var".
 
 inline "cic:/CoRN/tactics/GroupReflection/interpG.ind".
 
@@ -136,15 +136,15 @@ End Group_Interpretation_Function
 Section Group_NormCorrect
 *)
 
-inline "cic:/CoRN/tactics/GroupReflection/Group_NormCorrect/G.var" "Group_NormCorrect__".
+alias id "G" = "cic:/CoRN/tactics/GroupReflection/Group_NormCorrect/G.var".
 
-inline "cic:/CoRN/tactics/GroupReflection/Group_NormCorrect/val.var" "Group_NormCorrect__".
+alias id "val" = "cic:/CoRN/tactics/GroupReflection/Group_NormCorrect/val.var".
 
-inline "cic:/CoRN/tactics/GroupReflection/Group_NormCorrect/unop.var" "Group_NormCorrect__".
+alias id "unop" = "cic:/CoRN/tactics/GroupReflection/Group_NormCorrect/unop.var".
 
-inline "cic:/CoRN/tactics/GroupReflection/Group_NormCorrect/binop.var" "Group_NormCorrect__".
+alias id "binop" = "cic:/CoRN/tactics/GroupReflection/Group_NormCorrect/binop.var".
 
-inline "cic:/CoRN/tactics/GroupReflection/Group_NormCorrect/pfun.var" "Group_NormCorrect__".
+alias id "pfun" = "cic:/CoRN/tactics/GroupReflection/Group_NormCorrect/pfun.var".
 
 (* NOTATION
 Notation II := (interpG G val unop binop pfun).

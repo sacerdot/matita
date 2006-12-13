@@ -41,9 +41,9 @@ Unset Strict Implicit.
 Section Continuity
 *)
 
-inline "cic:/CoRN/reals/RealFuncts/Continuity/f.var" "Continuity__".
+alias id "f" = "cic:/CoRN/reals/RealFuncts/Continuity/f.var".
 
-inline "cic:/CoRN/reals/RealFuncts/Continuity/f2.var" "Continuity__".
+alias id "f2" = "cic:/CoRN/reals/RealFuncts/Continuity/f2.var".
 
 (*#*
 Let [f] be a unary setoid operation on [IR] and

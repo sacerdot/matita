@@ -52,11 +52,11 @@ be defined.  For a discussion on the different notions of convergent
 see Bishop 1967.
 *)
 
-inline "cic:/CoRN/ftc/FunctSequence/Definitions/a.var" "Definitions__".
+alias id "a" = "cic:/CoRN/ftc/FunctSequence/Definitions/a.var".
 
-inline "cic:/CoRN/ftc/FunctSequence/Definitions/b.var" "Definitions__".
+alias id "b" = "cic:/CoRN/ftc/FunctSequence/Definitions/b.var".
 
-inline "cic:/CoRN/ftc/FunctSequence/Definitions/Hab.var" "Definitions__".
+alias id "Hab" = "cic:/CoRN/ftc/FunctSequence/Definitions/Hab.var".
 
 (* begin hide *)
 
@@ -64,13 +64,13 @@ inline "cic:/CoRN/ftc/FunctSequence/Definitions/I.con" "Definitions__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/FunctSequence/Definitions/f.var" "Definitions__".
+alias id "f" = "cic:/CoRN/ftc/FunctSequence/Definitions/f.var".
 
-inline "cic:/CoRN/ftc/FunctSequence/Definitions/F.var" "Definitions__".
+alias id "F" = "cic:/CoRN/ftc/FunctSequence/Definitions/F.var".
 
-inline "cic:/CoRN/ftc/FunctSequence/Definitions/contf.var" "Definitions__".
+alias id "contf" = "cic:/CoRN/ftc/FunctSequence/Definitions/contf.var".
 
-inline "cic:/CoRN/ftc/FunctSequence/Definitions/contF.var" "Definitions__".
+alias id "contF" = "cic:/CoRN/ftc/FunctSequence/Definitions/contF.var".
 
 (* begin hide *)
 
@@ -132,11 +132,11 @@ End Definitions
 Section More_Definitions
 *)
 
-inline "cic:/CoRN/ftc/FunctSequence/More_Definitions/a.var" "More_Definitions__".
+alias id "a" = "cic:/CoRN/ftc/FunctSequence/More_Definitions/a.var".
 
-inline "cic:/CoRN/ftc/FunctSequence/More_Definitions/b.var" "More_Definitions__".
+alias id "b" = "cic:/CoRN/ftc/FunctSequence/More_Definitions/b.var".
 
-inline "cic:/CoRN/ftc/FunctSequence/More_Definitions/Hab.var" "More_Definitions__".
+alias id "Hab" = "cic:/CoRN/ftc/FunctSequence/More_Definitions/Hab.var".
 
 (* begin hide *)
 
@@ -144,9 +144,9 @@ inline "cic:/CoRN/ftc/FunctSequence/More_Definitions/I.con" "More_Definitions__"
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/FunctSequence/More_Definitions/f.var" "More_Definitions__".
+alias id "f" = "cic:/CoRN/ftc/FunctSequence/More_Definitions/f.var".
 
-inline "cic:/CoRN/ftc/FunctSequence/More_Definitions/contf.var" "More_Definitions__".
+alias id "contf" = "cic:/CoRN/ftc/FunctSequence/More_Definitions/contf.var".
 
 (*#*
 We can also say that [f] is simply convergent if it converges to some
@@ -162,7 +162,7 @@ It is useful to extract the limit as a partial function:
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/FunctSequence/More_Definitions/H.var" "More_Definitions__".
+alias id "H" = "cic:/CoRN/ftc/FunctSequence/More_Definitions/H.var".
 
 (* end show *)
 
@@ -181,11 +181,11 @@ Section Irrelevance_of_Proofs
 This section contains a number of technical results stating mainly that being a Cauchy sequence or converging to some limit is a property of the sequence itself and independent of the proofs we supply of its continuity or the continuity of its limit.
 *)
 
-inline "cic:/CoRN/ftc/FunctSequence/Irrelevance_of_Proofs/a.var" "Irrelevance_of_Proofs__".
+alias id "a" = "cic:/CoRN/ftc/FunctSequence/Irrelevance_of_Proofs/a.var".
 
-inline "cic:/CoRN/ftc/FunctSequence/Irrelevance_of_Proofs/b.var" "Irrelevance_of_Proofs__".
+alias id "b" = "cic:/CoRN/ftc/FunctSequence/Irrelevance_of_Proofs/b.var".
 
-inline "cic:/CoRN/ftc/FunctSequence/Irrelevance_of_Proofs/Hab.var" "Irrelevance_of_Proofs__".
+alias id "Hab" = "cic:/CoRN/ftc/FunctSequence/Irrelevance_of_Proofs/Hab.var".
 
 (* begin hide *)
 
@@ -193,23 +193,23 @@ inline "cic:/CoRN/ftc/FunctSequence/Irrelevance_of_Proofs/I.con" "Irrelevance_of
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/FunctSequence/Irrelevance_of_Proofs/f.var" "Irrelevance_of_Proofs__".
+alias id "f" = "cic:/CoRN/ftc/FunctSequence/Irrelevance_of_Proofs/f.var".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/FunctSequence/Irrelevance_of_Proofs/contf.var" "Irrelevance_of_Proofs__".
+alias id "contf" = "cic:/CoRN/ftc/FunctSequence/Irrelevance_of_Proofs/contf.var".
 
-inline "cic:/CoRN/ftc/FunctSequence/Irrelevance_of_Proofs/contf0.var" "Irrelevance_of_Proofs__".
+alias id "contf0" = "cic:/CoRN/ftc/FunctSequence/Irrelevance_of_Proofs/contf0.var".
 
 (* end show *)
 
-inline "cic:/CoRN/ftc/FunctSequence/Irrelevance_of_Proofs/F.var" "Irrelevance_of_Proofs__".
+alias id "F" = "cic:/CoRN/ftc/FunctSequence/Irrelevance_of_Proofs/F.var".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/FunctSequence/Irrelevance_of_Proofs/contF.var" "Irrelevance_of_Proofs__".
+alias id "contF" = "cic:/CoRN/ftc/FunctSequence/Irrelevance_of_Proofs/contF.var".
 
-inline "cic:/CoRN/ftc/FunctSequence/Irrelevance_of_Proofs/contF0.var" "Irrelevance_of_Proofs__".
+alias id "contF0" = "cic:/CoRN/ftc/FunctSequence/Irrelevance_of_Proofs/contF0.var".
 
 (* end show *)
 
@@ -248,11 +248,11 @@ limit; the limit is a continuous function; and convergence is well
 defined with respect to functional equality in the interval [[a,b]].
 *)
 
-inline "cic:/CoRN/ftc/FunctSequence/More_Properties/a.var" "More_Properties__".
+alias id "a" = "cic:/CoRN/ftc/FunctSequence/More_Properties/a.var".
 
-inline "cic:/CoRN/ftc/FunctSequence/More_Properties/b.var" "More_Properties__".
+alias id "b" = "cic:/CoRN/ftc/FunctSequence/More_Properties/b.var".
 
-inline "cic:/CoRN/ftc/FunctSequence/More_Properties/Hab.var" "More_Properties__".
+alias id "Hab" = "cic:/CoRN/ftc/FunctSequence/More_Properties/Hab.var".
 
 (* begin hide *)
 
@@ -260,37 +260,37 @@ inline "cic:/CoRN/ftc/FunctSequence/More_Properties/I.con" "More_Properties__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/FunctSequence/More_Properties/f.var" "More_Properties__".
+alias id "f" = "cic:/CoRN/ftc/FunctSequence/More_Properties/f.var".
 
-inline "cic:/CoRN/ftc/FunctSequence/More_Properties/g.var" "More_Properties__".
+alias id "g" = "cic:/CoRN/ftc/FunctSequence/More_Properties/g.var".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/FunctSequence/More_Properties/contf.var" "More_Properties__".
+alias id "contf" = "cic:/CoRN/ftc/FunctSequence/More_Properties/contf.var".
 
-inline "cic:/CoRN/ftc/FunctSequence/More_Properties/contf0.var" "More_Properties__".
+alias id "contf0" = "cic:/CoRN/ftc/FunctSequence/More_Properties/contf0.var".
 
-inline "cic:/CoRN/ftc/FunctSequence/More_Properties/contg.var" "More_Properties__".
+alias id "contg" = "cic:/CoRN/ftc/FunctSequence/More_Properties/contg.var".
 
-inline "cic:/CoRN/ftc/FunctSequence/More_Properties/contg0.var" "More_Properties__".
+alias id "contg0" = "cic:/CoRN/ftc/FunctSequence/More_Properties/contg0.var".
 
 (* end show *)
 
 inline "cic:/CoRN/ftc/FunctSequence/Cauchy_conv_fun_seq'.con".
 
-inline "cic:/CoRN/ftc/FunctSequence/More_Properties/F.var" "More_Properties__".
+alias id "F" = "cic:/CoRN/ftc/FunctSequence/More_Properties/F.var".
 
-inline "cic:/CoRN/ftc/FunctSequence/More_Properties/G.var" "More_Properties__".
+alias id "G" = "cic:/CoRN/ftc/FunctSequence/More_Properties/G.var".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/FunctSequence/More_Properties/contF.var" "More_Properties__".
+alias id "contF" = "cic:/CoRN/ftc/FunctSequence/More_Properties/contF.var".
 
-inline "cic:/CoRN/ftc/FunctSequence/More_Properties/contF0.var" "More_Properties__".
+alias id "contF0" = "cic:/CoRN/ftc/FunctSequence/More_Properties/contF0.var".
 
-inline "cic:/CoRN/ftc/FunctSequence/More_Properties/contG.var" "More_Properties__".
+alias id "contG" = "cic:/CoRN/ftc/FunctSequence/More_Properties/contG.var".
 
-inline "cic:/CoRN/ftc/FunctSequence/More_Properties/contG0.var" "More_Properties__".
+alias id "contG0" = "cic:/CoRN/ftc/FunctSequence/More_Properties/contG0.var".
 
 (* end show *)
 
@@ -339,11 +339,11 @@ Section Algebraic_Properties
 We now study how convergence is affected by algebraic operations, and some algebraic properties of the limit function.
 *)
 
-inline "cic:/CoRN/ftc/FunctSequence/Algebraic_Properties/a.var" "Algebraic_Properties__".
+alias id "a" = "cic:/CoRN/ftc/FunctSequence/Algebraic_Properties/a.var".
 
-inline "cic:/CoRN/ftc/FunctSequence/Algebraic_Properties/b.var" "Algebraic_Properties__".
+alias id "b" = "cic:/CoRN/ftc/FunctSequence/Algebraic_Properties/b.var".
 
-inline "cic:/CoRN/ftc/FunctSequence/Algebraic_Properties/Hab.var" "Algebraic_Properties__".
+alias id "Hab" = "cic:/CoRN/ftc/FunctSequence/Algebraic_Properties/Hab.var".
 
 (* begin hide *)
 
@@ -351,13 +351,13 @@ inline "cic:/CoRN/ftc/FunctSequence/Algebraic_Properties/I.con" "Algebraic_Prope
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/FunctSequence/Algebraic_Properties/f.var" "Algebraic_Properties__".
+alias id "f" = "cic:/CoRN/ftc/FunctSequence/Algebraic_Properties/f.var".
 
-inline "cic:/CoRN/ftc/FunctSequence/Algebraic_Properties/g.var" "Algebraic_Properties__".
+alias id "g" = "cic:/CoRN/ftc/FunctSequence/Algebraic_Properties/g.var".
 
-inline "cic:/CoRN/ftc/FunctSequence/Algebraic_Properties/contf.var" "Algebraic_Properties__".
+alias id "contf" = "cic:/CoRN/ftc/FunctSequence/Algebraic_Properties/contf.var".
 
-inline "cic:/CoRN/ftc/FunctSequence/Algebraic_Properties/contg.var" "Algebraic_Properties__".
+alias id "contg" = "cic:/CoRN/ftc/FunctSequence/Algebraic_Properties/contg.var".
 
 (*#*
 First, the limit function is unique.
@@ -376,19 +376,19 @@ inline "cic:/CoRN/ftc/FunctSequence/fun_Cauchy_prop_const.con".
 We now prove that if two sequences converge than their sum (difference, product) also converge to the sum (difference, product) of their limits.
 *)
 
-inline "cic:/CoRN/ftc/FunctSequence/Algebraic_Properties/F.var" "Algebraic_Properties__".
+alias id "F" = "cic:/CoRN/ftc/FunctSequence/Algebraic_Properties/F.var".
 
-inline "cic:/CoRN/ftc/FunctSequence/Algebraic_Properties/G.var" "Algebraic_Properties__".
+alias id "G" = "cic:/CoRN/ftc/FunctSequence/Algebraic_Properties/G.var".
 
-inline "cic:/CoRN/ftc/FunctSequence/Algebraic_Properties/contF.var" "Algebraic_Properties__".
+alias id "contF" = "cic:/CoRN/ftc/FunctSequence/Algebraic_Properties/contF.var".
 
-inline "cic:/CoRN/ftc/FunctSequence/Algebraic_Properties/contG.var" "Algebraic_Properties__".
+alias id "contG" = "cic:/CoRN/ftc/FunctSequence/Algebraic_Properties/contG.var".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/FunctSequence/Algebraic_Properties/convF.var" "Algebraic_Properties__".
+alias id "convF" = "cic:/CoRN/ftc/FunctSequence/Algebraic_Properties/convF.var".
 
-inline "cic:/CoRN/ftc/FunctSequence/Algebraic_Properties/convG.var" "Algebraic_Properties__".
+alias id "convG" = "cic:/CoRN/ftc/FunctSequence/Algebraic_Properties/convG.var".
 
 (* end show *)
 
@@ -418,11 +418,11 @@ End Algebraic_Properties
 Section More_Algebraic_Properties
 *)
 
-inline "cic:/CoRN/ftc/FunctSequence/More_Algebraic_Properties/a.var" "More_Algebraic_Properties__".
+alias id "a" = "cic:/CoRN/ftc/FunctSequence/More_Algebraic_Properties/a.var".
 
-inline "cic:/CoRN/ftc/FunctSequence/More_Algebraic_Properties/b.var" "More_Algebraic_Properties__".
+alias id "b" = "cic:/CoRN/ftc/FunctSequence/More_Algebraic_Properties/b.var".
 
-inline "cic:/CoRN/ftc/FunctSequence/More_Algebraic_Properties/Hab.var" "More_Algebraic_Properties__".
+alias id "Hab" = "cic:/CoRN/ftc/FunctSequence/More_Algebraic_Properties/Hab.var".
 
 (* begin hide *)
 
@@ -430,13 +430,13 @@ inline "cic:/CoRN/ftc/FunctSequence/More_Algebraic_Properties/I.con" "More_Algeb
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/FunctSequence/More_Algebraic_Properties/f.var" "More_Algebraic_Properties__".
+alias id "f" = "cic:/CoRN/ftc/FunctSequence/More_Algebraic_Properties/f.var".
 
-inline "cic:/CoRN/ftc/FunctSequence/More_Algebraic_Properties/g.var" "More_Algebraic_Properties__".
+alias id "g" = "cic:/CoRN/ftc/FunctSequence/More_Algebraic_Properties/g.var".
 
-inline "cic:/CoRN/ftc/FunctSequence/More_Algebraic_Properties/contf.var" "More_Algebraic_Properties__".
+alias id "contf" = "cic:/CoRN/ftc/FunctSequence/More_Algebraic_Properties/contf.var".
 
-inline "cic:/CoRN/ftc/FunctSequence/More_Algebraic_Properties/contg.var" "More_Algebraic_Properties__".
+alias id "contg" = "cic:/CoRN/ftc/FunctSequence/More_Algebraic_Properties/contg.var".
 
 (*#*
 The same is true if we don't make the limits explicit.
@@ -444,9 +444,9 @@ The same is true if we don't make the limits explicit.
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/FunctSequence/More_Algebraic_Properties/Hf.var" "More_Algebraic_Properties__".
+alias id "Hf" = "cic:/CoRN/ftc/FunctSequence/More_Algebraic_Properties/Hf.var".
 
-inline "cic:/CoRN/ftc/FunctSequence/More_Algebraic_Properties/Hg.var" "More_Algebraic_Properties__".
+alias id "Hg" = "cic:/CoRN/ftc/FunctSequence/More_Algebraic_Properties/Hg.var".
 
 (* end hide *)
 
@@ -470,11 +470,11 @@ End More_Algebraic_Properties
 Section Still_More_Algebraic_Properties
 *)
 
-inline "cic:/CoRN/ftc/FunctSequence/Still_More_Algebraic_Properties/a.var" "Still_More_Algebraic_Properties__".
+alias id "a" = "cic:/CoRN/ftc/FunctSequence/Still_More_Algebraic_Properties/a.var".
 
-inline "cic:/CoRN/ftc/FunctSequence/Still_More_Algebraic_Properties/b.var" "Still_More_Algebraic_Properties__".
+alias id "b" = "cic:/CoRN/ftc/FunctSequence/Still_More_Algebraic_Properties/b.var".
 
-inline "cic:/CoRN/ftc/FunctSequence/Still_More_Algebraic_Properties/Hab.var" "Still_More_Algebraic_Properties__".
+alias id "Hab" = "cic:/CoRN/ftc/FunctSequence/Still_More_Algebraic_Properties/Hab.var".
 
 (* begin hide *)
 
@@ -482,11 +482,11 @@ inline "cic:/CoRN/ftc/FunctSequence/Still_More_Algebraic_Properties/I.con" "Stil
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/FunctSequence/Still_More_Algebraic_Properties/f.var" "Still_More_Algebraic_Properties__".
+alias id "f" = "cic:/CoRN/ftc/FunctSequence/Still_More_Algebraic_Properties/f.var".
 
-inline "cic:/CoRN/ftc/FunctSequence/Still_More_Algebraic_Properties/contf.var" "Still_More_Algebraic_Properties__".
+alias id "contf" = "cic:/CoRN/ftc/FunctSequence/Still_More_Algebraic_Properties/contf.var".
 
-inline "cic:/CoRN/ftc/FunctSequence/Still_More_Algebraic_Properties/Hf.var" "Still_More_Algebraic_Properties__".
+alias id "Hf" = "cic:/CoRN/ftc/FunctSequence/Still_More_Algebraic_Properties/Hf.var".
 
 (*#*
 As a corollary, we get the analogous property for the sequence of algebraic inverse functions.

@@ -44,11 +44,11 @@ inline "cic:/CoRN/reals/Bridges_iso/le_witness_informative.con".
 Section bridges_axioms_imply_ours
 *)
 
-inline "cic:/CoRN/reals/Bridges_iso/bridges_axioms_imply_ours/OF.var" "bridges_axioms_imply_ours__".
+alias id "OF" = "cic:/CoRN/reals/Bridges_iso/bridges_axioms_imply_ours/OF.var".
 
-inline "cic:/CoRN/reals/Bridges_iso/bridges_axioms_imply_ours/lubp.var" "bridges_axioms_imply_ours__".
+alias id "lubp" = "cic:/CoRN/reals/Bridges_iso/bridges_axioms_imply_ours/lubp.var".
 
-inline "cic:/CoRN/reals/Bridges_iso/bridges_axioms_imply_ours/is_Archimedes.var" "bridges_axioms_imply_ours__".
+alias id "is_Archimedes" = "cic:/CoRN/reals/Bridges_iso/bridges_axioms_imply_ours/is_Archimedes.var".
 
 inline "cic:/CoRN/reals/Bridges_iso/is_Archimedes'.con".
 
@@ -64,7 +64,7 @@ inline "cic:/CoRN/reals/Bridges_iso/glbp.con".
 Section supremum
 *)
 
-inline "cic:/CoRN/reals/Bridges_iso/bridges_axioms_imply_ours/proofs_in_TCS/supremum/P.var" "bridges_axioms_imply_ours__proofs_in_TCS__supremum__".
+alias id "P" = "cic:/CoRN/reals/Bridges_iso/bridges_axioms_imply_ours/proofs_in_TCS/supremum/P.var".
 
 inline "cic:/CoRN/reals/Bridges_iso/inequality1.con".
 
@@ -96,7 +96,7 @@ inline "cic:/CoRN/reals/Bridges_iso/kaf.con".
 
 inline "cic:/CoRN/reals/Bridges_iso/Pkaf.con".
 
-inline "cic:/CoRN/reals/Bridges_iso/bridges_axioms_imply_ours/proofs_in_TCS/supremum/is_finite_P.var" "bridges_axioms_imply_ours__proofs_in_TCS__supremum__".
+alias id "is_finite_P" = "cic:/CoRN/reals/Bridges_iso/bridges_axioms_imply_ours/proofs_in_TCS/supremum/is_finite_P.var".
 
 inline "cic:/CoRN/reals/Bridges_iso/card.con".
 
@@ -112,7 +112,7 @@ inline "cic:/CoRN/reals/Bridges_iso/indeks.con".
 
 inline "cic:/CoRN/reals/Bridges_iso/Pindeks.con".
 
-inline "cic:/CoRN/reals/Bridges_iso/bridges_axioms_imply_ours/proofs_in_TCS/supremum/is_onto_seq_P.var" "bridges_axioms_imply_ours__proofs_in_TCS__supremum__".
+alias id "is_onto_seq_P" = "cic:/CoRN/reals/Bridges_iso/bridges_axioms_imply_ours/proofs_in_TCS/supremum/is_onto_seq_P.var".
 
 inline "cic:/CoRN/reals/Bridges_iso/P_is_inhabited.con".
 
@@ -189,7 +189,7 @@ inline "cic:/CoRN/reals/Bridges_iso/bounded_quantifier_informative.con".
 
 inline "cic:/CoRN/reals/Bridges_iso/bridges_lemma1a.con".
 
-inline "cic:/CoRN/reals/Bridges_iso/bridges_axioms_imply_ours/proofs_in_TCS/supremum/P_is_strongly_extensional.var" "bridges_axioms_imply_ours__proofs_in_TCS__supremum__".
+alias id "P_is_strongly_extensional" = "cic:/CoRN/reals/Bridges_iso/bridges_axioms_imply_ours/proofs_in_TCS/supremum/P_is_strongly_extensional.var".
 
 inline "cic:/CoRN/reals/Bridges_iso/bridges_lemma1b.con".
 
@@ -211,7 +211,7 @@ Section Every_Cauchy_Sequence_is_bounded
 
 inline "cic:/CoRN/reals/Bridges_iso/seq2set.con".
 
-inline "cic:/CoRN/reals/Bridges_iso/bridges_axioms_imply_ours/proofs_in_TCS/Every_Cauchy_Sequence_is_bounded/g.var" "bridges_axioms_imply_ours__proofs_in_TCS__Every_Cauchy_Sequence_is_bounded__".
+alias id "g" = "cic:/CoRN/reals/Bridges_iso/bridges_axioms_imply_ours/proofs_in_TCS/Every_Cauchy_Sequence_is_bounded/g.var".
 
 inline "cic:/CoRN/reals/Bridges_iso/bridges_axioms_imply_ours/proofs_in_TCS/Every_Cauchy_Sequence_is_bounded/g_.con" "bridges_axioms_imply_ours__proofs_in_TCS__Every_Cauchy_Sequence_is_bounded__".
 
@@ -263,7 +263,7 @@ inline "cic:/CoRN/reals/Bridges_iso/tail_seq.con".
 End Every_Cauchy_Sequence_is_bounded
 *)
 
-inline "cic:/CoRN/reals/Bridges_iso/bridges_axioms_imply_ours/proofs_in_TCS/g.var" "bridges_axioms_imply_ours__proofs_in_TCS__".
+alias id "g" = "cic:/CoRN/reals/Bridges_iso/bridges_axioms_imply_ours/proofs_in_TCS/g.var".
 
 inline "cic:/CoRN/reals/Bridges_iso/bridges_axioms_imply_ours/proofs_in_TCS/g_.con" "bridges_axioms_imply_ours__proofs_in_TCS__".
 

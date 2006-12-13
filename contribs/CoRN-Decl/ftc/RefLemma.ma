@@ -81,11 +81,11 @@ Using the results from these files, we prove our main lemma in several steps
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/a.var" "Refinement_Lemma__".
+alias id "a" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/a.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/b.var" "Refinement_Lemma__".
+alias id "b" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/b.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Hab.var" "Refinement_Lemma__".
+alias id "Hab" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Hab.var".
 
 (* begin hide *)
 
@@ -93,11 +93,11 @@ inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/I.con" "Refinement_Lemma__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/F.var" "Refinement_Lemma__".
+alias id "F" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/F.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/contF.var" "Refinement_Lemma__".
+alias id "contF" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/contF.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/incF.var" "Refinement_Lemma__".
+alias id "incF" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/incF.var".
 
 (* begin hide *)
 
@@ -124,9 +124,9 @@ respectively.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/First_Refinement_Lemma/e.var" "Refinement_Lemma__First_Refinement_Lemma__".
+alias id "e" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/First_Refinement_Lemma/e.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/First_Refinement_Lemma/He.var" "Refinement_Lemma__First_Refinement_Lemma__".
+alias id "He" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/First_Refinement_Lemma/He.var".
 
 (* begin hide *)
 
@@ -134,29 +134,29 @@ inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/First_Refinement_Lemma/d.con" "R
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/First_Refinement_Lemma/m.var" "Refinement_Lemma__First_Refinement_Lemma__".
+alias id "m" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/First_Refinement_Lemma/m.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/First_Refinement_Lemma/n.var" "Refinement_Lemma__First_Refinement_Lemma__".
+alias id "n" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/First_Refinement_Lemma/n.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/First_Refinement_Lemma/P.var" "Refinement_Lemma__First_Refinement_Lemma__".
+alias id "P" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/First_Refinement_Lemma/P.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/First_Refinement_Lemma/HMesh.var" "Refinement_Lemma__First_Refinement_Lemma__".
+alias id "HMesh" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/First_Refinement_Lemma/HMesh.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/First_Refinement_Lemma/Q.var" "Refinement_Lemma__First_Refinement_Lemma__".
+alias id "Q" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/First_Refinement_Lemma/Q.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/First_Refinement_Lemma/Href.var" "Refinement_Lemma__First_Refinement_Lemma__".
+alias id "Href" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/First_Refinement_Lemma/Href.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/First_Refinement_Lemma/fP.var" "Refinement_Lemma__First_Refinement_Lemma__".
+alias id "fP" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/First_Refinement_Lemma/fP.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/First_Refinement_Lemma/HfP.var" "Refinement_Lemma__First_Refinement_Lemma__".
+alias id "HfP" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/First_Refinement_Lemma/HfP.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/First_Refinement_Lemma/HfP'.var" "Refinement_Lemma__First_Refinement_Lemma__".
+alias id "HfP'" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/First_Refinement_Lemma/HfP'.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/First_Refinement_Lemma/fQ.var" "Refinement_Lemma__First_Refinement_Lemma__".
+alias id "fQ" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/First_Refinement_Lemma/fQ.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/First_Refinement_Lemma/HfQ.var" "Refinement_Lemma__First_Refinement_Lemma__".
+alias id "HfQ" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/First_Refinement_Lemma/HfQ.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/First_Refinement_Lemma/HfQ'.var" "Refinement_Lemma__First_Refinement_Lemma__".
+alias id "HfQ'" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/First_Refinement_Lemma/HfQ'.var".
 
 (* begin hide *)
 
@@ -246,29 +246,29 @@ and [R], respectively.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/n.var" "Refinement_Lemma__Second_Refinement_Lemma__".
+alias id "n" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/n.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/j.var" "Refinement_Lemma__Second_Refinement_Lemma__".
+alias id "j" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/j.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/k.var" "Refinement_Lemma__Second_Refinement_Lemma__".
+alias id "k" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/k.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/P.var" "Refinement_Lemma__Second_Refinement_Lemma__".
+alias id "P" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/P.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/Q.var" "Refinement_Lemma__Second_Refinement_Lemma__".
+alias id "Q" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/Q.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/R.var" "Refinement_Lemma__Second_Refinement_Lemma__".
+alias id "R" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/R.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/HrefP.var" "Refinement_Lemma__Second_Refinement_Lemma__".
+alias id "HrefP" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/HrefP.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/HrefR.var" "Refinement_Lemma__Second_Refinement_Lemma__".
+alias id "HrefR" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/HrefR.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/e.var" "Refinement_Lemma__Second_Refinement_Lemma__".
+alias id "e" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/e.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/e'.var" "Refinement_Lemma__Second_Refinement_Lemma__".
+alias id "e'" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/e'.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/He.var" "Refinement_Lemma__Second_Refinement_Lemma__".
+alias id "He" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/He.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/He'.var" "Refinement_Lemma__Second_Refinement_Lemma__".
+alias id "He'" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/He'.var".
 
 (* begin hide *)
 
@@ -278,21 +278,21 @@ inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/d'.con" 
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/HMeshP.var" "Refinement_Lemma__Second_Refinement_Lemma__".
+alias id "HMeshP" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/HMeshP.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/HMeshR.var" "Refinement_Lemma__Second_Refinement_Lemma__".
+alias id "HMeshR" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/HMeshR.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/fP.var" "Refinement_Lemma__Second_Refinement_Lemma__".
+alias id "fP" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/fP.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/HfP.var" "Refinement_Lemma__Second_Refinement_Lemma__".
+alias id "HfP" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/HfP.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/HfP'.var" "Refinement_Lemma__Second_Refinement_Lemma__".
+alias id "HfP'" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/HfP'.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/fR.var" "Refinement_Lemma__Second_Refinement_Lemma__".
+alias id "fR" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/fR.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/HfR.var" "Refinement_Lemma__Second_Refinement_Lemma__".
+alias id "HfR" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/HfR.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/HfR'.var" "Refinement_Lemma__Second_Refinement_Lemma__".
+alias id "HfR'" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Second_Refinement_Lemma/HfR'.var".
 
 inline "cic:/CoRN/ftc/RefLemma/second_refinement_lemma.con".
 
@@ -320,21 +320,21 @@ respectively;
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/n.var" "Refinement_Lemma__Third_Refinement_Lemma__".
+alias id "n" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/n.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/m.var" "Refinement_Lemma__Third_Refinement_Lemma__".
+alias id "m" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/m.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/P.var" "Refinement_Lemma__Third_Refinement_Lemma__".
+alias id "P" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/P.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/R.var" "Refinement_Lemma__Third_Refinement_Lemma__".
+alias id "R" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/R.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/e.var" "Refinement_Lemma__Third_Refinement_Lemma__".
+alias id "e" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/e.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/e'.var" "Refinement_Lemma__Third_Refinement_Lemma__".
+alias id "e'" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/e'.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/He.var" "Refinement_Lemma__Third_Refinement_Lemma__".
+alias id "He" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/He.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/He'.var" "Refinement_Lemma__Third_Refinement_Lemma__".
+alias id "He'" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/He'.var".
 
 (* begin hide *)
 
@@ -344,27 +344,27 @@ inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/d'.con" "
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/HMeshP.var" "Refinement_Lemma__Third_Refinement_Lemma__".
+alias id "HMeshP" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/HMeshP.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/HMeshR.var" "Refinement_Lemma__Third_Refinement_Lemma__".
+alias id "HMeshR" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/HMeshR.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/fP.var" "Refinement_Lemma__Third_Refinement_Lemma__".
+alias id "fP" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/fP.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/HfP.var" "Refinement_Lemma__Third_Refinement_Lemma__".
+alias id "HfP" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/HfP.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/HfP'.var" "Refinement_Lemma__Third_Refinement_Lemma__".
+alias id "HfP'" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/HfP'.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/fR.var" "Refinement_Lemma__Third_Refinement_Lemma__".
+alias id "fR" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/fR.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/HfR.var" "Refinement_Lemma__Third_Refinement_Lemma__".
+alias id "HfR" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/HfR.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/HfR'.var" "Refinement_Lemma__Third_Refinement_Lemma__".
+alias id "HfR'" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/HfR'.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/Hab'.var" "Refinement_Lemma__Third_Refinement_Lemma__".
+alias id "Hab'" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/Hab'.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/beta.var" "Refinement_Lemma__Third_Refinement_Lemma__".
+alias id "beta" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/beta.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/Hbeta.var" "Refinement_Lemma__Third_Refinement_Lemma__".
+alias id "Hbeta" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Third_Refinement_Lemma/Hbeta.var".
 
 (* begin hide *)
 
@@ -457,21 +457,21 @@ Finally, this is inequality (2.6.7) exactly as stated (same conventions as
 above)
 *)
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/n.var" "Refinement_Lemma__Fourth_Refinement_Lemma__".
+alias id "n" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/n.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/m.var" "Refinement_Lemma__Fourth_Refinement_Lemma__".
+alias id "m" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/m.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/P.var" "Refinement_Lemma__Fourth_Refinement_Lemma__".
+alias id "P" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/P.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/R.var" "Refinement_Lemma__Fourth_Refinement_Lemma__".
+alias id "R" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/R.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/e.var" "Refinement_Lemma__Fourth_Refinement_Lemma__".
+alias id "e" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/e.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/e'.var" "Refinement_Lemma__Fourth_Refinement_Lemma__".
+alias id "e'" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/e'.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/He.var" "Refinement_Lemma__Fourth_Refinement_Lemma__".
+alias id "He" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/He.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/He'.var" "Refinement_Lemma__Fourth_Refinement_Lemma__".
+alias id "He'" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/He'.var".
 
 (* begin hide *)
 
@@ -481,25 +481,25 @@ inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/d'.con" 
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/HMeshP.var" "Refinement_Lemma__Fourth_Refinement_Lemma__".
+alias id "HMeshP" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/HMeshP.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/HMeshR.var" "Refinement_Lemma__Fourth_Refinement_Lemma__".
+alias id "HMeshR" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/HMeshR.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/fP.var" "Refinement_Lemma__Fourth_Refinement_Lemma__".
+alias id "fP" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/fP.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/HfP.var" "Refinement_Lemma__Fourth_Refinement_Lemma__".
+alias id "HfP" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/HfP.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/HfP'.var" "Refinement_Lemma__Fourth_Refinement_Lemma__".
+alias id "HfP'" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/HfP'.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/fR.var" "Refinement_Lemma__Fourth_Refinement_Lemma__".
+alias id "fR" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/fR.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/HfR.var" "Refinement_Lemma__Fourth_Refinement_Lemma__".
+alias id "HfR" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/HfR.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/HfR'.var" "Refinement_Lemma__Fourth_Refinement_Lemma__".
+alias id "HfR'" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/HfR'.var".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/Hab'.var" "Refinement_Lemma__Fourth_Refinement_Lemma__".
+alias id "Hab'" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Fourth_Refinement_Lemma/Hab'.var".
 
 (* end show *)
 
@@ -515,21 +515,21 @@ Section Main_Refinement_Lemma
 
 (*#* We finish by presenting Theorem 9. *)
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Main_Refinement_Lemma/n.var" "Refinement_Lemma__Main_Refinement_Lemma__".
+alias id "n" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Main_Refinement_Lemma/n.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Main_Refinement_Lemma/m.var" "Refinement_Lemma__Main_Refinement_Lemma__".
+alias id "m" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Main_Refinement_Lemma/m.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Main_Refinement_Lemma/P.var" "Refinement_Lemma__Main_Refinement_Lemma__".
+alias id "P" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Main_Refinement_Lemma/P.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Main_Refinement_Lemma/R.var" "Refinement_Lemma__Main_Refinement_Lemma__".
+alias id "R" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Main_Refinement_Lemma/R.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Main_Refinement_Lemma/e.var" "Refinement_Lemma__Main_Refinement_Lemma__".
+alias id "e" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Main_Refinement_Lemma/e.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Main_Refinement_Lemma/e'.var" "Refinement_Lemma__Main_Refinement_Lemma__".
+alias id "e'" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Main_Refinement_Lemma/e'.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Main_Refinement_Lemma/He.var" "Refinement_Lemma__Main_Refinement_Lemma__".
+alias id "He" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Main_Refinement_Lemma/He.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Main_Refinement_Lemma/He'.var" "Refinement_Lemma__Main_Refinement_Lemma__".
+alias id "He'" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Main_Refinement_Lemma/He'.var".
 
 (* begin hide *)
 
@@ -539,21 +539,21 @@ inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Main_Refinement_Lemma/d'.con" "R
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Main_Refinement_Lemma/HMeshP.var" "Refinement_Lemma__Main_Refinement_Lemma__".
+alias id "HMeshP" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Main_Refinement_Lemma/HMeshP.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Main_Refinement_Lemma/HMeshR.var" "Refinement_Lemma__Main_Refinement_Lemma__".
+alias id "HMeshR" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Main_Refinement_Lemma/HMeshR.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Main_Refinement_Lemma/fP.var" "Refinement_Lemma__Main_Refinement_Lemma__".
+alias id "fP" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Main_Refinement_Lemma/fP.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Main_Refinement_Lemma/HfP.var" "Refinement_Lemma__Main_Refinement_Lemma__".
+alias id "HfP" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Main_Refinement_Lemma/HfP.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Main_Refinement_Lemma/HfP'.var" "Refinement_Lemma__Main_Refinement_Lemma__".
+alias id "HfP'" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Main_Refinement_Lemma/HfP'.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Main_Refinement_Lemma/fR.var" "Refinement_Lemma__Main_Refinement_Lemma__".
+alias id "fR" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Main_Refinement_Lemma/fR.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Main_Refinement_Lemma/HfR.var" "Refinement_Lemma__Main_Refinement_Lemma__".
+alias id "HfR" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Main_Refinement_Lemma/HfR.var".
 
-inline "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Main_Refinement_Lemma/HfR'.var" "Refinement_Lemma__Main_Refinement_Lemma__".
+alias id "HfR'" = "cic:/CoRN/ftc/RefLemma/Refinement_Lemma/Main_Refinement_Lemma/HfR'.var".
 
 inline "cic:/CoRN/ftc/RefLemma/refinement_lemma.con".
 

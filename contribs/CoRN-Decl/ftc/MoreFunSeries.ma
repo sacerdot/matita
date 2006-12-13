@@ -52,15 +52,15 @@ Some of the definitions do not make sense in this more general setting
 but the ones which do we simply adapt in the usual way.
 *)
 
-inline "cic:/CoRN/ftc/MoreFunSeries/Definitions/J.var" "Definitions__".
+alias id "J" = "cic:/CoRN/ftc/MoreFunSeries/Definitions/J.var".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/Definitions/f.var" "Definitions__".
+alias id "f" = "cic:/CoRN/ftc/MoreFunSeries/Definitions/f.var".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/Definitions/F.var" "Definitions__".
+alias id "F" = "cic:/CoRN/ftc/MoreFunSeries/Definitions/F.var".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/Definitions/contf.var" "Definitions__".
+alias id "contf" = "cic:/CoRN/ftc/MoreFunSeries/Definitions/contf.var".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/Definitions/contF.var" "Definitions__".
+alias id "contF" = "cic:/CoRN/ftc/MoreFunSeries/Definitions/contF.var".
 
 inline "cic:/CoRN/ftc/MoreFunSeries/Cauchy_fun_seq_IR.con".
 
@@ -94,15 +94,15 @@ Section More_Definitions
 Limit is defined and works in the same way as before.
 *)
 
-inline "cic:/CoRN/ftc/MoreFunSeries/More_Definitions/J.var" "More_Definitions__".
+alias id "J" = "cic:/CoRN/ftc/MoreFunSeries/More_Definitions/J.var".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/More_Definitions/f.var" "More_Definitions__".
+alias id "f" = "cic:/CoRN/ftc/MoreFunSeries/More_Definitions/f.var".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/More_Definitions/contf.var" "More_Definitions__".
+alias id "contf" = "cic:/CoRN/ftc/MoreFunSeries/More_Definitions/contf.var".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/MoreFunSeries/More_Definitions/conv.var" "More_Definitions__".
+alias id "conv" = "cic:/CoRN/ftc/MoreFunSeries/More_Definitions/conv.var".
 
 (* end show *)
 
@@ -123,25 +123,25 @@ Section Irrelevance_of_Proofs
 Proofs are irrelevant as before---they just have to be present.
 *)
 
-inline "cic:/CoRN/ftc/MoreFunSeries/Irrelevance_of_Proofs/J.var" "Irrelevance_of_Proofs__".
+alias id "J" = "cic:/CoRN/ftc/MoreFunSeries/Irrelevance_of_Proofs/J.var".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/Irrelevance_of_Proofs/f.var" "Irrelevance_of_Proofs__".
+alias id "f" = "cic:/CoRN/ftc/MoreFunSeries/Irrelevance_of_Proofs/f.var".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/MoreFunSeries/Irrelevance_of_Proofs/contf.var" "Irrelevance_of_Proofs__".
+alias id "contf" = "cic:/CoRN/ftc/MoreFunSeries/Irrelevance_of_Proofs/contf.var".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/Irrelevance_of_Proofs/contf0.var" "Irrelevance_of_Proofs__".
+alias id "contf0" = "cic:/CoRN/ftc/MoreFunSeries/Irrelevance_of_Proofs/contf0.var".
 
 (* end show *)
 
-inline "cic:/CoRN/ftc/MoreFunSeries/Irrelevance_of_Proofs/F.var" "Irrelevance_of_Proofs__".
+alias id "F" = "cic:/CoRN/ftc/MoreFunSeries/Irrelevance_of_Proofs/F.var".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/MoreFunSeries/Irrelevance_of_Proofs/contF.var" "Irrelevance_of_Proofs__".
+alias id "contF" = "cic:/CoRN/ftc/MoreFunSeries/Irrelevance_of_Proofs/contF.var".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/Irrelevance_of_Proofs/contF0.var" "Irrelevance_of_Proofs__".
+alias id "contF0" = "cic:/CoRN/ftc/MoreFunSeries/Irrelevance_of_Proofs/contF0.var".
 
 (* end show *)
 
@@ -163,39 +163,39 @@ Opaque Cauchy_fun_seq_Lim_IR.
 Section More_Properties
 *)
 
-inline "cic:/CoRN/ftc/MoreFunSeries/More_Properties/J.var" "More_Properties__".
+alias id "J" = "cic:/CoRN/ftc/MoreFunSeries/More_Properties/J.var".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/More_Properties/f.var" "More_Properties__".
+alias id "f" = "cic:/CoRN/ftc/MoreFunSeries/More_Properties/f.var".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/More_Properties/g.var" "More_Properties__".
+alias id "g" = "cic:/CoRN/ftc/MoreFunSeries/More_Properties/g.var".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/MoreFunSeries/More_Properties/contf.var" "More_Properties__".
+alias id "contf" = "cic:/CoRN/ftc/MoreFunSeries/More_Properties/contf.var".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/More_Properties/contf0.var" "More_Properties__".
+alias id "contf0" = "cic:/CoRN/ftc/MoreFunSeries/More_Properties/contf0.var".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/More_Properties/contg.var" "More_Properties__".
+alias id "contg" = "cic:/CoRN/ftc/MoreFunSeries/More_Properties/contg.var".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/More_Properties/contg0.var" "More_Properties__".
+alias id "contg0" = "cic:/CoRN/ftc/MoreFunSeries/More_Properties/contg0.var".
 
 (* end show *)
 
 inline "cic:/CoRN/ftc/MoreFunSeries/Cauchy_conv_fun_seq'_IR.con".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/More_Properties/F.var" "More_Properties__".
+alias id "F" = "cic:/CoRN/ftc/MoreFunSeries/More_Properties/F.var".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/More_Properties/G.var" "More_Properties__".
+alias id "G" = "cic:/CoRN/ftc/MoreFunSeries/More_Properties/G.var".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/MoreFunSeries/More_Properties/contF.var" "More_Properties__".
+alias id "contF" = "cic:/CoRN/ftc/MoreFunSeries/More_Properties/contF.var".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/More_Properties/contF0.var" "More_Properties__".
+alias id "contF0" = "cic:/CoRN/ftc/MoreFunSeries/More_Properties/contF0.var".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/More_Properties/contG.var" "More_Properties__".
+alias id "contG" = "cic:/CoRN/ftc/MoreFunSeries/More_Properties/contG.var".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/More_Properties/contG0.var" "More_Properties__".
+alias id "contG0" = "cic:/CoRN/ftc/MoreFunSeries/More_Properties/contG0.var".
 
 (* end show *)
 
@@ -230,15 +230,15 @@ Section Algebraic_Properties
 Algebraic operations still work well.
 *)
 
-inline "cic:/CoRN/ftc/MoreFunSeries/Algebraic_Properties/J.var" "Algebraic_Properties__".
+alias id "J" = "cic:/CoRN/ftc/MoreFunSeries/Algebraic_Properties/J.var".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/Algebraic_Properties/f.var" "Algebraic_Properties__".
+alias id "f" = "cic:/CoRN/ftc/MoreFunSeries/Algebraic_Properties/f.var".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/Algebraic_Properties/g.var" "Algebraic_Properties__".
+alias id "g" = "cic:/CoRN/ftc/MoreFunSeries/Algebraic_Properties/g.var".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/Algebraic_Properties/contf.var" "Algebraic_Properties__".
+alias id "contf" = "cic:/CoRN/ftc/MoreFunSeries/Algebraic_Properties/contf.var".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/Algebraic_Properties/contg.var" "Algebraic_Properties__".
+alias id "contg" = "cic:/CoRN/ftc/MoreFunSeries/Algebraic_Properties/contg.var".
 
 inline "cic:/CoRN/ftc/MoreFunSeries/FLim_unique_IR.con".
 
@@ -248,19 +248,19 @@ inline "cic:/CoRN/ftc/MoreFunSeries/fun_Lim_seq_const_IR.con".
 
 inline "cic:/CoRN/ftc/MoreFunSeries/fun_Cauchy_prop_const_IR.con".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/Algebraic_Properties/F.var" "Algebraic_Properties__".
+alias id "F" = "cic:/CoRN/ftc/MoreFunSeries/Algebraic_Properties/F.var".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/Algebraic_Properties/G.var" "Algebraic_Properties__".
+alias id "G" = "cic:/CoRN/ftc/MoreFunSeries/Algebraic_Properties/G.var".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/Algebraic_Properties/contF.var" "Algebraic_Properties__".
+alias id "contF" = "cic:/CoRN/ftc/MoreFunSeries/Algebraic_Properties/contF.var".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/Algebraic_Properties/contG.var" "Algebraic_Properties__".
+alias id "contG" = "cic:/CoRN/ftc/MoreFunSeries/Algebraic_Properties/contG.var".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/MoreFunSeries/Algebraic_Properties/convF.var" "Algebraic_Properties__".
+alias id "convF" = "cic:/CoRN/ftc/MoreFunSeries/Algebraic_Properties/convF.var".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/Algebraic_Properties/convG.var" "Algebraic_Properties__".
+alias id "convG" = "cic:/CoRN/ftc/MoreFunSeries/Algebraic_Properties/convG.var".
 
 (* end show *)
 
@@ -282,21 +282,21 @@ Section More_Algebraic_Properties
 If we work with the limit function things fit in just as well.
 *)
 
-inline "cic:/CoRN/ftc/MoreFunSeries/More_Algebraic_Properties/J.var" "More_Algebraic_Properties__".
+alias id "J" = "cic:/CoRN/ftc/MoreFunSeries/More_Algebraic_Properties/J.var".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/More_Algebraic_Properties/f.var" "More_Algebraic_Properties__".
+alias id "f" = "cic:/CoRN/ftc/MoreFunSeries/More_Algebraic_Properties/f.var".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/More_Algebraic_Properties/g.var" "More_Algebraic_Properties__".
+alias id "g" = "cic:/CoRN/ftc/MoreFunSeries/More_Algebraic_Properties/g.var".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/More_Algebraic_Properties/contf.var" "More_Algebraic_Properties__".
+alias id "contf" = "cic:/CoRN/ftc/MoreFunSeries/More_Algebraic_Properties/contf.var".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/More_Algebraic_Properties/contg.var" "More_Algebraic_Properties__".
+alias id "contg" = "cic:/CoRN/ftc/MoreFunSeries/More_Algebraic_Properties/contg.var".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/MoreFunSeries/More_Algebraic_Properties/Hf.var" "More_Algebraic_Properties__".
+alias id "Hf" = "cic:/CoRN/ftc/MoreFunSeries/More_Algebraic_Properties/Hf.var".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/More_Algebraic_Properties/Hg.var" "More_Algebraic_Properties__".
+alias id "Hg" = "cic:/CoRN/ftc/MoreFunSeries/More_Algebraic_Properties/Hg.var".
 
 (* end show *)
 
@@ -354,9 +354,9 @@ We now consider series of functions defined in arbitrary intervals.
 Convergence is defined as expected---through convergence in every compact interval.
 *)
 
-inline "cic:/CoRN/ftc/MoreFunSeries/Series_Definitions/J.var" "Series_Definitions__".
+alias id "J" = "cic:/CoRN/ftc/MoreFunSeries/Series_Definitions/J.var".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/Series_Definitions/f.var" "Series_Definitions__".
+alias id "f" = "cic:/CoRN/ftc/MoreFunSeries/Series_Definitions/f.var".
 
 inline "cic:/CoRN/ftc/MoreFunSeries/fun_series_convergent_IR.con".
 
@@ -364,7 +364,7 @@ inline "cic:/CoRN/ftc/MoreFunSeries/fun_series_conv_imp_conv_IR.con".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/MoreFunSeries/Series_Definitions/H.var" "Series_Definitions__".
+alias id "H" = "cic:/CoRN/ftc/MoreFunSeries/Series_Definitions/H.var".
 
 (* end show *)
 
@@ -396,9 +396,9 @@ Implicit Arguments FSeries_Sum [J f].
 Section More_Series_Definitions
 *)
 
-inline "cic:/CoRN/ftc/MoreFunSeries/More_Series_Definitions/J.var" "More_Series_Definitions__".
+alias id "J" = "cic:/CoRN/ftc/MoreFunSeries/More_Series_Definitions/J.var".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/More_Series_Definitions/f.var" "More_Series_Definitions__".
+alias id "f" = "cic:/CoRN/ftc/MoreFunSeries/More_Series_Definitions/f.var".
 
 (*#*
 Absolute convergence still exists.
@@ -418,9 +418,9 @@ Section Convergence_Results
 As before, any series converges to its sum.
 *)
 
-inline "cic:/CoRN/ftc/MoreFunSeries/Convergence_Results/J.var" "Convergence_Results__".
+alias id "J" = "cic:/CoRN/ftc/MoreFunSeries/Convergence_Results/J.var".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/Convergence_Results/f.var" "Convergence_Results__".
+alias id "f" = "cic:/CoRN/ftc/MoreFunSeries/Convergence_Results/f.var".
 
 inline "cic:/CoRN/ftc/MoreFunSeries/FSeries_conv.con".
 
@@ -451,7 +451,7 @@ Section Operations
 Convergence is well defined and preserved by operations.
 *)
 
-inline "cic:/CoRN/ftc/MoreFunSeries/Operations/J.var" "Operations__".
+alias id "J" = "cic:/CoRN/ftc/MoreFunSeries/Operations/J.var".
 
 inline "cic:/CoRN/ftc/MoreFunSeries/conv_fun_const_series_IR.con".
 
@@ -461,17 +461,17 @@ inline "cic:/CoRN/ftc/MoreFunSeries/conv_zero_fun_series_IR.con".
 
 inline "cic:/CoRN/ftc/MoreFunSeries/FSeries_Sum_zero_IR.con".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/Operations/f.var" "Operations__".
+alias id "f" = "cic:/CoRN/ftc/MoreFunSeries/Operations/f.var".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/Operations/g.var" "Operations__".
+alias id "g" = "cic:/CoRN/ftc/MoreFunSeries/Operations/g.var".
 
 inline "cic:/CoRN/ftc/MoreFunSeries/fun_series_convergent_wd_IR.con".
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/MoreFunSeries/Operations/convF.var" "Operations__".
+alias id "convF" = "cic:/CoRN/ftc/MoreFunSeries/Operations/convF.var".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/Operations/convG.var" "Operations__".
+alias id "convG" = "cic:/CoRN/ftc/MoreFunSeries/Operations/convG.var".
 
 (* end show *)
 
@@ -494,11 +494,11 @@ inline "cic:/CoRN/ftc/MoreFunSeries/FSeries_Sum_minus.con".
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/MoreFunSeries/Operations/c.var" "Operations__".
+alias id "c" = "cic:/CoRN/ftc/MoreFunSeries/Operations/c.var".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/Operations/H.var" "Operations__".
+alias id "H" = "cic:/CoRN/ftc/MoreFunSeries/Operations/H.var".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/Operations/contH.var" "Operations__".
+alias id "contH" = "cic:/CoRN/ftc/MoreFunSeries/Operations/contH.var".
 
 inline "cic:/CoRN/ftc/MoreFunSeries/FSeries_Sum_scal_conv.con".
 
@@ -518,11 +518,11 @@ The most important tests for convergence of series still apply: the
 comparison test (in both versions) and the ratio test.
 *)
 
-inline "cic:/CoRN/ftc/MoreFunSeries/Convergence_Criteria/J.var" "Convergence_Criteria__".
+alias id "J" = "cic:/CoRN/ftc/MoreFunSeries/Convergence_Criteria/J.var".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/Convergence_Criteria/f.var" "Convergence_Criteria__".
+alias id "f" = "cic:/CoRN/ftc/MoreFunSeries/Convergence_Criteria/f.var".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/Convergence_Criteria/contF.var" "Convergence_Criteria__".
+alias id "contF" = "cic:/CoRN/ftc/MoreFunSeries/Convergence_Criteria/contF.var".
 
 inline "cic:/CoRN/ftc/MoreFunSeries/fun_str_comparison_IR.con".
 
@@ -549,11 +549,11 @@ $f_i$#f<sub>i</sub># and inserting the null function in the first
 position.  This does not affect convergence or the sum of the series.
 *)
 
-inline "cic:/CoRN/ftc/MoreFunSeries/Insert_Series/J.var" "Insert_Series__".
+alias id "J" = "cic:/CoRN/ftc/MoreFunSeries/Insert_Series/J.var".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/Insert_Series/f.var" "Insert_Series__".
+alias id "f" = "cic:/CoRN/ftc/MoreFunSeries/Insert_Series/f.var".
 
-inline "cic:/CoRN/ftc/MoreFunSeries/Insert_Series/convF.var" "Insert_Series__".
+alias id "convF" = "cic:/CoRN/ftc/MoreFunSeries/Insert_Series/convF.var".
 
 inline "cic:/CoRN/ftc/MoreFunSeries/insert_series.con".
 

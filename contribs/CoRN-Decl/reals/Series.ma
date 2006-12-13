@@ -45,7 +45,7 @@ To each such sequence we can assign a sequence of partial sums.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/reals/Series/Definitions/x.var" "Definitions__".
+alias id "x" = "cic:/CoRN/reals/Series/Definitions/x.var".
 
 inline "cic:/CoRN/reals/Series/seq_part_sum.con".
 
@@ -99,7 +99,7 @@ End Definitions
 Section More_Definitions
 *)
 
-inline "cic:/CoRN/reals/Series/More_Definitions/x.var" "More_Definitions__".
+alias id "x" = "cic:/CoRN/reals/Series/More_Definitions/x.var".
 
 (*#* We also define absolute convergence. *)
 
@@ -129,11 +129,11 @@ we can also compute its sum.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/reals/Series/Power_Series/c.var" "Power_Series__".
+alias id "c" = "cic:/CoRN/reals/Series/Power_Series/c.var".
 
-inline "cic:/CoRN/reals/Series/Power_Series/H0c.var" "Power_Series__".
+alias id "H0c" = "cic:/CoRN/reals/Series/Power_Series/H0c.var".
 
-inline "cic:/CoRN/reals/Series/Power_Series/Hc1.var" "Power_Series__".
+alias id "Hc1" = "cic:/CoRN/reals/Series/Power_Series/Hc1.var".
 
 inline "cic:/CoRN/reals/Series/c_exp_Lim.con".
 
@@ -168,13 +168,13 @@ of two convergent series.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/reals/Series/Operations/x.var" "Operations__".
+alias id "x" = "cic:/CoRN/reals/Series/Operations/x.var".
 
-inline "cic:/CoRN/reals/Series/Operations/y.var" "Operations__".
+alias id "y" = "cic:/CoRN/reals/Series/Operations/y.var".
 
-inline "cic:/CoRN/reals/Series/Operations/convX.var" "Operations__".
+alias id "convX" = "cic:/CoRN/reals/Series/Operations/convX.var".
 
-inline "cic:/CoRN/reals/Series/Operations/convY.var" "Operations__".
+alias id "convY" = "cic:/CoRN/reals/Series/Operations/convY.var".
 
 inline "cic:/CoRN/reals/Series/convergent_wd.con".
 
@@ -190,7 +190,7 @@ inline "cic:/CoRN/reals/Series/series_sum_minus.con".
 
 (*#* Multiplication by a scalar [c] is also permitted. *)
 
-inline "cic:/CoRN/reals/Series/Operations/c.var" "Operations__".
+alias id "c" = "cic:/CoRN/reals/Series/Operations/c.var".
 
 inline "cic:/CoRN/reals/Series/conv_series_mult_scal.con".
 
@@ -204,9 +204,9 @@ End Operations
 Section More_Operations
 *)
 
-inline "cic:/CoRN/reals/Series/More_Operations/x.var" "More_Operations__".
+alias id "x" = "cic:/CoRN/reals/Series/More_Operations/x.var".
 
-inline "cic:/CoRN/reals/Series/More_Operations/convX.var" "More_Operations__".
+alias id "convX" = "cic:/CoRN/reals/Series/More_Operations/convX.var".
 
 (*#* As a corollary, we get the series of the inverses. *)
 
@@ -230,13 +230,13 @@ and derive an important corollary for series.
 Let [x,y : nat->IR] be equal after some natural number.
 *)
 
-inline "cic:/CoRN/reals/Series/Almost_Everywhere/x.var" "Almost_Everywhere__".
+alias id "x" = "cic:/CoRN/reals/Series/Almost_Everywhere/x.var".
 
-inline "cic:/CoRN/reals/Series/Almost_Everywhere/y.var" "Almost_Everywhere__".
+alias id "y" = "cic:/CoRN/reals/Series/Almost_Everywhere/y.var".
 
 inline "cic:/CoRN/reals/Series/aew_eq.con".
 
-inline "cic:/CoRN/reals/Series/Almost_Everywhere/aew_equal.var" "Almost_Everywhere__".
+alias id "aew_equal" = "cic:/CoRN/reals/Series/Almost_Everywhere/aew_equal.var".
 
 inline "cic:/CoRN/reals/Series/aew_Cauchy.con".
 
@@ -254,11 +254,11 @@ Section Cauchy_Almost_Everywhere
 
 (*#* Suppose furthermore that [x,y] are Cauchy sequences. *)
 
-inline "cic:/CoRN/reals/Series/Cauchy_Almost_Everywhere/x.var" "Cauchy_Almost_Everywhere__".
+alias id "x" = "cic:/CoRN/reals/Series/Cauchy_Almost_Everywhere/x.var".
 
-inline "cic:/CoRN/reals/Series/Cauchy_Almost_Everywhere/y.var" "Cauchy_Almost_Everywhere__".
+alias id "y" = "cic:/CoRN/reals/Series/Cauchy_Almost_Everywhere/y.var".
 
-inline "cic:/CoRN/reals/Series/Cauchy_Almost_Everywhere/aew_equal.var" "Cauchy_Almost_Everywhere__".
+alias id "aew_equal" = "cic:/CoRN/reals/Series/Cauchy_Almost_Everywhere/aew_equal.var".
 
 inline "cic:/CoRN/reals/Series/aew_Lim.con".
 
@@ -276,7 +276,7 @@ Section Convergence_Criteria
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/reals/Series/Convergence_Criteria/x.var" "Convergence_Criteria__".
+alias id "x" = "cic:/CoRN/reals/Series/Convergence_Criteria/x.var".
 
 (*#* We include the comparison test for series, both in a strong and in a less 
 general (but simpler) form.
@@ -306,7 +306,7 @@ End Convergence_Criteria
 Section More_CC
 *)
 
-inline "cic:/CoRN/reals/Series/More_CC/x.var" "More_CC__".
+alias id "x" = "cic:/CoRN/reals/Series/More_CC/x.var".
 
 inline "cic:/CoRN/reals/Series/ratio_test_conv.con".
 
@@ -326,13 +326,13 @@ Alternate series are a special case.  Suppose that [x] is nonnegative and
 decreasing convergent to 0.
 *)
 
-inline "cic:/CoRN/reals/Series/Alternate_Series/x.var" "Alternate_Series__".
+alias id "x" = "cic:/CoRN/reals/Series/Alternate_Series/x.var".
 
-inline "cic:/CoRN/reals/Series/Alternate_Series/pos_x.var" "Alternate_Series__".
+alias id "pos_x" = "cic:/CoRN/reals/Series/Alternate_Series/pos_x.var".
 
-inline "cic:/CoRN/reals/Series/Alternate_Series/Lim_x.var" "Alternate_Series__".
+alias id "Lim_x" = "cic:/CoRN/reals/Series/Alternate_Series/Lim_x.var".
 
-inline "cic:/CoRN/reals/Series/Alternate_Series/mon_x.var" "Alternate_Series__".
+alias id "mon_x" = "cic:/CoRN/reals/Series/Alternate_Series/mon_x.var".
 
 (* begin hide *)
 

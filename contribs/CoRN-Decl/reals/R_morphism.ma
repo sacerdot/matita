@@ -34,27 +34,27 @@ inline "cic:/CoRN/reals/R_morphism/Cauchy_Lim_prop2.con".
 Section morphism
 *)
 
-inline "cic:/CoRN/reals/R_morphism/morphism/R1.var" "morphism__".
+alias id "R1" = "cic:/CoRN/reals/R_morphism/morphism/R1.var".
 
-inline "cic:/CoRN/reals/R_morphism/morphism/R2.var" "morphism__".
+alias id "R2" = "cic:/CoRN/reals/R_morphism/morphism/R2.var".
 
 (* UNEXPORTED
 Section morphism_details
 *)
 
-inline "cic:/CoRN/reals/R_morphism/morphism/morphism_details/phi.var" "morphism__morphism_details__".
+alias id "phi" = "cic:/CoRN/reals/R_morphism/morphism/morphism_details/phi.var".
 
-inline "cic:/CoRN/reals/R_morphism/morphism/morphism_details/p1.var" "morphism__morphism_details__".
+alias id "p1" = "cic:/CoRN/reals/R_morphism/morphism/morphism_details/p1.var".
 
-inline "cic:/CoRN/reals/R_morphism/morphism/morphism_details/p2.var" "morphism__morphism_details__".
+alias id "p2" = "cic:/CoRN/reals/R_morphism/morphism/morphism_details/p2.var".
 
-inline "cic:/CoRN/reals/R_morphism/morphism/morphism_details/f1.var" "morphism__morphism_details__".
+alias id "f1" = "cic:/CoRN/reals/R_morphism/morphism/morphism_details/f1.var".
 
-inline "cic:/CoRN/reals/R_morphism/morphism/morphism_details/f2.var" "morphism__morphism_details__".
+alias id "f2" = "cic:/CoRN/reals/R_morphism/morphism/morphism_details/f2.var".
 
-inline "cic:/CoRN/reals/R_morphism/morphism/morphism_details/g1.var" "morphism__morphism_details__".
+alias id "g1" = "cic:/CoRN/reals/R_morphism/morphism/morphism_details/g1.var".
 
-inline "cic:/CoRN/reals/R_morphism/morphism/morphism_details/g2.var" "morphism__morphism_details__".
+alias id "g2" = "cic:/CoRN/reals/R_morphism/morphism/morphism_details/g2.var".
 
 inline "cic:/CoRN/reals/R_morphism/fun_pres_relation.con".
 
@@ -128,15 +128,15 @@ End morphism
 Section composition
 *)
 
-inline "cic:/CoRN/reals/R_morphism/composition/R1.var" "composition__".
+alias id "R1" = "cic:/CoRN/reals/R_morphism/composition/R1.var".
 
-inline "cic:/CoRN/reals/R_morphism/composition/R2.var" "composition__".
+alias id "R2" = "cic:/CoRN/reals/R_morphism/composition/R2.var".
 
-inline "cic:/CoRN/reals/R_morphism/composition/R3.var" "composition__".
+alias id "R3" = "cic:/CoRN/reals/R_morphism/composition/R3.var".
 
-inline "cic:/CoRN/reals/R_morphism/composition/f.var" "composition__".
+alias id "f" = "cic:/CoRN/reals/R_morphism/composition/f.var".
 
-inline "cic:/CoRN/reals/R_morphism/composition/g.var" "composition__".
+alias id "g" = "cic:/CoRN/reals/R_morphism/composition/g.var".
 
 inline "cic:/CoRN/reals/R_morphism/compose.con".
 
@@ -160,17 +160,17 @@ End composition
 Section isomorphism
 *)
 
-inline "cic:/CoRN/reals/R_morphism/isomorphism/R1.var" "isomorphism__".
+alias id "R1" = "cic:/CoRN/reals/R_morphism/isomorphism/R1.var".
 
-inline "cic:/CoRN/reals/R_morphism/isomorphism/R2.var" "isomorphism__".
+alias id "R2" = "cic:/CoRN/reals/R_morphism/isomorphism/R2.var".
 
 (* UNEXPORTED
 Section identity_map
 *)
 
-inline "cic:/CoRN/reals/R_morphism/isomorphism/identity_map/R3.var" "isomorphism__identity_map__".
+alias id "R3" = "cic:/CoRN/reals/R_morphism/isomorphism/identity_map/R3.var".
 
-inline "cic:/CoRN/reals/R_morphism/isomorphism/identity_map/f.var" "isomorphism__identity_map__".
+alias id "f" = "cic:/CoRN/reals/R_morphism/isomorphism/identity_map/f.var".
 
 inline "cic:/CoRN/reals/R_morphism/map_is_id.con".
 
@@ -188,11 +188,11 @@ End isomorphism
 Section surjective_map
 *)
 
-inline "cic:/CoRN/reals/R_morphism/surjective_map/R1.var" "surjective_map__".
+alias id "R1" = "cic:/CoRN/reals/R_morphism/surjective_map/R1.var".
 
-inline "cic:/CoRN/reals/R_morphism/surjective_map/R2.var" "surjective_map__".
+alias id "R2" = "cic:/CoRN/reals/R_morphism/surjective_map/R2.var".
 
-inline "cic:/CoRN/reals/R_morphism/surjective_map/f.var" "surjective_map__".
+alias id "f" = "cic:/CoRN/reals/R_morphism/surjective_map/f.var".
 
 inline "cic:/CoRN/reals/R_morphism/map_is_surjective.con".
 
@@ -204,13 +204,13 @@ End surjective_map
 Section simplification
 *)
 
-inline "cic:/CoRN/reals/R_morphism/simplification/R1.var" "simplification__".
+alias id "R1" = "cic:/CoRN/reals/R_morphism/simplification/R1.var".
 
-inline "cic:/CoRN/reals/R_morphism/simplification/R2.var" "simplification__".
+alias id "R2" = "cic:/CoRN/reals/R_morphism/simplification/R2.var".
 
-inline "cic:/CoRN/reals/R_morphism/simplification/f.var" "simplification__".
+alias id "f" = "cic:/CoRN/reals/R_morphism/simplification/f.var".
 
-inline "cic:/CoRN/reals/R_morphism/simplification/H1.var" "simplification__".
+alias id "H1" = "cic:/CoRN/reals/R_morphism/simplification/H1.var".
 
 inline "cic:/CoRN/reals/R_morphism/f_well_def.con".
 
@@ -218,7 +218,7 @@ inline "cic:/CoRN/reals/R_morphism/f_well_def.con".
 Section with_less
 *)
 
-inline "cic:/CoRN/reals/R_morphism/simplification/with_less/H2.var" "simplification__with_less__".
+alias id "H2" = "cic:/CoRN/reals/R_morphism/simplification/with_less/H2.var".
 
 inline "cic:/CoRN/reals/R_morphism/less_pres_f.con".
 
@@ -236,7 +236,7 @@ End with_less
 Section with_plus
 *)
 
-inline "cic:/CoRN/reals/R_morphism/simplification/with_plus/H3.var" "simplification__with_plus__".
+alias id "H3" = "cic:/CoRN/reals/R_morphism/simplification/with_plus/H3.var".
 
 inline "cic:/CoRN/reals/R_morphism/f_pres_Zero.con".
 
@@ -252,9 +252,9 @@ End with_plus
 Section with_plus_less
 *)
 
-inline "cic:/CoRN/reals/R_morphism/simplification/with_plus_less/H2.var" "simplification__with_plus_less__".
+alias id "H2" = "cic:/CoRN/reals/R_morphism/simplification/with_plus_less/H2.var".
 
-inline "cic:/CoRN/reals/R_morphism/simplification/with_plus_less/H3.var" "simplification__with_plus_less__".
+alias id "H3" = "cic:/CoRN/reals/R_morphism/simplification/with_plus_less/H3.var".
 
 inline "cic:/CoRN/reals/R_morphism/f_pres_ap_zero.con".
 
@@ -262,7 +262,7 @@ inline "cic:/CoRN/reals/R_morphism/f_pres_ap_zero.con".
 Section surjectivity_helps
 *)
 
-inline "cic:/CoRN/reals/R_morphism/simplification/with_plus_less/surjectivity_helps/f_surj.var" "simplification__with_plus_less__surjectivity_helps__".
+alias id "f_surj" = "cic:/CoRN/reals/R_morphism/simplification/with_plus_less/surjectivity_helps/f_surj.var".
 
 inline "cic:/CoRN/reals/R_morphism/f_pres_Lim.con".
 
@@ -274,7 +274,7 @@ End surjectivity_helps
 Section with_mult_plus_less
 *)
 
-inline "cic:/CoRN/reals/R_morphism/simplification/with_plus_less/with_mult_plus_less/H4.var" "simplification__with_plus_less__with_mult_plus_less__".
+alias id "H4" = "cic:/CoRN/reals/R_morphism/simplification/with_plus_less/with_mult_plus_less/H4.var".
 
 inline "cic:/CoRN/reals/R_morphism/f_pres_one.con".
 

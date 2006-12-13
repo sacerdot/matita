@@ -36,7 +36,7 @@ include "tactics/Transparent_algebra.ma".
 Section More_Nexp
 *)
 
-inline "cic:/CoRN/algebra/Expon/More_Nexp/R.var" "More_Nexp__".
+alias id "R" = "cic:/CoRN/algebra/Expon/More_Nexp/R.var".
 
 inline "cic:/CoRN/algebra/Expon/nexp_resp_ap_zero.con".
 
@@ -99,7 +99,7 @@ Implicit Arguments nexp_resp_ap_zero [R x].
 Section Zexp_def
 *)
 
-inline "cic:/CoRN/algebra/Expon/Zexp_def/R.var" "Zexp_def__".
+alias id "R" = "cic:/CoRN/algebra/Expon/Zexp_def/R.var".
 
 (*#*
 It would be nicer to define [zexp] using [caseZdiff], but we already
@@ -129,7 +129,7 @@ Notation "( x [//] Hx ) [^^] n" := (zexp x Hx n) (at level 0).
 Section Zexp_properties
 *)
 
-inline "cic:/CoRN/algebra/Expon/Zexp_properties/R.var" "Zexp_properties__".
+alias id "R" = "cic:/CoRN/algebra/Expon/Zexp_properties/R.var".
 
 inline "cic:/CoRN/algebra/Expon/zexp_zero.con".
 
@@ -276,7 +276,7 @@ Hint Resolve zexp_wd: algebra_c.
 Section Root_Unique
 *)
 
-inline "cic:/CoRN/algebra/Expon/Root_Unique/R.var" "Root_Unique__".
+alias id "R" = "cic:/CoRN/algebra/Expon/Root_Unique/R.var".
 
 inline "cic:/CoRN/algebra/Expon/root_unique.con".
 

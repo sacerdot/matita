@@ -43,7 +43,7 @@ Section Rational_sequence_prelogue
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/reals/Q_in_CReals/Rational_sequence_prelogue/R1.var" "Rational_sequence_prelogue__".
+alias id "R1" = "cic:/CoRN/reals/Q_in_CReals/Rational_sequence_prelogue/R1.var".
 
 (* We clone these proofs from CReals1.v just because there IR is an axiom *)
 

@@ -39,7 +39,7 @@ the proof that any two partitions with no common point have a common
 refinement).
 *)
 
-inline "cic:/CoRN/ftc/COrdLemmas/Lemmas/F.var" "Lemmas__".
+alias id "F" = "cic:/CoRN/ftc/COrdLemmas/Lemmas/F.var".
 
 inline "cic:/CoRN/ftc/COrdLemmas/om_fun_lt.con".
 
@@ -65,13 +65,13 @@ inline "cic:/CoRN/ftc/COrdLemmas/om_fun_4d.con".
 
 (* begin hide *)
 
-inline "cic:/CoRN/ftc/COrdLemmas/Lemmas/f.var" "Lemmas__".
+alias id "f" = "cic:/CoRN/ftc/COrdLemmas/Lemmas/f.var".
 
-inline "cic:/CoRN/ftc/COrdLemmas/Lemmas/f0.var" "Lemmas__".
+alias id "f0" = "cic:/CoRN/ftc/COrdLemmas/Lemmas/f0.var".
 
-inline "cic:/CoRN/ftc/COrdLemmas/Lemmas/f_mon.var" "Lemmas__".
+alias id "f_mon" = "cic:/CoRN/ftc/COrdLemmas/Lemmas/f_mon.var".
 
-inline "cic:/CoRN/ftc/COrdLemmas/Lemmas/h.var" "Lemmas__".
+alias id "h" = "cic:/CoRN/ftc/COrdLemmas/Lemmas/h.var".
 
 (* end hide *)
 
@@ -107,7 +107,7 @@ inline "cic:/CoRN/ftc/COrdLemmas/More_Lemmas/f'.con" "More_Lemmas__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/COrdLemmas/More_Lemmas/F.var" "More_Lemmas__".
+alias id "F" = "cic:/CoRN/ftc/COrdLemmas/More_Lemmas/F.var".
 
 (* begin show *)
 

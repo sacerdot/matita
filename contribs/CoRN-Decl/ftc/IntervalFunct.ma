@@ -47,11 +47,11 @@ type [I -> IR].
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/IntervalFunct/Operations/a.var" "Operations__".
+alias id "a" = "cic:/CoRN/ftc/IntervalFunct/Operations/a.var".
 
-inline "cic:/CoRN/ftc/IntervalFunct/Operations/b.var" "Operations__".
+alias id "b" = "cic:/CoRN/ftc/IntervalFunct/Operations/b.var".
 
-inline "cic:/CoRN/ftc/IntervalFunct/Operations/Hab.var" "Operations__".
+alias id "Hab" = "cic:/CoRN/ftc/IntervalFunct/Operations/Hab.var".
 
 (* begin hide *)
 
@@ -59,9 +59,9 @@ inline "cic:/CoRN/ftc/IntervalFunct/Operations/I.con" "Operations__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/IntervalFunct/Operations/f.var" "Operations__".
+alias id "f" = "cic:/CoRN/ftc/IntervalFunct/Operations/f.var".
 
-inline "cic:/CoRN/ftc/IntervalFunct/Operations/g.var" "Operations__".
+alias id "g" = "cic:/CoRN/ftc/IntervalFunct/Operations/g.var".
 
 (* UNEXPORTED
 Section Const
@@ -74,7 +74,7 @@ Constant and identity functions are defined.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/ftc/IntervalFunct/Operations/Const/c.var" "Operations__Const__".
+alias id "c" = "cic:/CoRN/ftc/IntervalFunct/Operations/Const/c.var".
 
 inline "cic:/CoRN/ftc/IntervalFunct/IConst_strext.con".
 
@@ -116,7 +116,7 @@ Section Nth_Power
 Exponentiation to a natural power [n] is also useful.
 *)
 
-inline "cic:/CoRN/ftc/IntervalFunct/Operations/Nth_Power/n.var" "Operations__Nth_Power__".
+alias id "n" = "cic:/CoRN/ftc/IntervalFunct/Operations/Nth_Power/n.var".
 
 inline "cic:/CoRN/ftc/IntervalFunct/INth_strext.con".
 
@@ -136,7 +136,7 @@ Section Recip_Div
 
 (* begin show *)
 
-inline "cic:/CoRN/ftc/IntervalFunct/Operations/Recip_Div/Hg.var" "Operations__Recip_Div__".
+alias id "Hg" = "cic:/CoRN/ftc/IntervalFunct/Operations/Recip_Div/Hg.var".
 
 (* end show *)
 
@@ -186,11 +186,11 @@ compact interval [[a',b']], and let [g] be a setoid function of type
 Section Composition
 *)
 
-inline "cic:/CoRN/ftc/IntervalFunct/Composition/a.var" "Composition__".
+alias id "a" = "cic:/CoRN/ftc/IntervalFunct/Composition/a.var".
 
-inline "cic:/CoRN/ftc/IntervalFunct/Composition/b.var" "Composition__".
+alias id "b" = "cic:/CoRN/ftc/IntervalFunct/Composition/b.var".
 
-inline "cic:/CoRN/ftc/IntervalFunct/Composition/Hab.var" "Composition__".
+alias id "Hab" = "cic:/CoRN/ftc/IntervalFunct/Composition/Hab.var".
 
 (* begin hide *)
 
@@ -198,11 +198,11 @@ inline "cic:/CoRN/ftc/IntervalFunct/Composition/I.con" "Composition__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/IntervalFunct/Composition/a'.var" "Composition__".
+alias id "a'" = "cic:/CoRN/ftc/IntervalFunct/Composition/a'.var".
 
-inline "cic:/CoRN/ftc/IntervalFunct/Composition/b'.var" "Composition__".
+alias id "b'" = "cic:/CoRN/ftc/IntervalFunct/Composition/b'.var".
 
-inline "cic:/CoRN/ftc/IntervalFunct/Composition/Hab'.var" "Composition__".
+alias id "Hab'" = "cic:/CoRN/ftc/IntervalFunct/Composition/Hab'.var".
 
 (* begin hide *)
 
@@ -210,11 +210,11 @@ inline "cic:/CoRN/ftc/IntervalFunct/Composition/I'.con" "Composition__".
 
 (* end hide *)
 
-inline "cic:/CoRN/ftc/IntervalFunct/Composition/f.var" "Composition__".
+alias id "f" = "cic:/CoRN/ftc/IntervalFunct/Composition/f.var".
 
-inline "cic:/CoRN/ftc/IntervalFunct/Composition/g.var" "Composition__".
+alias id "g" = "cic:/CoRN/ftc/IntervalFunct/Composition/g.var".
 
-inline "cic:/CoRN/ftc/IntervalFunct/Composition/Hfg.var" "Composition__".
+alias id "Hfg" = "cic:/CoRN/ftc/IntervalFunct/Composition/Hfg.var".
 
 inline "cic:/CoRN/ftc/IntervalFunct/IComp_strext.con".
 

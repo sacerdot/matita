@@ -188,7 +188,7 @@ write [e[/] (Snring n)] and [e[/]TwoNZ], [e[/]ThreeNZ] and so on.
 Section Field_axioms
 *)
 
-inline "cic:/CoRN/algebra/CFields/Field_axioms/F.var" "Field_axioms__".
+alias id "F" = "cic:/CoRN/algebra/CFields/Field_axioms/F.var".
 
 inline "cic:/CoRN/algebra/CFields/CField_is_CField.con".
 
@@ -207,7 +207,7 @@ Section Field_basics
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CFields/Field_basics/F.var" "Field_basics__".
+alias id "F" = "cic:/CoRN/algebra/CFields/Field_basics/F.var".
 
 inline "cic:/CoRN/algebra/CFields/rcpcl_is_inverse_unfolded.con".
 
@@ -237,7 +237,7 @@ Section Field_multiplication
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CFields/Field_multiplication/F.var" "Field_multiplication__".
+alias id "F" = "cic:/CoRN/algebra/CFields/Field_multiplication/F.var".
 
 inline "cic:/CoRN/algebra/CFields/mult_resp_ap_zero.con".
 
@@ -291,7 +291,7 @@ Section Rcpcl_properties
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CFields/Rcpcl_properties/F.var" "Rcpcl_properties__".
+alias id "F" = "cic:/CoRN/algebra/CFields/Rcpcl_properties/F.var".
 
 inline "cic:/CoRN/algebra/CFields/inv_one.con".
 
@@ -317,7 +317,7 @@ Section MultipGroup
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CFields/MultipGroup/F.var" "MultipGroup__".
+alias id "F" = "cic:/CoRN/algebra/CFields/MultipGroup/F.var".
 
 (*#*
 The multiplicative monoid of NonZeros.
@@ -350,7 +350,7 @@ In the names of lemmas, we denote [[/]] by [div], and
 %\end{nameconvention}%
 *)
 
-inline "cic:/CoRN/algebra/CFields/Div_properties/F.var" "Div_properties__".
+alias id "F" = "cic:/CoRN/algebra/CFields/Div_properties/F.var".
 
 inline "cic:/CoRN/algebra/CFields/div_prop.con".
 
@@ -448,7 +448,7 @@ Hint Resolve div_1 div_1' div_1'' div_wd x_div_x x_div_one div_div div_div2
 Section Mult_Cancel_Ap_Zero
 *)
 
-inline "cic:/CoRN/algebra/CFields/Mult_Cancel_Ap_Zero/F.var" "Mult_Cancel_Ap_Zero__".
+alias id "F" = "cic:/CoRN/algebra/CFields/Mult_Cancel_Ap_Zero/F.var".
 
 inline "cic:/CoRN/algebra/CFields/mult_cancel_ap_zero_lft.con".
 
@@ -480,11 +480,11 @@ Let [X] be a Field and [F,G:(PartFunct X)] have domains respectively
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CFields/CField_Ops/X.var" "CField_Ops__".
+alias id "X" = "cic:/CoRN/algebra/CFields/CField_Ops/X.var".
 
-inline "cic:/CoRN/algebra/CFields/CField_Ops/F.var" "CField_Ops__".
+alias id "F" = "cic:/CoRN/algebra/CFields/CField_Ops/F.var".
 
-inline "cic:/CoRN/algebra/CFields/CField_Ops/G.var" "CField_Ops__".
+alias id "G" = "cic:/CoRN/algebra/CFields/CField_Ops/G.var".
 
 (* begin hide *)
 
@@ -543,7 +543,7 @@ End Part_Function_Div
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/algebra/CFields/CField_Ops/R.var" "CField_Ops__".
+alias id "R" = "cic:/CoRN/algebra/CFields/CField_Ops/R.var".
 
 inline "cic:/CoRN/algebra/CFields/included_FRecip.con".
 

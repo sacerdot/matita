@@ -35,9 +35,9 @@ Let [A : CSetoid], [d : (CSetoid_bin_fun A A IR)].
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/metrics/CPseudoMSpaces/Relations/A.var" "Relations__".
+alias id "A" = "cic:/CoRN/metrics/CPseudoMSpaces/Relations/A.var".
 
-inline "cic:/CoRN/metrics/CPseudoMSpaces/Relations/d.var" "Relations__".
+alias id "d" = "cic:/CoRN/metrics/CPseudoMSpaces/Relations/d.var".
 
 (* UNEXPORTED
 Set Implicit Arguments.
@@ -111,7 +111,7 @@ Let [A] be a pseudo metric space.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/metrics/CPseudoMSpaces/PsMS_axioms/A.var" "PsMS_axioms__".
+alias id "A" = "cic:/CoRN/metrics/CPseudoMSpaces/PsMS_axioms/A.var".
 
 inline "cic:/CoRN/metrics/CPseudoMSpaces/CPsMetricSpace_is_CPsMetricSpace.con".
 
@@ -137,7 +137,7 @@ Let [Y] be a pseudo metric space.
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/metrics/CPseudoMSpaces/PsMS_basics/Y.var" "PsMS_basics__".
+alias id "Y" = "cic:/CoRN/metrics/CPseudoMSpaces/PsMS_basics/Y.var".
 
 inline "cic:/CoRN/metrics/CPseudoMSpaces/rev_tri_ineq.con".
 

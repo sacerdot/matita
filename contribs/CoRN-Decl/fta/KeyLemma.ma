@@ -41,23 +41,23 @@ and [eps : IR] such that [(Zero [<] eps)] and [(eps [<=] a_0)].
 %\end{convention}%
 *)
 
-inline "cic:/CoRN/fta/KeyLemma/Key_Lemma/a.var" "Key_Lemma__".
+alias id "a" = "cic:/CoRN/fta/KeyLemma/Key_Lemma/a.var".
 
-inline "cic:/CoRN/fta/KeyLemma/Key_Lemma/n.var" "Key_Lemma__".
+alias id "n" = "cic:/CoRN/fta/KeyLemma/Key_Lemma/n.var".
 
-inline "cic:/CoRN/fta/KeyLemma/Key_Lemma/gt_n_0.var" "Key_Lemma__".
+alias id "gt_n_0" = "cic:/CoRN/fta/KeyLemma/Key_Lemma/gt_n_0.var".
 
-inline "cic:/CoRN/fta/KeyLemma/Key_Lemma/eps.var" "Key_Lemma__".
+alias id "eps" = "cic:/CoRN/fta/KeyLemma/Key_Lemma/eps.var".
 
-inline "cic:/CoRN/fta/KeyLemma/Key_Lemma/eps_pos.var" "Key_Lemma__".
+alias id "eps_pos" = "cic:/CoRN/fta/KeyLemma/Key_Lemma/eps_pos.var".
 
-inline "cic:/CoRN/fta/KeyLemma/Key_Lemma/a_nonneg.var" "Key_Lemma__".
+alias id "a_nonneg" = "cic:/CoRN/fta/KeyLemma/Key_Lemma/a_nonneg.var".
 
-inline "cic:/CoRN/fta/KeyLemma/Key_Lemma/a_n_1.var" "Key_Lemma__".
+alias id "a_n_1" = "cic:/CoRN/fta/KeyLemma/Key_Lemma/a_n_1.var".
 
-inline "cic:/CoRN/fta/KeyLemma/Key_Lemma/a_0.var" "Key_Lemma__".
+alias id "a_0" = "cic:/CoRN/fta/KeyLemma/Key_Lemma/a_0.var".
 
-inline "cic:/CoRN/fta/KeyLemma/Key_Lemma/eps_le_a_0.var" "Key_Lemma__".
+alias id "eps_le_a_0" = "cic:/CoRN/fta/KeyLemma/Key_Lemma/eps_le_a_0.var".
 
 inline "cic:/CoRN/fta/KeyLemma/a_0_eps_nonneg.con".
 
