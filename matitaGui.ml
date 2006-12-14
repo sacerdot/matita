@@ -1676,18 +1676,16 @@ let interactive_string_choice
     | Some uris -> uris)
 
 let interactive_interp_choice () text prefix_len choices =
-(*  List.iter (fun (l,_,_) -> 
-   List.iter (fun l -> let start, stop = HExtlib.loc_of_floc l in
-   Printf.eprintf "(%d,%d)" start stop) l; prerr_endline "")
-   ((List.hd choices)); *)
+(*List.iter (fun l -> prerr_endline "==="; List.iter (fun (_,id,dsc) -> prerr_endline (id ^ " = " ^ dsc)) l) choices;*)
  let filter_choices filter =
   let rec is_compatible filter =
    function
       [] -> true
-    | (_,id,dsc)::tl ->
+    | ([],_,_)::tl -> is_compatible filter tl
+    | (loc::tlloc,id,dsc)::tl ->
        try
-        if List.assoc id filter = dsc then
-         is_compatible filter tl
+        if List.assoc (loc,id) filter = dsc then
+         is_compatible filter ((tlloc,id,dsc)::tl)
         else
          false
        with
@@ -1695,12 +1693,14 @@ let interactive_interp_choice () text prefix_len choices =
   in
    List.filter (fun (_,interp) -> is_compatible filter interp)
  in
- let rec get_choices id =
+ let rec get_choices loc id =
   function
      [] -> []
    | (_,he)::tl ->
-      let _,_,dsc = List.find (fun (_,id',_) -> id = id') he in
-       dsc :: (List.filter (fun dsc' -> dsc <> dsc') (get_choices id tl))
+      let _,_,dsc =
+       List.find (fun (locs,id',_) -> id = id' && List.mem loc locs) he
+      in
+       dsc :: (List.filter (fun dsc' -> dsc <> dsc') (get_choices loc id tl))
  in
  let example_interp =
   match choices with
@@ -1715,19 +1715,22 @@ let interactive_interp_choice () text prefix_len choices =
  let rec classify ids filter partial_interpretations =
   match ids with
      [] -> List.map fst partial_interpretations
-   | (locs,id,_)::tl ->
-      let choices = get_choices id partial_interpretations in
+   | ([],_,_)::tl -> classify tl filter partial_interpretations
+   | (loc::tlloc,id,dsc)::tl ->
+      let choices = get_choices loc id partial_interpretations in
       let chosen_dsc =
        match choices with
-          [dsc] -> dsc
+          [] -> prerr_endline ("NO CHOICES FOR " ^ id); assert false
+        | [dsc] -> dsc
         | _ ->
-          match ask_user id locs choices with
+          match ask_user id [loc] choices with
              [x] -> x
            | _ -> assert false
       in
-      let filter = (id,chosen_dsc)::filter in
-      let compatible_interps = filter_choices filter partial_interpretations in
-       classify tl filter compatible_interps in
+       let filter = ((loc,id),chosen_dsc)::filter in
+       let compatible_interps = filter_choices filter partial_interpretations in
+        classify ((tlloc,id,dsc)::tl) filter compatible_interps
+ in
  let enumerated_choices =
   let idx = ref ~-1 in
   List.map (fun interp -> incr idx; !idx,interp) choices
