@@ -63,6 +63,31 @@ qed.
 interpretation "mk_bounded_sequence" 'hide_everything_but a
 = (cic:/matita/ordered_sets/bounded_sequence.ind#xpointer(1/1/1) _ _ a _ _).
 
+lemma reduce_bas_seq:
+ ∀C.∀O:ordered_set C.∀a:nat→O.∀p.∀i.
+  bas_seq ? ? (mk_bounded_above_sequence ? ? a p) i = a i.
+ intros;
+ reflexivity.
+qed.
+
+(*lemma reduce_bbs_seq:
+ ∀C.∀O:ordered_set C.∀a:nat→O.∀p.∀i.
+  bbs_seq ? ? (mk_bounded_below_sequence ? ? a p) i = a i.
+ intros;
+ reflexivity.
+qed.*)
+
+axiom inf_extensional:
+ ∀C.∀O:dedekind_sigma_complete_ordered_set C.
+  ∀a,b:bounded_below_sequence ? O.
+   (∀i.a i = b i) → inf ? ? a = inf ? O b.
+   
+lemma eq_to_le: ∀C.∀O:ordered_set C.∀x,y:O.x=y → x ≤ y.
+ intros;
+ rewrite > H;
+ apply (or_reflexive ? ? O).
+qed.
+
 theorem fatou:
  ∀C.∀O':dedekind_sigma_complete_ordered_set C.
   ∀f:O'→O'. ∀H:is_order_continuous ? ? f.
@@ -81,11 +106,21 @@ theorem fatou:
     | skip
     ] 
  | intros;
-   rewrite > eq_f_liminf_sup_f_inf;
+   rewrite > eq_f_liminf_sup_f_inf in ⊢ (? ? ? % ?);
     [ unfold liminf;
       apply le_to_le_sup_sup;
-      elim daemon (*(* f inf < inf f *)
-      apply le_f_inf_inf_f*)
+      intro;
+      rewrite > reduce_bas_seq;
+      rewrite > reduce_bas_seq;
+      apply (or_transitive ? O' O');
+       [2: apply le_f_inf_inf_f;
+           assumption
+       | skip
+       | apply eq_to_le;
+         apply inf_extensional;
+         intro;
+         reflexivity
+       ]
     | assumption
     ]
  ].
