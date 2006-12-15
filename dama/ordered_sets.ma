@@ -385,6 +385,209 @@ definition liminf:
   ].
 qed.
 
+definition reverse_ordered_set: ∀C.ordered_set C → ordered_set C.
+ intros;
+ apply mk_ordered_set;
+  [ apply mk_pre_ordered_set;
+    apply (λx,y:o.y ≤ x)
+  | apply mk_is_order_relation;
+     [ simplify;
+       intros;
+       apply (or_reflexive ? ? o)
+     | simplify;
+       intros;
+       apply (or_transitive ? ? o);
+        [2: apply H1
+        | skip
+        | assumption
+        ] 
+     | simplify;
+       intros;
+       apply (or_antisimmetric ? ? o);
+       assumption
+     ]
+  ].
+qed.
+ 
+interpretation "Ordered set ge" 'geq a b =
+ (cic:/matita/ordered_sets/os_le.con _
+  (cic:/matita/ordered_sets/os_pre_ordered_set.con _
+   (cic:/matita/ordered_sets/reverse_ordered_set.con _ _)) a b).
+
+lemma is_lower_bound_reverse_is_upper_bound:
+ ∀C.∀O:ordered_set C.∀a:nat→O.∀l:O.
+  is_lower_bound ? O a l → is_upper_bound ? (reverse_ordered_set ? O) a l.
+ intros;
+ unfold;
+ intro;
+ unfold;
+ unfold reverse_ordered_set;
+ simplify;
+ apply H.
+qed.
+
+lemma is_upper_bound_reverse_is_lower_bound:
+ ∀C.∀O:ordered_set C.∀a:nat→O.∀l:O.
+  is_upper_bound ? O a l → is_lower_bound ? (reverse_ordered_set ? O) a l.
+ intros;
+ unfold;
+ intro;
+ unfold;
+ unfold reverse_ordered_set;
+ simplify;
+ apply H.
+qed.
+
+lemma reverse_is_lower_bound_is_upper_bound:
+ ∀C.∀O:ordered_set C.∀a:nat→O.∀l:O.
+  is_lower_bound ? (reverse_ordered_set ? O) a l → is_upper_bound ? O a l.
+ intros;
+ unfold in H;
+ unfold reverse_ordered_set in H;
+ apply H.
+qed.
+
+lemma reverse_is_upper_bound_is_lower_bound:
+ ∀C.∀O:ordered_set C.∀a:nat→O.∀l:O.
+  is_upper_bound ? (reverse_ordered_set ? O) a l → is_lower_bound ? O a l.
+ intros;
+ unfold in H;
+ unfold reverse_ordered_set in H;
+ apply H.
+qed.
+
+
+lemma is_inf_to_reverse_is_sup:
+ ∀C.∀O:ordered_set C.∀a:bounded_below_sequence ? O.∀l:O.
+  is_inf ? O a l → is_sup ? (reverse_ordered_set ? O) a l.
+ intros;
+ apply (mk_is_sup C (reverse_ordered_set ? ?));
+  [ apply is_lower_bound_reverse_is_upper_bound;
+    apply inf_lower_bound;
+    assumption
+  | intros;
+    change in v with (Type_OF_ordered_set ? O);
+    change with (v ≤ l);
+    apply (inf_greatest_lower_bound ? ? ? ? H);
+    apply reverse_is_upper_bound_is_lower_bound;
+    assumption
+  ].
+qed.
+ 
+lemma is_sup_to_reverse_is_inf:
+ ∀C.∀O:ordered_set C.∀a:bounded_above_sequence ? O.∀l:O.
+  is_sup ? O a l → is_inf ? (reverse_ordered_set ? O) a l.
+ intros;
+ apply (mk_is_inf C (reverse_ordered_set ? ?));
+  [ apply is_upper_bound_reverse_is_lower_bound;
+    apply sup_upper_bound;
+    assumption
+  | intros;
+    change in v with (Type_OF_ordered_set ? O);
+    change with (l ≤ v);
+    apply (sup_least_upper_bound ? ? ? ? H);
+    apply reverse_is_lower_bound_is_upper_bound;
+    assumption
+  ].
+qed.
+
+lemma reverse_is_sup_to_is_inf:
+ ∀C.∀O:ordered_set C.∀a:bounded_above_sequence ? O.∀l:O.
+  is_sup ? (reverse_ordered_set ? O) a l → is_inf ? O a l.
+ intros;
+ apply mk_is_inf;
+  [ apply reverse_is_upper_bound_is_lower_bound;
+    change in l with (Type_OF_ordered_set ? (reverse_ordered_set ? O));
+    apply sup_upper_bound;
+    assumption
+  | intros;
+    change in l with (Type_OF_ordered_set ? (reverse_ordered_set ? O));
+    change in v with (Type_OF_ordered_set ? (reverse_ordered_set ? O));
+    change with (os_le ? (reverse_ordered_set ? O) l v);
+    apply (sup_least_upper_bound ? ? ? ? H);
+    change in v with (Type_OF_ordered_set ? O);
+    apply is_lower_bound_reverse_is_upper_bound;
+    assumption
+  ].
+qed.
+
+lemma reverse_is_inf_to_is_sup:
+ ∀C.∀O:ordered_set C.∀a:bounded_above_sequence ? O.∀l:O.
+  is_inf ? (reverse_ordered_set ? O) a l → is_sup ? O a l.
+ intros;
+ apply mk_is_sup;
+  [ apply reverse_is_lower_bound_is_upper_bound;
+    change in l with (Type_OF_ordered_set ? (reverse_ordered_set ? O));
+    apply (inf_lower_bound ? ? ? ? H)
+  | intros;
+    change in l with (Type_OF_ordered_set ? (reverse_ordered_set ? O));
+    change in v with (Type_OF_ordered_set ? (reverse_ordered_set ? O));
+    change with (os_le ? (reverse_ordered_set ? O) v l);
+    apply (inf_greatest_lower_bound ? ? ? ? H);
+    change in v with (Type_OF_ordered_set ? O);
+    apply is_upper_bound_reverse_is_lower_bound;
+    assumption
+  ].
+qed.
+
+
+definition reverse_dedekind_sigma_complete_ordered_set:
+ ∀C.
+  dedekind_sigma_complete_ordered_set C → dedekind_sigma_complete_ordered_set C.
+ intros;
+ apply mk_dedekind_sigma_complete_ordered_set;
+  [ apply (reverse_ordered_set ? d)
+  | elim daemon
+    (*apply mk_is_dedekind_sigma_complete;
+     [ intros;
+       elim (dsc_sup ? ? d a m) 0;
+        [ generalize in match H; clear H;
+          generalize in match m; clear m;
+          elim d;
+          simplify in a1;
+          simplify;
+          change in a1 with (Type_OF_ordered_set ? (reverse_ordered_set ? o)); 
+          apply (ex_intro ? ? a1);
+          simplify in H1;
+          change in m with (Type_OF_ordered_set ? o);
+          apply (is_sup_to_reverse_is_inf ? ? ? ? H1)
+        | generalize in match H; clear H;
+          generalize in match m; clear m;
+          elim d;
+          simplify;
+          change in t with (Type_OF_ordered_set ? o);
+          simplify in t;
+          apply reverse_is_lower_bound_is_upper_bound;
+          assumption
+        ]
+     | apply is_sup_reverse_is_inf;
+     | apply m
+     | 
+     ]*)
+  ].
+qed.
+
+definition reverse_bounded_sequence:
+ ∀C.∀O:dedekind_sigma_complete_ordered_set C.
+  bounded_sequence ? O →
+   bounded_sequence ? (reverse_dedekind_sigma_complete_ordered_set ? O).
+ intros;
+ apply mk_bounded_sequence;
+  [ apply bs_seq;
+    unfold reverse_dedekind_sigma_complete_ordered_set;
+    simplify;
+    elim daemon
+  | elim daemon
+  | elim daemon
+  ].
+qed.
+
+definition limsup ≝
+ λC:Type.λO:dedekind_sigma_complete_ordered_set C.
+  λa:bounded_sequence ? O.
+   liminf ? (reverse_dedekind_sigma_complete_ordered_set ? O)
+    (reverse_bounded_sequence ? O a).
+
 notation "hvbox(〈a〉)"
  non associative with precedence 45
 for @{ 'hide_everything_but $a }.
