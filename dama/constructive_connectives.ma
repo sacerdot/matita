@@ -26,7 +26,7 @@ inductive ex (A:Type) (P:A→Prop) : Type \def
 
 notation < "hvbox(Σ ident i opt (: ty) break . p)"
   right associative with precedence 20
-for @{ 'exists ${default
+for @{ 'sigma ${default
   @{\lambda ${ident i} : $ty. $p)}
   @{\lambda ${ident i} . $p}}}.
 

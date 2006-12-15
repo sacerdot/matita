@@ -15,43 +15,16 @@
 set "baseuri" "cic:/matita/integration_algebras/".
 
 include "vector_spaces.ma".
+include "lattices.ma".
 
-record is_lattice (C:Type) (join,meet:C→C→C) : Prop \def
- { (* abelian semigroup properties *)
-   l_comm_j: symmetric ? join;
-   l_associative_j: associative ? join;
-   l_comm_m: symmetric ? meet;
-   l_associative_m: associative ? meet;
-   (* other properties *)
-   l_adsorb_j_m: ∀f,g. join f (meet f g) = f;
-   l_adsorb_m_j: ∀f,g. meet f (join f g) = f
- }.
-
-record lattice (C:Type) : Type \def
- { join: C → C → C;
-   meet: C → C → C;
-   l_lattice_properties: is_lattice ? join meet
- }.
-
-definition le \def λC:Type.λL:lattice C.λf,g. meet ? L f g = f.
-
-interpretation "Lattice le" 'leq a b =
- (cic:/matita/integration_algebras/le.con _ _ a b).
-
-definition lt \def λC:Type.λL:lattice C.λf,g. le ? L f g ∧ f ≠ g.
-
-interpretation "Lattice lt" 'lt a b =
- (cic:/matita/integration_algebras/lt.con _ _ a b).
-
-definition carrier_of_lattice ≝
- λC:Type.λL:lattice C.C.
+(**************** Riesz Spaces ********************)
 
 record is_riesz_space (K:ordered_field_ch0) (V:vector_space K)
- (L:lattice (Type_OF_vector_space ? V))
+ (L:lattice V)
 : Prop
 \def
- { rs_compat_le_plus: ∀f,g,h. le ? L f g → le ? L (f+h) (g+h);
-   rs_compat_le_times: ∀a:K.∀f. of_le ? 0 a → le ? L 0 f → le ? L 0 (a*f)
+ { rs_compat_le_plus: ∀f,g,h:V. os_le ? L f g → os_le ? L (f+h) (g+h);
+   rs_compat_le_times: ∀a:K.∀f:V. zero K≤a → os_le ? L (zero V) f → os_le ? L (zero V) (a*f)
  }.
 
 record riesz_space (K:ordered_field_ch0) : Type \def
@@ -60,54 +33,60 @@ record riesz_space (K:ordered_field_ch0) : Type \def
    rs_riesz_space_properties: is_riesz_space ? rs_vector_space rs_lattice
  }.
 
+record is_positive_linear (K) (V:riesz_space K) (T:V→K) : Prop ≝
+ { positive: ∀u:V. os_le ? V 0 u → os_le ? K 0 (T u);
+   linear1: ∀u,v:V. T (u+v) = T u + T v;
+   linear2: ∀u:V.∀k:K. T (k*u) = k*(T u)
+ }.
+
+record sequentially_order_continuous (K) (V:riesz_space K) (T:V→K) : Prop ≝
+ { soc_incr:
+    ∀a:nat→V.∀l:V.is_increasing ? ? a → is_sup ? V a l →
+     is_increasing ? K (λn.T (a n)) ∧ tends_to ? (λn.T (a n)) (T l)
+ }.
+
 definition absolute_value \def λK.λS:riesz_space K.λf.join ? S f (-f).   
 
-(*CSC: qui la notazione non fa capire!!! *)
+(**************** Normed Riesz spaces ****************************)
+
 definition is_riesz_norm ≝
- λR:real.λV:riesz_space R.λnorm:norm ? V.
-  ∀f,g:V. le ? V (absolute_value ? V f) (absolute_value ? V g) →
-   of_le R (norm f) (norm g).
+ λR:real.λV:riesz_space R.λnorm:norm R V.
+  ∀f,g:V. os_le ? V (absolute_value ? V f) (absolute_value ? V g) →
+   os_le ? R (n_function R V norm f) (n_function R V norm g).
 
 record riesz_norm (R:real) (V:riesz_space R) : Type ≝
- { rn_norm:> norm ? V;
+ { rn_norm:> norm R V;
    rn_riesz_norm_property: is_riesz_norm ? ? rn_norm
  }.
 
 (*CSC: non fa la chiusura delle coercion verso funclass *)
 definition rn_function ≝
  λR:real.λV:riesz_space R.λnorm:riesz_norm ? V.
-  n_function ? ? (rn_norm ? ? norm).
+  n_function R V (rn_norm ? ? norm).
 
 coercion cic:/matita/integration_algebras/rn_function.con 1.
 
 (************************** L-SPACES *************************************)
-
+(*
 record is_l_space (R:real) (V:riesz_space R) (norm:riesz_norm ? V) : Prop ≝
  { ls_banach: is_complete ? V (induced_distance ? ? norm);
    ls_linear: ∀f,g:V. le ? V 0 f → le ? V 0 g → norm (f+g) = norm f + norm g
  }.
-
+*)
 (******************** ARCHIMEDEAN RIESZ SPACES ***************************)
 
 record is_archimedean_riesz_space (K) (S:riesz_space K) : Prop
 \def
-  { ars_archimedean: ∃u.∀n.∀a.∀p:n > O.
-     le ? S
+  { ars_archimedean: ∃u:S.∀n.∀a.∀p:n > O.
+     os_le ? S
       (absolute_value ? S a)
-      ((inv ? (sum_field K n) (not_eq_sum_field_zero ? n p))* u) →
+      ((inv K (sum_field K n) (not_eq_sum_field_zero K n p))* u) →
      a = 0
   }.
 
 record archimedean_riesz_space (K:ordered_field_ch0) : Type \def
  { ars_riesz_space:> riesz_space K;
    ars_archimedean_property: is_archimedean_riesz_space ? ars_riesz_space
- }.
-
-record is_integral (K) (R:archimedean_riesz_space K) (I:R→K) : Prop
-\def
- { i_positive: ∀f:R. le ? R 0 f → of_le K 0 (I f);
-   i_linear1: ∀f,g:R. I (f + g) = I f + I g;
-   i_linear2: ∀f:R.∀k:K. I (k*f) = k*(I f)
  }.
 
 definition is_weak_unit ≝
@@ -129,7 +108,7 @@ record integration_riesz_space (R:real) : Type \def
    irs_unit: irs_archimedean_riesz_space;
    irs_weak_unit: is_weak_unit ? ? irs_unit;
    integral: irs_archimedean_riesz_space → R;
-   irs_integral_properties: is_integral ? ? integral;
+   irs_positive_linear: is_positive_linear ? ? integral;
    irs_limit1:
     ∀f:irs_archimedean_riesz_space.
      tends_to ?
@@ -151,17 +130,18 @@ record integration_riesz_space (R:real) : Type \def
 
 definition induced_norm_fun ≝
  λR:real.λV:integration_riesz_space R.λf:V.
-  integral ? ? (absolute_value ? ? f).
+  integral ? V (absolute_value ? ? f).
 
 lemma induced_norm_is_norm:
- ∀R:real.∀V:integration_riesz_space R.is_norm ? V (induced_norm_fun ? V).
+ ∀R:real.∀V:integration_riesz_space R.is_norm R V (induced_norm_fun ? V).
+ elim daemon.(*
  intros;
  apply mk_is_norm;
   [ apply mk_is_semi_norm;
      [ unfold induced_norm_fun;
        intros;
-       apply i_positive;
-       [ apply (irs_integral_properties ? V)
+       apply positive;
+       [ apply (irs_positive_linear ? V)
        | (* difficile *)
          elim daemon
        ]
@@ -182,7 +162,7 @@ lemma induced_norm_is_norm:
     rewrite < eq_zero_opp_zero;
     rewrite > zero_neutral;
     assumption
-  ].
+  ].*)
 qed.
 
 definition induced_norm ≝
@@ -222,7 +202,7 @@ record complete_integration_riesz_space (R:real) : Type ≝
 
 (* now we prove that any complete integration riesz space is an L-space *)
 
-theorem is_l_space_l_space_induced_by_integral:
+(*theorem is_l_space_l_space_induced_by_integral:
  ∀R:real.∀V:complete_integration_riesz_space R.
   is_l_space ? ? (induced_riesz_norm ? V).
  intros;
@@ -237,7 +217,7 @@ theorem is_l_space_l_space_induced_by_integral:
     (* difficile *)
     elim daemon
   ].
-qed.
+qed.*)
 
 (**************************** f-ALGEBRAS ********************************)
 

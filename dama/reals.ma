@@ -35,7 +35,7 @@ qed.
 
 definition max_seq: ∀R:real.∀x,y:R. nat → R.
  intros (R x y);
- elim (to_cotransitive R (of_le R) R 0 (inv ? (sum_field ? (S n)) ?) (x-y));
+ elim (of_cotransitive R 0 (inv ? (sum_field ? (S n)) ?) (x-y));
   [ apply x
   | apply not_eq_sum_field_zero ;
     unfold;
@@ -48,19 +48,21 @@ qed.
 axiom daemon: False.
 
 theorem cauchy_max_seq: ∀R:real.∀x,y:R. is_cauchy_seq ? (max_seq ? x y).
+elim daemon.
+(*
  intros;
  unfold;
  intros;
  exists; [ exact m | ]; (* apply (ex_intro ? ? m); *)
  intros;
  unfold max_seq;
- elim (to_cotransitive R (of_le R) R 0
+ elim (of_cotransitive R 0
 (inv R (sum_field R (S N))
  (not_eq_sum_field_zero R (S N) (le_S_S O N (le_O_n N)))) (x-y)
 (lt_zero_to_le_inv_zero R (S N)
  (not_eq_sum_field_zero R (S N) (le_S_S O N (le_O_n N)))));
   [ simplify;
-    elim (to_cotransitive R (of_le R) R 0
+    elim (of_cotransitive R  0
 (inv R (1+sum R (plus R) 0 1 m)
  (not_eq_sum_field_zero R (S m) (le_S_S O m (le_O_n m)))) (x-y)
 (lt_zero_to_le_inv_zero R (S m)
@@ -75,16 +77,15 @@ theorem cauchy_max_seq: ∀R:real.∀x,y:R. is_cauchy_seq ? (max_seq ? x y).
        ]
     | simplify;
       split;
-       [  apply (to_transitive ? ? 
-       (of_total_order_relation ? ? R) ? 0 ?);
-         [ apply (le_zero_x_to_le_opp_x_zero R ?)
-         | assumption
-         ]        
+       [ apply (or_transitive ? ? R ? 0);
+          [ apply (le_zero_x_to_le_opp_x_zero R ?)
+          | assumption
+          ]
        | assumption
        ]
     ]
   | simplify;
-    elim (to_cotransitive R (of_le R) R 0
+    elim (of_cotransitive R 0
 (inv R (1+sum R (plus R) 0 1 m)
  (not_eq_sum_field_zero R (S m) (le_S_S O m (le_O_n m)))) (x-y)
 (lt_zero_to_le_inv_zero R (S m)
@@ -98,7 +99,7 @@ theorem cauchy_max_seq: ∀R:real.∀x,y:R. is_cauchy_seq ? (max_seq ? x y).
          rewrite > eq_opp_plus_plus_opp_opp in H1;
          rewrite > eq_opp_opp_x_x in H1;
          rewrite > plus_comm in H1;
-         apply (to_transitive ? ? (of_total_order_relation ? ? R) ? 0 ?);
+         apply (or_transitive ? ? R ? 0);
           [ assumption
           | apply lt_zero_to_le_inv_zero
           ]
@@ -112,7 +113,7 @@ theorem cauchy_max_seq: ∀R:real.∀x,y:R. is_cauchy_seq ? (max_seq ? x y).
        ]
      ]
   ].
-  elim daemon.
+  elim daemon.*)
 qed.
 
 definition max: ∀R:real.R → R → R.
@@ -146,7 +147,7 @@ lemma technical1: ∀R:real.lim R (to_zero R) (is_cauchy_seq_to_zero R) = 0.
  elim daemon.
 qed.
  
-lemma abs_x_ge_O: \forall R: real. \forall x:R. 0 ≤ abs R x.
+lemma abs_x_ge_O: \forall R: real. \forall x:R. (zero R) ≤ abs R x.
  intros;
  unfold abs;
  unfold max;
@@ -156,7 +157,7 @@ lemma abs_x_ge_O: \forall R: real. \forall x:R. 0 ≤ abs R x.
  unfold to_zero;
  unfold max_seq;
  elim
-     (to_cotransitive R (of_le R) R 0
+     (of_cotransitive R 0
 (inv R (sum_field R (S n))
  (not_eq_sum_field_zero R (S n) (le_S_S O n (le_O_n n)))) (x--x)
 (lt_zero_to_le_inv_zero R (S n)

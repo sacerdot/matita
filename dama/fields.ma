@@ -55,5 +55,6 @@ theorem inv_inverse: ∀F:field.∀x:F.∀p: x ≠ 0. (inv ? x p)*x = 1.
  apply (inv_inverse_ ? ? (field_properties F)).
 qed.
 
+(*CSC: qua funzionava anche mettendo ? al posto della prima F*)
 definition sum_field ≝
- λF:field. sum ? (plus F) 0 1.
+ λF:field. sum F (plus F) 0 1.

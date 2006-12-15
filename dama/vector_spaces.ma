@@ -34,7 +34,7 @@ interpretation "Vector space external product" 'times a b =
  (cic:/matita/vector_spaces/emult.con _ _ a b).
 
 record is_semi_norm (R:real) (V: vector_space R) (semi_norm:V→R) : Prop \def
- { sn_positive: ∀x:V. 0 ≤ semi_norm x;
+ { sn_positive: ∀x:V. zero R ≤ semi_norm x;
    sn_omogeneous: ∀a:R.∀x:V. semi_norm (a*x) = (abs ? a) * semi_norm x;
    sn_triangle_inequality: ∀x,y:V. semi_norm (x + y) ≤ semi_norm x + semi_norm y
  }.
@@ -59,7 +59,7 @@ record norm (R:real) (V:vector_space R) : Type ≝
  }.
 
 record is_semi_distance (R:real) (C:Type) (semi_d: C→C→R) : Prop ≝
- { sd_positive: ∀x,y:C. 0 ≤ semi_d x y;
+ { sd_positive: ∀x,y:C. zero R ≤ semi_d x y;
    sd_properness: ∀x:C. semi_d x x = 0; 
    sd_triangle_inequality: ∀x,y,z:C. semi_d x z ≤ semi_d x y + semi_d z y
  }.
@@ -81,6 +81,7 @@ definition induced_distance_fun ≝
 theorem induced_distance_is_distance:
  ∀R:real.∀V:vector_space R.∀norm:norm ? V.
   is_distance ? ? (induced_distance_fun ? ? norm).
+elim daemon.(*
  intros;
  apply mk_is_distance;
   [ apply mk_is_semi_distance;
@@ -110,7 +111,7 @@ theorem induced_distance_is_distance:
        elim daemon
      | apply (n_norm_properties ? ? norm)
      ]
-  ].
+  ].*)
 qed.
 
 definition induced_distance ≝
@@ -120,8 +121,6 @@ definition induced_distance ≝
 
 definition tends_to :
  ∀R:real.∀V:vector_space R.∀d:distance ? V.∀f:nat→V.∀l:V.Prop.
- alias symbol "leq" = "Ordered field le".
- alias id "le" = "cic:/matita/nat/orders/le.ind#xpointer(1/1)".
 apply
   (λR:real.λV:vector_space R.λd:distance ? V.λf:nat→V.λl:V.
     ∀n:nat.∃m:nat.∀j:nat. le m j →

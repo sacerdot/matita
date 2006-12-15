@@ -91,7 +91,8 @@ intros;
 generalize in match (zero_neutral R 0);
 intro;
 generalize in match (eq_f ? ? (λy.x*y) ? ? H); intro; clear H;
-rewrite > mult_plus_distr_left in H1;
+(*CSC: qua funzionava prima della patch all'unificazione!*)
+rewrite > (mult_plus_distr_left R) in H1;
 generalize in match (eq_f ? ? (λy. (-(x*0)) +y) ? ? H1);intro;
 clear H1;
 rewrite < plus_assoc in H;
