@@ -12,36 +12,25 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/nat/iteration.ma".
+set "baseuri" "cic:/matita/nat/map_iter_p.ma".
 
 include "nat/permutation.ma".
 include "nat/count.ma".
 
-lemma le_to_le_to_eq: \forall n,m. n \le m \to m \le n \to n = m.
-apply nat_elim2
-  [intros.apply le_n_O_to_eq.assumption
-  |intros.apply sym_eq.apply le_n_O_to_eq.assumption
-  |intros.apply eq_f.apply H
-    [apply le_S_S_to_le.assumption
-    |apply le_S_S_to_le.assumption
-    ]
-  ]
-qed.
-
-let rec map_iter_P n p (g:nat \to nat) (a:nat) f \def
+let rec map_iter_p n p (g:nat \to nat) (a:nat) f \def
   match n with
    [ O \Rightarrow a
    | (S k) \Rightarrow 
       match p (S k) with
-      [true \Rightarrow f (g (S k)) (map_iter_P k p g a f)
-      |false \Rightarrow map_iter_P k p g a f]
+      [true \Rightarrow f (g (S k)) (map_iter_p k p g a f)
+      |false \Rightarrow map_iter_p k p g a f]
    ].
 
-theorem eq_map_iter_P: \forall g1,g2:nat \to nat.
+theorem eq_map_iter_p: \forall g1,g2:nat \to nat.
 \forall p:nat \to bool.
 \forall f:nat \to nat \to nat. \forall a,n:nat.
 (\forall m:nat. m \le n \to g1 m = g2 m) \to 
-map_iter_P n p g1 a f = map_iter_P n p g2 a f.
+map_iter_p n p g1 a f = map_iter_p n p g2 a f.
 intros 6.elim n
   [simplify.reflexivity.
   |simplify.elim (p (S n1))
@@ -56,45 +45,45 @@ intros 6.elim n
  ]
 qed.
 
-(* useful since simply simpifies too much *)
+(* useful since simplify simpifies too much *)
 
-theorem map_iter_P_O: \forall p.\forall g.\forall f. \forall a:nat.
-map_iter_P O p g a f = a.
+theorem map_iter_p_O: \forall p.\forall g.\forall f. \forall a:nat.
+map_iter_p O p g a f = a.
 intros.simplify.reflexivity.
 qed.
 
-theorem map_iter_P_S_true: \forall p.\forall g.\forall f. \forall a,n:nat.
+theorem map_iter_p_S_true: \forall p.\forall g.\forall f. \forall a,n:nat.
 p (S n) = true \to 
-map_iter_P (S n) p g a f = f (g (S n)) (map_iter_P n p g a f).
+map_iter_p (S n) p g a f = f (g (S n)) (map_iter_p n p g a f).
 intros.simplify.rewrite > H.reflexivity.
 qed.
 
-theorem map_iter_P_S_false: \forall p.\forall g.\forall f. \forall a,n:nat.
+theorem map_iter_p_S_false: \forall p.\forall g.\forall f. \forall a,n:nat.
 p (S n) = false \to 
-map_iter_P (S n) p g a f = map_iter_P n p g a f.
+map_iter_p (S n) p g a f = map_iter_p n p g a f.
 intros.simplify.rewrite > H.reflexivity.
 qed.
 
 (* map_iter examples *)
-definition Pi_P \def \lambda p. \lambda n.
-map_iter_P n p (\lambda n.n) (S O) times.
+definition pi_p \def \lambda p. \lambda n.
+map_iter_p n p (\lambda n.n) (S O) times.
 
-lemma Pi_P_S: \forall n.\forall p.
-Pi_P p (S n) = 
+lemma pi_p_S: \forall n.\forall p.
+pi_p p (S n) = 
   match p (S n) with
-    [true \Rightarrow (S n)*(Pi_P p n)
-    |false \Rightarrow (Pi_P p n)
+    [true \Rightarrow (S n)*(pi_p p n)
+    |false \Rightarrow (pi_p p n)
     ].
 intros.reflexivity.
 qed.
 
-lemma lt_O_Pi_P: \forall n.\forall p.
-O < Pi_P p n.
+lemma lt_O_pi_p: \forall n.\forall p.
+O < pi_p p n.
 intros.elim n
   [simplify.apply le_n
-  |rewrite > Pi_P_S.
+  |rewrite > pi_p_S.
    elim p (S n1)
-    [change with (O < (S n1)*(Pi_P p n1)).
+    [change with (O < (S n1)*(pi_p p n1)).
      rewrite >(times_n_O n1).
      apply lt_times[apply le_n|assumption]
     | assumption
@@ -107,16 +96,35 @@ let rec card n p \def
   [O \Rightarrow O
   |(S m) \Rightarrow 
       (bool_to_nat (p (S m))) + (card m p)].
+
+lemma count_card: \forall p.\forall n.
+p O = false \to count (S n) p = card n p.
+intros.elim n
+  [simplify.rewrite > H. reflexivity
+  |simplify.
+   rewrite < plus_n_O.
+   apply eq_f.assumption
+  ]
+qed.
+
+lemma count_card1: \forall p.\forall n.
+p O = false \to p n = false \to count n p = card n p.
+intros 3.apply (nat_case n)
+  [intro.simplify.rewrite > H. reflexivity
+  |intros.rewrite > (count_card ? ? H).
+   simplify.rewrite > H1.reflexivity
+  ]
+qed.
  
-lemma a_times_Pi_P: \forall p. \forall a,n.
-exp a (card n p) * Pi_P p n = map_iter_P n p (\lambda n.a*n) (S O) times.
+lemma a_times_pi_p: \forall p. \forall a,n.
+exp a (card n p) * pi_p p n = map_iter_p n p (\lambda n.a*n) (S O) times.
 intros.elim n
   [simplify.reflexivity
   |simplify.apply (bool_elim ? (p (S n1)))
     [intro.
      change with 
-      (a*exp a (card n1 p) * ((S n1) * (Pi_P p n1)) = 
-       a*(S n1)*map_iter_P n1 p (\lambda n.a*n) (S O) times).
+      (a*exp a (card n1 p) * ((S n1) * (pi_p p n1)) = 
+       a*(S n1)*map_iter_p n1 p (\lambda n.a*n) (S O) times).
        rewrite < H.
        auto
     |intro.assumption
@@ -240,20 +248,20 @@ split
   ]
 qed.
 
-theorem eq_map_iter_P_k: \forall f,g.\forall p.\forall a,k,n:nat.
+theorem eq_map_iter_p_k: \forall f,g.\forall p.\forall a,k,n:nat.
 p (S n-k) = true \to (\forall i. (S n)-k < i \to i \le (S n) \to (p i) = false) \to
-map_iter_P (S n) p g a f = map_iter_P (S n-k) p g a f.
+map_iter_p (S n) p g a f = map_iter_p (S n-k) p g a f.
 intros 5.
 elim k 3
   [rewrite < minus_n_O.reflexivity
   |apply (nat_case n1)
     [intros.
-     rewrite > map_iter_P_S_false
+     rewrite > map_iter_p_S_false
       [reflexivity
       |apply H2[simplify.apply lt_O_S.|apply le_n]
       ]
     |intros.
-     rewrite > map_iter_P_S_false
+     rewrite > map_iter_p_S_false
       [rewrite > (H m H1)
         [reflexivity
         |intros.
@@ -268,11 +276,11 @@ elim k 3
 qed.
 
 theorem eq_map_iter_p_a: \forall p.\forall f.\forall g. \forall a,n:nat. 
-(\forall i.i \le n \to p i = false) \to map_iter_P n p g a f = a.
+(\forall i.i \le n \to p i = false) \to map_iter_p n p g a f = a.
 intros 5.
 elim n
   [simplify.reflexivity
-  |rewrite > map_iter_P_S_false
+  |rewrite > map_iter_p_S_false
     [apply H.
      intros.
      apply H1.apply le_S.assumption
@@ -284,31 +292,31 @@ qed.
 theorem eq_map_iter_p_transpose: \forall p.\forall f.associative nat f \to
 symmetric2 nat nat f \to \forall g. \forall a,k,n:nat. k < n \to
 (p (S n) = true) \to (p (n-k)) = true \to (\forall i. n-k < i \to i \le n \to (p i) = false)
-\to map_iter_P (S n) p g a f = map_iter_P (S n) p (\lambda m. g (transpose (n-k) (S n) m)) a f.
+\to map_iter_p (S n) p g a f = map_iter_p (S n) p (\lambda m. g (transpose (n-k) (S n) m)) a f.
 intros 8.
 apply (nat_case n)
   [intro.absurd (k < O)
     [assumption|apply le_to_not_lt.apply le_O_n]
   |intros.
-   rewrite > (map_iter_P_S_true ? ? ? ? ? H3).
-   rewrite > (map_iter_P_S_true ? ? ? ? ? H3).
-   rewrite > (eq_map_iter_P_k ? ? ? ? ? ? H4 H5).
-   rewrite > (eq_map_iter_P_k ? ? ? ? ? ? H4 H5).
+   rewrite > (map_iter_p_S_true ? ? ? ? ? H3).
+   rewrite > (map_iter_p_S_true ? ? ? ? ? H3).
+   rewrite > (eq_map_iter_p_k ? ? ? ? ? ? H4 H5).
+   rewrite > (eq_map_iter_p_k ? ? ? ? ? ? H4 H5).
    generalize in match H4.
    rewrite > minus_Sn_m
     [intro.
-     rewrite > (map_iter_P_S_true ? ? ? ? ? H6).
-     rewrite > (map_iter_P_S_true ? ? ? ? ? H6).
+     rewrite > (map_iter_p_S_true ? ? ? ? ? H6).
+     rewrite > (map_iter_p_S_true ? ? ? ? ? H6).
      rewrite > transpose_i_j_j.
      rewrite > transpose_i_j_i.
-     cut (map_iter_P (m-k) p g a f =
-      map_iter_P (m-k) p (\lambda x.g (transpose (S(m-k)) (S(S m)) x)) a f)
+     cut (map_iter_p (m-k) p g a f =
+      map_iter_p (m-k) p (\lambda x.g (transpose (S(m-k)) (S(S m)) x)) a f)
       [rewrite < Hcut.
        rewrite < H.
        rewrite < H1 in \vdash (? ? (? % ?) ?).
        rewrite > H.
        reflexivity
-      |apply eq_map_iter_P.
+      |apply eq_map_iter_p.
        intros.unfold transpose.
        cut (eqb m1 (S (m-k)) =false)
         [cut (eqb m1 (S (S m)) =false)
@@ -336,7 +344,7 @@ qed.
 theorem eq_map_iter_p_transpose1: \forall p.\forall f.associative nat f \to
 symmetric2 nat nat f \to \forall g. \forall a,k1,k2,n:nat. O < k1 \to k1 < k2 \to k2 \le n \to
 (p k1) = true \to (p k2) = true \to (\forall i. k1 < i \to i < k2 \to (p i) = false)
-\to map_iter_P n p g a f = map_iter_P n p (\lambda m. g (transpose k1 k2 m)) a f.
+\to map_iter_p n p g a f = map_iter_p n p (\lambda m. g (transpose k1 k2 m)) a f.
 intros 10.
 elim n 2
   [absurd (k2 \le O)
@@ -362,8 +370,8 @@ elim n 2
      cut ((S n1) \neq k1)
       [apply (bool_elim ? (p (S n1)))
        [intro. 
-        rewrite > map_iter_P_S_true
-          [rewrite > map_iter_P_S_true
+        rewrite > map_iter_p_S_true
+          [rewrite > map_iter_p_S_true
             [cut ((transpose k1 k2 (S n1)) = (S n1))
               [rewrite > Hcut1.
                apply eq_f.
@@ -386,8 +394,8 @@ elim n 2
           |assumption
           ]
         |intro.
-          rewrite > map_iter_P_S_false
-          [rewrite > map_iter_P_S_false
+          rewrite > map_iter_p_S_false
+          [rewrite > map_iter_p_S_false
             [apply (H3 H5)
               [elim (le_to_or_lt_eq ? ? H6)
                 [auto
@@ -615,7 +623,7 @@ qed.
 theorem eq_map_iter_p_transpose2: \forall p.\forall f.associative nat f \to
 symmetric2 nat nat f \to \forall g. \forall a,k,n:nat. O < k \to k \le n \to
 (p (S n) = true) \to (p k) = true 
-\to map_iter_P (S n) p g a f = map_iter_P (S n) p (\lambda m. g (transpose k (S n) m)) a f.
+\to map_iter_p (S n) p g a f = map_iter_p (S n) p (\lambda m. g (transpose k (S n) m)) a f.
 intros 10.
 cut (k = (S n)-(S n -k))
   [generalize in match H3.clear H3.
@@ -643,9 +651,9 @@ cut (k = (S n)-(S n -k))
        elim H7.clear H7.
        elim H8.clear H8.
        apply (trans_eq  ? ? 
-        (map_iter_P (S n) p (\lambda i.f1 (transpose a1 (S n) (transpose (S n -m) a1 i))) a f))
+        (map_iter_p (S n) p (\lambda i.f1 (transpose a1 (S n) (transpose (S n -m) a1 i))) a f))
         [apply (trans_eq  ? ? 
-         (map_iter_P (S n) p (\lambda i.f1 (transpose a1 (S n) i)) a f))
+         (map_iter_p (S n) p (\lambda i.f1 (transpose a1 (S n) i)) a f))
           [cut (a1 = (S n -(S n -a1)))
             [rewrite > Hcut1.
              apply H2
@@ -674,7 +682,7 @@ cut (k = (S n)-(S n -k))
           ]
         ]
       |apply (trans_eq  ? ? 
-        (map_iter_P (S n) p (\lambda i.f1 (transpose a1 (S n) (transpose (S n -m) a1 (transpose (S n -(S n -a1)) (S n) i)))) a f)) 
+        (map_iter_p (S n) p (\lambda i.f1 (transpose a1 (S n) (transpose (S n -m) a1 (transpose (S n -(S n -a1)) (S n) i)))) a f)) 
         [cut (a1 = (S n) -(S n -a1))
           [apply H2 
             [apply lt_plus_to_lt_minus
@@ -692,7 +700,7 @@ cut (k = (S n)-(S n -k))
           |apply minus_m_minus_mn.
            apply le_S.assumption
           ]
-        |apply eq_map_iter_P.
+        |apply eq_map_iter_p.
          cut (a1 = (S n) -(S n -a1))
           [intros.
            apply eq_f.
@@ -727,13 +735,13 @@ qed.
 theorem eq_map_iter_p_transpose3: \forall p.\forall f.associative nat f \to
 symmetric2 nat nat f \to \forall g. \forall a,k,n:nat. O < k \to k \le (S n) \to
 (p (S n) = true) \to (p k) = true 
-\to map_iter_P (S n) p g a f = map_iter_P (S n) p (\lambda m. g (transpose k (S n) m)) a f.
+\to map_iter_p (S n) p g a f = map_iter_p (S n) p (\lambda m. g (transpose k (S n) m)) a f.
 intros.
 elim (le_to_or_lt_eq ? ? H3)
   [apply (eq_map_iter_p_transpose2 p f H H1 g a k n H2)
     [apply le_S_S_to_le.assumption|assumption|assumption]
   |rewrite > H6.
-   apply eq_map_iter_P.
+   apply eq_map_iter_p.
    intros.
    apply eq_f.apply sym_eq. apply transpose_i_i. 
   ]
@@ -757,13 +765,13 @@ qed.
 theorem eq_map_iter_p_permut: \forall p.\forall f.associative nat f \to
 symmetric2 nat nat f \to \forall n.\forall g. \forall h.\forall a:nat.
 permut_p h p n \to p O = false \to
-map_iter_P n p g a f = map_iter_P n p (compose ? ? ? g h) a f .
+map_iter_p n p g a f = map_iter_p n p (compose ? ? ? g h) a f .
 intros 5.
 elim n
   [simplify.reflexivity 
   |apply (bool_elim ? (p (S n1)))
     [intro.
-     apply (trans_eq ? ? (map_iter_P (S n1) p (\lambda m.g ((transpose (h (S n1)) (S n1)) m)) a f))
+     apply (trans_eq ? ? (map_iter_p (S n1) p (\lambda m.g ((transpose (h (S n1)) (S n1)) m)) a f))
       [unfold permut_p in H3.
        elim (H3 (S n1) (le_n ?) H5).
        elim H6. clear H6.
@@ -774,11 +782,11 @@ elim n
         |assumption
         |assumption
         ]
-      |apply (trans_eq ? ? (map_iter_P (S n1) p (\lambda m.
+      |apply (trans_eq ? ? (map_iter_p (S n1) p (\lambda m.
         (g(transpose (h (S n1)) (S n1) 
          (transpose (h (S n1)) (S n1) (h m)))) ) a f))
-        [rewrite > (map_iter_P_S_true ? ? ? ? ? H5).
-         rewrite > (map_iter_P_S_true ? ? ? ? ? H5).
+        [rewrite > (map_iter_p_S_true ? ? ? ? ? H5).
+         rewrite > (map_iter_p_S_true ? ? ? ? ? H5).
          apply eq_f2
           [rewrite > transpose_i_j_j.
            rewrite > transpose_i_j_i.
@@ -864,14 +872,14 @@ elim n
             |assumption
             ]
           ]
-        |apply eq_map_iter_P.
+        |apply eq_map_iter_p.
          intros.
          rewrite > transpose_transpose.reflexivity
         ]
       ]
   |intro.
-   rewrite > (map_iter_P_S_false ? ? ? ? ? H5).
-   rewrite > (map_iter_P_S_false ? ? ? ? ? H5).
+   rewrite > (map_iter_p_S_false ? ? ? ? ? H5).
+   rewrite > (map_iter_p_S_false ? ? ? ? ? H5).
    apply H2
     [unfold permut_p.
      unfold permut_p in H3.

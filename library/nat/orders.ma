@@ -191,6 +191,18 @@ apply H2.reflexivity.
 apply H3. apply le_S_S. assumption.
 qed.
 
+(* le to eq *)
+lemma le_to_le_to_eq: \forall n,m. n \le m \to m \le n \to n = m.
+apply nat_elim2
+  [intros.apply le_n_O_to_eq.assumption
+  |intros.apply sym_eq.apply le_n_O_to_eq.assumption
+  |intros.apply eq_f.apply H
+    [apply le_S_S_to_le.assumption
+    |apply le_S_S_to_le.assumption
+    ]
+  ]
+qed.
+
 (* lt and le trans *)
 theorem lt_O_S : \forall n:nat. O < S n.
 intro. unfold. apply le_S_S. apply le_O_n.
@@ -205,6 +217,12 @@ theorem le_to_lt_to_lt: \forall n,m,p:nat. le n m \to lt m p \to lt n p.
 intros 4.elim H.
 assumption.apply H2.unfold lt.
 apply lt_to_le.assumption.
+qed.
+
+theorem lt_S_to_lt: \forall n,m. S n < m \to n < m.
+intros.
+apply (trans_lt ? (S n))
+  [apply le_n|assumption]
 qed.
 
 theorem ltn_to_ltO: \forall n,m:nat. lt n m \to lt O m.

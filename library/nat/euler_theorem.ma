@@ -14,58 +14,10 @@
 
 set "baseuri" "cic:/matita/nat/euler_theorem".
 
-include "nat/iteration.ma".
+include "nat/map_iter_p.ma".
 include "nat/totient.ma".
 
-(* da spostare *)
-lemma le_to_le_to_eq: \forall n,m. n \le m \to m \le n \to n = m.
-apply nat_elim2
-  [intros.apply le_n_O_to_eq.assumption
-  |intros.apply sym_eq.apply le_n_O_to_eq.assumption
-  |intros.apply eq_f.apply H
-    [apply le_S_S_to_le.assumption
-    |apply le_S_S_to_le.assumption
-    ]
-  ]
-qed.
-
-lemma gcd_n_n: \forall n.gcd n n = n.
-intro.elim n
-  [reflexivity
-  |apply le_to_le_to_eq
-    [apply divides_to_le
-      [apply lt_O_S
-      |apply divides_gcd_n
-      ]
-    |apply divides_to_le
-      [apply lt_O_gcd.apply lt_O_S
-      |apply divides_d_gcd
-        [apply divides_n_n|apply divides_n_n]
-      ]
-    ]
-  ]
-qed.
-
-
-lemma count_card: \forall p.\forall n.
-p O = false \to count (S n) p = card n p.
-intros.elim n
-  [simplify.rewrite > H. reflexivity
-  |simplify.
-   rewrite < plus_n_O.
-   apply eq_f.assumption
-  ]
-qed.
-
-lemma count_card1: \forall p.\forall n.
-p O = false \to p n = false \to count n p = card n p.
-intros 3.apply (nat_case n)
-  [intro.simplify.rewrite > H. reflexivity
-  |intros.rewrite > (count_card ? ? H).
-   simplify.rewrite > H1.reflexivity
-  ]
-qed.
- 
+(* a reformulation of totient using card insted of count *)
 lemma totient_card: \forall n. 
 totient n = card n (\lambda i.eqb (gcd i n) (S O)).
 intro.apply (nat_case n)
@@ -80,106 +32,50 @@ intro.apply (nat_case n)
   ]
 qed.
 
-(* da spostare *)
-lemma gcd_n_times_nm: \forall n,m. O < m \to gcd n (n*m) = n.
-intro.apply (nat_case n)
-  [intros.reflexivity
-  |intros.
-   apply le_to_le_to_eq
-    [apply divides_to_le
-      [apply lt_O_S|apply divides_gcd_n]
-    |apply divides_to_le
-      [apply lt_O_gcd.rewrite > (times_n_O O).
-       apply lt_times[apply lt_O_S|assumption]
-      |apply divides_d_gcd
-        [apply (witness ? ? m1).reflexivity
-        |apply divides_n_n
-        ]
-      ]
-    ]
-  ]
-qed.
-
-(* da spostare *)
-lemma eq_gcd_SO_to_not_divides: \forall n,m. (S O) < n \to 
-(gcd n m) = (S O) \to \lnot (divides n m).
-intros.unfold.intro.
-elim H2.
-generalize in match H1.
-rewrite > H3.
-intro.
-cut (O < n2)
-  [elim (gcd_times_SO_to_gcd_SO n n n2 ? ? H4)
-    [cut (gcd n (n*n2) = n)
-      [apply (lt_to_not_eq (S O) n)
-        [assumption|rewrite < H4.assumption]
-      |apply gcd_n_times_nm.assumption
-      ]
-    |apply (trans_lt ? (S O))[apply le_n|assumption]
-    |assumption
-    ]
-  |elim (le_to_or_lt_eq O n2 (le_O_n n2))
-    [assumption
-    |apply False_ind.
-     apply (le_to_not_lt n (S O))
-      [rewrite < H4.
-       apply divides_to_le
-        [rewrite > H4.apply lt_O_S
-        |apply divides_d_gcd
-          [apply (witness ? ? n2).reflexivity
-          |apply divides_n_n
-          ]
-        ]
-      |assumption
-      ]
-    ]
-  ]
-qed.
-
-theorem gcd_Pi_P: \forall n,k. O < k \to k \le n \to
-gcd n (Pi_P (\lambda i.eqb (gcd i n) (S O)) k) = (S O).
+theorem gcd_pi_p: \forall n,k. O < k \to k \le n \to
+gcd n (pi_p (\lambda i.eqb (gcd i n) (S O)) k) = (S O).
 intros 3.elim H
-  [rewrite > Pi_P_S.
+  [rewrite > pi_p_S.
    cut (eqb (gcd (S O) n) (S O) = true)
     [rewrite > Hcut.
      change with ((gcd n (S O)) = (S O)).auto
     |apply eq_to_eqb_true.auto
     ]
-  |rewrite > Pi_P_S.
+  |rewrite > pi_p_S.
    apply eqb_elim
     [intro.
      change with 
-       ((gcd n ((S n1)*(Pi_P (\lambda i.eqb (gcd i n) (S O)) n1))) = (S O)).
+       ((gcd n ((S n1)*(pi_p (\lambda i.eqb (gcd i n) (S O)) n1))) = (S O)).
      apply eq_gcd_times_SO
       [unfold.apply le_S.assumption
-      |apply lt_O_Pi_P.
+      |apply lt_O_pi_p.
       |rewrite > sym_gcd. assumption.
       |apply H2.
        apply (trans_le ? (S n1))[apply le_n_Sn|assumption]
       ]
     |intro.
      change with 
-       (gcd n (Pi_P (\lambda i.eqb (gcd i n) (S O)) n1) = (S O)).
+       (gcd n (pi_p (\lambda i.eqb (gcd i n) (S O)) n1) = (S O)).
      apply H2.
      apply (trans_le ? (S n1))[apply le_n_Sn|assumption]
     ]
   ]
 qed.
 
-theorem congruent_map_iter_P_times:\forall f:nat \to nat. \forall a,n:nat.
+theorem congruent_map_iter_p_times:\forall f:nat \to nat. \forall a,n:nat.
 O < a \to
 congruent
-(map_iter_P n (\lambda i.eqb (gcd i a) (S O)) (\lambda x.f x) (S O) times)
-(map_iter_P n (\lambda i.eqb (gcd i a) (S O)) 
+(map_iter_p n (\lambda i.eqb (gcd i a) (S O)) (\lambda x.f x) (S O) times)
+(map_iter_p n (\lambda i.eqb (gcd i a) (S O)) 
  (\lambda x.f x \mod a) (S O) times) a.     
 intros.
 elim n
-  [rewrite > map_iter_P_O.
+  [rewrite > map_iter_p_O.
    apply (congruent_n_n ? a)
   |apply (eqb_elim (gcd (S n1) a) (S O))
     [intro.
-     rewrite > map_iter_P_S_true
-      [rewrite > map_iter_P_S_true
+     rewrite > map_iter_p_S_true
+      [rewrite > map_iter_p_S_true
         [apply congruent_times
           [assumption
           |apply congruent_n_mod_n.assumption
@@ -190,51 +86,13 @@ elim n
       |apply eq_to_eqb_true.assumption
       ]
     |intro. 
-     rewrite > map_iter_P_S_false
-      [rewrite > map_iter_P_S_false
+     rewrite > map_iter_p_S_false
+      [rewrite > map_iter_p_S_false
         [assumption
         |apply not_eq_to_eqb_false.assumption
         ]
       |apply not_eq_to_eqb_false.assumption
       ]
-    ]
-  ]
-qed.
-
-theorem lt_S_to_lt: \forall n,m. S n < m \to n < m.
-intros.
-apply (trans_lt ? (S n))
-  [apply le_n|assumption]
-qed.
-
-theorem gcd_SO_to_lt_O: \forall i,n. (S O) < n \to gcd i n = (S O) \to
-O < i.
-intros.
-elim (le_to_or_lt_eq ? ? (le_O_n i))
-  [assumption
-  |absurd ((gcd i n) = (S O))
-    [assumption
-    |rewrite < H2.
-     simplify.
-     unfold.intro.
-     apply (lt_to_not_eq (S O) n H).
-     apply sym_eq.assumption
-    ]
-  ]
-qed.
-
-theorem gcd_SO_to_lt_n: \forall i,n. (S O) < n \to i \le n \to gcd i n = (S O) \to
-i < n.
-intros.
-elim (le_to_or_lt_eq ? ? H1)
-  [assumption
-  |absurd ((gcd i n) = (S O))
-    [assumption
-    |rewrite > H3.
-     rewrite > gcd_n_n.
-     unfold.intro.
-     apply (lt_to_not_eq (S O) n H).
-     apply sym_eq.assumption
     ]
   ]
 qed.
@@ -335,9 +193,9 @@ cut (O < a)
   [apply divides_to_congruent
     [apply (trans_lt ? (S O)).apply lt_O_S. assumption
     |change with (O < exp a (totient n)).apply lt_O_exp.assumption
-    |apply (gcd_SO_to_divides_times_to_divides (Pi_P (\lambda i.eqb (gcd i n) (S O)) n))
+    |apply (gcd_SO_to_divides_times_to_divides (pi_p (\lambda i.eqb (gcd i n) (S O)) n))
       [apply (trans_lt ? (S O)).apply lt_O_S. assumption
-      |apply gcd_Pi_P
+      |apply gcd_pi_p
         [apply (trans_lt ? (S O)).apply lt_O_S. assumption
         |apply le_n
         ]
@@ -346,17 +204,17 @@ cut (O < a)
        rewrite > (sym_times (S O)).
        rewrite < times_n_SO.
        rewrite > totient_card.
-       rewrite > a_times_Pi_P.
+       rewrite > a_times_pi_p.
        apply congruent_to_divides
         [apply (trans_lt ? (S O)).apply lt_O_S. assumption
         | apply (transitive_congruent n ? 
-                 (map_iter_P n (\lambda i.eqb (gcd i n) (S O)) (\lambda x.a*x \mod n) (S O) times))
-          [apply (congruent_map_iter_P_times ? n n).
+                 (map_iter_p n (\lambda i.eqb (gcd i n) (S O)) (\lambda x.a*x \mod n) (S O) times))
+          [apply (congruent_map_iter_p_times ? n n).
            apply (trans_lt ? (S O))
             [apply lt_O_S|assumption]
-            |unfold Pi_P.
-             cut ( (map_iter_P n (\lambda i:nat.eqb (gcd i n) (S O)) (\lambda n:nat.n) (S O) times)
-                 = (map_iter_P n (\lambda i:nat.eqb (gcd i n) (S O)) (\lambda x:nat.a*x\mod n) (S O) times))
+            |unfold pi_p.
+             cut ( (map_iter_p n (\lambda i:nat.eqb (gcd i n) (S O)) (\lambda n:nat.n) (S O) times)
+                 = (map_iter_p n (\lambda i:nat.eqb (gcd i n) (S O)) (\lambda x:nat.a*x\mod n) (S O) times))
               [rewrite < Hcut1.apply congruent_n_n
               |apply (eq_map_iter_p_permut ? ? ? ? ? (λm.m))
                 [apply assoc_times

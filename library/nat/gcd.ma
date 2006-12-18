@@ -384,6 +384,74 @@ rewrite < H4 in \vdash (? ? %).assumption.
 intros.unfold lt.apply le_S_S.apply le_O_n.
 qed.
 
+theorem gcd_n_n: \forall n.gcd n n = n.
+intro.elim n
+  [reflexivity
+  |apply le_to_le_to_eq
+    [apply divides_to_le
+      [apply lt_O_S
+      |apply divides_gcd_n
+      ]
+    |apply divides_to_le
+      [apply lt_O_gcd.apply lt_O_S
+      |apply divides_d_gcd
+        [apply divides_n_n|apply divides_n_n]
+      ]
+    ]
+  ]
+qed.
+
+theorem gcd_SO_to_lt_O: \forall i,n. (S O) < n \to gcd i n = (S O) \to
+O < i.
+intros.
+elim (le_to_or_lt_eq ? ? (le_O_n i))
+  [assumption
+  |absurd ((gcd i n) = (S O))
+    [assumption
+    |rewrite < H2.
+     simplify.
+     unfold.intro.
+     apply (lt_to_not_eq (S O) n H).
+     apply sym_eq.assumption
+    ]
+  ]
+qed.
+
+theorem gcd_SO_to_lt_n: \forall i,n. (S O) < n \to i \le n \to gcd i n = (S O) \to
+i < n.
+intros.
+elim (le_to_or_lt_eq ? ? H1)
+  [assumption
+  |absurd ((gcd i n) = (S O))
+    [assumption
+    |rewrite > H3.
+     rewrite > gcd_n_n.
+     unfold.intro.
+     apply (lt_to_not_eq (S O) n H).
+     apply sym_eq.assumption
+    ]
+  ]
+qed.
+
+theorem  gcd_n_times_nm: \forall n,m. O < m \to gcd n (n*m) = n.
+intro.apply (nat_case n)
+  [intros.reflexivity
+  |intros.
+   apply le_to_le_to_eq
+    [apply divides_to_le
+      [apply lt_O_S|apply divides_gcd_n]
+    |apply divides_to_le
+      [apply lt_O_gcd.rewrite > (times_n_O O).
+       apply lt_times[apply lt_O_S|assumption]
+      |apply divides_d_gcd
+        [apply (witness ? ? m1).reflexivity
+        |apply divides_n_n
+        ]
+      ]
+    ]
+  ]
+qed.
+
 theorem symmetric_gcd: symmetric nat gcd.
 (*CSC: bug here: unfold symmetric does not work *)
 change with 
@@ -439,6 +507,41 @@ apply lt_O_gcd.assumption.
 qed.
 
 (* for the "converse" of the previous result see the end  of this development *)
+
+theorem eq_gcd_SO_to_not_divides: \forall n,m. (S O) < n \to 
+(gcd n m) = (S O) \to \lnot (divides n m).
+intros.unfold.intro.
+elim H2.
+generalize in match H1.
+rewrite > H3.
+intro.
+cut (O < n2)
+  [elim (gcd_times_SO_to_gcd_SO n n n2 ? ? H4)
+    [cut (gcd n (n*n2) = n)
+      [apply (lt_to_not_eq (S O) n)
+        [assumption|rewrite < H4.assumption]
+      |apply gcd_n_times_nm.assumption
+      ]
+    |apply (trans_lt ? (S O))[apply le_n|assumption]
+    |assumption
+    ]
+  |elim (le_to_or_lt_eq O n2 (le_O_n n2))
+    [assumption
+    |apply False_ind.
+     apply (le_to_not_lt n (S O))
+      [rewrite < H4.
+       apply divides_to_le
+        [rewrite > H4.apply lt_O_S
+        |apply divides_d_gcd
+          [apply (witness ? ? n2).reflexivity
+          |apply divides_n_n
+          ]
+        ]
+      |assumption
+      ]
+    ]
+  ]
+qed.
 
 theorem gcd_SO_n: \forall n:nat. gcd (S O) n = (S O).
 intro.
