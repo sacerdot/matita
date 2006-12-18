@@ -20,6 +20,7 @@ alias id "or" = "cic:/Coq/Init/Logic/or.ind#xpointer(1/1)".
 alias id "nat" = "cic:/Coq/Init/Datatypes/nat.ind#xpointer(1/1)".
 alias id "ex2" = "cic:/Coq/Init/Logic/ex2.ind#xpointer(1/1)".
 alias id "T" = "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/T/defs/T.ind#xpointer(1/1)".
+alias id "pr0_ind" = "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/pr0/defs/pr0_ind.con".
 
 inline procedural
    "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/pr0/props/pr0_subst0.con".

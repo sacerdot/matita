@@ -331,7 +331,9 @@ prerr_endline ("Stampo " ^ UriManager.string_of_uri uri);
              ObjPp.obj_to_string 78 style prefix (* FG: mi pare meglio 78 *)
               (fst (CicEnvironment.get_obj CicUniv.empty_ugraph uri))
             with
-             _ (* BRRRRRRRRR *) -> "ERRORE IN STAMPA DI " ^ UriManager.string_of_uri uri
+	     | e (* BRRRRRRRRR *) -> 
+	        Printf.sprintf "\nERRORE IN STAMPA DI %s\n%s\n" 
+		(UriManager.string_of_uri uri) (Printexc.to_string e)
           ) sorted_uris_without_xpointer)
       in
        [],declarative,String.length parsed_text
