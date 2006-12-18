@@ -39,9 +39,9 @@ theorem iff_refl: \forall A. A \liff A.
 qed.
 
 theorem iff_sym: \forall A,B. A \liff B \to B \liff A.
- intros. decompose. apply iff_intro; intros; auto.
+ intros. elim H. apply iff_intro[assumption|assumption]
 qed.
 
 theorem iff_trans: \forall A,B,C. A \liff B \to B \liff C \to A \liff C.
- intros. decompose. apply iff_intro; intros; auto.
+ intros. elim H. elim H1. apply iff_intro;intros;auto.
 qed.
