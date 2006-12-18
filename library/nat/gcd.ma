@@ -603,3 +603,34 @@ apply lt_O_gcd.
 rewrite > (times_n_O O).
 apply lt_times.assumption.assumption.
 qed.
+
+theorem gcd_SO_to_divides_times_to_divides: \forall m,n,p:nat. O < n \to
+gcd n m = (S O) \to n \divides (m*p) \to n \divides p.
+intros.
+cut (n \divides p \lor n \ndivides p)
+  [elim Hcut
+    [assumption
+    |cut (\exists a,b. a*n - b*m = (S O) \lor b*m - a*n = (S O))
+      [elim Hcut1.elim H4.elim H5         
+        [(* first case *)
+          rewrite > (times_n_SO p).rewrite < H6.
+          rewrite > distr_times_minus.
+          rewrite > (sym_times p (a1*m)).
+          rewrite > (assoc_times a1).
+          elim H2.
+          applyS (witness n ? ? (refl_eq ? ?)) (* timeout=50 *).
+         |(* second case *)
+          rewrite > (times_n_SO p).rewrite < H6.
+          rewrite > distr_times_minus.
+          rewrite > (sym_times p (a1*m)).
+          rewrite > (assoc_times a1).
+          elim H2.
+          applyS (witness n ? ? (refl_eq ? ?)).
+        ](* end second case *)
+     |rewrite < H1.apply eq_minus_gcd.
+     ]
+   ]
+ |apply (decidable_divides n p).
+  assumption.
+ ]
+qed.

@@ -694,42 +694,62 @@ theorem permut_to_eq_map_iter_i:\forall f:nat\to nat \to nat.associative nat f \
 symmetric2 nat nat f \to \forall k,n:nat.\forall g,h:nat \to nat.
 permut h (k+n) \to (\forall m:nat. m \lt n \to h m = m) \to
 map_iter_i k g f n = map_iter_i k (\lambda m.g(h m)) f n.
-intros 4.elim k.
-simplify.rewrite > (permut_n_to_eq_n h).reflexivity.assumption.assumption.
-apply (trans_eq ? ? (map_iter_i (S n) (\lambda m.g ((transpose (h (S n+n1)) (S n+n1)) m)) f n1)).
-unfold permut in H3.
-elim H3.
-apply (eq_map_iter_i_transpose2 f H H1 n1 n ? ? g).
-apply (permut_n_to_le h n1 (S n+n1)).
-apply le_plus_n.assumption.assumption.apply le_plus_n.apply le_n.
-apply H5.apply le_n.apply le_plus_n.apply le_n.
-apply (trans_eq ? ? (map_iter_i (S n) (\lambda m.
-(g(transpose (h (S n+n1)) (S n+n1) 
-(transpose (h (S n+n1)) (S n+n1) (h m)))) )f n1)).
-simplify.fold simplify (transpose (h (S n+n1)) (S n+n1) (S n+n1)).
-apply eq_f2.apply eq_f.
-rewrite > transpose_i_j_j.
-rewrite > transpose_i_j_i.
-rewrite > transpose_i_j_j.reflexivity.
-apply (H2 n1 (\lambda m.(g(transpose (h (S n+n1)) (S n+n1) m)))).
-apply permut_S_to_permut_transpose.
-assumption.
-intros.
-unfold transpose.
-rewrite > (not_eq_to_eqb_false (h m) (h (S n+n1))).
-rewrite > (not_eq_to_eqb_false (h m) (S n+n1)).
-simplify.apply H4.assumption.
-rewrite > H4.
-apply lt_to_not_eq.apply (trans_lt ? n1).assumption.
-simplify.unfold lt.apply le_S_S.apply le_plus_n.assumption.
-unfold permut in H3.elim H3.
-simplify.unfold Not.intro.
-apply (lt_to_not_eq m (S n+n1)).apply (trans_lt ? n1).assumption.
-simplify.unfold lt.apply le_S_S.apply le_plus_n.
-unfold injn in H7.
-apply (H7 m (S n+n1)).apply (trans_le ? n1).
-apply lt_to_le.assumption.apply le_plus_n.apply le_n.
-assumption.
-apply eq_map_iter_i.intros.
-rewrite > transpose_transpose.reflexivity.
+intros 4.elim k
+  [simplify.rewrite > (permut_n_to_eq_n h)
+    [reflexivity|assumption|assumption]
+  |apply (trans_eq ? ? (map_iter_i (S n) (\lambda m.g ((transpose (h (S n+n1)) (S n+n1)) m)) f n1))
+    [unfold permut in H3.
+     elim H3.
+     apply (eq_map_iter_i_transpose2 f H H1 n1 n ? ? g)
+      [apply (permut_n_to_le h n1 (S n+n1))
+        [apply le_plus_n|assumption|assumption|apply le_plus_n|apply le_n]
+      |apply H5.apply le_n
+      |apply le_plus_n
+      |apply le_n
+      ]
+    |apply (trans_eq ? ? (map_iter_i (S n) (\lambda m.
+      (g(transpose (h (S n+n1)) (S n+n1) 
+      (transpose (h (S n+n1)) (S n+n1) (h m)))) )f n1))
+      [simplify.fold simplify (transpose (h (S n+n1)) (S n+n1) (S n+n1)).
+       apply eq_f2
+        [apply eq_f.
+         rewrite > transpose_i_j_j.
+         rewrite > transpose_i_j_i.
+         rewrite > transpose_i_j_j.
+         reflexivity.
+        |apply (H2 n1 (\lambda m.(g(transpose (h (S n+n1)) (S n+n1) m))))
+          [apply permut_S_to_permut_transpose.assumption
+          |intros.
+           unfold transpose.
+           rewrite > (not_eq_to_eqb_false (h m) (h (S n+n1)))
+            [rewrite > (not_eq_to_eqb_false (h m) (S n+n1))
+              [simplify.apply H4.assumption
+              |rewrite > H4
+                [apply lt_to_not_eq.
+                 apply (trans_lt ? n1)
+                  [assumption|simplify.unfold lt.apply le_S_S.apply le_plus_n]
+                |assumption
+                ]
+              ]
+            |unfold permut in H3.elim H3.
+             simplify.unfold Not.intro.
+             apply (lt_to_not_eq m (S n+n1))
+              [apply (trans_lt ? n1)
+                [assumption|simplify.unfold lt.apply le_S_S.apply le_plus_n]
+              |unfold injn in H7.
+               apply (H7 m (S n+n1))
+                [apply (trans_le ? n1)
+                  [apply lt_to_le.assumption|apply le_plus_n]
+                |apply le_n
+                |assumption
+                ]
+              ]
+            ]
+          ]
+        ]
+      |apply eq_map_iter_i.intros.
+       rewrite > transpose_transpose.reflexivity
+      ]
+    ]
+  ]
 qed.
