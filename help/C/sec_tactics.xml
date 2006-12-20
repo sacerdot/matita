@@ -215,6 +215,52 @@
       </variablelist>
     </para>
   </sect1>
+  <sect1 id="tac_cases">
+    <title>cases</title>
+    <titleabbrev>cases</titleabbrev>
+    <para><userinput>
+     cases t hyps
+    </userinput></para>
+    <para>
+      <variablelist>
+        <varlistentry role="tactic.synopsis">
+          <term>Synopsis:</term>
+          <listitem>
+            <para>
+	     <emphasis role="bold">cases</emphasis>
+	     &term; [<emphasis role="bold">(</emphasis>[&id;]…<emphasis role="bold">)</emphasis>]
+	    </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Pre-conditions:</term>
+          <listitem>
+            <para>
+	     <command>t</command> must inhabit an inductive type
+	    </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Action:</term>
+          <listitem>
+            <para>
+	     It proceed by cases on <command>t</command>. The new generated
+             hypothesis in each branch are named according to
+             <command>hyps</command>.
+	    </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>New sequents to prove:</term>
+          <listitem>
+            <para>One new sequent for each constructor of the type of
+             <command>t</command>. Each sequent has a new hypothesis for
+             each argument of the constructor.</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </para>
+  </sect1>
   <sect1 id="tac_clear">
     <title>clear</title>
     <titleabbrev>clear</titleabbrev>
