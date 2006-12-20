@@ -26,6 +26,9 @@ alias id "or3_ind" = "cic:/matita/LAMBDA-TYPES/Level-1/Base/types/defs/or3_ind.c
 alias id "ex2_ind" = "cic:/Coq/Init/Logic/ex2_ind.con".
 alias id "ex3_2_ind" = "cic:/matita/LAMBDA-TYPES/Level-1/Base/types/defs/ex3_2_ind.con".
 alias id "subst0_gen_lift_ge" = "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/subst0/fwd/subst0_gen_lift_ge.con".
+alias id "or_intror" = "cic:/Coq/Init/Logic/or.ind#xpointer(1/1/2)".
+alias id "pr0_subst0_fwd" = "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/pr0/props/pr0_subst0_fwd.con".
+alias id "ex2_sym" = "cic:/matita/LAMBDA-TYPES/Level-1/Base/types/props/ex2_sym.con".
 
 inline procedural
    "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/pr0/props/pr0_subst0.con".
