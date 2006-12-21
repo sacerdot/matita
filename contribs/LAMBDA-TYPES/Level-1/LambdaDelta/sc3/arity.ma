@@ -17,6 +17,10 @@
 set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/sc3/arity".
 
 include "csubc/props.ma".
+include "csubc/getl.ma".
+include "csubc/arity.ma".
+include "lift1/props.ma".
+include "csubc/drop1.ma".
 
 theorem sc3_arity_csubc:
  \forall (g: G).(\forall (c1: C).(\forall (t: T).(\forall (a: A).((arity g c1 

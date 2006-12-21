@@ -22,6 +22,8 @@ include "sc3/props.ma".
 
 include "csuba/defs.ma".
 
+include "csuba/props.ma".
+
 theorem csubc_csuba:
  \forall (g: G).(\forall (c1: C).(\forall (c2: C).((csubc g c1 c2) \to (csuba 
 g c1 c2))))

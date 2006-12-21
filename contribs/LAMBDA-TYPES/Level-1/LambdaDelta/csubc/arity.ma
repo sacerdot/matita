@@ -20,6 +20,8 @@ include "csubc/csuba.ma".
 
 include "arity/defs.ma".
 
+include "csuba/arity.ma".
+
 theorem csubc_arity_conf:
  \forall (g: G).(\forall (c1: C).(\forall (c2: C).((csubc g c1 c2) \to 
 (\forall (t: T).(\forall (a: A).((arity g c1 t a) \to (arity g c2 t a)))))))

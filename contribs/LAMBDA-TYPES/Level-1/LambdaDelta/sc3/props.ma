@@ -30,6 +30,12 @@ include "llt/props.ma".
 
 include "drop1/props.ma".
 
+include "lift1/props.ma".
+
+include "drop1/getl.ma".
+
+include "csuba/arity.ma".
+
 theorem sc3_arity_gen:
  \forall (g: G).(\forall (c: C).(\forall (t: T).(\forall (a: A).((sc3 g a c 
 t) \to (arity g c t a)))))
