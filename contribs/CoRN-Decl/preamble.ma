@@ -14,7 +14,7 @@
 
 set "baseuri" "cic:/matita/CoRN-Decl/preamble".
 
-include "legacy/coq.ma".
+include "../../legacy/coq.ma".
 
 alias id "refl_equal" = "cic:/Coq/Init/Logic/eq.ind#xpointer(1/1/1)".
 alias id "False" = "cic:/Coq/Init/Logic/False.ind#xpointer(1/1)".

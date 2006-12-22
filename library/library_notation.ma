@@ -29,7 +29,8 @@ include "nat/factorization.ma".
 include "nat/times.ma".
 include "nat/fermat_little_theorem.ma".
 include "nat/nat.ma".
-include "legacy/coq.ma".
+(* FG: coq non c'entra con library, o sbaglio? *)
+(* include "legacy/coq.ma". *)
 include "Z/compare.ma".
 include "Z/plus.ma".
 include "Z/times.ma".
