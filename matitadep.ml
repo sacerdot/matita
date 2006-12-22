@@ -66,6 +66,13 @@ let main () =
       exit 1
     end;
   let ma_files = args in
+  let bof = Hashtbl.create 10 in
+  let baseuri_of_script s = 
+     try Hashtbl.find bof s 
+     with Not_found -> 
+       let b,_ = DependenciesParser.baseuri_of_script ~include_paths s in
+       Hashtbl.add bof s b; b
+  in
   List.iter
    (fun ma_file -> 
     let ic = open_in ma_file in
@@ -84,8 +91,7 @@ let main () =
           Hashtbl.add baseuri_of_inv uri ma_file
        | DependenciesParser.IncludeDep path -> 
           try 
-            let baseuri,_ =
-              DependenciesParser.baseuri_of_script ~include_paths path in
+            let baseuri = baseuri_of_script path in
             if not (Http_getter_storage.is_legacy baseuri) then
               (let moo_file = obj_file_of_baseuri false baseuri in
               Hashtbl.add include_deps ma_file moo_file;
