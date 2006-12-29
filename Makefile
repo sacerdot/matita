@@ -385,12 +385,18 @@ depend:
 	$(H)$(OCAMLDEP) *.ml *.mli > .depend
 depend.opt:
 	$(H)echo "  OCAMLDEP -native"
-	$(H)$(OCAMLDEP) -native *.ml *.mli > .depend
+	$(H)$(OCAMLDEP) -native *.ml *.mli > .depend.opt
 
-ifneq ($(MAKECMDGOALS), depend)
- ifneq ($(MAKECMDGOALS), depend.opt)
-   include .depend   
- endif
+ifeq ($(MAKECMDGOALS),)
+  include .depend   
+endif
+
+ifeq ($(MAKECMDGOALS), all)
+  include .depend   
+endif
+
+ifeq ($(MAKECMDGOALS), opt)
+  include .depend.opt   
 endif
 
 %.cmi: %.mli
