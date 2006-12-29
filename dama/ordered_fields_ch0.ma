@@ -15,71 +15,83 @@
 set "baseuri" "cic:/matita/ordered_fields_ch0/".
 
 include "fields.ma".
-include "ordered_sets.ma".
+include "ordered_sets2.ma".
 
 (*CSC: non capisco questi alias! Una volta non servivano*)
 alias id "plus" = "cic:/matita/groups/plus.con".
 alias symbol "plus" = "Abelian group plus".
-record is_ordered_field_ch0 (F:field) (le:F→F→Prop) : Type \def
- { of_mult_compat: ∀a,b. le 0 a → le 0 b → le 0 (a*b);
-   of_plus_compat: ∀a,b,c. le a b → le (a+c) (b+c);
-   of_weak_tricotomy : ∀a,b. a≠b → le a b ∨ le b a;
+
+record pre_ordered_field_ch0: Type ≝
+ { of_field:> field;
+   of_cotransitively_ordered_set_: cotransitively_ordered_set;
+   of_with: os_carrier of_cotransitively_ordered_set_ = carrier of_field
+ }.
+
+(*CSC: the following lemma (that is also a coercion) should be automatically
+  generated *)
+lemma of_cotransitively_ordered_set : pre_ordered_field_ch0 → cotransitively_ordered_set.
+ intro F;
+ apply mk_cotransitively_ordered_set;
+ [ apply mk_ordered_set;
+   [ apply (carrier F)
+   | apply
+      (eq_rect ? ? (λC:Type.C→C→Prop) (os_le (of_cotransitively_ordered_set_ F)) ? (of_with F))
+   | apply
+      (eq_rect' Type (os_carrier (of_cotransitively_ordered_set_ F))
+        (λa:Type.λH:os_carrier (of_cotransitively_ordered_set_ F)=a.
+          is_order_relation a (eq_rect Type (os_carrier (of_cotransitively_ordered_set_ F)) (λC:Type.C→C→Prop) (os_le (of_cotransitively_ordered_set_ F)) a H))
+        ? (Type_OF_pre_ordered_field_ch0 F) (of_with F));
+     simplify; 
+     apply (os_order_relation_properties (of_cotransitively_ordered_set_ F))
+   ]
+ | simplify;
+   apply
+    (eq_rect' ? ?
+      (λa:Type.λH:os_carrier (of_cotransitively_ordered_set_ F)=a.
+        cotransitive a
+         match H in eq
+          return
+           λa2:Type.λH1:os_carrier (of_cotransitively_ordered_set_ F)=a2.
+            a2→a2→Prop
+         with 
+          [refl_eq ⇒ os_le (of_cotransitively_ordered_set_ F)])
+      ? ? (of_with F));
+   simplify;
+   apply cos_cotransitive
+ ].
+qed.
+
+coercion cic:/matita/ordered_fields_ch0/of_cotransitively_ordered_set.con.
+
+record is_ordered_field_ch0 (F:pre_ordered_field_ch0) : Type \def
+ { of_mult_compat: ∀a,b:F. 0≤a → 0≤b → 0≤a*b;
+   of_plus_compat: ∀a,b,c:F. a≤b → a+c≤b+c;
+   of_weak_tricotomy : ∀a,b:F. a≠b → a≤b ∨ b≤a;
    (* 0 characteristics *)
-   (*CSC: qua c'era un ? al posto di F *)
-   of_char0: ∀n. n > O → sum F (plus F) 0 1 n ≠ 0
+   of_char0: ∀n. n > O → sum ? (plus F) 0 1 n ≠ 0
  }.
  
 record ordered_field_ch0 : Type \def
- { of_field:> field;
-   of_ordered_set:> ordered_set of_field;
-   of_reflexive: reflexive ? (os_le ? of_ordered_set);
-   of_antisimmetric: antisimmetric ? (os_le ? of_ordered_set);
-   of_cotransitive: cotransitive ? (os_le ? of_ordered_set);
-   (*CSC: qui c'era un ? al posto di of_field *)
-   of_ordered_field_properties:> is_ordered_field_ch0 of_field (os_le ? of_ordered_set)
+ { of_pre_ordered_field_ch0:> pre_ordered_field_ch0;
+   of_ordered_field_properties:> is_ordered_field_ch0 of_pre_ordered_field_ch0
  }.
 
-(*theorem ordered_set_of_ordered_field_ch0:
- ∀F:ordered_field_ch0.ordered_set F.
+lemma le_zero_x_to_le_opp_x_zero: ∀F:ordered_field_ch0.∀x:F.0 ≤ x → -x ≤ 0.
  intros;
- apply mk_ordered_set;
-  [ apply (mk_pre_ordered_set ? (of_le F))
-  | apply mk_is_order_relation;
-     [ apply (of_reflexive F)
-     | apply antisimmetric_to_cotransitive_to_transitive;
-       [ apply (of_antisimmetric F)
-       | apply (of_cotransitive F)
-       ]
-     | apply (of_antisimmetric F)
-     ]
-  ].
-qed.
-
-coercion cic:/matita/ordered_fields_ch0/ordered_set_of_ordered_field_ch0.con.
-*)
-
-(*interpretation "Ordered field le" 'leq a b =
- (cic:/matita/ordered_fields_ch0/of_le.con _ a b).
- *)
-
-(*CSC: qua c'era uno zero*)
-lemma le_zero_x_to_le_opp_x_zero: ∀F:ordered_field_ch0.∀x:F.(zero F) ≤ x → -x ≤ 0.
-intros;
- generalize in match (of_plus_compat ? ? F ? ? (-x) H); intro;
+ generalize in match (of_plus_compat ? F ? ? (-x) H); intro;
  rewrite > zero_neutral in H1;
  rewrite > plus_comm in H1;
  rewrite > opp_inverse in H1;
- (*assumption*)apply H1.
+ assumption.
 qed.
 
-(*CSC: qua c'era uno zero*)
-lemma le_x_zero_to_le_zero_opp_x: ∀F:ordered_field_ch0.∀x:F. x ≤ 0 → (zero F) ≤ -x.
+lemma le_x_zero_to_le_zero_opp_x: ∀F:ordered_field_ch0.∀x:F. x ≤ 0 → 0 ≤ -x.
  intros;
- generalize in match (of_plus_compat ? ? F ? ? (-x) H); intro;
+ generalize in match (of_plus_compat ? F ? ? (-x) H); intro;
  rewrite > zero_neutral in H1;
  rewrite > plus_comm in H1;
  rewrite > opp_inverse in H1;
- (*assumption.*) apply H1.
+ assumption.
 qed.
 
 (*
@@ -95,16 +107,16 @@ lemma not_eq_x_zero_to_lt_zero_mult_x_x:
 *)  
 
 axiom lt_zero_to_lt_inv_zero:
- ∀F:ordered_field_ch0.∀x:F.∀p:x≠0. lt ? F 0 x → lt ? F 0 (inv ? x p).
+ ∀F:ordered_field_ch0.∀x:F.∀p:x≠0. lt F 0 x → lt F 0 (inv ? x p).
 
 alias symbol "lt" = "natural 'less than'".
 
 (* The ordering is not necessary. *)
 axiom not_eq_sum_field_zero: ∀F:ordered_field_ch0.∀n. O<n → sum_field F n ≠ 0.
-axiom le_zero_sum_field: ∀F:ordered_field_ch0.∀n. O<n → lt ? F 0 (sum_field F n).
+axiom le_zero_sum_field: ∀F:ordered_field_ch0.∀n. O<n → lt F 0 (sum_field F n).
 
 axiom lt_zero_to_le_inv_zero:
- ∀F:ordered_field_ch0.∀n:nat.∀p:sum_field F n ≠ 0. os_le ? F 0 (inv ? (sum_field ? n) p).
+ ∀F:ordered_field_ch0.∀n:nat.∀p:sum_field F n ≠ 0. 0 ≤ inv ? (sum_field ? n) p.
 
 definition tends_to : ∀F:ordered_field_ch0.∀f:nat→F.∀l:F.Prop.
  apply

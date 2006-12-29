@@ -17,11 +17,11 @@ set "baseuri" "cic:/matita/ordered_sets2".
 include "ordered_sets.ma".
 
 theorem le_f_inf_inf_f:
- ∀C.∀O':dedekind_sigma_complete_ordered_set C.
-  ∀f:O'→O'. ∀H:is_order_continuous ? ? f.
-   ∀a:bounded_below_sequence ? O'.
+ ∀O':dedekind_sigma_complete_ordered_set.
+  ∀f:O'→O'. ∀H:is_order_continuous ? f.
+   ∀a:bounded_below_sequence O'.
     let p := ? in
-     f (inf ? ? a) ≤ inf ? ? (mk_bounded_below_sequence ? ? (λi. f (a i)) p).
+     f (inf ? a) ≤ inf ? (mk_bounded_below_sequence ? (λi. f (a i)) p).
  [ apply mk_is_bounded_below;
     [2: apply ioc_is_lower_bound_f_inf;
         assumption
@@ -29,34 +29,34 @@ theorem le_f_inf_inf_f:
     ] 
  | intros;
    clearbody p;
-   apply (inf_greatest_lower_bound ? ? ? ? (inf_is_inf ? ? ?));
+   apply (inf_greatest_lower_bound ? ? ? (inf_is_inf ? ?));
    simplify;
    intro;
-   letin b := (λi.match i with [ O ⇒ inf ? ? a | S _ ⇒ a n]);
+   letin b := (λi.match i with [ O ⇒ inf ? a | S _ ⇒ a n]);
    change with (f (b O) ≤ f (b (S O)));
-   apply (ioc_is_sequentially_monotone ? ? ? H);
+   apply (ioc_is_sequentially_monotone ? ? H);
    simplify;
    clear b;
    intro;
    elim n1; simplify;
-    [ apply (inf_lower_bound ? ? ? ? (inf_is_inf ? ? ?));
-    | apply (or_reflexive ? O' (dscos_ordered_set ? O'))
+    [ apply (inf_lower_bound ? ? ? (inf_is_inf ? ?));
+    | apply (or_reflexive O' ? (dscos_ordered_set O'))
     ]
  ].
 qed.
 
 theorem le_to_le_sup_sup:
- ∀C.∀O':dedekind_sigma_complete_ordered_set C.
-  ∀a,b:bounded_above_sequence ? O'.
-   (∀i.a i ≤ b i) → sup ? ? a ≤ sup ? ? b.
+ ∀O':dedekind_sigma_complete_ordered_set.
+  ∀a,b:bounded_above_sequence O'.
+   (∀i.a i ≤ b i) → sup ? a ≤ sup ? b.
  intros;
- apply (sup_least_upper_bound ? ? ? ? (sup_is_sup ? ? a));
+ apply (sup_least_upper_bound ? ? ? (sup_is_sup ? a));
  unfold;
  intro;
  apply (or_transitive ? ? O');
   [2: apply H
   | skip
-  | apply (sup_upper_bound ? ? ? ? (sup_is_sup ? ? b))
+  | apply (sup_upper_bound ? ? ? (sup_is_sup ? b))
   ].
 qed. 
 
@@ -64,8 +64,8 @@ interpretation "mk_bounded_sequence" 'hide_everything_but a
 = (cic:/matita/ordered_sets/bounded_sequence.ind#xpointer(1/1/1) _ _ a _ _).
 
 lemma reduce_bas_seq:
- ∀C.∀O:ordered_set C.∀a:nat→O.∀p.∀i.
-  bas_seq ? ? (mk_bounded_above_sequence ? ? a p) i = a i.
+ ∀O:ordered_set.∀a:nat→O.∀p.∀i.
+  bas_seq ? (mk_bounded_above_sequence ? a p) i = a i.
  intros;
  reflexivity.
 qed.
@@ -78,41 +78,41 @@ qed.
 qed.*)
 
 axiom inf_extensional:
- ∀C.∀O:dedekind_sigma_complete_ordered_set C.
-  ∀a,b:bounded_below_sequence ? O.
-   (∀i.a i = b i) → inf ? ? a = inf ? O b.
+ ∀O:dedekind_sigma_complete_ordered_set.
+  ∀a,b:bounded_below_sequence O.
+   (∀i.a i = b i) → inf ? a = inf O b.
    
-lemma eq_to_le: ∀C.∀O:ordered_set C.∀x,y:O.x=y → x ≤ y.
+lemma eq_to_le: ∀O:ordered_set.∀x,y:O.x=y → x ≤ y.
  intros;
  rewrite > H;
  apply (or_reflexive ? ? O).
 qed.
 
 theorem fatou:
- ∀C.∀O':dedekind_sigma_complete_ordered_set C.
-  ∀f:O'→O'. ∀H:is_order_continuous ? ? f.
-   ∀a:bounded_sequence ? O'.
+ ∀O':dedekind_sigma_complete_ordered_set.
+  ∀f:O'→O'. ∀H:is_order_continuous ? f.
+   ∀a:bounded_sequence O'.
     let pb := ? in
     let pa := ? in
-     f (liminf ? ? a) ≤ liminf ? ? (mk_bounded_sequence ? ? (λi. f (a i)) pb pa).
- [ letin bas ≝ (bounded_above_sequence_of_bounded_sequence ? ? a);
+     f (liminf ? a) ≤ liminf ? (mk_bounded_sequence ? (λi. f (a i)) pb pa).
+ [ letin bas ≝ (bounded_above_sequence_of_bounded_sequence ? a);
    apply mk_is_bounded_above;
-    [2: apply (ioc_is_upper_bound_f_sup ? ? ? H bas)
+    [2: apply (ioc_is_upper_bound_f_sup ? ? H bas)
     | skip
     ]
- | letin bbs ≝ (bounded_below_sequence_of_bounded_sequence ? ? a);
+ | letin bbs ≝ (bounded_below_sequence_of_bounded_sequence ? a);
    apply mk_is_bounded_below;
-    [2: apply (ioc_is_lower_bound_f_inf ? ? ? H bbs)
+    [2: apply (ioc_is_lower_bound_f_inf ? ? H bbs)
     | skip
     ] 
  | intros;
-   rewrite > eq_f_liminf_sup_f_inf in ⊢ (? ? ? % ?);
+   rewrite > eq_f_liminf_sup_f_inf in ⊢ (? ? % ?);
     [ unfold liminf;
       apply le_to_le_sup_sup;
       intro;
       rewrite > reduce_bas_seq;
       rewrite > reduce_bas_seq;
-      apply (or_transitive ? O' O');
+      apply (or_transitive ? ? O');
        [2: apply le_f_inf_inf_f;
            assumption
        | skip
@@ -125,3 +125,8 @@ theorem fatou:
     ]
  ].
 qed.
+
+record cotransitively_ordered_set: Type :=
+ { cos_ordered_set :> ordered_set;
+   cos_cotransitive: cotransitive ? (os_le cos_ordered_set)
+ }.

@@ -19,40 +19,66 @@ include "lattices.ma".
 
 (**************** Riesz Spaces ********************)
 
-record is_riesz_space (K:ordered_field_ch0) (V:vector_space K)
- (L:lattice V)
-: Prop
-\def
- { rs_compat_le_plus: ∀f,g,h:V. os_le ? L f g → os_le ? L (f+h) (g+h);
-   rs_compat_le_times: ∀a:K.∀f:V. zero K≤a → os_le ? L (zero V) f → os_le ? L (zero V) (a*f)
+record pre_riesz_space (K:ordered_field_ch0) : Type \def
+ { rs_vector_space:> vector_space K;
+   rs_lattice_: lattice;
+   rs_with: os_carrier rs_lattice_ = rs_vector_space
+ }.
+
+lemma rs_lattice: ∀K:ordered_field_ch0.pre_riesz_space K → lattice.
+ intros (K V);
+ apply mk_lattice;
+  [ apply (carrier V) 
+  | apply (eq_rect ? ? (λC:Type.C→C→C) ? ? (rs_with ? V));
+    apply l_join
+  | apply (eq_rect ? ? (λC:Type.C→C→C) ? ? (rs_with ? V));
+    apply l_meet
+  | apply 
+     (eq_rect' ? ?
+      (λa:Type.λH:os_carrier (rs_lattice_ ? V)=a.
+       is_lattice a
+        (eq_rect Type (rs_lattice_ K V) (λC:Type.C→C→C)
+          (l_join (rs_lattice_ K V)) a H)
+        (eq_rect Type (rs_lattice_ K V) (λC:Type.C→C→C)
+          (l_meet (rs_lattice_ K V)) a H))
+      ? ? (rs_with ? V));
+    simplify;
+    apply l_lattice_properties
+  ].
+qed.
+
+coercion cic:/matita/integration_algebras/rs_lattice.con.
+
+record is_riesz_space (K:ordered_field_ch0) (V:pre_riesz_space K) : Prop ≝
+ { rs_compat_le_plus: ∀f,g,h:V. f≤g → f+h≤g+h;
+   rs_compat_le_times: ∀a:K.∀f:V. zero K≤a → zero V≤f → zero V≤a*f
  }.
 
 record riesz_space (K:ordered_field_ch0) : Type \def
- { rs_vector_space:> vector_space K;
-   rs_lattice:> lattice rs_vector_space;
-   rs_riesz_space_properties: is_riesz_space ? rs_vector_space rs_lattice
+ { rs_pre_riesz_space:> pre_riesz_space K;
+   rs_riesz_space_properties: is_riesz_space ? rs_pre_riesz_space
  }.
 
 record is_positive_linear (K) (V:riesz_space K) (T:V→K) : Prop ≝
- { positive: ∀u:V. os_le ? V 0 u → os_le ? K 0 (T u);
+ { positive: ∀u:V. os_le V 0 u → os_le K 0 (T u);
    linear1: ∀u,v:V. T (u+v) = T u + T v;
    linear2: ∀u:V.∀k:K. T (k*u) = k*(T u)
  }.
 
 record sequentially_order_continuous (K) (V:riesz_space K) (T:V→K) : Prop ≝
  { soc_incr:
-    ∀a:nat→V.∀l:V.is_increasing ? ? a → is_sup ? V a l →
-     is_increasing ? K (λn.T (a n)) ∧ tends_to ? (λn.T (a n)) (T l)
+    ∀a:nat→V.∀l:V.is_increasing ? a → is_sup V a l →
+     is_increasing K (λn.T (a n)) ∧ tends_to ? (λn.T (a n)) (T l)
  }.
 
-definition absolute_value \def λK.λS:riesz_space K.λf.join ? S f (-f).   
+definition absolute_value \def λK.λS:riesz_space K.λf.l_join S f (-f).   
 
 (**************** Normed Riesz spaces ****************************)
 
 definition is_riesz_norm ≝
  λR:real.λV:riesz_space R.λnorm:norm R V.
-  ∀f,g:V. os_le ? V (absolute_value ? V f) (absolute_value ? V g) →
-   os_le ? R (n_function R V norm f) (n_function R V norm g).
+  ∀f,g:V. os_le V (absolute_value ? V f) (absolute_value ? V g) →
+   os_le R (n_function R V norm f) (n_function R V norm g).
 
 record riesz_norm (R:real) (V:riesz_space R) : Type ≝
  { rn_norm:> norm R V;
@@ -78,7 +104,7 @@ record is_l_space (R:real) (V:riesz_space R) (norm:riesz_norm ? V) : Prop ≝
 record is_archimedean_riesz_space (K) (S:riesz_space K) : Prop
 \def
   { ars_archimedean: ∃u:S.∀n.∀a.∀p:n > O.
-     os_le ? S
+     os_le S
       (absolute_value ? S a)
       ((inv K (sum_field K n) (not_eq_sum_field_zero K n p))* u) →
      a = 0
@@ -99,7 +125,7 @@ definition is_weak_unit ≝
   3. Fremlin proves u > 0 implies x /\ u > 0  > 0 for Archimedean spaces
    only. We pick this definition for now.
 *) λR:real.λV:archimedean_riesz_space R.λe:V.
-    ∀v:V. lt ? V 0 v → lt ? V 0 (meet ? V v e).
+    ∀v:V. lt V 0 v → lt V 0 (l_meet V v e).
 
 (* Here we are avoiding a construction (the quotient space to define
    f=g iff I(|f-g|)=0 *)
@@ -112,14 +138,14 @@ record integration_riesz_space (R:real) : Type \def
    irs_limit1:
     ∀f:irs_archimedean_riesz_space.
      tends_to ?
-      (λn.integral (meet ? irs_archimedean_riesz_space f
+      (λn.integral (l_meet irs_archimedean_riesz_space f
        ((sum_field R n)*irs_unit)))
        (integral f);
    irs_limit2:
     ∀f:irs_archimedean_riesz_space.
      tends_to ?
       (λn.
-        integral (meet ? irs_archimedean_riesz_space f
+        integral (l_meet irs_archimedean_riesz_space f
          ((inv ? (sum_field R (S n))
            (not_eq_sum_field_zero R (S n) (le_S_S O n (le_O_n n)))
          ) * irs_unit))) 0;
@@ -250,10 +276,10 @@ record is_f_algebra (K) (S:archimedean_riesz_space K) (one: S)
 \def 
 { compat_mult_le:
    ∀f,g:S.
-    le ? S 0 f → le ? S 0 g → le ? S 0 (a_mult ? ? ? A f g);
+    os_le S 0 f → os_le S 0 g → os_le S 0 (a_mult ? ? ? A f g);
   compat_mult_meet:
    ∀f,g,h:S.
-    meet ? S f g = 0 → meet ? S (a_mult ? ? ? A h f) g = 0
+    l_meet S f g = 0 → l_meet S (a_mult ? ? ? A h f) g = 0
 }.
 
 record f_algebra (K:ordered_field_ch0) (R:archimedean_riesz_space K) (one:R) :

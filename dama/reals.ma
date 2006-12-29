@@ -35,7 +35,7 @@ qed.
 
 definition max_seq: ∀R:real.∀x,y:R. nat → R.
  intros (R x y);
- elim (of_cotransitive R 0 (inv ? (sum_field ? (S n)) ?) (x-y));
+ elim (cos_cotransitive R 0 (inv ? (sum_field ? (S n)) ?) (x-y));
   [ apply x
   | apply not_eq_sum_field_zero ;
     unfold;
@@ -157,7 +157,7 @@ lemma abs_x_ge_O: \forall R: real. \forall x:R. (zero R) ≤ abs R x.
  unfold to_zero;
  unfold max_seq;
  elim
-     (of_cotransitive R 0
+     (cos_cotransitive R 0
 (inv R (sum_field R (S n))
  (not_eq_sum_field_zero R (S n) (le_S_S O n (le_O_n n)))) (x--x)
 (lt_zero_to_le_inv_zero R (S n)
