@@ -256,45 +256,67 @@ record is_algebra (K: field) (V:vector_space K) (mult:V→V→V) (one:V) : Prop
    a_associative_right: ∀a,f,g. a * (mult f g) = mult f (a * g)
  }.
 
-record algebra (K: field) (V:vector_space K) (a_one:V) : Type \def
- { a_mult: V → V → V;
+record algebra (K: field) : Type \def
+ { a_vector_space:> vector_space K;
+   a_one: a_vector_space;
+   a_mult: a_vector_space → a_vector_space → a_vector_space;
    a_algebra_properties: is_algebra ? ? a_mult a_one
  }.
 
 interpretation "Algebra product" 'times a b =
- (cic:/matita/integration_algebras/a_mult.con _ _ _ a b).
+ (cic:/matita/integration_algebras/a_mult.con _ a b).
 
 definition ring_of_algebra ≝
- λK.λV:vector_space K.λone:V.λA:algebra ? V one.
-  mk_ring V (a_mult ? ? ? A) one
-   (a_ring ? ? ? ? (a_algebra_properties ? ? ? A)).
+ λK.λA:algebra K.
+  mk_ring A (a_mult ? A) (a_one ? A)
+   (a_ring ? ? ? ? (a_algebra_properties ? A)).
 
 coercion cic:/matita/integration_algebras/ring_of_algebra.con.
 
-record is_f_algebra (K) (S:archimedean_riesz_space K) (one: S)
- (A:algebra ? S one) : Prop
-\def 
+record pre_f_algebra (K:ordered_field_ch0) : Type ≝
+ { fa_archimedean_riesz_space:> archimedean_riesz_space K;
+   fa_algebra_:> algebra K;
+   fa_with: a_vector_space ? fa_algebra_ = rs_vector_space ? fa_archimedean_riesz_space
+ }.
+
+lemma fa_algebra: ∀K:ordered_field_ch0.pre_f_algebra K → algebra K.
+ intros (K A);
+ apply mk_algebra;
+  [ apply (rs_vector_space ? A)
+  | elim daemon
+  | elim daemon
+  | elim daemon
+  ]
+ qed.
+
+coercion cic:/matita/integration_algebras/fa_algebra.con.
+
+record is_f_algebra (K) (A:pre_f_algebra K) : Prop ≝ 
 { compat_mult_le:
-   ∀f,g:S.
-    os_le S 0 f → os_le S 0 g → os_le S 0 (a_mult ? ? ? A f g);
+   ∀f,g:A.
+    os_le A (zero A) f → os_le A (zero A) g → os_le A (zero A) (a_mult ? A f g);
   compat_mult_meet:
-   ∀f,g,h:S.
-    l_meet S f g = 0 → l_meet S (a_mult ? ? ? A h f) g = 0
+   ∀f,g,h:A.
+    l_meet A f g = (zero A) → l_meet A (a_mult ? A h f) g = (zero A)
 }.
 
-record f_algebra (K:ordered_field_ch0) (R:archimedean_riesz_space K) (one:R) :
-Type \def 
-{ fa_algebra:> algebra ? R one;
-  fa_f_algebra_properties: is_f_algebra ? ? ? fa_algebra
+record f_algebra (K:ordered_field_ch0) : Type ≝ 
+{ fa_pre_f_algebra:> pre_f_algebra K;
+  fa_f_algebra_properties: is_f_algebra ? fa_pre_f_algebra
 }.
 
 (* to be proved; see footnote 2 in the paper by Spitters *)
 axiom symmetric_a_mult:
- ∀K,R,one.∀A:f_algebra K R one. symmetric ? (a_mult ? ? ? A).
+ ∀K.∀A:f_algebra K. symmetric ? (a_mult ? A).
 
 record integration_f_algebra (R:real) : Type \def
  { ifa_integration_riesz_space:> integration_riesz_space R;
-   ifa_f_algebra:>
-    f_algebra ? ifa_integration_riesz_space
-     (irs_unit ? ifa_integration_riesz_space)
+   ifa_f_algebra_: f_algebra R;
+   ifa_with:
+    fa_archimedean_riesz_space ? ifa_f_algebra_ =
+    irs_archimedean_riesz_space ? ifa_integration_riesz_space
  }.
+
+axiom ifa_f_algebra: ∀R:real.integration_f_algebra R → f_algebra R.
+
+coercion cic:/matita/integration_algebras/ifa_f_algebra.con.
