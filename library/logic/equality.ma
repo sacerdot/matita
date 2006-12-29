@@ -27,13 +27,13 @@ interpretation "leibnitz's non-equality"
   'neq x y = (cic:/matita/logic/connectives/Not.con
     (cic:/matita/logic/equality/eq.ind#xpointer(1/1) _ x y)).
 
-theorem eq_ind':
- \forall A. \forall x:A. \forall P: \forall y:A. x=y \to Prop.
+theorem eq_rect':
+ \forall A. \forall x:A. \forall P: \forall y:A. x=y \to Type.
   P ? (refl_eq ? x) \to \forall y:A. \forall p:x=y. P y p.
  intros.
  exact
-  (match p return \lambda y. \lambda p.P y p with
-    [refl_eq \Rightarrow H]).
+  (match p1 return \lambda y. \lambda p.P y p with
+    [refl_eq \Rightarrow p]).
 qed.
  
 variant reflexive_eq : \forall A:Type. reflexive A (eq A)
@@ -103,7 +103,7 @@ lemma trans_sym_eq:
    \forall u:x=y.
     comp ? ? ? ? u u = refl_eq ? y.
  intros.
- apply (eq_ind' ? ? ? ? ? u).
+ apply (eq_rect' ? ? ? ? ? u).
  reflexivity.
 qed.
 
@@ -143,7 +143,7 @@ theorem nu_left_inv:
     \forall u:x=y.
      nu_inv ? H ? ? (nu ? H ? ? u) = u.
  intros.
- apply (eq_ind' ? ? ? ? ? u).
+ apply (eq_rect' ? ? ? ? ? u).
  unfold nu_inv.
  apply trans_sym_eq.
 qed.
@@ -179,11 +179,11 @@ cut
 focus 8.
  clear q; clear p.
  intro.
- apply (eq_ind' ? ? ? ? ? q);
+ apply (eq_rect' ? ? ? ? ? q);
  fold simplify (nu ? ? (refl_eq ? x)).
  generalize in match (nu ? ? (refl_eq ? x)); intro.
  apply
-  (eq_ind' A x
+  (eq_rect' A x
    (\lambda y. \lambda u.
     eq_ind A x (\lambda a.a=y) u y u = refl_eq ? y)
    ? x H1).
