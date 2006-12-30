@@ -14,7 +14,7 @@
 
 set "baseuri" "cic:/matita/unfold".
 
-include "legacy/coq.ma".
+include "../legacy/coq.ma".
 
 alias symbol "plus" (instance 0) = "Coq's natural plus".
 definition myplus \def \lambda x,y. x+y.

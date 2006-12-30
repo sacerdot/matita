@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 set "baseuri" "cic:/matita/tests/continuationals".
-include "legacy/coq.ma".
+include "../legacy/coq.ma".
 
 alias id "nat" = "cic:/Coq/Init/Datatypes/nat.ind#xpointer(1/1)".
 alias id "S" = "cic:/Coq/Init/Datatypes/nat.ind#xpointer(1/1/2)".

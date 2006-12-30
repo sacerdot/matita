@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 set "baseuri" "cic:/matita/tests/clearbody".
-include "legacy/coq.ma".
+include "../legacy/coq.ma".
 alias num (instance 0) = "natural number".
 alias symbol "eq" (instance 0) = "Coq's leibnitz's equality".
 alias symbol "plus" (instance 0) = "Coq's natural plus".

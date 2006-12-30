@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 set "baseuri" "cic:/matita/tests/decompose".
-include "legacy/coq.ma".
+include "../legacy/coq.ma".
 alias symbol "and" (instance 0) = "Coq's logical and".
 alias symbol "or" (instance 0) = "Coq's logical or".
 

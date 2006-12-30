@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 set "baseuri" "cic:/matita/tests/absurd/".
-include "legacy/coq.ma".
+include "../legacy/coq.ma".
 alias num (instance 0) = "natural number".
 alias symbol "eq" (instance 0) = "Coq's leibnitz's equality".
 alias id "not" = "cic:/Coq/Init/Logic/not.con".
