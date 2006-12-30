@@ -60,7 +60,7 @@ record riesz_space (K:ordered_field_ch0) : Type \def
  }.
 
 record is_positive_linear (K) (V:riesz_space K) (T:V→K) : Prop ≝
- { positive: ∀u:V. os_le V 0 u → os_le K 0 (T u);
+ { positive: ∀u:V. (0:carrier V)≤u → (0:carrier K)≤T u;
    linear1: ∀u,v:V. T (u+v) = T u + T v;
    linear2: ∀u:V.∀k:K. T (k*u) = k*(T u)
  }.
@@ -77,8 +77,8 @@ definition absolute_value \def λK.λS:riesz_space K.λf.l_join S f (-f).
 
 definition is_riesz_norm ≝
  λR:real.λV:riesz_space R.λnorm:norm R V.
-  ∀f,g:V. os_le V (absolute_value ? V f) (absolute_value ? V g) →
-   os_le R (n_function R V norm f) (n_function R V norm g).
+  ∀f,g:V. absolute_value ? V f ≤ absolute_value ? V g →
+   n_function R V norm f ≤ n_function R V norm g.
 
 record riesz_norm (R:real) (V:riesz_space R) : Type ≝
  { rn_norm:> norm R V;
@@ -104,9 +104,8 @@ record is_l_space (R:real) (V:riesz_space R) (norm:riesz_norm ? V) : Prop ≝
 record is_archimedean_riesz_space (K) (S:riesz_space K) : Prop
 \def
   { ars_archimedean: ∃u:S.∀n.∀a.∀p:n > O.
-     os_le S
-      (absolute_value ? S a)
-      ((inv K (sum_field K n) (not_eq_sum_field_zero K n p))* u) →
+     absolute_value ? S a ≤
+      (inv K (sum_field K n) (not_eq_sum_field_zero K n p))* u →
      a = 0
   }.
 
@@ -294,7 +293,7 @@ coercion cic:/matita/integration_algebras/fa_algebra.con.
 record is_f_algebra (K) (A:pre_f_algebra K) : Prop ≝ 
 { compat_mult_le:
    ∀f,g:A.
-    os_le A (zero A) f → os_le A (zero A) g → os_le A (zero A) (a_mult ? A f g);
+    zero A ≤ f → zero A ≤ g → zero A ≤ a_mult ? A f g;
   compat_mult_meet:
    ∀f,g,h:A.
     l_meet A f g = (zero A) → l_meet A (a_mult ? A h f) g = (zero A)
