@@ -121,7 +121,7 @@ axiom lt_zero_to_le_inv_zero:
 definition tends_to : ∀F:ordered_field_ch0.∀f:nat→F.∀l:F.Prop.
  apply
   (λF:ordered_field_ch0.λf:nat → F.λl:F.
-    ∀n:nat.∃m:nat.∀j:nat. le m j →
+    ∀n:nat.∃m:nat.∀j:nat.m ≤ j →
      l - (inv F (sum_field ? (S n)) ?) ≤ f j ∧
      f j ≤ l + (inv F (sum_field ? (S n)) ?));
  apply not_eq_sum_field_zero;
@@ -143,7 +143,7 @@ definition is_cauchy_seq : ∀F:ordered_field_ch0.∀f:nat→F.Prop.
  apply
   (λF:ordered_field_ch0.λf:nat→F.
     ∀m:nat.
-     ∃n:nat.∀N. le n N →
+     ∃n:nat.∀N.n ≤ N →
       -(inv ? (sum_field F (S m)) ?) ≤ f N - f n ∧
       f N - f n ≤ inv ? (sum_field F (S m)) ?);
  apply not_eq_sum_field_zero;

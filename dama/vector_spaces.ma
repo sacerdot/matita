@@ -123,7 +123,7 @@ definition tends_to :
  ∀R:real.∀V:vector_space R.∀d:distance ? V.∀f:nat→V.∀l:V.Prop.
 apply
   (λR:real.λV:vector_space R.λd:distance ? V.λf:nat→V.λl:V.
-    ∀n:nat.∃m:nat.∀j:nat. le m j →
+    ∀n:nat.∃m:nat.∀j:nat. m ≤ j →
      d (f j) l ≤ inv R (sum_field ? (S n)) ?);
  apply not_eq_sum_field_zero;
  unfold;
@@ -136,7 +136,7 @@ definition is_cauchy_seq : ∀R:real.\forall V:vector_space R.
   (λR:real.λV: vector_space R. \lambda d:distance ? V.
    \lambda f:nat→V.
     ∀m:nat.
-     ∃n:nat.∀N. le n N →
+     ∃n:nat.∀N. n ≤ N →
       -(inv R (sum_field ? (S m)) ?) ≤ d (f N)  (f n)  ∧
       d (f N)  (f n)≤ inv R (sum_field R (S m)) ?);
  apply not_eq_sum_field_zero;
