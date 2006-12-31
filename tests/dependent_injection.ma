@@ -33,8 +33,8 @@ inductive ttree : Type → Type :=
     (that state the existence of a ?1 such that ...) *)
 theorem injection_test3:
  ∀t,t'. tnode nat t tempty = tnode nat t' tempty → t = t'.
- intros;
- destruct H;
+ intros.
+ destruct H.
  assumption.
 qed.
 
