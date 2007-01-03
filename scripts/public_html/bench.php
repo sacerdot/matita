@@ -261,7 +261,7 @@ function links_of($name,$q,$limits){
     <td>    
       <select name="test">";
         <option value="--">--</option>";
-          <?query("select distinct test from bench;","array_to_combo");?>
+          <?query("select distinct test from bench order by test;","array_to_combo");?>
       </select>      
     </td>
   </tr>
