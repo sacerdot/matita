@@ -692,4 +692,4 @@ qed.
 definition lt ≝ λO:ordered_set.λa,b:O.a ≤ b ∧ a ≠ b.
 
 interpretation "Ordered set lt" 'lt a b =
- (cic:/matita/ordered_sets/lt.con _ _ a b).
+ (cic:/matita/ordered_sets/lt.con _ a b).

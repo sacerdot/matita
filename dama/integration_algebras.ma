@@ -102,7 +102,7 @@ qed.
 coercion cic:/matita/integration_algebras/rs_ordered_abelian_group.con.
 
 record is_riesz_space (K:ordered_field_ch0) (V:pre_riesz_space K) : Prop ≝
- { rs_compat_le_times: ∀a:K.∀f:V. zero K≤a → zero V≤f → zero V≤a*f
+ { rs_compat_le_times: ∀a:K.∀f:V. 0≤a → 0≤f → 0≤a*f
  }.
 
 record riesz_space (K:ordered_field_ch0) : Type \def
@@ -122,7 +122,7 @@ record sequentially_order_continuous (K) (V:riesz_space K) (T:V→K) : Prop ≝
      is_increasing K (λn.T (a n)) ∧ tends_to ? (λn.T (a n)) (T l)
  }.
 
-definition absolute_value \def λK.λS:riesz_space K.λf.l_join S f (-f).   
+definition absolute_value ≝ λK.λS:riesz_space K.λf:S.f ∨ -f.   
 
 (**************** Normed Riesz spaces ****************************)
 
@@ -175,7 +175,7 @@ definition is_weak_unit ≝
   3. Fremlin proves u > 0 implies x /\ u > 0  > 0 for Archimedean spaces
    only. We pick this definition for now.
 *) λR:real.λV:archimedean_riesz_space R.λe:V.
-    ∀v:V. lt V 0 v → lt V 0 (l_meet V v e).
+    ∀v:V. 0<v → 0 < (v ∧ e).
 
 (* Here we are avoiding a construction (the quotient space to define
    f=g iff I(|f-g|)=0 *)
@@ -188,14 +188,13 @@ record integration_riesz_space (R:real) : Type \def
    irs_limit1:
     ∀f:irs_archimedean_riesz_space.
      tends_to ?
-      (λn.integral (l_meet irs_archimedean_riesz_space f
-       ((sum_field R n)*irs_unit)))
+      (λn.integral (f ∧ ((sum_field R n)*irs_unit)))
        (integral f);
    irs_limit2:
     ∀f:irs_archimedean_riesz_space.
      tends_to ?
       (λn.
-        integral (l_meet irs_archimedean_riesz_space f
+        integral (f ∧
          ((inv ? (sum_field R (S n))
            (not_eq_sum_field_zero R (S n) (le_S_S O n (le_O_n n)))
          ) * irs_unit))) 0;
@@ -342,12 +341,9 @@ lemma fa_algebra: ∀K:ordered_field_ch0.pre_f_algebra K → algebra K.
 coercion cic:/matita/integration_algebras/fa_algebra.con.
 
 record is_f_algebra (K) (A:pre_f_algebra K) : Prop ≝ 
-{ compat_mult_le:
-   ∀f,g:A.
-    zero A ≤ f → zero A ≤ g → zero A ≤ a_mult ? A f g;
+{ compat_mult_le: ∀f,g:A.0 ≤ f → 0 ≤ g → 0 ≤ f*g;
   compat_mult_meet:
-   ∀f,g,h:A.
-    l_meet A f g = (zero A) → l_meet A (a_mult ? A h f) g = (zero A)
+   ∀f,g,h:A.(f ∧ g) = 0 → ((h*f) ∧ g) = 0
 }.
 
 record f_algebra (K:ordered_field_ch0) : Type ≝ 

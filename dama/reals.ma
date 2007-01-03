@@ -147,7 +147,7 @@ lemma technical1: ∀R:real.lim R (to_zero R) (is_cauchy_seq_to_zero R) = 0.
  elim daemon.
 qed.
  
-lemma abs_x_ge_O: \forall R: real. \forall x:R. (zero R) ≤ abs R x.
+lemma abs_x_ge_O: ∀R:real.∀x:R. 0 ≤ abs ? x.
  intros;
  unfold abs;
  unfold max;

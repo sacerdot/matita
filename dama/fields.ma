@@ -21,7 +21,7 @@ record is_field (R:ring) (inv:∀x:R.x ≠ 0 → R) : Prop
  {  (* multiplicative abelian properties *)
     mult_comm_: symmetric ? (mult R);
     (* multiplicative group properties *)
-    inv_inverse_: ∀x.∀p: x ≠ 0. mult ? (inv x p) x = 1
+    inv_inverse_: ∀x.∀p: x ≠ 0. inv x p * x = 1
  }.
 
 lemma opp_opp: ∀R:ring. ∀x:R. --x=x.
