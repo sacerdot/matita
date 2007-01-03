@@ -22,36 +22,87 @@ include "lattices.ma".
 record pre_riesz_space (K:ordered_field_ch0) : Type \def
  { rs_vector_space:> vector_space K;
    rs_lattice_: lattice;
-   rs_with: os_carrier rs_lattice_ = rs_vector_space
+   rs_ordered_abelian_group_: ordered_abelian_group;
+   rs_with1:
+    og_abelian_group rs_ordered_abelian_group_ = vs_abelian_group ? rs_vector_space;
+   rs_with2:
+    og_ordered_set rs_ordered_abelian_group_ = ordered_set_of_lattice rs_lattice_
  }.
 
-lemma rs_lattice: ∀K:ordered_field_ch0.pre_riesz_space K → lattice.
+lemma rs_lattice: ∀K.pre_riesz_space K → lattice.
  intros (K V);
- apply mk_lattice;
-  [ apply (carrier V) 
-  | apply (eq_rect ? ? (λC:Type.C→C→C) ? ? (rs_with ? V));
-    apply l_join
-  | apply (eq_rect ? ? (λC:Type.C→C→C) ? ? (rs_with ? V));
-    apply l_meet
-  | apply 
-     (eq_rect' ? ?
-      (λa:Type.λH:os_carrier (rs_lattice_ ? V)=a.
-       is_lattice a
-        (eq_rect Type (rs_lattice_ K V) (λC:Type.C→C→C)
-          (l_join (rs_lattice_ K V)) a H)
-        (eq_rect Type (rs_lattice_ K V) (λC:Type.C→C→C)
-          (l_meet (rs_lattice_ K V)) a H))
-      ? ? (rs_with ? V));
-    simplify;
-    apply l_lattice_properties
+ cut (os_carrier (rs_lattice_ ? V) = V);
+  [ apply mk_lattice;
+     [ apply (carrier V) 
+     | apply (eq_rect ? ? (λC:Type.C→C→C) ? ? Hcut);
+       apply l_join
+     | apply (eq_rect ? ? (λC:Type.C→C→C) ? ? Hcut);
+       apply l_meet
+     | apply 
+        (eq_rect' ? ?
+         (λa:Type.λH:os_carrier (rs_lattice_ ? V)=a.
+          is_lattice a
+           (eq_rect Type (rs_lattice_ K V) (λC:Type.C→C→C)
+             (l_join (rs_lattice_ K V)) a H)
+           (eq_rect Type (rs_lattice_ K V) (λC:Type.C→C→C)
+             (l_meet (rs_lattice_ K V)) a H))
+         ? ? Hcut);
+       simplify;
+       apply l_lattice_properties
+     ]
+  | transitivity (os_carrier (rs_ordered_abelian_group_ ? V));
+    [ apply (eq_f ? ? os_carrier);
+      symmetry;
+      apply rs_with2
+    | apply (eq_f ? ? carrier);
+      apply rs_with1
+    ]
   ].
 qed.
 
 coercion cic:/matita/integration_algebras/rs_lattice.con.
+ 
+lemma rs_ordered_abelian_group: ∀K.pre_riesz_space K → ordered_abelian_group.
+ intros (K V);
+ apply mk_ordered_abelian_group;
+  [ apply mk_pre_ordered_abelian_group;
+     [ apply (vs_abelian_group ? (rs_vector_space ? V))
+     | apply (ordered_set_of_lattice (rs_lattice ? V))
+     | reflexivity
+     ]
+  | simplify;
+    generalize in match
+     (og_ordered_abelian_group_properties (rs_ordered_abelian_group_ ? V));
+    intro P;
+    unfold in P;
+    elim daemon(*
+    apply
+     (eq_rect ? ?
+      (λO:ordered_set.
+        ∀f,g,h.
+         os_le O f g →
+          os_le O
+           (plus (abelian_group_OF_pre_riesz_space K V) f h)
+           (plus (abelian_group_OF_pre_riesz_space K V) g h))
+      ? ? (rs_with2 ? V));
+    apply
+     (eq_rect ? ?
+      (λG:abelian_group.
+        ∀f,g,h.
+         os_le (ordered_set_OF_pre_riesz_space K V) f g →
+          os_le (ordered_set_OF_pre_riesz_space K V)
+           (plus (abelian_group_OF_pre_riesz_space K V) f h)
+           (plus (abelian_group_OF_pre_riesz_space K V) g h))
+      ? ? (rs_with1 ? V));
+    simplify;
+    apply og_ordered_abelian_group_properties*)
+  ]
+qed.
+
+coercion cic:/matita/integration_algebras/rs_ordered_abelian_group.con.
 
 record is_riesz_space (K:ordered_field_ch0) (V:pre_riesz_space K) : Prop ≝
- { rs_compat_le_plus: ∀f,g,h:V. f≤g → f+h≤g+h;
-   rs_compat_le_times: ∀a:K.∀f:V. zero K≤a → zero V≤f → zero V≤a*f
+ { rs_compat_le_times: ∀a:K.∀f:V. zero K≤a → zero V≤f → zero V≤a*f
  }.
 
 record riesz_space (K:ordered_field_ch0) : Type \def
@@ -60,7 +111,7 @@ record riesz_space (K:ordered_field_ch0) : Type \def
  }.
 
 record is_positive_linear (K) (V:riesz_space K) (T:V→K) : Prop ≝
- { positive: ∀u:V. (0:carrier V)≤u → (0:carrier K)≤T u;
+ { positive: ∀u:V. 0≤u → 0≤T u;
    linear1: ∀u,v:V. T (u+v) = T u + T v;
    linear2: ∀u:V.∀k:K. T (k*u) = k*(T u)
  }.
