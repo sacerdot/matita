@@ -324,7 +324,7 @@ coercion cic:/matita/integration_algebras/ring_of_algebra.con.
 
 record pre_f_algebra (K:ordered_field_ch0) : Type ≝
  { fa_archimedean_riesz_space:> archimedean_riesz_space K;
-   fa_algebra_:> algebra K;
+   fa_algebra_: algebra K;
    fa_with: a_vector_space ? fa_algebra_ = rs_vector_space ? fa_archimedean_riesz_space
  }.
 
