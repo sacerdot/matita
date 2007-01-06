@@ -24,7 +24,7 @@ qed.
 theorem nle_succ: \forall p,q. p <= q \to succ p <= succ q.
  unfold NLE.
  intros. decompose.
- apply ex_intro; auto. (**)
+ apply ex_intro; [|auto] (**)
 qed.
 
 theorem nle_refl: \forall x. x <= x.

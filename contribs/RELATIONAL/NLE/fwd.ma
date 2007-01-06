@@ -25,7 +25,7 @@ theorem nle_gen_succ_1: \forall x,y. x < y \to
  intros. decompose.
  lapply linear nplus_gen_succ_2 to H1 as H.
  decompose. subst.
- apply ex_intro; auto. (**)
+ apply ex_intro;[| auto] (**)
 qed.
 
 
