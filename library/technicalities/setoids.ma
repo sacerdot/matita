@@ -107,8 +107,8 @@ definition make_compatibility_goal_aux:
  ∀In,Out.∀f,g:function_type_of_morphism_signature In Out.Prop.
  intros 2; 
  elim In (a); simplify in f f1;
- generalize in match f; clear f;
  generalize in match f1; clear f1;
+ generalize in match f; clear f;
   [ elim a; simplify in f f1;
      [ exact (∀x1,x2. r x1 x2 → relation_of_relation_class ? Out (f x1) (f1 x2))
      | elim t;
@@ -250,18 +250,24 @@ definition equality_morphism_of_symmetric_reflexive_transitive_relation:
   ]
 qed.
 
-(*
 definition equality_morphism_of_asymmetric_areflexive_transitive_relation:
- ∀(A: Type)(Aeq: relation A)(trans: transitive ? Aeq).
-  let ASetoidClass1 := AsymmetricAreflexive Contravariant Aeq in
-  let ASetoidClass2 := AsymmetricAreflexive Covariant Aeq in
-   (Morphism_Theory (cons ASetoidClass1 (singl ASetoidClass2)) Impl_Relation_Class).
- intros.
- exists Aeq.
- unfold make_compatibility_goal; simpl; unfold impl; auto.
+ ∀A: Type.∀Aeq: relation A.∀trans: transitive ? Aeq.
+  let ASetoidClass1 := AsymmetricAreflexive ? Contravariant ? Aeq in
+  let ASetoidClass2 := AsymmetricAreflexive ? Covariant ? Aeq in
+   (Morphism_Theory (cons ? ASetoidClass1 (singl ? ASetoidClass2)) Impl_Relation_Class).
+ intros;
+ apply mk_Morphism_Theory;
+ [ simplify;
+   apply Aeq
+ | simplify;
+   intros;
+   whd;
+   intros;
+   auto
+ ].
 qed.
 
-definition equality_morphism_of_asymmetric_reflexive_transitive_relation:
+(*definition equality_morphism_of_asymmetric_reflexive_transitive_relation:
  ∀(A: Type)(Aeq: relation A)(refl: reflexive ? Aeq)(trans: transitive ? Aeq).
   let ASetoidClass1 := AsymmetricReflexive Contravariant refl in
   let ASetoidClass2 := AsymmetricReflexive Covariant refl in
