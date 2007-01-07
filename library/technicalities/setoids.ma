@@ -267,23 +267,30 @@ definition equality_morphism_of_asymmetric_areflexive_transitive_relation:
  ].
 qed.
 
-(*definition equality_morphism_of_asymmetric_reflexive_transitive_relation:
- ∀(A: Type)(Aeq: relation A)(refl: reflexive ? Aeq)(trans: transitive ? Aeq).
-  let ASetoidClass1 := AsymmetricReflexive Contravariant refl in
-  let ASetoidClass2 := AsymmetricReflexive Covariant refl in
-   (Morphism_Theory (cons ASetoidClass1 (singl ASetoidClass2)) Impl_Relation_Class).
- intros.
- exists Aeq.
- unfold make_compatibility_goal; simpl; unfold impl; eauto.
+definition equality_morphism_of_asymmetric_reflexive_transitive_relation:
+ ∀A: Type.∀Aeq: relation A.∀refl: reflexive ? Aeq.∀trans: transitive ? Aeq.
+  let ASetoidClass1 := AsymmetricReflexive ? Contravariant ? ? refl in
+  let ASetoidClass2 := AsymmetricReflexive ? Covariant ? ? refl in
+   (Morphism_Theory (cons ? ASetoidClass1 (singl ? ASetoidClass2)) Impl_Relation_Class).
+ intros;
+ apply mk_Morphism_Theory;
+ [ simplify;
+   apply Aeq
+ | simplify;
+   intros;
+   whd;
+   intro;
+   auto
+ ].
 qed.
 
 (* iff AS A RELATION *)
 
-Add Relation Prop iff
+(*DA PORTARE:Add Relation Prop iff
  reflexivity proved by iff_refl
  symmetry proved by iff_sym
  transitivity proved by iff_trans
- as iff_relation.
+ as iff_relation.*)
 
 (* every predicate is  morphism from Leibniz+ to Iff_Relation_Class *)
 definition morphism_theory_of_predicate :
@@ -291,33 +298,44 @@ definition morphism_theory_of_predicate :
   let In' := list_of_Leibniz_of_list_of_types In in
    function_type_of_morphism_signature In' Iff_Relation_Class →
     Morphism_Theory In' Iff_Relation_Class.
-  intros.
-  exists X.
-  induction In;  unfold make_compatibility_goal; simpl.
-    intro; apply iff_refl.
-    intro; apply (IHIn (X x)).
+  intros;
+  apply mk_Morphism_Theory;
+  [ apply f
+  | generalize in match f; clear f;
+    unfold In'; clear In';
+    elim In;
+     [ reduce;
+       intro;
+       alias id "iff_refl" = "cic:/matita/logic/coimplication/iff_refl.con".
+       apply iff_refl
+     | simplify;
+       intro x;
+       apply (H (f1 x))
+     ]
+  ].
 qed.
 
 (* impl AS A RELATION *)
 
-Theorem impl_trans: transitive ? impl.
- hnf; unfold impl; tauto.
-Qed.
+theorem impl_trans: transitive ? impl.
+ whd;
+ unfold impl;
+ intros;
+ auto.
+qed.
 
-Add Relation Prop impl
+(*DA PORTARE: Add Relation Prop impl
  reflexivity proved by impl_refl
  transitivity proved by impl_trans
- as impl_relation.
+ as impl_relation.*)
 
 (* THE CIC PART OF THE REFLEXIVE TACTIC (SETOID REWRITE) *)
 
 inductive rewrite_direction : Type :=
-   Left2Right
- | Right2Left.
+   Left2Right: rewrite_direction
+ | Right2Left: rewrite_direction.
 
-Implicit Type dir: rewrite_direction.
-
-definition variance_of_argument_class : Argument_Class → option variance.
+(*definition variance_of_argument_class : Argument_Class → option variance.
  destruct 1.
  exact None.
  exact (Some v).
@@ -675,15 +693,6 @@ Theorem setoid_rewrite:
      exact H1.
 Qed.
 
-(* BEGIN OF UTILITY/BACKWARD COMPATIBILITY PART *)
-
-record Setoid_Theory  (A: Type) (Aeq: relation A) : Prop := 
-  {Seq_refl : ∀x:A. Aeq x x;
-   Seq_sym : ∀x y:A. Aeq x y → Aeq y x;
-   Seq_trans : ∀x y z:A. Aeq x y → Aeq y z → Aeq x z}.
-
-(* END OF UTILITY/BACKWARD COMPATIBILITY PART *)
-
 (* A FEW EXAMPLES ON iff *)
 
 (* impl IS A MORPHISM *)
@@ -723,33 +732,5 @@ Qed.
 Add Morphism not with signature impl -→ impl as Not_Morphism2.
  unfold impl; tauto.
 Qed.
-
-(* FOR BACKWARD COMPATIBILITY *)
-Implicit Arguments Setoid_Theory [].
-Implicit Arguments Seq_refl [].
-Implicit Arguments Seq_sym [].
-Implicit Arguments Seq_trans [].
-
-
-(* Some tactics for manipulating Setoid Theory not officially 
-   declared as Setoid. *)
-
-Ltac trans_st x := match goal with 
-  | H : Setoid_Theory ? ?eqA |- ?eqA ? ? => 
-     apply (Seq_trans ? ? H) with x; auto
- end.
-
-Ltac sym_st := match goal with 
-  | H : Setoid_Theory ? ?eqA |- ?eqA ? ? => 
-     apply (Seq_sym ? ? H); auto
- end.
-
-Ltac refl_st := match goal with 
-  | H : Setoid_Theory ? ?eqA |- ?eqA ? ? => 
-     apply (Seq_refl ? ? H); auto
- end.
-
-definition gen_st : ∀A : Set. Setoid_Theory ? (@eq A).
-Proof. constructor; congruence. Qed.
 
 *)
