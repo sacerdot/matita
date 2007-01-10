@@ -12,9 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/tests".
+set "baseuri" "cic:/matita/test/prova".
 
-include "../contribs/LAMBDA-TYPES/Level-1/Base/ext/preamble.ma".
+include "../contribs/LAMBDA-TYPES/Level-1/Base/preamble.ma".
 
 alias id "Abbr" = "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/T/defs/B.ind#xpointer(1/1/1)".
 alias id "Abst" = "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/T/defs/B.ind#xpointer(1/1/2)".
@@ -51,3 +51,10 @@ alias id "THead" = "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/T/defs/T.ind#xp
 
 inline procedural
    "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/pr0/props/pr0_subst0.con".
+(*
+inline procedural
+   "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/ty3/pr3/ty3_sred_wcpr0_pr0.con".
+
+inline procedural
+   "cic:/Coq/Reals/RiemannInt/FTC_Riemann.con".
+*)

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/Base/ext/preamble".
+set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/Base/preamble".
 
 include' "../../../../legacy/coq.ma".
 
@@ -154,9 +154,9 @@ qed.
 
 default "equality"
  cic:/Coq/Init/Logic/eq.ind
- cic:/matita/LAMBDA-TYPES/Level-1/Base/ext/preamble/sym_eq.con
- cic:/matita/LAMBDA-TYPES/Level-1/Base/ext/preamble/trans_eq.con
+ cic:/matita/LAMBDA-TYPES/Level-1/Base/preamble/sym_eq.con
+ cic:/matita/LAMBDA-TYPES/Level-1/Base/preamble/trans_eq.con
  cic:/Coq/Init/Logic/eq_ind.con
  cic:/Coq/Init/Logic/eq_ind_r.con
- cic:/matita/LAMBDA-TYPES/Level-1/Base/ext/preamble/f_equal.con
+ cic:/matita/LAMBDA-TYPES/Level-1/Base/preamble/f_equal.con
  cic:/matita/legacy/coq/f_equal1.con.

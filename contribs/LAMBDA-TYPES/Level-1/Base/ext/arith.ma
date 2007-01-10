@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/Base/ext/arith".
 
-include "ext/preamble.ma".
+include "preamble.ma".
 
 theorem nat_dec:
  \forall (n1: nat).(\forall (n2: nat).(or (eq nat n1 n2) ((eq nat n1 n2) \to 

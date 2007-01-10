@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/Base/blt/defs".
 
-include "ext/preamble.ma".
+include "preamble.ma".
 
 definition blt:
  nat \to (nat \to bool)

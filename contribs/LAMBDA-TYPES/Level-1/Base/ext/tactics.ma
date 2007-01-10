@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/Base/ext/tactics".
 
-include "ext/preamble.ma".
+include "preamble.ma".
 
 theorem insert_eq:
  \forall (S: Set).(\forall (x: S).(\forall (P: ((S \to Prop))).(\forall (G: 

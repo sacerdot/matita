@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/Base/plist/defs".
 
-include "ext/preamble.ma".
+include "preamble.ma".
 
 inductive PList: Set \def
 | PNil: PList
