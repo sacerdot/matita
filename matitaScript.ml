@@ -234,7 +234,7 @@ let rec eval_macro include_paths (buffer : GText.buffer) guistuff lexicon_status
      guistuff.mathviewer#show_uri_list ~reuse:true ~entry l;
      [], "", parsed_text_length
   | TA.WHint (loc, term) ->
-     let s = ((None,[0,[],term], Cic.Meta (0,[]) ,term),0) in
+     let s = ((None,[0,[],term], Cic.Meta (0,[]) ,term, []),0) in
      let l = List.map fst (MQ.experimental_hint ~dbd s) in
      let entry = `Whelp (pp_macro mac, l) in
      guistuff.mathviewer#show_uri_list ~reuse:true ~entry l;
@@ -332,7 +332,7 @@ prerr_endline ("Stampo " ^ UriManager.string_of_uri uri);
               (fst (CicEnvironment.get_obj CicUniv.empty_ugraph uri))
             with
 	     | e (* BRRRRRRRRR *) -> 
-	        Printf.sprintf "\nERRORE IN STAMPA DI %s\n%s\n" 
+	        Printf.sprintf "\n(* ERRORE IN STAMPA DI %s\nEXCEPTION: %s *)\n" 
 		(UriManager.string_of_uri uri) (Printexc.to_string e)
           ) sorted_uris_without_xpointer)
       in
