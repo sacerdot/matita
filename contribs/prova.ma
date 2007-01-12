@@ -16,6 +16,26 @@ set "baseuri" "cic:/matita/test/prova".
 
 include "../contribs/LAMBDA-TYPES/Level-1/Base/preamble.ma".
 
+alias id "Abst" = "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/T/defs/B.ind#xpointer(1/1/2)".
+alias id "Abbr" = "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/T/defs/B.ind#xpointer(1/1/1)".
+(*
+alias id "B" = "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/T/defs/B.ind#xpointer(1/1)".
+*)
+theorem not_abbr_abst:
+ (Abbr\neq Abst)
+.(* tactics: 7 *)
+whd in \vdash (%).
+intros 1 (H).
+letin DEFINED \def (\lambda ee:B
+ .match ee in B return \lambda _:B.Prop with 
+  [Abbr\rArr True|Abst\rArr False|Void\rArr False]).(* extracted *)
+cut (DEFINED Abbr) as ASSUMED;
+[rewrite > H in ASSUMED:(%) as (H0)
+|apply I
+].
+elim H0 using False_ind names 0.(* 2 C I 2 0 *)
+qed.
+
 alias id "Abbr" = "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/T/defs/B.ind#xpointer(1/1/1)".
 alias id "Abst" = "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/T/defs/B.ind#xpointer(1/1/2)".
 alias id "Appl" = "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/T/defs/F.ind#xpointer(1/1/1)".
