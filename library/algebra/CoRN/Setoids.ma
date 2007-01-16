@@ -92,6 +92,8 @@ generalize in match (ap_irreflexive S x);
 elim H. apply H1. assumption.
 qed.
 
+axiom eq_symmetric : \forall S : CSetoid. symmetric S (cs_eq S).
+(*
 lemma eq_symmetric : \forall S : CSetoid. symmetric S (cs_eq S).
 intro. unfold. intros.
 generalize in match (ap_tight S x y). intro.
@@ -101,7 +103,7 @@ elim H1. clear H1.
 elim H2. clear H2.
 apply H1. unfold. intro. auto.
 qed.
-
+*)
 lemma eq_transitive : \forall S : CSetoid. transitive S (cs_eq S).
 intro. unfold. intros (x y z H H0).
 generalize in match (ap_tight S x y). intro.
@@ -130,12 +132,16 @@ lemma eq_transitive_unfolded : \forall S:CSetoid. \forall x,y,z:S. x = y \to y =
 apply eq_transitive.
 qed.
 
+
 lemma eq_wdl : \forall S:CSetoid. \forall x,y,z:S. x = y \to x = z \to z = y.
 intros.
 (* perche' auto non arriva in fondo ??? *)
-apply (eq_transitive_unfolded ? ? x). auto.
-assumption.
+apply (eq_transitive_unfolded ? ? x).
+apply eq_symmetric_unfolded.
+exact H1.
+exact H.
 qed.
+
 
 lemma ap_irreflexive_unfolded : \forall S:CSetoid. \forall x:S. \not (x \neq x).
 apply ap_irreflexive.
@@ -318,8 +324,8 @@ definition pred_strong_ext : \forall S: CSetoid. (S \to Prop) \to Prop \def
   P x \to (P y \or (x \neq y)).
 
 (* Definition pred_wd : CProp := forall x y : S, P x -> x [=] y -> P y. *)
-definition pred_wd : \forall S: CSetoid. (S \to Prop) \to Prop \def 
- \lambda S: CSetoid. \lambda P: S \to Prop. \forall x,y : S. 
+definition pred_wd : \forall S: CSetoid. \forall P :S \to Type. Type \def
+ \lambda S: CSetoid. \lambda P: S \to Type. \forall x,y : S. 
   P x \to x = y \to P y.
 
 record wd_pred (S: CSetoid) : Type \def
@@ -720,7 +726,7 @@ qed.
 
 
 record CSetoid_bin_fun (S1,S2,S3: CSetoid) : Type \def 
- {csbf_fun    : S1 \to S2 \to S3;
+ {csbf_fun    :2> S1 \to S2 \to S3;
   csbf_strext :  (bin_fun_strext S1 S2 S3 csbf_fun)}.
 
 lemma csbf_wd : \forall S1,S2,S3: CSetoid. \forall f : CSetoid_bin_fun S1 S2 S3. 
@@ -761,7 +767,7 @@ definition commutes : \forall S: CSetoid. (S \to S \to S)  \to Prop \def
  \lambda S: CSetoid. \lambda f : S \to S \to S. 
  \forall x,y : S. f x y = f y x.
  
-definition associative : \forall S: CSetoid. (S \to S \to S) \to Prop \def 
+definition CSassociative : \forall S: CSetoid. \forall f: S \to S \to S.  Prop \def 
 \lambda S: CSetoid. \lambda f : S \to S \to S. 
 \forall x,y,z : S.
  f x (f y z) = f (f x y) z.
@@ -783,15 +789,18 @@ definition mk_CSetoid_un_op : \forall S:CSetoid. \forall f: S \to S. fun_strext 
 
 lemma id_strext : \forall S:CSetoid. un_op_strext S (\lambda x:S. x).
 unfold un_op_strext.
-unfold fun_strext.intros.
-simplify.assumption.
+unfold fun_strext.
+intros.
+simplify in H.
+exact H.
 qed.
 
 lemma id_pres_eq : \forall S:CSetoid. un_op_wd S (\lambda x : S.x).
 unfold un_op_wd.
 unfold fun_wd.
 intros.
-simplify.assumption.
+simplify.
+exact H.
 qed.
 
 definition id_un_op : \forall S:CSetoid. CSetoid_un_op S 
@@ -1047,12 +1056,17 @@ intros. unfold equiv. split
 ]
 qed.
 
+(*
+axiom subcsetoid_is_CSetoid : \forall S:CSetoid. \forall P: S \to Prop. 
+is_CSetoid ? (subcsetoid_eq S P) (subcsetoid_ap S P).
+*)
+
 lemma subcsetoid_is_CSetoid : \forall S:CSetoid. \forall P: S \to Prop. 
 is_CSetoid ? (subcsetoid_eq S P) (subcsetoid_ap S P).
 intros.
 apply (mk_is_CSetoid ? (subcsetoid_eq S P) (subcsetoid_ap S P))
 [ unfold. intros.unfold. elim x. exact (ap_irreflexive_unfolded S ? ?) 
- [ assumption | apply H1.]
+ [ assumption | simplify in H1. exact H1 ]
  (* irreflexive *)
 |unfold. intros 2. elim x. generalize in match H1. elim y.simplify in H3. simplify.
 exact (ap_symmetric ? ? ? H3)
@@ -1063,6 +1077,7 @@ apply (ap_cotransitive ? ? ? H3)
 |unfold.intros.elim x. elim y.simplify.
 apply (ap_tight S ? ?)]
 qed.
+
 
 definition mk_SubCSetoid : \forall S:CSetoid. \forall P: S \to Prop. CSetoid \def 
 \lambda S:CSetoid. \lambda P:S \to Prop.
@@ -1113,12 +1128,18 @@ apply (cs_un_op_strext ? f ? ? H2).
 qed.
 
 definition mk_SubCSetoid_un_op : \forall S:CSetoid. \forall P: S \to Prop. \forall f: CSetoid_un_op S.
- \forall pr:un_op_pres_pred S P f.
- CSetoid_un_op (mk_SubCSetoid S P) \def
+ \forall pr:un_op_pres_pred S P f. CSetoid_un_op (mk_SubCSetoid S P).
+ intros (S P f pr).
+ apply (mk_CSetoid_un_op (mk_SubCSetoid S P) (restr_un_op S P f pr) (restr_un_op_strext S P f pr)).
+ qed.
+
+(* BUG Universe Inconsistency detected 
+ definition mk_SubCSetoid_un_op : \forall S:CSetoid. \forall P: S \to Prop. \forall f: CSetoid_un_op S.
+ \forall pr:un_op_pres_pred S P f. CSetoid_un_op (mk_SubCSetoid S P) \def
  \lambda S:CSetoid. \lambda P: S \to Prop. \lambda f: CSetoid_un_op S.
   \lambda pr:un_op_pres_pred S P f.
   mk_CSetoid_un_op (mk_SubCSetoid S P) (restr_un_op S P f pr) (restr_un_op_strext S P f pr).
-
+*)
 
 (* Subsetoid binary operations
 Let [f] be a binary setoid operation on [S].
@@ -1177,15 +1198,24 @@ qed.
 
 definition mk_SubCSetoid_bin_op : \forall S:CSetoid. \forall P: S \to Prop. 
   \forall f: CSetoid_bin_op S. \forall pr: bin_op_pres_pred S P f. 
+  CSetoid_bin_op (mk_SubCSetoid S P).
+  intros (S P f pr).
+  apply (mk_CSetoid_bin_op (mk_SubCSetoid S P) (restr_bin_op S P f pr)(restr_bin_op_strext S P f pr)).
+  qed.
+
+(* BUG Universe Inconsistency detected 
+definition mk_SubCSetoid_bin_op : \forall S:CSetoid. \forall P: S \to Prop. 
+  \forall f: CSetoid_bin_op S. \forall pr: bin_op_pres_pred S P f. 
   CSetoid_bin_op (mk_SubCSetoid S P) \def
   \lambda S:CSetoid. \lambda P: S \to Prop. 
   \lambda f: CSetoid_bin_op S. \lambda pr: bin_op_pres_pred S P f.
     mk_CSetoid_bin_op (mk_SubCSetoid S P) (restr_bin_op S P f pr)(restr_bin_op_strext S P f pr).
+*)
 
 lemma restr_f_assoc : \forall S:CSetoid. \forall P: S \to Prop. 
   \forall f: CSetoid_bin_op S. \forall pr: bin_op_pres_pred S P f.
-    associative S (csbf_fun S S S f) 
-    \to associative (mk_SubCSetoid S P) (csbf_fun (mk_SubCSetoid S P) (mk_SubCSetoid S P) (mk_SubCSetoid S P) (mk_SubCSetoid_bin_op S P f pr)).
+    CSassociative S (csbf_fun S S S f) 
+    \to CSassociative (mk_SubCSetoid S P) (csbf_fun (mk_SubCSetoid S P) (mk_SubCSetoid S P) (mk_SubCSetoid S P) (mk_SubCSetoid_bin_op S P f pr)).
 intros 4.
 intro.
 unfold.
@@ -1210,6 +1240,8 @@ elim n.elim m.simplify. reflexivity.reflexivity.
 elim m.simplify.reflexivity.reflexivity.
 qed.
 
+
+
 lemma proper_caseZ_diff_CS : \forall CS : CSetoid. \forall f : nat \to nat \to CS.
  (\forall m,n,p,q : nat. eq nat (plus m q) (plus n p) \to (f m n) = (f p q)) \to
  \forall m,n : nat. caseZ_diff CS (Zminus (Z_of_nat m) (Z_of_nat n)) f = (f m n).
@@ -1231,8 +1263,9 @@ apply f. apply n1. apply m1.
 apply eq_symmetric_unfolded.assumption.
 apply eq_symmetric_unfolded.assumption.
 apply H.
-auto.
+auto new.
 qed.
+
 (*
 Finally, we characterize functions defined on the natural numbers also as setoid functions, similarly to what we already did for predicates.
 *)
