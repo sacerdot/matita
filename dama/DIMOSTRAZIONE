@@ -1,0 +1,50 @@
+Prerequisiti:
+ 1. definizione di exceeds
+ 2. definizione di <= in termini di < (sui reali)
+ 2. definizione di sup forte (sui reali)
+
+========================================
+
+Lemma: liminf f a_n <= limsup f a_n
+Per definizione di <= dobbiamo dimostrare:
+  ~(limsup f a_n < liminf f a_n)
+Supponiamo limsup f a_n < liminf f a_n.
+Ovvero inf_n sup_{k>n} f a_k < sup_m inf_{h>m} f a_h
+? Quindi esiste un l tale che
+       inf_n sup_{k>n} f a_k + l/2 = sup_m inf_{h>m} f a_h - l/2
+? Per definizione di inf forte abbiamo
+       esiste un n' tale che
+         sup_{k>n'} f a_k < inf_n sup_{k>n} + l
+	                  = sup_m inf_{h>m} f a_h - l/2
+? Per definizione di sup forte abbiamo
+       esiste un n'' tale che
+         sup_{k>n'} f a_k < sup_m inf_{h>m} f a_h - l/2 < inf_{h>n''} f a_k
+  Sia N il max tra n' e n''. Allora:
+    sup_{k>N} f a_k < sup_{k>n'} f a_k < inf_{h>n''} f a_k < inf_{h>N} f a_k
+  Assurdo per lemma precedente.
+Qed.
+
+=======================================
+
+Lebesgue costruttivo:
+  a_n bounded da b ovvero \forall n, a_n < b
+  f strongly monotone ovvero f x < f y => y -<= x
+  liminf f a_n # limsup f a_n => liminf a_n < (o #) limsup a_n
+Dimostrazione:
+  per ipotesi
+   liminf f a_n # limsup f a_n
+  quindi
+   liminf f a_n > limsup f a_n \/ liminf f a_n < limsup f a_n.
+  per casi:
+    Caso 1:
+      Usiamo il lemma liminf f a_n <= limsup f a_n => assurdo
+    Caso 2:
+      Usiamo Fatou e Fatou rovesciato:
+        f (liminf a_n) <= liminf (f a_n)  (per fatou)
+	               <  limsup (f a_n)  (per ipotesi)
+		       <= f (limsup a_n)  (per fatou rovesciato)
+      Per monotonia forte della f otteniamo:
+          limsup a_n -<= liminf a_n
+      (Da cui:
+          liminf a_n # limsup a_n)
+Qed.
