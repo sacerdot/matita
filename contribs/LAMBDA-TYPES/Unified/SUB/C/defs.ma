@@ -12,16 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Unified/C/defs".
+set "baseuri" "cic:/matita/LAMBDA-TYPES/Unified/SUB/Context/defs".
 
 (* FLAT CONTEXTS
    - Naming policy:
      - contexts: c d
 *)
 
-include "P/defs.ma".
+include "SUB/T/defs.ma".
 
-inductive C: Set \def
-   | top  : C
-   | entry: C \to Bind \to P \to C
+inductive Context: Set \def
+   | top  : Context
+   | entry: Context \to Bind \to Term \to Context
 .
