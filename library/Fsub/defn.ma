@@ -18,24 +18,7 @@ include "nat/nat.ma".
 include "datatypes/bool.ma".
 include "nat/compare.ma".
 include "list/list.ma".
-
-(*** useful definitions and lemmas not really related to Fsub ***)
-
-lemma eqb_case : \forall x,y.(eqb x y) = true \lor (eqb x y) = false.
-intros;elim (eqb x y);auto;
-qed.
-       
-lemma eq_eqb_case : \forall x,y.((x = y) \land (eqb x y) = true) \lor
-                                ((x \neq y) \land (eqb x y) = false).
-intros;lapply (eqb_to_Prop x y);elim (eqb_case x y)
-  [rewrite > H in Hletin;simplify in Hletin;left;auto
-  |rewrite > H in Hletin;simplify in Hletin;right;auto]
-qed.
-
-let rec max m n \def
-  match (leb m n) with
-     [true \Rightarrow n
-     |false \Rightarrow m]. 
+include "Fsub/util.ma".
 
 (*** representation of Fsub types ***)  
 inductive Typ : Set \def
@@ -70,7 +53,7 @@ definition TCons \def \lambda G,X,T.((mk_bound true X T) :: G).
 
 definition env_append : Env \to Env \to Env \def \lambda G,H.(H @ G).
   
-notation "hvbox(\Forall S. break T)" 
+(* notation "hvbox(\Forall S. break T)" 
   non associative with precedence 90
 for @{ 'forall $S $T}.
 
@@ -102,7 +85,7 @@ interpretation "bound tvar" 'tvar x = (cic:/matita/Fsub/defn/Typ.ind#xpointer(1/
 
 interpretation "bound tname" 'tname x = (cic:/matita/Fsub/defn/Typ.ind#xpointer(1/1/2) x).
 
-interpretation "arrow type" 'arrow S T = (cic:/matita/Fsub/defn/Typ.ind#xpointer(1/1/4) S T). 
+interpretation "arrow type" 'arrow S T = (cic:/matita/Fsub/defn/Typ.ind#xpointer(1/1/4) S T). *) 
 
 (*** Various kinds of substitution, not all will be used probably ***)
 
@@ -170,104 +153,6 @@ let rec t_len T \def
      |(Arrow T1 T2) \Rightarrow (S (max (t_len T1) (t_len T2)))
      |(Forall T1 T2) \Rightarrow (S (max (t_len T1) (t_len T2)))].
 
-(* 
-let rec fresh_name G n \def
-  match G with
-    [ nil \Rightarrow n
-    | (cons b H) \Rightarrow match (leb (fresh_name H n) (name b)) with
-      [ true \Rightarrow (S (name b))
-      | false \Rightarrow (fresh_name H n) ]].
-
-lemma freshname_Gn_geq_n : \forall G,n.((fresh_name G n) >= n).
-intro;elim G
-  [simplify;unfold;constructor 1
-  |simplify;cut ((leb (fresh_name l n) (name s)) = true \lor
-                 (leb (fresh_name l n) (name s) = false))
-     [elim Hcut
-        [lapply (leb_to_Prop (fresh_name l n) (name s));rewrite > H1 in Hletin;
-         simplify in Hletin;rewrite > H1;simplify;lapply (H n);
-         unfold in Hletin1;unfold;
-         apply (trans_le ? ? ? Hletin1);
-         apply (trans_le ? ? ? Hletin);constructor 2;constructor 1
-        |rewrite > H1;simplify;apply H]
-     |elim (leb (fresh_name l n) (name s)) [left;reflexivity|right;reflexivity]]]
-qed.
-
-lemma freshname_consGX_gt_X : \forall G,X,T,b,n.
-          (fresh_name (cons ? (mk_bound b X T) G) n) > X.
-intros.unfold.unfold.simplify.cut ((leb (fresh_name G n) X) = true \lor 
-                                   (leb (fresh_name G n) X) = false)
-  [elim Hcut
-     [rewrite > H;simplify;constructor 1
-     |rewrite > H;simplify;lapply (leb_to_Prop (fresh_name G n) X);
-      rewrite > H in Hletin;simplify in Hletin;
-      lapply (not_le_to_lt ? ? Hletin);unfold in Hletin1;assumption]
-  |elim (leb (fresh_name G n) X) [left;reflexivity|right;reflexivity]]
-qed.
-
-lemma freshname_case : \forall G,X,T,b,n.
-  (fresh_name ((mk_bound b X T) :: G) n) = (fresh_name G n) \lor
-  (fresh_name ((mk_bound b X T) :: G) n) = (S X).
-intros.simplify.cut ((leb (fresh_name G n) X) = true \lor
-                 (leb (fresh_name G n) X) = false)
-  [elim Hcut
-     [rewrite > H;simplify;right;reflexivity
-     |rewrite > H;simplify;left;reflexivity]
-  |elim (leb (fresh_name G n) X)
-     [left;reflexivity|right;reflexivity]]
-qed.
-
-lemma freshname_monotone_n : \forall G,m,n.(m \leq n) \to
-                             ((fresh_name G m) \leq (fresh_name G n)).
-intros.elim G
-  [simplify;assumption
-  |simplify;cut ((leb (fresh_name l m) (name s)) = true \lor
-                 (leb (fresh_name l m) (name s)) = false)
-     [cut ((leb (fresh_name l n) (name s)) = true \lor
-              (leb (fresh_name l n) (name s)) = false)
-        [elim Hcut
-           [rewrite > H2;simplify;elim Hcut1
-              [rewrite > H3;simplify;constructor 1 
-              |rewrite > H3;simplify;
-               lapply (leb_to_Prop (fresh_name l n) (name s));
-               rewrite > H3 in Hletin;simplify in Hletin;
-               lapply (not_le_to_lt ? ? Hletin);unfold in Hletin1;assumption]
-           |rewrite > H2;simplify;elim Hcut1
-              [rewrite > H3;simplify;
-               lapply (leb_to_Prop (fresh_name l m) (name s));
-               rewrite > H2 in Hletin;simplify in Hletin;
-               lapply (not_le_to_lt ? ? Hletin);unfold in Hletin1;
-               lapply (leb_to_Prop (fresh_name l n) (name s));
-               rewrite > H3 in Hletin2;
-               simplify in Hletin2;lapply (trans_le ? ? ? Hletin1 H1);
-               lapply (trans_le ? ? ? Hletin3 Hletin2);
-               absurd ((S (name s)) \leq (name s))
-                 [assumption|apply not_le_Sn_n]
-              |rewrite > H3;simplify;assumption]]
-        |elim (leb (fresh_name l n) (name s)) 
-           [left;reflexivity|right;reflexivity]]
-     |elim (leb (fresh_name l m) (name s)) [left;reflexivity|right;reflexivity]]]
-qed.
-
-lemma freshname_monotone_G : \forall G,X,T,b,n.
-                   (fresh_name G n) \leq (fresh_name ((mk_bound b X T) :: G) n).
-intros.simplify.cut ((leb (fresh_name G n) X) = true \lor
-                     (leb (fresh_name G n) X) = false)
-  [elim Hcut
-     [rewrite > H;simplify;lapply (leb_to_Prop (fresh_name G n) X);
-      rewrite > H in Hletin;simplify in Hletin;constructor 2;assumption
-     |rewrite > H;simplify;constructor 1]
-  |elim (leb (fresh_name G n) X)
-     [left;reflexivity|right;reflexivity]]
-qed.*)
-
-lemma subst_O_nat : \forall T,U.((subst_type_O T U) = (subst_type_nat T U O)).
-intros;elim T;simplify;reflexivity;
-qed.
-
-(* FIXME: these definitions shouldn't be part of the poplmark challenge
-   - use destruct instead, when hopefully it will get fixed... *) 
-
 definition head \def
   \lambda G:(list bound).match G with
     [ nil \Rightarrow (mk_bound false O Top)
@@ -278,42 +163,11 @@ definition head_nat \def
     [ nil \Rightarrow O
     | (cons n H) \Rightarrow n].
 
-lemma inj_head : \forall h1,h2:bound.\forall t1,t2:Env.
-                 ((h1::t1) = (h2::t2)) \to (h1 = h2).
-intros.lapply (eq_f ? ? head ? ? H).simplify in Hletin.assumption.
-qed.
-
-lemma inj_head_nat : \forall h1,h2:nat.\forall t1,t2:(list nat).
-                 ((h1::t1) = (h2::t2)) \to (h1 = h2).
-intros.lapply (eq_f ? ? head_nat ? ? H).simplify in Hletin.assumption.
-qed.
-
-lemma inj_tail : \forall A.\forall h1,h2:A.\forall t1,t2:(list A).
-                 ((h1::t1) = (h2::t2)) \to (t1 = t2).
-intros.lapply (eq_f ? ? (tail ?) ? ? H).simplify in Hletin.assumption.
-qed.
-
-(* end of fixme *) 
-
-(*** definitions and theorems about lists ***)
-
-inductive in_list (A : Set) : A \to (list A) \to Prop \def
-  | in_Base : \forall x:A.\forall l:(list A).
-              (in_list A x (x :: l))
-  | in_Skip : \forall x,y:A.\forall l:(list A).
-              (in_list A x l) \to (in_list A x (y :: l)).
+(*** definitions about lists ***)
 
 (* var binding is in env judgement *)                
 definition var_bind_in_env : bound \to Env \to Prop \def
   \lambda b,G.(in_list bound b G).
-
-(* FIXME: use the map in library/list (when there will be one) *)
-definition map : \forall A,B,f.((list A) \to (list B)) \def
-  \lambda A,B,f.let rec map (l : (list A)) : (list B) \def
-    match l in list return \lambda l0:(list A).(list B) with
-      [nil \Rightarrow (nil B)
-      |(cons (a:A) (t:(list A))) \Rightarrow 
-        (cons B (f a) (map t))] in map.
 
 definition fv_env : (list bound) \to (list nat) \def
   \lambda G.(map ? ? (\lambda b.match b with
@@ -326,9 +180,6 @@ definition var_in_env : nat \to Env \to Prop \def
 definition var_type_in_env : nat \to Env \to Prop \def
   \lambda x,G.\exists T.(var_bind_in_env (mk_bound true x T) G).
 
-definition incl : \forall A.(list A) \to (list A) \to Prop \def
-  \lambda A,l,m.\forall x.(in_list A x l) \to (in_list A x m).               
-              
 let rec fv_type T \def
   match T with
     [(TVar n) \Rightarrow []
@@ -337,25 +188,126 @@ let rec fv_type T \def
     |(Arrow U V) \Rightarrow ((fv_type U) @ (fv_type V))
     |(Forall U V) \Rightarrow ((fv_type U) @ (fv_type V))].
 
+(*** Type Well-Formedness judgement ***)
+
+inductive WFType : Env \to Typ \to Prop \def
+  | WFT_TFree : \forall X,G.(in_list ? X (fv_env G)) 
+                \to (WFType G (TFree X))
+  | WFT_Top : \forall G.(WFType G Top)
+  | WFT_Arrow : \forall G,T,U.(WFType G T) \to (WFType G U) \to 
+                (WFType G (Arrow T U))
+  | WFT_Forall : \forall G,T,U.(WFType G T) \to
+                 (\forall X:nat.
+                    (\lnot (in_list ? X (fv_env G))) \to
+                    (\lnot (in_list ? X (fv_type U))) \to
+                    (WFType ((mk_bound true X T) :: G) 
+                       (subst_type_O U (TFree X)))) \to 
+                 (WFType G (Forall T U)).
+
+(*** Environment Well-Formedness judgement ***)
+
+inductive WFEnv : Env \to Prop \def
+  | WFE_Empty : (WFEnv Empty)
+  | WFE_cons : \forall B,X,T,G.(WFEnv G) \to 
+               \lnot (in_list ? X (fv_env G)) \to
+                  (WFType G T) \to (WFEnv ((mk_bound B X T) :: G)).
+            
+(*** Subtyping judgement ***)              
+inductive JSubtype : Env \to Typ \to Typ \to Prop \def
+  | SA_Top : \forall G:Env.\forall T:Typ.(WFEnv G) \to
+             (WFType G T) \to (JSubtype G T Top)
+  | SA_Refl_TVar : \forall G:Env.\forall X:nat.(WFEnv G) \to (var_in_env X G) 
+                   \to (JSubtype G (TFree X) (TFree X))
+  | SA_Trans_TVar : \forall G:Env.\forall X:nat.\forall T:Typ.
+                    \forall U:Typ.
+                    (var_bind_in_env (mk_bound true X U) G) \to
+                    (JSubtype G U T) \to (JSubtype G (TFree X) T)
+  | SA_Arrow : \forall G:Env.\forall S1,S2,T1,T2:Typ.
+               (JSubtype G T1 S1) \to (JSubtype G S2 T2) \to
+               (JSubtype G (Arrow S1 S2) (Arrow T1 T2))
+  | SA_All : \forall G:Env.\forall S1,S2,T1,T2:Typ.
+             (JSubtype G T1 S1) \to
+             (\forall X:nat.\lnot (var_in_env X G) \to
+                (JSubtype ((mk_bound true X T1) :: G) 
+                   (subst_type_O S2 (TFree X)) (subst_type_O T2 (TFree X)))) \to
+             (JSubtype G (Forall S1 S2) (Forall T1 T2)).
+
+(*** Typing judgement ***)
+inductive JType : Env \to Term \to Typ \to Prop \def
+  | T_Var : \forall G:Env.\forall x:nat.\forall T:Typ.
+            (WFEnv G) \to (var_bind_in_env (mk_bound false x T) G) \to
+            (JType G (Free x) T)
+  | T_Abs : \forall G.\forall T1,T2:Typ.\forall t2:Term.
+            \forall x:nat.
+            (JType ((mk_bound false x T1)::G) (subst_term_O t2 (Free x)) T2) \to
+            (JType G (Abs T1 t2) (Arrow T1 T2))
+  | T_App : \forall G.\forall t1,t2:Term.\forall T2:Typ.
+            \forall T1:Typ.(JType G t1 (Arrow T1 T2)) \to (JType G t2 T1) \to
+            (JType G (App t1 t2) T2)
+  | T_TAbs : \forall G:Env.\forall T1,T2:Typ.\forall t2:Term.
+             \forall X:nat.
+             (JType ((mk_bound true X T1)::G) 
+             (subst_term_tO t2 (TFree X)) (subst_type_O T2 (TFree X)))
+             \to (JType G (TAbs T1 t2) (Forall T1 T2))
+  | T_TApp : \forall G:Env.\forall t1:Term.\forall T2,T12:Typ.
+             \forall X:nat.\forall T11:Typ.
+             (JType G t1 (Forall T11 (subst_type_tfree_type T12 X (TVar O)))) \to 
+             (JSubtype G T2 T11)
+             \to (JType G (TApp t1 T2) (subst_type_tfree_type T12 X T2))
+  | T_Sub : \forall G:Env.\forall t:Term.\forall T:Typ.
+            \forall S:Typ.(JType G t S) \to (JSubtype G S T) \to (JType G t T).
+
+(*** definitions about swaps ***)
+
+let rec swap_Typ u v T on T \def
+  match T with
+     [(TVar n) \Rightarrow (TVar n)
+     |(TFree X) \Rightarrow (TFree (swap u v X))
+     |Top \Rightarrow Top
+     |(Arrow T1 T2) \Rightarrow (Arrow (swap_Typ u v T1) (swap_Typ u v T2))
+     |(Forall T1 T2) \Rightarrow (Forall (swap_Typ u v T1) (swap_Typ u v T2))].
+     
+definition swap_bound : nat \to nat \to bound \to bound \def
+  \lambda u,v,b.match b with
+     [(mk_bound B X T) \Rightarrow (mk_bound B (swap u v X) (swap_Typ u v T))].
+
+definition swap_Env : nat \to nat \to Env \to Env \def
+  \lambda u,v,G.(map ? ? (\lambda b.(swap_bound u v b)) G). 
+
+(****** PROOFS ********)
+
+lemma subst_O_nat : \forall T,U.((subst_type_O T U) = (subst_type_nat T U O)).
+intros;elim T;simplify;reflexivity;
+qed.
+
+(*** theorems about lists ***)
+
+(* FIXME: these definitions shouldn't be part of the poplmark challenge
+   - use destruct instead, when hopefully it will get fixed... *) 
+
+lemma inj_head : \forall h1,h2:bound.\forall t1,t2:Env.
+                 ((h1::t1) = (h2::t2)) \to (h1 = h2).
+intros.
+lapply (eq_f ? ? head ? ? H).simplify in Hletin.assumption.
+qed.
+
+lemma inj_head_nat : \forall h1,h2:nat.\forall t1,t2:(list nat).
+                 ((h1::t1) = (h2::t2)) \to (h1 = h2).
+intros.
+lapply (eq_f ? ? head_nat ? ? H).simplify in Hletin.assumption.
+qed.
+
+lemma inj_tail : \forall A.\forall h1,h2:A.\forall t1,t2:(list A).
+                 ((h1::t1) = (h2::t2)) \to (t1 = t2).
+intros.lapply (eq_f ? ? (tail ?) ? ? H).simplify in Hletin.assumption.
+qed.
+
+(* end of fixme *) 
+
 lemma var_notinbG_notinG : \forall G,x,b.
                            (\lnot (var_in_env x (b::G))) 
                            \to \lnot (var_in_env x G).
 intros 3.elim b.unfold.intro.elim H.unfold.simplify.constructor 2.exact H1.
-qed.
-
-lemma in_list_nil : \forall A,x.\lnot (in_list A x []).
-intros.unfold.intro.inversion H
-  [intros;lapply (sym_eq ? ? ? H2);absurd (a::l = [])
-     [assumption|apply nil_cons]
-  |intros;lapply (sym_eq ? ? ? H4);absurd (a1::l = [])
-     [assumption|apply nil_cons]]
-qed.
-
-lemma notin_cons : \forall A,x,y,l.\lnot (in_list A x (y::l)) \to
-                      (y \neq x) \land \lnot (in_list A x l).
-intros.split
-  [unfold;intro;apply H;rewrite > H1;constructor 1
-  |unfold;intro;apply H;constructor 2;assumption]
 qed.
 
 lemma boundinenv_natinfv : \forall x,G.
@@ -509,75 +461,6 @@ intros.generalize in match H.elim H
      [apply a2|apply ex_intro [apply (a1 :: a3)|simplify;reflexivity]]]
 qed.
   
-(*** Type Well-Formedness judgement ***)
-
-inductive WFType : Env \to Typ \to Prop \def
-  | WFT_TFree : \forall X,G.(in_list ? X (fv_env G)) 
-                \to (WFType G (TFree X))
-  | WFT_Top : \forall G.(WFType G Top)
-  | WFT_Arrow : \forall G,T,U.(WFType G T) \to (WFType G U) \to 
-                (WFType G (Arrow T U))
-  | WFT_Forall : \forall G,T,U.(WFType G T) \to
-                 (\forall X:nat.
-                    (\lnot (in_list ? X (fv_env G))) \to
-                    (\lnot (in_list ? X (fv_type U))) \to
-                    (WFType ((mk_bound true X T) :: G) 
-                       (subst_type_O U (TFree X)))) \to 
-                 (WFType G (Forall T U)).
-
-(*** Environment Well-Formedness judgement ***)
-
-inductive WFEnv : Env \to Prop \def
-  | WFE_Empty : (WFEnv Empty)
-  | WFE_cons : \forall B,X,T,G.(WFEnv G) \to 
-               \lnot (in_list ? X (fv_env G)) \to
-                  (WFType G T) \to (WFEnv ((mk_bound B X T) :: G)).
-            
-(*** Subtyping judgement ***)              
-inductive JSubtype : Env \to Typ \to Typ \to Prop \def
-  | SA_Top : \forall G:Env.\forall T:Typ.(WFEnv G) \to
-             (WFType G T) \to (JSubtype G T Top)
-  | SA_Refl_TVar : \forall G:Env.\forall X:nat.(WFEnv G) \to (var_in_env X G) 
-                   \to (JSubtype G (TFree X) (TFree X))
-  | SA_Trans_TVar : \forall G:Env.\forall X:nat.\forall T:Typ.
-                    \forall U:Typ.
-                    (var_bind_in_env (mk_bound true X U) G) \to
-                    (JSubtype G U T) \to (JSubtype G (TFree X) T)
-  | SA_Arrow : \forall G:Env.\forall S1,S2,T1,T2:Typ.
-               (JSubtype G T1 S1) \to (JSubtype G S2 T2) \to
-               (JSubtype G (Arrow S1 S2) (Arrow T1 T2))
-  | SA_All : \forall G:Env.\forall S1,S2,T1,T2:Typ.
-             (JSubtype G T1 S1) \to
-             (\forall X:nat.\lnot (var_in_env X G) \to
-                (JSubtype ((mk_bound true X T1) :: G) 
-                   (subst_type_O S2 (TFree X)) (subst_type_O T2 (TFree X)))) \to
-             (JSubtype G (Forall S1 S2) (Forall T1 T2)).
-
-(*** Typing judgement ***)
-inductive JType : Env \to Term \to Typ \to Prop \def
-  | T_Var : \forall G:Env.\forall x:nat.\forall T:Typ.
-            (WFEnv G) \to (var_bind_in_env (mk_bound false x T) G) \to
-            (JType G (Free x) T)
-  | T_Abs : \forall G.\forall T1,T2:Typ.\forall t2:Term.
-            \forall x:nat.
-            (JType ((mk_bound false x T1)::G) (subst_term_O t2 (Free x)) T2) \to
-            (JType G (Abs T1 t2) (Arrow T1 T2))
-  | T_App : \forall G.\forall t1,t2:Term.\forall T2:Typ.
-            \forall T1:Typ.(JType G t1 (Arrow T1 T2)) \to (JType G t2 T1) \to
-            (JType G (App t1 t2) T2)
-  | T_TAbs : \forall G:Env.\forall T1,T2:Typ.\forall t2:Term.
-             \forall X:nat.
-             (JType ((mk_bound true X T1)::G) 
-             (subst_term_tO t2 (TFree X)) (subst_type_O T2 (TFree X)))
-             \to (JType G (TAbs T1 t2) (Forall T1 T2))
-  | T_TApp : \forall G:Env.\forall t1:Term.\forall T2,T12:Typ.
-             \forall X:nat.\forall T11:Typ.
-             (JType G t1 (Forall T11 (subst_type_tfree_type T12 X (TVar O)))) \to 
-             (JSubtype G T2 T11)
-             \to (JType G (TApp t1 T2) (subst_type_tfree_type T12 X T2))
-  | T_Sub : \forall G:Env.\forall t:Term.\forall T:Typ.
-            \forall S:Typ.(JType G t S) \to (JSubtype G S T) \to (JType G t T).
-
 
 lemma WFT_env_incl : \forall G,T.(WFType G T) \to
                      \forall H.(incl ? (fv_env G) (fv_env H)) \to (WFType H T).
@@ -593,79 +476,42 @@ intros 4.generalize in match H1.elim H
         |simplify;apply (incl_nat_cons ? ? ? H6)]]]
 qed.
 
-(*** definitions and theorems about swaps ***)
+lemma fv_env_extends : \forall H,x,B,C,T,U,G.
+                          (fv_env (H @ ((mk_bound B x T) :: G))) = 
+                          (fv_env (H @ ((mk_bound C x U) :: G))).
+intros;elim H
+  [simplify;reflexivity
+  |elim s;simplify;rewrite > H1;reflexivity]
+qed.
 
-definition swap : nat \to nat \to nat \to nat \def
-  \lambda u,v,x.match (eqb x u) with
-    [true \Rightarrow v
-    |false \Rightarrow match (eqb x v) with
-       [true \Rightarrow u
-       |false \Rightarrow x]].
+lemma lookup_env_extends : \forall G,H,B,C,D,T,U,V,x,y.
+            (in_list ? (mk_bound D y V) (H @ ((mk_bound C x U) :: G))) \to
+            (y \neq x) \to
+            (in_list ? (mk_bound D y V) (H @ ((mk_bound B x T) :: G))).
+intros 10;elim H
+  [simplify in H1;(*FIXME*)generalize in match H1;intro;inversion H1
+     [intros;lapply (inj_head ? ? ? ? H5);rewrite < H4 in Hletin;
+      destruct Hletin;absurd (y = x) [symmetry;assumption|assumption]
+     |intros;simplify;lapply (inj_tail ? ? ? ? ? H7);rewrite > Hletin;
+      apply in_Skip;assumption]
+  |(*FIXME*)generalize in match H2;intro;inversion H2
+     [intros;simplify in H6;lapply (inj_head ? ? ? ? H6);rewrite > Hletin;
+      simplify;apply in_Base
+     |simplify;intros;lapply (inj_tail ? ? ? ? ? H8);rewrite > Hletin in H1;
+      rewrite > H7 in H1;apply in_Skip;apply (H1 H5 H3)]]
+qed.
+
+
+(*** theorems about swaps ***)
        
-lemma swap_left : \forall x,y.(swap x y x) = y.
-intros;unfold swap;rewrite > eqb_n_n;simplify;reflexivity;
-qed.
-
-lemma swap_right : \forall x,y.(swap x y y) = x.
-intros;unfold swap;elim (eq_eqb_case y x)
-  [elim H;rewrite > H2;simplify;rewrite > H1;reflexivity
-  |elim H;rewrite > H2;simplify;rewrite > eqb_n_n;simplify;reflexivity]
-qed.
-
-lemma swap_other : \forall x,y,z.(z \neq x) \to (z \neq y) \to (swap x y z) = z.
-intros;unfold swap;elim (eq_eqb_case z x)
-  [elim H2;lapply (H H3);elim Hletin
-  |elim H2;rewrite > H4;simplify;elim (eq_eqb_case z y)
-     [elim H5;lapply (H1 H6);elim Hletin
-     |elim H5;rewrite > H7;simplify;reflexivity]]
-qed. 
-
-lemma swap_inv : \forall u,v,x.(swap u v (swap u v x)) = x.
-intros;unfold in match (swap u v x);elim (eq_eqb_case x u)
-  [elim H;rewrite > H2;simplify;rewrite > H1;apply swap_right
-  |elim H;rewrite > H2;simplify;elim (eq_eqb_case x v)
-     [elim H3;rewrite > H5;simplify;rewrite > H4;apply swap_left
-     |elim H3;rewrite > H5;simplify;apply (swap_other ? ? ? H1 H4)]]
-qed.
-
-lemma swap_inj : \forall u,v,x,y.(swap u v x) = (swap u v y) \to x = y.
-intros;unfold swap in H;elim (eq_eqb_case x u)
-  [elim H1;elim (eq_eqb_case y u)
-     [elim H4;rewrite > H5;assumption
-     |elim H4;rewrite > H3 in H;rewrite > H6 in H;simplify in H;
-      elim (eq_eqb_case y v)
-        [elim H7;rewrite > H9 in H;simplify in H;rewrite > H in H8;
-         lapply (H5 H8);elim Hletin
-        |elim H7;rewrite > H9 in H;simplify in H;elim H8;symmetry;assumption]]
-  |elim H1;elim (eq_eqb_case y u)
-     [elim H4;rewrite > H3 in H;rewrite > H6 in H;simplify in H;
-      elim (eq_eqb_case x v)
-        [elim H7;rewrite > H9 in H;simplify in H;rewrite < H in H8;
-         elim H2;assumption
-        |elim H7;rewrite > H9 in H;simplify in H;elim H8;assumption]
-     |elim H4;rewrite > H3 in H;rewrite > H6 in H;simplify in H;
-      elim (eq_eqb_case x v)
-        [elim H7;rewrite > H9 in H;elim (eq_eqb_case y v)
-           [elim H10;rewrite > H11;assumption
-           |elim H10;rewrite > H12 in H;simplify in H;elim H5;symmetry;
-            assumption]
-        |elim H7;rewrite > H9 in H;elim (eq_eqb_case y v)
-           [elim H10;rewrite > H12 in H;simplify in H;elim H2;assumption
-           |elim H10;rewrite > H12 in H;simplify in H;assumption]]]]
-qed. 
-
 lemma fv_subst_type_nat : \forall x,T,y,n.(in_list ? x (fv_type T)) \to
                          (in_list ? x (fv_type (subst_type_nat T (TFree y) n))).
 intros 3;elim T 0
   [intros;simplify in H;elim (in_list_nil ? ? H)
-  |simplify;intros;assumption
-  |simplify;intros;assumption
-  |intros;simplify in H2;elim (nat_in_list_case ? ? ? H2)
-     [simplify;apply natinG_or_inH_to_natinGH;left;apply (H1 ? H3)
-     |simplify;apply natinG_or_inH_to_natinGH;right;apply (H ? H3)]
-  |intros;simplify in H2;elim (nat_in_list_case ? ? ? H2)
-     [simplify;apply natinG_or_inH_to_natinGH;left;apply (H1 ? H3)
-     |simplify;apply natinG_or_inH_to_natinGH;right;apply (H ? H3)]]
+  |2,3:simplify;intros;assumption
+  |*:intros;simplify in H2;elim (nat_in_list_case ? ? ? H2)
+     [1,3:simplify;apply natinG_or_inH_to_natinGH;left;apply (H1 ? H3)
+     |*:simplify;apply natinG_or_inH_to_natinGH;right;apply (H ? H3)]]
 qed.
 
 lemma fv_subst_type_O : \forall x,T,y.(in_list ? x (fv_type T)) \to
@@ -673,51 +519,31 @@ lemma fv_subst_type_O : \forall x,T,y.(in_list ? x (fv_type T)) \to
 intros;rewrite > subst_O_nat;apply (fv_subst_type_nat ? ? ? ? H);
 qed.
 
-let rec swap_Typ u v T on T \def
-  match T with
-     [(TVar n) \Rightarrow (TVar n)
-     |(TFree X) \Rightarrow (TFree (swap u v X))
-     |Top \Rightarrow Top
-     |(Arrow T1 T2) \Rightarrow (Arrow (swap_Typ u v T1) (swap_Typ u v T2))
-     |(Forall T1 T2) \Rightarrow (Forall (swap_Typ u v T1) (swap_Typ u v T2))].
-     
 lemma swap_Typ_inv : \forall u,v,T.(swap_Typ u v (swap_Typ u v T)) = T.
 intros;elim T
-  [simplify;reflexivity
+  [1,3:simplify;reflexivity
   |simplify;rewrite > swap_inv;reflexivity
-  |simplify;reflexivity
-  |simplify;rewrite > H;rewrite > H1;reflexivity
-  |simplify;rewrite > H;rewrite > H1;reflexivity]
+  |*:simplify;rewrite > H;rewrite > H1;reflexivity]
 qed.
 
 lemma swap_Typ_not_free : \forall u,v,T.\lnot (in_list ? u (fv_type T)) \to
                       \lnot (in_list ? v (fv_type T)) \to (swap_Typ u v T) = T.
 intros 3;elim T 0
-  [intros;simplify;reflexivity
+  [1,3:intros;simplify;reflexivity
   |simplify;intros;cut (n \neq u \land n \neq v)
      [elim Hcut;rewrite > (swap_other ? ? ? H2 H3);reflexivity
      |split
         [unfold;intro;apply H;rewrite > H2;apply in_Base
         |unfold;intro;apply H1;rewrite > H2;apply in_Base]]
-  |simplify;intros;reflexivity
-  |simplify;intros;cut ((\lnot (in_list ? u (fv_type t)) \land
+  |*:simplify;intros;cut ((\lnot (in_list ? u (fv_type t)) \land
                          \lnot (in_list ? u (fv_type t1))) \land
                         (\lnot (in_list ? v (fv_type t)) \land
                          \lnot (in_list ? v (fv_type t1))))
-     [elim Hcut;elim H4;elim H5;clear Hcut H4 H5;rewrite > (H H6 H8);
+     [1,3:elim Hcut;elim H4;elim H5;clear Hcut H4 H5;rewrite > (H H6 H8);
       rewrite > (H1 H7 H9);reflexivity
-     |split
-        [split;unfold;intro;apply H2;apply natinG_or_inH_to_natinGH;auto
-        |split;unfold;intro;apply H3;apply natinG_or_inH_to_natinGH;auto]]
-  |simplify;intros;cut ((\lnot (in_list ? u (fv_type t)) \land
-                         \lnot (in_list ? u (fv_type t1))) \land
-                        (\lnot (in_list ? v (fv_type t)) \land
-                         \lnot (in_list ? v (fv_type t1))))
-     [elim Hcut;elim H4;elim H5;clear Hcut H4 H5;rewrite > (H H6 H8);
-      rewrite > (H1 H7 H9);reflexivity
-     |split
-        [split;unfold;intro;apply H2;apply natinG_or_inH_to_natinGH;auto
-        |split;unfold;intro;apply H3;apply natinG_or_inH_to_natinGH;auto]]]
+     |*:split
+        [1,3:split;unfold;intro;apply H2;apply natinG_or_inH_to_natinGH;auto
+        |*:split;unfold;intro;apply H3;apply natinG_or_inH_to_natinGH;auto]]]
 qed.
         
 lemma subst_type_nat_swap : \forall u,v,T,X,m.
@@ -725,10 +551,8 @@ lemma subst_type_nat_swap : \forall u,v,T,X,m.
          (subst_type_nat (swap_Typ u v T) (TFree (swap u v X)) m).
 intros 4;elim T
   [simplify;elim (eqb_case n m);rewrite > H;simplify;reflexivity
-  |simplify;reflexivity
-  |simplify;reflexivity
-  |simplify;rewrite > H;rewrite > H1;reflexivity
-  |simplify;rewrite > H;rewrite > H1;reflexivity]
+  |2,3:simplify;reflexivity
+  |*:simplify;rewrite > H;rewrite > H1;reflexivity]
 qed.
 
 lemma subst_type_O_swap : \forall u,v,T,X.
@@ -744,7 +568,7 @@ lemma in_fv_type_swap : \forall u,v,x,T.((in_list ? x (fv_type T)) \to
               (in_list ? x (fv_type T))).
 intros;split
   [elim T 0
-     [simplify;intros;elim (in_list_nil ? ? H)
+     [1,3:simplify;intros;elim (in_list_nil ? ? H)
      |simplify;intros;cut (x = n)
         [rewrite > Hcut;apply in_Base
         |inversion H
@@ -752,15 +576,11 @@ intros;split
             reflexivity
            |intros;lapply (inj_tail ? ? ? ? ? H4);rewrite < Hletin in H1;
             elim (in_list_nil ? ? H1)]]
-     |simplify;intro;elim (in_list_nil ? ? H)
-     |simplify;intros;elim (nat_in_list_case ? ? ? H2)
-        [apply natinG_or_inH_to_natinGH;left;apply (H1 H3)
-        |apply natinG_or_inH_to_natinGH;right;apply (H H3)]
-     |simplify;intros;elim (nat_in_list_case ? ? ? H2)
-        [apply natinG_or_inH_to_natinGH;left;apply (H1 H3)
-        |apply natinG_or_inH_to_natinGH;right;apply (H H3)]]
+     |*:simplify;intros;elim (nat_in_list_case ? ? ? H2)
+        [1,3:apply natinG_or_inH_to_natinGH;left;apply (H1 H3)
+        |*:apply natinG_or_inH_to_natinGH;right;apply (H H3)]]
   |elim T 0
-     [simplify;intros;elim (in_list_nil ? ? H)
+     [1,3:simplify;intros;elim (in_list_nil ? ? H)
      |simplify;intros;cut ((swap u v x) = (swap u v n))
         [lapply (swap_inj ? ? ? ? Hcut);rewrite > Hletin;apply in_Base
         |inversion H
@@ -768,22 +588,11 @@ intros;split
             reflexivity
            |intros;lapply (inj_tail ? ? ? ? ? H4);rewrite < Hletin in H1;
             elim (in_list_nil ? ? H1)]]
-     |simplify;intro;elim (in_list_nil ? ? H)
-     |simplify;intros;elim (nat_in_list_case ? ? ? H2)
-        [apply natinG_or_inH_to_natinGH;left;apply (H1 H3)
-        |apply natinG_or_inH_to_natinGH;right;apply (H H3)]
-     |simplify;intros;elim (nat_in_list_case ? ? ? H2)
-        [apply natinG_or_inH_to_natinGH;left;apply (H1 H3)
-        |apply natinG_or_inH_to_natinGH;right;apply (H H3)]]]
+     |*:simplify;intros;elim (nat_in_list_case ? ? ? H2)
+        [1,3:apply natinG_or_inH_to_natinGH;left;apply (H1 H3)
+        |*:apply natinG_or_inH_to_natinGH;right;apply (H H3)]]]
 qed.
         
-definition swap_bound : nat \to nat \to bound \to bound \def
-  \lambda u,v,b.match b with
-     [(mk_bound B X T) \Rightarrow (mk_bound B (swap u v X) (swap_Typ u v T))].
-
-definition swap_Env : nat \to nat \to Env \to Env \def
-  \lambda u,v,G.(map ? ? (\lambda b.(swap_bound u v b)) G). 
-
 lemma lookup_swap : \forall x,u,v,T,B,G.(in_list ? (mk_bound B x T) G) \to
     (in_list ? (mk_bound B (swap u v x) (swap_Typ u v T)) (swap_Env u v G)).
 intros 6;elim G 0
@@ -804,16 +613,11 @@ intros 3;elim T
         [assumption|apply nil_cons]
      |intros;lapply (sym_eq ? ? ? H4);absurd (a1::l = [])
         [assumption|apply nil_cons]]
-  |simplify;simplify in H;assumption
-  |simplify in H;simplify;assumption
-  |simplify in H2;simplify;apply natinG_or_inH_to_natinGH;
+  |2,3:simplify;simplify in H;assumption
+  |*:simplify in H2;simplify;apply natinG_or_inH_to_natinGH;
    lapply (nat_in_list_case ? ? ? H2);elim Hletin
-     [left;apply (H1 ? H3)
-     |right;apply (H ? H3)]
-  |simplify in H2;simplify;apply natinG_or_inH_to_natinGH;
-   lapply (nat_in_list_case ? ? ? H2);elim Hletin
-     [left;apply (H1 ? H3)
-     |right;apply (H ? H3)]]
+     [1,3:left;apply (H1 ? H3)
+     |*:right;apply (H ? H3)]]
 qed.
 
 lemma in_dom_swap : \forall u,v,x,G.
@@ -949,6 +753,17 @@ inversion H
   |intros;lapply (inj_tail ? ? ? ? ? H5);rewrite > Hletin;assumption]
 qed.
 
+(* silly, but later useful *)
+
+lemma env_append_weaken : \forall G,H.(WFEnv (H @ G)) \to
+                             (incl ? G (H @ G)).
+intros 2;elim H
+  [simplify;unfold;intros;assumption
+  |simplify in H2;simplify;unfold;intros;apply in_Skip;apply H1
+     [apply (WFE_consG_WFE_G ? ? H2)
+     |assumption]]
+qed.
+
 lemma WFT_swap : \forall u,v,G,T.(WFType G T) \to
                     (WFType (swap_Env u v G) (swap_Typ u v T)).
 intros.elim H
@@ -997,40 +812,21 @@ qed.
 
 (*** some exotic inductions and related lemmas ***) 
 
-(* TODO : relocate the following 3 lemmas *)
-
-lemma max_case : \forall m,n.(max m n) = match (leb m n) with
-      [ false \Rightarrow n
-      | true \Rightarrow m ].
-intros;elim m;simplify;reflexivity;
-qed.
-
 lemma not_t_len_lt_SO : \forall T.\lnot (t_len T) < (S O).
 intros;elim T
-  [simplify;unfold;intro;unfold in H;elim (not_le_Sn_n ? H)
-  |simplify;unfold;intro;unfold in H;elim (not_le_Sn_n ? H)
-  |simplify;unfold;intro;unfold in H;elim (not_le_Sn_n ? H)
-  |simplify;unfold;rewrite > max_case;elim (leb (t_len t) (t_len t1))
-     [simplify in H2;apply H1;apply (trans_lt ? ? ? ? H2);unfold;constructor 1
-     |simplify in H2;apply H;apply (trans_lt ? ? ? ? H2);unfold;constructor 1]
-  |simplify;unfold;rewrite > max_case;elim (leb (t_len t) (t_len t1))
-     [simplify in H2;apply H1;apply (trans_lt ? ? ? ? H2);unfold;constructor 1
-     |simplify in H2;apply H;apply (trans_lt ? ? ? ? H2);unfold;constructor 1]]
+  [1,2,3:simplify;unfold;intro;unfold in H;elim (not_le_Sn_n ? H)
+  |*:simplify;unfold;rewrite > max_case;elim (leb (t_len t) (t_len t1))
+     [1,3:simplify in H2;apply H1;apply (trans_lt ? ? ? ? H2);unfold;constructor 1
+     |*:simplify in H2;apply H;apply (trans_lt ? ? ? ? H2);unfold;constructor 1]]
 qed.
 
 lemma t_len_gt_O : \forall T.(t_len T) > O.
 intro;elim T
-  [simplify;unfold;unfold;constructor 1
-  |simplify;unfold;unfold;constructor 1
-  |simplify;unfold;unfold;constructor 1
-  |simplify;lapply (max_case (t_len t) (t_len t1));rewrite > Hletin;
+  [1,2,3:simplify;unfold;unfold;constructor 1
+  |*:simplify;lapply (max_case (t_len t) (t_len t1));rewrite > Hletin;
    elim (leb (t_len t) (t_len t1))
-     [simplify;unfold;unfold;constructor 2;unfold in H1;unfold in H1;assumption
-     |simplify;unfold;unfold;constructor 2;unfold in H;unfold in H;assumption]
-  |simplify;lapply (max_case (t_len t) (t_len t1));rewrite > Hletin;
-   elim (leb (t_len t) (t_len t1))
-     [simplify;unfold;unfold;constructor 2;unfold in H1;unfold in H1;assumption
-     |simplify;unfold;unfold;constructor 2;unfold in H;unfold in H;assumption]]
+     [1,3:simplify;unfold;unfold;constructor 2;unfold in H1;unfold in H1;assumption
+     |*:simplify;unfold;unfold;constructor 2;unfold in H;unfold in H;assumption]]
 qed.
 
 lemma Typ_len_ind : \forall P:Typ \to Prop.
@@ -1044,15 +840,10 @@ cut (\forall P:Typ \to Prop.
   [intros;apply (Hcut ? H ? (t_len T));reflexivity
   |intros 4;generalize in match T;apply (nat_elim1 n);intros;
    generalize in match H2;elim t 
-     [apply H;intros;simplify in H4;elim (not_t_len_lt_SO ? H4)
-     |apply H;intros;simplify in H4;elim (not_t_len_lt_SO ? H4)
-     |apply H;intros;simplify in H4;elim (not_t_len_lt_SO ? H4)
-     |apply H;intros;apply (H1 (t_len V))
-        [rewrite > H5;assumption
-        |reflexivity]
-     |apply H;intros;apply (H1 (t_len V))
-        [rewrite > H5;assumption
-        |reflexivity]]]
+     [1,2,3:apply H;intros;simplify in H4;elim (not_t_len_lt_SO ? H4)
+     |*:apply H;intros;apply (H1 (t_len V))
+        [1,3:rewrite > H5;assumption
+        |*:reflexivity]]]
 qed.
 
 lemma t_len_arrow1 : \forall T1,T2.(t_len T1) < (t_len (Arrow T1 T2)).
@@ -1124,11 +915,8 @@ qed.
 lemma eq_t_len_TFree_subst : \forall T,n,X.(t_len T) = 
                                          (t_len (subst_type_nat T (TFree X) n)).
 intro.elim T
-  [simplify;elim (eqb n n1)
-     [simplify;reflexivity
-     |simplify;reflexivity]
-  |simplify;reflexivity
-  |simplify;reflexivity
+  [simplify;elim (eqb n n1);simplify;reflexivity
+  |2,3:simplify;reflexivity
   |simplify;lapply (H n X);lapply (H1 n X);rewrite < Hletin;rewrite < Hletin1;
    reflexivity
   |simplify;lapply (H n X);lapply (H1 (S n) X);rewrite < Hletin;
@@ -1155,7 +943,7 @@ intros 3.elim G 0
      |unfold;intro;apply H5;apply (fv_WFT ? ? ? Hletin3 H8)]]
 qed.
 
-(*** alternative "constructor" for universal types' well-formedness ***)
+(*** alternate "constructor" for universal types' well-formedness ***)
 
 lemma WFT_Forall2 : \forall G,X,T,T1,T2.
                        (WFEnv G) \to
@@ -1266,7 +1054,7 @@ cut (in_list ? y (fv_env ((mk_bound B x T1) :: G)))
    apply fv_subst_type_O;assumption]
 qed.
 
-(*** alternative "constructor" for subtyping between universal types ***)
+(*** alternate "constructor" for subtyping between universal types ***)
 
 lemma SA_All2 : \forall G,S1,S2,T1,T2,X.(JSubtype G T1 S1) \to
                    \lnot (in_list ? X (fv_env G)) \to
@@ -1324,3 +1112,73 @@ lapply (decidable_eq_nat X X1);elim Hletin
             elim Hletin3]
         |rewrite > subst_O_nat;apply in_FV_subst;assumption]]]
 qed.
+
+lemma WFE_Typ_subst : \forall H,x,B,C,T,U,G.
+                      (WFEnv (H @ ((mk_bound B x T) :: G))) \to (WFType G U) \to
+                      (WFEnv (H @ ((mk_bound C x U) :: G))).
+intros 7;elim H 0
+  [simplify;intros;(*FIXME*)generalize in match H1;intro;inversion H1
+     [intros;lapply (nil_cons ? G (mk_bound B x T));lapply (Hletin H4);
+      elim Hletin1
+     |intros;lapply (inj_tail ? ? ? ? ? H8);lapply (inj_head ? ? ? ? H8);
+      destruct Hletin1;rewrite < Hletin in H6;rewrite < Hletin in H4;
+      rewrite < Hcut1 in H6;apply (WFE_cons ? ? ? ? H4 H6 H2)]
+  |intros;simplify;generalize in match H2;elim s;simplify in H4;
+   inversion H4
+     [intros;absurd (mk_bound b n t::l@(mk_bound B x T::G)=Empty)
+        [assumption
+        |apply nil_cons]
+     |intros;lapply (inj_tail ? ? ? ? ? H9);lapply (inj_head ? ? ? ? H9);
+      destruct Hletin1;apply WFE_cons
+        [apply H1
+           [rewrite > Hletin;assumption
+           |assumption]
+        |rewrite > Hcut1;generalize in match H7;rewrite < Hletin;
+         rewrite > (fv_env_extends ? x B C T U);intro;assumption
+        |rewrite < Hletin in H8;rewrite > Hcut2;
+         apply (WFT_env_incl ? ? H8);rewrite > (fv_env_extends ? x B C T U);
+         unfold;intros;assumption]]]
+qed.
+
+lemma t_len_pred: \forall T,m.(S (t_len T)) \leq m \to (t_len T) \leq (pred m).
+intros 2;elim m
+  [elim (not_le_Sn_O ? H)
+  |simplify;apply (le_S_S_to_le ? ? H1)]
+qed.
+
+lemma pred_m_lt_m : \forall m,T.(t_len T) \leq m \to (pred m) < m.
+intros 2;elim m 0
+  [elim T
+     [4,5:simplify in H2;elim (not_le_Sn_O ? H2)
+     |*:simplify in H;elim (not_le_Sn_n ? H)]
+  |intros;simplify;unfold;constructor 1]
+qed.
+
+lemma WFE_bound_bound : \forall B,x,T,U,G. (WFEnv G) \to
+                                  (in_list ? (mk_bound B x T) G) \to
+                                  (in_list ? (mk_bound B x U) G) \to T = U.
+intros 6;elim H
+  [lapply (in_list_nil ? ? H1);elim Hletin
+  |inversion H6
+     [intros;rewrite < H7 in H8;lapply (inj_head ? ? ? ? H8);
+      rewrite > Hletin in H5;inversion H5
+        [intros;rewrite < H9 in H10;lapply (inj_head ? ? ? ? H10);
+         destruct Hletin1;symmetry;assumption
+        |intros;lapply (inj_tail ? ? ? ? ? H12);rewrite < Hletin1 in H9;
+         rewrite < H11 in H9;lapply (boundinenv_natinfv x e)
+           [destruct Hletin;rewrite < Hcut1 in Hletin2;lapply (H3 Hletin2);
+            elim Hletin3
+           |apply ex_intro
+              [apply B|apply ex_intro [apply T|assumption]]]]
+     |intros;lapply (inj_tail ? ? ? ? ? H10);rewrite < H9 in H7;
+      rewrite < Hletin in H7;(*FIXME*)generalize in match H5;intro;inversion H5
+        [intros;rewrite < H12 in H13;lapply (inj_head ? ? ? ? H13);
+         destruct Hletin1;rewrite < Hcut1 in H7;
+         lapply (boundinenv_natinfv n e)
+           [lapply (H3 Hletin2);elim Hletin3
+           |apply ex_intro
+              [apply B|apply ex_intro [apply U|assumption]]]
+        |intros;apply (H2 ? H7);rewrite > H14;lapply (inj_tail ? ? ? ? ? H15);
+         rewrite > Hletin1;assumption]]]
+qed.         
+

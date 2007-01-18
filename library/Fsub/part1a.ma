@@ -17,32 +17,31 @@ include "logic/equality.ma".
 include "nat/nat.ma".
 include "datatypes/bool.ma".
 include "nat/compare.ma".
+include "Fsub/util.ma".
 include "Fsub/defn.ma".
+
+(*** Lemma A.1 (Reflexivity) ***)
 
 theorem JS_Refl : \forall T,G.(WFType G T) \to (WFEnv G) \to (JSubtype G T T).
 apply Typ_len_ind;intro;elim U
   [(* FIXME *) generalize in match H1;intro;inversion H1
      [intros;destruct H6
      |intros;destruct H5
-     |intros;destruct H9
-     |intros;destruct H9]
+     |*:intros;destruct H9]
   |apply (SA_Refl_TVar ? ? H2);(*FIXME*)generalize in match H1;intro;
    inversion H1
      [intros;destruct H6;rewrite > Hcut;assumption
      |intros;destruct H5
-     |intros;destruct H9
-     |intros;destruct H9]
+     |*:intros;destruct H9]
   |apply (SA_Top ? ? H2 H1)
   |cut ((WFType G t) \land (WFType G t1))
      [elim Hcut;apply SA_Arrow
         [apply H2
            [apply t_len_arrow1
-           |assumption
-           |assumption]
+           |*:assumption]
         |apply H2
            [apply t_len_arrow2
-           |assumption
-           |assumption]]
+           |*:assumption]]
      |(*FIXME*)generalize in match H3;intro;inversion H3
         [intros;destruct H8
         |intros;destruct H7
@@ -55,8 +54,7 @@ apply Typ_len_ind;intro;elim U
         [apply (SA_All2 ? ? ? ? ? a ? H7 H6 H6)
            [apply H2
               [apply t_len_forall1
-              |assumption
-              |assumption]
+              |*:assumption]
            |apply H2
               [rewrite > subst_O_nat;rewrite < eq_t_len_TFree_subst;
                apply t_len_forall2
@@ -76,15 +74,12 @@ apply Typ_len_ind;intro;elim U
      |split;unfold;intro;apply H5;apply natinG_or_inH_to_natinGH;auto]]
 qed.
 
-lemma env_append_weaken : \forall G,H.(WFEnv (H @ G)) \to
-                             (incl ? G (H @ G)).
-intros 2;elim H
-  [simplify;unfold;intros;assumption
-  |simplify in H2;simplify;unfold;intros;apply in_Skip;apply H1
-     [apply (WFE_consG_WFE_G ? ? H2)
-     |assumption]]
-qed.
-
+(* 
+ * A slightly more general variant to lemma A.2.2, where weakening isn't
+ * defined as concatenation of any two disjoint environments, but as
+ * set inclusion.
+ *)
+ 
 lemma JS_weakening : \forall G,T,U.(JSubtype G T U) \to
                       \forall H.(WFEnv H) \to (incl ? G H) \to (JSubtype H T U).
 intros 4;elim H
@@ -99,8 +94,7 @@ intros 4;elim H
   |lapply (H2 ? H6 H7);apply (SA_All ? ? ? ? ? Hletin);intros;apply H4
      [unfold;intro;apply H8;lapply (incl_bound_fv ? ? H7);apply (Hletin1 ? H9)
      |apply WFE_cons
-        [assumption
-        |assumption
+        [1,2:assumption
         |lapply (incl_bound_fv ? ? H7);apply (WFT_env_incl ? ? ? ? Hletin1);
          apply (JS_to_WFT1 ? ? ? H1)]
      |unfold;intros;inversion H9
@@ -109,102 +103,7 @@ intros 4;elim H
          apply in_Skip;apply (H7 ? H10)]]]
 qed.
 
-lemma fv_env_extends : \forall H,x,B,C,T,U,G.
-                          (fv_env (H @ ((mk_bound B x T) :: G))) = 
-                          (fv_env (H @ ((mk_bound C x U) :: G))).
-intros;elim H
-  [simplify;reflexivity
-  |elim s;simplify;rewrite > H1;reflexivity]
-qed.
-
-lemma WFE_Typ_subst : \forall H,x,B,C,T,U,G.
-                      (WFEnv (H @ ((mk_bound B x T) :: G))) \to (WFType G U) \to
-                      (WFEnv (H @ ((mk_bound C x U) :: G))).
-intros 7;elim H 0
-  [simplify;intros;(*FIXME*)generalize in match H1;intro;inversion H1
-     [intros;lapply (nil_cons ? G (mk_bound B x T));lapply (Hletin H4);
-      elim Hletin1
-     |intros;lapply (inj_tail ? ? ? ? ? H8);lapply (inj_head ? ? ? ? H8);
-      destruct Hletin1;rewrite < Hletin in H6;rewrite < Hletin in H4;
-      rewrite < Hcut1 in H6;apply (WFE_cons ? ? ? ? H4 H6 H2)]
-  |intros;simplify;generalize in match H2;elim s;simplify in H4;
-   inversion H4
-     [intros;absurd (mk_bound b n t::l@(mk_bound B x T::G)=Empty)
-        [assumption
-        |apply nil_cons]
-     |intros;lapply (inj_tail ? ? ? ? ? H9);lapply (inj_head ? ? ? ? H9);
-      destruct Hletin1;apply WFE_cons
-        [apply H1
-           [rewrite > Hletin;assumption
-           |assumption]
-        |rewrite > Hcut1;generalize in match H7;rewrite < Hletin;
-         rewrite > (fv_env_extends ? x B C T U);intro;assumption
-        |rewrite < Hletin in H8;rewrite > Hcut2;
-         apply (WFT_env_incl ? ? H8);rewrite > (fv_env_extends ? x B C T U);
-         unfold;intros;assumption]]]
-qed.
-
-lemma lookup_env_extends : \forall G,H,B,C,D,T,U,V,x,y.
-            (in_list ? (mk_bound D y V) (H @ ((mk_bound C x U) :: G))) \to
-            (y \neq x) \to
-            (in_list ? (mk_bound D y V) (H @ ((mk_bound B x T) :: G))).
-intros 10;elim H
-  [simplify in H1;(*FIXME*)generalize in match H1;intro;inversion H1
-     [intros;lapply (inj_head ? ? ? ? H5);rewrite < H4 in Hletin;
-      destruct Hletin;absurd (y = x) [symmetry;assumption|assumption]
-     |intros;simplify;lapply (inj_tail ? ? ? ? ? H7);rewrite > Hletin;
-      apply in_Skip;assumption]
-  |(*FIXME*)generalize in match H2;intro;inversion H2
-     [intros;simplify in H6;lapply (inj_head ? ? ? ? H6);rewrite > Hletin;
-      simplify;apply in_Base
-     |simplify;intros;lapply (inj_tail ? ? ? ? ? H8);rewrite > Hletin in H1;
-      rewrite > H7 in H1;apply in_Skip;apply (H1 H5 H3)]]
-qed.
-
-lemma t_len_pred: \forall T,m.(S (t_len T)) \leq m \to (t_len T) \leq (pred m).
-intros 2;elim m
-  [elim (not_le_Sn_O ? H)
-  |simplify;apply (le_S_S_to_le ? ? H1)]
-qed.
-
-lemma pred_m_lt_m : \forall m,T.(t_len T) \leq m \to (pred m) < m.
-intros 2;elim m 0
-  [elim T
-     [simplify in H;elim (not_le_Sn_n ? H)
-     |simplify in H;elim (not_le_Sn_n ? H)
-     |simplify in H;elim (not_le_Sn_n ? H)
-     |simplify in H2;elim (not_le_Sn_O ? H2)
-     |simplify in H2;elim (not_le_Sn_O ? H2)]
-  |intros;simplify;unfold;constructor 1]
-qed.
-
-lemma WFE_bound_bound : \forall B,x,T,U,G. (WFEnv G) \to
-                                  (in_list ? (mk_bound B x T) G) \to
-                                  (in_list ? (mk_bound B x U) G) \to T = U.
-intros 6;elim H
-  [lapply (in_list_nil ? ? H1);elim Hletin
-  |inversion H6
-     [intros;rewrite < H7 in H8;lapply (inj_head ? ? ? ? H8);
-      rewrite > Hletin in H5;inversion H5
-        [intros;rewrite < H9 in H10;lapply (inj_head ? ? ? ? H10);
-         destruct Hletin1;symmetry;assumption
-        |intros;lapply (inj_tail ? ? ? ? ? H12);rewrite < Hletin1 in H9;
-         rewrite < H11 in H9;lapply (boundinenv_natinfv x e)
-           [destruct Hletin;rewrite < Hcut1 in Hletin2;lapply (H3 Hletin2);
-            elim Hletin3
-           |apply ex_intro
-              [apply B|apply ex_intro [apply T|assumption]]]]
-     |intros;lapply (inj_tail ? ? ? ? ? H10);rewrite < H9 in H7;
-      rewrite < Hletin in H7;(*FIXME*)generalize in match H5;intro;inversion H5
-        [intros;rewrite < H12 in H13;lapply (inj_head ? ? ? ? H13);
-         destruct Hletin1;rewrite < Hcut1 in H7;
-         lapply (boundinenv_natinfv n e)
-           [lapply (H3 Hletin2);elim Hletin3
-           |apply ex_intro
-              [apply B|apply ex_intro [apply U|assumption]]]
-        |intros;apply (H2 ? H7);rewrite > H14;lapply (inj_tail ? ? ? ? ? H15);
-         rewrite > Hletin1;assumption]]]
-qed.         
+(* Lemma A.3 (Transitivity and Narrowing) *)
 
 lemma JS_trans_narrow : \forall n.
   (\forall G,T,Q,U.
@@ -283,8 +182,7 @@ cut (\forall G,T,Q.(JSubtype G T Q) \to
         [intros;rewrite < H8;apply (SA_Top ? ? H2 H3)
         |intros;destruct H9
         |intros;destruct H10
-        |intros;destruct H11
-        |intros;destruct H11]
+        |*:intros;destruct H11]
      |assumption
      |apply (SA_Trans_TVar ? ? ? ? H2);apply (H4 ? H5 H6)
      |inversion H7
@@ -324,10 +222,7 @@ cut (\forall G,T,Q.(JSubtype G T Q) \to
                   apply (H15 ? ? ? ? ? H8 H2);lapply (t_len_forall1 t2 t3);
                   unfold in Hletin;lapply (trans_le ? ? ? Hletin H6);
                   apply (t_len_pred ? ? Hletin1)
-                 |assumption
-                 |assumption
-                 |assumption
-                 |lapply (H10 ? H20);rewrite > H12 in H5;
+                 |5:lapply (H10 ? H20);rewrite > H12 in H5;
                   lapply (H5 ? H20 (subst_type_O t5 (TFree a)))
                     [apply (H15 ? ? ? ? ? ? Hletin)
                        [rewrite < Hcut1;rewrite > subst_O_nat;
@@ -348,7 +243,8 @@ cut (\forall G,T,Q.(JSubtype G T Q) \to
                     |rewrite > Hcut1;rewrite > H12 in H4;
                      lapply (H4 ? H20);rewrite < Hcut1;apply JS_Refl
                        [apply (JS_to_WFT2 ? ? ? Hletin1)
-                       |apply (JS_to_WFE ? ? ? Hletin1)]]]
+                       |apply (JS_to_WFE ? ? ? Hletin1)]]
+                 |*:assumption]
               |split
                  [split
                     [unfold;intro;apply H17;
