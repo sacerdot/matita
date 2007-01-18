@@ -4,7 +4,6 @@ software/matita/legacy
 software/matita/library
 software/matita/tests
 software/matita/dama
-software/matita/contribs/CoRN
 software/matita/contribs/PREDICATIVE-TOPOLOGY
 software/matita/contribs/RELATIONAL
 software/matita/contribs/LAMBDA-TYPES/Unified
