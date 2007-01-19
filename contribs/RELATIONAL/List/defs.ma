@@ -12,21 +12,26 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/RELATIONAL/BEq/defs".
+set "baseuri" "cic:/matita/RELATIONAL/List/defs".
 
-include "logic/equality.ma".
-
-include "Bool/defs.ma".
-
-inductive BEq (A:Type) (a1:A): A \to Bool \to Prop \def
-   | beq_true : BEq A a1 a1 true
-   | beq_false: \forall a2. (a1 = a2 -> False) \to BEq A a1 a2 false
+inductive List (A:Set): Set \def
+   | nil: List A
+   | cons: List A \to A \to List A
 .
 
 (*CSC: the URI must disappear: there is a bug now *)
-interpretation "boolean equality" 'beq x y z = 
-   (cic:/matita/RELATIONAL/BEq/defs/BEq.ind#xpointer(1/1) _ x y z).
+interpretation "nil" 'nil = 
+   (cic:/matita/RELATIONAL/List/defs/List.ind#xpointer(1/1) _).
 
-notation "hvbox(a break -- b break == c)" 
+notation "hvbox([])"
   non associative with precedence 95
-for @{ 'beq $a $b $c}.
+for @{ 'nil }.
+
+(*CSC: the URI must disappear: there is a bug now *)
+interpretation "right cons" 'rcons x y = 
+   (cic:/matita/RELATIONAL/List/defs/List.ind#xpointer(1/2) _ x y).
+
+notation "hvbox([a break @ b])"
+  non associative with precedence 95
+for @{ 'rcons $a $b}.
+

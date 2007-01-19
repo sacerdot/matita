@@ -12,21 +12,23 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/RELATIONAL/BEq/defs".
+set "baseuri" "cic:/matita/RELATIONAL/NPlusList/props".
 
-include "logic/equality.ma".
+include "NPlusList/defs.ma".
+(*
+axiom npluslist_gen_cons: \forall l,q,r. 
+                            NPlusList (cons ? l q) r \to
+                            \exists p. NPlusList l p \land NPlus p q r.
+(* 
+ intros. inversion H; clear H; intros;
+ [ id
+ | subst.
+*)
 
-include "Bool/defs.ma".
-
-inductive BEq (A:Type) (a1:A): A \to Bool \to Prop \def
-   | beq_true : BEq A a1 a1 true
-   | beq_false: \forall a2. (a1 = a2 -> False) \to BEq A a1 a2 false
-.
-
-(*CSC: the URI must disappear: there is a bug now *)
-interpretation "boolean equality" 'beq x y z = 
-   (cic:/matita/RELATIONAL/BEq/defs/BEq.ind#xpointer(1/1) _ x y z).
-
-notation "hvbox(a break -- b break == c)" 
-  non associative with precedence 95
-for @{ 'beq $a $b $c}.
+theorem npluslist_inj_2: \forall ns1,ns2,n. 
+                         NPlusListEq (cons ? ns1 n) (cons ? ns2 n) \to
+                         NPlusListEq ns1 ns2.
+ unfold NPlusListEq. intros. decompose.
+ lapply linear npluslist_gen_cons to H. decompose.
+ lapply linear npluslist_gen_cons to H2. decompose.
+*)

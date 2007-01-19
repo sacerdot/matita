@@ -12,21 +12,27 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/RELATIONAL/BEq/defs".
+set "baseuri" "cic:/matita/RELATIONAL/NPlusList/defs".
 
-include "logic/equality.ma".
+include "List/defs.ma".
+include "NPlus/defs.ma".
 
-include "Bool/defs.ma".
 
-inductive BEq (A:Type) (a1:A): A \to Bool \to Prop \def
-   | beq_true : BEq A a1 a1 true
-   | beq_false: \forall a2. (a1 = a2 -> False) \to BEq A a1 a2 false
+inductive NPlusList: (List Nat) \to Nat \to Prop \def
+   | nplus_nil: NPlusList (nil ?) zero  
+   | nplus_cons: \forall l,p,q,r. 
+                 NPlusList l p \to NPlus p q r \to NPlusList (cons ? l q) r
 .
 
-(*CSC: the URI must disappear: there is a bug now *)
-interpretation "boolean equality" 'beq x y z = 
-   (cic:/matita/RELATIONAL/BEq/defs/BEq.ind#xpointer(1/1) _ x y z).
+definition NPlusListEq: (List Nat) \to (List Nat) \to Prop \def
+   \lambda ns1,ns2. \exists n. NPlusList ns1 n \land NPlusList ns2 n.
 
-notation "hvbox(a break -- b break == c)" 
+(*
+(*CSC: the URI must disappear: there is a bug now *)
+interpretation "ternary natural plus predicate" 'rel_plus3 x y z = 
+   (cic:/matita/RELATIONAL/NPlus/defs/NPlus3.con w x y z).
+
+notation "hvbox(a break + b break + c == d)" 
   non associative with precedence 95
-for @{ 'beq $a $b $c}.
+for @{ 'rel_plus3 $a $b $c $d}.
+*)

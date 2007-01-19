@@ -15,7 +15,6 @@
 set "baseuri" "cic:/matita/RELATIONAL/NPlus/defs".
 
 include "logic/equality.ma".
-
 include "Nat/defs.ma".
 
 inductive NPlus (p:Nat): Nat \to Nat \to Prop \def
@@ -26,6 +25,6 @@ inductive NPlus (p:Nat): Nat \to Nat \to Prop \def
 interpretation "natural plus predicate" 'rel_plus x y z = 
    (cic:/matita/RELATIONAL/NPlus/defs/NPlus.ind#xpointer(1/1) x y z).
 
-notation "hvbox(a break + b break == c)" 
+notation "hvbox(a break + b break == c)"
   non associative with precedence 95
 for @{ 'rel_plus $a $b $c}.

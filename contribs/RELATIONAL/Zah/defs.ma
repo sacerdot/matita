@@ -12,22 +12,21 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/RELATIONAL/BNot/defs".
+set "baseuri" "cic:/matita/RELATIONAL/Zah/defs".
 
-include "logic/equality.ma".
+include "datatypes/constructors.ma".
+include "logic/coimplication.ma".
+include "NPlusList/defs.ma".
 
-include "Bool/defs.ma".
+definition Zah \def Nat \times Nat.
 
-inductive BNot: Bool \to Bool \to Prop \def
-   | bnot_false: BNot false true
-   | bnot_true : BNot true false
-.
+definition ZEq: Zah \to Zah -> Prop :=
+   \lambda z1,z2.
+   \forall n. ((\fst z1) + (\snd z2) == n) \liff (\fst z2) + (\snd z1) == n.
 
-(*CSC: the URI must disappear: there is a bug now *)
-interpretation "boolean not predicate" 'rel_not x y = 
-   (cic:/matita/RELATIONAL/BNot/defs/BNot.ind#xpointer(1/1) x y).
+interpretation "integer equality" 'zeq x y =
+ (cic:/matita/RELATIONAL/Zah/defs/ZEq.con x y).
 
-(* FG: we can not use - here for some reason *)
-notation "hvbox(~ a break == b)" 
-  non associative with precedence 95
-for @{ 'rel_not $a $b}.
+notation "hvbox(a break = b)"
+  non associative with precedence 45
+for @{ 'zeq $a $b }.
