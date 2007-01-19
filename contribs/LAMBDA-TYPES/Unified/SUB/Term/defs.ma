@@ -12,16 +12,43 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Unified/SUB/Inc/defs".
+set "baseuri" "cic:/matita/LAMBDA-TYPES/Unified/SUB/Term/defs".
 
-(* DISPLACEMENT INCREMENT RELATION
+(* POLARIZED TERMS
+   - Naming policy:
+     - natural numbers      : sorts h k, local references i j, lengths l o
+     - boolean values       : p q
+     - generic leaf items   : m n
+     - generic binding items: r s 
+     - generic flat items   : r s
+     - generic head items   : m n
+     - terms                : t u
 *)
 
-include "SUB/Term/defs.ma".
+include "SUB/preamble.ma".
 
-inductive Inc (q:Bool) (i:Nat): Head \to Nat \to Prop \def
-   | inc_bind: \forall r. Inc q i (bind q r) (succ i)
-   | inc_skip: \forall p. (q = p \to False) \to
-               \forall r. Inc q i (bind p r) i
-   | inc_flat: \forall p,r. Inc q i (flat p r) i   
+inductive Leaf: Set \def
+   | sort: Nat \to Leaf
+   | lref: Nat \to Leaf
+.
+
+inductive Bind: Set \def
+   | abbr: Bind
+   | abst: Bind
+   | excl: Bind
+.
+
+inductive Flat: Set \def
+   | appl: Flat
+   | cast: Flat
+.
+
+inductive Head: Set \def
+   | bind: Bool \to Bind \to Head
+   | flat: Bool \to Flat \to Head
+.
+
+inductive Term: Set \def
+   | leaf: Leaf \to Term
+   | head: Head \to Term \to Term \to Term
 .

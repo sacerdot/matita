@@ -12,30 +12,28 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Unified/Lift/defs".
+set "baseuri" "cic:/matita/LAMBDA-TYPES/Unified/SUB/Lift/defs".
 
 (* LIFT RELATION
    - Usage: invoke with positive polarity
 *)
 
-include "logic/equality.ma".
-include "../../RELATIONAL/NPlus/defs.ma".
-include "../../RELATIONAL/NLE/defs.ma".
-include "../../RELATIONAL/BEq/defs.ma".
+include "SUB/Switch/defs.ma".
+include "SUB/Inc/defs.ma".
 
-include "P/defs.ma".
-include "Inc/defs.ma".
-
-inductive Lift (l: Nat): Nat \to Bool \to P \to P \to Prop \def
-   | lift_sort    : \forall i,a,h. Lift l i a (sort h) (sort h)
-   | lift_lref_neg: \forall i,j. Lift l i false (lref j) (lref j)
-   | lift_lref_lt : \forall i,j. 
-                    j < i \to Lift l i true (lref j) (lref j)
-   | lift_lref_ge : \forall i,j1,j2.
-                    i <= j1 \to (j1 + l == j2) \to
-                    Lift l i true (lref j1) (lref j2)
-   | lift_head    : \forall i,i',a,b,a',z,q1,q2,p1,p2. 
-                    (a * b == a') \to Inc i a' z i' \to
-                    Lift l i a' q1 q2 \to Lift l i' a p1 p2 \to 
-                    Lift l i a (head b z q1 p1) (head b z q2 p2)
+inductive Lift: Bool \to Nat \to Nat \to Term \to Term \to Prop \def
+   | lift_sort   : \forall l,q,i,h. 
+                   Lift q l i (leaf (sort h)) (leaf (sort h))
+   | lift_skip   : \forall l,i,j. 
+                   Lift false l i (leaf (lref j)) (leaf (lref j))
+   | lift_lref_lt: \forall l,i,j. j < i \to 
+                   Lift true l i (leaf (lref j)) (leaf (lref j))
+   | lift_lref_ge: \forall l,i,j1. i <= j1 \to
+                   \forall j2. (j1 + l == j2) \to
+                   Lift true l i (leaf (lref j1)) (leaf (lref j2))
+   | lift_head   : \forall l,qt,qu,z. Switch qt z qu \to
+                   \forall iu,it. Inc qt iu z it \to
+                   \forall u1,u2. Lift qu l iu u1 u2 \to
+                   \forall t1,t2. Lift qt l it t1 t2 \to 
+                   Lift qt l iu (head z u1 t1) (head z u2 t2)
 .

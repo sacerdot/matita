@@ -12,16 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Unified/SUB/Inc/defs".
+set "baseuri" "cic:/matita/LAMBDA-TYPES/Unified/SUB/Switch/defs".
 
-(* DISPLACEMENT INCREMENT RELATION
+(* POLARITY SWITCH RELATION
 *)
 
 include "SUB/Term/defs.ma".
 
-inductive Inc (q:Bool) (i:Nat): Head \to Nat \to Prop \def
-   | inc_bind: \forall r. Inc q i (bind q r) (succ i)
-   | inc_skip: \forall p. (q = p \to False) \to
-               \forall r. Inc q i (bind p r) i
-   | inc_flat: \forall p,r. Inc q i (flat p r) i   
+inductive Switch (q1:Bool): Head \to Bool \to Prop \def
+   | switch_bind: \forall q2,p. (p -- q1 == q2) \to
+                  \forall r. Switch q1 (bind p r) q2 
+   | switch_flat: \forall q2,p. (p -- q1 == q2) \to
+                  \forall r. Switch q1 (flat p r) q2 
 .
