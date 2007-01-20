@@ -65,14 +65,12 @@ let run_script is eval_function  =
   in
   let matita_debug = Helm_registry.get_bool "matita.debug" in
   try
-   let grafite_status'', lexicon_status'' =
-    match eval_function lexicon_status' grafite_status' is cb with
-       [] -> assert false
-     | (s,None)::_ -> s
-     | (s,Some _)::_ -> raise AttemptToInsertAnAlias
-   in
-    lexicon_status := Some lexicon_status'';
-    grafite_status := Some grafite_status''
+   match eval_function lexicon_status' grafite_status' is cb with
+      [] -> raise End_of_file
+    | ((grafite_status'',lexicon_status''),None)::_ ->
+       lexicon_status := Some lexicon_status'';
+       grafite_status := Some grafite_status''
+    | (s,Some _)::_ -> raise AttemptToInsertAnAlias
   with
   | GrafiteEngine.Drop  
   | End_of_file
