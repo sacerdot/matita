@@ -32,7 +32,8 @@ let main () =
  |"matitaclean"|"matitaclean.opt"|"matitaclean.opt.static"->Matitaclean.main()
  |"matitamake" |"matitamake.opt" |"matitamake.opt.static" ->Matitamake.main()
  |"matitaprover"|"matitaprover.opt"
- |"matitaprover.opt.static"->Matitaprover.main()
+ |"matitaprover.opt.static" ->Matitaprover.main()
+ |"matitawiki"|"matitawiki.opt" ->MatitaWiki.main()
  | _ ->
 (*
       let _ = Paramodulation.Saturation.init () in  *)
