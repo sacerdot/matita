@@ -49,6 +49,7 @@ val eval_from_stream :
   ?do_heavy_checks:bool ->
   ?clean_baseuri:bool ->
   ?enforce_no_new_aliases:bool -> (* default true *)
+  ?watch_statuses:(LexiconEngine.status -> GrafiteTypes.status -> unit) ->
   LexiconEngine.status ->
   GrafiteTypes.status ->
   Ulexing.lexbuf ->

@@ -102,12 +102,12 @@ exception TryingToAdd of string
 
 let eval_from_stream ~first_statement_only ~include_paths ?(prompt=false)
  ?do_heavy_checks ?clean_baseuri ?(enforce_no_new_aliases=true)
- lexicon_status grafite_status str cb 
+ ?(watch_statuses=fun _ _ -> ()) lexicon_status grafite_status str cb 
 =
  let rec loop lexicon_status grafite_status statuses =
   let loop =
    if first_statement_only then
-    fun _ _ _ -> raise End_of_file
+    fun _ _ statuses -> statuses
    else
     loop
   in
@@ -118,6 +118,7 @@ let eval_from_stream ~first_statement_only ~include_paths ?(prompt=false)
     in
      (match ast with
          GrafiteParser.LNone _ ->
+          watch_statuses lexicon_status grafite_status ;
           loop lexicon_status grafite_status
            (((grafite_status,lexicon_status),None)::statuses)
        | GrafiteParser.LSome ast ->
@@ -142,6 +143,7 @@ let eval_from_stream ~first_statement_only ~include_paths ?(prompt=false)
               [] -> assert false
             | (s,_)::_ -> s
           in
+           watch_statuses lexicon_status grafite_status ;
            loop lexicon_status grafite_status (new_statuses @ statuses))
    with
     End_of_file -> statuses
