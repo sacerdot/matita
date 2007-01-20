@@ -57,6 +57,8 @@ val mml_of_cic_object:
 
 val txt_of_cic_term: 
   int -> Cic.metasenv -> Cic.context -> Cic.term -> string 
+val txt_of_cic_sequent: 
+  int -> Cic.metasenv -> Cic.conjecture -> string
 val txt_of_cic_sequent_conclusion: 
   int -> Cic.metasenv -> Cic.conjecture -> string
 

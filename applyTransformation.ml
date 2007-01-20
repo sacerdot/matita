@@ -70,6 +70,20 @@ let mml_of_cic_object obj =
    (ids_to_terms, ids_to_father_ids, ids_to_conjectures, ids_to_hypotheses,
   ids_to_inner_sorts,ids_to_inner_types)))
 
+let txt_of_cic_sequent size metasenv sequent =
+  let unsh_sequent,(asequent,ids_to_terms,
+    ids_to_father_ids,ids_to_inner_sorts,ids_to_hypotheses)
+  =
+    Cic2acic.asequent_of_sequent metasenv sequent
+  in
+  let content_sequent = Acic2content.map_sequent asequent in 
+  let pres_sequent = 
+   CicNotationPres.mpres_of_box
+    (Sequent2pres.sequent2pres ~ids_to_inner_sorts content_sequent)
+  in
+  BoxPp.render_to_string (function x::_ -> x | _ -> assert false) size
+   pres_sequent
+
 let txt_of_cic_sequent_conclusion size metasenv sequent = 
   let _,(asequent,_,_,ids_to_inner_sorts,_) = 
     Cic2acic.asequent_of_sequent metasenv sequent 
@@ -83,4 +97,3 @@ let txt_of_cic_sequent_conclusion size metasenv sequent =
 let txt_of_cic_term size metasenv context t = 
   let fake_sequent = (-1,context,t) in
   txt_of_cic_sequent_conclusion size metasenv fake_sequent 
-
