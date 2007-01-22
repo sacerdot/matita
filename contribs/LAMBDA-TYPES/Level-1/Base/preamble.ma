@@ -138,13 +138,11 @@ theorem sym_not_eq: \forall A:Type. \forall x,y:A. x \neq y \to y \neq x.
  unfold not. intros. apply H. symmetry. assumption.
 qed.
 
-theorem trans_eq : ∀A:Type.∀x,y,z:A.x=y→y=z→x=z.
- intros;
- transitivity y;
- assumption.
+theorem trans_eq : \forall A:Type. \forall x,y,z:A. x=y \to y=z \to x=z.
+ intros. transitivity y; assumption.
 qed.
 
-theorem plus_reg_l: \forall (n,m,p:nat). n + m = n + p \to m = p.
+theorem plus_reg_l: \forall n,m,p. n + m = n + p \to m = p.
  intros. apply plus_reg_l; auto.
 qed.
 
