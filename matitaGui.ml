@@ -234,16 +234,40 @@ class interpErrorModel =
 
 let rec interactive_error_interp ?(all_passes=false) (source_buffer:GSourceView.source_buffer) notify_exn offset errorll
 = 
+  assert (List.flatten errorll <> []);
   let errorll' =
    let remove_non_significant =
      List.filter (fun (_env,_diff,_loc,_msg,significant) -> significant) in
    if all_passes then errorll else
      let safe_list_nth l n = try List.nth l n with Failure _ -> [] in
     (* We remove passes 1,2 and 5,6 *)
-     []::[]
-     ::(remove_non_significant (safe_list_nth errorll 2))
-     ::(remove_non_significant (safe_list_nth errorll 3))
-     ::[]::[]
+     let res =
+      []::[]
+      ::(remove_non_significant (safe_list_nth errorll 2))
+      ::(remove_non_significant (safe_list_nth errorll 3))
+      ::[]::[]
+     in
+      if List.flatten res <> [] then res
+      else
+       (* all errors (if any) are not significant: we keep them *)
+       let res =
+        []::[]
+        ::(safe_list_nth errorll 2)
+        ::(safe_list_nth errorll 3)
+        ::[]::[]
+       in
+        if List.flatten res <> [] then
+	 begin
+          HLog.warn
+	   "All disambiguation errors are not significant. Showing them anyway." ;
+	  res
+	 end
+	else
+         begin
+          HLog.warn
+	   "No errors in phases 2 and 3. Showing all errors in all phases" ;
+          errorll
+         end
    in
   let choices =
    let pass = ref 0 in
