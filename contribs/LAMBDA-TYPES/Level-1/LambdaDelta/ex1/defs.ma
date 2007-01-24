@@ -14,12 +14,18 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/pr1/defs".
+set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/ex1/defs".
 
-include "pr0/defs.ma".
+include "C/defs.ma".
 
-inductive pr1: T \to (T \to Prop) \def
-| pr1_refl: \forall (t: T).(pr1 t t)
-| pr1_sing: \forall (t2: T).(\forall (t1: T).((pr0 t1 t2) \to (\forall (t3: 
-T).((pr1 t2 t3) \to (pr1 t1 t3))))).
+definition ex1_c:
+ C
+\def
+ CHead (CHead (CHead (CSort O) (Bind Abst) (TSort O)) (Bind Abst) (TSort O)) 
+(Bind Abst) (TLRef O).
+
+definition ex1_t:
+ T
+\def
+ THead (Flat Appl) (TLRef O) (THead (Bind Abst) (TLRef (S (S O))) (TSort O)).
 

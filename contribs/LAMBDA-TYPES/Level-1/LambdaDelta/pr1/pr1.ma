@@ -28,7 +28,7 @@ t2) \to (ex2 T (\lambda (t: T).(pr1 t1 t)) (\lambda (t: T).(pr1 t2 t)))))))
 (t: T).(\lambda (t2: T).(\forall (t3: T).((pr0 t t3) \to (ex2 T (\lambda (t4: 
 T).(pr1 t2 t4)) (\lambda (t4: T).(pr1 t3 t4))))))) (\lambda (t: T).(\lambda 
 (t2: T).(\lambda (H0: (pr0 t t2)).(ex_intro2 T (\lambda (t3: T).(pr1 t t3)) 
-(\lambda (t3: T).(pr1 t2 t3)) t2 (pr1_pr0 t t2 H0) (pr1_r t2))))) (\lambda 
+(\lambda (t3: T).(pr1 t2 t3)) t2 (pr1_pr0 t t2 H0) (pr1_refl t2))))) (\lambda 
 (t2: T).(\lambda (t3: T).(\lambda (H0: (pr0 t3 t2)).(\lambda (t4: T).(\lambda 
 (_: (pr1 t2 t4)).(\lambda (H2: ((\forall (t5: T).((pr0 t2 t5) \to (ex2 T 
 (\lambda (t: T).(pr1 t4 t)) (\lambda (t: T).(pr1 t5 t))))))).(\lambda (t5: 
@@ -38,7 +38,7 @@ t))) (\lambda (x: T).(\lambda (H4: (pr0 t5 x)).(\lambda (H5: (pr0 t2
 x)).(ex2_ind T (\lambda (t: T).(pr1 t4 t)) (\lambda (t: T).(pr1 x t)) (ex2 T 
 (\lambda (t: T).(pr1 t4 t)) (\lambda (t: T).(pr1 t5 t))) (\lambda (x0: 
 T).(\lambda (H6: (pr1 t4 x0)).(\lambda (H7: (pr1 x x0)).(ex_intro2 T (\lambda 
-(t: T).(pr1 t4 t)) (\lambda (t: T).(pr1 t5 t)) x0 H6 (pr1_u x t5 H4 x0 
+(t: T).(pr1 t4 t)) (\lambda (t: T).(pr1 t5 t)) x0 H6 (pr1_sing x t5 H4 x0 
 H7))))) (H2 x H5))))) (pr0_confluence t3 t5 H3 t2 H0)))))))))) t0 t1 H))).
 
 theorem pr1_confluence:
@@ -49,10 +49,10 @@ t2) \to (ex2 T (\lambda (t: T).(pr1 t1 t)) (\lambda (t: T).(pr1 t2 t)))))))
 (t: T).(\lambda (t2: T).(\forall (t3: T).((pr1 t t3) \to (ex2 T (\lambda (t4: 
 T).(pr1 t2 t4)) (\lambda (t4: T).(pr1 t3 t4))))))) (\lambda (t: T).(\lambda 
 (t2: T).(\lambda (H0: (pr1 t t2)).(ex_intro2 T (\lambda (t3: T).(pr1 t t3)) 
-(\lambda (t3: T).(pr1 t2 t3)) t2 H0 (pr1_r t2))))) (\lambda (t2: T).(\lambda 
-(t3: T).(\lambda (H0: (pr0 t3 t2)).(\lambda (t4: T).(\lambda (_: (pr1 t2 
-t4)).(\lambda (H2: ((\forall (t5: T).((pr1 t2 t5) \to (ex2 T (\lambda (t: 
-T).(pr1 t4 t)) (\lambda (t: T).(pr1 t5 t))))))).(\lambda (t5: T).(\lambda 
+(\lambda (t3: T).(pr1 t2 t3)) t2 H0 (pr1_refl t2))))) (\lambda (t2: 
+T).(\lambda (t3: T).(\lambda (H0: (pr0 t3 t2)).(\lambda (t4: T).(\lambda (_: 
+(pr1 t2 t4)).(\lambda (H2: ((\forall (t5: T).((pr1 t2 t5) \to (ex2 T (\lambda 
+(t: T).(pr1 t4 t)) (\lambda (t: T).(pr1 t5 t))))))).(\lambda (t5: T).(\lambda 
 (H3: (pr1 t3 t5)).(ex2_ind T (\lambda (t: T).(pr1 t5 t)) (\lambda (t: T).(pr1 
 t2 t)) (ex2 T (\lambda (t: T).(pr1 t4 t)) (\lambda (t: T).(pr1 t5 t))) 
 (\lambda (x: T).(\lambda (H4: (pr1 t5 x)).(\lambda (H5: (pr1 t2 x)).(ex2_ind 

@@ -438,3 +438,23 @@ T).(pr3 e t2 t)) (pc3 c (lift h d t1) (lift h d t2)) (\lambda (x: T).(\lambda
 (lift h d x) (pr3_lift c e h d H t1 x H2) (lift h d t2) (pr3_lift c e h d H 
 t2 x H3))))) H1))))))))).
 
+theorem pc3_eta:
+ \forall (c: C).(\forall (t: T).(\forall (w: T).(\forall (u: T).((pc3 c t 
+(THead (Bind Abst) w u)) \to (\forall (v: T).((pc3 c v w) \to (pc3 c (THead 
+(Bind Abst) v (THead (Flat Appl) (TLRef O) (lift (S O) O t))) t)))))))
+\def
+ \lambda (c: C).(\lambda (t: T).(\lambda (w: T).(\lambda (u: T).(\lambda (H: 
+(pc3 c t (THead (Bind Abst) w u))).(\lambda (v: T).(\lambda (H0: (pc3 c v 
+w)).(pc3_t (THead (Bind Abst) w (THead (Flat Appl) (TLRef O) (lift (S O) O 
+(THead (Bind Abst) w u)))) c (THead (Bind Abst) v (THead (Flat Appl) (TLRef 
+O) (lift (S O) O t))) (pc3_head_21 c v w H0 (Bind Abst) (THead (Flat Appl) 
+(TLRef O) (lift (S O) O t)) (THead (Flat Appl) (TLRef O) (lift (S O) O (THead 
+(Bind Abst) w u))) (pc3_thin_dx (CHead c (Bind Abst) v) (lift (S O) O t) 
+(lift (S O) O (THead (Bind Abst) w u)) (pc3_lift (CHead c (Bind Abst) v) c (S 
+O) O (drop_drop (Bind Abst) O c c (drop_refl c) v) t (THead (Bind Abst) w u) 
+H) (TLRef O) Appl)) t (pc3_t (THead (Bind Abst) w u) c (THead (Bind Abst) w 
+(THead (Flat Appl) (TLRef O) (lift (S O) O (THead (Bind Abst) w u)))) 
+(pc3_pr3_r c (THead (Bind Abst) w (THead (Flat Appl) (TLRef O) (lift (S O) O 
+(THead (Bind Abst) w u)))) (THead (Bind Abst) w u) (pr3_eta c w u w (pr3_refl 
+c w))) t (pc3_s c (THead (Bind Abst) w u) t H))))))))).
+

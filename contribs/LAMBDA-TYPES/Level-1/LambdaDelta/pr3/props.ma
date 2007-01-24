@@ -16,9 +16,11 @@
 
 set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/pr3/props".
 
-include "pr3/defs.ma".
+include "pr3/pr1.ma".
 
 include "pr2/props.ma".
+
+include "pr1/props.ma".
 
 theorem clear_pr3_trans:
  \forall (c2: C).(\forall (t1: T).(\forall (t2: T).((pr3 c2 t1 t2) \to 
@@ -386,4 +388,28 @@ d t0)))) (\lambda (t: T).(pr3_refl c (lift h d t))) (\lambda (t0: T).(\lambda
 t4)).(\lambda (H3: (pr3 c (lift h d t0) (lift h d t4))).(pr3_sing c (lift h d 
 t0) (lift h d t3) (pr2_lift c e h d H t3 t0 H1) (lift h d t4) H3))))))) t1 t2 
 H0)))))))).
+
+theorem pr3_eta:
+ \forall (c: C).(\forall (w: T).(\forall (u: T).(let t \def (THead (Bind 
+Abst) w u) in (\forall (v: T).((pr3 c v w) \to (pr3 c (THead (Bind Abst) v 
+(THead (Flat Appl) (TLRef O) (lift (S O) O t))) t))))))
+\def
+ \lambda (c: C).(\lambda (w: T).(\lambda (u: T).(let t \def (THead (Bind 
+Abst) w u) in (\lambda (v: T).(\lambda (H: (pr3 c v w)).(eq_ind_r T (THead 
+(Bind Abst) (lift (S O) O w) (lift (S O) (S O) u)) (\lambda (t0: T).(pr3 c 
+(THead (Bind Abst) v (THead (Flat Appl) (TLRef O) t0)) (THead (Bind Abst) w 
+u))) (pr3_head_12 c v w H (Bind Abst) (THead (Flat Appl) (TLRef O) (THead 
+(Bind Abst) (lift (S O) O w) (lift (S O) (S O) u))) u (pr3_pr1 (THead (Flat 
+Appl) (TLRef O) (THead (Bind Abst) (lift (S O) O w) (lift (S O) (S O) u))) u 
+(pr1_sing (THead (Bind Abbr) (TLRef O) (lift (S O) (S O) u)) (THead (Flat 
+Appl) (TLRef O) (THead (Bind Abst) (lift (S O) O w) (lift (S O) (S O) u))) 
+(pr0_beta (lift (S O) O w) (TLRef O) (TLRef O) (pr0_refl (TLRef O)) (lift (S 
+O) (S O) u) (lift (S O) (S O) u) (pr0_refl (lift (S O) (S O) u))) u (pr1_sing 
+(THead (Bind Abbr) (TLRef O) (lift (S O) O u)) (THead (Bind Abbr) (TLRef O) 
+(lift (S O) (S O) u)) (pr0_delta1 (TLRef O) (TLRef O) (pr0_refl (TLRef O)) 
+(lift (S O) (S O) u) (lift (S O) (S O) u) (pr0_refl (lift (S O) (S O) u)) 
+(lift (S O) O u) (subst1_lift_S u O O (le_n O))) u (pr1_pr0 (THead (Bind 
+Abbr) (TLRef O) (lift (S O) O u)) u (pr0_zeta Abbr not_abbr_abst u u 
+(pr0_refl u) (TLRef O))))) (CHead c (Bind Abst) w))) (lift (S O) O (THead 
+(Bind Abst) w u)) (lift_bind Abst w u (S O) O))))))).
 

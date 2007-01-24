@@ -256,13 +256,13 @@ include "pr2/subst1.ma".
 
 include "pr3/defs.ma".
 
+include "pr3/pr1.ma".
+
 include "pr3/props.ma".
 
 include "pr3/fwd.ma".
 
 include "pr3/wcpr0.ma".
-
-include "pr3/pr1.ma".
 
 include "pr3/pr3.ma".
 
@@ -355,6 +355,10 @@ include "pc3/subst1.ma".
 include "ty3/defs.ma".
 
 include "ty3/fwd.ma".
+
+include "ex1/defs.ma".
+
+include "ex1/props.ma".
 
 include "ty3/props.ma".
 

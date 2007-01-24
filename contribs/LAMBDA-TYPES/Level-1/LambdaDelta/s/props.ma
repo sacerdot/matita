@@ -99,6 +99,14 @@ B).(\lambda (i: nat).(\lambda (j: nat).(\lambda (H: (eq nat (s (Bind b) i) (s
 (Bind b) j))).(eq_add_S i j H))))) (\lambda (f: F).(\lambda (i: nat).(\lambda 
 (j: nat).(\lambda (H: (eq nat (s (Flat f) i) (s (Flat f) j))).H)))) k).
 
+theorem s_inc:
+ \forall (k: K).(\forall (i: nat).(le i (s k i)))
+\def
+ \lambda (k: K).(K_ind (\lambda (k0: K).(\forall (i: nat).(le i (s k0 i)))) 
+(\lambda (b: B).(\lambda (i: nat).(le_S_n i (s (Bind b) i) (le_S (S i) (s 
+(Bind b) i) (le_n (s (Bind b) i)))))) (\lambda (f: F).(\lambda (i: nat).(le_n 
+(s (Flat f) i)))) k).
+
 theorem s_arith0:
  \forall (k: K).(\forall (i: nat).(eq nat (minus (s k i) (s k O)) i))
 \def

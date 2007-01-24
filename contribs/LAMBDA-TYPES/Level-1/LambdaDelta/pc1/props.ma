@@ -25,13 +25,13 @@ theorem pc1_pr0_r:
 \def
  \lambda (t1: T).(\lambda (t2: T).(\lambda (H: (pr0 t1 t2)).(ex_intro2 T 
 (\lambda (t: T).(pr1 t1 t)) (\lambda (t: T).(pr1 t2 t)) t2 (pr1_pr0 t1 t2 H) 
-(pr1_r t2)))).
+(pr1_refl t2)))).
 
 theorem pc1_pr0_x:
  \forall (t1: T).(\forall (t2: T).((pr0 t2 t1) \to (pc1 t1 t2)))
 \def
  \lambda (t1: T).(\lambda (t2: T).(\lambda (H: (pr0 t2 t1)).(ex_intro2 T 
-(\lambda (t: T).(pr1 t1 t)) (\lambda (t: T).(pr1 t2 t)) t1 (pr1_r t1) 
+(\lambda (t: T).(pr1 t1 t)) (\lambda (t: T).(pr1 t2 t)) t1 (pr1_refl t1) 
 (pr1_pr0 t2 t1 H)))).
 
 theorem pc1_pr0_u:
@@ -42,14 +42,14 @@ t3) \to (pc1 t1 t3)))))
 T).(\lambda (H0: (pc1 t2 t3)).(let H1 \def H0 in (ex2_ind T (\lambda (t: 
 T).(pr1 t2 t)) (\lambda (t: T).(pr1 t3 t)) (pc1 t1 t3) (\lambda (x: 
 T).(\lambda (H2: (pr1 t2 x)).(\lambda (H3: (pr1 t3 x)).(ex_intro2 T (\lambda 
-(t: T).(pr1 t1 t)) (\lambda (t: T).(pr1 t3 t)) x (pr1_u t2 t1 H x H2) H3)))) 
-H1)))))).
+(t: T).(pr1 t1 t)) (\lambda (t: T).(pr1 t3 t)) x (pr1_sing t2 t1 H x H2) 
+H3)))) H1)))))).
 
 theorem pc1_refl:
  \forall (t: T).(pc1 t t)
 \def
  \lambda (t: T).(ex_intro2 T (\lambda (t0: T).(pr1 t t0)) (\lambda (t0: 
-T).(pr1 t t0)) t (pr1_r t) (pr1_r t)).
+T).(pr1 t t0)) t (pr1_refl t) (pr1_refl t)).
 
 theorem pc1_s:
  \forall (t2: T).(\forall (t1: T).((pc1 t1 t2) \to (pc1 t2 t1)))

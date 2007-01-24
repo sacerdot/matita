@@ -109,3 +109,58 @@ d) x0)) (\lambda (t2: T).(subst1 d u (THead k t t0) t2)) (subst1_head u t
 (lift (S O) d x) d H2 k t0 (lift (S O) (s k d) x0) H4) (lift (S O) d (THead k 
 x x0)) (lift_head k x x0 (S O) d))))) H3))))) H1))))))))) t1)).
 
+theorem subst1_lift_S:
+ \forall (u: T).(\forall (i: nat).(\forall (h: nat).((le h i) \to (subst1 i 
+(TLRef h) (lift (S h) (S i) u) (lift (S h) i u)))))
+\def
+ \lambda (u: T).(T_ind (\lambda (t: T).(\forall (i: nat).(\forall (h: 
+nat).((le h i) \to (subst1 i (TLRef h) (lift (S h) (S i) t) (lift (S h) i 
+t)))))) (\lambda (n: nat).(\lambda (i: nat).(\lambda (h: nat).(\lambda (_: 
+(le h i)).(eq_ind_r T (TSort n) (\lambda (t: T).(subst1 i (TLRef h) t (lift 
+(S h) i (TSort n)))) (eq_ind_r T (TSort n) (\lambda (t: T).(subst1 i (TLRef 
+h) (TSort n) t)) (subst1_refl i (TLRef h) (TSort n)) (lift (S h) i (TSort n)) 
+(lift_sort n (S h) i)) (lift (S h) (S i) (TSort n)) (lift_sort n (S h) (S 
+i))))))) (\lambda (n: nat).(\lambda (i: nat).(\lambda (h: nat).(\lambda (H: 
+(le h i)).(lt_eq_gt_e n i (subst1 i (TLRef h) (lift (S h) (S i) (TLRef n)) 
+(lift (S h) i (TLRef n))) (\lambda (H0: (lt n i)).(eq_ind_r T (TLRef n) 
+(\lambda (t: T).(subst1 i (TLRef h) t (lift (S h) i (TLRef n)))) (eq_ind_r T 
+(TLRef n) (\lambda (t: T).(subst1 i (TLRef h) (TLRef n) t)) (subst1_refl i 
+(TLRef h) (TLRef n)) (lift (S h) i (TLRef n)) (lift_lref_lt n (S h) i H0)) 
+(lift (S h) (S i) (TLRef n)) (lift_lref_lt n (S h) (S i) (le_S (S n) i H0)))) 
+(\lambda (H0: (eq nat n i)).(let H1 \def (eq_ind_r nat i (\lambda (n0: 
+nat).(le h n0)) H n H0) in (eq_ind nat n (\lambda (n0: nat).(subst1 n0 (TLRef 
+h) (lift (S h) (S n0) (TLRef n)) (lift (S h) n0 (TLRef n)))) (eq_ind_r T 
+(TLRef n) (\lambda (t: T).(subst1 n (TLRef h) t (lift (S h) n (TLRef n)))) 
+(eq_ind_r T (TLRef (plus n (S h))) (\lambda (t: T).(subst1 n (TLRef h) (TLRef 
+n) t)) (eq_ind nat (S (plus n h)) (\lambda (n0: nat).(subst1 n (TLRef h) 
+(TLRef n) (TLRef n0))) (eq_ind_r nat (plus h n) (\lambda (n0: nat).(subst1 n 
+(TLRef h) (TLRef n) (TLRef (S n0)))) (eq_ind nat (plus h (S n)) (\lambda (n0: 
+nat).(subst1 n (TLRef h) (TLRef n) (TLRef n0))) (eq_ind T (lift (S n) O 
+(TLRef h)) (\lambda (t: T).(subst1 n (TLRef h) (TLRef n) t)) (subst1_single n 
+(TLRef h) (TLRef n) (lift (S n) O (TLRef h)) (subst0_lref (TLRef h) n)) 
+(TLRef (plus h (S n))) (lift_lref_ge h (S n) O (le_O_n h))) (S (plus h n)) 
+(sym_eq nat (S (plus h n)) (plus h (S n)) (plus_n_Sm h n))) (plus n h) 
+(plus_comm n h)) (plus n (S h)) (plus_n_Sm n h)) (lift (S h) n (TLRef n)) 
+(lift_lref_ge n (S h) n (le_n n))) (lift (S h) (S n) (TLRef n)) (lift_lref_lt 
+n (S h) (S n) (le_n (S n)))) i H0))) (\lambda (H0: (lt i n)).(eq_ind_r T 
+(TLRef (plus n (S h))) (\lambda (t: T).(subst1 i (TLRef h) t (lift (S h) i 
+(TLRef n)))) (eq_ind_r T (TLRef (plus n (S h))) (\lambda (t: T).(subst1 i 
+(TLRef h) (TLRef (plus n (S h))) t)) (subst1_refl i (TLRef h) (TLRef (plus n 
+(S h)))) (lift (S h) i (TLRef n)) (lift_lref_ge n (S h) i (le_S_n i n (le_S 
+(S i) n H0)))) (lift (S h) (S i) (TLRef n)) (lift_lref_ge n (S h) (S i) 
+H0)))))))) (\lambda (k: K).(\lambda (t: T).(\lambda (H: ((\forall (i: 
+nat).(\forall (h: nat).((le h i) \to (subst1 i (TLRef h) (lift (S h) (S i) t) 
+(lift (S h) i t))))))).(\lambda (t0: T).(\lambda (H0: ((\forall (i: 
+nat).(\forall (h: nat).((le h i) \to (subst1 i (TLRef h) (lift (S h) (S i) 
+t0) (lift (S h) i t0))))))).(\lambda (i: nat).(\lambda (h: nat).(\lambda (H1: 
+(le h i)).(eq_ind_r T (THead k (lift (S h) (S i) t) (lift (S h) (s k (S i)) 
+t0)) (\lambda (t1: T).(subst1 i (TLRef h) t1 (lift (S h) i (THead k t t0)))) 
+(eq_ind_r T (THead k (lift (S h) i t) (lift (S h) (s k i) t0)) (\lambda (t1: 
+T).(subst1 i (TLRef h) (THead k (lift (S h) (S i) t) (lift (S h) (s k (S i)) 
+t0)) t1)) (subst1_head (TLRef h) (lift (S h) (S i) t) (lift (S h) i t) i (H i 
+h H1) k (lift (S h) (s k (S i)) t0) (lift (S h) (s k i) t0) (eq_ind_r nat (S 
+(s k i)) (\lambda (n: nat).(subst1 (s k i) (TLRef h) (lift (S h) n t0) (lift 
+(S h) (s k i) t0))) (H0 (s k i) h (le_trans h i (s k i) H1 (s_inc k i))) (s k 
+(S i)) (s_S k i))) (lift (S h) i (THead k t t0)) (lift_head k t t0 (S h) i)) 
+(lift (S h) (S i) (THead k t t0)) (lift_head k t t0 (S h) (S i))))))))))) u).
+
