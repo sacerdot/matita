@@ -34,13 +34,13 @@ exception AttemptToInsertAnAlias
 
 (** {2 Initialization} *)
 
-let grafite_status = (ref None : GrafiteTypes.status option ref)
-let lexicon_status = (ref None : LexiconEngine.status option ref)
+let grafite_status = (ref [] : GrafiteTypes.status list ref)
+let lexicon_status = (ref [] : LexiconEngine.status list ref)
 
 let run_script is eval_function  =
   let lexicon_status',grafite_status' = 
     match !lexicon_status,!grafite_status with
-    | Some ss, Some s -> ss,s
+    | ss::_, s::_ -> ss,s
     | _,_ -> assert false
   in
   let cb = fun _ _ -> () in
@@ -49,8 +49,8 @@ let run_script is eval_function  =
    match eval_function lexicon_status' grafite_status' is cb with
       [] -> raise End_of_file
     | ((grafite_status'',lexicon_status''),None)::_ ->
-       lexicon_status := Some lexicon_status'';
-       grafite_status := Some grafite_status''
+       lexicon_status := lexicon_status''::!lexicon_status;
+       grafite_status := grafite_status''::!grafite_status
     | (s,Some _)::_ -> raise AttemptToInsertAnAlias
   with
   | GrafiteEngine.Drop  
@@ -63,81 +63,156 @@ let run_script is eval_function  =
       raise exn
 
 let clean_exit n =
- let opt_exit =
-  function
-     None -> ()
-   | Some n -> exit n
- in
   match !grafite_status with
-     None -> opt_exit n
-   | Some grafite_status ->
+     [] -> exit n
+   | grafite_status::_ ->
       try
        let baseuri = GrafiteTypes.get_string_option grafite_status "baseuri" in
        LibraryClean.clean_baseuris ~verbose:false [baseuri];
-       opt_exit n
+       exit n
       with GrafiteTypes.Option_error("baseuri", "not found") ->
        (* no baseuri ==> nothing to clean yet *)
-       opt_exit n
+       exit n
 
-let terminate () =
+let terminate n =
  let terminator = String.make 1 (Char.chr 249) in
-  print_endline terminator;
-  prerr_endline terminator
+ let prompt =
+  (match n with
+     None -> "-1"
+   | Some n -> string_of_int n) ^ terminator
+ in
+  print_endline prompt;
+  prerr_endline prompt
+;;
+
+let outer_syntax_parser () =
+ let text = ref "" in
+ let tag = ref `Do in
+ let callbacks =
+  { XmlPushParser.default_callbacks with
+    XmlPushParser.start_element =
+     (Some
+       (fun name attrs ->
+         match name with
+            "pgip" -> ()
+          | "doitem" -> tag := `Do
+          | "undoitem" -> tag := `Undo
+          | _ -> assert false)) ;
+    XmlPushParser.character_data =
+     (Some (fun s -> text := !text ^ s)) ;
+    XmlPushParser.end_element =
+     (Some
+       (function
+           "pgip" -> raise (XmlPushParser.Parse_error "EOC")
+         | "doitem"
+         | "undoitem" -> ()
+         | _ -> assert false))
+  }
+ in
+  let parse = XmlPushParser.create_parser callbacks in
+    try
+     XmlPushParser.parse parse (`Channel stdin) ;
+     raise End_of_file
+    with
+       XmlPushParser.Parse_error "no element found" -> raise End_of_file
+     | XmlPushParser.Parse_error "EOC" ->
+        match !tag with
+           `Do -> `Do !text
+         | `Undo ->
+             try
+              `Undo (int_of_string !text)
+             with
+              Failure _ -> assert false
 ;;
   
 let rec interactive_loop () = 
   (* every loop is terminated by a terminator both on stdout and stderr *)
-  let interactive_loop () = terminate(); interactive_loop () in
-  let str = Ulexing.from_utf8_channel stdin in
-  let watch_statuses lexicon_status grafite_status =
-   match grafite_status.GrafiteTypes.proof_status with
-      GrafiteTypes.Incomplete_proof
-       {GrafiteTypes.proof = uri,metasenv,bo,ty,attrs ;
-        GrafiteTypes.stack = stack } ->
-        let open_goals = Continuationals.Stack.open_goals stack in
-        print_endline
-         (String.concat "\n"
-           (List.map
-             (fun i ->
-               ApplyTransformation.txt_of_cic_sequent 80 metasenv
-                (List.find (fun (j,_,_) -> j=i) metasenv)
-             ) open_goals))
-    | _ -> ()
-  in
-  let include_paths =
-   Helm_registry.get_list Helm_registry.string "matita.includes" in
+  let interactive_loop n = terminate n; interactive_loop () in
   try
-    run_script str 
-      (MatitaEngine.eval_from_stream ~first_statement_only:true ~prompt:false
-      ~include_paths ~watch_statuses) ;
-    interactive_loop ()
+   match outer_syntax_parser () with
+      `Undo n ->
+        let rec drop =
+         function
+            0,l -> l
+          | n,_::l -> drop (n-1,l)
+          | _,[] -> assert false
+        in
+         let to_be_dropped = List.length !lexicon_status - n in
+         let safe_hd = function [] -> assert false | he::_ -> he in
+         let cur_lexicon_status = safe_hd !lexicon_status in
+         let cur_grafite_status = safe_hd !grafite_status in
+          lexicon_status := drop (to_be_dropped, !lexicon_status) ;
+          grafite_status := drop (to_be_dropped, !grafite_status) ;
+          let lexicon_status = safe_hd !lexicon_status in
+          let grafite_status = safe_hd !grafite_status in
+           LexiconSync.time_travel
+            ~present:cur_lexicon_status ~past:lexicon_status;
+           GrafiteSync.time_travel
+            ~present:cur_grafite_status ~past:grafite_status;
+           interactive_loop (Some n)
+    | `Do command ->
+        let str = Ulexing.from_utf8_string command in
+        let watch_statuses lexicon_status grafite_status =
+         match grafite_status.GrafiteTypes.proof_status with
+            GrafiteTypes.Incomplete_proof
+             {GrafiteTypes.proof = uri,metasenv,bo,ty,attrs ;
+              GrafiteTypes.stack = stack } ->
+              let open_goals = Continuationals.Stack.open_goals stack in
+              print_endline
+               (String.concat "\n"
+                 (List.map
+                   (fun i ->
+                     ApplyTransformation.txt_of_cic_sequent 80 metasenv
+                      (List.find (fun (j,_,_) -> j=i) metasenv)
+                   ) open_goals))
+          | _ -> ()
+        in
+        let include_paths =
+         Helm_registry.get_list Helm_registry.string "matita.includes"
+        in
+         run_script str 
+           (MatitaEngine.eval_from_stream ~first_statement_only:true ~prompt:false
+           ~include_paths ~watch_statuses) ;
+         interactive_loop (Some (List.length !lexicon_status))
   with 
-  | GrafiteEngine.Macro (floc,_) ->
-     let x, y = HExtlib.loc_of_floc floc in
-      HLog.error
-       (sprintf "A macro has been found in a script at %d-%d" x y);
-      interactive_loop ()
-  | Sys.Break -> HLog.error "user break!"; interactive_loop ()
-  | GrafiteTypes.Command_error _ -> interactive_loop ()
-  | HExtlib.Localized (floc,CicNotationParser.Parse_error err) ->
-     let x, y = HExtlib.loc_of_floc floc in
-      HLog.error (sprintf "Parse error at %d-%d: %s" x y err);
-      interactive_loop ()
-  | End_of_file as exn -> raise exn
-  | exn -> HLog.error (Printexc.to_string exn); interactive_loop ()
+   | GrafiteEngine.Macro (floc,_) ->
+      let x, y = HExtlib.loc_of_floc floc in
+       HLog.error
+        (sprintf "A macro has been found in a script at %d-%d" x y);
+       interactive_loop None
+   | Sys.Break -> HLog.error "user break!"; interactive_loop None
+   | GrafiteTypes.Command_error _ -> interactive_loop None
+   | HExtlib.Localized (floc,CicNotationParser.Parse_error err) ->
+      let x, y = HExtlib.loc_of_floc floc in
+       HLog.error (sprintf "Parse error at %d-%d: %s" x y err);
+       interactive_loop None
+   | End_of_file as exn -> raise exn
+   | exn -> HLog.error (Printexc.to_string exn); interactive_loop None
 
 
 let main () = 
   MatitaInit.initialize_all ();
+  HLog.set_log_callback
+   (fun tag msg ->
+     let s =
+      match tag with
+         `Debug -> "<div style='color:blue'>Debug: " ^ msg ^ "</div><br/>\n"
+       | `Message -> "<div style='color:green'>Info: " ^ msg ^ "</div><br/>\n"
+       | `Warning -> "<div style='color:yellow'>Warn: " ^ msg ^ "</div><br/>\n"
+       | `Error -> "<div style='color:red'>Error: " ^ msg ^ "</div><br/>\n"
+     in
+      output_string stdout s;
+      flush stdout
+   );
   (* must be called after init since args are set by cmdline parsing *)
   let system_mode =  Helm_registry.get_bool "matita.system" in
   Helm_registry.set_int "matita.verbosity" 0;
   let include_paths =
    Helm_registry.get_list Helm_registry.string "matita.includes" in
-  grafite_status := Some (GrafiteSync.init ());
+  grafite_status := [GrafiteSync.init ()];
   lexicon_status :=
-   Some (CicNotation2.load_notation ~include_paths
-    BuildTimeConf.core_notation_script);
+   [CicNotation2.load_notation ~include_paths
+     BuildTimeConf.core_notation_script] ;
   Sys.catch_break true;
   let origcb = HLog.get_log_callback () in
   let origcb t s = origcb t ((if system_mode then "[S] " else "") ^ s) in
@@ -153,11 +228,11 @@ let main () =
       interactive_loop ()
      with
       | End_of_file -> ()
-      | GrafiteEngine.Drop -> clean_exit (Some 1)
+      | GrafiteEngine.Drop -> clean_exit 1
     );
     let proof_status,moo_content_rev,metadata,lexicon_content_rev = 
       match !lexicon_status,!grafite_status with
-      | Some ss, Some s ->
+      | ss::_, s::_ ->
          s.proof_status, s.moo_content_rev, ss.LexiconEngine.metadata,
           ss.LexiconEngine.lexicon_content_rev
       | _,_ -> assert false
@@ -166,15 +241,15 @@ let main () =
      begin
       HLog.error
        "there are still incomplete proofs at the end of the script";
-      clean_exit (Some 2)
+      clean_exit 2
      end
     else
      begin
        let baseuri =
         GrafiteTypes.get_string_option
          (match !grafite_status with
-             None -> assert false
-           | Some s -> s) "baseuri" in
+             [] -> assert false
+           | s::_ -> s) "baseuri" in
        let moo_fname = 
          LibraryMisc.obj_file_of_baseuri 
            ~must_exist:false ~baseuri ~writable:true 
@@ -195,4 +270,4 @@ let main () =
   with 
   | exn ->
       if matita_debug then raise exn;
-      clean_exit (Some 3)
+      clean_exit 3
