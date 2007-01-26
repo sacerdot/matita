@@ -201,8 +201,8 @@ let main () =
        | `Warning -> "<div style='color:yellow'>Warn: " ^ msg ^ "</div><br/>\n"
        | `Error -> "<div style='color:red'>Error: " ^ msg ^ "</div><br/>\n"
      in
-      output_string stdout s;
-      flush stdout
+      output_string stderr s;
+      flush stderr
    );
   (* must be called after init since args are set by cmdline parsing *)
   let system_mode =  Helm_registry.get_bool "matita.system" in
