@@ -73,3 +73,7 @@ match p with
 definition sndT \def \lambda A,B:Type.\lambda p: ProdT A B.
 match p with
 [(pairT a b) \Rightarrow b].
+
+inductive option (A:Type) : Type ≝
+   None : option A
+ | Some : A → option A.
