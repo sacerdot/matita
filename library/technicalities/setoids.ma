@@ -335,140 +335,162 @@ inductive rewrite_direction : Type :=
    Left2Right: rewrite_direction
  | Right2Left: rewrite_direction.
 
-(*definition variance_of_argument_class : Argument_Class → option variance.
- destruct 1.
- exact None.
- exact (Some v).
- exact None.
- exact (Some v).
- exact None.
+definition variance_of_argument_class : Argument_Class → option variance.
+ intros;
+ elim a;
+  [ apply None
+  | apply (Some ? t)
+  | apply None
+  | apply (Some ? t)
+  | apply None
+  ]
 qed.
 
 definition opposite_direction :=
- fun dir =>
+ λdir.
    match dir with
-       Left2Right => Right2Left
-     | Right2Left => Left2Right
-   end.
+    [ Left2Right ⇒ Right2Left
+    | Right2Left ⇒ Left2Right
+    ].
 
-Lemma opposite_direction_idempotent:
- ∀dir. (opposite_direction (opposite_direction dir)) = dir.
-  destruct dir; reflexivity.
-Qed.
+lemma opposite_direction_idempotent:
+ ∀dir. opposite_direction (opposite_direction dir) = dir.
+  intros;
+  elim dir;
+  reflexivity.
+qed.
 
 inductive check_if_variance_is_respected :
  option variance → rewrite_direction → rewrite_direction →  Prop
 :=
-   MSNone : ∀dir dir'. check_if_variance_is_respected None dir dir'
- | MSCovariant : ∀dir. check_if_variance_is_respected (Some Covariant) dir dir
+   MSNone : ∀dir,dir'. check_if_variance_is_respected (None ?) dir dir'
+ | MSCovariant : ∀dir. check_if_variance_is_respected (Some ? Covariant) dir dir
  | MSContravariant :
      ∀dir.
-      check_if_variance_is_respected (Some Contravariant) dir (opposite_direction dir).
+      check_if_variance_is_respected (Some ? Contravariant) dir (opposite_direction dir).
 
 definition relation_class_of_reflexive_relation_class:
  Reflexive_Relation_Class → Relation_Class.
- induction 1.
-   exact (SymmetricReflexive ? s r).
-   exact (AsymmetricReflexive tt r).
-   exact (Leibniz ? T).
+ intro;
+ elim r;
+  [ apply (SymmetricReflexive ? ? ? H H1)
+  | apply (AsymmetricReflexive ? something ? ? H)
+  | apply (Leibniz ? T)
+  ]
 qed.
 
 definition relation_class_of_areflexive_relation_class:
  Areflexive_Relation_Class → Relation_Class.
- induction 1.
-   exact (SymmetricAreflexive ? s).
-   exact (AsymmetricAreflexive tt Aeq).
+ intro;
+ elim a;
+  [ apply (SymmetricAreflexive ? ? ? H)
+  | apply (AsymmetricAreflexive ? something ? r)
+  ]
 qed.
 
 definition carrier_of_reflexive_relation_class :=
- fun R => carrier_of_relation_class (relation_class_of_reflexive_relation_class R).
+ λR.carrier_of_relation_class ? (relation_class_of_reflexive_relation_class R).
 
 definition carrier_of_areflexive_relation_class :=
- fun R => carrier_of_relation_class (relation_class_of_areflexive_relation_class R).
+ λR.carrier_of_relation_class ? (relation_class_of_areflexive_relation_class R).
 
 definition relation_of_areflexive_relation_class :=
- fun R => relation_of_relation_class (relation_class_of_areflexive_relation_class R).
+ λR.relation_of_relation_class ? (relation_class_of_areflexive_relation_class R).
 
-inductive Morphism_Context Hole dir : Relation_Class → rewrite_direction →  Type :=
+inductive Morphism_Context (Hole: Relation_Class) (dir:rewrite_direction) : Relation_Class → rewrite_direction →  Type :=
     App :
-      ∀In Out dir'.
+      ∀In,Out,dir'.
         Morphism_Theory In Out → Morphism_Context_List Hole dir dir' In →
-           Morphism_Context Hole dir Out dir'
+           Morphism_Context Hole dir Out dir
   | ToReplace : Morphism_Context Hole dir Hole dir
   | ToKeep :
-     ∀S dir'.
+     ∀S,dir'.
       carrier_of_reflexive_relation_class S →
         Morphism_Context Hole dir (relation_class_of_reflexive_relation_class S) dir'
  | ProperElementToKeep :
-     ∀S dir' (x: carrier_of_areflexive_relation_class S).
+     ∀S,dir'.∀x: carrier_of_areflexive_relation_class S.
       relation_of_areflexive_relation_class S x x →
         Morphism_Context Hole dir (relation_class_of_areflexive_relation_class S) dir'
-with Morphism_Context_List Hole dir :
+with Morphism_Context_List :
    rewrite_direction → Arguments → Type
 :=
     fcl_singl :
-      ∀S dir' dir''.
+      ∀S,dir',dir''.
        check_if_variance_is_respected (variance_of_argument_class S) dir' dir'' →
         Morphism_Context Hole dir (relation_class_of_argument_class S) dir' →
-         Morphism_Context_List Hole dir dir'' (singl S)
+         Morphism_Context_List Hole dir dir'' (singl ? S)
  | fcl_cons :
-      ∀S L dir' dir''.
+      ∀S,L,dir',dir''.
        check_if_variance_is_respected (variance_of_argument_class S) dir' dir'' →
         Morphism_Context Hole dir (relation_class_of_argument_class S) dir' →
          Morphism_Context_List Hole dir dir'' L →
-          Morphism_Context_List Hole dir dir'' (cons S L).
-
-Scheme Morphism_Context_rect2 := Induction for Morphism_Context  Sort Type
-with Morphism_Context_List_rect2 := Induction for Morphism_Context_List Sort Type.
+          Morphism_Context_List Hole dir dir'' (cons ? S L).
 
 definition product_of_arguments : Arguments → Type.
- induction 1.
-   exact (carrier_of_relation_class a).
-   exact (prod (carrier_of_relation_class a) IHX).
+ intro;
+ elim a;
+  [ apply (carrier_of_relation_class ? t)
+  | apply (Prod (carrier_of_relation_class ? t) T)
+  ]
 qed.
 
 definition get_rewrite_direction: rewrite_direction → Argument_Class → rewrite_direction.
- intros dir R.
-destruct (variance_of_argument_class R).
-   destruct v.
-     exact dir.                                      (* covariant *)
-     exact (opposite_direction dir). (* contravariant *)
-   exact dir.                                       (* symmetric relation *)
+ intros (dir R);
+ cases (variance_of_argument_class R);
+  [ cases a;
+     [ exact dir                      (* covariant *)
+     | exact (opposite_direction dir) (* contravariant *)
+     ]
+  | exact dir                         (* symmetric relation *)
+  ]
 qed.
 
 definition directed_relation_of_relation_class:
- ∀dir (R: Relation_Class).
-   carrier_of_relation_class R → carrier_of_relation_class R → Prop.
- destruct 1.
-   exact (@relation_of_relation_class unit).
-   intros; exact (relation_of_relation_class ? X0 X).
+ ∀dir:rewrite_direction.∀R: Relation_Class.
+   carrier_of_relation_class ? R → carrier_of_relation_class ? R → Prop.
+ intros;
+ cases r;
+  [ exact (relation_of_relation_class ? ? c c1)
+  | apply (relation_of_relation_class ? ? c1 c)
+  ]
 qed.
 
 definition directed_relation_of_argument_class:
- ∀dir (R: Argument_Class).
-   carrier_of_relation_class R → carrier_of_relation_class R → Prop.
-  intros dir R.
-  rewrite <-
-   (about_carrier_of_relation_class_and_relation_class_of_argument_class R).
-  exact (directed_relation_of_relation_class dir (relation_class_of_argument_class R)).
+ ∀dir:rewrite_direction.∀R: Argument_Class.
+   carrier_of_relation_class ? R → carrier_of_relation_class ? R → Prop.
+  intros (dir R);
+  generalize in match
+   (about_carrier_of_relation_class_and_relation_class_of_argument_class R);
+  intro H;
+  apply (directed_relation_of_relation_class dir (relation_class_of_argument_class R));
+  apply (eq_rect ? ? (λX.X) ? ? (sym_eq ? ? ? H));
+   [ apply c
+   | apply c1
+   ]
 qed.
 
-
 definition relation_of_product_of_arguments:
- ∀dir In.
+ ∀dir:rewrite_direction.∀In.
   product_of_arguments In → product_of_arguments In → Prop.
- induction In.
-   simpl.
-   exact (directed_relation_of_argument_class (get_rewrite_direction dir a) a).
-
-   simpl; intros.
-   destruct X; destruct X0.
-   apply and.
-     exact
-      (directed_relation_of_argument_class (get_rewrite_direction dir a) a c c0).
-     exact (IHIn p p0).
+ intros 2;
+ elim In 0;
+  [ simplify;
+    intro;
+    exact (directed_relation_of_argument_class (get_rewrite_direction r t) t)
+  | intros;
+    change in p with (Prod (carrier_of_relation_class variance t) (product_of_arguments n));
+    change in p1 with (Prod (carrier_of_relation_class variance t) (product_of_arguments n));
+    cases p;
+    cases p1;
+   apply And;
+    [ exact
+      (directed_relation_of_argument_class (get_rewrite_direction r t) t a a1)
+    | exact (R b b1)
+    ]
+  ]
 qed. 
 
+(*
 definition apply_morphism:
  ∀In Out (m: function_type_of_morphism_signature In Out)
   (args: product_of_arguments In). carrier_of_relation_class Out.
