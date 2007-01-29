@@ -19,7 +19,7 @@ inductive void : Set \def.
 
 inductive unit : Set ≝ something: unit.
 
-inductive Prod (A,B:Set) : Set \def
+inductive Prod (A,B:Type) : Type \def
 pair : A \to B \to Prod A B.
 
 interpretation "Pair construction" 'pair x y =
