@@ -437,11 +437,11 @@ qed.
 definition get_rewrite_direction: rewrite_direction → Argument_Class → rewrite_direction.
  intros (dir R);
  cases (variance_of_argument_class R);
-  [ cases a;
+  [ exact dir
+  | cases a;
      [ exact dir                      (* covariant *)
      | exact (opposite_direction dir) (* contravariant *)
      ]
-  | exact dir                         (* symmetric relation *)
   ]
 qed.
 
@@ -490,65 +490,170 @@ definition relation_of_product_of_arguments:
   ]
 qed. 
 
-(*
 definition apply_morphism:
- ∀In Out (m: function_type_of_morphism_signature In Out)
-  (args: product_of_arguments In). carrier_of_relation_class Out.
- intros.
- induction In.
-   exact (m args).
-   simpl in m. args.
-   destruct args.
-   exact (IHIn (m c) p).
+ ∀In,Out.∀m: function_type_of_morphism_signature In Out.
+  ∀args: product_of_arguments In. carrier_of_relation_class ? Out.
+ intro;
+ elim In;
+  [ exact (f p)
+  | change in p with (Prod (carrier_of_relation_class variance t) (product_of_arguments n));
+   elim p;
+   change in f1 with (carrier_of_relation_class variance t → function_type_of_morphism_signature n Out);
+   exact (f ? (f1 t1) t2)
+  ]
 qed.
 
-Theorem apply_morphism_compatibility_Right2Left:
- ∀In Out (m1 m2: function_type_of_morphism_signature In Out)
-   (args1 args2: product_of_arguments In).
+theorem apply_morphism_compatibility_Right2Left:
+ ∀In,Out.∀m1,m2: function_type_of_morphism_signature In Out.
+  ∀args1,args2: product_of_arguments In.
      make_compatibility_goal_aux ? ? m1 m2 →
       relation_of_product_of_arguments Right2Left ? args1 args2 →
         directed_relation_of_relation_class Right2Left ?
          (apply_morphism ? ? m2 args1)
          (apply_morphism ? ? m1 args2).
-  induction In; intros.
-    simpl in m1. m2. args1. args2. H0 |- *.
-    destruct a; simpl in H; hnf in H0.
-          apply H; exact H0.
-          destruct v; simpl in H0; apply H; exact H0.
-          apply H; exact H0.
-          destruct v; simpl in H0; apply H; exact H0.
-          rewrite H0; apply H; exact H0.
+  intro;
+  elim In;
+   [ simplify in m1 m2 args1 args2 ⊢ %;
+     change in H1 with
+      (directed_relation_of_argument_class
+        (get_rewrite_direction Right2Left t) t args1 args2);
+     generalize in match H1; clear H1;
+     generalize in match H; clear H;
+     generalize in match args2; clear args2;
+     generalize in match args1; clear args1;
+     generalize in match m2; clear m2;
+     generalize in match m1; clear m1;
+     elim t 0;
+      [ intros (T1 r Hs Hr m1 m2 args1 args2 H H1);
+        simplify in H;
+        simplify in H1;
+        simplify;
+        apply H;
+        exact H1
+      | intros 8 (v T1 r Hr m1 m2 args1 args2);
+        cases v;
+        intros (H H1);
+        simplify in H1;
+        apply H;
+        exact H1
+      | intros;
+        apply H1;
+        exact H2
+      | intros 7 (v);
+        cases v;
+        intros (H H1);
+        simplify in H1;
+        apply H;
+        exact H1
+      | intros;
+        simplify in H1;
+        rewrite > H1;
+        apply H;
+        exact H1
+      ]
+   | change in m1 with
+      (carrier_of_relation_class variance t →
+        function_type_of_morphism_signature n Out);
+     change in m2 with
+      (carrier_of_relation_class variance t →
+        function_type_of_morphism_signature n Out);
+     change in args1 with
+      ((carrier_of_relation_class ? t) × (product_of_arguments n));
+     change in args2 with
+      ((carrier_of_relation_class ? t) × (product_of_arguments n));
+     generalize in match H2; clear H2;
+     elim args2 0; clear args2;
+     elim args1; clear args1;
+     elim H2; clear H2;
+     change in H4 with
+      (relation_of_product_of_arguments Right2Left n t2 t4);
+     change with
+      (relation_of_relation_class unit Out (apply_morphism n Out (m1 t3) t4)
+        (apply_morphism n Out (m2 t1) t2));
+     generalize in match H3; clear H3;
+     generalize in match t3; clear t3;
+     generalize in match t1; clear t1;
+     generalize in match H1; clear H1;
+     generalize in match m2; clear m2;
+     generalize in match m1; clear m1;
+     elim t 0;
+      [ intros (T1 r Hs Hr m1 m2 H1 t1 t3 H3);
+        simplify in H3;
+        change in H1 with
+         (∀x1,x2:T1.r x1 x2 → make_compatibility_goal_aux n Out (m1 x1) (m2 x2));
+        simplify in H;
+        apply H;
+         [ apply H1;
+           assumption
+         | assumption
+         ]
+     | intro v;
+       elim v 0;
+       [ intros (T1 r Hr m1 m2 H1 t1 t3 H3);
+         simplify in H3;
+         change in H1 with
+          (∀x1,x2:T1.r x1 x2 → make_compatibility_goal_aux n Out (m1 x1) (m2 x2));
+         simplify in H;
+         apply H;
+          [ apply H1;
+            assumption
+          | assumption
+          ]
+       | intros (T1 r Hr m1 m2 H1 t1 t3 H3);
+         simplify in H3;
+         change in H1 with
+          (∀x1,x2:T1.r x2 x1 → make_compatibility_goal_aux n Out (m1 x1) (m2 x2));
+         simplify in H;
+         apply H;
+          [ apply H1;
+            assumption
+          | assumption
+          ]       
+       ]
+     | intros (T1 r Hs m1 m2 H1 t1 t3 H3);
+       simplify in H3;
+       change in H1 with
+        (∀x1,x2:T1.r x1 x2 → make_compatibility_goal_aux n Out (m1 x1) (m2 x2));
+       simplify in H;
+       apply H;
+        [ apply H1;
+          assumption
+        | assumption
+        ]
+     | intro v;
+       elim v 0;
+        [ intros (T1 r m1 m2 H1 t1 t3 H3);
+          simplify in H3;
+          change in H1 with
+           (∀x1,x2:T1.r x1 x2 → make_compatibility_goal_aux n Out (m1 x1) (m2 x2));
+        | intros (T1 r m1 m2 H1 t1 t3 H3);
+          simplify in H3;
+          change in H1 with
+           (∀x1,x2:T1.r x2 x1 → make_compatibility_goal_aux n Out (m1 x1) (m2 x2));
+        ] ;
+        simplify in H;
+        apply H;
+         [1,3:
+           apply H1;
+           assumption
+         |2,4:
+           assumption
+         ]
+     | intros (T m1 m2 H1 t1 t3 H3);
+       simplify in H3;
+       change in H1 with
+        (∀x:T. make_compatibility_goal_aux n Out (m1 x) (m2 x));
+       rewrite > H3;
+       simplify in H;
+       apply H;
+        [ apply H1 
+        | assumption
+        ]
+     ]
+   ]
+qed.
 
-   simpl in m1. m2. args1. args2. H0 |- *.
-   destruct args1; destruct args2; simpl.
-   destruct H0.
-   simpl in H.
-   destruct a; simpl in H.
-     apply IHIn.
-       apply H; exact H0.
-       exact H1.
-     destruct v.
-       apply IHIn.
-         apply H; exact H0.
-         exact H1.
-       apply IHIn.
-         apply H; exact H0.       
-          exact H1.
-     apply IHIn.
-       apply H; exact H0.
-       exact H1.
-     destruct v.
-       apply IHIn.
-         apply H; exact H0.
-         exact H1.
-       apply IHIn.
-         apply H; exact H0.       
-          exact H1.
-    rewrite H0; apply IHIn.
-      apply H.
-      exact H1.
-Qed.
-
+(*
 Theorem apply_morphism_compatibility_Left2Right:
  ∀In Out (m1 m2: function_type_of_morphism_signature In Out)
    (args1 args2: product_of_arguments In).
