@@ -581,45 +581,21 @@ theorem apply_morphism_compatibility_Right2Left:
         simplify in H3;
         change in H1 with
          (∀x1,x2:T1.r x1 x2 → make_compatibility_goal_aux n Out (m1 x1) (m2 x2));
-        simplify in H;
-        apply H;
-         [ apply H1;
-           assumption
-         | assumption
-         ]
      | intro v;
        elim v 0;
        [ intros (T1 r Hr m1 m2 H1 t1 t3 H3);
          simplify in H3;
          change in H1 with
           (∀x1,x2:T1.r x1 x2 → make_compatibility_goal_aux n Out (m1 x1) (m2 x2));
-         simplify in H;
-         apply H;
-          [ apply H1;
-            assumption
-          | assumption
-          ]
        | intros (T1 r Hr m1 m2 H1 t1 t3 H3);
          simplify in H3;
          change in H1 with
           (∀x1,x2:T1.r x2 x1 → make_compatibility_goal_aux n Out (m1 x1) (m2 x2));
-         simplify in H;
-         apply H;
-          [ apply H1;
-            assumption
-          | assumption
-          ]       
        ]
      | intros (T1 r Hs m1 m2 H1 t1 t3 H3);
        simplify in H3;
        change in H1 with
         (∀x1,x2:T1.r x1 x2 → make_compatibility_goal_aux n Out (m1 x1) (m2 x2));
-       simplify in H;
-       apply H;
-        [ apply H1;
-          assumption
-        | assumption
-        ]
      | intro v;
        elim v 0;
         [ intros (T1 r m1 m2 H1 t1 t3 H3);
@@ -630,15 +606,7 @@ theorem apply_morphism_compatibility_Right2Left:
           simplify in H3;
           change in H1 with
            (∀x1,x2:T1.r x2 x1 → make_compatibility_goal_aux n Out (m1 x1) (m2 x2));
-        ] ;
-        simplify in H;
-        apply H;
-         [1,3:
-           apply H1;
-           assumption
-         |2,4:
-           assumption
-         ]
+        ]
      | intros (T m1 m2 H1 t1 t3 H3);
        simplify in H3;
        change in H1 with
@@ -649,7 +617,15 @@ theorem apply_morphism_compatibility_Right2Left:
         [ apply H1 
         | assumption
         ]
-     ]
+     ] ;
+     simplify in H;
+     apply H;
+      [1,3,5,7,9,11:
+        apply H1;
+        assumption
+      |2,4,6,8,10,12:
+        assumption
+      ]
    ]
 qed.
 
