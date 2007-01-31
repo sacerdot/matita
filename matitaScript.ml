@@ -578,6 +578,7 @@ object (self)
     with 
     | Margin -> self#notify
     | Not_found -> assert false
+    | Invalid_argument "Array.make" -> HLog.error "The script is too big!\n"
     | exc -> self#notify; raise exc
 
   method retract () =
@@ -595,6 +596,7 @@ object (self)
        self#notify
     with 
     | Margin -> self#notify
+    | Invalid_argument "Array.make" -> HLog.error "The script is too big!\n"
     | exc -> self#notify; raise exc
 
   method private getFuture =
@@ -728,6 +730,7 @@ object (self)
      set_star (Filename.basename self#ppFilename) false
 
   method goto (pos: [`Top | `Bottom | `Cursor]) () =
+  try  
     let old_locked_mark =
      `MARK
        (buffer#create_mark ~name:"old_locked_mark"
@@ -807,7 +810,9 @@ object (self)
         | Margin -> dispose_remember (); dispose_old_locked_mark (); self#notify
         | exc -> dispose_remember (); dispose_old_locked_mark ();
                  self#notify; raise exc)
-              
+  with Invalid_argument "Array.make" ->
+     HLog.error "The script is too big!\n"
+  
   method onGoingProof () =
     match self#grafite_status.proof_status with
     | No_proof | Proof _ -> false
@@ -858,6 +863,7 @@ prerr_endline ("## " ^ string_of_int parsed_text_length);
     | HExtlib.Localized _
     | CicNotationParser.Parse_error _ -> false
     | Margin | End_of_file -> true
+    | Invalid_argument "Array.make" -> false
 
   (* debug *)
   method dump () =
