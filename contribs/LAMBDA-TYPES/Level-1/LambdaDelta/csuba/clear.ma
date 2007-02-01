@@ -14,7 +14,7 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/csuba/clear".
+set "baseuri" "cic:/matita/LAMBDA-TYPES/LambdaDelta-1/csuba/clear".
 
 include "csuba/defs.ma".
 

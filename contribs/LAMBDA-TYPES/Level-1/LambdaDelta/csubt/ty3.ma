@@ -14,7 +14,7 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/csubt/ty3".
+set "baseuri" "cic:/matita/LAMBDA-TYPES/LambdaDelta-1/csubt/ty3".
 
 include "csubt/pc3.ma".
 

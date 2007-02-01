@@ -14,7 +14,7 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/ty3/fwd".
+set "baseuri" "cic:/matita/LAMBDA-TYPES/LambdaDelta-1/ty3/fwd".
 
 include "ty3/defs.ma".
 

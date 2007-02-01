@@ -14,7 +14,7 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta".
+set "baseuri" "cic:/matita/LAMBDA-TYPES/Base-1/spare".
 
-include "LambdaDelta/theory.ma".
+include "theory.ma".
 

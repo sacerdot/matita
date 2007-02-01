@@ -14,7 +14,7 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/tau1/defs".
+set "baseuri" "cic:/matita/LAMBDA-TYPES/LambdaDelta-1/tau1/defs".
 
 include "tau0/defs.ma".
 

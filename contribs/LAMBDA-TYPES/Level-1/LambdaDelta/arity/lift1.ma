@@ -14,7 +14,7 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/arity/lift1".
+set "baseuri" "cic:/matita/LAMBDA-TYPES/LambdaDelta-1/arity/lift1".
 
 include "arity/props.ma".
 

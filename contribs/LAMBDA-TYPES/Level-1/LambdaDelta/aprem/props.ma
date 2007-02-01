@@ -14,7 +14,7 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/aprem/props".
+set "baseuri" "cic:/matita/LAMBDA-TYPES/LambdaDelta-1/aprem/props".
 
 include "aprem/defs.ma".
 

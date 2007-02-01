@@ -14,7 +14,7 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/wcpr0/fwd".
+set "baseuri" "cic:/matita/LAMBDA-TYPES/LambdaDelta-1/wcpr0/fwd".
 
 include "wcpr0/defs.ma".
 

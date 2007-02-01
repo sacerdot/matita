@@ -14,7 +14,7 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/Base/plist/props".
+set "baseuri" "cic:/matita/LAMBDA-TYPES/Base-1/plist/props".
 
 include "plist/defs.ma".
 

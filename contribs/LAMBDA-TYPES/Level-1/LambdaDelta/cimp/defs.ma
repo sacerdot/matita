@@ -14,7 +14,7 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/cimp/defs".
+set "baseuri" "cic:/matita/LAMBDA-TYPES/LambdaDelta-1/cimp/defs".
 
 include "getl/defs.ma".
 

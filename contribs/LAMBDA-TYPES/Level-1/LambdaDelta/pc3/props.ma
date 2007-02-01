@@ -14,7 +14,7 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/pc3/props".
+set "baseuri" "cic:/matita/LAMBDA-TYPES/LambdaDelta-1/pc3/props".
 
 include "pc3/defs.ma".
 

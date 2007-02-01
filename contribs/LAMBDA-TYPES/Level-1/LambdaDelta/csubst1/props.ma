@@ -14,7 +14,7 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/csubst1/props".
+set "baseuri" "cic:/matita/LAMBDA-TYPES/LambdaDelta-1/csubst1/props".
 
 include "csubst1/defs.ma".
 

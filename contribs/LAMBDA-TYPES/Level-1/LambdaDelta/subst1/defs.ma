@@ -14,7 +14,7 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/subst1/defs".
+set "baseuri" "cic:/matita/LAMBDA-TYPES/LambdaDelta-1/subst1/defs".
 
 include "subst0/defs.ma".
 

@@ -14,7 +14,7 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/iso/fwd".
+set "baseuri" "cic:/matita/LAMBDA-TYPES/LambdaDelta-1/iso/fwd".
 
 include "iso/defs.ma".
 

@@ -14,7 +14,7 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/arity/subst0".
+set "baseuri" "cic:/matita/LAMBDA-TYPES/LambdaDelta-1/arity/subst0".
 
 include "arity/props.ma".
 

@@ -14,7 +14,7 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/sn3/fwd".
+set "baseuri" "cic:/matita/LAMBDA-TYPES/LambdaDelta-1/sn3/fwd".
 
 include "sn3/defs.ma".
 

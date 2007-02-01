@@ -14,7 +14,7 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/pr3/props".
+set "baseuri" "cic:/matita/LAMBDA-TYPES/LambdaDelta-1/pr3/props".
 
 include "pr3/pr1.ma".
 

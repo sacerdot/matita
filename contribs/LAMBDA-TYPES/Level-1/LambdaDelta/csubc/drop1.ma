@@ -14,7 +14,7 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/csubc/drop1".
+set "baseuri" "cic:/matita/LAMBDA-TYPES/LambdaDelta-1/csubc/drop1".
 
 include "csubc/drop.ma".
 

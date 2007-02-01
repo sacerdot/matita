@@ -14,7 +14,7 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/pr3/iso".
+set "baseuri" "cic:/matita/LAMBDA-TYPES/LambdaDelta-1/pr3/iso".
 
 include "pr3/fwd.ma".
 

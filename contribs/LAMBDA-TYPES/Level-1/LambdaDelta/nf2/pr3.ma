@@ -14,7 +14,7 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/nf2/pr3".
+set "baseuri" "cic:/matita/LAMBDA-TYPES/LambdaDelta-1/nf2/pr3".
 
 include "nf2/defs.ma".
 
