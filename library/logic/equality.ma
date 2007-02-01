@@ -70,19 +70,24 @@ theorem eq_f': \forall  A,B:Type.\forall f:A\to B.
 intros.elim H.apply refl_eq.
 qed.
 
-(* 
+(*  *)
 coercion cic:/matita/logic/equality/sym_eq.con.
 coercion cic:/matita/logic/equality/eq_f.con.
-*)
+(* *)
 
 default "equality"
  cic:/matita/logic/equality/eq.ind
- cic:/matita/logic/equality/symmetric_eq.con
+ cic:/matita/logic/equality/sym_eq.con
  cic:/matita/logic/equality/transitive_eq.con
  cic:/matita/logic/equality/eq_ind.con
  cic:/matita/logic/equality/eq_elim_r.con
  cic:/matita/logic/equality/eq_f.con
+(* *)
+ cic:/matita/logic/equality/eq_OF_eq.con.
+(* *)
+(*  
  cic:/matita/logic/equality/eq_f'.con. (* \x.sym (eq_f x) *)
+ *)
  
 theorem eq_f2: \forall  A,B,C:Type.\forall f:A\to B \to C.
 \forall x1,x2:A. \forall y1,y2:B.
