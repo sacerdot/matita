@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/LAMBDA-TYPES/LambdaDelta-1/G/defs".
 
-include "../Base/theory.ma".
+include "preamble.ma".
 
 record G : Set \def {
  next: (nat \to nat);

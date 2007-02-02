@@ -20,15 +20,9 @@ include "ext/tactics.ma".
 
 include "ext/arith.ma".
 
-include "types/defs.ma".
-
 include "types/props.ma".
 
-include "blt/defs.ma".
-
 include "blt/props.ma".
-
-include "plist/defs.ma".
 
 include "plist/props.ma".
 

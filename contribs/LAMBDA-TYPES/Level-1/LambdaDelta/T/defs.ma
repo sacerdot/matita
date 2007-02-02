@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/LAMBDA-TYPES/LambdaDelta-1/T/defs".
 
-include "../Base/theory.ma".
+include "preamble.ma".
 
 inductive B: Set \def
 | Abbr: B
