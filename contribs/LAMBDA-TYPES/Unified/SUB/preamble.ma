@@ -14,7 +14,7 @@
 
 (* Project started Tue Aug 22, 2006 ***************************************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Unified/SUB/preamble".
+set "baseuri" "cic:/matita/LAMBDA-TYPES/Unified-Sub/preamble".
 
 (* PREAMBLE
 *)

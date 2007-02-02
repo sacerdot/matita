@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Unified/SUB/Switch/defs".
+set "baseuri" "cic:/matita/LAMBDA-TYPES/Unified-Sub/Switch/defs".
 
 (* POLARITY SWITCH RELATION
 *)

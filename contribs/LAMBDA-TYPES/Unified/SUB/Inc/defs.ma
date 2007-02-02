@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Unified/SUB/Inc/defs".
+set "baseuri" "cic:/matita/LAMBDA-TYPES/Unified-Sub/Inc/defs".
 
 (* DISPLACEMENT INCREMENT RELATION
 *)
