@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/test/letrecand".
+set "baseuri" "cic:/matita/tests/letrecand".
 
 include "nat/nat.ma".
 

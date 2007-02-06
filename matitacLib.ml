@@ -31,6 +31,10 @@ open GrafiteTypes
 
 exception AttemptToInsertAnAlias
 
+let out = ref ignore 
+
+let set_callback f = out := f
+
 let pp_ast_statement =
   GrafiteAstPp.pp_statement ~term_pp:CicNotationPp.pp_term
     ~lazy_term_pp:CicNotationPp.pp_term ~obj_pp:(CicNotationPp.pp_obj CicNotationPp.pp_term)
@@ -126,8 +130,14 @@ let rec interactive_loop () =
         "matita.includes"))
   with 
   | GrafiteEngine.Drop -> pp_ocaml_mode ()
-  | GrafiteEngine.Macro (floc,_) ->
-     let x, y = HExtlib.loc_of_floc floc in
+  | GrafiteEngine.Macro (floc, f) ->
+      begin match snd (f []) with 
+       | GrafiteAst.Inline (_, style, suri, prefix) ->
+         let str = ApplyTransformation.txt_of_inline_macro style suri prefix in
+         !out str
+       | _ -> ()
+      end;
+      let x, y = HExtlib.loc_of_floc floc in
       HLog.error
        (sprintf "A macro has been found in a script at %d-%d" x y);
       interactive_loop ()

@@ -97,3 +97,60 @@ let txt_of_cic_sequent_conclusion size metasenv sequent =
 let txt_of_cic_term size metasenv context t = 
   let fake_sequent = (-1,context,t) in
   txt_of_cic_sequent_conclusion size metasenv fake_sequent 
+
+(****************************************************************************)
+(* txt_of_cic_object: IMPROVE ME *)
+
+let remove_closed_substs s =
+    Pcre.replace ~pat:"{...}" ~templ:"" s
+
+let term2pres n ids_to_inner_sorts annterm = 
+   let ast, ids_to_uris = 
+      TermAcicContent.ast_of_acic ids_to_inner_sorts annterm
+   in
+   let bobj =
+      CicNotationPres.box_of_mpres (
+         CicNotationPres.render ~prec:90 ids_to_uris 
+	    (TermContentPres.pp_ast ast)
+      )
+   in
+   let render = function _::x::_ -> x | _ -> assert false in
+   let mpres = CicNotationPres.mpres_of_box bobj in
+   let s = BoxPp.render_to_string render n mpres in
+   remove_closed_substs s
+
+let txt_of_cic_object n style prefix obj =
+  let aobj,_,_,ids_to_inner_sorts,ids_to_inner_types,_,_ = 
+     try Cic2acic.acic_object_of_cic_object obj
+     with e -> 
+        let msg = "Cic2ACic: " ^ Printexc.to_string e in
+	failwith msg
+  in
+  match style with
+     | GrafiteAst.Declarative      ->
+        let cobj = Acic2content.annobj2content ids_to_inner_sorts ids_to_inner_types aobj in
+        let bobj = Content2pres.content2pres ids_to_inner_sorts cobj in
+        remove_closed_substs ("\n\n" ^
+	   BoxPp.render_to_string (function _::x::_ -> x | _ -> assert false) n (CicNotationPres.mpres_of_box bobj)
+	)
+     | GrafiteAst.Procedural depth ->
+        let term_pp = term2pres (n - 8) ids_to_inner_sorts in
+        let lazy_term_pp = term_pp in
+        let obj_pp = CicNotationPp.pp_obj term_pp in
+        let aux = GrafiteAstPp.pp_statement ~term_pp ~lazy_term_pp ~obj_pp in
+        let script = Acic2Procedural.acic2procedural 
+	   ~ids_to_inner_sorts ~ids_to_inner_types ?depth prefix aobj in
+	"\n\n" ^ String.concat "" (List.map aux script)
+
+let txt_of_inline_macro style suri prefix =
+   let dbd = LibraryDb.instance () in   
+   let sorted_uris = MetadataDeps.sorted_uris_of_baseuri ~dbd suri in
+   let map uri =
+      try txt_of_cic_object 78 style prefix (* FG: mi pare meglio 78 *)
+                            (fst (CicEnvironment.get_obj CicUniv.empty_ugraph uri))
+      with
+         | e -> 
+	    Printf.sprintf "\n(* ERRORE IN STAMPA DI %s\nEXCEPTION: %s *)\n" 
+	    (UriManager.string_of_uri uri) (Printexc.to_string e)
+   in
+   String.concat "\n\n" (List.map map sorted_uris)

@@ -61,3 +61,5 @@ val eval_from_stream :
    (DisambiguateTypes.domain_item * DisambiguateTypes.codomain_item) option
   ) list
 
+(* this callback is called on every grafite command *)
+val set_callback: (GrafiteParser.ast_statement -> unit) -> unit 

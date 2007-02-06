@@ -62,3 +62,10 @@ val txt_of_cic_sequent:
 val txt_of_cic_sequent_conclusion: 
   int -> Cic.metasenv -> Cic.conjecture -> string
 
+(* columns, rendering style, name prefix, object *)
+val txt_of_cic_object: 
+   int -> GrafiteAst.presentation_style -> string -> Cic.obj -> string
+
+(* presentation_style, uri or baseuri, name prefix *)
+val txt_of_inline_macro:
+   GrafiteAst.presentation_style -> string -> string -> string

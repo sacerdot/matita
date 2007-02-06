@@ -289,54 +289,8 @@ let rec eval_macro include_paths (buffer : GText.buffer) guistuff lexicon_status
       guistuff.mathviewer#show_entry (`Cic (t_and_ty,metasenv));
       [], "", parsed_text_length
   | TA.Inline (_,style,suri,prefix) ->
-     let dbd = LibraryDb.instance () in
-     let uris =
-      let sql_pat =
-       (Pcre.replace ~rex:(Pcre.regexp "_") ~templ:"\\_" suri) ^ "%" in
-      let query =
-       sprintf ("SELECT source FROM %s WHERE source LIKE \"%s\" UNION "^^
-                "SELECT source FROM %s WHERE source LIKE \"%s\"")
-         (MetadataTypes.name_tbl ()) sql_pat
-         MetadataTypes.library_name_tbl sql_pat in
-      let result = HMysql.exec dbd query in
-       HMysql.map result
-        (function cols ->
-          match cols.(0) with
-             Some s -> UriManager.uri_of_string s
-           | _ -> assert false)
-     in
-prerr_endline "Inizio sorting";
-      let sorted_uris = MetadataDeps.topological_sort ~dbd uris in
-prerr_endline "Fine sorting";
-      let sorted_uris_without_xpointer =
-       HExtlib.filter_map
-        (function uri ->
-          let s =
-           Pcre.replace ~rex:(Pcre.regexp "#xpointer\\(1/1\\)") ~templ:""
-            (UriManager.string_of_uri uri) in
-          try
-           ignore (Pcre.exec ~rex:(Pcre.regexp"#xpointer") s);
-           None
-          with
-           Not_found ->
-            Some (UriManager.uri_of_string s)
-        ) sorted_uris
-      in
-      let declarative =
-       String.concat "\n\n"
-        (List.map
-          (fun uri ->
-prerr_endline ("Stampo " ^ UriManager.string_of_uri uri);
-            try
-             ObjPp.obj_to_string 78 style prefix (* FG: mi pare meglio 78 *)
-              (fst (CicEnvironment.get_obj CicUniv.empty_ugraph uri))
-            with
-	     | e (* BRRRRRRRRR *) -> 
-	        Printf.sprintf "\n(* ERRORE IN STAMPA DI %s\nEXCEPTION: %s *)\n" 
-		(UriManager.string_of_uri uri) (Printexc.to_string e)
-          ) sorted_uris_without_xpointer)
-      in
-       [],declarative,String.length parsed_text
+       let str = ApplyTransformation.txt_of_inline_macro style suri prefix in
+       [], str, String.length parsed_text
                                 
 and eval_executable include_paths (buffer : GText.buffer) guistuff
 lexicon_status grafite_status user_goal unparsed_text skipped_txt nonskipped_txt

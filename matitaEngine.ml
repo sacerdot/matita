@@ -100,6 +100,10 @@ let eval_ast ?do_heavy_checks ?clean_baseuri lexicon_status
 
 exception TryingToAdd of string
 
+let out = ref ignore 
+
+let set_callback f = out := f
+
 let eval_from_stream ~first_statement_only ~include_paths ?(prompt=false)
  ?do_heavy_checks ?clean_baseuri ?(enforce_no_new_aliases=true)
  ?(watch_statuses=fun _ _ -> ()) lexicon_status grafite_status str cb 
@@ -122,6 +126,7 @@ let eval_from_stream ~first_statement_only ~include_paths ?(prompt=false)
           loop lexicon_status grafite_status
            (((grafite_status,lexicon_status),None)::statuses)
        | GrafiteParser.LSome ast ->
+          !out ast;
           cb grafite_status ast;
           let new_statuses =
            eval_ast ?do_heavy_checks ?clean_baseuri lexicon_status

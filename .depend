@@ -11,13 +11,15 @@ lablGraphviz.cmx: lablGraphviz.cmi
 matitaclean.cmo: matitaMisc.cmi matitaInit.cmi matitaclean.cmi 
 matitaclean.cmx: matitaMisc.cmx matitaInit.cmx matitaclean.cmi 
 matitacLib.cmo: matitamakeLib.cmi matitaMisc.cmi matitaInit.cmi \
-    matitaExcPp.cmi matitaEngine.cmi buildTimeConf.cmi matitacLib.cmi 
+    matitaExcPp.cmi matitaEngine.cmi buildTimeConf.cmi \
+    applyTransformation.cmi matitacLib.cmi 
 matitacLib.cmx: matitamakeLib.cmx matitaMisc.cmx matitaInit.cmx \
-    matitaExcPp.cmx matitaEngine.cmx buildTimeConf.cmx matitacLib.cmi 
+    matitaExcPp.cmx matitaEngine.cmx buildTimeConf.cmx \
+    applyTransformation.cmx matitacLib.cmi 
 matitac.cmo: matitaprover.cmi matitamake.cmi matitadep.cmi matitaclean.cmi \
-    matitacLib.cmi gragrep.cmi 
+    matitacLib.cmi matitaWiki.cmo gragrep.cmi 
 matitac.cmx: matitaprover.cmx matitamake.cmx matitadep.cmx matitaclean.cmx \
-    matitacLib.cmx gragrep.cmx 
+    matitacLib.cmx matitaWiki.cmx gragrep.cmx 
 matitadep.cmo: matitaInit.cmi matitadep.cmi 
 matitadep.cmx: matitaInit.cmx matitadep.cmi 
 matitaEngine.cmo: matitaEngine.cmi 
@@ -51,9 +53,11 @@ matitaMathView.cmx: matitamakeLib.cmx matitaTypes.cmx matitaScript.cmx \
 matitaMisc.cmo: buildTimeConf.cmi matitaMisc.cmi 
 matitaMisc.cmx: buildTimeConf.cmx matitaMisc.cmi 
 matita.cmo: matitaTypes.cmi matitaScript.cmi matitaMathView.cmi \
-    matitaInit.cmi matitaGui.cmi matitaGtkMisc.cmi buildTimeConf.cmi 
+    matitaInit.cmi matitaGui.cmi matitaGtkMisc.cmi buildTimeConf.cmi \
+    applyTransformation.cmi 
 matita.cmx: matitaTypes.cmx matitaScript.cmx matitaMathView.cmx \
-    matitaInit.cmx matitaGui.cmx matitaGtkMisc.cmx buildTimeConf.cmx 
+    matitaInit.cmx matitaGui.cmx matitaGtkMisc.cmx buildTimeConf.cmx \
+    applyTransformation.cmx 
 matitaprover.cmo: matitaInit.cmi matitaExcPp.cmi matitaEngine.cmi \
     buildTimeConf.cmi matitaprover.cmi 
 matitaprover.cmx: matitaInit.cmx matitaExcPp.cmx matitaEngine.cmx \
@@ -66,6 +70,10 @@ matitaScript.cmx: matitamakeLib.cmx matitaTypes.cmx matitaMisc.cmx \
     applyTransformation.cmx matitaScript.cmi 
 matitaTypes.cmo: matitaTypes.cmi 
 matitaTypes.cmx: matitaTypes.cmi 
+matitaWiki.cmo: matitaInit.cmi matitaExcPp.cmi matitaEngine.cmi \
+    buildTimeConf.cmi applyTransformation.cmi 
+matitaWiki.cmx: matitaInit.cmx matitaExcPp.cmx matitaEngine.cmx \
+    buildTimeConf.cmx applyTransformation.cmx 
 matitaGtkMisc.cmi: matitaGeneratedGui.cmo 
 matitaGui.cmi: matitaGuiTypes.cmi 
 matitaGuiTypes.cmi: matitaTypes.cmi matitaGeneratedGui.cmo 

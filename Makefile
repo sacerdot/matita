@@ -34,9 +34,9 @@ CMOS =				\
 	matitaInit.cmo		\
 	matitaExcPp.cmo 	\
 	matitaEngine.cmo	\
+	applyTransformation.cmo	\
 	matitacLib.cmo		\
 	matitaprover.cmo        \
-	applyTransformation.cmo	\
 	matitaGtkMisc.cmo	\
 	matitaScript.cmo	\
 	matitaGeneratedGui.cmo	\
@@ -52,8 +52,8 @@ CCMOS =				\
 	matitaInit.cmo		\
 	matitaExcPp.cmo 	\
 	matitaEngine.cmo	\
-	matitacLib.cmo		\
 	applyTransformation.cmo	\
+	matitacLib.cmo		\
 	matitaWiki.cmo		\
 	matitaprover.cmo        \
 	$(NULL)

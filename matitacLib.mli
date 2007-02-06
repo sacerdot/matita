@@ -35,3 +35,6 @@ val main : mode:[ `COMPILER | `TOPLEVEL ] -> unit
   otherwise it performs the clean-up without exiting
 *)
 val clean_exit : int option -> unit
+
+(* this callback is called on the expansion of every inline macro *)
+val set_callback: (string -> unit) -> unit 
