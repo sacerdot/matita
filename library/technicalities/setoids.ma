@@ -401,7 +401,7 @@ inductive Morphism_Context (Hole: Relation_Class) (dir:rewrite_direction) : Rela
     App :
       ∀In,Out,dir'.
         Morphism_Theory In Out → Morphism_Context_List Hole dir dir' In →
-           Morphism_Context Hole dir Out dir
+           Morphism_Context Hole dir Out dir'
   | ToReplace : Morphism_Context Hole dir Hole dir
   | ToKeep :
      ∀S,dir'.
@@ -425,6 +425,62 @@ with Morphism_Context_List :
         Morphism_Context Hole dir (relation_class_of_argument_class S) dir' →
          Morphism_Context_List Hole dir dir'' L →
           Morphism_Context_List Hole dir dir'' (cons ? S L).
+
+lemma Morphism_Context_rect2:
+ ∀Hole,dir.
+ ∀P:
+  ∀r:Relation_Class.∀r0:rewrite_direction.Morphism_Context Hole dir r r0 → Type.
+ ∀P0:
+  ∀r:rewrite_direction.∀a:Arguments.Morphism_Context_List Hole dir r a → Type.
+ (∀In,Out,dir'.
+   ∀m:Morphism_Theory In Out.∀m0:Morphism_Context_List Hole dir dir' In.
+    P0 dir' In m0 → P Out dir' (App Hole ? ? ? ? m m0)) →
+ P Hole dir (ToReplace Hole dir) →
+ (∀S:Reflexive_Relation_Class.∀dir'.∀c:carrier_of_reflexive_relation_class S.
+   P (relation_class_of_reflexive_relation_class S) dir'
+    (ToKeep Hole dir S dir' c)) →
+ (∀S:Areflexive_Relation_Class.∀dir'.
+   ∀x:carrier_of_areflexive_relation_class S.
+    ∀r:relation_of_areflexive_relation_class S x x.
+     P (relation_class_of_areflexive_relation_class S) dir'
+      (ProperElementToKeep Hole dir S dir' x r)) →
+ (∀S:Argument_Class.∀dir',dir''.
+   ∀c:check_if_variance_is_respected (variance_of_argument_class S) dir' dir''.
+    ∀m:Morphism_Context Hole dir (relation_class_of_argument_class S) dir'.
+     P (relation_class_of_argument_class S) dir' m ->
+      P0 dir'' (singl ? S) (fcl_singl ? ? S ? ? c m)) →
+ (∀S:Argument_Class.∀L:Arguments.∀dir',dir''.
+   ∀c:check_if_variance_is_respected (variance_of_argument_class S) dir' dir''.
+    ∀m:Morphism_Context Hole dir (relation_class_of_argument_class S) dir'.
+     P (relation_class_of_argument_class S) dir' m →
+      ∀m0:Morphism_Context_List Hole dir dir'' L.
+       P0 dir'' L m0 → P0 dir'' (cons ? S L) (fcl_cons ? ? S ? ? ? c m m0)) →
+ ∀r:Relation_Class.∀r0:rewrite_direction.∀m:Morphism_Context Hole dir r r0.
+  P r r0 m
+≝
+ λHole,dir,P,P0,f,f0,f1,f2,f3,f4.
+ let rec
+  F (rc:Relation_Class) (r0:rewrite_direction)
+   (m:Morphism_Context Hole dir rc r0) on m : P rc r0 m
+ ≝
+  match m return λrc.λr0.λm0.P rc r0 m0 with
+  [ App In Out dir' m0 m1 ⇒ f In Out dir' m0 m1 (F0 dir' In m1)
+  | ToReplace ⇒ f0
+  | ToKeep S dir' c ⇒ f1 S dir' c
+  | ProperElementToKeep S dir' x r1 ⇒ f2 S dir' x r1
+  ]
+ and
+  F0 (r:rewrite_direction) (a:Arguments)
+   (m:Morphism_Context_List Hole dir r a) on m : P0 r a m
+ ≝
+  match m return λr.λa.λm0.P0 r a m0 with
+  [ fcl_singl S dir' dir'' c m0 ⇒
+      f3 S dir' dir'' c m0 (F (relation_class_of_argument_class S) dir' m0)
+  | fcl_cons S L dir' dir'' c m0 m1 ⇒
+      f4 S L dir' dir'' c m0 (F (relation_class_of_argument_class S) dir' m0)
+        m1 (F0 dir'' L m1)
+  ]
+in F.
 
 definition product_of_arguments : Arguments → Type.
  intro;
@@ -629,57 +685,139 @@ theorem apply_morphism_compatibility_Right2Left:
    ]
 qed.
 
-(*
-Theorem apply_morphism_compatibility_Left2Right:
- ∀In Out (m1 m2: function_type_of_morphism_signature In Out)
-   (args1 args2: product_of_arguments In).
+theorem apply_morphism_compatibility_Left2Right:
+ ∀In,Out.∀m1,m2: function_type_of_morphism_signature In Out.
+  ∀args1,args2: product_of_arguments In.
      make_compatibility_goal_aux ? ? m1 m2 →
       relation_of_product_of_arguments Left2Right ? args1 args2 →
         directed_relation_of_relation_class Left2Right ?
          (apply_morphism ? ? m1 args1)
          (apply_morphism ? ? m2 args2).
-  induction In; intros.
-    simpl in m1. m2. args1. args2. H0 |- *.
-    destruct a; simpl in H; hnf in H0.
-          apply H; exact H0.
-          destruct v; simpl in H0; apply H; exact H0.
-          apply H; exact H0.
-          destruct v; simpl in H0; apply H; exact H0.
-          rewrite H0; apply H; exact H0.
-
-    simpl in m1. m2. args1. args2. H0 |- *.
-   destruct args1; destruct args2; simpl.
-   destruct H0.
-   simpl in H.
-   destruct a; simpl in H.
-     apply IHIn.
-       apply H; exact H0.
-       exact H1.
-     destruct v.
-       apply IHIn.
-         apply H; exact H0.
-         exact H1.
-       apply IHIn.
-         apply H; exact H0.       
-          exact H1.
-       apply IHIn.
-         apply H; exact H0.
-         exact H1.
-       apply IHIn.
-         destruct v; simpl in H. H0; apply H; exact H0. 
-          exact H1.
-    rewrite H0; apply IHIn.
-      apply H.
-      exact H1.
-Qed.
-
+  intro;
+  elim In;
+   [ simplify in m1 m2 args1 args2 ⊢ %;
+     change in H1 with
+      (directed_relation_of_argument_class
+        (get_rewrite_direction Left2Right t) t args1 args2);
+     generalize in match H1; clear H1;
+     generalize in match H; clear H;
+     generalize in match args2; clear args2;
+     generalize in match args1; clear args1;
+     generalize in match m2; clear m2;
+     generalize in match m1; clear m1;
+     elim t 0;
+      [ intros (T1 r Hs Hr m1 m2 args1 args2 H H1);
+        simplify in H;
+        simplify in H1;
+        simplify;
+        apply H;
+        exact H1
+      | intros 8 (v T1 r Hr m1 m2 args1 args2);
+        cases v;
+        intros (H H1);
+        simplify in H1;
+        apply H;
+        exact H1
+      | intros;
+        apply H1;
+        exact H2
+      | intros 7 (v);
+        cases v;
+        intros (H H1);
+        simplify in H1;
+        apply H;
+        exact H1
+      | intros;
+        simplify in H1;
+        rewrite > H1;
+        apply H;
+        exact H1
+      ]
+   | change in m1 with
+      (carrier_of_relation_class variance t →
+        function_type_of_morphism_signature n Out);
+     change in m2 with
+      (carrier_of_relation_class variance t →
+        function_type_of_morphism_signature n Out);
+     change in args1 with
+      ((carrier_of_relation_class ? t) × (product_of_arguments n));
+     change in args2 with
+      ((carrier_of_relation_class ? t) × (product_of_arguments n));
+     generalize in match H2; clear H2;
+     elim args2 0; clear args2;
+     elim args1; clear args1;
+     elim H2; clear H2;
+     change in H4 with
+      (relation_of_product_of_arguments Left2Right n t2 t4);
+     change with
+      (relation_of_relation_class unit Out (apply_morphism n Out (m1 t1) t2)
+        (apply_morphism n Out (m2 t3) t4));
+     generalize in match H3; clear H3;
+     generalize in match t3; clear t3;
+     generalize in match t1; clear t1;
+     generalize in match H1; clear H1;
+     generalize in match m2; clear m2;
+     generalize in match m1; clear m1;
+     elim t 0;
+      [ intros (T1 r Hs Hr m1 m2 H1 t1 t3 H3);
+        simplify in H3;
+        change in H1 with
+         (∀x1,x2:T1.r x1 x2 → make_compatibility_goal_aux n Out (m1 x1) (m2 x2));
+     | intro v;
+       elim v 0;
+       [ intros (T1 r Hr m1 m2 H1 t1 t3 H3);
+         simplify in H3;
+         change in H1 with
+          (∀x1,x2:T1.r x1 x2 → make_compatibility_goal_aux n Out (m1 x1) (m2 x2));
+       | intros (T1 r Hr m1 m2 H1 t1 t3 H3);
+         simplify in H3;
+         change in H1 with
+          (∀x1,x2:T1.r x2 x1 → make_compatibility_goal_aux n Out (m1 x1) (m2 x2));
+       ]
+     | intros (T1 r Hs m1 m2 H1 t1 t3 H3);
+       simplify in H3;
+       change in H1 with
+        (∀x1,x2:T1.r x1 x2 → make_compatibility_goal_aux n Out (m1 x1) (m2 x2));
+     | intro v;
+       elim v 0;
+        [ intros (T1 r m1 m2 H1 t1 t3 H3);
+          simplify in H3;
+          change in H1 with
+           (∀x1,x2:T1.r x1 x2 → make_compatibility_goal_aux n Out (m1 x1) (m2 x2));
+        | intros (T1 r m1 m2 H1 t1 t3 H3);
+          simplify in H3;
+          change in H1 with
+           (∀x1,x2:T1.r x2 x1 → make_compatibility_goal_aux n Out (m1 x1) (m2 x2));
+        ]
+     | intros (T m1 m2 H1 t1 t3 H3);
+       simplify in H3;
+       change in H1 with
+        (∀x:T. make_compatibility_goal_aux n Out (m1 x) (m2 x));
+       rewrite > H3;
+       simplify in H;
+       apply H;
+        [ apply H1 
+        | assumption
+        ]
+     ] ;
+     simplify in H;
+     apply H;
+      [1,3,5,7,9,11:
+        apply H1;
+        assumption
+      |2,4,6,8,10,12:
+        assumption
+      ]
+   ]
+qed.
+(*
 definition interp :
- ∀Hole dir Out dir'. carrier_of_relation_class Hole →
-  Morphism_Context Hole dir Out dir' → carrier_of_relation_class Out.
- intros Hole dir Out dir' H t.
- elim t using
-  (@Morphism_Context_rect2 Hole dir (fun S ? ? => carrier_of_relation_class S)
-    (fun ? L fcl => product_of_arguments L));
+ ∀Hole,dir,Out,dir'. carrier_of_relation_class ? Hole →
+  Morphism_Context Hole dir Out dir' → carrier_of_relation_class ? Out.
+ intros (Hole dir Out dir' H t).
+ apply
+  (Morphism_Context_rect2 Hole dir (λS,xx,yy. carrier_of_relation_class S)
+    (λxx,L,fcl.product_of_arguments L));
   intros.
    exact (apply_morphism ? ? (Function m) X).
    exact H.
