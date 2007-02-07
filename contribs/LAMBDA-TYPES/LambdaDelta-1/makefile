@@ -1,6 +1,6 @@
 H=@
 
-RT_BASEDIR=../../../../
+RT_BASEDIR=../../../
 OPTIONS=-bench
 MMAKE=$(RT_BASEDIR)matitamake $(OPTIONS)
 CLEAN=$(RT_BASEDIR)matitaclean $(OPTIONS) 

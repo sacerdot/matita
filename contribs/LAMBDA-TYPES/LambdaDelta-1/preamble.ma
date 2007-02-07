@@ -14,4 +14,4 @@
 
 set "baseuri" "cic:/matita/LAMBDA-TYPES/LambdaDelta-1/preamble".
 
-include "../Base/theory.ma".
+include "../Base-1/theory.ma".
