@@ -44,11 +44,11 @@ inductive Flat: Set \def
 .
 
 inductive Head: Set \def
-   | bind: Bool \to Bind \to Head
-   | flat: Bool \to Flat \to Head
+   | bind: Bind \to Head
+   | flat: Flat \to Head
 .
 
 inductive Term: Set \def
    | leaf: Leaf \to Term
-   | head: Head \to Term \to Term \to Term
+   | head: Bool \to Head \to Term \to Term \to Term
 .
