@@ -25,7 +25,7 @@ set "baseuri" "cic:/matita/LAMBDA-TYPES/Unified-Sub/Term/defs".
      - terms                : t u
 *)
 
-include "SUB/preamble.ma".
+include "preamble.ma".
 
 inductive Leaf: Set \def
    | sort: Nat \to Leaf

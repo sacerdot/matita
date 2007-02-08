@@ -19,7 +19,7 @@ set "baseuri" "cic:/matita/LAMBDA-TYPES/Unified-Sub/Context/defs".
      - contexts: c d
 *)
 
-include "SUB/Term/defs.ma".
+include "Term/defs.ma".
 
 inductive Context: Set \def
    | leaf: Context
