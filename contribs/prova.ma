@@ -14,7 +14,7 @@
 
 set "baseuri" "cic:/matita/test/prova".
 
-include "../contribs/LAMBDA-TYPES/Level-1/Base/preamble.ma".
+include "LAMBDA-TYPES/LambdaDelta-1/preamble.ma".
 
 alias id "Abst" = "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/T/defs/B.ind#xpointer(1/1/2)".
 alias id "Abbr" = "cic:/matita/LAMBDA-TYPES/Level-1/LambdaDelta/T/defs/B.ind#xpointer(1/1/1)".
