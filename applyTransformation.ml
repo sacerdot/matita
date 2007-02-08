@@ -105,7 +105,11 @@ ignore (
     try
      let context' = CicMetaSubst.apply_subst_context subst context in
      let term' = CicMetaSubst.apply_subst subst term in
-      txt_of_cic_term 30 metasenv context' term'
+     let res = txt_of_cic_term 30 metasenv context' term' in
+      if String.contains res '\n' then
+       "\n" ^ res ^ "\n"
+      else
+       res
     with
        Sys.Break as exn -> raise exn
      | exn ->
