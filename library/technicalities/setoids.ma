@@ -482,6 +482,62 @@ lemma Morphism_Context_rect2:
   ]
 in F.
 
+lemma Morphism_Context_List_rect2:
+ ∀Hole,dir.
+ ∀P:
+  ∀r:Relation_Class.∀r0:rewrite_direction.Morphism_Context Hole dir r r0 → Type.
+ ∀P0:
+  ∀r:rewrite_direction.∀a:Arguments.Morphism_Context_List Hole dir r a → Type.
+ (∀In,Out,dir'.
+   ∀m:Morphism_Theory In Out.∀m0:Morphism_Context_List Hole dir dir' In.
+    P0 dir' In m0 → P Out dir' (App Hole ? ? ? ? m m0)) →
+ P Hole dir (ToReplace Hole dir) →
+ (∀S:Reflexive_Relation_Class.∀dir'.∀c:carrier_of_reflexive_relation_class S.
+   P (relation_class_of_reflexive_relation_class S) dir'
+    (ToKeep Hole dir S dir' c)) →
+ (∀S:Areflexive_Relation_Class.∀dir'.
+   ∀x:carrier_of_areflexive_relation_class S.
+    ∀r:relation_of_areflexive_relation_class S x x.
+     P (relation_class_of_areflexive_relation_class S) dir'
+      (ProperElementToKeep Hole dir S dir' x r)) →
+ (∀S:Argument_Class.∀dir',dir''.
+   ∀c:check_if_variance_is_respected (variance_of_argument_class S) dir' dir''.
+    ∀m:Morphism_Context Hole dir (relation_class_of_argument_class S) dir'.
+     P (relation_class_of_argument_class S) dir' m ->
+      P0 dir'' (singl ? S) (fcl_singl ? ? S ? ? c m)) →
+ (∀S:Argument_Class.∀L:Arguments.∀dir',dir''.
+   ∀c:check_if_variance_is_respected (variance_of_argument_class S) dir' dir''.
+    ∀m:Morphism_Context Hole dir (relation_class_of_argument_class S) dir'.
+     P (relation_class_of_argument_class S) dir' m →
+      ∀m0:Morphism_Context_List Hole dir dir'' L.
+       P0 dir'' L m0 → P0 dir'' (cons ? S L) (fcl_cons ? ? S ? ? ? c m m0)) →
+ ∀r:rewrite_direction.∀a:Arguments.∀m:Morphism_Context_List Hole dir r a.
+  P0 r a m
+≝
+ λHole,dir,P,P0,f,f0,f1,f2,f3,f4.
+ let rec
+  F (rc:Relation_Class) (r0:rewrite_direction)
+   (m:Morphism_Context Hole dir rc r0) on m : P rc r0 m
+ ≝
+  match m return λrc.λr0.λm0.P rc r0 m0 with
+  [ App In Out dir' m0 m1 ⇒ f In Out dir' m0 m1 (F0 dir' In m1)
+  | ToReplace ⇒ f0
+  | ToKeep S dir' c ⇒ f1 S dir' c
+  | ProperElementToKeep S dir' x r1 ⇒ f2 S dir' x r1
+  ]
+ and
+  F0 (r:rewrite_direction) (a:Arguments)
+   (m:Morphism_Context_List Hole dir r a) on m : P0 r a m
+ ≝
+  match m return λr.λa.λm0.P0 r a m0 with
+  [ fcl_singl S dir' dir'' c m0 ⇒
+      f3 S dir' dir'' c m0 (F (relation_class_of_argument_class S) dir' m0)
+  | fcl_cons S L dir' dir'' c m0 m1 ⇒
+      f4 S L dir' dir'' c m0 (F (relation_class_of_argument_class S) dir' m0)
+        m1 (F0 dir'' L m1)
+  ]
+in F0.
+
 definition product_of_arguments : Arguments → Type.
  intro;
  elim a;
@@ -838,33 +894,38 @@ definition interp :
    ]
 qed.
 
-(*
+
 (*CSC: interp and interp_relation_class_list should be mutually defined. since
    the proof term of each one contains the proof term of the other one. However
    I cannot do that interactively (I should write the Fix by hand) *)
 definition interp_relation_class_list :
- ∀Hole dir dir' (L: Arguments). carrier_of_relation_class Hole →
+ ∀Hole,dir,dir'.∀L: Arguments. carrier_of_relation_class ? Hole →
   Morphism_Context_List Hole dir dir' L → product_of_arguments L.
- intros Hole dir dir' L H t.
- elim t using
-  (@Morphism_Context_List_rect2 Hole dir (fun S ? ? => carrier_of_relation_class S)
-    (fun ? L fcl => product_of_arguments L));
- intros.
-   exact (apply_morphism ? ? (Function m) X).
-   exact H.
-   exact c.
-   exact x.
-   simpl;
-     rewrite <-
+ intros (Hole dir dir' L H t);
+ apply
+  (Morphism_Context_List_rect2 Hole dir (λS,xx,yy.carrier_of_relation_class ? S)
+    (λxx,L,fcl.product_of_arguments L));
+ intros;
+  [8: apply t
+  |7: skip
+  | exact (apply_morphism ? ? (Function ? ? m) p)
+  | exact H
+  | exact c
+  | exact x
+  | simplify;
+     rewrite <
        (about_carrier_of_relation_class_and_relation_class_of_argument_class S);
-     exact X.
-   split.
-     rewrite <-
-       (about_carrier_of_relation_class_and_relation_class_of_argument_class S);
-       exact X.
-       exact X0.
+     exact c1
+  | split;
+     [ rewrite <
+        (about_carrier_of_relation_class_and_relation_class_of_argument_class S);
+       exact c1
+     | exact p
+     ]
+  ]
 qed.
 
+(*
 Theorem setoid_rewrite:
  ∀Hole dir Out dir' (E1 E2: carrier_of_relation_class Hole)
   (E: Morphism_Context Hole dir Out dir').
