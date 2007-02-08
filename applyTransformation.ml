@@ -97,6 +97,22 @@ let txt_of_cic_sequent_conclusion size metasenv sequent =
 let txt_of_cic_term size metasenv context t = 
   let fake_sequent = (-1,context,t) in
   txt_of_cic_sequent_conclusion size metasenv fake_sequent 
+;;
+
+ignore (
+ CicMetaSubst.set_ppterm_in_context
+  (fun ~metasenv subst term context ->
+    try
+     let context' = CicMetaSubst.apply_subst_context subst context in
+     let term' = CicMetaSubst.apply_subst subst term in
+      txt_of_cic_term 30 metasenv context' term'
+    with
+       Sys.Break as exn -> raise exn
+     | exn ->
+        "[[ Exception raised during pretty-printing: " ^
+        Printexc.to_string exn ^ " ]] " ^
+        CicMetaSubst.ppterm_in_context ~metasenv subst term context)
+);;
 
 (****************************************************************************)
 (* txt_of_cic_object: IMPROVE ME *)
