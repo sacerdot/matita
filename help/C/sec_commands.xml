@@ -148,6 +148,12 @@
               <entry>expected object for 3rd URI</entry>
               <entry>expected object for 4th URI</entry>
               <entry>expected object for 5th URI</entry>
+              <entry>expected object for 6th URI</entry>
+              <entry>expected object for 7th URI</entry>
+              <entry>expected object for 8th URI</entry>
+              <entry>expected object for 9th URI</entry>
+              <entry>expected object for 10th URI</entry>
+              <entry>expected object for 11th URI</entry>
              </row>
             </thead>
             <tbody>
@@ -158,6 +164,12 @@
               <entry>a theorem of type <emphasis role="bold">∀</emphasis>A.<emphasis role="bold">∀</emphasis>x,y,z:A.eq A x y <emphasis role="bold">→</emphasis> eq A y z <emphasis role="bold">→</emphasis> eq A x z</entry>
               <entry><emphasis role="bold">∀</emphasis>A.<emphasis role="bold">∀</emphasis>a.<emphasis role="bold">∀</emphasis> P:A <emphasis role="bold">→</emphasis> <emphasis role="bold">Prop</emphasis>.P x <emphasis role="bold">→</emphasis> <emphasis role="bold">∀</emphasis>y.eq A x y <emphasis role="bold">→</emphasis> P y</entry>
               <entry><emphasis role="bold">∀</emphasis>A.<emphasis role="bold">∀</emphasis>a.<emphasis role="bold">∀</emphasis> P:A <emphasis role="bold">→</emphasis> <emphasis role="bold">Prop</emphasis>.P x <emphasis role="bold">→</emphasis> <emphasis role="bold">∀</emphasis>y.eq A y x <emphasis role="bold">→</emphasis> P y</entry>
+              <entry><emphasis role="bold">∀</emphasis>A.<emphasis role="bold">∀</emphasis>a.<emphasis role="bold">∀</emphasis> P:A <emphasis role="bold">→</emphasis> <emphasis role="bold">Set</emphasis>.P x <emphasis role="bold">→</emphasis> <emphasis role="bold">∀</emphasis>y.eq A x y <emphasis role="bold">→</emphasis> P y</entry>
+              <entry><emphasis role="bold">∀</emphasis>A.<emphasis role="bold">∀</emphasis>a.<emphasis role="bold">∀</emphasis> P:A <emphasis role="bold">→</emphasis> <emphasis role="bold">Set</emphasis>.P x <emphasis role="bold">→</emphasis> <emphasis role="bold">∀</emphasis>y.eq A y x <emphasis role="bold">→</emphasis> P y</entry>
+              <entry><emphasis role="bold">∀</emphasis>A.<emphasis role="bold">∀</emphasis>a.<emphasis role="bold">∀</emphasis> P:A <emphasis role="bold">→</emphasis> <emphasis role="bold">Type</emphasis>.P x <emphasis role="bold">→</emphasis> <emphasis role="bold">∀</emphasis>y.eq A x y <emphasis role="bold">→</emphasis> P y</entry>
+              <entry><emphasis role="bold">∀</emphasis>A.<emphasis role="bold">∀</emphasis>a.<emphasis role="bold">∀</emphasis> P:A <emphasis role="bold">→</emphasis> <emphasis role="bold">Type</emphasis>.P x <emphasis role="bold">→</emphasis> <emphasis role="bold">∀</emphasis>y.eq A y x <emphasis role="bold">→</emphasis> P y</entry>
+              <entry><emphasis role="bold">∀</emphasis>A.<emphasis role="bold">∀</emphasis>B.<emphasis role="bold">∀</emphasis> f:A <emphasis role="bold">→</emphasis> B.<emphasis role="bold">∀</emphasis>x,y:A.eq A x y <emphasis role="bold">→</emphasis> eq B (f x) (f y)</entry>
+              <entry><emphasis role="bold">∀</emphasis>A.<emphasis role="bold">∀</emphasis>B.<emphasis role="bold">∀</emphasis> f:A <emphasis role="bold">→</emphasis> B.<emphasis role="bold">∀</emphasis>x,y:A.eq A x y <emphasis role="bold">→</emphasis> eq B (f y) (f x)</entry>
              </row>
              <row>
               <entry>true</entry>
