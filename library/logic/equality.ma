@@ -60,6 +60,18 @@ theorem eq_elim_r:
 intros. elim (sym_eq ? ? ? H1).assumption.
 qed.
 
+theorem eq_elim_r':
+ \forall A:Type.\forall x:A. \forall P: A \to Set.
+   P x \to \forall y:A. y=x \to P y.
+intros. elim (sym_eq ? ? ? H).assumption.
+qed.
+
+theorem eq_elim_r'':
+ \forall A:Type.\forall x:A. \forall P: A \to Type.
+   P x \to \forall y:A. y=x \to P y.
+intros. elim (sym_eq ? ? ? H).assumption.
+qed.
+
 theorem eq_f: \forall  A,B:Type.\forall f:A\to B.
 \forall x,y:A. x=y \to f x = f y.
 intros.elim H.apply refl_eq.
@@ -81,6 +93,10 @@ default "equality"
  cic:/matita/logic/equality/transitive_eq.con
  cic:/matita/logic/equality/eq_ind.con
  cic:/matita/logic/equality/eq_elim_r.con
+ cic:/matita/logic/equality/eq_rec.con
+ cic:/matita/logic/equality/eq_elim_r'.con
+ cic:/matita/logic/equality/eq_rect.con
+ cic:/matita/logic/equality/eq_elim_r''.con
  cic:/matita/logic/equality/eq_f.con
 (* *)
  cic:/matita/logic/equality/eq_OF_eq.con.

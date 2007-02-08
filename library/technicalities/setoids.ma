@@ -810,30 +810,35 @@ theorem apply_morphism_compatibility_Left2Right:
       ]
    ]
 qed.
-(*
+
 definition interp :
  ∀Hole,dir,Out,dir'. carrier_of_relation_class ? Hole →
   Morphism_Context Hole dir Out dir' → carrier_of_relation_class ? Out.
  intros (Hole dir Out dir' H t).
  apply
-  (Morphism_Context_rect2 Hole dir (λS,xx,yy. carrier_of_relation_class S)
+  (Morphism_Context_rect2 Hole dir (λS,xx,yy. carrier_of_relation_class ? S)
     (λxx,L,fcl.product_of_arguments L));
-  intros.
-   exact (apply_morphism ? ? (Function m) X).
-   exact H.
-   exact c.
-   exact x.
-   simpl;
-     rewrite <-
+  intros;
+   [8: apply t
+   |7: skip
+   | exact (apply_morphism ? ? (Function ? ? m) p)
+   | exact H
+   | exact c
+   | exact x
+   | simplify;
+     rewrite <
        (about_carrier_of_relation_class_and_relation_class_of_argument_class S);
-     exact X.
-   split.
-     rewrite <-
-       (about_carrier_of_relation_class_and_relation_class_of_argument_class S);
-       exact X.
-       exact X0.
+     exact c1
+   | split;
+      [ rewrite <
+         (about_carrier_of_relation_class_and_relation_class_of_argument_class S);
+        exact c1
+      | exact p
+      ]
+   ]
 qed.
 
+(*
 (*CSC: interp and interp_relation_class_list should be mutually defined. since
    the proof term of each one contains the proof term of the other one. However
    I cannot do that interactively (I should write the Fix by hand) *)

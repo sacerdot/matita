@@ -12,6 +12,18 @@ theorem eq_elim_r:
 intros. elim (sym_eq ? ? ? H1).assumption.
 qed.
 
+theorem eq_elim_r':
+ \forall A:Type.\forall x:A. \forall P: A \to Set.
+   P x \to \forall y:A. eq A y x \to P y.
+intros. elim (sym_eq ? ? ? H).assumption.
+qed.
+
+theorem eq_elim_r'':
+ \forall A:Type.\forall x:A. \forall P: A \to Type.
+   P x \to \forall y:A. eq A y x \to P y.
+intros. elim (sym_eq ? ? ? H).assumption.
+qed.
+
 theorem trans_eq : 
     \forall A:Type.\forall x,y,z:A. eq A x y \to eq A y z \to eq A x z.
 intros.elim H1.assumption.
@@ -23,6 +35,10 @@ default "equality"
  cic:/matita/TPTP/BOO075-1/trans_eq.con
  cic:/matita/TPTP/BOO075-1/eq_ind.con
  cic:/matita/TPTP/BOO075-1/eq_elim_r.con
+ cic:/matita/TPTP/BOO075-1/eq_rec.con
+ cic:/matita/TPTP/BOO075-1/eq_elim_r'.con
+ cic:/matita/TPTP/BOO075-1/eq_rect.con
+ cic:/matita/TPTP/BOO075-1/eq_elim_r''.con
  cic:/matita/TPTP/BOO075-1/eq_f.con
  cic:/matita/TPTP/BOO075-1/eq_f1.con.
 

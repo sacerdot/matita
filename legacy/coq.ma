@@ -20,6 +20,10 @@ default "equality"
  cic:/Coq/Init/Logic/trans_eq.con
  cic:/Coq/Init/Logic/eq_ind.con
  cic:/Coq/Init/Logic/eq_ind_r.con
+ cic:/Coq/Init/Logic/eq_rec.con
+ cic:/Coq/Init/Logic/eq_rec_r.con
+ cic:/Coq/Init/Logic/eq_rect.con
+ cic:/Coq/Init/Logic/eq_rect_r.con
  cic:/Coq/Init/Logic/f_equal.con
  cic:/matita/legacy/coq/f_equal1.con.
 
