@@ -1018,10 +1018,15 @@ class gui () =
           | false -> main#toplevel#unfullscreen ())
         ~check:main#fullscreenMenuItem;
       main#fullscreenMenuItem#set_active false;
-      MatitaGtkMisc.toggle_callback
-        ~callback:(fun enabled ->
-          CicMetaSubst.use_low_level_ppterm_in_context := not enabled)
-        ~check:main#formulaePpMenuItem;
+      MatitaGtkMisc.toggle_callback ~check:main#ppNotationMenuItem
+        ~callback:(function
+          | true ->
+              CicNotation.set_active_notations
+                (List.map fst (CicNotation.get_all_notations ()))
+          | false ->
+              CicNotation.set_active_notations []);
+      MatitaGtkMisc.toggle_callback ~check:main#hideCoercionsMenuItem
+        ~callback:(fun enabled -> Acic2content.hide_coercions := enabled);
         (* log *)
       HLog.set_log_callback self#console#log_callback;
       GtkSignal.user_handler :=

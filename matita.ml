@@ -214,28 +214,30 @@ let _ =
     );
     addDebugSeparator ();
 *)
-(* ZACK: moved to a check box menu item in the View menu
     addDebugItem "disable high level pretty printer"
       (fun _ -> CicMetaSubst.use_low_level_ppterm_in_context := true);
     addDebugItem "enable high level pretty printer"
       (fun _ -> CicMetaSubst.use_low_level_ppterm_in_context := false);
-*)
+(* ZACK moved to the View menu
     addDebugItem "disable all (pretty printing) notations"
       (fun _ -> CicNotation.set_active_notations []);
     addDebugItem "enable all (pretty printing) notations"
       (fun _ ->
         CicNotation.set_active_notations
           (List.map fst (CicNotation.get_all_notations ())));
+*)
     addDebugSeparator ();
     addDebugItem "enable multiple disambiguation passes (default)"
       (fun _ -> GrafiteDisambiguator.only_one_pass := false);
     addDebugItem "enable only one disambiguation pass"
       (fun _ -> GrafiteDisambiguator.only_one_pass := true);
     addDebugSeparator ();
+(* ZACK moved to the View menu
     addDebugItem "enable coercions hiding"
       (fun _ -> Acic2content.hide_coercions := true);
     addDebugItem "disable coercions hiding"
       (fun _ -> Acic2content.hide_coercions := false);
+*)
     addDebugItem "show coercions graph" (fun _ ->
       let c = MatitaMathView.cicBrowser () in
       c#load (`About `Coercions));
