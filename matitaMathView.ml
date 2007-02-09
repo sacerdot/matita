@@ -452,7 +452,9 @@ object (self)
     let markup = CicNotationPres.render ids_to_uris pped_ast in
     BoxPp.render_to_string text_width markup
     *)
-    ApplyTransformation.txt_of_cic_sequent_conclusion 
+    let map_unicode_to_tex =
+      Helm_registry.get_opt Helm_registry.bool "matita.paste_unicode_as_tex" in
+    ApplyTransformation.txt_of_cic_sequent_conclusion ?map_unicode_to_tex
       text_width metasenv cic_sequent
 
   method private pattern_of term context unsh_sequent =

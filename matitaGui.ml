@@ -1012,11 +1012,10 @@ class gui () =
         not (Hr.get_opt_default Hr.bool ~default:false "matita.tactics_bar")
       then 
         main#tacticsBarMenuItem#set_active false;
-      MatitaGtkMisc.toggle_callback 
+      MatitaGtkMisc.toggle_callback ~check:main#fullscreenMenuItem
         ~callback:(function 
           | true -> main#toplevel#fullscreen () 
-          | false -> main#toplevel#unfullscreen ())
-        ~check:main#fullscreenMenuItem;
+          | false -> main#toplevel#unfullscreen ());
       main#fullscreenMenuItem#set_active false;
       MatitaGtkMisc.toggle_callback ~check:main#ppNotationMenuItem
         ~callback:(function
@@ -1027,6 +1026,13 @@ class gui () =
               CicNotation.set_active_notations []);
       MatitaGtkMisc.toggle_callback ~check:main#hideCoercionsMenuItem
         ~callback:(fun enabled -> Acic2content.hide_coercions := enabled);
+      MatitaGtkMisc.toggle_callback ~check:main#unicodeAsTexMenuItem
+        ~callback:(fun enabled ->
+          Helm_registry.set_bool "matita.paste_unicode_as_tex" enabled);
+      if not (Helm_registry.has "matita.paste_unicode_as_tex") then
+        Helm_registry.set_bool "matita.paste_unicode_as_tex" true;
+      main#unicodeAsTexMenuItem#set_active
+        (Helm_registry.get_bool "matita.paste_unicode_as_tex");
         (* log *)
       HLog.set_log_callback self#console#log_callback;
       GtkSignal.user_handler :=
