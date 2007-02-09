@@ -778,7 +778,11 @@ class gui () =
            unlock_world ()
           with
            | GrafiteDisambiguator.DisambiguationError (offset,errorll) ->
-              interactive_error_interp source_buffer notify_exn offset errorll ;
+              (try
+                interactive_error_interp source_buffer notify_exn offset
+                 errorll
+               with
+                exc -> notify_exn exc);
               unlock_world ()
            | exc ->
               notify_exn exc;
