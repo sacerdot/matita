@@ -214,10 +214,12 @@ let _ =
     );
     addDebugSeparator ();
 *)
+(* ZACK: moved to a check box menu item in the View menu
     addDebugItem "disable high level pretty printer"
       (fun _ -> CicMetaSubst.use_low_level_ppterm_in_context := true);
     addDebugItem "enable high level pretty printer"
       (fun _ -> CicMetaSubst.use_low_level_ppterm_in_context := false);
+*)
     addDebugItem "disable all (pretty printing) notations"
       (fun _ -> CicNotation.set_active_notations []);
     addDebugItem "enable all (pretty printing) notations"

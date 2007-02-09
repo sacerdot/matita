@@ -1014,6 +1014,10 @@ class gui () =
           | false -> main#toplevel#unfullscreen ())
         ~check:main#fullscreenMenuItem;
       main#fullscreenMenuItem#set_active false;
+      MatitaGtkMisc.toggle_callback
+        ~callback:(fun enabled ->
+          CicMetaSubst.use_low_level_ppterm_in_context := not enabled)
+        ~check:main#formulaePpMenuItem;
         (* log *)
       HLog.set_log_callback self#console#log_callback;
       GtkSignal.user_handler :=

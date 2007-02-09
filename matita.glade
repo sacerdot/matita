@@ -1081,7 +1081,7 @@
 			      <accelerator key="n" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image889">
+				<widget class="GtkImage" id="image979">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-new</property>
 				  <property name="icon_size">1</property>
@@ -1102,7 +1102,7 @@
 			      <accelerator key="o" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image890">
+				<widget class="GtkImage" id="image980">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-open</property>
 				  <property name="icon_size">1</property>
@@ -1123,7 +1123,7 @@
 			      <accelerator key="s" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image891">
+				<widget class="GtkImage" id="image981">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-save</property>
 				  <property name="icon_size">1</property>
@@ -1139,12 +1139,12 @@
 			  <child>
 			    <widget class="GtkImageMenuItem" id="saveAsMenuItem">
 			      <property name="visible">True</property>
-			      <property name="label" translatable="yes">Save _As ...</property>
+			      <property name="label" translatable="yes">Save _as ...</property>
 			      <property name="use_underline">True</property>
 			      <accelerator key="s" modifiers="GDK_CONTROL_MASK | GDK_SHIFT_MASK" signal="activate"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image892">
+				<widget class="GtkImage" id="image982">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-save-as</property>
 				  <property name="icon_size">1</property>
@@ -1165,7 +1165,7 @@
 			      <accelerator key="d" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image893">
+				<widget class="GtkImage" id="image983">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-execute</property>
 				  <property name="icon_size">1</property>
@@ -1192,7 +1192,7 @@
 			      <accelerator key="q" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image894">
+				<widget class="GtkImage" id="image984">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-quit</property>
 				  <property name="icon_size">1</property>
@@ -1227,7 +1227,7 @@
 			      <accelerator key="z" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image895">
+				<widget class="GtkImage" id="image985">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-undo</property>
 				  <property name="icon_size">1</property>
@@ -1249,7 +1249,7 @@
 			      <accelerator key="z" modifiers="GDK_CONTROL_MASK | GDK_SHIFT_MASK" signal="activate"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image896">
+				<widget class="GtkImage" id="image986">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-redo</property>
 				  <property name="icon_size">1</property>
@@ -1276,7 +1276,7 @@
 			      <accelerator key="x" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image897">
+				<widget class="GtkImage" id="image987">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-cut</property>
 				  <property name="icon_size">1</property>
@@ -1297,7 +1297,7 @@
 			      <accelerator key="c" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image898">
+				<widget class="GtkImage" id="image988">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-copy</property>
 				  <property name="icon_size">1</property>
@@ -1318,7 +1318,7 @@
 			      <accelerator key="v" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image899">
+				<widget class="GtkImage" id="image989">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-paste</property>
 				  <property name="icon_size">1</property>
@@ -1346,7 +1346,7 @@
 			      <property name="use_underline">True</property>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image900">
+				<widget class="GtkImage" id="image990">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-delete</property>
 				  <property name="icon_size">1</property>
@@ -1382,12 +1382,12 @@
 			  <child>
 			    <widget class="GtkImageMenuItem" id="findReplMenuItem">
 			      <property name="visible">True</property>
-			      <property name="label" translatable="yes">_Find &amp; Replace ...</property>
+			      <property name="label" translatable="yes">_Find &amp; replace ...</property>
 			      <property name="use_underline">True</property>
 			      <accelerator key="f" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image901">
+				<widget class="GtkImage" id="image991">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-find-and-replace</property>
 				  <property name="icon_size">1</property>
@@ -1418,7 +1418,7 @@
 			  <child>
 			    <widget class="GtkMenuItem" id="externalEditorMenuItem">
 			      <property name="visible">True</property>
-			      <property name="label" translatable="yes">Edit with E_xternal Editor</property>
+			      <property name="label" translatable="yes">Edit with e_xternal editor</property>
 			      <property name="use_underline">True</property>
 			    </widget>
 			  </child>
@@ -1509,7 +1509,7 @@
 			  <child>
 			    <widget class="GtkCheckMenuItem" id="tacticsBarMenuItem">
 			      <property name="visible">True</property>
-			      <property name="label" translatable="yes">Show _Tactics Bar</property>
+			      <property name="label" translatable="yes">Show _tactics bar</property>
 			      <property name="use_underline">True</property>
 			      <property name="active">True</property>
 			      <accelerator key="F2" modifiers="0" signal="activate"/>
@@ -1519,7 +1519,7 @@
 			  <child>
 			    <widget class="GtkMenuItem" id="newCicBrowserMenuItem">
 			      <property name="visible">True</property>
-			      <property name="label" translatable="yes">New Cic _Browser</property>
+			      <property name="label" translatable="yes">New CIC _browser</property>
 			      <property name="use_underline">True</property>
 			      <accelerator key="F3" modifiers="0" signal="activate"/>
 			    </widget>
@@ -1550,13 +1550,12 @@
 			  <child>
 			    <widget class="GtkImageMenuItem" id="increaseFontSizeMenuItem">
 			      <property name="visible">True</property>
-			      <property name="label" translatable="yes">Zoom _In</property>
+			      <property name="label" translatable="yes">Zoom _in</property>
 			      <property name="use_underline">True</property>
-			      <signal name="activate" handler="on_increaseFontSizeMenuItem_activate" last_modification_time="Wed, 15 Jun 2005 15:06:29 GMT"/>
 			      <accelerator key="plus" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image902">
+				<widget class="GtkImage" id="image992">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-zoom-in</property>
 				  <property name="icon_size">1</property>
@@ -1572,13 +1571,12 @@
 			  <child>
 			    <widget class="GtkImageMenuItem" id="decreaseFontSizeMenuItem">
 			      <property name="visible">True</property>
-			      <property name="label" translatable="yes">Zoom _Out</property>
+			      <property name="label" translatable="yes">Zoom _out</property>
 			      <property name="use_underline">True</property>
-			      <signal name="activate" handler="on_decreaseFontSizeMenuItem_activate" last_modification_time="Wed, 15 Jun 2005 15:06:29 GMT"/>
 			      <accelerator key="minus" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image903">
+				<widget class="GtkImage" id="image993">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-zoom-out</property>
 				  <property name="icon_size">1</property>
@@ -1594,12 +1592,12 @@
 			  <child>
 			    <widget class="GtkImageMenuItem" id="normalFontSizeMenuItem">
 			      <property name="visible">True</property>
-			      <property name="label" translatable="yes">_Normal Size</property>
+			      <property name="label" translatable="yes">_Normal size</property>
 			      <property name="use_underline">True</property>
 			      <accelerator key="equal" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image904">
+				<widget class="GtkImage" id="image994">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-zoom-100</property>
 				  <property name="icon_size">1</property>
@@ -1609,6 +1607,22 @@
 				  <property name="ypad">0</property>
 				</widget>
 			      </child>
+			    </widget>
+			  </child>
+
+			  <child>
+			    <widget class="GtkSeparatorMenuItem" id="separator12">
+			      <property name="visible">True</property>
+			    </widget>
+			  </child>
+
+			  <child>
+			    <widget class="GtkCheckMenuItem" id="formulaePpMenuItem">
+			      <property name="visible">True</property>
+			      <property name="label" translatable="yes">Pretty print formulae</property>
+			      <property name="use_underline">True</property>
+			      <property name="active">True</property>
+			      <accelerator key="p" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 			    </widget>
 			  </child>
 			</widget>
@@ -1652,7 +1666,7 @@
 			      <accelerator key="F1" modifiers="0" signal="activate"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image905">
+				<widget class="GtkImage" id="image995">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-help</property>
 				  <property name="icon_size">1</property>
@@ -1672,7 +1686,7 @@
 			      <property name="use_underline">True</property>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image906">
+				<widget class="GtkImage" id="image996">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-about</property>
 				  <property name="icon_size">1</property>
@@ -4417,238 +4431,6 @@
 	  <property name="padding">0</property>
 	  <property name="expand">False</property>
 	  <property name="fill">True</property>
-	</packing>
-      </child>
-    </widget>
-  </child>
-</widget>
-
-<widget class="GtkWindow" id="window1">
-  <property name="visible">True</property>
-  <property name="title" translatable="yes">window1</property>
-  <property name="type">GTK_WINDOW_TOPLEVEL</property>
-  <property name="window_position">GTK_WIN_POS_NONE</property>
-  <property name="modal">False</property>
-  <property name="resizable">True</property>
-  <property name="destroy_with_parent">False</property>
-  <property name="decorated">True</property>
-  <property name="skip_taskbar_hint">False</property>
-  <property name="skip_pager_hint">False</property>
-  <property name="type_hint">GDK_WINDOW_TYPE_HINT_NORMAL</property>
-  <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
-  <property name="focus_on_map">True</property>
-  <property name="urgency_hint">False</property>
-
-  <child>
-    <widget class="GtkHBox" id="hbox27">
-      <property name="visible">True</property>
-      <property name="homogeneous">False</property>
-      <property name="spacing">0</property>
-
-      <child>
-	<widget class="GtkToolbar" id="toolbar1">
-	  <property name="visible">True</property>
-	  <property name="orientation">GTK_ORIENTATION_HORIZONTAL</property>
-	  <property name="toolbar_style">GTK_TOOLBAR_BOTH</property>
-	  <property name="tooltips">True</property>
-	  <property name="show_arrow">True</property>
-
-	  <child>
-	    <widget class="GtkToolItem" id="toolitem30">
-	      <property name="visible">True</property>
-	      <property name="visible_horizontal">True</property>
-	      <property name="visible_vertical">True</property>
-	      <property name="is_important">False</property>
-
-	      <child>
-		<widget class="GtkButton" id="button1">
-		  <property name="visible">True</property>
-		  <property name="tooltip" translatable="yes">Restart</property>
-		  <property name="can_focus">True</property>
-		  <property name="relief">GTK_RELIEF_NONE</property>
-		  <property name="focus_on_click">True</property>
-
-		  <child>
-		    <widget class="GtkImage" id="image909">
-		      <property name="visible">True</property>
-		      <property name="stock">gtk-goto-top</property>
-		      <property name="icon_size">4</property>
-		      <property name="xalign">0.5</property>
-		      <property name="yalign">0.5</property>
-		      <property name="xpad">0</property>
-		      <property name="ypad">0</property>
-		    </widget>
-		  </child>
-		</widget>
-	      </child>
-	    </widget>
-	    <packing>
-	      <property name="expand">False</property>
-	      <property name="homogeneous">False</property>
-	    </packing>
-	  </child>
-
-	  <child>
-	    <widget class="GtkToolItem" id="toolitem31">
-	      <property name="visible">True</property>
-	      <property name="visible_horizontal">True</property>
-	      <property name="visible_vertical">True</property>
-	      <property name="is_important">False</property>
-
-	      <child>
-		<widget class="GtkButton" id="button2">
-		  <property name="visible">True</property>
-		  <property name="tooltip" translatable="yes">Retract 1 phrase</property>
-		  <property name="can_focus">True</property>
-		  <property name="relief">GTK_RELIEF_NONE</property>
-		  <property name="focus_on_click">True</property>
-
-		  <child>
-		    <widget class="GtkImage" id="image910">
-		      <property name="visible">True</property>
-		      <property name="stock">gtk-go-up</property>
-		      <property name="icon_size">4</property>
-		      <property name="xalign">0.5</property>
-		      <property name="yalign">0.5</property>
-		      <property name="xpad">0</property>
-		      <property name="ypad">0</property>
-		    </widget>
-		  </child>
-		</widget>
-	      </child>
-	    </widget>
-	    <packing>
-	      <property name="expand">False</property>
-	      <property name="homogeneous">False</property>
-	    </packing>
-	  </child>
-
-	  <child>
-	    <widget class="GtkToolItem" id="toolitem32">
-	      <property name="visible">True</property>
-	      <property name="visible_horizontal">True</property>
-	      <property name="visible_vertical">True</property>
-	      <property name="is_important">False</property>
-
-	      <child>
-		<widget class="GtkButton" id="button3">
-		  <property name="visible">True</property>
-		  <property name="tooltip" translatable="yes">Execute until point</property>
-		  <property name="can_focus">True</property>
-		  <property name="relief">GTK_RELIEF_NONE</property>
-		  <property name="focus_on_click">True</property>
-
-		  <child>
-		    <widget class="GtkImage" id="image911">
-		      <property name="visible">True</property>
-		      <property name="stock">gtk-jump-to</property>
-		      <property name="icon_size">4</property>
-		      <property name="xalign">0.5</property>
-		      <property name="yalign">0.5</property>
-		      <property name="xpad">0</property>
-		      <property name="ypad">0</property>
-		    </widget>
-		  </child>
-		</widget>
-	      </child>
-	    </widget>
-	    <packing>
-	      <property name="expand">False</property>
-	      <property name="homogeneous">False</property>
-	    </packing>
-	  </child>
-
-	  <child>
-	    <widget class="GtkToolItem" id="toolitem33">
-	      <property name="visible">True</property>
-	      <property name="visible_horizontal">True</property>
-	      <property name="visible_vertical">True</property>
-	      <property name="is_important">False</property>
-
-	      <child>
-		<widget class="GtkButton" id="button4">
-		  <property name="visible">True</property>
-		  <property name="tooltip" translatable="yes">Execute 1 phrase</property>
-		  <property name="can_focus">True</property>
-		  <property name="relief">GTK_RELIEF_NONE</property>
-		  <property name="focus_on_click">True</property>
-
-		  <child>
-		    <widget class="GtkImage" id="image912">
-		      <property name="visible">True</property>
-		      <property name="stock">gtk-go-down</property>
-		      <property name="icon_size">4</property>
-		      <property name="xalign">0.5</property>
-		      <property name="yalign">0.5</property>
-		      <property name="xpad">0</property>
-		      <property name="ypad">0</property>
-		    </widget>
-		  </child>
-		</widget>
-	      </child>
-	    </widget>
-	    <packing>
-	      <property name="expand">False</property>
-	      <property name="homogeneous">False</property>
-	    </packing>
-	  </child>
-
-	  <child>
-	    <widget class="GtkToolItem" id="toolitem34">
-	      <property name="visible">True</property>
-	      <property name="visible_horizontal">True</property>
-	      <property name="visible_vertical">True</property>
-	      <property name="is_important">False</property>
-
-	      <child>
-		<widget class="GtkButton" id="button5">
-		  <property name="visible">True</property>
-		  <property name="tooltip" translatable="yes">Execute all</property>
-		  <property name="can_focus">True</property>
-		  <property name="relief">GTK_RELIEF_NONE</property>
-		  <property name="focus_on_click">True</property>
-
-		  <child>
-		    <widget class="GtkImage" id="image913">
-		      <property name="visible">True</property>
-		      <property name="stock">gtk-goto-bottom</property>
-		      <property name="icon_size">4</property>
-		      <property name="xalign">0.5</property>
-		      <property name="yalign">0.5</property>
-		      <property name="xpad">0</property>
-		      <property name="ypad">0</property>
-		    </widget>
-		  </child>
-		</widget>
-	      </child>
-	    </widget>
-	    <packing>
-	      <property name="expand">False</property>
-	      <property name="homogeneous">False</property>
-	    </packing>
-	  </child>
-	</widget>
-	<packing>
-	  <property name="padding">0</property>
-	  <property name="expand">True</property>
-	  <property name="fill">True</property>
-	</packing>
-      </child>
-
-      <child>
-	<widget class="GtkImage" id="image914">
-	  <property name="visible">True</property>
-	  <property name="stock">gtk-cancel</property>
-	  <property name="icon_size">4</property>
-	  <property name="xalign">0.5</property>
-	  <property name="yalign">0.5</property>
-	  <property name="xpad">0</property>
-	  <property name="ypad">0</property>
-	</widget>
-	<packing>
-	  <property name="padding">0</property>
-	  <property name="expand">False</property>
-	  <property name="fill">False</property>
 	</packing>
       </child>
     </widget>
