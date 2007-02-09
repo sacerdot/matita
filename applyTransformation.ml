@@ -114,8 +114,23 @@ ignore (
        Sys.Break as exn -> raise exn
      | exn ->
         "[[ Exception raised during pretty-printing: " ^
-        Printexc.to_string exn ^ " ]] " ^
-        CicMetaSubst.ppterm_in_context ~metasenv subst term context)
+         (try
+           Printexc.to_string exn
+          with
+             Sys.Break as exn -> raise exn
+           | _ -> "<<exception raised pretty-printing the exception>>"
+         ) ^ " ]] " ^
+        (CicMetaSubst.use_low_level_ppterm_in_context := true;
+         try
+          let res =
+           CicMetaSubst.ppterm_in_context ~metasenv subst term context
+          in
+           CicMetaSubst.use_low_level_ppterm_in_context := false;
+           res
+         with
+          exc -> 
+           CicMetaSubst.use_low_level_ppterm_in_context := false;
+           raise exc))
 );;
 
 (****************************************************************************)
