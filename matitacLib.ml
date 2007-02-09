@@ -78,7 +78,8 @@ let run_script is eval_function  =
   with
   | GrafiteEngine.Drop  
   | End_of_file
-  | CicNotationParser.Parse_error _ as exn -> raise exn
+  | CicNotationParser.Parse_error _ 
+  | GrafiteEngine.Macro _ as exn -> raise exn
   | exn -> 
       if not matita_debug then
        HLog.error (snd (MatitaExcPp.to_string exn)) ;
@@ -120,7 +121,15 @@ let clean_exit n =
       with GrafiteTypes.Option_error("baseuri", "not found") ->
        (* no baseuri ==> nothing to clean yet *)
        opt_exit n
-  
+
+let get_macro_context = function
+   | Some {GrafiteTypes.proof_status = GrafiteTypes.No_proof} -> []
+   | Some status                ->
+      let stack = GrafiteTypes.get_stack status in
+      let goal = Continuationals.Stack.find_goal stack in
+      GrafiteTypes.get_proof_context status goal
+   | None                       -> assert false
+   
 let rec interactive_loop () = 
   let str = Ulexing.from_utf8_channel stdin in
   try
@@ -131,16 +140,16 @@ let rec interactive_loop () =
   with 
   | GrafiteEngine.Drop -> pp_ocaml_mode ()
   | GrafiteEngine.Macro (floc, f) ->
-      begin match snd (f []) with 
-       | GrafiteAst.Inline (_, style, suri, prefix) ->
+      begin match f (get_macro_context !grafite_status) with 
+       | _, GrafiteAst.Inline (_, style, suri, prefix) ->
          let str = ApplyTransformation.txt_of_inline_macro style suri prefix in
-         !out str
-       | _ -> ()
-      end;
-      let x, y = HExtlib.loc_of_floc floc in
-      HLog.error
-       (sprintf "A macro has been found in a script at %d-%d" x y);
-      interactive_loop ()
+         !out str;
+	 interactive_loop ()
+       | _ ->
+         let x, y = HExtlib.loc_of_floc floc in
+         HLog.error (sprintf "A macro has been found in a script at %d-%d" x y);
+         interactive_loop ()
+      end
   | Sys.Break -> HLog.error "user break!"; interactive_loop ()
   | GrafiteTypes.Command_error _ -> interactive_loop ()
   | End_of_file ->
@@ -215,6 +224,71 @@ let pp_times fname bench_mode rc big_bang =
     end
 ;;
 
+let rec compiler_loop fname big_bang mode buf =
+ let include_paths =
+  Helm_registry.get_list Helm_registry.string "matita.includes" in
+ let clean_baseuri = not (Helm_registry.get_bool "matita.preserve") in    
+ let matita_debug = Helm_registry.get_bool "matita.debug" in
+ let bench_mode =  Helm_registry.get_bool "matita.bench" in
+ try
+  run_script buf 
+   (MatitaEngine.eval_from_stream ~first_statement_only:false ~include_paths
+    ~clean_baseuri)
+ with 
+  | End_of_file -> ()
+  | Sys.Break as exn ->
+     if matita_debug then raise exn;
+      HLog.error "user break!";
+      pp_times fname bench_mode false big_bang;
+      if mode = `COMPILER then
+        clean_exit (Some ~-1)
+      else
+        pp_ocaml_mode ()
+  | GrafiteEngine.Drop ->
+      if mode = `COMPILER then 
+        begin
+          pp_times fname bench_mode false big_bang;
+          clean_exit (Some 1)
+        end
+      else 
+        pp_ocaml_mode ()
+  | GrafiteEngine.Macro (floc, f) ->
+      begin match f (get_macro_context !grafite_status) with 
+       | _, GrafiteAst.Inline (_, style, suri, prefix) ->
+         let str = ApplyTransformation.txt_of_inline_macro style suri prefix in
+         !out str;
+         compiler_loop fname big_bang mode buf
+       | _ ->
+         let x, y = HExtlib.loc_of_floc floc in
+         HLog.error (sprintf "A macro has been found in a script at %d-%d" x y);
+         if mode = `COMPILER then
+	    begin 
+	       pp_times fname bench_mode false big_bang;
+	       clean_exit (Some 1)
+            end 
+	 else 
+            pp_ocaml_mode ()
+      end
+  | HExtlib.Localized (floc,CicNotationParser.Parse_error err) ->
+     let (x, y) = HExtlib.loc_of_floc floc in
+     HLog.error (sprintf "Parse error at %d-%d: %s" x y err);
+     if mode = `COMPILER then
+       begin
+         pp_times fname bench_mode false big_bang;
+         clean_exit (Some 1)
+       end
+     else
+       pp_ocaml_mode ()
+  | exn ->
+      if matita_debug then raise exn;
+      if mode = `COMPILER then 
+        begin
+          pp_times fname bench_mode false big_bang;
+          clean_exit (Some 3)
+        end
+      else 
+        pp_ocaml_mode ()
+
 let main ~mode = 
   let big_bang = Unix.gettimeofday () in
   MatitaInit.initialize_all ();
@@ -241,25 +315,17 @@ let main ~mode =
   if Helm_registry.get_int "matita.verbosity" < 1 then
     HLog.set_log_callback newcb;
   if bench_mode then MatitaMisc.shutup ();
-  let matita_debug = Helm_registry.get_bool "matita.debug" in
-  try
     let time = Unix.time () in
     if Helm_registry.get_int "matita.verbosity" < 1 && not bench_mode then
       origcb `Message ("compiling " ^ Filename.basename fname ^ "...")
     else
       HLog.message (sprintf "execution of %s started:" fname);
-    let is =
-      Ulexing.from_utf8_channel
-        (match fname with
-        | "stdin" -> stdin
-        | fname -> open_in fname) in
-    let include_paths =
-     Helm_registry.get_list Helm_registry.string "matita.includes" in
-    (try
-      run_script is 
-       (MatitaEngine.eval_from_stream ~first_statement_only:false ~include_paths
-         ~clean_baseuri:(not (Helm_registry.get_bool "matita.preserve")))
-     with End_of_file -> ());
+    let ich = match fname with
+     | "stdin" -> stdin
+     | fname -> open_in fname
+    in
+    let buf = Ulexing.from_utf8_channel ich in
+    compiler_loop fname big_bang mode buf;
     let elapsed = Unix.time () -. time in
     let tm = Unix.gmtime elapsed in
     let sec = string_of_int tm.Unix.tm_sec ^ "''" in
@@ -307,51 +373,3 @@ let main ~mode =
        pp_times fname bench_mode true big_bang;
        exit 0
      end
-  with 
-  | Sys.Break as exn ->
-     if matita_debug then raise exn;
-      HLog.error "user break!";
-      pp_times fname bench_mode false big_bang;
-      if mode = `COMPILER then
-        clean_exit (Some ~-1)
-      else
-        pp_ocaml_mode ()
-  | GrafiteEngine.Drop ->
-      if mode = `COMPILER then 
-        begin
-          pp_times fname bench_mode false big_bang;
-          clean_exit (Some 1)
-        end
-      else 
-        pp_ocaml_mode ()
-  | GrafiteEngine.Macro (floc,_) ->
-     let x, y = HExtlib.loc_of_floc floc in
-      HLog.error
-       (sprintf "A macro has been found in a script at %d-%d" x y);
-      if mode = `COMPILER then 
-        begin
-          pp_times fname bench_mode false big_bang;
-          clean_exit (Some 1)
-        end
-      else 
-        pp_ocaml_mode ()
-  | HExtlib.Localized (floc,CicNotationParser.Parse_error err) ->
-     let (x, y) = HExtlib.loc_of_floc floc in
-     HLog.error (sprintf "Parse error at %d-%d: %s" x y err);
-     if mode = `COMPILER then
-       begin
-         pp_times fname bench_mode false big_bang;
-         clean_exit (Some 1)
-       end
-     else
-       pp_ocaml_mode ()
-  | exn ->
-      if matita_debug then raise exn;
-      if mode = `COMPILER then 
-        begin
-          pp_times fname bench_mode false big_bang;
-          clean_exit (Some 3)
-        end
-      else 
-        pp_ocaml_mode ()
-

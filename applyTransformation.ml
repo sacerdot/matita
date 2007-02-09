@@ -159,7 +159,7 @@ let txt_of_cic_object ?map_unicode_to_tex n style prefix obj =
   let aobj,_,_,ids_to_inner_sorts,ids_to_inner_types,_,_ = 
      try Cic2acic.acic_object_of_cic_object obj
      with e -> 
-        let msg = "Cic2ACic: " ^ Printexc.to_string e in
+        let msg = "txt_of_cic_object: " ^ Printexc.to_string e in
 	failwith msg
   in
   match style with
@@ -178,7 +178,7 @@ let txt_of_cic_object ?map_unicode_to_tex n style prefix obj =
         let aux = GrafiteAstPp.pp_statement ~term_pp ~lazy_term_pp ~obj_pp in
         let script = Acic2Procedural.acic2procedural 
 	   ~ids_to_inner_sorts ~ids_to_inner_types ?depth prefix aobj in
-	"\n\n" ^ String.concat "" (List.map aux script)
+	"\n" ^ String.concat "" (List.map aux script)
 
 let txt_of_inline_macro style suri prefix =
    let dbd = LibraryDb.instance () in   
@@ -191,4 +191,4 @@ let txt_of_inline_macro style suri prefix =
 	    Printf.sprintf "\n(* ERRORE IN STAMPA DI %s\nEXCEPTION: %s *)\n" 
 	    (UriManager.string_of_uri uri) (Printexc.to_string e)
    in
-   String.concat "\n\n" (List.map map sorted_uris)
+   String.concat "" (List.map map sorted_uris)
