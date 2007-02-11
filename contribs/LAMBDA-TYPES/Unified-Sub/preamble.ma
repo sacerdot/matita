@@ -22,6 +22,5 @@ set "baseuri" "cic:/matita/LAMBDA-TYPES/Unified-Sub/preamble".
 include "logic/equality.ma".
 include "../../RELATIONAL/NPlus/defs.ma".
 include "../../RELATIONAL/NLE/defs.ma".
-include "../../RELATIONAL/BEq/defs.ma".
 include "../../RELATIONAL/Nat/defs.ma".
 include "../../RELATIONAL/Bool/defs.ma".
