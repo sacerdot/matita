@@ -26,6 +26,7 @@
 (* $Id$ *)
 
 module G = GrafiteAst
+module L = LexiconAst
 
 (* from transcript *)
 
@@ -63,16 +64,18 @@ let dump f =
    let path = Filename.concat rt_base_dir "matita.ma.templ" in
    let lines = 14 in
    out_preamble och (path, lines);
-   let grafite_parser_cb ast =
-      output_string och (LexiconAstPp.pp_command ast)
+   let lexicon_engine_cb = function
+     | L.Include _ as ast -> output_string och (LexiconAstPp.pp_command ast)
+     | _                  -> ()
    in
    let matita_engine_cb = function
-      | G.Executable (_, G.Macro (_, G.Inline _)) -> ()
+      | G.Executable (_, G.Macro (_, G.Inline _)) 
+      | G.Executable (_, G.Command (_, G.Include _)) -> ()
       | ast                                                 ->
          output_string och (pp_ast_statement ast)
    in
    let matitac_lib_cb = output_string och in
-(*   GrafiteParser.set_callback grafite_parser_cb; *)
+   LexiconEngine.set_callback lexicon_engine_cb;
    MatitaEngine.set_callback matita_engine_cb;
    MatitacLib.set_callback matitac_lib_cb;
    at_exit atexit
