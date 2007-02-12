@@ -38,9 +38,9 @@ inductive Lift: Bool \to Nat \to Nat \to Term \to Term \to Prop \def
                    \forall q,t1,t2. Lift q l i t1 t2 \to 
                    \forall r.
                    Lift q l i (head q (flat r) u1 t1) (head q (flat r) u2 t2)
-   | lift_head   : \forall l,qt,q. (qt = q \to False) \to
+   | lift_head   : \forall l,q,p. (p = q \to False) \to
                    \forall i,u1,u2. Lift false l i u1 u2 \to
-                   \forall t1,t2. Lift qt l i t1 t2 \to 
+                   \forall t1,t2. Lift q l i t1 t2 \to 
                    \forall z.
-                   Lift qt l i (head q z u1 t1) (head q z u2 t2)
+                   Lift q l i (head p z u1 t1) (head p z u2 t2)
 .
