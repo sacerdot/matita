@@ -43,12 +43,16 @@ inductive Flat: Set \def
    | cast: Flat
 .
 
-inductive Head: Set \def
-   | bind: Bind \to Head
-   | flat: Flat \to Head
+inductive IntB: Set \def
+   | bind: Bool \to Bind \to IntB
+.
+
+inductive IntF: Set \def
+   | flat: Bool \to Flat \to IntF
 .
 
 inductive Term: Set \def
    | leaf: Leaf \to Term
-   | head: Bool \to Head \to Term \to Term \to Term
+   | intb: IntB \to Term \to Term \to Term
+   | intf: IntF \to Term \to Term \to Term
 .

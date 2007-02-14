@@ -23,5 +23,5 @@ include "Term/defs.ma".
 
 inductive Context: Set \def
    | leaf: Context
-   | head: Context \to Bind \to Term \to Context
+   | intb: Context \to IntB \to Term \to Context
 .

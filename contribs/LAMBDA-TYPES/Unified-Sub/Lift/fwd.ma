@@ -16,64 +16,59 @@ set "baseuri" "cic:/matita/LAMBDA-TYPES/Unified-Sub/Lift/fwd".
 
 include "Lift/defs.ma".
 
-theorem lift_sort_1: \forall q, h, d, k, x.
-                     Lift q h d (leaf (sort k)) x \to
-                     x = leaf (sort k).
+theorem lift_inv_sort_1: \forall l, i, h, x.
+                         Lift l i (leaf (sort h)) x \to
+                         x = leaf (sort h).
  intros. inversion H; clear H; intros;
  [ auto
+ | destruct H2
  | destruct H3
- | destruct H4
  | destruct H5
- | destruct H7
- | destruct H7
- | destruct H8
+ | destruct H5
  ].
 qed.
 
-theorem lift_lref_1: \forall q, h, d, k, x.
-                     Lift q h d (leaf (lref k)) x \to
-                     (q = false \land x = leaf (lref k)) \lor
-                     (q = true \land k < d \land x = leaf (lref k)) \lor
-                     (q = true \land d <= k \land 
-		      \exists e. (k + h == e) \land x = leaf (lref e)
-		     ). 
+theorem lift_inv_lref_1: \forall l, i, j1, x.
+                         Lift l i (leaf (lref j1)) x \to
+                         (i > j1 \land x = leaf (lref j1)) \lor
+                         (i <= j1 \land 
+                          \exists j2. (l + j1 == j2) \land x = leaf (lref j2)
+                         ).
  intros. inversion H; clear H; intros;
- [ destruct H3
- | destruct H3. clear H3. subst. auto depth = 4
- | destruct H4. clear H4. subst. auto depth = 5
- | destruct H5. clear H5. subst. auto depth = 5
- | destruct H7
- | destruct H7
- | destruct H8
+ [ destruct H1
+ | destruct H2. clear H2. subst. auto
+ | destruct H3. clear H3. subst. auto depth = 5
+ | destruct H5
+ | destruct H5
  ].
 qed.
 
-theorem lift_head_1: \forall q, l, i, p, z, u1, t1, x.
-                     Lift q l i (head p z u1 t1) x \to
-                     (p = q \land
-		                  \exists r, u2, t2. 
-		                  z = bind r \land
-		                  Lift true l i u1 u2 \land Lift q l (succ i) t1 t2 \land
-		                  x = head p z u2 t2
-		                 ) \lor
-		                 (p = q \land 
-		                  \exists r,u2,t2. 
-		                  z = flat r \land
-		                  Lift true l i u1 u2 \land Lift q l i t1 t2 \land
-		                  x = head p z u2 t2
-		                 ) \lor
-		                 ((p = q \to False) \land
-		                  \exists u2,t2.
-		                  Lift true l i u1 u2 \land Lift q l i t1 t2 \land
-		                  x = head p z u2 t2
-		                 ).
+theorem lift_inv_bind_1: \forall l, i, r, u1, t1, x.
+                         Lift l i (intb r u1 t1) x \to
+                         \exists u2, t2. 
+                         Lift l i u1 u2 \land
+                         Lift l (succ i) t1 t2 \land
+                         x = intb r u2 t2.
  intros. inversion H; clear H; intros;
- [ destruct H3
+ [ destruct H1
+ | destruct H2
  | destruct H3
- | destruct H4
+ | destruct H5. clear H5 H1 H3. subst. auto depth = 5
  | destruct H5
- | destruct H7. clear H7 H1 H3. subst. auto depth = 10
- | destruct H7. clear H7 H1 H3. subst. auto depth = 10
- | destruct H8. clear H8 H2 H4. subst. auto depth = 7
+ ].
+qed.
+
+theorem lift_inv_flat_1: \forall l, i, r, u1, t1, x.
+                         Lift l i (intf r u1 t1) x \to
+                         \exists u2, t2. 
+                         Lift l i u1 u2 \land
+                         Lift l i t1 t2 \land
+                         x = intf r u2 t2.
+ intros. inversion H; clear H; intros;
+ [ destruct H1
+ | destruct H2
+ | destruct H3
+ | destruct H5 
+ | destruct H5. clear H5 H1 H3. subst. auto depth = 5
  ].
 qed.

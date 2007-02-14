@@ -16,14 +16,23 @@ set "baseuri" "cic:/matita/RELATIONAL/NLE/defs".
 
 include "NPlus/defs.ma".
 
-definition NLE: Nat \to Nat \to Prop \def
-   \lambda q,r. \exists p. (p + q == r). 
+inductive NLE (q:Nat) (r:Nat): Prop \def
+   | nle_nplus: \forall p. (p + q == r) \to NLE q r. 
 
 (*CSC: the URI must disappear: there is a bug now *)
 interpretation "natural 'less or equal to'" 'leq x y =
-   (cic:/matita/RELATIONAL/NLE/defs/NLE.con x y).
+   (cic:/matita/RELATIONAL/NLE/defs/NLE.ind#xpointer(1/1) x y).
 
 (*CSC: the URI must disappear: there is a bug now *)
 interpretation "natural 'less than'" 'lt x y = 
-   (cic:/matita/RELATIONAL/NLE/defs/NLE.con 
+   (cic:/matita/RELATIONAL/NLE/defs/NLE.ind#xpointer(1/1) 
+      (cic:/matita/RELATIONAL/Nat/defs/Nat.ind#xpointer(1/1/2) x) y).
+
+(*CSC: the URI must disappear: there is a bug now *)
+interpretation "natural 'greater or equal to'" 'geq y x=
+   (cic:/matita/RELATIONAL/NLE/defs/NLE.ind#xpointer(1/1) x y).
+
+(*CSC: the URI must disappear: there is a bug now *)
+interpretation "natural 'greater than'" 'gt y x = 
+   (cic:/matita/RELATIONAL/NLE/defs/NLE.ind#xpointer(1/1) 
       (cic:/matita/RELATIONAL/Nat/defs/Nat.ind#xpointer(1/1/2) x) y).

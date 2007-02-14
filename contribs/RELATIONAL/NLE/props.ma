@@ -16,36 +16,51 @@ set "baseuri" "cic:/matita/RELATIONAL/NLE/props".
 
 include "NLE/fwd.ma".
 
-theorem nle_zero: \forall q. zero <= q.
- unfold NLE.
- intros. apply ex_intro; auto. (**)
+theorem nle_zero_1: \forall q. zero <= q.
+ intros. auto.
 qed.
 
-theorem nle_succ: \forall p,q. p <= q \to succ p <= succ q.
- unfold NLE.
- intros. decompose.
- apply ex_intro; [|auto] (**)
+theorem nle_succ_succ: \forall p,q. p <= q \to succ p <= succ q.
+ intros. elim H. clear H. auto.
+qed.
+
+theorem nle_ind: \forall P:(Nat \to Nat \to Prop).
+                 (\forall n:Nat.P zero n) \to 
+                 (\forall n,n1:Nat.
+                  n <= n1 \to P n n1 \to P (succ n) (succ n1)
+                 ) \to
+                \forall n,n1:Nat. n <= n1 \to P n n1.
+ intros 4. elim n; clear n;
+ [ auto
+ | lapply linear nle_inv_succ_1 to H3. decompose; subst.
+   auto
+ ].
 qed.
 
 theorem nle_refl: \forall x. x <= x.
- intros 1; elim x; clear x; intros; auto new timeout=100.
+ intros 1; elim x; clear x; intros; auto.
 qed.
 
 theorem nle_trans_succ: \forall x,y. x <= y \to x <= succ y.
- intros 1. elim x; clear x; intros; 
- [ auto new timeout=100.
- | lapply linear nle_gen_succ_1 to H1 as H0. decompose H0. subst.
-   auto new timeout=100.
+ intros. elim H using nle_ind; clear H x y; auto.
+qed.
+
+theorem nle_false: \forall x,y. x <= y \to y < x \to False.
+ intros 3; elim H using nle_ind; clear H x y; auto.
+qed.
+
+theorem nle_trans: \forall x,y. x <= y \to
+                   \forall z. y <= z \to x <= z.
+ intros 3. elim H using nle_ind; clear H x y;
+ [ auto
+ | lapply linear nle_inv_succ_1 to H3. decompose. subst. 
+   auto
  ].
 qed.
 
 theorem nle_lt_or_eq: \forall y,x. x <= y \to x < y \lor x = y.
- intros 1. elim y; clear y; intros;
- [ lapply linear nle_gen_zero_2 to H. auto new timeout=100
- | lapply linear nle_gen_succ_2 to H1. decompose;
-   [ subst. auto new timeout=100
-   | lapply linear H to H3 as H0. decompose;
-     subst; auto new timeout=100
-   ]
+ intros. elim H using nle_ind; clear H x y;
+ [ elim n; clear n; auto
+ | decompose; subst; auto
  ].
 qed.

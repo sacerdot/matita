@@ -16,43 +16,46 @@ set "baseuri" "cic:/matita/LAMBDA-TYPES/Unified-Sub/Lift/props".
 
 include "Lift/fwd.ma".
 
-alias id "nplus_conf" = "cic:/matita/RELATIONAL/NPlus/props/nplus_conf.con".
-
-axiom pippo: \forall x,y. x < y \to y <= x \to False.
-
-theorem lift_conf: \forall q,h,d,t,x. Lift q h d t x \to
-                   \forall y. Lift q h d t y \to
+theorem lift_conf: \forall l,i,t,x. Lift l i t x \to
+                   \forall y. Lift l i t y \to
                    x = y.
- intros 6. elim H; clear H q h d t x;
- [ lapply linear lift_sort_fwd to H1.
+ intros 5. elim H; clear H i t x;
+ [ lapply linear lift_inv_sort_1 to H1.
    subst. auto
- | lapply linear lift_lref_fwd to H1. 
-   decompose; subst; 
-   [ auto | destruct H1 | destruct H ]
- | lapply linear lift_lref_fwd to H2. 
+ | lapply linear lift_inv_lref_1 to H2.
    decompose; subst;
-   [ destruct H | auto | lapply pippo to H1, H4. decompose ]
- | lapply linear lift_lref_fwd to H3. 
+   [ auto | lapply nle_false to H2, H1. decompose ]
+ | lapply linear lift_inv_lref_1 to H3.
    decompose; subst;
-   [ destruct H
-   | lapply linear pippo to H5, H1. decompose 
-   | lapply linear nplus_conf to H2, H4. subst. auto 
+   [ lapply linear nle_false to H1, H3. decompose
+   | lapply linear nplus_conf to H2, H4. subst. auto
    ]
+ | lapply linear lift_inv_bind_1 to H5.
+   decompose. subst. auto.
+ | lapply linear lift_inv_flat_1 to H5.
+   decompose. subst. auto.
+ ].
+qed.
 
-(* 
-theorem lift_ct_le: \forall q,h,d,t,y. (Lift q h d t y) \to
-                    \forall k,e,x. (Lift q k e t x) \to
-                    \forall z. (Lift q k e y z) \to
-                    e <= d \to \forall d'. (k + d == d') \to
-                    (Lift q h d' x z).
- intros 6. elim H; clear H q h d t y;
- [ lapply linear lift_sort_fwd to H1.
-   lapply linear lift_sort_fwd to H2.
+alias id "nle_trans" = "cic:/matita/RELATIONAL/NLE/props/nle_trans.con".
+alias id "pippo" = "cic:/matita/RELATIONAL/NLE/nplus/pippo.con".
+alias id "nle_refl" = "cic:/matita/RELATIONAL/NLE/props/nle_refl.con".
+
+theorem lift_ct_le: \forall l1,i1,t,y. (Lift l1 i1 t y) \to
+                    \forall l2,i2,x. (Lift l2 i2 t x) \to
+                    \forall z. (Lift l2 i2 y z) \to
+                    i2 <= i1 \to \forall i. (l2 + i1 == i) \to
+                    (Lift l1 i x z).
+ intros 5. elim H; clear H i1 t y;
+ [ lapply lift_conf to H1, H2. clear H2. subst.
+   lapply linear lift_inv_sort_1 to H1.
    subst. auto
- | lapply linear lift_lref_fwd to H1. 
-   lapply linear lift_lref_fwd to H2.
-   decompose; subst;
-   [ auto
-   | auto
-   |  
- *)
+ | lapply lift_conf to H2, H3. clear H3. subst.
+   lapply linear lift_inv_lref_1 to H2.
+   decompose; subst; clear H2 H4 i2;
+   [ lapply linear nle_nplus to H5 as H. clear l2. (**)
+     lapply linear nle_trans to H1, H.
+     auto
+   | lapply pippo to H3, H5; [ auto | apply nle_refl | auto ]. (**)
+   ]
+ | 
