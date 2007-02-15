@@ -14,8 +14,7 @@
 
 set "baseuri" "cic:/matita/RELATIONAL/NPlus/defs".
 
-include "logic/equality.ma".
-include "Nat/defs.ma".
+include "datatypes/defs.ma".
 
 inductive NPlus (p:Nat): Nat \to Nat \to Prop \def
    | nplus_zero_2: NPlus p zero p

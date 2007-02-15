@@ -12,9 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/RELATIONAL/NPlus/fwd".
+set "baseuri" "cic:/matita/RELATIONAL/NPlus/inv".
 
-include "Nat/fwd.ma".
 include "NPlus/defs.ma".
 
 (* primitive generation lemmas proved by elimination and inversion *)
@@ -40,16 +39,16 @@ theorem nplus_gen_zero_2: \forall p,r. (p + zero == r) \to p = r.
  intros. inversion H; clear H; intros;
  [ auto new timeout=30
  | clear H H1.
-   lapply eq_gen_zero_succ to H2 as H0. decompose.
+   destruct H2.
  ].
 qed.
 
 theorem nplus_gen_succ_2: \forall p,q,r. (p + (succ q) == r) \to 
                           \exists s. r = (succ s) \land p + q == s.
  intros. inversion H; clear H; intros;
- [ lapply eq_gen_succ_zero to H as H0. decompose.
+ [ destruct H.
  | clear H1 H3 r.
-   lapply linear eq_gen_succ_succ to H2 as H0.
+   destruct H2; clear H2.
    subst.
    apply ex_intro; [| auto new timeout=30 ] (**)
  ].
@@ -60,7 +59,7 @@ theorem nplus_gen_zero_3: \forall p,q. (p + q == zero) \to
  intros. inversion H; clear H; intros;
  [ subst. auto new timeout=30
  | clear H H1.
-   lapply eq_gen_zero_succ to H3 as H0. decompose.
+   destruct H3.
  ].
 qed.
 
@@ -70,7 +69,7 @@ theorem nplus_gen_succ_3: \forall p,q,r. (p + q == (succ r)) \to
  intros. inversion H; clear H; intros;
  [ subst.
  | clear H1.
-   lapply linear eq_gen_succ_succ to H3 as H0.
+   destruct H3. clear H3.
    subst.
  ]; apply ex_intro; [| auto new timeout=30 || auto new timeout=30 ] (**)
 qed.
@@ -111,7 +110,7 @@ theorem nplus_gen_eq_2_3: \forall p,q. (p + q == q) \to p = zero.
    subst
  | lapply linear nplus_gen_succ_2 to H1 as H0.
    decompose.
-   lapply linear eq_gen_succ_succ to H2 as H0.
+   destruct H2. clear H2.
    subst
  ]; auto new timeout=30.
 qed.
@@ -122,7 +121,7 @@ theorem nplus_gen_eq_1_3: \forall p,q. (p + q == p) \to q = zero.
    subst
  | lapply linear nplus_gen_succ_1 to H1 as H0.
    decompose.
-   lapply linear eq_gen_succ_succ to H2 as H0.
+   destruct H2. clear H2.
    subst
  ]; auto new timeout=30.
 qed.

@@ -16,6 +16,10 @@ set "baseuri" "cic:/matita/RELATIONAL/NLE/nplus".
 
 include "NLE/defs.ma".
 
-axiom pippo: \forall x1, x2, x3. (x1 + x2 == x3) \to
-             \forall y1, y2, y3. (y1 + y2 == y3) \to
-             x1 <= y1 \to x2 < y2 \to x3 < y3.
+axiom nle_nplus_comp: \forall x1, x2, x3. (x1 + x2 == x3) \to
+                      \forall y1, y2, y3. (y1 + y2 == y3) \to
+                      x1 <= y1 \to x2 <= y2 \to x3 <= y3.
+
+axiom nle_nplus_comp_lt_2: \forall x1, x2, x3. (x1 + x2 == x3) \to
+                           \forall y1, y2, y3. (y1 + y2 == y3) \to
+                           x1 <= y1 \to x2 < y2 \to x3 < y3.

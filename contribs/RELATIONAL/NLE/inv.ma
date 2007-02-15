@@ -12,11 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/RELATIONAL/NLE/fwd".
+set "baseuri" "cic:/matita/RELATIONAL/NLE/inv".
 
-include "logic/connectives.ma".
-
-include "NPlus/fwd.ma".
+include "NPlus/inv.ma".
 include "NLE/defs.ma".
 
 theorem nle_inv_succ_1: \forall x,y. x < y \to 
@@ -29,14 +27,14 @@ qed.
 theorem nle_inv_succ_succ: \forall x,y. x < succ y \to x <= y.
  intros.
  lapply linear nle_inv_succ_1 to H. decompose.
- lapply linear eq_gen_succ_succ to H1. subst.
+ destruct H1. clear H1. subst.
  auto.
 qed.
 
 theorem nle_inv_succ_zero: \forall x. x < zero \to False.
  intros.
  lapply linear nle_inv_succ_1 to H. decompose.
- lapply linear eq_gen_zero_succ to H1. decompose.
+ destruct H1.
 qed.
 
 theorem nle_inv_zero_2: \forall x. x <= zero \to x = zero.

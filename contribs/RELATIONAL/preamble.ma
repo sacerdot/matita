@@ -12,9 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/RELATIONAL/Bool/defs".
+set "baseuri" "cic:/matita/RELATIONAL/preamble".
 
-inductive Bool: Set \def
-   | false: Bool
-   | true: Bool
-.
+include "logic/equality.ma".
+include "logic/connectives.ma".

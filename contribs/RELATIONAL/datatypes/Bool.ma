@@ -12,26 +12,11 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/RELATIONAL/List/defs".
+set "baseuri" "cic:/matita/RELATIONAL/datatypes/Bool".
 
-inductive List (A:Set): Set \def
-   | nil: List A
-   | cons: List A \to A \to List A
+include "preamble.ma".
+
+inductive Bool: Set \def
+   | false: Bool
+   | true : Bool
 .
-
-(*CSC: the URI must disappear: there is a bug now *)
-interpretation "nil" 'nil = 
-   (cic:/matita/RELATIONAL/List/defs/List.ind#xpointer(1/1) _).
-
-notation "hvbox([])"
-  non associative with precedence 95
-for @{ 'nil }.
-
-(*CSC: the URI must disappear: there is a bug now *)
-interpretation "right cons" 'rcons x y = 
-   (cic:/matita/RELATIONAL/List/defs/List.ind#xpointer(1/2) _ x y).
-
-notation "hvbox([a break @ b])"
-  non associative with precedence 95
-for @{ 'rcons $a $b}.
-

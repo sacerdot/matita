@@ -14,7 +14,7 @@
 
 set "baseuri" "cic:/matita/RELATIONAL/NLE/props".
 
-include "NLE/fwd.ma".
+include "NLE/inv.ma".
 
 theorem nle_zero_1: \forall q. zero <= q.
  intros. auto.
@@ -62,5 +62,17 @@ theorem nle_lt_or_eq: \forall y,x. x <= y \to x < y \lor x = y.
  intros. elim H using nle_ind; clear H x y;
  [ elim n; clear n; auto
  | decompose; subst; auto
+ ].
+qed.
+
+theorem nat_dec_lt_ge: \forall x,y. x < y \lor y <= x.
+ intros 2; elim y; clear y;
+ [ auto
+ | decompose;
+   [ lapply linear nle_inv_succ_1 to H1. decompose.
+     subst. auto depth=4
+   | lapply linear nle_lt_or_eq to H1; decompose;
+     subst; auto
+   ]
  ].
 qed.

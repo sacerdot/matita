@@ -14,7 +14,7 @@
 
 set "baseuri" "cic:/matita/RELATIONAL/NPlus/props".
 
-include "NPlus/fwd.ma".
+include "NPlus/inv.ma".
 
 theorem nplus_zero_1: \forall q. zero + q == q.
  intros. elim q; clear q; auto new timeout=100.

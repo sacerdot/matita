@@ -14,7 +14,7 @@
 
 set "baseuri" "cic:/matita/RELATIONAL/NPlusList/defs".
 
-include "List/defs.ma".
+include "datatypes/List.ma".
 include "NPlus/defs.ma".
 
 
