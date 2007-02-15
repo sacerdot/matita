@@ -20,13 +20,10 @@ set "baseuri" "cic:/matita/LAMBDA-TYPES/Unified-Sub/preamble".
 *)
 
 include "logic/equality.ma".
-include "../../RELATIONAL/NPlus/defs.ma".
-include "../../RELATIONAL/NLE/defs.ma".
-include "../../RELATIONAL/Nat/defs.ma".
-include "../../RELATIONAL/Bool/defs.ma".
-
-alias id "nplus_conf" = "cic:/matita/RELATIONAL/NPlus/props/nplus_conf.con".
-alias id "nle_false" = "cic:/matita/RELATIONAL/NLE/props/nle_false.con".
+include "../../RELATIONAL/datatypes/Bool.ma".
+include "../../RELATIONAL/NPlus/props.ma".
+include "../../RELATIONAL/NLE/props.ma".
+include "../../RELATIONAL/NLE/nplus.ma".
 
 axiom f_equal_3: \forall (A,B,C,D:Set).
                  \forall (f:A \to B \to C \to D). 

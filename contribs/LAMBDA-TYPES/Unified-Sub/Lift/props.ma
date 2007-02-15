@@ -14,7 +14,7 @@
 
 set "baseuri" "cic:/matita/LAMBDA-TYPES/Unified-Sub/Lift/props".
 
-include "Lift/fwd.ma".
+include "Lift/inv.ma".
 
 theorem lift_conf: \forall l,i,t,x. Lift l i t x \to
                    \forall y. Lift l i t y \to
@@ -37,15 +37,11 @@ theorem lift_conf: \forall l,i,t,x. Lift l i t x \to
  ].
 qed.
 
-alias id "nle_trans" = "cic:/matita/RELATIONAL/NLE/props/nle_trans.con".
-alias id "pippo" = "cic:/matita/RELATIONAL/NLE/nplus/pippo.con".
-alias id "nle_refl" = "cic:/matita/RELATIONAL/NLE/props/nle_refl.con".
-
-theorem lift_ct_le: \forall l1,i1,t,y. (Lift l1 i1 t y) \to
-                    \forall l2,i2,x. (Lift l2 i2 t x) \to
-                    \forall z. (Lift l2 i2 y z) \to
-                    i2 <= i1 \to \forall i. (l2 + i1 == i) \to
-                    (Lift l1 i x z).
+theorem lift_comp_le: \forall l1,i1,t,y. (Lift l1 i1 t y) \to
+                      \forall l2,i2,x. (Lift l2 i2 t x) \to
+                      \forall z. (Lift l2 i2 y z) \to
+                      i2 <= i1 \to \forall i. (l2 + i1 == i) \to
+                      (Lift l1 i x z).
  intros 5. elim H; clear H i1 t y;
  [ lapply lift_conf to H1, H2. clear H2. subst.
    lapply linear lift_inv_sort_1 to H1.
@@ -53,9 +49,24 @@ theorem lift_ct_le: \forall l1,i1,t,y. (Lift l1 i1 t y) \to
  | lapply lift_conf to H2, H3. clear H3. subst.
    lapply linear lift_inv_lref_1 to H2.
    decompose; subst; clear H2 H4 i2;
-   [ lapply linear nle_nplus to H5 as H. clear l2. (**)
-     lapply linear nle_trans to H1, H.
+   [ lapply linear nle_nplus to H5 as H0. clear l2. (**)
+     lapply linear nle_trans to H1, H0.
      auto
-   | lapply pippo to H3, H5; [ auto | apply nle_refl | auto ]. (**)
+   | lapply nle_nplus_comp_lt_2 to H3, H5; auto.
    ]
- | 
+ | lapply linear lift_inv_lref_1 to H3.
+   decompose; subst;
+   [ clear H2 H4 H6 n3 l2.
+     lapply linear nle_trans to H3, H5 as H0.
+     lapply linear nle_false to H1, H0. decompose
+   | lapply linear lift_inv_lref_1 to H4.
+     decompose; subst;
+     [ clear H1 H5 H6 H7 n1.
+       lapply linear nle_nplus to H2 as H0. (**)
+       lapply linear nle_trans to H3, H0 as H2.
+       lapply linear nle_false to H2, H4. decompose
+     | clear H3 H4 H5.
+       lapply nle_nplus_comp to H6, H7; auto.
+     ]
+   ]
+ |

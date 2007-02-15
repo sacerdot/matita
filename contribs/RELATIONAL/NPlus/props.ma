@@ -16,31 +16,42 @@ set "baseuri" "cic:/matita/RELATIONAL/NPlus/props".
 
 include "NPlus/inv.ma".
 
+(* Monoidal properties *)
+
+theorem nplus_conf: \forall p,q,r1. (p + q == r1) \to 
+                    \forall r2. (p + q == r2) \to r1 = r2.
+ intros 4. elim H; clear H q r1;
+ [ lapply linear nplus_gen_zero_2 to H1
+ | lapply linear nplus_gen_succ_2 to H3. decompose
+ ]; subst; auto.
+qed.
+
 theorem nplus_zero_1: \forall q. zero + q == q.
- intros. elim q; clear q; auto new timeout=100.
+ intros. elim q; clear q; auto.
 qed.
 
 theorem nplus_succ_1: \forall p,q,r. NPlus p q r \to 
                       (succ p) + q == (succ r).
- intros 2. elim q; clear q;
- [ lapply linear nplus_gen_zero_2 to H as H0.
-   subst
- | lapply linear nplus_gen_succ_2 to H1 as H0.
-   decompose.
-   subst
- ]; auto new timeout=100.
+ intros. elim H; clear H q r; auto.
 qed.
 
-theorem nplus_sym: \forall p,q,r. (p + q == r) \to q + p == r.
- intros 2. elim q; clear q;
- [ lapply linear nplus_gen_zero_2 to H as H0.
-   subst
- | lapply linear nplus_gen_succ_2 to H1 as H0.
-   decompose.
-   subst
- ]; auto new timeout=100.
+theorem nplus_comm: \forall p,q,r. (p + q == r) \to q + p == r.
+ intros. elim H; clear H q r; auto.
 qed.
 
+(* Corollaries *)
+
+theorem nplus_comm_1: \forall p1,q,r1. (p1 + q == r1) \to
+                      \forall p2,r2. (p2 + q == r2) \to
+                      \forall s. (p1 + r2 == s) \to (p2 + r1 == s).
+ intros 4. elim H; clear H q r1;
+ [ lapply linear nplus_gen_zero_2 to H1. subst
+ | lapply linear nplus_gen_succ_2 to H3. decompose. subst.
+   lapply linear nplus_gen_succ_2 to H4. decompose. subst
+ ]; auto.
+qed.
+
+(*                      
 theorem nplus_shift_succ_sx: \forall p,q,r. 
                              (p + (succ q) == r) \to (succ p) + q == r.
  intros.
@@ -84,15 +95,5 @@ theorem nplus_trans_2: \forall p1,q,r1. (p1 + q == r1) \to
    decompose.
  ]; apply ex_intro; [| auto new timeout=100 || auto new timeout=100 ]. (**)
 qed.
+*)
 
-theorem nplus_conf: \forall p,q,r1. (p + q == r1) \to 
-                    \forall r2. (p + q == r2) \to r1 = r2.
- intros 2. elim q; clear q; intros;
- [ lapply linear nplus_gen_zero_2 to H as H0.
-   subst
- | lapply linear nplus_gen_succ_2 to H1 as H0.
-   decompose. subst.
-   lapply linear nplus_gen_succ_2 to H2 as H0.
-   decompose. subst.
- ]; auto new timeout=100.
-qed.
