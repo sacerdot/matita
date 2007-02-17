@@ -12,23 +12,29 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* Project started Tue Aug 22, 2006 ***************************************)
+set "baseuri" "cic:/matita/RELATIONAL/NPlus/fun".
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Unified-Sub/preamble".
+include "NPlus/inv.ma".
 
-(* PREAMBLE
-*)
+(* Functional properties ****************************************************)
 
-include "logic/equality.ma".
-include "../../RELATIONAL/datatypes/Bool.ma".
-include "../../RELATIONAL/NPlus/monoid.ma".
-include "../../RELATIONAL/NLE/props.ma".
-include "../../RELATIONAL/NLE/nplus.ma".
+theorem nplus_total: \forall p,q. \exists r. p + q == r.
+ intros 2. elim q; clear q;
+ [ auto | decompose. auto ].
+qed.
 
-axiom f_equal_3: \forall (A,B,C,D:Set).
-                 \forall (f:A \to B \to C \to D). 
-                 \forall (x1,x2:A).
-                 \forall (y1,y2:B).
-                 \forall (z1,z2:C). 
-                 x1 = x2 \to y1 = y2 \to z1 = z2 \to 
-                 f x1 y1 z1 = f x2 y2 z2.  
+theorem nplus_mono: \forall p,q,r1. (p + q == r1) \to 
+                    \forall r2. (p + q == r2) \to r1 = r2.
+ intros 4. elim H; clear H q r1;
+ [ lapply linear nplus_gen_zero_2 to H1
+ | lapply linear nplus_gen_succ_2 to H3. decompose
+ ]; subst; auto.
+qed.
+
+theorem nplus_inj_1: \forall p1, q, r. (p1 + q == r) \to
+                     \forall p2. (p2 + q == r) \to p2 = p1.
+ intros 4. elim H; clear H q r;
+ [ lapply linear nplus_gen_zero_2 to H1
+ | lapply linear nplus_gen_succ_2_3 to H3
+ ]; auto.
+qed.

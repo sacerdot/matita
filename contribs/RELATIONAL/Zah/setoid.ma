@@ -14,7 +14,7 @@
 
 set "baseuri" "cic:/matita/RELATIONAL/Zah/setoid".
 
-include "NPlus/props.ma".
+include "NPlus/monoid.ma".
 include "Zah/defs.ma".
 
 theorem nplus_total: \forall p,q. \exists r. p + q == r.

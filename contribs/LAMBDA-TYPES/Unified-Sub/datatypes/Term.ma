@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Unified-Sub/Term/defs".
+set "baseuri" "cic:/matita/LAMBDA-TYPES/Unified-Sub/datatypes/Term".
 
 (* POLARIZED TERMS
    - Naming policy:

@@ -12,14 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Unified-Sub/Context/defs".
+set "baseuri" "cic:/matita/LAMBDA-TYPES/Unified-Sub/datatypes/Context".
 
 (* FLAT CONTEXTS
    - Naming policy:
      - contexts: c d
 *)
 
-include "Term/defs.ma".
+include "datatypes/Term.ma".
 
 inductive Context: Set \def
    | leaf: Context

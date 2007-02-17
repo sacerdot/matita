@@ -14,35 +14,14 @@
 
 set "baseuri" "cic:/matita/LAMBDA-TYPES/Unified-Sub/Lift/props".
 
-include "Lift/inv.ma".
+include "Lift/fun.ma".
 
-theorem lift_conf: \forall l,i,t,x. Lift l i t x \to
-                   \forall y. Lift l i t y \to
-                   x = y.
- intros 5. elim H; clear H i t x;
- [ lapply linear lift_inv_sort_1 to H1.
-   subst. auto
- | lapply linear lift_inv_lref_1 to H2.
-   decompose; subst;
-   [ auto | lapply nle_false to H2, H1. decompose ]
- | lapply linear lift_inv_lref_1 to H3.
-   decompose; subst;
-   [ lapply linear nle_false to H1, H3. decompose
-   | lapply linear nplus_conf to H2, H4. subst. auto
-   ]
- | lapply linear lift_inv_bind_1 to H5.
-   decompose. subst. auto.
- | lapply linear lift_inv_flat_1 to H5.
-   decompose. subst. auto.
- ].
-qed.
-
-theorem lift_comp_le: \forall l1,i1,t,y. (Lift l1 i1 t y) \to
-                      \forall l2,i2,x. (Lift l2 i2 t x) \to
-                      \forall z. (Lift l2 i2 y z) \to
-                      i2 <= i1 \to \forall i. (l2 + i1 == i) \to
-                      (Lift l1 i x z).
- intros 5. elim H; clear H i1 t y;
+theorem lift_comp_ge_1: \forall l1,i1,t1,t2. Lift l1 i1 t1 t2 \to
+                        \forall l2,i2,u1. Lift l2 i2 t1 u1 \to
+                        \forall u2. Lift l2 i2 t2 u2 \to
+                        i1 >= i2 \to \forall i. (l2 + i1 == i) \to
+                        Lift l1 i u1 u2.
+ intros 5. elim H; clear H i1 t1 t2;
  [ lapply lift_conf to H1, H2. clear H2. subst.
    lapply linear lift_inv_sort_1 to H1.
    subst. auto
@@ -69,4 +48,80 @@ theorem lift_comp_le: \forall l1,i1,t,y. (Lift l1 i1 t y) \to
        lapply nle_nplus_comp to H6, H7; auto.
      ]
    ]
- |
+ | clear H1 H3.
+   lapply linear lift_inv_bind_1 to H5.
+   lapply linear lift_inv_bind_1 to H6.
+   decompose. subst. auto width = 4
+ | clear H1 H3.
+   lapply linear lift_inv_flat_1 to H5.
+   lapply linear lift_inv_flat_1 to H6.
+   decompose. subst. auto width = 4
+ ].
+qed.
+
+theorem lift_comp_ge_2: \forall l1,i1,t1,t2. Lift l1 i1 t1 t2 \to
+                        \forall l2,i2,u1. Lift l2 i2 t1 u1 \to
+                        \forall i,u2. Lift l2 i t2 u2 \to
+                        i2 >= i1 \to (l1 + i2 == i) \to
+                        Lift l1 i1 u1 u2.
+ intros 5. elim H; clear H i1 t1 t2;
+ [ lapply linear lift_inv_sort_1 to H1.
+   lapply linear lift_inv_sort_1 to H2.
+   subst. auto
+ | lapply linear lift_inv_lref_1 to H2.
+   lapply linear lift_inv_lref_1 to H3.
+   decompose; subst; (* clear H2 H4 i2; *)
+   [ clear H H3 H4 H5. auto
+   | clear H1 H4 H7.
+     lapply linear nle_nplus to H5 as H0. (**)
+     lapply linear nle_trans to H3, H0 as H2.
+     lapply nle_false to H, H2. decompose
+   | clear H H5 H6.
+     lapply linear nle_trans to H4, H3 as H.
+     lapply nle_false to H, H1. decompose
+   | clear H H2 H5 H7. 
+     lapply linear nle_trans to H4, H3 as H.
+     lapply nle_false to H, H1. decompose
+   ]
+(* 
+ | lapply linear lift_inv_lref_1 to H3.
+   decompose; subst;
+   [ clear H2 H4 H6 n3 l2.
+     lapply linear nle_trans to H3, H5 as H0.
+     lapply linear nle_false to H1, H0. decompose
+   | lapply linear lift_inv_lref_1 to H4.
+     decompose; subst;
+     [ clear H1 H5 H6 H7 n1.
+       lapply linear nle_nplus to H2 as H0. (**)
+       lapply linear nle_trans to H3, H0 as H2.
+       lapply linear nle_false to H2, H4. decompose
+     | clear H3 H4 H5.
+       lapply nle_nplus_comp to H6, H7; auto.
+     ]
+   ]
+ | clear H1 H3.
+   lapply linear lift_inv_bind_1 to H5.
+   lapply linear lift_inv_bind_1 to H6.
+   decompose. subst. auto width = 4
+ | clear H1 H3.
+   lapply linear lift_inv_flat_1 to H5.
+   lapply linear lift_inv_flat_1 to H6.
+   decompose. subst. auto width = 4
+ ].
+qed.
+
+
+(*
+theorem lift_trans_le: \forall l1,i1,t1,t2. Lift l1 i1 t1 t2 \to
+                       \forall l2,i2,z. Lift l2 i2 t2 t3 \to
+		       i1 <= i2 \to 
+		       \forall i. \to i2 <= i \to (l1 + i1 == i) \to
+		       \forall l. (l1 + l2 == l) \to Lift l i1 t1 t3.
+*)
+axiom lift_conf_back_ge: \forall l1,i1,u1,u2. Lift l1 i1 u1 u2 \to
+	                 \forall l2,i,t2. Lift l2 i t2 u2 \to
+	                 \forall i2. i2 >= i1 \to (l1 + i2 == i) \to
+                         \exists t1. | Lift l2 i2 t1 u1 \land
+                                       Lift l1 i1 t1 t2.
+
+*)

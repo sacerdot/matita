@@ -12,19 +12,11 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/RELATIONAL/NPlus/props".
+set "baseuri" "cic:/matita/RELATIONAL/NPlus/monoid".
 
-include "NPlus/inv.ma".
+include "NPlus/fun.ma".
 
-(* Monoidal properties *)
-
-theorem nplus_conf: \forall p,q,r1. (p + q == r1) \to 
-                    \forall r2. (p + q == r2) \to r1 = r2.
- intros 4. elim H; clear H q r1;
- [ lapply linear nplus_gen_zero_2 to H1
- | lapply linear nplus_gen_succ_2 to H3. decompose
- ]; subst; auto.
-qed.
+(* Monoidal properties ******************************************************)
 
 theorem nplus_zero_1: \forall q. zero + q == q.
  intros. elim q; clear q; auto.
@@ -35,15 +27,22 @@ theorem nplus_succ_1: \forall p,q,r. NPlus p q r \to
  intros. elim H; clear H q r; auto.
 qed.
 
-theorem nplus_comm: \forall p,q,r. (p + q == r) \to q + p == r.
+theorem nplus_comm_rew: \forall p,q,r. (p + q == r) \to q + p == r.
  intros. elim H; clear H q r; auto.
 qed.
 
-(* Corollaries *)
+(* Corollaries of functional properties **************************************)
 
-theorem nplus_comm_1: \forall p1,q,r1. (p1 + q == r1) \to
-                      \forall p2,r2. (p2 + q == r2) \to
-                      \forall s. (p1 + r2 == s) \to (p2 + r1 == s).
+theorem nplus_inj_2: \forall p, q1, r. (p + q1 == r) \to
+                     \forall q2. (p + q2 == r) \to q1 = q2.
+ intros. auto.
+qed.
+
+(* Corollaries of nonoidal properties ***************************************)
+
+theorem nplus_comm_1_rew: \forall p1,q,r1. (p1 + q == r1) \to
+                          \forall p2,r2. (p2 + q == r2) \to
+                          \forall s. (p1 + r2 == s) \to (p2 + r1 == s).
  intros 4. elim H; clear H q r1;
  [ lapply linear nplus_gen_zero_2 to H1. subst
  | lapply linear nplus_gen_succ_2 to H3. decompose. subst.

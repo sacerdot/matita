@@ -125,3 +125,10 @@ theorem nplus_gen_eq_1_3: \forall p,q. (p + q == p) \to q = zero.
    subst
  ]; auto new timeout=30.
 qed.
+
+theorem nplus_gen_succ_2_3: \forall p,q,r.
+                            (p + (succ q) == (succ r)) \to p + q == r.
+ intros. 
+ lapply linear nplus_gen_succ_2 to H. decompose. subst.
+ destruct H1. clear H1. subst. auto.
+qed.

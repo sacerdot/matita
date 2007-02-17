@@ -18,7 +18,7 @@ set "baseuri" "cic:/matita/LAMBDA-TYPES/Unified-Sub/Lift/defs".
    - Usage: invoke with positive polarity
 *)
 
-include "Term/defs.ma".
+include "datatypes/Term.ma".
 
 inductive Lift (l: Nat): Nat \to Term \to Term \to Prop \def
    | lift_sort   : \forall i,h. 
