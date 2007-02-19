@@ -18,9 +18,9 @@ include "NPlus/inv.ma".
 include "NLE/defs.ma".
 
 theorem nle_inv_succ_1: \forall x,y. x < y \to 
-                         \exists z. y = succ z \land x <= z.
+                        \exists z. y = succ z \land x <= z.
  intros. elim H.
- lapply linear nplus_gen_succ_2 to H1.
+ lapply linear nplus_inv_succ_2 to H1.
  decompose. subst. auto depth = 4.
 qed.
 

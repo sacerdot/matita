@@ -65,7 +65,7 @@ theorem nle_lt_or_eq: \forall y,x. x <= y \to x < y \lor x = y.
  ].
 qed.
 
-theorem nat_dec_lt_ge: \forall x,y. x < y \lor y <= x.
+theorem nle_gt_or_le: \forall x,y. y > x \lor y <= x.
  intros 2; elim y; clear y;
  [ auto
  | decompose;

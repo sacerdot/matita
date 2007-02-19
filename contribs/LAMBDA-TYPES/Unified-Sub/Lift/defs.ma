@@ -22,12 +22,12 @@ include "datatypes/Term.ma".
 
 inductive Lift (l: Nat): Nat \to Term \to Term \to Prop \def
    | lift_sort   : \forall i,h. 
-                   Lift l i (leaf (sort h)) (leaf (sort h))
+                   Lift l i (sort h) (sort h)
    | lift_lref_gt: \forall i,j. i > j \to 
-                   Lift l i (leaf (lref j)) (leaf (lref j))
+                   Lift l i (lref j) (lref j)
    | lift_lref_le: \forall i,j1. i <= j1 \to
                    \forall j2. (l + j1  == j2) \to
-                   Lift l i (leaf (lref j1)) (leaf (lref j2))
+                   Lift l i (lref j1) (lref j2)
    | lift_bind   : \forall i,u1,u2. Lift l i u1 u2 \to
                    \forall t1,t2. Lift l (succ i) t1 t2 \to 
                    \forall r. Lift l i (intb r u1 t1) (intb r u2 t2)

@@ -18,7 +18,6 @@ set "baseuri" "cic:/matita/LAMBDA-TYPES/Unified-Sub/datatypes/Term".
    - Naming policy:
      - natural numbers      : sorts h k, local references i j, lengths l o
      - boolean values       : p q
-     - generic leaf items   : m n
      - generic binding items: r s 
      - generic flat items   : r s
      - generic head items   : m n
@@ -26,11 +25,6 @@ set "baseuri" "cic:/matita/LAMBDA-TYPES/Unified-Sub/datatypes/Term".
 *)
 
 include "preamble.ma".
-
-inductive Leaf: Set \def
-   | sort: Nat \to Leaf
-   | lref: Nat \to Leaf
-.
 
 inductive Bind: Set \def
    | abbr: Bind
@@ -52,7 +46,8 @@ inductive IntF: Set \def
 .
 
 inductive Term: Set \def
-   | leaf: Leaf \to Term
+   | sort: Nat  \to Term
+   | lref: Nat  \to Term
    | intb: IntB \to Term \to Term \to Term
    | intf: IntF \to Term \to Term \to Term
 .

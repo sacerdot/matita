@@ -26,15 +26,15 @@ qed.
 theorem nplus_mono: \forall p,q,r1. (p + q == r1) \to 
                     \forall r2. (p + q == r2) \to r1 = r2.
  intros 4. elim H; clear H q r1;
- [ lapply linear nplus_gen_zero_2 to H1
- | lapply linear nplus_gen_succ_2 to H3. decompose
+ [ lapply linear nplus_inv_zero_2 to H1
+ | lapply linear nplus_inv_succ_2 to H3. decompose
  ]; subst; auto.
 qed.
 
 theorem nplus_inj_1: \forall p1, q, r. (p1 + q == r) \to
                      \forall p2. (p2 + q == r) \to p2 = p1.
  intros 4. elim H; clear H q r;
- [ lapply linear nplus_gen_zero_2 to H1
- | lapply linear nplus_gen_succ_2_3 to H3
+ [ lapply linear nplus_inv_zero_2 to H1
+ | lapply linear nplus_inv_succ_2_3 to H3
  ]; auto.
 qed.

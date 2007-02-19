@@ -16,108 +16,64 @@ set "baseuri" "cic:/matita/LAMBDA-TYPES/Unified-Sub/Lift/props".
 
 include "Lift/fun.ma".
 
-theorem lift_comp_ge_1: \forall l1,i1,t1,t2. Lift l1 i1 t1 t2 \to
-                        \forall l2,i2,u1. Lift l2 i2 t1 u1 \to
-                        \forall u2. Lift l2 i2 t2 u2 \to
-                        i1 >= i2 \to \forall i. (l2 + i1 == i) \to
-                        Lift l1 i u1 u2.
+(* NOTE: this holds because of nplus_comm_1 *)
+theorem lift_comp: \forall l1,i1,t1,t2. Lift l1 i1 t1 t2 \to
+                   \forall l2,i2,u1. Lift l2 i2 t1 u1 \to
+                   \forall x. Lift l2 i2 t2 x \to
+                   \forall i,y. Lift l1 i u1 y \to
+                   i1 >= i2 \to (l2 + i1 == i) \to x = y.
  intros 5. elim H; clear H i1 t1 t2;
- [ lapply lift_conf to H1, H2. clear H2. subst.
-   lapply linear lift_inv_sort_1 to H1.
-   subst. auto
- | lapply lift_conf to H2, H3. clear H3. subst.
+ [ lapply lift_mono to H1, H2. clear H2. subst.
+   lapply linear lift_inv_sort_1 to H1. subst.
+   lapply linear lift_inv_sort_1 to H3. subst. auto
+ | lapply lift_mono to H2, H3. clear H3. subst.
    lapply linear lift_inv_lref_1 to H2.
-   decompose; subst; clear H2 H4 i2;
-   [ lapply linear nle_nplus to H5 as H0. clear l2. (**)
-     lapply linear nle_trans to H1, H0.
-     auto
-   | lapply nle_nplus_comp_lt_2 to H3, H5; auto.
-   ]
- | lapply linear lift_inv_lref_1 to H3.
-   decompose; subst;
-   [ clear H2 H4 H6 n3 l2.
-     lapply linear nle_trans to H3, H5 as H0.
-     lapply linear nle_false to H1, H0. decompose
-   | lapply linear lift_inv_lref_1 to H4.
-     decompose; subst;
-     [ clear H1 H5 H6 H7 n1.
-       lapply linear nle_nplus to H2 as H0. (**)
-       lapply linear nle_trans to H3, H0 as H2.
-       lapply linear nle_false to H2, H4. decompose
-     | clear H3 H4 H5.
-       lapply nle_nplus_comp to H6, H7; auto.
-     ]
-   ]
+   decompose; subst; clear H2 H5;
+   lapply linear lift_inv_lref_1_gt to H4; subst; auto width = 4
+ | lapply lift_inv_lref_1_le to H3; [ 2: auto ]. clear H3.
+   lapply lift_inv_lref_1_le to H4; [ 2: auto ]. clear H4.
+   decompose. subst. clear H6 i2.
+   lapply lift_inv_lref_1_le to H5; [ 2: auto depth = 4 width = 4 ]. 
+   decompose. subst. clear H5 H1 H7 i. auto depth = 4
  | clear H1 H3.
    lapply linear lift_inv_bind_1 to H5.
-   lapply linear lift_inv_bind_1 to H6.
-   decompose. subst. auto width = 4
+   lapply linear lift_inv_bind_1 to H6. decompose. subst.
+   lapply linear lift_inv_bind_1 to H7. decompose. subst.
+   auto width = 5
  | clear H1 H3.
    lapply linear lift_inv_flat_1 to H5.
-   lapply linear lift_inv_flat_1 to H6.
-   decompose. subst. auto width = 4
+   lapply linear lift_inv_flat_1 to H6. decompose. subst.
+   lapply linear lift_inv_flat_1 to H7. decompose. subst.
+   auto width = 5
  ].
 qed.
 
-theorem lift_comp_ge_2: \forall l1,i1,t1,t2. Lift l1 i1 t1 t2 \to
-                        \forall l2,i2,u1. Lift l2 i2 t1 u1 \to
-                        \forall i,u2. Lift l2 i t2 u2 \to
-                        i2 >= i1 \to (l1 + i2 == i) \to
-                        Lift l1 i1 u1 u2.
- intros 5. elim H; clear H i1 t1 t2;
- [ lapply linear lift_inv_sort_1 to H1.
-   lapply linear lift_inv_sort_1 to H2.
-   subst. auto
- | lapply linear lift_inv_lref_1 to H2.
-   lapply linear lift_inv_lref_1 to H3.
-   decompose; subst; (* clear H2 H4 i2; *)
-   [ clear H H3 H4 H5. auto
-   | clear H1 H4 H7.
-     lapply linear nle_nplus to H5 as H0. (**)
-     lapply linear nle_trans to H3, H0 as H2.
-     lapply nle_false to H, H2. decompose
-   | clear H H5 H6.
-     lapply linear nle_trans to H4, H3 as H.
-     lapply nle_false to H, H1. decompose
-   | clear H H2 H5 H7. 
-     lapply linear nle_trans to H4, H3 as H.
-     lapply nle_false to H, H1. decompose
-   ]
-(* 
- | lapply linear lift_inv_lref_1 to H3.
-   decompose; subst;
-   [ clear H2 H4 H6 n3 l2.
-     lapply linear nle_trans to H3, H5 as H0.
-     lapply linear nle_false to H1, H0. decompose
-   | lapply linear lift_inv_lref_1 to H4.
-     decompose; subst;
-     [ clear H1 H5 H6 H7 n1.
-       lapply linear nle_nplus to H2 as H0. (**)
-       lapply linear nle_trans to H3, H0 as H2.
-       lapply linear nle_false to H2, H4. decompose
-     | clear H3 H4 H5.
-       lapply nle_nplus_comp to H6, H7; auto.
-     ]
-   ]
- | clear H1 H3.
-   lapply linear lift_inv_bind_1 to H5.
-   lapply linear lift_inv_bind_1 to H6.
-   decompose. subst. auto width = 4
- | clear H1 H3.
-   lapply linear lift_inv_flat_1 to H5.
-   lapply linear lift_inv_flat_1 to H6.
-   decompose. subst. auto width = 4
- ].
+theorem lift_comp_rew_dx: \forall l1,i1,t1,t2. Lift l1 i1 t1 t2 \to
+                          \forall l2,i2,u1. Lift l2 i2 t1 u1 \to
+                          \forall u2. Lift l2 i2 t2 u2 \to
+                          i1 >= i2 \to \forall i. (l2 + i1 == i) \to
+                          Lift l1 i u1 u2.
+ intros.
+ lapply (lift_total l1 u1 i). decompose.
+ lapply lift_comp to H, H1, H2, H5, H3, H4. subst. auto.
 qed.
 
-
+theorem lift_comp_rew_sx: \forall l1,i1,t1,t2. Lift l1 i1 t1 t2 \to
+                          \forall l2,i2,u1. Lift l2 i2 t1 u1 \to
+                          \forall i,u2. Lift l2 i t2 u2 \to
+                          i2 >= i1 \to (l1 + i2 == i) \to
+                          Lift l1 i1 u1 u2.
+ intros.
+ lapply (lift_total l1 u1 i1). decompose.
+ lapply lift_comp to H1, H, H5, H2, H3, H4. subst. auto.
+qed.
 (*
 theorem lift_trans_le: \forall l1,i1,t1,t2. Lift l1 i1 t1 t2 \to
                        \forall l2,i2,z. Lift l2 i2 t2 t3 \to
 		       i1 <= i2 \to 
 		       \forall i. \to i2 <= i \to (l1 + i1 == i) \to
 		       \forall l. (l1 + l2 == l) \to Lift l i1 t1 t3.
-*)
+
 axiom lift_conf_back_ge: \forall l1,i1,u1,u2. Lift l1 i1 u1 u2 \to
 	                 \forall l2,i,t2. Lift l2 i t2 u2 \to
 	                 \forall i2. i2 >= i1 \to (l1 + i2 == i) \to
