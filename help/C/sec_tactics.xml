@@ -496,8 +496,7 @@
     <title>decompose</title>
     <titleabbrev>decompose</titleabbrev>
     <para><userinput>
-     decompose (T<subscript>1</subscript> ... T<subscript>n</subscript>) 
-     H as H<subscript>1</subscript> ... H<subscript>m</subscript>
+     decompose as H<subscript>1</subscript> ... H<subscript>m</subscript>
     </userinput></para>
     <para>
       <variablelist>
@@ -506,10 +505,6 @@
           <listitem>
             <para>
 	     <emphasis role="bold">decompose</emphasis>
-	     [<emphasis role="bold">(</emphasis>
-	     &id;…
-	     <emphasis role="bold">)</emphasis>]
-	     [&id;] 
 	     [<emphasis role="bold">as</emphasis> &id;…]
 	    </para>
           </listitem>
@@ -517,26 +512,22 @@
         <varlistentry>
           <term>Pre-conditions:</term>
           <listitem>
-            <para> 
-	     <command>H</command> must inhabit one inductive type among  
-	     <command>
-	      T<subscript>1</subscript> ... T<subscript>n</subscript>
-	     </command>
-	     and the types of a predefined list.
-	    </para>
+            <para>None.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>Action:</term>
           <listitem>
             <para>
-	     Runs <command>
-	      elim H H<subscript>1</subscript> ... H<subscript>m</subscript>
-	     </command>, clears <command>H</command> and tries to run itself
-	     recursively on each new identifier introduced by 
+	     For each each premise <command>H</command> 
+	     of type <command>T</command> in the current context
+	     where <command>T</command> is a non-recursive inductive type
+	     withour right parameters, the tactic runs
+	     <command> 
+	      elim H as H<subscript>1</subscript> ... H<subscript>m</subscript>
+	     </command>, clears <command>H</command>  and runs itself
+	     recursively on each new premise introduced by 
 	     <command>elim</command> in the opened sequents. 
-	     If <command>H</command> is not provided tries this operation on
-	     each premise in the current context.
 	    </para>
           </listitem>
         </varlistentry>
