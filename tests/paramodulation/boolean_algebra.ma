@@ -62,7 +62,7 @@ theorem bool1:
   (inv zero) = one.
 intros.
 unfold bool_algebra in H.
-decompose H.
+decompose
 auto paramodulation.
 qed.
 *)
@@ -76,7 +76,7 @@ theorem bool2:
   \forall x:A. (mult x zero) = zero.
 intros.
 unfold bool_algebra in H.
-decompose H.
+decompose
 auto paramodulation.
 qed.
 *)
@@ -90,7 +90,7 @@ theorem bool3:
   \forall x:A. (inv (inv x)) = x.
 intros.
 unfold bool_algebra in H.
-decompose H.
+decompose
 auto paramodulation.
 qed.
 *)
@@ -104,7 +104,7 @@ theorem bool266:
   \forall x,y:A. (mult x (add (inv x) y)) = (mult x y).
 intros.
 unfold bool_algebra in H.
-decompose H.
+decompose
 auto paramodulation.
 qed.
 *)
@@ -118,7 +118,7 @@ theorem bool507:
   \forall x,y:A. zero = (mult x (mult (inv x) y)).
 intros.
 unfold bool_algebra in H.
-decompose H.
+decompose
 auto paramodulation.
 qed.
 *)
@@ -132,7 +132,7 @@ theorem bool515:
   \forall x,y:A. zero = mult (inv x) (mult x y).
 intros.
 unfold bool_algebra in H.
-decompose H.
+decompose
 auto paramodulation.
 qed.
 *)
@@ -146,7 +146,7 @@ theorem bool304:
   \forall x,y:A. x = (mult (add y x) x).
 intros.
 unfold bool_algebra in H.
-decompose H.
+decompose
 auto paramodulation.
 qed.
 *)
@@ -160,7 +160,7 @@ theorem bool531:
   \forall x,y:A. zero = (mult (inv (add x y)) y).
 intros.
 unfold bool_algebra in H.
-decompose H.
+decompose
 auto paramodulation.
 qed.
 *)
@@ -174,7 +174,7 @@ theorem bool253:
   \forall x,y:A. (add (inv x) (mult y x)) = (add (inv x) y).
 intros.
 unfold bool_algebra in H.
-decompose H.
+decompose
 auto paramodulation.
 qed.
 *)
@@ -189,7 +189,7 @@ theorem bool557:
     inv x =  (add (inv x) (inv (add y x))).
 intros.
 unfold bool_algebra in H.
-decompose H.
+decompose
 auto paramodulation.
 qed.
 *)
@@ -204,7 +204,7 @@ theorem bool609:
     inv x =  (add (inv (add y x)) (inv x)).
 intros.
 unfold bool_algebra in H.
-decompose H.
+decompose
 auto paramodulation.
 qed.
 *)
@@ -219,7 +219,7 @@ theorem bool260:
     add x (mult x y) = mult x (add x y).
 intros.
 unfold bool_algebra in H.
-decompose H.
+decompose
 auto paramodulation.
 qed.
 *)
@@ -234,7 +234,7 @@ theorem bool276:
     (mult (add x y) (add z (add x u))) = (add (mult (add x y) z) (add x (mult y u))).
 intros.
 unfold bool_algebra in H.
-decompose H.
+decompose
 auto paramodulation.
 qed. 
 *)
@@ -249,7 +249,7 @@ theorem bool250:
     add x (mult y z) = mult (add y x) (add x z).
 intros.
 unfold bool_algebra in H.
-decompose H.
+decompose
 auto paramodulation.
 qed. 
 *)
@@ -332,7 +332,7 @@ theorem bool756full:
     add x y = add x (add y (mult x z)).
 intros.
 unfold bool_algebra in H.
-decompose H.
+decompose
 auto paramodulation.
 qed.
 *)
@@ -347,7 +347,7 @@ theorem bool1164:
     (add x y) = (add (add x (mult y z)) y).
 intros.
 unfold bool_algebra in H.
-decompose H.
+decompose
 auto paramodulation.
 qed.
 *)
@@ -392,7 +392,7 @@ theorem bool1230:
     add (add x y) z = add (add x y) (add z y).
 intros.
 unfold bool_algebra in H.
-decompose H.
+decompose
 auto paramodulation.
 qed.
 *)
@@ -407,7 +407,7 @@ theorem bool1372:
     add x (add y z) = add (add x z) y.
 intros.
 unfold bool_algebra in H.
-decompose H.
+decompose
 auto paramodulation.
 qed.
 *)
@@ -422,7 +422,7 @@ theorem bool381:
       add (inv x) y = add (mult x y) (inv x).
 intros.
 unfold bool_algebra in H.
-decompose H.
+decompose
 auto paramodulation.
 qed.
 *)
@@ -515,7 +515,6 @@ theorem bool5:
     (inv (mult x y)) = (add (inv x) (inv y)).
 intros.
 unfold bool_algebra in H.
-decompose H.
+decompose.
 auto paramodulation.
 qed.
-

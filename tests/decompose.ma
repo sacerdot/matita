@@ -22,7 +22,5 @@ alias symbol "or" (instance 0) = "Coq's logical or".
 theorem stupid: 
   \forall a,b,c:Prop.
   (a \land c \lor b \land c) \to (c \land (b \lor a)).
-  intros.decompose H.split.assumption.right.assumption.
+  intros.decompose.split.assumption.right.assumption.
   split.assumption.left.assumption.qed.
-
-

@@ -113,5 +113,5 @@ qed.
 theorem le_trans: \forall x,y. (le x y) \to \forall z. (le y z) \to (le x z).
 intros 1. elim x; clear H. clear x. 
 auto paramodulation.
-fwd H1 [H]. decompose H.
+fwd H1 [H]. decompose.
 *)
