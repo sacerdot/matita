@@ -14,65 +14,18 @@
 
 set "baseuri" "cic:/matita/RELATIONAL/NLE/props".
 
-include "NLE/inv.ma".
-
-theorem nle_zero_1: \forall q. zero <= q.
- intros. auto.
-qed.
-
-theorem nle_succ_succ: \forall p,q. p <= q \to succ p <= succ q.
- intros. elim H. clear H. auto.
-qed.
-
-theorem nle_ind: \forall P:(Nat \to Nat \to Prop).
-                 (\forall n:Nat.P zero n) \to 
-                 (\forall n,n1:Nat.
-                  n <= n1 \to P n n1 \to P (succ n) (succ n1)
-                 ) \to
-                \forall n,n1:Nat. n <= n1 \to P n n1.
- intros 4. elim n; clear n;
- [ auto
- | lapply linear nle_inv_succ_1 to H3. decompose; subst.
-   auto
- ].
-qed.
-
-theorem nle_refl: \forall x. x <= x.
- intros 1; elim x; clear x; intros; auto.
-qed.
+include "NLE/order.ma".
 
 theorem nle_trans_succ: \forall x,y. x <= y \to x <= succ y.
- intros. elim H using nle_ind; clear H x y; auto.
+ intros. elim H; clear H x y; auto.
 qed.
 
-theorem nle_false: \forall x,y. x <= y \to y < x \to False.
- intros 3; elim H using nle_ind; clear H x y; auto.
-qed.
-
-theorem nle_trans: \forall x,y. x <= y \to
-                   \forall z. y <= z \to x <= z.
- intros 3. elim H using nle_ind; clear H x y;
- [ auto
- | lapply linear nle_inv_succ_1 to H3. decompose. subst. 
-   auto
- ].
-qed.
-
-theorem nle_lt_or_eq: \forall y,x. x <= y \to x < y \lor x = y.
- intros. elim H using nle_ind; clear H x y;
- [ elim n; clear n; auto
- | decompose; subst; auto
- ].
-qed.
-
-theorem nle_gt_or_le: \forall x,y. y > x \lor y <= x.
+theorem nle_gt_or_le: \forall x, y. y > x \lor y <= x.
  intros 2; elim y; clear y;
  [ auto
  | decompose;
-   [ lapply linear nle_inv_succ_1 to H1. decompose.
-     subst. auto depth=4
-   | lapply linear nle_lt_or_eq to H1; decompose;
-     subst; auto
-   ]
+   [ lapply linear nle_inv_succ_1 to H1
+   | lapply linear nle_lt_or_eq to H1
+   ]; decompose; subst; auto depth = 4
  ].
 qed.

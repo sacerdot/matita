@@ -16,8 +16,10 @@ set "baseuri" "cic:/matita/RELATIONAL/NLE/defs".
 
 include "NPlus/defs.ma".
 
-inductive NLE (q:Nat) (r:Nat): Prop \def
-   | nle_nplus: \forall p. (p + q == r) \to NLE q r. 
+inductive NLE: Nat \to Nat \to Prop \def
+   | nle_zero_1: \forall q. NLE zero q
+   | nle_succ_succ: \forall p,q. NLE p q \to NLE (succ p) (succ q)
+.
 
 (*CSC: the URI must disappear: there is a bug now *)
 interpretation "natural 'greater or equal to'" 'geq y x=

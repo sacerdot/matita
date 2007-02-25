@@ -14,41 +14,41 @@
 
 set "baseuri" "cic:/matita/RELATIONAL/NLE/inv".
 
-include "NPlus/inv.ma".
 include "NLE/defs.ma".
 
 theorem nle_inv_succ_1: \forall x,y. x < y \to 
                         \exists z. y = succ z \land x <= z.
- intros. elim H.
- lapply linear nplus_inv_succ_2 to H1.
- decompose. subst. auto depth = 4.
+ intros. inversion H; clear H; intros; subst;
+ [ destruct H
+ | destruct H2. clear H2. subst. auto
+ ]
 qed.
 
 theorem nle_inv_succ_succ: \forall x,y. x < succ y \to x <= y.
- intros.
- lapply linear nle_inv_succ_1 to H. decompose.
- destruct H1. clear H1. subst.
- auto.
+ intros. inversion H; clear H; intros; subst;
+ [ destruct H
+ | destruct H2. destruct H3. clear H2 H3. subst. auto
+ ]
 qed.
 
 theorem nle_inv_succ_zero: \forall x. x < zero \to False.
- intros.
- lapply linear nle_inv_succ_1 to H. decompose.
- destruct H1.
+ intros. inversion H; clear H; intros; subst;
+ [ destruct H
+ | destruct H3
+ ]
 qed.
 
 theorem nle_inv_zero_2: \forall x. x <= zero \to x = zero.
- intros 1. elim x; clear x; intros;
+ intros. inversion H; clear H; intros; subst;
  [ auto
- | lapply linear nle_inv_succ_zero to H1. decompose.
+ | destruct H3
  ].
 qed.
 
 theorem nle_inv_succ_2: \forall y,x. x <= succ y \to
                         x = zero \lor \exists z. x = succ z \land z <= y.
- intros 2; elim x; clear x; intros;
+ intros. inversion H; clear H; intros; subst;
  [ auto
- | lapply linear nle_inv_succ_succ to H1.
-   auto depth = 4.
+ | destruct H3. clear H3. subst. auto depth = 4
  ].
 qed.

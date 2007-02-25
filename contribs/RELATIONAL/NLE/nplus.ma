@@ -16,6 +16,10 @@ set "baseuri" "cic:/matita/RELATIONAL/NLE/nplus".
 
 include "NLE/defs.ma".
 
+theorem nle_nplus: \forall p, q, r. (p + q == r) \to q <= r.
+ intros. elim H; clear H q r; auto.
+qed.
+
 axiom nle_nplus_comp: \forall x1, x2, x3. (x1 + x2 == x3) \to
                       \forall y1, y2, y3. (y1 + y2 == y3) \to
                       x1 <= y1 \to x2 <= y2 \to x3 <= y3.
