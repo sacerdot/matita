@@ -81,10 +81,6 @@
         <entry>|</entry>
         <entry>
 	     <link linkend="tac_decompose"><emphasis role="bold">decompose</emphasis></link>
-	     [<emphasis role="bold">(</emphasis>
-	     <emphasis><link linkend="grammar.id">id</link></emphasis>…
-	     <emphasis role="bold">)</emphasis>]
-	     [<emphasis><link linkend="grammar.id">id</link></emphasis>] 
 	     [<emphasis role="bold">as</emphasis> <emphasis><link linkend="grammar.id">id</link></emphasis>…]
 	    </entry>
       </row>

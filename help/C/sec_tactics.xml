@@ -519,10 +519,10 @@
           <term>Action:</term>
           <listitem>
             <para>
-	     For each each premise <command>H</command> 
-	     of type <command>T</command> in the current context
-	     where <command>T</command> is a non-recursive inductive type
-	     of sort Prop without right parameters, the tactic runs
+	     For each each premise <command>H</command> of type 
+	     <command>T</command> in the current context where
+	     <command>T</command> is a non-recursive inductive type without
+	     right parameters and of sort Prop or CProp, the tactic runs
 	     <command> 
 	      elim H as H<subscript>1</subscript> ... H<subscript>m</subscript>
 	     </command>, clears <command>H</command>  and runs itself

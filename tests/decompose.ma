@@ -13,14 +13,17 @@
 (**************************************************************************)
 
 set "baseuri" "cic:/matita/tests/decompose".
-include "../legacy/coq.ma".
-alias symbol "and" (instance 0) = "Coq's logical and".
-alias symbol "or" (instance 0) = "Coq's logical or".
 
-
+include "logic/connectives.ma".
 
 theorem stupid: 
   \forall a,b,c:Prop.
   (a \land c \lor b \land c) \to (c \land (b \lor a)).
   intros.decompose.split.assumption.right.assumption.
   split.assumption.left.assumption.qed.
+
+definition MyFalse \def False.
+
+theorem ex_falso_quodlibet: \forall (P:Prop). MyFalse \to P.
+ intros. decompose.
+qed.
