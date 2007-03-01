@@ -32,7 +32,7 @@ theorem ty3_gen_cast:
      .ty3 g c (THead (Flat Cast) t2 t1) x
       \rarr pc3 c t2 x\land ty3 g c t1 t2)
 .
-(* tactics: 68 *)
+(* tactics: 80 *)
 intros 6 (g c t1 t2 x H).
 apply insert_eq;(* 6 P P P C I I 3 0 *)
 [apply T(* dependent *)
@@ -43,7 +43,6 @@ alias id "ty3_ind" = "cic:/matita/LAMBDA-TYPES/LambdaDelta-1/ty3/defs/ty3_ind.co
 elim H0 using ty3_ind names 0;(* 13 P C I I I I I I I C C C I 12 3 *)
 [intros 11 (c0 t0 t UNUSED UNUSED u t3 UNUSED H4 H5 H6).
 letin H7 \def (f_equal T T (\lambda e:T.e) u (THead (Flat Cast) t2 t1) H6).(* 6 C C C C C I *)
-clearbody H7.
 rewrite > H7 in H4:(%) as (H8).
 cut (pc3 c0 t2 t3\land ty3 g c0 t1 t2) as H10;
 [id
@@ -161,28 +160,35 @@ letin H6 \def (f_equal T T
    |TLRef (_:nat)\rArr t3
    |THead (_:K) (t:T) (_:T)\rArr t]) (THead (Flat Cast) t3 t0)
  (THead (Flat Cast) t2 t1) H5).(* 6 C C C C C I *)
-alias id "pc3_refl" = "cic:/matita/LAMBDA-TYPES/LambdaDelta-1/pc3/props/pc3_refl.con".
-letin DEFINED \def (let H7 \def 
-        f_equal T T
-        (\lambda e:T
-         .match e in T return \lambda _:T.T with 
-          [TSort (_:nat)\rArr t0
-          |TLRef (_:nat)\rArr t0
-          |THead (_:K) (_:T) (t:T)\rArr t])
-        (THead (Flat Cast) t3 t0) (THead (Flat Cast) t2 t1) H5
- in
- \lambda H8:t3=t2
- .(let H11 \def 
-          eq_ind T t3
-          (\lambda t:T
-           .t0=THead (Flat Cast) t2 t1
-            \rarr pc3 c0 t2 t\land ty3 g c0 t1 t2) H2 t2 H8
-   in
-   let H12 \def eq_ind T t3 (\lambda t:T.ty3 g c0 t0 t) H1 t2 H8 in
-   eq_ind_r T t2 (\lambda t:T.pc3 c0 t2 t\land ty3 g c0 t1 t2)
-   (let H14 \def eq_ind T t0 (\lambda t:T.ty3 g c0 t t2) H12 t1 H7 in
-    conj (pc3 c0 t2 t2) (ty3 g c0 t1 t2) (pc3_refl c0 t2) H14) t3
-   H8)).
+letin H7 \def (f_equal T T
+ (\lambda e:T
+  .match e in T return \lambda _:T.T with 
+   [TSort (_:nat)\rArr t0
+   |TLRef (_:nat)\rArr t0
+   |THead (_:K) (_:T) (t:T)\rArr t]) (THead (Flat Cast) t3 t0)
+ (THead (Flat Cast) t2 t1) H5).(* 6 C C C C C I *)
+cut (t3=t2\rarr pc3 c0 t2 t3\land ty3 g c0 t1 t2) as DEFINED;
+[id
+|intros 1 (H8).
+rewrite > H8 in H2:(%) as (UNUSED).
+rewrite > H8 in H1:(%) as (H12).
+rewrite > H8 in \vdash (%).
+clearbody H7.
+change in H7:(%) with (match THead (Flat Cast) t3 t0 in T return \lambda _:T.T with 
+ [TSort (_:nat)\rArr t0
+ |TLRef (_:nat)\rArr t0
+ |THead (_:K) (_:T) (t:T)\rArr t]
+ =match THead (Flat Cast) t2 t1 in T return \lambda _:T.T with 
+  [TSort (_:nat)\rArr t0
+  |TLRef (_:nat)\rArr t0
+  |THead (_:K) (_:T) (t:T)\rArr t]).
+rewrite > H7 in H12:(%) as (H14).
+apply conj;(* 4 C C I I *)
+[alias id "pc3_refl" = "cic:/matita/LAMBDA-TYPES/LambdaDelta-1/pc3/props/pc3_refl.con".
+apply pc3_refl(* 2 C C *)
+|apply H14(* assumption *)
+]
+].
 apply DEFINED.(* 1 I *)
 apply H6(* assumption *)
 ]
