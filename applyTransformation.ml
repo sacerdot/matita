@@ -35,6 +35,8 @@
 
 (* $Id$ *)
 
+module G = GrafiteAst
+
 let mpres_document pres_box =
   Xml.add_xml_declaration (CicNotationPres.print_box pres_box)
 
@@ -156,27 +158,34 @@ let term2pres ?map_unicode_to_tex n ids_to_inner_sorts annterm =
    remove_closed_substs s
 
 let txt_of_cic_object ?map_unicode_to_tex n style prefix obj =
-  let aobj,_,_,ids_to_inner_sorts,ids_to_inner_types,_,_ = 
-     try Cic2acic.acic_object_of_cic_object obj
+  let get_aobj obj = 
+     try   
+        let aobj,_,_,ids_to_inner_sorts,ids_to_inner_types,_,_ =
+            Cic2acic.acic_object_of_cic_object obj
+        in
+	aobj, ids_to_inner_sorts, ids_to_inner_types
      with e -> 
         let msg = "txt_of_cic_object: " ^ Printexc.to_string e in
 	failwith msg
   in
   match style with
-     | GrafiteAst.Declarative      ->
-        let cobj = Acic2content.annobj2content ids_to_inner_sorts ids_to_inner_types aobj in
+     | G.Declarative      ->
+        let aobj, ids_to_inner_sorts, ids_to_inner_types = get_aobj obj in
+	let cobj = Acic2content.annobj2content ids_to_inner_sorts ids_to_inner_types aobj in
         let bobj = Content2pres.content2pres ids_to_inner_sorts cobj in
         remove_closed_substs ("\n\n" ^
 	   BoxPp.render_to_string ?map_unicode_to_tex
             (function _::x::_ -> x | _ -> assert false) n
             (CicNotationPres.mpres_of_box bobj)
 	)
-     | GrafiteAst.Procedural depth ->
+     | G.Procedural depth ->
+        let obj = ProceduralPreprocess.pp_obj obj in
+	let aobj, ids_to_inner_sorts, ids_to_inner_types = get_aobj obj in
         let term_pp = term2pres (n - 8) ids_to_inner_sorts in
         let lazy_term_pp = term_pp in
         let obj_pp = CicNotationPp.pp_obj term_pp in
         let aux = GrafiteAstPp.pp_statement ~term_pp ~lazy_term_pp ~obj_pp in
-        let script = Acic2Procedural.acic2procedural 
+	let script = Acic2Procedural.acic2procedural 
 	   ~ids_to_inner_sorts ~ids_to_inner_types ?depth prefix aobj in
 	"\n" ^ String.concat "" (List.map aux script)
 

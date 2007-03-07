@@ -17,9 +17,9 @@ matitacLib.cmx: matitamakeLib.cmx matitaMisc.cmx matitaInit.cmx \
     matitaExcPp.cmx matitaEngine.cmx buildTimeConf.cmx \
     applyTransformation.cmx matitacLib.cmi 
 matitac.cmo: matitaprover.cmi matitamake.cmi matitadep.cmi matitaclean.cmi \
-    matitacLib.cmi matitaWiki.cmx gragrep.cmi 
+    matitacLib.cmi matitaWiki.cmx matitaInit.cmi matitaEngine.cmi gragrep.cmi 
 matitac.cmx: matitaprover.cmx matitamake.cmx matitadep.cmx matitaclean.cmx \
-    matitacLib.cmx matitaWiki.cmx gragrep.cmx 
+    matitacLib.cmx matitaWiki.cmx matitaInit.cmx matitaEngine.cmx gragrep.cmx 
 matitadep.cmo: matitaInit.cmi matitadep.cmi 
 matitadep.cmx: matitaInit.cmx matitadep.cmi 
 matitaEngine.cmo: matitaEngine.cmi 
