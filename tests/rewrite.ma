@@ -62,3 +62,10 @@ theorem test_rewrite_in_hyp2:
  rewrite < plus_n_O in H H1 \vdash (? ? %).
  split; [ exact H | exact H1].
 qed.
+
+alias id "O" = "cic:/Coq/Init/Datatypes/nat.ind#xpointer(1/1/1)".
+theorem test_rewrite_under_pi: \forall x,y. x = O \to y = O \to x = x \to O = x.
+intros 3.
+rewrite > H in \vdash (? \to ? ? % % \to ? ? ? %).
+intros. reflexivity.
+qed.
