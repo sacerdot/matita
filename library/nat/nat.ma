@@ -26,7 +26,7 @@ definition pred: nat \to nat \def
  | (S p) \Rightarrow p ].
 
 theorem pred_Sn : \forall n:nat.n=(pred (S n)).
- intros. reflexivity.
+ intros. simplify. reflexivity.
 qed.
 
 theorem injective_S : injective nat nat S.

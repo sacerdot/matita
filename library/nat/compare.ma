@@ -112,23 +112,60 @@ match n with
 	match m with 
         [ O \Rightarrow false
 	| (S q) \Rightarrow leb p q]].
-	
+
+theorem leb_elim: \forall n,m:nat. \forall P:bool \to Prop. 
+(n \leq m \to (P true)) \to (n \nleq m \to (P false)) \to
+P (leb n m).
+apply nat_elim2; intros; simplify
+  [apply H.apply le_O_n
+  |apply H1.apply not_le_Sn_O.
+  |apply H;intros
+    [apply H1.apply le_S_S.assumption.
+    |apply H2.unfold Not.intros.apply H3.apply le_S_S_to_le.assumption
+    ]
+  ]
+qed.
+
+(*
+theorem decidable_le: \forall n,m. n \leq m \lor n \nleq m. 
+intros.
+apply (leb_elim n m)
+  [intro.left.assumption
+  |intro.right.assumption
+  ]
+qed.
+*)
+
+theorem le_to_leb_true: \forall n,m. n \leq m \to leb n m = true.
+intros.apply leb_elim;intros
+  [reflexivity
+  |apply False_ind.apply H1.apply H.
+  ]
+qed.
+
+theorem lt_to_leb_false: \forall n,m. m < n \to leb n m = false.
+intros.apply leb_elim;intros
+  [apply False_ind.apply (le_to_not_lt ? ? H1). assumption
+  |reflexivity
+  ]
+qed.
+
 theorem leb_to_Prop: \forall n,m:nat. 
 match (leb n m) with
 [ true  \Rightarrow n \leq m 
 | false \Rightarrow n \nleq m].
-intros.
-apply (nat_elim2
-(\lambda n,m:nat.match (leb n m) with
-[ true  \Rightarrow n \leq m 
-| false \Rightarrow n \nleq m])).
-simplify.exact le_O_n.
-simplify.exact not_le_Sn_O.
-intros 2.simplify.elim ((leb n1 m1)).
-simplify.apply le_S_S.apply H.
-simplify.unfold Not.intros.apply H.apply le_S_S_to_le.assumption.
+apply nat_elim2;simplify
+  [exact le_O_n
+  |exact not_le_Sn_O
+  |intros 2.simplify.
+   elim ((leb n m));simplify
+    [apply le_S_S.apply H
+    |unfold Not.intros.apply H.apply le_S_S_to_le.assumption
+    ]
+  ]
 qed.
 
+(*
 theorem leb_elim: \forall n,m:nat. \forall P:bool \to Prop. 
 (n \leq m \to (P true)) \to (n \nleq m \to (P false)) \to
 P (leb n m).
@@ -142,6 +179,7 @@ elim (leb n m).
 apply ((H H2)).
 apply ((H1 H2)).
 qed.
+*)
 
 let rec nat_compare n m: compare \def
 match n with

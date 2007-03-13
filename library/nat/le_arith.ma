@@ -51,6 +51,11 @@ intros.change with (O+m \le n+m).
 apply le_plus_l.apply le_O_n.
 qed.
 
+theorem le_plus_n_r :\forall n,m:nat. m \le m + n.
+intros.rewrite > sym_plus.
+apply le_plus_n.
+qed.
+
 theorem eq_plus_to_le: \forall n,m,p:nat.n=m+p \to m \le n.
 intros.rewrite > H.
 rewrite < sym_plus.

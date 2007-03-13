@@ -28,7 +28,7 @@ match (leb m n) with
 definition mod : nat \to nat \to nat \def
 \lambda n,m.
 match m with 
-[O \Rightarrow m
+[O \Rightarrow n
 | (S p) \Rightarrow mod_aux n n p]. 
 
 interpretation "natural remainder" 'module x y =
@@ -143,7 +143,7 @@ rewrite > distr_times_minus.
 rewrite > plus_minus.
 rewrite > sym_times.
 rewrite < H5.
-rewrite < sym_times.
+rewrite < sym_times. 
 apply plus_to_minus.
 apply H3.
 apply le_times_r.

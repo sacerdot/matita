@@ -22,9 +22,8 @@ inductive le (n:nat) : nat \to Prop \def
   | le_n : le n n
   | le_S : \forall m:nat. le n m \to le n (S m).
 
-(*CSC: the URI must disappear: there is a bug now *)
 interpretation "natural 'less or equal to'" 'leq x y = (cic:/matita/nat/orders/le.ind#xpointer(1/1) x y).
-(*CSC: the URI must disappear: there is a bug now *)
+
 interpretation "natural 'neither less nor equal to'" 'nleq x y =
   (cic:/matita/logic/connectives/Not.con
     (cic:/matita/nat/orders/le.ind#xpointer(1/1) x y)).
@@ -32,24 +31,21 @@ interpretation "natural 'neither less nor equal to'" 'nleq x y =
 definition lt: nat \to nat \to Prop \def
 \lambda n,m:nat.(S n) \leq m.
 
-(*CSC: the URI must disappear: there is a bug now *)
 interpretation "natural 'less than'" 'lt x y = (cic:/matita/nat/orders/lt.con x y).
-(*CSC: the URI must disappear: there is a bug now *)
+
 interpretation "natural 'not less than'" 'nless x y =
   (cic:/matita/logic/connectives/Not.con (cic:/matita/nat/orders/lt.con x y)).
 
 definition ge: nat \to nat \to Prop \def
 \lambda n,m:nat.m \leq n.
 
-(*CSC: the URI must disappear: there is a bug now *)
 interpretation "natural 'greater or equal to'" 'geq x y = (cic:/matita/nat/orders/ge.con x y).
 
 definition gt: nat \to nat \to Prop \def
 \lambda n,m:nat.m<n.
 
-(*CSC: the URI must disappear: there is a bug now *)
 interpretation "natural 'greater than'" 'gt x y = (cic:/matita/nat/orders/gt.con x y).
-(*CSC: the URI must disappear: there is a bug now *)
+
 interpretation "natural 'not greater than'" 'ngtr x y =
   (cic:/matita/logic/connectives/Not.con (cic:/matita/nat/orders/gt.con x y)).
 
@@ -99,6 +95,11 @@ elim H.apply le_n.apply (trans_le ? (pred n1)).assumption.
 apply le_pred_n.
 qed.
 
+theorem lt_S_S_to_lt: \forall n,m. 
+  S n < S m \to n < m.
+intros. apply le_S_S_to_le. assumption.
+qed.
+
 theorem leS_to_not_zero : \forall n,m:nat. S n \leq m \to not_zero m.
 intros.elim H.exact I.exact I.
 qed.
@@ -112,6 +113,15 @@ theorem not_le_Sn_n: \forall n:nat. S n \nleq n.
 intros.elim n.apply not_le_Sn_O.unfold Not.simplify.intros.cut (S n1 \leq n1).
 apply H.assumption.
 apply le_S_S_to_le.assumption.
+qed.
+
+theorem lt_pred: \forall n,m. 
+  O < n \to n < m \to pred n < pred m. 
+apply nat_elim2
+  [intros.apply False_ind.apply (not_le_Sn_O ? H)
+  |intros.apply False_ind.apply (not_le_Sn_O ? H1)
+  |intros.simplify.unfold.apply le_S_S_to_le.assumption
+  ]
 qed.
 
 (* le to lt or eq *)

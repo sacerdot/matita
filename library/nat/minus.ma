@@ -57,6 +57,14 @@ intros.rewrite < H.reflexivity.
 apply le_S_S_to_le. assumption.
 qed.
 
+theorem eq_minus_S_pred: \forall n,m. n - (S m) = pred(n -m).
+apply nat_elim2
+  [intro.reflexivity
+  |intro.simplify.auto
+  |intros.simplify.assumption
+  ]
+qed.
+
 theorem plus_minus:
 \forall n,m,p:nat. m \leq n \to (n-m)+p = (n+p)-m.
 intros 2.
@@ -226,6 +234,49 @@ rewrite > plus_n_Sm.assumption.
 qed.
 
 (* minus and lt - to be completed *)
+theorem lt_minus_l: \forall m,l,n:nat. 
+  l < m \to m \le n \to n - m < n - l.
+apply nat_elim2
+  [intros.apply False_ind.apply (not_le_Sn_O ? H)
+  |intros.rewrite < minus_n_O.
+   auto
+  |intros.
+   generalize in match H2.
+   apply (nat_case n1)
+    [intros.apply False_ind.apply (not_le_Sn_O ? H3)
+    |intros.simplify.
+     apply H
+      [
+       apply lt_S_S_to_lt.
+       assumption
+      |apply le_S_S_to_le.assumption
+      ]
+    ]
+  ]
+qed.
+
+theorem lt_minus_r: \forall n,m,l:nat. 
+  n \le l \to l < m \to l -n < m -n.
+intro.elim n
+  [applyS H1
+  |rewrite > eq_minus_S_pred.
+   rewrite > eq_minus_S_pred.
+   apply lt_pred
+    [unfold lt.apply le_plus_to_minus_r.applyS H1
+    |apply H[auto|assumption]
+    ]
+  ]
+qed.
+
+lemma lt_to_lt_O_minus : \forall m,n.
+  n < m \to O < m - n.
+intros.  
+unfold. apply le_plus_to_minus_r. unfold in H. rewrite > sym_plus. 
+rewrite < plus_n_Sm. 
+rewrite < plus_n_O. 
+assumption.
+qed.  
+
 theorem lt_minus_to_plus: \forall n,m,p. (lt n (p-m)) \to (lt (n+m) p).
 intros 3.apply (nat_elim2 (\lambda m,p.(lt n (p-m)) \to (lt (n+m) p))).
 intro.rewrite < plus_n_O.rewrite < minus_n_O.intro.assumption.

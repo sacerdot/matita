@@ -36,6 +36,11 @@ simplify.reflexivity.
 simplify.apply eq_f.assumption.
 qed.
 
+theorem plus_n_SO : \forall n:nat. S n = n+(S O).
+intro.rewrite > plus_n_O.
+apply plus_n_Sm.
+qed.
+
 theorem sym_plus: \forall n,m:nat. n+m = m+n.
 intros.elim n.
 simplify.apply plus_n_O.
