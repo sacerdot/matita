@@ -990,7 +990,7 @@ class gui () =
       connect_button tbar#applyButton (tac_w_term (A.Apply (loc, hole)));
       connect_button tbar#exactButton (tac_w_term (A.Exact (loc, hole)));
       connect_button tbar#elimButton (tac_w_term
-        (A.Elim (loc, hole, None, None, [])));
+        (A.Elim (loc, (Some hole, [], Some CicNotationPt.UserInput), None, None, [])));
       connect_button tbar#elimTypeButton (tac_w_term
         (A.ElimType (loc, hole, None, None, [])));
       connect_button tbar#splitButton (tac (A.Split loc));
