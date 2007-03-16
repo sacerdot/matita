@@ -17,7 +17,46 @@ set "baseuri" "cic:/matita/nat/euler_theorem".
 include "nat/map_iter_p.ma".
 include "nat/totient.ma".
 
+lemma gcd_n_n: \forall n.gcd n n = n.
+intro.elim n
+  [reflexivity
+  |apply le_to_le_to_eq
+    [apply divides_to_le
+      [apply lt_O_S
+      |apply divides_gcd_n
+      ]
+    |apply divides_to_le
+      [apply lt_O_gcd.apply lt_O_S
+      |apply divides_d_gcd
+        [apply divides_n_n|apply divides_n_n]
+      ]
+    ]
+  ]
+qed.
+
+
+lemma count_card: \forall p.\forall n.
+p O = false \to count (S n) p = card n p.
+intros.elim n
+  [simplify.rewrite > H. reflexivity
+  |simplify.
+   rewrite < plus_n_O.
+   apply eq_f.assumption
+  ]
+qed.
+
+lemma count_card1: \forall p.\forall n.
+p O = false \to p n = false \to count n p = card n p.
+intros 3.apply (nat_case n)
+  [intro.simplify.rewrite > H. reflexivity
+  |intros.rewrite > (count_card ? ? H).
+   simplify.rewrite > H1.reflexivity
+  ]
+qed.
+ 
+
 (* a reformulation of totient using card insted of count *)
+
 lemma totient_card: \forall n. 
 totient n = card n (\lambda i.eqb (gcd i n) (S O)).
 intro.apply (nat_case n)

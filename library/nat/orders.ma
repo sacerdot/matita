@@ -201,7 +201,7 @@ apply H2.reflexivity.
 apply H3. apply le_S_S. assumption.
 qed.
 
-(* le to eq *)
+(* le and eq *)
 lemma le_to_le_to_eq: \forall n,m. n \le m \to m \le n \to n = m.
 apply nat_elim2
   [intros.apply le_n_O_to_eq.assumption

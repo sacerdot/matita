@@ -19,8 +19,6 @@ include "nat/exp.ma".
 include "nat/gcd.ma".
 include "nat/relevant_equations.ma". (* required by auto paramod *)
 
-(* this definition of log is based on pairs, with a remainder *)
-
 let rec p_ord_aux p n m \def
   match n \mod m with
   [ O \Rightarrow 
@@ -240,4 +238,204 @@ apply le_to_not_lt.
 apply divides_to_le.unfold.apply le_n.assumption.
 rewrite < times_n_SO.
 apply exp_n_SO.
+qed.
+
+(* spostare *)
+theorem le_plus_to_le: 
+\forall a,n,m. a + n \le a + m \to n \le m.
+intro.
+elim a
+  [assumption
+  |apply H.
+   apply le_S_S_to_le.assumption
+  ]
+qed.
+  
+theorem le_times_to_le: 
+\forall a,n,m. O < a \to a * n \le a * m \to n \le m.
+intro.
+apply nat_elim2;intros
+  [apply le_O_n
+  |apply False_ind.
+   rewrite < times_n_O in H1.
+   generalize in match H1.
+   apply (lt_O_n_elim ? H).
+   intros.
+   simplify in H2.
+   apply (le_to_not_lt ? ? H2).
+   apply lt_O_S
+  |apply le_S_S.
+   apply H
+    [assumption
+    |rewrite < times_n_Sm in H2.
+     rewrite < times_n_Sm in H2.
+     apply (le_plus_to_le a).
+     assumption
+    ]
+  ]
+qed.
+
+theorem le_exp_to_le: 
+\forall a,n,m. S O < a \to exp a n \le exp a m \to n \le m.
+intro.
+apply nat_elim2;intros
+  [apply le_O_n
+  |apply False_ind.
+   apply (le_to_not_lt ? ? H1).
+   simplify.
+   rewrite > times_n_SO.
+   apply lt_to_le_to_lt_times
+    [assumption
+    |apply lt_O_exp.apply lt_to_le.assumption
+    |apply lt_O_exp.apply lt_to_le.assumption
+    ]
+  |simplify in H2.
+   apply le_S_S.
+   apply H
+    [assumption
+    |apply (le_times_to_le a)
+      [apply lt_to_le.assumption|assumption]
+    ]
+  ]
+qed.
+
+theorem divides_to_p_ord: \forall p,a,b,c,d,n,m:nat. 
+O < n \to O < m \to prime p 
+\to divides n m \to p_ord n p = pair ? ? a b \to
+p_ord m p = pair ? ? c d \to divides b d \land a \le c.
+intros.
+cut (S O < p)
+  [lapply (p_ord_to_exp1 ? ? ? ? Hcut H H4).
+   lapply (p_ord_to_exp1 ? ? ? ? Hcut H1 H5).
+   elim Hletin. clear Hletin.
+   elim Hletin1. clear Hletin1.
+   rewrite > H9 in H3.
+   split
+    [apply (gcd_SO_to_divides_times_to_divides (exp p c))
+      [elim (le_to_or_lt_eq ? ? (le_O_n b))
+        [assumption
+        |apply False_ind.
+         apply (lt_to_not_eq O ? H).
+         rewrite > H7.
+         rewrite < H10.
+         auto
+        ]
+      |elim c
+        [rewrite > sym_gcd.
+         apply gcd_SO_n
+        |simplify.
+         apply eq_gcd_times_SO
+          [apply lt_to_le.assumption
+          |apply lt_O_exp.apply lt_to_le.assumption
+          |rewrite > sym_gcd.
+           (* hint non trova prime_to_gcd_SO e
+              auto non chiude il goal *)
+           apply prime_to_gcd_SO
+            [assumption|assumption]
+          |assumption
+          ]
+        ]
+      |apply (trans_divides ? n)
+        [apply (witness ? ? (exp p a)).
+         rewrite > sym_times.
+         assumption
+        |assumption
+        ]
+      ]
+    |apply (le_exp_to_le p)
+      [assumption
+      |apply divides_to_le
+        [apply lt_O_exp.apply lt_to_le.assumption
+        |apply (gcd_SO_to_divides_times_to_divides d)
+          [apply lt_O_exp.apply lt_to_le.assumption
+          |elim a
+            [apply gcd_SO_n
+            |simplify.rewrite < sym_gcd.
+             apply eq_gcd_times_SO
+              [apply lt_to_le.assumption
+              |apply lt_O_exp.apply lt_to_le.assumption
+              |rewrite > sym_gcd.
+              (* hint non trova prime_to_gcd_SO e
+                 auto non chiude il goal *)
+               apply prime_to_gcd_SO
+                [assumption|assumption]
+              |rewrite > sym_gcd. assumption
+              ]
+            ]
+          |apply (trans_divides ? n)
+            [apply (witness ? ? b).assumption
+            |rewrite > sym_times.assumption
+            ]
+          ]
+        ]
+      ]
+    ]
+  |elim H2.assumption
+  ]
+qed.     
+
+definition ord :nat \to nat \to nat \def
+\lambda n,p. fst ? ? (p_ord n p).
+
+definition ord_rem :nat \to nat \to nat \def
+\lambda n,p. snd ? ? (p_ord n p).
+         
+theorem divides_to_ord: \forall p,n,m:nat. 
+O < n \to O < m \to prime p 
+\to divides n m 
+\to divides (ord_rem n p) (ord_rem m p) \land (ord n p) \le (ord m p).  
+intros.
+apply (divides_to_p_ord p ? ? ? ? n m H H1 H2 H3)
+  [unfold ord.unfold ord_rem.apply eq_pair_fst_snd
+  |unfold ord.unfold ord_rem.apply eq_pair_fst_snd
+  ]
+qed.
+
+theorem divides_to_divides_ord_rem: \forall p,n,m:nat. 
+O < n \to O < m \to prime p \to divides n m \to
+divides (ord_rem n p) (ord_rem m p).
+intros.
+elim (divides_to_ord p n m H H1 H2 H3).assumption.
+qed.
+
+theorem divides_to_le_ord: \forall p,n,m:nat. 
+O < n \to O < m \to prime p \to divides n m \to
+(ord n p) \le (ord m p).  
+intros.
+elim (divides_to_ord p n m H H1 H2 H3).assumption.
+qed.
+
+theorem exp_ord: \forall p,n. (S O) \lt p 
+\to O \lt n \to n = p \sup (ord n p) * (ord_rem n p).
+intros.
+elim (p_ord_to_exp1 p n (ord n p) (ord_rem n p))
+  [assumption
+  |assumption
+  |assumption
+  |unfold ord.unfold ord_rem.
+   apply eq_pair_fst_snd
+  ]
+qed.
+
+theorem divides_ord_rem: \forall p,n. (S O) < p \to O < n 
+\to divides (ord_rem n p) n. 
+intros.
+apply (witness ? ? (p \sup (ord n p))).
+rewrite > sym_times. 
+apply exp_ord[assumption|assumption]
+qed.
+
+theorem lt_O_ord_rem: \forall p,n. (S O) < p \to O < n \to O < ord_rem n p. 
+intros.
+elim (le_to_or_lt_eq O (ord_rem n p))
+  [assumption
+  |apply False_ind.
+   apply (lt_to_not_eq ? ? H1).
+   lapply (divides_ord_rem ? ? H H1).
+   rewrite < H2 in Hletin.
+   elim Hletin.
+   rewrite > H3.
+   reflexivity
+  |apply le_O_n
+  ]
 qed.

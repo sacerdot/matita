@@ -193,6 +193,25 @@ unfold lt.apply le_S_S.apply le_O_n.
 rewrite < plus_n_O.rewrite < sym_times.reflexivity.
 qed.
 
+lemma div_plus_times: \forall m,q,r:nat. r < m \to  (q*m+r)/ m = q. 
+intros.
+apply (div_mod_spec_to_eq (q*m+r) m ? ((q*m+r) \mod m) ? r)
+  [apply div_mod_spec_div_mod.
+   apply (le_to_lt_to_lt ? r)
+    [apply le_O_n|assumption]
+  |apply div_mod_spec_intro[assumption|reflexivity]
+  ]
+qed.
+
+lemma mod_plus_times: \forall m,q,r:nat. r < m \to  (q*m+r) \mod m = r. 
+intros.
+apply (div_mod_spec_to_eq2 (q*m+r) m ((q*m+r)/ m) ((q*m+r) \mod m) q r)
+  [apply div_mod_spec_div_mod.
+   apply (le_to_lt_to_lt ? r)
+    [apply le_O_n|assumption]
+  |apply div_mod_spec_intro[assumption|reflexivity]
+  ]
+qed.
 (* some properties of div and mod *)
 theorem div_times: \forall n,m:nat. ((S n)*m) / (S n) = m.
 intros.

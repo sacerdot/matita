@@ -27,10 +27,10 @@ definition max_prime_factor \def \lambda n:nat.
 theorem divides_max_prime_factor_n:
   \forall n:nat. (S O) < n
   \to nth_prime (max_prime_factor n) \divides n.
-intros; apply divides_b_true_to_divides;
-[ apply lt_O_nth_prime_n;
-| apply (f_max_true  (\lambda p:nat.eqb (n \mod (nth_prime p)) O) n);
-  cut (\exists i. nth_prime i = smallest_factor n);
+intros.
+apply divides_b_true_to_divides.
+apply (f_max_true  (\lambda p:nat.eqb (n \mod (nth_prime p)) O) n);
+cut (\exists i. nth_prime i = smallest_factor n);
   [ elim Hcut.
     apply (ex_intro nat ? a);
     split;
@@ -56,7 +56,7 @@ intros; apply divides_b_true_to_divides;
     (* 
     apply prime_to_nth_prime;
     apply prime_smallest_factor_n;
-    assumption; *) ] ]
+    assumption; *) ] 
 qed.
 
 theorem divides_to_max_prime_factor : \forall n,m. (S O) < n \to O < m \to n \divides m \to 
@@ -88,6 +88,17 @@ auto.
     ]
   ]
 *)  
+qed.
+
+theorem divides_to_max_prime_factor1 : \forall n,m. O < n \to O < m \to n \divides m \to 
+max_prime_factor n \le max_prime_factor m.
+intros 3.
+elim (le_to_or_lt_eq ? ? H)
+  [apply divides_to_max_prime_factor
+    [assumption|assumption|assumption]
+  |rewrite < H1.
+   simplify.apply le_O_n.
+  ]
 qed.
 
 theorem p_ord_to_lt_max_prime_factor: \forall n,p,q,r. O < n \to

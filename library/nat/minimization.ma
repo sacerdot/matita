@@ -72,11 +72,6 @@ intro.simplify.rewrite < H3.
 rewrite > H2.simplify.apply le_n.
 qed.
 
-
-definition max_spec \def \lambda f:nat \to bool.\lambda n: nat.
-\exists i. (le i n) \land (f i = true) \to
-(f n) = true \land (\forall i. i < n \to (f i = false)).
-
 theorem f_max_true : \forall f:nat \to bool. \forall n:nat.
 (\exists i:nat. le i n \land f i = true) \to f (max n f) = true. 
 intros 2.
@@ -119,6 +114,52 @@ apply le_S_S_to_le.assumption.
 intro.rewrite > H7.assumption.
 qed.
 
+definition max_spec \def \lambda f:nat \to bool.\lambda n,m: nat.
+m \le n \land (f m)=true \land (\forall i. m < i \to i \le n \to (f i = false)).
+
+theorem max_spec_to_max: \forall f:nat \to bool.\forall n,m:nat.
+max_spec f n m \to max n f = m.
+intros 2.
+elim n
+  [elim H.elim H1.apply (le_n_O_elim ? H3).
+   apply max_O_f
+  |elim H1.
+   elim (max_S_max f n1)
+    [elim H4.
+     rewrite > H6.
+     apply le_to_le_to_eq
+      [apply not_lt_to_le.
+       unfold Not.intro.
+       apply not_eq_true_false.
+       rewrite < H5.
+       apply H3
+        [assumption|apply le_n]
+      |elim H2.assumption
+      ]
+    |elim H4.
+     rewrite > H6.
+     apply H.
+     elim H2.
+     split
+      [split
+        [elim (le_to_or_lt_eq ? ? H7)
+          [apply le_S_S_to_le.assumption
+          |apply False_ind.
+           apply not_eq_true_false.
+           rewrite < H8.
+           rewrite > H9.
+           assumption
+          ]
+        |assumption
+        ]
+      |intros.
+       apply H3
+        [assumption|apply le_S.assumption]
+      ]
+    ]
+  ]
+qed.
+ 
 let rec min_aux off n f \def
   match f (n-off) with 
   [ true \Rightarrow (n-off)

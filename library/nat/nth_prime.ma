@@ -159,6 +159,17 @@ intros.apply (trans_lt O (S O)).
 unfold lt. apply le_n.apply lt_SO_nth_prime_n.
 qed.
 
+theorem lt_n_nth_prime_n : \forall n:nat. n \lt nth_prime n.
+intro.
+elim n
+  [apply lt_O_nth_prime_n
+  |apply (lt_to_le_to_lt ? (S (nth_prime n1)))
+    [unfold.apply le_S_S.assumption
+    |apply lt_nth_prime_n_nth_prime_Sn
+    ]
+  ]
+qed.
+
 theorem ex_m_le_n_nth_prime_m: 
 \forall n: nat. nth_prime O \le n \to 
 \exists m. nth_prime m \le n \land n < nth_prime (S m).

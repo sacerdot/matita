@@ -193,7 +193,7 @@ qed.
 (* boolean divides *)
 definition divides_b : nat \to nat \to bool \def
 \lambda n,m :nat. (eqb (m \mod n) O).
-  
+
 theorem divides_b_to_Prop :
 \forall n,m:nat. O < n \to
 match divides_b n m with
@@ -205,7 +205,7 @@ intro.simplify.apply mod_O_to_divides.assumption.assumption.
 intro.simplify.unfold Not.intro.apply H1.apply divides_to_mod_O.assumption.assumption.
 qed.
 
-theorem divides_b_true_to_divides :
+theorem divides_b_true_to_divides1:
 \forall n,m:nat. O < n \to
 (divides_b n m = true ) \to n \divides m.
 intros.
@@ -217,7 +217,21 @@ rewrite < H1.apply divides_b_to_Prop.
 assumption.
 qed.
 
-theorem divides_b_false_to_not_divides :
+theorem divides_b_true_to_divides:
+\forall n,m:nat. divides_b n m = true \to n \divides m.
+intros 2.apply (nat_case n)
+  [apply (nat_case m)
+    [intro.apply divides_n_n
+    |simplify.intros.apply False_ind.
+     apply not_eq_true_false.apply sym_eq.assumption
+    ]
+  |intros.
+   apply divides_b_true_to_divides1
+    [apply lt_O_S|assumption]
+  ]
+qed.
+
+theorem divides_b_false_to_not_divides1:
 \forall n,m:nat. O < n \to
 (divides_b n m = false ) \to n \ndivides m.
 intros.
@@ -227,6 +241,22 @@ match false with
 | false \Rightarrow n \ndivides m].
 rewrite < H1.apply divides_b_to_Prop.
 assumption.
+qed.
+
+theorem divides_b_false_to_not_divides:
+\forall n,m:nat. divides_b n m = false \to n \ndivides m.
+intros 2.apply (nat_case n)
+  [apply (nat_case m)
+    [simplify.unfold Not.intros.
+     apply not_eq_true_false.assumption
+    |unfold Not.intros.elim H1.
+     apply (not_eq_O_S m1).apply sym_eq.
+     assumption
+    ]
+  |intros.
+   apply divides_b_false_to_not_divides1
+    [apply lt_O_S|assumption]
+  ]
 qed.
 
 theorem decidable_divides: \forall n,m:nat.O < n \to
@@ -261,6 +291,21 @@ apply Hcut.apply divides_b_to_Prop.assumption.
 elim (divides_b n m).
 absurd (n \divides m).assumption.assumption.
 reflexivity.
+qed.
+
+theorem divides_b_true_to_lt_O: \forall n,m. O < n \to divides_b m n = true \to O < m.
+intros.
+elim (le_to_or_lt_eq ? ? (le_O_n m))
+  [assumption
+  |apply False_ind.
+   elim H1.
+   rewrite < H2 in H1.
+   simplify in H1.
+   apply (lt_to_not_eq O n H).
+   apply sym_eq.
+   apply eqb_true_to_eq.
+   assumption
+  ]
 qed.
 
 (* divides and pi *)
@@ -323,10 +368,8 @@ theorem not_divides_S_fact: \forall n,i:nat.
 (S O) < i \to i \le n \to i \ndivides S n!.
 intros.
 apply divides_b_false_to_not_divides.
-apply (trans_lt O (S O)).apply (le_n (S O)).assumption.
 unfold divides_b.
-rewrite > mod_S_fact.simplify.reflexivity.
-assumption.assumption.
+rewrite > mod_S_fact[simplify.reflexivity|assumption|assumption].
 qed.
 
 (* prime *)
@@ -401,7 +444,6 @@ intro.apply (nat_case m).intro. simplify.
 apply (witness ? ? (S O)). simplify.reflexivity.
 intros.
 apply divides_b_true_to_divides.
-apply (lt_O_smallest_factor ? H).
 change with 
 (eqb ((S(S m1)) \mod (min_aux m1 (S(S m1)) 
   (\lambda m.(eqb ((S(S m1)) \mod m) O)))) O = true).
@@ -431,7 +473,6 @@ apply (nat_case n).intro.apply False_ind.apply (not_le_Sn_O (S O) H).
 intro.apply (nat_case m).intro. apply False_ind.apply (not_le_Sn_n (S O) H).
 intros.
 apply divides_b_false_to_not_divides.
-apply (trans_lt O (S O)).apply (le_n (S O)).assumption.unfold divides_b.
 apply (lt_min_aux_to_false 
 (\lambda i:nat.eqb ((S(S m1)) \mod i) O) (S(S m1)) m1 i).
 cut ((S(S O)) = (S(S m1)-m1)).

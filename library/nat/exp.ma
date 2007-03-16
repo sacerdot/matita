@@ -15,6 +15,7 @@
 set "baseuri" "cic:/matita/nat/exp".
 
 include "nat/div_and_mod.ma".
+include "nat/lt_arith.ma".
 
 let rec exp n m on m\def 
  match m with 
@@ -95,3 +96,51 @@ qed.
 variant inj_exp_r: \forall p:nat. (S O) < p \to \forall n,m:nat.
 p \sup n = p \sup m \to n = m \def
 injective_exp_r.
+
+theorem le_exp: \forall n,m,p:nat. O < p \to n \le m \to exp p n \le exp p m.
+apply nat_elim2
+  [intros.
+   apply lt_O_exp.assumption
+  |intros.
+   apply False_ind.
+   apply (le_to_not_lt ? ? ? H1).
+   apply le_O_n
+  |intros.
+   simplify.
+   apply le_times
+    [apply le_n
+    |apply H[assumption|apply le_S_S_to_le.assumption]
+    ]
+  ]
+qed.
+ 
+theorem lt_exp: \forall n,m,p:nat. S O < p \to n < m \to exp p n < exp p m.
+apply nat_elim2
+  [intros.
+   apply (lt_O_n_elim ? H1).intro.
+   simplify.unfold lt.
+   rewrite > times_n_SO.
+   apply le_times
+    [assumption
+    |apply lt_O_exp.
+     apply (trans_lt ? (S O))[apply le_n|assumption]
+    ]
+  |intros.
+   apply False_ind.
+   apply (le_to_not_lt ? ? ? H1).
+   apply le_O_n
+  |intros.simplify.
+   apply lt_times_r1
+    [apply (trans_lt ? (S O))[apply le_n|assumption]
+    |apply H
+      [apply H1
+      |apply le_S_S_to_le.assumption
+      ]
+    ]
+  ]
+qed.
+
+     
+   
+   
+   

@@ -111,6 +111,28 @@ assumption.
 apply (ltn_to_ltO p q H2).
 qed.
 
+theorem lt_times_r1: 
+\forall n,m,p. O < n \to m < p \to n*m < n*p.
+intros.
+elim H;apply lt_times_r;assumption.
+qed.
+
+theorem lt_times_l1: 
+\forall n,m,p. O < n \to m < p \to m*n < p*n.
+intros.
+elim H;apply lt_times_l;assumption.
+qed.
+
+theorem lt_to_le_to_lt_times : 
+\forall n,n1,m,m1. n < n1 \to m \le m1 \to O < m1 \to n*m < n1*m1.
+intros.
+apply (le_to_lt_to_lt ? (n*m1))
+  [apply le_times_r.assumption
+  |apply lt_times_l1
+    [assumption|assumption]
+  ]
+qed.
+
 theorem lt_times_to_lt_l: 
 \forall n,p,q:nat. p*(S n) < q*(S n) \to p < q.
 intros.
