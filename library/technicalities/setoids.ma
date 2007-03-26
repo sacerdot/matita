@@ -68,15 +68,32 @@ definition carrier_of_relation_class : ∀X. X_Relation_Class X → Type.
  [1,2,3,4,5: exact T1]
 qed.
 
-definition relation_of_relation_class :
+definition relation_of_relation_class:
  ∀X,R. carrier_of_relation_class X R → carrier_of_relation_class X R → Prop.
  intros 2;
  elim R 0;
  simplify;
   [1,2: intros 4; apply r
   |3,4: intros 3; apply r
-  | apply eq
+  | intros 1 (T1); apply (eq T1). 
+    (* this eta expansion is needed to avoid a universe inconsistency *)
  ]
+qed.
+
+definition relation_of_relation_classCOQ:
+ ∀X,R. carrier_of_relation_class X R → carrier_of_relation_class X R → Prop.
+ intros 2;
+ exact (
+ match
+  R 
+  return
+    (λ x.carrier_of_relation_class X x -> carrier_of_relation_class X x -> Prop)
+with [
+ SymmetricReflexive A Aeq _ _ => Aeq
+| AsymmetricReflexive _ A Aeq _ => Aeq
+| SymmetricAreflexive A Aeq _ => Aeq
+| AsymmetricAreflexive _ A Aeq => Aeq
+| Leibniz T => eq T]).
 qed.
 
 lemma about_carrier_of_relation_class_and_relation_class_of_argument_class :
@@ -570,16 +587,11 @@ qed.
 definition directed_relation_of_argument_class:
  ∀dir:rewrite_direction.∀R: Argument_Class.
    carrier_of_relation_class ? R → carrier_of_relation_class ? R → Prop.
-  intros (dir R);
-  generalize in match
-   (about_carrier_of_relation_class_and_relation_class_of_argument_class R);
-  intro H;
-  apply (directed_relation_of_relation_class dir (relation_class_of_argument_class R));
-  apply (eq_rect ? ? (λX.X) ? ? (sym_eq ? ? ? H));
-   [ apply c
-   | apply c1
-   ]
+  intros (dir R c c1);
+  rewrite < (about_carrier_of_relation_class_and_relation_class_of_argument_class R) in c c1;
+  exact (directed_relation_of_relation_class dir (relation_class_of_argument_class R)  c c1).
 qed.
+
 
 definition relation_of_product_of_arguments:
  ∀dir:rewrite_direction.∀In.
