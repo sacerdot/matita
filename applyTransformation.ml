@@ -179,7 +179,7 @@ let txt_of_cic_object ?map_unicode_to_tex n style prefix obj =
             (CicNotationPres.mpres_of_box bobj)
 	)
      | G.Procedural depth ->
-        let obj = ProceduralPreprocess.pp_obj obj in
+        let obj = ProceduralOptimizer.optimize_obj obj in
 	let aobj, ids_to_inner_sorts, ids_to_inner_types = get_aobj obj in
         let term_pp = term2pres (n - 8) ids_to_inner_sorts in
         let lazy_term_pp = term_pp in
