@@ -19,6 +19,7 @@ set "baseuri" "cic:/matita/technicalities/setoids".
 
 include "datatypes/constructors.ma".
 include "logic/connectives2.ma".
+include "logic/coimplication.ma".
 
 (* DEFINITIONS OF Relation_Class AND n-ARY Morphism_Theory *)
 
@@ -51,59 +52,30 @@ inductive Areflexive_Relation_Class  : Type :=
  | AAsymmetric : ∀A.∀Aeq : relation A. Areflexive_Relation_Class.
 
 definition relation_class_of_argument_class : Argument_Class → Relation_Class.
- intro;
- unfold in a ⊢ %;
- elim a;
+ intros (a); cases a;
   [ apply (SymmetricReflexive ? ? ? H H1)
   | apply (AsymmetricReflexive ? something ? ? H)
   | apply (SymmetricAreflexive ? ? ? H)
   | apply (AsymmetricAreflexive ? something ? r)
-  | apply (Leibniz ? T1)
+  | apply (Leibniz ? T)
   ]
 qed.
 
 definition carrier_of_relation_class : ∀X. X_Relation_Class X → Type.
- intros;
- elim x;
- [1,2,3,4,5: exact T1]
+ intros (X x); cases x; clear x; [2,4:clear x1] clear X; assumption.
 qed.
 
 definition relation_of_relation_class:
  ∀X,R. carrier_of_relation_class X R → carrier_of_relation_class X R → Prop.
- intros 2;
- elim R 0;
- simplify;
-  [1,2: intros 4; apply r
-  |3,4: intros 3; apply r
-  | intros 1 (T1); apply (eq T1). 
-    (* this eta expansion is needed to avoid a universe inconsistency *)
- ]
-qed.
-
-definition relation_of_relation_classCOQ:
- ∀X,R. carrier_of_relation_class X R → carrier_of_relation_class X R → Prop.
- intros 2;
- exact (
- match
-  R 
-  return
-    (λ x.carrier_of_relation_class X x -> carrier_of_relation_class X x -> Prop)
-with [
- SymmetricReflexive A Aeq _ _ => Aeq
-| AsymmetricReflexive _ A Aeq _ => Aeq
-| SymmetricAreflexive A Aeq _ => Aeq
-| AsymmetricAreflexive _ A Aeq => Aeq
-| Leibniz T => eq T]).
+ intros 2; cases R; simplify; [1,2,3,4: assumption | apply (eq T) ]
 qed.
 
 lemma about_carrier_of_relation_class_and_relation_class_of_argument_class :
  ∀R.
   carrier_of_relation_class ? (relation_class_of_argument_class R) =
    carrier_of_relation_class ? R.
- intro;
- elim R;
- reflexivity.
- qed.
+ intro; cases R; reflexivity.
+qed.
 
 inductive nelistT (A : Type) : Type :=
    singl : A → nelistT A
@@ -113,11 +85,10 @@ definition Arguments := nelistT Argument_Class.
 
 definition function_type_of_morphism_signature :
  Arguments → Relation_Class → Type.
-  intros (In Out);
-  elim In
-   [ exact (carrier_of_relation_class ? t → carrier_of_relation_class ? Out)
-   | exact (carrier_of_relation_class ? t → T)
-   ]
+  intros (In Out); elim In; 
+  [ exact (carrier_of_relation_class ? t → carrier_of_relation_class ? Out)
+  | exact (carrier_of_relation_class ? t → T)
+  ]
 qed. 
 
 definition make_compatibility_goal_aux:
@@ -128,12 +99,12 @@ definition make_compatibility_goal_aux:
  generalize in match f; clear f;
   [ elim a; simplify in f f1;
      [ exact (∀x1,x2. r x1 x2 → relation_of_relation_class ? Out (f x1) (f1 x2))
-     | elim t;
+     | cases t;
         [ exact (∀x1,x2. r x1 x2 → relation_of_relation_class ? Out (f x1) (f1 x2))
         | exact (∀x1,x2. r x2 x1 → relation_of_relation_class ? Out (f x1) (f1 x2))
         ]
      | exact (∀x1,x2. r x1 x2 → relation_of_relation_class ? Out (f x1) (f1 x2))
-     | elim t;
+     | cases t;
         [ exact (∀x1,x2. r x1 x2 → relation_of_relation_class ? Out (f x1) (f1 x2))
         | exact (∀x1,x2. r x2 x1 → relation_of_relation_class ? Out (f x1) (f1 x2))
         ]
@@ -144,15 +115,10 @@ definition make_compatibility_goal_aux:
       (carrier_of_relation_class ? t → function_type_of_morphism_signature n Out) →
       Prop).
     elim t; simplify in f f1;
-     [ exact (∀x1,x2. r x1 x2 → R (f x1) (f1 x2))
-     | elim t1;
-        [ exact (∀x1,x2. r x1 x2 → R (f x1) (f1 x2))
-        | exact (∀x1,x2. r x2 x1 → R (f x1) (f1 x2))
-        ]
-     | exact (∀x1,x2. r x1 x2 → R (f x1) (f1 x2))
-     | elim t1;
-        [ exact (∀x1,x2. r x1 x2 → R (f x1) (f1 x2))
-        | exact (∀x1,x2. r x2 x1 → R (f x1) (f1 x2))
+     [1,3: exact (∀x1,x2. r x1 x2 → R (f x1) (f1 x2))
+     |2,4: cases t1;
+        [1,3: exact (∀x1,x2. r x1 x2 → R (f x1) (f1 x2))
+        |2,4: exact (∀x1,x2. r x2 x1 → R (f x1) (f1 x2))
         ]
      | exact (∀x. R (f x) (f1 x))
      ]
@@ -323,7 +289,6 @@ definition morphism_theory_of_predicate :
     elim In;
      [ reduce;
        intro;
-       alias id "iff_refl" = "cic:/matita/logic/coimplication/iff_refl.con".
        apply iff_refl
      | simplify;
        intro x;
