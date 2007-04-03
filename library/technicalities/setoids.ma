@@ -62,19 +62,19 @@ definition relation_class_of_argument_class : Argument_Class → Relation_Class.
 qed.
 
 definition carrier_of_relation_class : ∀X. X_Relation_Class X → Type.
- intros (X x); cases x; clear x; [2,4:clear x1] clear X; assumption.
+ intros (X x); cases x (A o o o o A o o A o o o A o A); exact A.
 qed.
 
 definition relation_of_relation_class:
  ∀X,R. carrier_of_relation_class X R → carrier_of_relation_class X R → Prop.
- intros 2; cases R; simplify; [1,2,3,4: assumption | apply (eq T) ]
+intros 2; cases R; simplify; [1,2,3,4: assumption | apply (eq T) ]
 qed.
 
 lemma about_carrier_of_relation_class_and_relation_class_of_argument_class :
  ∀R.
   carrier_of_relation_class ? (relation_class_of_argument_class R) =
    carrier_of_relation_class ? R.
- intro; cases R; reflexivity.
+intro; cases R; reflexivity.
 qed.
 
 inductive nelistT (A : Type) : Type :=
@@ -530,7 +530,7 @@ qed.
 
 definition get_rewrite_direction: rewrite_direction → Argument_Class → rewrite_direction.
  intros (dir R);
- cases (variance_of_argument_class R);
+ cases (variance_of_argument_class R) (a);
   [ exact dir
   | cases a;
      [ exact dir                      (* covariant *)
@@ -569,12 +569,12 @@ definition relation_of_product_of_arguments:
   | intros;
     change in p with (Prod (carrier_of_relation_class variance t) (product_of_arguments n));
     change in p1 with (Prod (carrier_of_relation_class variance t) (product_of_arguments n));
-    cases p;
-    cases p1;
+    cases p (c p2);
+    cases p1 (c1 p3);
    apply And;
     [ exact
-      (directed_relation_of_argument_class (get_rewrite_direction r t) t a a1)
-    | exact (R b b1)
+      (directed_relation_of_argument_class (get_rewrite_direction r t) t c c1)
+    | exact (R p2 p3)
     ]
   ]
 qed. 
