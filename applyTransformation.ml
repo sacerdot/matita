@@ -107,6 +107,7 @@ ignore (
   (fun ~metasenv subst term context ->
     try
      let context' = CicMetaSubst.apply_subst_context subst context in
+     let metasenv = CicMetaSubst.apply_subst_metasenv subst metasenv in
      let term' = CicMetaSubst.apply_subst subst term in
      let res = txt_of_cic_term 30 metasenv context' term' in
       if String.contains res '\n' then
