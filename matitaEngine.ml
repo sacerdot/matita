@@ -116,10 +116,15 @@ let eval_from_stream ~first_statement_only ~include_paths ?(prompt=false)
     loop
   in
    if prompt then (print_string "matita> "; flush stdout);
-   try
-    let lexicon_status,ast =
-     GrafiteParser.parse_statement ~include_paths str lexicon_status
-    in
+   let cont =
+     try
+       Some (GrafiteParser.parse_statement ~include_paths str lexicon_status)
+     with
+       End_of_file -> None
+   in
+   match cont with
+   | None -> statuses
+   | Some (lexicon_status,ast) ->
      (match ast with
          GrafiteParser.LNone _ ->
           watch_statuses lexicon_status grafite_status ;
@@ -150,8 +155,6 @@ let eval_from_stream ~first_statement_only ~include_paths ?(prompt=false)
           in
            watch_statuses lexicon_status grafite_status ;
            loop lexicon_status grafite_status (new_statuses @ statuses))
-   with
-    End_of_file -> statuses
  in
   loop lexicon_status grafite_status []
 ;;
