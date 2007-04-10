@@ -21,7 +21,7 @@ include "list/list.ma".
 include "Fsub/util.ma".
 
 (*** representation of Fsub types ***)  
-inductive Typ : Set \def
+inductive Typ : Type \def
   | TVar : nat \to Typ            (* type var *)
   | TFree: nat \to Typ            (* free type name *)
   | Top : Typ                     (* maximum type *)
@@ -29,7 +29,7 @@ inductive Typ : Set \def
   | Forall : Typ \to Typ \to Typ. (* universal type *)
   
 (*** representation of Fsub terms ***)
-inductive Term : Set \def
+inductive Term : Type \def
   | Var : nat \to Term            (* variable *)
   | Free : nat \to Term          (* free name *)
   | Abs : Typ \to Term \to Term   (* abstraction *)
@@ -39,7 +39,7 @@ inductive Term : Set \def
   
 (* representation of bounds *)
 
-record bound : Set \def { 
+record bound : Type \def { 
                           istype : bool;    (* is subtyping bound? *)
                           name   : nat ;    (* name *)
                           btype  : Typ      (* type to which the name is bound *)
@@ -354,11 +354,11 @@ lemma natinfv_boundinenv : \forall x,G.(in_list ? x (fv_env G)) \to
                               \exists B,T.(in_list ? (mk_bound B x T) G).
 intros 2;elim G 0
   [simplify;intro;lapply (in_list_nil ? ? H);elim Hletin
-  |intros 3;elim s;simplify in H1;inversion H1
+  |intros 3;elim t;simplify in H1;inversion H1
      [intros;rewrite < H2;simplify;apply ex_intro
         [apply b
         |apply ex_intro
-           [apply t
+           [apply t1
            |lapply (inj_head_nat ? ? ? ? H3);rewrite > H2;rewrite < Hletin;
             apply in_Base]]
      |intros;lapply (inj_tail ? ? ? ? ? H5);rewrite < Hletin in H2;
@@ -411,7 +411,7 @@ lemma varin_envappend_case: \forall G,H,x.(var_in_env x (H @ G)) \to
                             (var_in_env x G) \lor (var_in_env x H).
 intros 3.elim H 0
   [simplify;intro;left;assumption
-  |intros 2;elim s;simplify in H2;inversion H2
+  |intros 2;elim t;simplify in H2;inversion H2
      [intros;lapply (inj_head_nat ? ? ? ? H4);rewrite > Hletin;right;
       simplify;constructor 1
      |intros;lapply (inj_tail ? ? ? ? ? H6);
@@ -441,10 +441,10 @@ lemma varinG_or_varinH_to_varinGH : \forall G,H,x.
 intros.elim H1 0
   [elim H
      [simplify;assumption
-     |elim s;simplify;constructor 2;apply (H2 H3)]
+     |elim t;simplify;constructor 2;apply (H2 H3)]
   |elim H 0
      [simplify;intro;lapply (in_list_nil nat x H2);elim Hletin
-     |intros 2;elim s;simplify in H3;inversion H3
+     |intros 2;elim t;simplify in H3;inversion H3
         [intros;lapply (inj_head_nat ? ? ? ? H5);rewrite > Hletin;simplify;
          constructor 1
         |intros;simplify;constructor 2;rewrite < H6;apply H2;
@@ -481,7 +481,7 @@ lemma fv_env_extends : \forall H,x,B,C,T,U,G.
                           (fv_env (H @ ((mk_bound C x U) :: G))).
 intros;elim H
   [simplify;reflexivity
-  |elim s;simplify;rewrite > H1;reflexivity]
+  |elim t;simplify;rewrite > H1;reflexivity]
 qed.
 
 lemma lookup_env_extends : \forall G,H,B,C,D,T,U,V,x,y.
@@ -597,7 +597,7 @@ lemma lookup_swap : \forall x,u,v,T,B,G.(in_list ? (mk_bound B x T) G) \to
     (in_list ? (mk_bound B (swap u v x) (swap_Typ u v T)) (swap_Env u v G)).
 intros 6;elim G 0
   [intros;elim (in_list_nil ? ? H)
-  |intro;elim s;simplify;inversion H1
+  |intro;elim t;simplify;inversion H1
      [intros;lapply (inj_head ? ? ? ? H3);rewrite < H2 in Hletin;
       destruct Hletin;rewrite > Hcut;rewrite > Hcut1;rewrite > Hcut2;
       apply in_Base
@@ -628,13 +628,13 @@ lemma in_dom_swap : \forall u,v,x,G.
 intros;split
   [elim G 0
      [simplify;intro;elim (in_list_nil ? ? H)
-     |intro;elim s 0;simplify;intros;inversion H1
+     |intro;elim t 0;simplify;intros;inversion H1
         [intros;lapply (inj_head_nat ? ? ? ? H3);rewrite > Hletin;apply in_Base
         |intros;lapply (inj_tail ? ? ? ? ? H5);rewrite < Hletin in H2;
          rewrite > H4 in H;apply in_Skip;apply (H H2)]]
   |elim G 0
      [simplify;intro;elim (in_list_nil ? ? H)
-     |intro;elim s 0;simplify;intros;inversion H1
+     |intro;elim t 0;simplify;intros;inversion H1
         [intros;lapply (inj_head_nat ? ? ? ? H3);rewrite < H2 in Hletin;
          lapply (swap_inj ? ? ? ? Hletin);rewrite > Hletin1;apply in_Base
         |intros;lapply (inj_tail ? ? ? ? ? H5);rewrite < Hletin in H2;
@@ -657,7 +657,7 @@ cut (\forall l:(list nat).\exists n.\forall m.
              [assumption|apply nil_cons]
           |intros;lapply (sym_eq ? ? ? H5);absurd (a1::l1 = [])
              [assumption|apply nil_cons]]]
-    |elim H;lapply (decidable_eq_nat a s);elim Hletin
+    |elim H;lapply (decidable_eq_nat a t);elim Hletin
        [apply ex_intro
           [apply (S a)
           |intros;unfold;intro;inversion H4
@@ -668,23 +668,23 @@ cut (\forall l:(list nat).\exists n.\forall m.
               rewrite < H7 in H5;
               apply (H1 m ? H5);lapply (le_S ? ? H3);
               apply (le_S_S_to_le ? ? Hletin2)]]
-       |cut ((leb a s) = true \lor (leb a s) = false)
+       |cut ((leb a t) = true \lor (leb a t) = false)
           [elim Hcut
              [apply ex_intro
-                [apply (S s)
+                [apply (S t)
                 |intros;unfold;intro;inversion H5
                    [intros;lapply (inj_head_nat ? ? ? ? H7);rewrite > H6 in H4;
                     rewrite < Hletin1 in H4;apply (not_le_Sn_n ? H4)
                    |intros;lapply (inj_tail ? ? ? ? ? H9);
                     rewrite < Hletin1 in H6;lapply (H1 a1)
                       [apply (Hletin2 H6)
-                      |lapply (leb_to_Prop a s);rewrite > H3 in Hletin2;
+                      |lapply (leb_to_Prop a t);rewrite > H3 in Hletin2;
                        simplify in Hletin2;rewrite < H8;
                        apply (trans_le ? ? ? Hletin2);
                        apply (trans_le ? ? ? ? H4);constructor 2;constructor 1]]]
              |apply ex_intro
                 [apply a
-                |intros;lapply (leb_to_Prop a s);rewrite > H3 in Hletin1;
+                |intros;lapply (leb_to_Prop a t);rewrite > H3 in Hletin1;
                  simplify in Hletin1;lapply (not_le_to_lt ? ? Hletin1);
                  unfold in Hletin2;unfold;intro;inversion H5
                    [intros;lapply (inj_head_nat ? ? ? ? H7);
@@ -693,7 +693,7 @@ cut (\forall l:(list nat).\exists n.\forall m.
                    |intros;lapply (inj_tail ? ? ? ? ? H9);
                     rewrite < Hletin3 in H6;rewrite < H8 in H6;
                     apply (H1 ? H4 H6)]]]
-          |elim (leb a s);auto]]]]
+          |elim (leb a t);auto]]]]
 qed.
 
 (*** lemmas on well-formedness ***)
@@ -794,17 +794,17 @@ qed.
 lemma WFE_swap : \forall u,v,G.(WFEnv G) \to (WFEnv (swap_Env u v G)).
 intros 3.elim G 0
   [intro;simplify;assumption
-  |intros 2;elim s;simplify;constructor 2
+  |intros 2;elim t;simplify;constructor 2
      [apply H;apply (WFE_consG_WFE_G ? ? H1)
      |unfold;intro;lapply (in_dom_swap u v n l);elim Hletin;lapply (H4 H2);
       (* FIXME trick *)generalize in match H1;intro;inversion H1
-        [intros;absurd ((mk_bound b n t)::l = [])
+        [intros;absurd ((mk_bound b n t1)::l = [])
            [assumption|apply nil_cons]
         |intros;lapply (inj_head ? ? ? ? H10);lapply (inj_tail ? ? ? ? ? H10);
          destruct Hletin2;rewrite < Hcut1 in H8;rewrite < Hletin3 in H8;
          apply (H8 Hletin1)]
-     |apply (WFT_swap u v l t);inversion H1
-        [intro;absurd ((mk_bound b n t)::l = [])
+     |apply (WFT_swap u v l t1);inversion H1
+        [intro;absurd ((mk_bound b n t1)::l = [])
            [assumption|apply nil_cons]
         |intros;lapply (inj_head ? ? ? ? H6);lapply (inj_tail ? ? ? ? ? H6);
          destruct Hletin;rewrite > Hletin1;rewrite > Hcut2;assumption]]]
@@ -929,11 +929,11 @@ lemma swap_env_not_free : \forall u,v,G.(WFEnv G) \to
                                         (swap_Env u v G) = G.
 intros 3.elim G 0
   [simplify;intros;reflexivity
-  |intros 2;elim s 0;simplify;intros;lapply (notin_cons ? ? ? ? H2);
+  |intros 2;elim t 0;simplify;intros;lapply (notin_cons ? ? ? ? H2);
    lapply (notin_cons ? ? ? ? H3);elim Hletin;elim Hletin1;
    lapply (swap_other ? ? ? H4 H6);lapply (WFE_consG_to_WFT ? ? ? ? H1);
-   cut (\lnot (in_list ? u (fv_type t)))
-     [cut (\lnot (in_list ? v (fv_type t)))
+   cut (\lnot (in_list ? u (fv_type t1)))
+     [cut (\lnot (in_list ? v (fv_type t1)))
         [lapply (swap_Typ_not_free ? ? ? Hcut Hcut1);
          lapply (WFE_consG_WFE_G ? ? H1);
          lapply (H Hletin5 H5 H7);
@@ -1123,9 +1123,9 @@ intros 7;elim H 0
      |intros;lapply (inj_tail ? ? ? ? ? H8);lapply (inj_head ? ? ? ? H8);
       destruct Hletin1;rewrite < Hletin in H6;rewrite < Hletin in H4;
       rewrite < Hcut1 in H6;apply (WFE_cons ? ? ? ? H4 H6 H2)]
-  |intros;simplify;generalize in match H2;elim s;simplify in H4;
+  |intros;simplify;generalize in match H2;elim t;simplify in H4;
    inversion H4
-     [intros;absurd (mk_bound b n t::l@(mk_bound B x T::G)=Empty)
+     [intros;absurd (mk_bound b n t1::l@(mk_bound B x T::G)=Empty)
         [assumption
         |apply nil_cons]
      |intros;lapply (inj_tail ? ? ? ? ? H9);lapply (inj_head ? ? ? ? H9);

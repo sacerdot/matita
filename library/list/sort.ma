@@ -18,7 +18,7 @@ include "datatypes/bool.ma".
 include "datatypes/constructors.ma".
 include "list/list.ma".
 
-let rec mem (A:Set) (eq: A → A → bool) x (l: list A) on l ≝
+let rec mem (A:Type) (eq: A → A → bool) x (l: list A) on l ≝
  match l with
   [ nil ⇒ false
   | (cons a l') ⇒
@@ -28,7 +28,7 @@ let rec mem (A:Set) (eq: A → A → bool) x (l: list A) on l ≝
      ]
   ].
   
-let rec ordered (A:Set) (le: A → A → bool) (l: list A) on l ≝
+let rec ordered (A:Type) (le: A → A → bool) (l: list A) on l ≝
  match l with
   [ nil ⇒ true
   | (cons x l') ⇒
@@ -39,7 +39,7 @@ let rec ordered (A:Set) (le: A → A → bool) (l: list A) on l ≝
       ]
   ].
   
-let rec insert (A:Set) (le: A → A → bool) x (l: list A) on l ≝
+let rec insert (A:Type) (le: A → A → bool) x (l: list A) on l ≝
  match l with
   [ nil ⇒ [x]
   | (cons he l') ⇒
@@ -50,7 +50,7 @@ let rec insert (A:Set) (le: A → A → bool) x (l: list A) on l ≝
   ].
 
 lemma insert_ind :
- ∀A:Set. ∀le: A → A → bool. ∀x.
+ ∀A:Type. ∀le: A → A → bool. ∀x.
   ∀P:(list A → list A → Prop).
    ∀H:(∀l: list A. l=[] → P [] [x]).
     ∀H2:
@@ -86,7 +86,7 @@ lemma insert_ind :
 qed.
 
 
-let rec insertionsort (A:Set) (le: A → A → bool) (l: list A) on l ≝
+let rec insertionsort (A:Type) (le: A → A → bool) (l: list A) on l ≝
  match l with
   [ nil ⇒ []
   | (cons he l') ⇒
@@ -95,7 +95,7 @@ let rec insertionsort (A:Set) (le: A → A → bool) (l: list A) on l ≝
   ].
 
 lemma ordered_injective:
-  ∀A:Set. ∀le:A → A → bool.
+  ∀A:Type. ∀le:A → A → bool.
    ∀l:list A. ordered A le l = true → ordered A le (tail A l) = true.
   intros 3 (A le l).
   elim l
@@ -105,12 +105,12 @@ lemma ordered_injective:
     clear H1;
     elim l1;
     [ simplify; reflexivity;
-    | cut ((le s s1 \land ordered A le (s1::l2)) = true);
+    | cut ((le t t1 \land ordered A le (t1::l2)) = true);
       [ generalize in match Hcut; 
         apply andb_elim;
-        elim (le s s1);
+        elim (le t t1);
         [ simplify;
-          fold simplify (ordered ? le (s1::l2));
+          fold simplify (ordered ? le (t1::l2));
           intros; assumption;
         | simplify;
           intros (Habsurd);
@@ -126,7 +126,7 @@ lemma ordered_injective:
 qed.
 
 lemma insert_sorted:
-  \forall A:Set. \forall le:A\to A\to bool.
+  \forall A:Type. \forall le:A\to A\to bool.
   (\forall a,b:A. le a b = false \to le b a = true) \to
   \forall l:list A. \forall x:A.
     ordered A le l = true \to ordered A le (insert A le x l) = true.
@@ -139,7 +139,7 @@ lemma insert_sorted:
       elim l'; simplify;
       [ rewrite > H5;
         reflexivity
-      | elim (le x s); simplify;
+      | elim (le x t); simplify;
         [ rewrite > H5;
           reflexivity
         | simplify in H4;
@@ -157,7 +157,7 @@ lemma insert_sorted:
 qed.
   
 theorem insertionsort_sorted:
-  ∀A:Set.
+  ∀A:Type.
   ∀le:A → A → bool.∀eq:A → A → bool.
   (∀a,b:A. le a b = false → le b a = true) \to
   ∀l:list A.
@@ -166,7 +166,7 @@ theorem insertionsort_sorted:
   elim l;
   [ simplify;
     reflexivity;
-  | apply (insert_sorted ? ? le_tot (insertionsort ? le l1) s);
+  | apply (insert_sorted ? ? le_tot (insertionsort ? le l1) t);
     assumption;
   ]
 qed.

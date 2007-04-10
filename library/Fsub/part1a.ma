@@ -176,7 +176,7 @@ cut (\forall G,T,Q.(JSubtype G T Q) \to
                  |simplify;apply incl_nat_cons;assumption]]]
         |elim G2 0
            [simplify;unfold;intros;assumption
-           |intro;elim s 0;simplify;intros;apply incl_nat_cons;assumption]]]
+           |intro;elim t 0;simplify;intros;apply incl_nat_cons;assumption]]]
   |intros 4;(*generalize in match H1;*)elim H1
      [inversion H5
         [intros;rewrite < H8;apply (SA_Top ? ? H2 H3)

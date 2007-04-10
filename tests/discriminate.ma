@@ -13,31 +13,21 @@
 (**************************************************************************)
 
 set "baseuri" "cic:/matita/tests/discriminate".
-include "../legacy/coq.ma".
-alias id "not" = "cic:/Coq/Init/Logic/not.con".
-alias num (instance 0) = "natural number".
-alias symbol "eq" (instance 0) = "Coq's leibnitz's equality".
-alias id "False" = "cic:/Coq/Init/Logic/False.ind#xpointer(1/1)".
-alias id "True" = "cic:/Coq/Init/Logic/True.ind#xpointer(1/1)".
-alias id "nat" = "cic:/Coq/Init/Datatypes/nat.ind#xpointer(1/1)".
-alias id "bool" = "cic:/Coq/Init/Datatypes/bool.ind#xpointer(1/1)".
-alias id "S" = "cic:/Coq/Init/Datatypes/nat.ind#xpointer(1/1/2)".
-alias id "O" = "cic:/Coq/Init/Datatypes/nat.ind#xpointer(1/1/1)".
 
-inductive foo: Prop \def I_foo: foo.
+include "logic/equality.ma".
+include "nat/nat.ma".
+include "datatypes/constructors.ma".
 
-alias num (instance 0) = "binary integer number".
 theorem stupid:
-  1 = 0 \to (\forall p:Prop. p \to not p).
+  (S O) = O \to (\forall p:Prop. p \to Not p).
   intros.
-  generalize in match I_foo.
+  generalize in match I.
   destruct H.
 qed.
 
 inductive bar_list (A:Set): Set \def
   | bar_nil: bar_list A
   | bar_cons: A \to bar_list A \to bar_list A.
-
 
 theorem stupid2:
   \forall A:Set.\forall x:A.\forall l:bar_list A.
@@ -69,3 +59,64 @@ theorem recursive: S (S (S O)) = S (S O) \to False.
  intros;
  destruct H.
 qed.
+
+inductive complex (A,B : Type) : B → A → Type ≝
+| C1 : ∀x:nat.∀a:A.∀b:B. complex A B b a
+| C2 : ∀a,a1:A.∀b,b1:B.∀x:nat. complex A B b1 a1 → complex A B b a.
+
+
+theorem recursive1: ∀ x,y : nat. 
+  (C1 ? ? O     (Some ? x) y) = 
+  (C1 ? ? (S O) (Some ? x) y) → False.
+intros; destruct H;
+qed.
+
+theorem recursive2: ∀ x,y,z,t : nat. 
+  (C1 ? ? t (Some ? x) y) = 
+  (C1 ? ? z (Some ? x) y) → t=z.
+intros; destruct H;assumption.
+qed.
+
+theorem recursive3: ∀ x,y,z,t : nat. 
+  C2 ? ? (None ?) ? (S O) ? z (C1 ? ? (S O) (Some ? x) y) = 
+  C2 ? ? (None ?) ? (S O) ? t (C1 ? ? (S O) (Some ? x) y) → z=t.
+intros; destruct H;assumption.
+qed.
+
+theorem recursive4: ∀ x,y,z,t : nat. 
+  C2 ? ? (None ?) ? (S O) ? z (C1 ? ? (S O) (Some ? z) y) = 
+  C2 ? ? (None ?) ? (S O) ? t (C1 ? ? (S O) (Some ? x) y) → z=t.
+intros; 
+
+
+
+
+ (λHH  : ((C1 (option nat) nat (S O) (Some nat -7) -8) = (C1 (option nat) nat (S O) (Some nat -9) -8))
+  eq_elim_r 
+    (complex (option nat) nat -8 (Some nat -7)) 
+    (C1 (option nat) nat (S O) (Some nat -9) -8) 
+    (λc:(complex (option nat) nat -8 (Some nat -7)).
+      (eq (option nat) 
+        ((λx:(complex (option nat) nat -8 (Some nat -7)).
+           match x return (λy1:nat.(λy2:(option nat).(λ x:(complex (option nat) nat y1 y2).(option nat)))) with
+           [ (C1 (y1:nat) (a:(option nat)) (b:nat)) => a
+           | (C2 (a:(option nat)) (a1:(option nat)) (b:nat) (b1:nat) (y2:nat) (y3:(complex (option nat) nat b1 a1))) ⇒
+              (Some nat -7)
+           ]) c) 
+        (Some nat -9))) 
+     ? 
+     (C1 (option nat) nat (S O) (Some nat -7) -8) 
+     HH)
+
+
+
+
+destruct H;assumption.
+qed.
+
+theorem recursive2: ∀ x,y : nat. 
+  C2 ? ? (None ?) ? (S O) ? O (C1 ? ? O     (Some ? x) y) = 
+  C2 ? ? (None ?) ? (S O) ? O (C1 ? ? (S O) (Some ? x) y) → False.
+intros; destruct H;
+
+

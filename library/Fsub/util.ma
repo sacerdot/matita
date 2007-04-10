@@ -35,7 +35,7 @@ let rec max m n \def
      [true \Rightarrow n
      |false \Rightarrow m]. 
 
-inductive in_list (A : Set) : A \to (list A) \to Prop \def
+inductive in_list (A : Type) : A \to (list A) \to Prop \def
   | in_Base : \forall x:A.\forall l:(list A).
               (in_list A x (x :: l))
   | in_Skip : \forall x,y:A.\forall l:(list A).
