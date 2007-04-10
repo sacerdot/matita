@@ -16,7 +16,7 @@ set "baseuri" "cic:/matita/list/".
 include "logic/equality.ma".
 include "higher_order_defs/functions.ma".
 
-inductive list (A:Set) : Set :=
+inductive list (A:Type) : Type :=
   | nil: list A
   | cons: A -> list A -> list A.
 
@@ -39,7 +39,7 @@ interpretation "cons" 'cons hd tl =
 (* theorem test_notation: [O; S O; S (S O)] = O :: S O :: S (S O) :: []. *)
 
 theorem nil_cons:
-  \forall A:Set.\forall l:list A.\forall a:A.
+  \forall A:Type.\forall l:list A.\forall a:A.
     a::l <> [].
   intros;
   unfold Not;
@@ -57,14 +57,14 @@ let rec append A (l1: list A) l2 on l1 :=
   [ nil => l2
   | (cons hd tl) => hd :: append A tl l2 ].
 
-definition tail := \lambda A:Set. \lambda l: list A.
+definition tail := \lambda A:Type. \lambda l: list A.
   match l with
   [ nil => []
   | (cons hd tl) => tl].
 
 interpretation "append" 'append l1 l2 = (cic:/matita/list/append.con _ l1 l2).
 
-theorem append_nil: \forall A:Set.\forall l:list A.l @ [] = l.
+theorem append_nil: \forall A:Type.\forall l:list A.l @ [] = l.
   intros;
   elim l;
   [ reflexivity;
@@ -74,7 +74,7 @@ theorem append_nil: \forall A:Set.\forall l:list A.l @ [] = l.
   ]
 qed.
 
-theorem associative_append: \forall A:Set.associative (list A) (append A).
+theorem associative_append: \forall A:Type.associative (list A) (append A).
   intros; unfold; intros;
   elim x;
   [ simplify;
@@ -86,13 +86,13 @@ theorem associative_append: \forall A:Set.associative (list A) (append A).
 qed.
 
 theorem cons_append_commute:
-  \forall A:Set.\forall l1,l2:list A.\forall a:A.
+  \forall A:Type.\forall l1,l2:list A.\forall a:A.
     a :: (l1 @ l2) = (a :: l1) @ l2.
   intros;
   reflexivity;
 qed.
 
-inductive permutation (A:Set) : list A -> list A -> Prop \def
+inductive permutation (A:Type) : list A -> list A -> Prop \def
   | refl : \forall l:list A. permutation ? l l
   | swap : \forall l:list A. \forall x,y:A. 
               permutation ? (x :: y :: l) (y :: x :: l)
@@ -117,7 +117,7 @@ theorem tmp : permutation nat (x1 :: x2 :: x3 :: []) (x1 :: x3 :: x2 :: []).
 
 (*
 theorem nil_append_nil_both:
-  \forall A:Set.\forall l1,l2:list A.
+  \forall A:Type.\forall l1,l2:list A.
     l1 @ l2 = [] \to l1 = [] \land l2 = [].
 *)
 
