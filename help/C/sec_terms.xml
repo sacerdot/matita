@@ -285,7 +285,7 @@
       <entry/>
       <entry>|</entry>
         <entry><emphasis role="bold">match</emphasis> &term; 
-        [ <emphasis role="bold">in</emphasis> &term; ]
+        [ <emphasis role="bold">in</emphasis> &id; ]
         [ <emphasis role="bold">return</emphasis> &term; ]
         <emphasis role="bold">with</emphasis>
       </entry>
