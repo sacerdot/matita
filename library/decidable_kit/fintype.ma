@@ -117,7 +117,7 @@ cut (∀x:fsort. count fsort (cmp fsort x) enum = (S O));
                            (filter ? (sigma nat_eqType (λx.ltb x bound))
                            (if_p nat_eqType (λx.ltb x bound)) (iota O p)));
            rewrite > (count_O fsort); [1: reflexivity]
-           intros 1 (x);
+           intros 1 (x); 
            rewrite < (b2pT ? ? (eqP ? n ?) Enp);
            cases x (y Hy); intros (ABS); clear x;
            unfold segment; unfold notb; simplify; 
@@ -145,3 +145,157 @@ cut (∀x:fsort. count fsort (cmp fsort x) enum = (S O));
           rewrite > Hn in H; cases (H ?); reflexivity;
      ]]]      
 qed.
+
+let rec uniq (d:eqType) (l:list d) on l : bool ≝
+  match l with 
+  [ nil⇒ true 
+  | (cons x tl) ⇒ andb (notb (mem d x tl)) (uniq d tl)].
+
+lemma uniq_tail_OLD : ∀d:eqType.∀x:d.∀l:list d.uniq d (x::l) = true → uniq d l = true.
+intros (d x l Uxl); simplify in Uxl; cases (b2pT ? ? (andbP ? ?) Uxl); assumption;
+qed.
+
+lemma uniq_mem : ∀d:eqType.∀x:d.∀l:list d.uniq d (x::l) = true → mem d x l = false.
+intros (d x l H); simplify in H; lapply (b2pT ? ? (andbP ? ?) H) as H1; clear H;
+cases H1 (H2 H3); lapply (b2pT ? ?(negbP ?) H2); assumption;
+qed.
+
+lemma andbA : ∀a,b,c.andb a (andb b c) = andb (andb a b) c.
+intros; cases a; cases b; cases c; reflexivity; qed.
+
+lemma andbC : ∀a,b. andb a b = andb b a.
+intros; cases a; cases b; reflexivity; qed.
+
+lemma uniq_tail : 
+  ∀d:eqType.∀x:d.∀l:list d. uniq d (x::l) = andb (negb (mem d x l)) (uniq d l).
+intros (d x l);
+elim l; [1: simplify; reflexivity]
+generalize in match (refl_eq ? (cmp d x t));
+generalize in match (cmp d x t) in ⊢ (? ? ? % → %); intros 1 (b); cases b; clear b;
+intros (E); simplify ; rewrite > E; simplify; [1: reflexivity;]
+rewrite > andbA; rewrite > andbC in ⊢ (? ? (? % ?) ?); rewrite < andbA;
+rewrite < H; rewrite > andbC in ⊢ (? ? ? (? % ?)); rewrite < andbA;
+reflexivity;
+qed.
+  
+lemma count_O_mem : ∀d:eqType.∀x:d.∀l:list d.ltb O (count d (cmp d x) l) = mem d x l.
+intros 3 (d x l); elim l [reflexivity]
+simplify; fold simplify (mem d x l1); fold simplify (count d (cmp d x) l1);
+rewrite < H; cases (cmp d x t); simplify; reflexivity;
+qed.
+  
+lemma uniqP : ∀d:eqType.∀l:list d. 
+  reflect (∀x:d.mem d x l = true → count d (cmp d x) l = (S O)) (uniq d l).
+intros (d l); apply prove_reflect; elim l; [1: destruct H1 | 3: destruct H]
+[1: generalize in match H2; simplify in H2; fold simplify (orb (cmp d x t) (mem d x l1)) in H2;
+    (* lapply (uniq_tail ? ? ? H1) as Ul1; *) 
+    lapply (b2pT ? ? (orbP ? ?) H2) as H3; clear H2; 
+    cases H3; clear H3; intros;
+    [2: lapply (uniq_mem ? ? ? H1) as H4; 
+        generalize in match (refl_eq ? (cmp d x t));
+        generalize in match (cmp d x t) in ⊢ (? ? ? % → %); intros 1 (b); cases b; clear b;
+        intros (H5);
+        [1: simplify; rewrite > H5; simplify; fold simplify (count d (cmp d x) l1);
+            rewrite > count_O; [1:reflexivity]
+            intros (y Hy); rewrite > (b2pT ? ? (eqP d ? ?) H5) in H2 H3 H4 ⊢ %;
+            clear H5; clear x; rewrite > H2 in H4; destruct H4;
+         |2: simplify; rewrite > H5; simplify;
+             fold simplify (count d (cmp d x) (l1));
+             apply H; rewrite > uniq_tail in H1;
+             cases (b2pT ? ? (andbP ? ?) H1);
+             assumption;]
+    |1: simplify; rewrite > H2; simplify;
+        fold simplify (count d (cmp d x) l1);
+        rewrite > count_O; [1:reflexivity]
+        intros (y Hy); rewrite > (b2pT ? ? (eqP d ? ?) H2) in H3 ⊢ %;
+        clear H2; clear x;
+        lapply (uniq_mem ? ? ? H1) as H4;
+        generalize in match (refl_eq ? (cmp d t y));
+        generalize in match (cmp d t y) in ⊢ (? ? ? % → %); intros 1 (b); cases b; clear b;
+        [1: intros (E); rewrite > (b2pT ? ? (eqP d ? ?) E) in H4;
+            rewrite > H4 in Hy; destruct Hy;
+        |2:intros; reflexivity]]
+|2: rewrite > uniq_tail in H1;
+    generalize in match (refl_eq ? (uniq d l1));
+    generalize in match (uniq d l1) in ⊢ (? ? ? % → %); intros 1 (b); cases b; clear b;
+    [1: intros (E); rewrite > E in H1; rewrite > andbC in H1; simplify in H1;
+      unfold Not; intros (A); lapply (A t) as A'; 
+      [1: simplify in A'; 
+          rewrite > cmp_refl in A'; simplify in A';
+          destruct A'; clear A'; fold simplify (count d (cmp d t) l1) in Hcut;
+          rewrite < count_O_mem in H1;
+          rewrite > Hcut in H1; destruct H1;  
+      |2: simplify; rewrite > cmp_refl; reflexivity;]
+    |2: intros (Ul1); lapply (H Ul1); unfold Not; intros (A); apply Hletin;
+        intros (r Mrl1); lapply (A r); [2: simplify; rewrite > Mrl1; cases (cmp d r t); reflexivity]   
+        generalize in match (refl_eq ? (cmp d r t));
+        generalize in match (cmp d r t) in ⊢ (? ? ? % → %); intros 1 (b); cases b; clear b;
+        [1: intros (E); simplify in Hletin1; rewrite > E in Hletin1;
+            simplify in Hletin1; fold simplify (count d (cmp d r) l1) in Hletin1;
+            destruct Hletin1;
+            rewrite < count_O_mem in Mrl1;
+            rewrite > Hcut in Mrl1;
+            destruct Mrl1;
+        |2: intros; simplify in Hletin1; rewrite > H2 in Hletin1;
+            simplify in Hletin1; apply (Hletin1);]]]
+qed.
+    
+lemma mem_finType : ∀d:finType.∀x:d. mem d x (enum d) = true. 
+intros 1 (d); cases d; simplify; intros; rewrite < count_O_mem;
+rewrite > H; reflexivity;
+qed.
+
+lemma uniq_fintype_enum :  ∀d:finType. uniq d (enum d) = true.
+intros; cases d; simplify; apply (p2bT ? ? (uniqP ? ?)); intros; apply H;
+qed.
+
+lemma sub_enumP : ∀d:finType.∀p:d→bool.∀x:sub_eqType d p. 
+  count (sub_eqType d p) (cmp ? x) (filter ? ? (if_p ? p) (enum d)) = (S O).
+intros (d p x); cases x (t Ht); clear x;
+generalize in match (mem_finType d t); 
+generalize in match (uniq_fintype_enum d); 
+elim (enum d); [1:destruct H1]
+simplify; fold simplify (filter d (sigma d p) (if_p d p) l); 
+cases (in_sub_eq d p t1); simplify in ⊢ (? ? (? ? ? %) ?); 
+ [simplify; fold simplify (count (sub_eqType d p) (cmp (sub_eqType d p) {t,Ht})
+                        (filter d (sigma d p) (if_p d p) l));
+  generalize in match H3; clear H3; cases s (r Hr); clear s;
+  simplify; intros (Ert1); generalize in match Hr; clear Hr;
+  rewrite > Ert1; clear Ert1; clear r; intros (Ht1);
+  unfold  sub_eqType in ⊢ (? ? match ? (% ? ?) ? ? with [true⇒ ?|false⇒ ?] ?); 
+  simplify; generalize in match (refl_eq ? (cmp d t t1));
+  generalize in match (cmp d t t1) in ⊢ (? ? ? % → %); intros 1 (b); cases b; clear b;
+  intros (Ett1); simplify; 
+    [1: cut (count (sub_eqType d p) (cmp (sub_eqType d p) {t,Ht})
+            (filter d (sigma d p) (if_p d p) l) = O); [1:rewrite > Hcut; reflexivity]
+        lapply (uniq_mem ? ? ? H1);
+        generalize in match Ht; 
+        rewrite > (b2pT ? ? (eqP d ? ?) Ett1); intros (Ht1'); clear Ht1;
+        generalize in match Hletin; elim l; [1: reflexivity]
+        simplify; cases (in_sub_eq d p t2); simplify; 
+          [1: generalize in match H5; cases s; simplify; intros; clear H5; 
+              unfold sub_eqType in ⊢ (? ? match ? (% ? ?) ? ? with [true⇒ ?|false⇒ ?] ?);
+              simplify; rewrite > H7; simplify in H4;
+              generalize in match H4; clear H4; 
+              generalize in match (refl_eq ? (cmp d t1 t2));
+              generalize in match (cmp d t1 t2) in ⊢ (? ? ? % → %); intros 1 (b); cases b; clear b;
+              simplify; intros; [1: destruct H5] apply H3; assumption
+          |2:apply H3;
+              generalize in match H4; clear H4; simplify;
+              generalize in match (refl_eq ? (cmp d t1 t2));
+              generalize in match (cmp d t1 t2) in ⊢ (? ? ? % → %); intros 1 (b); cases b; clear b;
+              simplify; intros; [1: destruct H6] assumption;]
+    |2: apply H; [ rewrite > uniq_tail in H1; cases (b2pT ? ? (andbP ? ?) H1); assumption]
+        simplify in H2; rewrite > Ett1 in H2; simplify in H2; assumption] 
+ | rewrite > H; [1:reflexivity|2: rewrite > uniq_tail in H1; cases (b2pT ? ? (andbP ? ?) H1); assumption]
+   simplify in H2; generalize in match H2; generalize in match (refl_eq ? (cmp d t t1));
+   generalize in match (cmp d t t1) in ⊢ (? ? ? % → %); intros 1 (b); cases b; clear b;
+   intros (E); 
+     [lapply (b2pT ? ? (eqP d ? ?) E); clear H; rewrite > Hletin in Ht;
+      rewrite > Ht in H3; destruct H3;
+     |assumption]]
+qed.
+ 
+definition sub_finType : ∀d:finType.∀p:d→bool.finType ≝
+  λd:finType.λp:d→bool. mk_finType (sub_eqType d p) (filter ? ? (if_p ? p) (enum d)) (sub_enumP d p).
+ 

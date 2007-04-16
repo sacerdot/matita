@@ -56,6 +56,11 @@ intros (b); cases b; [ constructor 1; reflexivity | constructor 2;]
 unfold Not; intros (H); destruct H;
 qed.
 
+lemma prove_reflect : ∀P:Prop.∀b:bool.
+  (b = true → P) → (b = false → ¬P) → reflect P b.
+intros 2 (P b); cases b; intros; [left|right] auto.
+qed.   
+  
 (* ### standard connectives/relations with reflection predicate ### *)
 
 definition negb : bool → bool ≝ λb.match b with [ true ⇒ false | false ⇒ true].
@@ -69,22 +74,16 @@ definition andb : bool → bool → bool ≝
   λa,b:bool. match a with [ true ⇒ b | false ⇒ false ].
   
 lemma andbP : ∀a,b:bool. reflect (a = true ∧ b = true) (andb a b).
-intros (a b); 
-generalize in match (refl_eq ? (andb a b));
-generalize in match (andb a b) in ⊢ (? ? ? % → %); intros 1 (c);
-cases c; intros (H); [ apply reflect_true | apply reflect_false ];
-generalize in match H; clear H;
-cases a; simplify; 
-[1: intros (E); rewrite > E; split; reflexivity
-|2: intros (ABS); destruct ABS
-|3: intros (E); rewrite > E; unfold Not; intros (ABS); decompose;  destruct H1
-|4: intros (E); unfold Not; intros (ABS); decompose; destruct H]
+intros (a b); apply prove_reflect; cases a; cases b; simplify; intros (H);
+[1,2,3,4: rewrite > H; split; reflexivity;
+|5,6,7,8: unfold Not; intros (H1); cases H1; 
+          [destruct H|destruct H3|destruct H2|destruct H2]]
 qed.
 
 lemma andbPF : ∀a,b:bool. reflect (a = false ∨ b = false) (negb (andb a b)).
-intros (a b); cases a; cases b; simplify;
-[1: apply reflect_false | *: apply reflect_true ]
-[unfold Not; intros (H); cases H; destruct H1|right|left|left] reflexivity;
+intros (a b); apply prove_reflect; cases a; cases b; simplify; intros (H);
+[1,2,3,4: rewrite > H; [1,2:right|3,4:left] reflexivity
+|5,6,7,8: unfold Not; intros (H1); [2,3,4: destruct H]; cases H1; destruct H2]
 qed.
 
 definition orb : bool → bool → bool ≝
