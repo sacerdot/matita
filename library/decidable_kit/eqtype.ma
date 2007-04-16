@@ -138,20 +138,18 @@ generalize in match (refl_eq ? (ocmp ? a b));
 generalize in match (ocmp ? a b) in ⊢ (? ? ? % → %); intros 1 (c);
 cases c; intros (H); [ apply reflect_true | apply reflect_false ];
 generalize in match H; clear H;
-cases a; cases b;
-[1: intros; reflexivity;
-|2,3: intros (H); destruct H;
-|4: intros (H); simplify in H; rewrite > (b2pT ? ? (eqP d ? ?) H); reflexivity; 
-    (* se faccio la rewrite diretta non tipa *)
-|5: intros (H H1); destruct H
-|6,7: unfold Not; intros (H H1); destruct H1
-|8: unfold Not; simplify; intros (H H1); 
+cases a; cases b; simplify; intros (H);
+[1: reflexivity;
+|2,3,5: destruct H;
+|4: rewrite > (b2pT ? ? (eqP d ? ?) H); reflexivity; 
+|6,7: unfold Not; intros (H1); destruct H1
+|8: unfold Not; intros (H1); 
     (* ancora injection non va *)
     cut (s = s1); [ rewrite > Hcut in H;  rewrite > cmp_refl in H;  destruct H;].
     change with (match (Some d s) with
                  [ None ⇒ s | (Some s) ⇒ s] = s1); rewrite > H1;
-                 simplify; reflexivity;
-] qed.
+                 simplify; reflexivity;] 
+qed.
 
 definition option_eqType : eqType → eqType ≝ λd:eqType.mk_eqType ? ? (ocmpP d).
 definition option_canonical_eqType : ∀d:eqType.d → option_eqType d ≝

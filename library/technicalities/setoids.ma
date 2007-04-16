@@ -155,9 +155,7 @@ definition morphism_theory_of_function :
   generalize in match f; clear f;
   elim In;
    [ unfold make_compatibility_goal;
-     simplify;
-     intros;
-     whd;
+     whd; intros;
      reflexivity
    | simplify;
      intro;
@@ -612,26 +610,21 @@ theorem apply_morphism_compatibility_Right2Left:
      generalize in match args1; clear args1;
      generalize in match m2; clear m2;
      generalize in match m1; clear m1;
-     elim t 0;
+     elim t 0; simplify;
       [ intros (T1 r Hs Hr m1 m2 args1 args2 H H1);
-        simplify in H;
-        simplify in H1;
-        simplify;
         apply H;
         exact H1
       | intros 8 (v T1 r Hr m1 m2 args1 args2);
-        cases v;
+        cases v; 
+        simplify;
         intros (H H1);
-        simplify in H1;
-        apply H;
-        exact H1
+        apply (H ? ? H1);
       | intros;
         apply H1;
         exact H2
       | intros 7 (v);
-        cases v;
+        cases v; simplify;
         intros (H H1);
-        simplify in H1;
         apply H;
         exact H1
       | intros;
@@ -726,10 +719,9 @@ theorem apply_morphism_compatibility_Left2Right:
         directed_relation_of_relation_class Left2Right ?
          (apply_morphism ? ? m1 args1)
          (apply_morphism ? ? m2 args2).
-  intro;
-  elim In;
-   [ simplify in m1 m2 args1 args2 ⊢ %;
-     change in H1 with
+  intro; 
+  elim In 0; simplify; intros;
+   [ change in H1 with
       (directed_relation_of_argument_class
         (get_rewrite_direction Left2Right t) t args1 args2);
      generalize in match H1; clear H1;
@@ -738,11 +730,8 @@ theorem apply_morphism_compatibility_Left2Right:
      generalize in match args1; clear args1;
      generalize in match m2; clear m2;
      generalize in match m1; clear m1;
-     elim t 0;
+     elim t 0; simplify;
       [ intros (T1 r Hs Hr m1 m2 args1 args2 H H1);
-        simplify in H;
-        simplify in H1;
-        simplify;
         apply H;
         exact H1
       | intros 8 (v T1 r Hr m1 m2 args1 args2);
@@ -793,7 +782,6 @@ theorem apply_morphism_compatibility_Left2Right:
      generalize in match m1; clear m1;
      elim t 0;
       [ intros (T1 r Hs Hr m1 m2 H1 t1 t3 H3);
-        simplify in H3;
         change in H1 with
          (∀x1,x2:T1.r x1 x2 → make_compatibility_goal_aux n Out (m1 x1) (m2 x2));
      | intro v;

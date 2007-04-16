@@ -32,8 +32,7 @@ definition count : ∀T : eqType.∀f : T → bool.∀l : list T. nat :=
 let rec mem (d : eqType) (x : d) (l : list d) on l : bool ≝
   match l with
   [ nil ⇒ false 
-  | cons y tl ⇒
-     match (cmp d x y) with [ true ⇒ true | false ⇒ mem d x tl]].
+  | cons y tl ⇒ orb (cmp d x y) (mem d x tl)].
 
 definition iota : nat → nat → list nat ≝
   λn,m. nat_rect (λ_.list ?) (nil ?) (λx,acc.cons ? (n+x) acc) m.
@@ -49,17 +48,12 @@ lemma list_ind2 :
   (∀tl1,tl2,hd1,hd2. P tl1 tl2 → P (hd1::tl1) (hd2::tl2)) → 
   P l1 l2.
 intros (T1 T2 l1 l2 P Hl Pnil Pcons);
-generalize in match Hl; clear Hl;
-generalize in match l2; clear l2;
-elim l1 1 (l2 x1); [ cases l2; intros (Hl); [assumption| destruct Hl]
-| intros 3 (tl1 IH l2); cases l2; [1: simplify; intros 1 (Hl); destruct Hl] 
-  intros 1 (Hl); apply Pcons;
-  apply IH; destruct Hl; 
-  (* XXX simplify in Hl non folda length *) 
-  assumption;]
+generalize in match Hl; clear Hl; generalize in match l2; clear l2;
+elim l1 1 (l2 x1); [ cases l2; intros (Hl); [assumption| destruct Hl]]
+intros 3 (tl1 IH l2); cases l2; [1: simplify; intros 1 (Hl); destruct Hl] 
+intros 1 (Hl); apply Pcons; apply IH; destruct Hl; assumption;
 qed.
-  
- 
+
 lemma eq_map : ∀A,B,f,g,l. (∀x.f x = g x) → map A B f l = map A B g l.
 intros (A B f g l Efg); elim l; simplify; [1: reflexivity ];
 rewrite > (Efg t); rewrite > H; reflexivity;  
@@ -76,13 +70,12 @@ lemma lcmp_length :
   ∀d:eqType.∀l1,l2:list d.
  lcmp ? l1 l2 = true → length ? l1 = length ? l2.
 intros 2 (d l1); elim l1 1 (l2 x1);
-[ cases l2; simplify; intros;[reflexivity|destruct H] 
-| intros 3 (tl1 IH l2); cases (l2); intros; [1:destruct H]
-  simplify; (* XXX la apply non fa simplify? *) 
-  apply congr_S; apply (IH l);
-  (* XXX qualcosa di enorme e' rotto! la regola di convertibilita?! *)
-  simplify in H;
-  letin H' ≝ (b2pT ? ? (andbP ? ?) H); decompose; assumption]
+[1: cases l2; simplify; intros; [reflexivity|destruct H] 
+|2: intros 3 (tl1 IH l2); cases (l2); intros; [1:destruct H]
+    simplify; (* XXX la apply non fa simplify? *) 
+    apply congr_S; apply (IH l);
+    (* XXX qualcosa di enorme e' rotto! la regola di convertibilita?! *)
+    simplify in H; cases (b2pT ? ? (andbP ? ?) H); assumption]
 qed.
 
 lemma lcmpP : ∀d:eqType.∀l1,l2:list d. eq_compatible (list d) l1 l2 (lcmp d l1 l2).
@@ -90,33 +83,26 @@ intros (d l1 l2);
 generalize in match (refl_eq ? (lcmp d l1 l2));
 generalize in match (lcmp d l1 l2) in ⊢ (? ? ? % → %); intros 1 (c);
 cases c; intros (H); [ apply reflect_true | apply reflect_false ]
-[ letin Hl≝ (lcmp_length ? ? ? H); clearbody Hl;
+[ lapply (lcmp_length ? ? ? H) as Hl;
   generalize in match H; clear H;
   apply (list_ind2 ? ? ? ? ? Hl); [1: intros; reflexivity]
-  simplify; intros (tl1 tl2 hd1 hd2 IH H);
-  letin H' ≝ (b2pT ? ? (andbP ? ?) H); decompose;
+  simplify; intros (tl1 tl2 hd1 hd2 IH H); cases (b2pT ? ? (andbP ? ?) H);
   rewrite > (IH H2); rewrite > (b2pT ? ? (eqP d ? ?) H1); reflexivity
 | generalize in match H; clear H; generalize in match l2; clear l2;
   elim l1 1 (l1 x1);
-   [ cases l1; [intros; destruct H]
-     unfold Not; intros; destruct H1;
+   [ cases l1; [intros; destruct H | unfold Not; intros; destruct H1;]
    | intros 3 (tl1 IH l2); cases l2;
      [ unfold Not; intros; destruct H1;
      | simplify;  intros;
-       letin H' ≝ (p2bT ? ? (negbP ?) H); clearbody H'; clear H;
-       letin H'' ≝ (b2pT ? ? (andbPF ? ?) H'); clearbody H''; clear H';
-       cases H''; clear H'';
-       [ intros; 
-         letin H' ≝ (b2pF ? ? (eqP d ? ?) H); clearbody H'; clear H;
-         (* XXX destruct H1; *)
+       cases (b2pT ? ? (andbPF ? ?) (p2bT ? ? (negbP ?) H)); clear H;
+       [ intros; lapply (b2pF ? ? (eqP d ? ?) H1) as H'; clear H1;
+         (* XXX destruct H; *)
          change in H' with (Not ((match (x1::tl1) with [nil⇒x1|(cons x1 _) ⇒ x1]) = s));
-         rewrite > H1 in H'; simplify in H'; apply H'; reflexivity;
-       | intros; 
-         letin H' ≝ (IH ? H); clearbody H';
+         rewrite > H in H'; simplify in H'; apply H'; reflexivity;
+       | intros; lapply (IH ? H1) as H';
          (* XXX destruct H1 *)
          change in H' with (Not ((match (x1::tl1) with [nil⇒tl1|(cons _ l) ⇒ l]) = l)); 
-         rewrite > H1 in H'; simplify in H'; apply H'; reflexivity;
-       ]]]]
+         rewrite > H in H'; simplify in H'; apply H'; reflexivity;]]]]
 qed.
     
 definition list_eqType : eqType → eqType ≝ λd:eqType.mk_eqType ? ? (lcmpP d).  
