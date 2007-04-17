@@ -84,21 +84,32 @@ CUR_FAIL=`printf "$SQLQFAILCOUNT" "$MARK" | $MYSQL | tail -n 1`
 OLD_FAIL=`printf "$SQLQFAILCOUNT" "$LASTMARK" | $MYSQL | tail -n 1`
 
 if [ "$CUR_FAIL" -gt "$OLD_FAIL" ]; then
+  TMP1=`mktemp`
+  TMP2=`mktemp`
+  TMP3=`mktemp`
+  printf "$SQLQFAIL" "$MARK" | $MYSQL > $TMP1
+  printf "$SQLQFAIL" "$LASTMARK" | $MYSQL > $TMP2
+  combine $TMP1 not $TMP2 > $TMP3
+
   cat <<EOT
 
   More broken tests detected (MARK $MARK vs MARK $LASTMARK)
   Is: $CUR_FAIL
   Was: $OLD_FAIL 
-  
-  Now broken:
-`printf "$SQLQFAIL" "$MARK" | $MYSQL`
 
-  Were broken:
-`printf "$SQLQFAIL" "$LASTMARK" | $MYSQL`
+  Tests that are broken in $MARK but where not broken in $LASTMARK:
+`cat $TMP3`
+
+  List of broken tests in mark $MARK: 
+`cat $TMP1`
+
+  List of broken tests in old mark $LASTMARK:
+`cat $TMP2`
   
   For details: $URL
 EOT
 
+  rm $TMP1 $TMP2 $TMP3
 fi
 
 cd $OLD
