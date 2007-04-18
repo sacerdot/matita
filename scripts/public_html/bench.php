@@ -6,11 +6,47 @@
 // query ::= name "@@@" sql
 //
 $limits = array("20","50","100");
+
+$query_last_mark = "select mark from bench order by mark desc limit 1;";
+$last_mark = "";
+function set_last_mark($a) {
+ global $last_mark;
+ foreach ($a as $k => $v) {
+   $last_mark = $v;
+ }
+}
+query($query_last_mark,"set_last_mark");
+
+$query_before_last_mark = "select mark from bench where mark <> '$last_mark' order by mark desc limit 1;";
+$before_last_mark = "";
+function set_before_last_mark($a) {
+ global $before_last_mark;
+ foreach ($a as $k => $v) {
+   $before_last_mark = $v;
+ }
+}
+query($query_before_last_mark,"set_before_last_mark");
   
 $quey_all = urlencode("
 Whole content:
 @@@
 select * from bench order by mark desc***");
+
+$query_diff = urlencode("
+Time diff:
+@@@
+select 
+  b1.test as test, b1.timeuser as oldtime, b2.timeuser as newtime, b1.compilation as comp, b1.options as opts,
+  (b2.timeuser - b1.timeuser) as diff
+from 
+  bench as b1, bench as b2 
+where 
+  b1.test = b2.test and 
+  b1.options = b2.options and
+  b1.compilation = b2.compilation and 
+  b1.mark = '$before_last_mark' and b2.mark= '$last_mark' and
+  ABS(b2.timeuser - b1.timeuser) > 100
+order by diff desc***");
 
 $query_fail = urlencode("
 Number of failures
@@ -218,6 +254,7 @@ function links_of($name,$q,$limits){
     <p>
       <ul>
       <? links_of("Broken tests",$query_fail,$limits) ?>
+      <? links_of("Time diff",$query_diff,$limits) ?>
       <? links_of("Garbage collector killer",$query_gc,$limits) ?>
       <? links_of("Auto performances",$query_auto,$limits) ?>
       <? links_of("Global performances",$query_csc,$limits) ?>
@@ -310,15 +347,18 @@ SQL (only one query, ';' if present must terminate the query, no characters allo
 <tr><td colspan="7">
 <textarea rows="10" cols="120" name="query"/>
 select 
-  b1.test as test, b1.timeuser as oldtime, b2.timeuser as newtime, b1.compilation as comp, b1.options as opts
+  b1.test as test, b1.timeuser as oldtime, b2.timeuser as newtime, b1.compilation as comp, b1.options as opts,
+  (b2.timeuser - b1.timeuser) as diff
 from 
   bench as b1, bench as b2 
 where 
   b1.test = b2.test and 
   b1.options = b2.options and
   b1.compilation = b2.compilation and 
-  b1.mark = '' and b2.mark= '' and
-  ABS(b1.timeuser - b2.timeuser) &gt; 100;</textarea>
+  b1.mark = '<?php echo $before_last_mark ?>' and b2.mark= '<?php echo $last_mark ?>' and
+  ABS(b2.timeuser - b1.timeuser) &lt; 100
+order by diff desc;
+</textarea>
 </td>
 </tr>
 <tr><td>
