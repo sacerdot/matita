@@ -15,7 +15,7 @@ SQLQMARK="select distinct mark from bench where mark like '%s%%' order by mark;"
 SQLQTIME="select SUM(timeuser) from bench where mark = '%s' group by mark;"
 SQLQFAILCOUNT="select count(distinct test) from bench where mark = '%s' and result = 'fail';"
 SQLQFAIL="select distinct test from bench where mark = '%s' and result = 'fail';"
-URL="http://mowgli.cs.unibo.it/~tassi/bench.php"
+URL="http://mowgli.cs.unibo.it/~sacerdot/bench.php"
 
 #initialization
 OLD=$PWD
