@@ -44,6 +44,7 @@ where
   b1.test = b2.test and 
   b1.options = b2.options and
   b1.compilation = b2.compilation and 
+  b1.result = b2.result and 
   b1.mark = '$before_last_mark' and b2.mark= '$last_mark' and
   ABS(b2.timeuser - b1.timeuser) > 100
 order by diff desc***");
@@ -355,6 +356,7 @@ where
   b1.test = b2.test and 
   b1.options = b2.options and
   b1.compilation = b2.compilation and 
+  b1.result = b2.result and 
   b1.mark = '<?php echo $before_last_mark ?>' and b2.mark= '<?php echo $last_mark ?>' and
   ABS(b2.timeuser - b1.timeuser) &lt; 100
 order by diff desc;
