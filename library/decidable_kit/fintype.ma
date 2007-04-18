@@ -46,7 +46,7 @@ rewrite < (leb_eqb x n); rewrite > H1; reflexivity;
 qed.
 
 lemma mem_filter :
-  ∀d1,d2:eqType.(*∀y:d1.*)∀x:d2.∀l:list d1.∀p:d1 → option d2.
+  ∀d1,d2:eqType.∀x:d2.∀l:list d1.∀p:d1 → option d2.
   (∀y.mem d1 y l = true → 
     match (p y) with [None ⇒ false | (Some q) ⇒ cmp d2 x q] = false) →
   mem d2 x (filter d1 d2 p l) = false.

@@ -96,13 +96,9 @@ cases c; intros (H); [ apply reflect_true | apply reflect_false ]
      | simplify;  intros;
        cases (b2pT ? ? (andbPF ? ?) (p2bT ? ? (negbP ?) H)); clear H;
        [ intros; lapply (b2pF ? ? (eqP d ? ?) H1) as H'; clear H1;
-         (* XXX destruct H; *)
-         change in H' with (Not ((match (x1::tl1) with [nil⇒x1|(cons x1 _) ⇒ x1]) = s));
-         rewrite > H in H'; simplify in H'; apply H'; reflexivity;
-       | intros; lapply (IH ? H1) as H';
-         (* XXX destruct H1 *)
-         change in H' with (Not ((match (x1::tl1) with [nil⇒tl1|(cons _ l) ⇒ l]) = l)); 
-         rewrite > H in H'; simplify in H'; apply H'; reflexivity;]]]]
+         destruct H; rewrite > Hcut in H'; apply H'; reflexivity;
+       | intros; lapply (IH ? H1) as H'; destruct H;
+         rewrite > Hcut1 in H'; apply H'; reflexivity;]]]]
 qed.
     
 definition list_eqType : eqType → eqType ≝ λd:eqType.mk_eqType ? ? (lcmpP d).  

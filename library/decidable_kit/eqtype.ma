@@ -102,11 +102,8 @@ cases b; cases x (s ps); cases y (t pt); simplify; intros (Hcmp);
     reflexivity;
   | cases (H (b2pT ? ? (eqP d s t) Hcmp))
   ]
-| constructor 2; unfold Not; intros (H);
-  (* XXX destruct H; *)
-  change in Hcmp with (cmp d (match {?,ps} with [(mk_sigma s _)⇒s]) t = false);
-  rewrite > H in Hcmp; simplify in Hcmp; rewrite > cmp_refl in Hcmp; destruct Hcmp;
-]
+| constructor 2; unfold Not; intros (H); destruct H; 
+  rewrite > Hcut in Hcmp; rewrite > cmp_refl in Hcmp; destruct Hcmp;] 
 qed. 
 
 definition sub_eqType ≝ λd : eqType.λp. mk_eqType ? ? (sigma_eq_dec d p).
@@ -143,12 +140,8 @@ cases a; cases b; simplify; intros (H);
 |2,3,5: destruct H;
 |4: rewrite > (b2pT ? ? (eqP d ? ?) H); reflexivity; 
 |6,7: unfold Not; intros (H1); destruct H1
-|8: unfold Not; intros (H1); 
-    (* ancora injection non va *)
-    cut (s = s1); [ rewrite > Hcut in H;  rewrite > cmp_refl in H;  destruct H;].
-    change with (match (Some d s) with
-                 [ None ⇒ s | (Some s) ⇒ s] = s1); rewrite > H1;
-                 simplify; reflexivity;] 
+|8: unfold Not; intros (H1); destruct H1; 
+    rewrite > Hcut in H;  rewrite > cmp_refl in H; destruct H;]
 qed.
 
 definition option_eqType : eqType → eqType ≝ λd:eqType.mk_eqType ? ? (ocmpP d).
