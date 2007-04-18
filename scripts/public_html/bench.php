@@ -32,7 +32,7 @@ Whole content:
 @@@
 select * from bench order by mark desc***");
 
-$query_diff = urlencode("
+$query_time_diff = urlencode("
 Time diff:
 @@@
 select 
@@ -48,6 +48,22 @@ where
   b1.mark = '$before_last_mark' and b2.mark= '$last_mark' and
   ABS(b2.timeuser - b1.timeuser) > 100
 order by diff desc***");
+
+$query_result_diff = urlencode("
+Result diff:
+@@@
+select 
+  b1.test as test, b1.result as oldresult, b2.result as newresult, b1.timeuser as oldtime, b2.timeuser as newtime, b1.compilation as comp, b1.options as opts,
+  (b2.timeuser - b1.timeuser) as diff
+from 
+  bench as b1, bench as b2 
+where 
+  b1.test = b2.test and 
+  b1.options = b2.options and
+  b1.compilation = b2.compilation and 
+  b1.result <> b2.result and 
+  b1.mark = '$before_last_mark' and b2.mark= '$last_mark'
+order by test desc***");
 
 $query_fail = urlencode("
 Number of failures
@@ -255,7 +271,8 @@ function links_of($name,$q,$limits){
     <p>
       <ul>
       <? links_of("Broken tests",$query_fail,$limits) ?>
-      <? links_of("Time diff",$query_diff,$limits) ?>
+      <? links_of("Time diff",$query_time_diff,$limits) ?>
+      <? links_of("Result diff",$query_result_diff,$limits) ?>
       <? links_of("Garbage collector killer",$query_gc,$limits) ?>
       <? links_of("Auto performances",$query_auto,$limits) ?>
       <? links_of("Global performances",$query_csc,$limits) ?>
