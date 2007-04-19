@@ -17,6 +17,16 @@ function set_last_mark($a) {
 }
 query($query_last_mark,"set_last_mark");
 
+$query_last_svn_mark = "select revision from bench_svn where mark='$last_mark';";
+$last_svn_mark = "";
+function set_last_svn_mark($a) {
+ global $last_svn_mark;
+ foreach ($a as $k => $v) {
+   $last_svn_mark = trim($v);
+ }
+}
+query($query_last_svn_mark,"set_last_svn_mark");
+
 $query_before_last_mark = "select mark from bench where mark <> '$last_mark' order by mark desc limit 1;";
 $before_last_mark = "";
 function set_before_last_mark($a) {
@@ -26,6 +36,17 @@ function set_before_last_mark($a) {
  }
 }
 query($query_before_last_mark,"set_before_last_mark");
+
+$query_before_last_svn_mark = "select revision from bench_svn where mark='$before_last_mark';";
+$before_last_svn_mark = "";
+function set_before_last_svn_mark($a) {
+ global $before_last_svn_mark;
+ foreach ($a as $k => $v) {
+   $before_last_svn_mark = trim($v);
+ }
+}
+query($query_before_last_svn_mark,"set_before_last_svn_mark");
+
   
 $quey_all = urlencode("
 Whole content:
@@ -259,6 +280,17 @@ function links_of($name,$q,$limits){
   echo "</li>";
 }
 
+function last_commits() {
+ global $last_svn_mark;
+ global $before_last_svn_mark;
+ $query = "svn log -r$last_svn_mark:$before_last_svn_mark -v svn://mowgli.cs.unibo.it/trunk/helm/software";
+ echo $query;
+ exec($query,$res);
+ echo "<pre>";
+ foreach ($res as $k => $v) { echo "$v\n"; }
+ echo "</pre>";
+}
+
 ?>
 
 <html>
@@ -267,6 +299,8 @@ function links_of($name,$q,$limits){
   </head>
   <body>
     <h1>QUERY the benchmark system</h1>
+    <h2>Last Commits</h2>
+    <? last_commits() ?>
     <h2>Common Queries</h2>
     <p>
       <ul>
@@ -357,7 +391,13 @@ function links_of($name,$q,$limits){
 <table>
 <tr><td>'bench' table description:</td></tr>
 </tr>
-<? query("describe bench","printer"); ?>
+<? query("describe bench","printer"); $i=0; ?>
+</tr>
+<tr><td></td></tr>
+<tr><td></td></tr>
+<tr><td>'bench_svn' table description:</td></tr>
+</tr>
+<? query("describe bench_svn","printer"); $i=0; ?>
 </tr>
 <tr><td></td></tr>
 <tr><td colspan="7">
