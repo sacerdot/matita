@@ -75,7 +75,12 @@ let initialize () =
           match root with 
           | None -> ()
           | Some root -> 
-              developments := {root = root ; name = name} :: !developments) 
+              developments := {root = root ; name = name} :: !developments;
+              let inc = Helm_registry.get_list 
+                Helm_registry.string "matita.includes" in
+              Helm_registry.set_list Helm_registry.of_string 
+                ~key:"matita.includes" ~value:(inc @ [root])
+          ) 
       l
 
 (* finds the makefile path for development devel *)
