@@ -210,6 +210,7 @@ distclean: clean
 TEST_DIRS = 				\
 	legacy                          \
 	library 			\
+	library_auto 			\
 	tests 				\
 	dama				\
 	contribs/CoRN	 	        \
