@@ -96,12 +96,11 @@ let development_for_dir dir =
       false
     else
       let pref = String.sub d2 0 len1 in
-      pref = d1
+      pref = d1 && d2.[len1] = '/'
   in
-  (* it must be unique *)
   try
     Some (List.find (fun d -> is_prefix_of d.root dir) !developments)
-  with Not_found -> None
+  with Not_found | Failure _ -> None
 
 let development_for_name name =
   try 
