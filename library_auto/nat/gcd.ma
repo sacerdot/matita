@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/nat/gcd".
+set "baseuri" "cic:/matita/library_auto/nat/gcd".
 
 include "nat/primes.ma".
 

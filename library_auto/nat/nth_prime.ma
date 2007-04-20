@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/nat/nth_prime".
+set "baseuri" "cic:/matita/library_auto/nat/nth_prime".
 
 include "nat/primes.ma".
 include "nat/lt_arith.ma".

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/Q/q".
+set "baseuri" "cic:/matita/library_auto/Q/q".
 
 include "Z/compare.ma".
 include "Z/plus.ma".

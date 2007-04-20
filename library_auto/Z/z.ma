@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/Z/z".
+set "baseuri" "cic:/matita/library_auto/Z/z".
 
 include "datatypes/bool.ma".
 include "nat/nat.ma".
@@ -27,7 +27,7 @@ definition Z_of_nat \def
 [ O \Rightarrow  OZ 
 | (S n)\Rightarrow  pos n].
 
-coercion cic:/matita/Z/z/Z_of_nat.con.
+coercion cic:/matita/library_auto/Z/z/Z_of_nat.con.
 
 definition neg_Z_of_nat \def
 \lambda n. match n with

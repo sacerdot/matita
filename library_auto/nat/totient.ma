@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/nat/totient".
+set "baseuri" "cic:/matita/library_auto/nat/totient".
 
 include "nat/count.ma".
 include "nat/chinese_reminder.ma".

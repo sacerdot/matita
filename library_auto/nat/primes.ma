@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/nat/primes".
+set "baseuri" "cic:/matita/library_auto/nat/primes".
 
 include "nat/div_and_mod.ma".
 include "nat/minimization.ma".
@@ -22,9 +22,9 @@ include "nat/factorial.ma".
 inductive divides (n,m:nat) : Prop \def
 witness : \forall p:nat.m = times n p \to divides n m.
 
-interpretation "divides" 'divides n m = (cic:/matita/nat/primes/divides.ind#xpointer(1/1) n m).
+interpretation "divides" 'divides n m = (cic:/matita/library_auto/nat/primes/divides.ind#xpointer(1/1) n m).
 interpretation "not divides" 'ndivides n m =
- (cic:/matita/logic/connectives/Not.con (cic:/matita/nat/primes/divides.ind#xpointer(1/1) n m)).
+ (cic:/matita/logic/connectives/Not.con (cic:/matita/library_auto/nat/primes/divides.ind#xpointer(1/1) n m)).
 
 theorem reflexive_divides : reflexive nat divides.
 unfold reflexive.

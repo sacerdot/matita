@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/nat/congruence".
+set "baseuri" "cic:/matita/library_auto/nat/congruence".
 
 include "nat/relevant_equations.ma".
 include "nat/primes.ma".
@@ -24,7 +24,7 @@ definition congruent: nat \to nat \to nat \to Prop \def
 \lambda n,m,p:nat. mod n p = mod m p.
 
 interpretation "congruent" 'congruent n m p =
-  (cic:/matita/nat/congruence/congruent.con n m p).
+  (cic:/matita/library_auto/nat/congruence/congruent.con n m p).
 
 notation < "hvbox(n break \cong\sub p m)"
   (*non associative*) with precedence 45

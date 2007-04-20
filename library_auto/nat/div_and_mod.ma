@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/nat/div_and_mod".
+set "baseuri" "cic:/matita/library_auto/nat/div_and_mod".
 
 include "datatypes/constructors.ma".
 include "nat/minus.ma".
@@ -32,7 +32,7 @@ match m with
 | (S p) \Rightarrow mod_aux n n p]. 
 
 interpretation "natural remainder" 'module x y =
-  (cic:/matita/nat/div_and_mod/mod.con x y).
+  (cic:/matita/library_auto/nat/div_and_mod/mod.con x y).
 
 let rec div_aux p m n : nat \def
 match (leb m n) with
@@ -49,7 +49,7 @@ match m with
 | (S p) \Rightarrow div_aux n n p]. 
 
 interpretation "natural divide" 'divide x y =
-  (cic:/matita/nat/div_and_mod/div.con x y).
+  (cic:/matita/library_auto/nat/div_and_mod/div.con x y).
 
 theorem le_mod_aux_m_m: 
 \forall p,n,m. n \leq p \to (mod_aux p n m) \leq m.

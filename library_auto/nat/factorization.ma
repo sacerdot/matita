@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/nat/factorization".
+set "baseuri" "cic:/matita/library_auto/nat/factorization".
 
 include "nat/ord.ma".
 include "nat/gcd.ma".

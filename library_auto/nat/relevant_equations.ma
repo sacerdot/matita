@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/nat/relevant_equations".
+set "baseuri" "cic:/matita/library_auto/nat/relevant_equations".
 
 include "nat/times.ma".
 include "nat/minus.ma".

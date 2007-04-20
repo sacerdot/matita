@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/Z/times".
+set "baseuri" "cic:/matita/library_auto/Z/times".
 
 include "nat/lt_arith.ma".
 include "Z/plus.ma".
@@ -33,7 +33,7 @@ definition Ztimes :Z \to Z \to Z \def
          | (neg n) \Rightarrow (pos (pred ((S m) * (S n))))]].
          
 (*CSC: the URI must disappear: there is a bug now *)
-interpretation "integer times" 'times x y = (cic:/matita/Z/times/Ztimes.con x y).
+interpretation "integer times" 'times x y = (cic:/matita/library_auto/Z/times/Ztimes.con x y).
 
 theorem Ztimes_z_OZ:  \forall z:Z. z*OZ = OZ.
 intro.

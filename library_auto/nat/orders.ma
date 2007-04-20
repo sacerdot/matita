@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/nat/orders".
+set "baseuri" "cic:/matita/library_auto/nat/orders".
 
 include "nat/nat.ma".
 include "higher_order_defs/ordering.ma".
@@ -23,35 +23,35 @@ inductive le (n:nat) : nat \to Prop \def
   | le_S : \forall m:nat. le n m \to le n (S m).
 
 (*CSC: the URI must disappear: there is a bug now *)
-interpretation "natural 'less or equal to'" 'leq x y = (cic:/matita/nat/orders/le.ind#xpointer(1/1) x y).
+interpretation "natural 'less or equal to'" 'leq x y = (cic:/matita/library_auto/nat/orders/le.ind#xpointer(1/1) x y).
 (*CSC: the URI must disappear: there is a bug now *)
 interpretation "natural 'neither less nor equal to'" 'nleq x y =
   (cic:/matita/logic/connectives/Not.con
-    (cic:/matita/nat/orders/le.ind#xpointer(1/1) x y)).
+    (cic:/matita/library_auto/nat/orders/le.ind#xpointer(1/1) x y)).
 
 definition lt: nat \to nat \to Prop \def
 \lambda n,m:nat.(S n) \leq m.
 
 (*CSC: the URI must disappear: there is a bug now *)
-interpretation "natural 'less than'" 'lt x y = (cic:/matita/nat/orders/lt.con x y).
+interpretation "natural 'less than'" 'lt x y = (cic:/matita/library_auto/nat/orders/lt.con x y).
 (*CSC: the URI must disappear: there is a bug now *)
 interpretation "natural 'not less than'" 'nless x y =
-  (cic:/matita/logic/connectives/Not.con (cic:/matita/nat/orders/lt.con x y)).
+  (cic:/matita/logic/connectives/Not.con (cic:/matita/library_auto/nat/orders/lt.con x y)).
 
 definition ge: nat \to nat \to Prop \def
 \lambda n,m:nat.m \leq n.
 
 (*CSC: the URI must disappear: there is a bug now *)
-interpretation "natural 'greater or equal to'" 'geq x y = (cic:/matita/nat/orders/ge.con x y).
+interpretation "natural 'greater or equal to'" 'geq x y = (cic:/matita/library_auto/nat/orders/ge.con x y).
 
 definition gt: nat \to nat \to Prop \def
 \lambda n,m:nat.m<n.
 
 (*CSC: the URI must disappear: there is a bug now *)
-interpretation "natural 'greater than'" 'gt x y = (cic:/matita/nat/orders/gt.con x y).
+interpretation "natural 'greater than'" 'gt x y = (cic:/matita/library_auto/nat/orders/gt.con x y).
 (*CSC: the URI must disappear: there is a bug now *)
 interpretation "natural 'not greater than'" 'ngtr x y =
-  (cic:/matita/logic/connectives/Not.con (cic:/matita/nat/orders/gt.con x y)).
+  (cic:/matita/logic/connectives/Not.con (cic:/matita/library_auto/nat/orders/gt.con x y)).
 
 theorem transitive_le : transitive nat le.
 unfold transitive.

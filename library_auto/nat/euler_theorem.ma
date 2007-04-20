@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/nat/euler_theorem".
+set "baseuri" "cic:/matita/library_auto/nat/euler_theorem".
 
 include "nat/map_iter_p.ma".
 include "nat/totient.ma".

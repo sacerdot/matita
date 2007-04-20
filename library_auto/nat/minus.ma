@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 
-set "baseuri" "cic:/matita/nat/minus".
+set "baseuri" "cic:/matita/library_auto/nat/minus".
 
 include "nat/le_arith.ma".
 include "nat/compare.ma".
@@ -27,7 +27,7 @@ let rec minus n m \def
         | (S q) \Rightarrow minus p q ]].
 
 (*CSC: the URI must disappear: there is a bug now *)
-interpretation "natural minus" 'minus x y = (cic:/matita/nat/minus/minus.con x y).
+interpretation "natural minus" 'minus x y = (cic:/matita/library_auto/nat/minus/minus.con x y).
 
 theorem minus_n_O: \forall n:nat.n=n-O.
 intros.

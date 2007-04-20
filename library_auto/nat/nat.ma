@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/nat/nat".
+set "baseuri" "cic:/matita/library_auto/nat/nat".
 
 include "higher_order_defs/functions.ma".
 

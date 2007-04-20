@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/Z/orders".
+set "baseuri" "cic:/matita/library_auto/Z/orders".
 
 include "Z/z.ma".
 include "nat/orders.ma".
@@ -37,10 +37,10 @@ definition Zle : Z \to Z \to Prop \def
     | (neg m) \Rightarrow m \leq n ]].
 
 (*CSC: the URI must disappear: there is a bug now *)
-interpretation "integer 'less or equal to'" 'leq x y = (cic:/matita/Z/orders/Zle.con x y).
+interpretation "integer 'less or equal to'" 'leq x y = (cic:/matita/library_auto/Z/orders/Zle.con x y).
 (*CSC: the URI must disappear: there is a bug now *)
 interpretation "integer 'neither less nor equal to'" 'nleq x y =
-  (cic:/matita/logic/connectives/Not.con (cic:/matita/Z/orders/Zle.con x y)).
+  (cic:/matita/logic/connectives/Not.con (cic:/matita/library_auto/Z/orders/Zle.con x y)).
 
 definition Zlt : Z \to Z \to Prop \def
 \lambda x,y:Z.
@@ -62,10 +62,10 @@ definition Zlt : Z \to Z \to Prop \def
     | (neg m) \Rightarrow m<n ]].
     
 (*CSC: the URI must disappear: there is a bug now *)
-interpretation "integer 'less than'" 'lt x y = (cic:/matita/Z/orders/Zlt.con x y).
+interpretation "integer 'less than'" 'lt x y = (cic:/matita/library_auto/Z/orders/Zlt.con x y).
 (*CSC: the URI must disappear: there is a bug now *)
 interpretation "integer 'not less than'" 'nless x y =
-  (cic:/matita/logic/connectives/Not.con (cic:/matita/Z/orders/Zlt.con x y)).
+  (cic:/matita/logic/connectives/Not.con (cic:/matita/library_auto/Z/orders/Zlt.con x y)).
 
 theorem irreflexive_Zlt: irreflexive Z Zlt.
 unfold irreflexive.

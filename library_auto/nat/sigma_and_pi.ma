@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/nat/sigma_and_pi".
+set "baseuri" "cic:/matita/library_auto/nat/sigma_and_pi".
 
 include "nat/factorial.ma".
 include "nat/exp.ma".

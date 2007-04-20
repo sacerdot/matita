@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/nat/factorial".
+set "baseuri" "cic:/matita/library_auto/nat/factorial".
 
 include "nat/le_arith.ma".
 
@@ -21,7 +21,7 @@ let rec fact n \def
   [ O \Rightarrow (S O)
   | (S m) \Rightarrow (S m)*(fact m)].
 
-interpretation "factorial" 'fact n = (cic:/matita/nat/factorial/fact.con n).
+interpretation "factorial" 'fact n = (cic:/matita/library_auto/nat/factorial/fact.con n).
 
 theorem le_SO_fact : \forall n. (S O) \le n!.
 intro.

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/nat/fermat_little_theorem".
+set "baseuri" "cic:/matita/library_auto/nat/fermat_little_theorem".
 
 include "nat/exp.ma".
 include "nat/gcd.ma".

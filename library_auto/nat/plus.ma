@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/nat/plus".
+set "baseuri" "cic:/matita/library_auto/nat/plus".
 
 include "nat/nat.ma".
 
@@ -22,7 +22,7 @@ let rec plus n m \def
  | (S p) \Rightarrow S (plus p m) ].
 
 (*CSC: the URI must disappear: there is a bug now *)
-interpretation "natural plus" 'plus x y = (cic:/matita/nat/plus/plus.con x y).
+interpretation "natural plus" 'plus x y = (cic:/matita/library_auto/nat/plus/plus.con x y).
 
 theorem plus_n_O: \forall n:nat. n = n+O.
 intros.elim n

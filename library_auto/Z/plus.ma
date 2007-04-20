@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/Z/plus".
+set "baseuri" "cic:/matita/library_auto/Z/plus".
 
 include "Z/z.ma".
 include "nat/minus.ma".
@@ -41,7 +41,7 @@ definition Zplus :Z \to Z \to Z \def
          | (neg n) \Rightarrow (neg (pred ((S m)+(S n))))] ].
 
 (*CSC: the URI must disappear: there is a bug now *)
-interpretation "integer plus" 'plus x y = (cic:/matita/Z/plus/Zplus.con x y).
+interpretation "integer plus" 'plus x y = (cic:/matita/library_auto/Z/plus/Zplus.con x y).
          
 theorem Zplus_z_OZ:  \forall z:Z. z+OZ = z.
 intro.
@@ -409,7 +409,7 @@ definition Zopp : Z \to Z \def
 | (neg n) \Rightarrow (pos n) ].
 
 (*CSC: the URI must disappear: there is a bug now *)
-interpretation "integer unary minus" 'uminus x = (cic:/matita/Z/plus/Zopp.con x).
+interpretation "integer unary minus" 'uminus x = (cic:/matita/library_auto/Z/plus/Zopp.con x).
 
 theorem Zopp_Zplus: \forall x,y:Z. -(x+y) = -x + -y.
 intros.
@@ -467,4 +467,4 @@ qed.
 (* minus *)
 definition Zminus : Z \to Z \to Z \def \lambda x,y:Z. x + (-y).
 
-interpretation "integer minus" 'minus x y = (cic:/matita/Z/plus/Zminus.con x y).
+interpretation "integer minus" 'minus x y = (cic:/matita/library_auto/Z/plus/Zminus.con x y).

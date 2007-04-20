@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/nat/minimization".
+set "baseuri" "cic:/matita/library_auto/nat/minimization".
 
 include "nat/minus.ma".
 

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/nat/le_arith".
+set "baseuri" "cic:/matita/library_auto/nat/le_arith".
 
 include "nat/times.ma".
 include "nat/orders.ma".

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/nat/ord".
+set "baseuri" "cic:/matita/library_auto/nat/ord".
 
 include "datatypes/constructors.ma".
 include "nat/exp.ma".

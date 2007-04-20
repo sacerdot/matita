@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/nat/lt_arith".
+set "baseuri" "cic:/matita/library_auto/nat/lt_arith".
 
 include "nat/div_and_mod.ma".
 

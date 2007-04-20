@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/nat/compare".
+set "baseuri" "cic:/matita/library_auto/nat/compare".
 
 include "datatypes/bool.ma".
 include "datatypes/compare.ma".

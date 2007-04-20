@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/nat/exp".
+set "baseuri" "cic:/matita/library_auto/nat/exp".
 
 include "nat/div_and_mod.ma".
 
@@ -21,7 +21,7 @@ let rec exp n m on m\def
  [ O \Rightarrow (S O)
  | (S p) \Rightarrow (times n (exp n p)) ].
 
-interpretation "natural exponent" 'exp a b = (cic:/matita/nat/exp/exp.con a b).
+interpretation "natural exponent" 'exp a b = (cic:/matita/library_auto/nat/exp/exp.con a b).
 
 theorem exp_plus_times : \forall n,p,q:nat. 
 n \sup (p + q) = (n \sup p) * (n \sup q).

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/nat/permutation".
+set "baseuri" "cic:/matita/library_auto/nat/permutation".
 
 include "nat/compare.ma".
 include "nat/sigma_and_pi.ma".
@@ -116,7 +116,7 @@ notation < "(❲i \atop j❳)n"
 for @{ 'transposition $i $j $n}.
 
 interpretation "natural transposition" 'transposition i j n =
-  (cic:/matita/nat/permutation/transpose.con i j n).
+  (cic:/matita/library_auto/nat/permutation/transpose.con i j n).
 
 lemma transpose_i_j_i: \forall i,j:nat. transpose i j i = j.
 intros.

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/nat/chinese_reminder".
+set "baseuri" "cic:/matita/library_auto/nat/chinese_reminder".
 
 include "nat/exp.ma".
 include "nat/gcd.ma".

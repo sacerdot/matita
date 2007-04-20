@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/nat/map_iter_p.ma".
+set "baseuri" "cic:/matita/library_auto/nat/map_iter_p.ma".
 
 include "nat/permutation.ma".
 include "nat/count.ma".

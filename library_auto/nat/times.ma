@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/nat/times".
+set "baseuri" "cic:/matita/library_auto/nat/times".
 
 include "nat/plus.ma".
 
@@ -22,7 +22,7 @@ let rec times n m \def
  | (S p) \Rightarrow m+(times p m) ].
 
 (*CSC: the URI must disappear: there is a bug now *)
-interpretation "natural times" 'times x y = (cic:/matita/nat/times/times.con x y).
+interpretation "natural times" 'times x y = (cic:/matita/library_auto/nat/times/times.con x y).
 
 theorem times_n_O: \forall n:nat. O = n*O.
 intros.elim n

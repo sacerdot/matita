@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/nat/count".
+set "baseuri" "cic:/matita/library_auto/nat/count".
 
 include "nat/relevant_equations.ma".
 include "nat/sigma_and_pi.ma".
