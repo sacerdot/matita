@@ -103,7 +103,6 @@
     <keyword>fourier</keyword>
     <keyword>fwd</keyword>
     <keyword>generalize</keyword>
-    <keyword>goal</keyword>
     <keyword>id</keyword>
     <keyword>intro</keyword>
     <keyword>intros</keyword>
@@ -165,11 +164,11 @@
     <keyword>solve</keyword>
     <keyword>do</keyword>
     <keyword>repeat</keyword>
-    <keyword>end</keyword>
     <keyword>first</keyword>
     <keyword>focus</keyword>
     <keyword>unfocus</keyword>
     <keyword>progress</keyword>
+    <keyword>skip</keyword>
   </keyword-list>
 
 
