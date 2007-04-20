@@ -101,7 +101,7 @@ let development_for_dir dir =
       false
     else
       let pref = String.sub d2 0 len1 in
-      pref = d1 && d2.[len1] = '/'
+      pref = d1 && (len1 = len2 || d2.[len1] = '/')
   in
   try
     Some (List.find (fun d -> is_prefix_of d.root dir) !developments)
