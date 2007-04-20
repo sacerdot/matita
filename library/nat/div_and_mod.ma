@@ -215,11 +215,12 @@ qed.
 (* some properties of div and mod *)
 theorem div_times: \forall n,m:nat. ((S n)*m) / (S n) = m.
 intros.
-apply (div_mod_spec_to_eq ((S n)*m) (S n) ? ? ? O).
-goal 15. (* ?11 is closed with the following tactics *)
-apply div_mod_spec_div_mod.
-unfold lt.apply le_S_S.apply le_O_n.
-apply div_mod_spec_times.
+apply (div_mod_spec_to_eq ((S n)*m) (S n) ? ? ? O);
+[2: apply div_mod_spec_div_mod.
+    unfold lt.apply le_S_S.apply le_O_n.
+|   skip
+|   apply div_mod_spec_times
+]
 qed.
 
 theorem div_n_n: \forall n:nat. O < n \to n / n = S O.

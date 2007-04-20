@@ -60,14 +60,6 @@ let first_line s =
     String.sub s 0 nl_pos
   with Not_found -> s
 
-  (** creates a statement AST for the Goal tactic, e.g. "goal 7" *)
-let goal_ast n =
-  let module A = GrafiteAst in
-  let loc = HExtlib.dummy_floc in
-  A.Executable (loc, A.Tactical (loc,
-    A.Tactic (loc, A.Goal (loc, n)),
-    Some (A.Dot loc)))
-
 type guistuff = {
   mathviewer:MatitaTypes.mathViewer;
   urichooser: UriManager.uri list -> UriManager.uri list;
@@ -255,10 +247,9 @@ let rec eval_macro include_paths (buffer : GText.buffer) guistuff lexicon_status
       | [uri] -> 
           let suri = UriManager.string_of_uri uri in
           let ast loc =
-            TA.Executable (loc, (TA.Tactical (loc,
-              TA.Tactic (loc,
-                TA.Apply (loc, CicNotationPt.Uri (suri, None))),
-                Some (TA.Dot loc)))) in
+            TA.Executable (loc, (TA.Tactic (loc,
+             Some (TA.Apply (loc, CicNotationPt.Uri (suri, None))),
+             TA.Dot loc))) in
           let text =
            comment parsed_text ^ "\n" ^
             pp_eager_statement_ast (ast HExtlib.dummy_floc) in

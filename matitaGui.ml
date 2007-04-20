@@ -973,8 +973,8 @@ class gui () =
         if (MatitaScript.current ())#onGoingProof () then
           (MatitaScript.current ())#advance
             ~statement:("\n"
-              ^ GrafiteAstPp.pp_tactical ~term_pp:CicNotationPp.pp_term
-                ~lazy_term_pp:CicNotationPp.pp_term (A.Tactic (loc, ast)))
+              ^ GrafiteAstPp.pp_tactic ~term_pp:CicNotationPp.pp_term
+                ~lazy_term_pp:CicNotationPp.pp_term ast)
             ()
       in
       let tac_w_term ast _ =

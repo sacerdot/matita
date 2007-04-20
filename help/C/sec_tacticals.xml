@@ -251,7 +251,7 @@
        <entry/>
        <entry>|</entry>
        <entry><emphasis role="bold">do</emphasis> &nat;
-        &LCFtactical; <emphasis role="bold">end</emphasis>
+        &LCFtactical;
        </entry>
        <entry>&TODO;</entry>
       </row>
@@ -259,7 +259,7 @@
        <entry/>
        <entry>|</entry>
        <entry><emphasis role="bold">repeat</emphasis>
-        &LCFtactical; <emphasis role="bold">end</emphasis>
+        &LCFtactical;
        </entry>
        <entry>&TODO;</entry>
       </row>

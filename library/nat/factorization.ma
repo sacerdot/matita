@@ -399,7 +399,6 @@ apply (not_eq_O_S (S m1)).
 rewrite > Hcut.rewrite < H1.rewrite < times_n_O.reflexivity.
 apply le_to_or_lt_eq.apply le_O_n.
 (* prova del cut *)
-goal 20.
 apply (p_ord_aux_to_exp (S(S m1))).
 apply lt_O_nth_prime_n.
 assumption.

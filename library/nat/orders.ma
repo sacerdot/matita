@@ -182,8 +182,8 @@ qed.
 theorem le_n_O_to_eq : \forall n:nat. n \leq O \to O=n.
 intro.elim n.reflexivity.
 apply False_ind.
-apply not_le_Sn_O.
-goal 17. apply H1.
+apply not_le_Sn_O;
+[2: apply H1 | skip].
 qed.
 
 theorem le_n_O_elim: \forall n:nat.n \leq O \to \forall P: nat \to Prop.

@@ -140,8 +140,8 @@ intros 2.
 apply (nat_elim2 (\lambda n,m.n \leq m \to n-m = O)).
 intros.simplify.reflexivity.
 intros.apply False_ind.
-apply not_le_Sn_O.
-goal 13.apply H.
+apply not_le_Sn_O;
+[2: apply H | skip].
 intros.
 simplify.apply H.apply le_S_S_to_le. apply H1.
 qed.

@@ -303,9 +303,9 @@ object (self)
         "\n" ^
         GrafiteAstPp.pp_executable ~term_pp:(fun s -> s)
           ~lazy_term_pp:(fun _ -> assert false) ~obj_pp:(fun _ -> assert false)
-          (GrafiteAst.Tactical (loc,
-            GrafiteAst.Tactic (loc, GrafiteAst.Reduce (loc, kind, pat)),
-            Some (GrafiteAst.Semicolon loc))) in
+          (GrafiteAst.Tactic (loc,
+            Some (GrafiteAst.Reduce (loc, kind, pat)),
+            GrafiteAst.Semicolon loc)) in
       (MatitaScript.current ())#advance ~statement () in
     connect_menu_item copy gui#copy;
     connect_menu_item normalize (reduction_action `Normalize);
