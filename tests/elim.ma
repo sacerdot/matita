@@ -72,7 +72,6 @@ theorem t': \forall x,y. \forall H: sum x y O.
     (\lambda a,b,K. y=a \to O=b \to
         match K with [ (k a b p) \Rightarrow a ] = x)
      ? ? ? H).
- goal 16.
  simplify. intros.
  generalize in match H1.
  rewrite < H2; rewrite < H3.intro.
