@@ -27,6 +27,7 @@
 
 module G = GrafiteAst
 module L = LexiconAst
+module H = HExtlib
 
 (* from transcript *)
 
@@ -58,24 +59,27 @@ let pp_ast_statement =
 (**)
 
 let dump f =
+   let floc = H.dummy_floc in
+   let nl_ast = G.Comment (floc, G.Note (floc, "")) in
    let och = open_out f in
    let atexit () = close_out och in
+   let nl () =  output_string och (pp_ast_statement nl_ast) in
    let rt_base_dir = Filename.dirname Sys.argv.(0) in
    let path = Filename.concat rt_base_dir "matita.ma.templ" in
    let lines = 14 in
    out_preamble och (path, lines);
-   let lexicon_engine_cb = function
-     | L.Include _ as ast -> output_string och (LexiconAstPp.pp_command ast)
-     | _                  -> ()
+   let grafite_parser_cb fname = 
+      let ast = G.Executable (floc, G.Command (floc, G.Include (floc, fname))) in
+      output_string och (pp_ast_statement ast); nl (); nl ()
    in
    let matita_engine_cb = function
       | G.Executable (_, G.Macro (_, G.Inline _)) 
       | G.Executable (_, G.Command (_, G.Include _)) -> ()
-      | ast                                                 ->
-         output_string och (pp_ast_statement ast)
+      | ast                                          ->
+         output_string och (pp_ast_statement ast); nl (); nl ()
    in
    let matitac_lib_cb = output_string och in
-   LexiconEngine.set_callback lexicon_engine_cb;
+   GrafiteParser.set_callback grafite_parser_cb;
    MatitaEngine.set_callback matita_engine_cb;
    MatitacLib.set_callback matitac_lib_cb;
    at_exit atexit

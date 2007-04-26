@@ -188,7 +188,7 @@ let txt_of_cic_object ?map_unicode_to_tex n style prefix obj =
         let aux = GrafiteAstPp.pp_statement ~term_pp ~lazy_term_pp ~obj_pp in
 	let script = Acic2Procedural.acic2procedural 
 	   ~ids_to_inner_sorts ~ids_to_inner_types ?depth prefix aobj in
-	"\n" ^ String.concat "" (List.map aux script)
+	String.concat "" (List.map aux script) ^ "\n\n"
 
 let txt_of_inline_macro style suri prefix =
    let dbd = LibraryDb.instance () in   
