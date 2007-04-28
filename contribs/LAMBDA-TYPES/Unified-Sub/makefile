@@ -1,4 +1,4 @@
-H=
+H=@
 
 RT_BASEDIR=../../../
 OPTIONS=-bench

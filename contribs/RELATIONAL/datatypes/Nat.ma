@@ -16,7 +16,7 @@ set "baseuri" "cic:/matita/RELATIONAL/datatypes/Nat".
 
 include "preamble.ma".
 
-inductive Nat: Set \def
+inductive Nat: Type \def
    | zero: Nat
    | succ: Nat \to Nat
 .

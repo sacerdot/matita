@@ -21,7 +21,7 @@ set "baseuri" "cic:/matita/LAMBDA-TYPES/Unified-Sub/datatypes/Context".
 
 include "datatypes/Term.ma".
 
-inductive Context: Set \def
+inductive Context: Type \def
    | leaf: Context
    | intb: Context \to IntB \to Term \to Context
 .

@@ -16,7 +16,7 @@ set "baseuri" "cic:/matita/RELATIONAL/datatypes/Bool".
 
 include "preamble.ma".
 
-inductive Bool: Set \def
+inductive Bool: Type \def
    | false: Bool
    | true : Bool
 .

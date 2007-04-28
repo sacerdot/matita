@@ -21,13 +21,7 @@ include "Lift/defs.ma".
 theorem lift_inv_sort_1: \forall l, i, h, x.
                          Lift l i (sort h) x \to
                          x = sort h.
- intros. inversion H; clear H; intros;
- [ auto
- | destruct H2
- | destruct H3
- | destruct H5
- | destruct H5
- ].
+ intros. inversion H; clear H; intros; subst. auto.
 qed.
 
 theorem lift_inv_lref_1: \forall l, i, j1, x.
@@ -36,13 +30,7 @@ theorem lift_inv_lref_1: \forall l, i, j1, x.
                          (i <= j1 \land 
                           \exists j2. (l + j1 == j2) \land x = lref j2
                          ).
- intros. inversion H; clear H; intros;
- [ destruct H1
- | destruct H2. clear H2. subst. auto
- | destruct H3. clear H3. subst. auto depth = 5
- | destruct H5
- | destruct H5
- ].
+ intros. inversion H; clear H; intros; subst; auto depth = 5.
 qed.
 
 theorem lift_inv_bind_1: \forall l, i, r, u1, t1, x.
@@ -51,13 +39,7 @@ theorem lift_inv_bind_1: \forall l, i, r, u1, t1, x.
                          Lift l i u1 u2 \land
                          Lift l (succ i) t1 t2 \land
                          x = intb r u2 t2.
- intros. inversion H; clear H; intros;
- [ destruct H1
- | destruct H2
- | destruct H3
- | destruct H5. clear H5 H1 H3. subst. auto depth = 5
- | destruct H5
- ].
+ intros. inversion H; clear H; intros; subst. auto depth = 5.
 qed.
 
 theorem lift_inv_flat_1: \forall l, i, r, u1, t1, x.
@@ -66,25 +48,13 @@ theorem lift_inv_flat_1: \forall l, i, r, u1, t1, x.
                          Lift l i u1 u2 \land
                          Lift l i t1 t2 \land
                          x = intf r u2 t2.
- intros. inversion H; clear H; intros;
- [ destruct H1
- | destruct H2
- | destruct H3
- | destruct H5 
- | destruct H5. clear H5 H1 H3. subst. auto depth = 5
- ].
+ intros. inversion H; clear H; intros; subst. auto depth = 5.
 qed.
 
 theorem lift_inv_sort_2: \forall l, i, x, h.
                          Lift l i x (sort h) \to
                          x = sort h.
- intros. inversion H; clear H; intros;
- [ auto
- | destruct H3
- | destruct H4
- | destruct H6
- | destruct H6
- ].
+ intros. inversion H; clear H; intros; subst. auto.
 qed.
 
 theorem lift_inv_lref_2: \forall l, i, x, j2.
@@ -93,13 +63,7 @@ theorem lift_inv_lref_2: \forall l, i, x, j2.
                          (i <= j2 \land 
                           \exists j1. (l + j1 == j2) \land x = lref j1
                          ).
- intros. inversion H; clear H; intros;
- [ destruct H2
- | destruct H3. clear H3. subst. auto
- | destruct H4. clear H4. subst. auto depth = 5
- | destruct H6
- | destruct H6
- ].
+ intros. inversion H; clear H; intros; subst; auto depth = 5.
 qed.
 
 theorem lift_inv_bind_2: \forall l, i, r, x, u2, t2.
@@ -108,13 +72,7 @@ theorem lift_inv_bind_2: \forall l, i, r, x, u2, t2.
                          Lift l i u1 u2 \land
                          Lift l (succ i) t1 t2 \land
                          x = intb r u1 t1.
- intros. inversion H; clear H; intros;
- [ destruct H2
- | destruct H3
- | destruct H4
- | destruct H6. clear H5 H1 H3. subst. auto depth = 5
- | destruct H6
- ].
+ intros. inversion H; clear H; intros; subst. auto depth = 5.
 qed.
 
 theorem lift_inv_flat_2: \forall l, i, r, x, u2, t2.
@@ -123,13 +81,7 @@ theorem lift_inv_flat_2: \forall l, i, r, x, u2, t2.
                          Lift l i u1 u2 \land
                          Lift l i t1 t2 \land
                          x = intf r u1 t1.
- intros. inversion H; clear H; intros;
- [ destruct H2
- | destruct H3
- | destruct H4
- | destruct H6 
- | destruct H6. clear H6 H1 H3. subst. auto depth = 5
- ].
+ intros. inversion H; clear H; intros; subst. auto depth = 5.
 qed.
 
 (* Corollaries of inversion properties ***************************************)
@@ -153,7 +105,7 @@ theorem lift_inv_lref_1_le: \forall l, i, j1, x.
  | auto
  ].
 qed.
- 
+
 theorem lift_inv_lref_1_le_nplus: \forall l, i, j1, x.
                                  Lift l i (lref j1) x \to
                                  i <= j1 \to \forall j2. (l + j1 == j2) \to

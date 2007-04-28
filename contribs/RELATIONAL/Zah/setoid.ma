@@ -21,7 +21,7 @@ theorem nplus_total: \forall p,q. \exists r. p + q == r.
  intros 2. elim q; clear q;
  decompose; auto.
 qed.
-
+(*
 theorem zeq_intro: \forall z1,z2. 
                    (\forall n.((\fst z1) + (\snd z2) == n) \to ((\fst z2) + (\snd z1) == n)) \to
                    (\forall n.((\fst z2) + (\snd z1) == n) \to ((\fst z1) + (\snd z2) == n)) \to
@@ -36,7 +36,7 @@ qed.
 theorem zeq_sym: \forall z1,z2. z1 = z2 \to z2 = z1.
  unfold ZEq. intros. lapply linear (H n). auto.
 qed.
-(*
+*)(*
 theorem zeq_trans: \forall z1,z2. z1 = z2 \to 
                    \forall z3. z2 = z3 \to z1 = z3.
  unfold ZEq. intros.

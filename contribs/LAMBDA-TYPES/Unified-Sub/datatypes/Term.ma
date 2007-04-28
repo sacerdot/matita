@@ -26,26 +26,26 @@ set "baseuri" "cic:/matita/LAMBDA-TYPES/Unified-Sub/datatypes/Term".
 
 include "preamble.ma".
 
-inductive Bind: Set \def
+inductive Bind: Type \def
    | abbr: Bind
    | abst: Bind
    | excl: Bind
 .
 
-inductive Flat: Set \def
+inductive Flat: Type \def
    | appl: Flat
    | cast: Flat
 .
 
-inductive IntB: Set \def
+inductive IntB: Type \def
    | bind: Bool \to Bind \to IntB
 .
 
-inductive IntF: Set \def
+inductive IntF: Type \def
    | flat: Bool \to Flat \to IntF
 .
 
-inductive Term: Set \def
+inductive Term: Type \def
    | sort: Nat  \to Term
    | lref: Nat  \to Term
    | intb: IntB \to Term \to Term \to Term

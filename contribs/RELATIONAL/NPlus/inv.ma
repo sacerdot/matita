@@ -31,35 +31,23 @@ theorem nplus_inv_succ_1: \forall p,q,r. ((succ p) + q == r) \to
 qed.
 
 theorem nplus_inv_zero_2: \forall p,r. (p + zero == r) \to p = r.
- intros. inversion H; clear H; intros;
- [ auto.
- | clear H H1. destruct H2.
- ].
+ intros. inversion H; clear H; intros; subst. auto.
 qed.
 
 theorem nplus_inv_succ_2: \forall p,q,r. (p + (succ q) == r) \to 
                           \exists s. r = (succ s) \land p + q == s.
- intros. inversion H; clear H; intros;
- [ destruct H.
- | clear H1 H3 r. destruct H2; clear H2. subst. auto depth = 4.
- ].
+ intros. inversion H; clear H; intros; subst. auto depth = 4.
 qed.
 
 theorem nplus_inv_zero_3: \forall p,q. (p + q == zero) \to 
                           p = zero \land q = zero.
- intros. inversion H; clear H; intros;
- [ subst. auto
- | clear H H1. destruct H3.
- ].
+ intros. inversion H; clear H; intros; subst. auto.
 qed.
 
 theorem nplus_inv_succ_3: \forall p,q,r. (p + q == (succ r)) \to
                           \exists s. p = succ s \land (s + q == r) \lor
                                      q = succ s \land p + s == r.
- intros. inversion H; clear H; intros;
- [ subst
- | clear H1. destruct H3. clear H3. subst.
- ]; auto depth = 4.
+ intros. inversion H; clear H; intros; subst; auto depth = 4.
 qed.
 
 (* Corollaries to inversion lemmas ******************************************)
@@ -67,15 +55,13 @@ qed.
 theorem nplus_inv_succ_2_3: \forall p,q,r.
                             (p + (succ q) == (succ r)) \to p + q == r.
  intros. 
- lapply linear nplus_inv_succ_2 to H. decompose. subst.
- destruct H1. clear H1. subst. auto.
+ lapply linear nplus_inv_succ_2 to H. decompose. subst. auto.
 qed.
 
 theorem nplus_inv_succ_1_3: \forall p,q,r.
                             ((succ p) + q == (succ r)) \to p + q == r.
  intros. 
- lapply linear nplus_inv_succ_1 to H. decompose. subst.
- destruct H1. clear H1. subst. auto.
+ lapply linear nplus_inv_succ_1 to H. decompose. subst. auto.
 qed.
 
 theorem nplus_inv_eq_2_3: \forall p,q. (p + q == q) \to p = zero.

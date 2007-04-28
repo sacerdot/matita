@@ -19,7 +19,7 @@ include "logic/coimplication.ma".
 include "NPlusList/defs.ma".
 
 definition Zah \def Nat \times Nat.
-
+(*
 definition ZEq: Zah \to Zah -> Prop :=
    \lambda z1,z2.
    \forall n. ((\fst z1) + (\snd z2) == n) \liff (\fst z2) + (\snd z1) == n.
@@ -30,3 +30,4 @@ interpretation "integer equality" 'zeq x y =
 notation "hvbox(a break = b)"
   non associative with precedence 45
 for @{ 'zeq $a $b }.
+*)

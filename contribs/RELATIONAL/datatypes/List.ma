@@ -16,7 +16,7 @@ set "baseuri" "cic:/matita/RELATIONAL/datatypes/List".
 
 include "preamble.ma".
 
-inductive List (A:Set): Set \def
+inductive List (A: Type): Type \def
    | nil: List A
    | cons: List A \to A \to List A
 .

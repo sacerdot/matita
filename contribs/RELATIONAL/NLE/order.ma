@@ -38,10 +38,7 @@ theorem nle_irrefl: \forall x. x < x \to False.
 qed.
 
 theorem nle_irrefl_ei: \forall x, z. z <= x \to z = succ x \to False.
- intros 3. elim H; clear H x z;
- [ destruct H1
- | destruct H3. clear H3. subst. auto.
- ].
+ intros 3. elim H; clear H x z; subst. auto.
 qed.
 
 theorem nle_irrefl_smart: \forall x. x < x \to False.

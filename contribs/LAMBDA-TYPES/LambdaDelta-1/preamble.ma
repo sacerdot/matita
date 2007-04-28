@@ -40,7 +40,3 @@ alias id "plus_lt_le_compat" = "cic:/Coq/Arith/Plus/plus_lt_le_compat.con".
 alias id "plus_n_O" = "cic:/Coq/Init/Peano/plus_n_O.con".
 alias id "plus_Snm_nSm" = "cic:/Coq/Arith/Plus/plus_Snm_nSm.con".
 alias id "S_pred" = "cic:/Coq/Arith/Lt/S_pred.con".
-
-theorem trans_eq : \forall A:Type. \forall x,y,z:A. x=y \to y=z \to x=z.
- intros. transitivity y; assumption.
-qed.

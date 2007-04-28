@@ -2,6 +2,7 @@ Root directories of current matita developments
 
 software/matita/legacy
 software/matita/library
+software/matita/library_auto
 software/matita/tests
 software/matita/dama
 software/matita/contribs/PREDICATIVE-TOPOLOGY
