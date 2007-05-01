@@ -22,7 +22,7 @@ theorem nplus_zero_1: \forall q. zero + q == q.
  intros. elim q; clear q; auto.
 qed.
 
-theorem nplus_succ_1: \forall p,q,r. NPlus p q r \to 
+theorem nplus_succ_1: \forall p,q,r. (p + q == r) \to 
                       (succ p) + q == (succ r).
  intros. elim H; clear H q r; auto.
 qed.

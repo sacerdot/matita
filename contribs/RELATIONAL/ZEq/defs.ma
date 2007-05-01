@@ -12,22 +12,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/RELATIONAL/Zah/defs".
+set "baseuri" "cic:/matita/RELATIONAL/ZEq/defs".
 
-include "datatypes/constructors.ma".
-include "logic/coimplication.ma".
-include "NPlusList/defs.ma".
+include "datatypes/Zah.ma".
+include "NPlus/defs.ma".
 
-definition Zah \def Nat \times Nat.
-(*
-definition ZEq: Zah \to Zah -> Prop :=
-   \lambda z1,z2.
-   \forall n. ((\fst z1) + (\snd z2) == n) \liff (\fst z2) + (\snd z1) == n.
+inductive ZEq: Zah \to Zah \to Prop :=
+   | zeq: \forall m1,m2,m3,m4,n.
+          (m1 + m4 == n) \to (m3 + m2 == n) \to
+          ZEq \langle m1, m2 \rangle \langle m3, m4 \rangle
+.
 
-interpretation "integer equality" 'zeq x y =
- (cic:/matita/RELATIONAL/Zah/defs/ZEq.con x y).
+interpretation "integer equality" 'eq x y =
+ (cic:/matita/RELATIONAL/ZEq/defs/ZEq.ind#xpointer(1/1) x y).
 
-notation "hvbox(a break = b)"
-  non associative with precedence 45
-for @{ 'zeq $a $b }.
-*)

@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/RELATIONAL/preamble".
+set "baseuri" "cic:/matita/RELATIONAL/datatypes/Zah".
 
-include "logic/equality.ma".
-include "logic/connectives.ma".
-include "datatypes/constructors.ma".
+include "datatypes/Nat.ma".
+
+definition Zah \def Nat \times Nat.
