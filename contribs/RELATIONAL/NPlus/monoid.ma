@@ -39,6 +39,19 @@ theorem nplus_comm_rew: \forall p,q,r. (p + q == r) \to q + p == r.
  intros. elim H; clear H q r; auto.
 qed.
 
+theorem nplus_ass: \forall p1, p2, r1. (p1 + p2 == r1) \to
+                   \forall p3, s1. (r1 + p3 == s1) \to
+                   \forall r3. (p2 + p3 == r3) \to 
+                   \forall s3. (p1 + r3 == s3) \to s1 = s3.
+ intros 4. elim H; clear H p2 r1;
+ [ lapply linear nplus_inv_zero_1 to H2. subst.
+   lapply nplus_mono to H1, H3. subst. auto
+ | lapply linear nplus_inv_succ_1 to H3. decompose. subst.
+   lapply linear nplus_inv_succ_1 to H4. decompose. subst.
+   lapply linear nplus_inv_succ_2 to H5. decompose. subst. auto
+ ].
+qed.
+ 
 (* Corollaries of functional properties **************************************)
 
 theorem nplus_inj_2: \forall p, q1, r. (p + q1 == r) \to
