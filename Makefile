@@ -210,7 +210,6 @@ distclean: clean
 TEST_DIRS = 				\
 	legacy                          \
 	library 			\
-	library_auto 			\
 	tests 				\
 	dama				\
 	contribs/CoRN	 	        \
@@ -219,11 +218,16 @@ TEST_DIRS = 				\
 	contribs/PREDICATIVE-TOPOLOGY 	\
 	$(NULL)
 
+TEST_DIRS_OPT = 			\
+	$(TEST_DIRS)                    \
+	library_auto 			\
+	$(NULL)
+
 .PHONY: tests tests.opt cleantests cleantests.opt
 tests: $(foreach d,$(TEST_DIRS),$(d)-test)
-tests.opt: $(foreach d,$(TEST_DIRS),$(d)-test-opt)
+tests.opt: $(foreach d,$(TEST_DIRS_OPT),$(d)-test-opt)
 cleantests: $(foreach d,$(TEST_DIRS),$(d)-cleantests)
-cleantests.opt: $(foreach d,$(TEST_DIRS),$(d)-cleantests-opt)
+cleantests.opt: $(foreach d,$(TEST_DIRS_OPT),$(d)-cleantests-opt)
 
 %-test: matitac matitadep matitaclean 
 	-cd $* && make -k clean all
