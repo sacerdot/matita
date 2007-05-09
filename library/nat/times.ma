@@ -43,6 +43,16 @@ reflexivity.
 apply assoc_plus.
 qed.
 
+theorem times_O_to_O: \forall n,m:nat.n*m = O \to n = O \lor m= O.
+apply nat_elim2;intros
+  [left.reflexivity
+  |right.reflexivity
+  |apply False_ind.
+   simplify in H1.
+   apply (not_eq_O_S ? (sym_eq  ? ? ? H1))
+  ]
+qed.
+
 theorem times_n_SO : \forall n:nat. n = n * S O.
 intros.
 rewrite < times_n_Sm.

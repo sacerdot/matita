@@ -385,6 +385,10 @@ theorem not_prime_SO: \lnot (prime (S O)).
 unfold Not.unfold prime.intro.elim H.apply (not_le_Sn_n (S O) H1).
 qed.
 
+theorem prime_to_lt_O: \forall p. prime p \to O < p.
+intros.elim H.apply lt_to_le.assumption.
+qed.
+
 (* smallest factor *)
 definition smallest_factor : nat \to nat \def
 \lambda n:nat. 

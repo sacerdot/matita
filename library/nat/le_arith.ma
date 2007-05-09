@@ -62,6 +62,16 @@ rewrite < sym_plus.
 apply le_plus_n.
 qed.
 
+theorem le_plus_to_le: 
+\forall a,n,m. a + n \le a + m \to n \le m.
+intro.
+elim a
+  [assumption
+  |apply H.
+   apply le_S_S_to_le.assumption
+  ]
+qed.
+
 (* times *)
 theorem monotonic_le_times_r: 
 \forall n:nat.monotonic nat le (\lambda m. n * m).
@@ -97,4 +107,28 @@ theorem le_times_n: \forall n,m:nat.(S O) \le n \to m \le n*m.
 intros.elim H.simplify.
 elim (plus_n_O ?).apply le_n.
 simplify.rewrite < sym_plus.apply le_plus_n.
+qed.
+
+theorem le_times_to_le: 
+\forall a,n,m. S O \le a \to a * n \le a * m \to n \le m.
+intro.
+apply nat_elim2;intros
+  [apply le_O_n
+  |apply False_ind.
+   rewrite < times_n_O in H1.
+   generalize in match H1.
+   apply (lt_O_n_elim ? H).
+   intros.
+   simplify in H2.
+   apply (le_to_not_lt ? ? H2).
+   apply lt_O_S
+  |apply le_S_S.
+   apply H
+    [assumption
+    |rewrite < times_n_Sm in H2.
+     rewrite < times_n_Sm in H2.
+     apply (le_plus_to_le a).
+     assumption
+    ]
+  ]
 qed.

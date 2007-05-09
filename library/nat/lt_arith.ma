@@ -148,6 +148,15 @@ assumption.
 exact (decidable_lt p q).
 qed.
 
+theorem lt_times_n_to_lt: 
+\forall n,p,q:nat. O < n \to p*n < q*n \to p < q.
+intro.
+apply (nat_case n)
+  [intros.apply False_ind.apply (not_le_Sn_n ? H)
+  |intros 4.apply lt_times_to_lt_l
+  ]
+qed.
+
 theorem lt_times_to_lt_r: 
 \forall n,p,q:nat. (S n)*p < (S n)*q \to lt p q.
 intros.
@@ -155,6 +164,15 @@ apply (lt_times_to_lt_l n).
 rewrite < sym_times.
 rewrite < (sym_times (S n)).
 assumption.
+qed.
+
+theorem lt_times_n_to_lt_r: 
+\forall n,p,q:nat. O < n \to n*p < n*q \to lt p q.
+intro.
+apply (nat_case n)
+  [intros.apply False_ind.apply (not_le_Sn_n ? H)
+  |intros 4.apply lt_times_to_lt_r
+  ]
 qed.
 
 theorem nat_compare_times_l : \forall n,p,q:nat. 

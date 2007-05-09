@@ -240,65 +240,6 @@ rewrite < times_n_SO.
 apply exp_n_SO.
 qed.
 
-(* spostare *)
-theorem le_plus_to_le: 
-\forall a,n,m. a + n \le a + m \to n \le m.
-intro.
-elim a
-  [assumption
-  |apply H.
-   apply le_S_S_to_le.assumption
-  ]
-qed.
-  
-theorem le_times_to_le: 
-\forall a,n,m. O < a \to a * n \le a * m \to n \le m.
-intro.
-apply nat_elim2;intros
-  [apply le_O_n
-  |apply False_ind.
-   rewrite < times_n_O in H1.
-   generalize in match H1.
-   apply (lt_O_n_elim ? H).
-   intros.
-   simplify in H2.
-   apply (le_to_not_lt ? ? H2).
-   apply lt_O_S
-  |apply le_S_S.
-   apply H
-    [assumption
-    |rewrite < times_n_Sm in H2.
-     rewrite < times_n_Sm in H2.
-     apply (le_plus_to_le a).
-     assumption
-    ]
-  ]
-qed.
-
-theorem le_exp_to_le: 
-\forall a,n,m. S O < a \to exp a n \le exp a m \to n \le m.
-intro.
-apply nat_elim2;intros
-  [apply le_O_n
-  |apply False_ind.
-   apply (le_to_not_lt ? ? H1).
-   simplify.
-   rewrite > times_n_SO.
-   apply lt_to_le_to_lt_times
-    [assumption
-    |apply lt_O_exp.apply lt_to_le.assumption
-    |apply lt_O_exp.apply lt_to_le.assumption
-    ]
-  |simplify in H2.
-   apply le_S_S.
-   apply H
-    [assumption
-    |apply (le_times_to_le a)
-      [apply lt_to_le.assumption|assumption]
-    ]
-  ]
-qed.
-
 theorem divides_to_p_ord: \forall p,a,b,c,d,n,m:nat. 
 O < n \to O < m \to prime p 
 \to divides n m \to p_ord n p = pair ? ? a b \to
@@ -438,4 +379,32 @@ elim (le_to_or_lt_eq O (ord_rem n p))
    reflexivity
   |apply le_O_n
   ]
+qed.
+
+(* p_ord_inv is the inverse of ord *)
+definition p_ord_inv \def
+\lambda p,m,x.
+  match p_ord x p with
+  [pair q r \Rightarrow r*m+q].
+  
+theorem  eq_p_ord_inv: \forall p,m,x.
+p_ord_inv p m x = (ord_rem x p)*m+(ord x p).
+intros.unfold p_ord_inv. unfold ord_rem.
+unfold ord.
+elim (p_ord x p).
+reflexivity.
+qed.
+
+theorem div_p_ord_inv: 
+\forall p,m,x. ord x p < m \to p_ord_inv p m x / m = ord_rem x p.
+intros.rewrite > eq_p_ord_inv.
+apply div_plus_times.
+assumption.
+qed.
+
+theorem mod_p_ord_inv: 
+\forall p,m,x. ord x p < m \to p_ord_inv p m x \mod m = ord x p.
+intros.rewrite > eq_p_ord_inv.
+apply mod_plus_times.
+assumption.
 qed.

@@ -113,7 +113,7 @@ apply nat_elim2
     ]
   ]
 qed.
- 
+
 theorem lt_exp: \forall n,m,p:nat. S O < p \to n < m \to exp p n < exp p m.
 apply nat_elim2
   [intros.
@@ -139,6 +139,31 @@ apply nat_elim2
     ]
   ]
 qed.
+
+theorem le_exp_to_le: 
+\forall a,n,m. S O < a \to exp a n \le exp a m \to n \le m.
+intro.
+apply nat_elim2;intros
+  [apply le_O_n
+  |apply False_ind.
+   apply (le_to_not_lt ? ? H1).
+   simplify.
+   rewrite > times_n_SO.
+   apply lt_to_le_to_lt_times
+    [assumption
+    |apply lt_O_exp.apply lt_to_le.assumption
+    |apply lt_O_exp.apply lt_to_le.assumption
+    ]
+  |simplify in H2.
+   apply le_S_S.
+   apply H
+    [assumption
+    |apply (le_times_to_le a)
+      [apply lt_to_le.assumption|assumption]
+    ]
+  ]
+qed.
+
 
      
    

@@ -227,86 +227,116 @@ qed.
 theorem eq_minus_gcd_aux: \forall p,m,n.O < n \to n \le m \to n \le p \to
 \exists a,b. a*n - b*m = gcd_aux p m n \lor b*m - a*n = gcd_aux p m n.
 intro.
-elim p.
-absurd (O < n).assumption.apply le_to_not_lt.assumption.
-cut (O < m).
-cut (n1 \divides m \lor  n1 \ndivides m).
-simplify.
-elim Hcut1.
-rewrite > divides_to_divides_b_true.
-simplify.
-apply (ex_intro ? ? (S O)).
-apply (ex_intro ? ? O).
-left.simplify.rewrite < plus_n_O.
-apply sym_eq.apply minus_n_O.
-assumption.assumption.
-rewrite > not_divides_to_divides_b_false.
-change with
-(\exists a,b.
-a*n1 - b*m = gcd_aux n n1 (m \mod n1)
-\lor 
-b*m - a*n1 = gcd_aux n n1 (m \mod n1)).
-cut 
-(\exists a,b.
-a*(m \mod n1) - b*n1= gcd_aux n n1 (m \mod n1)
-\lor
-b*n1 - a*(m \mod n1) = gcd_aux n n1 (m \mod n1)).
-elim Hcut2.elim H5.elim H6.
-(* first case *)
-rewrite < H7.
-apply (ex_intro ? ? (a1+a*(m / n1))).
-apply (ex_intro ? ? a).
-right.
-rewrite < sym_plus.
-rewrite < (sym_times n1).
-rewrite > distr_times_plus.
-rewrite > (sym_times n1).
-rewrite > (sym_times n1).
-rewrite > (div_mod m n1) in \vdash (? ? (? % ?) ?).
-rewrite > assoc_times.
-rewrite < sym_plus.
-rewrite > distr_times_plus.
-rewrite < eq_minus_minus_minus_plus.
-rewrite < sym_plus.
-rewrite < plus_minus.
-rewrite < minus_n_n.reflexivity.
-apply le_n.
-assumption.
-(* second case *)
-rewrite < H7.
-apply (ex_intro ? ? (a1+a*(m / n1))).
-apply (ex_intro ? ? a).
-left.
-(* clear Hcut2.clear H5.clear H6.clear H. *)
-rewrite > sym_times.
-rewrite > distr_times_plus.
-rewrite > sym_times.
-rewrite > (sym_times n1).
-rewrite > (div_mod m n1) in \vdash (? ? (? ? %) ?).
-rewrite > distr_times_plus.
-rewrite > assoc_times.
-rewrite < eq_minus_minus_minus_plus.
-rewrite < sym_plus.
-rewrite < plus_minus.
-rewrite < minus_n_n.reflexivity.
-apply le_n.
-assumption.
-apply (H n1 (m \mod n1)).
-cut (O \lt m \mod n1 \lor O = m \mod n1).
-elim Hcut2.assumption. 
-absurd (n1 \divides m).apply mod_O_to_divides.
-assumption.
-symmetry.assumption.assumption.
-apply le_to_or_lt_eq.apply le_O_n.
-apply lt_to_le.
-apply lt_mod_m_m.assumption.
-apply le_S_S_to_le.
-apply (trans_le ? n1).
-change with (m \mod n1 < n1).
-apply lt_mod_m_m.
-assumption.assumption.assumption.assumption.
-apply (decidable_divides n1 m).assumption.
-apply (lt_to_le_to_lt ? n1).assumption.assumption.
+elim p
+  [absurd (O < n)
+    [assumption
+    |apply le_to_not_lt.assumption
+    ]
+  |cut (O < m)
+    [cut (n1 \divides m \lor  n1 \ndivides m)
+      [simplify.
+       elim Hcut1
+        [rewrite > divides_to_divides_b_true
+          [simplify.
+           apply (ex_intro ? ? (S O)).
+           apply (ex_intro ? ? O).
+           left.
+           simplify.
+           rewrite < plus_n_O.
+           apply sym_eq.
+           apply minus_n_O
+          |assumption
+          |assumption
+          ]
+        |rewrite > not_divides_to_divides_b_false
+          [change with
+           (\exists a,b.a*n1 - b*m = gcd_aux n n1 (m \mod n1)
+            \lor b*m - a*n1 = gcd_aux n n1 (m \mod n1)).
+           cut 
+           (\exists a,b.a*(m \mod n1) - b*n1= gcd_aux n n1 (m \mod n1)
+            \lor b*n1 - a*(m \mod n1) = gcd_aux n n1 (m \mod n1))
+            [elim Hcut2.elim H5.elim H6
+              [(* first case *)
+               rewrite < H7.
+               apply (ex_intro ? ? (a1+a*(m / n1))).
+               apply (ex_intro ? ? a).
+               right.
+               rewrite < sym_plus.
+               rewrite < (sym_times n1).
+               rewrite > distr_times_plus.
+               rewrite > (sym_times n1).
+               rewrite > (sym_times n1).
+               rewrite > (div_mod m n1) in \vdash (? ? (? % ?) ?)
+                [rewrite > assoc_times.
+                 rewrite < sym_plus.
+                 rewrite > distr_times_plus.
+                 rewrite < eq_minus_minus_minus_plus.
+                 rewrite < sym_plus.
+                 rewrite < plus_minus
+                  [rewrite < minus_n_n.reflexivity
+                  |apply le_n
+                  ]
+                |assumption
+                ]
+              |(* second case *)
+              rewrite < H7.
+               apply (ex_intro ? ? (a1+a*(m / n1))).
+               apply (ex_intro ? ? a).
+               left.
+               (* clear Hcut2.clear H5.clear H6.clear H. *)
+               rewrite > sym_times.
+               rewrite > distr_times_plus.
+               rewrite > sym_times.
+               rewrite > (sym_times n1).
+               rewrite > (div_mod m n1) in \vdash (? ? (? ? %) ?)
+                [rewrite > distr_times_plus.
+                 rewrite > assoc_times.
+                 rewrite < eq_minus_minus_minus_plus.
+                 rewrite < sym_plus.
+                 rewrite < plus_minus
+                  [rewrite < minus_n_n.reflexivity
+                  |apply le_n
+                  ]
+                |assumption
+                ]
+              ]
+            |apply (H n1 (m \mod n1))
+              [cut (O \lt m \mod n1 \lor O = m \mod n1)
+                [elim Hcut2
+                  [assumption 
+                  |absurd (n1 \divides m)
+                    [apply mod_O_to_divides
+                      [assumption
+                      |symmetry.assumption
+                      ]
+                    |assumption
+                    ]
+                  ]
+                |apply le_to_or_lt_eq.
+                 apply le_O_n
+                ]
+              |apply lt_to_le.
+               apply lt_mod_m_m.
+               assumption
+              |apply le_S_S_to_le.
+               apply (trans_le ? n1)
+                [change with (m \mod n1 < n1).
+                 apply lt_mod_m_m.
+                 assumption
+                |assumption
+                ]
+              ]
+            ]
+          |assumption
+          |assumption
+          ]
+        ]
+      |apply (decidable_divides n1 m).
+       assumption
+      ]
+    |apply (lt_to_le_to_lt ? n1);assumption
+    ]
+  ]
 qed.
 
 theorem eq_minus_gcd:
@@ -525,7 +555,7 @@ cut (O < n2)
     |apply (trans_lt ? (S O))[apply le_n|assumption]
     |assumption
     ]
-  |elim (le_to_or_lt_eq O n2 (le_O_n n2))
+  |elim (le_to_or_lt_eq O n2 (le_O_n n2));
     [assumption
     |apply False_ind.
      apply (le_to_not_lt n (S O))
