@@ -527,3 +527,6 @@ lapply (exp_ord (nth_prime (max_prime_factor n)) n)
   |apply lt_to_le.assumption
   ]
 qed.
+
+
+

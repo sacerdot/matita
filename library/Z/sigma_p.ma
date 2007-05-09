@@ -14,7 +14,7 @@
 
 set "baseuri" "cic:/matita/Z/sigma_p.ma".
 
-include "Z/plus.ma".
+include "Z/times.ma".
 include "nat/primes.ma".
 include "nat/ord.ma".
 
@@ -201,6 +201,68 @@ elim n
      rewrite > sigma_p_plus.
      rewrite > H.
      apply (trans_eq ? ? (O+(sigma_p n1 p1 (\lambda x:nat.sigma_p m p2 (g x)))))
+      [apply eq_f2
+        [rewrite > (eq_sigma_p ? (\lambda x.false) ? (\lambda x:nat.g ((x+n1*m)/m) ((x+n1*m)\mod m)))
+          [apply sigma_p_false
+          |intros.
+           rewrite > sym_plus.
+           rewrite > (div_plus_times ? ? ? H2).
+           rewrite > (mod_plus_times ? ? ? H2).
+           rewrite > H1.
+           simplify.reflexivity
+          |intros.reflexivity.
+          ]
+        |reflexivity
+        ]
+      |reflexivity   
+      ]
+    ]
+  ]
+qed.
+
+(* a stronger, dependent version, required e.g. for dirichlet product *)
+theorem sigma_p2' : 
+\forall n,m:nat.
+\forall p1:nat \to bool.
+\forall p2:nat \to nat \to bool.
+\forall g: nat \to nat \to Z.
+sigma_p (n*m) 
+  (\lambda x.andb (p1 (div x m)) (p2 (div x m) (mod x m))) 
+  (\lambda x.g (div x m) (mod x m)) =
+sigma_p n p1 
+  (\lambda x.sigma_p m (p2 x) (g x)).
+intros.
+elim n
+  [simplify.reflexivity
+  |apply (bool_elim ? (p1 n1))
+    [intro.
+     rewrite > (true_to_sigma_p_Sn ? ? ? H1).
+     simplify in \vdash (? ? (? % ? ?) ?);
+     rewrite > sigma_p_plus.
+     rewrite < H.
+     apply eq_f2
+      [apply eq_sigma_p
+        [intros.
+         rewrite > sym_plus.
+         rewrite > (div_plus_times ? ? ? H2).
+         rewrite > (mod_plus_times ? ? ? H2).
+         rewrite > H1.
+         simplify.reflexivity
+        |intros.
+         rewrite > sym_plus.
+         rewrite > (div_plus_times ? ? ? H2).
+         rewrite > (mod_plus_times ? ? ? H2).
+         rewrite > H1.
+         simplify.reflexivity.   
+        ]
+      |reflexivity
+      ]
+    |intro.
+     rewrite > (false_to_sigma_p_Sn ? ? ? H1).
+     simplify in \vdash (? ? (? % ? ?) ?);
+     rewrite > sigma_p_plus.
+     rewrite > H.
+     apply (trans_eq ? ? (O+(sigma_p n1 p1 (\lambda x:nat.sigma_p m (p2 x) (g x)))))
       [apply eq_f2
         [rewrite > (eq_sigma_p ? (\lambda x.false) ? (\lambda x:nat.g ((x+n1*m)/m) ((x+n1*m)\mod m)))
           [apply sigma_p_false
@@ -431,45 +493,41 @@ elim n
   ]
 qed.
 
-definition p_ord_times \def
-\lambda p,m,x.
-  match p_ord x p with
-  [pair q r \Rightarrow r*m+q].
-  
-theorem  eq_p_ord_times: \forall p,m,x.
-p_ord_times p m x = (ord_rem x p)*m+(ord x p).
-intros.unfold p_ord_times. unfold ord_rem.
-unfold ord.
-elim (p_ord x p).
-reflexivity.
-qed.
-
-theorem div_p_ord_times: 
-\forall p,m,x. ord x p < m \to p_ord_times p m x / m = ord_rem x p.
-intros.rewrite > eq_p_ord_times.
-apply div_plus_times.
-assumption.
-qed.
-
-theorem mod_p_ord_times: 
-\forall p,m,x. ord x p < m \to p_ord_times p m x \mod m = ord x p.
-intros.rewrite > eq_p_ord_times.
-apply mod_plus_times.
-assumption.
-qed.
-
-theorem times_O_to_O: \forall n,m:nat.n*m = O \to n = O \lor m= O.
-apply nat_elim2;intros
-  [left.reflexivity
-  |right.reflexivity
-  |apply False_ind.
-   simplify in H1.
-   apply (not_eq_O_S ? (sym_eq  ? ? ? H1))
+(* sigma_p and Ztimes *)
+lemma Ztimes_sigma_pl: \forall z:Z.\forall n:nat.\forall p. \forall f.
+z * (sigma_p n p f) = sigma_p n p (\lambda i.z*(f i)).
+intros.
+elim n
+  [rewrite > Ztimes_z_OZ.reflexivity
+  |apply (bool_elim ? (p n1)); intro
+    [rewrite > true_to_sigma_p_Sn
+      [rewrite > true_to_sigma_p_Sn 
+        [rewrite < H.
+         apply distr_Ztimes_Zplus
+        |assumption
+        ]
+      |assumption
+      ]
+    |rewrite > false_to_sigma_p_Sn
+      [rewrite > false_to_sigma_p_Sn
+        [assumption
+        |assumption
+        ]
+      |assumption
+      ] 
+    ]
   ]
 qed.
 
-theorem prime_to_lt_O: \forall p. prime p \to O < p.
-intros.elim H.apply lt_to_le.assumption.
+lemma Ztimes_sigma_pr: \forall z:Z.\forall n:nat.\forall p. \forall f.
+(sigma_p n p f) * z = sigma_p n p (\lambda i.(f i)*z).
+intros.
+rewrite < sym_Ztimes.
+rewrite > Ztimes_sigma_pl.
+apply eq_sigma_p
+  [intros.reflexivity
+  |intros.apply sym_Ztimes
+  ]
 qed.
 
 theorem divides_exp_to_lt_ord:\forall n,m,j,p. O < n \to prime p \to
@@ -563,7 +621,7 @@ cut (O < p)
     (sigma_p (S n*S m) (\lambda x:nat.divides_b (x/S m) n)
        (\lambda x:nat.g (x/S m*(p)\sup(x\mod S m)))))
     [apply sym_eq.
-     apply (eq_sigma_p_gh g ? (p_ord_times p (S m)))
+     apply (eq_sigma_p_gh g ? (p_ord_inv p (S m)))
       [intros.
        lapply (divides_b_true_to_lt_O ? ? H H4).
        apply divides_to_divides_b_true
@@ -584,7 +642,7 @@ cut (O < p)
         ]
       |intros.
        lapply (divides_b_true_to_lt_O ? ? H H4).
-       unfold p_ord_times.
+       unfold p_ord_inv.
        rewrite > (p_ord_exp1 p ? (i \mod (S m)) (i/S m))
         [change with ((i/S m)*S m+i \mod S m=i).
          apply sym_eq.
@@ -615,7 +673,7 @@ cut (O < p)
         ]
       |intros.
        cut (ord j p < S m)
-        [rewrite > div_p_ord_times
+        [rewrite > div_p_ord_inv
           [apply divides_to_divides_b_true
             [apply lt_O_ord_rem
               [elim H1.assumption
@@ -636,8 +694,8 @@ cut (O < p)
         ]
       |intros.
        cut (ord j p < S m)
-        [rewrite > div_p_ord_times
-          [rewrite > mod_p_ord_times
+        [rewrite > div_p_ord_inv
+          [rewrite > mod_p_ord_inv
             [rewrite > sym_times.
              apply sym_eq.
              apply exp_ord
@@ -658,7 +716,7 @@ cut (O < p)
          apply (divides_b_true_to_lt_O ? ? H4).
         ]
       |intros.
-       rewrite > eq_p_ord_times.
+       rewrite > eq_p_ord_inv.
        rewrite > sym_plus.
        apply (lt_to_le_to_lt ? (S m +ord_rem j p*S m))
         [apply lt_plus_l.
