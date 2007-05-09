@@ -986,14 +986,14 @@ class gui () =
               ~lazy_term_pp:CicNotationPp.pp_term ast)
       in
       let tbar = main in
-      connect_button tbar#introsButton (tac (A.Intros (loc, None, [])));
+      connect_button tbar#introsButton (tac (A.Intros (loc, (None, []))));
       connect_button tbar#applyButton (tac_w_term (A.Apply (loc, hole)));
       connect_button tbar#exactButton (tac_w_term (A.Exact (loc, hole)));
       connect_button tbar#elimButton (tac_w_term
         (let pattern = None, [], Some CicNotationPt.UserInput in
-	A.Elim (loc, hole, None, pattern, None, [])));
+	A.Elim (loc, hole, None, pattern, (None, []))));
       connect_button tbar#elimTypeButton (tac_w_term
-        (A.ElimType (loc, hole, None, None, [])));
+        (A.ElimType (loc, hole, None, (None, []))));
       connect_button tbar#splitButton (tac (A.Split loc));
       connect_button tbar#leftButton (tac (A.Left loc));
       connect_button tbar#rightButton (tac (A.Right loc));
