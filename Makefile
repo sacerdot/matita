@@ -218,9 +218,9 @@ TEST_DIRS = 				\
 	contribs/PREDICATIVE-TOPOLOGY 	\
 	$(NULL)
 
+#	library_auto 			\
 TEST_DIRS_OPT = 			\
 	$(TEST_DIRS)                    \
-	library_auto 			\
 	$(NULL)
 
 .PHONY: tests tests.opt cleantests cleantests.opt
