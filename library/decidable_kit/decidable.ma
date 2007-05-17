@@ -109,7 +109,7 @@ intros (n); apply (p2bT ? ? (lebP ? ?)); apply le_n; qed.
 
 lemma lebW : ∀n,m. leb (S n) m = true → leb n m = true.
 intros (n m H); lapply (b2pT ? ? (lebP ? ?) H); clear H;
-apply (p2bT ? ? (lebP ? ?)); auto.
+apply (p2bT ? ? (lebP ? ?)); apply lt_to_le; assumption.
 qed. 
 
 definition ltb ≝ λx,y.leb (S x) y.
@@ -149,7 +149,8 @@ qed.
 
 
 (* OUT OF PLACE *)
-lemma ltW : ∀n,m. n < m → n < (S m). intros; auto. qed.
+lemma ltW : ∀n,m. n < m → n < (S m).
+intros; unfold lt; unfold lt in H; auto. qed.
 
 lemma ltbW : ∀n,m. ltb n m = true → ltb n (S m) = true.
 intros (n m H); letin H1 ≝ (b2pT ? ? (ltbP ? ?) H); clearbody H1;

@@ -214,6 +214,8 @@ apply p_ord_aux_to_Prop1;
   assumption.
 qed.
 
+axiom not_eq_to_le_to_lt: ∀n,m. n≠m → n≤m → n<m.
+
 theorem p_ord_exp1: \forall p,n,q,r. O < p \to \lnot p \divides r \to
 n = p \sup q * r \to p_ord n p = pair nat nat q r.
 intros.
@@ -257,8 +259,7 @@ apply p_ord_exp
           ]
         ]
       ]*)
-    | alias id "not_eq_to_le_to_lt" = "cic:/matita/algebra/finite_groups/not_eq_to_le_to_lt.con".
-      apply not_eq_to_le_to_lt
+    | apply not_eq_to_le_to_lt
       [ unfold.
         intro.
         auto

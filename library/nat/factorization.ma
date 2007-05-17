@@ -125,7 +125,7 @@ cut (r \mod (nth_prime (max_prime_factor n)) \neq O);
     *)
   |letin z \def le.
    cut(pair nat nat q r=p_ord_aux n n (nth_prime (max_prime_factor n)));
-   [2: rewrite < H1.assumption.|letin x \def le.auto width = 4 new]
+   [2: rewrite < H1.assumption.|letin x \def le.auto width = 4 depth = 2]
    (* CERCA COME MAI le_n non lo applica se lo trova come Const e non Rel *)
   ].
 (*

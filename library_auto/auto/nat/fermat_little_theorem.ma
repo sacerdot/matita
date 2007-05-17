@@ -53,20 +53,18 @@ split
                   apply le_S_S.
                   apply le_O_n*)
                 | rewrite > lt_to_eq_mod;
-                    auto(*unfold lt;apply le_S_S;assumption*)                  
+                    unfold lt;auto.(*apply le_S_S;assumption*)                  
                 ]
               | auto
                 (*unfold lt.
                 apply le_S_S.
                 apply le_O_n*)              
               | rewrite > lt_to_eq_mod
-                [ auto
-                  (*unfold lt.
-                  apply le_S_S.
+                [ unfold lt.auto
+                  (*apply le_S_S.
                   assumption*)
-                | auto
-                  (*unfold lt.
-                  apply le_S_S.
+                | unfold lt.auto
+                  (*apply le_S_S.
                   assumption*)
                 ]
               ]
@@ -80,16 +78,14 @@ split
               [ rewrite < H4 in \vdash (? ? ? (? %?)).
                 rewrite < mod_S
                 [ assumption
-                | auto
-                  (*unfold lt.
-                  apply le_S_S.
+                | unfold lt.auto
+                  (*apply le_S_S.
                   apply le_O_n*)
                 | rewrite > lt_to_eq_mod;
-                    auto;(*unfold lt;apply le_S_S;assumption*)                
+                    unfold lt;auto;(*apply le_S_S;assumption*)                
                 ]
-              | auto
-                (*unfold lt.
-                apply le_S_S.
+              | unfold lt.auto
+                (*apply le_S_S.
                 apply le_O_n*)
               ]
             ]
@@ -101,16 +97,14 @@ split
               [ rewrite < H3 in \vdash (? ? (? %?) ?).
                 rewrite < mod_S
                 [ assumption
-                | auto
-                  (*unfold lt.
-                  apply le_S_S.
+                | unfold lt.auto
+                  (*apply le_S_S.
                   apply le_O_n*)
                 | rewrite > lt_to_eq_mod;
-                    auto(*unfold lt;apply le_S_S;assumption*)                  
+                    unfold lt;auto(*apply le_S_S;assumption*)                  
                 ]
-              | auto
-                (*unfold lt.
-                apply le_S_S.
+              | unfold lt.auto
+                (*apply le_S_S.
                 apply le_O_n*)
               ]
             |(* i = n, j= n*)
@@ -128,14 +122,12 @@ split
         (*apply le_to_or_lt_eq.
         assumption*)
       ]                  
-    | auto
-      (*unfold lt.
-      apply le_S_S.
+    | unfold lt.auto
+      (*apply le_S_S.
       assumption*)
     ]
-  | auto
-    (*unfold lt.
-    apply le_S_S.
+  | unfold lt.auto
+    (*apply le_S_S.
     assumption*)
   ]
 ]
@@ -246,9 +238,8 @@ split
         | rewrite > sym_plus.
           apply le_plus_n
         ]*)
-      | auto
-        (*unfold prime in H.
-        elim H.
+      | unfold prime in H. elim H. auto.
+        (*
         apply (trans_lt ? (S O))
         [ unfold lt.
           apply le_n
@@ -257,9 +248,8 @@ split
       ]
     | apply (le_to_not_lt p (j-i)).
       apply divides_to_le
-      [ auto
-        (*unfold lt.
-        apply le_SO_minus.
+      [ unfold lt.auto
+        (*apply le_SO_minus.
         assumption*)
       | cut (divides p a \lor divides p (j-i))
         [ elim Hcut
@@ -273,10 +263,8 @@ split
           [ assumption
           | rewrite > distr_times_minus.
             apply eq_mod_to_divides
-            [ auto
-              (*unfold prime in H.                        
-              elim H.
-              apply (trans_lt ? (S O))
+            [ unfold prime in H.elim H.auto
+              (*apply (trans_lt ? (S O))
               [ unfold lt.
                 apply le_n
               | assumption
@@ -306,9 +294,8 @@ split
         | rewrite > sym_plus.
           apply le_plus_n
         ]*)
-      | auto
-        (*unfold prime in H.
-        elim H.
+      | unfold prime in H.elim H.auto.
+        (*
         apply (trans_lt ? (S O))
         [ unfold lt.
           apply le_n
@@ -317,9 +304,8 @@ split
       ]
     | apply (le_to_not_lt p (i-j)).
       apply divides_to_le
-      [ auto
-        (*unfold lt.
-        apply le_SO_minus.
+      [ unfold lt.auto
+        (*apply le_SO_minus.
         assumption*)
       | cut (divides p a \lor divides p (i-j))
         [ elim Hcut
@@ -333,9 +319,8 @@ split
           [ assumption
           | rewrite > distr_times_minus.
             apply eq_mod_to_divides
-            [ auto
-              (*unfold prime in H.
-              elim H.
+            [ unfold prime in H.elim H.auto.
+              (*
               apply (trans_lt ? (S O))
               [ unfold lt.
                 apply le_n

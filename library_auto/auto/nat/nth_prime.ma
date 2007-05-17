@@ -46,9 +46,8 @@ unfold Not.
 intro.
 apply (not_divides_S_fact n (smallest_factor(S n!)))
 [ apply lt_SO_smallest_factor.
-  auto
-  (*unfold lt.
-  apply le_S_S.
+  unfold lt.auto
+  (*apply le_S_S.
   apply le_SO_fact*)
 | assumption
 | auto
@@ -80,9 +79,8 @@ elim H
     ]*)
   | (* Andrea: ancora hint non lo trova *)
     apply prime_smallest_factor_n.
-    auto
-    (*unfold lt.
-    apply le_S.
+    unfold lt.auto
+    (*apply le_S.
     apply le_SSO_fact.
     unfold lt.
     apply le_S_S.
@@ -101,7 +99,7 @@ match n with
     
 (* it works, but nth_prime 4 takes already a few minutes -
 it must compute factorial of 7 ...*)
-
+(*
 theorem example11 : nth_prime (S(S O)) = (S(S(S(S(S O))))).
 auto.
 (*normalize.reflexivity.*)
@@ -116,7 +114,7 @@ theorem example13 : nth_prime (S(S(S(S O)))) = (S(S(S(S(S(S(S(S(S(S(S O)))))))))
 auto.
 (*normalize.reflexivity.*)
 qed.
-
+*)
 (*
 theorem example14 : nth_prime (S(S(S(S(S O))))) = (S(S(S(S(S(S(S(S(S(S(S O))))))))))).
 normalize.reflexivity.
@@ -152,9 +150,8 @@ apply (nat_case n)
     ]
   | apply prime_to_primeb_true.
     apply prime_smallest_factor_n.
-    auto
-    (*unfold lt.
-    apply le_S_S.
+    unfold lt.auto
+    (*apply le_S_S.
     apply le_SO_fact*)
   ]
 ]
@@ -195,9 +192,8 @@ intros.
  * ancora terminata
  *)
 elim n
-[ auto
-  (*unfold lt.
-  apply le_n*)
+[ unfold lt.auto
+  (*apply le_n*)
 | auto
   (*apply (trans_lt ? (nth_prime n1))
   [ assumption

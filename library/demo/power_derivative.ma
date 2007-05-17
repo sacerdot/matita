@@ -251,8 +251,9 @@ alias symbol "times" = "Fmult".
 
 theorem derivative_power: ∀n:nat. D[x \sup n] = n·x \sup (pred n).
  assume n:nat.
- we proceed by induction on n to prove
- (D[x \sup n] = n · x \sup (pred n)).
+ (*we proceed by induction on n to prove
+ (D[x \sup n] = n · x \sup (pred n)).*)
+ elim n 0.
  case O.
    the thesis becomes (D[x \sup 0] = 0·x \sup (pred 0)).
    by _
@@ -306,8 +307,8 @@ interpretation "Rderivative" 'derivative f =
 
 theorem derivative_power': ∀n:nat. D[x \sup (1+n)] = (1+n) · x \sup n.
  assume n:nat.
- we proceed by induction on n to prove
- (D[x \sup (1+n)] = (1+n) · x \sup n).
+ (*we proceed by induction on n to prove
+ (D[x \sup (1+n)] = (1+n) · x \sup n).*) elim n 0.
  case O.
    the thesis becomes (D[x \sup 1] = 1 · x \sup 0).
    by _

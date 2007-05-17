@@ -231,9 +231,10 @@ congruent m m1 p \to congruent (n*m) (n1*m1) p.
 unfold congruent. 
 intros. 
 rewrite > (mod_times n m p H).
-auto.
-(*rewrite > H1.
+rewrite > H1.
 rewrite > H2.
+auto.
+(*
 apply sym_eq.
 apply mod_times.
 assumption.*)

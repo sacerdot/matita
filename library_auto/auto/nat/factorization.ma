@@ -598,7 +598,6 @@ apply (nat_case n)
           ]
         ]
       | (* prova del cut *)
-        goal 20.
         apply (p_ord_aux_to_exp (S(S m1)));auto
         (*[ apply lt_O_nth_prime_n
         | assumption

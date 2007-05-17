@@ -258,6 +258,8 @@ let _ =
         ~doc:(HExtlib.unopt (mview ())#get_document) ~name:"matita.xml" ())); *)
     addDebugItem "load (sequent) MathML from matita.xml"
       (fun _ -> (mview ())#load_uri ~filename:"matita.xml");
+    addDebugItem "autoWin"
+    (fun _ -> MatitaAutoGui.auto_dialog Auto.get_auto_status);
   end
   (** Debugging }}} *)
 

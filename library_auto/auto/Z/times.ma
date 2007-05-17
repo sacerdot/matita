@@ -233,7 +233,7 @@ rewrite < S_pred
   | apply lt_O_times_S_S                    
   | apply lt_O_times_S_S
   ]
-| auto
+| unfold lt.auto
   (*simplify.
   unfold lt.
   apply le_SO_minus.

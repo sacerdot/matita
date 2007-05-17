@@ -181,7 +181,7 @@ split
       apply (trans_le ? (j -i))
       [ apply divides_to_le
         [(*fattorizzare*)
-          auto (*qui auto e' efficace, ma impiega un tempo piuttosto alto a chiudere il goal corrente*)
+          unfold lt.auto.
           (*apply (lt_plus_to_lt_l i).
           simplify.
           rewrite < (plus_minus_m_m)
@@ -214,7 +214,7 @@ split
       apply (trans_le ? (i -j))
       [ apply divides_to_le
         [(*fattorizzare*)
-          auto (*qui auto e' efficace, ma impiega un tempo piuttosto alto per concludere il goal attuale*)
+          unfold lt.auto.
           (*apply (lt_plus_to_lt_l j).
           simplify.
           rewrite < (plus_minus_m_m)

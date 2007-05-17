@@ -510,17 +510,11 @@ cut (n! \mod i = O)
   | rewrite > Hcut.
     assumption
   ]
-| auto
-  (*apply divides_to_mod_O
-  [ apply (trans_lt O (S O))
-    [ apply (le_n (S O))
-    | assumption 
-    ]
+| auto(*
+  apply divides_to_mod_O
+  [ apply ltn_to_ltO [| apply H]
   | apply divides_fact
-    [ apply (trans_lt O (S O))
-      [ apply (le_n (S O))
-      | assumption
-      ]
+    [ apply ltn_to_ltO [| apply H]
     | assumption
     ]
   ]*)
@@ -643,9 +637,8 @@ apply (nat_case n)
       (*unfold lt.
       apply le_n*)
     | apply lt_SO_smallest_factor.
-      auto
-      (*unfold lt.
-      apply le_S_S.
+      unfold lt.auto
+      (*apply le_S_S.
       apply le_S_S.
       apply le_O_n*)     
     ]
@@ -902,9 +895,8 @@ apply (nat_case n)
       simplify.
       rewrite < H.
       apply prime_smallest_factor_n.
-      auto
-      (*unfold lt.
-      apply le_S_S.
+      unfold lt.auto
+      (*apply le_S_S.
       apply le_S_S.
       apply le_O_n*)
     | intro.
