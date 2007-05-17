@@ -155,7 +155,7 @@ let rec interactive_loop () =
         let watch_statuses lexicon_status grafite_status =
          match grafite_status.GrafiteTypes.proof_status with
             GrafiteTypes.Incomplete_proof
-             {GrafiteTypes.proof = uri,metasenv,bo,ty,attrs ;
+             {GrafiteTypes.proof = uri,metasenv,_subst,bo,ty,attrs ;
               GrafiteTypes.stack = stack } ->
               let open_goals = Continuationals.Stack.open_goals stack in
               print_endline

@@ -167,8 +167,8 @@ let _ =
             (MatitaScript.current ())#grafite_status.GrafiteTypes.proof_status
             with
             | GrafiteTypes.No_proof -> (Cic.Implicit None)
-            | Incomplete_proof i -> let _,_,p,_, _ = i.GrafiteTypes.proof in p
-            | Proof p -> let _,_,p,_, _ = p in p
+            | Incomplete_proof i -> let _,_,_subst,p,_, _ = i.GrafiteTypes.proof in p
+            | Proof p -> let _,_,_subst,p,_, _ = p in p
             | Intermediate _ -> assert false)));
      addDebugItem "Print current proof (natural language) to stderr" 
        (fun _ -> 
@@ -179,9 +179,9 @@ let _ =
             with
             | GrafiteTypes.No_proof -> assert false
             | Incomplete_proof i -> 
-                let _,m,p,ty, attrs = i.GrafiteTypes.proof in 
+                let _,m,_subst,p,ty, attrs = i.GrafiteTypes.proof in 
                 Cic.CurrentProof ("current (incomplete) proof",m,p,ty,[],attrs)
-            | Proof (_,m,p,ty, attrs) -> 
+            | Proof (_,m,_subst,p,ty, attrs) -> 
                 Cic.CurrentProof ("current proof",m,p,ty,[],attrs)
             | Intermediate _ -> assert false)));
 (*     addDebugItem "ask record choice"

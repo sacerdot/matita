@@ -650,7 +650,9 @@ class sequentsViewer ~(notebook:GPack.notebook) ~(cicMathView:cicMathView) () =
       _metasenv <- []; 
       self#script#setGoal None
 
-    method load_sequents { proof = (_,metasenv,_,_, _) as proof; stack = stack } =
+    method load_sequents 
+      { proof = (_,metasenv,_subst,_,_, _) as proof; stack = stack } 
+    =
       _metasenv <- metasenv;
       pages <- 0;
       let win goal_switch =
@@ -1092,11 +1094,11 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
     method private home () =
       self#_showMath;
       match self#script#grafite_status.proof_status with
-      | Proof  (uri, metasenv, bo, ty, attrs) ->
+      | Proof  (uri, metasenv, _subst, bo, ty, attrs) ->
           let name = UriManager.name_of_uri (HExtlib.unopt uri) in
           let obj = Cic.CurrentProof (name, metasenv, bo, ty, [], attrs) in
           self#_loadObj obj
-      | Incomplete_proof { proof = (uri, metasenv, bo, ty, attrs) } ->
+      | Incomplete_proof { proof = (uri, metasenv, _subst, bo, ty, attrs) } ->
           let name = UriManager.name_of_uri (HExtlib.unopt uri) in
           let obj = Cic.CurrentProof (name, metasenv, bo, ty, [], attrs) in
           self#_loadObj obj
