@@ -42,6 +42,7 @@ CMOS =				\
 	matitaGeneratedGui.cmo	\
 	matitaMathView.cmo 	\
 	matitaGui.cmo		\
+	matitaAutoGui.cmo		\
 	$(NULL)
 # objects for matitac (batch compiler)
 CCMOS =				\
@@ -218,9 +219,9 @@ TEST_DIRS = 				\
 	contribs/PREDICATIVE-TOPOLOGY 	\
 	$(NULL)
 
-#	library_auto 			\
+#	library_auto 			
 TEST_DIRS_OPT = 			\
-	$(TEST_DIRS)                    \
+	$(TEST_DIRS)        \
 	$(NULL)
 
 .PHONY: tests tests.opt cleantests cleantests.opt
