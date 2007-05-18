@@ -1,6 +1,6 @@
 H=@
 
-RT_BASEDIR=@MATITA_RT_BASE_DIR@/
+RT_BASEDIR=/home/fguidi/svn/software/matita/
 OPTIONS=-bench
 MMAKE=$(RT_BASEDIR)matitamake $(OPTIONS)
 CLEAN=$(RT_BASEDIR)matitaclean $(OPTIONS) 
@@ -13,18 +13,18 @@ ifneq "$(SRC)" ""
   XXX="SRC=$(SRC)"
 endif
 
-all: preall
+all: build_mas preall 
 	$(H)$(XXX) MATITA_FLAGS=$(MATITA_FLAGS) $(MMAKE) build $(devel)
-clean: preall
+clean: clean_mas preall
 	$(H)$(XXX) MATITA_FLAGS=$(MATITA_FLAGS) $(MMAKE) clean $(devel)
-cleanall: preall
+cleanall: clean_mas preall
 	$(H)$(XXX) MATITA_FLAGS=$(MATITA_FLAGS) $(MCLEAN) all
 
-all.opt opt: preall.opt
+all.opt opt: build_mas preall.opt
 	$(H)$(XXX) MATITA_FLAGS=$(MATITA_FLAGS) $(MMAKEO) build $(devel)
-clean.opt: preall.opt
+clean.opt: clean_mas preall.opt
 	$(H)$(XXX) MATITA_FLAGS=$(MATITA_FLAGS) $(MMAKEO) clean $(devel)
-cleanall.opt: preall.opt
+cleanall.opt: clean_mas preall.opt
 	$(H)$(XXX) MATITA_FLAGS=$(MATITA_FLAGS) $(MCLEANO) all
 
 %.mo: preall
@@ -37,3 +37,15 @@ preall:
 
 preall.opt:
 	$(H)$(XXX) MATITA_FLAGS=$(MATITA_FLAGS) $(MMAKEO) init $(devel)
+
+
+# FG: added part ############################################################
+
+build_mas:
+	$(H)$(MAKE) preamble.mo.opt
+	$(H)$(MAKE) -f Makefile
+	$(H)$(MAKE) preall.opt
+	$(H)$(XXX) MATITA_FLAGS=$(MATITA_FLAGS) $(MMAKEO) clean $(devel)
+
+clean_mas:
+	$(H)$(MAKE) -f Makefile clean

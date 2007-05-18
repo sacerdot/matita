@@ -1,0 +1,106 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+set "baseuri" "cic:/matita/LAMBDA-TYPES/Base-2/ext/arith".
+
+include "preamble.ma".
+
+inline procedural "cic:/matita/LAMBDA-TYPES/Base-1/ext/arith/nat_dec.con".
+
+inline procedural 
+"cic:/matita/LAMBDA-TYPES/Base-1/ext/arith/simpl_plus_r.con".
+
+inline procedural 
+"cic:/matita/LAMBDA-TYPES/Base-1/ext/arith/minus_plus_r.con".
+
+inline procedural 
+"cic:/matita/LAMBDA-TYPES/Base-1/ext/arith/plus_permute_2_in_3.con".
+
+inline procedural 
+"cic:/matita/LAMBDA-TYPES/Base-1/ext/arith/plus_permute_2_in_3_assoc.con".
+
+inline procedural "cic:/matita/LAMBDA-TYPES/Base-1/ext/arith/plus_O.con".
+
+inline procedural "cic:/matita/LAMBDA-TYPES/Base-1/ext/arith/minus_Sx_SO.con".
+
+inline procedural "cic:/matita/LAMBDA-TYPES/Base-1/ext/arith/eq_nat_dec.con".
+
+inline procedural "cic:/matita/LAMBDA-TYPES/Base-1/ext/arith/neq_eq_e.con".
+
+inline procedural "cic:/matita/LAMBDA-TYPES/Base-1/ext/arith/le_false.con".
+
+inline procedural "cic:/matita/LAMBDA-TYPES/Base-1/ext/arith/le_Sx_x.con".
+
+inline procedural "cic:/matita/LAMBDA-TYPES/Base-1/ext/arith/minus_le.con".
+
+inline procedural 
+"cic:/matita/LAMBDA-TYPES/Base-1/ext/arith/le_plus_minus_sym.con".
+
+inline procedural 
+"cic:/matita/LAMBDA-TYPES/Base-1/ext/arith/le_minus_minus.con".
+
+inline procedural 
+"cic:/matita/LAMBDA-TYPES/Base-1/ext/arith/le_minus_plus.con".
+
+inline procedural "cic:/matita/LAMBDA-TYPES/Base-1/ext/arith/le_minus.con".
+
+inline procedural 
+"cic:/matita/LAMBDA-TYPES/Base-1/ext/arith/le_trans_plus_r.con".
+
+inline procedural "cic:/matita/LAMBDA-TYPES/Base-1/ext/arith/le_gen_S.con".
+
+inline procedural 
+"cic:/matita/LAMBDA-TYPES/Base-1/ext/arith/lt_x_plus_x_Sy.con".
+
+inline procedural 
+"cic:/matita/LAMBDA-TYPES/Base-1/ext/arith/simpl_lt_plus_r.con".
+
+inline procedural "cic:/matita/LAMBDA-TYPES/Base-1/ext/arith/minus_x_Sy.con".
+
+inline procedural 
+"cic:/matita/LAMBDA-TYPES/Base-1/ext/arith/lt_plus_minus.con".
+
+inline procedural 
+"cic:/matita/LAMBDA-TYPES/Base-1/ext/arith/lt_plus_minus_r.con".
+
+inline procedural "cic:/matita/LAMBDA-TYPES/Base-1/ext/arith/minus_x_SO.con".
+
+inline procedural "cic:/matita/LAMBDA-TYPES/Base-1/ext/arith/le_x_pred_y.con".
+
+inline procedural "cic:/matita/LAMBDA-TYPES/Base-1/ext/arith/lt_le_minus.con".
+
+inline procedural "cic:/matita/LAMBDA-TYPES/Base-1/ext/arith/lt_le_e.con".
+
+inline procedural "cic:/matita/LAMBDA-TYPES/Base-1/ext/arith/lt_eq_e.con".
+
+inline procedural "cic:/matita/LAMBDA-TYPES/Base-1/ext/arith/lt_eq_gt_e.con".
+
+inline procedural "cic:/matita/LAMBDA-TYPES/Base-1/ext/arith/lt_gen_xS.con".
+
+inline procedural "cic:/matita/LAMBDA-TYPES/Base-1/ext/arith/le_lt_false.con".
+
+inline procedural "cic:/matita/LAMBDA-TYPES/Base-1/ext/arith/lt_neq.con".
+
+inline procedural "cic:/matita/LAMBDA-TYPES/Base-1/ext/arith/arith0.con".
+
+inline procedural "cic:/matita/LAMBDA-TYPES/Base-1/ext/arith/O_minus.con".
+
+inline procedural "cic:/matita/LAMBDA-TYPES/Base-1/ext/arith/minus_minus.con".
+
+inline procedural "cic:/matita/LAMBDA-TYPES/Base-1/ext/arith/plus_plus.con".
+
+inline procedural "cic:/matita/LAMBDA-TYPES/Base-1/ext/arith/le_S_minus.con".
+
