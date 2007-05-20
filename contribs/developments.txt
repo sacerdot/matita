@@ -10,3 +10,4 @@ software/matita/contribs/RELATIONAL
 software/matita/contribs/LAMBDA-TYPES/Unified-Sub
 software/matita/contribs/LAMBDA-TYPES/Base-1
 software/matita/contribs/LAMBDA-TYPES/LambdaDelta-1
+software/matita/contribs/LAMBDA-TYPES/Base-2

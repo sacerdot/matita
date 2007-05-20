@@ -26,7 +26,7 @@ cleanall.opt: preall
 %.mo: preall
 	$(H)MATITA_FLAGS=$(MATITA_FLAGS) $(MMAKE) $@
 %.mo.opt: preall
-	$(H)MATITA_FLAGS=$(MATITA_FLAGS) $(MMAKEO) $@
+	$(H)MATITA_FLAGS=$(MATITA_FLAGS) $(MMAKEO) $(@:.opt=)
 	
 preall:
 	$(H)MATITA_FLAGS=$(MATITA_FLAGS) $(MMAKE) init $(devel)

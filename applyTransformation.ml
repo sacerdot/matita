@@ -191,6 +191,11 @@ let txt_of_cic_object ?map_unicode_to_tex n style prefix obj =
 	String.concat "" (List.map aux script) ^ "\n\n"
 
 let txt_of_inline_macro style suri prefix =
+   let print_exc = function
+      | ProofEngineHelpers.Bad_pattern s as e ->
+           Printexc.to_string e ^ " " ^ Lazy.force s
+      | e -> Printexc.to_string e
+   in
    let dbd = LibraryDb.instance () in   
    let sorted_uris = MetadataDeps.sorted_uris_of_baseuri ~dbd suri in
    let map uri =
@@ -199,6 +204,6 @@ let txt_of_inline_macro style suri prefix =
       with
          | e -> 
 	    Printf.sprintf "\n(* ERRORE IN STAMPA DI %s\nEXCEPTION: %s *)\n" 
-	    (UriManager.string_of_uri uri) (Printexc.to_string e)
+	    (UriManager.string_of_uri uri) (print_exc e)
    in
    String.concat "" (List.map map sorted_uris)
