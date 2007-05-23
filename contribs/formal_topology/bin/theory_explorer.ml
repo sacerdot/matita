@@ -59,7 +59,7 @@ type set = equivalence_class list
 let string_of_set s =
  String.concat "\n" (List.map string_of_equivalence_class s)
 
-let ps_of_set (to_be_considered,under_consideration) ?processing s =
+let ps_of_set (to_be_considered,under_consideration,news) ?processing s =
  let ch = open_out "xxx.dot" in
   output_string ch "digraph G {\n";
   (match under_consideration with
@@ -69,6 +69,9 @@ let ps_of_set (to_be_considered,under_consideration) ?processing s =
   List.iter
    (function repr -> output_string ch (dot_of_cop repr ^ " [color=green];")
    ) to_be_considered ;
+  List.iter
+   (function repr -> output_string ch (dot_of_cop repr ^ " [color=navy];")
+   ) news ;
   output_string ch (String.concat "\n" (List.map dot_of_equivalence_class s));
   output_string ch "\n";
   (match processing with
@@ -161,7 +164,7 @@ let analyze_one to_be_considered repr hecandidate (news,set) =
    news,set
   else
    try
-    let set = normalize (to_be_considered,Some repr) candidate set in
+    let set = normalize (to_be_considered,Some repr,news) candidate set in
      news,set
    with
     Not_found ->
@@ -169,7 +172,7 @@ let analyze_one to_be_considered repr hecandidate (news,set) =
      let geq = ref [] in
      let node = candidate,[],leq,geq in
      let set = node::set in
-      locate (to_be_considered,Some repr) node set;
+      locate (to_be_considered,Some repr,news) node set;
       candidate::news,set
 ;;
 
@@ -188,7 +191,7 @@ let rec explore i set news =
     begin
      print_endline ("PUNTO FISSO RAGGIUNTO! i=" ^ string_of_int i);
      print_endline (string_of_set set ^ "\n----------------");
-     ps_of_set ([],None) set
+     ps_of_set ([],None,[]) set
     end
    else
     begin
@@ -202,6 +205,6 @@ in
   print_endline ("PRIMA ITERAZIONE, i=0, j=0");
   print_endline (string_of_set set ^ "\n----------------");
   ignore (Unix.system "rm -f log");
-  ps_of_set ([id],None) set;
+  ps_of_set ([id],None,[]) set;
   explore 1 set [id]
 ;;
