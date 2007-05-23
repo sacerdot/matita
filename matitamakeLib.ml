@@ -325,12 +325,18 @@ let root_for_development development = development.root
 let name_for_development development = development.name
 
 let publish_development_bstract build clean devel = 
-  let matita_flags = "\"-system\"" in
+  let matita_flags, matita_flags_system = 
+    let orig_matita_flags = 
+      try Sys.getenv "MATITA_FLAGS" with Not_found -> "" 
+    in
+    "\"" ^ orig_matita_flags ^ "\"", "\"" ^ orig_matita_flags ^ " -system\"" 
+  in
   HLog.message "cleaning the development before publishing";
-  if clean ~matita_flags:"" devel then
+  if clean ~matita_flags devel then
     begin
       HLog.message "rebuilding the development in 'system' space";
-      if build ~matita_flags devel then
+      (* here we should use pristine metadata if we use sqlite *)
+      if build ~matita_flags:matita_flags_system devel then
         begin
           HLog.message "publishing succeded";
           true
