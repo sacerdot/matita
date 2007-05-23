@@ -99,7 +99,7 @@ let ps_of_set (to_be_considered,under_consideration,news) ?processing s =
           "style=dashed];\n"));
   output_string ch "}\n";
   close_out ch;
-  ignore (Unix.system "dot -Tps xxx.dot > xxx.ps")
+  ignore (Unix.system "tred xxx.dot > yyy.dot && dot -Tps yyy.dot > xxx.ps")
 
 let test to_be_considered_and_now set rel candidate repr =
  ps_of_set to_be_considered_and_now ~processing:(candidate,rel,repr) set;
