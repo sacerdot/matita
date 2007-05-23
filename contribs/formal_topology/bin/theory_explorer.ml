@@ -13,6 +13,8 @@ type compound_operator = op list
 let string_of_cop op =
  if op = [] then "id" else String.concat "" (List.map string_of_op op)
 
+let dot_of_cop op = "\"" ^ string_of_cop op ^ "\""
+
 let rec matita_of_cop v =
  function
   | [] -> v
@@ -40,12 +42,13 @@ let string_of_equivalence_class (repr,others,leq,_) =
 let dot_of_equivalence_class (repr,others,leq,_) =
  (if others <> [] then
    let eq = String.concat " = " (List.map string_of_cop (repr::others)) in
-    string_of_cop repr ^ "[label=\"" ^ eq ^ "\"];\n"
+    dot_of_cop repr ^ "[label=\"" ^ eq ^ "\"];" ^
+     if !leq = [] then "" else "\n"
   else "") ^
    String.concat "\n" 
     (List.map
       (function (repr',_,_,_) ->
-         string_of_cop repr' ^ " -> " ^ string_of_cop repr ^ ";") !leq)
+         dot_of_cop repr' ^ " -> " ^ dot_of_cop repr ^ ";") !leq)
 
 (* set of equivalence classes *)
 type set = equivalence_class list
@@ -57,11 +60,12 @@ let ps_of_set ?processing s =
  let ch = open_out "xxx.dot" in
   output_string ch "digraph G {\n";
   output_string ch (String.concat "\n" (List.map dot_of_equivalence_class s));
+  output_string ch "\n";
   (match processing with
       None -> ()
     | Some (repr,rel,repr') ->
        output_string ch
-        (string_of_cop repr' ^ " -> " ^ string_of_cop repr ^
+        (dot_of_cop repr' ^ " -> " ^ dot_of_cop repr ^
          " [" ^
          (if rel="=" then "arrowhead=none " else "") ^
          "style=dashed];\n"));
