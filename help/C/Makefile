@@ -52,8 +52,9 @@ TXTS = $(patsubst %.html,%.txt,$(wildcard *.html))
 .PHONY: txt
 txt: txt-stamp
 txt-stamp: html-stamp
-	$(MAKE) $(TXTS)
+	$(MAKE) txt-stamp-rec
 	touch $@
+txt-stamp-rec: $(TXTS)
 %.txt: %.html
 	w3m -dump -no-graph $< > $@
 

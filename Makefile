@@ -24,48 +24,50 @@ ifeq ($(NODB),true)
 	MATITA_FLAGS += -nodb
 endif
 
-# objects for matita (GTK GUI)
-CMOS =				\
-	buildTimeConf.cmo	\
-	lablGraphviz.cmo	\
-	matitaTypes.cmo		\
-	matitaMisc.cmo		\
-	matitamakeLib.cmo	\
-	matitaInit.cmo		\
-	matitaExcPp.cmo 	\
-	matitaEngine.cmo	\
-	applyTransformation.cmo	\
-	matitacLib.cmo		\
-	matitaprover.cmo        \
-	matitaGtkMisc.cmo	\
-	matitaScript.cmo	\
-	matitaGeneratedGui.cmo	\
-	matitaMathView.cmo 	\
-	matitaGui.cmo		\
+MLI = \
+	lablGraphviz.mli	\
+	matitaTypes.mli		\
+	matitaMisc.mli		\
+	matitamakeLib.mli	\
+	matitaInit.mli		\
+	matitaExcPp.mli 	\
+	matitaEngine.mli	\
+	applyTransformation.mli	\
+	matitacLib.mli		\
+	matitaprover.mli        \
+	matitaGtkMisc.mli	\
+	matitaScript.mli	\
+	matitaMathView.mli 	\
+	matitaGui.mli		\
 	matitaAutoGui.cmo		\
 	$(NULL)
+CMLI =				\
+	matitaTypes.mli		\
+	matitaMisc.mli		\
+	matitamakeLib.mli	\
+	matitaInit.mli		\
+	matitaExcPp.mli 	\
+	matitaEngine.mli	\
+	applyTransformation.mli	\
+	matitacLib.mli		\
+	matitaWiki.mli		\
+	matitaprover.mli        \
+	$(NULL)
+MAINCMLI =			\
+	matitadep.mli		\
+	matitaclean.mli		\
+	matitamake.mli		\
+	gragrep.mli 		\
+	$(NULL)
+# objects for matita (GTK GUI)
+ML = buildTimeConf.ml matitaGeneratedGui.ml $(MLI:%.mli=%.ml)
 # objects for matitac (batch compiler)
-CCMOS =				\
-	buildTimeConf.cmo	\
-	matitaTypes.cmo		\
-	matitaMisc.cmo		\
-	matitamakeLib.cmo	\
-	matitaInit.cmo		\
-	matitaExcPp.cmo 	\
-	matitaEngine.cmo	\
-	applyTransformation.cmo	\
-	matitacLib.cmo		\
-	matitaWiki.cmo		\
-	matitaprover.cmo        \
-	$(NULL)
-MAINCMOS =			\
-	matitadep.cmo		\
-	matitaclean.cmo		\
-	matitamake.cmo		\
-	gragrep.cmo 		\
-	$(NULL)
+CML = buildTimeConf.ml $(CMLI:%.mli=%.ml)
+MAINCML = $(MAINCMLI:%.mli=%.ml)
+	
 PROGRAMS_BYTE = \
-	matita matitac cicbrowser matitadep matitaclean matitamake matitaprover matitawiki
+	matita matitac cicbrowser matitadep matitaclean \
+	matitamake matitaprover matitawiki
 PROGRAMS = $(PROGRAMS_BYTE) matitatop
 PROGRAMS_OPT = $(patsubst %,%.opt,$(PROGRAMS_BYTE))
 NOINST_PROGRAMS = dump_moo gragrep
@@ -73,29 +75,16 @@ NOINST_PROGRAMS_OPT = $(patsubst %,%.opt,$(EXTRA_PROGRAMS))
 
 .PHONY: all
 all: $(PROGRAMS) $(NOINST_PROGRAMS)
-#  all: matita.conf.xml $(PROGRAMS) coq.moo
 
-#  matita.conf.xml: matita.conf.xml.sample
-#          $(H)if diff matita.conf.xml.sample matita.conf.xml 1>/dev/null 2>/dev/null; then\
-#                  touch matita.conf.xml;\
-#          else\
-#                  echo;\
-#                  echo "matita.conf.xml.sample is newer than matita.conf.xml";\
-#                  echo;\
-#                  echo "PLEASE update your configuration file!";\
-#                  echo "(copying matita.conf.xml.sample should work)";\
-#                  echo;\
-#                  false;\
-#          fi
-
-#  coq.moo: library/legacy/coq.ma matitac
-#          ./matitac $(MATITA_FLAGS) $<
-#  coq.moo.opt: library/legacy/coq.ma matitac.opt
-#          ./matitac.opt $(MATITA_FLAGS) $<
-
+CMOS = $(ML:%.ml=%.cmo)
+CCMOS = $(CML:%.ml=%.cmo)
+MAINCMOS = $(MAINCML:%.ml=%.cmo)
 CMXS = $(patsubst %.cmo,%.cmx,$(CMOS))
 CCMXS = $(patsubst %.cmo,%.cmx,$(CCMOS))
 MAINCMXS = $(patsubst %.cmo,%.cmx,$(MAINCMOS))
+$(CMOS): $(LIB_DEPS)
+$(CMXOS): $(LIBX_DEPS)
+
 LIB_DEPS := $(shell $(OCAMLFIND) query -recursive -predicates "byte" -format "%d/%a" $(MATITA_REQUIRES))
 LIBX_DEPS := $(shell $(OCAMLFIND) query -recursive -predicates "native" -format "%d/%a" $(MATITA_REQUIRES))
 CLIB_DEPS := $(shell $(OCAMLFIND) query -recursive -predicates "byte" -format "%d/%a" $(MATITA_CREQUIRES))
@@ -185,10 +174,8 @@ cicbrowser: matita
 cicbrowser.opt: matita.opt
 	$(H)test -f $@ || ln -s $< $@
 
-matitaGeneratedGui.ml matitaGeneratedGui.mli: matita.glade
+matitaGeneratedGui.ml: matita.glade
 	$(H)$(LABLGLADECC) -embed $< > matitaGeneratedGui.ml
-	$(H)rm -f matitaGeneratedGui.mli
-	$(H)#$(OCAMLC) $(PKGS) -i matitaGeneratedGui.ml > matitaGeneratedGui.mli
 
 .PHONY: clean
 clean:
@@ -197,6 +184,7 @@ clean:
 		$(NOINST_PROGRAMS) $(NOINST_PROGRAMS_OPT) \
 		$(PROGRAMS_STATIC) \
 		$(PROGRAMS_UPX) \
+		*.stamp \
 		$(NULL)
 
 .PHONY: distclean
@@ -243,22 +231,28 @@ cleantests.opt: $(foreach d,$(TEST_DIRS_OPT),$(d)-cleantests-opt)
 
 ifeq ($(DISTRIBUTED),yes)
 
-dist_library: dist_library@standard-library
-dist_library@%:
+
+MATITA_CFLAGS = #-nodb
+
+dist_library: install_preliminaries dist_library@standard-library
+dist_library@%: 
 	$(H)echo "MATITAMAKE init $*"
-	$(H)(cd $(DESTDIR) && ./matitamake init $* $(DESTDIR)/ma/$*)
+	$(H)(HOME=$(WHERE) USER=builder MATITA_RT_BASE_DIR=$(WHERE) MATITA_FLAGS='$(MATITA_CFLAGS)' $(WHERE)/matitamake init $* $(WHERE)/ma/$*)
 	$(H)echo "MATITAMAKE publish $*"
-	$(H)(cd $(DESTDIR) && ./matitamake publish $*)
+	$(H)(HOME=$(WHERE) USER=builder MATITA_RT_BASE_DIR=$(WHERE) MATITA_FLAGS='$(MATITA_CFLAGS)' $(WHERE)/matitamake publish $*)
 	$(H)echo "MATITAMAKE destroy $*"
-	$(H)(cd $(DESTDIR) && ./matitamake destroy $*)
+	$(H)(HOME=$(WHERE) USER=builder MATITA_RT_BASE_DIR=$(WHERE) MATITA_FLAGS='$(MATITA_CFLAGS)' $(WHERE)/matitamake destroy $*)
+	# sqlite3 only
+	$(H)cp $(WHERE)/.matita/matita.db  $(WHERE)/metadata.db || true
+	#$(H)rm -rf $(WHERE)/.matita/
 	touch $@
 
 endif
 
-dist_pre: matitaGeneratedGui.ml matitaGeneratedGui.mli
+dist_pre: matitaGeneratedGui.ml
 	$(MAKE) -C dist/ dist_pre
 
-DESTDIR = $(RT_BASE_DIR)
+WHERE = $(DESTDIR)/$(RT_BASE_DIR)
 INSTALL_STUFF = 			\
 	icons/ 				\
 	help/ 				\
@@ -280,30 +274,32 @@ else
 INSTALL_STUFF_BIN = $(INSTALL_PROGRAMS)
 endif
 
-install: install_preliminaries dist_library install_conclusion
+install-arch: install_preliminaries 
+install-indep: dist_library 
 
-install_preliminaries:
-	install -d $(DESTDIR)/ma/
-	cp -a $(INSTALL_STUFF) $(DESTDIR)
+install_preliminaries : install_preliminaries.stamp
+
+install_preliminaries.stamp:
+	$(H)install -d $(WHERE)/ma/
+	$(H)cp -a $(INSTALL_STUFF) $(WHERE)
 ifeq ($(HAVE_OCAMLOPT),yes)
-	install -s $(INSTALL_STUFF_BIN) $(DESTDIR)
-	for p in $(INSTALL_PROGRAMS); do ln -fs $$p.opt $(DESTDIR)/$$p; done
+	$(H)install -s $(INSTALL_STUFF_BIN) $(WHERE)
+	$(H)for p in $(INSTALL_PROGRAMS); do ln -fs $$p.opt $(WHERE)/$$p; done
 else
-	install $(INSTALL_STUFF_BIN) $(DESTDIR)
+	$(H)install $(INSTALL_STUFF_BIN) $(WHERE)
 endif
-	for p in $(INSTALL_PROGRAMS_LINKS_MATITAC); do \
-		ln -fs matitac $(DESTDIR)/$$p;\
+	$(H)for p in $(INSTALL_PROGRAMS_LINKS_MATITAC); do \
+		ln -fs matitac $(WHERE)/$$p;\
 	done
-	for p in $(INSTALL_PROGRAMS_LINKS_MATITA); do \
-		ln -fs matita $(DESTDIR)/$$p;\
+	$(H)for p in $(INSTALL_PROGRAMS_LINKS_MATITA); do \
+		ln -fs matita $(WHERE)/$$p;\
 	done
-	cp -a library/ $(DESTDIR)/ma/standard-library
-	cp -a contribs/ $(DESTDIR)/ma/
-
-install_conclusion:
+	$(H)cp -a library/ $(WHERE)/ma/standard-library
+	$(H)cp -a contribs/ $(WHERE)/ma/
+	$(H)touch install_preliminaries.stamp
 
 uninstall:
-	rm -rf $(DESTDIR)
+	$(H)rm -rf $(WHERE)
 
 STATIC_LINK = dist/static_link/static_link
 # for matita
@@ -386,19 +382,18 @@ cicbrowser.opt.static.upx: matita.opt.static.upx
 
 # }}} End of distribution stuff
 
+# {{{ Deps and automatic rules 
 tags: TAGS
 .PHONY: TAGS
 TAGS:
 	$(H)cd ..; otags -vi -r components/ matita/
 
-#.depend: matitaGeneratedGui.ml matitaGeneratedGui.mli *.ml *.mli
-
 .PHONY: depend
 	
-depend:
+depend: 
 	$(H)echo "  OCAMLDEP"
-	$(H)$(OCAMLDEP) *.ml *.mli > .depend
-depend.opt:
+	$(H)$(OCAMLDEP)  > .depend
+depend.opt: 
 	$(H)echo "  OCAMLDEP -native"
 	$(H)$(OCAMLDEP) -native *.ml *.mli > .depend.opt
 
@@ -411,6 +406,10 @@ ifeq ($(MAKECMDGOALS), all)
 endif
 
 ifeq ($(MAKECMDGOALS), opt)
+  include .depend.opt   
+endif
+
+ifeq ($(MAKECMDGOALS), world)
   include .depend.opt   
 endif
 
@@ -427,22 +426,11 @@ endif
 	$(H)echo "  OCAMLC -dtypes $<"
 	$(H)$(OCAMLC) -dtypes $(PKGS) -c $<
 
-$(CMOS): $(LIB_DEPS)
-$(CMOS:%.cmo=%.cmx): $(LIBX_DEPS)
-
 deps.ps: deps.dot
 	dot -Tps -o $@ $<
 deps.dot: .depend
 	./dep2dot.rb < $< | tred > $@
 
-ifeq ($(MAKECMDGOALS),all)
-   $(CMOS:%.cmo=%.cmi): $(LIB_DEPS)
-endif
-ifeq ($(MAKECMDGOALS),)
-   $(CMOS:%.cmo=%.cmi): $(LIB_DEPS)
-endif
-ifeq ($(MAKECMDGOALS),opt)
-   $(CMOS:%.cmo=%.cmi): $(LIBX_DEPS)
-endif
+# }}} End of deps and automatic rules
 
 # vim: set foldmethod=marker:
