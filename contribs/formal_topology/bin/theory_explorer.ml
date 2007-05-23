@@ -44,7 +44,10 @@ let dot_of_equivalence_class (repr,others,leq,_) =
    let eq = String.concat " = " (List.map string_of_cop (repr::others)) in
     dot_of_cop repr ^ "[label=\"" ^ eq ^ "\"];" ^
      if !leq = [] then "" else "\n"
-  else "") ^
+  else if !leq = [] then
+   dot_of_cop repr ^ ";"
+  else
+   "") ^
    String.concat "\n" 
     (List.map
       (function (repr',_,_,_) ->
@@ -144,9 +147,9 @@ let locate ((repr,_,leq,geq) as node) set =
   aux set
 ;;
 
-let analyze_one i repr hecandidate (news,set) =
+let analyze_one repr hecandidate (news,set) =
  let candidate = hecandidate::repr in
-  if List.length (List.filter ((=) M) candidate) > i then
+  if List.length (List.filter ((=) M) candidate) > 1 then
    news,set
   else
    try
@@ -162,31 +165,28 @@ let analyze_one i repr hecandidate (news,set) =
       candidate::news,set
 ;;
 
-let rec explore i j set news =
+let rec explore i set news =
  let rec aux news set =
   function
      [] -> news,set
    | repr::tl ->
       let news,set =
-       List.fold_right (analyze_one i repr) [I;C;M] (news,set)
+       List.fold_right (analyze_one repr) [I;C;M] (news,set)
       in
        aux news set tl
  in
   let news,set = aux [] set news in
    if news = [] then
     begin
-     print_endline ("PUNTO FISSO RAGGIUNTO! i=" ^ string_of_int i ^ " j=" ^ string_of_int j);
+     print_endline ("PUNTO FISSO RAGGIUNTO! i=" ^ string_of_int i);
      print_endline (string_of_set set ^ "\n----------------");
-     if i < 2 then
-      explore (i+1) 1 set (List.map (function (repr,_,_,_) -> repr) set)
-     else
-      ps_of_set set
+     ps_of_set set
     end
    else
     begin
-     print_endline ("NUOVA ITERAZIONE, i=" ^ string_of_int i ^ " j=" ^ string_of_int j);
+     print_endline ("NUOVA ITERAZIONE, i=" ^ string_of_int i);
      print_endline (string_of_set set ^ "\n----------------");
-     explore i (j+1) set news
+     explore (i+1) set news
     end
 in
  let id = [] in
@@ -195,5 +195,5 @@ in
   print_endline (string_of_set set ^ "\n----------------");
   ignore (Unix.system "rm -f log");
   ps_of_set set;
-  explore 0 1 set [id]
+  explore 1 set [id]
 ;;
