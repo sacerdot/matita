@@ -59,14 +59,22 @@ type set = equivalence_class list
 let string_of_set s =
  String.concat "\n" (List.map string_of_equivalence_class s)
 
-let ps_of_set ?processing s =
+let ps_of_set (to_be_considered,under_consideration) ?processing s =
  let ch = open_out "xxx.dot" in
   output_string ch "digraph G {\n";
+  (match under_consideration with
+      None -> ()
+    | Some repr ->
+       output_string ch (dot_of_cop repr ^ " [color=yellow];"));
+  List.iter
+   (function repr -> output_string ch (dot_of_cop repr ^ " [color=green];")
+   ) to_be_considered ;
   output_string ch (String.concat "\n" (List.map dot_of_equivalence_class s));
   output_string ch "\n";
   (match processing with
       None -> ()
     | Some (repr,rel,repr') ->
+       output_string ch (dot_of_cop repr ^ " [color=red];");
        output_string ch
         (dot_of_cop repr' ^ " -> " ^ dot_of_cop repr ^
          " [" ^
@@ -76,8 +84,8 @@ let ps_of_set ?processing s =
   close_out ch;
   ignore (Unix.system "dot -Tps xxx.dot > xxx.ps")
 
-let test set rel candidate repr =
- ps_of_set ~processing:(candidate,rel,repr) set;
+let test to_be_considered_and_now set rel candidate repr =
+ ps_of_set to_be_considered_and_now ~processing:(candidate,rel,repr) set;
  print_string
   (string_of_cop candidate ^ " " ^ rel ^ " " ^ string_of_cop repr ^ "? ");
  flush stdout;
@@ -113,12 +121,12 @@ let test set rel candidate repr =
    print_endline (if res then "y" else "n");
    res
 
-let normalize candidate set =
+let normalize to_be_considered_and_now candidate set =
  let rec aux =
   function
      [] -> raise Not_found
    | (repr,others,leq,geq) as eqclass :: tl ->
-       if test set "=" candidate repr then
+       if test to_be_considered_and_now set "=" candidate repr then
         (repr,others@[candidate],leq,geq)::tl
        else
         eqclass::(aux tl) 
@@ -126,18 +134,18 @@ let normalize candidate set =
   aux set
 ;;
 
-let locate ((repr,_,leq,geq) as node) set =
+let locate to_be_considered_and_now ((repr,_,leq,geq) as node) set =
  let rec aux =
   function
      [] -> ()
    | (repr',_,leq',geq') as node' :: tl ->
        if repr = repr' then ()
-       else if test set "⊆" repr repr' then
+       else if test to_be_considered_and_now set "⊆" repr repr' then
         begin
          leq  := node' :: !leq;
          geq' := node  :: !geq'
         end
-       else if test set "⊆" repr' repr then
+       else if test to_be_considered_and_now set "⊆" repr' repr then
         begin
          geq  := node' :: !geq;
          leq' := node  :: !leq'
@@ -147,13 +155,13 @@ let locate ((repr,_,leq,geq) as node) set =
   aux set
 ;;
 
-let analyze_one repr hecandidate (news,set) =
+let analyze_one to_be_considered repr hecandidate (news,set) =
  let candidate = hecandidate::repr in
   if List.length (List.filter ((=) M) candidate) > 1 then
    news,set
   else
    try
-    let set = normalize candidate set in
+    let set = normalize (to_be_considered,Some repr) candidate set in
      news,set
    with
     Not_found ->
@@ -161,7 +169,7 @@ let analyze_one repr hecandidate (news,set) =
      let geq = ref [] in
      let node = candidate,[],leq,geq in
      let set = node::set in
-      locate node set;
+      locate (to_be_considered,Some repr) node set;
       candidate::news,set
 ;;
 
@@ -171,7 +179,7 @@ let rec explore i set news =
      [] -> news,set
    | repr::tl ->
       let news,set =
-       List.fold_right (analyze_one repr) [I;C;M] (news,set)
+       List.fold_right (analyze_one tl repr) [I;C;M] (news,set)
       in
        aux news set tl
  in
@@ -180,7 +188,7 @@ let rec explore i set news =
     begin
      print_endline ("PUNTO FISSO RAGGIUNTO! i=" ^ string_of_int i);
      print_endline (string_of_set set ^ "\n----------------");
-     ps_of_set set
+     ps_of_set ([],None) set
     end
    else
     begin
@@ -194,6 +202,6 @@ in
   print_endline ("PRIMA ITERAZIONE, i=0, j=0");
   print_endline (string_of_set set ^ "\n----------------");
   ignore (Unix.system "rm -f log");
-  ps_of_set set;
+  ps_of_set ([id],None) set;
   explore 1 set [id]
 ;;
