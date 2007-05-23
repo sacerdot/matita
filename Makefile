@@ -392,7 +392,7 @@ TAGS:
 	
 depend: 
 	$(H)echo "  OCAMLDEP"
-	$(H)$(OCAMLDEP)  > .depend
+	$(H)$(OCAMLDEP) *.ml *.mli > .depend
 depend.opt: 
 	$(H)echo "  OCAMLDEP -native"
 	$(H)$(OCAMLDEP) -native *.ml *.mli > .depend.opt
