@@ -1,3 +1,11 @@
+type rel = Equal | SubsetEqual | SupersetEqual
+
+let string_of_rel =
+ function
+    Equal -> "="
+  | SubsetEqual -> "⊆"
+  | SupersetEqual -> "⊇"
+
 (* operator *)
 type op = I | C | M
 
@@ -78,11 +86,17 @@ let ps_of_set (to_be_considered,under_consideration,news) ?processing s =
       None -> ()
     | Some (repr,rel,repr') ->
        output_string ch (dot_of_cop repr ^ " [color=red];");
-       output_string ch
-        (dot_of_cop repr' ^ " -> " ^ dot_of_cop repr ^
-         " [" ^
-         (if rel="=" then "arrowhead=none " else "") ^
-         "style=dashed];\n"));
+       let repr,repr' =
+        match rel with
+           SupersetEqual -> repr',repr
+         | Equal
+         | SubsetEqual -> repr,repr'
+       in
+        output_string ch
+         (dot_of_cop repr' ^ " -> " ^ dot_of_cop repr ^
+          " [" ^
+          (match rel with Equal -> "arrowhead=none " | _ -> "") ^
+          "style=dashed];\n"));
   output_string ch "}\n";
   close_out ch;
   ignore (Unix.system "dot -Tps xxx.dot > xxx.ps")
@@ -90,7 +104,7 @@ let ps_of_set (to_be_considered,under_consideration,news) ?processing s =
 let test to_be_considered_and_now set rel candidate repr =
  ps_of_set to_be_considered_and_now ~processing:(candidate,rel,repr) set;
  print_string
-  (string_of_cop candidate ^ " " ^ rel ^ " " ^ string_of_cop repr ^ "? ");
+  (string_of_cop candidate ^ " " ^ string_of_rel rel ^ " " ^ string_of_cop repr ^ "? ");
  flush stdout;
  assert (Unix.system "cp formal_topology.ma xxx.ma" = Unix.WEXITED 0);
  let ch = open_out_gen [Open_append] 0 "xxx.ma" in
@@ -114,12 +128,20 @@ let test to_be_considered_and_now set rel candidate repr =
            matita_of_cop "A" repr ^ " ⊆ " ^ matita_of_cop "A" repr' ^ ".\n");
       ) !leq;
    ) set;
+  let candidate',rel',repr' =
+   match rel with
+      SupersetEqual -> repr,SubsetEqual,candidate
+    | Equal
+    | SubsetEqual -> candidate,rel,repr
+  in
   output_string ch
-   ("theorem foo: \\forall A." ^ matita_of_cop "A" candidate ^ " " ^ rel ^ " " ^
-     matita_of_cop "A" repr ^ ". intros; auto size=6 depth=4. qed.\n");
+   ("theorem foo: \\forall A." ^ matita_of_cop "A" candidate' ^
+      " " ^ string_of_rel rel' ^ " " ^
+      matita_of_cop "A" repr' ^ ". intros; auto size=6 depth=4. qed.\n");
   close_out ch;
   let res =
-   Unix.system "../../../matitac.opt xxx.ma >> log 2>&1" = Unix.WEXITED 0
+   (*Unix.system "../../../matitac.opt xxx.ma >> log 2>&1" = Unix.WEXITED 0*)
+   Unix.system "../../../matitac.opt xxx.ma > /dev/null 2>&1" = Unix.WEXITED 0
   in
    print_endline (if res then "y" else "n");
    res
@@ -129,7 +151,7 @@ let normalize to_be_considered_and_now candidate set =
   function
      [] -> raise Not_found
    | (repr,others,leq,geq) as eqclass :: tl ->
-       if test to_be_considered_and_now set "=" candidate repr then
+       if test to_be_considered_and_now set Equal candidate repr then
         (repr,others@[candidate],leq,geq)::tl
        else
         eqclass::(aux tl) 
@@ -143,12 +165,12 @@ let locate to_be_considered_and_now ((repr,_,leq,geq) as node) set =
      [] -> ()
    | (repr',_,leq',geq') as node' :: tl ->
        if repr = repr' then ()
-       else if test to_be_considered_and_now set "⊆" repr repr' then
+       else if test to_be_considered_and_now set SubsetEqual repr repr' then
         begin
          leq  := node' :: !leq;
          geq' := node  :: !geq'
         end
-       else if test to_be_considered_and_now set "⊆" repr' repr then
+       else if test to_be_considered_and_now set SupersetEqual repr repr' then
         begin
          geq  := node' :: !geq;
          leq' := node  :: !leq'
@@ -204,7 +226,7 @@ in
  let set = [id,[],ref [], ref []] in
   print_endline ("PRIMA ITERAZIONE, i=0, j=0");
   print_endline (string_of_set set ^ "\n----------------");
-  ignore (Unix.system "rm -f log");
+  (*ignore (Unix.system "rm -f log");*)
   ps_of_set ([id],None,[]) set;
   explore 1 set [id]
 ;;
