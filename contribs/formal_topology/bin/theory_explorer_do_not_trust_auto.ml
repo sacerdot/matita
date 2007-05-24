@@ -43,7 +43,7 @@ let string_of_equivalence_class (repr,others,leq,_) =
      String.concat "\n" 
       (List.map
         (function (repr',_,_,_) ->
-           string_of_cop repr ^ " ⊆ " ^ string_of_cop repr') !leq)
+           string_of_cop repr ^ " <= " ^ string_of_cop repr') !leq)
    else
     "")
 
@@ -61,28 +61,19 @@ let dot_of_equivalence_class (repr,others,leq,_) =
       (function (repr',_,_,_) ->
          dot_of_cop repr' ^ " -> " ^ dot_of_cop repr ^ ";") !leq)
 
-(* set of equivalence classes, infima, suprema *)
-type set =
- equivalence_class list * equivalence_class list * equivalence_class list
+(* set of equivalence classes *)
+type set = equivalence_class list
 
-let string_of_set (s,_,_) =
+let string_of_set s =
  String.concat "\n" (List.map string_of_equivalence_class s)
 
-let ps_of_set (to_be_considered,under_consideration,news) ?processing (s,inf,sup) =
+let ps_of_set (to_be_considered,under_consideration,news) ?processing s =
  let ch = open_out "xxx.dot" in
   output_string ch "digraph G {\n";
   (match under_consideration with
       None -> ()
     | Some repr ->
        output_string ch (dot_of_cop repr ^ " [color=yellow];"));
-  List.iter
-   (function (repr,_,_,_) ->
-     output_string ch (dot_of_cop repr ^ " [shape=diamond];")
-   ) inf ;
-  List.iter
-   (function (repr,_,_,_) ->
-     output_string ch (dot_of_cop repr ^ " [shape=polygon];")
-   ) sup ;
   List.iter
    (function repr -> output_string ch (dot_of_cop repr ^ " [color=green];")
    ) to_be_considered ;
@@ -110,7 +101,7 @@ let ps_of_set (to_be_considered,under_consideration,news) ?processing (s,inf,sup
   close_out ch;
   ignore (Unix.system "tred xxx.dot > yyy.dot && dot -Tps yyy.dot > xxx.ps")
 
-let test to_be_considered_and_now ((s,_,_) as set) rel candidate repr =
+let test to_be_considered_and_now set rel candidate repr =
  ps_of_set to_be_considered_and_now ~processing:(candidate,rel,repr) set;
  print_string
   (string_of_cop candidate ^ " " ^ string_of_rel rel ^ " " ^ string_of_cop repr ^ "? ");
@@ -136,7 +127,7 @@ let test to_be_considered_and_now ((s,_,_) as set) rel candidate repr =
           ": \\forall A." ^
            matita_of_cop "A" repr ^ " ⊆ " ^ matita_of_cop "A" repr' ^ ".\n");
       ) !leq;
-   ) s;
+   ) set;
   let candidate',rel',repr' =
    match rel with
       SupersetEqual -> repr,SubsetEqual,candidate
@@ -155,118 +146,59 @@ let test to_be_considered_and_now ((s,_,_) as set) rel candidate repr =
    print_endline (if res then "y" else "n");
    res
 
-let rec leq_transitive_closure leq node ((repr,_,leq',geq') as node') =
- if not (List.mem node' !leq) then leq := node' :: !leq;
- if not (List.mem node !geq') then geq' := node :: !geq';
- List.iter (leq_transitive_closure leq node) !leq'
-;;
-
-let rec geq_transitive_closure geq node ((_,_,leq',geq') as node') =
- if not (List.mem node' !geq) then geq  := node' :: !geq;
- if not (List.mem node !leq') then leq' := node  :: !leq';
- List.iter (geq_transitive_closure geq node) !geq'
-;;
-
-let remove node l =
- let l' = List.filter (fun node' -> node != node') l in
- if List.length l = List.length l' then
-  assert false
- else
-  l'
-;;
-
-let locate_using_leq to_be_considered_and_now ((repr,_,leq,_) as node)
- ((nodes,inf,sup) as set)
-=
- let rec aux is_sup inf =
+let normalize to_be_considered_and_now candidate set =
+ let rec aux =
   function
-     [] -> is_sup,inf
-   | (repr',_,_,geq') as node' :: sup ->
-       if repr=repr' then aux is_sup inf (!geq'@sup)
-       else if List.mem node' !leq
-            || test to_be_considered_and_now set SubsetEqual repr repr'
-       then
-        begin
-         let inf = if !geq' = [] then remove node' inf else inf in
-          leq_transitive_closure leq node node';
-          aux false inf (!geq'@sup)
-        end
+     [] -> raise Not_found
+   | (repr,others,leq,geq) as eqclass :: tl ->
+       if test to_be_considered_and_now set Equal candidate repr then
+        (repr,others@[candidate],leq,geq)::tl
        else
-        aux is_sup inf sup
+        eqclass::(aux tl) 
  in
-  let is_sup,inf = aux true inf sup in
-   if is_sup then
-    nodes,inf,sup@[node]
-   else
-    nodes,inf,sup
+  aux set
 ;;
 
-exception SameEquivalenceClass of equivalence_class * equivalence_class;;
-
-let locate_using_geq to_be_considered_and_now ((repr,_,leq,geq) as node)
- ((nodes,inf,sup) as set)
-=
- let rec aux is_inf sup =
+let locate to_be_considered_and_now ((repr,_,leq,geq) as node) set =
+ let rec aux =
   function
-     [] -> sup,is_inf
-   | (repr',_,leq',_) as node' :: inf ->
-       if repr=repr' then aux is_inf sup (!leq'@inf)
-       else if List.mem node' !geq
-            || test to_be_considered_and_now set SupersetEqual repr repr'
-       then
+     [] -> ()
+   | (repr',_,leq',geq') as node' :: tl ->
+       if repr = repr' then ()
+       else if test to_be_considered_and_now set SubsetEqual repr repr' then
         begin
-         if List.mem node' !leq then
-          (* We have found two equal nodes! *)
-          raise (SameEquivalenceClass (node,node'))
-         else
-          begin
-           let sup = if !leq' = [] then remove node' sup else sup in
-            geq_transitive_closure geq node node';
-            aux false sup (!leq'@inf)
-          end
+         leq  := node' :: !leq;
+         geq' := node  :: !geq'
         end
-       else
-        aux is_inf sup inf
+       else if test to_be_considered_and_now set SupersetEqual repr repr' then
+        begin
+         geq  := node' :: !geq;
+         leq' := node  :: !leq'
+        end ;
+       aux tl
  in
-  let sup,is_inf = aux true sup inf in
-   if is_inf then
-    nodes,inf@[node],sup
-   else
-    nodes,inf,sup
+  aux set
 ;;
 
-let analyze_one to_be_considered repr hecandidate (news,((nodes,inf,sup) as set)) =
+let analyze_one to_be_considered repr hecandidate (news,set) =
  let candidate = hecandidate::repr in
   if List.length (List.filter ((=) M) candidate) > 1 then
    news,set
   else
    try
-    let leq = ref [] in
-    let geq = ref [] in
-    let node = candidate,[],leq,geq in
-    let nodes = nodes@[node] in
-    let set = nodes,inf,sup in
-    let set = locate_using_leq (to_be_considered,Some repr,news) node set in
-    let set = locate_using_geq (to_be_considered,Some repr,news) node set in
-     news@[candidate],set
+    let set = normalize (to_be_considered,Some repr,news) candidate set in
+     news,set
    with
-    SameEquivalenceClass (node_to_be_deleted,node') ->
-     let rec clean =
-      function
-         [] -> []
-       | (repr',others,leq,geq) as node::tl ->
-          leq := List.filter (function node -> node_to_be_deleted != node) !leq;
-          geq := List.filter (function node -> node_to_be_deleted != node) !geq;
-          if node==node' then
-           (repr',others@[candidate],leq,geq)::clean tl
-          else
-           (repr',others,leq,geq)::clean tl
-     in
-     let nodes = clean nodes in
-      news,(nodes,inf,sup)
+    Not_found ->
+     let leq = ref [] in
+     let geq = ref [] in
+     let node = candidate,[],leq,geq in
+     let set = node::set in
+      locate (to_be_considered,Some repr,news) node set;
+      candidate::news,set
 ;;
 
-let rec explore i (set:set) news =
+let rec explore i set news =
  let rec aux news set =
   function
      [] -> news,set
@@ -291,8 +223,7 @@ let rec explore i (set:set) news =
     end
 in
  let id = [] in
- let id_node = id,[],ref [], ref [] in
- let set = [id_node],[id_node],[id_node] in
+ let set = [id,[],ref [], ref []] in
   print_endline ("PRIMA ITERAZIONE, i=0, j=0");
   print_endline (string_of_set set ^ "\n----------------");
   (*ignore (Unix.system "rm -f log");*)
