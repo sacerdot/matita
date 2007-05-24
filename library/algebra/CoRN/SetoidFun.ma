@@ -196,7 +196,7 @@ exact H0.
 qed.
 
 
-(* Questa coercion composta non e' stata generata automaticamente *)
+(* Questa coercion composta non e' stata generata autobatchmaticamente *)
 lemma mycor: ∀S. CSetoid_bin_op S → (S → S → S).
  intros;
  unfold in c;
@@ -235,7 +235,7 @@ unfold in H10.
 letin H40 \def (csf_strext A B g).
 unfold in H40.
 elim (H10 (csf_fun ? ? g x1) (csf_fun ? ? g x2) (csf_fun ? ? g y1) (csf_fun ? ? g y2) H0); 
-[left | right]; auto.
+[left | right]; autobatch.
 qed.
 
 definition compose_CSetoid_bin_fun: \forall A, B, C : CSetoid. 
@@ -473,7 +473,7 @@ simplify.
 right. apply I|intros (a at).simplify. left. apply I]]
 simplify.
 left.
-auto new|intros 2 (c l).
+autobatch new|intros 2 (c l).
 intros 2 (Hy).
 elim y 0[
 intros 2 (H z).
@@ -509,15 +509,15 @@ unfold Not.
 elim x 0[
   intro y.
   elim y 0[
-    split[simplify.intro.auto new|simplify.intros.exact H1]|
+    split[simplify.intro.autobatch new|simplify.intros.exact H1]|
 intros (a at).
 simplify.
-split[intro.auto new|intros. exact H1]
+split[intro.autobatch new|intros. exact H1]
 ]
 |
 intros (a at IHx).
 elim y 0[simplify.
-  split[intro.auto new|intros.exact H]
+  split[intro.autobatch new|intros.exact H]
   |
 intros 2 (c l).
 generalize in match (IHx l).
@@ -874,7 +874,7 @@ generalize in match (bpfstrx ? ? ? ? ? ? ? H0).
 exact (eq_imp_not_ap ? ? ? H).
 qed.
 
-(* Similar for automorphisms. *)
+(* Similar for autobatchmorphisms. *)
 
 record PartFunct (S : CSetoid) : Type \def 
   {pfdom  :  S -> Type;
@@ -1247,7 +1247,7 @@ a = b \to b \neq c \to a \neq c.
 intros.
 generalize in match (ap_cotransitive_unfolded ? ? ? H1 a).
 intro.elim H2.apply False_ind.apply (eq_imp_not_ap ? ? ? H).
-auto.assumption.
+autobatch.assumption.
 qed.
 
 lemma Dir_bij : \forall A, B:CSetoid. 
@@ -1262,7 +1262,7 @@ lemma Dir_bij : \forall A, B:CSetoid.
   apply (eq_to_ap_to_ap ? ? ? ? (H1 ?)).
   apply ap_symmetric_unfolded.assumption
   |unfold surjective.intros.
-   elim f.auto.
+   elim f.autobatch.
   ]
 qed.
    
@@ -1282,7 +1282,7 @@ lemma Inv_bij : \forall A, B:CSetoid.
   apply ap_symmetric_unfolded.
   apply (eq_to_ap_to_ap ? ? ? ? (H3 ?)).
   apply ap_symmetric_unfolded.assumption|
-  intros.auto]
+  intros.autobatch]
 qed.
 
 (* End bijections.*)

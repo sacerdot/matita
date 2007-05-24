@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/library_auto/nat/orders".
+set "baseuri" "cic:/matita/library_autobatch/nat/orders".
 
 include "auto/nat/nat.ma".
 include "higher_order_defs/ordering.ma".
@@ -23,40 +23,40 @@ inductive le (n:nat) : nat \to Prop \def
   | le_S : \forall m:nat. le n m \to le n (S m).
 
 (*CSC: the URI must disappear: there is a bug now *)
-interpretation "natural 'less or equal to'" 'leq x y = (cic:/matita/library_auto/nat/orders/le.ind#xpointer(1/1) x y).
+interpretation "natural 'less or equal to'" 'leq x y = (cic:/matita/library_autobatch/nat/orders/le.ind#xpointer(1/1) x y).
 (*CSC: the URI must disappear: there is a bug now *)
 interpretation "natural 'neither less nor equal to'" 'nleq x y =
   (cic:/matita/logic/connectives/Not.con
-    (cic:/matita/library_auto/nat/orders/le.ind#xpointer(1/1) x y)).
+    (cic:/matita/library_autobatch/nat/orders/le.ind#xpointer(1/1) x y)).
 
 definition lt: nat \to nat \to Prop \def
 \lambda n,m:nat.(S n) \leq m.
 
 (*CSC: the URI must disappear: there is a bug now *)
-interpretation "natural 'less than'" 'lt x y = (cic:/matita/library_auto/nat/orders/lt.con x y).
+interpretation "natural 'less than'" 'lt x y = (cic:/matita/library_autobatch/nat/orders/lt.con x y).
 (*CSC: the URI must disappear: there is a bug now *)
 interpretation "natural 'not less than'" 'nless x y =
-  (cic:/matita/logic/connectives/Not.con (cic:/matita/library_auto/nat/orders/lt.con x y)).
+  (cic:/matita/logic/connectives/Not.con (cic:/matita/library_autobatch/nat/orders/lt.con x y)).
 
 definition ge: nat \to nat \to Prop \def
 \lambda n,m:nat.m \leq n.
 
 (*CSC: the URI must disappear: there is a bug now *)
-interpretation "natural 'greater or equal to'" 'geq x y = (cic:/matita/library_auto/nat/orders/ge.con x y).
+interpretation "natural 'greater or equal to'" 'geq x y = (cic:/matita/library_autobatch/nat/orders/ge.con x y).
 
 definition gt: nat \to nat \to Prop \def
 \lambda n,m:nat.m<n.
 
 (*CSC: the URI must disappear: there is a bug now *)
-interpretation "natural 'greater than'" 'gt x y = (cic:/matita/library_auto/nat/orders/gt.con x y).
+interpretation "natural 'greater than'" 'gt x y = (cic:/matita/library_autobatch/nat/orders/gt.con x y).
 (*CSC: the URI must disappear: there is a bug now *)
 interpretation "natural 'not greater than'" 'ngtr x y =
-  (cic:/matita/logic/connectives/Not.con (cic:/matita/library_auto/nat/orders/gt.con x y)).
+  (cic:/matita/logic/connectives/Not.con (cic:/matita/library_autobatch/nat/orders/gt.con x y)).
 
 theorem transitive_le : transitive nat le.
 unfold transitive.
 intros.
-elim H1;auto.
+elim H1;autobatch.
 (*[ assumption
 | apply le_S.
   assumption
@@ -70,7 +70,7 @@ theorem transitive_lt: transitive nat lt.
 unfold transitive.
 unfold lt.
 intros.
-elim H1;auto.
+elim H1;autobatch.
   (*apply le_S;assumption.*)
   
 qed.
@@ -80,7 +80,7 @@ theorem trans_lt: \forall n,m,p:nat. lt n m \to lt m p \to lt n p
 
 theorem le_S_S: \forall n,m:nat. n \leq m \to S n \leq S m.
 intros.
-elim H;auto.
+elim H;autobatch.
 (*[ apply le_n.
 | apply le_S.
   assumption
@@ -89,7 +89,7 @@ qed.
 
 theorem le_O_n : \forall n:nat. O \leq n.
 intros.
-elim n;auto.
+elim n;autobatch.
 (*[ apply le_n
 | apply le_S. 
   assumption
@@ -97,14 +97,14 @@ elim n;auto.
 qed.
 
 theorem le_n_Sn : \forall n:nat. n \leq S n.
-intros.auto.
+intros.autobatch.
 (*apply le_S.
 apply le_n.*)
 qed.
 
 theorem le_pred_n : \forall n:nat. pred n \leq n.
 intros.
-elim n;auto.
+elim n;autobatch.
 (*[ simplify.
   apply le_n
 | simplify.
@@ -115,7 +115,7 @@ qed.
 theorem le_S_S_to_le : \forall n,m:nat. S n \leq S m \to n \leq m.
 intros.
 change with (pred (S n) \leq pred (S m)).
-elim H;auto.
+elim H;autobatch.
 (*[ apply le_n
 | apply (trans_le ? (pred n1))
   [ assumption
@@ -127,9 +127,9 @@ qed.
 theorem leS_to_not_zero : \forall n,m:nat. S n \leq m \to not_zero m.
 intros.
 elim H
-[ (*qui auto non chiude il goal*)
+[ (*qui autobatch non chiude il goal*)
   exact I
-| (*qui auto non chiude il goal*)
+| (*qui autobatch non chiude il goal*)
   exact I
 ]
 qed.
@@ -140,7 +140,7 @@ intros.
 unfold Not.
 simplify.
 intros.
-(*qui auto NON chiude il goal*)
+(*qui autobatch NON chiude il goal*)
 apply (leS_to_not_zero ? ? H).
 qed.
 
@@ -150,7 +150,7 @@ elim n
 [ apply not_le_Sn_O
 | unfold Not.
   simplify.
-  intros.auto
+  intros.autobatch
   (*cut (S n1 \leq n1).
   [ apply H.
     assumption
@@ -165,12 +165,12 @@ theorem le_to_or_lt_eq : \forall n,m:nat.
 n \leq m \to n < m \lor n = m.
 intros.
 elim H
-[ auto
+[ autobatch
   (*right.
   reflexivity*)
 | left.
   unfold lt.
-  auto
+  autobatch
   (*apply le_S_S.
   assumption*)
 ]
@@ -181,7 +181,7 @@ theorem lt_to_not_eq : \forall n,m:nat. n<m \to n \neq m.
 unfold Not.
 intros.
 cut ((le (S n) m) \to False)
-[ auto
+[ autobatch
   (*apply Hcut.
   assumption*)
 | rewrite < H1.
@@ -193,7 +193,7 @@ qed.
 theorem lt_to_le : \forall n,m:nat. n<m \to n \leq m.
 simplify.
 intros.
-auto.
+autobatch.
 (*unfold lt in H.
 elim H
 [ apply le_S. 
@@ -204,7 +204,7 @@ elim H
 qed.
 
 theorem lt_S_to_le : \forall n,m:nat. n < S m \to n \leq m.
-auto.
+autobatch.
 (*simplify.
 intros.
 apply le_S_S_to_le.
@@ -215,13 +215,13 @@ theorem not_le_to_lt: \forall n,m:nat. n \nleq m \to m<n.
 intros 2.
 apply (nat_elim2 (\lambda n,m.n \nleq m \to m<n))
 [ intros.
-  apply (absurd (O \leq n1));auto
+  apply (absurd (O \leq n1));autobatch
   (*[ apply le_O_n
   | assumption
   ]*)
 | unfold Not.
   unfold lt.
-  intros.auto
+  intros.autobatch
   (*apply le_S_S.
   apply le_O_n*)
 | unfold Not.
@@ -230,7 +230,7 @@ apply (nat_elim2 (\lambda n,m.n \nleq m \to m<n))
   apply le_S_S.
   apply H.
   intros.
-  auto
+  autobatch
   (*apply H1.
   apply le_S_S.
   assumption*)
@@ -241,7 +241,7 @@ theorem lt_to_not_le: \forall n,m:nat. n<m \to m \nleq n.
 unfold Not.
 unfold lt.
 intros 3.
-elim H;auto.
+elim H;autobatch.
 (*[ apply (not_le_Sn_n n H1)
 | apply H2.
   apply lt_to_le. 
@@ -254,7 +254,7 @@ simplify.
 intros.
 apply lt_S_to_le.
 apply not_le_to_lt.
-(*qui auto non chiude il goal*)
+(*qui autobatch non chiude il goal*)
 exact H.
 qed.
 
@@ -263,7 +263,7 @@ intros.
 unfold Not.
 unfold lt.
 apply lt_to_not_le.
-unfold lt.auto.
+unfold lt.autobatch.
 (*apply le_S_S.
 assumption.*)
 qed.
@@ -273,7 +273,7 @@ theorem le_n_O_to_eq : \forall n:nat. n \leq O \to O=n.
 intro.
 elim n
 [ reflexivity
-| apply False_ind.auto
+| apply False_ind.autobatch
   (*apply not_le_Sn_O.
   goal 17. apply H1.*)
 ]
@@ -292,7 +292,7 @@ qed.
 theorem le_n_Sm_elim : \forall n,m:nat.n \leq S m \to 
 \forall P:Prop. (S n \leq S m \to P) \to (n=S m \to P) \to P.
 intros 4.
-elim H;auto.
+elim H;autobatch.
 (*[ apply H2.
   reflexivity
 | apply H3. 
@@ -305,15 +305,15 @@ qed.
 lemma le_to_le_to_eq: \forall n,m. n \le m \to m \le n \to n = m.
 apply nat_elim2
 [ intros.
-  auto
+  autobatch
   (*apply le_n_O_to_eq.
   assumption*)
-| intros.auto
+| intros.autobatch
   (*apply sym_eq.
   apply le_n_O_to_eq.
   assumption*)
 | intros.
-  apply eq_f.auto
+  apply eq_f.autobatch
   (*apply H
   [ apply le_S_S_to_le.assumption
   | apply le_S_S_to_le.assumption
@@ -323,7 +323,7 @@ qed.
 
 (* lt and le trans *)
 theorem lt_O_S : \forall n:nat. O < S n.
-intro.auto.
+intro.autobatch.
 (*unfold.
 apply le_S_S.
 apply le_O_n.*)
@@ -331,7 +331,7 @@ qed.
 
 theorem lt_to_le_to_lt: \forall n,m,p:nat. lt n m \to le m p \to lt n p.
 intros.
-elim H1;auto.
+elim H1;autobatch.
 (*[ assumption
 | unfold lt.
   apply le_S.
@@ -343,7 +343,7 @@ theorem le_to_lt_to_lt: \forall n,m,p:nat. le n m \to lt m p \to lt n p.
 intros 4.
 elim H
 [ assumption
-| apply H2.auto
+| apply H2.autobatch
   (*unfold lt.
   apply lt_to_le.
   assumption*)
@@ -351,7 +351,7 @@ elim H
 qed.
 
 theorem lt_S_to_lt: \forall n,m. S n < m \to n < m.
-intros.auto.
+intros.autobatch.
 (*apply (trans_lt ? (S n))
 [ apply le_n
 | assumption
@@ -379,7 +379,7 @@ qed.
 (* other abstract properties *)
 theorem antisymmetric_le : antisymmetric nat le.
 unfold antisymmetric.
-auto.
+autobatch.
 (*intros 2.
 apply (nat_elim2 (\lambda n,m.(n \leq m \to m \leq n \to n=m)))
 [ intros.
@@ -396,9 +396,9 @@ apply (nat_elim2 (\lambda n,m.(n \leq m \to m \leq n \to n=m)))
 qed.
 
 (*NOTA:
- * auto chiude il goal prima della tattica intros 2, tuttavia non chiude gli ultimi
+ * autobatch chiude il goal prima della tattica intros 2, tuttavia non chiude gli ultimi
  * 2 rami aperti dalla tattica apply (nat_elim2 (\lambda n,m.(n \leq m \to m \leq n \to n=m))).
- * evidentemente auto sfrutta una dimostrazione diversa rispetto a quella proposta
+ * evidentemente autobatch sfrutta una dimostrazione diversa rispetto a quella proposta
  * nella libreria
  *)
 
@@ -409,25 +409,25 @@ theorem decidable_le: \forall n,m:nat. decidable (n \leq m).
 intros.
 apply (nat_elim2 (\lambda n,m.decidable (n \leq m)))
 [ intros.
-  unfold decidable.auto
+  unfold decidable.autobatch
   (*left.
   apply le_O_n*)
 | intros.
   unfold decidable.
-  auto
+  autobatch
   (*right.
   exact (not_le_Sn_O n1)*)
 | intros 2.
   unfold decidable.
   intro.
   elim H
-  [ auto
+  [ autobatch
     (*left.
     apply le_S_S.
     assumption*)
   | right.
     unfold Not.
-    auto
+    autobatch
     (*intro.
     apply H1.
     apply le_S_S_to_le.
@@ -438,7 +438,7 @@ qed.
 
 theorem decidable_lt: \forall n,m:nat. decidable (n < m).
 intros.
-(*qui auto non chiude il goal*)
+(*qui autobatch non chiude il goal*)
 exact (decidable_le (S n) m).
 qed.
 
@@ -448,7 +448,7 @@ theorem nat_elim1 : \forall n:nat.\forall P:nat \to Prop.
 (\forall m.(\forall p. (p \lt m) \to P p) \to P m) \to P n.
 intros.
 cut (\forall q:nat. q \le n \to P q)
-[ auto
+[ autobatch
   (*apply (Hcut n).
   apply le_n*)
 | elim n
@@ -460,7 +460,7 @@ cut (\forall q:nat. q \le n \to P q)
   | apply H.
     intros.
     apply H1.
-    auto
+    autobatch
     (*cut (p < S n1)
     [ apply lt_S_to_le.
       assumption
@@ -482,7 +482,7 @@ unfold lt.
 unfold increasing.
 unfold lt.
 intros.
-elim H1;auto.
+elim H1;autobatch.
 (*[ apply H
 | apply (trans_le ? (f n1))
   [ assumption
@@ -497,7 +497,7 @@ qed.
 theorem le_n_fn: \forall f:nat \to nat. (increasing f) 
 \to \forall n:nat. n \le (f n).
 intros.
-elim n;auto.
+elim n;autobatch.
 (*[ apply le_O_n
 | apply (trans_le ? (S (f n1)))
   [ apply le_S_S.
@@ -512,7 +512,7 @@ qed.
 
 theorem increasing_to_le: \forall f:nat \to nat. (increasing f) 
 \to \forall m:nat. \exists i. m \le (f i).
-intros.auto.
+intros.autobatch.
 (*elim m
 [ apply (ex_intro ? ? O).
   apply le_O_n
@@ -534,7 +534,7 @@ theorem increasing_to_le2: \forall f:nat \to nat. (increasing f)
 \exists i. (f i) \le m \land m <(f (S i)).
 intros.
 elim H1
-[ auto.
+[ autobatch.
   (*apply (ex_intro ? ? O).
   split
   [ apply le_n
@@ -545,7 +545,7 @@ elim H1
   cut ((S n1) < (f (S a)) \lor (S n1) = (f (S a)))
   [ elim Hcut
     [ apply (ex_intro ? ? a).
-      auto
+      autobatch
       (*split
       [ apply le_S.
         assumption
@@ -555,12 +555,12 @@ elim H1
       split
       [ rewrite < H7.
         apply le_n
-      | auto
+      | autobatch
         (*rewrite > H7.
         apply H*)
       ]
     ]
-  | auto
+  | autobatch
     (*apply le_to_or_lt_eq.
     apply H6*)
   ]

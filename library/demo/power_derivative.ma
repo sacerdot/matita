@@ -121,7 +121,7 @@ lemma Fmult_one_f: ∀f:R→R.1·f=f.
  simplify;
  apply f_eq_extensional;
  intro;
- auto.
+ autobatch.
 qed.
 
 lemma Fmult_zero_f: ∀f:R→R.0·f=0.
@@ -130,7 +130,7 @@ lemma Fmult_zero_f: ∀f:R→R.0·f=0.
  simplify;
  apply f_eq_extensional;
  intro;
- auto.
+ autobatch.
 qed.
 
 lemma Fmult_commutative: symmetric ? Fmult.
@@ -139,7 +139,7 @@ lemma Fmult_commutative: symmetric ? Fmult.
  unfold Fmult;
  apply f_eq_extensional;
  intros;
- auto.
+ autobatch.
 qed.
 
 lemma Fmult_associative: associative ? Fmult.
@@ -149,7 +149,7 @@ lemma Fmult_associative: associative ? Fmult.
  unfold Fmult;
  apply f_eq_extensional;
  intros;
- auto.
+ autobatch.
 qed.
 
 lemma Fmult_Fplus_distr: distributive ? Fmult Fplus.
@@ -160,7 +160,7 @@ lemma Fmult_Fplus_distr: distributive ? Fmult Fplus.
  apply f_eq_extensional;
  intros;
  simplify;
- auto.
+ autobatch.
 qed.
 
 lemma monomio_product:
@@ -173,13 +173,13 @@ lemma monomio_product:
   [ simplify;
     apply f_eq_extensional;
     intro;
-    auto
+    autobatch
   | simplify;
     apply f_eq_extensional;
     intro;
     cut (x\sup (n1+m) = x \sup n1 · x \sup m);
      [ rewrite > Hcut;
-       auto
+       autobatch
      | change in ⊢ (? ? % ?) with ((λx:R.x\sup(n1+m)) x);
        rewrite > H;
        reflexivity
@@ -196,7 +196,7 @@ lemma costante_sum:
  intros;
  elim n;
   [ simplify;
-    auto
+    autobatch
   | simplify;
     clear x;
     clear H;
@@ -205,19 +205,19 @@ lemma costante_sum:
      [ simplify;
        elim m;
         [ simplify;
-          auto
+          autobatch
         | simplify;
           rewrite < H;
-          auto
+          autobatch
         ]
      | simplify;
        rewrite < H;
        clear H;
        elim n;
         [ simplify;
-          auto
+          autobatch
         | simplify;
-          auto
+          autobatch
         ]
      ]
    ].

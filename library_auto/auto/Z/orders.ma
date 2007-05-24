@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/library_auto/Z/orders".
+set "baseuri" "cic:/matita/library_autobatch/Z/orders".
 
 include "auto/Z/z.ma".
 include "auto/nat/orders.ma".
@@ -37,10 +37,10 @@ definition Zle : Z \to Z \to Prop \def
     | (neg m) \Rightarrow m \leq n ]].
 
 (*CSC: the URI must disappear: there is a bug now *)
-interpretation "integer 'less or equal to'" 'leq x y = (cic:/matita/library_auto/Z/orders/Zle.con x y).
+interpretation "integer 'less or equal to'" 'leq x y = (cic:/matita/library_autobatch/Z/orders/Zle.con x y).
 (*CSC: the URI must disappear: there is a bug now *)
 interpretation "integer 'neither less nor equal to'" 'nleq x y =
-  (cic:/matita/logic/connectives/Not.con (cic:/matita/library_auto/Z/orders/Zle.con x y)).
+  (cic:/matita/logic/connectives/Not.con (cic:/matita/library_autobatch/Z/orders/Zle.con x y)).
 
 definition Zlt : Z \to Z \to Prop \def
 \lambda x,y:Z.
@@ -62,32 +62,32 @@ definition Zlt : Z \to Z \to Prop \def
     | (neg m) \Rightarrow m<n ]].
     
 (*CSC: the URI must disappear: there is a bug now *)
-interpretation "integer 'less than'" 'lt x y = (cic:/matita/library_auto/Z/orders/Zlt.con x y).
+interpretation "integer 'less than'" 'lt x y = (cic:/matita/library_autobatch/Z/orders/Zlt.con x y).
 (*CSC: the URI must disappear: there is a bug now *)
 interpretation "integer 'not less than'" 'nless x y =
-  (cic:/matita/logic/connectives/Not.con (cic:/matita/library_auto/Z/orders/Zlt.con x y)).
+  (cic:/matita/logic/connectives/Not.con (cic:/matita/library_autobatch/Z/orders/Zlt.con x y)).
 
 theorem irreflexive_Zlt: irreflexive Z Zlt.
 unfold irreflexive.
 unfold Not.
 intro.
 elim x
-[ (*qui auto non chiude il goal*)
+[ (*qui autobatch non chiude il goal*)
   exact H
 | cut (neg n < neg n \to False)
   [ apply Hcut.
-    (*qui auto non chiude il goal*)
+    (*qui autobatch non chiude il goal*)
     apply H
-  | auto
+  | autobatch
     (*simplify.
     unfold lt.
     apply not_le_Sn_n*)
   ]
 | cut (pos n < pos n \to False)
   [ apply Hcut.
-    (*qui auto non chiude il goal*)
+    (*qui autobatch non chiude il goal*)
     apply H
-  | auto
+  | autobatch
     (*simplify.
     unfold lt.
     apply not_le_Sn_n*)
@@ -101,7 +101,7 @@ theorem irrefl_Zlt: irreflexive Z Zlt
 theorem Zlt_neg_neg_to_lt: 
 \forall n,m:nat. neg n < neg m \to m < n.
 intros.
-(*qui auto non chiude il goal*)
+(*qui autobatch non chiude il goal*)
 apply H.
 qed.
 
@@ -114,7 +114,7 @@ qed.
 theorem Zlt_pos_pos_to_lt: 
 \forall n,m:nat. pos n < pos m \to n < m.
 intros.
-(*qui auto non chiude il goal*)
+(*qui autobatch non chiude il goal*)
 apply H.
 qed.
 
@@ -129,18 +129,18 @@ intros 2.
 elim x
 [ (* goal: x=OZ *)
   cut (OZ < y \to Zsucc OZ \leq y)
-  [ auto
+  [ autobatch
     (*apply Hcut. 
     assumption*)
   | simplify.
     elim y 
     [ simplify.
-      (*qui auto non chiude il goal*)
+      (*qui autobatch non chiude il goal*)
       exact H1
     | simplify.
       apply le_O_n
     | simplify.
-      (*qui auto non chiude il goal*)    
+      (*qui autobatch non chiude il goal*)    
       exact H1
     ]
   ]
@@ -148,12 +148,12 @@ elim x
   exact H
 | (* goal: x=neg *)      
   cut (neg n < y \to Zsucc (neg n) \leq y)
-  [ auto
+  [ autobatch
     (*apply Hcut. 
     assumption*)
   | elim n
     [ cut (neg O < y \to Zsucc (neg O) \leq y)
-      [ auto
+      [ autobatch
         (*apply Hcut. 
         assumption*)
       | simplify.
@@ -163,12 +163,12 @@ elim x
         | simplify.
           exact I
         | simplify.
-          (*qui auto non chiude il goal*)
+          (*qui autobatch non chiude il goal*)
           apply (not_le_Sn_O n1 H2)
         ]
       ]
     | cut (neg (S n1) < y \to (Zsucc (neg (S n1))) \leq y)
-      [ auto
+      [ autobatch
         (*apply Hcut. 
         assumption*)
       | simplify.
@@ -178,7 +178,7 @@ elim x
         | simplify.
           exact I
         | simplify.
-          (*qui auto non chiude il goal*)
+          (*qui autobatch non chiude il goal*)
           apply (le_S_S_to_le n2 n1 H3)
         ]
       ] 

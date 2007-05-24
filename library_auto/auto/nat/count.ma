@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/library_auto/nat/count".
+set "baseuri" "cic:/matita/library_autobatch/nat/count".
 
 include "auto/nat/relevant_equations.ma".
 include "auto/nat/sigma_and_pi.ma".
@@ -24,7 +24,7 @@ intros.
 elim n;simplify
 [ reflexivity
 | rewrite > H.
-  auto
+  autobatch
   (*rewrite > assoc_plus.
   rewrite < (assoc_plus (g (S (n1+m)))).
   rewrite > (sym_plus (g (S (n1+m)))).
@@ -38,12 +38,12 @@ theorem sigma_plus: \forall n,p,m:nat.\forall f:nat \to nat.
 sigma (S (p+n)) f m = sigma p (\lambda x.(f ((S n) + x))) m + sigma n f m.
 intros. 
 elim p;simplify
-[ auto
+[ autobatch
   (*rewrite < (sym_plus n m).
   reflexivity*)
 | rewrite > assoc_plus in \vdash (? ? ? %).
   rewrite < H.
-  auto
+  autobatch
   (*simplify.
   rewrite < plus_n_Sm.
   rewrite > (sym_plus n).
@@ -62,7 +62,7 @@ elim p;simplify
 | rewrite > assoc_plus in \vdash (? ? ? %).
   rewrite < H.
   rewrite < plus_n_Sm.
-  auto
+  autobatch
   (*rewrite < plus_n_Sm.simplify.
   rewrite < (sym_plus n).
   rewrite > assoc_plus.
@@ -84,7 +84,7 @@ elim n;simplify
 | rewrite > sigma_f_g.
   rewrite < plus_n_O.
   rewrite < H.
-  auto
+  autobatch
   
   (*rewrite > (S_pred ((S n1)*(S m)))
   [ apply sigma_plus1
@@ -122,7 +122,7 @@ definition bool_to_nat: bool \to nat \def
 theorem bool_to_nat_andb: \forall a,b:bool.
 bool_to_nat (andb a b) = (bool_to_nat a)*(bool_to_nat b).
 intros. 
-elim a;auto.
+elim a;autobatch.
 (*[elim b
   [ simplify.
     reflexivity
@@ -159,7 +159,7 @@ rewrite > (permut_to_eq_map_iter_i plus assoc_plus sym_plus ? ? ?
                                           ((i1*(S n) + i) \mod (S n)) i1 i)
     [ rewrite > (div_mod_spec_to_eq2 (i1*(S n) + i) (S n) ((i1*(S n) + i)/(S n)) 
                                            ((i1*(S n) + i) \mod (S n)) i1 i)
-      [ rewrite > H3;auto (*qui auto impiega parecchio tempo*)
+      [ rewrite > H3;autobatch (*qui autobatch impiega parecchio tempo*)
         (*[ apply bool_to_nat_andb
         | unfold lt.
           apply le_S_S.
@@ -168,24 +168,24 @@ rewrite > (permut_to_eq_map_iter_i plus assoc_plus sym_plus ? ? ?
           apply le_S_S.
           assumption
         ]*)
-      | auto
+      | autobatch
         (*apply div_mod_spec_div_mod.
         unfold lt.
         apply le_S_S.
         apply le_O_n*)
-      | constructor 1;auto
+      | constructor 1;autobatch
         (*[ unfold lt.
           apply le_S_S.
           assumption
         | reflexivity
         ]*)
       ]  
-    | auto
+    | autobatch
       (*apply div_mod_spec_div_mod.
       unfold lt.
       apply le_S_S.
       apply le_O_n*)
-    | constructor 1;auto
+    | constructor 1;autobatch
       (*[ unfold lt.
         apply le_S_S.
         assumption
@@ -197,7 +197,7 @@ rewrite > (permut_to_eq_map_iter_i plus assoc_plus sym_plus ? ? ?
     (sigma m (\lambda n.bool_to_nat (f2 n)) O))) O))
     [ apply eq_sigma.
       intros.
-      auto
+      autobatch
       (*rewrite > sym_times.
       apply (trans_eq ? ? 
       (sigma m (\lambda n.(bool_to_nat (f2 n))*(bool_to_nat (f1 i))) O))
@@ -205,7 +205,7 @@ rewrite > (permut_to_eq_map_iter_i plus assoc_plus sym_plus ? ? ?
       | apply sym_eq. 
         apply sigma_times
       ]*)
-    | auto
+    | autobatch
       (*simplify.
       apply sym_eq. 
       apply sigma_times*)
@@ -219,14 +219,14 @@ rewrite > (permut_to_eq_map_iter_i plus assoc_plus sym_plus ? ? ?
     rewrite < S_pred in \vdash (? ? %)
     [ change with ((g (i/(S n)) (i \mod (S n))) \lt (S n)*(S m)).
       apply H
-      [ auto
+      [ autobatch
         (*apply lt_mod_m_m.
         unfold lt. 
         apply le_S_S.
         apply le_O_n*)
       | apply (lt_times_to_lt_l n).
         apply (le_to_lt_to_lt ? i)
-        [ auto
+        [ autobatch
           (*rewrite > (div_mod i (S n)) in \vdash (? ? %)
           [ rewrite > sym_plus.
             apply le_plus_n
@@ -237,18 +237,18 @@ rewrite > (permut_to_eq_map_iter_i plus assoc_plus sym_plus ? ? ?
         | unfold lt.       
           rewrite > S_pred in \vdash (? ? %)
           [ apply le_S_S.
-            auto
+            autobatch
             (*rewrite > plus_n_O in \vdash (? ? %).
             rewrite > sym_times. 
             assumption*)
-          | auto
+          | autobatch
             (*rewrite > (times_n_O O).
             apply lt_times;
             unfold lt;apply le_S_S;apply le_O_n*)            
           ]
         ]
       ]
-    | auto
+    | autobatch
       (*rewrite > (times_n_O O).
       apply lt_times;
       unfold lt;apply le_S_S;apply le_O_n *)     
@@ -268,22 +268,22 @@ rewrite > (permut_to_eq_map_iter_i plus assoc_plus sym_plus ? ? ?
                     rewrite < (H2 (i \mod (S n)) (i/(S n)) Hcut2 Hcut3) in \vdash (? ? (? % ?) ?).
                     rewrite < (H1 (j \mod (S n)) (j/(S n)) Hcut4 Hcut5).
                     rewrite < (H2 (j \mod (S n)) (j/(S n)) Hcut4 Hcut5) in \vdash (? ? ? (? % ?)).
-                    auto
+                    autobatch
                     (*rewrite > H6.
                     reflexivity*)
-                  | auto                 
+                  | autobatch                 
                     (*unfold lt. 
                     apply le_S_S.
                     apply le_O_n*)
                   ]
-                | auto
+                | autobatch
                   (*unfold lt. 
                   apply le_S_S.
                   apply le_O_n*)
                 ]
               | apply (lt_times_to_lt_l n).
                 apply (le_to_lt_to_lt ? j)
-                [ auto.
+                [ autobatch.
                   (*rewrite > (div_mod j (S n)) in \vdash (? ? %)
                   [ rewrite > sym_plus.
                     apply le_plus_n
@@ -295,14 +295,14 @@ rewrite > (permut_to_eq_map_iter_i plus assoc_plus sym_plus ? ? ?
                   assumption
                 ]
               ]
-            | auto
+            | autobatch
               (*apply lt_mod_m_m.
               unfold lt. apply le_S_S.
               apply le_O_n*)
             ]
           | apply (lt_times_to_lt_l n).
             apply (le_to_lt_to_lt ? i)
-            [ auto 
+            [ autobatch 
               (*rewrite > (div_mod i (S n)) in \vdash (? ? %)
               [ rewrite > sym_plus.
                 apply le_plus_n
@@ -314,13 +314,13 @@ rewrite > (permut_to_eq_map_iter_i plus assoc_plus sym_plus ? ? ?
               assumption
             ]
           ]
-        | auto
+        | autobatch
           (*apply lt_mod_m_m.
           unfold lt. apply le_S_S.
           apply le_O_n*)
         ]
       | unfold lt.
-        auto
+        autobatch
         (*rewrite > S_pred in \vdash (? ? %)
         [ apply le_S_S.
           assumption
@@ -330,7 +330,7 @@ rewrite > (permut_to_eq_map_iter_i plus assoc_plus sym_plus ? ? ?
         ]*)
       ]
     | unfold lt.
-      auto
+      autobatch
       (*rewrite > S_pred in \vdash (? ? %)
       [ apply le_S_S.
         assumption

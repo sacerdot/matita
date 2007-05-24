@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/library_auto/nat/div_and_mod".
+set "baseuri" "cic:/matita/library_autobatch/nat/div_and_mod".
 
 include "datatypes/constructors.ma".
 include "auto/nat/minus.ma".
@@ -32,7 +32,7 @@ match m with
 | (S p) \Rightarrow mod_aux n n p]. 
 
 interpretation "natural remainder" 'module x y =
-  (cic:/matita/library_auto/nat/div_and_mod/mod.con x y).
+  (cic:/matita/library_autobatch/nat/div_and_mod/mod.con x y).
 
 let rec div_aux p m n : nat \def
 match (leb m n) with
@@ -49,14 +49,14 @@ match m with
 | (S p) \Rightarrow div_aux n n p]. 
 
 interpretation "natural divide" 'divide x y =
-  (cic:/matita/library_auto/nat/div_and_mod/div.con x y).
+  (cic:/matita/library_autobatch/nat/div_and_mod/div.con x y).
 
 theorem le_mod_aux_m_m: 
 \forall p,n,m. n \leq p \to (mod_aux p n m) \leq m.
 intro.
 elim p
 [ apply (le_n_O_elim n H (\lambda n.(mod_aux O n m) \leq m)).
-  auto
+  autobatch
   (*simplify.
   apply le_O_n*)
 | simplify.
@@ -64,10 +64,10 @@ elim p
   [ assumption
   | apply H.
     cut (n1 \leq (S n) \to n1-(S m) \leq n)
-    [ auto
+    [ autobatch
       (*apply Hcut.
       assumption*)
-    | elim n1;simplify;auto
+    | elim n1;simplify;autobatch
       (*[ apply le_O_n.
       | apply (trans_le ? n2 n)
         [ apply le_minus_m
@@ -86,7 +86,7 @@ elim m
 [ apply False_ind.
   apply (not_le_Sn_O O H)
 | simplify.
-  auto
+  autobatch
   (*unfold lt.
   apply le_S_S.
   apply le_mod_aux_m_m.
@@ -98,7 +98,7 @@ theorem div_aux_mod_aux: \forall p,n,m:nat.
 (n=(div_aux p n m)*(S m) + (mod_aux p n m)).
 intro.
 elim p;simplify
-[ elim (leb n m);auto
+[ elim (leb n m);autobatch
     (*simplify;apply refl_eq.*)  
 | apply (leb_elim n1 m);simplify;intro
   [ apply refl_eq
@@ -106,7 +106,7 @@ elim p;simplify
     elim (H (n1-(S m)) m).
     change with (n1=(S m)+(n1-(S m))).
     rewrite < sym_plus.
-    auto
+    autobatch
     (*apply plus_minus_m_m.
     change with (m < n1).
     apply not_le_to_lt.
@@ -137,7 +137,7 @@ intros 4.
 unfold Not.
 intros.
 elim H.
-absurd (le (S r) O);auto.
+absurd (le (S r) O);autobatch.
 (*[ rewrite < H1.
   assumption
 | exact (not_le_Sn_O r).
@@ -147,7 +147,7 @@ qed.
 theorem div_mod_spec_div_mod: 
 \forall n,m. O < m \to (div_mod_spec n m (n / m) (n \mod m)).
 intros.
-auto.
+autobatch.
 (*apply div_mod_spec_intro
 [ apply lt_mod_m_m.
   assumption
@@ -172,7 +172,7 @@ apply (nat_compare_elim q q1)
       | elim Hcut.
         assumption
       ]
-    | apply (trans_le ? ((q1-q)*b));auto
+    | apply (trans_le ? ((q1-q)*b));autobatch
       (*[ apply le_times_n.
         apply le_SO_minus.
         exact H6
@@ -182,7 +182,7 @@ apply (nat_compare_elim q q1)
     ]
   | rewrite < sym_times.
     rewrite > distr_times_minus.
-    rewrite > plus_minus;auto
+    rewrite > plus_minus;autobatch
     (*[ rewrite > sym_times.
       rewrite < H5.
       rewrite < sym_times.
@@ -194,7 +194,7 @@ apply (nat_compare_elim q q1)
     ]*)
   ]
 | (* eq case *)
-  auto
+  autobatch
   (*intros.
   assumption*)
 | (* the following case is symmetric *)
@@ -207,7 +207,7 @@ apply (nat_compare_elim q q1)
       | elim Hcut.
         assumption
       ]
-    | apply (trans_le ? ((q-q1)*b));auto
+    | apply (trans_le ? ((q-q1)*b));autobatch
       (*[ apply le_times_n.
         apply le_SO_minus.
         exact H6
@@ -217,7 +217,7 @@ apply (nat_compare_elim q q1)
     ]
   | rewrite < sym_times.
     rewrite > distr_times_minus.
-    rewrite > plus_minus;auto
+    rewrite > plus_minus;autobatch
     (*[ rewrite > sym_times.
       rewrite < H3.
       rewrite < sym_times.
@@ -245,7 +245,7 @@ qed.
 
 theorem div_mod_spec_times : \forall n,m:nat.div_mod_spec ((S n)*m) (S n) m O.
 intros.
-auto.
+autobatch.
 (*constructor 1
 [ unfold lt.
   apply le_S_S.
@@ -262,9 +262,9 @@ qed.
 theorem div_times: \forall n,m:nat. ((S n)*m) / (S n) = m.
 intros.
 apply (div_mod_spec_to_eq ((S n)*m) (S n) ? ? ? O);
-[2: apply div_mod_spec_div_mod.auto.
+[2: apply div_mod_spec_div_mod.autobatch.
 | skip
-| auto
+| autobatch
 ]
 (*unfold lt.apply le_S_S.apply le_O_n.
 apply div_mod_spec_times.*)
@@ -272,7 +272,7 @@ qed.
 
 theorem div_n_n: \forall n:nat. O < n \to n / n = S O.
 intros.
-apply (div_mod_spec_to_eq n n (n / n) (n \mod n) (S O) O);auto.
+apply (div_mod_spec_to_eq n n (n / n) (n \mod n) (S O) O);autobatch.
 (*[ apply div_mod_spec_div_mod.
   assumption
 | constructor 1
@@ -287,7 +287,7 @@ qed.
 
 theorem eq_div_O: \forall n,m. n < m \to n / m = O.
 intros.
-apply (div_mod_spec_to_eq n m (n/m) (n \mod m) O n);auto.
+apply (div_mod_spec_to_eq n m (n/m) (n \mod m) O n);autobatch.
 (*[ apply div_mod_spec_div_mod.
   apply (le_to_lt_to_lt O n m)
   [ apply le_O_n
@@ -302,7 +302,7 @@ qed.
 
 theorem mod_n_n: \forall n:nat. O < n \to n \mod n = O.
 intros.
-apply (div_mod_spec_to_eq2 n n (n / n) (n \mod n) (S O) O);auto.
+apply (div_mod_spec_to_eq2 n n (n / n) (n \mod n) (S O) O);autobatch.
 (*[ apply div_mod_spec_div_mod.
   assumption
 | constructor 1
@@ -319,13 +319,13 @@ theorem mod_S: \forall n,m:nat. O < m \to S (n \mod m) < m \to
 ((S n) \mod m) = S (n \mod m).
 intros.
 apply (div_mod_spec_to_eq2 (S n) m ((S n) / m) ((S n) \mod m) (n / m) (S (n \mod m)))
-[ auto
+[ autobatch
   (*apply div_mod_spec_div_mod.
   assumption*)
 | constructor 1
   [ assumption
   | rewrite < plus_n_Sm.
-    auto
+    autobatch
     (*apply eq_f.
     apply div_mod.
     assumption*)
@@ -335,14 +335,14 @@ qed.
 
 theorem mod_O_n: \forall n:nat.O \mod n = O.
 intro.
-elim n;auto.
+elim n;autobatch.
   (*simplify;reflexivity*)
 
 qed.
 
 theorem lt_to_eq_mod:\forall n,m:nat. n < m \to n \mod m = n.
 intros.
-apply (div_mod_spec_to_eq2 n m (n/m) (n \mod m) O n);auto.
+apply (div_mod_spec_to_eq2 n m (n/m) (n \mod m) O n);autobatch.
 (*[ apply div_mod_spec_div_mod.
   apply (le_to_lt_to_lt O n m)
   [ apply le_O_n
@@ -360,7 +360,7 @@ theorem injective_times_r: \forall n:nat.injective nat nat (\lambda m:nat.(S n)*
 change with (\forall n,p,q:nat.(S n)*p = (S n)*q \to p=q).
 intros.
 rewrite < (div_times n).
-auto.
+autobatch.
 (*rewrite < (div_times n q).
 apply eq_f2
 [ assumption
@@ -376,7 +376,7 @@ simplify.
 intros 4.
 apply (lt_O_n_elim n H).
 intros.
-auto.
+autobatch.
 (*apply (inj_times_r m).
 assumption.*)
 qed.
@@ -387,7 +387,7 @@ variant inj_times_r1:\forall n. O < n \to \forall p,q:nat.n*p = n*q \to p=q
 theorem injective_times_l: \forall n:nat.injective nat nat (\lambda m:nat.m*(S n)).
 simplify.
 intros.
-auto.
+autobatch.
 (*apply (inj_times_r n x y).
 rewrite < sym_times.
 rewrite < (sym_times y).
@@ -402,7 +402,7 @@ simplify.
 intros 4.
 apply (lt_O_n_elim n H).
 intros.
-auto.
+autobatch.
 (*apply (inj_times_l m).
 assumption.*)
 qed.

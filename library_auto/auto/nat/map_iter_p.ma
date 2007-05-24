@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/library_auto/nat/map_iter_p.ma".
+set "baseuri" "cic:/matita/library_autobatch/nat/map_iter_p.ma".
 
 include "auto/nat/permutation.ma".
 include "auto/nat/count.ma".
@@ -33,20 +33,20 @@ theorem eq_map_iter_p: \forall g1,g2:nat \to nat.
 map_iter_p n p g1 a f = map_iter_p n p g2 a f.
 intros 6.
 elim n
-[ auto
+[ autobatch
   (*simplify.
   reflexivity*)
 | simplify.
   elim (p (S n1))
   [ simplify.
     apply eq_f2
-    [ auto
+    [ autobatch
       (*apply H1.
       apply le_n*)
     | simplify.
       apply H.
       intros.
-      auto
+      autobatch
       (*apply H1.
       apply le_S.
       assumption*)
@@ -54,7 +54,7 @@ elim n
   | simplify.
     apply H.
     intros.
-    auto
+    autobatch
     (*apply H1.
     apply le_S.
     assumption*)
@@ -67,7 +67,7 @@ qed.
 theorem map_iter_p_O: \forall p.\forall g.\forall f. \forall a:nat.
 map_iter_p O p g a f = a.
 intros.
-auto.
+autobatch.
 (*simplify.reflexivity.*)
 qed.
 
@@ -100,13 +100,13 @@ lemma lt_O_pi_p: \forall n.\forall p.
 O < pi_p p n.
 intros.
 elim n
-[ auto
+[ autobatch
   (*simplify.
   apply le_n*)
 | rewrite > pi_p_S.
   elim p (S n1)
   [ change with (O < (S n1)*(pi_p p n1)).
-    auto
+    autobatch
     (*rewrite >(times_n_O n1).
     apply lt_times
     [ apply le_n
@@ -128,13 +128,13 @@ p O = false \to count (S n) p = card n p.
 intros.
 elim n
 [ simplify.
-  auto
+  autobatch
   (*rewrite > H. 
   reflexivity*)
 | simplify.
   rewrite < plus_n_O.
   apply eq_f.
-  (*qui auto non chiude un goal chiuso invece dal solo assumption*)
+  (*qui autobatch non chiude un goal chiuso invece dal solo assumption*)
   assumption
 ]
 qed.
@@ -145,12 +145,12 @@ intros 3.
 apply (nat_case n)
 [ intro.
   simplify.
-  auto
+  autobatch
   (*rewrite > H. 
   reflexivity*)
 | intros.rewrite > (count_card ? ? H).
   simplify.
-  auto
+  autobatch
   (*rewrite > H1.
   reflexivity*)
 ]
@@ -160,7 +160,7 @@ lemma a_times_pi_p: \forall p. \forall a,n.
 exp a (card n p) * pi_p p n = map_iter_p n p (\lambda n.a*n) (S O) times.
 intros.
 elim n
-[ auto
+[ autobatch
   (*simplify.
   reflexivity*)
 | simplify.
@@ -170,9 +170,9 @@ elim n
       (a*exp a (card n1 p) * ((S n1) * (pi_p p n1)) = 
        a*(S n1)*map_iter_p n1 p (\lambda n.a*n) (S O) times).
     rewrite < H.
-    auto
+    autobatch
   | intro.
-    (*la chiamata di auto in questo punto dopo circa 8 minuti non aveva
+    (*la chiamata di autobatch in questo punto dopo circa 8 minuti non aveva
      * ancora generato un risultato 
      *)
     assumption
@@ -225,7 +225,7 @@ split
   [ unfold compose.
     assumption
   | unfold compose.
-    auto
+    autobatch
     (*rewrite < H11.
     reflexivity*)
   ]
@@ -233,7 +233,7 @@ split
   unfold compose.
   apply (H9 (f j))
   [ elim (H j H13 H12).
-    auto
+    autobatch
     (*elim H15.
     rewrite < H18.
     reflexivity*)
@@ -256,14 +256,14 @@ split
   split
   [ elim H4.
     elim (le_to_or_lt_eq (f i) (S n))
-    [ auto
+    [ autobatch
       (*apply le_S_S_to_le.
       assumption*)
     | absurd (f i = (S n))
       [ assumption
       | rewrite < H1.
         apply H5
-        [ auto
+        [ autobatch
           (*rewrite < H8.
           assumption*)
         | apply le_n
@@ -274,13 +274,13 @@ split
       ]
     | assumption
     ]
-  | auto
+  | autobatch
     (*elim H4.
     assumption*)
   ]
 | intros.
   elim (H i (le_S i n H2) H3).
-  auto
+  autobatch
   (*apply H8
   [ assumption
   | apply le_S.
@@ -315,11 +315,11 @@ split
     [ intro.
       apply (eqb_elim i1 j)
       [ simplify.intro.
-        auto
+        autobatch
         (*rewrite < H6.
         assumption*)
       | simplify.intro.
-        auto
+        autobatch
         (*rewrite < H2.
         rewrite < H5.
         assumption*)
@@ -327,7 +327,7 @@ split
     | intro.
       apply (eqb_elim i1 j)
       [ simplify.intro.
-        auto
+        autobatch
         (*rewrite > H2.
         rewrite < H6.
         assumption*)
@@ -339,7 +339,7 @@ split
 | intros.
   unfold Not.
   intro.
-  auto
+  autobatch
   (*apply H7.
   apply (injective_transpose ? ? ? ? H8)*)
 ]
@@ -351,14 +351,14 @@ p (S n-k) = true \to (\forall i. (S n)-k < i \to i \le (S n) \to (p i) = false) 
 map_iter_p (S n) p g a f = map_iter_p (S n-k) p g a f.
 intros 5.
 elim k 3
-[ auto
+[ autobatch
   (*rewrite < minus_n_O.
   reflexivity*)
 | apply (nat_case n1)
   [ intros.
     rewrite > map_iter_p_S_false
     [ reflexivity
-    | auto
+    | autobatch
       (*apply H2
       [ simplify.
         apply lt_O_S.
@@ -371,13 +371,13 @@ elim k 3
       [ reflexivity
       | intros.
         apply (H2 i H3).
-        auto
+        autobatch
         (*apply le_S.
         assumption*)
       ]
-    | auto
+    | autobatch
       (*apply H2
-      [ auto
+      [ autobatch
       | apply le_n
       ]*)
     ]
@@ -391,17 +391,17 @@ theorem eq_map_iter_p_a: \forall p.\forall f.\forall g. \forall a,n:nat.
 (\forall i.i \le n \to p i = false) \to map_iter_p n p g a f = a.
 intros 5.
 elim n
-[ auto
+[ autobatch
   (*simplify.
   reflexivity*)
 | rewrite > map_iter_p_S_false
   [ apply H.
     intros.
-    auto
+    autobatch
     (*apply H1.
     apply le_S.
     assumption*)
-  | auto
+  | autobatch
     (*apply H1.
     apply le_n*)
   ]
@@ -417,7 +417,7 @@ apply (nat_case n)
 [ intro.
   absurd (k < O)
   [ assumption
-  | auto
+  | autobatch
     (*apply le_to_not_lt.
     apply le_O_n*)
   ]
@@ -438,7 +438,7 @@ apply (nat_case n)
     [ rewrite < Hcut.
       rewrite < H.
       rewrite < H1 in \vdash (? ? (? % ?) ?).
-      auto
+      autobatch
       (*rewrite > H.
       reflexivity*)
     | apply eq_map_iter_p.
@@ -452,24 +452,24 @@ apply (nat_case n)
         | apply not_eq_to_eqb_false.
           apply lt_to_not_eq.
           apply (le_to_lt_to_lt ? m)
-          [ auto
+          [ autobatch
             (*apply (trans_le ? (m-k))
             [ assumption
-            | auto
+            | autobatch
             ]*)
-          | auto
+          | autobatch
             (*apply le_S.
             apply le_n*)
           ]
         ]
       | apply not_eq_to_eqb_false.
         apply lt_to_not_eq.
-        auto
+        autobatch
         (*unfold.
-        auto*)
+        autobatch*)
       ]
     ]
-  | auto
+  | autobatch
     (*apply le_S_S_to_le.
     assumption*)
   ]
@@ -484,7 +484,7 @@ intros 10.
 elim n 2
 [ absurd (k2 \le O)
   [ assumption
-  | auto
+  | autobatch
     (*apply lt_to_not_le.
     apply (trans_lt ? k1 ? H2 H3)*)
   ]
@@ -495,22 +495,22 @@ elim n 2
     cut (k1 = n1 - (n1 -k1))
     [ rewrite > Hcut.
       apply (eq_map_iter_p_transpose p f H H1 g a (n1-k1))
-      [ cut (k1 \le n1);auto
+      [ cut (k1 \le n1);autobatch
       | assumption
-      | auto
+      | autobatch
         (*rewrite < Hcut.
         assumption*)
       | rewrite < Hcut.
         intros.
         apply (H9 i H10).
-        auto
+        autobatch
         (*unfold.
-        auto*)   
+        autobatch*)   
       ]
     | apply sym_eq.
-      auto
+      autobatch
       (*apply plus_to_minus.
-      auto*)
+      autobatch*)
     ]
   | intros.
     cut ((S n1) \neq k1)
@@ -523,9 +523,9 @@ elim n 2
               apply eq_f.
               apply (H3 H5)
               [ elim (le_to_or_lt_eq ? ? H6)
-                [ auto
+                [ autobatch
                 | absurd (S n1=k2)
-                  [ auto
+                  [ autobatch
                     (*apply sym_eq.
                     assumption*)
                   | assumption
@@ -549,10 +549,10 @@ elim n 2
         [ rewrite > map_iter_p_S_false
           [ apply (H3 H5)
             [ elim (le_to_or_lt_eq ? ? H6)
-              [ auto
-              | (*l'invocazione di auto qui genera segmentation fault*)
+              [ autobatch
+              | (*l'invocazione di autobatch qui genera segmentation fault*)
                 absurd (S n1=k2)
-                [ auto
+                [ autobatch
                   (*apply sym_eq.
                   assumption*)
                 | assumption
@@ -591,7 +591,7 @@ elim n
     right.
     apply (ex_intro ? ? O).
     split
-    [ auto
+    [ autobatch
       (*split
       [ apply le_n
       | assumption
@@ -599,7 +599,7 @@ elim n
     | intros.
       absurd (O<i)
       [ assumption
-      | auto
+      | autobatch
         (*apply le_to_not_lt.
         assumption*)
       ]
@@ -622,7 +622,7 @@ elim n
     | intros.
       absurd (S n1<i)
       [ assumption
-      | auto
+      | autobatch
         (*apply le_to_not_lt.
         assumption*)
       ]
@@ -631,11 +631,11 @@ elim n
     [ left.
       intros.
       elim (le_to_or_lt_eq m (S n1) H3)
-      [ auto
+      [ autobatch
         (*apply H1.
         apply le_S_S_to_le.
         assumption*)
-      | auto
+      | autobatch
         (*rewrite > H4.
         assumption*)
       ]
@@ -645,7 +645,7 @@ elim n
       elim H4.
       apply (ex_intro ? ? a).
       split
-      [ auto
+      [ autobatch
         (*split
         [ apply le_S.
           assumption
@@ -653,13 +653,13 @@ elim n
         ]*)
       | intros.
         elim (le_to_or_lt_eq i (S n1) H9)
-        [ auto
+        [ autobatch
           (*apply H5
           [ assumption
           | apply le_S_S_to_le.
             assumption
           ]*)
-        | auto
+        | autobatch
           (*rewrite > H10.
           assumption*)
         ]
@@ -680,7 +680,7 @@ elim (decidable_n p n)
   | unfold.
     intro.
     apply not_eq_true_false.
-    auto
+    autobatch
     (*rewrite < H3.
     apply H2.
     assumption*)
@@ -694,7 +694,7 @@ elim (decidable_n p n)
     elim H3.clear H3.
     elim H4.clear H4.
     split
-    [ auto
+    [ autobatch
       (*split
       [ split
         [ assumption
@@ -708,7 +708,7 @@ elim (decidable_n p n)
     rewrite > H2.
     left.
     elim H3 2.
-    (*qui la tattica auto non conclude il goal, concluso invece con l'invocazione
+    (*qui la tattica autobatch non conclude il goal, concluso invece con l'invocazione
      *della sola tattica assumption
      *)
     assumption
@@ -720,7 +720,7 @@ elim (decidable_n p n)
       apply not_eq_true_false.
       rewrite < H4.
       elim H3.
-      auto
+      autobatch
       (*clear H3.
       apply (H6 j H2).assumption*)
     ]
@@ -739,7 +739,7 @@ elim n
   intros.
   absurd (m \le O)
   [ assumption
-  | auto
+  | autobatch
     (*apply lt_to_not_le.
     assumption*)
   ]
@@ -751,7 +751,7 @@ elim n
           right.
           apply (ex_intro ? ? (S n1)).
           split
-          [ auto
+          [ autobatch
             (*split
             [ split
               [ assumption
@@ -760,7 +760,7 @@ elim n
             | assumption
             ]*)
           | intros.
-            auto
+            autobatch
             (*apply (H4 i H6).
             apply le_S_S_to_le.
             assumption*)
@@ -769,13 +769,13 @@ elim n
           left.
           intros.          
           elim (le_to_or_lt_eq ? ? H7)
-          [ auto
+          [ autobatch
             (*apply H4
             [ assumption
             | apply le_S_S_to_le.
               assumption
             ]*)
-          | auto
+          | autobatch
             (*rewrite > H8.
             assumption*)
           ]
@@ -788,7 +788,7 @@ elim n
         apply (ex_intro ? ? a).
         split
         [ split
-          [ auto
+          [ autobatch
             (*split
             [ assumption
             | apply le_S.
@@ -796,13 +796,13 @@ elim n
             ]*)
           | assumption
           ]
-        | (*qui auto non chiude il goal, chiuso invece mediante l'invocazione
+        | (*qui autobatch non chiude il goal, chiuso invece mediante l'invocazione
            *della sola tattica assumption
            *)
           assumption
         ]
       ]
-    | auto
+    | autobatch
       (*apply le_S_S_to_le.
       assumption*)
     ]
@@ -825,16 +825,16 @@ intros 2.
 apply (nat_elim2 ? ? ? ? n m)
 [ simplify.
   intros.
-  auto
+  autobatch
 | intros 2.
-  auto
+  autobatch
   (*rewrite < minus_n_O.
   intro.
   assumption*)
 | intros.
   simplify.
   cut (n1 < m1+p)
-  [ auto
+  [ autobatch
   | apply H.
     apply H1
   ]
@@ -848,7 +848,7 @@ apply (nat_elim2 ? ? ? ? n m)
 [ simplify.
   intros 3.
   apply (le_n_O_elim ? H).
-  auto
+  autobatch
   (*simplify.  
   intros.
   assumption*)
@@ -858,7 +858,7 @@ apply (nat_elim2 ? ? ? ? n m)
 | intros.
   simplify.
   apply H
-  [ auto
+  [ autobatch
     (*apply le_S_S_to_le.
     assumption*)
   | apply le_S_S_to_le.
@@ -870,9 +870,9 @@ qed.
 theorem minus_m_minus_mn: \forall n,m. n\le m \to n=m-(m-n).
 intros.
 apply sym_eq.
-auto.
+autobatch.
 (*apply plus_to_minus.
-auto.*)
+autobatch.*)
 qed.
 
 theorem eq_map_iter_p_transpose2: \forall p.\forall f.associative nat f \to
@@ -896,14 +896,14 @@ cut (k = (S n)-(S n -k))
   elim (decidable_n2 p n (S n -m) H4 H6)
   [ apply (eq_map_iter_p_transpose1 p f H H1 f1 a)
     [ assumption
-    | auto
+    | autobatch
       (*unfold.
-      auto*)
+      autobatch*)
     | apply le_n
     | assumption
     | assumption
     | intros.
-      auto
+      autobatch
       (*apply H7
       [ assumption
       | apply le_S_S_to_le.
@@ -923,26 +923,26 @@ cut (k = (S n)-(S n -k))
         [ rewrite > Hcut1.
           apply H2
           [ apply lt_plus_to_lt_minus
-            [ auto
+            [ autobatch
               (*apply le_S.
               assumption*)
             | rewrite < sym_plus.
-              auto
+              autobatch
               (*apply lt_minus_to_lt_plus.
               assumption*)
             ]
           | rewrite < Hcut1.
-            auto
+            autobatch
             (*apply (trans_lt ? (S n -m));
                 assumption*)
           | rewrite < Hcut1.
             assumption
           | assumption
-          | auto
+          | autobatch
             (*rewrite < Hcut1.
             assumption*)
           ]
-        | auto
+        | autobatch
           (*apply minus_m_minus_mn.
           apply le_S.
           assumption*)
@@ -950,12 +950,12 @@ cut (k = (S n)-(S n -k))
       | apply (eq_map_iter_p_transpose1 p f H H1)
         [ assumption
         | assumption
-        | auto
+        | autobatch
           (*apply le_S.
           assumption*)
         | assumption
         | assumption
-        | (*qui auto non chiude il goal, chiuso dall'invocazione della singola
+        | (*qui autobatch non chiude il goal, chiuso dall'invocazione della singola
            * tattica assumption
            *)
           assumption
@@ -966,16 +966,16 @@ cut (k = (S n)-(S n -k))
       [ cut (a1 = (S n) -(S n -a1))
         [ apply H2 
           [ apply lt_plus_to_lt_minus
-            [ auto
+            [ autobatch
               (*apply le_S.
               assumption*)
             | rewrite < sym_plus.
-              auto
+              autobatch
               (*apply lt_minus_to_lt_plus.
               assumption*)
             ]
           | rewrite < Hcut1.
-            auto
+            autobatch
             (*apply (trans_lt ? (S n -m))
             [ assumption
             | assumption
@@ -983,11 +983,11 @@ cut (k = (S n)-(S n -k))
           | rewrite < Hcut1.
             assumption
           | assumption
-          | auto
+          | autobatch
             (*rewrite < Hcut1.
             assumption*)
           ]
-        | auto
+        | autobatch
           (*apply minus_m_minus_mn.
           apply le_S.
           assumption*)
@@ -1019,7 +1019,7 @@ cut (k = (S n)-(S n -k))
             rewrite < H12 in \vdash (? (? %) ?).
             assumption
           ]
-        | auto
+        | autobatch
           (*apply minus_m_minus_mn.
           apply le_S.
           assumption*)
@@ -1027,7 +1027,7 @@ cut (k = (S n)-(S n -k))
       ]
     ]
   ]
-| auto
+| autobatch
   (*apply minus_m_minus_mn.
   apply le_S.
   assumption*)
@@ -1040,7 +1040,7 @@ symmetric2 nat nat f \to \forall g. \forall a,k,n:nat. O < k \to k \le (S n) \to
 \to map_iter_p (S n) p g a f = map_iter_p (S n) p (\lambda m. g (transpose k (S n) m)) a f.
 intros.
 elim (le_to_or_lt_eq ? ? H3)
-[ apply (eq_map_iter_p_transpose2 p f H H1 g a k n H2);auto
+[ apply (eq_map_iter_p_transpose2 p f H H1 g a k n H2);autobatch
   (*[ apply le_S_S_to_le.
     assumption
   | assumption
@@ -1049,7 +1049,7 @@ elim (le_to_or_lt_eq ? ? H3)
 | rewrite > H6.
   apply eq_map_iter_p.
   intros.
-  auto
+  autobatch
   (*apply eq_f.
   apply sym_eq. 
   apply transpose_i_i.*)
@@ -1069,13 +1069,13 @@ absurd (p (h (S m)) = true)
 | apply (le_n_O_elim ? H4).
   unfold.
   intro.
-  (*l'invocazione di auto in questo punto genera segmentation fault*)
+  (*l'invocazione di autobatch in questo punto genera segmentation fault*)
   apply not_eq_true_false.
-  (*l'invocazione di auto in questo punto genera segmentation fault*)
+  (*l'invocazione di autobatch in questo punto genera segmentation fault*)
   rewrite < H9.
-  (*l'invocazione di auto in questo punto genera segmentation fault*)
+  (*l'invocazione di autobatch in questo punto genera segmentation fault*)
   rewrite < H1.
-  (*l'invocazione di auto in questo punto genera segmentation fault*)
+  (*l'invocazione di autobatch in questo punto genera segmentation fault*)
   reflexivity
 ]
 qed.
@@ -1086,7 +1086,7 @@ permut_p h p n \to p O = false \to
 map_iter_p n p g a f = map_iter_p n p (compose ? ? ? g h) a f .
 intros 5.
 elim n
-[ auto
+[ autobatch
   (*simplify.
   reflexivity*) 
 | apply (bool_elim ? (p (S n1)))
@@ -1097,7 +1097,7 @@ elim n
       elim H6.
       clear H6.
       apply (eq_map_iter_p_transpose3 p f H H1 g a (h(S n1)) n1)
-      [ apply (permut_p_O ? ? ? H3 H4);auto
+      [ apply (permut_p_O ? ? ? H3 H4);autobatch
         (*[ apply le_n
         | assumption
         ]*)
@@ -1131,14 +1131,14 @@ elim n
                   cut (h i \neq h (S n1))
                   [ rewrite > (not_eq_to_eqb_false ? ? Hcut). 
                     simplify.
-                    auto
+                    autobatch
                     (*apply le_S_S_to_le.
                     assumption*)
                   | apply H9
                     [ apply H5
                     | apply le_n
                     | apply lt_to_not_eq.
-                      auto
+                      autobatch
                       (*unfold.
                       apply le_S_S.
                       assumption*)
@@ -1148,14 +1148,14 @@ elim n
                   apply (eqb_elim (S n1) (h (S n1)))
                   [ intro.
                     absurd (h i = h (S n1))
-                    [ auto
+                    [ autobatch
                       (*rewrite > H8.
                       assumption*)
                     | apply H9
                       [ assumption
                       | apply le_n
                       | apply lt_to_not_eq.
-                        auto
+                        autobatch
                         (*unfold.
                         apply le_S_S.
                         assumption*)
@@ -1169,11 +1169,11 @@ elim n
                     elim (H3 (S n1) (le_n ? ) H5).
                     elim H13.clear H13.
                     elim (le_to_or_lt_eq ? ? H15)
-                    [ auto
+                    [ autobatch
                       (*apply le_S_S_to_le.
                       assumption*)
                     | apply False_ind.
-                      auto
+                      autobatch
                       (*apply H12.
                       apply sym_eq.
                       assumption*)
@@ -1188,26 +1188,26 @@ elim n
                 [ intro.
                   apply (eqb_elim (h i) (h (S n1)))
                   [ intro.
-                    (*NB: qui auto non chiude il goal*)
+                    (*NB: qui autobatch non chiude il goal*)
                     simplify.
                     assumption
                   | intro.
                     simplify.
                     elim (H3 (S n1) (le_n ? ) H5).
-                    auto
+                    autobatch
                     (*elim H10. 
                     assumption*)
                   ]
                 | intro.
                   apply (eqb_elim (h i) (h (S n1)))
                   [ intro.
-                  (*NB: qui auto non chiude il goal*)
+                  (*NB: qui autobatch non chiude il goal*)
                     simplify.
                     assumption
                   | intro.
                     simplify.
                     elim (H3 i (le_S ? ? H6) H7).
-                    auto                  
+                    autobatch                  
                     (*elim H10.
                     assumption*)
                   ]
@@ -1227,7 +1227,7 @@ elim n
         ]
       | apply eq_map_iter_p.
         intros.
-        auto
+        autobatch
         (*rewrite > transpose_transpose.
         reflexivity*)
       ]
@@ -1244,25 +1244,25 @@ elim n
       split
       [ split
         [ elim (le_to_or_lt_eq ? ? H10)
-          [ auto
+          [ autobatch
             (*apply le_S_S_to_le.assumption*)
           | absurd (p (h i) = true)
             [ assumption
             | rewrite > H12.
               rewrite > H5.
               unfold.intro.
-              (*l'invocazione di auto qui genera segmentation fault*)
+              (*l'invocazione di autobatch qui genera segmentation fault*)
               apply not_eq_true_false.
-              (*l'invocazione di auto qui genera segmentation fault*)
+              (*l'invocazione di autobatch qui genera segmentation fault*)
               apply sym_eq.
-              (*l'invocazione di auto qui genera segmentation fault*)
+              (*l'invocazione di autobatch qui genera segmentation fault*)
               assumption
             ]
           ]
         | assumption
         ]
       | intros.
-        apply H9;auto
+        apply H9;autobatch
         (*[ assumption
         | apply (le_S ? ? H13)
         | assumption

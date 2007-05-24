@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/library_auto/Z/plus".
+set "baseuri" "cic:/matita/library_autobatch/Z/plus".
 
 include "auto/Z/z.ma".
 include "auto/nat/minus.ma".
@@ -41,11 +41,11 @@ definition Zplus :Z \to Z \to Z \def
          | (neg n) \Rightarrow (neg (pred ((S m)+(S n))))] ].
 
 (*CSC: the URI must disappear: there is a bug now *)
-interpretation "integer plus" 'plus x y = (cic:/matita/library_auto/Z/plus/Zplus.con x y).
+interpretation "integer plus" 'plus x y = (cic:/matita/library_autobatch/Z/plus/Zplus.con x y).
          
 theorem Zplus_z_OZ:  \forall z:Z. z+OZ = z.
 intro.
-elim z;auto.
+elim z;autobatch.
   (*simplify;reflexivity.*)
 qed.
 
@@ -54,15 +54,15 @@ qed.
 theorem sym_Zplus : \forall x,y:Z. x+y = y+x.
 intros.
 elim x
-[ auto
+[ autobatch
   (*rewrite > Zplus_z_OZ.
   reflexivity*)
 | elim y
-  [ auto
+  [ autobatch
     (*simplify.
     reflexivity*)
   | simplify.
-    auto
+    autobatch
     (*rewrite < plus_n_Sm.
     rewrite < plus_n_Sm.
     rewrite < sym_plus.
@@ -70,7 +70,7 @@ elim x
   | simplify.
     rewrite > nat_compare_n_m_m_n.
     simplify.
-    elim nat_compare;auto
+    elim nat_compare;autobatch
     (*[ simplify.
       reflexivity
     | simplify.
@@ -80,13 +80,13 @@ elim x
     ]*)
   ]
 | elim y
-  [ auto
+  [ autobatch
     (*simplify.
     reflexivity*)
   | simplify.
     rewrite > nat_compare_n_m_m_n.
     simplify.
-    elim nat_compare;auto
+    elim nat_compare;autobatch
     (*[ simplify.
       reflexivity
     | simplify. 
@@ -95,7 +95,7 @@ elim x
       reflexivity
     ]*)
   | simplify.
-    auto
+    autobatch
     (*rewrite < plus_n_Sm. 
     rewrite < plus_n_Sm.
     rewrite < sym_plus.
@@ -107,10 +107,10 @@ qed.
 theorem Zpred_Zplus_neg_O : \forall z:Z. Zpred z = (neg O)+z.
 intros.
 elim z
-[ auto
+[ autobatch
   (*simplify.
   reflexivity*)
-| elim n;auto
+| elim n;autobatch
   (*[ simplify.
     reflexivity
   | simplify.
@@ -124,13 +124,13 @@ qed.
 theorem Zsucc_Zplus_pos_O : \forall z:Z. Zsucc z = (pos O)+z.
 intros.
 elim z
-[ auto
+[ autobatch
   (*simplify.
   reflexivity*)
-| auto
+| autobatch
   (*simplify.
   reflexivity*)
-| elim n;auto
+| elim n;autobatch
   (*[ simplify.
     reflexivity
   | simplify.
@@ -143,20 +143,20 @@ theorem Zplus_pos_pos:
 \forall n,m. (pos n)+(pos m) = (Zsucc (pos n))+(Zpred (pos m)).
 intros.
 elim n
-[ elim m;auto
+[ elim m;autobatch
   (*[ simplify.
     reflexivity
   | simplify.
     reflexivity
   ]*)
 | elim m
-  [ auto
+  [ autobatch
     (*simplify.
     rewrite < plus_n_Sm.
     rewrite < plus_n_O.
     reflexivity*)
   | simplify.
-    auto
+    autobatch
     (*rewrite < plus_n_Sm.
     rewrite < plus_n_Sm.
     reflexivity*)
@@ -174,13 +174,13 @@ theorem Zplus_neg_pos :
 \forall n,m. (neg n)+(pos m) = (Zsucc (neg n))+(Zpred (pos m)).
 intros.
 elim n
-[ elim m;auto
+[ elim m;autobatch
   (*[ simplify.
     reflexivity
   | simplify.
     reflexivity
   ]*)
-| elim m;auto
+| elim m;autobatch
   (*[ simplify.
     reflexivity
   | simplify.
@@ -193,7 +193,7 @@ theorem Zplus_neg_neg:
 \forall n,m. (neg n)+(neg m) = (Zsucc (neg n))+(Zpred (neg m)).
 intros.
 elim n
-[ auto
+[ autobatch
   (*elim m
   [ simplify.
     reflexivity
@@ -201,12 +201,12 @@ elim n
     reflexivity
   ]*)
 | elim m
-  [ auto
+  [ autobatch
     (*simplify.
     rewrite > plus_n_Sm.
     reflexivity*)
   | simplify.
-    auto
+    autobatch
     (*rewrite > plus_n_Sm.
     reflexivity*)
   ]
@@ -217,7 +217,7 @@ theorem Zplus_Zsucc_Zpred:
 \forall x,y. x+y = (Zsucc x)+(Zpred y).
 intros.
 elim x
-[ auto
+[ autobatch
   (*elim y
   [ simplify.
     reflexivity
@@ -227,13 +227,13 @@ elim x
   | simplify.
     reflexivity
   ]*)
-| elim y;auto
+| elim y;autobatch
   (*[ simplify.
     reflexivity
   | apply Zplus_pos_pos
   | apply Zplus_pos_neg
   ]*)
-| elim y;auto
+| elim y;autobatch
   (*[ rewrite < sym_Zplus.
     rewrite < (sym_Zplus (Zpred OZ)).
     rewrite < Zpred_Zplus_neg_O.
@@ -259,13 +259,13 @@ intros.
 apply (nat_elim2
 (\lambda n,m. (Zsucc (pos n))+(neg m) = (Zsucc ((pos n)+(neg m)))))
 [ intro.
-  elim n1;auto
+  elim n1;autobatch
   (*[ simplify.
     reflexivity
   | elim n2; simplify; reflexivity
   ]*)
 | intros.
-  auto
+  autobatch
   (*elim n1;simplify;reflexivity*)
 | intros.
   rewrite < (Zplus_pos_neg ? m1).
@@ -280,17 +280,17 @@ intros.
 apply (nat_elim2
 (\lambda n,m. Zsucc (neg n) + neg m = Zsucc (neg n + neg m)))
 [ intros.
-  auto
+  autobatch
   (*elim n1
   [ simplify. 
     reflexivity
   | elim n2;simplify;reflexivity
   ]*)
 | intros.
-  auto 
+  autobatch 
   (*elim n1;simplify;reflexivity*)
 | intros.
-  auto.
+  autobatch.
   (*rewrite < (Zplus_neg_neg ? m1).
   reflexivity*)
 ]
@@ -302,17 +302,17 @@ intros.
 apply (nat_elim2
 (\lambda n,m. Zsucc (neg n) + (pos m) = Zsucc (neg n + pos m)))
 [ intros.
-  auto
+  autobatch
   (*elim n1
   [ simplify. 
     reflexivity
   | elim n2;simplify;reflexivity
   ]*)
 | intros.
-  auto 
+  autobatch 
   (*elim n1;simplify;reflexivity*)
 | intros.
-  auto
+  autobatch
   (*rewrite < H.
   rewrite < (Zplus_neg_pos ? (S m1)).
   reflexivity*)
@@ -322,7 +322,7 @@ qed.
 theorem Zplus_Zsucc : \forall x,y:Z. (Zsucc x)+y = Zsucc (x+y).
 intros.
 elim x
-[ auto
+[ autobatch
   (*elim y
   [ simplify. 
     reflexivity
@@ -331,13 +331,13 @@ elim x
   | rewrite < Zsucc_Zplus_pos_O.
     reflexivity
   ]*)
-| elim y;auto
+| elim y;autobatch
   (*[ rewrite < (sym_Zplus OZ).
     reflexivity
   | apply Zplus_Zsucc_pos_pos
   | apply Zplus_Zsucc_pos_neg
   ]*)
-| elim y;auto
+| elim y;autobatch
   (*[ rewrite < sym_Zplus.
     rewrite < (sym_Zplus OZ).
     simplify.
@@ -350,7 +350,7 @@ qed.
 
 theorem Zplus_Zpred: \forall x,y:Z. (Zpred x)+y = Zpred (x+y).
 intros.
-cut (Zpred (x+y) = Zpred ((Zsucc (Zpred x))+y));auto.
+cut (Zpred (x+y) = Zpred ((Zsucc (Zpred x))+y));autobatch.
 (*[ rewrite > Hcut.
   rewrite > Zplus_Zsucc.
   rewrite > Zpred_Zsucc.
@@ -366,31 +366,31 @@ change with (\forall x,y,z:Z. (x + y) + z = x + (y + z)).
 (* simplify. *)
 intros.
 elim x
-[ auto
+[ autobatch
   (*simplify.
   reflexivity*)
 | elim n
   [ rewrite < Zsucc_Zplus_pos_O.
-    auto
+    autobatch
     (*rewrite < Zsucc_Zplus_pos_O.
     rewrite > Zplus_Zsucc.
     reflexivity*)
   | rewrite > (Zplus_Zsucc (pos n1)).
     rewrite > (Zplus_Zsucc (pos n1)).
-    auto
+    autobatch
     (*rewrite > (Zplus_Zsucc ((pos n1)+y)).
     apply eq_f.
     assumption*)
   ]
 | elim n
   [ rewrite < (Zpred_Zplus_neg_O (y+z)).
-    auto
+    autobatch
     (*rewrite < (Zpred_Zplus_neg_O y).
     rewrite < Zplus_Zpred.
     reflexivity*)
   | rewrite > (Zplus_Zpred (neg n1)).
     rewrite > (Zplus_Zpred (neg n1)).
-    auto
+    autobatch
     (*rewrite > (Zplus_Zpred ((neg n1)+y)).
     apply eq_f.
     assumption*)
@@ -409,33 +409,33 @@ definition Zopp : Z \to Z \def
 | (neg n) \Rightarrow (pos n) ].
 
 (*CSC: the URI must disappear: there is a bug now *)
-interpretation "integer unary minus" 'uminus x = (cic:/matita/library_auto/Z/plus/Zopp.con x).
+interpretation "integer unary minus" 'uminus x = (cic:/matita/library_autobatch/Z/plus/Zopp.con x).
 
 theorem Zopp_Zplus: \forall x,y:Z. -(x+y) = -x + -y.
 intros.
 elim x
-[ elim y;auto
+[ elim y;autobatch
   (*simplify;reflexivity*)
 | elim y
-  [ auto
+  [ autobatch
     (*simplify. 
     reflexivity*)
-  | auto
+  | autobatch
     (*simplify. 
     reflexivity*)
   | simplify. 
     apply nat_compare_elim;
-      intro;auto (*simplify;reflexivity*)        
+      intro;autobatch (*simplify;reflexivity*)        
   ]
 | elim y
-  [ auto
+  [ autobatch
     (*simplify.
     reflexivity*)
   | simplify. 
     apply nat_compare_elim;
-      intro;auto
+      intro;autobatch
         (*simplify;reflexivity*)
-  | auto
+  | autobatch
     (*simplify.
     reflexivity*)
   ]
@@ -453,12 +453,12 @@ elim x
 [ apply refl_eq
 | simplify.
   rewrite > nat_compare_n_n.
-  auto
+  autobatch
   (*simplify.
   apply refl_eq*)
 | simplify.
   rewrite > nat_compare_n_n.
-  auto
+  autobatch
   (*simplify.
   apply refl_eq*)
 ]
@@ -467,4 +467,4 @@ qed.
 (* minus *)
 definition Zminus : Z \to Z \to Z \def \lambda x,y:Z. x + (-y).
 
-interpretation "integer minus" 'minus x y = (cic:/matita/library_auto/Z/plus/Zminus.con x y).
+interpretation "integer minus" 'minus x y = (cic:/matita/library_autobatch/Z/plus/Zminus.con x y).

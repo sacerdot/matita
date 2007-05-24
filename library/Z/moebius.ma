@@ -64,7 +64,7 @@ intros.
 apply p_ord_exp1
   [apply lt_O_nth_prime_n
   |assumption
-  |auto
+  |autobatch
   ]
 qed.
 
@@ -514,7 +514,7 @@ lapply (exp_ord (nth_prime (max_prime_factor n)) n)
           (ord_rem n (nth_prime (max_prime_factor n))))
           [apply lt_to_le.assumption
           |apply le_n
-          |auto
+          |autobatch
           |assumption
           ]
         |left.apply sym_eq.assumption

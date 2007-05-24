@@ -436,7 +436,7 @@ elim n
                  absurd (j = (h n1))
                   [rewrite < H10.
                    rewrite > H5
-                    [reflexivity|assumption|auto]
+                    [reflexivity|assumption|autobatch]
                   |apply eqb_false_to_not_eq.
                    generalize in match H11.
                    elim (eqb j (h n1))
@@ -637,7 +637,7 @@ cut (O < p)
            apply eq_f.
            rewrite > sym_plus.
            apply plus_minus_m_m.
-           auto
+           autobatch
           ]
         ]
       |intros.
@@ -663,7 +663,7 @@ cut (O < p)
          change with ((i/S m) < S n).
          apply (lt_times_to_lt_l m).
          apply (le_to_lt_to_lt ? i)
-          [auto|assumption]
+          [autobatch|assumption]
         |apply le_exp
           [assumption
           |apply le_S_S_to_le.

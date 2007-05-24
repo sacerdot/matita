@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/library_auto/nat/factorization".
+set "baseuri" "cic:/matita/library_autobatch/nat/factorization".
 
 include "auto/nat/ord.ma".
 include "auto/nat/gcd.ma".
@@ -36,7 +36,7 @@ apply divides_b_true_to_divides
     apply (ex_intro nat ? a).
     split
     [ apply (trans_le a (nth_prime a))
-      [ auto
+      [ autobatch
         (*apply le_n_fn.
         exact lt_nth_prime_n_nth_prime_Sn*)
       | rewrite > H1.
@@ -46,16 +46,16 @@ apply divides_b_true_to_divides
       (*CSC: simplify here does something nasty! *)
       change with (divides_b (smallest_factor n) n = true).
       apply divides_to_divides_b_true
-      [ auto
+      [ autobatch
         (*apply (trans_lt ? (S O))
         [ unfold lt.
           apply le_n
         | apply lt_SO_smallest_factor.
           assumption
         ]*)
-      | auto
+      | autobatch
         (*letin x \def le.
-        auto new*)
+        autobatch new*)
          (*       
        apply divides_smallest_factor_n;
         apply (trans_lt ? (S O));
@@ -63,7 +63,7 @@ apply divides_b_true_to_divides
         | assumption; ] *) 
       ] 
     ]
-  | auto
+  | autobatch
     (* 
     apply prime_to_nth_prime;
     apply prime_smallest_factor_n;
@@ -77,22 +77,22 @@ max_prime_factor n \le max_prime_factor m.
 intros.
 unfold max_prime_factor.
 apply f_m_to_le_max
-[ auto
+[ autobatch
   (*apply (trans_le ? n)
   [ apply le_max_n
   | apply divides_to_le;assumption
   ]*)
 | change with (divides_b (nth_prime (max_prime_factor n)) m = true).
   apply divides_to_divides_b_true
-  [ auto
+  [ autobatch
     (*cut (prime (nth_prime (max_prime_factor n)))
     [ apply lt_O_nth_prime_n
     | apply prime_nth_prime
     ]*)
-  | auto
+  | autobatch
     (*cut (nth_prime (max_prime_factor n) \divides n)
-    [ auto
-    | auto
+    [ autobatch
+    | autobatch
     ] *)   
   (*
     [ apply (transitive_divides ? n);
@@ -126,15 +126,15 @@ cut (max_prime_factor r \lt max_prime_factor n \lor
   [ assumption
   | absurd (nth_prime (max_prime_factor n) \divides r)
     [ rewrite < H4.
-      auto
+      autobatch
       (*apply divides_max_prime_factor_n.
       assumption*)
     | unfold Not.
       intro.
       cut (r \mod (nth_prime (max_prime_factor n)) \neq O)
-      [ auto
+      [ autobatch
         (*unfold Not in Hcut1.
-        auto new*)
+        autobatch new*)
         (*
         apply Hcut1.apply divides_to_mod_O;
         [ apply lt_O_nth_prime_n.
@@ -146,7 +146,7 @@ cut (max_prime_factor r \lt max_prime_factor n \lor
         [ 2: rewrite < H1.
           assumption
         | letin x \def le.
-          auto width = 4 new
+          autobatch width = 4 new
         ]
       (* CERCA COME MAI le_n non lo applica se lo trova come Const e non Rel *)
       ]
@@ -188,7 +188,7 @@ cut (max_prime_factor n < p \lor max_prime_factor n = p)
       | assumption
       | apply (witness r n ((nth_prime p) \sup q)).
         rewrite > sym_times.
-        (*qui auto non chiude il goal*)
+        (*qui autobatch non chiude il goal*)
         apply (p_ord_aux_to_exp n n)
         [ apply lt_O_nth_prime_n.
         | assumption
@@ -196,7 +196,7 @@ cut (max_prime_factor n < p \lor max_prime_factor n = p)
       ]
     | assumption
     ]
-  | apply (p_ord_to_lt_max_prime_factor n ? q);auto
+  | apply (p_ord_to_lt_max_prime_factor n ? q);autobatch
     (*[ assumption
     | apply sym_eq.
       assumption
@@ -261,7 +261,7 @@ elim f
 [1,2:
   simplify; 
   unfold lt;
-  rewrite > times_n_SO;auto
+  rewrite > times_n_SO;autobatch
   (*apply le_times
   [ change with (O < nth_prime i).
     apply lt_O_nth_prime_n
@@ -282,7 +282,7 @@ elim f
 [ simplify.
   unfold lt.
   rewrite > times_n_SO.
-  auto
+  autobatch
   (*apply le_times
   [ change with (S O < nth_prime i).
     apply lt_SO_nth_prime_n
@@ -294,7 +294,7 @@ elim f
   unfold lt.
   rewrite > times_n_SO.
   rewrite > sym_times.
-  auto
+  autobatch
   (*apply le_times
   [ change with (O < exp (nth_prime i) n).
     apply lt_O_exp.
@@ -314,7 +314,7 @@ elim p
 [ simplify.
   elim H1
   [ elim H2.
-    auto
+    autobatch
     (*rewrite > H3.
     rewrite > sym_times. 
     apply times_n_SO*)
@@ -327,12 +327,12 @@ elim p
   defactorize_aux match (p_ord_aux n1 n1 (nth_prime n)) with
   [(pair q r)  \Rightarrow (factorize_aux n r (nf_cons q acc))] O =
   n1*defactorize_aux acc (S n))
-  [ (*invocando auto in questo punto, dopo circa 7 minuti l'esecuzione non era ancora terminata
+  [ (*invocando autobatch in questo punto, dopo circa 7 minuti l'esecuzione non era ancora terminata
       ne' con un errore ne' chiudendo il goal
      *)
     apply (Hcut (fst ? ? (p_ord_aux n1 n1 (nth_prime n)))
     (snd ? ? (p_ord_aux n1 n1 (nth_prime n)))).
-    auto
+    autobatch
     (*apply sym_eq.apply eq_pair_fst_snd*)
   | intros.
     rewrite < H3.
@@ -340,11 +340,11 @@ elim p
     cut (n1 = r * (nth_prime n) \sup q)
     [ rewrite > H  
       [ simplify.
-        auto
+        autobatch
         (*rewrite < assoc_times.
         rewrite < Hcut.
         reflexivity.*)
-      | auto
+      | autobatch
         (*cut (O < r \lor O = r)
         [ elim Hcut1
           [ assumption
@@ -371,10 +371,10 @@ elim p
               [ elim H5.
                 apply False_ind.
                 apply (not_eq_O_S n).
-                auto
+                autobatch
                 (*apply sym_eq.
                 assumption*)
-              | auto
+              | autobatch
                 (*apply le_S_S_to_le.
                 exact H5*)
               ]
@@ -383,7 +383,7 @@ elim p
             ]
           | cut (r=(S O))
             [ apply (nat_case n)
-              [ auto
+              [ autobatch
                 (*left.
                 split
                 [ assumption
@@ -392,7 +392,7 @@ elim p
               | intro.
                 right.
                 rewrite > Hcut2.
-                auto
+                autobatch
                 (*simplify.
                 unfold lt.
                 apply le_S_S.
@@ -401,13 +401,13 @@ elim p
             | cut (r < (S O) ∨ r=(S O))
               [ elim Hcut2
                 [ absurd (O=r)
-                  [ auto
+                  [ autobatch
                     (*apply le_n_O_to_eq.
                     apply le_S_S_to_le.
                     exact H5*)
                   | unfold Not.
                     intro.
-                    auto
+                    autobatch
                     (*cut (O=n1)
                     [ apply (not_le_Sn_O O).
                       rewrite > Hcut3 in ⊢ (? ? %).
@@ -419,7 +419,7 @@ elim p
                   ]
                 | assumption
                 ]
-              | auto
+              | autobatch
                 (*apply (le_to_or_lt_eq r (S O)).
                 apply not_lt_to_le.
                 assumption*)
@@ -458,10 +458,10 @@ apply (nat_case n)
     defactorize (match p_ord (S(S m1)) (nth_prime p) with
     [ (pair q r) \Rightarrow 
       nfa_proper (factorize_aux p r (nf_last (pred q)))])=(S(S m1)))
-    [ (*invocando auto qui, dopo circa 300 secondi non si ottiene alcun risultato*)
+    [ (*invocando autobatch qui, dopo circa 300 secondi non si ottiene alcun risultato*)
       apply (Hcut (fst ? ? (p_ord (S(S m1)) (nth_prime p)))
       (snd ? ? (p_ord (S(S m1)) (nth_prime p)))).
-      auto      
+      autobatch      
       (*apply sym_eq.
       apply eq_pair_fst_snd*)
     | intros.
@@ -473,9 +473,9 @@ apply (nat_case n)
           [ (*CSC: simplify here does something really nasty *)
             change with (r*(nth_prime p) \sup (S (pred q)) = (S(S m1))).
             cut ((S (pred q)) = q)
-            [ (*invocando auto qui, dopo circa 300 secondi non si ottiene ancora alcun risultato*)
+            [ (*invocando autobatch qui, dopo circa 300 secondi non si ottiene ancora alcun risultato*)
               rewrite > Hcut2.
-              auto
+              autobatch
               (*rewrite > sym_times.
               apply sym_eq.
               apply (p_ord_aux_to_exp (S(S m1)))
@@ -490,7 +490,7 @@ apply (nat_case n)
                 [ assumption              
                 | absurd (nth_prime p \divides S (S m1))
                   [ apply (divides_max_prime_factor_n (S (S m1))).
-                    auto
+                    autobatch
                     (*unfold lt.
                     apply le_S_S.
                     apply le_S_S.
@@ -501,13 +501,13 @@ apply (nat_case n)
                       change with (nth_prime p \divides r \to False).
                       intro.
                       apply (p_ord_aux_to_not_mod_O (S(S m1)) (S(S m1)) (nth_prime p) q r)                      [ apply lt_SO_nth_prime_n
-                      | auto
+                      | autobatch
                         (*unfold lt.
                         apply le_S_S.
                         apply le_O_n*)
                       | apply le_n
                       | assumption
-                      | (*invocando auto qui, dopo circa 300 secondi non si ottiene ancora alcun risultato*)
+                      | (*invocando autobatch qui, dopo circa 300 secondi non si ottiene ancora alcun risultato*)
                         apply divides_to_mod_O
                         [ apply lt_O_nth_prime_n
                         | assumption
@@ -521,7 +521,7 @@ apply (nat_case n)
                     ]
                   ]
                 ]
-              | auto
+              | autobatch
                 (*apply le_to_or_lt_eq.
                 apply le_O_n*)
               ]
@@ -531,7 +531,7 @@ apply (nat_case n)
             cut ((S O) < r \lor S O \nlt r)
             [ elim Hcut2
               [ right. 
-                apply (p_ord_to_lt_max_prime_factor1 (S(S m1)) ? q r);auto
+                apply (p_ord_to_lt_max_prime_factor1 (S(S m1)) ? q r);autobatch
                 (*[ unfold lt.
                   apply le_S_S. 
                   apply le_O_n
@@ -541,7 +541,7 @@ apply (nat_case n)
                 ]*)
               | cut (r=(S O))
                 [ apply (nat_case p)
-                  [ auto
+                  [ autobatch
                     (*left.
                     split
                     [ assumption
@@ -550,7 +550,7 @@ apply (nat_case n)
                   | intro.
                     right.
                     rewrite > Hcut3.
-                    auto
+                    autobatch
                     (*simplify.
                     unfold lt.
                     apply le_S_S.
@@ -558,7 +558,7 @@ apply (nat_case n)
                   ]
                 | cut (r \lt (S O) \or r=(S O))
                   [ elim Hcut3
-                    [ absurd (O=r);auto
+                    [ absurd (O=r);autobatch
                       (*[ apply le_n_O_to_eq.
                         apply le_S_S_to_le.
                         exact H2
@@ -570,7 +570,7 @@ apply (nat_case n)
                       ]*)
                     | assumption
                     ]
-                  | auto
+                  | autobatch
                     (*apply (le_to_or_lt_eq r (S O)).
                     apply not_lt_to_le.
                     assumption*)
@@ -588,17 +588,17 @@ apply (nat_case n)
               apply (not_eq_O_S (S m1)).
               rewrite > Hcut.
               rewrite < H1.
-              auto
+              autobatch
               (*rewrite < times_n_O.
               reflexivity*)
             ]
-          | auto
+          | autobatch
             (*apply le_to_or_lt_eq.
             apply le_O_n*)  
           ]
         ]
       | (* prova del cut *)
-        apply (p_ord_aux_to_exp (S(S m1)));auto
+        apply (p_ord_aux_to_exp (S(S m1)));autobatch
         (*[ apply lt_O_nth_prime_n
         | assumption
         ]*)
@@ -624,7 +624,7 @@ nth_prime ((max_p f)+i) \divides defactorize_aux f i.
 intro.
 elim f
 [ simplify.
-  auto
+  autobatch
   (*apply (witness ? ? ((nth_prime i) \sup n)).
   reflexivity*)
 | change with 
@@ -634,7 +634,7 @@ elim f
   rewrite > H1.
   rewrite < sym_times.
   rewrite > assoc_times.
-  auto
+  autobatch
   (*rewrite < plus_n_Sm.
   apply (witness ? ? (n2* (nth_prime i) \sup n)).
   reflexivity*)
@@ -647,7 +647,7 @@ p \divides n \sup m \to p \divides n.
 intros 3.
 elim m
 [ simplify in H1.
-  auto
+  autobatch
   (*apply (transitive_divides p (S O))
   [ assumption
   | apply divides_SO_n
@@ -655,10 +655,10 @@ elim m
 | cut (p \divides n \lor p \divides n \sup n1)
   [ elim Hcut
     [ assumption
-    | auto
+    | autobatch
       (*apply H;assumption*)
     ]
-  | auto
+  | autobatch
     (*apply divides_times_to_divides
     [ assumption
     | exact H2
@@ -675,11 +675,11 @@ unfold prime in H1.
 elim H1.
 apply H4
 [ apply (divides_exp_to_divides p q m);assumption
-| (*invocando auto in questo punto, dopo piu' di 8 minuti la computazione non
+| (*invocando autobatch in questo punto, dopo piu' di 8 minuti la computazione non
    * era ancora terminata.
    *)
   unfold prime in H.
-  (*invocando auto anche in questo punto, dopo piu' di 10 minuti la computazione
+  (*invocando autobatch anche in questo punto, dopo piu' di 10 minuti la computazione
    * non era ancora terminata.
    *)
   elim H.
@@ -695,7 +695,7 @@ elim f
   (nth_prime i \divides (nth_prime j) \sup (S n) \to False).
   intro.
   absurd ((nth_prime i) = (nth_prime j))
-  [ apply (divides_exp_to_eq ? ? (S n));auto
+  [ apply (divides_exp_to_eq ? ? (S n));autobatch
     (*[ apply prime_nth_prime
     | apply prime_nth_prime
     | assumption
@@ -716,7 +716,7 @@ elim f
   \lor nth_prime i \divides defactorize_aux n1 (S j))
   [ elim Hcut
     [ absurd ((nth_prime i) = (nth_prime j))
-      [ apply (divides_exp_to_eq ? ? n);auto
+      [ apply (divides_exp_to_eq ? ? n);autobatch
         (*[ apply prime_nth_prime
         | apply prime_nth_prime
         | assumption
@@ -731,7 +731,7 @@ elim f
         ]
       ]
     | apply (H i (S j))
-      [ auto
+      [ autobatch
         (*apply (trans_lt ? j)
         [ assumption
         | unfold lt.
@@ -740,7 +740,7 @@ elim f
       | assumption
       ]
     ]
-  | auto
+  | autobatch
     (*apply divides_times_to_divides.
     apply prime_nth_prime.
     assumption*)
@@ -756,9 +756,9 @@ change with
 intro.
 cut (S(max_p g)+i= i)
 [ apply (not_le_Sn_n i).
-  rewrite < Hcut in \vdash (? ? %). (*chiamando auto qui da uno strano errore  "di tipo"*)
+  rewrite < Hcut in \vdash (? ? %). (*chiamando autobatch qui da uno strano errore  "di tipo"*)
   simplify.
-  auto
+  autobatch
   (*apply le_S_S.
   apply le_plus_n*)
 | apply injective_nth_prime.
@@ -781,10 +781,10 @@ unfold Not.
 rewrite < plus_n_O.
 intro.
 apply (not_divides_defactorize_aux f i (S i) ?)
-[ auto
+[ autobatch
   (*unfold lt.
   apply le_n*)
-| auto
+| autobatch
   (*rewrite > H.
   rewrite > assoc_times.
   apply (witness ? ? ((exp (nth_prime i) n)*(defactorize_aux g (S i)))).
@@ -802,18 +802,18 @@ elim f
     apply inj_S.
     apply (inj_exp_r (nth_prime i))
     [ apply lt_SO_nth_prime_n
-    | (*qui auto non conclude il goal attivo*)
+    | (*qui autobatch non conclude il goal attivo*)
       assumption
     ]
   | apply False_ind.
-    (*auto chiamato qui NON conclude il goal attivo*)
+    (*autobatch chiamato qui NON conclude il goal attivo*)
     apply (not_eq_nf_last_nf_cons n2 n n1 i H2)
   ]
 | generalize in match H1.
   elim g
   [ apply False_ind.
     apply (not_eq_nf_last_nf_cons n1 n2 n i).
-    auto
+    autobatch
     (*apply sym_eq. 
     assumption*)
   | simplify in H3.
@@ -824,7 +824,7 @@ elim f
     nf_cons n n1 = nf_cons n2 n3))
     [ intro.
       elim n4
-      [ auto
+      [ autobatch
         (*apply eq_f.
         apply (H n3 (S i))
         simplify in H4.
@@ -833,20 +833,20 @@ elim f
         assumption*)
       | apply False_ind.
         apply (not_eq_nf_cons_O_nf_cons n1 n3 n5 i).
-        (*auto chiamato qui NON chiude il goal attivo*)
+        (*autobatch chiamato qui NON chiude il goal attivo*)
         assumption
       ]    
     | intros.
       apply False_ind.
       apply (not_eq_nf_cons_O_nf_cons n3 n1 n4 i).      
       apply sym_eq.
-      (*auto chiamato qui non chiude il goal*)
+      (*autobatch chiamato qui non chiude il goal*)
       assumption
     | intros.
       cut (nf_cons n4 n1 = nf_cons m n3)
       [ cut (n4=m)
         [ cut (n1=n3)
-          [ auto
+          [ autobatch
             (*rewrite > Hcut1.
             rewrite > Hcut2.
             reflexivity*)
@@ -855,7 +855,7 @@ elim f
             [ (nf_last m) \Rightarrow n1
             | (nf_cons m g) \Rightarrow g ] = n3).
             rewrite > Hcut.
-            auto
+            autobatch
             (*simplify.
             reflexivity*)
           ]
@@ -863,9 +863,9 @@ elim f
           (match nf_cons n4 n1 with
           [ (nf_last m) \Rightarrow m
           | (nf_cons m g) \Rightarrow m ] = m).
-          (*invocando auto qui, dopo circa 8 minuti la computazione non era ancora terminata*)
+          (*invocando autobatch qui, dopo circa 8 minuti la computazione non era ancora terminata*)
           rewrite > Hcut.
-          auto
+          autobatch
           (*simplify.
           reflexivity*)
         ]        
@@ -909,7 +909,7 @@ elim f
     apply False_ind.
     apply (not_le_Sn_n O).
     rewrite > H1 in \vdash (? ? %).
-    auto
+    autobatch
     (*change with (O < defactorize_aux n O).
     apply lt_O_defactorize_aux*)
   ]
@@ -918,7 +918,7 @@ elim f
   [ (* one - zero *)
     simplify in H1.
     apply False_ind.
-    auto
+    autobatch
     (*apply (not_eq_O_S O).
     apply sym_eq.
     assumption*)
@@ -929,7 +929,7 @@ elim f
     apply False_ind.
     apply (not_le_Sn_n (S O)).
     rewrite > H1 in \vdash (? ? %).
-    auto
+    autobatch
     (*change with ((S O) < defactorize_aux n O).
     apply lt_SO_defactorize_aux*)
   ]
@@ -940,7 +940,7 @@ elim f
     apply False_ind.
     apply (not_le_Sn_n O).
     rewrite < H1 in \vdash (? ? %).
-    auto
+    autobatch
     (*change with (O < defactorize_aux n O).
     apply lt_O_defactorize_aux.*)
   | (* proper - one *)
@@ -948,13 +948,13 @@ elim f
     apply False_ind.
     apply (not_le_Sn_n (S O)).
     rewrite < H1 in \vdash (? ? %).
-    auto
+    autobatch
     (*change with ((S O) < defactorize_aux n O).
     apply lt_SO_defactorize_aux.*)
   | (* proper - proper *)
     apply eq_f.
     apply (injective_defactorize_aux O).
-    (*invocata qui la tattica auto NON chiude il goal, chiuso invece 
+    (*invocata qui la tattica autobatch NON chiude il goal, chiuso invece 
      *da exact H1
      *)
     exact H1
@@ -965,7 +965,7 @@ qed.
 theorem factorize_defactorize: 
 \forall f,g: nat_fact_all. factorize (defactorize f) = f.
 intros.
-auto.
+autobatch.
 (*apply injective_defactorize.
 apply defactorize_factorize.
 *)

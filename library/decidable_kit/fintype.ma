@@ -80,8 +80,8 @@ cases b; simplify;
 [2:intros (Hpt); apply H; intros; apply H1; simplify;
    generalize in match (refl_eq ? (cmp d x t));
    generalize in match (cmp d x t) in ⊢ (? ? ? % → %); intros 1 (b1);
-   cases b1; simplify; intros; [2:rewrite > H2] auto.
-|1:intros (H2); lapply (H1 t); [2:simplify; rewrite > cmp_refl; simplify; auto]
+   cases b1; simplify; intros; [2:rewrite > H2] autobatch.
+|1:intros (H2); lapply (H1 t); [2:simplify; rewrite > cmp_refl; simplify; autobatch]
    rewrite > H2 in Hletin; simplify in Hletin; destruct Hletin]
 qed.    
     
@@ -103,7 +103,7 @@ cut (∀x:fsort. count fsort (cmp fsort x) enum = (S O));
       generalize in match (refl_eq ? (eqb n p));
       generalize in match (eqb n p) in ⊢ (? ? ? % → %); intros 1(b); cases b; clear b; 
       intros (Enp); simplify;
-      [2:rewrite > IH; [1,3: auto]
+      [2:rewrite > IH; [1,3: autobatch]
          rewrite <  ltb_n_Sm in Hm; rewrite > Enp in Hm;
          generalize in match Hm; cases (ltb n p); intros; [reflexivity]
          simplify in H1; destruct H1;

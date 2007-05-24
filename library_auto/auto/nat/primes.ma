@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/library_auto/nat/primes".
+set "baseuri" "cic:/matita/library_autobatch/nat/primes".
 
 include "auto/nat/div_and_mod.ma".
 include "auto/nat/minimization.ma".
@@ -22,9 +22,9 @@ include "auto/nat/factorial.ma".
 inductive divides (n,m:nat) : Prop \def
 witness : \forall p:nat.m = times n p \to divides n m.
 
-interpretation "divides" 'divides n m = (cic:/matita/library_auto/nat/primes/divides.ind#xpointer(1/1) n m).
+interpretation "divides" 'divides n m = (cic:/matita/library_autobatch/nat/primes/divides.ind#xpointer(1/1) n m).
 interpretation "not divides" 'ndivides n m =
- (cic:/matita/logic/connectives/Not.con (cic:/matita/library_auto/nat/primes/divides.ind#xpointer(1/1) n m)).
+ (cic:/matita/logic/connectives/Not.con (cic:/matita/library_autobatch/nat/primes/divides.ind#xpointer(1/1) n m)).
 
 theorem reflexive_divides : reflexive nat divides.
 unfold reflexive.
@@ -41,7 +41,7 @@ constructor 1
 [ assumption
 | apply (lt_O_n_elim n H).
   intros.
-  auto
+  autobatch
   (*rewrite < plus_n_O.
   rewrite > div_times.
   apply sym_times*)
@@ -52,7 +52,7 @@ theorem div_mod_spec_to_divides :
 \forall n,m,p. div_mod_spec m n p O \to n \divides m.
 intros.
 elim H.
-auto.
+autobatch.
 (*apply (witness n m p).
 rewrite < sym_times.
 rewrite > (plus_n_O (p*n)).
@@ -63,10 +63,10 @@ theorem divides_to_mod_O:
 \forall n,m. O < n \to n \divides m \to (m \mod n) = O.
 intros.
 apply (div_mod_spec_to_eq2 m n (m / n) (m \mod n) (m / n) O)
-[ auto
+[ autobatch
   (*apply div_mod_spec_div_mod.
   assumption*)
-| auto
+| autobatch
   (*apply divides_to_div_mod_spec;assumption*)
 ]
 qed.
@@ -78,7 +78,7 @@ apply (witness n m (m / n)).
 rewrite > (plus_n_O (n * (m / n))).
 rewrite < H1.
 rewrite < sym_times.
-auto.
+autobatch.
 (* Andrea: perche' hint non lo trova ?*)
 (*apply div_mod.
 assumption.*)
@@ -86,13 +86,13 @@ qed.
 
 theorem divides_n_O: \forall n:nat. n \divides O.
 intro.
-auto.
+autobatch.
 (*apply (witness n O O).
 apply times_n_O.*)
 qed.
 
 theorem divides_n_n: \forall n:nat. n \divides n.
-auto.
+autobatch.
 (*intro.
 apply (witness n n (S O)).
 apply times_n_SO.*)
@@ -100,7 +100,7 @@ qed.
 
 theorem divides_SO_n: \forall n:nat. (S O) \divides n.
 intro.
-auto.
+autobatch.
 (*apply (witness (S O) n n).
 simplify.
 apply plus_n_O.*)
@@ -112,7 +112,7 @@ intros.
 elim H.
 elim H1.
 apply (witness n (p+q) (n2+n1)).
-auto.
+autobatch.
 (*rewrite > H2.
 rewrite > H3.
 apply sym_eq.
@@ -125,7 +125,7 @@ intros.
 elim H.
 elim H1.
 apply (witness n (p-q) (n2-n1)).
-auto.
+autobatch.
 (*rewrite > H2.
 rewrite > H3.
 apply sym_eq.
@@ -145,14 +145,14 @@ apply (trans_eq nat ? (n*(m*(n2*n1))))
   [ apply assoc_times
   | apply eq_f.
     apply (trans_eq nat ? ((n2*m)*n1))
-    [ auto
+    [ autobatch
       (*apply sym_eq. 
       apply assoc_times*)
     | rewrite > (sym_times n2 m).
       apply assoc_times
     ]
   ]
-| auto
+| autobatch
   (*apply sym_eq. 
   apply assoc_times*)
 ]
@@ -164,7 +164,7 @@ intros.
 elim H.
 elim H1.
 apply (witness x z (n2*n)).
-auto.
+autobatch.
 (*rewrite > H3.
 rewrite > H2.
 apply assoc_times.*)
@@ -179,11 +179,11 @@ intros.
 cut (n \le m \or \not n \le m)
 [ elim Hcut
   [ cut (n-m=O)
-    [ auto
+    [ autobatch
       (*rewrite > Hcut1.
       apply (witness p O O).
       apply times_n_O*)
-    | auto
+    | autobatch
       (*apply eq_minus_n_m_O.
       assumption*)
     ]
@@ -196,7 +196,7 @@ cut (n \le m \or \not n \le m)
       rewrite > eq_minus_minus_minus_plus.
       rewrite > sym_plus.
       rewrite > H1.
-      auto
+      autobatch
       (*rewrite < div_mod
       [ reflexivity
       | assumption
@@ -204,7 +204,7 @@ cut (n \le m \or \not n \le m)
     | apply sym_eq.
       apply plus_to_minus.
       rewrite > sym_plus.
-      auto
+      autobatch
       (*apply div_mod.
       assumption*)
     ]
@@ -231,7 +231,7 @@ apply (nat_case1 n2)
     rewrite > H2.
     rewrite > H3.
     rewrite > H5.
-    auto
+    autobatch
     (*rewrite < times_n_O.
     reflexivity*)
   | intros.
@@ -240,14 +240,14 @@ apply (nat_case1 n2)
       rewrite > times_n_SO in \vdash (? % ?).
       apply le_times_r.
       rewrite > H4.
-      auto
+      autobatch
       (*apply le_S_S.
       apply le_O_n*)
     | rewrite > H3.
       rewrite > times_n_SO in \vdash (? % ?).
       apply le_times_r.
       rewrite > H5.
-      auto
+      autobatch
       (*apply le_S_S.
       apply le_O_n*)
     ]
@@ -263,7 +263,7 @@ rewrite > H2.
 cut (O < n2)
 [ apply (lt_O_n_elim n2 Hcut).
   intro.
-  auto
+  autobatch
   (*rewrite < sym_times.
   simplify.
   rewrite < sym_plus.
@@ -292,7 +292,7 @@ elim (le_to_or_lt_eq O n (le_O_n n))
   [ assumption
   | rewrite > H2.
     rewrite < H3.
-    auto
+    autobatch
     (*simplify.
     exact (not_le_Sn_n O)*)
   ]
@@ -313,13 +313,13 @@ unfold divides_b.
 apply eqb_elim
 [ intro.
   simplify.
-  auto
+  autobatch
   (*apply mod_O_to_divides;assumption*)
 | intro.
   simplify.
   unfold Not.
   intro.
-  auto
+  autobatch
   (*apply H1.
   apply divides_to_mod_O;assumption*)
 ]
@@ -364,10 +364,10 @@ cut
   assumption
 | elim (divides_b n m)
   [ left.
-    (*qui auto non chiude il goal, chiuso dalla sola apply H1*)
+    (*qui autobatch non chiude il goal, chiuso dalla sola apply H1*)
     apply H1
   | right.
-    (*qui auto non chiude il goal, chiuso dalla sola apply H1*)
+    (*qui autobatch non chiude il goal, chiuso dalla sola apply H1*)
     apply H1
   ]
 ]
@@ -386,7 +386,7 @@ cut (match (divides_b n m) with
   [ reflexivity
   | absurd (n \divides m)
     [ assumption
-    | (*qui auto non chiude il goal, chiuso dalla sola applicazione di assumption*)
+    | (*qui autobatch non chiude il goal, chiuso dalla sola applicazione di assumption*)
       assumption
     ]
   ]
@@ -404,7 +404,7 @@ cut (match (divides_b n m) with
   assumption
 | elim (divides_b n m)
   [ absurd (n \divides m)
-    [ (*qui auto non chiude il goal, chiuso dalla sola tattica assumption*)
+    [ (*qui autobatch non chiude il goal, chiuso dalla sola tattica assumption*)
       assumption
     | assumption
     ]
@@ -420,7 +420,7 @@ intros 5.
 elim n
 [ simplify.
   cut (i = m)
-  [ auto
+  [ autobatch
     (*rewrite < Hcut.
     apply divides_n_n*)
   | apply antisymmetric_le
@@ -433,19 +433,19 @@ elim n
   [ elim Hcut
     [ apply (transitive_divides ? (pi n1 f m))
       [ apply H1.
-        auto
+        autobatch
         (*apply le_S_S_to_le.
         assumption*)
-      | auto
+      | autobatch
         (*apply (witness ? ? (f (S n1+m))).
         apply sym_times*)
       ]
-    | auto
+    | autobatch
       (*rewrite > H3.
       apply (witness ? ? (pi n1 f m)).
       reflexivity*)
     ]
-  | auto
+  | autobatch
     (*apply le_to_or_lt_eq.
     assumption*)
   ]
@@ -471,7 +471,7 @@ intros 3.
 elim n
 [ absurd (O<i)
   [ assumption
-  | auto
+  | autobatch
     (*apply (le_n_O_elim i H1).
     apply (not_le_Sn_O O)*)
   ]
@@ -479,16 +479,16 @@ elim n
   apply (le_n_Sm_elim i n1 H2)
   [ intro.
     apply (transitive_divides ? n1!)
-    [ auto
+    [ autobatch
       (*apply H1.
       apply le_S_S_to_le. 
       assumption*)
-    | auto
+    | autobatch
       (*apply (witness ? ? (S n1)).
       apply sym_times*)
     ]
   | intro.
-    auto
+    autobatch
     (*rewrite > H3.
     apply (witness ? ? n1!).
     reflexivity*)
@@ -502,7 +502,7 @@ intros.
 cut (n! \mod i = O)
 [ rewrite < Hcut.
   apply mod_S
-  [ auto
+  [ autobatch
     (*apply (trans_lt O (S O))
     [ apply (le_n (S O))
     | assumption
@@ -510,7 +510,7 @@ cut (n! \mod i = O)
   | rewrite > Hcut.
     assumption
   ]
-| auto(*
+| autobatch(*
   apply divides_to_mod_O
   [ apply ltn_to_ltO [| apply H]
   | apply divides_fact
@@ -525,13 +525,13 @@ theorem not_divides_S_fact: \forall n,i:nat.
 (S O) < i \to i \le n \to i \ndivides S n!.
 intros.
 apply divides_b_false_to_not_divides
-[ auto
+[ autobatch
   (*apply (trans_lt O (S O))
   [ apply (le_n (S O))
   | assumption
   ]*)
 | unfold divides_b.
-  rewrite > mod_S_fact;auto
+  rewrite > mod_S_fact;autobatch
   (*[ simplify.
     reflexivity
   | assumption
@@ -588,13 +588,13 @@ theorem lt_SO_smallest_factor:
 \forall n:nat. (S O) < n \to (S O) < (smallest_factor n).
 intro.
 apply (nat_case n)
-[ auto
+[ autobatch
   (*intro.
   apply False_ind.
   apply (not_le_Sn_O (S O) H)*)
 | intro.
   apply (nat_case m)
-  [ auto
+  [ autobatch
     (*intro. apply False_ind.
     apply (not_le_Sn_n (S O) H)*)  
   | intros.
@@ -607,7 +607,7 @@ apply (nat_case n)
         apply le_min_aux
       | apply sym_eq.
         apply plus_to_minus.
-        auto
+        autobatch
         (*rewrite < sym_plus.
         simplify.
         reflexivity*)        
@@ -620,24 +620,24 @@ qed.
 theorem lt_O_smallest_factor: \forall n:nat. O < n \to O < (smallest_factor n).
 intro.
 apply (nat_case n)
-[ auto
+[ autobatch
   (*intro.
   apply False_ind.
   apply (not_le_Sn_n O H)*)
 | intro.
   apply (nat_case m)
-  [ auto
+  [ autobatch
     (*intro.
     simplify.
     unfold lt.
     apply le_n*)
   | intros.
     apply (trans_lt ? (S O))
-    [ auto
+    [ autobatch
       (*unfold lt.
       apply le_n*)
     | apply lt_SO_smallest_factor.
-      unfold lt.auto
+      unfold lt.autobatch
       (*apply le_S_S.
       apply le_S_S.
       apply le_O_n*)     
@@ -651,13 +651,13 @@ theorem divides_smallest_factor_n :
 intro.
 apply (nat_case n)
 [ intro.
-  auto
+  autobatch
   (*apply False_ind.
   apply (not_le_Sn_O O H)*)
 | intro.
   apply (nat_case m)
   [ intro.
-    auto
+    autobatch
     (*simplify.
     apply (witness ? ? (S O)). 
     simplify.
@@ -671,12 +671,12 @@ apply (nat_case n)
       apply f_min_aux_true.
       apply (ex_intro nat ? (S(S m1))).
       split
-      [ auto
+      [ autobatch
         (*split
         [ apply le_minus_m
         | apply le_n
         ]*)
-      | auto
+      | autobatch
         (*rewrite > mod_n_n
         [ reflexivity
         | apply (trans_lt ? (S O))
@@ -697,11 +697,11 @@ theorem le_smallest_factor_n :
 \forall n:nat. smallest_factor n \le n.
 intro.
 apply (nat_case n)
-[ auto
+[ autobatch
   (*simplify.
   apply le_n*)
 | intro.
-  auto
+  autobatch
   (*apply (nat_case m)
   [ simplify.
     apply le_n
@@ -733,7 +733,7 @@ apply (nat_case n)
     apply (not_le_Sn_n (S O) H)
   | intros.
     apply divides_b_false_to_not_divides
-    [ auto
+    [ autobatch
       (*apply (trans_lt O (S O))
       [ apply (le_n (S O))
       | assumption
@@ -746,7 +746,7 @@ apply (nat_case n)
           exact H1
         | apply sym_eq.        
           apply plus_to_minus.
-          auto
+          autobatch
           (*rewrite < sym_plus.
           simplify.
           reflexivity*)
@@ -774,14 +774,14 @@ split
       [ apply (transitive_divides m (smallest_factor n))
         [ assumption
         | apply divides_smallest_factor_n.
-          auto
+          autobatch
           (*apply (trans_lt ? (S O))
           [ unfold lt. 
             apply le_n
           | exact H
           ]*)
         ]
-      | apply lt_smallest_factor_to_not_divides;auto      
+      | apply lt_smallest_factor_to_not_divides;autobatch      
         (*[ exact H
         | assumption
         | assumption
@@ -806,13 +806,13 @@ smallest_factor n = n.
 intro.
 apply (nat_case n)
 [ intro.
-  auto
+  autobatch
   (*apply False_ind.
   apply (not_prime_O H)*)
 | intro.
   apply (nat_case m)
   [ intro.
-    auto
+    autobatch
     (*apply False_ind.
     apply (not_prime_SO H)*)
   | intro.
@@ -822,7 +822,7 @@ apply (nat_case n)
     smallest_factor (S(S m1)) = (S(S m1))).
     intro.
     elim H.
-    auto
+    autobatch
     (*apply H2
     [ apply divides_smallest_factor_n.
       apply (trans_lt ? (S O))
@@ -870,7 +870,7 @@ match primeb n with
 intro.
 apply (nat_case n)
 [ simplify.
-  auto
+  autobatch
   (*unfold Not.
   unfold prime.
   intro.
@@ -879,7 +879,7 @@ apply (nat_case n)
 | intro.
   apply (nat_case m)
   [ simplify.
-    auto
+    autobatch
     (*unfold Not.
     unfold prime.
     intro.
@@ -895,7 +895,7 @@ apply (nat_case n)
       simplify.
       rewrite < H.
       apply prime_smallest_factor_n.
-      unfold lt.auto
+      unfold lt.autobatch
       (*apply le_S_S.
       apply le_S_S.
       apply le_O_n*)
@@ -903,7 +903,7 @@ apply (nat_case n)
       simplify.
       change with (prime (S(S m1)) \to False).
       intro.
-      auto      
+      autobatch      
       (*apply H.
       apply prime_to_smallest_factor.
       assumption*)
@@ -920,7 +920,7 @@ match true with
 [ true \Rightarrow prime n
 | false \Rightarrow \lnot (prime n)].
 rewrite < H.
-(*qui auto non chiude il goal*)
+(*qui autobatch non chiude il goal*)
 apply primeb_to_Prop.
 qed.
 
@@ -932,7 +932,7 @@ match false with
 [ true \Rightarrow prime n
 | false \Rightarrow \lnot (prime n)].
 rewrite < H.
-(*qui auto non chiude il goal*)
+(*qui autobatch non chiude il goal*)
 apply primeb_to_Prop.
 qed.
 
@@ -944,14 +944,14 @@ cut
 [ true \Rightarrow prime n
 | false \Rightarrow \lnot (prime n)] \to (prime n) \lor \lnot (prime n))
 [ apply Hcut.
-  (*qui auto non chiude il goal*)
+  (*qui autobatch non chiude il goal*)
   apply primeb_to_Prop
 | elim (primeb n)
   [ left.
-    (*qui auto non chiude il goal*)
+    (*qui autobatch non chiude il goal*)
     apply H
   | right.
-    (*qui auto non chiude il goal*)
+    (*qui autobatch non chiude il goal*)
     apply H
   ]
 ]
@@ -964,13 +964,13 @@ cut (match (primeb n) with
 [ true \Rightarrow prime n
 | false \Rightarrow \lnot (prime n)] \to ((primeb n) = true))
 [ apply Hcut.
-  (*qui auto non chiude il goal*)
+  (*qui autobatch non chiude il goal*)
   apply primeb_to_Prop
 | elim (primeb n)
   [ reflexivity.
   | absurd (prime n)
     [ assumption
-    | (*qui auto non chiude il goal*)
+    | (*qui autobatch non chiude il goal*)
       assumption
     ]
   ]
@@ -984,11 +984,11 @@ cut (match (primeb n) with
 [ true \Rightarrow prime n
 | false \Rightarrow \lnot (prime n)] \to ((primeb n) = false))
 [ apply Hcut.
-  (*qui auto non chiude il goal*)
+  (*qui autobatch non chiude il goal*)
   apply primeb_to_Prop
 | elim (primeb n)
   [ absurd (prime n)
-    [ (*qui auto non chiude il goal*)
+    [ (*qui autobatch non chiude il goal*)
       assumption
     | assumption
     ]

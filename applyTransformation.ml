@@ -158,7 +158,9 @@ let term2pres ?map_unicode_to_tex n ids_to_inner_sorts annterm =
    let s = BoxPp.render_to_string ?map_unicode_to_tex render n mpres in
    remove_closed_substs s
 
-let txt_of_cic_object ?map_unicode_to_tex n style prefix obj =
+let txt_of_cic_object 
+ ?map_unicode_to_tex ?skip_thm_and_qed ?skip_initial_lambdas n style prefix obj 
+=
   let get_aobj obj = 
      try   
         let aobj,_,_,ids_to_inner_sorts,ids_to_inner_types,_,_ =
@@ -186,8 +188,11 @@ let txt_of_cic_object ?map_unicode_to_tex n style prefix obj =
         let lazy_term_pp = term_pp in
         let obj_pp = CicNotationPp.pp_obj term_pp in
         let aux = GrafiteAstPp.pp_statement ~term_pp ~lazy_term_pp ~obj_pp in
-	let script = Acic2Procedural.acic2procedural 
-	   ~ids_to_inner_sorts ~ids_to_inner_types ?depth prefix aobj in
+	let script = 
+    Acic2Procedural.acic2procedural 
+	   ~ids_to_inner_sorts ~ids_to_inner_types ?depth ?skip_thm_and_qed 
+       ?skip_initial_lambdas prefix aobj 
+  in
 	String.concat "" (List.map aux script) ^ "\n\n"
 
 let txt_of_inline_macro style suri prefix =

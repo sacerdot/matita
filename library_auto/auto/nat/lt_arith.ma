@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/library_auto/nat/lt_arith".
+set "baseuri" "cic:/matita/library_autobatch/nat/lt_arith".
 
 include "auto/nat/div_and_mod.ma".
 
@@ -22,7 +22,7 @@ theorem monotonic_lt_plus_r:
 simplify.intros.
 elim n;simplify
 [ assumption
-| auto. 
+| autobatch. 
   (*unfold lt.
   apply le_S_S.
   assumption.*)
@@ -40,14 +40,14 @@ intros.
  rewrite < (sym_plus n).*)
 applyS lt_plus_r.assumption.
 qed.
-(* IN ALTERNATIVA: mantengo le 2 rewrite, e concludo con auto. *)
+(* IN ALTERNATIVA: mantengo le 2 rewrite, e concludo con autobatch. *)
 
 variant lt_plus_l: \forall n,p,q:nat. p < q \to p + n < q + n \def
 monotonic_lt_plus_l.
 
 theorem lt_plus: \forall n,m,p,q:nat. n < m \to p < q \to n + p < m + q.
 intros.
-auto.
+autobatch.
 (*apply (trans_lt ? (n + q)).
 apply lt_plus_r.assumption.
 apply lt_plus_l.assumption.*)
@@ -78,7 +78,7 @@ qed.
 (* times and zero *)
 theorem lt_O_times_S_S: \forall n,m:nat.O < (S n)*(S m).
 intros.
-auto.
+autobatch.
 (*simplify.
 unfold lt.
 apply le_S_S.
@@ -90,7 +90,7 @@ theorem monotonic_lt_times_r:
 \forall n:nat.monotonic nat lt (\lambda m.(S n)*m).
 simplify.
 intros.elim n
-[ auto
+[ autobatch
   (*simplify.
   rewrite < plus_n_O.
   rewrite < plus_n_O.
@@ -111,7 +111,7 @@ intros.
 applyS lt_times_r.assumption.
 qed.
 
-(* IN ALTERNATIVA: mantengo le 2 rewrite, e concludo con auto. *)
+(* IN ALTERNATIVA: mantengo le 2 rewrite, e concludo con autobatch. *)
 
 
 variant lt_times_l: \forall n,p,q:nat. p<q \to p*(S n) < q*(S n)
@@ -125,22 +125,22 @@ elim n
   cut (lt O q)
   [ apply (lt_O_n_elim q Hcut).
     intro.
-    auto
+    autobatch
     (*change with (O < (S m1)*(S m2)).
     apply lt_O_times_S_S.*)
-  | apply (ltn_to_ltO p q H1). (*funziona anche auto*)
+  | apply (ltn_to_ltO p q H1). (*funziona anche autobatch*)
   ]
 | apply (trans_lt ? ((S n1)*q))
-  [ auto
+  [ autobatch
     (*apply lt_times_r.
     assumption.*)
   | cut (lt O q)
     [ apply (lt_O_n_elim q Hcut).
       intro.
-      auto
+      autobatch
       (*apply lt_times_l.
       assumption.*)
-    |apply (ltn_to_ltO p q H2). (*funziona anche auto*)
+    |apply (ltn_to_ltO p q H2). (*funziona anche autobatch*)
     ]
   ]
 ]
@@ -155,7 +155,7 @@ cut (p < q \lor p \nlt q)
   | absurd (p * (S n) < q * (S n))
     [ assumption
     | apply le_to_not_lt.
-      auto
+      autobatch
       (*apply le_times_l.
       apply not_lt_to_le.
       assumption.*)
@@ -184,26 +184,26 @@ apply nat_compare_elim
     reflexivity
   | intro.
     absurd (p=q)
-    [ auto.
+    [ autobatch.
       (*apply (inj_times_r n).
       assumption*)
-    | auto
+    | autobatch
       (*apply lt_to_not_eq. 
       assumption*)
     ]
   | intro.
     absurd (q<p)
-    [ auto.
+    [ autobatch.
       (*apply (lt_times_to_lt_r n).
       assumption.*)
-    | auto
+    | autobatch
       (*apply le_to_not_lt.
       apply lt_to_le.
       assumption*)
     ]
   ]. 
 | intro.
-  auto
+  autobatch
   (*rewrite < H.
   rewrite > nat_compare_n_n.
   reflexivity*)
@@ -211,21 +211,21 @@ apply nat_compare_elim
   apply nat_compare_elim
   [ intro.
     absurd (p<q)
-    [ auto
+    [ autobatch
       (*apply (lt_times_to_lt_r n).
       assumption.*)
-    | auto 
+    | autobatch 
       (*apply le_to_not_lt.
       apply lt_to_le. 
       assumption.*)
     ]
   | intro.
     absurd (q=p)
-    [ auto. 
+    [ autobatch. 
       (*symmetry.
       apply (inj_times_r n).
       assumption*)
-    | auto
+    | autobatch
       (*apply lt_to_not_eq.
       assumption*)
     ]
@@ -249,7 +249,7 @@ rewrite < sym_times.
 rewrite < div_mod
 [ rewrite > H2.
   assumption.
-| auto
+| autobatch
   (*unfold lt.
   apply le_S_S.
   apply le_O_n.*)
@@ -270,21 +270,21 @@ apply (nat_case1 (n / m))
         rewrite > H2.
         simplify.
         unfold lt.
-        auto.
+        autobatch.
         (*rewrite < plus_n_O.
         rewrite < plus_n_Sm.
         apply le_S_S.
         apply le_S_S.
         apply le_plus_n*)
-      | auto 
+      | autobatch 
         (*apply le_times_r.
         assumption*)
       ]
-    | auto
+    | autobatch
       (*rewrite < sym_plus.
       apply le_plus_n*)
     ]
-  | auto
+  | autobatch
     (*apply (trans_lt ? (S O)).
     unfold lt. 
     apply le_n.
@@ -303,7 +303,7 @@ apply (nat_compare_elim x y)
   apply (not_le_Sn_n (f x)).
   rewrite > H1 in \vdash (? ? %).
   change with (f x < f y).
-  auto
+  autobatch
   (*apply H.
   apply H2*)
 | intros.
@@ -313,7 +313,7 @@ apply (nat_compare_elim x y)
   apply (not_le_Sn_n (f y)).
   rewrite < H1 in \vdash (? ? %).
   change with (f y < f x).
-  auto
+  autobatch
   (*apply H.
   apply H2*)
 ]
@@ -322,7 +322,7 @@ qed.
 theorem increasing_to_injective: \forall f:nat\to nat.
 increasing f \to injective nat nat f.
 intros.
-auto.
+autobatch.
 (*apply monotonic_to_injective.
 apply increasing_to_monotonic.
 assumption.*)

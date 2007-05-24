@@ -39,6 +39,6 @@ theorem transitive_iff: transitive ? iff.
  elim H1;
  split;
  intro;
- auto.
+ autobatch.
 qed.
 

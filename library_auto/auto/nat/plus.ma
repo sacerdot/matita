@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/library_auto/nat/plus".
+set "baseuri" "cic:/matita/library_autobatch/nat/plus".
 
 include "auto/nat/nat.ma".
 
@@ -22,14 +22,14 @@ let rec plus n m \def
  | (S p) \Rightarrow S (plus p m) ].
 
 (*CSC: the URI must disappear: there is a bug now *)
-interpretation "natural plus" 'plus x y = (cic:/matita/library_auto/nat/plus/plus.con x y).
+interpretation "natural plus" 'plus x y = (cic:/matita/library_autobatch/nat/plus/plus.con x y).
 
 theorem plus_n_O: \forall n:nat. n = n+O.
 intros.elim n
-[ auto
+[ autobatch
   (*simplify.
   reflexivity*)
-| auto
+| autobatch
   (*simplify.
   apply eq_f.
   assumption.*)
@@ -38,11 +38,11 @@ qed.
 
 theorem plus_n_Sm : \forall n,m:nat. S (n+m) = n+(S m).
 intros.elim n
-[ auto
+[ autobatch
   (*simplify.
   reflexivity.*)
 | simplify.
-  auto
+  autobatch
   (*
   apply eq_f.
   assumption.*)]
@@ -50,22 +50,22 @@ qed.
 
 theorem sym_plus: \forall n,m:nat. n+m = m+n.
 intros.elim n
-[ auto
+[ autobatch
   (*simplify.
   apply plus_n_O.*)
 | simplify.
-  auto
+  autobatch
   (*rewrite > H.
   apply plus_n_Sm.*)]
 qed.
 
 theorem associative_plus : associative nat plus.
 unfold associative.intros.elim x
-[auto
+[autobatch
  (*simplify.
  reflexivity.*)
 |simplify.
- auto
+ autobatch
  (*apply eq_f.
  assumption.*)
 ]
@@ -77,7 +77,7 @@ theorem assoc_plus : \forall n,m,p:nat. (n+m)+p = n+(m+p)
 theorem injective_plus_r: \forall n:nat.injective nat nat (\lambda m.n+m).
 intro.simplify.intros 2.elim n
 [ exact H
-| auto
+| autobatch
   (*apply H.apply inj_S.apply H1.*)
 ]
 qed.
@@ -86,7 +86,7 @@ theorem inj_plus_r: \forall p,n,m:nat. p+n = p+m \to n=m
 \def injective_plus_r.
 
 theorem injective_plus_l: \forall m:nat.injective nat nat (\lambda n.n+m).
-intro.simplify.intros.auto.
+intro.simplify.intros.autobatch.
 (*apply (injective_plus_r m).
 rewrite < sym_plus.
 rewrite < (sym_plus y).

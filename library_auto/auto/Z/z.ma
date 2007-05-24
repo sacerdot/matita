@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/library_auto/Z/z".
+set "baseuri" "cic:/matita/library_autobatch/Z/z".
 
 include "datatypes/bool.ma".
 include "auto/nat/nat.ma".
@@ -27,7 +27,7 @@ definition Z_of_nat \def
 [ O \Rightarrow  OZ 
 | (S n)\Rightarrow  pos n].
 
-coercion cic:/matita/library_auto/Z/z/Z_of_nat.con.
+coercion cic:/matita/library_autobatch/Z/z/Z_of_nat.con.
 
 definition neg_Z_of_nat \def
 \lambda n. match n with
@@ -54,18 +54,18 @@ match OZ_test z with
 |false \Rightarrow z \neq OZ].
 intros.
 elim z
-[ (*qui auto non chiude il goal*)
+[ (*qui autobatch non chiude il goal*)
   simplify.
   reflexivity
 | simplify.
   unfold Not.
   intros (H).
-  (*qui auto non chiude il goal*)
+  (*qui autobatch non chiude il goal*)
   destruct H
 | simplify.
   unfold Not.
   intros (H).
-  (*qui auto non chiude il goal*)
+  (*qui autobatch non chiude il goal*)
   destruct H
 ]
 qed.
@@ -76,7 +76,7 @@ unfold injective.
 intros.
 apply inj_S.
 change with (abs (pos x) = abs (pos y)).
-auto.
+autobatch.
 (*apply eq_f.
 assumption.*)
 qed.
@@ -89,7 +89,7 @@ unfold injective.
 intros.
 apply inj_S.
 change with (abs (neg x) = abs (neg y)).
-auto.
+autobatch.
 (*apply eq_f.
 assumption.*)
 qed.
@@ -100,21 +100,21 @@ variant inj_neg : \forall n,m:nat. neg n = neg m \to n = m
 theorem not_eq_OZ_pos: \forall n:nat. OZ \neq pos n.
 unfold Not.
 intros (n H).
-(*qui auto non chiude il goal*)
+(*qui autobatch non chiude il goal*)
 destruct H.
 qed.
 
 theorem not_eq_OZ_neg :\forall n:nat. OZ \neq neg n.
 unfold Not.
 intros (n H).
-(*qui auto non chiude il goal*)
+(*qui autobatch non chiude il goal*)
 destruct H.
 qed.
 
 theorem not_eq_pos_neg :\forall n,m:nat. pos n \neq neg m.
 unfold Not.
 intros (n m H).
-(*qui auto non chiude il goal*)
+(*qui autobatch non chiude il goal*)
 destruct H.
 qed.
 
@@ -125,15 +125,15 @@ elim x
 [ (* goal: x=OZ *)
   elim y
   [ (* goal: x=OZ y=OZ *)
-    auto
+    autobatch
     (*left.
     reflexivity*)
   | (* goal: x=OZ 2=2 *)
-    auto
+    autobatch
     (*right.
     apply not_eq_OZ_pos*)
   | (* goal: x=OZ 2=3 *)
-    auto
+    autobatch
     (*right.
     apply not_eq_OZ_neg*)
   ]
@@ -144,25 +144,25 @@ elim x
     unfold Not.
     intro.
     apply (not_eq_OZ_pos n).
-    auto
+    autobatch
     (*symmetry. 
     assumption*)
   | (* goal: x=pos y=pos *)
     elim (decidable_eq_nat n n1:((n=n1) \lor ((n=n1) \to False)))
-    [ auto
+    [ autobatch
       (*left.
       apply eq_f.
       assumption*)
     | right.
       unfold Not.      
       intros (H_inj).
-      auto
+      autobatch
       (*apply H. 
       destruct H_inj. 
       assumption*)
     ]
   | (* goal: x=pos y=neg *)
-    auto
+    autobatch
     (*right.
     unfold Not.
     intro.
@@ -176,7 +176,7 @@ elim x
     unfold Not.
     intro.
     apply (not_eq_OZ_neg n).
-    auto
+    autobatch
     (*symmetry.
     assumption*)
   | (* goal: x=neg y=pos *)
@@ -184,19 +184,19 @@ elim x
     unfold Not.
     intro.
     apply (not_eq_pos_neg n1 n).
-    auto
+    autobatch
     (*symmetry.
     assumption*)
   | (* goal: x=neg y=neg *)
     elim (decidable_eq_nat n n1:((n=n1) \lor ((n=n1) \to False)))
-    [ auto
+    [ autobatch
       (*left.
       apply eq_f.
       assumption*)
     | right.
       unfold Not.
       intro.
-      auto
+      autobatch
       (*apply H.
       apply injective_neg.
       assumption*)

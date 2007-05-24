@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/library_auto/Z/compare".
+set "baseuri" "cic:/matita/library_autobatch/Z/compare".
 
 include "auto/Z/orders.ma".
 include "auto/nat/compare.ma".
@@ -57,21 +57,21 @@ elim x
     unfold Not.
     intro.
     apply (not_eq_OZ_pos n).
-    auto
+    autobatch
     (*apply sym_eq.
     assumption*)
   | simplify.
     apply eqb_elim
     [ intro.    
       simplify.
-      auto
+      autobatch
       (*apply eq_f.
       assumption*)
     | intro.
       simplify.
       unfold Not.
       intro.
-      auto
+      autobatch
       (*apply H.
       apply inj_pos.
       assumption*)
@@ -84,28 +84,28 @@ elim x
     unfold Not.
     intro.
     apply (not_eq_OZ_neg n).
-    auto
+    autobatch
     (*apply sym_eq.
     assumption*)
   | simplify.
     unfold Not.
     intro.
     apply (not_eq_pos_neg n1 n).
-    auto
+    autobatch
     (*apply sym_eq.
     assumption*)
   | simplify.  
     apply eqb_elim
     [ intro.
       simplify.
-      auto
+      autobatch
       (*apply eq_f.
       assumption*)
     | intro.
       simplify.
       unfold Not.
       intro.
-      auto
+      autobatch
       (*apply H.
       apply inj_neg.
       assumption*)
@@ -122,12 +122,12 @@ cut
 [ true \Rightarrow x=y
 | false \Rightarrow x \neq y] \to P (eqZb x y))
 [ apply Hcut.
-  (*NB qui auto non chiude il goal*)
+  (*NB qui autobatch non chiude il goal*)
   apply eqZb_to_Prop
 | elim (eqZb)
-  [ (*NB qui auto non chiude il goal*)
+  [ (*NB qui autobatch non chiude il goal*)
     apply (H H2)
-  | (*NB qui auto non chiude il goal*)
+  | (*NB qui autobatch non chiude il goal*)
     apply (H1 H2)
   ]
 ]
@@ -180,18 +180,18 @@ elim x
     | EQ \Rightarrow pos n = pos n1
     | GT \Rightarrow (S n1) \leq n]) 
     [ apply Hcut.
-      (*NB qui auto non chiude il goal*)
+      (*NB qui autobatch non chiude il goal*)
       apply nat_compare_to_Prop 
     | elim (nat_compare n n1)
       [ simplify.
-        (*NB qui auto non chiude il goal*)
+        (*NB qui autobatch non chiude il goal*)
         exact H
       | simplify.
         apply eq_f.
-        (*NB qui auto non chiude il goal*)
+        (*NB qui autobatch non chiude il goal*)
         exact H
       | simplify.
-        (*NB qui auto non chiude il goal*)
+        (*NB qui autobatch non chiude il goal*)
         exact H
       ]
     ]
@@ -213,19 +213,19 @@ elim x
     | EQ \Rightarrow neg n = neg n1
     | GT \Rightarrow (S n) \leq n1])
     [ apply Hcut.
-      (*NB qui auto non chiude il goal*) 
+      (*NB qui autobatch non chiude il goal*) 
       apply nat_compare_to_Prop
     | elim (nat_compare n1 n)
       [ simplify.
-        (*NB qui auto non chiude il goal*)
+        (*NB qui autobatch non chiude il goal*)
         exact H
       | simplify.
         apply eq_f.
         apply sym_eq.
-        (*NB qui auto non chiude il goal*)
+        (*NB qui autobatch non chiude il goal*)
         exact H
       | simplify.
-        (*NB qui auto non chiude il goal*)
+        (*NB qui autobatch non chiude il goal*)
         exact H
       ]
     ]

@@ -162,7 +162,7 @@ apply (trans_eq ? ?
             [apply sym_eq.
              apply div_plus_times.
              assumption
-            |auto
+            |autobatch
             ]
           |apply lt_mod_m_m.
            assumption

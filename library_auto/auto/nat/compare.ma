@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/library_auto/nat/compare".
+set "baseuri" "cic:/matita/library_autobatch/nat/compare".
 
 include "datatypes/bool.ma".
 include "datatypes/compare.ma".
@@ -39,7 +39,7 @@ apply (nat_elim2
 [ true  \Rightarrow n = m 
 | false \Rightarrow n \neq m]))
 [ intro.
-  elim n1;simplify;auto
+  elim n1;simplify;autobatch
   (*[ simplify
     reflexivity
   | simplify.
@@ -50,7 +50,7 @@ apply (nat_elim2
   unfold Not.
   intro.
   apply (not_eq_O_S n1).
-  auto
+  autobatch
   (*apply sym_eq.
   assumption*)
 | intros.
@@ -62,7 +62,7 @@ apply (nat_elim2
   | unfold Not.
     intro.
     apply H1.
-    auto
+    autobatch
     (*apply inj_S.
     assumption*)
   ]
@@ -77,12 +77,12 @@ cut
 [ true  \Rightarrow n = m
 | false \Rightarrow n \neq m] \to (P (eqb n m)))
 [ apply Hcut.
-  (* qui auto non conclude il goal*)
+  (* qui autobatch non conclude il goal*)
   apply eqb_to_Prop
 | elim (eqb n m)
-  [ (*qui auto non conclude il goal*)
+  [ (*qui autobatch non conclude il goal*)
     apply ((H H2))
-  | (*qui auto non conclude il goal*)
+  | (*qui autobatch non conclude il goal*)
     apply ((H1 H2))
   ]
 ]
@@ -90,7 +90,7 @@ qed.
 
 theorem eqb_n_n: \forall n. eqb n n = true.
 intro.
-elim n;simplify;auto.
+elim n;simplify;autobatch.
 (*[ simplify.reflexivity
 | simplify.assumption.
 ]*)
@@ -104,7 +104,7 @@ match true with
 [ true  \Rightarrow n = m 
 | false \Rightarrow n \neq m].
 rewrite < H.
-(*qui auto non conclude il goal*)
+(*qui autobatch non conclude il goal*)
 apply eqb_to_Prop. 
 qed.
 
@@ -116,14 +116,14 @@ match false with
 [ true  \Rightarrow n = m 
 | false \Rightarrow n \neq m].
 rewrite < H.
-(*qui auto non conclude il goal*)
+(*qui autobatch non conclude il goal*)
 apply eqb_to_Prop. 
 qed.
 
 theorem eq_to_eqb_true: \forall n,m:nat.
 n = m \to eqb n m = true.
 intros.
-auto.
+autobatch.
 (*apply (eqb_elim n m)
 [ intros. reflexivity
 | intros.apply False_ind.apply (H1 H)
@@ -164,12 +164,12 @@ apply (nat_elim2
   simplify.
   elim ((leb n1 m1));simplify
   [ apply le_S_S.
-     (*qui auto non conclude il goal*)
+     (*qui autobatch non conclude il goal*)
     apply H
   | unfold Not.
     intros.
     apply H.
-    auto
+    autobatch
     (*apply le_S_S_to_le.
     assumption*)
   ]
@@ -185,12 +185,12 @@ cut
 [ true  \Rightarrow n \leq m
 | false \Rightarrow n \nleq m] \to (P (leb n m)))
 [ apply Hcut.
-  (*qui auto non conclude il goal*)
+  (*qui autobatch non conclude il goal*)
   apply leb_to_Prop
 | elim (leb n m)
-  [ (*qui auto non conclude il goal*)
+  [ (*qui autobatch non conclude il goal*)
     apply ((H H2))
-  | (*qui auto non conclude il goal*)
+  | (*qui autobatch non conclude il goal*)
     apply ((H1 H2))
   ]
 ]
@@ -209,7 +209,7 @@ match n with
 (**********)
 theorem nat_compare_n_n: \forall n:nat. nat_compare n n = EQ.
 intro.elim n
-[ auto
+[ autobatch
   (*simplify.
   reflexivity*)
 | simplify.
@@ -219,13 +219,13 @@ qed.
 
 theorem nat_compare_S_S: \forall n,m:nat. 
 nat_compare n m = nat_compare (S n) (S m).
-intros.auto.
+intros.autobatch.
 (*simplify.reflexivity.*)
 qed.
 
 theorem S_pred: \forall n:nat.lt O n \to eq nat n (S (pred n)).
 intro.
-elim n;auto.
+elim n;autobatch.
 (*[ apply False_ind.
   exact (not_le_Sn_O O H)
 | apply eq_f.
@@ -240,7 +240,7 @@ intros.
 apply (lt_O_n_elim n H).
 apply (lt_O_n_elim m H1).
 intros.
-auto.
+autobatch.
 (*simplify.reflexivity.*)
 qed.
 
@@ -255,7 +255,7 @@ apply (nat_elim2 (\lambda n,m.match (nat_compare n m) with
   | EQ \Rightarrow n=m
   | GT \Rightarrow m < n ]))
 [ intro.
-  elim n1;simplify;auto
+  elim n1;simplify;autobatch
   (*[ reflexivity
   | unfold lt.
     apply le_S_S.
@@ -263,7 +263,7 @@ apply (nat_elim2 (\lambda n,m.match (nat_compare n m) with
   ]*)
 | intro.
   simplify.
-  auto
+  autobatch
   (*unfold lt.
   apply le_S_S. 
   apply le_O_n*)
@@ -272,14 +272,14 @@ apply (nat_elim2 (\lambda n,m.match (nat_compare n m) with
   elim ((nat_compare n1 m1));simplify
   [ unfold lt.
     apply le_S_S.
-    (*qui auto non chiude il goal*)
+    (*qui autobatch non chiude il goal*)
     apply H
   | apply eq_f.
-    (*qui auto non chiude il goal*)
+    (*qui autobatch non chiude il goal*)
     apply H
   | unfold lt.
     apply le_S_S.
-    (*qui auto non chiude il goal*)
+    (*qui autobatch non chiude il goal*)
     apply H
   ]
 ]
@@ -289,9 +289,9 @@ theorem nat_compare_n_m_m_n: \forall n,m:nat.
 nat_compare n m = compare_invert (nat_compare m n).
 intros. 
 apply (nat_elim2 (\lambda n,m. nat_compare n m = compare_invert (nat_compare m n)));intros
-[ elim n1;auto(*;simplify;reflexivity*)
-| elim n1;auto(*;simplify;reflexivity*)  
-| auto
+[ elim n1;autobatch(*;simplify;reflexivity*)
+| elim n1;autobatch(*;simplify;reflexivity*)  
+| autobatch
   (*simplify.elim H.reflexivity*)
 ]
 qed.
@@ -306,14 +306,14 @@ cut (match (nat_compare n m) with
 | GT \Rightarrow m < n] \to
 (P (nat_compare n m)))
 [ apply Hcut.
-  (*auto non chiude il goal*)
+  (*autobatch non chiude il goal*)
   apply nat_compare_to_Prop
 | elim ((nat_compare n m))
-  [ (*auto non chiude il goal*)
+  [ (*autobatch non chiude il goal*)
     apply ((H H3))
-  | (*auto non chiude il goal*)
+  | (*autobatch non chiude il goal*)
     apply ((H1 H3))
-  | (*auto non chiude il goal*)
+  | (*autobatch non chiude il goal*)
     apply ((H2 H3))
   ]
 ]

@@ -77,8 +77,8 @@ intros 3.elim H
   [rewrite > pi_p_S.
    cut (eqb (gcd (S O) n) (S O) = true)
     [rewrite > Hcut.
-     change with ((gcd n (S O)) = (S O)).auto
-    |apply eq_to_eqb_true.auto
+     change with ((gcd n (S O)) = (S O)).autobatch
+    |apply eq_to_eqb_true.autobatch
     ]
   |rewrite > pi_p_S.
    apply eqb_elim
@@ -189,11 +189,11 @@ split
             |apply mod_O_to_divides
               [assumption
               |rewrite > distr_times_minus.
-               auto
+               autobatch
               ]
             ]
           ]
-        |auto
+        |autobatch
         ]
       ]
     |intro.assumption
@@ -214,11 +214,11 @@ split
             |apply mod_O_to_divides
               [assumption
               |rewrite > distr_times_minus.
-               auto
+               autobatch
               ]
             ]
           ]
-        |auto
+        |autobatch
         ]
       ]
     ]

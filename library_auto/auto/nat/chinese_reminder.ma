@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/library_auto/nat/chinese_reminder".
+set "baseuri" "cic:/matita/library_autobatch/nat/chinese_reminder".
 
 include "auto/nat/exp.ma".
 include "auto/nat/gcd.ma".
@@ -40,7 +40,7 @@ cut (\exists c,d.c*n - d*m = (S O) \lor d*m - c*n = (S O))
         rewrite < assoc_times.
         rewrite < times_plus_l.
         rewrite > eq_minus_plus_plus_minus
-        [ auto
+        [ autobatch
           (*rewrite < times_minus_l.
           rewrite > sym_plus.
           apply (eq_times_plus_to_congruent ? ? ? ((b+(a+b*m)*a2)-b*a2))
@@ -50,7 +50,7 @@ cut (\exists c,d.c*n - d*m = (S O) \lor d*m - c*n = (S O))
         | apply le_times_l.
           apply (trans_le ? ((a+b*m)*a2))
           [ apply le_times_l.
-            apply (trans_le ? (b*m));auto
+            apply (trans_le ? (b*m));autobatch
             (*[ rewrite > times_n_SO in \vdash (? % ?).
               apply le_times_r.
               assumption
@@ -63,7 +63,7 @@ cut (\exists c,d.c*n - d*m = (S O) \lor d*m - c*n = (S O))
         [ apply lt_to_le.
           change with (O + a2*m < a1*n).
           apply lt_minus_to_plus.
-          auto
+          autobatch
           (*rewrite > H5.
           unfold lt.
           apply le_n*)
@@ -77,7 +77,7 @@ cut (\exists c,d.c*n - d*m = (S O) \lor d*m - c*n = (S O))
         rewrite > distr_times_minus.
         rewrite < assoc_times.
         rewrite < eq_plus_minus_minus_minus
-        [ auto
+        [ autobatch
           (*rewrite < times_n_SO.
           rewrite < times_minus_l.
           rewrite < sym_plus.
@@ -87,15 +87,15 @@ cut (\exists c,d.c*n - d*m = (S O) \lor d*m - c*n = (S O))
           ]*)
         | rewrite > assoc_times.
           apply le_times_r.
-          (*auto genera un'esecuzione troppo lunga*)
-          apply (trans_le ? (a1*n - a2*m));auto
+          (*autobatch genera un'esecuzione troppo lunga*)
+          apply (trans_le ? (a1*n - a2*m));autobatch
           (*[ rewrite > H5.
             apply le_n
           | apply (le_minus_m ? (a2*m))
           ]*)
         | apply le_times_l.
           apply le_times_l.
-          auto
+          autobatch
           (*apply (trans_le ? (b*m))
           [ rewrite > times_n_SO in \vdash (? % ?).
             apply le_times_r.
@@ -110,7 +110,7 @@ cut (\exists c,d.c*n - d*m = (S O) \lor d*m - c*n = (S O))
         [ apply lt_to_le.
           change with (O + a2*m < a1*n).
           apply lt_minus_to_plus.
-          auto
+          autobatch
           (*rewrite > H5.
           unfold lt.
           apply le_n*)        
@@ -129,7 +129,7 @@ cut (\exists c,d.c*n - d*m = (S O) \lor d*m - c*n = (S O))
         rewrite > distr_times_minus.
         rewrite < assoc_times.
         rewrite < eq_plus_minus_minus_minus
-        [ auto
+        [ autobatch
           (*rewrite < times_n_SO.
           rewrite < times_minus_l.
           rewrite < sym_plus.
@@ -139,7 +139,7 @@ cut (\exists c,d.c*n - d*m = (S O) \lor d*m - c*n = (S O))
           ]*)
         | rewrite > assoc_times.
           apply le_times_r.
-          apply (trans_le ? (a2*m - a1*n));auto
+          apply (trans_le ? (a2*m - a1*n));autobatch
           (*[ rewrite > H5.
             apply le_n
           | apply (le_minus_m ? (a1*n))
@@ -147,7 +147,7 @@ cut (\exists c,d.c*n - d*m = (S O) \lor d*m - c*n = (S O))
         | rewrite > assoc_times.
           rewrite > assoc_times.
           apply le_times_l.
-          auto
+          autobatch
           (*apply (trans_le ? (a*n))
           [ rewrite > times_n_SO in \vdash (? % ?).
             apply le_times_r.
@@ -162,7 +162,7 @@ cut (\exists c,d.c*n - d*m = (S O) \lor d*m - c*n = (S O))
         [ apply lt_to_le.
           change with (O + a1*n < a2*m).
           apply lt_minus_to_plus.
-          auto
+          autobatch
           (*rewrite > H5.
           unfold lt.
           apply le_n*)
@@ -180,7 +180,7 @@ cut (\exists c,d.c*n - d*m = (S O) \lor d*m - c*n = (S O))
         rewrite > assoc_plus.
         rewrite < times_plus_l.
         rewrite > eq_minus_plus_plus_minus
-        [ auto
+        [ autobatch
           (*rewrite < times_minus_l.
           rewrite > sym_plus.
           apply (eq_times_plus_to_congruent ? ? ? ((a+(b+a*n)*a1)-a*a1))
@@ -190,7 +190,7 @@ cut (\exists c,d.c*n - d*m = (S O) \lor d*m - c*n = (S O))
         | apply le_times_l.
           apply (trans_le ? ((b+a*n)*a1))
           [ apply le_times_l.
-            auto
+            autobatch
             (*apply (trans_le ? (a*n))
             [ rewrite > times_n_SO in \vdash (? % ?).
               apply le_times_r.
@@ -204,7 +204,7 @@ cut (\exists c,d.c*n - d*m = (S O) \lor d*m - c*n = (S O))
         [ apply lt_to_le.
           change with (O + a1*n < a2*m).
           apply lt_minus_to_plus.
-          auto
+          autobatch
           (*rewrite > H5.
           unfold lt.
           apply le_n*)
@@ -214,7 +214,7 @@ cut (\exists c,d.c*n - d*m = (S O) \lor d*m - c*n = (S O))
     ]
   ]
 (* proof of the cut *)
-| (* qui auto non conclude il goal *)
+| (* qui autobatch non conclude il goal *)
   rewrite < H2.
   apply eq_minus_gcd
 ]
@@ -235,7 +235,7 @@ elim (and_congruent_congruent m n a b)
         apply sym_eq.
         change with (congruent a1 (a1 \mod (m*n)) m).
         rewrite < sym_times.
-        auto
+        autobatch
         (*apply congruent_n_mod_times;assumption*)
       | assumption
       ]
@@ -243,13 +243,13 @@ elim (and_congruent_congruent m n a b)
       [ unfold congruent.
         apply sym_eq.
         change with (congruent a1 (a1 \mod (m*n)) n).
-        auto
+        autobatch
         (*apply congruent_n_mod_times;assumption*)
       | assumption
       ]
     ]
   | apply lt_mod_m_m.
-    auto
+    autobatch
     (*rewrite > (times_n_O O).
     apply lt_times;assumption*)
   ]
@@ -268,7 +268,7 @@ reflexivity.
 qed.
 
 theorem cr_pair2: cr_pair (S(S O)) (S(S(S O))) (S O) O = (S(S(S O))).
-auto.
+autobatch.
 (*simplify.
 reflexivity.*)
 qed.
@@ -294,7 +294,7 @@ cut (andb (eqb ((cr_pair m n a b) \mod m) a)
   [ rewrite > H3.
     simplify.
     intro.
-    auto
+    autobatch
     (*split
     [ reflexivity
     | apply eqb_true_to_eq.
@@ -302,11 +302,11 @@ cut (andb (eqb ((cr_pair m n a b) \mod m) a)
     ]*)
   | simplify.
     intro.
-    (* l'invocazione di auto qui genera segmentation fault *)
+    (* l'invocazione di autobatch qui genera segmentation fault *)
     apply False_ind.
-    (* l'invocazione di auto qui genera segmentation fault *)
+    (* l'invocazione di autobatch qui genera segmentation fault *)
     apply not_eq_true_false.
-    (* l'invocazione di auto qui genera segmentation fault *)
+    (* l'invocazione di autobatch qui genera segmentation fault *)
     apply sym_eq.
     assumption
   ]
@@ -316,7 +316,7 @@ cut (andb (eqb ((cr_pair m n a b) \mod m) a)
   [ apply (ex_intro ? ? a1).
     split
     [ split
-      [ auto
+      [ autobatch
         (*rewrite < minus_n_n.
         apply le_O_n*)
       | elim H3.
@@ -326,7 +326,7 @@ cut (andb (eqb ((cr_pair m n a b) \mod m) a)
         | apply (nat_case (m*n))
           [ apply le_O_n
           | intro.
-            auto
+            autobatch
             (*rewrite < pred_Sn.
             apply le_n*)
           ]
@@ -339,7 +339,7 @@ cut (andb (eqb ((cr_pair m n a b) \mod m) a)
       [ cut (a1 \mod n = b)
         [ rewrite > (eq_to_eqb_true ? ? Hcut).
           rewrite > (eq_to_eqb_true ? ? Hcut1).
-          (* l'invocazione di auto qui non chiude il goal *)
+          (* l'invocazione di autobatch qui non chiude il goal *)
           simplify.
           reflexivity
         | rewrite < (lt_to_eq_mod b n);
@@ -348,12 +348,12 @@ cut (andb (eqb ((cr_pair m n a b) \mod m) a)
       | rewrite < (lt_to_eq_mod a m);assumption        
       ]
     ]
-  | auto
+  | autobatch
     (*apply (le_to_lt_to_lt ? b)
     [ apply le_O_n
     | assumption
     ]*)
-  | auto
+  | autobatch
     (*apply (le_to_lt_to_lt ? a)
     [ apply le_O_n
     | assumption

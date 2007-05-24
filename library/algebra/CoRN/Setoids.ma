@@ -101,7 +101,7 @@ generalize in match (ap_tight S y x). intro.
 generalize in match (ap_symmetric S y x). intro.
 elim H1. clear H1.
 elim H2. clear H2.
-apply H1. unfold. intro. auto.
+apply H1. unfold. intro. autobatch.
 qed.
 *)
 lemma eq_transitive : \forall S : CSetoid. transitive S (cs_eq S).
@@ -135,7 +135,7 @@ qed.
 
 lemma eq_wdl : \forall S:CSetoid. \forall x,y,z:S. x = y \to x = z \to z = y.
 intros.
-(* perche' auto non arriva in fondo ??? *)
+(* perche' autobatch non arriva in fondo ??? *)
 apply (eq_transitive_unfolded ? ? x).
 apply eq_symmetric_unfolded.
 exact H1.
@@ -361,7 +361,7 @@ intro P.
 intro x; intros y H H0.
 elim (csp'_strext P x y H).
 
-auto.
+autobatch.
 
 intro H1.
 elimtype False.
@@ -503,12 +503,12 @@ generalize (H x1 x2 y y).
 intro H1.
 elim (H1 H0).
 
-auto.
+autobatch.
 
 intro H3.
 elim H3; intro H4.
 
-auto.
+autobatch.
 elim (ap_irreflexive _ _ H4).
 Qed.
 
@@ -517,22 +517,22 @@ unfold Crel_strext, Crel_strext_rht in |- *; intros H x y1 y2 H0.
 generalize (H x x y1 y2 H0); intro H1.
 elim H1; intro H2.
 
-auto.
+autobatch.
 
 elim H2; intro H3.
 
 elim (ap_irreflexive _ _ H3).
 
-auto.
+autobatch.
 Qed.
 
 Lemma Crel_strextarg_imp_strext :
  Crel_strext_rht -> Crel_strext_lft -> Crel_strext.
 unfold Crel_strext, Crel_strext_lft, Crel_strext_rht in |- *;
  intros H H0 x1 x2 y1 y2 H1.
-elim (H x1 y1 y2 H1); auto.
+elim (H x1 y1 y2 H1); autobatch.
 intro H2.
-elim (H0 x1 x2 y2 H2); auto.
+elim (H0 x1 x2 y2 H2); autobatch.
 Qed.
 *)
 
@@ -553,7 +553,7 @@ intro R.
 red in |- *; intros x y z H H0.
 elim (Ccsr_strext R x x y z H).
 
-auto.
+autobatch.
 
 intro H1; elimtype False.
 elim H1; intro H2.
@@ -569,7 +569,7 @@ intro R.
 red in |- *; intros x y z H H0.
 elim (Ccsr_strext R x z y y H).
 
-auto.
+autobatch.
 
 intro H1; elimtype False.
 elim H1; intro H2.
@@ -614,11 +614,11 @@ Lemma ap_strext : Crel_strext (cs_ap (c:=S)).
 red in |- *; intros x1 x2 y1 y2 H.
 case (ap_cotransitive_unfolded _ _ _ H x2); intro H0.
 
-auto.
+autobatch.
 
 case (ap_cotransitive_unfolded _ _ _ H0 y2); intro H1.
 
-auto.
+autobatch.
 
 right; right.
 apply ap_symmetric_unfolded.
@@ -1263,7 +1263,7 @@ apply f. apply n1. apply m1.
 apply eq_symmetric_unfolded.assumption.
 apply eq_symmetric_unfolded.assumption.
 apply H.
-auto new.
+autobatch new.
 qed.
 
 (*

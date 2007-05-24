@@ -103,7 +103,7 @@ rewrite > distr_times_plus.
 (*rewrite > (sym_times p (m/p)).*)
 (*rewrite > sym_times.*)
 rewrite > assoc_plus.
-auto paramodulation.
+autobatch paramodulation.
 rewrite < div_mod.
 assumption.
 assumption.

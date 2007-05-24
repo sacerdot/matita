@@ -46,13 +46,13 @@ cut (\exists i. nth_prime i = smallest_factor n);
       [ apply (trans_lt ? (S O));
         [ unfold lt; apply le_n;
         | apply lt_SO_smallest_factor; assumption; ]
-      | letin x \def le.auto new.
+      | letin x \def le.autobatch new.
          (*       
        apply divides_smallest_factor_n;
         apply (trans_lt ? (S O));
         [ unfold lt; apply le_n;
         | assumption; ] *) ] ]
-  | auto. 
+  | autobatch. 
     (* 
     apply prime_to_nth_prime;
     apply prime_smallest_factor_n;
@@ -70,8 +70,8 @@ apply divides_to_divides_b_true.
 cut (prime (nth_prime (max_prime_factor n))).
 apply lt_O_nth_prime_n.apply prime_nth_prime.
 cut (nth_prime (max_prime_factor n) \divides n).
-auto.
-auto.
+autobatch.
+autobatch.
 (*
   [ apply (transitive_divides ? n);
     [ apply divides_max_prime_factor_n.
@@ -116,7 +116,7 @@ apply divides_max_prime_factor_n.
 assumption.unfold Not.
 intro.
 cut (r \mod (nth_prime (max_prime_factor n)) \neq O);
-  [unfold Not in Hcut1.auto new.
+  [unfold Not in Hcut1.autobatch new.
     (*
     apply Hcut1.apply divides_to_mod_O;
     [ apply lt_O_nth_prime_n.
@@ -125,7 +125,7 @@ cut (r \mod (nth_prime (max_prime_factor n)) \neq O);
     *)
   |letin z \def le.
    cut(pair nat nat q r=p_ord_aux n n (nth_prime (max_prime_factor n)));
-   [2: rewrite < H1.assumption.|letin x \def le.auto width = 4 depth = 2]
+   [2: rewrite < H1.assumption.|letin x \def le.autobatch width = 4 depth = 2]
    (* CERCA COME MAI le_n non lo applica se lo trova come Const e non Rel *)
   ].
 (*

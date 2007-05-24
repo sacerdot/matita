@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/library_auto/nat/sigma_and_pi".
+set "baseuri" "cic:/matita/library_autobatch/nat/sigma_and_pi".
 
 include "auto/nat/factorial.ma".
 include "auto/nat/exp.ma".
@@ -35,7 +35,7 @@ theorem eq_sigma: \forall f,g:nat \to nat.
 intros 3.
 elim n
 [ simplify.
-  auto
+  autobatch
   (*apply H
   [ apply le_n
   | rewrite < plus_n_O.
@@ -44,10 +44,10 @@ elim n
 | simplify.
   apply eq_f2
   [ apply H1
-    [ auto
+    [ autobatch
       (*change with (m \le (S n1)+m).
       apply le_plus_n*)
-    | auto
+    | autobatch
       (*rewrite > (sym_plus m).
       apply le_n*)
     ]
@@ -55,7 +55,7 @@ elim n
     intros.
     apply H1
     [ assumption
-    | auto
+    | autobatch
       (*rewrite < plus_n_Sm.
       apply le_S.
       assumption*)
@@ -71,7 +71,7 @@ theorem eq_pi: \forall f,g:nat \to nat.
 intros 3.
 elim n
 [ simplify.
-  auto
+  autobatch
   (*apply H
   [ apply le_n
   | rewrite < plus_n_O.
@@ -80,10 +80,10 @@ elim n
 | simplify.
   apply eq_f2
   [ apply H1
-    [ auto
+    [ autobatch
       (*change with (m \le (S n1)+m).
       apply le_plus_n*)
-    | auto
+    | autobatch
       (*rewrite > (sym_plus m).
       apply le_n*)
     ]
@@ -91,7 +91,7 @@ elim n
     intros.
     apply H1
     [ assumption
-    | auto
+    | autobatch
       (*rewrite < plus_n_Sm.
       apply le_S.
       assumption*)
@@ -103,13 +103,13 @@ qed.
 theorem eq_fact_pi: \forall n. (S n)! = pi n (\lambda m.m) (S O).
 intro.
 elim n
-[ auto
+[ autobatch
   (*simplify.
   reflexivity*)
 | change with ((S(S n1))*(S n1)! = ((S n1)+(S O))*(pi n1 (\lambda m.m) (S O))).
   rewrite < plus_n_Sm.
   rewrite < plus_n_O.
-  auto
+  autobatch
   (*apply eq_f.
   assumption*)
 ]
@@ -119,7 +119,7 @@ theorem exp_pi_l: \forall f:nat\to nat.\forall n,m,a:nat.
 (exp a (S n))*pi n f m= pi n (\lambda p.a*(f p)) m.
 intros.
 elim n
-[ auto
+[ autobatch
   (*simplify.
   rewrite < times_n_SO.
   reflexivity*)
@@ -130,7 +130,7 @@ elim n
   apply eq_f.
   rewrite < assoc_times. 
   rewrite < assoc_times.
-  auto 
+  autobatch 
   (*apply eq_f2
   [ apply sym_times
   | reflexivity

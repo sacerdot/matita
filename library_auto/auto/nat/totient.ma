@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/library_auto/nat/totient".
+set "baseuri" "cic:/matita/library_autobatch/nat/totient".
 
 include "auto/nat/count.ma".
 include "auto/nat/chinese_reminder.ma".
@@ -33,7 +33,7 @@ totient (n*m) = (totient n)*(totient m).
 intro.
 apply (nat_case n)
 [ intros.
-  auto
+  autobatch
   (*simplify.
   reflexivity*)
 | intros 2.
@@ -53,7 +53,7 @@ apply (nat_case n)
       apply (le_to_lt_to_lt ? (pred ((S m)*(S m2))))
       [ unfold min.
         apply le_min_aux_r
-      | auto
+      | autobatch
         (*unfold lt.
         apply (nat_case ((S m)*(S m2)))
         [ apply le_n
@@ -84,17 +84,17 @@ apply (nat_case n)
             rewrite > sym_gcd.
             rewrite > gcd_mod
             [ apply (gcd_times_SO_to_gcd_SO ? ? (S m2))
-              [ auto
+              [ autobatch
                 (*unfold lt.
                 apply le_S_S.
                 apply le_O_n*)
-              | auto
+              | autobatch
                 (*unfold lt.
                 apply le_S_S.
                 apply le_O_n*)
               | assumption
               ]
-            | auto
+            | autobatch
               (*unfold lt.
               apply le_S_S.
               apply le_O_n*)
@@ -104,19 +104,19 @@ apply (nat_case n)
           rewrite > sym_gcd.
           rewrite > gcd_mod
           [ apply (gcd_times_SO_to_gcd_SO ? ? (S m))
-            [ auto
+            [ autobatch
               (*unfold lt.
               apply le_S_S.
               apply le_O_n*)
-            | auto
+            | autobatch
               (*unfold lt.
               apply le_S_S.
               apply le_O_n*)
-            | auto
+            | autobatch
               (*rewrite > sym_times.
               assumption*)
             ]
-          | auto
+          | autobatch
             (*unfold lt.
             apply le_S_S.
             apply le_O_n*)
@@ -130,30 +130,30 @@ apply (nat_case n)
             apply False_ind.
             apply H6.
             apply eq_gcd_times_SO
-            [ auto
+            [ autobatch
               (*unfold lt.
               apply le_S_S.
               apply le_O_n*)
-            | auto
+            | autobatch
               (*unfold lt.
               apply le_S_S.
               apply le_O_n*)
             | rewrite < gcd_mod
-              [ auto
+              [ autobatch
                 (*rewrite > H4.
                 rewrite > sym_gcd.
                 assumption*)
-              | auto
+              | autobatch
                 (*unfold lt.
                 apply le_S_S.
                 apply le_O_n*)
               ]
             | rewrite < gcd_mod
-              [ auto
+              [ autobatch
                 (*rewrite > H5.
                 rewrite > sym_gcd.
                 assumption*)
-              | auto
+              | autobatch
                 (*unfold lt.
                 apply le_S_S.
                 apply le_O_n*)

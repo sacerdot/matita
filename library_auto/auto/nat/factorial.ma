@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/library_auto/nat/factorial".
+set "baseuri" "cic:/matita/library_autobatch/nat/factorial".
 
 include "auto/nat/le_arith.ma".
 
@@ -21,16 +21,16 @@ let rec fact n \def
   [ O \Rightarrow (S O)
   | (S m) \Rightarrow (S m)*(fact m)].
 
-interpretation "factorial" 'fact n = (cic:/matita/library_auto/nat/factorial/fact.con n).
+interpretation "factorial" 'fact n = (cic:/matita/library_autobatch/nat/factorial/fact.con n).
 
 theorem le_SO_fact : \forall n. (S O) \le n!.
 intro.
 elim n
-[ auto
+[ autobatch
   (*simplify.
   apply le_n*)
 | change with ((S O) \le (S n1)*n1!).
-  auto
+  autobatch
   (*apply (trans_le ? ((S n1)*(S O)))
   [ simplify.
     apply le_S_S.
@@ -45,12 +45,12 @@ theorem le_SSO_fact : \forall n. (S O) < n \to (S(S O)) \le n!.
 intro.
 apply (nat_case n)
 [ intro.
-  auto
+  autobatch
   (*apply False_ind.
   apply (not_le_Sn_O (S O) H).*)
 | intros.
   change with ((S (S O)) \le (S m)*m!).
-  apply (trans_le ? ((S(S O))*(S O)));auto
+  apply (trans_le ? ((S(S O))*(S O)));autobatch
   (*[ apply le_n
   | apply le_times
     [ exact H
@@ -65,7 +65,7 @@ intro.
 elim n
 [ apply le_O_n
 | change with (S n1 \le (S n1)*n1!).
-  apply (trans_le ? ((S n1)*(S O)));auto 
+  apply (trans_le ? ((S n1)*(S O)));autobatch 
   (*[ rewrite < times_n_SO.
     apply le_n
   | apply le_times.
@@ -79,7 +79,7 @@ theorem lt_n_fact_n: \forall n. (S(S O)) < n \to n < n!.
 intro.
 apply (nat_case n)
 [ intro.
-  auto
+  autobatch
   (*apply False_ind.
   apply (not_le_Sn_O (S(S O)) H)*)
 | intros.
@@ -89,11 +89,11 @@ apply (nat_case n)
     simplify.
     unfold lt.
     apply le_S_S.
-    auto
+    autobatch
     (*rewrite < plus_n_O.
     apply le_plus_n*)
   | apply le_times_r.
-    auto
+    autobatch
     (*apply le_SSO_fact.
     simplify.
     unfold lt.

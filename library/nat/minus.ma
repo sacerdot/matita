@@ -60,7 +60,7 @@ qed.
 theorem eq_minus_S_pred: \forall n,m. n - (S m) = pred(n -m).
 apply nat_elim2
   [intro.reflexivity
-  |intro.simplify.auto
+  |intro.simplify.autobatch
   |intros.simplify.assumption
   ]
 qed.
@@ -239,7 +239,7 @@ theorem lt_minus_l: \forall m,l,n:nat.
 apply nat_elim2
   [intros.apply False_ind.apply (not_le_Sn_O ? H)
   |intros.rewrite < minus_n_O.
-   auto
+   autobatch
   |intros.
    generalize in match H2.
    apply (nat_case n1)
@@ -263,7 +263,7 @@ intro.elim n
    rewrite > eq_minus_S_pred.
    apply lt_pred
     [unfold lt.apply le_plus_to_minus_r.applyS H1
-    |apply H[auto|assumption]
+    |apply H[autobatch|assumption]
     ]
   ]
 qed.

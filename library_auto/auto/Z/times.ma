@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/library_auto/Z/times".
+set "baseuri" "cic:/matita/library_autobatch/Z/times".
 
 include "auto/nat/lt_arith.ma".
 include "auto/Z/plus.ma".
@@ -33,18 +33,18 @@ definition Ztimes :Z \to Z \to Z \def
          | (neg n) \Rightarrow (pos (pred ((S m) * (S n))))]].
          
 (*CSC: the URI must disappear: there is a bug now *)
-interpretation "integer times" 'times x y = (cic:/matita/library_auto/Z/times/Ztimes.con x y).
+interpretation "integer times" 'times x y = (cic:/matita/library_autobatch/Z/times/Ztimes.con x y).
 
 theorem Ztimes_z_OZ:  \forall z:Z. z*OZ = OZ.
 intro.
-elim z;auto.
+elim z;autobatch.
   (*simplify;reflexivity.*)
 qed.
 
 theorem Ztimes_neg_Zopp: \forall n:nat.\forall x:Z.
 neg n * x = - (pos n * x).
 intros.
-elim x;auto.
+elim x;autobatch.
   (*simplify;reflexivity.*)
 qed.
 
@@ -52,32 +52,32 @@ theorem symmetric_Ztimes : symmetric Z Ztimes.
 change with (\forall x,y:Z. x*y = y*x).
 intros.
 elim x
-[ auto
+[ autobatch
   (*rewrite > Ztimes_z_OZ.
   reflexivity*)
 | elim y
-  [ auto
+  [ autobatch
     (*simplify.
     reflexivity*)
   | change with (pos (pred ((S n) * (S n1))) = pos (pred ((S n1) * (S n)))).
-    auto
+    autobatch
     (*rewrite < sym_times.
     reflexivity*)
   | change with (neg (pred ((S n) * (S n1))) = neg (pred ((S n1) * (S n)))).
-    auto
+    autobatch
     (*rewrite < sym_times.
     reflexivity*)
   ]
 | elim y
-  [ auto
+  [ autobatch
     (*simplify.
     reflexivity*)
   | change with (neg (pred ((S n) * (S n1))) = neg (pred ((S n1) * (S n)))).
-    auto
+    autobatch
     (*rewrite < sym_times.
     reflexivity*)
   | change with (pos (pred ((S n) * (S n1))) = pos (pred ((S n1) * (S n)))).
-    auto
+    autobatch
     (*rewrite < sym_times.
     reflexivity*)
   ]
@@ -91,22 +91,22 @@ theorem associative_Ztimes: associative Z Ztimes.
 unfold associative.
 intros.
 elim x
-[ auto
+[ autobatch
   (*simplify.
   reflexivity*) 
 | elim y
-  [ auto
+  [ autobatch
     (*simplify.
     reflexivity*)
   | elim z
-    [ auto
+    [ autobatch
       (*simplify.
       reflexivity*)
     | change with 
        (pos (pred ((S (pred ((S n) * (S n1)))) * (S n2))) =
        pos (pred ((S n) * (S (pred ((S n1) * (S n2))))))).
       rewrite < S_pred
-      [ rewrite < S_pred;auto
+      [ rewrite < S_pred;autobatch
         (*[ rewrite < assoc_times.
           reflexivity
         | apply lt_O_times_S_S
@@ -117,7 +117,7 @@ elim x
        (neg (pred ((S (pred ((S n) * (S n1)))) * (S n2))) =
        neg (pred ((S n) * (S (pred ((S n1) * (S n2))))))).
       rewrite < S_pred
-      [ rewrite < S_pred;auto
+      [ rewrite < S_pred;autobatch
         (*[ rewrite < assoc_times.
           reflexivity
         | apply lt_O_times_S_S
@@ -126,14 +126,14 @@ elim x
       ]
     ]
   | elim z
-    [ auto
+    [ autobatch
       (*simplify.
       reflexivity*)
     | change with 
        (neg (pred ((S (pred ((S n) * (S n1)))) * (S n2))) =
        neg (pred ((S n) * (S (pred ((S n1) * (S n2))))))).
       rewrite < S_pred
-      [ rewrite < S_pred;auto
+      [ rewrite < S_pred;autobatch
         (*[ rewrite < assoc_times.
           reflexivity
         | apply lt_O_times_S_S
@@ -144,7 +144,7 @@ elim x
        (pos (pred ((S (pred ((S n) * (S n1)))) * (S n2))) =
        pos(pred ((S n) * (S (pred ((S n1) * (S n2))))))).
       rewrite < S_pred
-      [ rewrite < S_pred;auto
+      [ rewrite < S_pred;autobatch
         (*[ rewrite < assoc_times.
           reflexivity
         | apply lt_O_times_S_S
@@ -154,18 +154,18 @@ elim x
     ]
   ]
 | elim y
-  [ auto
+  [ autobatch
     (*simplify.
     reflexivity*)
   | elim z
-    [ auto
+    [ autobatch
       (*simplify.
       reflexivity*)
     | change with 
        (neg (pred ((S (pred ((S n) * (S n1)))) * (S n2))) =
        neg (pred ((S n) * (S (pred ((S n1) * (S n2))))))).
       rewrite < S_pred
-      [ rewrite < S_pred;auto
+      [ rewrite < S_pred;autobatch
         (*[ rewrite < assoc_times.
           reflexivity
         | apply lt_O_times_S_S
@@ -176,7 +176,7 @@ elim x
        (pos (pred ((S (pred ((S n) * (S n1)))) * (S n2))) =
        pos (pred ((S n) * (S (pred ((S n1) * (S n2))))))).
       rewrite < S_pred
-      [ rewrite < S_pred;auto
+      [ rewrite < S_pred;autobatch
         (*[ rewrite < assoc_times.
           reflexivity
         | apply lt_O_times_S_S
@@ -185,14 +185,14 @@ elim x
       ]
     ]
   | elim z
-    [ auto
+    [ autobatch
       (*simplify.
       reflexivity*)
     | change with 
        (pos (pred ((S (pred ((S n) * (S n1)))) * (S n2))) =
        pos (pred ((S n) * (S (pred ((S n1) * (S n2))))))).
       rewrite < S_pred
-      [ rewrite < S_pred;auto
+      [ rewrite < S_pred;autobatch
         (*[ rewrite < assoc_times.
           reflexivity
         | apply lt_O_times_S_S
@@ -203,7 +203,7 @@ elim x
        (neg (pred ((S (pred ((S n) * (S n1)))) * (S n2))) =
        neg(pred ((S n) * (S (pred ((S n1) * (S n2))))))).
       rewrite < S_pred
-      [ rewrite < S_pred;auto
+      [ rewrite < S_pred;autobatch
         (*[ rewrite < assoc_times.
           reflexivity
         | apply lt_O_times_S_S
@@ -225,7 +225,7 @@ pred ((S n) * (S p)) - pred ((S n) * (S q)).
 intros.
 rewrite < S_pred
 [ rewrite > minus_pred_pred
-  [ auto
+  [ autobatch
     (*rewrite < distr_times_minus. 
     reflexivity*)
    
@@ -233,7 +233,7 @@ rewrite < S_pred
   | apply lt_O_times_S_S                    
   | apply lt_O_times_S_S
   ]
-| unfold lt.auto
+| unfold lt.autobatch
   (*simplify.
   unfold lt.
   apply le_SO_minus.
@@ -258,7 +258,7 @@ rewrite < nat_compare_pred_pred
     rewrite < (times_minus1 n q p H).
     reflexivity
   | intro.
-    auto
+    autobatch
     (*rewrite < H.
     simplify.
     reflexivity*)
@@ -278,7 +278,7 @@ qed.
 lemma Ztimes_Zplus_pos_pos_neg: \forall n,p,q:nat.
 (pos n)*((pos p)+(neg q)) = (pos n)*(pos p)+ (pos n)*(neg q).
 intros.
-auto.
+autobatch.
 (*rewrite < sym_Zplus.
 rewrite > Ztimes_Zplus_pos_neg_pos.
 apply sym_Zplus.*)
@@ -296,7 +296,7 @@ elim y
   | change with
      (pos (pred ((S n) * ((S n1) + (S n2)))) =
      pos (pred ((S n) * (S n1) + (S n) * (S n2)))).
-    auto
+    autobatch
     (*rewrite < distr_times_plus.
     reflexivity*)
   | apply Ztimes_Zplus_pos_pos_neg
@@ -307,7 +307,7 @@ elim y
   | change with
      (neg (pred ((S n) * ((S n1) + (S n2)))) =
      neg (pred ((S n) * (S n1) + (S n) * (S n2)))).
-    auto
+    autobatch
     (*rewrite < distr_times_plus.
     reflexivity*)
   ]
@@ -325,7 +325,7 @@ change with (\forall n,y,z.
 intros.
 rewrite > Ztimes_neg_Zopp. 
 rewrite > distr_Ztimes_Zplus_pos.
-auto.
+autobatch.
 (*rewrite > Zopp_Zplus.
 rewrite < Ztimes_neg_Zopp.
 rewrite < Ztimes_neg_Zopp.
@@ -339,7 +339,7 @@ distributive2_Ztimes_neg_Zplus.
 theorem distributive_Ztimes_Zplus: distributive Z Ztimes Zplus.
 change with (\forall x,y,z:Z. x * (y + z) = x*y + x*z).
 intros.
-elim x;auto.
+elim x;autobatch.
 (*[ simplify.
   reflexivity
 | apply distr_Ztimes_Zplus_pos

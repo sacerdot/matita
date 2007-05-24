@@ -126,7 +126,7 @@ intros.elim n
       (a*exp a (card n1 p) * ((S n1) * (pi_p p n1)) = 
        a*(S n1)*map_iter_p n1 p (\lambda n.a*n) (S O) times).
        rewrite < H.
-       auto
+       autobatch
     |intro.assumption
     ]
   ]
@@ -269,7 +269,7 @@ elim k 3
          apply le_S.
          assumption
         ]
-      |apply H2[auto|apply le_n]
+      |apply H2[autobatch|apply le_n]
       ]
     ]
   ]
@@ -327,13 +327,13 @@ apply (nat_case n)
            apply lt_to_not_eq.
            apply (le_to_lt_to_lt ? m)
             [apply (trans_le ? (m-k))
-              [assumption|auto]
+              [assumption|autobatch]
             |apply le_S.apply le_n
             ]
           ]
         |apply not_eq_to_eqb_false.
          apply lt_to_not_eq.
-         unfold.auto
+         unfold.autobatch
         ]
       ]
     |apply le_S_S_to_le.assumption
@@ -356,15 +356,15 @@ elim n 2
     cut (k1 = n1 - (n1 -k1))
      [rewrite > Hcut.
       apply (eq_map_iter_p_transpose p f H H1 g a (n1-k1))
-        [cut (k1 \le n1)[auto|auto]
+        [cut (k1 \le n1)[autobatch|autobatch]
         |assumption
         |rewrite < Hcut.assumption
         |rewrite < Hcut.intros.
-         apply (H9 i H10).unfold.auto   
+         apply (H9 i H10).unfold.autobatch   
        ]
      |apply sym_eq.
        apply plus_to_minus.
-       auto.
+       autobatch.
      ]
    |intros.
      cut ((S n1) \neq k1)
@@ -377,7 +377,7 @@ elim n 2
                apply eq_f.
                apply (H3 H5)
                 [elim (le_to_or_lt_eq ? ? H6)
-                  [auto
+                  [autobatch
                   |absurd (S n1=k2)[apply sym_eq.assumption|assumption]
                   ]
                 |assumption
@@ -398,7 +398,7 @@ elim n 2
           [rewrite > map_iter_p_S_false
             [apply (H3 H5)
               [elim (le_to_or_lt_eq ? ? H6)
-                [auto
+                [autobatch
                 |absurd (S n1=k2)[apply sym_eq.assumption|assumption]
                 ]
               |assumption
@@ -583,13 +583,13 @@ theorem lt_minus_to_lt_plus:
 \forall n,m,p. n - m < p \to n < m + p.
 intros 2.
 apply (nat_elim2 ? ? ? ? n m)
-  [simplify.intros.auto.
+  [simplify.intros.autobatch.
   |intros 2.rewrite < minus_n_O.
    intro.assumption
   |intros.
    simplify.
    cut (n1 < m1+p)
-    [auto
+    [autobatch
     |apply H.
      apply H1
     ]
@@ -617,7 +617,7 @@ theorem minus_m_minus_mn: \forall n,m. n\le m \to n=m-(m-n).
 intros.
 apply sym_eq.
 apply plus_to_minus.
-auto.
+autobatch.
 qed.
 
 theorem eq_map_iter_p_transpose2: \forall p.\forall f.associative nat f \to
@@ -639,7 +639,7 @@ cut (k = (S n)-(S n -k))
      elim (decidable_n2 p n (S n -m) H4 H6)
       [apply (eq_map_iter_p_transpose1 p f H H1 f1 a)
         [assumption.
-        |unfold.auto.
+        |unfold.autobatch.
         |apply le_n
         |assumption
         |assumption

@@ -542,8 +542,8 @@ intros 3;elim T 0
      [1,3:elim Hcut;elim H4;elim H5;clear Hcut H4 H5;rewrite > (H H6 H8);
       rewrite > (H1 H7 H9);reflexivity
      |*:split
-        [1,3:split;unfold;intro;apply H2;apply natinG_or_inH_to_natinGH;auto
-        |*:split;unfold;intro;apply H3;apply natinG_or_inH_to_natinGH;auto]]]
+        [1,3:split;unfold;intro;apply H2;apply natinG_or_inH_to_natinGH;autobatch
+        |*:split;unfold;intro;apply H3;apply natinG_or_inH_to_natinGH;autobatch]]]
 qed.
         
 lemma subst_type_nat_swap : \forall u,v,T,X,m.
@@ -693,7 +693,7 @@ cut (\forall l:(list nat).\exists n.\forall m.
                    |intros;lapply (inj_tail ? ? ? ? ? H9);
                     rewrite < Hletin3 in H6;rewrite < H8 in H6;
                     apply (H1 ? H4 H6)]]]
-          |elim (leb a t);auto]]]]
+          |elim (leb a t);autobatch]]]]
 qed.
 
 (*** lemmas on well-formedness ***)
@@ -858,7 +858,7 @@ cut ((max (t_len T1) (t_len T2)) = match (leb (t_len T1) (t_len T2)) with
         [rewrite > H;rewrite > H in Hletin;simplify;constructor 1
         |rewrite > H;rewrite > H in Hletin;simplify;simplify in Hletin;
          unfold;apply le_S_S;assumption]
-     |elim (leb (t_len T1) (t_len T2));auto]
+     |elim (leb (t_len T1) (t_len T2));autobatch]
   |elim T1;simplify;reflexivity]
 qed.
 
@@ -875,7 +875,7 @@ cut ((max (t_len T1) (t_len T2)) = match (leb (t_len T1) (t_len T2)) with
          lapply (not_le_to_lt ? ? Hletin);unfold in Hletin1;unfold;
          constructor 2;assumption
         |rewrite > H;simplify;unfold;constructor 1]
-     |elim (leb (t_len T1) (t_len T2));auto]
+     |elim (leb (t_len T1) (t_len T2));autobatch]
   |elim T1;simplify;reflexivity]
 qed.
 
@@ -891,7 +891,7 @@ cut ((max (t_len T1) (t_len T2)) = match (leb (t_len T1) (t_len T2)) with
         [rewrite > H;rewrite > H in Hletin;simplify;constructor 1
         |rewrite > H;rewrite > H in Hletin;simplify;simplify in Hletin;
          unfold;apply le_S_S;assumption]
-     |elim (leb (t_len T1) (t_len T2));auto]
+     |elim (leb (t_len T1) (t_len T2));autobatch]
   |elim T1;simplify;reflexivity]
 qed.
 
@@ -908,7 +908,7 @@ cut ((max (t_len T1) (t_len T2)) = match (leb (t_len T1) (t_len T2)) with
          lapply (not_le_to_lt ? ? Hletin);unfold in Hletin1;unfold;
          constructor 2;assumption
         |rewrite > H;simplify;unfold;constructor 1]
-     |elim (leb (t_len T1) (t_len T2));auto]
+     |elim (leb (t_len T1) (t_len T2));autobatch]
   |elim T1;simplify;reflexivity]
 qed.
 

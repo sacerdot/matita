@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/library_auto/nat/gcd".
+set "baseuri" "cic:/matita/library_autobatch/nat/gcd".
 
 include "auto/nat/primes.ma".
 
@@ -48,7 +48,7 @@ apply (witness ? ? (n2 - n1*(m / n))).
   apply sym_eq.
   apply plus_to_minus.
   rewrite > sym_times.
-  auto.
+  autobatch.
   (*letin x \def div.
   rewrite < (div_mod ? ? H).
   reflexivity.*)
@@ -66,7 +66,7 @@ rewrite < H3.
 rewrite < assoc_times.
 rewrite < H4.
 rewrite < sym_times.
-auto.
+autobatch.
 (*apply div_mod.
 assumption.*)
 qed.
@@ -76,7 +76,7 @@ theorem divides_gcd_aux_mn: \forall p,m,n. O < n \to n \le m \to n \le p \to
 gcd_aux p m n \divides m \land gcd_aux p m n \divides n. 
 intro.
 elim p
-[ absurd (O < n);auto
+[ absurd (O < n);autobatch
   (*[ assumption
   | apply le_to_not_lt.
     assumption
@@ -86,7 +86,7 @@ elim p
     elim Hcut
     [ rewrite > divides_to_divides_b_true
       [ simplify.
-        auto
+        autobatch
         (*split
         [ assumption
         | apply (witness n1 n1 (S O)).
@@ -100,7 +100,7 @@ elim p
         cut (gcd_aux n n1 (m \mod n1) \divides n1 \land
         gcd_aux n n1 (m \mod n1) \divides mod m n1)
         [ elim Hcut1.
-          auto width = 4.
+          autobatch width = 4.
           (*split
           [ apply (divides_mod_to_divides ? ? n1);assumption           
           | assumption
@@ -110,7 +110,7 @@ elim p
             [ elim Hcut1
               [ assumption
               | apply False_ind.
-                auto
+                autobatch
                 (*apply H4.
                 apply mod_O_to_divides
                 [ assumption
@@ -118,17 +118,17 @@ elim p
                   assumption
                 ]*)
               ]
-            | auto
+            | autobatch
               (*apply le_to_or_lt_eq.
               apply le_O_n*)
             ]
-          | auto
+          | autobatch
             (*apply lt_to_le.
             apply lt_mod_m_m.
             assumption*)
           | apply le_S_S_to_le.
-            apply (trans_le ? n1);auto
-            (*[ auto.change with (m \mod n1 < n1).
+            apply (trans_le ? n1);autobatch
+            (*[ autobatch.change with (m \mod n1 < n1).
               apply lt_mod_m_m.
               assumption
             | assumption
@@ -139,7 +139,7 @@ elim p
       | assumption
       ]
     ]
-  | auto
+  | autobatch
     (*apply (decidable_divides n1 m).
     assumption*)
   ]
@@ -174,7 +174,7 @@ apply (leb_elim n m)
 [ apply (nat_case1 n)
   [ simplify.
     intros.
-    auto
+    autobatch
     (*split
     [ apply (witness m m (S O)).
       apply times_n_SO
@@ -186,7 +186,7 @@ apply (leb_elim n m)
     (gcd_aux (S m1) m (S m1) \divides m
     \land 
     gcd_aux (S m1) m (S m1) \divides (S m1)).
-    auto
+    autobatch
     (*apply divides_gcd_aux_mn
     [ unfold lt.
       apply le_S_S.
@@ -200,7 +200,7 @@ apply (leb_elim n m)
   apply (nat_case1 m)
   [ simplify.
     intros.
-    auto
+    autobatch
     (*split
     [ apply (witness n O O).
       apply times_n_O
@@ -216,10 +216,10 @@ apply (leb_elim n m)
     \land 
     gcd_aux (S m1) n (S m1) \divides S m1)
     [ elim Hcut.
-      auto
+      autobatch
       (*split;assumption*)
     | apply divides_gcd_aux_mn
-      [ auto
+      [ autobatch
         (*unfold lt.
         apply le_S_S.
         apply le_O_n*)
@@ -229,7 +229,7 @@ apply (leb_elim n m)
         intro.
         apply H.
         rewrite > H1.
-        auto
+        autobatch
         (*apply (trans_le ? (S n))
         [ apply le_n_Sn
         | assumption
@@ -243,19 +243,19 @@ qed.
 
 theorem divides_gcd_n: \forall n,m. gcd n m \divides n.
 intros. 
-exact (proj2  ? ? (divides_gcd_nm n m)). (*auto non termina la dimostrazione*)
+exact (proj2  ? ? (divides_gcd_nm n m)). (*autobatch non termina la dimostrazione*)
 qed.
 
 theorem divides_gcd_m: \forall n,m. gcd n m \divides m.
 intros. 
-exact (proj1 ? ? (divides_gcd_nm n m)). (*auto non termina la dimostrazione*)
+exact (proj1 ? ? (divides_gcd_nm n m)). (*autobatch non termina la dimostrazione*)
 qed.
 
 theorem divides_gcd_aux: \forall p,m,n,d. O < n \to n \le m \to n \le p \to
 d \divides m \to d \divides n \to d \divides gcd_aux p m n. 
 intro.
 elim p
-[ absurd (O < n);auto
+[ absurd (O < n);autobatch
   (*[ assumption
   | apply le_to_not_lt.
     assumption
@@ -264,7 +264,7 @@ elim p
   cut (n1 \divides m \lor n1 \ndivides m)
   [ elim Hcut.
     rewrite > divides_to_divides_b_true;
-    simplify; auto.
+    simplify; autobatch.
     (*[ simplify.
       assumption.
     | assumption. 
@@ -277,7 +277,7 @@ elim p
         [ elim Hcut1
           [ assumption
           | 
-            absurd (n1 \divides m);auto
+            absurd (n1 \divides m);autobatch
             (*[ apply mod_O_to_divides
               [ assumption.
               | apply sym_eq.assumption.
@@ -285,16 +285,16 @@ elim p
             | assumption
             ]*)
           ]
-        | auto 
+        | autobatch 
           (*apply le_to_or_lt_eq.
           apply le_O_n*)        
         ]
-      | auto
+      | autobatch
         (*apply lt_to_le.
         apply lt_mod_m_m.
         assumption*)
       | apply le_S_S_to_le.
-        auto
+        autobatch
         (*apply (trans_le ? n1)
         [ change with (m \mod n1 < n1).
           apply lt_mod_m_m.
@@ -302,14 +302,14 @@ elim p
         | assumption
         ]*)
       | assumption
-      | auto 
+      | autobatch 
         (*apply divides_mod;
         assumption*)
       ]
     | assumption
     | assumption
     ]
-  | auto 
+  | autobatch 
     (*apply (decidable_divides n1 m).
     assumption*)
   ]
@@ -338,11 +338,11 @@ apply (leb_elim n m)
   | intros.
     change with (d \divides gcd_aux (S m1) m (S m1)).
     apply divides_gcd_aux      
-    [ unfold lt.auto
+    [ unfold lt.autobatch
       (*apply le_S_S.
       apply le_O_n.*)
     | assumption.
-    | apply le_n. (*chiude il goal anche con auto*)
+    | apply le_n. (*chiude il goal anche con autobatch*)
     | assumption.
     | rewrite < H2.
       assumption
@@ -355,14 +355,14 @@ apply (leb_elim n m)
   | intros.
     change with (d \divides gcd_aux (S m1) n (S m1)).
     apply divides_gcd_aux
-    [ unfold lt.auto
+    [ unfold lt.autobatch
       (*apply le_S_S.
       apply le_O_n*)
-    | auto
+    | autobatch
       (*apply lt_to_le.
       apply not_le_to_lt.
       assumption*)
-    | apply le_n (*chiude il goal anche con auto*)
+    | apply le_n (*chiude il goal anche con autobatch*)
     | assumption
     | rewrite < H2.
       assumption
@@ -375,7 +375,7 @@ theorem eq_minus_gcd_aux: \forall p,m,n.O < n \to n \le m \to n \le p \to
 \exists a,b. a*n - b*m = gcd_aux p m n \lor b*m - a*n = gcd_aux p m n.
 intro.
 elim p
-[ absurd (O < n);auto
+[ absurd (O < n);autobatch
   (*[ assumption
   | apply le_to_not_lt
     assumption.
@@ -388,7 +388,7 @@ elim p
         [ simplify.
           apply (ex_intro ? ? (S O)).
           apply (ex_intro ? ? O).
-          auto
+          autobatch
           (*left.
           simplify.
           rewrite < plus_n_O.
@@ -420,12 +420,12 @@ elim p
               rewrite > distr_times_plus.
               rewrite > (sym_times n1).
               rewrite > (sym_times n1).
-              rewrite > (div_mod m n1) in \vdash (? ? (? % ?) ?);auto
+              rewrite > (div_mod m n1) in \vdash (? ? (? % ?) ?);autobatch
               (*[ rewrite > assoc_times.
                 rewrite < sym_plus.
                 rewrite > distr_times_plus.
                 rewrite < eq_minus_minus_minus_plus.
-                rewrite < sym_plus.auto.
+                rewrite < sym_plus.autobatch.
                 rewrite < plus_minus
                 [ rewrite < minus_n_n.
                   reflexivity
@@ -447,7 +447,7 @@ elim p
               [ rewrite > distr_times_plus.
                 rewrite > assoc_times.
                 rewrite < eq_minus_minus_minus_plus.
-                auto
+                autobatch
                 (*rewrite < sym_plus.
                 rewrite < plus_minus
                 [ rewrite < minus_n_n.
@@ -461,7 +461,7 @@ elim p
             [ cut (O \lt m \mod n1 \lor O = m \mod n1)
               [ elim Hcut2
                 [ assumption 
-                | absurd (n1 \divides m);auto
+                | absurd (n1 \divides m);autobatch
                   (*[ apply mod_O_to_divides
                     [ assumption
                     | symmetry.
@@ -470,16 +470,16 @@ elim p
                   | assumption
                   ]*)
                 ]
-              | auto
+              | autobatch
                 (*apply le_to_or_lt_eq.
                 apply le_O_n*)
               ]
-            | auto
+            | autobatch
               (*apply lt_to_le.
               apply lt_mod_m_m.
               assumption*)
             | apply le_S_S_to_le.
-              auto
+              autobatch
               (*apply (trans_le ? n1)
               [ change with (m \mod n1 < n1).
                 apply lt_mod_m_m.
@@ -492,11 +492,11 @@ elim p
         | assumption
         ]
       ]
-    | auto
+    | autobatch
       (*apply (decidable_divides n1 m).
       assumption*)
     ]
-  | auto
+  | autobatch
     (*apply (lt_to_le_to_lt ? n1);assumption *)   
   ]
 ]
@@ -512,7 +512,7 @@ apply (leb_elim n m)
     intros.
     apply (ex_intro ? ? O).
     apply (ex_intro ? ? (S O)).
-    auto
+    autobatch
     (*right.simplify.
     rewrite < plus_n_O.
     apply sym_eq.
@@ -522,7 +522,7 @@ apply (leb_elim n m)
     (\exists a,b.
     a*(S m1) - b*m = (gcd_aux (S m1) m (S m1)) 
     \lor b*m - a*(S m1) = (gcd_aux (S m1) m (S m1))).
-    auto
+    autobatch
     (*apply eq_minus_gcd_aux
     [ unfold lt. 
       apply le_S_S.
@@ -536,7 +536,7 @@ apply (leb_elim n m)
     intros.
     apply (ex_intro ? ? (S O)).
     apply (ex_intro ? ? O).
-    auto
+    autobatch
     (*left.simplify.
     rewrite < plus_n_O.
     apply sym_eq.
@@ -553,7 +553,7 @@ apply (leb_elim n m)
     b*n - a*(S m1) = (gcd_aux (S m1) n (S m1)))
     [ elim Hcut.
       elim H2.
-      elim H3;apply (ex_intro ? ? a1);auto
+      elim H3;apply (ex_intro ? ? a1);autobatch
       (*[ apply (ex_intro ? ? a1).
         apply (ex_intro ? ? a).
         right.
@@ -563,11 +563,11 @@ apply (leb_elim n m)
         left.
         assumption
       ]*)
-    | apply eq_minus_gcd_aux;auto
+    | apply eq_minus_gcd_aux;autobatch
       (*[ unfold lt. 
         apply le_S_S.
         apply le_O_n
-      | auto.apply lt_to_le.
+      | autobatch.apply lt_to_le.
         apply not_le_to_lt.
         assumption
       | apply le_n.
@@ -580,7 +580,7 @@ qed.
 (* some properties of gcd *)
 
 theorem gcd_O_n: \forall n:nat. gcd O n = n.
-auto.
+autobatch.
 (*intro.simplify.reflexivity.*)
 qed.
 
@@ -589,7 +589,7 @@ m = O \land n = O.
 intros.
 cut (O \divides n \land O \divides m)
 [ elim Hcut.
-  auto size = 7;
+  autobatch size = 7;
   (*
   split; 
     [ apply antisymmetric_divides
@@ -608,7 +608,7 @@ qed.
 
 theorem lt_O_gcd:\forall m,n:nat. O < n \to O < gcd m n.
 intros.
-auto.
+autobatch.
 (*
 apply (divides_to_lt_O (gcd m n) n ? ?);
   [apply (H).
@@ -619,7 +619,7 @@ qed.
 
 theorem gcd_n_n: \forall n.gcd n n = n.
 intro.
-auto.
+autobatch.
 (*
 apply (antisymmetric_divides (gcd n n) n ? ?);
   [apply (divides_gcd_n n n).
@@ -643,7 +643,7 @@ elim (le_to_or_lt_eq ? ? (le_O_n i))
     unfold.
     intro.
     apply (lt_to_not_eq (S O) n H).
-    auto
+    autobatch
     (*apply sym_eq.
     assumption*)
   ]
@@ -690,7 +690,7 @@ theorem symmetric_gcd: symmetric nat gcd.
 change with 
 (\forall n,m:nat. gcd n m = gcd m n).
 intros.
-auto size = 7.
+autobatch size = 7.
 (*
 apply (antisymmetric_divides (gcd n m) (gcd m n) ? ?);
   [apply (divides_d_gcd n m (gcd n m) ? ?);
@@ -715,15 +715,15 @@ apply (nat_case n)
 | intro.
   apply divides_to_le
   [ apply lt_O_gcd.
-    auto
+    autobatch
     (*rewrite > (times_n_O O).
     apply lt_times
-    [ auto.unfold lt.
+    [ autobatch.unfold lt.
       apply le_S_S.
       apply le_O_n
     | assumption
     ]*)
-  | apply divides_d_gcd;auto
+  | apply divides_d_gcd;autobatch
     (*[ apply (transitive_divides ? (S m1))
       [ apply divides_gcd_m
       | apply (witness ? ? p).
@@ -740,10 +740,10 @@ gcd m (n*p) = (S O) \to gcd m n = (S O).
 intros.
 apply antisymmetric_le
 [ rewrite < H2.
-  auto
+  autobatch
   (*apply le_gcd_times.
   assumption*)
-| auto
+| autobatch
   (*change with (O < gcd m n). 
   apply lt_O_gcd.
   assumption*)
@@ -761,8 +761,8 @@ rewrite > H3.
 intro.
 cut (O < n2)
 [ elim (gcd_times_SO_to_gcd_SO n n n2 ? ? H4)
-  [ cut (gcd n (n*n2) = n);auto
-    (*[ auto.apply (lt_to_not_eq (S O) n)
+  [ cut (gcd n (n*n2) = n);autobatch
+    (*[ autobatch.apply (lt_to_not_eq (S O) n)
       [ assumption
       | rewrite < H4.
         assumption
@@ -770,7 +770,7 @@ cut (O < n2)
     | apply gcd_n_times_nm.
       assumption
     ]*)
-  | auto
+  | autobatch
     (*apply (trans_lt ? (S O))
     [ apply le_n
     | assumption
@@ -782,7 +782,7 @@ cut (O < n2)
   | apply False_ind.
     apply (le_to_not_lt n (S O))
     [ rewrite < H4.
-      apply divides_to_le;auto
+      apply divides_to_le;autobatch
       (*[ rewrite > H4.
         apply lt_O_S
       | apply divides_d_gcd
@@ -799,7 +799,7 @@ qed.
 
 theorem gcd_SO_n: \forall n:nat. gcd (S O) n = (S O).
 intro.
-auto.
+autobatch.
 (*
 apply (symmetric_eq nat (S O) (gcd (S O) n) ?).
 apply (antisymmetric_divides (S O) (gcd (S O) n) ? ?);
@@ -812,7 +812,7 @@ qed.
 theorem divides_gcd_mod: \forall m,n:nat. O < n \to
 divides (gcd m n) (gcd n (m \mod n)).
 intros.
-auto width = 4.
+autobatch width = 4.
 (*apply divides_d_gcd
 [ apply divides_mod
   [ assumption
@@ -826,7 +826,7 @@ qed.
 theorem divides_mod_gcd: \forall m,n:nat. O < n \to
 divides (gcd n (m \mod n)) (gcd m n) .
 intros.
-auto.
+autobatch.
 (*apply divides_d_gcd
 [ apply divides_gcd_n
 | apply (divides_mod_to_divides ? ? n)
@@ -840,7 +840,7 @@ qed.
 theorem gcd_mod: \forall m,n:nat. O < n \to
 (gcd n (m \mod n)) = (gcd m n) .
 intros.
-auto.
+autobatch.
 (*apply antisymmetric_divides
 [ apply divides_mod_gcd.
   assumption
@@ -860,7 +860,7 @@ apply antisym_le
   intro.
   apply H1.
   rewrite < (H3 (gcd n m));
-  [auto|auto| unfold lt; auto]
+  [autobatch|autobatch| unfold lt; autobatch]
   (*[ apply divides_gcd_m
   | apply divides_gcd_n
   | assumption
@@ -874,13 +874,13 @@ apply antisym_le
       [ elim Hcut1.
         rewrite < H5 in \vdash (? ? %).
         assumption
-      | auto
+      | autobatch
         (*apply gcd_O_to_eq_O.
         apply sym_eq.
         assumption*)
       ]
     ]
-  | auto
+  | autobatch
     (*apply le_to_or_lt_eq.
     apply le_O_n*)
   ]
@@ -921,7 +921,7 @@ cut (n \divides p \lor n \ndivides p)
           rewrite > (sym_times q (a1*p)).
           rewrite > (assoc_times a1).
           elim H1.
-          auto
+          autobatch
           (*rewrite > H6.
           rewrite < sym_times.rewrite > assoc_times.
           rewrite < (assoc_times q).
@@ -930,7 +930,7 @@ cut (n \divides p \lor n \ndivides p)
           apply (witness ? ? (n2*a1-q*a)).
           reflexivity*)
         ](* end second case *)
-     | rewrite < (prime_to_gcd_SO n p);auto
+     | rewrite < (prime_to_gcd_SO n p);autobatch
       (* [ apply eq_minus_gcd
        | assumption
        | assumption
@@ -939,7 +939,7 @@ cut (n \divides p \lor n \ndivides p)
    ]
  | apply (decidable_divides n p).
    apply (trans_lt ? (S O))
-    [ auto
+    [ autobatch
       (*unfold lt.
       apply le_n*)
     | unfold prime in H.
@@ -962,16 +962,16 @@ apply antisymmetric_le
       change with ((S O) < (S O)).
       rewrite < H2 in \vdash (? ? %).
       apply (lt_to_le_to_lt ? (smallest_factor (gcd m (n*p))))
-      [ auto
+      [ autobatch
         (*apply lt_SO_smallest_factor.
         assumption*)
       | apply divides_to_le; 
-        [ auto |   
+        [ autobatch |   
         apply divides_d_gcd
          [ assumption
          | apply (transitive_divides ? (gcd m (n*p)))
-           [ auto.
-           | auto.
+           [ autobatch.
+           | autobatch.
            ]
          ]
         ]
@@ -999,12 +999,12 @@ apply antisymmetric_le
       [ apply lt_SO_smallest_factor.
         assumption
       | apply divides_to_le; 
-        [ auto |
+        [ autobatch |
         apply divides_d_gcd
          [ assumption
          | apply (transitive_divides ? (gcd m (n*p)))
-           [ auto.
-           | auto.
+           [ autobatch.
+           | autobatch.
            ]
          ]
         ]
@@ -1027,16 +1027,16 @@ apply antisymmetric_le
       ]
     ]
   | apply divides_times_to_divides;
-    [ auto | 
+    [ autobatch | 
       apply (transitive_divides ? (gcd m (n*p)))
-           [ auto.
-           | auto.
+           [ autobatch.
+           | autobatch.
            ]
          ]
         ]
     (*[ apply prime_smallest_factor_n.
       assumption
-    | auto.apply (transitive_divides ? (gcd m (n*p)))
+    | autobatch.apply (transitive_divides ? (gcd m (n*p)))
       [ apply divides_smallest_factor_n.
         apply (trans_lt ? (S O))
         [ unfold lt. 
@@ -1046,7 +1046,7 @@ apply antisymmetric_le
       | apply divides_gcd_m
       ]
     ]*)
-| auto
+| autobatch
   (*change with (O < gcd m (n*p)).
   apply lt_O_gcd.
   rewrite > (times_n_O O).
@@ -1081,7 +1081,7 @@ cut (n \divides p \lor n \ndivides p)
       apply eq_minus_gcd
     ]
   ]
-| auto
+| autobatch
   (*apply (decidable_divides n p).
   assumption.*)
 ]

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/library_auto/nat/congruence".
+set "baseuri" "cic:/matita/library_autobatch/nat/congruence".
 
 include "auto/nat/relevant_equations.ma".
 include "auto/nat/primes.ma".
@@ -24,7 +24,7 @@ definition congruent: nat \to nat \to nat \to Prop \def
 \lambda n,m,p:nat. mod n p = mod m p.
 
 interpretation "congruent" 'congruent n m p =
-  (cic:/matita/library_auto/nat/congruence/congruent.con n m p).
+  (cic:/matita/library_autobatch/nat/congruence/congruent.con n m p).
 
 notation < "hvbox(n break \cong\sub p m)"
   (*non associative*) with precedence 45
@@ -43,16 +43,16 @@ unfold congruent.
 intros.
 whd.
 apply (trans_eq ? ? (y \mod p))
-[ (*qui auto non chiude il goal*)
+[ (*qui autobatch non chiude il goal*)
   apply H
-| (*qui auto non chiude il goal*)
+| (*qui autobatch non chiude il goal*)
   apply H1
 ]
 qed.
 
 theorem le_to_mod: \forall n,m:nat. n \lt m \to n = n \mod m.
 intros.
-auto.
+autobatch.
 (*apply (div_mod_spec_to_eq2 n m O n (n/m) (n \mod m))
 [ constructor 1
   [ assumption
@@ -69,7 +69,7 @@ qed.
 
 theorem mod_mod : \forall n,p:nat. O<p \to n \mod p = (n \mod p) \mod p.
 intros.
-auto.
+autobatch.
 (*rewrite > (div_mod (n \mod p) p) in \vdash (? ? % ?)
 [ rewrite > (eq_div_O ? p)
   [ reflexivity
@@ -84,18 +84,18 @@ theorem mod_times_mod : \forall n,m,p:nat. O<p \to O<m \to n \mod p = (n \mod (m
 intros.
 apply (div_mod_spec_to_eq2 n p (n/p) (n \mod p) 
 (n/(m*p)*m + (n \mod (m*p)/p)))
-[ auto. 
+[ autobatch. 
   (*apply div_mod_spec_div_mod.
   assumption*)
 | constructor 1
-  [ auto
+  [ autobatch
     (*apply lt_mod_m_m.
     assumption*)
   | rewrite > times_plus_l.
     rewrite > assoc_plus.
     rewrite < div_mod
     [ rewrite > assoc_times.
-      rewrite < div_mod;auto
+      rewrite < div_mod;autobatch
       (*[ reflexivity
       | rewrite > (times_n_O O).
         apply lt_times;assumption       
@@ -110,7 +110,7 @@ theorem congruent_n_mod_n :
 \forall n,p:nat. O < p \to congruent n (n \mod p) p.
 intros.
 unfold congruent.
-auto.
+autobatch.
 (*apply mod_mod.
 assumption.*)
 qed.
@@ -126,11 +126,11 @@ n = r*p+m \to congruent n m p.
 intros.
 unfold congruent.
 apply (div_mod_spec_to_eq2 n p (div n p) (mod n p) (r +(div m p)) (mod m p))
-[ auto
+[ autobatch
   (*apply div_mod_spec_div_mod.
   assumption*)
 | constructor 1
-  [ auto
+  [ autobatch
     (*apply lt_mod_m_m.
     assumption*)
   |  
@@ -141,7 +141,7 @@ rewrite > distr_times_plus.
 (*rewrite > (sym_times p (m/p)).*)
 (*rewrite > sym_times.*)
   rewrite > assoc_plus.
-  auto paramodulation.
+  autobatch paramodulation.
   rewrite < div_mod.
   assumption.
   assumption.
@@ -163,7 +163,7 @@ elim H2.
 apply (eq_times_plus_to_congruent n m p n2)
 [ assumption
 | rewrite < sym_plus.
-  apply minus_to_plus;auto
+  apply minus_to_plus;autobatch
   (*[ assumption
   | rewrite > sym_times. assumption
   ]*)
@@ -179,7 +179,7 @@ rewrite > sym_times.
 rewrite > (div_mod n p) in \vdash (? ? % ?)
 [ rewrite > (div_mod m p) in \vdash (? ? % ?)
   [ rewrite < (sym_plus (m \mod p)).
-    auto
+    autobatch
     (*rewrite < H1.
     rewrite < (eq_minus_minus_minus_plus ? (n \mod p)).
     rewrite < minus_plus_m_m.
@@ -199,13 +199,13 @@ apply (eq_times_plus_to_congruent ? ? p
 ((n / p)*p*(m / p) + (n / p)*(m \mod p) + (n \mod p)*(m / p)))
 [ assumption
 | apply (trans_eq ? ? (((n/p)*p+(n \mod p))*((m/p)*p+(m \mod p))))
-  [ apply eq_f2;auto(*;apply div_mod.assumption.*)    
+  [ apply eq_f2;autobatch(*;apply div_mod.assumption.*)    
   | apply (trans_eq ? ? (((n/p)*p)*((m/p)*p) + (n/p)*p*(m \mod p) +
     (n \mod p)*((m / p)*p) + (n \mod p)*(m \mod p)))
     [ apply times_plus_plus
     | apply eq_f2
       [ rewrite < assoc_times.
-        auto      
+        autobatch      
         (*rewrite > (assoc_times (n/p) p (m \mod p)).
         rewrite > (sym_times p (m \mod p)).
         rewrite < (assoc_times (n/p) (m \mod p) p).
@@ -233,7 +233,7 @@ intros.
 rewrite > (mod_times n m p H).
 rewrite > H1.
 rewrite > H2.
-auto.
+autobatch.
 (*
 apply sym_eq.
 apply mod_times.
@@ -244,12 +244,12 @@ theorem congruent_pi: \forall f:nat \to nat. \forall n,m,p:nat.O < p \to
 congruent (pi n f m) (pi n (\lambda m. mod (f m) p) m) p.
 intros.
 elim n;simplify
-[ auto
+[ autobatch
   (*apply congruent_n_mod_n.
   assumption*)
 | apply congruent_times
   [ assumption
-  | auto
+  | autobatch
     (*apply congruent_n_mod_n.
     assumption*)
   | (*NB: QUI AUTO NON RIESCE A CHIUDERE IL GOAL*)

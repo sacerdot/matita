@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/library_auto/nat/nth_prime".
+set "baseuri" "cic:/matita/library_autobatch/nat/nth_prime".
 
 include "auto/nat/primes.ma".
 include "auto/nat/lt_arith.ma".
@@ -46,11 +46,11 @@ unfold Not.
 intro.
 apply (not_divides_S_fact n (smallest_factor(S n!)))
 [ apply lt_SO_smallest_factor.
-  unfold lt.auto
+  unfold lt.autobatch
   (*apply le_S_S.
   apply le_SO_fact*)
 | assumption
-| auto
+| autobatch
   (*apply divides_smallest_factor_n.
   unfold lt.
   apply le_S_S.
@@ -63,7 +63,7 @@ n < m \land m \le S n! \land (prime m).
 intros.
 elim H
 [ apply (ex_intro nat ? (S(S O))).
-  split;auto
+  split;autobatch
   (*[ split
     [ apply (le_n (S(S O)))
     | apply (le_n (S(S O)))
@@ -72,14 +72,14 @@ elim H
   ]*)
 | apply (ex_intro nat ? (smallest_factor (S (S n1)!))).
   split
-  [ auto
+  [ autobatch
     (*split
     [ apply smallest_factor_fact
     | apply le_smallest_factor_n
     ]*)
   | (* Andrea: ancora hint non lo trova *)
     apply prime_smallest_factor_n.
-    unfold lt.auto
+    unfold lt.autobatch
     (*apply le_S.
     apply le_SSO_fact.
     unfold lt.
@@ -101,17 +101,17 @@ match n with
 it must compute factorial of 7 ...*)
 (*
 theorem example11 : nth_prime (S(S O)) = (S(S(S(S(S O))))).
-auto.
+autobatch.
 (*normalize.reflexivity.*)
 qed.
 
 theorem example12: nth_prime (S(S(S O))) = (S(S(S(S(S(S(S O))))))).
-auto.
+autobatch.
 (*normalize.reflexivity.*)
 qed.
 
 theorem example13 : nth_prime (S(S(S(S O)))) = (S(S(S(S(S(S(S(S(S(S(S O))))))))))).
-auto.
+autobatch.
 (*normalize.reflexivity.*)
 qed.
 *)
@@ -123,7 +123,7 @@ normalize.reflexivity.
 theorem prime_nth_prime : \forall n:nat.prime (nth_prime n).
 intro.
 apply (nat_case n)
-[ auto 
+[ autobatch 
   (*simplify.
   apply (primeb_to_Prop (S(S O)))*)
 | intro.
@@ -141,7 +141,7 @@ apply (nat_case n)
         exact (smallest_factor_fact (nth_prime m))
       | (* maybe we could factorize this proof *)
         apply plus_to_minus.
-        auto
+        autobatch
         (*apply plus_minus_m_m.
         apply le_S_S.
         apply le_n_fact_n*)
@@ -150,7 +150,7 @@ apply (nat_case n)
     ]
   | apply prime_to_primeb_true.
     apply prime_smallest_factor_n.
-    unfold lt.auto
+    unfold lt.autobatch
     (*apply le_S_S.
     apply le_SO_fact*)
   ]
@@ -170,7 +170,7 @@ cut (upper_bound - (upper_bound -(S previous_prime)) = (S previous_prime))
 [ rewrite < Hcut in \vdash (? % ?).
   apply le_min_aux
 | apply plus_to_minus.
-  auto
+  autobatch
   (*apply plus_minus_m_m.
   apply le_S_S.
   apply le_n_fact_n*)
@@ -181,20 +181,20 @@ variant lt_nth_prime_n_nth_prime_Sn :\forall n:nat.
 (nth_prime n) < (nth_prime (S n)) \def increasing_nth_prime.
 
 theorem injective_nth_prime: injective nat nat nth_prime.
-auto.
+autobatch.
 (*apply increasing_to_injective.
 apply increasing_nth_prime.*)
 qed.
 
 theorem lt_SO_nth_prime_n : \forall n:nat. (S O) \lt nth_prime n.
 intros.
-(*usando la tattica auto qui, dopo svariati minuti la computazione non era
+(*usando la tattica autobatch qui, dopo svariati minuti la computazione non era
  * ancora terminata
  *)
 elim n
-[ unfold lt.auto
+[ unfold lt.autobatch
   (*apply le_n*)
-| auto
+| autobatch
   (*apply (trans_lt ? (nth_prime n1))
   [ assumption
   | apply lt_nth_prime_n_nth_prime_Sn
@@ -204,7 +204,7 @@ qed.
 
 theorem lt_O_nth_prime_n : \forall n:nat. O \lt nth_prime n.
 intros.
-auto.
+autobatch.
 (*apply (trans_lt O (S O))
 [ unfold lt.
   apply le_n
@@ -215,7 +215,7 @@ qed.
 theorem ex_m_le_n_nth_prime_m: 
 \forall n: nat. nth_prime O \le n \to 
 \exists m. nth_prime m \le n \land n < nth_prime (S m).
-auto.
+autobatch.
 (*intros.
 apply increasing_to_le2
 [ exact lt_nth_prime_n_nth_prime_Sn
@@ -234,7 +234,7 @@ apply (lt_min_aux_to_false primeb upper_bound (upper_bound - (S previous_prime))
   [ rewrite > Hcut.
     assumption
   | apply plus_to_minus.
-    auto
+    autobatch
     (*apply plus_minus_m_m.
     apply le_S_S.
     apply le_n_fact_n*)
@@ -254,14 +254,14 @@ cut (\exists m. nth_prime m \le p \land p < nth_prime (S m))
   [ elim Hcut1
     [ absurd (prime p)
       [ assumption
-      | auto
+      | autobatch
         (*apply (lt_nth_prime_to_not_prime a);assumption*)
       ]
-    | auto
+    | autobatch
       (*apply (ex_intro nat ? a).
       assumption*)
     ]
-  | auto
+  | autobatch
     (*apply le_to_or_lt_eq.
     assumption*)
   ]

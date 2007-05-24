@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/library_auto/nat/fermat_little_theorem".
+set "baseuri" "cic:/matita/library_autobatch/nat/fermat_little_theorem".
 
 include "auto/nat/exp.ma".
 include "auto/nat/gcd.ma".
@@ -25,7 +25,7 @@ unfold permut.
 split
 [ intros.
   unfold S_mod.
-  auto
+  autobatch
   (*apply le_S_S_to_le.
   change with ((S i) \mod (S n) < S n).
   apply lt_mod_m_m.
@@ -44,26 +44,26 @@ split
             [ (* i < n, j< n *)
               rewrite < mod_S
               [ rewrite < mod_S
-                [ (*qui auto non chiude il goal, chiuso invece dalla tattica
+                [ (*qui autobatch non chiude il goal, chiuso invece dalla tattica
                    * apply H2
                    *)
                   apply H2                
-                | auto
+                | autobatch
                   (*unfold lt.
                   apply le_S_S.
                   apply le_O_n*)
                 | rewrite > lt_to_eq_mod;
-                    unfold lt;auto.(*apply le_S_S;assumption*)                  
+                    unfold lt;autobatch.(*apply le_S_S;assumption*)                  
                 ]
-              | auto
+              | autobatch
                 (*unfold lt.
                 apply le_S_S.
                 apply le_O_n*)              
               | rewrite > lt_to_eq_mod
-                [ unfold lt.auto
+                [ unfold lt.autobatch
                   (*apply le_S_S.
                   assumption*)
-                | unfold lt.auto
+                | unfold lt.autobatch
                   (*apply le_S_S.
                   assumption*)
                 ]
@@ -78,13 +78,13 @@ split
               [ rewrite < H4 in \vdash (? ? ? (? %?)).
                 rewrite < mod_S
                 [ assumption
-                | unfold lt.auto
+                | unfold lt.autobatch
                   (*apply le_S_S.
                   apply le_O_n*)
                 | rewrite > lt_to_eq_mod;
-                    unfold lt;auto;(*apply le_S_S;assumption*)                
+                    unfold lt;autobatch;(*apply le_S_S;assumption*)                
                 ]
-              | unfold lt.auto
+              | unfold lt.autobatch
                 (*apply le_S_S.
                 apply le_O_n*)
               ]
@@ -97,36 +97,36 @@ split
               [ rewrite < H3 in \vdash (? ? (? %?) ?).
                 rewrite < mod_S
                 [ assumption
-                | unfold lt.auto
+                | unfold lt.autobatch
                   (*apply le_S_S.
                   apply le_O_n*)
                 | rewrite > lt_to_eq_mod;
-                    unfold lt;auto(*apply le_S_S;assumption*)                  
+                    unfold lt;autobatch(*apply le_S_S;assumption*)                  
                 ]
-              | unfold lt.auto
+              | unfold lt.autobatch
                 (*apply le_S_S.
                 apply le_O_n*)
               ]
             |(* i = n, j= n*)
-              auto
+              autobatch
               (*rewrite > H3.
               rewrite > H4.
               reflexivity*)
             ]
           ]
-        | auto
+        | autobatch
           (*apply le_to_or_lt_eq.
           assumption*)
         ]
-      | auto
+      | autobatch
         (*apply le_to_or_lt_eq.
         assumption*)
       ]                  
-    | unfold lt.auto
+    | unfold lt.autobatch
       (*apply le_S_S.
       assumption*)
     ]
-  | unfold lt.auto
+  | unfold lt.autobatch
     (*apply le_S_S.
     assumption*)
   ]
@@ -155,7 +155,7 @@ elim n
   [ unfold prime in H.
     elim H.
     assumption
-  | auto
+  | autobatch
     (*apply divides_to_le.
     unfold lt.
     apply le_n.
@@ -167,7 +167,7 @@ elim n
   [ elim Hcut
     [ apply (lt_to_not_le (S n1) p)
       [ assumption
-      | auto
+      | autobatch
         (*apply divides_to_le
         [ unfold lt.
           apply le_S_S.
@@ -175,7 +175,7 @@ elim n
         | assumption
         ]*)
       ]
-    | auto
+    | autobatch
       (*apply H1
       [ apply (trans_lt ? (S n1))
         [ unfold lt. 
@@ -185,7 +185,7 @@ elim n
       | assumption
       ]*)
     ]
-  | auto
+  | autobatch
     (*apply divides_times_to_divides;
       assumption*)
   ]
@@ -204,7 +204,7 @@ split
     apply lt_mod_m_m.
     unfold prime in H.
     elim H.
-    auto
+    autobatch
     (*unfold lt.
     apply (trans_le ? (S (S O)))
     [ apply le_n_Sn
@@ -214,7 +214,7 @@ split
     [ apply le_n
     | unfold prime in H.
       elim H.
-      auto
+      autobatch
       (*apply (trans_lt ? (S O))
       [ unfold lt.
         apply le_n
@@ -230,7 +230,7 @@ split
     absurd (j-i \lt p)
     [ unfold lt.
       rewrite > (S_pred p)
-      [ auto
+      [ autobatch
         (*apply le_S_S.
         apply le_plus_to_minus.
         apply (trans_le ? (pred p))
@@ -238,7 +238,7 @@ split
         | rewrite > sym_plus.
           apply le_plus_n
         ]*)
-      | unfold prime in H. elim H. auto.
+      | unfold prime in H. elim H. autobatch.
         (*
         apply (trans_lt ? (S O))
         [ unfold lt.
@@ -248,13 +248,13 @@ split
       ]
     | apply (le_to_not_lt p (j-i)).
       apply divides_to_le
-      [ unfold lt.auto
+      [ unfold lt.autobatch
         (*apply le_SO_minus.
         assumption*)
       | cut (divides p a \lor divides p (j-i))
         [ elim Hcut
           [ apply False_ind.
-            auto
+            autobatch
             (*apply H1.
             assumption*)
           | assumption
@@ -263,13 +263,13 @@ split
           [ assumption
           | rewrite > distr_times_minus.
             apply eq_mod_to_divides
-            [ unfold prime in H.elim H.auto
+            [ unfold prime in H.elim H.autobatch
               (*apply (trans_lt ? (S O))
               [ unfold lt.
                 apply le_n
               | assumption
               ]*)
-            | auto
+            | autobatch
               (*apply sym_eq.
               apply H4*)
             ]
@@ -278,7 +278,7 @@ split
       ]
     ]
   |(* i = j *)
-    auto
+    autobatch
     (*intro. 
     assumption*)
   | (* j < i *)
@@ -286,7 +286,7 @@ split
     absurd (i-j \lt p)
     [ unfold lt.
       rewrite > (S_pred p)
-      [ auto
+      [ autobatch
         (*apply le_S_S.
         apply le_plus_to_minus.
         apply (trans_le ? (pred p))
@@ -294,7 +294,7 @@ split
         | rewrite > sym_plus.
           apply le_plus_n
         ]*)
-      | unfold prime in H.elim H.auto.
+      | unfold prime in H.elim H.autobatch.
         (*
         apply (trans_lt ? (S O))
         [ unfold lt.
@@ -304,13 +304,13 @@ split
       ]
     | apply (le_to_not_lt p (i-j)).
       apply divides_to_le
-      [ unfold lt.auto
+      [ unfold lt.autobatch
         (*apply le_SO_minus.
         assumption*)
       | cut (divides p a \lor divides p (i-j))
         [ elim Hcut
           [ apply False_ind.
-            auto
+            autobatch
             (*apply H1.
             assumption*)
           | assumption
@@ -319,7 +319,7 @@ split
           [ assumption
           | rewrite > distr_times_minus.
             apply eq_mod_to_divides
-            [ unfold prime in H.elim H.auto.
+            [ unfold prime in H.elim H.autobatch.
               (*
               apply (trans_lt ? (S O))
               [ unfold lt.
@@ -344,7 +344,7 @@ cut (O < a)
   [ cut (O < pred p)
     [ apply divides_to_congruent
       [ assumption
-      | auto
+      | autobatch
         (*change with (O < exp a (pred p)).
         apply lt_O_exp.
         assumption*)
@@ -354,7 +354,7 @@ cut (O < a)
           | apply False_ind.
             apply (prime_to_not_divides_fact p H (pred p))
             [ unfold lt.
-              auto
+              autobatch
               (*rewrite < (S_pred ? Hcut1).
               apply le_n*)
             | assumption
@@ -382,25 +382,25 @@ cut (O < a)
                   rewrite < eq_map_iter_i_pi.
                   apply (permut_to_eq_map_iter_i ? ? ? ? ? (λm.m))
                   [ apply assoc_times
-                  | (*NB qui auto non chiude il goal, chiuso invece dalla sola
+                  | (*NB qui autobatch non chiude il goal, chiuso invece dalla sola
                      ( tattica apply sys_times
                      *)
                     apply sym_times
                   | rewrite < plus_n_Sm.
                     rewrite < plus_n_O.
                     rewrite < (S_pred ? Hcut2).
-                    auto
+                    autobatch
                     (*apply permut_mod
                     [ assumption
                     | assumption
                     ]*)
                   | intros.
                     cut (m=O)
-                    [ auto
+                    [ autobatch
                       (*rewrite > Hcut3.
                       rewrite < times_n_O.
                       apply mod_O_n.*)
-                    | auto
+                    | autobatch
                       (*apply sym_eq.
                       apply le_n_O_to_eq.
                       apply le_S_S_to_le.
@@ -422,7 +422,7 @@ cut (O < a)
     ]
   | unfold prime in H.
     elim H.
-    auto
+    autobatch
     (*apply (trans_lt ? (S O))
     [ unfold lt.
       apply le_n
@@ -435,11 +435,11 @@ cut (O < a)
     | apply False_ind.
       apply H1.
       rewrite < H2.
-      auto
+      autobatch
       (*apply (witness ? ? O).
       apply times_n_O*)
     ]
-  | auto
+  | autobatch
     (*apply le_to_or_lt_eq.
     apply le_O_n*)
   ]

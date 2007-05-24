@@ -136,7 +136,7 @@ intros (H2 H3).
 elim (H1 e) 0.
 clear H1.
 intros (H4 H5).
-auto new.
+autobatch new.
 qed.
 (*
 astepr (e[+]f). 
@@ -155,7 +155,7 @@ We can also define a similar addition operator, which will be denoted by [{+}], 
 %\begin{convention}% Whenever possible, we will denote the functional construction corresponding to an algebraic operation by the same symbol enclosed in curly braces.
 %\end{convention}%
 
-At this stage, we will always consider automorphisms; we %{\em %could%}% treat this in a more general setting, but we feel that it wouldn't really be a useful effort.
+At this stage, we will always consider autobatchmorphisms; we %{\em %could%}% treat this in a more general setting, but we feel that it wouldn't really be a useful effort.
 
 %\begin{convention}% Let [G:CSemiGroup] and [F,F':(PartFunct G)] and denote by [P] and [Q], respectively, the predicates characterizing their domains.
 %\end{convention}%

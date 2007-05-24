@@ -71,7 +71,7 @@ apply Typ_len_ind;intro;elim U
            |intros;destruct H10
            |intros;destruct H14
            |intros;destruct H14;rewrite > Hcut1;assumption]]
-     |split;unfold;intro;apply H5;apply natinG_or_inH_to_natinGH;auto]]
+     |split;unfold;intro;apply H5;apply natinG_or_inH_to_natinGH;autobatch]]
 qed.
 
 (* 

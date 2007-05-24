@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/library_auto/Q/q".
+set "baseuri" "cic:/matita/library_autobatch/Q/q".
 
 include "auto/Z/compare.ma".
 include "auto/Z/plus.ma".
@@ -51,7 +51,7 @@ elim f
 | elim g
   [ apply H2
   | apply H3
-  | auto
+  | autobatch
     (*apply H4.
     apply H5*)
   ]
@@ -100,7 +100,7 @@ theorem injective_pp : injective nat fraction pp.
 unfold injective.
 intros.
 change with ((aux(pp x)) = (aux (pp y))).
-auto.
+autobatch.
 (*apply eq_f.
 assumption.*)
 qed.
@@ -109,7 +109,7 @@ theorem injective_nn : injective nat fraction nn.
 unfold injective.
 intros.
 change with ((aux (nn x)) = (aux (nn y))).
-auto.
+autobatch.
 (*apply eq_f.
 assumption.*)
 qed.
@@ -118,7 +118,7 @@ theorem eq_cons_to_eq1: \forall f,g:fraction.\forall x,y:Z.
 (cons x f) = (cons y g) \to x = y.
 intros.
 change with ((fhd (cons x f)) = (fhd (cons y g))).
-auto.
+autobatch.
 (*apply eq_f.assumption.*)
 qed.
 
@@ -126,7 +126,7 @@ theorem eq_cons_to_eq2: \forall x,y:Z.\forall f,g:fraction.
 (cons x f) = (cons y g) \to f = g.
 intros.
 change with ((ftl (cons x f)) = (ftl (cons y g))).
-auto.
+autobatch.
 (*apply eq_f.assumption.*)
 qed.
 
@@ -181,21 +181,21 @@ apply (fraction_elim2 (\lambda f,g. f=g \lor (f=g \to False)))
 [ intros.
   elim g1
   [ elim ((decidable_eq_nat n n1) : n=n1 \lor (n=n1 \to False))
-    [ auto
+    [ autobatch
       (*left.
       apply eq_f.
       assumption*)
     | right.
       intro.
-      auto
+      autobatch
       (*apply H.
       apply injective_pp.
       assumption*)
     ]
-  | auto
+  | autobatch
     (*right.
     apply not_eq_pp_nn*)
-  | auto
+  | autobatch
     (*right.
     apply not_eq_pp_cons*)
   ]
@@ -204,22 +204,22 @@ apply (fraction_elim2 (\lambda f,g. f=g \lor (f=g \to False)))
   [ right.
     intro.
     apply (not_eq_pp_nn n1 n).
-    auto
+    autobatch
     (*apply sym_eq. 
     assumption*)
   | elim ((decidable_eq_nat n n1) : n=n1 \lor (n=n1 \to False))
-    [ auto
+    [ autobatch
       (*left. 
       apply eq_f. 
       assumption*)
     | right.
       intro.
-      auto
+      autobatch
       (*apply H.
       apply injective_nn.
       assumption*)
     ]
-  | auto
+  | autobatch
     (*right.
     apply not_eq_nn_cons*)
   ]
@@ -227,33 +227,33 @@ apply (fraction_elim2 (\lambda f,g. f=g \lor (f=g \to False)))
   right.
   intro.
   apply (not_eq_pp_cons m x f1).
-  auto
+  autobatch
   (*apply sym_eq.
   assumption*)
 | intros.
   right.
   intro.
   apply (not_eq_nn_cons m x f1).
-  auto
+  autobatch
   (*apply sym_eq.
   assumption*)
 | intros.
   elim H
   [ elim ((decidable_eq_Z x y) : x=y \lor (x=y \to False))
-    [ auto
+    [ autobatch
       (*left.
       apply eq_f2;
         assumption*)
     | right.
       intro.
-      auto
+      autobatch
       (*apply H2.
       apply (eq_cons_to_eq1 f1 g1).
       assumption*)
     ]    
   | right.
     intro.
-    auto
+    autobatch
     (*apply H1.
     apply (eq_cons_to_eq2 x y f1 g1).
     assumption*)
@@ -276,14 +276,14 @@ apply (fraction_elim2
     apply eqb_elim
     [ intro.
       simplify.
-      auto
+      autobatch
       (*apply eq_f.
       assumption*)
     | intro.
       simplify.
       unfold Not.
       intro.
-      auto
+      autobatch
       (*apply H.
       apply injective_pp.
       assumption*)
@@ -299,21 +299,21 @@ apply (fraction_elim2
     unfold Not.
     intro.
     apply (not_eq_pp_nn n1 n).
-    auto
+    autobatch
     (*apply sym_eq.
     assumption*)
   | simplify.
     apply eqb_elim
     [ intro.
       simplify.
-      auto
+      autobatch
       (*apply eq_f.
       assumption*)
     | intro.
       simplify.
       unfold Not.
       intro.
-      auto
+      autobatch
       (*apply H.
       apply injective_nn.
       assumption*)
@@ -326,7 +326,7 @@ apply (fraction_elim2
   unfold Not.
   intro.
   apply (not_eq_pp_cons m x f1).
-  auto
+  autobatch
   (*apply sym_eq.
   assumption*)
 | intros.
@@ -334,7 +334,7 @@ apply (fraction_elim2
   unfold Not.
   intro.
   apply (not_eq_nn_cons m x f1).
-  auto
+  autobatch
   (*apply sym_eq.
   assumption*)
 | intros.
@@ -346,14 +346,14 @@ apply (fraction_elim2
     [ simplify.
       apply eq_f2
       [ assumption
-      | (*qui auto non chiude il goal*)
+      | (*qui autobatch non chiude il goal*)
         apply H2
       ]
     | simplify.
       unfold Not.
       intro.
       apply H2.
-      auto
+      autobatch
       (*apply (eq_cons_to_eq2 x y).
       assumption*)
     ]
@@ -361,7 +361,7 @@ apply (fraction_elim2
     simplify.
     unfold Not.
     intro.
-    auto
+    autobatch
     (*apply H1.
     apply (eq_cons_to_eq1 f1 g1).
     assumption*)
@@ -409,41 +409,41 @@ apply (fraction_elim2 (\lambda f,g.ftimes f g = ftimes g f))
 [ intros.
   elim g
   [ change with (Z_to_ratio (pos n + pos n1) = Z_to_ratio (pos n1 + pos n)).
-    auto
+    autobatch
     (*apply eq_f.
     apply sym_Zplus*)
   | change with (Z_to_ratio (pos n + neg n1) = Z_to_ratio (neg n1 + pos n)).
-    auto
+    autobatch
     (*apply eq_f.
     apply sym_Zplus*)
   | change with (frac (cons (pos n + z) f) = frac (cons (z + pos n) f)).
-    auto
+    autobatch
     (*rewrite < sym_Zplus.
     reflexivity*)
   ]
 | intros.
   elim g
   [ change with (Z_to_ratio (neg n + pos n1) = Z_to_ratio (pos n1 + neg n)).
-    auto
+    autobatch
     (*apply eq_f.
     apply sym_Zplus*)
   | change with (Z_to_ratio (neg n + neg n1) = Z_to_ratio (neg n1 + neg n)).
-    auto
+    autobatch
     (*apply eq_f.
     apply sym_Zplus*)
   | change with (frac (cons (neg n + z) f) = frac (cons (z + neg n) f)).
-    auto
+    autobatch
     (*rewrite < sym_Zplus.
     reflexivity*)
   ]
 | intros.
   change with (frac (cons (x1 + pos m) f) = frac (cons (pos m + x1) f)).
-  auto
+  autobatch
   (*rewrite < sym_Zplus.
   reflexivity*)
 | intros.
   change with (frac (cons (x1 + neg m) f) = frac (cons (neg m + x1) f)).
-  auto
+  autobatch
   (*rewrite < sym_Zplus.
   reflexivity*)
 | intros.
@@ -465,11 +465,11 @@ theorem ftimes_finv : \forall f:fraction. ftimes f (finv f) = one.
 intro.
 elim f
 [ change with (Z_to_ratio (pos n + - (pos n)) = one).
-  auto
+  autobatch
   (*rewrite > Zplus_Zopp.
   reflexivity*)
 | change with (Z_to_ratio (neg n + - (neg n)) = one).
-  auto
+  autobatch
   (*rewrite > Zplus_Zopp.
   reflexivity*)
 |

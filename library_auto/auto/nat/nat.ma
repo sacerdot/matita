@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/library_auto/nat/nat".
+set "baseuri" "cic:/matita/library_autobatch/nat/nat".
 
 include "higher_order_defs/functions.ma".
 
@@ -26,7 +26,7 @@ definition pred: nat \to nat \def
  | (S p) \Rightarrow p ].
 
 theorem pred_Sn : \forall n:nat.n=(pred (S n)).
-  auto.
+  autobatch.
  (*intros. reflexivity.*)
 qed.
 
@@ -35,7 +35,7 @@ theorem injective_S : injective nat nat S.
  intros.
  rewrite > pred_Sn.
  rewrite > (pred_Sn y).
- auto.
+ autobatch.
  (*apply eq_f. 
  assumption.*)
 qed.
@@ -48,7 +48,7 @@ theorem not_eq_S  : \forall n,m:nat.
  intros.
  unfold Not. 
  intros.
- auto.
+ autobatch.
  (*apply H. 
  apply injective_S.
  assumption.*)
@@ -91,10 +91,10 @@ theorem nat_case1:
   (n=O \to P O) \to  (\forall m:nat. (n=(S m) \to P (S m))) \to P n.
 intros 2; 
 elim n
-  [ auto
+  [ autobatch
     (*apply H;
     reflexivity*)
-  | auto
+  | autobatch
     (*apply H2;
     reflexivity*) ]
 qed.
@@ -111,7 +111,7 @@ theorem nat_elim2 :
   | apply (nat_case m)
     [ apply H1
     |intro;
-     auto
+     autobatch
      (*apply H2;
      apply H3*) 
     ] 
@@ -122,27 +122,27 @@ theorem decidable_eq_nat : \forall n,m:nat.decidable (n=m).
  intros.unfold decidable.
  apply (nat_elim2 (\lambda n,m.(Or (n=m) ((n=m) \to False))))
  [ intro; elim n1
-   [auto
+   [autobatch
     (*left; 
     reflexivity*)
-   |auto 
+   |autobatch 
    (*right; 
    apply not_eq_O_S*) ]
  | intro;
    right; 
    intro; 
    apply (not_eq_O_S n1);
-   auto 
+   autobatch 
    (*apply sym_eq; 
    assumption*)
  | intros; elim H
-   [  auto
+   [  autobatch
       (*left; 
       apply eq_f; 
       assumption*)
    | right;
      intro;
-     auto 
+     autobatch 
      (*apply H1; 
      apply inj_S; 
      assumption*) 

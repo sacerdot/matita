@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/library_auto/nat/times".
+set "baseuri" "cic:/matita/library_autobatch/nat/times".
 
 include "auto/nat/plus.ma".
 
@@ -22,14 +22,14 @@ let rec times n m \def
  | (S p) \Rightarrow m+(times p m) ].
 
 (*CSC: the URI must disappear: there is a bug now *)
-interpretation "natural times" 'times x y = (cic:/matita/library_auto/nat/times/times.con x y).
+interpretation "natural times" 'times x y = (cic:/matita/library_autobatch/nat/times/times.con x y).
 
 theorem times_n_O: \forall n:nat. O = n*O.
 intros.elim n
-[ auto
+[ autobatch
   (*simplify.
   reflexivity.*)
-| simplify.  (* qui auto non funziona: Uncaught exception: Invalid_argument ("List.map2")*)
+| simplify.  (* qui autobatch non funziona: Uncaught exception: Invalid_argument ("List.map2")*)
   assumption.
 ]
 qed.
@@ -37,10 +37,10 @@ qed.
 theorem times_n_Sm : 
 \forall n,m:nat. n+(n*m) = n*(S m).
 intros.elim n
-[ auto.
+[ autobatch.
   (*simplify.reflexivity.*)
 | simplify.
-  auto
+  autobatch
   (*apply eq_f.
   rewrite < H.
   transitivity ((n1+m)+n1*m)
@@ -57,8 +57,8 @@ intros.elim n
 qed.
 
 (* NOTA:
-   se non avessi semplificato con auto tutto il secondo ramo della tattica
-   elim n, avrei comunque potuto risolvere direttamente con auto entrambi
+   se non avessi semplificato con autobatch tutto il secondo ramo della tattica
+   elim n, avrei comunque potuto risolvere direttamente con autobatch entrambi
    i rami generati dalla prima applicazione della tattica transitivity
    (precisamente transitivity ((n1+m)+n1*m)
  *)
@@ -66,7 +66,7 @@ qed.
 theorem times_n_SO : \forall n:nat. n = n * S O.
 intros.
 rewrite < times_n_Sm.
-auto paramodulation. (*termina la dim anche solo con auto*)
+autobatch paramodulation. (*termina la dim anche solo con autobatch*)
 (*rewrite < times_n_O.
 rewrite < plus_n_O.
 reflexivity.*)
@@ -75,7 +75,7 @@ qed.
 theorem times_SSO_n : \forall n:nat. n + n = S (S O) * n.
 intros.
 simplify.
-auto paramodulation. (* termina la dim anche solo con auto*)
+autobatch paramodulation. (* termina la dim anche solo con autobatch*)
 (*rewrite < plus_n_O.
 reflexivity.*)
 qed.
@@ -83,10 +83,10 @@ qed.
 theorem symmetric_times : symmetric nat times. 
 unfold symmetric.
 intros.elim x
-[ auto
+[ autobatch
   (*simplify.apply times_n_O.*)
 | simplify.
-  auto
+  autobatch
   (*rewrite > H.apply times_n_Sm.*)
 ]
 qed.
@@ -98,7 +98,7 @@ theorem distributive_times_plus : distributive nat times plus.
 unfold distributive.
 intros.elim x;simplify
 [ reflexivity.
-| auto
+| autobatch
   (*rewrite > H.
   rewrite > assoc_plus.
   rewrite > assoc_plus.
@@ -117,7 +117,7 @@ theorem associative_times: associative nat times.
 unfold associative.intros.
 elim x;simplify
 [ apply refl_eq
-| auto
+| autobatch
   (*rewrite < sym_times.
   rewrite > distr_times_plus.
   rewrite < sym_times.

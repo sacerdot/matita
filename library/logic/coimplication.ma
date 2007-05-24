@@ -31,11 +31,11 @@ notation < "hvbox(a break \leftrightarrow b)"
 for @{ 'iff $a $b }.
 
 theorem iff_intro: \forall A,B. (A \to B) \to (B \to A) \to (A \liff B).
- unfold Iff. intros. split; intros; auto.
+ unfold Iff. intros. split; intros; autobatch.
 qed.
 
 theorem iff_refl: \forall A. A \liff A.
- intros. apply iff_intro; intros; auto.
+ intros. apply iff_intro; intros; autobatch.
 qed.
 
 theorem iff_sym: \forall A,B. A \liff B \to B \liff A.
@@ -43,5 +43,5 @@ theorem iff_sym: \forall A,B. A \liff B \to B \liff A.
 qed.
 
 theorem iff_trans: \forall A,B,C. A \liff B \to B \liff C \to A \liff C.
- intros. elim H. elim H1. apply iff_intro;intros;auto.
+ intros. elim H. elim H1. apply iff_intro;intros;autobatch.
 qed.

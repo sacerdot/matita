@@ -12,12 +12,12 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/library_auto/nat/ord".
+set "baseuri" "cic:/matita/library_autobatch/nat/ord".
 
 include "datatypes/constructors.ma".
 include "auto/nat/exp.ma".
 include "auto/nat/gcd.ma".
-include "auto/nat/relevant_equations.ma". (* required by auto paramod *)
+include "auto/nat/relevant_equations.ma". (* required by autobatch paramod *)
 
 (* this definition of log is based on pairs, with a remainder *)
 
@@ -59,7 +59,7 @@ elim p
     [ rewrite > (plus_n_O (m*(n1 / m))).
       rewrite < H2.
       rewrite > sym_times.
-      auto
+      autobatch
       (*rewrite < div_mod
       [ reflexivity
       | assumption
@@ -93,7 +93,7 @@ elim i
   rewrite < plus_n_O.
   apply (nat_case p)
   [ simplify.
-    elim (n \mod m);auto
+    elim (n \mod m);autobatch
     (*[ simplify.
       reflexivity
     | simplify.
@@ -104,15 +104,15 @@ elim i
     cut (O < n \mod m \lor O = n \mod m)
     [ elim Hcut
       [ apply (lt_O_n_elim (n \mod m) H3).
-        intros.auto
+        intros.autobatch
         (*simplify.
         reflexivity*)
-      | apply False_ind.auto
+      | apply False_ind.autobatch
         (*apply H1.
         apply sym_eq.
         assumption*)
       ]
-    | auto
+    | autobatch
       (*apply le_to_or_lt_eq.
       apply le_O_n*)
     ]  
@@ -131,7 +131,7 @@ elim i
       fold simplify (m \sup (S n1)). 
       cut ((m \sup (S n1) *n) / m = m \sup n1 *n)
       [ rewrite > Hcut1.
-        rewrite > (H2 m1);auto
+        rewrite > (H2 m1);autobatch
         (*[ simplify.
           reflexivity
         | apply le_S_S_to_le.
@@ -147,7 +147,7 @@ elim i
     | (* mod_exp = O *)
       apply divides_to_mod_O
       [ assumption
-      | simplify.auto
+      | simplify.autobatch
         (*rewrite > assoc_times.
         apply (witness ? ? (m \sup n1 *n)).
         reflexivity*)
@@ -162,7 +162,7 @@ theorem p_ord_aux_to_Prop1: \forall p,n,m. (S O) < m \to O < n \to n \le p \to
   [ (pair q r) \Rightarrow r \mod m \neq O].
 intro.
 elim p
-[ absurd (O < n);auto
+[ absurd (O < n);autobatch
   (*[ assumption
   | apply le_to_not_lt.
     assumption
@@ -174,7 +174,7 @@ elim p
     elim (p_ord_aux n (n1 / m) m).
     apply H5
     [ assumption
-    | auto
+    | autobatch
       (*apply eq_mod_O_to_lt_O_div
       [ apply (trans_lt ? (S O))
         [ unfold lt.
@@ -184,7 +184,7 @@ elim p
       | assumption
       | assumption
       ]*)
-    | apply le_S_S_to_le.auto
+    | apply le_S_S_to_le.autobatch
       (*apply (trans_le ? n1)
       [ change with (n1 / m < n1).
         apply lt_div_n_m_n;assumption        
@@ -192,7 +192,7 @@ elim p
       ]*)
     ]
   | intros.
-    simplify.auto
+    simplify.autobatch
     (*rewrite > H4.    
     unfold Not.
     intro.
@@ -225,7 +225,7 @@ apply p_ord_exp
 [ assumption
 | unfold.
   intro.
-  auto
+  autobatch
   (*apply H1.
   apply mod_O_to_divides
   [ assumption
@@ -233,7 +233,7 @@ apply p_ord_exp
   ]*)
 | apply (trans_le ? (p \sup q))
   [ cut ((S O) \lt p)
-    [ auto
+    [ autobatch
       (*elim q
       [ simplify.
         apply le_n_Sn
@@ -262,7 +262,7 @@ apply p_ord_exp
     | apply not_eq_to_le_to_lt
       [ unfold.
         intro.
-        auto
+        autobatch
         (*apply H1.
         rewrite < H3.
         apply (witness ? r r ?).
@@ -276,7 +276,7 @@ apply p_ord_exp
     change with (O \lt r).
     apply not_eq_to_le_to_lt
     [ unfold.
-      intro.auto
+      intro.autobatch
       (*apply H1.rewrite < H3.
       apply (witness ? ? O ?).rewrite < times_n_O.
       reflexivity*)
@@ -292,7 +292,7 @@ intros.
 unfold p_ord in H2.
 split
 [ unfold.intro.
-  apply (p_ord_aux_to_not_mod_O n n p q r);auto
+  apply (p_ord_aux_to_not_mod_O n n p q r);autobatch
   (*[ assumption
   | assumption
   | apply le_n
@@ -307,7 +307,7 @@ split
     | assumption
     ]
   ]*)
-| apply (p_ord_aux_to_exp n);auto
+| apply (p_ord_aux_to_exp n);autobatch
   (*[ apply (trans_lt ? (S O))
     [ unfold.
       apply le_n
@@ -329,7 +329,7 @@ cut ((S O) \lt p)
 [ elim (p_ord_to_exp1 ? ? ? ? Hcut H1 H3).
   elim (p_ord_to_exp1 ? ? ? ? Hcut H2 H4).
   apply p_ord_exp1
-  [ auto
+  [ autobatch
     (*apply (trans_lt ? (S O))
     [ unfold.
       apply le_n
@@ -337,13 +337,13 @@ cut ((S O) \lt p)
     ]*)
   | unfold.
     intro.
-    elim (divides_times_to_divides ? ? ? H H9);auto
+    elim (divides_times_to_divides ? ? ? H H9);autobatch
     (*[ apply (absurd ? ? H10 H5)
     | apply (absurd ? ? H10 H7)
     ]*)
   | (* rewrite > H6.
     rewrite > H8. *)
-    auto paramodulation
+    autobatch paramodulation
   ]
 | unfold prime in H. 
   elim H. 
@@ -356,7 +356,7 @@ theorem fst_p_ord_times: \forall p,a,b. prime p
 \to fst ? ? (p_ord (a*b) p) = (fst ? ? (p_ord a p)) + (fst ? ? (p_ord b p)).
 intros.
 rewrite > (p_ord_times p a b (fst ? ? (p_ord a p)) (snd ? ? (p_ord a p))
-(fst ? ? (p_ord b p)) (snd ? ? (p_ord b p)) H H1 H2);auto.
+(fst ? ? (p_ord b p)) (snd ? ? (p_ord b p)) H H1 H2);autobatch.
 (*[ simplify.
   reflexivity
 | apply eq_pair_fst_snd
@@ -367,7 +367,7 @@ qed.
 theorem p_ord_p : \forall p:nat. (S O) \lt p \to p_ord p p = pair ? ? (S O) (S O).
 intros.
 apply p_ord_exp1
-[ auto
+[ autobatch
   (*apply (trans_lt ? (S O))
   [ unfold.
     apply le_n
@@ -375,14 +375,14 @@ apply p_ord_exp1
   ]*)
 | unfold.
   intro.
-  apply (absurd ? ? H).auto
+  apply (absurd ? ? H).autobatch
   (*apply le_to_not_lt.
   apply divides_to_le
   [ unfold.
     apply le_n
   | assumption
   ]*)
-| auto
+| autobatch
   (*rewrite < times_n_SO.
   apply exp_n_SO*)
 ]

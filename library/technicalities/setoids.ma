@@ -209,7 +209,7 @@ definition equality_morphism_of_symmetric_areflexive_transitive_relation:
     unfold transitive in H;
     unfold symmetric in sym;
     intro;
-    auto new
+    autobatch new
   ].
 qed.
 
@@ -227,7 +227,7 @@ definition equality_morphism_of_symmetric_reflexive_transitive_relation:
     intro;
     unfold transitive in H;
     unfold symmetric in sym;
-    auto depth=4.
+    autobatch depth=4.
   ]
 qed.
 
@@ -244,7 +244,7 @@ definition equality_morphism_of_asymmetric_areflexive_transitive_relation:
    intros;
    whd;
    intros;
-   auto
+   autobatch
  ].
 qed.
 
@@ -261,7 +261,7 @@ definition equality_morphism_of_asymmetric_reflexive_transitive_relation:
    intros;
    whd;
    intro;
-   auto
+   autobatch
  ].
 qed.
 
@@ -301,7 +301,7 @@ theorem impl_trans: transitive ? impl.
  whd;
  unfold impl;
  intros;
- auto.
+ autobatch.
 qed.
 
 (*DA PORTARE: Add Relation Prop impl
@@ -970,39 +970,39 @@ Qed.
 (* impl IS A MORPHISM *)
 
 Add Morphism impl with signature iff ==> iff ==> iff as Impl_Morphism.
-unfold impl; tauto.
+unfold impl; tautobatch.
 Qed.
 
 (* and IS A MORPHISM *)
 
 Add Morphism and with signature iff ==> iff ==> iff as And_Morphism.
- tauto.
+ tautobatch.
 Qed.
 
 (* or IS A MORPHISM *)
 
 Add Morphism or with signature iff ==> iff ==> iff as Or_Morphism.
- tauto.
+ tautobatch.
 Qed.
 
 (* not IS A MORPHISM *)
 
 Add Morphism not with signature iff ==> iff as Not_Morphism.
- tauto.
+ tautobatch.
 Qed.
 
 (* THE SAME EXAMPLES ON impl *)
 
 Add Morphism and with signature impl ++> impl ++> impl as And_Morphism2.
- unfold impl; tauto.
+ unfold impl; tautobatch.
 Qed.
 
 Add Morphism or with signature impl ++> impl ++> impl as Or_Morphism2.
- unfold impl; tauto.
+ unfold impl; tautobatch.
 Qed.
 
 Add Morphism not with signature impl -→ impl as Not_Morphism2.
- unfold impl; tauto.
+ unfold impl; tautobatch.
 Qed.
 
 *)

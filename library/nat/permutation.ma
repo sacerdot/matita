@@ -620,7 +620,7 @@ apply le_S.apply le_n.assumption.
 apply (trans_eq ? ? (map_iter_i (S k) (\lambda m. g 
 (transpose i (S(m1 + i)) (transpose (S(m1 + i)) (S(S(m1 + i))) m))) f n)).
 apply (H2 O ? ? (S(m1+i))).
-unfold lt.apply le_S_S.apply le_O_n.
+unfold lt.apply le_S_S.apply le_O_n.id.
 apply (trans_le ? i).assumption.
 change with (i \le (S m1)+i).apply le_plus_n.
 exact H4.

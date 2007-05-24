@@ -1004,7 +1004,7 @@ class gui () =
         (tac_w_term (A.Transitivity (loc, hole)));
       connect_button tbar#assumptionButton (tac (A.Assumption loc));
       connect_button tbar#cutButton (tac_w_term (A.Cut (loc, None, hole)));
-      connect_button tbar#autoButton (tac (A.Auto (loc,[])));
+      connect_button tbar#autoButton (tac (A.AutoBatch (loc,[])));
       MatitaGtkMisc.toggle_widget_visibility
        ~widget:(main#tacticsButtonsHandlebox :> GObj.widget)
        ~check:main#tacticsBarMenuItem;

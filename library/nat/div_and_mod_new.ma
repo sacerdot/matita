@@ -151,7 +151,7 @@ qed.
 
 theorem div_mod_spec_div_mod: 
 \forall n,m. O < m \to (div_mod_spec n m (n / m) (n \mod m)).
-intros.auto.
+intros.autobatch.
 (*
 apply div_mod_spec_intro.
 apply lt_mod_m_m.assumption.
@@ -170,7 +170,7 @@ apply (nat_compare_elim q q1);intro
         [apply (lt_to_not_le r b H2 Hcut2)
         |elim Hcut.assumption
         ]
-      |auto depth=4. apply (trans_le ? ((q1-q)*b))
+      |autobatch depth=4. apply (trans_le ? ((q1-q)*b))
         [apply le_times_n.
          apply le_SO_minus.exact H6
         |rewrite < sym_plus.
@@ -180,7 +180,7 @@ apply (nat_compare_elim q q1);intro
     |rewrite < sym_times.
      rewrite > distr_times_minus.
      rewrite > plus_minus
-      [auto.
+      [autobatch.
        (*
        rewrite > sym_times.
        rewrite < H5.
@@ -188,7 +188,7 @@ apply (nat_compare_elim q q1);intro
        apply plus_to_minus.
        apply H3
        *)
-      |auto.
+      |autobatch.
        (*
        apply le_times_r.
        apply lt_to_le.

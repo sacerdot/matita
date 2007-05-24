@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/library_auto/nat/euler_theorem".
+set "baseuri" "cic:/matita/library_autobatch/nat/euler_theorem".
 
 include "auto/nat/map_iter_p.ma".
 include "auto/nat/totient.ma".
@@ -27,9 +27,9 @@ apply (nat_case n)
   apply (nat_case m)
   [ reflexivity
   | intro.
-    apply count_card1;auto
+    apply count_card1;autobatch
     (*[ reflexivity
-    | auto.rewrite > gcd_n_n.
+    | autobatch.rewrite > gcd_n_n.
       reflexivity
     ]*)
   ]
@@ -43,11 +43,11 @@ elim H
 [ rewrite > pi_p_S.
   cut (eqb (gcd (S O) n) (S O) = true)
   [ rewrite > Hcut.
-    auto
+    autobatch
     (*change with ((gcd n (S O)) = (S O)).
-    auto*)
-  | auto
-    (*apply eq_to_eqb_true.auto*)
+    autobatch*)
+  | autobatch
+    (*apply eq_to_eqb_true.autobatch*)
   ]
 | rewrite > pi_p_S.
   apply eqb_elim
@@ -55,16 +55,16 @@ elim H
     change with 
      ((gcd n ((S n1)*(pi_p (\lambda i.eqb (gcd i n) (S O)) n1))) = (S O)).
     apply eq_gcd_times_SO
-    [ auto
+    [ autobatch
       (*unfold.
       apply le_S.
       assumption*)
     | apply lt_O_pi_p.
-    | auto
+    | autobatch
       (*rewrite > sym_gcd. 
       assumption.*)
     | apply H2.
-      auto
+      autobatch
       (*apply (trans_le ? (S n1))
       [ apply le_n_Sn
       | assumption
@@ -74,7 +74,7 @@ elim H
     change with 
       (gcd n (pi_p (\lambda i.eqb (gcd i n) (S O)) n1) = (S O)).
     apply H2.
-    auto
+    autobatch
     (*apply (trans_le ? (S n1))
     [ apply le_n_Sn
     | assumption
@@ -91,7 +91,7 @@ congruent
  (\lambda x.f x \mod a) (S O) times) a.     
 intros.
 elim n
-[ auto
+[ autobatch
   (*rewrite > map_iter_p_O.
   apply (congruent_n_n ? a)*)
 | apply (eqb_elim (gcd (S n1) a) (S O))
@@ -100,30 +100,30 @@ elim n
     [ rewrite > map_iter_p_S_true
       [ apply congruent_times
         [ assumption
-        | auto
+        | autobatch
           (*apply congruent_n_mod_n.
           assumption*)
-        | (*NB qui auto non chiude il goal*)
+        | (*NB qui autobatch non chiude il goal*)
           assumption
         ]
-      | auto
+      | autobatch
         (*apply eq_to_eqb_true.
         assumption*)
       ]
-    | auto
+    | autobatch
       (*apply eq_to_eqb_true.
       assumption*)
     ]
   | intro. 
     rewrite > map_iter_p_S_false
     [ rewrite > map_iter_p_S_false
-      [ (*BN qui auto non chiude il goal*)
+      [ (*BN qui autobatch non chiude il goal*)
         assumption
-      | auto
+      | autobatch
         (*apply not_eq_to_eqb_false.
         assumption*)
       ]
-    | auto
+    | autobatch
       (*apply not_eq_to_eqb_false.
       assumption*)
     ]
@@ -140,7 +140,7 @@ simplify.
 intros.
 split
 [ split
-  [ auto
+  [ autobatch
     (*apply lt_to_le.
     apply lt_mod_m_m.
     assumption*)
@@ -151,13 +151,13 @@ split
       apply eq_gcd_times_SO
       [ assumption
       | apply (gcd_SO_to_lt_O i n H).
-        auto
+        autobatch
         (*apply eqb_true_to_eq.
         assumption*)
-      | auto
+      | autobatch
         (*rewrite > sym_gcd.
         assumption*)
-      | auto
+      | autobatch
         (*rewrite > sym_gcd.
         apply eqb_true_to_eq.
         assumption*)
@@ -181,7 +181,7 @@ split
       apply (trans_le ? (j -i))
       [ apply divides_to_le
         [(*fattorizzare*)
-          unfold lt.auto.
+          unfold lt.autobatch.
           (*apply (lt_plus_to_lt_l i).
           simplify.
           rewrite < (plus_minus_m_m)
@@ -191,20 +191,20 @@ split
           ]*)
         | apply (gcd_SO_to_divides_times_to_divides a)
           [ assumption
-          | auto
+          | autobatch
             (*rewrite > sym_gcd.
             assumption*)
           | apply mod_O_to_divides
             [ assumption
             | rewrite > distr_times_minus.
-              auto
+              autobatch
             ]
           ]
         ]
-      | auto
+      | autobatch
       ]
     ]
-  | auto
+  | autobatch
     (*intro.
     assumption*)
   | intro.
@@ -214,7 +214,7 @@ split
       apply (trans_le ? (i -j))
       [ apply divides_to_le
         [(*fattorizzare*)
-          unfold lt.auto.
+          unfold lt.autobatch.
           (*apply (lt_plus_to_lt_l j).
           simplify.
           rewrite < (plus_minus_m_m)
@@ -224,17 +224,17 @@ split
           ]*)
         | apply (gcd_SO_to_divides_times_to_divides a)
           [ assumption
-          | auto
+          | autobatch
             (*rewrite > sym_gcd.
             assumption*)
           | apply mod_O_to_divides
             [ assumption
             | rewrite > distr_times_minus.
-              auto
+              autobatch
             ]
           ]
         ]
-      | auto
+      | autobatch
       ]
     ]
   ]
@@ -246,20 +246,20 @@ gcd a n = (S O) \to congruent (exp a (totient n)) (S O) n.
 intros.
 cut (O < a)
 [ apply divides_to_congruent
-  [ auto
+  [ autobatch
     (*apply (trans_lt ? (S O)).
     apply lt_O_S.
     assumption*)
-  | auto
+  | autobatch
     (*change with (O < exp a (totient n)).
     apply lt_O_exp.
     assumption*)
   | apply (gcd_SO_to_divides_times_to_divides (pi_p (\lambda i.eqb (gcd i n) (S O)) n))
-    [ auto
+    [ autobatch
       (*apply (trans_lt ? (S O)).
       apply lt_O_S. 
       assumption*)
-    | auto
+    | autobatch
       (*apply gcd_pi_p
       [ apply (trans_lt ? (S O)).
         apply lt_O_S. 
@@ -273,13 +273,13 @@ cut (O < a)
       rewrite > totient_card.
       rewrite > a_times_pi_p.
       apply congruent_to_divides
-      [ auto
+      [ autobatch
         (*apply (trans_lt ? (S O)).
         apply lt_O_S. 
         assumption*)
       | apply (transitive_congruent n ? 
          (map_iter_p n (\lambda i.eqb (gcd i n) (S O)) (\lambda x.a*x \mod n) (S O) times))
-        [ auto
+        [ autobatch
           (*apply (congruent_map_iter_p_times ? n n).
           apply (trans_lt ? (S O))
           [ apply lt_O_S
@@ -298,7 +298,7 @@ cut (O < a)
               apply not_eq_to_eqb_false.
               unfold.
               intro.
-              auto
+              autobatch
               (*apply (lt_to_not_eq (S O) n)
               [ assumption
               | apply sym_eq.
@@ -310,9 +310,9 @@ cut (O < a)
       ]
     ]
   ] 
-| elim (le_to_or_lt_eq O a (le_O_n a));auto
+| elim (le_to_or_lt_eq O a (le_O_n a));autobatch
   (*[ assumption
-  | auto.absurd (gcd a n = S O)
+  | autobatch.absurd (gcd a n = S O)
     [ assumption
     | rewrite < H2.
       simplify.

@@ -17,7 +17,7 @@ set "baseuri" "cic:/matita/nat/ord".
 include "datatypes/constructors.ma".
 include "nat/exp.ma".
 include "nat/gcd.ma".
-include "nat/relevant_equations.ma". (* required by auto paramod *)
+include "nat/relevant_equations.ma". (* required by autobatch paramod *)
 
 let rec p_ord_aux p n m \def
   match n \mod m with
@@ -213,7 +213,7 @@ apply (absurd ? ? H10 H5).
 apply (absurd ? ? H10 H7).
 (* rewrite > H6.
 rewrite > H8. *)
-auto paramodulation.
+autobatch paramodulation.
 unfold prime in H. elim H. assumption.
 qed.
 
@@ -259,7 +259,7 @@ cut (S O < p)
          apply (lt_to_not_eq O ? H).
          rewrite > H7.
          rewrite < H10.
-         auto
+         autobatch
         ]
       |elim c
         [rewrite > sym_gcd.
@@ -270,7 +270,7 @@ cut (S O < p)
           |apply lt_O_exp.apply lt_to_le.assumption
           |rewrite > sym_gcd.
            (* hint non trova prime_to_gcd_SO e
-              auto non chiude il goal *)
+              autobatch non chiude il goal *)
            apply prime_to_gcd_SO
             [assumption|assumption]
           |assumption
@@ -297,7 +297,7 @@ cut (S O < p)
               |apply lt_O_exp.apply lt_to_le.assumption
               |rewrite > sym_gcd.
               (* hint non trova prime_to_gcd_SO e
-                 auto non chiude il goal *)
+                 autobatch non chiude il goal *)
                apply prime_to_gcd_SO
                 [assumption|assumption]
               |rewrite > sym_gcd. assumption

@@ -58,7 +58,7 @@ qed.
 
 lemma prove_reflect : ∀P:Prop.∀b:bool.
   (b = true → P) → (b = false → ¬P) → reflect P b.
-intros 2 (P b); cases b; intros; [left|right] auto.
+intros 2 (P b); cases b; intros; [left|right] autobatch.
 qed.   
   
 (* ### standard connectives/relations with reflection predicate ### *)
@@ -96,7 +96,7 @@ intros (a b); cases a; cases b; simplify;
 qed. 
 
 lemma orbC : ∀a,b. orb a b = orb b a.
-intros (a b); cases a; cases b; auto. qed.
+intros (a b); cases a; cases b; autobatch. qed.
 
 lemma lebP: ∀x,y. reflect (x ≤ y) (leb x y).
 intros (x y); generalize in match (leb_to_Prop x y); 
@@ -119,7 +119,7 @@ intros (x y); apply (lebP (S x) y);
 qed.
 
 lemma ltb_refl : ∀n.ltb n n = false.
-intros (n); apply (p2bF ? ? (ltbP ? ?)); auto; 
+intros (n); apply (p2bF ? ? (ltbP ? ?)); autobatch; 
 qed.
     
 (* ### = between booleans as <-> in Prop ### *)    
@@ -139,8 +139,8 @@ qed.
 
 lemma leb_eqb : ∀n,m. orb (eqb n m) (leb (S n) m) = leb n m.
 intros (n m); apply bool_to_eq; split; intros (H);
-[1:cases (b2pT ? ? (orbP ? ?) H); [2: auto] 
-   rewrite > (eqb_true_to_eq ? ? H1); auto
+[1:cases (b2pT ? ? (orbP ? ?) H); [2: autobatch] 
+   rewrite > (eqb_true_to_eq ? ? H1); autobatch
 |2:cases (b2pT ? ? (lebP ? ?) H); 
    [ elim n; [reflexivity|assumption] 
    | simplify; rewrite > (p2bT ? ? (lebP ? ?) H1); rewrite > orbC ]
@@ -150,7 +150,7 @@ qed.
 
 (* OUT OF PLACE *)
 lemma ltW : ∀n,m. n < m → n < (S m).
-intros; unfold lt; unfold lt in H; auto. qed.
+intros; unfold lt; unfold lt in H; autobatch. qed.
 
 lemma ltbW : ∀n,m. ltb n m = true → ltb n (S m) = true.
 intros (n m H); letin H1 ≝ (b2pT ? ? (ltbP ? ?) H); clearbody H1;

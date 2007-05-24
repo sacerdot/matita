@@ -20,14 +20,14 @@ include "list/list.ma".
 (*** useful definitions and lemmas not really related to Fsub ***)
 
 lemma eqb_case : \forall x,y.(eqb x y) = true \lor (eqb x y) = false.
-intros;elim (eqb x y);auto;
+intros;elim (eqb x y);autobatch;
 qed.
        
 lemma eq_eqb_case : \forall x,y.((x = y) \land (eqb x y) = true) \lor
                                 ((x \neq y) \land (eqb x y) = false).
 intros;lapply (eqb_to_Prop x y);elim (eqb_case x y)
-  [rewrite > H in Hletin;simplify in Hletin;left;auto
-  |rewrite > H in Hletin;simplify in Hletin;right;auto]
+  [rewrite > H in Hletin;simplify in Hletin;left;autobatch
+  |rewrite > H in Hletin;simplify in Hletin;right;autobatch]
 qed.
 
 let rec max m n \def
