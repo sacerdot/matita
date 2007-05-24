@@ -217,6 +217,20 @@ let geq_transitive_closure node node' =
 
 let (@@) l1 e = if List.memq e l1 then l1 else l1@[e]
 
+let rec leq_reachable node =
+ function
+    [] -> false
+  | node'::_ when node == node' -> true
+  | (_,_,leq,_)::tl -> leq_reachable node (!leq@tl)
+;;
+
+let rec geq_reachable node =
+ function
+    [] -> false
+  | node'::_ when node == node' -> true
+  | (_,_,_,geq)::tl -> geq_reachable node (!geq@tl)
+;;
+
 let locate_using_leq to_be_considered_and_now ((repr,_,leq,_) as node)
  ((_,_,sup) as set)
 =
@@ -229,9 +243,9 @@ let locate_using_leq to_be_considered_and_now ((repr,_,leq,_) as node)
        set
    | (repr',_,_,geq') as node' :: tl ->
        if repr=repr' then aux is_sup set (!geq'@tl)
-       else if List.mem node' !leq
-            || test to_be_considered_and_now set SubsetEqual repr repr'
-       then
+       else if leq_reachable node' !leq then
+        aux is_sup set tl
+       else if test to_be_considered_and_now set SubsetEqual repr repr' then
         begin
          let inf = if !geq' = [] then (remove node' inf)@@node else inf in
           leq_transitive_closure node node';
@@ -258,9 +272,9 @@ let locate_using_geq to_be_considered_and_now ((repr,_,leq,geq) as node)
        set
    | (repr',_,leq',_) as node' :: tl ->
        if repr=repr' then aux is_inf set (!leq'@tl)
-       else if List.mem node' !geq
-            || test to_be_considered_and_now set SupersetEqual repr repr'
-       then
+       else if geq_reachable node' !geq then
+        aux is_inf set tl
+       else if test to_be_considered_and_now set SupersetEqual repr repr' then
         begin
          if List.mem node' !leq then
           (* We have found two equal nodes! *)
