@@ -36,6 +36,9 @@ type equivalence_class =
  compound_operator * compound_operator list *
   equivalence_class list ref * equivalence_class list ref
 
+let (===) (repr,_,_,_) (repr',_,_,_) = repr = repr';;
+let (<=>) (repr,_,_,_) (repr',_,_,_) = repr <> repr';;
+
 let string_of_equivalence_class (repr,others,leq,_) =
  String.concat " = " (List.map string_of_cop (repr::others)) ^
   (if !leq <> [] then
@@ -114,7 +117,8 @@ let ps_of_set (to_be_considered,under_consideration,news) ?processing (s,inf,sup
   close_out ch;
   (*ignore (Unix.system "tred xxx.dot > yyy.dot && dot -Tps yyy.dot > xxx.ps")*)
   ignore (Unix.system "dot -Tps xxx.dot > xxx.ps");
-  ignore (read_line ())
+  (*ignore (read_line ())*)
+;;
 
 let test to_be_considered_and_now ((s,_,_) as set) rel candidate repr =
  ps_of_set to_be_considered_and_now ~processing:(candidate,rel,repr) set;
@@ -161,7 +165,7 @@ let test to_be_considered_and_now ((s,_,_) as set) rel candidate repr =
    print_endline (if res then "y" else "n");
    res
 
-let remove node = List.filter (fun node' -> node != node');;
+let remove node = List.filter (fun node' -> node <=> node');;
 
 let add_leq_arc ((_,_,leq,_) as node) ((_,_,_,geq') as node') =
  leq := node' :: !leq;
@@ -215,19 +219,19 @@ let geq_transitive_closure node node' =
   remove_transitive_arcs node node'
 ;;
 
-let (@@) l1 e = if List.memq e l1 then l1 else l1@[e]
+let (@@) l1 n = if List.exists (function n' -> n===n') l1 then l1 else l1@[n]
 
 let rec leq_reachable node =
  function
     [] -> false
-  | node'::_ when node == node' -> true
+  | node'::_ when node === node' -> true
   | (_,_,leq,_)::tl -> leq_reachable node (!leq@tl)
 ;;
 
 let rec geq_reachable node =
  function
     [] -> false
-  | node'::_ when node == node' -> true
+  | node'::_ when node === node' -> true
   | (_,_,_,geq)::tl -> geq_reachable node (!geq@tl)
 ;;
 
@@ -276,7 +280,7 @@ let locate_using_geq to_be_considered_and_now ((repr,_,leq,geq) as node)
         aux is_inf set tl
        else if test to_be_considered_and_now set SupersetEqual repr repr' then
         begin
-         if List.mem node' !leq then
+         if List.exists (function n -> n===node') !leq then
           (* We have found two equal nodes! *)
           raise (SameEquivalenceClass (node,node'))
          else
@@ -313,12 +317,12 @@ let analyze_one to_be_considered repr hecandidate (news,((nodes,inf,sup) as set)
       function
          [] -> []
        | (repr',others,leq,geq) as node::tl ->
-          leq := List.filter (function node -> node_to_be_deleted != node) !leq;
-          geq := List.filter (function node -> node_to_be_deleted != node) !geq;
-          if node==node' then
+          leq:= List.filter (function node -> node_to_be_deleted <=> node) !leq;
+          geq:= List.filter (function node -> node_to_be_deleted <=> node) !geq;
+          if node===node' then
            (repr',others@[candidate],leq,geq)::clean tl
           else
-           (repr',others,leq,geq)::clean tl
+           node::clean tl
      in
      let nodes = clean nodes in
       news,(nodes,inf,sup)
