@@ -77,11 +77,15 @@ let ps_of_set (to_be_considered,under_consideration,news) ?processing (s,inf,sup
        output_string ch (dot_of_cop repr ^ " [color=yellow];"));
   List.iter
    (function (repr,_,_,_) ->
-     output_string ch (dot_of_cop repr ^ " [shape=diamond];")
+     if List.exists (function (repr',_,_,_) -> repr=repr') sup then
+      output_string ch (dot_of_cop repr ^ " [shape=Mdiamond];")
+     else
+      output_string ch (dot_of_cop repr ^ " [shape=diamond];")
    ) inf ;
   List.iter
    (function (repr,_,_,_) ->
-     output_string ch (dot_of_cop repr ^ " [shape=polygon];")
+     if not (List.exists (function (repr',_,_,_) -> repr=repr') inf) then
+      output_string ch (dot_of_cop repr ^ " [shape=polygon];")
    ) sup ;
   List.iter
    (function repr -> output_string ch (dot_of_cop repr ^ " [color=green];")
@@ -108,7 +112,9 @@ let ps_of_set (to_be_considered,under_consideration,news) ?processing (s,inf,sup
           "style=dashed];\n"));
   output_string ch "}\n";
   close_out ch;
-  ignore (Unix.system "tred xxx.dot > yyy.dot && dot -Tps yyy.dot > xxx.ps")
+  (*ignore (Unix.system "tred xxx.dot > yyy.dot && dot -Tps yyy.dot > xxx.ps")*)
+  ignore (Unix.system "dot -Tps xxx.dot > xxx.ps");
+  ignore (read_line ())
 
 let test to_be_considered_and_now ((s,_,_) as set) rel candidate repr =
  ps_of_set to_be_considered_and_now ~processing:(candidate,rel,repr) set;
@@ -155,62 +161,103 @@ let test to_be_considered_and_now ((s,_,_) as set) rel candidate repr =
    print_endline (if res then "y" else "n");
    res
 
-let rec leq_transitive_closure leq node ((repr,_,leq',geq') as node') =
- if not (List.mem node' !leq) then leq := node' :: !leq;
- if not (List.mem node !geq') then geq' := node :: !geq';
- List.iter (leq_transitive_closure leq node) !leq'
+let remove node = List.filter (fun node' -> node != node');;
+
+let add_leq_arc ((_,_,leq,_) as node) ((_,_,_,geq') as node') =
+ leq := node' :: !leq;
+ geq' := node :: !geq'
 ;;
 
-let rec geq_transitive_closure geq node ((_,_,leq',geq') as node') =
- if not (List.mem node' !geq) then geq  := node' :: !geq;
- if not (List.mem node !leq') then leq' := node  :: !leq';
- List.iter (geq_transitive_closure geq node) !geq'
+let add_geq_arc ((_,_,_,geq) as node) ((_,_,leq',_) as node') =
+ geq := node' :: !geq;
+ leq' := node :: !leq'
 ;;
 
-let remove node l =
- let l' = List.filter (fun node' -> node != node') l in
- if List.length l = List.length l' then
-  assert false
- else
-  l'
+let remove_leq_arc ((_,_,leq,_) as node) ((_,_,_,geq') as node') =
+ leq := remove node' !leq;
+ geq' := remove node !geq'
 ;;
+
+let remove_geq_arc ((_,_,_,geq) as node) ((_,_,leq',_) as node') =
+ geq := remove node' !geq;
+ leq' := remove node !leq'
+;;
+
+let leq_transitive_closure node node' =
+ add_leq_arc node node';
+ let rec remove_transitive_arcs ((_,_,_,geq) as node) (_,_,leq',_) =
+  let rec remove_arcs_to_ascendents =
+   function
+      [] -> ()
+    | (_,_,leq,_) as node'::tl ->
+       remove_leq_arc node node';
+       remove_arcs_to_ascendents (!leq@tl)
+  in
+   remove_arcs_to_ascendents !leq';
+   List.iter (function son -> remove_transitive_arcs son node) !geq
+ in
+  remove_transitive_arcs node node'
+;;
+
+let geq_transitive_closure node node' =
+ add_geq_arc node node';
+ let rec remove_transitive_arcs ((_,_,leq,_) as node) (_,_,_,geq') =
+  let rec remove_arcs_to_descendents =
+   function
+      [] -> ()
+    | (_,_,_,geq) as node'::tl ->
+       remove_geq_arc node node';
+       remove_arcs_to_descendents (!geq@tl)
+  in
+   remove_arcs_to_descendents !geq';
+   List.iter (function father -> remove_transitive_arcs father node) !leq
+ in
+  remove_transitive_arcs node node'
+;;
+
+let (@@) l1 e = if List.memq e l1 then l1 else l1@[e]
 
 let locate_using_leq to_be_considered_and_now ((repr,_,leq,_) as node)
- ((nodes,inf,sup) as set)
+ ((_,_,sup) as set)
 =
- let rec aux is_sup inf =
+ let rec aux is_sup ((nodes,inf,sup) as set) =
   function
-     [] -> is_sup,inf
-   | (repr',_,_,geq') as node' :: sup ->
-       if repr=repr' then aux is_sup inf (!geq'@sup)
+     [] ->
+      if is_sup then
+       nodes,inf,sup@@node
+      else
+       set
+   | (repr',_,_,geq') as node' :: tl ->
+       if repr=repr' then aux is_sup set (!geq'@tl)
        else if List.mem node' !leq
             || test to_be_considered_and_now set SubsetEqual repr repr'
        then
         begin
-         let inf = if !geq' = [] then remove node' inf else inf in
-          leq_transitive_closure leq node node';
-          aux false inf (!geq'@sup)
+         let inf = if !geq' = [] then (remove node' inf)@@node else inf in
+          leq_transitive_closure node node';
+          aux false (nodes,inf,sup) (!geq'@tl)
         end
        else
-        aux is_sup inf sup
+        aux is_sup set tl
  in
-  let is_sup,inf = aux true inf sup in
-   if is_sup then
-    nodes,inf,sup@[node]
-   else
-    nodes,inf,sup
+prerr_endline ("SUP: " ^ String.concat "," (List.map (fun (x,_,_,_) -> string_of_cop x) sup));
+  aux true set sup
 ;;
 
 exception SameEquivalenceClass of equivalence_class * equivalence_class;;
 
 let locate_using_geq to_be_considered_and_now ((repr,_,leq,geq) as node)
- ((nodes,inf,sup) as set)
+ ((_,inf,_) as set)
 =
- let rec aux is_inf sup =
+ let rec aux is_inf ((nodes,inf,sup) as set) =
   function
-     [] -> sup,is_inf
-   | (repr',_,leq',_) as node' :: inf ->
-       if repr=repr' then aux is_inf sup (!leq'@inf)
+     [] ->
+      if is_inf then
+       nodes,inf@@node,sup
+      else
+       set
+   | (repr',_,leq',_) as node' :: tl ->
+       if repr=repr' then aux is_inf set (!leq'@tl)
        else if List.mem node' !geq
             || test to_be_considered_and_now set SupersetEqual repr repr'
        then
@@ -220,19 +267,16 @@ let locate_using_geq to_be_considered_and_now ((repr,_,leq,geq) as node)
           raise (SameEquivalenceClass (node,node'))
          else
           begin
-           let sup = if !leq' = [] then remove node' sup else sup in
-            geq_transitive_closure geq node node';
-            aux false sup (!leq'@inf)
+           let sup = if !leq' = [] then (remove node' sup)@@node else sup in
+            geq_transitive_closure node node';
+            aux false (nodes,inf,sup) (!leq'@tl)
           end
         end
        else
-        aux is_inf sup inf
+        aux is_inf set tl
  in
-  let sup,is_inf = aux true sup inf in
-   if is_inf then
-    nodes,inf@[node],sup
-   else
-    nodes,inf,sup
+prerr_endline ("INF: " ^ String.concat "," (List.map (fun (x,_,_,_) -> string_of_cop x) inf));
+  aux true set inf
 ;;
 
 let analyze_one to_be_considered repr hecandidate (news,((nodes,inf,sup) as set)) =
