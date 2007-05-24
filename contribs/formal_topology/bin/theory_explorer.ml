@@ -116,7 +116,7 @@ let ps_of_set (to_be_considered,under_consideration,news) ?processing (s,inf,sup
   output_string ch "}\n";
   close_out ch;
   (*ignore (Unix.system "tred xxx.dot > yyy.dot && dot -Tps yyy.dot > xxx.ps")*)
-  ignore (Unix.system "dot -Tps xxx.dot > xxx.ps");
+  ignore (Unix.system "cp xxx.ps xxx_old.ps && dot -Tps xxx.dot > xxx.ps");
   (*ignore (read_line ())*)
 ;;
 
@@ -236,7 +236,7 @@ let rec geq_reachable node =
 ;;
 
 let locate_using_leq to_be_considered_and_now ((repr,_,leq,_) as node)
- ((_,_,sup) as set)
+ set start
 =
  let rec aux is_sup ((nodes,inf,sup) as set) =
   function
@@ -258,14 +258,13 @@ let locate_using_leq to_be_considered_and_now ((repr,_,leq,_) as node)
        else
         aux is_sup set tl
  in
-prerr_endline ("SUP: " ^ String.concat "," (List.map (fun (x,_,_,_) -> string_of_cop x) sup));
-  aux true set sup
+  aux true set start
 ;;
 
 exception SameEquivalenceClass of equivalence_class * equivalence_class;;
 
 let locate_using_geq to_be_considered_and_now ((repr,_,leq,geq) as node)
- ((_,inf,_) as set)
+ set start
 =
  let rec aux is_inf ((nodes,inf,sup) as set) =
   function
@@ -293,11 +292,12 @@ let locate_using_geq to_be_considered_and_now ((repr,_,leq,geq) as node)
        else
         aux is_inf set tl
  in
-prerr_endline ("INF: " ^ String.concat "," (List.map (fun (x,_,_,_) -> string_of_cop x) inf));
-  aux true set inf
+  aux true set start
 ;;
 
 let analyze_one to_be_considered repr hecandidate (news,((nodes,inf,sup) as set)) =
+assert (List.for_all (fun (_,_,leq,geq) -> !geq = [] && let rec check_sups = function [] -> true | (_,_,leq,_) as node::tl -> if !leq = [] then List.exists (fun n -> n===node) sup && check_sups tl else check_sups (!leq@tl) in check_sups !leq) inf);
+assert (List.for_all (fun (_,_,leq,geq) -> !leq = [] && let rec check_infs = function [] -> true | (_,_,_,geq) as node::tl -> if !geq = [] then List.exists (fun n -> n===node) inf && check_infs tl else check_infs (!geq@tl) in check_infs !geq) sup);
  let candidate = hecandidate::repr in
   if List.length (List.filter ((=) M) candidate) > 1 then
    news,set
@@ -308,17 +308,47 @@ let analyze_one to_be_considered repr hecandidate (news,((nodes,inf,sup) as set)
     let node = candidate,[],leq,geq in
     let nodes = nodes@[node] in
     let set = nodes,inf,sup in
-    let set = locate_using_leq (to_be_considered,Some repr,news) node set in
-    let set = locate_using_geq (to_be_considered,Some repr,news) node set in
+    let start_inf,start_sup =
+     let repr_node =
+      match List.filter (fun (repr',_,_,_) -> repr=repr') nodes with
+         [node] -> node
+       | _ -> assert false
+     in
+inf,sup(*
+     match hecandidate with
+        I -> inf,[repr_node]
+      | C -> [repr_node],sup
+      | M -> inf,sup
+*)
+    in
+    let set =
+     locate_using_leq (to_be_considered,Some repr,news) node set start_sup in
+    let set =
+     locate_using_geq (to_be_considered,Some repr,news) node set start_inf
+    in
      news@[candidate],set
    with
-    SameEquivalenceClass (node_to_be_deleted,node') ->
+    SameEquivalenceClass ((_,_,leq_d,geq_d) as node_to_be_deleted,node') ->
      let rec clean =
       function
          [] -> []
        | (repr',others,leq,geq) as node::tl ->
-          leq:= List.filter (function node -> node_to_be_deleted <=> node) !leq;
-          geq:= List.filter (function node -> node_to_be_deleted <=> node) !geq;
+          leq :=
+           List.fold_right
+            (fun node l ->
+              if node_to_be_deleted <=> node then
+               node::l
+              else
+               !leq_d@l
+            ) !leq [];
+          geq :=
+           List.fold_right
+            (fun node l ->
+              if node_to_be_deleted <=> node then
+               node::l
+              else
+               !geq_d@l
+            ) !geq [];
           if node===node' then
            (repr',others@[candidate],leq,geq)::clean tl
           else
