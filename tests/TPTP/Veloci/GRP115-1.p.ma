@@ -29,7 +29,7 @@ theorem prove_order3:
 \forall H0:\forall X:Univ.\forall Y:Univ.\forall Z:Univ.eq Univ (multiply X (multiply (multiply X (multiply (multiply X Y) Z)) (multiply identity (multiply Z Z)))) Y.eq Univ (multiply a (multiply a a)) identity
 .
 intros.
-auto paramodulation timeout=100.
+autobatch paramodulation timeout=100.
 try assumption.
 print proofterm.
 qed.

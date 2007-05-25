@@ -65,7 +65,7 @@ theorem prove_a_inverse_is_b:
 \forall H9:\forall X:Univ.\forall Y:Univ.eq Univ (add X Y) (add Y X).eq Univ b (inverse a)
 .
 intros.
-auto paramodulation timeout=100.
+autobatch paramodulation timeout=100.
 try assumption.
 print proofterm.
 qed.

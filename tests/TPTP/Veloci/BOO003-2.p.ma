@@ -68,7 +68,7 @@ theorem prove_a_times_a_is_a:
 \forall H13:\forall X:Univ.\forall Y:Univ.eq Univ (add X Y) (add Y X).eq Univ (multiply a a) a
 .
 intros.
-auto paramodulation timeout=100.
+autobatch paramodulation timeout=100.
 try assumption.
 print proofterm.
 qed.

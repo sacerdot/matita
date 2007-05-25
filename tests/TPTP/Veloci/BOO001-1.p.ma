@@ -59,7 +59,7 @@ theorem prove_inverse_is_self_cancelling:
 \forall H4:\forall V:Univ.\forall W:Univ.\forall X:Univ.\forall Y:Univ.\forall Z:Univ.eq Univ (multiply (multiply V W X) Y (multiply V W Z)) (multiply V W (multiply X Y Z)).eq Univ (inverse (inverse a)) a
 .
 intros.
-auto paramodulation timeout=100.
+autobatch paramodulation timeout=100.
 try assumption.
 print proofterm.
 qed.

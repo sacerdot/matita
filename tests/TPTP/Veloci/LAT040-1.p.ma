@@ -70,7 +70,7 @@ theorem rhs:
 \forall H11:\forall X:Univ.eq Univ (meet X X) X.eq Univ yy zz
 .
 intros.
-auto paramodulation timeout=100.
+autobatch paramodulation timeout=100.
 try assumption.
 print proofterm.
 qed.

@@ -65,7 +65,7 @@ theorem prove_mv_29:
 \forall H3:\forall X:Univ.eq Univ (implies truth X) X.eq Univ (implies x (not (not x))) truth
 .
 intros.
-auto paramodulation timeout=100.
+autobatch paramodulation timeout=100.
 try assumption.
 print proofterm.
 qed.

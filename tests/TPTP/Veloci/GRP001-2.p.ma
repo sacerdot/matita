@@ -79,7 +79,7 @@ theorem prove_b_times_a_is_c:
 \forall H6:\forall X:Univ.eq Univ (multiply identity X) X.eq Univ (multiply b a) c
 .
 intros.
-auto paramodulation timeout=100.
+autobatch paramodulation timeout=100.
 try assumption.
 print proofterm.
 qed.

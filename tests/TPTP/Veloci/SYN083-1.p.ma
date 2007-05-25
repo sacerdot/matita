@@ -31,7 +31,7 @@ theorem prove_this:
 \forall H0:\forall X:Univ.\forall Y:Univ.\forall Z:Univ.eq Univ (f X (f Y Z)) (f (f X Y) Z).eq Univ (f a (f b (f c d))) (f (f (f a b) c) d)
 .
 intros.
-auto paramodulation timeout=100.
+autobatch paramodulation timeout=100.
 try assumption.
 print proofterm.
 qed.

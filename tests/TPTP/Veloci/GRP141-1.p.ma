@@ -115,7 +115,7 @@ theorem prove_ax_glb1d:
 \forall H16:\forall X:Univ.eq Univ (multiply identity X) X.eq Univ (greatest_lower_bound (greatest_lower_bound a b) c) c
 .
 intros.
-auto paramodulation timeout=100.
+autobatch paramodulation timeout=100.
 try assumption.
 print proofterm.
 qed.

@@ -129,7 +129,7 @@ theorem prove_alternative_wajsberg_axiom:
 \forall H15:\forall X:Univ.eq Univ (implies truth X) X.eq Univ (and_star (xor truth x) x) falsehood
 .
 intros.
-auto paramodulation timeout=100.
+autobatch paramodulation timeout=100.
 try assumption.
 print proofterm.
 qed.

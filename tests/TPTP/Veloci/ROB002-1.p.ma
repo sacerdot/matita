@@ -59,7 +59,7 @@ theorem prove_huntingtons_axiom:
 \forall H3:\forall X:Univ.\forall Y:Univ.eq Univ (add X Y) (add Y X).eq Univ (add (negate (add a (negate b))) (negate (add (negate a) (negate b)))) b
 .
 intros.
-auto paramodulation timeout=100.
+autobatch paramodulation timeout=100.
 try assumption.
 print proofterm.
 qed.

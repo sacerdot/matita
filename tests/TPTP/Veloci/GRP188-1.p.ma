@@ -111,7 +111,7 @@ theorem prove_p38a:
 \forall H14:\forall X:Univ.eq Univ (multiply identity X) X.eq Univ (least_upper_bound b (least_upper_bound a b)) (least_upper_bound a b)
 .
 intros.
-auto paramodulation timeout=100.
+autobatch paramodulation timeout=100.
 try assumption.
 print proofterm.
 qed.

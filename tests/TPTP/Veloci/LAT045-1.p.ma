@@ -77,7 +77,7 @@ theorem prove_orthomodular_law:
 \forall H13:\forall X:Univ.eq Univ (meet X X) X.eq Univ (join a (meet (complement a) (join a b))) (join a b)
 .
 intros.
-auto paramodulation timeout=100.
+autobatch paramodulation timeout=100.
 try assumption.
 print proofterm.
 qed.

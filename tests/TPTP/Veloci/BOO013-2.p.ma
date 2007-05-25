@@ -76,7 +76,7 @@ theorem prove_b_is_a:
 \forall H17:\forall X:Univ.\forall Y:Univ.eq Univ (add X Y) (add Y X).eq Univ b c
 .
 intros.
-auto paramodulation timeout=100.
+autobatch paramodulation timeout=100.
 try assumption.
 print proofterm.
 qed.

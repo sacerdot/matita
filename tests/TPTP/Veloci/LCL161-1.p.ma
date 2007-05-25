@@ -78,7 +78,7 @@ theorem prove_wajsberg_axiom:
 \forall H12:\forall X:Univ.eq Univ (not X) (xor X truth).eq Univ (implies truth x) x
 .
 intros.
-auto paramodulation timeout=100.
+autobatch paramodulation timeout=100.
 try assumption.
 print proofterm.
 qed.

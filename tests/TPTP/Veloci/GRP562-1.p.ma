@@ -32,7 +32,7 @@ theorem prove_these_axioms_2:
 \forall H1:\forall A:Univ.\forall B:Univ.\forall C:Univ.eq Univ (divide (divide (divide A (inverse B)) C) (divide A C)) B.eq Univ (multiply (multiply (inverse b2) b2) a2) a2
 .
 intros.
-auto paramodulation timeout=100.
+autobatch paramodulation timeout=100.
 try assumption.
 print proofterm.
 qed.

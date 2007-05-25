@@ -36,7 +36,7 @@ theorem prove_absorbtion_dual:
 \forall H1:\forall X:Univ.\forall Y:Univ.eq Univ (meet X (join X Y)) X.eq Univ (join a (meet a b)) a
 .
 intros.
-auto paramodulation timeout=100.
+autobatch paramodulation timeout=100.
 try assumption.
 print proofterm.
 qed.

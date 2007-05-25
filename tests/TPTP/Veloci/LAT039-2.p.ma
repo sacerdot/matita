@@ -69,7 +69,7 @@ theorem rhs:
 \forall H10:\forall X:Univ.eq Univ (meet X X) X.eq Univ (join xx (meet yy zz)) (meet (join xx yy) (join xx zz))
 .
 intros.
-auto paramodulation timeout=100.
+autobatch paramodulation timeout=100.
 try assumption.
 print proofterm.
 qed.

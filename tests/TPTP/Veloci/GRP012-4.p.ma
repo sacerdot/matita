@@ -71,7 +71,7 @@ theorem prove_inverse_of_product_is_product_of_inverses:
 \forall H4:\forall X:Univ.eq Univ (multiply identity X) X.eq Univ (inverse (multiply a b)) (multiply (inverse b) (inverse a))
 .
 intros.
-auto paramodulation timeout=100.
+autobatch paramodulation timeout=100.
 try assumption.
 print proofterm.
 qed.

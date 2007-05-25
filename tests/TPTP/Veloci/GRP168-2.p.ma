@@ -4,7 +4,7 @@ include "logic/equality.ma".
 (* -------------------------------------------------------------------------- *)
 (*  File     : GRP168-2 : TPTP v3.1.1. Bugfixed v1.2.1. *)
 (*  Domain   : Group Theory (Lattice Ordered) *)
-(*  Problem  : Inner group automorphisms are order preserving *)
+(*  Problem  : Inner group autobatchmorphisms are order preserving *)
 (*  Version  : [Fuc94] (equality) axioms. *)
 (*             Theorem formulation : Dual. *)
 (*  English  :  *)
@@ -114,7 +114,7 @@ theorem prove_p01b:
 \forall H15:\forall X:Univ.eq Univ (multiply identity X) X.eq Univ (greatest_lower_bound (multiply (inverse c) (multiply a c)) (multiply (inverse c) (multiply b c))) (multiply (inverse c) (multiply a c))
 .
 intros.
-auto paramodulation timeout=100.
+autobatch paramodulation timeout=100.
 try assumption.
 print proofterm.
 qed.
