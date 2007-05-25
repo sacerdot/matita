@@ -156,7 +156,7 @@ let test to_be_considered_and_now ((s,_,_) as set) rel candidate repr =
   output_string ch
    ("theorem foo: \\forall A." ^ matita_of_cop "A" candidate' ^
       " " ^ string_of_rel rel' ^ " " ^
-      matita_of_cop "A" repr' ^ ". intros; auto size=6 depth=4. qed.\n");
+      matita_of_cop "A" repr' ^ ". intros; autobatch size=7 depth=4. qed.\n");
   close_out ch;
   let res =
    (*Unix.system "../../../matitac.opt xxx.ma >> log 2>&1" = Unix.WEXITED 0*)
@@ -235,7 +235,7 @@ let rec geq_reachable node =
   | (_,_,_,geq)::tl -> geq_reachable node (!geq@tl)
 ;;
 
-let locate_using_leq to_be_considered_and_now ((repr,_,leq,_) as node)
+let locate_using_leq to_be_considered_and_now ((repr,_,leq,geq) as node)
  set start
 =
  let rec aux ((nodes,inf,sup) as set) =
@@ -248,9 +248,18 @@ let locate_using_leq to_be_considered_and_now ((repr,_,leq,_) as node)
        else if test to_be_considered_and_now set SubsetEqual repr repr' then
         begin
          let sup = remove node sup in
-         let inf = if !geq' = [] then (remove node' inf)@@node else inf in
-          leq_transitive_closure node node';
-          aux (nodes,inf,sup) (!geq'@tl)
+         let inf =
+          if !geq' = [] then
+           let inf = remove node' inf in
+            if !geq = [] then
+             inf@@node
+            else
+             inf
+          else
+           inf
+          in
+           leq_transitive_closure node node';
+           aux (nodes,inf,sup) (!geq'@tl)
         end
        else
         aux set tl
@@ -258,7 +267,7 @@ let locate_using_leq to_be_considered_and_now ((repr,_,leq,_) as node)
   aux set start
 ;;
 
-exception SameEquivalenceClass of equivalence_class * equivalence_class;;
+exception SameEquivalenceClass of set * equivalence_class * equivalence_class;;
 
 let locate_using_geq to_be_considered_and_now ((repr,_,leq,geq) as node)
  set start
@@ -274,11 +283,20 @@ let locate_using_geq to_be_considered_and_now ((repr,_,leq,geq) as node)
         begin
          if List.exists (function n -> n===node') !leq then
           (* We have found two equal nodes! *)
-          raise (SameEquivalenceClass (node,node'))
+          raise (SameEquivalenceClass (set,node,node'))
          else
           begin
            let inf = remove node inf in
-           let sup = if !leq' = [] then (remove node' sup)@@node else sup in
+           let sup =
+            if !leq' = [] then
+             let sup = remove node' sup in
+             if !leq = [] then
+              sup@@node
+             else
+              sup
+            else
+             sup
+           in
             geq_transitive_closure node node';
             aux (nodes,inf,sup) (!leq'@tl)
           end
@@ -290,7 +308,7 @@ let locate_using_geq to_be_considered_and_now ((repr,_,leq,geq) as node)
 ;;
 
 let analyze_one to_be_considered repr hecandidate (news,((nodes,inf,sup) as set)) =
-if not (List.for_all (fun ((_,_,_,geq) as node) -> !geq = [] && let rec check_sups = function [] -> true | (_,_,leq,_) as node::tl -> if !leq = [] then List.exists (fun n -> n===node) sup && check_sups tl else check_sups (!leq@tl) in check_sups [node]) inf) then (ps_of_set ([],None,[]) set; assert false);
+if not (List.for_all (fun ((_,_,_,geq) as node) -> !geq = [] && let rec check_sups = function [] -> true | (_,_,leq,_) as node::tl -> if !leq = [] then List.exists (fun n -> n===node) sup && check_sups tl else check_sups (!leq@tl) in check_sups [node]) inf) then ((*ps_of_set ([],None,[]) set;*) assert false);
 if not (List.for_all (fun ((_,_,leq,_) as node) -> !leq = [] && let rec check_infs = function [] -> true | (_,_,_,geq) as node::tl -> if !geq = [] then List.exists (fun n -> n===node) inf && check_infs tl else check_infs (!geq@tl) in check_infs [node]) sup) then (ps_of_set ([],None,[]) set; assert false);
  let candidate = hecandidate::repr in
   if List.length (List.filter ((=) M) candidate) > 1 then
@@ -328,14 +346,22 @@ if not (List.for_all (fun ((_,_,leq,_) as node) -> !leq = [] && let rec check_in
 (
 let _,inf,sup = set in
 if not (List.for_all (fun ((_,_,_,geq) as node) -> !geq = [] && let rec check_sups = function [] -> true | (_,_,leq,_) as node::tl -> if !leq = [] then List.exists (fun n -> n===node) sup && check_sups tl else check_sups (!leq@tl) in check_sups [node]) inf) then (ps_of_set ([],None,[]) set; assert false);
-if not (List.for_all (fun ((_,_,leq,_) as node) -> !leq = [] && let rec check_infs = function [] -> true | (_,_,_,geq) as node::tl -> if !geq = [] then List.exists (fun n -> n===node) inf && check_infs tl else check_infs (!geq@tl) in check_infs [node]) sup) then (ps_of_set ([],None,[]) set; assert false);
+if not (List.for_all (fun ((_,_,leq,_) as node) -> !leq = [] && let rec check_infs = function [] -> true | (_,_,_,geq) as node::tl -> if !geq = [] then List.exists (fun n -> n===node) inf && check_infs tl else check_infs (!geq@tl) in check_infs [node]) sup) then ((*ps_of_set ([],None,[]) set;*) assert false);
 );
      news@[candidate],set
    with
-    SameEquivalenceClass ((_,_,leq_d,geq_d) as node_to_be_deleted,node') ->
+    SameEquivalenceClass ((nodes,inf,sup) as set,((r,_,leq_d,geq_d) as node_to_be_deleted),node')->
+prerr_endline ("SAMEEQCLASS: " ^ string_of_cop r);
+(
+let _,inf,sup = set in
+if not (List.for_all (fun ((_,_,_,geq) as node) -> !geq = [] && let rec check_sups = function [] -> true | (_,_,leq,_) as node::tl -> if !leq = [] then List.exists (fun n -> n===node) sup && check_sups tl else check_sups (!leq@tl) in check_sups [node]) inf) then (ps_of_set ([],None,[]) set; assert false);
+if not (List.for_all (fun ((_,_,leq,_) as node) -> !leq = [] && let rec check_infs = function [] -> true | (_,_,_,geq) as node::tl -> if !geq = [] then List.exists (fun n -> n===node) inf && check_infs tl else check_infs (!geq@tl) in check_infs [node]) sup) then ((*ps_of_set ([],None,[]) set;*) assert false);
+);
      let rec clean =
       function
          [] -> []
+       | node::tl when node===node_to_be_deleted ->
+          clean tl
        | (repr',others,leq,geq) as node::tl ->
           leq :=
            List.fold_right
@@ -359,6 +385,26 @@ if not (List.for_all (fun ((_,_,leq,_) as node) -> !leq = [] && let rec check_in
            node::clean tl
      in
      let nodes = clean nodes in
+     let inf =
+      let inf' = remove node_to_be_deleted inf in
+       if List.length inf <> List.length inf' then
+        inf@@node'
+       else
+        inf
+     in
+     let sup =
+      let sup' = remove node_to_be_deleted sup in
+       if List.length sup <> List.length sup' then
+        sup@@node'
+       else
+        sup
+     in
+let set = nodes,inf,sup in
+(
+let _,inf,sup = set in
+if not (List.for_all (fun ((_,_,_,geq) as node) -> !geq = [] && let rec check_sups = function [] -> true | (_,_,leq,_) as node::tl -> if !leq = [] then List.exists (fun n -> n===node) sup && check_sups tl else check_sups (!leq@tl) in check_sups [node]) inf) then (ps_of_set ([],None,[]) set; assert false);
+if not (List.for_all (fun ((_,_,leq,_) as node) -> !leq = [] && let rec check_infs = function [] -> true | (_,_,_,geq) as node::tl -> if !geq = [] then List.exists (fun n -> n===node) inf && check_infs tl else check_infs (!geq@tl) in check_infs [node]) sup) then (ps_of_set ([],None,[]) set; assert false);
+);
       news,(nodes,inf,sup)
 ;;
 
