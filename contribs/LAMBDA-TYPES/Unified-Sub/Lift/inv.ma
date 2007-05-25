@@ -21,7 +21,7 @@ include "Lift/defs.ma".
 theorem lift_inv_sort_1: \forall l, i, h, x.
                          Lift l i (sort h) x \to
                          x = sort h.
- intros. inversion H; clear H; intros; subst. auto.
+ intros. inversion H; clear H; intros; subst. autobatch.
 qed.
 
 theorem lift_inv_lref_1: \forall l, i, j1, x.
@@ -54,7 +54,7 @@ qed.
 theorem lift_inv_sort_2: \forall l, i, x, h.
                          Lift l i x (sort h) \to
                          x = sort h.
- intros. inversion H; clear H; intros; subst. auto.
+ intros. inversion H; clear H; intros; subst. autobatch.
 qed.
 
 theorem lift_inv_lref_2: \forall l, i, x, j2.

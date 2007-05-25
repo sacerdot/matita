@@ -102,9 +102,9 @@ theorem trans_eq : \forall A:Type. \forall x,y,z:A. x=y \to y=z \to x=z.
 qed.
 
 theorem plus_reg_l: \forall n,m,p. n + m = n + p \to m = p.
- intros. apply plus_reg_l; auto.
+ intros. apply plus_reg_l; autobatch.
 qed.
 
 theorem plus_le_reg_l: \forall p,n,m. p + n <= p + m \to n <= m.
- intros. apply plus_le_reg_l; auto.
+ intros. apply plus_le_reg_l; autobatch.
 qed.

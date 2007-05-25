@@ -19,7 +19,7 @@ include "NPlus/defs.ma".
 (* Inversion lemmas *********************************************************)
 
 theorem nplus_inv_zero_1: \forall q,r. (zero + q == r) \to q = r.
- intros. elim H; clear H q r; auto.
+ intros. elim H; clear H q r; autobatch.
 qed.
 
 theorem nplus_inv_succ_1: \forall p,q,r. ((succ p) + q == r) \to 
@@ -31,7 +31,7 @@ theorem nplus_inv_succ_1: \forall p,q,r. ((succ p) + q == r) \to
 qed.
 
 theorem nplus_inv_zero_2: \forall p,r. (p + zero == r) \to p = r.
- intros. inversion H; clear H; intros; subst. auto.
+ intros. inversion H; clear H; intros; subst. autobatch.
 qed.
 
 theorem nplus_inv_succ_2: \forall p,q,r. (p + (succ q) == r) \to 
@@ -41,7 +41,7 @@ qed.
 
 theorem nplus_inv_zero_3: \forall p,q. (p + q == zero) \to 
                           p = zero \land q = zero.
- intros. inversion H; clear H; intros; subst. auto.
+ intros. inversion H; clear H; intros; subst. autobatch.
 qed.
 
 theorem nplus_inv_succ_3: \forall p,q,r. (p + q == (succ r)) \to
@@ -55,25 +55,25 @@ qed.
 theorem nplus_inv_succ_2_3: \forall p,q,r.
                             (p + (succ q) == (succ r)) \to p + q == r.
  intros. 
- lapply linear nplus_inv_succ_2 to H. decompose. subst. auto.
+ lapply linear nplus_inv_succ_2 to H. decompose. subst. autobatch.
 qed.
 
 theorem nplus_inv_succ_1_3: \forall p,q,r.
                             ((succ p) + q == (succ r)) \to p + q == r.
  intros. 
- lapply linear nplus_inv_succ_1 to H. decompose. subst. auto.
+ lapply linear nplus_inv_succ_1 to H. decompose. subst. autobatch.
 qed.
 
 theorem nplus_inv_eq_2_3: \forall p,q. (p + q == q) \to p = zero.
  intros 2. elim q; clear q;
  [ lapply linear nplus_inv_zero_2 to H
  | lapply linear nplus_inv_succ_2_3 to H1
- ]; auto.
+ ]; autobatch.
 qed.
 
 theorem nplus_inv_eq_1_3: \forall p,q. (p + q == p) \to q = zero.
  intros 1. elim p; clear p;
  [ lapply linear nplus_inv_zero_1 to H
  | lapply linear nplus_inv_succ_1_3 to H1.
- ]; auto.
+ ]; autobatch.
 qed.

@@ -84,8 +84,8 @@ theorem le_gen_S_x_aux: \forall m,x,y. (le y x) \to (y = S m) \to
 intros 4. elim H; clear H x y.
 apply eq_gen_S_O. exact m. elim H1. auto paramodulation.
 clear H2. cut (n = m).
-elim Hcut. apply ex_intro. exact n1. split; auto.
-apply eq_gen_S_S. auto.
+elim Hcut. apply ex_intro. exact n1. split; autobatch.
+apply eq_gen_S_S. autobatch.
 qed.
 
 theorem le_gen_S_x: \forall m,x. (le (S m) x) \to 

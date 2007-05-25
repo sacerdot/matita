@@ -330,7 +330,7 @@ theorem tail_inf_increasing:
       assumption
     | unfold y;
       simplify;
-      auto paramodulation library
+      autobatch paramodulation library
     ]
  ].
 qed.
