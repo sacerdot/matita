@@ -156,7 +156,7 @@ let test to_be_considered_and_now ((s,_,_) as set) rel candidate repr =
   output_string ch
    ("theorem foo: \\forall A." ^ matita_of_cop "A" candidate' ^
       " " ^ string_of_rel rel' ^ " " ^
-      matita_of_cop "A" repr' ^ ". intros; autobatch size=7 depth=4. qed.\n");
+      matita_of_cop "A" repr' ^ ". intros; autobatch size=8 depth=4. qed.\n");
   close_out ch;
   let res =
    (*Unix.system "../../../matitac.opt xxx.ma >> log 2>&1" = Unix.WEXITED 0*)
@@ -357,11 +357,11 @@ let _,inf,sup = set in
 if not (List.for_all (fun ((_,_,_,geq) as node) -> !geq = [] && let rec check_sups = function [] -> true | (_,_,leq,_) as node::tl -> if !leq = [] then List.exists (fun n -> n===node) sup && check_sups tl else check_sups (!leq@tl) in check_sups [node]) inf) then (ps_of_set ([],None,[]) set; assert false);
 if not (List.for_all (fun ((_,_,leq,_) as node) -> !leq = [] && let rec check_infs = function [] -> true | (_,_,_,geq) as node::tl -> if !geq = [] then List.exists (fun n -> n===node) inf && check_infs tl else check_infs (!geq@tl) in check_infs [node]) sup) then ((*ps_of_set ([],None,[]) set;*) assert false);
 );
-     let rec clean =
+     let rec clean inf sup res =
       function
-         [] -> []
+         [] -> inf,sup,res
        | node::tl when node===node_to_be_deleted ->
-          clean tl
+          clean inf sup res tl
        | (repr',others,leq,geq) as node::tl ->
           leq :=
            List.fold_right
@@ -371,6 +371,7 @@ if not (List.for_all (fun ((_,_,leq,_) as node) -> !leq = [] && let rec check_in
               else
                !leq_d@l
             ) !leq [];
+          let sup = if !leq = [] then sup@@node else sup in
           geq :=
            List.fold_right
             (fun node l ->
@@ -379,26 +380,15 @@ if not (List.for_all (fun ((_,_,leq,_) as node) -> !leq = [] && let rec check_in
               else
                !geq_d@l
             ) !geq [];
+          let inf = if !geq = [] then inf@@node else inf in
           if node===node' then
-           (repr',others@[candidate],leq,geq)::clean tl
+           clean inf sup ((repr',others@[candidate],leq,geq)::res) tl
           else
-           node::clean tl
+           clean inf sup (node::res) tl
      in
-     let nodes = clean nodes in
-     let inf =
-      let inf' = remove node_to_be_deleted inf in
-       if List.length inf <> List.length inf' then
-        inf@@node'
-       else
-        inf
-     in
-     let sup =
-      let sup' = remove node_to_be_deleted sup in
-       if List.length sup <> List.length sup' then
-        sup@@node'
-       else
-        sup
-     in
+     let inf,sup,nodes = clean inf sup [] nodes in
+     let inf = remove node_to_be_deleted inf in
+     let sup = remove node_to_be_deleted sup in
 let set = nodes,inf,sup in
 (
 let _,inf,sup = set in
