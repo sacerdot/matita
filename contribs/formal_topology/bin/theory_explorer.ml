@@ -23,12 +23,15 @@ let string_of_cop op =
 
 let dot_of_cop op = "\"" ^ string_of_cop op ^ "\""
 
-let rec matita_of_cop v =
- function
-  | [] -> v
-  | I::tl -> "i (" ^ matita_of_cop v tl ^ ")"
-  | C::tl -> "c (" ^ matita_of_cop v tl ^ ")"
-  | M::tl -> "m (" ^ matita_of_cop v tl ^ ")"
+let matita_of_cop v =
+ let matita_of_op = function I -> "i" | C -> "c" | M -> "m" in
+ let rec aux =
+  function
+   | [] -> v
+   | [op] -> matita_of_op op ^ " " ^ v
+   | op::tl -> matita_of_op op ^ " (" ^ aux tl ^ ")"
+ in
+  aux
 
 (* representative, other elements in the equivalence class,
    leq classes, geq classes *)
@@ -126,7 +129,7 @@ let test to_be_considered_and_now ((s,_,_) as set) rel candidate repr =
   (string_of_cop candidate ^ " " ^ string_of_rel rel ^ " " ^ string_of_cop repr ^ "? ");
  flush stdout;
  assert (Unix.system "cp formal_topology.ma xxx.ma" = Unix.WEXITED 0);
- let ch = open_out_gen [Open_append] 0 "xxx.ma" in
+ let ch = open_out_gen [Open_append ; Open_creat] 0 "xxx.ma" in
  let i = ref 0 in
   List.iter
    (function (repr,others,leq,_) ->
@@ -151,17 +154,23 @@ let test to_be_considered_and_now ((s,_,_) as set) rel candidate repr =
    match rel with
       SupersetEqual -> repr,SubsetEqual,candidate
     | Equal
-    | SubsetEqual -> candidate,rel,repr
-  in
-  output_string ch
+    | SubsetEqual -> candidate,rel,repr in
+  let query =
    ("theorem foo: \\forall A." ^ matita_of_cop "A" candidate' ^
       " " ^ string_of_rel rel' ^ " " ^
-      matita_of_cop "A" repr' ^ ". intros; autobatch size=8 depth=4. qed.\n");
+      matita_of_cop "A" repr' ^ ". intros; autobatch size=8 depth=4. qed.") in
+  output_string ch (query ^ "\n");
   close_out ch;
   let res =
    (*Unix.system "../../../matitac.opt xxx.ma >> log 2>&1" = Unix.WEXITED 0*)
    Unix.system "../../../matitac.opt xxx.ma > /dev/null 2>&1" = Unix.WEXITED 0
   in
+   let ch = open_out_gen [Open_append] 0o0600 "log.ma" in
+   if res then
+    output_string ch (query ^ "\n")
+   else
+    output_string ch ("(* " ^ query ^ "*)\n");
+   close_out ch;
    print_endline (if res then "y" else "n");
    res
 
@@ -428,6 +437,7 @@ in
   print_endline ("PRIMA ITERAZIONE, i=0, j=0");
   print_endline (string_of_set set ^ "\n----------------");
   (*ignore (Unix.system "rm -f log");*)
+  assert (Unix.system "cp formal_topology.ma log.ma" = Unix.WEXITED 0);
   ps_of_set ([id],None,[]) set;
   explore 1 set [id]
 ;;
