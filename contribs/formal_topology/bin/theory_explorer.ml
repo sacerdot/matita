@@ -9,11 +9,8 @@ let string_of_rel =
 (* operator *)
 type op = I | C | M
 
-let string_of_op =
- function
-    I -> "i"
-  | C -> "c"
-  | M -> "-"
+let string_of_op = function I -> "i" | C -> "c" | M -> "-"
+let matita_of_op = function I -> "i" | C -> "c" | M -> "m"
 
 (* compound operator *)
 type compound_operator = op list
@@ -24,7 +21,6 @@ let string_of_cop op =
 let dot_of_cop op = "\"" ^ string_of_cop op ^ "\""
 
 let matita_of_cop v =
- let matita_of_op = function I -> "i" | C -> "c" | M -> "m" in
  let rec aux =
   function
    | [] -> v
@@ -32,6 +28,18 @@ let matita_of_cop v =
    | op::tl -> matita_of_op op ^ " (" ^ aux tl ^ ")"
  in
   aux
+
+let name_of_theorem cop rel cop' =
+ let cop,rel,cop' =
+  match rel with
+     Equal -> cop,"eq",cop'
+   | SubsetEqual -> cop,"leq",cop'
+   | SupersetEqual -> cop',"leq",cop
+ in
+  rel ^ "_" ^
+   String.concat "" (List.map matita_of_op cop) ^ "_" ^
+   String.concat "" (List.map matita_of_op cop')
+;;
 
 (* representative, other elements in the equivalence class,
    leq classes, geq classes *)
@@ -156,9 +164,10 @@ let test to_be_considered_and_now ((s,_,_) as set) rel candidate repr =
     | Equal
     | SubsetEqual -> candidate,rel,repr in
   let query =
-   ("theorem foo: \\forall A." ^ matita_of_cop "A" candidate' ^
+   let name = name_of_theorem candidate' rel' repr' in
+   ("theorem " ^ name ^ ": \\forall A." ^ matita_of_cop "A" candidate' ^
       " " ^ string_of_rel rel' ^ " " ^
-      matita_of_cop "A" repr' ^ ". intros; autobatch size=8 depth=4. qed.") in
+      matita_of_cop "A" repr' ^ ". intros; autobatch size=8 depth=4 width=2. qed.") in
   output_string ch (query ^ "\n");
   close_out ch;
   let res =
@@ -360,7 +369,6 @@ if not (List.for_all (fun ((_,_,leq,_) as node) -> !leq = [] && let rec check_in
      news@[candidate],set
    with
     SameEquivalenceClass ((nodes,inf,sup) as set,((r,_,leq_d,geq_d) as node_to_be_deleted),node')->
-prerr_endline ("SAMEEQCLASS: " ^ string_of_cop r);
 (
 let _,inf,sup = set in
 if not (List.for_all (fun ((_,_,_,geq) as node) -> !geq = [] && let rec check_sups = function [] -> true | (_,_,leq,_) as node::tl -> if !leq = [] then List.exists (fun n -> n===node) sup && check_sups tl else check_sups (!leq@tl) in check_sups [node]) inf) then (ps_of_set ([],None,[]) set; assert false);
@@ -373,22 +381,28 @@ if not (List.for_all (fun ((_,_,leq,_) as node) -> !leq = [] && let rec check_in
           clean inf sup res tl
        | (repr',others,leq,geq) as node::tl ->
           leq :=
-           List.fold_right
-            (fun node l ->
-              if node_to_be_deleted <=> node then
-               node::l
-              else
-               !leq_d@l
-            ) !leq [];
+           (let rec aux res =
+             function
+                [] -> res
+              | (_,_,leq,_) as node::tl ->
+                 if node_to_be_deleted <=> node then
+                  aux (res@[node]) tl
+                 else
+                  (List.filter (fun n ->not (leq_reachable n (res@tl))) !leq)@tl
+            in
+             aux [] !leq);
           let sup = if !leq = [] then sup@@node else sup in
           geq :=
-           List.fold_right
-            (fun node l ->
-              if node_to_be_deleted <=> node then
-               node::l
-              else
-               !geq_d@l
-            ) !geq [];
+           (let rec aux res =
+             function
+                [] -> res
+              | (_,_,_,geq) as node::tl ->
+                 if node_to_be_deleted <=> node then
+                  aux (res@[node]) tl
+                 else
+                  (List.filter (fun n ->not (geq_reachable n (res@tl))) !geq)@tl
+            in
+             aux [] !geq);
           let inf = if !geq = [] then inf@@node else inf in
           if node===node' then
            clean inf sup ((repr',others@[candidate],leq,geq)::res) tl
