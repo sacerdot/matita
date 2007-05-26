@@ -47,8 +47,12 @@ axiom m_antimonotonia: ∀A,B. A ⊆ B → m B ⊆ m A.
 axiom m_saturazione: ∀A. A ⊆ m (m A).
 axiom m_puntofisso: ∀A. m A = m (m (m A)).
 
-lemma l1: ∀A,B. i A ⊆ B → i A ⊆ i B. intros; rewrite < i_idempotenza; autobatch. qed.
-lemma l2: ∀A,B. A ⊆ c B → c A ⊆ c B. intros; rewrite < c_idempotenza in ⊢ (? ? %); autobatch. qed.
+lemma l1: ∀A,B. i A ⊆ B → i A ⊆ i B.
+ intros; rewrite < i_idempotenza; apply (i_monotonia (i A) B H).
+qed.
+lemma l2: ∀A,B. A ⊆ c B → c A ⊆ c B.
+ intros; rewrite < c_idempotenza in ⊢ (? ? %); apply (c_monotonia A (c B) H).
+qed.
 
 axiom th1: ∀A. c (m A) ⊆ m (i A).
 axiom th2: ∀A. i (m A) ⊆ m (c A).

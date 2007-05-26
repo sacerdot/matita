@@ -136,8 +136,9 @@ let test to_be_considered_and_now ((s,_,_) as set) rel candidate repr =
  print_string
   (string_of_cop candidate ^ " " ^ string_of_rel rel ^ " " ^ string_of_cop repr ^ "? ");
  flush stdout;
- assert (Unix.system "cp formal_topology.ma xxx.ma" = Unix.WEXITED 0);
- let ch = open_out_gen [Open_append ; Open_creat] 0 "xxx.ma" in
+ assert (Unix.system "cat log.ma | sed s/^theorem/axiom/g | sed 's/\\. intros.*qed\\././g' > xxx.ma" = Unix.WEXITED 0);
+ let ch = open_out_gen [Open_append] 0 "xxx.ma" in
+(*
  let i = ref 0 in
   List.iter
    (function (repr,others,leq,_) ->
@@ -158,6 +159,7 @@ let test to_be_considered_and_now ((s,_,_) as set) rel candidate repr =
            matita_of_cop "A" repr ^ " ⊆ " ^ matita_of_cop "A" repr' ^ ".\n");
       ) !leq;
    ) s;
+*)
   let candidate',rel',repr' =
    match rel with
       SupersetEqual -> repr,SubsetEqual,candidate
@@ -167,7 +169,7 @@ let test to_be_considered_and_now ((s,_,_) as set) rel candidate repr =
    let name = name_of_theorem candidate' rel' repr' in
    ("theorem " ^ name ^ ": \\forall A." ^ matita_of_cop "A" candidate' ^
       " " ^ string_of_rel rel' ^ " " ^
-      matita_of_cop "A" repr' ^ ". intros; autobatch size=8 depth=4 width=2. qed.") in
+      matita_of_cop "A" repr' ^ ". intros; autobatch size=8 depth=3 width=2. qed.") in
   output_string ch (query ^ "\n");
   close_out ch;
   let res =
@@ -256,13 +258,15 @@ let rec geq_reachable node =
 let locate_using_leq to_be_considered_and_now ((repr,_,leq,geq) as node)
  set start
 =
- let rec aux ((nodes,inf,sup) as set) =
+ let rec aux ((nodes,inf,sup) as set) already_visited =
   function
      [] -> set
    | (repr',_,_,geq') as node' :: tl ->
-       if repr=repr' then aux set (!geq'@tl)
+       if List.exists (function n -> n===node') already_visited then
+        aux set already_visited tl
+       else if repr=repr' then aux set (node'::already_visited) (!geq'@tl)
        else if leq_reachable node' !leq then
-        aux set tl
+        aux set (node'::already_visited) tl
        else if test to_be_considered_and_now set SubsetEqual repr repr' then
         begin
          let sup = remove node sup in
@@ -277,12 +281,12 @@ let locate_using_leq to_be_considered_and_now ((repr,_,leq,geq) as node)
            inf
           in
            leq_transitive_closure node node';
-           aux (nodes,inf,sup) (!geq'@tl)
+           aux (nodes,inf,sup) (node'::already_visited) (!geq'@tl)
         end
        else
-        aux set tl
+        aux set (node'::already_visited) tl
  in
-  aux set start
+  aux set [] start
 ;;
 
 exception SameEquivalenceClass of set * equivalence_class * equivalence_class;;
@@ -290,13 +294,15 @@ exception SameEquivalenceClass of set * equivalence_class * equivalence_class;;
 let locate_using_geq to_be_considered_and_now ((repr,_,leq,geq) as node)
  set start
 =
- let rec aux ((nodes,inf,sup) as set) =
+ let rec aux ((nodes,inf,sup) as set) already_visited =
   function
      [] -> set
    | (repr',_,leq',_) as node' :: tl ->
-       if repr=repr' then aux set (!leq'@tl)
+       if List.exists (function n -> n===node') already_visited then
+        aux set already_visited tl
+       else if repr=repr' then aux set (node'::already_visited) (!leq'@tl)
        else if geq_reachable node' !geq then
-        aux set tl
+        aux set (node'::already_visited) tl
        else if test to_be_considered_and_now set SupersetEqual repr repr' then
         begin
          if List.exists (function n -> n===node') !leq then
@@ -316,13 +322,13 @@ let locate_using_geq to_be_considered_and_now ((repr,_,leq,geq) as node)
              sup
            in
             geq_transitive_closure node node';
-            aux (nodes,inf,sup) (!leq'@tl)
+            aux (nodes,inf,sup) (node'::already_visited) (!leq'@tl)
           end
         end
        else
-        aux set tl
+        aux set (node'::already_visited) tl
  in
-  aux set start
+  aux set [] start
 ;;
 
 let analyze_one to_be_considered repr hecandidate (news,((nodes,inf,sup) as set)) =
