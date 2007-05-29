@@ -84,16 +84,12 @@ MAINCMOS = $(MAINCML:%.ml=%.cmo)
 CMXS = $(patsubst %.cmo,%.cmx,$(CMOS))
 CCMXS = $(patsubst %.cmo,%.cmx,$(CCMOS))
 MAINCMXS = $(patsubst %.cmo,%.cmx,$(MAINCMOS))
-$(CMOS): $(LIB_DEPS)
+$(CMOS) : $(LIB_DEPS)
 $(CMXOS): $(LIBX_DEPS)
-ifeq ($(MAKECMDGOALS),all)
-   $(CMOS:%.cmo=%.cmi): $(LIB_DEPS)
-endif
-ifeq ($(MAKECMDGOALS),)
-   $(CMOS:%.cmo=%.cmi): $(LIB_DEPS)
-endif
 ifeq ($(MAKECMDGOALS),opt)
-   $(CMOS:%.cmo=%.cmi): $(LIBX_DEPS)
+	$(MLI:%.mli=%.cmi): $(LIBX_DEPS)
+else
+	 $(MLI:%.mli=%.cmi): $(LIB_DEPS)
 endif
 
 LIB_DEPS := $(shell $(OCAMLFIND) query -recursive -predicates "byte" -format "%d/%a" $(MATITA_REQUIRES))
