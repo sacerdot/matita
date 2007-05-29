@@ -81,7 +81,17 @@ let cell_of_candidate height context ?(active=false) g id c =
   in
   tooltip#set_tip ~text (button :> GObj.widget);
   ignore(button#connect#clicked 
-    (fun _ -> HLog.warn (string_of_int id); Auto.give_hint id));
+    (fun _ -> 
+      let menu = GMenu.menu () in
+      let follow = GMenu.menu_item ~label:"Follow" () in
+      let prune = GMenu.menu_item ~label:"Prune" () in
+      ignore (follow#connect#activate 
+        (fun _ -> HLog.warn (string_of_int id); Auto.give_hint id));
+      ignore (prune#connect#activate 
+        (fun _ -> HLog.warn (string_of_int id); Auto.give_prune_hint id));
+      menu#append follow;
+      menu#append prune;
+      menu#popup 0 (GtkMain.Main.get_current_event_time ())));
   button
 ;;
 let cell_of_goal height win_width context goal = 
@@ -114,7 +124,7 @@ let cell_of_candidates height grey context goal cads =
 ;;
 
 let elems_to_rows height context win_width (table : GPack.table) (or_list) =
-  let height = height / (List.length or_list) in
+  let height = height / ((List.length or_list) + 1) in
   let _ = 
    List.fold_left 
     (fun position (goal_id, goal, grey, depth, candidates) ->

@@ -10,9 +10,10 @@ PKGS = -package "$(MATITA_REQUIRES)"
 CPKGS = -package "$(MATITA_CREQUIRES)"
 OCAML_THREADS_FLAGS = -thread
 OCAML_DEBUG_FLAGS = -g
+#OCAMLOPT_DEBUG_FLAGS = -p
 OCAMLC_FLAGS = $(OCAML_FLAGS) $(OCAML_THREADS_FLAGS)
 OCAMLC = $(OCAMLFIND) ocamlc $(OCAMLC_FLAGS) $(OCAML_DEBUG_FLAGS)
-OCAMLOPT = $(OCAMLFIND) opt $(OCAMLC_FLAGS)
+OCAMLOPT = $(OCAMLFIND) opt $(OCAMLC_FLAGS) $(OCAMLOPT_DEBUG_FLAGS)
 OCAMLDEP = $(OCAMLFIND) ocamldep $(OCAML_FLAGS)
 INSTALL_PROGRAMS= matita matitac
 INSTALL_PROGRAMS_LINKS_MATITA= cicbrowser 
@@ -84,6 +85,15 @@ CCMXS = $(patsubst %.cmo,%.cmx,$(CCMOS))
 MAINCMXS = $(patsubst %.cmo,%.cmx,$(MAINCMOS))
 $(CMOS): $(LIB_DEPS)
 $(CMXOS): $(LIBX_DEPS)
+ifeq ($(MAKECMDGOALS),all)
+   $(CMOS:%.cmo=%.cmi): $(LIB_DEPS)
+endif
+ifeq ($(MAKECMDGOALS),)
+   $(CMOS:%.cmo=%.cmi): $(LIB_DEPS)
+endif
+ifeq ($(MAKECMDGOALS),opt)
+   $(CMOS:%.cmo=%.cmi): $(LIBX_DEPS)
+endif
 
 LIB_DEPS := $(shell $(OCAMLFIND) query -recursive -predicates "byte" -format "%d/%a" $(MATITA_REQUIRES))
 LIBX_DEPS := $(shell $(OCAMLFIND) query -recursive -predicates "native" -format "%d/%a" $(MATITA_REQUIRES))

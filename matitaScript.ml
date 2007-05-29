@@ -541,36 +541,47 @@ let rec eval_macro include_paths (buffer : GText.buffer) guistuff lexicon_status
           CicMetaSubst.apply_subst subst (Cic.Meta (i,irl))
         in
         let time = Unix.gettimeofday () -. timestamp in
-        let text = 
-          comment parsed_text ^ "\n" ^ 
-          cic2grafite cc menv proof_term ^ 
-          (Printf.sprintf "\n(* end auto proof: %4.2f *)" time)
+        let size, depth = Auto.size_and_depth cc menv proof_term in
+        let trailer = 
+          Printf.sprintf 
+            "\n(* end auto(%s) proof: TIME=%4.2f SIZE=%d DEPTH=%d *)"
+            Auto.revision time size depth
         in
-        (* alternative using FG stuff 
-        let proof_term = 
-          Auto.lambda_close ~prefix_name:"orrible_hack_" proof_term menv cc 
+        let proof_script = 
+          if List.exists (fun (s,_) -> s = "paramodulation") params then
+            (* use declarative output *)
+            "Not supported yet"
+          else
+            if true then
+              (* use cic2grafite *)
+              cic2grafite cc menv proof_term 
+            else
+              (* alternative using FG stuff *)
+              let proof_term = 
+                Auto.lambda_close ~prefix_name:"orrible_hack_" 
+                  proof_term menv cc 
+              in
+              let ty,_ = 
+                CicTypeChecker.type_of_aux'
+                  menv [] proof_term CicUniv.empty_ugraph
+              in
+              let obj = 
+                Cic.Constant ("",Some proof_term, ty, [], [`Flavour `Lemma])
+              in
+                Pcre.qreplace ~templ:"?" ~pat:"orrible_hack_[0-9]+"
+                 (strip_comments
+                  (ApplyTransformation.txt_of_cic_object
+                    ~map_unicode_to_tex:false 
+                    ~skip_thm_and_qed:true
+                    ~skip_initial_lambdas:true
+                    80 (GrafiteAst.Procedural None) "" obj)) 
         in
-        let ty,_ = 
-          CicTypeChecker.type_of_aux' menv [] proof_term CicUniv.empty_ugraph
-        in
-        let obj = 
-          Cic.Constant ("",Some proof_term, ty, [], [`Flavour `Lemma])
-        in
-        let text = 
-          comment parsed_text ^ 
-          Pcre.qreplace ~templ:"?" ~pat:"orrible_hack_[0-9]+"
-           (strip_comments
-            (ApplyTransformation.txt_of_cic_object
-              ~map_unicode_to_tex:false 
-              ~skip_thm_and_qed:true
-              ~skip_initial_lambdas:true
-              80 (GrafiteAst.Procedural None) "" obj)) ^
-          "(* end auto proof *)"
-        in
-        *)
+        let text = comment parsed_text ^ "\n" ^ proof_script ^ trailer in
         [],text,parsed_text_length
       with
-        ProofEngineTypes.Fail _ -> [], comment parsed_text, parsed_text_length)
+        ProofEngineTypes.Fail _ as exn -> 
+          raise exn
+          (* [], comment parsed_text ^ "\nfail.\n", parsed_text_length *))
   | TA.Inline (_,style,suri,prefix) ->
        let str = ApplyTransformation.txt_of_inline_macro style suri prefix in
        [], str, String.length parsed_text
