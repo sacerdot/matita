@@ -1,3 +1,31 @@
+(**** PROFILING ****)
+let ok_time = ref 0.0;;
+let ko_time = ref 0.0;;
+
+let profile f x =
+ let before = Unix.gettimeofday () in
+ let res = f x in
+ let after = Unix.gettimeofday () in
+ let delta = after -. before in
+  if res = Unix.WEXITED 0 then
+   ok_time := !ok_time +. delta
+  else
+   ko_time := !ko_time +. delta;
+  res
+;;
+
+let _ =
+ Sys.catch_break true;
+ at_exit
+  (function () ->
+    prerr_endline
+     ("\nTIME SPENT IN CHECKING GOOD CONJECTURES: " ^ string_of_float !ok_time);
+    prerr_endline
+     ("TIME SPENT IN CHECKING BAD CONJECTURES: " ^ string_of_float !ko_time);)
+;;
+
+(**** END PROFILING ****)
+
 type rel = Equal | SubsetEqual | SupersetEqual
 
 let string_of_rel =
@@ -174,8 +202,9 @@ let test to_be_considered_and_now ((s,_,_) as set) rel candidate repr =
   close_out ch;
   let res =
    (*Unix.system "../../../matitac.opt xxx.ma >> log 2>&1" = Unix.WEXITED 0*)
-   Unix.system "../../../matitac.opt xxx.ma > /dev/null 2>&1" = Unix.WEXITED 0
+   profile Unix.system "../../../matitac.opt xxx.ma > /dev/null 2>&1" = Unix.WEXITED 0
   in
+   ignore (Unix.system "echo '(*' >> log.ma && cat xxx.dot >> log.ma && echo '*)' >> log.ma");
    let ch = open_out_gen [Open_append] 0o0600 "log.ma" in
    if res then
     output_string ch (query ^ "\n")
