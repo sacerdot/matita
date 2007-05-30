@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/formal_topologyxxx2/".
+set "baseuri" "cic:/matita/formal_topology/".
 include "logic/equality.ma".
 
 axiom S: Type.
@@ -23,7 +23,7 @@ notation "hvbox(A break ⊆ B)" with precedence 59
 for @{ 'subseteq $A $B}.
 
 interpretation "Subseteq" 'subseteq A B =
- (cic:/matita/formal_topologyxxx2/leq.con A B).
+ (cic:/matita/formal_topology/leq.con A B).
 
 axiom leq_refl: ∀A. A ⊆ A.
 axiom leq_antisym: ∀A,B. A ⊆ B → B ⊆ A → A=B.

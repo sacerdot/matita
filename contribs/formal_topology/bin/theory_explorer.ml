@@ -159,13 +159,63 @@ let ps_of_set (to_be_considered,under_consideration,news) ?processing (s,inf,sup
   (*ignore (read_line ())*)
 ;;
 
+(******** communication with matitawiki ************)
+let min_ch,mout_ch = Unix.open_process "../../../matitawiki.opt 2> /dev/null";;
+
+let exec_cmd ?(undo=false) s =
+ let un = if undo then "un" else "" in
+(*prerr_endline ("<pgip><" ^ un ^ "doitem>" ^ s ^ "</" ^ un ^ "doitem></pgip>\n");*)
+ output_string mout_ch ("<pgip><" ^ un ^ "doitem>" ^ s ^ "</" ^ un ^ "doitem></pgip>\n");
+ flush mout_ch;
+ let rec aux v =
+  let l = input_line min_ch in
+  let last = String.length l - 1 in
+   assert (last > 0);
+   if l.[last] = Char.chr 249 then
+    int_of_string (String.sub l 0 last)
+   else
+    aux l
+ in
+  aux "x"
+;;
+
+let exec_cmds =
+ let rec aux undopos =
+  function
+     [] -> true
+   | he::tl ->
+      let pos = exec_cmd he in
+       if pos = -1 then
+        begin
+         match undopos with
+            None -> assert false
+          | Some undopos ->
+             assert (exec_cmd ~undo:true (string_of_int (undopos - 1)) <> -1);
+             false
+        end
+       else
+        match undopos with
+           None -> aux (Some pos) tl
+         | _ -> aux undopos tl
+ in
+  aux None
+
+let _ =
+ assert (exec_cmd "set \"baseuri\" \"cic:/matita/theory_former\"." <> -1);
+ assert (exec_cmd "include \"formal_topology.ma\"." <> -1);
+;;
+
+(********* testing a conjecture *******************)
+
 let test to_be_considered_and_now ((s,_,_) as set) rel candidate repr =
  ps_of_set to_be_considered_and_now ~processing:(candidate,rel,repr) set;
  print_string
   (string_of_cop candidate ^ " " ^ string_of_rel rel ^ " " ^ string_of_cop repr ^ "? ");
  flush stdout;
+(*
  assert (Unix.system "cat log.ma | sed s/^theorem/axiom/g | sed 's/\\. intros.*qed\\././g' > xxx.ma" = Unix.WEXITED 0);
  let ch = open_out_gen [Open_append] 0 "xxx.ma" in
+*)
 (*
  let i = ref 0 in
   List.iter
@@ -193,17 +243,26 @@ let test to_be_considered_and_now ((s,_,_) as set) rel candidate repr =
       SupersetEqual -> repr,SubsetEqual,candidate
     | Equal
     | SubsetEqual -> candidate,rel,repr in
-  let query =
+  let query1 =
    let name = name_of_theorem candidate' rel' repr' in
    ("theorem " ^ name ^ ": \\forall A." ^ matita_of_cop "A" candidate' ^
       " " ^ string_of_rel rel' ^ " " ^
-      matita_of_cop "A" repr' ^ ". intros; autobatch size=8 depth=3 width=2. qed.") in
+      matita_of_cop "A" repr' ^ ".") in
+  let query2 = "intros;" in
+  let query3 = "autobatch size=8 depth=3 width=2." in
+  let query4 = "qed." in
+  let query = query1 ^ query2 ^ query3 ^ query4 in
+(*
   output_string ch (query ^ "\n");
   close_out ch;
+*)
+  let res = exec_cmds [query1; query2; query3; query4] in
+(*
   let res =
    (*Unix.system "../../../matitac.opt xxx.ma >> log 2>&1" = Unix.WEXITED 0*)
    profile Unix.system "../../../matitac.opt xxx.ma > /dev/null 2>&1" = Unix.WEXITED 0
   in
+*)
    ignore (Unix.system "echo '(*' >> log.ma && cat xxx.dot >> log.ma && echo '*)' >> log.ma");
    let ch = open_out_gen [Open_append] 0o0600 "log.ma" in
    if res then
