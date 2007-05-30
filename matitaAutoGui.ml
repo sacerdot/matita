@@ -190,6 +190,12 @@ let auto_dialog elems =
       Auto.step ();
       win#toplevel#destroy ();
       GMain.Main.quit ()));
+  ignore(win#toplevel#event#connect#delete
+    (fun _ -> 
+      Auto.pause false;
+      Auto.step ();
+      win#toplevel#destroy ();
+      GMain.Main.quit ();true));
   let redraw_callback _ = fill_win win elems;true in
   let redraw = GMain.Timeout.add ~ms:400 ~callback:redraw_callback in
   ignore(win#buttonPAUSE#connect#clicked 
