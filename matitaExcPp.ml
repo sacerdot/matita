@@ -54,6 +54,8 @@ let rec to_string =
         fname
   | ProofEngineTypes.Fail msg -> None, "Tactic error: " ^ Lazy.force msg
   | Continuationals.Error s -> None, "Tactical error: " ^ Lazy.force s
+  | ProofEngineHelpers.Bad_pattern msg ->
+     None, "Bad pattern: " ^ Lazy.force msg
   | CicRefine.RefineFailure msg ->
      None, "Refiner error: " ^ Lazy.force msg
   | CicTypeChecker.TypeCheckerFailure msg ->
