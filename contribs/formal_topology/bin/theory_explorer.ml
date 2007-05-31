@@ -354,7 +354,7 @@ let locate_using_leq to_be_considered_and_now ((repr,_,leq,geq) as node)
         aux set already_visited tl
        else if repr=repr' then aux set (node'::already_visited) (!geq'@tl)
        else if leq_reachable node' !leq then
-        aux set (node'::already_visited) tl
+        aux set (node'::already_visited) (!geq'@tl)
        else if test to_be_considered_and_now set SubsetEqual repr repr' then
         begin
          let sup = remove node sup in
@@ -390,7 +390,7 @@ let locate_using_geq to_be_considered_and_now ((repr,_,leq,geq) as node)
         aux set already_visited tl
        else if repr=repr' then aux set (node'::already_visited) (!leq'@tl)
        else if geq_reachable node' !geq then
-        aux set (node'::already_visited) tl
+        aux set (node'::already_visited) (!leq'@tl)
        else if test to_be_considered_and_now set SupersetEqual repr repr' then
         begin
          if List.exists (function n -> n===node') !leq then
