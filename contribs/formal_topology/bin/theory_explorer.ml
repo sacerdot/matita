@@ -343,6 +343,8 @@ let rec geq_reachable node =
   | (_,_,_,geq)::tl -> geq_reachable node (!geq@tl)
 ;;
 
+exception SameEquivalenceClass of set * equivalence_class * equivalence_class;;
+
 let locate_using_leq to_be_considered_and_now ((repr,_,leq,geq) as node)
  set start
 =
@@ -357,27 +359,31 @@ let locate_using_leq to_be_considered_and_now ((repr,_,leq,geq) as node)
         aux set (node'::already_visited) (!geq'@tl)
        else if test to_be_considered_and_now set SubsetEqual repr repr' then
         begin
-         let sup = remove node sup in
-         let inf =
-          if !geq' = [] then
-           let inf = remove node' inf in
-            if !geq = [] then
-             inf@@node
+         if List.exists (function n -> n===node') !geq then
+          (* We have found two equal nodes! *)
+          raise (SameEquivalenceClass (set,node,node'))
+         else
+          begin
+           let sup = remove node sup in
+           let inf =
+            if !geq' = [] then
+             let inf = remove node' inf in
+              if !geq = [] then
+               inf@@node
+              else
+               inf
             else
              inf
-          else
-           inf
-          in
-           leq_transitive_closure node node';
-           aux (nodes,inf,sup) (node'::already_visited) (!geq'@tl)
+            in
+             leq_transitive_closure node node';
+             aux (nodes,inf,sup) (node'::already_visited) (!geq'@tl)
+          end
         end
        else
         aux set (node'::already_visited) tl
  in
   aux set [] start
 ;;
-
-exception SameEquivalenceClass of set * equivalence_class * equivalence_class;;
 
 let locate_using_geq to_be_considered_and_now ((repr,_,leq,geq) as node)
  set start
@@ -391,6 +397,9 @@ let locate_using_geq to_be_considered_and_now ((repr,_,leq,geq) as node)
        else if repr=repr' then aux set (node'::already_visited) (!leq'@tl)
        else if geq_reachable node' !geq then
         aux set (node'::already_visited) (!leq'@tl)
+       else if (List.exists (function n -> not (leq_reachable n [node'])) !leq)
+        then
+         aux set (node'::already_visited) tl
        else if test to_be_considered_and_now set SupersetEqual repr repr' then
         begin
          if List.exists (function n -> n===node') !leq then
@@ -432,18 +441,23 @@ if not (List.for_all (fun ((_,_,leq,_) as node) -> !leq = [] && let rec check_in
     let node = candidate,[],leq,geq in
     let nodes = nodes@[node] in
     let set = nodes,inf@[node],sup@[node] in
-    let start_inf,start_sup =
+    let set,start_inf,start_sup =
      let repr_node =
       match List.filter (fun (repr',_,_,_) -> repr=repr') nodes with
          [node] -> node
        | _ -> assert false
      in
-inf,sup(*
-     match hecandidate with
-        I -> inf,[repr_node]
-      | C -> [repr_node],sup
-      | M -> inf,sup
-*)
+      match hecandidate,repr with
+         I, I::_ -> raise (SameEquivalenceClass (set,node,repr_node))
+       | I, _ ->
+          add_leq_arc node repr_node;
+          (nodes,remove repr_node inf@[node],sup),inf,sup
+       | C, C::_ -> raise (SameEquivalenceClass (set,node,repr_node))
+       | C, _ ->
+          add_geq_arc node repr_node;
+          (nodes,inf,remove repr_node sup@[node]),inf,sup
+       | M, M::M::_ -> raise (SameEquivalenceClass (set,node,repr_node))
+       | M, _ -> set,inf,sup
     in
     let set =
      locate_using_leq (to_be_considered,Some repr,news) node set start_sup in
