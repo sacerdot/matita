@@ -7,7 +7,7 @@ let profile f x =
  let res = f x in
  let after = Unix.gettimeofday () in
  let delta = after -. before in
-  if res = Unix.WEXITED 0 then
+  if res then
    ok_time := !ok_time +. delta
   else
    ko_time := !ko_time +. delta;
@@ -256,7 +256,7 @@ let test to_be_considered_and_now ((s,_,_) as set) rel candidate repr =
   output_string ch (query ^ "\n");
   close_out ch;
 *)
-  let res = exec_cmds [query1; query2; query3; query4] in
+  let res = profile exec_cmds [query1; query2; query3; query4] in
 (*
   let res =
    (*Unix.system "../../../matitac.opt xxx.ma >> log 2>&1" = Unix.WEXITED 0*)
