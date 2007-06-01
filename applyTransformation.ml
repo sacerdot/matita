@@ -150,7 +150,7 @@ let term2pres ?map_unicode_to_tex n ids_to_inner_sorts annterm =
    let bobj =
       CicNotationPres.box_of_mpres (
          CicNotationPres.render ~prec:90 ids_to_uris 
-	    (TermContentPres.pp_ast ast)
+            (TermContentPres.pp_ast ast)
       )
    in
    let render = function _::x::_ -> x | _ -> assert false in
@@ -166,34 +166,39 @@ let txt_of_cic_object
         let aobj,_,_,ids_to_inner_sorts,ids_to_inner_types,_,_ =
             Cic2acic.acic_object_of_cic_object obj
         in
-	aobj, ids_to_inner_sorts, ids_to_inner_types
+        aobj, ids_to_inner_sorts, ids_to_inner_types
      with e -> 
         let msg = "txt_of_cic_object: " ^ Printexc.to_string e in
-	failwith msg
+        failwith msg
   in
   match style with
      | G.Declarative      ->
         let aobj, ids_to_inner_sorts, ids_to_inner_types = get_aobj obj in
-	let cobj = Acic2content.annobj2content ids_to_inner_sorts ids_to_inner_types aobj in
-        let bobj = Content2pres.content2pres ids_to_inner_sorts cobj in
+        let cobj = 
+          Acic2content.annobj2content 
+            ids_to_inner_sorts ids_to_inner_types aobj 
+        in
+        let bobj = 
+          Content2pres.content2pres 
+            ?skip_initial_lambdas ?skip_thm_and_qed ~ids_to_inner_sorts cobj 
+        in
         remove_closed_substs ("\n\n" ^
-	   BoxPp.render_to_string ?map_unicode_to_tex
+           BoxPp.render_to_string ?map_unicode_to_tex
             (function _::x::_ -> x | _ -> assert false) n
             (CicNotationPres.mpres_of_box bobj)
-	)
+        )
      | G.Procedural depth ->
         let obj = ProceduralOptimizer.optimize_obj obj in
-	let aobj, ids_to_inner_sorts, ids_to_inner_types = get_aobj obj in
+        let aobj, ids_to_inner_sorts, ids_to_inner_types = get_aobj obj in
         let term_pp = term2pres (n - 8) ids_to_inner_sorts in
         let lazy_term_pp = term_pp in
         let obj_pp = CicNotationPp.pp_obj term_pp in
         let aux = GrafiteAstPp.pp_statement ~term_pp ~lazy_term_pp ~obj_pp in
-	let script = 
+        let script = 
     Acic2Procedural.acic2procedural 
-	   ~ids_to_inner_sorts ~ids_to_inner_types ?depth ?skip_thm_and_qed 
-       ?skip_initial_lambdas prefix aobj 
+           ~ids_to_inner_sorts ~ids_to_inner_types ?depth ?skip_thm_and_qed prefix aobj 
   in
-	String.concat "" (List.map aux script) ^ "\n\n"
+        String.concat "" (List.map aux script) ^ "\n\n"
 
 let txt_of_inline_macro style suri prefix =
    let print_exc = function
@@ -208,7 +213,7 @@ let txt_of_inline_macro style suri prefix =
                             (fst (CicEnvironment.get_obj CicUniv.empty_ugraph uri))
       with
          | e -> 
-	    Printf.sprintf "\n(* ERRORE IN STAMPA DI %s\nEXCEPTION: %s *)\n" 
-	    (UriManager.string_of_uri uri) (print_exc e)
+            Printf.sprintf "\n(* ERRORE IN STAMPA DI %s\nEXCEPTION: %s *)\n" 
+            (UriManager.string_of_uri uri) (print_exc e)
    in
    String.concat "" (List.map map sorted_uris)

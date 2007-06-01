@@ -68,7 +68,8 @@ val txt_of_cic_sequent_conclusion:
 (* columns, rendering style, name prefix, object *)
 val txt_of_cic_object: 
   ?map_unicode_to_tex:bool -> 
-  ?skip_thm_and_qed:bool -> ?skip_initial_lambdas:bool ->  
+  ?skip_thm_and_qed:bool -> 
+  ?skip_initial_lambdas:bool -> 
     int -> GrafiteAst.presentation_style -> string ->
   Cic.obj ->
     string

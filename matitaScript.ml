@@ -548,9 +548,26 @@ let rec eval_macro include_paths (buffer : GText.buffer) guistuff lexicon_status
             Auto.revision time size depth
         in
         let proof_script = 
-          if List.exists (fun (s,_) -> s = "paramodulation") params then
-            (* use declarative output *)
-            "Not supported yet"
+          if true (* List.exists (fun (s,_) -> s = "paramodulation") params *) then
+              let proof_term = 
+                Auto.lambda_close ~prefix_name:"orrible_hack_" 
+                  proof_term menv cc 
+              in
+              let ty,_ = 
+                CicTypeChecker.type_of_aux'
+                  menv [] proof_term CicUniv.empty_ugraph
+              in
+              prerr_endline (CicPp.ppterm proof_term);
+              (* use declarative output *)
+              let obj =
+                (* il proof_term vive in cc, devo metterci i lambda no? *)
+                (Cic.CurrentProof ("xxx",menv,proof_term,ty,[],[]))
+              in
+               ApplyTransformation.txt_of_cic_object
+                ~map_unicode_to_tex:false 
+                ~skip_thm_and_qed:true
+                ~skip_initial_lambdas:true
+                80 GrafiteAst.Declarative "" obj
           else
             if true then
               (* use cic2grafite *)
