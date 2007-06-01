@@ -83,12 +83,12 @@
     <keyword>absurd</keyword>
     <keyword>apply</keyword>
     <keyword>assumption</keyword>
-    <keyword>auto</keyword>
-    <keyword>paramodulation</keyword>
+    <keyword>autobatch</keyword>
     <keyword>cases</keyword>
     <keyword>clear</keyword>
     <keyword>clearbody</keyword>
     <keyword>change</keyword>
+    <keyword>compose</keyword>
     <keyword>constructor</keyword>
     <keyword>contradiction</keyword>
     <keyword>cut</keyword>
@@ -178,6 +178,7 @@
     <keyword>check</keyword>
     <keyword>hint</keyword>
     <keyword>set</keyword>
+    <keyword>auto</keyword>
   </keyword-list>
   
   <keyword-list _name = "Whelp Macro" style = "Others 3"
