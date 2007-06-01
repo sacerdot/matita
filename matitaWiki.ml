@@ -124,6 +124,10 @@ let outer_syntax_parser () =
              with
               Failure _ -> assert false
 ;;
+
+let include_paths =
+ lazy (Helm_registry.get_list Helm_registry.string "matita.includes")
+;;
   
 let rec interactive_loop () = 
   (* every loop is terminated by a terminator both on stdout and stderr *)
@@ -167,12 +171,9 @@ let rec interactive_loop () =
                    ) open_goals))
           | _ -> ()
         in
-        let include_paths =
-         Helm_registry.get_list Helm_registry.string "matita.includes"
-        in
          run_script str 
            (MatitaEngine.eval_from_stream ~first_statement_only:true ~prompt:false
-           ~include_paths ~watch_statuses) ;
+           ~include_paths:(Lazy.force include_paths) ~watch_statuses) ;
          interactive_loop (Some (List.length !lexicon_status))
   with 
    | GrafiteEngine.Macro (floc,_) ->
