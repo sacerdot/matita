@@ -41,7 +41,6 @@ MLI = \
 	matitaScript.mli	\
 	matitaMathView.mli 	\
 	matitaGui.mli		\
-	matitaAutoGui.cmo		\
 	$(NULL)
 CMLI =				\
 	matitaTypes.mli		\
@@ -62,7 +61,7 @@ MAINCMLI =			\
 	gragrep.mli 		\
 	$(NULL)
 # objects for matita (GTK GUI)
-ML = buildTimeConf.ml matitaGeneratedGui.ml $(MLI:%.mli=%.ml)
+ML = buildTimeConf.ml matitaGeneratedGui.ml matitaAutoGui.ml $(MLI:%.mli=%.ml)
 # objects for matitac (batch compiler)
 CML = buildTimeConf.ml $(CMLI:%.mli=%.ml)
 MAINCML = $(MAINCMLI:%.mli=%.ml)
@@ -421,7 +420,7 @@ else
   TO_DEPEND_ON=$(LIB_DEPS)
 endif
 
-$(MLI:%.mli=%.cmi): $(TO_DEPEND_ON)
+$(MLI:%.mli=%.cmi) $(ML:%.ml=%.cmo) $(ML:%.ml=%.cmx): $(TO_DEPEND_ON)
 
 include $(TO_INCLUDE)
 
