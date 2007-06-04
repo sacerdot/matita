@@ -548,7 +548,7 @@ let rec eval_macro include_paths (buffer : GText.buffer) guistuff lexicon_status
             Auto.revision time size depth
         in
         let proof_script = 
-          if true (* List.exists (fun (s,_) -> s = "paramodulation") params *) then
+          if List.exists (fun (s,_) -> s = "paramodulation") params then
               let proof_term = 
                 Auto.lambda_close ~prefix_name:"orrible_hack_" 
                   proof_term menv cc 
