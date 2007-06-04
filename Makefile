@@ -86,11 +86,6 @@ CCMXS = $(patsubst %.cmo,%.cmx,$(CCMOS))
 MAINCMXS = $(patsubst %.cmo,%.cmx,$(MAINCMOS))
 $(CMOS) : $(LIB_DEPS)
 $(CMXOS): $(LIBX_DEPS)
-ifeq ($(MAKECMDGOALS),opt)
-	$(MLI:%.mli=%.cmi): $(LIBX_DEPS)
-else
-	 $(MLI:%.mli=%.cmi): $(LIB_DEPS)
-endif
 
 LIB_DEPS := $(shell $(OCAMLFIND) query -recursive -predicates "byte" -format "%d/%a" $(MATITA_REQUIRES))
 LIBX_DEPS := $(shell $(OCAMLFIND) query -recursive -predicates "native" -format "%d/%a" $(MATITA_REQUIRES))
@@ -404,21 +399,31 @@ depend.opt:
 	$(H)echo "  OCAMLDEP -native"
 	$(H)$(OCAMLDEP) -native *.ml *.mli > .depend.opt
 
-ifeq ($(MAKECMDGOALS),)
-  include .depend   
+# this should be sligtly better, since should work with 'make all opt'
+ifneq (,$(findstring all,$(MAKECMDGOALS)))
+  # if we 'make all opt' the deps for 'all' should be fine also for opt
+	# if we 'make opt all' it should not work...
+  TO_INCLUDE+=.depend
+  TO_DEPEND_ON=$(LIB_DEPS)
+else ifneq (,$(findstring opt,$(MAKECMDGOALS)))
+  TO_INCLUDE+=.depend.opt
+  TO_DEPEND_ON=$(LIBX_DEPS)
+else ifneq (,$(findstring world,$(MAKECMDGOALS)))
+  ifeq ($(HAVE_OCAMLOPT),yes)
+    TO_INCLUDE+=.depend.opt
+    TO_DEPEND_ON=$(LIBX_DEPS)
+  else
+    TO_INCLUDE+=.depend
+    TO_DEPEND_ON=$(LIB_DEPS)
+  endif
+else
+  TO_INCLUDE+=.depend
+  TO_DEPEND_ON=$(LIB_DEPS)
 endif
 
-ifeq ($(MAKECMDGOALS), all)
-  include .depend   
-endif
+$(MLI:%.mli=%.cmi): $(TO_DEPEND_ON)
 
-ifeq ($(MAKECMDGOALS), opt)
-  include .depend.opt   
-endif
-
-ifeq ($(MAKECMDGOALS), world)
-  include .depend.opt   
-endif
+include $(TO_INCLUDE)
 
 %.cmi: %.mli
 	$(H)echo "  OCAMLC $<"
