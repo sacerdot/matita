@@ -357,6 +357,9 @@ let locate_using_leq to_be_considered_and_now ((repr,_,leq,geq) as node)
        else if repr=repr' then aux set (node'::already_visited) (!geq'@tl)
        else if leq_reachable node' !leq then
         aux set (node'::already_visited) (!geq'@tl)
+       else if (List.exists (function n -> not (geq_reachable n [node'])) !geq)
+        then
+         aux set (node'::already_visited) tl
        else if test to_be_considered_and_now set SubsetEqual repr repr' then
         begin
          if List.exists (function n -> n===node') !geq then
