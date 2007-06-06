@@ -399,30 +399,40 @@ depend.opt:
 	$(H)$(OCAMLDEP) -native *.ml *.mli > .depend.opt
 
 # this should be sligtly better, since should work with 'make all opt'
-ifneq (,$(findstring all,$(MAKECMDGOALS)))
+MAKECMDGOALS_DELIM=$(addprefix _x_,$(addsuffix _x_,$(MAKECMDGOALS)))
+ifneq (,$(findstring _x_all_x_,$(MAKECMDGOALS_DELIM)))
   # if we 'make all opt' the deps for 'all' should be fine also for opt
-	# if we 'make opt all' it should not work...
+  # if we 'make opt all' it should not work...
+  INCLUDE_MANDATORY=yes
   TO_INCLUDE+=.depend
   TO_DEPEND_ON=$(LIB_DEPS)
-else ifneq (,$(findstring opt,$(MAKECMDGOALS)))
+else ifneq (,$(findstring _x_opt_x_,$(MAKECMDGOALS_DELIM)))
+  INCLUDE_MANDATORY=yes
   TO_INCLUDE+=.depend.opt
   TO_DEPEND_ON=$(LIBX_DEPS)
-else ifneq (,$(findstring world,$(MAKECMDGOALS)))
+else ifneq (,$(findstring _x_world_x_,$(MAKECMDGOALS_DELIM)))
   ifeq ($(HAVE_OCAMLOPT),yes)
+    INCLUDE_MANDATORY=yes
     TO_INCLUDE+=.depend.opt
     TO_DEPEND_ON=$(LIBX_DEPS)
   else
+    INCLUDE_MANDATORY=yes
     TO_INCLUDE+=.depend
     TO_DEPEND_ON=$(LIB_DEPS)
   endif
 else
   TO_INCLUDE+=.depend
+  INCLUDE_MANDATORY=no
   TO_DEPEND_ON=$(LIB_DEPS)
 endif
 
 $(MLI:%.mli=%.cmi) $(ML:%.ml=%.cmo) $(ML:%.ml=%.cmx): $(TO_DEPEND_ON)
 
-include $(TO_INCLUDE)
+ifeq (no,$(INCLUDE_MANDATORY))
+  -include $(TO_INCLUDE)
+else
+  include $(TO_INCLUDE)
+endif
 
 %.cmi: %.mli
 	$(H)echo "  OCAMLC $<"
