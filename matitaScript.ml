@@ -549,7 +549,7 @@ let rec eval_macro include_paths (buffer : GText.buffer) guistuff lexicon_status
         in
         let proof_script = 
           if List.exists (fun (s,_) -> s = "paramodulation") params then
-              let proof_term = 
+              let proof_term, how_many_lambdas = 
                 Auto.lambda_close ~prefix_name:"orrible_hack_" 
                   proof_term menv cc 
               in
@@ -566,7 +566,7 @@ let rec eval_macro include_paths (buffer : GText.buffer) guistuff lexicon_status
                ApplyTransformation.txt_of_cic_object
                 ~map_unicode_to_tex:false 
                 ~skip_thm_and_qed:true
-                ~skip_initial_lambdas:true
+                ~skip_initial_lambdas:how_many_lambdas
                 80 GrafiteAst.Declarative "" obj
           else
             if true then
@@ -574,7 +574,7 @@ let rec eval_macro include_paths (buffer : GText.buffer) guistuff lexicon_status
               cic2grafite cc menv proof_term 
             else
               (* alternative using FG stuff *)
-              let proof_term = 
+              let proof_term, how_many_lambdas = 
                 Auto.lambda_close ~prefix_name:"orrible_hack_" 
                   proof_term menv cc 
               in
@@ -590,7 +590,7 @@ let rec eval_macro include_paths (buffer : GText.buffer) guistuff lexicon_status
                   (ApplyTransformation.txt_of_cic_object
                     ~map_unicode_to_tex:false 
                     ~skip_thm_and_qed:true
-                    ~skip_initial_lambdas:true
+                    ~skip_initial_lambdas:how_many_lambdas
                     80 (GrafiteAst.Procedural None) "" obj)) 
         in
         let text = comment parsed_text ^ "\n" ^ proof_script ^ trailer in
@@ -600,7 +600,10 @@ let rec eval_macro include_paths (buffer : GText.buffer) guistuff lexicon_status
           raise exn
           (* [], comment parsed_text ^ "\nfail.\n", parsed_text_length *))
   | TA.Inline (_,style,suri,prefix) ->
-       let str = ApplyTransformation.txt_of_inline_macro style suri prefix in
+       let str = 
+         ApplyTransformation.txt_of_inline_macro
+           ~map_unicode_to_tex:false style suri prefix 
+       in
        [], str, String.length parsed_text
                                 
 and eval_executable include_paths (buffer : GText.buffer) guistuff

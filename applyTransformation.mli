@@ -69,11 +69,12 @@ val txt_of_cic_sequent_conclusion:
 val txt_of_cic_object: 
   ?map_unicode_to_tex:bool -> 
   ?skip_thm_and_qed:bool -> 
-  ?skip_initial_lambdas:bool -> 
+  ?skip_initial_lambdas:int -> 
     int -> GrafiteAst.presentation_style -> string ->
   Cic.obj ->
     string
 
 (* presentation_style, uri or baseuri, name prefix *)
 val txt_of_inline_macro:
+  ?map_unicode_to_tex:bool -> 
    GrafiteAst.presentation_style -> string -> string -> string
