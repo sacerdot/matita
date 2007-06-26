@@ -35,5 +35,6 @@ qed.
 
 theorem nle_inv_succ_2: \forall y,x. x <= succ y \to
                         x = zero \lor \exists z. x = succ z \land z <= y.
- intros. inversion H; clear H; intros; subst; auto depth = 4.
+ intros. inversion H; clear H; intros; subst;
+ autobatch depth = 4.
 qed.

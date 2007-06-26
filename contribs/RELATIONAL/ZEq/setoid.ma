@@ -20,11 +20,11 @@ include "ZEq/defs.ma".
 theorem zeq_refl: \forall z. z = z.
  intros. elim z. clear z.
  lapply (nplus_total t t1). decompose.
- auto.
+ autobatch.
 qed.
 
 theorem zeq_sym: \forall z1,z2. z1 = z2 \to z2 = z1.
- intros. elim H. clear H z1 z2. auto.
+ intros. elim H. clear H z1 z2. autobatch.
 qed.
 (*
 theorem zeq_trans: \forall z1,z2. z1 = z2 \to 

@@ -20,7 +20,7 @@ include "NPlus/inv.ma".
 
 theorem nplus_total: \forall p,q. \exists r. p + q == r.
  intros 2. elim q; clear q;
- [ auto | decompose. auto ].
+ [ autobatch | decompose. autobatch ].
 qed.
 
 theorem nplus_mono: \forall p,q,r1. (p + q == r1) \to 
@@ -28,7 +28,7 @@ theorem nplus_mono: \forall p,q,r1. (p + q == r1) \to
  intros 4. elim H; clear H q r1;
  [ lapply linear nplus_inv_zero_2 to H1
  | lapply linear nplus_inv_succ_2 to H3. decompose
- ]; subst; auto.
+ ]; subst; autobatch.
 qed.
 
 theorem nplus_inj_1: \forall p1, q, r. (p1 + q == r) \to
@@ -36,5 +36,5 @@ theorem nplus_inj_1: \forall p1, q, r. (p1 + q == r) \to
  intros 4. elim H; clear H q r;
  [ lapply linear nplus_inv_zero_2 to H1
  | lapply linear nplus_inv_succ_2_3 to H3
- ]; auto.
+ ]; autobatch.
 qed.

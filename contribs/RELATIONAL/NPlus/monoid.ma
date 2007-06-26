@@ -19,12 +19,12 @@ include "NPlus/fun.ma".
 (* Monoidal properties ******************************************************)
 
 theorem nplus_zero_1: \forall q. zero + q == q.
- intros. elim q; clear q; auto.
+ intros. elim q; clear q; autobatch.
 qed.
 
 theorem nplus_succ_1: \forall p,q,r. (p + q == r) \to 
                       (succ p) + q == (succ r).
- intros. elim H; clear H q r; auto.
+ intros. elim H; clear H q r; autobatch.
 qed.
 
 theorem nplus_comm: \forall p, q, x. (p + q == x) \to
@@ -32,11 +32,11 @@ theorem nplus_comm: \forall p, q, x. (p + q == x) \to
  intros 4; elim H; clear H q x;
  [ lapply linear nplus_inv_zero_1 to H1
  | lapply linear nplus_inv_succ_1 to H3. decompose
- ]; subst; auto.
+ ]; subst; autobatch.
 qed.
 
 theorem nplus_comm_rew: \forall p,q,r. (p + q == r) \to q + p == r.
- intros. elim H; clear H q r; auto.
+ intros. elim H; clear H q r; autobatch.
 qed.
 
 theorem nplus_ass: \forall p1, p2, r1. (p1 + p2 == r1) \to
@@ -45,10 +45,10 @@ theorem nplus_ass: \forall p1, p2, r1. (p1 + p2 == r1) \to
                    \forall s3. (p1 + r3 == s3) \to s1 = s3.
  intros 4. elim H; clear H p2 r1;
  [ lapply linear nplus_inv_zero_1 to H2. subst.
-   lapply nplus_mono to H1, H3. subst. auto
+   lapply nplus_mono to H1, H3. subst. autobatch
  | lapply linear nplus_inv_succ_1 to H3. decompose. subst.
    lapply linear nplus_inv_succ_1 to H4. decompose. subst.
-   lapply linear nplus_inv_succ_2 to H5. decompose. subst. auto
+   lapply linear nplus_inv_succ_2 to H5. decompose. subst. autobatch
  ].
 qed.
  
@@ -56,7 +56,7 @@ qed.
 
 theorem nplus_inj_2: \forall p, q1, r. (p + q1 == r) \to
                      \forall q2. (p + q2 == r) \to q1 = q2.
- intros. auto.
+ intros. autobatch.
 qed.
 
 (* Corollaries of nonoidal properties ***************************************)
@@ -71,7 +71,7 @@ theorem nplus_comm_1: \forall p1, q, r1. (p1 + q == r1) \to
  | lapply linear nplus_inv_succ_2 to H3.
    lapply linear nplus_inv_succ_2 to H4. decompose. subst.
    lapply linear nplus_inv_succ_2 to H5. decompose
- ]; subst; auto.
+ ]; subst; autobatch.
 qed.
 
 theorem nplus_comm_1_rew: \forall p1,q,r1. (p1 + q == r1) \to
@@ -81,7 +81,7 @@ theorem nplus_comm_1_rew: \forall p1,q,r1. (p1 + q == r1) \to
  [ lapply linear nplus_inv_zero_2 to H1. subst
  | lapply linear nplus_inv_succ_2 to H3. decompose. subst.
    lapply linear nplus_inv_succ_2 to H4. decompose. subst
- ]; auto.
+ ]; autobatch.
 qed.
 
 (*                      

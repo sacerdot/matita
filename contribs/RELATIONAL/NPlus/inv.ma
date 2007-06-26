@@ -25,8 +25,8 @@ qed.
 theorem nplus_inv_succ_1: \forall p,q,r. ((succ p) + q == r) \to 
                           \exists s. r = (succ s) \land p + q == s.
  intros. elim H; clear H q r; intros;
- [ auto depth = 4
- | clear H1. decompose. subst. auto depth = 4
+ [ autobatch depth = 4
+ | clear H1. decompose. subst. autobatch depth = 4
  ]
 qed.
 
@@ -36,7 +36,8 @@ qed.
 
 theorem nplus_inv_succ_2: \forall p,q,r. (p + (succ q) == r) \to 
                           \exists s. r = (succ s) \land p + q == s.
- intros. inversion H; clear H; intros; subst. auto depth = 4.
+ intros. inversion H; clear H; intros; subst.
+ autobatch depth = 4.
 qed.
 
 theorem nplus_inv_zero_3: \forall p,q. (p + q == zero) \to 
@@ -47,7 +48,8 @@ qed.
 theorem nplus_inv_succ_3: \forall p,q,r. (p + q == (succ r)) \to
                           \exists s. p = succ s \land (s + q == r) \lor
                                      q = succ s \land p + s == r.
- intros. inversion H; clear H; intros; subst; auto depth = 4.
+ intros. inversion H; clear H; intros; subst;
+ autobatch depth = 4.
 qed.
 
 (* Corollaries to inversion lemmas ******************************************)

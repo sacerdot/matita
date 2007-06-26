@@ -17,15 +17,15 @@ set "baseuri" "cic:/matita/RELATIONAL/NLE/props".
 include "NLE/order.ma".
 
 theorem nle_trans_succ: \forall x,y. x <= y \to x <= succ y.
- intros. elim H; clear H x y; auto.
+ intros. elim H; clear H x y; autobatch.
 qed.
 
 theorem nle_gt_or_le: \forall x, y. y > x \lor y <= x.
  intros 2; elim y; clear y;
- [ auto
+ [ autobatch
  | decompose;
    [ lapply linear nle_inv_succ_1 to H1
    | lapply linear nle_lt_or_eq to H1
-   ]; decompose; subst; auto depth = 4
+   ]; decompose; subst; autobatch depth = 4
  ].
 qed.
