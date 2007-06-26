@@ -970,7 +970,7 @@ cut (O < p)
 ]
 qed.
     
-(*distributive propery for sigma_p_gen*)
+(*distributive property for sigma_p_gen*)
 theorem distributive_times_plus_sigma_p_generic: \forall A:Type.
 \forall plusA: A \to A \to A. \forall basePlusA: A.
 \forall timesA: A \to A \to A. 
