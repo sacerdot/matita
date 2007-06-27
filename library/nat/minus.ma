@@ -287,6 +287,15 @@ rewrite < plus_n_Sm.
 apply H.apply H1.
 qed.
 
+theorem lt_O_minus_to_lt: \forall a,b:nat.
+O \lt b-a \to a \lt b.
+intros.
+rewrite > (plus_n_O a).
+rewrite > (sym_plus a O).
+apply (lt_minus_to_plus O  a b).
+assumption.
+qed.
+
 theorem distributive_times_minus: distributive nat times minus.
 unfold distributive.
 intros.

@@ -139,6 +139,19 @@ apply Hcut.assumption.rewrite < H1.
 apply not_le_Sn_n.
 qed.
 
+(*not lt*)
+theorem eq_to_not_lt: \forall a,b:nat.
+a = b \to a \nlt b.
+intros.
+unfold Not.
+intros.
+rewrite > H in H1.
+apply (lt_to_not_eq b b)
+[ assumption
+| reflexivity
+]
+qed.
+
 (* le vs. lt *)
 theorem lt_to_le : \forall n,m:nat. n<m \to n \leq m.
 simplify.intros.unfold lt in H.elim H.

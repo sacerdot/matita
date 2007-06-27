@@ -17,6 +17,7 @@ set "baseuri" "cic:/matita/nat/div_and_mod".
 include "datatypes/constructors.ma".
 include "nat/minus.ma".
 
+
 let rec mod_aux p m n: nat \def
 match (leb m n) with
 [ true \Rightarrow m
@@ -331,3 +332,14 @@ let rec n_divides_aux p n m acc \def
 
 (* n_divides n m = <q,r> if m divides n q times, with remainder r *)
 definition n_divides \def \lambda n,m:nat.n_divides_aux n n m O.
+
+
+(*a simple variant of div_times theorem *)
+theorem div_times_ltO: \forall a,b:nat. O \lt b \to
+a*b/b = a.
+intros.
+rewrite > sym_times.
+rewrite > (S_pred b H).
+apply div_times.
+qed.
+

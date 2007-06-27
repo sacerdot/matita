@@ -63,9 +63,59 @@ rewrite > sym_plus.
 rewrite > (sym_plus q).assumption.
 qed.
 
+theorem le_to_lt_to_plus_lt: \forall a,b,c,d:nat.
+a \le c \to b \lt d \to (a + b) \lt (c+d).
+intros.
+cut (a \lt c \lor a = c)
+[ elim Hcut
+  [ apply (lt_plus );
+      assumption
+  | rewrite > H2.
+    apply (lt_plus_r c b d).
+    assumption
+  ]
+| apply le_to_or_lt_eq.
+  assumption
+]
+qed.
+
+
 (* times and zero *)
 theorem lt_O_times_S_S: \forall n,m:nat.O < (S n)*(S m).
 intros.simplify.unfold lt.apply le_S_S.apply le_O_n.
+qed.
+
+theorem lt_times_eq_O: \forall a,b:nat.
+O \lt a \to (a * b) = O \to b = O.
+intros.
+apply (nat_case1 b)
+[ intros.
+  reflexivity
+| intros.
+  rewrite > H2 in H1.
+  rewrite > (S_pred a) in H1
+  [ apply False_ind.
+    apply (eq_to_not_lt O ((S (pred a))*(S m)))
+    [ apply sym_eq.
+      assumption
+    | apply lt_O_times_S_S
+    ]
+  | assumption
+  ]
+]
+qed.
+
+theorem O_lt_times_to_O_lt: \forall a,c:nat.
+O \lt (a * c) \to O \lt a.
+intros.
+apply (nat_case1 a)
+[ intros.
+  rewrite > H1 in H.
+  simplify in H.
+  assumption
+| intros.
+  apply lt_O_S
+]
 qed.
 
 (* times *)
@@ -75,6 +125,20 @@ simplify.
 intros.elim n.
 simplify.rewrite < plus_n_O.rewrite < plus_n_O.assumption.
 apply lt_plus.assumption.assumption.
+qed.
+
+(* a simple variant of the previus monotionic_lt_times *)
+theorem monotonic_lt_times_variant: \forall c:nat.
+O \lt c \to monotonic nat lt (\lambda t.(t*c)).
+intros.
+apply (increasing_to_monotonic).
+unfold increasing.
+intros.
+simplify.
+rewrite > sym_plus.
+rewrite > plus_n_O in \vdash (? % ?).
+apply lt_plus_r.
+assumption.
 qed.
 
 theorem lt_times_r: \forall n,p,q:nat. p < q \to (S n) * p < (S n) * q
@@ -235,6 +299,7 @@ apply le_plus_n.
 apply (trans_lt ? (S O)).
 unfold lt. apply le_n.assumption.
 qed.
+
 
 (* general properties of functions *)
 theorem monotonic_to_injective: \forall f:nat\to nat.

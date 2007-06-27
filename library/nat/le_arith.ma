@@ -132,3 +132,14 @@ apply nat_elim2;intros
     ]
   ]
 qed.
+
+(*0 and times *)
+theorem O_lt_const_to_le_times_const:  \forall a,c:nat.
+O \lt c \to a \le a*c.
+intros.
+rewrite > (times_n_SO a) in \vdash (? % ?).
+apply le_times
+[ apply le_n
+| assumption
+]
+qed.
