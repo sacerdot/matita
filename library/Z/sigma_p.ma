@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/Z/sigma_p.ma".
+set "baseuri" "cic:/matita/Z/sigma_p".
 
 include "Z/times.ma".
 include "nat/primes.ma".

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/nat/iteration2.ma".
+set "baseuri" "cic:/matita/nat/iteration2".
 
 include "nat/primes.ma".
 include "nat/ord.ma".
