@@ -186,6 +186,85 @@ apply (eq_sigma_p_gh_gen Z OZ Zplus ? ? ? g h h1 n n1 p1 p2)
 qed.
 
 
+theorem divides_exp_to_lt_ord:\forall n,m,j,p. O < n \to prime p \to
+p \ndivides n \to j \divides n*(exp p m) \to ord j p < S m.
+intros.
+cut (m = ord (n*(exp p m)) p)
+  [apply le_S_S.
+   rewrite > Hcut.
+   apply divides_to_le_ord
+    [elim (le_to_or_lt_eq ? ? (le_O_n j))
+      [assumption
+      |apply False_ind.
+       apply (lt_to_not_eq ? ? H).
+       elim H3.
+       rewrite < H4 in H5.simplify in H5.
+       elim (times_O_to_O ? ? H5)
+        [apply sym_eq.assumption
+        |apply False_ind.
+         apply (not_le_Sn_n O).
+         rewrite < H6 in \vdash (? ? %).
+         apply lt_O_exp.
+         elim H1.apply lt_to_le.assumption
+        ]
+      ]
+    |rewrite > (times_n_O O).
+     apply lt_times
+      [assumption|apply lt_O_exp.apply (prime_to_lt_O ? H1)]
+    |assumption
+    |assumption
+    ]
+  |unfold ord.
+   rewrite > (p_ord_exp1 p ? m n)
+    [reflexivity
+    |apply (prime_to_lt_O ? H1)
+    |assumption
+    |apply sym_times
+    ]
+  ]
+qed.
+
+theorem divides_exp_to_divides_ord_rem:\forall n,m,j,p. O < n \to prime p \to
+p \ndivides n \to j \divides n*(exp p m) \to ord_rem j p \divides n.
+intros.
+cut (O < j)
+  [cut (n = ord_rem (n*(exp p m)) p)
+    [rewrite > Hcut1.
+     apply divides_to_divides_ord_rem
+      [assumption   
+      |rewrite > (times_n_O O).
+       apply lt_times
+        [assumption|apply lt_O_exp.apply (prime_to_lt_O ? H1)]
+      |assumption
+      |assumption
+      ]
+    |unfold ord_rem.
+     rewrite > (p_ord_exp1 p ? m n)
+      [reflexivity
+      |apply (prime_to_lt_O ? H1)
+      |assumption
+      |apply sym_times
+      ]
+    ]
+  |elim (le_to_or_lt_eq ? ? (le_O_n j))
+    [assumption
+    |apply False_ind.
+     apply (lt_to_not_eq ? ? H).
+     elim H3.
+     rewrite < H4 in H5.simplify in H5.
+     elim (times_O_to_O ? ? H5)
+      [apply sym_eq.assumption
+      |apply False_ind.
+       apply (not_le_Sn_n O).
+       rewrite < H6 in \vdash (? ? %).
+       apply lt_O_exp.
+       elim H1.apply lt_to_le.assumption
+      ]
+    ]
+  ] 
+qed.
+
+
 theorem sigma_p_divides_b: 
 \forall n,m,p:nat.O < n \to prime p \to Not (divides p n) \to 
 \forall g: nat \to Z.
