@@ -17,24 +17,7 @@ set "baseuri" "cic:/matita/nat/euler_theorem".
 include "nat/map_iter_p.ma".
 include "nat/totient.ma".
 
-lemma gcd_n_n: \forall n.gcd n n = n.
-intro.elim n
-  [reflexivity
-  |apply le_to_le_to_eq
-    [apply divides_to_le
-      [apply lt_O_S
-      |apply divides_gcd_n
-      ]
-    |apply divides_to_le
-      [apply lt_O_gcd.apply lt_O_S
-      |apply divides_d_gcd
-        [apply divides_n_n|apply divides_n_n]
-      ]
-    ]
-  ]
-qed.
-
-
+(*
 lemma count_card: \forall p.\forall n.
 p O = false \to count (S n) p = card n p.
 intros.elim n
@@ -55,7 +38,7 @@ intros 3.apply (nat_case n)
 qed.
  
 
-(* a reformulation of totient using card insted of count *)
+( a reformulation of totient using card insted of count )
 
 lemma totient_card: \forall n. 
 totient n = card n (\lambda i.eqb (gcd i n) (S O)).
@@ -70,15 +53,147 @@ intro.apply (nat_case n)
     ]
   ]
 qed.
+*)
 
+
+(*this obvious property is useful because simplify, sometimes,
+  "simplifies too much", and doesn't allow to obtain this simple result.
+ *)
+theorem card_Sn: \forall n:nat. \forall p:nat \to bool.
+card (S n) p = (bool_to_nat (p (S n))) + (card n p).
+intros.
+simplify.
+reflexivity.
+qed.
+
+(* a reformulation of totient using card insted of sigma_p *)
+
+theorem totient_card_aux: \forall n,m: nat.
+m = n \to
+sigma_p (S (S n)) (\lambda m:nat.eqb (gcd m (S (S n))) (S O)) (\lambda x:nat. (S O)) 
+= card (S n) (\lambda m:nat.eqb (gcd m (S (S n))) (S O)).
+intros.
+rewrite < H in \vdash (? ? (? % ? ?) ?).
+rewrite < H in \vdash (? ? ? (? % ?)).
+elim (m)
+[ rewrite > card_Sn.
+  cut ((eqb (gcd (S O)(S (S n))) (S O) ) = true)
+  [ rewrite > Hcut.
+    simplify in \vdash (? ? ? %).
+    rewrite > true_to_sigma_p_Sn
+    [ rewrite > false_to_sigma_p_Sn in \vdash (? ? (? ? %) ?)
+      [ simplify in \vdash (? ? % ?).
+        reflexivity
+      | rewrite > gcd_O_n.
+        apply not_eq_to_eqb_false.
+        apply cic:/matita/nat/nat/not_eq_S.con.                
+        unfold Not.
+        intro.        
+        cut ( (S n) \le O)
+        [ apply (not_le_Sn_n n ?).
+          apply (transitive_le (S n) O n ? ?);
+          [ apply (Hcut1)
+          | apply (le_O_n n)
+          ]
+        | rewrite > H1.
+          apply le_n
+        ]
+      ]
+    | assumption
+    ]
+  | apply eq_to_eqb_true.
+    rewrite > gcd_SO_n.
+    reflexivity   
+  ]
+| cut ((eqb (gcd (S (S n1)) (S (S n))) (S O))  = true 
+    \lor (eqb (gcd (S (S n1)) (S (S n))) (S O))  = false)
+  [ elim Hcut
+    [ rewrite > card_Sn.
+      rewrite > true_to_sigma_p_Sn
+      [ rewrite > H2.
+        simplify in \vdash (? ? ? (? % ?)).
+        apply eq_f.
+        assumption
+      | assumption
+      ]      
+    | rewrite > card_Sn.
+      rewrite > false_to_sigma_p_Sn
+      [ rewrite > H2.
+        simplify in \vdash (? ? ? (? % ?)).
+        rewrite > sym_plus.
+        rewrite < plus_n_O.
+        assumption
+      | assumption  
+      ]
+    ]
+  | elim (eqb (gcd (S (S n1)) (S (S n))) (S O))
+    [ left.
+      reflexivity
+    | right.
+      reflexivity
+    ]
+  ]
+]
+qed.
+  
+
+lemma totient_card: \forall n.
+totient n = card n (\lambda i.eqb (gcd i n) (S O)).
+intros.
+elim n
+[ simplify.
+  reflexivity
+| elim n1
+  [ simplify.
+    reflexivity
+  |
+    (*unfold card.
+    intros.*)
+    (* here simplify creates problems: it seems it simplifies too much. I had to 
+     * introduce the obvious theorem card_Sn.
+     *)
+    rewrite > card_Sn.
+    rewrite > (gcd_n_n (S (S n2))).
+    cut ((eqb (S (S n2)) (S O)) = false)
+    [ rewrite > Hcut.
+      simplify in \vdash (? ? ? (? % ?)).
+      rewrite > sym_plus.
+      rewrite < (plus_n_O).
+      unfold totient.      
+      apply (totient_card_aux n2 n2).
+      reflexivity    
+    | apply not_eq_to_eqb_false.
+      apply cic:/matita/nat/nat/not_eq_S.con.
+      unfold Not.
+      intro.
+      cut ( (S n2) \le O)
+        [ apply (not_le_Sn_n n2 ?).
+          apply (transitive_le (S n2) O n2 ? ?);
+          [ apply (Hcut)
+          | apply (le_O_n n2)
+          ]
+        | rewrite > H2.
+          apply le_n
+        ]
+    ]
+  ]
+]
+qed.
+  
 theorem gcd_pi_p: \forall n,k. O < k \to k \le n \to
 gcd n (pi_p (\lambda i.eqb (gcd i n) (S O)) k) = (S O).
 intros 3.elim H
   [rewrite > pi_p_S.
    cut (eqb (gcd (S O) n) (S O) = true)
     [rewrite > Hcut.
-     change with ((gcd n (S O)) = (S O)).autobatch
-    |apply eq_to_eqb_true.autobatch
+     change with ((gcd n (S O)) = (S O)).
+     apply (transitive_eq nat (gcd n (S O)) (gcd (S O) n) (S O) ? ?);
+     [ apply (sym_eq nat (gcd (S O) n) (gcd n (S O)) ?).
+       apply (symmetric_gcd (S O) n).
+     | apply (gcd_SO_n n).
+     ]
+    |apply eq_to_eqb_true.
+     apply (gcd_SO_n n)
     ]
   |rewrite > pi_p_S.
    apply eqb_elim
@@ -189,11 +304,18 @@ split
             |apply mod_O_to_divides
               [assumption
               |rewrite > distr_times_minus.
-               autobatch
+               apply (divides_to_mod_O n (minus (times a j) (times a i)) ? ?);
+               [ apply (H3).
+               | apply (eq_mod_to_divides (times a j) (times a i) n ? ?);
+                [ apply (H3).
+                |apply (sym_eq nat (mod (times a i) n) (mod (times a j) n) ?).
+                 apply (H13).
+                ]
+               ]
               ]
             ]
           ]
-        |autobatch
+        | apply (le_minus_m j i).
         ]
       ]
     |intro.assumption
@@ -214,11 +336,17 @@ split
             |apply mod_O_to_divides
               [assumption
               |rewrite > distr_times_minus.
-               autobatch
+               apply (divides_to_mod_O n (minus (times a i) (times a j)) ? ?);
+               [apply (H3).
+               | apply (eq_mod_to_divides (times a i) (times a j) n ? ?);
+                 [apply (H3).
+                 |apply (H13).
+                 ]
+               ]
               ]
             ]
           ]
-        |autobatch
+        | apply (le_minus_m i j).
         ]
       ]
     ]
@@ -229,7 +357,7 @@ theorem congruent_exp_totient_SO: \forall n,a:nat. (S O) < n \to
 gcd a n = (S O) \to congruent (exp a (totient n)) (S O) n. 
 intros.
 cut (O < a)
-  [apply divides_to_congruent
+  [ apply divides_to_congruent
     [apply (trans_lt ? (S O)).apply lt_O_S. assumption
     |change with (O < exp a (totient n)).apply lt_O_exp.assumption
     |apply (gcd_SO_to_divides_times_to_divides (pi_p (\lambda i.eqb (gcd i n) (S O)) n))
@@ -281,6 +409,5 @@ cut (O < a)
           [assumption|apply sym_eq.assumption] 
         ]
       ]     
-    ]       
-qed.  
-     
+    ]
+qed.

@@ -982,7 +982,7 @@ theorem distributive_times_plus_sigma_p_generic: \forall A:Type.
   \to
 
 ((timesA k (sigma_p_gen n p A g basePlusA plusA)) = 
- (sigma_p_gen n p A (\lambda i:nat.(timesA (g i) k)) basePlusA plusA)).
+ (sigma_p_gen n p A (\lambda i:nat.(timesA k (g i))) basePlusA plusA)).
 intros.
 elim n
 [ simplify.
