@@ -154,13 +154,9 @@ definition tick ≝
   (* fetch *)
   let opc ≝ opcode_of_byte (mem s (pc s)) in
   let op1 ≝ mem s (S (pc s)) in
-  let op2 ≝ mem s (S (S (pc s))) in
   let clk' ≝ cycles_of_opcode opc in
   match eqb (S (clk s)) clk' with
-   [ false ⇒
-       mk_status
-        (acc s) (pc s) (spc s) (zf s) (cf s) (mem s) (S (clk s))
-   | true ⇒
+   [ true ⇒
       match opc with
        [ ADDd ⇒
           let x ≝ mem s op1 in
@@ -201,6 +197,9 @@ definition tick ≝
           mk_status (acc s) (2 + pc s) (spc s) (zf s) (cf s)
            (update (mem s) op1 (acc s)) 0
        ]
+   | false ⇒
+       mk_status
+        (acc s) (pc s) (spc s) (zf s) (cf s) (mem s) (S (clk s))
    ].
 
 let rec execute s n on n ≝
@@ -212,104 +211,38 @@ let rec execute s n on n ≝
 lemma foo: ∀s,n. execute s (S n) = execute (tick s) n.
  intros; reflexivity.
 qed.
-(*
-lemma goo: pc (execute mult_status 4) = O.
- reduce;
- CSC.
 
+lemma goo: True.
+ letin s0 ≝ mult_status;
+ letin pc0 ≝ (pc s0);
+ 
+ reduce in pc0;
+ letin i0 ≝ (opcode_of_byte (mem s0 pc0));
+ reduce in i0;
+ 
+ letin s1 ≝ (execute s0 (cycles_of_opcode i0));
+ letin pc1 ≝ (pc s1);
+ reduce in pc1;
+ letin i1 ≝ (opcode_of_byte (mem s1 pc1));
+ reduce in i1;
 
- simplify;
- whd in ⊢ (? ? (? (? (? %))) ?);
- do 2 (simplify in match (matita_nat_of_coq_nat ?));
- simplify in match (matita_nat_of_coq_nat ?);
- whd in ⊢ (? ? (? (? (? (? ? ? ? ? ? ? %)))) ?);
- whd in ⊢ (? ? (? (? (? %))) ?);
+ letin s2 ≝ (execute s1 (cycles_of_opcode i1));
+ letin pc2 ≝ (pc s2);
+ reduce in pc2;
+ letin i2 ≝ (opcode_of_byte (mem s2 pc2));
+ reduce in i2;
 
+ letin s3 ≝ (execute s2 (cycles_of_opcode i2));
+ letin pc3 ≝ (pc s3);
+ reduce in pc3;
+ letin i3 ≝ (opcode_of_byte (mem s3 pc3));
+ reduce in i3;
 
-
-
-
-
-
-
-
-
-
-
- change with (tick (tick (tick mult_status)) = mult_status);
- change with (tick (tick mult_status) = mult_status);
- change with (tick mult_status = mult_status);
- change with (mult_status = mult_status);
- reflexivity.
+ letin s4 ≝ (execute s3 (cycles_of_opcode i3));
+ letin pc4 ≝ (pc s4);
+ reduce in pc4;
+ letin i4 ≝ (opcode_of_byte (mem s4 pc4));
+ reduce in i4;
+ 
+ exact I.
 qed.
-
-(*
- unfold mult_status; 
- simplify;
- whd in ⊢ (? ?
-(?
- (?
-  (?
-   match match ? % in nat return ? with [O\rArr ?|S\rArr ?] in bool return ?
-    with 
-   [true\rArr ?|false\rArr ?]))) ?);
- simplify;
- whd in ⊢ (? ?
-(?
- (?
-  (?
-   match % in opcode return ? with 
-   [ADDd\rArr ?
-   |BEQ\rArr ?
-   |BRA\rArr ?
-   |DECd\rArr ?
-   |LDAi\rArr ?
-   |LDAd\rArr ?
-   |STAd\rArr ?]))) ?);
- simplify;
- whd in \vdash (? ?
-(?
- (?
-  match match % in nat return ? with [O\rArr ?|S\rArr ?] in bool return ? with 
-  [true\rArr ?|false\rArr ?])) ?);
- simplify;
- whd in \vdash (? ?
-(?
- (?
-  match % in opcode return ? with 
-  [ADDd\rArr ?
-  |BEQ\rArr ?
-  |BRA\rArr ?
-  |DECd\rArr ?
-  |LDAi\rArr ?
-  |LDAd\rArr ?
-  |STAd\rArr ?])) ?);
- simplify;
- whd in \vdash (? ? (? match % in bool return ? with [true\rArr ?|false\rArr ?]) ?);
- simplify;
- whd in \vdash (? ?
-(?
- match % in opcode return ? with 
- [ADDd\rArr ?
- |BEQ\rArr ?
- |BRA\rArr ?
- |DECd\rArr ?
- |LDAi\rArr ?
- |LDAd\rArr ?
- |STAd\rArr ?]) ?);
- simplify;
- whd in \vdash (? ? match % in bool return ? with [true\rArr ?|false\rArr ?] ?);
- simplify;
- whd in \vdash (? ?
-match % in opcode return ? with 
-[ADDd\rArr ?
-|BEQ\rArr ?
-|BRA\rArr ?
-|DECd\rArr ?
-|LDAi\rArr ?
-|LDAd\rArr ?
-|STAd\rArr ?] ?);
- simplify;
- reflexivity.
-*)
-*)
