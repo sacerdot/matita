@@ -150,6 +150,7 @@ record status : Type ≝ {
 definition mult_status : status ≝
  mk_status @0 @0 @0 false false (λa:addr. nth ? mult_source @0 a) 0.
 
+alias id "update" = "cic:/Marseille/GC/card/card/update.con".
 definition tick ≝
  λs:status.
   (* fetch *)
@@ -163,12 +164,16 @@ definition tick ≝
         (acc s) (pc s) (spc s) (zf s) (cf s) (mem s) (S (clk s))
    | true ⇒
       match opc with
-       [ ADDd ⇒ s
+       [ ADDd ⇒
+          let x ≝ mem s op1 in
+          let acc' ≝ x + acc s in (* signed!!! *)
+           mk_status acc' (2 + pc s) (spc s)
+            (eqb O acc') (cf s) (mem s) 0
        | BEQ ⇒
           mk_status
            (acc s)
            (match zf s with
-             [ true ⇒ op1 + pc s   (* signed!!! *)
+             [ true ⇒ 2 + op1 + pc s   (* signed!!! *)
              | false ⇒ 2 + pc s
              ])
            (spc s)
@@ -176,8 +181,19 @@ definition tick ≝
            (cf s)
            (mem s)
            0
-       | BRA ⇒ s
-       | DECd ⇒ s
+       | BRA ⇒
+          mk_status
+           (acc s) (2 + op1 + pc s) (* signed!!! *)
+           (spc s)
+           (zf s)
+           (cf s)
+           (mem s)
+           0
+       | DECd ⇒
+          let x ≝ pred (mem s op1) in (* signed!!! *)
+          let mem' ≝ update (mem s) op1 x in
+           mk_status (acc s) (2 + pc s) (spc s)
+            (eqb O x) (cf s) mem' 0 (* check zb!!! *)
        | LDAi ⇒ s
        | LDAd ⇒ s
        | STAd ⇒ s
