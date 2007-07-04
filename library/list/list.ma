@@ -133,3 +133,13 @@ simplify.
 reflexivity.
 qed.
 *)
+
+let rec nth (A:Type) l d n on n ≝
+ match n with
+  [ O ⇒
+     match l with
+      [ nil ⇒ d
+      | cons (x : A) _ ⇒ x
+      ]
+  | S n' ⇒ nth A (tail ? l) d n'
+  ].
