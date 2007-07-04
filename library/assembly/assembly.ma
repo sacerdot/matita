@@ -18,7 +18,7 @@ include "nat/times.ma".
 include "nat/compare.ma".
 include "list/list.ma".
 
-alias id "OO" = "cic:/Coq/Init/Datatypes/nat.ind#xpointer(1/1/1)".
+(*alias id "OO" = "cic:/Coq/Init/Datatypes/nat.ind#xpointer(1/1/1)".
 alias id "SS" = "cic:/Coq/Init/Datatypes/nat.ind#xpointer(1/1/2)".
 
 let rec matita_nat_of_coq_nat n ≝
@@ -28,7 +28,7 @@ let rec matita_nat_of_coq_nat n ≝
   ].
 coercion cic:/matita/assembly/matita_nat_of_coq_nat.con.
 alias num (instance 0) = "natural number".
-
+*)
 definition byte ≝ nat.
 definition addr ≝ nat.
 
@@ -41,15 +41,16 @@ inductive opcode: Type ≝
  | LDAd: opcode  (* 3, 182 *)
  | STAd: opcode. (* 3, 183 *)
 
-let rec cycles_of_opcode op ≝
+alias num (instance 0) = "natural number".
+let rec cycles_of_opcode op : nat ≝
  match op with
-  [ ADDd ⇒ matita_nat_of_coq_nat 3
-  | BEQ ⇒ matita_nat_of_coq_nat 3
-  | BRA ⇒ matita_nat_of_coq_nat 3
-  | DECd ⇒ matita_nat_of_coq_nat 5
-  | LDAi ⇒ matita_nat_of_coq_nat 2
-  | LDAd ⇒ matita_nat_of_coq_nat 3
-  | STAd ⇒ matita_nat_of_coq_nat 3
+  [ ADDd ⇒ 3
+  | BEQ ⇒ 3
+  | BRA ⇒ 3
+  | DECd ⇒ 5
+  | LDAi ⇒ 2
+  | LDAd ⇒ 3
+  | STAd ⇒ 3
   ].
 
 inductive cartesian_product (A,B: Type) : Type ≝
@@ -72,7 +73,7 @@ definition opcode_of_byte ≝
     | cons c tl ⇒
        match c with
         [ couple op n ⇒
-           match eqb (matita_nat_of_coq_nat n) b with
+           match eqb n b with
             [ true ⇒ op
             | false ⇒ aux tl
             ]]]
@@ -97,12 +98,12 @@ definition byte_of_opcode : opcode → byte ≝
  λop.
   let rec aux l ≝
    match l with
-    [ nil ⇒ matita_nat_of_coq_nat 0
+    [ nil ⇒ 0
     | cons c tl ⇒
        match c with
         [ couple op' n ⇒
            match opcodeeqb op op' with
-            [ true ⇒ matita_nat_of_coq_nat n
+            [ true ⇒ n
             | false ⇒ aux tl
             ]]]
   in
@@ -114,26 +115,18 @@ for @{ 'byte_of_opcode $a }.
 interpretation "byte_of_opcode" 'byte_of_opcode a =
  (cic:/matita/assembly/byte_of_opcode.con a).
 
-definition byte_of_coq_nat : nat → byte ≝ matita_nat_of_coq_nat.
- 
-notation "hvbox(@ break a)"
-  non associative with precedence 80
-for @{ 'matita_nat_of_coq_nat $a }.
-interpretation "matita_nat_of_coq_nat" 'matita_nat_of_coq_nat a =
- (cic:/matita/assembly/byte_of_coq_nat.con a).
-
 definition mult_source : list byte ≝
-  [#LDAi; @0;
-   #STAd; @18; (* 18 = locazione $12 *)
-   #LDAd; @17; (* 17 = locazione $11 *)
-   #BEQ;  @14;
-   #LDAd; @18;
-   #DECd; @17;
-   #ADDd; @16; (* 16 = locazione $10 *)
-   #STAd; @18;
-   #LDAd; @17;
-   #BRA;  @246; (* 246 = -10 *)
-   #LDAd; @18].
+  [#LDAi; 0;
+   #STAd; 32; (* 18 = locazione $12 *)
+   #LDAd; 31; (* 17 = locazione $11 *)
+   #BEQ;  12;
+   #LDAd; 18;
+   #DECd; 31;
+   #ADDd; 30; (* 16 = locazione $10 *)
+   #STAd; 32;
+   #LDAd; 31;
+   #BRA;  246; (* 242 = -14 *)
+   #LDAd; 32].
    
 definition mult_source' : list byte.
 
@@ -148,9 +141,14 @@ record status : Type ≝ {
 }.
 
 definition mult_status : status ≝
- mk_status @0 @0 @0 false false (λa:addr. nth ? mult_source @0 a) 0.
+ mk_status 0 0 0 false false (λa:addr. nth ? mult_source 0 a) 0.
+ 
+definition update ≝
+ λf: addr → byte.λa.λv.λx.
+  match eqb x a with
+   [ true ⇒ v
+   | false ⇒ f x ].
 
-alias id "update" = "cic:/Marseille/GC/card/card/update.con".
 definition tick ≝
  λs:status.
   (* fetch *)
@@ -194,9 +192,14 @@ definition tick ≝
           let mem' ≝ update (mem s) op1 x in
            mk_status (acc s) (2 + pc s) (spc s)
             (eqb O x) (cf s) mem' 0 (* check zb!!! *)
-       | LDAi ⇒ s
-       | LDAd ⇒ s
-       | STAd ⇒ s
+       | LDAi ⇒
+          mk_status op1 (2 + pc s) (spc s) (eqb O op1) (cf s) (mem s) 0
+       | LDAd ⇒
+          let x ≝ pred (mem s op1) in
+           mk_status x (2 + pc s) (spc s) (eqb O x) (cf s) (mem s) 0
+       | STAd ⇒
+          mk_status (acc s) (2 + pc s) (spc s) (zf s) (cf s)
+           (update (mem s) op1 (acc s)) 0
        ]
    ].
 
@@ -209,9 +212,30 @@ let rec execute s n on n ≝
 lemma foo: ∀s,n. execute s (S n) = execute (tick s) n.
  intros; reflexivity.
 qed.
+(*
+lemma goo: pc (execute mult_status 4) = O.
+ reduce;
+ CSC.
 
-lemma goo: execute mult_status (matita_nat_of_coq_nat 4) = mult_status.
+
  simplify;
+ whd in ⊢ (? ? (? (? (? %))) ?);
+ do 2 (simplify in match (matita_nat_of_coq_nat ?));
+ simplify in match (matita_nat_of_coq_nat ?);
+ whd in ⊢ (? ? (? (? (? (? ? ? ? ? ? ? %)))) ?);
+ whd in ⊢ (? ? (? (? (? %))) ?);
+
+
+
+
+
+
+
+
+
+
+
+
  change with (tick (tick (tick mult_status)) = mult_status);
  change with (tick (tick mult_status) = mult_status);
  change with (tick mult_status = mult_status);
@@ -287,4 +311,5 @@ match % in opcode return ? with
 |STAd\rArr ?] ?);
  simplify;
  reflexivity.
+*)
 *)
