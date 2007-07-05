@@ -14,23 +14,246 @@
 
 set "baseuri" "cic:/matita/assembly/".
 
-include "nat/times.ma".
-include "nat/compare.ma".
+include "nat/div_and_mod_new.ma".
+(*include "nat/compare.ma".*)
 include "list/list.ma".
 
-(*alias id "OO" = "cic:/Coq/Init/Datatypes/nat.ind#xpointer(1/1/1)".
-alias id "SS" = "cic:/Coq/Init/Datatypes/nat.ind#xpointer(1/1/2)".
+inductive exadecimal : Type ≝
+   x0: exadecimal
+ | x1: exadecimal
+ | x2: exadecimal
+ | x3: exadecimal
+ | x4: exadecimal
+ | x5: exadecimal
+ | x6: exadecimal
+ | x7: exadecimal
+ | x8: exadecimal
+ | x9: exadecimal
+ | xA: exadecimal
+ | xB: exadecimal
+ | xC: exadecimal
+ | xD: exadecimal
+ | xE: exadecimal
+ | xF: exadecimal.
+ 
+record byte : Type ≝ {
+ bh: exadecimal;
+ bl: exadecimal
+}.
 
-let rec matita_nat_of_coq_nat n ≝
- match n with
-  [ OO ⇒ O
-  | SS y ⇒ S (matita_nat_of_coq_nat y)
-  ].
-coercion cic:/matita/assembly/matita_nat_of_coq_nat.con.
+definition eqex ≝
+ λb1,b2.
+  match b1 with
+   [ x0 ⇒
+       match b2 with
+        [ x0 ⇒ true  | x1 ⇒ false | x2 ⇒ false | x3 ⇒ false
+        | x4 ⇒ false | x5 ⇒ false | x6 ⇒ false | x7 ⇒ false
+        | x8 ⇒ false | x9 ⇒ false | xA ⇒ false | xB ⇒ false
+        | xC ⇒ false | xD ⇒ false | xE ⇒ false | xF ⇒ false ] 
+   | x1 ⇒
+       match b2 with
+        [ x0 ⇒ false | x1 ⇒ true  | x2 ⇒ false | x3 ⇒ false
+        | x4 ⇒ false | x5 ⇒ false | x6 ⇒ false | x7 ⇒ false
+        | x8 ⇒ false | x9 ⇒ false | xA ⇒ false | xB ⇒ false
+        | xC ⇒ false | xD ⇒ false | xE ⇒ false | xF ⇒ false ] 
+   | x2 ⇒
+       match b2 with
+        [ x0 ⇒ false | x1 ⇒ false | x2 ⇒ true  | x3 ⇒ false
+        | x4 ⇒ false | x5 ⇒ false | x6 ⇒ false | x7 ⇒ false
+        | x8 ⇒ false | x9 ⇒ false | xA ⇒ false | xB ⇒ false
+        | xC ⇒ false | xD ⇒ false | xE ⇒ false | xF ⇒ false ] 
+   | x3 ⇒
+       match b2 with
+        [ x0 ⇒ false | x1 ⇒ false | x2 ⇒ false | x3 ⇒ true 
+        | x4 ⇒ false | x5 ⇒ false | x6 ⇒ false | x7 ⇒ false
+        | x8 ⇒ false | x9 ⇒ false | xA ⇒ false | xB ⇒ false
+        | xC ⇒ false | xD ⇒ false | xE ⇒ false | xF ⇒ false ] 
+   | x4 ⇒
+       match b2 with
+        [ x0 ⇒ false | x1 ⇒ false | x2 ⇒ false | x3 ⇒ false
+        | x4 ⇒ true  | x5 ⇒ false | x6 ⇒ false | x7 ⇒ false
+        | x8 ⇒ false | x9 ⇒ false | xA ⇒ false | xB ⇒ false
+        | xC ⇒ false | xD ⇒ false | xE ⇒ false | xF ⇒ false ] 
+   | x5 ⇒
+       match b2 with
+        [ x0 ⇒ false | x1 ⇒ false | x2 ⇒ false | x3 ⇒ false
+        | x4 ⇒ false | x5 ⇒ true  | x6 ⇒ false | x7 ⇒ false
+        | x8 ⇒ false | x9 ⇒ false | xA ⇒ false | xB ⇒ false
+        | xC ⇒ false | xD ⇒ false | xE ⇒ false | xF ⇒ false ] 
+   | x6 ⇒
+       match b2 with
+        [ x0 ⇒ false | x1 ⇒ false | x2 ⇒ false | x3 ⇒ false
+        | x4 ⇒ false | x5 ⇒ false | x6 ⇒ true  | x7 ⇒ false
+        | x8 ⇒ false | x9 ⇒ false | xA ⇒ false | xB ⇒ false
+        | xC ⇒ false | xD ⇒ false | xE ⇒ false | xF ⇒ false ] 
+   | x7 ⇒
+       match b2 with
+        [ x0 ⇒ false | x1 ⇒ false | x2 ⇒ false | x3 ⇒ false
+        | x4 ⇒ false | x5 ⇒ false | x6 ⇒ false | x7 ⇒ true 
+        | x8 ⇒ false | x9 ⇒ false | xA ⇒ false | xB ⇒ false
+        | xC ⇒ false | xD ⇒ false | xE ⇒ false | xF ⇒ false ] 
+   | x8 ⇒
+       match b2 with
+        [ x0 ⇒ false | x1 ⇒ false | x2 ⇒ false | x3 ⇒ false
+        | x4 ⇒ false | x5 ⇒ false | x6 ⇒ false | x7 ⇒ false
+        | x8 ⇒ true  | x9 ⇒ false | xA ⇒ false | xB ⇒ false
+        | xC ⇒ false | xD ⇒ false | xE ⇒ false | xF ⇒ false ] 
+   | x9 ⇒
+       match b2 with
+        [ x0 ⇒ false | x1 ⇒ false | x2 ⇒ false | x3 ⇒ false
+        | x4 ⇒ false | x5 ⇒ false | x6 ⇒ false | x7 ⇒ false
+        | x8 ⇒ false | x9 ⇒ true  | xA ⇒ false | xB ⇒ false
+        | xC ⇒ false | xD ⇒ false | xE ⇒ false | xF ⇒ false ] 
+   | xA ⇒
+       match b2 with
+        [ x0 ⇒ false | x1 ⇒ false | x2 ⇒ false | x3 ⇒ false
+        | x4 ⇒ false | x5 ⇒ false | x6 ⇒ false | x7 ⇒ false
+        | x8 ⇒ false | x9 ⇒ false | xA ⇒ true  | xB ⇒ false
+        | xC ⇒ false | xD ⇒ false | xE ⇒ false | xF ⇒ false ] 
+   | xB ⇒
+       match b2 with
+        [ x0 ⇒ false | x1 ⇒ false | x2 ⇒ false | x3 ⇒ false
+        | x4 ⇒ false | x5 ⇒ false | x6 ⇒ false | x7 ⇒ false
+        | x8 ⇒ false | x9 ⇒ false | xA ⇒ false | xB ⇒ true 
+        | xC ⇒ false | xD ⇒ false | xE ⇒ false | xF ⇒ false ] 
+   | xC ⇒
+       match b2 with
+        [ x0 ⇒ false | x1 ⇒ false | x2 ⇒ false | x3 ⇒ false
+        | x4 ⇒ false | x5 ⇒ false | x6 ⇒ false | x7 ⇒ false
+        | x8 ⇒ false | x9 ⇒ false | xA ⇒ false | xB ⇒ false
+        | xC ⇒ true  | xD ⇒ false | xE ⇒ false | xF ⇒ false ] 
+   | xD ⇒
+       match b2 with
+        [ x0 ⇒ false | x1 ⇒ false | x2 ⇒ false | x3 ⇒ false
+        | x4 ⇒ false | x5 ⇒ false | x6 ⇒ false | x7 ⇒ false
+        | x8 ⇒ false | x9 ⇒ false | xA ⇒ false | xB ⇒ false
+        | xC ⇒ false | xD ⇒ true  | xE ⇒ false | xF ⇒ false ] 
+   | xE ⇒
+       match b2 with
+        [ x0 ⇒ false | x1 ⇒ false | x2 ⇒ false | x3 ⇒ false
+        | x4 ⇒ false | x5 ⇒ false | x6 ⇒ false | x7 ⇒ false
+        | x8 ⇒ false | x9 ⇒ false | xA ⇒ false | xB ⇒ false
+        | xC ⇒ false | xD ⇒ false | xE ⇒ true  | xF ⇒ false ] 
+   | xF ⇒
+       match b2 with
+        [ x0 ⇒ false | x1 ⇒ false | x2 ⇒ false | x3 ⇒ false
+        | x4 ⇒ false | x5 ⇒ false | x6 ⇒ false | x7 ⇒ false
+        | x8 ⇒ false | x9 ⇒ false | xA ⇒ false | xB ⇒ false
+        | xC ⇒ false | xD ⇒ false | xE ⇒ false | xF ⇒ true  ]]. 
+
+
+definition eqbyte ≝
+ λb,b'. eqex (bh b) (bh b') ∧ eqex (bl b) (bl b').
+
 alias num (instance 0) = "natural number".
-*)
-definition byte ≝ nat.
+definition nat_of_exadecimal ≝
+ λb.
+  match b with
+   [ x0 ⇒ 0
+   | x1 ⇒ 1
+   | x2 ⇒ 2
+   | x3 ⇒ 3
+   | x4 ⇒ 4
+   | x5 ⇒ 5
+   | x6 ⇒ 6
+   | x7 ⇒ 7
+   | x8 ⇒ 8
+   | x9 ⇒ 9
+   | x10 ⇒ 10
+   | x11 ⇒ 11
+   | x12 ⇒ 12
+   | x13 ⇒ 13
+   | x14 ⇒ 14
+   | x15 ⇒ 15
+   ].
+
+coercion cic:/matita/assembly/nat_of_exadecimal.con.
+
+definition nat_of_byte ≝ λb:byte. 16*(bh b) + (bl b).
+
+coercion cic:/matita/assembly/nat_of_byte.con.
+
+definition exadecimal_of_nat ≝
+ λb.
+  match b with [ O ⇒ x0 | S b ⇒
+  match b with [ O ⇒ x1 | S b ⇒
+  match b with [ O ⇒ x2 | S b ⇒ 
+  match b with [ O ⇒ x3 | S b ⇒ 
+  match b with [ O ⇒ x4 | S b ⇒ 
+  match b with [ O ⇒ x5 | S b ⇒ 
+  match b with [ O ⇒ x6 | S b ⇒ 
+  match b with [ O ⇒ x7 | S b ⇒ 
+  match b with [ O ⇒ x8 | S b ⇒ 
+  match b with [ O ⇒ x9 | S b ⇒ 
+  match b with [ O ⇒ xA | S b ⇒ 
+  match b with [ O ⇒ xB | S b ⇒ 
+  match b with [ O ⇒ xC | S b ⇒ 
+  match b with [ O ⇒ xD | S b ⇒ 
+  match b with [ O ⇒ xE | S b ⇒ 
+  match b with [ O ⇒ xF | S b ⇒ x0]]]]]]]]]]]]]]]]. 
+
+definition byte_of_nat ≝
+ λn. mk_byte (exadecimal_of_nat ((n / 16) \mod 16)) (exadecimal_of_nat (n \mod 16)).
+ 
+lemma byte_of_nat_nat_of_byte: ∀b. byte_of_nat (nat_of_byte b) = b.
+ intros;
+ elim b;
+ elim e;
+ elim e1;
+ reflexivity.
+qed.
+
+lemma sign_ok: byte_of_nat 257 = mk_byte x0 x1.
+ reflexivity.
+qed.
+  
 definition addr ≝ nat.
+
+definition xpred ≝
+ λb.
+  match b with
+   [ x0 ⇒ xF
+   | x1 ⇒ x0
+   | x2 ⇒ x1
+   | x3 ⇒ x2
+   | x4 ⇒ x3
+   | x5 ⇒ x4
+   | x6 ⇒ x5
+   | x7 ⇒ x6
+   | x8 ⇒ x7
+   | x9 ⇒ x8
+   | xA ⇒ x9
+   | xB ⇒ xA
+   | xC ⇒ xB
+   | xD ⇒ xC
+   | xE ⇒ xD
+   | xF ⇒ xE ].
+
+definition bpred ≝
+ λb.
+  match eqex (bl b) x0 with
+   [ true ⇒ mk_byte (xpred (bh b)) (xpred (bl b))
+   | false ⇒ mk_byte (bh b) (xpred (bl b))
+   ]. 
+
+(* way too slow!
+lemma bpred_pred:
+ ∀b.
+  match eqbyte b (mk_byte x0 x0) with
+   [ true ⇒ nat_of_byte (bpred b) = mk_byte xF xF
+   | false ⇒ nat_of_byte (bpred b) = pred (nat_of_byte b)].
+ intros;
+ elim b;
+ elim e;
+ elim e1;
+ whd;
+ reflexivity.
+qed.
+*)
+
+definition addr_of_byte : byte → addr ≝ λb. nat_of_byte b.
+
+coercion cic:/matita/assembly/addr_of_byte.con.
 
 inductive opcode: Type ≝
    ADDd: opcode  (* 3 clock, 171 *)
@@ -41,7 +264,6 @@ inductive opcode: Type ≝
  | LDAd: opcode  (* 3, 182 *)
  | STAd: opcode. (* 3, 183 *)
 
-alias num (instance 0) = "natural number".
 let rec cycles_of_opcode op : nat ≝
  match op with
   [ ADDd ⇒ 3
@@ -57,13 +279,13 @@ inductive cartesian_product (A,B: Type) : Type ≝
  couple: ∀a:A.∀b:B. cartesian_product A B.
 
 definition opcodemap ≝
- [ couple ? ? ADDd 171;
-   couple ? ? BEQ 55;
-   couple ? ? BRA 48;
-   couple ? ? DECd 58;
-   couple ? ? LDAi 166;
-   couple ? ? LDAd 182;
-   couple ? ? STAd 183 ].
+ [ couple ? ? ADDd (mk_byte xA xB);
+   couple ? ? BEQ (mk_byte x3 x7);
+   couple ? ? BRA (mk_byte x3 x0);
+   couple ? ? DECd (mk_byte x3 xA);
+   couple ? ? LDAi (mk_byte xA x6);
+   couple ? ? LDAd (mk_byte xB x6);
+   couple ? ? STAd (mk_byte xB x7) ].
 
 definition opcode_of_byte ≝
  λb.
@@ -73,7 +295,7 @@ definition opcode_of_byte ≝
     | cons c tl ⇒
        match c with
         [ couple op n ⇒
-           match eqb n b with
+           match eqbyte n b with
             [ true ⇒ op
             | false ⇒ aux tl
             ]]]
@@ -98,7 +320,7 @@ definition byte_of_opcode : opcode → byte ≝
  λop.
   let rec aux l ≝
    match l with
-    [ nil ⇒ 0
+    [ nil ⇒ mk_byte x0 x0
     | cons c tl ⇒
        match c with
         [ couple op' n ⇒
@@ -116,19 +338,17 @@ interpretation "byte_of_opcode" 'byte_of_opcode a =
  (cic:/matita/assembly/byte_of_opcode.con a).
 
 definition mult_source : list byte ≝
-  [#LDAi; 0;
-   #STAd; 32; (* 18 = locazione $12 *)
-   #LDAd; 31; (* 17 = locazione $11 *)
-   #BEQ;  12;
-   #LDAd; 18;
-   #DECd; 31;
-   #ADDd; 30; (* 16 = locazione $10 *)
-   #STAd; 32;
-   #LDAd; 31;
-   #BRA;  246; (* 242 = -14 *)
-   #LDAd; 32].
-   
-definition mult_source' : list byte.
+  [#LDAi; mk_byte x0 x0;
+   #STAd; mk_byte x2 x0; (* 18 = locazione $12 *)
+   #LDAd; mk_byte x1 xF; (* 17 = locazione $11 *)
+   #BEQ;  mk_byte x0 xC;
+   #LDAd; mk_byte x1 x2;
+   #DECd; mk_byte x1 xF;
+   #ADDd; mk_byte x1 xE; (* 16 = locazione $10 *)
+   #STAd; mk_byte x2 x0;
+   #LDAd; mk_byte x1 xF;
+   #BRA;  mk_byte xF x2; (* 242 = -14 *)
+   #LDAd; mk_byte x2 x0].
 
 record status : Type ≝ {
   acc : byte;
@@ -141,7 +361,8 @@ record status : Type ≝ {
 }.
 
 definition mult_status : status ≝
- mk_status 0 0 0 false false (λa:addr. nth ? mult_source 0 a) 0.
+ mk_status (mk_byte x0 x0) 0 0 false false
+  (λa:addr. nth ? mult_source (mk_byte x0 x0) a) 0.
  
 definition update ≝
  λf: addr → byte.λa.λv.λx.
@@ -159,9 +380,9 @@ definition tick ≝
    [ true ⇒
       match opc with
        [ ADDd ⇒
-          let x ≝ mem s op1 in
+          let x ≝ nat_of_byte (mem s op1) in
           let acc' ≝ x + acc s in (* signed!!! *)
-           mk_status acc' (2 + pc s) (spc s)
+           mk_status (byte_of_nat acc') (2 + pc s) (spc s)
             (eqb O acc') (cf s) (mem s) 0
        | BEQ ⇒
           mk_status
@@ -184,14 +405,14 @@ definition tick ≝
            (mem s)
            0
        | DECd ⇒
-          let x ≝ pred (mem s op1) in (* signed!!! *)
+          let x ≝ bpred (mem s op1) in (* signed!!! *)
           let mem' ≝ update (mem s) op1 x in
            mk_status (acc s) (2 + pc s) (spc s)
             (eqb O x) (cf s) mem' 0 (* check zb!!! *)
        | LDAi ⇒
           mk_status op1 (2 + pc s) (spc s) (eqb O op1) (cf s) (mem s) 0
        | LDAd ⇒
-          let x ≝ pred (mem s op1) in
+          let x ≝ bpred (mem s op1) in
            mk_status x (2 + pc s) (spc s) (eqb O x) (cf s) (mem s) 0
        | STAd ⇒
           mk_status (acc s) (2 + pc s) (spc s) (zf s) (cf s)
