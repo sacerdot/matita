@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/nat/div_and_mod".
+set "baseuri" "cic:/matita/nat/div_and_mod_new".
 
 include "datatypes/constructors.ma".
 include "nat/minus.ma".
@@ -31,7 +31,7 @@ definition mod: nat \to nat \to nat \def
 \lambda m,n.mod_aux m m n.
 
 interpretation "natural remainder" 'module x y =
-  (cic:/matita/nat/div_and_mod/mod.con x y).
+  (cic:/matita/nat/div_and_mod_new/mod.con x y).
 
 lemma O_to_mod_aux: \forall m,n. mod_aux O m n = m.
 intros.
@@ -71,7 +71,7 @@ definition div : nat \to nat \to nat \def
 \lambda n,m.div_aux n n m.
 
 interpretation "natural divide" 'divide x y =
-  (cic:/matita/nat/div_and_mod/div.con x y).
+  (cic:/matita/nat/div_and_mod_new/div.con x y).
 
 theorem lt_mod_aux_m_m: 
 \forall n. O < n \to \forall t,m. m \leq t \to (mod_aux t m n) < n.
@@ -358,12 +358,3 @@ let rec n_divides_aux p n m acc \def
 
 (* n_divides n m = <q,r> if m divides n q times, with remainder r *)
 definition n_divides \def \lambda n,m:nat.n_divides_aux n n m O.
-
-(*a simple variant of div_times theorem *)
-theorem div_times_ltO: \forall a,b:nat. O \lt b \to
-a*b/b = a.
-intros.
-rewrite > sym_times.
-rewrite > (S_pred b H).
-apply div_times.
-qed.

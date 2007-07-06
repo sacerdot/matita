@@ -31,8 +31,8 @@ MLI = \
 	matitaTypes.mli		\
 	matitaMisc.mli		\
 	matitamakeLib.mli	\
-	matitaInit.mli		\
 	matitaExcPp.mli 	\
+	matitaInit.mli		\
 	matitaEngine.mli	\
 	applyTransformation.mli	\
 	matitacLib.mli		\
@@ -46,8 +46,8 @@ CMLI =				\
 	matitaTypes.mli		\
 	matitaMisc.mli		\
 	matitamakeLib.mli	\
-	matitaInit.mli		\
 	matitaExcPp.mli 	\
+	matitaInit.mli		\
 	matitaEngine.mli	\
 	applyTransformation.mli	\
 	matitacLib.mli		\
@@ -296,7 +296,7 @@ endif
 		ln -fs matita $(WHERE)/$$p;\
 	done
 	$(H)cp -a library/ $(WHERE)/ma/standard-library
-	$(H)cp -a contribs/ $(WHERE)/ma/
+	#$(H)cp -a contribs/ $(WHERE)/ma/
 	$(H)touch install_preliminaries.stamp
 
 uninstall:

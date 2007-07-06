@@ -93,7 +93,6 @@ let main () =
        "Timeout in seconds"];
   MatitaInit.parse_cmdline ();
   MatitaInit.load_configuration_file ();
-  Helm_registry.set_bool "db.nodb" true;
   Helm_registry.set_bool "matita.nodisk" true;
   HLog.set_log_callback (fun _ _ -> ()); 
   let args = Helm_registry.get_list Helm_registry.string "matita.args" in

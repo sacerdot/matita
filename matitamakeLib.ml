@@ -193,11 +193,7 @@ let call_make ?matita_flags development target make =
   let csc = try ["SRC=" ^ Sys.getenv "SRC"] with Not_found -> [] in
   rebuild_makefile development;
   let makefile = makefile_for_development development in
-  let nodb =
-    Helm_registry.get_opt_default Helm_registry.bool ~default:false "db.nodb"
-  in
   let flags = [] in 
-  let flags = flags @ if nodb then ["NODB=true"] else [] in
   let flags =
     try
       flags @ [ sprintf "MATITA_FLAGS=\"%s\"" matita_flags ]

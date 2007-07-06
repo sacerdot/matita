@@ -619,7 +619,7 @@ script ex loc
      | TA.Command (_,TA.Set (_,"baseuri",u)) ->
         if  Http_getter_storage.is_read_only u then
           raise (ActionCancelled ("baseuri " ^ u ^ " is readonly"));
-        if not (Http_getter_storage.is_empty u) then
+        if not (Http_getter_storage.is_empty ~local:true u) then
          (match 
             guistuff.ask_confirmation 
               ~title:"Baseuri redefinition" 

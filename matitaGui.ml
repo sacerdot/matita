@@ -84,17 +84,12 @@ let ask_and_save_moo_if_needed parent fname lexicon_status grafite_status =
      LibraryMisc.obj_file_of_baseuri ~must_exist:false ~baseuri
       ~writable:true in
     let save () =
-      let metadata_fname =
-       LibraryMisc.metadata_file_of_baseuri 
-         ~must_exist:false ~baseuri ~writable:true in
       let lexicon_fname =
        LibraryMisc.lexicon_file_of_baseuri 
          ~must_exist:false ~baseuri ~writable:true
       in
        GrafiteMarshal.save_moo moo_fname
         grafite_status.GrafiteTypes.moo_content_rev;
-       LibraryNoDb.save_metadata metadata_fname
-        lexicon_status.LexiconEngine.metadata;
        LexiconMarshal.save_lexicon lexicon_fname
         lexicon_status.LexiconEngine.lexicon_content_rev
     in

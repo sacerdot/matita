@@ -24,19 +24,50 @@
     <!-- <key name="font_size">10</key> -->
   </section>
   <section name="db">
-    <!-- Access parameter to the (MySql) metadata database. They are not
-    needed if Matita is always run with -nodb, but this is _not_
-    recommended since a lot of features wont work.
-    Hint. The simplest way to create a database is:
+    <!-- 
+    Every metadata key must have the following fields:
+      1) dbhost: a file:// or a mysql:// path
+      2) database name: use extension .db for file:// dbs
+      3) username
+      4) password: use 'none' for no password
+      5) dbtype: one of the following
+           'legacy' 
+              are read only dbs, used for the Coq/contribs stuff
+           'library' 
+	      is the standard library, becames writable in publish (-system)
+	      mode
+           'user' 
+              is the user own db (can be the same of marked as ro, tables
+              have different names and can coexist)
+
+    Note that:
+      exactly one 'user'    db must be specified
+      exactly one 'library' db must be specified
+      exactly one 'legacy'  db can  be specified
+    -->
+    
+    <!-- this snippet is what is used by the helm team, everything on mowgli.
+         note that user's tables are named diffrently from library tables, so that
+	 they can coexists on the same db -->
+    <key name="metadata">@DBHOST@ matita helm none library</key>
+    <key name="metadata">@DBHOST@ matita helm none user</key>
+
+    <!-- The following snippet it what you want to use a local sqlite db
+         and acess remotely to the coq library trought mowgli
+    <key name="metadata">@DBHOST@ matita helm none legacy</key>
+    <key name="metadata">file://$(matita.rt_base_dir) metadata.db helm helm library</key>
+    <key name="metadata">file://$(matita.basedir) user.db helm helm user</key>
+    -->
+
+    <!-- 
+    If you have a large amount of metadata, you may be interested in using
+    MySql instead of Sqlite. The simplest way to create a MySql database is:
       0) # become an user with database administration privileges
       1) mysqladmin create matita
       2) echo "grant all privileges on matita.* to helm;" | mysql matita
       Note that this way the database will be open to anyone, apply
       stricter permissions if needed.
     -->
-    <key name="host">@DBHOST@</key>
-    <key name="user">helm</key>
-    <key name="database">matita</key>
   </section>
   <section name="getter">
     <!-- Cache dir for CIC XML documents downloaded from the net.
@@ -74,6 +105,11 @@
     <key name="prefix">
       cic:/
       file:///projects/helm/library/coq_contribs/
+      legacy
+    </key>
+    <key name="prefix">
+      cic:/
+      http://mowgli.cs.unibo.it/xml/
       legacy
     </key>
   </section>

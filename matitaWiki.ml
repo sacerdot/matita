@@ -231,10 +231,10 @@ let main () =
       | End_of_file -> ()
       | GrafiteEngine.Drop -> clean_exit 1
     );
-    let proof_status,moo_content_rev,metadata,lexicon_content_rev = 
+    let proof_status,moo_content_rev,lexicon_content_rev = 
       match !lexicon_status,!grafite_status with
       | ss::_, s::_ ->
-         s.proof_status, s.moo_content_rev, ss.LexiconEngine.metadata,
+         s.proof_status, s.moo_content_rev,
           ss.LexiconEngine.lexicon_content_rev
       | _,_ -> assert false
     in
@@ -259,12 +259,7 @@ let main () =
          LibraryMisc.lexicon_file_of_baseuri 
           ~must_exist:false ~baseuri ~writable:true 
        in
-       let metadata_fname =
-        LibraryMisc.metadata_file_of_baseuri 
-          ~must_exist:false ~baseuri ~writable:true
-       in
        GrafiteMarshal.save_moo moo_fname moo_content_rev;
-       LibraryNoDb.save_metadata metadata_fname metadata;
        LexiconMarshal.save_lexicon lexicon_fname lexicon_content_rev;
        exit 0
      end

@@ -36,8 +36,10 @@ matitaGui.cmo: matitaprover.cmi matitamakeLib.cmi matitaTypes.cmi \
 matitaGui.cmx: matitaprover.cmx matitamakeLib.cmx matitaTypes.cmx \
     matitaScript.cmx matitaMisc.cmx matitaMathView.cmx matitaGtkMisc.cmx \
     matitaGeneratedGui.cmx matitaExcPp.cmx buildTimeConf.cmx matitaGui.cmi 
-matitaInit.cmo: matitamakeLib.cmi buildTimeConf.cmo matitaInit.cmi 
-matitaInit.cmx: matitamakeLib.cmx buildTimeConf.cmx matitaInit.cmi 
+matitaInit.cmo: matitamakeLib.cmi matitaExcPp.cmi buildTimeConf.cmo \
+    matitaInit.cmi 
+matitaInit.cmx: matitamakeLib.cmx matitaExcPp.cmx buildTimeConf.cmx \
+    matitaInit.cmi 
 matitamakeLib.cmo: buildTimeConf.cmo matitamakeLib.cmi 
 matitamakeLib.cmx: buildTimeConf.cmx matitamakeLib.cmi 
 matitamake.cmo: matitamakeLib.cmi matitaInit.cmi matitamake.cmi 

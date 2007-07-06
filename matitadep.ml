@@ -31,12 +31,12 @@ module U = UriManager
 let obj_file_of_baseuri writable baseuri = 
   try 
     LibraryMisc.obj_file_of_baseuri 
-     ~must_exist:true ~baseuri ~writable
+     ~must_exist:true ~baseuri ~writable 
   with 
   | Http_getter_types.Unresolvable_URI _ 
   | Http_getter_types.Key_not_found _ ->  
     LibraryMisc.obj_file_of_baseuri 
-     ~must_exist:false ~baseuri ~writable:true
+     ~must_exist:false ~baseuri ~writable:true 
 ;;
 
 let main () =

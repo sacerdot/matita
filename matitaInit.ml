@@ -45,7 +45,6 @@ let already_configured s l =
 let conffile = ref BuildTimeConf.matita_conf
 
 let registry_defaults = [
-  "db.nodb",                  "false";
   "matita.debug",             "false";
   "matita.external_editor",   "gvim -f -c 'go %p' %f";
   "matita.preserve",          "false";
@@ -76,6 +75,17 @@ let load_configuration init_status =
         let login = (Unix.getpwuid (Unix.getuid ())).Unix.pw_name in
         Helm_registry.set "user.name" login
       end;
+      let home = Helm_registry.get_string "matita.basedir" in
+      let user_conf_file = home ^ "/matita.conf.xml" in
+      if HExtlib.is_regular user_conf_file then
+        begin
+          HLog.message ("Loading additional conf file from " ^ user_conf_file);
+          try
+            Helm_registry.load_from user_conf_file
+          with exn -> 
+            HLog.error
+              ("While loading conf file: " ^ snd (MatitaExcPp.to_string exn))
+        end;
       ConfigurationFile::init_status 
     end
   else
@@ -244,9 +254,6 @@ let parse_cmdline init_status =
         "-force",
             Arg.Unit (fun () -> Helm_registry.set_bool "matita.force" true),
             ("Force actions that would not be executed per default");
-        "-nodb", Arg.Unit (fun () -> Helm_registry.set_bool "db.nodb" true),
-            ("Avoid using external database connection"
-             ^ "\n    WARNING: disable many features");
         "-noprofile", 
           Arg.Unit (fun () -> Helm_registry.set_bool "matita.profile" false),
           "Turns off profiling printings";

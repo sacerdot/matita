@@ -1112,7 +1112,7 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
       self#_loadObj obj
       
     method private _loadDir dir = 
-      let content = Http_getter.ls dir in
+      let content = Http_getter.ls ~local:false dir in
       let l =
         List.fast_sort
           Pervasives.compare
