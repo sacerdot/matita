@@ -14,7 +14,7 @@
 
 set "baseuri" "cic:/matita/assembly/".
 
-include "nat/div_and_mod_new.ma".
+include "nat/div_and_mod.ma".
 (*include "nat/compare.ma".*)
 include "list/list.ma".
 
