@@ -50,5 +50,5 @@ axiom mult_idempotent: ∀r2:R2.∀x:r2. mult ? x x = x.
 lemma test: ∀r:R. ∀x:r. f ? x = x.
  intros;
  unfold f;
- auto paramodulation.
+ autobatch paramodulation.
 qed.
