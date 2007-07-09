@@ -28,18 +28,19 @@ record R : Type := { r1 :> R1; r2_ : R2; with_: C r1 = K r2_ }.
 lemma r2 : R → R2.
  intro;
  apply mk_R2;
- [ apply (C r)
- | apply (eq_rect ? ? (λx.x → x → x));
-   [3: symmetry;
-       [2: apply (with_ r)
-       | skip
-       ]
-   | skip
-   | apply (mult (r2_ r))
-   ]
- ].
+ [ exact (C r)
+ | rewrite > (with_ r); exact (mult (r2_ r))]
 qed.
 coercion cic:/matita/test/r2.con.
+
+(* convertibility test *)
+lemma conv_test : ∀r:R.C r -> K r.
+  intros.
+  change with (C (r1 r)).
+  change with (K (r2 r)).
+  change with (C (r1 r)).
+  assumption.
+qed.
 
 (* Let's play with it *)
 definition f ≝ λr:R.λx:r.plus ? (mult ? x x) x.
@@ -52,3 +53,6 @@ lemma test: ∀r:R. ∀x:r. f ? x = x.
  unfold f;
  autobatch paramodulation.
 qed.
+
+
+
