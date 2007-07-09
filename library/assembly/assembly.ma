@@ -331,25 +331,6 @@ definition byte_of_opcode : opcode → byte ≝
   in
    aux opcodemap.
 
-notation "hvbox(# break a)"
-  non associative with precedence 80
-for @{ 'byte_of_opcode $a }.
-interpretation "byte_of_opcode" 'byte_of_opcode a =
- (cic:/matita/assembly/byte_of_opcode.con a).
-
-definition mult_source : list byte ≝
-  [#LDAi; mk_byte x0 x0;
-   #STAd; mk_byte x2 x0; (* 18 = locazione $12 *)
-   #LDAd; mk_byte x1 xF; (* 17 = locazione $11 *)
-   #BEQ;  mk_byte x0 xC;
-   #LDAd; mk_byte x1 x2;
-   #DECd; mk_byte x1 xF;
-   #ADDd; mk_byte x1 xE; (* 16 = locazione $10 *)
-   #STAd; mk_byte x2 x0;
-   #LDAd; mk_byte x1 xF;
-   #BRA;  mk_byte xF x2; (* 242 = -14 *)
-   #LDAd; mk_byte x2 x0].
-
 record status : Type ≝ {
   acc : byte;
   pc  : addr;
@@ -360,10 +341,6 @@ record status : Type ≝ {
   clk : nat
 }.
 
-definition mult_status : status ≝
- mk_status (mk_byte x0 x0) 0 0 false false
-  (λa:addr. nth ? mult_source (mk_byte x0 x0) a) 0.
- 
 definition update ≝
  λf: addr → byte.λa.λv.λx.
   match eqb x a with
@@ -433,10 +410,77 @@ lemma foo: ∀s,n. execute s (S n) = execute (tick s) n.
  intros; reflexivity.
 qed.
 
+notation "hvbox(# break a)"
+  non associative with precedence 80
+for @{ 'byte_of_opcode $a }.
+interpretation "byte_of_opcode" 'byte_of_opcode a =
+ (cic:/matita/assembly/byte_of_opcode.con a).
+
+definition mult_source : list byte ≝
+  [#LDAi; mk_byte x0 x0;
+   #STAd; mk_byte x2 x0; (* 18 = locazione $12 *)
+   #LDAd; mk_byte x1 xF; (* 17 = locazione $11 *)
+   #BEQ;  mk_byte x0 xC;
+   #LDAd; mk_byte x1 x2;
+   #DECd; mk_byte x1 xF;
+   #ADDd; mk_byte x1 xE; (* 16 = locazione $10 *)
+   #STAd; mk_byte x2 x0;
+   #LDAd; mk_byte x1 xF;
+   #BRA;  mk_byte xF x2; (* 242 = -14 *)
+   #LDAd; mk_byte x2 x0].
+
+definition mult_status ≝
+ λx,y.
+  mk_status (mk_byte x0 x0) 0 0 false false
+   (λa:addr.
+     match leb a 29 with
+      [ true ⇒ nth ? mult_source (mk_byte x0 x0) a
+      | false ⇒
+         match eqb a 30 with
+          [ true ⇒ x
+          | false ⇒ y
+          ]
+      ]) 0.
+
+lemma goo1:
+ ∀x.
+  (λi.
+    let s ≝ execute (mult_status x (mk_byte x0 x0)) i in
+     pc s = 22 ∧ mem s 32 = byte_of_nat 0) 14.
+ intros;
+ whd;
+ split;
+  [ reduce;
+    reflexivity
+  | reduce;
+    reflexivity
+  ].
+
+
+lemma goo1:
+ ∀x.
+  let i ≝ 14 in
+  let s ≝ execute (mult_status x (mk_byte x0 x0)) i in
+   pc s = 22 ∧ mem s 32 = byte_of_nat 0.
+ intros;
+ split;
+  [ reduce;
+    
+  |
+  ].
+qed.
+
+lemma goo1:
+ ∀x,y.
+  let i ≝ 14 + 23 * nat_of_byte y in
+  let s ≝ execute (mult_status x y) i in
+   pc s = 22 ∧ mem s 32 = byte_of_nat (nat_of_byte x * nat_of_byte y).
+ intros;
+qed.
+
 lemma goo: True.
  letin s0 ≝ mult_status;
- letin pc0 ≝ (pc s0);
- 
+ letin pc0 ≝ (pc s0); 
  reduce in pc0;
  letin i0 ≝ (opcode_of_byte (mem s0 pc0));
  reduce in i0;
@@ -458,12 +502,44 @@ lemma goo: True.
  reduce in pc3;
  letin i3 ≝ (opcode_of_byte (mem s3 pc3));
  reduce in i3;
+ letin zf3 ≝ (zf s3);
+ reduce in zf3;
 
  letin s4 ≝ (execute s3 (cycles_of_opcode i3));
  letin pc4 ≝ (pc s4);
  reduce in pc4;
  letin i4 ≝ (opcode_of_byte (mem s4 pc4));
  reduce in i4;
+
+ letin s5 ≝ (execute s4 (cycles_of_opcode i4));
+ letin pc5 ≝ (pc s5);
+ reduce in pc5;
+ letin i5 ≝ (opcode_of_byte (mem s5 pc5));
+ reduce in i5;
+ 
+ letin s6 ≝ (execute s5 (cycles_of_opcode i5));
+ letin pc6 ≝ (pc s6);
+ reduce in pc6;
+ letin i6 ≝ (opcode_of_byte (mem s6 pc6));
+ reduce in i6;
+ 
+ letin s7 ≝ (execute s6 (cycles_of_opcode i6));
+ letin pc7 ≝ (pc s7);
+ reduce in pc7;
+ letin i7 ≝ (opcode_of_byte (mem s7 pc7));
+ reduce in i7;
+ 
+ letin s8 ≝ (execute s7 (cycles_of_opcode i7));
+ letin pc8 ≝ (pc s8);
+ reduce in pc8;
+ letin i8 ≝ (opcode_of_byte (mem s8 pc8));
+ reduce in i8;
+
+ letin s9 ≝ (execute s8 (cycles_of_opcode i8));
+ letin pc9 ≝ (pc s9);
+ reduce in pc9;
+ letin i9 ≝ (opcode_of_byte (mem s9 pc9));
+ reduce in i9;
  
  exact I.
 qed.
