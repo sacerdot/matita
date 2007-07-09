@@ -243,7 +243,7 @@ let mk_maker refresh_cb =
     let out_r,out_w = Unix.pipe () in
     let err_r,err_w = Unix.pipe () in
     let pid = ref ~-1 in
-    ignore(Sys.signal Sys.sigchld (Sys.Signal_ignore));
+    let oldhandler = Sys.signal Sys.sigchld (Sys.Signal_ignore) in
     try
 (*       prerr_endline (String.concat " " args); *)
       let argv = Array.of_list ("make"::args) in
@@ -267,10 +267,13 @@ let mk_maker refresh_cb =
         aux r;
         refresh_cb ()
       done;
+      ignore(Sys.signal Sys.sigchld oldhandler);
       true
     with 
     | Unix.Unix_error (_,"read",_)
-    | Unix.Unix_error (_,"select",_) -> true)
+    | Unix.Unix_error (_,"select",_) -> 
+        ignore(Sys.signal Sys.sigchld oldhandler);
+        true)
 
 let build_development_in_bg ?matita_flags ?(target="all") refresh_cb development =
   call_make ?matita_flags development target (mk_maker refresh_cb)
