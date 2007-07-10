@@ -15,7 +15,6 @@
 set "baseuri" "cic:/matita/assembly/".
 
 include "nat/div_and_mod.ma".
-(*include "nat/compare.ma".*)
 include "list/list.ma".
 
 inductive exadecimal : Type ≝
@@ -193,14 +192,14 @@ let rec exadecimal_of_nat b ≝
 
 definition byte_of_nat ≝
  λn. mk_byte (exadecimal_of_nat (n / 16)) (exadecimal_of_nat n).
- (*
+
 lemma byte_of_nat_nat_of_byte: ∀b. byte_of_nat (nat_of_byte b) = b.
  intros;
  elim b;
  elim e;
  elim e1;
  reflexivity.
-qed. *)
+qed.
 
 notation "14" non associative with precedence 80 for @{ 'x14 }.
 interpretation "natural number" 'x14 = 
@@ -542,7 +541,7 @@ definition bpred ≝
    | false ⇒ mk_byte (bh b) (xpred (bl b))
    ]. 
 
-(* way too slow! 
+(* Way too slow and subsumed by previous theorem
 lemma bpred_pred:
  ∀b.
   match eqbyte b (mk_byte x0 x0) with
@@ -552,7 +551,6 @@ lemma bpred_pred:
  elim b;
  elim e;
  elim e1;
- whd;
  reflexivity.
 qed.
 *)
@@ -653,77 +651,68 @@ definition update ≝
    [ true ⇒ v
    | false ⇒ f x ].
 
-definition continuation :=
- byte -> addr -> addr -> bool -> bool -> (addr -> byte) -> nat -> status.
+definition mmod16 ≝ λn. nat_of_byte (byte_of_nat n).
 
 definition tick ≝
- \lambda continuation: continuation.
- \lambda acc:byte.
- \lambda pc:addr.
- \lambda spc:addr.
- \lambda zf:bool.
- \lambda cf:bool.
- \lambda mem:addr -> byte.
- \lambda clk:nat.
+ λs:status.
   (* fetch *)
-  let opc ≝ opcode_of_byte (mem (pc)) in
-  let op1 ≝ mem (S (pc)) in
+  let opc ≝ opcode_of_byte (mem s (pc s)) in
+  let op1 ≝ mem s (S (pc s)) in
   let clk' ≝ cycles_of_opcode opc in
-  match eqb (S (clk)) clk' with
+  match eqb (S (clk s)) clk' with
    [ true ⇒
       match opc with
        [ ADDd ⇒
-          let x ≝ nat_of_byte (mem op1) in
-          let acc' ≝ x + acc in (* signed!!! *)
-           continuation (byte_of_nat acc') (2 + pc) (spc)
-            (eqb O acc') (cf) (mem) 0
+          let x ≝ nat_of_byte (mem s op1) in
+          let acc' ≝ acc s + x in (* signed!!! *)
+           mk_status (byte_of_nat acc') (2 + pc s) (spc s)
+            (eqb O acc') (cf s) (mem s) 0
        | BEQ ⇒
-          continuation
-           (acc)
-           (match zf with
-             [ true ⇒ 2 + op1 + pc   (* signed!!! *)
-             | false ⇒ 2 + pc
+          mk_status
+           (acc s)
+           (match zf s with
+             [ true ⇒ mmod16 (2 + op1 + pc s) (*\mod 256*)   (* signed!!! *)
+             | false ⇒ 2 + pc s
              ])
-           (spc)
-           (zf)
-           (cf)
-           (mem)
+           (spc s)
+           (zf s)
+           (cf s)
+           (mem s)
            0
        | BRA ⇒
-          continuation
-           (acc) (2 + op1 + pc) (* signed!!! *)
-           (spc)
-           (zf)
-           (cf)
-           (mem)
+          mk_status
+           (acc s) (mmod16 (2 + op1 + pc s) (*\mod 256*)) (* signed!!! *)
+           (spc s)
+           (zf s)
+           (cf s)
+           (mem s)
            0
        | DECd ⇒
-          let x ≝ bpred (mem op1) in (* signed!!! *)
-          let mem' ≝ update (mem) op1 x in
-           continuation (acc) (2 + pc) (spc)
-            (eqb O x) (cf) mem' 0 (* check zb!!! *)
+          let x ≝ bpred (mem s op1) in (* signed!!! *)
+          let mem' ≝ update (mem s) op1 x in
+           mk_status (acc s) (2 + pc s) (spc s)
+            (eqb O x) (cf s) mem' 0 (* check zb!!! *)
        | LDAi ⇒
-          continuation op1 (2 + pc) (spc) (eqb O op1) (cf) (mem) 0
+          mk_status op1 (2 + pc s) (spc s) (eqb O op1) (cf s) (mem s) 0
        | LDAd ⇒
-          let x ≝ mem op1 in
-           continuation x (2 + pc) (spc) (eqb O x) (cf) (mem) 0
+          let x ≝ mem s op1 in
+           mk_status x (2 + pc s) (spc s) (eqb O x) (cf s) (mem s) 0
        | STAd ⇒
-          continuation (acc) (2 + pc) (spc) (zf) (cf)
-           (update (mem) op1 (acc)) 0
+          mk_status (acc s) (2 + pc s) (spc s) (zf s) (cf s)
+           (update (mem s) op1 (acc s)) 0
        ]
    | false ⇒
-       continuation
-        (acc) (pc) (spc) (zf) (cf) (mem) (S (clk))
+       mk_status
+        (acc s) (pc s) (spc s) (zf s) (cf s) (mem s) (S (clk s))
    ].
 
-let rec execute n on n ≝
+let rec execute s n on n ≝
  match n with
-  [ O ⇒ mk_status
-  | S n' ⇒ tick (execute n')
+  [ O ⇒ s
+  | S n' ⇒ execute (tick s) n'
   ].
   
-lemma foo: ∀acc,pc,zf,cf,mem,clk,n. 
-  execute (S n) acc pc zf cf mem clk = tick (execute n) acc pc zf cf mem clk.
+lemma foo: ∀s,n. execute s (S n) = execute (tick s) n.
  intros; reflexivity.
 qed.
 
@@ -734,21 +723,20 @@ interpretation "byte_of_opcode" 'byte_of_opcode a =
  (cic:/matita/assembly/byte_of_opcode.con a).
 
 definition mult_source : list byte ≝
-  [#LDAi; mk_byte x0 x0;
-   #STAd; mk_byte x2 x0; (* 18 = locazione $12 *)
-   #LDAd; mk_byte x1 xF; (* 17 = locazione $11 *)
-   #BEQ;  mk_byte x0 xC;
-   #LDAd; mk_byte x1 x2;
-   #DECd; mk_byte x1 xF;
-   #ADDd; mk_byte x1 xE; (* 16 = locazione $10 *)
-   #STAd; mk_byte x2 x0;
-   #LDAd; mk_byte x1 xF;
-   #BRA;  mk_byte xF x2; (* 242 = -14 *)
-   #LDAd; mk_byte x2 x0].
+  [#LDAi; mk_byte x0 x0; (* A := 0 *)
+   #STAd; mk_byte x2 x0; (* Z := A *)
+   #LDAd; mk_byte x1 xF; (* (l1) A := Y *)
+   #BEQ;  mk_byte x0 xA; (* if A == 0 then goto l2 *)
+   #LDAd; mk_byte x2 x0; (* A := Z *)
+   #DECd; mk_byte x1 xF; (* Y := Y - 1 *)
+   #ADDd; mk_byte x1 xE; (* A += X *)
+   #STAd; mk_byte x2 x0; (* Z := A *)
+   #BRA;  mk_byte xF x2; (* goto l1 *)
+   #LDAd; mk_byte x2 x0].(* (l2) *)
 
-definition mult_mem ≝
+definition mult_status ≝
  λx,y.
-  (* mk_status (mk_byte x0 x0) 0 0 false false *)
+  mk_status (mk_byte x0 x0) 0 0 false false
    (λa:addr.
      match leb a 29 with
       [ true ⇒ nth ? mult_source (mk_byte x0 x0) a
@@ -757,29 +745,41 @@ definition mult_mem ≝
           [ true ⇒ x
           | false ⇒ y
           ]
-      ]) (* 0 *).
-      
-lemma foobar:
- ∀x. 
-   let s ≝ 
-     execute 14 (mk_byte x0 x0) 0 0 false false (mult_mem x (mk_byte x0 x0)) 0 
-   in
-    pc s = 22 ∧ mem s 32 = byte_of_nat 0.
- intros; split; reflexivity;
-qed.
+      ]) 0.
 
 (*
-lemma goo1:
+lemma foobar:
  ∀x.
-  let i ≝ 14 in
-  let s ≝ execute (mult_status x (mk_byte x0 x0)) i in
-   pc s = 22 ∧ mem s 32 = byte_of_nat 0.
+  let y ≝ mk_byte x0 x1 in
+  let i ≝ 14 + 23 * nat_of_byte y in
+  let s ≝ execute (mult_status x y) i in
+   pc s = 20 ∧ mem s 32 = x.
  intros;
+ letin w ≝ 22;
+ letin opc ≝ (let s ≝ execute (mult_status x y) w in opcode_of_byte (mem s (pc s))); whd in opc;
+ letin acc' ≝ (acc (execute (mult_status x y) w)); change in acc' with (byte_of_nat x);
+ letin z ≝ (let s ≝ (execute (mult_status x y) w) in mem s 32); whd in z;
+ letin x ≝ (let s ≝ (execute (mult_status x y) w) in mem s 30); whd in x;
+ (*letin xxx ≝ (byte_of_nat (x+y)); normalize in xxx;*)
  split;
-  [ reduce;
-    
-  |
-  ].
+  [ normalize; reflexivity
+  | change with (byte_of_nat x = x);
+ normalize;
+ split;
+  [ reflexivity
+  | change with (byte_of_nat (x + 0));
+ letin www ≝ (nat_of_byte (byte_of_nat 260)); whd in www;
+ letin xxx ≝ (260 \mod 256); reduce in xxx;
+ letin xxx ≝ ((18 + 242) \mod 256);
+ whd in xxx;
+ letin pc' ≝ (pc s);
+ normalize in pc';
+ letin opcode ≝ (let s ≝ s in opcode_of_byte (mem s (pc s)));
+ normalize in opcode;
+ csc.
+ split;
+ reduce in s;
+ reflexivity.
 qed.
 
 lemma goo1:
