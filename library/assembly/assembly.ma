@@ -144,6 +144,604 @@ definition eqex ≝
 definition eqbyte ≝
  λb,b'. eqex (bh b) (bh b') ∧ eqex (bl b) (bl b').
 
+inductive cartesian_product (A,B: Type) : Type ≝
+ couple: ∀a:A.∀b:B. cartesian_product A B.
+
+definition plusex ≝
+ λb1,b2,c.
+  match c with
+   [ true ⇒
+      match b1 with
+       [ x0 ⇒
+           match b2 with
+            [ x0 ⇒ couple exadecimal bool x1 false
+            | x1 ⇒ couple exadecimal bool x2 false
+            | x2 ⇒ couple exadecimal bool x3 false
+            | x3 ⇒ couple exadecimal bool x4 false
+            | x4 ⇒ couple exadecimal bool x5 false
+            | x5 ⇒ couple exadecimal bool x6 false
+            | x6 ⇒ couple exadecimal bool x7 false
+            | x7 ⇒ couple exadecimal bool x8 false
+            | x8 ⇒ couple exadecimal bool x9 false
+            | x9 ⇒ couple exadecimal bool xA false
+            | xA ⇒ couple exadecimal bool xB false
+            | xB ⇒ couple exadecimal bool xC false
+            | xC ⇒ couple exadecimal bool xD false
+            | xD ⇒ couple exadecimal bool xE false
+            | xE ⇒ couple exadecimal bool xF false
+            | xF ⇒ couple exadecimal bool x0 true ] 
+       | x1 ⇒
+           match b2 with
+            [ x0 ⇒ couple exadecimal bool x2 false
+            | x1 ⇒ couple exadecimal bool x3 false
+            | x2 ⇒ couple exadecimal bool x4 false
+            | x3 ⇒ couple exadecimal bool x5 false
+            | x4 ⇒ couple exadecimal bool x6 false
+            | x5 ⇒ couple exadecimal bool x7 false
+            | x6 ⇒ couple exadecimal bool x8 false
+            | x7 ⇒ couple exadecimal bool x9 false
+            | x8 ⇒ couple exadecimal bool xA false
+            | x9 ⇒ couple exadecimal bool xB false
+            | xA ⇒ couple exadecimal bool xC false
+            | xB ⇒ couple exadecimal bool xD false
+            | xC ⇒ couple exadecimal bool xE false
+            | xD ⇒ couple exadecimal bool xF false
+            | xE ⇒ couple exadecimal bool x0 true
+            | xF ⇒ couple exadecimal bool x1 true ] 
+       | x2 ⇒
+           match b2 with
+            [ x0 ⇒ couple exadecimal bool x3 false
+            | x1 ⇒ couple exadecimal bool x4 false
+            | x2 ⇒ couple exadecimal bool x5 false
+            | x3 ⇒ couple exadecimal bool x6 false
+            | x4 ⇒ couple exadecimal bool x7 false
+            | x5 ⇒ couple exadecimal bool x8 false
+            | x6 ⇒ couple exadecimal bool x9 false
+            | x7 ⇒ couple exadecimal bool xA false
+            | x8 ⇒ couple exadecimal bool xB false
+            | x9 ⇒ couple exadecimal bool xC false
+            | xA ⇒ couple exadecimal bool xD false
+            | xB ⇒ couple exadecimal bool xE false
+            | xC ⇒ couple exadecimal bool xF false
+            | xD ⇒ couple exadecimal bool x0 true
+            | xE ⇒ couple exadecimal bool x1 true
+            | xF ⇒ couple exadecimal bool x2 true ] 
+       | x3 ⇒
+           match b2 with
+            [ x0 ⇒ couple exadecimal bool x4 false
+            | x1 ⇒ couple exadecimal bool x5 false
+            | x2 ⇒ couple exadecimal bool x6 false
+            | x3 ⇒ couple exadecimal bool x7 false
+            | x4 ⇒ couple exadecimal bool x8 false
+            | x5 ⇒ couple exadecimal bool x9 false
+            | x6 ⇒ couple exadecimal bool xA false
+            | x7 ⇒ couple exadecimal bool xB false
+            | x8 ⇒ couple exadecimal bool xC false
+            | x9 ⇒ couple exadecimal bool xD false
+            | xA ⇒ couple exadecimal bool xE false
+            | xB ⇒ couple exadecimal bool xF false
+            | xC ⇒ couple exadecimal bool x0 true
+            | xD ⇒ couple exadecimal bool x1 true
+            | xE ⇒ couple exadecimal bool x2 true
+            | xF ⇒ couple exadecimal bool x3 true ] 
+       | x4 ⇒
+           match b2 with
+            [ x0 ⇒ couple exadecimal bool x5 false
+            | x1 ⇒ couple exadecimal bool x6 false
+            | x2 ⇒ couple exadecimal bool x7 false
+            | x3 ⇒ couple exadecimal bool x8 false
+            | x4 ⇒ couple exadecimal bool x9 false
+            | x5 ⇒ couple exadecimal bool xA false
+            | x6 ⇒ couple exadecimal bool xB false
+            | x7 ⇒ couple exadecimal bool xC false
+            | x8 ⇒ couple exadecimal bool xD false
+            | x9 ⇒ couple exadecimal bool xE false
+            | xA ⇒ couple exadecimal bool xF false
+            | xB ⇒ couple exadecimal bool x0 true
+            | xC ⇒ couple exadecimal bool x1 true
+            | xD ⇒ couple exadecimal bool x2 true
+            | xE ⇒ couple exadecimal bool x3 true
+            | xF ⇒ couple exadecimal bool x4 true ] 
+       | x5 ⇒
+           match b2 with
+            [ x0 ⇒ couple exadecimal bool x6 false
+            | x1 ⇒ couple exadecimal bool x7 false
+            | x2 ⇒ couple exadecimal bool x8 false
+            | x3 ⇒ couple exadecimal bool x9 false
+            | x4 ⇒ couple exadecimal bool xA false
+            | x5 ⇒ couple exadecimal bool xB false
+            | x6 ⇒ couple exadecimal bool xC false
+            | x7 ⇒ couple exadecimal bool xD false
+            | x8 ⇒ couple exadecimal bool xE false
+            | x9 ⇒ couple exadecimal bool xF false
+            | xA ⇒ couple exadecimal bool x0 true
+            | xB ⇒ couple exadecimal bool x1 true
+            | xC ⇒ couple exadecimal bool x2 true
+            | xD ⇒ couple exadecimal bool x3 true
+            | xE ⇒ couple exadecimal bool x4 true
+            | xF ⇒ couple exadecimal bool x5 true ] 
+       | x6 ⇒
+           match b2 with
+            [ x0 ⇒ couple exadecimal bool x7 false
+            | x1 ⇒ couple exadecimal bool x8 false
+            | x2 ⇒ couple exadecimal bool x9 false
+            | x3 ⇒ couple exadecimal bool xA false
+            | x4 ⇒ couple exadecimal bool xB false
+            | x5 ⇒ couple exadecimal bool xC false
+            | x6 ⇒ couple exadecimal bool xD false
+            | x7 ⇒ couple exadecimal bool xE false
+            | x8 ⇒ couple exadecimal bool xF false
+            | x9 ⇒ couple exadecimal bool x0 true
+            | xA ⇒ couple exadecimal bool x1 true
+            | xB ⇒ couple exadecimal bool x2 true
+            | xC ⇒ couple exadecimal bool x3 true
+            | xD ⇒ couple exadecimal bool x4 true
+            | xE ⇒ couple exadecimal bool x5 true
+            | xF ⇒ couple exadecimal bool x6 true ] 
+       | x7 ⇒
+           match b2 with
+            [ x0 ⇒ couple exadecimal bool x8 false
+            | x1 ⇒ couple exadecimal bool x9 false
+            | x2 ⇒ couple exadecimal bool xA false
+            | x3 ⇒ couple exadecimal bool xB false
+            | x4 ⇒ couple exadecimal bool xC false
+            | x5 ⇒ couple exadecimal bool xD false
+            | x6 ⇒ couple exadecimal bool xE false
+            | x7 ⇒ couple exadecimal bool xF false
+            | x8 ⇒ couple exadecimal bool x0 true
+            | x9 ⇒ couple exadecimal bool x1 true
+            | xA ⇒ couple exadecimal bool x2 true
+            | xB ⇒ couple exadecimal bool x3 true
+            | xC ⇒ couple exadecimal bool x4 true
+            | xD ⇒ couple exadecimal bool x5 true
+            | xE ⇒ couple exadecimal bool x6 true
+            | xF ⇒ couple exadecimal bool x7 true ] 
+       | x8 ⇒
+           match b2 with
+            [ x0 ⇒ couple exadecimal bool x9 false
+            | x1 ⇒ couple exadecimal bool xA false
+            | x2 ⇒ couple exadecimal bool xB false
+            | x3 ⇒ couple exadecimal bool xC false
+            | x4 ⇒ couple exadecimal bool xD false
+            | x5 ⇒ couple exadecimal bool xE false
+            | x6 ⇒ couple exadecimal bool xF false
+            | x7 ⇒ couple exadecimal bool x0 true
+            | x8 ⇒ couple exadecimal bool x1 true
+            | x9 ⇒ couple exadecimal bool x2 true
+            | xA ⇒ couple exadecimal bool x3 true
+            | xB ⇒ couple exadecimal bool x4 true
+            | xC ⇒ couple exadecimal bool x5 true
+            | xD ⇒ couple exadecimal bool x6 true
+            | xE ⇒ couple exadecimal bool x7 true
+            | xF ⇒ couple exadecimal bool x8 true ] 
+       | x9 ⇒
+           match b2 with
+            [ x0 ⇒ couple exadecimal bool xA false
+            | x1 ⇒ couple exadecimal bool xB false
+            | x2 ⇒ couple exadecimal bool xC false
+            | x3 ⇒ couple exadecimal bool xD false
+            | x4 ⇒ couple exadecimal bool xE false
+            | x5 ⇒ couple exadecimal bool xF false
+            | x6 ⇒ couple exadecimal bool x0 true
+            | x7 ⇒ couple exadecimal bool x1 true
+            | x8 ⇒ couple exadecimal bool x2 true
+            | x9 ⇒ couple exadecimal bool x3 true
+            | xA ⇒ couple exadecimal bool x4 true
+            | xB ⇒ couple exadecimal bool x5 true
+            | xC ⇒ couple exadecimal bool x6 true
+            | xD ⇒ couple exadecimal bool x7 true
+            | xE ⇒ couple exadecimal bool x8 true
+            | xF ⇒ couple exadecimal bool x9 true ] 
+       | xA ⇒
+           match b2 with
+            [ x0 ⇒ couple exadecimal bool xB false
+            | x1 ⇒ couple exadecimal bool xC false
+            | x2 ⇒ couple exadecimal bool xD false
+            | x3 ⇒ couple exadecimal bool xE false
+            | x4 ⇒ couple exadecimal bool xF false
+            | x5 ⇒ couple exadecimal bool x0 true
+            | x6 ⇒ couple exadecimal bool x1 true
+            | x7 ⇒ couple exadecimal bool x2 true
+            | x8 ⇒ couple exadecimal bool x3 true
+            | x9 ⇒ couple exadecimal bool x4 true
+            | xA ⇒ couple exadecimal bool x5 true
+            | xB ⇒ couple exadecimal bool x6 true
+            | xC ⇒ couple exadecimal bool x7 true
+            | xD ⇒ couple exadecimal bool x8 true
+            | xE ⇒ couple exadecimal bool x9 true
+            | xF ⇒ couple exadecimal bool xA true ] 
+       | xB ⇒
+           match b2 with
+            [ x0 ⇒ couple exadecimal bool xC false
+            | x1 ⇒ couple exadecimal bool xD false
+            | x2 ⇒ couple exadecimal bool xE false
+            | x3 ⇒ couple exadecimal bool xF false
+            | x4 ⇒ couple exadecimal bool x0 true
+            | x5 ⇒ couple exadecimal bool x1 true
+            | x6 ⇒ couple exadecimal bool x2 true
+            | x7 ⇒ couple exadecimal bool x3 true
+            | x8 ⇒ couple exadecimal bool x4 true
+            | x9 ⇒ couple exadecimal bool x5 true
+            | xA ⇒ couple exadecimal bool x6 true
+            | xB ⇒ couple exadecimal bool x7 true
+            | xC ⇒ couple exadecimal bool x8 true
+            | xD ⇒ couple exadecimal bool x9 true
+            | xE ⇒ couple exadecimal bool xA true
+            | xF ⇒ couple exadecimal bool xB true ] 
+       | xC ⇒
+           match b2 with
+            [ x0 ⇒ couple exadecimal bool xD false
+            | x1 ⇒ couple exadecimal bool xE false
+            | x2 ⇒ couple exadecimal bool xF false
+            | x3 ⇒ couple exadecimal bool x0 true
+            | x4 ⇒ couple exadecimal bool x1 true
+            | x5 ⇒ couple exadecimal bool x2 true
+            | x6 ⇒ couple exadecimal bool x3 true
+            | x7 ⇒ couple exadecimal bool x4 true
+            | x8 ⇒ couple exadecimal bool x5 true
+            | x9 ⇒ couple exadecimal bool x6 true
+            | xA ⇒ couple exadecimal bool x7 true
+            | xB ⇒ couple exadecimal bool x8 true
+            | xC ⇒ couple exadecimal bool x9 true
+            | xD ⇒ couple exadecimal bool xA true
+            | xE ⇒ couple exadecimal bool xB true
+            | xF ⇒ couple exadecimal bool xC true ] 
+       | xD ⇒
+           match b2 with
+            [ x0 ⇒ couple exadecimal bool xE false
+            | x1 ⇒ couple exadecimal bool xF false
+            | x2 ⇒ couple exadecimal bool x0 true
+            | x3 ⇒ couple exadecimal bool x1 true
+            | x4 ⇒ couple exadecimal bool x2 true
+            | x5 ⇒ couple exadecimal bool x3 true
+            | x6 ⇒ couple exadecimal bool x4 true
+            | x7 ⇒ couple exadecimal bool x5 true
+            | x8 ⇒ couple exadecimal bool x6 true
+            | x9 ⇒ couple exadecimal bool x7 true
+            | xA ⇒ couple exadecimal bool x8 true
+            | xB ⇒ couple exadecimal bool x9 true
+            | xC ⇒ couple exadecimal bool xA true
+            | xD ⇒ couple exadecimal bool xB true
+            | xE ⇒ couple exadecimal bool xC true
+            | xF ⇒ couple exadecimal bool xD true ] 
+       | xE ⇒
+           match b2 with
+            [ x0 ⇒ couple exadecimal bool xF false
+            | x1 ⇒ couple exadecimal bool x0 true
+            | x2 ⇒ couple exadecimal bool x1 true
+            | x3 ⇒ couple exadecimal bool x2 true
+            | x4 ⇒ couple exadecimal bool x3 true
+            | x5 ⇒ couple exadecimal bool x4 true
+            | x6 ⇒ couple exadecimal bool x5 true
+            | x7 ⇒ couple exadecimal bool x6 true
+            | x8 ⇒ couple exadecimal bool x7 true
+            | x9 ⇒ couple exadecimal bool x8 true
+            | xA ⇒ couple exadecimal bool x9 true
+            | xB ⇒ couple exadecimal bool xA true
+            | xC ⇒ couple exadecimal bool xB true
+            | xD ⇒ couple exadecimal bool xC true
+            | xE ⇒ couple exadecimal bool xD true
+            | xF ⇒ couple exadecimal bool xE true ]
+       | xF ⇒
+           match b2 with
+            [ x0 ⇒ couple exadecimal bool x0 true
+            | x1 ⇒ couple exadecimal bool x1 true
+            | x2 ⇒ couple exadecimal bool x2 true
+            | x3 ⇒ couple exadecimal bool x3 true
+            | x4 ⇒ couple exadecimal bool x4 true
+            | x5 ⇒ couple exadecimal bool x5 true
+            | x6 ⇒ couple exadecimal bool x6 true
+            | x7 ⇒ couple exadecimal bool x7 true
+            | x8 ⇒ couple exadecimal bool x8 true
+            | x9 ⇒ couple exadecimal bool x9 true
+            | xA ⇒ couple exadecimal bool xA true
+            | xB ⇒ couple exadecimal bool xB true
+            | xC ⇒ couple exadecimal bool xC true
+            | xD ⇒ couple exadecimal bool xD true
+            | xE ⇒ couple exadecimal bool xE true
+            | xF ⇒ couple exadecimal bool xF true ] 
+       ]
+   | false ⇒
+      match b1 with
+       [ x0 ⇒
+           match b2 with
+            [ x0 ⇒ couple exadecimal bool x0 false
+            | x1 ⇒ couple exadecimal bool x1 false
+            | x2 ⇒ couple exadecimal bool x2 false
+            | x3 ⇒ couple exadecimal bool x3 false
+            | x4 ⇒ couple exadecimal bool x4 false
+            | x5 ⇒ couple exadecimal bool x5 false
+            | x6 ⇒ couple exadecimal bool x6 false
+            | x7 ⇒ couple exadecimal bool x7 false
+            | x8 ⇒ couple exadecimal bool x8 false
+            | x9 ⇒ couple exadecimal bool x9 false
+            | xA ⇒ couple exadecimal bool xA false
+            | xB ⇒ couple exadecimal bool xB false
+            | xC ⇒ couple exadecimal bool xC false
+            | xD ⇒ couple exadecimal bool xD false
+            | xE ⇒ couple exadecimal bool xE false
+            | xF ⇒ couple exadecimal bool xF false ] 
+       | x1 ⇒
+           match b2 with
+            [ x0 ⇒ couple exadecimal bool x1 false
+            | x1 ⇒ couple exadecimal bool x2 false
+            | x2 ⇒ couple exadecimal bool x3 false
+            | x3 ⇒ couple exadecimal bool x4 false
+            | x4 ⇒ couple exadecimal bool x5 false
+            | x5 ⇒ couple exadecimal bool x6 false
+            | x6 ⇒ couple exadecimal bool x7 false
+            | x7 ⇒ couple exadecimal bool x8 false
+            | x8 ⇒ couple exadecimal bool x9 false
+            | x9 ⇒ couple exadecimal bool xA false
+            | xA ⇒ couple exadecimal bool xB false
+            | xB ⇒ couple exadecimal bool xC false
+            | xC ⇒ couple exadecimal bool xD false
+            | xD ⇒ couple exadecimal bool xE false
+            | xE ⇒ couple exadecimal bool xF false
+            | xF ⇒ couple exadecimal bool x0 true ] 
+       | x2 ⇒
+           match b2 with
+            [ x0 ⇒ couple exadecimal bool x2 false
+            | x1 ⇒ couple exadecimal bool x3 false
+            | x2 ⇒ couple exadecimal bool x4 false
+            | x3 ⇒ couple exadecimal bool x5 false
+            | x4 ⇒ couple exadecimal bool x6 false
+            | x5 ⇒ couple exadecimal bool x7 false
+            | x6 ⇒ couple exadecimal bool x8 false
+            | x7 ⇒ couple exadecimal bool x9 false
+            | x8 ⇒ couple exadecimal bool xA false
+            | x9 ⇒ couple exadecimal bool xB false
+            | xA ⇒ couple exadecimal bool xC false
+            | xB ⇒ couple exadecimal bool xD false
+            | xC ⇒ couple exadecimal bool xE false
+            | xD ⇒ couple exadecimal bool xF false
+            | xE ⇒ couple exadecimal bool x0 true
+            | xF ⇒ couple exadecimal bool x1 true ] 
+       | x3 ⇒
+           match b2 with
+            [ x0 ⇒ couple exadecimal bool x3 false
+            | x1 ⇒ couple exadecimal bool x4 false
+            | x2 ⇒ couple exadecimal bool x5 false
+            | x3 ⇒ couple exadecimal bool x6 false
+            | x4 ⇒ couple exadecimal bool x7 false
+            | x5 ⇒ couple exadecimal bool x8 false
+            | x6 ⇒ couple exadecimal bool x9 false
+            | x7 ⇒ couple exadecimal bool xA false
+            | x8 ⇒ couple exadecimal bool xB false
+            | x9 ⇒ couple exadecimal bool xC false
+            | xA ⇒ couple exadecimal bool xD false
+            | xB ⇒ couple exadecimal bool xE false
+            | xC ⇒ couple exadecimal bool xF false
+            | xD ⇒ couple exadecimal bool x0 true
+            | xE ⇒ couple exadecimal bool x1 true
+            | xF ⇒ couple exadecimal bool x2 true ] 
+       | x4 ⇒
+           match b2 with
+            [ x0 ⇒ couple exadecimal bool x4 false
+            | x1 ⇒ couple exadecimal bool x5 false
+            | x2 ⇒ couple exadecimal bool x6 false
+            | x3 ⇒ couple exadecimal bool x7 false
+            | x4 ⇒ couple exadecimal bool x8 false
+            | x5 ⇒ couple exadecimal bool x9 false
+            | x6 ⇒ couple exadecimal bool xA false
+            | x7 ⇒ couple exadecimal bool xB false
+            | x8 ⇒ couple exadecimal bool xC false
+            | x9 ⇒ couple exadecimal bool xD false
+            | xA ⇒ couple exadecimal bool xE false
+            | xB ⇒ couple exadecimal bool xF false
+            | xC ⇒ couple exadecimal bool x0 true
+            | xD ⇒ couple exadecimal bool x1 true
+            | xE ⇒ couple exadecimal bool x2 true
+            | xF ⇒ couple exadecimal bool x3 true ] 
+       | x5 ⇒
+           match b2 with
+            [ x0 ⇒ couple exadecimal bool x5 false
+            | x1 ⇒ couple exadecimal bool x6 false
+            | x2 ⇒ couple exadecimal bool x7 false
+            | x3 ⇒ couple exadecimal bool x8 false
+            | x4 ⇒ couple exadecimal bool x9 false
+            | x5 ⇒ couple exadecimal bool xA false
+            | x6 ⇒ couple exadecimal bool xB false
+            | x7 ⇒ couple exadecimal bool xC false
+            | x8 ⇒ couple exadecimal bool xD false
+            | x9 ⇒ couple exadecimal bool xE false
+            | xA ⇒ couple exadecimal bool xF false
+            | xB ⇒ couple exadecimal bool x0 true
+            | xC ⇒ couple exadecimal bool x1 true
+            | xD ⇒ couple exadecimal bool x2 true
+            | xE ⇒ couple exadecimal bool x3 true
+            | xF ⇒ couple exadecimal bool x4 true ] 
+       | x6 ⇒
+           match b2 with
+            [ x0 ⇒ couple exadecimal bool x6 false
+            | x1 ⇒ couple exadecimal bool x7 false
+            | x2 ⇒ couple exadecimal bool x8 false
+            | x3 ⇒ couple exadecimal bool x9 false
+            | x4 ⇒ couple exadecimal bool xA false
+            | x5 ⇒ couple exadecimal bool xB false
+            | x6 ⇒ couple exadecimal bool xC false
+            | x7 ⇒ couple exadecimal bool xD false
+            | x8 ⇒ couple exadecimal bool xE false
+            | x9 ⇒ couple exadecimal bool xF false
+            | xA ⇒ couple exadecimal bool x0 true
+            | xB ⇒ couple exadecimal bool x1 true
+            | xC ⇒ couple exadecimal bool x2 true
+            | xD ⇒ couple exadecimal bool x3 true
+            | xE ⇒ couple exadecimal bool x4 true
+            | xF ⇒ couple exadecimal bool x5 true ] 
+       | x7 ⇒
+           match b2 with
+            [ x0 ⇒ couple exadecimal bool x7 false
+            | x1 ⇒ couple exadecimal bool x8 false
+            | x2 ⇒ couple exadecimal bool x9 false
+            | x3 ⇒ couple exadecimal bool xA false
+            | x4 ⇒ couple exadecimal bool xB false
+            | x5 ⇒ couple exadecimal bool xC false
+            | x6 ⇒ couple exadecimal bool xD false
+            | x7 ⇒ couple exadecimal bool xE false
+            | x8 ⇒ couple exadecimal bool xF false
+            | x9 ⇒ couple exadecimal bool x0 true
+            | xA ⇒ couple exadecimal bool x1 true
+            | xB ⇒ couple exadecimal bool x2 true
+            | xC ⇒ couple exadecimal bool x3 true
+            | xD ⇒ couple exadecimal bool x4 true
+            | xE ⇒ couple exadecimal bool x5 true
+            | xF ⇒ couple exadecimal bool x6 true ] 
+       | x8 ⇒
+           match b2 with
+            [ x0 ⇒ couple exadecimal bool x8 false
+            | x1 ⇒ couple exadecimal bool x9 false
+            | x2 ⇒ couple exadecimal bool xA false
+            | x3 ⇒ couple exadecimal bool xB false
+            | x4 ⇒ couple exadecimal bool xC false
+            | x5 ⇒ couple exadecimal bool xD false
+            | x6 ⇒ couple exadecimal bool xE false
+            | x7 ⇒ couple exadecimal bool xF false
+            | x8 ⇒ couple exadecimal bool x0 true
+            | x9 ⇒ couple exadecimal bool x1 true
+            | xA ⇒ couple exadecimal bool x2 true
+            | xB ⇒ couple exadecimal bool x3 true
+            | xC ⇒ couple exadecimal bool x4 true
+            | xD ⇒ couple exadecimal bool x5 true
+            | xE ⇒ couple exadecimal bool x6 true
+            | xF ⇒ couple exadecimal bool x7 true ] 
+       | x9 ⇒
+           match b2 with
+            [ x0 ⇒ couple exadecimal bool x9 false
+            | x1 ⇒ couple exadecimal bool xA false
+            | x2 ⇒ couple exadecimal bool xB false
+            | x3 ⇒ couple exadecimal bool xC false
+            | x4 ⇒ couple exadecimal bool xD false
+            | x5 ⇒ couple exadecimal bool xE false
+            | x6 ⇒ couple exadecimal bool xF false
+            | x7 ⇒ couple exadecimal bool x0 true
+            | x8 ⇒ couple exadecimal bool x1 true
+            | x9 ⇒ couple exadecimal bool x2 true
+            | xA ⇒ couple exadecimal bool x3 true
+            | xB ⇒ couple exadecimal bool x4 true
+            | xC ⇒ couple exadecimal bool x5 true
+            | xD ⇒ couple exadecimal bool x6 true
+            | xE ⇒ couple exadecimal bool x7 true
+            | xF ⇒ couple exadecimal bool x8 true ] 
+       | xA ⇒
+           match b2 with
+            [ x0 ⇒ couple exadecimal bool xA false
+            | x1 ⇒ couple exadecimal bool xB false
+            | x2 ⇒ couple exadecimal bool xC false
+            | x3 ⇒ couple exadecimal bool xD false
+            | x4 ⇒ couple exadecimal bool xE false
+            | x5 ⇒ couple exadecimal bool xF false
+            | x6 ⇒ couple exadecimal bool x0 true
+            | x7 ⇒ couple exadecimal bool x1 true
+            | x8 ⇒ couple exadecimal bool x2 true
+            | x9 ⇒ couple exadecimal bool x3 true
+            | xA ⇒ couple exadecimal bool x4 true
+            | xB ⇒ couple exadecimal bool x5 true
+            | xC ⇒ couple exadecimal bool x6 true
+            | xD ⇒ couple exadecimal bool x7 true
+            | xE ⇒ couple exadecimal bool x8 true
+            | xF ⇒ couple exadecimal bool x9 true ] 
+       | xB ⇒
+           match b2 with
+            [ x0 ⇒ couple exadecimal bool xB false
+            | x1 ⇒ couple exadecimal bool xC false
+            | x2 ⇒ couple exadecimal bool xD false
+            | x3 ⇒ couple exadecimal bool xE false
+            | x4 ⇒ couple exadecimal bool xF false
+            | x5 ⇒ couple exadecimal bool x0 true
+            | x6 ⇒ couple exadecimal bool x1 true
+            | x7 ⇒ couple exadecimal bool x2 true
+            | x8 ⇒ couple exadecimal bool x3 true
+            | x9 ⇒ couple exadecimal bool x4 true
+            | xA ⇒ couple exadecimal bool x5 true
+            | xB ⇒ couple exadecimal bool x6 true
+            | xC ⇒ couple exadecimal bool x7 true
+            | xD ⇒ couple exadecimal bool x8 true
+            | xE ⇒ couple exadecimal bool x9 true
+            | xF ⇒ couple exadecimal bool xA true ] 
+       | xC ⇒
+           match b2 with
+            [ x0 ⇒ couple exadecimal bool xC false
+            | x1 ⇒ couple exadecimal bool xD false
+            | x2 ⇒ couple exadecimal bool xE false
+            | x3 ⇒ couple exadecimal bool xF false
+            | x4 ⇒ couple exadecimal bool x0 true
+            | x5 ⇒ couple exadecimal bool x1 true
+            | x6 ⇒ couple exadecimal bool x2 true
+            | x7 ⇒ couple exadecimal bool x3 true
+            | x8 ⇒ couple exadecimal bool x4 true
+            | x9 ⇒ couple exadecimal bool x5 true
+            | xA ⇒ couple exadecimal bool x6 true
+            | xB ⇒ couple exadecimal bool x7 true
+            | xC ⇒ couple exadecimal bool x8 true
+            | xD ⇒ couple exadecimal bool x9 true
+            | xE ⇒ couple exadecimal bool xA true
+            | xF ⇒ couple exadecimal bool xB true ] 
+       | xD ⇒
+           match b2 with
+            [ x0 ⇒ couple exadecimal bool xD false
+            | x1 ⇒ couple exadecimal bool xE false
+            | x2 ⇒ couple exadecimal bool xF false
+            | x3 ⇒ couple exadecimal bool x0 true
+            | x4 ⇒ couple exadecimal bool x1 true
+            | x5 ⇒ couple exadecimal bool x2 true
+            | x6 ⇒ couple exadecimal bool x3 true
+            | x7 ⇒ couple exadecimal bool x4 true
+            | x8 ⇒ couple exadecimal bool x5 true
+            | x9 ⇒ couple exadecimal bool x6 true
+            | xA ⇒ couple exadecimal bool x7 true
+            | xB ⇒ couple exadecimal bool x8 true
+            | xC ⇒ couple exadecimal bool x9 true
+            | xD ⇒ couple exadecimal bool xA true
+            | xE ⇒ couple exadecimal bool xB true
+            | xF ⇒ couple exadecimal bool xC true ] 
+       | xE ⇒
+           match b2 with
+            [ x0 ⇒ couple exadecimal bool xE false
+            | x1 ⇒ couple exadecimal bool xF false
+            | x2 ⇒ couple exadecimal bool x0 true
+            | x3 ⇒ couple exadecimal bool x1 true
+            | x4 ⇒ couple exadecimal bool x2 true
+            | x5 ⇒ couple exadecimal bool x3 true
+            | x6 ⇒ couple exadecimal bool x4 true
+            | x7 ⇒ couple exadecimal bool x5 true
+            | x8 ⇒ couple exadecimal bool x6 true
+            | x9 ⇒ couple exadecimal bool x7 true
+            | xA ⇒ couple exadecimal bool x8 true
+            | xB ⇒ couple exadecimal bool x9 true
+            | xC ⇒ couple exadecimal bool xA true
+            | xD ⇒ couple exadecimal bool xB true
+            | xE ⇒ couple exadecimal bool xC true
+            | xF ⇒ couple exadecimal bool xD true ] 
+       | xF ⇒
+           match b2 with
+            [ x0 ⇒ couple exadecimal bool xF false
+            | x1 ⇒ couple exadecimal bool x0 true
+            | x2 ⇒ couple exadecimal bool x1 true
+            | x3 ⇒ couple exadecimal bool x2 true
+            | x4 ⇒ couple exadecimal bool x3 true
+            | x5 ⇒ couple exadecimal bool x4 true
+            | x6 ⇒ couple exadecimal bool x5 true
+            | x7 ⇒ couple exadecimal bool x6 true
+            | x8 ⇒ couple exadecimal bool x7 true
+            | x9 ⇒ couple exadecimal bool x8 true
+            | xA ⇒ couple exadecimal bool x9 true
+            | xB ⇒ couple exadecimal bool xA true
+            | xC ⇒ couple exadecimal bool xB true
+            | xD ⇒ couple exadecimal bool xC true
+            | xE ⇒ couple exadecimal bool xD true
+            | xF ⇒ couple exadecimal bool xE true ]
+       ]
+   ]
+.
+
+definition plusbyte ≝
+ λb1,b2,c.
+  match plusex (bl b1) (bl b2) c with
+   [ couple l c' ⇒
+      match plusex (bh b1) (bh b2) c' with
+       [ couple h c'' ⇒ couple ? ? (mk_byte h l) c'' ]].
+
 alias num (instance 0) = "natural number".
 definition nat_of_exadecimal ≝
  λb.
@@ -200,6 +798,27 @@ lemma byte_of_nat_nat_of_byte: ∀b. byte_of_nat (nat_of_byte b) = b.
  elim e1;
  reflexivity.
 qed.
+
+definition nat_of_bool ≝
+ λb. match b with [ true ⇒ 1 | false ⇒ 0 ].
+
+(* Way too slow. Handles 2^32 goals!
+lemma plusbyte_ok:
+ ∀b1,b2,c.
+  match plusbyte b1 b2 c with
+   [ couple r c' ⇒ b1 + b2 + nat_of_bool c = nat_of_byte r + nat_of_bool c'
+   ].
+ intros;
+ elim c;
+ elim b1;
+ elim e;
+ elim e1;
+ elim b2;
+ elim e2;
+ elim e3;
+ reflexivity.
+qed.
+*)
 
 notation "14" non associative with precedence 80 for @{ 'x14 }.
 interpretation "natural number" 'x14 = 
@@ -579,9 +1198,6 @@ let rec cycles_of_opcode op : nat ≝
   | STAd ⇒ 3
   ].
 
-inductive cartesian_product (A,B: Type) : Type ≝
- couple: ∀a:A.∀b:B. cartesian_product A B.
-
 definition opcodemap ≝
  [ couple ? ? ADDd (mk_byte xA xB);
    couple ? ? BEQ (mk_byte x3 x7);
@@ -654,57 +1270,57 @@ definition update ≝
 definition mmod16 ≝ λn. nat_of_byte (byte_of_nat n).
 
 definition tick ≝
- λs:status.
-  (* fetch *)
-  let opc ≝ opcode_of_byte (mem s (pc s)) in
-  let op1 ≝ mem s (S (pc s)) in
+ λs:status. match s with [ mk_status acc pc spc zf cf mem clk ⇒
+  let opc ≝ opcode_of_byte (mem pc) in
+  let op1 ≝ mem (S pc) in
   let clk' ≝ cycles_of_opcode opc in
-  match eqb (S (clk s)) clk' with
+  match eqb (S clk) clk' with
    [ true ⇒
       match opc with
        [ ADDd ⇒
-          let x ≝ nat_of_byte (mem s op1) in
-          let acc' ≝ acc s + x in (* signed!!! *)
-           mk_status (byte_of_nat acc') (2 + pc s) (spc s)
-            (eqb O acc') (cf s) (mem s) 0
+          let res ≝ plusbyte acc (mem op1) false in (* verify carrier! *)
+          let acc' ≝ match res with [ couple acc' _ ⇒ acc' ] in
+          let c' ≝ match res with [ couple _ c' ⇒ c'] in
+           mk_status acc' (2 + pc) spc
+            (eqb O (nat_of_byte acc')) c' mem 0 (* verify carrier! *)
        | BEQ ⇒
           mk_status
-           (acc s)
-           (match zf s with
-             [ true ⇒ mmod16 (2 + op1 + pc s) (*\mod 256*)   (* signed!!! *)
-             | false ⇒ 2 + pc s
+           acc
+           (match zf with
+             [ true ⇒ mmod16 (2 + op1 + pc) (*\mod 256*)   (* signed!!! *)
+             | false ⇒ 2 + pc
              ])
-           (spc s)
-           (zf s)
-           (cf s)
-           (mem s)
+           spc
+           zf
+           cf
+           mem
            0
        | BRA ⇒
           mk_status
-           (acc s) (mmod16 (2 + op1 + pc s) (*\mod 256*)) (* signed!!! *)
-           (spc s)
-           (zf s)
-           (cf s)
-           (mem s)
+           acc (mmod16 (2 + op1 + pc) (*\mod 256*)) (* signed!!! *)
+           spc
+           zf
+           cf
+           mem
            0
        | DECd ⇒
-          let x ≝ bpred (mem s op1) in (* signed!!! *)
-          let mem' ≝ update (mem s) op1 x in
-           mk_status (acc s) (2 + pc s) (spc s)
-            (eqb O x) (cf s) mem' 0 (* check zb!!! *)
+          let x ≝ bpred (mem op1) in (* signed!!! *)
+          let mem' ≝ update mem op1 x in
+           mk_status acc (2 + pc) spc
+            (eqb O x) cf mem' 0 (* check zb!!! *)
        | LDAi ⇒
-          mk_status op1 (2 + pc s) (spc s) (eqb O op1) (cf s) (mem s) 0
+          mk_status op1 (2 + pc) spc (eqb O op1) cf mem 0
        | LDAd ⇒
-          let x ≝ mem s op1 in
-           mk_status x (2 + pc s) (spc s) (eqb O x) (cf s) (mem s) 0
+          let x ≝ mem op1 in
+           mk_status x (2 + pc) spc (eqb O x) cf mem 0
        | STAd ⇒
-          mk_status (acc s) (2 + pc s) (spc s) (zf s) (cf s)
-           (update (mem s) op1 (acc s)) 0
+          mk_status acc (2 + pc) spc zf cf
+           (update mem op1 acc) 0
        ]
    | false ⇒
        mk_status
-        (acc s) (pc s) (spc s) (zf s) (cf s) (mem s) (S (clk s))
-   ].
+        acc pc spc zf cf mem (S clk)
+   ]].
 
 let rec execute s n on n ≝
  match n with
@@ -747,17 +1363,97 @@ definition mult_status ≝
           ]
       ]) 0.
 
-(*
-lemma foobar:
+lemma plusbyte_O_x:
+ ∀b. plusbyte (mk_byte x0 x0) b false = couple ? ? b false.
+ intros;
+ elim b;
+ elim e;
+ elim e1;
+ reflexivity.
+qed.
+
+definition plusbytenc ≝
+ λx,y.
+  match plusbyte x y false with
+   [couple res _ ⇒ res].
+
+lemma plusbytenc_O_x:
+ ∀x. plusbytenc (mk_byte x0 x0) x = x.
+ intros;
+ unfold plusbytenc;
+ rewrite > plusbyte_O_x;
+ reflexivity.
+qed.
+
+lemma test_O_O:
+  let i ≝ 14 in
+  let s ≝ execute (mult_status (mk_byte x0 x0) (mk_byte x0 x0)) i in
+   pc s = 20 ∧ mem s 32 = byte_of_nat 0.
+ normalize;
+ split;
+ reflexivity.
+qed.
+
+
+lemma test_0_2:
+  let x ≝ mk_byte x0 x0 in
+  let y ≝ mk_byte x0 x2 in
+  let i ≝ 14 + 23 * nat_of_byte y in
+  let s ≝ execute (mult_status x y) i in
+   pc s = 20 ∧ mem s 32 = plusbytenc x x.
+ intros;
+ split;
+ reflexivity.
+qed.
+
+lemma test_x_1:
  ∀x.
   let y ≝ mk_byte x0 x1 in
   let i ≝ 14 + 23 * nat_of_byte y in
   let s ≝ execute (mult_status x y) i in
    pc s = 20 ∧ mem s 32 = x.
  intros;
+ split;
+  [ reflexivity
+  | change in ⊢ (? ? % ?) with (plusbytenc (mk_byte x0 x0) x);
+    rewrite > plusbytenc_O_x;
+    reflexivity
+  ].
+qed.
+
+lemma test_x_2:
+ ∀x.
+  let y ≝ mk_byte x0 x2 in
+  let i ≝ 14 + 23 * nat_of_byte y in
+  let s ≝ execute (mult_status x y) i in
+   pc s = 20 ∧ mem s 32 = plusbytenc x x.
+ intros;
+ split;
+  [ reflexivity
+  | change in ⊢ (? ? % ?) with
+     (plusbytenc (plusbytenc (mk_byte x0 x0) x) x);
+    rewrite > plusbytenc_O_x;
+    reflexivity
+  ].
+qed.
+
+(*
+lemma test_x_y:
+ ∀x,y.
+  let i ≝ 14 + 23 * nat_of_byte y in
+  let s ≝ execute (mult_status x y) i in
+   pc s = 20 ∧ mem s 32 = byte_of_nat (nat_of_byte x * nat_of_byte y).
+ intros;
+ 
+qed.
+*)
+
+(*
  letin w ≝ 22;
  letin opc ≝ (let s ≝ execute (mult_status x y) w in opcode_of_byte (mem s (pc s))); whd in opc;
- letin acc' ≝ (acc (execute (mult_status x y) w)); change in acc' with (byte_of_nat x);
+ letin acc' ≝ (acc (execute (mult_status x y) w)); 
+ normalize in acc';
+ change in acc' with x;
  letin z ≝ (let s ≝ (execute (mult_status x y) w) in mem s 32); whd in z;
  letin x ≝ (let s ≝ (execute (mult_status x y) w) in mem s 30); whd in x;
  (*letin xxx ≝ (byte_of_nat (x+y)); normalize in xxx;*)
