@@ -39,7 +39,7 @@ definition max_seq: ∀R:real.∀x,y:R. nat → R.
   [ apply x
   | apply not_eq_sum_field_zero ;
     unfold;
-    auto new
+    autobatch
   | apply y
   | apply lt_zero_to_le_inv_zero 
   ].

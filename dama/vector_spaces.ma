@@ -127,7 +127,7 @@ apply
      d (f j) l ≤ inv R (sum_field ? (S n)) ?);
  apply not_eq_sum_field_zero;
  unfold;
- auto new.
+ autobatch.
 qed.
 
 definition is_cauchy_seq : ∀R:real.\forall V:vector_space R.
@@ -141,7 +141,7 @@ definition is_cauchy_seq : ∀R:real.\forall V:vector_space R.
       d (f N)  (f n)≤ inv R (sum_field R (S m)) ?);
  apply not_eq_sum_field_zero;
  unfold;
- auto.
+ autobatch.
 qed.
 
 definition is_complete ≝
