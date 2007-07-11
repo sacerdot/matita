@@ -17,6 +17,314 @@ set "baseuri" "cic:/matita/assembly/".
 include "nat/div_and_mod.ma".
 include "list/list.ma".
 
+notation "14" non associative with precedence 80 for @{ 'x14 }.
+interpretation "natural number" 'x14 = 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/1)))))))))))))))).
+
+notation "22" non associative with precedence 80 for @{ 'x22 }.
+interpretation "natural number" 'x22 = 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/1)))))))))))))))))))))))).
+ 
+notation "256" non associative with precedence 80 for @{ 'x256 }.
+interpretation "natural number" 'x256 = 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/1) 
+))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
+))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
+))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
+))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))).
+
 inductive exadecimal : Type ≝
    x0: exadecimal
  | x1: exadecimal
@@ -799,6 +1107,11 @@ lemma byte_of_nat_nat_of_byte: ∀b. byte_of_nat (nat_of_byte b) = b.
  reflexivity.
 qed.
 
+axiom nat_of_byte_byte_of_nat: ∀n. n < 256 → nat_of_byte (byte_of_nat n) = n.
+(* intros;
+ unfold byte_of_nat;
+*) 
+
 definition nat_of_bool ≝
  λb. match b with [ true ⇒ 1 | false ⇒ 0 ].
 
@@ -819,311 +1132,6 @@ lemma plusbyte_ok:
  reflexivity.
 qed.
 *)
-
-notation "14" non associative with precedence 80 for @{ 'x14 }.
-interpretation "natural number" 'x14 = 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/1)))))))))))))))).
-
-notation "22" non associative with precedence 80 for @{ 'x22 }.
-interpretation "natural number" 'x22 = 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/1)))))))))))))))))))))))).
- 
-notation "256" non associative with precedence 80 for @{ 'x256 }.
-interpretation "natural number" 'x256 = 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
-(cic:/matita/nat/nat/nat.ind#xpointer(1/1/1) 
-))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
-))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
-))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
-)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))).
 
 (*
 lemma sign_ok: ∀ n:nat. nat_of_byte (byte_of_nat n) = n \mod 256.
@@ -1328,8 +1336,15 @@ let rec execute s n on n ≝
   | S n' ⇒ execute (tick s) n'
   ].
   
-lemma foo: ∀s,n. execute s (S n) = execute (tick s) n.
- intros; reflexivity.
+lemma breakpoint:
+ ∀s,n1,n2. execute s (n1 + n2) = execute (execute s n1) n2.
+ intros;
+ generalize in match s; clear s;
+ elim n1;
+  [ reflexivity
+  | simplify;
+    apply H;
+  ]
 qed.
 
 notation "hvbox(# break a)"
@@ -1350,10 +1365,8 @@ definition mult_source : list byte ≝
    #BRA;  mk_byte xF x2; (* goto l1 *)
    #LDAd; mk_byte x2 x0].(* (l2) *)
 
-definition mult_status ≝
- λx,y.
-  mk_status (mk_byte x0 x0) 0 0 false false
-   (λa:addr.
+definition mult_memory ≝
+ λx,y.λa:addr.
      match leb a 29 with
       [ true ⇒ nth ? mult_source (mk_byte x0 x0) a
       | false ⇒
@@ -1361,7 +1374,11 @@ definition mult_status ≝
           [ true ⇒ x
           | false ⇒ y
           ]
-      ]) 0.
+      ].
+
+definition mult_status ≝
+ λx,y.
+  mk_status (mk_byte x0 x0) 0 0 false false (mult_memory x y) 0.
 
 lemma plusbyte_O_x:
  ∀b. plusbyte (mk_byte x0 x0) b false = couple ? ? b false.
@@ -1437,16 +1454,130 @@ lemma test_x_2:
   ].
 qed.
 
+axiom byte_elim:
+ ∀P:byte → Prop.
+  (P (mk_byte x0 x0)) →
+   (∀i:nat. i < 255 → P (byte_of_nat i) → P (byte_of_nat (S i))) →
+    ∀b:byte. P b.
+(* Tedious proof, easy to automate but not trivial
+ intros;
+ elim b;
+ elim e;
+  [ elim e1;
+     [ assumption
+     | apply (H1 0);
+        [ apply lt_O_S
+        | assumption
+        ]
+     | apply (H1 1);
+        [ alias id "lt_S_S" = "cic:/matita/algebra/finite_groups/lt_S_S.con".
+          apply lt_S_S;
+          apply lt_O_S
+        | apply (H1 0);
+*)
+
+theorem lt_trans: ∀x,y,z. x < y → y < z → x < z.
+ unfold lt;
+ intros;
+ autobatch.
+qed.
+
+axiom daemon: False.
+
+axiom loop_invariant:
+ ∀x,y:byte.∀j:nat. j ≤ y →
+  let s ≝ execute (mult_status x y) (5 + 23*j) in
+   pc s = 4 ∧
+   mem s 30 = x ∧
+   mem s 31 = byte_of_nat (y - j) ∧
+   mem s 32 = byte_of_nat (x * j).
 (*
-lemma test_x_y:
+ intros 2;
+ apply (byte_elim ? ? ? y);
+  [ intros;
+    simplify in H;
+    cut (j=O);
+     [ unfold s; clear s;
+       rewrite > Hcut;
+       reflexivity
+     | (* easy *) elim daemon
+     ]
+  | intros;
+    unfold s;
+    cut (j < S i ∨ j = S i);
+    [ elim Hcut;
+       [ rewrite > nat_of_byte_byte_of_nat in H1;
+         [2: apply (lt_trans ? 255);
+             [ assumption
+             | unfold lt;
+               (* ???????? *)
+             ]
+         | generalize in match (H1 j); clear H1;
+           intros;
+           unfold lt in H3;
+           cut (j ≤ i);
+            [ generalize in match (H4 Hcut1); clear H4; clear Hcut1; intro;
+              apply H1
+            | letin xxx ≝ H3;
+              inversion xxx;
+               [ intro;
+                 rewrite > (injective_S ? ? H1);
+                 autobatch
+               | intros;
+                 (* facile *) elim daemon
+               ] 
+            ]
+         ]
+       |
+       ]
+    | (* easy *)
+    ]
+  ].
+qed.  
+*)
+
+axiom loop_invariant':
+ ∀x,y:byte.∀j:nat. j ≤ y →
+  let s ≝ execute (mult_status x y) (5 + 23*j) in
+   s =
+    mk_status (byte_of_nat (x * j)) 4 0 true false
+     (update (update (update (mult_memory x y) 30 x) 31 (byte_of_nat (y - j))) 32
+      (byte_of_nat (x * j)))
+     0.
+
+theorem test_x_y:
  ∀x,y.
   let i ≝ 14 + 23 * nat_of_byte y in
   let s ≝ execute (mult_status x y) i in
    pc s = 20 ∧ mem s 32 = byte_of_nat (nat_of_byte x * nat_of_byte y).
  intros;
- 
+ generalize in match (loop_invariant' x y y (le_n y)); intro;
+ generalize in match (breakpoint (mult_status x y) (5 + 23*y) 9); intro;
+ cut (5 + 23*y +9 = 14 + 23* y);
+  [2: autobatch paramodulation
+  | rewrite > Hcut in H1;
+    change in H1:(? ? % ?) with s;
+    letin s0 ≝ (execute (mult_status x y) (S (S (S (S (S O))))+S 22*y));
+    generalize in match H; intro K; clear H;
+    change in K with
+     (s0 =
+      mk_status (byte_of_nat (x*y)) 4 0 true false
+       (update
+        (update
+         (update (mult_memory x y) 30 x)
+         31 (byte_of_nat (y-y)))
+         32 (byte_of_nat (x*y))) O);
+    clear Hcut;
+    generalize in match H1; intro K1; clear H1;
+    change in K1 with (s = execute s0 9);
+    rewrite > K in K1;
+    clear K; clear s0; clearbody s; clear i;
+    rewrite < minus_n_n in K1;
+    split;
+    rewrite > K1;
+    reflexivity
+  ]
 qed.
-*)
 
 (*
  letin w ≝ 22;
