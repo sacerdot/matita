@@ -120,7 +120,7 @@ definition tends_to : ∀F:ordered_field_ch0.∀f:nat→F.∀l:F.Prop.
      f j ≤ l + (inv F (sum_field ? (S n)) ?));
  apply not_eq_sum_field_zero;
  unfold;
- auto new.
+ autobatch.
 qed.
 
 (*
@@ -142,7 +142,7 @@ definition is_cauchy_seq : ∀F:ordered_field_ch0.∀f:nat→F.Prop.
       f N - f n ≤ inv ? (sum_field F (S m)) ?);
  apply not_eq_sum_field_zero;
  unfold;
- auto.
+ autobatch.
 qed.
 
 definition is_complete ≝
