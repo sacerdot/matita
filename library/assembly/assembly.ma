@@ -61,6 +61,111 @@ interpretation "natural number" 'x22 =
 (cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
 (cic:/matita/nat/nat/nat.ind#xpointer(1/1/1)))))))))))))))))))))))).
 
+notation "30" non associative with precedence 80 for @{ 'x30 }.
+interpretation "natural number" 'x30 = 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/1)))))))))))))))))))))))))))))))).
+
+notation "31" non associative with precedence 80 for @{ 'x31 }.
+interpretation "natural number" 'x31 = 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/1))))))))))))))))))))))))))))))))).
+
+notation "32" non associative with precedence 80 for @{ 'x32 }.
+interpretation "natural number" 'x32 = 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
+(cic:/matita/nat/nat/nat.ind#xpointer(1/1/1)))))))))))))))))))))))))))))))))).
+
 notation "255" non associative with precedence 80 for @{ 'x255 }.
 interpretation "natural number" 'x255 = 
 (cic:/matita/nat/nat/nat.ind#xpointer(1/1/2) 
@@ -1553,7 +1658,7 @@ definition tick ≝
           let acc' ≝ match res with [ couple acc' _ ⇒ acc' ] in
           let c' ≝ match res with [ couple _ c' ⇒ c'] in
            mk_status acc' (2 + pc) spc
-            (eqb O (nat_of_byte acc')) c' mem 0 (* verify carrier! *)
+            (eqbyte (mk_byte x0 x0) acc') c' mem 0 (* verify carrier! *)
        | BEQ ⇒
           mk_status
            acc
@@ -1578,12 +1683,12 @@ definition tick ≝
           let x ≝ bpred (mem op1) in (* signed!!! *)
           let mem' ≝ update mem op1 x in
            mk_status acc (2 + pc) spc
-            (eqb O x) cf mem' 0 (* check zb!!! *)
+            (eqbyte (mk_byte x0 x0) x) cf mem' 0 (* check zb!!! *)
        | LDAi ⇒
-          mk_status op1 (2 + pc) spc (eqb O op1) cf mem 0
+          mk_status op1 (2 + pc) spc (eqbyte (mk_byte x0 x0) op1) cf mem 0
        | LDAd ⇒
           let x ≝ mem op1 in
-           mk_status x (2 + pc) spc (eqb O x) cf mem 0
+           mk_status x (2 + pc) spc (eqbyte (mk_byte x0 x0) x) cf mem 0
        | STAd ⇒
           mk_status acc (2 + pc) spc zf cf
            (update mem op1 acc) 0
@@ -1656,6 +1761,11 @@ definition plusbytenc ≝
  λx,y.
   match plusbyte x y false with
    [couple res _ ⇒ res].
+
+definition plusbytec ≝
+ λx,y.
+  match plusbyte x y false with
+   [couple _ c ⇒ c].
 
 lemma plusbytenc_O_x:
  ∀x. plusbytenc (mk_byte x0 x0) x = x.
@@ -1809,12 +1919,205 @@ axiom status_eq:
   (∀a. mem s a = mem s' a) →
   clk s = clk s' →
    s=s'.
+
+lemma eq_eqex_S_x0_false:
+ ∀n. n < 15 → eqex x0 (exadecimal_of_nat (S n)) = false.
+ intro;
+ cases n 0; [ intro; simplify; reflexivity | clear n];
+ cases n1 0; [ intro; simplify; reflexivity | clear n1];
+ cases n 0; [ intro; simplify; reflexivity | clear n];
+ cases n1 0; [ intro; simplify; reflexivity | clear n1];
+ cases n 0; [ intro; simplify; reflexivity | clear n];
+ cases n1 0; [ intro; simplify; reflexivity | clear n1];
+ cases n 0; [ intro; simplify; reflexivity | clear n];
+ cases n1 0; [ intro; simplify; reflexivity | clear n1];
+ cases n 0; [ intro; simplify; reflexivity | clear n];
+ cases n1 0; [ intro; simplify; reflexivity | clear n1];
+ cases n 0; [ intro; simplify; reflexivity | clear n];
+ cases n1 0; [ intro; simplify; reflexivity | clear n1];
+ cases n 0; [ intro; simplify; reflexivity | clear n];
+ cases n1 0; [ intro; simplify; reflexivity | clear n1];
+ cases n 0; [ intro; simplify; reflexivity | clear n];
+ intro;
+ unfold lt in H;
+ cut (S n1 ≤ 0);
+  [ elim (not_le_Sn_O ? Hcut)
+  | do 15 (apply le_S_S_to_le);
+    assumption
+  ]
+qed.
+
+lemma leq_m_n_to_eq_div_n_m_S: ∀n,m:nat. 0 < m → m ≤ n → ∃z. n/m = S z.
+ intros;
+ unfold div;
+ apply (ex_intro ? ? (div_aux (pred n) (n-m) (pred m)));
+ cut (∃w.m = S w);
+  [ elim Hcut;
+    rewrite > H2;
+    rewrite > H2 in H1;
+    clear Hcut; clear H2; clear H; (*clear m;*)
+    simplify;
+    unfold in ⊢ (? ? % ?);
+    cut (∃z.n = S z);
+     [ elim Hcut; clear Hcut;
+       rewrite > H in H1;
+       rewrite > H; clear m;
+       change in ⊢ (? ? % ?)  with
+        (match leb (S a1) a with
+         [ true ⇒ O
+         | false ⇒ S (div_aux a1 ((S a1) - S a) a)]);
+       cut (S a1 ≰ a);
+        [ apply (leb_elim (S a1) a);
+           [ intro;
+             elim (Hcut H2)
+           | intro;
+             simplify;
+             reflexivity
+           ]
+        | intro;
+          autobatch
+        ]
+     | elim H1; autobatch
+     ]
+  | autobatch
+  ].
+qed.
+
+lemma eq_eqbyte_x0_x0_byte_of_nat_S_false:
+ ∀b. b < 255 → eqbyte (mk_byte x0 x0) (byte_of_nat (S b)) = false.
+ intros;
+ unfold byte_of_nat;
+ cut (b < 15 ∨ b ≥ 15);
+  [ elim Hcut;
+    [ unfold eqbyte;
+      change in ⊢ (? ? (? ? %) ?) with (eqex x0 (exadecimal_of_nat (S b))); 
+      rewrite > eq_eqex_S_x0_false;
+       [ alias id "andb_sym" = "cic:/matita/nat/propr_div_mod_lt_le_totient1_aux/andb_sym.con".
+         rewrite > andb_sym;
+         reflexivity
+       | assumption
+       ]
+    | unfold eqbyte;
+      change in ⊢ (? ? (? % ?) ?) with (eqex x0 (exadecimal_of_nat (S b/16)));
+      letin K ≝ (leq_m_n_to_eq_div_n_m_S (S b) 16 ? ?);
+       [ autobatch
+       | unfold in H1;
+         apply le_S_S;
+         assumption
+       | clearbody K;
+         elim K; clear K;
+         rewrite > H2;
+         rewrite > eq_eqex_S_x0_false;
+          [ reflexivity
+          | unfold lt;
+            unfold lt in H;
+            rewrite < H2;
+            clear H2; clear a; clear H1; clear Hcut;
+            elim daemon (* trivial arithmetic property over <= and div *)
+          ] 
+       ]
+    ]
+  | elim daemon
+  ].
+qed.
+
+lemma lt_nat_of_exadecimal_16: ∀b. nat_of_exadecimal b < 16.
+ intro;
+ elim b;
+ simplify;
+ autobatch.
+qed.
+
+lemma lt_nat_of_byte_256: ∀b. nat_of_byte b < 256.
+ intro;
+ unfold nat_of_byte;
+ letin H ≝ (lt_nat_of_exadecimal_16 (bh b)); clearbody H;
+ letin K ≝ (lt_nat_of_exadecimal_16 (bl b)); clearbody K;
+ unfold lt in H K ⊢ %;
+ letin H' ≝ (le_S_S_to_le ? ? H); clearbody H'; clear H;
+ letin K' ≝ (le_S_S_to_le ? ? K); clearbody K'; clear K;
+ apply le_S_S;
+ cut (16*bh b ≤ 16*15);
+  [ letin Hf ≝ (le_plus ? ? ? ? Hcut K'); clearbody Hf;
+    simplify in Hf:(? ? %);
+    assumption
+  | autobatch
+  ]
+qed.
+
+lemma exadecimal_of_nat_mod:
+ ∀n.exadecimal_of_nat n = exadecimal_of_nat (n \mod 16).
+ elim daemon.
+(*
+ intros;
+ cases n; [ reflexivity | ];
+ cases n1; [ reflexivity | ];
+ cases n2; [ reflexivity | ];
+ cases n3; [ reflexivity | ];
+ cases n4; [ reflexivity | ];
+ cases n5; [ reflexivity | ];
+ cases n6; [ reflexivity | ];  
+ cases n7; [ reflexivity | ];
+ cases n8; [ reflexivity | ];
+ cases n9; [ reflexivity | ];
+ cases n10; [ reflexivity | ];
+ cases n11; [ reflexivity | ];
+ cases n12; [ reflexivity | ];
+ cases n13; [ reflexivity | ];
+ cases n14; [ reflexivity | ];
+ cases n15; [ reflexivity | ];
+ change in ⊢ (? ? ? (? (? % ?))) with (16 + n16);
+ cut ((16 + n16) \mod 16 = n16 \mod 16);
+  [ rewrite > Hcut;
+    simplify in ⊢ (? ? % ?);
+    
+  | unfold mod;
+    change with (mod_aux (16+n16) (16+n16) 15 = n16);
+    unfold mod_aux;
+    change with
+     (match leb (16+n16) 15 with
+       [true ⇒ 16+n16
+       | false ⇒ mod_aux (15+n16) ((16+n16) - 16) 15
+       ] = n16);
+    cut (leb (16+n16) 15 = false);
+     [ rewrite > Hcut;
+       change with (mod_aux (15+n16) (16+n16-16) 15 = n16);
+       cut (16+n16-16 = n16);
+        [ rewrite > Hcut1; clear Hcut1;
+          
+        |
+        ]
+     |
+     ]
+  ]*)
+qed. 
+
+lemma eq_bpred_S_a_a:
+ ∀a. a < 255 → bpred (byte_of_nat (S a)) = byte_of_nat a.
+elim daemon. (*
+ intros;
+ unfold byte_of_nat;
+ cut (a \mod 16 = 15 ∨ a \mod 16 < 15);
+  [ elim Hcut;
+     [ 
+     |
+     ]
+  | autobatch
+  ].*)
+qed.
+ 
+lemma plusbyteenc_S:
+ ∀x:byte.∀n.plusbytenc (byte_of_nat (x*n)) x = byte_of_nat (x * S n).
+ intros;
+ elim daemon.
+qed. 
+
 (*
 lemma loop_invariant':
  ∀x,y:byte.∀j:nat. j ≤ y →
   execute (mult_status x y) (5 + 23*j)
    =
-    mk_status (byte_of_nat (x * j)) 4 0 true false
+    mk_status (byte_of_nat (x * j)) 4 0 (eqbyte (mk_byte x0 x0) (byte_of_nat (x*j))) false
      (update (update (update (mult_memory x y) 30 x) 31 (byte_of_nat (y - j))) 32
       (byte_of_nat (x * j)))
      0.
@@ -1838,37 +2141,143 @@ lemma loop_invariant':
         clear K; 
         rewrite > H';
         clear H';
-        TO BE FINISHED;
+        cut (∃z.y-n=S z ∧ z < 255);
+         [ elim Hcut; clear Hcut;
+           elim H; clear H;
+           rewrite > H2;
+           (* instruction 1 *)
+           letin K ≝
+            (breakpoint
+              (mk_status (byte_of_nat (x*n)) 4 O true false
+               (update (update (update (mult_memory x y) 30 x) 31 (byte_of_nat (S a))) 32
+               (byte_of_nat (x*n))) O)
+              3 20); clearbody K;
+           normalize in K:(? ? (? ? %) ?);
+           apply transitive_eq; [2: apply K | skip | ]; clear K;
+           change in ⊢ (? ? (? % ?) ?) with
+           (mk_status
+            (byte_of_nat (S a))
+            6
+            0
+            (eqbyte (mk_byte x0 x0) (byte_of_nat (S a)))
+            false
+            (update
+             (update (update (mult_memory x y) 30 x)
+               31 (byte_of_nat (S a)))
+              32 (byte_of_nat (x*n)))
+            0);
+           (* instruction 2 *)
+           letin K ≝
+            (breakpoint
+              (mk_status (byte_of_nat (S a)) 6 O
+               (eqbyte (mk_byte x0 x0) (byte_of_nat (S a))) false
+                (update (update (update (mult_memory x y) 30 x) 31 (byte_of_nat (S a))) 32
+                 (byte_of_nat (x*n))) O)
+              3 17); clearbody K;
+           normalize in K:(? ? (? ? %) ?);
+           apply transitive_eq; [2: apply K | skip | ]; clear K;
+           whd in ⊢ (? ? (? % ?) ?);
+           letin K ≝ (eq_eqbyte_x0_x0_byte_of_nat_S_false ? H3); clearbody K;
+           rewrite > K; clear K;
+           simplify in ⊢ (? ? (? (? ? % ? ? ? ? ?) ?) ?);
+           (* instruction 3 *)
+           letin K ≝
+            (breakpoint
+              (mk_status (byte_of_nat (S a)) 8 O
+               (eqbyte (mk_byte x0 x0) (byte_of_nat (S a))) false
+                (update (update (update (mult_memory x y) 30 x) 31 (byte_of_nat (S a))) 32
+                 (byte_of_nat (x*n))) O)
+              3 14); clearbody K;
+           normalize in K:(? ? (? ? %) ?);
+           apply transitive_eq; [2: apply K | skip | ]; clear K;
+           whd in ⊢ (? ? (? % ?) ?);
+           change in ⊢ (? ? (? (? % ? ? ? ? ? ?) ?) ?) with (byte_of_nat (x*n));
+           normalize in ⊢ (? ? (? (? ? % ? ? ? ? ?) ?) ?);
+           change in ⊢ (? ? (? (? ? ? ? % ? ? ?) ?) ?) with (eqbyte (mk_byte x0 x0) (byte_of_nat (x*n)));
+           (* instruction DECd *)
+           letin K ≝
+            (breakpoint
+             (mk_status (byte_of_nat (x*n)) 10 O
+              (eqbyte (mk_byte x0 x0) (byte_of_nat (x*n))) false
+               (update (update (update (mult_memory x y) 30 x) 31 (byte_of_nat (S a))) 32
+                (byte_of_nat (x*n))) O)
+             5 9); clearbody K;
+           normalize in K:(? ? (? ? %) ?);
+           apply transitive_eq; [2: apply K | skip | ]; clear K;
+           whd in ⊢ (? ? (? % ?) ?);
+           change in ⊢ (? ? (? (? ? ? ? (? ? %) ? ? ?) ?) ?) with (bpred (byte_of_nat (S a)));
+           rewrite > (eq_bpred_S_a_a ? H3);
+           normalize in ⊢ (? ? (? (? ? % ? ? ? ? ?) ?) ?);
+           normalize in ⊢ (? ? (? (? ? ? ? ? ? (? ? % ?) ?) ?) ?);
+           cut (y - S n = a);
+            [2: elim daemon | ];
+           rewrite < Hcut; clear Hcut; clear H3; clear H2; clear a;          
+           (* instruction ADDd *)
+           letin K ≝
+            (breakpoint
+             (mk_status (byte_of_nat (x*n)) 12
+              O (eqbyte (mk_byte x0 x0) (byte_of_nat (y-S n))) false
+              (update
+               (update (update (update (mult_memory x y) 30 x) 31 (byte_of_nat (S (y-S n))))
+               32 (byte_of_nat (x*n))) 31
+               (byte_of_nat (y-S n))) O)
+             3 6); clearbody K;
+           normalize in K:(? ? (? ? %) ?);            
+           apply transitive_eq; [2: apply K | skip | ]; clear K;
+           whd in ⊢ (? ? (? % ?) ?);
+           change in ⊢ (? ? (? (? % ? ? ? ? ? ?) ?) ?) with
+            (plusbytenc (byte_of_nat (x*n)) x);
+           change in ⊢ (? ? (? (? ? ? ? (? ? %) ? ? ?) ?) ?) with
+            (plusbytenc (byte_of_nat (x*n)) x);
+           normalize in ⊢ (? ? (? (? ? % ? ? ? ? ?) ?) ?);
+           normalize in \vdash (? ?
+            (?
+             (? ? ? ? ? match ? ? % ? in cartesian_product return ? with [couple\rArr ?] ? ?)
+             ?) ?);
+           rewrite > plusbyteenc_S;
+           (* instruction STAd *)
+           letin K ≝
+            (breakpoint
+             (mk_status (byte_of_nat (x*S n)) 14 O
+              (eqbyte (mk_byte x0 x0) (byte_of_nat (x*S n)))
+               match plusbyte (byte_of_nat (x*n)) x false
+                in cartesian_product
+               return \lambda c:(cartesian_product byte bool).bool
+              with 
+              [couple (_:byte) (c':bool)\rArr c']
+               (update
+                (update (update (update (mult_memory x y) 30 x) 31 (byte_of_nat (S (y-S n))))
+                32 (byte_of_nat (x*n))) 31
+                (byte_of_nat (y-S n))) O)
+            3 3); clearbody K;
+           normalize in K:(? ? (? ? %) ?);            
+           apply transitive_eq; [2: apply K | skip | ]; clear K;
+           whd in ⊢ (? ? (? % ?) ?);
+           normalize in ⊢ (? ? (? (? ? % ? ? ? ? ?) ?) ?);
+           (* instruction BRA *)
+           whd in ⊢ (? ? % ?);
+           normalize in ⊢ (? ? (? ? % ? ? ? ? ?) ?);
+           apply status_eq;
+            [1,2,3,4,7: normalize; reflexivity
+            |6: intro;
+              elim daemon
+            |5: FALSO!
+            ]
+         | exists;
+            [ apply (y - S n)
+            | split;
+               [ rewrite < (minus_S_S y n);
+                 autobatch
+               | letin K ≝ (lt_nat_of_byte_256 y); clearbody K;
+                 letin K' ≝ (lt_minus_m y (S n) ? ?); clearbody K';
+                 autobatch
+               ]
+            ]
+         ]
       ]
     | autobatch paramodulation
     ] 
   ]   
-(*
- intros 2;
- apply (byte_elim ? ? ? y);
-  [ intros;
-    simplify in H;
-    generalize in match (le_n_O_to_eq ? H); intro;
-    unfold s; clear s;
-    rewrite < H1;
-    rewrite < times_n_O;
-    rewrite < times_n_O;
-    apply status_eq;
-     [1,2,3,4,5,7: normalize; reflexivity
-     | intros;
-       whd in ⊢ (? ? % %);
-       normalize in ⊢ (? ? match ? ? % in bool return ? with [true\rArr ?|false\rArr ?] ?);
-       elim (eqb a 32) in ⊢ (? ? % match % in bool return ? with [true\rArr ?|false\rArr ?]);
-       simplify;
-        [ reflexivity
-        | whd in ⊢ (? ? % %);
-          elim daemon
-        ]
-     ]
-  | intros;
-    cut (j = byte_of_nat (S i) ∨ j ≤ byte_of_nat i);
-  ].
-*)
 qed.
 
 theorem test_x_y:
@@ -1903,109 +2312,4 @@ theorem test_x_y:
     rewrite > K1;
     reflexivity
   ]
-qed.
-
-(*
- letin w ≝ 22;
- letin opc ≝ (let s ≝ execute (mult_status x y) w in opcode_of_byte (mem s (pc s))); whd in opc;
- letin acc' ≝ (acc (execute (mult_status x y) w)); 
- normalize in acc';
- change in acc' with x;
- letin z ≝ (let s ≝ (execute (mult_status x y) w) in mem s 32); whd in z;
- letin x ≝ (let s ≝ (execute (mult_status x y) w) in mem s 30); whd in x;
- (*letin xxx ≝ (byte_of_nat (x+y)); normalize in xxx;*)
- split;
-  [ normalize; reflexivity
-  | change with (byte_of_nat x = x);
- normalize;
- split;
-  [ reflexivity
-  | change with (byte_of_nat (x + 0));
- letin www ≝ (nat_of_byte (byte_of_nat 260)); whd in www;
- letin xxx ≝ (260 \mod 256); reduce in xxx;
- letin xxx ≝ ((18 + 242) \mod 256);
- whd in xxx;
- letin pc' ≝ (pc s);
- normalize in pc';
- letin opcode ≝ (let s ≝ s in opcode_of_byte (mem s (pc s)));
- normalize in opcode;
- csc.
- split;
- reduce in s;
- reflexivity.
-qed.
-
-lemma goo1:
- ∀x,y.
-  let i ≝ 14 + 23 * nat_of_byte y in
-  let s ≝ execute (mult_status x y) i in
-   pc s = 22 ∧ mem s 32 = byte_of_nat (nat_of_byte x * nat_of_byte y).
- intros;
-qed.
-
-lemma goo: True.
- letin s0 ≝ mult_status;
- letin pc0 ≝ (pc s0); 
- reduce in pc0;
- letin i0 ≝ (opcode_of_byte (mem s0 pc0));
- reduce in i0;
- 
- letin s1 ≝ (execute s0 (cycles_of_opcode i0));
- letin pc1 ≝ (pc s1);
- reduce in pc1;
- letin i1 ≝ (opcode_of_byte (mem s1 pc1));
- reduce in i1;
-
- letin s2 ≝ (execute s1 (cycles_of_opcode i1));
- letin pc2 ≝ (pc s2);
- reduce in pc2;
- letin i2 ≝ (opcode_of_byte (mem s2 pc2));
- reduce in i2;
-
- letin s3 ≝ (execute s2 (cycles_of_opcode i2));
- letin pc3 ≝ (pc s3);
- reduce in pc3;
- letin i3 ≝ (opcode_of_byte (mem s3 pc3));
- reduce in i3;
- letin zf3 ≝ (zf s3);
- reduce in zf3;
-
- letin s4 ≝ (execute s3 (cycles_of_opcode i3));
- letin pc4 ≝ (pc s4);
- reduce in pc4;
- letin i4 ≝ (opcode_of_byte (mem s4 pc4));
- reduce in i4;
-
- letin s5 ≝ (execute s4 (cycles_of_opcode i4));
- letin pc5 ≝ (pc s5);
- reduce in pc5;
- letin i5 ≝ (opcode_of_byte (mem s5 pc5));
- reduce in i5;
- 
- letin s6 ≝ (execute s5 (cycles_of_opcode i5));
- letin pc6 ≝ (pc s6);
- reduce in pc6;
- letin i6 ≝ (opcode_of_byte (mem s6 pc6));
- reduce in i6;
- 
- letin s7 ≝ (execute s6 (cycles_of_opcode i6));
- letin pc7 ≝ (pc s7);
- reduce in pc7;
- letin i7 ≝ (opcode_of_byte (mem s7 pc7));
- reduce in i7;
- 
- letin s8 ≝ (execute s7 (cycles_of_opcode i7));
- letin pc8 ≝ (pc s8);
- reduce in pc8;
- letin i8 ≝ (opcode_of_byte (mem s8 pc8));
- reduce in i8;
-
- letin s9 ≝ (execute s8 (cycles_of_opcode i8));
- letin pc9 ≝ (pc s9);
- reduce in pc9;
- letin i9 ≝ (opcode_of_byte (mem s9 pc9));
- reduce in i9;
- 
- exact I.
-qed.
-*)*)
+qed.*)
