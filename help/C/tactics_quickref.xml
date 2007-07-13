@@ -60,7 +60,7 @@
       <row>
         <entry/>
         <entry>|</entry>
-        <entry><link linkend="tac_compose"><emphasis role="bold">compose</emphasis></link> [&nat;] &sterm; [<emphasis role="bold">with</emphasis> &sterm;] [&intros-spec;]</entry>
+        <entry><link linkend="tac_compose"><emphasis role="bold">compose</emphasis></link> [<emphasis><link linkend="grammar.nat">nat</link></emphasis>] <emphasis><link linkend="grammar.sterm">sterm</link></emphasis> [<emphasis role="bold">with</emphasis> <emphasis><link linkend="grammar.sterm">sterm</link></emphasis>] [<emphasis><link linkend="grammar.intros-spec">intros-spec</link></emphasis>]</entry>
       </row>
       <row>
         <entry/>

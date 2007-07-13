@@ -1,117 +1,178 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
-  "http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd" [
+<?xml version="1.0"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
 
-  <!ENTITY dhfirstname "<firstname>Enrico</firstname>">
-  <!ENTITY dhsurname   "<surname>Tassi</surname>">
-  <!ENTITY dhdate      "<date>21 Jun 2007</date>">
-  <!ENTITY dhsection   "<manvolnum>1</manvolnum>">
-  <!ENTITY dhemail     "<email>gareuselesinge@debian.org</email>">
-  <!ENTITY dhusername  "Enrico Tassi">
-  <!ENTITY dhucpackage "<refentrytitle>matita</refentrytitle>">
-  <!ENTITY dhpackage   "matita">
+  <!ENTITY legal SYSTEM "legal.xml">
+  <!ENTITY license SYSTEM "sec_license.xml">
+  <!ENTITY install SYSTEM "sec_install.xml">
+  <!ENTITY gettingstarted SYSTEM "sec_gettingstarted.xml">
+  <!ENTITY intro SYSTEM "sec_intro.xml">
+  <!ENTITY terms SYSTEM "sec_terms.xml">
+  <!ENTITY tacticals SYSTEM "sec_tacticals.xml">
+  <!ENTITY tactics SYSTEM "sec_tactics.xml">
+  <!ENTITY declarative_tactics SYSTEM "sec_declarative_tactics.xml">
+  <!ENTITY othercommands SYSTEM "sec_commands.xml">
+  <!ENTITY usernotation SYSTEM "sec_usernotation.xml">
 
-  <!ENTITY debian      "<productname>Debian</productname>">
-  <!ENTITY gnu         "<acronym>GNU</acronym>">
-  <!ENTITY gpl         "&gnu; <acronym>GPL</acronym>">
+  <!ENTITY tacticref SYSTEM "tactics_quickref.xml">
+  <!ENTITY declarativetacticref SYSTEM "declarative_tactics_quickref.xml">
+
+  <!ENTITY manrevision "1&alpha;">
+  <!ENTITY date "12/07/2006">
+  <!ENTITY app "<application>Matita</application>">
+  <!ENTITY appname "Matita">
+  <!ENTITY appversion SYSTEM "version.txt">
+
+  <!ENTITY TODO "<emphasis>TODO</emphasis>">
+  <!ENTITY MYSQL "<application> <ulink type='http'
+      url='http://www.mysql.com'>MySQL</ulink> </application>">
+
+  <!-- Entities for BNF -->
+  <!ENTITY id "<emphasis><link linkend='grammar.id'>id</link></emphasis>">
+  <!ENTITY uri "<emphasis><link linkend='grammar.uri'>uri</link></emphasis>">
+  <!ENTITY char "<emphasis><link linkend='grammar.char'>char</link></emphasis>">
+  <!ENTITY uri-step "<emphasis><link linkend='grammar.uri-step'>uri-step</link></emphasis>">
+  <!ENTITY nat "<emphasis><link linkend='grammar.nat'>nat</link></emphasis>">
+  <!ENTITY term "<emphasis><link linkend='grammar.term'>term</link></emphasis>">
+  <!ENTITY rec_def "<emphasis><link linkend='grammar.rec_def'>rec_def</link></emphasis>">
+  <!ENTITY match_pattern "<emphasis><link linkend='grammar.match_pattern'>match_pattern</link></emphasis>">
+  <!ENTITY match_branch "<emphasis><link linkend='grammar.match_branch'>match_branch</link></emphasis>">
+  <!ENTITY args "<emphasis><link linkend='grammar.args'>args</link></emphasis>">
+  <!ENTITY args2 "<emphasis><link linkend='grammar.args2'>args2</link></emphasis>">
+  <!ENTITY sterm "<emphasis><link linkend='grammar.sterm'>sterm</link></emphasis>">
+  <!ENTITY intros-spec "<emphasis><link linkend='grammar.intros-spec'>intros-spec</link></emphasis>">
+  <!ENTITY pattern "<emphasis><link linkend='grammar.pattern'>pattern</link></emphasis>">
+  <!ENTITY reduction-kind "<emphasis><link linkend='grammar.reduction-kind'>reduction-kind</link></emphasis>">
+  <!ENTITY path "<emphasis><link linkend='grammar.path'>path</link></emphasis>">
+  <!ENTITY proofscript "<emphasis><link linkend='grammar.proofscript'>proof-script</link></emphasis>">
+  <!ENTITY proofstep "<emphasis><link linkend='grammar.proofstep'>proof-step</link></emphasis>">
+  <!ENTITY tactic "<emphasis><link linkend='grammar.tactic'>tactic</link></emphasis>">
+  <!ENTITY LCFtactical "<emphasis><link linkend='grammar.LCFtactical'>LCF-tactical</link></emphasis>">
+  <!ENTITY qstring "<emphasis><link linkend='grammar.qstring'>qstring</link></emphasis>">
+  <!ENTITY interpretation "<emphasis><link linkend='grammar.interpretation'>interpretation</link></emphasis>">
+  <!ENTITY autoparams "<emphasis><link linkend='grammar.autoparams'>auto_params</link></emphasis>">
 ]>
 
-<refentry>
-  <refentryinfo>
-    <address>
-      &dhemail;
-    </address>
-    <author>
-      &dhfirstname;
-      &dhsurname;
-    </author>
+<?yelp:chunk-depth 3?>
+
+<book id="matita_manual" lang="en">
+
+  <title>&app; V&appversion; User Manual (rev. &manrevision;)</title>
+
+  <bookinfo>
+
     <copyright>
-      <year>2007</year>
-      <holder>&dhusername;</holder>
+      <year>2006</year>
+      <holder>The HELM team.</holder>
     </copyright>
-    &dhdate;
-  </refentryinfo>
-  <refmeta>
-    &dhucpackage;
 
-    &dhsection;
-  </refmeta>
-  <refnamediv>
-    <refname>&dhpackage;</refname>
+    <authorgroup> 
+      <author> 
+	<firstname>Andrea</firstname> 
+	<surname>Asperti</surname> 
+	<affiliation> 
+	  <address> <email>asperti@cs.unibo.it</email> </address> 
+	</affiliation> 
+      </author> 
+      <author> 
+	<firstname>Claudio</firstname> 
+	<surname>Sacerdoti Coen</surname> 
+	<affiliation> 
+	  <address> <email>sacerdot@cs.unibo.it</email> </address> 
+	</affiliation> 
+      </author> 
+      <author> 
+	<firstname>Ferruccio</firstname> 
+	<surname>Guidi</surname> 
+	<affiliation> 
+	  <address> <email>fguidi@cs.unibo.it</email> </address> 
+	</affiliation> 
+      </author>       
+      <author> 
+	<firstname>Enrico</firstname> 
+	<surname>Tassi</surname> 
+	<affiliation> 
+	  <address> <email>tassi@cs.unibo.it</email> </address> 
+	</affiliation> 
+      </author> 
+      <author> 
+	<firstname>Stefano</firstname> 
+	<surname>Zacchiroli</surname> 
+	<affiliation> 
+	  <address> <email>zacchiro@cs.unibo.it</email> </address> 
+	</affiliation> 
+      </author>
+    </authorgroup>
 
-    <refpurpose>creates XML data file for Vim7 omni completion from
-      DTDs</refpurpose>
-  </refnamediv>
-  <refsynopsisdiv>
-    <cmdsynopsis>
-      <command>&dhpackage;</command>
-      <arg choice="req"><replaceable>filename</replaceable>.dtd</arg>
-      <arg choice="opt"><replaceable>dialectname</replaceable></arg>
-    </cmdsynopsis>
-  </refsynopsisdiv>
+    <legalnotice>
+      <para> Both &appname; and this document are free software, you can
+	redistribute them and/or modify them under the terms of the GNU General
+	Public License as published by the Free Software Foundation.  See <xref
+	  linkend="sec_license" /> for more information. </para>
+    </legalnotice>
 
-  <refsect1>
-    <title>DESCRIPTION</title>
+    <revhistory>
+      <revision>
+	<revnumber>&manrevision;</revnumber>
+	<date>&date;</date>
+      </revision>
+    </revhistory>
 
-    <para> This manual page documents brieftly the
-      <command>&dhpackage;</command> program. For more information see its HTML
-      documentation in
-      <filename>/usr/share/doc/vim-scripts/html/dtd2vim.html</filename>.
-    </para>
+  </bookinfo>
 
-    <para>Starting from version 7 Vim supports context aware completion of XML
-      files (and others). In particular, when the file being edited is an XML
-      file, completion can be driven by the grammar extracted from a Document
-      Type Definition (DTD). </para>
+<!-- ============= Document Body ============================= -->
 
-    <para>For this feature to work the user should put an XML data file
-      corresponding to the desired DTD in a <filename>autoload/xml</filename>
-      directory contained in a directory belonging to Vim's
-      <varname>'runtimepath'</varname> (for example
-      <filename>~/.vim/autoload/xml/</filename>). </para>
+&intro;
+&install;
+&gettingstarted;
+&terms;
+&usernotation;
+&tacticals;
+&tactics;
+&declarative_tactics;
+&othercommands;
+&license;
 
-    <para><command>&dhpackage;</command> is the program that creates XML data
-      files from DTDs. Given as input a DTD
-      <filename><replaceable>file</replaceable>.dtd</filename> it will create a
-      <filename>file.vim</filename> XML data file.
-      <replaceable>dialectname</replaceable> will be part of dictionary name
-      and will be used as argument for the <command>:XMLns</command> command.
-    </para>
+</book>
 
-  </refsect1>
+<!-- CSC: valid element tags
+<sect1 id="intro"> <title>Introduction</title> ...
+<sect2 id="what"> <title>What is Matita?</title>
+<para>
+<note> <title>Note:</title> <para> ...
+<footnote> <para> ...
+<itemizedlist mark="opencircle">
+    <listitem>
+     <para>
+	The computer player for Iagno is easy to beat.
+     </para>
+    </listitem>
+ </itemizedlist>
 
-  <refsect1>
-    <title>OPTIONS</title>
+<ulink type="http" url="http://www.gnome.org/gdp">
+<email>itp@gnu.org</email>
+<application>Matita</application>
+<command>iagno</command> on the command line
+<citetitle>Othello</citetitle>
 
-    <para>None. </para>
-  </refsect1>
+<guimenuitem>Iagno</guimenuitem>
+<guisubmenu>Games</guisubmenu>
+<guibutton>none</guibutton>
+<menuchoice> <guimenu>Settings</guimenu> <guisubmenu>Preferences </guisubmenu> </menuchoice>
 
-  <refsect1>
-    <title>SEE ALSO</title>
+<xref linkend="start-shot"/>. 
+<figure id="start-shot">
+ <title>Starting Position</title>
+ <screenshot>
+   <mediaobject> 
+   <imageobject>
+ <imagedata fileref="figures/START.png" format="PNG" srccredit="Eric Baudais"/>
+  </imageobject>
+   <textobject> 
+     <phrase>Screenshot of the starting position.</phrase> 
+   </textobject> 
+ </mediaobject>
+ </screenshot>
+</figure>
 
-    <para>vim (1).</para>
-
-    <para>In the Vim online help: <userinput>:help compl-omni</userinput>,
-      <userinput>:help ft-xml-omni</userinput>, <userinput>:help
-	:XMLns</userinput>. </para>
-
-    <para>dtd2vim is fully documented in
-      <filename>/usr/share/doc/vim-scripts/html/dtd2vim.html</filename>.
-    </para>
-  </refsect1>
-
-  <refsect1>
-    <title>AUTHOR</title>
-
-    <para>This manual page was written by &dhusername; &dhemail; for the
-      &debian; system (but may be used by others). Permission is granted to
-      copy, distribute and/or modify this document under the terms of the &gnu;
-      General Public License, Version 2 any later version published by the Free
-      Software Foundation. </para>
-
-    <para> On Debian systems, the complete text of the GNU General Public
-      License can be found in /usr/share/common-licenses/GPL. </para>
-  </refsect1>
-
-</refentry>
-
+-->
