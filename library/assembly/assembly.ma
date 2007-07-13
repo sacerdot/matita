@@ -2112,12 +2112,21 @@ lemma plusbyteenc_S:
  elim daemon.
 qed. 
 
-(*
+lemma eq_plusbytec_x0_x0_x_false:
+ ∀x.plusbytec (mk_byte x0 x0) x = false.
+ intro;
+ elim x;
+ elim e;
+ elim e1;
+ reflexivity.
+qed.
+
 lemma loop_invariant':
  ∀x,y:byte.∀j:nat. j ≤ y →
   execute (mult_status x y) (5 + 23*j)
    =
-    mk_status (byte_of_nat (x * j)) 4 0 (eqbyte (mk_byte x0 x0) (byte_of_nat (x*j))) false
+    mk_status (byte_of_nat (x * j)) 4 0 (eqbyte (mk_byte x0 x0) (byte_of_nat (x*j)))
+     (plusbytec (byte_of_nat (x*pred j)) x)
      (update (update (update (mult_memory x y) 30 x) 31 (byte_of_nat (y - j))) 32
       (byte_of_nat (x * j)))
      0.
@@ -2125,7 +2134,10 @@ lemma loop_invariant':
  elim j;
   [ do 2 (rewrite < times_n_O);
     apply status_eq;
-    [1,2,3,4,5,7: normalize; reflexivity
+    [1,2,3,4,7: normalize; reflexivity
+    | rewrite > eq_plusbytec_x0_x0_x_false;
+      normalize;
+      reflexivity 
     | intro;
       elim daemon
     ]
@@ -2145,32 +2157,29 @@ lemma loop_invariant':
          [ elim Hcut; clear Hcut;
            elim H; clear H;
            rewrite > H2;
-           (* instruction 1 *)
+           (* instruction LDAd *)
            letin K ≝
             (breakpoint
-              (mk_status (byte_of_nat (x*n)) 4 O true false
+              (mk_status (byte_of_nat (x*n)) 4 O
+               (eqbyte (mk_byte x0 x0) (byte_of_nat (x*n)))
+               (plusbytec (byte_of_nat (x*pred n)) x)
                (update (update (update (mult_memory x y) 30 x) 31 (byte_of_nat (S a))) 32
                (byte_of_nat (x*n))) O)
               3 20); clearbody K;
            normalize in K:(? ? (? ? %) ?);
            apply transitive_eq; [2: apply K | skip | ]; clear K;
-           change in ⊢ (? ? (? % ?) ?) with
-           (mk_status
-            (byte_of_nat (S a))
-            6
-            0
-            (eqbyte (mk_byte x0 x0) (byte_of_nat (S a)))
-            false
-            (update
-             (update (update (mult_memory x y) 30 x)
-               31 (byte_of_nat (S a)))
-              32 (byte_of_nat (x*n)))
-            0);
-           (* instruction 2 *)
+           whd in ⊢ (? ? (? % ?) ?);
+           normalize in ⊢ (? ? (? (? ? % ? ? ? ? ?) ?) ?);
+           change in ⊢ (? ? (? (? % ? ? ? ? ? ?) ?) ?)
+            with (byte_of_nat (S a));
+           change in ⊢ (? ? (? (? ? ? ? (? ? %) ? ? ?) ?) ?) with
+            (byte_of_nat (S a));
+           (* instruction BEQ *)
            letin K ≝
             (breakpoint
               (mk_status (byte_of_nat (S a)) 6 O
-               (eqbyte (mk_byte x0 x0) (byte_of_nat (S a))) false
+               (eqbyte (mk_byte x0 x0) (byte_of_nat (S a)))
+               (plusbytec (byte_of_nat (x*pred n)) x)
                 (update (update (update (mult_memory x y) 30 x) 31 (byte_of_nat (S a))) 32
                  (byte_of_nat (x*n))) O)
               3 17); clearbody K;
@@ -2180,11 +2189,12 @@ lemma loop_invariant':
            letin K ≝ (eq_eqbyte_x0_x0_byte_of_nat_S_false ? H3); clearbody K;
            rewrite > K; clear K;
            simplify in ⊢ (? ? (? (? ? % ? ? ? ? ?) ?) ?);
-           (* instruction 3 *)
+           (* instruction LDAd *)
            letin K ≝
             (breakpoint
               (mk_status (byte_of_nat (S a)) 8 O
-               (eqbyte (mk_byte x0 x0) (byte_of_nat (S a))) false
+               (eqbyte (mk_byte x0 x0) (byte_of_nat (S a)))
+               (plusbytec (byte_of_nat (x*pred n)) x)
                 (update (update (update (mult_memory x y) 30 x) 31 (byte_of_nat (S a))) 32
                  (byte_of_nat (x*n))) O)
               3 14); clearbody K;
@@ -2198,7 +2208,8 @@ lemma loop_invariant':
            letin K ≝
             (breakpoint
              (mk_status (byte_of_nat (x*n)) 10 O
-              (eqbyte (mk_byte x0 x0) (byte_of_nat (x*n))) false
+              (eqbyte (mk_byte x0 x0) (byte_of_nat (x*n)))
+              (plusbytec (byte_of_nat (x*pred n)) x)
                (update (update (update (mult_memory x y) 30 x) 31 (byte_of_nat (S a))) 32
                 (byte_of_nat (x*n))) O)
              5 9); clearbody K;
@@ -2216,7 +2227,8 @@ lemma loop_invariant':
            letin K ≝
             (breakpoint
              (mk_status (byte_of_nat (x*n)) 12
-              O (eqbyte (mk_byte x0 x0) (byte_of_nat (y-S n))) false
+              O (eqbyte (mk_byte x0 x0) (byte_of_nat (y-S n)))
+              (plusbytec (byte_of_nat (x*pred n)) x)
               (update
                (update (update (update (mult_memory x y) 30 x) 31 (byte_of_nat (S (y-S n))))
                32 (byte_of_nat (x*n))) 31
@@ -2230,21 +2242,15 @@ lemma loop_invariant':
            change in ⊢ (? ? (? (? ? ? ? (? ? %) ? ? ?) ?) ?) with
             (plusbytenc (byte_of_nat (x*n)) x);
            normalize in ⊢ (? ? (? (? ? % ? ? ? ? ?) ?) ?);
-           normalize in \vdash (? ?
-            (?
-             (? ? ? ? ? match ? ? % ? in cartesian_product return ? with [couple\rArr ?] ? ?)
-             ?) ?);
+           change in ⊢ (? ? (? (? ? ? ? ? % ? ?) ?) ?)
+            with (plusbytec (byte_of_nat (x*n)) x);
            rewrite > plusbyteenc_S;
            (* instruction STAd *)
            letin K ≝
             (breakpoint
              (mk_status (byte_of_nat (x*S n)) 14 O
               (eqbyte (mk_byte x0 x0) (byte_of_nat (x*S n)))
-               match plusbyte (byte_of_nat (x*n)) x false
-                in cartesian_product
-               return \lambda c:(cartesian_product byte bool).bool
-              with 
-              [couple (_:byte) (c':bool)\rArr c']
+              (plusbytec (byte_of_nat (x*n)) x)
                (update
                 (update (update (update (mult_memory x y) 30 x) 31 (byte_of_nat (S (y-S n))))
                 32 (byte_of_nat (x*n))) 31
@@ -2257,11 +2263,14 @@ lemma loop_invariant':
            (* instruction BRA *)
            whd in ⊢ (? ? % ?);
            normalize in ⊢ (? ? (? ? % ? ? ? ? ?) ?);
+           rewrite < pred_Sn;        
            apply status_eq;
             [1,2,3,4,7: normalize; reflexivity
+            | change with (plusbytec (byte_of_nat (x*n)) x =
+                             plusbytec (byte_of_nat (x*n)) x);
+              reflexivity
             |6: intro;
               elim daemon
-            |5: FALSO!
             ]
          | exists;
             [ apply (y - S n)
@@ -2275,41 +2284,35 @@ lemma loop_invariant':
             ]
          ]
       ]
-    | autobatch paramodulation
+    | rewrite > associative_plus;
+      autobatch paramodulation
     ] 
   ]   
 qed.
 
 theorem test_x_y:
- ∀x,y.
-  let i ≝ 14 + 23 * nat_of_byte y in
-  let s ≝ execute (mult_status x y) i in
-   pc s = 20 ∧ mem s 32 = byte_of_nat (nat_of_byte x * nat_of_byte y).
+ ∀x,y:byte.
+  let i ≝ 14 + 23 * y in
+   execute (mult_status x y) i =
+    mk_status (byte_of_nat (x*y)) 20 0
+     (eqbyte (mk_byte x0 x0) (byte_of_nat (x*y)))
+     (plusbytec (byte_of_nat (x*pred y)) x)
+     (update
+       (update (mult_memory x y) 31 (mk_byte x0 x0))
+       32 (byte_of_nat (x*y)))
+     0.
  intros;
- generalize in match (loop_invariant' x y y (le_n y)); intro;
- generalize in match (breakpoint (mult_status x y) (5 + 23*y) 9); intro;
- cut (5 + 23*y +9 = 14 + 23* y);
-  [2: autobatch paramodulation
-  | rewrite > Hcut in H1;
-    change in H1:(? ? % ?) with s;
-    letin s0 ≝ (execute (mult_status x y) (S (S (S (S (S O))))+S 22*y));
-    generalize in match H; intro K; clear H;
-    change in K with
-     (s0 =
-      mk_status (byte_of_nat (x*y)) 4 0 true false
-       (update
-        (update
-         (update (mult_memory x y) 30 x)
-         31 (byte_of_nat (y-y)))
-         32 (byte_of_nat (x*y))) O);
-    clear Hcut;
-    generalize in match H1; intro K1; clear H1;
-    change in K1 with (s = execute s0 9);
-    rewrite > K in K1;
-    clear K; clear s0; clearbody s; clear i;
-    rewrite < minus_n_n in K1;
-    split;
-    rewrite > K1;
-    reflexivity
-  ]
-qed.*)
+ cut (14 + 23 * y = 5 + 23*y + 9);
+  [2: autobatch paramodulation;
+  | rewrite > Hcut; (* clear Hcut; *)
+    rewrite > (breakpoint (mult_status x y) (5 + 23*y) 9);
+    rewrite > loop_invariant';
+     [2: apply le_n
+     | rewrite < minus_n_n;
+       apply status_eq;
+        [1,2,3,4,5,7: normalize; reflexivity
+        | elim daemon
+        ]
+     ]
+  ].
+qed.
