@@ -255,11 +255,13 @@ lemma plusbytenc_S:
  rewrite < byte_of_nat_nat_of_byte;
  rewrite > (plusbytenc_ok (byte_of_nat (x*n)) x);
  rewrite < times_n_Sm;
- rewrite > mod_plus;
- rewrite < eq_nat_of_byte_mod in ⊢ (? ? (? (? (? ? %) ?)) ?);
- rewrite > nat_of_byte_byte_of_nat;
- rewrite < mod_mod in ⊢ (? ? (? (? (? % ?) ?)) ?);
-elim daemon.
+ rewrite > nat_of_byte_byte_of_nat in ⊢ (? ? (? (? (? % ?) ?)) ?);
+ rewrite > eq_nat_of_byte_n_nat_of_byte_mod_n_256 in ⊢ (? ? ? %);
+ rewrite > mod_plus in ⊢ (? ? (? %) ?);
+ rewrite > mod_plus in ⊢ (? ? ? (? %));
+ rewrite < mod_mod in ⊢ (? ? (? (? (? % ?) ?)) ?); [2: autobatch | ];
+ rewrite > sym_plus in ⊢ (? ? (? (? % ?)) ?);
+ reflexivity.
 qed. 
 
 lemma eq_plusbytec_x0_x0_x_false:
