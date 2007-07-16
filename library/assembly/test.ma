@@ -330,7 +330,15 @@ theorem test_x_y:
      | rewrite < minus_n_n;
        apply status_eq;
         [1,2,3,4,5,7: normalize; reflexivity
-        | elim daemon
+        | intro;
+          change with (update (update (update (mult_memory x y) 30 x) 31 (byte_of_nat O)) 32
+(byte_of_nat (nat_of_byte x*nat_of_byte y)) a =
+           update (update (mult_memory x y) 31 (mk_byte x0 x0)) 32
+(byte_of_nat (nat_of_byte x*nat_of_byte y)) a);
+          apply inj_update; intro;
+          apply inj_update; intro;
+          change in ⊢ (? ? (? ? ? % ?) ?) with (mult_memory x y 30);
+          apply eq_update_s_a_sa
         ]
      ]
   ].
