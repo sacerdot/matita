@@ -836,6 +836,13 @@ lemma nat_of_exadecimal_exadecimal_of_nat:
   ]
 qed.
 
+lemma exadecimal_of_nat_nat_of_exadecimal:
+ ∀b.exadecimal_of_nat (nat_of_exadecimal b) = b.
+ intro;
+ elim b;
+ reflexivity.
+qed.
+
 lemma plusex_ok:
  ∀b1,b2,c.
   match plusex b1 b2 c with
@@ -902,6 +909,17 @@ lemma eqex_true_to_eq: ∀b,b'. eqex b b' = true → b=b'.
  simplify;
  intro;
  first [ reflexivity | destruct H ].
+qed.
+ 
+lemma eqex_false_to_not_eq: ∀b,b'. eqex b b' = false → b ≠ b'.
+ intros 2;
+ elim b 0;
+ elim b' 0;
+ simplify;
+ intro;
+ try (destruct H);
+ intro K;
+ destruct K.
 qed.
  
 (*
