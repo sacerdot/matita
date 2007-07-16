@@ -214,7 +214,9 @@ lemma loop_invariant':
            normalize in ⊢ (? ? (? (? ? % ? ? ? ? ?) ?) ?);
            normalize in ⊢ (? ? (? (? ? ? ? ? ? (? ? % ?) ?) ?) ?);
            cut (y - S n = a);
-            [2: elim daemon | ];
+            [2: rewrite > eq_minus_S_pred;
+                rewrite > H2;
+                reflexivity | ];
            rewrite < Hcut; clear Hcut; clear H3; clear H2; clear a;          
            (* instruction ADDd *)
            letin K ≝
