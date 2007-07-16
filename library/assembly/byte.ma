@@ -87,8 +87,23 @@ lemma nat_of_byte_byte_of_nat: ∀n. nat_of_byte (byte_of_nat n) = n \mod 256.
   ].
 qed.
 
-axiom eq_nat_of_byte_n_nat_of_byte_mod_n_256:
+lemma eq_nat_of_byte_n_nat_of_byte_mod_n_256:
  ∀n. byte_of_nat n = byte_of_nat (n \mod 256).
+ intro;
+ unfold byte_of_nat;
+ apply eq_f2;
+  [ rewrite > exadecimal_of_nat_mod in ⊢ (? ? % ?);
+    rewrite > exadecimal_of_nat_mod in ⊢ (? ? ? %);
+    apply eq_f;
+    elim daemon
+  | rewrite > exadecimal_of_nat_mod;
+    rewrite > exadecimal_of_nat_mod in ⊢ (? ? ? %);
+    rewrite > divides_to_eq_mod_mod_mod;
+     [ reflexivity
+     | autobatch
+     ]
+  ]
+qed.
 
 lemma plusbyte_ok:
  ∀b1,b2,c.
@@ -163,7 +178,12 @@ lemma plusbytenc_O_x:
  reflexivity.
 qed.
 
-axiom eq_nat_of_byte_mod: ∀b. nat_of_byte b = nat_of_byte b \mod 256.
+lemma eq_nat_of_byte_mod: ∀b. nat_of_byte b = nat_of_byte b \mod 256.
+ intro;
+ lapply (lt_nat_of_byte_256 b);
+ rewrite > (lt_to_eq_mod ? ? Hletin) in ⊢ (? ? ? %);
+ reflexivity.
+qed.
 
 theorem plusbytenc_ok:
  ∀b1,b2:byte. nat_of_byte (plusbytenc b1 b2) = (b1 + b2) \mod 256.
