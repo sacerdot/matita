@@ -237,6 +237,25 @@ qed.
 
 lemma eq_bpred_S_a_a:
  ∀a. a < 255 → bpred (byte_of_nat (S a)) = byte_of_nat a.
+(*
+ intros;
+ unfold bpred;
+ apply (bool_elim ? (eqex (bl (byte_of_nat (S a))) x0)); intros;
+  [ change with (mk_byte (xpred (bh (byte_of_nat (S a)))) (xpred (bl (byte_of_nat (S a))))
+     = byte_of_nat a);
+    rewrite > (eqex_true_to_eq ? ? H1);
+    normalize in ⊢ (? ? (? ? %) ?);
+    unfold byte_of_nat;
+    change with (mk_byte (xpred (exadecimal_of_nat (S a/16))) xF =
+                 mk_byte (exadecimal_of_nat (a/16)) (exadecimal_of_nat a));
+    
+    
+  |
+ change in ⊢ (? ? match ? % ? in bool return ? with [true\rArr ?|false\rArr ?] ?);
+ unfold byte_of_nat;
+ unfold bpred;
+ simplify;
+*)
 elim daemon. (*
  intros;
  unfold byte_of_nat;

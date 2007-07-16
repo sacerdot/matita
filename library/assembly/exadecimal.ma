@@ -776,81 +776,65 @@ qed.
 
 lemma exadecimal_of_nat_mod:
  ∀n.exadecimal_of_nat n = exadecimal_of_nat (n \mod 16).
- elim daemon.
-(*
  intros;
- cases n; [ reflexivity | ];
- cases n1; [ reflexivity | ];
- cases n2; [ reflexivity | ];
- cases n3; [ reflexivity | ];
- cases n4; [ reflexivity | ];
- cases n5; [ reflexivity | ];
- cases n6; [ reflexivity | ];  
- cases n7; [ reflexivity | ];
- cases n8; [ reflexivity | ];
- cases n9; [ reflexivity | ];
- cases n10; [ reflexivity | ];
- cases n11; [ reflexivity | ];
- cases n12; [ reflexivity | ];
- cases n13; [ reflexivity | ];
- cases n14; [ reflexivity | ];
- cases n15; [ reflexivity | ];
+ apply (nat_elim1 n); intro;
+ cases m; [ intro; reflexivity | ];
+ cases n1; [ intro; reflexivity | ];
+ cases n2; [ intro; reflexivity | ];
+ cases n3; [ intro; reflexivity | ];
+ cases n4; [ intro; reflexivity | ];
+ cases n5; [ intro; reflexivity | ];
+ cases n6; [ intro; reflexivity | ];
+ cases n7; [ intro; reflexivity | ];
+ cases n8; [ intro; reflexivity | ];
+ cases n9; [ intro; reflexivity | ];
+ cases n10; [ intro; reflexivity | ];
+ cases n11; [ intro; reflexivity | ];
+ cases n12; [ intro; reflexivity | ];
+ cases n13; [ intro; reflexivity | ];
+ cases n14; [ intro; reflexivity | ];
+ cases n15; [ intro; reflexivity | ];
+ intros;
+ change in ⊢ (? ? % ?) with (exadecimal_of_nat n16);
  change in ⊢ (? ? ? (? (? % ?))) with (16 + n16);
- cut ((16 + n16) \mod 16 = n16 \mod 16);
-  [ rewrite > Hcut;
-    simplify in ⊢ (? ? % ?);
-    
-  | unfold mod;
-    change with (mod_aux (16+n16) (16+n16) 15 = n16);
-    unfold mod_aux;
-    change with
-     (match leb (16+n16) 15 with
-       [true ⇒ 16+n16
-       | false ⇒ mod_aux (15+n16) ((16+n16) - 16) 15
-       ] = n16);
-    cut (leb (16+n16) 15 = false);
-     [ rewrite > Hcut;
-       change with (mod_aux (15+n16) (16+n16-16) 15 = n16);
-       cut (16+n16-16 = n16);
-        [ rewrite > Hcut1; clear Hcut1;
-          
-        |
-        ]
-     |
-     ]
-  ]*)
+ rewrite > mod_plus;
+ change in ⊢ (? ? ? (? (? % ?))) with (n16 \mod 16);
+ rewrite < mod_mod;
+  [ apply H;
+    autobatch
+  | autobatch
+  ]
 qed.
 
-axiom nat_of_exadecimal_exadecimal_of_nat:
+lemma nat_of_exadecimal_exadecimal_of_nat:
  ∀n. nat_of_exadecimal (exadecimal_of_nat n) = n \mod 16.
-(*
  intro;
- apply (exadecimal_of_nat_elim (λn.;
- 
- 
- 
- elim n 0; [ reflexivity | intro ];
- elim n1 0; [ intros; reflexivity | intros 2 ];
- elim n2 0; [ intros; reflexivity | intros 2 ];
- elim n3 0; [ intros; reflexivity | intros 2 ];
- elim n4 0; [ intros; reflexivity | intros 2 ];
- elim n5 0; [ intros; reflexivity | intros 2 ];
- elim n6 0; [ intros; reflexivity | intros 2 ];
- elim n7 0; [ intros; reflexivity | intros 2 ];
- elim n8 0; [ intros; reflexivity | intros 2 ];
- elim n9 0; [ intros; reflexivity | intros 2 ];
- elim n10 0; [ intros; reflexivity | intros 2 ];
- elim n11 0; [ intros; reflexivity | intros 2 ];
- elim n12 0; [ intros; reflexivity | intros 2 ];
- elim n13 0; [ intros; reflexivity | intros 2 ];
- elim n14 0; [ intros; reflexivity | intros 2 ];
- elim n15 0; [ intros; reflexivity | intros 2 ];
+ rewrite > exadecimal_of_nat_mod;
+ generalize in match (lt_mod_m_m n 16 ?); [2: autobatch | ]
+ generalize in match (n \mod 16); intro;
+ cases n1; [ intro; reflexivity | ];
+ cases n2; [ intro; reflexivity | ];
+ cases n3; [ intro; reflexivity | ];
+ cases n4; [ intro; reflexivity | ];
+ cases n5; [ intro; reflexivity | ]; 
+ cases n6; [ intro; reflexivity | ]; 
+ cases n7; [ intro; reflexivity | ];
+ cases n8; [ intro; reflexivity | ];
+ cases n9; [ intro; reflexivity | ];
+ cases n10; [ intro; reflexivity | ];
+ cases n11 [ intro; reflexivity | ];
+ cases n12; [ intro; reflexivity | ];
+ cases n13; [ intro; reflexivity | ];
+ cases n14; [ intro; reflexivity | ];
+ cases n15; [ intro; reflexivity | ];
+ cases n16; [ intro; reflexivity | ];
  intro;
- simplify;
- rewrite < H15;
- change in ⊢ (? ? % ?) with (nat_of_exadecimal (exadecimal_of_nat n16));
+ unfold lt in H;
+ cut False;
+  [ elim Hcut
+  | autobatch
+  ]
 qed.
-*)
 
 lemma plusex_ok:
  ∀b1,b2,c.
@@ -884,20 +868,6 @@ definition xpred ≝
    | xE ⇒ xD
    | xF ⇒ xE ].
 
-(* Way too slow and subsumed by previous theorem
-lemma bpred_pred:
- ∀b.
-  match eqbyte b (mk_byte x0 x0) with
-   [ true ⇒ nat_of_byte (bpred b) = mk_byte xF xF
-   | false ⇒ nat_of_byte (bpred b) = pred (nat_of_byte b)].
- intros;
- elim b;
- elim e;
- elim e1;
- reflexivity.
-qed.
-*)
-
 lemma eq_eqex_S_x0_false:
  ∀n. n < 15 → eqex x0 (exadecimal_of_nat (S n)) = false.
  intro;
@@ -924,3 +894,19 @@ lemma eq_eqex_S_x0_false:
     assumption
   ]
 qed.
+
+lemma eqex_true_to_eq: ∀b,b'. eqex b b' = true → b=b'.
+ intros 2;
+ elim b 0;
+ elim b' 0;
+ simplify;
+ intro;
+ first [ reflexivity | destruct H ].
+qed.
+ 
+(*
+lemma xpred_S: ∀b. xpred (exadecimal_of_nat (S b)) = exadecimal_of_nat b.
+ intros;
+ rewrite > exadecimal_of_nat_mod;
+ rewrite > exadecimal_of_nat_mod in ⊢ (? ? ? %);
+*)
