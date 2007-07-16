@@ -139,6 +139,38 @@ lemma update_update_a_b:
  ].
 qed.
 
+lemma eq_update_s_a_sa: ∀s,a,b. update s a (s a) b = s b.
+ intros;
+ unfold update;
+ apply (bool_elim ? (eqb b a) ? ?); simplify; intros;
+  [ rewrite > (eqb_true_to_eq ? ? H);
+    reflexivity
+  | reflexivity
+  ]
+qed.
+
+lemma inj_update:
+ ∀s,s',a,v,b. (a ≠ b → s b = s' b) → update s a v b = update s' a v b.
+ intros;
+ unfold update;
+ apply (bool_elim ? (eqb b a) ? ?); simplify; intros;
+  [ reflexivity
+  | apply H;
+    intro;
+    autobatch
+  ]
+qed.
+
+lemma not_eq_a_b_to_eq_update_a_b: ∀s,a,b,v. a ≠ b → update s a v b = s b.
+ intros;
+ unfold update;
+ rewrite > not_eq_to_eqb_false; simplify;
+  [ reflexivity
+  | intro;
+    autobatch
+  ]
+qed.
+
 definition mmod16 ≝ λn. nat_of_byte (byte_of_nat n).
 
 definition tick ≝

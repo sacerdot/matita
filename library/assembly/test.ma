@@ -118,7 +118,21 @@ lemma loop_invariant':
       normalize;
       reflexivity 
     | intro;
-      elim daemon
+      rewrite < minus_n_O;
+      normalize in ⊢ (? ? (? (? ? %) ?) ?);
+      whd in ⊢ (? ? % ?);
+      change in ⊢ (? ? % ?) with (update (mult_memory x y) 32 (mk_byte x0 x0) a);
+      change in ⊢ (? ? ? %) with (update (update (update (mult_memory x y) 30 x) 31
+        (byte_of_nat y)) 32 (byte_of_nat 0) a);
+      change in ⊢ (? ? ? (? (? (? ? ? %) ? ?) ? ? ?)) with (mult_memory x y 30);
+      rewrite > byte_of_nat_nat_of_byte;
+      change in ⊢ (? ? ? (? (? ? ? %) ? ? ?)) with (mult_memory x y 31);
+      apply inj_update;
+      intro;
+      rewrite > (eq_update_s_a_sa (update (mult_memory x y) 30 (mult_memory x y 30))
+       31 a) in ⊢ (? ? ? %);
+      rewrite > eq_update_s_a_sa;
+      reflexivity
     ]
   | cut (5 + 23 * S n = 5 + 23 * n + 23);
     [ letin K ≝ (breakpoint (mult_status x y) (5 + 23 * n) 23); clearbody K;
@@ -249,7 +263,31 @@ lemma loop_invariant':
                              plusbytec (byte_of_nat (x*n)) x);
               reflexivity
             |6: intro;
-              elim daemon
+              simplify in ⊢ (? ? ? %);
+              change in ⊢ (? ? % ?) with
+               (update
+                (update
+                 (update
+                  (update (update (mult_memory x y) 30 x) 31
+                   (byte_of_nat (S (nat_of_byte y-S n)))) 32 (byte_of_nat (nat_of_byte x*n))) 31
+                    (byte_of_nat (nat_of_byte y-S n)))
+                   (nat_of_byte
+                    (update
+                     (update
+                      (update (update (mult_memory x y) 30 x) 31
+                       (byte_of_nat (S (nat_of_byte y-S n)))) 32 (byte_of_nat (nat_of_byte x*n))) 31
+                      (byte_of_nat (nat_of_byte y-S n)) 15))
+                     (byte_of_nat (nat_of_byte x*S n)) a);
+              normalize in ⊢ (? ? (? ? % ? ?) ?);
+              apply inj_update;
+              intro;
+              apply inj_update;
+              intro;
+              rewrite > not_eq_a_b_to_eq_update_a_b in ⊢ (? ? % ?); [2: apply H | ];
+              rewrite > not_eq_a_b_to_eq_update_a_b in ⊢ (? ? % ?);
+               [ reflexivity
+               | assumption
+               ]
             ]
          | exists;
             [ apply (y - S n)
@@ -264,7 +302,9 @@ lemma loop_invariant':
          ]
       ]
     | rewrite > associative_plus;
-      autobatch paramodulation
+      rewrite < times_n_Sm;
+      rewrite > sym_plus in ⊢ (? ? ? (? ? %));
+      reflexivity
     ] 
   ]   
 qed.
