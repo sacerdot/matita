@@ -1189,6 +1189,7 @@ definition tick ≝
            acc
            (match zf with
              [ true ⇒ mmod16 (2 + op1 + pc) (*\mod 256*)   (* signed!!! *)
+                      (* FIXME: can't work - address truncated to 8 bits *)
              | false ⇒ 2 + pc
              ])
            spc
@@ -1199,6 +1200,7 @@ definition tick ≝
        | BRA ⇒
           mk_status
            acc (mmod16 (2 + op1 + pc) (*\mod 256*)) (* signed!!! *)
+                                      (* FIXME: same as above *)
            spc
            zf
            cf
@@ -1300,7 +1302,12 @@ lemma plusbytenc_O_x:
  reflexivity.
 qed.
 
-axiom mod_plus: ∀a,b,m. (a + b) \mod m = a \mod m + b \mod m.
+(*axiom mod_plus: ∀a,b,m. (a + b) \mod m = a \mod m + b \mod m.*)
+axiom mod_plus: \forall a1,a2,b1,b2,m.
+              a1 \mod m = b1 \mod m \to
+              a2 \mod m = b2 \mod m \to
+              (a1 + a2) \mod m = (b1 + b2) \mod m.
+              
 axiom eq_mod_times_n_m_m_O: ∀n,m. O < m → n * m \mod m = O.
 
 axiom eq_nat_of_byte_mod: ∀b. nat_of_byte b = nat_of_byte b \mod 256.
@@ -1315,11 +1322,16 @@ theorem plusbytenc_ok:
  change with (nat_of_byte t = (b1 + b2) \mod 256);
  rewrite < plus_n_O in H;
  rewrite > H; clear H;
- rewrite > mod_plus;
  letin K ≝ (eq_nat_of_byte_mod t); clearbody K;
+ rewrite > K in ⊢ (? ? % ?); 
  letin K' ≝ (eq_mod_times_n_m_m_O (nat_of_bool t1) 256 ?); clearbody K';
-  [ autobatch | ];
- autobatch paramodulation.
+    [ autobatch
+    | cut (O =  O \mod 256);
+       [ rewrite > Hcut in K':(? ? ? %);
+         rewrite > K in K:(? ? % ?);
+         rewrite > (mod_plus ? ? ? ? ? K K') in ⊢ (? ? ? %);
+         rewrite < plus_n_O;reflexivity
+       |simplify;reflexivity]]
 qed.
 
 lemma test_O_O:
@@ -1463,8 +1475,12 @@ lemma eq_eqbyte_x0_x0_byte_of_nat_S_false:
     [ unfold eqbyte;
       change in ⊢ (? ? (? ? %) ?) with (eqex x0 (exadecimal_of_nat (S b))); 
       rewrite > eq_eqex_S_x0_false;
-       [ alias id "andb_sym" = "cic:/matita/nat/propr_div_mod_lt_le_totient1_aux/andb_sym.con".
+       [ elim (eqex (bh (mk_byte x0 x0))
+(bh (mk_byte (exadecimal_of_nat (S b/16)) (exadecimal_of_nat (S b)))));simplify;
+(*
+ alias id "andb_sym" = "cic:/matita/nat/propr_div_mod_lt_le_totient1_aux/andb_sym.con".
          rewrite > andb_sym;
+*)
          reflexivity
        | assumption
        ]
