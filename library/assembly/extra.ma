@@ -23,6 +23,8 @@ axiom mod_mod: ∀a,n,m. n∣m → a \mod n = a \mod n \mod m.
 axiom eq_mod_times_n_m_m_O: ∀n,m. O < m → n * m \mod m = O.
 axiom eq_mod_to_eq_plus_mod: ∀a,b,c,m. a \mod m = b \mod m → (a+c) \mod m = (b+c) \mod m.
 axiom eq_mod_times_times_mod: ∀a,b,n,m. m = a*n → (a*b) \mod m = a * (b \mod n).
+axiom le_to_le_plus_to_le : ∀a,b,c,d.b\leq d\rarr a+b\leq c+d\rarr a\leq c.
+axiom or_lt_le : ∀n,m. n < m ∨ m ≤ n.
 
 inductive cartesian_product (A,B: Type) : Type ≝
  couple: ∀a:A.∀b:B. cartesian_product A B.

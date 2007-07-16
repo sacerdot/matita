@@ -182,6 +182,8 @@ theorem plusbytenc_ok:
  autobatch paramodulation.
 qed.
 
+
+
 lemma eq_eqbyte_x0_x0_byte_of_nat_S_false:
  ∀b. b < 255 → eqbyte (mk_byte x0 x0) (byte_of_nat (S b)) = false.
  intros;
@@ -216,11 +218,20 @@ lemma eq_eqbyte_x0_x0_byte_of_nat_S_false:
             unfold lt in H;
             rewrite < H2;
             clear H2; clear a; clear H1; clear Hcut;
-            elim daemon (* trivial arithmetic property over <= and div *)
+            apply (le_times_to_le 16) [ autobatch | ] ;
+            rewrite > (div_mod (S b) 16) in H;[2:autobatch|]
+            rewrite > (div_mod 255 16) in H:(? ? %);[2:autobatch|]
+            lapply (le_to_le_plus_to_le ? ? ? ? ? H);
+            [apply lt_S_to_le;
+             apply lt_mod_m_m;autobatch
+            |rewrite > sym_times;
+             rewrite > sym_times in ⊢ (? ? %); (* just to speed up qed *)
+             normalize in \vdash (? ? %);apply Hletin;
+            ]
           ] 
        ]
     ]
-  | elim daemon
+  | elim (or_lt_le b 15);unfold ge;autobatch
   ].
 qed.
 
