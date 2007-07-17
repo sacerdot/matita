@@ -209,7 +209,7 @@ qed.
 
 
 lemma eq_eqbyte_x0_x0_byte_of_nat_S_false:
- ∀b. b < 255 → eqbyte (mk_byte x0 x0) (byte_of_nat (S b))) = false.
+ ∀b. b < 255 → eqbyte (mk_byte x0 x0) (byte_of_nat (S b)) = false.
  intros;
  unfold byte_of_nat;
  cut (b < 15 ∨ b ≥ 15);
@@ -218,11 +218,8 @@ lemma eq_eqbyte_x0_x0_byte_of_nat_S_false:
       change in ⊢ (? ? (? ? %) ?) with (eqex x0 (exadecimal_of_nat (S b))); 
       rewrite > eq_eqex_S_x0_false;
        [ elim (eqex (bh (mk_byte x0 x0))
-(bh (mk_byte (exadecimal_of_nat (S b/16)) (exadecimal_of_nat (S b)))));simplify;
-(*
- alias id "andb_sym" = "cic:/matita/nat/propr_div_mod_lt_le_totient1_aux/andb_sym.con".
-         rewrite > andb_sym;
-*)
+          (bh (mk_byte (exadecimal_of_nat (S b/16)) (exadecimal_of_nat (S b)))));
+         simplify;
          reflexivity
        | assumption
        ]
@@ -250,7 +247,7 @@ lemma eq_eqbyte_x0_x0_byte_of_nat_S_false:
              apply lt_mod_m_m;autobatch
             |rewrite > sym_times;
              rewrite > sym_times in ⊢ (? ? %); (* just to speed up qed *)
-             normalize in \vdash (? ? %);apply Hletin;
+             normalize in ⊢ (? ? %);apply Hletin;
             ]
           ] 
        ]
@@ -259,9 +256,10 @@ lemma eq_eqbyte_x0_x0_byte_of_nat_S_false:
   ].
 qed.
 
+axiom eq_mod_O_to_exists: ∀n,m. n \mod m = 0 → ∃z. n = z*m.
+
 lemma eq_bpred_S_a_a:
  ∀a. a < 255 → bpred (byte_of_nat (S a)) = byte_of_nat a.
-(*
  intros;
  unfold bpred;
  apply (bool_elim ? (eqex (bl (byte_of_nat (S a))) x0)); intros;
@@ -272,26 +270,40 @@ lemma eq_bpred_S_a_a:
     unfold byte_of_nat;
     change with (mk_byte (xpred (exadecimal_of_nat (S a/16))) xF =
                  mk_byte (exadecimal_of_nat (a/16)) (exadecimal_of_nat a));
-    
-    
-  |
- change in ⊢ (? ? match ? % ? in bool return ? with [true\rArr ?|false\rArr ?] ?);
- unfold byte_of_nat;
- unfold bpred;
- simplify;
-*)
-elim daemon. (*
- intros;
- unfold byte_of_nat;
- cut (a \mod 16 = 15 ∨ a \mod 16 < 15);
-  [ elim Hcut;
-     [ 
-     |
-     ]
-  | autobatch
-  ].*)
+    lapply (eqex_true_to_eq ? ? H1); clear H1;
+    unfold byte_of_nat in Hletin;
+    change in Hletin with (exadecimal_of_nat (S a) = x0);
+    lapply (eq_f ? ? nat_of_exadecimal ? ? Hletin); clear Hletin;
+    normalize in Hletin1:(? ? ? %);
+    rewrite > nat_of_exadecimal_exadecimal_of_nat in Hletin1;
+    elim (eq_mod_O_to_exists ? ? Hletin1); clear Hletin1;
+    rewrite > H1;
+    rewrite > div_times_ltO; [2: autobatch | ]
+    lapply (eq_f ? ? (λx.x/16) ? ? H1);
+    rewrite > div_times_ltO in Hletin; [2: autobatch | ]
+    lapply (eq_f ? ? (λx.x \mod 16) ? ? H1);
+    rewrite > eq_mod_times_n_m_m_O in Hletin1;
+    elim daemon
+  | change with (mk_byte (bh (byte_of_nat (S a))) (xpred (bl (byte_of_nat (S a))))
+    = byte_of_nat a);
+    unfold byte_of_nat;
+    change with (mk_byte (exadecimal_of_nat (S a/16)) (xpred (exadecimal_of_nat (S a)))
+    = mk_byte (exadecimal_of_nat (a/16)) (exadecimal_of_nat a));
+    lapply (eqex_false_to_not_eq ? ? H1);
+    unfold byte_of_nat in Hletin;
+    change in Hletin with (exadecimal_of_nat (S a) ≠ x0);
+    cut (nat_of_exadecimal (exadecimal_of_nat (S a)) ≠ 0);
+     [2: intro;
+       apply Hletin;
+       lapply (eq_f ? ? exadecimal_of_nat ? ? H2);
+       rewrite > exadecimal_of_nat_nat_of_exadecimal in Hletin1;
+       apply Hletin1
+     | ];
+     
+    elim daemon
+  ]
 qed.
- 
+
 lemma plusbytenc_S:
  ∀x:byte.∀n.plusbytenc (byte_of_nat (x*n)) x = byte_of_nat (x * S n).
  intros;
