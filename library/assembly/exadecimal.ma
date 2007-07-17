@@ -14,7 +14,7 @@
 
 set "baseuri" "cic:/matita/assembly/exadecimal/".
 
-include "extra.ma".
+include "assembly/extra.ma".
 
 inductive exadecimal : Type ≝
    x0: exadecimal

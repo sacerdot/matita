@@ -14,7 +14,7 @@
 
 set "baseuri" "cic:/matita/assembly/vm/".
 
-include "byte.ma".
+include "assembly/byte.ma".
 
 definition addr ≝ nat.
 
@@ -94,6 +94,12 @@ definition byte_of_opcode : opcode → byte ≝
             ]]]
   in
    aux opcodemap.
+
+notation "hvbox(# break a)"
+  non associative with precedence 80
+for @{ 'byte_of_opcode $a }.
+interpretation "byte_of_opcode" 'byte_of_opcode a =
+ (cic:/matita/assembly/vm/byte_of_opcode.con a).
 
 record status : Type ≝ {
   acc : byte;

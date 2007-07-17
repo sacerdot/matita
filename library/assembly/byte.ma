@@ -14,12 +14,16 @@
 
 set "baseuri" "cic:/matita/assembly/byte".
 
-include "exadecimal.ma".
+include "assembly/exadecimal.ma".
 
 record byte : Type ≝ {
  bh: exadecimal;
  bl: exadecimal
 }.
+
+notation "〈 x, y 〉" non associative with precedence 80 for @{ 'mk_byte $x $y }.
+interpretation "mk_byte" 'mk_byte x y = 
+ (cic:/matita/assembly/byte/byte.ind#xpointer(1/1/1) x y).
 
 definition eqbyte ≝
  λb,b'. eqex (bh b) (bh b') ∧ eqex (bl b) (bl b').
@@ -205,7 +209,7 @@ qed.
 
 
 lemma eq_eqbyte_x0_x0_byte_of_nat_S_false:
- ∀b. b < 255 → eqbyte (mk_byte x0 x0) (byte_of_nat (S b)) = false.
+ ∀b. b < 255 → eqbyte (mk_byte x0 x0) (byte_of_nat (S b))) = false.
  intros;
  unfold byte_of_nat;
  cut (b < 15 ∨ b ≥ 15);
