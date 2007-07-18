@@ -86,13 +86,16 @@ class graphviz_impl ?packing () =
 
     method private load_map fname =
       let areas = ref [] in
+      let is_rect l = 
+        try List.assoc "shape" l = "rect" with Not_found -> false
+      in
       let p =
         XmlPushParser.create_parser
           { XmlPushParser.default_callbacks with
             XmlPushParser.start_element =
               Some (fun elt attrs ->
                 match elt with
-                | "area" -> areas := attrs :: !areas
+                | "area" when is_rect attrs -> areas := attrs :: !areas
                 | _ -> ()) } in
       XmlPushParser.parse p (`File fname);
       map <- !areas

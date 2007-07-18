@@ -1173,6 +1173,12 @@ class gui () =
       connect_menu_item main#saveMenuItem   saveScript;
       connect_menu_item main#saveAsMenuItem saveAsScript;
       connect_menu_item main#newMenuItem    newScript;
+      connect_menu_item main#showCoercionsGraphMenuItem 
+        (fun _ -> 
+          let c = MatitaMathView.cicBrowser () in
+          c#load (`About `Coercions));
+      connect_menu_item main#showAutoGuiMenuItem 
+        (fun _ -> MatitaAutoGui.auto_dialog Auto.get_auto_status);
          (* script monospace font stuff *)  
       self#updateFontSize ();
         (* debug menu *)

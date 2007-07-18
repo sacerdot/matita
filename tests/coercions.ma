@@ -112,6 +112,23 @@ definition mapmult:  \forall n:nat.\forall l:listn nat n. nat \to nat \to nat \d
   \lambda n:nat.\lambda l:listn nat n.\lambda m,o:nat.
   l (m m) o (o o o).
 
+axiom T0 : Type.
+axiom T1 : Type.
+axiom T2 : Type.
+axiom T3 : Type.
+
+axiom c1 : T0 -> T1.
+axiom c2 : T1 -> T2.
+axiom c3 : T2 -> T3.
+axiom c4 : T2 -> T1.
+
+coercion cic:/matita/tests/coercions/c1.con.
+coercion cic:/matita/tests/coercions/c2.con.
+coercion cic:/matita/tests/coercions/c3.con.
+coercion cic:/matita/tests/coercions/c4.con.
+
+
+
   
   
  
