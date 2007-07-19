@@ -1161,7 +1161,7 @@
                               <widget class="GtkMenuItem" id="showCoercionsGraphMenuItem">
                                 <property name="visible">True</property>
                                 <property name="tooltip" translatable="yes">Displays the graph of coercions</property>
-                                <property name="label" translatable="yes">Coericons Graph</property>
+                                <property name="label" translatable="yes">Coercions Graph</property>
                                 <property name="use_underline">True</property>
                               </widget>
                             </child>
