@@ -968,7 +968,10 @@ class gui () =
         if (MatitaScript.current ())#onGoingProof () then
           (MatitaScript.current ())#advance
             ~statement:("\n"
-              ^ GrafiteAstPp.pp_tactic ~term_pp:CicNotationPp.pp_term
+              ^ GrafiteAstPp.pp_tactic
+                ~map_unicode_to_tex:(Helm_registry.get_bool
+                  "matita.paste_unicode_as_tex")
+                ~term_pp:CicNotationPp.pp_term
                 ~lazy_term_pp:CicNotationPp.pp_term ast)
             ()
       in
@@ -978,6 +981,8 @@ class gui () =
           buf#insert ~iter:(buf#get_iter_at_mark (`NAME "locked"))
             ("\n"
             ^ GrafiteAstPp.pp_tactic ~term_pp:CicNotationPp.pp_term
+              ~map_unicode_to_tex:(Helm_registry.get_bool
+                "matita.paste_unicode_as_tex")
               ~lazy_term_pp:CicNotationPp.pp_term ast)
       in
       let tbar = main in

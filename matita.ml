@@ -174,6 +174,8 @@ let _ =
        (fun _ -> 
         prerr_endline 
           (ApplyTransformation.txt_of_cic_object 120 GrafiteAst.Declarative "" 
+            ~map_unicode_to_tex:(Helm_registry.get_bool
+              "matita.paste_unicode_as_tex")
             (match 
             (MatitaScript.current ())#grafite_status.GrafiteTypes.proof_status
             with

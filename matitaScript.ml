@@ -402,14 +402,20 @@ let cic2grafite context menv t =
       let pres_term = TermContentPres.pp_ast content_term in
       let dummy_tbl = Hashtbl.create 1 in
       let markup = CicNotationPres.render dummy_tbl pres_term in
-      let s = "(" ^ BoxPp.render_to_string List.hd width markup ^ ")" in
+      let s = "(" ^ BoxPp.render_to_string
+       ~map_unicode_to_tex:(Helm_registry.get_bool
+         "matita.paste_unicode_as_tex")
+       List.hd width markup ^ ")" in
       Pcre.substitute 
         ~pat:"\\\\forall [Ha-z][a-z0-9_]*" ~subst:(fun x -> "\n" ^ x) s
     in
     CicNotationPp.set_pp_term term_pp;
     let lazy_term_pp = fun x -> assert false in
     let obj_pp = CicNotationPp.pp_obj CicNotationPp.pp_term in
-    GrafiteAstPp.pp_statement ~term_pp ~lazy_term_pp ~obj_pp t
+    GrafiteAstPp.pp_statement
+     ~map_unicode_to_tex:(Helm_registry.get_bool
+       "matita.paste_unicode_as_tex")
+     ~term_pp ~lazy_term_pp ~obj_pp t
   in
   let script = String.concat "" (List.map pp ast) in
   prerr_endline script;
@@ -433,7 +439,9 @@ let rec eval_macro include_paths (buffer : GText.buffer) guistuff lexicon_status
     let metasenv = GrafiteTypes.get_proof_metasenv grafite_status in
     TAPp.pp_macro 
       ~term_pp:(fun x -> 
-        ApplyTransformation.txt_of_cic_term max_int metasenv [] (f x))
+        ApplyTransformation.txt_of_cic_term max_int metasenv [] (f x)
+         ~map_unicode_to_tex:(Helm_registry.get_bool
+           "matita.paste_unicode_as_tex"))
   in
   match mac with
   (* WHELP's stuff *)
@@ -490,7 +498,10 @@ let rec eval_macro include_paths (buffer : GText.buffer) guistuff lexicon_status
              TA.Dot loc))) in
           let text =
            comment parsed_text ^ "\n" ^
-            pp_eager_statement_ast (ast HExtlib.dummy_floc) in
+            pp_eager_statement_ast (ast HExtlib.dummy_floc)
+            ~map_unicode_to_tex:(Helm_registry.get_bool
+              "matita.paste_unicode_as_tex")
+          in
           let text_len = MatitaGtkMisc.utf8_string_length text in
           let loc = HExtlib.floc_of_loc (0,text_len) in
           let statement = `Ast (GrafiteParser.LSome (ast loc),text) in

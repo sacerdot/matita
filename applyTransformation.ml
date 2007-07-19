@@ -72,7 +72,7 @@ let mml_of_cic_object obj =
    (ids_to_terms, ids_to_father_ids, ids_to_conjectures, ids_to_hypotheses,
   ids_to_inner_sorts,ids_to_inner_types)))
 
-let txt_of_cic_sequent ?map_unicode_to_tex size metasenv sequent =
+let txt_of_cic_sequent ~map_unicode_to_tex size metasenv sequent =
   let unsh_sequent,(asequent,ids_to_terms,
     ids_to_father_ids,ids_to_inner_sorts,ids_to_hypotheses)
   =
@@ -83,10 +83,10 @@ let txt_of_cic_sequent ?map_unicode_to_tex size metasenv sequent =
    CicNotationPres.mpres_of_box
     (Sequent2pres.sequent2pres ~ids_to_inner_sorts content_sequent)
   in
-  BoxPp.render_to_string ?map_unicode_to_tex
+  BoxPp.render_to_string ~map_unicode_to_tex
     (function x::_ -> x | _ -> assert false) size pres_sequent
 
-let txt_of_cic_sequent_conclusion ?map_unicode_to_tex size metasenv sequent =
+let txt_of_cic_sequent_conclusion ~map_unicode_to_tex size metasenv sequent =
   let _,(asequent,_,_,ids_to_inner_sorts,_) = 
     Cic2acic.asequent_of_sequent metasenv sequent 
   in
@@ -94,12 +94,12 @@ let txt_of_cic_sequent_conclusion ?map_unicode_to_tex size metasenv sequent =
   let t, ids_to_uris = TermAcicContent.ast_of_acic ids_to_inner_sorts t in
   let t = TermContentPres.pp_ast t in
   let t = CicNotationPres.render ids_to_uris t in
-  BoxPp.render_to_string ?map_unicode_to_tex
+  BoxPp.render_to_string ~map_unicode_to_tex
     (function x::_ -> x | _ -> assert false) size t
 
-let txt_of_cic_term ?map_unicode_to_tex size metasenv context t = 
+let txt_of_cic_term ~map_unicode_to_tex size metasenv context t = 
   let fake_sequent = (-1,context,t) in
-  txt_of_cic_sequent_conclusion ?map_unicode_to_tex size metasenv fake_sequent 
+  txt_of_cic_sequent_conclusion ~map_unicode_to_tex size metasenv fake_sequent 
 ;;
 
 ignore (
@@ -109,7 +109,10 @@ ignore (
      let context' = CicMetaSubst.apply_subst_context subst context in
      let metasenv = CicMetaSubst.apply_subst_metasenv subst metasenv in
      let term' = CicMetaSubst.apply_subst subst term in
-     let res = txt_of_cic_term 30 metasenv context' term' in
+     let res =
+      txt_of_cic_term
+       ~map_unicode_to_tex:(Helm_registry.get_bool "matita.paste_unicode_as_tex")
+       30 metasenv context' term' in
       if String.contains res '\n' then
        "\n" ^ res ^ "\n"
       else
@@ -143,7 +146,7 @@ ignore (
 let remove_closed_substs s =
     Pcre.replace ~pat:"{...}" ~templ:"" s
 
-let term2pres ?map_unicode_to_tex n ids_to_inner_sorts annterm = 
+let term2pres ~map_unicode_to_tex n ids_to_inner_sorts annterm = 
    let ast, ids_to_uris = 
       TermAcicContent.ast_of_acic ids_to_inner_sorts annterm
    in
@@ -155,11 +158,11 @@ let term2pres ?map_unicode_to_tex n ids_to_inner_sorts annterm =
    in
    let render = function _::x::_ -> x | _ -> assert false in
    let mpres = CicNotationPres.mpres_of_box bobj in
-   let s = BoxPp.render_to_string ?map_unicode_to_tex render n mpres in
+   let s = BoxPp.render_to_string ~map_unicode_to_tex render n mpres in
    remove_closed_substs s
 
 let txt_of_cic_object 
- ?map_unicode_to_tex ?skip_thm_and_qed ?skip_initial_lambdas n style prefix obj 
+ ~map_unicode_to_tex ?skip_thm_and_qed ?skip_initial_lambdas n style prefix obj 
 =
   let get_aobj obj = 
      try   
@@ -183,24 +186,25 @@ let txt_of_cic_object
             ?skip_initial_lambdas ?skip_thm_and_qed ~ids_to_inner_sorts cobj 
         in
         remove_closed_substs ("\n\n" ^
-           BoxPp.render_to_string ?map_unicode_to_tex
+           BoxPp.render_to_string ~map_unicode_to_tex
             (function _::x::_ -> x | _ -> assert false) n
             (CicNotationPres.mpres_of_box bobj)
         )
      | G.Procedural depth ->
         let obj = ProceduralOptimizer.optimize_obj obj in
         let aobj, ids_to_inner_sorts, ids_to_inner_types = get_aobj obj in
-        let term_pp = term2pres (n - 8) ids_to_inner_sorts in
+        let term_pp = term2pres ~map_unicode_to_tex (n - 8) ids_to_inner_sorts in
         let lazy_term_pp = term_pp in
         let obj_pp = CicNotationPp.pp_obj term_pp in
-        let aux = GrafiteAstPp.pp_statement ~term_pp ~lazy_term_pp ~obj_pp in
+        let aux = GrafiteAstPp.pp_statement
+         ~map_unicode_to_tex ~term_pp ~lazy_term_pp ~obj_pp in
         let script = 
     Acic2Procedural.acic2procedural 
            ~ids_to_inner_sorts ~ids_to_inner_types ?depth ?skip_thm_and_qed prefix aobj 
   in
         String.concat "" (List.map aux script) ^ "\n\n"
 
-let txt_of_inline_macro ?map_unicode_to_tex style suri prefix =
+let txt_of_inline_macro ~map_unicode_to_tex style suri prefix =
    let print_exc = function
       | ProofEngineHelpers.Bad_pattern s as e ->
            Printexc.to_string e ^ " " ^ Lazy.force s
@@ -211,7 +215,7 @@ let txt_of_inline_macro ?map_unicode_to_tex style suri prefix =
    let map uri =
       try 
         txt_of_cic_object 
-          ?map_unicode_to_tex 78 style prefix
+          ~map_unicode_to_tex 78 style prefix
           (fst (CicEnvironment.get_obj CicUniv.empty_ugraph uri))
       with
          | e -> 

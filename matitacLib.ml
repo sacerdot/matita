@@ -35,9 +35,12 @@ let out = ref ignore
 
 let set_callback f = out := f
 
-let pp_ast_statement =
-  GrafiteAstPp.pp_statement ~term_pp:CicNotationPp.pp_term
-    ~lazy_term_pp:CicNotationPp.pp_term ~obj_pp:(CicNotationPp.pp_obj CicNotationPp.pp_term)
+let pp_ast_statement st =
+  GrafiteAstPp.pp_statement
+    ~map_unicode_to_tex:(Helm_registry.get_bool
+      "matita.paste_unicode_as_tex")
+    ~term_pp:CicNotationPp.pp_term
+    ~lazy_term_pp:CicNotationPp.pp_term ~obj_pp:(CicNotationPp.pp_obj CicNotationPp.pp_term) st
 
 (** {2 Initialization} *)
 
@@ -142,9 +145,13 @@ let rec interactive_loop () =
   | GrafiteEngine.Macro (floc, f) ->
       begin match f (get_macro_context !grafite_status) with 
        | _, GrafiteAst.Inline (_, style, suri, prefix) ->
-         let str = ApplyTransformation.txt_of_inline_macro style suri prefix in
-         !out str;
-	 interactive_loop ()
+         let str =
+          ApplyTransformation.txt_of_inline_macro style suri prefix
+           ~map_unicode_to_tex:(Helm_registry.get_bool
+             "matita.paste_unicode_as_tex")
+         in
+          !out str;
+	  interactive_loop ()
        | _ ->
          let x, y = HExtlib.loc_of_floc floc in
          HLog.error (sprintf "A macro has been found in a script at %d-%d" x y);
@@ -255,7 +262,10 @@ let rec compiler_loop fname big_bang mode buf =
   | GrafiteEngine.Macro (floc, f) ->
       begin match f (get_macro_context !grafite_status) with 
        | _, GrafiteAst.Inline (_, style, suri, prefix) ->
-         let str = ApplyTransformation.txt_of_inline_macro style suri prefix in
+         let str =
+          ApplyTransformation.txt_of_inline_macro style suri prefix
+           ~map_unicode_to_tex:(Helm_registry.get_bool
+             "matita.paste_unicode_as_tex") in
          !out str;
          compiler_loop fname big_bang mode buf
        | _ ->

@@ -52,9 +52,11 @@ let out_preamble och (path, lines) =
 
 (* from matitacLib *)
 
-let pp_ast_statement =
+let pp_ast_statement st =
   GrafiteAstPp.pp_statement ~term_pp:CicNotationPp.pp_term
-    ~lazy_term_pp:CicNotationPp.pp_term ~obj_pp:(CicNotationPp.pp_obj CicNotationPp.pp_term)
+    ~map_unicode_to_tex:(Helm_registry.get_bool
+      "matita.paste_unicode_as_tex")
+    ~lazy_term_pp:CicNotationPp.pp_term ~obj_pp:(CicNotationPp.pp_obj CicNotationPp.pp_term) st
 
 (**)
 

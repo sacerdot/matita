@@ -56,18 +56,18 @@ val mml_of_cic_object:
        (Cic.id, Cic2acic.anntypes) Hashtbl.t))  (* ids_to_inner_types *)
 
 val txt_of_cic_term: 
-  ?map_unicode_to_tex:bool -> int -> Cic.metasenv -> Cic.context -> Cic.term ->
+  map_unicode_to_tex:bool -> int -> Cic.metasenv -> Cic.context -> Cic.term ->
     string 
 val txt_of_cic_sequent: 
-  ?map_unicode_to_tex:bool -> int -> Cic.metasenv -> Cic.conjecture ->
+  map_unicode_to_tex:bool -> int -> Cic.metasenv -> Cic.conjecture ->
     string
 val txt_of_cic_sequent_conclusion: 
-  ?map_unicode_to_tex:bool -> int -> Cic.metasenv -> Cic.conjecture ->
+  map_unicode_to_tex:bool -> int -> Cic.metasenv -> Cic.conjecture ->
     string
 
 (* columns, rendering style, name prefix, object *)
 val txt_of_cic_object: 
-  ?map_unicode_to_tex:bool -> 
+  map_unicode_to_tex:bool -> 
   ?skip_thm_and_qed:bool -> 
   ?skip_initial_lambdas:int -> 
     int -> GrafiteAst.presentation_style -> string ->
@@ -76,5 +76,5 @@ val txt_of_cic_object:
 
 (* presentation_style, uri or baseuri, name prefix *)
 val txt_of_inline_macro:
-  ?map_unicode_to_tex:bool -> 
+  map_unicode_to_tex:bool -> 
    GrafiteAst.presentation_style -> string -> string -> string

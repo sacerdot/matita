@@ -303,6 +303,8 @@ object (self)
         "\n" ^
         GrafiteAstPp.pp_executable ~term_pp:(fun s -> s)
           ~lazy_term_pp:(fun _ -> assert false) ~obj_pp:(fun _ -> assert false)
+          ~map_unicode_to_tex:(Helm_registry.get_bool
+            "matita.paste_unicode_as_tex")
           (GrafiteAst.Tactic (loc,
             Some (GrafiteAst.Reduce (loc, kind, pat)),
             GrafiteAst.Semicolon loc)) in
@@ -434,6 +436,8 @@ object (self)
           let tactic_text_pattern =  self#tactic_text_pattern_of_node node in
           GrafiteAstPp.pp_tactic_pattern
             ~term_pp:(fun s -> s) ~lazy_term_pp:(fun _ -> assert false)
+            ~map_unicode_to_tex:(Helm_registry.get_bool
+              "matita.paste_unicode_as_tex")
             tactic_text_pattern
       | `Term -> self#tactic_text_of_node node
     else string_of_dom_node node
@@ -453,8 +457,8 @@ object (self)
     BoxPp.render_to_string text_width markup
     *)
     let map_unicode_to_tex =
-      Helm_registry.get_opt Helm_registry.bool "matita.paste_unicode_as_tex" in
-    ApplyTransformation.txt_of_cic_sequent_conclusion ?map_unicode_to_tex
+      Helm_registry.get_bool "matita.paste_unicode_as_tex" in
+    ApplyTransformation.txt_of_cic_sequent_conclusion ~map_unicode_to_tex
       text_width metasenv cic_sequent
 
   method private pattern_of term context unsh_sequent =

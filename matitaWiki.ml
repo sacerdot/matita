@@ -167,6 +167,8 @@ let rec interactive_loop () =
                  (List.map
                    (fun i ->
                      ApplyTransformation.txt_of_cic_sequent 80 metasenv
+                      ~map_unicode_to_tex:(Helm_registry.get_bool
+                        "matita.paste_unicode_as_tex")
                       (List.find (fun (j,_,_) -> j=i) metasenv)
                    ) open_goals))
           | _ -> ()
