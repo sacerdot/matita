@@ -111,11 +111,30 @@ record status : Type ≝ {
   clk : nat
 }.
 
+notation "{hvbox('Acc' ≝ acc ; break 'Pc' ≝ pc ; break 'Spc' ≝ spc ; break 'Fz' ≝ fz ; break 'Fc' ≝ fc ; break  'M' ≝ m ; break 'Clk' ≝ clk)}"
+non associative with precedence 80 for
+ @{ 'mkstatus $acc $pc $spc $fz $fc $m $clk }.
+ 
+interpretation "mk_status" 'mkstatus acc pc spc fz fc m clk =
+ (cic:/matita/assembly/vm/status.ind#xpointer(1/1/1) acc pc spc fz fc m clk).
+
 definition update ≝
  λf: addr → byte.λa.λv.λx.
   match eqb x a with
    [ true ⇒ v
    | false ⇒ f x ].
+
+notation "hvbox(m break {a ↦ break v})" non associative with precedence 80 for 
+ @{ 'update $m $a $v }.
+ 
+notation "hvbox(m break {a ↦ break v} \nbsp x)" non associative with precedence 80 for 
+ @{ 'update4 $m $a $v $x }.
+ 
+interpretation "update" 'update m a v =
+  (cic:/matita/assembly/vm/update.con m a v).
+
+interpretation "update4" 'update4 m a v x =
+  (cic:/matita/assembly/vm/update.con m a v x).
 
 lemma update_update_a_a:
  ∀s,a,v1,v2,b.

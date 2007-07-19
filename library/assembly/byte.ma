@@ -42,6 +42,9 @@ coercion cic:/matita/assembly/byte/nat_of_byte.con.
 definition byte_of_nat ≝
  λn. mk_byte (exadecimal_of_nat (n / 16)) (exadecimal_of_nat n).
 
+interpretation "byte_of_nat" 'byte_of_opcode a =
+ (cic:/matita/assembly/byte/byte_of_nat.con a).
+
 lemma byte_of_nat_nat_of_byte: ∀b. byte_of_nat (nat_of_byte b) = b.
  intros;
  elim b;

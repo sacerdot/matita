@@ -43,6 +43,24 @@ definition mult_status ≝
  λx,y.
   mk_status 〈x0, x0〉 0 0 false false (mult_memory x y) 0.
 
+notation " 'M' \sub (x y)" non associative with precedence 80 for 
+ @{ 'memory $x $y }.
+ 
+interpretation "mult_memory" 'memory x y = 
+  (cic:/matita/assembly/test/mult_memory.con x y).
+
+notation " 'M' \sub (x y) \nbsp a" non associative with precedence 80 for 
+ @{ 'memory4 $x $y $a }.
+ 
+interpretation "mult_memory4" 'memory4 x y a = 
+  (cic:/matita/assembly/test/mult_memory.con x y a).
+  
+notation " \Sigma \sub (x y)" non associative with precedence 80 for 
+ @{ 'status $x $y }.
+
+interpretation "mult_status" 'status x y =
+  (cic:/matita/assembly/test/mult_status.con x y).
+
 lemma test_O_O:
   let i ≝ 14 in
   let s ≝ execute (mult_status 〈x0, x0〉 〈x0, x0〉) i in
@@ -52,6 +70,7 @@ lemma test_O_O:
  reflexivity.
 qed.
 
+(*
 lemma test_0_2:
   let x ≝ 〈x0, x0〉 in
   let y ≝ 〈x0, x2〉 in
@@ -62,6 +81,7 @@ lemma test_0_2:
  split;
  reflexivity.
 qed.
+*)
 
 lemma test_x_1:
  ∀x.
@@ -78,6 +98,7 @@ lemma test_x_1:
   ].
 qed.
 
+(*
 lemma test_x_2:
  ∀x.
   let y ≝ 〈x0, x2〉 in
@@ -93,6 +114,7 @@ lemma test_x_2:
     reflexivity
   ].
 qed.
+*)
 
 lemma loop_invariant':
  ∀x,y:byte.∀j:nat. j ≤ y →
@@ -114,7 +136,6 @@ lemma loop_invariant':
     | intro;
       rewrite < minus_n_O;
       normalize in ⊢ (? ? (? (? ? %) ?) ?);
-      whd in ⊢ (? ? % ?);
       change in ⊢ (? ? % ?) with (update (mult_memory x y) 32 〈x0, x0〉 a);
       change in ⊢ (? ? ? %) with (update (update (update (mult_memory x y) 30 x) 31
         (byte_of_nat y)) 32 (byte_of_nat 0) a);
@@ -289,7 +310,7 @@ lemma loop_invariant':
             [ apply (y - S n)
             | split;
                [ rewrite < (minus_S_S y n);
-                 autobatch
+                 apply (minus_Sn_m (nat_of_byte y) (S n) H1)
                | letin K ≝ (lt_nat_of_byte_256 y); clearbody K;
                  letin K' ≝ (lt_minus_m y (S n) ? ?); clearbody K';
                  autobatch
@@ -305,12 +326,13 @@ lemma loop_invariant':
   ]   
 qed.
 
+
 theorem test_x_y:
  ∀x,y:byte.
   let i ≝ 14 + 23 * y in
    execute (mult_status x y) i =
-    mk_status (byte_of_nat (x*y)) 20 0
-     (eqbyte 〈x0, x0〉 (byte_of_nat (x*y)))
+    mk_status (#(x*y)) 20 0
+     (eqbyte 〈x0, x0〉 (#(x*y)))
      (plusbytec (byte_of_nat (x*pred y)) x)
      (update
        (update (mult_memory x y) 31 〈x0, x0〉)
@@ -327,6 +349,7 @@ theorem test_x_y:
        apply status_eq;
         [1,2,3,4,5,7: normalize; reflexivity
         | intro;
+        letin xxx \def ((mult_memory x y) { a ↦ x }).
           change with (update (update (update (mult_memory x y) 30 x) 31 (byte_of_nat O)) 32
 (byte_of_nat (nat_of_byte x*nat_of_byte y)) a =
            update (update (mult_memory x y) 31 〈x0, x0〉) 32
