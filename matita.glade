@@ -910,7 +910,7 @@
                                 <property name="visible">True</property>
                                 <property name="label" translatable="yes">Paste Unicode as TeX</property>
                                 <property name="use_underline">True</property>
-                                <property name="active">True</property>
+                                <property name="active">False</property>
                               </widget>
                             </child>
                             <child>

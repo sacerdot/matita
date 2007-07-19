@@ -564,7 +564,8 @@ let rec eval_macro include_paths (buffer : GText.buffer) guistuff lexicon_status
                 (Cic.CurrentProof ("xxx",menv,proof_term,ty,[],[]))
               in
                ApplyTransformation.txt_of_cic_object
-                ~map_unicode_to_tex:false 
+                ~map_unicode_to_tex:(Helm_registry.get_bool
+                  "matita.paste_unicode_as_tex")
                 ~skip_thm_and_qed:true
                 ~skip_initial_lambdas:how_many_lambdas
                 80 GrafiteAst.Declarative "" obj
@@ -588,7 +589,8 @@ let rec eval_macro include_paths (buffer : GText.buffer) guistuff lexicon_status
                 Pcre.qreplace ~templ:"?" ~pat:"orrible_hack_[0-9]+"
                  (strip_comments
                   (ApplyTransformation.txt_of_cic_object
-                    ~map_unicode_to_tex:false 
+                    ~map_unicode_to_tex:(Helm_registry.get_bool
+                      "matita.paste_unicode_as_tex")
                     ~skip_thm_and_qed:true
                     ~skip_initial_lambdas:how_many_lambdas
                     80 (GrafiteAst.Procedural None) "" obj)) 
@@ -602,7 +604,9 @@ let rec eval_macro include_paths (buffer : GText.buffer) guistuff lexicon_status
   | TA.Inline (_,style,suri,prefix) ->
        let str = 
          ApplyTransformation.txt_of_inline_macro
-           ~map_unicode_to_tex:false style suri prefix 
+          ~map_unicode_to_tex:(Helm_registry.get_bool
+            "matita.paste_unicode_as_tex")
+          style suri prefix 
        in
        [], str, String.length parsed_text
                                 

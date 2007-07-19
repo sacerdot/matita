@@ -1026,7 +1026,7 @@ class gui () =
         ~callback:(fun enabled ->
           Helm_registry.set_bool "matita.paste_unicode_as_tex" enabled);
       if not (Helm_registry.has "matita.paste_unicode_as_tex") then
-        Helm_registry.set_bool "matita.paste_unicode_as_tex" true;
+        Helm_registry.set_bool "matita.paste_unicode_as_tex" false;
       main#unicodeAsTexMenuItem#set_active
         (Helm_registry.get_bool "matita.paste_unicode_as_tex");
         (* log *)
