@@ -140,7 +140,7 @@ lemma loop_invariant':
       apply inj_update;
       intro;
       rewrite > (eq_update_s_a_sa (update (mult_memory x y) 30 (mult_memory x y 30))
-       31 a) in ⊢ (? ? ? %);
+       31 a);
       rewrite > eq_update_s_a_sa;
       reflexivity
     ]
@@ -257,8 +257,8 @@ lemma loop_invariant':
               intro;
               apply inj_update;
               intro;
-              rewrite > not_eq_a_b_to_eq_update_a_b in ⊢ (? ? % ?); [2: apply H | ];
-              rewrite > not_eq_a_b_to_eq_update_a_b in ⊢ (? ? % ?);
+              rewrite > not_eq_a_b_to_eq_update_a_b; [2: apply H | ];
+              rewrite > not_eq_a_b_to_eq_update_a_b;
                [ reflexivity
                | assumption
                ]
