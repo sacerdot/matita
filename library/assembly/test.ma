@@ -216,21 +216,10 @@ lemma loop_invariant':
               reflexivity
             |6: intro;
               simplify in ⊢ (? ? ? %);
+              normalize in ⊢ (? ? (? (? ? ? ? ? ? (? ? (? %) ?) ?) ?) ?);
               change in ⊢ (? ? % ?) with
-               (update
-                (update
-                 (update
-                  (update (update (mult_memory x y) 30 x) 31
-                   (byte_of_nat (S (nat_of_byte y-S n)))) 32 (byte_of_nat (nat_of_byte x*n))) 31
-                    (byte_of_nat (nat_of_byte y-S n)))
-                   (nat_of_byte
-                    (update
-                     (update
-                      (update (update (mult_memory x y) 30 x) 31
-                       (byte_of_nat (S (nat_of_byte y-S n)))) 32 (byte_of_nat (nat_of_byte x*n))) 31
-                      (byte_of_nat (nat_of_byte y-S n)) 15))
-                     (byte_of_nat (nat_of_byte x*S n)) a);
-              normalize in ⊢ (? ? (? ? % ? ?) ?);
+               ((mult_memory x y){30↦x}{31↦#(S (y-S n))}{32↦#(x*n)}{31↦#(y-S n)}
+                {〈x2,x0〉↦ #(x*S n)} a);
               apply inj_update;
               intro;
               apply inj_update;
