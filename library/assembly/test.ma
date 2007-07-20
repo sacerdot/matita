@@ -132,8 +132,7 @@ lemma loop_invariant':
       rewrite < minus_n_O;
       normalize in ⊢ (? ? (? (? ? %) ?) ?);
       change in ⊢ (? ? % ?) with (update (mult_memory x y) 32 〈x0, x0〉 a);
-      change in ⊢ (? ? ? %) with (update (update (update (mult_memory x y) 30 x) 31
-        (byte_of_nat y)) 32 (byte_of_nat 0) a);
+      simplify in ⊢ (? ? ? %);
       change in ⊢ (? ? ? (? (? (? ? ? %) ? ?) ? ? ?)) with (mult_memory x y 30);
       rewrite > byte_of_nat_nat_of_byte;
       change in ⊢ (? ? ? (? (? ? ? %) ? ? ?)) with (mult_memory x y 31);
@@ -145,20 +144,13 @@ lemma loop_invariant':
       reflexivity
     ]
   | cut (5 + 23 * S n = 5 + 23 * n + 23);
-    [ letin K ≝ (breakpoint (mult_status x y) (5 + 23 * n) 23); clearbody K;
-      letin H' ≝ (H ?); clearbody H'; clear H;
-      [ apply le_S_S_to_le;
+    [ rewrite > Hcut; clear Hcut;
+      rewrite > breakpoint;
+      rewrite > H; clear H;
+      [2: apply le_S_S_to_le;
         apply le_S;
         apply H1
-      | letin xxx ≝ (eq_f ? ? (λz. execute (mult_status x y) z) ? ? Hcut); clearbody xxx;
-        clear Hcut;
-        rewrite > xxx;
-        clear xxx;
-        apply (transitive_eq ? ? ? ? K);
-        clear K; 
-        rewrite > H';
-        clear H';
-        cut (∃z.y-n=S z ∧ z < 255);
+      | cut (∃z.y-n=S z ∧ z < 255);
          [ elim Hcut; clear Hcut;
            elim H; clear H;
            rewrite > H2;
@@ -256,7 +248,11 @@ lemma loop_invariant':
                  apply (minus_Sn_m (nat_of_byte y) (S n) H1)
                | letin K ≝ (lt_nat_of_byte_256 y); clearbody K;
                  letin K' ≝ (lt_minus_m y (S n) ? ?); clearbody K';
-                 autobatch
+                 [ apply (lt_to_le_to_lt O (S n) (nat_of_byte y) ? ?);
+                   autobatch
+                 | autobatch
+                 | autobatch
+                 ]
                ]
             ]
          ]
@@ -292,15 +288,12 @@ theorem test_x_y:
        apply status_eq;
         [1,2,3,4,5,7: normalize; reflexivity
         | intro;
-        letin xxx \def ((mult_memory x y) { a ↦ x }).
-          change with (update (update (update (mult_memory x y) 30 x) 31 (byte_of_nat O)) 32
-(byte_of_nat (nat_of_byte x*nat_of_byte y)) a =
-           update (update (mult_memory x y) 31 〈x0, x0〉) 32
+          simplify in ⊢ (? ? ? %);
+          change in ⊢ (? ? % ?) with
+           (update (update (update (mult_memory x y) 30 x) 31 (byte_of_nat O)) 32
 (byte_of_nat (nat_of_byte x*nat_of_byte y)) a);
-          apply inj_update; intro;
-          apply inj_update; intro;
-          change in ⊢ (? ? (? ? ? % ?) ?) with (mult_memory x y 30);
-          apply eq_update_s_a_sa
+          repeat (apply inj_update; intro);
+          apply (eq_update_s_a_sa ? 30)
         ]
      ]
   ].
