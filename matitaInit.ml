@@ -45,13 +45,14 @@ let already_configured s l =
 let conffile = ref BuildTimeConf.matita_conf
 
 let registry_defaults = [
-  "matita.debug",             "false";
-  "matita.external_editor",   "gvim -f -c 'go %p' %f";
-  "matita.preserve",          "false";
-  "matita.profile",           "true";
-  "matita.system",            "false";
-  "matita.verbosity",         "1";
-  "matita.bench",              "false";
+  "matita.debug",                "false";
+  "matita.external_editor",      "gvim -f -c 'go %p' %f";
+  "matita.preserve",             "false";
+  "matita.profile",              "true";
+  "matita.system",               "false";
+  "matita.verbosity",            "1";
+  "matita.bench",                "false";
+  "matita.paste_unicode_as_tex", "false"
     (** verbosity level: 1 is the default, 0 is intuitively "quiet", > 1 is
      * intuitively verbose *)
 ]
