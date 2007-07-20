@@ -163,16 +163,8 @@ lemma loop_invariant':
            elim H; clear H;
            rewrite > H2;
            (* instruction LDAd *)
-           letin K ≝
-            (breakpoint
-              (mk_status (byte_of_nat (x*n)) 4 O
-               (eqbyte 〈x0, x0〉 (byte_of_nat (x*n)))
-               (plusbytec (byte_of_nat (x*pred n)) x)
-               (update (update (update (mult_memory x y) 30 x) 31 (byte_of_nat (S a))) 32
-               (byte_of_nat (x*n))) O)
-              3 20); clearbody K;
-           normalize in K:(? ? (? ? %) ?);
-           rewrite > K; clear K;
+           change in ⊢ (? ? (? ? %) ?) with (3+20);
+           rewrite > breakpoint in ⊢ (? ? % ?);
            whd in ⊢ (? ? (? % ?) ?);
            normalize in ⊢ (? ? (? (? ? % ? ? ? ? ?) ?) ?);
            change in ⊢ (? ? (? (? % ? ? ? ? ? ?) ?) ?)
@@ -180,28 +172,22 @@ lemma loop_invariant':
            change in ⊢ (? ? (? (? ? ? ? (? ? %) ? ? ?) ?) ?) with
             (byte_of_nat (S a));
            (* instruction BEQ *)
-           letin K ≝
-            (breakpoint
-              (mk_status (byte_of_nat (S a)) 6 O
-               (eqbyte 〈x0, x0〉 (byte_of_nat (S a)))
-               (plusbytec (byte_of_nat (x*pred n)) x)
-                (update (update (update (mult_memory x y) 30 x) 31 (byte_of_nat (S a))) 32
-                 (byte_of_nat (x*n))) O)
-              3 17); clearbody K;
-           normalize in K:(? ? (? ? %) ?);
-           rewrite > K; clear K;
+           change in ⊢ (? ? (? ? %) ?) with (3+17);
+           rewrite > breakpoint in ⊢ (? ? % ?);
            whd in ⊢ (? ? (? % ?) ?);
            letin K ≝ (eq_eqbyte_x0_x0_byte_of_nat_S_false ? H3); clearbody K;
            rewrite > K; clear K;
            simplify in ⊢ (? ? (? (? ? % ? ? ? ? ?) ?) ?);
            (* instruction LDAd *)
-           rewrite > (breakpoint ? 3 14);
+           change in ⊢ (? ? (? ? %) ?) with (3+14);
+           rewrite > breakpoint in ⊢ (? ? % ?);
            whd in ⊢ (? ? (? % ?) ?);
            change in ⊢ (? ? (? (? % ? ? ? ? ? ?) ?) ?) with (byte_of_nat (x*n));
            normalize in ⊢ (? ? (? (? ? % ? ? ? ? ?) ?) ?);
            change in ⊢ (? ? (? (? ? ? ? % ? ? ?) ?) ?) with (eqbyte 〈x0, x0〉 (byte_of_nat (x*n)));
            (* instruction DECd *)
-           rewrite > (breakpoint ? 5 9);
+           change in ⊢ (? ? (? ? %) ?) with (5+9);
+           rewrite > breakpoint in ⊢ (? ? % ?);
            whd in ⊢ (? ? (? % ?) ?);
            change in ⊢ (? ? (? (? ? ? ? (? ? %) ? ? ?) ?) ?) with (bpred (byte_of_nat (S a)));
            rewrite > (eq_bpred_S_a_a ? H3);
@@ -213,7 +199,8 @@ lemma loop_invariant':
                 reflexivity | ];
            rewrite < Hcut; clear Hcut; clear H3; clear H2; clear a;          
            (* instruction ADDd *)
-           rewrite > (breakpoint ? 3 6);
+           change in ⊢ (? ? (? ? %) ?) with (3+6);
+           rewrite > breakpoint in ⊢ (? ? % ?);
            whd in ⊢ (? ? (? % ?) ?);
            change in ⊢ (? ? (? (? % ? ? ? ? ? ?) ?) ?) with
             (plusbytenc (byte_of_nat (x*n)) x);
@@ -233,8 +220,7 @@ lemma loop_invariant':
            rewrite < pred_Sn;        
            apply status_eq;
             [1,2,3,4,7: normalize; reflexivity
-            | change with (plusbytec (byte_of_nat (x*n)) x =
-                             plusbytec (byte_of_nat (x*n)) x);
+            | change with (plusbytec #(x*n) x = plusbytec #(x*n) x);
               reflexivity
             |6: intro;
               simplify in ⊢ (? ? ? %);
