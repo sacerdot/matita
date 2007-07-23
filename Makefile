@@ -35,6 +35,7 @@ MLI = \
 	matitaInit.mli		\
 	matitaEngine.mli	\
 	applyTransformation.mli	\
+	matitaAutoGui.mli	\
 	matitacLib.mli		\
 	matitaprover.mli        \
 	matitaGtkMisc.mli	\
@@ -61,7 +62,7 @@ MAINCMLI =			\
 	gragrep.mli 		\
 	$(NULL)
 # objects for matita (GTK GUI)
-ML = buildTimeConf.ml matitaGeneratedGui.ml matitaAutoGui.ml $(MLI:%.mli=%.ml)
+ML = buildTimeConf.ml matitaGeneratedGui.ml $(MLI:%.mli=%.ml)
 # objects for matitac (batch compiler)
 CML = buildTimeConf.ml $(CMLI:%.mli=%.ml)
 MAINCML = $(MAINCMLI:%.mli=%.ml)

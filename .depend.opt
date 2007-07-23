@@ -6,8 +6,10 @@ gragrep.cmo: matitaInit.cmi buildTimeConf.cmx gragrep.cmi
 gragrep.cmx: matitaInit.cmx buildTimeConf.cmx gragrep.cmi 
 lablGraphviz.cmo: lablGraphviz.cmi 
 lablGraphviz.cmx: lablGraphviz.cmi 
-matitaAutoGui.cmo: matitaGeneratedGui.cmx 
-matitaAutoGui.cmx: matitaGeneratedGui.cmx 
+matitaAutoGui.cmo: matitaGeneratedGui.cmx applyTransformation.cmi \
+    matitaAutoGui.cmi 
+matitaAutoGui.cmx: matitaGeneratedGui.cmx applyTransformation.cmx \
+    matitaAutoGui.cmi 
 matitaclean.cmo: matitaMisc.cmi matitaInit.cmi matitaclean.cmi 
 matitaclean.cmx: matitaMisc.cmx matitaInit.cmx matitaclean.cmi 
 matitacLib.cmo: matitamakeLib.cmi matitaMisc.cmi matitaInit.cmi \
@@ -32,10 +34,12 @@ matitaGtkMisc.cmx: matitaTypes.cmx matitaGeneratedGui.cmx buildTimeConf.cmx \
     matitaGtkMisc.cmi 
 matitaGui.cmo: matitaprover.cmi matitamakeLib.cmi matitaTypes.cmi \
     matitaScript.cmi matitaMisc.cmi matitaMathView.cmi matitaGtkMisc.cmi \
-    matitaGeneratedGui.cmx matitaExcPp.cmi buildTimeConf.cmx matitaGui.cmi 
+    matitaGeneratedGui.cmx matitaExcPp.cmi matitaAutoGui.cmi \
+    buildTimeConf.cmx matitaGui.cmi 
 matitaGui.cmx: matitaprover.cmx matitamakeLib.cmx matitaTypes.cmx \
     matitaScript.cmx matitaMisc.cmx matitaMathView.cmx matitaGtkMisc.cmx \
-    matitaGeneratedGui.cmx matitaExcPp.cmx buildTimeConf.cmx matitaGui.cmi 
+    matitaGeneratedGui.cmx matitaExcPp.cmx matitaAutoGui.cmx \
+    buildTimeConf.cmx matitaGui.cmi 
 matitaInit.cmo: matitamakeLib.cmi matitaExcPp.cmi buildTimeConf.cmx \
     matitaInit.cmi 
 matitaInit.cmx: matitamakeLib.cmx matitaExcPp.cmx buildTimeConf.cmx \
@@ -55,7 +59,7 @@ matitaMathView.cmx: matitamakeLib.cmx matitaTypes.cmx matitaScript.cmx \
 matitaMisc.cmo: buildTimeConf.cmx matitaMisc.cmi 
 matitaMisc.cmx: buildTimeConf.cmx matitaMisc.cmi 
 matita.cmo: matitaTypes.cmi matitaScript.cmi matitaMathView.cmi \
-    matitaInit.cmi matitaGui.cmi matitaGtkMisc.cmi matitaAutoGui.cmx \
+    matitaInit.cmi matitaGui.cmi matitaGtkMisc.cmi matitaAutoGui.cmi \
     buildTimeConf.cmx applyTransformation.cmi 
 matita.cmx: matitaTypes.cmx matitaScript.cmx matitaMathView.cmx \
     matitaInit.cmx matitaGui.cmx matitaGtkMisc.cmx matitaAutoGui.cmx \

@@ -1,6 +1,6 @@
 MYSQL_FLAGS = --extended_insert --lock-tables=off --no-create-info
 DB = -u helm -h mowgli.cs.unibo.it matita
-TABLE_CREATOR = ../../ocaml/metadata/table_creator/table_creator
+TABLE_CREATOR = ../../components/binaries/table_creator/table_creator
 TABLES := $(shell $(TABLE_CREATOR) list all)
 MANUAL_DIR = ../help/C
 WEB_DIR = ../../../www/matita
