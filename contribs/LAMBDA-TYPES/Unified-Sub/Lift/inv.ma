@@ -30,7 +30,7 @@ theorem lift_inv_lref_1: \forall l, i, j1, x.
                          (i <= j1 \land 
                           \exists j2. (l + j1 == j2) \land x = lref j2
                          ).
- intros. inversion H; clear H; intros; subst; autobatch depth = 5.
+ intros. inversion H; clear H; intros; subst; autobatch depth = 5 size = 7.
 qed.
 
 theorem lift_inv_bind_1: \forall l, i, r, u1, t1, x.
@@ -39,7 +39,7 @@ theorem lift_inv_bind_1: \forall l, i, r, u1, t1, x.
                          Lift l i u1 u2 \land
                          Lift l (succ i) t1 t2 \land
                          x = intb r u2 t2.
- intros. inversion H; clear H; intros; subst. autobatch depth = 5.
+ intros. inversion H; clear H; intros; subst; autobatch depth = 5 size = 7.
 qed.
 
 theorem lift_inv_flat_1: \forall l, i, r, u1, t1, x.
@@ -48,7 +48,7 @@ theorem lift_inv_flat_1: \forall l, i, r, u1, t1, x.
                          Lift l i u1 u2 \land
                          Lift l i t1 t2 \land
                          x = intf r u2 t2.
- intros. inversion H; clear H; intros; subst. autobatch depth = 5.
+ intros. inversion H; clear H; intros; subst. autobatch depth = 5 size = 7.
 qed.
 
 theorem lift_inv_sort_2: \forall l, i, x, h.
@@ -63,7 +63,7 @@ theorem lift_inv_lref_2: \forall l, i, x, j2.
                          (i <= j2 \land 
                           \exists j1. (l + j1 == j2) \land x = lref j1
                          ).
- intros. inversion H; clear H; intros; subst; autobatch depth = 5.
+ intros. inversion H; clear H; intros; subst; autobatch depth = 5 size = 10.
 qed.
 
 theorem lift_inv_bind_2: \forall l, i, r, x, u2, t2.
@@ -72,7 +72,7 @@ theorem lift_inv_bind_2: \forall l, i, r, x, u2, t2.
                          Lift l i u1 u2 \land
                          Lift l (succ i) t1 t2 \land
                          x = intb r u1 t1.
- intros. inversion H; clear H; intros; subst. autobatch depth = 5.
+ intros. inversion H; clear H; intros; subst. autobatch depth = 5 size = 7.
 qed.
 
 theorem lift_inv_flat_2: \forall l, i, r, x, u2, t2.
@@ -81,7 +81,7 @@ theorem lift_inv_flat_2: \forall l, i, r, x, u2, t2.
                          Lift l i u1 u2 \land
                          Lift l i t1 t2 \land
                          x = intf r u1 t1.
- intros. inversion H; clear H; intros; subst. autobatch depth = 5.
+ intros. inversion H; clear H; intros; subst. autobatch depth = 5 size = 7.
 qed.
 
 (* Corollaries of inversion properties ***************************************)

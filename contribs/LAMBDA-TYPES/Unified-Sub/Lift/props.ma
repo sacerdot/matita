@@ -25,26 +25,26 @@ theorem lift_comp: \forall l1,i1,t1,t2. Lift l1 i1 t1 t2 \to
  intros 5. elim H; clear H i1 t1 t2;
  [ lapply lift_mono to H1, H2. clear H2. subst.
    lapply linear lift_inv_sort_1 to H1. subst.
-   lapply linear lift_inv_sort_1 to H3. subst. auto
+   lapply linear lift_inv_sort_1 to H3. subst. autobatch
  | lapply lift_mono to H2, H3. clear H3. subst.
    lapply linear lift_inv_lref_1 to H2.
    decompose; subst; clear H2 H5;
-   lapply linear lift_inv_lref_1_gt to H4; subst; auto width = 4
- | lapply lift_inv_lref_1_le to H3; [ 2: auto ]. clear H3.
-   lapply lift_inv_lref_1_le to H4; [ 2: auto ]. clear H4.
+   lapply linear lift_inv_lref_1_gt to H4; subst; autobatch width = 4
+ | lapply lift_inv_lref_1_le to H3; [ 2: autobatch ]. clear H3.
+   lapply lift_inv_lref_1_le to H4; [ 2: autobatch ]. clear H4.
    decompose. subst. clear H6 i2.
-   lapply lift_inv_lref_1_le to H5; [ 2: auto depth = 4 width = 4 ]. 
-   decompose. subst. clear H5 H1 H7 i. auto depth = 4
+   lapply lift_inv_lref_1_le to H5; [ 2: autobatch depth = 4 width = 4 ]. 
+   decompose. subst. clear H5 H1 H7 i. autobatch depth = 4 size = 7
  | clear H1 H3.
    lapply linear lift_inv_bind_1 to H5.
    lapply linear lift_inv_bind_1 to H6. decompose. subst.
    lapply linear lift_inv_bind_1 to H7. decompose. subst.
-   auto width = 5
+   autobatch depth = 4 width = 6 size = 15
  | clear H1 H3.
    lapply linear lift_inv_flat_1 to H5.
    lapply linear lift_inv_flat_1 to H6. decompose. subst.
    lapply linear lift_inv_flat_1 to H7. decompose. subst.
-   auto width = 5
+   autobatch depth = 4 width = 6 size = 9
  ].
 qed.
 
@@ -55,7 +55,7 @@ theorem lift_comp_rew_dx: \forall l1,i1,t1,t2. Lift l1 i1 t1 t2 \to
                           Lift l1 i u1 u2.
  intros.
  lapply (lift_total l1 u1 i). decompose.
- lapply lift_comp to H, H1, H2, H5, H3, H4. subst. auto.
+ lapply lift_comp to H, H1, H2, H5, H3, H4. subst. autobatch.
 qed.
 
 theorem lift_comp_rew_sx: \forall l1,i1,t1,t2. Lift l1 i1 t1 t2 \to
@@ -65,7 +65,7 @@ theorem lift_comp_rew_sx: \forall l1,i1,t1,t2. Lift l1 i1 t1 t2 \to
                           Lift l1 i1 u1 u2.
  intros.
  lapply (lift_total l1 u1 i1). decompose.
- lapply lift_comp to H1, H, H5, H2, H3, H4. subst. auto.
+ lapply lift_comp to H1, H, H5, H2, H3, H4. subst. autobatch.
 qed.
 (*
 theorem lift_trans_le: \forall l1,i1,t1,t2. Lift l1 i1 t1 t2 \to
