@@ -223,14 +223,15 @@ simplify.
 intro.apply False_ind.
 apply not_eq_true_false.apply sym_eq.assumption.
 apply (f_min_aux_true 
-(\lambda x. andb (eqb (x \mod m) a) (eqb (x \mod n) b)) (pred (m*n)) (pred (m*n))).
+(\lambda x. andb (eqb (x \mod m) a) (eqb (x \mod n) b)) (pred (m*n)) O).
 elim (and_congruent_congruent_lt m n a b).
 apply (ex_intro ? ? a1).split.split.
-rewrite < minus_n_n.apply le_O_n.
+apply le_O_n.
 elim H3.apply le_S_S_to_le.apply (trans_le ? (m*n)).
 assumption.apply (nat_case (m*n)).apply le_O_n.
 intro.
-rewrite < pred_Sn.apply le_n.
+rewrite < pred_Sn.
+rewrite < plus_n_O.apply le_n.
 elim H3.elim H4.
 apply andb_elim.
 cut (a1 \mod m = a).

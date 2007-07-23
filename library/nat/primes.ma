@@ -397,18 +397,18 @@ match n with
 | (S p) \Rightarrow 
   match p with
   [ O \Rightarrow (S O)
-  | (S q) \Rightarrow min_aux q (S(S q)) (\lambda m.(eqb ((S(S q)) \mod m) O))]].
+  | (S q) \Rightarrow min_aux q (S (S O)) (\lambda m.(eqb ((S(S q)) \mod m) O))]].
 
-(* it works ! 
-theorem example1 : smallest_prime_factor (S(S(S O))) = (S(S(S O))).
+(* it works !
+theorem example1 : smallest_factor (S(S(S O))) = (S(S(S O))).
 normalize.reflexivity.
 qed.
 
-theorem example2: smallest_prime_factor (S(S(S(S O)))) = (S(S O)).
+theorem example2: smallest_factor (S(S(S(S O)))) = (S(S O)).
 normalize.reflexivity.
 qed.
 
-theorem example3 : smallest_prime_factor (S(S(S(S(S(S(S O))))))) = (S(S(S(S(S(S(S O))))))).
+theorem example3 : smallest_factor (S(S(S(S(S(S(S O))))))) = (S(S(S(S(S(S(S O))))))).
 simplify.reflexivity.
 qed. *)
 
@@ -419,7 +419,7 @@ apply (nat_case n).intro.apply False_ind.apply (not_le_Sn_O (S O) H).
 intro.apply (nat_case m).intro. apply False_ind.apply (not_le_Sn_n (S O) H).
 intros.
 change with 
-(S O < min_aux m1 (S(S m1)) (\lambda m.(eqb ((S(S m1)) \mod m) O))).
+(S O < min_aux m1 (S (S O)) (\lambda m.(eqb ((S(S m1)) \mod m) O))).
 apply (lt_to_le_to_lt ? (S (S O))).
 apply (le_n (S(S O))).
 cut ((S(S O)) = (S(S m1)) - m1).
@@ -449,15 +449,18 @@ apply (witness ? ? (S O)). simplify.reflexivity.
 intros.
 apply divides_b_true_to_divides.
 change with 
-(eqb ((S(S m1)) \mod (min_aux m1 (S(S m1)) 
+(eqb ((S(S m1)) \mod (min_aux m1 (S (S O)) 
   (\lambda m.(eqb ((S(S m1)) \mod m) O)))) O = true).
 apply f_min_aux_true.
 apply (ex_intro nat ? (S(S m1))).
 split.split.
-apply le_minus_m.apply le_n.
-rewrite > mod_n_n.reflexivity.
-apply (trans_lt ? (S O)).apply (le_n (S O)).unfold lt.
-apply le_S_S.apply le_S_S.apply le_O_n.
+apply (le_S_S_to_le (S (S O)) (S (S m1)) ?).
+apply (minus_le_O_to_le (S (S (S O))) (S (S (S m1))) ?).
+apply (le_n O).
+rewrite < sym_plus. simplify. apply le_n.
+apply (eq_to_eqb_true (mod (S (S m1)) (S (S m1))) O ?).
+apply (mod_n_n (S (S m1)) ?).
+apply (H).
 qed.
   
 theorem le_smallest_factor_n : 
@@ -478,12 +481,9 @@ intro.apply (nat_case m).intro. apply False_ind.apply (not_le_Sn_n (S O) H).
 intros.
 apply divides_b_false_to_not_divides.
 apply (lt_min_aux_to_false 
-(\lambda i:nat.eqb ((S(S m1)) \mod i) O) (S(S m1)) m1 i).
-cut ((S(S O)) = (S(S m1)-m1)).
-rewrite < Hcut.exact H1.
-apply sym_eq. apply plus_to_minus.
-rewrite < sym_plus.simplify.reflexivity.
-exact H2.
+(\lambda i:nat.eqb ((S(S m1)) \mod i) O) (S (S O)) m1 i).
+assumption.
+assumption.
 qed.
 
 theorem prime_smallest_factor_n : 

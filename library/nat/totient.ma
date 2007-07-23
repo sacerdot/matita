@@ -63,7 +63,8 @@ apply (nat_case1 n)
    [intros.unfold cr_pair.
         apply (le_to_lt_to_lt ? (pred ((S m2)*(S m1))))
           [unfold min.
-           apply le_min_aux_r
+           apply transitive_le;
+            [2: apply le_min_aux_r | skip | apply le_n]
           |unfold lt.
            apply (nat_case ((S m2)*(S m1)))
             [apply le_n|intro.apply le_n]

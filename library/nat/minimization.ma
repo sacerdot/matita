@@ -161,19 +161,19 @@ elim n
 qed.
  
 let rec min_aux off n f \def
-  match f (n-off) with 
-  [ true \Rightarrow (n-off)
+  match f n with 
+  [ true \Rightarrow n
   | false \Rightarrow 
       match off with
       [ O \Rightarrow n
-      | (S p) \Rightarrow min_aux p n f]].
+      | (S p) \Rightarrow min_aux p (S n) f]].
 
 definition min : nat \to (nat \to bool) \to nat \def
-\lambda n.\lambda f. min_aux n n f.
+\lambda n.\lambda f. min_aux n O f.
 
 theorem min_aux_O_f: \forall f:nat \to bool. \forall i :nat.
 min_aux O i f = i.
-intros.simplify.rewrite < minus_n_O.
+intros.simplify.
 elim (f i).reflexivity.
 simplify.reflexivity.
 qed.
@@ -184,34 +184,35 @@ intro.apply (min_aux_O_f f O).
 qed.
 
 theorem min_aux_S : \forall f: nat \to bool. \forall i,n:nat.
-(f (n -(S i)) = true \land min_aux (S i) n f = (n - (S i))) \lor 
-(f (n -(S i)) = false \land min_aux (S i) n f = min_aux i n f).
-intros.simplify.elim (f (n - (S i))).
+((f n) = true \land min_aux (S i) n f = n) \lor 
+((f n) = false \land min_aux (S i) n f = min_aux i (S n) f).
+intros.simplify.elim (f n).
 simplify.left.split.reflexivity.reflexivity.
 simplify.right.split.reflexivity.reflexivity.
 qed.
 
 theorem f_min_aux_true: \forall f:nat \to bool. \forall off,m:nat.
-(\exists i. le (m-off) i \land le i m \land f i = true) \to
+(\exists i. le m i \land le i (off + m) \land f i = true) \to
 f (min_aux off m f) = true. 
 intros 2.
 elim off.elim H.elim H1.elim H2.
 cut (a = m).
 rewrite > (min_aux_O_f f).rewrite < Hcut.assumption.
-apply (antisym_le a m).assumption.rewrite > (minus_n_O m).assumption.
+apply (antisym_le a m).assumption.assumption.
 simplify.
 apply (bool_ind (\lambda b:bool.
-(f (m-(S n)) = b) \to (f (match b in bool with
-[ true \Rightarrow m-(S n)
-| false  \Rightarrow (min_aux n m f)])) = true)).
-simplify.intro.assumption.
-simplify.intro.apply H.
+(f m = b) \to (f (match b in bool with
+[ true \Rightarrow m
+| false  \Rightarrow (min_aux n (S m) f)])) = true)).
+intro; assumption.
+intro. apply H.
 elim H1.elim H3.elim H4.
-elim (le_to_or_lt_eq (m-(S n)) a H6). 
+elim (le_to_or_lt_eq ? a H6). 
 apply (ex_intro nat ? a).
 split.split.
-apply lt_minus_S_n_to_le_minus_n.assumption.
-assumption.assumption.
+assumption.
+rewrite < plus_n_Sm; assumption.
+assumption.
 absurd (f a = false).rewrite < H8.assumption.
 rewrite > H5.
 apply not_eq_true_false.
@@ -219,45 +220,67 @@ reflexivity.
 qed.
 
 theorem lt_min_aux_to_false : \forall f:nat \to bool. 
-\forall n,off,m:nat. (n-off) \leq m \to m < (min_aux off n f) \to f m = false.
+\forall n,off,m:nat. n \leq m \to m < (min_aux off n f) \to f m = false.
 intros 3.
-elim off.absurd (le n m).rewrite > minus_n_O.assumption.
-apply lt_to_not_le.rewrite < (min_aux_O_f f n).assumption.
-generalize in match H1.
-elim (min_aux_S f n1 n).
-elim H3.
-absurd (n - S n1 \le m).assumption.
-apply lt_to_not_le.rewrite < H6.assumption.
-elim H3.
-elim (le_to_or_lt_eq (n -(S n1)) m).
-apply H.apply lt_minus_S_n_to_le_minus_n.assumption.
-rewrite < H6.assumption.
-rewrite < H7.assumption.
-assumption.
+generalize in match n; clear n.
+elim off.absurd (le n1 m).assumption.
+apply lt_to_not_le.rewrite < (min_aux_O_f f n1).assumption.
+elim (le_to_or_lt_eq ? ? H1);
+ [ unfold lt in H3;
+   apply (H (S n1));
+   [ assumption
+   | elim (min_aux_S f n n1);
+     [ elim H4;
+       elim (not_le_Sn_n n1);
+       rewrite > H6 in H2;
+       apply (lt_to_le (S n1) n1 ?).
+       apply (le_to_lt_to_lt (S n1) m n1 ? ?);
+        [apply (H3).
+        |apply (H2).
+        ]
+     | elim H4;
+       rewrite < H6;
+       assumption
+     ]
+   ]
+ | rewrite < H3 in H2 ⊢ %.
+   elim (min_aux_S f n n1);
+    [ elim H4;
+      rewrite > H6 in H2;
+      unfold lt in H2;
+      elim (not_le_Sn_n ? H2)
+    | elim H4;
+      assumption
+    ]
+ ]
 qed.
 
-theorem le_min_aux : \forall f:nat \to bool. 
-\forall n,off:nat. (n-off) \leq (min_aux off n f).
+
+lemma le_min_aux : \forall f:nat \to bool. 
+\forall n,off:nat. n \leq (min_aux off n f).
 intros 3.
-elim off.rewrite < minus_n_O.
-rewrite > (min_aux_O_f f n).apply le_n.
-elim (min_aux_S f n1 n).
+generalize in match n. clear n.
+elim off.
+rewrite > (min_aux_O_f f n1).apply le_n.
+elim (min_aux_S f n n1).
 elim H1.rewrite > H3.apply le_n.
 elim H1.rewrite > H3.
-apply (trans_le (n-(S n1)) (n-n1)).
-apply monotonic_le_minus_r.
-apply le_n_Sn.
-assumption.
+apply (transitive_le ? (S n1));
+ [ apply le_n_Sn
+ | apply (H (S n1))
+ ]
 qed.
 
 theorem le_min_aux_r : \forall f:nat \to bool. 
-\forall n,off:nat. (min_aux off n f) \le n.
+\forall n,off:nat. (min_aux off n f) \le n+off.
 intros.
-elim off.simplify.rewrite < minus_n_O.
-elim (f n).simplify.apply le_n.
-simplify.apply le_n.
-simplify.elim (f (n -(S n1))).
-simplify.apply le_plus_to_minus.
-rewrite < sym_plus.apply le_plus_n.
-simplify.assumption.
+generalize in match n. clear n.
+elim off.simplify.
+elim (f n1).simplify.rewrite < plus_n_O.apply le_n.
+simplify.rewrite < plus_n_O.apply le_n.
+simplify.elim (f n1).
+simplify.
+apply (le_plus_n_r (S n) n1).
+simplify.rewrite < plus_n_Sm.
+apply (H (S n1)).
 qed.

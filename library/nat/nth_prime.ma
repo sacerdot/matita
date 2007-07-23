@@ -74,11 +74,9 @@ match n with
   | (S p) \Rightarrow
     let previous_prime \def (nth_prime p) in
     let upper_bound \def S previous_prime! in
-    min_aux (upper_bound - (S previous_prime)) upper_bound primeb].
+    min_aux upper_bound (S previous_prime) primeb].
     
-(* it works, but nth_prime 4 takes already a few minutes -
-it must compute factorial of 7 ...*)
-
+(* it works
 theorem example11 : nth_prime (S(S O)) = (S(S(S(S(S O))))).
 normalize.reflexivity.
 qed.
@@ -91,10 +89,11 @@ theorem example13 : nth_prime (S(S(S(S O)))) = (S(S(S(S(S(S(S(S(S(S(S O)))))))))
 normalize.reflexivity.
 qed.
 
-(*
-theorem example14 : nth_prime (S(S(S(S(S O))))) = (S(S(S(S(S(S(S(S(S(S(S O))))))))))).
+alias num (instance 0) = "natural number".
+theorem example14 : nth_prime 18 = 67.
 normalize.reflexivity.
-*) 
+qed.
+*)
 
 theorem prime_nth_prime : \forall n:nat.prime (nth_prime n).
 intro.
@@ -104,19 +103,17 @@ intro.
 change with
 (let previous_prime \def (nth_prime m) in
 let upper_bound \def S previous_prime! in
-prime (min_aux (upper_bound - (S previous_prime)) upper_bound primeb)).
+prime (min_aux upper_bound (S previous_prime) primeb)).
 apply primeb_true_to_prime.
 apply f_min_aux_true.
 apply (ex_intro nat ? (smallest_factor (S (nth_prime m)!))).
 split.split.
-cut (S (nth_prime m)!-(S (nth_prime m)! - (S (nth_prime m))) = (S (nth_prime m))).
-rewrite > Hcut.exact (smallest_factor_fact (nth_prime m)).
-(* maybe we could factorize this proof *)
-apply plus_to_minus.
-apply plus_minus_m_m.
-apply le_S_S.
-apply le_n_fact_n.
-apply le_smallest_factor_n.
+apply smallest_factor_fact.
+apply transitive_le;
+ [2: apply le_smallest_factor_n
+ | skip
+ | apply (le_plus_n_r (S (nth_prime m)) (S (fact (nth_prime m))))
+ ].
 apply prime_to_primeb_true.
 apply prime_smallest_factor_n.unfold lt.
 apply le_S_S.apply le_SO_fact.
@@ -129,15 +126,9 @@ intros.
 change with
 (let previous_prime \def (nth_prime n) in
 let upper_bound \def S previous_prime! in
-(S previous_prime) \le min_aux (upper_bound - (S previous_prime)) upper_bound primeb).
+(S previous_prime) \le min_aux upper_bound (S previous_prime) primeb).
 intros.
-cut (upper_bound - (upper_bound -(S previous_prime)) = (S previous_prime)).
-rewrite < Hcut in \vdash (? % ?).
 apply le_min_aux.
-apply plus_to_minus.
-apply plus_minus_m_m.
-apply le_S_S.
-apply le_n_fact_n.
 qed.
 
 variant lt_nth_prime_n_nth_prime_Sn :\forall n:nat. 
@@ -184,14 +175,13 @@ intros.
 apply primeb_false_to_not_prime.
 letin previous_prime \def (nth_prime n).
 letin upper_bound \def (S previous_prime!).
-apply (lt_min_aux_to_false primeb upper_bound (upper_bound - (S previous_prime)) m).
-cut (S (nth_prime n)!-(S (nth_prime n)! - (S (nth_prime n))) = (S (nth_prime n))).
-rewrite > Hcut.assumption.
-apply plus_to_minus.
-apply plus_minus_m_m.
-apply le_S_S.
-apply le_n_fact_n.
+apply (lt_min_aux_to_false primeb (S previous_prime) upper_bound m).
 assumption.
+unfold lt.
+apply (transitive_le (S m) (nth_prime (S n)) (min_aux (S (fact (nth_prime n))) (S (nth_prime n)) primeb) ? ?);
+  [apply (H1).
+  |apply (le_n (min_aux (S (fact (nth_prime n))) (S (nth_prime n)) primeb)).
+  ]
 qed.
 
 (* nth_prime enumerates all primes *)
