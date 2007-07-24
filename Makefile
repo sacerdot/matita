@@ -205,6 +205,7 @@ TEST_DIRS = 				\
 	dama				\
 	contribs/CoRN	 	        \
 	contribs/RELATIONAL	 	\
+	contribs/LOGIC	       	 	\
 	contribs/LAMBDA-TYPES 		\
 	contribs/PREDICATIVE-TOPOLOGY 	\
 	$(NULL)
