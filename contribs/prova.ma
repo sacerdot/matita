@@ -14,6 +14,22 @@
 
 set "baseuri" "cic:/matita/test/prova".
 
+include "../legacy/coq.ma".
+
+theorem pippo: \forall (A,B:Prop). A \land B \to A.
+ intros; decompose; assumption.
+qed.  
+
+inline procedural "cic:/matita/test/prova/pippo.con".
+
+alias id "plus" = "cic:/Coq/Init/Peano/plus.con".
+alias id "nat" = "cic:/Coq/Init/Datatypes/nat.ind#xpointer(1/1)".
+alias id "eq" = "cic:/Coq/Init/Logic/eq.ind#xpointer(1/1)".
+theorem plus_comm: \forall n:nat.\forall m:nat.eq nat (plus n m) (plus m n).
+ intros; alias id "plus_comm" = "cic:/Coq/Arith/Plus/plus_comm.con".
+apply plus_comm.
+qed.
+(*
 include "LAMBDA-TYPES/LambdaDelta-1/preamble.ma".
 alias id "ty3" = "cic:/matita/LAMBDA-TYPES/LambdaDelta-1/ty3/defs/ty3.ind#xpointer(1/1)".
 alias id "pc3" = "cic:/matita/LAMBDA-TYPES/LambdaDelta-1/pc3/defs/pc3.con".
@@ -195,4 +211,26 @@ apply H6(* assumption *)
 |apply H(* assumption *)
 ].
 qed.
+*)
+(*
+include "nat/orders.ma".
 
+theorem le_inv:
+ \forall P:nat \to Prop
+ .\forall p2
+  .\forall p1
+   .p2 <= p1 \to
+    (p1 = p2 \to P p2) \to 
+     (\forall n1
+      .p2 <= n1 \to 
+      (p1 = n1 \to P n1) \to 
+      p1 = S n1 \to P (S n1)) \to 
+      P p1.
+ intros 4; elim H names 0; clear H p1; intros;
+ [ apply H; reflexivity
+ | apply H3; clear H3; intros;
+   [ apply H | apply H1; clear H1; intros; subst;
+     [ apply H2; apply H3 | ]
+   | reflexivity
+ ]
+*)
