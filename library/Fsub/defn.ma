@@ -232,6 +232,19 @@ inductive JSubtype : Env \to Typ \to Typ \to Prop \def
                    (subst_type_O S2 (TFree X)) (subst_type_O T2 (TFree X)))) \to
              (JSubtype G (Forall S1 S2) (Forall T1 T2)).
 
+(*
+notation < "hvbox(e break ⊢ ta \nbsp 'V' \nbsp tb (= \above \alpha))" 
+  non associative with precedence 30 for @{ 'subjudg $e $ta $tb }.
+notation > "hvbox(e break ⊢ ta 'Fall' break tb)" 
+  non associative with precedence 30 for @{ 'subjudg $e $ta $tb }.
+notation "hvbox(e break ⊢ ta \lessdot break tb)" 
+  non associative with precedence 30 for @{ 'subjudg $e $ta $tb }.  
+interpretation "Fsub subtype judgement" 'subjudg e ta tb =
+ (cic:/matita/Fsub/defn/JSubtype.ind#xpointer(1/1) e ta tb).
+
+lemma xx : \forall e,ta,tb. e \vdash  ta Fall tb.
+*)
+
 (*** Typing judgement ***)
 inductive JType : Env \to Term \to Typ \to Prop \def
   | T_Var : \forall G:Env.\forall x:nat.\forall T:Typ.
@@ -636,7 +649,7 @@ qed.
 
 (*** lemmata relating subtyping and well-formedness ***)
 
-lemma JS_to_WFE : \forall G,T,U.(JSubtype G T U) \to (WFEnv G).
+lemma JS_to_WFE : \forall G,T,U.(G \vdash T \lessdot U) \to (WFEnv G).
 intros;elim H;assumption.
 qed.
 
