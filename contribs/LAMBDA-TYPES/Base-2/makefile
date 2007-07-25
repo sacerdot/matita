@@ -1,6 +1,6 @@
 H=@
 
-RT_BASEDIR=/home/fguidi/svn/software/matita/
+RT_BASEDIR=../../../
 OPTIONS=-bench
 MMAKE=$(RT_BASEDIR)matitamake $(OPTIONS)
 CLEAN=$(RT_BASEDIR)matitaclean $(OPTIONS) 
@@ -27,6 +27,11 @@ clean.opt: clean_mas preall.opt
 cleanall.opt: clean_mas preall.opt
 	$(H)$(XXX) MATITA_FLAGS=$(MATITA_FLAGS) $(MCLEANO) all
 
+mas: preall
+	$(H)$(XXX) MATITA_FLAGS=$(MATITA_FLAGS) $(MMAKE) build $(devel)
+mas.opt: preall.opt
+	$(H)$(XXX) MATITA_FLAGS=$(MATITA_FLAGS) $(MMAKEO) build $(devel)
+
 %.mo: preall
 	$(H)$(XXX) MATITA_FLAGS=$(MATITA_FLAGS) $(MMAKE) $@
 %.mo.opt: preall.opt
@@ -38,14 +43,22 @@ preall:
 preall.opt:
 	$(H)$(XXX) MATITA_FLAGS=$(MATITA_FLAGS) $(MMAKEO) init $(devel)
 
-
 # FG: added part ############################################################
 
-build_mas:
-	$(H)$(MAKE) preamble.mo.opt
-	$(H)$(MAKE) -f Makefile
-	$(H)$(MAKE) preall.opt
-	$(H)$(XXX) MATITA_FLAGS=$(MATITA_FLAGS) $(MMAKEO) clean $(devel)
+MATITAC = $(RT_BASEDIR)/matitac.opt
+
+MMAS = $(shell find -name "*.mma")
+MAS = $(MMAS:%.mma=%.ma)
+
+build_mas: preall.opt theory.ma
 
 clean_mas:
-	$(H)$(MAKE) -f Makefile clean
+	$(H)rm -f $(MAS)
+
+%.ma: %.mma
+	$(H)$(MATITAC) -dump $@ $< $(OPTIONS)
+	$(MAKE) preall.opt
+
+include depend
+
+.DELETE_ON_ERROR:

@@ -61,6 +61,7 @@ let pp_ast_statement st =
 (**)
 
 let dump f =
+   Helm_registry.set_bool "matita.moo" false;
    let floc = H.dummy_floc in
    let nl_ast = G.Comment (floc, G.Note (floc, "")) in
    let och = open_out f in
@@ -87,6 +88,7 @@ let dump f =
    at_exit atexit
    
 let main () =
+ Helm_registry.set_bool "matita.moo" true;
  match Filename.basename Sys.argv.(0) with
  |"gragrep"    |"gragrep.opt"    |"gragrep.opt.static"    ->Gragrep.main()
  |"matitadep"  |"matitadep.opt"  |"matitadep.opt.static"  ->Matitadep.main()

@@ -371,8 +371,11 @@ let main ~mode =
          LibraryMisc.lexicon_file_of_baseuri 
           ~must_exist:false ~baseuri ~writable:true 
        in
-       GrafiteMarshal.save_moo moo_fname moo_content_rev;
-       LexiconMarshal.save_lexicon lexicon_fname lexicon_content_rev;
+(* FG: we do not generate .moo when dumping .mma files *)
+       if Helm_registry.get_bool "matita.moo" then begin
+          GrafiteMarshal.save_moo moo_fname moo_content_rev;
+          LexiconMarshal.save_lexicon lexicon_fname lexicon_content_rev;
+       end;
        HLog.message 
          (sprintf "execution of %s completed in %s." fname (hou^min^sec));
        pp_times fname bench_mode true big_bang;
