@@ -110,7 +110,7 @@ theorem prove_ax_glb2b:
 \forall H14:\forall X:Univ.eq Univ (multiply identity X) X.eq Univ (greatest_lower_bound (greatest_lower_bound a b) a) (greatest_lower_bound a b)
 .
 intros.
-autobatch paramodulation timeout=100.
+autobatch paramodulation timeout=100;
 try assumption.
 print proofterm.
 qed.

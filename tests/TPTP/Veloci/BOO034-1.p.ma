@@ -68,7 +68,7 @@ theorem prove_single_axiom:
 \forall H4:\forall V:Univ.\forall W:Univ.\forall X:Univ.\forall Y:Univ.\forall Z:Univ.eq Univ (multiply (multiply V W X) Y (multiply V W Z)) (multiply V W (multiply X Y Z)).eq Univ (multiply (multiply a (inverse a) b) (inverse (multiply (multiply c d e) f (multiply c d g))) (multiply d (multiply g f e) c)) b
 .
 intros.
-autobatch paramodulation timeout=100.
+autobatch paramodulation timeout=100;
 try assumption.
 print proofterm.
 qed.

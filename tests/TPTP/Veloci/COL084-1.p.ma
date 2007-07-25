@@ -35,7 +35,7 @@ exists[
 2:
 exists[
 2:
-autobatch paramodulation timeout=100.
+autobatch paramodulation timeout=100;
 try assumption.
 |
 skip]

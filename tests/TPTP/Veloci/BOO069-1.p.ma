@@ -31,7 +31,7 @@ theorem prove_tba_axioms_3:
 \forall H0:\forall A:Univ.\forall B:Univ.\forall C:Univ.\forall D:Univ.\forall E:Univ.\forall F:Univ.\forall G:Univ.eq Univ (multiply (multiply A (inverse A) B) (inverse (multiply (multiply C D E) F (multiply C D G))) (multiply D (multiply G F E) C)) B.eq Univ (multiply a b (inverse b)) a
 .
 intros.
-autobatch paramodulation timeout=100.
+autobatch paramodulation timeout=100;
 try assumption.
 print proofterm.
 qed.

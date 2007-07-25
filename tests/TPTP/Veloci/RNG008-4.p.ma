@@ -87,7 +87,7 @@ theorem prove_commutativity:
 \forall H15:\forall X:Univ.eq Univ (add additive_identity X) X.eq Univ (multiply b a) c
 .
 intros.
-autobatch paramodulation timeout=100.
+autobatch paramodulation timeout=100;
 try assumption.
 print proofterm.
 qed.

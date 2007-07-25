@@ -36,7 +36,7 @@ theorem prove_these_axioms_3:
 \forall H3:\forall A:Univ.\forall B:Univ.\forall C:Univ.eq Univ (divide (divide (divide A A) (divide A (divide B (divide (divide identity A) C)))) C) B.eq Univ (multiply (multiply a3 b3) c3) (multiply a3 (multiply b3 c3))
 .
 intros.
-autobatch paramodulation timeout=100.
+autobatch paramodulation timeout=100;
 try assumption.
 print proofterm.
 qed.

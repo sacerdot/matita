@@ -68,7 +68,7 @@ theorem prove_inverse_of_id_is_id:
 \forall H4:\forall X:Univ.eq Univ (multiply identity X) X.eq Univ (inverse identity) identity
 .
 intros.
-autobatch paramodulation timeout=100.
+autobatch paramodulation timeout=100;
 try assumption.
 print proofterm.
 qed.

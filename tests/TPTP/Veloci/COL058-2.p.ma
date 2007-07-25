@@ -35,7 +35,7 @@ theorem prove_the_bird_exists:
 \forall H0:\forall X1:Univ.\forall X2:Univ.eq Univ (response (response lark X1) X2) (response X1 (response X2 X2)).eq Univ (response (response (response lark (response (response lark (response lark lark)) (response lark (response lark lark)))) (response lark (response lark lark))) (response (response lark (response (response lark (response lark lark)) (response lark (response lark lark)))) (response lark (response lark lark)))) (response (response lark (response (response lark (response lark lark)) (response lark (response lark lark)))) (response lark (response lark lark)))
 .
 intros.
-autobatch paramodulation timeout=100.
+autobatch paramodulation timeout=100;
 try assumption.
 print proofterm.
 qed.

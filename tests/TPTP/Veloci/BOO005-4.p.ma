@@ -63,7 +63,7 @@ theorem prove_a_plus_1_is_a:
 \forall H7:\forall X:Univ.\forall Y:Univ.eq Univ (add X Y) (add Y X).eq Univ (add a multiplicative_identity) multiplicative_identity
 .
 intros.
-autobatch paramodulation timeout=100.
+autobatch paramodulation timeout=100;
 try assumption.
 print proofterm.
 qed.

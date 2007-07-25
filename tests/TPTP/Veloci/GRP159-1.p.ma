@@ -112,7 +112,7 @@ theorem prove_ax_mono2c:
 \forall H15:\forall X:Univ.eq Univ (multiply identity X) X.eq Univ (least_upper_bound (multiply c a) (multiply c b)) (multiply c b)
 .
 intros.
-autobatch paramodulation timeout=100.
+autobatch paramodulation timeout=100;
 try assumption.
 print proofterm.
 qed.

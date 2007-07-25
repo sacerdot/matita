@@ -76,7 +76,7 @@ theorem prove_equality:
 \forall H20:\forall X:Univ.\forall Y:Univ.eq Univ (add X Y) (add Y X).eq Univ (multiply (multiply (associator a a b) a) (associator a a b)) additive_identity
 .
 intros.
-autobatch paramodulation timeout=100.
+autobatch paramodulation timeout=100;
 try assumption.
 print proofterm.
 qed.

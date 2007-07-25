@@ -113,7 +113,7 @@ theorem prove_p23x:
 \forall H17:\forall X:Univ.eq Univ (multiply identity X) X.eq Univ (least_upper_bound (multiply a b) identity) (multiply a (least_upper_bound (inverse a) b))
 .
 intros.
-autobatch paramodulation timeout=100.
+autobatch paramodulation timeout=100;
 try assumption.
 print proofterm.
 qed.

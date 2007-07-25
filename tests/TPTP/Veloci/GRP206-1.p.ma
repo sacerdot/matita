@@ -46,7 +46,7 @@ theorem prove_moufang1:
 \forall H8:\forall X:Univ.eq Univ (multiply identity X) X.eq Univ (multiply (multiply a (multiply b c)) a) (multiply (multiply a b) (multiply c a))
 .
 intros.
-autobatch paramodulation timeout=100.
+autobatch paramodulation timeout=100;
 try assumption.
 print proofterm.
 qed.

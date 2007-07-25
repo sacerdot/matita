@@ -84,7 +84,7 @@ theorem prove_left_alternative:
 \forall H14:\forall X:Univ.eq Univ (add additive_identity X) X.eq Univ (associator x x y) additive_identity
 .
 intros.
-autobatch paramodulation timeout=100.
+autobatch paramodulation timeout=100;
 try assumption.
 print proofterm.
 qed.

@@ -115,7 +115,7 @@ theorem prove_ax_lub1d:
 \forall H16:\forall X:Univ.eq Univ (multiply identity X) X.eq Univ (least_upper_bound (least_upper_bound a b) c) c
 .
 intros.
-autobatch paramodulation timeout=100.
+autobatch paramodulation timeout=100;
 try assumption.
 print proofterm.
 qed.

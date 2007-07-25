@@ -33,7 +33,7 @@ theorem prove_these_axioms_3:
 \forall H1:\forall A:Univ.\forall B:Univ.\forall C:Univ.eq Univ (double_divide (inverse (double_divide (inverse (double_divide A (inverse B))) C)) (double_divide A C)) B.eq Univ (multiply (multiply a3 b3) c3) (multiply a3 (multiply b3 c3))
 .
 intros.
-autobatch paramodulation timeout=100.
+autobatch paramodulation timeout=100;
 try assumption.
 print proofterm.
 qed.

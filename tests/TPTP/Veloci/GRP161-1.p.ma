@@ -109,7 +109,7 @@ theorem prove_ax_reflb:
 \forall H14:\forall X:Univ.eq Univ (multiply identity X) X.eq Univ (greatest_lower_bound a a) a
 .
 intros.
-autobatch paramodulation timeout=100.
+autobatch paramodulation timeout=100;
 try assumption.
 print proofterm.
 qed.

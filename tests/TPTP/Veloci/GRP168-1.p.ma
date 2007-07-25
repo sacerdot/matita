@@ -116,7 +116,7 @@ theorem prove_p01a:
 \forall H15:\forall X:Univ.eq Univ (multiply identity X) X.eq Univ (least_upper_bound (multiply (inverse c) (multiply a c)) (multiply (inverse c) (multiply b c))) (multiply (inverse c) (multiply b c))
 .
 intros.
-autobatch paramodulation timeout=100.
+autobatch paramodulation timeout=100;
 try assumption.
 print proofterm.
 qed.
