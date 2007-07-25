@@ -27,11 +27,6 @@ clean.opt: clean_mas preall.opt
 cleanall.opt: clean_mas preall.opt
 	$(H)$(XXX) MATITA_FLAGS=$(MATITA_FLAGS) $(MCLEANO) all
 
-mas: preall
-	$(H)$(XXX) MATITA_FLAGS=$(MATITA_FLAGS) $(MMAKE) build $(devel)
-mas.opt: preall.opt
-	$(H)$(XXX) MATITA_FLAGS=$(MATITA_FLAGS) $(MMAKEO) build $(devel)
-
 %.mo: preall
 	$(H)$(XXX) MATITA_FLAGS=$(MATITA_FLAGS) $(MMAKE) $@
 %.mo.opt: preall.opt
@@ -57,7 +52,6 @@ clean_mas:
 
 %.ma: %.mma
 	$(H)$(MATITAC) -dump $@ $< $(OPTIONS)
-	$(MAKE) preall.opt
 
 include depend
 
