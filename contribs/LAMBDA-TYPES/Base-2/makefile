@@ -45,7 +45,7 @@ MATITAC = $(RT_BASEDIR)/matitac.opt
 MMAS = $(shell find -name "*.mma")
 MAS = $(MMAS:%.mma=%.ma)
 
-build_mas: preall.opt theory.ma
+build_mas: preall.opt $(MAS)
 
 clean_mas:
 	$(H)rm -f $(MAS)
