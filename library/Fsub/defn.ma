@@ -46,47 +46,13 @@ record bound : Set \def {
                         }.
                
 (* representation of Fsub typing environments *)
-definition Env \def (list bound).
+(*definition Env \def (list bound).
 definition Empty \def (nil bound).
 definition Cons \def \lambda G,X,T.((mk_bound false X T) :: G).
 definition TCons \def \lambda G,X,T.((mk_bound true X T) :: G).
 
-definition env_append : Env \to Env \to Env \def \lambda G,H.(H @ G).
+definition env_append : Env \to Env \to Env \def \lambda G,H.(H @ G). *)
   
-(* notation "hvbox(\Forall S. break T)" 
-  non associative with precedence 90
-for @{ 'forall $S $T}.
-
-notation "hvbox(#x)"
-  with precedence 60
-  for @{'var $x}.
-  
-notation "hvbox(##x)"
-  with precedence 61
-  for @{'tvar $x}.
-
-notation "hvbox(!x)"
-  with precedence 60
-  for @{'name $x}.
-  
-notation "hvbox(!!x)"
-  with precedence 61
-  for @{'tname $x}.
-
-notation "hvbox(s break \mapsto t)"
-  right associative with precedence 55
-  for @{ 'arrow $s $t }.
-
-interpretation "universal type" 'forall S T = (cic:/matita/Fsub/defn/Typ.ind#xpointer(1/1/5) S T).
-
-interpretation "bound var" 'var x = (cic:/matita/Fsub/defn/Typ.ind#xpointer(1/1/1) x).
-
-interpretation "bound tvar" 'tvar x = (cic:/matita/Fsub/defn/Typ.ind#xpointer(1/1/3) x).
-
-interpretation "bound tname" 'tname x = (cic:/matita/Fsub/defn/Typ.ind#xpointer(1/1/2) x).
-
-interpretation "arrow type" 'arrow S T = (cic:/matita/Fsub/defn/Typ.ind#xpointer(1/1/4) S T). *) 
-
 (*** Various kinds of substitution, not all will be used probably ***)
 
 (* substitutes i-th dangling index in type T with type U *)
@@ -101,10 +67,10 @@ let rec subst_type_nat T U i \def
     | (Forall T1 T2) \Rightarrow (Forall (subst_type_nat T1 U i) (subst_type_nat T2 U (S i))) ].
 
 (* substitutes 0-th dangling index in type T with type U *)
-let rec subst_type_O T U  \def subst_type_nat T U O. 
+(*let rec subst_type_O T U  \def subst_type_nat T U O.*) 
 
 (* substitutes 0-th dangling index in term t with term u *)
-let rec subst_term_O t u  \def
+(*let rec subst_term_O t u  \def
   let rec aux t0 i \def
     match t0 with
     [ (Var n) \Rightarrow match (eqb n i) with
@@ -141,7 +107,7 @@ let rec subst_type_tfree_type T X U on T \def
     | (Arrow T1 T2) \Rightarrow (Arrow (subst_type_tfree_type T1 X U) 
                                        (subst_type_tfree_type T2 X U))
     | (Forall T1 T2) \Rightarrow (Forall (subst_type_tfree_type T1 X U) 
-                                       (subst_type_tfree_type T2 X U)) ].
+                                       (subst_type_tfree_type T2 X U)) ].*)
             
 (*** height of T's syntactic tree ***)
 
@@ -165,20 +131,20 @@ definition head_nat \def
 
 (*** definitions about lists ***)
 
-(* var binding is in env judgement *)                
-definition var_bind_in_env : bound \to Env \to Prop \def
-  \lambda b,G.(in_list bound b G).
+(*(* var binding is in env judgement *)                
+definition var_bind_in_env : bound \to (list bound) \to Prop \def
+  \lambda b,G.(in_list bound b G).*)
 
 definition fv_env : (list bound) \to (list nat) \def
   \lambda G.(map ? ? (\lambda b.match b with
       [(mk_bound B X T) \Rightarrow X]) G).
 
-(* variable is in env judgement *)              
-definition var_in_env : nat \to Env \to Prop \def
+(*(* variable is in env judgement *)              
+definition var_in_env : nat \to (list bound) \to Prop \def
   \lambda x,G.(in_list nat x (fv_env G)).
   
-definition var_type_in_env : nat \to Env \to Prop \def
-  \lambda x,G.\exists T.(var_bind_in_env (mk_bound true x T) G).
+definition var_type_in_env : nat \to (list bound) \to Prop \def
+  \lambda x,G.\exists T.(var_bind_in_env (mk_bound true x T) G).*)
 
 let rec fv_type T \def
   match T with
@@ -190,7 +156,7 @@ let rec fv_type T \def
 
 (*** Type Well-Formedness judgement ***)
 
-inductive WFType : Env \to Typ \to Prop \def
+inductive WFType : (list bound) \to Typ \to Prop \def
   | WFT_TFree : \forall X,G.(in_list ? X (fv_env G)) 
                 \to (WFType G (TFree X))
   | WFT_Top : \forall G.(WFType G Top)
@@ -201,94 +167,115 @@ inductive WFType : Env \to Typ \to Prop \def
                     (\lnot (in_list ? X (fv_env G))) \to
                     (\lnot (in_list ? X (fv_type U))) \to
                     (WFType ((mk_bound true X T) :: G) 
-                       (subst_type_O U (TFree X)))) \to 
+                       (subst_type_nat U (TFree X) O))) \to 
                  (WFType G (Forall T U)).
 
 (*** Environment Well-Formedness judgement ***)
 
-inductive WFEnv : Env \to Prop \def
-  | WFE_Empty : (WFEnv Empty)
+inductive WFEnv : (list bound) \to Prop \def
+  | WFE_Empty : (WFEnv (nil ?))
   | WFE_cons : \forall B,X,T,G.(WFEnv G) \to 
                \lnot (in_list ? X (fv_env G)) \to
                   (WFType G T) \to (WFEnv ((mk_bound B X T) :: G)).
             
 (*** Subtyping judgement ***)              
-inductive JSubtype : Env \to Typ \to Typ \to Prop \def
-  | SA_Top : \forall G:Env.\forall T:Typ.(WFEnv G) \to
+inductive JSubtype : (list bound) \to Typ \to Typ \to Prop \def
+  | SA_Top : \forall G.\forall T:Typ.(WFEnv G) \to
              (WFType G T) \to (JSubtype G T Top)
-  | SA_Refl_TVar : \forall G:Env.\forall X:nat.(WFEnv G) \to (var_in_env X G) 
+  | SA_Refl_TVar : \forall G.\forall X:nat.(WFEnv G) 
+                   \to (in_list ? X (fv_env G)) 
                    \to (JSubtype G (TFree X) (TFree X))
-  | SA_Trans_TVar : \forall G:Env.\forall X:nat.\forall T:Typ.
+  | SA_Trans_TVar : \forall G.\forall X:nat.\forall T:Typ.
                     \forall U:Typ.
-                    (var_bind_in_env (mk_bound true X U) G) \to
+                    (in_list ? (mk_bound true X U) G) \to
                     (JSubtype G U T) \to (JSubtype G (TFree X) T)
-  | SA_Arrow : \forall G:Env.\forall S1,S2,T1,T2:Typ.
+  | SA_Arrow : \forall G.\forall S1,S2,T1,T2:Typ.
                (JSubtype G T1 S1) \to (JSubtype G S2 T2) \to
                (JSubtype G (Arrow S1 S2) (Arrow T1 T2))
-  | SA_All : \forall G:Env.\forall S1,S2,T1,T2:Typ.
+  | SA_All : \forall G.\forall S1,S2,T1,T2:Typ.
              (JSubtype G T1 S1) \to
-             (\forall X:nat.\lnot (var_in_env X G) \to
+             (\forall X:nat.\lnot (in_list ? X (fv_env G)) \to
                 (JSubtype ((mk_bound true X T1) :: G) 
-                   (subst_type_O S2 (TFree X)) (subst_type_O T2 (TFree X)))) \to
+                   (subst_type_nat S2 (TFree X) O) (subst_type_nat T2 (TFree X) O))) \to
              (JSubtype G (Forall S1 S2) (Forall T1 T2)).
 
-(*
-notation < "hvbox(e break ⊢ ta \nbsp 'V' \nbsp tb (= \above \alpha))" 
-  non associative with precedence 30 for @{ 'subjudg $e $ta $tb }.
-notation > "hvbox(e break ⊢ ta 'Fall' break tb)" 
-  non associative with precedence 30 for @{ 'subjudg $e $ta $tb }.
-notation "hvbox(e break ⊢ ta \lessdot break tb)" 
+notation "hvbox(e ⊢ break ta ⊴  break tb)" 
   non associative with precedence 30 for @{ 'subjudg $e $ta $tb }.  
 interpretation "Fsub subtype judgement" 'subjudg e ta tb =
  (cic:/matita/Fsub/defn/JSubtype.ind#xpointer(1/1) e ta tb).
 
-lemma xx : \forall e,ta,tb. e \vdash  ta Fall tb.
-*)
+notation > "hvbox(\Forall S.T)" 
+  non associative with precedence 60 for @{ 'forall $S $T}.
+notation < "hvbox('All' \sub S. break T)" 
+  non associative with precedence 60 for @{ 'forall $S $T}.
+interpretation "universal type" 'forall S T = 
+  (cic:/matita/Fsub/defn/Typ.ind#xpointer(1/1/5) S T).
+  
+notation "#x" with precedence 79 for @{'tvar $x}.
+interpretation "bound tvar" 'tvar x = 
+  (cic:/matita/Fsub/defn/Typ.ind#xpointer(1/1/1) x).
 
-(*** Typing judgement ***)
-inductive JType : Env \to Term \to Typ \to Prop \def
-  | T_Var : \forall G:Env.\forall x:nat.\forall T:Typ.
-            (WFEnv G) \to (var_bind_in_env (mk_bound false x T) G) \to
-            (JType G (Free x) T)
-  | T_Abs : \forall G.\forall T1,T2:Typ.\forall t2:Term.
-            \forall x:nat.
-            (JType ((mk_bound false x T1)::G) (subst_term_O t2 (Free x)) T2) \to
-            (JType G (Abs T1 t2) (Arrow T1 T2))
-  | T_App : \forall G.\forall t1,t2:Term.\forall T2:Typ.
-            \forall T1:Typ.(JType G t1 (Arrow T1 T2)) \to (JType G t2 T1) \to
-            (JType G (App t1 t2) T2)
-  | T_TAbs : \forall G:Env.\forall T1,T2:Typ.\forall t2:Term.
-             \forall X:nat.
-             (JType ((mk_bound true X T1)::G) 
-             (subst_term_tO t2 (TFree X)) (subst_type_O T2 (TFree X)))
-             \to (JType G (TAbs T1 t2) (Forall T1 T2))
-  | T_TApp : \forall G:Env.\forall t1:Term.\forall T2,T12:Typ.
-             \forall X:nat.\forall T11:Typ.
-             (JType G t1 (Forall T11 (subst_type_tfree_type T12 X (TVar O)))) \to 
-             (JSubtype G T2 T11)
-             \to (JType G (TApp t1 T2) (subst_type_tfree_type T12 X T2))
-  | T_Sub : \forall G:Env.\forall t:Term.\forall T:Typ.
-            \forall S:Typ.(JType G t S) \to (JSubtype G S T) \to (JType G t T).
+notation "!x" with precedence 79 for @{'tname $x}.
+interpretation "bound tname" 'tname x = 
+  (cic:/matita/Fsub/defn/Typ.ind#xpointer(1/1/2) x).
+  
+notation "⊤" with precedence 90 for @{'toptype}.
+interpretation "toptype" 'toptype = 
+  (cic:/matita/Fsub/defn/Typ.ind#xpointer(1/1/3)).
+
+notation "hvbox(s break ⇛ t)"
+  right associative with precedence 55 for @{ 'arrow $s $t }.
+interpretation "arrow type" 'arrow S T = 
+  (cic:/matita/Fsub/defn/Typ.ind#xpointer(1/1/4) S T).
+  
+notation "hvbox(S [# n ↦ T])"
+  non associative with precedence 80 for @{ 'substvar $S $T $n }.
+interpretation "subst bound var" 'substvar S T n =
+  (cic:/matita/Fsub/defn/subst_type_nat.con S T n).  
+
+notation "hvbox(|T|)"
+  non associative with precedence 30 for @{ 'tlen $T }.
+interpretation "type length" 'tlen T =
+  (cic:/matita/Fsub/defn/t_len.con T).  
+
+notation > "hvbox(x ∈ l)"
+  non associative with precedence 30 for @{ 'inlist $x $l }.
+notation < "hvbox(x \nbsp ∈ \nbsp l)"
+  non associative with precedence 30 for @{ 'inlist $x $l }.
+interpretation "item in list" 'inlist x l =
+  (cic:/matita/Fsub/util/in_list.ind#xpointer(1/1) _ x l).
+  
+notation "hvbox(!X ⊴ T)"
+  non associative with precedence 60 for @{ 'subtypebound $X $T }.
+interpretation "subtyping bound" 'subtypebound X T =
+  (cic:/matita/Fsub/defn/bound.ind#xpointer(1/1/1) true X T).  
+
+(*notation < "hvbox(e break ⊢ ta \nbsp 'V' \nbsp tb (= \above \alpha))" 
+  non associative with precedence 30 for @{ 'subjudg $e $ta $tb }.
+notation > "hvbox(e break ⊢ ta 'Fall' break tb)" 
+  non associative with precedence 30 for @{ 'subjudg $e $ta $tb }.
+notation "hvbox(e break ⊢ ta \lessdot break tb)" 
+  non associative with precedence 30 for @{ 'subjudg $e $ta $tb }.*)  
 
 (****** PROOFS ********)
 
-lemma subst_O_nat : \forall T,U.((subst_type_O T U) = (subst_type_nat T U O)).
+(*lemma subst_O_nat : \forall T,U.((subst_type_O T U) = T[#O↦U]).
 intros;elim T;simplify;reflexivity;
-qed.
+qed.*)
 
 (*** theorems about lists ***)
 
 (* FIXME: these definitions shouldn't be part of the poplmark challenge
    - use destruct instead, when hopefully it will get fixed... *) 
 
-lemma inj_head : \forall h1,h2:bound.\forall t1,t2:Env.
-                 ((h1::t1) = (h2::t2)) \to (h1 = h2).
+lemma inj_head : \forall h1,h2:bound.\forall t1,t2:(list bound).
+                 (h1::t1 = h2::t2) \to h1 = h2.
 intros.
 lapply (eq_f ? ? head ? ? H).simplify in Hletin.assumption.
 qed.
 
 lemma inj_head_nat : \forall h1,h2:nat.\forall t1,t2:(list nat).
-                 ((h1::t1) = (h2::t2)) \to (h1 = h2).
+                 (h1::t1 = h2::t2) \to (h1 = h2).
 intros.
 lapply (eq_f ? ? head_nat ? ? H).simplify in Hletin.assumption.
 qed.
@@ -521,9 +508,9 @@ intros 4.elim H
      [apply (H4 H6)
      |apply (H2 H6)]
   |simplify in H5;lapply (nat_in_list_case ? ? ? H5);elim Hletin
-     [lapply (fresh_name ((fv_type t1) @ (fv_env e)));elim Hletin1;
+     [lapply (fresh_name ((fv_type t1) @ (fv_env l)));elim Hletin1;
       cut ((\lnot (in_list ? a (fv_type t1))) \land
-           (\lnot (in_list ? a (fv_env e))))
+           (\lnot (in_list ? a (fv_env l))))
         [elim Hcut;lapply (H4 ? H9 H8)
            [cut (x \neq a)
               [simplify in Hletin2;
@@ -534,7 +521,7 @@ intros 4.elim H
                  |intros;lapply (inj_tail ? ? ? ? ? H14);rewrite > Hletin3;
                   assumption]
               |unfold;intro;apply H8;rewrite < H10;assumption]
-           |rewrite > subst_O_nat;apply in_FV_subst;assumption]
+           |apply in_FV_subst;assumption]
         |split
            [unfold;intro;apply H7;apply natinG_or_inH_to_natinGH;right;
             assumption
@@ -574,8 +561,8 @@ lemma t_len_arrow1 : \forall T1,T2.(t_len T1) < (t_len (Arrow T1 T2)).
 intros.simplify.
 (* FIXME!!! BUG?!?! *)
 cut ((max (t_len T1) (t_len T2)) = match (leb (t_len T1) (t_len T2)) with
-      [ false \Rightarrow (t_len T2)
-      | true \Rightarrow (t_len T1) ])
+      [ false ⇒ (t_len T2)
+      | true  ⇒ (t_len T1) ])
   [rewrite > Hcut;cut ((leb (t_len T1) (t_len T2)) = false \lor
                        (leb (t_len T1) (t_len T2)) = true)
      [lapply (leb_to_Prop (t_len T1) (t_len T2));elim Hcut1
@@ -649,7 +636,7 @@ qed.
 
 (*** lemmata relating subtyping and well-formedness ***)
 
-lemma JS_to_WFE : \forall G,T,U.(G \vdash T \lessdot U) \to (WFEnv G).
+lemma JS_to_WFE : \forall G,T,U.(G \vdash T ⊴ U) \to (WFEnv G).
 intros;elim H;assumption.
 qed.
 
@@ -690,7 +677,7 @@ intros 7;elim H 0
       rewrite < Hcut1 in H6;apply (WFE_cons ? ? ? ? H4 H6 H2)]
   |intros;simplify;generalize in match H2;elim t;simplify in H4;
    inversion H4
-     [intros;absurd (mk_bound b n t1::l@(mk_bound B x T::G)=Empty)
+     [intros;absurd (mk_bound b n t1::l@(mk_bound B x T::G)=[])
         [assumption
         |apply nil_cons]
      |intros;lapply (inj_tail ? ? ? ? ? H9);lapply (inj_head ? ? ? ? H9);
@@ -716,7 +703,7 @@ intros 6;elim H
         [intros;rewrite < H9 in H10;lapply (inj_head ? ? ? ? H10);
          destruct Hletin1;symmetry;assumption
         |intros;lapply (inj_tail ? ? ? ? ? H12);rewrite < Hletin1 in H9;
-         rewrite < H11 in H9;lapply (boundinenv_natinfv x e)
+         rewrite < H11 in H9;lapply (boundinenv_natinfv x l)
            [destruct Hletin;rewrite < Hcut1 in Hletin2;lapply (H3 Hletin2);
             elim Hletin3
            |apply ex_intro
@@ -725,7 +712,7 @@ intros 6;elim H
       rewrite < Hletin in H7;(*FIXME*)generalize in match H5;intro;inversion H5
         [intros;rewrite < H12 in H13;lapply (inj_head ? ? ? ? H13);
          destruct Hletin1;rewrite < Hcut1 in H7;
-         lapply (boundinenv_natinfv n e)
+         lapply (boundinenv_natinfv n l)
            [lapply (H3 Hletin2);elim Hletin3
            |apply ex_intro
               [apply B|apply ex_intro [apply U|assumption]]]

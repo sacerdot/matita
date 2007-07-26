@@ -52,7 +52,7 @@ apply Typ_len_ind;intro;elim U
      [lapply (H2 t ? ? Hcut H4)
         [apply t_len_forall1
         |apply (SA_All ? ? ? ? ? Hletin);intros;apply H2
-           [rewrite > subst_O_nat;rewrite < eq_t_len_TFree_subst;
+           [rewrite < eq_t_len_TFree_subst;
             apply t_len_forall2
            |generalize in match H3;intro;inversion H3
               [intros;destruct H9
@@ -61,8 +61,8 @@ apply Typ_len_ind;intro;elim U
               |intros;destruct H12;subst;apply H9
                  [assumption
                  |unfold;intro;apply H5;
-                  elim (fresh_name ((fv_env e)@(fv_type t3)));
-                  cut ((\lnot (in_list ? a (fv_env e))) \land
+                  elim (fresh_name ((fv_env l)@(fv_type t3)));
+                  cut ((\lnot (in_list ? a (fv_env l))) \land
                        (\lnot (in_list ? a (fv_type t3))))
                     [elim Hcut1;lapply (H9 ? H13 H14);
                      lapply (fv_WFT ? X ? Hletin1)
@@ -71,7 +71,7 @@ apply Typ_len_ind;intro;elim U
                            elim (H14 H11)
                           |intros;lapply (inj_tail ? ? ? ? ? H18);
                            rewrite < Hletin3 in H15;assumption]
-                       |rewrite >subst_O_nat;apply varinT_varinT_subst;
+                       |apply varinT_varinT_subst;
                         assumption]
                     |split;unfold;intro;apply H12;apply natinG_or_inH_to_natinGH
                        [right;assumption
@@ -149,17 +149,17 @@ cut (\forall G,T,P.
                  |rewrite > H8 in H5;apply (H7 ? H5)]
               |elim (decidable_eq_nat X n)
                  [apply (SA_Trans_TVar ? ? ? P)
-                    [rewrite < H10;elim l
+                    [rewrite < H10;elim l1
                       [simplify;constructor 1
                       |simplify;constructor 2;assumption]
                    |apply H7
                       [lapply (H6 ? H7 H8 H9);lapply (JS_to_WFE ? ? ? Hletin);
                        apply (JS_weakening ? ? ? H3 ? Hletin1);unfold;intros;
-                       elim l;simplify;constructor 2;assumption
+                       elim l1;simplify;constructor 2;assumption
                       |lapply (WFE_bound_bound true n t1 U ? ? H4)
                          [apply (JS_to_WFE ? ? ? H5)
                          |rewrite < Hletin;apply (H6 ? H7 H8 H9)
-                         |rewrite > H9;rewrite > H10;elim l;simplify
+                         |rewrite > H9;rewrite > H10;elim l1;simplify
                             [constructor 1
                             |constructor 2;assumption]]]]
                 |apply (SA_Trans_TVar ? ? ? t1)
@@ -172,11 +172,11 @@ cut (\forall G,T,P.
                 |apply (H7 ? H8 H9 H10)]
              |apply SA_All
                 [apply (H5 ? H8 H9 H10)
-                |intros;apply (H7 ? ? (mk_bound true X1 t2::l) H8)
-                   [rewrite > H10;cut ((fv_env (l@(mk_bound true X P::G1))) =
-                                       (fv_env (l@(mk_bound true X U::G1))))
-                      [unfold;intro;apply H11;unfold;rewrite > Hcut2;assumption
-                      |elim l
+                |intros;apply (H7 ? ? (mk_bound true X1 t2::l1) H8)
+                   [rewrite > H10;cut ((fv_env (l1@(mk_bound true X P::G1))) =
+                                       (fv_env (l1@(mk_bound true X U::G1))))
+                      [unfold;intro;apply H11;rewrite > Hcut2;assumption
+                      |elim l1
                          [simplify;reflexivity
                          |elim t4;simplify;rewrite > H12;reflexivity]]
                    |simplify;apply (incl_nat_cons ? ? ? H9)
@@ -225,15 +225,15 @@ cut (\forall G,T,P.
               [elim Hletin;apply (H12 ? ? ? H8 H2)
               |apply t_len_forall1]
            |intros;(*destruct H12;*)subst;
-            lapply (H6 (subst_type_O t5 (TFree X)))
+            lapply (H6 (subst_type_nat t5 (TFree X) O))
               [elim Hletin;apply H13
                  [lapply (H6 t4)
-                    [elim Hletin1;apply (H16 e1 [] X t6);
+                    [elim Hletin1;apply (H16 l1 [] X t6);
                        [simplify;apply H4;assumption
                        |assumption]
                     |apply t_len_forall1]
                  |apply (H10 ? H12)]
-              |rewrite > subst_O_nat;rewrite < eq_t_len_TFree_subst;
+              |rewrite < eq_t_len_TFree_subst;
                apply t_len_forall2]]]]]
 qed.
 
