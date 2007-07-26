@@ -42,6 +42,21 @@ let developments = ref []
 let pool () = Helm_registry.get "matita.basedir" ^ "/matitamake/" ;;
 let rootfile = "/root" ;;
 
+(* /foo/./bar/..//baz -> /foo/baz *)
+let normalize_path s = 
+  let s = Str.global_replace (Str.regexp "//") "/" s in
+  let l = Str.split (Str.regexp "/") s in
+  let rec aux = function
+    | [] -> []
+    | he::".."::tl -> aux tl
+    | he::"."::tl -> aux (he::tl)
+    | he::tl -> he :: aux tl
+  in
+  (if Str.string_match (Str.regexp "^/") s 0 then "/" else "") ^
+  String.concat "/" (aux l)
+  ^ (if Str.string_match (Str.regexp "/$") s 0 then "/" else "")
+;;
+
 let ls_dir dir = 
   try
     let d = Unix.opendir dir in
@@ -94,6 +109,7 @@ let dot_for_development devel =
 
 (* given a dir finds a development that is radicated in it or below *)
 let development_for_dir dir =
+  let dir = normalize_path dir in
   let is_prefix_of d1 d2 =
     let len1 = String.length d1 in
     let len2 = String.length d2 in
@@ -157,6 +173,7 @@ let rebuild_makefile_devel development =
   
 (* creates a new development if possible *)
 let initialize_development name dir =
+  let dir = normalize_path dir in
   let name = Pcre.replace ~pat:" " ~templ:"_" name in 
   let dev = {name = name ; root = dir} in
   dump_development dev;

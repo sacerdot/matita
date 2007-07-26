@@ -59,3 +59,4 @@ val name_for_development : development -> string
 (** @return dot file for a given development, if it exists *)
 val dot_for_development : development -> string option
 
+val normalize_path: string -> string

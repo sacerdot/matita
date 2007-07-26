@@ -783,7 +783,9 @@ class gui () =
               notify_exn exc;
               unlock_world ()
        in
-        worker_thread := Some (Thread.create thread_main ()) in
+       thread_main ();
+        (* worker_thread := Some (Thread.create thread_main ()) *)
+      in
       let kill_worker =
        (* the following lines are from Xavier Leroy: http://alan.petitepomme.net/cwn/2005.11.08.html *)
        let interrupt = ref None in
@@ -889,6 +891,8 @@ class gui () =
         | None -> true
         | Some path -> 
             let is_prefix_of d1 d2 =
+              let d1 = MatitamakeLib.normalize_path d1 in
+              let d2 = MatitamakeLib.normalize_path d2 in
               let len1 = String.length d1 in
               let len2 = String.length d2 in
               if len2 < len1 then 
