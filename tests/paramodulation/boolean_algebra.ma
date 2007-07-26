@@ -516,5 +516,5 @@ theorem bool5:
 intros.
 unfold bool_algebra in H.
 decompose.
-auto paramodulation.
+autobatch paramodulation timeout=120.
 qed.

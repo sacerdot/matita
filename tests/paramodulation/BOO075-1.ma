@@ -94,7 +94,7 @@ theorem prove_meredith_2_basis_1:
 \forall H0:\forall A:Univ.\forall B:Univ.\forall C:Univ.eq Univ (nand (nand A (nand (nand B A) A)) (nand B (nand C A))) B.eq Univ (nand (nand a a) (nand b a)) a
 .
 intros.
-auto paramodulation timeout=600.
+autobatch paramodulation timeout=600;
 try assumption.
 print proofterm.
 qed.
