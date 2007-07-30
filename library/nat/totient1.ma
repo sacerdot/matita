@@ -96,7 +96,6 @@ cut (O \lt (pred n))
 ]
 qed.
 
-
 (*3rd*)
 theorem aux_S_i_mod_n_le_i_div_n: \forall i,n:nat.
 i < n*n \to (divides_b (i/n) (pred n) \land
@@ -412,8 +411,6 @@ cut (O \lt n)
   ]
 ]
 qed.
-
-  
 
 
 (*6th*)

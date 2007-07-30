@@ -24,7 +24,7 @@ include "nat/iteration2.ma".
     phi (n) is the number of naturals i (less or equal than n) so then gcd (i,n) = 1.
    (so this definition considers the values i=1,2,...,n)
   
-  sigma_p doesn't work ok the value n (but the first value it works on is (pred n))
+  sigma_p doesn't work on the value n (but the first value it works on is (pred n))
   but works also on 0. That's not a problem, in fact
    - if n <> 1, gcd (n,0) <>1 and gcd (n,n) = n <> 1. 
    - if n = 1, then Phi(n) = 1, and (totient n), as defined below, returns 1. 

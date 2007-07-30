@@ -16,13 +16,13 @@ set "baseuri" "cic:/matita/nat/iteration2".
 
 include "nat/primes.ma".
 include "nat/ord.ma".
-include "nat/generic_sigma_p.ma".
+include "nat/generic_iter_p.ma".
 include "nat/count.ma".(*necessary just to use bool_to_nat and bool_to_nat_andb*)
 
 
 (* sigma_p on nautral numbers is a specialization of sigma_p_gen *)
 definition sigma_p: nat \to (nat \to bool) \to (nat \to nat) \to nat \def
-\lambda n, p, g. (sigma_p_gen n p nat g O plus).
+\lambda n, p, g. (iter_p_gen n p nat g O plus).
 
 theorem symmetricIntPlus: symmetric nat plus.
 change with (\forall a,b:nat. (plus a b) = (plus b a)).
@@ -40,7 +40,7 @@ p n = true \to sigma_p (S n) p g =
 (g n)+(sigma_p n p g).
 intros.
 unfold sigma_p.
-apply true_to_sigma_p_Sn_gen.
+apply true_to_iter_p_gen_Sn.
 assumption.
 qed.
    
@@ -49,10 +49,9 @@ theorem false_to_sigma_p_Sn:
 p n = false \to sigma_p (S n) p g = sigma_p n p g.
 intros.
 unfold sigma_p.
-apply false_to_sigma_p_Sn_gen.
+apply false_to_iter_p_gen_Sn.
 assumption.
-
-qed.
+qed.  
 
 theorem eq_sigma_p: \forall p1,p2:nat \to bool.
 \forall g1,g2: nat \to nat.\forall n.
@@ -61,7 +60,7 @@ theorem eq_sigma_p: \forall p1,p2:nat \to bool.
 sigma_p n p1 g1 = sigma_p n p2 g2.
 intros.
 unfold sigma_p.
-apply eq_sigma_p_gen;
+apply eq_iter_p_gen;
   assumption.
 qed.
 
@@ -72,7 +71,7 @@ theorem eq_sigma_p1: \forall p1,p2:nat \to bool.
 sigma_p n p1 g1 = sigma_p n p2 g2.
 intros.
 unfold sigma_p.
-apply eq_sigma_p1_gen;
+apply eq_iter_p_gen1;
   assumption.
 qed.
 
@@ -80,7 +79,7 @@ theorem sigma_p_false:
 \forall g: nat \to nat.\forall n.sigma_p n (\lambda x.false) g = O.
 intros.
 unfold sigma_p.
-apply sigma_p_false_gen.
+apply iter_p_gen_false.
 qed.
 
 theorem sigma_p_plus: \forall n,k:nat.\forall p:nat \to bool.
@@ -89,7 +88,7 @@ sigma_p (k+n) p g
 = sigma_p k (\lambda x.p (x+n)) (\lambda x.g (x+n)) + sigma_p n p g.
 intros.
 unfold sigma_p.
-apply (sigma_p_plusA_gen nat n k p g O plus)
+apply (iter_p_gen_plusA nat n k p g O plus)
 [ apply symmetricIntPlus.
 | intros.
   apply sym_eq.
@@ -104,7 +103,7 @@ theorem false_to_eq_sigma_p: \forall n,m:nat.n \le m \to
 p i = false) \to sigma_p m p g = sigma_p n p g.
 intros.
 unfold sigma_p.
-apply (false_to_eq_sigma_p_gen);
+apply (false_to_eq_iter_p_gen);
   assumption.
 qed.
 
@@ -119,7 +118,7 @@ sigma_p n p1
   (\lambda x.sigma_p m p2 (g x)).
 intros.
 unfold sigma_p.
-apply (sigma_p2_gen n m p1 p2 nat g O plus)
+apply (iter_p_gen2 n m p1 p2 nat g O plus)
 [ apply symmetricIntPlus
 | apply associative_plus
 | intros.
@@ -134,13 +133,13 @@ theorem sigma_p2' :
 \forall p2:nat \to nat \to bool.
 \forall g: nat \to nat \to nat.
 sigma_p (n*m) 
-  (\lambda x.andb (p1 (div x m)) (p2 (div x m) (mod x m))) 
+  (\lambda x.andb (p1 (div x m)) (p2 (div x m) (mod x  m))) 
   (\lambda x.g (div x m) (mod x m)) =
 sigma_p n p1 
   (\lambda x.sigma_p m (p2 x) (g x)).
 intros.
 unfold sigma_p.
-apply (sigma_p2_gen' n m p1 p2 nat g O plus)
+apply (iter_p_gen2' n m p1 p2 nat g O plus)
 [ apply symmetricIntPlus
 | apply associative_plus
 | intros.
@@ -154,7 +153,7 @@ lemma sigma_p_gi: \forall g: nat \to nat.
 sigma_p n p g = g i + sigma_p n (\lambda x. andb (p x) (notb (eqb x i))) g.
 intros.
 unfold sigma_p.
-apply (sigma_p_gi_gen)
+apply (iter_p_gen_gi)
 [ apply symmetricIntPlus
 | apply associative_plus
 | intros.
@@ -177,7 +176,7 @@ theorem eq_sigma_p_gh:
 sigma_p n p1 (\lambda x.g(h x)) = sigma_p n1 (\lambda x.p2 x) g.
 intros.
 unfold sigma_p.
-apply (eq_sigma_p_gh_gen nat O plus ? ? ? g h h1 n n1 p1 p2)
+apply (eq_iter_p_gen_gh nat O plus ? ? ? g h h1 n n1 p1 p2)
 [ apply symmetricIntPlus
 | apply associative_plus
 | intros.
@@ -201,7 +200,7 @@ sigma_p (S n) (\lambda x.divides_b x n)
   (\lambda x.sigma_p (S m) (\lambda y.true) (\lambda y.g (x*(exp p y)))).
 intros.
 unfold sigma_p.
-apply (sigma_p_divides_gen nat O plus n m p ? ? ? g)
+apply (iter_p_gen_divides nat O plus n m p ? ? ? g)
 [ assumption
 | assumption
 | assumption
@@ -216,7 +215,7 @@ qed.
 theorem distributive_times_plus_sigma_p: \forall n,k:nat. \forall p:nat \to bool. \forall g:nat \to nat.
 k*(sigma_p n p g) = sigma_p n p (\lambda i:nat.k * (g i)).
 intros.
-apply (distributive_times_plus_sigma_p_generic nat plus O times n k p g)
+apply (distributive_times_plus_iter_p_gen nat plus O times n k p g)
 [ apply symmetricIntPlus
 | apply associative_plus
 | intros.

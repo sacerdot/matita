@@ -17,11 +17,11 @@ set "baseuri" "cic:/matita/Z/sigma_p".
 include "Z/times.ma".
 include "nat/primes.ma".
 include "nat/ord.ma".
-include "nat/generic_sigma_p.ma".
+include "nat/generic_iter_p.ma".
 
-(* sigma_p in Z is a specialization of sigma_p_gen *)
+(* sigma_p in Z is a specialization of iter_p_gen *)
 definition sigma_p: nat \to (nat \to bool) \to (nat \to Z) \to Z \def
-\lambda n, p, g. (sigma_p_gen n p Z g OZ Zplus).
+\lambda n, p, g. (iter_p_gen n p Z g OZ Zplus).
 
 theorem symmetricZPlus: symmetric Z Zplus.
 change with (\forall a,b:Z. (Zplus a b) = (Zplus b a)).
@@ -36,7 +36,7 @@ p n = true \to sigma_p (S n) p g =
 (g n)+(sigma_p n p g).
 intros.
 unfold sigma_p.
-apply true_to_sigma_p_Sn_gen.
+apply true_to_iter_p_gen_Sn.
 assumption.
 qed.
    
@@ -45,7 +45,7 @@ theorem false_to_sigma_p_Sn:
 p n = false \to sigma_p (S n) p g = sigma_p n p g.
 intros.
 unfold sigma_p.
-apply false_to_sigma_p_Sn_gen.
+apply false_to_iter_p_gen_Sn.
 assumption.
 qed.
 
@@ -56,7 +56,7 @@ theorem eq_sigma_p: \forall p1,p2:nat \to bool.
 sigma_p n p1 g1 = sigma_p n p2 g2.
 intros.
 unfold sigma_p.
-apply eq_sigma_p_gen;
+apply eq_iter_p_gen;
   assumption.
 qed.
 
@@ -67,7 +67,7 @@ theorem eq_sigma_p1: \forall p1,p2:nat \to bool.
 sigma_p n p1 g1 = sigma_p n p2 g2.
 intros.
 unfold sigma_p.
-apply eq_sigma_p1_gen;
+apply eq_iter_p_gen1;
   assumption.
 qed.
 
@@ -75,7 +75,7 @@ theorem sigma_p_false:
 \forall g: nat \to Z.\forall n.sigma_p n (\lambda x.false) g = O.
 intros.
 unfold sigma_p.
-apply sigma_p_false_gen.
+apply iter_p_gen_false.
 qed.
 
 theorem sigma_p_plus: \forall n,k:nat.\forall p:nat \to bool.
@@ -84,7 +84,7 @@ sigma_p (k+n) p g
 = sigma_p k (\lambda x.p (x+n)) (\lambda x.g (x+n)) + sigma_p n p g.
 intros.
 unfold sigma_p.
-apply (sigma_p_plusA_gen Z n k p g OZ Zplus)
+apply (iter_p_gen_plusA Z n k p g OZ Zplus)
 [ apply symmetricZPlus.
 | intros.
   apply cic:/matita/Z/plus/Zplus_z_OZ.con
@@ -98,7 +98,7 @@ theorem false_to_eq_sigma_p: \forall n,m:nat.n \le m \to
 p i = false) \to sigma_p m p g = sigma_p n p g.
 intros.
 unfold sigma_p.
-apply (false_to_eq_sigma_p_gen);
+apply (false_to_eq_iter_p_gen);
   assumption.
 qed.
 
@@ -113,7 +113,7 @@ sigma_p n p1
   (\lambda x.sigma_p m p2 (g x)).
 intros.
 unfold sigma_p.
-apply (sigma_p2_gen n m p1 p2 Z g OZ Zplus)
+apply (iter_p_gen2 n m p1 p2 Z g OZ Zplus)
 [ apply symmetricZPlus
 | apply associative_Zplus
 | intros.
@@ -135,7 +135,7 @@ sigma_p n p1
   (\lambda x.sigma_p m (p2 x) (g x)).
 intros.
 unfold sigma_p.
-apply (sigma_p2_gen' n m p1 p2 Z g OZ Zplus)
+apply (iter_p_gen2' n m p1 p2 Z g OZ Zplus)
 [ apply symmetricZPlus
 | apply associative_Zplus
 | intros.
@@ -148,7 +148,7 @@ lemma sigma_p_gi: \forall g: nat \to Z.
 sigma_p n p g = g i + sigma_p n (\lambda x. andb (p x) (notb (eqb x i))) g.
 intros.
 unfold sigma_p.
-apply (sigma_p_gi_gen)
+apply (iter_p_gen_gi)
 [ apply symmetricZPlus
 | apply associative_Zplus
 | intros.
@@ -171,7 +171,7 @@ theorem eq_sigma_p_gh:
 sigma_p n p1 (\lambda x.g(h x)) = sigma_p n1 (\lambda x.p2 x) g.
 intros.
 unfold sigma_p.
-apply (eq_sigma_p_gh_gen Z OZ Zplus ? ? ? g h h1 n n1 p1 p2)
+apply (eq_iter_p_gen_gh Z OZ Zplus ? ? ? g h h1 n n1 p1 p2)
 [ apply symmetricZPlus
 | apply associative_Zplus
 | intros.
@@ -273,7 +273,7 @@ sigma_p (S n) (\lambda x.divides_b x n)
   (\lambda x.sigma_p (S m) (\lambda y.true) (\lambda y.g (x*(exp p y)))).
 intros.
 unfold sigma_p.
-apply (sigma_p_divides_gen Z OZ Zplus n m p ? ? ? g)
+apply (iter_p_gen_divides Z OZ Zplus n m p ? ? ? g)
 [ assumption
 | assumption
 | assumption
@@ -289,7 +289,7 @@ qed.
 lemma Ztimes_sigma_pl: \forall z:Z.\forall n:nat.\forall p. \forall f.
 z * (sigma_p n p f) = sigma_p n p (\lambda i.z*(f i)).
 intros.
-apply (distributive_times_plus_sigma_p_generic Z Zplus OZ Ztimes n z p f)
+apply (distributive_times_plus_iter_p_gen Z Zplus OZ Ztimes n z p f)
 [ apply symmetricZPlus
 | apply associative_Zplus
 | intros.
