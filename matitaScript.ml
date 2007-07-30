@@ -478,7 +478,7 @@ let rec eval_macro include_paths (buffer : GText.buffer) guistuff lexicon_status
      guistuff.mathviewer#show_uri_list ~reuse:true ~entry l;
      [], "", parsed_text_length
   (* REAL macro *)
-  | TA.Hint loc -> 
+  | TA.Hint (loc, rewrite) -> 
       let user_goal' =
        match user_goal with
           Some n -> n
@@ -486,38 +486,44 @@ let rec eval_macro include_paths (buffer : GText.buffer) guistuff lexicon_status
       in
       let proof = GrafiteTypes.get_current_proof grafite_status in
       let proof_status = proof,user_goal' in
-      let l = List.map fst (MQ.experimental_hint ~dbd proof_status) in
-      let selected = guistuff.urichooser l in
-      (match selected with
-      | [] -> [], "", parsed_text_length
-      | [uri] -> 
-          let suri = UriManager.string_of_uri uri in
-          let ast loc =
-            TA.Executable (loc, (TA.Tactic (loc,
-             Some (TA.Apply (loc, CicNotationPt.Uri (suri, None))),
-             TA.Dot loc))) in
-          let text =
-           comment parsed_text ^ "\n" ^
-            pp_eager_statement_ast (ast HExtlib.dummy_floc)
-            ~map_unicode_to_tex:(Helm_registry.get_bool
-              "matita.paste_unicode_as_tex")
-          in
-          let text_len = MatitaGtkMisc.utf8_string_length text in
-          let loc = HExtlib.floc_of_loc (0,text_len) in
-          let statement = `Ast (GrafiteParser.LSome (ast loc),text) in
-          let res,_,_parsed_text_len =
-           eval_statement include_paths buffer guistuff lexicon_status
-            grafite_status user_goal script statement
-          in
-           (* we need to replace all the parsed_text *)
-           res,"",String.length parsed_text
-      | _ -> 
-          HLog.error 
-            "The result of the urichooser should be only 1 uri, not:\n";
-          List.iter (
-            fun u -> HLog.error (UriManager.string_of_uri u ^ "\n")
-          ) selected;
-          assert false)
+      if rewrite then
+        let l = MQ.equations_for_goal ~dbd proof_status in
+        let entry = `Whelp (pp_macro (TA.WHint(loc, Cic.Implicit None)), l) in
+        guistuff.mathviewer#show_uri_list ~reuse:true ~entry l;
+        [], "", parsed_text_length
+      else
+        let l = List.map fst (MQ.experimental_hint ~dbd proof_status) in
+        let selected = guistuff.urichooser l in
+        (match selected with
+        | [] -> [], "", parsed_text_length
+        | [uri] -> 
+            let suri = UriManager.string_of_uri uri in
+            let ast loc =
+              TA.Executable (loc, (TA.Tactic (loc,
+               Some (TA.Apply (loc, CicNotationPt.Uri (suri, None))),
+               TA.Dot loc))) in
+            let text =
+             comment parsed_text ^ "\n" ^
+              pp_eager_statement_ast (ast HExtlib.dummy_floc)
+              ~map_unicode_to_tex:(Helm_registry.get_bool
+                "matita.paste_unicode_as_tex")
+            in
+            let text_len = MatitaGtkMisc.utf8_string_length text in
+            let loc = HExtlib.floc_of_loc (0,text_len) in
+            let statement = `Ast (GrafiteParser.LSome (ast loc),text) in
+            let res,_,_parsed_text_len =
+             eval_statement include_paths buffer guistuff lexicon_status
+              grafite_status user_goal script statement
+            in
+             (* we need to replace all the parsed_text *)
+             res,"",String.length parsed_text
+        | _ -> 
+            HLog.error 
+              "The result of the urichooser should be only 1 uri, not:\n";
+            List.iter (
+              fun u -> HLog.error (UriManager.string_of_uri u ^ "\n")
+            ) selected;
+            assert false)
   | TA.Check (_,term) ->
       let metasenv = GrafiteTypes.get_proof_metasenv grafite_status in
       let context =
