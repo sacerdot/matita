@@ -488,6 +488,7 @@ let rec eval_macro include_paths (buffer : GText.buffer) guistuff lexicon_status
       let proof_status = proof,user_goal' in
       if rewrite then
         let l = MQ.equations_for_goal ~dbd proof_status in
+        let l = List.filter (fun u -> not (LibraryObjects.in_eq_URIs u)) l in
         let entry = `Whelp (pp_macro (TA.WHint(loc, Cic.Implicit None)), l) in
         guistuff.mathviewer#show_uri_list ~reuse:true ~entry l;
         [], "", parsed_text_length
