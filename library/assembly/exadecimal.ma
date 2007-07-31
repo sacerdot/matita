@@ -801,7 +801,8 @@ lemma exadecimal_of_nat_mod:
  change in ⊢ (? ? ? (? (? % ?))) with (n16 \mod 16);
  rewrite < mod_mod;
   [ apply H;
-    autobatch
+    unfold lt;
+    autobatch.
   | autobatch
   ]
 qed.
@@ -848,11 +849,7 @@ lemma plusex_ok:
   match plusex b1 b2 c with
    [ couple r c' ⇒ b1 + b2 + nat_of_bool c = nat_of_exadecimal r + nat_of_bool c' * 16 ].
  intros;
- elim c;
- elim b1;
- elim b2;
- normalize;
- reflexivity.
+ elim b1; (elim b2; (elim c; normalize; reflexivity)).
 qed.
 
 definition xpred ≝

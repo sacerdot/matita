@@ -1247,7 +1247,8 @@ a = b \to b \neq c \to a \neq c.
 intros.
 generalize in match (ap_cotransitive_unfolded ? ? ? H1 a).
 intro.elim H2.apply False_ind.apply (eq_imp_not_ap ? ? ? H).
-autobatch.assumption.
+apply ap_symmetric_unfolded. assumption.
+assumption.
 qed.
 
 lemma Dir_bij : \forall A, B:CSetoid. 

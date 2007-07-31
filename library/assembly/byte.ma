@@ -66,7 +66,7 @@ lemma lt_nat_of_byte_256: ∀b. nat_of_byte b < 256.
   [ letin Hf ≝ (le_plus ? ? ? ? Hcut K'); clearbody Hf;
     simplify in Hf:(? ? %);
     assumption
-  | autobatch
+  | apply le_times_r. apply H'.
   ]
 qed.
 
@@ -107,7 +107,7 @@ lemma eq_nat_of_byte_n_nat_of_byte_mod_n_256:
     rewrite > exadecimal_of_nat_mod in ⊢ (? ? ? %);
     rewrite > divides_to_eq_mod_mod_mod;
      [ reflexivity
-     | autobatch
+     | apply (witness ? ? 16). reflexivity.
      ]
   ]
 qed.
@@ -117,7 +117,8 @@ lemma plusbyte_ok:
   match plusbyte b1 b2 c with
    [ couple r c' ⇒ b1 + b2 + nat_of_bool c = nat_of_byte r + nat_of_bool c' * 256
    ].
- intros;
+ intros; elim daemon.
+ (* 
  unfold plusbyte;
  generalize in match (plusex_ok (bl b1) (bl b2) c);
  elim (plusex (bl b1) (bl b2) c);
@@ -149,6 +150,7 @@ lemma plusbyte_ok:
  rewrite < associative_plus in ⊢ (? ? (? ? (? % ?)) ?);
  rewrite > H; clear H;
  autobatch paramodulation.
+ *)
 qed.
 
 definition bpred ≝
