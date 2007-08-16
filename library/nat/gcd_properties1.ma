@@ -203,7 +203,29 @@ apply (nat_case1 c)
   simplify.
   reflexivity
 | intros.
-  rewrite < H. 
+  rewrite < H.
+  apply gcd1
+  [ apply divides_times
+    [ apply divides_n_n
+    | apply divides_gcd_n.
+    ]
+  | apply divides_times
+    [ apply divides_n_n
+    | rewrite > sym_gcd.  
+      apply divides_gcd_n
+    ]
+  | intros.
+    apply (divides_d_times_gcd)
+    [ rewrite > H.
+      apply lt_O_S  
+    | assumption
+    | assumption
+    ]
+  ]
+]
+qed.
+  
+  (* 
   apply (nat_case1 a)
   [ intros.
     rewrite > (sym_times c O).
@@ -241,7 +263,7 @@ apply (nat_case1 c)
     ]
   ]
 ]
-qed.
+qed.*)
 
 
 theorem associative_nat_gcd: associative nat gcd.
