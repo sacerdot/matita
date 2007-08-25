@@ -783,8 +783,8 @@ class gui () =
               notify_exn exc;
               unlock_world ()
        in
-       thread_main ();
-        (* worker_thread := Some (Thread.create thread_main ()) *)
+       (*thread_main ();*)
+       worker_thread := Some (Thread.create thread_main ())
       in
       let kill_worker =
        (* the following lines are from Xavier Leroy: http://alan.petitepomme.net/cwn/2005.11.08.html *)
