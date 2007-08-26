@@ -26,18 +26,13 @@ inductive Track: Context \to Proof \to Sequent \to Prop \def
                  Track P (parx h) (pair (posr h) (posr h))
    | track_impw: \forall P,r,D,a,b. Track P r (pair lleaf D) \to
                  Track P (impw r) (pair (impl a b) D)
-   | track_impi: \forall P,r. \forall a,b:Formula. 
+   | track_impr: \forall P,r. \forall a,b:Formula. 
                  Track P r (pair a b) \to 
-                 Track P (impi r) (pair lleaf (impl a b))
-   | track_impe: \forall P,Q,r,D,i. \forall a,b:Formula.
-                 Track Q r (pair lleaf D) \to
-                 Insert (pair a b) i P Q \to
-                 Track P (impe r) (pair (impl a b) D) 
-(*   
-   | track_impe: \forall P,p,q,r,A,B,D,a,b.
-                 Track P p (pair A (rinj a)) \to
-                 Track P q (pair (linj b) B) \to
-		 Track (abst P (pair A B)) r (pair lleaf D) \to
-		 Track P (impe p q r) (pair (linj (impl a b)) D)
-*)
+                 Track P (impr r) (pair lleaf (impl a b))
+   | track_impi: \forall P,Q,p,q,r,A,B,D,i. \forall a,b:Formula.
+                 Track P p (pair A a) \to
+                 Track P q (pair b B) \to
+		 Track Q r (pair lleaf D) \to
+		 Insert (pair A B) i P Q \to
+		 Track P (impi p q r) (pair (impl a b) D)
 .

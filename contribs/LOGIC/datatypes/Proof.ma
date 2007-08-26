@@ -22,12 +22,10 @@ set "baseuri" "cic:/matita/LOGIC/datatypes/Proof".
 include "preamble.ma".
 
 inductive Proof: Type \def
-   | lref: Nat \to Proof
-   | parx: Nat \to Proof
-   | impw: Proof \to Proof
-   | impi: Proof \to Proof
-   | impe: Proof \to Proof
-(*   
-   | impe: Proof \to Proof \to Proof \to Proof
-*)
+   | lref: Nat \to Proof                       (* projection         *)
+   | parx: Nat \to Proof                       (*                    *)
+   | impw: Proof \to Proof                     (* weakening          *)
+   | impr: Proof \to Proof                     (* right introduction *)
+   | impi: Proof \to Proof \to Proof \to Proof (* left introduction  *)
+   | scut: Proof \to Proof \to Proof           (* symmetric cut      *)
 .
