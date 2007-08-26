@@ -12,27 +12,24 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/LOGIC/NTrack/order".
+set "baseuri" "cic:/matita/LOGIC/Track/order".
 
-include "Track/order.ma".
-include "NTrack/props.ma".
+include "Insert/fun.ma".
+include "Track/defs.ma".
 
 (* Order properties *********************************************************)
 
-theorem ntrack_refl: \forall P. \forall c:Formula. \exists r. 
-                     NTrack P r (pair c c).
+theorem track_refl: \forall P. \forall c:Formula. \exists r. 
+                    Track P r (pair c c).
  intros; elim c; clear c;
  [ autobatch
  | lapply (insert_total (pair f f1) zero P); [2:autobatch];
    decompose; autobatch depth = 5 width = 4 size = 8
  ].
 qed.
-(*
-theorem ntrack_trans: \forall p,q,A,B. \forall c:Formula.
-                      NTrack leaf p (pair A c) \to NTrack leaf q (pair c B) \to
-                      \exists r. NTrack leaf r (pair A B).
- intros;
- lapply linear ntrack_track to H as H0;
- lapply linear ntrack_track to H1 as H;
- lapply linear track_trans to H0, H as H1; decompose;
-*)
+
+theorem track_trans: \forall P,p,q,A,B. \forall c:Formula.
+                     Track P p (pair A c) \to Track P q (pair c B) \to
+                     \exists r. Track P r (pair A B).
+ intros; autobatch.
+qed.

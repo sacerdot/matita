@@ -12,27 +12,31 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/LOGIC/NTrack/defs".
+set "baseuri" "cic:/matita/LOGIC/Track/defs".
 
-(* NORMAL PROOF TREE TRACKS
+(* PROOF TREE TRACKS
 *)
 
 include "datatypes/Proof.ma".
 include "Insert/defs.ma".
 
-inductive NTrack: Context \to Proof \to Sequent \to Prop \def
-   | ntrack_proj: \forall P,Q,S,i. Insert S i P Q \to NTrack Q (lref i) S
-   | ntrack_posr: \forall P,h.
-                  NTrack P (parx h) (pair (posr h) (posr h))
-   | ntrack_impw: \forall P,r,D,a,b. NTrack P r (pair lleaf D) \to
-                  NTrack P (impw r) (pair (impl a b) D)
-   | ntrack_impr: \forall P,r. \forall a,b:Formula. 
-                  NTrack P r (pair a b) \to 
-                  NTrack P (impr r) (pair lleaf (impl a b))
-   | ntrack_impi: \forall P,Q,p,q,r,A,B,D,i. \forall a,b:Formula.
-                  NTrack P p (pair A a) \to
-                  NTrack P q (pair b B) \to
-		  NTrack Q r (pair lleaf D) \to
-		  Insert (pair A B) i P Q \to
-		  NTrack P (impi p q r) (pair (impl a b) D)
+inductive Track: Context \to Proof \to Sequent \to Prop \def
+   | track_proj: \forall P,Q,S,i. Insert S i P Q \to Track Q (lref i) S
+   | track_posr: \forall P,h.
+                 Track P (parx h) (pair (posr h) (posr h))
+   | track_impw: \forall P,r,D,a,b. Track P r (pair lleaf D) \to
+                 Track P (impw r) (pair (impl a b) D)
+   | track_impr: \forall P,r. \forall a,b:Formula. 
+                 Track P r (pair a b) \to 
+                 Track P (impr r) (pair lleaf (impl a b))
+   | track_impi: \forall P,Q,p,q,r,A,B,D,i. \forall a,b:Formula.
+                 Track P p (pair A a) \to
+                 Track P q (pair b B) \to
+		 Track Q r (pair lleaf D) \to
+		 Insert (pair A B) i P Q \to
+		 Track P (impi p q r) (pair (impl a b) D)
+   | track_scut: \forall P,p,q,A,B. \forall c:Formula.
+                 Track P p (pair A c) \to
+                 Track P q (pair c B) \to
+                 Track P (scut p q) (pair A B)
 .
