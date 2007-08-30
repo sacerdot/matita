@@ -56,7 +56,8 @@ let rec to_string =
   | Continuationals.Error s -> None, "Tactical error: " ^ Lazy.force s
   | ProofEngineHelpers.Bad_pattern msg ->
      None, "Bad pattern: " ^ Lazy.force msg
-  | CicRefine.RefineFailure msg ->
+  | CicRefine.RefineFailure msg
+  | CicRefine.AssertFailure msg ->
      None, "Refiner error: " ^ Lazy.force msg
   | CicTypeChecker.TypeCheckerFailure msg ->
      None, "Type checking error: " ^ Lazy.force msg
