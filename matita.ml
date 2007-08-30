@@ -250,7 +250,12 @@ let _ =
       List.iter
       (fun (s,t,ul) -> 
           HLog.debug
-           ((String.concat "," (List.map UriManager.name_of_uri ul)) ^ ":"
+           ((String.concat ","
+              (List.map
+                (fun u,saturations ->
+                  UriManager.name_of_uri u ^
+                   "(" ^ string_of_int saturations ^ ")")
+                ul)) ^ ":"
              ^ CoercDb.name_of_carr s ^ " -> " ^ CoercDb.name_of_carr t))
         (CoercDb.to_list ()));
     addDebugSeparator ();
