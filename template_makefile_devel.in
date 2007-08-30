@@ -1,6 +1,6 @@
 H=@
 
-RT_BASEDIR=@MATITA_RT_BASE_DIR@/
+RT_BASEDIR=$(shell if [ -x "@MATITA_RT_BASE_DIR@/matitamake" -o -x "@MATITA_RT_BASE_DIR@/matitamake.opt" ]; then echo "@MATITA_RT_BASE_DIR@"; else echo ""; fi)
 OPTIONS=-bench
 MMAKE=$(RT_BASEDIR)matitamake $(OPTIONS)
 CLEAN=$(RT_BASEDIR)matitaclean $(OPTIONS) 
