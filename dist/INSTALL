@@ -17,6 +17,8 @@ Installing from sources
     Database setup
     Compiling and installing
 
+Configuring Matita
+
 Installing from sources
 
 Currently, the only intended way to install Matita is starting from its source
@@ -185,5 +187,5 @@ install
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Prev                                                                       Next
-Matita vs Coq                        Home            Chapter 3. Getting started
+Matita vs Coq                        Home                    Configuring Matita
 
