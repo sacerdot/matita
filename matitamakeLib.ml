@@ -146,9 +146,14 @@ let rebuild_makefile development =
     HExtlib.input_file BuildTimeConf.matitamake_makefile_template 
   in
   let ext = Lazy.force am_i_opt in
-  let cc = BuildTimeConf.runtime_base_dir ^ "/matitac" ^ ext in
-  let rm = BuildTimeConf.runtime_base_dir ^ "/matitaclean" ^ ext in
-  let mm = BuildTimeConf.runtime_base_dir ^ "/matitadep" ^ ext in
+  let binpath = 
+    if HExtlib.is_executable 
+      (BuildTimeConf.runtime_base_dir ^ "/matitac" ^ ext)
+    then BuildTimeConf.runtime_base_dir ^ "/" else ""
+  in
+  let cc = binpath ^ "matitac" ^ ext in
+  let rm = binpath ^ "matitaclean" ^ ext in
+  let mm = binpath ^ "matitadep" ^ ext in
   let df = pool () ^ development.name ^ "/depend" in
   let template = Pcre.replace ~pat:"@ROOT@" ~templ:development.root template in
   let template = Pcre.replace ~pat:"@CC@" ~templ:cc template in
