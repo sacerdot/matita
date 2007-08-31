@@ -12,16 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/test/".
+set "baseuri" "cic:/matita/test/coercions_nonuniform/".
 
 axiom A : Type.
 axiom B : A -> Type.
 axiom f : A -> A.
 axiom f1 : A -> A.
 
-axiom c : ∀a:A.B (f a).
+axiom k : ∀a:A.B (f a).
 
-coercion cic:/matita/test/c.con.
+coercion cic:/matita/test/coercions_nonuniform/k.con.
 
 axiom C : Type.
 
@@ -33,8 +33,8 @@ axiom C : Type.
 axiom c2 : ∀a.B (f a) -> B (f1 a).
 axiom c1 : ∀a:A. B (f1 a) -> C.
 
-coercion cic:/matita/test/c1.con.
-coercion cic:/matita/test/c2.con.
+coercion cic:/matita/test/coercions_nonuniform/c1.con.
+coercion cic:/matita/test/coercions_nonuniform/c2.con.
 
 axiom g : C -> C.
 
@@ -44,6 +44,3 @@ definition test := λa:A.g a.
 Coq < Coercion c1 : B >-> C.                
 User error: c1 does not respect the inheritance uniform condition
 *)
-
-
-
