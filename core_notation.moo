@@ -1,7 +1,7 @@
 notation < "hvbox(\exists ident i opt (: ty) break . p)"
   right associative with precedence 20
 for @{ 'exists ${default
-  @{\lambda ${ident i} : $ty. $p)}
+  @{\lambda ${ident i} : $ty. $p}
   @{\lambda ${ident i} . $p}}}.
 
 notation "hvbox(a break \to b)" 
