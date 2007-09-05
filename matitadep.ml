@@ -50,13 +50,11 @@ let main () =
   let resolve alias current_buri =
     let buri = buri alias in
     if buri <> current_buri then Some buri else None in
-  MatitaInit.fill_registry ();
   let dot_file = ref "" in
   MatitaInit.add_cmdline_spec 
     ["-dot", Arg.Set_string dot_file,
       "<file> Save dependency graph in dot format to the given file"];
-  MatitaInit.parse_cmdline ();
-  MatitaInit.load_configuration_file ();
+  MatitaInit.parse_cmdline_and_configuration_file ();
   let include_paths =
    Helm_registry.get_list Helm_registry.string "matita.includes" in
   let args = Helm_registry.get_list Helm_registry.string "matita.args" in

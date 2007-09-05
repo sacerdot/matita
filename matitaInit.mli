@@ -27,9 +27,7 @@
 val initialize_all: unit -> unit
 
   (** {2 per-components initialization} *)
-val fill_registry: unit -> unit (** fill registry with default values *)
-val parse_cmdline: unit -> unit (** parse cmdline setting registry keys *)
-val load_configuration_file: unit -> unit
+val parse_cmdline_and_configuration_file: unit -> unit
 
   (** {2 Utilities} *)
 

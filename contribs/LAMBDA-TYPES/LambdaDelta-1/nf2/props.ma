@@ -48,6 +48,25 @@ x1))))).(eq_ind_r T (THead (Bind Abst) x0 x1) (\lambda (t0: T).(eq T (THead
 x1 (refl_equal K (Bind Abst)) (H x0 H4) (H0 x1 (H5 b v))) t2 H3)))))) 
 H2)))))))))).
 
+theorem nf2_abst_shift:
+ \forall (c: C).(\forall (u: T).((nf2 c u) \to (\forall (t: T).((nf2 (CHead c 
+(Bind Abst) u) t) \to (nf2 c (THead (Bind Abst) u t))))))
+\def
+ \lambda (c: C).(\lambda (u: T).(\lambda (H: ((\forall (t2: T).((pr2 c u t2) 
+\to (eq T u t2))))).(\lambda (t: T).(\lambda (H0: ((\forall (t2: T).((pr2 
+(CHead c (Bind Abst) u) t t2) \to (eq T t t2))))).(\lambda (t2: T).(\lambda 
+(H1: (pr2 c (THead (Bind Abst) u t) t2)).(let H2 \def (pr2_gen_abst c u t t2 
+H1) in (ex3_2_ind T T (\lambda (u2: T).(\lambda (t3: T).(eq T t2 (THead (Bind 
+Abst) u2 t3)))) (\lambda (u2: T).(\lambda (_: T).(pr2 c u u2))) (\lambda (_: 
+T).(\lambda (t3: T).(\forall (b: B).(\forall (u0: T).(pr2 (CHead c (Bind b) 
+u0) t t3))))) (eq T (THead (Bind Abst) u t) t2) (\lambda (x0: T).(\lambda 
+(x1: T).(\lambda (H3: (eq T t2 (THead (Bind Abst) x0 x1))).(\lambda (H4: (pr2 
+c u x0)).(\lambda (H5: ((\forall (b: B).(\forall (u0: T).(pr2 (CHead c (Bind 
+b) u0) t x1))))).(eq_ind_r T (THead (Bind Abst) x0 x1) (\lambda (t0: T).(eq T 
+(THead (Bind Abst) u t) t0)) (f_equal3 K T T T THead (Bind Abst) (Bind Abst) 
+u x0 t x1 (refl_equal K (Bind Abst)) (H x0 H4) (H0 x1 (H5 Abst u))) t2 
+H3)))))) H2)))))))).
+
 theorem nf2_appl_lref:
  \forall (c: C).(\forall (u: T).((nf2 c u) \to (\forall (i: nat).((nf2 c 
 (TLRef i)) \to (nf2 c (THead (Flat Appl) u (TLRef i)))))))

@@ -50,6 +50,8 @@ include "csuba/defs.ma".
 
 include "nf2/defs.ma".
 
+include "ex2/defs.ma".
+
 include "csubc/defs.ma".
 
 include "pc1/defs.ma".

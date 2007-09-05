@@ -304,6 +304,26 @@ A).((arity g c0 t0 a3) \to (leq g a2 a3))))).(\lambda (a3: A).(\lambda (H2:
 (leq g a2 a3)).(\lambda (a0: A).(\lambda (H3: (arity g c0 t0 a0)).(leq_trans 
 g a3 a2 (leq_sym g a2 a3 H2) a0 (H1 a0 H3))))))))))) c t a1 H))))).
 
+theorem arity_repellent:
+ \forall (g: G).(\forall (c: C).(\forall (w: T).(\forall (t: T).(\forall (a1: 
+A).((arity g (CHead c (Bind Abst) w) t a1) \to (\forall (a2: A).((arity g c 
+(THead (Bind Abst) w t) a2) \to ((leq g a1 a2) \to (\forall (P: 
+Prop).P)))))))))
+\def
+ \lambda (g: G).(\lambda (c: C).(\lambda (w: T).(\lambda (t: T).(\lambda (a1: 
+A).(\lambda (H: (arity g (CHead c (Bind Abst) w) t a1)).(\lambda (a2: 
+A).(\lambda (H0: (arity g c (THead (Bind Abst) w t) a2)).(\lambda (H1: (leq g 
+a1 a2)).(\lambda (P: Prop).(let H_y \def (arity_repl g (CHead c (Bind Abst) 
+w) t a1 H a2 H1) in (let H2 \def (arity_gen_abst g c w t a2 H0) in (ex3_2_ind 
+A A (\lambda (a3: A).(\lambda (a4: A).(eq A a2 (AHead a3 a4)))) (\lambda (a3: 
+A).(\lambda (_: A).(arity g c w (asucc g a3)))) (\lambda (_: A).(\lambda (a4: 
+A).(arity g (CHead c (Bind Abst) w) t a4))) P (\lambda (x0: A).(\lambda (x1: 
+A).(\lambda (H3: (eq A a2 (AHead x0 x1))).(\lambda (_: (arity g c w (asucc g 
+x0))).(\lambda (H5: (arity g (CHead c (Bind Abst) w) t x1)).(let H6 \def 
+(eq_ind A a2 (\lambda (a: A).(arity g (CHead c (Bind Abst) w) t a)) H_y 
+(AHead x0 x1) H3) in (leq_ahead_false_2 g x1 x0 (arity_mono g (CHead c (Bind 
+Abst) w) t (AHead x0 x1) H6 x1 H5) P))))))) H2)))))))))))).
+
 theorem arity_appls_cast:
  \forall (g: G).(\forall (c: C).(\forall (u: T).(\forall (t: T).(\forall (vs: 
 TList).(\forall (a: A).((arity g c (THeads (Flat Appl) vs u) (asucc g a)) \to 

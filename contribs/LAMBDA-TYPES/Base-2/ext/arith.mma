@@ -44,6 +44,8 @@ inline procedural "cic:/matita/LAMBDA-TYPES/Base-1/ext/arith/le_false.con".
 
 inline procedural "cic:/matita/LAMBDA-TYPES/Base-1/ext/arith/le_Sx_x.con".
 
+inline procedural "cic:/matita/LAMBDA-TYPES/Base-1/ext/arith/le_n_pred.con".
+
 inline procedural "cic:/matita/LAMBDA-TYPES/Base-1/ext/arith/minus_le.con".
 
 inline procedural 
@@ -59,6 +61,8 @@ inline procedural "cic:/matita/LAMBDA-TYPES/Base-1/ext/arith/le_minus.con".
 
 inline procedural 
 "cic:/matita/LAMBDA-TYPES/Base-1/ext/arith/le_trans_plus_r.con".
+
+inline procedural "cic:/matita/LAMBDA-TYPES/Base-1/ext/arith/lt_x_O.con".
 
 inline procedural "cic:/matita/LAMBDA-TYPES/Base-1/ext/arith/le_gen_S.con".
 
@@ -103,4 +107,6 @@ inline procedural "cic:/matita/LAMBDA-TYPES/Base-1/ext/arith/minus_minus.con".
 inline procedural "cic:/matita/LAMBDA-TYPES/Base-1/ext/arith/plus_plus.con".
 
 inline procedural "cic:/matita/LAMBDA-TYPES/Base-1/ext/arith/le_S_minus.con".
+
+inline procedural "cic:/matita/LAMBDA-TYPES/Base-1/ext/arith/lt_x_pred_y.con".
 

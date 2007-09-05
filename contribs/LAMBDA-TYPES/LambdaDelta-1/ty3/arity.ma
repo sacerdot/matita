@@ -16,7 +16,7 @@
 
 set "baseuri" "cic:/matita/LAMBDA-TYPES/LambdaDelta-1/ty3/arity".
 
-include "ty3/defs.ma".
+include "ty3/pr3_props.ma".
 
 include "arity/pr3.ma".
 

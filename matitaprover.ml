@@ -83,7 +83,6 @@ let p_to_ma ?timeout ~tptppath ~filename () =
 ;;
 
 let main () =
-  MatitaInit.fill_registry ();
   let tptppath = ref "./" in
   let timeout = ref 600 in
   MatitaInit.add_cmdline_spec
@@ -91,8 +90,7 @@ let main () =
        "Where to find the Axioms/ and Problems/ directory";
      "-timeout", Arg.Int (fun x -> timeout := x),
        "Timeout in seconds"];
-  MatitaInit.parse_cmdline ();
-  MatitaInit.load_configuration_file ();
+  MatitaInit.parse_cmdline_and_configuration_file ();
   Helm_registry.set_bool "matita.nodisk" true;
   HLog.set_log_callback (fun _ _ -> ()); 
   let args = Helm_registry.get_list Helm_registry.string "matita.args" in

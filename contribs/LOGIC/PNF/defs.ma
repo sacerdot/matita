@@ -12,69 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* This file was automatically generated: do not edit *********************)
+set "baseuri" "cic:/matita/LOGIC/PNF/defs".
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Base-2/types/defs".
+(* NORMAL FORM PREDICATE FOR PARALLEL REDUCTION
+*)
 
-include "preamble.ma".
+include "PRed/defs.ma".
 
-
-(* object and3 not inlined *)
-
-
-(* object and4 not inlined *)
-
-
-(* object or3 not inlined *)
-
-
-(* object or4 not inlined *)
-
-
-(* object ex3 not inlined *)
-
-
-(* object ex4 not inlined *)
-
-
-(* object ex_2 not inlined *)
-
-
-(* object ex2_2 not inlined *)
-
-
-(* object ex3_2 not inlined *)
-
-
-(* object ex4_2 not inlined *)
-
-
-(* object ex_3 not inlined *)
-
-
-(* object ex2_3 not inlined *)
-
-
-(* object ex3_3 not inlined *)
-
-
-(* object ex4_3 not inlined *)
-
-
-(* object ex3_4 not inlined *)
-
-
-(* object ex4_4 not inlined *)
-
-
-(* object ex4_5 not inlined *)
-
-
-(* object ex5_5 not inlined *)
-
-
-(* object ex6_6 not inlined *)
-
-
-(* object ex6_7 not inlined *)
-
+inductive PNF: Proof \to Prop \def
+   | pnf: \forall p. (\forall q. p => q \to p = q) \to PNF p
+.

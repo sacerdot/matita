@@ -28,9 +28,7 @@
 module MK = MatitamakeLib ;;
 
 let main () =
-  MatitaInit.fill_registry ();
-  MatitaInit.parse_cmdline ();
-  MatitaInit.load_configuration_file ();
+  MatitaInit.parse_cmdline_and_configuration_file ();
   MK.initialize ();
   let usage = ref (fun () -> ()) in
   let dev_of_name name = 

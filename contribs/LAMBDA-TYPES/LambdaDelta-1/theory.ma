@@ -26,9 +26,13 @@ include "wcpr0/fwd.ma".
 
 include "pr3/wcpr0.ma".
 
+include "ex2/props.ma".
+
 include "ex1/props.ma".
 
 include "ty3/tau0.ma".
+
+include "ty3/nf2.ma".
 
 include "ty3/dec.ma".
 

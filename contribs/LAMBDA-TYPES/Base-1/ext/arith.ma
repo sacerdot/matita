@@ -184,6 +184,14 @@ theorem le_Sx_x:
  \lambda (x: nat).(\lambda (H: (le (S x) x)).(\lambda (P: Prop).(let H0 \def 
 le_Sn_n in (False_ind P (H0 x H))))).
 
+theorem le_n_pred:
+ \forall (n: nat).(\forall (m: nat).((le n m) \to (le (pred n) (pred m))))
+\def
+ \lambda (n: nat).(\lambda (m: nat).(\lambda (H: (le n m)).(le_ind n (\lambda 
+(n0: nat).(le (pred n) (pred n0))) (le_n (pred n)) (\lambda (m0: 
+nat).(\lambda (_: (le n m0)).(\lambda (H1: (le (pred n) (pred m0))).(le_trans 
+(pred n) (pred m0) m0 H1 (le_pred_n m0))))) m H))).
+
 theorem minus_le:
  \forall (x: nat).(\forall (y: nat).(le (minus x y) x))
 \def
@@ -263,6 +271,14 @@ theorem le_trans_plus_r:
 \def
  \lambda (x: nat).(\lambda (y: nat).(\lambda (z: nat).(\lambda (H: (le (plus 
 x y) z)).(le_trans y (plus x y) z (le_plus_r x y) H)))).
+
+theorem lt_x_O:
+ \forall (x: nat).((lt x O) \to (\forall (P: Prop).P))
+\def
+ \lambda (x: nat).(\lambda (H: (le (S x) O)).(\lambda (P: Prop).(let H_y \def 
+(le_n_O_eq (S x) H) in (let H0 \def (eq_ind nat O (\lambda (ee: nat).(match 
+ee in nat return (\lambda (_: nat).Prop) with [O \Rightarrow True | (S _) 
+\Rightarrow False])) I (S x) H_y) in (False_ind P H0))))).
 
 theorem le_gen_S:
  \forall (m: nat).(\forall (x: nat).((le (S m) x) \to (ex2 nat (\lambda (n: 
@@ -585,4 +601,13 @@ d h) n)).(let H0 \def (le_trans d (plus d h) n (le_plus_l d h) H) in (let H1
 \def (eq_ind nat n (\lambda (n0: nat).(le d n0)) H0 (plus (minus n h) h) 
 (le_plus_minus_sym h n (le_trans_plus_r d h n H))) in (le_S d (minus n h) 
 (le_minus d n h H))))))).
+
+theorem lt_x_pred_y:
+ \forall (x: nat).(\forall (y: nat).((lt x (pred y)) \to (lt (S x) y)))
+\def
+ \lambda (x: nat).(\lambda (y: nat).(nat_ind (\lambda (n: nat).((lt x (pred 
+n)) \to (lt (S x) n))) (\lambda (H: (lt x O)).(lt_x_O x H (lt (S x) O))) 
+(\lambda (n: nat).(\lambda (_: (((lt x (pred n)) \to (lt (S x) n)))).(\lambda 
+(H0: (lt x n)).(le_S_n (S (S x)) (S n) (le_n_S (S (S x)) (S n) (le_n_S (S x) 
+n H0)))))) y)).
 

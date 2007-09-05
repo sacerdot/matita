@@ -16,8 +16,6 @@ set "baseuri" "cic:/matita/LAMBDA-TYPES/Base-2/preamble".
 
 include "../Base-1/definitions.ma".
 
-alias id "le_ind" = "cic:/Coq/Init/Peano/le_ind.con".
-
 default "equality"
  cic:/Coq/Init/Logic/eq.ind
  cic:/matita/LAMBDA-TYPES/Base-1/preamble/sym_eq.con

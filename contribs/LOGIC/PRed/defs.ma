@@ -12,69 +12,28 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* This file was automatically generated: do not edit *********************)
+set "baseuri" "cic:/matita/LOGIC/PRed/defs".
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Base-2/types/defs".
+(* SINGLE STEP PARALLEL REDUCTION
+   For cut elimination 
+*)
 
-include "preamble.ma".
+include "datatypes/Proof.ma".
 
+inductive PRed: Proof \to Proof \to Prop \def
+   | pred_lref: \forall i. PRed (lref i) (lref i)
+   | pred_parx: \forall h. PRed (parx h) (parx h)
+   | pred_impw: \forall p1,p2. PRed p1 p2 \to PRed (impw p1) (impw p2)
+   | pred_impr: \forall p1,p2. PRed p1 p2 \to PRed (impr p1) (impr p2)
+   | pred_impi: \forall p1,p2. PRed p1 p2 \to \forall q1,q2. PRed q1 q2 \to
+                \forall r1,r2. PRed r1 r2 \to 
+		PRed (impi p1 q1 r1) (impi p2 q2 r2)
+   | pred_scut: \forall p1,p2. PRed p1 p2 \to \forall q1,q2. PRed q1 q2 \to
+                PRed (scut p1 q1) (scut p2 q2)
+.
 
-(* object and3 not inlined *)
-
-
-(* object and4 not inlined *)
-
-
-(* object or3 not inlined *)
-
-
-(* object or4 not inlined *)
-
-
-(* object ex3 not inlined *)
-
-
-(* object ex4 not inlined *)
-
-
-(* object ex_2 not inlined *)
-
-
-(* object ex2_2 not inlined *)
-
-
-(* object ex3_2 not inlined *)
-
-
-(* object ex4_2 not inlined *)
-
-
-(* object ex_3 not inlined *)
-
-
-(* object ex2_3 not inlined *)
-
-
-(* object ex3_3 not inlined *)
-
-
-(* object ex4_3 not inlined *)
-
-
-(* object ex3_4 not inlined *)
-
-
-(* object ex4_4 not inlined *)
-
-
-(* object ex4_5 not inlined *)
-
-
-(* object ex5_5 not inlined *)
-
-
-(* object ex6_6 not inlined *)
-
-
-(* object ex6_7 not inlined *)
-
+(*CSC: the URI must disappear: there is a bug now *)
+interpretation 
+   "single step parallel reduction in B->"
+   'parred x y = (cic:/matita/LOGIC/PRed/defs/PRed.ind#xpointer(1/1) x y)
+.

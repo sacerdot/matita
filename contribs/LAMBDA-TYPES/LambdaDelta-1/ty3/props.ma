@@ -18,6 +18,8 @@ set "baseuri" "cic:/matita/LAMBDA-TYPES/LambdaDelta-1/ty3/props".
 
 include "ty3/fwd.ma".
 
+include "pc3/fwd.ma".
+
 theorem ty3_lift:
  \forall (g: G).(\forall (e: C).(\forall (t1: T).(\forall (t2: T).((ty3 g e 
 t1 t2) \to (\forall (c: C).(\forall (d: nat).(\forall (h: nat).((drop h d c 
@@ -419,4 +421,54 @@ t4))))).(\lambda (t4: T).(\lambda (H4: (ty3 g c0 (THead (Flat Cast) t2 t0)
 t4)).(and_ind (pc3 c0 t2 t4) (ty3 g c0 t0 t2) (pc3 c0 t2 t4) (\lambda (H5: 
 (pc3 c0 t2 t4)).(\lambda (_: (ty3 g c0 t0 t2)).H5)) (ty3_gen_cast g c0 t0 t2 
 t4 H4)))))))))))) c u t1 H))))).
+
+theorem ty3_gen_abst_abst:
+ \forall (g: G).(\forall (c: C).(\forall (u: T).(\forall (t1: T).(\forall 
+(t2: T).((ty3 g c (THead (Bind Abst) u t1) (THead (Bind Abst) u t2)) \to (ex2 
+T (\lambda (w: T).(ty3 g c u w)) (\lambda (_: T).(ty3 g (CHead c (Bind Abst) 
+u) t1 t2))))))))
+\def
+ \lambda (g: G).(\lambda (c: C).(\lambda (u: T).(\lambda (t1: T).(\lambda 
+(t2: T).(\lambda (H: (ty3 g c (THead (Bind Abst) u t1) (THead (Bind Abst) u 
+t2))).(ex_ind T (\lambda (t: T).(ty3 g c (THead (Bind Abst) u t2) t)) (ex2 T 
+(\lambda (w: T).(ty3 g c u w)) (\lambda (_: T).(ty3 g (CHead c (Bind Abst) u) 
+t1 t2))) (\lambda (x: T).(\lambda (H0: (ty3 g c (THead (Bind Abst) u t2) 
+x)).(ex4_3_ind T T T (\lambda (t3: T).(\lambda (_: T).(\lambda (_: T).(pc3 c 
+(THead (Bind Abst) u t3) x)))) (\lambda (_: T).(\lambda (t: T).(\lambda (_: 
+T).(ty3 g c u t)))) (\lambda (t3: T).(\lambda (_: T).(\lambda (_: T).(ty3 g 
+(CHead c (Bind Abst) u) t2 t3)))) (\lambda (t3: T).(\lambda (_: T).(\lambda 
+(t0: T).(ty3 g (CHead c (Bind Abst) u) t3 t0)))) (ex2 T (\lambda (w: T).(ty3 
+g c u w)) (\lambda (_: T).(ty3 g (CHead c (Bind Abst) u) t1 t2))) (\lambda 
+(x0: T).(\lambda (x1: T).(\lambda (x2: T).(\lambda (_: (pc3 c (THead (Bind 
+Abst) u x0) x)).(\lambda (_: (ty3 g c u x1)).(\lambda (H3: (ty3 g (CHead c 
+(Bind Abst) u) t2 x0)).(\lambda (_: (ty3 g (CHead c (Bind Abst) u) x0 
+x2)).(ex4_3_ind T T T (\lambda (t3: T).(\lambda (_: T).(\lambda (_: T).(pc3 c 
+(THead (Bind Abst) u t3) (THead (Bind Abst) u t2))))) (\lambda (_: 
+T).(\lambda (t: T).(\lambda (_: T).(ty3 g c u t)))) (\lambda (t3: T).(\lambda 
+(_: T).(\lambda (_: T).(ty3 g (CHead c (Bind Abst) u) t1 t3)))) (\lambda (t3: 
+T).(\lambda (_: T).(\lambda (t0: T).(ty3 g (CHead c (Bind Abst) u) t3 t0)))) 
+(ex2 T (\lambda (w: T).(ty3 g c u w)) (\lambda (_: T).(ty3 g (CHead c (Bind 
+Abst) u) t1 t2))) (\lambda (x3: T).(\lambda (x4: T).(\lambda (x5: T).(\lambda 
+(H5: (pc3 c (THead (Bind Abst) u x3) (THead (Bind Abst) u t2))).(\lambda (H6: 
+(ty3 g c u x4)).(\lambda (H7: (ty3 g (CHead c (Bind Abst) u) t1 x3)).(\lambda 
+(_: (ty3 g (CHead c (Bind Abst) u) x3 x5)).(and_ind (pc3 c u u) (\forall (b: 
+B).(\forall (u0: T).(pc3 (CHead c (Bind b) u0) x3 t2))) (ex2 T (\lambda (w: 
+T).(ty3 g c u w)) (\lambda (_: T).(ty3 g (CHead c (Bind Abst) u) t1 t2))) 
+(\lambda (_: (pc3 c u u)).(\lambda (H10: ((\forall (b: B).(\forall (u0: 
+T).(pc3 (CHead c (Bind b) u0) x3 t2))))).(ex_intro2 T (\lambda (w: T).(ty3 g 
+c u w)) (\lambda (_: T).(ty3 g (CHead c (Bind Abst) u) t1 t2)) x4 H6 
+(ty3_conv g (CHead c (Bind Abst) u) t2 x0 H3 t1 x3 H7 (H10 Abst u))))) 
+(pc3_gen_abst c u u x3 t2 H5))))))))) (ty3_gen_bind g Abst c u t1 (THead 
+(Bind Abst) u t2) H))))))))) (ty3_gen_bind g Abst c u t2 x H0)))) 
+(ty3_correct g c (THead (Bind Abst) u t1) (THead (Bind Abst) u t2) H))))))).
+
+theorem ty3_typecheck:
+ \forall (g: G).(\forall (c: C).(\forall (t: T).(\forall (v: T).((ty3 g c t 
+v) \to (ex T (\lambda (u: T).(ty3 g c (THead (Flat Cast) v t) u)))))))
+\def
+ \lambda (g: G).(\lambda (c: C).(\lambda (t: T).(\lambda (v: T).(\lambda (H: 
+(ty3 g c t v)).(ex_ind T (\lambda (t0: T).(ty3 g c v t0)) (ex T (\lambda (u: 
+T).(ty3 g c (THead (Flat Cast) v t) u))) (\lambda (x: T).(\lambda (H0: (ty3 g 
+c v x)).(ex_intro T (\lambda (u: T).(ty3 g c (THead (Flat Cast) v t) u)) v 
+(ty3_cast g c t v H x H0)))) (ty3_correct g c t v H)))))).
 

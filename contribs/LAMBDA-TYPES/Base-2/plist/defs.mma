@@ -18,6 +18,7 @@ set "baseuri" "cic:/matita/LAMBDA-TYPES/Base-2/plist/defs".
 
 include "preamble.ma".
 
+
 (* object PList not inlined *)
 
 
@@ -28,5 +29,4 @@ include "preamble.ma".
 
 
 (* object papp not inlined *)
-
 

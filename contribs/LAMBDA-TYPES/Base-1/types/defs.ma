@@ -21,6 +21,9 @@ include "preamble.ma".
 inductive and3 (P0: Prop) (P1: Prop) (P2: Prop): Prop \def
 | and3_intro: P0 \to (P1 \to (P2 \to (and3 P0 P1 P2))).
 
+inductive and4 (P0: Prop) (P1: Prop) (P2: Prop) (P3: Prop): Prop \def
+| and4_intro: P0 \to (P1 \to (P2 \to (P3 \to (and4 P0 P1 P2 P3)))).
+
 inductive or3 (P0: Prop) (P1: Prop) (P2: Prop): Prop \def
 | or3_intro0: P0 \to (or3 P0 P1 P2)
 | or3_intro1: P1 \to (or3 P0 P1 P2)

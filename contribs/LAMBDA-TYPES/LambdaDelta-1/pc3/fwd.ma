@@ -277,3 +277,25 @@ T).(\lambda (t1: T).(\forall (b: B).(\forall (u: T).(pr3 (CHead c (Bind b) u)
 t2 (lift h (S d) t1)))))) x3 x4 H17 H16 H15))))))))) (lift_gen_bind Abst x1 
 x2 x0 h d H11)))))))) H7))))) H4))))) H1)))))))))).
 
+theorem pc3_gen_sort_abst:
+ \forall (c: C).(\forall (u: T).(\forall (t: T).(\forall (n: nat).((pc3 c 
+(TSort n) (THead (Bind Abst) u t)) \to (\forall (P: Prop).P)))))
+\def
+ \lambda (c: C).(\lambda (u: T).(\lambda (t: T).(\lambda (n: nat).(\lambda 
+(H: (pc3 c (TSort n) (THead (Bind Abst) u t))).(\lambda (P: Prop).(let H0 
+\def H in (ex2_ind T (\lambda (t0: T).(pr3 c (TSort n) t0)) (\lambda (t0: 
+T).(pr3 c (THead (Bind Abst) u t) t0)) P (\lambda (x: T).(\lambda (H1: (pr3 c 
+(TSort n) x)).(\lambda (H2: (pr3 c (THead (Bind Abst) u t) x)).(let H3 \def 
+(pr3_gen_abst c u t x H2) in (ex3_2_ind T T (\lambda (u2: T).(\lambda (t2: 
+T).(eq T x (THead (Bind Abst) u2 t2)))) (\lambda (u2: T).(\lambda (_: T).(pr3 
+c u u2))) (\lambda (_: T).(\lambda (t2: T).(\forall (b: B).(\forall (u0: 
+T).(pr3 (CHead c (Bind b) u0) t t2))))) P (\lambda (x0: T).(\lambda (x1: 
+T).(\lambda (H4: (eq T x (THead (Bind Abst) x0 x1))).(\lambda (_: (pr3 c u 
+x0)).(\lambda (_: ((\forall (b: B).(\forall (u0: T).(pr3 (CHead c (Bind b) 
+u0) t x1))))).(let H7 \def (eq_ind T x (\lambda (t0: T).(eq T t0 (TSort n))) 
+(pr3_gen_sort c x n H1) (THead (Bind Abst) x0 x1) H4) in (let H8 \def (eq_ind 
+T (THead (Bind Abst) x0 x1) (\lambda (ee: T).(match ee in T return (\lambda 
+(_: T).Prop) with [(TSort _) \Rightarrow False | (TLRef _) \Rightarrow False 
+| (THead _ _ _) \Rightarrow True])) I (TSort n) H7) in (False_ind P 
+H8)))))))) H3))))) H0))))))).
+

@@ -612,10 +612,10 @@ return (\lambda (_: A).A) with [(ASort _ _) \Rightarrow a4 | (AHead a7 _)
 ((leq g a2 a6) \to P)))) (\lambda (H12: (eq A a6 (asucc g a0))).(eq_ind A 
 (asucc g a0) (\lambda (a7: A).((leq g (AHead a a0) a) \to ((leq g a2 a7) \to 
 P))) (\lambda (H13: (leq g (AHead a a0) a)).(\lambda (_: (leq g a2 (asucc g 
-a0))).(leq_ahead_false g a a0 H13 P))) a6 (sym_eq A a6 (asucc g a0) H12))) a4 
-(sym_eq A a4 a H11))) H10))) a5 (sym_eq A a5 a2 H8))) a3 (sym_eq A a3 (AHead 
-a a0) H7))) H6)) H5 H2 H3)))]) in (H2 (refl_equal A (AHead (AHead a a0) a2)) 
-(refl_equal A (AHead a (asucc g a0)))))))))))) a1)).
+a0))).(leq_ahead_false_1 g a a0 H13 P))) a6 (sym_eq A a6 (asucc g a0) H12))) 
+a4 (sym_eq A a4 a H11))) H10))) a5 (sym_eq A a5 a2 H8))) a3 (sym_eq A a3 
+(AHead a a0) H7))) H6)) H5 H2 H3)))]) in (H2 (refl_equal A (AHead (AHead a 
+a0) a2)) (refl_equal A (AHead a (asucc g a0)))))))))))) a1)).
 
 theorem leq_asucc_false:
  \forall (g: G).(\forall (a: A).((leq g (asucc g a) a) \to (\forall (P: 

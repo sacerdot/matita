@@ -53,6 +53,39 @@ x4)).(let H13 \def (eq_ind A x (\lambda (a: A).(arity g c v (asucc g a))) H8
 c v (asucc g (AHead x3 x4)) H13 (asucc g x3) H11) P))))))) H9))))) 
 H6))))))))))) (ty3_gen_bind g Abst c v t u H1)))))))))).
 
+theorem ty3_repellent:
+ \forall (g: G).(\forall (c: C).(\forall (w: T).(\forall (t: T).(\forall (u1: 
+T).((ty3 g c (THead (Bind Abst) w t) u1) \to (\forall (u2: T).((ty3 g (CHead 
+c (Bind Abst) w) t (lift (S O) O u2)) \to ((pc3 c u1 u2) \to (\forall (P: 
+Prop).P)))))))))
+\def
+ \lambda (g: G).(\lambda (c: C).(\lambda (w: T).(\lambda (t: T).(\lambda (u1: 
+T).(\lambda (H: (ty3 g c (THead (Bind Abst) w t) u1)).(\lambda (u2: 
+T).(\lambda (H0: (ty3 g (CHead c (Bind Abst) w) t (lift (S O) O 
+u2))).(\lambda (H1: (pc3 c u1 u2)).(\lambda (P: Prop).(ex_ind T (\lambda (t0: 
+T).(ty3 g (CHead c (Bind Abst) w) (lift (S O) O u2) t0)) P (\lambda (x: 
+T).(\lambda (H2: (ty3 g (CHead c (Bind Abst) w) (lift (S O) O u2) x)).(let H3 
+\def (ty3_gen_lift g (CHead c (Bind Abst) w) u2 x (S O) O H2 c (drop_drop 
+(Bind Abst) O c c (drop_refl c) w)) in (ex2_ind T (\lambda (t2: T).(pc3 
+(CHead c (Bind Abst) w) (lift (S O) O t2) x)) (\lambda (t2: T).(ty3 g c u2 
+t2)) P (\lambda (x0: T).(\lambda (_: (pc3 (CHead c (Bind Abst) w) (lift (S O) 
+O x0) x)).(\lambda (H5: (ty3 g c u2 x0)).(let H_y \def (ty3_conv g c u2 x0 H5 
+(THead (Bind Abst) w t) u1 H H1) in (let H_x \def (ty3_arity g (CHead c (Bind 
+Abst) w) t (lift (S O) O u2) H0) in (let H6 \def H_x in (ex2_ind A (\lambda 
+(a1: A).(arity g (CHead c (Bind Abst) w) t a1)) (\lambda (a1: A).(arity g 
+(CHead c (Bind Abst) w) (lift (S O) O u2) (asucc g a1))) P (\lambda (x1: 
+A).(\lambda (H7: (arity g (CHead c (Bind Abst) w) t x1)).(\lambda (H8: (arity 
+g (CHead c (Bind Abst) w) (lift (S O) O u2) (asucc g x1))).(let H_x0 \def 
+(ty3_arity g c (THead (Bind Abst) w t) u2 H_y) in (let H9 \def H_x0 in 
+(ex2_ind A (\lambda (a1: A).(arity g c (THead (Bind Abst) w t) a1)) (\lambda 
+(a1: A).(arity g c u2 (asucc g a1))) P (\lambda (x2: A).(\lambda (H10: (arity 
+g c (THead (Bind Abst) w t) x2)).(\lambda (H11: (arity g c u2 (asucc g 
+x2))).(arity_repellent g c w t x1 H7 x2 H10 (asucc_inj g x1 x2 (arity_mono g 
+c u2 (asucc g x1) (arity_gen_lift g (CHead c (Bind Abst) w) u2 (asucc g x1) 
+(S O) O H8 c (drop_drop (Bind Abst) O c c (drop_refl c) w)) (asucc g x2) 
+H11)) P)))) H9)))))) H6))))))) H3)))) (ty3_correct g (CHead c (Bind Abst) w) 
+t (lift (S O) O u2) H0))))))))))).
+
 theorem ty3_acyclic:
  \forall (g: G).(\forall (c: C).(\forall (t: T).(\forall (u: T).((ty3 g c t 
 u) \to ((pc3 c u t) \to (\forall (P: Prop).P))))))

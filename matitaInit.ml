@@ -25,8 +25,6 @@
 
 (* $Id$ *)
 
-open Printf
-
 type thingsToInitilaize = 
   ConfigurationFile | Db | Environment | Getter | Makelib | CmdLine | Registry
   
@@ -61,6 +59,7 @@ let set_registry_values =
   List.iter (fun key, value -> Helm_registry.set ~key ~value)
 
 let fill_registry init_status =
+  wants [ ConfigurationFile ] init_status;
   if not (already_configured [ Registry ] init_status) then begin
     set_registry_values registry_defaults;
     Registry :: init_status
@@ -68,7 +67,6 @@ let fill_registry init_status =
     init_status
 
 let load_configuration init_status =
-  wants [ Registry ] init_status;
   if not (already_configured [ConfigurationFile] init_status) then
     begin
       Helm_registry.load_from !conffile;
@@ -138,44 +136,44 @@ let _ =
   List.iter
     (fun (name, s) -> Hashtbl.replace usages name s)
     [ "matitac", 
-        sprintf "MatitaC v%s
+        Printf.sprintf "MatitaC v%s
 Usage: matitac [ OPTION ... ] FILE
 Options:"
           BuildTimeConf.version;
       "gragrep",
-        sprintf "Grafite Grep v%s
+        Printf.sprintf "Grafite Grep v%s
 Usage: gragrep [ -r ] PATH
 Options:"
           BuildTimeConf.version;
       "matitaprover",
-        sprintf "Matita's prover v%s
+        Printf.sprintf "Matita's prover v%s
 Usage: matitaprover [ -tptppath ] FILE.p
 Options:"
           BuildTimeConf.version;
       "matita",
-        sprintf "Matita v%s
+        Printf.sprintf "Matita v%s
 Usage: matita [ OPTION ... ] [ FILE ... ]
 Options:"
           BuildTimeConf.version;
       "cicbrowser",
-        sprintf
+        Printf.sprintf
           "CIC Browser v%s
 Usage: cicbrowser [ URL | WHELP QUERY ]
 Options:"
           BuildTimeConf.version;
       "matitadep",
-        sprintf "MatitaDep v%s
+        Printf.sprintf "MatitaDep v%s
 Usage: matitadep [ OPTION ... ] FILE ...
 Options:"
           BuildTimeConf.version;
       "matitaclean",
-        sprintf "MatitaClean v%s
+        Printf.sprintf "MatitaClean v%s
 Usage: matitaclean all
        matitaclean [ (FILE | URI) ... ]
 Options:"
           BuildTimeConf.version;
       "matitamake",
-        sprintf "MatitaMake v%s
+        Printf.sprintf "MatitaMake v%s
 Usage: matitamake [ OPTION ... ] (init | clean | list | destroy | build)
   init
     Parameters: name (the name of the development, required)
@@ -212,7 +210,8 @@ Options:"
           BuildTimeConf.version;
     ]
 let default_usage =
-  sprintf "Matita v%s\nUsage: matita [ ARG ]\nOptions:" BuildTimeConf.version
+  Printf.sprintf 
+    "Matita v%s\nUsage: matita [ ARG ]\nOptions:" BuildTimeConf.version
 
 let usage () =
   let basename = Filename.basename Sys.argv.(0) in
@@ -280,6 +279,9 @@ let parse_cmdline init_status =
             Arg.Unit (fun () -> Helm_registry.set_bool "matita.debug" true),
               ("Do not catch top-level exception "
               ^ "(useful for backtrace inspection)");
+	    "-onepass",
+	    Arg.Unit (fun () -> GrafiteDisambiguator.only_one_pass := true),
+	    "Enable only one disambiguation pass";    
           ]
         else []
       in
@@ -309,11 +311,16 @@ let die_usage () =
   print_endline (usage ());
   exit 1
 
+let conf_components = 
+  [ parse_cmdline; load_configuration; fill_registry ]
+
+let other_components =
+  [ initialize_makelib; initialize_db; initialize_environment ]
+
 let initialize_all () =
   status := 
     List.fold_left (fun s f -> f s) !status
-    [ fill_registry; parse_cmdline; load_configuration; initialize_makelib;
-      initialize_db; initialize_environment ]
+    (conf_components @ other_components)
 (*     initialize_notation 
       (initialize_environment 
         (initialize_db 
@@ -321,14 +328,9 @@ let initialize_all () =
             (load_configuration
               (parse_cmdline !status))))) *)
 
-let load_configuration_file () =
-  status := load_configuration !status
+let parse_cmdline_and_configuration_file () =
+  status := List.fold_left (fun s f -> f s) !status conf_components
 
-let parse_cmdline () =
-  status := parse_cmdline !status
-
-let fill_registry () =
-  status := fill_registry !status
 ;;
 
 Inversion_principle.init ()
