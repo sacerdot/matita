@@ -59,7 +59,6 @@ let set_registry_values =
   List.iter (fun key, value -> Helm_registry.set ~key ~value)
 
 let fill_registry init_status =
-  wants [ ConfigurationFile ] init_status;
   if not (already_configured [ Registry ] init_status) then begin
     set_registry_values registry_defaults;
     Registry :: init_status
@@ -225,6 +224,7 @@ let add_cmdline_spec l = extra_cmdline_specs := l @ !extra_cmdline_specs
 
 let parse_cmdline init_status =
   if not (already_configured [CmdLine] init_status) then begin
+    wants [Registry] init_status;
     let includes = ref [] in
     let default_includes = [ 
       ".";
@@ -312,7 +312,7 @@ let die_usage () =
   exit 1
 
 let conf_components = 
-  [ parse_cmdline; load_configuration; fill_registry ]
+  [ load_configuration; fill_registry; parse_cmdline]
 
 let other_components =
   [ initialize_makelib; initialize_db; initialize_environment ]
