@@ -73,16 +73,11 @@ qed.
 theorem n_gt_Uno_to_O_lt_pred_n: \forall n:nat.
 (S O) \lt n \to O \lt (pred n).
 intros.
-elim H
-[ simplify.
-  apply (lt_O_S O)
-| rewrite < (pred_Sn n1).
-  apply (lt_to_le_to_lt O (S (S O)) n1)
-  [ apply le_S.
-    apply (le_n (S O))
-  | assumption
-  ]
-]
+apply (Sa_le_b_to_O_lt_b (pred (S O)) (pred n) ?).
+ apply (lt_pred (S O) n ? ?);
+ [ apply (lt_O_S O) 
+ | apply (H)
+ ]
 qed.
 
 
@@ -91,14 +86,12 @@ O \lt m \to m \divides n \to (n / m) * m = n.
 intros.
 rewrite > plus_n_O.
 apply sym_eq.
-cut (O = n \mod m)
-[ rewrite > Hcut.
+cut (n \mod m = O)
+[ rewrite < Hcut.
   apply div_mod.
   assumption
-| apply sym_eq.
-  apply divides_to_mod_O;
+| apply divides_to_mod_O;
     assumption.
-  
 ]
 qed.
 
@@ -219,53 +212,22 @@ qed.
 theorem div_times_to_eqSO: \forall a,d:nat.
 O \lt d \to a*d = d \to a = (S O).
 intros.
-rewrite > (plus_n_O d) in H1:(? ? ? %).
-cut (a*d -d = O)
-[ rewrite  > sym_times in Hcut.
-  rewrite > times_n_SO in Hcut:(? ? (? ? %) ?).
-  rewrite < distr_times_minus in Hcut.
-  cut ((a - (S O)) = O)
-  [ apply (minus_to_plus a (S O) O)
-    [ apply (nat_case1 a)
-      [ intros.
-        rewrite > H2 in H1.
-        simplify in H1.
-        rewrite < (plus_n_O d) in H1.
-        rewrite < H1 in H.
-        apply False_ind.
-        change in H with ((S O) \le O).
-        apply (not_le_Sn_O O H)
-      | intros.
-        apply (le_S_S O m).
-        apply (le_O_n m)
-      ]
-    | assumption
-    ]
-  | apply (lt_times_eq_O d (a - (S O)));
-      assumption
-  ]
-| apply (plus_to_minus ).
+apply (cic:/matita/nat/div_and_mod/inj_times_r1.con d)
+[ assumption
+| rewrite > sym_times.
+  rewrite < (times_n_SO d).
   assumption
 ]
 qed.
+
 
 theorem div_mod_minus:
 \forall a,b:nat. O \lt b \to
 (a /b)*b = a - (a \mod b).
 intros.
-apply sym_eq.
-apply (inj_plus_r (a \mod b)).
-rewrite > (sym_plus (a \mod b) ?).
-rewrite < (plus_minus_m_m a (a \mod b))
-[ rewrite > sym_plus.
-  apply div_mod.
-  assumption
-| rewrite > (div_mod a b) in \vdash (? ? %)
-  [ rewrite > plus_n_O in \vdash (? % ?).
-    rewrite > sym_plus.
-    apply cic:/matita/nat/le_arith/le_plus_n.con
-  | assumption
-  ]
+rewrite > (div_mod a b) in \vdash (? ? ? (? % ?))
+[ apply (minus_plus_m_m (times (div a b) b) (mod a b))
+| assumption
 ]
 qed.
 
