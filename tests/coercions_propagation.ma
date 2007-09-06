@@ -54,6 +54,75 @@ theorem test4: (∃n. 1 ≤ n) → ∃n. 0 < n.
  assumption.
 qed.
 
+theorem test5: nat → ∃n. 1 ≤ n.
+apply (
+ let rec aux n : nat ≝
+  match n with
+   [ O ⇒ 1
+   | S m ⇒ S (aux m)
+   ]
+ in
+  aux
+: nat → ∃n. 1 ≤ n);
+[ cases (aux name_con); simplify; ] autobatch;
+qed.
+
+inductive NN (A:Type) : nat -> Type ≝
+ | NO : NN A O
+ | NS : ∀n:nat. NN A n → NN A (S n).
+ 
+definition injectN ≝ λA,k.λP.λa:NN A k.λp:P a. sigma_intro ? P ? p.
+
+coercion cic:/matita/test/coercions_propagation/injectN.con 0 1.
+
+definition ejectN ≝ λA,k.λP.λc: ∃n:NN A k.P n. match c with [ sigma_intro w _ ⇒ w].
+
+coercion cic:/matita/test/coercions_propagation/ejectN.con.
+
+definition PN :=
+ λA,k.λx:NN A k. 1 <= k.
+
+theorem test51_byhand: ∀A,k. NN A k → ∃n:NN A (S k). PN ? ? n.
+intros 1;
+apply (
+ let rec aux (w : nat) (n : NN A w) on n : ∃p:NN A (S w).PN ? ? p ≝
+  match n in NN return λx.λm:NN A x.∃p:NN A (S x).PN ? ? p with
+   [ NO ⇒ injectN ? ? ? (NS A ? (NO A)) ?
+   | NS x m ⇒ injectN ? ? ? (NS A (S x) (ejectN ? ? ? (aux ? m))) ?  
+   ]
+ in
+  aux
+: ∀n:nat. NN A n → ∃m:NN A (S n). PN ? ? m);
+[2: cases (aux x m); simplify; autobatch ] unfold PN; autobatch;
+qed.
+
+theorem f : nat -> nat -> ∃n:nat.O <= n.
+apply (λx,y:nat.y : nat -> nat -> ∃n:nat. O <= n).
+apply le_O_n; 
+qed.
+
+axiom F : nat -> nat -> nat.
+
+theorem f1 : nat -> nat -> ∃n:nat.O <= n.
+apply (F : nat -> nat -> ∃n:nat. O <= n).
+apply le_O_n; 
+qed.
+
+theorem test51: ∀A,k. NN A k → ∃n:NN A (S k). PN ? ? n.
+intros 1;
+(* MANCA UN LIFT forse NEL FIX *)
+apply (
+ let rec aux (w : nat) (n : NN A w) on n : NN A (S w) ≝
+  match n in NN return λx.λm:NN A x.NN A (S x) with
+   [ NO ⇒ NS A ? (NO A)
+   | NS x m ⇒ NS A (S x) (aux ? m)  
+   ]
+ in
+  aux
+: ∀n:nat. NN A n → ∃m:NN A (S n). PN ? ? m);
+[ cases (aux name_con); simplify; ] autobatch;
+qed.
+
 (* guarded troppo debole 
 theorem test5: nat → ∃n. 1 ≤ n.
 apply (
