@@ -157,20 +157,12 @@ apply (leb_elim n m)
 ]
 qed.
 
-(* 2 basic properties of divides predicate *)
-theorem aDIVb_to_bDIVa_to_aEQb:
-\forall a,b:nat.
-a \divides b \to b \divides a \to a = b.
-intros.
-apply antisymmetric_divides;
-  assumption.
-qed.
-
+(* a basic property of divides predicate *)
 
 theorem O_div_c_to_c_eq_O: \forall c:nat.
 O \divides c \to c = O.
 intros.
-apply aDIVb_to_bDIVa_to_aEQb
+apply antisymmetric_divides
 [ apply divides_n_O
 | assumption
 ]
@@ -182,7 +174,7 @@ c \divides a \to c \divides b \to
 (\forall d:nat. d \divides a \to d \divides b \to d \divides c) \to (gcd a b) = c.
 intros.
 elim (H2 ((gcd a b)))
-[ apply (aDIVb_to_bDIVa_to_aEQb (gcd a b) c)
+[ apply (antisymmetric_divides (gcd a b) c)
   [ apply (witness (gcd a b) c n2).
     assumption
   | apply divides_d_gcd;
@@ -224,47 +216,6 @@ apply (nat_case1 c)
   ]
 ]
 qed.
-  
-  (* 
-  apply (nat_case1 a)
-  [ intros.
-    rewrite > (sym_times c O).
-    simplify.
-    reflexivity
-  | intros.
-    rewrite < H1.
-    apply (nat_case1 b)
-    [ intros.
-      rewrite > (sym_times ? O).
-      rewrite > (sym_gcd a O).
-      rewrite > sym_gcd.
-      simplify.
-      reflexivity
-    | intros.
-      rewrite < H2.
-      apply gcd1
-      [ apply divides_times
-        [ apply divides_n_n
-        | apply divides_gcd_n.
-        ]
-      | apply divides_times
-        [ apply divides_n_n
-        | rewrite > sym_gcd.  
-          apply divides_gcd_n
-        ]
-      | intros.
-        apply (divides_d_times_gcd)
-        [ rewrite > H.
-          apply lt_O_S  
-        | assumption
-        | assumption
-        ]
-      ]
-    ]
-  ]
-]
-qed.*)
-
 
 theorem associative_nat_gcd: associative nat gcd.
 change with (\forall a,b,c:nat. (gcd (gcd a b) c) = (gcd a (gcd b c))).

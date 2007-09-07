@@ -136,7 +136,7 @@ apply divides_SO_n.
 qed.
 
 theorem sum_divisor_totient1_aux_3: \forall i,n:nat.
-i < n*n \to 
+(S O) \lt n  \to i < n*n \to 
   (divides_b (i/n) (pred n)
 \land (leb (S(i\mod n)) (i/n)
 \land eqb (gcd (i\mod n) (i/n)) (S O)))
@@ -153,42 +153,8 @@ apply (lt_to_le_to_lt ((i \mod n)*(pred n) / (i/n))
   | rewrite > (NdivM_times_M_to_N )
     [ rewrite > (NdivM_times_M_to_N ) in \vdash (? ? %)
       [ apply (monotonic_lt_times_variant (pred n)) 
-        [ apply (nat_case1 n)
-          [ intros.
-            rewrite > H2 in H:(? ? %).
-            change in H:(? ? %) with (O).
-            change in H:(%) with ((S i) \le O).
-            apply False_ind.
-            apply (not_le_Sn_O i H)  
-          | intro.
-            elim m
-            [ rewrite > H2 in H1:(%).
-              rewrite > H2 in H:(%).
-              simplify in H.
-              cut (i = O)
-              [ rewrite > Hcut in H1:(%).
-                simplify in H1.  
-                apply False_ind.  
-                apply (not_eq_true_false H1)
-              | change in H:(%) with((S i) \le (S O)).
-                cut (i \le O )
-                [ apply (nat_case1 i)
-                  [ intros.
-                    reflexivity
-                  | intros.
-                    rewrite > H3 in Hcut:(%).
-                    apply False_ind.
-                    apply (not_le_Sn_O m1 Hcut)
-                  ]
-                | apply (le_S_S_to_le i O).
-                  assumption
-                ]
-              ]
-            | change with ((S O) \le (S n1)).
-              apply (le_S_S O n1).
-              apply (le_O_n n1)
-            ]
-          ]
+        [ apply n_gt_Uno_to_O_lt_pred_n.
+          assumption      
         | change with ((S (i\mod n)) \le (i/n)).          
           apply (aux_S_i_mod_n_le_i_div_n i n);
             assumption    
@@ -220,8 +186,7 @@ apply (lt_to_le_to_lt ((i \mod n)*(pred n) / (i/n))
   ]
 | rewrite > (sym_times).
   rewrite > (div_times_ltO )  
-  [ apply (le_n (pred n)).
-    
+  [ apply (le_n (pred n))
   | apply (Sa_le_b_to_O_lt_b (i \mod n) (i/n)).
     apply (aux_S_i_mod_n_le_i_div_n i n);
       assumption.
@@ -483,7 +448,7 @@ qed.
     
 (* The main theorem, adding the hypotesis n > 1 (the cases n= 0
    and n = 1 are dealed as particular cases in theorem 
-   sum_divisor_totiet)
+   sum_divisor_totient)
  *)        
 theorem sum_divisor_totient1: \forall n. (S O) \lt n \to sigma_p n (\lambda d.divides_b d (pred n)) totient = (pred n).
 intros. 

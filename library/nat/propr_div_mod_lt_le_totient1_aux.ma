@@ -112,77 +112,21 @@ apply (le_times_to_le c (a/c) a)
 qed.
 
 
-theorem bTIMESc_le_a_to_c_le_aDIVb: \forall a,b,c:nat.
-O \lt b \to (b*c) \le a \to c \le (a /b).
-intros.
-rewrite > (div_mod a b) in H1
-[ apply (le_times_to_le b ? ?)
-  [ assumption
-  | cut ( (c*b) \le ((a/b)*b) \lor ((a/b)*b) \lt (c*b))
-    [ elim Hcut
-      [ rewrite < (sym_times c b).
-        rewrite < (sym_times (a/b) b).
-        assumption
-      | cut (a/b \lt c)
-        [ change in Hcut1 with ((S (a/b)) \le c).
-          cut( b*(S (a/b)) \le b*c)
-          [ rewrite > (sym_times b (S (a/b))) in Hcut2.
-            simplify in Hcut2.
-            cut ((b + (a/b)*b) \le ((a/b)*b + (a \mod b)))
-            [ cut (b \le (a \mod b))
-              [ apply False_ind.
-                apply (lt_to_not_le (a \mod b) b)
-                [ apply (lt_mod_m_m).
-                  assumption
-                | assumption
-                ]
-              | apply (le_plus_to_le ((a/b)*b)).
-                rewrite > sym_plus.
-                assumption.
-              ]
-            | apply (trans_le ? (b*c) ?);
-                assumption
-            ]
-          | apply (le_times_r b ? ?).
-            assumption
-          ]
-        | apply (lt_times_n_to_lt b (a/b) c)
-          [ assumption
-          | assumption
-          ]
-        ]
-      ]
-    | apply (leb_elim (c*b) ((a/b)*b))
-      [ intros.
-        left.
-        assumption
-      | intros.
-        right.
-        apply cic:/matita/nat/orders/not_le_to_lt.con. 
-        assumption        
-      ]
-    ]
-  ]
-| assumption
-] 
-qed.
-
 theorem lt_O_a_lt_O_b_a_divides_b_to_lt_O_aDIVb:
 \forall a,b:nat.
 O \lt a \to O \lt b \to a \divides b \to O \lt (b/a).
 intros.
 elim H2.
-cut (O \lt n2)
-[ rewrite > H3.
-  rewrite > (sym_times a n2).
-  rewrite > (div_times_ltO n2 a);
-    assumption  
-| apply (divides_to_lt_O n2 b)
+rewrite > H3.
+rewrite > (sym_times a n2).
+rewrite > (div_times_ltO n2 a)
+[ apply (divides_to_lt_O n2 b)
   [ assumption
   | apply (witness n2 b a).
     rewrite > sym_times.
     assumption
-  ] 
+  ]  
+| assumption  
 ]
 qed.
 
@@ -208,17 +152,17 @@ cut(O \lt c)
 ]
 qed.
 
-
+(*
 theorem div_times_to_eqSO: \forall a,d:nat.
 O \lt d \to a*d = d \to a = (S O).
 intros.
-apply (cic:/matita/nat/div_and_mod/inj_times_r1.con d)
+apply (inj_times_r1 d)
 [ assumption
 | rewrite > sym_times.
   rewrite < (times_n_SO d).
   assumption
 ]
-qed.
+qed.*)
 
 
 theorem div_mod_minus:
@@ -231,6 +175,7 @@ rewrite > (div_mod a b) in \vdash (? ? ? (? % ?))
 ]
 qed.
 
+(*
 theorem sum_div_eq_div: \forall a,b,c:nat.
 O \lt c \to b \lt c \to c \divides a \to (a+b) /c = a/c.
 intros.
@@ -245,7 +190,7 @@ rewrite > (div_plus_times c n2 b)
 | assumption
 ]
 qed.
-
+*)
 
 (* A corollary to the division theorem (between natural numbers).
  *
@@ -270,82 +215,73 @@ split
 | rewrite < (times_n_Sm b c).
   rewrite < H1.
   rewrite > sym_times.
-  rewrite > div_mod_minus
-  [ rewrite < (eq_minus_plus_plus_minus b a (a \mod b))
-    [ rewrite < (sym_plus a b).
-      rewrite > (eq_minus_plus_plus_minus a b (a \mod b))
-      [ rewrite > (plus_n_O a) in \vdash (? % ?).
-        apply (le_to_lt_to_plus_lt)
-        [ apply (le_n a)
-        | apply cic:/matita/nat/minus/lt_to_lt_O_minus.con.      
-          apply cic:/matita/nat/div_and_mod/lt_mod_m_m.con.
-          assumption
-        ]
-      | apply lt_to_le.
-        apply lt_mod_m_m.
-        assumption
-      ]
-    | rewrite > (div_mod a b) in \vdash (? ? %)
-      [ rewrite > plus_n_O in \vdash (? % ?).
-        rewrite > sym_plus.
-        apply cic:/matita/nat/le_arith/le_plus_n.con
-      | assumption
-      ]
-    ]
+  rewrite > (div_mod a b) in \vdash (? % ?)
+  [ rewrite > (sym_plus b ((a/b)*b)).
+    apply lt_plus_r.
+    apply lt_mod_m_m.
+    assumption
   | assumption
   ]
 ]
 qed.
+  
 
 theorem th_div_interi_1: \forall a,c,b:nat.
 O \lt b \to (b*c) \le a \to a \lt (b*(S c)) \to a/b = c.
 intros.
 apply (le_to_le_to_eq)
-[ cut (a/b \le c \lor c \lt a/b)
-  [ elim Hcut
-    [ assumption
-    | change in H3 with ((S c) \le (a/b)).
-      cut (b*(S c) \le (b*(a/b)))
-      [ rewrite > (sym_times b (S c)) in Hcut1.
-        cut (a \lt (b * (a/b)))
-        [ rewrite > (div_mod a b) in Hcut2:(? % ?)
-          [ rewrite > (plus_n_O (b*(a/b))) in Hcut2:(? ? %).
-            cut ((a \mod b) \lt O)
-            [ apply False_ind.
-              apply (lt_to_not_le (a \mod b) O)
-              [ assumption
-              | apply le_O_n
-              ]              
-            | apply (lt_plus_to_lt_r ((a/b)*b)).
-              rewrite > (sym_times b (a/b)) in Hcut2:(? ? (? % ?)).
-              assumption 
-            ]
-          | assumption
-          ]
-        | apply (lt_to_le_to_lt ? (b*(S c)) ?)
+[ apply (leb_elim (a/b) c);intros
+  [ assumption
+  | cut (c \lt (a/b))
+    [ apply False_ind.
+      apply (lt_to_not_le (a \mod b) O)
+      [ apply (lt_plus_to_lt_l ((a/b)*b)).
+        simplify.
+        rewrite < sym_plus.
+        rewrite < div_mod
+        [ apply (lt_to_le_to_lt ? (b*(S c)) ?)
           [ assumption
-          | rewrite > (sym_times b (S c)).
+          | rewrite > (sym_times (a/b) b).
+            apply le_times_r.
             assumption
           ]
+        | assumption
         ]
-      | apply le_times_r.
-        assumption
+      | apply le_O_n
       ]
-    ]
-  | apply (leb_elim (a/b) c)
-    [ intros.
-      left.
-      assumption
-    | intros.
-      right.
-      apply cic:/matita/nat/orders/not_le_to_lt.con. 
+    | apply not_le_to_lt.
       assumption
     ]
-  ] 
-| apply (bTIMESc_le_a_to_c_le_aDIVb);
-    assumption
+  ]
+| apply (leb_elim c (a/b));intros
+  [ assumption
+  | cut((a/b) \lt c) 
+    [ apply False_ind.
+      apply (lt_to_not_le (a \mod b) b)
+      [ apply (lt_mod_m_m).
+        assumption
+      | apply (le_plus_to_le ((a/b)*b)).
+        rewrite < (div_mod a b)
+        [ apply (trans_le ? (b*c) ?)
+          [ rewrite > (sym_times (a/b) b).
+            rewrite > (times_n_SO b) in \vdash (? (? ? %) ?).
+            rewrite < distr_times_plus.
+            rewrite > sym_plus.
+            simplify in \vdash (? (? ? %) ?).
+            apply le_times_r.
+            assumption
+          | assumption
+          ]
+        | assumption
+        ]
+      ]
+    | apply not_le_to_lt. 
+      assumption
+    ]
+  ]
 ]
 qed.
+
 
 theorem times_numerator_denominator_aux: \forall a,b,c,d:nat.
 O \lt c \to O \lt b \to d = (a/b) \to d= (a*c)/(b*c).
