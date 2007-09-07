@@ -50,7 +50,7 @@ qed.
 
 theorem test4: (∃n. 1 ≤ n) → ∃n. 0 < n.
  apply ((λn:nat.n) : (∃n. 1 ≤ n) → ∃n. 0 < n);
- cases name_con;
+ cases s;
  assumption.
 qed.
 
@@ -64,7 +64,7 @@ apply (
  in
   aux
 : nat → ∃n. 1 ≤ n);
-[ cases (aux name_con); simplify; ] autobatch;
+[ cases (aux n1); simplify; ] autobatch;
 qed.
 
 inductive NN (A:Type) : nat -> Type ≝
@@ -110,8 +110,7 @@ qed.
 
 theorem test51: ∀A,k. NN A k → ∃n:NN A (S k). PN ? ? n.
 intros 1;
-(* MANCA UN LIFT forse NEL FIX *)
-apply (
+letin xxx ≝ (
  let rec aux (w : nat) (n : NN A w) on n : NN A (S w) ≝
   match n in NN return λx.λm:NN A x.NN A (S x) with
    [ NO ⇒ NS A ? (NO A)
@@ -119,8 +118,8 @@ apply (
    ]
  in
   aux
-: ∀n:nat. NN A n → ∃m:NN A (S n). PN ? ? m);
-[ cases (aux name_con); simplify; ] autobatch;
+: ∀n:nat. NN A n → ∃m:NN A (S n). PN ? ? m); [3: apply xxx];
+unfold PN in aux ⊢ %; [cases (aux n2 n3)] autobatch
 qed.
 
 (* guarded troppo debole 
