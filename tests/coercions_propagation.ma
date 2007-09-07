@@ -119,11 +119,11 @@ letin xxx ≝ (
  in
   aux
 : ∀n:nat. NN A n → ∃m:NN A (S n). PN ? ? m); [3: apply xxx];
-unfold PN in aux ⊢ %; [cases (aux n2 n3)] autobatch
+unfold PN in aux ⊢ %; [cases (aux n2 n3)] autobatch;
 qed.
 
-(* guarded troppo debole 
-theorem test5: nat → ∃n. 1 ≤ n.
+(* guarded troppo debole *)
+theorem test522: nat → ∃n. 1 ≤ n.
 apply (
  let rec aux n : nat ≝
   match n with
@@ -133,95 +133,8 @@ apply (
  in
   aux
 : nat → ∃n. 1 ≤ n);
-cases name_con;
-simplify;
- [ autobatch
- | cases (aux n);
-   simplify;
-   apply lt_O_S
- ]
-qed.
-*)
-
-(*
-theorem test5: nat → ∃n. 1 ≤ n.
-apply (
- let rec aux (n : nat) : ∃n. 1 ≤ n ≝ 
-   match n with
-   [ O => (S O : ∃n. 1 ≤ n)
-   | S m => (S (aux m) : ∃n. 1 ≤ n)
-(*      
-   inject ? (S (eject ? (aux m))) ? *)
-   ]
- in
-  aux
- : nat → ∃n. 1 ≤ n);
- [ autobatch
- | elim (aux m);
-   simplify;
-   autobatch
- ]
+[ cases (aux n1); simplify;
+  autobatch
+| autobatch].
 qed.
 
-Re1: nat => nat |- body[Rel1] : nat => nat
-Re1: nat => X |- body[Rel1] : nat => nat : nat => X
-Re1: Y => X |- body[Rel1] : nat => nat : Y => X
-
-nat => nat
-nat => X
-
-theorem test5: (∃n. 2 ≤ n) → ∃n. 1 ≤ n.
-apply (
- λk: ∃n. 2 ≤ n.
- let rec aux n : eject ? n = eject ? k → ∃n. 1 ≤ n ≝
-  match eject ? n return λx:nat. x = eject ? k → ∃n. 1 ≤ n with
-   [ O ⇒ λH: 0 = eject ? k.
-          sigma_intro ? ? 0 ?
-   | S m ⇒ λH: S m = eject ? k.
-          sigma_intro ? ? (S m) ?
-   ]
- in
-  aux k (refl_eq ? (eject ? k)));
-
-
-intro;
-cases s; clear s;
-generalize in match H; clear H;
-elim a;
- [ apply (sigma_intro ? ? 0);
- | apply (sigma_intro ? ? (S n));
- ].
-
-apply (
- λk.
- let rec aux n : ∃n. 1 ≤ n ≝
-  inject ?
-   (match n with
-     [ O ⇒ O
-     | S m ⇒ S (eject ? (aux m))
-     ]) ?
- in aux (eject ? k)).
-
-   
-apply (
- let rec aux n : nat ≝
-  match n with
-   [ O ⇒ O
-   | S m ⇒ S (aux m)
-   ]
- in
-  aux
-: (∃n. 2 ≤ n) → ∃n. 1 ≤ n);
-
-qed.
-
-(*
-theorem test5: nat → ∃n. 0 ≤ n.
- apply (λn:nat.?);
- apply
-  (match n return λ_.∃n.0 ≤ n with [O ⇒ (0 : ∃n.0 ≤ n) | S n' ⇒ ex_intro ? ? n' ?]
-  : ∃n. 0 ≤ n);
- autobatch.
-qed.
-*)
-*)
