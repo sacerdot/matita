@@ -107,10 +107,24 @@ definition map:  \forall n:nat.\forall l:listn nat n. nat \to nat \def
 definition church: nat \to nat \to nat \def times.
 
 coercion cic:/matita/tests/coercions/church.con 1.
+lemma foo0 : ∀n:nat. n n = n * n.
+intros; reflexivity;
+qed.
+lemma foo01 : ∀n:nat. n n n = n * n * n.
+intros; reflexivity;
+qed.
 
 definition mapmult:  \forall n:nat.\forall l:listn nat n. nat \to nat \to nat \def
   \lambda n:nat.\lambda l:listn nat n.\lambda m,o:nat.
   l (m m) o (o o o).
+  
+lemma foo : ∀n:nat. n n n n n n = n * n * n * n * n * n.
+intros; reflexivity;
+qed.
+
+axiom f : nat → nat.
+
+lemma foo1 : ∀n:nat. f n n = f n * n.
 
 axiom T0 : Type.
 axiom T1 : Type.
