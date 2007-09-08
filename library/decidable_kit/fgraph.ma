@@ -183,7 +183,7 @@ intros 2 (d m); elim m 0; simplify; [intros (x); cases x; reflexivity]
 intros (n IH x); elim x; rewrite > mem_multss; simplify; [reflexivity]
 rewrite > mem_finType; simplify; rewrite > IH; reflexivity;
 qed.
-
+(*
 axiom uniq_concat : ∀d:eqType.∀l1,l2. uniq d (l1@l1) = (andb (uniq ? l1) (andb (uniq ? l2) ())). 
 
 lemma uniq_mkpermr : ∀d:finType.∀m. uniq ? (mkpermr d m) = true.
@@ -261,4 +261,4 @@ Canonical Structure set_finType := FinType (can_uniq can_sval).
 Definition iset_of_fun (f : G -> bool_finType) : setType :=
   locked Sett (fgraph_of_fun f).
 
-
+*)
