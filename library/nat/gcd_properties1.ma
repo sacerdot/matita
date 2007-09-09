@@ -256,7 +256,7 @@ apply (nat_case1 a)
 [ intros.
   apply (nat_case1 b)
   [ intros.
-    cut (d = O)
+    cut (d = O) (*this is an impossible case*)
     [ rewrite > Hcut.
       simplify.
       apply divides_SO_n
