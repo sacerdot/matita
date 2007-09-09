@@ -144,12 +144,9 @@ lemma mem_multes :
 intros (d e l s); elim l (hd tl IH); [cases s;simplify;[2: rewrite > andbC] reflexivity]
 simplify; rewrite > IH; cases s; simplify; [reflexivity]
 unfold list_eqType; simplify;
-generalize in match (refl_eq ? (cmp d e s1)); generalize in match (cmp d e s1) in ⊢ (? ? ? % → %);
-intros 1 (b); cases b; clear b; intros (E); cases (lcmp d l1 hd); 
-[1,2: rewrite > (b2pT ? ? (eqP ? ? ?) E); simplify; rewrite > cmp_refl; reflexivity
-|3,4: rewrite > andbC; simplify; [2: reflexivity] rewrite > orbC; 
-      simplify; apply (p2bF ? ? (eqP ? ? ?)); unfold Not; intros (H); rewrite > H in E;
-      rewrite > cmp_refl in E; destruct E;]
+apply (cmpP ? e s1); cases (lcmp d l1 hd); intros (E); 
+[1,2: rewrite > E; simplify; rewrite > cmp_refl; reflexivity
+|3,4: rewrite > cmpC; rewrite > E; simplify; reflexivity;]
 qed.
 
 lemma mem_concat: 
@@ -166,15 +163,13 @@ lemma mem_multss :
   match x in list with [ Nil ⇒ false | (Cons he tl) ⇒ andb (mem ? he s) (mem ? tl l)].
 intros (d s l x); elim s; [cases x] simplify; try reflexivity; rewrite > mem_concat;
 rewrite > H; clear H; rewrite > mem_multes; cases x; simplify; [reflexivity]
-unfold list_eqType; simplify;
-generalize in match (refl_eq ? (cmp d t s1)); generalize in match (cmp d t s1) in ⊢ (? ? ? % → %);
-intros 1 (b); cases b; clear b; intros (E); cases (mem d s1 l1);
-[1,2: rewrite > (b2pT ? ? (eqP ? ? ?) E); rewrite > cmp_refl; simplify;
+unfold list_eqType; simplify; apply (cmpP ? t s1); intros (E); 
+cases (mem d s1 l1);
+[1,2: rewrite > E; rewrite > cmp_refl; simplify;
       [rewrite > orb_refl | rewrite > orbC ] reflexivity
 |3,4: simplify; rewrite > orbC; simplify; [reflexivity] symmetry;
       apply (p2bF ? ? (andbP ? ?)); unfold Not; intros (H); decompose;
-      rewrite > (b2pT ? ? (eqP ? ? ?) H1) in E; rewrite > cmp_refl in E;
-      destruct E]
+      rewrite > cmpC in H1; rewrite > E in H1; destruct H1;] 
 qed.   
 
 lemma mem_mkpermr_size : 

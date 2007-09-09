@@ -90,20 +90,12 @@ interpretation "sub_eqType" 'sig x h =
 lemma sigma_eq_dec : ∀d:eqType.∀p.∀x,y:sigma d p. 
   eq_compatible ? x y (cmp ? (sval ? ? x) (sval ? ?y)).
 intros (d p x y);
-generalize in match (refl_eq ? (cmp d (sval d p x) (sval d p y)));
-generalize in match (cmp d (sval d p x) (sval d p y)) in ⊢ (? ? ? % → %); intros 1 (b);
-cases b; cases x (s ps); cases y (t pt); simplify; intros (Hcmp);
-[ constructor 1;
-  generalize in match (eqP d s t); intros (Est);
-  cases Est (H); clear Est;
-  [ generalize in match ps;
-    rewrite > H; intros (pt'); 
-    rewrite < (pirrel bool (p t) true pt pt' (eqType_decidable bool_eqType));
-    reflexivity;
-  | cases (H (b2pT ? ? (eqP d s t) Hcmp))
-  ]
-| constructor 2; unfold Not; intros (H); destruct H; 
-  rewrite > Hcut in Hcmp; rewrite > cmp_refl in Hcmp; destruct Hcmp;] 
+cases (eqP d (sval ? ? x) (sval ? ? y)); generalize in match H; clear H; 
+cases x (s ps); cases y (t pt); simplify; intros (Est); 
+[1: constructor 1; generalize in match ps; rewrite > Est; intros (pt');
+    rewrite < (pirrel ? ? ? pt pt' (eqType_decidable bool_eqType)); reflexivity;
+|2: constructor 2; unfold Not; intros (H); destruct H;
+    cases (Est); assumption;]  
 qed. 
 
 definition sub_eqType ≝ λd : eqType.λp. mk_eqType ? ? (sigma_eq_dec d p).
@@ -153,9 +145,13 @@ coercion cic:/matita/decidable_kit/eqtype/option_canonical_eqType.con.
 definition test_canonical_option_eqType ≝ 
   (eq (option_eqType nat_eqType) O (S O)).
 
-(* OUT OF PLACE *)       
-lemma eqbC : ∀x,y:nat. eqb x y = eqb y x.
-intros (x y); apply bool_to_eq; split; intros (H); 
-rewrite > (b2pT ? ? (eqbP ? ?) H); rewrite > (cmp_refl nat_eqType);
-reflexivity;
+lemma cmpP : ∀d:eqType.∀x,y:d.∀P:bool → Prop. 
+  (x=y → P true) → (cmp d x y = false → P false) → P (cmp d x y).
+intros; cases (eqP ? x y); [2:apply H1; apply (p2bF ? ? (eqP d ? ?))] autobatch;
+qed.
+
+lemma cmpC : ∀d:eqType.∀x,y:d. cmp d x y = cmp d y x.
+intros; apply (cmpP ? x y); apply (cmpP ? y x); [1,4: intros; reflexivity]
+[intros (H2 H1) | intros (H1 H2)] rewrite > H1 in H2; rewrite > cmp_refl in H2; 
+destruct H2.      
 qed.
