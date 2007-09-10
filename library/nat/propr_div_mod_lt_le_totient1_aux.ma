@@ -102,8 +102,7 @@ apply (le_times_to_le c (a/c) a)
 [ assumption
 | rewrite > (sym_times c (a/c)).
   rewrite > (NdivM_times_M_to_N a c) in \vdash (? % ?)
-  [ rewrite < (sym_times a c).
-    apply (O_lt_const_to_le_times_const).
+  [ apply (le_times_n c a ?).   
     assumption
   | assumption
   | assumption
@@ -152,18 +151,6 @@ cut(O \lt c)
 ]
 qed.
 
-(*
-theorem div_times_to_eqSO: \forall a,d:nat.
-O \lt d \to a*d = d \to a = (S O).
-intros.
-apply (inj_times_r1 d)
-[ assumption
-| rewrite > sym_times.
-  rewrite < (times_n_SO d).
-  assumption
-]
-qed.*)
-
 
 theorem div_mod_minus:
 \forall a,b:nat. O \lt b \to
@@ -175,22 +162,6 @@ rewrite > (div_mod a b) in \vdash (? ? ? (? % ?))
 ]
 qed.
 
-(*
-theorem sum_div_eq_div: \forall a,b,c:nat.
-O \lt c \to b \lt c \to c \divides a \to (a+b) /c = a/c.
-intros.
-elim H2.
-rewrite > H3.
-rewrite > (sym_times c n2).
-rewrite > (div_plus_times c n2 b)
-[ rewrite > (div_times_ltO n2 c)
-  [ reflexivity
-  | assumption
-  ]
-| assumption
-]
-qed.
-*)
 
 (* A corollary to the division theorem (between natural numbers).
  *

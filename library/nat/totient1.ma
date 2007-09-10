@@ -362,17 +362,11 @@ cut (O \lt n)
     ]
   | assumption
   ]
-| apply (nat_case1 n)
-  [ intros.
-    rewrite > H7 in H6.
-    rewrite > sym_times in H6.
-    simplify in H6.
-    rewrite > H6 in H.
-    apply False_ind.
-    change in H with ((S O) \le O).
-    apply (not_le_Sn_O O H)
-  | intros.
-    apply (lt_O_S m)
+| apply (divides_to_lt_O n c)
+  [ assumption
+  | apply (witness n c b).
+    rewrite > sym_times.
+    assumption
   ]
 ]
 qed.
@@ -573,7 +567,7 @@ apply (trans_eq ? ?
               | apply (sum_divisor_totient1_aux2);
                 assumption
               ]
-            | apply (eqb_true_to_eq (gcd (i \mod n) (i/n)) (S O)).    
+            | apply (eqb_true_to_eq (gcd (i \mod n) (i/n)) (S O)).
               apply (andb_true_true 
               (eqb (gcd (i\mod n) (i/n)) (S O))
               (leb (S (i\mod n)) (i/n))
