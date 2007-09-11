@@ -157,17 +157,6 @@ apply (leb_elim n m)
 ]
 qed.
 
-(* a basic property of divides predicate *)
-
-theorem O_div_c_to_c_eq_O: \forall c:nat.
-O \divides c \to c = O.
-intros.
-apply antisymmetric_divides
-[ apply divides_n_O
-| assumption
-]
-qed.
-
 (* an alternative characterization for gcd *)
 theorem gcd1: \forall a,b,c:nat.
 c \divides a \to c \divides b \to
@@ -187,7 +176,7 @@ elim (H2 ((gcd a b)))
 qed.
 
 
-theorem eq_gcd_times_times_eqv_times_gcd: \forall a,b,c:nat.
+theorem eq_gcd_times_times_times_gcd: \forall a,b,c:nat.
 (gcd (c*a) (c*b)) = c*(gcd a b).
 intros.
 apply (nat_case1 c)
@@ -249,7 +238,7 @@ apply gcd1
 ]
 qed.
 
-theorem aDIVIDES_b_TIMES_c_to_GCD_a_b_eq_d_to_aDIVd_DIVIDES_c: \forall a,b,c,d:nat.
+theorem divides_times_to_gcd_to_divides_div: \forall a,b,c,d:nat.
 a \divides (b*c) \to (gcd a b) = d \to (a/d) \divides c.
 intros.
 apply (nat_case1 a)
@@ -276,7 +265,10 @@ apply (nat_case1 a)
       | apply (lt_times_eq_O b c)
         [ rewrite > H3.
           apply lt_O_S
-        | apply (O_div_c_to_c_eq_O (b*c) H)
+        | apply antisymmetric_divides
+          [ apply divides_n_O
+          | assumption
+          ]
         ]
       ]
     | rewrite < H1.
@@ -301,7 +293,7 @@ apply (nat_case1 a)
                   assumption
               | apply (inj_times_r1 d ? ?)
                 [ assumption
-                | rewrite < (eq_gcd_times_times_eqv_times_gcd (a/d) (b/d) d).
+                | rewrite < (eq_gcd_times_times_times_gcd (a/d) (b/d) d).
                   rewrite < (times_n_SO d).
                   rewrite < (sym_times (a/d) d).
                   rewrite < (sym_times (b/d) d).
@@ -350,57 +342,46 @@ apply (nat_case1 a)
 ]
 qed.
 
-theorem gcd_sum_times_eq_gcd_aux: \forall a,b,d,m:nat. 
-(gcd (a+m*b) b) = d \to (gcd a b) = d.
+theorem gcd_plus_times_gcd: \forall a,b,d,m:nat. 
+(gcd (a+m*b) b) = (gcd a b).
 intros.
 apply gcd1
-[ rewrite > (minus_plus_m_m a (m*b)).
-  apply divides_minus
-  [ rewrite < H.
-    apply divides_gcd_n
-  | rewrite > (times_n_SO d).
-    rewrite > (sym_times d ?).
-    apply divides_times
-    [ apply divides_SO_n
-    | rewrite < H.
-      apply divides_gcd_m
+[ apply divides_plus
+  [ apply divides_gcd_n
+  | apply (trans_divides ? b ?)
+    [ apply divides_gcd_m
+    | rewrite > sym_times.
+      apply (witness b (b*m) m).
+      reflexivity
     ]
   ]
-| rewrite < H.
-  apply divides_gcd_m
+| apply divides_gcd_m
 | intros.
-  rewrite < H.
   apply divides_d_gcd
   [ assumption
-  | apply divides_plus
+  | rewrite > (minus_plus_m_m a (m*b)). 
+    apply divides_minus
     [ assumption
-    | rewrite > (times_n_SO d1).
-      rewrite > (sym_times d1 ?).
-      apply divides_times
-      [ apply divides_SO_n
-      | assumption
-      ]
+    | apply (trans_divides ? b ?)
+      [ assumption
+      | rewrite > sym_times.
+        apply (witness b (b*m) m).
+        reflexivity
+      ] 
     ]
   ]
 ]
 qed.
 
-theorem gcd_sum_times_eq_gcd: \forall a,b,m:nat. 
-(gcd (a+m*b) b) = (gcd a b).
-intros.
-apply sym_eq.
-apply (gcd_sum_times_eq_gcd_aux a b (gcd (a+m*b) b) m).
-reflexivity.
-qed.
 
-theorem gcd_div_div_eq_div_gcd: \forall a,b,m:nat.
+theorem eq_gcd_div_div_div_gcd: \forall a,b,m:nat.
 O \lt m \to m \divides a \to m \divides b \to 
 (gcd (a/m) (b/m)) = (gcd a b) / m.
 intros.
 apply (inj_times_r1 m H).
 rewrite > (sym_times m ((gcd a b)/m)).
 rewrite > (NdivM_times_M_to_N (gcd a b) m)
-[ rewrite < eq_gcd_times_times_eqv_times_gcd.
+[ rewrite < eq_gcd_times_times_times_gcd.
   rewrite > (sym_times m (a/m)).
   rewrite > (sym_times m (b/m)).
   rewrite > (NdivM_times_M_to_N a m H H1).
@@ -413,7 +394,7 @@ rewrite > (NdivM_times_M_to_N (gcd a b) m)
 qed.
 
 
-theorem gcdSO_divides_divides_times_divides: \forall c,e,f:nat.
+theorem gcd_SO_to_divides_to_divides_to_divides_times: \forall c,e,f:nat.
 (gcd e f) = (S O)  \to e \divides c \to f \divides c \to 
 (e*f) \divides c.
 intros.
@@ -462,13 +443,13 @@ qed.
    the following sense: if a1 and a2 are relatively prime, then 
    gcd(a1·a2, b) = gcd(a1, b)·gcd(a2, b). 
  *)
-theorem gcd_aTIMESb_c_eq_gcd_a_c_TIMES_gcd_b_c: \forall a,b,c:nat.
+theorem gcd_SO_to_eq_gcd_times_times_gcd_gcd: \forall a,b,c:nat.
 (gcd a b) = (S O) \to (gcd (a*b) c) = (gcd a c) * (gcd b c).
 intros.
 apply gcd1
 [ apply divides_times; 
     apply divides_gcd_n
-| apply (gcdSO_divides_divides_times_divides c (gcd a c) (gcd b c))
+| apply (gcd_SO_to_divides_to_divides_to_divides_times c (gcd a c) (gcd b c))
   [ apply gcd1
     [ apply divides_SO_n  
     | apply divides_SO_n
@@ -492,11 +473,11 @@ apply gcd1
   | apply (divides_gcd_m)      
   ]
 | intros.
-  rewrite < (eq_gcd_times_times_eqv_times_gcd b c (gcd a c)).
+  rewrite < (eq_gcd_times_times_times_gcd b c (gcd a c)).
   rewrite > (sym_times (gcd a c) b).
   rewrite > (sym_times (gcd a c) c).
-  rewrite < (eq_gcd_times_times_eqv_times_gcd a c b).
-  rewrite < (eq_gcd_times_times_eqv_times_gcd a c c).
+  rewrite < (eq_gcd_times_times_times_gcd a c b).
+  rewrite < (eq_gcd_times_times_times_gcd a c c).
   apply (divides_d_gcd)
   [ apply (divides_d_gcd)
     [ rewrite > (times_n_SO d).
@@ -525,7 +506,7 @@ apply gcd1
 qed.
   
   
-theorem gcd_eq_gcd_minus: \forall a,b:nat.
+theorem eq_gcd_gcd_minus: \forall a,b:nat.
 a \lt b \to (gcd a b) = (gcd (b - a) b).
 intros.
 apply sym_eq.
