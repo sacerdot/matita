@@ -622,13 +622,13 @@ v2)).(\lambda (H16: (tau0 g c0 t2 t6)).(let H_y \def (H1 t6 H16) in (let H_y0
 t2) (THead (Flat Cast) v2 t6)) (\lambda (x: T).(\lambda (H18: (ty3 g c0 v2 
 x)).(ex_ind T (\lambda (t: T).(ty3 g c0 t6 t)) (ty3 g c0 (THead (Flat Cast) 
 t3 t2) (THead (Flat Cast) v2 t6)) (\lambda (x0: T).(\lambda (H19: (ty3 g c0 
-t6 x0)).(ty3_conv g c0 (THead (Flat Cast) v2 t6) v2 (ty3_cast g c0 t6 v2 
-(ty3_sconv g c0 t6 x0 H19 t3 v2 H_y0 H17) x H18) (THead (Flat Cast) t3 t2) t3 
-(ty3_cast g c0 t2 t3 H0 v2 H_y0) (pc3_s c0 t3 (THead (Flat Cast) v2 t6) 
-(pc3_pr2_u c0 t6 (THead (Flat Cast) v2 t6) (pr2_free c0 (THead (Flat Cast) v2 
-t6) t6 (pr0_epsilon t6 t6 (pr0_refl t6) v2)) t3 H17))))) (ty3_correct g c0 t2 
-t6 H_y)))) (ty3_correct g c0 t3 v2 H_y0))))))) t4 H14)) t5 (sym_eq T t5 t2 
-H13))) v1 (sym_eq T v1 t3 H12))) H11))) c1 (sym_eq C c1 c0 H7) H8 H9 H5 
-H6))))]) in (H5 (refl_equal C c0) (refl_equal T (THead (Flat Cast) t3 t2)) 
-(refl_equal T t4))))))))))))) c u t1 H))))).
+t6 x0)).(ty3_conv g c0 (THead (Flat Cast) v2 t6) (THead (Flat Cast) x v2) 
+(ty3_cast g c0 t6 v2 (ty3_sconv g c0 t6 x0 H19 t3 v2 H_y0 H17) x H18) (THead 
+(Flat Cast) t3 t2) (THead (Flat Cast) v2 t3) (ty3_cast g c0 t2 t3 H0 v2 H_y0) 
+(pc3_s c0 (THead (Flat Cast) v2 t3) (THead (Flat Cast) v2 t6) (pc3_thin_dx c0 
+t6 t3 H17 v2 Cast))))) (ty3_correct g c0 t2 t6 H_y)))) (ty3_correct g c0 t3 
+v2 H_y0))))))) t4 H14)) t5 (sym_eq T t5 t2 H13))) v1 (sym_eq T v1 t3 H12))) 
+H11))) c1 (sym_eq C c1 c0 H7) H8 H9 H5 H6))))]) in (H5 (refl_equal C c0) 
+(refl_equal T (THead (Flat Cast) t3 t2)) (refl_equal T t4))))))))))))) c u t1 
+H))))).
 

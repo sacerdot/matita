@@ -554,28 +554,34 @@ in (ex3_2_ind T T (\lambda (y1: T).(\lambda (_: T).(subst1 d u t4 (lift (S O)
 d y1)))) (\lambda (_: T).(\lambda (y2: T).(subst1 d u t0 (lift (S O) d y2)))) 
 (\lambda (y1: T).(\lambda (y2: T).(ty3 g a y1 y2))) (ex3_2 T T (\lambda (y1: 
 T).(\lambda (_: T).(subst1 d u (THead (Flat Cast) t4 t3) (lift (S O) d y1)))) 
-(\lambda (_: T).(\lambda (y2: T).(subst1 d u t4 (lift (S O) d y2)))) (\lambda 
-(y1: T).(\lambda (y2: T).(ty3 g a y1 y2)))) (\lambda (x0: T).(\lambda (x1: 
-T).(\lambda (H8: (subst1 d u t4 (lift (S O) d x0))).(\lambda (_: (subst1 d u 
-t0 (lift (S O) d x1))).(\lambda (H10: (ty3 g a x0 x1)).(let H11 \def (H1 e u 
-d H4 a0 H5 a H6) in (ex3_2_ind T T (\lambda (y1: T).(\lambda (_: T).(subst1 d 
-u t3 (lift (S O) d y1)))) (\lambda (_: T).(\lambda (y2: T).(subst1 d u t4 
-(lift (S O) d y2)))) (\lambda (y1: T).(\lambda (y2: T).(ty3 g a y1 y2))) 
-(ex3_2 T T (\lambda (y1: T).(\lambda (_: T).(subst1 d u (THead (Flat Cast) t4 
-t3) (lift (S O) d y1)))) (\lambda (_: T).(\lambda (y2: T).(subst1 d u t4 
-(lift (S O) d y2)))) (\lambda (y1: T).(\lambda (y2: T).(ty3 g a y1 y2)))) 
-(\lambda (x2: T).(\lambda (x3: T).(\lambda (H12: (subst1 d u t3 (lift (S O) d 
+(\lambda (_: T).(\lambda (y2: T).(subst1 d u (THead (Flat Cast) t0 t4) (lift 
+(S O) d y2)))) (\lambda (y1: T).(\lambda (y2: T).(ty3 g a y1 y2)))) (\lambda 
+(x0: T).(\lambda (x1: T).(\lambda (H8: (subst1 d u t4 (lift (S O) d 
+x0))).(\lambda (H9: (subst1 d u t0 (lift (S O) d x1))).(\lambda (H10: (ty3 g 
+a x0 x1)).(let H11 \def (H1 e u d H4 a0 H5 a H6) in (ex3_2_ind T T (\lambda 
+(y1: T).(\lambda (_: T).(subst1 d u t3 (lift (S O) d y1)))) (\lambda (_: 
+T).(\lambda (y2: T).(subst1 d u t4 (lift (S O) d y2)))) (\lambda (y1: 
+T).(\lambda (y2: T).(ty3 g a y1 y2))) (ex3_2 T T (\lambda (y1: T).(\lambda 
+(_: T).(subst1 d u (THead (Flat Cast) t4 t3) (lift (S O) d y1)))) (\lambda 
+(_: T).(\lambda (y2: T).(subst1 d u (THead (Flat Cast) t0 t4) (lift (S O) d 
+y2)))) (\lambda (y1: T).(\lambda (y2: T).(ty3 g a y1 y2)))) (\lambda (x2: 
+T).(\lambda (x3: T).(\lambda (H12: (subst1 d u t3 (lift (S O) d 
 x2))).(\lambda (H13: (subst1 d u t4 (lift (S O) d x3))).(\lambda (H14: (ty3 g 
 a x2 x3)).(let H15 \def (eq_ind T x3 (\lambda (t: T).(ty3 g a x2 t)) H14 x0 
 (subst1_confluence_lift t4 x3 u d H13 x0 H8)) in (ex3_2_intro T T (\lambda 
 (y1: T).(\lambda (_: T).(subst1 d u (THead (Flat Cast) t4 t3) (lift (S O) d 
-y1)))) (\lambda (_: T).(\lambda (y2: T).(subst1 d u t4 (lift (S O) d y2)))) 
-(\lambda (y1: T).(\lambda (y2: T).(ty3 g a y1 y2))) (THead (Flat Cast) x0 x2) 
-x0 (eq_ind_r T (THead (Flat Cast) (lift (S O) d x0) (lift (S O) d x2)) 
-(\lambda (t: T).(subst1 d u (THead (Flat Cast) t4 t3) t)) (subst1_head u t4 
-(lift (S O) d x0) d H8 (Flat Cast) t3 (lift (S O) d x2) H12) (lift (S O) d 
-(THead (Flat Cast) x0 x2)) (lift_flat Cast x0 x2 (S O) d)) H8 (ty3_cast g a 
-x2 x0 H15 x1 H10)))))))) H11))))))) H7)))))))))))))))))) c t1 t2 H))))).
+y1)))) (\lambda (_: T).(\lambda (y2: T).(subst1 d u (THead (Flat Cast) t0 t4) 
+(lift (S O) d y2)))) (\lambda (y1: T).(\lambda (y2: T).(ty3 g a y1 y2))) 
+(THead (Flat Cast) x0 x2) (THead (Flat Cast) x1 x0) (eq_ind_r T (THead (Flat 
+Cast) (lift (S O) d x0) (lift (S O) d x2)) (\lambda (t: T).(subst1 d u (THead 
+(Flat Cast) t4 t3) t)) (subst1_head u t4 (lift (S O) d x0) d H8 (Flat Cast) 
+t3 (lift (S O) d x2) H12) (lift (S O) d (THead (Flat Cast) x0 x2)) (lift_flat 
+Cast x0 x2 (S O) d)) (eq_ind_r T (THead (Flat Cast) (lift (S O) d x1) (lift 
+(S O) d x0)) (\lambda (t: T).(subst1 d u (THead (Flat Cast) t0 t4) t)) 
+(subst1_head u t0 (lift (S O) d x1) d H9 (Flat Cast) t4 (lift (S O) d x0) H8) 
+(lift (S O) d (THead (Flat Cast) x1 x0)) (lift_flat Cast x1 x0 (S O) d)) 
+(ty3_cast g a x2 x0 H15 x1 H10)))))))) H11))))))) H7)))))))))))))))))) c t1 
+t2 H))))).
 
 theorem ty3_gen_cvoid:
  \forall (g: G).(\forall (c: C).(\forall (t1: T).(\forall (t2: T).((ty3 g c 
@@ -1103,47 +1109,59 @@ C).(\lambda (H5: (drop (S O) d c0 a)).(let H6 \def (H3 e u d H4 a H5) in
 (\lambda (_: T).(\lambda (y2: T).(eq T t0 (lift (S O) d y2)))) (\lambda (y1: 
 T).(\lambda (y2: T).(ty3 g a y1 y2))) (ex3_2 T T (\lambda (y1: T).(\lambda 
 (_: T).(eq T (THead (Flat Cast) t4 t3) (lift (S O) d y1)))) (\lambda (_: 
-T).(\lambda (y2: T).(eq T t4 (lift (S O) d y2)))) (\lambda (y1: T).(\lambda 
-(y2: T).(ty3 g a y1 y2)))) (\lambda (x0: T).(\lambda (x1: T).(\lambda (H7: 
-(eq T t4 (lift (S O) d x0))).(\lambda (H8: (eq T t0 (lift (S O) d 
-x1))).(\lambda (H9: (ty3 g a x0 x1)).(let H10 \def (eq_ind T t0 (\lambda (t: 
-T).(ty3 g c0 t4 t)) H2 (lift (S O) d x1) H8) in (let H11 \def (eq_ind T t4 
-(\lambda (t: T).(ty3 g c0 t (lift (S O) d x1))) H10 (lift (S O) d x0) H7) in 
-(let H12 \def (eq_ind T t4 (\lambda (t: T).(\forall (e0: C).(\forall (u0: 
-T).(\forall (d0: nat).((getl d0 c0 (CHead e0 (Bind Void) u0)) \to (\forall 
-(a0: C).((drop (S O) d0 c0 a0) \to (ex3_2 T T (\lambda (y1: T).(\lambda (_: 
-T).(eq T t3 (lift (S O) d0 y1)))) (\lambda (_: T).(\lambda (y2: T).(eq T t 
-(lift (S O) d0 y2)))) (\lambda (y1: T).(\lambda (y2: T).(ty3 g a0 y1 
-y2))))))))))) H1 (lift (S O) d x0) H7) in (let H13 \def (eq_ind T t4 (\lambda 
-(t: T).(ty3 g c0 t3 t)) H0 (lift (S O) d x0) H7) in (eq_ind_r T (lift (S O) d 
-x0) (\lambda (t: T).(ex3_2 T T (\lambda (y1: T).(\lambda (_: T).(eq T (THead 
-(Flat Cast) t t3) (lift (S O) d y1)))) (\lambda (_: T).(\lambda (y2: T).(eq T 
-t (lift (S O) d y2)))) (\lambda (y1: T).(\lambda (y2: T).(ty3 g a y1 y2))))) 
-(let H14 \def (H12 e u d H4 a H5) in (ex3_2_ind T T (\lambda (y1: T).(\lambda 
-(_: T).(eq T t3 (lift (S O) d y1)))) (\lambda (_: T).(\lambda (y2: T).(eq T 
-(lift (S O) d x0) (lift (S O) d y2)))) (\lambda (y1: T).(\lambda (y2: T).(ty3 
-g a y1 y2))) (ex3_2 T T (\lambda (y1: T).(\lambda (_: T).(eq T (THead (Flat 
-Cast) (lift (S O) d x0) t3) (lift (S O) d y1)))) (\lambda (_: T).(\lambda 
-(y2: T).(eq T (lift (S O) d x0) (lift (S O) d y2)))) (\lambda (y1: 
-T).(\lambda (y2: T).(ty3 g a y1 y2)))) (\lambda (x2: T).(\lambda (x3: 
-T).(\lambda (H15: (eq T t3 (lift (S O) d x2))).(\lambda (H16: (eq T (lift (S 
-O) d x0) (lift (S O) d x3))).(\lambda (H17: (ty3 g a x2 x3)).(let H18 \def 
-(eq_ind T t3 (\lambda (t: T).(ty3 g c0 t (lift (S O) d x0))) H13 (lift (S O) 
-d x2) H15) in (eq_ind_r T (lift (S O) d x2) (\lambda (t: T).(ex3_2 T T 
-(\lambda (y1: T).(\lambda (_: T).(eq T (THead (Flat Cast) (lift (S O) d x0) 
-t) (lift (S O) d y1)))) (\lambda (_: T).(\lambda (y2: T).(eq T (lift (S O) d 
-x0) (lift (S O) d y2)))) (\lambda (y1: T).(\lambda (y2: T).(ty3 g a y1 
-y2))))) (let H19 \def (eq_ind_r T x3 (\lambda (t: T).(ty3 g a x2 t)) H17 x0 
-(lift_inj x0 x3 (S O) d H16)) in (eq_ind T (lift (S O) d (THead (Flat Cast) 
-x0 x2)) (\lambda (t: T).(ex3_2 T T (\lambda (y1: T).(\lambda (_: T).(eq T t 
-(lift (S O) d y1)))) (\lambda (_: T).(\lambda (y2: T).(eq T (lift (S O) d x0) 
-(lift (S O) d y2)))) (\lambda (y1: T).(\lambda (y2: T).(ty3 g a y1 y2))))) 
-(ex3_2_intro T T (\lambda (y1: T).(\lambda (_: T).(eq T (lift (S O) d (THead 
-(Flat Cast) x0 x2)) (lift (S O) d y1)))) (\lambda (_: T).(\lambda (y2: T).(eq 
-T (lift (S O) d x0) (lift (S O) d y2)))) (\lambda (y1: T).(\lambda (y2: 
-T).(ty3 g a y1 y2))) (THead (Flat Cast) x0 x2) x0 (refl_equal T (lift (S O) d 
-(THead (Flat Cast) x0 x2))) (refl_equal T (lift (S O) d x0)) (ty3_cast g a x2 
-x0 H19 x1 H9)) (THead (Flat Cast) (lift (S O) d x0) (lift (S O) d x2)) 
-(lift_flat Cast x0 x2 (S O) d))) t3 H15))))))) H14)) t4 H7)))))))))) 
-H6)))))))))))))))) c t1 t2 H))))).
+T).(\lambda (y2: T).(eq T (THead (Flat Cast) t0 t4) (lift (S O) d y2)))) 
+(\lambda (y1: T).(\lambda (y2: T).(ty3 g a y1 y2)))) (\lambda (x0: 
+T).(\lambda (x1: T).(\lambda (H7: (eq T t4 (lift (S O) d x0))).(\lambda (H8: 
+(eq T t0 (lift (S O) d x1))).(\lambda (H9: (ty3 g a x0 x1)).(let H10 \def 
+(eq_ind T t0 (\lambda (t: T).(ty3 g c0 t4 t)) H2 (lift (S O) d x1) H8) in 
+(eq_ind_r T (lift (S O) d x1) (\lambda (t: T).(ex3_2 T T (\lambda (y1: 
+T).(\lambda (_: T).(eq T (THead (Flat Cast) t4 t3) (lift (S O) d y1)))) 
+(\lambda (_: T).(\lambda (y2: T).(eq T (THead (Flat Cast) t t4) (lift (S O) d 
+y2)))) (\lambda (y1: T).(\lambda (y2: T).(ty3 g a y1 y2))))) (let H11 \def 
+(eq_ind T t4 (\lambda (t: T).(ty3 g c0 t (lift (S O) d x1))) H10 (lift (S O) 
+d x0) H7) in (let H12 \def (eq_ind T t4 (\lambda (t: T).(\forall (e0: 
+C).(\forall (u0: T).(\forall (d0: nat).((getl d0 c0 (CHead e0 (Bind Void) 
+u0)) \to (\forall (a0: C).((drop (S O) d0 c0 a0) \to (ex3_2 T T (\lambda (y1: 
+T).(\lambda (_: T).(eq T t3 (lift (S O) d0 y1)))) (\lambda (_: T).(\lambda 
+(y2: T).(eq T t (lift (S O) d0 y2)))) (\lambda (y1: T).(\lambda (y2: T).(ty3 
+g a0 y1 y2))))))))))) H1 (lift (S O) d x0) H7) in (let H13 \def (eq_ind T t4 
+(\lambda (t: T).(ty3 g c0 t3 t)) H0 (lift (S O) d x0) H7) in (eq_ind_r T 
+(lift (S O) d x0) (\lambda (t: T).(ex3_2 T T (\lambda (y1: T).(\lambda (_: 
+T).(eq T (THead (Flat Cast) t t3) (lift (S O) d y1)))) (\lambda (_: 
+T).(\lambda (y2: T).(eq T (THead (Flat Cast) (lift (S O) d x1) t) (lift (S O) 
+d y2)))) (\lambda (y1: T).(\lambda (y2: T).(ty3 g a y1 y2))))) (let H14 \def 
+(H12 e u d H4 a H5) in (ex3_2_ind T T (\lambda (y1: T).(\lambda (_: T).(eq T 
+t3 (lift (S O) d y1)))) (\lambda (_: T).(\lambda (y2: T).(eq T (lift (S O) d 
+x0) (lift (S O) d y2)))) (\lambda (y1: T).(\lambda (y2: T).(ty3 g a y1 y2))) 
+(ex3_2 T T (\lambda (y1: T).(\lambda (_: T).(eq T (THead (Flat Cast) (lift (S 
+O) d x0) t3) (lift (S O) d y1)))) (\lambda (_: T).(\lambda (y2: T).(eq T 
+(THead (Flat Cast) (lift (S O) d x1) (lift (S O) d x0)) (lift (S O) d y2)))) 
+(\lambda (y1: T).(\lambda (y2: T).(ty3 g a y1 y2)))) (\lambda (x2: 
+T).(\lambda (x3: T).(\lambda (H15: (eq T t3 (lift (S O) d x2))).(\lambda 
+(H16: (eq T (lift (S O) d x0) (lift (S O) d x3))).(\lambda (H17: (ty3 g a x2 
+x3)).(let H18 \def (eq_ind T t3 (\lambda (t: T).(ty3 g c0 t (lift (S O) d 
+x0))) H13 (lift (S O) d x2) H15) in (eq_ind_r T (lift (S O) d x2) (\lambda 
+(t: T).(ex3_2 T T (\lambda (y1: T).(\lambda (_: T).(eq T (THead (Flat Cast) 
+(lift (S O) d x0) t) (lift (S O) d y1)))) (\lambda (_: T).(\lambda (y2: 
+T).(eq T (THead (Flat Cast) (lift (S O) d x1) (lift (S O) d x0)) (lift (S O) 
+d y2)))) (\lambda (y1: T).(\lambda (y2: T).(ty3 g a y1 y2))))) (let H19 \def 
+(eq_ind_r T x3 (\lambda (t: T).(ty3 g a x2 t)) H17 x0 (lift_inj x0 x3 (S O) d 
+H16)) in (eq_ind T (lift (S O) d (THead (Flat Cast) x0 x2)) (\lambda (t: 
+T).(ex3_2 T T (\lambda (y1: T).(\lambda (_: T).(eq T t (lift (S O) d y1)))) 
+(\lambda (_: T).(\lambda (y2: T).(eq T (THead (Flat Cast) (lift (S O) d x1) 
+(lift (S O) d x0)) (lift (S O) d y2)))) (\lambda (y1: T).(\lambda (y2: 
+T).(ty3 g a y1 y2))))) (eq_ind T (lift (S O) d (THead (Flat Cast) x1 x0)) 
+(\lambda (t: T).(ex3_2 T T (\lambda (y1: T).(\lambda (_: T).(eq T (lift (S O) 
+d (THead (Flat Cast) x0 x2)) (lift (S O) d y1)))) (\lambda (_: T).(\lambda 
+(y2: T).(eq T t (lift (S O) d y2)))) (\lambda (y1: T).(\lambda (y2: T).(ty3 g 
+a y1 y2))))) (ex3_2_intro T T (\lambda (y1: T).(\lambda (_: T).(eq T (lift (S 
+O) d (THead (Flat Cast) x0 x2)) (lift (S O) d y1)))) (\lambda (_: T).(\lambda 
+(y2: T).(eq T (lift (S O) d (THead (Flat Cast) x1 x0)) (lift (S O) d y2)))) 
+(\lambda (y1: T).(\lambda (y2: T).(ty3 g a y1 y2))) (THead (Flat Cast) x0 x2) 
+(THead (Flat Cast) x1 x0) (refl_equal T (lift (S O) d (THead (Flat Cast) x0 
+x2))) (refl_equal T (lift (S O) d (THead (Flat Cast) x1 x0))) (ty3_cast g a 
+x2 x0 H19 x1 H9)) (THead (Flat Cast) (lift (S O) d x1) (lift (S O) d x0)) 
+(lift_flat Cast x1 x0 (S O) d)) (THead (Flat Cast) (lift (S O) d x0) (lift (S 
+O) d x2)) (lift_flat Cast x0 x2 (S O) d))) t3 H15))))))) H14)) t4 H7)))) t0 
+H8))))))) H6)))))))))))))))) c t1 t2 H))))).
 

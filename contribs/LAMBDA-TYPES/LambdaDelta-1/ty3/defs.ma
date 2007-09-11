@@ -42,5 +42,5 @@ g c (THead (Flat Appl) w v) (THead (Flat Appl) w (THead (Bind Abst) u
 t)))))))))
 | ty3_cast: \forall (c: C).(\forall (t1: T).(\forall (t2: T).((ty3 g c t1 t2) 
 \to (\forall (t0: T).((ty3 g c t2 t0) \to (ty3 g c (THead (Flat Cast) t2 t1) 
-t2)))))).
+(THead (Flat Cast) t0 t2))))))).
 

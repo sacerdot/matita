@@ -179,10 +179,14 @@ C).(\lambda (t0: T).(\lambda (t3: T).(\lambda (_: (ty3 g c t0 t3)).(\lambda
 nat).(\forall (h: nat).((drop h d c0 c) \to (ty3 g c0 (lift h d t3) (lift h d 
 t4)))))))).(\lambda (c0: C).(\lambda (d: nat).(\lambda (h: nat).(\lambda (H4: 
 (drop h d c0 c)).(eq_ind_r T (THead (Flat Cast) (lift h d t3) (lift h (s 
-(Flat Cast) d) t0)) (\lambda (t: T).(ty3 g c0 t (lift h d t3))) (ty3_cast g 
-c0 (lift h (s (Flat Cast) d) t0) (lift h d t3) (H1 c0 d h H4) (lift h d t4) 
-(H3 c0 d h H4)) (lift h d (THead (Flat Cast) t3 t0)) (lift_head (Flat Cast) 
-t3 t0 h d)))))))))))))) e t1 t2 H))))).
+(Flat Cast) d) t0)) (\lambda (t: T).(ty3 g c0 t (lift h d (THead (Flat Cast) 
+t4 t3)))) (eq_ind_r T (THead (Flat Cast) (lift h d t4) (lift h (s (Flat Cast) 
+d) t3)) (\lambda (t: T).(ty3 g c0 (THead (Flat Cast) (lift h d t3) (lift h (s 
+(Flat Cast) d) t0)) t)) (ty3_cast g c0 (lift h (s (Flat Cast) d) t0) (lift h 
+(s (Flat Cast) d) t3) (H1 c0 (s (Flat Cast) d) h H4) (lift h d t4) (H3 c0 d h 
+H4)) (lift h d (THead (Flat Cast) t4 t3)) (lift_head (Flat Cast) t4 t3 h d)) 
+(lift h d (THead (Flat Cast) t3 t0)) (lift_head (Flat Cast) t3 t0 h 
+d)))))))))))))) e t1 t2 H))))).
 
 theorem ty3_correct:
  \forall (g: G).(\forall (c: C).(\forall (t1: T).(\forall (t2: T).((ty3 g c 
@@ -244,10 +248,14 @@ T).(ty3 g c0 (THead (Flat Appl) w (THead (Bind Abst) u t)) t0)) (THead (Flat
 Appl) w (THead (Bind Abst) u x1)) (ty3_appl g c0 w u H0 (THead (Bind Abst) u 
 t) x1 (ty3_bind g c0 u x2 H9 Abst t x1 H10 x3 H11)))))))))) (ty3_gen_bind g 
 Abst c0 u t x0 H7)))) H6)))) H4))))))))))) (\lambda (c0: C).(\lambda (t0: 
-T).(\lambda (t3: T).(\lambda (_: (ty3 g c0 t0 t3)).(\lambda (H1: (ex T 
-(\lambda (t: T).(ty3 g c0 t3 t)))).(\lambda (t4: T).(\lambda (_: (ty3 g c0 t3 
-t4)).(\lambda (_: (ex T (\lambda (t: T).(ty3 g c0 t4 t)))).H1)))))))) c t1 t2 
-H))))).
+T).(\lambda (t3: T).(\lambda (_: (ty3 g c0 t0 t3)).(\lambda (_: (ex T 
+(\lambda (t: T).(ty3 g c0 t3 t)))).(\lambda (t4: T).(\lambda (H2: (ty3 g c0 
+t3 t4)).(\lambda (H3: (ex T (\lambda (t: T).(ty3 g c0 t4 t)))).(let H4 \def 
+H3 in (ex_ind T (\lambda (t: T).(ty3 g c0 t4 t)) (ex T (\lambda (t: T).(ty3 g 
+c0 (THead (Flat Cast) t4 t3) t))) (\lambda (x: T).(\lambda (H5: (ty3 g c0 t4 
+x)).(ex_intro T (\lambda (t: T).(ty3 g c0 (THead (Flat Cast) t4 t3) t)) 
+(THead (Flat Cast) x t4) (ty3_cast g c0 t3 t4 H2 x H5)))) H4)))))))))) c t1 
+t2 H))))).
 
 theorem ty3_unique:
  \forall (g: G).(\forall (c: C).(\forall (u: T).(\forall (t1: T).((ty3 g c u 
@@ -416,11 +424,15 @@ x1) (H3 (THead (Bind Abst) x0 x1) H6) w Appl) t2 H5)))))) (ty3_gen_appl g c0
 w v t2 H4))))))))))))) (\lambda (c0: C).(\lambda (t0: T).(\lambda (t2: 
 T).(\lambda (_: (ty3 g c0 t0 t2)).(\lambda (_: ((\forall (t3: T).((ty3 g c0 
 t0 t3) \to (pc3 c0 t2 t3))))).(\lambda (t3: T).(\lambda (_: (ty3 g c0 t2 
-t3)).(\lambda (_: ((\forall (t4: T).((ty3 g c0 t2 t4) \to (pc3 c0 t3 
+t3)).(\lambda (H3: ((\forall (t4: T).((ty3 g c0 t2 t4) \to (pc3 c0 t3 
 t4))))).(\lambda (t4: T).(\lambda (H4: (ty3 g c0 (THead (Flat Cast) t2 t0) 
-t4)).(and_ind (pc3 c0 t2 t4) (ty3 g c0 t0 t2) (pc3 c0 t2 t4) (\lambda (H5: 
-(pc3 c0 t2 t4)).(\lambda (_: (ty3 g c0 t0 t2)).H5)) (ty3_gen_cast g c0 t0 t2 
-t4 H4)))))))))))) c u t1 H))))).
+t4)).(ex3_ind T (\lambda (t5: T).(pc3 c0 (THead (Flat Cast) t5 t2) t4)) 
+(\lambda (_: T).(ty3 g c0 t0 t2)) (\lambda (t5: T).(ty3 g c0 t2 t5)) (pc3 c0 
+(THead (Flat Cast) t3 t2) t4) (\lambda (x0: T).(\lambda (H5: (pc3 c0 (THead 
+(Flat Cast) x0 t2) t4)).(\lambda (_: (ty3 g c0 t0 t2)).(\lambda (H7: (ty3 g 
+c0 t2 x0)).(pc3_t (THead (Flat Cast) x0 t2) c0 (THead (Flat Cast) t3 t2) 
+(pc3_head_1 c0 t3 x0 (H3 x0 H7) (Flat Cast) t2) t4 H5))))) (ty3_gen_cast g c0 
+t0 t2 t4 H4)))))))))))) c u t1 H))))).
 
 theorem ty3_gen_abst_abst:
  \forall (g: G).(\forall (c: C).(\forall (u: T).(\forall (t1: T).(\forall 
@@ -469,6 +481,7 @@ v) \to (ex T (\lambda (u: T).(ty3 g c (THead (Flat Cast) v t) u)))))))
  \lambda (g: G).(\lambda (c: C).(\lambda (t: T).(\lambda (v: T).(\lambda (H: 
 (ty3 g c t v)).(ex_ind T (\lambda (t0: T).(ty3 g c v t0)) (ex T (\lambda (u: 
 T).(ty3 g c (THead (Flat Cast) v t) u))) (\lambda (x: T).(\lambda (H0: (ty3 g 
-c v x)).(ex_intro T (\lambda (u: T).(ty3 g c (THead (Flat Cast) v t) u)) v 
-(ty3_cast g c t v H x H0)))) (ty3_correct g c t v H)))))).
+c v x)).(ex_intro T (\lambda (u: T).(ty3 g c (THead (Flat Cast) v t) u)) 
+(THead (Flat Cast) x v) (ty3_cast g c t v H x H0)))) (ty3_correct g c t v 
+H)))))).
 

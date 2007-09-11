@@ -178,13 +178,21 @@ g x3) (arity_head g c0 u x H6 t (asucc g x3) H18)))))))) H15)))))))) H10)))))
 H7))))) H4))))))))))) (\lambda (c0: C).(\lambda (t3: T).(\lambda (t4: 
 T).(\lambda (_: (ty3 g c0 t3 t4)).(\lambda (H1: (ex2 A (\lambda (a1: 
 A).(arity g c0 t3 a1)) (\lambda (a1: A).(arity g c0 t4 (asucc g 
-a1))))).(\lambda (t0: T).(\lambda (_: (ty3 g c0 t4 t0)).(\lambda (_: (ex2 A 
+a1))))).(\lambda (t0: T).(\lambda (_: (ty3 g c0 t4 t0)).(\lambda (H3: (ex2 A 
 (\lambda (a1: A).(arity g c0 t4 a1)) (\lambda (a1: A).(arity g c0 t0 (asucc g 
 a1))))).(let H4 \def H1 in (ex2_ind A (\lambda (a1: A).(arity g c0 t3 a1)) 
 (\lambda (a1: A).(arity g c0 t4 (asucc g a1))) (ex2 A (\lambda (a1: A).(arity 
-g c0 (THead (Flat Cast) t4 t3) a1)) (\lambda (a1: A).(arity g c0 t4 (asucc g 
-a1)))) (\lambda (x: A).(\lambda (H5: (arity g c0 t3 x)).(\lambda (H6: (arity 
-g c0 t4 (asucc g x))).(ex_intro2 A (\lambda (a1: A).(arity g c0 (THead (Flat 
-Cast) t4 t3) a1)) (\lambda (a1: A).(arity g c0 t4 (asucc g a1))) x 
-(arity_cast g c0 t4 x H6 t3 H5) H6)))) H4)))))))))) c t1 t2 H))))).
+g c0 (THead (Flat Cast) t4 t3) a1)) (\lambda (a1: A).(arity g c0 (THead (Flat 
+Cast) t0 t4) (asucc g a1)))) (\lambda (x: A).(\lambda (H5: (arity g c0 t3 
+x)).(\lambda (H6: (arity g c0 t4 (asucc g x))).(let H7 \def H3 in (ex2_ind A 
+(\lambda (a1: A).(arity g c0 t4 a1)) (\lambda (a1: A).(arity g c0 t0 (asucc g 
+a1))) (ex2 A (\lambda (a1: A).(arity g c0 (THead (Flat Cast) t4 t3) a1)) 
+(\lambda (a1: A).(arity g c0 (THead (Flat Cast) t0 t4) (asucc g a1)))) 
+(\lambda (x0: A).(\lambda (H8: (arity g c0 t4 x0)).(\lambda (H9: (arity g c0 
+t0 (asucc g x0))).(ex_intro2 A (\lambda (a1: A).(arity g c0 (THead (Flat 
+Cast) t4 t3) a1)) (\lambda (a1: A).(arity g c0 (THead (Flat Cast) t0 t4) 
+(asucc g a1))) x (arity_cast g c0 t4 x H6 t3 H5) (arity_cast g c0 t0 (asucc g 
+x) (arity_repl g c0 t0 (asucc g x0) H9 (asucc g (asucc g x)) (asucc_repl g x0 
+(asucc g x) (arity_mono g c0 t4 x0 H8 (asucc g x) H6))) t4 H6))))) H7))))) 
+H4)))))))))) c t1 t2 H))))).
 

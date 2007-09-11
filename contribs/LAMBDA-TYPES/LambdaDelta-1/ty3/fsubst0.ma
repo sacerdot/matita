@@ -858,99 +858,130 @@ Abbr) u)) \to (ty3 g c2 t4 t0)))))))))).(\lambda (i: nat).(\lambda (u:
 T).(\lambda (c2: C).(\lambda (t4: T).(\lambda (H4: (fsubst0 i u c (THead 
 (Flat Cast) t3 t2) c2 t4)).(fsubst0_ind i u c (THead (Flat Cast) t3 t2) 
 (\lambda (c0: C).(\lambda (t5: T).(\forall (e: C).((getl i c (CHead e (Bind 
-Abbr) u)) \to (ty3 g c0 t5 t3))))) (\lambda (t5: T).(\lambda (H5: (subst0 i u 
-(THead (Flat Cast) t3 t2) t5)).(\lambda (e: C).(\lambda (H6: (getl i c (CHead 
-e (Bind Abbr) u))).(or3_ind (ex2 T (\lambda (u2: T).(eq T t5 (THead (Flat 
-Cast) u2 t2))) (\lambda (u2: T).(subst0 i u t3 u2))) (ex2 T (\lambda (t6: 
-T).(eq T t5 (THead (Flat Cast) t3 t6))) (\lambda (t6: T).(subst0 (s (Flat 
-Cast) i) u t2 t6))) (ex3_2 T T (\lambda (u2: T).(\lambda (t6: T).(eq T t5 
-(THead (Flat Cast) u2 t6)))) (\lambda (u2: T).(\lambda (_: T).(subst0 i u t3 
-u2))) (\lambda (_: T).(\lambda (t6: T).(subst0 (s (Flat Cast) i) u t2 t6)))) 
-(ty3 g c t5 t3) (\lambda (H7: (ex2 T (\lambda (u2: T).(eq T t5 (THead (Flat 
-Cast) u2 t2))) (\lambda (u2: T).(subst0 i u t3 u2)))).(ex2_ind T (\lambda 
+Abbr) u)) \to (ty3 g c0 t5 (THead (Flat Cast) t0 t3)))))) (\lambda (t5: 
+T).(\lambda (H5: (subst0 i u (THead (Flat Cast) t3 t2) t5)).(\lambda (e: 
+C).(\lambda (H6: (getl i c (CHead e (Bind Abbr) u))).(or3_ind (ex2 T (\lambda 
 (u2: T).(eq T t5 (THead (Flat Cast) u2 t2))) (\lambda (u2: T).(subst0 i u t3 
-u2)) (ty3 g c t5 t3) (\lambda (x: T).(\lambda (H8: (eq T t5 (THead (Flat 
-Cast) x t2))).(\lambda (H9: (subst0 i u t3 x)).(eq_ind_r T (THead (Flat Cast) 
-x t2) (\lambda (t6: T).(ty3 g c t6 t3)) (ty3_conv g c t3 t0 H2 (THead (Flat 
-Cast) x t2) x (ty3_cast g c t2 x (ty3_conv g c x t0 (H3 i u c x (fsubst0_snd 
-i u c t3 x H9) e H6) t2 t3 H0 (pc3_s c t3 x (pc3_fsubst0 c t3 t3 (pc3_refl c 
-t3) i u c x (fsubst0_snd i u c t3 x H9) e H6))) t0 (H3 i u c x (fsubst0_snd i 
-u c t3 x H9) e H6)) (pc3_fsubst0 c t3 t3 (pc3_refl c t3) i u c x (fsubst0_snd 
-i u c t3 x H9) e H6)) t5 H8)))) H7)) (\lambda (H7: (ex2 T (\lambda (t6: 
-T).(eq T t5 (THead (Flat Cast) t3 t6))) (\lambda (t6: T).(subst0 (s (Flat 
-Cast) i) u t2 t6)))).(ex2_ind T (\lambda (t6: T).(eq T t5 (THead (Flat Cast) 
-t3 t6))) (\lambda (t6: T).(subst0 (s (Flat Cast) i) u t2 t6)) (ty3 g c t5 t3) 
-(\lambda (x: T).(\lambda (H8: (eq T t5 (THead (Flat Cast) t3 x))).(\lambda 
-(H9: (subst0 (s (Flat Cast) i) u t2 x)).(eq_ind_r T (THead (Flat Cast) t3 x) 
-(\lambda (t6: T).(ty3 g c t6 t3)) (ty3_cast g c x t3 (H1 (s (Flat Cast) i) u 
-c x (fsubst0_snd (s (Flat Cast) i) u c t2 x H9) e H6) t0 H2) t5 H8)))) H7)) 
+u2))) (ex2 T (\lambda (t6: T).(eq T t5 (THead (Flat Cast) t3 t6))) (\lambda 
+(t6: T).(subst0 (s (Flat Cast) i) u t2 t6))) (ex3_2 T T (\lambda (u2: 
+T).(\lambda (t6: T).(eq T t5 (THead (Flat Cast) u2 t6)))) (\lambda (u2: 
+T).(\lambda (_: T).(subst0 i u t3 u2))) (\lambda (_: T).(\lambda (t6: 
+T).(subst0 (s (Flat Cast) i) u t2 t6)))) (ty3 g c t5 (THead (Flat Cast) t0 
+t3)) (\lambda (H7: (ex2 T (\lambda (u2: T).(eq T t5 (THead (Flat Cast) u2 
+t2))) (\lambda (u2: T).(subst0 i u t3 u2)))).(ex2_ind T (\lambda (u2: T).(eq 
+T t5 (THead (Flat Cast) u2 t2))) (\lambda (u2: T).(subst0 i u t3 u2)) (ty3 g 
+c t5 (THead (Flat Cast) t0 t3)) (\lambda (x: T).(\lambda (H8: (eq T t5 (THead 
+(Flat Cast) x t2))).(\lambda (H9: (subst0 i u t3 x)).(eq_ind_r T (THead (Flat 
+Cast) x t2) (\lambda (t6: T).(ty3 g c t6 (THead (Flat Cast) t0 t3))) (ex_ind 
+T (\lambda (t6: T).(ty3 g c t0 t6)) (ty3 g c (THead (Flat Cast) x t2) (THead 
+(Flat Cast) t0 t3)) (\lambda (x0: T).(\lambda (H10: (ty3 g c t0 
+x0)).(ty3_conv g c (THead (Flat Cast) t0 t3) (THead (Flat Cast) x0 t0) 
+(ty3_cast g c t3 t0 H2 x0 H10) (THead (Flat Cast) x t2) (THead (Flat Cast) t0 
+x) (ty3_cast g c t2 x (ty3_conv g c x t0 (H3 i u c x (fsubst0_snd i u c t3 x 
+H9) e H6) t2 t3 H0 (pc3_s c t3 x (pc3_fsubst0 c t3 t3 (pc3_refl c t3) i u c x 
+(fsubst0_snd i u c t3 x H9) e H6))) t0 (H3 i u c x (fsubst0_snd i u c t3 x 
+H9) e H6)) (pc3_fsubst0 c (THead (Flat Cast) t0 t3) (THead (Flat Cast) t0 t3) 
+(pc3_refl c (THead (Flat Cast) t0 t3)) i u c (THead (Flat Cast) t0 x) 
+(fsubst0_snd i u c (THead (Flat Cast) t0 t3) (THead (Flat Cast) t0 x) 
+(subst0_snd (Flat Cast) u x t3 i H9 t0)) e H6)))) (ty3_correct g c x t0 (H3 i 
+u c x (fsubst0_snd i u c t3 x H9) e H6))) t5 H8)))) H7)) (\lambda (H7: (ex2 T 
+(\lambda (t6: T).(eq T t5 (THead (Flat Cast) t3 t6))) (\lambda (t6: 
+T).(subst0 (s (Flat Cast) i) u t2 t6)))).(ex2_ind T (\lambda (t6: T).(eq T t5 
+(THead (Flat Cast) t3 t6))) (\lambda (t6: T).(subst0 (s (Flat Cast) i) u t2 
+t6)) (ty3 g c t5 (THead (Flat Cast) t0 t3)) (\lambda (x: T).(\lambda (H8: (eq 
+T t5 (THead (Flat Cast) t3 x))).(\lambda (H9: (subst0 (s (Flat Cast) i) u t2 
+x)).(eq_ind_r T (THead (Flat Cast) t3 x) (\lambda (t6: T).(ty3 g c t6 (THead 
+(Flat Cast) t0 t3))) (ty3_cast g c x t3 (H1 (s (Flat Cast) i) u c x 
+(fsubst0_snd (s (Flat Cast) i) u c t2 x H9) e H6) t0 H2) t5 H8)))) H7)) 
 (\lambda (H7: (ex3_2 T T (\lambda (u2: T).(\lambda (t6: T).(eq T t5 (THead 
 (Flat Cast) u2 t6)))) (\lambda (u2: T).(\lambda (_: T).(subst0 i u t3 u2))) 
 (\lambda (_: T).(\lambda (t6: T).(subst0 (s (Flat Cast) i) u t2 
 t6))))).(ex3_2_ind T T (\lambda (u2: T).(\lambda (t6: T).(eq T t5 (THead 
 (Flat Cast) u2 t6)))) (\lambda (u2: T).(\lambda (_: T).(subst0 i u t3 u2))) 
 (\lambda (_: T).(\lambda (t6: T).(subst0 (s (Flat Cast) i) u t2 t6))) (ty3 g 
-c t5 t3) (\lambda (x0: T).(\lambda (x1: T).(\lambda (H8: (eq T t5 (THead 
-(Flat Cast) x0 x1))).(\lambda (H9: (subst0 i u t3 x0)).(\lambda (H10: (subst0 
-(s (Flat Cast) i) u t2 x1)).(eq_ind_r T (THead (Flat Cast) x0 x1) (\lambda 
-(t6: T).(ty3 g c t6 t3)) (ty3_conv g c t3 t0 H2 (THead (Flat Cast) x0 x1) x0 
-(ty3_cast g c x1 x0 (ty3_conv g c x0 t0 (H3 i u c x0 (fsubst0_snd i u c t3 x0 
-H9) e H6) x1 t3 (H1 (s (Flat Cast) i) u c x1 (fsubst0_snd (s (Flat Cast) i) u 
-c t2 x1 H10) e H6) (pc3_s c t3 x0 (pc3_fsubst0 c t3 t3 (pc3_refl c t3) i u c 
-x0 (fsubst0_snd i u c t3 x0 H9) e H6))) t0 (H3 i u c x0 (fsubst0_snd i u c t3 
-x0 H9) e H6)) (pc3_fsubst0 c t3 t3 (pc3_refl c t3) i u c x0 (fsubst0_snd i u 
-c t3 x0 H9) e H6)) t5 H8)))))) H7)) (subst0_gen_head (Flat Cast) u t3 t2 t5 i 
-H5)))))) (\lambda (c3: C).(\lambda (H5: (csubst0 i u c c3)).(\lambda (e: 
-C).(\lambda (H6: (getl i c (CHead e (Bind Abbr) u))).(ty3_cast g c3 t2 t3 (H1 
-i u c3 t2 (fsubst0_fst i u c t2 c3 H5) e H6) t0 (H3 i u c3 t3 (fsubst0_fst i 
-u c t3 c3 H5) e H6)))))) (\lambda (t5: T).(\lambda (H5: (subst0 i u (THead 
-(Flat Cast) t3 t2) t5)).(\lambda (c3: C).(\lambda (H6: (csubst0 i u c 
-c3)).(\lambda (e: C).(\lambda (H7: (getl i c (CHead e (Bind Abbr) 
-u))).(or3_ind (ex2 T (\lambda (u2: T).(eq T t5 (THead (Flat Cast) u2 t2))) 
-(\lambda (u2: T).(subst0 i u t3 u2))) (ex2 T (\lambda (t6: T).(eq T t5 (THead 
-(Flat Cast) t3 t6))) (\lambda (t6: T).(subst0 (s (Flat Cast) i) u t2 t6))) 
-(ex3_2 T T (\lambda (u2: T).(\lambda (t6: T).(eq T t5 (THead (Flat Cast) u2 
-t6)))) (\lambda (u2: T).(\lambda (_: T).(subst0 i u t3 u2))) (\lambda (_: 
-T).(\lambda (t6: T).(subst0 (s (Flat Cast) i) u t2 t6)))) (ty3 g c3 t5 t3) 
-(\lambda (H8: (ex2 T (\lambda (u2: T).(eq T t5 (THead (Flat Cast) u2 t2))) 
-(\lambda (u2: T).(subst0 i u t3 u2)))).(ex2_ind T (\lambda (u2: T).(eq T t5 
-(THead (Flat Cast) u2 t2))) (\lambda (u2: T).(subst0 i u t3 u2)) (ty3 g c3 t5 
-t3) (\lambda (x: T).(\lambda (H9: (eq T t5 (THead (Flat Cast) x 
+c t5 (THead (Flat Cast) t0 t3)) (\lambda (x0: T).(\lambda (x1: T).(\lambda 
+(H8: (eq T t5 (THead (Flat Cast) x0 x1))).(\lambda (H9: (subst0 i u t3 
+x0)).(\lambda (H10: (subst0 (s (Flat Cast) i) u t2 x1)).(eq_ind_r T (THead 
+(Flat Cast) x0 x1) (\lambda (t6: T).(ty3 g c t6 (THead (Flat Cast) t0 t3))) 
+(ex_ind T (\lambda (t6: T).(ty3 g c t0 t6)) (ty3 g c (THead (Flat Cast) x0 
+x1) (THead (Flat Cast) t0 t3)) (\lambda (x: T).(\lambda (H11: (ty3 g c t0 
+x)).(ty3_conv g c (THead (Flat Cast) t0 t3) (THead (Flat Cast) x t0) 
+(ty3_cast g c t3 t0 H2 x H11) (THead (Flat Cast) x0 x1) (THead (Flat Cast) t0 
+x0) (ty3_cast g c x1 x0 (ty3_conv g c x0 t0 (H3 i u c x0 (fsubst0_snd i u c 
+t3 x0 H9) e H6) x1 t3 (H1 (s (Flat Cast) i) u c x1 (fsubst0_snd (s (Flat 
+Cast) i) u c t2 x1 H10) e H6) (pc3_s c t3 x0 (pc3_fsubst0 c t3 t3 (pc3_refl c 
+t3) i u c x0 (fsubst0_snd i u c t3 x0 H9) e H6))) t0 (H3 i u c x0 
+(fsubst0_snd i u c t3 x0 H9) e H6)) (pc3_fsubst0 c (THead (Flat Cast) t0 t3) 
+(THead (Flat Cast) t0 t3) (pc3_refl c (THead (Flat Cast) t0 t3)) i u c (THead 
+(Flat Cast) t0 x0) (fsubst0_snd i u c (THead (Flat Cast) t0 t3) (THead (Flat 
+Cast) t0 x0) (subst0_snd (Flat Cast) u x0 t3 i H9 t0)) e H6)))) (ty3_correct 
+g c x0 t0 (H3 i u c x0 (fsubst0_snd i u c t3 x0 H9) e H6))) t5 H8)))))) H7)) 
+(subst0_gen_head (Flat Cast) u t3 t2 t5 i H5)))))) (\lambda (c3: C).(\lambda 
+(H5: (csubst0 i u c c3)).(\lambda (e: C).(\lambda (H6: (getl i c (CHead e 
+(Bind Abbr) u))).(ty3_cast g c3 t2 t3 (H1 i u c3 t2 (fsubst0_fst i u c t2 c3 
+H5) e H6) t0 (H3 i u c3 t3 (fsubst0_fst i u c t3 c3 H5) e H6)))))) (\lambda 
+(t5: T).(\lambda (H5: (subst0 i u (THead (Flat Cast) t3 t2) t5)).(\lambda 
+(c3: C).(\lambda (H6: (csubst0 i u c c3)).(\lambda (e: C).(\lambda (H7: (getl 
+i c (CHead e (Bind Abbr) u))).(or3_ind (ex2 T (\lambda (u2: T).(eq T t5 
+(THead (Flat Cast) u2 t2))) (\lambda (u2: T).(subst0 i u t3 u2))) (ex2 T 
+(\lambda (t6: T).(eq T t5 (THead (Flat Cast) t3 t6))) (\lambda (t6: 
+T).(subst0 (s (Flat Cast) i) u t2 t6))) (ex3_2 T T (\lambda (u2: T).(\lambda 
+(t6: T).(eq T t5 (THead (Flat Cast) u2 t6)))) (\lambda (u2: T).(\lambda (_: 
+T).(subst0 i u t3 u2))) (\lambda (_: T).(\lambda (t6: T).(subst0 (s (Flat 
+Cast) i) u t2 t6)))) (ty3 g c3 t5 (THead (Flat Cast) t0 t3)) (\lambda (H8: 
+(ex2 T (\lambda (u2: T).(eq T t5 (THead (Flat Cast) u2 t2))) (\lambda (u2: 
+T).(subst0 i u t3 u2)))).(ex2_ind T (\lambda (u2: T).(eq T t5 (THead (Flat 
+Cast) u2 t2))) (\lambda (u2: T).(subst0 i u t3 u2)) (ty3 g c3 t5 (THead (Flat 
+Cast) t0 t3)) (\lambda (x: T).(\lambda (H9: (eq T t5 (THead (Flat Cast) x 
 t2))).(\lambda (H10: (subst0 i u t3 x)).(eq_ind_r T (THead (Flat Cast) x t2) 
-(\lambda (t6: T).(ty3 g c3 t6 t3)) (ty3_conv g c3 t3 t0 (H3 i u c3 t3 
-(fsubst0_fst i u c t3 c3 H6) e H7) (THead (Flat Cast) x t2) x (ty3_cast g c3 
-t2 x (ty3_conv g c3 x t0 (H3 i u c3 x (fsubst0_both i u c t3 x H10 c3 H6) e 
-H7) t2 t3 (H1 i u c3 t2 (fsubst0_fst i u c t2 c3 H6) e H7) (pc3_s c3 t3 x 
-(pc3_fsubst0 c t3 t3 (pc3_refl c t3) i u c3 x (fsubst0_both i u c t3 x H10 c3 
-H6) e H7))) t0 (H3 i u c3 x (fsubst0_both i u c t3 x H10 c3 H6) e H7)) 
-(pc3_fsubst0 c t3 t3 (pc3_refl c t3) i u c3 x (fsubst0_both i u c t3 x H10 c3 
-H6) e H7)) t5 H9)))) H8)) (\lambda (H8: (ex2 T (\lambda (t6: T).(eq T t5 
-(THead (Flat Cast) t3 t6))) (\lambda (t6: T).(subst0 (s (Flat Cast) i) u t2 
+(\lambda (t6: T).(ty3 g c3 t6 (THead (Flat Cast) t0 t3))) (ex_ind T (\lambda 
+(t6: T).(ty3 g c3 t0 t6)) (ty3 g c3 (THead (Flat Cast) x t2) (THead (Flat 
+Cast) t0 t3)) (\lambda (x0: T).(\lambda (H11: (ty3 g c3 t0 x0)).(ty3_conv g 
+c3 (THead (Flat Cast) t0 t3) (THead (Flat Cast) x0 t0) (ty3_cast g c3 t3 t0 
+(H3 i u c3 t3 (fsubst0_fst i u c t3 c3 H6) e H7) x0 H11) (THead (Flat Cast) x 
+t2) (THead (Flat Cast) t0 x) (ty3_cast g c3 t2 x (ty3_conv g c3 x t0 (H3 i u 
+c3 x (fsubst0_both i u c t3 x H10 c3 H6) e H7) t2 t3 (H1 i u c3 t2 
+(fsubst0_fst i u c t2 c3 H6) e H7) (pc3_s c3 t3 x (pc3_fsubst0 c t3 t3 
+(pc3_refl c t3) i u c3 x (fsubst0_both i u c t3 x H10 c3 H6) e H7))) t0 (H3 i 
+u c3 x (fsubst0_both i u c t3 x H10 c3 H6) e H7)) (pc3_fsubst0 c (THead (Flat 
+Cast) t0 t3) (THead (Flat Cast) t0 t3) (pc3_refl c (THead (Flat Cast) t0 t3)) 
+i u c3 (THead (Flat Cast) t0 x) (fsubst0_both i u c (THead (Flat Cast) t0 t3) 
+(THead (Flat Cast) t0 x) (subst0_snd (Flat Cast) u x t3 i H10 t0) c3 H6) e 
+H7)))) (ty3_correct g c3 t3 t0 (H3 i u c3 t3 (fsubst0_fst i u c t3 c3 H6) e 
+H7))) t5 H9)))) H8)) (\lambda (H8: (ex2 T (\lambda (t6: T).(eq T t5 (THead 
+(Flat Cast) t3 t6))) (\lambda (t6: T).(subst0 (s (Flat Cast) i) u t2 
 t6)))).(ex2_ind T (\lambda (t6: T).(eq T t5 (THead (Flat Cast) t3 t6))) 
-(\lambda (t6: T).(subst0 (s (Flat Cast) i) u t2 t6)) (ty3 g c3 t5 t3) 
-(\lambda (x: T).(\lambda (H9: (eq T t5 (THead (Flat Cast) t3 x))).(\lambda 
-(H10: (subst0 (s (Flat Cast) i) u t2 x)).(eq_ind_r T (THead (Flat Cast) t3 x) 
-(\lambda (t6: T).(ty3 g c3 t6 t3)) (ty3_cast g c3 x t3 (H1 i u c3 x 
-(fsubst0_both i u c t2 x H10 c3 H6) e H7) t0 (H3 i u c3 t3 (fsubst0_fst i u c 
-t3 c3 H6) e H7)) t5 H9)))) H8)) (\lambda (H8: (ex3_2 T T (\lambda (u2: 
-T).(\lambda (t6: T).(eq T t5 (THead (Flat Cast) u2 t6)))) (\lambda (u2: 
-T).(\lambda (_: T).(subst0 i u t3 u2))) (\lambda (_: T).(\lambda (t6: 
-T).(subst0 (s (Flat Cast) i) u t2 t6))))).(ex3_2_ind T T (\lambda (u2: 
-T).(\lambda (t6: T).(eq T t5 (THead (Flat Cast) u2 t6)))) (\lambda (u2: 
-T).(\lambda (_: T).(subst0 i u t3 u2))) (\lambda (_: T).(\lambda (t6: 
-T).(subst0 (s (Flat Cast) i) u t2 t6))) (ty3 g c3 t5 t3) (\lambda (x0: 
-T).(\lambda (x1: T).(\lambda (H9: (eq T t5 (THead (Flat Cast) x0 
-x1))).(\lambda (H10: (subst0 i u t3 x0)).(\lambda (H11: (subst0 (s (Flat 
-Cast) i) u t2 x1)).(eq_ind_r T (THead (Flat Cast) x0 x1) (\lambda (t6: 
-T).(ty3 g c3 t6 t3)) (ty3_conv g c3 t3 t0 (H3 i u c3 t3 (fsubst0_fst i u c t3 
-c3 H6) e H7) (THead (Flat Cast) x0 x1) x0 (ty3_cast g c3 x1 x0 (ty3_conv g c3 
-x0 t0 (H3 i u c3 x0 (fsubst0_both i u c t3 x0 H10 c3 H6) e H7) x1 t3 (H1 i u 
-c3 x1 (fsubst0_both i u c t2 x1 H11 c3 H6) e H7) (pc3_s c3 t3 x0 (pc3_fsubst0 
-c t3 t3 (pc3_refl c t3) i u c3 x0 (fsubst0_both i u c t3 x0 H10 c3 H6) e 
-H7))) t0 (H3 i u c3 x0 (fsubst0_both i u c t3 x0 H10 c3 H6) e H7)) 
-(pc3_fsubst0 c t3 t3 (pc3_refl c t3) i u c3 x0 (fsubst0_both i u c t3 x0 H10 
-c3 H6) e H7)) t5 H9)))))) H8)) (subst0_gen_head (Flat Cast) u t3 t2 t5 i 
-H5)))))))) c2 t4 H4)))))))))))))) c1 t1 t H))))).
+(\lambda (t6: T).(subst0 (s (Flat Cast) i) u t2 t6)) (ty3 g c3 t5 (THead 
+(Flat Cast) t0 t3)) (\lambda (x: T).(\lambda (H9: (eq T t5 (THead (Flat Cast) 
+t3 x))).(\lambda (H10: (subst0 (s (Flat Cast) i) u t2 x)).(eq_ind_r T (THead 
+(Flat Cast) t3 x) (\lambda (t6: T).(ty3 g c3 t6 (THead (Flat Cast) t0 t3))) 
+(ty3_cast g c3 x t3 (H1 i u c3 x (fsubst0_both i u c t2 x H10 c3 H6) e H7) t0 
+(H3 i u c3 t3 (fsubst0_fst i u c t3 c3 H6) e H7)) t5 H9)))) H8)) (\lambda 
+(H8: (ex3_2 T T (\lambda (u2: T).(\lambda (t6: T).(eq T t5 (THead (Flat Cast) 
+u2 t6)))) (\lambda (u2: T).(\lambda (_: T).(subst0 i u t3 u2))) (\lambda (_: 
+T).(\lambda (t6: T).(subst0 (s (Flat Cast) i) u t2 t6))))).(ex3_2_ind T T 
+(\lambda (u2: T).(\lambda (t6: T).(eq T t5 (THead (Flat Cast) u2 t6)))) 
+(\lambda (u2: T).(\lambda (_: T).(subst0 i u t3 u2))) (\lambda (_: 
+T).(\lambda (t6: T).(subst0 (s (Flat Cast) i) u t2 t6))) (ty3 g c3 t5 (THead 
+(Flat Cast) t0 t3)) (\lambda (x0: T).(\lambda (x1: T).(\lambda (H9: (eq T t5 
+(THead (Flat Cast) x0 x1))).(\lambda (H10: (subst0 i u t3 x0)).(\lambda (H11: 
+(subst0 (s (Flat Cast) i) u t2 x1)).(eq_ind_r T (THead (Flat Cast) x0 x1) 
+(\lambda (t6: T).(ty3 g c3 t6 (THead (Flat Cast) t0 t3))) (ex_ind T (\lambda 
+(t6: T).(ty3 g c3 t0 t6)) (ty3 g c3 (THead (Flat Cast) x0 x1) (THead (Flat 
+Cast) t0 t3)) (\lambda (x: T).(\lambda (H12: (ty3 g c3 t0 x)).(ty3_conv g c3 
+(THead (Flat Cast) t0 t3) (THead (Flat Cast) x t0) (ty3_cast g c3 t3 t0 (H3 i 
+u c3 t3 (fsubst0_fst i u c t3 c3 H6) e H7) x H12) (THead (Flat Cast) x0 x1) 
+(THead (Flat Cast) t0 x0) (ty3_cast g c3 x1 x0 (ty3_conv g c3 x0 t0 (H3 i u 
+c3 x0 (fsubst0_both i u c t3 x0 H10 c3 H6) e H7) x1 t3 (H1 i u c3 x1 
+(fsubst0_both i u c t2 x1 H11 c3 H6) e H7) (pc3_s c3 t3 x0 (pc3_fsubst0 c t3 
+t3 (pc3_refl c t3) i u c3 x0 (fsubst0_both i u c t3 x0 H10 c3 H6) e H7))) t0 
+(H3 i u c3 x0 (fsubst0_both i u c t3 x0 H10 c3 H6) e H7)) (pc3_fsubst0 c 
+(THead (Flat Cast) t0 t3) (THead (Flat Cast) t0 t3) (pc3_refl c (THead (Flat 
+Cast) t0 t3)) i u c3 (THead (Flat Cast) t0 x0) (fsubst0_both i u c (THead 
+(Flat Cast) t0 t3) (THead (Flat Cast) t0 x0) (subst0_snd (Flat Cast) u x0 t3 
+i H10 t0) c3 H6) e H7)))) (ty3_correct g c3 t3 t0 (H3 i u c3 t3 (fsubst0_fst 
+i u c t3 c3 H6) e H7))) t5 H9)))))) H8)) (subst0_gen_head (Flat Cast) u t3 t2 
+t5 i H5)))))))) c2 t4 H4)))))))))))))) c1 t1 t H))))).
 
 theorem ty3_csubst0:
  \forall (g: G).(\forall (c1: C).(\forall (t1: T).(\forall (t2: T).((ty3 g c1 
