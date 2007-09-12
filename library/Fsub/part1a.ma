@@ -13,75 +13,20 @@
 (**************************************************************************)
 
 set "baseuri" "cic:/matita/Fsub/part1a/".
-include "logic/equality.ma".
-include "nat/nat.ma".
-include "datatypes/bool.ma".
-include "nat/compare.ma".
-include "Fsub/util.ma".
 include "Fsub/defn.ma".
 
 (*** Lemma A.1 (Reflexivity) ***)
 
-theorem JS_Refl : \forall T,G.(WFType G T) \to (WFEnv G) \to (JSubtype G T T).
-apply Typ_len_ind;intro;elim U
-  [(* FIXME *) generalize in match H1;intro;inversion H1
-     [intros;destruct H6
-     |intros;destruct H5
-     |*:intros;destruct H9]
-  |apply (SA_Refl_TVar ? ? H2);(*FIXME*)generalize in match H1;intro;
-   inversion H1
-     [intros;destruct H6;rewrite > Hcut;assumption
-     |intros;destruct H5
-     |*:intros;destruct H9]
-  |apply (SA_Top ? ? H2 H1)
-  |cut ((WFType G t) \land (WFType G t1))
-     [elim Hcut;apply SA_Arrow
-        [apply H2
-           [apply t_len_arrow1
-           |*:assumption]
-        |apply H2
-           [apply t_len_arrow2
-           |*:assumption]]
-     |(* no shortcut? *)
-      (*FIXME*)generalize in match H3;intro;inversion H3
-        [intros;destruct H8
-        |intros;destruct H7
-        |intros;destruct H11;rewrite > Hcut;rewrite > Hcut1;split;assumption
-        |intros;destruct H11]]
-  |cut (WFType G t)
-     [lapply (H2 t ? ? Hcut H4)
-        [apply t_len_forall1
-        |apply (SA_All ? ? ? ? ? Hletin);intros;apply H2
-           [rewrite < eq_t_len_TFree_subst;
-            apply t_len_forall2
-           |generalize in match H3;intro;inversion H3
-              [intros;destruct H9
-              |intros;destruct H8
-              |intros;destruct H12
-              |intros;destruct H12;subst;apply H9
-                 [assumption
-                 |unfold;intro;apply H5;
-                  elim (fresh_name ((fv_env l)@(fv_type t3)));
-                  cut ((\lnot (in_list ? a (fv_env l))) \land
-                       (\lnot (in_list ? a (fv_type t3))))
-                    [elim Hcut1;lapply (H9 ? H13 H14);
-                     lapply (fv_WFT ? X ? Hletin1)
-                       [simplify in Hletin2;inversion Hletin2
-                          [intros;lapply (inj_head_nat ? ? ? ? H16);subst;
-                           elim (H14 H11)
-                          |intros;lapply (inj_tail ? ? ? ? ? H18);
-                           rewrite < Hletin3 in H15;assumption]
-                       |apply varinT_varinT_subst;
-                        assumption]
-                    |split;unfold;intro;apply H12;apply natinG_or_inH_to_natinGH
-                       [right;assumption
-                       |left;assumption]]]]
-           |apply WFE_cons;assumption]]
-     |(*FIXME*)generalize in match H3;intro;inversion H3
-        [intros;destruct H8
-        |intros;destruct H7
-        |intros;destruct H11
-        |intros;destruct H11;subst;assumption]]]
+theorem JS_Refl : ∀T,G.WFType G T → WFEnv G → G ⊢ T ⊴  T.
+intros 3;elim H
+  [apply (SA_Refl_TVar l n H2 H1);
+  |apply (SA_Top l Top H1 (WFT_Top l));
+  |apply (SA_Arrow l t t1 t t1 (H2 H5) (H4 H5))
+  |apply (SA_All ? ? ? ? ? (H2 H5));intros;apply (H4 X H6)
+     [intro;apply H6;apply (fv_WFT (Forall t t1) X l)
+        [apply (WFT_Forall ? ? ? H1 H3)
+        |simplify;autobatch]
+     |autobatch]]
 qed.
 
 (* 
@@ -106,11 +51,56 @@ intros 4;elim H
      |apply WFE_cons
         [1,2:assumption
         |apply (JS_to_WFT1 ? ? ? Hletin)]
-     |unfold;intros;inversion H9
-        [intros;lapply (inj_head ? ? ? ? H11);rewrite > Hletin1;apply in_Base
-        |intros;lapply (inj_tail ? ? ? ? ? H13);rewrite < Hletin1 in H10;
-         apply in_Skip;apply (H7 ? H10)]]]
+     |unfold;intros;elim (in_cons_case ? ? ? ? H9)
+        [rewrite > H10;apply in_Base
+        |elim H10;apply (in_Skip ? ? ? ? ? H11);apply (H7 ? H12)]]]
 qed.
+
+lemma decidable_eq_Typ : \forall S,T:Typ.(S = T) ∨ (S ≠ T).
+intro;elim S
+  [elim T
+     [elim (decidable_eq_nat n n1)
+        [rewrite > H;left;reflexivity
+        |right;intro;destruct H1;apply (H Hcut)]
+     |2,3:right;intro;destruct H
+     |*:right;intro;destruct H2]
+  |elim T
+     [2:elim (decidable_eq_nat n n1)
+        [rewrite > H;left;reflexivity
+        |right;intro;destruct H1;apply (H Hcut)]
+     |1,3:right;intro;destruct H
+     |*:right;intro;destruct H2]
+  |elim T
+     [3:left;reflexivity
+     |1,2:right;intro;destruct H
+     |*:right;intro;destruct H2]
+  |elim T
+     [1,2,3:right;intro;destruct H2
+     |elim (H t2)
+        [rewrite > H4;elim (H1 t3)
+           [rewrite > H5;left;reflexivity
+           |right;intro;apply H5;destruct H6;assumption]
+        |right;intro;apply H4;destruct H5;assumption]
+     |right;intro;destruct H4]
+  |elim T
+     [1,2,3:right;intro;destruct H2
+     |right;intro;destruct H4
+     |elim (H t2)
+        [rewrite > H4;elim (H1 t3)
+           [rewrite > H5;left;reflexivity
+           |right;intro;apply H5;destruct H6;assumption]
+        |right;intro;apply H4;destruct H5;assumption]]]
+qed.
+
+lemma decidable_eq_bound: ∀b1,b2:bound.(b1 = b2) ∨ (b1 ≠ b2).
+intros;elim b1;elim b2;elim (decidable_eq_nat n n1)
+  [rewrite < H;elim (decidable_eq_Typ t t1)
+     [rewrite < H1;elim (bool_to_decidable_eq b b3)
+        [rewrite > H2;left;reflexivity
+        |right;intro;destruct H3;apply (H2 Hcut)]
+     |right;intro;destruct H2;apply (H1 Hcut1)]
+  |right;intro;destruct H1;apply (H Hcut1)]
+qed.     
 
 (* Lemma A.3 (Transitivity and Narrowing) *)
 
@@ -151,17 +141,28 @@ cut (\forall G,T,P.
                  [apply (SA_Trans_TVar ? ? ? P)
                     [rewrite < H10;elim l1
                       [simplify;constructor 1
-                      |simplify;constructor 2;assumption]
+                      |simplify;elim (decidable_eq_bound (mk_bound true X P) t2)
+                         [rewrite < H12;apply in_Base
+                         |apply (in_Skip ? ? ? ? ? H12);assumption]]
                    |apply H7
                       [lapply (H6 ? H7 H8 H9);lapply (JS_to_WFE ? ? ? Hletin);
                        apply (JS_weakening ? ? ? H3 ? Hletin1);unfold;intros;
-                       elim l1;simplify;constructor 2;assumption
+                       elim l1
+                         [simplify;
+                          elim (decidable_eq_bound x (mk_bound true X P))
+                            [rewrite < H12;apply in_Base
+                            |apply (in_Skip ? ? ? ? ? H12);assumption]
+                         |simplify;elim (decidable_eq_bound x t2)
+                            [rewrite < H13;apply in_Base
+                            |apply (in_Skip ? ? ? ? ? H13);assumption]]
                       |lapply (WFE_bound_bound true n t1 U ? ? H4)
                          [apply (JS_to_WFE ? ? ? H5)
                          |rewrite < Hletin;apply (H6 ? H7 H8 H9)
                          |rewrite > H9;rewrite > H10;elim l1;simplify
                             [constructor 1
-                            |constructor 2;assumption]]]]
+                            |elim (decidable_eq_bound (mk_bound true n U) t2)
+                               [rewrite > H12;apply in_Base
+                               |apply (in_Skip ? ? ? ? ? H12);assumption]]]]]
                 |apply (SA_Trans_TVar ? ? ? t1)
                    [rewrite > H9 in H4;
                     apply (lookup_env_extends ? ? ? ? ? ? ? ? ? ? H4);
