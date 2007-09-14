@@ -19,4 +19,4 @@ set "baseuri" "cic:/matita/LOGIC/preamble".
 (* PREAMBLE
 *)
 
-include "../LAMBDA-TYPES/Unified-Sub/preamble.ma".
+include "../RELATIONAL/datatypes/Nat.ma".
