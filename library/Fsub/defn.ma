@@ -293,24 +293,13 @@ cut (\forall l:(list nat).\exists n.\forall m.
      |apply H;constructor 1]
   |intros;elim l
     [apply (ex_intro ? ? O);intros;unfold;intro;elim (in_list_nil ? ? H1)
-    |elim H;elim (decidable_eq_nat a t)
-       [apply (ex_intro ? ? (S a));intros;intro;elim (in_cons_case ? ? ? ? H4)
-          [rewrite < H5 in H2;rewrite < H2 in H3;apply (not_le_Sn_n ? H3)
-          |elim H5;elim (H1 m ? H7);apply (le_S_S_to_le ? ? (le_S ? ? H3))]
-       |cut ((leb a t) = true \lor (leb a t) = false)
-          [elim Hcut
-             [apply (ex_intro ? ? (S t));intros;intro;
-              elim (in_cons_case ? ? ? ? H5)
-                [rewrite > H6 in H4;apply (not_le_Sn_n ? H4)
-                |elim H6;elim (H1 m ? H8);apply (trans_le a t m)
-                   [lapply (leb_to_Prop a t);rewrite > H3 in Hletin;assumption
-                   |apply (le_S_S_to_le t m (le_S (S t) m H4))]]
-             |apply (ex_intro ? ? a);intros;intro;elim (in_cons_case ? ? ? ? H5)
-                [lapply (leb_to_Prop a t);rewrite > H3 in Hletin;
-                 simplify in Hletin;lapply (not_le_to_lt ? ? Hletin);
-                 unfold in Hletin1;rewrite < H6 in Hletin;apply (Hletin H4)
-                |elim H6;elim (H1 ? H4 H8)]]
-          |elim (leb a t);autobatch]]]]
+    |elim H;
+     apply (ex_intro ? ? (S (max a t))).
+     intros.unfold. intro.
+     elim (in_cons_case ? ? ? ? H3)
+      [rewrite > H4 in H2.autobatch
+      |elim H4.apply (H1 m ? H6).
+       apply (trans_le ? (max a t));autobatch]]]
 qed.
 
 (*** lemmata on well-formedness ***)
@@ -340,6 +329,13 @@ qed.
            
 (*** some exotic inductions and related lemmas ***) 
 
+lemma O_lt_t_len: \forall T.O < (t_len T).
+intros;elim T
+  [1,2,3:simplify;apply le_n
+  |*:simplify;apply lt_O_S]
+qed.
+
+(*
 lemma not_t_len_lt_SO : \forall T.\lnot (t_len T) < (S O).
 intros;elim T
   [1,2,3:simplify;unfold;intro;unfold in H;elim (not_le_Sn_n ? H)
@@ -347,6 +343,7 @@ intros;elim T
      [1,3:simplify in H2;apply H1;apply (trans_lt ? ? ? ? H2);unfold;constructor 1
      |*:simplify in H2;apply H;apply (trans_lt ? ? ? ? H2);unfold;constructor 1]]
 qed.
+*)
 
 lemma Typ_len_ind : \forall P:Typ \to Prop.
                        (\forall U.(\forall V.((t_len V) < (t_len U)) \to (P V))
@@ -359,7 +356,7 @@ cut (\forall P:Typ \to Prop.
   [intros;apply (Hcut ? H ? (t_len T));reflexivity
   |intros 4;generalize in match T;apply (nat_elim1 n);intros;
    generalize in match H2;elim t 
-     [1,2,3:apply H;intros;simplify in H4;elim (not_t_len_lt_SO ? H4)
+     [1,2,3:apply H;intros;simplify in H4;elim (lt_to_not_le ? ? H4 (O_lt_t_len ?))
      |*:apply H;intros;apply (H1 (t_len V))
         [1,3:rewrite > H5;assumption
         |*:reflexivity]]]
@@ -367,68 +364,22 @@ qed.
 
 lemma t_len_arrow1 : \forall T1,T2.(t_len T1) < (t_len (Arrow T1 T2)).
 intros.simplify.
-(* FIXME!!! BUG?!?! *)
-cut ((max (t_len T1) (t_len T2)) = match (leb (t_len T1) (t_len T2)) with
-      [ false ⇒ (t_len T2)
-      | true  ⇒ (t_len T1) ])
-  [rewrite > Hcut;cut ((leb (t_len T1) (t_len T2)) = false \lor
-                       (leb (t_len T1) (t_len T2)) = true)
-     [lapply (leb_to_Prop (t_len T1) (t_len T2));elim Hcut1
-        [rewrite > H;rewrite > H in Hletin;simplify;constructor 1
-        |rewrite > H;rewrite > H in Hletin;simplify;simplify in Hletin;
-         unfold;apply le_S_S;assumption]
-     |elim (leb (t_len T1) (t_len T2));autobatch]
-  |elim T1;simplify;reflexivity]
+apply le_S_S.apply le_m_max_m_n.
 qed.
 
 lemma t_len_arrow2 : \forall T1,T2.(t_len T2) < (t_len (Arrow T1 T2)).
 intros.simplify.
-(* FIXME!!! BUG?!?! *)
-cut ((max (t_len T1) (t_len T2)) = match (leb (t_len T1) (t_len T2)) with
-      [ false \Rightarrow (t_len T2)
-      | true \Rightarrow (t_len T1) ])
-  [rewrite > Hcut;cut ((leb (t_len T1) (t_len T2)) = false \lor
-                       (leb (t_len T1) (t_len T2)) = true)
-     [lapply (leb_to_Prop (t_len T1) (t_len T2));elim Hcut1
-        [rewrite > H;rewrite > H in Hletin;simplify;simplify in Hletin;
-         lapply (not_le_to_lt ? ? Hletin);unfold in Hletin1;unfold;
-         constructor 2;assumption
-        |rewrite > H;simplify;unfold;constructor 1]
-     |elim (leb (t_len T1) (t_len T2));autobatch]
-  |elim T1;simplify;reflexivity]
+apply le_S_S.apply le_n_max_m_n.
 qed.
 
 lemma t_len_forall1 : \forall T1,T2.(t_len T1) < (t_len (Forall T1 T2)).
 intros.simplify.
-(* FIXME!!! BUG?!?! *)
-cut ((max (t_len T1) (t_len T2)) = match (leb (t_len T1) (t_len T2)) with
-      [ false \Rightarrow (t_len T2)
-      | true \Rightarrow (t_len T1) ])
-  [rewrite > Hcut;cut ((leb (t_len T1) (t_len T2)) = false \lor
-                       (leb (t_len T1) (t_len T2)) = true)
-     [lapply (leb_to_Prop (t_len T1) (t_len T2));elim Hcut1
-        [rewrite > H;rewrite > H in Hletin;simplify;constructor 1
-        |rewrite > H;rewrite > H in Hletin;simplify;simplify in Hletin;
-         unfold;apply le_S_S;assumption]
-     |elim (leb (t_len T1) (t_len T2));autobatch]
-  |elim T1;simplify;reflexivity]
+apply le_S_S.apply le_m_max_m_n.
 qed.
 
 lemma t_len_forall2 : \forall T1,T2.(t_len T2) < (t_len (Forall T1 T2)).
 intros.simplify.
-(* FIXME!!! BUG?!?! *)
-cut ((max (t_len T1) (t_len T2)) = match (leb (t_len T1) (t_len T2)) with
-      [ false \Rightarrow (t_len T2)
-      | true \Rightarrow (t_len T1) ])
-  [rewrite > Hcut;cut ((leb (t_len T1) (t_len T2)) = false \lor
-                       (leb (t_len T1) (t_len T2)) = true)
-     [lapply (leb_to_Prop (t_len T1) (t_len T2));elim Hcut1
-        [rewrite > H;rewrite > H in Hletin;simplify;simplify in Hletin;
-         lapply (not_le_to_lt ? ? Hletin);unfold in Hletin1;unfold;
-         constructor 2;assumption
-        |rewrite > H;simplify;unfold;constructor 1]
-     |elim (leb (t_len T1) (t_len T2));autobatch]
-  |elim T1;simplify;reflexivity]
+apply le_S_S.apply le_n_max_m_n.
 qed.
 
 lemma eq_t_len_TFree_subst : \forall T,n,X.(t_len T) = 

@@ -19,10 +19,29 @@ include "list/list.ma".
 
 (*** useful definitions and lemmas not really related to Fsub ***)
 
-let rec max m n \def
+definition max \def 
+\lambda m,n.
   match (leb m n) with
      [true \Rightarrow n
      |false \Rightarrow m]. 
+     
+lemma le_n_max_m_n: \forall m,n:nat. n \le max m n.
+intros.
+unfold max.
+apply (leb_elim m n)
+  [simplify.intros.apply le_n
+  |simplify.intros.autobatch
+  ]
+qed.
+  
+lemma le_m_max_m_n: \forall m,n:nat. m \le max m n.
+intros.
+unfold max.
+apply (leb_elim m n)
+  [simplify.intro.assumption
+  |simplify.intros.autobatch
+  ]
+qed.  
 
 inductive in_list (A:Type): A → (list A) → Prop ≝
 | in_Base : ∀ x,l.(in_list A x (x::l))
