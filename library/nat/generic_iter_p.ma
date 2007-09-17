@@ -17,8 +17,6 @@ set "baseuri" "cic:/matita/nat/generic_iter_p.ma".
 include "nat/primes.ma".
 include "nat/ord.ma".
 
-
-
 (*a generic definition of summatory indexed over natural numbers:
  * n:N is the advanced end in the range of the sommatory 
  * p: N -> bool is a predicate. if (p i) = true, then (g i) is summed, else it isn't 
@@ -27,6 +25,7 @@ include "nat/ord.ma".
  * baseA (of type A) is the neutral element of A for plusA operation
  * plusA: A -> A -> A is the sum over elements in A. 
  *)
+ 
 let rec iter_p_gen (n:nat) (p: nat \to bool) (A:Type) (g: nat \to A) 
    (baseA: A) (plusA: A \to A \to A)  \def
   match n with
@@ -288,7 +287,6 @@ elim n
 ]
 qed.
 
-
 theorem iter_p_gen2': 
 \forall n,m:nat.
 \forall p1: nat \to bool.
@@ -472,7 +470,7 @@ elim n
 ] 
 qed.
 
-
+(* invariance under permutation; single sum *)
 theorem eq_iter_p_gen_gh: 
 \forall A:Type.
 \forall baseA: A.
@@ -490,7 +488,7 @@ theorem eq_iter_p_gen_gh:
 (\forall j. j < n1 \to p2 j = true \to h1 j < n) \to 
 
 iter_p_gen n p1 A (\lambda x.g(h x)) baseA plusA = 
-iter_p_gen n1 (\lambda x.p2 x) A g baseA plusA.
+iter_p_gen n1 p2 A g baseA plusA.
 intros 10.
 elim n
 [ generalize in match H8.
@@ -670,6 +668,7 @@ elim n
 qed.
 
 
+(* da spostare *)
 
 definition p_ord_times \def
 \lambda p,m,x.
@@ -696,6 +695,140 @@ theorem mod_p_ord_times:
 intros.rewrite > eq_p_ord_times.
 apply mod_plus_times.
 assumption.
+qed.
+
+lemma lt_times_to_lt_O: \forall i,n,m:nat. i < n*m \to O < m.
+intros.
+elim (le_to_or_lt_eq O ? (le_O_n m))
+  [assumption
+  |apply False_ind.
+   rewrite < H1 in H.
+   rewrite < times_n_O in H.
+   apply (not_le_Sn_O ? H)
+  ]
+qed.
+
+(* lemmino da postare *)
+theorem lt_times_to_lt_div: \forall i,n,m. i < n*m \to i/m < n.
+intros.
+cut (O < m)
+  [apply (lt_times_n_to_lt m)
+    [assumption
+    |apply (le_to_lt_to_lt ? i)
+      [rewrite > (div_mod i m) in \vdash (? ? %).
+       apply le_plus_n_r.
+       assumption
+      |assumption
+      ]
+    ]
+  |apply (lt_times_to_lt_O ? ? ? H)
+  ]
+qed.
+
+theorem iter_p_gen_knm:
+\forall A:Type.
+\forall baseA: A.
+\forall plusA: A \to A \to A. 
+(symmetric A plusA) \to 
+(associative A plusA) \to 
+(\forall a:A.(plusA a  baseA) = a)\to
+\forall g: nat \to A.
+\forall h2:nat \to nat \to nat.
+\forall h11,h12:nat \to nat. 
+\forall k,n,m.
+\forall p1,p21:nat \to bool.
+\forall p22:nat \to nat \to bool.
+(\forall x. x < k \to p1 x = true \to 
+p21 (h11 x) = true \land p22 (h11 x) (h12 x) = true
+\land h2 (h11 x) (h12 x) = x 
+\land (h11 x) < n \land (h12 x) < m) \to
+(\forall i,j. i < n \to j < m \to p21 i = true \to p22 i j = true \to 
+p1 (h2 i j) = true \land 
+h11 (h2 i j) = i \land h12 (h2 i j) = j
+\land h2 i j < k) \to
+iter_p_gen k p1 A g baseA plusA =
+iter_p_gen n p21 A (\lambda x:nat.iter_p_gen m (p22 x) A (\lambda y. g (h2 x y)) baseA plusA) baseA plusA.
+intros.
+rewrite < (iter_p_gen2' n m p21 p22 ? ? ? ? H H1 H2).
+apply sym_eq.
+apply (eq_iter_p_gen_gh A baseA plusA H H1 H2 g ? (\lambda x.(h11 x)*m+(h12 x)))
+ [intros.
+  elim (H4 (i/m) (i \mod m));clear H4
+   [elim H7.clear H7.
+    elim H4.clear H4.
+    assumption
+   |apply (lt_times_to_lt_div ? ? ? H5)
+   |apply lt_mod_m_m.
+    apply (lt_times_to_lt_O ? ? ? H5)
+   |apply (andb_true_true ? ? H6)
+   |apply (andb_true_true_r ? ? H6)
+   ]
+ |intros.
+  elim (H4 (i/m) (i \mod m));clear H4
+   [elim H7.clear H7.
+    elim H4.clear H4.
+    rewrite > H10.
+    rewrite > H9.
+    apply sym_eq.
+    apply div_mod.
+    apply (lt_times_to_lt_O ? ? ? H5)
+   |apply (lt_times_to_lt_div ? ? ? H5)
+   |apply lt_mod_m_m.
+    apply (lt_times_to_lt_O ? ? ? H5)  
+   |apply (andb_true_true ? ? H6)
+   |apply (andb_true_true_r ? ? H6)
+   ]
+ |intros.
+  elim (H4 (i/m) (i \mod m));clear H4
+   [elim H7.clear H7.
+    elim H4.clear H4.
+    assumption
+   |apply (lt_times_to_lt_div ? ? ? H5)
+   |apply lt_mod_m_m.
+    apply (lt_times_to_lt_O ? ? ? H5)
+   |apply (andb_true_true ? ? H6)
+   |apply (andb_true_true_r ? ? H6)
+   ]
+ |intros.
+  elim (H3 j H5 H6).
+  elim H7.clear H7.
+  elim H9.clear H9.
+  elim H7.clear H7.
+  rewrite > div_plus_times
+   [rewrite > mod_plus_times
+     [rewrite > H9.
+      rewrite > H12.
+      reflexivity.
+     |assumption
+     ]
+   |assumption
+   ]
+ |intros.
+  elim (H3 j H5 H6).
+  elim H7.clear H7.
+  elim H9.clear H9.
+  elim H7.clear H7. 
+  rewrite > div_plus_times
+   [rewrite > mod_plus_times
+     [assumption
+     |assumption
+     ]
+   |assumption
+   ]
+ |intros.
+  elim (H3 j H5 H6).
+  elim H7.clear H7.
+  elim H9.clear H9.
+  elim H7.clear H7. 
+  apply (lt_to_le_to_lt ? ((h11 j)*m+m))
+   [apply monotonic_lt_plus_r.
+    assumption
+   |rewrite > sym_plus.
+    change with ((S (h11 j)*m) \le n*m).
+    apply monotonic_le_times_l.
+    assumption
+   ]
+ ]
 qed.
 
 theorem iter_p_gen_divides:
