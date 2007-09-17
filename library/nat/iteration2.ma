@@ -173,7 +173,7 @@ theorem eq_sigma_p_gh:
 (\forall j. j < n1 \to p2 j = true \to p1 (h1 j) = true) \to
 (\forall j. j < n1 \to p2 j = true \to h (h1 j) = j) \to 
 (\forall j. j < n1 \to p2 j = true \to h1 j < n) \to 
-sigma_p n p1 (\lambda x.g(h x)) = sigma_p n1 (\lambda x.p2 x) g.
+sigma_p n p1 (\lambda x.g(h x)) = sigma_p n1 p2 g.
 intros.
 unfold sigma_p.
 apply (eq_iter_p_gen_gh nat O plus ? ? ? g h h1 n n1 p1 p2)
@@ -580,3 +580,35 @@ rewrite > (S_pred ((S n)*(S m))) in \vdash (? ? (? % ? ?) ?)
 | apply lt_O_times_S_S
 ]
 qed.
+
+theorem sigma_p_knm: 
+\forall g: nat \to nat.
+\forall h2:nat \to nat \to nat.
+\forall h11,h12:nat \to nat. 
+\forall k,n,m.
+\forall p1,p21:nat \to bool.
+\forall p22:nat \to nat \to bool.
+(\forall x. x < k \to p1 x = true \to 
+p21 (h11 x) = true \land p22 (h11 x) (h12 x) = true
+\land h2 (h11 x) (h12 x) = x 
+\land (h11 x) < n \land (h12 x) < m) \to
+(\forall i,j. i < n \to j < m \to p21 i = true \to p22 i j = true \to 
+p1 (h2 i j) = true \land 
+h11 (h2 i j) = i \land h12 (h2 i j) = j
+\land h2 i j < k) \to
+sigma_p k p1 g=
+sigma_p n p21 (\lambda x:nat.sigma_p m (p22 x) (\lambda y. g (h2 x y))).
+intros.
+unfold sigma_p.
+unfold sigma_p in \vdash (? ? ? (? ? ? ? (\lambda x:?.%) ? ?)).
+apply iter_p_gen_knm
+  [apply symmetricIntPlus
+  |apply associative_plus
+  |intro.rewrite < plus_n_O.reflexivity
+  |exact h11
+  |exact h12
+  |assumption
+  |assumption
+  ]
+qed.
+  

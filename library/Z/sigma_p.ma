@@ -168,7 +168,7 @@ theorem eq_sigma_p_gh:
 (\forall j. j < n1 \to p2 j = true \to p1 (h1 j) = true) \to
 (\forall j. j < n1 \to p2 j = true \to h (h1 j) = j) \to 
 (\forall j. j < n1 \to p2 j = true \to h1 j < n) \to 
-sigma_p n p1 (\lambda x.g(h x)) = sigma_p n1 (\lambda x.p2 x) g.
+sigma_p n p1 (\lambda x.g(h x)) = sigma_p n1 p2 g.
 intros.
 unfold sigma_p.
 apply (eq_iter_p_gen_gh Z OZ Zplus ? ? ? g h h1 n n1 p1 p2)
