@@ -24,7 +24,7 @@ include "nat/iteration2.ma".
  *)
 
 (* some basic properties of and - or*)
-theorem andb_sym: \forall A,B:bool.
+(*theorem andb_sym: \forall A,B:bool.
 (A \land B) = (B \land A).
 intros.
 elim A;
@@ -60,7 +60,7 @@ rewrite > H1.
 rewrite > H2.
 reflexivity.
 qed.
-
+*)
 (*properties about relational operators*)
 
 theorem Sa_le_b_to_O_lt_b: \forall a,b:nat.
@@ -69,6 +69,7 @@ intros.
 elim H;
   apply lt_O_S.
 qed.
+
 
 theorem n_gt_Uno_to_O_lt_pred_n: \forall n:nat.
 (S O) \lt n \to O \lt (pred n).
