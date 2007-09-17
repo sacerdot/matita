@@ -78,6 +78,14 @@ reflexivity.
 assumption.
 qed.
 
+theorem andb_true_true_r: \forall b1,b2. (b1 \land b2) = true \to b2 = true.
+intro. elim b1
+  [assumption
+  |apply False_ind.apply not_eq_true_false.
+   apply sym_eq.assumption
+  ]
+qed.
+
 definition orb : bool \to bool \to bool\def
 \lambda b1,b2:bool. 
  match b1 with 
@@ -123,4 +131,43 @@ theorem P_x_to_P_x_to_eq:
  intros.
  apply eq_to_eq_to_eq_p_q.
  exact bool_to_decidable_eq.
-qed. 
+qed.
+
+
+(* some basic properties of and - or*)
+theorem andb_sym: \forall A,B:bool.
+(A \land B) = (B \land A).
+intros.
+elim A;
+  elim B;
+    simplify;
+    reflexivity.
+qed.
+
+theorem andb_assoc: \forall A,B,C:bool.
+(A \land (B \land C)) = ((A \land B) \land C).
+intros.
+elim A;
+  elim B;
+    elim C;
+      simplify;
+      reflexivity.
+qed.
+
+theorem orb_sym: \forall A,B:bool.
+(A \lor B) = (B \lor A).
+intros.
+elim A;
+  elim B;
+    simplify;
+    reflexivity.
+qed.
+
+theorem andb_t_t_t: \forall A,B,C:bool.
+A = true \to B = true \to C = true \to (A \land (B \land C)) = true.
+intros.
+rewrite > H.
+rewrite > H1.
+rewrite > H2.
+reflexivity.
+qed.
