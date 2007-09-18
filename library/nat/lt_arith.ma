@@ -301,6 +301,162 @@ unfold lt. apply le_n.assumption.
 qed.
 
 
+(* Forall a,b : N. 0 < b \to b * (a/b) <= a < b * (a/b +1) *)
+(* The theorem is shown in two different parts: *)
+
+theorem lt_to_div_to_and_le_times_lt_S: \forall a,b,c:nat.
+O \lt b \to a/b = c \to (b*c \le a \land a \lt b*(S c)).
+intros.
+split
+[ rewrite < H1.
+  rewrite > sym_times.
+  rewrite > eq_times_div_minus_mod
+  [ apply (le_minus_m a (a \mod b))
+  | assumption
+  ]
+| rewrite < (times_n_Sm b c).
+  rewrite < H1.
+  rewrite > sym_times.
+  rewrite > (div_mod a b) in \vdash (? % ?)
+  [ rewrite > (sym_plus b ((a/b)*b)).
+    apply lt_plus_r.
+    apply lt_mod_m_m.
+    assumption
+  | assumption
+  ]
+]
+qed.
+
+theorem lt_to_le_times_to_lt_S_to_div: \forall a,c,b:nat.
+O \lt b \to (b*c) \le a \to a \lt (b*(S c)) \to a/b = c.
+intros.
+apply (le_to_le_to_eq)
+[ apply (leb_elim (a/b) c);intros
+  [ assumption
+  | cut (c \lt (a/b))
+    [ apply False_ind.
+      apply (lt_to_not_le (a \mod b) O)
+      [ apply (lt_plus_to_lt_l ((a/b)*b)).
+        simplify.
+        rewrite < sym_plus.
+        rewrite < div_mod
+        [ apply (lt_to_le_to_lt ? (b*(S c)) ?)
+          [ assumption
+          | rewrite > (sym_times (a/b) b).
+            apply le_times_r.
+            assumption
+          ]
+        | assumption
+        ]
+      | apply le_O_n
+      ]
+    | apply not_le_to_lt.
+      assumption
+    ]
+  ]
+| apply (leb_elim c (a/b));intros
+  [ assumption
+  | cut((a/b) \lt c) 
+    [ apply False_ind.
+      apply (lt_to_not_le (a \mod b) b)
+      [ apply (lt_mod_m_m).
+        assumption
+      | apply (le_plus_to_le ((a/b)*b)).
+        rewrite < (div_mod a b)
+        [ apply (trans_le ? (b*c) ?)
+          [ rewrite > (sym_times (a/b) b).
+            rewrite > (times_n_SO b) in \vdash (? (? ? %) ?).
+            rewrite < distr_times_plus.
+            rewrite > sym_plus.
+            simplify in \vdash (? (? ? %) ?).
+            apply le_times_r.
+            assumption
+          | assumption
+          ]
+        | assumption
+        ]
+      ]
+    | apply not_le_to_lt. 
+      assumption
+    ]
+  ]
+]
+qed.
+
+
+theorem lt_to_lt_to_eq_div_div_times_times: \forall a,b,c:nat. 
+O \lt c \to O \lt b \to (a/b) = (a*c)/(b*c).
+intros.
+apply sym_eq.
+cut (b*(a/b) \le a \land a \lt b*(S (a/b)))
+[ elim Hcut.
+  apply lt_to_le_times_to_lt_S_to_div
+  [ rewrite > (S_pred b)
+    [ rewrite > (S_pred c)
+      [ apply (lt_O_times_S_S)
+      | assumption
+      ]
+    | assumption
+    ]
+  | rewrite > assoc_times.
+    rewrite > (sym_times c (a/b)).
+    rewrite < assoc_times.
+    rewrite > (sym_times (b*(a/b)) c).
+    rewrite > (sym_times a c).
+    apply (le_times_r c (b*(a/b)) a).
+    assumption
+  | rewrite > (sym_times a c).
+    rewrite > (assoc_times ).
+    rewrite > (sym_times c (S (a/b))).
+    rewrite < (assoc_times).
+    rewrite > (sym_times (b*(S (a/b))) c).
+    apply (lt_times_r1 c a (b*(S (a/b))));
+      assumption    
+  ]
+| apply (lt_to_div_to_and_le_times_lt_S)
+  [ assumption
+  | reflexivity
+  ]
+]
+qed.
+
+theorem times_mod: \forall a,b,c:nat.
+O \lt c \to O \lt b \to ((a*c) \mod (b*c)) = c*(a\mod b).
+intros.
+apply (div_mod_spec_to_eq2 (a*c) (b*c) (a/b) ((a*c) \mod (b*c)) (a/b) (c*(a \mod b)))
+[ rewrite > (lt_to_lt_to_eq_div_div_times_times a b c)
+  [ apply div_mod_spec_div_mod.
+    rewrite > (S_pred b)
+    [ rewrite > (S_pred c)
+      [ apply lt_O_times_S_S
+      | assumption
+      ]
+    | assumption
+    ]
+  | assumption
+  | assumption
+  ]
+| apply div_mod_spec_intro
+  [ rewrite > (sym_times b c).
+    apply (lt_times_r1 c)
+    [ assumption
+    | apply (lt_mod_m_m).
+      assumption
+    ]
+  | rewrite < (assoc_times (a/b) b c).
+    rewrite > (sym_times a c).
+    rewrite > (sym_times ((a/b)*b) c).
+    rewrite < (distr_times_plus c ? ?).
+    apply eq_f.
+    apply (div_mod a b).
+    assumption
+  ]
+]
+qed.
+
+
+
+
 (* general properties of functions *)
 theorem monotonic_to_injective: \forall f:nat\to nat.
 monotonic nat lt f \to injective nat nat f.
@@ -322,3 +478,4 @@ increasing f \to injective nat nat f.
 intros.apply monotonic_to_injective.
 apply increasing_to_monotonic.assumption.
 qed.
+

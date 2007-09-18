@@ -163,11 +163,10 @@ elim A;
     reflexivity.
 qed.
 
-theorem andb_t_t_t: \forall A,B,C:bool.
-A = true \to B = true \to C = true \to (A \land (B \land C)) = true.
+theorem true_to_true_to_andb_true: \forall A,B:bool.
+A = true \to B = true \to (A \land B) = true.
 intros.
 rewrite > H.
 rewrite > H1.
-rewrite > H2.
 reflexivity.
 qed.

@@ -101,6 +101,16 @@ simplify.
 apply div_aux_mod_aux.
 qed.
 
+theorem eq_times_div_minus_mod:
+\forall a,b:nat. O \lt b \to
+(a /b)*b = a - (a \mod b).
+intros.
+rewrite > (div_mod a b) in \vdash (? ? ? (? % ?))
+[ apply (minus_plus_m_m (times (div a b) b) (mod a b))
+| assumption
+]
+qed.
+
 inductive div_mod_spec (n,m,q,r:nat) : Prop \def
 div_mod_spec_intro: r < m \to n=q*m+r \to (div_mod_spec n m q r).
 
@@ -224,6 +234,15 @@ apply (div_mod_spec_to_eq ((S n)*m) (S n) ? ? ? O);
 ]
 qed.
 
+(*a simple variant of div_times theorem *)
+theorem lt_O_to_div_times: \forall a,b:nat. O \lt b \to
+a*b/b = a.
+intros.
+rewrite > sym_times.
+rewrite > (S_pred b H).
+apply div_times.
+qed.
+
 theorem div_n_n: \forall n:nat. O < n \to n / n = S O.
 intros.
 apply (div_mod_spec_to_eq n n (n / n) (n \mod n) (S O) O).
@@ -332,14 +351,4 @@ let rec n_divides_aux p n m acc \def
 
 (* n_divides n m = <q,r> if m divides n q times, with remainder r *)
 definition n_divides \def \lambda n,m:nat.n_divides_aux n n m O.
-
-
-(*a simple variant of div_times theorem *)
-theorem div_times_ltO: \forall a,b:nat. O \lt b \to
-a*b/b = a.
-intros.
-rewrite > sym_times.
-rewrite > (S_pred b H).
-apply div_times.
-qed.
 

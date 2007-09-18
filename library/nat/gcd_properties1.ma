@@ -14,7 +14,7 @@
 
 set "baseuri" "cic:/matita/nat/gcd_properties1".
 
-include "nat/propr_div_mod_lt_le_totient1_aux.ma".
+include "nat/gcd.ma".
 
 (* this file contains some important properites of gcd in N *)
 
@@ -238,107 +238,96 @@ apply gcd1
 ]
 qed.
 
-theorem divides_times_to_gcd_to_divides_div: \forall a,b,c,d:nat.
-a \divides (b*c) \to (gcd a b) = d \to (a/d) \divides c.
+
+theorem eq_gcd_div_div_div_gcd: \forall a,b,m:nat.
+O \lt m \to m \divides a \to m \divides b \to 
+(gcd (a/m) (b/m)) = (gcd a b) / m.
+intros.
+apply (inj_times_r1 m H).
+rewrite > (sym_times m ((gcd a b)/m)).
+rewrite > (divides_to_times_div (gcd a b) m)
+[ rewrite < eq_gcd_times_times_times_gcd.
+  rewrite > (sym_times m (a/m)).
+  rewrite > (sym_times m (b/m)).
+  rewrite > (divides_to_times_div a m H H1).
+  rewrite > (divides_to_times_div b m H H2).
+  reflexivity
+| assumption
+| apply divides_d_gcd;
+    assumption
+]
+qed.
+
+
+
+theorem divides_times_to_divides_div_gcd: \forall a,b,c:nat.
+a \divides (b*c) \to (a/(gcd a b)) \divides c.
 intros.
 apply (nat_case1 a)
 [ intros.
   apply (nat_case1 b)
-  [ intros.
-    cut (d = O) (*this is an impossible case*)
+  [ (*It's an impossible situation*)
+    intros. 
+    simplify.
+    apply divides_SO_n
+  | intros.    
+    cut (c = O)
     [ rewrite > Hcut.
-      simplify.
-      apply divides_SO_n
-    | rewrite > H2 in H1.
-      rewrite > H3 in H1.
-      apply sym_eq.
-      assumption
-    ]
-  | intros.
-    cut (O \lt d)
-    [ rewrite > (S_pred d Hcut).
-      simplify.
-      rewrite > H2 in H.
-      cut (c = O)
-      [ rewrite > Hcut1.
-        apply (divides_n_n O)
-      | apply (lt_times_eq_O b c)
-        [ rewrite > H3.
-          apply lt_O_S
-        | apply antisymmetric_divides
-          [ apply divides_n_O
-          | assumption
-          ]
+      apply (divides_n_n O)
+    | apply (lt_times_eq_O b c)
+      [ rewrite > H2.
+        apply lt_O_S
+      | apply antisymmetric_divides
+        [ apply divides_n_O
+        | rewrite < H1.
+          assumption
         ]
       ]
-    | rewrite < H1.
-      apply lt_O_gcd.
-      rewrite > H3.
-      apply lt_O_S
     ]
   ]
 | intros.
-  rewrite < H2.
+  rewrite < H1.
   elim H.
-  cut (d \divides a \land d \divides b)
-  [ cut (O \lt a)
-    [ cut (O \lt d)
-      [ elim Hcut.
-        rewrite < (NdivM_times_M_to_N a d) in H3
-        [ rewrite < (NdivM_times_M_to_N b d) in H3 
-          [ cut (b/d*c = a/d*n2)
-            [ apply (gcd_SO_to_divides_times_to_divides (b/d) (a/d) c)
-              [ apply (O_lt_times_to_O_lt (a/d) d).
-                rewrite > (NdivM_times_M_to_N a d);
-                  assumption
-              | apply (inj_times_r1 d ? ?)
-                [ assumption
-                | rewrite < (eq_gcd_times_times_times_gcd (a/d) (b/d) d).
-                  rewrite < (times_n_SO d).
-                  rewrite < (sym_times (a/d) d).
-                  rewrite < (sym_times (b/d) d).
-                  rewrite > (NdivM_times_M_to_N a d)
-                  [ rewrite > (NdivM_times_M_to_N b d);
-                      assumption                    
-                  | assumption
-                  | assumption              
-                  ]
-                ]
-              | apply (witness (a/d) ((b/d)*c) n2 Hcut3)
-              ]
-            | apply (inj_times_r1 d ? ?)
-              [ assumption
-              | rewrite > sym_times.
-                rewrite > (sym_times d ((a/d) * n2)).
-                rewrite > assoc_times.
-                rewrite > (assoc_times (a/d) n2 d).            
-                rewrite > (sym_times c d).
-                rewrite > (sym_times n2 d).              
-                rewrite < assoc_times.
-                rewrite < (assoc_times (a/d) d n2).
-                assumption
-              ]
-            ]
-          | assumption
-          | assumption
+  cut (O \lt a)
+  [ cut (O \lt (gcd a b))
+    [ apply (gcd_SO_to_divides_times_to_divides (b/(gcd a b)) (a/(gcd a b)) c)
+      [ apply (O_lt_times_to_O_lt (a/(gcd a b)) (gcd a b)).
+        rewrite > (divides_to_times_div a (gcd a b))
+        [ assumption      
+        | assumption
+        | apply divides_gcd_n
+        ]
+      | rewrite < (div_n_n (gcd a b)) in \vdash (? ? ? %)
+        [ apply eq_gcd_div_div_div_gcd
+          [ assumption
+          | apply divides_gcd_n
+          | apply divides_gcd_m
           ]
         | assumption
-        | assumption    
         ]
-      | rewrite < H1.
-        rewrite > sym_gcd.
-        apply lt_O_gcd.
-        assumption
+      | apply (witness ? ? n2).
+        apply (inj_times_r1 (gcd a b) Hcut1).
+        rewrite < assoc_times.
+        rewrite < sym_times in \vdash (? ? (? % ?) ?).
+        rewrite > (divides_to_times_div b (gcd a b))
+        [ rewrite < assoc_times in \vdash (? ? ? %).
+          rewrite < sym_times in \vdash (? ? ? (? % ?)).
+          rewrite > (divides_to_times_div a (gcd a b))
+          [ assumption
+          | assumption
+          | apply divides_gcd_n
+          ]
+        | assumption
+        | apply divides_gcd_m
+        ]
       ]
-    | rewrite > H2.
-      apply lt_O_S
+    | rewrite > sym_gcd.
+      apply lt_O_gcd.
+      assumption    
     ]
-  | rewrite < H1.
-    split
-    [ apply divides_gcd_n
-    | apply divides_gcd_m
-    ]
-  ]
+  | rewrite > H1.
+    apply lt_O_S
+  ]    
 ]
 qed.
 
@@ -374,53 +363,14 @@ apply gcd1
 qed.
 
 
-theorem eq_gcd_div_div_div_gcd: \forall a,b,m:nat.
-O \lt m \to m \divides a \to m \divides b \to 
-(gcd (a/m) (b/m)) = (gcd a b) / m.
-intros.
-apply (inj_times_r1 m H).
-rewrite > (sym_times m ((gcd a b)/m)).
-rewrite > (NdivM_times_M_to_N (gcd a b) m)
-[ rewrite < eq_gcd_times_times_times_gcd.
-  rewrite > (sym_times m (a/m)).
-  rewrite > (sym_times m (b/m)).
-  rewrite > (NdivM_times_M_to_N a m H H1).
-  rewrite > (NdivM_times_M_to_N b m H H2).
-  reflexivity
-| assumption
-| apply divides_d_gcd;
-    assumption
-]
-qed.
-
 
 theorem gcd_SO_to_divides_to_divides_to_divides_times: \forall c,e,f:nat.
 (gcd e f) = (S O)  \to e \divides c \to f \divides c \to 
 (e*f) \divides c.
 intros.
-apply (nat_case1 e)
-[ intros.
-  apply (nat_case1 c)
-  [ intros.
-    simplify.
-    apply (divides_n_n O).
-  | intros.
-    rewrite > H3 in H1.
-    apply False_ind.
-    cut (O \lt O)
-    [ apply (le_to_not_lt O O)
-      [ apply (le_n O)
-      | assumption
-      ]
-    | apply (divides_to_lt_O O c)
-      [ rewrite > H4.
-        apply lt_O_S
-      | assumption
-      ]
-    ]
-  ]
-| intros.
-  rewrite < H3.
+apply (nat_case1 c); intros
+[ apply divides_n_O 
+| rewrite < H3.
   elim H1.
   elim H2.
   rewrite > H5.
@@ -429,16 +379,18 @@ apply (nat_case1 e)
   [ apply (divides_n_n)
   | rewrite > H5 in H1.
     apply (gcd_SO_to_divides_times_to_divides f e n)
-    [ rewrite > H3.
-      apply (lt_O_S m)
+    [ rewrite < H5 in H1.
+      rewrite > H3 in H1.
+      apply (divides_to_lt_O e (S m))
+      [ apply lt_O_S
+      | assumption
+      ]
     | assumption
     | assumption
     ]
   ]
 ]
 qed.
-
-
 (* the following theorem shows that gcd is a multiplicative function in 
    the following sense: if a1 and a2 are relatively prime, then 
    gcd(a1·a2, b) = gcd(a1, b)·gcd(a2, b). 
