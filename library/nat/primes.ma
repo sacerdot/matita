@@ -190,27 +190,51 @@ rewrite > H2.rewrite < H3.
 simplify.exact (not_le_Sn_n O).
 qed.
 
+
 (*divides and div*)
 
-theorem divides_to_times_div: \forall n,m:nat.
-O \lt m \to m \divides n \to (n / m) * m = n.
-intros.
-rewrite > plus_n_O.
-apply sym_eq.
-cut (n \mod m = O)
-[ rewrite < Hcut.
-  apply div_mod.
-  assumption
-| apply divides_to_mod_O;
-    assumption.
-]
+theorem divides_to_div: \forall n,m.divides n m \to m/n*n = m.
+intro.
+elim (le_to_or_lt_eq O n (le_O_n n))
+  [rewrite > plus_n_O.
+   rewrite < (divides_to_mod_O ? ? H H1).
+   apply sym_eq.
+   apply div_mod.
+   assumption
+  |elim H1.
+   generalize in match H2.
+   rewrite < H.
+   simplify.
+   intro.
+   rewrite > H3.
+   reflexivity
+  ]
 qed.
 
-(*to remove hypotesis b > 0*)
+theorem div_div: \forall n,d:nat. O < n \to divides d n \to 
+n/(n/d) = d.
+intros.
+apply (inj_times_l1 (n/d))
+  [apply (lt_times_n_to_lt d)
+    [apply (divides_to_lt_O ? ? H H1).
+    |rewrite > divides_to_div;assumption
+    ]
+  |rewrite > divides_to_div
+    [rewrite > sym_times.
+     rewrite > divides_to_div
+      [reflexivity
+      |assumption
+      ]
+    |apply (witness ? ? d).
+     apply sym_eq.
+     apply divides_to_div.
+     assumption
+    ]
+  ]
+qed.
+
 theorem divides_to_eq_times_div_div_times: \forall a,b,c:nat.
 O \lt b \to c \divides b \to a * (b /c) = (a*b)/c.
-(*theorem divides_to_eq_times_div_div_times: \forall a,b,c:nat.
-c \divides b \to a * (b /c) = (a*b)/c.*)
 intros.
 elim H1.
 rewrite > H2.
@@ -228,6 +252,7 @@ cut(O \lt c)
     assumption.
 ]
 qed.
+
 
 (* boolean divides *)
 definition divides_b : nat \to nat \to bool \def

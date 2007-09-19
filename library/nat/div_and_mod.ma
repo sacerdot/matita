@@ -293,6 +293,38 @@ constructor 1.
 assumption.reflexivity.
 qed.
 
+theorem mod_SO: \forall n:nat. mod n (S O) = O.
+intro.
+apply sym_eq.
+apply le_n_O_to_eq.
+apply le_S_S_to_le.
+apply lt_mod_m_m.
+apply le_n.
+qed.
+
+theorem div_SO: \forall n:nat. div n (S O) = n.
+intro.
+rewrite > (div_mod ? (S O)) in \vdash (? ? ? %)
+  [rewrite > mod_SO.
+   rewrite < plus_n_O.
+   apply times_n_SO
+  |apply le_n
+  ]
+qed.
+
+theorem le_div: \forall n,m. O < n \to m/n \le m.
+intros.
+rewrite > (div_mod m n) in \vdash (? ? %)
+  [apply (trans_le ? (m/n*n))
+    [rewrite > times_n_SO in \vdash (? % ?).
+     apply le_times
+      [apply le_n|assumption]
+    |apply le_plus_n_r
+    ]
+  |assumption
+  ]
+qed.
+
 (* injectivity *)
 theorem injective_times_r: \forall n:nat.injective nat nat (\lambda m:nat.(S n)*m).
 change with (\forall n,p,q:nat.(S n)*p = (S n)*q \to p=q).

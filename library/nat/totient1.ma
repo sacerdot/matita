@@ -25,6 +25,7 @@ include "nat/gcd_properties1.ma".
    number n is equal to n
  *)
 
+(*simple auxiliary properties*)
 theorem eq_div_times_div_times: \forall a,b,c:nat.
 O \lt b \to b \divides a \to b \divides c \to
 a / b * c = a * (c/b).
@@ -47,15 +48,12 @@ theorem lt_O_to_divides_to_lt_O_div:
 O \lt b \to a \divides b \to O \lt (b/a).
 intros.
 apply (O_lt_times_to_O_lt ? a).
-rewrite > (divides_to_times_div b a)
-[ assumption
-| apply (divides_to_lt_O a b H H1)
-| assumption
-]
+rewrite > (divides_to_div a b); 
+  assumption.
 qed.
 
 (*tha main theorem*) 
-theorem sigma_p_Sn_divides_b_totient_n': \forall n. O \lt n \to sigma_p (S n) (\lambda d.divides_b d n) totient = n.
+theorem sigma_p_Sn_divides_b_totient_n: \forall n. O \lt n \to sigma_p (S n) (\lambda d.divides_b d n) totient = n.
 intros. 
 unfold totient.
 apply (trans_eq ? ? 
@@ -104,9 +102,8 @@ apply (trans_eq ? ?
           [ split
             [ apply divides_to_divides_b_true
               [ apply (O_lt_times_to_O_lt ? (gcd x n)).
-                rewrite > (divides_to_times_div n (gcd x n))
+                rewrite > (divides_to_div (gcd x n) n)
                 [ assumption
-                | assumption
                 | apply (divides_gcd_m)
                 ]
               | rewrite > sym_gcd.
@@ -119,13 +116,11 @@ apply (trans_eq ? ?
                 change with (x/(gcd x n) \lt n/(gcd x n)).
                 apply (lt_times_n_to_lt (gcd x n) ? ?)
                 [ assumption
-                | rewrite > (divides_to_times_div x (gcd x n))
-                  [ rewrite > (divides_to_times_div n (gcd x n))
+                | rewrite > (divides_to_div (gcd x n) x)
+                  [ rewrite > (divides_to_div (gcd x n) n)
                     [ assumption
-                    | assumption
                     | apply divides_gcd_m
                     ]
-                  | assumption
                   | apply divides_gcd_n
                   ]
                 ]
@@ -144,7 +139,7 @@ apply (trans_eq ? ?
               | apply divides_gcd_m 
               ]
             | rewrite > associative_times.
-              rewrite > (divides_to_times_div n (n/(gcd x n)))
+              rewrite > (divides_to_div (n/(gcd x n)) n)
               [ apply eq_div_times_div_times
                 [ assumption
                 | apply divides_gcd_n
@@ -161,29 +156,23 @@ apply (trans_eq ? ?
                 apply lt_O_gcd.
                 assumption.                
                 apply divides_gcd_n.*)
-              | apply lt_O_to_divides_to_lt_O_div
-                [ assumption
-                | apply divides_gcd_m 
-                ] 
               | apply (witness ? ? (gcd x n)).
-                rewrite > divides_to_times_div
+                rewrite > divides_to_div
                 [ reflexivity
-                | assumption
-                | apply divides_gcd_m
-                
+                | apply divides_gcd_m                
                 ]                
               ]
             ]  
           ]
         | apply (le_to_lt_to_lt ? n)
-          [ apply cic:/matita/Z/dirichlet_product/le_div.con.
+          [ apply le_div.
             assumption
           | change with ((S n) \le (S n)).
             apply le_n 
           ]
         ]
       | apply (le_to_lt_to_lt ? x)
-        [ apply cic:/matita/Z/dirichlet_product/le_div.con.
+        [ apply le_div.
           assumption   
         | apply (trans_lt ? n ?)
           [ assumption
@@ -206,7 +195,7 @@ apply (trans_eq ? ?
                 [ split
                   [ reflexivity
                   | rewrite > Hcut3.
-                    apply (cic:/matita/Z/dirichlet_product/div_div.con);
+                    apply (div_div);
                       assumption
                   ]               
                 | rewrite > Hcut3.
@@ -222,23 +211,21 @@ apply (trans_eq ? ?
                   | apply divides_n_n
                   ]
                 ]
-              | rewrite < (divides_to_times_div n i) in \vdash (? ? %)
+              | rewrite < (divides_to_div i n) in \vdash (? ? %)
                 [ rewrite > sym_times.
                   apply (lt_times_r1)
                   [ apply lt_O_to_divides_to_lt_O_div; (*n/i 3*)
                       assumption
                   | assumption
                   ]
-                | apply (divides_to_lt_O i n); assumption
                 | assumption
                 ]               
               ]
-            | rewrite < (divides_to_times_div n i) in \vdash (? ? (? ? %) ?)
+            | rewrite < (divides_to_div i n) in \vdash (? ? (? ? %) ?)
               [ rewrite > (sym_times j).
                 rewrite > times_n_SO in \vdash (? ? ? %).
                 rewrite < Hcut2.
-                apply eq_gcd_times_times_times_gcd.                
-              | apply (divides_to_lt_O i n); assumption
+                apply eq_gcd_times_times_times_gcd                
               | assumption
               ]
             ]

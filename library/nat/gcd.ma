@@ -15,6 +15,7 @@
 set "baseuri" "cic:/matita/nat/gcd".
 
 include "nat/primes.ma".
+include "nat/lt_arith.ma".
 
 let rec gcd_aux p m n: nat \def
 match divides_b n m with
@@ -163,42 +164,109 @@ intros.
 exact (proj1 ? ? (divides_gcd_nm n m)).
 qed.
 
-theorem divides_gcd_aux: \forall p,m,n,d. O < n \to n \le m \to n \le p \to
-d \divides m \to d \divides n \to d \divides gcd_aux p m n. 
-intro.elim p.
-absurd (O < n).assumption.apply le_to_not_lt.assumption.
-simplify.
-cut (n1 \divides m \lor n1 \ndivides m).
-elim Hcut.
-rewrite > divides_to_divides_b_true.
-simplify.assumption.
-assumption.assumption.
-rewrite > not_divides_to_divides_b_false.
-simplify.
-apply H.
-cut (O \lt m \mod n1 \lor O = m \mod n1).
-elim Hcut1.assumption.
-absurd (n1 \divides m).apply mod_O_to_divides.
-assumption.apply sym_eq.assumption.assumption.
-apply le_to_or_lt_eq.apply le_O_n.
-apply lt_to_le.
-apply lt_mod_m_m.assumption.
-apply le_S_S_to_le.
-apply (trans_le ? n1).
-change with (m \mod n1 < n1).
-apply lt_mod_m_m.assumption.assumption.
-assumption.
-apply divides_mod.assumption.assumption.assumption.
-assumption.assumption.
-apply (decidable_divides n1 m).assumption.
+
+theorem divides_times_gcd_aux: \forall p,m,n,d,c. 
+O \lt c \to O < n \to n \le m \to n \le p \to
+d \divides (c*m) \to d \divides (c*n) \to d \divides c*gcd_aux p m n. 
+intro.
+elim p
+[ absurd (O < n)
+  [ assumption
+  | apply le_to_not_lt.
+    assumption
+  ]
+| simplify.
+  cut (n1 \divides m \lor n1 \ndivides m)
+  [ elim Hcut
+    [ rewrite > divides_to_divides_b_true
+      [ simplify.
+        assumption
+      | assumption
+      | assumption
+      ]
+    | rewrite > not_divides_to_divides_b_false
+      [ simplify.
+        apply H
+        [ assumption
+        | cut (O \lt m \mod n1 \lor O = m \mod n1)
+          [ elim Hcut1
+            [ assumption
+            | absurd (n1 \divides m)
+              [ apply mod_O_to_divides
+                [ assumption
+                | apply sym_eq.
+                  assumption
+                ]
+              | assumption
+              ]
+            ]
+          | apply le_to_or_lt_eq.
+            apply le_O_n
+          ]
+        | apply lt_to_le.
+          apply lt_mod_m_m.
+          assumption
+        | apply le_S_S_to_le.
+          apply (trans_le ? n1)
+          [ change with (m \mod n1 < n1).
+            apply lt_mod_m_m.
+            assumption
+          | assumption
+          ]
+        | assumption
+        | rewrite < times_mod
+          [ rewrite < (sym_times c m).
+            rewrite < (sym_times c n1).
+            apply divides_mod
+            [ rewrite > (S_pred c)
+              [ rewrite > (S_pred n1)
+                [ apply (lt_O_times_S_S)
+                | assumption
+                ]
+              | assumption
+              ]
+            | assumption
+            | assumption
+            ]
+          | assumption
+          | assumption
+          ]
+        ]
+      | assumption
+      | assumption
+      ]
+    ]
+  | apply (decidable_divides n1 m).
+    assumption
+  ]
+]
 qed.
 
-theorem divides_d_gcd: \forall m,n,d. 
-d \divides m \to d \divides n \to d \divides gcd n m. 
+(*a particular case of the previous theorem (setting c=1)*)
+theorem divides_gcd_aux: \forall p,m,n,d. O < n \to n \le m \to n \le p \to
+d \divides m \to d \divides n \to d \divides gcd_aux p m n. 
 intros.
-(*CSC: here simplify simplifies too much because of a redex in gcd *)
+rewrite > (times_n_SO (gcd_aux p m n)).
+rewrite < (sym_times (S O)).
+apply (divides_times_gcd_aux)
+[ apply (lt_O_S O)
+| assumption
+| assumption
+| assumption
+| rewrite > (sym_times (S O)).
+  rewrite < (times_n_SO m).
+  assumption
+| rewrite > (sym_times (S O)).
+  rewrite < (times_n_SO n).
+  assumption
+]
+qed.
+
+theorem divides_d_times_gcd: \forall m,n,d,c. 
+O \lt c \to d \divides (c*m) \to d \divides (c*n) \to d \divides c*gcd n m. 
+intros.
 change with
-(d \divides
+(d \divides c *
 match leb n m with
   [ true \Rightarrow 
     match n with 
@@ -208,20 +276,63 @@ match leb n m with
     match m with 
     [ O \Rightarrow n
     | (S p) \Rightarrow gcd_aux (S p) n (S p) ]]).
-apply (leb_elim n m).
-apply (nat_case1 n).simplify.intros.assumption.
+apply (leb_elim n m)
+[ apply (nat_case1 n)
+  [ simplify.
+    intros.
+    assumption
+  | intros.
+    change with (d \divides c*gcd_aux (S m1) m (S m1)).
+    apply divides_times_gcd_aux
+    [ assumption
+    | unfold lt.
+      apply le_S_S.
+      apply le_O_n
+    | assumption
+    | apply (le_n (S m1))
+    | assumption
+    | rewrite < H3.
+      assumption
+    ]
+  ]
+| apply (nat_case1 m)
+  [ simplify.
+    intros.
+    assumption
+  | intros.
+    change with (d \divides c * gcd_aux (S m1) n (S m1)).
+    apply divides_times_gcd_aux
+    [ unfold lt.
+      change with (O \lt c).
+      assumption
+    | apply lt_O_S
+    | apply lt_to_le.
+      apply not_le_to_lt.
+      assumption
+    | apply (le_n (S m1)).
+    | assumption
+    | rewrite < H3.
+      assumption
+    ]
+  ]
+]
+qed.
+
+(*a particular case of the previous theorem (setting c=1)*)
+theorem divides_d_gcd: \forall m,n,d. 
+d \divides m \to d \divides n \to d \divides gcd n m. 
 intros.
-change with (d \divides gcd_aux (S m1) m (S m1)).
-apply divides_gcd_aux.
-unfold lt.apply le_S_S.apply le_O_n.assumption.apply le_n.assumption.
-rewrite < H2.assumption.
-apply (nat_case1 m).simplify.intros.assumption.
-intros.
-change with (d \divides gcd_aux (S m1) n (S m1)).
-apply divides_gcd_aux.
-unfold lt.apply le_S_S.apply le_O_n.
-apply lt_to_le.apply not_le_to_lt.assumption.apply le_n.assumption.
-rewrite < H2.assumption.
+rewrite > (times_n_SO (gcd n m)).
+rewrite < (sym_times (S O)).
+apply (divides_d_times_gcd)
+[ apply (lt_O_S O)
+| rewrite > (sym_times (S O)).
+  rewrite < (times_n_SO m).
+  assumption
+| rewrite > (sym_times (S O)).
+  rewrite < (times_n_SO n).
+  assumption
+]
 qed.
 
 theorem eq_minus_gcd_aux: \forall p,m,n.O < n \to n \le m \to n \le p \to

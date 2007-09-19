@@ -14,6 +14,7 @@
 
 set "baseuri" "cic:/matita/Z/dirichlet_product".
 
+include "nat/primes.ma".
 include "Z/sigma_p.ma".
 include "Z/times.ma".
 
@@ -24,6 +25,7 @@ sigma_p (S n)
 
 (* da spostare *)
 
+(* spostati in div_and_mod.ma
 theorem mod_SO: \forall n:nat. mod n (S O) = O.
 intro.
 apply sym_eq.
@@ -40,7 +42,7 @@ rewrite > (div_mod ? (S O)) in \vdash (? ? ? %)
    apply times_n_SO
   |apply le_n
   ]
-qed.
+qed.*)
 
 theorem and_true: \forall a,b:bool. 
 andb a b =true \to a =true \land b= true.
@@ -88,7 +90,7 @@ elim (le_to_or_lt_eq O n (le_O_n n))
    assumption
   ]
 qed.
-
+(* spostato in primes.ma
 theorem divides_to_div: \forall n,m.divides n m \to m/n*n = m.
 intro.
 elim (le_to_or_lt_eq O n (le_O_n n))
@@ -105,8 +107,8 @@ elim (le_to_or_lt_eq O n (le_O_n n))
    rewrite > H3.
    reflexivity
   ]
-qed.
-
+qed.*)
+(* spostato in div_and_mod.ma
 theorem le_div: \forall n,m. O < n \to m/n \le m.
 intros.
 rewrite > (div_mod m n) in \vdash (? ? %)
@@ -118,7 +120,7 @@ rewrite > (div_mod m n) in \vdash (? ? %)
     ]
   |assumption
   ]
-qed.
+qed.*)
   
 theorem sigma_p2_eq: 
 \forall g: nat \to nat \to Z.
@@ -920,6 +922,7 @@ apply divides_to_divides_b_true1
   ]
 qed.
 
+(* spostato in primes.ma (non in div_and_mod.ma perche' serve il predicato divides)
 theorem div_div: \forall n,d:nat. O < n \to divides d n \to 
 n/(n/d) = d.
 intros.
@@ -941,7 +944,7 @@ apply (inj_times_l1 (n/d))
     ]
   ]
 qed.
-
+*)
 theorem commutative_dirichlet_product: \forall f,g:nat \to Z.\forall n. O < n \to 
 dirichlet_product f g n = dirichlet_product g f n.
 intros.
