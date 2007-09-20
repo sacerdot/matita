@@ -25,24 +25,7 @@ include "nat/gcd_properties1.ma".
    number n is equal to n
  *)
 
-(*simple auxiliary properties*)
-theorem eq_div_times_div_times: \forall a,b,c:nat.
-O \lt b \to b \divides a \to b \divides c \to
-a / b * c = a * (c/b).
-intros.
-elim H1.
-elim H2.
-rewrite > H3.
-rewrite > H4.    
-rewrite > (sym_times) in \vdash (? ? ? (? ? (? % ?))).
-rewrite > (sym_times) in \vdash (? ? (? (? % ?) ?) ?).
-rewrite > (lt_O_to_div_times ? ? H).
-rewrite > (lt_O_to_div_times ? ? H) in \vdash (? ? ? (? ? %)).
-rewrite > (sym_times b n2).
-rewrite > assoc_times.
-reflexivity.
-qed.
-    
+(*simple auxiliary properties*)   
 theorem lt_O_to_divides_to_lt_O_div:
 \forall a,b:nat.
 O \lt b \to a \divides b \to O \lt (b/a).
@@ -140,22 +123,24 @@ apply (trans_eq ? ?
               ]
             | rewrite > associative_times.
               rewrite > (divides_to_div (n/(gcd x n)) n)
-              [ apply eq_div_times_div_times
-                [ assumption
-                | apply divides_gcd_n
+              [ rewrite > sym_times.
+                rewrite > (divides_to_eq_times_div_div_times x)
+                [ apply (inj_times_l1 (gcd x n) Hcut).
+                  rewrite > (divides_to_div (gcd x n) (x * n))
+                  [ rewrite > assoc_times.
+                    rewrite > (divides_to_div (gcd x n) x)
+                    [ apply sym_times
+                    | apply divides_gcd_n
+                    ]
+                  | apply (trans_divides ? x)
+                    [ apply divides_gcd_n
+                    | apply (witness ? ? n).
+                      reflexivity
+                    ]
+                  ]
+                | assumption
                 | apply divides_gcd_m
-                ]
-                (*rewrite > sym_times.
-                rewrite > (divides_to_eq_times_div_div_times n).
-                rewrite > (divides_to_eq_times_div_div_times x).
-                rewrite > (sym_times n x).
-                reflexivity. 
-                assumption.
-                apply divides_gcd_m.
-                apply (divides_to_lt_O (gcd x n)).
-                apply lt_O_gcd.
-                assumption.                
-                apply divides_gcd_n.*)
+                ]              
               | apply (witness ? ? (gcd x n)).
                 rewrite > divides_to_div
                 [ reflexivity
@@ -203,10 +188,10 @@ apply (trans_eq ? ?
                   [ rewrite > div_n_n  
                     [ apply sym_eq.
                       apply times_n_SO.
-                    | apply lt_O_to_divides_to_lt_O_div; (*n/i 1*)
+                    | apply lt_O_to_divides_to_lt_O_div;
                         assumption
                     ]
-                  | apply lt_O_to_divides_to_lt_O_div; (*n/i 2*)
+                  | apply lt_O_to_divides_to_lt_O_div; 
                       assumption
                   | apply divides_n_n
                   ]
@@ -214,7 +199,7 @@ apply (trans_eq ? ?
               | rewrite < (divides_to_div i n) in \vdash (? ? %)
                 [ rewrite > sym_times.
                   apply (lt_times_r1)
-                  [ apply lt_O_to_divides_to_lt_O_div; (*n/i 3*)
+                  [ apply lt_O_to_divides_to_lt_O_div;
                       assumption
                   | assumption
                   ]
