@@ -112,7 +112,7 @@ let initialize_makelib init_status =
     init_status
 
 let initialize_environment init_status = 
-  wants [ConfigurationFile] init_status;
+  wants [CmdLine] init_status;
   if not (already_configured [Getter;Environment] init_status) then
     begin
       Http_getter.init ();
