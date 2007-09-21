@@ -209,8 +209,13 @@ let call_make ?matita_flags development target make =
       | None -> (try Sys.getenv "MATITA_FLAGS" with Not_found -> "")
       | Some s -> s 
     in
-    already_defined ^ 
-      if Helm_registry.get_bool "matita.bench" then "-bench" else ""
+    let bench = 
+      if Helm_registry.get_bool "matita.bench" then " -bench" else ""
+    in
+    let system = 
+      if Helm_registry.get_bool "matita.system" then " -system" else ""
+    in
+    already_defined ^ bench ^ system
   in
   let csc = try ["SRC=" ^ Sys.getenv "SRC"] with Not_found -> [] in
   rebuild_makefile development;
@@ -218,7 +223,7 @@ let call_make ?matita_flags development target make =
   let flags = [] in 
   let flags =
     try
-      flags @ [ sprintf "MATITA_FLAGS=\"%s\"" matita_flags ]
+      flags @ [ sprintf "MATITA_FLAGS=%s" matita_flags ]
     with Not_found -> flags in
   let flags = flags @ csc in
   let args = 
