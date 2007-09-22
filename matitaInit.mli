@@ -28,6 +28,7 @@ val initialize_all: unit -> unit
 
   (** {2 per-components initialization} *)
 val parse_cmdline_and_configuration_file: unit -> unit
+val initialize_environment: unit -> unit
 
   (** {2 Utilities} *)
 

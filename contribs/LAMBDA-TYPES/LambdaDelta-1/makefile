@@ -1,7 +1,7 @@
 H=@
 
 RT_BASEDIR=../../../
-OPTIONS=-bench -onepass 
+OPTIONS=-bench -onepass -system
 MMAKE=$(RT_BASEDIR)matitamake $(OPTIONS)
 CLEAN=$(RT_BASEDIR)matitaclean $(OPTIONS) 
 MMAKEO=$(RT_BASEDIR)matitamake.opt $(OPTIONS)

@@ -331,6 +331,8 @@ let initialize_all () =
 let parse_cmdline_and_configuration_file () =
   status := List.fold_left (fun s f -> f s) !status conf_components
 
-;;
+let initialize_environment () =
+  status := initialize_environment !status
 
-Inversion_principle.init ()
+let _ =
+  Inversion_principle.init ()

@@ -17,7 +17,7 @@ all: $(TODO)
 
 clean:
 	$(MATITACLEAN) $(MATITA_FLAGS) $(SRC) 
-	rm -f $(TODO)
+	rm -f $(TODO) @DEPFILE@
 
 %.moo:
 	if [ -z "$<" ]; then \

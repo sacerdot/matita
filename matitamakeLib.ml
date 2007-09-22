@@ -355,7 +355,7 @@ let publish_development_bstract build clean devel =
     let orig_matita_flags = 
       try Sys.getenv "MATITA_FLAGS" with Not_found -> "" 
     in
-    "\"" ^ orig_matita_flags ^ "\"", "\"" ^ orig_matita_flags ^ " -system\"" 
+    orig_matita_flags, orig_matita_flags ^ " -system" 
   in
   HLog.message "cleaning the development before publishing";
   if clean ~matita_flags devel then

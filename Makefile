@@ -199,6 +199,7 @@ distclean: clean
 	$(H)rm -rf .matita
 
 TEST_DIRS = 				\
+	legacy                          \
 	library 			\
 	tests 				\
 	dama				\
