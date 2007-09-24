@@ -45,7 +45,7 @@ qed.
 
 inductive in_list (A:Type): A → (list A) → Prop ≝
 | in_Base : ∀ x,l.(in_list A x (x::l))
-| in_Skip : ∀ x,y,l.(in_list A x l) → (x ≠ y) → (in_list A x (y::l)).
+| in_Skip : ∀ x,y,l.(in_list A x l) → (in_list A x (y::l)).
 
 notation > "hvbox(x ∈ l)"
   non associative with precedence 30 for @{ 'inlist $x $l }.
@@ -53,12 +53,6 @@ notation < "hvbox(x \nbsp ∈ \nbsp l)"
   non associative with precedence 30 for @{ 'inlist $x $l }.
 interpretation "item in list" 'inlist x l =
   (cic:/matita/Fsub/util/in_list.ind#xpointer(1/1) _ x l).
-
-lemma in_Skip2 : ∀x,y,l.(in_list nat x l) → (in_list nat x (y::l)).
-intros;elim (decidable_eq_nat x y)
-  [rewrite > H1;apply in_Base
-  |apply (in_Skip ? ? ? ? H H1)]
-qed.
 
 definition incl : \forall A.(list A) \to (list A) \to Prop \def
   \lambda A,l,m.\forall x.(in_list A x l) \to (in_list A x m).               
@@ -74,17 +68,70 @@ definition map : \forall A,B,f.((list A) \to (list B)) \def
 lemma in_list_nil : \forall A,x.\lnot (in_list A x []).
 intros.unfold.intro.inversion H
   [intros;lapply (sym_eq ? ? ? H2);destruct Hletin
-  |intros;destruct H5]
+  |intros;destruct H4]
 qed.
 
-lemma in_cons_case : ∀A.∀x,h:A.∀t:list A.x ∈ h::t → x = h ∨ (x ≠ h ∧ (x ∈ t)).
+lemma in_cons_case : ∀A.∀x,h:A.∀t:list A.x ∈ h::t → x = h ∨ (x ∈ t).
 intros;inversion H;intros
   [destruct H2;left;symmetry;assumption
-  |destruct H5;right;split [rewrite > Hcut|rewrite > Hcut1] assumption ]
+  |destruct H4;right;applyS H1]
+qed.
+
+lemma append_nil:\forall A:Type.\forall l:list A. l@[]=l.
+intros.
+elim l;intros;autobatch.
+qed.
+
+lemma append_cons:\forall A.\forall a:A.\forall l,l1. 
+l@(a::l1)=(l@[a])@l1.
+intros.
+rewrite > associative_append.
+reflexivity.
+qed.
+
+lemma in_list_append1: \forall A.\forall x:A.
+\forall l1,l2. x \in l1 \to x \in l1@l2.
+intros.
+elim H
+  [simplify.apply in_Base
+  |simplify.apply in_Skip.assumption
+  ]
+qed.
+
+lemma in_list_append2: \forall A.\forall x:A.
+\forall l1,l2. x \in l2 \to x \in l1@l2.
+intros 3.
+elim l1
+  [simplify.assumption
+  |simplify.apply in_Skip.apply H.assumption
+  ]
+qed.
+
+theorem append_to_or_in_list: \forall A:Type.\forall x:A.
+\forall l,l1. x \in l@l1 \to (x \in l) \lor (x \in l1).
+intros 3.
+elim l
+  [right.apply H
+  |simplify in H1.inversion H1;intros
+    [destruct H3.left.rewrite < Hcut.
+     apply in_Base
+    |destruct H5.
+     elim (H l2)
+      [left.apply in_Skip.
+       rewrite < H4.assumption
+      |right.rewrite < H4.assumption
+      |rewrite > Hcut1.rewrite > H4.assumption
+      ]
+    ]
+  ]
 qed.
 
 lemma max_case : \forall m,n.(max m n) = match (leb m n) with
       [ false \Rightarrow n
       | true \Rightarrow m ].
 intros;elim m;simplify;reflexivity;
+qed.
+
+lemma incl_A_A: ∀T,A.incl T A A.
+intros.unfold incl.intros.assumption.
 qed.
