@@ -19,4 +19,4 @@ set "baseuri" "cic:/matita/LOGIC/preamble".
 (* PREAMBLE
 *)
 
-include "../RELATIONAL/datatypes/Nat.ma".
+include "../RELATIONAL/NLE/defs.ma".

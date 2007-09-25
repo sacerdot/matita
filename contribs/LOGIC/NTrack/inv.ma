@@ -15,7 +15,7 @@
 set "baseuri" "cic:/matita/LOGIC/NTrack/inv".
 
 include "NTrack/defs.ma".
-
+(*
 theorem ntrack_inv_lref: \forall Q,S,i. NTrack Q (lref i) S \to
                          \exists P. Insert S i P Q.
  intros; inversion H; clear H; intros; subst; autobatch.
@@ -63,3 +63,4 @@ theorem ntrack_inv_lleaf_impl:
  | subst; autobatch depth = 4
  ].
 qed.
+*)

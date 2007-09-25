@@ -18,7 +18,7 @@ include "CLE/defs.ma".
 include "Insert/inv.ma".
 
 (* Functional properties ****************************************************)
-
+(*
 theorem insert_total: \forall S,i,P. i <= P \to \exists Q. Insert S i P Q.
  intros 4; elim H; clear H i P;
  decompose; autobatch.
@@ -31,3 +31,4 @@ theorem insert_inj: \forall S1,i,P, Q. Insert S1 i P Q \to
  | lapply linear insert_inv_succ to H3; decompose; subst; autobatch
  ].
 qed.
+*)

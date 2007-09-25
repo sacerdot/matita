@@ -18,7 +18,8 @@ set "baseuri" "cic:/matita/LOGIC/PNF/defs".
 *)
 
 include "PRed/defs.ma".
-
+(*
 inductive PNF: Proof \to Prop \def
    | pnf: \forall p. (\forall q. p => q \to p = q) \to PNF p
 .
+*)

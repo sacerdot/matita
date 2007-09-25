@@ -12,28 +12,29 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/LOGIC/NTrack/order".
+set "baseuri" "cic:/matita/LOGIC/Track/pred".
 
-include "Track/order.ma".
-include "NTrack/props.ma".
+(**)
 
-(* Order properties *********************************************************)
-(*
-theorem ntrack_refl: \forall P. \forall c:Formula. \exists r. 
-                     NTrack P r (pair c c).
- intros; elim c; clear c;
+include "Track/inv.ma".
+include "PRed/defs.ma".
+
+theorem track_pred: \forall Q1,Q2,p1,p2,S1,S2. PRed Q1 p1 S1 Q2 p2 S2 \to
+                    Track Q1 p1 S1 \to Track Q2 p2 S2.
+ intros 7; elim H; clear H Q1 Q2 p1 p2 S1 S2;
  [ autobatch
- | lapply (insert_total (pair f f1) zero P); [2:autobatch];
-   decompose; autobatch depth = 5 width = 4 size = 8
+ | autobatch
+ | lapply linear track_inv_impw to H3; decompose; subst; autobatch
+ | lapply linear track_inv_impr to H3; decompose; subst; autobatch
+ | lapply linear track_inv_impi to H7; decompose; subst; autobatch size = 7
+ | lapply linear track_inv_scut to H5; decompose; subst; autobatch
+ | lapply linear track_inv_scut to H4; decompose; subst;
+   lapply linear track_inv_lref to H6; decompose; autobatch
+ | lapply linear track_inv_scut to H4; decompose; subst;
+   lapply linear track_inv_lref to H5; decompose; autobatch
+ | lapply linear track_inv_scut to H3; decompose; subst;
+   lapply linear track_inv_prin to H5; subst; autobatch
+ | lapply linear track_inv_scut to H3; decompose; subst;
+   lapply linear track_inv_prin to H4; subst; autobatch
  ].
 qed.
-(*
-theorem ntrack_trans: \forall p,q,A,B. \forall c:Formula.
-                      NTrack leaf p (pair A c) \to NTrack leaf q (pair c B) \to
-                      \exists r. NTrack leaf r (pair A B).
- intros;
- lapply linear ntrack_track to H as H0;
- lapply linear ntrack_track to H1 as H;
- lapply linear track_trans to H0, H as H1; decompose;
-*)
-*)

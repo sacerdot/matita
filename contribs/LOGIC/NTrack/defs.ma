@@ -17,9 +17,8 @@ set "baseuri" "cic:/matita/LOGIC/NTrack/defs".
 (* NORMAL PROOF TREE TRACKS
 *)
 
-include "datatypes/Proof.ma".
 include "Insert/defs.ma".
-
+(*
 inductive NTrack: Context \to Proof \to Sequent \to Prop \def
    | ntrack_proj: \forall P,Q,S,i. Insert S i P Q \to NTrack Q (lref i) S
    | ntrack_posr: \forall P,h.
@@ -36,3 +35,4 @@ inductive NTrack: Context \to Proof \to Sequent \to Prop \def
 		  Insert (pair A B) i P Q \to
 		  NTrack P (impi p q r) (pair (impl a b) D)
 .
+*)

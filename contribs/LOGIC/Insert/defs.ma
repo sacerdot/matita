@@ -17,10 +17,14 @@ set "baseuri" "cic:/matita/LOGIC/Insert/defs".
 (* INSERT RELATION FOR CONTEXTS
 *)
 
+include "Lift/defs.ma".
 include "datatypes/Context.ma".
 
-inductive Insert (S:Sequent): Nat \to Context \to Context \to Prop \def
-   | insert_zero: \forall P. Insert S zero P (abst P S)
-   | insert_succ: \forall P,Q,R,i. 
-                  Insert S i P Q \to Insert S (succ i) (abst P R) (abst Q R)
+inductive Insert (p,q:Proof) (S:Sequent): 
+                 Nat \to Context \to Context \to Prop \def
+   | insert_zero: \forall P. Insert p q S zero P (abst P p q S)
+   | insert_succ: \forall P,Q,i. Insert p q S i P Q \to 
+                  \forall p1,p2. Lift i (succ zero) p1 p2 \to 
+                  \forall q1,q2. Lift i (succ zero) q1 q2 \to \forall R. 
+                  Insert p q S (succ i) (abst P p1 q1 R) (abst Q p2 q2 R)
 .

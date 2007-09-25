@@ -17,7 +17,7 @@ set "baseuri" "cic:/matita/LOGIC/NTrack/props".
 include "Insert/props.ma".
 include "Track/defs.ma".
 include "NTrack/inv.ma".
-
+(*
 theorem ntrack_weak: \forall R,p,P,Q,S,i. 
                      NTrack P p S \to Insert R i P Q \to 
                      \exists q. NTrack Q q S.
@@ -60,3 +60,4 @@ qed.
 theorem ntrack_track: \forall R,p,P. NTrack P p R \to Track P p R.
  intros; elim H names 0; clear H P p R; intros; autobatch width = 4.
 qed.
+*)

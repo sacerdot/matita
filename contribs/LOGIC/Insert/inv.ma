@@ -18,7 +18,7 @@ set "baseuri" "cic:/matita/LOGIC/Insert/inv".
 *)
 
 include "Insert/defs.ma".
-
+(*
 theorem insert_inv_zero: \forall S,P,Q. Insert S zero P Q \to Q = abst P S.
  intros; inversion H; clear H; intros; subst; autobatch.
 qed.
@@ -54,3 +54,4 @@ theorem insert_inv_abst_2: \forall P,i. \forall R,S:Sequent.
  | clear H1. lapply linear insert_inv_leaf_2 to H. decompose
  ].
 qed.
+*)

@@ -18,7 +18,7 @@ set "baseuri" "cic:/matita/LOGIC/Insert/props".
 *)
 
 include "Insert/fun.ma".
-
+(*
 theorem insert_conf: \forall P,Q1,S1,i1. Insert S1 i1 P Q1 \to 
                      \forall Q2,S2,i2. Insert S2 i2 P Q2 \to
                      \exists Q,j1,j2. 
@@ -70,3 +70,4 @@ theorem insert_conf_rev_full: \forall P1,Q,S1,i1. Insert S1 i1 P1 Q \to
  | autobatch depth = 7 size = 8
  ].
 qed.
+*)

@@ -18,7 +18,7 @@ include "Insert/fun.ma".
 include "Track/defs.ma".
 
 (* Order properties *********************************************************)
-
+(*
 theorem track_refl: \forall P. \forall c:Formula. \exists r. 
                     Track P r (pair c c).
  intros; elim c; clear c;
@@ -33,3 +33,4 @@ theorem track_trans: \forall P,p,q,A,B. \forall c:Formula.
                      \exists r. Track P r (pair A B).
  intros; autobatch.
 qed.
+*)
