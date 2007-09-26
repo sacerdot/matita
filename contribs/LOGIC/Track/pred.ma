@@ -36,5 +36,8 @@ theorem track_pred: \forall Q1,Q2,p1,p2,S1,S2. PRed Q1 p1 S1 Q2 p2 S2 \to
    lapply linear track_inv_prin to H5; subst; autobatch
  | lapply linear track_inv_scut to H3; decompose; subst;
    lapply linear track_inv_prin to H4; subst; autobatch
+ | lapply linear track_inv_scut to H3; decompose; subst;
+   lapply linear track_inv_impw to H4; decompose; subst;
+   lapply linear track_inv_impr to H5; decompose; subst; autobatch
  ].
 qed.

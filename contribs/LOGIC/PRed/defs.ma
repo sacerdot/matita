@@ -47,6 +47,8 @@ inductive PRed: Context \to Proof \to Sequent \to
                 \forall h. PRed P1 (scut (prin h) q1) S P2 q2 S
    | pred_b_dx: \forall p1,p2,Q1,Q2,S. PRed Q1 p1 S Q2 p2 S \to
                 \forall h. PRed Q1 (scut p1 (prin h)) S Q2 p2 S
+   | pred_c   : \forall p1,p2,Q1,Q2,S. PRed Q1 p1 S Q2 p2 S \to 
+                \forall p. PRed Q1 (scut (impr p) (impw p1)) S Q2 p2 S    
 .
 
 (*CSC: the URI must disappear: there is a bug now *)
