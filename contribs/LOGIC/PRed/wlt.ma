@@ -12,16 +12,18 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/LOGIC/PNF/defs".
+set "baseuri" "cic:/matita/LOGIC/PRed/wlt".
 
-(* NORMAL FORM PREDICATE FOR PROOFS IN CONTEXT
-   For cut elimination
-*)
+(**)
 
 include "PEq/defs.ma".
 include "PRed/defs.ma".
-
-inductive PNF (P:Context) (p:Proof): Prop \def
-   | pnf: (\forall q,Q,S. [P, p, S] => [Q, q, S] \to [P, p] = [Q, q]) \to 
-          PNF P p
-.
+include "WLT/defs.ma".
+(*
+theorem pred_wlt: \forall p1,p2,Q1,Q2,S.
+                  [Q1, p1, S] => [Q2, p2, S] \to \lnot [Q1, p1] = [Q2, p2] \to
+                  [Q2, p2] < [Q1, p1].
+ intros 6; elim H; clear H;
+ [ unfold Not in H1; lapply linear depth = 1 H1;
+   [ decompose | autobatch ]
+*)

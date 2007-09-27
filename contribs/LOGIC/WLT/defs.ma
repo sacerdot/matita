@@ -12,16 +12,23 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/LOGIC/PNF/defs".
+set "baseuri" "cic:/matita/LOGIC/WLT/defs".
 
-(* NORMAL FORM PREDICATE FOR PROOFS IN CONTEXT
-   For cut elimination
+(* ORDER RELATION BETWEEN PROOFS IN CONTEXT
 *)
 
-include "PEq/defs.ma".
-include "PRed/defs.ma".
+include "Weight/defs.ma".
 
-inductive PNF (P:Context) (p:Proof): Prop \def
-   | pnf: (\forall q,Q,S. [P, p, S] => [Q, q, S] \to [P, p] = [Q, q]) \to 
-          PNF P p
+inductive WLT (Q1:Context) (p1:Proof) (Q2:Context) (p2:Proof): Prop \def
+   | wlt_intro: \forall m,m1. Weight m Q1 p1 m1 \to
+                \forall m2. Weight m Q2 p2 m2 \to
+                m1 < m2 \to WLT Q1 p1 Q2 p2               
 .
+
+interpretation "order relation between proofs in context" 
+   'lt2 x1 y1 x2 y2 = 
+      (cic:/matita/LOGIC/WLT/defs/WLT.ind#xpointer(1/1) x1 y1 x2 y2).
+
+notation "hvbox([a1, b1] break \lt [a2, b2])" 
+  non associative with precedence 45
+for @{ 'lt2 $a1 $b1 $a2 $b2 }.

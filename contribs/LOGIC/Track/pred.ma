@@ -19,7 +19,7 @@ set "baseuri" "cic:/matita/LOGIC/Track/pred".
 include "Track/inv.ma".
 include "PRed/defs.ma".
 
-theorem track_pred: \forall Q1,Q2,p1,p2,S1,S2. PRed Q1 p1 S1 Q2 p2 S2 \to
+theorem track_pred: \forall Q1,Q2,p1,p2,S1,S2. [Q1, p1, S1] => [Q2, p2, S2] \to
                     Track Q1 p1 S1 \to Track Q2 p2 S2.
  intros 7; elim H; clear H Q1 Q2 p1 p2 S1 S2;
  [ autobatch

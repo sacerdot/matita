@@ -57,3 +57,7 @@ interpretation
    'parred3 x1 y1 z1 x2 y2 z2 = 
       (cic:/matita/LOGIC/PRed/defs/PRed.ind#xpointer(1/1) x1 y1 z1 x2 y2 z2)
 .
+
+notation "hvbox([a1,b1,c1] break => [a2,b2,c2])" 
+  non associative with precedence 45
+for @{ 'parred3 $a1 $b1 $c1 $a2 $b2 $c2 }.
