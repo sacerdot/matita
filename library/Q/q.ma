@@ -319,3 +319,23 @@ intro.elim r.
 reflexivity.
 simplify.apply ftimes_finv.
 qed.
+
+definition Qtimes : Q \to Q \to Q \def
+\lambda p,q.
+  match p with
+  [OQ \Rightarrow OQ
+  |Qpos p1 \Rightarrow 
+    match q with
+    [OQ \Rightarrow OQ
+    |Qpos q1 \Rightarrow Qpos (rtimes p1 q1)
+    |Qneg q1 \Rightarrow Qneg (rtimes p1 q1)
+    ]
+  |neg p1 \Rightarrow 
+    match q with
+    [OQ \Rightarrow OQ
+    |Qpos q1 \Rightarrow Qneg (rtimes p1 q1)
+    |Qneg q1 \Rightarrow Qpos (rtimes p1 q1)
+    ]
+  ]
+.
+    
