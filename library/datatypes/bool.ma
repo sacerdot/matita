@@ -15,6 +15,7 @@
 set "baseuri" "cic:/matita/datatypes/bool/".
 
 include "logic/equality.ma".
+include "higher_order_defs/functions.ma".
 
 inductive bool : Set \def 
   | true : bool
@@ -53,6 +54,20 @@ match b with
 intros 2.elim b.exact H. exact H.
 qed.
 
+theorem notb_notb: \forall b:bool. notb (notb b) = b.
+intros.
+elim b;reflexivity.
+qed.
+
+theorem injective_notb: injective bool bool notb.
+unfold injective.
+intros.
+rewrite < notb_notb.
+rewrite < (notb_notb y).
+apply eq_f.
+assumption.
+qed.
+
 (*CSC: the URI must disappear: there is a bug now *)
 interpretation "boolean not" 'not x = (cic:/matita/datatypes/bool/notb.con x).
 
@@ -70,6 +85,18 @@ match b1 with
 [ true \Rightarrow P b2
 | false \Rightarrow P false] \to P (b1 \land b2).
 intros 3.elim b1.exact H. exact H.
+qed.
+
+theorem and_true: \forall a,b:bool. 
+andb a b =true \to a =true \land b= true.
+intro.elim a
+  [split
+    [reflexivity|assumption]
+  |apply False_ind.
+   apply not_eq_true_false.
+   apply sym_eq.
+   assumption
+  ]
 qed.
 
 theorem andb_true_true: \forall b1,b2. (b1 \land b2) = true \to b1 = true.
