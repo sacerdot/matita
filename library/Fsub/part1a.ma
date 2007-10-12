@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/test/Fsub/part1a/".
+set "baseuri" "cic:/matita/Fsub/part1a/".
 include "Fsub/defn.ma".
 
 (*** Lemma A.1 (Reflexivity) ***)
