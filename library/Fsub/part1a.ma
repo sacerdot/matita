@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/Fsub/part1a/".
+set "baseuri" "cic:/matita/test/Fsub/part1a/".
 include "Fsub/defn.ma".
 
 (*** Lemma A.1 (Reflexivity) ***)
@@ -82,73 +82,43 @@ qed.
 
 lemma JS_trans_prova: ∀T,G1.WFType G1 T →
 ∀G,R,U.incl ? (fv_env G1) (fv_env G) → G ⊢ R ⊴ T → G ⊢ T ⊴ U → G ⊢ R ⊴ U.
-intros 3;elim H;clear H
-  [apply (JS_trans_TFree ? ? ? H3 ? H4)
-  |rewrite > (JSubtype_Top ? ? H3);apply SA_Top;autobatch
-  |cut (∃T.T = Arrow t t1) as Htriv
-     [elim Htriv;clear Htriv;rewrite < H in H6;rewrite < H in H7;
-      generalize in match H7;generalize in match H4;generalize in match H2;
-      generalize in match H5;generalize in match H;clear H7 H4 H2 H5 H;elim H6
-        [1,2:destruct H4
-        |apply (SA_Trans_TVar ? ? ? ? H);apply (H4 H5 H7 H8 H9);assumption
-        |inversion H11;intros
-           [apply SA_Top;rewrite < H14;autobatch
-           |destruct H15
-           |destruct H16
-           |destruct H17;apply SA_Arrow;rewrite < H16;destruct H7
-              [apply H9
+intros 3;elim H;clear H; try autobatch;
+  [rewrite > (JSubtype_Top ? ? H3);autobatch
+  |generalize in match H7;generalize in match H4;generalize in match H2;
+   generalize in match H5;clear H7 H4 H2 H5;
+   generalize in match (refl_eq ? (Arrow t t1));
+   elim H6 in ⊢ (? ? ? %→%); clear H6; intros; subst;
+    [apply (SA_Trans_TVar ? ? ? ? H);apply (H4 ? ? H8 H9);autobatch
+    |inversion H11;intros; subst; autobatch depth=4 width=4 size=9;
+    ]
+  |generalize in match H7;generalize in match H4;generalize in match H2;
+   generalize in match H5;clear H7 H4 H2 H5;
+   generalize in match (refl_eq ? (Forall t t1));elim H6 in ⊢ (? ? ? %→%);subst
+     [apply (SA_Trans_TVar ? ? ? ? H);apply (H4 ? H7 H8 H9 H10);reflexivity
+     |inversion H11;intros;subst
+        [apply SA_Top
+           [autobatch
+              |apply WFT_Forall
                  [autobatch
-                 |rewrite < Hcut2;rewrite > Hcut;rewrite > H16;assumption
-                 |rewrite < Hcut2;assumption]
-              |apply H10
-                 [autobatch
-                 |rewrite < Hcut3;rewrite < Hcut1;rewrite < H16;assumption
-                 |rewrite > H16;rewrite < Hcut3;rewrite > Hcut1;assumption]]
-           |destruct H17]
-        |destruct H7]
-     |apply (ex_intro ? ? (Arrow t t1));reflexivity]
-  |cut (∃T.T = Forall t t1) as Htriv
-     [elim Htriv;clear Htriv;rewrite < H in H7;rewrite < H in H6.
-      generalize in match H7;generalize in match H4;generalize in match H2;
-      generalize in match H5;generalize in match H;clear H7 H4 H2 H5 H;
-      elim H6
-        [1,2:destruct H4
-        |apply (SA_Trans_TVar ? ? ? ? H);apply (H4 H5 H7 H8 H9 H10)
-        |destruct H7
-        |inversion H11;intros
-           [apply SA_Top
-              [assumption
-              |rewrite < H14;apply WFT_Forall
-                 [autobatch
-                 |intros;lapply (H4 ? H17);autobatch]]
-           |destruct H15
-           |destruct H16
-           |destruct H17
-           |destruct H17;apply SA_All;destruct H7
-              [rewrite < H16;apply H9;
-                 [autobatch
-                 |rewrite < Hcut2;rewrite > Hcut;rewrite > H16;assumption
-                 |rewrite < Hcut2. assumption]
+                 |intros;lapply (H4 ? H13);autobatch]]
+           |apply SA_All
+              [autobatch paramodulation
               |intros;apply (H10 X)
-                 [intro;apply H19;rewrite < H16;apply H8;assumption
-                 |intro;apply H19;rewrite < H16;apply H8;
-                  apply (WFT_to_incl ? ? ? H3);assumption
-                 |simplify;apply incl_cons;rewrite < H16;assumption
-                 |apply (narrowing X ((mk_bound true X t6)::l2) 
-                            ? ? ? ? ? H12 ? ? [])
+                 [intro;apply H15;apply H8;assumption
+                 |intro;apply H15;apply H8;apply (WFT_to_incl ? ? ? H3);
+                  assumption
+                 |simplify;autobatch
+                 |apply (narrowing X (mk_bound true X t::l2) 
+                         ? ? ? ? ? H7 ? ? [])
                     [intros;apply H9
-                       [unfold;intros;lapply (H8 ? H21);rewrite < H16;
-                        rewrite > fv_append;autobatch
-                       |rewrite < Hcut2;rewrite > Hcut;
-                        apply (JS_weakening ? ? ? H12)
+                       [unfold;intros;lapply (H8 ? H17);rewrite > fv_append;
+                        autobatch
+                       |apply (JS_weakening ? ? ? H7)
                           [autobatch
                           |unfold;intros;autobatch]
-                       |rewrite < Hcut2;rewrite > Hcut;assumption]
-                    |rewrite < Hcut;rewrite < Hcut3;rewrite < H16;apply H4;
-                     rewrite > H16;assumption
-                    |reflexivity]
-                 |rewrite < Hcut3;rewrite > Hcut1;apply H14;assumption]]]]
-     |apply (ex_intro ? ? (Forall t t1));reflexivity]]
+                       |assumption]
+                    |*:autobatch]
+                 |autobatch]]]]]
 qed.
 
 theorem JS_trans : ∀G,T,U,V.G ⊢ T ⊴ U → G ⊢ U ⊴ V → G ⊢ T ⊴ V.
