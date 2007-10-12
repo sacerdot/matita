@@ -100,6 +100,12 @@ theorem lt_S_S_to_lt: \forall n,m.
 intros. apply le_S_S_to_le. assumption.
 qed.
 
+theorem lt_to_lt_S_S: ∀n,m. n < m → S n < S m.
+intros;
+unfold lt in H;
+apply (le_S_S ? ? H).
+qed.
+
 theorem leS_to_not_zero : \forall n,m:nat. S n \leq m \to not_zero m.
 intros.elim H.exact I.exact I.
 qed.

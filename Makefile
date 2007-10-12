@@ -5,7 +5,7 @@ include ../Makefile.defs
 NULL =
 H=@
 
-OCAML_FLAGS = -pp $(CAMLP4O)
+OCAML_FLAGS = -pp $(CAMLP5O) -rectypes
 PKGS = -package "$(MATITA_REQUIRES)"
 CPKGS = -package "$(MATITA_CREQUIRES)"
 OCAML_THREADS_FLAGS = -thread

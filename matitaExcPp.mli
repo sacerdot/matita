@@ -23,5 +23,5 @@
  * http://helm.cs.unibo.it/
  *)
 
-val to_string: exn -> Token.flocation option * string
+val to_string: exn -> Stdpp.location option * string
 

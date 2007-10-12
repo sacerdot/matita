@@ -175,11 +175,7 @@ intro;
 apply (not_le_Sn_n ? H3).
 qed.
 
-theorem lt_S_S: ∀n,m. n < m → S n < S m.
-intros;
-unfold lt in H;
-apply (le_S_S ? ? H).
-qed.
+
 
 (* moved to nat/order.ma 
 theorem lt_O_S: ∀n. O < S n.

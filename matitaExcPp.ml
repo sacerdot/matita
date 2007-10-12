@@ -96,10 +96,7 @@ let rec to_string =
           let (x, y) = HExtlib.loc_of_floc floc in
           let x = x + offset in
           let y = y + offset in
-          let flocb,floce = floc in
-          let floc =
-           {flocb with Lexing.pos_cnum = x}, {floce with Lexing.pos_cnum = y}
-          in
+          let floc = HExtlib.floc_of_loc (x,y) in
            Some floc
        | _ -> None in
      let rec explain =

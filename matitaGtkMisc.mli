@@ -146,7 +146,7 @@ val report_error:
 
     (* given an utf8 string a floc returns the parsed substring and its length
      * in bytes *)
-val utf8_parsed_text: string -> Token.flocation -> string * int
+val utf8_parsed_text: string -> Stdpp.location -> string * int
 
     (* the length in characters, not bytes *)
 val utf8_string_length: string -> int
