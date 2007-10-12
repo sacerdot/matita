@@ -34,6 +34,11 @@ definition neg_Z_of_nat \def
 [ O \Rightarrow  OZ 
 | (S n)\Rightarrow  neg n].
 
+lemma pos_n_eq_S_n : \forall n : nat.
+  (pos n) = (S n).
+intro.reflexivity. 
+qed.
+
 definition abs \def
 \lambda z.
  match z with 

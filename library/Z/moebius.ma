@@ -40,6 +40,7 @@ definition moebius : nat \to Z \def
   let p \def (max n (\lambda p:nat.eqb (n \mod (nth_prime p)) O)) in
   moebius_aux (S p) n.
 
+(*
 theorem moebius_O : moebius O = pos O.
 simplify. reflexivity.
 qed.
@@ -56,6 +57,10 @@ theorem moebius_SSSO : moebius (S (S (S O))) = neg O.
 simplify.reflexivity.
 qed.
 
+theorem moebius_SSSSO : moebius (S (S (S (S O)))) = OZ.
+simplify.reflexivity.
+qed.
+*)
 
 theorem not_divides_to_p_ord_O: \forall n,i.
 Not (divides (nth_prime i) n) \to p_ord n (nth_prime i) = 

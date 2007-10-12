@@ -261,6 +261,10 @@ definition Zopp : Z \to Z \def
 (*CSC: the URI must disappear: there is a bug now *)
 interpretation "integer unary minus" 'uminus x = (cic:/matita/Z/plus/Zopp.con x).
 
+theorem eq_OZ_Zopp_OZ : OZ = (- OZ).
+reflexivity.
+qed.
+
 theorem Zopp_Zplus: \forall x,y:Z. -(x+y) = -x + -y.
 intros.
 elim x.elim y.
@@ -297,6 +301,26 @@ simplify.apply refl_eq.
 simplify.
 rewrite > nat_compare_n_n.
 simplify.apply refl_eq.
+qed.
+
+theorem injective_Zplus_l: \forall x:Z.injective Z Z (\lambda y.y+x).
+intro.simplify.intros (z y).
+rewrite < Zplus_z_OZ.
+rewrite < (Zplus_z_OZ y).
+rewrite < (Zplus_Zopp x).
+rewrite < (Zplus_Zopp x).
+rewrite < assoc_Zplus.
+rewrite < assoc_Zplus.
+apply eq_f2
+  [assumption|reflexivity]
+qed.
+
+theorem injective_Zplus_r: \forall x:Z.injective Z Z (\lambda y.x+y).
+intro.simplify.intros (z y).
+apply (injective_Zplus_l x).
+rewrite < sym_Zplus.
+rewrite > H.
+apply sym_Zplus.
 qed.
 
 (* minus *)

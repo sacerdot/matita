@@ -76,6 +76,121 @@ cut (pos n < pos n \to False).
 apply Hcut.apply H.simplify.unfold lt.apply not_le_Sn_n.
 qed.
 
+(* transitivity *)
+theorem transitive_Zle : transitive Z Zle.
+unfold transitive.
+intros 3.
+elim x 0
+[ (* x = OZ *)
+  elim y 0
+  [ intros. assumption 
+  | intro.
+    elim z
+    [ simplify. apply I 
+    | simplify. apply I
+    | simplify. simplify in H1. assumption
+    ]
+  | intro.
+    elim z
+    [ simplify. apply I
+    | simplify. apply I
+    | simplify. simplify in H. assumption
+    ]
+  ]
+| (* x = (pos n) *)
+  intro.
+  elim y 0
+  [ intros. apply False_ind. apply H
+  | intros 2. 
+    elim z 0
+    [ simplify. intro. assumption
+    | intro. generalize in match H. simplify. apply trans_le 
+    | intro. simplify. intro. assumption
+    ]
+  | intros 2. apply False_ind. apply H
+  ]
+| (* x = (neg n) *)
+  intro.
+  elim y 0
+  [ elim z 0
+    [ simplify. intros. assumption
+    | intro. simplify. intros. assumption
+    | intro. simplify. intros. apply False_ind. apply H1
+    ]
+  | intros 2.
+    elim z
+    [ apply False_ind. apply H1 
+    | simplify. apply I
+    | apply False_ind. apply H1
+    ]
+  | intros 2.
+    elim z 0
+    [ simplify. intro. assumption
+    | intro. simplify. intro. assumption
+    | intros. simplify. simplify in H. simplify in H1. 
+      generalize in match H. generalize in match H1. apply trans_le
+    ]
+  ]
+]
+qed.
+
+variant trans_Zle: transitive Z Zle
+\def transitive_Zle.
+
+theorem transitive_Zlt: transitive Z Zlt.
+unfold.
+intros 3.
+elim x 0
+[ (* x = OZ *)
+  elim y 0
+  [ intros. apply False_ind. apply H 
+  | intro.
+    elim z
+    [ simplify. apply H1 
+    | simplify. apply I
+    | simplify. apply H1
+    ]
+  | intros 2. apply False_ind. apply H
+  ]
+| (* x = (pos n) *)
+  intro.
+  elim y 0
+  [ intros. apply False_ind. apply H
+  | intros 2. 
+    elim z 0
+    [ simplify. intro. assumption
+    | intro. generalize in match H. simplify. apply trans_lt 
+    | intro. simplify. intro. assumption
+    ]
+  | intros 2. apply False_ind. apply H
+  ]
+| (* x = (neg n) *)
+  intro.
+  elim y 0
+  [ elim z 0
+    [ intros. simplify. apply I
+    | intro. simplify. intros. assumption
+    | intro. simplify. intros. apply False_ind. apply H1
+    ]
+  | intros 2.
+    elim z
+    [ apply False_ind. apply H1 
+    | simplify. apply I
+    | apply False_ind. apply H1
+    ]
+  | intros 2.
+    elim z 0
+    [ simplify. intro. assumption
+    | intro. simplify. intro. assumption
+    | intros. simplify. simplify in H. simplify in H1. 
+      generalize in match H. generalize in match H1. apply trans_lt
+    ]
+  ]
+]
+qed.
+
+variant trans_Zlt: transitive Z Zlt
+\def transitive_Zlt.
 theorem irrefl_Zlt: irreflexive Z Zlt
 \def irreflexive_Zlt.
 

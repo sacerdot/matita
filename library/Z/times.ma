@@ -42,6 +42,8 @@ simplify.reflexivity.
 simplify.reflexivity.
 qed.
 
+definition Zone \def pos O.
+
 theorem Ztimes_neg_Zopp: \forall n:nat.\forall x:Z.
 neg n * x = - (pos n * x).
 intros.elim x.
@@ -67,6 +69,21 @@ qed.
 
 variant sym_Ztimes : \forall x,y:Z. x*y = y*x
 \def symmetric_Ztimes.
+
+theorem Ztimes_Zone_l: \forall z:Z. Ztimes Zone z = z.
+intro.unfold Zone.simplify.
+elim z;simplify
+  [reflexivity
+  |rewrite < plus_n_O.reflexivity
+  |rewrite < plus_n_O.reflexivity
+  ]
+qed.
+
+theorem Ztimes_Zone_r: \forall z:Z. Ztimes z Zone = z.
+intro.
+rewrite < sym_Ztimes.
+apply Ztimes_Zone_l.
+qed.
 
 theorem associative_Ztimes: associative Z Ztimes.
 unfold associative.
