@@ -262,6 +262,26 @@ apply lt_to_not_eq.assumption.
 intro.reflexivity.
 qed.
 
+(* times and plus *)
+theorem lt_times_plus_times: \forall a,b,n,m:nat. 
+a < n \to b < m \to a*m + b < n*m.
+intros 3.
+apply (nat_case n)
+  [intros.apply False_ind.apply (not_le_Sn_O ? H)
+  |intros.simplify.
+   rewrite < sym_plus.
+   unfold.
+   change with (S b+a*m1 \leq m1+m*m1).
+   apply le_plus
+    [assumption
+    |apply le_times
+      [apply le_S_S_to_le.assumption
+      |apply le_n
+      ]
+    ]
+  ]
+qed.
+
 (* div *) 
 
 theorem eq_mod_O_to_lt_O_div: \forall n,m:nat. O < m \to O < n\to n \mod m = O \to O < n / m. 

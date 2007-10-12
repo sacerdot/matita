@@ -211,6 +211,14 @@ elim (le_to_or_lt_eq O n (le_O_n n))
   ]
 qed.
 
+theorem divides_div: \forall d,n. divides d n \to divides (n/d) n.
+intros.
+apply (witness ? ? d).
+apply sym_eq.
+apply divides_to_div.
+assumption.
+qed.
+
 theorem div_div: \forall n,d:nat. O < n \to divides d n \to 
 n/(n/d) = d.
 intros.
@@ -287,7 +295,8 @@ intros 2.apply (nat_case n)
   [apply (nat_case m)
     [intro.apply divides_n_n
     |simplify.intros.apply False_ind.
-     apply not_eq_true_false.apply sym_eq.assumption
+     apply not_eq_true_false.apply sym_eq.
+     assumption
     ]
   |intros.
    apply divides_b_true_to_divides1
@@ -345,6 +354,22 @@ elim (divides_b n m).reflexivity.
 absurd (n \divides m).assumption.assumption.
 qed.
 
+theorem divides_to_divides_b_true1 : \forall n,m:nat.
+O < m \to n \divides m \to divides_b n m = true.
+intro.
+elim (le_to_or_lt_eq O n (le_O_n n))
+  [apply divides_to_divides_b_true
+    [assumption|assumption]
+  |apply False_ind.
+   rewrite < H in H2.
+   elim H2.
+   simplify in H3.
+   apply (not_le_Sn_O O).
+   rewrite > H3 in H1.
+   assumption
+  ]
+qed.
+
 theorem not_divides_to_divides_b_false: \forall n,m:nat. O < n \to
 \lnot(n \divides m) \to (divides_b n m) = false.
 intros.
@@ -355,6 +380,18 @@ apply Hcut.apply divides_b_to_Prop.assumption.
 elim (divides_b n m).
 absurd (n \divides m).assumption.assumption.
 reflexivity.
+qed.
+
+theorem divides_b_div_true: 
+\forall d,n. O < n \to 
+  divides_b d n = true \to divides_b (n/d) n = true.
+intros.
+apply divides_to_divides_b_true1
+  [assumption
+  |apply divides_div.
+   apply divides_b_true_to_divides.
+   assumption
+  ]
 qed.
 
 theorem divides_b_true_to_lt_O: \forall n,m. O < n \to divides_b m n = true \to O < m.

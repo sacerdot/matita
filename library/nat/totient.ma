@@ -33,7 +33,9 @@ include "nat/iteration2.ma".
 definition totient : nat \to nat \def
 \lambda n.sigma_p n (\lambda m. eqb (gcd m n) (S O)) (\lambda m.S O).
 
-                                        
+lemma totient1: totient (S(S(S(S(S(S O)))))) = ?.
+[|simplify.
+                                
 theorem totient_times: \forall n,m:nat. (gcd m n) = (S O) \to
 totient (n*m) = (totient n)*(totient m).
 intros.

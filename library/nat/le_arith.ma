@@ -20,9 +20,10 @@ include "nat/orders.ma".
 (* plus *)
 theorem monotonic_le_plus_r: 
 \forall n:nat.monotonic nat le (\lambda m.n + m).
-simplify.intros.elim n.
-simplify.assumption.
-simplify.apply le_S_S.assumption.
+simplify.intros.elim n
+  [simplify.assumption.
+  |simplify.apply le_S_S.assumption
+  ]
 qed.
 
 theorem le_plus_r: \forall p,n,m:nat. n \le m \to p + n \le p + m
@@ -41,9 +42,21 @@ theorem le_plus_l: \forall p,n,m:nat. n \le m \to n + p \le m + p
 theorem le_plus: \forall n1,n2,m1,m2:nat. n1 \le n2  \to m1 \le m2 
 \to n1 + m1 \le n2 + m2.
 intros.
+(**
+auto.
+*)
+apply (transitive_le (plus n1 m1) (plus n1 m2) (plus n2 m2) ? ?);
+  [apply (monotonic_le_plus_r n1 m1 m2 ?).
+   apply (H1).
+  |apply (monotonic_le_plus_l m2 n1 n2 ?).
+   apply (H).
+  ]
+(* end auto($Revision$) proof: TIME=0.61 SIZE=100 DEPTH=100 *)
+(*
 apply (trans_le ? (n2 + m1)).
 apply le_plus_l.assumption.
 apply le_plus_r.assumption.
+*)
 qed.
 
 theorem le_plus_n :\forall n,m:nat. m \le n + m.
