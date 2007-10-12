@@ -16,7 +16,7 @@ set "baseuri" "cic:/matita/nat/ord".
 
 include "datatypes/constructors.ma".
 include "nat/exp.ma".
-include "nat/gcd.ma".
+include "nat/nth_prime.ma".
 include "nat/relevant_equations.ma". (* required by autobatch paramod *)
 
 let rec p_ord_aux p n m \def
@@ -240,6 +240,7 @@ rewrite < times_n_SO.
 apply exp_n_SO.
 qed.
 
+(* p_ord and divides *)
 theorem divides_to_p_ord: \forall p,a,b,c,d,n,m:nat. 
 O < n \to O < m \to prime p 
 \to divides n m \to p_ord n p = pair ? ? a b \to
@@ -313,7 +314,55 @@ cut (S O < p)
     ]
   |elim H2.assumption
   ]
-qed.     
+qed.    
+
+(* p_ord and primes *)
+theorem not_divides_to_p_ord_O: \forall n,i.
+Not (divides (nth_prime i) n) \to p_ord n (nth_prime i) = 
+pair nat nat O n.
+intros.
+apply p_ord_exp1
+  [apply lt_O_nth_prime_n
+  |assumption
+  |autobatch
+  ]
+qed.
+
+theorem p_ord_O_to_not_divides: \forall n,i,r.
+O < n \to
+p_ord n (nth_prime i) = pair nat nat O r 
+\to Not (divides (nth_prime i) n).
+intros.
+lapply (p_ord_to_exp1 ? ? ? ? ? ? H1)
+  [apply lt_SO_nth_prime_n
+  |assumption
+  |elim Hletin.
+   simplify in H3.
+   rewrite > H3.
+   rewrite < plus_n_O.
+   assumption
+  ]
+qed.
+
+theorem p_ord_to_not_eq_O : \forall n,p,q,r.
+  (S O) < n \to
+  p_ord n (nth_prime p) = pair nat nat q r \to
+  Not (r=O).
+intros.
+unfold.intro.
+cut (O < n)
+  [lapply (p_ord_to_exp1 ? ? ? ? ? ? H1)
+    [apply lt_SO_nth_prime_n.
+    |assumption
+    |elim Hletin.
+     apply (lt_to_not_eq ? ? Hcut).
+     rewrite > H4.
+     rewrite > H2.
+     apply times_n_O
+    ]
+  |apply (trans_lt ? (S O))[apply lt_O_S|assumption]
+  ]
+qed.
 
 definition ord :nat \to nat \to nat \def
 \lambda n,p. fst ? ? (p_ord n p).

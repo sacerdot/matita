@@ -101,6 +101,19 @@ elim (le_to_or_lt_eq ? ? H)
   ]
 qed.
 
+theorem max_prime_factor_to_not_p_ord_O : \forall n,p,r.
+  (S O) < n \to
+  p = max_prime_factor n \to
+  p_ord n (nth_prime p) \neq pair nat nat O r.
+intros.unfold Not.intro.
+apply (p_ord_O_to_not_divides ? ? ? ? H2)
+  [apply (trans_lt ? (S O))[apply lt_O_S|assumption]
+  |rewrite > H1.
+   apply divides_max_prime_factor_n.
+   assumption
+  ]
+qed.
+
 theorem p_ord_to_lt_max_prime_factor: \forall n,p,q,r. O < n \to
 p = max_prime_factor n \to 
 (pair nat nat q r) = p_ord n (nth_prime p) \to
@@ -162,6 +175,33 @@ assumption.assumption.
 apply (p_ord_to_lt_max_prime_factor n ? q).
 assumption.apply sym_eq.assumption.assumption.assumption.
 apply (le_to_or_lt_eq ? p H1).
+qed.
+
+lemma lt_max_prime_factor_to_not_divides: \forall n,p:nat.
+O < n \to n=S O \lor max_prime_factor n < p \to 
+(nth_prime p \ndivides n).
+intros.unfold Not.intro.
+elim H1
+  [rewrite > H3 in H2.
+   apply (le_to_not_lt (nth_prime p) (S O))
+    [apply divides_to_le[apply le_n|assumption]
+    |apply lt_SO_nth_prime_n
+    ]
+  |apply (not_le_Sn_n p).
+   change with (p < p).
+   apply (le_to_lt_to_lt ? ? ? ? H3).
+   unfold max_prime_factor.
+   apply  f_m_to_le_max
+    [apply (trans_le ? (nth_prime p))
+      [apply lt_to_le.
+       apply lt_n_nth_prime_n
+      |apply divides_to_le;assumption
+      ]
+    |apply eq_to_eqb_true.
+     apply divides_to_mod_O
+      [apply lt_O_nth_prime_n|assumption]
+    ]
+  ]
 qed.
 
 (* datatypes and functions *)
@@ -454,6 +494,88 @@ elim H1.apply H4.
 apply (divides_exp_to_divides p q m).
 assumption.assumption.
 unfold prime in H.elim H.assumption.
+qed.
+
+lemma eq_p_max: \forall n,p,r:nat. O < n \to
+O < r \to
+r = (S O) \lor (max r (\lambda p:nat.eqb (r \mod (nth_prime p)) O)) < p \to
+p = max_prime_factor (r*(nth_prime p)\sup n).
+intros.
+apply sym_eq.
+unfold max_prime_factor.
+apply max_spec_to_max.
+split
+  [split
+    [rewrite > times_n_SO in \vdash (? % ?).
+     rewrite > sym_times.
+     apply le_times
+      [assumption
+      |apply lt_to_le.
+       apply (lt_to_le_to_lt ? (nth_prime p))
+        [apply lt_n_nth_prime_n
+        |rewrite > exp_n_SO in \vdash (? % ?).
+         apply le_exp
+          [apply lt_O_nth_prime_n
+          |assumption
+          ]
+        ]
+      ]
+    |apply eq_to_eqb_true.
+     apply divides_to_mod_O
+      [apply lt_O_nth_prime_n
+      |apply (lt_O_n_elim ? H).
+       intro.
+       apply (witness ? ? (r*(nth_prime p \sup m))).
+       rewrite < assoc_times.
+       rewrite < sym_times in \vdash (? ? ? (? % ?)).
+       rewrite > exp_n_SO in \vdash (? ? ? (? (? ? %) ?)).
+       rewrite > assoc_times.
+       rewrite < exp_plus_times.
+       reflexivity
+      ]
+    ]
+  |intros.  
+   apply not_eq_to_eqb_false.
+   unfold Not.intro.
+   lapply (mod_O_to_divides ? ? ? H5)
+    [apply lt_O_nth_prime_n
+    |cut (Not (divides (nth_prime i) ((nth_prime p)\sup n)))
+      [elim H2
+        [rewrite > H6 in Hletin.
+         simplify in Hletin.
+         rewrite < plus_n_O in Hletin.
+         apply Hcut.assumption
+        |elim (divides_times_to_divides ? ? ? ? Hletin)
+          [apply (lt_to_not_le ? ? H3).
+           apply lt_to_le. 
+           apply (le_to_lt_to_lt ? ? ? ? H6).
+           apply f_m_to_le_max
+            [apply (trans_le ? (nth_prime i))
+              [apply lt_to_le.
+               apply lt_n_nth_prime_n
+              |apply divides_to_le[assumption|assumption]
+              ]
+            |apply eq_to_eqb_true.
+             apply divides_to_mod_O
+              [apply lt_O_nth_prime_n|assumption]
+            ]
+          |apply prime_nth_prime
+          |apply Hcut.assumption
+          ]
+        ]
+      |unfold Not.intro.
+       apply (lt_to_not_eq ? ? H3).
+       apply sym_eq.
+       elim (prime_nth_prime p).
+       apply injective_nth_prime.
+       apply H8
+        [apply (divides_exp_to_divides ? ? ? ? H6).
+         apply prime_nth_prime.
+        |apply lt_SO_nth_prime_n
+        ]
+      ]
+    ]
+  ]
 qed.
 
 theorem  not_divides_defactorize_aux: \forall f:nat_fact. \forall i,j:nat.
