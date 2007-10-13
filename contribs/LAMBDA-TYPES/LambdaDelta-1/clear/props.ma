@@ -134,7 +134,6 @@ C).(\lambda (H0: (clear (CHead c k t) c2)).(K_ind (\lambda (k0: K).((clear
 (CHead c (Bind b) t) (\lambda (c0: C).(le (cweight c0) (plus (cweight c) 
 (tweight t)))) (le_n (plus (cweight c) (tweight t))) c2 (clear_gen_bind b c 
 c2 t H1)))) (\lambda (f: F).(\lambda (H1: (clear (CHead c (Flat f) t) 
-c2)).(le_S_n (cweight c2) (plus (cweight c) (tweight t)) (le_n_S (cweight c2) 
-(plus (cweight c) (tweight t)) (le_plus_trans (cweight c2) (cweight c) 
-(tweight t) (H c2 (clear_gen_flat f c c2 t H1))))))) k H0))))))) c1).
+c2)).(le_plus_trans (cweight c2) (cweight c) (tweight t) (H c2 
+(clear_gen_flat f c c2 t H1))))) k H0))))))) c1).
 

@@ -452,7 +452,7 @@ T).(ty3 g c u t)))) (\lambda (t3: T).(\lambda (_: T).(\lambda (_: T).(ty3 g
 (t0: T).(ty3 g (CHead c (Bind Abst) u) t3 t0)))) (ex2 T (\lambda (w: T).(ty3 
 g c u w)) (\lambda (_: T).(ty3 g (CHead c (Bind Abst) u) t1 t2))) (\lambda 
 (x0: T).(\lambda (x1: T).(\lambda (x2: T).(\lambda (_: (pc3 c (THead (Bind 
-Abst) u x0) x)).(\lambda (_: (ty3 g c u x1)).(\lambda (H3: (ty3 g (CHead c 
+Abst) u x0) x)).(\lambda (H2: (ty3 g c u x1)).(\lambda (H3: (ty3 g (CHead c 
 (Bind Abst) u) t2 x0)).(\lambda (_: (ty3 g (CHead c (Bind Abst) u) x0 
 x2)).(ex4_3_ind T T T (\lambda (t3: T).(\lambda (_: T).(\lambda (_: T).(pc3 c 
 (THead (Bind Abst) u t3) (THead (Bind Abst) u t2))))) (\lambda (_: 
@@ -461,16 +461,12 @@ T).(\lambda (t: T).(\lambda (_: T).(ty3 g c u t)))) (\lambda (t3: T).(\lambda
 T).(\lambda (_: T).(\lambda (t0: T).(ty3 g (CHead c (Bind Abst) u) t3 t0)))) 
 (ex2 T (\lambda (w: T).(ty3 g c u w)) (\lambda (_: T).(ty3 g (CHead c (Bind 
 Abst) u) t1 t2))) (\lambda (x3: T).(\lambda (x4: T).(\lambda (x5: T).(\lambda 
-(H5: (pc3 c (THead (Bind Abst) u x3) (THead (Bind Abst) u t2))).(\lambda (H6: 
+(H5: (pc3 c (THead (Bind Abst) u x3) (THead (Bind Abst) u t2))).(\lambda (_: 
 (ty3 g c u x4)).(\lambda (H7: (ty3 g (CHead c (Bind Abst) u) t1 x3)).(\lambda 
-(_: (ty3 g (CHead c (Bind Abst) u) x3 x5)).(and_ind (pc3 c u u) (\forall (b: 
-B).(\forall (u0: T).(pc3 (CHead c (Bind b) u0) x3 t2))) (ex2 T (\lambda (w: 
-T).(ty3 g c u w)) (\lambda (_: T).(ty3 g (CHead c (Bind Abst) u) t1 t2))) 
-(\lambda (_: (pc3 c u u)).(\lambda (H10: ((\forall (b: B).(\forall (u0: 
-T).(pc3 (CHead c (Bind b) u0) x3 t2))))).(ex_intro2 T (\lambda (w: T).(ty3 g 
-c u w)) (\lambda (_: T).(ty3 g (CHead c (Bind Abst) u) t1 t2)) x4 H6 
-(ty3_conv g (CHead c (Bind Abst) u) t2 x0 H3 t1 x3 H7 (H10 Abst u))))) 
-(pc3_gen_abst c u u x3 t2 H5))))))))) (ty3_gen_bind g Abst c u t1 (THead 
+(_: (ty3 g (CHead c (Bind Abst) u) x3 x5)).(let H_y \def (pc3_gen_abst_shift 
+c u x3 t2 H5) in (ex_intro2 T (\lambda (w: T).(ty3 g c u w)) (\lambda (_: 
+T).(ty3 g (CHead c (Bind Abst) u) t1 t2)) x1 H2 (ty3_conv g (CHead c (Bind 
+Abst) u) t2 x0 H3 t1 x3 H7 H_y)))))))))) (ty3_gen_bind g Abst c u t1 (THead 
 (Bind Abst) u t2) H))))))))) (ty3_gen_bind g Abst c u t2 x H0)))) 
 (ty3_correct g c (THead (Bind Abst) u t1) (THead (Bind Abst) u t2) H))))))).
 

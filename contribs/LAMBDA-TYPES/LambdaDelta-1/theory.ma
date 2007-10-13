@@ -20,7 +20,7 @@ include "subst0/tlt.ma".
 
 include "tau1/cnt.ma".
 
-include "gz/props.ma".
+include "ex0/props.ma".
 
 include "wcpr0/fwd.ma".
 

@@ -97,13 +97,9 @@ t0 (TLRef n))) (f_equal nat T TLRef (plus n O) n (sym_eq nat n (plus n O)
 K).(\lambda (t0: T).(\lambda (H: ((\forall (d: nat).(eq T (lift O d t0) 
 t0)))).(\lambda (t1: T).(\lambda (H0: ((\forall (d: nat).(eq T (lift O d t1) 
 t1)))).(\lambda (d: nat).(eq_ind_r T (THead k (lift O d t0) (lift O (s k d) 
-t1)) (\lambda (t2: T).(eq T t2 (THead k t0 t1))) (sym_eq T (THead k t0 t1) 
-(THead k (lift O d t0) (lift O (s k d) t1)) (sym_eq T (THead k (lift O d t0) 
-(lift O (s k d) t1)) (THead k t0 t1) (sym_eq T (THead k t0 t1) (THead k (lift 
-O d t0) (lift O (s k d) t1)) (f_equal3 K T T T THead k k t0 (lift O d t0) t1 
-(lift O (s k d) t1) (refl_equal K k) (sym_eq T (lift O d t0) t0 (H d)) 
-(sym_eq T (lift O (s k d) t1) t1 (H0 (s k d))))))) (lift O d (THead k t0 t1)) 
-(lift_head k t0 t1 O d)))))))) t).
+t1)) (\lambda (t2: T).(eq T t2 (THead k t0 t1))) (f_equal3 K T T T THead k k 
+(lift O d t0) t0 (lift O (s k d) t1) t1 (refl_equal K k) (H d) (H0 (s k d))) 
+(lift O d (THead k t0 t1)) (lift_head k t0 t1 O d)))))))) t).
 
 theorem lift_lref_gt:
  \forall (d: nat).(\forall (n: nat).((lt d n) \to (eq T (lift (S O) d (TLRef 
@@ -171,30 +167,25 @@ z)))) (\lambda (y: T).(\lambda (_: T).(eq T (lift h d t) (lift h d y))))
 (H3: (eq T t1 (THead (Bind b) x0 x1))).(\lambda (H4: (eq T (lift h d t) (lift 
 h d x0))).(\lambda (H5: (eq T (lift h (S d) t0) (lift h (S d) x1))).(eq_ind_r 
 T (THead (Bind b) x0 x1) (\lambda (t2: T).(eq T (THead (Bind b) t t0) t2)) 
-(sym_eq T (THead (Bind b) x0 x1) (THead (Bind b) t t0) (sym_eq T (THead (Bind 
-b) t t0) (THead (Bind b) x0 x1) (sym_eq T (THead (Bind b) x0 x1) (THead (Bind 
-b) t t0) (f_equal3 K T T T THead (Bind b) (Bind b) x0 t x1 t0 (refl_equal K 
-(Bind b)) (sym_eq T t x0 (H x0 h d H4)) (sym_eq T t0 x1 (H0 x1 h (S d) 
-H5)))))) t1 H3)))))) (lift_gen_bind b (lift h d t) (lift h (S d) t0) t1 h d 
-H2)))))))))))) (\lambda (f: F).(\lambda (t: T).(\lambda (H: ((\forall (t0: 
-T).(\forall (h: nat).(\forall (d: nat).((eq T (lift h d t) (lift h d t0)) \to 
-(eq T t t0))))))).(\lambda (t0: T).(\lambda (H0: ((\forall (t1: T).(\forall 
-(h: nat).(\forall (d: nat).((eq T (lift h d t0) (lift h d t1)) \to (eq T t0 
-t1))))))).(\lambda (t1: T).(\lambda (h: nat).(\lambda (d: nat).(\lambda (H1: 
-(eq T (lift h d (THead (Flat f) t t0)) (lift h d t1))).(let H2 \def (eq_ind T 
-(lift h d (THead (Flat f) t t0)) (\lambda (t2: T).(eq T t2 (lift h d t1))) H1 
-(THead (Flat f) (lift h d t) (lift h d t0)) (lift_flat f t t0 h d)) in 
-(ex3_2_ind T T (\lambda (y: T).(\lambda (z: T).(eq T t1 (THead (Flat f) y 
-z)))) (\lambda (y: T).(\lambda (_: T).(eq T (lift h d t) (lift h d y)))) 
-(\lambda (_: T).(\lambda (z: T).(eq T (lift h d t0) (lift h d z)))) (eq T 
-(THead (Flat f) t t0) t1) (\lambda (x0: T).(\lambda (x1: T).(\lambda (H3: (eq 
-T t1 (THead (Flat f) x0 x1))).(\lambda (H4: (eq T (lift h d t) (lift h d 
-x0))).(\lambda (H5: (eq T (lift h d t0) (lift h d x1))).(eq_ind_r T (THead 
-(Flat f) x0 x1) (\lambda (t2: T).(eq T (THead (Flat f) t t0) t2)) (sym_eq T 
-(THead (Flat f) x0 x1) (THead (Flat f) t t0) (sym_eq T (THead (Flat f) t t0) 
-(THead (Flat f) x0 x1) (sym_eq T (THead (Flat f) x0 x1) (THead (Flat f) t t0) 
-(f_equal3 K T T T THead (Flat f) (Flat f) x0 t x1 t0 (refl_equal K (Flat f)) 
-(sym_eq T t x0 (H x0 h d H4)) (sym_eq T t0 x1 (H0 x1 h d H5)))))) t1 H3)))))) 
+(f_equal3 K T T T THead (Bind b) (Bind b) t x0 t0 x1 (refl_equal K (Bind b)) 
+(H x0 h d H4) (H0 x1 h (S d) H5)) t1 H3)))))) (lift_gen_bind b (lift h d t) 
+(lift h (S d) t0) t1 h d H2)))))))))))) (\lambda (f: F).(\lambda (t: 
+T).(\lambda (H: ((\forall (t0: T).(\forall (h: nat).(\forall (d: nat).((eq T 
+(lift h d t) (lift h d t0)) \to (eq T t t0))))))).(\lambda (t0: T).(\lambda 
+(H0: ((\forall (t1: T).(\forall (h: nat).(\forall (d: nat).((eq T (lift h d 
+t0) (lift h d t1)) \to (eq T t0 t1))))))).(\lambda (t1: T).(\lambda (h: 
+nat).(\lambda (d: nat).(\lambda (H1: (eq T (lift h d (THead (Flat f) t t0)) 
+(lift h d t1))).(let H2 \def (eq_ind T (lift h d (THead (Flat f) t t0)) 
+(\lambda (t2: T).(eq T t2 (lift h d t1))) H1 (THead (Flat f) (lift h d t) 
+(lift h d t0)) (lift_flat f t t0 h d)) in (ex3_2_ind T T (\lambda (y: 
+T).(\lambda (z: T).(eq T t1 (THead (Flat f) y z)))) (\lambda (y: T).(\lambda 
+(_: T).(eq T (lift h d t) (lift h d y)))) (\lambda (_: T).(\lambda (z: T).(eq 
+T (lift h d t0) (lift h d z)))) (eq T (THead (Flat f) t t0) t1) (\lambda (x0: 
+T).(\lambda (x1: T).(\lambda (H3: (eq T t1 (THead (Flat f) x0 x1))).(\lambda 
+(H4: (eq T (lift h d t) (lift h d x0))).(\lambda (H5: (eq T (lift h d t0) 
+(lift h d x1))).(eq_ind_r T (THead (Flat f) x0 x1) (\lambda (t2: T).(eq T 
+(THead (Flat f) t t0) t2)) (f_equal3 K T T T THead (Flat f) (Flat f) t x0 t0 
+x1 (refl_equal K (Flat f)) (H x0 h d H4) (H0 x1 h d H5)) t1 H3)))))) 
 (lift_gen_flat f (lift h d t) (lift h d t0) t1 h d H2)))))))))))) k)) x).
 
 theorem lift_gen_lift:
@@ -251,39 +242,37 @@ h1 d1 H1)) (eq_ind_r T (TLRef n) (\lambda (t: T).(eq T (TLRef n) t))
 H2))) (\lambda (H3: (le d2 n)).(lt_le_e n (plus d2 h2) (ex2 T (\lambda (t2: 
 T).(eq T x (lift h1 d1 t2))) (\lambda (t2: T).(eq T (TLRef n) (lift h2 d2 
 t2)))) (\lambda (H4: (lt n (plus d2 h2))).(lift_gen_lref_false h2 (plus d2 
-h1) (plus n h1) (le_S_n (plus d2 h1) (plus n h1) (lt_le_S (plus d2 h1) (S 
-(plus n h1)) (le_lt_n_Sm (plus d2 h1) (plus n h1) (plus_le_compat d2 n h1 h1 
-H3 (le_n h1))))) (eq_ind_r nat (plus (plus d2 h2) h1) (\lambda (n0: nat).(lt 
-(plus n h1) n0)) (lt_le_S (plus n h1) (plus (plus d2 h2) h1) 
-(plus_lt_compat_r n (plus d2 h2) h1 H4)) (plus (plus d2 h1) h2) 
-(plus_permute_2_in_3 d2 h1 h2)) x H2 (ex2 T (\lambda (t2: T).(eq T x (lift h1 
-d1 t2))) (\lambda (t2: T).(eq T (TLRef n) (lift h2 d2 t2)))))) (\lambda (H4: 
-(le (plus d2 h2) n)).(let H5 \def (eq_ind nat (plus n h1) (\lambda (n0: 
-nat).(eq T (TLRef n0) (lift h2 (plus d2 h1) x))) H2 (plus (minus (plus n h1) 
-h2) h2) (le_plus_minus_sym h2 (plus n h1) (le_plus_trans h2 n h1 
-(le_trans_plus_r d2 h2 n H4)))) in (eq_ind_r T (TLRef (minus (plus n h1) h2)) 
-(\lambda (t: T).(ex2 T (\lambda (t2: T).(eq T t (lift h1 d1 t2))) (\lambda 
-(t2: T).(eq T (TLRef n) (lift h2 d2 t2))))) (ex_intro2 T (\lambda (t2: T).(eq 
-T (TLRef (minus (plus n h1) h2)) (lift h1 d1 t2))) (\lambda (t2: T).(eq T 
-(TLRef n) (lift h2 d2 t2))) (TLRef (minus n h2)) (eq_ind_r nat (plus (minus n 
-h2) h1) (\lambda (n0: nat).(eq T (TLRef n0) (lift h1 d1 (TLRef (minus n 
-h2))))) (eq_ind_r T (TLRef (plus (minus n h2) h1)) (\lambda (t: T).(eq T 
-(TLRef (plus (minus n h2) h1)) t)) (refl_equal T (TLRef (plus (minus n h2) 
-h1))) (lift h1 d1 (TLRef (minus n h2))) (lift_lref_ge (minus n h2) h1 d1 
-(le_trans d1 d2 (minus n h2) H (le_minus d2 n h2 H4)))) (minus (plus n h1) 
-h2) (le_minus_plus h2 n (le_trans_plus_r d2 h2 n H4) h1)) (eq_ind_r nat (plus 
-(minus n h2) h2) (\lambda (n0: nat).(eq T (TLRef n0) (lift h2 d2 (TLRef 
-(minus n0 h2))))) (eq_ind_r T (TLRef (plus (minus (plus (minus n h2) h2) h2) 
-h2)) (\lambda (t: T).(eq T (TLRef (plus (minus n h2) h2)) t)) (f_equal nat T 
-TLRef (plus (minus n h2) h2) (plus (minus (plus (minus n h2) h2) h2) h2) 
-(f_equal2 nat nat nat plus (minus n h2) (minus (plus (minus n h2) h2) h2) h2 
-h2 (sym_eq nat (minus (plus (minus n h2) h2) h2) (minus n h2) (minus_plus_r 
-(minus n h2) h2)) (refl_equal nat h2))) (lift h2 d2 (TLRef (minus (plus 
-(minus n h2) h2) h2))) (lift_lref_ge (minus (plus (minus n h2) h2) h2) h2 d2 
-(le_minus d2 (plus (minus n h2) h2) h2 (plus_le_compat d2 (minus n h2) h2 h2 
-(le_minus d2 n h2 H4) (le_n h2))))) n (le_plus_minus_sym h2 n 
-(le_trans_plus_r d2 h2 n H4)))) x (lift_gen_lref_ge h2 (plus d2 h1) (minus 
-(plus n h1) h2) (arith0 h2 d2 n H4 h1) x H5)))))))))))))))))) (\lambda (k: 
+h1) (plus n h1) (plus_le_compat d2 n h1 h1 H3 (le_n h1)) (eq_ind_r nat (plus 
+(plus d2 h2) h1) (\lambda (n0: nat).(lt (plus n h1) n0)) (plus_lt_compat_r n 
+(plus d2 h2) h1 H4) (plus (plus d2 h1) h2) (plus_permute_2_in_3 d2 h1 h2)) x 
+H2 (ex2 T (\lambda (t2: T).(eq T x (lift h1 d1 t2))) (\lambda (t2: T).(eq T 
+(TLRef n) (lift h2 d2 t2)))))) (\lambda (H4: (le (plus d2 h2) n)).(let H5 
+\def (eq_ind nat (plus n h1) (\lambda (n0: nat).(eq T (TLRef n0) (lift h2 
+(plus d2 h1) x))) H2 (plus (minus (plus n h1) h2) h2) (le_plus_minus_sym h2 
+(plus n h1) (le_plus_trans h2 n h1 (le_trans h2 (plus d2 h2) n (le_plus_r d2 
+h2) H4)))) in (eq_ind_r T (TLRef (minus (plus n h1) h2)) (\lambda (t: T).(ex2 
+T (\lambda (t2: T).(eq T t (lift h1 d1 t2))) (\lambda (t2: T).(eq T (TLRef n) 
+(lift h2 d2 t2))))) (ex_intro2 T (\lambda (t2: T).(eq T (TLRef (minus (plus n 
+h1) h2)) (lift h1 d1 t2))) (\lambda (t2: T).(eq T (TLRef n) (lift h2 d2 t2))) 
+(TLRef (minus n h2)) (eq_ind_r nat (plus (minus n h2) h1) (\lambda (n0: 
+nat).(eq T (TLRef n0) (lift h1 d1 (TLRef (minus n h2))))) (eq_ind_r T (TLRef 
+(plus (minus n h2) h1)) (\lambda (t: T).(eq T (TLRef (plus (minus n h2) h1)) 
+t)) (refl_equal T (TLRef (plus (minus n h2) h1))) (lift h1 d1 (TLRef (minus n 
+h2))) (lift_lref_ge (minus n h2) h1 d1 (le_trans d1 d2 (minus n h2) H 
+(le_minus d2 n h2 H4)))) (minus (plus n h1) h2) (le_minus_plus h2 n (le_trans 
+h2 (plus d2 h2) n (le_plus_r d2 h2) H4) h1)) (eq_ind_r nat (plus (minus n h2) 
+h2) (\lambda (n0: nat).(eq T (TLRef n0) (lift h2 d2 (TLRef (minus n0 h2))))) 
+(eq_ind_r T (TLRef (plus (minus (plus (minus n h2) h2) h2) h2)) (\lambda (t: 
+T).(eq T (TLRef (plus (minus n h2) h2)) t)) (f_equal nat T TLRef (plus (minus 
+n h2) h2) (plus (minus (plus (minus n h2) h2) h2) h2) (f_equal2 nat nat nat 
+plus (minus n h2) (minus (plus (minus n h2) h2) h2) h2 h2 (sym_eq nat (minus 
+(plus (minus n h2) h2) h2) (minus n h2) (minus_plus_r (minus n h2) h2)) 
+(refl_equal nat h2))) (lift h2 d2 (TLRef (minus (plus (minus n h2) h2) h2))) 
+(lift_lref_ge (minus (plus (minus n h2) h2) h2) h2 d2 (le_minus d2 (plus 
+(minus n h2) h2) h2 (plus_le_compat d2 (minus n h2) h2 h2 (le_minus d2 n h2 
+H4) (le_n h2))))) n (le_plus_minus_sym h2 n (le_trans h2 (plus d2 h2) n 
+(le_plus_r d2 h2) H4)))) x (lift_gen_lref_ge h2 (plus d2 h1) (minus (plus n 
+h1) h2) (arith0 h2 d2 n H4 h1) x H5)))))))))))))))))) (\lambda (k: 
 K).(\lambda (t: T).(\lambda (H: ((\forall (x: T).(\forall (h1: nat).(\forall 
 (h2: nat).(\forall (d1: nat).(\forall (d2: nat).((le d1 d2) \to ((eq T (lift 
 h1 d1 t) (lift h2 (plus d2 h1) x)) \to (ex2 T (\lambda (t2: T).(eq T x (lift 
@@ -344,56 +333,55 @@ d1)) (eq_ind_r T (THead (Bind b) (lift h2 d2 x2) (lift h2 (S d2) x3))
 (\lambda (t2: T).(eq T (THead (Bind b) (lift h2 d2 x2) (lift h2 (S d2) x3)) 
 t2)) (refl_equal T (THead (Bind b) (lift h2 d2 x2) (lift h2 (S d2) x3))) 
 (lift h2 d2 (THead (Bind b) x2 x3)) (lift_bind b x2 x3 h2 d2))) t0 H13) x1 
-H12)))) (H0 x1 h1 h2 (S d1) (S d2) (le_S_n (S d1) (S d2) (lt_le_S (S d1) (S 
-(S d2)) (lt_n_S d1 (S d2) (le_lt_n_Sm d1 d2 H1)))) H11)))) t H9) x0 H8)))) (H 
-x0 h1 h2 d1 d2 H1 H6)) x H5)))))) (lift_gen_bind b (lift h1 d1 t) (lift h1 (S 
-d1) t0) x h2 (plus d2 h1) H4))))) (\lambda (f: F).(\lambda (H3: (eq T (lift 
-h1 d1 (THead (Flat f) t t0)) (lift h2 (plus d2 h1) x))).(let H4 \def (eq_ind 
-T (lift h1 d1 (THead (Flat f) t t0)) (\lambda (t2: T).(eq T t2 (lift h2 (plus 
-d2 h1) x))) H3 (THead (Flat f) (lift h1 d1 t) (lift h1 d1 t0)) (lift_flat f t 
-t0 h1 d1)) in (ex3_2_ind T T (\lambda (y: T).(\lambda (z: T).(eq T x (THead 
-(Flat f) y z)))) (\lambda (y: T).(\lambda (_: T).(eq T (lift h1 d1 t) (lift 
-h2 (plus d2 h1) y)))) (\lambda (_: T).(\lambda (z: T).(eq T (lift h1 d1 t0) 
-(lift h2 (plus d2 h1) z)))) (ex2 T (\lambda (t2: T).(eq T x (lift h1 d1 t2))) 
-(\lambda (t2: T).(eq T (THead (Flat f) t t0) (lift h2 d2 t2)))) (\lambda (x0: 
-T).(\lambda (x1: T).(\lambda (H5: (eq T x (THead (Flat f) x0 x1))).(\lambda 
-(H6: (eq T (lift h1 d1 t) (lift h2 (plus d2 h1) x0))).(\lambda (H7: (eq T 
-(lift h1 d1 t0) (lift h2 (plus d2 h1) x1))).(eq_ind_r T (THead (Flat f) x0 
-x1) (\lambda (t2: T).(ex2 T (\lambda (t3: T).(eq T t2 (lift h1 d1 t3))) 
-(\lambda (t3: T).(eq T (THead (Flat f) t t0) (lift h2 d2 t3))))) (ex2_ind T 
-(\lambda (t2: T).(eq T x0 (lift h1 d1 t2))) (\lambda (t2: T).(eq T t (lift h2 
-d2 t2))) (ex2 T (\lambda (t2: T).(eq T (THead (Flat f) x0 x1) (lift h1 d1 
-t2))) (\lambda (t2: T).(eq T (THead (Flat f) t t0) (lift h2 d2 t2)))) 
-(\lambda (x2: T).(\lambda (H8: (eq T x0 (lift h1 d1 x2))).(\lambda (H9: (eq T 
-t (lift h2 d2 x2))).(eq_ind_r T (lift h1 d1 x2) (\lambda (t2: T).(ex2 T 
-(\lambda (t3: T).(eq T (THead (Flat f) t2 x1) (lift h1 d1 t3))) (\lambda (t3: 
-T).(eq T (THead (Flat f) t t0) (lift h2 d2 t3))))) (eq_ind_r T (lift h2 d2 
-x2) (\lambda (t2: T).(ex2 T (\lambda (t3: T).(eq T (THead (Flat f) (lift h1 
-d1 x2) x1) (lift h1 d1 t3))) (\lambda (t3: T).(eq T (THead (Flat f) t2 t0) 
-(lift h2 d2 t3))))) (ex2_ind T (\lambda (t2: T).(eq T x1 (lift h1 d1 t2))) 
-(\lambda (t2: T).(eq T t0 (lift h2 d2 t2))) (ex2 T (\lambda (t2: T).(eq T 
-(THead (Flat f) (lift h1 d1 x2) x1) (lift h1 d1 t2))) (\lambda (t2: T).(eq T 
-(THead (Flat f) (lift h2 d2 x2) t0) (lift h2 d2 t2)))) (\lambda (x3: 
-T).(\lambda (H10: (eq T x1 (lift h1 d1 x3))).(\lambda (H11: (eq T t0 (lift h2 
-d2 x3))).(eq_ind_r T (lift h1 d1 x3) (\lambda (t2: T).(ex2 T (\lambda (t3: 
-T).(eq T (THead (Flat f) (lift h1 d1 x2) t2) (lift h1 d1 t3))) (\lambda (t3: 
-T).(eq T (THead (Flat f) (lift h2 d2 x2) t0) (lift h2 d2 t3))))) (eq_ind_r T 
-(lift h2 d2 x3) (\lambda (t2: T).(ex2 T (\lambda (t3: T).(eq T (THead (Flat 
-f) (lift h1 d1 x2) (lift h1 d1 x3)) (lift h1 d1 t3))) (\lambda (t3: T).(eq T 
-(THead (Flat f) (lift h2 d2 x2) t2) (lift h2 d2 t3))))) (ex_intro2 T (\lambda 
-(t2: T).(eq T (THead (Flat f) (lift h1 d1 x2) (lift h1 d1 x3)) (lift h1 d1 
-t2))) (\lambda (t2: T).(eq T (THead (Flat f) (lift h2 d2 x2) (lift h2 d2 x3)) 
-(lift h2 d2 t2))) (THead (Flat f) x2 x3) (eq_ind_r T (THead (Flat f) (lift h1 
-d1 x2) (lift h1 d1 x3)) (\lambda (t2: T).(eq T (THead (Flat f) (lift h1 d1 
-x2) (lift h1 d1 x3)) t2)) (refl_equal T (THead (Flat f) (lift h1 d1 x2) (lift 
-h1 d1 x3))) (lift h1 d1 (THead (Flat f) x2 x3)) (lift_flat f x2 x3 h1 d1)) 
-(eq_ind_r T (THead (Flat f) (lift h2 d2 x2) (lift h2 d2 x3)) (\lambda (t2: 
-T).(eq T (THead (Flat f) (lift h2 d2 x2) (lift h2 d2 x3)) t2)) (refl_equal T 
-(THead (Flat f) (lift h2 d2 x2) (lift h2 d2 x3))) (lift h2 d2 (THead (Flat f) 
-x2 x3)) (lift_flat f x2 x3 h2 d2))) t0 H11) x1 H10)))) (H0 x1 h1 h2 d1 d2 H1 
-H7)) t H9) x0 H8)))) (H x0 h1 h2 d1 d2 H1 H6)) x H5)))))) (lift_gen_flat f 
-(lift h1 d1 t) (lift h1 d1 t0) x h2 (plus d2 h1) H4))))) k H2))))))))))))) 
-t1).
+H12)))) (H0 x1 h1 h2 (S d1) (S d2) (le_n_S d1 d2 H1) H11)))) t H9) x0 H8)))) 
+(H x0 h1 h2 d1 d2 H1 H6)) x H5)))))) (lift_gen_bind b (lift h1 d1 t) (lift h1 
+(S d1) t0) x h2 (plus d2 h1) H4))))) (\lambda (f: F).(\lambda (H3: (eq T 
+(lift h1 d1 (THead (Flat f) t t0)) (lift h2 (plus d2 h1) x))).(let H4 \def 
+(eq_ind T (lift h1 d1 (THead (Flat f) t t0)) (\lambda (t2: T).(eq T t2 (lift 
+h2 (plus d2 h1) x))) H3 (THead (Flat f) (lift h1 d1 t) (lift h1 d1 t0)) 
+(lift_flat f t t0 h1 d1)) in (ex3_2_ind T T (\lambda (y: T).(\lambda (z: 
+T).(eq T x (THead (Flat f) y z)))) (\lambda (y: T).(\lambda (_: T).(eq T 
+(lift h1 d1 t) (lift h2 (plus d2 h1) y)))) (\lambda (_: T).(\lambda (z: 
+T).(eq T (lift h1 d1 t0) (lift h2 (plus d2 h1) z)))) (ex2 T (\lambda (t2: 
+T).(eq T x (lift h1 d1 t2))) (\lambda (t2: T).(eq T (THead (Flat f) t t0) 
+(lift h2 d2 t2)))) (\lambda (x0: T).(\lambda (x1: T).(\lambda (H5: (eq T x 
+(THead (Flat f) x0 x1))).(\lambda (H6: (eq T (lift h1 d1 t) (lift h2 (plus d2 
+h1) x0))).(\lambda (H7: (eq T (lift h1 d1 t0) (lift h2 (plus d2 h1) 
+x1))).(eq_ind_r T (THead (Flat f) x0 x1) (\lambda (t2: T).(ex2 T (\lambda 
+(t3: T).(eq T t2 (lift h1 d1 t3))) (\lambda (t3: T).(eq T (THead (Flat f) t 
+t0) (lift h2 d2 t3))))) (ex2_ind T (\lambda (t2: T).(eq T x0 (lift h1 d1 
+t2))) (\lambda (t2: T).(eq T t (lift h2 d2 t2))) (ex2 T (\lambda (t2: T).(eq 
+T (THead (Flat f) x0 x1) (lift h1 d1 t2))) (\lambda (t2: T).(eq T (THead 
+(Flat f) t t0) (lift h2 d2 t2)))) (\lambda (x2: T).(\lambda (H8: (eq T x0 
+(lift h1 d1 x2))).(\lambda (H9: (eq T t (lift h2 d2 x2))).(eq_ind_r T (lift 
+h1 d1 x2) (\lambda (t2: T).(ex2 T (\lambda (t3: T).(eq T (THead (Flat f) t2 
+x1) (lift h1 d1 t3))) (\lambda (t3: T).(eq T (THead (Flat f) t t0) (lift h2 
+d2 t3))))) (eq_ind_r T (lift h2 d2 x2) (\lambda (t2: T).(ex2 T (\lambda (t3: 
+T).(eq T (THead (Flat f) (lift h1 d1 x2) x1) (lift h1 d1 t3))) (\lambda (t3: 
+T).(eq T (THead (Flat f) t2 t0) (lift h2 d2 t3))))) (ex2_ind T (\lambda (t2: 
+T).(eq T x1 (lift h1 d1 t2))) (\lambda (t2: T).(eq T t0 (lift h2 d2 t2))) 
+(ex2 T (\lambda (t2: T).(eq T (THead (Flat f) (lift h1 d1 x2) x1) (lift h1 d1 
+t2))) (\lambda (t2: T).(eq T (THead (Flat f) (lift h2 d2 x2) t0) (lift h2 d2 
+t2)))) (\lambda (x3: T).(\lambda (H10: (eq T x1 (lift h1 d1 x3))).(\lambda 
+(H11: (eq T t0 (lift h2 d2 x3))).(eq_ind_r T (lift h1 d1 x3) (\lambda (t2: 
+T).(ex2 T (\lambda (t3: T).(eq T (THead (Flat f) (lift h1 d1 x2) t2) (lift h1 
+d1 t3))) (\lambda (t3: T).(eq T (THead (Flat f) (lift h2 d2 x2) t0) (lift h2 
+d2 t3))))) (eq_ind_r T (lift h2 d2 x3) (\lambda (t2: T).(ex2 T (\lambda (t3: 
+T).(eq T (THead (Flat f) (lift h1 d1 x2) (lift h1 d1 x3)) (lift h1 d1 t3))) 
+(\lambda (t3: T).(eq T (THead (Flat f) (lift h2 d2 x2) t2) (lift h2 d2 
+t3))))) (ex_intro2 T (\lambda (t2: T).(eq T (THead (Flat f) (lift h1 d1 x2) 
+(lift h1 d1 x3)) (lift h1 d1 t2))) (\lambda (t2: T).(eq T (THead (Flat f) 
+(lift h2 d2 x2) (lift h2 d2 x3)) (lift h2 d2 t2))) (THead (Flat f) x2 x3) 
+(eq_ind_r T (THead (Flat f) (lift h1 d1 x2) (lift h1 d1 x3)) (\lambda (t2: 
+T).(eq T (THead (Flat f) (lift h1 d1 x2) (lift h1 d1 x3)) t2)) (refl_equal T 
+(THead (Flat f) (lift h1 d1 x2) (lift h1 d1 x3))) (lift h1 d1 (THead (Flat f) 
+x2 x3)) (lift_flat f x2 x3 h1 d1)) (eq_ind_r T (THead (Flat f) (lift h2 d2 
+x2) (lift h2 d2 x3)) (\lambda (t2: T).(eq T (THead (Flat f) (lift h2 d2 x2) 
+(lift h2 d2 x3)) t2)) (refl_equal T (THead (Flat f) (lift h2 d2 x2) (lift h2 
+d2 x3))) (lift h2 d2 (THead (Flat f) x2 x3)) (lift_flat f x2 x3 h2 d2))) t0 
+H11) x1 H10)))) (H0 x1 h1 h2 d1 d2 H1 H7)) t H9) x0 H8)))) (H x0 h1 h2 d1 d2 
+H1 H6)) x H5)))))) (lift_gen_flat f (lift h1 d1 t) (lift h1 d1 t0) x h2 (plus 
+d2 h1) H4))))) k H2))))))))))))) t1).
 
 theorem lift_free:
  \forall (t: T).(\forall (h: nat).(\forall (k: nat).(\forall (d: 
@@ -490,26 +478,23 @@ nat).(eq T (lift h n0 (TLRef (plus n k))) (lift k e (lift h d (TLRef n)))))
 (plus n k)) (\lambda (t0: T).(eq T (TLRef (plus n k)) t0)) (refl_equal T 
 (TLRef (plus n k))) (lift k e (TLRef n)) (lift_lref_ge n k e H0)) (lift h d 
 (TLRef n)) (lift_lref_lt n h d H1)) (lift h (plus d k) (TLRef (plus n k))) 
-(lift_lref_lt (plus n k) h (plus d k) (lt_le_S (plus n k) (plus d k) 
-(plus_lt_compat_r n d k H1))))) (\lambda (H1: (le d n)).(eq_ind_r T (TLRef 
-(plus (plus n k) h)) (\lambda (t0: T).(eq T t0 (lift k e (lift h d (TLRef 
-n))))) (eq_ind_r T (TLRef (plus n h)) (\lambda (t0: T).(eq T (TLRef (plus 
-(plus n k) h)) (lift k e t0))) (eq_ind_r T (TLRef (plus (plus n h) k)) 
-(\lambda (t0: T).(eq T (TLRef (plus (plus n k) h)) t0)) (f_equal nat T TLRef 
-(plus (plus n k) h) (plus (plus n h) k) (sym_eq nat (plus (plus n h) k) (plus 
-(plus n k) h) (plus_permute_2_in_3 n h k))) (lift k e (TLRef (plus n h))) 
-(lift_lref_ge (plus n h) k e (le_S_n e (plus n h) (lt_le_S e (S (plus n h)) 
-(le_lt_n_Sm e (plus n h) (le_plus_trans e n h H0)))))) (lift h d (TLRef n)) 
-(lift_lref_ge n h d H1)) (lift h (plus d k) (TLRef (plus n k))) (lift_lref_ge 
-(plus n k) h (plus d k) (le_S_n (plus d k) (plus n k) (lt_le_S (plus d k) (S 
-(plus n k)) (le_lt_n_Sm (plus d k) (plus n k) (plus_le_compat d n k k H1 
-(le_n k))))))))) (plus k d) (plus_comm k d)) (lift k e (TLRef n)) 
-(lift_lref_ge n k e H0)))))))))) (\lambda (k: K).(\lambda (t0: T).(\lambda 
-(H: ((\forall (h: nat).(\forall (k0: nat).(\forall (d: nat).(\forall (e: 
-nat).((le e d) \to (eq T (lift h (plus k0 d) (lift k0 e t0)) (lift k0 e (lift 
-h d t0)))))))))).(\lambda (t1: T).(\lambda (H0: ((\forall (h: nat).(\forall 
-(k0: nat).(\forall (d: nat).(\forall (e: nat).((le e d) \to (eq T (lift h 
-(plus k0 d) (lift k0 e t1)) (lift k0 e (lift h d t1)))))))))).(\lambda (h: 
+(lift_lref_lt (plus n k) h (plus d k) (plus_lt_compat_r n d k H1)))) (\lambda 
+(H1: (le d n)).(eq_ind_r T (TLRef (plus (plus n k) h)) (\lambda (t0: T).(eq T 
+t0 (lift k e (lift h d (TLRef n))))) (eq_ind_r T (TLRef (plus n h)) (\lambda 
+(t0: T).(eq T (TLRef (plus (plus n k) h)) (lift k e t0))) (eq_ind_r T (TLRef 
+(plus (plus n h) k)) (\lambda (t0: T).(eq T (TLRef (plus (plus n k) h)) t0)) 
+(f_equal nat T TLRef (plus (plus n k) h) (plus (plus n h) k) (sym_eq nat 
+(plus (plus n h) k) (plus (plus n k) h) (plus_permute_2_in_3 n h k))) (lift k 
+e (TLRef (plus n h))) (lift_lref_ge (plus n h) k e (le_plus_trans e n h H0))) 
+(lift h d (TLRef n)) (lift_lref_ge n h d H1)) (lift h (plus d k) (TLRef (plus 
+n k))) (lift_lref_ge (plus n k) h (plus d k) (plus_le_compat d n k k H1 (le_n 
+k)))))) (plus k d) (plus_comm k d)) (lift k e (TLRef n)) (lift_lref_ge n k e 
+H0)))))))))) (\lambda (k: K).(\lambda (t0: T).(\lambda (H: ((\forall (h: 
+nat).(\forall (k0: nat).(\forall (d: nat).(\forall (e: nat).((le e d) \to (eq 
+T (lift h (plus k0 d) (lift k0 e t0)) (lift k0 e (lift h d 
+t0)))))))))).(\lambda (t1: T).(\lambda (H0: ((\forall (h: nat).(\forall (k0: 
+nat).(\forall (d: nat).(\forall (e: nat).((le e d) \to (eq T (lift h (plus k0 
+d) (lift k0 e t1)) (lift k0 e (lift h d t1)))))))))).(\lambda (h: 
 nat).(\lambda (k0: nat).(\lambda (d: nat).(\lambda (e: nat).(\lambda (H1: (le 
 e d)).(eq_ind_r T (THead k (lift k0 e t0) (lift k0 (s k e) t1)) (\lambda (t2: 
 T).(eq T (lift h (plus k0 d) t2) (lift k0 e (lift h d (THead k t0 t1))))) 

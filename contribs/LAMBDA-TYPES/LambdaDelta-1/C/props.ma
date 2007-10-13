@@ -25,18 +25,16 @@ theorem clt_cong:
 T).(clt (CHead c k t) (CHead d k t))))))
 \def
  \lambda (c: C).(\lambda (d: C).(\lambda (H: (lt (cweight c) (cweight 
-d))).(\lambda (_: K).(\lambda (t: T).(lt_le_S (plus (cweight c) (tweight t)) 
-(plus (cweight d) (tweight t)) (plus_lt_compat_r (cweight c) (cweight d) 
-(tweight t) H)))))).
+d))).(\lambda (_: K).(\lambda (t: T).(plus_lt_compat_r (cweight c) (cweight 
+d) (tweight t) H))))).
 
 theorem clt_head:
  \forall (k: K).(\forall (c: C).(\forall (u: T).(clt c (CHead c k u))))
 \def
  \lambda (_: K).(\lambda (c: C).(\lambda (u: T).(eq_ind_r nat (plus (cweight 
-c) O) (\lambda (n: nat).(lt n (plus (cweight c) (tweight u)))) (lt_le_S (plus 
-(cweight c) O) (plus (cweight c) (tweight u)) (plus_le_lt_compat (cweight c) 
-(cweight c) O (tweight u) (le_n (cweight c)) (tweight_lt u))) (cweight c) 
-(plus_n_O (cweight c))))).
+c) O) (\lambda (n: nat).(lt n (plus (cweight c) (tweight u)))) 
+(plus_le_lt_compat (cweight c) (cweight c) O (tweight u) (le_n (cweight c)) 
+(tweight_lt u)) (cweight c) (plus_n_O (cweight c))))).
 
 theorem clt_wf__q_ind:
  \forall (P: ((C \to Prop))).(((\forall (n: nat).((\lambda (P0: ((C \to 

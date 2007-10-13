@@ -118,44 +118,44 @@ n1) a3)))) (\lambda (H8: (eq A (ASort h3 n3) a3)).(eq_ind A (ASort h3 n3)
 n3)) (\lambda (H10: (lt k k0)).(let H_y \def (aplus_reg_r g (ASort h1 n1) 
 (ASort h2 n2) k k H0 (minus k0 k)) in (let H11 \def (eq_ind_r nat (plus 
 (minus k0 k) k) (\lambda (n: nat).(eq A (aplus g (ASort h1 n1) n) (aplus g 
-(ASort h2 n2) n))) H_y k0 (le_plus_minus_sym k k0 (le_S_n k k0 (le_S (S k) k0 
-H10)))) in (leq_sort g h1 h3 n1 n3 k0 (trans_eq A (aplus g (ASort h1 n1) k0) 
-(aplus g (ASort h2 n2) k0) (aplus g (ASort h3 n3) k0) H11 H9))))) (\lambda 
-(H10: (le k0 k)).(let H_y \def (aplus_reg_r g (ASort h2 n2) (ASort h3 n3) k0 
-k0 H9 (minus k k0)) in (let H11 \def (eq_ind_r nat (plus (minus k k0) k0) 
-(\lambda (n: nat).(eq A (aplus g (ASort h2 n2) n) (aplus g (ASort h3 n3) n))) 
-H_y k (le_plus_minus_sym k0 k H10)) in (leq_sort g h1 h3 n1 n3 k (trans_eq A 
-(aplus g (ASort h1 n1) k) (aplus g (ASort h2 n2) k) (aplus g (ASort h3 n3) k) 
-H0 H11))))))) a3 H8)) n0 (sym_eq nat n0 n2 H7))) h0 (sym_eq nat h0 h2 H6))) 
-H5)) H4 H2))) | (leq_head a0 a4 H2 a5 a6 H3) \Rightarrow (\lambda (H4: (eq A 
-(AHead a0 a5) (ASort h2 n2))).(\lambda (H5: (eq A (AHead a4 a6) a3)).((let H6 
-\def (eq_ind A (AHead a0 a5) (\lambda (e: A).(match e in A return (\lambda 
-(_: A).Prop) with [(ASort _ _) \Rightarrow False | (AHead _ _) \Rightarrow 
-True])) I (ASort h2 n2) H4) in (False_ind ((eq A (AHead a4 a6) a3) \to ((leq 
-g a0 a4) \to ((leq g a5 a6) \to (leq g (ASort h1 n1) a3)))) H6)) H5 H2 
-H3)))]) in (H2 (refl_equal A (ASort h2 n2)) (refl_equal A a3))))))))))) 
-(\lambda (a3: A).(\lambda (a4: A).(\lambda (_: (leq g a3 a4)).(\lambda (H1: 
-((\forall (a5: A).((leq g a4 a5) \to (leq g a3 a5))))).(\lambda (a5: 
-A).(\lambda (a6: A).(\lambda (_: (leq g a5 a6)).(\lambda (H3: ((\forall (a7: 
-A).((leq g a6 a7) \to (leq g a5 a7))))).(\lambda (a0: A).(\lambda (H4: (leq g 
-(AHead a4 a6) a0)).(let H5 \def (match H4 in leq return (\lambda (a: 
-A).(\lambda (a7: A).(\lambda (_: (leq ? a a7)).((eq A a (AHead a4 a6)) \to 
-((eq A a7 a0) \to (leq g (AHead a3 a5) a0)))))) with [(leq_sort h1 h2 n1 n2 k 
-H5) \Rightarrow (\lambda (H6: (eq A (ASort h1 n1) (AHead a4 a6))).(\lambda 
-(H7: (eq A (ASort h2 n2) a0)).((let H8 \def (eq_ind A (ASort h1 n1) (\lambda 
-(e: A).(match e in A return (\lambda (_: A).Prop) with [(ASort _ _) 
-\Rightarrow True | (AHead _ _) \Rightarrow False])) I (AHead a4 a6) H6) in 
-(False_ind ((eq A (ASort h2 n2) a0) \to ((eq A (aplus g (ASort h1 n1) k) 
-(aplus g (ASort h2 n2) k)) \to (leq g (AHead a3 a5) a0))) H8)) H7 H5))) | 
-(leq_head a7 a8 H5 a9 a10 H6) \Rightarrow (\lambda (H7: (eq A (AHead a7 a9) 
-(AHead a4 a6))).(\lambda (H8: (eq A (AHead a8 a10) a0)).((let H9 \def 
-(f_equal A A (\lambda (e: A).(match e in A return (\lambda (_: A).A) with 
-[(ASort _ _) \Rightarrow a9 | (AHead _ a) \Rightarrow a])) (AHead a7 a9) 
-(AHead a4 a6) H7) in ((let H10 \def (f_equal A A (\lambda (e: A).(match e in 
-A return (\lambda (_: A).A) with [(ASort _ _) \Rightarrow a7 | (AHead a _) 
-\Rightarrow a])) (AHead a7 a9) (AHead a4 a6) H7) in (eq_ind A a4 (\lambda (a: 
-A).((eq A a9 a6) \to ((eq A (AHead a8 a10) a0) \to ((leq g a a8) \to ((leq g 
-a9 a10) \to (leq g (AHead a3 a5) a0)))))) (\lambda (H11: (eq A a9 
+(ASort h2 n2) n))) H_y k0 (le_plus_minus_sym k k0 (le_trans k (S k) k0 (le_S 
+k k (le_n k)) H10))) in (leq_sort g h1 h3 n1 n3 k0 (trans_eq A (aplus g 
+(ASort h1 n1) k0) (aplus g (ASort h2 n2) k0) (aplus g (ASort h3 n3) k0) H11 
+H9))))) (\lambda (H10: (le k0 k)).(let H_y \def (aplus_reg_r g (ASort h2 n2) 
+(ASort h3 n3) k0 k0 H9 (minus k k0)) in (let H11 \def (eq_ind_r nat (plus 
+(minus k k0) k0) (\lambda (n: nat).(eq A (aplus g (ASort h2 n2) n) (aplus g 
+(ASort h3 n3) n))) H_y k (le_plus_minus_sym k0 k H10)) in (leq_sort g h1 h3 
+n1 n3 k (trans_eq A (aplus g (ASort h1 n1) k) (aplus g (ASort h2 n2) k) 
+(aplus g (ASort h3 n3) k) H0 H11))))))) a3 H8)) n0 (sym_eq nat n0 n2 H7))) h0 
+(sym_eq nat h0 h2 H6))) H5)) H4 H2))) | (leq_head a0 a4 H2 a5 a6 H3) 
+\Rightarrow (\lambda (H4: (eq A (AHead a0 a5) (ASort h2 n2))).(\lambda (H5: 
+(eq A (AHead a4 a6) a3)).((let H6 \def (eq_ind A (AHead a0 a5) (\lambda (e: 
+A).(match e in A return (\lambda (_: A).Prop) with [(ASort _ _) \Rightarrow 
+False | (AHead _ _) \Rightarrow True])) I (ASort h2 n2) H4) in (False_ind 
+((eq A (AHead a4 a6) a3) \to ((leq g a0 a4) \to ((leq g a5 a6) \to (leq g 
+(ASort h1 n1) a3)))) H6)) H5 H2 H3)))]) in (H2 (refl_equal A (ASort h2 n2)) 
+(refl_equal A a3))))))))))) (\lambda (a3: A).(\lambda (a4: A).(\lambda (_: 
+(leq g a3 a4)).(\lambda (H1: ((\forall (a5: A).((leq g a4 a5) \to (leq g a3 
+a5))))).(\lambda (a5: A).(\lambda (a6: A).(\lambda (_: (leq g a5 
+a6)).(\lambda (H3: ((\forall (a7: A).((leq g a6 a7) \to (leq g a5 
+a7))))).(\lambda (a0: A).(\lambda (H4: (leq g (AHead a4 a6) a0)).(let H5 \def 
+(match H4 in leq return (\lambda (a: A).(\lambda (a7: A).(\lambda (_: (leq ? 
+a a7)).((eq A a (AHead a4 a6)) \to ((eq A a7 a0) \to (leq g (AHead a3 a5) 
+a0)))))) with [(leq_sort h1 h2 n1 n2 k H5) \Rightarrow (\lambda (H6: (eq A 
+(ASort h1 n1) (AHead a4 a6))).(\lambda (H7: (eq A (ASort h2 n2) a0)).((let H8 
+\def (eq_ind A (ASort h1 n1) (\lambda (e: A).(match e in A return (\lambda 
+(_: A).Prop) with [(ASort _ _) \Rightarrow True | (AHead _ _) \Rightarrow 
+False])) I (AHead a4 a6) H6) in (False_ind ((eq A (ASort h2 n2) a0) \to ((eq 
+A (aplus g (ASort h1 n1) k) (aplus g (ASort h2 n2) k)) \to (leq g (AHead a3 
+a5) a0))) H8)) H7 H5))) | (leq_head a7 a8 H5 a9 a10 H6) \Rightarrow (\lambda 
+(H7: (eq A (AHead a7 a9) (AHead a4 a6))).(\lambda (H8: (eq A (AHead a8 a10) 
+a0)).((let H9 \def (f_equal A A (\lambda (e: A).(match e in A return (\lambda 
+(_: A).A) with [(ASort _ _) \Rightarrow a9 | (AHead _ a) \Rightarrow a])) 
+(AHead a7 a9) (AHead a4 a6) H7) in ((let H10 \def (f_equal A A (\lambda (e: 
+A).(match e in A return (\lambda (_: A).A) with [(ASort _ _) \Rightarrow a7 | 
+(AHead a _) \Rightarrow a])) (AHead a7 a9) (AHead a4 a6) H7) in (eq_ind A a4 
+(\lambda (a: A).((eq A a9 a6) \to ((eq A (AHead a8 a10) a0) \to ((leq g a a8) 
+\to ((leq g a9 a10) \to (leq g (AHead a3 a5) a0)))))) (\lambda (H11: (eq A a9 
 a6)).(eq_ind A a6 (\lambda (a: A).((eq A (AHead a8 a10) a0) \to ((leq g a4 
 a8) \to ((leq g a a10) \to (leq g (AHead a3 a5) a0))))) (\lambda (H12: (eq A 
 (AHead a8 a10) a0)).(eq_ind A (AHead a8 a10) (\lambda (a: A).((leq g a4 a8) 

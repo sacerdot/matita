@@ -200,12 +200,10 @@ k n) x3))) H4 (lift h (r k n) x5) H7) in (let H12 \def (eq_ind T x5 (\lambda
 (CHead x4 k t0)) \to (\forall (x6: C).((drop h0 n (CHead c0 k (lift h (r k n) 
 t0)) x6) \to (eq C (CHead x4 k t0) x6)))))) H10 x3 (lift_inj x5 x3 h (r k n) 
 H11)) in (eq_ind_r T x3 (\lambda (t0: T).(eq C (CHead x4 k t0) (CHead x0 k 
-x3))) (sym_eq C (CHead x0 k x3) (CHead x4 k x3) (sym_eq C (CHead x4 k x3) 
-(CHead x0 k x3) (sym_eq C (CHead x0 k x3) (CHead x4 k x3) (f_equal3 C K T C 
-CHead x0 x4 k k x3 x3 (H x0 (r k n) h H5 x4 H8) (refl_equal K k) (refl_equal 
-T x3))))) x5 (lift_inj x5 x3 h (r k n) H11))))) x1 H6)) x2 H3)))))) 
-(drop_gen_skip_l c0 x1 t h n k H1))))))) (drop_gen_skip_l c0 x2 t h n k 
-H2)))))))) d))))))) c).
+x3))) (f_equal3 C K T C CHead x4 x0 k k x3 x3 (sym_eq C x0 x4 (H x0 (r k n) h 
+H5 x4 H8)) (refl_equal K k) (refl_equal T x3)) x5 (lift_inj x5 x3 h (r k n) 
+H11))))) x1 H6)) x2 H3)))))) (drop_gen_skip_l c0 x1 t h n k H1))))))) 
+(drop_gen_skip_l c0 x2 t h n k H2)))))))) d))))))) c).
 
 theorem drop_conf_lt:
  \forall (k: K).(\forall (i: nat).(\forall (u: T).(\forall (c0: C).(\forall 

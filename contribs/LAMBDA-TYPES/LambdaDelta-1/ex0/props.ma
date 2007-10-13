@@ -14,9 +14,9 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/LambdaDelta-1/gz/props".
+set "baseuri" "cic:/matita/LAMBDA-TYPES/LambdaDelta-1/ex0/props".
 
-include "gz/defs.ma".
+include "ex0/defs.ma".
 
 include "leq/defs.ma".
 

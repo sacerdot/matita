@@ -56,18 +56,14 @@ a1) (lweight a2))).(\lambda (H0: (lt (lweight a2) (lweight a3))).(lt_trans
 theorem llt_head_sx:
  \forall (a1: A).(\forall (a2: A).(llt a1 (AHead a1 a2)))
 \def
- \lambda (a1: A).(\lambda (a2: A).(le_S_n (S (lweight a1)) (S (plus (lweight 
-a1) (lweight a2))) (le_n_S (S (lweight a1)) (S (plus (lweight a1) (lweight 
-a2))) (le_n_S (lweight a1) (plus (lweight a1) (lweight a2)) (le_plus_l 
-(lweight a1) (lweight a2)))))).
+ \lambda (a1: A).(\lambda (a2: A).(le_n_S (lweight a1) (plus (lweight a1) 
+(lweight a2)) (le_plus_l (lweight a1) (lweight a2)))).
 
 theorem llt_head_dx:
  \forall (a1: A).(\forall (a2: A).(llt a2 (AHead a1 a2)))
 \def
- \lambda (a1: A).(\lambda (a2: A).(le_S_n (S (lweight a2)) (S (plus (lweight 
-a1) (lweight a2))) (le_n_S (S (lweight a2)) (S (plus (lweight a1) (lweight 
-a2))) (le_n_S (lweight a2) (plus (lweight a1) (lweight a2)) (le_plus_r 
-(lweight a1) (lweight a2)))))).
+ \lambda (a1: A).(\lambda (a2: A).(le_n_S (lweight a2) (plus (lweight a1) 
+(lweight a2)) (le_plus_r (lweight a1) (lweight a2)))).
 
 theorem llt_wf__q_ind:
  \forall (P: ((A \to Prop))).(((\forall (n: nat).((\lambda (P0: ((A \to 

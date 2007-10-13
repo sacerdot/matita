@@ -506,82 +506,82 @@ Appl) w t3) (THead (Flat Appl) w (THead (Bind Abst) u0 x2)) (ty3_appl g c0 w
 u0 H0 t3 x2 (ty3_sconv g c0 t3 x H16 (THead (Bind Abst) u0 t) (THead (Bind 
 Abst) u0 x2) (ty3_bind g c0 u0 x3 H20 Abst t x2 H21 x4 H22) H15)) (THead 
 (Flat Appl) w v) (THead (Flat Appl) w (THead (Bind Abst) u0 t)) (ty3_appl g 
-c0 w u0 H0 v t H2) (pc3_s c0 (THead (Flat Appl) w (THead (Bind Abst) u0 t)) 
-(THead (Flat Appl) w t3) (pc3_thin_dx c0 t3 (THead (Bind Abst) u0 t) H15 w 
-Appl)))))))))) (ty3_gen_bind g Abst c0 u0 t x1 H18)))) (ty3_correct g c0 v 
-(THead (Bind Abst) u0 t) H2)))) (ty3_correct g c0 w u0 H0)))) (ty3_correct g 
-c0 v t3 H_y))))) t2 H13)) t0 (sym_eq T t0 v H12))) v0 (sym_eq T v0 w H11))) 
-H10))) c1 (sym_eq C c1 c0 H6) H7 H8 H5)))) | (tau0_cast c1 v1 v2 H5 t0 t3 H6) 
-\Rightarrow (\lambda (H7: (eq C c1 c0)).(\lambda (H8: (eq T (THead (Flat 
-Cast) v1 t0) (THead (Flat Appl) w v))).(\lambda (H9: (eq T (THead (Flat Cast) 
-v2 t3) t2)).(eq_ind C c0 (\lambda (c2: C).((eq T (THead (Flat Cast) v1 t0) 
-(THead (Flat Appl) w v)) \to ((eq T (THead (Flat Cast) v2 t3) t2) \to ((tau0 
-g c2 v1 v2) \to ((tau0 g c2 t0 t3) \to (ty3 g c0 (THead (Flat Appl) w v) 
-t2)))))) (\lambda (H10: (eq T (THead (Flat Cast) v1 t0) (THead (Flat Appl) w 
-v))).(let H11 \def (eq_ind T (THead (Flat Cast) v1 t0) (\lambda (e: T).(match 
+c0 w u0 H0 v t H2) (pc3_thin_dx c0 (THead (Bind Abst) u0 t) t3 (ty3_unique g 
+c0 v (THead (Bind Abst) u0 t) H2 t3 H_y) w Appl))))))))) (ty3_gen_bind g Abst 
+c0 u0 t x1 H18)))) (ty3_correct g c0 v (THead (Bind Abst) u0 t) H2)))) 
+(ty3_correct g c0 w u0 H0)))) (ty3_correct g c0 v t3 H_y))))) t2 H13)) t0 
+(sym_eq T t0 v H12))) v0 (sym_eq T v0 w H11))) H10))) c1 (sym_eq C c1 c0 H6) 
+H7 H8 H5)))) | (tau0_cast c1 v1 v2 H5 t0 t3 H6) \Rightarrow (\lambda (H7: (eq 
+C c1 c0)).(\lambda (H8: (eq T (THead (Flat Cast) v1 t0) (THead (Flat Appl) w 
+v))).(\lambda (H9: (eq T (THead (Flat Cast) v2 t3) t2)).(eq_ind C c0 (\lambda 
+(c2: C).((eq T (THead (Flat Cast) v1 t0) (THead (Flat Appl) w v)) \to ((eq T 
+(THead (Flat Cast) v2 t3) t2) \to ((tau0 g c2 v1 v2) \to ((tau0 g c2 t0 t3) 
+\to (ty3 g c0 (THead (Flat Appl) w v) t2)))))) (\lambda (H10: (eq T (THead 
+(Flat Cast) v1 t0) (THead (Flat Appl) w v))).(let H11 \def (eq_ind T (THead 
+(Flat Cast) v1 t0) (\lambda (e: T).(match e in T return (\lambda (_: T).Prop) 
+with [(TSort _) \Rightarrow False | (TLRef _) \Rightarrow False | (THead k _ 
+_) \Rightarrow (match k in K return (\lambda (_: K).Prop) with [(Bind _) 
+\Rightarrow False | (Flat f) \Rightarrow (match f in F return (\lambda (_: 
+F).Prop) with [Appl \Rightarrow False | Cast \Rightarrow True])])])) I (THead 
+(Flat Appl) w v) H10) in (False_ind ((eq T (THead (Flat Cast) v2 t3) t2) \to 
+((tau0 g c0 v1 v2) \to ((tau0 g c0 t0 t3) \to (ty3 g c0 (THead (Flat Appl) w 
+v) t2)))) H11))) c1 (sym_eq C c1 c0 H7) H8 H9 H5 H6))))]) in (H5 (refl_equal 
+C c0) (refl_equal T (THead (Flat Appl) w v)) (refl_equal T t2)))))))))))))) 
+(\lambda (c0: C).(\lambda (t2: T).(\lambda (t3: T).(\lambda (H0: (ty3 g c0 t2 
+t3)).(\lambda (H1: ((\forall (t4: T).((tau0 g c0 t2 t4) \to (ty3 g c0 t2 
+t4))))).(\lambda (t0: T).(\lambda (_: (ty3 g c0 t3 t0)).(\lambda (H3: 
+((\forall (t4: T).((tau0 g c0 t3 t4) \to (ty3 g c0 t3 t4))))).(\lambda (t4: 
+T).(\lambda (H4: (tau0 g c0 (THead (Flat Cast) t3 t2) t4)).(let H5 \def 
+(match H4 in tau0 return (\lambda (c1: C).(\lambda (t: T).(\lambda (t5: 
+T).(\lambda (_: (tau0 ? c1 t t5)).((eq C c1 c0) \to ((eq T t (THead (Flat 
+Cast) t3 t2)) \to ((eq T t5 t4) \to (ty3 g c0 (THead (Flat Cast) t3 t2) 
+t4)))))))) with [(tau0_sort c1 n) \Rightarrow (\lambda (H5: (eq C c1 
+c0)).(\lambda (H6: (eq T (TSort n) (THead (Flat Cast) t3 t2))).(\lambda (H7: 
+(eq T (TSort (next g n)) t4)).(eq_ind C c0 (\lambda (_: C).((eq T (TSort n) 
+(THead (Flat Cast) t3 t2)) \to ((eq T (TSort (next g n)) t4) \to (ty3 g c0 
+(THead (Flat Cast) t3 t2) t4)))) (\lambda (H8: (eq T (TSort n) (THead (Flat 
+Cast) t3 t2))).(let H9 \def (eq_ind T (TSort n) (\lambda (e: T).(match e in T 
+return (\lambda (_: T).Prop) with [(TSort _) \Rightarrow True | (TLRef _) 
+\Rightarrow False | (THead _ _ _) \Rightarrow False])) I (THead (Flat Cast) 
+t3 t2) H8) in (False_ind ((eq T (TSort (next g n)) t4) \to (ty3 g c0 (THead 
+(Flat Cast) t3 t2) t4)) H9))) c1 (sym_eq C c1 c0 H5) H6 H7)))) | (tau0_abbr 
+c1 d v i H5 w H6) \Rightarrow (\lambda (H7: (eq C c1 c0)).(\lambda (H8: (eq T 
+(TLRef i) (THead (Flat Cast) t3 t2))).(\lambda (H9: (eq T (lift (S i) O w) 
+t4)).(eq_ind C c0 (\lambda (c2: C).((eq T (TLRef i) (THead (Flat Cast) t3 
+t2)) \to ((eq T (lift (S i) O w) t4) \to ((getl i c2 (CHead d (Bind Abbr) v)) 
+\to ((tau0 g d v w) \to (ty3 g c0 (THead (Flat Cast) t3 t2) t4)))))) (\lambda 
+(H10: (eq T (TLRef i) (THead (Flat Cast) t3 t2))).(let H11 \def (eq_ind T 
+(TLRef i) (\lambda (e: T).(match e in T return (\lambda (_: T).Prop) with 
+[(TSort _) \Rightarrow False | (TLRef _) \Rightarrow True | (THead _ _ _) 
+\Rightarrow False])) I (THead (Flat Cast) t3 t2) H10) in (False_ind ((eq T 
+(lift (S i) O w) t4) \to ((getl i c0 (CHead d (Bind Abbr) v)) \to ((tau0 g d 
+v w) \to (ty3 g c0 (THead (Flat Cast) t3 t2) t4)))) H11))) c1 (sym_eq C c1 c0 
+H7) H8 H9 H5 H6)))) | (tau0_abst c1 d v i H5 w H6) \Rightarrow (\lambda (H7: 
+(eq C c1 c0)).(\lambda (H8: (eq T (TLRef i) (THead (Flat Cast) t3 
+t2))).(\lambda (H9: (eq T (lift (S i) O v) t4)).(eq_ind C c0 (\lambda (c2: 
+C).((eq T (TLRef i) (THead (Flat Cast) t3 t2)) \to ((eq T (lift (S i) O v) 
+t4) \to ((getl i c2 (CHead d (Bind Abst) v)) \to ((tau0 g d v w) \to (ty3 g 
+c0 (THead (Flat Cast) t3 t2) t4)))))) (\lambda (H10: (eq T (TLRef i) (THead 
+(Flat Cast) t3 t2))).(let H11 \def (eq_ind T (TLRef i) (\lambda (e: T).(match 
 e in T return (\lambda (_: T).Prop) with [(TSort _) \Rightarrow False | 
-(TLRef _) \Rightarrow False | (THead k _ _) \Rightarrow (match k in K return 
-(\lambda (_: K).Prop) with [(Bind _) \Rightarrow False | (Flat f) \Rightarrow 
-(match f in F return (\lambda (_: F).Prop) with [Appl \Rightarrow False | 
-Cast \Rightarrow True])])])) I (THead (Flat Appl) w v) H10) in (False_ind 
-((eq T (THead (Flat Cast) v2 t3) t2) \to ((tau0 g c0 v1 v2) \to ((tau0 g c0 
-t0 t3) \to (ty3 g c0 (THead (Flat Appl) w v) t2)))) H11))) c1 (sym_eq C c1 c0 
-H7) H8 H9 H5 H6))))]) in (H5 (refl_equal C c0) (refl_equal T (THead (Flat 
-Appl) w v)) (refl_equal T t2)))))))))))))) (\lambda (c0: C).(\lambda (t2: 
-T).(\lambda (t3: T).(\lambda (H0: (ty3 g c0 t2 t3)).(\lambda (H1: ((\forall 
-(t4: T).((tau0 g c0 t2 t4) \to (ty3 g c0 t2 t4))))).(\lambda (t0: T).(\lambda 
-(_: (ty3 g c0 t3 t0)).(\lambda (H3: ((\forall (t4: T).((tau0 g c0 t3 t4) \to 
-(ty3 g c0 t3 t4))))).(\lambda (t4: T).(\lambda (H4: (tau0 g c0 (THead (Flat 
-Cast) t3 t2) t4)).(let H5 \def (match H4 in tau0 return (\lambda (c1: 
-C).(\lambda (t: T).(\lambda (t5: T).(\lambda (_: (tau0 ? c1 t t5)).((eq C c1 
-c0) \to ((eq T t (THead (Flat Cast) t3 t2)) \to ((eq T t5 t4) \to (ty3 g c0 
-(THead (Flat Cast) t3 t2) t4)))))))) with [(tau0_sort c1 n) \Rightarrow 
-(\lambda (H5: (eq C c1 c0)).(\lambda (H6: (eq T (TSort n) (THead (Flat Cast) 
-t3 t2))).(\lambda (H7: (eq T (TSort (next g n)) t4)).(eq_ind C c0 (\lambda 
-(_: C).((eq T (TSort n) (THead (Flat Cast) t3 t2)) \to ((eq T (TSort (next g 
-n)) t4) \to (ty3 g c0 (THead (Flat Cast) t3 t2) t4)))) (\lambda (H8: (eq T 
-(TSort n) (THead (Flat Cast) t3 t2))).(let H9 \def (eq_ind T (TSort n) 
-(\lambda (e: T).(match e in T return (\lambda (_: T).Prop) with [(TSort _) 
-\Rightarrow True | (TLRef _) \Rightarrow False | (THead _ _ _) \Rightarrow 
-False])) I (THead (Flat Cast) t3 t2) H8) in (False_ind ((eq T (TSort (next g 
-n)) t4) \to (ty3 g c0 (THead (Flat Cast) t3 t2) t4)) H9))) c1 (sym_eq C c1 c0 
-H5) H6 H7)))) | (tau0_abbr c1 d v i H5 w H6) \Rightarrow (\lambda (H7: (eq C 
-c1 c0)).(\lambda (H8: (eq T (TLRef i) (THead (Flat Cast) t3 t2))).(\lambda 
-(H9: (eq T (lift (S i) O w) t4)).(eq_ind C c0 (\lambda (c2: C).((eq T (TLRef 
-i) (THead (Flat Cast) t3 t2)) \to ((eq T (lift (S i) O w) t4) \to ((getl i c2 
-(CHead d (Bind Abbr) v)) \to ((tau0 g d v w) \to (ty3 g c0 (THead (Flat Cast) 
-t3 t2) t4)))))) (\lambda (H10: (eq T (TLRef i) (THead (Flat Cast) t3 
-t2))).(let H11 \def (eq_ind T (TLRef i) (\lambda (e: T).(match e in T return 
-(\lambda (_: T).Prop) with [(TSort _) \Rightarrow False | (TLRef _) 
-\Rightarrow True | (THead _ _ _) \Rightarrow False])) I (THead (Flat Cast) t3 
-t2) H10) in (False_ind ((eq T (lift (S i) O w) t4) \to ((getl i c0 (CHead d 
-(Bind Abbr) v)) \to ((tau0 g d v w) \to (ty3 g c0 (THead (Flat Cast) t3 t2) 
-t4)))) H11))) c1 (sym_eq C c1 c0 H7) H8 H9 H5 H6)))) | (tau0_abst c1 d v i H5 
-w H6) \Rightarrow (\lambda (H7: (eq C c1 c0)).(\lambda (H8: (eq T (TLRef i) 
-(THead (Flat Cast) t3 t2))).(\lambda (H9: (eq T (lift (S i) O v) t4)).(eq_ind 
-C c0 (\lambda (c2: C).((eq T (TLRef i) (THead (Flat Cast) t3 t2)) \to ((eq T 
-(lift (S i) O v) t4) \to ((getl i c2 (CHead d (Bind Abst) v)) \to ((tau0 g d 
-v w) \to (ty3 g c0 (THead (Flat Cast) t3 t2) t4)))))) (\lambda (H10: (eq T 
-(TLRef i) (THead (Flat Cast) t3 t2))).(let H11 \def (eq_ind T (TLRef i) 
-(\lambda (e: T).(match e in T return (\lambda (_: T).Prop) with [(TSort _) 
-\Rightarrow False | (TLRef _) \Rightarrow True | (THead _ _ _) \Rightarrow 
-False])) I (THead (Flat Cast) t3 t2) H10) in (False_ind ((eq T (lift (S i) O 
-v) t4) \to ((getl i c0 (CHead d (Bind Abst) v)) \to ((tau0 g d v w) \to (ty3 
-g c0 (THead (Flat Cast) t3 t2) t4)))) H11))) c1 (sym_eq C c1 c0 H7) H8 H9 H5 
-H6)))) | (tau0_bind b c1 v t5 t6 H5) \Rightarrow (\lambda (H6: (eq C c1 
-c0)).(\lambda (H7: (eq T (THead (Bind b) v t5) (THead (Flat Cast) t3 
-t2))).(\lambda (H8: (eq T (THead (Bind b) v t6) t4)).(eq_ind C c0 (\lambda 
-(c2: C).((eq T (THead (Bind b) v t5) (THead (Flat Cast) t3 t2)) \to ((eq T 
-(THead (Bind b) v t6) t4) \to ((tau0 g (CHead c2 (Bind b) v) t5 t6) \to (ty3 
-g c0 (THead (Flat Cast) t3 t2) t4))))) (\lambda (H9: (eq T (THead (Bind b) v 
-t5) (THead (Flat Cast) t3 t2))).(let H10 \def (eq_ind T (THead (Bind b) v t5) 
-(\lambda (e: T).(match e in T return (\lambda (_: T).Prop) with [(TSort _) 
-\Rightarrow False | (TLRef _) \Rightarrow False | (THead k _ _) \Rightarrow 
-(match k in K return (\lambda (_: K).Prop) with [(Bind _) \Rightarrow True | 
-(Flat _) \Rightarrow False])])) I (THead (Flat Cast) t3 t2) H9) in (False_ind 
-((eq T (THead (Bind b) v t6) t4) \to ((tau0 g (CHead c0 (Bind b) v) t5 t6) 
-\to (ty3 g c0 (THead (Flat Cast) t3 t2) t4))) H10))) c1 (sym_eq C c1 c0 H6) 
-H7 H8 H5)))) | (tau0_appl c1 v t5 t6 H5) \Rightarrow (\lambda (H6: (eq C c1 
+(TLRef _) \Rightarrow True | (THead _ _ _) \Rightarrow False])) I (THead 
+(Flat Cast) t3 t2) H10) in (False_ind ((eq T (lift (S i) O v) t4) \to ((getl 
+i c0 (CHead d (Bind Abst) v)) \to ((tau0 g d v w) \to (ty3 g c0 (THead (Flat 
+Cast) t3 t2) t4)))) H11))) c1 (sym_eq C c1 c0 H7) H8 H9 H5 H6)))) | 
+(tau0_bind b c1 v t5 t6 H5) \Rightarrow (\lambda (H6: (eq C c1 c0)).(\lambda 
+(H7: (eq T (THead (Bind b) v t5) (THead (Flat Cast) t3 t2))).(\lambda (H8: 
+(eq T (THead (Bind b) v t6) t4)).(eq_ind C c0 (\lambda (c2: C).((eq T (THead 
+(Bind b) v t5) (THead (Flat Cast) t3 t2)) \to ((eq T (THead (Bind b) v t6) 
+t4) \to ((tau0 g (CHead c2 (Bind b) v) t5 t6) \to (ty3 g c0 (THead (Flat 
+Cast) t3 t2) t4))))) (\lambda (H9: (eq T (THead (Bind b) v t5) (THead (Flat 
+Cast) t3 t2))).(let H10 \def (eq_ind T (THead (Bind b) v t5) (\lambda (e: 
+T).(match e in T return (\lambda (_: T).Prop) with [(TSort _) \Rightarrow 
+False | (TLRef _) \Rightarrow False | (THead k _ _) \Rightarrow (match k in K 
+return (\lambda (_: K).Prop) with [(Bind _) \Rightarrow True | (Flat _) 
+\Rightarrow False])])) I (THead (Flat Cast) t3 t2) H9) in (False_ind ((eq T 
+(THead (Bind b) v t6) t4) \to ((tau0 g (CHead c0 (Bind b) v) t5 t6) \to (ty3 
+g c0 (THead (Flat Cast) t3 t2) t4))) H10))) c1 (sym_eq C c1 c0 H6) H7 H8 
+H5)))) | (tau0_appl c1 v t5 t6 H5) \Rightarrow (\lambda (H6: (eq C c1 
 c0)).(\lambda (H7: (eq T (THead (Flat Appl) v t5) (THead (Flat Cast) t3 
 t2))).(\lambda (H8: (eq T (THead (Flat Appl) v t6) t4)).(eq_ind C c0 (\lambda 
 (c2: C).((eq T (THead (Flat Appl) v t5) (THead (Flat Cast) t3 t2)) \to ((eq T 
@@ -625,10 +625,9 @@ t3 t2) (THead (Flat Cast) v2 t6)) (\lambda (x0: T).(\lambda (H19: (ty3 g c0
 t6 x0)).(ty3_conv g c0 (THead (Flat Cast) v2 t6) (THead (Flat Cast) x v2) 
 (ty3_cast g c0 t6 v2 (ty3_sconv g c0 t6 x0 H19 t3 v2 H_y0 H17) x H18) (THead 
 (Flat Cast) t3 t2) (THead (Flat Cast) v2 t3) (ty3_cast g c0 t2 t3 H0 v2 H_y0) 
-(pc3_s c0 (THead (Flat Cast) v2 t3) (THead (Flat Cast) v2 t6) (pc3_thin_dx c0 
-t6 t3 H17 v2 Cast))))) (ty3_correct g c0 t2 t6 H_y)))) (ty3_correct g c0 t3 
-v2 H_y0))))))) t4 H14)) t5 (sym_eq T t5 t2 H13))) v1 (sym_eq T v1 t3 H12))) 
-H11))) c1 (sym_eq C c1 c0 H7) H8 H9 H5 H6))))]) in (H5 (refl_equal C c0) 
-(refl_equal T (THead (Flat Cast) t3 t2)) (refl_equal T t4))))))))))))) c u t1 
-H))))).
+(pc3_thin_dx c0 t3 t6 (ty3_unique g c0 t2 t3 H0 t6 H_y) v2 Cast)))) 
+(ty3_correct g c0 t2 t6 H_y)))) (ty3_correct g c0 t3 v2 H_y0))))))) t4 H14)) 
+t5 (sym_eq T t5 t2 H13))) v1 (sym_eq T v1 t3 H12))) H11))) c1 (sym_eq C c1 c0 
+H7) H8 H9 H5 H6))))]) in (H5 (refl_equal C c0) (refl_equal T (THead (Flat 
+Cast) t3 t2)) (refl_equal T t4))))))))))))) c u t1 H))))).
 

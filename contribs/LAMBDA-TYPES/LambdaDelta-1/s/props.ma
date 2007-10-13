@@ -75,8 +75,7 @@ theorem s_le:
 \def
  \lambda (k: K).(K_ind (\lambda (k0: K).(\forall (i: nat).(\forall (j: 
 nat).((le i j) \to (le (s k0 i) (s k0 j)))))) (\lambda (_: B).(\lambda (i: 
-nat).(\lambda (j: nat).(\lambda (H: (le i j)).(le_S_n (S i) (S j) (lt_le_S (S 
-i) (S (S j)) (lt_n_S i (S j) (le_lt_n_Sm i j H)))))))) (\lambda (_: 
+nat).(\lambda (j: nat).(\lambda (H: (le i j)).(le_n_S i j H))))) (\lambda (_: 
 F).(\lambda (i: nat).(\lambda (j: nat).(\lambda (H: (le i j)).H)))) k).
 
 theorem s_lt:
@@ -85,9 +84,8 @@ theorem s_lt:
 \def
  \lambda (k: K).(K_ind (\lambda (k0: K).(\forall (i: nat).(\forall (j: 
 nat).((lt i j) \to (lt (s k0 i) (s k0 j)))))) (\lambda (_: B).(\lambda (i: 
-nat).(\lambda (j: nat).(\lambda (H: (lt i j)).(le_S_n (S (S i)) (S j) (le_n_S 
-(S (S i)) (S j) (le_n_S (S i) j H))))))) (\lambda (_: F).(\lambda (i: 
-nat).(\lambda (j: nat).(\lambda (H: (lt i j)).H)))) k).
+nat).(\lambda (j: nat).(\lambda (H: (lt i j)).(le_n_S (S i) j H))))) (\lambda 
+(_: F).(\lambda (i: nat).(\lambda (j: nat).(\lambda (H: (lt i j)).H)))) k).
 
 theorem s_inj:
  \forall (k: K).(\forall (i: nat).(\forall (j: nat).((eq nat (s k i) (s k j)) 

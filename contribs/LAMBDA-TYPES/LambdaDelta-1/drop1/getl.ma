@@ -162,8 +162,7 @@ H15 b e1 v i H1) in (let H17 \def H_x in (ex2_ind C (\lambda (e2: C).(drop1
 i))) (ptrans hds0 i)) v))))) (\lambda (x: C).(\lambda (H18: (drop1 (ptrans 
 hds0 i) x e1)).(\lambda (H19: (getl (trans hds0 i) c3 (CHead x (Bind b) 
 (lift1 (ptrans hds0 i) v)))).(let H_x0 \def (drop_getl_trans_lt (trans hds0 
-i) d (le_S_n (S (trans hds0 i)) d (lt_le_S (S (trans hds0 i)) (S d) (blt_lt 
-(S d) (S (trans hds0 i)) H16))) c2 c3 h H14 b x (lift1 (ptrans hds0 i) v) 
+i) d (blt_lt d (trans hds0 i) H16) c2 c3 h H14 b x (lift1 (ptrans hds0 i) v) 
 H19) in (let H20 \def H_x0 in (ex2_ind C (\lambda (e2: C).(getl (trans hds0 
 i) c2 (CHead e2 (Bind b) (lift h (minus d (S (trans hds0 i))) (lift1 (ptrans 
 hds0 i) v))))) (\lambda (e2: C).(drop h (minus d (S (trans hds0 i))) e2 x)) 

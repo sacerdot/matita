@@ -49,9 +49,9 @@ T).(\lambda (c2: C).(\lambda (_: (csubt g c1 c2)).(pc3_refl c2 t)))) (\lambda
 (t0: T).(\lambda (t3: T).(\lambda (H0: (pr2 c1 t0 t3)).(\lambda (t4: 
 T).(\lambda (_: (pc3 c1 t3 t4)).(\lambda (H2: ((\forall (c2: C).((csubt g c1 
 c2) \to (pc3 c2 t3 t4))))).(\lambda (c2: C).(\lambda (H3: (csubt g c1 
-c2)).(pc3_pr2_u c2 t3 t0 (csubt_pr2 g c1 t0 t3 H0 c2 H3) t4 (H2 c2 
-H3)))))))))) (\lambda (t0: T).(\lambda (t3: T).(\lambda (H0: (pr2 c1 t0 
-t3)).(\lambda (t4: T).(\lambda (_: (pc3 c1 t0 t4)).(\lambda (H2: ((\forall 
+c2)).(pc3_t t3 c2 t0 (pc3_pr2_r c2 t0 t3 (csubt_pr2 g c1 t0 t3 H0 c2 H3)) t4 
+(H2 c2 H3)))))))))) (\lambda (t0: T).(\lambda (t3: T).(\lambda (H0: (pr2 c1 
+t0 t3)).(\lambda (t4: T).(\lambda (_: (pc3 c1 t0 t4)).(\lambda (H2: ((\forall 
 (c2: C).((csubt g c1 c2) \to (pc3 c2 t0 t4))))).(\lambda (c2: C).(\lambda 
 (H3: (csubt g c1 c2)).(pc3_t t0 c2 t3 (pc3_pr2_x c2 t3 t0 (csubt_pr2 g c1 t0 
 t3 H0 c2 H3)) t4 (H2 c2 H3)))))))))) t1 t2 H))))).

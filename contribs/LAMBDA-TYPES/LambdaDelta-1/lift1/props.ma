@@ -31,13 +31,9 @@ PList).(\forall (t: T).(eq T (lift1 p (lift1 is2 t)) (lift1 (papp p is2)
 t))))) (\lambda (is2: PList).(\lambda (t: T).(refl_equal T (lift1 is2 t)))) 
 (\lambda (n: nat).(\lambda (n0: nat).(\lambda (p: PList).(\lambda (H: 
 ((\forall (is2: PList).(\forall (t: T).(eq T (lift1 p (lift1 is2 t)) (lift1 
-(papp p is2) t)))))).(\lambda (is2: PList).(\lambda (t: T).(sym_eq T (lift n 
-n0 (lift1 (papp p is2) t)) (lift n n0 (lift1 p (lift1 is2 t))) (sym_eq T 
-(lift n n0 (lift1 p (lift1 is2 t))) (lift n n0 (lift1 (papp p is2) t)) 
-(sym_eq T (lift n n0 (lift1 (papp p is2) t)) (lift n n0 (lift1 p (lift1 is2 
-t))) (f_equal3 nat nat T T lift n n n0 n0 (lift1 (papp p is2) t) (lift1 p 
-(lift1 is2 t)) (refl_equal nat n) (refl_equal nat n0) (sym_eq T (lift1 p 
-(lift1 is2 t)) (lift1 (papp p is2) t) (H is2 t)))))))))))) is1).
+(papp p is2) t)))))).(\lambda (is2: PList).(\lambda (t: T).(f_equal3 nat nat 
+T T lift n n n0 n0 (lift1 p (lift1 is2 t)) (lift1 (papp p is2) t) (refl_equal 
+nat n) (refl_equal nat n0) (H is2 t)))))))) is1).
 
 theorem lift1_xhg:
  \forall (hds: PList).(\forall (t: T).(eq T (lift1 (Ss hds) (lift (S O) O t)) 

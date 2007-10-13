@@ -29,12 +29,8 @@ theorem aplus_reg_r:
 (h2: nat).(\lambda (H: (eq A (aplus g a1 h1) (aplus g a2 h2))).(\lambda (h: 
 nat).(nat_ind (\lambda (n: nat).(eq A (aplus g a1 (plus n h1)) (aplus g a2 
 (plus n h2)))) H (\lambda (n: nat).(\lambda (H0: (eq A (aplus g a1 (plus n 
-h1)) (aplus g a2 (plus n h2)))).(sym_eq A (asucc g (aplus g a2 (plus n h2))) 
-(asucc g (aplus g a1 (plus n h1))) (sym_eq A (asucc g (aplus g a1 (plus n 
-h1))) (asucc g (aplus g a2 (plus n h2))) (sym_eq A (asucc g (aplus g a2 (plus 
-n h2))) (asucc g (aplus g a1 (plus n h1))) (f_equal2 G A A asucc g g (aplus g 
-a2 (plus n h2)) (aplus g a1 (plus n h1)) (refl_equal G g) (sym_eq A (aplus g 
-a1 (plus n h1)) (aplus g a2 (plus n h2)) H0))))))) h))))))).
+h1)) (aplus g a2 (plus n h2)))).(f_equal2 G A A asucc g g (aplus g a1 (plus n 
+h1)) (aplus g a2 (plus n h2)) (refl_equal G g) H0))) h))))))).
 
 theorem aplus_assoc:
  \forall (g: G).(\forall (a: A).(\forall (h1: nat).(\forall (h2: nat).(eq A 
@@ -51,14 +47,9 @@ g a (plus n h2)))))).(\lambda (h2: nat).(nat_ind (\lambda (n0: nat).(eq A
 n)) (\lambda (n0: nat).(\lambda (H0: (eq A (aplus g (asucc g (aplus g a n)) 
 n0) (asucc g (aplus g a (plus n n0))))).(eq_ind nat (S (plus n n0)) (\lambda 
 (n1: nat).(eq A (asucc g (aplus g (asucc g (aplus g a n)) n0)) (asucc g 
-(aplus g a n1)))) (sym_eq A (asucc g (asucc g (aplus g a (plus n n0)))) 
-(asucc g (aplus g (asucc g (aplus g a n)) n0)) (sym_eq A (asucc g (aplus g 
-(asucc g (aplus g a n)) n0)) (asucc g (asucc g (aplus g a (plus n n0)))) 
-(sym_eq A (asucc g (asucc g (aplus g a (plus n n0)))) (asucc g (aplus g 
-(asucc g (aplus g a n)) n0)) (f_equal2 G A A asucc g g (asucc g (aplus g a 
-(plus n n0))) (aplus g (asucc g (aplus g a n)) n0) (refl_equal G g) (sym_eq A 
-(aplus g (asucc g (aplus g a n)) n0) (asucc g (aplus g a (plus n n0))) 
-H0))))) (plus n (S n0)) (plus_n_Sm n n0)))) h2)))) h1))).
+(aplus g a n1)))) (f_equal2 G A A asucc g g (aplus g (asucc g (aplus g a n)) 
+n0) (asucc g (aplus g a (plus n n0))) (refl_equal G g) H0) (plus n (S n0)) 
+(plus_n_Sm n n0)))) h2)))) h1))).
 
 theorem aplus_asucc:
  \forall (g: G).(\forall (h: nat).(\forall (a: A).(eq A (aplus g (asucc g a) 

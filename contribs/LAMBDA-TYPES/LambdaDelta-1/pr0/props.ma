@@ -105,30 +105,29 @@ d) w)) (\lambda (t: T).(pr0 (THead (Bind Abbr) (lift h d u1) (lift h (s (Bind
 Abbr) d) t0)) t)) (pr0_delta (lift h d u1) (lift h d u2) (H1 h d) (lift h (S 
 d) t0) (lift h (S d) t3) (H3 h (S d)) (lift h (S d) w) (let d' \def (S d) in 
 (eq_ind nat (minus (S d) (S O)) (\lambda (n: nat).(subst0 O (lift h n u2) 
-(lift h d' t3) (lift h d' w))) (subst0_lift_lt t3 w u2 O H4 (S d) (lt_le_S O 
-(S d) (le_lt_n_Sm O d (le_O_n d))) h) d (eq_ind nat d (\lambda (n: nat).(eq 
-nat n d)) (refl_equal nat d) (minus d O) (minus_n_O d))))) (lift h d (THead 
-(Bind Abbr) u2 w)) (lift_head (Bind Abbr) u2 w h d)) (lift h d (THead (Bind 
-Abbr) u1 t0)) (lift_head (Bind Abbr) u1 t0 h d)))))))))))))) (\lambda (b: 
-B).(\lambda (H0: (not (eq B b Abst))).(\lambda (t0: T).(\lambda (t3: 
-T).(\lambda (_: (pr0 t0 t3)).(\lambda (H2: ((\forall (h: nat).(\forall (d: 
-nat).(pr0 (lift h d t0) (lift h d t3)))))).(\lambda (u: T).(\lambda (h: 
-nat).(\lambda (d: nat).(eq_ind_r T (THead (Bind b) (lift h d u) (lift h (s 
-(Bind b) d) (lift (S O) O t0))) (\lambda (t: T).(pr0 t (lift h d t3))) 
-(eq_ind nat (plus (S O) d) (\lambda (n: nat).(pr0 (THead (Bind b) (lift h d 
-u) (lift h n (lift (S O) O t0))) (lift h d t3))) (eq_ind_r T (lift (S O) O 
-(lift h d t0)) (\lambda (t: T).(pr0 (THead (Bind b) (lift h d u) t) (lift h d 
-t3))) (pr0_zeta b H0 (lift h d t0) (lift h d t3) (H2 h d) (lift h d u)) (lift 
-h (plus (S O) d) (lift (S O) O t0)) (lift_d t0 h (S O) d O (le_O_n d))) (S d) 
-(refl_equal nat (S d))) (lift h d (THead (Bind b) u (lift (S O) O t0))) 
-(lift_head (Bind b) u (lift (S O) O t0) h d))))))))))) (\lambda (t0: 
-T).(\lambda (t3: T).(\lambda (_: (pr0 t0 t3)).(\lambda (H1: ((\forall (h: 
-nat).(\forall (d: nat).(pr0 (lift h d t0) (lift h d t3)))))).(\lambda (u: 
-T).(\lambda (h: nat).(\lambda (d: nat).(eq_ind_r T (THead (Flat Cast) (lift h 
-d u) (lift h (s (Flat Cast) d) t0)) (\lambda (t: T).(pr0 t (lift h d t3))) 
-(pr0_epsilon (lift h (s (Flat Cast) d) t0) (lift h d t3) (H1 h d) (lift h d 
-u)) (lift h d (THead (Flat Cast) u t0)) (lift_head (Flat Cast) u t0 h 
-d))))))))) t1 t2 H))).
+(lift h d' t3) (lift h d' w))) (subst0_lift_lt t3 w u2 O H4 (S d) (le_n_S O d 
+(le_O_n d)) h) d (eq_ind nat d (\lambda (n: nat).(eq nat n d)) (refl_equal 
+nat d) (minus d O) (minus_n_O d))))) (lift h d (THead (Bind Abbr) u2 w)) 
+(lift_head (Bind Abbr) u2 w h d)) (lift h d (THead (Bind Abbr) u1 t0)) 
+(lift_head (Bind Abbr) u1 t0 h d)))))))))))))) (\lambda (b: B).(\lambda (H0: 
+(not (eq B b Abst))).(\lambda (t0: T).(\lambda (t3: T).(\lambda (_: (pr0 t0 
+t3)).(\lambda (H2: ((\forall (h: nat).(\forall (d: nat).(pr0 (lift h d t0) 
+(lift h d t3)))))).(\lambda (u: T).(\lambda (h: nat).(\lambda (d: 
+nat).(eq_ind_r T (THead (Bind b) (lift h d u) (lift h (s (Bind b) d) (lift (S 
+O) O t0))) (\lambda (t: T).(pr0 t (lift h d t3))) (eq_ind nat (plus (S O) d) 
+(\lambda (n: nat).(pr0 (THead (Bind b) (lift h d u) (lift h n (lift (S O) O 
+t0))) (lift h d t3))) (eq_ind_r T (lift (S O) O (lift h d t0)) (\lambda (t: 
+T).(pr0 (THead (Bind b) (lift h d u) t) (lift h d t3))) (pr0_zeta b H0 (lift 
+h d t0) (lift h d t3) (H2 h d) (lift h d u)) (lift h (plus (S O) d) (lift (S 
+O) O t0)) (lift_d t0 h (S O) d O (le_O_n d))) (S d) (refl_equal nat (S d))) 
+(lift h d (THead (Bind b) u (lift (S O) O t0))) (lift_head (Bind b) u (lift 
+(S O) O t0) h d))))))))))) (\lambda (t0: T).(\lambda (t3: T).(\lambda (_: 
+(pr0 t0 t3)).(\lambda (H1: ((\forall (h: nat).(\forall (d: nat).(pr0 (lift h 
+d t0) (lift h d t3)))))).(\lambda (u: T).(\lambda (h: nat).(\lambda (d: 
+nat).(eq_ind_r T (THead (Flat Cast) (lift h d u) (lift h (s (Flat Cast) d) 
+t0)) (\lambda (t: T).(pr0 t (lift h d t3))) (pr0_epsilon (lift h (s (Flat 
+Cast) d) t0) (lift h d t3) (H1 h d) (lift h d u)) (lift h d (THead (Flat 
+Cast) u t0)) (lift_head (Flat Cast) u t0 h d))))))))) t1 t2 H))).
 
 theorem pr0_subst0_back:
  \forall (u2: T).(\forall (t1: T).(\forall (t2: T).(\forall (i: nat).((subst0 
@@ -1654,10 +1653,9 @@ x1)).(\lambda (H13: (subst0 i v2 t4 x1)).(or_intror (pr0 (THead (Bind b) u
 (\lambda (w2: T).(pr0 (THead (Bind b) u (lift (S O) O x0)) w2)) (\lambda (w2: 
 T).(subst0 i v2 t4 w2)) x1 (pr0_zeta b H0 x0 x1 H12 u) H13))))) H11)) (H2 v1 
 x0 i H10 v2 H4))) x H8) w1 H6)))) (subst0_gen_lift_ge v1 t3 x (s (Bind b) i) 
-(S O) O H7 (le_S_n (S O) (S i) (lt_le_S (S O) (S (S i)) (lt_n_S O (S i) 
-(le_lt_n_Sm O i (le_O_n i)))))))))) H5)) (\lambda (H5: (ex3_2 T T (\lambda 
-(u2: T).(\lambda (t5: T).(eq T w1 (THead (Bind b) u2 t5)))) (\lambda (u2: 
-T).(\lambda (_: T).(subst0 i v1 u u2))) (\lambda (_: T).(\lambda (t5: 
+(S O) O H7 (le_n_S O i (le_O_n i))))))) H5)) (\lambda (H5: (ex3_2 T T 
+(\lambda (u2: T).(\lambda (t5: T).(eq T w1 (THead (Bind b) u2 t5)))) (\lambda 
+(u2: T).(\lambda (_: T).(subst0 i v1 u u2))) (\lambda (_: T).(\lambda (t5: 
 T).(subst0 (s (Bind b) i) v1 (lift (S O) O t3) t5))))).(ex3_2_ind T T 
 (\lambda (u2: T).(\lambda (t5: T).(eq T w1 (THead (Bind b) u2 t5)))) (\lambda 
 (u2: T).(\lambda (_: T).(subst0 i v1 u u2))) (\lambda (_: T).(\lambda (t5: 
@@ -1692,9 +1690,8 @@ x2)).(or_intror (pr0 (THead (Bind b) x0 (lift (S O) O x)) t4) (ex2 T (\lambda
 T).(subst0 i v2 t4 w2))) (ex_intro2 T (\lambda (w2: T).(pr0 (THead (Bind b) 
 x0 (lift (S O) O x)) w2)) (\lambda (w2: T).(subst0 i v2 t4 w2)) x2 (pr0_zeta 
 b H0 x x2 H13 x0) H14))))) H12)) (H2 v1 x i H11 v2 H4))) x1 H9) w1 H6)))) 
-(subst0_gen_lift_ge v1 t3 x1 (s (Bind b) i) (S O) O H8 (le_S_n (S O) (S i) 
-(lt_le_S (S O) (S (S i)) (lt_n_S O (S i) (le_lt_n_Sm O i (le_O_n 
-i)))))))))))) H5)) (subst0_gen_head (Bind b) v1 u (lift (S O) O t3) w1 i 
+(subst0_gen_lift_ge v1 t3 x1 (s (Bind b) i) (S O) O H8 (le_n_S O i (le_O_n 
+i))))))))) H5)) (subst0_gen_head (Bind b) v1 u (lift (S O) O t3) w1 i 
 H3))))))))))))))) (\lambda (t3: T).(\lambda (t4: T).(\lambda (H0: (pr0 t3 
 t4)).(\lambda (H1: ((\forall (v1: T).(\forall (w1: T).(\forall (i: 
 nat).((subst0 i v1 t3 w1) \to (\forall (v2: T).((pr0 v1 v2) \to (or (pr0 w1 

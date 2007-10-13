@@ -445,18 +445,18 @@ t0) t3))) (\forall (t3: T).((ty3 g c2 (THead (Flat Cast) t t0) t3) \to
 T).(ty3 g c2 t t4)) P (\lambda (x2: T).(\lambda (_: (pc3 c2 (THead (Flat 
 Cast) x2 t) t3)).(\lambda (H15: (ty3 g c2 t0 t)).(\lambda (H16: (ty3 g c2 t 
 x2)).(let H_y \def (ty3_unique g c2 t x2 H16 x H6) in (let H_y0 \def 
-(ty3_unique g c2 t0 t H15 x0 H9) in (H12 (pc3_s c2 x0 t H_y0) P))))))) 
-(ty3_gen_cast g c2 t0 t t3 H13))))))) H11))))) (ty3_correct g c2 t0 x0 H9)))) 
-H8)) (\lambda (H8: ((\forall (t3: T).((ty3 g c2 t0 t3) \to (\forall (P: 
-Prop).P))))).(or_intror (ex T (\lambda (t3: T).(ty3 g c2 (THead (Flat Cast) t 
-t0) t3))) (\forall (t3: T).((ty3 g c2 (THead (Flat Cast) t t0) t3) \to 
-(\forall (P: Prop).P))) (\lambda (t3: T).(\lambda (H9: (ty3 g c2 (THead (Flat 
-Cast) t t0) t3)).(\lambda (P: Prop).(ex3_ind T (\lambda (t4: T).(pc3 c2 
-(THead (Flat Cast) t4 t) t3)) (\lambda (_: T).(ty3 g c2 t0 t)) (\lambda (t4: 
-T).(ty3 g c2 t t4)) P (\lambda (x0: T).(\lambda (_: (pc3 c2 (THead (Flat 
-Cast) x0 t) t3)).(\lambda (H11: (ty3 g c2 t0 t)).(\lambda (_: (ty3 g c2 t 
-x0)).(H8 t H11 P))))) (ty3_gen_cast g c2 t0 t t3 H9))))))) H7)))) H5)) 
-(\lambda (H5: ((\forall (t3: T).((ty3 g c2 t t3) \to (\forall (P: 
+(ty3_unique g c2 t0 t H15 x0 H9) in (H12 (ex2_sym T (pr3 c2 t) (pr3 c2 x0) 
+H_y0) P))))))) (ty3_gen_cast g c2 t0 t t3 H13))))))) H11))))) (ty3_correct g 
+c2 t0 x0 H9)))) H8)) (\lambda (H8: ((\forall (t3: T).((ty3 g c2 t0 t3) \to 
+(\forall (P: Prop).P))))).(or_intror (ex T (\lambda (t3: T).(ty3 g c2 (THead 
+(Flat Cast) t t0) t3))) (\forall (t3: T).((ty3 g c2 (THead (Flat Cast) t t0) 
+t3) \to (\forall (P: Prop).P))) (\lambda (t3: T).(\lambda (H9: (ty3 g c2 
+(THead (Flat Cast) t t0) t3)).(\lambda (P: Prop).(ex3_ind T (\lambda (t4: 
+T).(pc3 c2 (THead (Flat Cast) t4 t) t3)) (\lambda (_: T).(ty3 g c2 t0 t)) 
+(\lambda (t4: T).(ty3 g c2 t t4)) P (\lambda (x0: T).(\lambda (_: (pc3 c2 
+(THead (Flat Cast) x0 t) t3)).(\lambda (H11: (ty3 g c2 t0 t)).(\lambda (_: 
+(ty3 g c2 t x0)).(H8 t H11 P))))) (ty3_gen_cast g c2 t0 t t3 H9))))))) H7)))) 
+H5)) (\lambda (H5: ((\forall (t3: T).((ty3 g c2 t t3) \to (\forall (P: 
 Prop).P))))).(or_intror (ex T (\lambda (t3: T).(ty3 g c2 (THead (Flat Cast) t 
 t0) t3))) (\forall (t3: T).((ty3 g c2 (THead (Flat Cast) t t0) t3) \to 
 (\forall (P: Prop).P))) (\lambda (t3: T).(\lambda (H6: (ty3 g c2 (THead (Flat 

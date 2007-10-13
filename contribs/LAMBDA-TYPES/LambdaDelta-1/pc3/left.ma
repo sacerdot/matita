@@ -79,10 +79,10 @@ theorem pc3_ind_left__pc3_pc3_left:
 t2)).(pc3_left_ind c (\lambda (t: T).(\lambda (t0: T).(pc3 c t t0))) (\lambda 
 (t: T).(pc3_refl c t)) (\lambda (t0: T).(\lambda (t3: T).(\lambda (H0: (pr2 c 
 t0 t3)).(\lambda (t4: T).(\lambda (_: (pc3_left c t3 t4)).(\lambda (H2: (pc3 
-c t3 t4)).(pc3_pr2_u c t3 t0 H0 t4 H2))))))) (\lambda (t0: T).(\lambda (t3: 
-T).(\lambda (H0: (pr2 c t0 t3)).(\lambda (t4: T).(\lambda (_: (pc3_left c t0 
-t4)).(\lambda (H2: (pc3 c t0 t4)).(pc3_t t0 c t3 (pc3_pr2_x c t3 t0 H0) t4 
-H2))))))) t1 t2 H)))).
+c t3 t4)).(pc3_t t3 c t0 (pc3_pr2_r c t0 t3 H0) t4 H2))))))) (\lambda (t0: 
+T).(\lambda (t3: T).(\lambda (H0: (pr2 c t0 t3)).(\lambda (t4: T).(\lambda 
+(_: (pc3_left c t0 t4)).(\lambda (H2: (pc3 c t0 t4)).(pc3_t t0 c t3 
+(pc3_pr2_x c t3 t0 H0) t4 H2))))))) t1 t2 H)))).
 
 theorem pc3_ind_left:
  \forall (c: C).(\forall (P: ((T \to (T \to Prop)))).(((\forall (t: T).(P t 

@@ -52,11 +52,10 @@ theorem next_plus_lt:
 g n) h))))
 \def
  \lambda (g: G).(\lambda (h: nat).(nat_ind (\lambda (n: nat).(\forall (n0: 
-nat).(lt n0 (next_plus g (next g n0) n)))) (\lambda (n: nat).(le_S_n (S n) 
-(next g n) (lt_le_S (S n) (S (next g n)) (lt_n_S n (next g n) (next_lt g 
-n))))) (\lambda (n: nat).(\lambda (H: ((\forall (n0: nat).(lt n0 (next_plus g 
-(next g n0) n))))).(\lambda (n0: nat).(eq_ind nat (next_plus g (next g (next 
-g n0)) n) (\lambda (n1: nat).(lt n0 n1)) (lt_trans n0 (next g n0) (next_plus 
-g (next g (next g n0)) n) (next_lt g n0) (H (next g n0))) (next g (next_plus 
-g (next g n0) n)) (next_plus_next g (next g n0) n))))) h)).
+nat).(lt n0 (next_plus g (next g n0) n)))) (\lambda (n: nat).(next_lt g n)) 
+(\lambda (n: nat).(\lambda (H: ((\forall (n0: nat).(lt n0 (next_plus g (next 
+g n0) n))))).(\lambda (n0: nat).(eq_ind nat (next_plus g (next g (next g n0)) 
+n) (\lambda (n1: nat).(lt n0 n1)) (lt_trans n0 (next g n0) (next_plus g (next 
+g (next g n0)) n) (next_lt g n0) (H (next g n0))) (next g (next_plus g (next 
+g n0) n)) (next_plus_next g (next g n0) n))))) h)).
 

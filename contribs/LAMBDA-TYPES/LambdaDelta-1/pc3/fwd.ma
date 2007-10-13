@@ -77,6 +77,19 @@ B).(\forall (u: T).(pc3 (CHead c (Bind b) u) t1 t2))) (pc3_pr3_t c u1 x0 H16
 u2 H5) (\lambda (b: B).(\lambda (u: T).(pc3_pr3_t (CHead c (Bind b) u) t1 x1 
 (H15 b u) t2 (H6 b u))))))))) H12)))))))) H7))))))) H3))))) H0))))))).
 
+theorem pc3_gen_abst_shift:
+ \forall (c: C).(\forall (u: T).(\forall (t1: T).(\forall (t2: T).((pc3 c 
+(THead (Bind Abst) u t1) (THead (Bind Abst) u t2)) \to (pc3 (CHead c (Bind 
+Abst) u) t1 t2)))))
+\def
+ \lambda (c: C).(\lambda (u: T).(\lambda (t1: T).(\lambda (t2: T).(\lambda 
+(H: (pc3 c (THead (Bind Abst) u t1) (THead (Bind Abst) u t2))).(let H_x \def 
+(pc3_gen_abst c u u t1 t2 H) in (let H0 \def H_x in (and_ind (pc3 c u u) 
+(\forall (b: B).(\forall (u0: T).(pc3 (CHead c (Bind b) u0) t1 t2))) (pc3 
+(CHead c (Bind Abst) u) t1 t2) (\lambda (_: (pc3 c u u)).(\lambda (H2: 
+((\forall (b: B).(\forall (u0: T).(pc3 (CHead c (Bind b) u0) t1 t2))))).(H2 
+Abst u))) H0))))))).
+
 theorem pc3_gen_lift:
  \forall (c: C).(\forall (t1: T).(\forall (t2: T).(\forall (h: nat).(\forall 
 (d: nat).((pc3 c (lift h d t1) (lift h d t2)) \to (\forall (e: C).((drop h d 

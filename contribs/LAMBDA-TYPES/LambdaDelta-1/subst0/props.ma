@@ -145,9 +145,9 @@ h d u1) (lift h (s k d) t0)) t)) (subst0_both (lift h (minus d (S i0)) v)
 (lift h d u1) (lift h d u2) i0 (H1 d H4 h) k (lift h (s k d) t0) (lift h (s k 
 d) t3) (eq_ind nat (minus (s k d) (s k (S i0))) (\lambda (n: nat).(subst0 (s 
 k i0) (lift h n v) (lift h (s k d) t0) (lift h (s k d) t3))) (H5 (s k d) 
-(lt_le_S (s k i0) (s k d) (s_lt k i0 d H4)) h) (minus d (S i0)) (minus_s_s k 
-d (S i0)))) (lift h d (THead k u2 t3)) (lift_head k u2 t3 h d)) (lift h d 
-(THead k u1 t0)) (lift_head k u1 t0 h d))))))))))))))))) i u t1 t2 H))))).
+(s_lt k i0 d H4) h) (minus d (S i0)) (minus_s_s k d (S i0)))) (lift h d 
+(THead k u2 t3)) (lift_head k u2 t3 h d)) (lift h d (THead k u1 t0)) 
+(lift_head k u1 t0 h d))))))))))))))))) i u t1 t2 H))))).
 
 theorem subst0_lift_ge:
  \forall (t1: T).(\forall (t2: T).(\forall (u: T).(\forall (i: nat).(\forall 

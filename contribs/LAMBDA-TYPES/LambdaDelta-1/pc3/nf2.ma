@@ -14,49 +14,24 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/LambdaDelta-1/definitions".
+set "baseuri" "cic:/matita/LAMBDA-TYPES/LambdaDelta-1/pc3/nf2".
 
-include "tlt/defs.ma".
+include "pc3/defs.ma".
 
-include "iso/defs.ma".
+include "nf2/pr3.ma".
 
-include "clen/defs.ma".
-
-include "flt/defs.ma".
-
-include "cnt/defs.ma".
-
-include "cimp/defs.ma".
-
-include "subst1/defs.ma".
-
-include "csubst1/defs.ma".
-
-include "fsubst0/defs.ma".
-
-include "next_plus/defs.ma".
-
-include "tau1/defs.ma".
-
-include "llt/defs.ma".
-
-include "aprem/defs.ma".
-
-include "ex0/defs.ma".
-
-include "wcpr0/defs.ma".
-
-include "csuba/defs.ma".
-
-include "nf2/defs.ma".
-
-include "ex2/defs.ma".
-
-include "csubc/defs.ma".
-
-include "pc1/defs.ma".
-
-include "ex1/defs.ma".
-
-include "csubt/defs.ma".
+theorem pc3_nf2:
+ \forall (c: C).(\forall (t1: T).(\forall (t2: T).((pc3 c t1 t2) \to ((nf2 c 
+t1) \to ((nf2 c t2) \to (eq T t1 t2))))))
+\def
+ \lambda (c: C).(\lambda (t1: T).(\lambda (t2: T).(\lambda (H: (pc3 c t1 
+t2)).(\lambda (H0: (nf2 c t1)).(\lambda (H1: (nf2 c t2)).(let H2 \def H in 
+(ex2_ind T (\lambda (t: T).(pr3 c t1 t)) (\lambda (t: T).(pr3 c t2 t)) (eq T 
+t1 t2) (\lambda (x: T).(\lambda (H3: (pr3 c t1 x)).(\lambda (H4: (pr3 c t2 
+x)).(let H_y \def (nf2_pr3_unfold c t1 x H3 H0) in (let H5 \def (eq_ind_r T x 
+(\lambda (t: T).(pr3 c t2 t)) H4 t1 H_y) in (let H6 \def (eq_ind_r T x 
+(\lambda (t: T).(pr3 c t1 t)) H3 t1 H_y) in (let H_y0 \def (nf2_pr3_unfold c 
+t2 t1 H5 H1) in (let H7 \def (eq_ind T t2 (\lambda (t: T).(pr3 c t t1)) H5 t1 
+H_y0) in (eq_ind_r T t1 (\lambda (t: T).(eq T t1 t)) (refl_equal T t1) t2 
+H_y0))))))))) H2))))))).
 

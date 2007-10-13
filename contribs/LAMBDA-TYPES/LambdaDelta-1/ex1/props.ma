@@ -487,29 +487,31 @@ Abst) (TSort O)) (Bind Abst) (TLRef O)) (Bind b) u0) x5 x1))))).(let H43 \def
 (CSort O) (Bind Abst) (TSort O)) (Bind Abst) (TSort O)) (Bind Abst) (TLRef 
 O)) (TLRef (S (S O))) t)) (pc3_t x0 (CHead (CHead (CHead (CSort O) (Bind 
 Abst) (TSort O)) (Bind Abst) (TSort O)) (Bind Abst) (TLRef O)) (TLRef (S (S 
-O))) H41 (lift (S O) O (TLRef O)) (pc3_s (CHead (CHead (CHead (CSort O) (Bind 
-Abst) (TSort O)) (Bind Abst) (TSort O)) (Bind Abst) (TLRef O)) x0 (lift (S O) 
-O (TLRef O)) H22)) (TLRef (plus O (S O))) (lift_lref_ge O (S O) O (le_n O))) 
-in (let H44 \def H43 in (ex2_ind T (\lambda (t: T).(pr3 (CHead (CHead (CHead 
-(CSort O) (Bind Abst) (TSort O)) (Bind Abst) (TSort O)) (Bind Abst) (TLRef 
-O)) (TLRef (S (S O))) t)) (\lambda (t: T).(pr3 (CHead (CHead (CHead (CSort O) 
-(Bind Abst) (TSort O)) (Bind Abst) (TSort O)) (Bind Abst) (TLRef O)) (TLRef 
-(S O)) t)) P (\lambda (x14: T).(\lambda (H45: (pr3 (CHead (CHead (CHead 
-(CSort O) (Bind Abst) (TSort O)) (Bind Abst) (TSort O)) (Bind Abst) (TLRef 
-O)) (TLRef (S (S O))) x14)).(\lambda (H46: (pr3 (CHead (CHead (CHead (CSort 
-O) (Bind Abst) (TSort O)) (Bind Abst) (TSort O)) (Bind Abst) (TLRef O)) 
-(TLRef (S O)) x14)).(let H47 \def (eq_ind_r T x14 (\lambda (t: T).(eq T 
-(TLRef (S (S O))) t)) (nf2_pr3_unfold (CHead (CHead (CHead (CSort O) (Bind 
-Abst) (TSort O)) (Bind Abst) (TSort O)) (Bind Abst) (TLRef O)) (TLRef (S (S 
-O))) x14 H45 (nf2_lref_abst (CHead (CHead (CHead (CSort O) (Bind Abst) (TSort 
-O)) (Bind Abst) (TSort O)) (Bind Abst) (TLRef O)) (CSort O) (TSort O) (S (S 
-O)) (getl_clear_bind Abst (CHead (CHead (CHead (CSort O) (Bind Abst) (TSort 
-O)) (Bind Abst) (TSort O)) (Bind Abst) (TLRef O)) (CHead (CHead (CSort O) 
-(Bind Abst) (TSort O)) (Bind Abst) (TSort O)) (TLRef O) (clear_bind Abst 
-(CHead (CHead (CSort O) (Bind Abst) (TSort O)) (Bind Abst) (TSort O)) (TLRef 
-O)) (CHead (CSort O) (Bind Abst) (TSort O)) (S O) (getl_head (Bind Abst) O 
-(CHead (CSort O) (Bind Abst) (TSort O)) (CHead (CSort O) (Bind Abst) (TSort 
-O)) (getl_refl Abst (CSort O) (TSort O)) (TSort O))))) (TLRef (S O)) 
+O))) H41 (lift (S O) O (TLRef O)) (ex2_sym T (pr3 (CHead (CHead (CHead (CSort 
+O) (Bind Abst) (TSort O)) (Bind Abst) (TSort O)) (Bind Abst) (TLRef O)) (lift 
+(S O) O (TLRef O))) (pr3 (CHead (CHead (CHead (CSort O) (Bind Abst) (TSort 
+O)) (Bind Abst) (TSort O)) (Bind Abst) (TLRef O)) x0) H22)) (TLRef (plus O (S 
+O))) (lift_lref_ge O (S O) O (le_n O))) in (let H44 \def H43 in (ex2_ind T 
+(\lambda (t: T).(pr3 (CHead (CHead (CHead (CSort O) (Bind Abst) (TSort O)) 
+(Bind Abst) (TSort O)) (Bind Abst) (TLRef O)) (TLRef (S (S O))) t)) (\lambda 
+(t: T).(pr3 (CHead (CHead (CHead (CSort O) (Bind Abst) (TSort O)) (Bind Abst) 
+(TSort O)) (Bind Abst) (TLRef O)) (TLRef (S O)) t)) P (\lambda (x14: 
+T).(\lambda (H45: (pr3 (CHead (CHead (CHead (CSort O) (Bind Abst) (TSort O)) 
+(Bind Abst) (TSort O)) (Bind Abst) (TLRef O)) (TLRef (S (S O))) 
+x14)).(\lambda (H46: (pr3 (CHead (CHead (CHead (CSort O) (Bind Abst) (TSort 
+O)) (Bind Abst) (TSort O)) (Bind Abst) (TLRef O)) (TLRef (S O)) x14)).(let 
+H47 \def (eq_ind_r T x14 (\lambda (t: T).(eq T (TLRef (S (S O))) t)) 
+(nf2_pr3_unfold (CHead (CHead (CHead (CSort O) (Bind Abst) (TSort O)) (Bind 
+Abst) (TSort O)) (Bind Abst) (TLRef O)) (TLRef (S (S O))) x14 H45 
+(nf2_lref_abst (CHead (CHead (CHead (CSort O) (Bind Abst) (TSort O)) (Bind 
+Abst) (TSort O)) (Bind Abst) (TLRef O)) (CSort O) (TSort O) (S (S O)) 
+(getl_clear_bind Abst (CHead (CHead (CHead (CSort O) (Bind Abst) (TSort O)) 
+(Bind Abst) (TSort O)) (Bind Abst) (TLRef O)) (CHead (CHead (CSort O) (Bind 
+Abst) (TSort O)) (Bind Abst) (TSort O)) (TLRef O) (clear_bind Abst (CHead 
+(CHead (CSort O) (Bind Abst) (TSort O)) (Bind Abst) (TSort O)) (TLRef O)) 
+(CHead (CSort O) (Bind Abst) (TSort O)) (S O) (getl_head (Bind Abst) O (CHead 
+(CSort O) (Bind Abst) (TSort O)) (CHead (CSort O) (Bind Abst) (TSort O)) 
+(getl_refl Abst (CSort O) (TSort O)) (TSort O))))) (TLRef (S O)) 
 (nf2_pr3_unfold (CHead (CHead (CHead (CSort O) (Bind Abst) (TSort O)) (Bind 
 Abst) (TSort O)) (Bind Abst) (TLRef O)) (TLRef (S O)) x14 H46 (nf2_lref_abst 
 (CHead (CHead (CHead (CSort O) (Bind Abst) (TSort O)) (Bind Abst) (TSort O)) 
