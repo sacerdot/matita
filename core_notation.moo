@@ -119,7 +119,3 @@ for @{ 'and $a $b }.
 notation "hvbox(\lnot a)" 
   non associative with precedence 40
 for @{ 'not $a }.
-
-notation "hvbox(a break => b)" 
-  non associative with precedence 45
-for @{ 'parred $a $b }.
