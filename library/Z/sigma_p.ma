@@ -314,7 +314,39 @@ apply eq_sigma_p
 qed.
 
 
-(* sigma from n1*m1 to n2*m2 *)
+theorem sigma_p_knm: 
+\forall g: nat \to Z.
+\forall h2:nat \to nat \to nat.
+\forall h11,h12:nat \to nat. 
+\forall k,n,m.
+\forall p1,p21:nat \to bool.
+\forall p22:nat \to nat \to bool.
+(\forall x. x < k \to p1 x = true \to 
+p21 (h11 x) = true \land p22 (h11 x) (h12 x) = true
+\land h2 (h11 x) (h12 x) = x 
+\land (h11 x) < n \land (h12 x) < m) \to
+(\forall i,j. i < n \to j < m \to p21 i = true \to p22 i j = true \to 
+p1 (h2 i j) = true \land 
+h11 (h2 i j) = i \land h12 (h2 i j) = j
+\land h2 i j < k) \to
+sigma_p k p1 g=
+sigma_p n p21 (\lambda x:nat.sigma_p m (p22 x) (\lambda y. g (h2 x y))).
+intros.
+unfold sigma_p.
+unfold sigma_p in \vdash (? ? ? (? ? ? ? (\lambda x:?.%) ? ?)).
+apply iter_p_gen_knm
+  [ apply symmetricZPlus
+  |apply associative_Zplus
+  | intro.
+    apply (Zplus_z_OZ a)
+  | exact h11
+  | exact h12
+  | assumption
+  | assumption
+  ]
+qed.
+
+
 theorem sigma_p2_eq: 
 \forall g: nat \to nat \to Z.
 \forall h11,h12,h21,h22: nat \to nat \to nat. 
@@ -332,8 +364,165 @@ p21 (h21 i j) = true \land p22 (h21 i j) (h22 i j) = true
 sigma_p n1 p11 (\lambda x:nat .sigma_p m1 (p12 x) (\lambda y. g x y)) =
 sigma_p n2 p21 (\lambda x:nat .sigma_p m2 (p22 x) (\lambda y. g (h11 x y) (h12 x y))).
 intros.
+unfold sigma_p.
+unfold sigma_p in \vdash (? ? (? ? ? ? (\lambda x:?.%) ? ?) ?).
+unfold sigma_p in \vdash (? ? ? (? ? ? ? (\lambda x:?.%) ? ?)).
+
+apply(iter_p_gen_2_eq Z OZ Zplus ? ? ? g h11 h12 h21 h22 n1 m1 n2 m2 p11 p21 p12 p22)
+[ apply symmetricZPlus
+| apply associative_Zplus
+| intro.
+  apply (Zplus_z_OZ a)
+| assumption
+| assumption
+]
+qed.
+
+
+
+
+(*
+
+
+
+
+
 rewrite < sigma_p2'.
-rewrite < sigma_p2'.
+letin ha:= (\lambda x,y.(((h11 x y)*m1) + (h12 x y))).
+letin ha12:= (\lambda x.(h21 (x/m1) (x \mod m1))).
+letin ha22:= (\lambda x.(h22 (x/m1) (x \mod m1))).
+
+apply (trans_eq ? ? 
+(sigma_p n2 p21 (\lambda x:nat. sigma_p m2 (p22 x)
+ (\lambda y:nat.(g (((h11 x y)*m1+(h12 x y))/m1) (((h11 x y)*m1+(h12 x y))\mod m1)) ) ) ))
+[
+  apply (sigma_p_knm (\lambda e. (g (e/m1) (e \mod m1))) ha ha12 ha22);intros
+  [ elim (and_true ? ? H3).
+    cut(O \lt m1)
+    [ cut(x/m1 < n1)
+      [ cut((x \mod m1) < m1)
+        [ elim (H1 ? ? Hcut1 Hcut2 H4 H5).
+          elim H6.clear H6.
+          elim H8.clear H8.
+          elim H6.clear H6.
+          elim H8.clear H8.
+          split
+          [ split
+            [ split
+              [ split
+                [ assumption
+                | assumption
+                ]
+              | rewrite > H11.
+                rewrite > H10.
+                apply sym_eq.
+                apply div_mod.
+                assumption
+              ]
+            | assumption
+            ]
+          | assumption
+          ]
+        | apply lt_mod_m_m.
+          assumption
+        ]
+      | apply (lt_times_n_to_lt m1)
+        [ assumption
+        | apply (le_to_lt_to_lt ? x)
+          [ apply (eq_plus_to_le ? ? (x \mod m1)).
+            apply div_mod.
+            assumption
+          | assumption
+        ]
+      ]  
+    ]
+    | apply not_le_to_lt.unfold.intro.
+      generalize in match H2.
+      apply (le_n_O_elim ? H6).
+      rewrite < times_n_O.
+      apply le_to_not_lt.
+      apply le_O_n.              
+    ]
+  | elim (H ? ? H2 H3 H4 H5).
+    elim H6.clear H6.
+    elim H8.clear H8.
+    elim H6.clear H6.
+    elim H8.clear H8.
+    cut(((h11 i j)*m1 + (h12 i j))/m1 = (h11 i j))
+    [ cut(((h11 i j)*m1 + (h12 i j)) \mod m1 = (h12 i j))
+      [ split
+        [ split
+          [ split
+            [ apply true_to_true_to_andb_true
+              [ rewrite > Hcut.
+                assumption
+              | rewrite > Hcut1.
+                rewrite > Hcut.
+                assumption
+              ] 
+            | rewrite > Hcut1.
+              rewrite > Hcut.
+              assumption
+            ]
+          | rewrite > Hcut1.
+            rewrite > Hcut.
+            assumption            
+          ]
+        | cut(O \lt m1)
+          [ cut(O \lt n1)      
+            [ apply (lt_to_le_to_lt ? ((h11 i j)*m1 + m1) )
+              [ apply (lt_plus_r).
+                assumption
+              | rewrite > sym_plus.
+                rewrite > (sym_times (h11 i j) m1).
+                rewrite > times_n_Sm.
+                rewrite > sym_times.
+                apply (le_times_l).
+                assumption  
+              ]
+            | apply not_le_to_lt.unfold.intro.
+              generalize in match H9.
+              apply (le_n_O_elim ? H8).       
+              apply le_to_not_lt.
+              apply le_O_n
+            ]
+          | apply not_le_to_lt.unfold.intro.
+            generalize in match H7.
+            apply (le_n_O_elim ? H8).       
+            apply le_to_not_lt.
+            apply le_O_n
+          ]  
+        ]
+      | rewrite > (mod_plus_times m1 (h11 i j) (h12 i j)).
+        reflexivity.
+        assumption
+      ]     
+    | rewrite > (div_plus_times m1 (h11 i j) (h12 i j)).
+      reflexivity.
+      assumption
+    ]
+  ]
+| apply (eq_sigma_p1)
+  [ intros. reflexivity
+  | intros.
+    apply (eq_sigma_p1)
+    [ intros. reflexivity
+    | intros.
+      rewrite > (div_plus_times)
+      [ rewrite > (mod_plus_times)
+        [ reflexivity
+        | elim (H x x1 H2 H4 H3 H5).
+          assumption
+        ]
+      | elim (H x x1 H2 H4 H3 H5).       
+        assumption
+      ]
+    ]
+  ]
+]
+qed.
+
+rewrite < sigma_p2' in \vdash (? ? ? %).
 apply sym_eq.
 letin h := (\lambda x.(h11 (x/m2) (x\mod m2))*m1 + (h12 (x/m2) (x\mod m2))).
 letin h1 := (\lambda x.(h21 (x/m1) (x\mod m1))*m2 + (h22 (x/m1) (x\mod m1))).
@@ -357,7 +546,10 @@ apply (trans_eq ? ?
             [apply sym_eq.
              apply div_plus_times.
              assumption
-            |autobatch
+            | 
+              apply sym_eq.
+              apply mod_plus_times.
+              assumption
             ]
           |apply lt_mod_m_m.
            assumption
@@ -626,3 +818,6 @@ apply (trans_eq ? ?
     ]
   ]
 qed.
+*)
+
+

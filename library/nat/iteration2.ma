@@ -612,3 +612,35 @@ apply iter_p_gen_knm
   ]
 qed.
   
+  
+theorem sigma_p2_eq: 
+\forall g: nat \to nat \to nat.
+\forall h11,h12,h21,h22: nat \to nat \to nat. 
+\forall n1,m1,n2,m2.
+\forall p11,p21:nat \to bool.
+\forall p12,p22:nat \to nat \to bool.
+(\forall i,j. i < n2 \to j < m2 \to p21 i = true \to p22 i j = true \to 
+p11 (h11 i j) = true \land p12 (h11 i j) (h12 i j) = true
+\land h21 (h11 i j) (h12 i j) = i \land h22 (h11 i j) (h12 i j) = j
+\land h11 i j < n1 \land h12 i j < m1) \to
+(\forall i,j. i < n1 \to j < m1 \to p11 i = true \to p12 i j = true \to 
+p21 (h21 i j) = true \land p22 (h21 i j) (h22 i j) = true
+\land h11 (h21 i j) (h22 i j) = i \land h12 (h21 i j) (h22 i j) = j
+\land (h21 i j) < n2 \land (h22 i j) < m2) \to
+sigma_p n1 p11 (\lambda x:nat .sigma_p m1 (p12 x) (\lambda y. g x y)) =
+sigma_p n2 p21 (\lambda x:nat .sigma_p m2 (p22 x) (\lambda y. g (h11 x y) (h12 x y))).
+intros.
+unfold sigma_p.
+unfold sigma_p in \vdash (? ? (? ? ? ? (\lambda x:?.%) ? ?) ?).
+unfold sigma_p in \vdash (? ? ? (? ? ? ? (\lambda x:?.%) ? ?)).
+
+apply(iter_p_gen_2_eq nat O plus ? ? ? g h11 h12 h21 h22 n1 m1 n2 m2 p11 p21 p12 p22)
+[ apply symmetricIntPlus
+| apply associative_plus
+| intro.
+  rewrite < (plus_n_O).
+  reflexivity
+| assumption
+| assumption
+]
+qed.

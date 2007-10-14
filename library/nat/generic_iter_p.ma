@@ -1142,4 +1142,496 @@ elim n
 ]
 qed.
 
+(* old version - proved without theorem iter_p_gen_knm
+theorem iter_p_gen_2_eq: 
+\forall A:Type.
+\forall baseA: A.
+\forall plusA: A \to A \to A. 
+(symmetric A plusA) \to 
+(associative A plusA) \to 
+(\forall a:A.(plusA a  baseA) = a)\to
+\forall g: nat \to nat \to A.
+\forall h11,h12,h21,h22: nat \to nat \to nat. 
+\forall n1,m1,n2,m2.
+\forall p11,p21:nat \to bool.
+\forall p12,p22:nat \to nat \to bool.
+(\forall i,j. i < n2 \to j < m2 \to p21 i = true \to p22 i j = true \to 
+p11 (h11 i j) = true \land p12 (h11 i j) (h12 i j) = true
+\land h21 (h11 i j) (h12 i j) = i \land h22 (h11 i j) (h12 i j) = j
+\land h11 i j < n1 \land h12 i j < m1) \to
+(\forall i,j. i < n1 \to j < m1 \to p11 i = true \to p12 i j = true \to 
+p21 (h21 i j) = true \land p22 (h21 i j) (h22 i j) = true
+\land h11 (h21 i j) (h22 i j) = i \land h12 (h21 i j) (h22 i j) = j
+\land (h21 i j) < n2 \land (h22 i j) < m2) \to
+iter_p_gen n1 p11 A 
+     (\lambda x:nat .iter_p_gen m1 (p12 x) A (\lambda y. g x y) baseA plusA) 
+     baseA plusA =
+iter_p_gen n2 p21 A 
+    (\lambda x:nat .iter_p_gen m2 (p22 x) A  (\lambda y. g (h11 x y) (h12 x y)) baseA plusA )
+    baseA plusA.
+intros.
+rewrite < (iter_p_gen2' ? ? ? ? ? ? ? ? H H1 H2).
+rewrite < (iter_p_gen2' ? ? ? ? ? ? ? ? H H1 H2).
+apply sym_eq.
+letin h := (\lambda x.(h11 (x/m2) (x\mod m2))*m1 + (h12 (x/m2) (x\mod m2))).
+letin h1 := (\lambda x.(h21 (x/m1) (x\mod m1))*m2 + (h22 (x/m1) (x\mod m1))).
+apply (trans_eq ? ? 
+  (iter_p_gen (n2*m2) (\lambda x:nat.p21 (x/m2)\land p22 (x/m2) (x\mod m2)) A
+  (\lambda x:nat.g ((h x)/m1) ((h x)\mod m1)) baseA plusA ))
+  [clear h.clear h1.
+   apply eq_iter_p_gen1
+    [intros.reflexivity
+    |intros.
+     cut (O < m2)
+      [cut (x/m2 < n2)
+        [cut (x \mod m2 < m2)
+          [elim (and_true ? ? H6).
+           elim (H3 ? ? Hcut1 Hcut2 H7 H8).
+           elim H9.clear H9.
+           elim H11.clear H11.
+           elim H9.clear H9.
+           elim H11.clear H11.
+           apply eq_f2
+            [apply sym_eq.
+             apply div_plus_times.
+             assumption
+            | apply sym_eq.
+              apply mod_plus_times.
+              assumption
+            ]
+          |apply lt_mod_m_m.
+           assumption
+          ]
+        |apply (lt_times_n_to_lt m2)
+          [assumption
+          |apply (le_to_lt_to_lt ? x)
+            [apply (eq_plus_to_le ? ? (x \mod m2)).
+             apply div_mod.
+             assumption
+            |assumption
+            ]
+          ]
+        ]
+      |apply not_le_to_lt.unfold.intro.
+       generalize in match H5.
+       apply (le_n_O_elim ? H7).
+       rewrite < times_n_O.
+       apply le_to_not_lt.
+       apply le_O_n  
+      ]      
+    ]
+  |apply (eq_iter_p_gen_gh ? ? ? H H1 H2 ? h h1);intros
+    [cut (O < m2)
+      [cut (i/m2 < n2)
+        [cut (i \mod m2 < m2)
+          [elim (and_true ? ? H6).
+           elim (H3 ? ? Hcut1 Hcut2 H7 H8).
+           elim H9.clear H9.
+           elim H11.clear H11.
+           elim H9.clear H9.
+           elim H11.clear H11.
+           cut ((h11 (i/m2) (i\mod m2)*m1+h12 (i/m2) (i\mod m2))/m1 = 
+                 h11 (i/m2) (i\mod m2))
+            [cut ((h11 (i/m2) (i\mod m2)*m1+h12 (i/m2) (i\mod m2))\mod m1 =
+                  h12 (i/m2) (i\mod m2))
+              [rewrite > Hcut3.
+               rewrite > Hcut4.
+               rewrite > H9.
+               rewrite > H15.
+               reflexivity
+              |apply mod_plus_times. 
+               assumption
+              ]
+            |apply div_plus_times.
+             assumption
+            ]
+          |apply lt_mod_m_m.
+           assumption
+          ]
+        |apply (lt_times_n_to_lt m2)
+          [assumption
+          |apply (le_to_lt_to_lt ? i)
+            [apply (eq_plus_to_le ? ? (i \mod m2)).
+             apply div_mod.
+             assumption
+            |assumption
+            ]
+          ]
+        ]
+      |apply not_le_to_lt.unfold.intro.
+       generalize in match H5.
+       apply (le_n_O_elim ? H7).
+       rewrite < times_n_O.
+       apply le_to_not_lt.
+       apply le_O_n  
+      ]      
+    |cut (O < m2)
+      [cut (i/m2 < n2)
+        [cut (i \mod m2 < m2)
+          [elim (and_true ? ? H6).
+           elim (H3 ? ? Hcut1 Hcut2 H7 H8).
+           elim H9.clear H9.
+           elim H11.clear H11.
+           elim H9.clear H9.
+           elim H11.clear H11.
+           cut ((h11 (i/m2) (i\mod m2)*m1+h12 (i/m2) (i\mod m2))/m1 = 
+                 h11 (i/m2) (i\mod m2))
+            [cut ((h11 (i/m2) (i\mod m2)*m1+h12 (i/m2) (i\mod m2))\mod m1 =
+                  h12 (i/m2) (i\mod m2))
+              [rewrite > Hcut3.
+               rewrite > Hcut4.
+               rewrite > H13.
+               rewrite > H14.
+               apply sym_eq.
+               apply div_mod.
+               assumption
+              |apply mod_plus_times. 
+               assumption
+              ]
+            |apply div_plus_times.
+             assumption
+            ]
+          |apply lt_mod_m_m.
+           assumption
+          ]
+        |apply (lt_times_n_to_lt m2)
+          [assumption
+          |apply (le_to_lt_to_lt ? i)
+            [apply (eq_plus_to_le ? ? (i \mod m2)).
+             apply div_mod.
+             assumption
+            |assumption
+            ]
+          ]
+        ]
+      |apply not_le_to_lt.unfold.intro.
+       generalize in match H5.
+       apply (le_n_O_elim ? H7).
+       rewrite < times_n_O.
+       apply le_to_not_lt.
+       apply le_O_n  
+      ]      
+    |cut (O < m2)
+      [cut (i/m2 < n2)
+        [cut (i \mod m2 < m2)
+          [elim (and_true ? ? H6).
+           elim (H3 ? ? Hcut1 Hcut2 H7 H8).
+           elim H9.clear H9.
+           elim H11.clear H11.
+           elim H9.clear H9.
+           elim H11.clear H11.
+           apply lt_times_plus_times
+            [assumption|assumption]
+          |apply lt_mod_m_m.
+           assumption
+          ]
+        |apply (lt_times_n_to_lt m2)
+          [assumption
+          |apply (le_to_lt_to_lt ? i)
+            [apply (eq_plus_to_le ? ? (i \mod m2)).
+             apply div_mod.
+             assumption
+            |assumption
+            ]
+          ]
+        ]
+      |apply not_le_to_lt.unfold.intro.
+       generalize in match H5.
+       apply (le_n_O_elim ? H7).
+       rewrite < times_n_O.
+       apply le_to_not_lt.
+       apply le_O_n  
+      ]
+    |cut (O < m1)
+      [cut (j/m1 < n1)
+        [cut (j \mod m1 < m1)
+          [elim (and_true ? ? H6).
+           elim (H4 ? ? Hcut1 Hcut2 H7 H8).
+           elim H9.clear H9.
+           elim H11.clear H11.
+           elim H9.clear H9.
+           elim H11.clear H11.
+           cut ((h21 (j/m1) (j\mod m1)*m2+h22 (j/m1) (j\mod m1))/m2 = 
+                 h21 (j/m1) (j\mod m1))
+            [cut ((h21 (j/m1) (j\mod m1)*m2+h22 (j/m1) (j\mod m1))\mod m2 =
+                  h22 (j/m1) (j\mod m1))
+              [rewrite > Hcut3.
+               rewrite > Hcut4.
+               rewrite > H9.
+               rewrite > H15.
+               reflexivity
+              |apply mod_plus_times. 
+               assumption
+              ]
+            |apply div_plus_times.
+             assumption
+            ]
+          |apply lt_mod_m_m.
+           assumption
+          ] 
+        |apply (lt_times_n_to_lt m1)
+          [assumption
+          |apply (le_to_lt_to_lt ? j)
+            [apply (eq_plus_to_le ? ? (j \mod m1)).
+             apply div_mod.
+             assumption
+            |assumption
+            ]
+          ]
+        ]
+      |apply not_le_to_lt.unfold.intro.
+       generalize in match H5.
+       apply (le_n_O_elim ? H7).
+       rewrite < times_n_O.
+       apply le_to_not_lt.
+       apply le_O_n  
+      ] 
+    |cut (O < m1)
+      [cut (j/m1 < n1)
+        [cut (j \mod m1 < m1)
+          [elim (and_true ? ? H6).
+           elim (H4 ? ? Hcut1 Hcut2 H7 H8).
+           elim H9.clear H9.
+           elim H11.clear H11.
+           elim H9.clear H9.
+           elim H11.clear H11.
+           cut ((h21 (j/m1) (j\mod m1)*m2+h22 (j/m1) (j\mod m1))/m2 = 
+                 h21 (j/m1) (j\mod m1))
+            [cut ((h21 (j/m1) (j\mod m1)*m2+h22 (j/m1) (j\mod m1))\mod m2 =
+                  h22 (j/m1) (j\mod m1))
+              [rewrite > Hcut3.
+               rewrite > Hcut4.               
+               rewrite > H13.
+               rewrite > H14.
+               apply sym_eq.
+               apply div_mod.
+               assumption
+              |apply mod_plus_times. 
+               assumption
+              ]
+            |apply div_plus_times.
+             assumption
+            ]
+          |apply lt_mod_m_m.
+           assumption
+          ] 
+        |apply (lt_times_n_to_lt m1)
+          [assumption
+          |apply (le_to_lt_to_lt ? j)
+            [apply (eq_plus_to_le ? ? (j \mod m1)).
+             apply div_mod.
+             assumption
+            |assumption
+            ]
+          ]
+        ]
+      |apply not_le_to_lt.unfold.intro.
+       generalize in match H5.
+       apply (le_n_O_elim ? H7).
+       rewrite < times_n_O.
+       apply le_to_not_lt.
+       apply le_O_n  
+      ] 
+    |cut (O < m1)
+      [cut (j/m1 < n1)
+        [cut (j \mod m1 < m1)
+          [elim (and_true ? ? H6).
+           elim (H4 ? ? Hcut1 Hcut2 H7 H8).
+           elim H9.clear H9.
+           elim H11.clear H11.
+           elim H9.clear H9.
+           elim H11.clear H11.
+           apply (lt_times_plus_times ? ? ? m2)
+            [assumption|assumption]
+          |apply lt_mod_m_m.
+           assumption
+          ] 
+        |apply (lt_times_n_to_lt m1)
+          [assumption
+          |apply (le_to_lt_to_lt ? j)
+            [apply (eq_plus_to_le ? ? (j \mod m1)).
+             apply div_mod.
+             assumption
+            |assumption
+            ]
+          ]
+        ]
+      |apply not_le_to_lt.unfold.intro.
+       generalize in match H5.
+       apply (le_n_O_elim ? H7).
+       rewrite < times_n_O.
+       apply le_to_not_lt.
+       apply le_O_n  
+      ]
+    ]
+  ]
+qed.*)
+
+
+theorem iter_p_gen_2_eq: 
+\forall A:Type.
+\forall baseA: A.
+\forall plusA: A \to A \to A. 
+(symmetric A plusA) \to 
+(associative A plusA) \to 
+(\forall a:A.(plusA a  baseA) = a)\to
+\forall g: nat \to nat \to A.
+\forall h11,h12,h21,h22: nat \to nat \to nat. 
+\forall n1,m1,n2,m2.
+\forall p11,p21:nat \to bool.
+\forall p12,p22:nat \to nat \to bool.
+(\forall i,j. i < n2 \to j < m2 \to p21 i = true \to p22 i j = true \to 
+p11 (h11 i j) = true \land p12 (h11 i j) (h12 i j) = true
+\land h21 (h11 i j) (h12 i j) = i \land h22 (h11 i j) (h12 i j) = j
+\land h11 i j < n1 \land h12 i j < m1) \to
+(\forall i,j. i < n1 \to j < m1 \to p11 i = true \to p12 i j = true \to 
+p21 (h21 i j) = true \land p22 (h21 i j) (h22 i j) = true
+\land h11 (h21 i j) (h22 i j) = i \land h12 (h21 i j) (h22 i j) = j
+\land (h21 i j) < n2 \land (h22 i j) < m2) \to
+iter_p_gen n1 p11 A 
+     (\lambda x:nat .iter_p_gen m1 (p12 x) A (\lambda y. g x y) baseA plusA) 
+     baseA plusA =
+iter_p_gen n2 p21 A 
+    (\lambda x:nat .iter_p_gen m2 (p22 x) A  (\lambda y. g (h11 x y) (h12 x y)) baseA plusA )
+    baseA plusA.
+
+intros.
+rewrite < (iter_p_gen2' ? ? ? ? ? ? ? ? H H1 H2).
+letin ha:= (\lambda x,y.(((h11 x y)*m1) + (h12 x y))).
+letin ha12:= (\lambda x.(h21 (x/m1) (x \mod m1))).
+letin ha22:= (\lambda x.(h22 (x/m1) (x \mod m1))).
+
+apply (trans_eq ? ? 
+(iter_p_gen n2 p21 A (\lambda x:nat. iter_p_gen m2 (p22 x) A
+ (\lambda y:nat.(g (((h11 x y)*m1+(h12 x y))/m1) (((h11 x y)*m1+(h12 x y))\mod m1))) baseA plusA ) baseA plusA))
+[
+  apply (iter_p_gen_knm A baseA plusA H H1 H2 (\lambda e. (g (e/m1) (e \mod m1))) ha ha12 ha22);intros
+  [ elim (and_true ? ? H6).
+    cut(O \lt m1)
+    [ cut(x/m1 < n1)
+      [ cut((x \mod m1) < m1)
+        [ elim (H4 ? ? Hcut1 Hcut2 H7 H8).
+          elim H9.clear H9.
+          elim H11.clear H11.
+          elim H9.clear H9.
+          elim H11.clear H11.
+          split
+          [ split
+            [ split
+              [ split
+                [ assumption
+                | assumption
+                ]
+              | rewrite > H14.
+                rewrite > H13.
+                apply sym_eq.
+                apply div_mod.
+                assumption
+              ]
+            | assumption
+            ]
+          | assumption
+          ]
+        | apply lt_mod_m_m.
+          assumption
+        ]
+      | apply (lt_times_n_to_lt m1)
+        [ assumption
+        | apply (le_to_lt_to_lt ? x)
+          [ apply (eq_plus_to_le ? ? (x \mod m1)).
+            apply div_mod.
+            assumption
+          | assumption
+        ]
+      ]  
+    ]
+    | apply not_le_to_lt.unfold.intro.
+      generalize in match H5.
+      apply (le_n_O_elim ? H9).
+      rewrite < times_n_O.
+      apply le_to_not_lt.
+      apply le_O_n.              
+    ]
+  | elim (H3 ? ? H5 H6 H7 H8).
+    elim H9.clear H9.
+    elim H11.clear H11.
+    elim H9.clear H9.
+    elim H11.clear H11.
+    cut(((h11 i j)*m1 + (h12 i j))/m1 = (h11 i j))
+    [ cut(((h11 i j)*m1 + (h12 i j)) \mod m1 = (h12 i j))
+      [ split
+        [ split
+          [ split
+            [ apply true_to_true_to_andb_true
+              [ rewrite > Hcut.
+                assumption
+              | rewrite > Hcut1.
+                rewrite > Hcut.
+                assumption
+              ] 
+            | rewrite > Hcut1.
+              rewrite > Hcut.
+              assumption
+            ]
+          | rewrite > Hcut1.
+            rewrite > Hcut.
+            assumption            
+          ]
+        | cut(O \lt m1)
+          [ cut(O \lt n1)      
+            [ apply (lt_to_le_to_lt ? ((h11 i j)*m1 + m1) )
+              [ apply (lt_plus_r).
+                assumption
+              | rewrite > sym_plus.
+                rewrite > (sym_times (h11 i j) m1).
+                rewrite > times_n_Sm.
+                rewrite > sym_times.
+                apply (le_times_l).
+                assumption  
+              ]
+            | apply not_le_to_lt.unfold.intro.
+              generalize in match H12.
+              apply (le_n_O_elim ? H11).       
+              apply le_to_not_lt.
+              apply le_O_n
+            ]
+          | apply not_le_to_lt.unfold.intro.
+            generalize in match H10.
+            apply (le_n_O_elim ? H11).       
+            apply le_to_not_lt.
+            apply le_O_n
+          ]  
+        ]
+      | rewrite > (mod_plus_times m1 (h11 i j) (h12 i j)).
+        reflexivity.
+        assumption
+      ]     
+    | rewrite > (div_plus_times m1 (h11 i j) (h12 i j)).
+      reflexivity.
+      assumption
+    ]
+  ]
+| apply (eq_iter_p_gen1)
+  [ intros. reflexivity 
+  | intros.
+    apply (eq_iter_p_gen1)
+    [ intros. reflexivity
+    | intros.
+      rewrite > (div_plus_times)
+      [ rewrite > (mod_plus_times)
+        [ reflexivity
+        | elim (H3 x x1 H5 H7 H6 H8).
+          assumption
+        ]
+      | elim (H3 x x1 H5 H7 H6 H8).       
+        assumption
+      ]
+    ]
+  ]
+]
+qed.
+
+
+
+
 
