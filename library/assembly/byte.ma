@@ -283,9 +283,9 @@ lemma eq_bpred_S_a_a:
     rewrite > nat_of_exadecimal_exadecimal_of_nat in Hletin1;
     elim (eq_mod_O_to_exists ? ? Hletin1); clear Hletin1;
     rewrite > H1;
-    rewrite > div_times_ltO; [2: autobatch | ]
+    rewrite > lt_O_to_div_times; [2: autobatch | ]
     lapply (eq_f ? ? (λx.x/16) ? ? H1);
-    rewrite > div_times_ltO in Hletin; [2: autobatch | ]
+    rewrite > lt_O_to_div_times in Hletin; [2: autobatch | ]
     lapply (eq_f ? ? (λx.x \mod 16) ? ? H1);
     rewrite > eq_mod_times_n_m_m_O in Hletin1;
     elim daemon

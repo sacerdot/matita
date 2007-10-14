@@ -65,7 +65,7 @@ axiom frac_Qinv1: \forall a,b:nat.Qinv(frac a b) = frac b a.
 axiom frac_Qinv2: \forall a,b:nat.Qinv(frac (Zopp a) b) = frac (Zopp b) a.
 
 definition sigma_Q \def \lambda n,p,f.iter_p_gen n p Q f QO Qplus. 
-
+(*
 theorem geometric: \forall q.\exists k. 
 Qlt q (sigma_Q k (\lambda x.true) (\lambda x. frac (S O) x)).
-    
+*)  

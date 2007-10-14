@@ -50,3 +50,13 @@ rewrite > distr_times_plus.
 rewrite > distr_times_plus.
 rewrite < assoc_plus.reflexivity.
 qed.
+
+theorem eq_pred_to_eq:
+ ∀n,m. O < n → O < m → pred n = pred m → n = m.
+intros;
+generalize in match (eq_f ? ? S ? ? H2);
+intro;
+rewrite < S_pred in H3;
+rewrite < S_pred in H3;
+assumption.
+qed.

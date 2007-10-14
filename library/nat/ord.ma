@@ -166,8 +166,7 @@ apply p_ord_exp
   apply le_times_l.
   assumption.
   apply le_times_r.assumption.
-alias id "not_eq_to_le_to_lt" = "cic:/matita/algebra/finite_groups/not_eq_to_le_to_lt.con".
-apply not_eq_to_le_to_lt.
+  apply not_eq_to_le_to_lt.
   unfold.intro.apply H1.
   rewrite < H3.
   apply (witness ? r r ?).simplify.apply plus_n_O.

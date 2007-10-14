@@ -768,8 +768,7 @@ lemma lt_nat_of_exadecimal_16: ∀b. nat_of_exadecimal b < 16.
  elim b;
  simplify;
  [
- |*: alias id "lt_S_S" = "cic:/matita/algebra/finite_groups/lt_S_S.con".
-   repeat (apply lt_S_S)
+ |*: repeat (apply lt_to_lt_S_S)
  ];
  autobatch.
 qed.

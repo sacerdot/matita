@@ -181,6 +181,50 @@ apply ((H1 H2)).
 qed.
 *)
 
+definition ltb ≝λn,m. leb n m ∧ notb (eqb n m).
+
+theorem ltb_to_Prop :
+ ∀n,m.
+  match ltb n m with
+  [ true ⇒ n < m
+  | false ⇒ n ≮ m
+  ].
+intros;
+unfold ltb;
+apply leb_elim;
+apply eqb_elim;
+intros;
+simplify;
+[ rewrite < H;
+  apply le_to_not_lt;
+  constructor 1
+| apply (not_eq_to_le_to_lt ? ? H H1)
+| rewrite < H;
+  apply le_to_not_lt;
+  constructor 1
+| apply le_to_not_lt;
+  generalize in match (not_le_to_lt ? ? H1);
+  clear H1;
+  intro;
+  apply lt_to_le;
+  assumption
+].
+qed.
+
+theorem ltb_elim: ∀n,m:nat. ∀P:bool → Prop.
+(n < m → (P true)) → (n ≮ m → (P false)) →
+P (ltb n m).
+intros.
+cut
+(match (ltb n m) with
+[ true  ⇒ n < m
+| false ⇒ n ≮ m] → (P (ltb n m))).
+apply Hcut.apply ltb_to_Prop.
+elim (ltb n m).
+apply ((H H2)).
+apply ((H1 H2)).
+qed.
+
 let rec nat_compare n m: compare \def
 match n with
 [ O \Rightarrow 
@@ -201,11 +245,6 @@ qed.
 theorem nat_compare_S_S: \forall n,m:nat. 
 nat_compare n m = nat_compare (S n) (S m).
 intros.simplify.reflexivity.
-qed.
-
-theorem S_pred: \forall n:nat.lt O n \to eq nat n (S (pred n)).
-intro.elim n.apply False_ind.exact (not_le_Sn_O O H).
-apply eq_f.apply pred_Sn.
 qed.
 
 theorem nat_compare_pred_pred: 

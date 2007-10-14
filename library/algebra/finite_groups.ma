@@ -60,140 +60,6 @@ interpretation "Index_of_finite_enumerable representation"
 
 (* several definitions/theorems to be moved somewhere else *)
 
-definition ltb ≝λn,m. leb n m ∧ notb (eqb n m).
-
-theorem not_eq_to_le_to_lt: ∀n,m. n≠m → n≤m → n<m.
-intros;
-elim (le_to_or_lt_eq ? ? H1);
-[ assumption
-| elim (H H2)
-].
-qed.
-
-theorem ltb_to_Prop :
- ∀n,m.
-  match ltb n m with
-  [ true ⇒ n < m
-  | false ⇒ n ≮ m
-  ].
-intros;
-unfold ltb;
-apply leb_elim;
-apply eqb_elim;
-intros;
-simplify;
-[ rewrite < H;
-  apply le_to_not_lt;
-  constructor 1
-| apply (not_eq_to_le_to_lt ? ? H H1)
-| rewrite < H;
-  apply le_to_not_lt;
-  constructor 1
-| apply le_to_not_lt;
-  generalize in match (not_le_to_lt ? ? H1);
-  clear H1;
-  intro;
-  apply lt_to_le;
-  assumption
-].
-qed.
-
-theorem ltb_elim: ∀n,m:nat. ∀P:bool → Prop.
-(n < m → (P true)) → (n ≮ m → (P false)) →
-P (ltb n m).
-intros.
-cut
-(match (ltb n m) with
-[ true  ⇒ n < m
-| false ⇒ n ≮ m] → (P (ltb n m))).
-apply Hcut.apply ltb_to_Prop.
-elim (ltb n m).
-apply ((H H2)).
-apply ((H1 H2)).
-qed.
-
-theorem Not_lt_n_n: ∀n. n ≮ n.
-intro;
-unfold Not;
-intro;
-unfold lt in H;
-apply (not_le_Sn_n ? H).
-qed.
-
-theorem eq_pred_to_eq:
- ∀n,m. O < n → O < m → pred n = pred m → n = m.
-intros;
-generalize in match (eq_f ? ? S ? ? H2);
-intro;
-rewrite < S_pred in H3;
-rewrite < S_pred in H3;
-assumption.
-qed.
-
-theorem le_pred_to_le:
- ∀n,m. O < m → pred n ≤ pred m → n ≤ m.
-intros 2;
-elim n;
-[ apply le_O_n
-| simplify in H2;
-  rewrite > (S_pred m);
-  [ apply le_S_S;
-    assumption
-  | assumption
-  ]
-].
-qed.
-
-theorem le_to_le_pred:
- ∀n,m. n ≤ m → pred n ≤ pred m.
-intros 2;
-elim n;
-[ simplify;
-  apply le_O_n
-| simplify;
-  generalize in match H1;
-  clear H1;
-  elim m;
-  [ elim (not_le_Sn_O ? H1)
-  | simplify;
-    apply le_S_S_to_le;
-    assumption
-  ]
-].
-qed.
-
-theorem lt_n_m_to_not_lt_m_Sn: ∀n,m. n < m → m ≮ S n.
-intros;
-unfold Not;
-intro;
-unfold lt in H;
-unfold lt in H1;
-generalize in match (le_S_S ? ? H);
-intro;
-generalize in match (transitive_le ? ? ? H2 H1);
-intro;
-apply (not_le_Sn_n ? H3).
-qed.
-
-
-
-(* moved to nat/order.ma 
-theorem lt_O_S: ∀n. O < S n.
-intro;
-unfold lt;
-apply le_S_S;
-apply le_O_n.
-qed. *)
-
-theorem le_n_m_to_lt_m_Sn_to_eq_n_m: ∀n,m. n ≤ m → m < S n → n=m.
-intros;
-unfold lt in H1;
-generalize in match (le_S_S_to_le ? ? H1);
-intro;
-apply cic:/matita/nat/orders/antisym_le.con;
-assumption.
-qed.
-
 theorem pigeonhole:
  ∀n:nat.∀f:nat→nat.
   (∀x,y.x≤n → y≤n → f x = f y → x=y) →
@@ -307,7 +173,7 @@ elim n;
             apply (ltb_elim (f (S n1)) (f a));
             [ simplify;
               intros;
-              generalize in match (lt_S_S ? ? H5);
+              generalize in match (lt_to_lt_S_S ? ? H5);
               intro;
               rewrite < S_pred in H6;
               [ elim (lt_n_m_to_not_lt_m_Sn ? ? H4 H6)
@@ -385,7 +251,8 @@ elim n;
       [ apply (H1 ? ? ? ? Hcut);
         apply le_S;
         assumption
-      | apply eq_pred_to_eq;
+      | alias id "eq_pred_to_eq" = "cic:/matita/nat/relevant_equations/eq_pred_to_eq.con".
+apply eq_pred_to_eq;
         [ apply (ltn_to_ltO ? ? H7)
         | apply (ltn_to_ltO ? ? H6)
         | assumption

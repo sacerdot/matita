@@ -157,13 +157,13 @@ inductive derive: sequent → Prop ≝
  | NotL: ∀l1,l2,f.
     derive 〈l1,f::l2〉 → derive 〈FNot f :: l1,l2〉.
 
-alias id "Nil" = "cic:/matita/list/list.ind#xpointer(1/1/1)".
 let rec and_of_list l ≝
  match l with
-  [ Nil ⇒ FTrue
-  | Cons F l' ⇒ FAnd F (and_of_list l')
+  [ nil ⇒ FTrue
+  | cons F l' ⇒ FAnd F (and_of_list l')
   ].
 
+alias id "Nil" = "cic:/matita/list/list.ind#xpointer(1/1/1)".
 let rec or_of_list l ≝
  match l with
   [ Nil ⇒ FFalse
@@ -276,7 +276,6 @@ theorem soundness: ∀F. derive F → is_tautology (formula_of_sequent F).
 qed.
 
 alias num (instance 0) = "natural number".
-alias symbol "plus" = "natural plus".
 let rec size F ≝
  match F with
   [ FTrue ⇒ 0
@@ -289,8 +288,8 @@ let rec size F ≝
 
 let rec sizel l ≝
  match l with
-  [ Nil ⇒ 0
-  | Cons F l' ⇒ size F + sizel l'
+  [ nil ⇒ 0
+  | cons F l' ⇒ size F + sizel l'
   ].
 
 definition size_of_sequent ≝
@@ -311,8 +310,7 @@ definition same_atom : Formula → Formula → bool.
 qed.
 
 definition symmetricb ≝
- λA:Type.λeq:A → A → bool.
-  ∀x,y. eq x y = eq y x.
+ λA:Type.λeq:A → A → bool. ∀x,y. eq x y = eq y x.
 
 theorem symmetricb_eqb: symmetricb ? eqb.
  intro;
@@ -917,5 +915,4 @@ qed.
     simplify in H2;
   | apply NotR;
     simplify in H1;
-*)
 *)

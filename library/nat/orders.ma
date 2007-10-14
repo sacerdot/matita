@@ -130,12 +130,57 @@ apply nat_elim2
   ]
 qed.
 
+theorem S_pred: \forall n:nat.lt O n \to eq nat n (S (pred n)).
+intro.elim n.apply False_ind.exact (not_le_Sn_O O H).
+apply eq_f.apply pred_Sn.
+qed.
+
+theorem le_pred_to_le:
+ ∀n,m. O < m → pred n ≤ pred m → n ≤ m.
+intros 2;
+elim n;
+[ apply le_O_n
+| simplify in H2;
+  rewrite > (S_pred m);
+  [ apply le_S_S;
+    assumption
+  | assumption
+  ]
+].
+qed.
+
+theorem le_to_le_pred:
+ ∀n,m. n ≤ m → pred n ≤ pred m.
+intros 2;
+elim n;
+[ simplify;
+  apply le_O_n
+| simplify;
+  generalize in match H1;
+  clear H1;
+  elim m;
+  [ elim (not_le_Sn_O ? H1)
+  | simplify;
+    apply le_S_S_to_le;
+    assumption
+  ]
+].
+qed.
+
 (* le to lt or eq *)
 theorem le_to_or_lt_eq : \forall n,m:nat. 
 n \leq m \to n < m \lor n = m.
 intros.elim H.
 right.reflexivity.
 left.unfold lt.apply le_S_S.assumption.
+qed.
+
+theorem Not_lt_n_n: ∀n. n ≮ n.
+intro;
+unfold Not;
+intro;
+unfold lt in H;
+apply (not_le_Sn_n ? H).
 qed.
 
 (* not eq *)
@@ -156,6 +201,19 @@ apply (lt_to_not_eq b b)
 [ assumption
 | reflexivity
 ]
+qed.
+
+theorem lt_n_m_to_not_lt_m_Sn: ∀n,m. n < m → m ≮ S n.
+intros;
+unfold Not;
+intro;
+unfold lt in H;
+unfold lt in H1;
+generalize in match (le_S_S ? ? H);
+intro;
+generalize in match (transitive_le ? ? ? H2 H1);
+intro;
+apply (not_le_Sn_n ? H3).
 qed.
 
 (* le vs. lt *)
@@ -195,6 +253,14 @@ theorem le_to_not_lt: \forall n,m:nat. le n m \to Not (lt m n).
 intros.unfold Not.unfold lt.
 apply lt_to_not_le.unfold lt.
 apply le_S_S.assumption.
+qed.
+
+theorem not_eq_to_le_to_lt: ∀n,m. n≠m → n≤m → n<m.
+intros;
+elim (le_to_or_lt_eq ? ? H1);
+[ assumption
+| elim (H H2)
+].
 qed.
 
 (* le elimination *)
@@ -278,6 +344,15 @@ qed.
 
 theorem antisym_le: \forall n,m:nat. n \leq m \to m \leq n \to n=m
 \def antisymmetric_le.
+
+theorem le_n_m_to_lt_m_Sn_to_eq_n_m: ∀n,m. n ≤ m → m < S n → n=m.
+intros;
+unfold lt in H1;
+generalize in match (le_S_S_to_le ? ? H1);
+intro;
+apply antisym_le;
+assumption.
+qed.
 
 theorem decidable_le: \forall n,m:nat. decidable (n \leq m).
 intros.
