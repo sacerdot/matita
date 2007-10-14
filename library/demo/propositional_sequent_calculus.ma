@@ -752,18 +752,18 @@ lemma completeness_base:
   [ decompose;
     rewrite > H2; clear H2;
     rewrite > H4; clear H4;
-    apply (exchangeL ? a1 a2 (FAtom a));
-    apply (exchangeR ? a3 a4 (FAtom a));
-    apply axiom 
+    apply (ExchangeL ? a1 a2 (FAtom a));
+    apply (ExchangeR ? a3 a4 (FAtom a));
+    apply Axiom 
   | elim (sizel_0_no_axiom_is_tautology t t1 H H1 H2);
      [ decompose;
        rewrite > H3;
-       apply (exchangeL ? a a1 FFalse);
-       apply falseL
+       apply (ExchangeL ? a a1 FFalse);
+       apply FalseL
      | decompose;
        rewrite > H3;
-       apply (exchangeR ? a a1 FTrue);
-       apply trueR
+       apply (ExchangeR ? a a1 FTrue);
+       apply TrueR
      ]
   ]
 qed.
