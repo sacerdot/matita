@@ -41,4 +41,4 @@ record paperino: Prop \def {
 (* the following test used to show the following bug: the left
    parameter A in the type of t was not unified with the left
    parameter A in the type of the constructor of the record *)
-record t (A:Type) : Type := { f : t A }.
+record t (A:Type) : Type := { f : A }.
