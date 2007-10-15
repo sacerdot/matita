@@ -16,7 +16,7 @@ set "baseuri" "cic:/matita/demodulation/".
 
 include "../legacy/coq.ma".
 
-alias num = "natural number".
+alias num = "Coq natural number".
 alias symbol "times" = "Coq's natural times".
 alias symbol "plus" = "Coq's natural plus".
 alias symbol "eq" = "Coq's leibnitz's equality".
