@@ -38,7 +38,7 @@ theorem GRP049_simple:
   \forall mult: A \to A \to A.
   \forall H: (\forall x,y,z:A.mult z (inv (mult (inv (mult (inv (mult z y)) x)) (inv (mult y (mult (inv y) y))))) = x).
   \forall a,b:A. mult (inv a) a = mult (inv b) b.
-intros.autobatch paramodulation;
+intros.autobatch paramodulation; exact a.
 qed.
 
 theorem GRP049 :
