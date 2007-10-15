@@ -23,10 +23,10 @@ alias symbol "times" (instance 0) = "Coq's natural times".
 theorem para1:
   \forall n,m,n1,m1:nat.
     n=m \to n1 = m1 \to (n + n1) = (m + m1).
-intros. auto paramodulation.
+intros. autobatch paramodulation.
 qed.
 
 theorem para2:
   \forall n:nat. n + n = 2 * n.
-intros. auto paramodulation.
+intros. autobatch paramodulation.
 qed.

@@ -30,7 +30,7 @@ theorem prova1:
   C.
   intros (A B C S a w h b wb).
   (* exact (h s (a b) b wb II). *)
-  auto new width = 5 depth = 3. (* look at h parameters! *)
+  autobatch new width = 5 depth = 3. (* look at h parameters! *)
   qed.
   
 (* c'e' qualcosa di imperativo, se si cambia l'rdine delle ipotesi poi sclera *)
@@ -42,6 +42,6 @@ theorem prova2:
   \forall b:B.
   A=B.
   intros.
-  auto paramodulation.
+  autobatch paramodulation.
   try assumption.
   qed. 
