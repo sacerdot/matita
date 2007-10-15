@@ -15,7 +15,7 @@
 set "baseuri" "cic:/matita/generalize".
 include "../legacy/coq.ma".
 
-alias num (instance 0) = "natural number".
+alias num (instance 0) = "Coq natural number".
 alias symbol "eq" (instance 0) = "Coq's leibnitz's equality".
 alias symbol "plus" (instance 0) = "Coq's natural plus".
 alias id "plus_comm" = "cic:/Coq/Arith/Plus/plus_comm.con".
