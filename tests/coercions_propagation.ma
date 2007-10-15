@@ -16,7 +16,6 @@ set "baseuri" "cic:/matita/test/coercions_propagation/".
 
 include "logic/connectives.ma".
 include "nat/orders.ma".
-alias num (instance 0) = "natural number".
 
 inductive sigma (A:Type) (P:A → Prop) : Type ≝
  sigma_intro: ∀a:A. P a → sigma A P.
@@ -33,7 +32,6 @@ definition eject ≝ λP.λc: ∃n:nat.P n. match c with [ sigma_intro w _ ⇒ w
 coercion cic:/matita/test/coercions_propagation/eject.con.
 
 alias num (instance 0) = "natural number".
-
 theorem test: ∃n. 0 ≤ n.
  apply (S O : ∃n. 0 ≤ n).
  autobatch.
