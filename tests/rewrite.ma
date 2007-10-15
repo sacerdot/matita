@@ -16,7 +16,7 @@ set "baseuri" "cic:/matita/tests/rewrite/".
 include "../legacy/coq.ma".
 
 alias id "nat" = "cic:/Coq/Init/Datatypes/nat.ind#xpointer(1/1)".
-alias num (instance 0) = "natural number".
+alias num (instance 0) = "Coq natural number".
 alias symbol "eq" (instance 0) = "Coq's leibnitz's equality". 
 alias symbol "plus" (instance 0) = "Coq's natural plus".
 alias id "plus_n_O" = "cic:/Coq/Init/Peano/plus_n_O.con".
