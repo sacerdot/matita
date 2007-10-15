@@ -86,37 +86,11 @@ qed.
 theorem recursive4: ∀ x,y,z,t : nat. 
   C2 ? ? (None ?) ? (S O) ? z (C1 ? ? (S O) (Some ? z) y) = 
   C2 ? ? (None ?) ? (S O) ? t (C1 ? ? (S O) (Some ? x) y) → z=t.
-intros; 
-
-
-
-
- (λHH  : ((C1 (option nat) nat (S O) (Some nat -7) -8) = (C1 (option nat) nat (S O) (Some nat -9) -8))
-  eq_elim_r 
-    (complex (option nat) nat -8 (Some nat -7)) 
-    (C1 (option nat) nat (S O) (Some nat -9) -8) 
-    (λc:(complex (option nat) nat -8 (Some nat -7)).
-      (eq (option nat) 
-        ((λx:(complex (option nat) nat -8 (Some nat -7)).
-           match x return (λy1:nat.(λy2:(option nat).(λ x:(complex (option nat) nat y1 y2).(option nat)))) with
-           [ (C1 (y1:nat) (a:(option nat)) (b:nat)) => a
-           | (C2 (a:(option nat)) (a1:(option nat)) (b:nat) (b1:nat) (y2:nat) (y3:(complex (option nat) nat b1 a1))) ⇒
-              (Some nat -7)
-           ]) c) 
-        (Some nat -9))) 
-     ? 
-     (C1 (option nat) nat (S O) (Some nat -7) -8) 
-     HH)
-
-
-
-
-destruct H;assumption.
+intros; destruct H;assumption.
 qed.
 
 theorem recursive2: ∀ x,y : nat. 
   C2 ? ? (None ?) ? (S O) ? O (C1 ? ? O     (Some ? x) y) = 
   C2 ? ? (None ?) ? (S O) ? O (C1 ? ? (S O) (Some ? x) y) → False.
-intros; destruct H;
-
-
+intros; destruct H.
+qed.
