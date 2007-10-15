@@ -14,10 +14,9 @@
 
 set "baseuri" "cic:/matita/tests/clearbody".
 include "../legacy/coq.ma".
-alias num (instance 0) = "natural number".
+alias num (instance 0) = "Coq natural number".
 alias symbol "eq" (instance 0) = "Coq's leibnitz's equality".
 alias symbol "plus" (instance 0) = "Coq's natural plus".
-
 
 theorem stupid : 
   let x \def 0 + 1 in x + 2 = x + 2.
