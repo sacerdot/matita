@@ -114,11 +114,7 @@ theorem easy3: ∀A:Prop. (A ∧ ∃n:nat.n ≠ n) → True.
  assume P: Prop.
  suppose (P ∧ ∃m:nat.m ≠ m) (H).
  by H we have P (H1) and (∃x:nat.x≠x) (H2).
- (*BUG:
  by H2 let q:nat such that (q ≠ q) (Ineq).
- *)
- (* the next line is wrong, but for the moment it does the job *)
- by H2 let q:nat such that False (Ineq).
  by I done.
 qed.
 
