@@ -52,16 +52,16 @@ letin k3 \def (eq_ind_r A (add (multiply ? (inverse ?)) (multiply b n1)) (\lambd
 focus 633. clearbody k3.
 exact
 (eq_ind A b (\lambda x:A.(eq A x b)) (refl_equal A b) (add (multiply a b) b) (eq_ind A (multiply b n1) (\lambda x:A.(eq A x (add (multiply a b) b))) (eq_ind_r A (add a n1) (\lambda x:A.(eq A (multiply b x) (add (multiply a b) b))) (eq_ind_r A (multiply n1 b) (\lambda x:A.(eq A (multiply b (add a n1)) (add (multiply a b) x))) (H5 b a n1) b (eq_ind A (multiply b n1) (\lambda x:A.(eq A b (multiply n1 x))) (eq_ind A (multiply b n1) (\lambda x:A.(eq A x (multiply n1 (multiply b n1)))) (eq_ind_r A (add b b) (\lambda x:A.(eq A (multiply b n1) (multiply n1 x))) (eq_ind A (add n1 n1) (\lambda x:A.(eq A (multiply b x) (multiply n1 (add b b)))) (eq_ind A (add n1 n1) (\lambda x:A.(eq A (multiply b (add n1 n1)) (multiply x (add b b)))) (eq_ind_r A (add (multiply b (add n1 n1)) (multiply b (add n1 n1))) (\lambda x:A.(eq A (multiply b (add n1 n1)) x)) (eq_ind_r A (add (multiply n1 b) (multiply n1 b)) (\lambda x:A.(eq A (multiply b (add n1 n1)) (add (multiply b (add n1 n1)) x))) (eq_ind_r A (add (multiply n1 b) (multiply n1 b)) (\lambda x:A.(eq A x (add (multiply b (add n1 n1)) (add (multiply n1 b) (multiply n1 b))))) (eq_ind_r A (add (multiply n1 b) (multiply n1 b)) (\lambda x:A.(eq A (add (multiply n1 b) (multiply n1 b)) (add x (add (multiply n1 b) (multiply n1 b))))) (eq_ind A (multiply (add (multiply n1 b) (multiply n1 b)) n1) (\lambda x:A.(eq A x (add (add (multiply n1 b) (multiply n1 b)) (add (multiply n1 b) (multiply n1 b))))) (H7 (multiply n1 b)) (add (multiply n1 b) (multiply n1 b)) (H8 (multiply n1 b))) (multiply b (add n1 n1)) (H5 b n1 n1)) (multiply b (add n1 n1)) (H5 b n1 n1)) (multiply b (add n1 n1)) (H5 b n1 n1)) (multiply (add n1 n1) (add b b)) (H5 (add n1 n1) b b)) n1 (eq_ind A (multiply (add n1 n1) n1) (\lambda x:A.(eq A x n1)) (H6 n1 n1) (add n1 n1) (H8 n1))) n1 (eq_ind A (multiply (add n1 n1) n1) (\lambda x:A.(eq A x n1)) (H6 n1 n1) (add n1 n1) (H8 n1))) (multiply b n1) (eq_ind_r A (multiply n1 (add b b)) (\lambda x:A.(eq A x (add b b))) (eq_ind A (multiply (add b b) n1) (\lambda x:A.(eq A (multiply n1 (add b b)) x)) (eq_ind A (add n1 n1) (\lambda x:A.(eq A (multiply n1 (add b b)) (multiply (add b b) x))) (eq_ind_r A (add (multiply n1 (add b b)) (multiply n1 (add b b))) (\lambda x:A.(eq A (multiply n1 (add b b)) x)) (eq_ind_r A (add (multiply b n1) (multiply b n1)) (\lambda x:A.(eq A (multiply n1 (add b b)) (add (multiply n1 (add b b)) x))) (eq_ind_r A (add (multiply b n1) (multiply b n1)) (\lambda x:A.(eq A x (add (multiply n1 (add b b)) (add (multiply b n1) (multiply b n1))))) (eq_ind_r A (add (multiply b n1) (multiply b n1)) (\lambda x:A.(eq A (add (multiply b n1) (multiply b n1)) (add x (add (multiply b n1) (multiply b n1))))) (eq_ind A (multiply (add (multiply b n1) (multiply b n1)) n1) (\lambda x:A.(eq A x (add (add (multiply b n1) (multiply b n1)) (add (multiply b n1) (multiply b n1))))) (H7 (multiply b n1)) (add (multiply b n1) (multiply b n1)) (H8 (multiply b n1))) (multiply n1 (add b b)) (H5 n1 b b)) (multiply n1 (add b b)) (H5 n1 b b)) (multiply n1 (add b b)) (H5 n1 b b)) (multiply (add b b) (add n1 n1)) (H5 (add b b) n1 n1)) n1 (eq_ind A (multiply (add n1 n1) n1) (\lambda x:A.(eq A x n1)) (H6 n1 n1) (add n1 n1) (H8 n1))) (add b b) (H8 b)) (multiply b n1) (eq_ind A (add n1 n1) (\lambda x:A.(eq A (multiply b x) (multiply n1 (add b b)))) (eq_ind A (add n1 n1) (\lambda x:A.(eq A (multiply b (add n1 n1)) (multiply x (add b b)))) (eq_ind_r A (add (multiply b (add n1 n1)) (multiply b (add n1 n1))) (\lambda x:A.(eq A (multiply b (add n1 n1)) x)) (eq_ind_r A (add (multiply n1 b) (multiply n1 b)) (\lambda x:A.(eq A (multiply b (add n1 n1)) (add (multiply b (add n1 n1)) x))) (eq_ind_r A (add (multiply n1 b) (multiply n1 b)) (\lambda x:A.(eq A x (add (multiply b (add n1 n1)) (add (multiply n1 b) (multiply n1 b))))) (eq_ind_r A (add (multiply n1 b) (multiply n1 b)) (\lambda x:A.(eq A (add (multiply n1 b) (multiply n1 b)) (add x (add (multiply n1 b) (multiply n1 b))))) (eq_ind A (multiply (add (multiply n1 b) (multiply n1 b)) n1) (\lambda x:A.(eq A x (add (add (multiply n1 b) (multiply n1 b)) (add (multiply n1 b) (multiply n1 b))))) (H7 (multiply n1 b)) (add (multiply n1 b) (multiply n1 b)) (H8 (multiply n1 b))) (multiply b (add n1 n1)) (H5 b n1 n1)) (multiply b (add n1 n1)) (H5 b n1 n1)) (multiply b (add n1 n1)) (H5 b n1 n1)) (multiply (add n1 n1) (add b b)) (H5 (add n1 n1) b b)) n1 (eq_ind A (multiply (add n1 n1) n1) (\lambda x:A.(eq A x n1)) (H6 n1 n1) (add n1 n1) (H8 n1))) n1 (eq_ind A (multiply (add n1 n1) n1) (\lambda x:A.(eq A x n1)) (H6 n1 n1) (add n1 n1) (H8 n1))))) b ?) b ?)) n1 ?) b ?)).
-auto new.
-auto new.
-auto new.
-auto new.
+autobatch.
+autobatch.
+autobatch.
+autobatch.
 unfocus.
-auto new.
+autobatch.
 unfocus.
-auto new.
+autobatch.
 unfocus.
-auto new.
+autobatch.
 unfocus.
-auto new.
+autobatch.
 qed.

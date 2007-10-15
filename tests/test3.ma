@@ -27,5 +27,5 @@ alias symbol "times" (instance 0) = "Coq's natural times".
 
 theorem b:\forall p:nat. p * 0=0.
 intro.
-auto new library.
+autobatch library.
 qed.
