@@ -127,8 +127,8 @@ elim l
 qed.
 
 lemma max_case : \forall m,n.(max m n) = match (leb m n) with
-      [ false \Rightarrow n
-      | true \Rightarrow m ].
+      [ true \Rightarrow n
+      | false \Rightarrow m ].
 intros;elim m;simplify;reflexivity;
 qed.
 
