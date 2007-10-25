@@ -37,7 +37,7 @@ unfold Not.intro.
 change with 
 match true with
 [ true \Rightarrow False
-| flase \Rightarrow True].
+| false \Rightarrow True].
 rewrite > H.simplify.exact I.
 qed.
 
