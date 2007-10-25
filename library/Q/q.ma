@@ -330,7 +330,7 @@ definition Qtimes : Q \to Q \to Q \def
     |Qpos q1 \Rightarrow Qpos (rtimes p1 q1)
     |Qneg q1 \Rightarrow Qneg (rtimes p1 q1)
     ]
-  |neg p1 \Rightarrow 
+  |Qneg p1 \Rightarrow 
     match q with
     [OQ \Rightarrow OQ
     |Qpos q1 \Rightarrow Qneg (rtimes p1 q1)
