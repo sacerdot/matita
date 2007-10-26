@@ -48,11 +48,11 @@
     
     <!-- this snippet is what is used by the helm team, everything on mowgli.
          note that user's tables are named diffrently from library tables, so that
-	 they can coexists on the same db -->
 
     <key name="metadata">@DBHOST@ public helm none legacy</key>
     <key name="metadata">@DBHOST@ matita helm none library</key>
     <key name="metadata">@DBHOST@ matita helm none user</key>
+	 they can coexists on the same db -->
 
     <!-- The following snipset is used by the helm team to publish the matita
          contributions
@@ -64,9 +64,9 @@
     <!-- The following snippet it what you want to use a local sqlite db
          and acess remotely to the coq library trought mowgli
     <key name="metadata">@DBHOST@ matita helm none legacy</key>
+    -->
     <key name="metadata">file://$(matita.rt_base_dir) metadata.db helm helm library</key>
     <key name="metadata">file://$(matita.basedir) user.db helm helm user</key>
-    -->
 
     <!-- 
     If you have a large amount of metadata, you may be interested in using
@@ -97,11 +97,13 @@
       (e.g. the Matita standard library)
     "legacy" implies "ro"
     -->
+    <!--
     <key name="prefix">
       cic:/matita/
       file:///projects/helm/library/matita_contribs/matita
       ro
     </key>
+    -->
     <key name="prefix">
       cic:/matita/
       file://$(matita.rt_base_dir)/xml/standard-library/
@@ -111,6 +113,7 @@
       cic:/matita/
       file://$(user.home)/.matita/xml/matita/
     </key>
+    <!--
     <key name="prefix">
       cic:/
       file://@RT_BASE_DIR@/xml/legacy-library/coq/
@@ -126,5 +129,6 @@
       http://mowgli.cs.unibo.it/xml/
       legacy
     </key>
+    -->
   </section>
 </helm_registry>
