@@ -140,7 +140,7 @@ definition mkpermr :=
 lemma mem_multes : 
   ∀d:finType.∀e:d.∀l:list_eqType (list_eqType d).∀s:list_eqType d.
   mem ? s (multes ? e l) = 
-  match s in list with [ Nil ⇒ false | (Cons e1 tl) ⇒ andb (cmp ? e e1) (mem ? tl l)].
+  match s in list with [ nil ⇒ false | (cons e1 tl) ⇒ andb (cmp ? e e1) (mem ? tl l)].
 intros (d e l s); elim l (hd tl IH); [cases s;simplify;[2: rewrite > andbC] reflexivity]
 simplify; rewrite > IH; cases s; simplify; [reflexivity]
 unfold list_eqType; simplify;
@@ -160,7 +160,7 @@ lemma orb_refl : ∀x.orb x x = x. intros (x); cases x; reflexivity; qed.
 lemma mem_multss : 
   ∀d:finType.∀s:list_eqType d.∀l:list_eqType (list_eqType d).∀x:list_eqType d.
   mem ? x (multss ? s l) = 
-  match x in list with [ Nil ⇒ false | (Cons he tl) ⇒ andb (mem ? he s) (mem ? tl l)].
+  match x in list with [ nil ⇒ false | (cons he tl) ⇒ andb (mem ? he s) (mem ? tl l)].
 intros (d s l x); elim s; [cases x] simplify; try reflexivity; rewrite > mem_concat;
 rewrite > H; clear H; rewrite > mem_multes; cases x; simplify; [reflexivity]
 unfold list_eqType; simplify; apply (cmpP ? t s1); intros (E); 
