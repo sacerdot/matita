@@ -451,20 +451,22 @@ object (self)
     ApplyTransformation.txt_of_cic_sequent_conclusion ~map_unicode_to_tex
      ~output_type text_width metasenv cic_sequent
 
-  method private pattern_of term context unsh_sequent =
-    let context_len = List.length context in
+  method private pattern_of term father_hyp unsh_sequent =
     let _, unsh_context, conclusion = unsh_sequent in
-    try
-      (match
-        List.nth unsh_context (List.length unsh_context - context_len - 1)
-      with
-      | None -> assert false (* can't select a restricted hypothesis *)
-      | Some (name, Cic.Decl ty) ->
-          ProofEngineHelpers.pattern_of ~term:ty [term]
-      | Some (name, Cic.Def (bo, _)) ->
-          ProofEngineHelpers.pattern_of ~term:bo [term])
-    with Failure _ | Invalid_argument _ ->
-      ProofEngineHelpers.pattern_of ~term:conclusion [term]
+    let where =
+     match father_hyp with
+        None -> conclusion
+      | Some name ->
+         let rec aux =
+          function
+             [] -> assert false
+           | Some (Cic.Name name', Cic.Decl ty)::_ when name' = name -> ty
+           | Some (Cic.Name name', Cic.Def (bo,_))::_ when name' = name-> bo
+           | _::tl -> aux tl
+         in
+          aux unsh_context
+    in
+     ProofEngineHelpers.pattern_of ~term:where [term]
 
   method private get_cic_info id =
     match self#cic_info with
@@ -478,14 +480,17 @@ object (self)
     let cic_info, unsh_sequent = self#get_cic_info id in
     let cic_sequent =
       match self#get_term_by_id cic_info id with
-      | SelTerm (t, _father_hyp) ->
+      | SelTerm (t, father_hyp) ->
+(*
+IDIOTA: PRIMA SI FA LA LOCATE, POI LA PATTERN_OF. MEGLIO UN'UNICA pattern_of CHE PRENDA IN INPUT UN TERMINE E UN SEQUENTE. PER IL MOMENTO RISOLVO USANDO LA father_hyp PER RITROVARE L'IPOTESI PERDUTA
+*)
           let occurrences =
             ProofEngineHelpers.locate_in_conjecture t unsh_sequent in
           (match occurrences with
           | [ context, _t ] ->
               (match paste_kind with
               | `Term -> ~-1, context, t
-              | `Pattern -> ~-1, [], self#pattern_of t context unsh_sequent)
+              | `Pattern -> ~-1, [], self#pattern_of t father_hyp unsh_sequent)
           | _ ->
               HLog.error (sprintf "found %d occurrences while 1 was expected"
                 (List.length occurrences));
