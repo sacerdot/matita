@@ -163,11 +163,10 @@ let rec and_of_list l ≝
   | cons F l' ⇒ FAnd F (and_of_list l')
   ].
 
-alias id "Nil" = "cic:/matita/list/list.ind#xpointer(1/1/1)".
 let rec or_of_list l ≝
  match l with
-  [ Nil ⇒ FFalse
-  | Cons F l' ⇒ FOr F (or_of_list l')
+  [ nil ⇒ FFalse
+  | cons F l' ⇒ FOr F (or_of_list l')
   ].
 
 definition formula_of_sequent ≝
