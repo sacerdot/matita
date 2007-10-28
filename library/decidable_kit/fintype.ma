@@ -88,8 +88,8 @@ cut (∀x:fsort. count fsort (cmp fsort x) enum = (S O));
    generalize in match bound in ⊢ (% → ? → ? ? (? ? ? (? ? ? ? %)) ?);
    intros 1 (m); elim m  (Hm Hn p IH Hm Hn); [ destruct Hm ]
    simplify; cases (eqP bool_eqType (ltb p bound) true); simplify;
-   [1:unfold segment in ⊢ (? ? match ? % ? ? with [true⇒ ?|false⇒ ?] ?);
-      unfold nat_eqType in ⊢ (? ? match % with [true⇒ ?|false⇒ ?] ?);
+   [1:unfold segment in ⊢ (? ? match ? % ? ? with [_ ⇒ ?|_ ⇒ ?] ?);
+      unfold nat_eqType in ⊢ (? ? match % with [_ ⇒ ?|_ ⇒ ?] ?);
       simplify; apply (cmpP nat_eqType n p); intros (Enp); simplify;
       [2:rewrite > IH; [1,3: autobatch]
          rewrite <  ltb_n_Sm in Hm; rewrite > Enp in Hm;
@@ -169,7 +169,7 @@ intros (d l); apply prove_reflect; elim l; [1: destruct H1 | 3: destruct H]
     [1: intros (E); rewrite > E in H1; rewrite > andbC in H1; simplify in H1;
         unfold Not; intros (A); lapply (A t) as A'; 
         [1: simplify in A'; rewrite > cmp_refl in A'; simplify in A';
-            destruct A'; clear A'; rewrite < count_O_mem in H1;
+            destruct A'; rewrite < count_O_mem in H1;
             rewrite > Hcut in H1; destruct H1;  
         |2: simplify; rewrite > cmp_refl; reflexivity;]
     |2: intros (Ul1); lapply (H Ul1); unfold Not; intros (A); apply Hletin;
@@ -200,7 +200,7 @@ cases (in_sub_eq d p t1); simplify;
 [1:generalize in match H3; clear H3; cases s (r Hr); clear s;
    simplify; intros (Ert1); generalize in match Hr; clear Hr;
    rewrite > Ert1; clear Ert1; clear r; intros (Ht1);
-   unfold  sub_eqType in ⊢ (? ? match ? (% ? ?) ? ? with [true⇒ ?|false⇒ ?] ?); 
+   unfold  sub_eqType in ⊢ (? ? match ? (% ? ?) ? ? with [_ ⇒ ?|_ ⇒ ?] ?); 
    simplify; apply (cmpP ? t t1); simplify; intros (Ett1);
    [1: cut (count (sub_eqType d p) (cmp (sub_eqType d p) {t,Ht})
             (filter d (sigma d p) (if_p d p) l) = O); [1:rewrite > Hcut; reflexivity]
@@ -210,7 +210,7 @@ cases (in_sub_eq d p t1); simplify;
        generalize in match Hletin; elim l; [ reflexivity]
        simplify; cases (in_sub_eq d p t2); simplify; 
        [1: generalize in match H5; cases s; simplify; intros; clear H5; 
-           unfold sub_eqType in ⊢ (? ? match ? (% ? ?) ? ? with [true⇒ ?|false⇒ ?] ?);
+           unfold sub_eqType in ⊢ (? ? match ? (% ? ?) ? ? with [_ ⇒ ?|_ ⇒ ?] ?);
            simplify; rewrite > H7; simplify in H4;
            generalize in match H4; clear H4; apply (cmpP ? t1 t2);
            simplify; intros; [destruct H5] apply H3; assumption;
