@@ -393,6 +393,12 @@
       <entry>&id; &id; [&id;]…</entry>
       <entry>n-ary constructor (binds the n arguments)</entry>
      </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
+      <entry><emphasis role="bold">_</emphasis></entry>
+      <entry>any remaining constructor (ignoring its arguments)</entry>
+     </row>
     </tbody>
    </tgroup>
   </table>
@@ -568,7 +574,7 @@
        <row>
         <entry/>
         <entry>|</entry>
-        <entry><emphasis role="bold">in match</emphasis> &term;
+        <entry><emphasis role="bold">in match</emphasis> &path;
           [<emphasis role="bold">in</emphasis>
           [&id;[<emphasis role="bold">:</emphasis> &path;]]…
           [<emphasis role="bold">⊢</emphasis> &path;]]</entry>
@@ -584,7 +590,7 @@
        <row>
 	<entry id="grammar.path">&path;</entry>
 	<entry>::=</entry>
-        <entry><emphasis>〈〈any &sterm; whithout occurrences of <emphasis role="bold">Set</emphasis>, <emphasis role="bold">Prop</emphasis>, <emphasis role="bold">CProp</emphasis>, <emphasis role="bold">Type</emphasis>, &id;, &uri; and user provided notation; however, <emphasis role="bold">%</emphasis> is now an additional production for &sterm;〉〉</emphasis></entry>
+        <entry><emphasis>〈〈any &sterm; without occurrences of <emphasis role="bold">Set</emphasis>, <emphasis role="bold">Prop</emphasis>, <emphasis role="bold">CProp</emphasis>, <emphasis role="bold">Type</emphasis>, &id;, &uri; and user provided notation; however, <emphasis role="bold">%</emphasis> is now an additional production for &sterm;〉〉</emphasis></entry>
        </row>
       </tbody>
      </tgroup>
@@ -597,6 +603,26 @@
        that can be represented by <emphasis role="bold">?</emphasis>.
        </para></listitem>
     </orderedlist>
+    <para>Warning: the format for a path for a <emphasis role="bold">match</emphasis> … <emphasis role="bold">with</emphasis>
+     expression is restricted to: <emphasis role="bold">match</emphasis> &path;
+     <emphasis role="bold">with</emphasis>
+     <emphasis role="bold">[</emphasis>
+     <emphasis role="bold">_</emphasis>
+     <emphasis role="bold">⇒</emphasis>
+     &path;
+     <emphasis role="bold">|</emphasis> …
+     <emphasis role="bold">|</emphasis>
+     <emphasis role="bold">_</emphasis>
+     <emphasis role="bold">⇒</emphasis>
+     &path;
+     <emphasis role="bold">]</emphasis>
+     Its semantics is the following: the n-th 
+     &quot;<emphasis role="bold">_</emphasis>
+     <emphasis role="bold">⇒</emphasis>
+     &path;&quot; branch is matched against the n-th constructor of the
+     inductive data type. The head λ-abstractions of &path; are matched
+     against the corresponding constructor arguments. 
+    </para>
     <para>For instance, the path
       <userinput>∀_,_:?.(? ? % ?)→(? ? ? %)</userinput>
        locates at once the subterms
