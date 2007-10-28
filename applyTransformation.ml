@@ -48,8 +48,7 @@ let mml_of_cic_sequent metasenv sequent =
   in
   let content_sequent = Acic2content.map_sequent asequent in 
   let pres_sequent = 
-    (Sequent2pres.sequent2pres ~ids_to_inner_sorts content_sequent)
-  in
+   Sequent2pres.sequent2pres ~ids_to_inner_sorts content_sequent in
   let xmlpres = mpres_document pres_sequent in
   (Xml2Gdome.document_of_xml DomMisc.domImpl xmlpres,
    unsh_sequent,
@@ -86,20 +85,23 @@ let txt_of_cic_sequent ~map_unicode_to_tex size metasenv sequent =
   BoxPp.render_to_string ~map_unicode_to_tex
     (function x::_ -> x | _ -> assert false) size pres_sequent
 
-let txt_of_cic_sequent_conclusion ~map_unicode_to_tex size metasenv sequent =
+let txt_of_cic_sequent_conclusion ~map_unicode_to_tex ~output_type size
+ metasenv sequent =
   let _,(asequent,_,_,ids_to_inner_sorts,_) = 
     Cic2acic.asequent_of_sequent metasenv sequent 
   in
   let _,_,_,t = Acic2content.map_sequent asequent in 
-  let t, ids_to_uris = TermAcicContent.ast_of_acic ids_to_inner_sorts t in
+  let t, ids_to_uris =
+   TermAcicContent.ast_of_acic ~output_type ids_to_inner_sorts t in
   let t = TermContentPres.pp_ast t in
   let t = CicNotationPres.render ids_to_uris t in
   BoxPp.render_to_string ~map_unicode_to_tex
     (function x::_ -> x | _ -> assert false) size t
 
 let txt_of_cic_term ~map_unicode_to_tex size metasenv context t = 
-  let fake_sequent = (-1,context,t) in
-  txt_of_cic_sequent_conclusion ~map_unicode_to_tex size metasenv fake_sequent 
+ let fake_sequent = (-1,context,t) in
+  txt_of_cic_sequent_conclusion ~map_unicode_to_tex ~output_type:`Term size
+   metasenv fake_sequent 
 ;;
 
 ignore (
@@ -148,14 +150,11 @@ let remove_closed_substs s =
 
 let term2pres ~map_unicode_to_tex n ids_to_inner_sorts annterm = 
    let ast, ids_to_uris = 
-      TermAcicContent.ast_of_acic ids_to_inner_sorts annterm
-   in
+    TermAcicContent.ast_of_acic ~output_type:`Term ids_to_inner_sorts annterm in
    let bobj =
       CicNotationPres.box_of_mpres (
          CicNotationPres.render ~prec:90 ids_to_uris 
-            (TermContentPres.pp_ast ast)
-      )
-   in
+            (TermContentPres.pp_ast ast)) in
    let render = function _::x::_ -> x | _ -> assert false in
    let mpres = CicNotationPres.mpres_of_box bobj in
    let s = BoxPp.render_to_string ~map_unicode_to_tex render n mpres in

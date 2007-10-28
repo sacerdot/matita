@@ -57,13 +57,12 @@ val mml_of_cic_object:
 
 val txt_of_cic_term: 
   map_unicode_to_tex:bool -> int -> Cic.metasenv -> Cic.context -> Cic.term ->
-    string 
+   string 
 val txt_of_cic_sequent: 
-  map_unicode_to_tex:bool -> int -> Cic.metasenv -> Cic.conjecture ->
-    string
+  map_unicode_to_tex:bool -> int -> Cic.metasenv -> Cic.conjecture -> string
 val txt_of_cic_sequent_conclusion: 
-  map_unicode_to_tex:bool -> int -> Cic.metasenv -> Cic.conjecture ->
-    string
+  map_unicode_to_tex:bool -> output_type:[`Pattern | `Term] -> int ->
+   Cic.metasenv -> Cic.conjecture -> string
 
 (* columns, rendering style, name prefix, object *)
 val txt_of_cic_object: 

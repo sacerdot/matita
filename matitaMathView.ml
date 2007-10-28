@@ -252,7 +252,7 @@ object (self)
    match self#get_term_by_id cic_info id with
    | SelTerm (t, father_hyp) ->
        let sequent = self#sequent_of_id ~paste_kind:`Pattern id in
-       let text = self#string_of_cic_sequent sequent in
+       let text = self#string_of_cic_sequent ~output_type:`Pattern sequent in
        (match father_hyp with
        | None -> None, [], Some text
        | Some hyp_name -> None, [ hyp_name, text ], None)
@@ -264,7 +264,7 @@ object (self)
    match self#get_term_by_id cic_info id with
    | SelTerm (t, father_hyp) ->
        let sequent = self#sequent_of_id ~paste_kind:`Term id in
-       let text = self#string_of_cic_sequent sequent in
+       let text = self#string_of_cic_sequent ~output_type:`Term sequent in
        text
    | SelHyp (hyp_name, _ctxt) -> hyp_name
 
@@ -442,24 +442,14 @@ object (self)
       | `Term -> self#tactic_text_of_node node
     else string_of_dom_node node
 
-  method private string_of_cic_sequent cic_sequent =
+  method private string_of_cic_sequent ~output_type cic_sequent =
     let script = MatitaScript.current () in
     let metasenv =
       if script#onGoingProof () then script#proofMetasenv else [] in
-    (*
-    let _, (acic_sequent, _, _, ids_to_inner_sorts, _) =
-      Cic2acic.asequent_of_sequent metasenv cic_sequent in
-    let _, _, _, annterm = acic_sequent in
-    let ast, ids_to_uris =
-      TermAcicContent.ast_of_acic ids_to_inner_sorts annterm in
-    let pped_ast = TermContentPres.pp_ast ast in
-    let markup = CicNotationPres.render ids_to_uris pped_ast in
-    BoxPp.render_to_string text_width markup
-    *)
     let map_unicode_to_tex =
       Helm_registry.get_bool "matita.paste_unicode_as_tex" in
     ApplyTransformation.txt_of_cic_sequent_conclusion ~map_unicode_to_tex
-      text_width metasenv cic_sequent
+     ~output_type text_width metasenv cic_sequent
 
   method private pattern_of term context unsh_sequent =
     let context_len = List.length context in
