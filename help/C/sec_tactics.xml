@@ -370,15 +370,15 @@
               as if <command>intros hyps</command> was issued.</para>
             <para>If <command>t1:∀x:A.B[x]</command> and
             <command>t2:∀x,y:A.B[x]→B[y]→C[x,y]</command> it generates:
-              <varlistentry>
+             <itemizedlist>
                 <listitem>
-                  <command>λx,y:A.t2 x y (t1 x) : ∀x,y:A.B[y]→C[x,y]</command> 
+                  <para><command>λx,y:A.t2 x y (t1 x) : ∀x,y:A.B[y]→C[x,y]</command></para>
                 </listitem>
                 <listitem>
-                  <command>λx,y:A.λH:B[x].t2 x y H (t1 y) : ∀x,y:A.B[x]→C[x,y]
-                  </command>
+                  <para><command>λx,y:A.λH:B[x].t2 x y H (t1 y) : ∀x,y:A.B[x]→C[x,y]
+                  </command></para>
                 </listitem>
-              </varlistentry>
+             </itemizedlist>
           </para>
           <para>If <command>t2</command> is omitted it composes 
             <command>t1</command>
