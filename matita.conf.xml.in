@@ -45,21 +45,14 @@
       exactly one 'library' db must be specified
       exactly one 'legacy'  db can  be specified
     -->
-    
-    <!-- this snippet is what is used by the helm team, everything on mowgli.
-         note that user's tables are named diffrently from library tables, so that
-	 they can coexists on the same db -->
 
-    <key name="metadata">@DBHOST@ public helm none legacy</key>
-    <key name="metadata">@DBHOST@ matita helm none library</key>
-    <key name="metadata">@DBHOST@ matita helm none user</key>
+    <!-- The following snippet is used by the helm team
+         note that user's tables are named diffrently from library tables,
+	 so they can coexists on the same db -->
 
-    <!-- The following snipset is used by the helm team to publish the matita
-         contributions
-    <key name="metadata">@DBHOST@ mowgli helm none legacy</key>
+    <key name="metadata">@DBHOST@ matita helm none legacy</key>
     <key name="metadata">@DBHOST@ public helm none library</key>
-    <key name="metadata">@DBHOST@ public helm none user</key>
-    -->
+    <key name="metadata">@DBHOST@ matita helm none user</key>
 
     <!-- The following snippet it what you want to use a local sqlite db
          and acess remotely to the coq library trought mowgli
