@@ -371,6 +371,14 @@
     The file <emphasis>matita.conf.xml</emphasis>...
     &TODO;
     </para>
+   <figure><title>Configuring the Databases</title>
+     <mediaobject>
+       <imageobject>
+         <imagedata fileref="figures/database.png" format="PNG" srccredit="Enrico Tassi"/>
+       </imageobject>
+       <textobject><phrase>How to configure the databases.</phrase></textobject>
+     </mediaobject>
+   </figure>
   </sect1>
 
 </chapter>
