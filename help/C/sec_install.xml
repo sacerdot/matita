@@ -247,10 +247,11 @@
     </sect2>
 
     <sect2 id="database_setup">
-      <title>Database setup</title>
+      <title>(optional) &MYSQL; setup</title>
 
-      <para> To fully exploit &appname; indexing and search capabilities you
-	will need a working &MYSQL; database. Detalied instructions on how to do
+      <para> To fully exploit &appname; indexing and search capabilities 
+	on a huge metadata set you may
+	need a working &MYSQL; database. Detalied instructions on how to do
 	it can be found in the <ulink type="http"
 	  url="http://dev.mysql.com/doc/">MySQL documentation</ulink>. Here you
 	can find a quick howto. </para>
@@ -386,11 +387,25 @@
   </sect1>
 
   <sect1 id="matita.conf.xml">
-    <title>Configuring Matita</title>
+    <title>Configuring &appname;</title>
     <para>
     The file <emphasis>matita.conf.xml</emphasis>...
     &TODO;
     </para>
+  <sect2>
+   <title>The db and the getter sections</title>
+   <para>
+	   &appname; needs to store/fetch data and metadata. Data is essentially
+	   composed of XML files, metadata is a set of tuples for a relational
+	   model. Data and metadata can produced by the user or be already
+	   available. Both kind of data/metadata can be local and/or remote.
+   </para>
+   <para>
+	   The db section tells &appname; where to store and retrieve metadata,
+	   while the getter section describes where XML files have to be
+	   found. The following picture describes the suggested configuration.
+	   Dashed arrows are determined by the configuration file.
+   </para>
    <figure><title>Configuring the Databases</title>
      <mediaobject>
        <imageobject>
@@ -399,6 +414,79 @@
        <textobject><phrase>How to configure the databases.</phrase></textobject>
      </mediaobject>
    </figure>
+  <sect3>
+   <title>The getter</title>
+   <para>
+	   Consider the following snippet and the URI
+	   <userinput>cic:/matita/foo/bar.con</userinput>. If &appname;
+	   is asked to read that object it will resolve the object trough
+	   the getter. Since the first two entries are equally specific
+	   (longest match rule applies) first the path
+	   <userinput>file://$(matita.rt_base_dir)/xml/standard-library/foo/bar.con</userinput>
+	   and then <userinput>file://$(user.home)/.matita/xml/matita/foo/bar.con</userinput>
+	   are inspected.
+	   <programlisting>
+<![CDATA[
+  <section name="getter">
+    <key name="cache_dir">$(user.home)/.matita/getter/cache</key>
+    <key name="prefix">
+      cic:/matita/
+      file://$(matita.rt_base_dir)/xml/standard-library/
+      ro
+    </key>
+    <key name="prefix">
+      cic:/matita/
+      file://$(user.home)/.matita/xml/matita/
+    </key>
+    <key name="prefix">
+      cic:/Coq/
+      http://mowgli.cs.unibo.it/xml/
+      legacy
+    </key>
+  </section>
+]]>	
+	</programlisting> 
+	if the same URI has to be written, the former prefix is skipped
+	since it is marked as readonly (<userinput>ro</userinput>).
+	Objects resolved using the third prefix are readonly too, and are
+	retrieved using the network. There is no limit to the number of
+	prefixes the user can define. The distinction between prefixes marked
+	as readonly and legacy is that, legacy ones are really read only, while
+	the ones marked with <userinput>ro</userinput> are considered for
+	writing when &appname; is started in system mode (used to publish user
+	developments in the library space).
+   </para>
+  </sect3>
+  <sect3>
+	  <title>The db</title>
+	<para>
+	   The database subsystem has three fron ends: library, user and
+	   legacy.  The latter is the only optional one. Every query is done on
+	   every frontend, making the duplicate free union of the results.
+	   The user front end kepps metadata produced by the user, and is thus
+	   heavily accessed in read/write mode, while the library and legacy
+	   fron ends are read only. Every front end can be connected to
+	   backend, the storage actually. 
+	   Consider the following snippet.
+	   <programlisting>
+<![CDATA[
+  <section name="db">
+    <key name="metadata">mysql://mowgli.cs.unibo.it matita helm none legacy</key>
+    <key name="metadata">file://$(matita.rt_base_dir) metadata.db helm helm library</key>
+    <key name="metadata">file://$(matita.basedir) user.db helm helm user</key>
+  </section>
+]]>	
+	</programlisting> 
+	Here the usr database is a file (thus locally accessed trough the
+	Sqlite library) placed in the user's home directory. The library one is
+	placed in the &appname; runtime directory. The legacy fron end is
+	connected to a remote &MYSQL; based storage. Every metadata key 
+	takes a path to the storage, the name of the database, the user name,
+	a password (or <userinput>none</userinput>) and the name of the front 
+	end to which it is attached.
+   </para>
+  </sect3>
+  </sect2>
   </sect1>
 
 </chapter>
