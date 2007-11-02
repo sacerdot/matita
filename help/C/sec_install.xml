@@ -389,11 +389,24 @@
   <sect1 id="matita.conf.xml">
     <title>Configuring &appname;</title>
     <para>
-    The file <emphasis>matita.conf.xml</emphasis>...
-    &TODO;
+	    The configuration file is divided in four sections. The user and
+	    matita ones are self explicative and does not need user
+	    intervention. Here we report a sample snippet for these two
+	    sections. The remaining db and getter sections will be explained in
+	    details later.
+	   <programlisting>
+<![CDATA[
+  <section name="user">
+    <key name="home">$(HOME)</key>
+    <key name="name">$(USER)</key>
+  </section>
+  <section name="matita">
+    <key name="basedir">$(user.home)/.matita</key>
+    <key name="rt_base_dir">/usr/share/matita/</key>
+    <key name="owner">$(user.name)</key>
+  </section>
+]]></programlisting>
     </para>
-  <sect2>
-   <title>The db and the getter sections</title>
    <para>
 	   &appname; needs to store/fetch data and metadata. Data is essentially
 	   composed of XML files, metadata is a set of tuples for a relational
@@ -414,8 +427,7 @@
        <textobject><phrase>How to configure the databases.</phrase></textobject>
      </mediaobject>
    </figure>
-  <sect3>
-   <title>The getter</title>
+   <para>The getter</para>
    <para>
 	   Consider the following snippet and the URI
 	   <userinput>cic:/matita/foo/bar.con</userinput>. If &appname;
@@ -456,9 +468,7 @@
 	writing when &appname; is started in system mode (used to publish user
 	developments in the library space).
    </para>
-  </sect3>
-  <sect3>
-	  <title>The db</title>
+	  <para>The db</para>
 	<para>
 	   The database subsystem has three fron ends: library, user and
 	   legacy.  The latter is the only optional one. Every query is done on
@@ -485,8 +495,6 @@
 	a password (or <userinput>none</userinput>) and the name of the front 
 	end to which it is attached.
    </para>
-  </sect3>
-  </sect2>
   </sect1>
 
 </chapter>
