@@ -26,6 +26,8 @@
   <!ENTITY TODO "<emphasis>TODO</emphasis>">
   <!ENTITY MYSQL "<application> <ulink type='http'
       url='http://www.mysql.com'>MySQL</ulink> </application>">
+  <!ENTITY Sqlite "<application> <ulink type='http'
+      url='http://www.sqlite.org'>Sqlite</ulink> </application>">
 
   <!-- Entities for BNF -->
   <!ENTITY id "<emphasis><link linkend='grammar.id'>id</link></emphasis>">

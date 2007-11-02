@@ -47,17 +47,24 @@
 	tools and libraries. They are listed below.
 
 	<note>
-	  <title>Note for Debian users</title>
+	  <title>Note for Debian (and derivatives) users</title>
 
-	  <para>If you are running a <ulink type="http"
-	      url="http://www.debian.org">Debian GNU/Linux</ulink> distribution
-	    you can have APT install all the required tools and libraries by
-	    adding the following repository to your
-	    <filename>/etc/apt/sources.list</filename>: <programlisting>
-	      deb <ulink type="http"
-		url="http://people.debian.org/~zack">http://people.debian.org/~zack</ulink> unstable helm
-	  </programlisting> and installing the
-	  <application>helm-matita-deps</application> package.</para>
+	  <para>If you are running a 
+		  <ulink type="http"
+			  url="http://www.debian.org">Debian GNU/Linux</ulink>
+		  distribution,
+		  or any of its derivative like <ulink type="http"
+			  url="http://ubuntu.com">Ubuntu</ulink>, 
+		  you can use APT to install all the required tools and
+		  libraries since they are all part of the Debian archive. 
+	  </para>	  
+	  <para>	  
+		  apt-get install ocaml ocaml-findlib libgdome2-ocaml-dev liblablgtk2-ocaml-dev liblablgtkmathview-ocaml-dev liblablgtksourceview-ocaml-dev libsqlite3-ocaml-dev libocamlnet-ocaml-dev libzip-ocaml-dev libhttp-ocaml-dev ocaml-ulex08 libexpat-ocaml-dev libmysql-ocaml-dev camlp5
+	  </para>	  
+	  <para>	  
+		  An official debian package is going to be added to the
+		  archive too.
+	  </para>
 
 	</note>
 
@@ -181,9 +188,22 @@
 	      <para> SQL database and OCaml bindings for its client-side library
 	      </para>
 	      <para> The SQL database itself is not strictly needed to run
-		&appname;, but we stronly encourage its use since a lot of
-		features are disabled without it. Still, the OCaml bindings of
-		the library are needed at compile time.</para>
+		&appname;, but the client libraries are.</para>
+	    </listitem>
+	  </varlistentry>
+
+	  <varlistentry>
+	    <term> &Sqlite; </term>
+	    <term>
+		    <application> 
+			  <ulink type="http"
+			      url="http://ocaml.info/home/ocaml_sources.html">
+		OCaml Sqlite3
+	      </ulink> </application>
+	    </term>
+	    <listitem>
+	      <para> Sqlite database and OCaml bindings
+	      </para>
 	    </listitem>
 	  </varlistentry>
 
