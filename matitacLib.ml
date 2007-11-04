@@ -304,6 +304,13 @@ let main ~mode =
   MatitaInit.initialize_all ();
   (* must be called after init since args are set by cmdline parsing *)
   let fname = fname () in
+  if false then
+   let basename = Filename.chop_extension fname in
+   let f = open_out (basename ^ ".ml") in
+    LibrarySync.set_object_declaration_hook
+     (fun _ obj ->
+       output_string f (CicExportation.ppobj basename obj);
+       flush f);
   let system_mode =  Helm_registry.get_bool "matita.system" in
   let bench_mode =  Helm_registry.get_bool "matita.bench" in
   if bench_mode then
