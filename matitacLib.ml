@@ -309,7 +309,7 @@ let main ~mode =
    let f = open_out (basename ^ ".ml") in
     LibrarySync.set_object_declaration_hook
      (fun _ obj ->
-       output_string f (CicExportation.ppobj basename obj);
+       output_string f (CicExportation.ppobj (Filename.basename basename) obj);
        flush f);
   let system_mode =  Helm_registry.get_bool "matita.system" in
   let bench_mode =  Helm_registry.get_bool "matita.bench" in
