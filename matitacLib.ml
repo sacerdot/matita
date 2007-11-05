@@ -304,13 +304,32 @@ let main ~mode =
   MatitaInit.initialize_all ();
   (* must be called after init since args are set by cmdline parsing *)
   let fname = fname () in
-  if false then
-   let basename = Filename.chop_extension fname in
-   let f = open_out (basename ^ ".ml") in
+  if true then
+   let basename = Filename.basename (Filename.chop_extension fname) in
+   let baseuri =
+    (* This does not work yet :-(
+       let baseuri =
+        GrafiteTypes.get_string_option
+        (match !grafite_status with None -> assert false | Some s -> s)
+        "baseuri" in*)
+    lazy
+     (fst (DependenciesParser.baseuri_of_script ~include_paths:[] fname)) in
+   let mangled_baseuri =
+    lazy
+     ( let baseuri = Lazy.force baseuri in
+       let baseuri = String.sub baseuri 5 (String.length baseuri - 5) in
+       let baseuri = Pcre.replace ~pat:"/" ~templ:"_" baseuri in
+        String.uncapitalize baseuri
+     ) in
+   let f =
+    lazy
+     (open_out
+       (Filename.dirname fname ^ "/" ^ Lazy.force mangled_baseuri ^ ".ml")) in
     LibrarySync.set_object_declaration_hook
      (fun _ obj ->
-       output_string f (CicExportation.ppobj (Filename.basename basename) obj);
-       flush f);
+       output_string (Lazy.force f)
+        (CicExportation.ppobj (Lazy.force baseuri) obj);
+       flush (Lazy.force f));
   let system_mode =  Helm_registry.get_bool "matita.system" in
   let bench_mode =  Helm_registry.get_bool "matita.bench" in
   if bench_mode then
