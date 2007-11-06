@@ -73,7 +73,7 @@ qed.
 
 lemma in_cons_case : ∀A.∀x,h:A.∀t:list A.x ∈ h::t → x = h ∨ (x ∈ t).
 intros;inversion H;intros
-  [destruct H2;left;symmetry;assumption
+  [destruct H2;left;symmetry;reflexivity
   |destruct H4;right;applyS H1]
 qed.
 
@@ -112,15 +112,12 @@ theorem append_to_or_in_list: \forall A:Type.\forall x:A.
 intros 3.
 elim l
   [right.apply H
-  |simplify in H1.inversion H1;intros
-    [destruct H3.left.rewrite < Hcut.
-     apply in_Base
-    |destruct H5.
-     elim (H l2)
-      [left.apply in_Skip.
-       rewrite < H4.assumption
-      |right.rewrite < H4.assumption
-      |rewrite > Hcut1.rewrite > H4.assumption
+  |simplify in H1.inversion H1;intros; destruct;
+    [left.apply in_Base
+    | elim (H l2)
+      [left.apply in_Skip. assumption
+      |right.assumption
+      |assumption
       ]
     ]
   ]

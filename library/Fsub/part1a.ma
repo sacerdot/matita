@@ -43,8 +43,8 @@ intros 4;elim H
      [unfold;intro;apply H8;apply (incl_bound_fv ? ? H7 ? H9)
      |apply (WFE_cons ? ? ? ? H6 H8);autobatch
      |unfold;intros;inversion H9;intros
-        [destruct H11;rewrite > Hcut;apply in_Base
-        |destruct H13;rewrite < Hcut1 in H10;apply in_Skip;apply (H7 ? H10)]]]
+        [destruct H11;apply in_Base
+        |destruct H13;apply in_Skip;apply (H7 ? H10)]]]
 qed.
 
 theorem narrowing:∀X,G,G1,U,P,M,N.
@@ -87,15 +87,15 @@ intros 3;elim H;clear H; try autobatch;
   |generalize in match H7;generalize in match H4;generalize in match H2;
    generalize in match H5;clear H7 H4 H2 H5;
    generalize in match (refl_eq ? (Arrow t t1));
-   elim H6 in ⊢ (? ? ? %→%); clear H6; intros; subst;
+   elim H6 in ⊢ (? ? ? %→%); clear H6; intros; destruct;
     [apply (SA_Trans_TVar ? ? ? ? H);apply (H4 ? ? H8 H9);autobatch
-    |inversion H11;intros; subst; autobatch depth=4 width=4 size=9;
+    |inversion H11;intros; destruct; autobatch depth=4 width=4 size=9;
     ]
   |generalize in match H7;generalize in match H4;generalize in match H2;
    generalize in match H5;clear H7 H4 H2 H5;
-   generalize in match (refl_eq ? (Forall t t1));elim H6 in ⊢ (? ? ? %→%);subst
+   generalize in match (refl_eq ? (Forall t t1));elim H6 in ⊢ (? ? ? %→%);destruct;
      [apply (SA_Trans_TVar ? ? ? ? H);apply (H4 ? H7 H8 H9 H10);reflexivity
-     |inversion H11;intros;subst
+     |inversion H11;intros;destruct;
         [apply SA_Top
            [autobatch
               |apply WFT_Forall
@@ -108,7 +108,7 @@ intros 3;elim H;clear H; try autobatch;
                  |intro;apply H15;apply H8;apply (WFT_to_incl ? ? ? H3);
                   assumption
                  |simplify;autobatch
-                 |apply (narrowing X (mk_bound true X t::l2) 
+                 |apply (narrowing X (mk_bound true X t::l1)
                          ? ? ? ? ? H7 ? ? [])
                     [intros;apply H9
                        [unfold;intros;lapply (H8 ? H17);rewrite > fv_append;

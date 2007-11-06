@@ -122,7 +122,7 @@ elim x.
   (* goal: x=pos y=pos *)
     elim (decidable_eq_nat n n1:((n=n1) \lor ((n=n1) \to False))).
     left.apply eq_f.assumption.
-    right.unfold Not.intros (H_inj).apply H. destruct H_inj. assumption.
+    right.unfold Not.intros (H_inj).apply H. destruct H_inj. reflexivity.
   (* goal: x=pos y=neg *)
     right.unfold Not.intro.apply (not_eq_pos_neg n n1). assumption.
 (* goal: x=neg *)

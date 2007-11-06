@@ -98,7 +98,7 @@ cases c; intros (H); [ apply reflect_true | apply reflect_false ]
        [ intros; lapply (b2pF ? ? (eqP d ? ?) H1) as H'; clear H1;
          destruct H; rewrite > Hcut in H'; apply H'; reflexivity;
        | intros; lapply (IH ? H1) as H'; destruct H;
-         rewrite > Hcut1 in H'; apply H'; reflexivity;]]]]
+         apply H'; reflexivity;]]]]
 qed.
     
 definition list_eqType : eqType → eqType ≝ λd:eqType.mk_eqType ? ? (lcmpP d).  

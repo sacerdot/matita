@@ -35,7 +35,7 @@ apply prove_reflect; intros;
  [1: generalize in match H; rewrite > (b2pT ? ? (eqP (list_eqType d2) ? ?) H2); 
      intros; clear H H2; rewrite < (pirrel ? ? ? H1 H3 (eqType_decidable nat_eqType));
      reflexivity
- |2: unfold Not; intros (H3); destruct H3; rewrite > Hcut in H2;
+ |2: unfold Not; intros (H3); destruct H3;
      rewrite > (cmp_refl (list_eqType d2)) in H2; destruct H2;]
 qed.
 

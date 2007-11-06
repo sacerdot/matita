@@ -224,7 +224,7 @@ lemma lookup_env_extends : \forall G,H,B,C,D,T,U,V,x,y.
             (in_list ? (mk_bound D y V) (H @ ((mk_bound B x T) :: G))).
 intros 10;elim H
   [simplify in H1;elim (in_cons_case ? ? ? ? H1)
-     [destruct H3;elim (H2 Hcut1)
+     [destruct H3;elim (H2);reflexivity
      |simplify;apply (in_Skip ? ? ? ? H3);]
   |simplify in H2;simplify;elim (in_cons_case ? ? ? ? H2)
      [rewrite > H4;apply in_Base
@@ -323,18 +323,16 @@ lemma WFE_Typ_subst : \forall H,x,B,C,T,U,G.
 intros 7;elim H 0
   [simplify;intros;(*FIXME*)generalize in match H1;intro;inversion H1;intros
      [lapply (nil_cons ? G (mk_bound B x T));elim (Hletin H4)
-     |destruct H8;rewrite < Hcut2 in H6;rewrite < Hcut in H4;
-      rewrite < Hcut in H6;apply (WFE_cons ? ? ? ? H4 H6 H2)]
+     |destruct H8;apply (WFE_cons ? ? ? ? H4 H6 H2)]
   |intros;simplify;generalize in match H2;elim t;simplify in H4;
    inversion H4;intros
      [destruct H5
      |destruct H9;apply WFE_cons
-        [rewrite < Hcut in H5;apply (H1 H5 H3)
-        |rewrite < (fv_env_extends ? x B C T U);rewrite > Hcut;rewrite > Hcut2;
-         assumption
-        |rewrite < Hcut3 in H8;rewrite > Hcut1;apply (WFT_env_incl ? ? H8);
+        [apply (H1 H5 H3)
+        |rewrite < (fv_env_extends ? x B C T U); assumption
+        |apply (WFT_env_incl ? ? H8);
          rewrite < (fv_env_extends ? x B C T U);unfold;intros;
-         rewrite > Hcut;assumption]]]
+         assumption]]]
 qed.
 
 lemma WFE_bound_bound : \forall B,x,T,U,G. (WFEnv G) \to
@@ -343,13 +341,13 @@ lemma WFE_bound_bound : \forall B,x,T,U,G. (WFEnv G) \to
 intros 6;elim H
   [lapply (in_list_nil ? ? H1);elim Hletin
   |elim (in_cons_case ? ? ? ? H6)
-     [destruct H7;subst;elim (in_cons_case ? ? ? ? H5)
-        [destruct H7;assumption
-        |elim H7;elim H3;apply boundinenv_natinfv;apply (ex_intro ? ? b);
+     [destruct H7;destruct;elim (in_cons_case ? ? ? ? H5)
+        [destruct H7;reflexivity
+        |elim H7;elim H3;apply boundinenv_natinfv;apply (ex_intro ? ? B);
          apply (ex_intro ? ? T);assumption]
      |elim (in_cons_case ? ? ? ? H5)
         [destruct H8;elim H3;apply boundinenv_natinfv;apply (ex_intro ? ? B);
-         apply (ex_intro ? ? U);rewrite < Hcut1;assumption
+         apply (ex_intro ? ? U);assumption
         |apply (H2 H8 H7)]]]
 qed.
 
@@ -360,8 +358,8 @@ lemma WFT_to_incl: ∀G,T,U.
 intros.elim (fresh_name ((fv_type U)@(fv_env G))).lapply(H a)
   [unfold;intros;lapply (fv_WFT ? x ? Hletin)
      [simplify in Hletin1;inversion Hletin1;intros
-        [destruct H4;elim H1;rewrite > Hcut;rewrite < H3.autobatch
-        |destruct H6;rewrite > Hcut1;assumption]
+        [destruct H4;elim H1;autobatch
+        |destruct H6;assumption]
      |apply in_FV_subst;assumption]
   |*:intro;apply H1;autobatch]
 qed.

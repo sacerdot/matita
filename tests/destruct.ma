@@ -64,29 +64,28 @@ inductive complex (A,B : Type) : B → A → Type ≝
 | C1 : ∀x:nat.∀a:A.∀b:B. complex A B b a
 | C2 : ∀a,a1:A.∀b,b1:B.∀x:nat. complex A B b1 a1 → complex A B b a.
 
-
 theorem recursive1: ∀ x,y : nat. 
   (C1 ? ? O     (Some ? x) y) = 
   (C1 ? ? (S O) (Some ? x) y) → False.
-intros; destruct H;
+intros; destruct H.
 qed.
 
 theorem recursive2: ∀ x,y,z,t : nat. 
   (C1 ? ? t (Some ? x) y) = 
   (C1 ? ? z (Some ? x) y) → t=z.
-intros; destruct H;assumption.
+intros; destruct H; reflexivity.
 qed.
 
 theorem recursive3: ∀ x,y,z,t : nat. 
   C2 ? ? (None ?) ? (S O) ? z (C1 ? ? (S O) (Some ? x) y) = 
   C2 ? ? (None ?) ? (S O) ? t (C1 ? ? (S O) (Some ? x) y) → z=t.
-intros; destruct H;assumption.
+intros; destruct H; reflexivity.
 qed.
 
 theorem recursive4: ∀ x,y,z,t : nat. 
   C2 ? ? (None ?) ? (S O) ? z (C1 ? ? (S O) (Some ? z) y) = 
   C2 ? ? (None ?) ? (S O) ? t (C1 ? ? (S O) (Some ? x) y) → z=t.
-intros; destruct H;assumption.
+intros; destruct H; reflexivity.
 qed.
 
 theorem recursive2: ∀ x,y : nat. 
