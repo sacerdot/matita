@@ -15,7 +15,7 @@
 set "baseuri" "cic:/matita/ordered_groups/".
 
 include "groups.ma".
-include "ordered_sets2.ma".
+include "ordered_sets.ma".
 
 record pre_ordered_abelian_group : Type ≝
  { og_abelian_group:> abelian_group;

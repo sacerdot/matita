@@ -14,7 +14,7 @@
 
 set "baseuri" "cic:/matita/sigma_algebra/".
 
-include "topology.ma".
+include "classical_pointwise/topology.ma".
 
 record is_sigma_algebra (X:Type) (A: set X) (M: set (set X)) : Prop ≝
  { siga_subset: ∀B.B ∈ M → B ⊆ A;

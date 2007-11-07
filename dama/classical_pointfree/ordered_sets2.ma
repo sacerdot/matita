@@ -12,9 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/ordered_sets2".
+set "baseuri" "cic:/matita/classical_pointfree/ordered_sets2".
 
-include "ordered_sets.ma".
+include "classical_pointfree/ordered_sets.ma".
 
 theorem le_f_inf_inf_f:
  ∀O':dedekind_sigma_complete_ordered_set.
@@ -125,8 +125,3 @@ theorem fatou:
     ]
  ].
 qed.
-
-record cotransitively_ordered_set: Type :=
- { cos_ordered_set :> ordered_set;
-   cos_cotransitive: cotransitive ? (os_le cos_ordered_set)
- }.

@@ -14,7 +14,7 @@
 
 set "baseuri" "cic:/matita/topology/".
 
-include "sets.ma".
+include "classical_pointwise/sets.ma".
 
 record is_topology (X) (A: set X) (O: set (set X)) : Prop  ≝
  { top_subset: ∀B. B ∈ O → B ⊆ A;
