@@ -30,7 +30,7 @@ qed.
 theorem zeq_trans: \forall z1,z2. z1 = z2 \to 
                    \forall z3. z2 = z3 \to z1 = z3.
  intros 3. elim H. clear H z1 z2. 
- inversion H3. clear H3. intros. subst.
+ inversion H3. clear H3. intros. destruct.
  lapply (nplus_total n5 n6). decompose.
  lapply (nplus_total n4 n9). decompose.
  apply zeq.

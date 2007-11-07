@@ -35,7 +35,7 @@ theorem injection_test3:
  ∀t,t'. tnode nat t tempty = tnode nat t' tempty → t = t'.
  intros.
  destruct H.
- assumption.
+ reflexivity.
 qed.
 
 theorem injection_test3:

@@ -24,7 +24,7 @@ theorem nle_trans: \forall x,y. x <= y \to
                    \forall z. y <= z \to x <= z.
  intros 3. elim H; clear H x y;
  [ autobatch
- | lapply linear nle_inv_succ_1 to H3. decompose. subst. 
+ | lapply linear nle_inv_succ_1 to H3. decompose. destruct. 
    autobatch
  ].
 qed.
@@ -38,7 +38,7 @@ theorem nle_irrefl: \forall x. x < x \to False.
 qed.
 
 theorem nle_irrefl_ei: \forall x, z. z <= x \to z = succ x \to False.
- intros 3. elim H; clear H x z; subst. autobatch.
+ intros 3. elim H; clear H x z; destruct. autobatch.
 qed.
 
 theorem nle_irrefl_smart: \forall x. x < x \to False.

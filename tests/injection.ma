@@ -27,7 +27,7 @@ inductive t0 : Type :=
 theorem injection_test0: ∀n,n',m,m'. k0 n m = k0 n' m' → m = m'.
  intros;
  destruct H;
- assumption.
+ reflexivity.
 qed.
 
 inductive t : Type → Type :=
@@ -37,7 +37,7 @@ inductive t : Type → Type :=
 theorem injection_test1: ∀n,n'. k n = k n' → n = n'.
  intros;
  destruct H;
- assumption.
+ reflexivity.
 qed.
 
 inductive tt (A:Type) : Type -> Type :=
@@ -47,7 +47,7 @@ inductive tt (A:Type) : Type -> Type :=
 theorem injection_test2: ∀n,n',m,m'. k1 bool n n' = k1 bool m m' → n' = m'.
  intros;
  destruct H;
- assumption.
+ reflexivity.
 qed.
 
 inductive ttree : Type → Type :=
@@ -58,5 +58,5 @@ theorem injection_test4:
  ∀n,n',m,m'. k1 bool (S n) (S (S m)) = k1 bool (S n') (S (S (S m'))) → m = S m'.
  intros;
  destruct H;
- assumption.
+ reflexivity.
 qed.

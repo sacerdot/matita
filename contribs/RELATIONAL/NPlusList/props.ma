@@ -22,7 +22,7 @@ axiom npluslist_gen_cons: \forall l,q,r.
 (* 
  intros. inversion H; clear H; intros;
  [ id
- | subst.
+ | destruct.
 *)
 
 theorem npluslist_inj_2: \forall ns1,ns2,n. 

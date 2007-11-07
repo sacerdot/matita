@@ -26,6 +26,6 @@ theorem nle_gt_or_le: \forall x, y. y > x \lor y <= x.
  | decompose;
    [ lapply linear nle_inv_succ_1 to H1
    | lapply linear nle_lt_or_eq to H1
-   ]; decompose; subst; autobatch depth = 4
+   ]; decompose; destruct; autobatch depth = 4
  ].
 qed.

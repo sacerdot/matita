@@ -24,20 +24,20 @@ theorem track_pred: \forall Q1,Q2,p1,p2,S1,S2. [Q1, p1, S1] => [Q2, p2, S2] \to
  intros 7; elim H; clear H Q1 Q2 p1 p2 S1 S2;
  [ autobatch
  | autobatch
- | lapply linear track_inv_impw to H3; decompose; subst; autobatch
- | lapply linear track_inv_impr to H3; decompose; subst; autobatch
- | lapply linear track_inv_impi to H7; decompose; subst; autobatch size = 7
- | lapply linear track_inv_scut to H5; decompose; subst; autobatch
- | lapply linear track_inv_scut to H4; decompose; subst;
+ | lapply linear track_inv_impw to H3; decompose; destruct; autobatch
+ | lapply linear track_inv_impr to H3; decompose; destruct; autobatch
+ | lapply linear track_inv_impi to H7; decompose; destruct; autobatch size = 7
+ | lapply linear track_inv_scut to H5; decompose; destruct; autobatch
+ | lapply linear track_inv_scut to H4; decompose; destruct;
    lapply linear track_inv_lref to H6; decompose; autobatch
- | lapply linear track_inv_scut to H4; decompose; subst;
+ | lapply linear track_inv_scut to H4; decompose; destruct;
    lapply linear track_inv_lref to H5; decompose; autobatch
- | lapply linear track_inv_scut to H3; decompose; subst;
-   lapply linear track_inv_prin to H5; subst; autobatch
- | lapply linear track_inv_scut to H3; decompose; subst;
-   lapply linear track_inv_prin to H4; subst; autobatch
- | lapply linear track_inv_scut to H3; decompose; subst;
-   lapply linear track_inv_impw to H4; decompose; subst;
-   lapply linear track_inv_impr to H5; decompose; subst; autobatch
+ | lapply linear track_inv_scut to H3; decompose; destruct;
+   lapply linear track_inv_prin to H5; destruct; autobatch
+ | lapply linear track_inv_scut to H3; decompose; destruct;
+   lapply linear track_inv_prin to H4; destruct; autobatch
+ | lapply linear track_inv_scut to H3; decompose; destruct;
+   lapply linear track_inv_impw to H4; decompose; destruct;
+   lapply linear track_inv_impr to H5; decompose; destruct; autobatch
  ].
 qed.

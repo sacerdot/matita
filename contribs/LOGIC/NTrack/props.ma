@@ -24,12 +24,12 @@ theorem ntrack_weak: \forall R,p,P,Q,S,i.
  intros 2; elim p; clear p;
  [ lapply linear ntrack_inv_lref to H as H0; decompose;
    lapply linear insert_trans to H, H1; decompose; autobatch
- | lapply linear ntrack_inv_parx to H; subst; autobatch
- | lapply linear ntrack_inv_impw to H1; decompose; subst;
+ | lapply linear ntrack_inv_parx to H; destruct; autobatch
+ | lapply linear ntrack_inv_impw to H1; decompose; destruct;
    lapply linear H to H4, H2; decompose; autobatch
- | lapply linear ntrack_inv_impr to H1; decompose; subst;
+ | lapply linear ntrack_inv_impr to H1; decompose; destruct;
    lapply linear H to H4, H2; decompose; autobatch
- | lapply linear ntrack_inv_impi to H3; decompose; subst;
+ | lapply linear ntrack_inv_impi to H3; decompose; destruct;
    lapply insert_conf to H4, H6; clear H6; decompose;
    lapply H to H9, H4; clear H H9; lapply linear H1 to H8, H4;
    lapply linear H2 to H7, H6; decompose; autobatch width = 4
@@ -42,13 +42,13 @@ theorem ntrack_comp: \forall R,q,p,P,Q,S,i.
                      \exists r. NTrack P r S.
  intros 2; elim q; clear q;
  [ lapply linear ntrack_inv_lref to H1 as H0; decompose;
-   lapply linear insert_conf_rev_full to H1,H2; decompose; subst; autobatch
- | lapply linear ntrack_inv_parx to H1; subst; autobatch
- | lapply linear ntrack_inv_impw to H2; decompose; subst;
+   lapply linear insert_conf_rev_full to H1,H2; decompose; destruct; autobatch
+ | lapply linear ntrack_inv_parx to H1; destruct; autobatch
+ | lapply linear ntrack_inv_impw to H2; decompose; destruct;
    lapply linear H to H1, H5, H3; decompose; autobatch
- | lapply linear ntrack_inv_impr to H2; decompose; subst;
+ | lapply linear ntrack_inv_impr to H2; decompose; destruct;
    lapply linear H to H1, H5, H3; decompose; autobatch
- | lapply linear ntrack_inv_impi to H4; decompose; subst;
+ | lapply linear ntrack_inv_impi to H4; decompose; destruct;
    lapply insert_trans to H5, H7; clear H7; decompose;
    lapply ntrack_weak to H3, H6; decompose;
    lapply H to H3, H10, H5; clear H H10; lapply linear H1 to H3, H9, H5;

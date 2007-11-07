@@ -18,23 +18,23 @@ include "NLE/defs.ma".
 
 theorem nle_inv_succ_1: \forall x,y. x < y \to 
                         \exists z. y = succ z \land x <= z.
- intros. inversion H; clear H; intros; subst. autobatch.
+ intros. inversion H; clear H; intros; destruct. autobatch.
 qed.
 
 theorem nle_inv_succ_succ: \forall x,y. x < succ y \to x <= y.
- intros. inversion H; clear H; intros; subst. autobatch.
+ intros. inversion H; clear H; intros; destruct. autobatch.
 qed.
 
 theorem nle_inv_succ_zero: \forall x. x < zero \to False.
- intros. inversion H; clear H; intros; subst.
+ intros. inversion H; clear H; intros; destruct.
 qed.
 
 theorem nle_inv_zero_2: \forall x. x <= zero \to x = zero.
- intros. inversion H; clear H; intros; subst. autobatch.
+ intros. inversion H; clear H; intros; destruct. autobatch.
 qed.
 
 theorem nle_inv_succ_2: \forall y,x. x <= succ y \to
                         x = zero \lor \exists z. x = succ z \land z <= y.
- intros. inversion H; clear H; intros; subst;
+ intros. inversion H; clear H; intros; destruct;
  autobatch depth = 4.
 qed.

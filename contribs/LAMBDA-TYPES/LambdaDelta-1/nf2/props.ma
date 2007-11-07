@@ -27,6 +27,25 @@ theorem nf2_sort:
 n) t2)).(eq_ind_r T (TSort n) (\lambda (t: T).(eq T (TSort n) t)) (refl_equal 
 T (TSort n)) t2 (pr2_gen_sort c t2 n H))))).
 
+theorem nf2_csort_lref:
+ \forall (n: nat).(\forall (i: nat).(nf2 (CSort n) (TLRef i)))
+\def
+ \lambda (n: nat).(\lambda (i: nat).(\lambda (t2: T).(\lambda (H: (pr2 (CSort 
+n) (TLRef i) t2)).(let H0 \def (pr2_gen_lref (CSort n) t2 i H) in (or_ind (eq 
+T t2 (TLRef i)) (ex2_2 C T (\lambda (d: C).(\lambda (u: T).(getl i (CSort n) 
+(CHead d (Bind Abbr) u)))) (\lambda (_: C).(\lambda (u: T).(eq T t2 (lift (S 
+i) O u))))) (eq T (TLRef i) t2) (\lambda (H1: (eq T t2 (TLRef i))).(eq_ind_r 
+T (TLRef i) (\lambda (t: T).(eq T (TLRef i) t)) (refl_equal T (TLRef i)) t2 
+H1)) (\lambda (H1: (ex2_2 C T (\lambda (d: C).(\lambda (u: T).(getl i (CSort 
+n) (CHead d (Bind Abbr) u)))) (\lambda (_: C).(\lambda (u: T).(eq T t2 (lift 
+(S i) O u)))))).(ex2_2_ind C T (\lambda (d: C).(\lambda (u: T).(getl i (CSort 
+n) (CHead d (Bind Abbr) u)))) (\lambda (_: C).(\lambda (u: T).(eq T t2 (lift 
+(S i) O u)))) (eq T (TLRef i) t2) (\lambda (x0: C).(\lambda (x1: T).(\lambda 
+(H2: (getl i (CSort n) (CHead x0 (Bind Abbr) x1))).(\lambda (H3: (eq T t2 
+(lift (S i) O x1))).(eq_ind_r T (lift (S i) O x1) (\lambda (t: T).(eq T 
+(TLRef i) t)) (getl_gen_sort n i (CHead x0 (Bind Abbr) x1) H2 (eq T (TLRef i) 
+(lift (S i) O x1))) t2 H3))))) H1)) H0))))).
+
 theorem nf2_abst:
  \forall (c: C).(\forall (u: T).((nf2 c u) \to (\forall (b: B).(\forall (v: 
 T).(\forall (t: T).((nf2 (CHead c (Bind b) v) t) \to (nf2 c (THead (Bind 

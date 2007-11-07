@@ -25,9 +25,9 @@ theorem insert_conf: \forall P,Q1,S1,i1. Insert S1 i1 P Q1 \to
                      Insert S2 j2 Q1 Q \land Insert S1 j1 Q2 Q.
  intros 5. elim H; clear H i1 P Q1;
  [ elim H1; clear H1 i2 c Q2; decompose; autobatch depth = 7 size = 8
- | lapply linear insert_inv_abst_1 to H3. decompose; subst;
+ | lapply linear insert_inv_abst_1 to H3. decompose; destruct;
    [ autobatch depth = 7 size = 8
-   | lapply linear H2 to H4. decompose. subst. autobatch depth = 6 size = 8
+   | lapply linear H2 to H4. decompose. destruct. autobatch depth = 6 size = 8
    ]
  ].
 qed. 
@@ -37,10 +37,10 @@ theorem insert_trans: \forall P1,Q1,S1,i1. Insert S1 i1 P1 Q1 \to
                       \exists P2,j1,j2. 
                       Insert S2 j2 P1 P2 \land Insert S1 j1 P2 Q2.
  intros 5. elim H; clear H i1 P1 Q1;
- [ lapply linear insert_inv_abst_1 to H1. decompose; subst; autobatch depth = 6 size = 7
- | lapply linear insert_inv_abst_1 to H3. decompose; subst;
+ [ lapply linear insert_inv_abst_1 to H1. decompose; destruct; autobatch depth = 6 size = 7
+ | lapply linear insert_inv_abst_1 to H3. decompose; destruct;
    [ clear H2. autobatch depth = 7 size = 8
-   | lapply linear H2 to H4. decompose. subst. autobatch depth = 6 size = 8
+   | lapply linear H2 to H4. decompose. destruct. autobatch depth = 6 size = 8
    ]
  ].
 qed.
@@ -51,10 +51,10 @@ theorem insert_conf_rev: \forall P1,Q,S1,i1. Insert S1 i1 P1 Q \to
                          \exists Q1,Q2,j1,j2. 
                          Insert S2 j2 Q2 P1 \land Insert S1 j1 Q1 P2.
  intros 5; elim H; clear H i1 P1 Q;
- [ inversion H1; clear H1; intros; subst; autobatch depth = 7 size = 8
- | inversion H3; clear H3; intros; subst;
+ [ inversion H1; clear H1; intros; destruct; autobatch depth = 7 size = 8
+ | inversion H3; clear H3; intros; destruct;
    [ autobatch depth = 7 size = 8
-   | clear H3; lapply linear H2 to H; decompose; subst;
+   | clear H3; lapply linear H2 to H; decompose; destruct;
      autobatch depth = 8 size = 10
    ]
  ].
@@ -65,8 +65,8 @@ theorem insert_conf_rev_full: \forall P1,Q,S1,i1. Insert S1 i1 P1 Q \to
                               (S1 = S2 \land i1 = i2 \land P1 = P2) \lor 
                               \exists Q1,Q2,j1,j2. 
                               Insert S2 j2 Q2 P1 \land Insert S1 j1 Q1 P2.
- intros; lapply insert_conf_rev to H, H1; decompose; subst;
- [ lapply linear insert_inj to H, H1; subst; autobatch depth = 4
+ intros; lapply insert_conf_rev to H, H1; decompose; destruct;
+ [ lapply linear insert_inj to H, H1; destruct; autobatch depth = 4
  | autobatch depth = 7 size = 8
  ].
 qed.
