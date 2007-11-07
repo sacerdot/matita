@@ -304,7 +304,7 @@ let main ~mode =
   MatitaInit.initialize_all ();
   (* must be called after init since args are set by cmdline parsing *)
   let fname = fname () in
-  if true then
+  if false then
    let basename = Filename.basename (Filename.chop_extension fname) in
    let baseuri =
     (* This does not work yet :-(
