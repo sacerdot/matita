@@ -95,7 +95,7 @@ cases x (s ps); cases y (t pt); simplify; intros (Est);
 [1: constructor 1; generalize in match ps; rewrite > Est; intros (pt');
     rewrite < (pirrel ? ? ? pt pt' (eqType_decidable bool_eqType)); reflexivity;
 |2: constructor 2; unfold Not; intros (H); destruct H;
-    cases (Est); assumption;]  
+    cases (Est); reflexivity]  
 qed. 
 
 definition sub_eqType ≝ λd : eqType.λp. mk_eqType ? ? (sigma_eq_dec d p).
@@ -132,8 +132,7 @@ cases a; cases b; simplify; intros (H);
 |2,3,5: destruct H;
 |4: rewrite > (b2pT ? ? (eqP d ? ?) H); reflexivity; 
 |6,7: unfold Not; intros (H1); destruct H1
-|8: unfold Not; intros (H1); destruct H1; 
-    rewrite > Hcut in H;  rewrite > cmp_refl in H; destruct H;]
+|8: unfold Not; intros (H1); destruct H1;rewrite > cmp_refl in H; destruct H;]
 qed.
 
 definition option_eqType : eqType → eqType ≝ λd:eqType.mk_eqType ? ? (ocmpP d).

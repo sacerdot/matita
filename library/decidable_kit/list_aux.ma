@@ -96,7 +96,7 @@ cases c; intros (H); [ apply reflect_true | apply reflect_false ]
      | simplify;  intros;
        cases (b2pT ? ? (andbPF ? ?) (p2bT ? ? (negbP ?) H)); clear H;
        [ intros; lapply (b2pF ? ? (eqP d ? ?) H1) as H'; clear H1;
-         destruct H; rewrite > Hcut in H'; apply H'; reflexivity;
+         destruct H; apply H'; reflexivity;
        | intros; lapply (IH ? H1) as H'; destruct H;
          apply H'; reflexivity;]]]]
 qed.
