@@ -305,7 +305,7 @@ let main ~mode =
   (* must be called after init since args are set by cmdline parsing *)
   let fname = fname () in
   if false then
-   let basename = Filename.basename (Filename.chop_extension fname) in
+   (let basename = Filename.basename (Filename.chop_extension fname) in
    let baseuri =
     (* This does not work yet :-(
        let baseuri =
@@ -329,7 +329,7 @@ let main ~mode =
      (fun _ obj ->
        output_string (Lazy.force f)
         (CicExportation.ppobj (Lazy.force baseuri) obj);
-       flush (Lazy.force f));
+       flush (Lazy.force f)));
   let system_mode =  Helm_registry.get_bool "matita.system" in
   let bench_mode =  Helm_registry.get_bool "matita.bench" in
   if bench_mode then
