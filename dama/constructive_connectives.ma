@@ -32,3 +32,9 @@ for @{ 'sigma ${default
 
 interpretation "constructive exists" 'sigma \eta.x =
   (cic:/matita/constructive_connectives/ex.ind#xpointer(1/1) _ x).
+
+alias id "False" = "cic:/matita/logic/connectives/False.ind#xpointer(1/1)".
+definition Not ≝ λx:Type.False.
+
+interpretation "constructive not" 'not x = 
+  (cic:/matita/constructive_connectives/Not.con x).
