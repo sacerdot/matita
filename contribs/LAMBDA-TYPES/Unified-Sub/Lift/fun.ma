@@ -39,7 +39,7 @@ theorem lift_mono: \forall l,i,t,t1. Lift l i t t1 \to
  | lapply linear lift_inv_lref_1_le_nplus to H3, H1, H2
  | lapply linear lift_inv_bind_1 to H5. decompose
  | lapply linear lift_inv_flat_1 to H5. decompose
- ]; subst; autobatch.
+ ]; destruct; autobatch.
 qed.
 
 theorem lift_inj: \forall l,i,t1,t. Lift l i t1 t \to
@@ -53,5 +53,5 @@ theorem lift_inj: \forall l,i,t1,t. Lift l i t1 t \to
    lapply lift_inv_lref_2_le_nplus to H3, H0, H2
  | lapply linear lift_inv_bind_2 to H5. decompose
  | lapply linear lift_inv_flat_2 to H5. decompose
- ]; subst; autobatch.
+ ]; destruct; autobatch.
 qed.
