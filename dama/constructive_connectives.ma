@@ -14,14 +14,20 @@
 
 set "baseuri" "cic:/matita/constructive_connectives/".
 
-inductive or (A,B:Type) : Type \def
-   Left : A → or A B
- | Right : B → or A B.
+inductive Or (A,B:Type) : Type ≝
+   Left : A → Or A B
+ | Right : B → Or A B.
 
 interpretation "constructive or" 'or x y =
-  (cic:/matita/constructive_connectives/or.ind#xpointer(1/1) x y).
+  (cic:/matita/constructive_connectives/Or.ind#xpointer(1/1) x y).
 
-inductive ex (A:Type) (P:A→Prop) : Type \def
+inductive And (A,B:Type) : Type ≝
+ | Conj : A → B → And A B.
+ 
+interpretation "constructive and" 'and x y =
+  (cic:/matita/constructive_connectives/And.ind#xpointer(1/1) x y).
+
+inductive ex (A:Type) (P:A→Prop) : Type ≝
   ex_intro: ∀w:A. P w → ex A P.
 
 notation < "hvbox(Σ ident i opt (: ty) break . p)"
@@ -34,7 +40,7 @@ interpretation "constructive exists" 'sigma \eta.x =
   (cic:/matita/constructive_connectives/ex.ind#xpointer(1/1) _ x).
 
 alias id "False" = "cic:/matita/logic/connectives/False.ind#xpointer(1/1)".
-definition Not ≝ λx:Type.False.
+definition Not ≝ λx:Type.x → False.
 
 interpretation "constructive not" 'not x = 
   (cic:/matita/constructive_connectives/Not.con x).
