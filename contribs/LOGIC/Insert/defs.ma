@@ -18,7 +18,7 @@ set "baseuri" "cic:/matita/LOGIC/Insert/defs".
 *)
 
 include "Lift/defs.ma".
-include "datatypes/Context.ma".
+include "datatypes_defs/Context.ma".
 
 inductive Insert (p,q:Proof) (S:Sequent): 
                  Nat \to Context \to Context \to Prop \def

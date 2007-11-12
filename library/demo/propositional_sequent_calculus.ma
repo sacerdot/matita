@@ -433,7 +433,7 @@ lemma same_atom_to_eq: ∀f1,f2. same_atom f1 f2 = true → f1=f2.
      |4,5:
        simplify in H2;
        destruct H2
-     | simplify in H2;
+     | simplify in H1;
        destruct H1
      ]
   |4,5:

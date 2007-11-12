@@ -17,7 +17,7 @@ set "baseuri" "cic:/matita/LOGIC/PEq/defs".
 (* EQUALITY PREDICATE FOR PROOFS IN CONTEXT
 *)
 
-include "datatypes/Context.ma".
+include "datatypes_defs/Context.ma".
 
 inductive PEq (Q1:Context) (p1:Proof) (Q2:Context) (p2:Proof): Prop \def
    | peq_intro: Q1 = Q2 \land p1 = p2 \to PEq Q1 p1 Q2 p2

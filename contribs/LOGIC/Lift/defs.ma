@@ -17,7 +17,7 @@ set "baseuri" "cic:/matita/LOGIC/Lift/defs".
 (* PROOF RELOCATION
 *)
 
-include "datatypes/Proof.ma".
+include "datatypes_defs/Proof.ma".
 
 inductive Lift: Nat \to Nat \to Proof \to Proof \to Prop \def
    | lift_lref_lt: \forall jd,jh,i. i < jd \to Lift jd jh (lref i) (lref i)

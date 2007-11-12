@@ -16,4 +16,10 @@ set "baseuri" "cic:/matita/LOGIC/datatypes_props/Sequent".
 
 include "datatypes_defs/Sequent.ma".
 
+theorem linj_inj: \forall a,c. linj a = linj c \to a = c.
+ intros; whd in H:(? ? % %); destruct; autobatch.
+qed.
+
 theorem rinj_inj: \forall b,d. rinj b = rinj d \to b = d.
+ intros; whd in H:(? ? % %); destruct; autobatch.
+qed.

@@ -18,7 +18,7 @@ set "baseuri" "cic:/matita/LOGIC/Weight/defs".
    For cut elimination and confluence
 *)
 
-include "datatypes/Context.ma".
+include "datatypes_defs/Context.ma".
 
 
 inductive Weight: Nat \to Context \to Proof \to Nat \to Prop \def

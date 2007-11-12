@@ -17,7 +17,7 @@ set "baseuri" "cic:/matita/LOGIC/CLE/defs".
 (* ORDER RELATION BETWEEN POSITIONS AND CONTEXTS
 *)
 
-include "datatypes/Context.ma".
+include "datatypes_defs/Context.ma".
 
 inductive CLE: Nat \to Context \to Prop \def
    | cle_zero: \forall Q. CLE zero Q

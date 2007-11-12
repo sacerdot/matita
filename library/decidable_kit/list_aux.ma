@@ -49,9 +49,9 @@ lemma list_ind2 :
   P l1 l2.
 intros (T1 T2 l1 l2 P Hl Pnil Pcons);
 generalize in match Hl; clear Hl; generalize in match l2; clear l2;
-elim l1 1 (l2 x1); [ cases l2; intros (Hl); [assumption| destruct Hl]]
+elim l1 1 (l2 x1); [ cases l2; intros (Hl); [assumption| simplify in Hl; destruct Hl]]
 intros 3 (tl1 IH l2); cases l2; [1: simplify; intros 1 (Hl); destruct Hl] 
-intros 1 (Hl); apply Pcons; apply IH; destruct Hl; assumption;
+intros 1 (Hl); apply Pcons; apply IH; simplify in Hl; destruct Hl; assumption;
 qed.
 
 lemma eq_map : ∀A,B,f,g,l. (∀x.f x = g x) → map A B f l = map A B g l.
@@ -71,7 +71,7 @@ lemma lcmp_length :
  lcmp ? l1 l2 = true → length ? l1 = length ? l2.
 intros 2 (d l1); elim l1 1 (l2 x1);
 [1: cases l2; simplify; intros; [reflexivity|destruct H] 
-|2: intros 3 (tl1 IH l2); cases (l2); intros; [1:destruct H]
+|2: intros 3 (tl1 IH l2); cases (l2); intros; [1:simplify in H; destruct H]
     simplify; (* XXX la apply non fa simplify? *) 
     apply congr_S; apply (IH l);
     (* XXX qualcosa di enorme e' rotto! la regola di convertibilita?! *)
@@ -90,7 +90,7 @@ cases c; intros (H); [ apply reflect_true | apply reflect_false ]
   rewrite > (IH H2); rewrite > (b2pT ? ? (eqP d ? ?) H1); reflexivity
 | generalize in match H; clear H; generalize in match l2; clear l2;
   elim l1 1 (l1 x1);
-   [ cases l1; [intros; destruct H | unfold Not; intros; destruct H1;]
+   [ cases l1; simplify; [intros; destruct H | unfold Not; intros; destruct H1;]
    | intros 3 (tl1 IH l2); cases l2;
      [ unfold Not; intros; destruct H1;
      | simplify;  intros;

@@ -86,7 +86,7 @@ cut (∀x:fsort. count fsort (cmp fsort x) enum = (S O));
    generalize in match Hn; generalize in match Hn; clear Hn;
    unfold segment_enum;
    generalize in match bound in ⊢ (% → ? → ? ? (? ? ? (? ? ? ? %)) ?);
-   intros 1 (m); elim m  (Hm Hn p IH Hm Hn); [ destruct Hm ]
+   intros 1 (m); elim m  (Hm Hn p IH Hm Hn); [ simplify in Hm; destruct Hm ]
    simplify; cases (eqP bool_eqType (ltb p bound) true); simplify;
    [1:unfold segment in ⊢ (? ? match ? % ? ? with [_ ⇒ ?|_ ⇒ ?] ?);
       unfold nat_eqType in ⊢ (? ? match % with [_ ⇒ ?|_ ⇒ ?] ?);
@@ -146,7 +146,7 @@ reflexivity; qed.
   
 lemma uniqP : ∀d:eqType.∀l:list d. 
   reflect (∀x:d.mem d x l = true → count d (cmp d x) l = (S O)) (uniq d l).
-intros (d l); apply prove_reflect; elim l; [1: destruct H1 | 3: destruct H]
+intros (d l); apply prove_reflect; elim l; [1: simplify in H1; destruct H1 | 3: simplify in H; destruct H]
 [1: generalize in match H2; simplify in H2; 
     lapply (b2pT ? ? (orbP ? ?) H2) as H3; clear H2; 
     cases H3; clear H3; intros;
@@ -170,7 +170,7 @@ intros (d l); apply prove_reflect; elim l; [1: destruct H1 | 3: destruct H]
         unfold Not; intros (A); lapply (A t) as A'; 
         [1: simplify in A'; rewrite > cmp_refl in A'; simplify in A';
             destruct A'; rewrite < count_O_mem in H1;
-            rewrite > Hcut in H1; destruct H1;  
+            rewrite > Hcut in H1; simplify in H1; destruct H1;  
         |2: simplify; rewrite > cmp_refl; reflexivity;]
     |2: intros (Ul1); lapply (H Ul1); unfold Not; intros (A); apply Hletin;
         intros (r Mrl1); lapply (A r); 
@@ -178,7 +178,7 @@ intros (d l); apply prove_reflect; elim l; [1: destruct H1 | 3: destruct H]
         generalize in match Hletin1; simplify; apply (cmpP d r t); 
         simplify; intros (E Hc); [2: assumption]
         destruct Hc; rewrite < count_O_mem in Mrl1;
-        rewrite > Hcut in Mrl1; destruct Mrl1;]]
+        rewrite > Hcut in Mrl1; simplify in Mrl1; destruct Mrl1;]]
 qed.
     
 lemma mem_finType : ∀d:finType.∀x:d. mem d x (enum d) = true. 
@@ -195,7 +195,7 @@ lemma sub_enumP : ∀d:finType.∀p:d→bool.∀x:sub_eqType d p.
 intros (d p x); cases x (t Ht); clear x;
 generalize in match (mem_finType d t); 
 generalize in match (uniq_fintype_enum d); 
-elim (enum d); [destruct H1] simplify;  
+elim (enum d); [simplify in H1; destruct H1] simplify;  
 cases (in_sub_eq d p t1); simplify; 
 [1:generalize in match H3; clear H3; cases s (r Hr); clear s;
    simplify; intros (Ert1); generalize in match Hr; clear Hr;
