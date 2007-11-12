@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/ordered_sets/".
+set "baseuri" "cic:/matita/excedence/".
 
 include "higher_order_defs/relations.ma".
 include "nat/plus.ma".
@@ -27,12 +27,12 @@ record excedence : Type ≝ {
 }.
 
 interpretation "excedence" 'nleq a b =
- (cic:/matita/ordered_sets/exc_relation.con _ a b). 
+ (cic:/matita/excedence/exc_relation.con _ a b). 
 
 definition le ≝ λE:excedence.λa,b:E. ¬ (a ≰ b).
 
 interpretation "ordered sets less or equal than" 'leq a b = 
- (cic:/matita/ordered_sets/le.con _ a b).
+ (cic:/matita/excedence/le.con _ a b).
 
 lemma le_reflexive: ∀E.reflexive ? (le E).
 intros (E); unfold; cases E; simplify; intros (x); apply (H x);
@@ -46,7 +46,7 @@ qed.
 definition apart ≝ λE:excedence.λa,b:E. a ≰ b ∨ b ≰ a.
 
 notation "a # b" non associative with precedence 50 for @{ 'apart $a $b}.
-interpretation "apartness" 'apart a b = (cic:/matita/ordered_sets/apart.con _ a b). 
+interpretation "apartness" 'apart a b = (cic:/matita/excedence/apart.con _ a b). 
 
 lemma apart_coreflexive: ∀E.coreflexive ? (apart E).
 intros (E); unfold; cases E; simplify; clear E; intros (x); unfold;
@@ -67,7 +67,7 @@ definition eq ≝ λE:excedence.λa,b:E. ¬ (a # b).
 
 notation "a ≈ b" non associative with precedence 50 for @{ 'napart $a $b}.    
 interpretation "alikeness" 'napart a b =
-  (cic:/matita/ordered_sets/eq.con _ a b). 
+  (cic:/matita/excedence/eq.con _ a b). 
 
 lemma eq_reflexive:∀E. reflexive ? (eq E).
 intros (E); unfold; cases E (T f cRf _); simplify; unfold Not; intros (x H);
@@ -94,7 +94,7 @@ qed.
 definition lt ≝ λE:excedence.λa,b:E. a ≤ b ∧ a # b.
 
 interpretation "ordered sets less than" 'lt a b =
- (cic:/matita/ordered_sets/lt.con _ a b).
+ (cic:/matita/excedence/lt.con _ a b).
 
 lemma lt_coreflexive: ∀E.coreflexive ? (lt E).
 intros (E); unfold; unfold Not; intros (x H); cases H (_ ABS); 
