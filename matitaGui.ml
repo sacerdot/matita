@@ -964,59 +964,13 @@ class gui () =
         ignore (adj#connect#changed
                 (fun _ -> adj#set_value (adj#upper -. adj#page_size)));
       console#message (sprintf "\tMatita version %s\n" BuildTimeConf.version);
-        (* toolbar *)
-      let module A = GrafiteAst in
-      let hole = CicNotationPt.UserInput in
-      let loc = HExtlib.dummy_floc in
-      let tac ast _ =
-        if (MatitaScript.current ())#onGoingProof () then
-          (MatitaScript.current ())#advance
-            ~statement:("\n"
-              ^ GrafiteAstPp.pp_tactic
-                ~map_unicode_to_tex:(Helm_registry.get_bool
-                  "matita.paste_unicode_as_tex")
-                ~term_pp:CicNotationPp.pp_term
-                ~lazy_term_pp:CicNotationPp.pp_term ast)
-            ()
-      in
-      let tac_w_term ast _ =
-        if (MatitaScript.current ())#onGoingProof () then
-          let buf = source_buffer in
-          buf#insert ~iter:(buf#get_iter_at_mark (`NAME "locked"))
-            ("\n"
-            ^ GrafiteAstPp.pp_tactic ~term_pp:CicNotationPp.pp_term
-              ~map_unicode_to_tex:(Helm_registry.get_bool
-                "matita.paste_unicode_as_tex")
-              ~lazy_term_pp:CicNotationPp.pp_term ast)
-      in
-      let tbar = main in
-      connect_button tbar#introsButton (tac (A.Intros (loc, (None, []))));
-      connect_button tbar#applyButton (tac_w_term (A.Apply (loc, hole)));
-      connect_button tbar#exactButton (tac_w_term (A.Exact (loc, hole)));
-      connect_button tbar#elimButton (tac_w_term
-        (let pattern = None, [], Some CicNotationPt.UserInput in
-	A.Elim (loc, hole, None, pattern, (None, []))));
-      connect_button tbar#elimTypeButton (tac_w_term
-        (A.ElimType (loc, hole, None, (None, []))));
-      connect_button tbar#splitButton (tac (A.Split loc));
-      connect_button tbar#leftButton (tac (A.Left loc));
-      connect_button tbar#rightButton (tac (A.Right loc));
-      connect_button tbar#existsButton (tac (A.Exists loc));
-      connect_button tbar#reflexivityButton (tac (A.Reflexivity loc));
-      connect_button tbar#symmetryButton (tac (A.Symmetry loc));
-      connect_button tbar#transitivityButton
-        (tac_w_term (A.Transitivity (loc, hole)));
-      connect_button tbar#assumptionButton (tac (A.Assumption loc));
-      connect_button tbar#cutButton (tac_w_term (A.Cut (loc, None, hole)));
-      connect_button tbar#autoButton (tac (A.AutoBatch (loc,[])));
-      MatitaGtkMisc.toggle_widget_visibility
-       ~widget:(main#tacticsButtonsHandlebox :> GObj.widget)
-       ~check:main#tacticsBarMenuItem;
+      (* TO BE REMOVED *)
+      main#tacticsButtonsHandlebox#misc#hide ();
+      main#tacticsBarMenuItem#misc#hide ();
+      main#scriptNotebook#remove_page 1;
+      main#scriptNotebook#set_show_tabs false;
+      (* / TO BE REMOVED *)
       let module Hr = Helm_registry in
-      if
-        not (Hr.get_opt_default Hr.bool ~default:false "matita.tactics_bar")
-      then 
-        main#tacticsBarMenuItem#set_active false;
       MatitaGtkMisc.toggle_callback ~check:main#fullscreenMenuItem
         ~callback:(function 
           | true -> main#toplevel#fullscreen () 
