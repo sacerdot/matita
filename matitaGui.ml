@@ -1379,11 +1379,13 @@ class gui () =
         end
       
     method setStar name b =
-      let l = main#scriptLabel in
+      let w = main#toplevel in
+      let set x = w#set_title x in
+      let name = "Matita - " ^ name in
       if b then
-        l#set_text (name ^  " *")
+        set (name ^  " *")
       else
-        l#set_text (name)
+        set (name)
         
     method private _enableSaveTo file =
       script_fname <- Some file;
