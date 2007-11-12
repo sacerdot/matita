@@ -33,7 +33,10 @@ theorem track_pred: \forall Q1,Q2,p1,p2,S1,S2. [Q1, p1, S1] => [Q2, p2, S2] \to
  | lapply linear track_inv_scut to H4; decompose; destruct;
    lapply linear track_inv_lref to H5; decompose; autobatch
  | lapply linear track_inv_scut to H3; decompose; destruct;
-   lapply linear track_inv_prin to H5; destruct; autobatch
+   lapply linear track_inv_prin to H5; destruct;
+   lapply linear rinj_inj to Hcut1;
+   rewrite < Hcut1 in H4; clear Hcut1 a2;
+   autobatch
  | lapply linear track_inv_scut to H3; decompose; destruct;
    lapply linear track_inv_prin to H4; destruct; autobatch
  | lapply linear track_inv_scut to H3; decompose; destruct;

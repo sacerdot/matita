@@ -12,35 +12,22 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/LOGIC/datatypes/Sequent".
+set "baseuri" "cic:/matita/LOGIC/datatypes_defs/Context".
 
-(* SEQUENTS
+(* FLAT CONTEXTS
    - Naming policy:
-     - left hand sides  (lhs): A C
-     - right hand sides (rhs): B D
-     - sequents              : R S
+     - contexts: P Q
 *)
 
-include "datatypes/Formula.ma".
+include "datatypes_defs/Proof.ma".
+include "datatypes_defs/Sequent.ma".
 
-inductive LHS: Type \def
-   | lleaf: LHS
-   | labst: LHS \to Formula \to LHS
+inductive Context: Type \def
+   | leaf: Context
+   | abst: Context \to Proof \to Proof \to Sequent \to Context
 .
+(*
+definition inj: Sequent \to Context \def abst leaf.
 
-inductive RHS: Type \def
-   | rleaf: RHS
-   | rabst: Formula \to RHS \to RHS
-.
-
-inductive Sequent: Type \def
-   | pair: LHS \to RHS \to Sequent
-.
-
-definition linj: Formula \to LHS \def labst lleaf.
-
-definition rinj: Formula \to RHS \def \lambda b. rabst b rleaf.
-
-coercion cic:/matita/LOGIC/datatypes/Sequent/linj.con.
-
-coercion cic:/matita/LOGIC/datatypes/Sequent/rinj.con.
+coercion cic:/matita/LOGIC/datatypes_defs/Context/inj.con.
+*)

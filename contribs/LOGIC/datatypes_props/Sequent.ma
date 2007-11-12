@@ -12,16 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/LOGIC/datatypes/Formula".
+set "baseuri" "cic:/matita/LOGIC/datatypes_props/Sequent".
 
-(* FORMULAE
-   - Naming policy:
-     - formulae: a b c d
-*)
+include "datatypes_defs/Sequent.ma".
 
-include "preamble.ma".
-
-inductive Formula: Type \def
-   | posr: Nat \to Formula
-   | impl: Formula \to Formula \to Formula
-.
+theorem rinj_inj: \forall b,d. rinj b = rinj d \to b = d.

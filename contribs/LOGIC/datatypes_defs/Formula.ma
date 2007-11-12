@@ -12,20 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/LOGIC/datatypes/Proof".
+set "baseuri" "cic:/matita/LOGIC/datatypes_defs/Formula".
 
-(* PROOFS
+(* FORMULAE
    - Naming policy:
-     - proofs: p q r s
+     - formulae: a b c d
 *)
 
 include "preamble.ma".
 
-inductive Proof: Type \def
-   | lref: Nat \to Proof                       (* projection         *)
-   | prin: Nat \to Proof                       (* pos rel inhabitant *)
-   | impw: Proof \to Proof                     (* weakening          *)
-   | impr: Proof \to Proof                     (* right introduction *)
-   | impi: Proof \to Proof \to Proof \to Proof (* left introduction  *)
-   | scut: Proof \to Proof \to Proof           (* symmetric cut      *)
+inductive Formula: Type \def
+   | posr: Nat \to Formula
+   | impl: Formula \to Formula \to Formula
 .
