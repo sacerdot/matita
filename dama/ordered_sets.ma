@@ -14,7 +14,7 @@
 
 set "baseuri" "cic:/matita/ordered_sets/".
 
-include "ordered_sets.ma".
+include "excedence.ma".
 
 record is_porder_relation (C:Type) (le:C→C→Prop) (eq:C→C→Prop) : Type ≝ { 
   por_reflexive: reflexive ? le;
