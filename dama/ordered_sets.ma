@@ -32,12 +32,10 @@ intros (E); apply (mk_pordered_set E); apply (mk_is_porder_relation);
 [apply le_reflexive|apply le_transitive|apply le_antisymmetric]
 qed. 
 
-definition total_order : ∀E:excedence. Type ≝
-  λE:excedence. ∀a,b:E. a ≰ b → a < b.
-
 alias id "transitive" = "cic:/matita/higher_order_defs/relations/transitive.con".
 alias id "cotransitive" = "cic:/matita/higher_order_defs/relations/cotransitive.con".
 alias id "antisymmetric" = "cic:/matita/higher_order_defs/relations/antisymmetric.con".
+
 theorem antisimmetric_to_cotransitive_to_transitive:
  ∀C:Type.∀le:C→C→Prop. antisymmetric ? le → cotransitive ? le → transitive ? le.  
 intros (T f Af cT); unfold transitive; intros (x y z fxy fyz);
@@ -104,180 +102,120 @@ definition bounded_above_sequence_of_bounded_sequence ≝
 coercion cic:/matita/ordered_sets/bounded_above_sequence_of_bounded_sequence.con.
 
 definition lower_bound ≝
- λO:ordered_set.λb:bounded_below_sequence O.
+ λO:pordered_set.λb:bounded_below_sequence O.
   ib_lower_bound ? b (bbs_is_bounded_below ? b).
 
 lemma lower_bound_is_lower_bound:
- ∀O:ordered_set.∀b:bounded_below_sequence O.
+ ∀O:pordered_set.∀b:bounded_below_sequence O.
   is_lower_bound ? b (lower_bound ? b).
- intros;
- unfold lower_bound;
- apply ib_lower_bound_is_lower_bound.
+intros; unfold lower_bound; apply ib_lower_bound_is_lower_bound.
 qed.
 
 definition upper_bound ≝
- λO:ordered_set.λb:bounded_above_sequence O.
+ λO:pordered_set.λb:bounded_above_sequence O.
   ib_upper_bound ? b (bas_is_bounded_above ? b).
 
 lemma upper_bound_is_upper_bound:
- ∀O:ordered_set.∀b:bounded_above_sequence O.
+ ∀O:pordered_set.∀b:bounded_above_sequence O.
   is_upper_bound ? b (upper_bound ? b).
- intros;
- unfold upper_bound;
- apply ib_upper_bound_is_upper_bound.
+intros; unfold upper_bound; apply ib_upper_bound_is_upper_bound.
 qed.
 
-definition lt ≝ λO:ordered_set.λa,b:O.a ≤ b ∧ a ≠ b.
-
-interpretation "Ordered set lt" 'lt a b =
- (cic:/matita/ordered_sets/lt.con _ a b).
-
-definition reverse_ordered_set: ordered_set → ordered_set.
- intros;
- apply mk_ordered_set;
-  [2:apply (λx,y:o.y ≤ x)
-  | skip
-  | apply mk_is_order_relation;
-     [ simplify;
-       intros;
-       apply (or_reflexive ? ? o)
-     | simplify;
-       intros;
-       apply (or_transitive ? ? o);
-        [2: apply H1
-        | skip
-        | assumption
-        ] 
-     | simplify;
-       intros;
-       apply (or_antisimmetric ? ? o);
-       assumption
-     ]
-  ].
+lemma Or_symmetric: symmetric ? Or.
+unfold; intros (x y H); cases H; [right|left] assumption;
 qed.
+
+definition reverse_excedence: excedence → excedence.
+intros (E); apply (mk_excedence E); [apply (λx,y.exc_relation E y x)] 
+cases E (T f cRf cTf); simplify; 
+[1: unfold Not; intros (x H); apply (cRf x); assumption
+|2: intros (x y z); apply Or_symmetric; apply cTf; assumption;]
+qed. 
+
+definition reverse_pordered_set: pordered_set → pordered_set.
+intros (p); apply (mk_pordered_set (reverse_excedence p));
+generalize in match (reverse_excedence p); intros (E); cases E (T f cRf cTf);
+simplify; apply mk_is_porder_relation; unfold; intros;
+[apply le_reflexive|apply (le_transitive ???? H H1);|apply (le_antisymmetric ??? H H1)]
+qed. 
  
-interpretation "Ordered set ge" 'geq a b =
- (cic:/matita/ordered_sets/os_le.con _
-  (cic:/matita/ordered_sets/os_pre_ordered_set.con _
-   (cic:/matita/ordered_sets/reverse_ordered_set.con _ _)) a b).
-
 lemma is_lower_bound_reverse_is_upper_bound:
- ∀O:ordered_set.∀a:nat→O.∀l:O.
-  is_lower_bound O a l → is_upper_bound (reverse_ordered_set O) a l.
- intros;
- unfold;
- intro;
- unfold;
- unfold reverse_ordered_set;
- simplify;
- apply H.
+ ∀O:pordered_set.∀a:nat→O.∀l:O.
+  is_lower_bound O a l → is_upper_bound (reverse_pordered_set O) a l.
+intros (O a l H); unfold; intros (n); unfold reverse_pordered_set;
+unfold reverse_excedence; simplify; fold unfold le (le ? l (a n)); apply H;    
 qed.
 
 lemma is_upper_bound_reverse_is_lower_bound:
- ∀O:ordered_set.∀a:nat→O.∀l:O.
-  is_upper_bound O a l → is_lower_bound (reverse_ordered_set O) a l.
- intros;
- unfold;
- intro;
- unfold;
- unfold reverse_ordered_set;
- simplify;
- apply H.
+ ∀O:pordered_set.∀a:nat→O.∀l:O.
+  is_upper_bound O a l → is_lower_bound (reverse_pordered_set O) a l.
+intros (O a l H); unfold; intros (n); unfold reverse_pordered_set;
+unfold reverse_excedence; simplify; fold unfold le (le ? (a n) l); apply H;    
 qed.
 
 lemma reverse_is_lower_bound_is_upper_bound:
- ∀O:ordered_set.∀a:nat→O.∀l:O.
-  is_lower_bound (reverse_ordered_set O) a l → is_upper_bound O a l.
- intros;
- unfold in H;
- unfold reverse_ordered_set in H;
- apply H.
+ ∀O:pordered_set.∀a:nat→O.∀l:O.
+  is_lower_bound (reverse_pordered_set O) a l → is_upper_bound O a l.
+intros (O a l H); unfold; intros (n); unfold reverse_pordered_set in H;
+unfold reverse_excedence in H; simplify in H; apply H;    
 qed.
 
 lemma reverse_is_upper_bound_is_lower_bound:
- ∀O:ordered_set.∀a:nat→O.∀l:O.
-  is_upper_bound (reverse_ordered_set O) a l → is_lower_bound O a l.
- intros;
- unfold in H;
- unfold reverse_ordered_set in H;
- apply H.
+ ∀O:pordered_set.∀a:nat→O.∀l:O.
+  is_upper_bound (reverse_pordered_set O) a l → is_lower_bound O a l.
+intros (O a l H); unfold; intros (n); unfold reverse_pordered_set in H;
+unfold reverse_excedence in H; simplify in H; apply H;    
 qed.
-
 
 lemma is_inf_to_reverse_is_sup:
- ∀O:ordered_set.∀a:bounded_below_sequence O.∀l:O.
-  is_inf O a l → is_sup (reverse_ordered_set O) a l.
- intros;
- apply (mk_is_sup (reverse_ordered_set O));
-  [ apply is_lower_bound_reverse_is_upper_bound;
-    apply inf_lower_bound;
-    assumption
-  | intros;
-    change in v with (os_carrier O);
-    change with (v ≤ l);
-    apply (inf_greatest_lower_bound ? ? ? H);
-    apply reverse_is_upper_bound_is_lower_bound;
-    assumption
-  ].
+ ∀O:pordered_set.∀a:bounded_below_sequence O.∀l:O.
+  is_inf O a l → is_sup (reverse_pordered_set O) a l.
+intros (O a l H); apply (mk_is_sup (reverse_pordered_set O));
+[1: apply is_lower_bound_reverse_is_upper_bound; apply inf_lower_bound; assumption
+|2: unfold reverse_pordered_set; simplify; unfold reverse_excedence; simplify; 
+    intros (m H1); apply (inf_greatest_lower_bound ? ? ? H); apply H1;]
 qed.
- 
+
 lemma is_sup_to_reverse_is_inf:
- ∀O:ordered_set.∀a:bounded_above_sequence O.∀l:O.
-  is_sup O a l → is_inf (reverse_ordered_set O) a l.
- intros;
- apply (mk_is_inf (reverse_ordered_set O));
-  [ apply is_upper_bound_reverse_is_lower_bound;
-    apply sup_upper_bound;
-    assumption
-  | intros;
-    change in v with (os_carrier O);
-    change with (l ≤ v);
-    apply (sup_least_upper_bound ? ? ? H);
-    apply reverse_is_lower_bound_is_upper_bound;
-    assumption
-  ].
+ ∀O:pordered_set.∀a:bounded_above_sequence O.∀l:O.
+  is_sup O a l → is_inf (reverse_pordered_set O) a l.
+intros (O a l H); apply (mk_is_inf (reverse_pordered_set O));
+[1: apply is_upper_bound_reverse_is_lower_bound; apply sup_upper_bound; assumption
+|2: unfold reverse_pordered_set; simplify; unfold reverse_excedence; simplify; 
+    intros (m H1); apply (sup_least_upper_bound ? ? ? H); apply H1;]
 qed.
 
 lemma reverse_is_sup_to_is_inf:
- ∀O:ordered_set.∀a:bounded_above_sequence O.∀l:O.
-  is_sup (reverse_ordered_set O) a l → is_inf O a l.
- intros;
- apply mk_is_inf;
-  [ apply reverse_is_upper_bound_is_lower_bound;
-    change in l with (os_carrier (reverse_ordered_set O));
-    apply sup_upper_bound;
-    assumption
-  | intros;
-    change in l with (os_carrier (reverse_ordered_set O));
-    change in v with (os_carrier (reverse_ordered_set O));
-    change with (os_le (reverse_ordered_set O) l v);
-    apply (sup_least_upper_bound ? ? ? H);
-    change in v with (os_carrier O);
-    apply is_lower_bound_reverse_is_upper_bound;
-    assumption
-  ].
+ ∀O:pordered_set.∀a:bounded_above_sequence O.∀l:O.
+  is_sup (reverse_pordered_set O) a l → is_inf O a l.
+intros (O a l H); apply mk_is_inf;
+[1: apply reverse_is_upper_bound_is_lower_bound; 
+    apply (sup_upper_bound (reverse_pordered_set O)); assumption
+|2: intros (v H1); apply (sup_least_upper_bound (reverse_pordered_set O) a l H v);
+    apply is_lower_bound_reverse_is_upper_bound; assumption;]
 qed.
 
 lemma reverse_is_inf_to_is_sup:
- ∀O:ordered_set.∀a:bounded_above_sequence O.∀l:O.
-  is_inf (reverse_ordered_set O) a l → is_sup O a l.
- intros;
- apply mk_is_sup;
-  [ apply reverse_is_lower_bound_is_upper_bound;
-    change in l with (os_carrier (reverse_ordered_set O));
-    apply (inf_lower_bound ? ? ? H)
-  | intros;
-    change in l with (os_carrier (reverse_ordered_set O));
-    change in v with (os_carrier (reverse_ordered_set O));
-    change with (os_le (reverse_ordered_set O) v l);
-    apply (inf_greatest_lower_bound ? ? ? H);
-    change in v with (os_carrier O);
-    apply is_upper_bound_reverse_is_lower_bound;
-    assumption
-  ].
+ ∀O:pordered_set.∀a:bounded_above_sequence O.∀l:O.
+  is_inf (reverse_pordered_set O) a l → is_sup O a l.
+intros (O a l H); apply mk_is_sup;
+[1: apply reverse_is_lower_bound_is_upper_bound; 
+    apply (inf_lower_bound (reverse_pordered_set O)); assumption
+|2: intros (v H1); apply (inf_greatest_lower_bound (reverse_pordered_set O) a l H v);
+    apply is_upper_bound_reverse_is_lower_bound; assumption;]
 qed.
 
+(*
 record cotransitively_ordered_set: Type :=
  { cos_ordered_set :> ordered_set;
    cos_cotransitive: cotransitive ? (os_le cos_ordered_set)
  }.
+*)
+
+definition total_order_property : ∀E:excedence. Type ≝
+  λE:excedence. ∀a,b:E. a ≰ b → a < b.
+
+record tordered_set : Type ≝ {
+ tos_poset:> pordered_set;
+ tos_totality: total_order_property tos_poset
+}.
