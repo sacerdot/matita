@@ -76,7 +76,7 @@ lemma strong_ext_to_ext: ∀A:apartness.∀op:A→A. strong_ext ? op → ext ? o
 intros 6 (A op SEop x y Exy); intro Axy; apply Exy; apply SEop; assumption;
 qed. 
 
-lemma f_plusl: ∀G:abelian_group.∀x,y,z:G. y ≈ z →  x+y ≈ x+z.
+lemma feq_plusl: ∀G:abelian_group.∀x,y,z:G. y ≈ z →  x+y ≈ x+z.
 intros (G x y z Eyz); apply (strong_ext_to_ext ?? (plus_strong_ext ? x));
 assumption;
 qed.  
@@ -103,49 +103,68 @@ apply (ap_rewl ??? ((-x + x) + y));
         [1: apply (feq_plusr ???? (opp_inverse ??)); 
         |2: apply (ap_rewl ???? (zero_neutral ? y)); apply (ap_rewr ??? (0 + z));
             [1: apply (feq_plusr ???? (opp_inverse ??)); 
-            |2: apply (ap_rewr ???? (zero_neutral ? z)); assumption;]]]]
+            |2: apply (ap_rewr ???? (zero_neutral ??)); assumption;]]]]
 qed.
 
-lemma plus_canc: ∀G:abelian_group.∀x,y,z:G. x+y ≈ x+z → y ≈ z. 
-intros 6 (G x y z E Ayz); apply E; apply fap_plusl; assumption;
-qed. 
-
-(*
-
-theorem eq_opp_plus_plus_opp_opp: ∀G:abelian_group.∀x,y:G. -(x+y) = -x + -y.
- intros;
- apply (cancellationlaw ? (x+y));
- rewrite < plus_comm;
- rewrite > opp_inverse;
- rewrite > plus_assoc;
- rewrite > plus_comm in ⊢ (? ? ? (? ? ? (? ? ? %)));
- rewrite < plus_assoc in ⊢ (? ? ? (? ? ? %));
- rewrite > plus_comm;
- rewrite > plus_comm in ⊢ (? ? ? (? ? (? ? % ?) ?));
- rewrite > opp_inverse;
- rewrite > zero_neutral;
- rewrite > opp_inverse;
- reflexivity.
+lemma fap_plusr: ∀G:abelian_group.∀x,y,z:G. y # z →  y+x # z+x. 
+intros (G x y z Ayz); apply (plus_strong_extr ? (-x));
+apply (ap_rewl ??? (y + (x + -x)));
+[1: apply (eq_symmetric ??? (plus_assoc ????)); 
+|2: apply (ap_rewr ??? (z + (x + -x)));
+    [1: apply (eq_symmetric ??? (plus_assoc ????)); 
+    |2: apply (ap_rewl ??? (y + (-x+x)) (feq_plusl ???? (plus_comm ???)));
+        apply (ap_rewl ??? (y + 0) (feq_plusl ???? (opp_inverse ??)));
+        apply (ap_rewl ??? (0 + y) (plus_comm ???));
+        apply (ap_rewl ??? y (zero_neutral ??));
+        apply (ap_rewr ??? (z + (-x+x)) (feq_plusl ???? (plus_comm ???)));
+        apply (ap_rewr ??? (z + 0) (feq_plusl ???? (opp_inverse ??)));
+        apply (ap_rewr ??? (0 + z) (plus_comm ???));
+        apply (ap_rewr ??? z (zero_neutral ??));
+        assumption]]
+qed.
+    
+lemma plus_cancl: ∀G:abelian_group.∀y,z,x:G. x+y ≈ x+z → y ≈ z. 
+intros 6 (G y z x E Ayz); apply E; apply fap_plusl; assumption;
 qed.
 
-theorem eq_opp_opp_x_x: ∀G:abelian_group.∀x:G.--x=x.
- intros;
- apply (cancellationlaw ? (-x));
- rewrite > opp_inverse;
- rewrite > plus_comm;
- rewrite > opp_inverse;
- reflexivity.
+lemma plus_cancr: ∀G:abelian_group.∀y,z,x:G. y+x ≈ z+x → y ≈ z. 
+intros 6 (G y z x E Ayz); apply E; apply fap_plusr; assumption;
 qed.
 
-theorem eq_zero_opp_zero: ∀G:abelian_group.0=-0.
+theorem eq_opp_plus_plus_opp_opp: 
+  ∀G:abelian_group.∀x,y:G. -(x+y) ≈ -x + -y.
+intros (G x y); apply (plus_cancr ??? (x+y));
+apply (eq_transitive ?? 0); [apply (opp_inverse ??)]
+apply (eq_transitive ?? (-x + -y + x + y)); [2: apply (eq_symmetric ??? (plus_assoc ????))]
+apply (eq_transitive ?? (-y + -x + x + y)); [2: repeat apply feq_plusr; apply plus_comm]
+apply (eq_transitive ?? (-y + (-x + x) + y)); [2: apply feq_plusr; apply plus_assoc;]
+apply (eq_transitive ?? (-y + 0 + y)); 
+  [2: apply feq_plusr; apply feq_plusl; apply eq_symmetric; apply opp_inverse]
+apply (eq_transitive ?? (-y + y)); 
+  [2: apply feq_plusr; apply eq_symmetric; 
+      apply (eq_transitive ?? (0+-y)); [apply plus_comm|apply zero_neutral]]
+apply eq_symmetric; apply opp_inverse.
+qed.
+
+theorem eq_opp_opp_x_x: ∀G:abelian_group.∀x:G.--x ≈ x.
+intros (G x); apply (plus_cancl ??? (-x));
+apply (eq_transitive ?? (--x + -x)); [apply plus_comm]
+apply (eq_transitive (carr G) (plus G (opp G (opp G x)) (opp G x)) (zero G) (plus G (opp G x) x) ? ?);
+  [apply (opp_inverse G (opp G x)).
+  |apply (eq_symmetric (carr G) (plus G (opp G x) x) (zero G) ?).
+   apply (opp_inverse G x).
+  ]
+qed.
+
+theorem eq_zero_opp_zero: ∀G:abelian_group.0 ≈ -0.
  [ assumption
  | intros;
-   apply (cancellationlaw ? 0);
-   rewrite < plus_comm in ⊢ (? ? ? %);
-   rewrite > opp_inverse;
-   rewrite > zero_neutral;
-   reflexivity
- ].
+apply (eq_transitive (carr G) (zero G) (plus G (opp G (zero G)) (zero G)) (opp G (zero G)) ? ?);
+  [apply (eq_symmetric (carr G) (plus G (opp G (zero G)) (zero G)) (zero G) ?).
+   apply (opp_inverse G (zero G)).
+  |apply (eq_transitive (carr G) (plus G (opp G (zero G)) (zero G)) (plus G (zero G) (opp G (zero G))) (opp G (zero G)) ? ?);
+    [apply (plus_comm G (opp G (zero G)) (zero G)).
+    |apply (zero_neutral G (opp G (zero G))).
+    ]
+  ]]
 qed.
-
-*)
