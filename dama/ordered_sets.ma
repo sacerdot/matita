@@ -132,6 +132,8 @@ cases E (T f cRf cTf); simplify;
 |2: intros (x y z); apply Or_symmetric; apply cTf; assumption;]
 qed. 
 
+(*
+
 definition reverse_pordered_set: pordered_set → pordered_set.
 intros (p); apply (mk_pordered_set (reverse_excedence p));
 generalize in match (reverse_excedence p); intros (E); cases E (T f cRf cTf);
@@ -210,6 +212,8 @@ record cotransitively_ordered_set: Type :=
  { cos_ordered_set :> ordered_set;
    cos_cotransitive: cotransitive ? (os_le cos_ordered_set)
  }.
+*)
+
 *)
 
 definition total_order_property : ∀E:excedence. Type ≝

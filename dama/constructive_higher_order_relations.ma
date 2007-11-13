@@ -29,3 +29,9 @@ definition symmetric ≝
 
 definition transitive ≝
  λC:Type.λle:C→C→Type.∀x,y,z:C.le x y → le y z → le x z.
+
+definition associative ≝
+ λC:Type.λop:C→C→C.λeq:C→C→Type.∀x,y,z. eq (op x (op y z)) (op (op x y) z).
+
+definition commutative ≝
+ λC:Type.λop:C→C→C.λeq:C→C→Type.∀x,y. eq (op x y) (op y x).

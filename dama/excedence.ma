@@ -43,51 +43,55 @@ intros (E); unfold; cases E; simplify; unfold Not; intros (x y z Rxy Ryz H2);
 cases (c x z y H2) (H4 H5); clear H2; [exact (Rxy H4)|exact (Ryz H5)] 
 qed.
 
-definition apart ≝ λE:excedence.λa,b:E. a ≰ b ∨ b ≰ a.
+record apartness : Type ≝ {
+  ap_carr:> Type;
+  ap_apart: ap_carr → ap_carr → Type;
+  ap_coreflexive: coreflexive ? ap_apart;
+  ap_symmetric: symmetric ? ap_apart;
+  ap_cotransitive: cotransitive ? ap_apart
+}.
 
 notation "a # b" non associative with precedence 50 for @{ 'apart $a $b}.
-interpretation "apartness" 'apart a b = (cic:/matita/excedence/apart.con _ a b). 
+interpretation "axiomatic apartness" 'apart x y = 
+  (cic:/matita/excedence/ap_apart.con _ x y).
 
-lemma apart_coreflexive: ∀E.coreflexive ? (apart E).
-intros (E); unfold; cases E; simplify; clear E; intros (x); unfold;
-intros (H1); apply (H x); cases H1; assumption;
+definition apart ≝ λE:excedence.λa,b:E. a ≰ b ∨ b ≰ a.
+
+definition apart_of_excedence: excedence → apartness.
+intros (E); apply (mk_apartness E (apart E));  
+[1: unfold; cases E; simplify; clear E; intros (x); unfold;
+    intros (H1); apply (H x); cases H1; assumption;
+|2: unfold; intros(x y H); cases H; clear H; [right|left] assumption;
+|3: intros (E); unfold; cases E (T f _ cTf); simplify; intros (x y z Axy);
+    cases Axy (H); lapply (cTf ? ? z H) as H1; cases H1; clear Axy H1;
+    [left; left|right; left|right; right|left; right] assumption]
 qed.
 
-lemma apart_symmetric: ∀E.symmetric ? (apart E).
-intros (E); unfold; intros(x y H); cases H; clear H; [right|left] assumption; 
-qed.
+coercion cic:/matita/excedence/apart_of_excedence.con.
 
-lemma apart_cotrans: ∀E. cotransitive ? (apart E).
-intros (E); unfold; cases E (T f _ cTf); simplify; intros (x y z Axy);
-cases Axy (H); lapply (cTf ? ? z H) as H1; cases H1; clear Axy H1;
-[left; left|right; left|right; right|left; right] assumption.
-qed.
-
-definition eq ≝ λE:excedence.λa,b:E. ¬ (a # b).
+definition eq ≝ λA:apartness.λa,b:A. ¬ (a # b).
 
 notation "a ≈ b" non associative with precedence 50 for @{ 'napart $a $b}.    
 interpretation "alikeness" 'napart a b =
   (cic:/matita/excedence/eq.con _ a b). 
 
 lemma eq_reflexive:∀E. reflexive ? (eq E).
-intros (E); unfold; cases E (T f cRf _); simplify; unfold Not; intros (x H);
-apply (cRf x); cases H; assumption;
+intros (E); unfold; intros (x); apply ap_coreflexive; 
 qed.
 
 lemma eq_symmetric:∀E.symmetric ? (eq E).
-intros (E); unfold; unfold eq; unfold Not;
-intros (x y H1 H2); apply H1; cases H2; [right|left] assumption; 
+intros (E); unfold; intros (x y Exy); unfold; unfold; intros (Ayx); apply Exy;
+apply ap_symmetric; assumption; 
 qed.
 
 lemma eq_transitive: ∀E.transitive ? (eq E).
-intros (E); unfold; cases E (T f _ cTf); simplify; unfold Not; 
-intros (x y z H1 H2 H3); cases H3 (H4 H4); clear E H3; lapply (cTf ? ? y H4) as H5;
-cases H5; clear H5 H4 cTf; [1,4: apply H1|*:apply H2] clear H1 H2;
-[1,3:left|*:right] assumption;
+(* bug. intros k deve fare whd quanto basta *)
+intros 6 (E x y z Exy Eyz); intro Axy; cases (ap_cotransitive ???y Axy); 
+[apply Exy|apply Eyz] assumption.
 qed.
-
-lemma le_antisymmetric: ∀E.antisymmetric ? (le E) (eq E).
-intros (E); unfold; intros (x y Lxy Lyx); unfold; unfold; intros (H);
+(* BUG: vedere se ricapita *)
+lemma le_antisymmetric: ∀E.antisymmetric ? (le E) (eq ?).
+intros 5 (E x y Lxy Lyx); intro H;
 cases H; [apply Lxy;|apply Lyx] assumption;
 qed.
 
@@ -97,10 +101,11 @@ interpretation "ordered sets less than" 'lt a b =
  (cic:/matita/excedence/lt.con _ a b).
 
 lemma lt_coreflexive: ∀E.coreflexive ? (lt E).
-intros (E); unfold; unfold Not; intros (x H); cases H (_ ABS); 
-apply (apart_coreflexive ? x ABS);
+intros 2 (E x); intro H; cases H (_ ABS); 
+apply (ap_coreflexive ? x ABS);
 qed.
 
+(* 
 lemma lt_transitive: ∀E.transitive ? (lt E).
 intros (E); unfold; intros (x y z H1 H2); cases H1 (Lxy Axy); cases H2 (Lyz Ayz); 
 split; [apply (le_transitive ???? Lxy Lyz)] clear H1 H2;
@@ -115,3 +120,5 @@ theorem lt_to_excede: ∀E:excedence.∀a,b:E. (a < b) → (b ≰ a).
 intros (E a b Lab); cases Lab (LEab Aab);
 cases Aab (H H); [cases (LEab H)] fold normalize (b ≰ a); assumption; (* BUG *)  
 qed.
+
+*)
