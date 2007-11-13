@@ -65,9 +65,9 @@ lemma le_zero_x_to_le_opp_x_zero:
 intros (G x Px);
 generalize in match (og_ordered_abelian_group_properties ? ? ? (-x) Px); intro;
 (* ma cazzo, qui bisogna rifare anche i gruppi con ≈ ? *)
- rewrite > zero_neutral in H1;
- rewrite > plus_comm in H1;
- rewrite > opp_inverse in H1;
+ rewrite > zero_neutral in H;
+ rewrite > plus_comm in H;
+ rewrite > opp_inverse in H;
  assumption.
 qed.
 

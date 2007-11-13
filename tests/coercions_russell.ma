@@ -93,7 +93,7 @@ definition find_spec ≝
                     ∃l1,l2,l3.l = l1 @ [x] @ l2 @ [y] @ l3].
 
 lemma mem_x_to_ex_l1_l2 : ∀l,x.mem ? eqb x l = true → ∃l1,l2.l = l1 @ [x] @ l2.
-intros 2; elim l (H hd tl IH H); [destruct H]
+intros 2; elim l (H hd tl IH H); [simplify in H; destruct H]
 generalize in match H; clear H;
 simplify; apply (eqb_elim x hd); simplify; intros;
 [1:clear IH; rewrite < H; apply (ex_intro ? ? []); 
