@@ -119,3 +119,21 @@ theorem lt_to_excede: ∀E:excedence.∀a,b:E. (a < b) → (b ≰ a).
 intros (E a b Lab); cases Lab (LEab Aab);
 cases Aab (H H); [cases (LEab H)] fold normalize (b ≰ a); assumption; (* BUG *)  
 qed.
+
+theorem le_le_to_eq: ∀E:excedence.∀x,y:E. x ≤ y → y ≤ x → x ≈ y.
+intros 6 (E x y L1 L2 H); cases H; [apply (L1 H1)|apply (L2 H1)]
+qed.
+
+lemma unfold_apart: ∀E:excedence. ∀x,y:E. x ≰ y ∨ y ≰ x → x # y.
+unfold apart_of_excedence; unfold apart; simplify; intros; assumption;
+qed.
+
+lemma le_rewl: ∀E:excedence.∀z,y,x:E. x ≈ y → x ≤ z → y ≤ z.
+intros (E z y x Exy Lxz); apply (le_transitive ???? ? Lxz);
+intro Xyz; apply Exy; apply unfold_apart; right; assumption;
+qed.
+
+lemma le_rewr: ∀E:excedence.∀z,y,x:E. x ≈ y → z ≤ x → z ≤ y.
+intros (E z y x Exy Lxz); apply (le_transitive ???? Lxz);
+intro Xyz; apply Exy; apply unfold_apart; left; assumption;
+qed.
