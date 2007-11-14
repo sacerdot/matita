@@ -41,35 +41,53 @@ record ordered_abelian_group : Type ≝
     is_ordered_abelian_group og_pre_ordered_abelian_group
  }.
 
-lemma le_rewl: ∀E:excedence.∀x,z,y:E. x ≈ y → x ≤ z → y ≤ z.
-intros (E x z y); apply (le_transitive ???? ? H1); 
-clear H1 z; unfold in H; unfold; intro H1; apply H; clear H; 
-lapply ap_cotransitive;  
-intros (G x z y); intro Eyz; 
+lemma le_le_eq: ∀E:excedence.∀x,y:E. x ≤ y → y ≤ x → x ≈ y.
+intros 6 (E x y L1 L2 H); cases H; [apply (L1 H1)|apply (L2 H1)]
+qed.
 
+lemma unfold_apart: ∀E:excedence. ∀x,y:E. x ≰ y ∨ y ≰ x → x # y.
+unfold apart_of_excedence; unfold apart; simplify; intros; assumption;
+qed.
+
+lemma le_rewl: ∀E:excedence.∀z,y,x:E. x ≈ y → x ≤ z → y ≤ z.
+intros (E z y x Exy Lxz); apply (le_transitive ???? ? Lxz);
+intro Xyz; apply Exy; apply unfold_apart; right; assumption;
+qed.
+
+lemma le_rewr: ∀E:excedence.∀z,y,x:E. x ≈ y → z ≤ x → z ≤ y.
+intros (E z y x Exy Lxz); apply (le_transitive ???? Lxz);
+intro Xyz; apply Exy; apply unfold_apart; left; assumption;
+qed.
 
 lemma plus_cancr_le: 
   ∀G:ordered_abelian_group.∀x,y,z:G.x+z ≤ y + z → x ≤ y.
 intros 5 (G x y z L);
-
- apply L; clear L; elim (exc_cotransitive ???z Exy);
+apply (le_rewl ??? (0+x) (zero_neutral ??));
+apply (le_rewl ??? (x+0) (plus_comm ???));
+apply (le_rewl ??? (x+(-z+z))); [apply feq_plusl;apply opp_inverse;]
+apply (le_rewl ??? (x+(z+ -z))); [apply feq_plusl;apply plus_comm;]
+apply (le_rewl ??? (x+z+ -z)); [apply eq_symmetric; apply plus_assoc;]
+apply (le_rewr ??? (0+y) (zero_neutral ??));
+apply (le_rewr ??? (y+0) (plus_comm ???));
+apply (le_rewr ??? (y+(-z+z))); [apply feq_plusl;apply opp_inverse;]
+apply (le_rewr ??? (y+(z+ -z))); [apply feq_plusl;apply plus_comm;]
+apply (le_rewr ??? (y+z+ -z)); [apply eq_symmetric; apply plus_assoc;]
+apply (og_ordered_abelian_group_properties ??? (-z));
+assumption;
+qed.
 
 lemma le_zero_x_to_le_opp_x_zero: 
   ∀G:ordered_abelian_group.∀x:G.0 ≤ x → -x ≤ 0.
-intros (G x Px);
-generalize in match (og_ordered_abelian_group_properties ? ? ? (-x) Px); intro;
-(* ma cazzo, qui bisogna rifare anche i gruppi con ≈ ? *)
- rewrite > zero_neutral in H;
- rewrite > plus_comm in H;
- rewrite > opp_inverse in H;
- assumption.
+intros (G x Px); apply (plus_cancr_le ??? x);
+apply (le_rewl ??? 0 (eq_symmetric ??? (opp_inverse ??)));
+apply (le_rewr ??? x (eq_symmetric ??? (zero_neutral ??)));
+assumption;
 qed.
 
-lemma le_x_zero_to_le_zero_opp_x: ∀G:ordered_abelian_group.∀x:G. x ≤ 0 → 0 ≤ -x.
- intros;
- generalize in match (og_ordered_abelian_group_properties ? ? ? (-x) H); intro;
- rewrite > zero_neutral in H1;
- rewrite > plus_comm in H1;
- rewrite > opp_inverse in H1;
- assumption.
+lemma le_x_zero_to_le_zero_opp_x: 
+  ∀G:ordered_abelian_group.∀x:G. x ≤ 0 → 0 ≤ -x.
+intros (G x Lx0); apply (plus_cancr_le ??? x);
+apply (le_rewr ??? 0 (eq_symmetric ??? (opp_inverse ??)));
+apply (le_rewl ??? x (eq_symmetric ??? (zero_neutral ??)));
+assumption; 
 qed.
