@@ -149,22 +149,12 @@ qed.
 theorem eq_opp_opp_x_x: ∀G:abelian_group.∀x:G.--x ≈ x.
 intros (G x); apply (plus_cancl ??? (-x));
 apply (eq_transitive ?? (--x + -x)); [apply plus_comm]
-apply (eq_transitive (carr G) (plus G (opp G (opp G x)) (opp G x)) (zero G) (plus G (opp G x) x) ? ?);
-  [apply (opp_inverse G (opp G x)).
-  |apply (eq_symmetric (carr G) (plus G (opp G x) x) (zero G) ?).
-   apply (opp_inverse G x).
-  ]
+apply (eq_transitive ?? 0); [apply opp_inverse]
+apply eq_symmetric; apply opp_inverse;
 qed.
 
-theorem eq_zero_opp_zero: ∀G:abelian_group.0 ≈ -0.
- [ assumption
- | intros;
-apply (eq_transitive (carr G) (zero G) (plus G (opp G (zero G)) (zero G)) (opp G (zero G)) ? ?);
-  [apply (eq_symmetric (carr G) (plus G (opp G (zero G)) (zero G)) (zero G) ?).
-   apply (opp_inverse G (zero G)).
-  |apply (eq_transitive (carr G) (plus G (opp G (zero G)) (zero G)) (plus G (zero G) (opp G (zero G))) (opp G (zero G)) ? ?);
-    [apply (plus_comm G (opp G (zero G)) (zero G)).
-    |apply (zero_neutral G (opp G (zero G))).
-    ]
-  ]]
+theorem eq_zero_opp_zero: ∀G:abelian_group.0 ≈ -0. [assumption]
+intro G; apply (plus_cancr ??? 0);
+apply (eq_transitive ?? 0); [apply zero_neutral;]
+apply eq_symmetric; apply opp_inverse;
 qed.

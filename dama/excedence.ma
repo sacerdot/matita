@@ -104,8 +104,7 @@ lemma lt_coreflexive: ∀E.coreflexive ? (lt E).
 intros 2 (E x); intro H; cases H (_ ABS); 
 apply (ap_coreflexive ? x ABS);
 qed.
-
-(* 
+ 
 lemma lt_transitive: ∀E.transitive ? (lt E).
 intros (E); unfold; intros (x y z H1 H2); cases H1 (Lxy Axy); cases H2 (Lyz Ayz); 
 split; [apply (le_transitive ???? Lxy Lyz)] clear H1 H2;
@@ -120,5 +119,3 @@ theorem lt_to_excede: ∀E:excedence.∀a,b:E. (a < b) → (b ≰ a).
 intros (E a b Lab); cases Lab (LEab Aab);
 cases Aab (H H); [cases (LEab H)] fold normalize (b ≰ a); assumption; (* BUG *)  
 qed.
-
-*)

@@ -14,8 +14,8 @@
 
 set "baseuri" "cic:/matita/ordered_groups/".
 
-include "groups.ma".
 include "ordered_sets.ma".
+include "groups.ma".
 
 record pre_ordered_abelian_group : Type ≝
  { og_abelian_group_: abelian_group;
@@ -40,6 +40,19 @@ record ordered_abelian_group : Type ≝
    og_ordered_abelian_group_properties:
     is_ordered_abelian_group og_pre_ordered_abelian_group
  }.
+
+lemma le_rewl: ∀E:excedence.∀x,z,y:E. x ≈ y → x ≤ z → y ≤ z.
+intros (E x z y); apply (le_transitive ???? ? H1); 
+clear H1 z; unfold in H; unfold; intro H1; apply H; clear H; 
+lapply ap_cotransitive;  
+intros (G x z y); intro Eyz; 
+
+
+lemma plus_cancr_le: 
+  ∀G:ordered_abelian_group.∀x,y,z:G.x+z ≤ y + z → x ≤ y.
+intros 5 (G x y z L);
+
+ apply L; clear L; elim (exc_cotransitive ???z Exy);
 
 lemma le_zero_x_to_le_opp_x_zero: 
   ∀G:ordered_abelian_group.∀x:G.0 ≤ x → -x ≤ 0.
