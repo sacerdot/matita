@@ -51,7 +51,7 @@ record apartness : Type ≝ {
   ap_cotransitive: cotransitive ? ap_apart
 }.
 
-notation "a # b" non associative with precedence 50 for @{ 'apart $a $b}.
+notation "a break # b" non associative with precedence 50 for @{ 'apart $a $b}.
 interpretation "axiomatic apartness" 'apart x y = 
   (cic:/matita/excedence/ap_apart.con _ x y).
 
@@ -71,7 +71,7 @@ coercion cic:/matita/excedence/apart_of_excedence.con.
 
 definition eq ≝ λA:apartness.λa,b:A. ¬ (a # b).
 
-notation "a ≈ b" non associative with precedence 50 for @{ 'napart $a $b}.    
+notation "a break ≈ b" non associative with precedence 50 for @{ 'napart $a $b}.    
 interpretation "alikeness" 'napart a b =
   (cic:/matita/excedence/eq.con _ a b). 
 
