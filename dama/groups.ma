@@ -42,7 +42,7 @@ record abelian_group : Type ≝
    opp_inverse: left_inverse ? plus zero opp;
    plus_strong_ext: ∀z.strong_ext ? (plus z)  
 }.
- 
+
 notation "0" with precedence 89 for @{ 'zero }.
 
 interpretation "Abelian group zero" 'zero =
@@ -59,16 +59,6 @@ definition minus ≝
 
 interpretation "Abelian group minus" 'minus a b =
  (cic:/matita/groups/minus.con _ a b).
- 
-lemma ap_rewl: ∀A:apartness.∀x,z,y:A. x ≈ y → y # z → x # z.
-intros (A x z y Exy Ayz); cases (ap_cotransitive ???x Ayz); [2:assumption]
-cases (Exy (ap_symmetric ??? a));
-qed.
-  
-lemma ap_rewr: ∀A:apartness.∀x,z,y:A. x ≈ y → z # y → z # x.
-intros (A x z y Exy Azy); apply ap_symmetric; apply (ap_rewl ???? Exy);
-apply ap_symmetric; assumption;
-qed.
 
 definition ext ≝ λA:apartness.λop:A→A. ∀x,y. x ≈ y → op x ≈ op y.
 
@@ -80,6 +70,8 @@ lemma feq_plusl: ∀G:abelian_group.∀x,y,z:G. y ≈ z →  x+y ≈ x+z.
 intros (G x y z Eyz); apply (strong_ext_to_ext ?? (plus_strong_ext ? x));
 assumption;
 qed.  
+
+coercion cic:/matita/groups/feq_plusl.con.
    
 lemma plus_strong_extr: ∀G:abelian_group.∀z:G.strong_ext ? (λx.x + z).
 intros 5 (G z x y A); simplify in A;
@@ -93,6 +85,8 @@ intros (G x y z Eyz); apply (strong_ext_to_ext ?? (plus_strong_extr ? x));
 assumption;
 qed.   
    
+coercion cic:/matita/groups/feq_plusr.con.   
+   
 lemma fap_plusl: ∀G:abelian_group.∀x,y,z:G. y # z →  x+y # x+z. 
 intros (G x y z Ayz); apply (plus_strong_ext ? (-x));
 apply (ap_rewl ??? ((-x + x) + y));
@@ -105,6 +99,8 @@ apply (ap_rewl ??? ((-x + x) + y));
             [1: apply (feq_plusr ???? (opp_inverse ??)); 
             |2: apply (ap_rewr ???? (zero_neutral ??)); assumption;]]]]
 qed.
+
+
 
 lemma fap_plusr: ∀G:abelian_group.∀x,y,z:G. y # z →  y+x # z+x. 
 intros (G x y z Ayz); apply (plus_strong_extr ? (-x));
