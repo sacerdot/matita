@@ -84,11 +84,16 @@ intros (E); unfold; intros (x y Exy); unfold; unfold; intros (Ayx); apply Exy;
 apply ap_symmetric; assumption; 
 qed.
 
+lemma eq_symmetric_:∀E:apartness.∀x,y:E.x ≈ y → y ≈ x := eq_symmetric.
+
+coercion cic:/matita/excedence/eq_symmetric_.con.
+
 lemma eq_transitive: ∀E.transitive ? (eq E).
 (* bug. intros k deve fare whd quanto basta *)
 intros 6 (E x y z Exy Eyz); intro Axy; cases (ap_cotransitive ???y Axy); 
 [apply Exy|apply Eyz] assumption.
 qed.
+
 (* BUG: vedere se ricapita *)
 lemma le_antisymmetric: ∀E.antisymmetric ? (le E) (eq ?).
 intros 5 (E x y Lxy Lyx); intro H;
@@ -136,4 +141,14 @@ qed.
 lemma le_rewr: ∀E:excedence.∀z,y,x:E. x ≈ y → z ≤ x → z ≤ y.
 intros (E z y x Exy Lxz); apply (le_transitive ???? Lxz);
 intro Xyz; apply Exy; apply unfold_apart; left; assumption;
+qed.
+ 
+lemma ap_rewl: ∀A:apartness.∀x,z,y:A. x ≈ y → y # z → x # z.
+intros (A x z y Exy Ayz); cases (ap_cotransitive ???x Ayz); [2:assumption]
+cases (Exy (ap_symmetric ??? a));
+qed.
+  
+lemma ap_rewr: ∀A:apartness.∀x,z,y:A. x ≈ y → z # y → z # x.
+intros (A x z y Exy Azy); apply ap_symmetric; apply (ap_rewl ???? Exy);
+apply ap_symmetric; assumption;
 qed.
