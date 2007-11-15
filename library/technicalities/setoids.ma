@@ -209,7 +209,23 @@ definition equality_morphism_of_symmetric_areflexive_transitive_relation:
     unfold transitive in H;
     unfold symmetric in sym;
     intro;
-    autobatch new
+      [ apply (H x2 x1 x3 ? ?);
+          [apply (sym x1 x2 ?).
+           apply (H1).
+          |apply (H x1 x x3 ? ?);
+            [apply (H3).
+            |apply (H2).
+            ]
+          ]
+      | apply (H x1 x3 x ? ?);
+         [apply (H x1 x2 x3 ? ?);
+            [apply (H1).
+            |apply (H3).
+            ]
+         |apply (sym x x3 ?).
+          apply (H2).
+         ]
+      ]
   ].
 qed.
 
@@ -227,7 +243,26 @@ definition equality_morphism_of_symmetric_reflexive_transitive_relation:
     intro;
     unfold transitive in H;
     unfold symmetric in sym;
-    autobatch depth=4.
+    [ apply (H x2 x1 x3 ? ?);
+        [apply (sym x1 x2 ?).
+         apply (H1).
+        |apply (H x1 x x3 ? ?);
+          [apply (H3).
+          |apply (H2).
+          ]
+        ]
+    | apply (H x1 x2 x ? ?);
+      [apply (H1).
+      |apply (H x2 x3 x ? ?);
+        [apply (H3).
+        |apply (sym x x3 ?).
+         apply (H x x3 x3 ? ?);
+          [apply (H2).
+          |apply (refl x3).
+          ]
+        ]
+      ]
+    ]
   ]
 qed.
 
@@ -244,7 +279,13 @@ definition equality_morphism_of_asymmetric_areflexive_transitive_relation:
    intros;
    whd;
    intros;
-   autobatch
+   apply (H x2 x1 x3 ? ?);
+    [apply (H1).
+    |apply (H x1 x x3 ? ?);
+      [apply (H3).
+      |apply (H2).
+      ]
+    ]
  ].
 qed.
 
@@ -261,7 +302,13 @@ definition equality_morphism_of_asymmetric_reflexive_transitive_relation:
    intros;
    whd;
    intro;
-   autobatch
+   apply (H x2 x1 x3 ? ?);
+     [apply (H1).
+     |apply (H x1 x x3 ? ?);
+       [apply (H3).
+       |apply (H2).
+       ]
+     ]
  ].
 qed.
 
@@ -301,6 +348,7 @@ theorem impl_trans: transitive ? impl.
  whd;
  unfold impl;
  intros;
+ apply (H1 ?).apply (H ?).apply (H2).
  autobatch.
 qed.
 
