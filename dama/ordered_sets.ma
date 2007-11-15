@@ -132,13 +132,11 @@ cases E (T f cRf cTf); simplify;
 |2: intros (x y z); apply Or_symmetric; apply cTf; assumption;]
 qed. 
 
-(*
-
 definition reverse_pordered_set: pordered_set → pordered_set.
 intros (p); apply (mk_pordered_set (reverse_excedence p));
-generalize in match (reverse_excedence p); intros (E); cases E (T f cRf cTf);
-simplify; apply mk_is_porder_relation; unfold; intros;
-[apply le_reflexive|apply (le_transitive ???? H H1);|apply (le_antisymmetric ??? H H1)]
+generalize in match (reverse_excedence p); intros (E);
+apply mk_is_porder_relation;
+[apply le_reflexive|apply le_transitive|apply le_antisymmetric]
 qed. 
  
 lemma is_lower_bound_reverse_is_upper_bound:
@@ -207,17 +205,8 @@ intros (O a l H); apply mk_is_sup;
     apply is_upper_bound_reverse_is_lower_bound; assumption;]
 qed.
 
-(*
-record cotransitively_ordered_set: Type :=
- { cos_ordered_set :> ordered_set;
-   cos_cotransitive: cotransitive ? (os_le cos_ordered_set)
- }.
-*)
-
-*)
-
 definition total_order_property : ∀E:excedence. Type ≝
-  λE:excedence. ∀a,b:E. a ≰ b → a < b.
+  λE:excedence. ∀a,b:E. a ≰ b → b < a.
 
 record tordered_set : Type ≝ {
  tos_poset:> pordered_set;
