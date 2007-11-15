@@ -239,6 +239,8 @@ let parse_cmdline init_status =
     let reduce_verbosity () =
       Helm_registry.set_int "matita.verbosity"
         (Helm_registry.get_int "matita.verbosity" - 1) in
+    let print_version () =
+            Printf.printf "%s\n" BuildTimeConf.version;exit 0 in
     let increase_verbosity () =
       Helm_registry.set_int "matita.verbosity"
         (Helm_registry.get_int "matita.verbosity" + 1) in
@@ -272,6 +274,7 @@ let parse_cmdline init_status =
             ("Act on the system library instead of the user one"
              ^ "\n    WARNING: not for the casual user");
         "-v", Arg.Unit increase_verbosity, "Increase verbosity";
+        "--version", Arg.Unit print_version, "Prints version";
       ] in
       let debug_arg_spec =
         if BuildTimeConf.debug then
