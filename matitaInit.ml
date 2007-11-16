@@ -246,7 +246,7 @@ let parse_cmdline init_status =
       Helm_registry.set_int "matita.verbosity"
         (Helm_registry.get_int "matita.verbosity" + 1) in
     let no_innertypes () =
-      Helm_registry.set_bool "matita.noinnertypes" false in
+      Helm_registry.set_bool "matita.noinnertypes" true in
     let arg_spec =
       let std_arg_spec = [
         "-I", Arg.String (add_l includes),
