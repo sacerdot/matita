@@ -32,7 +32,9 @@ qed.
 
 coercion cic:/matita/ordered_groups/og_abelian_group.con.
 
-
+(* CSC: NO! Cosi' e' nel frammento negativo. Devi scriverlo con l'eccedenza!
+   Tutto il resto del file e' da rigirare nel frammento positivo.
+*)
 record ogroup : Type ≝ { 
   og_carr:> pre_ogroup;
   fle_plusr: ∀f,g,h:og_carr. f≤g → f+h≤g+h

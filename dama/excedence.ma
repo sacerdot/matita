@@ -21,7 +21,7 @@ include "constructive_higher_order_relations.ma".
 
 record excedence : Type ≝ {
   exc_carr:> Type;
-  exc_relation: exc_carr → exc_carr → Prop;
+  exc_relation: exc_carr → exc_carr → Type; (* Big bug: era in Prop!!! *)
   exc_coreflexive: coreflexive ? exc_relation;
   exc_cotransitive: cotransitive ? exc_relation 
 }.
@@ -63,7 +63,7 @@ intros (E); apply (mk_apartness E (apart E));
     intros (H1); apply (H x); cases H1; assumption;
 |2: unfold; intros(x y H); cases H; clear H; [right|left] assumption;
 |3: intros (E); unfold; cases E (T f _ cTf); simplify; intros (x y z Axy);
-    cases Axy (H); lapply (cTf ? ? z H) as H1; cases H1; clear Axy H1;
+    cases Axy (H H); lapply (cTf ? ? z H) as H1; cases H1; clear Axy H1;
     [left; left|right; left|right; right|left; right] assumption]
 qed.
 
@@ -127,12 +127,14 @@ intros (E a b Lab); cases Lab (LEab Aab);
 cases Aab (H H); [cases (LEab H)] fold normalize (b ≰ a); assumption; (* BUG *)  
 qed.
 
+(* CSC: lo avevi gia' dimostrato; ho messo apply! *)
 theorem le_le_to_eq: ∀E:excedence.∀x,y:E. x ≤ y → y ≤ x → x ≈ y.
-intros 6 (E x y L1 L2 H); cases H; [apply (L1 H1)|apply (L2 H1)]
+apply le_antisymmetric;
 qed.
 
+(* CSC: perche' quel casino: bastava intros; assumption! *)
 lemma unfold_apart: ∀E:excedence. ∀x,y:E. x ≰ y ∨ y ≰ x → x # y.
-unfold apart_of_excedence; unfold apart; simplify; intros; assumption;
+intros; assumption;
 qed.
 
 lemma le_rewl: ∀E:excedence.∀z,y,x:E. x ≈ y → x ≤ z → y ≤ z.
