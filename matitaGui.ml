@@ -860,6 +860,7 @@ class gui () =
                 (fun () -> MatitamakeLib.clean_development_in_bg refresh d)
               in
               ignore(clean ())));
+      (* publish button hidden, use command line 
       connect_button develList#publishButton 
         (locker (fun () -> 
           match get_devel_selected () with
@@ -868,6 +869,8 @@ class gui () =
               let publish = locker (fun () ->
                 MatitamakeLib.publish_development_in_bg refresh d) in
               ignore(publish ())));
+              *)
+      develList#publishButton#misc#hide ();
       connect_button develList#graphButton (fun () -> 
         match get_devel_selected () with
         | None -> ()
