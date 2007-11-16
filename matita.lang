@@ -28,6 +28,7 @@
     <keyword>and</keyword>
     <keyword>as</keyword>
     <keyword>coercion</keyword>
+    <keyword>nocomposites</keyword>
     <keyword>coinductive</keyword>
     <keyword>corec</keyword>
     <keyword>default</keyword>
