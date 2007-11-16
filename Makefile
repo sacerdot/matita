@@ -236,8 +236,6 @@ cleantests.opt: $(foreach d,$(TEST_DIRS_OPT),$(d)-cleantests-opt)
 ifeq ($(DISTRIBUTED),yes)
 
 
-MATITA_CFLAGS = #-nodb
-
 dist_library: install_preliminaries dist_library@standard-library
 dist_library@%: 
 	$(H)echo "MATITAMAKE init $*"
