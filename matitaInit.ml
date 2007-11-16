@@ -244,6 +244,8 @@ let parse_cmdline init_status =
     let increase_verbosity () =
       Helm_registry.set_int "matita.verbosity"
         (Helm_registry.get_int "matita.verbosity" + 1) in
+    let no_innertypes () =
+      Helm_registry.set_bool "matita.noinnertypes" false in
     let arg_spec =
       let std_arg_spec = [
         "-I", Arg.String (add_l includes),
@@ -259,6 +261,8 @@ let parse_cmdline init_status =
         "-noprofile", 
           Arg.Unit (fun () -> Helm_registry.set_bool "matita.profile" false),
           "Turns off profiling printings";
+        "-noinnertypes", Arg.Unit no_innertypes, 
+          "Turns off inner types generation while publishing";
         "-profile-only",
           Arg.String (fun rex -> Helm_registry.set "matita.profile_only" rex),
           "Activates only profiler with label matching the provided regex";
