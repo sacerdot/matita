@@ -50,7 +50,8 @@ let registry_defaults = [
   "matita.system",               "false";
   "matita.verbosity",            "1";
   "matita.bench",                "false";
-  "matita.paste_unicode_as_tex", "false"
+  "matita.paste_unicode_as_tex", "false";
+  "matita.noinnertypes",         "false";
     (** verbosity level: 1 is the default, 0 is intuitively "quiet", > 1 is
      * intuitively verbose *)
 ]
