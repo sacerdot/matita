@@ -931,8 +931,12 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
         match self#currentCicUri with
         | Some uri -> self#load (`Metadata (`Deps (`Back, uri)))
         | None -> ());
+      (* remove hbugs *)
+      (*
       connect_menu_item win#hBugsTutorsMenuItem (fun () ->
         self#load (`HBugs `Tutors));
+      *)
+      win#hBugsTutorsMenuItem#misc#hide ();
       connect_menu_item win#browserUrlMenuItem (fun () ->
         win#browserUri#entry#misc#grab_focus ());
 

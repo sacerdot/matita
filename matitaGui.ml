@@ -1144,10 +1144,13 @@ class gui () =
       self#updateFontSize ();
         (* debug menu *)
       main#debugMenu#misc#hide ();
-        (* status bar *)
+        (* HBUGS *)
+      main#hintNotebook#misc#hide ();
+      (*
       main#hintLowImage#set_file (image_path "matita-bulb-low.png");
       main#hintMediumImage#set_file (image_path "matita-bulb-medium.png");
       main#hintHighImage#set_file (image_path "matita-bulb-high.png");
+      *)
         (* focus *)
       self#sourceView#misc#grab_focus ();
         (* main win dimension *)
