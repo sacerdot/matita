@@ -215,7 +215,10 @@ let call_make ?matita_flags development target make =
     let system = 
       if Helm_registry.get_bool "matita.system" then " -system" else ""
     in
-    already_defined ^ bench ^ system
+    let noinnertypes = 
+      if Helm_registry.get_bool "matita.noinnertypes" then " -noinnertypes" else ""
+    in
+    already_defined ^ bench ^ system ^ noinnertypes
   in
   let csc = try ["SRC=" ^ Sys.getenv "SRC"] with Not_found -> [] in
   rebuild_makefile development;
