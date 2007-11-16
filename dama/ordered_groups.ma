@@ -43,62 +43,58 @@ lemma plus_cancr_le:
 intros 5 (G x y z L);
 apply (le_rewl ??? (0+x) (zero_neutral ??));
 apply (le_rewl ??? (x+0) (plus_comm ???));
-apply (le_rewl ??? (x+(-z+z))); [apply feq_plusl;apply opp_inverse;]
-apply (le_rewl ??? (x+(z+ -z))); [apply feq_plusl;apply plus_comm;]
-apply (le_rewl ??? (x+z+ -z)); [apply eq_symmetric; apply plus_assoc;]
+apply (le_rewl ??? (x+(-z+z)) (opp_inverse ??));
+apply (le_rewl ??? (x+(z+ -z)) (plus_comm ??z));
+apply (le_rewl ??? (x+z+ -z) (plus_assoc ????));
 apply (le_rewr ??? (0+y) (zero_neutral ??));
 apply (le_rewr ??? (y+0) (plus_comm ???));
-apply (le_rewr ??? (y+(-z+z))); [apply feq_plusl;apply opp_inverse;]
-apply (le_rewr ??? (y+(z+ -z))); [apply feq_plusl;apply plus_comm;]
-apply (le_rewr ??? (y+z+ -z)); [apply eq_symmetric; apply plus_assoc;]
-apply (fle_plusr ??? (-z));
-assumption;
+apply (le_rewr ??? (y+(-z+z)) (opp_inverse ??));
+apply (le_rewr ??? (y+(z+ -z)) (plus_comm ??z));
+apply (le_rewr ??? (y+z+ -z) (plus_assoc ????));
+apply (fle_plusr ??? (-z) L);
 qed.
 
 lemma fle_plusl: ∀G:ogroup. ∀f,g,h:G. f≤g → h+f≤h+g.
 intros (G f g h);
 apply (plus_cancr_le ??? (-h));
-apply (le_rewl ??? (f+h+ -h)); [apply feq_plusr;apply plus_comm;]
+apply (le_rewl ??? (f+h+ -h) (plus_comm ? f h));
 apply (le_rewl ??? (f+(h+ -h)) (plus_assoc ????));
-apply (le_rewl ??? (f+(-h+h))); [apply feq_plusl;apply plus_comm;]
-apply (le_rewl ??? (f+0)); [apply feq_plusl; apply eq_symmetric; apply opp_inverse]
+apply (le_rewl ??? (f+(-h+h)) (plus_comm ? h (-h)));
+apply (le_rewl ??? (f+0) (opp_inverse ??));
 apply (le_rewl ??? (0+f) (plus_comm ???));
-apply (le_rewl ??? (f) (eq_symmetric ??? (zero_neutral ??)));
-apply (le_rewr ??? (g+h+ -h)); [apply feq_plusr;apply plus_comm;]
+apply (le_rewl ??? (f) (zero_neutral ??));
+apply (le_rewr ??? (g+h+ -h) (plus_comm ? h ?));
 apply (le_rewr ??? (g+(h+ -h)) (plus_assoc ????));
-apply (le_rewr ??? (g+(-h+h))); [apply feq_plusl;apply plus_comm;]
-apply (le_rewr ??? (g+0)); [apply feq_plusl; apply eq_symmetric; apply opp_inverse]
+apply (le_rewr ??? (g+(-h+h)) (plus_comm ??h));
+apply (le_rewr ??? (g+0) (opp_inverse ??));
 apply (le_rewr ??? (0+g) (plus_comm ???));
-apply (le_rewr ??? (g) (eq_symmetric ??? (zero_neutral ??)));
-assumption;
+apply (le_rewr ??? (g) (zero_neutral ??) H);
 qed.
 
 lemma plus_cancl_le: 
   ∀G:ogroup.∀x,y,z:G.z+x ≤ z+y → x ≤ y.
 intros 5 (G x y z L);
 apply (le_rewl ??? (0+x) (zero_neutral ??));
-apply (le_rewl ??? ((-z+z)+x)); [apply feq_plusr;apply opp_inverse;]
+apply (le_rewl ??? ((-z+z)+x) (opp_inverse ??));
 apply (le_rewl ??? (-z+(z+x)) (plus_assoc ????));
 apply (le_rewr ??? (0+y) (zero_neutral ??));
-apply (le_rewr ??? ((-z+z)+y)); [apply feq_plusr;apply opp_inverse;]
+apply (le_rewr ??? ((-z+z)+y) (opp_inverse ??));
 apply (le_rewr ??? (-z+(z+y)) (plus_assoc ????));
-apply (fle_plusl ??? (-z));
-assumption;
+apply (fle_plusl ??? (-z) L);
 qed.
 
 
 lemma le_zero_x_to_le_opp_x_zero: 
   ∀G:ogroup.∀x:G.0 ≤ x → -x ≤ 0.
 intros (G x Px); apply (plus_cancr_le ??? x);
-apply (le_rewl ??? 0 (eq_symmetric ??? (opp_inverse ??)));
-apply (le_rewr ??? x (eq_symmetric ??? (zero_neutral ??)));
-assumption;
+apply (le_rewl ??? 0 (opp_inverse ??));
+apply (le_rewr ??? x (zero_neutral ??) Px);
 qed.
 
 lemma le_x_zero_to_le_zero_opp_x: 
   ∀G:ogroup.∀x:G. x ≤ 0 → 0 ≤ -x.
 intros (G x Lx0); apply (plus_cancr_le ??? x);
-apply (le_rewr ??? 0 (eq_symmetric ??? (opp_inverse ??)));
-apply (le_rewl ??? x (eq_symmetric ??? (zero_neutral ??)));
+apply (le_rewr ??? 0 (opp_inverse ??));
+apply (le_rewl ??? x (zero_neutral ??));
 assumption; 
 qed.

@@ -36,10 +36,10 @@ record abelian_group : Type ≝
    plus: carr → carr → carr;
    zero: carr;
    opp: carr → carr;
-   plus_assoc: associative ? plus (eq carr);
-   plus_comm: commutative ? plus (eq carr);
-   zero_neutral: left_neutral ? plus zero;
-   opp_inverse: left_inverse ? plus zero opp;
+   plus_assoc_: associative ? plus (eq carr);
+   plus_comm_: commutative ? plus (eq carr);
+   zero_neutral_: left_neutral ? plus zero;
+   opp_inverse_: left_inverse ? plus zero opp;
    plus_strong_ext: ∀z.strong_ext ? (plus z)  
 }.
 
@@ -60,6 +60,11 @@ definition minus ≝
 interpretation "Abelian group minus" 'minus a b =
  (cic:/matita/groups/minus.con _ a b).
 
+lemma plus_assoc: ∀G:abelian_group.∀x,y,z:G.x+(y+z)≈x+y+z ≝ plus_assoc_. 
+lemma plus_comm: ∀G:abelian_group.∀x,y:G.x+y≈y+x ≝ plus_comm_. 
+lemma zero_neutral: ∀G:abelian_group.∀x:G.0+x≈x ≝ zero_neutral_. 
+lemma opp_inverse: ∀G:abelian_group.∀x:G.-x+x≈0 ≝ opp_inverse_.
+
 definition ext ≝ λA:apartness.λop:A→A. ∀x,y. x ≈ y → op x ≈ op y.
 
 lemma strong_ext_to_ext: ∀A:apartness.∀op:A→A. strong_ext ? op → ext ? op.
@@ -71,7 +76,7 @@ intros (G x y z Eyz); apply (strong_ext_to_ext ?? (plus_strong_ext ? x));
 assumption;
 qed.  
 
-coercion cic:/matita/groups/feq_plusl.con.
+coercion cic:/matita/groups/feq_plusl.con nocomposites.
    
 lemma plus_strong_extr: ∀G:abelian_group.∀z:G.strong_ext ? (λx.x + z).
 intros 5 (G z x y A); simplify in A;
@@ -85,8 +90,18 @@ intros (G x y z Eyz); apply (strong_ext_to_ext ?? (plus_strong_extr ? x));
 assumption;
 qed.   
    
-coercion cic:/matita/groups/feq_plusr.con.   
-   
+coercion cic:/matita/groups/feq_plusr.con nocomposites.
+
+(* generation of coercions to make *_rew[lr] easier *)
+lemma feq_plusr_sym_: ∀G:abelian_group.∀x,y,z:G.z ≈ y →  y+x ≈ z+x.
+compose feq_plusr with eq_symmetric_ (H); apply H; assumption;
+qed.
+coercion cic:/matita/groups/feq_plusr_sym_.con nocomposites.
+lemma feq_plusl_sym_: ∀G:abelian_group.∀x,y,z:G.z ≈ y →  x+y ≈ x+z.
+compose feq_plusl with eq_symmetric_ (H); apply H; assumption;
+qed.
+coercion cic:/matita/groups/feq_plusl_sym_.con nocomposites.
+      
 lemma fap_plusl: ∀G:abelian_group.∀x,y,z:G. y # z →  x+y # x+z. 
 intros (G x y z Ayz); apply (plus_strong_ext ? (-x));
 apply (ap_rewl ??? ((-x + x) + y));
@@ -95,12 +110,10 @@ apply (ap_rewl ??? ((-x + x) + y));
     [1: apply plus_assoc; 
     |2: apply (ap_rewl ??? (0 + y));
         [1: apply (feq_plusr ???? (opp_inverse ??)); 
-        |2: apply (ap_rewl ???? (zero_neutral ? y)); apply (ap_rewr ??? (0 + z));
-            [1: apply (feq_plusr ???? (opp_inverse ??)); 
-            |2: apply (ap_rewr ???? (zero_neutral ??)); assumption;]]]]
+        |2: apply (ap_rewl ???? (zero_neutral ? y)); 
+            apply (ap_rewr ??? (0 + z) (opp_inverse ??)); 
+            apply (ap_rewr ???? (zero_neutral ??)); assumption;]]]
 qed.
-
-
 
 lemma fap_plusr: ∀G:abelian_group.∀x,y,z:G. y # z →  y+x # z+x. 
 intros (G x y z Ayz); apply (plus_strong_extr ? (-x));
@@ -108,12 +121,12 @@ apply (ap_rewl ??? (y + (x + -x)));
 [1: apply (eq_symmetric ??? (plus_assoc ????)); 
 |2: apply (ap_rewr ??? (z + (x + -x)));
     [1: apply (eq_symmetric ??? (plus_assoc ????)); 
-    |2: apply (ap_rewl ??? (y + (-x+x)) (feq_plusl ???? (plus_comm ???)));
-        apply (ap_rewl ??? (y + 0) (feq_plusl ???? (opp_inverse ??)));
+    |2: apply (ap_rewl ??? (y + (-x+x)) (plus_comm ? x (-x)));
+        apply (ap_rewl ??? (y + 0) (opp_inverse ??));
         apply (ap_rewl ??? (0 + y) (plus_comm ???));
         apply (ap_rewl ??? y (zero_neutral ??));
-        apply (ap_rewr ??? (z + (-x+x)) (feq_plusl ???? (plus_comm ???)));
-        apply (ap_rewr ??? (z + 0) (feq_plusl ???? (opp_inverse ??)));
+        apply (ap_rewr ??? (z + (-x+x)) (plus_comm ? x (-x)));
+        apply (ap_rewr ??? (z + 0) (opp_inverse ??));
         apply (ap_rewr ??? (0 + z) (plus_comm ???));
         apply (ap_rewr ??? z (zero_neutral ??));
         assumption]]
@@ -130,7 +143,7 @@ qed.
 theorem eq_opp_plus_plus_opp_opp: 
   ∀G:abelian_group.∀x,y:G. -(x+y) ≈ -x + -y.
 intros (G x y); apply (plus_cancr ??? (x+y));
-apply (eq_transitive ?? 0); [apply (opp_inverse ??)]
+apply (eq_transitive ?? 0 ? (opp_inverse ??));
 apply (eq_transitive ?? (-x + -y + x + y)); [2: apply (eq_symmetric ??? (plus_assoc ????))]
 apply (eq_transitive ?? (-y + -x + x + y)); [2: repeat apply feq_plusr; apply plus_comm]
 apply (eq_transitive ?? (-y + (-x + x) + y)); [2: apply feq_plusr; apply plus_assoc;]
