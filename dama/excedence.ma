@@ -79,22 +79,22 @@ lemma eq_reflexive:∀E. reflexive ? (eq E).
 intros (E); unfold; intros (x); apply ap_coreflexive; 
 qed.
 
-lemma eq_symmetric:∀E.symmetric ? (eq E).
+lemma eq_sym_:∀E.symmetric ? (eq E).
 intros (E); unfold; intros (x y Exy); unfold; unfold; intros (Ayx); apply Exy;
 apply ap_symmetric; assumption; 
 qed.
 
-lemma eq_symmetric_:∀E:apartness.∀x,y:E.x ≈ y → y ≈ x := eq_symmetric.
+lemma eq_sym:∀E:apartness.∀x,y:E.x ≈ y → y ≈ x := eq_sym_.
 
-coercion cic:/matita/excedence/eq_symmetric_.con.
+coercion cic:/matita/excedence/eq_sym.con.
 
-lemma eq_transitive_: ∀E.transitive ? (eq E).
+lemma eq_trans_: ∀E.transitive ? (eq E).
 (* bug. intros k deve fare whd quanto basta *)
 intros 6 (E x y z Exy Eyz); intro Axy; cases (ap_cotransitive ???y Axy); 
 [apply Exy|apply Eyz] assumption.
 qed.
 
-lemma eq_transitive:∀E:apartness.∀x,y,z:E.x ≈ y → y ≈ z → x ≈ z ≝ eq_transitive_.
+lemma eq_trans:∀E:apartness.∀x,y,z:E.x ≈ y → y ≈ z → x ≈ z ≝ eq_trans_.
 
 (* BUG: vedere se ricapita *)
 lemma le_antisymmetric: ∀E.antisymmetric ? (le E) (eq ?).
