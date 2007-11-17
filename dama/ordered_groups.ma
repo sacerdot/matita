@@ -37,8 +37,44 @@ coercion cic:/matita/ordered_groups/og_abelian_group.con.
 *)
 record ogroup : Type ≝ { 
   og_carr:> pre_ogroup;
-  fle_plusr: ∀f,g,h:og_carr. f≤g → f+h≤g+h
+  exc_canc_plusr: ∀f,g,h:og_carr. f+h ≰ g+h → f ≰ g
 }.
+
+lemma fexc_plusr: 
+  ∀G:ogroup.∀x,y,z:G. x ≰ y → x+z ≰ y + z.
+intros 5 (G x y z L); apply (exc_canc_plusr ??? (-z));
+apply (exc_rewl ??? (x + (z + -z)) (plus_assoc ????));
+apply (exc_rewl ??? (x + (-z + z)) (plus_comm ??z));
+apply (exc_rewl ??? (x+0) (opp_inverse ??));
+apply (exc_rewl ??? (0+x) (plus_comm ???));
+apply (exc_rewl ??? x (zero_neutral ??));
+apply (exc_rewr ??? (y + (z + -z)) (plus_assoc ????));
+apply (exc_rewr ??? (y + (-z + z)) (plus_comm ??z));
+apply (exc_rewr ??? (y+0) (opp_inverse ??));
+apply (exc_rewr ??? (0+y) (plus_comm ???));
+apply (exc_rewr ??? y (zero_neutral ??) L);
+qed.
+
+coercion cic:/matita/ordered_groups/fexc_plusr.con nocomposites.
+
+lemma exc_canc_plusl: ∀G:ogroup.∀f,g,h:G. h+f ≰ h+g → f ≰ g.
+intros 5 (G x y z L); apply (exc_canc_plusr ??? z);
+apply (exc_rewl ??? (z+x) (plus_comm ???));
+apply (exc_rewr ??? (z+y) (plus_comm ???) L);
+qed.
+
+lemma fexc_plusl: 
+  ∀G:ogroup.∀x,y,z:G. x ≰ y → z+x ≰ z+y.
+intros 5 (G x y z L); apply (exc_canc_plusl ??? (-z));
+apply (exc_rewl ???? (plus_assoc ??z x));
+apply (exc_rewr ???? (plus_assoc ??z y));
+apply (exc_rewl ??? (0+x) (opp_inverse ??));
+apply (exc_rewr ??? (0+y) (opp_inverse ??));
+apply (exc_rewl ???? (zero_neutral ??));
+apply (exc_rewr ???? (zero_neutral ??) L);
+qed.
+
+coercion cic:/matita/ordered_groups/fexc_plusl.con nocomposites.
 
 lemma plus_cancr_le: 
   ∀G:ogroup.∀x,y,z:G.x+z ≤ y + z → x ≤ y.
@@ -53,7 +89,7 @@ apply (le_rewr ??? (y+0) (plus_comm ???));
 apply (le_rewr ??? (y+(-z+z)) (opp_inverse ??));
 apply (le_rewr ??? (y+(z+ -z)) (plus_comm ??z));
 apply (le_rewr ??? (y+z+ -z) (plus_assoc ????));
-apply (fle_plusr ??? (-z) L);
+intro H; apply L; clear L; apply (exc_canc_plusr ??? (-z) H);
 qed.
 
 lemma fle_plusl: ∀G:ogroup. ∀f,g,h:G. f≤g → h+f≤h+g.
@@ -85,12 +121,27 @@ apply (le_rewr ??? (-z+(z+y)) (plus_assoc ????));
 apply (fle_plusl ??? (-z) L);
 qed.
 
-
+lemma exc_opp_x_zero_to_exc_zero_x: 
+  ∀G:ogroup.∀x:G.-x ≰ 0 → 0 ≰ x.
+intros (G x H); apply (exc_canc_plusr ??? (-x));
+apply (exc_rewr ???? (plus_comm ???));
+apply (exc_rewr ???? (opp_inverse ??));
+apply (exc_rewl ???? (zero_neutral ??) H);
+qed.
+  
 lemma le_zero_x_to_le_opp_x_zero: 
   ∀G:ogroup.∀x:G.0 ≤ x → -x ≤ 0.
 intros (G x Px); apply (plus_cancr_le ??? x);
 apply (le_rewl ??? 0 (opp_inverse ??));
 apply (le_rewr ??? x (zero_neutral ??) Px);
+qed.
+
+lemma exc_zero_opp_x_to_exc_x_zero: 
+  ∀G:ogroup.∀x:G. 0 ≰ -x → x ≰ 0.
+intros (G x H); apply (exc_canc_plusl ??? (-x));
+apply (exc_rewr ???? (plus_comm ???));
+apply (exc_rewl ???? (opp_inverse ??));
+apply (exc_rewr ???? (zero_neutral ??) H);
 qed.
 
 lemma le_x_zero_to_le_zero_opp_x: 
