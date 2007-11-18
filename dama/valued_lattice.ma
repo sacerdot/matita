@@ -46,8 +46,15 @@ interpretation "lattice value" 'value2 a = (cic:/matita/valued_lattice/value.con
 notation "\mu" non associative with precedence 80 for @{ 'value }.
 interpretation "lattice value" 'value = (cic:/matita/valued_lattice/value.con _ _).
 
-axiom foo: ∀R.∀L:vlattice R.∀x,y,z:L.
+lemma foo: ∀R.∀L:vlattice R.∀x,y,z:L.
   μ(x ∧ (y ∨ z)) ≈ (μ x) + (μ y) + μ z + -μ (y ∧ z) + -μ (z ∨ (x ∨ y)).
+intros (R L x y z);
+lapply (meet_join_plus ? ? x (y ∨ z)) as H;
+lapply (meet_join_plus ? ? y z) as H1;
+ (*CSC: A questo punto ti servono dei lemmi sui gruppi che non sono ancora
+   stati dimostrati. E una valanga di passi di riscrittura :-)
+ *)
+
 
 lemma meet_join_le1: ∀R.∀L:vlattice R.∀x,y,z:L.μ (x ∧ z) ≤ μ (x ∧ (y ∨ z)). 
 intros (R L x y z);
