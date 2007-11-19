@@ -40,6 +40,12 @@ theorem exp_n_SO : \forall n:nat. n = n \sup (S O).
 intro.simplify.rewrite < times_n_SO.reflexivity.
 qed.
 
+theorem exp_SSO: \forall n. exp n (S(S O)) = n*n.
+intro.simplify.
+rewrite < times_n_SO.
+reflexivity.
+qed.
+
 theorem exp_exp_times : \forall n,p,q:nat. 
 (n \sup p) \sup q = n \sup (p * q).
 intros.
@@ -164,7 +170,22 @@ apply nat_elim2;intros
   ]
 qed.
 
-
+theorem lt_exp_to_lt: 
+\forall a,n,m. S O < a \to exp a n < exp a m \to n < m.
+intros.
+elim (le_to_or_lt_eq n m)
+  [assumption
+  |apply False_ind.
+   apply (lt_to_not_eq ? ? H1).
+   rewrite < H2.
+   reflexivity
+  |apply (le_exp_to_le a)
+    [assumption
+    |apply lt_to_le.
+     assumption
+    ]
+  ]
+qed.
      
    
    

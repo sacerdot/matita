@@ -325,6 +325,16 @@ intros.apply (le_to_lt_to_lt O n).
 apply le_O_n.assumption.
 qed.
 
+theorem lt_SO_n_to_lt_O_pred_n: \forall n:nat.
+(S O) \lt n \to O \lt (pred n).
+intros.
+apply (ltn_to_ltO (pred (S O)) (pred n) ?).
+ apply (lt_pred (S O) n);
+ [ apply (lt_O_S O) 
+ | assumption
+ ]
+qed.
+
 theorem lt_O_n_elim: \forall n:nat. lt O n \to 
 \forall P:nat\to Prop. (\forall m:nat.P (S m)) \to P n.
 intro.elim n.apply False_ind.exact (not_le_Sn_O O H).

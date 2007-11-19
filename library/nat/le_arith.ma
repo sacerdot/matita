@@ -146,6 +146,18 @@ apply nat_elim2;intros
   ]
 qed.
 
+theorem le_S_times_SSO: \forall n,m.O < m \to
+n \le m \to S n \le (S(S O))*m.
+intros.
+simplify.
+rewrite > plus_n_O.
+simplify.rewrite > plus_n_Sm.
+apply le_plus
+  [assumption
+  |rewrite < plus_n_O.
+   assumption
+  ]
+qed.
 (*0 and times *)
 theorem O_lt_const_to_le_times_const:  \forall a,c:nat.
 O \lt c \to a \le a*c.

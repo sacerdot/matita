@@ -15,14 +15,32 @@
 set "baseuri" "cic:/matita/nat/factorization".
 
 include "nat/ord.ma".
-include "nat/gcd.ma".
-include "nat/nth_prime.ma".
 
 (* the following factorization algorithm looks for the largest prime
    factor. *)
 definition max_prime_factor \def \lambda n:nat.
 (max n (\lambda p:nat.eqb (n \mod (nth_prime p)) O)).
 
+theorem lt_SO_max_prime: \forall m. S O <  m \to 
+S O < max m (λi:nat.primeb i∧divides_b i m).
+intros.
+apply (lt_to_le_to_lt ? (smallest_factor m))
+  [apply lt_SO_smallest_factor.assumption
+  |apply f_m_to_le_max
+    [apply le_smallest_factor_n
+    |apply true_to_true_to_andb_true
+      [apply prime_to_primeb_true.
+       apply prime_smallest_factor_n.
+       assumption
+      |apply divides_to_divides_b_true
+        [apply lt_O_smallest_factor.apply lt_to_le.assumption
+        |apply divides_smallest_factor_n.
+         apply lt_to_le.assumption
+        ]
+      ]
+    ]
+  ]
+qed.
 (* max_prime_factor is indeed a factor *)
 theorem divides_max_prime_factor_n:
   \forall n:nat. (S O) < n
@@ -40,7 +58,6 @@ cut (\exists i. nth_prime i = smallest_factor n);
       | rewrite > H1;
         apply le_smallest_factor_n; ]
     | rewrite > H1;
-      (*CSC: simplify here does something nasty! *)
       change with (divides_b (smallest_factor n) n = true);
       apply divides_to_divides_b_true;
       [ apply (trans_lt ? (S O));
@@ -356,7 +373,7 @@ theorem defactorize_factorize: \forall n:nat.defactorize (factorize n) = n.
 intro.
 apply (nat_case n).reflexivity.
 intro.apply (nat_case m).reflexivity.
-intro.(*CSC: simplify here does something really nasty *)
+intro.
 change with  
 (let p \def (max (S(S m1)) (\lambda p:nat.eqb ((S(S m1)) \mod (nth_prime p)) O)) in
 defactorize (match p_ord (S(S m1)) (nth_prime p) with
@@ -377,7 +394,6 @@ simplify.
 cut ((S(S m1)) = (nth_prime p) \sup q *r).
 cut (O<r).
 rewrite > defactorize_aux_factorize_aux.
-(*CSC: simplify here does something really nasty *)
 change with (r*(nth_prime p) \sup (S (pred q)) = (S(S m1))).
 cut ((S (pred q)) = q).
 rewrite > Hcut2.
@@ -395,7 +411,6 @@ apply (divides_max_prime_factor_n (S (S m1))).
 unfold lt.apply le_S_S.apply le_S_S. apply le_O_n.
 cut ((S(S m1)) = r).
 rewrite > Hcut3 in \vdash (? (? ? %)).
-(*CSC: simplify here does something really nasty *)
 change with (nth_prime p \divides r \to False).
 intro.
 apply (p_ord_aux_to_not_mod_O (S(S m1)) (S(S m1)) (nth_prime p) q r).
@@ -470,30 +485,6 @@ rewrite > assoc_times.
 rewrite < plus_n_Sm.
 apply (witness ? ? (n2* (nth_prime i) \sup n)).
 reflexivity.
-qed.
-
-theorem divides_exp_to_divides: 
-\forall p,n,m:nat. prime p \to 
-p \divides n \sup m \to p \divides n.
-intros 3.elim m.simplify in H1.
-apply (transitive_divides p (S O)).assumption.
-apply divides_SO_n.
-cut (p \divides n \lor p \divides n \sup n1).
-elim Hcut.assumption.
-apply H.assumption.assumption.
-apply divides_times_to_divides.assumption.
-exact H2.
-qed.
-
-theorem divides_exp_to_eq: 
-\forall p,q,m:nat. prime p \to prime q \to
-p \divides q \sup m \to p = q.
-intros.
-unfold prime in H1.
-elim H1.apply H4.
-apply (divides_exp_to_divides p q m).
-assumption.assumption.
-unfold prime in H.elim H.assumption.
 qed.
 
 lemma eq_p_max: \forall n,p,r:nat. O < n \to
@@ -762,7 +753,7 @@ exact H1.
 qed.
 
 theorem factorize_defactorize: 
-\forall f,g: nat_fact_all. factorize (defactorize f) = f.
+\forall f: nat_fact_all. factorize (defactorize f) = f.
 intros.
 apply injective_defactorize.
 apply defactorize_factorize.

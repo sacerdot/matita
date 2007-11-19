@@ -55,7 +55,6 @@ intro.apply (nat_case n)
 qed.
 *)
 
-
 (*this obvious property is useful because simplify, sometimes,
   "simplifies too much", and doesn't allow to obtain this simple result.
  *)
@@ -136,7 +135,6 @@ elim (m)
 ]
 qed.
   
-
 lemma totient_card: \forall n.
 totient n = card n (\lambda i.eqb (gcd i n) (S O)).
 intros.

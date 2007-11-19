@@ -749,6 +749,7 @@ apply gcd_O_to_eq_O.apply sym_eq.assumption.
 apply le_to_or_lt_eq.apply le_O_n.
 qed.
 
+(* primes and divides *)
 theorem divides_times_to_divides: \forall n,p,q:nat.prime n \to n \divides p*q \to
 n \divides p \lor n \divides q.
 intros.
@@ -800,6 +801,30 @@ cut (n \divides p \lor n \ndivides p)
     |unfold prime in H.elim H. assumption
     ]
   ]
+qed.
+
+theorem divides_exp_to_divides: 
+\forall p,n,m:nat. prime p \to 
+p \divides n \sup m \to p \divides n.
+intros 3.elim m.simplify in H1.
+apply (transitive_divides p (S O)).assumption.
+apply divides_SO_n.
+cut (p \divides n \lor p \divides n \sup n1).
+elim Hcut.assumption.
+apply H.assumption.assumption.
+apply divides_times_to_divides.assumption.
+exact H2.
+qed.
+
+theorem divides_exp_to_eq: 
+\forall p,q,m:nat. prime p \to prime q \to
+p \divides q \sup m \to p = q.
+intros.
+unfold prime in H1.
+elim H1.apply H4.
+apply (divides_exp_to_divides p q m).
+assumption.assumption.
+unfold prime in H.elim H.assumption.
 qed.
 
 theorem eq_gcd_times_SO: \forall m,n,p:nat. O < n \to O < p \to
@@ -878,3 +903,4 @@ cut (n \divides p \lor n \ndivides p)
   assumption.
  ]
 qed.
+

@@ -126,6 +126,23 @@ apply nat_elim2; intros; simplify
   ]
 qed.
 
+theorem leb_true_to_le:\forall n,m.
+leb n m = true \to (n \le m).
+intros 2.
+apply leb_elim
+  [intros.assumption
+  |intros.destruct H1.
+  ]
+qed.
+
+theorem leb_false_to_not_le:\forall n,m.
+leb n m = false \to \lnot (n \le m).
+intros 2.
+apply leb_elim
+  [intros.destruct H1
+  |intros.assumption
+  ]
+qed.
 (*
 theorem decidable_le: \forall n,m. n \leq m \lor n \nleq m. 
 intros.

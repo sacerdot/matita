@@ -239,6 +239,27 @@ apply (nat_case n)
   ]
 qed.
 
+theorem le_times_to_le_div: \forall a,b,c:nat.
+O \lt b \to (b*c) \le a \to c \le (a /b).
+intros.
+apply lt_S_to_le.
+apply (lt_times_n_to_lt b)
+  [assumption
+  |rewrite > sym_times.
+   apply (le_to_lt_to_lt ? a)
+    [assumption
+    |simplify.
+     rewrite > sym_plus.
+     rewrite > (div_mod a b) in ⊢ (? % ?)
+      [apply lt_plus_r.
+       apply lt_mod_m_m.
+       assumption
+      |assumption
+      ]
+    ]
+  ]
+qed.
+
 theorem nat_compare_times_l : \forall n,p,q:nat. 
 nat_compare p q = nat_compare ((S n) * p) ((S n) * q).
 intros.apply nat_compare_elim.intro.
@@ -320,7 +341,81 @@ apply (trans_lt ? (S O)).
 unfold lt. apply le_n.assumption.
 qed.
 
+theorem eq_div_div_div_times: \forall n,m,q. O < n \to O < m \to
+q/n/m = q/(n*m).
+intros.
+apply (div_mod_spec_to_eq q (n*m) ? (q\mod n+n*(q/n\mod m)) ? (mod q (n*m)))
+  [apply div_mod_spec_intro
+    [apply (lt_to_le_to_lt ? (n*(S (q/n\mod m))))
+      [rewrite < times_n_Sm.
+       apply lt_plus_l.
+       apply lt_mod_m_m.
+       assumption
+      |apply le_times_r.
+       apply lt_mod_m_m.
+       assumption
+      ]
+    |rewrite > sym_times in ⊢ (? ? ? (? (? ? %) ?)).
+     rewrite < assoc_times.
+     rewrite > (eq_times_div_minus_mod ? ? H1).
+     rewrite > sym_times.
+     rewrite > distributive_times_minus.
+     rewrite > sym_times.
+     rewrite > (eq_times_div_minus_mod ? ? H).
+     rewrite < sym_plus in ⊢ (? ? ? (? ? %)).
+     rewrite < assoc_plus.
+     rewrite < plus_minus_m_m
+      [rewrite < plus_minus_m_m
+        [reflexivity
+        |apply (eq_plus_to_le ? ? ((q/n)*n)).
+         rewrite < sym_plus.
+         apply div_mod.
+         assumption
+        ]
+      |apply (trans_le ? (n*(q/n)))
+        [apply le_times_r.
+         apply (eq_plus_to_le ? ? ((q/n)/m*m)).
+         rewrite < sym_plus.
+         apply div_mod.
+         assumption
+        |rewrite > sym_times.
+         rewrite > eq_times_div_minus_mod
+          [apply le_n
+          |assumption
+          ]
+        ]
+      ]
+    ]
+  |apply div_mod_spec_div_mod.
+   rewrite > (times_n_O O).
+   apply lt_times;assumption
+  ]
+qed.
 
+theorem eq_div_div_div_div: \forall n,m,q. O < n \to O < m \to
+q/n/m = q/m/n.
+intros.
+apply (trans_eq ? ? (q/(n*m)))
+  [apply eq_div_div_div_times;assumption
+  |rewrite > sym_times.
+   apply sym_eq.
+   apply eq_div_div_div_times;assumption
+  ]
+qed.
+
+theorem SSO_mod: \forall n,m. O < m \to (S(S O))*n/m = (n/m)*(S(S O)) + mod ((S(S O))*n/m) (S(S O)).
+intros.
+rewrite < (lt_O_to_div_times n (S(S O))) in ⊢ (? ? ? (? (? (? % ?) ?) ?))
+  [rewrite > eq_div_div_div_div
+    [rewrite > sym_times in ⊢ (? ? ? (? (? (? (? % ?) ?) ?) ?)).
+     apply div_mod.
+     apply lt_O_S
+    |apply lt_O_S
+    |assumption
+    ]
+  |apply lt_O_S
+  ]
+qed.
 (* Forall a,b : N. 0 < b \to b * (a/b) <= a < b * (a/b +1) *)
 (* The theorem is shown in two different parts: *)
 

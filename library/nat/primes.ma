@@ -190,8 +190,33 @@ rewrite > H2.rewrite < H3.
 simplify.exact (not_le_Sn_n O).
 qed.
 
-
-(*divides and div*)
+(*a variant of or_div_mod *)
+theorem or_div_mod1: \forall n,q. O < q \to
+(divides q (S n)) \land S n = (S (div n q)) * q \lor
+(\lnot (divides q (S n)) \land S n= (div n q) * q + S (n\mod q)).
+intros.elim (or_div_mod n q H);elim H1
+  [left.split
+    [apply (witness ? ? (S (n/q))).
+     rewrite > sym_times.assumption
+    |assumption
+    ]
+  |right.split
+    [intro.
+     apply (not_eq_O_S (n \mod q)).
+     (* come faccio a fare unfold nelleipotesi ? *)
+     cut ((S n) \mod q = O)
+      [rewrite < Hcut.
+       apply (div_mod_spec_to_eq2 (S n) q (div (S n) q) (mod (S n) q) (div n q) (S (mod n q)))
+        [apply div_mod_spec_div_mod.
+         assumption
+        |apply div_mod_spec_intro;assumption
+        ]
+      |apply divides_to_mod_O;assumption
+      ]
+    |assumption
+    ]
+  ]
+qed.
 
 theorem divides_to_div: \forall n,m.divides n m \to m/n*n = m.
 intro.
@@ -488,6 +513,11 @@ qed.
 
 theorem prime_to_lt_O: \forall p. prime p \to O < p.
 intros.elim H.apply lt_to_le.assumption.
+qed.
+
+theorem prime_to_lt_SO: \forall p. prime p \to S O < p.
+intros.elim H.
+assumption.
 qed.
 
 (* smallest factor *)

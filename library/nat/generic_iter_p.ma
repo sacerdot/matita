@@ -205,6 +205,47 @@ elim H
 ]
 qed.
 
+(* a therem slightly more general than the previous one *)
+theorem or_false_eq_baseA_to_eq_iter_p_gen: \forall A:Type. \forall n,m:nat.\forall p:nat \to bool.
+\forall g: nat \to A. \forall baseA:A. \forall plusA: A \to A \to A.
+(\forall a. plusA baseA a = a) \to
+n \le m \to (\forall i:nat. n \le i \to i < m \to p i = false \lor g i = baseA)
+\to iter_p_gen m p A g baseA plusA = iter_p_gen n p A g baseA plusA.
+intros 9.
+elim H1
+[reflexivity
+|apply (bool_elim ? (p n1));intro
+  [elim (H4 n1)
+    [apply False_ind.
+     apply not_eq_true_false.
+     rewrite < H5.
+     rewrite < H6.
+     reflexivity
+    |rewrite > true_to_iter_p_gen_Sn
+      [rewrite > H6.
+       rewrite > H.
+       apply H3.intros.
+       apply H4
+        [assumption
+        |apply le_S.assumption
+        ]
+      |assumption
+      ]
+    |assumption
+    |apply le_n
+    ]
+  |rewrite > false_to_iter_p_gen_Sn
+    [apply H3.intros.
+     apply H4
+      [assumption
+      |apply le_S.assumption
+      ]
+    |assumption
+    ]
+  ]
+]
+qed.
+    
 theorem iter_p_gen2 : 
 \forall n,m:nat.
 \forall p1,p2:nat \to bool.
@@ -1631,7 +1672,82 @@ apply (trans_eq ? ?
 ]
 qed.
 
-
+theorem iter_p_gen_iter_p_gen: 
+\forall A:Type.
+\forall baseA: A.
+\forall plusA: A \to A \to A. 
+(symmetric A plusA) \to 
+(associative A plusA) \to 
+(\forall a:A.(plusA a  baseA) = a)\to
+\forall g: nat \to nat \to A.
+\forall n,m.
+\forall p11,p21:nat \to bool.
+\forall p12,p22:nat \to nat \to bool.
+(\forall x,y. x < n \to y < m \to 
+ (p11 x \land p12 x y) = (p21 y \land p22 y x)) \to
+iter_p_gen n p11 A 
+  (\lambda x:nat.iter_p_gen m (p12 x) A (\lambda y. g x y) baseA plusA) 
+  baseA plusA =
+iter_p_gen m p21 A 
+  (\lambda y:nat.iter_p_gen n (p22 y) A  (\lambda x. g x y) baseA plusA )
+  baseA plusA.
+intros.
+apply (iter_p_gen_2_eq A baseA plusA H H1 H2 (\lambda x,y. g x y) (\lambda x,y.y) (\lambda x,y.x) (\lambda x,y.y) (\lambda x,y.x)
+       n m m n p11 p21 p12 p22)
+  [intros.split
+    [split
+      [split
+        [split
+          [split
+            [apply (andb_true_true ? (p12 j i)).
+             rewrite > H3
+              [rewrite > H6.rewrite > H7.reflexivity
+              |assumption
+              |assumption
+              ]
+            |apply (andb_true_true_r (p11 j)).
+             rewrite > H3
+              [rewrite > H6.rewrite > H7.reflexivity
+              |assumption
+              |assumption
+              ]
+            ]
+          |reflexivity
+          ]
+        |reflexivity
+        ]
+      |assumption
+      ]
+    |assumption
+    ]
+  |intros.split
+    [split
+      [split
+        [split
+          [split
+            [apply (andb_true_true ? (p22 j i)).
+             rewrite < H3
+              [rewrite > H6.rewrite > H7.reflexivity
+              |assumption
+              |assumption
+              ]
+            |apply (andb_true_true_r (p21 j)).
+             rewrite < H3
+              [rewrite > H6.rewrite > H7.reflexivity
+              |assumption
+              |assumption
+              ]
+            ]
+          |reflexivity
+          ]
+        |reflexivity
+        ]
+      |assumption
+      ]
+    |assumption
+    ]
+  ]
+qed.
 
 
 

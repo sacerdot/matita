@@ -325,6 +325,31 @@ rewrite > (div_mod m n) in \vdash (? ? %)
   ]
 qed.
 
+theorem or_div_mod: \forall n,q. O < q \to
+((S (n \mod q)=q) \land S n = (S (div n q)) * q \lor
+((S (n \mod q)<q) \land S n= (div n q) * q + S (n\mod q))).
+intros.
+elim (le_to_or_lt_eq ? ? (lt_mod_m_m n q H))
+  [right.split
+    [assumption
+    |rewrite < plus_n_Sm.
+     apply eq_f.
+     apply div_mod.
+     assumption
+    ]
+  |left.split
+    [assumption
+    |simplify.
+     rewrite > sym_plus.
+     rewrite < H1 in ⊢ (? ? ? (? ? %)).
+     rewrite < plus_n_Sm.
+     apply eq_f.
+     apply div_mod.
+     assumption
+    ]
+  ]
+qed.
+
 (* injectivity *)
 theorem injective_times_r: \forall n:nat.injective nat nat (\lambda m:nat.(S n)*m).
 change with (\forall n,p,q:nat.(S n)*p = (S n)*q \to p=q).

@@ -72,6 +72,76 @@ intro.simplify.rewrite < H3.
 rewrite > H2.simplify.apply le_n.
 qed.
 
+theorem max_f_g: \forall f,g,n. (\forall i. i \le n \to f i = g i) \to
+max n f = max n g.
+intros 3.
+elim n
+  [simplify.
+   rewrite > (H O)
+    [reflexivity
+    |apply le_n
+    ]
+  |simplify.
+   rewrite > H
+    [rewrite > H1
+      [reflexivity
+      |apply le_n
+      ]
+    |intros.
+     apply H1.
+     apply le_S.
+     assumption
+    ]
+  ]
+qed.
+
+theorem le_max_f_max_g: \forall f,g,n. (\forall i. i \le n \to f i = true \to g i =true) \to
+max n f \le max n g.
+intros 3.
+elim n
+  [simplify.
+   elim (f O);apply le_O_n
+  |simplify.
+   apply (bool_elim ? (f (S n1)));intro
+    [rewrite > (H1 (S n1) ? H2)
+      [apply le_n
+      |apply le_n
+      ]
+    |cases (g(S n1))
+      [simplify.
+       apply le_S.
+       apply le_max_n
+      |simplify.
+       apply H.
+       intros.
+       apply H1
+        [apply le_S.assumption
+        |assumption
+        ]
+      ]
+    ]
+  ]
+qed.
+
+
+theorem max_O : \forall f:nat \to bool. \forall n:nat.
+(\forall i:nat. le i n \to f i = false) \to max n f = O.
+intros 2.elim n
+  [simplify.rewrite > H
+    [reflexivity
+    |apply le_O_n
+    ]
+  |simplify.rewrite > H1
+    [simplify.apply H.
+     intros.
+     apply H1.
+     apply le_S.
+     assumption
+    |apply le_n
+    ]
+  ]
+qed.
+
 theorem f_max_true : \forall f:nat \to bool. \forall n:nat.
 (\exists i:nat. le i n \land f i = true) \to f (max n f) = true. 
 intros 2.
@@ -95,6 +165,73 @@ rewrite < H2.rewrite < H7.rewrite > H6. reflexivity.
 reflexivity.
 qed.
 
+theorem exists_forall_le:\forall f,n. 
+(\exists i. i \le n \land f i = true) \lor
+(\forall i. i \le n \to f i = false).
+intros.
+elim n
+  [apply (bool_elim ? (f O));intro
+    [left.apply (ex_intro ? ? O).
+     split[apply le_n|assumption]
+    |right.intros.
+     apply (le_n_O_elim ? H1).
+     assumption
+    ]
+  |elim H
+    [elim H1.elim H2.
+     left.apply (ex_intro ? ? a).
+     split[apply le_S.assumption|assumption]
+    |apply (bool_elim ? (f (S n1)));intro
+      [left.apply (ex_intro ? ? (S n1)).
+       split[apply le_n|assumption]
+      |right.intros.
+       elim (le_to_or_lt_eq ? ? H3)
+        [apply H1.
+         apply le_S_S_to_le.
+         apply H4
+        |rewrite > H4.
+         assumption
+        ]
+      ]
+    ]
+  ]
+qed.
+     
+theorem exists_max_forall_false:\forall f,n. 
+((\exists i. i \le n \land f i = true) \land (f (max n f) = true))\lor
+((\forall i. i \le n \to f i = false) \land (max n f) = O).
+intros.
+elim (exists_forall_le f n)
+  [left.split
+    [assumption
+    |apply f_max_true.assumption
+    ]
+  |right.split
+    [assumption
+    |apply max_O.assumption
+    ]
+  ]
+qed.
+
+theorem false_to_lt_max: \forall f,n,m.O < n \to
+f n = false \to max m f \le n \to max m f < n.
+intros.
+elim (le_to_or_lt_eq ? ? H2)
+  [assumption
+  |elim (exists_max_forall_false f m)
+    [elim H4.
+     apply False_ind.
+     apply not_eq_true_false.
+     rewrite < H6.
+     rewrite > H3.
+     assumption
+    |elim H4.
+     rewrite > H6.
+     assumption
+    ]
+  ]
+qed.
+
 theorem lt_max_to_false : \forall f:nat \to bool. 
 \forall n,m:nat. (max n f) < m \to m \leq n \to f m = false.
 intros 2.
@@ -112,6 +249,18 @@ intro.
 apply H.rewrite < H6.assumption.
 apply le_S_S_to_le.assumption.
 intro.rewrite > H7.assumption.
+qed.
+
+theorem f_false_to_le_max: \forall f,n,p. (∃i:nat.i≤n∧f i=true) \to
+(\forall m. p < m \to f m = false)
+\to max n f \le p.
+intros.
+apply not_lt_to_le.intro.
+apply not_eq_true_false.
+rewrite < (H1 ? H2).
+apply sym_eq.
+apply f_max_true.
+assumption.
 qed.
 
 definition max_spec \def \lambda f:nat \to bool.\lambda n,m: nat.

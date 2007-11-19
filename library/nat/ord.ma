@@ -17,6 +17,7 @@ set "baseuri" "cic:/matita/nat/ord".
 include "datatypes/constructors.ma".
 include "nat/exp.ma".
 include "nat/nth_prime.ma".
+include "nat/gcd.ma". (* for some properties of divides *)
 include "nat/relevant_equations.ma". (* required by autobatch paramod *)
 
 let rec p_ord_aux p n m \def
@@ -429,7 +430,165 @@ elim (le_to_or_lt_eq O (ord_rem n p))
   ]
 qed.
 
-(* p_ord_inv is the inverse of ord *)
+(* properties of ord e ord_rem *)
+
+theorem ord_times: \forall p,m,n.O<m \to O<n \to prime p \to
+ord (m*n) p = ord m p+ord n p.
+intros.unfold ord.
+rewrite > (p_ord_times ? ? ? (ord m p) (ord_rem m p) (ord n p) (ord_rem n p))
+  [reflexivity
+  |assumption
+  |assumption
+  |assumption
+  |unfold ord.unfold ord_rem.apply eq_pair_fst_snd
+  |unfold ord.unfold ord_rem.apply eq_pair_fst_snd
+  ]
+qed.
+
+theorem ord_exp: \forall p,m.S O < p \to
+ord (exp p m) p = m.
+intros.
+unfold ord.
+rewrite > (p_ord_exp1 p (exp p m) m (S O))
+  [reflexivity
+  |apply lt_to_le.assumption
+  |intro.apply (lt_to_not_le ? ? H).
+   apply divides_to_le
+    [apply lt_O_S
+    |assumption
+    ]
+  |apply times_n_SO
+  ]
+qed.
+
+theorem not_divides_to_ord_O: 
+\forall p,m. prime p \to \lnot (divides p m) \to
+ord m p = O.
+intros.unfold ord.
+rewrite > (p_ord_exp1 p m O m)
+  [reflexivity
+  |apply prime_to_lt_O.assumption
+  |assumption
+  |simplify.apply plus_n_O
+  ]
+qed.
+
+theorem ord_O_to_not_divides: 
+\forall p,m. O < m \to prime p \to ord m p = O \to 
+\lnot (divides p m).
+intros.
+lapply (p_ord_to_exp1 p m (ord m p) (ord_rem m p))
+  [elim Hletin.
+   rewrite > H4.
+   rewrite > H2.
+   rewrite > sym_times.
+   rewrite < times_n_SO.
+   assumption
+  |apply prime_to_lt_SO.assumption
+  |assumption
+  |unfold ord.unfold ord_rem.apply eq_pair_fst_snd
+  ]
+qed.
+
+theorem divides_to_not_ord_O: 
+\forall p,m. O < m \to prime p \to divides p m \to
+\lnot(ord m p = O).
+intros.intro.
+apply (ord_O_to_not_divides ? ? H H1 H3).
+assumption.
+qed.
+
+theorem not_ord_O_to_divides: 
+\forall p,m. O < m \to prime p \to \lnot (ord m p = O) \to 
+divides p m.
+intros.
+rewrite > (exp_ord p) in ⊢ (? ? %)
+  [apply (trans_divides ? (exp p (ord m p)))
+    [generalize in match H2.
+     cases (ord m p);intro
+      [apply False_ind.apply H3.reflexivity
+      |simplify.autobatch
+      ]
+    |autobatch
+    ]
+  |apply prime_to_lt_SO.
+   assumption
+  |assumption
+  ]
+qed.
+
+theorem not_divides_ord_rem: \forall m,p.O< m \to S O < p \to
+\lnot (divides p (ord_rem m p)).
+intros.
+elim (p_ord_to_exp1 p m (ord m p) (ord_rem m p))
+  [assumption
+  |assumption
+  |assumption
+  |unfold ord.unfold ord_rem.apply eq_pair_fst_snd
+  ]
+qed.
+
+theorem ord_ord_rem: \forall p,q,m. O < m \to 
+prime p \to prime q \to
+q < p \to ord (ord_rem m p) q = ord m q.
+intros.
+rewrite > (exp_ord p) in ⊢ (? ? ? (? % ?))
+  [rewrite > ord_times
+    [rewrite > not_divides_to_ord_O in ⊢ (? ? ? (? % ?))
+      [reflexivity
+      |assumption
+      |intro.
+       apply (lt_to_not_eq ? ? H3).
+       apply (divides_exp_to_eq ? ? ? H2 H1 H4)
+      ]
+    |apply lt_O_exp.
+     apply (ltn_to_ltO ? ? H3)
+    |apply lt_O_ord_rem
+      [elim H1.assumption
+      |assumption
+      
+      ]
+    |assumption
+    ]
+  |elim H1.assumption
+  |assumption
+  ]
+qed.
+
+theorem lt_ord_rem: \forall n,m. prime n \to O < m \to
+divides n m \to ord_rem m n < m.
+intros.
+elim (le_to_or_lt_eq (ord_rem m n) m)
+  [assumption
+  |apply False_ind.
+   apply (ord_O_to_not_divides ? ? H1 H ? H2).
+   apply (inj_exp_r n)
+    [apply prime_to_lt_SO.assumption
+    |apply (inj_times_l1 m)
+      [assumption
+      |rewrite > sym_times in ⊢ (? ? ? %).
+       rewrite < times_n_SO.
+       rewrite < H3 in ⊢ (? ? (? ? %) ?).
+       apply sym_eq.
+       apply exp_ord
+        [apply prime_to_lt_SO.assumption
+        |assumption
+        ]
+      ]
+    ]
+  |apply divides_to_le
+    [assumption
+    |apply divides_ord_rem
+      [apply prime_to_lt_SO.assumption
+      |assumption
+      ]
+    ]
+  ]
+qed.
+
+(* p_ord_inv is used to encode the pair ord and rem into 
+   a single natural number. *)
+ 
 definition p_ord_inv \def
 \lambda p,m,x.
   match p_ord x p with
