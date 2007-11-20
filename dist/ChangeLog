@@ -1,5 +1,6 @@
-2006-06-13  Stefano Zacchiroli	<zack@cs.unibo.it>
+0.4.98 - ??/11/2007 - bugfix release
+	* compiles against camlp5 >= 5.0  
+	* removed dependency against lablgtksourceview since it is now part
+	  of lablgtk2
 
-	* NEWS: Version 0.1.0 (alpha)
-	* First public release of Matita.
-
+0.4.97 - 16/11/2007 - initial release
