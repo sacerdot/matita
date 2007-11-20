@@ -1,6 +1,5 @@
 0.4.98 - ??/11/2007 - bugfix release
 	* compiles against camlp5 >= 5.0  
-	* removed dependency against lablgtksourceview since it is now part
-	  of lablgtk2
+	* changed lablgtksourceview module name since it is now part of lablgtk2
 
 0.4.97 - 16/11/2007 - initial release
