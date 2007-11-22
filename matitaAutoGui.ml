@@ -35,7 +35,6 @@ let start = ref 0;;
 let len = ref 10;;
 
 let pp c t =
-  (*
   let t = 
     ProofEngineReduction.replace 
       ~equality:(fun a b -> match b with Cic.Meta _ -> true | _ -> false) 
@@ -43,10 +42,6 @@ let pp c t =
   in
     ApplyTransformation.txt_of_cic_term ~map_unicode_to_tex:false
       max_int [] c t
-  *)
-  let names = List.map (function None -> None | Some (x,_) -> Some x) c in
-  let txt_t = CicPp.pp t names in
-  Pcre.replace ~pat:"\\?(\\d+)\\[[^]]*\\]" ~templ:"?<sub>$1</sub>" txt_t
 ;;
 let pp_goal context x = 
   if x == fake_goal then "" else pp context x
