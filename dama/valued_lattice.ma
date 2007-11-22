@@ -29,7 +29,7 @@ record vlattice (R : ogroup) : Type ≝ {
   meet_assoc: ∀x,y,z. value (meet x (meet y z)) ≈ value (meet (meet x y) z);   
   meet_wins1: ∀x,y. value (join x (meet x y)) ≈ value x;
   meet_wins2: ∀x,y. value (meet x (join x y)) ≈ value x;
-  meet_join_plus: ∀x,y. value (join x y) + value (meet x y) ≈ value x + value y;
+  modular_mjp: ∀x,y. value (join x y) + value (meet x y) ≈ value x + value y;
   join_meet_le: ∀x,y,z. value (join x (meet y z)) ≤ value (join x y);
   meet_join_le: ∀x,y,z. value (meet x (join y z)) ≤ value (meet x y)  
 }. 
@@ -46,18 +46,58 @@ interpretation "lattice value" 'value2 a = (cic:/matita/valued_lattice/value.con
 notation "\mu" non associative with precedence 80 for @{ 'value }.
 interpretation "lattice value" 'value = (cic:/matita/valued_lattice/value.con _ _).
 
-lemma foo: ∀R.∀L:vlattice R.∀x,y,z:L.
+lemma feq_joinr: ∀R.∀L:vlattice R.∀x,y,z:L. 
+  μ x ≈ μ y → μ (z ∧ x) ≈ μ (z ∧ y) → μ (z ∨ x) ≈ μ (z ∨ y).
+intros (R L x y z H H1);
+apply (plus_cancr ??? (μ(z∧x)));
+apply (eq_trans ?? (μz + μx) ? (modular_mjp ????));
+apply (eq_trans ?? (μz + μy) ? H); clear H;
+apply (eq_trans ?? (μ(z∨y) + μ(z∧y))); [1: apply eq_sym; apply modular_mjp]
+apply (plus_cancl ??? (- μ (z ∨ y)));
+apply (eq_trans ?? ? ? (plus_assoc ????));
+apply (eq_trans ?? (0+ μ(z∧y)) ? (opp_inverse ??));
+apply (eq_trans ?? ? ? (zero_neutral ??));
+apply (eq_trans ?? (- μ(z∨y)+ μ(z∨y)+ μ(z∧x)) ?? (plus_assoc ????));
+apply (eq_trans ?? (0+ μ(z∧x)) ?? (opp_inverse ??)); 
+apply (eq_trans ?? (μ (z ∧ x)) ?H1 (zero_neutral ??));
+qed.
+
+lemma step1_3_57: ∀R.∀L:vlattice R.∀x,y,z:L.
   μ(x ∧ (y ∨ z)) ≈ (μ x) + (μ y) + μ z + -μ (y ∧ z) + -μ (z ∨ (x ∨ y)).
 intros (R L x y z);
-lapply (meet_join_plus ? ? x (y ∨ z)) as H;
-lapply (meet_join_plus ? ? y z) as H1;
- (*CSC: A questo punto ti servono dei lemmi sui gruppi che non sono ancora
-   stati dimostrati. E una valanga di passi di riscrittura :-)
- *)
-
+cut (μ(x∧(y∨z))≈(μx + μ(y ∨ z) + - μ(x∨(y∨z)))); [2:
+  lapply (modular_mjp ?? x (y ∨ z)) as H1;
+  apply (eq_trans ?? (μ(x∨(y∨z))+ μ(x∧(y∨z)) +-μ(x∨(y∨z))) ?? H1); clear H1;
+  apply (eq_trans ?? ? ?? (plus_comm ???));
+  (* apply (eq_trans ?? (0+μ(x∧(y∧z))) ?? (opp_inverse ??)); ASSERT FALSE *)
+  apply (eq_trans ?? (- μ(x∨(y∨z))+ μ(x∨(y∨z))+ μ(x∧(y∨z)))); [2: apply eq_sym; apply plus_assoc;]
+  apply (eq_trans ?? (0+μ(x∧(y∨z)))); [2: apply feq_plusr; apply eq_sym; apply opp_inverse;]
+  (* apply (eq_trans ?? ? ? (eq_refl ??) (zero_neutral ??)); ASSERT FALSE *)
+  apply (eq_trans ?? (μ(x∧(y∨z)))); [apply eq_reflexive| apply eq_sym; apply zero_neutral]]
+apply (eq_trans ?? ? ? Hcut); clear Hcut;
+cut ( μ(y∨z) ≈ μy + μz + -μ (y ∧ z)); [2:
+  lapply (modular_mjp ?? y z) as H1;
+  apply (plus_cancr ??? (μ(y ∧ z)));
+  apply (eq_trans ?? ? ? H1); clear H1;
+  apply (eq_trans ?? ? ?? (plus_assoc ????));   
+  apply (eq_trans ?? (μy+ μz + 0)); [2: apply feq_plusl; apply eq_sym; apply opp_inverse]   
+  apply (eq_trans ?? ? ?? (plus_comm ???));
+  apply (eq_trans ?? (μy + μz) ?? (eq_sym ??? (zero_neutral ??)));
+  apply eq_reflexive;]
+apply (eq_trans ?? ( μx+ (μy+ μz+- μ(y∧z)) +- μ(x∨(y∨z))) ?); [
+  apply feq_plusr; apply feq_plusl; apply Hcut] clear Hcut;
+apply (eq_trans ?? (μx+ μy+ μz+- μ(y∧z)+- μ(x∨(y∨z)))); [2:
+  apply feq_plusl; apply feq_opp;
+  apply (eq_trans ?? ? ? (join_assoc ?????));
+  apply (eq_trans ?? ? ? (join_comm ????));
+  apply eq_reflexive;]
+apply feq_plusr; apply (eq_trans ?? ? ? (plus_assoc ????));
+apply feq_plusr; apply plus_assoc;
+qed.
 
 lemma meet_join_le1: ∀R.∀L:vlattice R.∀x,y,z:L.μ (x ∧ z) ≤ μ (x ∧ (y ∨ z)). 
 intros (R L x y z);
+apply (le_rewr ??? ? (step1_3_57 ?????));
 apply (le_rewr ??? (μ x + μ y + μ z + -μ (y ∧ z) + -μ(z ∨ (x ∨ y))) (foo ?????));
 apply (le_rewr ??? (μ x + μ y + μ z + -μ (y ∧ z) + -μ((z ∨ x) ∨ y))); 
   [ apply feq_plusl; apply eq_opp_sym; apply join_assoc;]

@@ -32,27 +32,36 @@ qed.
 
 coercion cic:/matita/ordered_groups/og_abelian_group.con.
 
-(* CSC: NO! Cosi' e' nel frammento negativo. Devi scriverlo con l'eccedenza!
-   Tutto il resto del file e' da rigirare nel frammento positivo.
-*)
 record ogroup : Type ≝ { 
   og_carr:> pre_ogroup;
   exc_canc_plusr: ∀f,g,h:og_carr. f+h ≰ g+h → f ≰ g
 }.
 
+notation > "'Ex'≪" non associative with precedence 50 for
+ @{'excedencerewritel}.
+ 
+interpretation "exc_rewl" 'excedencerewritel = 
+ (cic:/matita/excedence/exc_rewl.con _ _ _).
+
+notation > "'Ex'≫" non associative with precedence 50 for
+ @{'excedencerewriter}.
+ 
+interpretation "exc_rewr" 'excedencerewriter = 
+ (cic:/matita/excedence/exc_rewr.con _ _ _).
+
 lemma fexc_plusr: 
   ∀G:ogroup.∀x,y,z:G. x ≰ y → x+z ≰ y + z.
 intros 5 (G x y z L); apply (exc_canc_plusr ??? (-z));
-apply (exc_rewl ??? (x + (z + -z)) (plus_assoc ????));
-apply (exc_rewl ??? (x + (-z + z)) (plus_comm ??z));
-apply (exc_rewl ??? (x+0) (opp_inverse ??));
-apply (exc_rewl ??? (0+x) (plus_comm ???));
-apply (exc_rewl ??? x (zero_neutral ??));
-apply (exc_rewr ??? (y + (z + -z)) (plus_assoc ????));
-apply (exc_rewr ??? (y + (-z + z)) (plus_comm ??z));
-apply (exc_rewr ??? (y+0) (opp_inverse ??));
-apply (exc_rewr ??? (0+y) (plus_comm ???));
-apply (exc_rewr ??? y (zero_neutral ??) L);
+apply (Ex≪  (x + (z + -z)) (plus_assoc ????));
+apply (Ex≪  (x + (-z + z)) (plus_comm ??z));
+apply (Ex≪  (x+0) (opp_inverse ??));
+apply (Ex≪  (0+x) (plus_comm ???));
+apply (Ex≪  x (zero_neutral ??));
+apply (Ex≫ (y + (z + -z)) (plus_assoc ????));
+apply (Ex≫  (y + (-z + z)) (plus_comm ??z));
+apply (Ex≫  (y+0) (opp_inverse ??));
+apply (Ex≫  (0+y) (plus_comm ???));
+apply (Ex≫  y (zero_neutral ??) L);
 qed.
 
 coercion cic:/matita/ordered_groups/fexc_plusr.con nocomposites.

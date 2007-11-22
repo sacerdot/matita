@@ -182,26 +182,26 @@ intros (G x y z H1 H2); apply eq_sym; apply (feq_oppr ??y);
 [2:apply eq_sym] assumption;
 qed.
 
-lemma eq_opp: ∀G:abelian_group.∀x,y:G. x ≈ y → -x ≈ -y.
+lemma feq_opp: ∀G:abelian_group.∀x,y:G. x ≈ y → -x ≈ -y.
 intros (G x y H); apply (feq_oppl ??y ? H); apply eq_reflexive;
 qed.
 
-coercion cic:/matita/groups/eq_opp.con nocomposites.
+coercion cic:/matita/groups/feq_opp.con nocomposites.
 
 lemma eq_opp_sym: ∀G:abelian_group.∀x,y:G. y ≈ x → -x ≈ -y.
-compose eq_opp with eq_sym (H); apply H; assumption;
+compose feq_opp with eq_sym (H); apply H; assumption;
 qed.
 
 coercion cic:/matita/groups/eq_opp_sym.con nocomposites.
 
 lemma eq_opp_plusr: ∀G:abelian_group.∀x,y,z:G. x ≈ y → -(x + z) ≈ -(y + z).
-compose feq_plusr with eq_opp(H); apply H; assumption;
+compose feq_plusr with feq_opp(H); apply H; assumption;
 qed.
 
 coercion cic:/matita/groups/eq_opp_plusr.con nocomposites.
 
 lemma eq_opp_plusl: ∀G:abelian_group.∀x,y,z:G. x ≈ y → -(z + x) ≈ -(z + y).
-compose feq_plusl with eq_opp(H); apply H; assumption;
+compose feq_plusl with feq_opp(H); apply H; assumption;
 qed.
 
 coercion cic:/matita/groups/eq_opp_plusl.con nocomposites.
