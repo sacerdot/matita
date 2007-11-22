@@ -988,7 +988,7 @@ rewrite > eq_fact_B
   ]
 qed.
 
-theorem le_B_exp: \forall n.S O < n \to
+theorem lt_SO_to_le_B_exp: \forall n.S O < n \to
 B ((S(S O))*n) \le exp (S(S O)) ((S(S O))*n).
 intros.
 apply (le_times_to_le (exp (fact n) (S(S O))))
@@ -1004,171 +1004,200 @@ apply (le_times_to_le (exp (fact n) (S(S O))))
   ]
 qed.
 
-theorem le_A_SSO_A: \forall n.
-A((S(S O))*n) \le 
- pi_p (S ((S(S O))*n)) primeb (λp:nat.p)*A n.
-unfold A.intros.
-cut (pi_p (S n) primeb (λp:nat.(exp p (log p n))) = pi_p (S ((S(S O))*n)) primeb (λp:nat.(p)\sup(log p n)))
+theorem le_B_exp: \forall n.
+B ((S(S O))*n) \le exp (S(S O)) ((S(S O))*n).
+intro.cases n
+  [apply le_n
+  |cases n1
+    [simplify.apply le_S.apply le_S.apply le_n
+    |apply lt_SO_to_le_B_exp.
+     apply le_S_S.apply lt_O_S.
+    ]
+  ]
+qed.
+
+theorem eq_A_SSO_n: \forall n.O < n \to
+A((S(S O))*n) =
+ pi_p (S ((S(S O))*n)) primeb 
+  (\lambda p.(pi_p (log p ((S(S O))*n) )   
+    (\lambda i.true) (\lambda i.(exp p (bool_to_nat (leb (S n) (exp p (S i))))))))
+ *A n.
+intro.
+rewrite > eq_A_A'.rewrite > eq_A_A'.
+unfold A'.intros.
+cut (
+ pi_p (S n) primeb (λp:nat.pi_p (log p n) (λi:nat.true) (λi:nat.p))
+ = pi_p (S ((S(S O))*n)) primeb
+    (λp:nat.pi_p (log p ((S(S O))*n)) (λi:nat.true) (λi:nat.(p)\sup(bool_to_nat (\lnot (leb (S n) (exp p (S i))))))))
   [rewrite > Hcut.
    rewrite < times_pi_p.
-   apply le_pi_p.intros.
-   lapply (prime_to_lt_SO ? (primeb_true_to_prime ? H1)) as H2.
-   change with (i\sup(log i ((S(S O))*n))≤i\sup(S(log i n))).
-   apply le_exp
-    [apply lt_to_le.assumption
-    |apply (trans_le ? (log i (i*n)))
-      [apply le_log
-        [assumption
-        |apply not_le_to_lt.intro.
-         apply (lt_to_not_le ? ? H).  
-         apply (trans_le ? (S O)) 
-          [apply le_S_S.assumption
-          |apply lt_to_le.assumption
-          ] 
-        |apply le_times_l.
-         assumption
+   apply eq_pi_p1;intros
+    [reflexivity
+    |rewrite < times_pi_p.
+     apply eq_pi_p;intros
+      [reflexivity
+      |apply (bool_elim ? (leb (S n) (exp x (S x1))));intro
+        [simplify.rewrite < times_n_SO.apply times_n_SO
+        |simplify.rewrite < plus_n_O.apply times_n_SO
         ]
-      |rewrite > exp_n_SO in ⊢ (? (? ? (? % ?)) ?).
-       rewrite > log_exp
-        [apply le_n
-        |assumption
-        |apply not_le_to_lt.intro.
-         apply (lt_to_not_le ? ? H). 
-         apply (le_n_O_elim ? H3).
-         apply lt_to_le.
-         assumption
-        ] 
       ]
     ]
-  |apply sym_eq.
-   apply or_false_eq_SO_to_eq_pi_p
-    [apply le_S_S.
-     apply le_times_n.
-     apply lt_O_S
-    |intros.right.
-     change with (exp i (log i n) = (exp i O)).
-     apply eq_f.
-     apply antisymmetric_le
-      [cut (O < n)
-        [apply le_S_S_to_le.
-         apply (lt_exp_to_lt i)
-          [apply (le_to_lt_to_lt ? n);assumption
-          |apply (le_to_lt_to_lt ? n)
-            [apply le_exp_log.
-             assumption
-            |rewrite < exp_n_SO.
+  |apply (trans_eq ? ? (pi_p (S n) primeb 
+    (\lambda p:nat.pi_p (log p n) (\lambda i:nat.true) (\lambda i:nat.(p)\sup(bool_to_nat (¬leb (S n) (exp p (S i))))))))
+    [apply eq_pi_p1;intros
+      [reflexivity
+      |apply eq_pi_p1;intros
+        [reflexivity
+        |rewrite > lt_to_leb_false
+          [simplify.apply times_n_SO
+          |apply le_S_S.
+           apply (trans_le ? (exp x (log x n)))
+            [apply le_exp
+              [apply prime_to_lt_O.
+               apply primeb_true_to_prime.
+               assumption
+              |assumption
+              ]
+            |apply le_exp_log.
              assumption
             ]
           ]
-        |apply not_le_to_lt.intro.
-         apply (lt_to_not_le ? ? H1).
-         generalize in match H.
-         apply (le_n_O_elim ? H2).
-         intro.assumption
         ]
-      |apply le_O_n
+      ]
+    |apply (trans_eq ? ? 
+      (pi_p (S ((S(S O))*n)) primeb
+       (λp:nat.pi_p (log p n) (λi:nat.true)
+        (λi:nat.(p)\sup(bool_to_nat (¬leb (S n) ((p)\sup(S i))))))))
+      [apply sym_eq.
+       apply or_false_eq_SO_to_eq_pi_p
+        [apply le_S_S.
+         simplify.
+         apply le_plus_n_r
+        |intros.right.
+         rewrite > lt_to_log_O
+          [reflexivity
+          |assumption
+          |assumption
+          ]
+        ]
+      |apply eq_pi_p1;intros
+        [reflexivity
+        |apply sym_eq.
+         apply or_false_eq_SO_to_eq_pi_p
+          [apply le_log
+            [apply prime_to_lt_SO.
+             apply primeb_true_to_prime.
+             assumption
+            |assumption
+            |simplify.
+             apply le_plus_n_r
+            ]
+          |intros.right.
+           rewrite > le_to_leb_true
+            [simplify.reflexivity
+            |apply (lt_to_le_to_lt ? (exp x (S (log x n))))
+              [apply lt_exp_log.
+               apply prime_to_lt_SO.
+               apply primeb_true_to_prime.
+               assumption
+              |apply le_exp
+                [apply prime_to_lt_O.
+                 apply primeb_true_to_prime.
+                 assumption
+                |apply le_S_S.assumption
+                ]
+              ]
+            ]
+          ]
+        ]
       ]
     ]
   ]
 qed.
-    
-(* so far so good 
-
-theorem le_A_BA: \forall n. 
+               
+theorem le_A_BA1: \forall n. O < n \to 
 A((S(S O))*n) \le B((S(S O))*n)*A n.
-(*
-  [simplify.reflexivity
-  |rewrite > times_SSO.
-   rewrite > times_SSO.
-   unfold A.
-apply (trans_le ? ((pi_p (S ((S(S O))*n)) primeb (λp:nat.p))*A n))
-  [apply le_A_SSO_A
-  |apply le_times_l.
+intros.
+rewrite > eq_A_SSO_n
+  [apply le_times_l.
    unfold B.
    apply le_pi_p.intros.
-*)
-intro.unfold A.unfold B.
-cut (pi_p (S n) primeb (λp:nat.(exp p (log p n))) = pi_p (S ((S(S O))*n)) primeb (λp:nat.(p)\sup(log p n)))
-  [rewrite > Hcut.
-   rewrite < times_pi_p.
    apply le_pi_p.intros.
-   apply le_trans i.
-   
-
-   change with (i\sup(log i ((S(S O))*n))≤i\sup(S(log i n))).
    apply le_exp
     [apply prime_to_lt_O.
      apply primeb_true_to_prime.
      assumption
-    |apply (trans_le ? (log i (i*n)))
-      [apply le_log
-        [apply prime_to_lt_SO.
-         apply primeb_true_to_prime.
-         assumption
-        |apply not_le_to_lt.intro.
-         apply (lt_to_not_le ? ? H).  
-         apply (trans_le ? (S O)) 
-          [apply le_S_S.assumption
-          |apply prime_to_lt_O.
+    |apply (bool_elim ? (leb (S n) (exp i (S i1))));intro
+      [simplify in ⊢ (? % ?).
+       cut ((S(S O))*n/i\sup(S i1) = S O)
+        [rewrite > Hcut.apply le_n
+        |apply (div_mod_spec_to_eq 
+          ((S(S O))*n) (exp i (S i1)) 
+           ? (mod ((S(S O))*n) (exp i (S i1))) 
+           ? (minus ((S(S O))*n) (exp i (S i1))) )
+          [apply div_mod_spec_div_mod.
+           apply lt_O_exp.
+           apply prime_to_lt_O.
            apply primeb_true_to_prime.
-           assumption 
-          ] 
-        |apply le_times_l.
-         apply prime_to_lt_SO.
-         apply primeb_true_to_prime.
-         assumption
-        ]
-      |rewrite > exp_n_SO in ⊢ (? (? ? (? % ?)) ?).
-       rewrite > log_exp
-        [apply le_n
-        |apply prime_to_lt_SO.
-         apply primeb_true_to_prime.
-         assumption
-        |apply not_le_to_lt.intro.
-         apply (lt_to_not_le ? ? H). 
-         apply (le_n_O_elim ? H2).
-         apply prime_to_lt_O.
-         apply primeb_true_to_prime.
-         assumption
-        ] 
-      ]
-    ]
-  |apply sym_eq.
-   apply or_false_eq_SO_to_eq_pi_p
-    [apply le_S_S.
-     apply le_times_n.
-     apply lt_O_S
-    |intros.right.
-     change with (exp i (log i n) = (exp i O)).
-     apply eq_f.
-     apply antisymmetric_le
-      [cut (O < n)
-        [apply le_S_S_to_le.
-         apply (lt_exp_to_lt i)
-          [apply (le_to_lt_to_lt ? n);assumption
-          |apply (le_to_lt_to_lt ? n)
-            [apply le_exp_log.
-             assumption
-            |rewrite < exp_n_SO.
-             assumption
+           assumption
+          |cut (i\sup(S i1)≤(S(S O))*n)
+            [apply div_mod_spec_intro
+              [alias id "lt_plus_to_lt_minus" = "cic:/matita/nat/map_iter_p.ma/lt_plus_to_lt_minus.con".
+               apply lt_plus_to_lt_minus
+                [assumption
+                |simplify in ⊢ (? % ?).
+                 rewrite < plus_n_O.
+                 apply lt_plus
+                  [apply leb_true_to_le.assumption
+                  |apply leb_true_to_le.assumption
+                  ]
+                ]
+              |rewrite > sym_plus.
+               rewrite > sym_times in ⊢ (? ? ? (? ? %)).
+               rewrite < times_n_SO.
+               apply plus_minus_m_m.
+               assumption
+              ]
+            |apply (trans_le ? (exp i (log i ((S(S O))*n))))
+              [apply le_exp
+                [apply prime_to_lt_O.
+                 apply primeb_true_to_prime.
+                 assumption
+                |assumption
+                ]
+              |apply le_exp_log.
+               rewrite > (times_n_O O) in ⊢ (? % ?).
+               apply lt_times 
+                [apply lt_O_S
+                |assumption
+                ]
+              ]
             ]
           ]
-        |apply not_le_to_lt.intro.
-         apply (lt_to_not_le ? ? H1).
-         generalize in match H.
-         apply (le_n_O_elim ? H2).
-         intro.assumption
         ]
       |apply le_O_n
       ]
     ]
+  |assumption
   ]
 qed.
 
+theorem le_A_BA: \forall n. A((S(S O))*n) \le B((S(S O))*n)*A n.
+intros.cases n
+  [apply le_n
+  |apply le_A_BA1.apply lt_O_S
+  ]
+qed.
 
-unfold A.unfold B.
-rewrite > eq_A_A'.rewrite > eq_A_A'.
-unfold A'.unfold B.
+theorem le_A_exp: \forall n.
+A((S(S O))*n) \le (exp (S(S O)) ((S(S O)*n)))*A n.
+intro.
+apply (trans_le ? (B((S(S O))*n)*A n))
+  [apply le_A_BA
+  |apply le_times_l.
+   apply le_B_exp
+  ]
+qed.
 
 (* da spostare *)
 theorem times_exp: \forall n,m,p.exp n p * exp m p = exp (n*m) p.
@@ -1678,3 +1707,4 @@ elim (lt_O_to_or_eq_S m)
        
        a*log a-a+k*log a
        
+*)

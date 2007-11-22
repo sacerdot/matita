@@ -46,6 +46,21 @@ apply (le_exp_to_le n)
   ]
 qed.
 
+theorem lt_to_log_O: \forall n,m. O < m \to m < n \to log n m = O.
+intros.
+apply sym_eq.apply le_n_O_to_eq.
+apply le_S_S_to_le.
+apply (lt_exp_to_lt n)
+  [apply (le_to_lt_to_lt ? m);assumption
+  |simplify in ⊢ (? ? %).
+   rewrite < times_n_SO.
+   apply (le_to_lt_to_lt ? m)
+    [apply le_exp_log.assumption
+    |assumption
+    ]
+  ]
+qed.
+
 theorem lt_log_n_n: \forall p, n. S O < p \to O < n \to log p n < n.
 intros.
 cut (log p n \le n)
