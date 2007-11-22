@@ -233,25 +233,30 @@ let rec interactive_error_interp ?(all_passes=false) (source_buffer:GSourceView.
   let errorll' =
    let remove_non_significant =
      List.filter (fun (_env,_diff,_loc,_msg,significant) -> significant) in
-   if all_passes then errorll else
+   let annotated_errorll () =
+    List.rev
+     (snd
+       (List.fold_left (fun (pass,res) item -> pass+1,(pass+1,item)::res) (0,[])
+         errorll)) in
+   if all_passes then annotated_errorll () else
      let safe_list_nth l n = try List.nth l n with Failure _ -> [] in
     (* We remove passes 1,2 and 5,6 *)
      let res =
-      []::[]
-      ::(remove_non_significant (safe_list_nth errorll 2))
-      ::(remove_non_significant (safe_list_nth errorll 3))
-      ::[]::[]
+      (1,[])::(2,[])
+      ::(3,remove_non_significant (safe_list_nth errorll 2))
+      ::(4,remove_non_significant (safe_list_nth errorll 3))
+      ::(5,[])::(6,[])::[]
      in
-      if List.flatten res <> [] then res
+      if List.flatten (List.map snd res) <> [] then res
       else
        (* all errors (if any) are not significant: we keep them *)
        let res =
-        []::[]
-        ::(safe_list_nth errorll 2)
-        ::(safe_list_nth errorll 3)
-        ::[]::[]
+        (1,[])::(2,[])
+        ::(3,(safe_list_nth errorll 2))
+        ::(4,(safe_list_nth errorll 3))
+        ::(5,[])::(6,[])::[]
        in
-        if List.flatten res <> [] then
+        if List.flatten (List.map snd res) <> [] then
 	 begin
           HLog.warn
 	   "All disambiguation errors are not significant. Showing them anyway." ;
@@ -261,18 +266,16 @@ let rec interactive_error_interp ?(all_passes=false) (source_buffer:GSourceView.
          begin
           HLog.warn
 	   "No errors in phases 2 and 3. Showing all errors in all phases" ;
-          errorll
+          annotated_errorll ()
          end
    in
   let choices =
-   let pass = ref 0 in
    List.flatten
     (List.map
-      (fun l ->
-        incr pass;
+      (fun (pass,l) ->
         List.map
          (fun (env,diff,offset,msg,significant) ->
-           offset, [[!pass], [[!pass], env, diff], msg, significant]) l
+           offset, [[pass], [[pass], env, diff], msg, significant]) l
       ) errorll') in
   (* Here we are doing a stable sort and list_uniq returns the latter
      "equal" element. I.e. we are showing the error corresponding to the
