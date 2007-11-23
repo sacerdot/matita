@@ -78,25 +78,26 @@ let initialize () =
   match ls_dir (pool ()) with
   | None -> logger `Error ("Unable to list directory " ^ pool ()) 
   | Some l -> 
-      List.iter 
-        (fun name -> 
-          let root = 
-            try 
-              Some (HExtlib.input_file (pool () ^ name ^ rootfile))
-            with Unix.Unix_error _ -> 
-              logger `Warning ("Malformed development " ^ name);
-              None
-          in 
-          match root with 
-          | None -> ()
-          | Some root -> 
-              developments := {root = root ; name = name} :: !developments;
-              let inc = Helm_registry.get_list 
-                Helm_registry.string "matita.includes" in
-              Helm_registry.set_list Helm_registry.of_string 
-                ~key:"matita.includes" ~value:(inc @ [root])
-          ) 
-      l
+      let paths = 
+        List.fold_left 
+          (fun acc name -> 
+            let root = 
+              try 
+                Some (HExtlib.input_file (pool () ^ name ^ rootfile))
+              with Unix.Unix_error _ -> 
+                logger `Warning ("Malformed development " ^ name);
+                None
+            in 
+            match root with 
+            | None -> acc
+            | Some root -> 
+                developments := {root = root ; name = name} :: !developments;
+                root::acc)
+         [] l
+      in
+      let inc = Helm_registry.get_list Helm_registry.string "matita.includes" in
+      Helm_registry.set_list Helm_registry.of_string 
+        ~key:"matita.includes" ~value:(inc @ paths)
 
 (* finds the makefile path for development devel *)
 let makefile_for_development devel =
