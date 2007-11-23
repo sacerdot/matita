@@ -52,7 +52,7 @@ intros (R L x y z H H1);
 apply (plus_cancr ??? (μ(z∧x)));
 apply (eq_trans ?? (μz + μx) ? (modular_mjp ????));
 apply (eq_trans ?? (μz + μy) ? H); clear H;
-apply (eq_trans ?? (μ(z∨y) + μ(z∧y))); [1: apply eq_sym; apply modular_mjp]
+apply (eq_trans ?? (μ(z∨y) + μ(z∧y)) ? (modular_mjp ??z y));
 apply (plus_cancl ??? (- μ (z ∨ y)));
 apply (eq_trans ?? ? ? (plus_assoc ????));
 apply (eq_trans ?? (0+ μ(z∧y)) ? (opp_inverse ??));
@@ -68,7 +68,7 @@ lapply (modular_mjp ?? y z) as H1;
 apply (plus_cancr ??? (μ(y ∧ z)));
 apply (eq_trans ?? ? ? H1); clear H1;
 apply (eq_trans ?? ? ?? (plus_assoc ????));   
-apply (eq_trans ?? (μy+ μz + 0)); [2: apply feq_plusl; apply eq_sym; apply opp_inverse]   
+apply (eq_trans ?? (μy+ μz + 0) ?? (opp_inverse ??));   
 apply (eq_trans ?? ? ?? (plus_comm ???));
 apply (eq_trans ?? (μy + μz) ?? (eq_sym ??? (zero_neutral ??)));
 apply eq_reflexive.
@@ -80,8 +80,8 @@ lapply (modular_mjp ?? y z) as H1;
 apply (plus_cancl ??? (μ(y ∨ z)));
 apply (eq_trans ?? ? ? H1); clear H1;
 apply (eq_trans ????? (plus_comm ???));
-apply (eq_trans ?? ? ?? (plus_assoc ????));   
-apply (eq_trans ?? (μy+ μz + 0)); [2: apply feq_plusl; apply eq_sym; apply opp_inverse]   
+apply (eq_trans ?? ? ?? (plus_assoc ????));    
+apply (eq_trans ?? (μy+ μz + 0) ?? (opp_inverse ??));   
 apply (eq_trans ?? ? ?? (plus_comm ???));
 apply (eq_trans ?? (μy + μz) ?? (eq_sym ??? (zero_neutral ??)));
 apply eq_reflexive.
@@ -92,12 +92,10 @@ intros (R L x y z);
 lapply (modular_mjp ?? x (y ∨ z)) as H1;
 apply (eq_trans ?? (μ(x∨(y∨z))+ μ(x∧(y∨z)) +-μ(x∨(y∨z)))); [2: apply feq_plusr; apply H1;] clear H1;
 apply (eq_trans ?? ? ?? (plus_comm ???));
-(* apply (eq_trans ?? (0+μ(x∧(y∧z))) ?? (opp_inverse ??)); ASSERT FALSE *)
-apply (eq_trans ?? (- μ(x∨(y∨z))+ μ(x∨(y∨z))+ μ(x∧(y∨z)))); [2: apply eq_sym; apply plus_assoc;]
-apply (eq_trans ?? (0+μ(x∧(y∨z)))); [2: apply feq_plusr; apply eq_sym; apply opp_inverse;]
-(* apply (eq_trans ?? ? ? (eq_refl ??) (zero_neutral ??)); ASSERT FALSE *)
-apply (eq_trans ?? (μ(x∧(y∨z)))); [apply eq_reflexive]
-apply eq_sym; apply zero_neutral.
+apply (eq_trans ?? (- μ(x∨(y∨z))+ μ(x∨(y∨z))+ μ(x∧(y∨z))) ?? (plus_assoc ????));
+apply (eq_trans ?? (0+μ(x∧(y∨z))) ?? (opp_inverse ??));
+apply (eq_trans ?? (μ(x∧(y∨z))) ?? (zero_neutral ??));
+apply eq_reflexive.
 qed.
 
 lemma modularjm: ∀R.∀L:vlattice R.∀x,y,z:L.μ(x∨(y∧z))≈(μx + μ(y ∧ z) + - μ(x∧(y∧z))).
