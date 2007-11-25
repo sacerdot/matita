@@ -22,6 +22,8 @@
     <key name="owner">$(user.name)</key>
     <!-- Initial GUI font size. -->
     <!-- <key name="font_size">10</key> -->
+    <!--  Perform heavy checks when run interactively (like duplicate check) -->
+    <!-- <key name="do_heavy_checks">false</key> -->
   </section>
   <section name="db">
     <!-- 

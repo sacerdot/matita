@@ -620,11 +620,11 @@ class sequentsViewer ~(notebook:GPack.notebook) ~(cicMathView:cicMathView) () =
 
     method load_logo =
      notebook#set_show_tabs false;
-     notebook#append_page logo
+     ignore(notebook#append_page logo)
 
     method load_logo_with_qed =
      notebook#set_show_tabs false;
-     notebook#append_page logo_with_qed
+     ignore(notebook#append_page logo_with_qed)
 
     method reset =
       cicMathView#remove_selections;
@@ -698,7 +698,8 @@ class sequentsViewer ~(notebook:GPack.notebook) ~(cicMathView:cicMathView) () =
       let add_tab markup goal_switch =
         let goal = Stack.goal_of_switch goal_switch in
         if not (List.mem goal !added_goals) then begin
-          notebook#append_page ~tab_label:(tab_label markup) (win goal_switch);
+          ignore(notebook#append_page 
+            ~tab_label:(tab_label markup) (win goal_switch));
           page2goal <- (!page, goal_switch) :: page2goal;
           goal2page <- (goal_switch, !page) :: goal2page;
           incr page;

@@ -52,6 +52,7 @@ let registry_defaults = [
   "matita.bench",                "false";
   "matita.paste_unicode_as_tex", "false";
   "matita.noinnertypes",         "false";
+  "matita.do_heavy_checks",      "true";
     (** verbosity level: 1 is the default, 0 is intuitively "quiet", > 1 is
      * intuitively verbose *)
 ]

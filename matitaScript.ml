@@ -85,7 +85,8 @@ let eval_with_engine guistuff lexicon_status grafite_status user_goal
   let text = skipped_txt ^ nonskipped_txt in
   let prefix_len = MatitaGtkMisc.utf8_string_length skipped_txt in
   let enriched_history_fragment =
-   MatitaEngine.eval_ast ~do_heavy_checks:true
+   MatitaEngine.eval_ast ~do_heavy_checks:(Helm_registry.get_bool
+     "matita.do_heavy_checks")
     lexicon_status grafite_status (text,prefix_len,st)
   in
   let enriched_history_fragment = List.rev enriched_history_fragment in
