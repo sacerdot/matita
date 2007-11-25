@@ -1199,6 +1199,8 @@ apply (trans_le ? (B((S(S O))*n)*A n))
   ]
 qed.
 
+(*
+
 (* da spostare *)
 theorem times_exp: \forall n,m,p.exp n p * exp m p = exp (n*m) p.
 intros.elim p
