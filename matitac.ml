@@ -98,9 +98,6 @@ let main () =
  |"matitaprover.opt.static" ->Matitaprover.main()
  |"matitawiki"|"matitawiki.opt" ->MatitaWiki.main()
  | _ ->
-(*
-      let _ = Paramodulation.Saturation.init () in  *)
-(* ALB to link paramodulation *)
       let dump_msg = "<filename> Dump source with expanded macros to <filename>" in
       MatitaInit.add_cmdline_spec ["-dump", Arg.String dump, dump_msg];
       let _ = MatitacLib.main `COMPILER in

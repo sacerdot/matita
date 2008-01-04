@@ -32,9 +32,9 @@ notation "hvbox(l1 break @ l2)"
   right associative with precedence 47
   for @{'append $l1 $l2 }.
 
-interpretation "nil" 'nil = (cic:/matita/list/list.ind#xpointer(1/1/1) _).
+interpretation "nil" 'nil = (cic:/matita/list/list/list.ind#xpointer(1/1/1) _).
 interpretation "cons" 'cons hd tl =
-  (cic:/matita/list/list.ind#xpointer(1/1/2) _ hd tl).
+  (cic:/matita/list/list/list.ind#xpointer(1/1/2) _ hd tl).
 
 (* theorem test_notation: [O; S O; S (S O)] = O :: S O :: S (S O) :: []. *)
 
@@ -62,7 +62,7 @@ definition tail := \lambda A:Type. \lambda l: list A.
   [ nil => []
   | (cons hd tl) => tl].
 
-interpretation "append" 'append l1 l2 = (cic:/matita/list/append.con _ l1 l2).
+interpretation "append" 'append l1 l2 = (cic:/matita/list/list/append.con _ l1 l2).
 
 theorem append_nil: \forall A:Type.\forall l:list A.l @ [] = l.
   intros;

@@ -236,7 +236,7 @@ let parse_cmdline init_status =
       BuildTimeConf.stdlib_dir_installed ; ] 
     in
     let absolutize s =
-      if Pcre.pmatch ~pat:"^/" s then s else Sys.getcwd() ^"/"^s
+      if Pcre.pmatch ~pat:"^/" s then s else Sys.getcwd () ^"/"^s
     in
     let args = ref [] in
     let add_l l = fun s -> l := s :: !l in

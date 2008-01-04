@@ -48,10 +48,10 @@ record CSetoid : Type \def
    cs_proof :  is_CSetoid cs_crr cs_eq cs_ap}.   
 
 interpretation "setoid equality"
-   'eq x y = (cic:/matita/algebra/CoRN/Setoid/cs_eq.con _ x y).
+   'eq x y = (cic:/matita/algebra/CoRN/Setoids/cs_eq.con _ x y).
 
 interpretation "setoid apart"
-  'neq x y = (cic:/matita/algebra/CoRN/Setoid/cs_ap.con _ x y).
+  'neq x y = (cic:/matita/algebra/CoRN/Setoids/cs_ap.con _ x y).
 
 (* visto che sia "ap" che "eq" vanno in Prop e data la "tight-apartness", 
 "cs_neq" e "ap" non sono la stessa cosa? *)
@@ -809,7 +809,7 @@ definition id_un_op : \forall S:CSetoid. CSetoid_un_op S
 definition un_op_fun: \forall S:CSetoid. CSetoid_un_op S \to CSetoid_fun S S
 \def \lambda S.\lambda f.f.
 
-coercion cic:/matita/algebra/CoRN/Setoid/un_op_fun.con.
+coercion cic:/matita/algebra/CoRN/Setoids/un_op_fun.con.
 
 definition cs_un_op_strext : \forall S:CSetoid. \forall f: CSetoid_fun S S. fun_strext S S (csf_fun S S f) \def 
 \lambda S:CSetoid. \lambda f : CSetoid_fun S S. csf_strext S S f.
@@ -862,7 +862,7 @@ definition cs_bin_op_strext : \forall S:CSetoid. \forall f: CSetoid_bin_fun S S 
 definition bin_op_bin_fun: \forall S:CSetoid. CSetoid_bin_op S \to CSetoid_bin_fun S S S
 \def \lambda S.\lambda f.f.
 
-coercion cic:/matita/algebra/CoRN/Setoid/bin_op_bin_fun.con.
+coercion cic:/matita/algebra/CoRN/Setoids/bin_op_bin_fun.con.
 
 
 
@@ -982,7 +982,7 @@ definition outer_op_bin_fun: \forall S:CSetoid.
 CSetoid_outer_op S S \to CSetoid_bin_fun S S S
 \def \lambda S.\lambda f.f.
 
-coercion cic:/matita/algebra/CoRN/Setoid/outer_op_bin_fun.con.
+coercion cic:/matita/algebra/CoRN/Setoids/outer_op_bin_fun.con.
 (* begin hide 
 Identity Coercion outer_op_bin_fun : CSetoid_outer_op >-> CSetoid_bin_fun.
 end hide *)
