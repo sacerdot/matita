@@ -1,0 +1,45 @@
+(* directories *)
+#directory "../components/cic"
+#directory "../components/cic_notation"
+#directory "../components/cic_omdoc"
+#directory "../components/cic_proof_checking"
+#directory "../components/cic_textual_parser2"
+#directory "../components/cic_transformations"
+#directory "../components/cic_unification"
+#directory "../components/getter"
+#directory "../components/hbugs"
+#directory "../components/mathql"
+#directory "../components/mathql_generator"
+#directory "../components/mathql_interpreter"
+#directory "../components/metadata"
+#directory "../components/paramodulation"
+#directory "../components/registry"
+#directory "../components/tactics"
+#directory "../components/thread"
+#directory "../components/urimanager"
+#directory "../components/xml"
+#directory "../components/xmldiff"
+
+(* custom printers *)
+let fppuri ppf uri =
+ let s = UriManager.string_of_uri uri in
+  Format.pp_print_string ppf s
+;;
+
+#install_printer CicMetaSubst.fppsubst;;
+#install_printer CicMetaSubst.fppterm;;
+#install_printer CicMetaSubst.fppmetasenv;;
+#install_printer fppuri;;
+
+(* utility functions *)
+let go = MatitacLib.interactive_loop;;
+
+(* let's go! *)
+let _ = 
+ at_exit (fun () -> MatitacLib.clean_exit None);
+ MatitaInit.initialize_all () ;
+ if Array.length Sys.argv > 1 then
+   MatitacLib.main `TOPLEVEL
+ else
+   MatitacLib.go ()
+;;

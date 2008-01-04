@@ -1,0 +1,9 @@
+theory.ma: theory.mma ext/tactics.ma ext/arith.ma types/props.ma blt/props.ma plist/props.ma | ext/tactics.mo.opt ext/arith.mo.opt types/props.mo.opt blt/props.mo.opt plist/props.mo.opt
+ext/tactics.ma: ext/tactics.mma preamble.ma | preamble.mo.opt
+ext/arith.ma: ext/arith.mma preamble.ma | preamble.mo.opt
+types/defs.ma: types/defs.mma preamble.ma | preamble.mo.opt
+types/props.ma: types/props.mma types/defs.ma | types/defs.mo.opt
+blt/defs.ma: blt/defs.mma preamble.ma | preamble.mo.opt
+blt/props.ma: blt/props.mma blt/defs.ma | blt/defs.mo.opt
+plist/defs.ma: plist/defs.mma preamble.ma | preamble.mo.opt
+plist/props.ma: plist/props.mma plist/defs.ma | plist/defs.mo.opt

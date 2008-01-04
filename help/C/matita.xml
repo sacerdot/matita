@@ -1,0 +1,180 @@
+<?xml version="1.0"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+
+  <!ENTITY legal SYSTEM "legal.xml">
+  <!ENTITY license SYSTEM "sec_license.xml">
+  <!ENTITY install SYSTEM "sec_install.xml">
+  <!ENTITY gettingstarted SYSTEM "sec_gettingstarted.xml">
+  <!ENTITY intro SYSTEM "sec_intro.xml">
+  <!ENTITY terms SYSTEM "sec_terms.xml">
+  <!ENTITY tacticals SYSTEM "sec_tacticals.xml">
+  <!ENTITY tactics SYSTEM "sec_tactics.xml">
+  <!ENTITY declarative_tactics SYSTEM "sec_declarative_tactics.xml">
+  <!ENTITY othercommands SYSTEM "sec_commands.xml">
+  <!ENTITY usernotation SYSTEM "sec_usernotation.xml">
+
+  <!ENTITY tacticref SYSTEM "tactics_quickref.xml">
+  <!ENTITY declarativetacticref SYSTEM "declarative_tactics_quickref.xml">
+
+  <!ENTITY manrevision "1&alpha;">
+  <!ENTITY date "12/07/2006">
+  <!ENTITY app "<application>Matita</application>">
+  <!ENTITY appname "Matita">
+  <!ENTITY appversion SYSTEM "version.txt">
+
+  <!ENTITY TODO "<emphasis>TODO</emphasis>">
+  <!ENTITY MYSQL "<application> <ulink type='http'
+      url='http://www.mysql.com'>MySQL</ulink> </application>">
+  <!ENTITY Sqlite "<application> <ulink type='http'
+      url='http://www.sqlite.org'>Sqlite</ulink> </application>">
+
+  <!-- Entities for BNF -->
+  <!ENTITY id "<emphasis><link linkend='grammar.id'>id</link></emphasis>">
+  <!ENTITY uri "<emphasis><link linkend='grammar.uri'>uri</link></emphasis>">
+  <!ENTITY char "<emphasis><link linkend='grammar.char'>char</link></emphasis>">
+  <!ENTITY uri-step "<emphasis><link linkend='grammar.uri-step'>uri-step</link></emphasis>">
+  <!ENTITY nat "<emphasis><link linkend='grammar.nat'>nat</link></emphasis>">
+  <!ENTITY term "<emphasis><link linkend='grammar.term'>term</link></emphasis>">
+  <!ENTITY rec_def "<emphasis><link linkend='grammar.rec_def'>rec_def</link></emphasis>">
+  <!ENTITY match_pattern "<emphasis><link linkend='grammar.match_pattern'>match_pattern</link></emphasis>">
+  <!ENTITY match_branch "<emphasis><link linkend='grammar.match_branch'>match_branch</link></emphasis>">
+  <!ENTITY args "<emphasis><link linkend='grammar.args'>args</link></emphasis>">
+  <!ENTITY args2 "<emphasis><link linkend='grammar.args2'>args2</link></emphasis>">
+  <!ENTITY sterm "<emphasis><link linkend='grammar.sterm'>sterm</link></emphasis>">
+  <!ENTITY intros-spec "<emphasis><link linkend='grammar.intros-spec'>intros-spec</link></emphasis>">
+  <!ENTITY pattern "<emphasis><link linkend='grammar.pattern'>pattern</link></emphasis>">
+  <!ENTITY reduction-kind "<emphasis><link linkend='grammar.reduction-kind'>reduction-kind</link></emphasis>">
+  <!ENTITY path "<emphasis><link linkend='grammar.path'>path</link></emphasis>">
+  <!ENTITY proofscript "<emphasis><link linkend='grammar.proofscript'>proof-script</link></emphasis>">
+  <!ENTITY proofstep "<emphasis><link linkend='grammar.proofstep'>proof-step</link></emphasis>">
+  <!ENTITY tactic "<emphasis><link linkend='grammar.tactic'>tactic</link></emphasis>">
+  <!ENTITY LCFtactical "<emphasis><link linkend='grammar.LCFtactical'>LCF-tactical</link></emphasis>">
+  <!ENTITY qstring "<emphasis><link linkend='grammar.qstring'>qstring</link></emphasis>">
+  <!ENTITY interpretation "<emphasis><link linkend='grammar.interpretation'>interpretation</link></emphasis>">
+  <!ENTITY autoparams "<emphasis><link linkend='grammar.autoparams'>auto_params</link></emphasis>">
+]>
+
+<?yelp:chunk-depth 3?>
+
+<book id="matita_manual" lang="en">
+
+  <title>&app; V&appversion; User Manual (rev. &manrevision;)</title>
+
+  <bookinfo>
+
+    <copyright>
+      <year>2006</year>
+      <holder>The HELM team.</holder>
+    </copyright>
+
+    <authorgroup> 
+      <author> 
+	<firstname>Andrea</firstname> 
+	<surname>Asperti</surname> 
+	<affiliation> 
+	  <address> <email>asperti@cs.unibo.it</email> </address> 
+	</affiliation> 
+      </author> 
+      <author> 
+	<firstname>Claudio</firstname> 
+	<surname>Sacerdoti Coen</surname> 
+	<affiliation> 
+	  <address> <email>sacerdot@cs.unibo.it</email> </address> 
+	</affiliation> 
+      </author> 
+      <author> 
+	<firstname>Ferruccio</firstname> 
+	<surname>Guidi</surname> 
+	<affiliation> 
+	  <address> <email>fguidi@cs.unibo.it</email> </address> 
+	</affiliation> 
+      </author>       
+      <author> 
+	<firstname>Enrico</firstname> 
+	<surname>Tassi</surname> 
+	<affiliation> 
+	  <address> <email>tassi@cs.unibo.it</email> </address> 
+	</affiliation> 
+      </author> 
+      <author> 
+	<firstname>Stefano</firstname> 
+	<surname>Zacchiroli</surname> 
+	<affiliation> 
+	  <address> <email>zacchiro@cs.unibo.it</email> </address> 
+	</affiliation> 
+      </author>
+    </authorgroup>
+
+    <legalnotice>
+      <para> Both &appname; and this document are free software, you can
+	redistribute them and/or modify them under the terms of the GNU General
+	Public License as published by the Free Software Foundation.  See <xref
+	  linkend="sec_license" /> for more information. </para>
+    </legalnotice>
+
+    <revhistory>
+      <revision>
+	<revnumber>&manrevision;</revnumber>
+	<date>&date;</date>
+      </revision>
+    </revhistory>
+
+  </bookinfo>
+
+<!-- ============= Document Body ============================= -->
+
+&intro;
+&install;
+&gettingstarted;
+&terms;
+&usernotation;
+&tacticals;
+&tactics;
+&declarative_tactics;
+&othercommands;
+&license;
+
+</book>
+
+<!-- CSC: valid element tags
+<sect1 id="intro"> <title>Introduction</title> ...
+<sect2 id="what"> <title>What is Matita?</title>
+<para>
+<note> <title>Note:</title> <para> ...
+<footnote> <para> ...
+<itemizedlist mark="opencircle">
+    <listitem>
+     <para>
+	The computer player for Iagno is easy to beat.
+     </para>
+    </listitem>
+ </itemizedlist>
+
+<ulink type="http" url="http://www.gnome.org/gdp">
+<email>itp@gnu.org</email>
+<application>Matita</application>
+<command>iagno</command> on the command line
+<citetitle>Othello</citetitle>
+
+<guimenuitem>Iagno</guimenuitem>
+<guisubmenu>Games</guisubmenu>
+<guibutton>none</guibutton>
+<menuchoice> <guimenu>Settings</guimenu> <guisubmenu>Preferences </guisubmenu> </menuchoice>
+
+<xref linkend="start-shot"/>. 
+<figure id="start-shot">
+ <title>Starting Position</title>
+ <screenshot>
+   <mediaobject> 
+   <imageobject>
+ <imagedata fileref="figures/START.png" format="PNG" srccredit="Eric Baudais"/>
+  </imageobject>
+   <textobject> 
+     <phrase>Screenshot of the starting position.</phrase> 
+   </textobject> 
+ </mediaobject>
+ </screenshot>
+</figure>
+
+-->

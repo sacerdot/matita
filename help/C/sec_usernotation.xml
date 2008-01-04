@@ -1,0 +1,18 @@
+
+<!-- ============ User Notation ====================== -->
+<chapter id="sec_usernotation">
+ <title>Extending the syntax</title>
+ <sect1>
+   <title>Introduction</title>
+   <para>
+     &TODO;
+   </para>
+   <para id="notation">
+     notation: &TODO;
+   </para>
+   <para id="interpretation">
+     interpretation: &TODO;
+   </para>
+ </sect1>
+</chapter>
+

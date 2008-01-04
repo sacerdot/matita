@@ -1,0 +1,8 @@
+Unsatisfiable/BOO025-1.ma
+Unsatisfiable/BOO072-1.ma
+Unsatisfiable/BOO074-1.ma
+Unsatisfiable/GRP424-1.ma
+Unsatisfiable/GRP441-1.ma
+Unsatisfiable/GRP500-1.ma
+Unsatisfiable/LAT096-1.ma
+Unsatisfiable/LAT097-1.ma

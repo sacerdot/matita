@@ -1,0 +1,36 @@
+SRC=$(shell find @ROOT@ -name "*.ma" -a -type f)
+SHORTSRC=$(echo $(SRC) | sed 's?^@ROOT@/??g')
+TODO=$(SRC:%.ma=%.mo)
+
+MATITA_FLAGS=
+MATITA_FLAGS+=-noprofile
+NODB=false
+ifeq ($(NODB),true)
+	MATITA_FLAGS += -nodb
+endif
+
+MATITAC=@CC@
+MATITACLEAN=@CLEAN@
+MATITADEP=@DEP@
+
+all: $(TODO) 
+
+clean:
+	$(MATITACLEAN) $(MATITA_FLAGS) $(SRC) 
+	rm -f $(TODO) @DEPFILE@
+
+%.moo:
+	if [ -z "$<" ]; then \
+		echo "missing dependencies for $@"; \
+	else \
+		$(MATITAC) $(MATITA_FLAGS) -q -I @ROOT@ $<; \
+	fi
+
+@DEPFILE@ : $(SRC)
+	$(MATITADEP) $(MATITA_FLAGS) -I '@ROOT@' -dot @DEPFILE@.dot $^ \
+		1> @DEPFILE@ 2>@DEPFILE@.errors \
+		|| (echo;cat @DEPFILE@.errors;echo;rm @DEPFILE@;false)
+
+# this is the depend for full targets like:
+# dir/dir/name.moo: dir/dir/name.ma dir/dep.moo
+include @DEPFILE@

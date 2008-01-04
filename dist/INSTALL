@@ -1,0 +1,191 @@
+ 
+Tiny Matita logoMatita Home
+
+                           Chapter 2. Installation
+Prev                                                                      Next
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Chapter 2. Installation
+
+Table of Contents
+
+Installing from sources
+
+    Getting the source code
+    Requirements
+    Database setup
+    Compiling and installing
+
+Configuring Matita
+
+Installing from sources
+
+Currently, the only intended way to install Matita is starting from its source
+code.
+
+Getting the source code
+
+You can get the Matita source code in two ways:
+
+ 1. go to the download page and get the latest released source tarball;
+
+ 2. get the development sources from our SVN repository. You will need the
+    components/ and matita/ directories from the trunk/helm/software/
+    directory, plus the configure and Makefile* stuff from the same directory.
+
+    In this case you will need to run autoconf before proceding with the
+    building instructions below.
+
+Requirements
+
+In order to build Matita from sources you will need some tools and libraries.
+They are listed below.
+
+Note for Debian users
+
+If you are running a Debian GNU/Linux distribution you can have APT install all
+the required tools and libraries by adding the following repository to your /
+etc/apt/sources.list:
+
+              deb http://people.debian.org/~zack unstable helm
+
+
+and installing the helm-matita-deps package.
+
+Required tools and libraries
+
+OCaml
+
+    the Objective Caml compiler, version 3.09 or above
+
+Findlib
+
+    OCaml package manager, version 1.1.1 or above
+
+OCaml Expat
+
+    OCaml bindings for the expat library
+
+GMetaDOM
+
+    OCaml bindings for the Gdome 2 library
+
+OCaml HTTP
+
+    OCaml library to write HTTP daemons (and clients)
+
+LablGTK
+
+    OCaml bindings for the GTK+ library , version 2.6.0 or above
+
+GtkMathView , LablGtkMathView
+
+    GTK+ widget to render MathML documents and its OCaml bindings
+
+GtkSourceView , LablGtkSourceView
+
+    extension for the GTK+ text widget (adding the typical features of source
+    code editors) and its OCaml bindings
+
+MySQL , OCaml MySQL
+
+    SQL database and OCaml bindings for its client-side library
+
+    The SQL database itself is not strictly needed to run Matita, but we
+    stronly encourage its use since a lot of features are disabled without it.
+    Still, the OCaml bindings of the library are needed at compile time.
+
+Ocamlnet
+
+    collection of OCaml libraries to deal with application-level Internet
+    protocols and conventions
+
+ulex
+
+    Unicode lexer generator for OCaml
+
+CamlZip
+
+    OCaml library to access .gz files
+
+Database setup
+
+To fully exploit Matita indexing and search capabilities you will need a
+working MySQL database. Detalied instructions on how to do it can be found in
+the MySQL documentation. Here you can find a quick howto.
+
+In order to create a database you need administrator permissions on your MySQL
+installation, usually the root account has them. Once you have the permissions,
+a new database can be created executing mysqladmin create matita (matita is the
+default database name, you can change it using the db.user key of the
+configuration file).
+
+Then you need to grant the necessary access permissions to the database user of
+Matita, typing echo "grant all privileges on matita.* to helm;" | mysql matita
+should do the trick (helm is the default user name used by Matita to access the
+database, you can change it using the db.user key of the configuration file).
+
+Note
+
+This way you create a database named matita on which anyone claiming to be the
+helm user can do everything (like adding dummy data or destroying the contained
+one). It is strongly suggested to apply more fine grained permissions, how to
+do it is out of the scope of this manual.
+
+Compiling and installing
+
+Once you get the source code the installations steps should be quite familiar.
+
+First of all you need to configure the build process executing ./configure.
+This will check that all needed tools and library are installed and prepare the
+sources for compilation and installation.
+
+Quite a few (optional) arguments may be passed to the configure command line to
+change build time parameters. They are listed below, together with their
+default values:
+
+configure command line arguments
+
+--with-runtime-dir=dir
+
+    (Default: /usr/local/matita) Runtime base directory where all Matita stuff
+    (executables, configuration files, standard library, ...) will be installed
+
+--with-dbhost=host
+
+    (Default: localhost) Default SQL server hostname. Will be used while
+    building the standard library during the installation and to create the
+    default Matita configuration. May be changed later in configuration file.
+
+--enable-debug
+
+    (Default: disabled) Enable debugging code. Not for the casual user.
+
+Then you will manage the build and install process using make as usual. Below
+are reported the targets you have to invoke in sequence to build and install:
+
+make targets
+
+world
+
+    builds components needed by Matita and Matita itself (in bytecode or native
+    code depending on the availability of the OCaml native code compiler)
+
+install
+
+    installs Matita related tools, standard library and the needed runtime
+    stuff in the proper places on the filesystem.
+
+    As a part of the installation process the Matita standard library will be
+    compiled, thus testing that the just built matitac compiler works properly.
+
+    For this step you will need a working SQL database (for indexing the
+    standard library while you are compiling it). See Database setup for
+    instructions on how to set it up.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Prev                                                                       Next
+Matita vs Coq                        Home                    Configuring Matita
+

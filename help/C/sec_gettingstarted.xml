@@ -1,0 +1,226 @@
+
+<!-- ============= Getting started ============================== -->
+
+<chapter id="sec_gettingstarted">
+  <title>Getting started</title>
+  <para> If you are already familiar with the Calculus of (Co)Inductive
+  Constructions (CIC) and with interactive theorem provers with procedural
+  proof languages (expecially Coq), getting started with Matita is relatively
+  easy. You just need to learn how to type Unicode symbols, how to browse
+  and search the library and how to author a proof script.</para>
+
+  <sect1 id="unicode">
+   <title>How to type Unicode symbols</title>
+   <para>Unicode characters can be typed in several ways:</para>
+    <itemizedlist>
+      <listitem><para>Using the &quot;Ctrl+Shift+Unicode code&quot; standard Gnome shortcut. E.g. Ctrl+Shift+3a9 generates &quot;Ω&quot;.</para>
+     </listitem>
+     <listitem><para>Typing the ligature &quot;\name&quot; where &quot;name&quot;
+      is a standard Unicode or LaTeX name for the character. Pressing
+      &quot;Alt+L&quot; just after the last character of the name converts
+      the ligature to the Unicode symbol. This operation is
+      not required since Matita understands also the &quot;\name&quot;
+      sequences. E.g. &quot;\Omega&quot; followed by Alt+L generates
+      &quot;Ω&quot;.</para>
+     </listitem>
+     <listitem><para>Typing one of the following ligatures (and optionally
+         converting the ligature to the Unicode character has described before):
+         &quot;:=&quot; (which stands for ≝); &quot;->&quot; (which stands for
+         &quot;→&quot;); &quot;=>&quot; (which stands for &quot;⇒&quot;).</para>
+     </listitem>
+    </itemizedlist>
+  </sect1>
+  <sect1 id="cicbrowser">
+   <title>Browsing and searching</title>
+   <para>The CIC browser is used to browse and search the library.
+    You can open a new CIC browser selecting &quot;New Cic Browser&quot;
+    from the &quot;View&quot; menu of Matita, or by pressing &quot;F3&quot;.
+    The CIC browser is similar to a traditional Web browser.</para>
+   <sect2 id="browsinglib">
+    <title>Browsing the library</title>
+    <para>To browse the library, type in the location bar the absolute URI of
+    the theorem, definition or library fragment you are interested in.
+    &quot;cic:/&quot; is the root of the library. Contributions developed
+    in Matita are under &quot;cic:/matita&quot;; all the others are
+    part of the library of Coq.</para>
+    <para>Following the hyperlinks it is possible to navigate in the Web
+    of mathematical notions. Proof are rendered in pseudo-natural language
+    and mathematical notation is used for formulae. For now, mathematical
+    notation must be included in the current script to be activated, but we
+    plan to remove this limitation.</para>
+   </sect2>
+   <sect2 id="aboutproof">
+    <title>Looking at a proof under development</title>
+    <para>A proof under development is not yet part of the library.
+     The special URI &quot;about:proof&quot; can be used to browse the
+     proof currently under development, if there is one.
+     The &quot;home&quot; button of the CIC browser sets the location bar to
+     &quot;about:proof&quot;.
+    </para>
+   </sect2>
+   <sect2 id="whelp">
+    <title>Searching the library</title>
+    <para>The query bar of the CIC browser can be used to search the library
+     of Matita for theorems or definitions that match certain criteria.
+     The criteria is given by typing a term in the query bar and selecting
+     an action in the drop down menu right of it.</para>
+    <sect3 id="locate">
+     <title>Searching by name</title>
+     <para>     &TODO;</para>
+   </sect3>
+    <sect3 id="hint">
+     <title>List of lemmas that can be applied</title>
+     <para>     &TODO;</para>
+   </sect3>
+    <sect3 id="match">
+     <title>Searching by exact match</title>
+     <para>     &TODO;</para>
+   </sect3>
+    <sect3 id="elim">
+     <title>List of elimination principles for a given type</title>
+     <para>     &TODO;</para>
+   </sect3>
+    <sect3 id="instance">
+     <title>Searching by instantiation</title>
+     <para>     &TODO;</para>
+   </sect3>
+   </sect2>
+  </sect1>
+  <sect1 id="authoring">
+   <title>Authoring</title>
+   <sect2 id="developments">
+   <title>How to use developments</title>
+   <para>
+     A development is a set of scripts files that are strictly related (i.e.
+     they depend on each other).  &appname; is able to automatically manage
+     dependencies among the scripts in a development, compiling them in the
+     correct order. 
+   </para>
+   <para>
+     The include statement can be performed by &appname; only if the mentioned
+     script is compiled. If both scripts (the one that includes and the included)
+     are part of the same development, the included script (and recursively all
+     its dependencies) can be compiled automatically. Dependencies among scripts
+     belonging to different developments is not implemented yet.
+   </para>
+   <para>
+     The &quot;Developments...&quot; item the File menu (or pressing
+     Ctrl+D) opens the Developments window.
+   </para>
+   <figure><title>The Developments window</title>
+     <mediaobject>
+       <imageobject>
+         <imagedata fileref="figures/developments.png" /> 
+       </imageobject>
+       <textobject><phrase>Screenshot of the Developments window.</phrase></textobject>
+     </mediaobject>
+   </figure>
+   <para> 
+    <variablelist><title>Developments window buttons</title>
+      <varlistentry><term><filename>New</filename></term>
+        <listitem>
+          <para>
+            To create a new Development the user needs to specify a name<footnote>
+              <para>
+                The name of the Development should be the name of the directory in
+                which it lives. This is not a requirement, but the makefile
+                automatically generated by matita in the root directory of the
+                development will eventually generate a new Development with a name
+                that follows this convention. Having more than one development for
+                the same set of files is not an issue.
+              </para>
+            </footnote>
+            and the root directory in which all scripts will be placed,
+            eventually organized in subdirectories. The Development should be
+            named as the directory in which it lives. A &quot;makefile&quot;
+            file is placed in the specified root directory. That makefile
+            supports the following targets:
+            <variablelist>
+              <varlistentry><term><filename>all</filename></term>
+                <listitem>
+                  <para>
+                    Build the whole development.
+                  </para>
+                </listitem>
+              </varlistentry>
+              <varlistentry><term><filename>clean</filename></term>
+                <listitem>
+                  <para>
+                    Cleans the whole development.
+                  </para>
+                </listitem>
+              </varlistentry>
+              <varlistentry><term><filename>cleanall</filename></term>
+                <listitem>
+                  <para>
+                    Resets the user environment (i.e. deleting all the results
+                    of compilation of every development, including the contents
+                    of the database). This target should be used only in case
+                    something goes wrong and &appname; behaves incorrectly.
+                  </para>
+                </listitem>
+              </varlistentry>
+              <varlistentry><term><filename>scriptname.mo</filename></term>
+                <listitem>
+                  <para>
+                    Compiles &quot;scriptname.ma&quot;
+                  </para>
+                </listitem>
+              </varlistentry>
+            </variablelist>
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry><term><filename>Delete</filename></term>
+        <listitem>
+          <para>
+            Decompiles the whole development and removes it.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry><term><filename>Build</filename></term>
+        <listitem>
+          <para>
+            Compiles all the scripts in the development.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry><term><filename>Clean</filename></term>
+        <listitem>
+          <para>
+            Decompiles the whole development.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry><term><filename>Publish</filename></term>
+        <listitem>
+          <para>
+            All the user developments live in the &quot;user&quot; space. That is, the
+            result of the compilation of scripts is placed in his home directory
+            and the tuples are placed in personal tables inside the database.
+            Publishing a development means putting it in the &quot;library&quot; space. This
+            means putting the result of compilation in the same place where the
+            standard library lives. This feature will be improved in the future
+            to support publishing the development in the &quot;distributed
+            library&quot; space (making your development public).
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry><term><filename>Close</filename></term>
+        <listitem>
+          <para>
+            Closes the Developments window
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+    </para>
+ </sect2>
+   <sect2 id="authoringinterface">
+    <title>The authoring interface</title>
+    <para>&TODO;</para>
+   </sect2>
+ </sect1>
+</chapter>
+
+
