@@ -23,18 +23,7 @@
  * http://helm.cs.unibo.it/
  *)
 
-val interactive_loop : unit -> unit
-
-(** go initializes the status and calls interactive_loop *)
-val go : unit -> unit
-val main : mode:[ `COMPILER | `TOPLEVEL ] -> unit
-
-(** clean_exit n
-  if n = Some n it performs an exit [n] after a complete clean-up of what was
-   partially compiled
-  otherwise it performs the clean-up without exiting
-*)
-val clean_exit : int option -> unit
+val main: unit -> unit
 
 (* this callback is called on the expansion of every inline macro *)
 val set_callback: (string -> unit) -> unit 

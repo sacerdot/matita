@@ -212,7 +212,7 @@ let main () =
   Helm_registry.set_int "matita.verbosity" 0;
   let include_paths =
    Helm_registry.get_list Helm_registry.string "matita.includes" in
-  grafite_status := [GrafiteSync.init ()];
+  grafite_status := [GrafiteSync.init "cic:/matita/tests/"];
   lexicon_status :=
    [CicNotation2.load_notation ~include_paths
      BuildTimeConf.core_notation_script] ;

@@ -743,14 +743,14 @@ class script  ~(source_view: GSourceView.source_view)
               () =
 let buffer = source_view#buffer in
 let source_buffer = source_view#source_buffer in
-let initial_statuses () =
+let initial_statuses baseuri =
  (* these include_paths are used only to load the initial notation *)
  let include_paths =
   Helm_registry.get_list Helm_registry.string "matita.includes" in
  let lexicon_status =
   CicNotation2.load_notation ~include_paths
    BuildTimeConf.core_notation_script in
- let grafite_status = GrafiteSync.init () in
+ let grafite_status = GrafiteSync.init baseuri in
   grafite_status,lexicon_status
 in
 object (self)
@@ -773,7 +773,7 @@ object (self)
 
   val mutable statements = []    (** executed statements *)
 
-  val mutable history = [ initial_statuses () ]
+  val mutable history = [ initial_statuses "cic:/matita/test/" ]
     (** list of states before having executed statements. Head element of this
       * list is the current state, last element is the state at the beginning of
       * the script.
@@ -933,7 +933,8 @@ object (self)
     
   method assignFileName file =
     let root, buri, file = Librarian.baseuri_of_script ~include_paths file in
-    Helm_registry.set "matita.filename" file
+    Helm_registry.set "matita.filename" file;
+    self#reset_buffer
     
   method saveToFile () =
     let oc = open_out (Librarian.filename ()) in
@@ -967,8 +968,10 @@ object (self)
     LexiconSync.time_travel ~present:self#lexicon_status ~past:lexicon_status
 
   method private reset_buffer = 
+    let file = Librarian.filename () in
+    let root, buri, file = Librarian.baseuri_of_script file in
     statements <- [];
-    history <- [ initial_statuses () ];
+    history <- [ initial_statuses buri ];
     userGoal <- None;
     self#notify;
     buffer#remove_tag locked_tag ~start:buffer#start_iter ~stop:buffer#end_iter;

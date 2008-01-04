@@ -37,69 +37,11 @@ let set_callback f = out := f
 
 let pp_ast_statement st =
   GrafiteAstPp.pp_statement
-    ~map_unicode_to_tex:(Helm_registry.get_bool
-      "matita.paste_unicode_as_tex")
+    ~map_unicode_to_tex:(Helm_registry.get_bool "matita.paste_unicode_as_tex")
     ~term_pp:CicNotationPp.pp_term
     ~lazy_term_pp:CicNotationPp.pp_term ~obj_pp:(CicNotationPp.pp_obj CicNotationPp.pp_term) st
 
-(** {2 Initialization} *)
-
-let grafite_status = (ref None : GrafiteTypes.status option ref)
-let lexicon_status = (ref None : LexiconEngine.status option ref)
-
-let run_script is eval_function  =
-  let lexicon_status',grafite_status' = 
-    match !lexicon_status,!grafite_status with
-    | Some ss, Some s -> ss,s
-    | _,_ -> assert false
-  in
-  let slash_n_RE = Pcre.regexp "\\n" in
-  let cb = 
-    if Helm_registry.get_int "matita.verbosity" < 1 then 
-      (fun _ _ -> ())
-    else 
-      (fun grafite_status stm ->
-        (* dump_status grafite_status; *)
-        let stm = pp_ast_statement stm in
-        let stm = Pcre.replace ~rex:slash_n_RE stm in
-        let stm =
-          if String.length stm > 50 then
-            String.sub stm 0 50 ^ " ..."
-          else
-            stm
-        in
-        HLog.debug ("Executing: ``" ^ stm ^ "''"))
-  in
-  let matita_debug = Helm_registry.get_bool "matita.debug" in
-  try
-   match eval_function lexicon_status' grafite_status' is cb with
-      [] -> raise End_of_file
-    | ((grafite_status'',lexicon_status''),None)::_ ->
-       lexicon_status := Some lexicon_status'';
-       grafite_status := Some grafite_status''
-    | (s,Some _)::_ -> raise AttemptToInsertAnAlias
-  with
-  | GrafiteEngine.Drop  
-  | End_of_file
-  | CicNotationParser.Parse_error _ 
-  | GrafiteEngine.Macro _ as exn -> raise exn
-  | exn -> 
-      if not matita_debug then
-       HLog.error (snd (MatitaExcPp.to_string exn)) ;
-      raise exn
-
-let fname () =
-  let rec aux = function
-  | ""::tl -> aux tl
-  | [x] -> x
-  | [] -> MatitaInit.die_usage ()
-  | l -> 
-      prerr_endline 
-        ("Wrong commands: " ^ 
-          String.concat " " (List.map (fun x -> "'" ^ x ^ "'") l));
-      MatitaInit.die_usage ()
-  in
-  aux (Helm_registry.get_list Helm_registry.string "matita.args")
+(* NOBODY EVER USER matitatop 
 
 let pp_ocaml_mode () = 
   HLog.message "";
@@ -108,31 +50,6 @@ let pp_ocaml_mode () =
   HLog.message "Type 'go ();;' to enter an interactive matitac";
   HLog.message ""
   
-let clean_exit n =
- let opt_exit =
-  function
-     None -> ()
-   | Some n -> exit n
- in
-  match !grafite_status with
-     None -> opt_exit n
-   | Some grafite_status ->
-      try
-       let baseuri = GrafiteTypes.get_string_option grafite_status "baseuri" in
-       LibraryClean.clean_baseuris ~verbose:false [baseuri];
-       opt_exit n
-      with GrafiteTypes.Option_error("baseuri", "not found") ->
-       (* no baseuri ==> nothing to clean yet *)
-       opt_exit n
-
-let get_macro_context = function
-   | Some {GrafiteTypes.proof_status = GrafiteTypes.No_proof} -> []
-   | Some status                ->
-      let stack = GrafiteTypes.get_stack status in
-      let goal = Continuationals.Stack.find_goal stack in
-      GrafiteTypes.get_proof_context status goal
-   | None                       -> assert false
-   
 let rec interactive_loop () = 
   let str = Ulexing.from_utf8_channel stdin in
   try
@@ -161,7 +78,7 @@ let rec interactive_loop () =
   | GrafiteTypes.Command_error _ -> interactive_loop ()
   | End_of_file ->
      print_newline ();
-     clean_exit (Some 0)
+     clean_exit fname (Some 0)
   | HExtlib.Localized (floc,CicNotationParser.Parse_error err) ->
      let x, y = HExtlib.loc_of_floc floc in
       HLog.error (sprintf "Parse error at %d-%d: %s" x y err);
@@ -186,7 +103,77 @@ let go () =
     BuildTimeConf.core_notation_script);
   Sys.catch_break true;
   interactive_loop ()
+;;
+*)
 
+(* snippet for extraction, should be moved to the build function 
+  if false then
+   (let baseuri =
+    (* This does not work yet :-(
+       let baseuri =
+        GrafiteTypes.get_string_option
+        (match !grafite_status with None -> assert false | Some s -> s)
+        "baseuri" in*)
+    lazy
+      (let _root, buri, _fname = Librarian.baseuri_of_script ~include_paths:[] fname in
+      buri)
+   in
+   let mangled_baseuri =
+    lazy
+     ( let baseuri = Lazy.force baseuri in
+       let baseuri = String.sub baseuri 5 (String.length baseuri - 5) in
+       let baseuri = Pcre.replace ~pat:"/" ~templ:"_" baseuri in
+        String.uncapitalize baseuri
+     ) in
+   let f =
+    lazy
+     (open_out
+       (Filename.dirname fname ^ "/" ^ Lazy.force mangled_baseuri ^ ".ml")) in
+    LibrarySync.set_object_declaration_hook
+     (fun _ obj ->
+       output_string (Lazy.force f)
+        (CicExportation.ppobj (Lazy.force baseuri) obj);
+       flush (Lazy.force f)));
+*)
+
+(** {2 Initialization} *)
+
+let slash_n_RE = Pcre.regexp "\\n" ;;
+
+let run_script is lexicon_status' grafite_status' eval_function  =
+  let print_cb =
+    if Helm_registry.get_int "matita.verbosity" < 1 then 
+      (fun _ _ -> ())
+    else 
+      (fun grafite_status stm ->
+        let stm = pp_ast_statement stm in
+        let stm = Pcre.replace ~rex:slash_n_RE stm in
+        let stm =
+          if String.length stm > 50 then String.sub stm 0 50 ^ " ..."
+          else stm
+        in
+        HLog.debug ("Executing: ``" ^ stm ^ "''"))
+  in
+  match eval_function lexicon_status' grafite_status' is print_cb with
+  | [] -> raise End_of_file
+  | ((grafite_status'',lexicon_status''),None)::_ ->
+     grafite_status'', lexicon_status''
+  | (s,Some _)::_ -> raise AttemptToInsertAnAlias
+;;
+
+let clean_exit baseuri rc =
+  LibraryClean.clean_baseuris ~verbose:false [baseuri]; rc
+;;
+
+let get_macro_context = function
+   | Some {GrafiteTypes.proof_status = GrafiteTypes.No_proof} -> []
+   | Some status                ->
+      let stack = GrafiteTypes.get_stack status in
+      let goal = Continuationals.Stack.find_goal stack in
+      GrafiteTypes.get_proof_context status goal
+   | None                       -> assert false
+;;
+   
 let pp_times fname bench_mode rc big_bang = 
   if bench_mode then
     begin
@@ -231,213 +218,185 @@ let pp_times fname bench_mode rc big_bang =
     end
 ;;
 
-let rec compiler_loop fname big_bang mode buf =
- let include_paths =
-  Helm_registry.get_list Helm_registry.string "matita.includes" in
- let clean_baseuri = not (Helm_registry.get_bool "matita.preserve") in    
- let matita_debug = Helm_registry.get_bool "matita.debug" in
- let bench_mode =  Helm_registry.get_bool "matita.bench" in
- try
-  run_script buf 
-   (MatitaEngine.eval_from_stream ~first_statement_only:false ~include_paths
-    ~clean_baseuri)
- with 
-  | End_of_file -> ()
-  | Sys.Break as exn ->
-     if matita_debug then raise exn;
-      HLog.error "user break!";
-      pp_times fname bench_mode false big_bang;
-      if mode = `COMPILER then
-        clean_exit (Some ~-1)
-      else
-        pp_ocaml_mode ()
-  | GrafiteEngine.Drop ->
-      if mode = `COMPILER then 
-        begin
-          pp_times fname bench_mode false big_bang;
-          clean_exit (Some 1)
-        end
-      else 
-        pp_ocaml_mode ()
-  | GrafiteEngine.Macro (floc, f) ->
-      begin match f (get_macro_context !grafite_status) with 
-       | _, GrafiteAst.Inline (_, style, suri, prefix) ->
-         let str =
-          ApplyTransformation.txt_of_inline_macro style suri prefix
-           ~map_unicode_to_tex:(Helm_registry.get_bool
-             "matita.paste_unicode_as_tex") in
-         !out str;
-         compiler_loop fname big_bang mode buf
-       | _ ->
-         let x, y = HExtlib.loc_of_floc floc in
-         HLog.error (sprintf "A macro has been found in a script at %d-%d" x y);
-         if mode = `COMPILER then
-	    begin 
-	       pp_times fname bench_mode false big_bang;
-	       clean_exit (Some 1)
-            end 
-	 else 
-            pp_ocaml_mode ()
-      end
-  | HExtlib.Localized (floc,CicNotationParser.Parse_error err) ->
-     let (x, y) = HExtlib.loc_of_floc floc in
-     HLog.error (sprintf "Parse error at %d-%d: %s" x y err);
-     if mode = `COMPILER then
-       begin
-         pp_times fname bench_mode false big_bang;
-         clean_exit (Some 1)
-       end
-     else
-       pp_ocaml_mode ()
-  | exn ->
-      if matita_debug then raise exn;
-      if mode = `COMPILER then 
-        begin
-          pp_times fname bench_mode false big_bang;
-          clean_exit (Some 3)
-        end
-      else 
-        pp_ocaml_mode ()
-
-exception ReadOnlyUri of string
-
-let main ~mode = 
-  let big_bang = Unix.gettimeofday () in
-  MatitaInit.initialize_all ();
-  (* must be called after init since args are set by cmdline parsing *)
-  let fname = fname () in
-  if false then
-   (let baseuri =
-    (* This does not work yet :-(
-       let baseuri =
-        GrafiteTypes.get_string_option
-        (match !grafite_status with None -> assert false | Some s -> s)
-        "baseuri" in*)
-    lazy
-      (let _root, buri, _fname = Librarian.baseuri_of_script ~include_paths:[] fname in
-      buri)
-   in
-   let mangled_baseuri =
-    lazy
-     ( let baseuri = Lazy.force baseuri in
-       let baseuri = String.sub baseuri 5 (String.length baseuri - 5) in
-       let baseuri = Pcre.replace ~pat:"/" ~templ:"_" baseuri in
-        String.uncapitalize baseuri
-     ) in
-   let f =
-    lazy
-     (open_out
-       (Filename.dirname fname ^ "/" ^ Lazy.force mangled_baseuri ^ ".ml")) in
-    LibrarySync.set_object_declaration_hook
-     (fun _ obj ->
-       output_string (Lazy.force f)
-        (CicExportation.ppobj (Lazy.force baseuri) obj);
-       flush (Lazy.force f)));
-  let system_mode =  Helm_registry.get_bool "matita.system" in
+let rec compiler_loop fname =
+  (* initialization, MOVE OUTSIDE *)
+  let matita_debug = Helm_registry.get_bool "matita.debug" in
   let bench_mode =  Helm_registry.get_bool "matita.bench" in
-  if bench_mode then
-    Helm_registry.set_int "matita.verbosity" 0;
-  let include_paths =
-   Helm_registry.get_list Helm_registry.string "matita.includes" in
-  grafite_status := Some (GrafiteSync.init ());
-  lexicon_status :=
-   Some (CicNotation2.load_notation ~include_paths
-    BuildTimeConf.core_notation_script);
-  Sys.catch_break true;
-  let origcb = HLog.get_log_callback () in
-  let origcb t s = origcb t ((if system_mode then "[S] " else "") ^ s) in
-  let newcb tag s =
-    match tag with
-    | `Debug | `Message -> ()
-    | `Warning | `Error -> origcb tag s
+  let clean_baseuri = not (Helm_registry.get_bool "matita.preserve") in    
+  let include_paths = 
+    Helm_registry.get_list Helm_registry.string "matita.includes" 
   in
-  if Helm_registry.get_int "matita.verbosity" < 1 then
-    HLog.set_log_callback newcb;
-  if bench_mode then MatitaMisc.shutup ();
-  let ich, fname, baseuri = 
-    if fname = "stdin" || fname = "-" then
-      let fname = "/dev/fd/0" in
-      let _,baseuri,fname =
-        Librarian.baseuri_of_script ~include_paths:[] fname
-      in
-        stdin, fname, baseuri
-    else
-      let _,baseuri,fname = 
-        Librarian.baseuri_of_script ~include_paths fname 
-      in
-        open_in fname, fname, baseuri
+  (* sanity checks *)
+  let _,baseuri,fname = Librarian.baseuri_of_script ~include_paths fname in
+  let moo_fname = 
+   LibraryMisc.obj_file_of_baseuri ~must_exist:false ~baseuri ~writable:true
   in
-              (* PUT THIS IN A FUNCTION *)
-        if Http_getter_storage.is_read_only baseuri then begin
-          HLog.error (Printf.sprintf "uri %s belongs to a read-only repository"
-          baseuri);
-          raise (ReadOnlyUri baseuri)
-        end;
-        if (not (Http_getter_storage.is_empty ~local:true baseuri) ||
-            LibraryClean.db_uris_of_baseuri baseuri <> [])
-          then begin
-          HLog.message ("baseuri " ^ baseuri ^ " is not empty");
-          HLog.message ("cleaning baseuri " ^ baseuri);
-          LibraryClean.clean_baseuris [baseuri];
-          assert (Http_getter_storage.is_empty ~local:true baseuri);
-        end;
-        if not (Helm_registry.get_opt_default Helm_registry.bool "matita.nodisk"
-                  ~default:false) 
-        then
-          HExtlib.mkdir 
-            (Filename.dirname 
-              (Http_getter.filename ~local:true ~writable:true (baseuri ^
-              "foo.con")));
-              (* PUT THIS IN A FUNCTION *)
+  let lexicon_fname= 
+   LibraryMisc.lexicon_file_of_baseuri ~must_exist:false ~baseuri ~writable:true
+  in
+  if Http_getter_storage.is_read_only baseuri then 
+    HLog.error 
+      (Printf.sprintf "uri %s belongs to a read-only repository" baseuri);
+  (* cleanup of previously compiled objects *)
+  if (not (Http_getter_storage.is_empty ~local:true baseuri) ||
+      LibraryClean.db_uris_of_baseuri baseuri <> []) && clean_baseuri
+    then begin
+    HLog.message ("baseuri " ^ baseuri ^ " is not empty");
+    HLog.message ("cleaning baseuri " ^ baseuri);
+    LibraryClean.clean_baseuris [baseuri];
+    assert (Http_getter_storage.is_empty ~local:true baseuri);
+  end;
+  (* create dir for XML files *)
+  if not (Helm_registry.get_opt_default Helm_registry.bool "matita.nodisk"
+            ~default:false) 
+  then
+    HExtlib.mkdir 
+      (Filename.dirname 
+        (Http_getter.filename ~local:true ~writable:true (baseuri ^
+        "foo.con")));
+  (* begin of compilation *)
+  let grafite_status = GrafiteSync.init baseuri in
+  let lexicon_status = 
+    CicNotation2.load_notation ~include_paths:[]
+      BuildTimeConf.core_notation_script 
+  in
+  let big_bang = Unix.gettimeofday () in
   let time = Unix.time () in
-  if Helm_registry.get_int "matita.verbosity" < 1 && not bench_mode then
-    origcb `Message ("compiling " ^ 
-    Filename.basename fname ^ " in " ^ baseuri ^ " ...")
-  else
-    HLog.message (sprintf "execution of %s started in %s:" 
-      (Filename.basename fname) baseuri);
-  let buf = Ulexing.from_utf8_channel ich in
-  compiler_loop fname big_bang mode buf;
-  let elapsed = Unix.time () -. time in
-  let tm = Unix.gmtime elapsed in
-  let sec = string_of_int tm.Unix.tm_sec ^ "''" in
-  let min = 
-    if tm.Unix.tm_min > 0 then (string_of_int tm.Unix.tm_min ^ "' ") else "" 
-  in
-  let hou = 
-    if tm.Unix.tm_hour > 0 then (string_of_int tm.Unix.tm_hour ^ "h ") else ""
-  in
-  let proof_status,moo_content_rev,lexicon_content_rev = 
-    match !lexicon_status,!grafite_status with
-    | Some ss, Some s ->
-       s.proof_status, s.moo_content_rev, 
-        ss.LexiconEngine.lexicon_content_rev
-    | _,_ -> assert false
-  in
-  if proof_status <> GrafiteTypes.No_proof then
-   begin
-    HLog.error
-     "there are still incomplete proofs at the end of the script";
-    pp_times fname bench_mode true big_bang;
-    clean_exit (Some 2)
-   end
-  else
-   begin
-     let moo_fname = 
-       LibraryMisc.obj_file_of_baseuri 
-         ~must_exist:false ~baseuri ~writable:true 
-     in
-     let lexicon_fname= 
-       LibraryMisc.lexicon_file_of_baseuri 
-        ~must_exist:false ~baseuri ~writable:true 
-     in
-     (* FG: we do not generate .moo when dumping .mma files *)
-     if Helm_registry.get_bool "matita.moo" then begin
+  HLog.message ("compiling " ^ Filename.basename fname ^ " in " ^ baseuri);
+  let buf = Ulexing.from_utf8_channel (open_in fname) in
+  try
+    let grafite_status, lexicon_status =
+     run_script buf lexicon_status grafite_status 
+      (MatitaEngine.eval_from_stream ~first_statement_only:false ~include_paths)
+    in
+    let elapsed = Unix.time () -. time in
+    let proof_status,moo_content_rev,lexicon_content_rev = 
+      grafite_status.proof_status, grafite_status.moo_content_rev, 
+       lexicon_status.LexiconEngine.lexicon_content_rev
+    in
+    if proof_status <> GrafiteTypes.No_proof then
+     (HLog.error
+      "there are still incomplete proofs at the end of the script"; 
+     pp_times fname bench_mode false big_bang;
+     clean_exit baseuri false)
+    else
+     (if Helm_registry.get_bool "matita.moo" then begin
+        (* FG: we do not generate .moo when dumping .mma files *)
         GrafiteMarshal.save_moo moo_fname moo_content_rev;
         LexiconMarshal.save_lexicon lexicon_fname lexicon_content_rev;
      end;
+     let tm = Unix.gmtime elapsed in
+     let sec = string_of_int tm.Unix.tm_sec ^ "''" in
+     let min = 
+       if tm.Unix.tm_min > 0 then (string_of_int tm.Unix.tm_min^"' ") else "" 
+     in
+     let hou = 
+       if tm.Unix.tm_hour > 0 then (string_of_int tm.Unix.tm_hour^"h ") else ""
+     in
      HLog.message 
        (sprintf "execution of %s completed in %s." fname (hou^min^sec));
      pp_times fname bench_mode true big_bang;
-     exit 0
-   end
+     true)
+  with 
+  | End_of_file -> HLog.error "End_of_file?!"; clean_exit baseuri false
+  | Sys.Break as exn ->
+     if matita_debug then raise exn;
+     HLog.error "user break!";
+     pp_times fname bench_mode false big_bang;
+     clean_exit baseuri false
+  | GrafiteEngine.Macro (floc, f) ->
+      ((* THIS CODE IS NOW BROKEN *) HLog.warn "Codice da rivedere";
+      match f (get_macro_context (Some grafite_status)) with 
+      | _, GrafiteAst.Inline (_, style, suri, prefix) ->
+        let str =
+         ApplyTransformation.txt_of_inline_macro style suri prefix
+          ~map_unicode_to_tex:(Helm_registry.get_bool
+            "matita.paste_unicode_as_tex") in
+        print_endline str;
+        compiler_loop fname 
+      | _ ->
+        let x, y = HExtlib.loc_of_floc floc in
+        HLog.error (sprintf "A macro has been found at %d-%d" x y);
+        pp_times fname bench_mode false big_bang;
+        clean_exit baseuri false)
+  | HExtlib.Localized (floc,CicNotationParser.Parse_error err) ->
+      let (x, y) = HExtlib.loc_of_floc floc in
+      HLog.error (sprintf "Parse error at %d-%d: %s" x y err);
+      pp_times fname bench_mode false big_bang;
+      clean_exit baseuri false
+  | exn ->
+       if matita_debug then raise exn;
+       HLog.error (snd (MatitaExcPp.to_string exn));
+       pp_times fname bench_mode false big_bang;
+       clean_exit baseuri false
+;;
+
+let main () =
+  MatitaInit.initialize_all ();
+  (* targets and deps *)
+  let targets = Helm_registry.get_list Helm_registry.string "matita.args" in
+  let deps = 
+    match targets with
+    | [] ->
+      (match Librarian.find_roots_in_dir (Sys.getcwd ()) with
+      | [x] -> 
+         HLog.message ("Using the following root: " ^ x);
+         Make.load_deps_file (Filename.dirname x ^ "/depends") 
+      | [] -> 
+         HLog.error "No targets and no root found"; exit 1
+      | roots -> 
+         HLog.error ("Too many roots found, move into one and retry: "^
+           String.concat ", " roots);exit 1);
+    | hd::_ -> 
+      let root, _, _ = Librarian.baseuri_of_script hd in
+      HLog.message ("Using the following root: " ^ root);
+      Make.load_deps_file (root ^ "/depends") 
+  in
+  (* must be called after init since args are set by cmdline parsing *)
+  let system_mode =  Helm_registry.get_bool "matita.system" in
+  let bench_mode =  Helm_registry.get_bool "matita.bench" in
+  if bench_mode then Helm_registry.set_int "matita.verbosity" 0;
+  if system_mode then HLog.message "Compiling in system space";
+  if bench_mode then MatitaMisc.shutup ();
+  (* here we go *)
+  let module F = 
+    struct 
+      type source_object = string
+      type target_object = string
+      let string_of_source_object s = s;;
+      let string_of_target_object s = s;;
+
+      let target_of mafile = 
+        let _,baseuri,_ = Librarian.baseuri_of_script mafile in
+        LibraryMisc.obj_file_of_baseuri 
+          ~must_exist:false ~baseuri ~writable:true 
+      ;;
+  
+      let mtime_of_source_object s =
+        try Some (Unix.stat s).Unix.st_mtime
+        with Unix.Unix_error (Unix.ENOENT, "stat", f) when f = s -> 
+          raise (Failure ("Unable to stat a source file: " ^ s)) 
+      ;;
+  
+      let mtime_of_target_object s =
+        try Some (Unix.stat s).Unix.st_mtime
+        with Unix.Unix_error (Unix.ENOENT, "stat", f) when f = s -> None
+      ;;
+  
+      let build fname = 
+        let oldfname = 
+          Helm_registry.get_opt
+           Helm_registry.string "matita.filename"
+        in
+        Helm_registry.set_string "matita.filename" fname;
+        let rc = compiler_loop fname in
+        (match oldfname with
+        | Some n -> Helm_registry.set_string "matita.filename" n;
+        | _ -> Helm_registry.unset "matita.filename");
+        rc
+      ;;
+    end 
+  in
+  let module Make = Make.Make(F) in
+  Make.make deps targets
+

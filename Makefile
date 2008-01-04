@@ -28,6 +28,7 @@ ifeq ($(NODB),true)
 endif
 
 MLI = \
+        make.mli		\
 	lablGraphviz.mli	\
 	matitaTypes.mli		\
 	matitaMisc.mli		\
@@ -45,6 +46,7 @@ MLI = \
 	matitaGui.mli		\
 	$(NULL)
 CMLI =				\
+        make.mli		\
 	matitaTypes.mli		\
 	matitaMisc.mli		\
 	matitamakeLib.mli	\

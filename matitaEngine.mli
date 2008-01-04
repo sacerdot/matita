@@ -25,7 +25,6 @@
 
 val eval_ast :
   ?do_heavy_checks:bool ->
-  ?clean_baseuri:bool ->
   LexiconEngine.status ->
   GrafiteTypes.status ->
   string * int *
@@ -47,7 +46,6 @@ val eval_from_stream :
   include_paths:string list ->
   ?prompt:bool ->
   ?do_heavy_checks:bool ->
-  ?clean_baseuri:bool ->
   ?enforce_no_new_aliases:bool -> (* default true *)
   ?watch_statuses:(LexiconEngine.status -> GrafiteTypes.status -> unit) ->
   LexiconEngine.status ->

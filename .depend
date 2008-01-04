@@ -6,6 +6,8 @@ gragrep.cmo: matitaInit.cmi buildTimeConf.cmo gragrep.cmi
 gragrep.cmx: matitaInit.cmx buildTimeConf.cmx gragrep.cmi 
 lablGraphviz.cmo: lablGraphviz.cmi 
 lablGraphviz.cmx: lablGraphviz.cmi 
+make.cmo: make.cmi 
+make.cmx: make.cmi 
 matitaAutoGui.cmo: matitaGeneratedGui.cmo applyTransformation.cmi \
     matitaAutoGui.cmi 
 matitaAutoGui.cmx: matitaGeneratedGui.cmx applyTransformation.cmx \
@@ -13,17 +15,15 @@ matitaAutoGui.cmx: matitaGeneratedGui.cmx applyTransformation.cmx \
 matitaclean.cmo: matitaMisc.cmi matitaInit.cmi matitaclean.cmi 
 matitaclean.cmx: matitaMisc.cmx matitaInit.cmx matitaclean.cmi 
 matitacLib.cmo: matitamakeLib.cmi matitaMisc.cmi matitaInit.cmi \
-    matitaExcPp.cmi matitaEngine.cmi buildTimeConf.cmo \
-    applyTransformation.cmi matitacLib.cmi 
+    matitaExcPp.cmi make.cmi buildTimeConf.cmo matitacLib.cmi 
 matitacLib.cmx: matitamakeLib.cmx matitaMisc.cmx matitaInit.cmx \
-    matitaExcPp.cmx matitaEngine.cmx buildTimeConf.cmx \
-    applyTransformation.cmx matitacLib.cmi 
+    matitaExcPp.cmx make.cmx buildTimeConf.cmx matitacLib.cmi 
 matitac.cmo: matitaprover.cmi matitamake.cmi matitadep.cmi matitaclean.cmi \
     matitacLib.cmi matitaWiki.cmo matitaInit.cmi matitaEngine.cmi gragrep.cmi 
 matitac.cmx: matitaprover.cmx matitamake.cmx matitadep.cmx matitaclean.cmx \
     matitacLib.cmx matitaWiki.cmx matitaInit.cmx matitaEngine.cmx gragrep.cmx 
-matitadep.cmo: matitaInit.cmi matitadep.cmi 
-matitadep.cmx: matitaInit.cmx matitadep.cmi 
+matitadep.cmo: matitamakeLib.cmi matitaInit.cmi matitadep.cmi 
+matitadep.cmx: matitamakeLib.cmx matitaInit.cmx matitadep.cmi 
 matitaEngine.cmo: matitaEngine.cmi 
 matitaEngine.cmx: matitaEngine.cmi 
 matitaExcPp.cmo: matitaExcPp.cmi 
@@ -80,6 +80,8 @@ matitaWiki.cmo: matitaInit.cmi matitaExcPp.cmi matitaEngine.cmi \
     buildTimeConf.cmo applyTransformation.cmi 
 matitaWiki.cmx: matitaInit.cmx matitaExcPp.cmx matitaEngine.cmx \
     buildTimeConf.cmx applyTransformation.cmx 
+rottener.cmo: matitaInit.cmi buildTimeConf.cmo 
+rottener.cmx: matitaInit.cmx buildTimeConf.cmx 
 matitaGtkMisc.cmi: matitaGeneratedGui.cmo 
 matitaGui.cmi: matitaGuiTypes.cmi 
 matitaGuiTypes.cmi: matitaTypes.cmi matitaGeneratedGui.cmo 

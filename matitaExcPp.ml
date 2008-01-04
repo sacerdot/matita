@@ -117,10 +117,6 @@ let rec to_string =
       let _,msg = to_string exn in
       let (x, y) = HExtlib.loc_of_floc floc in
        Some floc, sprintf "Error at %d-%d: %s" x y msg
-  | GrafiteTypes.Option_error ("baseuri", "not found" ) -> 
-      None,
-      "Baseuri not set for this script. "
-      ^ "Use 'set \"baseuri\" \"<uri>\".' to set it."
   | GrafiteTypes.Command_error msg -> None, "Error: " ^ msg
   | CicNotationParser.Parse_error err ->
       None, sprintf "Parse error: %s" err

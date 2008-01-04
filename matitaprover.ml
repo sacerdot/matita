@@ -104,7 +104,7 @@ let main () =
   in
 (*   prerr_endline data; *)
   let is = Ulexing.from_utf8_string data in
-  let gs = GrafiteSync.init () in
+  let gs = GrafiteSync.init "cic:/TPTP/" in
   let ls = 
     CicNotation2.load_notation ~include_paths:[] 
       BuildTimeConf.core_notation_script 
@@ -115,7 +115,6 @@ let main () =
       MatitaEngine.eval_from_stream 
         ~first_statement_only:false 
         ~include_paths:[]
-        ~clean_baseuri:true
         ~do_heavy_checks:false
         ~prompt:false
         ls gs is

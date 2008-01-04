@@ -100,8 +100,7 @@ let main () =
  | _ ->
       let dump_msg = "<filename> Dump source with expanded macros to <filename>" in
       MatitaInit.add_cmdline_spec ["-dump", Arg.String dump, dump_msg];
-      let _ = MatitacLib.main `COMPILER in
-      ()
+      MatitacLib.main ()
 
 let _ = main ()
 

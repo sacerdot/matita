@@ -88,7 +88,7 @@ let main () =
   let ma_files = args in
   (* here we go *)
   (* fills:
-              Hashtbl.add include_deps     ma_file moo_file
+              Hashtbl.add include_deps     ma_file ma_file
               Hashtbl.add include_deps_dot ma_file baseuri
   *)
   List.iter (fun ma_file -> ignore (baseuri_of_script ma_file)) ma_files;

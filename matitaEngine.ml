@@ -41,7 +41,7 @@ let disambiguate_tactic text prefix_len lexicon_status_ref grafite_status goal t
   GrafiteTypes.set_metasenv metasenv grafite_status,tac
 
 let disambiguate_command lexicon_status_ref grafite_status cmd =
- let baseuri, grafite_status = GrafiteTypes.get_baseuri grafite_status in
+ let baseuri = GrafiteTypes.get_baseuri grafite_status in
  let lexicon_status,metasenv,cmd =
   GrafiteDisambiguate.disambiguate_command ~baseuri
    !lexicon_status_ref (GrafiteTypes.get_proof_metasenv grafite_status) cmd
@@ -58,17 +58,17 @@ let disambiguate_macro lexicon_status_ref grafite_status macro context =
  in
   GrafiteTypes.set_metasenv metasenv grafite_status,macro
 
-let eval_ast ?do_heavy_checks ?clean_baseuri lexicon_status
+let eval_ast ?do_heavy_checks lexicon_status
  grafite_status (text,prefix_len,ast)
 =
  let lexicon_status_ref = ref lexicon_status in
- let baseuri, grafite_status = GrafiteTypes.get_baseuri grafite_status in
+ let baseuri = GrafiteTypes.get_baseuri grafite_status in
  let new_grafite_status,new_objs =
   GrafiteEngine.eval_ast
    ~disambiguate_tactic:(disambiguate_tactic text prefix_len lexicon_status_ref)
    ~disambiguate_command:(disambiguate_command lexicon_status_ref)
    ~disambiguate_macro:(disambiguate_macro lexicon_status_ref)
-   ?do_heavy_checks ?clean_baseuri grafite_status (text,prefix_len,ast) in
+   ?do_heavy_checks grafite_status (text,prefix_len,ast) in
  let new_lexicon_status =
   LexiconSync.add_aliases_for_objs !lexicon_status_ref new_objs in
  let new_aliases =
@@ -104,7 +104,7 @@ let out = ref ignore
 let set_callback f = out := f
 
 let eval_from_stream ~first_statement_only ~include_paths ?(prompt=false)
- ?do_heavy_checks ?clean_baseuri ?(enforce_no_new_aliases=true)
+ ?do_heavy_checks ?(enforce_no_new_aliases=true)
  ?(watch_statuses=fun _ _ -> ()) lexicon_status grafite_status str cb 
 =
  let rec loop lexicon_status grafite_status statuses =
@@ -133,7 +133,7 @@ let eval_from_stream ~first_statement_only ~include_paths ?(prompt=false)
           !out ast;
           cb grafite_status ast;
           let new_statuses =
-           eval_ast ?do_heavy_checks ?clean_baseuri lexicon_status
+           eval_ast ?do_heavy_checks lexicon_status
             grafite_status ("",0,ast) in
           if enforce_no_new_aliases then
            List.iter 
