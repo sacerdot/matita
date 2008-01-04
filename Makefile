@@ -73,7 +73,7 @@ MAINCML = $(MAINCMLI:%.mli=%.ml)
 PROGRAMS_BYTE = \
 	matita matitac cicbrowser matitadep matitaclean \
 	matitamake matitaprover matitawiki
-PROGRAMS = $(PROGRAMS_BYTE) matitatop
+PROGRAMS = $(PROGRAMS_BYTE) 
 PROGRAMS_OPT = $(patsubst %,%.opt,$(PROGRAMS_BYTE))
 NOINST_PROGRAMS = dump_moo gragrep
 NOINST_PROGRAMS_OPT = $(patsubst %,%.opt,$(EXTRA_PROGRAMS))
@@ -148,10 +148,6 @@ rottener.opt: rottener.ml $(CLIBX_DEPS) $(CCMXS) $(MAINCMXS)
 	$(H)$(OCAMLOPT) $(CPKGS) -package lablgtk2 -linkpkg -o $@ $(CCMXS) $(MAINCMXS) rottener.ml
 clean-rottened:
 	find . -type f -name "*.ma.*.rottened" -exec rm {} \;
-
-matitatop: matitatop.ml $(CLIB_DEPS) $(CCMOS)
-	$(H)echo "  OCAMLC $<"
-	$(H)$(OCAMLC) $(CPKGS) -linkpkg -o $@ toplevellib.cma $(CCMOS) $<
 
 matitaprover: matitac
 	$(H)test -f $@ || ln -s $< $@

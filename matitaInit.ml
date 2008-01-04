@@ -48,13 +48,10 @@ let registry_defaults = [
   "matita.preserve",             "false";
   "matita.profile",              "true";
   "matita.system",               "false";
-  "matita.verbosity",            "1";
-  "matita.bench",                "false";
+  "matita.verbose",              "false";
   "matita.paste_unicode_as_tex", "false";
   "matita.noinnertypes",         "false";
   "matita.do_heavy_checks",      "true";
-    (** verbosity level: 1 is the default, 0 is intuitively "quiet", > 1 is
-     * intuitively verbose *)
 ]
 
 let set_registry_values =
@@ -240,14 +237,8 @@ let parse_cmdline init_status =
     in
     let args = ref [] in
     let add_l l = fun s -> l := s :: !l in
-    let reduce_verbosity () =
-      Helm_registry.set_int "matita.verbosity"
-        (Helm_registry.get_int "matita.verbosity" - 1) in
     let print_version () =
             Printf.printf "%s\n" BuildTimeConf.version;exit 0 in
-    let increase_verbosity () =
-      Helm_registry.set_int "matita.verbosity"
-        (Helm_registry.get_int "matita.verbosity" + 1) in
     let no_innertypes () =
       Helm_registry.set_bool "matita.noinnertypes" true in
     let set_baseuri s =
@@ -277,18 +268,16 @@ let parse_cmdline init_status =
         "-profile-only",
           Arg.String (fun rex -> Helm_registry.set "matita.profile_only" rex),
           "Activates only profiler with label matching the provided regex";
-        "-bench", 
-          Arg.Unit (fun () -> Helm_registry.set_bool "matita.bench" true),
-          "Turns on parsable output on stdout, that is timings for matitac...";
         "-preserve",
           Arg.Unit (fun () -> Helm_registry.set_bool "matita.preserve" true),
           "Turns off automatic baseuri cleaning";
-        "-q", Arg.Unit reduce_verbosity, "Reduce verbosity";
         "-system", Arg.Unit (fun () ->
               Helm_registry.set_bool "matita.system" true),
             ("Act on the system library instead of the user one"
              ^ "\n    WARNING: not for the casual user");
-        "-v", Arg.Unit increase_verbosity, "Increase verbosity";
+        "-v", 
+          Arg.Unit (fun () -> Helm_registry.set_bool "matita.verbose" true), 
+          "Verbose mode";
         "--version", Arg.Unit print_version, "Prints version";
       ] in
       let debug_arg_spec =

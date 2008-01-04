@@ -209,7 +209,6 @@ let main () =
    );
   (* must be called after init since args are set by cmdline parsing *)
   let system_mode =  Helm_registry.get_bool "matita.system" in
-  Helm_registry.set_int "matita.verbosity" 0;
   let include_paths =
    Helm_registry.get_list Helm_registry.string "matita.includes" in
   grafite_status := [GrafiteSync.init "cic:/matita/tests/"];

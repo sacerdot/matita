@@ -58,8 +58,6 @@ let pp_ast_statement st =
       "matita.paste_unicode_as_tex")
     ~lazy_term_pp:CicNotationPp.pp_term ~obj_pp:(CicNotationPp.pp_obj CicNotationPp.pp_term) st
 
-(**)
-
 let dump f =
    Helm_registry.set_bool "matita.moo" false;
    let floc = H.dummy_floc in
@@ -86,7 +84,74 @@ let dump f =
    MatitaEngine.set_callback matita_engine_cb;
    MatitacLib.set_callback matitac_lib_cb;
    at_exit atexit
-   
+;;
+
+(* compiler ala pascal/java using make *)
+let main_compiler () =
+  MatitaInit.initialize_all ();
+  (* targets and deps *)
+  let targets = Helm_registry.get_list Helm_registry.string "matita.args" in
+  let deps = 
+    match targets with
+    | [] ->
+      (match Librarian.find_roots_in_dir (Sys.getcwd ()) with
+      | [x] -> 
+         Make.load_deps_file (Filename.dirname x ^ "/depends") 
+      | [] -> 
+         HLog.error "No targets and no root found"; exit 1
+      | roots -> 
+         HLog.error ("Too many roots found, move into one and retry: "^
+           String.concat ", " roots);exit 1);
+    | hd::_ -> 
+      let root, _, _ = Librarian.baseuri_of_script hd in
+      Make.load_deps_file (root ^ "/depends") 
+  in
+  (* must be called after init since args are set by cmdline parsing *)
+  let system_mode =  Helm_registry.get_bool "matita.system" in
+  if system_mode then HLog.message "Compiling in system space";
+  if not (Helm_registry.get_bool "matita.verbose") then MatitaMisc.shutup ();
+  (* here we go *)
+  let module F = 
+    struct 
+      type source_object = string
+      type target_object = string
+      let string_of_source_object s = s;;
+      let string_of_target_object s = s;;
+
+      let target_of mafile = 
+        let _,baseuri,_ = Librarian.baseuri_of_script mafile in
+        LibraryMisc.obj_file_of_baseuri 
+          ~must_exist:false ~baseuri ~writable:true 
+      ;;
+  
+      let mtime_of_source_object s =
+        try Some (Unix.stat s).Unix.st_mtime
+        with Unix.Unix_error (Unix.ENOENT, "stat", f) when f = s -> 
+          raise (Failure ("Unable to stat a source file: " ^ s)) 
+      ;;
+  
+      let mtime_of_target_object s =
+        try Some (Unix.stat s).Unix.st_mtime
+        with Unix.Unix_error (Unix.ENOENT, "stat", f) when f = s -> None
+      ;;
+  
+      let build fname = 
+        let oldfname = 
+          Helm_registry.get_opt
+           Helm_registry.string "matita.filename"
+        in
+        let rc = MatitacLib.compile fname in
+        (match oldfname with
+        | Some n -> Helm_registry.set_string "matita.filename" n;
+        | _ -> Helm_registry.unset "matita.filename");
+        rc
+      ;;
+    end 
+  in
+  let module Make = Make.Make(F) in
+  Make.make deps targets
+;;
+
 let main () =
  Helm_registry.set_bool "matita.moo" true;
  match Filename.basename Sys.argv.(0) with
@@ -98,9 +163,9 @@ let main () =
  |"matitaprover.opt.static" ->Matitaprover.main()
  |"matitawiki"|"matitawiki.opt" ->MatitaWiki.main()
  | _ ->
-      let dump_msg = "<filename> Dump source with expanded macros to <filename>" in
-      MatitaInit.add_cmdline_spec ["-dump", Arg.String dump, dump_msg];
-      MatitacLib.main ()
+    let dump_msg = "<filename> Dump with expanded macros to <filename>" in
+    MatitaInit.add_cmdline_spec ["-dump", Arg.String dump, dump_msg];
+    main_compiler ()
 
 let _ = main ()
 

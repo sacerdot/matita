@@ -23,7 +23,7 @@
  * http://helm.cs.unibo.it/
  *)
 
-val main: unit -> unit
+val compile: string -> bool
 
 (* this callback is called on the expansion of every inline macro *)
 val set_callback: (string -> unit) -> unit 
