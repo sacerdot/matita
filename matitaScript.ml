@@ -753,27 +753,43 @@ let initial_statuses baseuri =
  let grafite_status = GrafiteSync.init baseuri in
   grafite_status,lexicon_status
 in
+let default_buri = "cic:/matita/tests" in
+let default_fname = ".unnamed.ma" in
 object (self)
   val mutable include_paths =
    Helm_registry.get_list Helm_registry.string "matita.includes"
 
   val scriptId = fresh_script_id ()
-  
+
   val guistuff = {
     mathviewer = mathviewer;
     urichooser = urichooser;
     ask_confirmation = ask_confirmation;
-    develcreator=develcreator;}
+    develcreator=develcreator;
+  }
+
+  val mutable filename_ = (None : string option)
+
+  method has_name = filename_ <> None
+  
+  method buri_of_current_file = 
+    match filename_ with
+    | None -> default_buri 
+    | Some f ->
+        try let root, buri, fname = Librarian.baseuri_of_script f in buri
+        with Librarian.NoRootFor _ -> default_buri
+
+  method filename = match filename_ with None -> default_fname | Some f -> f
 
   initializer 
     ignore (GMain.Timeout.add ~ms:300000 
        ~callback:(fun _ -> self#_saveToBackupFile ();true));
     ignore (buffer#connect#modified_changed 
-      (fun _ -> set_star (Filename.basename (Librarian.filename ())) buffer#modified))
+      (fun _ -> set_star buffer#modified))
 
   val mutable statements = []    (** executed statements *)
 
-  val mutable history = [ initial_statuses "cic:/matita/test/" ]
+  val mutable history = [ initial_statuses default_buri ]
     (** list of states before having executed statements. Head element of this
       * list is the current state, last element is the state at the beginning of
       * the script.
@@ -932,21 +948,26 @@ object (self)
     buffer#set_modified false
     
   method assignFileName file =
-    let root, buri, file = Librarian.baseuri_of_script ~include_paths file in
-    Helm_registry.set "matita.filename" file;
+    self#goto_top;
+    filename_ <- file; 
     self#reset_buffer
     
   method saveToFile () =
-    let oc = open_out (Librarian.filename ()) in
-    output_string oc (buffer#get_text ~start:buffer#start_iter
+    if self#has_name && buffer#modified then
+      let oc = open_out self#filename in
+      output_string oc (buffer#get_text ~start:buffer#start_iter
                         ~stop:buffer#end_iter ());
-    close_out oc;
-    buffer#set_modified false
+      close_out oc;
+      set_star false;
+      buffer#set_modified false
+    else
+      if self#has_name then HLog.debug "No need to save"
+      else HLog.error "Can't save, no filename selected"
   
   method private _saveToBackupFile () =
     if buffer#modified then
       begin
-        let f = Librarian.filename () ^ "~" in
+        let f = self#filename in
         let oc = open_out f in
         output_string oc (buffer#get_text ~start:buffer#start_iter
                             ~stop:buffer#end_iter ());
@@ -968,10 +989,8 @@ object (self)
     LexiconSync.time_travel ~present:self#lexicon_status ~past:lexicon_status
 
   method private reset_buffer = 
-    let file = Librarian.filename () in
-    let root, buri, file = Librarian.baseuri_of_script file in
     statements <- [];
-    history <- [ initial_statuses buri ];
+    history <- [ initial_statuses self#buri_of_current_file ];
     userGoal <- None;
     self#notify;
     buffer#remove_tag locked_tag ~start:buffer#start_iter ~stop:buffer#end_iter;
@@ -988,7 +1007,7 @@ object (self)
     let template = HExtlib.input_file BuildTimeConf.script_template in 
     buffer#insert ~iter:(buffer#get_iter `START) template;
     buffer#set_modified false;
-    set_star (Filename.basename (Librarian.filename ())) false
+    set_star false
 
   method goto (pos: [`Top | `Bottom | `Cursor]) () =
   try  
@@ -1098,6 +1117,11 @@ object (self)
   method setGoal n = userGoal <- n
   method goal = userGoal
 
+  method bos = 
+    match history with
+    | _::[] -> true
+    | _ -> false
+
   method eos = 
     let rec is_there_only_comments lexicon_status s = 
       if Pcre.pmatch ~rex:only_dust_RE s then raise Margin;
@@ -1132,7 +1156,8 @@ prerr_endline ("## " ^ string_of_int parsed_text_length);
     HLog.debug ("history size: " ^ string_of_int (List.length history));
     HLog.debug (sprintf "%d statements:" (List.length statements));
     List.iter HLog.debug statements;
-    HLog.debug ("Current file name: " ^ Librarian.filename ());
+    HLog.debug ("Current file name: " ^ self#filename);
+    HLog.debug ("Current buri: " ^ self#buri_of_current_file);
 end
 
 let _script = ref None

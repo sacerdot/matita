@@ -66,12 +66,8 @@ let clean_exit n =
   match !grafite_status with
      [] -> exit n
    | grafite_status::_ ->
-      try
-       let baseuri = GrafiteTypes.get_string_option grafite_status "baseuri" in
+       let baseuri = GrafiteTypes.get_baseuri grafite_status in
        LibraryClean.clean_baseuris ~verbose:false [baseuri];
-       exit n
-      with GrafiteTypes.Option_error("baseuri", "not found") ->
-       (* no baseuri ==> nothing to clean yet *)
        exit n
 
 let terminate n =
@@ -248,10 +244,11 @@ let main () =
     else
      begin
        let baseuri =
-        GrafiteTypes.get_string_option
-         (match !grafite_status with
+        GrafiteTypes.get_baseuri 
+           (match !grafite_status with
              [] -> assert false
-           | s::_ -> s) "baseuri" in
+           | s::_ -> s)
+       in
        let moo_fname = 
          LibraryMisc.obj_file_of_baseuri 
            ~must_exist:false ~baseuri ~writable:true 

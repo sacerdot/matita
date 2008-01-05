@@ -66,58 +66,30 @@ class console ~(buffer: GText.buffer) () =
   end
         
 let clean_current_baseuri grafite_status = 
-    try  
-      let baseuri = GrafiteTypes.get_string_option grafite_status "baseuri" in
-      LibraryClean.clean_baseuris [baseuri]
-    with GrafiteTypes.Option_error _ -> ()
+  LibraryClean.clean_baseuris [GrafiteTypes.get_baseuri grafite_status]
 
-let ask_and_save_moo_if_needed parent fname lexicon_status grafite_status = 
-  let baseuri =
-   try Some (GrafiteTypes.get_string_option grafite_status "baseuri")
-   with GrafiteTypes.Option_error _ -> None
+let save_moo lexicon_status grafite_status = 
+  let script = MatitaScript.current () in
+  let baseuri = GrafiteTypes.get_baseuri grafite_status in
+  let no_pstatus = 
+    grafite_status.GrafiteTypes.proof_status = GrafiteTypes.No_proof 
   in
-  if (MatitaScript.current ())#eos &&
-     grafite_status.GrafiteTypes.proof_status = GrafiteTypes.No_proof &&
-     baseuri <> None
-  then
-   begin
-    let baseuri = match baseuri with Some b -> b | None -> assert false in
-    let moo_fname = 
-     LibraryMisc.obj_file_of_baseuri ~must_exist:false ~baseuri
-      ~writable:true in
-    let save () =
-      let lexicon_fname =
+  match script#bos, script#eos, no_pstatus with
+  | true, _, _ -> ()
+  | _, true, true ->
+     let moo_fname = 
+       LibraryMisc.obj_file_of_baseuri ~must_exist:false ~baseuri
+        ~writable:true in
+     let lexicon_fname =
        LibraryMisc.lexicon_file_of_baseuri 
          ~must_exist:false ~baseuri ~writable:true
-      in
-       GrafiteMarshal.save_moo moo_fname
-        grafite_status.GrafiteTypes.moo_content_rev;
-       LexiconMarshal.save_lexicon lexicon_fname
-        lexicon_status.LexiconEngine.lexicon_content_rev
-    in
-     begin
-       let rc = 
-         MatitaGtkMisc.ask_confirmation
-         ~title:"A .moo can be generated"
-         ~message:(Printf.sprintf 
-           "%s can be generated for %s.\n<i>Should I generate it?</i>"
-           (Filename.basename moo_fname) (Filename.basename fname))
-         ~parent ()
-       in
-       let b = 
-         match rc with 
-         | `YES -> true 
-         | `NO -> false 
-         | `CANCEL -> raise MatitaTypes.Cancel 
-       in
-       if b then
-           save ()
-       else
-         clean_current_baseuri grafite_status
-     end
-   end
-  else
-    clean_current_baseuri grafite_status 
+     in
+     GrafiteMarshal.save_moo moo_fname
+       grafite_status.GrafiteTypes.moo_content_rev;
+     LexiconMarshal.save_lexicon lexicon_fname
+       lexicon_status.LexiconEngine.lexicon_content_rev
+  | _ -> clean_current_baseuri grafite_status 
+;;
     
 let ask_unsaved parent =
   MatitaGtkMisc.ask_confirmation 
@@ -229,7 +201,8 @@ class interpErrorModel =
     end
 
 
-let rec interactive_error_interp ~all_passes (source_buffer:GSourceView.source_buffer) notify_exn offset errorll script_fname
+let rec interactive_error_interp ~all_passes
+  (source_buffer:GSourceView.source_buffer) notify_exn offset errorll filename
 = 
   (* hook to save a script for each disambiguation error *)
   if false then
@@ -237,7 +210,6 @@ let rec interactive_error_interp ~all_passes (source_buffer:GSourceView.source_b
      source_buffer#get_text ~start:source_buffer#start_iter
       ~stop:source_buffer#end_iter () in
     let md5 = Digest.to_hex (Digest.string text) in
-    let filename = match script_fname with Some s -> s | None -> "unnamed.ma" in
     let filename =
      Filename.chop_extension filename ^ ".error." ^ md5 ^ ".ma"  in
     let ch = open_out filename in
@@ -369,7 +341,7 @@ let rec interactive_error_interp ~all_passes (source_buffer:GSourceView.source_b
        connect_button dialog#disambiguationErrorsMoreErrors
         (fun _ -> return () ;
           interactive_error_interp ~all_passes:true source_buffer
-           notify_exn offset errorll script_fname);
+           notify_exn offset errorll filename);
        connect_button dialog#disambiguationErrorsCancelButton fail;
        dialog#disambiguationErrors#show ();
        GtkThread.main ()
@@ -414,7 +386,6 @@ class gui () =
     val mutable chosen_file = None
     val mutable _ok_not_exists = false
     val mutable _only_directory = false
-    val mutable script_fname = None
     val mutable font_size = default_font_size
     val mutable next_devel_must_contain = None
     val mutable next_ligatures = []
@@ -422,6 +393,7 @@ class gui () =
     val primary = GData.clipboard Gdk.Atom.primary
    
     initializer
+      let s () = MatitaScript.current () in
         (* glade's check widgets *)
       List.iter (fun w -> w#check_widgets ())
         (let c w = (w :> <check_widgets: unit -> unit>) in
@@ -713,8 +685,9 @@ class gui () =
           with
            | GrafiteDisambiguator.DisambiguationError (offset,errorll) ->
               (try
-                interactive_error_interp ~all_passes:!all_disambiguation_passes source_buffer
-                 notify_exn offset errorll script_fname
+                interactive_error_interp 
+                 ~all_passes:!all_disambiguation_passes source_buffer
+                 notify_exn offset errorll (s())#filename
                with
                 exc -> notify_exn exc);
               unlock_world ()
@@ -952,28 +925,27 @@ class gui () =
             source_buffer#set_language matita_lang;
             source_buffer#set_highlight true
       in
-      let s () = MatitaScript.current () in
       let disableSave () =
-        script_fname <- None;
+        (s())#assignFileName None;
         main#saveMenuItem#misc#set_sensitive false
       in
       let saveAsScript () =
         let script = s () in
         match self#chooseFile ~ok_not_exists:true () with
         | Some f -> 
-              script#assignFileName f;
+              HExtlib.touch f;
+              script#assignFileName (Some f);
               script#saveToFile (); 
               console#message ("'"^f^"' saved.\n");
               self#_enableSaveTo f
         | None -> ()
       in
       let saveScript () =
-        match script_fname with
-        | None -> saveAsScript ()
-        | Some f -> 
-              (s ())#assignFileName f;
-              (s ())#saveToFile ();
-              console#message ("'"^f^"' saved.\n");
+        let script = s () in
+        if script#has_name then 
+          (script#saveToFile (); 
+          console#message ("'"^script#filename^"' saved.\n"))
+        else saveAsScript ()
       in
       let abandon_script () =
         let lexicon_status = (s ())#lexicon_status in
@@ -983,11 +955,7 @@ class gui () =
           | `YES -> saveScript ()
           | `NO -> ()
           | `CANCEL -> raise MatitaTypes.Cancel);
-        (match script_fname with
-        | None -> ()
-        | Some fname ->
-           ask_and_save_moo_if_needed main#toplevel fname
-            lexicon_status grafite_status);
+        save_moo lexicon_status grafite_status
       in
       let loadScript () =
         let script = s () in 
@@ -996,7 +964,7 @@ class gui () =
           | Some f -> 
               abandon_script ();
               script#reset (); 
-              script#assignFileName f;
+              script#assignFileName (Some f);
               source_view#source_buffer#begin_not_undoable_action ();
               script#loadFromFile f; 
               source_view#source_buffer#end_not_undoable_action ();
@@ -1012,7 +980,7 @@ class gui () =
         (s ())#template (); 
         source_view#source_buffer#end_not_undoable_action ();
         disableSave ();
-        script_fname <- None
+        (s ())#assignFileName None
       in
       let cursor () =
         source_buffer#place_cursor
@@ -1029,38 +997,18 @@ class gui () =
       let jump = locker (keep_focus jump) in
         (* quit *)
       self#setQuitCallback (fun () -> 
-        let lexicon_status = (MatitaScript.current ())#lexicon_status in
-        let grafite_status = (MatitaScript.current ())#grafite_status in
+        let script = MatitaScript.current () in
         if source_view#buffer#modified then
-          begin
-            let rc = ask_unsaved main#toplevel in 
-            try
-              match rc with
-              | `YES -> saveScript ();
-                        if not source_view#buffer#modified then
-                          begin
-                            (match script_fname with
-                            | None -> ()
-                            | Some fname -> 
-                               ask_and_save_moo_if_needed main#toplevel
-                                fname lexicon_status grafite_status);
-                          GMain.Main.quit ()
-                          end
-              | `NO -> GMain.Main.quit ()
-              | `CANCEL -> raise MatitaTypes.Cancel
-            with MatitaTypes.Cancel -> ()
-          end 
+          match ask_unsaved main#toplevel with
+          | `YES -> 
+               saveScript ();
+               save_moo script#lexicon_status script#grafite_status;
+               GMain.Main.quit ()
+          | `NO -> GMain.Main.quit ()
+          | `CANCEL -> ()
         else 
-          begin  
-            (match script_fname with
-            | None -> clean_current_baseuri grafite_status; GMain.Main.quit ()
-            | Some fname ->
-                try
-                  ask_and_save_moo_if_needed main#toplevel fname lexicon_status
-                   grafite_status;
-                  GMain.Main.quit ()
-                with MatitaTypes.Cancel -> ())
-          end);
+          (save_moo script#lexicon_status script#grafite_status;
+          GMain.Main.quit ()));
       connect_button main#scriptAdvanceButton advance;
       connect_button main#scriptRetractButton retract;
       connect_button main#scriptTopButton top;
@@ -1248,12 +1196,12 @@ class gui () =
         ask_text ~gui:self ~title:"External editor" ~msg ~multiline:false
           ~default:(Helm_registry.get "matita.external_editor") ()
       in *)
-      let fname = Librarian.filename () in
+      let script = MatitaScript.current () in
+      let fname = script#filename in
       let slice mark =
         source_buffer#start_iter#get_slice
           ~stop:(source_buffer#get_iter_at_mark mark)
       in
-      let script = MatitaScript.current () in
       let locked = `MARK script#locked_mark in
       let string_pos mark = string_of_int (String.length (slice mark)) in
       let cursor_pos = string_pos `INSERT in
@@ -1302,7 +1250,7 @@ class gui () =
           in
           let data = Matitaprover.p_to_ma ~filename:file ~tptppath () in
           let filename = Pcre.replace ~pat:"\\.p$" ~templ:".ma" file in
-          script#assignFileName filename;
+          script#assignFileName (Some filename);
           source_view#source_buffer#begin_not_undoable_action ();
           script#loadFromString data;
           source_view#source_buffer#end_not_undoable_action ();
@@ -1311,7 +1259,7 @@ class gui () =
         end
       else
         begin
-          script#assignFileName file;
+          script#assignFileName (Some file);
           let content =
            if Sys.file_exists file then file
            else BuildTimeConf.script_template
@@ -1323,17 +1271,18 @@ class gui () =
            self#_enableSaveTo file
         end
       
-    method setStar name b =
+    method setStar b =
+      let s = MatitaScript.current () in
       let w = main#toplevel in
       let set x = w#set_title x in
-      let name = "Matita - " ^ name in
-      if b then
-        set (name ^  " *")
-      else
-        set (name)
+      let name = 
+        "Matita - " ^ Filename.basename s#filename ^ 
+        (if b then "*" else "") ^
+        " in " ^ s#buri_of_current_file 
+      in
+        set name
         
     method private _enableSaveTo file =
-      script_fname <- Some file;
       self#main#saveMenuItem#misc#set_sensitive true
         
     method console = console

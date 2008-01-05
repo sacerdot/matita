@@ -135,17 +135,7 @@ let main_compiler () =
         with Unix.Unix_error (Unix.ENOENT, "stat", f) when f = s -> None
       ;;
   
-      let build fname = 
-        let oldfname = 
-          Helm_registry.get_opt
-           Helm_registry.string "matita.filename"
-        in
-        let rc = MatitacLib.compile fname in
-        (match oldfname with
-        | Some n -> Helm_registry.set_string "matita.filename" n;
-        | _ -> Helm_registry.unset "matita.filename");
-        rc
-      ;;
+      let build = MatitacLib.compile;;
     end 
   in
   let module Make = Make.Make(F) in

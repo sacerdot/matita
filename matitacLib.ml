@@ -94,7 +94,6 @@ let cut prefix s =
 ;;
 
 let rec compile fname =
-  Helm_registry.set_string "matita.filename" fname;
   (* initialization, MOVE OUTSIDE *)
   let matita_debug = Helm_registry.get_bool "matita.debug" in
   let clean_baseuri = not (Helm_registry.get_bool "matita.preserve") in    

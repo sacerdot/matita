@@ -33,7 +33,7 @@ object
   method locked_tag : GText.tag
   method error_tag : GText.tag
 
-  (** @return current status *)
+    (** @return current status *)
   method lexicon_status: LexiconEngine.status
   method grafite_status: GrafiteTypes.status
     
@@ -51,8 +51,12 @@ object
   method template: unit -> unit
 
   (** {2 Load/save} *)
-
-  method assignFileName : string -> unit (* to the current active file *)
+  
+  method has_name: bool
+  (* alwais return a name, use has_name to check if it is the default one *)
+  method filename: string 
+  method buri_of_current_file: string
+  method assignFileName : string option -> unit (* to the current active file *)
   method loadFromFile : string -> unit
   method loadFromString : string -> unit
   method saveToFile : unit -> unit
@@ -62,7 +66,6 @@ object
   (** @return true if there is an ongoing proof, false otherise *)
   method onGoingProof: unit -> bool
 
-(*   method proofStatus: ProofEngineTypes.status |+* @raise Statement_error +| *)
   method proofMetasenv: Cic.metasenv          (** @raise Statement_error *)
   method proofContext: Cic.context            (** @raise Statement_error *)
   method proofConclusion: Cic.term            (** @raise Statement_error *)
@@ -73,6 +76,7 @@ object
 
   (** end of script, true if the whole script has been executed *)
   method eos: bool
+  method bos: bool
 
   (** misc *)
   method clean_dirty_lock: unit
@@ -91,7 +95,7 @@ val script:
   develcreator: (containing:string option -> unit) ->
   ask_confirmation: 
     (title:string -> message:string -> [`YES | `NO | `CANCEL]) -> 
-  set_star: (string -> bool -> unit) ->
+  set_star: (bool -> unit) ->
   unit -> 
     script
 

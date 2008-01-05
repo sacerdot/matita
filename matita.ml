@@ -308,12 +308,9 @@ let _ =
       (fun _ ->
         prerr_endline "Still cleaning the library: don't be impatient!"));
    prerr_endline "Matita is cleaning up. Please wait.";
-   try
-    let baseuri =
-     GrafiteTypes.get_string_option
-      (MatitaScript.current ())#grafite_status "baseuri"
-    in
+   let baseuri = 
+     GrafiteTypes.get_baseuri (MatitaScript.current ())#grafite_status
+   in
      LibraryClean.clean_baseuris [baseuri]
-   with GrafiteTypes.Option_error _ -> ()
 
 (* vim:set foldmethod=marker: *)

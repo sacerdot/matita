@@ -45,7 +45,7 @@ let conffile = ref BuildTimeConf.matita_conf
 let registry_defaults = [
   "matita.debug",                "false";
   "matita.external_editor",      "gvim -f -c 'go %p' %f";
-  "matita.preserve",             "false";
+  "matita.preserve",             "false"; (* FIXME, inutile pure lei *)
   "matita.profile",              "true";
   "matita.system",               "false";
   "matita.verbose",              "false";
