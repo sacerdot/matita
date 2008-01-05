@@ -52,6 +52,7 @@ let registry_defaults = [
   "matita.paste_unicode_as_tex", "false";
   "matita.noinnertypes",         "false";
   "matita.do_heavy_checks",      "true";
+  "matita.moo",                  "true";
 ]
 
 let set_registry_values =

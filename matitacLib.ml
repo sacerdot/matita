@@ -69,7 +69,8 @@ let pp_times fname rc big_bang =
     let { Unix.tms_utime = u ; Unix.tms_stime = s} = Unix.times () in
     let r = Unix.gettimeofday () -. big_bang in
     let extra = try Sys.getenv "BENCH_EXTRA_TEXT" with Not_found -> "" in
-    let rc = if rc then "[0;32mOK[0m" else "[0;31mFAIL[0m" in
+    let rc,rcascii = 
+      if rc then "[0;32mOK[0m","Ok" else "[0;31mFAIL[0m","Fail" in
     let times = 
       let fmt t = 
         let seconds = int_of_float t in
@@ -82,7 +83,8 @@ let pp_times fname rc big_bang =
     in
     let s = Printf.sprintf "%-4s %s %s" rc times extra in
     print_endline s;
-    flush stdout
+    flush stdout;
+    HLog.message ("Compilation of "^Filename.basename fname^": "^rc)
 ;;
 
 let cut prefix s = 
@@ -219,4 +221,33 @@ let rec compile fname =
        pp_times fname false big_bang;
        clean_exit baseuri false
 ;;
+
+module F = 
+  struct 
+    type source_object = string
+    type target_object = string
+    let string_of_source_object s = s;;
+    let string_of_target_object s = s;;
+
+    let target_of mafile = 
+      let _,baseuri,_ = Librarian.baseuri_of_script mafile in
+      LibraryMisc.obj_file_of_baseuri 
+        ~must_exist:false ~baseuri ~writable:true 
+    ;;
+
+    let mtime_of_source_object s =
+      try Some (Unix.stat s).Unix.st_mtime
+      with Unix.Unix_error (Unix.ENOENT, "stat", f) when f = s -> 
+        raise (Failure ("Unable to stat a source file: " ^ s)) 
+    ;;
+
+    let mtime_of_target_object s =
+      try Some (Unix.stat s).Unix.st_mtime
+      with Unix.Unix_error (Unix.ENOENT, "stat", f) when f = s -> None
+    ;;
+
+    let build = compile;;
+  end 
+
+module Make = Make.Make(F) 
 

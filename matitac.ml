@@ -50,8 +50,6 @@ let out_preamble och (path, lines) =
    print lines;
    out_line_comment och "This file was automatically generated: do not edit"
 
-(* from matitacLib *)
-
 let pp_ast_statement st =
   GrafiteAstPp.pp_statement ~term_pp:CicNotationPp.pp_term
     ~map_unicode_to_tex:(Helm_registry.get_bool
@@ -91,68 +89,44 @@ let main_compiler () =
   MatitaInit.initialize_all ();
   (* targets and deps *)
   let targets = Helm_registry.get_list Helm_registry.string "matita.args" in
-  let deps = 
+  let deps, target = 
     match targets with
     | [] ->
       (match Librarian.find_roots_in_dir (Sys.getcwd ()) with
       | [x] -> 
-         Make.load_deps_file (Filename.dirname x ^ "/depends") 
+         Make.load_deps_file (Filename.dirname x ^ "/depends"), []
       | [] -> 
          HLog.error "No targets and no root found"; exit 1
       | roots -> 
          HLog.error ("Too many roots found, move into one and retry: "^
            String.concat ", " roots);exit 1);
-    | hd::_ -> 
-      let root, _, _ = Librarian.baseuri_of_script hd in
-      Make.load_deps_file (root ^ "/depends") 
+    | [hd] -> 
+      let root, buri, file = Librarian.baseuri_of_script hd in
+      Make.load_deps_file (root ^ "/depends"),
+      let target = HExtlib.chop_prefix (root^"/") file in
+      HLog.debug ("Compiling target '" ^ target ^ "' with base uri '"^buri^"'");
+      [target]
+    | _ -> HLog.error "Only one target (or none) can be specified.";exit 1
   in
   (* must be called after init since args are set by cmdline parsing *)
   let system_mode =  Helm_registry.get_bool "matita.system" in
   if system_mode then HLog.message "Compiling in system space";
   if not (Helm_registry.get_bool "matita.verbose") then MatitaMisc.shutup ();
   (* here we go *)
-  let module F = 
-    struct 
-      type source_object = string
-      type target_object = string
-      let string_of_source_object s = s;;
-      let string_of_target_object s = s;;
-
-      let target_of mafile = 
-        let _,baseuri,_ = Librarian.baseuri_of_script mafile in
-        LibraryMisc.obj_file_of_baseuri 
-          ~must_exist:false ~baseuri ~writable:true 
-      ;;
-  
-      let mtime_of_source_object s =
-        try Some (Unix.stat s).Unix.st_mtime
-        with Unix.Unix_error (Unix.ENOENT, "stat", f) when f = s -> 
-          raise (Failure ("Unable to stat a source file: " ^ s)) 
-      ;;
-  
-      let mtime_of_target_object s =
-        try Some (Unix.stat s).Unix.st_mtime
-        with Unix.Unix_error (Unix.ENOENT, "stat", f) when f = s -> None
-      ;;
-  
-      let build = MatitacLib.compile;;
-    end 
-  in
-  let module Make = Make.Make(F) in
-  Make.make deps targets
+  MatitacLib.Make.make deps target
 ;;
 
 let main () =
- Helm_registry.set_bool "matita.moo" true;
- match Filename.basename Sys.argv.(0) with
- |"matitadep"  |"matitadep.opt"  |"matitadep.opt.static"  ->Matitadep.main()
- |"matitaclean"|"matitaclean.opt"|"matitaclean.opt.static"->Matitaclean.main()
- |"matitaprover"|"matitaprover.opt"|"matitaprover.opt.static"->Matitaprover.main()
- |"matitawiki"|"matitawiki.opt" ->MatitaWiki.main()
- | _ ->
+  let bin = Filename.basename Sys.argv.(0) in
+  if      Pcre.pmatch ~pat:"^matitadep"    bin then Matitadep.main ()
+  else if Pcre.pmatch ~pat:"^matitaclean"  bin then Matitaclean.main ()
+  else if Pcre.pmatch ~pat:"^matitaprover" bin then Matitaprover.main ()
+  else if Pcre.pmatch ~pat:"^matitawiki"   bin then MatitaWiki.main ()
+  else
     let dump_msg = "<filename> Dump with expanded macros to <filename>" in
     MatitaInit.add_cmdline_spec ["-dump", Arg.String dump, dump_msg];
     main_compiler ()
+;;
 
 let _ = main ()
 
