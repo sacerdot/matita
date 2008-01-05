@@ -904,10 +904,6 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
       ignore (win#toplevel#event#connect#delete (fun _ ->
         let my_id = Oo.id self in
         cicBrowsers := List.filter (fun b -> Oo.id b <> my_id) !cicBrowsers;
-        if !cicBrowsers = [] &&
-          Helm_registry.get "matita.mode" = "cicbrowser"
-        then
-          GMain.quit ();
         false));
       ignore(win#whelpResultTreeview#connect#row_activated 
         ~callback:(fun _ _ ->
@@ -1045,7 +1041,6 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
           | `About `Coercions -> self#coerchgraph true ()
           | `Check term -> self#_loadCheck term
           | `Cic (term, metasenv) -> self#_loadTermCic term metasenv
-          | `Development d -> self#_showDevelDeps d
           | `Dir dir -> self#_loadDir dir
           | `HBugs `Tutors -> self#_loadHBugsTutors
           | `Metadata (`Deps ((`Fwd | `Back) as dir, uri)) ->
@@ -1135,16 +1130,6 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
     method private setEntry entry =
       win#browserUri#entry#set_text (MatitaTypes.string_of_entry entry);
       current_entry <- entry
-
-    method private _showDevelDeps d =
-      match MatitamakeLib.development_for_name d with
-      | None -> ()
-      | Some devel ->
-          (match MatitamakeLib.dot_for_development devel with
-          | None -> ()
-          | Some fname ->
-              gviz#load_graph_from_file ~gviz_cmd:"tred | dot" fname;
-              self#_showGviz)
 
     method private _loadObj obj =
       (* showMath must be done _before_ loading the document, since if the

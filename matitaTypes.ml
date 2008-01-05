@@ -43,7 +43,6 @@ type mathViewer_entry =
   [ `About of abouts  (* current proof *)
   | `Check of string  (* term *)
   | `Cic of Cic.term * Cic.metasenv
-  | `Development of string
   | `Dir of string  (* "directory" in cic uris namespace *)
   | `HBugs of [ `Tutors ] (* list of available HBugs tutors *)
   | `Metadata of [ `Deps of [`Fwd | `Back] * UriManager.uri ]
@@ -59,7 +58,6 @@ let string_of_entry = function
   | `About `CoercionsFull -> "about:coercions"
   | `Check _ -> "check:"
   | `Cic (_, _) -> "term:"
-  | `Development d -> "devel:/" ^ d
   | `Dir uri -> uri
   | `HBugs `Tutors -> "hbugs:/tutors/"
   | `Metadata meta ->

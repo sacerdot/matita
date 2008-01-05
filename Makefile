@@ -18,8 +18,8 @@ OCAMLC = $(OCAMLFIND) ocamlc$(OCAML_PROF) $(OCAMLC_FLAGS) $(OCAML_DEBUG_FLAGS)
 OCAMLOPT = $(OCAMLFIND) opt $(OCAMLC_FLAGS) $(OCAMLOPT_DEBUG_FLAGS)
 OCAMLDEP = $(OCAMLFIND) ocamldep $(OCAMLDEP_FLAGS)
 INSTALL_PROGRAMS= matita matitac
-INSTALL_PROGRAMS_LINKS_MATITA= cicbrowser 
-INSTALL_PROGRAMS_LINKS_MATITAC= matitadep matitamake matitaclean matitaprover matitawiki
+INSTALL_PROGRAMS_LINKS_MATITA= 
+INSTALL_PROGRAMS_LINKS_MATITAC= matitadep matitaclean matitaprover matitawiki
 
 MATITA_FLAGS = -noprofile
 NODB=false
@@ -32,7 +32,6 @@ MLI = \
 	lablGraphviz.mli	\
 	matitaTypes.mli		\
 	matitaMisc.mli		\
-	matitamakeLib.mli	\
 	matitaExcPp.mli 	\
 	matitaInit.mli		\
 	matitaEngine.mli	\
@@ -49,7 +48,6 @@ CMLI =				\
         make.mli		\
 	matitaTypes.mli		\
 	matitaMisc.mli		\
-	matitamakeLib.mli	\
 	matitaExcPp.mli 	\
 	matitaInit.mli		\
 	matitaEngine.mli	\
@@ -61,8 +59,6 @@ CMLI =				\
 MAINCMLI =			\
 	matitadep.mli		\
 	matitaclean.mli		\
-	matitamake.mli		\
-	gragrep.mli 		\
 	$(NULL)
 # objects for matita (GTK GUI)
 ML = buildTimeConf.ml matitaGeneratedGui.ml $(MLI:%.mli=%.ml)
@@ -71,11 +67,11 @@ CML = buildTimeConf.ml $(CMLI:%.mli=%.ml)
 MAINCML = $(MAINCMLI:%.mli=%.ml)
 	
 PROGRAMS_BYTE = \
-	matita matitac cicbrowser matitadep matitaclean \
-	matitamake matitaprover matitawiki
+	matita matitac matitadep matitaclean \
+	matitaprover matitawiki
 PROGRAMS = $(PROGRAMS_BYTE) 
 PROGRAMS_OPT = $(patsubst %,%.opt,$(PROGRAMS_BYTE))
-NOINST_PROGRAMS = dump_moo gragrep
+NOINST_PROGRAMS = dump_moo 
 NOINST_PROGRAMS_OPT = $(patsubst %,%.opt,$(EXTRA_PROGRAMS))
 
 .PHONY: all
@@ -167,21 +163,6 @@ matitawiki.opt: matitac.opt
 matitaclean: matitac
 	$(H)test -f $@ || ln -s $< $@
 matitaclean.opt: matitac.opt
-	$(H)test -f $@ || ln -s $< $@
-
-matitamake: matitac
-	$(H)test -f $@ || ln -s $< $@
-matitamake.opt: matitac.opt
-	$(H)test -f $@ || ln -s $< $@
-	
-gragrep: matitac
-	$(H)test -f $@ || ln -s $< $@
-gragrep.opt: matitac.opt
-	$(H)test -f $@ || ln -s $< $@
-	
-cicbrowser: matita
-	$(H)test -f $@ || ln -s $< $@
-cicbrowser.opt: matita.opt
 	$(H)test -f $@ || ln -s $< $@
 
 matitaGeneratedGui.ml: matita.glade
@@ -377,12 +358,6 @@ matitadep.opt.static: matitac.opt.static
 matitaclean.opt.static: matitac.opt.static
 	$(H)test -f $@ || ln -s $< $@
 matitawiki.opt.static: matitac.opt.static
-	$(H)test -f $@ || ln -s $< $@
-matitamake.opt.static: matitac.opt.static
-	$(H)test -f $@ || ln -s $< $@
-cicbrowser.opt.static: matita.opt.static
-	$(H)test -f $@ || ln -s $< $@
-cicbrowser.opt.static.upx: matita.opt.static.upx
 	$(H)test -f $@ || ln -s $< $@
 
 %.upx: %

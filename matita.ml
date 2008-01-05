@@ -65,7 +65,7 @@ let script =
         (fun ~title ~message -> 
             MatitaGtkMisc.ask_confirmation ~title ~message 
             ~parent:gui#main#toplevel ())
-      ~develcreator:gui#createDevelopment
+      ~rootcreator:gui#createRoot
       ()
   in
   gui#sourceView#source_buffer#begin_not_undoable_action ();
@@ -274,34 +274,16 @@ let _ =
   end
   (** Debugging }}} *)
 
-  (** {2 Command line parsing} *)
-
-let set_matita_mode () =
-  let matita_mode =
-    if Filename.basename Sys.argv.(0) = "cicbrowser" || 
-       Filename.basename Sys.argv.(0) = "cicbrowser.opt"
-    then "cicbrowser"
-    else "matita"
-  in
-  Helm_registry.set "matita.mode" matita_mode
-
   (** {2 Main} *)
 
 let _ =
-  set_matita_mode ();
   at_exit (fun () -> print_endline "\nThanks for using Matita!\n");
   Sys.catch_break true;
   let args = Helm_registry.get_list Helm_registry.string "matita.args" in
-  if Helm_registry.get "matita.mode" = "cicbrowser" then  (* cicbrowser *)
-    let browser = MatitaMathView.cicBrowser () in
-    let uri = match args with [] -> "cic:/" | _ -> String.concat " " args in
-    browser#loadInput uri
-  else begin  (* matita *)
-    (try gui#loadScript (List.hd args) with Failure _ -> ());
-    gui#main#mainWin#show ();
-  end;
+  (try gui#loadScript (List.hd args) with Failure _ -> ());
+  gui#main#mainWin#show ();
   try
-    GtkThread.main ()
+   GtkThread.main ()
   with Sys.Break ->
    Sys.set_signal Sys.sigint
     (Sys.Signal_handle

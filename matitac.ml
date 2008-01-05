@@ -145,12 +145,9 @@ let main_compiler () =
 let main () =
  Helm_registry.set_bool "matita.moo" true;
  match Filename.basename Sys.argv.(0) with
- |"gragrep"    |"gragrep.opt"    |"gragrep.opt.static"    ->Gragrep.main()
  |"matitadep"  |"matitadep.opt"  |"matitadep.opt.static"  ->Matitadep.main()
  |"matitaclean"|"matitaclean.opt"|"matitaclean.opt.static"->Matitaclean.main()
- |"matitamake" |"matitamake.opt" |"matitamake.opt.static" ->Matitamake.main()
- |"matitaprover"|"matitaprover.opt"
- |"matitaprover.opt.static" ->Matitaprover.main()
+ |"matitaprover"|"matitaprover.opt"|"matitaprover.opt.static"->Matitaprover.main()
  |"matitawiki"|"matitawiki.opt" ->MatitaWiki.main()
  | _ ->
     let dump_msg = "<filename> Dump with expanded macros to <filename>" in

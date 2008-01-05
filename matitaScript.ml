@@ -69,7 +69,6 @@ type guistuff = {
   mathviewer:MatitaTypes.mathViewer;
   urichooser: UriManager.uri list -> UriManager.uri list;
   ask_confirmation: title:string -> message:string -> [`YES | `NO | `CANCEL];
-  develcreator: containing:string option -> unit;
 }
 
 let eval_with_engine guistuff lexicon_status grafite_status user_goal
@@ -101,80 +100,32 @@ let eval_with_engine guistuff lexicon_status grafite_status user_goal
       ([],skipped_txt) enriched_history_fragment
   in
   res,"",parsed_text_length
+;;
 
-let wrap_with_developments guistuff f arg = 
-  let compile_needed_and_go_on lexiconfile d exc =
-    let target = Pcre.replace ~pat:"lexicon$" ~templ:"moo" lexiconfile in
-    let target = Pcre.replace ~pat:"metadata$" ~templ:"moo" target in
-    let refresh_cb () = 
-      while Glib.Main.pending () do ignore(Glib.Main.iteration false); done
-    in
-    if not(MatitamakeLib.build_development_in_bg ~target refresh_cb d) then
-      raise exc
-    else
-      f arg
-  in
-  let do_nothing () = raise (ActionCancelled "Inclusion not performed") in
-  let check_if_file_is_exists f =
-    assert(Pcre.pmatch ~pat:"ma$" f);
-    let pwd = Sys.getcwd () in
-    let f_pwd = pwd ^ "/" ^ f in
-    if not (HExtlib.is_regular f_pwd) then
-      raise (ActionCancelled ("File "^f_pwd^" does not exists!"))
-    else
-      raise 
-        (ActionCancelled 
-          ("Internal error: "^f_pwd^" exists but I'm unable to include it!"))
-  in
-  let handle_with_devel d lexiconfile mafile exc =
-    let name = MatitamakeLib.name_for_development d in
-    let title = "Unable to include " ^ lexiconfile in
-    let message = 
-      mafile ^ " is handled by development <b>" ^ name ^ "</b>.\n\n" ^
-      "<i>Should I compile it and Its dependencies?</i>"
-    in
-    (match guistuff.ask_confirmation ~title ~message with
-    | `YES -> compile_needed_and_go_on lexiconfile d exc
-    | `NO -> raise exc
-    | `CANCEL -> do_nothing ())
-  in
-  let handle_without_devel mafilename exc =
-    let title = "Unable to include " ^ mafilename in
-    let message = 
-     mafilename ^ " is <b>not</b> handled by a development.\n" ^
-     "All dependencies are automatically solved for a development.\n\n" ^
-     "<i>Do you want to set up a development?</i>"
-    in
-    (match guistuff.ask_confirmation ~title ~message with
-    | `YES -> 
-        guistuff.develcreator ~containing:(Some (Filename.dirname mafilename));
-        do_nothing ()
-    | `NO -> raise exc
-    | `CANCEL -> do_nothing())
-  in
-  try 
-    f arg
+let wrap_with_make g f x = 
+  try      
+    f x
   with
-  | DependenciesParser.UnableToInclude mafilename -> 
+(*
+  | DependenciesParser.UnableToInclude mafilename ->
       assert (Pcre.pmatch ~pat:"ma$" mafilename);
       check_if_file_is_exists mafilename
-  | LexiconEngine.IncludedFileNotCompiled (xfilename,mafilename) 
+*)
+  | LexiconEngine.IncludedFileNotCompiled (xfilename,mafilename)
   | GrafiteEngine.IncludedFileNotCompiled (xfilename,mafilename) as exn ->
       assert (Pcre.pmatch ~pat:"ma$" mafilename);
-      assert (Pcre.pmatch ~pat:"lexicon$" xfilename || 
+      assert (Pcre.pmatch ~pat:"lexicon$" xfilename ||
               Pcre.pmatch ~pat:"mo$" xfilename );
       (* we know that someone was able to include the .ma, get the baseuri
        * but was unable to get the compilation output 'xfilename' *)
-      match MatitamakeLib.development_for_dir (Filename.dirname mafilename) with
-      | None -> handle_without_devel mafilename exn
-      | Some d -> handle_with_devel d xfilename mafilename exn
+      raise exn
 ;;
-    
+
 let eval_with_engine
      guistuff lexicon_status grafite_status user_goal 
        skipped_txt nonskipped_txt st
 =
-  wrap_with_developments guistuff
+  wrap_with_make guistuff
     (eval_with_engine 
       guistuff lexicon_status grafite_status user_goal 
         skipped_txt nonskipped_txt) st
@@ -680,7 +631,7 @@ and eval_statement include_paths (buffer : GText.buffer) guistuff lexicon_status
     | `Raw text ->
         if Pcre.pmatch ~rex:only_dust_RE text then raise Margin;
         let ast = 
-          wrap_with_developments guistuff
+          wrap_with_make guistuff
             (GrafiteParser.parse_statement 
               (Ulexing.from_utf8_string text) ~include_paths) lexicon_status 
         in
@@ -739,7 +690,7 @@ class script  ~(source_view: GSourceView.source_view)
               ~set_star
               ~ask_confirmation
               ~urichooser 
-              ~develcreator 
+              ~rootcreator 
               () =
 let buffer = source_view#buffer in
 let source_buffer = source_view#source_buffer in
@@ -765,7 +716,6 @@ object (self)
     mathviewer = mathviewer;
     urichooser = urichooser;
     ask_confirmation = ask_confirmation;
-    develcreator=develcreator;
   }
 
   val mutable filename_ = (None : string option)
@@ -1162,10 +1112,10 @@ end
 
 let _script = ref None
 
-let script ~source_view ~mathviewer ~urichooser ~develcreator ~ask_confirmation ~set_star ()
+let script ~source_view ~mathviewer ~urichooser ~rootcreator ~ask_confirmation ~set_star ()
 =
   let s = new script 
-    ~source_view ~mathviewer ~ask_confirmation ~urichooser ~develcreator ~set_star () 
+    ~source_view ~mathviewer ~ask_confirmation ~urichooser ~rootcreator ~set_star () 
   in
   _script := Some s;
   s

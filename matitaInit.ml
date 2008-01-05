@@ -26,7 +26,7 @@
 (* $Id$ *)
 
 type thingsToInitilaize = 
-  ConfigurationFile | Db | Environment | Getter | Makelib | CmdLine | Registry
+  ConfigurationFile | Db | Environment | Getter | CmdLine | Registry
   
 exception FailedToInitialize of thingsToInitilaize
 
@@ -98,16 +98,6 @@ let initialize_db init_status =
         MetadataTypes.ownerize_tables (Helm_registry.get "matita.owner");
       LibraryDb.create_owner_environment ();
       Db::init_status
-    end
-  else
-    init_status
-
-let initialize_makelib init_status = 
-  wants [ConfigurationFile] init_status;
-  if not (already_configured [Makelib] init_status) then
-    begin
-      MatitamakeLib.initialize (); 
-      Makelib::init_status
     end
   else
     init_status
@@ -324,18 +314,12 @@ let conf_components =
   [ load_configuration; fill_registry; parse_cmdline]
 
 let other_components =
-  [ initialize_makelib; initialize_db; initialize_environment ]
+  [ initialize_db; initialize_environment ]
 
 let initialize_all () =
   status := 
     List.fold_left (fun s f -> f s) !status
     (conf_components @ other_components)
-(*     initialize_notation 
-      (initialize_environment 
-        (initialize_db 
-          (initialize_makelib
-            (load_configuration
-              (parse_cmdline !status))))) *)
 
 let parse_cmdline_and_configuration_file () =
   status := List.fold_left (fun s f -> f s) !status conf_components

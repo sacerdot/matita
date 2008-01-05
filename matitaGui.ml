@@ -362,8 +362,7 @@ class gui () =
   let main = new mainWin () in
   let fileSel = new fileSelectionWin () in
   let findRepl = new findReplWin () in
-  let develList = new develListWin () in
-  let newDevel = new newDevelWin () in
+  let newRoot = new newRootWin () in
   let keyBindingBoxes = (* event boxes which should receive global key events *)
     [ main#mainWinEventBox ]
   in
@@ -387,7 +386,7 @@ class gui () =
     val mutable _ok_not_exists = false
     val mutable _only_directory = false
     val mutable font_size = default_font_size
-    val mutable next_devel_must_contain = None
+    val mutable next_root_must_contain = None
     val mutable next_ligatures = []
     val clipboard = GData.clipboard Gdk.Atom.clipboard
     val primary = GData.clipboard Gdk.Atom.primary
@@ -632,13 +631,11 @@ class gui () =
         (* interface lockers *)
       let lock_world _ =
         main#buttonsToolbar#misc#set_sensitive false;
-        develList#buttonsHbox#misc#set_sensitive false;
         main#scriptMenu#misc#set_sensitive false;
         source_view#set_editable false
       in
       let unlock_world _ =
         main#buttonsToolbar#misc#set_sensitive true;
-        develList#buttonsHbox#misc#set_sensitive true;
         main#scriptMenu#misc#set_sensitive true;
         source_view#set_editable true;
         (*The next line seems sufficient to avoid some unknown race condition *)
@@ -723,128 +720,26 @@ class gui () =
           f (); source_view#misc#grab_focus ()
          with
           exc -> source_view#misc#grab_focus (); raise exc in
-        (* developments win *)
-      let model = 
-        new MatitaGtkMisc.multiStringListModel 
-          ~cols:2 develList#developmentsTreeview
-      in
-      let refresh_devels_win () =
-        model#list_store#clear ();
-        List.iter 
-          (fun (name, root) -> model#easy_mappend [name;root]) 
-          (MatitamakeLib.list_known_developments ())
-      in
-      let get_devel_selected () = 
-        match model#easy_mselection () with
-        | [[name;_]] -> MatitamakeLib.development_for_name name
-        | _ -> None
-      in
-      let refresh () = 
-        while Glib.Main.pending () do 
-          ignore(Glib.Main.iteration false); 
-        done
-      in
-      connect_button develList#newButton
-        (fun () -> 
-          next_devel_must_contain <- None;
-          newDevel#toplevel#misc#show());
-      connect_button develList#deleteButton
-        (locker (fun () -> 
-          (match get_devel_selected () with
-          | None -> ()
-          | Some d -> MatitamakeLib.destroy_development_in_bg refresh d);
-          refresh_devels_win ()));
-      connect_button develList#buildButton 
-        (locker (fun () -> 
-          match get_devel_selected () with
-          | None -> ()
-          | Some d -> 
-              let build = locker 
-                (fun () -> MatitamakeLib.build_development_in_bg refresh d)
-              in
-              ignore(build ())));
-      connect_button develList#cleanButton 
-        (locker (fun () -> 
-          match get_devel_selected () with
-          | None -> ()
-          | Some d -> 
-              let clean = locker 
-                (fun () -> MatitamakeLib.clean_development_in_bg refresh d)
-              in
-              ignore(clean ())));
-      (* publish button hidden, use command line 
-      connect_button develList#publishButton 
-        (locker (fun () -> 
-          match get_devel_selected () with
-          | None -> ()
-          | Some d -> 
-              let publish = locker (fun () ->
-                MatitamakeLib.publish_development_in_bg refresh d) in
-              ignore(publish ())));
-              *)
-      develList#publishButton#misc#hide ();
-      connect_button develList#graphButton (fun () -> 
-        match get_devel_selected () with
-        | None -> ()
-        | Some d ->
-            (match MatitamakeLib.dot_for_development d with
-            | None -> ()
-            | Some _ ->
-                let browser = MatitaMathView.cicBrowser () in
-                browser#load (`Development
-                  (MatitamakeLib.name_for_development d))));
-      connect_button develList#closeButton 
-        (fun () -> develList#toplevel#misc#hide());
-      ignore(develList#toplevel#event#connect#delete 
-        (fun _ -> develList#toplevel#misc#hide();true));
-      connect_menu_item main#developmentsMenuItem
-        (fun () -> refresh_devels_win ();develList#toplevel#misc#show ());
-      
-        (* add development win *)
-      let check_if_root_contains root =
-        match next_devel_must_contain with
-        | None -> true
-        | Some path -> 
-            let is_prefix_of d1 d2 =
-              let d1 = MatitamakeLib.normalize_path d1 in
-              let d2 = MatitamakeLib.normalize_path d2 in
-              let len1 = String.length d1 in
-              let len2 = String.length d2 in
-              if len2 < len1 then 
-                false
-              else
-                let pref = String.sub d2 0 len1 in
-                pref = d1
-            in
-            is_prefix_of root path
-      in
-      connect_button newDevel#addButton 
+      (* add root win *)
+      connect_button newRoot#addButton 
        (fun () -> 
-          let name = newDevel#nameEntry#text in
-          let root = newDevel#rootEntry#text in
-          if check_if_root_contains root then
-            begin
-              ignore (MatitamakeLib.initialize_development name root);
-              refresh_devels_win ();
-              newDevel#nameEntry#set_text "";
-              newDevel#rootEntry#set_text "";
-              newDevel#toplevel#misc#hide()
-            end
-          else
-            HLog.error ("The selected root does not contain " ^ 
-              match next_devel_must_contain with 
-              | Some x -> x 
-              | _ -> assert false));
-      connect_button newDevel#chooseRootButton 
+          let name = newRoot#buriEntry#text in
+          let root = newRoot#rootEntry#text in
+          if next_root_must_contain = Some "xxx" then ();
+          HLog.error ("implement me: "^root^" "^name);
+          newRoot#buriEntry#set_text "";
+          newRoot#rootEntry#set_text "";
+          newRoot#toplevel#misc#hide());
+      connect_button newRoot#chooseRootButton 
        (fun () ->
          let path = self#chooseDir () in
          match path with
-         | Some path -> newDevel#rootEntry#set_text path
+         | Some path -> newRoot#rootEntry#set_text path
          | None -> ());
-      connect_button newDevel#cancelButton 
-       (fun () -> newDevel#toplevel#misc#hide ());
-      ignore(newDevel#toplevel#event#connect#delete 
-        (fun _ -> newDevel#toplevel#misc#hide();true));
+      connect_button newRoot#cancelButton 
+       (fun () -> newRoot#toplevel#misc#hide ());
+      ignore(newRoot#toplevel#event#connect#delete 
+        (fun _ -> newRoot#toplevel#misc#hide();true));
       
         (* file selection win *)
       ignore (fileSel#fileSelectionWin#event#connect#delete (fun _ -> true));
@@ -1291,8 +1186,7 @@ class gui () =
     method fileSel = fileSel
     method findRepl = findRepl
     method main = main
-    method develList = develList
-    method newDevel = newDevel
+    method newRoot = newRoot
 
     method newBrowserWin () =
       object (self)
@@ -1346,9 +1240,9 @@ class gui () =
       (* we should check that this is a directory *)
       chosen_file
   
-    method createDevelopment ~containing =
-      next_devel_must_contain <- containing;
-      newDevel#toplevel#misc#show()
+    method createRoot ~containing =
+      next_root_must_contain <- containing;
+      newRoot#toplevel#misc#show()
 
     method askText ?(title = "") ?(msg = "") () =
       let dialog = new textDialog () in

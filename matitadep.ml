@@ -66,7 +66,6 @@ let main () =
     "<file> Save dependency graph in dot format to the given file";];
   MatitaInit.parse_cmdline_and_configuration_file ();
   MatitaInit.initialize_environment ();
-  MatitamakeLib.initialize ();
   let args = Helm_registry.get_list Helm_registry.string "matita.args" in
   let args = 
     if args = [] then
