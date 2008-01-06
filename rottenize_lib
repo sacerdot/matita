@@ -1,4 +1,0 @@
-#!/bin/bash
-set -x
-make clean-rottened
-./rottener.opt -r library/
