@@ -114,9 +114,12 @@ let wrap_with_make include_paths g f x =
       (* we know that someone was able to include the .ma, get the baseuri
        * but was unable to get the compilation output 'xfilename' *)
       let root, buri, _, tgt = 
-        Librarian.baseuri_of_script ~include_paths mafilename
+        try
+          Librarian.baseuri_of_script ~include_paths mafilename
+        with Librarian.NoRootFor _ -> raise exn
       in
-      if MatitacLib.Make.make root [tgt] then f x else raise exn
+      if MatitacLib.Make.make root [tgt] then f x 
+      else raise (Failure ("Compiling: " ^ tgt))
 ;;
 
 let eval_with_engine include_paths 
@@ -791,6 +794,7 @@ object (self)
 
   method private _advance ?statement () =
    let s = match statement with Some s -> s | None -> self#getFuture in
+   if self#bos then LibraryClean.clean_baseuris [self#buri_of_current_file];
    HLog.debug ("evaluating: " ^ first_line s ^ " ...");
    let entries, newtext, parsed_len = 
     try
@@ -935,7 +939,7 @@ object (self)
     HLog.debug ("Moving to " ^ Sys.getcwd ())
     
   method saveToFile () =
-    if self#has_name && buffer#modified then
+    if self#has_name then
       let oc = open_out self#filename in
       output_string oc (buffer#get_text ~start:buffer#start_iter
                         ~stop:buffer#end_iter ());
@@ -943,8 +947,7 @@ object (self)
       set_star false;
       buffer#set_modified false
     else
-      if self#has_name then HLog.debug "No need to save"
-      else HLog.error "Can't save, no filename selected"
+      HLog.error "Can't save, no filename selected"
   
   method private _saveToBackupFile () =
     if buffer#modified then
