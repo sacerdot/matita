@@ -254,8 +254,7 @@
             On the contrary, theorem and definitions declared in a file can be
            immediately used without including it.</para>
           <para>The file <command>s</command> is automatically compiled
-           if it is not compiled yet and if it is handled by a
-           <link linkend="developments">development</link>.
+	  if it is not compiled yet.
           </para>
          </listitem>
        </varlistentry>
@@ -277,36 +276,6 @@
          <term>Action:</term>
          <listitem>
            <para>Not documented (&TODO;), do not use it.</para>
-         </listitem>
-       </varlistentry>
-     </variablelist>
-   </para>
- </sect1>
- <sect1 id="command_set">
-   <title>set</title>
-   <para><userinput>set &quot;baseuri&quot; &quot;s&quot;</userinput></para>
-   <para>
-     <variablelist>
-       <varlistentry>
-         <term>Synopsis:</term>
-         <listitem>
-           <para><emphasis role="bold">set</emphasis> &qstring; &qstring;</para>
-         </listitem>
-       </varlistentry>
-       <varlistentry>
-         <term>Action:</term>
-         <listitem>
-           <para>Sets to <command>s</command> the baseuri of all the
-            theorems and definitions stated in the current file.
-            The baseuri should be <command>a/b/c/foo</command>
-            if the file is named <command>foo</command> and it is in
-            the subtree <command>a/b/c</command> of the current
-            <link linkend="developments">development</link>.
-            This requirement is not enforced, but it could be in the future.
-           </para>
-           <para>Currently, <command>baseuri</command> is the only
-            property that can be set even if the parser accepts
-            arbitrary property names.</para>
          </listitem>
        </varlistentry>
      </variablelist>

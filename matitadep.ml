@@ -76,8 +76,9 @@ let main () =
          Sys.chdir (Filename.dirname x);
          HExtlib.find ~test:(fun x -> Filename.check_suffix x ".ma") "."
       | _ ->
-         prerr_endline ("Too many roots: " ^ String.concat ", " roots);
-         prerr_endline ("Enter one of these directories and retry");
+         let roots = List.map (HExtlib.chop_prefix (Sys.getcwd()^"/")) roots in
+         prerr_endline ("Too many roots found:\n\t" ^ String.concat "\n\t" roots);
+         prerr_endline ("\nEnter one of these directories and retry");
          exit 1
   in
   let ma_files = args in

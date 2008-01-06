@@ -45,7 +45,6 @@ let conffile = ref BuildTimeConf.matita_conf
 let registry_defaults = [
   "matita.debug",                "false";
   "matita.external_editor",      "gvim -f -c 'go %p' %f";
-  "matita.preserve",             "false"; (* FIXME, inutile pure lei *)
   "matita.profile",              "true";
   "matita.system",               "false";
   "matita.verbose",              "false";
@@ -127,76 +126,29 @@ let _ =
   List.iter
     (fun (name, s) -> Hashtbl.replace usages name s)
     [ "matitac", 
-        Printf.sprintf "MatitaC v%s
+        Printf.sprintf "Matita batch compiler v%s
 Usage: matitac [ OPTION ... ] FILE
 Options:"
           BuildTimeConf.version;
-      "gragrep",
-        Printf.sprintf "Grafite Grep v%s
-Usage: gragrep [ -r ] PATH
-Options:"
-          BuildTimeConf.version;
-      "matitaprover",
-        Printf.sprintf "Matita's prover v%s
+        "matitaprover",
+        Printf.sprintf "Matita (TPTP) prover v%s
 Usage: matitaprover [ -tptppath ] FILE.p
 Options:"
           BuildTimeConf.version;
       "matita",
-        Printf.sprintf "Matita v%s
-Usage: matita [ OPTION ... ] [ FILE ... ]
-Options:"
-          BuildTimeConf.version;
-      "cicbrowser",
-        Printf.sprintf
-          "CIC Browser v%s
-Usage: cicbrowser [ URL | WHELP QUERY ]
+        Printf.sprintf "Matita interactive theorem prover v%s
+Usage: matita [ OPTION ... ] [ FILE ]
 Options:"
           BuildTimeConf.version;
       "matitadep",
-        Printf.sprintf "MatitaDep v%s
-Usage: matitadep [ OPTION ... ] FILE ...
+        Printf.sprintf "Matita depency file generator v%s
+Usage: matitadep [ OPTION ... ] 
 Options:"
           BuildTimeConf.version;
       "matitaclean",
         Printf.sprintf "MatitaClean v%s
 Usage: matitaclean all
-       matitaclean [ (FILE | URI) ... ]
-Options:"
-          BuildTimeConf.version;
-      "matitamake",
-        Printf.sprintf "MatitaMake v%s
-Usage: matitamake [ OPTION ... ] (init | clean | list | destroy | build)
-  init
-    Parameters: name (the name of the development, required)
-                root (the directory in which the delopment is rooted, 
-                      optional, default is current working directory)
-    Description: tells matitamake that a new development radicated 
-      in the current working directory should be handled.
-  clean
-    Parameters: name (the name of the development to destroy, optional)
-      If omitted the development that holds the current working 
-      directory is used (if any).
-    Description: clean the develpoment.
-  list
-    Parameters: 
-    Description: lists the known developments and their roots.
-  destroy
-    Parameters: name (the name of the development to destroy, required)
-    Description: deletes a development (only from matitamake metadat, no
-      .ma files will be deleted).
-  build
-    Parameters: name (the name of the development to build, required)
-    Description: completely builds the develpoment.
-  publish
-    Parameters: name (the name of the development to publish, required)
-    Description: cleans the development in the user space, rebuilds it
-      in the system space ('ro' repositories, that for this operation 
-      becames writable). 
-Notes:
-  If target is omitted an 'all' will be used as the default.
-  With -build you can build a development wherever it is.
-  If you specify a target it implicitly refers to the development that
-  holds the current working directory (if any).
+       matitaclean ( FILE | URI )
 Options:"
           BuildTimeConf.version;
     ]
@@ -219,7 +171,6 @@ let parse_cmdline init_status =
     wants [Registry] init_status;
     let includes = ref [] in
     let default_includes = [ 
-      ".";
       BuildTimeConf.stdlib_dir_devel;
       BuildTimeConf.stdlib_dir_installed ; ] 
     in
@@ -259,9 +210,6 @@ let parse_cmdline init_status =
         "-profile-only",
           Arg.String (fun rex -> Helm_registry.set "matita.profile_only" rex),
           "Activates only profiler with label matching the provided regex";
-        "-preserve",
-          Arg.Unit (fun () -> Helm_registry.set_bool "matita.preserve" true),
-          "Turns off automatic baseuri cleaning";
         "-system", Arg.Unit (fun () ->
               Helm_registry.set_bool "matita.system" true),
             ("Act on the system library instead of the user one"

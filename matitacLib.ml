@@ -110,7 +110,6 @@ let get_include_paths options =
 let rec compile options fname =
   (* initialization, MOVE OUTSIDE *)
   let matita_debug = Helm_registry.get_bool "matita.debug" in
-  let clean_baseuri = not (Helm_registry.get_bool "matita.preserve") in    
   (* sanity checks *)
   let include_paths = get_include_paths options in
   let root,baseuri,fname,_tgt = Librarian.baseuri_of_script ~include_paths fname in
@@ -125,7 +124,7 @@ let rec compile options fname =
       (Printf.sprintf "uri %s belongs to a read-only repository" baseuri);
   (* cleanup of previously compiled objects *)
   if (not (Http_getter_storage.is_empty ~local:true baseuri) ||
-      LibraryClean.db_uris_of_baseuri baseuri <> []) && clean_baseuri
+      LibraryClean.db_uris_of_baseuri baseuri <> []) 
     then begin
     HLog.message ("baseuri " ^ baseuri ^ " is not empty");
     HLog.message ("cleaning baseuri " ^ baseuri);

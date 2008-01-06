@@ -1,89 +1,89 @@
-higher_order_defs/ordering.ma logic/equality.ma
-higher_order_defs/functions.ma logic/equality.ma
-higher_order_defs/relations.ma logic/connectives.ma
-decidable_kit/fintype.ma decidable_kit/eqtype.ma decidable_kit/list_aux.ma
-decidable_kit/list_aux.ma decidable_kit/eqtype.ma list/list.ma nat/plus.ma
-decidable_kit/eqtype.ma datatypes/constructors.ma decidable_kit/decidable.ma
-decidable_kit/fgraph.ma decidable_kit/fintype.ma
-decidable_kit/decidable.ma datatypes/bool.ma decidable_kit/streicher.ma logic/connectives.ma nat/compare.ma
-decidable_kit/streicher.ma logic/connectives.ma logic/equality.ma
-Fsub/part1a_inversion.ma Fsub/defn.ma
-Fsub/defn.ma Fsub/util.ma
-Fsub/util.ma list/list.ma logic/equality.ma nat/compare.ma
-Fsub/part1a.ma Fsub/defn.ma
-technicalities/setoids.ma datatypes/constructors.ma logic/coimplication.ma logic/connectives2.ma
-Q/q.ma Z/compare.ma Z/plus.ma
-Q/Qaxioms.ma Z/compare.ma Z/times.ma nat/iteration2.ma
-nat/ord.ma datatypes/constructors.ma nat/exp.ma nat/gcd.ma nat/nth_prime.ma nat/relevant_equations.ma
-nat/primes.ma logic/connectives.ma nat/div_and_mod.ma nat/factorial.ma nat/minimization.ma nat/sigma_and_pi.ma
-nat/compare.ma datatypes/bool.ma datatypes/compare.ma nat/orders.ma
-nat/euler_theorem.ma nat/nat.ma nat/map_iter_p.ma nat/totient.ma
-nat/plus.ma nat/nat.ma
-nat/pi_p.ma nat/generic_iter_p.ma nat/iteration2.ma nat/primes.ma
-nat/orders.ma logic/connectives.ma higher_order_defs/ordering.ma nat/nat.ma
-nat/map_iter_p.ma nat/count.ma nat/permutation.ma
-nat/relevant_equations.ma nat/gcd.ma nat/minus.ma nat/times.ma
-nat/nat.ma higher_order_defs/functions.ma
-nat/iteration2.ma nat/count.ma nat/generic_iter_p.ma nat/ord.ma nat/primes.ma
-nat/log.ma datatypes/constructors.ma nat/div_and_mod_diseq.ma nat/iteration2.ma nat/minimization.ma nat/primes.ma nat/relevant_equations.ma
-nat/factorization.ma nat/ord.ma
-nat/lt_arith.ma nat/div_and_mod.ma
-nat/totient.ma nat/chinese_reminder.ma nat/iteration2.ma
-nat/gcd_properties1.ma nat/gcd.ma
-nat/generic_iter_p.ma nat/div_and_mod_diseq.ma nat/ord.ma nat/primes.ma
-nat/div_and_mod_diseq.ma nat/lt_arith.ma
-nat/times.ma nat/plus.ma
-nat/le_arith.ma nat/orders.ma nat/times.ma
-nat/sigma_and_pi.ma nat/exp.ma nat/factorial.ma nat/lt_arith.ma
-nat/neper.ma nat/binomial.ma nat/chebyshev.ma nat/div_and_mod_diseq.ma nat/iteration2.ma nat/log.ma
-nat/chebyshev_thm.ma nat/neper.ma
-nat/gcd.ma nat/lt_arith.ma nat/primes.ma
-nat/minimization.ma nat/minus.ma
-nat/exp.ma nat/div_and_mod.ma nat/lt_arith.ma
-nat/fermat_little_theorem.ma nat/congruence.ma nat/exp.ma nat/gcd.ma nat/permutation.ma
-nat/binomial.ma nat/factorial2.ma nat/iteration2.ma
-nat/nth_prime.ma nat/lt_arith.ma nat/primes.ma
-nat/factorial.ma nat/le_arith.ma
-nat/permutation.ma nat/compare.ma nat/sigma_and_pi.ma
-nat/chinese_reminder.ma nat/congruence.ma nat/exp.ma nat/gcd.ma nat/permutation.ma
-nat/chebyshev.ma nat/factorial2.ma nat/factorization.ma nat/log.ma nat/pi_p.ma
-nat/minus.ma nat/compare.ma nat/le_arith.ma
-nat/congruence.ma nat/primes.ma nat/relevant_equations.ma
-nat/totient1.ma nat/compare.ma nat/gcd_properties1.ma nat/iteration2.ma nat/totient.ma
-nat/factorial2.ma nat/exp.ma nat/factorial.ma
-nat/count.ma nat/permutation.ma nat/relevant_equations.ma nat/sigma_and_pi.ma
-nat/div_and_mod.ma datatypes/constructors.ma nat/minus.ma
-logic/connectives2.ma higher_order_defs/relations.ma
-logic/coimplication.ma logic/connectives.ma
-logic/connectives.ma
-logic/equality.ma logic/connectives.ma higher_order_defs/relations.ma
-list/list.ma higher_order_defs/functions.ma logic/equality.ma nat/nat.ma
-list/sort.ma datatypes/bool.ma datatypes/constructors.ma list/list.ma
-demo/power_derivative.ma nat/nat.ma nat/compare.ma nat/orders.ma nat/plus.ma
-demo/propositional_sequent_calculus.ma datatypes/constructors.ma list/sort.ma nat/compare.ma nat/plus.ma
-algebra/CoRN/SetoidFun.ma algebra/CoRN/Setoids.ma higher_order_defs/relations.ma
-algebra/CoRN/Setoids.ma Z/plus.ma datatypes/constructors.ma higher_order_defs/relations.ma logic/equality.ma nat/nat.ma
-algebra/CoRN/SemiGroups.ma algebra/CoRN/SetoidInc.ma
-algebra/CoRN/SetoidInc.ma algebra/CoRN/SetoidFun.ma
-algebra/monoids.ma algebra/semigroups.ma
-algebra/semigroups.ma higher_order_defs/functions.ma
-algebra/finite_groups.ma nat/relevant_equations.ma algebra/groups.ma
-algebra/groups.ma logic/connectives.ma algebra/monoids.ma datatypes/bool.ma nat/compare.ma nat/le_arith.ma
-datatypes/bool.ma higher_order_defs/functions.ma logic/equality.ma
-datatypes/compare.ma
-datatypes/constructors.ma logic/equality.ma
-assembly/extra.ma list/list.ma nat/div_and_mod.ma nat/primes.ma
-assembly/exadecimal.ma assembly/extra.ma
-assembly/vm.ma assembly/byte.ma
-assembly/byte.ma assembly/exadecimal.ma
-assembly/test.ma assembly/vm.ma
-Z/z.ma datatypes/bool.ma nat/nat.ma
-Z/sigma_p.ma Z/plus.ma Z/times.ma nat/generic_iter_p.ma nat/ord.ma nat/primes.ma
-Z/compare.ma Z/orders.ma nat/compare.ma
-Z/plus.ma Z/z.ma nat/minus.ma
-Z/inversion.ma Z/dirichlet_product.ma Z/moebius.ma
-Z/orders.ma logic/connectives.ma Z/z.ma nat/orders.ma
-Z/times.ma Z/plus.ma nat/lt_arith.ma
-Z/moebius.ma Z/sigma_p.ma nat/factorization.ma
-Z/dirichlet_product.ma Z/sigma_p.ma Z/times.ma nat/primes.ma
 library_notation.ma Q/q.ma Z/compare.ma Z/orders.ma Z/plus.ma Z/times.ma Z/z.ma algebra/finite_groups.ma algebra/groups.ma algebra/monoids.ma algebra/semigroups.ma datatypes/bool.ma datatypes/compare.ma datatypes/constructors.ma higher_order_defs/functions.ma higher_order_defs/ordering.ma higher_order_defs/relations.ma list/list.ma list/sort.ma logic/connectives.ma logic/equality.ma nat/chinese_reminder.ma nat/compare.ma nat/congruence.ma nat/count.ma nat/div_and_mod.ma nat/exp.ma nat/factorial.ma nat/factorization.ma nat/fermat_little_theorem.ma nat/gcd.ma nat/le_arith.ma nat/lt_arith.ma nat/minimization.ma nat/minus.ma nat/nat.ma nat/nth_prime.ma nat/ord.ma nat/orders.ma nat/permutation.ma nat/plus.ma nat/primes.ma nat/relevant_equations.ma nat/sigma_and_pi.ma nat/times.ma nat/totient.ma
+Z/dirichlet_product.ma Z/sigma_p.ma Z/times.ma nat/primes.ma
+Z/moebius.ma Z/sigma_p.ma nat/factorization.ma
+Z/times.ma Z/plus.ma nat/lt_arith.ma
+Z/orders.ma logic/connectives.ma Z/z.ma nat/orders.ma
+Z/inversion.ma Z/dirichlet_product.ma Z/moebius.ma
+Z/plus.ma Z/z.ma nat/minus.ma
+Z/compare.ma Z/orders.ma nat/compare.ma
+Z/sigma_p.ma Z/plus.ma Z/times.ma nat/generic_iter_p.ma nat/ord.ma nat/primes.ma
+Z/z.ma datatypes/bool.ma nat/nat.ma
+assembly/test.ma assembly/vm.ma
+assembly/byte.ma assembly/exadecimal.ma
+assembly/vm.ma assembly/byte.ma
+assembly/exadecimal.ma assembly/extra.ma
+assembly/extra.ma list/list.ma nat/div_and_mod.ma nat/primes.ma
+datatypes/constructors.ma logic/equality.ma
+datatypes/compare.ma 
+datatypes/bool.ma higher_order_defs/functions.ma logic/equality.ma
+algebra/groups.ma logic/connectives.ma algebra/monoids.ma datatypes/bool.ma nat/compare.ma nat/le_arith.ma
+algebra/finite_groups.ma nat/relevant_equations.ma algebra/groups.ma
+algebra/semigroups.ma higher_order_defs/functions.ma
+algebra/monoids.ma algebra/semigroups.ma
+algebra/CoRN/SetoidInc.ma algebra/CoRN/SetoidFun.ma
+algebra/CoRN/SemiGroups.ma algebra/CoRN/SetoidInc.ma
+algebra/CoRN/Setoids.ma Z/plus.ma datatypes/constructors.ma higher_order_defs/relations.ma logic/equality.ma nat/nat.ma
+algebra/CoRN/SetoidFun.ma algebra/CoRN/Setoids.ma higher_order_defs/relations.ma
+demo/propositional_sequent_calculus.ma datatypes/constructors.ma list/sort.ma nat/compare.ma nat/plus.ma
+demo/power_derivative.ma nat/nat.ma nat/compare.ma nat/orders.ma nat/plus.ma
+list/sort.ma datatypes/bool.ma datatypes/constructors.ma list/list.ma
+list/list.ma higher_order_defs/functions.ma logic/equality.ma nat/nat.ma
+logic/equality.ma logic/connectives.ma higher_order_defs/relations.ma
+logic/connectives.ma 
+logic/coimplication.ma logic/connectives.ma
+logic/connectives2.ma higher_order_defs/relations.ma
+nat/div_and_mod.ma datatypes/constructors.ma nat/minus.ma
+nat/count.ma nat/permutation.ma nat/relevant_equations.ma nat/sigma_and_pi.ma
+nat/factorial2.ma nat/exp.ma nat/factorial.ma
+nat/totient1.ma nat/compare.ma nat/gcd_properties1.ma nat/iteration2.ma nat/totient.ma
+nat/congruence.ma nat/primes.ma nat/relevant_equations.ma
+nat/minus.ma nat/compare.ma nat/le_arith.ma
+nat/chebyshev.ma nat/factorial2.ma nat/factorization.ma nat/log.ma nat/pi_p.ma
+nat/chinese_reminder.ma nat/congruence.ma nat/exp.ma nat/gcd.ma nat/permutation.ma
+nat/permutation.ma nat/compare.ma nat/sigma_and_pi.ma
+nat/factorial.ma nat/le_arith.ma
+nat/nth_prime.ma nat/lt_arith.ma nat/primes.ma
+nat/binomial.ma nat/factorial2.ma nat/iteration2.ma
+nat/fermat_little_theorem.ma nat/congruence.ma nat/exp.ma nat/gcd.ma nat/permutation.ma
+nat/exp.ma nat/div_and_mod.ma nat/lt_arith.ma
+nat/minimization.ma nat/minus.ma
+nat/gcd.ma nat/lt_arith.ma nat/primes.ma
+nat/chebyshev_thm.ma nat/neper.ma
+nat/neper.ma nat/binomial.ma nat/chebyshev.ma nat/div_and_mod_diseq.ma nat/iteration2.ma nat/log.ma
+nat/sigma_and_pi.ma nat/exp.ma nat/factorial.ma nat/lt_arith.ma
+nat/le_arith.ma nat/orders.ma nat/times.ma
+nat/times.ma nat/plus.ma
+nat/div_and_mod_diseq.ma nat/lt_arith.ma
+nat/generic_iter_p.ma nat/div_and_mod_diseq.ma nat/ord.ma nat/primes.ma
+nat/gcd_properties1.ma nat/gcd.ma
+nat/totient.ma nat/chinese_reminder.ma nat/iteration2.ma
+nat/lt_arith.ma nat/div_and_mod.ma
+nat/factorization.ma nat/ord.ma
+nat/log.ma datatypes/constructors.ma nat/div_and_mod_diseq.ma nat/iteration2.ma nat/minimization.ma nat/primes.ma nat/relevant_equations.ma
+nat/iteration2.ma nat/count.ma nat/generic_iter_p.ma nat/ord.ma nat/primes.ma
+nat/nat.ma higher_order_defs/functions.ma
+nat/relevant_equations.ma nat/gcd.ma nat/minus.ma nat/times.ma
+nat/map_iter_p.ma nat/count.ma nat/permutation.ma
+nat/orders.ma logic/connectives.ma higher_order_defs/ordering.ma nat/nat.ma
+nat/pi_p.ma nat/generic_iter_p.ma nat/iteration2.ma nat/primes.ma
+nat/plus.ma nat/nat.ma
+nat/euler_theorem.ma nat/nat.ma nat/map_iter_p.ma nat/totient.ma
+nat/compare.ma datatypes/bool.ma datatypes/compare.ma nat/orders.ma
+nat/primes.ma logic/connectives.ma nat/div_and_mod.ma nat/factorial.ma nat/minimization.ma nat/sigma_and_pi.ma
+nat/ord.ma datatypes/constructors.ma nat/exp.ma nat/gcd.ma nat/nth_prime.ma nat/relevant_equations.ma
+Q/Qaxioms.ma Z/compare.ma Z/times.ma nat/iteration2.ma
+Q/q.ma Z/compare.ma Z/plus.ma
+technicalities/setoids.ma datatypes/constructors.ma logic/coimplication.ma logic/connectives2.ma
+Fsub/part1a.ma Fsub/defn.ma
+Fsub/util.ma list/list.ma logic/equality.ma nat/compare.ma
+Fsub/defn.ma Fsub/util.ma
+Fsub/part1a_inversion.ma Fsub/defn.ma
+decidable_kit/streicher.ma logic/connectives.ma logic/equality.ma
+decidable_kit/decidable.ma datatypes/bool.ma decidable_kit/streicher.ma logic/connectives.ma nat/compare.ma
+decidable_kit/fgraph.ma decidable_kit/fintype.ma
+decidable_kit/eqtype.ma datatypes/constructors.ma decidable_kit/decidable.ma
+decidable_kit/list_aux.ma decidable_kit/eqtype.ma list/list.ma nat/plus.ma
+decidable_kit/fintype.ma decidable_kit/eqtype.ma decidable_kit/list_aux.ma
+higher_order_defs/relations.ma logic/connectives.ma
+higher_order_defs/functions.ma logic/equality.ma
+higher_order_defs/ordering.ma logic/equality.ma
