@@ -27,6 +27,6 @@
 val set_callback: (string -> unit) -> unit 
 
 module Make : sig
-        val make: (string * string list) list -> string list -> unit
+        val make: string -> string list -> bool
 end
 

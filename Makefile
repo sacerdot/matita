@@ -28,7 +28,6 @@ ifeq ($(NODB),true)
 endif
 
 MLI = \
-        make.mli		\
 	lablGraphviz.mli	\
 	matitaTypes.mli		\
 	matitaMisc.mli		\
@@ -45,7 +44,6 @@ MLI = \
 	matitaGui.mli		\
 	$(NULL)
 CMLI =				\
-        make.mli		\
 	matitaTypes.mli		\
 	matitaMisc.mli		\
 	matitaExcPp.mli 	\
@@ -111,9 +109,9 @@ links:
 
 linkonly:
 	$(H)echo "  OCAMLC matita.ml"
-	$(H)$(OCAMLC) $(PKGS) -linkpkg -o matita $(CMOS) matita.ml
+	$(H)$(OCAMLC) $(PKGS) -linkpkg -o matita $(CMOS) $(OCAML_DEBUG_FLAGS) matita.ml
 	$(H)echo "  OCAMLC matitac.ml"
-	$(H)$(OCAMLC) $(CPKGS) -linkpkg -o matitac $(CCMOS) $(MAINCMOS) matitac.ml
+	$(H)$(OCAMLC) $(CPKGS) -linkpkg -o matitac $(CCMOS) $(MAINCMOS) $(OCAML_DEBUG_FLAGS) matitac.ml
 .PHONY: linkonly
 matita: matita.ml $(LIB_DEPS) $(CMOS)
 	$(H)echo "  OCAMLC $<"

@@ -66,9 +66,7 @@ let main () =
     "<file> Save dependency graph in dot format to the given file";];
   MatitaInit.parse_cmdline_and_configuration_file ();
   MatitaInit.initialize_environment ();
-  let args = Helm_registry.get_list Helm_registry.string "matita.args" in
   let args = 
-    if args = [] then
       let roots = Librarian.find_roots_in_dir (Sys.getcwd ()) in
       match roots with
       | [] -> 
@@ -81,8 +79,6 @@ let main () =
          prerr_endline ("Too many roots: " ^ String.concat ", " roots);
          prerr_endline ("Enter one of these directories and retry");
          exit 1
-    else
-      args
   in
   let ma_files = args in
   (* here we go *)
@@ -133,24 +129,35 @@ let main () =
       close_out oc
     end;
   (* generate regular depend output *)
-  let oc = open_out "depends" in
-  List.iter 
-   (fun ma_file -> 
+  let fix_name f =
+    let f = 
+      if Pcre.pmatch ~pat:"^\\./" f then
+        String.sub f 2 (String.length f - 2)
+      else 
+        f
+    in 
+      HExtlib.normalize_path f
+  in
+  let deps =
+    List.fold_left
+     (fun acc ma_file -> 
       let deps = Hashtbl.find_all include_deps ma_file in
       let deps = List.fast_sort Pervasives.compare deps in
       let deps = HExtlib.list_uniq deps in
-      let deps = ma_file :: deps in
-      let deps = 
-        List.map (fun f ->
-                let f = 
-                  if Pcre.pmatch ~pat:"^\\./" f then
-                    String.sub f 2 (String.length f - 2)
-                  else 
-                    f
-                in HExtlib.normalize_path f) deps 
-      in
-      output_string oc (String.concat " " deps ^ "\n"))
-   ma_files;
-  close_out oc;
-  HLog.message ("Generated " ^ Sys.getcwd () ^ "/depends")
+      let deps = List.map fix_name deps in
+      (fix_name ma_file, deps) :: acc)
+     [] ma_files
+  in
+  let extern = 
+    List.fold_left
+      (fun acc (_,d) -> 
+        List.fold_left 
+          (fun a x -> 
+             if List.exists (fun (t,_) -> x=t) deps then a 
+             else x::a) 
+          acc d)
+      [] deps
+  in
+  Librarian.write_deps_file (Sys.getcwd()) (deps@List.map (fun x -> x,[]) extern)
+;;
 

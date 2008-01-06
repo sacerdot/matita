@@ -95,14 +95,24 @@ let cut prefix s =
   String.sub s lenp (lens-lenp)
 ;;
 
-let rec compile fname =
+let get_include_paths options =
+  let include_paths = 
+    try List.assoc "include_paths" options with Not_found -> "" 
+  in
+  let include_paths = Str.split (Str.regexp " ") include_paths in
+  let include_paths = 
+    include_paths @ 
+    Helm_registry.get_list Helm_registry.string "matita.includes" 
+  in
+    include_paths
+;;
+
+let rec compile options fname =
   (* initialization, MOVE OUTSIDE *)
   let matita_debug = Helm_registry.get_bool "matita.debug" in
   let clean_baseuri = not (Helm_registry.get_bool "matita.preserve") in    
-  let include_paths = 
-    Helm_registry.get_list Helm_registry.string "matita.includes" 
-  in
   (* sanity checks *)
+  let include_paths = get_include_paths options in
   let root,baseuri,fname,_tgt = Librarian.baseuri_of_script ~include_paths fname in
   let moo_fname = 
    LibraryMisc.obj_file_of_baseuri ~must_exist:false ~baseuri ~writable:true
@@ -204,7 +214,7 @@ let rec compile fname =
           ~map_unicode_to_tex:(Helm_registry.get_bool
             "matita.paste_unicode_as_tex") in
         !out str;
-        compile fname 
+        compile options fname 
       | _ ->
         let x, y = HExtlib.loc_of_floc floc in
         HLog.error (sprintf "A macro has been found at %d-%d" x y);
@@ -229,8 +239,17 @@ module F =
     let string_of_source_object s = s;;
     let string_of_target_object s = s;;
 
-    let target_of mafile = 
-      let _,baseuri,_,_ = Librarian.baseuri_of_script mafile in
+    let root_of opts s = 
+      try
+        let include_paths = get_include_paths opts in
+        let root,_,_,_ = Librarian.baseuri_of_script ~include_paths s in
+        Some root
+      with Librarian.NoRootFor x -> None
+    ;;
+
+    let target_of opts mafile = 
+      let include_paths = get_include_paths opts in
+      let _,baseuri,_,_ = Librarian.baseuri_of_script ~include_paths mafile in
       LibraryMisc.obj_file_of_baseuri 
         ~must_exist:false ~baseuri ~writable:true 
     ;;
@@ -238,7 +257,9 @@ module F =
     let mtime_of_source_object s =
       try Some (Unix.stat s).Unix.st_mtime
       with Unix.Unix_error (Unix.ENOENT, "stat", f) when f = s -> 
-        raise (Failure ("Unable to stat a source file: " ^ s)) 
+              None
+(*         max_float *)
+(*         raise (Failure ("Unable to stat a source file: " ^ s))  *)
     ;;
 
     let mtime_of_target_object s =
@@ -247,7 +268,10 @@ module F =
     ;;
 
     let build = compile;;
+
+    let load_deps_file = Librarian.load_deps_file;;
+
   end 
 
-module Make = Make.Make(F) 
+module Make = Librarian.Make(F) 
 

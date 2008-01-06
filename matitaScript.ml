@@ -720,11 +720,15 @@ object (self)
 
   method has_name = filename_ <> None
   
-  method buri_of_current_file = 
+  method buri_of_current_file =
     match filename_ with
     | None -> default_buri 
     | Some f ->
-        try let _root, buri, _fname, _tgt = Librarian.baseuri_of_script f in buri
+        try 
+          let _root, buri, _fname, _tgt = 
+            Librarian.baseuri_of_script ~include_paths f 
+          in 
+          buri
         with Librarian.NoRootFor _ -> default_buri
 
   method filename = match filename_ with None -> default_fname | Some f -> f
@@ -1105,7 +1109,6 @@ prerr_endline ("## " ^ string_of_int parsed_text_length);
     HLog.debug (sprintf "%d statements:" (List.length statements));
     List.iter HLog.debug statements;
     HLog.debug ("Current file name: " ^ self#filename);
-    HLog.debug ("Current buri: " ^ self#buri_of_current_file);
 end
 
 let _script = ref None
