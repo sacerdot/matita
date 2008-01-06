@@ -87,7 +87,6 @@ let dump f =
 (* compiler ala pascal/java using make *)
 let main_compiler () =
   MatitaInit.initialize_all ();
-  if not (Helm_registry.get_bool "matita.verbose") then MatitaMisc.shutup ();
   (* targets and deps *)
   let targets = Helm_registry.get_list Helm_registry.string "matita.args" in
   let target, root = 
@@ -96,21 +95,24 @@ let main_compiler () =
       (match Librarian.find_roots_in_dir (Sys.getcwd ()) with
       | [x] -> [], x
       | [] -> 
-         HLog.error "No targets and no root found"; exit 1
+         prerr_endline "No targets and no root found"; exit 1
       | roots -> 
-         HLog.error ("Too many roots found, move into one and retry: "^
-           String.concat ", " roots);exit 1);
+         let roots = List.map (HExtlib.chop_prefix (Sys.getcwd()^"/")) roots in
+         prerr_endline ("Too many roots found:\n\t" ^ String.concat "\n\t" roots);
+         prerr_endline ("\nEnter one of these directories and retry");
+         exit 1);
     | [hd] -> 
       let root, buri, file, target =
         Librarian.baseuri_of_script ~include_paths:[] hd 
       in
       [target], root
-    | _ -> HLog.error "Only one target (or none) can be specified.";exit 1
+    | _ -> prerr_endline "Only one target (or none) can be specified.";exit 1
   in
   (* must be called after init since args are set by cmdline parsing *)
   let system_mode =  Helm_registry.get_bool "matita.system" in
   if system_mode then HLog.message "Compiling in system space";
   (* here we go *)
+  if not (Helm_registry.get_bool "matita.verbose") then MatitaMisc.shutup ();
   if MatitacLib.Make.make root target then 
     HLog.message "Compilation successful"
   else
