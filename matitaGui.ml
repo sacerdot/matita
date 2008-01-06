@@ -58,6 +58,7 @@ class console ~(buffer: GText.buffer) () =
     method clear () =
       buffer#delete ~start:buffer#start_iter ~stop:buffer#end_iter
     method log_callback (tag: HLog.log_tag) s =
+      let s = Pcre.replace ~pat:"\\[0;3.m([^]+)\\[0m" ~templ:"$1" s in
       match tag with
       | `Debug -> self#debug (s ^ "\n")
       | `Error -> self#error (s ^ "\n")
@@ -1155,6 +1156,7 @@ class gui () =
       else
         begin
           script#assignFileName (Some file);
+          let file = script#filename in
           let content =
            if Sys.file_exists file then file
            else BuildTimeConf.script_template

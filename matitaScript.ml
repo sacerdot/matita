@@ -102,15 +102,10 @@ let eval_with_engine guistuff lexicon_status grafite_status user_goal
   res,"",parsed_text_length
 ;;
 
-let wrap_with_make g f x = 
+let wrap_with_make include_paths g f x = 
   try      
     f x
   with
-(*
-  | DependenciesParser.UnableToInclude mafilename ->
-      assert (Pcre.pmatch ~pat:"ma$" mafilename);
-      check_if_file_is_exists mafilename
-*)
   | LexiconEngine.IncludedFileNotCompiled (xfilename,mafilename)
   | GrafiteEngine.IncludedFileNotCompiled (xfilename,mafilename) as exn ->
       assert (Pcre.pmatch ~pat:"ma$" mafilename);
@@ -118,14 +113,17 @@ let wrap_with_make g f x =
               Pcre.pmatch ~pat:"mo$" xfilename );
       (* we know that someone was able to include the .ma, get the baseuri
        * but was unable to get the compilation output 'xfilename' *)
-      raise exn
+      let root, buri, _, tgt = 
+        Librarian.baseuri_of_script ~include_paths mafilename
+      in
+      if MatitacLib.Make.make root [tgt] then f x else raise exn
 ;;
 
-let eval_with_engine
+let eval_with_engine include_paths 
      guistuff lexicon_status grafite_status user_goal 
        skipped_txt nonskipped_txt st
 =
-  wrap_with_make guistuff
+  wrap_with_make include_paths guistuff
     (eval_with_engine 
       guistuff lexicon_status grafite_status user_goal 
         skipped_txt nonskipped_txt) st
@@ -609,7 +607,7 @@ script ex loc
    ignore (buffer#move_mark (`NAME "beginning_of_statement")
     ~where:((buffer#get_iter_at_mark (`NAME "locked"))#forward_chars
        (Glib.Utf8.length skipped_txt))) ;
-   eval_with_engine
+   eval_with_engine include_paths 
     guistuff lexicon_status grafite_status user_goal skipped_txt nonskipped_txt
      (TA.Executable (loc, ex))
   with
@@ -631,7 +629,7 @@ and eval_statement include_paths (buffer : GText.buffer) guistuff lexicon_status
     | `Raw text ->
         if Pcre.pmatch ~rex:only_dust_RE text then raise Margin;
         let ast = 
-          wrap_with_make guistuff
+          wrap_with_make include_paths guistuff
             (GrafiteParser.parse_statement 
               (Ulexing.from_utf8_string text) ~include_paths) lexicon_status 
         in
@@ -702,11 +700,22 @@ let initial_statuses baseuri =
  let grafite_status = GrafiteSync.init baseuri in
   grafite_status,lexicon_status
 in
+let read_include_paths file =
+ try 
+   let root, _buri, _fname, _tgt = 
+     Librarian.baseuri_of_script ~include_paths:[] file 
+   in 
+   let rc = 
+    Str.split (Str.regexp " ") 
+     (List.assoc "include_paths" (Librarian.load_root_file (root^"/root")))
+   in
+   List.iter (HLog.debug) rc; rc
+ with Librarian.NoRootFor _ | Not_found -> []
+in
 let default_buri = "cic:/matita/tests" in
 let default_fname = ".unnamed.ma" in
 object (self)
-  val mutable include_paths = (* FIXME, reset every time a new root is entered *)
-   Helm_registry.get_list Helm_registry.string "matita.includes"
+  val mutable include_paths_ = []
 
   val scriptId = fresh_script_id ()
 
@@ -720,13 +729,25 @@ object (self)
 
   method has_name = filename_ <> None
   
+  method include_paths =
+    include_paths_
+
+  method private curdir =
+    try
+     let root, _buri, _fname, _tgt = 
+       Librarian.baseuri_of_script ~include_paths:self#include_paths
+       self#filename 
+     in 
+     root
+    with Librarian.NoRootFor _ -> Sys.getcwd ()
+
   method buri_of_current_file =
     match filename_ with
     | None -> default_buri 
     | Some f ->
         try 
           let _root, buri, _fname, _tgt = 
-            Librarian.baseuri_of_script ~include_paths f 
+            Librarian.baseuri_of_script ~include_paths:self#include_paths f 
           in 
           buri
         with Librarian.NoRootFor _ -> default_buri
@@ -773,7 +794,7 @@ object (self)
    HLog.debug ("evaluating: " ^ first_line s ^ " ...");
    let entries, newtext, parsed_len = 
     try
-     eval_statement include_paths buffer guistuff self#lexicon_status
+     eval_statement self#include_paths buffer guistuff self#lexicon_status
       self#grafite_status userGoal self (`Raw s)
     with End_of_file -> raise Margin
    in
@@ -898,11 +919,20 @@ object (self)
     buffer#set_text (HExtlib.input_file f);
     self#reset_buffer;
     buffer#set_modified false
-    
+
   method assignFileName file =
+    let file = 
+      match file with 
+      | Some f -> Some (Librarian.absolutize f)
+      | None -> None
+    in
     self#goto_top;
     filename_ <- file; 
-    self#reset_buffer
+    include_paths_ <- 
+      (match file with Some file -> read_include_paths file | None -> []);
+    self#reset_buffer;
+    Sys.chdir self#curdir;
+    HLog.debug ("Moving to " ^ Sys.getcwd ())
     
   method saveToFile () =
     if self#has_name && buffer#modified then
@@ -1079,7 +1109,7 @@ object (self)
       if Pcre.pmatch ~rex:only_dust_RE s then raise Margin;
       let lexicon_status,st =
        GrafiteParser.parse_statement (Ulexing.from_utf8_string s)
-        ~include_paths lexicon_status
+        ~include_paths:self#include_paths lexicon_status
       in
       match st with
       | GrafiteParser.LSome (GrafiteAst.Comment (loc,_)) -> 

@@ -56,6 +56,7 @@ object
   (* alwais return a name, use has_name to check if it is the default one *)
   method filename: string 
   method buri_of_current_file: string 
+  method include_paths: string list
   method assignFileName : string option -> unit (* to the current active file *)
   method loadFromFile : string -> unit
   method loadFromString : string -> unit
