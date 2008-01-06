@@ -43,7 +43,7 @@ let main () =
   let baseuri_of_script s = 
      try Hashtbl.find baseuri_of s 
      with Not_found -> 
-       let _,b,_ = Librarian.baseuri_of_script ~include_paths s in
+       let _,b,_,_ = Librarian.baseuri_of_script ~include_paths s in
        Hashtbl.add baseuri_of s b; 
        Hashtbl.add baseuri_of_inv b s; 
        b

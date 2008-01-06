@@ -695,19 +695,17 @@ class script  ~(source_view: GSourceView.source_view)
 let buffer = source_view#buffer in
 let source_buffer = source_view#source_buffer in
 let initial_statuses baseuri =
- (* these include_paths are used only to load the initial notation *)
- let include_paths =
-  Helm_registry.get_list Helm_registry.string "matita.includes" in
  let lexicon_status =
-  CicNotation2.load_notation ~include_paths
-   BuildTimeConf.core_notation_script in
+   CicNotation2.load_notation ~include_paths:[]
+     BuildTimeConf.core_notation_script 
+ in
  let grafite_status = GrafiteSync.init baseuri in
   grafite_status,lexicon_status
 in
 let default_buri = "cic:/matita/tests" in
 let default_fname = ".unnamed.ma" in
 object (self)
-  val mutable include_paths =
+  val mutable include_paths = (* FIXME, reset every time a new root is entered *)
    Helm_registry.get_list Helm_registry.string "matita.includes"
 
   val scriptId = fresh_script_id ()
@@ -726,7 +724,7 @@ object (self)
     match filename_ with
     | None -> default_buri 
     | Some f ->
-        try let root, buri, fname = Librarian.baseuri_of_script f in buri
+        try let _root, buri, _fname, _tgt = Librarian.baseuri_of_script f in buri
         with Librarian.NoRootFor _ -> default_buri
 
   method filename = match filename_ with None -> default_fname | Some f -> f

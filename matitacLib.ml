@@ -103,7 +103,7 @@ let rec compile fname =
     Helm_registry.get_list Helm_registry.string "matita.includes" 
   in
   (* sanity checks *)
-  let root,baseuri,fname = Librarian.baseuri_of_script ~include_paths fname in
+  let root,baseuri,fname,_tgt = Librarian.baseuri_of_script ~include_paths fname in
   let moo_fname = 
    LibraryMisc.obj_file_of_baseuri ~must_exist:false ~baseuri ~writable:true
   in
@@ -230,7 +230,7 @@ module F =
     let string_of_target_object s = s;;
 
     let target_of mafile = 
-      let _,baseuri,_ = Librarian.baseuri_of_script mafile in
+      let _,baseuri,_,_ = Librarian.baseuri_of_script mafile in
       LibraryMisc.obj_file_of_baseuri 
         ~must_exist:false ~baseuri ~writable:true 
     ;;

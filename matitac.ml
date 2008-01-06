@@ -101,11 +101,9 @@ let main_compiler () =
          HLog.error ("Too many roots found, move into one and retry: "^
            String.concat ", " roots);exit 1);
     | [hd] -> 
-      let root, buri, file = Librarian.baseuri_of_script hd in
-      Make.load_deps_file (root ^ "/depends"),
-      let target = HExtlib.chop_prefix (root^"/") file in
+      let root, buri, file, target = Librarian.baseuri_of_script hd in
       HLog.debug ("Compiling target '" ^ target ^ "' with base uri '"^buri^"'");
-      [target]
+      Make.load_deps_file (root ^ "/depends"), [target]
     | _ -> HLog.error "Only one target (or none) can be specified.";exit 1
   in
   (* must be called after init since args are set by cmdline parsing *)
