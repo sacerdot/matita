@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/tests/letrec/".
+
 
 
 alias id "O" = "cic:/Coq/Init/Datatypes/nat.ind#xpointer(1/1/1)".

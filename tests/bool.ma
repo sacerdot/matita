@@ -12,9 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/tests/bool/".
 
-include "../legacy/coq.ma".
+
+include "coq.ma".
 
 alias id "nat" = "cic:/Coq/Init/Datatypes/nat.ind#xpointer(1/1)".
 alias id "eq" = "cic:/Coq/Init/Logic/eq.ind#xpointer(1/1)".

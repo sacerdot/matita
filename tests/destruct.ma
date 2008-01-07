@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/tests/discriminate".
+
 
 include "logic/equality.ma".
 include "nat/nat.ma".

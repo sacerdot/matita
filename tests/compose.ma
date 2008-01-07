@@ -1,4 +1,4 @@
-set "baseuri" "cic:/matita/tests/compose/LCL002-1".
+
 include "logic/equality.ma".
 
 theorem an_1:

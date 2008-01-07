@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/tests/fix_betareduction/".
-include "../legacy/coq.ma".
+
+include "coq.ma".
 
 alias id "eq" = "cic:/Coq/Init/Logic/eq.ind#xpointer(1/1)".
 alias id "n" = "cic:/Suresnes/BDD/canonicite/Canonicity_BDT/n.con".

@@ -1,4 +1,4 @@
-set "baseuri" "cic:/matita/tests/grafite/".
+
 
 (* commento *)
 (** hint. *)

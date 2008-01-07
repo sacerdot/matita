@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/tests/clear".
-include "../legacy/coq.ma".
+
+include "coq.ma".
 alias num (instance 0) = "natural number".
 alias symbol "eq" (instance 0) = "Coq's leibnitz's equality".
 alias id "True" = "cic:/Coq/Init/Logic/True.ind#xpointer(1/1)".

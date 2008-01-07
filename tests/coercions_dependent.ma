@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/test/".
+
 
 include "nat/nat.ma".
 include "list/list.ma".
@@ -27,7 +27,7 @@ axiom c : ∀A,B.∀l:list A.vec B (length A l).
 
 axiom veclen : ∀A,n.vec A n -> nat.
 
-coercion cic:/matita/test/c.con.
+coercion cic:/matita/tests/coercions_dependent/c.con.
 
 alias num (instance 0) = "natural number".
 definition xxx := veclen nat ? [3; 4; 7].

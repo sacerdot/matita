@@ -29,7 +29,7 @@ open Printf
 
 open GrafiteTypes
 
-exception AttemptToInsertAnAlias
+exception AttemptToInsertAnAlias of LexiconEngine.status
 
 let out = ref ignore 
 let set_callback f = out := f
@@ -108,59 +108,58 @@ let get_include_paths options =
 ;;
 
 let rec compile options fname =
-  (* initialization, MOVE OUTSIDE *)
   let matita_debug = Helm_registry.get_bool "matita.debug" in
-  (* sanity checks *)
   let include_paths = get_include_paths options in
   let root,baseuri,fname,_tgt = Librarian.baseuri_of_script ~include_paths fname in
-  let moo_fname = 
-   LibraryMisc.obj_file_of_baseuri ~must_exist:false ~baseuri ~writable:true
-  in
-  let lexicon_fname= 
-   LibraryMisc.lexicon_file_of_baseuri ~must_exist:false ~baseuri ~writable:true
-  in
-  if Http_getter_storage.is_read_only baseuri then 
-    HLog.error 
-      (Printf.sprintf "uri %s belongs to a read-only repository" baseuri);
-  (* cleanup of previously compiled objects *)
-  if (not (Http_getter_storage.is_empty ~local:true baseuri) ||
-      LibraryClean.db_uris_of_baseuri baseuri <> []) 
-    then begin
-    HLog.message ("baseuri " ^ baseuri ^ " is not empty");
-    HLog.message ("cleaning baseuri " ^ baseuri);
-    LibraryClean.clean_baseuris [baseuri];
-    assert (Http_getter_storage.is_empty ~local:true baseuri);
-  end;
-  (* create dir for XML files *)
-  if not (Helm_registry.get_opt_default Helm_registry.bool "matita.nodisk"
-            ~default:false) 
-  then
-    HExtlib.mkdir 
-      (Filename.dirname 
-        (Http_getter.filename ~local:true ~writable:true (baseuri ^
-        "foo.con")));
-  (* begin of compilation *)
   let grafite_status = GrafiteSync.init baseuri in
   let lexicon_status = 
     CicNotation2.load_notation ~include_paths:[]
       BuildTimeConf.core_notation_script 
   in
+  let initial_lexicon_status = lexicon_status in
   let big_bang = Unix.gettimeofday () in
   let time = Unix.time () in
-  HLog.message ("compiling " ^ Filename.basename fname ^ " in " ^ baseuri);
-  if not (Helm_registry.get_bool "matita.verbose") then
-    (let cc = 
-      if Str.string_match(Str.regexp ".*opt$") Sys.argv.(0) 0 then "matitac.opt"
-      else "matitac" 
-    in
-    let s = Printf.sprintf "%s %-35s " cc (cut (root^"/") fname) in
-    print_string s; flush stdout);
-  let buf = Ulexing.from_utf8_channel (open_in fname) in
-  let print_cb =
-    if not (Helm_registry.get_bool "matita.verbose") then (fun _ _ -> ())
-    else pp_ast_statement
-  in
   try
+    (* sanity checks *)
+    let moo_fname = 
+     LibraryMisc.obj_file_of_baseuri ~must_exist:false ~baseuri ~writable:true
+    in
+    let lexicon_fname= 
+     LibraryMisc.lexicon_file_of_baseuri ~must_exist:false ~baseuri ~writable:true
+    in
+    if Http_getter_storage.is_read_only baseuri then 
+      HLog.error 
+        (Printf.sprintf "uri %s belongs to a read-only repository" baseuri);
+    (* cleanup of previously compiled objects *)
+    if (not (Http_getter_storage.is_empty ~local:true baseuri) ||
+        LibraryClean.db_uris_of_baseuri baseuri <> []) 
+      then begin
+      HLog.message ("baseuri " ^ baseuri ^ " is not empty");
+      HLog.message ("cleaning baseuri " ^ baseuri);
+      LibraryClean.clean_baseuris [baseuri];
+      assert (Http_getter_storage.is_empty ~local:true baseuri);
+    end;
+    (* create dir for XML files *)
+    if not (Helm_registry.get_opt_default Helm_registry.bool "matita.nodisk"
+              ~default:false) 
+    then
+      HExtlib.mkdir 
+        (Filename.dirname 
+          (Http_getter.filename ~local:true ~writable:true (baseuri ^
+          "foo.con")));
+    HLog.message ("compiling " ^ Filename.basename fname ^ " in " ^ baseuri);
+    if not (Helm_registry.get_bool "matita.verbose") then
+      (let cc = 
+        if Str.string_match(Str.regexp ".*opt$") Sys.argv.(0) 0 then "matitac.opt"
+        else "matitac" 
+      in
+      let s = Printf.sprintf "%s %-35s " cc (cut (root^"/") fname) in
+      print_string s; flush stdout);
+    let buf = Ulexing.from_utf8_channel (open_in fname) in
+    let print_cb =
+      if not (Helm_registry.get_bool "matita.verbose") then (fun _ _ -> ())
+      else pp_ast_statement
+    in
     let grafite_status, lexicon_status =
       match
        MatitaEngine.eval_from_stream ~first_statement_only:false ~include_paths
@@ -168,7 +167,7 @@ let rec compile options fname =
       with
       | [] -> raise End_of_file
       | ((grafite,lexicon),None)::_ -> grafite, lexicon
-      | (s,Some _)::_ -> raise AttemptToInsertAnAlias
+      | ((_,l),Some _)::_ -> raise (AttemptToInsertAnAlias l)
     in
     let elapsed = Unix.time () -. time in
     let proof_status,moo_content_rev,lexicon_content_rev = 
@@ -179,6 +178,7 @@ let rec compile options fname =
      (HLog.error
       "there are still incomplete proofs at the end of the script"; 
      pp_times fname false big_bang;
+     LexiconSync.time_travel ~present:lexicon_status ~past:initial_lexicon_status;
      clean_exit baseuri false)
     else
      (if Helm_registry.get_bool "matita.moo" then begin
@@ -197,26 +197,39 @@ let rec compile options fname =
      HLog.message 
        (sprintf "execution of %s completed in %s." fname (hou^min^sec));
      pp_times fname true big_bang;
+     LexiconSync.time_travel ~present:lexicon_status ~past:initial_lexicon_status;
      true)
   with 
-  | End_of_file -> HLog.error "End_of_file?!"; clean_exit baseuri false
+  | End_of_file -> 
+      HLog.error "End_of_file"; 
+      pp_times fname false big_bang;
+      clean_exit baseuri false
+  | AttemptToInsertAnAlias lexicon_status -> 
+      pp_times fname false big_bang;
+      LexiconSync.time_travel ~present:lexicon_status ~past:initial_lexicon_status;
+      clean_exit baseuri false
   | Sys.Break as exn ->
-     if matita_debug then raise exn;
+     if matita_debug then raise exn; 
      HLog.error "user break!";
      pp_times fname false big_bang;
      clean_exit baseuri false
   | GrafiteEngine.Macro (floc, f) ->
-      (match f (get_macro_context (Some grafite_status)) with 
-      | _, GrafiteAst.Inline (_, style, suri, prefix) ->
-        let str =
-         ApplyTransformation.txt_of_inline_macro style suri prefix
-          ~map_unicode_to_tex:(Helm_registry.get_bool
-            "matita.paste_unicode_as_tex") in
-        !out str;
-        compile options fname 
-      | _ ->
-        let x, y = HExtlib.loc_of_floc floc in
-        HLog.error (sprintf "A macro has been found at %d-%d" x y);
+      (try
+        match f (get_macro_context (Some grafite_status)) with 
+        | _, GrafiteAst.Inline (_, style, suri, prefix) ->
+          let str =
+           ApplyTransformation.txt_of_inline_macro style suri prefix
+            ~map_unicode_to_tex:(Helm_registry.get_bool
+              "matita.paste_unicode_as_tex") in
+          !out str;
+          compile options fname 
+        | _ ->
+          let x, y = HExtlib.loc_of_floc floc in
+          HLog.error (sprintf "A macro has been found at %d-%d" x y);
+          pp_times fname false big_bang;
+          clean_exit baseuri false
+      with exn -> 
+        HLog.error (snd (MatitaExcPp.to_string exn)); 
         pp_times fname false big_bang;
         clean_exit baseuri false)
   | HExtlib.Localized (floc,CicNotationParser.Parse_error err) ->
@@ -225,7 +238,7 @@ let rec compile options fname =
       pp_times fname false big_bang;
       clean_exit baseuri false
   | exn ->
-       if matita_debug then raise exn;
+       if matita_debug then raise exn; 
        HLog.error (snd (MatitaExcPp.to_string exn));
        pp_times fname false big_bang;
        clean_exit baseuri false

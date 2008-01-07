@@ -1,4 +1,4 @@
-set "baseuri" "cic:/matita/tests/drop".
+
 
 alias id "O" = "cic:/Coq/Init/Datatypes/nat.ind#xpointer(1/1/1)".
 alias num (instance 0) = "natural number".

@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/tests/assumption".
-include "../legacy/coq.ma".
+
+include "coq.ma".
 
 alias id "nat" = "cic:/Coq/Init/Datatypes/nat.ind#xpointer(1/1)".
 alias num (instance 0) = "Coq natural number".

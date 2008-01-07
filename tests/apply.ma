@@ -13,8 +13,8 @@
 (**************************************************************************)
 
 (* test _with_ the WHD on the apply argument *)
-set "baseuri" "cic:/matita/tests/apply/".
-include "../legacy/coq.ma".
+
+include "coq.ma".
 
 alias id "not" = "cic:/Coq/Init/Logic/not.con".
 alias id "False" = "cic:/Coq/Init/Logic/False.ind#xpointer(1/1)".

@@ -1,5 +1,5 @@
-set "baseuri" "cic:/matita/TPTP/BOO024-1".
-include "../legacy/coq.ma".
+
+include "coq.ma".
 alias id "eq" = "cic:/Coq/Init/Logic/eq.ind#xpointer(1/1)".
 (* Inclusion of: BOO024-1.p *)
 (* -------------------------------------------------------------------------- *)

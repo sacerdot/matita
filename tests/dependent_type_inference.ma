@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/test/dependent_type_inference/".
+
 
 include "nat/nat.ma".
 

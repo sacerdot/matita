@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/tests/match_inference/".
+
 
 inductive pos: Set \def
 | one : pos

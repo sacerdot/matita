@@ -1,4 +1,4 @@
-set "baseuri" "cic:/matita/tests/interactive/instance/".
+
 
 whelp instance \lambda A:Set.\lambda P:A \to A \to Prop.\forall x:A. P x x.
 whelp instance \lambda A:Set.\lambda P:A \to A \to Prop.\forall x,y:A. P x y \to P y x.

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/tests/first/".
+
 
 inductive nat : Set \def
   | O : nat

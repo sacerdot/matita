@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/test/coercions_nonuniform/".
+
 
 axiom A : Type.
 axiom B : A -> Type.
@@ -21,7 +21,7 @@ axiom f1 : A -> A.
 
 axiom k : ∀a:A.B (f a).
 
-coercion cic:/matita/test/coercions_nonuniform/k.con.
+coercion cic:/matita/tests/coercions_nonuniform/k.con.
 
 axiom C : Type.
 
@@ -33,8 +33,8 @@ axiom C : Type.
 axiom c2 : ∀a.B (f a) -> B (f1 a).
 axiom c1 : ∀a:A. B (f1 a) -> C.
 
-coercion cic:/matita/test/coercions_nonuniform/c1.con.
-coercion cic:/matita/test/coercions_nonuniform/c2.con.
+coercion cic:/matita/tests/coercions_nonuniform/c1.con.
+coercion cic:/matita/tests/coercions_nonuniform/c2.con.
 
 axiom g : C -> C.
 

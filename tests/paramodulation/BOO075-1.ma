@@ -1,4 +1,4 @@
-set "baseuri" "cic:/matita/TPTP/BOO075-1".
+
 
 inductive eq (A:Type) (x:A) : A \to Prop \def refl_eq : eq A x x.
 
@@ -30,17 +30,17 @@ intros.elim H1.assumption.
 qed.
 
 default "equality"
- cic:/matita/TPTP/BOO075-1/eq.ind
- cic:/matita/TPTP/BOO075-1/sym_eq.con
- cic:/matita/TPTP/BOO075-1/trans_eq.con
- cic:/matita/TPTP/BOO075-1/eq_ind.con
- cic:/matita/TPTP/BOO075-1/eq_elim_r.con
- cic:/matita/TPTP/BOO075-1/eq_rec.con
- cic:/matita/TPTP/BOO075-1/eq_elim_r'.con
- cic:/matita/TPTP/BOO075-1/eq_rect.con
- cic:/matita/TPTP/BOO075-1/eq_elim_r''.con
- cic:/matita/TPTP/BOO075-1/eq_f.con
- cic:/matita/TPTP/BOO075-1/eq_f1.con.
+ cic:/matita/tests/paramodulation/BOO075-1/eq.ind
+ cic:/matita/tests/paramodulation/BOO075-1/sym_eq.con
+ cic:/matita/tests/paramodulation/BOO075-1/trans_eq.con
+ cic:/matita/tests/paramodulation/BOO075-1/eq_ind.con
+ cic:/matita/tests/paramodulation/BOO075-1/eq_elim_r.con
+ cic:/matita/tests/paramodulation/BOO075-1/eq_rec.con
+ cic:/matita/tests/paramodulation/BOO075-1/eq_elim_r'.con
+ cic:/matita/tests/paramodulation/BOO075-1/eq_rect.con
+ cic:/matita/tests/paramodulation/BOO075-1/eq_elim_r''.con
+ cic:/matita/tests/paramodulation/BOO075-1/eq_f.con
+ cic:/matita/tests/paramodulation/BOO075-1/eq_f1.con.
 
 theorem eq_f: \forall  A,B:Type.\forall f:A\to B.
   \forall x,y:A. eq A x y \to eq B (f x) (f y).
@@ -55,7 +55,7 @@ qed.
 inductive ex (A:Type) (P:A \to Prop) : Prop \def
     ex_intro: \forall x:A. P x \to ex A P.
 interpretation "exists" 'exists \eta.x =
-  (cic:/matita/TPTP/BOO075-1/ex.ind#xpointer(1/1) _ x).
+  (cic:/matita/tests/paramodulation/BOO075-1/ex.ind#xpointer(1/1) _ x).
 
 notation < "hvbox(\exists ident i opt (: ty) break . p)"
   right associative with precedence 20

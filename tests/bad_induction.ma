@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/nat/bad_induction".
+
 
 include "nat/nat.ma".
 

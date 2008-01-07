@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/tests/contradiction".
-include "../legacy/coq.ma".
+
+include "coq.ma".
 alias id "True" = "cic:/Coq/Init/Logic/True.ind#xpointer(1/1)".
 alias id "not" = "cic:/Coq/Init/Logic/not.con".
 alias num (instance 0) = "natural number".

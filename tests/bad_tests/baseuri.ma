@@ -12,5 +12,5 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/tests/baseuri/".
-set "baseuri" "cic:/matita/tests/baseuri/".
+
+

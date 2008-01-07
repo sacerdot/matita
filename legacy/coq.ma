@@ -12,8 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/legacy/coq/".
-
 default "equality"
  cic:/Coq/Init/Logic/eq.ind
  cic:/Coq/Init/Logic/sym_eq.con

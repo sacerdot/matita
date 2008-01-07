@@ -12,9 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/tests/metasenv_ordering".
 
-include "../legacy/coq.ma".
+
+include "coq.ma".
 
 alias num (instance 0) = "natural number".
 alias id "nat" = "cic:/Coq/Init/Datatypes/nat.ind#xpointer(1/1)".

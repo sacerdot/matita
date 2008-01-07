@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/tests/third/".
+
 alias id "nat" = "cic:/matita/tests/first/nat.ind#xpointer(1/1)".
 alias id "O" = "cic:/matita/tests/first/nat.ind#xpointer(1/1/1)".
 alias id "eq" = "cic:/matita/tests/first/eq.ind#xpointer(1/1)".

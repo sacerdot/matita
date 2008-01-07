@@ -12,6 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/tests/mysql_escaping/".
+
 
 theorem a' : Prop \to Prop.intros.assumption.qed.

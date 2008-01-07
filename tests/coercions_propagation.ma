@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/test/coercions_propagation/".
+
 
 include "logic/connectives.ma".
 include "nat/orders.ma".
@@ -21,15 +21,15 @@ inductive sigma (A:Type) (P:A → Prop) : Type ≝
  sigma_intro: ∀a:A. P a → sigma A P.
 
 interpretation "sigma" 'exists \eta.x =
-  (cic:/matita/test/coercions_propagation/sigma.ind#xpointer(1/1) _ x).
+  (cic:/matita/tests/coercions_propagation/sigma.ind#xpointer(1/1) _ x).
   
 definition inject ≝ λP.λa:nat.λp:P a. sigma_intro ? P ? p.
 
-coercion cic:/matita/test/coercions_propagation/inject.con 0 1.
+coercion cic:/matita/tests/coercions_propagation/inject.con 0 1.
 
 definition eject ≝ λP.λc: ∃n:nat.P n. match c with [ sigma_intro w _ ⇒ w].
 
-coercion cic:/matita/test/coercions_propagation/eject.con.
+coercion cic:/matita/tests/coercions_propagation/eject.con.
 
 alias num (instance 0) = "natural number".
 theorem test: ∃n. 0 ≤ n.
@@ -71,11 +71,11 @@ inductive NN (A:Type) : nat -> Type ≝
  
 definition injectN ≝ λA,k.λP.λa:NN A k.λp:P a. sigma_intro ? P ? p.
 
-coercion cic:/matita/test/coercions_propagation/injectN.con 0 1.
+coercion cic:/matita/tests/coercions_propagation/injectN.con 0 1.
 
 definition ejectN ≝ λA,k.λP.λc: ∃n:NN A k.P n. match c with [ sigma_intro w _ ⇒ w].
 
-coercion cic:/matita/test/coercions_propagation/ejectN.con.
+coercion cic:/matita/tests/coercions_propagation/ejectN.con.
 
 definition PN :=
  λA,k.λx:NN A k. 1 <= k.

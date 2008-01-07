@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/test/".
+
 
 include "logic/equality.ma".
 
@@ -31,7 +31,7 @@ lemma r2 : R → R2.
  [ exact (C r)
  | rewrite > (with_ r); exact (mult (r2_ r))]
 qed.
-coercion cic:/matita/test/r2.con.
+coercion cic:/matita/tests/multiple_inheritance/r2.con.
 
 (* convertibility test *)
 lemma conv_test : ∀r:R.C r -> K r.

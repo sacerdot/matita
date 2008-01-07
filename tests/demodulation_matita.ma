@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/demodulation_matita/".
+
 
 include "nat/minus.ma".
 

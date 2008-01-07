@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/test/".
+
 
 include "logic/equality.ma".
 include "nat/nat.ma".
@@ -27,8 +27,8 @@ axiom eatB : ∀n. B n -> A O.
 axiom jmcBA : ∀n,m.∀p:A n = B m.B m -> A n. 
 axiom jmcAB : ∀n,m.∀p:A n = B m.A n -> B m.
 
-coercion cic:/matita/test/jmcAB.con.
-coercion cic:/matita/test/jmcBA.con.
+coercion cic:/matita/tests/coercions_open/jmcAB.con.
+coercion cic:/matita/tests/coercions_open/jmcBA.con.
 
 axiom daemon : ∀x,y:A O.x = y.
 

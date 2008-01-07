@@ -2,7 +2,7 @@ library_notation.ma Q/q.ma Z/compare.ma Z/orders.ma Z/plus.ma Z/times.ma Z/z.ma 
 Z/dirichlet_product.ma Z/sigma_p.ma Z/times.ma nat/primes.ma
 Z/moebius.ma Z/sigma_p.ma nat/factorization.ma
 Z/times.ma Z/plus.ma nat/lt_arith.ma
-Z/orders.ma logic/connectives.ma Z/z.ma nat/orders.ma
+Z/orders.ma Z/z.ma logic/connectives.ma nat/orders.ma
 Z/inversion.ma Z/dirichlet_product.ma Z/moebius.ma
 Z/plus.ma Z/z.ma nat/minus.ma
 Z/compare.ma Z/orders.ma nat/compare.ma
@@ -16,8 +16,8 @@ assembly/extra.ma list/list.ma nat/div_and_mod.ma nat/primes.ma
 datatypes/constructors.ma logic/equality.ma
 datatypes/compare.ma 
 datatypes/bool.ma higher_order_defs/functions.ma logic/equality.ma
-algebra/groups.ma logic/connectives.ma algebra/monoids.ma datatypes/bool.ma nat/compare.ma nat/le_arith.ma
-algebra/finite_groups.ma nat/relevant_equations.ma algebra/groups.ma
+algebra/groups.ma algebra/monoids.ma datatypes/bool.ma logic/connectives.ma nat/compare.ma nat/le_arith.ma
+algebra/finite_groups.ma algebra/groups.ma nat/relevant_equations.ma
 algebra/semigroups.ma higher_order_defs/functions.ma
 algebra/monoids.ma algebra/semigroups.ma
 algebra/CoRN/SetoidInc.ma algebra/CoRN/SetoidFun.ma
@@ -25,10 +25,10 @@ algebra/CoRN/SemiGroups.ma algebra/CoRN/SetoidInc.ma
 algebra/CoRN/Setoids.ma Z/plus.ma datatypes/constructors.ma higher_order_defs/relations.ma logic/equality.ma nat/nat.ma
 algebra/CoRN/SetoidFun.ma algebra/CoRN/Setoids.ma higher_order_defs/relations.ma
 demo/propositional_sequent_calculus.ma datatypes/constructors.ma list/sort.ma nat/compare.ma nat/plus.ma
-demo/power_derivative.ma nat/nat.ma nat/compare.ma nat/orders.ma nat/plus.ma
+demo/power_derivative.ma nat/compare.ma nat/nat.ma nat/orders.ma nat/plus.ma
 list/sort.ma datatypes/bool.ma datatypes/constructors.ma list/list.ma
 list/list.ma higher_order_defs/functions.ma logic/equality.ma nat/nat.ma
-logic/equality.ma logic/connectives.ma higher_order_defs/relations.ma
+logic/equality.ma higher_order_defs/relations.ma logic/connectives.ma
 logic/connectives.ma 
 logic/coimplication.ma logic/connectives.ma
 logic/connectives2.ma higher_order_defs/relations.ma
@@ -64,7 +64,7 @@ nat/iteration2.ma nat/count.ma nat/generic_iter_p.ma nat/ord.ma nat/primes.ma
 nat/nat.ma higher_order_defs/functions.ma
 nat/relevant_equations.ma nat/gcd.ma nat/minus.ma nat/times.ma
 nat/map_iter_p.ma nat/count.ma nat/permutation.ma
-nat/orders.ma logic/connectives.ma higher_order_defs/ordering.ma nat/nat.ma
+nat/orders.ma higher_order_defs/ordering.ma logic/connectives.ma nat/nat.ma
 nat/pi_p.ma nat/generic_iter_p.ma nat/iteration2.ma nat/primes.ma
 nat/plus.ma nat/nat.ma
 nat/euler_theorem.ma nat/nat.ma nat/map_iter_p.ma nat/totient.ma

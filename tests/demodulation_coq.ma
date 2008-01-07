@@ -12,9 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/demodulation/".
 
-include "../legacy/coq.ma".
+
+include "coq.ma".
 
 alias num = "Coq natural number".
 alias symbol "times" = "Coq's natural times".

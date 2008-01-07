@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/tests/test3/".
-include "../legacy/coq.ma".
+
+include "coq.ma".
 
 alias symbol "eq" (instance 0) = "Coq's leibnitz's equality".
 theorem a:\forall x.x=x.

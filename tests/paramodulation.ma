@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/tests/paramodulation".
-include "../legacy/coq.ma".
+
+include "coq.ma".
 alias id "nat" = "cic:/Coq/Init/Datatypes/nat.ind#xpointer(1/1)".
 alias symbol "eq" (instance 0) = "Coq's leibnitz's equality".
 alias symbol "plus" (instance 0) = "Coq's natural plus".

@@ -1,4 +1,4 @@
-set "baseuri" "cic:/matita/tests/interactive/test5/".
+
 
 whelp instance 
   \lambda A:Set. 

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/tests/paramodulation/irratsqrt2/".
+
 
 include "nat/times.ma".
 include "nat/minus.ma".

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/test/tacticals".
+
 
 inductive myand (A, B: Prop) : Prop \def
  | myconj : ∀a:A.∀b:B. myand A B. 

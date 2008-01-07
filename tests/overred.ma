@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/test/overred/".
+
 
 include "logic/equality.ma".
 
@@ -24,7 +24,7 @@ definition T3 : Type := T2.
 axiom t3 : T3.
 axiom c : T2 -> X -> X.
 
-coercion cic:/matita/test/overred/c.con 1.
+coercion cic:/matita/tests/overred/c.con 1.
 
 axiom daemon : c t3 x = x. 
 

@@ -1,4 +1,4 @@
-set "baseuri" "cic:/matita/TPTP/RNG024-7".
+
 include "logic/equality.ma".
 (* Inclusion of: RNG024-7.p *)
 (* -------------------------------------------------------------------------- *)

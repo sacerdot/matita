@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/tests/inversion2/".
-include "../legacy/coq.ma".
+
+include "coq.ma".
 
 inductive nat : Set \def
    O : nat

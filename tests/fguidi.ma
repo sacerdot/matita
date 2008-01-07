@@ -12,13 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/tests/fguidi/".
-include "../legacy/coq.ma".
+
+include "coq.ma".
 
 alias id "O" = "cic:/Coq/Init/Datatypes/nat.ind#xpointer(1/1/1)".
 alias id "nat" = "cic:/Coq/Init/Datatypes/nat.ind#xpointer(1/1)".
 alias id "S" = "cic:/Coq/Init/Datatypes/nat.ind#xpointer(1/1/2)".
-alias id "le" = "cic:/matita/fguidi/le.ind#xpointer(1/1)".
+alias id "le" = "cic:/matita/tests/fguidi/le.ind#xpointer(1/1)".
 alias id "False_ind" = "cic:/Coq/Init/Logic/False_ind.con".
 alias id "I" = "cic:/Coq/Init/Logic/True.ind#xpointer(1/1/1)". 
 alias id "ex_intro" = "cic:/Coq/Init/Logic/ex.ind#xpointer(1/1/1)".

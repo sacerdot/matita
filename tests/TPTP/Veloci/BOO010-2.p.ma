@@ -1,4 +1,4 @@
-set "baseuri" "cic:/matita/TPTP/BOO010-2".
+
 include "logic/equality.ma".
 (* Inclusion of: BOO010-2.p *)
 (* -------------------------------------------------------------------------- *)

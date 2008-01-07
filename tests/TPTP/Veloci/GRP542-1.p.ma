@@ -1,4 +1,4 @@
-set "baseuri" "cic:/matita/TPTP/GRP542-1".
+
 include "logic/equality.ma".
 (* Inclusion of: GRP542-1.p *)
 (* -------------------------------------------------------------------------- *)

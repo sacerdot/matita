@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/test/russell/".
+
 
 include "nat/orders.ma".
 include "list/list.ma".
@@ -22,15 +22,15 @@ inductive sigma (A:Type) (P:A → Prop) : Type ≝
  sig_intro: ∀a:A. P a → sigma A P.
 
 interpretation "sigma" 'exists \eta.x =
-  (cic:/matita/test/russell/sigma.ind#xpointer(1/1) _ x).
+  (cic:/matita/tests/coercions_russell/sigma.ind#xpointer(1/1) _ x).
  
 definition inject ≝ λP.λa:list nat.λp:P a. sig_intro ? P ? p.
 
-coercion cic:/matita/test/russell/inject.con 0 1.
+coercion cic:/matita/tests/coercions_russell/inject.con 0 1.
 
 definition eject ≝ λP.λc: ∃n:list nat.P n. match c with [ sig_intro w _ ⇒ w].
 
-coercion cic:/matita/test/russell/eject.con.
+coercion cic:/matita/tests/coercions_russell/eject.con.
   
 alias symbol "exists" (instance 2) = "exists".
 lemma tl : ∀l:list nat. l ≠ [] → ∃l1.∃a.a :: l1 = l.
@@ -55,7 +55,7 @@ qed.
 
 definition nat_return := λn:nat. Some ? n.
 
-coercion cic:/matita/test/russell/nat_return.con.
+coercion cic:/matita/tests/coercions_russell/nat_return.con.
 
 definition raise_exn := None nat.
 
@@ -76,11 +76,11 @@ include "nat/compare.ma".
 
 definition inject_opt ≝ λP.λa:option nat.λp:P a. sig_intro ? P ? p.
 
-coercion cic:/matita/test/russell/inject_opt.con 0 1.
+coercion cic:/matita/tests/coercions_russell/inject_opt.con 0 1.
 
 definition eject_opt ≝ λP.λc: ∃n:option nat.P n. match c with [ sig_intro w _ ⇒ w].
 
-coercion cic:/matita/test/russell/eject_opt.con.
+coercion cic:/matita/tests/coercions_russell/eject_opt.con.
 
 (* we may define mem as in the following lemma and get rid of it *)
 definition find_spec ≝
@@ -106,7 +106,7 @@ definition if : ∀A:Type.bool → A → A → A ≝
  
 notation < "'If' \nbsp b \nbsp 'Then' \nbsp t \nbsp 'Else' \nbsp f" for @{ 'if $b $t $f }.
 notation > "'If' b 'Then' t 'Else' f" for @{ 'if $b $t $f }.
-interpretation "if" 'if a b c = (cic:/matita/test/russell/if.con _ a b c). 
+interpretation "if" 'if a b c = (cic:/matita/tests/coercions_russell/if.con _ a b c). 
 
 definition sigma_find_spec : ∀p,l. sigma ? (λres.find_spec l p res).
 (* define the find function *) 

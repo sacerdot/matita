@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/tests/test4/".
-include "../legacy/coq.ma".
+
+include "coq.ma".
 
 
 (* commento che va nell'ast, ma non viene contato

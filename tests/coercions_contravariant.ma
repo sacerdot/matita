@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/test/".
+
 
 include "logic/equality.ma".
 include "nat/nat.ma".
@@ -26,8 +26,8 @@ axiom d : ∀n,m. B n -> B1 m.
 axiom f : ∀n,m. A n -> B m.
 axiom g : ∀n.B n.
 
-coercion cic:/matita/test/c.con.
-coercion cic:/matita/test/d.con.
+coercion cic:/matita/tests/coercions_contravariant/c.con.
+coercion cic:/matita/tests/coercions_contravariant/d.con.
 
 definition foo :=  λn,n1,m,m1.(λx.d m m1 (f n m (c n1 n x)) : A1 n1 -> B1 m1).
 definition foo1_1 := λn,n1,m,m1.(f n m : A1 n1 -> B1 m1).

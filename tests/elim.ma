@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/tests/elim".
-include "../legacy/coq.ma".
+
+include "coq.ma".
 
 inductive stupidtype: Set \def
   | Base : stupidtype

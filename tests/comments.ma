@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/tests/comments/".
-include "../legacy/coq.ma".
+
+include "coq.ma".
 
 (* commento che va nell'ast, ma non viene contato
     come step perche' non e' un executable

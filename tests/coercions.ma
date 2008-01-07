@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/tests/coercions/".
+
 
 include "nat/compare.ma".
 include "nat/times.ma".

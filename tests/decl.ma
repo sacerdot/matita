@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/tests/decl".
+
 
 include "nat/times.ma".
 include "nat/orders.ma".

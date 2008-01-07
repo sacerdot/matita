@@ -12,6 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/xxx".
+
 
 theorem t: And True (eq nat O O). split. exact (refl_equal nat O). exact I. qed.

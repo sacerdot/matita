@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/tests/simpl/".
-include "../legacy/coq.ma".
+
+include "coq.ma".
 
 alias symbol "eq" (instance 0) = "Coq's leibnitz's equality".
 alias id "plus" = "cic:/Coq/Init/Peano/plus.con".

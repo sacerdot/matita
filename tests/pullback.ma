@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/tests/pullback".
+
 
 inductive T : Type \def t : T.
 inductive L : Type \def l : L.
