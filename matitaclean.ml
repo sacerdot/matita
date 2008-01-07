@@ -55,54 +55,69 @@ let ask_confirmation _ =
     end
 ;;
 
+let clean_all () =
+  if Helm_registry.get_bool "matita.system" then
+    ask_confirmation ();
+  LibraryDb.clean_owner_environment ();
+  let prefixes = 
+    HExtlib.filter_map 
+      (fun s -> 
+        if String.sub s 0 5 = "file:" then 
+          Some (Str.replace_first (Str.regexp "^file://") "" s)
+        else
+          None)
+      (Http_getter_storage.list_writable_prefixes ())
+  in
+  List.iter 
+    (fun xmldir ->
+      let clean_pat =
+        String.concat " -o "
+          (List.map (fun suf -> "-name \\*" ^ suf) clean_suffixes) in
+      let clean_cmd =
+        sprintf "find %s \\( %s \\) -exec rm \\{\\} \\; 2> /dev/null"
+          xmldir clean_pat in
+      ignore (Sys.command clean_cmd);
+      ignore 
+       (Sys.command ("find " ^ xmldir ^ 
+        " -type d -exec rmdir -p {} \\; 2> /dev/null"))) 
+    prefixes
+;;
+
 let main () =
   let _ = MatitaInit.initialize_all () in
   if not (Helm_registry.get_bool "matita.verbose") then MatitaMisc.shutup ();
-  match Helm_registry.get_list Helm_registry.string "matita.args" with
-  | [ "all" ] ->
-      if Helm_registry.get_bool "matita.system" then
-        ask_confirmation ();
-      LibraryDb.clean_owner_environment ();
-      let prefixes = 
-        HExtlib.filter_map 
-          (fun s -> 
-            if String.sub s 0 5 = "file:" then 
-              Some (Str.replace_first (Str.regexp "^file://") "" s)
-            else
-              None)
-          (Http_getter_storage.list_writable_prefixes ())
-      in
-      List.iter 
-        (fun xmldir ->
-          let clean_pat =
-            String.concat " -o "
-              (List.map (fun suf -> "-name \\*" ^ suf) clean_suffixes) in
-          let clean_cmd =
-            sprintf "find %s \\( %s \\) -exec rm \\{\\} \\; 2> /dev/null"
-              xmldir clean_pat in
-          ignore (Sys.command clean_cmd);
-          ignore 
-           (Sys.command ("find " ^ xmldir ^ 
-            " -type d -exec rmdir -p {} \\; 2> /dev/null"))) 
-        prefixes;
-      exit 0
-  | [] -> MatitaInit.die_usage ()
-  | files ->
-     let uris_to_remove =
-      List.fold_left
-        (fun uris_to_remove suri ->
-          let uri = 
-            try
-              UM.buri_of_uri (UM.uri_of_string suri)
-            with UM.IllFormedUri _ ->
-              let _,u,_,_ = Librarian.baseuri_of_script ~include_paths:[] suri in
-              if String.length u < 5 || String.sub u 0 5 <> "cic:/" then begin
-                HLog.error (sprintf "File %s defines a bad baseuri: %s"
-                  suri u);
-                exit 1
-              end else
-                u
-          in
-           uri::uris_to_remove) [] files
-     in
-      LibraryClean.clean_baseuris uris_to_remove
+  let files =
+    match Helm_registry.get_list Helm_registry.string "matita.args" with
+    | [ "all" ] -> clean_all (); exit 0
+    | [] -> 
+        (match Librarian.find_roots_in_dir (Sys.getcwd ()) with
+        | [x] -> 
+           Sys.chdir (Filename.dirname x); 
+           HExtlib.find ~test:(fun x -> Filename.check_suffix x ".ma") "."
+        | [] -> 
+           prerr_endline "No targets and no root found"; exit 1
+        | roots -> 
+           let roots = List.map (HExtlib.chop_prefix (Sys.getcwd()^"/")) roots in
+           prerr_endline ("Too many roots found:\n\t" ^ String.concat "\n\t" roots);
+           prerr_endline ("\nEnter one of these directories and retry");
+           exit 1);
+    | files -> files
+  in
+  let uris_to_remove =
+   List.fold_left
+     (fun uris_to_remove suri ->
+       let uri = 
+         try
+           UM.buri_of_uri (UM.uri_of_string suri)
+         with UM.IllFormedUri _ ->
+           let _,u,_,_ = Librarian.baseuri_of_script ~include_paths:[] suri in
+           if String.length u < 5 || String.sub u 0 5 <> "cic:/" then begin
+             HLog.error (sprintf "File %s defines a bad baseuri: %s"
+               suri u);
+             exit 1
+           end else
+             u
+       in
+        uri::uris_to_remove) [] files
+  in
+   LibraryClean.clean_baseuris uris_to_remove
