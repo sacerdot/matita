@@ -691,7 +691,6 @@ class script  ~(source_view: GSourceView.source_view)
               ~set_star
               ~ask_confirmation
               ~urichooser 
-              ~rootcreator 
               () =
 let buffer = source_view#buffer in
 let source_buffer = source_view#source_buffer in
@@ -733,7 +732,8 @@ object (self)
   method has_name = filename_ <> None
   
   method include_paths =
-    include_paths_
+    include_paths_ @ 
+    Helm_registry.get_list Helm_registry.string "matita.includes"
 
   method private curdir =
     try
@@ -1146,10 +1146,10 @@ end
 
 let _script = ref None
 
-let script ~source_view ~mathviewer ~urichooser ~rootcreator ~ask_confirmation ~set_star ()
+let script ~source_view ~mathviewer ~urichooser ~ask_confirmation ~set_star ()
 =
   let s = new script 
-    ~source_view ~mathviewer ~ask_confirmation ~urichooser ~rootcreator ~set_star () 
+    ~source_view ~mathviewer ~ask_confirmation ~urichooser ~set_star () 
   in
   _script := Some s;
   s

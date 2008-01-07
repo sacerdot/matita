@@ -93,7 +93,6 @@ val script:
   source_view:GSourceView.source_view -> 
   mathviewer: MatitaTypes.mathViewer-> 
   urichooser: (UriManager.uri list -> UriManager.uri list) -> 
-  rootcreator: (containing:string option -> unit) ->
   ask_confirmation: 
     (title:string -> message:string -> [`YES | `NO | `CANCEL]) -> 
   set_star: (bool -> unit) ->

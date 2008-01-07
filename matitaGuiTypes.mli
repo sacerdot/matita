@@ -49,7 +49,6 @@ object
   method fileSel :      MatitaGeneratedGui.fileSelectionWin
   method main :         MatitaGeneratedGui.mainWin
   method findRepl :     MatitaGeneratedGui.findReplWin
-  method newRoot:      MatitaGeneratedGui.newRootWin
 (*   method toolbar :      MatitaGeneratedGui.toolBarWin *)
 
   method console:       console
@@ -86,7 +85,6 @@ object
     * @param ok_not_exists if set to true returns also non existent files
     * (useful for save). Defaults to false *)
   method chooseFile: ?ok_not_exists:bool -> unit -> string option
-  method createRoot: containing:string option -> unit
 
     (** prompt the user for a (multiline) text entry *)
   method askText: ?title:string -> ?msg:string -> unit -> string option

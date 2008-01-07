@@ -65,7 +65,6 @@ let script =
         (fun ~title ~message -> 
             MatitaGtkMisc.ask_confirmation ~title ~message 
             ~parent:gui#main#toplevel ())
-      ~rootcreator:gui#createRoot
       ()
   in
   gui#sourceView#source_buffer#begin_not_undoable_action ();

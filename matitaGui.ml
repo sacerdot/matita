@@ -363,7 +363,6 @@ class gui () =
   let main = new mainWin () in
   let fileSel = new fileSelectionWin () in
   let findRepl = new findReplWin () in
-  let newRoot = new newRootWin () in
   let keyBindingBoxes = (* event boxes which should receive global key events *)
     [ main#mainWinEventBox ]
   in
@@ -387,7 +386,6 @@ class gui () =
     val mutable _ok_not_exists = false
     val mutable _only_directory = false
     val mutable font_size = default_font_size
-    val mutable next_root_must_contain = None
     val mutable next_ligatures = []
     val clipboard = GData.clipboard Gdk.Atom.clipboard
     val primary = GData.clipboard Gdk.Atom.primary
@@ -721,26 +719,6 @@ class gui () =
           f (); source_view#misc#grab_focus ()
          with
           exc -> source_view#misc#grab_focus (); raise exc in
-      (* add root win *)
-      connect_button newRoot#addButton 
-       (fun () -> 
-          let name = newRoot#buriEntry#text in
-          let root = newRoot#rootEntry#text in
-          if next_root_must_contain = Some "xxx" then ();
-          HLog.error ("implement me: "^root^" "^name);
-          newRoot#buriEntry#set_text "";
-          newRoot#rootEntry#set_text "";
-          newRoot#toplevel#misc#hide());
-      connect_button newRoot#chooseRootButton 
-       (fun () ->
-         let path = self#chooseDir () in
-         match path with
-         | Some path -> newRoot#rootEntry#set_text path
-         | None -> ());
-      connect_button newRoot#cancelButton 
-       (fun () -> newRoot#toplevel#misc#hide ());
-      ignore(newRoot#toplevel#event#connect#delete 
-        (fun _ -> newRoot#toplevel#misc#hide();true));
       
         (* file selection win *)
       ignore (fileSel#fileSelectionWin#event#connect#delete (fun _ -> true));
@@ -1188,7 +1166,6 @@ class gui () =
     method fileSel = fileSel
     method findRepl = findRepl
     method main = main
-    method newRoot = newRoot
 
     method newBrowserWin () =
       object (self)
@@ -1242,10 +1219,6 @@ class gui () =
       (* we should check that this is a directory *)
       chosen_file
   
-    method createRoot ~containing =
-      next_root_must_contain <- containing;
-      newRoot#toplevel#misc#show()
-
     method askText ?(title = "") ?(msg = "") () =
       let dialog = new textDialog () in
       dialog#textDialog#set_title title;
