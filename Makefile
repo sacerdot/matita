@@ -225,12 +225,10 @@ ifeq ($(DISTRIBUTED),yes)
 
 dist_library: install_preliminaries dist_library@standard-library
 dist_library@%: 
-	$(H)echo "MATITAMAKE init $*"
-	$(H)(HOME=$(WHERE) USER=builder MATITA_RT_BASE_DIR=$(WHERE) MATITA_FLAGS='$(MATITA_CFLAGS)' $(WHERE)/matitamake init $* $(WHERE)/ma/$*)
-	$(H)echo "MATITAMAKE publish $*"
-	$(H)(HOME=$(WHERE) USER=builder MATITA_RT_BASE_DIR=$(WHERE) MATITA_FLAGS='$(MATITA_CFLAGS)' $(WHERE)/matitamake publish $*)
-	$(H)echo "MATITAMAKE destroy $*"
-	$(H)(HOME=$(WHERE) USER=builder MATITA_RT_BASE_DIR=$(WHERE) MATITA_FLAGS='$(MATITA_CFLAGS)' $(WHERE)/matitamake destroy $*)
+	$(H)echo "publish $*"
+	$(H)cd $*;(HOME=$(WHERE) USER=builder MATITA_RT_BASE_DIR=$(WHERE) MATITA_FLAGS='$(MATITA_CFLAGS)' $(WHERE)/matitac -system)
+	$(H)echo "destroy $*"
+	$(H)cd $*;(HOME=$(WHERE) USER=builder MATITA_RT_BASE_DIR=$(WHERE) MATITA_FLAGS='$(MATITA_CFLAGS)' $(WHERE)/matitacclean)
 	# sqlite3 only
 	$(H)cp $(WHERE)/.matita/matita.db  $(WHERE)/metadata.db || true
 	#$(H)rm -rf $(WHERE)/.matita/
