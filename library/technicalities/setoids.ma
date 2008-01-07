@@ -18,8 +18,8 @@
 
 
 include "datatypes/constructors.ma".
-include "logic/connectives2.ma".
 include "logic/coimplication.ma".
+include "logic/connectives2.ma".
 
 (* DEFINITIONS OF Relation_Class AND n-ARY Morphism_Theory *)
 
