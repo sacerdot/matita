@@ -100,7 +100,7 @@
 	for example, consider the following files and directories, and
 	assume you keep files in &quot;list&quot; separated from files
 	in &quot;sort&quot; (for example the former directory may contain
-	functions on proofs about lists, while latter sorting algorithms
+	functions and proofs about lists, while latter sorting algorithms
 	for lists):
 <programlisting><![CDATA[
   list/
