@@ -169,6 +169,8 @@ let main () =
           acc d)
       [] deps
   in
-  Librarian.write_deps_file (Sys.getcwd()) (deps@List.map (fun x -> x,[]) extern)
+  Librarian.write_deps_file (Sys.getcwd()) 
+   (deps@HExtlib.list_uniq (List.sort Pervasives.compare (List.map (fun x ->
+           x,[]) extern)))
 ;;
 
