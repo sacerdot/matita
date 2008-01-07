@@ -225,10 +225,12 @@ ifeq ($(DISTRIBUTED),yes)
 
 dist_library: install_preliminaries dist_library@standard-library
 dist_library@%: 
+	$(H)echo "depend $*"
+	$(H)cd $*;(HOME=$(WHERE) USER=builder MATITA_RT_BASE_DIR=$(WHERE) MATITA_FLAGS='$(MATITA_CFLAGS)' $(WHERE)/matitadep)
 	$(H)echo "publish $*"
 	$(H)cd $*;(HOME=$(WHERE) USER=builder MATITA_RT_BASE_DIR=$(WHERE) MATITA_FLAGS='$(MATITA_CFLAGS)' $(WHERE)/matitac -system)
 	$(H)echo "destroy $*"
-	$(H)cd $*;(HOME=$(WHERE) USER=builder MATITA_RT_BASE_DIR=$(WHERE) MATITA_FLAGS='$(MATITA_CFLAGS)' $(WHERE)/matitacclean)
+	$(H)cd $*;(HOME=$(WHERE) USER=builder MATITA_RT_BASE_DIR=$(WHERE) MATITA_FLAGS='$(MATITA_CFLAGS)' $(WHERE)/matitaclean)
 	# sqlite3 only
 	$(H)cp $(WHERE)/.matita/matita.db  $(WHERE)/metadata.db || true
 	#$(H)rm -rf $(WHERE)/.matita/
