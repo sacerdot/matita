@@ -56,12 +56,12 @@ matitaprover.cmo: matitaInit.cmi matitaExcPp.cmi matitaEngine.cmi \
     buildTimeConf.cmx matitaprover.cmi 
 matitaprover.cmx: matitaInit.cmx matitaExcPp.cmx matitaEngine.cmx \
     buildTimeConf.cmx matitaprover.cmi 
-matitaScript.cmo: matitaTypes.cmi matitaMisc.cmi matitaGtkMisc.cmi \
-    matitaEngine.cmi buildTimeConf.cmx applyTransformation.cmi \
-    matitaScript.cmi 
-matitaScript.cmx: matitaTypes.cmx matitaMisc.cmx matitaGtkMisc.cmx \
-    matitaEngine.cmx buildTimeConf.cmx applyTransformation.cmx \
-    matitaScript.cmi 
+matitaScript.cmo: matitacLib.cmi matitaTypes.cmi matitaMisc.cmi \
+    matitaGtkMisc.cmi matitaEngine.cmi buildTimeConf.cmx \
+    applyTransformation.cmi matitaScript.cmi 
+matitaScript.cmx: matitacLib.cmx matitaTypes.cmx matitaMisc.cmx \
+    matitaGtkMisc.cmx matitaEngine.cmx buildTimeConf.cmx \
+    applyTransformation.cmx matitaScript.cmi 
 matitaTypes.cmo: matitaTypes.cmi 
 matitaTypes.cmx: matitaTypes.cmi 
 matitaWiki.cmo: matitaInit.cmi matitaExcPp.cmi matitaEngine.cmi \

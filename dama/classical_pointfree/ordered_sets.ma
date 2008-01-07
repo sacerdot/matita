@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/classical_pointwise/ordered_sets/".
+
 
 include "excess.ma".
 
@@ -320,10 +320,10 @@ notation "hvbox(〈a〉)"
 for @{ 'hide_everything_but $a }.
 
 interpretation "mk_bounded_above_sequence" 'hide_everything_but a
-= (cic:/matita/ordered_set/bounded_above_sequence.ind#xpointer(1/1/1) _ _ a _).
+= (cic:/matita/classical_pointfree/ordered_sets/bounded_above_sequence.ind#xpointer(1/1/1) _ _ a _).
 
 interpretation "mk_bounded_below_sequence" 'hide_everything_but a
-= (cic:/matita/ordered_set/bounded_below_sequence.ind#xpointer(1/1/1) _ _ a _).
+= (cic:/matita/classical_pointfree/ordered_sets/bounded_below_sequence.ind#xpointer(1/1/1) _ _ a _).
 
 theorem eq_f_sup_sup_f:
  ∀O':dedekind_sigma_complete_ordered_set.

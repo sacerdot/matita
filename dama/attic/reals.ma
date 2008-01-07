@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/reals/".
+
 
 include "attic/ordered_fields_ch0.ma".
 

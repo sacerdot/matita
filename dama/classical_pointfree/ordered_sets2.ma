@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/classical_pointfree/ordered_sets2".
+
 
 include "classical_pointfree/ordered_sets.ma".
 
@@ -61,7 +61,7 @@ theorem le_to_le_sup_sup:
 qed. 
 
 interpretation "mk_bounded_sequence" 'hide_everything_but a
-= (cic:/matita/ordered_set/bounded_sequence.ind#xpointer(1/1/1) _ _ a _ _).
+= (cic:/matita/classical_pointfree/ordered_sets/bounded_sequence.ind#xpointer(1/1/1) _ _ a _ _).
 
 lemma reduce_bas_seq:
  ∀O:ordered_set.∀a:nat→O.∀p.∀i.

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/vector_spaces/".
+
 
 include "attic/reals.ma".
 
@@ -31,7 +31,7 @@ record vector_space (K:field): Type \def
 }.
 
 interpretation "Vector space external product" 'times a b =
- (cic:/matita/vector_spaces/emult.con _ _ a b).
+ (cic:/matita/attic/vector_spaces/emult.con _ _ a b).
 
 record is_semi_norm (R:real) (V: vector_space R) (semi_norm:V→R) : Prop \def
  { sn_positive: ∀x:V. zero R ≤ semi_norm x;

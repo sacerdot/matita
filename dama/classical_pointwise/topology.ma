@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/topology/".
+
 
 include "classical_pointwise/sets.ma".
 

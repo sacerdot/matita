@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/sigma_algebra/".
+
 
 include "classical_pointwise/topology.ma".
 

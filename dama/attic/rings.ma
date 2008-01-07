@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/rings/".
+
 
 include "group.ma".
 
@@ -66,13 +66,13 @@ theorem not_eq_zero_one: ∀R:ring.0 ≠ one R.
 qed.
 
 interpretation "Ring mult" 'times a b =
- (cic:/matita/rings/mult.con _ a b).
+ (cic:/matita/attic/rings/mult.con _ a b).
 
 notation "1" with precedence 89
 for @{ 'one }.
 
 interpretation "Ring one" 'one =
- (cic:/matita/rings/one.con _).
+ (cic:/matita/attic/rings/one.con _).
 
 lemma eq_mult_zero_x_zero: ∀R:ring.∀x:R.0*x=0.
  intros;

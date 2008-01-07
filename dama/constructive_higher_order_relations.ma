@@ -12,9 +12,10 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/constructive_higher_order_relations".
+
 
 include "constructive_connectives.ma".
+include "higher_order_defs/relations.ma".
 
 definition cotransitive ≝
  λC:Type.λlt:C→C→Type.∀x,y,z:C. lt x y → lt x z ∨ lt z y. 

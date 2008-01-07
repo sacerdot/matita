@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/metric_space/".
+
 
 include "ordered_divisible_group.ma".
 

@@ -37,23 +37,24 @@ let main () =
   let baseuri_of_inv = Hashtbl.create 13 in
   let dot_file = ref "" in
   (* helpers *)
-  let include_paths = 
-    Helm_registry.get_list Helm_registry.string "matita.includes" 
-  in
+  let include_paths = ref [] in
   let baseuri_of_script s = 
      try Hashtbl.find baseuri_of s 
      with Not_found -> 
-       let _,b,_,_ = Librarian.baseuri_of_script ~include_paths s in
+       let _,b,_,_ = 
+         Librarian.baseuri_of_script ~include_paths:!include_paths s 
+       in
        Hashtbl.add baseuri_of s b; 
        Hashtbl.add baseuri_of_inv b s; 
        b
   in
-  let script_of_baseuri b =
-    try Hashtbl.find baseuri_of_inv b
+  let script_of_baseuri ma b =
+    try Some (Hashtbl.find baseuri_of_inv b)
     with Not_found -> 
-     assert false 
-    (* should be called only after baseuri_of_script is
-     * called on every file *)
+      HLog.error ("Skipping dependency of '"^ma^"' over '"^b^"'");
+      HLog.error ("Plase include the file defining such baseuri, or fix");
+      HLog.error ("possibly incorrect verbatim URIs in the .ma file.");
+      None
   in
   let buri alias = U.buri_of_uri (U.uri_of_string alias) in
   let resolve alias current_buri =
@@ -74,6 +75,11 @@ let main () =
          exit 1
       | [x] -> 
          Sys.chdir (Filename.dirname x);
+         let opts = Librarian.load_root_file "root" in
+         include_paths := 
+           (try Str.split (Str.regexp " ") (List.assoc "include_paths" opts)
+           with Not_found -> []) @ 
+           (Helm_registry.get_list Helm_registry.string "matita.includes");
          HExtlib.find ~test:(fun x -> Filename.check_suffix x ".ma") "."
       | _ ->
          let roots = List.map (HExtlib.chop_prefix (Sys.getcwd()^"/")) roots in
@@ -100,8 +106,12 @@ let main () =
               let dep = resolve uri ma_baseuri in
               (match dep with 
               | None -> ()
-              | Some u -> Hashtbl.add include_deps ma_file (script_of_baseuri u))
+              | Some u -> 
+                  match script_of_baseuri ma_file u with
+                  | Some d -> Hashtbl.add include_deps ma_file d
+                  | None -> ())                
          | DependenciesParser.IncludeDep path -> 
+                ignore (baseuri_of_script path);
                 Hashtbl.add include_deps ma_file path)
        dependencies)
    ma_files;

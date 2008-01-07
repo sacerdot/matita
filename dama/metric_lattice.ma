@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/metric_lattice/".
+
 
 include "metric_space.ma".
 include "lattice.ma".

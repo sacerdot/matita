@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/prevalued_lattice/".
+
 
 include "ordered_group.ma".
 

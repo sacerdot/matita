@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/constructive_connectives/".
+include "logic/connectives.ma".
 
 inductive Or (A,B:Type) : Type ≝
    Left : A → Or A B

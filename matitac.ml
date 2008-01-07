@@ -93,7 +93,7 @@ let main_compiler () =
     match targets with
     | [] ->
       (match Librarian.find_roots_in_dir (Sys.getcwd ()) with
-      | [x] -> [], x
+      | [x] -> [], Filename.dirname x
       | [] -> 
          prerr_endline "No targets and no root found"; exit 1
       | roots -> 

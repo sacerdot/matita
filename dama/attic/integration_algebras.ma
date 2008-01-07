@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/integration_algebras/".
+
 
 include "attic/vector_spaces.ma".
 include "lattice.ma".
@@ -60,7 +60,7 @@ lemma rs_lattice: ∀K.pre_riesz_space K → lattice.
   ].
 qed.
 
-coercion cic:/matita/integration_algebras/rs_lattice.con.
+coercion cic:/matita/attic/integration_algebras/rs_lattice.con.
  
 lemma rs_ordered_abelian_group: ∀K.pre_riesz_space K → ordered_abelian_group.
  intros (K V);
@@ -99,7 +99,7 @@ lemma rs_ordered_abelian_group: ∀K.pre_riesz_space K → ordered_abelian_group
   ]
 qed.
 
-coercion cic:/matita/integration_algebras/rs_ordered_abelian_group.con.
+coercion cic:/matita/attic/integration_algebras/rs_ordered_abelian_group.con.
 
 record is_riesz_space (K:ordered_field_ch0) (V:pre_riesz_space K) : Prop ≝
  { rs_compat_le_times: ∀a:K.∀f:V. 0≤a → 0≤f → 0≤a*f
@@ -141,7 +141,7 @@ definition rn_function ≝
  λR:real.λV:riesz_space R.λnorm:riesz_norm ? V.
   n_function R V (rn_norm ? ? norm).
 
-coercion cic:/matita/integration_algebras/rn_function.con 1.
+coercion cic:/matita/attic/integration_algebras/rn_function.con 1.
 
 (************************** L-SPACES *************************************)
 (*
@@ -313,14 +313,14 @@ record algebra (K: field) : Type \def
  }.
 
 interpretation "Algebra product" 'times a b =
- (cic:/matita/integration_algebras/a_mult.con _ a b).
+ (cic:/matita/attic/integration_algebras/a_mult.con _ a b).
 
 definition ring_of_algebra ≝
  λK.λA:algebra K.
   mk_ring A (a_mult ? A) (a_one ? A)
    (a_ring ? ? ? ? (a_algebra_properties ? A)).
 
-coercion cic:/matita/integration_algebras/ring_of_algebra.con.
+coercion cic:/matita/attic/integration_algebras/ring_of_algebra.con.
 
 record pre_f_algebra (K:ordered_field_ch0) : Type ≝
  { fa_archimedean_riesz_space:> archimedean_riesz_space K;
@@ -338,7 +338,7 @@ lemma fa_algebra: ∀K:ordered_field_ch0.pre_f_algebra K → algebra K.
   ]
  qed.
 
-coercion cic:/matita/integration_algebras/fa_algebra.con.
+coercion cic:/matita/attic/integration_algebras/fa_algebra.con.
 
 record is_f_algebra (K) (A:pre_f_algebra K) : Prop ≝ 
 { compat_mult_le: ∀f,g:A.0 ≤ f → 0 ≤ g → 0 ≤ f*g;
@@ -365,4 +365,4 @@ record integration_f_algebra (R:real) : Type \def
 
 axiom ifa_f_algebra: ∀R:real.integration_f_algebra R → f_algebra R.
 
-coercion cic:/matita/integration_algebras/ifa_f_algebra.con.
+coercion cic:/matita/attic/integration_algebras/ifa_f_algebra.con.

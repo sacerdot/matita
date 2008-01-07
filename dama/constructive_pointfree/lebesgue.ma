@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/lebesgue/".
+
 
 include "metric_lattice.ma".
 include "sequence.ma".

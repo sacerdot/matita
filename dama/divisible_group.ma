@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/divisible_group/".
+
 
 include "nat/orders.ma".
 include "group.ma".

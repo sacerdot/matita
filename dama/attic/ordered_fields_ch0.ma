@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/ordered_fields_ch0/".
+
 
 include "attic/fields.ma".
 include "ordered_group.ma".
@@ -55,7 +55,7 @@ lemma of_ordered_abelian_group: pre_ordered_field_ch0 → ordered_abelian_group.
   ]
 qed.
 
-coercion cic:/matita/ordered_fields_ch0/of_ordered_abelian_group.con.
+coercion cic:/matita/attic/ordered_fields_ch0/of_ordered_abelian_group.con.
 
 (*CSC: I am not able to prove this since unfold is undone by coercion composition*)
 axiom of_with1:
@@ -74,7 +74,7 @@ lemma of_cotransitively_ordered_set : pre_ordered_field_ch0 → cotransitively_o
  ]
 qed.
 
-coercion cic:/matita/ordered_fields_ch0/of_cotransitively_ordered_set.con.
+coercion cic:/matita/attic/ordered_fields_ch0/of_cotransitively_ordered_set.con.
 
 record is_ordered_field_ch0 (F:pre_ordered_field_ch0) : Type \def
  { of_mult_compat: ∀a,b:F. 0≤a → 0≤b → 0≤a*b;

@@ -12,12 +12,12 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/excess/".
+
 
 include "higher_order_defs/relations.ma".
 include "nat/plus.ma".
-include "constructive_connectives.ma".
 include "constructive_higher_order_relations.ma".
+include "constructive_connectives.ma".
 
 record excess : Type ≝ {
   exc_carr:> Type;
