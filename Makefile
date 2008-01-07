@@ -250,7 +250,6 @@ INSTALL_STUFF = 			\
 	matita.conf.xml 		\
 	closed.xml 			\
 	gtkmathview.matita.conf.xml 	\
-	template_makefile.in 		\
 	AUTHORS 			\
 	LICENSE 			\
 	$(NULL)
