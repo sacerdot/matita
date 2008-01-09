@@ -98,62 +98,66 @@ let eval_ast ?do_heavy_checks lexicon_status
   ((new_grafite_status,new_lexicon_status),None)::intermediate_states
 
 exception TryingToAdd of string
+exception EnrichedWithLexiconStatus of exn * LexiconEngine.status
 
 let out = ref ignore 
 
 let set_callback f = out := f
 
-let eval_from_stream ~first_statement_only ~include_paths ?(prompt=false)
+let eval_from_stream ~first_statement_only ~include_paths 
  ?do_heavy_checks ?(enforce_no_new_aliases=true)
  ?(watch_statuses=fun _ _ -> ()) lexicon_status grafite_status str cb 
 =
  let rec loop lexicon_status grafite_status statuses =
   let loop =
-   if first_statement_only then
-    fun _ _ statuses -> statuses
-   else
-    loop
+   if first_statement_only then fun _ _ statuses -> statuses
+   else loop
   in
-   if prompt then (print_string "matita> "; flush stdout);
-   let cont =
-     try
-       Some (GrafiteParser.parse_statement ~include_paths str lexicon_status)
-     with
-       End_of_file -> None
-   in
-   match cont with
-   | None -> statuses
-   | Some (lexicon_status,ast) ->
-     (match ast with
-         GrafiteParser.LNone _ ->
-          watch_statuses lexicon_status grafite_status ;
-          loop lexicon_status grafite_status
-           (((grafite_status,lexicon_status),None)::statuses)
-       | GrafiteParser.LSome ast ->
-          !out ast;
-          cb grafite_status ast;
-          let new_statuses =
-           eval_ast ?do_heavy_checks lexicon_status
-            grafite_status ("",0,ast) in
-          if enforce_no_new_aliases then
-           List.iter 
-            (fun (_,alias) ->
-              match alias with
-                None -> ()
-              | Some (k,((v,_) as value)) ->
-                 let newtxt =
-                  DisambiguatePp.pp_environment
-                   (DisambiguateTypes.Environment.add k value
-                     DisambiguateTypes.Environment.empty)
-                 in
-                  raise (TryingToAdd newtxt)) new_statuses;
-          let grafite_status,lexicon_status =
-           match new_statuses with
-              [] -> assert false
-            | (s,_)::_ -> s
-          in
-           watch_statuses lexicon_status grafite_status ;
-           loop lexicon_status grafite_status (new_statuses @ statuses))
+  let stop,l,g,s = 
+   try
+     let cont =
+       try
+         Some (GrafiteParser.parse_statement ~include_paths str lexicon_status)
+       with
+         End_of_file -> None
+     in
+     match cont with
+     | None -> true, lexicon_status, grafite_status, statuses
+     | Some (lexicon_status,ast) ->
+       (match ast with
+           GrafiteParser.LNone _ ->
+            watch_statuses lexicon_status grafite_status ;
+            false, lexicon_status, grafite_status,
+             (((grafite_status,lexicon_status),None)::statuses)
+         | GrafiteParser.LSome ast ->
+            !out ast;
+            cb grafite_status ast;
+            let new_statuses =
+             eval_ast ?do_heavy_checks lexicon_status
+              grafite_status ("",0,ast) in
+            if enforce_no_new_aliases then
+             List.iter 
+              (fun (_,alias) ->
+                match alias with
+                  None -> ()
+                | Some (k,((v,_) as value)) ->
+                   let newtxt =
+                    DisambiguatePp.pp_environment
+                     (DisambiguateTypes.Environment.add k value
+                       DisambiguateTypes.Environment.empty)
+                   in
+                    raise (TryingToAdd newtxt)) new_statuses;
+            let grafite_status,lexicon_status =
+             match new_statuses with
+                [] -> assert false
+              | (s,_)::_ -> s
+            in
+             watch_statuses lexicon_status grafite_status ;
+             false, lexicon_status, grafite_status, (new_statuses @ statuses))
+   with exn ->
+     raise (EnrichedWithLexiconStatus (exn, lexicon_status))
+  in
+  if stop then s else loop l g s
  in
   loop lexicon_status grafite_status []
 ;;

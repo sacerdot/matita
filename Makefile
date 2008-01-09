@@ -19,7 +19,7 @@ OCAMLOPT = $(OCAMLFIND) opt $(OCAMLC_FLAGS) $(OCAMLOPT_DEBUG_FLAGS)
 OCAMLDEP = $(OCAMLFIND) ocamldep $(OCAMLDEP_FLAGS)
 INSTALL_PROGRAMS= matita matitac
 INSTALL_PROGRAMS_LINKS_MATITA= 
-INSTALL_PROGRAMS_LINKS_MATITAC= matitadep matitaclean matitaprover matitawiki
+INSTALL_PROGRAMS_LINKS_MATITAC= matitadep matitaclean matitawiki
 
 MATITA_FLAGS = -noprofile
 NODB=false
@@ -31,13 +31,12 @@ MLI = \
 	lablGraphviz.mli	\
 	matitaTypes.mli		\
 	matitaMisc.mli		\
+	matitaEngine.mli	\
 	matitaExcPp.mli 	\
 	matitaInit.mli		\
-	matitaEngine.mli	\
 	applyTransformation.mli	\
 	matitaAutoGui.mli	\
 	matitacLib.mli		\
-	matitaprover.mli        \
 	matitaGtkMisc.mli	\
 	matitaScript.mli	\
 	matitaMathView.mli 	\
@@ -46,13 +45,12 @@ MLI = \
 CMLI =				\
 	matitaTypes.mli		\
 	matitaMisc.mli		\
+	matitaEngine.mli	\
 	matitaExcPp.mli 	\
 	matitaInit.mli		\
-	matitaEngine.mli	\
 	applyTransformation.mli	\
 	matitacLib.mli		\
 	matitaWiki.mli		\
-	matitaprover.mli        \
 	$(NULL)
 MAINCMLI =			\
 	matitadep.mli		\
@@ -66,7 +64,7 @@ MAINCML = $(MAINCMLI:%.mli=%.ml)
 	
 PROGRAMS_BYTE = \
 	matita matitac matitadep matitaclean \
-	matitaprover matitawiki
+	matitawiki
 PROGRAMS = $(PROGRAMS_BYTE) 
 PROGRAMS_OPT = $(patsubst %,%.opt,$(PROGRAMS_BYTE))
 NOINST_PROGRAMS = dump_moo 
@@ -142,11 +140,6 @@ rottener.opt: rottener.ml $(CLIBX_DEPS) $(CCMXS) $(MAINCMXS)
 	$(H)$(OCAMLOPT) $(CPKGS) -package lablgtk2 -linkpkg -o $@ $(CCMXS) $(MAINCMXS) rottener.ml
 clean-rottened:
 	find . -type f -name "*.ma.*.rottened" -exec rm {} \;
-
-matitaprover: matitac
-	$(H)test -f $@ || ln -s $< $@
-matitaprover.opt: matitac.opt
-	$(H)test -f $@ || ln -s $< $@
 
 matitadep: matitac
 	$(H)test -f $@ || ln -s $< $@
@@ -344,11 +337,6 @@ matitac.opt.static: $(STATIC_LINK) $(CLIBX_DEPS) $(CCMXS) $(MAINCMXS) matitac.ml
 	$(STATIC_LINK) $(STATIC_CLIBS) -- \
 		$(OCAMLOPT) $(CPKGS) -linkpkg -o $@ $(CCMXS) $(MAINCMXS) matitac.ml \
 		$(STATIC_EXTRA_CLIBS)
-	strip $@
-matitaprover.opt.static: $(STATIC_LINK) $(CLIBX_DEPS) $(CCMXS) $(MAINCMXS) matitac.ml
-	$(STATIC_LINK) $(STATIC_CLIBS_PROVER) -- \
-		$(OCAMLOPT) $(CPKGS) -linkpkg -o $@ $(CCMXS) $(MAINCMXS) matitac.ml \
-		$(STATIC_EXTRA_CLIBS);
 	strip $@
 matitadep.opt.static: matitac.opt.static
 	$(H)test -f $@ || ln -s $< $@

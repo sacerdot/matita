@@ -170,7 +170,7 @@ let rec interactive_loop () =
           | _ -> ()
         in
          run_script str 
-           (MatitaEngine.eval_from_stream ~first_statement_only:true ~prompt:false
+           (MatitaEngine.eval_from_stream ~first_statement_only:true 
            ~include_paths:(Lazy.force include_paths) ~watch_statuses) ;
          interactive_loop (Some (List.length !lexicon_status))
   with 

@@ -29,10 +29,13 @@ coercions_open.ma logic/equality.ma nat/nat.ma
 match_inference.ma 
 hard_refine.ma coq.ma
 fix_betareduction.ma coq.ma
+push_pop_status_aux1.ma 
+push_pop_status.ma push_pop_status_aux1.ma
 decl.ma nat/orders.ma nat/times.ma
 pullback.ma 
 mysql_escaping.ma 
 rewrite.ma coq.ma
+push_pop_status_aux2.ma 
 injection.ma coq.ma
 contradiction.ma coq.ma
 fold.ma coq.ma

@@ -71,7 +71,7 @@ type guistuff = {
   ask_confirmation: title:string -> message:string -> [`YES | `NO | `CANCEL];
 }
 
-let eval_with_engine guistuff lexicon_status grafite_status user_goal
+let eval_with_engine include_paths guistuff lexicon_status grafite_status user_goal
  skipped_txt nonskipped_txt st
 =
   let module TAPp = GrafiteAstPp in
@@ -102,34 +102,46 @@ let eval_with_engine guistuff lexicon_status grafite_status user_goal
   res,"",parsed_text_length
 ;;
 
-let wrap_with_make include_paths g f x = 
+(* this function calls the parser in a way that it does not perform inclusions,
+ * so that we can ensure the inclusion is performed after the included file 
+ * is compiled (if needed). matitac does not need that, since it compiles files
+ * in the good order, here files may be compiled on demand. *)
+let wrap_with_make include_paths (f : GrafiteParser.statement) x = 
   try      
-    f x
+    f ~never_include:true ~include_paths x
   with
-  | LexiconEngine.IncludedFileNotCompiled (xfilename,mafilename)
-  | GrafiteEngine.IncludedFileNotCompiled (xfilename,mafilename) as exn ->
-      assert (Pcre.pmatch ~pat:"ma$" mafilename);
-      assert (Pcre.pmatch ~pat:"lexicon$" xfilename ||
-              Pcre.pmatch ~pat:"mo$" xfilename );
-      (* we know that someone was able to include the .ma, get the baseuri
-       * but was unable to get the compilation output 'xfilename' *)
+  | GrafiteParser.NoInclusionPerformed mafilename ->
       let root, buri, _, tgt = 
-        try
-          Librarian.baseuri_of_script ~include_paths mafilename
-        with Librarian.NoRootFor _ -> raise exn
+        try Librarian.baseuri_of_script ~include_paths mafilename
+        with Librarian.NoRootFor _ -> 
+          HLog.error ("The included file '"^mafilename^"' has no root file,");
+          HLog.error "please create it.";
+          raise (Failure ("No root file for "^mafilename))
       in
-      if MatitacLib.Make.make root [tgt] then f x 
+      let initial_lexicon_status = 
+        CicNotation2.load_notation ~include_paths:[] BuildTimeConf.core_notation_script 
+      in
+      let b,x = 
+        try
+          GrafiteSync.push ();
+          LexiconSync.time_travel ~present:x ~past:initial_lexicon_status;
+          let rc = MatitacLib.Make.make root [tgt] in 
+          GrafiteSync.pop ();
+          CicNotation.reset ();
+          ignore(CicNotation2.load_notation ~include_paths:[]
+            BuildTimeConf.core_notation_script);
+          let x = List.fold_left (fun s c -> LexiconEngine.eval_command s c)
+            initial_lexicon_status (List.rev
+            x.LexiconEngine.lexicon_content_rev) 
+          in
+          rc,x
+        with 
+        | exn ->
+            HLog.error ("Unexpected " ^ snd(MatitaExcPp.to_string exn));
+            assert false
+      in
+      if b then f ~include_paths x 
       else raise (Failure ("Compiling: " ^ tgt))
-;;
-
-let eval_with_engine include_paths 
-     guistuff lexicon_status grafite_status user_goal 
-       skipped_txt nonskipped_txt st
-=
-  wrap_with_make include_paths guistuff
-    (eval_with_engine 
-      guistuff lexicon_status grafite_status user_goal 
-        skipped_txt nonskipped_txt) st
 ;;
 
 let pp_eager_statement_ast =
@@ -588,25 +600,6 @@ script ex loc
  let module MD = GrafiteDisambiguator in
  let module ML = MatitaMisc in
   try
-   begin
-    match ex with
-     | TA.Command (_,TA.Set (_,"baseuri",u)) ->
-        if  Http_getter_storage.is_read_only u then
-          raise (ActionCancelled ("baseuri " ^ u ^ " is readonly"));
-        if not (Http_getter_storage.is_empty ~local:true u) then
-         (match 
-            guistuff.ask_confirmation 
-              ~title:"Baseuri redefinition" 
-              ~message:(
-                "Baseuri " ^ u ^ " already exists.\n" ^
-                "Do you want to redefine the corresponding "^
-                "part of the library?")
-          with
-           | `YES -> LibraryClean.clean_baseuris [u]
-           | `NO -> ()
-           | `CANCEL -> raise MatitaTypes.Cancel)
-     | _ -> ()
-   end;
    ignore (buffer#move_mark (`NAME "beginning_of_statement")
     ~where:((buffer#get_iter_at_mark (`NAME "locked"))#forward_chars
        (Glib.Utf8.length skipped_txt))) ;
@@ -632,9 +625,8 @@ and eval_statement include_paths (buffer : GText.buffer) guistuff lexicon_status
     | `Raw text ->
         if Pcre.pmatch ~rex:only_dust_RE text then raise Margin;
         let ast = 
-          wrap_with_make include_paths guistuff
-            (GrafiteParser.parse_statement 
-              (Ulexing.from_utf8_string text) ~include_paths) lexicon_status 
+         wrap_with_make include_paths
+          (GrafiteParser.parse_statement (Ulexing.from_utf8_string text)) lexicon_status 
         in
           ast, text
     | `Ast (st, text) -> (lexicon_status, st), text

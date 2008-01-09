@@ -39,12 +39,13 @@ val eval_ast :
 (* heavy checks slow down the compilation process but give you some interesting
  * infos like if the theorem is a duplicate *)
 
+exception EnrichedWithLexiconStatus of exn * LexiconEngine.status
+
 (* should be used only by the compiler since it looses the
    * disambiguation_context (text,prefix_len,_) *)
 val eval_from_stream :
   first_statement_only:bool ->
   include_paths:string list ->
-  ?prompt:bool ->
   ?do_heavy_checks:bool ->
   ?enforce_no_new_aliases:bool -> (* default true *)
   ?watch_statuses:(LexiconEngine.status -> GrafiteTypes.status -> unit) ->

@@ -22,8 +22,8 @@ matitadep.cmo: matitaInit.cmi matitadep.cmi
 matitadep.cmx: matitaInit.cmx matitadep.cmi 
 matitaEngine.cmo: matitaEngine.cmi 
 matitaEngine.cmx: matitaEngine.cmi 
-matitaExcPp.cmo: matitaExcPp.cmi 
-matitaExcPp.cmx: matitaExcPp.cmi 
+matitaExcPp.cmo: matitaEngine.cmi matitaExcPp.cmi 
+matitaExcPp.cmx: matitaEngine.cmx matitaExcPp.cmi 
 matitaGtkMisc.cmo: matitaTypes.cmi matitaGeneratedGui.cmx buildTimeConf.cmx \
     matitaGtkMisc.cmi 
 matitaGtkMisc.cmx: matitaTypes.cmx matitaGeneratedGui.cmx buildTimeConf.cmx \

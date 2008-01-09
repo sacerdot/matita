@@ -200,46 +200,47 @@ let rec compile options fname =
      LexiconSync.time_travel ~present:lexicon_status ~past:initial_lexicon_status;
      true)
   with 
-  | End_of_file -> 
-      HLog.error "End_of_file"; 
-      pp_times fname false big_bang;
-      clean_exit baseuri false
+  (* all exceptions should be wrapped to allow lexicon-undo (LS.time_travel) *)
   | AttemptToInsertAnAlias lexicon_status -> 
+     pp_times fname false big_bang;
+     LexiconSync.time_travel ~present:lexicon_status ~past:initial_lexicon_status;
+     clean_exit baseuri false
+  | MatitaEngine.EnrichedWithLexiconStatus (exn, lex_stat) ->
+      (match exn with
+      | Sys.Break -> HLog.error "user break!"
+      | GrafiteEngine.Macro (floc, f) ->
+          (try
+            match f (get_macro_context (Some grafite_status)) with 
+            | _, GrafiteAst.Inline (_, style, suri, prefix) ->
+              let str =
+               ApplyTransformation.txt_of_inline_macro style suri prefix
+                ~map_unicode_to_tex:(Helm_registry.get_bool
+                  "matita.paste_unicode_as_tex") in
+              (* the output of compilation is wrong in this way!! *)
+              !out str; ignore(compile options fname) 
+            | _ ->
+              let x, y = HExtlib.loc_of_floc floc in
+              HLog.error (sprintf "A macro has been found at %d-%d" x y)
+          with exn -> HLog.error (snd (MatitaExcPp.to_string exn))) 
+      | HExtlib.Localized (floc,CicNotationParser.Parse_error err) ->
+          let (x, y) = HExtlib.loc_of_floc floc in
+          HLog.error (sprintf "Parse error at %d-%d: %s" x y err)
+      | exn -> HLog.error (snd (MatitaExcPp.to_string exn)));
+      LexiconSync.time_travel ~present:lex_stat ~past:initial_lexicon_status;
       pp_times fname false big_bang;
-      LexiconSync.time_travel ~present:lexicon_status ~past:initial_lexicon_status;
       clean_exit baseuri false
+  | End_of_file -> (* this is CSC stuff ... or can only happen on empty files *)
+     HLog.error "End_of_file"; 
+     pp_times fname false big_bang;
+     clean_exit baseuri false
   | Sys.Break as exn ->
      if matita_debug then raise exn; 
      HLog.error "user break!";
      pp_times fname false big_bang;
      clean_exit baseuri false
-  | GrafiteEngine.Macro (floc, f) ->
-      (try
-        match f (get_macro_context (Some grafite_status)) with 
-        | _, GrafiteAst.Inline (_, style, suri, prefix) ->
-          let str =
-           ApplyTransformation.txt_of_inline_macro style suri prefix
-            ~map_unicode_to_tex:(Helm_registry.get_bool
-              "matita.paste_unicode_as_tex") in
-          !out str;
-          compile options fname 
-        | _ ->
-          let x, y = HExtlib.loc_of_floc floc in
-          HLog.error (sprintf "A macro has been found at %d-%d" x y);
-          pp_times fname false big_bang;
-          clean_exit baseuri false
-      with exn -> 
-        HLog.error (snd (MatitaExcPp.to_string exn)); 
-        pp_times fname false big_bang;
-        clean_exit baseuri false)
-  | HExtlib.Localized (floc,CicNotationParser.Parse_error err) ->
-      let (x, y) = HExtlib.loc_of_floc floc in
-      HLog.error (sprintf "Parse error at %d-%d: %s" x y err);
-      pp_times fname false big_bang;
-      clean_exit baseuri false
   | exn ->
        if matita_debug then raise exn; 
-       HLog.error (snd (MatitaExcPp.to_string exn));
+       HLog.error ("Unwrapped exception, please fix: "^ snd (MatitaExcPp.to_string exn));
        pp_times fname false big_bang;
        clean_exit baseuri false
 ;;
@@ -268,10 +269,7 @@ module F =
 
     let mtime_of_source_object s =
       try Some (Unix.stat s).Unix.st_mtime
-      with Unix.Unix_error (Unix.ENOENT, "stat", f) when f = s -> 
-              None
-(*         max_float *)
-(*         raise (Failure ("Unable to stat a source file: " ^ s))  *)
+      with Unix.Unix_error (Unix.ENOENT, "stat", f) when f = s -> None
     ;;
 
     let mtime_of_target_object s =

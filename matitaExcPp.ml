@@ -147,6 +147,8 @@ let rec to_string =
      None, "Already defined: " ^ UriManager.string_of_uri s
   | CoercDb.EqCarrNotImplemented msg ->
      None, ("EqCarrNotImplemented: " ^ Lazy.force msg)
+  | MatitaEngine.EnrichedWithLexiconStatus (exn,_) ->
+     None, "EnrichedWithLexiconStatus "^snd(to_string exn)
   | GrafiteDisambiguator.DisambiguationError (offset,errorll) ->
      let loc =
       match errorll with
