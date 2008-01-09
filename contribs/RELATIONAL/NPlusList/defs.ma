@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/RELATIONAL/NPlusList/defs".
+
 
 include "datatypes/List.ma".
 include "NPlus/defs.ma".

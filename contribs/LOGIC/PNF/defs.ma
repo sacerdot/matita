@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/LOGIC/PNF/defs".
+
 
 (* NORMAL FORM PREDICATE FOR PROOFS IN CONTEXT
    For cut elimination

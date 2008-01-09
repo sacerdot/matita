@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/LOGIC/NTrack/inv".
+
 
 include "NTrack/defs.ma".
 (*

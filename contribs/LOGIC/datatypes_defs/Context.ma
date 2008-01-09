@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/LOGIC/datatypes_defs/Context".
+
 
 (* FLAT CONTEXTS
    - Naming policy:

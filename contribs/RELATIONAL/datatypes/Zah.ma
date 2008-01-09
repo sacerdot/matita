@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/RELATIONAL/datatypes/Zah".
+
 
 include "datatypes/Nat.ma".
 

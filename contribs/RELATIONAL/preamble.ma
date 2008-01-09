@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/RELATIONAL/preamble".
+
 
 include "logic/equality.ma".
 include "logic/connectives.ma".

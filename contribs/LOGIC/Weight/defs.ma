@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/LOGIC/Weight/defs".
+
 
 (* PROOF WEIGHT
    For cut elimination and confluence

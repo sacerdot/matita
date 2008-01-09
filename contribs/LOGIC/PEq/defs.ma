@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/LOGIC/PEq/defs".
+
 
 (* EQUALITY PREDICATE FOR PROOFS IN CONTEXT
 *)

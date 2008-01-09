@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/LOGIC/datatypes_props/Sequent".
+
 
 include "datatypes_defs/Sequent.ma".
 

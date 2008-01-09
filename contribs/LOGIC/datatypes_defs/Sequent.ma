@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/LOGIC/datatypes_defs/Sequent".
+
 
 (* SEQUENTS
    - Naming policy:

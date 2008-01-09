@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/LOGIC/Track/defs".
+
 
 (* PROOF TREE TRACKS
 *)

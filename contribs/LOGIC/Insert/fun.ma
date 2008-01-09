@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/LOGIC/Insert/fun".
+
 
 include "CLE/defs.ma".
 include "Insert/inv.ma".

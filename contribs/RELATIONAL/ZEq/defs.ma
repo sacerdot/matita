@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/RELATIONAL/ZEq/defs".
+
 
 include "datatypes/Zah.ma".
 include "NPlus/defs.ma".

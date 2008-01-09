@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/RELATIONAL/NPlusList/props".
+
 
 include "NPlusList/defs.ma".
 (*

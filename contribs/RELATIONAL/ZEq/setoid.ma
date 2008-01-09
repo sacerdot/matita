@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/RELATIONAL/ZEq/setoid".
+
 
 include "NPlus/fun.ma".
 include "ZEq/defs.ma".

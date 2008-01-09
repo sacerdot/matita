@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/LOGIC/NTrack/props".
+
 
 include "Insert/props.ma".
 include "Track/defs.ma".

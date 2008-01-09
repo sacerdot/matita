@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/LOGIC/WLT/defs".
+
 
 (* ORDER RELATION BETWEEN PROOFS IN CONTEXT
 *)

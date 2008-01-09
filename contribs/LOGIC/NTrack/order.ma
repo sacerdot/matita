@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/LOGIC/NTrack/order".
+
 
 include "Track/order.ma".
 include "NTrack/props.ma".

@@ -14,9 +14,9 @@
 
 (* Project started Sat Apr 7, 2007 ****************************************)
 
-set "baseuri" "cic:/matita/LOGIC/preamble".
+
 
 (* PREAMBLE
 *)
 
-include "../RELATIONAL/NLE/defs.ma".
+include "NLE/defs.ma".
