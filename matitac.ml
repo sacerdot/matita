@@ -123,7 +123,6 @@ let main () =
   let bin = Filename.basename Sys.argv.(0) in
   if      Pcre.pmatch ~pat:"^matitadep"    bin then Matitadep.main ()
   else if Pcre.pmatch ~pat:"^matitaclean"  bin then Matitaclean.main ()
-  else if Pcre.pmatch ~pat:"^matitaprover" bin then Matitaprover.main ()
   else if Pcre.pmatch ~pat:"^matitawiki"   bin then MatitaWiki.main ()
   else
     let dump_msg = "<filename> Dump with expanded macros to <filename>" in
