@@ -33,10 +33,10 @@ MLI = \
 	matitaMisc.mli		\
 	matitaEngine.mli	\
 	matitaExcPp.mli 	\
-	matitaInit.mli		\
 	applyTransformation.mli	\
-	matitaAutoGui.mli	\
 	matitacLib.mli		\
+	matitaInit.mli		\
+	matitaAutoGui.mli	\
 	matitaGtkMisc.mli	\
 	matitaScript.mli	\
 	matitaMathView.mli 	\
@@ -47,9 +47,9 @@ CMLI =				\
 	matitaMisc.mli		\
 	matitaEngine.mli	\
 	matitaExcPp.mli 	\
-	matitaInit.mli		\
 	applyTransformation.mli	\
 	matitacLib.mli		\
+	matitaInit.mli		\
 	matitaWiki.mli		\
 	$(NULL)
 MAINCMLI =			\

@@ -162,6 +162,65 @@ let usage () =
     try Filename.chop_extension basename with Invalid_argument  _ -> basename
   in
   try Hashtbl.find usages usage_key with Not_found -> default_usage
+;;
+
+let dump f =
+   let module G = GrafiteAst in
+   let module L = LexiconAst in
+   let module H = HExtlib in
+   Helm_registry.set_bool "matita.moo" false;
+   let floc = H.dummy_floc in
+   let nl_ast = G.Comment (floc, G.Note (floc, "")) in
+   let och = open_out f in
+   let atexit () = close_out och in
+   let out_comment och s =
+      let s = if s <> "" && s.[0] = '*' then "#" ^ s else s in 
+      Printf.fprintf och "%s%s%s\n\n" "(*" s "*)"
+   in
+   let out_line_comment och s =
+      let l = 70 - String.length s in
+      let s = Printf.sprintf " %s %s" s (String.make l '*') in
+      out_comment och s
+   in
+   let out_preamble och (path, lines) =
+      let ich = open_in path in
+      let rec print i =
+         if i > 0 then 
+            let s = input_line ich in
+            begin Printf.fprintf och "%s\n" s; print (pred i) end
+      in 
+      print lines;
+      out_line_comment och "This file was automatically generated: do not edit"
+   in
+   let pp_ast_statement st =
+     GrafiteAstPp.pp_statement ~term_pp:CicNotationPp.pp_term
+       ~map_unicode_to_tex:(Helm_registry.get_bool
+         "matita.paste_unicode_as_tex")
+       ~lazy_term_pp:CicNotationPp.pp_term 
+       ~obj_pp:(CicNotationPp.pp_obj CicNotationPp.pp_term) st
+   in
+   let nl () =  output_string och (pp_ast_statement nl_ast) in
+   let rt_base_dir = Filename.dirname Sys.argv.(0) in
+   let path = Filename.concat rt_base_dir "matita.ma.templ" in
+   let lines = 14 in
+   out_preamble och (path, lines);
+   let grafite_parser_cb fname = 
+      let ast = G.Executable 
+        (floc, G.Command (floc, G.Include (floc, fname))) in
+      output_string och (pp_ast_statement ast); nl (); nl ()
+   in
+   let matita_engine_cb = function
+      | G.Executable (_, G.Macro (_, G.Inline _)) 
+      | G.Executable (_, G.Command (_, G.Include _)) -> ()
+      | ast                                          ->
+         output_string och (pp_ast_statement ast); nl (); nl ()
+   in
+   let matitac_lib_cb = output_string och in
+   GrafiteParser.set_callback grafite_parser_cb;
+   MatitaEngine.set_callback matita_engine_cb;
+   MatitacLib.set_callback matitac_lib_cb;
+   at_exit atexit
+;;
 
 let extra_cmdline_specs = ref []
 let add_cmdline_spec l = extra_cmdline_specs := l @ !extra_cmdline_specs
@@ -214,6 +273,8 @@ let parse_cmdline init_status =
               Helm_registry.set_bool "matita.system" true),
             ("Act on the system library instead of the user one"
              ^ "\n    WARNING: not for the casual user");
+        "-dump", Arg.String dump,
+          "<filename> Dump with expanded macros to <filename>";
         "-v", 
           Arg.Unit (fun () -> Helm_registry.set_bool "matita.verbose" true), 
           "Verbose mode";
