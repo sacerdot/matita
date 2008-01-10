@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Unified-Sub/Lift/defs".
+
 
 (* LIFT RELATION
    - Usage: invoke with positive polarity

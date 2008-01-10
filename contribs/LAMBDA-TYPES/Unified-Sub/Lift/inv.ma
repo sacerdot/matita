@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Unified-Sub/Lift/inv".
+
 
 include "Lift/defs.ma".
 

@@ -12,12 +12,23 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* This file was automatically generated: do not edit *********************)
-
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Base-2/blt/defs".
-
-include "preamble.ma".
+(* Project started Tue Aug 22, 2006 ***************************************)
 
 
-(* object blt not inlined *)
 
+(* PREAMBLE
+*)
+
+include "logic/equality.ma".
+include "datatypes/Bool.ma".
+include "NPlus/monoid.ma".
+include "NLE/props.ma".
+include "NLE/nplus.ma".
+
+axiom f_equal_3: \forall (A,B,C,D:Set).
+                 \forall (f:A \to B \to C \to D). 
+                 \forall (x1,x2:A).
+                 \forall (y1,y2:B).
+                 \forall (z1,z2:C). 
+                 x1 = x2 \to y1 = y2 \to z1 = z2 \to 
+                 f x1 y1 z1 = f x2 y2 z2.  

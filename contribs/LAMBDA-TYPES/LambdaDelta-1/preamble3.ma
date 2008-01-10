@@ -12,9 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/LambdaDelta-1/preamble".
 
-include "../Base-1/theory.ma".
+
+include "theory.ma".
 
 alias id "and_ind" = "cic:/Coq/Init/Logic/and_ind.con".
 alias id "bool_ind" = "cic:/Coq/Init/Datatypes/bool_ind.con".

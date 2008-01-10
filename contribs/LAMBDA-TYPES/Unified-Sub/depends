@@ -1,0 +1,12 @@
+preamble4.ma NLE/nplus.ma NLE/props.ma NPlus/monoid.ma datatypes/Bool.ma logic/equality.ma
+datatypes/Context.ma datatypes/Term.ma
+datatypes/Term.ma preamble4.ma
+Lift/props.ma Lift/fun.ma
+Lift/inv.ma Lift/defs.ma
+Lift/defs.ma datatypes/Term.ma
+Lift/fun.ma Lift/inv.ma
+NLE/nplus.ma 
+NLE/props.ma 
+NPlus/monoid.ma 
+datatypes/Bool.ma 
+logic/equality.ma 

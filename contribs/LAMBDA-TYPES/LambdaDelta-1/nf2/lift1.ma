@@ -14,7 +14,7 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/LambdaDelta-1/nf2/lift1".
+
 
 include "nf2/props.ma".
 

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Unified-Sub/datatypes/Term".
+
 
 (* POLARIZED TERMS
    - Naming policy:
@@ -24,7 +24,7 @@ set "baseuri" "cic:/matita/LAMBDA-TYPES/Unified-Sub/datatypes/Term".
      - terms                : t u
 *)
 
-include "preamble.ma".
+include "preamble4.ma".
 
 inductive Bind: Type \def
    | abbr: Bind

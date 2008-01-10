@@ -14,9 +14,9 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/LambdaDelta-1/A/defs".
 
-include "preamble.ma".
+
+include "preamble3.ma".
 
 inductive A: Set \def
 | ASort: nat \to (nat \to A)

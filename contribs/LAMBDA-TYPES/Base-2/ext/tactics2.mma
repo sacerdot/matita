@@ -12,23 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* Project started Tue Aug 22, 2006 ***************************************)
+(* This file was automatically generated: do not edit *********************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Unified-Sub/preamble".
+include "preamble.ma".
 
-(* PREAMBLE
-*)
+inline procedural "cic:/matita/LAMBDA-TYPES/Base-1/ext/tactics/insert_eq.con".
 
-include "logic/equality.ma".
-include "../../RELATIONAL/datatypes/Bool.ma".
-include "../../RELATIONAL/NPlus/monoid.ma".
-include "../../RELATIONAL/NLE/props.ma".
-include "../../RELATIONAL/NLE/nplus.ma".
+inline procedural "cic:/matita/LAMBDA-TYPES/Base-1/ext/tactics/unintro.con".
 
-axiom f_equal_3: \forall (A,B,C,D:Set).
-                 \forall (f:A \to B \to C \to D). 
-                 \forall (x1,x2:A).
-                 \forall (y1,y2:B).
-                 \forall (z1,z2:C). 
-                 x1 = x2 \to y1 = y2 \to z1 = z2 \to 
-                 f x1 y1 z1 = f x2 y2 z2.  
+inline procedural 
+"cic:/matita/LAMBDA-TYPES/Base-1/ext/tactics/xinduction.con".
+

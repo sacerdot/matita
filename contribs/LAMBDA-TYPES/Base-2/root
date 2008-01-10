@@ -1,0 +1,2 @@
+baseuri=cic:/matita/LAMBDA-TYPES/Base-2
+include_paths= ../Base-1 ../../../legacy

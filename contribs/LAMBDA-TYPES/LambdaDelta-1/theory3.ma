@@ -14,15 +14,25 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Base-2/blt/props".
 
-include "blt/defs.ma".
 
-inline procedural "cic:/matita/LAMBDA-TYPES/Base-1/blt/props/lt_blt.con".
+include "subst0/tlt.ma".
 
-inline procedural "cic:/matita/LAMBDA-TYPES/Base-1/blt/props/le_bge.con".
+include "tau1/cnt.ma".
 
-inline procedural "cic:/matita/LAMBDA-TYPES/Base-1/blt/props/blt_lt.con".
+include "ex0/props.ma".
 
-inline procedural "cic:/matita/LAMBDA-TYPES/Base-1/blt/props/bge_le.con".
+include "wcpr0/fwd.ma".
+
+include "pr3/wcpr0.ma".
+
+include "ex2/props.ma".
+
+include "ex1/props.ma".
+
+include "ty3/tau0.ma".
+
+include "ty3/nf2.ma".
+
+include "ty3/dec.ma".
 

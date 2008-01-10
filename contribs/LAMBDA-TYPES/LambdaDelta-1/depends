@@ -1,0 +1,200 @@
+definitions3.ma aprem/defs.ma cimp/defs.ma clen/defs.ma cnt/defs.ma csuba/defs.ma csubc/defs.ma csubst1/defs.ma csubt/defs.ma ex0/defs.ma ex1/defs.ma ex2/defs.ma flt/defs.ma fsubst0/defs.ma iso/defs.ma llt/defs.ma next_plus/defs.ma nf2/defs.ma pc1/defs.ma subst1/defs.ma tau1/defs.ma tlt/defs.ma wcpr0/defs.ma
+preamble3.ma theory.ma
+spare.ma theory.ma
+theory3.ma ex0/props.ma ex1/props.ma ex2/props.ma pr3/wcpr0.ma subst0/tlt.ma tau1/cnt.ma ty3/dec.ma ty3/nf2.ma ty3/tau0.ma wcpr0/fwd.ma
+tlist/props.ma tlist/defs.ma
+tlist/defs.ma T/defs.ma
+clen/defs.ma C/defs.ma s/defs.ma
+clen/getl.ma clen/defs.ma getl/props.ma
+leq/props.ma aplus/props.ma leq/defs.ma
+leq/asucc.ma aplus/props.ma leq/props.ma
+leq/defs.ma aplus/defs.ma
+leq/fwd.ma leq/defs.ma
+pr3/props.ma pr1/props.ma pr2/props.ma pr3/pr1.ma
+pr3/pr3.ma pr2/pr2.ma pr3/props.ma
+pr3/defs.ma pr2/defs.ma
+pr3/fwd.ma pr2/fwd.ma pr3/props.ma
+pr3/subst1.ma pr2/subst1.ma pr3/defs.ma
+pr3/iso.ma iso/props.ma pr3/fwd.ma tlist/props.ma
+pr3/wcpr0.ma pr3/props.ma wcpr0/getl.ma
+pr3/pr1.ma pr1/defs.ma pr3/defs.ma
+ty3/fsubst0.ma csubst0/props.ma getl/getl.ma pc3/fsubst0.ma ty3/props.ma
+ty3/nf2.ma nf2/arity.ma pc3/nf2.ma ty3/arity.ma
+ty3/props.ma pc3/fwd.ma ty3/fwd.ma
+ty3/arity_props.ma sc3/arity.ma ty3/arity.ma ty3/fwd.ma
+ty3/arity.ma arity/pr3.ma asucc/fwd.ma ty3/pr3_props.ma
+ty3/pr3_props.ma ty3/pr3.ma
+ty3/tau0.ma tau0/defs.ma ty3/pr3_props.ma
+ty3/pr3.ma csubt/ty3.ma pc1/props.ma pc3/pc1.ma pc3/wcpr0.ma ty3/fsubst0.ma ty3/subst1.ma
+ty3/defs.ma G/defs.ma pc3/defs.ma
+ty3/fwd.ma pc3/props.ma ty3/defs.ma
+ty3/dec.ma getl/dec.ma getl/flt.ma pc3/dec.ma ty3/pr3_props.ma
+ty3/subst1.ma csubst1/fwd.ma csubst1/getl.ma getl/getl.ma pc3/fwd.ma pc3/subst1.ma ty3/props.ma
+cnt/props.ma cnt/defs.ma lift/fwd.ma
+cnt/defs.ma T/defs.ma
+fsubst0/defs.ma csubst0/defs.ma subst0/defs.ma
+fsubst0/fwd.ma fsubst0/defs.ma
+iso/props.ma iso/fwd.ma
+iso/defs.ma T/defs.ma
+iso/fwd.ma iso/defs.ma tlist/defs.ma
+lift/props.ma lift/fwd.ma s/props.ma tlist/defs.ma
+lift/defs.ma T/defs.ma s/defs.ma tlist/defs.ma
+lift/tlt.ma lift/fwd.ma tlt/props.ma
+lift/fwd.ma lift/defs.ma
+flt/props.ma C/props.ma flt/defs.ma
+flt/defs.ma C/defs.ma
+A/defs.ma preamble3.ma
+subst0/props.ma lift/props.ma subst0/fwd.ma
+subst0/defs.ma lift/defs.ma
+subst0/tlt.ma lift/props.ma lift/tlt.ma subst0/defs.ma
+subst0/fwd.ma lift/props.ma subst0/defs.ma
+subst0/subst0.ma subst0/props.ma
+subst0/dec.ma lift/props.ma subst0/defs.ma
+pr1/props.ma T/props.ma pr0/subst1.ma pr1/defs.ma subst1/props.ma
+pr1/defs.ma pr0/defs.ma
+pr1/pr1.ma pr0/pr0.ma pr1/props.ma
+T/props.ma T/defs.ma
+T/defs.ma preamble3.ma
+T/dec.ma T/defs.ma
+sc3/props.ma arity/aprem.ma arity/lift1.ma csuba/arity.ma drop1/getl.ma drop1/props.ma lift1/props.ma llt/props.ma nf2/lift1.ma sc3/defs.ma sn3/lift1.ma
+sc3/arity.ma csubc/arity.ma csubc/drop1.ma csubc/getl.ma csubc/props.ma
+sc3/defs.ma arity/defs.ma drop1/defs.ma sn3/defs.ma
+tau1/props.ma tau0/props.ma tau1/defs.ma
+tau1/defs.ma tau0/defs.ma
+tau1/cnt.ma cnt/props.ma tau1/props.ma
+aplus/props.ma aplus/defs.ma next_plus/props.ma
+aplus/defs.ma asucc/defs.ma
+asucc/defs.ma A/defs.ma G/defs.ma
+asucc/fwd.ma asucc/defs.ma
+aprem/props.ma aprem/defs.ma leq/defs.ma
+aprem/defs.ma A/defs.ma
+nf2/props.ma nf2/defs.ma pr2/fwd.ma
+nf2/arity.ma arity/subst0.ma nf2/fwd.ma
+nf2/pr3.ma nf2/defs.ma pr3/pr3.ma
+nf2/defs.ma pr2/defs.ma
+nf2/fwd.ma T/props.ma nf2/defs.ma pr2/clen.ma subst0/dec.ma
+nf2/dec.ma C/props.ma nf2/defs.ma pr0/dec.ma pr2/clen.ma pr2/fwd.ma
+nf2/lift1.ma drop1/defs.ma nf2/props.ma
+nf2/iso.ma iso/props.ma nf2/pr3.ma pr3/fwd.ma
+drop/props.ma drop/fwd.ma lift/props.ma r/props.ma
+drop/defs.ma C/defs.ma lift/defs.ma r/defs.ma
+drop/fwd.ma drop/defs.ma
+csuba/drop.ma csuba/fwd.ma drop/fwd.ma
+csuba/clear.ma clear/fwd.ma csuba/defs.ma
+csuba/props.ma csuba/defs.ma
+csuba/arity.ma T/props.ma arity/props.ma csuba/getl.ma csuba/props.ma
+csuba/defs.ma arity/defs.ma
+csuba/fwd.ma csuba/defs.ma
+csuba/getl.ma csuba/clear.ma csuba/drop.ma getl/clear.ma
+C/props.ma C/defs.ma T/props.ma
+C/defs.ma T/defs.ma
+csubt/drop.ma csubt/defs.ma drop/fwd.ma
+csubt/clear.ma clear/fwd.ma csubt/defs.ma
+csubt/props.ma csubt/defs.ma
+csubt/pc3.ma csubt/getl.ma pc3/left.ma
+csubt/defs.ma ty3/defs.ma
+csubt/fwd.ma csubt/defs.ma
+csubt/ty3.ma csubt/pc3.ma csubt/props.ma
+csubt/getl.ma csubt/clear.ma csubt/drop.ma csubt/fwd.ma getl/clear.ma
+cimp/props.ma cimp/defs.ma getl/getl.ma
+cimp/defs.ma getl/defs.ma
+drop1/props.ma drop/props.ma drop1/defs.ma getl/defs.ma
+drop1/defs.ma drop/defs.ma lift1/defs.ma
+drop1/getl.ma drop1/defs.ma getl/drop.ma
+lift1/props.ma drop1/defs.ma lift/props.ma lift1/defs.ma
+lift1/defs.ma lift/defs.ma
+lift1/fwd.ma lift/fwd.ma lift1/defs.ma
+pr2/pr2.ma getl/props.ma pr0/pr0.ma pr2/defs.ma
+pr2/props.ma getl/clear.ma getl/drop.ma pr0/props.ma pr2/defs.ma
+pr2/defs.ma getl/defs.ma pr0/defs.ma
+pr2/fwd.ma getl/clear.ma getl/drop.ma pr0/fwd.ma pr2/defs.ma
+pr2/subst1.ma csubst1/fwd.ma csubst1/getl.ma getl/drop.ma pr0/fwd.ma pr0/subst1.ma pr2/defs.ma subst1/subst1.ma
+pr2/clen.ma clen/getl.ma pr2/props.ma
+pc3/fsubst0.ma csubst0/getl.ma fsubst0/defs.ma pc3/left.ma
+pc3/nf2.ma nf2/pr3.ma pc3/defs.ma
+pc3/pc1.ma pc1/defs.ma pc3/defs.ma pr3/pr1.ma
+pc3/props.ma pc3/defs.ma pr3/pr3.ma
+pc3/left.ma pc3/props.ma
+pc3/defs.ma pr3/defs.ma
+pc3/fwd.ma pc3/props.ma pr3/fwd.ma
+pc3/dec.ma nf2/fwd.ma ty3/arity_props.ma ty3/pr3.ma
+pc3/subst1.ma pc3/props.ma pr3/subst1.ma
+pc3/wcpr0.ma pc3/props.ma wcpr0/getl.ma
+pr0/props.ma pr0/defs.ma subst0/subst0.ma
+pr0/pr0.ma lift/tlt.ma pr0/fwd.ma
+pr0/defs.ma subst0/defs.ma
+pr0/fwd.ma pr0/props.ma
+pr0/dec.ma T/dec.ma T/props.ma pr0/fwd.ma subst0/dec.ma
+pr0/subst1.ma pr0/props.ma subst1/defs.ma
+subst1/props.ma subst0/props.ma subst1/defs.ma
+subst1/defs.ma subst0/defs.ma
+subst1/fwd.ma subst0/props.ma subst1/defs.ma
+subst1/subst1.ma subst0/subst0.ma subst1/fwd.ma
+tlt/props.ma tlt/defs.ma
+tlt/defs.ma T/defs.ma
+r/props.ma r/defs.ma s/defs.ma
+r/defs.ma T/defs.ma
+wcpr0/defs.ma C/defs.ma pr0/defs.ma
+wcpr0/fwd.ma wcpr0/defs.ma
+wcpr0/getl.ma getl/props.ma wcpr0/defs.ma
+G/defs.ma preamble3.ma
+csubst0/drop.ma csubst0/fwd.ma drop/fwd.ma s/props.ma
+csubst0/clear.ma clear/fwd.ma csubst0/fwd.ma
+csubst0/props.ma csubst0/defs.ma
+csubst0/defs.ma C/defs.ma subst0/defs.ma
+csubst0/fwd.ma csubst0/defs.ma
+csubst0/getl.ma csubst0/clear.ma csubst0/drop.ma getl/fwd.ma
+next_plus/props.ma next_plus/defs.ma
+next_plus/defs.ma G/defs.ma
+tau0/props.ma getl/drop.ma tau0/defs.ma
+tau0/defs.ma G/defs.ma getl/defs.ma
+csubc/drop.ma csubc/defs.ma sc3/props.ma
+csubc/clear.ma csubc/defs.ma
+csubc/props.ma csubc/defs.ma sc3/props.ma
+csubc/arity.ma arity/defs.ma csubc/csuba.ma
+csubc/drop1.ma csubc/drop.ma
+csubc/defs.ma sc3/defs.ma
+csubc/csuba.ma csuba/defs.ma csubc/defs.ma sc3/props.ma
+csubc/getl.ma csubc/clear.ma csubc/drop.ma
+arity/props.ma arity/fwd.ma
+arity/aprem.ma aprem/props.ma arity/cimp.ma arity/props.ma
+arity/pr3.ma arity/subst0.ma csuba/arity.ma pr0/fwd.ma pr1/defs.ma pr3/defs.ma wcpr0/getl.ma
+arity/defs.ma getl/defs.ma leq/defs.ma
+arity/fwd.ma arity/defs.ma getl/drop.ma leq/asucc.ma leq/fwd.ma
+arity/subst0.ma arity/props.ma csubst0/getl.ma csubst0/props.ma fsubst0/fwd.ma getl/getl.ma subst0/dec.ma subst0/fwd.ma
+arity/lift1.ma arity/props.ma drop1/defs.ma
+arity/cimp.ma arity/defs.ma cimp/props.ma
+ex2/props.ma arity/fwd.ma ex2/defs.ma nf2/defs.ma pr2/fwd.ma
+ex2/defs.ma C/defs.ma
+getl/drop.ma clear/drop.ma getl/props.ma r/props.ma
+getl/clear.ma clear/drop.ma getl/props.ma
+getl/props.ma clear/props.ma drop/props.ma getl/fwd.ma
+getl/defs.ma clear/defs.ma drop/defs.ma
+getl/fwd.ma clear/fwd.ma drop/fwd.ma getl/defs.ma
+getl/dec.ma getl/props.ma
+getl/flt.ma clear/props.ma flt/props.ma getl/fwd.ma
+getl/getl.ma getl/clear.ma getl/drop.ma
+clear/drop.ma clear/fwd.ma drop/fwd.ma
+clear/props.ma clear/fwd.ma
+clear/defs.ma C/defs.ma
+clear/fwd.ma clear/defs.ma
+s/props.ma s/defs.ma
+s/defs.ma T/defs.ma
+pc1/props.ma pc1/defs.ma pr1/pr1.ma
+pc1/defs.ma pr1/defs.ma
+sn3/nf2.ma nf2/dec.ma nf2/pr3.ma sn3/defs.ma
+sn3/props.ma iso/props.ma nf2/iso.ma pr3/iso.ma sn3/fwd.ma sn3/nf2.ma
+sn3/defs.ma pr3/defs.ma
+sn3/fwd.ma pr3/props.ma sn3/defs.ma
+sn3/lift1.ma drop1/defs.ma lift1/fwd.ma sn3/props.ma
+llt/props.ma leq/defs.ma llt/defs.ma
+llt/defs.ma A/defs.ma
+ex1/props.ma arity/defs.ma ex1/defs.ma leq/props.ma nf2/pr3.ma nf2/props.ma pc3/fwd.ma ty3/fwd.ma
+ex1/defs.ma C/defs.ma
+ex0/props.ma aplus/props.ma ex0/defs.ma leq/defs.ma
+ex0/defs.ma A/defs.ma G/defs.ma
+csubst1/props.ma csubst1/defs.ma subst1/defs.ma
+csubst1/defs.ma csubst0/defs.ma
+csubst1/fwd.ma csubst0/fwd.ma csubst1/defs.ma subst1/props.ma
+csubst1/getl.ma csubst0/getl.ma csubst0/props.ma csubst1/props.ma drop/props.ma subst1/props.ma
+theory.ma 

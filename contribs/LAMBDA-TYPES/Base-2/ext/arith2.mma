@@ -14,8 +14,6 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Base-2/ext/arith".
-
 include "preamble.ma".
 
 inline procedural "cic:/matita/LAMBDA-TYPES/Base-1/ext/arith/nat_dec.con".

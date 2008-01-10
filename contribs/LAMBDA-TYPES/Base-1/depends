@@ -1,0 +1,13 @@
+definitions.ma blt/defs.ma plist/defs.ma types/defs.ma
+preamble.ma coq.ma
+theory.ma blt/props.ma ext/arith.ma ext/tactics.ma plist/props.ma types/props.ma
+spare.ma theory.ma
+plist/props.ma plist/defs.ma
+plist/defs.ma preamble.ma
+ext/tactics.ma preamble.ma
+ext/arith.ma preamble.ma
+types/props.ma types/defs.ma
+types/defs.ma preamble.ma
+blt/props.ma blt/defs.ma
+blt/defs.ma preamble.ma
+coq.ma 

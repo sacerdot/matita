@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Unified-Sub/datatypes/Context".
+
 
 (* FLAT CONTEXTS
    - Naming policy:

@@ -12,9 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Base-1/preamble".
 
-include' "../../../legacy/coq.ma".
+
+include "coq.ma".
 
 alias symbol "eq" = "Coq's leibnitz's equality".
 alias symbol "leq" = "Coq's natural 'less or equal to'".

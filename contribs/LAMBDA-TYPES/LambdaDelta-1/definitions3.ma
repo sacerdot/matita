@@ -14,19 +14,49 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/Base-2/plist/defs".
-
-include "preamble.ma".
 
 
-(* object PList not inlined *)
+include "tlt/defs.ma".
 
+include "iso/defs.ma".
 
-(* object PConsTail not inlined *)
+include "clen/defs.ma".
 
+include "flt/defs.ma".
 
-(* object Ss not inlined *)
+include "cnt/defs.ma".
 
+include "cimp/defs.ma".
 
-(* object papp not inlined *)
+include "subst1/defs.ma".
+
+include "csubst1/defs.ma".
+
+include "fsubst0/defs.ma".
+
+include "next_plus/defs.ma".
+
+include "tau1/defs.ma".
+
+include "llt/defs.ma".
+
+include "aprem/defs.ma".
+
+include "ex0/defs.ma".
+
+include "wcpr0/defs.ma".
+
+include "csuba/defs.ma".
+
+include "nf2/defs.ma".
+
+include "ex2/defs.ma".
+
+include "csubc/defs.ma".
+
+include "pc1/defs.ma".
+
+include "ex1/defs.ma".
+
+include "csubt/defs.ma".
 

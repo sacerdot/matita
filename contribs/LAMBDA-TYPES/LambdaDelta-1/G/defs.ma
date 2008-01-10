@@ -14,9 +14,9 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-set "baseuri" "cic:/matita/LAMBDA-TYPES/LambdaDelta-1/G/defs".
 
-include "preamble.ma".
+
+include "preamble3.ma".
 
 record G : Set \def {
  next: (nat \to nat);
