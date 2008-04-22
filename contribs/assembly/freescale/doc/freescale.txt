@@ -1,0 +1,21 @@
+INDIRIZZI ITALIA
+
+http://www.freescale.com/webapp/sps/site/overview.jsp?nodeId=0671479183#it
+http://www.freescale.com/webapp/sps/site/homepage.jsp?nodeId=06714769568830
+
+Italy:
+Freescale Semiconductor
+Via Muzio Attendolo Detto
+Sforza, 13
+20141 Milano
+Italia 
+
+TOOL TEST
+
+http://www.freescale.com/webapp/sps/site/prod_summary.jsp?code=DEMO9RS08KA2
+DEMO9RS08KA2 (50$)
+per MC9RS08KA2 (<=1$)
+
+http://www.freescale.com/webapp/sps/site/prod_summary.jsp?code=USBSPYDER08
+USBSPYDER08 (29$)
+per MC9RS08KA1/2, MC9S08QD2/4, MC9S08QG4/8 (<=1$)

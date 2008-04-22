@@ -1,0 +1,501 @@
+
+<!-- ============= Installation ============================== -->
+
+<chapter id="sec_install">
+  <title>Installation</title>
+
+  <sect1 id="inst_from_src">
+    <title>Installing from sources</title>
+
+    <para>Currently, the only intended way to install &appname; is starting
+      from its source code.  </para>
+
+    <sect2 id="get_source_code">
+      <title>Getting the source code</title>
+
+      <para>You can get the &appname; source code in two ways:
+	<orderedlist>
+
+	  <listitem> <para> go to the <ulink type="http"
+		url="http://matita.cs.unibo.it/download.shtml">download
+		page</ulink> and get the <ulink type="http"
+		url="http://matita.cs.unibo.it/sources/matita-latest.tar.gz"
+		>latest released source tarball</ulink>;</para> </listitem>
+
+	  <listitem> <para> get the development sources from <ulink type="http"
+		url="http://helm.cs.unibo.it/websvn/listing.php?repname=helm&amp;path=%2F&amp;sc=0">our
+		SVN repository</ulink>. You will need the
+	      <application>components/</application> and
+	      <application>matita/</application> directories from the
+	      <filename>trunk/helm/software/</filename> directory, plus the
+	      <filename>configure</filename> and <filename>Makefile*</filename>
+	      stuff from the same directory.  </para>
+
+	      <para>In this case you will need to run
+		<command>autoconf</command> before proceding with the building
+		instructions below.</para> </listitem>
+
+	</orderedlist>
+      </para>
+      
+    </sect2>
+
+    <sect2 id="build_requirements">
+      <title>Requirements</title>
+
+      <para>In order to build &appname; from sources you will need some
+	tools and libraries. They are listed below.
+
+	<note>
+	  <title>Note for Debian (and derivatives) users</title>
+
+	  <para>If you are running a 
+		  <ulink type="http"
+			  url="http://www.debian.org">Debian GNU/Linux</ulink>
+		  distribution,
+		  or any of its derivative like <ulink type="http"
+			  url="http://ubuntu.com">Ubuntu</ulink>, 
+		  you can use APT to install all the required tools and
+		  libraries since they are all part of the Debian archive. 
+	  </para>	  
+	  <para>	  
+		  apt-get install ocaml ocaml-findlib libgdome2-ocaml-dev liblablgtk2-ocaml-dev liblablgtkmathview-ocaml-dev liblablgtksourceview-ocaml-dev libsqlite3-ocaml-dev libocamlnet-ocaml-dev libzip-ocaml-dev libhttp-ocaml-dev ocaml-ulex08 libexpat-ocaml-dev libmysql-ocaml-dev camlp5
+	  </para>	  
+	  <para>	  
+		  An official debian package is going to be added to the
+		  archive too.
+	  </para>
+
+	</note>
+
+	<variablelist>
+	  <title>Required tools and libraries</title>
+
+	  <varlistentry>
+	    <term>
+	      <application> <ulink type="http"
+		  url="http://caml.inria.fr">OCaml</ulink> </application>
+	    </term>
+	    <listitem>
+	      <para> the Objective Caml compiler, version 3.09 or above </para>
+	    </listitem>
+	  </varlistentry>
+
+	  <varlistentry>
+	    <term>
+	      <application> <ulink type="http"
+		  url="http://www.ocaml-programming.de/packages/">Findlib</ulink>
+	      </application>
+	    </term>
+	    <listitem>
+	      <para> OCaml package manager, version 1.1.1 or above</para>
+	    </listitem>
+	  </varlistentry>
+
+	  <varlistentry>
+	    <term>
+	      <application> <ulink type="http"
+		  url="http://www.xs4all.nl/~mmzeeman/ocaml/">OCaml
+		  Expat</ulink> </application>
+	    </term>
+	    <listitem>
+	      <para>OCaml bindings for the <application><ulink type="http"
+		    url="http://expat.sourceforge.net/">expat</ulink>
+		  library</application> </para>
+	    </listitem>
+	  </varlistentry>
+
+	  <varlistentry>
+	    <term>
+	      <application> <ulink type="http"
+		  url="http://gmetadom.sourceforge.net/">GMetaDOM</ulink>
+	      </application>
+	    </term>
+	    <listitem>
+	      <para>OCaml bindings for the <application><ulink type="http"
+		    url="http://gdome2.cs.unibo.it/">Gdome 2</ulink>
+		  library</application></para>
+	    </listitem>
+	  </varlistentry>
+
+	  <varlistentry>
+	    <term>
+	      <application> <ulink type="http"
+		  url="http://www.bononia.it/~zack/ocaml-http.en.html">OCaml
+		  HTTP</ulink> </application>
+	    </term>
+	    <listitem>
+	      <para> OCaml library to write HTTP daemons (and clients) </para>
+	    </listitem>
+	  </varlistentry>
+
+	  <varlistentry>
+	    <term>
+	      <application> <ulink type="http"
+		  url="http://wwwfun.kurims.kyoto-u.ac.jp/soft/lsl/lablgtk.html">LablGTK</ulink>
+	      </application>
+	    </term>
+	    <listitem>
+	      <para> OCaml bindings for the <application> <ulink type="http"
+		    url="http://www.gtk.org"> GTK+</ulink> library
+	      </application>, version 2.6.0 or above </para>
+	    </listitem>
+	  </varlistentry>
+
+	  <varlistentry>
+	    <term>
+	      <application> <ulink type="http"
+		  url="http://helm.cs.unibo.it/mml-widget/">GtkMathView</ulink>
+	      </application>
+	    </term>
+	    <term>
+	      <application> <ulink type="http"
+		  url="http://helm.cs.unibo.it/mml-widget/">LablGtkMathView</ulink>
+	      </application>
+	    </term>
+	    <listitem>
+	      <para> GTK+ widget to render <ulink type="http"
+		  url="http://www.w3.org/Math/">MathML</ulink> documents and its
+		OCaml bindings </para>
+	    </listitem>
+	  </varlistentry>
+
+	  <varlistentry>
+	    <term>
+	      <application> <ulink type="http"
+		  url="http://gtksourceview.sourceforge.net/">GtkSourceView</ulink>
+	      </application>
+	    </term>
+	    <term>
+	      <application> <ulink type="http"
+		  url="http://helm.cs.unibo.it/software/lablgtksourceview/">LablGtkSourceView</ulink>
+	      </application>
+	    </term>
+	    <listitem>
+	      <para> extension for the GTK+ text widget (adding the typical
+		features of source code editors) and its OCaml bindings </para>
+	    </listitem>
+	  </varlistentry>
+
+	  <varlistentry>
+	    <term> &MYSQL; </term>
+	    <term>
+	      <application> <ulink type="http"
+		  url="http://raevnos.pennmush.org/code/ocaml-mysql/">OCaml
+		  MySQL</ulink> </application>
+	    </term>
+	    <listitem>
+	      <para> SQL database and OCaml bindings for its client-side library
+	      </para>
+	      <para> The SQL database itself is not strictly needed to run
+		&appname;, but the client libraries are.</para>
+	    </listitem>
+	  </varlistentry>
+
+	  <varlistentry>
+	    <term> &Sqlite; </term>
+	    <term>
+		    <application> 
+			  <ulink type="http"
+			      url="http://ocaml.info/home/ocaml_sources.html">
+		OCaml Sqlite3
+	      </ulink> </application>
+	    </term>
+	    <listitem>
+	      <para> Sqlite database and OCaml bindings
+	      </para>
+	    </listitem>
+	  </varlistentry>
+
+	  <varlistentry>
+	    <term>
+	      <application> <ulink type="http"
+		  url="http://ocamlnet.sourceforge.net/">Ocamlnet</ulink>
+	      </application>
+	    </term>
+	    <listitem>
+	      <para> collection of OCaml libraries to deal with
+		application-level Internet protocols and conventions </para>
+	    </listitem>
+	  </varlistentry>
+
+	  <varlistentry>
+	    <term>
+	      <application> <ulink type="http"
+		  url="http://www.cduce.org/download.html">ulex</ulink>
+	      </application>
+	    </term>
+	    <listitem>
+	      <para> Unicode lexer generator for OCaml </para>
+	    </listitem>
+	  </varlistentry>
+
+	  <varlistentry>
+	    <term>
+	      <application> <ulink type="http"
+		  url="http://cristal.inria.fr/~xleroy/software.html">CamlZip</ulink>
+	      </application>
+	    </term>
+	    <listitem>
+	      <para> OCaml library to access <filename>.gz</filename> files
+	      </para>
+	    </listitem>
+	  </varlistentry>
+
+	</variablelist> </para>
+
+    </sect2>
+
+    <sect2 id="database_setup">
+      <title>(optional) &MYSQL; setup</title>
+
+      <para> To fully exploit &appname; indexing and search capabilities 
+	on a huge metadata set you may
+	need a working &MYSQL; database. Detalied instructions on how to do
+	it can be found in the <ulink type="http"
+	  url="http://dev.mysql.com/doc/">MySQL documentation</ulink>. Here you
+	can find a quick howto. </para>
+
+      <para> In order to create a database you need administrator permissions on
+	your MySQL installation, usually the root account has them. Once you
+	have the permissions, a new database can be created executing
+	<userinput>mysqladmin create matita</userinput>
+	(<emphasis>matita</emphasis> is the default database name, you can
+	change it using the <parameter>db.user</parameter> key of the
+	configuration file). </para>
+
+      <para> Then you need to grant the necessary access permissions to the
+	database user of &appname;, typing <userinput>echo "grant all privileges
+	  on matita.* to helm;" | mysql matita</userinput> should do the trick
+	(<emphasis>helm</emphasis> is the default user name used by &appname; to
+	access the database, you can change it using the
+	<parameter>db.user</parameter> key of the configuration file).
+      </para>
+
+      <note>
+	<para> This way you create a database named <emphasis>matita</emphasis>
+	  on which anyone claiming to be the <emphasis>helm</emphasis> user can
+	  do everything (like adding dummy data or destroying the contained
+	  one). It is strongly suggested to apply more fine grained permissions,
+	  how to do it is out of the scope of this manual.</para>
+      </note>
+      
+    </sect2>
+
+    <sect2 id="build_instructions">
+      <title>Compiling and installing</title>
+
+      <para> Once you get the source code the installations steps should be
+	quite familiar.</para>
+
+      <para> First of all you need to configure the build process executing
+	<userinput>./configure</userinput>. This will check that all needed
+	tools and library are installed and prepare the sources for compilation
+	and installation. </para>
+	
+      <para> Quite a few (optional) arguments may be passed to the
+	<application>configure</application> command line to change build time
+	parameters. They are listed below, together with their
+	default values: </para>
+
+	<variablelist>
+	  <title> <application>configure</application> command line
+	    arguments</title>
+
+	  <varlistentry>
+	    <term>
+	      <userinput>--with-runtime-dir=<replaceable>dir</replaceable></userinput>
+	    </term>
+	    <listitem>
+	      <para>
+		(<emphasis>Default:</emphasis>
+		<filename>/usr/local/matita</filename>) Runtime base directory
+		where all &appname; stuff (executables, configuration files,
+		standard library, ...) will be installed
+	      </para>
+	    </listitem>
+	  </varlistentry>
+
+	  <varlistentry>
+	    <term>
+	      <userinput>--with-dbhost=<replaceable>host</replaceable></userinput>
+	    </term>
+	    <listitem>
+	      <para>
+		(<emphasis>Default:</emphasis> localhost) Default SQL server
+		hostname. Will be used while building the standard library
+		during the installation and to create the default &appname;
+		configuration. May be changed later in configuration file.
+	      </para>
+	    </listitem>
+	  </varlistentry>
+
+	  <varlistentry>
+	    <term>
+	      <userinput>--enable-debug</userinput>
+	    </term>
+	    <listitem>
+	      <para>
+		(<emphasis>Default:</emphasis> disabled) Enable debugging code.
+		Not for the casual user.
+	      </para>
+	    </listitem>
+	  </varlistentry>
+	</variablelist>
+
+      <para> Then you will manage the build and install process using
+	<application><ulink type="http"
+	    url="http://www.gnu.org/software/make/">make</ulink></application>
+	as usual. Below are reported the targets you have to invoke in sequence
+	to build and install:
+      </para>
+
+	<variablelist>
+	  <title><application>make</application> targets</title>
+
+	  <varlistentry>
+	    <term><userinput>world</userinput></term>
+	    <listitem>
+	      <para>builds components needed by &appname; and &appname; itself
+		(in bytecode or native code depending
+		on the availability of the OCaml native code compiler) </para>
+	    </listitem>
+	  </varlistentry>
+
+	  <varlistentry>
+	    <term><userinput>install</userinput></term>
+	    <listitem>
+	      <para>installs &appname; related tools, standard library and the
+		needed runtime stuff in the proper places on the filesystem.
+	      </para>
+	      <para>As a part of the installation process the &appname;
+		standard library will be compiled, thus testing that the just
+		built <application>matitac</application> compiler works
+		properly.</para>
+	      <para>For this step you will need a working SQL database (for
+		indexing the standard library while you are compiling it). See
+		<ulink type="http" url="#database_setup">Database setup</ulink>
+		for instructions on how to set it up.
+	      </para>
+	    </listitem>
+	  </varlistentry>
+
+	</variablelist>
+      
+    </sect2>
+
+  </sect1>
+
+  <sect1 id="matita.conf.xml">
+    <title>Configuring &appname;</title>
+    <para>
+	    The configuration file is divided in four sections. The user and
+	    matita ones are self explicative and does not need user
+	    intervention. Here we report a sample snippet for these two
+	    sections. The remaining db and getter sections will be explained in
+	    details later.
+	   <programlisting>
+<![CDATA[
+  <section name="user">
+    <key name="home">$(HOME)</key>
+    <key name="name">$(USER)</key>
+  </section>
+  <section name="matita">
+    <key name="basedir">$(user.home)/.matita</key>
+    <key name="rt_base_dir">/usr/share/matita/</key>
+    <key name="owner">$(user.name)</key>
+  </section>
+]]></programlisting>
+    </para>
+   <para>
+	   &appname; needs to store/fetch data and metadata. Data is essentially
+	   composed of XML files, metadata is a set of tuples for a relational
+	   model. Data and metadata can produced by the user or be already
+	   available. Both kind of data/metadata can be local and/or remote.
+   </para>
+   <para>
+	   The db section tells &appname; where to store and retrieve metadata,
+	   while the getter section describes where XML files have to be
+	   found. The following picture describes the suggested configuration.
+	   Dashed arrows are determined by the configuration file.
+   </para>
+   <figure><title>Configuring the Databases</title>
+     <mediaobject>
+       <imageobject>
+         <imagedata fileref="figures/database.png" format="PNG" srccredit="Enrico Tassi"/>
+       </imageobject>
+       <textobject><phrase>How to configure the databases.</phrase></textobject>
+     </mediaobject>
+   </figure>
+   <para>The getter</para>
+   <para>
+	   Consider the following snippet and the URI
+	   <userinput>cic:/matita/foo/bar.con</userinput>. If &appname;
+	   is asked to read that object it will resolve the object trough
+	   the getter. Since the first two entries are equally specific
+	   (longest match rule applies) first the path
+	   <userinput>file://$(matita.rt_base_dir)/xml/standard-library/foo/bar.con</userinput>
+	   and then <userinput>file://$(user.home)/.matita/xml/matita/foo/bar.con</userinput>
+	   are inspected.
+	   <programlisting>
+<![CDATA[
+  <section name="getter">
+    <key name="cache_dir">$(user.home)/.matita/getter/cache</key>
+    <key name="prefix">
+      cic:/matita/
+      file://$(matita.rt_base_dir)/xml/standard-library/
+      ro
+    </key>
+    <key name="prefix">
+      cic:/matita/
+      file://$(user.home)/.matita/xml/matita/
+    </key>
+    <key name="prefix">
+      cic:/Coq/
+      http://mowgli.cs.unibo.it/xml/
+      legacy
+    </key>
+  </section>
+]]>	
+	</programlisting> 
+	if the same URI has to be written, the former prefix is skipped
+	since it is marked as readonly (<userinput>ro</userinput>).
+	Objects resolved using the third prefix are readonly too, and are
+	retrieved using the network. There is no limit to the number of
+	prefixes the user can define. The distinction between prefixes marked
+	as readonly and legacy is that, legacy ones are really read only, while
+	the ones marked with <userinput>ro</userinput> are considered for
+	writing when &appname; is started in system mode (used to publish user
+	developments in the library space).
+   </para>
+	  <para>The db</para>
+	<para>
+	   The database subsystem has three fron ends: library, user and
+	   legacy.  The latter is the only optional one. Every query is done on
+	   every frontend, making the duplicate free union of the results.
+	   The user front end kepps metadata produced by the user, and is thus
+	   heavily accessed in read/write mode, while the library and legacy
+	   fron ends are read only. Every front end can be connected to
+	   backend, the storage actually. 
+	   Consider the following snippet.
+	   <programlisting>
+<![CDATA[
+  <section name="db">
+    <key name="metadata">mysql://mowgli.cs.unibo.it matita helm none legacy</key>
+    <key name="metadata">file://$(matita.rt_base_dir) metadata.db helm helm library</key>
+    <key name="metadata">file://$(matita.basedir) user.db helm helm user</key>
+  </section>
+]]>	
+	</programlisting> 
+	Here the usr database is a file (thus locally accessed trough the
+	Sqlite library) placed in the user's home directory. The library one is
+	placed in the &appname; runtime directory. The legacy fron end is
+	connected to a remote &MYSQL; based storage. Every metadata key 
+	takes a path to the storage, the name of the database, the user name,
+	a password (or <userinput>none</userinput>) and the name of the front 
+	end to which it is attached.
+   </para>
+  </sect1>
+
+</chapter>
+

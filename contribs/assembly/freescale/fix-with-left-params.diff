@@ -1,0 +1,216 @@
+Index: load_write.ma
+===================================================================
+--- load_write.ma	(revision 8243)
++++ load_write.ma	(working copy)
+@@ -260,10 +260,12 @@
+ λm:mcu_type.λt:memory_impl.λs:any_status m t.λw:word16.
+  get_pc_reg m t (set_pc_reg m t s (succ_w16 w)).
+ 
+-let rec filtered_plus_w16 (m:mcu_type) (t:memory_impl) (s:any_status m t) (w:word16) (n:nat) on n ≝
++definition filtered_plus_w16 := \lambda m : mcu_type.
++let rec aux (t:memory_impl) (s:any_status m t) (w:word16) (n:nat) on n ≝
+  match n with
+   [ O ⇒ w
+-  | S n' ⇒ filtered_plus_w16 m t s (filtered_inc_w16 m t s w) n' ].
++  | S n' ⇒ aux t s (filtered_inc_w16 m t s w) n' ]
++  in aux.
+ 
+ (* 
+    errore1: non esiste traduzione ILL_OP
+Index: multivm.ma
+===================================================================
+--- multivm.ma	(revision 8243)
++++ multivm.ma	(working copy)
+@@ -1304,12 +1304,13 @@
+ (* ESECUZIONE *)
+ (* ********** *)
+ 
+-let rec execute (m:mcu_type) (t:memory_impl) (s:tick_result (any_status m t)) (n:nat) on n ≝
++definition execute := \lambda m : mcu_type.
++let rec aux (t:memory_impl) (s:tick_result (any_status m t)) (n:nat) on n ≝
+  match s with
+   [ TickERR s' error ⇒ TickERR ? s' error
+   | TickSUSP s' susp ⇒ TickSUSP ? s' susp
+-  | TickOK s'        ⇒ match n with [ O ⇒ TickOK ? s' | S n' ⇒ execute m t (tick m t s') n' ]
+-  ].
++  | TickOK s'        ⇒ match n with [ O ⇒ TickOK ? s' | S n' ⇒ aux t (tick m t s') n' ]
++  ] in aux.
+ 
+ lemma breakpoint:
+  ∀m,u,s,n1,n2. execute m u s (n1 + n2) = execute m u (execute m u s n1) n2.
+Index: medium_tests_lemmas.ma
+===================================================================
+--- medium_tests_lemmas.ma	(revision 8241)
++++ medium_tests_lemmas.ma	(working copy)
+@@ -126,7 +126,7 @@
+ axiom MSB16_of_make_word16 :
+  ∀bh,bl:byte8.
+   MSB_w16 (mk_word16 bh bl) = MSB_b8 bh.
+-
++(*
+ lemma execute_HCS08_LDHX_maIMM2 :
+  ∀t:memory_impl.∀s:any_status HCS08 t.∀bhigh,blow:byte8.
+   (get_clk_desc HCS08 t s = None ?) →
+@@ -436,3 +436,4 @@
+  [2: elim H; reflexivity ]
+  reflexivity.
+ qed.
++*)
+\ No newline at end of file
+Index: medium_tests.ma
+===================================================================
+--- medium_tests.ma	(revision 8241)
++++ medium_tests.ma	(working copy)
+@@ -800,34 +800,37 @@
+      ; 〈x0,x0〉 ; 〈x0,x0〉 ; 〈x0,x0〉 ; 〈x0,x0〉 ; 〈x0,x0〉 ; 〈x0,x0〉 ; 〈x0,x0〉 ; 〈x0,x0〉 ].
+ 
+ (* esecuzione execute k*(n+2) *)
+-let rec dTest_HCS08_gNum_execute1 (m:mcu_type) (t:memory_impl) (s:tick_result (any_status m t)) (n,ntot:nat) on n ≝
++definition dTest_HCS08_gNum_execute1 := \lambda m : mcu_type.
++let rec aux (t:memory_impl) (s:tick_result (any_status m t)) (n,ntot:nat) on n ≝
+  match s with
+   [ TickERR s' error ⇒ TickERR ? s' error
+   | TickSUSP s' susp ⇒ TickSUSP ? s' susp
+   | TickOK s' ⇒ match n with
+    [ O ⇒ TickOK ? s'
+-   | S n' ⇒ dTest_HCS08_gNum_execute1 m t (execute m t (TickOK ? s') (ntot+2)) n' ntot ]
+-  ].
++   | S n' ⇒ aux t (execute m t (TickOK ? s') (ntot+2)) n' ntot ]
++  ] in aux.
+ 
+ (* esecuzione execute k*(n+1)*(n+2) *)
+-let rec dTest_HCS08_gNum_execute2 (m:mcu_type) (t:memory_impl) (s:tick_result (any_status m t)) (n,ntot:nat) on n ≝
++definition dTest_HCS08_gNum_execute2 := \lambda m : mcu_type.
++let rec aux (t:memory_impl) (s:tick_result (any_status m t)) (n,ntot:nat) on n ≝
+  match s with
+   [ TickERR s' error ⇒ TickERR ? s' error
+   | TickSUSP s' susp ⇒ TickSUSP ? s' susp
+   | TickOK s' ⇒ match n with
+    [ O ⇒ TickOK ? s'
+-   | S n' ⇒ dTest_HCS08_gNum_execute2 m t (dTest_HCS08_gNum_execute1 m t (TickOK ? s') (ntot+1) ntot) n' ntot ]
+-  ].
++   | S n' ⇒ aux t (dTest_HCS08_gNum_execute1 m t (TickOK ? s') (ntot+1) ntot) n' ntot ]
++  ] in aux.
+ 
+ (* esecuzione execute k*n*(n+1)*(n+2) *)
+-let rec dTest_HCS08_gNum_execute3 (m:mcu_type) (t:memory_impl) (s:tick_result (any_status m t)) (n,ntot:nat) on n ≝
++definition dTest_HCS08_gNum_execute3 := \lambda m : mcu_type.
++let rec aux (t:memory_impl) (s:tick_result (any_status m t)) (n,ntot:nat) on n ≝
+  match s with
+   [ TickERR s' error ⇒ TickERR ? s' error
+   | TickSUSP s' susp ⇒ TickSUSP ? s' susp
+   | TickOK s' ⇒ match n with
+    [ O ⇒ TickOK ? s'
+-   | S n' ⇒ dTest_HCS08_gNum_execute3 m t (dTest_HCS08_gNum_execute2 m t (TickOK ? s') ntot ntot) n' ntot ]
+-  ].
++   | S n' ⇒ aux t (dTest_HCS08_gNum_execute2 m t (TickOK ? s') ntot ntot) n' ntot ]
++  ] in aux.
+ 
+ (* esecuzione execute 80+11*n*(n+1)*(n+2) *)
+ definition dTest_HCS08_gNum_execute4 ≝
+Index: opcode.ma
+===================================================================
+--- opcode.ma	(revision 8241)
++++ opcode.ma	(working copy)
+@@ -385,56 +385,60 @@
+ (* ********************************************* *)
+ 
+ (* su tutta la lista quante volte compare il byte *)
+-let rec get_byte_count (m:mcu_type) (b:byte8) (c:nat)
++definition get_byte_count := \lambda m : mcu_type.
++let rec aux (b:byte8) (c:nat)
+  (l:list (Prod4T (any_opcode m) instr_mode byte8_or_word16 byte8)) on l ≝
+  match l with
+   [ nil ⇒ c
+   | cons hd tl ⇒ match thd4T ???? hd with
+    [ Byte b' ⇒ match eq_b8 b b' with
+-    [ true ⇒ get_byte_count m b (S c) tl
+-    | false ⇒ get_byte_count m b c tl
++    [ true ⇒  aux b (S c) tl
++    | false ⇒ aux b c tl
+     ]
+-   | Word _ ⇒ get_byte_count m b c tl
++   | Word _ ⇒ aux b c tl
+    ]
+-  ].
++  ] in aux.
+ 
+ (* su tutta la lista quante volte compare la word (0x9E+byte) *)
+-let rec get_word_count (m:mcu_type) (b:byte8) (c:nat)
++definition get_word_count := \lambda m : mcu_type.
++let rec aux (b:byte8) (c:nat)
+  (l:list (Prod4T (any_opcode m) instr_mode byte8_or_word16 byte8)) on l ≝
+  match l with
+   [ nil ⇒ c
+   | cons hd tl ⇒ match thd4T ???? hd with
+-   [ Byte _ ⇒ get_word_count m b c tl
++   [ Byte _ ⇒ aux b c tl
+    | Word w ⇒ match eq_w16 〈〈x9,xE〉:b〉 w with
+-    [ true ⇒ get_word_count m b (S c) tl
+-    | false ⇒ get_word_count m b c tl
++    [ true ⇒ aux b (S c) tl
++    | false ⇒ aux b c tl
+     ]
+    ]
+-  ].
++  ] in aux.
+ 
+ (* su tutta la lista quante volte compare lo pseudocodice *)
+-let rec get_pseudo_count (m:mcu_type) (o:opcode) (c:nat)
++definition get_pseudo_count := \lambda m : mcu_type.
++let rec aux (o:opcode) (c:nat)
+  (l:list (Prod4T (any_opcode m) instr_mode byte8_or_word16 byte8)) on l ≝
+  match l with
+   [ nil ⇒ c
+   | cons hd tl ⇒ match fst4T ???? hd with
+    [ anyOP o' ⇒ match eqop m (anyOP m o) (anyOP m o') with
+-    [ true ⇒ get_pseudo_count m o (S c) tl
+-    | false ⇒ get_pseudo_count m o c tl
++    [ true ⇒ aux o (S c) tl
++    | false ⇒ aux o c tl
+     ]
+    ]
+-  ].
++  ] in aux.
+ 
+ (* su tutta la lista quante volte compare la modalita' *)
+-let rec get_mode_count (m:mcu_type) (i:instr_mode) (c:nat)
++definition get_mode_count:= \lambda m : mcu_type.
++let rec aux (i:instr_mode) (c:nat)
+  (l:list (Prod4T (any_opcode m) instr_mode byte8_or_word16 byte8)) on l ≝
+  match l with
+   [ nil ⇒ c
+   | cons hd tl ⇒ match eqim (snd4T ???? hd) i with
+-   [ true ⇒ get_mode_count m i (S c) tl
+-   | false ⇒ get_mode_count m i c tl
++   [ true ⇒ aux i (S c) tl
++   | false ⇒ aux i c tl
+    ]
+-  ].
++  ] in aux.
+ 
+ (* b e' non implementato? *)
+ let rec test_not_impl_byte (b:byte8) (l:list byte8) on l ≝
+@@ -467,17 +471,18 @@
+   ].
+ 
+ (* su tutta la lista quante volte compare la coppia opcode,instr_mode *)
+-let rec get_OpIm_count (m:mcu_type) (o:any_opcode m) (i:instr_mode) (c:nat)
++definition get_OpIm_count := \lambda m : mcu_type.
++let rec aux (o:any_opcode m) (i:instr_mode) (c:nat)
+  (l:list (Prod4T (any_opcode m) instr_mode byte8_or_word16 byte8)) on l ≝
+  match l with
+   [ nil ⇒ c
+   | cons hd tl ⇒
+    match (eqop m o (fst4T ???? hd)) ⊗
+          (eqim i (snd4T ???? hd)) with
+-    [ true ⇒ get_OpIm_count m o i (S c) tl
+-    | false ⇒ get_OpIm_count m o i c tl
++    [ true ⇒ aux o i (S c) tl
++    | false ⇒ aux o i c tl
+     ] 
+-  ].
++  ] in aux.
+ 
+ (* iteratore sugli opcode *)
+ definition forall_opcode ≝ λP.

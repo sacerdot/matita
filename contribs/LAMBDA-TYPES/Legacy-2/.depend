@@ -1,0 +1,2 @@
+Legacy-2/coq/defs.ma: Legacy-2/coq/defs.mma Legacy-2/preamble.ma
+Legacy-2/coq/props.ma: Legacy-2/coq/props.mma Legacy-2/coq/defs.ma

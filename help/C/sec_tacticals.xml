@@ -1,0 +1,305 @@
+
+<!-- ============ Tacticals ====================== -->
+<chapter id="sec_tacticals">
+ <title>Tacticals</title>
+ <sect1>
+   <title>Interactive proofs and definitions</title>
+   <para>
+    An interactive definition is started by giving a
+    <link linkend="definition">definition</link> command omitting
+    the definiens.
+    An interactive proof is started by using one of the
+    <link linkend="proofs">proof commands</link> omitting
+    an explicit proof term.
+   </para>
+   <para>An interactive proof or definition can and must be terminated by
+    a <link linkend="command_qed">qed</link> command when no more sequents are
+    left to prove. Between the command that starts the interactive session and
+    the qed command the user must provide a procedural proof script made
+    of <link linkend="sec_tactics">tactics</link> structured by means of
+    <link linkend="tacticals">tacticals</link>.</para>
+   <para>In the tradition of the LCF system, tacticals can be considered
+    higher order tactics. Their syntax is structured and they are executed
+    atomically. On the contrary, in Matita the syntax of several tacticals is
+    destructured into a sequence of tokens and tactics in such a way that is
+    is possible to stop execution after every single token or tactic.
+    The original semantics is preserved: the execution of the whole sequence
+    yields the result expected by the original LCF-like tactical.</para>
+ </sect1>
+ <sect1 id="proofstatus">
+  <title>The proof status</title>
+  <para>
+   During an interactive proof, the proof status is made of
+   the set of sequents to prove and the partial proof built so far.
+  </para>
+  <para>The partial proof can be <link linkend="aboutproof">inspected</link>
+   on demand in the CIC browser. It will be shown in pseudo-natural language
+   produced on the fly from the proof term.</para>
+  <para>The set of sequents to prove is shown in the notebook of the
+   <link linkend="authoringinterface">authoring interface</link>, in the
+   top-right corner of the main window of Matita. Each tab shows a different
+   sequent, named with a question mark followed by a number. The current
+   role of the sequent, according to the following description, is also
+   shown in the tab tag.
+  </para>
+  <orderedlist>
+   <listitem id="selectedsequents">
+    <para>
+     <emphasis role="bold">Selected sequents</emphasis>
+      (name in boldface, e.g. <emphasis role="bold">?3</emphasis>).
+      The next tactic will be applied to every selected sequent, producing
+      new selected sequents. <link linkend="tacticals">Tacticals</link>
+      such as branching (&quot;<emphasis role="bold">[</emphasis>&quot;)
+      or &quot;<emphasis role="bold">focus</emphasis>&quot; can be used
+      to change the set of selected sequents.
+    </para>
+   </listitem>
+   <listitem id="siblingsequents">
+    <para>
+     <emphasis role="bold">Sibling sequents</emphasis>
+     (name prefixed by a vertical bar and their position, e.g.
+      |<subscript>3</subscript>?2). When the set of selected sequents
+     has more than one element, the user can decide to focus in turn on each
+     of them. The branching <link linkend="tacticals">tactical</link>
+     (&quot;<emphasis role="bold">[</emphasis>&quot;) selects the first
+     sequent only, marking every previously selected sequent as a sibling
+     sequent. Each sibling sequent is given a different position. The
+     tactical &quot;<emphasis role="bold">2,3:</emphasis>&quot; can be used to
+     select one or more sibling sequents, different from the one proposed,
+     according to their position. Once the user starts to work on the
+     selected sibling sequents it becomes impossible to select a new
+     set of siblings until the (&quot;<emphasis role="bold">|</emphasis>&quot;)
+     tactical is used to end work on the current one.
+    </para>
+   </listitem>
+   <listitem id="solvedsequents">
+    <para>
+     <emphasis role="bold">Automatically solved sibling sequents</emphasis>
+     (name strokethrough, e.g. |<subscript>3</subscript><emphasis role="strikethrough">?2</emphasis>).
+     Sometimes a tactic can close by side effects a sibling sequent the
+     user has not selected yet. The sequent is left in the automatically
+     solved status in order for the user to explicitly accept
+     (using the &quot;<emphasis role="bold">skip</emphasis>&quot;
+     <link linkend="tacticals">tactical</link>) the automatic
+     instantiation in the proof script. This way the correspondence between
+     the number of branches in the proof script and the number of sequents
+     generated in the proof is preserved.
+    </para>
+   </listitem>
+  </orderedlist>
+ </sect1>
+ <sect1 id="tacticals">
+  <title>Tacticals</title>
+   <table frame="topbot" rowsep="0" colsep="0" role="grammar">
+     <title>proof script</title>
+     <tgroup cols="4">
+     <tbody>
+      <row>
+       <entry id="grammar.proofscript">&proofscript;</entry>
+       <entry>::=</entry>
+       <entry>&proofstep; [&proofstep;]…</entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </table>
+   <para>Every proof step can be immediately executed.</para>
+   <table frame="topbot" rowsep="0" colsep="0" role="grammar">
+     <title>proof steps</title>
+     <tgroup cols="4">
+     <tbody>
+      <row>
+       <entry id="grammar.proofstep">&proofstep;</entry>
+       <entry>::=</entry>
+       <entry>&LCFtactical;</entry>
+       <entry>The tactical is applied to each
+        <link linkend="selectedsequents">selected sequent</link>.
+        Each new sequent becomes a selected sequent.</entry>
+      </row>
+      <row>
+       <entry/>
+       <entry>|</entry>
+       <entry><emphasis role="bold">.</emphasis></entry>
+       <entry>The first
+        <link linkend="selectedsequents">selected sequent</link> becomes
+        the only one selected. All the remaining previously selected sequents
+        are proposed to the user one at a time when the next
+        &quot;<emphasis role="bold">.</emphasis>&quot; is used.
+       </entry>
+      </row>
+      <row>
+       <entry/>
+       <entry>|</entry>
+       <entry><emphasis role="bold">;</emphasis></entry>
+       <entry>Nothing changes. Use this proof step as a separator in
+        concrete syntax.</entry>
+      </row>
+      <row>
+       <entry/>
+       <entry>|</entry>
+       <entry><emphasis role="bold">[</emphasis></entry>
+       <entry>Every <link linkend="selectedsequents">selected sequent</link>
+        becomes a <link linkend="siblingsequents">sibling sequent</link>
+        that constitute a branch in the proof.
+        Moreover, the first sequent is also selected.
+       </entry>
+      </row>
+      <row>
+       <entry/>
+       <entry>|</entry>
+       <entry><emphasis role="bold">|</emphasis></entry>
+       <entry>Stop working on the current branch of the innermost branching
+        proof.
+        The sibling branches become the <link linkend="siblingsequents">sibling
+        sequents</link> and the first one is also selected.
+       </entry>
+      </row>
+      <row>
+       <entry/>
+       <entry>|</entry>
+       <entry>&nat;[<emphasis role="bold">,</emphasis>&nat;]…<emphasis role="bold">:</emphasis></entry>
+       <entry>The <link linkend="siblingsequents">sibling sequents</link>
+        specified by the user become the next
+        <link linkend="selectedsequents">selected sequents</link>.
+       </entry>
+      </row>
+      <row>
+       <entry/>
+       <entry>|</entry>
+       <entry><emphasis role="bold">*:</emphasis></entry>
+       <entry>Every sibling branch not considered yet in the innermost
+        branching proof becomes a
+        <link linkend="selectedsequents">selected sequent</link>.
+       </entry>
+      </row>
+      <row>
+       <entry/>
+       <entry>|</entry>
+       <entry><emphasis role="bold">skip</emphasis></entry>
+       <entry>Accept the automatically provided instantiation (not shown
+        to the user) for the currently selected
+        <link linkend="solvedsequents">automatically closed sibling sequent</link>.
+       </entry>
+      </row>
+      <row>
+       <entry/>
+       <entry>|</entry>
+       <entry><emphasis role="bold">]</emphasis></entry>
+       <entry>Stop analyzing branches for the innermost branching proof.
+        Every sequent opened during the branching proof and not closed yet
+        becomes a <link linkend="selectedsequents">selected sequent</link>.
+       </entry>
+      </row>
+      <row>
+       <entry/>
+       <entry>|</entry>
+       <entry><emphasis role="bold">focus</emphasis>&nbsp;&nat;&nbsp;[&nat;]…</entry>
+       <entry>
+        Selects the sequents specified by the user. The selected sequents
+        must be completely closed (no new sequents left open) before doing an
+        &quot;<emphasis role="bold">unfocus</emphasis> that restores
+        the current set of sibling branches.
+       </entry>
+      </row>
+      <row>
+       <entry/>
+       <entry>|</entry>
+       <entry><emphasis role="bold">unfocus</emphasis></entry>
+       <entry>
+        Used to match the innermost
+        &quot;<emphasis role="bold">focus</emphasis>&quot; tactical
+        when all the sequents selected by it have been closed.
+        Until &quot;<emphasis role="bold">unfocus</emphasis>&quot; is
+        performed, it is not possible to progress in the rest of the
+        proof.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </table>
+   <table frame="topbot" rowsep="0" colsep="0" role="grammar">
+     <title>tactics and LCF tacticals</title>
+     <tgroup cols="4">
+     <tbody>
+      <row>
+       <entry id="grammar.LCFtactical">&LCFtactical;</entry>
+       <entry>::=</entry>
+       <entry>&tactic;</entry>
+       <entry>Applies the specified tactic.</entry>
+      </row>
+      <row>
+       <entry/>
+       <entry>|</entry>
+       <entry>&LCFtactical; <emphasis role="bold">;</emphasis> &LCFtactical;</entry>
+       <entry>Applies the first tactical first and the second tactical
+        to each sequent opened by the first one.</entry>
+      </row>
+      <row>
+       <entry/>
+       <entry>|</entry>
+       <entry>&LCFtactical;
+        <emphasis role="bold">[</emphasis>
+        [&LCFtactical;]
+        [<emphasis role="bold">|</emphasis> &LCFtactical;]…
+        <emphasis role="bold">]</emphasis>
+       </entry>
+       <entry>Applies the first tactical first and each tactical in the
+        list of tacticals to the corresponding sequent opened by the
+        first one. The number of tacticals provided in the list must be
+        equal to the number of sequents opened by the first tactical.</entry>
+      </row>
+      <row>
+       <entry/>
+       <entry>|</entry>
+       <entry><emphasis role="bold">do</emphasis> &nat;
+        &LCFtactical;
+       </entry>
+       <entry>&TODO;</entry>
+      </row>
+      <row>
+       <entry/>
+       <entry>|</entry>
+       <entry><emphasis role="bold">repeat</emphasis>
+        &LCFtactical;
+       </entry>
+       <entry>&TODO;</entry>
+      </row>
+      <row>
+       <entry/>
+       <entry>|</entry>
+       <entry>
+        <emphasis role="bold">first [</emphasis>
+        [&LCFtactical;]
+        [<emphasis role="bold">|</emphasis> &LCFtactical;]…
+        <emphasis role="bold">]</emphasis>
+       </entry>
+       <entry>&TODO;</entry>
+      </row>
+      <row>
+       <entry/>
+       <entry>|</entry>
+       <entry><emphasis role="bold">try</emphasis> &LCFtactical;</entry>
+       <entry>&TODO;</entry>
+      </row>
+      <row>
+       <entry/>
+       <entry>|</entry>
+       <entry>
+        <emphasis role="bold">solve [</emphasis>
+        [&LCFtactical;]
+        [<emphasis role="bold">|</emphasis> &LCFtactical;]…
+        <emphasis role="bold">]</emphasis>
+       </entry>
+       <entry>&TODO;</entry>
+      </row>
+      <row>
+       <entry/>
+       <entry>|</entry>
+       <entry><emphasis role="bold">(</emphasis>&LCFtactical;<emphasis role="bold">)</emphasis></entry>
+       <entry>Used for grouping during parsing.</entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </table>
+ </sect1>
+</chapter>
+

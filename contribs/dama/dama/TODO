@@ -1,0 +1,4 @@
+changing file resets the display-notation ref, but not the GUI tick
+mettere una maction in tutti i body (ma forse non basta)
+la visualizzazione dellea notazione se viene disttivata e poi se ne definisce una... la rende causa
+il fatto che disabilitarla significa rimuovere quelle definite fino ad ora, non disabilitarla in senso proprio.

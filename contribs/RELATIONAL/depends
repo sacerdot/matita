@@ -1,0 +1,21 @@
+preamble.ma datatypes/constructors.ma logic/connectives.ma logic/equality.ma
+datatypes/Nat.ma preamble.ma
+datatypes/Zah.ma datatypes/Nat.ma
+datatypes/List.ma preamble.ma
+datatypes/Bool.ma preamble.ma
+ZEq/setoid.ma NPlus/fun.ma ZEq/defs.ma
+ZEq/defs.ma NPlus/defs.ma datatypes/Zah.ma
+NLE/nplus.ma NLE/defs.ma
+NLE/props.ma NLE/order.ma
+NLE/inv.ma NLE/defs.ma
+NLE/defs.ma NPlus/defs.ma datatypes/Nat.ma
+NLE/order.ma NLE/inv.ma
+NPlusList/props.ma NPlusList/defs.ma
+NPlusList/defs.ma NPlus/defs.ma datatypes/List.ma
+NPlus/inv.ma NPlus/defs.ma
+NPlus/monoid.ma NPlus/fun.ma
+NPlus/defs.ma datatypes/Nat.ma
+NPlus/fun.ma NPlus/inv.ma
+datatypes/constructors.ma 
+logic/connectives.ma 
+logic/equality.ma 
