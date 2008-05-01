@@ -1,0 +1,126 @@
+############### Costruttivizzazione di Fremlin ######################
+
+Prerequisiti:
+ 1. definizione di exceeds
+ 2. definizione di <= in termini di < (sui reali)
+ 2. definizione di sup forte (sui reali)
+
+========================================
+
+Lemma: liminf f a_n <= limsup f a_n
+Per definizione di <= dobbiamo dimostrare:
+  ~(limsup f a_n < liminf f a_n)
+Supponiamo limsup f a_n < liminf f a_n.
+Ovvero inf_n sup_{k>n} f a_k < sup_m inf_{h>m} f a_h
+? Quindi esiste un l tale che
+       inf_n sup_{k>n} f a_k + l/2 = sup_m inf_{h>m} f a_h - l/2
+? Per definizione di inf forte abbiamo
+       esiste un n' tale che
+         sup_{k>n'} f a_k < inf_n sup_{k>n} + l
+	                  = sup_m inf_{h>m} f a_h - l/2
+? Per definizione di sup forte abbiamo
+       esiste un n'' tale che
+         sup_{k>n'} f a_k < sup_m inf_{h>m} f a_h - l/2 < inf_{h>n''} f a_k
+  Sia N il max tra n' e n''. Allora:
+    sup_{k>N} f a_k < sup_{k>n'} f a_k < inf_{h>n''} f a_k < inf_{h>N} f a_k
+  Assurdo per lemma precedente.
+Qed.
+
+=======================================
+
+Lebesgue costruttivo:
+  a_n bounded da b ovvero \forall n, a_n < b
+  f strongly monotone ovvero f x < f y => y -<= x
+  liminf f a_n # limsup f a_n => liminf a_n < (o #) limsup a_n
+Dimostrazione:
+  per ipotesi
+   liminf f a_n # limsup f a_n
+  quindi
+   liminf f a_n > limsup f a_n \/ liminf f a_n < limsup f a_n.
+  per casi:
+    Caso 1:
+      Usiamo il lemma liminf f a_n <= limsup f a_n => assurdo
+    Caso 2:
+      Usiamo Fatou e Fatou rovesciato:
+        f (liminf a_n) <= liminf (f a_n)  (per fatou)
+	               <  limsup (f a_n)  (per ipotesi)
+		       <= f (limsup a_n)  (per fatou rovesciato)
+      Per monotonia forte della f otteniamo:
+          limsup a_n -<= liminf a_n
+      (Da cui:
+          liminf a_n # limsup a_n)
+Qed.
+
+############### Costruttivizzazione di Weber-Zoli ######################
+
+Prerequisiti:
+ 1. does_not_approach_zero x_n =
+     \exists delta. \exists sottosuccessione j.
+      \forall n. x_(j n) > delta
+ 2. does_not_have_sup = ??? (vedi prerequisito ????? sotto da soddisfare)
+ 3. sigma_and_esaustiva su [a,b] x_n =
+     d(a_n,x) does_not_approach_zero => a_n does_not_have_sup x
+ ????? inf x_i does_not_have_sup x => liminf x_i # x
+
+=======================================
+
+Sviluppi futuri:
+ Spezzare sigma_and_esaustiva in sigma + esaustiva o qualcosa del
+ genere. Probabilmente sigma diventa
+   d(a,a_1) ~<= \bigsum_{i=n}^\infty d(a_n,a_{n+1})  =>
+   a_n does_not_have_sup a
+ La prova del lemma 5 in versione positiva e' ancora da fare.
+ L'esaustivita' deve essere rimpiazzata da un concetto tipo located.
+
+=======================================
+
+Due carabinieri:
+ a_n <= x_n <= b_n
+ d(x_n,x) does_not_approach_zero =>
+  d(a_n,x) does_not_approach_zero \/
+  d(b_n,x) does_not_approach_zero
+Dimostrazione:
+ Per ipotesi esiste un \delta e una sottosuccessione y tale che
+   \delta <  d(y_n,x)
+          <= d(y_n,a_n) + d(a_n,x)
+          <= d(b_n,a_n) + d(a_n,x)
+          <= d(b_n,x) + 2d(a_n,x)
+ We conclude (?????? costruttivamente vero per > 0 e vero classicamente)
+  d(b_n,x) > \delta/4 \/ d(a_n,x) > \delta/4
+ and thus
+  d(a_n,x) does_not_approach_zero \/
+  d(b_n,x) does_not_approach_zero
+Qed.
+
+=======================================
+
+Lebsegue costruttivo:
+ x_n in [a,b], a_n <= x_n <= b_n per ogni n
+ d sigma_and_esaustiva su [a,b];
+ d(x_n,liminf x_n) does_not_approach_zero \/
+ d(x_n,limsup x_n) does_not_approach_zero =>
+ liminf x_n # limsup x_n   (possiamo concludere che eccede? forse no)
+Dimostrazione:
+ Fissiamo un x tale che d(x_n,x) does_not_approach_zero.
+ Per ipotesi d(x_n,x) does_not_approach_zero
+ Siano a_n := inf_{i>=n} x_i e b_n := sup_{i>=n} x_i.
+ Per i due carabinieri:
+  d(a_n,x) does_not_approach_zero \/ d(b_n,x) does_not_approach_zero
+ Per definizione di sigma_and_esaustiva su [a,b]
+  a_n does_not_have_sup x \/ b_n does_not_have_inf x
+ Quindi, per definizione di liminf e limsup e per ?????????
+  liminf x_n # x \/ limsup x_n # x
+ Facendo discharging di x concludiamo
+  \forall x t.c. d(x_n,x) does_not_approach zero,
+  liminf x_n # x \/ limsup x_n # x
+ Per ipotesi possiamo istanziare x con liminf x_n oppure con
+ limsup x_n.
+ Nel primo caso otteniamo
+  liminf x_n # liminf x_n \/ limsup x_n # liminf x_n
+ Poiche' la prima ipotesi e' falsa concludiamo
+  limsup x_n # liminf x_n
+ Nel secondo caso otteniamo
+  liminf x_n # limsup x_n \/ limsup x_n # limsup x_n \/ 
+ Poiche' la seconda ipotesi e' falsa concludiamo anche in questo caso
+  limsup x_n # liminf x_n
+Qed.

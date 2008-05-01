@@ -1,0 +1,12 @@
+
+1) in order to generated chunked html directly
+    XHTML_XSL=http://docbook.sourceforge.net/release/xsl/current/xhtml/chunk.xsl
+
+2) to obtain a better pdf, package db2latex-xsl
+
+3) write a separate XSLT that includes the standard one
+
+4) have a look at:
+    svn checkout svn://svn.debian.org/svn/ddp/refcard/trunk
+    http://people.debian.org/~debacle/ (thanks Debacle!)
+

@@ -1,0 +1,776 @@
+
+<!-- =========== Terms, declarations and definitions ============ -->
+
+<chapter id="sec_terms">
+  <title>Syntax</title>
+  <para>To describe syntax in this manual we use the following conventions:</para>
+  <orderedlist>
+    <listitem><para>Non terminal symbols are emphasized and have a link to their
+	definition. E.g.: &term;</para></listitem>
+    <listitem><para>Terminal symbols are in bold. E.g.:
+	<emphasis role="bold">theorem</emphasis></para></listitem>
+    <listitem><para>Optional sequences of elements are put in square brackets.
+	E.g.: [<emphasis role="bold">in</emphasis> &term;]</para></listitem>
+    <listitem><para>Alternatives are put in square brakets and they are
+	separated by vertical bars. E.g.: [<emphasis role="bold">&lt;</emphasis>|<emphasis role="bold">&gt;</emphasis>]</para></listitem>
+    <listitem><para>Repetitions of a sequence of elements are given by putting the
+    sequence in square brackets, that are followed by three dots. The empty
+    sequence is a valid repetition.
+    E.g.: [<emphasis role="bold">and</emphasis> &term;]…</para></listitem>
+    <listitem><para>Characters belonging to a set of characters are given
+     by listing the set elements in square brackets. Hyphens are used to
+     specify ranges of characters in the set.
+     E.g.: [<emphasis role="bold">a</emphasis>-<emphasis role="bold">zA</emphasis>-<emphasis role="bold">Z0</emphasis>-<emphasis role="bold">9_-</emphasis>]</para></listitem>
+  </orderedlist>
+  <sect1 id="terms_and_co">
+  <title>Terms &amp; co.</title>
+  <sect2 id="lexical">
+  <title>Lexical conventions</title>
+    <table frame="topbot" rowsep="0" colsep="0" role="grammar">
+      <title>qstring</title>
+      <tgroup cols="4">
+      <tbody>
+       <row>
+	<entry id="grammar.qstring">&qstring;</entry>
+	<entry>::=</entry>
+        <entry><emphasis role="bold">&quot;</emphasis><emphasis>〈〈any sequence of characters excluded &quot;〉〉</emphasis><emphasis role="bold">&quot;</emphasis></entry>
+       </row>
+      </tbody>
+     </tgroup>
+    </table>
+    <table frame="topbot" rowsep="0" colsep="0" role="grammar">
+      <title>id</title>
+      <tgroup cols="4">
+      <tbody>
+       <row>
+	<entry id="grammar.id">&id;</entry>
+	<entry>::=</entry>
+        <entry><emphasis>〈〈any sequence of letters, underscores or valid <ulink type="http" url="http://www.w3.org/TR/2004/REC-xml-20040204/#NT-Digit">XML digits</ulink> prefixed by a latin letter ([a-zA-Z]) and post-fixed by a possible empty sequence of decorators ([?'`])〉〉</emphasis></entry>
+       </row>
+      </tbody>
+     </tgroup>
+    </table>
+    <table frame="topbot" rowsep="0" colsep="0" role="grammar">
+      <title>nat</title>
+      <tgroup cols="4">
+      <tbody>
+       <row>
+	<entry id="grammar.nat">&nat;</entry>
+	<entry>::=</entry>
+	<entry><emphasis>〈〈any sequence of valid <ulink type="http" url="http://www.w3.org/TR/2004/REC-xml-20040204/#NT-Digit">XML digits</ulink>〉〉</emphasis></entry>
+       </row>
+      </tbody>
+     </tgroup>
+    </table>
+    <table frame="topbot" rowsep="0" colsep="0" role="grammar">
+      <title>char</title>
+      <tgroup cols="4">
+      <tbody>
+       <row>
+	<entry id="grammar.char">&char;</entry>
+	<entry>::=</entry>
+	<entry>[<emphasis role="bold">a</emphasis>-<emphasis role="bold">zA</emphasis>-<emphasis role="bold">Z0</emphasis>-<emphasis role="bold">9_-</emphasis>]</entry>
+       </row>
+      </tbody>
+     </tgroup>
+    </table>
+    <table frame="topbot" rowsep="0" colsep="0" role="grammar">
+      <title>uri-step</title>
+      <tgroup cols="4">
+      <tbody>
+       <row>
+	<entry id="grammar.uri-step">&uri-step;</entry>
+	<entry>::=</entry>
+	<entry>&char;[&char;]…</entry>
+       </row>
+      </tbody>
+     </tgroup>
+    </table>
+    <table frame="topbot" rowsep="0" colsep="0" role="grammar">
+      <title>uri</title>
+      <tgroup cols="4">
+      <tbody>
+       <row>
+	<entry id="grammar.uri">&uri;</entry>
+	<entry>::=</entry>
+	<entry>[<emphasis role="bold">cic:/</emphasis>|<emphasis role="bold">theory:/</emphasis>]&uri-step;[<emphasis role="bold">/</emphasis>&uri-step;]…<emphasis role="bold">.</emphasis>&id;[<emphasis role="bold">.</emphasis>&id;]…[<emphasis role="bold">#xpointer(</emphasis>&nat;<emphasis role="bold">/</emphasis>&nat;[<emphasis role="bold">/</emphasis>&nat;]…<emphasis role="bold">)</emphasis>]</entry>
+       </row>
+      </tbody>
+     </tgroup>
+    </table>
+  </sect2>
+  <sect2 id="terms">
+  <title>Terms</title>
+
+  <!-- ZACK: Sample EBNF snippet, see:
+  http://www.docbook.org/tdg/en/html/productionset.html -->
+  <!--
+  <productionset>
+    <title>Terms</title>
+    <production id="grammar.term">
+      <lhs>&term;</lhs>
+      <rhs>&sterm;</rhs>
+      <lineannotation></lineannotation>
+    </production>
+  </productionset>
+  -->
+
+  <para>
+  <table frame="topbot" rowsep="0" colsep="0" role="grammar">
+    <title>Terms</title>
+    <tgroup cols="4">
+    <tbody>
+     <row>
+      <entry id="grammar.term">&term;</entry>
+      <entry>::=</entry>
+      <entry>&sterm;</entry>
+      <entry>simple or delimited term</entry>
+     </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
+      <entry>&term; &term;</entry>
+      <entry>application</entry>
+     </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
+      <entry><emphasis role="bold">λ</emphasis>&args;<emphasis role="bold">.</emphasis>&term;</entry>
+      <entry>λ-abstraction</entry>
+     </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
+      <entry><emphasis role="bold">Π</emphasis>&args;<emphasis role="bold">.</emphasis>&term;</entry>
+      <entry>dependent product meant to define a datatype</entry>
+     </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
+      <entry><emphasis role="bold">∀</emphasis>&args;<emphasis role="bold">.</emphasis>&term;</entry>
+      <entry>dependent product meant to define a proposition</entry>
+     </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
+      <entry>&term; <emphasis role="bold">→</emphasis> &term;</entry>
+      <entry>non-dependent product (logical implication or function space)</entry>
+     </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
+      <entry><emphasis role="bold">let</emphasis> [&id;|(&id;<emphasis role="bold">:</emphasis> &term;)] <emphasis role="bold">≝</emphasis> &term; <emphasis role="bold">in</emphasis> &term;</entry>
+      <entry>local definition</entry>
+     </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
+      <entry>
+	<emphasis role="bold">let</emphasis>
+	[<emphasis role="bold">co</emphasis>]<emphasis role="bold">rec</emphasis>
+	&rec_def;
+      </entry>
+      <entry>(co)recursive definitions</entry>
+     </row>
+     <row>
+      <entry/>
+      <entry/>
+      <entry>
+      [<emphasis role="bold">and</emphasis> &rec_def;]…
+      </entry>
+      <entry/>
+     </row>
+     <row>
+      <entry/>
+      <entry/>
+      <entry>
+      <emphasis role="bold">in</emphasis> &term;
+      </entry>
+      <entry/>
+     </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
+      <entry>…</entry>
+      <entry>user provided notation</entry>
+     </row>
+      <row>
+	<entry id="grammar.rec_def">&rec_def;</entry>
+	<entry>::=</entry>
+	<entry>
+	  &id; [&id;|<emphasis role="bold">_</emphasis>|<emphasis role="bold">(</emphasis>&id;[<emphasis role="bold">,</emphasis>&id;]… <emphasis role="bold">:</emphasis>&term;<emphasis role="bold">)</emphasis>]…
+	</entry>
+	<entry />
+      </row>
+      <row>
+	<entry />
+	<entry />
+	<entry>
+	  [<emphasis role="bold">on</emphasis> &id;]
+	  [<emphasis role="bold">:</emphasis> &term;]
+	  <emphasis role="bold">≝</emphasis> &term;]
+	</entry>
+	<entry />
+      </row>
+    </tbody>
+   </tgroup>
+  </table>
+
+  <table frame="topbot" rowsep="0" colsep="0" role="grammar">
+    <title>Simple terms</title>
+    <tgroup cols="4">
+    <tbody>
+     <row>
+      <entry id="grammar.sterm">&sterm;</entry>
+      <entry>::=</entry>
+      <entry><emphasis role="bold">(</emphasis>&term;<emphasis role="bold">)</emphasis></entry>
+      <entry/>
+     </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
+      <entry>&id;[<emphasis role="bold">\subst[</emphasis>
+       &id;<emphasis role="bold">≔</emphasis>&term;
+       [<emphasis role="bold">;</emphasis>&id;<emphasis role="bold">≔</emphasis>&term;]…
+       <emphasis role="bold">]</emphasis>]
+      </entry>
+      <entry>identifier with optional explicit named substitution</entry>
+     </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
+      <entry>&uri;</entry>
+      <entry>a qualified reference</entry>
+     </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
+      <entry><emphasis role="bold">Prop</emphasis></entry>
+      <entry>the impredicative sort of propositions</entry>
+     </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
+      <entry><emphasis role="bold">Set</emphasis></entry>
+      <entry>the impredicate sort of datatypes</entry>
+     </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
+      <entry><emphasis role="bold">CProp</emphasis></entry>
+      <entry>one fixed predicative sort of constructive propositions</entry>
+     </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
+      <entry><emphasis role="bold">Type</emphasis></entry>
+      <entry>one predicative sort of datatypes</entry>
+     </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
+      <entry><emphasis role="bold">?</emphasis></entry>
+      <entry>implicit argument</entry>
+     </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
+      <entry><emphasis role="bold">?n</emphasis>
+      [<emphasis role="bold">[</emphasis>
+      [<emphasis role="bold">_</emphasis>|&term;]…
+      <emphasis role="bold">]</emphasis>]</entry>
+      <entry>metavariable</entry>
+     </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
+        <entry><emphasis role="bold">match</emphasis> &term; 
+        [ <emphasis role="bold">in</emphasis> &id; ]
+        [ <emphasis role="bold">return</emphasis> &term; ]
+        <emphasis role="bold">with</emphasis>
+      </entry>
+      <entry>case analysis</entry>
+     </row>
+     <row>
+      <entry/>
+      <entry/>
+      <entry>
+       <emphasis role="bold">[</emphasis> 
+       &match_branch;[<emphasis role="bold">|</emphasis>&match_branch;]…
+       <emphasis role="bold">]</emphasis> 
+      </entry>
+      <entry/>
+     </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
+      <entry><emphasis role="bold">(</emphasis>&term;<emphasis role="bold">:</emphasis>&term;<emphasis role="bold">)</emphasis></entry>
+      <entry>cast</entry>
+     </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
+      <entry>…</entry>
+      <entry>user provided notation at precedence 90</entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </table>
+
+  <table frame="topbot" rowsep="0" colsep="0" role="grammar">
+    <title>Arguments</title>
+    <tgroup cols="4">
+    <tbody>
+     <row>
+      <entry id="grammar.args">&args;</entry>
+      <entry>::=</entry>
+      <entry>
+       <emphasis role="bold">_</emphasis>[<emphasis role="bold">:</emphasis> &term;]
+      </entry>
+      <entry>ignored argument</entry>
+     </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
+      <entry>
+       <emphasis role="bold">(</emphasis><emphasis role="bold">_</emphasis>[<emphasis role="bold">:</emphasis> &term;]<emphasis role="bold">)</emphasis>
+      </entry>
+      <entry>ignored argument</entry>
+     </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
+      <entry>&id;[<emphasis role="bold">,</emphasis>&id;]…[<emphasis role="bold">:</emphasis> &term;]</entry>
+      <entry></entry>
+     </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
+      <entry><emphasis role="bold">(</emphasis>&id;[<emphasis role="bold">,</emphasis>&id;]…[<emphasis role="bold">:</emphasis> &term;]<emphasis role="bold">)</emphasis></entry>
+      <entry/>
+     </row>
+     <row>
+      <entry id="grammar.args2">&args2;</entry>
+      <entry>::=</entry>
+      <entry>&id;</entry>
+      <entry/>
+     </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
+      <entry><emphasis role="bold">(</emphasis>&id;[<emphasis role="bold">,</emphasis>&id;]…<emphasis role="bold">:</emphasis> &term;<emphasis role="bold">)</emphasis></entry>
+      <entry/>
+     </row>
+    </tbody>
+   </tgroup>
+  </table>
+
+  <table frame="topbot" rowsep="0" colsep="0" role="grammar">
+    <title>Pattern matching</title>
+    <tgroup cols="4">
+    <tbody>
+      <row>
+	<entry id="grammar.match_branch">&match_branch;</entry>
+	<entry>::=</entry>
+	<entry>&match_pattern; <emphasis role="bold">⇒</emphasis> &term;</entry>
+	<entry />
+      </row>
+     <row>
+      <entry id="grammar.match_pattern">&match_pattern;</entry>
+      <entry>::=</entry>
+      <entry>&id;</entry>
+      <entry>0-ary constructor</entry>
+     </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
+      <entry><emphasis role="bold">(</emphasis>&id; &id; [&id;]…<emphasis role="bold">)</emphasis></entry>
+      <entry>n-ary constructor (binds the n arguments)</entry>
+     </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
+      <entry>&id; &id; [&id;]…</entry>
+      <entry>n-ary constructor (binds the n arguments)</entry>
+     </row>
+     <row>
+      <entry/>
+      <entry>|</entry>
+      <entry><emphasis role="bold">_</emphasis></entry>
+      <entry>any remaining constructor (ignoring its arguments)</entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </table>
+  </para>
+
+  </sect2>
+  </sect1>
+
+  <sect1 id="axiom_definition_declaration">
+   <title>Definitions and declarations</title>
+   <sect2 id="axiom">
+    <title><emphasis role="bold">axiom</emphasis> &id;<emphasis role="bold">:</emphasis> &term;</title>
+    <titleabbrev>axiom</titleabbrev>
+    <para><userinput>axiom H: P</userinput></para>
+    <para><command>H</command> is declared as an axiom that states <command>P</command></para>
+  </sect2>
+  <sect2 id="definition">
+    <title><emphasis role="bold">definition</emphasis> &id;[<emphasis role="bold">:</emphasis> &term;] [<emphasis role="bold">≝</emphasis> &term;]</title>
+    <titleabbrev>definition</titleabbrev>
+    <para><userinput>definition f: T ≝ t</userinput></para>
+    <para><command>f</command> is defined as <command>t</command>;
+     <command>T</command> is its type. An error is raised if the type of
+     <command>t</command> is not convertible to <command>T</command>.</para>
+    <para><command>T</command> is inferred from <command>t</command> if
+      omitted.</para>
+    <para><command>t</command> can be omitted only if <command>T</command> is
+     given. In this case Matita enters in interactive mode and
+     <command>f</command> must be defined by means of tactics.</para>
+    <para>Notice that the command is equivalent to <command>theorem f: T ≝ t</command>.</para>
+  </sect2>
+  <sect2 id="letrec">
+    <title><emphasis role="bold">letrec</emphasis> &TODO;</title>
+    <titleabbrev>&TODO;</titleabbrev>
+    <para>&TODO;</para>
+  </sect2>
+  <sect2 id="inductive">
+    <title>[<emphasis role="bold">inductive</emphasis>|<emphasis role="bold">coinductive</emphasis>] &id; [&args2;]… <emphasis role="bold">:</emphasis> &term; <emphasis role="bold">≝</emphasis> [<emphasis role="bold">|</emphasis>] [&id;<emphasis role="bold">:</emphasis>&term;] [<emphasis role="bold">|</emphasis> &id;<emphasis role="bold">:</emphasis>&term;]…
+[<emphasis role="bold">with</emphasis> &id; <emphasis role="bold">:</emphasis> &term; <emphasis role="bold">≝</emphasis> [<emphasis role="bold">|</emphasis>] [&id;<emphasis role="bold">:</emphasis>&term;] [<emphasis role="bold">|</emphasis> &id;<emphasis role="bold">:</emphasis>&term;]…]…
+</title>
+    <titleabbrev>(co)inductive types declaration</titleabbrev>
+    <para><userinput>inductive i x y z: S ≝ k1:T1 | … | kn:Tn with i' : S' ≝ k1':T1' | … | km':Tm'</userinput></para>
+    <para>Declares a family of two mutually inductive types
+     <command>i</command> and <command>i'</command> whose types are
+     <command>S</command> and <command>S'</command>, which must be convertible
+     to sorts.</para>
+    <para>The constructors <command>ki</command> of type <command>Ti</command>
+     and <command>ki'</command> of type <command>Ti'</command> are also
+     simultaneously declared. The declared types <command>i</command> and
+     <command>i'</command> may occur in the types of the constructors, but
+     only in strongly positive positions according to the rules of the
+     calculus.</para>
+    <para>The whole family is parameterized over the arguments <command>x,y,z</command>.</para>
+    <para>If the keyword <command>coinductive</command> is used, the declared
+     types are considered mutually coinductive.</para>
+    <para>Elimination principles for the record are automatically generated
+     by Matita, if allowed by the typing rules of the calculus according to
+     the sort <command>S</command>. If generated,
+     they are named <command>i_ind</command>, <command>i_rec</command> and
+     <command>i_rect</command> according to the sort of their induction
+     predicate.</para> 
+  </sect2>
+  <sect2 id="record">
+    <title><emphasis role="bold">record</emphasis> &id; [&args2;]… <emphasis role="bold">:</emphasis> &term; <emphasis role="bold">≝</emphasis><emphasis role="bold">{</emphasis>[&id; [<emphasis role="bold">:</emphasis>|<emphasis role="bold">:&gt;</emphasis>] &term;] [<emphasis role="bold">;</emphasis>&id; [<emphasis role="bold">:</emphasis>|<emphasis role="bold">:&gt;</emphasis>] &term;]…<emphasis role="bold">}</emphasis></title>
+    <titleabbrev>record</titleabbrev>
+    <para><userinput>record id x y z: S ≝ { f1: T1; …; fn:Tn }</userinput></para>
+    <para>Declares a new record family <command>id</command> parameterized over
+     <command>x,y,z</command>.</para>
+    <para><command>S</command> is the type of the record
+     and it must be convertible to a sort.</para>
+    <para>Each field <command>fi</command> is declared by giving its type
+     <command>Ti</command>. A record without any field is admitted.</para>
+    <para>Elimination principles for the record are automatically generated
+     by Matita, if allowed by the typing rules of the calculus according to
+     the sort <command>S</command>. If generated,
+     they are named <command>i_ind</command>, <command>i_rec</command> and
+     <command>i_rect</command> according to the sort of their induction
+     predicate.</para> 
+    <para>For each field <command>fi</command> a record projection
+     <command>fi</command> is also automatically generated if projection
+     is allowed by the typing rules of the calculus according to the
+     sort <command>S</command>, the type <command>T1</command> and
+     the definability of depending record projections.</para>
+    <para>If the type of a field is declared with <command>:&gt;</command>,
+     the corresponding record projection becomes an implicit coercion.
+     This is just syntactic sugar and it has the same effect of declaring the
+     record projection as a coercion later on.</para>
+  </sect2>
+  </sect1>
+
+  <sect1 id="proofs">
+   <title>Proofs</title>
+   <sect2 id="theorem">
+    <title><emphasis role="bold">theorem</emphasis> &id;[<emphasis role="bold">:</emphasis> &term;] [<emphasis role="bold">≝</emphasis> &term;]</title>
+    <titleabbrev>theorem</titleabbrev>
+    <para><userinput>theorem f: P ≝ p</userinput></para>
+    <para>Proves a new theorem <command>f</command> whose thesis is
+     <command>P</command>.</para>
+    <para>If <command>p</command> is provided, it must be a proof term for
+     <command>P</command>. Otherwise an interactive proof is started.</para>
+    <para><command>P</command> can be omitted only if the proof is not
+     interactive.</para>
+    <para>Proving a theorem already proved in the library is an error.
+     To provide an alternative name and proof for the same theorem, use
+     <command>variant f: P ≝ p</command>.</para>
+    <para>A warning is raised if the name of the theorem cannot be obtained
+      by mangling the name of the constants in its thesis.</para>
+    <para>Notice that the command is equivalent to <command>definition f: T ≝ t</command>.</para>
+   </sect2>
+   <sect2 id="variant">
+    <title><emphasis role="bold">variant</emphasis> &id;<emphasis role="bold">:</emphasis> &term; <emphasis role="bold">≝</emphasis> &term;</title>
+    <titleabbrev>variant</titleabbrev>
+    <para><userinput>variant f: T ≝ t</userinput></para>
+    <para>Same as <command>theorem f: T ≝ t</command>, but it does not
+     complain if the theorem has already been proved. To be used to give
+     an alternative name or proof to a theorem.</para>
+   </sect2>
+   <sect2 id="lemma">
+    <title><emphasis role="bold">lemma</emphasis> &id;[<emphasis role="bold">:</emphasis> &term;] [<emphasis role="bold">≝</emphasis> &term;]</title>
+    <titleabbrev>lemma</titleabbrev>
+    <para><userinput>lemma f: T ≝ t</userinput></para>
+    <para>Same as <command>theorem f: T ≝ t</command></para>
+   </sect2>
+   <sect2 id="fact">
+    <title><emphasis role="bold">fact</emphasis> &id;[<emphasis role="bold">:</emphasis> &term;] [<emphasis role="bold">≝</emphasis> &term;]</title>
+    <titleabbrev>fact</titleabbrev>
+    <para><userinput>fact f: T ≝ t</userinput></para>
+    <para>Same as <command>theorem f: T ≝ t</command></para>
+   </sect2>
+   <sect2 id="remark">
+    <title><emphasis role="bold">remark</emphasis> &id;[<emphasis role="bold">:</emphasis> &term;] [<emphasis role="bold">≝</emphasis> &term;]</title>
+    <titleabbrev>remark</titleabbrev>
+    <para><userinput>remark f: T ≝ t</userinput></para>
+    <para>Same as <command>theorem f: T ≝ t</command></para>
+   </sect2>
+  </sect1>
+
+  <sect1 id="tacticargs">
+   <title>Tactic arguments</title>
+   <para>This section documents the syntax of some recurring arguments for
+    tactics.</para>
+
+    <sect2 id="introsspec">
+    <title>intros-spec</title>
+    <table frame="topbot" rowsep="0" colsep="0" role="grammar">
+      <title>intros-spec</title>
+      <tgroup cols="4">
+      <tbody>
+       <row>
+	<entry id="grammar.intros-spec">&intros-spec;</entry>
+	<entry>::=</entry>
+        <entry>[&nat;] [<emphasis role="bold">(</emphasis>[&id;]…<emphasis role="bold">)</emphasis>]</entry>
+       </row>
+      </tbody>
+     </tgroup>
+    </table>
+        <para>The natural number is the number of new hypotheses to be introduced. The list of identifiers gives the name for the first hypotheses.</para>
+    </sect2>
+
+    <sect2 id="pattern">
+    <title>pattern</title>
+    <table frame="topbot" rowsep="0" colsep="0" role="grammar">
+      <title>pattern</title>
+      <tgroup cols="4">
+      <tbody>
+       <row>
+	<entry id="grammar.pattern">&pattern;</entry>
+	<entry>::=</entry>
+        <entry><emphasis role="bold">in</emphasis>
+          [&id;[<emphasis role="bold">:</emphasis> &path;]]…
+          [<emphasis role="bold">⊢</emphasis> &path;]]</entry>
+        <entry>simple pattern</entry>
+       </row>
+       <row>
+        <entry/>
+        <entry>|</entry>
+        <entry><emphasis role="bold">in match</emphasis> &path;
+          [<emphasis role="bold">in</emphasis>
+          [&id;[<emphasis role="bold">:</emphasis> &path;]]…
+          [<emphasis role="bold">⊢</emphasis> &path;]]</entry>
+        <entry>full pattern</entry>
+       </row>
+      </tbody>
+     </tgroup>
+    </table>
+    <table frame="topbot" rowsep="0" colsep="0" role="grammar">
+      <title>path</title>
+      <tgroup cols="4">
+      <tbody>
+       <row>
+	<entry id="grammar.path">&path;</entry>
+	<entry>::=</entry>
+        <entry><emphasis>〈〈any &sterm; without occurrences of <emphasis role="bold">Set</emphasis>, <emphasis role="bold">Prop</emphasis>, <emphasis role="bold">CProp</emphasis>, <emphasis role="bold">Type</emphasis>, &id;, &uri; and user provided notation; however, <emphasis role="bold">%</emphasis> is now an additional production for &sterm;〉〉</emphasis></entry>
+       </row>
+      </tbody>
+     </tgroup>
+    </table>
+    <para>A <emphasis>path</emphasis> locates zero or more subterms of a given term by mimicking the term structure up to:</para>
+    <orderedlist>
+      <listitem><para>Occurrences of the subterms to locate that are
+       represented by <emphasis role="bold">%</emphasis>.</para></listitem>
+      <listitem><para>Subterms without any occurrence of subterms to locate
+       that can be represented by <emphasis role="bold">?</emphasis>.
+       </para></listitem>
+    </orderedlist>
+    <para>Warning: the format for a path for a <emphasis role="bold">match</emphasis> … <emphasis role="bold">with</emphasis>
+     expression is restricted to: <emphasis role="bold">match</emphasis> &path;
+     <emphasis role="bold">with</emphasis>
+     <emphasis role="bold">[</emphasis>
+     <emphasis role="bold">_</emphasis>
+     <emphasis role="bold">⇒</emphasis>
+     &path;
+     <emphasis role="bold">|</emphasis> …
+     <emphasis role="bold">|</emphasis>
+     <emphasis role="bold">_</emphasis>
+     <emphasis role="bold">⇒</emphasis>
+     &path;
+     <emphasis role="bold">]</emphasis>
+     Its semantics is the following: the n-th 
+     &quot;<emphasis role="bold">_</emphasis>
+     <emphasis role="bold">⇒</emphasis>
+     &path;&quot; branch is matched against the n-th constructor of the
+     inductive data type. The head λ-abstractions of &path; are matched
+     against the corresponding constructor arguments. 
+    </para>
+    <para>For instance, the path
+      <userinput>∀_,_:?.(? ? % ?)→(? ? ? %)</userinput>
+       locates at once the subterms
+      <userinput>x+y</userinput> and <userinput>x*y</userinput> in the
+      term <userinput>∀x,y:nat.x+y=1→0=x*y</userinput>
+      (where the notation <userinput>A=B</userinput> hides the term
+      <userinput>(eq T A B)</userinput> for some type <userinput>T</userinput>).
+    </para>
+    <para>A <emphasis>simple pattern</emphasis> extends paths to locate
+     subterms in a whole sequent. In particular, the pattern
+     <userinput>in H: p  K: q ⊢ r</userinput> locates at once all the subterms
+     located by the pattern <userinput>r</userinput> in the conclusion of the
+     sequent and by the patterns <userinput>p</userinput> and
+     <userinput>q</userinput> in the hypotheses <userinput>H</userinput>
+     and <userinput>K</userinput> of the sequent.
+    </para>
+    <para>If no list of hypotheses is provided in a simple pattern, no subterm
+     is selected in the hypothesis. If the <userinput>⊢ p</userinput>
+     part of the pattern is not provided, no subterm will be matched in the
+     conclusion if at least one hypothesis is provided; otherwise the whole
+     conclusion is selected.
+    </para>
+    <para>Finally, a <emphasis>full pattern</emphasis> is interpreted in three
+     steps. In the first step the <userinput>match T in</userinput>
+     part is ignored and a set <emphasis>S</emphasis> of subterms is
+     located as for the case of
+     simple patterns. In the second step the term <userinput>T</userinput>
+     is parsed and interpreted in the context of each subterm
+     <emphasis>s ∈ S</emphasis>. In the last term for each
+     <emphasis>s ∈ S</emphasis> the interpreted term <userinput>T</userinput>
+     computed in the previous step is looked for. The final set of subterms
+     located by the full pattern is the set of occurrences of
+     the interpreted <userinput>T</userinput> in the subterms <emphasis>s</emphasis>.
+    </para>
+    <para>A full pattern can always be replaced by a simple pattern,
+      often at the cost of increased verbosity or decreased readability.</para>
+    <para>Example: the pattern
+      <userinput>⊢ in match x+y in ∀_,_:?.(? ? % ?)</userinput>
+      locates only the first occurrence of <userinput>x+y</userinput>
+      in the sequent <userinput>x,y: nat ⊢ ∀z,w:nat. (x+y) * (z+w) =
+      z * (x+y) + w * (x+y)</userinput>. The corresponding simple pattern
+      is <userinput>⊢ ∀_,_:?.(? ? (? % ?) ?)</userinput>.
+    </para>
+    <para>Every tactic that acts on subterms of the selected sequents have
+     a pattern argument for uniformity. To automatically generate a simple
+     pattern:</para>
+    <orderedlist>
+     <listitem><para>Select in the current goal the subterms to pass to the
+      tactic by using the mouse. In order to perform a multiple selection of
+      subterms, hold the Ctrl key while selecting every subterm after the
+      first one.</para></listitem>
+     <listitem><para>From the contextual menu select &quot;Copy&quot;.</para></listitem>
+     <listitem><para>From the &quot;Edit&quot; or the contextual menu select
+      &quot;Paste as pattern&quot;</para></listitem>
+    </orderedlist>
+    </sect2>
+
+    <sect2 id="reduction-kind">
+    <title>reduction-kind</title>
+    <para>Reduction kinds are normalization functions that transform a term
+     to a convertible but simpler one. Each reduction kind can be used both
+     as a tactic argument and as a stand-alone tactic.</para>
+    <table frame="topbot" rowsep="0" colsep="0" role="grammar">
+      <title>reduction-kind</title>
+      <tgroup cols="4">
+      <tbody>
+       <row>
+	<entry id="grammar.reduction-kind">&reduction-kind;</entry>
+	<entry>::=</entry>
+        <entry><emphasis role="bold">normalize</emphasis></entry>
+        <entry>Computes the βδιζ-normal form</entry>
+       </row>
+       <row>
+        <entry/>
+        <entry>|</entry>
+        <entry><emphasis role="bold">reduce</emphasis></entry>
+        <entry>Computes the βδιζ-normal form</entry>
+       </row>
+       <row>
+        <entry/>
+        <entry>|</entry>
+        <entry><emphasis role="bold">simplify</emphasis></entry>
+        <entry>Computes a form supposed to be simpler</entry>
+       </row>
+       <row>
+        <entry/>
+        <entry>|</entry>
+        <entry><emphasis role="bold">unfold</emphasis> [&sterm;]</entry>
+        <entry>δ-reduces the constant or variable if specified, or that
+         in head position</entry>
+       </row>
+       <row>
+        <entry/>
+        <entry>|</entry>
+        <entry><emphasis role="bold">whd</emphasis></entry>
+        <entry>Computes the βδιζ-weak-head normal form</entry>
+       </row>
+      </tbody>
+     </tgroup>
+    </table>
+    </sect2>
+
+    <sect2 id="auto-params">
+    <title>auto-params</title>
+    <para>&TODO;</para>
+    <table frame="topbot" rowsep="0" colsep="0" role="grammar">
+      <title>auto-params</title>
+      <tgroup cols="4">
+      <tbody>
+       <row>
+	<entry id="grammar.autoparams">&autoparams;</entry>
+	<entry>::=</entry>
+        <entry>[&simpleautoparam;]…
+               [<emphasis role="bold">by</emphasis>
+                &term; [&term;]…]
+        </entry>
+        <entry>&TODO;</entry>
+       </row>
+      </tbody>
+     </tgroup>
+    </table>
+    <table frame="topbot" rowsep="0" colsep="0" role="grammar">
+      <title>simple-auto-param</title>
+      <tgroup cols="4">
+      <tbody>
+       <row>
+	<entry id="grammar.simpleautoparam">&simpleautoparam;</entry>
+	<entry>::=</entry>
+        <entry><emphasis role="bold">depth=&nat;</emphasis></entry>
+        <entry>&TODO;</entry>
+       </row>
+       <row>
+        <entry/>
+        <entry>|</entry>
+        <entry><emphasis role="bold">width=&nat;</emphasis></entry>
+        <entry>&TODO;</entry>
+       </row>
+       <row>
+        <entry/>
+        <entry>|</entry>
+        <entry><emphasis role="bold">&TODO;</emphasis></entry>
+        <entry>&TODO;</entry>
+       </row>
+      </tbody>
+     </tgroup>
+    </table>
+    </sect2>
+  </sect1>
+
+</chapter>
+

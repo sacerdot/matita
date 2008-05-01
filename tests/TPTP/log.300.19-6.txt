@@ -1,0 +1,698 @@
+Unsatisfiable/ALG005-1.ma ... FAIL Rating : 0.07 1
+Unsatisfiable/ALG006-1.ma ... OK TIME NEEDED: 324.10 Rating : 0.00 2
+Unsatisfiable/ALG007-1.ma ... OK TIME NEEDED: 475.52 Rating : 0.00 3
+Unsatisfiable/BOO001-1.ma ... OK TIME NEEDED: 0.04 Rating : 0.00 4
+Unsatisfiable/BOO002-1.ma ... OK TIME NEEDED: 7.20 Rating : 0.07 5
+Unsatisfiable/BOO002-2.ma ... OK TIME NEEDED: 12.64 Rating : 0.00 6
+Unsatisfiable/BOO003-2.ma ... OK TIME NEEDED: 0.47 Rating : 0.00 7
+Unsatisfiable/BOO003-4.ma ... OK TIME NEEDED: 0.58 Rating : 0.00 8
+Unsatisfiable/BOO004-2.ma ... OK TIME NEEDED: 0.36 Rating : 0.00 9
+Unsatisfiable/BOO004-4.ma ... OK TIME NEEDED: 0.08 Rating : 0.00 10
+Unsatisfiable/BOO005-2.ma ... OK TIME NEEDED: 0.28 Rating : 0.00 11
+Unsatisfiable/BOO005-4.ma ... OK TIME NEEDED: 0.08 Rating : 0.00 12
+Unsatisfiable/BOO006-2.ma ... OK TIME NEEDED: 0.85 Rating : 0.00 13
+Unsatisfiable/BOO006-4.ma ... OK TIME NEEDED: 0.75 Rating : 0.00 14
+Unsatisfiable/BOO007-2.ma ... OK TIME NEEDED: 166.08 Rating : 0.14 15
+Unsatisfiable/BOO007-4.ma ... OK TIME NEEDED: 79.91 Rating : 0.07 16
+Unsatisfiable/BOO008-2.ma ... OK TIME NEEDED: 245.82 Rating : 0.07 17
+Unsatisfiable/BOO008-4.ma ... OK TIME NEEDED: 106.85 Rating : 0.00 18
+Unsatisfiable/BOO009-2.ma ... OK TIME NEEDED: 1.32 Rating : 0.00 19
+Unsatisfiable/BOO009-4.ma ... OK TIME NEEDED: 0.98 Rating : 0.00 20
+Unsatisfiable/BOO010-2.ma ... OK TIME NEEDED: 1.29 Rating : 0.00 21
+Unsatisfiable/BOO010-4.ma ... OK TIME NEEDED: 0.67 Rating : 0.00 22
+Unsatisfiable/BOO011-2.ma ... OK TIME NEEDED: 0.01 Rating : 0.00 23
+Unsatisfiable/BOO011-4.ma ... OK TIME NEEDED: 0.01 Rating : 0.00 24
+Unsatisfiable/BOO012-2.ma ... OK TIME NEEDED: 0.43 Rating : 0.00 25
+Unsatisfiable/BOO012-4.ma ... OK TIME NEEDED: 0.16 Rating : 0.00 26
+Unsatisfiable/BOO013-2.ma ... OK TIME NEEDED: 0.09 Rating : 0.00 27
+Unsatisfiable/BOO013-4.ma ... OK TIME NEEDED: 0.17 Rating : 0.00 28
+Unsatisfiable/BOO014-2.ma ... OK TIME NEEDED: 8.10 Rating : 0.00 29
+Unsatisfiable/BOO014-4.ma ... OK TIME NEEDED: 29.37 Rating : 0.00 30
+Unsatisfiable/BOO015-2.ma ... OK TIME NEEDED: 6.25 Rating : 0.00 31
+Unsatisfiable/BOO015-4.ma ... OK TIME NEEDED: 26.58 Rating : 0.00 32
+Unsatisfiable/BOO016-2.ma ... OK TIME NEEDED: 1.76 Rating : 0.00 33
+Unsatisfiable/BOO017-2.ma ... OK TIME NEEDED: 1.93 Rating : 0.00 34
+Unsatisfiable/BOO018-4.ma ... OK TIME NEEDED: 0.01 Rating : 0.00 35
+Unsatisfiable/BOO021-1.ma ... OK TIME NEEDED: 0.02 Rating : 0.07 36
+Unsatisfiable/BOO022-1.ma ... FAIL Rating : 0.07 37
+Unsatisfiable/BOO023-1.ma ... FAIL Rating : 0.50 38
+Unsatisfiable/BOO024-1.ma ... OK TIME NEEDED: 3.17 Rating : 0.00 39
+Unsatisfiable/BOO025-1.ma ... OK TIME NEEDED: 8.45 Rating : 0.07 40
+Unsatisfiable/BOO026-1.ma ... OK Rating : 0.07 41
+Unsatisfiable/BOO028-1.ma ... FAIL Rating : 0.07 42
+Unsatisfiable/BOO029-1.ma ... OK TIME NEEDED: 21.11 Rating : 0.00 43
+Unsatisfiable/BOO031-1.ma ... FAIL Rating : 0.21 44
+Unsatisfiable/BOO034-1.ma ... OK TIME NEEDED: 0.25 Rating : 0.21 45
+Unsatisfiable/BOO067-1.ma ... FAIL Rating : 0.21 46
+Unsatisfiable/BOO068-1.ma ... OK TIME NEEDED: 2.13 Rating : 0.00 47
+Unsatisfiable/BOO069-1.ma ... OK TIME NEEDED: 1.46 Rating : 0.00 48
+Unsatisfiable/BOO070-1.ma ... OK TIME NEEDED: 2.38 Rating : 0.00 49
+Unsatisfiable/BOO071-1.ma ... OK TIME NEEDED: 1.38 Rating : 0.00 50
+Unsatisfiable/BOO072-1.ma ... FAIL Rating : 0.07 51
+Unsatisfiable/BOO073-1.ma ... FAIL Rating : 0.36 52
+Unsatisfiable/BOO074-1.ma ... FAIL Rating : 0.07 53
+Unsatisfiable/BOO075-1.ma ... OK TIME NEEDED: 0.66 Rating : 0.00 54
+Unsatisfiable/BOO076-1.ma ... FAIL Rating : 0.71 55
+Unsatisfiable/COL001-1.ma ... OK TIME NEEDED: 559.63 Rating : 0.07 56
+Unsatisfiable/COL001-2.ma ... OK TIME NEEDED: 15.71 Rating : 0.07 57
+Unsatisfiable/COL002-1.ma ... OK TIME NEEDED: 5.65 Rating : 0.00 58
+Unsatisfiable/COL002-4.ma ... OK TIME NEEDED: 100.64 Rating : 0.07 59
+Unsatisfiable/COL002-5.ma ... FAIL Rating : 0.43 60
+Unsatisfiable/COL003-1.ma ... FAIL Rating : 0.79 61
+Unsatisfiable/COL004-1.ma ... FAIL Rating : 0.57 62
+Unsatisfiable/COL004-3.ma ... FAIL Rating : 0.21 63
+Unsatisfiable/COL006-1.ma ... FAIL Rating : 0.57 64
+Unsatisfiable/COL006-5.ma ... FAIL Rating : 0.64 65
+Unsatisfiable/COL006-6.ma ... FAIL Rating : 0.64 66
+Unsatisfiable/COL006-7.ma ... FAIL Rating : 0.64 67
+Unsatisfiable/COL007-1.ma ... OK TIME NEEDED: 0.04 Rating : 0.00 68
+Unsatisfiable/COL008-1.ma ... OK TIME NEEDED: 0.01 Rating : 0.00 69
+Unsatisfiable/COL009-1.ma ... OK TIME NEEDED: 26.92 Rating : 0.07 70
+Unsatisfiable/COL010-1.ma ... OK TIME NEEDED: 0.08 Rating : 0.07 71
+Unsatisfiable/COL011-1.ma ... FAIL Rating : 0.36 72
+Unsatisfiable/COL012-1.ma ... OK TIME NEEDED: 0.00 Rating : 0.00 73
+Unsatisfiable/COL013-1.ma ... OK TIME NEEDED: 0.00 Rating : 0.00 74
+Unsatisfiable/COL014-1.ma ... OK TIME NEEDED: 0.00 Rating : 0.00 75
+Unsatisfiable/COL015-1.ma ... OK TIME NEEDED: 0.02 Rating : 0.00 76
+Unsatisfiable/COL016-1.ma ... OK TIME NEEDED: 0.00 Rating : 0.00 77
+Unsatisfiable/COL017-1.ma ... OK TIME NEEDED: 0.02 Rating : 0.00 78
+Unsatisfiable/COL018-1.ma ... OK TIME NEEDED: 0.00 Rating : 0.00 79
+Unsatisfiable/COL019-1.ma ... OK TIME NEEDED: 4.46 Rating : 0.00 80
+Unsatisfiable/COL020-1.ma ... FAIL Rating : 0.07 81
+Unsatisfiable/COL021-1.ma ... OK TIME NEEDED: 0.01 Rating : 0.00 82
+Unsatisfiable/COL022-1.ma ... OK TIME NEEDED: 0.75 Rating : 0.00 83
+Unsatisfiable/COL023-1.ma ... OK TIME NEEDED: 452.84 Rating : 0.00 84
+Unsatisfiable/COL024-1.ma ... OK TIME NEEDED: 0.01 Rating : 0.00 85
+Unsatisfiable/COL025-1.ma ... OK TIME NEEDED: 0.05 Rating : 0.00 86
+Unsatisfiable/COL026-1.ma ... FAIL Rating : 0.07 87
+Unsatisfiable/COL027-1.ma ... FAIL Rating : 0.00 88
+Unsatisfiable/COL029-1.ma ... OK TIME NEEDED: 0.00 Rating : 0.00 89
+Unsatisfiable/COL030-1.ma ... OK TIME NEEDED: 0.73 Rating : 0.14 90
+Unsatisfiable/COL031-1.ma ... OK TIME NEEDED: 0.01 Rating : 0.00 91
+Unsatisfiable/COL032-1.ma ... OK Rating : 0.14 92
+Unsatisfiable/COL033-1.ma ... OK TIME NEEDED: 0.08 Rating : 0.07 93
+Unsatisfiable/COL034-1.ma ... FAIL Rating : 0.43 94
+Unsatisfiable/COL035-1.ma ... FAIL Rating : 0.14 95
+Unsatisfiable/COL036-1.ma ... OK TIME NEEDED: 143.77 Rating : 0.57 96
+Unsatisfiable/COL037-1.ma ... FAIL Rating : 0.29 97
+Unsatisfiable/COL038-1.ma ... FAIL Rating : 0.64 98
+Unsatisfiable/COL039-1.ma ... OK TIME NEEDED: 77.40 Rating : 0.00 99
+Unsatisfiable/COL041-1.ma ... OK Rating : 0.36 100
+Unsatisfiable/COL042-1.ma ... FAIL Rating : 0.86 101
+Unsatisfiable/COL042-6.ma ... FAIL Rating : 0.14 102
+Unsatisfiable/COL042-7.ma ... FAIL Rating : 0.14 103
+Unsatisfiable/COL042-8.ma ... FAIL Rating : 0.14 104
+Unsatisfiable/COL042-9.ma ... FAIL Rating : 0.14 105
+Unsatisfiable/COL043-1.ma ... FAIL Rating : 0.86 106
+Unsatisfiable/COL043-3.ma ... FAIL Rating : 0.71 107
+Unsatisfiable/COL044-1.ma ... FAIL Rating : 0.21 108
+Unsatisfiable/COL044-6.ma ... FAIL Rating : 0.64 109
+Unsatisfiable/COL044-7.ma ... FAIL Rating : 0.50 110
+Unsatisfiable/COL044-8.ma ... FAIL Rating : 0.71 111
+Unsatisfiable/COL044-9.ma ... FAIL Rating : 0.64 112
+Unsatisfiable/COL045-1.ma ... OK TIME NEEDED: 4.06 Rating : 0.00 113
+Unsatisfiable/COL046-1.ma ... FAIL Rating : 0.64 114
+Unsatisfiable/COL048-1.ma ... OK TIME NEEDED: 0.13 Rating : 0.00 115
+Unsatisfiable/COL049-1.ma ... FAIL Rating : 0.29 116
+Unsatisfiable/COL050-1.ma ... OK TIME NEEDED: 0.01 Rating : 0.00 117
+Unsatisfiable/COL051-1.ma ... OK TIME NEEDED: 0.01 Rating : 0.00 118
+Unsatisfiable/COL052-1.ma ... FAIL Rating : 0.00 119
+Unsatisfiable/COL053-1.ma ... OK TIME NEEDED: 0.02 Rating : 0.00 120
+Unsatisfiable/COL056-1.ma ... OK TIME NEEDED: 0.02 Rating : 0.07 121
+Unsatisfiable/COL057-1.ma ... FAIL Rating : 0.36 122
+Unsatisfiable/COL058-1.ma ... OK TIME NEEDED: 0.12 Rating : 0.00 123
+Unsatisfiable/COL058-2.ma ... OK TIME NEEDED: 0.03 Rating : 0.00 124
+Unsatisfiable/COL058-3.ma ... OK TIME NEEDED: 0.02 Rating : 0.00 125
+Unsatisfiable/COL059-1.ma ... FAIL Rating : 0.00 126
+Unsatisfiable/COL060-1.ma ... FAIL Rating : 0.36 127
+Unsatisfiable/COL060-2.ma ... OK TIME NEEDED: 0.00 Rating : 0.00 128
+Unsatisfiable/COL060-3.ma ... OK TIME NEEDED: 0.00 Rating : 0.00 129
+Unsatisfiable/COL061-1.ma ... FAIL Rating : 0.36 130
+Unsatisfiable/COL061-2.ma ... OK TIME NEEDED: 0.00 Rating : 0.00 131
+Unsatisfiable/COL061-3.ma ... OK TIME NEEDED: 0.00 Rating : 0.00 132
+Unsatisfiable/COL062-1.ma ... FAIL Rating : 0.50 133
+Unsatisfiable/COL062-2.ma ... OK TIME NEEDED: 0.00 Rating : 0.00 134
+Unsatisfiable/COL062-3.ma ... OK TIME NEEDED: 0.00 Rating : 0.00 135
+Unsatisfiable/COL063-1.ma ... FAIL Rating : 0.50 136
+Unsatisfiable/COL063-2.ma ... OK TIME NEEDED: 0.00 Rating : 0.00 137
+Unsatisfiable/COL063-3.ma ... OK TIME NEEDED: 0.00 Rating : 0.00 138
+Unsatisfiable/COL063-4.ma ... OK TIME NEEDED: 0.00 Rating : 0.00 139
+Unsatisfiable/COL063-5.ma ... OK TIME NEEDED: 0.00 Rating : 0.00 140
+Unsatisfiable/COL063-6.ma ... OK TIME NEEDED: 0.00 Rating : 0.00 141
+Unsatisfiable/COL064-1.ma ... FAIL Rating : 0.64 142
+Unsatisfiable/COL064-2.ma ... OK TIME NEEDED: 0.00 Rating : 0.07 143
+Unsatisfiable/COL064-3.ma ... OK TIME NEEDED: 0.00 Rating : 0.00 144
+Unsatisfiable/COL064-4.ma ... OK TIME NEEDED: 0.00 Rating : 0.07 145
+Unsatisfiable/COL064-5.ma ... OK TIME NEEDED: 0.00 Rating : 0.07 146
+Unsatisfiable/COL064-6.ma ... OK TIME NEEDED: 0.00 Rating : 0.00 147
+Unsatisfiable/COL064-7.ma ... OK TIME NEEDED: 0.00 Rating : 0.07 148
+Unsatisfiable/COL064-8.ma ... OK TIME NEEDED: 0.00 Rating : 0.00 149
+Unsatisfiable/COL064-9.ma ... OK TIME NEEDED: 0.00 Rating : 0.07 150
+Unsatisfiable/COL065-1.ma ... FAIL Rating : 0.71 151
+Unsatisfiable/COL066-1.ma ... FAIL Rating : 0.93 152
+Unsatisfiable/COL066-2.ma ... OK TIME NEEDED: 7.08 Rating : 0.00 153
+Unsatisfiable/COL066-3.ma ... OK TIME NEEDED: 6.55 Rating : 0.00 154
+Unsatisfiable/COL070-1.ma ... OK TIME NEEDED: 330.85 Rating : 0.07 155
+Unsatisfiable/COL075-2.ma ... OK TIME NEEDED: 0.03 Rating : 0.00 156
+Unsatisfiable/COL083-1.ma ... OK TIME NEEDED: 0.00 Rating : 0.00 157
+Unsatisfiable/COL084-1.ma ... OK TIME NEEDED: 0.00 Rating : 0.00 158
+Unsatisfiable/COL085-1.ma ... OK TIME NEEDED: 0.00 Rating : 0.00 159
+Unsatisfiable/COL086-1.ma ... OK TIME NEEDED: 0.00 Rating : 0.00 160
+Unsatisfiable/GRP001-2.ma ... OK TIME NEEDED: 0.03 Rating : 0.00 161
+Unsatisfiable/GRP001-4.ma ... OK TIME NEEDED: 0.02 Rating : 0.00 162
+Unsatisfiable/GRP002-2.ma ... OK TIME NEEDED: 8.94 Rating : 0.00 163
+Unsatisfiable/GRP002-3.ma ... OK TIME NEEDED: 20.76 Rating : 0.00 164
+Unsatisfiable/GRP002-4.ma ... OK TIME NEEDED: 17.58 Rating : 0.00 165
+Unsatisfiable/GRP010-4.ma ... OK TIME NEEDED: 0.01 Rating : 0.00 166
+Unsatisfiable/GRP011-4.ma ... OK TIME NEEDED: 0.05 Rating : 0.00 167
+Unsatisfiable/GRP012-4.ma ... OK TIME NEEDED: 0.03 Rating : 0.00 168
+Unsatisfiable/GRP014-1.ma ... FAIL Rating : 0.14 169
+Unsatisfiable/GRP022-2.ma ... OK TIME NEEDED: 0.01 Rating : 0.00 170
+Unsatisfiable/GRP023-2.ma ... OK TIME NEEDED: 0.00 Rating : 0.00 171
+Unsatisfiable/GRP024-5.ma ... FAIL Rating : 0.50 172
+Unsatisfiable/GRP114-1.ma ... OK TIME NEEDED: 60.18 Rating : 0.29 173
+Unsatisfiable/GRP115-1.ma ... OK TIME NEEDED: 1.31 Rating : 0.00 174
+Unsatisfiable/GRP116-1.ma ... OK TIME NEEDED: 1.30 Rating : 0.00 175
+Unsatisfiable/GRP117-1.ma ... OK TIME NEEDED: 1.36 Rating : 0.00 176
+Unsatisfiable/GRP118-1.ma ... OK TIME NEEDED: 1.52 Rating : 0.00 177
+Unsatisfiable/GRP119-1.ma ... OK Rating : 0.00 178
+Unsatisfiable/GRP120-1.ma ... OK Rating : 0.00 179
+Unsatisfiable/GRP121-1.ma ... OK TIME NEEDED: 48.93 Rating : 0.00 180
+Unsatisfiable/GRP122-1.ma ... FAIL Rating : 0.07 181
+Unsatisfiable/GRP136-1.ma ... OK TIME NEEDED: 0.00 Rating : 0.00 182
+Unsatisfiable/GRP137-1.ma ... OK TIME NEEDED: 0.00 Rating : 0.00 183
+Unsatisfiable/GRP138-1.ma ... OK TIME NEEDED: 1.24 Rating : 0.00 184
+Unsatisfiable/GRP139-1.ma ... OK TIME NEEDED: 0.06 Rating : 0.00 185
+Unsatisfiable/GRP140-1.ma ... OK TIME NEEDED: 1.29 Rating : 0.00 186
+Unsatisfiable/GRP141-1.ma ... OK TIME NEEDED: 0.05 Rating : 0.00 187
+Unsatisfiable/GRP142-1.ma ... OK TIME NEEDED: 0.01 Rating : 0.00 188
+Unsatisfiable/GRP143-1.ma ... OK TIME NEEDED: 0.02 Rating : 0.00 189
+Unsatisfiable/GRP144-1.ma ... OK TIME NEEDED: 0.01 Rating : 0.00 190
+Unsatisfiable/GRP145-1.ma ... OK TIME NEEDED: 0.04 Rating : 0.00 191
+Unsatisfiable/GRP146-1.ma ... OK TIME NEEDED: 0.12 Rating : 0.00 192
+Unsatisfiable/GRP147-1.ma ... OK TIME NEEDED: 1.75 Rating : 0.00 193
+Unsatisfiable/GRP148-1.ma ... OK TIME NEEDED: 1.74 Rating : 0.00 194
+Unsatisfiable/GRP149-1.ma ... OK TIME NEEDED: 0.12 Rating : 0.00 195
+Unsatisfiable/GRP150-1.ma ... OK TIME NEEDED: 0.04 Rating : 0.00 196
+Unsatisfiable/GRP151-1.ma ... OK TIME NEEDED: 0.01 Rating : 0.00 197
+Unsatisfiable/GRP152-1.ma ... OK TIME NEEDED: 0.11 Rating : 0.00 198
+Unsatisfiable/GRP153-1.ma ... OK TIME NEEDED: 0.01 Rating : 0.00 199
+Unsatisfiable/GRP154-1.ma ... OK TIME NEEDED: 0.23 Rating : 0.00 200
+Unsatisfiable/GRP155-1.ma ... OK TIME NEEDED: 0.30 Rating : 0.00 201
+Unsatisfiable/GRP156-1.ma ... OK TIME NEEDED: 0.30 Rating : 0.00 202
+Unsatisfiable/GRP157-1.ma ... OK TIME NEEDED: 0.13 Rating : 0.00 203
+Unsatisfiable/GRP158-1.ma ... OK TIME NEEDED: 0.16 Rating : 0.00 204
+Unsatisfiable/GRP159-1.ma ... OK TIME NEEDED: 0.10 Rating : 0.00 205
+Unsatisfiable/GRP160-1.ma ... OK TIME NEEDED: 0.00 Rating : 0.00 206
+Unsatisfiable/GRP161-1.ma ... OK TIME NEEDED: 0.00 Rating : 0.00 207
+Unsatisfiable/GRP162-1.ma ... OK TIME NEEDED: 0.18 Rating : 0.00 208
+Unsatisfiable/GRP163-1.ma ... OK TIME NEEDED: 0.16 Rating : 0.00 209
+Unsatisfiable/GRP164-1.ma ... FAIL Rating : 0.93 210
+Unsatisfiable/GRP164-2.ma ... FAIL Rating : 0.93 211
+Unsatisfiable/GRP165-1.ma ... OK TIME NEEDED: 1.76 Rating : 0.00 212
+Unsatisfiable/GRP165-2.ma ... OK TIME NEEDED: 1.63 Rating : 0.00 213
+Unsatisfiable/GRP166-1.ma ... OK TIME NEEDED: 17.00 Rating : 0.00 214
+Unsatisfiable/GRP166-2.ma ... OK TIME NEEDED: 23.37 Rating : 0.00 215
+Unsatisfiable/GRP166-3.ma ... OK TIME NEEDED: 4.36 Rating : 0.00 216
+Unsatisfiable/GRP166-4.ma ... OK TIME NEEDED: 4.42 Rating : 0.00 217
+Unsatisfiable/GRP167-1.ma ... OK TIME NEEDED: 110.83 Rating : 0.21 218
+Unsatisfiable/GRP167-2.ma ... OK TIME NEEDED: 114.98 Rating : 0.21 219
+Unsatisfiable/GRP167-3.ma ... FAIL Rating : 0.50 220
+Unsatisfiable/GRP167-4.ma ... FAIL Rating : 0.43 221
+Unsatisfiable/GRP167-5.ma ... OK TIME NEEDED: 2.36 Rating : 0.14 222
+Unsatisfiable/GRP168-1.ma ... OK TIME NEEDED: 0.26 Rating : 0.07 223
+Unsatisfiable/GRP168-2.ma ... OK TIME NEEDED: 0.28 Rating : 0.07 224
+Unsatisfiable/GRP169-1.ma ... OK TIME NEEDED: 115.38 Rating : 0.00 225
+Unsatisfiable/GRP169-2.ma ... OK TIME NEEDED: 99.20 Rating : 0.00 226
+Unsatisfiable/GRP170-1.ma ... FAIL Rating : 0.00 227
+Unsatisfiable/GRP170-2.ma ... FAIL Rating : 0.00 228
+Unsatisfiable/GRP170-3.ma ... FAIL Rating : 0.00 229
+Unsatisfiable/GRP170-4.ma ... FAIL Rating : 0.00 230
+Unsatisfiable/GRP171-1.ma ... OK TIME NEEDED: 1.53 Rating : 0.00 231
+Unsatisfiable/GRP171-2.ma ... OK TIME NEEDED: 1.60 Rating : 0.00 232
+Unsatisfiable/GRP172-1.ma ... OK TIME NEEDED: 1.60 Rating : 0.00 233
+Unsatisfiable/GRP172-2.ma ... OK TIME NEEDED: 1.56 Rating : 0.00 234
+Unsatisfiable/GRP173-1.ma ... OK TIME NEEDED: 0.73 Rating : 0.00 235
+Unsatisfiable/GRP174-1.ma ... OK TIME NEEDED: 0.95 Rating : 0.00 236
+Unsatisfiable/GRP175-1.ma ... OK TIME NEEDED: 1.83 Rating : 0.00 237
+Unsatisfiable/GRP175-2.ma ... OK TIME NEEDED: 1.82 Rating : 0.00 238
+Unsatisfiable/GRP175-3.ma ... OK TIME NEEDED: 1.90 Rating : 0.00 239
+Unsatisfiable/GRP175-4.ma ... OK TIME NEEDED: 1.61 Rating : 0.00 240
+Unsatisfiable/GRP176-1.ma ... OK TIME NEEDED: 0.23 Rating : 0.00 241
+Unsatisfiable/GRP176-2.ma ... OK TIME NEEDED: 0.22 Rating : 0.00 242
+Unsatisfiable/GRP177-2.ma ... FAIL Rating : 0.21 243
+Unsatisfiable/GRP178-1.ma ... FAIL Rating : 0.14 244
+Unsatisfiable/GRP178-2.ma ... FAIL Rating : 0.14 245
+Unsatisfiable/GRP179-1.ma ... FAIL Rating : 0.50 246
+Unsatisfiable/GRP179-2.ma ... FAIL Rating : 0.50 247
+Unsatisfiable/GRP179-3.ma ... FAIL Rating : 0.36 248
+Unsatisfiable/GRP180-1.ma ... FAIL Rating : 0.50 249
+Unsatisfiable/GRP180-2.ma ... FAIL Rating : 0.43 250
+Unsatisfiable/GRP181-1.ma ... FAIL Rating : 0.71 251
+Unsatisfiable/GRP181-2.ma ... FAIL Rating : 0.71 252
+Unsatisfiable/GRP181-3.ma ... OK TIME NEEDED: 28.37 Rating : 0.43 253
+Unsatisfiable/GRP181-4.ma ... OK TIME NEEDED: 35.94 Rating : 0.43 254
+Unsatisfiable/GRP182-1.ma ... OK TIME NEEDED: 0.01 Rating : 0.00 255
+Unsatisfiable/GRP182-2.ma ... OK TIME NEEDED: 0.02 Rating : 0.00 256
+Unsatisfiable/GRP182-3.ma ... OK TIME NEEDED: 0.01 Rating : 0.00 257
+Unsatisfiable/GRP182-4.ma ... OK TIME NEEDED: 0.03 Rating : 0.00 258
+Unsatisfiable/GRP183-1.ma ... FAIL Rating : 0.43 259
+Unsatisfiable/GRP183-2.ma ... FAIL Rating : 0.43 260
+Unsatisfiable/GRP183-3.ma ... FAIL Rating : 0.43 261
+Unsatisfiable/GRP183-4.ma ... FAIL Rating : 0.36 262
+Unsatisfiable/GRP184-1.ma ... FAIL Rating : 0.29 263
+Unsatisfiable/GRP184-2.ma ... FAIL Rating : 0.14 264
+Unsatisfiable/GRP184-3.ma ... FAIL Rating : 0.21 265
+Unsatisfiable/GRP184-4.ma ... OK TIME NEEDED: 51.53 Rating : 0.00 266
+Unsatisfiable/GRP185-1.ma ... FAIL Rating : 0.07 267
+Unsatisfiable/GRP185-2.ma ... FAIL Rating : 0.07 268
+Unsatisfiable/GRP185-3.ma ... FAIL Rating : 0.21 269
+Unsatisfiable/GRP185-4.ma ... FAIL Rating : 0.21 270
+Unsatisfiable/GRP186-1.ma ... FAIL Rating : 0.57 271
+Unsatisfiable/GRP186-2.ma ... FAIL Rating : 0.36 272
+Unsatisfiable/GRP186-3.ma ... OK TIME NEEDED: 0.26 Rating : 0.00 273
+Unsatisfiable/GRP186-4.ma ... OK TIME NEEDED: 0.13 Rating : 0.00 274
+Unsatisfiable/GRP187-1.ma ... FAIL Rating : 0.64 275
+Unsatisfiable/GRP188-1.ma ... OK TIME NEEDED: 0.05 Rating : 0.00 276
+Unsatisfiable/GRP188-2.ma ... FAIL Rating : 0.00 277
+Unsatisfiable/GRP189-1.ma ... OK TIME NEEDED: 0.01 Rating : 0.00 278
+Unsatisfiable/GRP189-2.ma ... OK TIME NEEDED: 0.03 Rating : 0.00 279
+Unsatisfiable/GRP190-1.ma ... OK TIME NEEDED: 156.68 Rating : 0.00 280
+Unsatisfiable/GRP190-2.ma ... OK TIME NEEDED: 155.26 Rating : 0.00 281
+Unsatisfiable/GRP191-1.ma ... OK TIME NEEDED: 145.33 Rating : 0.00 282
+Unsatisfiable/GRP191-2.ma ... OK TIME NEEDED: 143.45 Rating : 0.00 283
+Unsatisfiable/GRP192-1.ma ... OK TIME NEEDED: 0.23 Rating : 0.07 284
+Unsatisfiable/GRP193-1.ma ... OK TIME NEEDED: 32.58 Rating : 0.00 285
+Unsatisfiable/GRP193-2.ma ... OK TIME NEEDED: 32.81 Rating : 0.00 286
+Unsatisfiable/GRP195-1.ma ... FAIL Rating : 0.00 287
+Unsatisfiable/GRP196-1.ma ... FAIL Rating : 0.93 288
+Unsatisfiable/GRP200-1.ma ... FAIL Rating : 0.29 289
+Unsatisfiable/GRP201-1.ma ... FAIL Rating : 0.36 290
+Unsatisfiable/GRP202-1.ma ... FAIL Rating : 0.43 291
+Unsatisfiable/GRP203-1.ma ... FAIL Rating : 0.21 292
+Unsatisfiable/GRP205-1.ma ... FAIL Rating : 0.43 293
+Unsatisfiable/GRP206-1.ma ... OK TIME NEEDED: 0.03 Rating : 0.00 294
+Unsatisfiable/GRP403-1.ma ... OK TIME NEEDED: 90.63 Rating : 0.07 295
+Unsatisfiable/GRP404-1.ma ... FAIL Rating : 0.21 296
+Unsatisfiable/GRP405-1.ma ... FAIL Rating : 0.21 297
+Unsatisfiable/GRP406-1.ma ... OK TIME NEEDED: 88.30 Rating : 0.00 298
+Unsatisfiable/GRP407-1.ma ... FAIL Rating : 0.00 299
+Unsatisfiable/GRP408-1.ma ... FAIL Rating : 0.00 300
+Unsatisfiable/GRP409-1.ma ... OK TIME NEEDED: 1.29 Rating : 0.00 301
+Unsatisfiable/GRP410-1.ma ... FAIL Rating : 0.21 302
+Unsatisfiable/GRP411-1.ma ... FAIL Rating : 0.21 303
+Unsatisfiable/GRP412-1.ma ... OK TIME NEEDED: 47.25 Rating : 0.00 304
+Unsatisfiable/GRP413-1.ma ... FAIL Rating : 0.07 305
+Unsatisfiable/GRP414-1.ma ... FAIL Rating : 0.07 306
+Unsatisfiable/GRP415-1.ma ... FAIL Rating : 0.00 307
+Unsatisfiable/GRP416-1.ma ... FAIL Rating : 0.07 308
+Unsatisfiable/GRP417-1.ma ... FAIL Rating : 0.14 309
+Unsatisfiable/GRP418-1.ma ... FAIL Rating : 0.07 310
+Unsatisfiable/GRP419-1.ma ... FAIL Rating : 0.29 311
+Unsatisfiable/GRP420-1.ma ... FAIL Rating : 0.36 312
+Unsatisfiable/GRP421-1.ma ... OK TIME NEEDED: 79.02 Rating : 0.14 313
+Unsatisfiable/GRP422-1.ma ... FAIL Rating : 0.29 314
+Unsatisfiable/GRP423-1.ma ... FAIL Rating : 0.36 315
+Unsatisfiable/GRP424-1.ma ... OK TIME NEEDED: 1.80 Rating : 0.00 316
+Unsatisfiable/GRP425-1.ma ... FAIL Rating : 0.07 317
+Unsatisfiable/GRP426-1.ma ... FAIL Rating : 0.14 318
+Unsatisfiable/GRP427-1.ma ... FAIL Rating : 0.00 319
+Unsatisfiable/GRP428-1.ma ... FAIL Rating : 0.00 320
+Unsatisfiable/GRP429-1.ma ... FAIL Rating : 0.14 321
+Unsatisfiable/GRP430-1.ma ... FAIL Rating : 0.00 322
+Unsatisfiable/GRP431-1.ma ... FAIL Rating : 0.00 323
+Unsatisfiable/GRP432-1.ma ... FAIL Rating : 0.00 324
+Unsatisfiable/GRP433-1.ma ... FAIL Rating : 0.00 325
+Unsatisfiable/GRP434-1.ma ... FAIL Rating : 0.00 326
+Unsatisfiable/GRP435-1.ma ... FAIL Rating : 0.00 327
+Unsatisfiable/GRP436-1.ma ... FAIL Rating : 0.07 328
+Unsatisfiable/GRP437-1.ma ... FAIL Rating : 0.07 329
+Unsatisfiable/GRP438-1.ma ... FAIL Rating : 0.07 330
+Unsatisfiable/GRP439-1.ma ... FAIL Rating : 0.07 331
+Unsatisfiable/GRP440-1.ma ... FAIL Rating : 0.14 332
+Unsatisfiable/GRP441-1.ma ... FAIL Rating : 0.21 333
+Unsatisfiable/GRP442-1.ma ... FAIL Rating : 0.14 334
+Unsatisfiable/GRP443-1.ma ... FAIL Rating : 0.07 335
+Unsatisfiable/GRP444-1.ma ... FAIL Rating : 0.21 336
+Unsatisfiable/GRP445-1.ma ... OK TIME NEEDED: 0.11 Rating : 0.00 337
+Unsatisfiable/GRP446-1.ma ... OK TIME NEEDED: 0.62 Rating : 0.00 338
+Unsatisfiable/GRP447-1.ma ... OK TIME NEEDED: 11.05 Rating : 0.14 339
+Unsatisfiable/GRP448-1.ma ... OK TIME NEEDED: 0.11 Rating : 0.00 340
+Unsatisfiable/GRP449-1.ma ... OK TIME NEEDED: 0.64 Rating : 0.00 341
+Unsatisfiable/GRP450-1.ma ... OK TIME NEEDED: 10.86 Rating : 0.07 342
+Unsatisfiable/GRP451-1.ma ... OK TIME NEEDED: 0.09 Rating : 0.00 343
+Unsatisfiable/GRP452-1.ma ... OK TIME NEEDED: 98.00 Rating : 0.14 344
+Unsatisfiable/GRP453-1.ma ... OK TIME NEEDED: 146.19 Rating : 0.21 345
+Unsatisfiable/GRP454-1.ma ... OK TIME NEEDED: 0.00 Rating : 0.00 346
+Unsatisfiable/GRP455-1.ma ... OK TIME NEEDED: 0.03 Rating : 0.00 347
+Unsatisfiable/GRP456-1.ma ... OK TIME NEEDED: 0.18 Rating : 0.07 348
+Unsatisfiable/GRP457-1.ma ... OK TIME NEEDED: 0.00 Rating : 0.00 349
+Unsatisfiable/GRP458-1.ma ... OK TIME NEEDED: 0.03 Rating : 0.00 350
+Unsatisfiable/GRP459-1.ma ... OK TIME NEEDED: 0.19 Rating : 0.00 351
+Unsatisfiable/GRP460-1.ma ... OK TIME NEEDED: 0.00 Rating : 0.00 352
+Unsatisfiable/GRP461-1.ma ... OK TIME NEEDED: 0.01 Rating : 0.00 353
+Unsatisfiable/GRP462-1.ma ... OK TIME NEEDED: 0.44 Rating : 0.00 354
+Unsatisfiable/GRP463-1.ma ... OK TIME NEEDED: 0.00 Rating : 0.00 355
+Unsatisfiable/GRP464-1.ma ... OK TIME NEEDED: 0.01 Rating : 0.00 356
+Unsatisfiable/GRP465-1.ma ... OK TIME NEEDED: 0.42 Rating : 0.00 357
+Unsatisfiable/GRP466-1.ma ... OK TIME NEEDED: 0.12 Rating : 0.00 358
+Unsatisfiable/GRP467-1.ma ... OK TIME NEEDED: 0.94 Rating : 0.00 359
+Unsatisfiable/GRP468-1.ma ... OK TIME NEEDED: 184.97 Rating : 0.00 360
+Unsatisfiable/GRP469-1.ma ... FAIL Rating : 0.21 361
+Unsatisfiable/GRP470-1.ma ... FAIL Rating : 0.21 362
+Unsatisfiable/GRP471-1.ma ... FAIL Rating : 0.21 363
+Unsatisfiable/GRP472-1.ma ... FAIL Rating : 0.07 364
+Unsatisfiable/GRP473-1.ma ... FAIL Rating : 0.07 365
+Unsatisfiable/GRP474-1.ma ... FAIL Rating : 0.07 366
+Unsatisfiable/GRP475-1.ma ... FAIL Rating : 0.21 367
+Unsatisfiable/GRP476-1.ma ... FAIL Rating : 0.21 368
+Unsatisfiable/GRP477-1.ma ... FAIL Rating : 0.21 369
+Unsatisfiable/GRP478-1.ma ... FAIL Rating : 0.14 370
+Unsatisfiable/GRP479-1.ma ... FAIL Rating : 0.14 371
+Unsatisfiable/GRP480-1.ma ... FAIL Rating : 0.21 372
+Unsatisfiable/GRP481-1.ma ... OK TIME NEEDED: 0.01 Rating : 0.00 373
+Unsatisfiable/GRP482-1.ma ... OK TIME NEEDED: 0.06 Rating : 0.00 374
+Unsatisfiable/GRP483-1.ma ... OK TIME NEEDED: 0.53 Rating : 0.00 375
+Unsatisfiable/GRP484-1.ma ... OK TIME NEEDED: 0.07 Rating : 0.00 376
+Unsatisfiable/GRP485-1.ma ... OK TIME NEEDED: 0.19 Rating : 0.00 377
+Unsatisfiable/GRP486-1.ma ... OK TIME NEEDED: 0.58 Rating : 0.00 378
+Unsatisfiable/GRP487-1.ma ... OK TIME NEEDED: 0.03 Rating : 0.00 379
+Unsatisfiable/GRP488-1.ma ... OK TIME NEEDED: 1.20 Rating : 0.00 380
+Unsatisfiable/GRP489-1.ma ... OK TIME NEEDED: 1.02 Rating : 0.00 381
+Unsatisfiable/GRP490-1.ma ... OK TIME NEEDED: 0.03 Rating : 0.00 382
+Unsatisfiable/GRP491-1.ma ... OK TIME NEEDED: 0.04 Rating : 0.00 383
+Unsatisfiable/GRP492-1.ma ... OK TIME NEEDED: 0.47 Rating : 0.00 384
+Unsatisfiable/GRP493-1.ma ... OK TIME NEEDED: 0.02 Rating : 0.00 385
+Unsatisfiable/GRP494-1.ma ... OK TIME NEEDED: 0.05 Rating : 0.00 386
+Unsatisfiable/GRP495-1.ma ... OK TIME NEEDED: 0.30 Rating : 0.00 387
+Unsatisfiable/GRP496-1.ma ... OK TIME NEEDED: 0.01 Rating : 0.00 388
+Unsatisfiable/GRP497-1.ma ... OK TIME NEEDED: 0.11 Rating : 0.00 389
+Unsatisfiable/GRP498-1.ma ... OK TIME NEEDED: 0.27 Rating : 0.00 390
+Unsatisfiable/GRP499-1.ma ... FAIL Rating : 0.00 391
+Unsatisfiable/GRP500-1.ma ... FAIL Rating : 0.07 392
+Unsatisfiable/GRP501-1.ma ... FAIL Rating : 0.14 393
+Unsatisfiable/GRP502-1.ma ... FAIL Rating : 0.14 394
+Unsatisfiable/GRP503-1.ma ... FAIL Rating : 0.14 395
+Unsatisfiable/GRP504-1.ma ... FAIL Rating : 0.14 396
+Unsatisfiable/GRP505-1.ma ... FAIL Rating : 0.50 397
+Unsatisfiable/GRP506-1.ma ... FAIL Rating : 0.64 398
+Unsatisfiable/GRP507-1.ma ... FAIL Rating : 0.57 399
+Unsatisfiable/GRP508-1.ma ... FAIL Rating : 0.57 400
+Unsatisfiable/GRP509-1.ma ... OK TIME NEEDED: 0.98 Rating : 0.00 401
+Unsatisfiable/GRP510-1.ma ... OK TIME NEEDED: 0.86 Rating : 0.00 402
+Unsatisfiable/GRP511-1.ma ... OK TIME NEEDED: 2.09 Rating : 0.00 403
+Unsatisfiable/GRP512-1.ma ... OK TIME NEEDED: 1.00 Rating : 0.00 404
+Unsatisfiable/GRP513-1.ma ... OK TIME NEEDED: 1.02 Rating : 0.00 405
+Unsatisfiable/GRP514-1.ma ... OK TIME NEEDED: 0.98 Rating : 0.00 406
+Unsatisfiable/GRP515-1.ma ... OK TIME NEEDED: 7.25 Rating : 0.00 407
+Unsatisfiable/GRP516-1.ma ... OK TIME NEEDED: 4.15 Rating : 0.00 408
+Unsatisfiable/GRP517-1.ma ... OK TIME NEEDED: 0.04 Rating : 0.00 409
+Unsatisfiable/GRP518-1.ma ... OK TIME NEEDED: 0.02 Rating : 0.00 410
+Unsatisfiable/GRP519-1.ma ... OK TIME NEEDED: 5.78 Rating : 0.00 411
+Unsatisfiable/GRP520-1.ma ... OK TIME NEEDED: 0.37 Rating : 0.00 412
+Unsatisfiable/GRP521-1.ma ... OK TIME NEEDED: 0.07 Rating : 0.00 413
+Unsatisfiable/GRP522-1.ma ... OK TIME NEEDED: 10.82 Rating : 0.00 414
+Unsatisfiable/GRP523-1.ma ... OK TIME NEEDED: 24.87 Rating : 0.00 415
+Unsatisfiable/GRP524-1.ma ... OK TIME NEEDED: 11.55 Rating : 0.00 416
+Unsatisfiable/GRP525-1.ma ... OK TIME NEEDED: 0.03 Rating : 0.00 417
+Unsatisfiable/GRP526-1.ma ... OK TIME NEEDED: 1.61 Rating : 0.00 418
+Unsatisfiable/GRP527-1.ma ... OK TIME NEEDED: 13.32 Rating : 0.00 419
+Unsatisfiable/GRP528-1.ma ... OK TIME NEEDED: 3.04 Rating : 0.00 420
+Unsatisfiable/GRP529-1.ma ... OK TIME NEEDED: 0.04 Rating : 0.00 421
+Unsatisfiable/GRP530-1.ma ... OK TIME NEEDED: 0.01 Rating : 0.00 422
+Unsatisfiable/GRP531-1.ma ... OK TIME NEEDED: 8.62 Rating : 0.00 423
+Unsatisfiable/GRP532-1.ma ... OK TIME NEEDED: 0.19 Rating : 0.00 424
+Unsatisfiable/GRP533-1.ma ... OK TIME NEEDED: 0.00 Rating : 0.00 425
+Unsatisfiable/GRP534-1.ma ... OK TIME NEEDED: 0.01 Rating : 0.00 426
+Unsatisfiable/GRP535-1.ma ... OK TIME NEEDED: 2.89 Rating : 0.00 427
+Unsatisfiable/GRP536-1.ma ... OK TIME NEEDED: 0.06 Rating : 0.00 428
+Unsatisfiable/GRP537-1.ma ... OK TIME NEEDED: 0.00 Rating : 0.00 429
+Unsatisfiable/GRP538-1.ma ... OK TIME NEEDED: 0.01 Rating : 0.00 430
+Unsatisfiable/GRP539-1.ma ... OK TIME NEEDED: 4.26 Rating : 0.00 431
+Unsatisfiable/GRP540-1.ma ... OK TIME NEEDED: 0.06 Rating : 0.00 432
+Unsatisfiable/GRP541-1.ma ... OK TIME NEEDED: 0.00 Rating : 0.00 433
+Unsatisfiable/GRP542-1.ma ... OK TIME NEEDED: 0.01 Rating : 0.00 434
+Unsatisfiable/GRP543-1.ma ... OK TIME NEEDED: 1.94 Rating : 0.00 435
+Unsatisfiable/GRP544-1.ma ... OK TIME NEEDED: 0.03 Rating : 0.00 436
+Unsatisfiable/GRP545-1.ma ... OK TIME NEEDED: 0.00 Rating : 0.00 437
+Unsatisfiable/GRP546-1.ma ... OK TIME NEEDED: 0.01 Rating : 0.00 438
+Unsatisfiable/GRP547-1.ma ... OK TIME NEEDED: 0.89 Rating : 0.00 439
+Unsatisfiable/GRP548-1.ma ... OK TIME NEEDED: 0.04 Rating : 0.00 440
+Unsatisfiable/GRP549-1.ma ... OK TIME NEEDED: 0.00 Rating : 0.00 441
+Unsatisfiable/GRP550-1.ma ... FAIL Rating : 0.07 442
+Unsatisfiable/GRP551-1.ma ... OK TIME NEEDED: 1.26 Rating : 0.00 443
+Unsatisfiable/GRP552-1.ma ... OK TIME NEEDED: 0.02 Rating : 0.00 444
+Unsatisfiable/GRP553-1.ma ... OK TIME NEEDED: 0.35 Rating : 0.00 445
+Unsatisfiable/GRP554-1.ma ... OK TIME NEEDED: 0.38 Rating : 0.00 446
+Unsatisfiable/GRP555-1.ma ... OK TIME NEEDED: 0.38 Rating : 0.00 447
+Unsatisfiable/GRP556-1.ma ... OK TIME NEEDED: 1.31 Rating : 0.00 448
+Unsatisfiable/GRP557-1.ma ... OK TIME NEEDED: 0.05 Rating : 0.00 449
+Unsatisfiable/GRP558-1.ma ... OK TIME NEEDED: 0.34 Rating : 0.00 450
+Unsatisfiable/GRP559-1.ma ... OK TIME NEEDED: 63.72 Rating : 0.00 451
+Unsatisfiable/GRP560-1.ma ... OK TIME NEEDED: 3.85 Rating : 0.00 452
+Unsatisfiable/GRP561-1.ma ... OK TIME NEEDED: 0.11 Rating : 0.00 453
+Unsatisfiable/GRP562-1.ma ... OK TIME NEEDED: 0.07 Rating : 0.00 454
+Unsatisfiable/GRP563-1.ma ... OK TIME NEEDED: 26.52 Rating : 0.00 455
+Unsatisfiable/GRP564-1.ma ... OK TIME NEEDED: 3.48 Rating : 0.00 456
+Unsatisfiable/GRP565-1.ma ... OK TIME NEEDED: 0.05 Rating : 0.00 457
+Unsatisfiable/GRP566-1.ma ... OK TIME NEEDED: 0.05 Rating : 0.00 458
+Unsatisfiable/GRP567-1.ma ... OK TIME NEEDED: 3.85 Rating : 0.14 459
+Unsatisfiable/GRP568-1.ma ... OK TIME NEEDED: 0.43 Rating : 0.14 460
+Unsatisfiable/GRP569-1.ma ... OK TIME NEEDED: 0.04 Rating : 0.00 461
+Unsatisfiable/GRP570-1.ma ... Unsatisfiable/GRP570-1.ma ... OK TIME NEEDED: 0.04 Rating : 0.00 1
+Unsatisfiable/GRP571-1.ma ... OK TIME NEEDED: 3.12 Rating : 0.14 2
+Unsatisfiable/GRP572-1.ma ... OK TIME NEEDED: 0.22 Rating : 0.07 3
+Unsatisfiable/GRP573-1.ma ... OK TIME NEEDED: 0.03 Rating : 0.00 4
+Unsatisfiable/GRP574-1.ma ... OK TIME NEEDED: 0.13 Rating : 0.00 5
+Unsatisfiable/GRP575-1.ma ... OK TIME NEEDED: 9.14 Rating : 0.14 6
+Unsatisfiable/GRP576-1.ma ... OK TIME NEEDED: 0.21 Rating : 0.00 7
+Unsatisfiable/GRP577-1.ma ... OK TIME NEEDED: 0.10 Rating : 0.00 8
+Unsatisfiable/GRP578-1.ma ... OK TIME NEEDED: 0.20 Rating : 0.00 9
+Unsatisfiable/GRP579-1.ma ... OK Rating : 0.07 10
+Unsatisfiable/GRP580-1.ma ... OK TIME NEEDED: 0.38 Rating : 0.00 11
+Unsatisfiable/GRP581-1.ma ... OK TIME NEEDED: 0.03 Rating : 0.00 12
+Unsatisfiable/GRP582-1.ma ... OK TIME NEEDED: 0.16 Rating : 0.00 13
+Unsatisfiable/GRP583-1.ma ... OK TIME NEEDED: 1.49 Rating : 0.07 14
+Unsatisfiable/GRP584-1.ma ... OK TIME NEEDED: 0.18 Rating : 0.00 15
+Unsatisfiable/GRP585-1.ma ... OK TIME NEEDED: 8.76 Rating : 0.00 16
+Unsatisfiable/GRP586-1.ma ... OK TIME NEEDED: 8.50 Rating : 0.00 17
+Unsatisfiable/GRP587-1.ma ... OK TIME NEEDED: 502.11 Rating : 0.00 18
+Unsatisfiable/GRP588-1.ma ... OK TIME NEEDED: 180.78 Rating : 0.00 19
+Unsatisfiable/GRP589-1.ma ... OK TIME NEEDED: 0.10 Rating : 0.00 20
+Unsatisfiable/GRP590-1.ma ... OK TIME NEEDED: 47.86 Rating : 0.00 21
+Unsatisfiable/GRP591-1.ma ... OK TIME NEEDED: 273.95 Rating : 0.07 22
+Unsatisfiable/GRP592-1.ma ... OK TIME NEEDED: 54.36 Rating : 0.07 23
+Unsatisfiable/GRP593-1.ma ... OK TIME NEEDED: 94.27 Rating : 0.00 24
+Unsatisfiable/GRP594-1.ma ... OK TIME NEEDED: 94.11 Rating : 0.00 25
+Unsatisfiable/GRP595-1.ma ... OK TIME NEEDED: 83.30 Rating : 0.07 26
+Unsatisfiable/GRP596-1.ma ... OK TIME NEEDED: 85.71 Rating : 0.07 27
+Unsatisfiable/GRP597-1.ma ... OK TIME NEEDED: 0.25 Rating : 0.00 28
+Unsatisfiable/GRP598-1.ma ... OK TIME NEEDED: 0.23 Rating : 0.07 29
+Unsatisfiable/GRP599-1.ma ... OK TIME NEEDED: 97.88 Rating : 0.07 30
+Unsatisfiable/GRP600-1.ma ... OK TIME NEEDED: 0.54 Rating : 0.07 31
+Unsatisfiable/GRP601-1.ma ... FAIL Rating : 0.07 32
+Unsatisfiable/GRP602-1.ma ... FAIL Rating : 0.07 33
+Unsatisfiable/GRP603-1.ma ... FAIL Rating : 0.07 34
+Unsatisfiable/GRP604-1.ma ... FAIL Rating : 0.07 35
+Unsatisfiable/GRP605-1.ma ... OK TIME NEEDED: 175.99 Rating : 0.00 36
+Unsatisfiable/GRP606-1.ma ... OK TIME NEEDED: 176.57 Rating : 0.00 37
+Unsatisfiable/GRP607-1.ma ... OK TIME NEEDED: 407.66 Rating : 0.00 38
+Unsatisfiable/GRP608-1.ma ... OK TIME NEEDED: 183.10 Rating : 0.00 39
+Unsatisfiable/GRP609-1.ma ... OK TIME NEEDED: 123.47 Rating : 0.07 40
+Unsatisfiable/GRP610-1.ma ... Unsatisfiable/GRP610-1.ma ... OK TIME NEEDED: 79.58 Rating : 0.07 1
+Unsatisfiable/GRP611-1.ma ... OK TIME NEEDED: 80.92 Rating : 0.00 2
+Unsatisfiable/GRP612-1.ma ... OK TIME NEEDED: 179.66 Rating : 0.07 3
+Unsatisfiable/GRP613-1.ma ... OK TIME NEEDED: 0.26 Rating : 0.00 4
+Unsatisfiable/GRP614-1.ma ... OK TIME NEEDED: 0.26 Rating : 0.00 5
+Unsatisfiable/GRP615-1.ma ... OK TIME NEEDED: 102.09 Rating : 0.07 1
+Unsatisfiable/GRP616-1.ma ... OK TIME NEEDED: 0.31 Rating : 0.00 2
+Unsatisfiable/LAT006-1.ma ... OK TIME NEEDED: 116.84 Rating : 0.14 3
+Unsatisfiable/LAT007-1.ma ... OK TIME NEEDED: 217.47 Rating : 0.36 4
+Unsatisfiable/LAT008-1.ma ... OK TIME NEEDED: 0.19 Rating : 0.07 5
+Unsatisfiable/LAT009-1.ma ... OK TIME NEEDED: 529.79 Rating : 0.00 6
+Unsatisfiable/LAT010-1.ma ... FAIL Rating : 0.00 7
+Unsatisfiable/LAT011-1.ma ... FAIL Rating : 0.07 8
+Unsatisfiable/LAT012-1.ma ... OK TIME NEEDED: 6.85 Rating : 0.00 9
+Unsatisfiable/LAT013-1.ma ... FAIL Rating : 0.14 10
+Unsatisfiable/LAT014-1.ma ... OK TIME NEEDED: 0.01 Rating : 0.00 11
+Unsatisfiable/LAT017-1.ma ... FAIL Rating : 0.71 12
+Unsatisfiable/LAT018-1.ma ... FAIL Rating : 0.93 13
+Unsatisfiable/LAT019-1.ma ... FAIL Rating : 0.00 14
+Unsatisfiable/LAT020-1.ma ... FAIL Rating : 0.50 15
+Unsatisfiable/LAT021-1.ma ... FAIL Rating : 0.00 16
+Unsatisfiable/LAT022-1.ma ... FAIL Rating : 0.21 17
+Unsatisfiable/LAT023-1.ma ... FAIL Rating : 0.21 18
+Unsatisfiable/LAT026-1.ma ... OK TIME NEEDED: 162.24 Rating : 0.14 19
+Unsatisfiable/LAT027-1.ma ... OK TIME NEEDED: 62.99 Rating : 0.07 20
+Unsatisfiable/LAT028-1.ma ... OK TIME NEEDED: 43.96 Rating : 0.00 21
+Unsatisfiable/LAT031-1.ma ... OK TIME NEEDED: 25.43 Rating : 0.00 22
+Unsatisfiable/LAT032-1.ma ... OK TIME NEEDED: 233.76 Rating : 0.00 23
+Unsatisfiable/LAT033-1.ma ... OK TIME NEEDED: 0.01 Rating : 0.00 24
+Unsatisfiable/LAT034-1.ma ... OK TIME NEEDED: 0.01 Rating : 0.00 25
+Unsatisfiable/LAT038-1.ma ... FAIL Rating : 0.43 26
+Unsatisfiable/LAT039-1.ma ... OK TIME NEEDED: 0.19 Rating : 0.00 27
+Unsatisfiable/LAT039-2.ma ... OK TIME NEEDED: 0.18 Rating : 0.00 28
+Unsatisfiable/LAT040-1.ma ... OK TIME NEEDED: 222.06 Rating : 0.00 29
+Unsatisfiable/LAT042-1.ma ... OK TIME NEEDED: 61.99 Rating : 0.00 30
+Unsatisfiable/LAT043-1.ma ... OK TIME NEEDED: 299.60 Rating : 0.00 31
+Unsatisfiable/LAT044-1.ma ... FAIL Rating : 0.14 32
+Unsatisfiable/LAT045-1.ma ... FAIL Rating : 0.07 33
+Unsatisfiable/LAT070-1.ma ... FAIL Rating : 0.93 34
+Unsatisfiable/LAT072-1.ma ... FAIL Rating : 1.00 35
+Unsatisfiable/LAT074-1.ma ... FAIL Rating : 1.00 36
+Unsatisfiable/LAT075-1.ma ... FAIL Rating : 1.00 37
+Unsatisfiable/LAT076-1.ma ... FAIL Rating : 1.00 38
+Unsatisfiable/LAT077-1.ma ... FAIL Rating : 1.00 39
+Unsatisfiable/LAT078-1.ma ... FAIL Rating : 1.00 40
+Unsatisfiable/LAT079-1.ma ... FAIL Rating : 1.00 41
+Unsatisfiable/LAT080-1.ma ... OK Rating : 0.36 42
+Unsatisfiable/LAT081-1.ma ... FAIL Rating : 0.57 43
+Unsatisfiable/LAT082-1.ma ... FAIL Rating : 0.64 44
+Unsatisfiable/LAT083-1.ma ... OK Rating : 0.36 45
+Unsatisfiable/LAT084-1.ma ... FAIL Rating : 0.50 46
+Unsatisfiable/LAT085-1.ma ... FAIL Rating : 0.57 47
+Unsatisfiable/LAT086-1.ma ... FAIL Rating : 0.50 48
+Unsatisfiable/LAT087-1.ma ... FAIL Rating : 0.43 49
+Unsatisfiable/LAT088-1.ma ... OK TIME NEEDED: 0.07 Rating : 0.00 50
+Unsatisfiable/LAT089-1.ma ... OK TIME NEEDED: 1.45 Rating : 0.00 51
+Unsatisfiable/LAT090-1.ma ... OK TIME NEEDED: 0.10 Rating : 0.00 52
+Unsatisfiable/LAT091-1.ma ... OK TIME NEEDED: 24.68 Rating : 0.07 53
+Unsatisfiable/LAT092-1.ma ... OK Rating : 0.36 54
+Unsatisfiable/LAT093-1.ma ... FAIL Rating : 0.43 55
+Unsatisfiable/LAT094-1.ma ... OK Rating : 0.36 56
+Unsatisfiable/LAT095-1.ma ... FAIL Rating : 0.43 57
+Unsatisfiable/LAT096-1.ma ... FAIL Rating : 0.36 58
+Unsatisfiable/LAT097-1.ma ... FAIL Rating : 0.36 59
+Unsatisfiable/LAT138-1.ma ... FAIL Rating : 1.00 60
+Unsatisfiable/LAT139-1.ma ... FAIL Rating : 1.00 61
+Unsatisfiable/LAT140-1.ma ... FAIL Rating : 1.00 62
+Unsatisfiable/LAT141-1.ma ... FAIL Rating : 1.00 63
+Unsatisfiable/LAT142-1.ma ... FAIL Rating : 0.64 64
+Unsatisfiable/LAT143-1.ma ... FAIL Rating : 0.14 65
+Unsatisfiable/LAT144-1.ma ... FAIL Rating : 0.86 66
+Unsatisfiable/LAT145-1.ma ... FAIL Rating : 0.93 67
+Unsatisfiable/LAT146-1.ma ... FAIL Rating : 0.79 68
+Unsatisfiable/LAT147-1.ma ... FAIL Rating : 0.79 69
+Unsatisfiable/LAT148-1.ma ... FAIL Rating : 0.71 70
+Unsatisfiable/LAT149-1.ma ... FAIL Rating : 0.93 71
+Unsatisfiable/LAT150-1.ma ... FAIL Rating : 0.86 72
+Unsatisfiable/LAT151-1.ma ... FAIL Rating : 0.86 73
+Unsatisfiable/LAT152-1.ma ... FAIL Rating : 0.79 74
+Unsatisfiable/LAT153-1.ma ... FAIL Rating : 0.93 75
+Unsatisfiable/LAT154-1.ma ... FAIL Rating : 0.79 76
+Unsatisfiable/LAT155-1.ma ... FAIL Rating : 0.86 77
+Unsatisfiable/LAT156-1.ma ... FAIL Rating : 0.64 78
+Unsatisfiable/LAT157-1.ma ... FAIL Rating : 0.86 79
+Unsatisfiable/LAT158-1.ma ... FAIL Rating : 0.93 80
+Unsatisfiable/LAT159-1.ma ... FAIL Rating : 0.86 81
+Unsatisfiable/LAT160-1.ma ... FAIL Rating : 0.64 82
+Unsatisfiable/LAT161-1.ma ... FAIL Rating : 1.00 83
+Unsatisfiable/LAT162-1.ma ... FAIL Rating : 0.86 84
+Unsatisfiable/LAT163-1.ma ... FAIL Rating : 0.93 85
+Unsatisfiable/LAT164-1.ma ... FAIL Rating : 0.93 86
+Unsatisfiable/LAT165-1.ma ... FAIL Rating : 0.93 87
+Unsatisfiable/LAT166-1.ma ... FAIL Rating : 0.93 88
+Unsatisfiable/LAT167-1.ma ... FAIL Rating : 0.93 89
+Unsatisfiable/LAT168-1.ma ... FAIL Rating : 0.14 90
+Unsatisfiable/LAT169-1.ma ... FAIL Rating : 0.86 91
+Unsatisfiable/LAT170-1.ma ... FAIL Rating : 0.79 92
+Unsatisfiable/LAT171-1.ma ... FAIL Rating : 0.50 93
+Unsatisfiable/LAT172-1.ma ... FAIL Rating : 0.93 94
+Unsatisfiable/LAT173-1.ma ... FAIL Rating : 0.93 95
+Unsatisfiable/LAT174-1.ma ... FAIL Rating : 0.79 96
+Unsatisfiable/LAT175-1.ma ... FAIL Rating : 0.93 97
+Unsatisfiable/LAT176-1.ma ... FAIL Rating : 0.93 98
+Unsatisfiable/LAT177-1.ma ... FAIL Rating : 1.00 99
+Unsatisfiable/LCL109-2.ma ... OK TIME NEEDED: 181.65 Rating : 0.29 100
+Unsatisfiable/LCL109-6.ma ... OK TIME NEEDED: 325.11 Rating : 0.14 101
+Unsatisfiable/LCL110-2.ma ... OK TIME NEEDED: 0.24 Rating : 0.00 102
+Unsatisfiable/LCL111-2.ma ... OK TIME NEEDED: 7.91 Rating : 0.07 103
+Unsatisfiable/LCL112-2.ma ... OK TIME NEEDED: 0.24 Rating : 0.00 104
+Unsatisfiable/LCL113-2.ma ... OK TIME NEEDED: 0.24 Rating : 0.00 105
+Unsatisfiable/LCL114-2.ma ... OK TIME NEEDED: 0.27 Rating : 0.00 106
+Unsatisfiable/LCL115-2.ma ... OK TIME NEEDED: 0.26 Rating : 0.00 107
+Unsatisfiable/LCL116-2.ma ... OK TIME NEEDED: 0.74 Rating : 0.00 108
+Unsatisfiable/LCL132-1.ma ... OK TIME NEEDED: 0.04 Rating : 0.00 109
+Unsatisfiable/LCL133-1.ma ... OK TIME NEEDED: 0.09 Rating : 0.00 110
+Unsatisfiable/LCL134-1.ma ... OK TIME NEEDED: 0.05 Rating : 0.00 111
+Unsatisfiable/LCL135-1.ma ... OK TIME NEEDED: 0.05 Rating : 0.00 112
+Unsatisfiable/LCL138-1.ma ... FAIL Rating : 0.21 113
+Unsatisfiable/LCL139-1.ma ... OK TIME NEEDED: 0.24 Rating : 0.00 114
+Unsatisfiable/LCL140-1.ma ... OK TIME NEEDED: 0.24 Rating : 0.00 115
+Unsatisfiable/LCL141-1.ma ... FAIL Rating : 0.00 116
+Unsatisfiable/LCL153-1.ma ... OK TIME NEEDED: 0.38 Rating : 0.00 117
+Unsatisfiable/LCL154-1.ma ... OK TIME NEEDED: 0.30 Rating : 0.00 118
+Unsatisfiable/LCL155-1.ma ... OK TIME NEEDED: 0.21 Rating : 0.00 119
+Unsatisfiable/LCL156-1.ma ... OK TIME NEEDED: 0.20 Rating : 0.00 120
+Unsatisfiable/LCL157-1.ma ... OK TIME NEEDED: 0.31 Rating : 0.00 121
+Unsatisfiable/LCL158-1.ma ... OK TIME NEEDED: 0.38 Rating : 0.00 122
+Unsatisfiable/LCL159-1.ma ... OK TIME NEEDED: 176.84 Rating : 0.00 123
+Unsatisfiable/LCL160-1.ma ... OK TIME NEEDED: 6.76 Rating : 0.14 124
+Unsatisfiable/LCL161-1.ma ... OK TIME NEEDED: 0.11 Rating : 0.00 125
+Unsatisfiable/LCL162-1.ma ... FAIL Rating : 0.00 126
+Unsatisfiable/LCL163-1.ma ... OK TIME NEEDED: 0.53 Rating : 0.14 127
+Unsatisfiable/LCL164-1.ma ... OK TIME NEEDED: 35.13 Rating : 0.00 128
+Unsatisfiable/LDA001-1.ma ... OK TIME NEEDED: 0.04 Rating : 0.00 129
+Unsatisfiable/LDA002-1.ma ... OK TIME NEEDED: 16.54 Rating : 0.00 130
+Unsatisfiable/LDA007-3.ma ... OK TIME NEEDED: 0.16 Rating : 0.00 131
+Unsatisfiable/RNG007-4.ma ... OK TIME NEEDED: 0.04 Rating : 0.00 132
+Unsatisfiable/RNG008-3.ma ... OK TIME NEEDED: 2.18 Rating : 0.07 133
+Unsatisfiable/RNG008-4.ma ... OK TIME NEEDED: 2.18 Rating : 0.07 134
+Unsatisfiable/RNG008-7.ma ... OK TIME NEEDED: 12.24 Rating : 0.07 135
+Unsatisfiable/RNG009-5.ma ... FAIL Rating : 0.50 136
+Unsatisfiable/RNG009-7.ma ... FAIL Rating : 0.50 137
+Unsatisfiable/RNG011-5.ma ... OK TIME NEEDED: 0.37 Rating : 0.00 138
+Unsatisfiable/RNG012-6.ma ... FAIL Rating : 0.00 139
+Unsatisfiable/RNG013-6.ma ... FAIL Rating : 0.00 140
+Unsatisfiable/RNG014-6.ma ... FAIL Rating : 0.00 141
+Unsatisfiable/RNG015-6.ma ... FAIL Rating : 0.00 142
+Unsatisfiable/RNG016-6.ma ... FAIL Rating : 0.00 143
+Unsatisfiable/RNG017-6.ma ... FAIL Rating : 0.00 144
+Unsatisfiable/RNG018-6.ma ... FAIL Rating : 0.00 145
+Unsatisfiable/RNG019-6.ma ... FAIL Rating : 0.21 146
+Unsatisfiable/RNG019-7.ma ... FAIL Rating : 0.21 147
+Unsatisfiable/RNG020-6.ma ... FAIL Rating : 0.29 148
+Unsatisfiable/RNG020-7.ma ... FAIL Rating : 0.21 149
+Unsatisfiable/RNG021-6.ma ... FAIL Rating : 0.14 150
+Unsatisfiable/RNG021-7.ma ... FAIL Rating : 0.21 151
+Unsatisfiable/RNG023-6.ma ... OK TIME NEEDED: 1.36 Rating : 0.00 152
+Unsatisfiable/RNG023-7.ma ... OK TIME NEEDED: 1.48 Rating : 0.00 153
+Unsatisfiable/RNG024-6.ma ... OK TIME NEEDED: 1.34 Rating : 0.00 154
+Unsatisfiable/RNG024-7.ma ... OK TIME NEEDED: 1.48 Rating : 0.00 155
+Unsatisfiable/RNG025-4.ma ... FAIL Rating : 0.29 156
+Unsatisfiable/RNG025-5.ma ... FAIL Rating : 0.36 157
+Unsatisfiable/RNG025-6.ma ... FAIL Rating : 0.29 158
+Unsatisfiable/RNG025-7.ma ... FAIL Rating : 0.43 159
+Unsatisfiable/RNG026-6.ma ... FAIL Rating : 0.57 160
+Unsatisfiable/RNG026-7.ma ... FAIL Rating : 0.50 161
+Unsatisfiable/RNG027-5.ma ... FAIL Rating : 0.86 162
+Unsatisfiable/RNG027-7.ma ... FAIL Rating : 0.86 163
+Unsatisfiable/RNG027-8.ma ... FAIL Rating : 0.86 164
+Unsatisfiable/RNG027-9.ma ... FAIL Rating : 0.86 165
+Unsatisfiable/RNG028-5.ma ... FAIL Rating : 0.86 166
+Unsatisfiable/RNG028-7.ma ... FAIL Rating : 0.86 167
+Unsatisfiable/RNG028-8.ma ... FAIL Rating : 0.86 168
+Unsatisfiable/RNG028-9.ma ... FAIL Rating : 0.86 169
+Unsatisfiable/RNG029-5.ma ... FAIL Rating : 0.86 170
+Unsatisfiable/RNG029-6.ma ... FAIL Rating : 0.86 171
+Unsatisfiable/RNG029-7.ma ... FAIL Rating : 0.86 172
+Unsatisfiable/RNG035-7.ma ... FAIL Rating : 0.86 173
+Unsatisfiable/ROB001-1.ma ... FAIL Rating : 1.00 174
+Unsatisfiable/ROB002-1.ma ... OK TIME NEEDED: 8.65 Rating : 0.00 175
+Unsatisfiable/ROB003-1.ma ... FAIL Rating : 0.00 176
+Unsatisfiable/ROB004-1.ma ... FAIL Rating : 0.00 177
+Unsatisfiable/ROB005-1.ma ... FAIL Rating : 0.07 178
+Unsatisfiable/ROB006-1.ma ... FAIL Rating : 0.86 179
+Unsatisfiable/ROB006-2.ma ... FAIL Rating : 0.86 180
+Unsatisfiable/ROB008-1.ma ... FAIL Rating : 0.00 181
+Unsatisfiable/ROB009-1.ma ... OK TIME NEEDED: 0.11 Rating : 0.00 182
+Unsatisfiable/ROB010-1.ma ... OK TIME NEEDED: 0.11 Rating : 0.00 183
+Unsatisfiable/ROB013-1.ma ... OK TIME NEEDED: 0.11 Rating : 0.00 184
+Unsatisfiable/ROB022-1.ma ... FAIL Rating : 0.00 185
+Unsatisfiable/ROB023-1.ma ... FAIL Rating : 0.00 186
+Unsatisfiable/ROB026-1.ma ... FAIL Rating : 0.86 187
+Unsatisfiable/ROB030-1.ma ... OK TIME NEEDED: 0.00 Rating : 0.00 188
+Unsatisfiable/ROB031-1.ma ... FAIL Rating : 1.00 189
+Unsatisfiable/ROB032-1.ma ... FAIL Rating : 1.00 190
+Unsatisfiable/SYN080-1.ma ... OK TIME NEEDED: 0.00 Rating : 0.00 191
+Unsatisfiable/SYN083-1.ma ... OK TIME NEEDED: 0.01 Rating : 0.00 192

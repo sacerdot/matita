@@ -1,0 +1,27 @@
+preamble0.ma NLE/defs.ma
+Insert/props.ma Insert/fun.ma
+Insert/inv.ma Insert/defs.ma
+Insert/defs.ma Lift/defs.ma datatypes_defs/Context.ma
+Insert/fun.ma CLE/defs.ma Insert/inv.ma
+datatypes_defs/Context.ma datatypes_defs/Proof.ma datatypes_defs/Sequent.ma
+datatypes_defs/Sequent.ma datatypes_defs/Formula.ma
+datatypes_defs/Proof.ma preamble0.ma
+datatypes_defs/Formula.ma preamble0.ma
+PRed/wlt.ma PEq/defs.ma PRed/defs.ma WLT/defs.ma
+PRed/defs.ma Insert/defs.ma
+Track/inv.ma Track/defs.ma
+Track/pred.ma PRed/defs.ma Track/inv.ma datatypes_props/Sequent.ma
+Track/defs.ma Insert/defs.ma
+Track/order.ma Insert/fun.ma Track/defs.ma
+Lift/defs.ma datatypes_defs/Proof.ma
+PNF/defs.ma PEq/defs.ma PRed/defs.ma
+datatypes_props/Sequent.ma datatypes_defs/Sequent.ma
+Weight/defs.ma datatypes_defs/Context.ma
+CLE/defs.ma datatypes_defs/Context.ma
+NTrack/props.ma Insert/props.ma NTrack/inv.ma Track/defs.ma
+NTrack/inv.ma NTrack/defs.ma
+NTrack/defs.ma Insert/defs.ma
+NTrack/order.ma NTrack/props.ma Track/order.ma
+PEq/defs.ma datatypes_defs/Context.ma
+WLT/defs.ma Weight/defs.ma
+NLE/defs.ma 

@@ -1,0 +1,53 @@
+
+MATITA
+------
+
+Matita is a new document-centric interactive theorem prover that integrates
+several Mathematical Knowledge Management tools and techniques.
+
+Matita is traditional. Its logical foundation is the Calculus of (Co)Inductive
+Constructions (CIC). It can re-use mathematical concepts produced by other
+proof assistants like Coq and encoded in an XML encoding of CIC. The
+interaction paradigm of Matita is familiar, being inspired by CtCoq and Proof
+General. Its proof language is procedural in the same spirit of LCF.
+
+Matita is innovative:
+
+- the user interface sports high quality bidimensional rendering of proofs and
+  formulae transformed on-the-fly to MathML markup, on which direct
+  manipulation of the underlying CIC terms is still possible;
+
+- the knowledge base is distributed: every authored concepts can be published
+  becoming part of the Matita library which can be browsed as an hypertext
+  (locally or on the World Wide Web) and searched by means of content-based
+  queries;
+
+- the tactical language, part of the proof language, has step-by-step
+  semantics, enabling inspection and replaying of deeply structured proof
+  scripts.
+
+More information are available on the Matita web site:
+
+  http://matita.cs.unibo.it/
+
+
+INSTALLATION
+------------
+
+See the file INSTALL for building and installation instructions.
+
+
+BUGS
+----
+
+Bugs reporting is handled using the Bugzilla bug tracker available at:
+
+  http://bugs.mowgli.cs.unibo.it/
+
+
+LICENSE
+-------
+
+Matita and its documentation are free software.
+See the file COPYING for copying conditions.
+

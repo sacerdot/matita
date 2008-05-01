@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language _name="grafite" version="1.0" _section="Sources" mimetypes="text/x-matita">
+
+  <escape-char>\</escape-char>
+
+  <block-comment _name = "Commented Code" style = "Comment">
+    <start-regex>\(\*\*[^\)]</start-regex>
+    <end-regex>[^\(]\*\*\)</end-regex>
+  </block-comment>
+
+  <block-comment _name = "Block Comment" style = "Comment">
+    <start-regex>\(\*</start-regex>
+    <end-regex>\*\)</end-regex>
+  </block-comment>
+
+  <keyword-list _name = "Theorem Kinds" style = "Keyword" case-sensitive="TRUE">
+    <keyword>theorem</keyword>
+    <keyword>definition</keyword>
+    <keyword>lemma</keyword>
+    <keyword>fact</keyword>
+    <keyword>remark</keyword>
+    <keyword>variant</keyword>
+    <keyword>axiom</keyword>
+  </keyword-list>
+    
+  <keyword-list _name = "Commands" style = "Keyword" case-sensitive="TRUE">
+    <keyword>alias</keyword>
+    <keyword>and</keyword>
+    <keyword>as</keyword>
+    <keyword>coercion</keyword>
+    <keyword>nocomposites</keyword>
+    <keyword>coinductive</keyword>
+    <keyword>corec</keyword>
+    <keyword>default</keyword>
+    <keyword>for</keyword>
+    <keyword>include</keyword>
+    <keyword>include'</keyword>
+    <keyword>inductive</keyword>
+    <keyword>in</keyword>
+    <keyword>interpretation</keyword>
+    <keyword>let</keyword>
+    <keyword>match</keyword>
+    <keyword>names</keyword>
+    <keyword>notation</keyword>
+    <keyword>on</keyword>
+    <keyword>qed</keyword>
+    <keyword>rec</keyword>
+    <keyword>record</keyword>
+    <keyword>return</keyword>
+    <keyword>to</keyword>
+    <keyword>using</keyword>
+    <keyword>with</keyword>
+  </keyword-list>
+
+  <pattern-item _name = "Command [" style = "Keyword">
+    <regex>\[</regex>
+  </pattern-item>
+  <pattern-item _name = "Command |" style = "Keyword">
+    <regex>\|</regex>
+  </pattern-item>
+  <pattern-item _name = "Command ]" style = "Keyword">
+    <regex>\]</regex>
+  </pattern-item>
+  <pattern-item _name = "Command {" style = "Keyword">
+    <regex>\{</regex>
+  </pattern-item>
+  <pattern-item _name = "Command }" style = "Keyword">
+    <regex>\}</regex>
+  </pattern-item>
+  <pattern-item _name = "Notation ast mark" style = "Keyword">
+    <regex>@</regex>
+  </pattern-item>
+  <pattern-item _name = "Notation meta mark" style = "Keyword">
+    <regex>\$</regex>
+  </pattern-item>
+
+  <keyword-list _name = "Sorts" style = "Data Type" case-sensitive="TRUE">
+    <keyword>Set</keyword>
+    <keyword>Prop</keyword>
+    <keyword>Type</keyword>
+  </keyword-list>
+
+  <keyword-list _name = "Tactics" style = "Others 2" case-sensitive="TRUE">
+    <keyword>absurd</keyword>
+    <keyword>apply</keyword>
+    <keyword>assumption</keyword>
+    <keyword>autobatch</keyword>
+    <keyword>cases</keyword>
+    <keyword>clear</keyword>
+    <keyword>clearbody</keyword>
+    <keyword>change</keyword>
+    <keyword>compose</keyword>
+    <keyword>constructor</keyword>
+    <keyword>contradiction</keyword>
+    <keyword>cut</keyword>
+    <keyword>decompose</keyword>
+    <keyword>destruct</keyword>
+    <keyword>elim</keyword>
+    <keyword>elimType</keyword>
+    <keyword>exact</keyword>
+    <keyword>exists</keyword>
+    <keyword>fail</keyword>
+    <keyword>fold</keyword>
+    <keyword>fourier</keyword>
+    <keyword>fwd</keyword>
+    <keyword>generalize</keyword>
+    <keyword>id</keyword>
+    <keyword>intro</keyword>
+    <keyword>intros</keyword>
+    <keyword>inversion</keyword>
+    <keyword>lapply</keyword>
+    <keyword>linear</keyword>
+    <keyword>left</keyword>
+    <keyword>letin</keyword>
+    <keyword>normalize</keyword>
+    <keyword>reduce</keyword>
+    <keyword>reflexivity</keyword>
+    <keyword>replace</keyword>
+    <keyword>rewrite</keyword>
+    <keyword>ring</keyword>
+    <keyword>right</keyword>
+    <keyword>symmetry</keyword>
+    <keyword>simplify</keyword>
+    <keyword>split</keyword>
+    <keyword>to</keyword>
+    <keyword>transitivity</keyword>
+    <keyword>unfold</keyword>
+    <keyword>whd</keyword>
+    <keyword>assume</keyword>
+    <keyword>suppose</keyword>
+    <keyword>by</keyword>
+    <keyword>is</keyword>
+    <keyword>or</keyword>
+    <keyword>equivalent</keyword>
+    <keyword>equivalently</keyword>
+    <keyword>we</keyword> 
+    <keyword>prove</keyword>
+    <keyword>proved</keyword>
+    <keyword>need</keyword>
+    <keyword>proceed</keyword>
+    <keyword>induction</keyword>
+    <keyword>inductive</keyword>
+    <keyword>case</keyword>
+    <keyword>base</keyword>
+    <keyword>let</keyword>
+    <keyword>such</keyword>
+    <keyword>that</keyword>
+    <keyword>by</keyword>
+    <keyword>have</keyword>
+    <keyword>and</keyword>
+    <keyword>the</keyword>
+    <keyword>thesis</keyword>
+    <keyword>becomes</keyword>
+    <keyword>hypothesis</keyword>
+    <keyword>know</keyword>
+    <keyword>case</keyword>	    	 
+    <keyword>obtain</keyword>	    	 
+    <keyword>conclude</keyword>	    	 
+    <keyword>done</keyword>	    	 
+</keyword-list>
+
+  <keyword-list _name = "Tacticals" style = "Keyword" case-sensitive="TRUE">
+    <keyword>try</keyword>
+    <keyword>solve</keyword>
+    <keyword>do</keyword>
+    <keyword>repeat</keyword>
+    <keyword>first</keyword>
+    <keyword>focus</keyword>
+    <keyword>unfocus</keyword>
+    <keyword>progress</keyword>
+    <keyword>skip</keyword>
+  </keyword-list>
+
+
+  <keyword-list _name = "Matita Macro" style = "Others 3" case-sensitive="TRUE">
+    <keyword>inline</keyword>
+    <keyword>procedural</keyword>
+    <keyword>check</keyword>
+    <keyword>hint</keyword>
+    <keyword>set</keyword>
+    <keyword>auto</keyword>
+  </keyword-list>
+  
+  <keyword-list _name = "Whelp Macro" style = "Others 3"
+    case-sensitive="TRUE" 
+    beginning-regex="whelp *" 
+    match-empty-string-at-beginning="FALSE"
+    match-empty-string-at-end="FALSE" >
+    <keyword>elim</keyword>
+    <keyword>hint</keyword>
+    <keyword>instance</keyword>
+    <keyword>locate</keyword>
+    <keyword>match</keyword>
+  </keyword-list>
+    
+  <keyword-list _name = "TeX Macro" style = "Preprocessor" 
+    case-sensitive="TRUE" 
+    beginning-regex="\\" 
+    match-empty-string-at-beginning="FALSE"
+    match-empty-string-at-end="FALSE" >
+     <keyword>def</keyword>
+     <keyword>forall</keyword>
+     <keyword>lambda</keyword>
+     <keyword>to</keyword>
+     <keyword>exists</keyword>
+     <keyword>Rightarrow</keyword>
+     <keyword>Assign</keyword>
+     <keyword>land</keyword>
+     <keyword>lor</keyword>
+     <keyword>lnot</keyword>
+     <keyword>liff</keyword>
+     <keyword>subst</keyword>
+     <keyword>vdash</keyword>
+     <keyword>iforall</keyword>
+     <keyword>iexists</keyword>
+  </keyword-list>
+
+  <string _name = "String" style = "String" >
+    <start-regex>&quot;</start-regex>
+    <end-regex>&quot;</end-regex>
+  </string>
+ 
+</language>

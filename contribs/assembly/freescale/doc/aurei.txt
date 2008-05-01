@@ -1,0 +1,235 @@
+
+static unsigned int result[16]={ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
+
+void main(void)
+{
+unsigned int res_pos=0,tested_num=0,divisor=0;
+unsigned long int acc=0;
+
+for(tested_num=1;tested_num<2;tested_num++)
+ {
+ for(acc=0,divisor=1;divisor<tested_num;divisor++)
+  {
+  if(!(tested_num%divisor))
+   { acc+=divisor; }
+  }
+ 
+ if(acc==tested_num)
+  { result[res_pos++]=tested_num; }
+ }
+}
+
+NUMERI AUREI: Somma divisori(x)=x
+Fino a 0xFFFF sono
+6/28/496/8128
+
+ 1000: 545 -> 156.295.006          : stima di complessita' che dovrebbe essere
+  500: 545 ->  27.863.083          : T(n)=O(a+b*(n^3)) ma e' veramente enorme!
+  250: 545 ->   4.916.615          :
+  100: 545 ->     826.150          :
+   50: 545 ->     218.243 (213878) : 217698=64+217634 : /117649= 1,8
+   25: 545 ->      58.798 ( 57858) :  58253=64+ 58189 : / 13824= 4,2
+   10: 545 ->      10.212 ( 10127) :   9667=64+  9603 : /   729=13,2
+    5: 545 ->       2.789 (  2789) :   2244=64+  2180 : /    64=34,1
+    4: 545 ->       1.760 (  1765) :   1220=64+  1156 : /    27=42,8
+    3: 545 ->       1.136 (  1142) :    597=64+   533 : /    8 =66,6
+    2: 545 ->         661 (   664) :    119=64+    55 : /    1 =55
+    1: 545 ->         609 (   601) :        64        :
+
+word result[16] = 0x0100
+
+A: 0x00 HX: 0x1A00 PC: 0x18C0 SP: 0x0165 Z:1
+A: 0x00 HX: num    PC: 0x1941 SP: 0x0165 Z:1
+
+18C0 95          TSX
+18C1 6F 09       CLR 9,X
+18C3 6F 08       CLR 8,X
+18C5 AD 7D       BSR *+127 ; 1944
+18C7 9E FF 01    STHX 1,SP
+18CA AD 78       BSR *+122 ; 1944
+18CC 9E FF 07    STHX 7,SP
+18CF 20 38       BRA *+58
+18D1 9E FE 01    LDHX 1,SP
+18D4 89          PSHX
+18D5 8B          PSHH
+18D6 9E FE 09    LDHX 9,SP
+18D9 CD 1A 0D    JSR 0X1A0D
+18DC A7 02       AIS #2
+18DE 65 00 00    CPHX #0X0000
+18E1 26 1F       BNE *+33 ; 1902
+18E3 95          TSX
+18E4 E6 07       LDA 7,X
+18E6 EE 06       LDX 6,X
+18E8 87          PSHA
+18E9 89          PSHX
+18EA 4F          CLRA
+18EB 87          PSHA
+18EC 87          PSHA
+18ED 95          TSX
+18EE 89          PSHX
+18EF 8B          PSHH
+18F0 AF 06       AIX #6
+18F2 89          PSHX
+18F3 8B          PSHH
+18F4 9E FE 03    LDHX 3,SP
+18F7 CD 1A 1D    JSR 0X1A1D
+18FA 95          TSX
+18FB AF 0C       AIX #12
+18FD CD 1A 23    JSR 0X1A23
+1900 A7 06       AIS #6
+1902 95          TSX
+1903 6C 07       INC 7,X
+1905 26 02       BNE *+4 ; 1909
+1907 6C 06       INC 6,X
+1909 9E FE 01    LDHX 1,SP
+190C 9E F3 07    CPHX 7,SP
+190F 22 C0       BHI *-62 ; 18D1
+1911 9E F3 05    CPHX 5,SP
+1914 26 1D       BNE *+31 ; 1933
+1916 9E FE 03    LDHX 3,SP
+1919 26 18       BNE *+26 ; 1933
+191B 9E FE 09    LDHX 9,SP
+191E 89          PSHX
+191F AF 01       AIX #1
+1921 9E FF 0A    STHX 10,SP
+1924 88          PULX
+1925 58          LSLX
+1926 9E E6 02    LDA 2,SP
+1929 8C          CLRH
+192A D7 01 01    STA 257,X
+192D 9E E6 01    LDA 1,SP
+1930 D7 01 00    STA 256,X
+1933 95          TSX
+1934 6C 01       INC 1,X
+1936 26 01       BNE *+3 ; 1939
+1938 7C          INC ,X
+1939 9E FE 01    LDHX 1,SP
+193C 65 00 19    CPHX #0X0019
+193F 25 89       BCS *-117 ; 18CA
+
+1941-1943 STOP
+
+1944 5F          CLRX
+1945 8C          CLRH
+1946 9E FF 07    STHX 7,SP
+1949 8C          CLRH
+194A 9E FF 05    STHX 5,SP
+194D 5C          INCX
+194E 81          RTS
+194F E6 03       LDA 3,X
+1951 87          PSHA
+1952 E6 02       LDA 2,X
+1954 87          PSHA
+1955 9E AE       LDHX ,X
+1957 89          PSHX
+1958 8B          PSHH
+1959 9E FE 07    LDHX 7,SP
+195C E6 03       LDA 3,X
+195E 9E E7 11    STA 17,SP
+1961 E6 02       LDA 2,X
+1963 9E E7 10    STA 16,SP
+1966 9E AE       LDHX ,X
+1968 9E FF 0E    STHX 14,SP
+196B 9E FE 05    LDHX 5,SP
+196E FC          JMP ,X
+196F 87          PSHA
+1970 89          PSHX
+1971 8B          PSHH
+1972 89          PSHX
+1973 8B          PSHH
+1974 9E FE 06    LDHX 6,SP
+1977 89          PSHX
+1978 8B          PSHH
+1979 9E FE 0A    LDHX 10,SP
+197C 9E FF 08    STHX 8,SP
+197F 9E FE 0C    LDHX 12,SP
+1982 CC 19 4F    JMP 0X194F
+1985 9E 6D 04    TST 4,SP
+1988 26 1A       BNE *+28 ; 19A4
+198A 95          TSX
+198B E6 07       LDA 7,X
+198D EE 04       LDX 4,X
+198F 8C          CLRH
+1990 52          DIV
+1991 9E E7 04    STA 4,SP
+1994 9E E6 09    LDA 9,SP
+1997 52          DIV
+1998 9E E7 05    STA 5,SP
+199B 9E 6F 08    CLR 8,SP
+199E 8B          PSHH
+199F 86          PULA
+19A0 9E E7 09    STA 9,SP
+19A3 81          RTS
+19A4 4F          CLRA
+19A5 87          PSHA
+19A6 AE 08       LDX #0X08
+19A8 98          CLC
+19A9 9E 69 0A    ROL 10,SP
+19AC 9E 69 09    ROL 9,SP
+19AF 9E 69 01    ROL 1,SP
+19B2 9E E6 05    LDA 5,SP
+19B5 9E E1 01    CMP 1,SP
+19B8 22 1D       BHI *+31 ; 19D7
+19BA 26 08       BNE *+10 ; 19C4
+19BC 9E E6 06    LDA 6,SP
+19BF 9E E1 09    CMP 9,SP
+19C2 22 13       BHI *+21 ; 19D7
+19C4 9E E6 09    LDA 9,SP
+19C7 9E E0 06    SUB 6,SP
+19CA 9E E7 09    STA 9,SP
+19CD 9E E6 01    LDA 1,SP
+19D0 9E E2 05    SBC 5,SP
+19D3 9E E7 01    STA 1,SP
+19D6 99          SEC
+19D7 5B D0       DBNZX *-46 ; 19A9
+19D9 9E E6 0A    LDA 10,SP
+19DC 49          ROLA
+19DD 9E E7 06    STA 6,SP
+19E0 9E E6 09    LDA 9,SP
+19E3 9E E7 0A    STA 10,SP
+19E6 86          PULA
+19E7 9E E7 08    STA 8,SP
+19EA 9E 6F 04    CLR 4,SP
+19ED 81          RTS
+19EE 95          TSX
+19EF E6 12       LDA 18,X
+19F1 EB 05       ADD 5,X
+19F3 E7 12       STA 18,X
+19F5 E6 11       LDA 17,X
+19F7 E9 04       ADC 4,X
+19F9 E7 11       STA 17,X
+19FB E6 10       LDA 16,X
+19FD E9 03       ADC 3,X
+19FF E7 10       STA 16,X
+1A01 E6 0F       LDA 15,X
+1A03 E9 02       ADC 2,X
+1A05 E7 0F       STA 15,X
+1A07 A7 0A       AIS #10
+1A09 8A          PULH
+1A0A 88          PULX
+1A0B 86          PULA
+1A0C 81          RTS
+1A0D A7 FE       AIS #-2
+1A0F 9E FF 01    STHX 1,SP
+1A12 87          PSHA
+1A13 CD 19 85    JSR 0X1985
+1A16 86          PULA
+1A17 A7 02       AIS #2
+1A19 9E FE 03    LDHX 3,SP
+1A1C 81          RTS
+1A1D CD 19 6F    JSR 0X196F
+1A20 CD 19 EE    JSR 0X19EE
+1A23 87          PSHA
+1A24 9E E6 04    LDA 4,SP
+1A27 F7          STA ,X
+1A28 9E E6 05    LDA 5,SP
+1A2B E7 01       STA 1,X
+1A2D 9E E6 06    LDA 6,SP
+1A30 E7 02       STA 2,X
+1A32 9E E6 07    LDA 7,SP
+1A35 E7 03       STA 3,X
+1A37 86          PULA
+1A38 8A          PULH
+1A39 88          PULX
+1A3A A7 A4       AIS #4
+1A3C FC          JMP ,X
