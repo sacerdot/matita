@@ -1,0 +1,42 @@
+to generate the problems:
+
+  cd ../../../components/binaries/tptp2grafite/
+  make generate
+  cd ../../../matita/tests/TPTP
+  ./classify.sh
+
+to start a run:
+
+  be sure to have matitac.opt in ../../
+  ./try | tee logname
+
+if you have a file containing the list of files to execute, like 
+
+  ...
+  Unsatisfiable/BOO001-1.ma
+  Unsatisfiable/BOO002-1.ma
+  Unsatisfiable/BOO004-2.ma
+  Unsatisfiable/LCL113-2.ma
+  ...
+
+  you can run 
+  
+  ./try filewithproblemlist | tee logname
+
+logname format
+
+  log.SECONDS.DAY-MONTH.MESSAGE
+
+other scripts
+
+  simulate_casc.sh logfile 
+
+    Gives the results of the problems listed in elenco_CASC.txt
+
+  merge_sorted_logs.awk
+
+    Given a file composed by the sorted concatenation of 2 logs
+    returns the one obtaining using the best of duplicate lines
+    (use to merge a log with a successive run on the FAIL problems)
+
+# eof

@@ -1,0 +1,311 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* ********************************************************************** *)
+(*                           Progetto FreeScale                           *)
+(*                                                                        *)
+(* Sviluppato da:                                                         *)
+(*   Cosimo Oliboni, oliboni@cs.unibo.it                                  *)
+(*                                                                        *)
+(* Questo materiale fa parte della tesi:                                  *)
+(*   "Formalizzazione Interattiva dei Microcontroller a 8bit FreeScale"   *)
+(*                                                                        *)
+(*                    data ultima modifica 15/11/2007                     *)
+(* ********************************************************************** *)
+
+set "baseuri" "cic:/matita/freescale/tests/".
+
+(*include "/media/VIRTUOSO/freescale/micro_tests.ma".*)
+include "freescale/micro_tests.ma".
+
+(* 
+   RAM indirizzabile in modalita' diretta da usare per X,Y,Z
+   A=X*Y (parte low) con [0x0020-0x004F] X ≝ [0x0020] Y ≝ [0x0021] Z ≝ [0x0022]
+*)
+definition test_mult_source_RS08 : list byte8 ≝
+let m ≝ RS08 in source_to_byte8 m (
+(* [0x3800] Z <- 0      3clk *) (compile m ? CLR (maDIR1 〈x2,x2〉) I) @
+(* [0x3802] (l1) A <- Y 3clk *) (compile m ? LDA (maDIR1 〈x2,x1〉) I) @
+(* [0x3804] A=0 goto l2 3clk *) (compile m ? BEQ (maIMM1 〈x0,xA〉) I) @
+(* [0x3806] A <- Z      3clk *) (compile m ? LDA (maDIR1 〈x2,x2〉) I) @
+(* [0x3808] Y --        5clk *) (compile m ? DEC (maDIR1 〈x2,x1〉) I) @
+(* [0x380A] A += X      3clk *) (compile m ? ADD (maDIR1 〈x2,x0〉) I) @
+(* [0x380C] Z <- A      3clk *) (compile m ? STA (maDIR1 〈x2,x2〉) I) @
+(* [0x380E] goto l1     3clk *) (compile m ? BRA (maIMM1 〈xF,x2〉) I) @
+(* [0x3810] (l2) A <- Z 3clk *) (compile m ? LDA (maDIR1 〈x2,x2〉) I)
+ ).
+
+(* ************** *)
+(* *****TODO***** *)
+(* ************** *)
+
+definition mult_memory ≝
+ λx,y.λa:addr.
+     match leb a 29 with
+      [ true ⇒ nth ? mult_source 〈x0, x0〉 a
+      | false ⇒
+         match eqb a 30 with
+          [ true ⇒ x
+          | false ⇒ y
+          ]
+      ].
+
+definition mult_status ≝
+ λx,y.
+  mk_status 〈x0, x0〉 0 0 false false (mult_memory x y) 0.
+
+notation " 'M' \sub (x y)" non associative with precedence 80 for 
+ @{ 'memory $x $y }.
+ 
+interpretation "mult_memory" 'memory x y = 
+  (cic:/matita/freescale/test/mult_memory.con x y).
+
+notation " 'M' \sub (x y) \nbsp a" non associative with precedence 80 for 
+ @{ 'memory4 $x $y $a }.
+ 
+interpretation "mult_memory4" 'memory4 x y a = 
+  (cic:/matita/freescale/test/mult_memory.con x y a).
+  
+notation " \Sigma \sub (x y)" non associative with precedence 80 for 
+ @{ 'status $x $y }.
+
+interpretation "mult_status" 'status x y =
+  (cic:/matita/freescale/test/mult_status.con x y).
+
+lemma test_O_O:
+  let i ≝ 14 in
+  let s ≝ execute (mult_status 〈x0, x0〉 〈x0, x0〉) i in
+   pc s = 20 ∧ mem s 32 = byte_of_nat 0.
+ split;
+ reflexivity.
+qed.
+
+lemma test_0_2:
+  let x ≝ 〈x0, x0〉 in
+  let y ≝ 〈x0, x2〉 in
+  let i ≝ 14 + 23 * nat_of_byte y in
+  let s ≝ execute (mult_status x y) i in
+   pc s = 20 ∧ mem s 32 = plusbytenc x x.
+ intros;
+ split;
+ reflexivity.
+qed.
+
+lemma test_x_1:
+ ∀x.
+  let y ≝ 〈x0, x1〉 in
+  let i ≝ 14 + 23 * nat_of_byte y in
+  let s ≝ execute (mult_status x y) i in
+   pc s = 20 ∧ mem s 32 = x.
+ intros;
+ split;
+  [ reflexivity
+  | change in ⊢ (? ? % ?) with (plusbytenc 〈x0, x0〉 x);
+    rewrite > plusbytenc_O_x;
+    reflexivity
+  ].
+qed.
+
+lemma test_x_2:
+ ∀x.
+  let y ≝ 〈x0, x2〉 in
+  let i ≝ 14 + 23 * nat_of_byte y in
+  let s ≝ execute (mult_status x y) i in
+   pc s = 20 ∧ mem s 32 = plusbytenc x x.
+ intros;
+ split;
+  [ reflexivity
+  | change in ⊢ (? ? % ?) with
+     (plusbytenc (plusbytenc 〈x0, x0〉 x) x);
+    rewrite > plusbytenc_O_x;
+    reflexivity
+  ].
+qed.
+
+lemma loop_invariant':
+ ∀x,y:byte.∀j:nat. j ≤ y →
+  execute (mult_status x y) (5 + 23*j)
+   =
+    mk_status (byte_of_nat (x * j)) 4 0 (eqbyte 〈x0, x0〉 (byte_of_nat (x*j)))
+     (plusbytec (byte_of_nat (x*pred j)) x)
+     (update (update (update (mult_memory x y) 30 x) 31 (byte_of_nat (y - j))) 32
+      (byte_of_nat (x * j)))
+     0.
+ intros 3;
+ elim j;
+  [ do 2 (rewrite < times_n_O);
+    apply status_eq;
+    [1,2,3,4,7: normalize; reflexivity
+    | rewrite > eq_plusbytec_x0_x0_x_false;
+      normalize;
+      reflexivity 
+    | intro;
+      rewrite < minus_n_O;
+      normalize in ⊢ (? ? (? (? ? %) ?) ?);
+      change in ⊢ (? ? % ?) with (update (mult_memory x y) 32 〈x0, x0〉 a);
+      simplify in ⊢ (? ? ? %);
+      change in ⊢ (? ? ? (? (? (? ? ? %) ? ?) ? ? ?)) with (mult_memory x y 30);
+      rewrite > byte_of_nat_nat_of_byte;
+      change in ⊢ (? ? ? (? (? ? ? %) ? ? ?)) with (mult_memory x y 31);
+      apply inj_update;
+      intro;
+      rewrite > (eq_update_s_a_sa (update (mult_memory x y) 30 (mult_memory x y 30))
+       31 a);
+      rewrite > eq_update_s_a_sa;
+      reflexivity
+    ]
+  | cut (5 + 23 * S n = 5 + 23 * n + 23);
+    [ rewrite > Hcut; clear Hcut;
+      rewrite > breakpoint;
+      rewrite > H; clear H;
+      [2: apply le_S_S_to_le;
+        apply le_S;
+        apply H1
+      | cut (∃z.y-n=S z ∧ z < 255);
+         [ elim Hcut; clear Hcut;
+           elim H; clear H;
+           rewrite > H2;
+           (* instruction LDAd *)
+           change in ⊢ (? ? (? ? %) ?) with (3+20);
+           rewrite > breakpoint in ⊢ (? ? % ?);
+           whd in ⊢ (? ? (? % ?) ?);
+           normalize in ⊢ (? ? (? (? ? % ? ? ? ? ?) ?) ?);
+           change in ⊢ (? ? (? (? % ? ? ? ? ? ?) ?) ?)
+            with (byte_of_nat (S a));
+           change in ⊢ (? ? (? (? ? ? ? (? ? %) ? ? ?) ?) ?) with
+            (byte_of_nat (S a));
+           (* instruction BEQ *)
+           change in ⊢ (? ? (? ? %) ?) with (3+17);
+           rewrite > breakpoint in ⊢ (? ? % ?);
+           whd in ⊢ (? ? (? % ?) ?);
+           letin K ≝ (eq_eqbyte_x0_x0_byte_of_nat_S_false ? H3); clearbody K;
+           rewrite > K; clear K;
+           simplify in ⊢ (? ? (? (? ? % ? ? ? ? ?) ?) ?);
+           (* instruction LDAd *)
+           change in ⊢ (? ? (? ? %) ?) with (3+14);
+           rewrite > breakpoint in ⊢ (? ? % ?);
+           whd in ⊢ (? ? (? % ?) ?);
+           change in ⊢ (? ? (? (? % ? ? ? ? ? ?) ?) ?) with (byte_of_nat (x*n));
+           normalize in ⊢ (? ? (? (? ? % ? ? ? ? ?) ?) ?);
+           change in ⊢ (? ? (? (? ? ? ? % ? ? ?) ?) ?) with (eqbyte 〈x0, x0〉 (byte_of_nat (x*n)));
+           (* instruction DECd *)
+           change in ⊢ (? ? (? ? %) ?) with (5+9);
+           rewrite > breakpoint in ⊢ (? ? % ?);
+           whd in ⊢ (? ? (? % ?) ?);
+           change in ⊢ (? ? (? (? ? ? ? (? ? %) ? ? ?) ?) ?) with (bpred (byte_of_nat (S a)));
+           rewrite > (eq_bpred_S_a_a ? H3);
+           normalize in ⊢ (? ? (? (? ? % ? ? ? ? ?) ?) ?);
+           normalize in ⊢ (? ? (? (? ? ? ? ? ? (? ? % ?) ?) ?) ?);
+           cut (y - S n = a);
+            [2: rewrite > eq_minus_S_pred;
+                rewrite > H2;
+                reflexivity | ];
+           rewrite < Hcut; clear Hcut; clear H3; clear H2; clear a;          
+           (* instruction ADDd *)
+           change in ⊢ (? ? (? ? %) ?) with (3+6);
+           rewrite > breakpoint in ⊢ (? ? % ?);
+           whd in ⊢ (? ? (? % ?) ?);
+           change in ⊢ (? ? (? (? % ? ? ? ? ? ?) ?) ?) with
+            (plusbytenc (byte_of_nat (x*n)) x);
+           change in ⊢ (? ? (? (? ? ? ? (? ? %) ? ? ?) ?) ?) with
+            (plusbytenc (byte_of_nat (x*n)) x);
+           normalize in ⊢ (? ? (? (? ? % ? ? ? ? ?) ?) ?);
+           change in ⊢ (? ? (? (? ? ? ? ? % ? ?) ?) ?)
+            with (plusbytec (byte_of_nat (x*n)) x);
+           rewrite > plusbytenc_S;
+           (* instruction STAd *)
+           rewrite > (breakpoint ? 3 3);
+           whd in ⊢ (? ? (? % ?) ?);
+           normalize in ⊢ (? ? (? (? ? % ? ? ? ? ?) ?) ?);
+           (* instruction BRA *)
+           whd in ⊢ (? ? % ?);
+           normalize in ⊢ (? ? (? ? % ? ? ? ? ?) ?);
+           rewrite < pred_Sn;        
+           apply status_eq;
+            [1,2,3,4,7: normalize; reflexivity
+            | change with (plusbytec #(x*n) x = plusbytec #(x*n) x);
+              reflexivity
+            |6: intro;
+              simplify in ⊢ (? ? ? %);
+              normalize in ⊢ (? ? (? (? ? ? ? ? ? (? ? (? %) ?) ?) ?) ?);
+              change in ⊢ (? ? % ?) with
+               ((mult_memory x y){30↦x}{31↦#(S (y-S n))}{32↦#(x*n)}{31↦#(y-S n)}
+                {〈x2,x0〉↦ #(x*S n)} a);
+              apply inj_update;
+              intro;
+              apply inj_update;
+              intro;
+              rewrite > not_eq_a_b_to_eq_update_a_b; [2: apply H | ];
+              rewrite > not_eq_a_b_to_eq_update_a_b;
+               [ reflexivity
+               | assumption
+               ]
+            ]
+         | exists;
+            [ apply (y - S n)
+            | split;
+               [ rewrite < (minus_S_S y n);
+                 apply (minus_Sn_m (nat_of_byte y) (S n) H1)
+               | letin K ≝ (lt_nat_of_byte_256 y); clearbody K;
+                 letin K' ≝ (lt_minus_m y (S n) ? ?); clearbody K';
+                 [ apply (lt_to_le_to_lt O (S n) (nat_of_byte y) ? ?);
+                   autobatch
+                 | autobatch
+                 | autobatch
+                 ]
+               ]
+            ]
+         ]
+      ]
+    | rewrite > associative_plus;
+      rewrite < times_n_Sm;
+      rewrite > sym_plus in ⊢ (? ? ? (? ? %));
+      reflexivity
+    ] 
+  ]   
+qed.
+
+
+theorem test_x_y:
+ ∀x,y:byte.
+  let i ≝ 14 + 23 * y in
+   execute (mult_status x y) i =
+    mk_status (#(x*y)) 20 0
+     (eqbyte 〈x0, x0〉 (#(x*y)))
+     (plusbytec (byte_of_nat (x*pred y)) x)
+     (update
+       (update (mult_memory x y) 31 〈x0, x0〉)
+       32 (byte_of_nat (x*y)))
+     0.
+ intros;
+ cut (14 + 23 * y = 5 + 23*y + 9);
+  [2: autobatch paramodulation;
+  | rewrite > Hcut; (* clear Hcut; *)
+    rewrite > (breakpoint (mult_status x y) (5 + 23*y) 9);
+    rewrite > loop_invariant';
+     [2: apply le_n
+     | rewrite < minus_n_n;
+       apply status_eq;
+        [1,2,3,4,5,7: normalize; reflexivity
+        | intro;
+          simplify in ⊢ (? ? ? %);
+          change in ⊢ (? ? % ?) with
+           (update (update (update (mult_memory x y) 30 x) 31 (byte_of_nat O)) 32
+(byte_of_nat (nat_of_byte x*nat_of_byte y)) a);
+          repeat (apply inj_update; intro);
+          apply (eq_update_s_a_sa ? 30)
+        ]
+     ]
+  ].
+qed.

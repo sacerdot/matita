@@ -1,0 +1,10 @@
+Fsub/part1a_inversion.ma Fsub/defn.ma
+Fsub/part1a.ma Fsub/defn.ma
+Fsub/defn.ma Fsub/util.ma
+Fsub/util.ma list/in.ma list/list.ma logic/equality.ma nat/compare.ma
+Fsub/part1a_inversion2.ma Fsub/defn2.ma
+Fsub/defn2.ma Fsub/util.ma
+list/in.ma 
+list/list.ma 
+logic/equality.ma 
+nat/compare.ma 

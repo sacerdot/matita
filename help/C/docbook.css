@@ -1,0 +1,56 @@
+
+body {
+  background: url(../../images/sheetbg.png);
+}
+
+ul.authorgroup {
+  list-style-type: none;
+  padding-left: 1em;
+}
+
+div.titlepage {
+  background: #eaeaea;
+}
+
+div.titlepage hr {
+  display: none;
+}
+
+div.navheader hr {
+  display: none;
+}
+
+div.navfooter hr {
+  display: none;
+}
+
+div.navheader {
+  padding-left: 150px;
+  background: #eaeaea;
+}
+
+div.navfooter {
+  background: #eaeaea;
+}
+
+div.matita_logo {
+  position: absolute;
+  top: 3px;
+  left: 5px;
+}
+
+div.matita_logo img {
+  border-style: none;
+}
+
+div.matita_logo span {
+  position: absolute;
+  top: 13px;
+  left: 65px;
+  text-decoration: underline;
+}
+
+div.figure {
+  text-align: center;
+}
+

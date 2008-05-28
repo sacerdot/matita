@@ -1,0 +1,2 @@
+baseuri=cic:/matita/didactic
+include_paths=../../../tests

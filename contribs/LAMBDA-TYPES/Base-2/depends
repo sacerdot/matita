@@ -1,0 +1,8 @@
+Base-2/ext/tactics.mma Base-2/preamble.ma Base-1/ext/tactics.ma
+Base-2/ext/arith.mma Base-2/preamble.ma Base-1/ext/arith.ma
+Base-2/types/defs.mma Base-2/preamble.ma Base-1/types/defs.ma
+Base-2/types/props.mma Base-2/preamble.ma Base-1/types/props.ma
+Base-2/blt/defs.mma Base-2/preamble.ma Base-1/blt/defs.ma
+Base-2/blt/props.mma Base-2/preamble.ma Base-1/blt/props.ma
+Base-2/plist/defs.mma Base-2/preamble.ma Base-1/plist/defs.ma
+Base-2/plist/props.mma Base-2/preamble.ma Base-1/plist/props.ma

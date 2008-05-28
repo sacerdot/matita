@@ -1,0 +1,17 @@
+bench.sql  
+  the SQL code to generate the bench table
+  
+crontab  
+  install this crontab (may need tweaking) to have cron run the whole
+  stuff for you
+  
+crontab.sh  
+  the script crontab should run (includes a "pretty" report)
+
+do_tests.sh  
+  script used by ../Makefile to run matitac[.opt] on some tests. supports some
+  options and prints out some informations neded my insert
+
+profile_svn.sh
+  SVN co, compilation, run
+

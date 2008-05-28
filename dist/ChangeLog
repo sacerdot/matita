@@ -1,0 +1,19 @@
+0.5.1  - -/5/2008 - minor bug fix release
+	* visualization of inductive types reports the number of fixed parameters
+	* a wrong context was used to refine fixpoints arguments
+	  when trying to optimize out the letin (grep for `AvoidLetIn):
+	  (let rec f x = Fix... in f t ---> Fix... t)
+	* auto fixed to prefer goals with metavariables to closed ones,
+	  added new syntax to specify the universe "auto by t1, t2, ...",
+		updated documentation describing all auto parameters
+	* declarative language syntax and documentation ported to the new 
+	  auto parameters
+
+0.5.0  - 9/5/2008 - bugfix release
+	* first release not considered experimental
+
+0.4.98 - ??/11/2007 - bugfix release
+	* compiles against camlp5 >= 5.0  
+	* changed lablgtksourceview module name since it is now part of lablgtk2
+
+0.4.97 - 16/11/2007 - initial release

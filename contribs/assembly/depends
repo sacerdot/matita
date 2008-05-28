@@ -1,0 +1,33 @@
+freescale/translation.ma freescale/table_HC05.ma freescale/table_HC08.ma freescale/table_HCS08.ma freescale/table_RS08.ma
+freescale/table_RS08_tests.ma freescale/table_RS08.ma
+freescale/table_HCS08.ma freescale/opcode.ma
+freescale/table_RS08.ma freescale/opcode.ma
+freescale/memory_trees.ma freescale/memory_struct.ma
+freescale/multivm.ma freescale/load_write.ma
+freescale/opcode.ma freescale/aux_bases.ma
+freescale/memory_func.ma freescale/memory_struct.ma
+freescale/micro_tests.ma freescale/multivm.ma
+freescale/exadecim.ma freescale/extra.ma
+freescale/table_HC08.ma freescale/opcode.ma
+freescale/table_HC05.ma freescale/opcode.ma
+freescale/memory_bits.ma freescale/memory_trees.ma
+freescale/word16.ma freescale/byte8.ma
+freescale/table_HC08_tests.ma freescale/table_HC08.ma
+freescale/table_HC05_tests.ma freescale/table_HC05.ma
+freescale/model.ma freescale/status.ma
+freescale/medium_tests.ma freescale/medium_tests_lemmas.ma
+freescale/medium_tests_tools.ma freescale/multivm.ma
+freescale/load_write.ma freescale/model.ma
+freescale/memory_struct.ma freescale/translation.ma
+freescale/table_HCS08_tests.ma freescale/table_HCS08.ma
+freescale/memory_abs.ma freescale/memory_bits.ma freescale/memory_func.ma freescale/memory_trees.ma
+freescale/extra.ma datatypes/constructors.ma list/list.ma logic/connectives.ma nat/div_and_mod.ma nat/primes.ma
+freescale/aux_bases.ma freescale/word16.ma
+freescale/medium_tests_lemmas.ma freescale/medium_tests_tools.ma
+freescale/status.ma freescale/memory_abs.ma
+freescale/byte8.ma freescale/exadecim.ma
+datatypes/constructors.ma 
+list/list.ma 
+logic/connectives.ma 
+nat/div_and_mod.ma 
+nat/primes.ma 

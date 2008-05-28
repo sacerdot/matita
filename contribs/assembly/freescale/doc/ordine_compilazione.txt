@@ -1,0 +1,40 @@
+
+tutte le definizioni fanno capo a
+ cic:/matita/freescale/...
+
+extra.ma
+exadecim.ma
+byte8.ma
+word16.ma
+aux_bases.ma
+opcode.ma
+table_HC05.ma
+table_HC08.ma
+table_HCS08.ma
+table_RS08.ma
+translation.ma
+memory_struct.ma
+memory_func.ma
+memory_trees.ma
+memory_bits.ma
+memory_abs.ma
+status.ma
+model.ma
+load_write.ma
+multivm.ma
+micro_tests.ma
+medium_tests_tools.ma
+medium_tests.ma
+tests.ma
+
+dubbi:
+1) atomicita' istruzione
+   - overflow su pc durante fetch opcode/immediati/indirizzi (ammesso)
+   - overflow su indiretto durante caricamento operandi (non ammesso)
+2) atomicita' salto
+   - overflow su pc in seguito a branch (ammesso)
+3) cosa succede con un ILLEGAL OPCODE
+   - nell'HC05
+   - nell'HC08/HCS08/RS08 con mascheramento ILLEGAL OPCODE
+4) cosa succede con un ILLEGAL ADDRESS
+   - nell'HC08/HCS08/RS08 con mascheramento ILLEGAL ADDRESS
