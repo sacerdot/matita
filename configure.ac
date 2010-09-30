@@ -217,3 +217,4 @@ AC_OUTPUT([
   matita/help/C/version.txt
   Makefile.defs
 ])
+
