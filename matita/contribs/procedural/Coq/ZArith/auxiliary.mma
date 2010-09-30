@@ -1,0 +1,100 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: auxiliary.v,v 1.12.2.1 2004/07/16 19:31:22 herbelin Exp $ i*)
+
+(*#* Binary Integers (Pierre Cr\233\gut, CNET, Lannion, France) *)
+
+include "Arith/Arith.ma".
+
+include "ZArith/BinInt.ma".
+
+include "ZArith/Zorder.ma".
+
+include "Logic/Decidable.ma".
+
+include "Arith/Peano_dec.ma".
+
+include "Arith/Compare_dec.ma".
+
+(* UNEXPORTED
+Open Local Scope Z_scope.
+*)
+
+(*#*********************************************************************)
+
+(*#* Moving terms from one side to the other of an inequality *)
+
+inline procedural "cic:/Coq/ZArith/auxiliary/Zne_left.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/auxiliary/Zegal_left.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/auxiliary/Zle_left.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/auxiliary/Zle_left_rev.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/auxiliary/Zlt_left_rev.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/auxiliary/Zlt_left.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/auxiliary/Zlt_left_lt.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/auxiliary/Zge_left.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/auxiliary/Zgt_left.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/auxiliary/Zgt_left_gt.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/auxiliary/Zgt_left_rev.con" as theorem.
+
+(*#*********************************************************************)
+
+(*#* Factorization lemmas *)
+
+inline procedural "cic:/Coq/ZArith/auxiliary/Zred_factor0.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/auxiliary/Zred_factor1.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/auxiliary/Zred_factor2.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/auxiliary/Zred_factor3.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/auxiliary/Zred_factor4.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/auxiliary/Zred_factor5.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/auxiliary/Zred_factor6.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/auxiliary/Zle_mult_approx.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/auxiliary/Zmult_le_approx.con" as theorem.
+

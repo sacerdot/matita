@@ -1,0 +1,200 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+include "Init/Prelude.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: ClassicalFacts.v,v 1.6.2.1 2004/07/16 19:31:06 herbelin Exp $ i*)
+
+(*#* Some facts and definitions about classical logic *)
+
+(*#* [prop_degeneracy] (also referred as propositional completeness) *)
+
+(*  asserts (up to consistency) that there are only two distinct formulas *)
+
+inline procedural "cic:/Coq/Logic/ClassicalFacts/prop_degeneracy.con" as definition.
+
+(*#* [prop_extensionality] asserts equivalent formulas are equal *)
+
+inline procedural "cic:/Coq/Logic/ClassicalFacts/prop_extensionality.con" as definition.
+
+(*#* [excluded_middle] asserts we can reason by case on the truth *)
+
+(*  or falsity of any formula *)
+
+inline procedural "cic:/Coq/Logic/ClassicalFacts/excluded_middle.con" as definition.
+
+(*#* [proof_irrelevance] asserts equality of all proofs of a given formula *)
+
+inline procedural "cic:/Coq/Logic/ClassicalFacts/proof_irrelevance.con" as definition.
+
+(*#* We show [prop_degeneracy <-> (prop_extensionality /\ excluded_middle)] *)
+
+inline procedural "cic:/Coq/Logic/ClassicalFacts/prop_degen_ext.con" as lemma.
+
+inline procedural "cic:/Coq/Logic/ClassicalFacts/prop_degen_em.con" as lemma.
+
+inline procedural "cic:/Coq/Logic/ClassicalFacts/prop_ext_em_degen.con" as lemma.
+
+(*#* We successively show that:
+
+   [prop_extensionality]
+     implies equality of [A] and [A->A] for inhabited [A], which 
+     implies the existence of a (trivial) retract from [A->A] to [A]
+        (just take the identity), which
+     implies the existence of a fixpoint operator in [A]
+        (e.g. take the Y combinator of lambda-calculus)
+*)
+
+inline procedural "cic:/Coq/Logic/ClassicalFacts/inhabited.con" as definition.
+
+inline procedural "cic:/Coq/Logic/ClassicalFacts/prop_ext_A_eq_A_imp_A.con" as lemma.
+
+inline procedural "cic:/Coq/Logic/ClassicalFacts/retract.ind".
+
+inline procedural "cic:/Coq/Logic/ClassicalFacts/prop_ext_retract_A_A_imp_A.con" as lemma.
+
+inline procedural "cic:/Coq/Logic/ClassicalFacts/has_fixpoint.ind".
+
+inline procedural "cic:/Coq/Logic/ClassicalFacts/ext_prop_fixpoint.con" as lemma.
+
+(*#* Assume we have booleans with the property that there is at most 2
+    booleans (which is equivalent to dependent case analysis). Consider
+    the fixpoint of the negation function: it is either true or false by
+    dependent case analysis, but also the opposite by fixpoint. Hence
+    proof-irrelevance.
+
+    We then map bool proof-irrelevance to all propositions.
+*)
+
+(* UNEXPORTED
+Section Proof_irrelevance_gen
+*)
+
+(* UNEXPORTED
+cic:/Coq/Logic/ClassicalFacts/Proof_irrelevance_gen/bool.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Logic/ClassicalFacts/Proof_irrelevance_gen/true.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Logic/ClassicalFacts/Proof_irrelevance_gen/false.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Logic/ClassicalFacts/Proof_irrelevance_gen/bool_elim.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Logic/ClassicalFacts/Proof_irrelevance_gen/bool_elim_redl.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Logic/ClassicalFacts/Proof_irrelevance_gen/bool_elim_redr.var
+*)
+
+(* UNAVAILABLE OBJECT: cic:/Coq/Logic/ClassicalFacts/Proof_irrelevance_gen/bool_dep_induction.con *)
+
+inline procedural "cic:/Coq/Logic/ClassicalFacts/Proof_irrelevance_gen/bool_dep_induction.con" "Proof_irrelevance_gen__" as definition.
+
+inline procedural "cic:/Coq/Logic/ClassicalFacts/aux.con" as lemma.
+
+inline procedural "cic:/Coq/Logic/ClassicalFacts/ext_prop_dep_proof_irrel_gen.con" as lemma.
+
+(* UNEXPORTED
+End Proof_irrelevance_gen
+*)
+
+(*#* In the pure Calculus of Constructions, we can define the boolean
+    proposition bool = (C:Prop)C->C->C but we cannot prove that it has at
+    most 2 elements.
+*)
+
+(* UNEXPORTED
+Section Proof_irrelevance_CC
+*)
+
+inline procedural "cic:/Coq/Logic/ClassicalFacts/BoolP.con" as definition.
+
+inline procedural "cic:/Coq/Logic/ClassicalFacts/TrueP.con" as definition.
+
+inline procedural "cic:/Coq/Logic/ClassicalFacts/FalseP.con" as definition.
+
+inline procedural "cic:/Coq/Logic/ClassicalFacts/BoolP_elim.con" as definition.
+
+inline procedural "cic:/Coq/Logic/ClassicalFacts/BoolP_elim_redl.con" as definition.
+
+inline procedural "cic:/Coq/Logic/ClassicalFacts/BoolP_elim_redr.con" as definition.
+
+inline procedural "cic:/Coq/Logic/ClassicalFacts/BoolP_dep_induction.con" as definition.
+
+inline procedural "cic:/Coq/Logic/ClassicalFacts/ext_prop_dep_proof_irrel_cc.con" as lemma.
+
+(* UNEXPORTED
+End Proof_irrelevance_CC
+*)
+
+(*#* In the Calculus of Inductive Constructions, inductively defined booleans
+    enjoy dependent case analysis, hence directly proof-irrelevance from
+    propositional extensionality.
+*)
+
+(* UNEXPORTED
+Section Proof_irrelevance_CIC
+*)
+
+inline procedural "cic:/Coq/Logic/ClassicalFacts/boolP.ind".
+
+inline procedural "cic:/Coq/Logic/ClassicalFacts/boolP_elim_redl.con" as definition.
+
+inline procedural "cic:/Coq/Logic/ClassicalFacts/boolP_elim_redr.con" as definition.
+
+inline procedural "cic:/Coq/Logic/ClassicalFacts/boolP_indd.con" as theorem.
+
+inline procedural "cic:/Coq/Logic/ClassicalFacts/ext_prop_dep_proof_irrel_cic.con" as lemma.
+
+(* UNEXPORTED
+End Proof_irrelevance_CIC
+*)
+
+(*#* Can we state proof irrelevance from propositional degeneracy
+  (i.e. propositional extensionality + excluded middle) without
+  dependent case analysis ?
+
+  Conjecture: it seems possible to build a model of CC interpreting
+  all non-empty types by the set of all lambda-terms. Such a model would
+  satisfy propositional degeneracy without satisfying proof-irrelevance
+  (nor dependent case analysis). This would imply that the previous
+  results cannot be refined.
+*)
+

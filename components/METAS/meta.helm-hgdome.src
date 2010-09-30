@@ -1,0 +1,4 @@
+requires="helm-xml gdome2"
+version="0.0.1"
+archive(byte)="hgdome.cma"
+archive(native)="hgdome.cmxa"

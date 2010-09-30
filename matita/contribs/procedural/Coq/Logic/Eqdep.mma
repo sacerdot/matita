@@ -1,0 +1,155 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+include "Init/Prelude.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Eqdep.v,v 1.10.2.1 2004/07/16 19:31:06 herbelin Exp $ i*)
+
+(*#* This file defines dependent equality and shows its equivalence with
+    equality on dependent pairs (inhabiting sigma-types). It axiomatizes
+    the invariance by substitution of reflexive equality proofs and 
+    shows the equivalence between the 4 following statements
+
+    - Invariance by Substitution of Reflexive Equality Proofs.
+    - Injectivity of Dependent Equality
+    - Uniqueness of Identity Proofs
+    - Uniqueness of Reflexive Identity Proofs
+    - Streicher's Axiom K
+
+  These statements are independent of the calculus of constructions [2].
+
+  References:
+
+  [1] T. Streicher, Semantical Investigations into Intensional Type Theory,
+      Habilitationsschrift, LMU M\252\nchen, 1993.
+  [2] M. Hofmann, T. Streicher, The groupoid interpretation of type theory,
+      Proceedings of the meeting Twenty-five years of constructive
+      type theory, Venice, Oxford University Press, 1998
+*)
+
+(* UNEXPORTED
+Section Dependent_Equality
+*)
+
+(* UNEXPORTED
+cic:/Coq/Logic/Eqdep/Dependent_Equality/U.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Logic/Eqdep/Dependent_Equality/P.var
+*)
+
+(*#* Dependent equality *)
+
+inline procedural "cic:/Coq/Logic/Eqdep/eq_dep.ind".
+
+(* UNEXPORTED
+Hint Constructors eq_dep: core v62.
+*)
+
+inline procedural "cic:/Coq/Logic/Eqdep/eq_dep_sym.con" as lemma.
+
+(* UNEXPORTED
+Hint Immediate eq_dep_sym: core v62.
+*)
+
+inline procedural "cic:/Coq/Logic/Eqdep/eq_dep_trans.con" as lemma.
+
+inline procedural "cic:/Coq/Logic/Eqdep/eq_indd.con" as theorem.
+
+inline procedural "cic:/Coq/Logic/Eqdep/eq_dep1.ind".
+
+inline procedural "cic:/Coq/Logic/Eqdep/eq_dep1_dep.con" as lemma.
+
+inline procedural "cic:/Coq/Logic/Eqdep/eq_dep_dep1.con" as lemma.
+
+(*#* Invariance by Substitution of Reflexive Equality Proofs *)
+
+inline procedural "cic:/Coq/Logic/Eqdep/eq_rect_eq.con".
+
+(*#* Injectivity of Dependent Equality is a consequence of *)
+
+(*#* Invariance by Substitution of Reflexive Equality Proof *)
+
+inline procedural "cic:/Coq/Logic/Eqdep/eq_dep1_eq.con" as lemma.
+
+inline procedural "cic:/Coq/Logic/Eqdep/eq_dep_eq.con" as lemma.
+
+(* UNEXPORTED
+End Dependent_Equality
+*)
+
+(*#* Uniqueness of Identity Proofs (UIP) is a consequence of *)
+
+(*#* Injectivity of Dependent Equality *)
+
+inline procedural "cic:/Coq/Logic/Eqdep/UIP.con" as lemma.
+
+(*#* Uniqueness of Reflexive Identity Proofs is a direct instance of UIP *)
+
+inline procedural "cic:/Coq/Logic/Eqdep/UIP_refl.con" as lemma.
+
+(*#* Streicher axiom K is a direct consequence of Uniqueness of
+    Reflexive Identity Proofs *)
+
+inline procedural "cic:/Coq/Logic/Eqdep/Streicher_K.con" as lemma.
+
+(*#* We finally recover eq_rec_eq (alternatively eq_rect_eq) from K *)
+
+inline procedural "cic:/Coq/Logic/Eqdep/eq_rec_eq.con" as lemma.
+
+(*#* Dependent equality is equivalent to equality on dependent pairs *)
+
+inline procedural "cic:/Coq/Logic/Eqdep/equiv_eqex_eqdep.con" as lemma.
+
+(*#* UIP implies the injectivity of equality on dependent pairs *)
+
+inline procedural "cic:/Coq/Logic/Eqdep/inj_pair2.con" as lemma.
+
+(*#* UIP implies the injectivity of equality on dependent pairs *)
+
+inline procedural "cic:/Coq/Logic/Eqdep/inj_pairT2.con" as lemma.
+
+(*#* The main results to be exported *)
+
+(* UNEXPORTED
+Hint Resolve eq_dep_intro eq_dep_eq: core v62.
+*)
+
+(* UNEXPORTED
+Hint Immediate eq_dep_sym: core v62.
+*)
+
+(* UNEXPORTED
+Hint Resolve inj_pair2 inj_pairT2: core.
+*)
+

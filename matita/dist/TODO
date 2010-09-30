@@ -1,0 +1,41 @@
+TODO:
+- "ncoercion" statement:
+  - simple syntax
+  - generation of hints to implement the pullback
+- principles generation:
+  - induction/inversions
+- dependency graphs
+- queries (on the trie?)
+- Tactics:
+  - satuation
+  - destruct
+  - ncut
+  - nclearbody
+  - nletin che prende il tipo
+  - napply che prenda il pattern
+- Semantic selection:
+  - cosa usare per i pattern % ?
+
+- Library.copy_at_level
+- NCicRefiner.typeof e inferenza universi
+- hints:
+  - compare with the paper
+
+BUGS:
+1) la disambiguazione sembra generare termini (? ? ?) quando buca!
+   inoltre buca anche quando c'e' una scelta sola
+?2) cosa "corrisponde" alla simplify?   multivm/breakpoint
+    => la mu (+ iota) normalize
+*5) variabili libere => errore di tipaggio
+
+6) sintassi per i NG naturali (serve una ndefault? serve una notazione
+   standard sui numeri slegati dalla ndefault?)
+7) se c'' variabili locale x1 e il costruttore x1, fa due passate
+8) exadecim_lemmas, destruct: lento...
+
+11) ngeneralize bug di unificazione:  ngeneralize in match (x1 = x2)
+12) generazione dei nomi non va:
+    include "freescale/byte8.ma".
+    nlemma test: ∀b1,b2,b3.
+     plus_b8_d_d b1 (plus_b8_d_d b2 b3) = plus_b8_d_d (plus_b8_d_d b1 b2) b3.
+     #b1; #b2; #b3; ncases b1; ncases b2; ncases b3; 

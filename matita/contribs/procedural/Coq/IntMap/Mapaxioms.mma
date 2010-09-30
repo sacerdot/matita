@@ -1,0 +1,240 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i 	$Id: Mapaxioms.v,v 1.4.2.1 2004/07/16 19:31:04 herbelin Exp $	 i*)
+
+include "Bool/Bool.ma".
+
+include "Bool/Sumbool.ma".
+
+include "ZArith/ZArith.ma".
+
+include "IntMap/Addr.ma".
+
+include "IntMap/Adist.ma".
+
+include "IntMap/Addec.ma".
+
+include "IntMap/Map.ma".
+
+include "IntMap/Fset.ma".
+
+(* UNEXPORTED
+Section MapAxioms
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapaxioms/MapAxioms/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapaxioms/MapAxioms/B.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapaxioms/MapAxioms/C.var
+*)
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/eqm_sym.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/eqm_refl.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/eqm_trans.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/eqmap.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/eqmap_sym.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/eqmap_refl.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/eqmap_trans.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapPut_as_Merge.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapPut_ext.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapPut_behind_as_Merge.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapPut_behind_ext.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapMerge_empty_m_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapMerge_empty_m.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapMerge_m_empty_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapMerge_m_empty.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapMerge_empty_l.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapMerge_empty_r.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapMerge_assoc.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapMerge_idempotent.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapMerge_ext.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapMerge_ext_l.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapMerge_ext_r.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapMerge_RestrTo_l.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapRemove_as_RestrBy.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapRemove_ext.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapDomRestrTo_empty_m_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapDomRestrTo_empty_m.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapDomRestrTo_m_empty_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapDomRestrTo_m_empty.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapDomRestrTo_assoc.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapDomRestrTo_idempotent.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapDomRestrTo_Dom.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapDomRestrBy_empty_m_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapDomRestrBy_empty_m.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapDomRestrBy_m_empty_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapDomRestrBy_m_empty.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapDomRestrBy_Dom.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapDomRestrBy_m_m_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapDomRestrBy_By.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapDomRestrBy_By_comm.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapDomRestrBy_To.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapDomRestrBy_To_comm.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapDomRestrTo_By.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapDomRestrTo_By_comm.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapDomRestrTo_To_comm.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapMerge_DomRestrTo.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapMerge_DomRestrBy.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapDelta_empty_m_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapDelta_empty_m.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapDelta_m_empty_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapDelta_m_empty.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapDelta_nilpotent.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapDelta_as_Merge.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapDelta_as_DomRestrBy.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapDelta_as_DomRestrBy_2.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapDelta_sym.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapDelta_ext.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapDelta_ext_l.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapDelta_ext_r.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapDom_Split_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapDom_Split_2.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapDom_Split_3.con" as lemma.
+
+(* UNEXPORTED
+End MapAxioms
+*)
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapDomRestrTo_ext.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapDomRestrTo_ext_l.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapDomRestrTo_ext_r.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapDomRestrBy_ext.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapDomRestrBy_ext_l.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapDomRestrBy_ext_r.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/MapDomRestrBy_m_m.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/FSetDelta_assoc.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/FSet_ext.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/FSetUnion_comm.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/FSetUnion_assoc.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/FSetUnion_M0_s.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/FSetUnion_s_M0.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/FSetUnion_idempotent.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/FSetInter_comm.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/FSetInter_assoc.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/FSetInter_M0_s.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/FSetInter_s_M0.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/FSetInter_idempotent.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/FSetUnion_Inter_l.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/FSetUnion_Inter_r.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/FSetInter_Union_l.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapaxioms/FSetInter_Union_r.con" as lemma.
+

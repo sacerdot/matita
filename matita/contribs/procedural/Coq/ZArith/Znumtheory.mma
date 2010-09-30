@@ -1,0 +1,279 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Znumtheory.v,v 1.5.2.1 2004/07/16 19:31:22 herbelin Exp $ i*)
+
+include "ZArith/ZArith_base.ma".
+
+include "ZArith/Zcomplements.ma".
+
+include "ZArith/Zdiv.ma".
+
+(* UNEXPORTED
+Open Local Scope Z_scope.
+*)
+
+(*#* This file contains some notions of number theory upon Z numbers: 
+     - a divisibility predicate [Zdivide]
+     - a gcd predicate [gcd]
+     - Euclid algorithm [euclid]
+     - an efficient [Zgcd] function 
+     - a relatively prime predicate [rel_prime]
+     - a prime predicate [prime]
+*)
+
+(*#* * Divisibility *)
+
+inline procedural "cic:/Coq/ZArith/Znumtheory/Zdivide.ind".
+
+(*#* Syntax for divisibility *)
+
+(* NOTATION
+Notation "( a | b )" := (Zdivide a b) (at level 0) : Z_scope.
+*)
+
+(*#* Results concerning divisibility*)
+
+inline procedural "cic:/Coq/ZArith/Znumtheory/Zdivide_refl.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Znumtheory/Zone_divide.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Znumtheory/Zdivide_0.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Zdivide_refl Zone_divide Zdivide_0: zarith.
+*)
+
+inline procedural "cic:/Coq/ZArith/Znumtheory/Zmult_divide_compat_l.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Znumtheory/Zmult_divide_compat_r.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Zmult_divide_compat_l Zmult_divide_compat_r: zarith.
+*)
+
+inline procedural "cic:/Coq/ZArith/Znumtheory/Zdivide_plus_r.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Znumtheory/Zdivide_opp_r.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Znumtheory/Zdivide_opp_r_rev.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Znumtheory/Zdivide_opp_l.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Znumtheory/Zdivide_opp_l_rev.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Znumtheory/Zdivide_minus_l.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Znumtheory/Zdivide_mult_l.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Znumtheory/Zdivide_mult_r.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Znumtheory/Zdivide_factor_r.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Znumtheory/Zdivide_factor_l.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Zdivide_plus_r Zdivide_opp_r Zdivide_opp_r_rev Zdivide_opp_l
+  Zdivide_opp_l_rev Zdivide_minus_l Zdivide_mult_l Zdivide_mult_r
+  Zdivide_factor_r Zdivide_factor_l: zarith.
+*)
+
+(*#* Auxiliary result. *)
+
+inline procedural "cic:/Coq/ZArith/Znumtheory/Zmult_one.con" as lemma.
+
+(*#* Only [1] and [-1] divide [1]. *)
+
+inline procedural "cic:/Coq/ZArith/Znumtheory/Zdivide_1.con" as lemma.
+
+(*#* If [a] divides [b] and [b] divides [a] then [a] is [b] or [-b]. *)
+
+inline procedural "cic:/Coq/ZArith/Znumtheory/Zdivide_antisym.con" as lemma.
+
+(*#* If [a] divides [b] and [b<>0] then [|a| <= |b|]. *)
+
+inline procedural "cic:/Coq/ZArith/Znumtheory/Zdivide_bounds.con" as lemma.
+
+(*#* * Greatest common divisor (gcd). *)
+
+(*#* There is no unicity of the gcd; hence we define the predicate [gcd a b d] 
+     expressing that [d] is a gcd of [a] and [b]. 
+     (We show later that the [gcd] is actually unique if we discard its sign.) *)
+
+inline procedural "cic:/Coq/ZArith/Znumtheory/Zis_gcd.ind".
+
+(*#* Trivial properties of [gcd] *)
+
+inline procedural "cic:/Coq/ZArith/Znumtheory/Zis_gcd_sym.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Znumtheory/Zis_gcd_0.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Znumtheory/Zis_gcd_minus.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Znumtheory/Zis_gcd_opp.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Zis_gcd_sym Zis_gcd_0 Zis_gcd_minus Zis_gcd_opp: zarith.
+*)
+
+(*#* * Extended Euclid algorithm. *)
+
+(*#* Euclid's algorithm to compute the [gcd] mainly relies on
+    the following property. *)
+
+inline procedural "cic:/Coq/ZArith/Znumtheory/Zis_gcd_for_euclid.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Znumtheory/Zis_gcd_for_euclid2.con" as lemma.
+
+(*#* We implement the extended version of Euclid's algorithm,
+    i.e. the one computing Bezout's coefficients as it computes
+    the [gcd]. We follow the algorithm given in Knuth's
+    "Art of Computer Programming", vol 2, page 325. *)
+
+(* UNEXPORTED
+Section extended_euclid_algorithm
+*)
+
+(* UNEXPORTED
+cic:/Coq/ZArith/Znumtheory/extended_euclid_algorithm/a.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/ZArith/Znumtheory/extended_euclid_algorithm/b.var
+*)
+
+(*#* The specification of Euclid's algorithm is the existence of
+    [u], [v] and [d] such that [ua+vb=d] and [(gcd a b d)]. *)
+
+inline procedural "cic:/Coq/ZArith/Znumtheory/Euclid.ind".
+
+(*#* The recursive part of Euclid's algorithm uses well-founded
+    recursion of non-negative integers. It maintains 6 integers
+    [u1,u2,u3,v1,v2,v3] such that the following invariant holds:
+    [u1*a+u2*b=u3] and [v1*a+v2*b=v3] and [gcd(u2,v3)=gcd(a,b)]. 
+    *)
+
+inline procedural "cic:/Coq/ZArith/Znumtheory/euclid_rec.con" as lemma.
+
+(*#* We get Euclid's algorithm by applying [euclid_rec] on
+    [1,0,a,0,1,b] when [b>=0] and [1,0,a,0,-1,-b] when [b<0]. *)
+
+inline procedural "cic:/Coq/ZArith/Znumtheory/euclid.con" as lemma.
+
+(* UNEXPORTED
+End extended_euclid_algorithm
+*)
+
+inline procedural "cic:/Coq/ZArith/Znumtheory/Zis_gcd_uniqueness_apart_sign.con" as theorem.
+
+(*#* * Bezout's coefficients *)
+
+inline procedural "cic:/Coq/ZArith/Znumtheory/Bezout.ind".
+
+(*#* Existence of Bezout's coefficients for the [gcd] of [a] and [b] *)
+
+inline procedural "cic:/Coq/ZArith/Znumtheory/Zis_gcd_bezout.con" as lemma.
+
+(*#* gcd of [ca] and [cb] is [c gcd(a,b)]. *)
+
+inline procedural "cic:/Coq/ZArith/Znumtheory/Zis_gcd_mult.con" as lemma.
+
+(*#* We could obtain a [Zgcd] function via [euclid]. But we propose 
+  here a more direct version of a [Zgcd], with better extraction 
+  (no bezout coeffs). *)
+
+inline procedural "cic:/Coq/ZArith/Znumtheory/Zgcd_pos.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/Znumtheory/Zgcd_spec.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/Znumtheory/Zgcd.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/Znumtheory/Zgcd_is_pos.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Znumtheory/Zgcd_is_gcd.con" as lemma.
+
+(*#* * Relative primality *)
+
+inline procedural "cic:/Coq/ZArith/Znumtheory/rel_prime.con" as definition.
+
+(*#* Bezout's theorem: [a] and [b] are relatively prime if and
+    only if there exist [u] and [v] such that [ua+vb = 1]. *)
+
+inline procedural "cic:/Coq/ZArith/Znumtheory/rel_prime_bezout.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Znumtheory/bezout_rel_prime.con" as lemma.
+
+(*#* Gauss's theorem: if [a] divides [bc] and if [a] and [b] are
+    relatively prime, then [a] divides [c]. *)
+
+inline procedural "cic:/Coq/ZArith/Znumtheory/Gauss.con" as theorem.
+
+(*#* If [a] is relatively prime to [b] and [c], then it is to [bc] *)
+
+inline procedural "cic:/Coq/ZArith/Znumtheory/rel_prime_mult.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Znumtheory/rel_prime_cross_prod.con" as lemma.
+
+(*#* After factorization by a gcd, the original numbers are relatively prime. *)
+
+inline procedural "cic:/Coq/ZArith/Znumtheory/Zis_gcd_rel_prime.con" as lemma.
+
+(*#* * Primality *)
+
+inline procedural "cic:/Coq/ZArith/Znumtheory/prime.ind".
+
+(*#* The sole divisors of a prime number [p] are [-1], [1], [p] and [-p]. *)
+
+inline procedural "cic:/Coq/ZArith/Znumtheory/prime_divisors.con" as lemma.
+
+(*#* A prime number is relatively prime with any number it does not divide *)
+
+inline procedural "cic:/Coq/ZArith/Znumtheory/prime_rel_prime.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve prime_rel_prime: zarith.
+*)
+
+(*#* [Zdivide] can be expressed using [Zmod]. *)
+
+inline procedural "cic:/Coq/ZArith/Znumtheory/Zmod_divide.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Znumtheory/Zdivide_mod.con" as lemma.
+
+(*#* [Zdivide] is hence decidable *)
+
+inline procedural "cic:/Coq/ZArith/Znumtheory/Zdivide_dec.con" as lemma.
+
+(*#* If a prime [p] divides [ab] then it divides either [a] or [b] *)
+
+inline procedural "cic:/Coq/ZArith/Znumtheory/prime_mult.con" as lemma.
+

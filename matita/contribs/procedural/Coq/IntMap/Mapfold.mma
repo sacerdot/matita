@@ -1,0 +1,272 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i   	  $Id: Mapfold.v,v 1.4.2.1 2004/07/16 19:31:04 herbelin Exp $      i*)
+
+include "Bool/Bool.ma".
+
+include "Bool/Sumbool.ma".
+
+include "ZArith/ZArith.ma".
+
+include "IntMap/Addr.ma".
+
+include "IntMap/Adist.ma".
+
+include "IntMap/Addec.ma".
+
+include "IntMap/Map.ma".
+
+include "IntMap/Fset.ma".
+
+include "IntMap/Mapaxioms.ma".
+
+include "IntMap/Mapiter.ma".
+
+include "IntMap/Lsort.ma".
+
+include "IntMap/Mapsubset.ma".
+
+include "Lists/List.ma".
+
+(* UNEXPORTED
+Section MapFoldResults
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapfold/MapFoldResults/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapfold/MapFoldResults/M.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapfold/MapFoldResults/neutral.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapfold/MapFoldResults/op.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapfold/MapFoldResults/nleft.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapfold/MapFoldResults/nright.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapfold/MapFoldResults/assoc.var
+*)
+
+inline procedural "cic:/Coq/IntMap/Mapfold/MapFold_ext.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapfold/MapFold_ext_f_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapfold/MapFold_ext_f.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapfold/MapFold1_as_Fold_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapfold/MapFold1_as_Fold.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapfold/MapFold1_ext.con" as lemma.
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapfold/MapFoldResults/comm.var
+*)
+
+inline procedural "cic:/Coq/IntMap/Mapfold/MapFold_Put_disjoint_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapfold/MapFold_Put_disjoint_2.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapfold/MapFold_Put_disjoint.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapfold/MapFold_Put_behind_disjoint_2.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapfold/MapFold_Put_behind_disjoint.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapfold/MapFold_Merge_disjoint_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapfold/MapFold_Merge_disjoint.con" as lemma.
+
+(* UNEXPORTED
+End MapFoldResults
+*)
+
+(* UNEXPORTED
+Section MapFoldDistr
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapfold/MapFoldDistr/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapfold/MapFoldDistr/M.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapfold/MapFoldDistr/neutral.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapfold/MapFoldDistr/op.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapfold/MapFoldDistr/M'.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapfold/MapFoldDistr/neutral'.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapfold/MapFoldDistr/op'.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapfold/MapFoldDistr/N.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapfold/MapFoldDistr/times.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapfold/MapFoldDistr/absorb.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapfold/MapFoldDistr/distr.var
+*)
+
+inline procedural "cic:/Coq/IntMap/Mapfold/MapFold_distr_r_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapfold/MapFold_distr_r.con" as lemma.
+
+(* UNEXPORTED
+End MapFoldDistr
+*)
+
+(* UNEXPORTED
+Section MapFoldDistrL
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapfold/MapFoldDistrL/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapfold/MapFoldDistrL/M.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapfold/MapFoldDistrL/neutral.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapfold/MapFoldDistrL/op.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapfold/MapFoldDistrL/M'.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapfold/MapFoldDistrL/neutral'.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapfold/MapFoldDistrL/op'.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapfold/MapFoldDistrL/N.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapfold/MapFoldDistrL/times.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapfold/MapFoldDistrL/absorb.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapfold/MapFoldDistrL/distr.var
+*)
+
+inline procedural "cic:/Coq/IntMap/Mapfold/MapFold_distr_l.con" as lemma.
+
+(* UNEXPORTED
+End MapFoldDistrL
+*)
+
+(* UNEXPORTED
+Section MapFoldExists
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapfold/MapFoldExists/A.var
+*)
+
+inline procedural "cic:/Coq/IntMap/Mapfold/MapFold_orb_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapfold/MapFold_orb.con" as lemma.
+
+(* UNEXPORTED
+End MapFoldExists
+*)
+
+(* UNEXPORTED
+Section DMergeDef
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapfold/DMergeDef/A.var
+*)
+
+inline procedural "cic:/Coq/IntMap/Mapfold/DMerge.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Mapfold/in_dom_DMerge_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapfold/in_dom_DMerge_2.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapfold/in_dom_DMerge_3.con" as lemma.
+
+(* UNEXPORTED
+End DMergeDef
+*)
+

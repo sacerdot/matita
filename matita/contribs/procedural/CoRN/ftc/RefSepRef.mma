@@ -1,0 +1,168 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "CoRN.ma".
+
+(* $Id: RefSepRef.v,v 1.6 2004/04/23 10:01:00 lcf Exp $ *)
+
+(* begin hide *)
+
+include "ftc/COrdLemmas.ma".
+
+include "ftc/Partitions.ma".
+
+(* UNEXPORTED
+Section Refining_Separated
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/RefSepRef/Refining_Separated/a.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/RefSepRef/Refining_Separated/b.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/RefSepRef/Refining_Separated/Hab.var
+*)
+
+inline procedural "cic:/CoRN/ftc/RefSepRef/Refining_Separated/I.con" "Refining_Separated__" as definition.
+
+(* UNEXPORTED
+cic:/CoRN/ftc/RefSepRef/Refining_Separated/F.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/RefSepRef/Refining_Separated/contF.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/RefSepRef/Refining_Separated/incF.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/RefSepRef/Refining_Separated/m.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/RefSepRef/Refining_Separated/n.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/RefSepRef/Refining_Separated/P.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/RefSepRef/Refining_Separated/R.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/RefSepRef/Refining_Separated/HPR.var
+*)
+
+inline procedural "cic:/CoRN/ftc/RefSepRef/RSR_HP.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSepRef/RSR_HP'.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSepRef/RSR_HR.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSepRef/RSR_HR'.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSepRef/RSR_mn0.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSepRef/RSR_nm0.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSepRef/RSR_H'.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSepRef/Refining_Separated/f'.con" "Refining_Separated__" as definition.
+
+inline procedural "cic:/CoRN/ftc/RefSepRef/Refining_Separated/g'.con" "Refining_Separated__" as definition.
+
+inline procedural "cic:/CoRN/ftc/RefSepRef/RSR_f'_nlnf.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSepRef/RSR_g'_nlnf.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSepRef/RSR_f'_mon.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSepRef/RSR_g'_mon.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSepRef/RSR_f'_ap_g'.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSepRef/Refining_Separated/h.con" "Refining_Separated__" as definition.
+
+inline procedural "cic:/CoRN/ftc/RefSepRef/RSR_h_nlnf.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSepRef/RSR_h_mon.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSepRef/RSR_h_mon'.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSepRef/RSR_h_f'.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSepRef/RSR_h_g'.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSepRef/RSR_h_PropAll.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSepRef/RSR_h_PropEx.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSepRef/Separated_Refinement_fun.con" as definition.
+
+inline procedural "cic:/CoRN/ftc/RefSepRef/Separated_Refinement_lemma1.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSepRef/Separated_Refinement_lemma3.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSepRef/Separated_Refinement_lemma4.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSepRef/Separated_Refinement_lemma2.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSepRef/Separated_Refinement.con" as definition.
+
+inline procedural "cic:/CoRN/ftc/RefSepRef/RSR_auxP.con" as definition.
+
+inline procedural "cic:/CoRN/ftc/RefSepRef/RSR_auxR.con" as definition.
+
+inline procedural "cic:/CoRN/ftc/RefSepRef/RSR_auxP_lemma0.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSepRef/RSR_h_inj.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSepRef/RSR_auxP_lemmai.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSepRef/RSR_auxP_lemman.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSepRef/RSR_auxP_lemma1.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSepRef/RSR_auxP_lemma2.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSepRef/Separated_Refinement_lft.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSepRef/RSR_auxR_lemma0.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSepRef/RSR_auxR_lemmai.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSepRef/RSR_auxR_lemmam.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSepRef/RSR_auxR_lemma1.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSepRef/RSR_auxR_lemma2.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSepRef/Separated_Refinement_rht.con" as lemma.
+
+(* UNEXPORTED
+End Refining_Separated
+*)
+
+(* end hide *)
+

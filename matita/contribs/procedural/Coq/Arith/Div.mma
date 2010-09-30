@@ -1,0 +1,64 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Div.v,v 1.8.2.1 2004/07/16 19:31:00 herbelin Exp $ i*)
+
+(*#* Euclidean division *)
+
+(* UNEXPORTED
+V7only [Import nat_scope.].
+*)
+
+(* UNEXPORTED
+Open Local Scope nat_scope.
+*)
+
+include "Arith/Le.ma".
+
+include "Arith/Compare_dec.ma".
+
+(* UNEXPORTED
+Implicit Variables Type n,a,b,q,r:nat.
+*)
+
+(* UNAVAILABLE OBJECT: cic:/Coq/Arith/Div/inf_dec.con *********************)
+
+inline procedural "cic:/Coq/Arith/Div/inf_dec.con" as definition.
+
+(* UNAVAILABLE OBJECT: cic:/Coq/Arith/Div/div1.con ************************)
+
+inline procedural "cic:/Coq/Arith/Div/div1.con" as theorem.
+
+(* UNAVAILABLE OBJECT: cic:/Coq/Arith/Div/div2.con ************************)
+
+inline procedural "cic:/Coq/Arith/Div/div2.con" as theorem.
+

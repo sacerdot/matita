@@ -1,0 +1,162 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "CoRN.ma".
+
+include "algebra/COrdFields2.ma".
+
+(*#*
+** Properties of [AbsSmall]
+*)
+
+(* Begin_SpecReals *)
+
+inline procedural "cic:/CoRN/algebra/COrdAbs/AbsSmall.con" as definition.
+
+(* UNEXPORTED
+Implicit Arguments AbsSmall [R].
+*)
+
+(* End_SpecReals *)
+
+(* UNEXPORTED
+Section AbsSmall_properties
+*)
+
+(*#*
+%\begin{convention}% Let [R] be an ordered field.
+%\end{convention}%
+*)
+
+(* UNEXPORTED
+cic:/CoRN/algebra/COrdAbs/AbsSmall_properties/R.var
+*)
+
+inline procedural "cic:/CoRN/algebra/COrdAbs/AbsSmall_wdr.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdAbs/AbsSmall_wdr_unfolded.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdAbs/AbsSmall_wdl.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdAbs/AbsSmall_wdl_unfolded.con" as lemma.
+
+(* UNEXPORTED
+Declare Left Step AbsSmall_wdl_unfolded.
+*)
+
+(* UNEXPORTED
+Declare Right Step AbsSmall_wdr_unfolded.
+*)
+
+(* begin hide *)
+
+(* NOTATION
+Notation ZeroR := (Zero:R).
+*)
+
+(* end hide *)
+
+inline procedural "cic:/CoRN/algebra/COrdAbs/AbsSmall_leEq_trans.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdAbs/zero_AbsSmall.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdAbs/AbsSmall_trans.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdAbs/leEq_imp_AbsSmall.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdAbs/inv_resp_AbsSmall.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdAbs/AbsSmall_minus.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdAbs/AbsSmall_plus.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdAbs/AbsSmall_eps_div_two.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdAbs/AbsSmall_x_plus_delta.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdAbs/AbsSmall_x_minus_delta.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdAbs/AbsSmall_x_plus_eps_div2.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdAbs/AbsSmall_x_minus_eps_div2.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdAbs/AbsSmall_intermediate.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdAbs/AbsSmall_eps_div2.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdAbs/AbsSmall_nonneg.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdAbs/AbsSmall_mult.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdAbs/AbsSmall_cancel_mult.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdAbs/AbsSmall_approach_zero.con" as lemma.
+
+(* UNEXPORTED
+End AbsSmall_properties
+*)
+
+(* UNEXPORTED
+Declare Left Step AbsSmall_wdl_unfolded.
+*)
+
+(* UNEXPORTED
+Declare Right Step AbsSmall_wdr_unfolded.
+*)
+
+(*#* ** Properties of [AbsBig] *)
+
+inline procedural "cic:/CoRN/algebra/COrdAbs/absBig.con" as definition.
+
+(* NOTATION
+Notation AbsBig := (absBig _).
+*)
+
+inline procedural "cic:/CoRN/algebra/COrdAbs/AbsBigSmall_minus.con" as lemma.
+
+(* UNEXPORTED
+Section absBig_wd_properties
+*)
+
+(*#*
+%\begin{convention}% Let [R] be an ordered field.
+%\end{convention}%
+*)
+
+(* UNEXPORTED
+cic:/CoRN/algebra/COrdAbs/absBig_wd_properties/R.var
+*)
+
+inline procedural "cic:/CoRN/algebra/COrdAbs/AbsBig_wdr.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdAbs/AbsBig_wdl.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdAbs/AbsBig_wdr_unfolded.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdAbs/AbsBig_wdl_unfolded.con" as lemma.
+
+(* UNEXPORTED
+End absBig_wd_properties
+*)
+
+(* UNEXPORTED
+Declare Left Step AbsBig_wdl_unfolded.
+*)
+
+(* UNEXPORTED
+Declare Right Step AbsBig_wdr_unfolded.
+*)
+

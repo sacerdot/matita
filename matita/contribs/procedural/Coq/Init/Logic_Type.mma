@@ -1,0 +1,123 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Logic_Type.v,v 1.19.2.1 2004/07/16 19:31:03 herbelin Exp $ i*)
+
+(* UNEXPORTED
+Set Implicit Arguments.
+*)
+
+(*#* This module defines quantification on the world [Type]
+    ([Logic.v] was defining it on the world [Set]) *)
+
+include "Init/Datatypes.ma".
+
+include "Init/Logic.ma".
+
+inline procedural "cic:/Coq/Init/Logic_Type/notT.con" as definition.
+
+(* UNEXPORTED
+Section identity_is_a_congruence
+*)
+
+(* UNEXPORTED
+cic:/Coq/Init/Logic_Type/identity_is_a_congruence/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Init/Logic_Type/identity_is_a_congruence/B.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Init/Logic_Type/identity_is_a_congruence/f.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Init/Logic_Type/identity_is_a_congruence/x.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Init/Logic_Type/identity_is_a_congruence/y.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Init/Logic_Type/identity_is_a_congruence/z.var
+*)
+
+inline procedural "cic:/Coq/Init/Logic_Type/sym_id.con" as lemma.
+
+inline procedural "cic:/Coq/Init/Logic_Type/trans_id.con" as lemma.
+
+inline procedural "cic:/Coq/Init/Logic_Type/congr_id.con" as lemma.
+
+inline procedural "cic:/Coq/Init/Logic_Type/sym_not_id.con" as lemma.
+
+(* UNEXPORTED
+End identity_is_a_congruence
+*)
+
+inline procedural "cic:/Coq/Init/Logic_Type/identity_ind_r.con" as definition.
+
+inline procedural "cic:/Coq/Init/Logic_Type/identity_rec_r.con" as definition.
+
+inline procedural "cic:/Coq/Init/Logic_Type/identity_rect_r.con" as definition.
+
+inline procedural "cic:/Coq/Init/Logic_Type/prodT.ind".
+
+(* UNEXPORTED
+Section prodT_proj
+*)
+
+(* UNEXPORTED
+cic:/Coq/Init/Logic_Type/prodT_proj/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Init/Logic_Type/prodT_proj/B.var
+*)
+
+inline procedural "cic:/Coq/Init/Logic_Type/fstT.con" as definition.
+
+inline procedural "cic:/Coq/Init/Logic_Type/sndT.con" as definition.
+
+(* UNEXPORTED
+End prodT_proj
+*)
+
+inline procedural "cic:/Coq/Init/Logic_Type/prodT_uncurry.con" as definition.
+
+inline procedural "cic:/Coq/Init/Logic_Type/prodT_curry.con" as definition.
+
+(* UNEXPORTED
+Hint Immediate sym_id sym_not_id: core v62.
+*)
+

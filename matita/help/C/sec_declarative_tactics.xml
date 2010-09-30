@@ -1,0 +1,518 @@
+<!-- ================= Tactics ========================= -->
+<chapter id="sec_declarative_tactics">
+  <title>Declarative Tactics</title>
+
+  <sect1
+  id="declarative_tactics_quickref">
+    <title>Quick reference card</title>
+    <para>
+      &declarativetacticref;
+    </para>
+  </sect1>
+
+  
+  <sect1 id="tac_assume">
+    <title>assume</title>
+    <titleabbrev>assume</titleabbrev>
+    <para><userinput>assume x : t</userinput></para>
+  <para>
+    <variablelist>
+      <varlistentry role="tactic.synopsis">
+       <term>Synopsis:</term>
+       <listitem>
+         <para><emphasis role="bold">assume</emphasis> &id; <emphasis role="bold"> : </emphasis> &sterm;</para>
+       </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Pre-conditions:</term>
+	<listitem>
+	  <para>The conclusion of the current proof must be
+	   <command>∀x:T.P</command> or
+	   <command>T→P</command> where <command>T</command> is
+	   a data type (i.e. <command>T</command> has type
+	   <command>Set</command> or <command>Type</command>).</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Action:</term>
+	<listitem>
+	  <para>It adds to the context of the current sequent to prove a new
+	   declaration <command>x : T </command>. The new conclusion becomes
+	   <command>P</command>.</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>New sequents to prove:</term>
+	<listitem>
+	  <para>None.</para>
+	</listitem>
+      </varlistentry>
+    </variablelist>
+   </para>
+  </sect1>
+
+    <sect1 id="tac_byinduction">
+      <title>by induction hypothesis we know</title>
+      <titleabbrev>by induction hypothesis we know</titleabbrev>
+      <para><userinput>by induction hypothesis we know t (id)</userinput></para>
+      <para>
+        <variablelist>
+	  <varlistentry role="tactic.synopsis">
+	    <term>Synopsis:</term>
+	    <listitem><para><emphasis role="bold">by induction hypothesis we know</emphasis> &term; <emphasis role="bold"> (</emphasis> &id; <emphasis role="bold">)</emphasis></para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>Pre-condition:</term>
+	    <listitem>
+        <para>To be used in a proof by induction to state the inductive
+          hypothesis.</para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>Action:</term>
+	      <listitem>
+	        <para> Introduces the inductive hypothesis. </para>
+	      </listitem>
+	  </varlistentry>
+          <varlistentry>
+             <term>New sequents to prove:</term>
+	         <listitem>
+	         <para>None.</para>
+	         </listitem>
+	  </varlistentry>
+         </variablelist>
+      </para>
+    </sect1>  
+
+   <sect1 id="tac_case">
+     <title>case</title>
+     <titleabbrev>case</titleabbrev>
+     <para><userinput>case id (id1:t1) … (idn:tn)</userinput></para>
+     <para>
+       <variablelist>
+         <varlistentry role="tactic.synopsis">
+	   <term>Synopsis:</term>
+	   <listitem>
+	     <para><emphasis role="bold">case</emphasis> &id; [<emphasis role="bold">(</emphasis> &id; <emphasis role="bold">:</emphasis> &term;  <emphasis role="bold">)</emphasis>] … </para>
+	   </listitem>
+	 </varlistentry>
+         <varlistentry>
+            <term>Pre-condition:</term>
+	    <listitem>
+        <para>To be used in a proof by induction or by cases to start
+          a new case</para>
+	    </listitem>
+	 </varlistentry>
+         <varlistentry>
+            <term>Action:</term>
+            <listitem>
+              <para>Starts the new case <command>id</command> declaring
+                the local parameters <command>(id1:t1) … (idn:tn)</command></para>
+            </listitem>
+         </varlistentry>
+         <varlistentry>
+           <term>New sequents to prove:</term>
+           <listitem>
+               <para>None</para>
+           </listitem>
+         </varlistentry>
+       </variablelist>
+     </para>
+  </sect1> 
+
+ <sect1 id="tac_bydone">
+   <title>done</title>
+   <titleabbrev>done</titleabbrev>
+   <para><userinput>justification done</userinput></para>
+   <para>
+     <variablelist>
+       <varlistentry role="tactic.synopsis">
+         <term>Synopsis:</term>
+	 <listitem>
+	   <para>&justification; <emphasis role="bold">done</emphasis></para>
+	 </listitem>
+       </varlistentry>
+       <varlistentry>
+         <term>Pre-condition:</term>
+	 <listitem>
+	   <para></para>
+	 </listitem>
+       </varlistentry>
+       <varlistentry>
+         <term>Action:</term>
+	   <listitem> 
+	     <para>It closes the current sequent given the justification.</para>
+	   </listitem>
+       </varlistentry>
+       <varlistentry>
+           <term>New sequents to prove:</term>
+           <listitem>
+               <para>None.</para>
+           </listitem>
+       </varlistentry>
+   </variablelist>
+     </para>
+  </sect1>
+
+
+  <sect1 id="tac_exitselim">
+    <title>let such that</title>
+    <titleabbrev>let such that</titleabbrev>
+    <para><userinput>justification let x:t such that p (id)</userinput>
+    </para>
+    <para>
+      <variablelist>
+        <varlistentry role="tactic.synopsis">
+	  <term>Synopsis:</term>
+	  <listitem>
+	    <para>&justification; <emphasis role="bold">let</emphasis> &id; 
+	            <emphasis role="bold">:</emphasis> &term; <emphasis role="bold">such that</emphasis> &term; 
+		     <emphasis role="bold">(</emphasis> &id; <emphasis role="bold">)</emphasis></para>
+          </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>Pre-condition:</term>
+	  <listitem>
+      <para>
+	    </para>
+	  </listitem>  
+	</varlistentry>
+	<varlistentry>
+	  <term>Action:</term>
+	  <listitem>
+      <para>It derives <command>∃x:t.p</command> using the
+        <command>justification</command> and then it introduces in the context
+        <command>x</command> and the hypothesis  
+        <command>p</command> labelled with
+        <command>id</command>.
+      </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>New sequent to prove:</term>
+	  <listitem>
+      <para>None.</para>
+	  </listitem>
+	</varlistentry>
+     </variablelist>
+    </para>
+  </sect1>
+
+  <sect1 id="tac_obtain">
+    <title>obtain</title>
+    <titleabbrev>obtain</titleabbrev>
+    <para><userinput>obtain H t1 = t2 justification</userinput></para>
+    <para>
+      <variablelist>
+         <varlistentry role="tactic.synopsis">
+	   <term>Synopsis:</term>
+	   <listitem>
+	     <para>[<emphasis role="bold">obtain</emphasis> &id; | <emphasis role="bold">conclude</emphasis> &term;] <emphasis role="bold">=</emphasis> &term; [&autoparams; | <emphasis role="bold">using</emphasis> &term; | <emphasis role="bold">using once</emphasis> &term; | <emphasis role="bold">proof</emphasis>] [<emphasis role="bold">done</emphasis>]</para>
+	   </listitem>
+	 </varlistentry>
+	 <varlistentry>
+	   <term>Pre-condition:</term>
+	     <listitem>
+         <para><command>conclude</command> can be used only if the current
+           sequent is stating an equality. The left hand side must be omitted
+           in an equality chain.</para> 
+       </listitem>
+	 </varlistentry>
+	 <varlistentry>
+	   <term>Action:</term>
+	   <listitem>
+       <para>Starts or continues an equality chain. If the chain starts 
+         with <command>obtain H</command> a new subproof named 
+         <command>H</command> is started.</para>
+           </listitem>
+         </varlistentry>
+	 <varlistentry>
+	   <term>New sequent to prove:</term>
+	     <listitem>
+	        <para>If the chain starts 
+            with <command>obtain H</command> a nre sequent for
+            <command>t2 = ?</command> is opened.
+          </para>
+	     </listitem>
+	 </varlistentry>
+       </variablelist>
+     </para>
+   </sect1>
+
+  <sect1 id="tac_suppose">
+    <title>suppose</title>
+    <titleabbrev>suppose</titleabbrev>
+    <para><userinput>suppose t1 (x) that is equivalent to t2</userinput></para>
+  <para>
+     <variablelist>
+       <varlistentry role="tactic.synopsis">
+         <term>Synopsis:</term>
+	 <listitem>
+	   <para><emphasis role="bold">suppose</emphasis> &term; <emphasis role="bold"> (</emphasis> &id; 
+	     <emphasis role="bold">) </emphasis> [ <emphasis role="bold">that is equivalent to</emphasis>  &term; ]</para>
+	 </listitem>
+       </varlistentry>
+      <varlistentry>
+         <term>Pre-condition:</term>
+	 <listitem>
+	   <para>The conclusion of the current proof must be
+	   <command>∀x:T.P</command> or
+	   <command>T→P</command> where <command>T</command> is
+	   a proposition (i.e. <command>T</command> has type
+	   <command>Prop</command> or <command>CProp</command>).</para>
+	 </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Action:</term>
+	  <listitem>
+	    <para>It adds to the context of the current sequent to prove a new
+	   declaration <command>x : T </command>. The new conclusion becomes
+	   <command>P</command>.</para>
+	  </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>New sequents to prove:</term>
+        <listitem>
+            <para>None.</para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+   </para>
+  </sect1>
+
+   <sect1 id="tac_thesisbecomes">
+     <title>the thesis becomes</title>
+     <titleabbrev>the thesis becomes</titleabbrev>
+     <para><userinput>the thesis becomes t</userinput></para>
+     <para>
+        <variablelist>
+	   <varlistentry role="tactic.synopsis">
+	     <term>Synopsis:</term>
+	     <listitem>
+	       <para><emphasis role ="bold">the thesis becomes</emphasis> &term; </para>
+	     </listitem>
+	   </varlistentry>
+	   <varlistentry>
+	     <term>Pre-condition:</term>
+	     <listitem>
+         <para>The provided term <command>t</command> must be convertible with
+           current sequent.</para>
+	     </listitem>
+	   </varlistentry>
+	   <varlistentry>
+	     <term>Action:</term>
+	     <listitem>
+	       <para>It changes the current goal to the one provided.</para>
+	     </listitem>
+	   </varlistentry>
+	   <varlistentry>
+	     <term>New sequent to prove:</term>
+	     <listitem>
+	       <para>None.</para>
+	     </listitem>
+	   </varlistentry>
+	 </variablelist>
+       </para>
+   </sect1>
+   
+  <sect1 id="tac_weneedtoprove">
+    <title>we need to prove</title>
+    <titleabbrev>we need to prove</titleabbrev>
+    <para><userinput>we need to prove t1 (id) or equivalently t2</userinput></para>
+    <para>
+      <variablelist>
+        <varlistentry role="tactic.synopsis">
+	  <term>Synopsis:</term>
+	  <listitem>
+      <para><emphasis role="bold">we need to prove</emphasis> &term;
+        [<emphasis role="bold">(</emphasis>&id;
+        <emphasis role="bold">)</emphasis>]
+        [ <emphasis role="bold">or equivalently</emphasis> &term;]</para> 
+	  </listitem>
+	</varlistentry>
+        <varlistentry>
+          <term>Pre-condition:</term>
+	  <listitem>
+	    <para></para>
+	  </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Action:</term>
+	    <listitem>
+        <para>If <command>id</command> is provided, starts a subproof that once concluded 
+              will be named <command>id</command>. Otherwise states what needs to be proved.
+              If <command>t2</command> is provided, the new goal is 
+              immediately changed to <command>t2</command> wich must
+              be equivalent to <command>t1</command>.
+            </para>
+	    </listitem>
+        </varlistentry>
+        <varlistentry>
+           <term>New sequents to prove:</term>
+	   <listitem>
+	     <para>The stated one if <command>id</command> is provided</para>
+	   </listitem>
+	</varlistentry>     
+     </variablelist>
+    </para>
+  </sect1>
+
+
+  <sect1 id="tac_andelim">
+    <title>we have</title>
+    <titleabbrev>we have</titleabbrev>
+    <para><userinput>justification we have t1 (id1) and t2 (id2)</userinput>
+    </para>
+    <para>
+      <variablelist>
+        <varlistentry role="tactic_synopsis">
+	  <term>Synopsis:</term>
+	  <listitem>
+	    <para>&justification; <emphasis role="bold">we have</emphasis> &term; 
+	            <emphasis role="bold">( </emphasis> &id; <emphasis role="bold"> ) and </emphasis> &term; 
+		      <emphasis role="bold"> ( </emphasis> &id; <emphasis role="bold">)</emphasis></para>
+          </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>Pre-condition:</term>
+	  <listitem>
+	    <para></para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>Action:</term>
+	  <listitem>
+      <para>It derives <command>t1∧t2</command> using the 
+        <command>justification</command> then it introduces in the context
+        <command>t1</command>   labelled with <command>id1</command> and
+        <command>t2</command>   labelled with <command>id2</command>.
+      </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>New sequent to prove:</term>
+	  <listitem>
+	     <para>None.</para>
+          </listitem>
+	</varlistentry>
+      </variablelist>
+    </para>
+  </sect1>
+
+  <sect1 id="tac_weproceedbycases">
+    <title>we proceed by cases on</title>
+      <titleabbrev>we proceed by cases on</titleabbrev>
+      <para><userinput>we proceed by cases on t to prove th</userinput></para>
+      <para>
+        <variablelist>
+	  <varlistentry role="tactic.synopsis">
+	    <term>Synopsis:</term>
+	    <listitem>
+	      <para><emphasis role="bold">we proceed by cases on</emphasis> &term; <emphasis role="bold">to prove</emphasis> &term; </para>
+	     </listitem>
+          </varlistentry>
+	  <varlistentry>
+	    <term>Pre-condition:</term>
+	    <listitem>
+        <para><command>t</command> must inhabitant of an inductive type and
+          <command>th</command> must be the conclusion to be proved by 
+          cases.</para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>Action:</term>
+	      <listitem>
+          <para> It proceeds by cases on <command>t</command> </para>
+              </listitem>
+	  </varlistentry>
+          <varlistentry>
+            <term>New sequents to prove:</term>
+	    <listitem>
+	       <para>It opens one new sequent for each constructor of the
+                type of <command>t</command>.</para>
+	    </listitem>
+	  </varlistentry>
+         </variablelist>
+       </para>
+    </sect1>
+    
+    <sect1 id="tac_weproceedbyinduction">
+    <title>we proceed by induction on</title>
+    <titleabbrev>we proceed by induction on</titleabbrev>
+    <para><userinput>we proceed by induction on t to prove th</userinput></para>        
+    <para>
+      <variablelist>
+        <varlistentry role="tactic.synopsis">
+	  <term>Synopsis:</term>
+	  <listitem>
+	    <para><emphasis role="bold">we proceed by induction on</emphasis> &term; <emphasis role="bold"> to prove </emphasis> &term; </para>
+	  </listitem>
+	</varlistentry>
+        <varlistentry>
+	  <term>Pre-condition:</term>
+	  <listitem>
+      <para><command>t</command> must inhabitant of an inductive type and 
+        <command>th</command> must be the conclusion to be proved by induction.
+        </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>Action:</term>
+	    <listitem>
+	      <para>It proceed by induction on <command>t</command>.</para>
+	    </listitem>
+	</varlistentry>
+        <varlistentry>
+            <term>New sequents to prove:</term>
+            <listitem>
+              <para>It opens one new sequent for each constructor of the
+                type of <command>t</command>.</para>
+            </listitem>
+        </varlistentry>
+      </variablelist>
+    </para>
+  </sect1>
+
+
+ <sect1 id="tac_bytermweproved">
+   <title>we proved</title>
+     <titleabbrev>we proved</titleabbrev>
+     <para><userinput>justification we proved t (id)</userinput></para>
+     <para>
+       <variablelist>
+         <varlistentry role="tactic.synopsis">
+	   <term>Synopsis:</term>
+	   <listitem>
+	     <para>&justification; <emphasis role="bold">we proved</emphasis> &term; 
+         <emphasis role="bold">(</emphasis> &id; 
+         <emphasis role="bold">)</emphasis></para>
+           </listitem>
+	   </varlistentry>
+	   <varlistentry>
+	     <term>Pre-condition:</term>
+	     <listitem>
+	       <para><command>t</command>must have type <command>Prop</command>.
+         </para>
+	     </listitem>
+	   </varlistentry>
+	   <varlistentry>
+	     <term>Action:</term>
+	     <listitem>
+         <para>It derives <command>t</command>
+           using the justification and labels the conclusion with
+           <command>id</command>.
+         </para>
+	     </listitem>
+	   </varlistentry>
+	   <varlistentry>
+	     <term>New sequent to prove:</term>
+	     <listitem>
+	       <para>None.</para>
+	     </listitem>
+	   </varlistentry>
+	 </variablelist>
+       </para>
+    </sect1>
+
+</chapter>

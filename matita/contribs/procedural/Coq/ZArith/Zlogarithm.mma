@@ -1,0 +1,169 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Zlogarithm.v,v 1.14.2.1 2004/07/16 19:31:21 herbelin Exp $ i*)
+
+(*#*********************************************************************)
+
+(*#* The integer logarithms with base 2. 
+
+    There are three logarithms,
+    depending on the rounding of the real 2-based logarithm:
+    - [Log_inf]: [y = (Log_inf x) iff 2^y <= x < 2^(y+1)]
+      i.e. [Log_inf x] is the biggest integer that is smaller than [Log x]
+    - [Log_sup]: [y = (Log_sup x) iff 2^(y-1) < x <= 2^y]
+      i.e. [Log_inf x] is the smallest integer that is bigger than [Log x]
+    - [Log_nearest]: [y= (Log_nearest x) iff 2^(y-1/2) < x <= 2^(y+1/2)]
+      i.e. [Log_nearest x] is the integer nearest from [Log x] *)
+
+include "ZArith/ZArith_base.ma".
+
+include "ZArith/Zcomplements.ma".
+
+include "ZArith/Zpower.ma".
+
+(* UNEXPORTED
+Open Local Scope Z_scope.
+*)
+
+(* UNEXPORTED
+Section Log_pos
+*)
+
+(* Log of positive integers *)
+
+(*#* First we build [log_inf] and [log_sup] *)
+
+inline procedural "cic:/Coq/ZArith/Zlogarithm/log_inf.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/Zlogarithm/log_sup.con" as definition.
+
+(* UNEXPORTED
+Hint Unfold log_inf log_sup.
+*)
+
+(*#* Then we give the specifications of [log_inf] and [log_sup] 
+    and prove their validity *)
+
+(*i Hints Resolve ZERO_le_S : zarith. i*)
+
+(* UNEXPORTED
+Hint Resolve Zle_trans: zarith.
+*)
+
+inline procedural "cic:/Coq/ZArith/Zlogarithm/log_inf_correct.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/Zlogarithm/log_inf_correct1.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/Zlogarithm/log_inf_correct2.con" as definition.
+
+(* UNEXPORTED
+Opaque log_inf_correct1 log_inf_correct2.
+*)
+
+(* UNEXPORTED
+Hint Resolve log_inf_correct1 log_inf_correct2: zarith.
+*)
+
+inline procedural "cic:/Coq/ZArith/Zlogarithm/log_sup_correct1.con" as lemma.
+
+(*#* For every [p], either [p] is a power of two and [(log_inf p)=(log_sup p)]
+    either [(log_sup p)=(log_inf p)+1] *)
+
+inline procedural "cic:/Coq/ZArith/Zlogarithm/log_sup_log_inf.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/Zlogarithm/log_sup_correct2.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/Zlogarithm/log_inf_le_log_sup.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zlogarithm/log_sup_le_Slog_inf.con" as lemma.
+
+(*#* Now it's possible to specify and build the [Log] rounded to the nearest *)
+
+inline procedural "cic:/Coq/ZArith/Zlogarithm/log_near.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/Zlogarithm/log_near_correct1.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/Zlogarithm/log_near_correct2.con" as theorem.
+
+(*i******************
+Theorem log_near_correct: (p:positive)
+  `| (two_p (log_near p)) - (POS p) | <= (POS p)-(two_p (log_inf p))`
+  /\`| (two_p (log_near p)) - (POS p) | <= (two_p (log_sup p))-(POS p)`.
+Intro.
+Induction p.
+Intros p0 [(Einf1,Einf2)|(Esup1,Esup2)].
+Unfold log_near log_inf log_sup. Fold log_near log_inf log_sup.
+Rewrite Einf1.
+Repeat Rewrite two_p_S.
+Case p0; [Left | Left | Right].
+
+Split.
+Simpl.
+Rewrite E1; Case p0; Try Reflexivity.
+Compute.
+Unfold log_near; Fold log_near.
+Unfold log_inf; Fold log_inf.
+Repeat Rewrite E1.
+Split.
+**********************************i*)
+
+(* UNEXPORTED
+End Log_pos
+*)
+
+(* UNEXPORTED
+Section divers
+*)
+
+(*#* Number of significative digits. *)
+
+inline procedural "cic:/Coq/ZArith/Zlogarithm/N_digits.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/Zlogarithm/ZERO_le_N_digits.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zlogarithm/log_inf_shift_nat.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zlogarithm/log_sup_shift_nat.con" as lemma.
+
+(*#* [Is_power p] means that p is a power of two *)
+
+inline procedural "cic:/Coq/ZArith/Zlogarithm/Is_power.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/Zlogarithm/Is_power_correct.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zlogarithm/Is_power_or.con" as lemma.
+
+(* UNEXPORTED
+End divers
+*)
+

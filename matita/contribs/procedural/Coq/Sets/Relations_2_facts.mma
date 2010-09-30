@@ -1,0 +1,100 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*#***************************************************************************)
+
+(*                                                                          *)
+
+(*                         Naive Set Theory in Coq                          *)
+
+(*                                                                          *)
+
+(*                     INRIA                        INRIA                   *)
+
+(*              Rocquencourt                        Sophia-Antipolis        *)
+
+(*                                                                          *)
+
+(*                                 Coq V6.1                                 *)
+
+(*									    *)
+
+(*			         Gilles Kahn 				    *)
+
+(*				 Gerard Huet				    *)
+
+(*									    *)
+
+(*									    *)
+
+(*                                                                          *)
+
+(* Acknowledgments: This work was started in July 1993 by F. Prost. Thanks  *)
+
+(* to the Newton Institute for providing an exceptional work environment    *)
+
+(* in Summer 1995. Several developments by E. Ledinot were an inspiration.  *)
+
+(*#***************************************************************************)
+
+(*i $Id: Relations_2_facts.v,v 1.6.2.1 2004/07/16 19:31:18 herbelin Exp $ i*)
+
+include "Sets/Relations_1.ma".
+
+include "Sets/Relations_1_facts.ma".
+
+include "Sets/Relations_2.ma".
+
+inline procedural "cic:/Coq/Sets/Relations_2_facts/Rstar_reflexive.con" as theorem.
+
+inline procedural "cic:/Coq/Sets/Relations_2_facts/Rplus_contains_R.con" as theorem.
+
+inline procedural "cic:/Coq/Sets/Relations_2_facts/Rstar_contains_R.con" as theorem.
+
+inline procedural "cic:/Coq/Sets/Relations_2_facts/Rstar_contains_Rplus.con" as theorem.
+
+inline procedural "cic:/Coq/Sets/Relations_2_facts/Rstar_transitive.con" as theorem.
+
+inline procedural "cic:/Coq/Sets/Relations_2_facts/Rstar_cases.con" as theorem.
+
+inline procedural "cic:/Coq/Sets/Relations_2_facts/Rstar_equiv_Rstar1.con" as theorem.
+
+inline procedural "cic:/Coq/Sets/Relations_2_facts/Rsym_imp_Rstarsym.con" as theorem.
+
+inline procedural "cic:/Coq/Sets/Relations_2_facts/Sstar_contains_Rstar.con" as theorem.
+
+inline procedural "cic:/Coq/Sets/Relations_2_facts/star_monotone.con" as theorem.
+
+inline procedural "cic:/Coq/Sets/Relations_2_facts/RstarRplus_RRstar.con" as theorem.
+
+inline procedural "cic:/Coq/Sets/Relations_2_facts/Lemma1.con" as theorem.
+

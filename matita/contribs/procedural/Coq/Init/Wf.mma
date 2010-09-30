@@ -1,0 +1,208 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(* UNEXPORTED
+Set Implicit Arguments.
+*)
+
+(*i $Id: Wf.v,v 1.17.2.1 2004/07/16 19:31:04 herbelin Exp $ i*)
+
+(*#* This module proves the validity of
+    - well-founded recursion (also called course of values)
+    - well-founded induction
+
+   from a well-founded ordering on a given set *)
+
+include "Init/Notations.ma".
+
+include "Init/Logic.ma".
+
+include "Init/Datatypes.ma".
+
+(*#* Well-founded induction principle on Prop *)
+
+(* UNEXPORTED
+Section Well_founded
+*)
+
+(* UNEXPORTED
+cic:/Coq/Init/Wf/Well_founded/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Init/Wf/Well_founded/R.var
+*)
+
+(*#* The accessibility predicate is defined to be non-informative *)
+
+inline procedural "cic:/Coq/Init/Wf/Acc.ind".
+
+inline procedural "cic:/Coq/Init/Wf/Acc_inv.con" as lemma.
+
+(*#* the informative elimination :
+     [let Acc_rec F = let rec wf x = F x wf in wf] *)
+
+(* UNEXPORTED
+Section AccRecType
+*)
+
+(* UNEXPORTED
+cic:/Coq/Init/Wf/Well_founded/AccRecType/P.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Init/Wf/Well_founded/AccRecType/F.var
+*)
+
+inline procedural "cic:/Coq/Init/Wf/Acc_rect.con" as definition.
+
+(* UNEXPORTED
+End AccRecType
+*)
+
+inline procedural "cic:/Coq/Init/Wf/Acc_rec.con" as definition.
+
+(*#* A simplified version of Acc_rec(t) *)
+
+(* UNEXPORTED
+Section AccIter
+*)
+
+(* UNEXPORTED
+cic:/Coq/Init/Wf/Well_founded/AccIter/P.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Init/Wf/Well_founded/AccIter/F.var
+*)
+
+inline procedural "cic:/Coq/Init/Wf/Acc_iter.con" as definition.
+
+(* UNEXPORTED
+End AccIter
+*)
+
+(*#* A relation is well-founded if every element is accessible *)
+
+inline procedural "cic:/Coq/Init/Wf/well_founded.con" as definition.
+
+(*#* well-founded induction on Set and Prop *)
+
+(* UNEXPORTED
+cic:/Coq/Init/Wf/Well_founded/Rwf.var
+*)
+
+inline procedural "cic:/Coq/Init/Wf/well_founded_induction_type.con" as theorem.
+
+inline procedural "cic:/Coq/Init/Wf/well_founded_induction.con" as theorem.
+
+inline procedural "cic:/Coq/Init/Wf/well_founded_ind.con" as theorem.
+
+(*#* Building fixpoints  *)
+
+(* UNEXPORTED
+Section FixPoint
+*)
+
+(* UNEXPORTED
+cic:/Coq/Init/Wf/Well_founded/FixPoint/P.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Init/Wf/Well_founded/FixPoint/F.var
+*)
+
+inline procedural "cic:/Coq/Init/Wf/Fix_F.con" as definition.
+
+inline procedural "cic:/Coq/Init/Wf/Fix.con" as definition.
+
+(*#* Proof that [well_founded_induction] satisfies the fixpoint equation. 
+    It requires an extra property of the functional *)
+
+(* UNEXPORTED
+cic:/Coq/Init/Wf/Well_founded/FixPoint/F_ext.var
+*)
+
+inline procedural "cic:/Coq/Init/Wf/Acc_inv_dep.con" as theorem.
+
+inline procedural "cic:/Coq/Init/Wf/Fix_F_eq.con" as lemma.
+
+inline procedural "cic:/Coq/Init/Wf/Fix_F_inv.con" as lemma.
+
+inline procedural "cic:/Coq/Init/Wf/Fix_eq.con" as lemma.
+
+(* UNEXPORTED
+End FixPoint
+*)
+
+(* UNEXPORTED
+End Well_founded
+*)
+
+(*#* A recursor over pairs *)
+
+(* UNEXPORTED
+Section Well_founded_2
+*)
+
+(* UNEXPORTED
+cic:/Coq/Init/Wf/Well_founded_2/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Init/Wf/Well_founded_2/B.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Init/Wf/Well_founded_2/R.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Init/Wf/Well_founded_2/P.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Init/Wf/Well_founded_2/F.var
+*)
+
+inline procedural "cic:/Coq/Init/Wf/Acc_iter_2.con" as definition.
+
+(* UNEXPORTED
+cic:/Coq/Init/Wf/Well_founded_2/Rwf.var
+*)
+
+inline procedural "cic:/Coq/Init/Wf/well_founded_induction_type_2.con" as theorem.
+
+(* UNEXPORTED
+End Well_founded_2
+*)
+

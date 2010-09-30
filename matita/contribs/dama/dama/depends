@@ -1,0 +1,13 @@
+models/q_support.ma Q/q/qplus.ma Q/q/qtimes.ma logic/cprop_connectives.ma
+models/q_bars.ma dama/nat_ordered_set.ma logic/cprop_connectives.ma models/list_support.ma models/q_support.ma
+models/list_support.ma list/list.ma logic/cprop_connectives.ma nat/minus.ma
+.unnamed.ma 
+models/q_copy.ma models/q_bars.ma
+models/q_rebase.ma Q/q/qtimes.ma dama/russell_support.ma models/q_copy.ma
+Q/q/qplus.ma 
+Q/q/qtimes.ma 
+dama/nat_ordered_set.ma 
+dama/russell_support.ma 
+list/list.ma 
+logic/cprop_connectives.ma 
+nat/minus.ma 

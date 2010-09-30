@@ -1,0 +1,83 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: JMeq.v,v 1.8.2.2 2004/08/03 17:42:32 herbelin Exp $ i*)
+
+(*#* John Major's Equality as proposed by C. Mc Bride
+
+  Reference:
+
+  [McBride] Elimination with a Motive, Proceedings of TYPES 2000,
+  LNCS 2277, pp 197-216, 2002.
+
+*)
+
+(* UNEXPORTED
+Set Implicit Arguments.
+*)
+
+inline procedural "cic:/Coq/Logic/JMeq/JMeq.ind".
+
+(* UNEXPORTED
+Reset JMeq_ind.
+*)
+
+(* UNEXPORTED
+Hint Resolve JMeq_refl.
+*)
+
+inline procedural "cic:/Coq/Logic/JMeq/sym_JMeq.con" as lemma.
+
+(* UNEXPORTED
+Hint Immediate sym_JMeq.
+*)
+
+inline procedural "cic:/Coq/Logic/JMeq/trans_JMeq.con" as lemma.
+
+inline procedural "cic:/Coq/Logic/JMeq/JMeq_eq.con".
+
+inline procedural "cic:/Coq/Logic/JMeq/JMeq_ind.con" as lemma.
+
+inline procedural "cic:/Coq/Logic/JMeq/JMeq_rec.con" as lemma.
+
+inline procedural "cic:/Coq/Logic/JMeq/JMeq_ind_r.con" as lemma.
+
+inline procedural "cic:/Coq/Logic/JMeq/JMeq_rec_r.con" as lemma.
+
+(*#* [JMeq] is equivalent to [(eq_dep Set [X]X)] *)
+
+include "Logic/Eqdep.ma".
+
+inline procedural "cic:/Coq/Logic/JMeq/JMeq_eq_dep.con" as lemma.
+
+inline procedural "cic:/Coq/Logic/JMeq/eq_dep_JMeq.con" as lemma.
+

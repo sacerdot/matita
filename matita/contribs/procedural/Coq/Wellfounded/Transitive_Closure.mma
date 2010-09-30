@@ -1,0 +1,72 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Transitive_Closure.v,v 1.7.2.1 2004/07/16 19:31:19 herbelin Exp $ i*)
+
+(*#* Author: Bruno Barras *)
+
+include "Relations/Relation_Definitions.ma".
+
+include "Relations/Relation_Operators.ma".
+
+(* UNEXPORTED
+Section Wf_Transitive_Closure
+*)
+
+(* UNEXPORTED
+cic:/Coq/Wellfounded/Transitive_Closure/Wf_Transitive_Closure/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Wellfounded/Transitive_Closure/Wf_Transitive_Closure/R.var
+*)
+
+(* NOTATION
+Notation trans_clos := (clos_trans A R).
+*)
+
+inline procedural "cic:/Coq/Wellfounded/Transitive_Closure/incl_clos_trans.con" as lemma.
+
+inline procedural "cic:/Coq/Wellfounded/Transitive_Closure/Acc_clos_trans.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Acc_clos_trans.
+*)
+
+inline procedural "cic:/Coq/Wellfounded/Transitive_Closure/Acc_inv_trans.con" as lemma.
+
+inline procedural "cic:/Coq/Wellfounded/Transitive_Closure/wf_clos_trans.con" as theorem.
+
+(* UNEXPORTED
+End Wf_Transitive_Closure
+*)
+

@@ -1,0 +1,97 @@
+include "logic/equality.ma".
+
+(* Inclusion of: GRP205-1.p *)
+
+(* -------------------------------------------------------------------------- *)
+
+(*  File     : GRP205-1 : TPTP v3.7.0. Released v2.3.0. *)
+
+(*  Domain   : Group Theory (Loops) *)
+
+(*  Problem  : In Loops, Moufang-3 => Moufang-4. *)
+
+(*  Version  : [MP96] (equality) axioms. *)
+
+(*  English  :  *)
+
+(*  Refs     : [Wos96] Wos (1996), OTTER and the Moufang Identity Problem *)
+
+(*  Source   : [Wos96] *)
+
+(*  Names    : - [Wos96] *)
+
+(*  Status   : Unsatisfiable *)
+
+(*  Rating   : 0.33 v3.4.0, 0.38 v3.3.0, 0.43 v3.1.0, 0.33 v2.7.0, 0.36 v2.6.0, 0.00 v2.4.0, 0.33 v2.3.0 *)
+
+(*  Syntax   : Number of clauses     :   10 (   0 non-Horn;  10 unit;   1 RR) *)
+
+(*             Number of atoms       :   10 (  10 equality) *)
+
+(*             Maximal clause size   :    1 (   1 average) *)
+
+(*             Number of predicates  :    1 (   0 propositional; 2-2 arity) *)
+
+(*             Number of functors    :    9 (   4 constant; 0-2 arity) *)
+
+(*             Number of variables   :   15 (   0 singleton) *)
+
+(*             Maximal term depth    :    4 (   2 average) *)
+
+(*  Comments : *)
+
+(* -------------------------------------------------------------------------- *)
+
+(* ----Loop axioms: *)
+
+(* ----Moufang-3 *)
+
+(* ----Denial of Moufang-4 *)
+ntheorem prove_moufang4:
+ (∀Univ:Type.∀X:Univ.∀Y:Univ.∀Z:Univ.
+∀identity:Univ.
+∀left_division:∀_:Univ.∀_:Univ.Univ.
+∀left_inverse:∀_:Univ.Univ.
+∀multiply:∀_:Univ.∀_:Univ.Univ.
+∀right_division:∀_:Univ.∀_:Univ.Univ.
+∀right_inverse:∀_:Univ.Univ.
+∀x:Univ.
+∀y:Univ.
+∀z:Univ.
+∀H0:∀X:Univ.∀Y:Univ.∀Z:Univ.eq Univ (multiply (multiply (multiply X Y) X) Z) (multiply X (multiply Y (multiply X Z))).
+∀H1:∀X:Univ.eq Univ (multiply (left_inverse X) X) identity.
+∀H2:∀X:Univ.eq Univ (multiply X (right_inverse X)) identity.
+∀H3:∀X:Univ.∀Y:Univ.eq Univ (right_division (multiply X Y) Y) X.
+∀H4:∀X:Univ.∀Y:Univ.eq Univ (multiply (right_division X Y) Y) X.
+∀H5:∀X:Univ.∀Y:Univ.eq Univ (left_division X (multiply X Y)) Y.
+∀H6:∀X:Univ.∀Y:Univ.eq Univ (multiply X (left_division X Y)) Y.
+∀H7:∀X:Univ.eq Univ (multiply X identity) X.
+∀H8:∀X:Univ.eq Univ (multiply identity X) X.eq Univ (multiply x (multiply (multiply y z) x)) (multiply (multiply x y) (multiply z x)))
+.
+#Univ ##.
+#X ##.
+#Y ##.
+#Z ##.
+#identity ##.
+#left_division ##.
+#left_inverse ##.
+#multiply ##.
+#right_division ##.
+#right_inverse ##.
+#x ##.
+#y ##.
+#z ##.
+#H0 ##.
+#H1 ##.
+#H2 ##.
+#H3 ##.
+#H4 ##.
+#H5 ##.
+#H6 ##.
+#H7 ##.
+#H8 ##.
+nauto by H0,H1,H2,H3,H4,H5,H6,H7,H8 ##;
+ntry (nassumption) ##;
+nqed.
+
+(* -------------------------------------------------------------------------- *)

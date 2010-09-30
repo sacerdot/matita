@@ -1,0 +1,76 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: BoolEq.v,v 1.4.2.1 2004/07/16 19:31:02 herbelin Exp $ i*)
+
+(* Cuihtlauac Alvarado - octobre 2000 *)
+
+(*#* Properties of a boolean equality   *)
+
+include "Bool/Bool.ma".
+
+(* UNEXPORTED
+Section Bool_eq_dec
+*)
+
+(* UNEXPORTED
+cic:/Coq/Bool/BoolEq/Bool_eq_dec/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Bool/BoolEq/Bool_eq_dec/beq.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Bool/BoolEq/Bool_eq_dec/beq_refl.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Bool/BoolEq/Bool_eq_dec/beq_eq.var
+*)
+
+inline procedural "cic:/Coq/Bool/BoolEq/beq_eq_true.con" as definition.
+
+inline procedural "cic:/Coq/Bool/BoolEq/beq_eq_not_false.con" as definition.
+
+inline procedural "cic:/Coq/Bool/BoolEq/beq_false_not_eq.con" as definition.
+
+inline procedural "cic:/Coq/Bool/BoolEq/exists_beq_eq.con" as definition.
+
+inline procedural "cic:/Coq/Bool/BoolEq/not_eq_false_beq.con" as definition.
+
+inline procedural "cic:/Coq/Bool/BoolEq/eq_dec.con" as definition.
+
+(* UNEXPORTED
+End Bool_eq_dec
+*)
+

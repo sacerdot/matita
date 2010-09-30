@@ -1,0 +1,78 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Sqrt_reg.v,v 1.9.2.1 2004/07/16 19:31:15 herbelin Exp $ i*)
+
+include "Reals/Rbase.ma".
+
+include "Reals/Rfunctions.ma".
+
+include "Reals/Ranalysis1.ma".
+
+include "Reals/R_sqrt.ma".
+
+(* UNEXPORTED
+Open Local Scope R_scope.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Sqrt_reg/sqrt_var_maj.con" as lemma.
+
+(* sqrt is continuous in 1 *)
+
+inline procedural "cic:/Coq/Reals/Sqrt_reg/sqrt_continuity_pt_R1.con" as lemma.
+
+(* sqrt is continuous forall x>0 *)
+
+inline procedural "cic:/Coq/Reals/Sqrt_reg/sqrt_continuity_pt.con" as lemma.
+
+(* sqrt is derivable for all x>0 *)
+
+inline procedural "cic:/Coq/Reals/Sqrt_reg/derivable_pt_lim_sqrt.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Sqrt_reg/derivable_pt_sqrt.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Sqrt_reg/derive_pt_sqrt.con" as lemma.
+
+(* We show that sqrt is continuous for all x>=0 *)
+
+(* Remark : by definition of sqrt (as extension of Rsqrt on |R), *)
+
+(*          we could also show that sqrt is continuous for all x *)
+
+inline procedural "cic:/Coq/Reals/Sqrt_reg/continuity_pt_sqrt.con" as lemma.
+

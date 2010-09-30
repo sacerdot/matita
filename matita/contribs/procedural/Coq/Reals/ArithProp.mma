@@ -1,0 +1,70 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: ArithProp.v,v 1.11.2.1 2004/07/16 19:31:10 herbelin Exp $ i*)
+
+include "Reals/Rbase.ma".
+
+include "Reals/Rbasic_fun.ma".
+
+include "Arith/Even.ma".
+
+include "Arith/Div2.ma".
+
+(* UNEXPORTED
+Open Local Scope Z_scope.
+*)
+
+(* UNEXPORTED
+Open Local Scope R_scope.
+*)
+
+inline procedural "cic:/Coq/Reals/ArithProp/minus_neq_O.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/ArithProp/le_minusni_n.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/ArithProp/lt_minus_O_lt.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/ArithProp/even_odd_cor.con" as lemma.
+
+(* 2m <= 2n => m<=n *)
+
+inline procedural "cic:/Coq/Reals/ArithProp/le_double.con" as lemma.
+
+(* Here, we have the euclidian division *)
+
+(* This lemma is used in the proof of sin_eq_0 : (sin x)=0<->x=kPI *)
+
+inline procedural "cic:/Coq/Reals/ArithProp/euclidian_division.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/ArithProp/tech8.con" as lemma.
+

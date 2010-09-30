@@ -1,0 +1,53 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i      $Id: SplitAbsolu.v,v 1.6.2.1 2004/07/16 19:31:15 herbelin Exp $       i*)
+
+include "Reals/Rbasic_fun.ma".
+
+(* UNEXPORTED
+Ltac split_case_Rabs :=
+  match goal with
+  |  |- context [(Rcase_abs ?X1)] =>
+      case (Rcase_abs X1); try split_case_Rabs
+  end.
+*)
+
+(* UNEXPORTED
+Ltac split_Rabs :=
+  match goal with
+  | id:context [(Rabs _)] |- _ => generalize id; clear id; try split_Rabs
+  |  |- context [(Rabs ?X1)] =>
+      unfold Rabs in |- *; try split_case_Rabs; intros
+  end.
+*)
+

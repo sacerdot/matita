@@ -1,0 +1,92 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Operators_Properties.v,v 1.7.2.1 2004/07/16 19:31:16 herbelin Exp $ i*)
+
+(*#***************************************************************************)
+
+(*                            Bruno Barras                                  *)
+
+(*#***************************************************************************)
+
+include "Relations/Relation_Definitions.ma".
+
+include "Relations/Relation_Operators.ma".
+
+(* UNEXPORTED
+Section Properties
+*)
+
+(* UNEXPORTED
+cic:/Coq/Relations/Operators_Properties/Properties/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Relations/Operators_Properties/Properties/R.var
+*)
+
+(* UNAVAILABLE OBJECT: cic:/Coq/Relations/Operators_Properties/Properties/incl.con *)
+
+inline procedural "cic:/Coq/Relations/Operators_Properties/Properties/incl.con" "Properties__" as definition.
+
+(* UNEXPORTED
+Section Clos_Refl_Trans
+*)
+
+inline procedural "cic:/Coq/Relations/Operators_Properties/clos_rt_is_preorder.con" as lemma.
+
+inline procedural "cic:/Coq/Relations/Operators_Properties/clos_rt_idempotent.con" as lemma.
+
+inline procedural "cic:/Coq/Relations/Operators_Properties/clos_refl_trans_ind_left.con" as lemma.
+
+(* UNEXPORTED
+End Clos_Refl_Trans
+*)
+
+(* UNEXPORTED
+Section Clos_Refl_Sym_Trans
+*)
+
+inline procedural "cic:/Coq/Relations/Operators_Properties/clos_rt_clos_rst.con" as lemma.
+
+inline procedural "cic:/Coq/Relations/Operators_Properties/clos_rst_is_equiv.con" as lemma.
+
+inline procedural "cic:/Coq/Relations/Operators_Properties/clos_rst_idempotent.con" as lemma.
+
+(* UNEXPORTED
+End Clos_Refl_Sym_Trans
+*)
+
+(* UNEXPORTED
+End Properties
+*)
+

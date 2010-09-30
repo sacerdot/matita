@@ -1,0 +1,9 @@
+algebra/CoRN/SemiGroups.ma algebra/CoRN/SetoidInc.ma
+algebra/CoRN/SetoidInc.ma algebra/CoRN/SetoidFun.ma
+algebra/CoRN/Setoids.ma Z/plus.ma datatypes/constructors.ma higher_order_defs/relations.ma logic/equality.ma nat/nat.ma
+algebra/CoRN/SetoidFun.ma algebra/CoRN/Setoids.ma higher_order_defs/relations.ma
+Z/plus.ma 
+datatypes/constructors.ma 
+higher_order_defs/relations.ma 
+logic/equality.ma 
+nat/nat.ma 

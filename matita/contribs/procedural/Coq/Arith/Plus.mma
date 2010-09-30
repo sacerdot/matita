@@ -1,0 +1,168 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Plus.v,v 1.18.2.1 2004/07/16 19:31:00 herbelin Exp $ i*)
+
+(*#* Properties of addition *)
+
+include "Arith/Le.ma".
+
+include "Arith/Lt.ma".
+
+(* UNEXPORTED
+Open Local Scope nat_scope.
+*)
+
+(* UNEXPORTED
+Implicit Types m n p q : nat.
+*)
+
+(*#* Zero is neutral *)
+
+inline procedural "cic:/Coq/Arith/Plus/plus_0_l.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Plus/plus_0_r.con" as lemma.
+
+(*#* Commutativity *)
+
+inline procedural "cic:/Coq/Arith/Plus/plus_comm.con" as lemma.
+
+(* UNEXPORTED
+Hint Immediate plus_comm: arith v62.
+*)
+
+(*#* Associativity *)
+
+inline procedural "cic:/Coq/Arith/Plus/plus_Snm_nSm.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Plus/plus_assoc.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve plus_assoc: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/Plus/plus_permute.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Plus/plus_assoc_reverse.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve plus_assoc_reverse: arith v62.
+*)
+
+(*#* Simplification *)
+
+inline procedural "cic:/Coq/Arith/Plus/plus_reg_l.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Plus/plus_le_reg_l.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Plus/plus_lt_reg_l.con" as lemma.
+
+(*#* Compatibility with order *)
+
+inline procedural "cic:/Coq/Arith/Plus/plus_le_compat_l.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve plus_le_compat_l: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/Plus/plus_le_compat_r.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve plus_le_compat_r: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/Plus/le_plus_l.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve le_plus_l: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/Plus/le_plus_r.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve le_plus_r: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/Plus/le_plus_trans.con" as theorem.
+
+(* UNEXPORTED
+Hint Resolve le_plus_trans: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/Plus/lt_plus_trans.con" as theorem.
+
+(* UNEXPORTED
+Hint Immediate lt_plus_trans: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/Plus/plus_lt_compat_l.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve plus_lt_compat_l: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/Plus/plus_lt_compat_r.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve plus_lt_compat_r: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/Plus/plus_le_compat.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Plus/plus_le_lt_compat.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Plus/plus_lt_le_compat.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Plus/plus_lt_compat.con" as lemma.
+
+(*#* Inversion lemmas *)
+
+inline procedural "cic:/Coq/Arith/Plus/plus_is_O.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Plus/plus_is_one.con" as definition.
+
+(*#* Derived properties *)
+
+inline procedural "cic:/Coq/Arith/Plus/plus_permute_2_in_4.con" as lemma.
+
+(*#* Tail-recursive plus *)
+
+(*#* [tail_plus] is an alternative definition for [plus] which is 
+    tail-recursive, whereas [plus] is not. This can be useful
+    when extracting programs. *)
+
+inline procedural "cic:/Coq/Arith/Plus/plus_acc.con" as definition.
+
+inline procedural "cic:/Coq/Arith/Plus/tail_plus.con" as definition.
+
+inline procedural "cic:/Coq/Arith/Plus/plus_tail_plus.con" as lemma.
+

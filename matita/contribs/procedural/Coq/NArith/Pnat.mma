@@ -1,0 +1,194 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Pnat.v,v 1.3.2.1 2004/07/16 19:31:07 herbelin Exp $ i*)
+
+include "NArith/BinPos.ma".
+
+(*#*********************************************************************)
+
+(*#* Properties of the injection from binary positive numbers to Peano 
+    natural numbers *)
+
+(*#* Original development by Pierre Cr\233\gut, CNET, Lannion, France *)
+
+include "Arith/Le.ma".
+
+include "Arith/Lt.ma".
+
+include "Arith/Gt.ma".
+
+include "Arith/Plus.ma".
+
+include "Arith/Mult.ma".
+
+include "Arith/Minus.ma".
+
+(*#* [nat_of_P] is a morphism for addition *)
+
+inline procedural "cic:/Coq/NArith/Pnat/Pmult_nat_succ_morphism.con" as lemma.
+
+inline procedural "cic:/Coq/NArith/Pnat/nat_of_P_succ_morphism.con" as lemma.
+
+inline procedural "cic:/Coq/NArith/Pnat/Pmult_nat_plus_carry_morphism.con" as theorem.
+
+inline procedural "cic:/Coq/NArith/Pnat/nat_of_P_plus_carry_morphism.con" as theorem.
+
+inline procedural "cic:/Coq/NArith/Pnat/Pmult_nat_l_plus_morphism.con" as theorem.
+
+inline procedural "cic:/Coq/NArith/Pnat/nat_of_P_plus_morphism.con" as theorem.
+
+(*#* [Pmult_nat] is a morphism for addition *)
+
+inline procedural "cic:/Coq/NArith/Pnat/Pmult_nat_r_plus_morphism.con" as lemma.
+
+inline procedural "cic:/Coq/NArith/Pnat/ZL6.con" as lemma.
+
+(*#* [nat_of_P] is a morphism for multiplication *)
+
+inline procedural "cic:/Coq/NArith/Pnat/nat_of_P_mult_morphism.con" as theorem.
+
+(*#* [nat_of_P] maps to the strictly positive subset of [nat] *)
+
+inline procedural "cic:/Coq/NArith/Pnat/ZL4.con" as lemma.
+
+(*#* Extra lemmas on [lt] on Peano natural numbers *)
+
+inline procedural "cic:/Coq/NArith/Pnat/ZL7.con" as lemma.
+
+inline procedural "cic:/Coq/NArith/Pnat/ZL8.con" as lemma.
+
+(*#* [nat_of_P] is a morphism from [positive] to [nat] for [lt] (expressed
+    from [compare] on [positive])
+
+    Part 1: [lt] on [positive] is finer than [lt] on [nat]
+*)
+
+inline procedural "cic:/Coq/NArith/Pnat/nat_of_P_lt_Lt_compare_morphism.con" as lemma.
+
+(*#* [nat_of_P] is a morphism from [positive] to [nat] for [gt] (expressed
+    from [compare] on [positive])
+
+    Part 1: [gt] on [positive] is finer than [gt] on [nat]
+*)
+
+inline procedural "cic:/Coq/NArith/Pnat/nat_of_P_gt_Gt_compare_morphism.con" as lemma.
+
+(*#* [nat_of_P] is a morphism from [positive] to [nat] for [lt] (expressed
+    from [compare] on [positive])
+
+    Part 2: [lt] on [nat] is finer than [lt] on [positive]
+*)
+
+inline procedural "cic:/Coq/NArith/Pnat/nat_of_P_lt_Lt_compare_complement_morphism.con" as lemma.
+
+(*#* [nat_of_P] is a morphism from [positive] to [nat] for [gt] (expressed
+    from [compare] on [positive])
+
+    Part 2: [gt] on [nat] is finer than [gt] on [positive]
+*)
+
+inline procedural "cic:/Coq/NArith/Pnat/nat_of_P_gt_Gt_compare_complement_morphism.con" as lemma.
+
+(*#* [nat_of_P] is strictly positive *)
+
+inline procedural "cic:/Coq/NArith/Pnat/le_Pmult_nat.con" as lemma.
+
+inline procedural "cic:/Coq/NArith/Pnat/lt_O_nat_of_P.con" as lemma.
+
+(*#* Pmult_nat permutes with multiplication *)
+
+inline procedural "cic:/Coq/NArith/Pnat/Pmult_nat_mult_permute.con" as lemma.
+
+inline procedural "cic:/Coq/NArith/Pnat/Pmult_nat_2_mult_2_permute.con" as lemma.
+
+inline procedural "cic:/Coq/NArith/Pnat/Pmult_nat_4_mult_2_permute.con" as lemma.
+
+(*#* Mapping of xH, xO and xI through [nat_of_P] *)
+
+inline procedural "cic:/Coq/NArith/Pnat/nat_of_P_xH.con" as lemma.
+
+inline procedural "cic:/Coq/NArith/Pnat/nat_of_P_xO.con" as lemma.
+
+inline procedural "cic:/Coq/NArith/Pnat/nat_of_P_xI.con" as lemma.
+
+(*#*********************************************************************)
+
+(*#* Properties of the shifted injection from Peano natural numbers to 
+    binary positive numbers *)
+
+(*#* Composition of [P_of_succ_nat] and [nat_of_P] is successor on [nat] *)
+
+inline procedural "cic:/Coq/NArith/Pnat/nat_of_P_o_P_of_succ_nat_eq_succ.con" as theorem.
+
+(*#* Miscellaneous lemmas on [P_of_succ_nat] *)
+
+inline procedural "cic:/Coq/NArith/Pnat/ZL3.con" as lemma.
+
+inline procedural "cic:/Coq/NArith/Pnat/ZL5.con" as lemma.
+
+(*#* Composition of [nat_of_P] and [P_of_succ_nat] is successor on [positive] *)
+
+inline procedural "cic:/Coq/NArith/Pnat/P_of_succ_nat_o_nat_of_P_eq_succ.con" as theorem.
+
+(*#* Composition of [nat_of_P], [P_of_succ_nat] and [Ppred] is identity
+    on [positive] *)
+
+inline procedural "cic:/Coq/NArith/Pnat/pred_o_P_of_succ_nat_o_nat_of_P_eq_id.con" as theorem.
+
+(*#*********************************************************************)
+
+(*#* Extra properties of the injection from binary positive numbers to Peano 
+    natural numbers *)
+
+(*#* [nat_of_P] is a morphism for subtraction on positive numbers *)
+
+inline procedural "cic:/Coq/NArith/Pnat/nat_of_P_minus_morphism.con" as theorem.
+
+(*#* [nat_of_P] is injective *)
+
+inline procedural "cic:/Coq/NArith/Pnat/nat_of_P_inj.con" as lemma.
+
+inline procedural "cic:/Coq/NArith/Pnat/ZL16.con" as lemma.
+
+inline procedural "cic:/Coq/NArith/Pnat/ZL17.con" as lemma.
+
+(*#* Comparison and subtraction *)
+
+inline procedural "cic:/Coq/NArith/Pnat/Pcompare_minus_r.con" as lemma.
+
+inline procedural "cic:/Coq/NArith/Pnat/Pcompare_minus_l.con" as lemma.
+
+(*#* Distributivity of multiplication over subtraction *)
+
+inline procedural "cic:/Coq/NArith/Pnat/Pmult_minus_distr_l.con" as theorem.
+

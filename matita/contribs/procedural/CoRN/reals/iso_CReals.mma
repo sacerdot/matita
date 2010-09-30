@@ -1,0 +1,127 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "CoRN.ma".
+
+(* begin hide *)
+
+(* in this file the  concrete canonical isomorphism -in te sense of 
+   R_morphisms.v - between two arbitrary model of real numbers is built *)
+
+include "reals/Q_dense.ma".
+
+include "reals/R_morphism.ma".
+
+inline procedural "cic:/CoRN/reals/iso_CReals/less_pres_Lim.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/iso_CReals/Lim_pres_less.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/iso_CReals/inj_seq_less.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/iso_CReals/less_inj_seq.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/iso_CReals/SeqLimit_unique.con" as theorem.
+
+inline procedural "cic:/CoRN/reals/iso_CReals/Lim_well_def.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/iso_CReals/Lim_one_one.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/iso_CReals/inj_seq_well_def.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/iso_CReals/inj_Q_one_one.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/iso_CReals/Lim_pres_plus.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/iso_CReals/G_pres_plus.con" as lemma.
+
+(* This theorem can be avoided but it is interesting *)
+
+inline procedural "cic:/CoRN/reals/iso_CReals/nonarchemaedian_bound_for_Lim.con" as theorem.
+
+inline procedural "cic:/CoRN/reals/iso_CReals/Lim_pres_mult.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/iso_CReals/G_pres_mult.con" as lemma.
+
+(* UNEXPORTED
+Section Concrete_iso_between_Creals
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/iso_CReals/Concrete_iso_between_Creals/R1.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/iso_CReals/Concrete_iso_between_Creals/R2.var
+*)
+
+inline procedural "cic:/CoRN/reals/iso_CReals/image_Cauchy12.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/iso_CReals/image_Cauchy21.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/iso_CReals/image_G_as_CauchySeq12.con" as definition.
+
+inline procedural "cic:/CoRN/reals/iso_CReals/image_G_as_CauchySeq21.con" as definition.
+
+inline procedural "cic:/CoRN/reals/iso_CReals/f12.con" as definition.
+
+inline procedural "cic:/CoRN/reals/iso_CReals/g21.con" as definition.
+
+(*#****** ISO FROM R1 TO R2 ********)
+
+inline procedural "cic:/CoRN/reals/iso_CReals/f12_is_inverse_g21.con" as theorem.
+
+inline procedural "cic:/CoRN/reals/iso_CReals/f12_is_surjective.con" as theorem.
+
+inline procedural "cic:/CoRN/reals/iso_CReals/f12_strong_ext.con" as theorem.
+
+inline procedural "cic:/CoRN/reals/iso_CReals/f12_pres_less.con" as theorem.
+
+inline procedural "cic:/CoRN/reals/iso_CReals/f12_pres_plus.con" as theorem.
+
+inline procedural "cic:/CoRN/reals/iso_CReals/f12_pres_mult.con" as theorem.
+
+(*#********* ISO FROM R2 TO R1 **********)
+
+inline procedural "cic:/CoRN/reals/iso_CReals/g21_is_inverse_f12.con" as theorem.
+
+inline procedural "cic:/CoRN/reals/iso_CReals/g21_is_surjective.con" as theorem.
+
+inline procedural "cic:/CoRN/reals/iso_CReals/g21_strong_ext.con" as theorem.
+
+inline procedural "cic:/CoRN/reals/iso_CReals/g21_pres_less.con" as theorem.
+
+inline procedural "cic:/CoRN/reals/iso_CReals/g21_pres_plus.con" as theorem.
+
+inline procedural "cic:/CoRN/reals/iso_CReals/g21_pres_mult.con" as theorem.
+
+(*#** Building Homomorphisms out of f12 and g21 ***)
+
+inline procedural "cic:/CoRN/reals/iso_CReals/f12_as_Homomorphism.con" as definition.
+
+inline procedural "cic:/CoRN/reals/iso_CReals/g21_as_Homomorphism.con" as definition.
+
+inline procedural "cic:/CoRN/reals/iso_CReals/f12_inverse_lft.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/iso_CReals/g21_inverse_rht.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/iso_CReals/Canonic_Isomorphism_between_CReals.con" as definition.
+
+(* UNEXPORTED
+End Concrete_iso_between_Creals
+*)
+
+(* end hide *)
+

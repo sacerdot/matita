@@ -1,0 +1,58 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: ClassicalDescription.v,v 1.7.2.1 2004/07/16 19:31:06 herbelin Exp $ i*)
+
+(*#* This file provides classical logic and definite description *)
+
+(*#* Classical logic and definite description, as shown in [1],
+    implies the double-negation of excluded-middle in Set, hence it
+    implies a strongly classical world. Especially it conflicts with
+    impredicativity of Set, knowing that true<>false in Set.
+
+    [1] Laurent Chicli, Lo\239\c Pottier, Carlos Simpson, Mathematical
+    Quotients and Quotient Types in Coq, Proceedings of TYPES 2002,
+    Lecture Notes in Computer Science 2646, Springer Verlag.
+*)
+
+include "Logic/Classical.ma".
+
+inline procedural "cic:/Coq/Logic/ClassicalDescription/dependent_description.con".
+
+(*#* Principle of definite descriptions (aka axiom of unique choice) *)
+
+inline procedural "cic:/Coq/Logic/ClassicalDescription/description.con" as theorem.
+
+(*#* The followig proof comes from [1] *)
+
+inline procedural "cic:/Coq/Logic/ClassicalDescription/classic_set.con" as theorem.
+

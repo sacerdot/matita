@@ -1,0 +1,138 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i 	     $Id: Adist.v,v 1.9.2.1 2004/07/16 19:31:04 herbelin Exp $	      i*)
+
+include "Bool/Bool.ma".
+
+include "ZArith/ZArith.ma".
+
+include "Arith/Arith.ma".
+
+include "Arith/Min.ma".
+
+include "IntMap/Addr.ma".
+
+inline procedural "cic:/Coq/IntMap/Adist/ad_plength_1.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Adist/natinf.ind".
+
+inline procedural "cic:/Coq/IntMap/Adist/ad_plength.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Adist/ad_plength_infty.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adist/ad_plength_zeros.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adist/ad_plength_one.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adist/ad_plength_first_one.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adist/ni_min.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Adist/ni_min_idemp.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adist/ni_min_comm.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adist/ni_min_assoc.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adist/ni_min_O_l.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adist/ni_min_O_r.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adist/ni_min_inf_l.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adist/ni_min_inf_r.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adist/ni_le.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Adist/ni_le_refl.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adist/ni_le_antisym.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adist/ni_le_trans.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adist/ni_le_min_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adist/ni_le_min_2.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adist/ni_min_case.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adist/ni_le_total.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adist/ni_le_min_induc.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adist/le_ni_le.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adist/ni_le_le.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adist/ad_plength_lb.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adist/ad_plength_ub.con" as lemma.
+
+(*#* We define an ultrametric distance between addresses: 
+    $d(a,a')=1/2^pd(a,a')$, 
+    where $pd(a,a')$ is the number of identical bits at the beginning 
+    of $a$ and $a'$ (infinity if $a=a'$).  
+    Instead of working with $d$, we work with $pd$, namely
+    [ad_pdist]: *)
+
+inline procedural "cic:/Coq/IntMap/Adist/ad_pdist.con" as definition.
+
+(*#* d is a distance, so $d(a,a')=0$ iff $a=a'$; this means that
+    $pd(a,a')=infty$ iff $a=a'$: *)
+
+inline procedural "cic:/Coq/IntMap/Adist/ad_pdist_eq_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adist/ad_pdist_eq_2.con" as lemma.
+
+(*#* $d$ is a distance, so $d(a,a')=d(a',a)$: *)
+
+inline procedural "cic:/Coq/IntMap/Adist/ad_pdist_comm.con" as lemma.
+
+(*#* $d$ is an ultrametric distance, that is, not only $d(a,a')\leq
+    d(a,a'')+d(a'',a')$,
+  but in fact $d(a,a')\leq max(d(a,a''),d(a'',a'))$.
+  This means that $min(pd(a,a''),pd(a'',a'))<=pd(a,a')$ (lemma [ad_pdist_ultra] below).
+  This follows from the fact that $a ~Ra~|a| = 1/2^{\texttt{ad\_plength}}(a))$
+  is an ultrametric norm, i.e. that $|a-a'| \leq max (|a-a''|, |a''-a'|)$,
+  or equivalently that $|a+b|<=max(|a|,|b|)$, i.e. that
+  min $(\texttt{ad\_plength}(a), \texttt{ad\_plength}(b)) \leq 
+  \texttt{ad\_plength} (a~\texttt{xor}~ b)$
+  (lemma [ad_plength_ultra]).
+*)
+
+inline procedural "cic:/Coq/IntMap/Adist/ad_plength_ultra_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adist/ad_plength_ultra.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adist/ad_pdist_ultra.con" as lemma.
+

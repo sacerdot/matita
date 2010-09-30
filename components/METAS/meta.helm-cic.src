@@ -1,0 +1,5 @@
+requires="helm-urimanager helm-xml expat"
+version="0.0.1"
+archive(byte)="cic.cma"
+archive(native)="cic.cmxa"
+linkopts=""

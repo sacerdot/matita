@@ -1,0 +1,9 @@
+preamble.ma datatypes/bool.ma datatypes/constructors.ma logic/connectives.ma
+Class/eq.ma Class/defs.ma
+Domain/defs.ma Class/defs.ma
+Domain/data.ma Domain/defs.ma
+Subset/defs.ma Domain/defs.ma
+Class/defs.ma preamble.ma
+datatypes/bool.ma 
+datatypes/constructors.ma 
+logic/connectives.ma 

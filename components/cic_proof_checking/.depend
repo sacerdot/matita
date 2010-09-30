@@ -1,0 +1,38 @@
+cicLogger.cmi: 
+cicEnvironment.cmi: 
+cicPp.cmi: 
+cicUnivUtils.cmi: 
+cicSubstitution.cmi: 
+cicMiniReduction.cmi: 
+cicReduction.cmi: 
+cicTypeChecker.cmi: 
+freshNamesGenerator.cmi: 
+cicDischarge.cmi: 
+cicLogger.cmo: cicLogger.cmi 
+cicLogger.cmx: cicLogger.cmi 
+cicEnvironment.cmo: cicEnvironment.cmi 
+cicEnvironment.cmx: cicEnvironment.cmi 
+cicPp.cmo: cicEnvironment.cmi cicPp.cmi 
+cicPp.cmx: cicEnvironment.cmx cicPp.cmi 
+cicUnivUtils.cmo: cicEnvironment.cmi cicUnivUtils.cmi 
+cicUnivUtils.cmx: cicEnvironment.cmx cicUnivUtils.cmi 
+cicSubstitution.cmo: cicEnvironment.cmi cicSubstitution.cmi 
+cicSubstitution.cmx: cicEnvironment.cmx cicSubstitution.cmi 
+cicMiniReduction.cmo: cicSubstitution.cmi cicMiniReduction.cmi 
+cicMiniReduction.cmx: cicSubstitution.cmx cicMiniReduction.cmi 
+cicReduction.cmo: cicSubstitution.cmi cicPp.cmi cicEnvironment.cmi \
+    cicReduction.cmi 
+cicReduction.cmx: cicSubstitution.cmx cicPp.cmx cicEnvironment.cmx \
+    cicReduction.cmi 
+cicTypeChecker.cmo: cicUnivUtils.cmi cicSubstitution.cmi cicReduction.cmi \
+    cicPp.cmi cicLogger.cmi cicEnvironment.cmi cicTypeChecker.cmi 
+cicTypeChecker.cmx: cicUnivUtils.cmx cicSubstitution.cmx cicReduction.cmx \
+    cicPp.cmx cicLogger.cmx cicEnvironment.cmx cicTypeChecker.cmi 
+freshNamesGenerator.cmo: cicTypeChecker.cmi cicSubstitution.cmi \
+    freshNamesGenerator.cmi 
+freshNamesGenerator.cmx: cicTypeChecker.cmx cicSubstitution.cmx \
+    freshNamesGenerator.cmi 
+cicDischarge.cmo: cicTypeChecker.cmi cicSubstitution.cmi cicEnvironment.cmi \
+    cicDischarge.cmi 
+cicDischarge.cmx: cicTypeChecker.cmx cicSubstitution.cmx cicEnvironment.cmx \
+    cicDischarge.cmi 

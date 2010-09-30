@@ -1,0 +1,64 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Classical_Pred_Type.v,v 1.6.2.1 2004/07/16 19:31:06 herbelin Exp $ i*)
+
+(*#* Classical Predicate Logic on Type *)
+
+include "Logic/Classical_Prop.ma".
+
+(* UNEXPORTED
+Section Generic
+*)
+
+(* UNEXPORTED
+cic:/Coq/Logic/Classical_Pred_Type/Generic/U.var
+*)
+
+(*#* de Morgan laws for quantifiers *)
+
+inline procedural "cic:/Coq/Logic/Classical_Pred_Type/not_all_ex_not.con" as lemma.
+
+inline procedural "cic:/Coq/Logic/Classical_Pred_Type/not_all_not_ex.con" as lemma.
+
+inline procedural "cic:/Coq/Logic/Classical_Pred_Type/not_ex_all_not.con" as lemma.
+
+inline procedural "cic:/Coq/Logic/Classical_Pred_Type/not_ex_not_all.con" as lemma.
+
+inline procedural "cic:/Coq/Logic/Classical_Pred_Type/ex_not_not_all.con" as lemma.
+
+inline procedural "cic:/Coq/Logic/Classical_Pred_Type/all_not_not_ex.con" as lemma.
+
+(* UNEXPORTED
+End Generic
+*)
+

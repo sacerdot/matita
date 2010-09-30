@@ -1,0 +1,76 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Max.v,v 1.7.2.1 2004/07/16 19:31:00 herbelin Exp $ i*)
+
+include "Arith/Arith.ma".
+
+(* UNEXPORTED
+Open Local Scope nat_scope.
+*)
+
+(* UNEXPORTED
+Implicit Types m n : nat.
+*)
+
+(*#* maximum of two natural numbers *)
+
+inline procedural "cic:/Coq/Arith/Max/max.con" as definition.
+
+(*#* Simplifications of [max] *)
+
+inline procedural "cic:/Coq/Arith/Max/max_SS.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Max/max_comm.con" as lemma.
+
+(*#* [max] and [le] *)
+
+inline procedural "cic:/Coq/Arith/Max/max_l.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Max/max_r.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Max/le_max_l.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Max/le_max_r.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve max_r max_l le_max_l le_max_r: arith v62.
+*)
+
+(*#* [max n m] is equal to [n] or [m] *)
+
+inline procedural "cic:/Coq/Arith/Max/max_dec.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Max/max_case.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Max/max_case2.con" as lemma.
+

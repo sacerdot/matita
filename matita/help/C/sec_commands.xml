@@ -1,0 +1,588 @@
+
+<!-- ============ Commands ====================== -->
+<chapter id="sec_commands">
+ <title>Other commands</title>
+ <sect1 id="command_alias">
+   <title>alias</title>
+   <para><userinput>alias id &quot;s&quot; = &quot;def&quot;</userinput></para>
+   <para><userinput>alias symbol &quot;s&quot; (instance n) = &quot;def&quot;</userinput></para>
+   <para><userinput>alias num (instance n) = &quot;def&quot;</userinput></para>
+   <para>
+     <variablelist>
+       <varlistentry>
+         <term>Synopsis:</term>
+         <listitem>
+           <para><emphasis role="bold">alias</emphasis>
+            [<emphasis role="bold">id</emphasis> &qstring; <emphasis role="bold">=</emphasis> &qstring;
+            | <emphasis role="bold">symbol</emphasis> &qstring; [<emphasis role="bold">(instance</emphasis> &nat;<emphasis role="bold">)</emphasis>] <emphasis role="bold">=</emphasis> &qstring;
+            | <emphasis role="bold">num</emphasis> [<emphasis role="bold">(instance</emphasis> &nat;<emphasis role="bold">)</emphasis>] <emphasis role="bold">=</emphasis> &qstring;
+            ]
+           </para>
+         </listitem>
+       </varlistentry>
+       <varlistentry>
+         <term>Action:</term>
+         <listitem>
+           <para>Used to give an hint to the disambiguating parser.
+            When the parser is faced to the identifier (or symbol)
+            <command>s</command> or to any number, it will prefer
+            interpretations that &quot;map <command>s</command> (or the
+            number) to <command>def</command>&quot;. For identifiers,
+            &quot;def&quot; is the URI of the interpretation.
+            E.g.: <command>cic:/matita/nat/nat.ind#xpointer(1/1/1)</command>
+            for the first constructor of the first inductive type defined
+            in the block of inductive type(s)
+            <command>cic:/matita/nat/nat.ind</command>.
+            For symbols and numbers, &quot;def&quot; is the label used to
+            mark the wanted
+            <link linkend="interpretation">interpretation</link>.
+           </para>
+          <para>When a symbol or a number occurs several times in the
+           term to be parsed, it is possible to give an hint only for the
+           instance <command>n</command>. When the instance is omitted,
+           the hint is valid for every occurrence.
+          </para>
+          <para>
+           Hints are automatically inserted in the script by Matita every
+           time the user is interactively asked a question to disambiguate
+           a term. This way the user won't be posed the same question twice
+           when the script will be executed again.</para>
+         </listitem>
+       </varlistentry>
+     </variablelist>
+   </para>
+ </sect1>
+ <sect1 id="command_check">
+   <title>check</title>
+   <para><userinput>check t</userinput></para>
+   <para>
+     <variablelist>
+       <varlistentry>
+         <term>Synopsis:</term>
+         <listitem>
+           <para><emphasis role="bold">check</emphasis> &term;</para>
+         </listitem>
+       </varlistentry>
+       <varlistentry>
+         <term>Action:</term>
+         <listitem>
+           <para>Opens a CIC browser window that shows <command>t</command>
+            together with its type. The command is immediately removed from
+            the script.</para>
+         </listitem>
+       </varlistentry>
+     </variablelist>
+   </para>
+ </sect1>
+ <sect1 id="command_eval">
+   <title>eval</title>
+   <para><userinput>eval red on t</userinput></para>
+   <para>
+     <variablelist>
+       <varlistentry>
+         <term>Synopsis:</term>
+         <listitem>
+           <para><emphasis role="bold">eval</emphasis> 
+            &reduction-kind; 
+             <emphasis role="bold">on</emphasis>
+             &term;</para>
+         </listitem>
+       </varlistentry>
+       <varlistentry>
+         <term>Action:</term>
+         <listitem>
+           <para>Opens a CIC browser window that shows 
+             the reduct of 
+             <command>t</command>
+             together with its type.</para>
+         </listitem>
+       </varlistentry>
+     </variablelist>
+   </para>
+ </sect1>
+ <sect1 id="command_prefer_coercion">
+   <title>prefer coercion</title>
+   <para><userinput>prefer coercion u</userinput></para>
+   <para>
+     <variablelist>
+       <varlistentry>
+         <term>Synopsis:</term>
+         <listitem>
+		 <para>
+			 <emphasis role="bold">prefer coercion</emphasis> 
+       (&uri; | &term;)
+		 </para>
+         </listitem>
+       </varlistentry>
+       <varlistentry>
+         <term>Action:</term>
+         <listitem>
+           <para>The already declared coercion <command>u</command> 
+             is preferred to other coercions with the same source and target.
+           </para>
+         </listitem>
+       </varlistentry>
+     </variablelist>
+   </para>
+ </sect1>
+ <sect1 id="command_coercion">
+   <title>coercion</title>
+   <para><userinput>coercion u with ariety saturation nocomposites</userinput></para>
+   <para>
+     <variablelist>
+       <varlistentry>
+         <term>Synopsis:</term>
+         <listitem>
+		 <para>
+			 <emphasis role="bold">coercion</emphasis> 
+			 (&uri; | &term; <emphasis role="bold">with</emphasis>)
+			 [ &nat; [&nat;]] 
+			 [ <emphasis role="bold">nocomposites</emphasis> ]
+		 </para>
+         </listitem>
+       </varlistentry>
+       <varlistentry>
+         <term>Action:</term>
+         <listitem>
+		 <para>Declares <command>u</command> as an implicit coercion.
+		 If the type of <command>u</command> is 	
+		 <command>∀x1:T1. … ∀x(n-1):T(n-1).Tn</command> the coercion target is
+		 <command>T(n - ariety)</command> while its source is 
+		 <command>T(n - ariety - saturation - 1)</command>.
+	    Every time a term <command>x</command>
+            of type source is used with expected type target, Matita
+            automatically replaces <command>x</command> with
+            <command>(u ? … ? x ? … ?)</command> to avoid a typing error.</para>
+            Note that the number of <command>?</command> added after 
+	    <command>x</command> is saturation.
+           <para>Implicit coercions are not displayed to the user:
+            <command>(u ? … ? x)</command> is rendered simply
+            as <command>x</command>.</para>
+           <para>When a coercion <command>u</command> is declared
+            from source <command>s</command> to target <command>t</command>
+            and there is already a coercion <command>u'</command> of
+            target <command>s</command> or source <command>t</command>,
+            a composite implicit coercion is automatically computed
+	    by Matita unless <emphasis role="bold">nocomposites</emphasis> 
+	    is specified.</para>
+         </listitem>
+       </varlistentry>
+     </variablelist>
+   </para>
+ </sect1>
+ <sect1 id="command_default">
+   <title>default</title>
+   <para><userinput>default &quot;s&quot; u<subscript>1</subscript> … u<subscript>n</subscript></userinput></para>
+   <para>
+     <variablelist>
+       <varlistentry>
+         <term>Synopsis:</term>
+         <listitem>
+           <para><emphasis role="bold">default</emphasis>
+            &qstring; &uri; [&uri;]…
+           </para>
+         </listitem>
+       </varlistentry>
+       <varlistentry>
+         <term>Action:</term>
+         <listitem>
+           <para>It registers a cluster of related definitions and
+            theorems to be used by tactics and the rendering engine.
+            Some functionalities of Matita are not available when some
+            clusters have not been registered. Overloading a cluster
+            registration is possible: the last registration will be the
+            default one, but the previous ones are still in effect.</para>
+           <para>
+            <command>s</command> is an identifier of the cluster and
+            <command>u<subscript>1</subscript> … u<subscript>n</subscript></command>
+            are the URIs of the definitions and theorems of the cluster.
+            The number <command>n</command> of required URIs depends on the
+            cluster. The following clusters are supported.
+           </para>
+           <table>
+            <title>clusters</title>
+            <tgroup cols="6">
+            <thead>
+             <row>
+              <entry>name</entry>
+              <entry>expected object for 1st URI</entry>
+              <entry>expected object for 2nd URI</entry>
+              <entry>expected object for 3rd URI</entry>
+              <entry>expected object for 4th URI</entry>
+              <entry>expected object for 5th URI</entry>
+              <entry>expected object for 6th URI</entry>
+              <entry>expected object for 7th URI</entry>
+              <entry>expected object for 8th URI</entry>
+              <entry>expected object for 9th URI</entry>
+              <entry>expected object for 10th URI</entry>
+              <entry>expected object for 11th URI</entry>
+             </row>
+            </thead>
+            <tbody>
+             <row>
+              <entry>equality</entry>
+              <entry>an inductive type (say, of type <command>eq</command>) of type ∀A:Type.A <emphasis role="bold">→</emphasis> <emphasis role="bold">Prop</emphasis> with one family parameter and one constructor of type ∀x:A.eq A x</entry>
+              <entry>a theorem of type <emphasis role="bold">∀</emphasis>A.<emphasis role="bold">∀</emphasis>x,y:A.eq A x y <emphasis role="bold">→</emphasis> eq A y x</entry>
+              <entry>a theorem of type <emphasis role="bold">∀</emphasis>A.<emphasis role="bold">∀</emphasis>x,y,z:A.eq A x y <emphasis role="bold">→</emphasis> eq A y z <emphasis role="bold">→</emphasis> eq A x z</entry>
+              <entry><emphasis role="bold">∀</emphasis>A.<emphasis role="bold">∀</emphasis>a.<emphasis role="bold">∀</emphasis> P:A <emphasis role="bold">→</emphasis> <emphasis role="bold">Prop</emphasis>.P x <emphasis role="bold">→</emphasis> <emphasis role="bold">∀</emphasis>y.eq A x y <emphasis role="bold">→</emphasis> P y</entry>
+              <entry><emphasis role="bold">∀</emphasis>A.<emphasis role="bold">∀</emphasis>a.<emphasis role="bold">∀</emphasis> P:A <emphasis role="bold">→</emphasis> <emphasis role="bold">Prop</emphasis>.P x <emphasis role="bold">→</emphasis> <emphasis role="bold">∀</emphasis>y.eq A y x <emphasis role="bold">→</emphasis> P y</entry>
+              <entry><emphasis role="bold">∀</emphasis>A.<emphasis role="bold">∀</emphasis>a.<emphasis role="bold">∀</emphasis> P:A <emphasis role="bold">→</emphasis> <emphasis role="bold">Set</emphasis>.P x <emphasis role="bold">→</emphasis> <emphasis role="bold">∀</emphasis>y.eq A x y <emphasis role="bold">→</emphasis> P y</entry>
+              <entry><emphasis role="bold">∀</emphasis>A.<emphasis role="bold">∀</emphasis>a.<emphasis role="bold">∀</emphasis> P:A <emphasis role="bold">→</emphasis> <emphasis role="bold">Set</emphasis>.P x <emphasis role="bold">→</emphasis> <emphasis role="bold">∀</emphasis>y.eq A y x <emphasis role="bold">→</emphasis> P y</entry>
+              <entry><emphasis role="bold">∀</emphasis>A.<emphasis role="bold">∀</emphasis>a.<emphasis role="bold">∀</emphasis> P:A <emphasis role="bold">→</emphasis> <emphasis role="bold">Type</emphasis>.P x <emphasis role="bold">→</emphasis> <emphasis role="bold">∀</emphasis>y.eq A x y <emphasis role="bold">→</emphasis> P y</entry>
+              <entry><emphasis role="bold">∀</emphasis>A.<emphasis role="bold">∀</emphasis>a.<emphasis role="bold">∀</emphasis> P:A <emphasis role="bold">→</emphasis> <emphasis role="bold">Type</emphasis>.P x <emphasis role="bold">→</emphasis> <emphasis role="bold">∀</emphasis>y.eq A y x <emphasis role="bold">→</emphasis> P y</entry>
+              <entry><emphasis role="bold">∀</emphasis>A.<emphasis role="bold">∀</emphasis>B.<emphasis role="bold">∀</emphasis> f:A <emphasis role="bold">→</emphasis> B.<emphasis role="bold">∀</emphasis>x,y:A.eq A x y <emphasis role="bold">→</emphasis> eq B (f x) (f y)</entry>
+              <entry><emphasis role="bold">∀</emphasis>A.<emphasis role="bold">∀</emphasis>B.<emphasis role="bold">∀</emphasis> f:A <emphasis role="bold">→</emphasis> B.<emphasis role="bold">∀</emphasis>x,y:A.eq A x y <emphasis role="bold">→</emphasis> eq B (f y) (f x)</entry>
+             </row>
+             <row>
+              <entry>true</entry>
+              <entry>an inductive type of type <emphasis role="bold">Prop</emphasis> with only one constructor that has no arguments</entry>
+              <entry/>
+              <entry/>
+              <entry/>
+              <entry/>
+             </row>
+             <row>
+              <entry>false</entry>
+              <entry>an inductive type of type <emphasis role="bold">Prop</emphasis> without constructors</entry>
+              <entry/>
+              <entry/>
+              <entry/>
+              <entry/>
+             </row>
+             <row>
+              <entry>absurd</entry>
+              <entry>a theorem of type <emphasis role="bold">∀</emphasis>A:Prop.<emphasis role="bold">∀</emphasis>B:Prop.A <emphasis role="bold">→</emphasis> Not A <emphasis role="bold">→</emphasis> B</entry>
+              <entry/>
+              <entry/>
+              <entry/>
+              <entry/>
+             </row>
+            </tbody>
+            </tgroup>
+           </table>
+         </listitem>
+       </varlistentry>
+     </variablelist>
+   </para>
+ </sect1>
+ <sect1 id="command_hint">
+   <title>hint</title>
+   <para><userinput>hint</userinput></para>
+   <para>
+     <variablelist>
+       <varlistentry>
+         <term>Synopsis:</term>
+         <listitem>
+           <para><emphasis role="bold">hint</emphasis>
+           </para>
+         </listitem>
+       </varlistentry>
+       <varlistentry>
+         <term>Action:</term>
+         <listitem>
+           <para>Displays a list of theorems that can be successfully
+            applied to the current selected sequent. The command is
+            removed from the script, but the window that displays the
+            theorems allow to add to the script the application of the
+            selected theorem.
+           </para>
+         </listitem>
+       </varlistentry>
+     </variablelist>
+   </para>
+ </sect1>
+ <sect1 id="command_include">
+   <title>include</title>
+   <para><userinput>include &quot;s&quot;</userinput></para>
+   <para>
+     <variablelist>
+       <varlistentry>
+         <term>Synopsis:</term>
+         <listitem>
+           <para><emphasis role="bold">include</emphasis> &qstring;</para>
+         </listitem>
+       </varlistentry>
+       <varlistentry>
+         <term>Action:</term>
+         <listitem>
+           <para>Every <link linkend="command_coercion">coercion</link>,
+            <link linkend="notation">notation</link> and
+            <link linkend="interpretation">interpretation</link> that was active
+            when the file <command>s</command> was compiled last time
+            is made active. The same happens for declarations of
+            <link linkend="command_default">default definitions and
+            theorems</link> and disambiguation
+            hints (<link linkend="command_alias">aliases</link>).
+            On the contrary, theorem and definitions declared in a file can be
+           immediately used without including it.</para>
+          <para>The file <command>s</command> is automatically compiled
+	  if it is not compiled yet.
+          </para>
+         </listitem>
+       </varlistentry>
+     </variablelist>
+   </para>
+ </sect1>
+ <sect1 id="command_include_first">
+   <title>include' &quot;s&quot;</title>
+   <para><userinput></userinput></para>
+   <para>
+     <variablelist>
+       <varlistentry>
+         <term>Synopsis:</term>
+         <listitem>
+           <para><emphasis role="bold">include'</emphasis> &qstring;</para>
+         </listitem>
+       </varlistentry>
+       <varlistentry>
+         <term>Action:</term>
+         <listitem>
+           <para>Not documented (&TODO;), do not use it.</para>
+         </listitem>
+       </varlistentry>
+     </variablelist>
+   </para>
+ </sect1>
+ <sect1 id="command_whelp">
+   <title>whelp</title>
+   <para><userinput>whelp locate &quot;s&quot;</userinput></para>
+   <para><userinput>whelp hint t</userinput></para>
+   <para><userinput>whelp elim t</userinput></para>
+   <para><userinput>whelp match t</userinput></para>
+   <para><userinput>whelp instance t</userinput></para>
+   <para>
+     <variablelist>
+       <varlistentry>
+         <term>Synopsis:</term>
+         <listitem>
+           <para><emphasis role="bold">whelp</emphasis>
+            [<emphasis role="bold">locate</emphasis> &qstring;
+            | <emphasis role="bold">hint</emphasis> &term;
+            | <emphasis role="bold">elim</emphasis> &term;
+            | <emphasis role="bold">match</emphasis> &term;
+            | <emphasis role="bold">instance</emphasis> &term;
+            ]
+           </para>
+         </listitem>
+       </varlistentry>
+       <varlistentry>
+         <term>Action:</term>
+         <listitem>
+           <para>Performs the corresponding <link linkend="whelp">query</link>,
+            showing the result in the CIC browser. The command is removed
+            from the script.
+           </para>
+         </listitem>
+       </varlistentry>
+     </variablelist>
+   </para>
+ </sect1>
+ <sect1 id="command_qed">
+   <title>qed</title>
+   <para><userinput>qed</userinput></para>
+   <para>
+     <variablelist>
+       <varlistentry>
+         <term>Synopsis:</term>
+         <listitem>
+           <para><emphasis role="bold">qed</emphasis>
+           </para>
+         </listitem>
+       </varlistentry>
+       <varlistentry>
+         <term>Action:</term>
+         <listitem>
+           <para>Saves and indexes the current interactive theorem or
+            definition.
+            In order to do this, the set of sequents still to be proved
+            must be empty.</para>
+         </listitem>
+       </varlistentry>
+     </variablelist>
+   </para>
+ </sect1>
+ 
+ <sect1 id="command_inline">
+   <title>inline</title>
+   <para><userinput>inline &quot;s&quot; params</userinput></para>
+   <para>
+     <variablelist>
+       <varlistentry>
+         <term>Synopsis:</term>
+         <listitem>
+           <para>
+	     <emphasis role="bold">inline</emphasis> &qstring; &inlineparams;
+           </para>
+         </listitem>
+       </varlistentry>
+       <varlistentry>
+         <term>Action:</term>
+         <listitem>
+           <para>Inlines a representation of the item <command>s</command>,
+which can be the URI of a HELM object. If an entire HELM directory (i.e. a base
+URI) or the path of a *.ma source file is provided, all the contained objects
+are represented in a row.
+If the inlined object has a proof, this proof is represented in several ways
+depending on the provided parameters.</para>
+         </listitem>
+       </varlistentry>
+     </variablelist>
+   </para>
+   
+    <sect2 id="inline-params">
+    <title>inline-params</title>
+    <table frame="topbot" rowsep="0" colsep="0" role="grammar">
+      <title>inline-params</title>
+      <tgroup cols="4">
+      <tbody>
+       <row>
+	<entry id="grammar.inlineparams">&inlineparams;</entry>
+	<entry>::=</entry>
+        <entry>[&inlineparam; [&inlineparam;] … ]</entry>
+       </row>
+      </tbody>
+     </tgroup>
+    </table>
+    <table frame="topbot" rowsep="0" colsep="0" role="grammar">
+      <title>inline-param</title>
+      <tgroup cols="4">
+      <tbody>
+       
+       <row>
+	<entry id="grammar.inlineparam">&inlineparam;</entry>
+	<entry>::=</entry>
+	<entry><emphasis role="bold">axiom</emphasis></entry>
+        <entry>Try to give an <link linkend="axiom">axiom</link> flavour
+           (bodies are omitted even if present) 
+	</entry>
+       </row>
+
+       <row>
+        <entry/>
+        <entry>|</entry>	
+	<entry><emphasis role="bold">definition</emphasis></entry>
+        <entry>Try give a <link linkend="definition">definition</link> flavour
+	</entry>
+       </row>
+
+       <row>
+        <entry/>
+        <entry>|</entry>	
+	<entry><emphasis role="bold">theorem</emphasis></entry>
+        <entry>Try give a <link linkend="theorem">theorem</link> flavour
+	</entry>
+       </row>
+
+       <row>
+        <entry/>
+        <entry>|</entry>	
+	<entry><emphasis role="bold">lemma</emphasis></entry>
+        <entry>Try give a <link linkend="lemma">lemma</link> flavour
+	</entry>
+       </row>
+
+       <row>
+        <entry/>
+        <entry>|</entry>	
+	<entry><emphasis role="bold">remark</emphasis></entry>
+        <entry>Try give a <link linkend="remark">remark</link> flavour
+	</entry>
+       </row>
+
+       <row>
+        <entry/>
+        <entry>|</entry>	
+	<entry><emphasis role="bold">fact</emphasis></entry>
+        <entry>Try give a <link linkend="fact">fact</link> flavour
+	</entry>
+       </row>
+
+       <row>
+        <entry/>
+        <entry>|</entry>	
+	<entry><emphasis role="bold">variant</emphasis></entry>
+        <entry>Try give a <link linkend="variant">variant</link> flavour
+	       (implies <emphasis role="bold">plain</emphasis>)
+	</entry>
+       </row>
+
+       <row>
+        <entry/>
+        <entry>|</entry>	
+	<entry><emphasis role="bold">declarative</emphasis></entry>
+        <entry>Represent proofs using 
+           <link linkend="sec_declarative_tactics">declarative tactics</link>
+	   (this is the dafault and can be omitted)
+	</entry>
+       </row>
+       
+       <row>
+        <entry/>
+        <entry>|</entry>
+        <entry><emphasis role="bold">procedural</emphasis></entry>
+        <entry>Represent proofs using 
+           <link linkend="sec_tactics">procedural tactics</link>
+       	</entry>
+       </row>
+       
+       <row>
+        <entry/>
+        <entry>|</entry>
+        <entry><emphasis role="bold">plain</emphasis></entry>
+        <entry>Represent proofs using plain 
+	   <link linkend="tbl_terms">proof terms</link>
+	</entry>
+       </row>
+
+       <row>
+        <entry/>
+        <entry>|</entry>
+	<entry><emphasis role="bold">nodefaults</emphasis></entry>
+        <entry>
+	 Do not use the tactics depending on the
+	 <link linkend="command_default">default</link> command
+	   (<link linkend="tac_rewrite">rewrite</link>
+	    in the <emphasis role="bold">procedural</emphasis> mode)
+	</entry>
+       </row>
+
+       <row valign="top">
+        <entry/>
+        <entry>|</entry>
+	<entry><emphasis role="bold">level=&nat;</emphasis></entry>
+        <entry>
+	 Set the level of the procedural proof representation
+	 (the default is the highest level)
+         <itemizedlist>
+          <listitem>
+	   Tactics used at level 1:
+	    <link linkend="tac_exact">exact</link>
+	  </listitem>
+          <listitem>
+	   Additional tactics used at level 2:
+	    <link linkend="tac_letin">letin</link>,
+	    <link linkend="tac_cut">cut</link>,
+	    <link linkend="tac_change">change</link>,
+	    <link linkend="tac_intros">intros</link>,
+	    <link linkend="tac_apply">apply</link>,
+	    <link linkend="tac_elim">elim</link>,
+	    <link linkend="tac_cases">cases</link>,
+	    <link linkend="tac_rewrite">rewrite</link>
+          </listitem>
+         </itemizedlist>
+	</entry>
+       </row>
+
+       <row>
+        <entry/>
+        <entry>|</entry>
+	<entry><emphasis role="bold">depth=&nat;</emphasis></entry>
+        <entry>&TODO;</entry>
+       </row>
+      
+      </tbody>
+     </tgroup>
+    </table>
+    </sect2>   
+ </sect1>
+</chapter>

@@ -1,0 +1,8 @@
+grafiteAstPp.cmi: grafiteAst.cmo 
+grafiteMarshal.cmi: grafiteAst.cmo 
+grafiteAst.cmo: 
+grafiteAst.cmx: 
+grafiteAstPp.cmo: grafiteAst.cmo grafiteAstPp.cmi 
+grafiteAstPp.cmx: grafiteAst.cmx grafiteAstPp.cmi 
+grafiteMarshal.cmo: grafiteAstPp.cmi grafiteAst.cmo grafiteMarshal.cmi 
+grafiteMarshal.cmx: grafiteAstPp.cmx grafiteAst.cmx grafiteMarshal.cmi 

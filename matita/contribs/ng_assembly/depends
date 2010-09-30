@@ -1,0 +1,111 @@
+common/sigma.ma common/theory.ma
+compiler/preast_tree.ma common/string.ma compiler/ast_type.ma num/word32.ma
+emulator/opcodes/IP2022_pseudo.ma num/bool.ma
+emulator/status/HC08_status_lemmas.ma emulator/status/HC08_status.ma num/word16_lemmas.ma
+emulator/status/HC05_status_lemmas.ma emulator/status/HC05_status.ma num/word16_lemmas.ma
+emulator/multivm/multivm.ma emulator/multivm/Freescale_multivm.ma emulator/multivm/IP2022_multivm.ma emulator/read_write/fetch.ma
+emulator/translation/translation.ma emulator/translation/Freescale_translation.ma emulator/translation/IP2022_translation.ma
+num/word24.ma num/byte8.ma
+num/bool_lemmas.ma num/bool.ma
+emulator/multivm/multivm_lemmas.ma common/nat_lemmas.ma emulator/multivm/multivm.ma
+emulator/opcodes/IP2022_instr_mode.ma num/word16.ma
+common/string.ma common/ascii.ma common/list_utility.ma
+compiler/environment.ma common/string.ma compiler/ast_type.ma
+emulator/opcodes/HC08_table.ma common/list.ma emulator/opcodes/Freescale_instr_mode.ma emulator/opcodes/Freescale_pseudo.ma emulator/opcodes/byte_or_word.ma
+num/exadecim.ma common/prod.ma num/bool.ma num/oct.ma num/quatern.ma
+emulator/opcodes/IP2022_pseudo_lemmas.ma emulator/opcodes/IP2022_pseudo.ma num/bool_lemmas.ma
+common/list_utility.ma common/list.ma common/nat_lemmas.ma common/option.ma
+emulator/read_write/RS08_read_write.ma emulator/status/status_setter.ma
+num/byte8.ma common/nat.ma num/bitrigesim.ma num/comp_num.ma num/exadecim.ma
+emulator/read_write/IP2022_read_write.ma emulator/read_write/read_write_base.ma emulator/status/status_setter.ma
+emulator/model/RS08_model.ma emulator/status/status.ma
+emulator/status/RS08_status_lemmas.ma emulator/status/RS08_status.ma num/word16_lemmas.ma
+num/byte8_lemmas.ma num/byte8.ma num/comp_num_lemmas.ma num/exadecim_lemmas.ma
+num/oct_lemmas.ma num/bool_lemmas.ma num/oct.ma
+emulator/status/HC05_status.ma num/word16.ma
+num/bool.ma common/theory.ma
+emulator/model/HC05_model.ma emulator/status/status.ma
+emulator/tests/micro_tests_tools.ma common/list.ma num/word16.ma
+emulator/translation/Freescale_translation.ma emulator/translation/translation_base.ma
+emulator/opcodes/HC08_table_tests.ma emulator/opcodes/HC08_table.ma emulator/opcodes/pseudo.ma
+emulator/status/IP2022_status.ma emulator/memory/memory_struct.ma num/word16.ma num/word24.ma
+num/bitrigesim_lemmas.ma num/bitrigesim.ma num/bool_lemmas.ma
+emulator/status/status.ma emulator/memory/memory_abs.ma emulator/opcodes/pseudo.ma emulator/status/HC05_status.ma emulator/status/HC08_status.ma emulator/status/IP2022_status.ma emulator/status/RS08_status.ma
+emulator/memory/memory_bits.ma emulator/memory/memory_trees.ma
+emulator/opcodes/RS08_table_tests.ma emulator/opcodes/RS08_table.ma emulator/opcodes/pseudo.ma
+emulator/model/HCS08_model.ma emulator/status/status.ma
+emulator/read_write/Freescale_load_write.ma emulator/read_write/load_write_base.ma emulator/status/status_getter.ma
+num/quatern.ma num/bool.ma
+emulator/opcodes/Freescale_instr_mode.ma num/word16.ma
+common/nat_lemmas.ma common/nat.ma num/bool_lemmas.ma
+universe/universe.ma common/list.ma common/nat_lemmas.ma common/prod.ma
+emulator/translation/translation_base.ma common/option.ma emulator/opcodes/HC05_table.ma emulator/opcodes/HC08_table.ma emulator/opcodes/HCS08_table.ma emulator/opcodes/IP2022_table.ma emulator/opcodes/RS08_table.ma emulator/opcodes/pseudo.ma
+num/word16_lemmas.ma num/byte8_lemmas.ma num/word16.ma
+emulator/read_write/IP2022_load_write.ma emulator/read_write/load_write_base.ma emulator/status/status_getter.ma
+emulator/tests/micro_tests2.ma emulator/multivm/multivm.ma emulator/status/status_lemmas.ma emulator/tests/micro_tests_tools.ma
+emulator/memory/memory_trees.ma common/list.ma common/option.ma emulator/memory/memory_struct.ma num/word32.ma
+common/nat.ma num/bool.ma
+emulator/status/RS08_status.ma num/word16.ma
+compiler/ast_type_lemmas.ma common/list_utility_lemmas.ma compiler/ast_type.ma
+common/string_lemmas.ma common/ascii_lemmas.ma common/list_utility_lemmas.ma common/string.ma
+emulator/status/IP2022_status_lemmas.ma emulator/memory/memory_struct_lemmas.ma emulator/status/IP2022_status.ma num/oct_lemmas.ma num/word16_lemmas.ma num/word24_lemmas.ma
+num/comp_num.ma num/exadecim.ma
+emulator/status/status_setter.ma emulator/status/status.ma
+emulator/multivm/IP2022_multivm.ma emulator/multivm/multivm_base.ma emulator/read_write/load_write.ma
+num/quatern_lemmas.ma num/bool_lemmas.ma num/quatern.ma
+common/list.ma common/theory.ma
+emulator/opcodes/HCS08_table.ma common/list.ma emulator/opcodes/Freescale_instr_mode.ma emulator/opcodes/Freescale_pseudo.ma emulator/opcodes/byte_or_word.ma
+emulator/opcodes/HC05_table_tests.ma emulator/opcodes/HC05_table.ma emulator/opcodes/pseudo.ma
+common/ascii.ma num/bool.ma
+num/exadecim_lemmas.ma num/bool_lemmas.ma num/exadecim.ma
+emulator/memory/memory_struct_lemmas.ma emulator/memory/memory_struct.ma num/bool_lemmas.ma
+emulator/opcodes/IP2022_table.ma common/list.ma emulator/opcodes/IP2022_instr_mode.ma emulator/opcodes/IP2022_pseudo.ma emulator/opcodes/byte_or_word.ma
+num/oct.ma num/bool.ma
+num/word32.ma num/word16.ma
+emulator/model/IP2022_model.ma emulator/status/status.ma
+emulator/tests/micro_tests1.ma emulator/multivm/multivm.ma emulator/status/status_lemmas.ma emulator/tests/micro_tests_tools.ma
+emulator/read_write/read_write_base.ma common/theory.ma
+num/word16.ma num/byte8.ma
+emulator/opcodes/Freescale_pseudo_lemmas.ma emulator/opcodes/Freescale_pseudo.ma num/bool_lemmas.ma
+emulator/model/model.ma emulator/model/HC05_model.ma emulator/model/HC08_model.ma emulator/model/HCS08_model.ma emulator/model/IP2022_model.ma emulator/model/RS08_model.ma
+num/word24_lemmas.ma num/byte8_lemmas.ma num/word24.ma
+emulator/opcodes/IP2022_table_tests.ma emulator/opcodes/IP2022_table.ma emulator/opcodes/pseudo.ma
+common/prod.ma num/bool.ma
+common/option.ma num/bool.ma
+emulator/tests/medium_tests.ma common/list_utility.ma common/nat_to_num.ma emulator/tests/medium_tests_tools.ma
+emulator/translation/IP2022_translation.ma emulator/translation/translation_base.ma
+emulator/multivm/multivm_base.ma common/theory.ma emulator/status/status_setter.ma
+num/comp_num_lemmas.ma num/bool_lemmas.ma num/comp_num.ma
+emulator/memory/memory_func.ma common/list.ma common/option.ma emulator/memory/memory_struct.ma num/word32.ma
+emulator/model/HC08_model.ma emulator/status/status.ma
+emulator/status/status_getter.ma emulator/status/status_setter.ma
+common/ascii_lemmas.ma common/ascii.ma num/bool_lemmas.ma
+emulator/multivm/Freescale_multivm.ma emulator/multivm/multivm_base.ma emulator/read_write/load_write.ma
+emulator/read_write/read_write.ma emulator/read_write/IP2022_read_write.ma emulator/read_write/RS08_read_write.ma
+emulator/memory/memory_struct.ma num/byte8.ma num/oct.ma
+common/list_utility_lemmas.ma common/list_lemmas.ma common/list_utility.ma
+common/nat_to_num.ma common/nat.ma num/word32.ma
+emulator/read_write/fetch.ma emulator/memory/memory_abs.ma emulator/status/status_getter.ma emulator/translation/translation.ma
+compiler/ast_type.ma common/list_utility.ma
+emulator/opcodes/HC05_table.ma common/list.ma emulator/opcodes/Freescale_instr_mode.ma emulator/opcodes/Freescale_pseudo.ma emulator/opcodes/byte_or_word.ma
+emulator/status/HC08_status.ma num/word16.ma
+common/prod_lemmas.ma common/prod.ma num/bool_lemmas.ma
+test_errori.ma 
+emulator/memory/memory_abs.ma emulator/memory/memory_bits.ma emulator/memory/memory_func.ma emulator/memory/memory_trees.ma
+emulator/tests/medium_tests_tools.ma emulator/multivm/multivm.ma
+emulator/opcodes/Freescale_pseudo.ma num/bool.ma
+emulator/read_write/load_write_base.ma emulator/read_write/read_write.ma
+num/word32_lemmas.ma num/word16_lemmas.ma num/word32.ma
+emulator/read_write/load_write.ma emulator/read_write/Freescale_load_write.ma emulator/read_write/IP2022_load_write.ma
+emulator/opcodes/byte_or_word.ma num/word16.ma
+common/option_lemmas.ma common/option.ma num/bool_lemmas.ma
+emulator/opcodes/RS08_table.ma common/list.ma emulator/opcodes/Freescale_instr_mode.ma emulator/opcodes/Freescale_pseudo.ma emulator/opcodes/byte_or_word.ma
+num/bitrigesim.ma num/bool.ma
+common/theory.ma 
+emulator/opcodes/pseudo.ma common/list.ma emulator/opcodes/Freescale_instr_mode.ma emulator/opcodes/Freescale_pseudo.ma emulator/opcodes/IP2022_instr_mode.ma emulator/opcodes/IP2022_pseudo.ma emulator/opcodes/byte_or_word.ma
+emulator/opcodes/Freescale_instr_mode_lemmas.ma emulator/opcodes/Freescale_instr_mode.ma num/bitrigesim_lemmas.ma num/bool_lemmas.ma num/exadecim_lemmas.ma num/oct_lemmas.ma
+emulator/status/status_lemmas.ma common/option_lemmas.ma common/prod_lemmas.ma emulator/opcodes/pseudo_lemmas.ma emulator/status/HC05_status_lemmas.ma emulator/status/HC08_status_lemmas.ma emulator/status/IP2022_status_lemmas.ma emulator/status/RS08_status_lemmas.ma emulator/status/status.ma
+common/list_lemmas.ma common/list.ma
+emulator/opcodes/pseudo_lemmas.ma emulator/opcodes/Freescale_instr_mode_lemmas.ma emulator/opcodes/Freescale_pseudo_lemmas.ma emulator/opcodes/IP2022_instr_mode_lemmas.ma emulator/opcodes/IP2022_pseudo_lemmas.ma emulator/opcodes/pseudo.ma
+emulator/opcodes/HCS08_table_tests.ma emulator/opcodes/HCS08_table.ma emulator/opcodes/pseudo.ma
+emulator/opcodes/IP2022_instr_mode_lemmas.ma emulator/opcodes/IP2022_instr_mode.ma num/bitrigesim_lemmas.ma num/bool_lemmas.ma num/oct_lemmas.ma

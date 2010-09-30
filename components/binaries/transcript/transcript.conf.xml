@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<helm_registry>
+  <section name="transcript">
+    <key name="heading_path">matita.ma.templ</key>
+    <key name="heading_lines">14</key>
+  </section>
+</helm_registry>

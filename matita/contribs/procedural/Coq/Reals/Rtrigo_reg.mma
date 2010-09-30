@@ -1,0 +1,92 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Rtrigo_reg.v,v 1.15.2.1 2004/07/16 19:31:15 herbelin Exp $ i*)
+
+include "Reals/Rbase.ma".
+
+include "Reals/Rfunctions.ma".
+
+include "Reals/SeqSeries.ma".
+
+include "Reals/Rtrigo.ma".
+
+include "Reals/Ranalysis1.ma".
+
+include "Reals/PSeries_reg.ma".
+
+(* UNEXPORTED
+Open Local Scope nat_scope.
+*)
+
+(* UNEXPORTED
+Open Local Scope R_scope.
+*)
+
+inline procedural "cic:/Coq/Reals/Rtrigo_reg/CVN_R_cos.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Rtrigo_reg/continuity_cos.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Rtrigo_reg/continuity_sin.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtrigo_reg/CVN_R_sin.con" as lemma.
+
+(* (sin h)/h -> 1 when h -> 0 *)
+
+inline procedural "cic:/Coq/Reals/Rtrigo_reg/derivable_pt_lim_sin_0.con" as lemma.
+
+(* ((cos h)-1)/h -> 0 when h -> 0 *)
+
+inline procedural "cic:/Coq/Reals/Rtrigo_reg/derivable_pt_lim_cos_0.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Rtrigo_reg/derivable_pt_lim_sin.con" as theorem.
+
+inline procedural "cic:/Coq/Reals/Rtrigo_reg/derivable_pt_lim_cos.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtrigo_reg/derivable_pt_sin.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtrigo_reg/derivable_pt_cos.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtrigo_reg/derivable_sin.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtrigo_reg/derivable_cos.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtrigo_reg/derive_pt_sin.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtrigo_reg/derive_pt_cos.con" as lemma.
+

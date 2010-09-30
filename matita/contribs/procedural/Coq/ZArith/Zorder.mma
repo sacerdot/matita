@@ -1,0 +1,406 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Zorder.v,v 1.6.2.1 2004/07/16 19:31:22 herbelin Exp $ i*)
+
+(*#* Binary Integers (Pierre Cr\233\gut (CNET, Lannion, France) *)
+
+include "NArith/BinPos.ma".
+
+include "ZArith/BinInt.ma".
+
+include "Arith/Arith.ma".
+
+include "Logic/Decidable.ma".
+
+include "ZArith/Zcompare.ma".
+
+(* UNEXPORTED
+Open Local Scope Z_scope.
+*)
+
+(* UNEXPORTED
+Implicit Types x y z : Z.
+*)
+
+(*#*********************************************************************)
+
+(*#* Properties of the order relations on binary integers *)
+
+(*#* Trichotomy *)
+
+inline procedural "cic:/Coq/ZArith/Zorder/Ztrichotomy_inf.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Ztrichotomy.con" as theorem.
+
+(*#*********************************************************************)
+
+(*#* Decidability of equality and order on Z *)
+
+inline procedural "cic:/Coq/ZArith/Zorder/dec_eq.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/Zorder/dec_Zne.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/Zorder/dec_Zle.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/Zorder/dec_Zgt.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/Zorder/dec_Zge.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/Zorder/dec_Zlt.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/Zorder/not_Zeq.con" as theorem.
+
+(*#* Relating strict and large orders *)
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zgt_lt.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zlt_gt.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zge_le.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zle_ge.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zle_not_gt.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zgt_not_le.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zle_not_lt.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zlt_not_le.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Znot_ge_lt.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Znot_lt_ge.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Znot_gt_le.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Znot_le_gt.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zge_iff_le.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zgt_iff_lt.con" as lemma.
+
+(*#* Reflexivity *)
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zle_refl.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zeq_le.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Zle_refl: zarith.
+*)
+
+(*#* Antisymmetry *)
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zle_antisym.con" as lemma.
+
+(*#* Asymmetry *)
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zgt_asym.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zlt_asym.con" as lemma.
+
+(*#* Irreflexivity *)
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zgt_irrefl.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zlt_irrefl.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zlt_not_eq.con" as lemma.
+
+(*#* Large = strict or equal *)
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zlt_le_weak.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zle_lt_or_eq.con" as lemma.
+
+(*#* Dichotomy *)
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zle_or_lt.con" as lemma.
+
+(*#* Transitivity of strict orders *)
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zgt_trans.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zlt_trans.con" as lemma.
+
+(*#* Mixed transitivity *)
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zle_gt_trans.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zgt_le_trans.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zlt_le_trans.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zle_lt_trans.con" as lemma.
+
+(*#* Transitivity of large orders *)
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zle_trans.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zge_trans.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Zle_trans: zarith.
+*)
+
+(*#* Compatibility of successor wrt to order *)
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zsucc_le_compat.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zsucc_gt_compat.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zsucc_lt_compat.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Zsucc_le_compat: zarith.
+*)
+
+(*#* Simplification of successor wrt to order *)
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zsucc_gt_reg.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zsucc_le_reg.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zsucc_lt_reg.con" as lemma.
+
+(*#* Compatibility of addition wrt to order *)
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zplus_gt_compat_l.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zplus_gt_compat_r.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zplus_le_compat_l.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zplus_le_compat_r.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zplus_lt_compat_l.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zplus_lt_compat_r.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zplus_lt_le_compat.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zplus_le_lt_compat.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zplus_le_compat.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zplus_lt_compat.con" as lemma.
+
+(*#* Compatibility of addition wrt to being positive *)
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zplus_le_0_compat.con" as lemma.
+
+(*#* Simplification of addition wrt to order *)
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zplus_gt_reg_l.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zplus_gt_reg_r.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zplus_le_reg_l.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zplus_le_reg_r.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zplus_lt_reg_l.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zplus_lt_reg_r.con" as lemma.
+
+(*#* Special base instances of order *)
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zgt_succ.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Znot_le_succ.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zlt_succ.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zlt_pred.con" as lemma.
+
+(*#* Relating strict and large order using successor or predecessor *)
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zgt_le_succ.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zlt_gt_succ.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zle_lt_succ.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zlt_le_succ.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zgt_succ_le.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zlt_succ_le.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zlt_succ_gt.con" as lemma.
+
+(*#* Weakening order *)
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zle_succ.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Zle_succ: zarith.
+*)
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zle_pred.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zlt_lt_succ.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zle_le_succ.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zle_succ_le.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Zle_le_succ: zarith.
+*)
+
+(*#* Relating order wrt successor and order wrt predecessor *)
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zgt_succ_pred.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zlt_succ_pred.con" as lemma.
+
+(*#* Relating strict order and large order on positive *)
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zlt_0_le_0_pred.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zgt_0_le_0_pred.con" as lemma.
+
+(*#* Special cases of ordered integers *)
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zlt_0_1.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zle_0_1.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zle_neg_pos.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zgt_pos_0.con" as lemma.
+
+(* weaker but useful (in [Zpower] for instance) *)
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zle_0_pos.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zlt_neg_0.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zle_0_nat.con" as lemma.
+
+(* UNEXPORTED
+Hint Immediate Zeq_le: zarith.
+*)
+
+(*#* Transitivity using successor *)
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zge_trans_succ.con" as lemma.
+
+(*#* Derived lemma *)
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zgt_succ_gt_or_eq.con" as lemma.
+
+(*#* Compatibility of multiplication by a positive wrt to order *)
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zmult_le_compat_r.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zmult_le_compat_l.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zmult_lt_compat_r.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zmult_gt_compat_r.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zmult_gt_0_lt_compat_r.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zmult_gt_0_le_compat_r.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zmult_lt_0_le_compat_r.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zmult_gt_0_lt_compat_l.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zmult_lt_compat_l.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zmult_gt_compat_l.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zmult_ge_compat_r.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zmult_ge_compat_l.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zmult_ge_compat.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zmult_le_compat.con" as lemma.
+
+(*#* Simplification of multiplication by a positive wrt to being positive *)
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zmult_gt_0_lt_reg_r.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zmult_lt_reg_r.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zmult_le_reg_r.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zmult_lt_0_le_reg_r.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zmult_ge_reg_r.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zmult_gt_reg_r.con" as lemma.
+
+(*#* Compatibility of multiplication by a positive wrt to being positive *)
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zmult_le_0_compat.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zmult_gt_0_compat.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zmult_lt_O_compat.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zmult_gt_0_le_0_compat.con" as lemma.
+
+(*#* Simplification of multiplication by a positive wrt to being positive *)
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zmult_le_0_reg_r.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zmult_gt_0_lt_0_reg_r.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zmult_lt_0_reg_r.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zmult_gt_0_reg_l.con" as lemma.
+
+(*#* Simplification of square wrt order *)
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zgt_square_simpl.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zlt_square_simpl.con" as lemma.
+
+(*#* Equivalence between inequalities *)
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zle_plus_swap.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zlt_plus_swap.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zeq_plus_swap.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zlt_minus_simpl_swap.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zorder/Zlt_O_minus_lt.con" as lemma.
+

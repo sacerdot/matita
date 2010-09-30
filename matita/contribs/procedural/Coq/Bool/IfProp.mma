@@ -1,0 +1,54 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: IfProp.v,v 1.7.2.1 2004/07/16 19:31:03 herbelin Exp $ i*)
+
+include "Bool/Bool.ma".
+
+inline procedural "cic:/Coq/Bool/IfProp/IfProp.ind".
+
+(* UNEXPORTED
+Hint Resolve Iftrue Iffalse: bool v62.
+*)
+
+inline procedural "cic:/Coq/Bool/IfProp/Iftrue_inv.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/IfProp/Iffalse_inv.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/IfProp/IfProp_true.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/IfProp/IfProp_false.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/IfProp/IfProp_or.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/IfProp/IfProp_sum.con" as lemma.
+

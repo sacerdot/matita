@@ -1,0 +1,146 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Sorting.v,v 1.4.2.1 2004/07/16 19:31:19 herbelin Exp $ i*)
+
+include "Lists/List.ma".
+
+include "Sets/Multiset.ma".
+
+include "Sorting/Permutation.ma".
+
+include "Relations/Relations.ma".
+
+(* UNEXPORTED
+Set Implicit Arguments.
+*)
+
+(* UNEXPORTED
+Section defs
+*)
+
+(* UNEXPORTED
+cic:/Coq/Sorting/Sorting/defs/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Sorting/Sorting/defs/leA.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Sorting/Sorting/defs/eqA.var
+*)
+
+(* UNAVAILABLE OBJECT: cic:/Coq/Sorting/Sorting/defs/gtA.con **************)
+
+inline procedural "cic:/Coq/Sorting/Sorting/defs/gtA.con" "defs__" as definition.
+
+(* UNEXPORTED
+cic:/Coq/Sorting/Sorting/defs/leA_dec.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Sorting/Sorting/defs/eqA_dec.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Sorting/Sorting/defs/leA_refl.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Sorting/Sorting/defs/leA_trans.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Sorting/Sorting/defs/leA_antisym.var
+*)
+
+(* UNEXPORTED
+Hint Resolve leA_refl.
+*)
+
+(* UNEXPORTED
+Hint Immediate eqA_dec leA_dec leA_antisym.
+*)
+
+(* UNAVAILABLE OBJECT: cic:/Coq/Sorting/Sorting/defs/emptyBag.con *********)
+
+inline procedural "cic:/Coq/Sorting/Sorting/defs/emptyBag.con" "defs__" as definition.
+
+(* UNAVAILABLE OBJECT: cic:/Coq/Sorting/Sorting/defs/singletonBag.con *****)
+
+inline procedural "cic:/Coq/Sorting/Sorting/defs/singletonBag.con" "defs__" as definition.
+
+(*#* [lelistA] *)
+
+inline procedural "cic:/Coq/Sorting/Sorting/lelistA.ind".
+
+(* UNEXPORTED
+Hint Constructors lelistA.
+*)
+
+inline procedural "cic:/Coq/Sorting/Sorting/lelistA_inv.con" as lemma.
+
+(*#* definition for a list to be sorted *)
+
+inline procedural "cic:/Coq/Sorting/Sorting/sort.ind".
+
+(* UNEXPORTED
+Hint Constructors sort.
+*)
+
+inline procedural "cic:/Coq/Sorting/Sorting/sort_inv.con" as lemma.
+
+inline procedural "cic:/Coq/Sorting/Sorting/sort_rec.con" as lemma.
+
+(*#* merging two sorted lists *)
+
+inline procedural "cic:/Coq/Sorting/Sorting/merge_lem.ind".
+
+inline procedural "cic:/Coq/Sorting/Sorting/merge.con" as lemma.
+
+(* UNEXPORTED
+End defs
+*)
+
+(* UNEXPORTED
+Unset Implicit Arguments.
+*)
+
+(* UNEXPORTED
+Hint Constructors sort: datatypes v62.
+*)
+
+(* UNEXPORTED
+Hint Constructors lelistA: datatypes v62.
+*)
+

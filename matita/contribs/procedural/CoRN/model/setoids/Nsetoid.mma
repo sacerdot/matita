@@ -1,0 +1,64 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "CoRN.ma".
+
+(* $Id: Nsetoid.v,v 1.4 2004/04/06 15:46:04 lcf Exp $ *)
+
+include "model/structures/Nsec.ma".
+
+include "algebra/CSetoidFun.ma".
+
+(*#* **Example of a setoid: [nat]
+
+We will show that the natural numbers form a CSetoid. 
+*)
+
+inline procedural "cic:/CoRN/model/setoids/Nsetoid/ap_nat_irreflexive.con" as lemma.
+
+inline procedural "cic:/CoRN/model/setoids/Nsetoid/ap_nat_symmetric.con" as lemma.
+
+inline procedural "cic:/CoRN/model/setoids/Nsetoid/ap_nat_cotransitive.con" as lemma.
+
+inline procedural "cic:/CoRN/model/setoids/Nsetoid/ap_nat_tight.con" as lemma.
+
+inline procedural "cic:/CoRN/model/setoids/Nsetoid/ap_nat_is_apartness.con" as definition.
+
+inline procedural "cic:/CoRN/model/setoids/Nsetoid/nat_as_CSetoid.con" as definition.
+
+(*#* ***Addition
+*)
+
+inline procedural "cic:/CoRN/model/setoids/Nsetoid/plus_wd.con" as lemma.
+
+inline procedural "cic:/CoRN/model/setoids/Nsetoid/plus_strext.con" as lemma.
+
+inline procedural "cic:/CoRN/model/setoids/Nsetoid/plus_is_bin_fun.con" as definition.
+
+(*#* It is associative and commutative.
+*)
+
+inline procedural "cic:/CoRN/model/setoids/Nsetoid/plus_is_assoc.con" as lemma.
+
+inline procedural "cic:/CoRN/model/setoids/Nsetoid/plus_is_commut.con" as lemma.
+
+(*#* ***Multiplication
+*)
+
+inline procedural "cic:/CoRN/model/setoids/Nsetoid/mult_strext.con" as lemma.
+
+inline procedural "cic:/CoRN/model/setoids/Nsetoid/mult_as_bin_fun.con" as definition.
+

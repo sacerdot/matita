@@ -1,0 +1,92 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Zabs.v,v 1.4.2.1 2004/07/16 19:31:21 herbelin Exp $ i*)
+
+(*#* Binary Integers (Pierre Cr\233\gut (CNET, Lannion, France) *)
+
+include "Arith/Arith.ma".
+
+include "NArith/BinPos.ma".
+
+include "ZArith/BinInt.ma".
+
+include "ZArith/Zorder.ma".
+
+include "ZArith/ZArith_dec.ma".
+
+(* UNEXPORTED
+Open Local Scope Z_scope.
+*)
+
+(*#*********************************************************************)
+
+(*#* Properties of absolute value *)
+
+inline procedural "cic:/Coq/ZArith/Zabs/Zabs_eq.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zabs/Zabs_non_eq.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zabs/Zabs_Zopp.con" as theorem.
+
+(*#* Proving a property of the absolute value by cases *)
+
+inline procedural "cic:/Coq/ZArith/Zabs/Zabs_ind.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zabs/Zabs_intro.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/Zabs/Zabs_dec.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/Zabs/Zabs_pos.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zabs/Zabs_eq_case.con" as theorem.
+
+(*#* Triangular inequality *)
+
+(* UNEXPORTED
+Hint Local Resolve Zle_neg_pos: zarith.
+*)
+
+inline procedural "cic:/Coq/ZArith/Zabs/Zabs_triangle.con" as theorem.
+
+(*#* Absolute value and multiplication *)
+
+inline procedural "cic:/Coq/ZArith/Zabs/Zsgn_Zabs.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zabs/Zabs_Zsgn.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zabs/Zabs_Zmult.con" as theorem.
+
+(*#* absolute value in nat is compatible with order *)
+
+inline procedural "cic:/Coq/ZArith/Zabs/Zabs_nat_lt.con" as lemma.
+

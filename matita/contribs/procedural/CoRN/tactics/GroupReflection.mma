@@ -1,0 +1,264 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "CoRN.ma".
+
+(* $Id: GroupReflection.v,v 1.3 2004/04/23 10:01:06 lcf Exp $ *)
+
+(* begin hide *)
+
+include "algebra/CAbGroups.ma".
+
+include "tactics/AlgReflection.ma".
+
+(* UNEXPORTED
+Section Group_Interpretation_Function
+*)
+
+(* UNEXPORTED
+cic:/CoRN/tactics/GroupReflection/Group_Interpretation_Function/G.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/tactics/GroupReflection/Group_Interpretation_Function/val.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/tactics/GroupReflection/Group_Interpretation_Function/unop.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/tactics/GroupReflection/Group_Interpretation_Function/binop.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/tactics/GroupReflection/Group_Interpretation_Function/pfun.var
+*)
+
+inline procedural "cic:/CoRN/tactics/GroupReflection/interpG.ind".
+
+inline procedural "cic:/CoRN/tactics/GroupReflection/wfG.con" as definition.
+
+inline procedural "cic:/CoRN/tactics/GroupReflection/xexprG.ind".
+
+inline procedural "cic:/CoRN/tactics/GroupReflection/xforgetG.con" as definition.
+
+inline procedural "cic:/CoRN/tactics/GroupReflection/xinterpG.con" as definition.
+
+inline procedural "cic:/CoRN/tactics/GroupReflection/xexprG2interpG.con" as lemma.
+
+inline procedural "cic:/CoRN/tactics/GroupReflection/xexprG_diagram_commutes.con" as definition.
+
+inline procedural "cic:/CoRN/tactics/GroupReflection/xexprG2wfG.con" as lemma.
+
+inline procedural "cic:/CoRN/tactics/GroupReflection/fexprG.ind".
+
+inline procedural "cic:/CoRN/tactics/GroupReflection/fexprG_var.con" as definition.
+
+inline procedural "cic:/CoRN/tactics/GroupReflection/fexprG_zero.con" as definition.
+
+inline procedural "cic:/CoRN/tactics/GroupReflection/fexprG_plus.con" as definition.
+
+inline procedural "cic:/CoRN/tactics/GroupReflection/fexprG_mult_int.con" as definition.
+
+inline procedural "cic:/CoRN/tactics/GroupReflection/fforgetG.con" as definition.
+
+inline procedural "cic:/CoRN/tactics/GroupReflection/fexprG2interp.con" as lemma.
+
+inline procedural "cic:/CoRN/tactics/GroupReflection/fexprG2wf.con" as lemma.
+
+(* UNEXPORTED
+Opaque csg_crr.
+*)
+
+(* UNEXPORTED
+Opaque cm_crr.
+*)
+
+(* UNEXPORTED
+Opaque cg_crr.
+*)
+
+(* UNEXPORTED
+Opaque csf_fun.
+*)
+
+(* UNEXPORTED
+Opaque csbf_fun.
+*)
+
+(* UNEXPORTED
+Opaque csr_rel.
+*)
+
+(* UNEXPORTED
+Opaque cs_eq.
+*)
+
+(* UNEXPORTED
+Opaque cs_neq.
+*)
+
+(* UNEXPORTED
+Opaque cs_ap.
+*)
+
+(* UNEXPORTED
+Opaque cm_unit.
+*)
+
+(* UNEXPORTED
+Opaque csg_op.
+*)
+
+(* UNEXPORTED
+Opaque cg_inv.
+*)
+
+(* UNEXPORTED
+Opaque cg_minus.
+*)
+
+inline procedural "cic:/CoRN/tactics/GroupReflection/refl_interpG.con" as lemma.
+
+inline procedural "cic:/CoRN/tactics/GroupReflection/interpG_wd.con" as lemma.
+
+(* UNEXPORTED
+End Group_Interpretation_Function
+*)
+
+(* UNEXPORTED
+Section Group_NormCorrect
+*)
+
+(* UNEXPORTED
+cic:/CoRN/tactics/GroupReflection/Group_NormCorrect/G.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/tactics/GroupReflection/Group_NormCorrect/val.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/tactics/GroupReflection/Group_NormCorrect/unop.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/tactics/GroupReflection/Group_NormCorrect/binop.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/tactics/GroupReflection/Group_NormCorrect/pfun.var
+*)
+
+(* NOTATION
+Notation II := (interpG G val unop binop pfun).
+*)
+
+(*
+four kinds of exprs:
+
+  I	(expr_int _)
+  V	(expr_var _)
+  M	(expr_mult V M)
+	I
+  P	(expr_plus M P)
+	I
+
+M: sorted on V
+P: sorted on M, all M's not an I
+*)
+
+inline procedural "cic:/CoRN/tactics/GroupReflection/MI_mult_comm_int.con" as lemma.
+
+(* UNEXPORTED
+Opaque Zmult.
+*)
+
+inline procedural "cic:/CoRN/tactics/GroupReflection/MI_mult_corr_G.con" as lemma.
+
+(* UNEXPORTED
+Transparent Zmult.
+*)
+
+(* UNEXPORTED
+Opaque MI_mult.
+*)
+
+inline procedural "cic:/CoRN/tactics/GroupReflection/MV_mult_corr_G.con" as lemma.
+
+(* UNEXPORTED
+Opaque MV_mult.
+*)
+
+inline procedural "cic:/CoRN/tactics/GroupReflection/MM_mult_corr_G.con" as lemma.
+
+(* UNEXPORTED
+Transparent MV_mult MI_mult.
+*)
+
+(* UNEXPORTED
+Opaque MV_mult.
+*)
+
+inline procedural "cic:/CoRN/tactics/GroupReflection/MM_plus_corr_G.con" as lemma.
+
+(* UNEXPORTED
+Transparent MV_mult.
+*)
+
+(* UNEXPORTED
+Opaque MM_plus.
+*)
+
+inline procedural "cic:/CoRN/tactics/GroupReflection/PM_plus_corr_G.con" as lemma.
+
+(* UNEXPORTED
+Transparent MM_plus.
+*)
+
+(* UNEXPORTED
+Opaque PM_plus.
+*)
+
+inline procedural "cic:/CoRN/tactics/GroupReflection/PP_plus_corr_G.con" as lemma.
+
+(* UNEXPORTED
+Transparent PM_plus.
+*)
+
+(* UNEXPORTED
+Opaque PM_plus MM_mult MI_mult.
+*)
+
+inline procedural "cic:/CoRN/tactics/GroupReflection/PM_mult_corr_G.con" as lemma.
+
+(* UNEXPORTED
+Opaque PM_mult.
+*)
+
+inline procedural "cic:/CoRN/tactics/GroupReflection/PP_mult_corr_G.con" as lemma.
+
+inline procedural "cic:/CoRN/tactics/GroupReflection/NormG_corr_G.con" as lemma.
+
+inline procedural "cic:/CoRN/tactics/GroupReflection/Tactic_lemmaG.con" as lemma.
+
+(* UNEXPORTED
+End Group_NormCorrect
+*)
+
+(* end hide *)
+

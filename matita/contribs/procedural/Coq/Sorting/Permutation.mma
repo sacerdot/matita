@@ -1,0 +1,152 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Permutation.v,v 1.4.2.1 2004/07/16 19:31:19 herbelin Exp $ i*)
+
+include "Relations/Relations.ma".
+
+include "Lists/List.ma".
+
+include "Sets/Multiset.ma".
+
+(* UNEXPORTED
+Set Implicit Arguments.
+*)
+
+(* UNEXPORTED
+Section defs
+*)
+
+(* UNEXPORTED
+cic:/Coq/Sorting/Permutation/defs/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Sorting/Permutation/defs/leA.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Sorting/Permutation/defs/eqA.var
+*)
+
+(* UNAVAILABLE OBJECT: cic:/Coq/Sorting/Permutation/defs/gtA.con **********)
+
+inline procedural "cic:/Coq/Sorting/Permutation/defs/gtA.con" "defs__" as definition.
+
+(* UNEXPORTED
+cic:/Coq/Sorting/Permutation/defs/leA_dec.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Sorting/Permutation/defs/eqA_dec.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Sorting/Permutation/defs/leA_refl.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Sorting/Permutation/defs/leA_trans.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Sorting/Permutation/defs/leA_antisym.var
+*)
+
+(* UNEXPORTED
+Hint Resolve leA_refl: default.
+*)
+
+(* UNEXPORTED
+Hint Immediate eqA_dec leA_dec leA_antisym: default.
+*)
+
+(* UNAVAILABLE OBJECT: cic:/Coq/Sorting/Permutation/defs/emptyBag.con *****)
+
+inline procedural "cic:/Coq/Sorting/Permutation/defs/emptyBag.con" "defs__" as definition.
+
+(* UNAVAILABLE OBJECT: cic:/Coq/Sorting/Permutation/defs/singletonBag.con *)
+
+inline procedural "cic:/Coq/Sorting/Permutation/defs/singletonBag.con" "defs__" as definition.
+
+(*#* contents of a list *)
+
+inline procedural "cic:/Coq/Sorting/Permutation/list_contents.con" as definition.
+
+inline procedural "cic:/Coq/Sorting/Permutation/list_contents_app.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve list_contents_app.
+*)
+
+inline procedural "cic:/Coq/Sorting/Permutation/permutation.con" as definition.
+
+inline procedural "cic:/Coq/Sorting/Permutation/permut_refl.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve permut_refl.
+*)
+
+inline procedural "cic:/Coq/Sorting/Permutation/permut_tran.con" as lemma.
+
+inline procedural "cic:/Coq/Sorting/Permutation/permut_right.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve permut_right.
+*)
+
+inline procedural "cic:/Coq/Sorting/Permutation/permut_app.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve permut_app.
+*)
+
+inline procedural "cic:/Coq/Sorting/Permutation/permut_cons.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve permut_cons.
+*)
+
+inline procedural "cic:/Coq/Sorting/Permutation/permut_middle.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve permut_middle.
+*)
+
+(* UNEXPORTED
+End defs
+*)
+
+(* UNEXPORTED
+Unset Implicit Arguments.
+*)
+

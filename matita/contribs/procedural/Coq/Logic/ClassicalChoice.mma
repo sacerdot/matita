@@ -1,0 +1,51 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: ClassicalChoice.v,v 1.4.2.1 2004/07/16 19:31:06 herbelin Exp $ i*)
+
+(*#* This file provides classical logic and functional choice *)
+
+(*#* This file extends ClassicalDescription.v with the axiom of choice.
+    As ClassicalDescription.v, it implies the double-negation of
+    excluded-middle in Set and implies a strongly classical
+    world. Especially it conflicts with impredicativity of Set, knowing
+    that true<>false in Set.
+*)
+
+include "Logic/ClassicalDescription.ma".
+
+include "Logic/RelationalChoice.ma".
+
+include "Logic/ChoiceFacts.ma".
+
+inline procedural "cic:/Coq/Logic/ClassicalChoice/choice.con" as theorem.
+

@@ -1,0 +1,78 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: SeqSeries.v,v 1.14.2.1 2004/07/16 19:31:15 herbelin Exp $ i*)
+
+include "Reals/Rbase.ma".
+
+include "Reals/Rfunctions.ma".
+
+include "Arith/Max.ma".
+
+include "Reals/Rseries.ma".
+
+include "Reals/SeqProp.ma".
+
+include "Reals/Rcomplete.ma".
+
+include "Reals/PartSum.ma".
+
+include "Reals/AltSeries.ma".
+
+include "Reals/Binomial.ma".
+
+include "Reals/Rsigma.ma".
+
+include "Reals/Rprod.ma".
+
+include "Reals/Cauchy_prod.ma".
+
+include "Reals/Alembert.ma".
+
+(* UNEXPORTED
+Open Local Scope R_scope.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/SeqSeries/sum_maj1.con" as lemma.
+
+(* Comparaison of convergence for series *)
+
+inline procedural "cic:/Coq/Reals/SeqSeries/Rseries_CV_comp.con" as lemma.
+
+(* Cesaro's theorem *)
+
+inline procedural "cic:/Coq/Reals/SeqSeries/Cesaro.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/SeqSeries/Cesaro_1.con" as lemma.
+

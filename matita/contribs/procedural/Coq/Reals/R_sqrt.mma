@@ -1,0 +1,112 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: R_sqrt.v,v 1.10.2.1 2004/07/16 19:31:12 herbelin Exp $ i*)
+
+include "Reals/Rbase.ma".
+
+include "Reals/Rfunctions.ma".
+
+include "Reals/Rsqrt_def.ma".
+
+(* UNEXPORTED
+Open Local Scope R_scope.
+*)
+
+(* Here is a continuous extension of Rsqrt on R *)
+
+inline procedural "cic:/Coq/Reals/R_sqrt/sqrt.con" as definition.
+
+inline procedural "cic:/Coq/Reals/R_sqrt/sqrt_positivity.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/R_sqrt/sqrt_sqrt.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/R_sqrt/sqrt_0.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/R_sqrt/sqrt_1.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/R_sqrt/sqrt_eq_0.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/R_sqrt/sqrt_lem_0.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/R_sqrt/sqtr_lem_1.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/R_sqrt/sqrt_def.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/R_sqrt/sqrt_square.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/R_sqrt/sqrt_Rsqr.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/R_sqrt/sqrt_Rsqr_abs.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/R_sqrt/Rsqr_sqrt.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/R_sqrt/sqrt_mult.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/R_sqrt/sqrt_lt_R0.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/R_sqrt/sqrt_div.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/R_sqrt/sqrt_lt_0.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/R_sqrt/sqrt_lt_1.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/R_sqrt/sqrt_le_0.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/R_sqrt/sqrt_le_1.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/R_sqrt/sqrt_inj.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/R_sqrt/sqrt_less.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/R_sqrt/sqrt_more.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/R_sqrt/sqrt_cauchy.con" as lemma.
+
+(*#***********************************************************)
+
+(* Resolution of [a*X^2+b*X+c=0]                            *)
+
+(*#***********************************************************)
+
+inline procedural "cic:/Coq/Reals/R_sqrt/Delta.con" as definition.
+
+inline procedural "cic:/Coq/Reals/R_sqrt/Delta_is_pos.con" as definition.
+
+inline procedural "cic:/Coq/Reals/R_sqrt/sol_x1.con" as definition.
+
+inline procedural "cic:/Coq/Reals/R_sqrt/sol_x2.con" as definition.
+
+inline procedural "cic:/Coq/Reals/R_sqrt/Rsqr_sol_eq_0_1.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/R_sqrt/Rsqr_sol_eq_0_0.con" as lemma.
+

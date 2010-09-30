@@ -1,0 +1,1294 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: RIneq.v,v 1.23.2.1 2004/07/16 19:31:11 herbelin Exp $ i*)
+
+(*#**************************************************************************)
+
+(*#*              Basic lemmas for the classical reals numbers              *)
+
+(*#**************************************************************************)
+
+include "Reals/Raxioms.ma".
+
+(* UNEXPORTED
+Open Local Scope Z_scope.
+*)
+
+(* UNEXPORTED
+Open Local Scope R_scope.
+*)
+
+(* UNEXPORTED
+Implicit Type r : R.
+*)
+
+(*#**************************************************************************)
+
+(*#*       Instantiating Ring tactic on reals                               *)
+
+(*#**************************************************************************)
+
+inline procedural "cic:/Coq/Reals/RIneq/RTheory.con" as lemma.
+
+(* NOTATION
+Add Field R Rplus Rmult 1 0 Ropp (fun x y:R => false) Rinv RTheory Rinv_l
+ with minus := Rminus div := Rdiv.
+*)
+
+(*#*************************************************************************)
+
+(*#*  Relation between orders and equality                                 *)
+
+(*#*************************************************************************)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rlt_irrefl.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Rlt_irrefl: real.
+*)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rle_refl.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RIneq/Rlt_not_eq.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RIneq/Rgt_not_eq.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rlt_dichotomy_converse.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Rlt_dichotomy_converse: real.
+*)
+
+(*#* Reasoning by case on equalities and order *)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Req_dec.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Req_dec: real.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rtotal_order.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rdichotomy.con" as lemma.
+
+(*#********************************************************************************)
+
+(*#*       Order Lemma  : relating [<], [>], [<=] and [>=]  	                 *)
+
+(*#********************************************************************************)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rlt_le.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Rlt_le: real.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rle_ge.con" as lemma.
+
+(* UNEXPORTED
+Hint Immediate Rle_ge: real.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rge_le.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Rge_le: real.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rnot_le_lt.con" as lemma.
+
+(* UNEXPORTED
+Hint Immediate Rnot_le_lt: real.
+*)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rnot_ge_lt.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rlt_not_le.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RIneq/Rgt_not_le.con" as lemma.
+
+(* UNEXPORTED
+Hint Immediate Rlt_not_le: real.
+*)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rle_not_lt.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rlt_not_ge.con" as lemma.
+
+(* UNEXPORTED
+Hint Immediate Rlt_not_ge: real.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Req_le.con" as lemma.
+
+(* UNEXPORTED
+Hint Immediate Req_le: real.
+*)
+
+inline procedural "cic:/Coq/Reals/RIneq/Req_ge.con" as lemma.
+
+(* UNEXPORTED
+Hint Immediate Req_ge: real.
+*)
+
+inline procedural "cic:/Coq/Reals/RIneq/Req_le_sym.con" as lemma.
+
+(* UNEXPORTED
+Hint Immediate Req_le_sym: real.
+*)
+
+inline procedural "cic:/Coq/Reals/RIneq/Req_ge_sym.con" as lemma.
+
+(* UNEXPORTED
+Hint Immediate Req_ge_sym: real.
+*)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rle_antisym.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Rle_antisym: real.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rle_le_eq.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RIneq/Rlt_eq_compat.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rle_trans.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rle_lt_trans.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rlt_le_trans.con" as lemma.
+
+(*#* Decidability of the order *)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rlt_dec.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rle_dec.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rgt_dec.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rge_dec.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RIneq/Rlt_le_dec.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RIneq/Rle_or_lt.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RIneq/Rle_lt_or_eq_dec.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/inser_trans_R.con" as lemma.
+
+(*#***************************************************************)
+
+(*#*        Field Lemmas                                         *)
+
+(* This part contains lemma involving the Fields operations     *)
+
+(*#***************************************************************)
+
+(*#********************************************************)
+
+(*#*      Addition                                        *)
+
+(*#********************************************************)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rplus_ne.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Rplus_ne: real v62.
+*)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rplus_0_r.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Rplus_0_r: real.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rplus_opp_l.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Rplus_opp_l: real.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rplus_opp_r_uniq.con" as lemma.
+
+(*i New i*)
+
+(* UNEXPORTED
+Hint Resolve (f_equal (A:=R)): real.
+*)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rplus_eq_compat_l.con" as lemma.
+
+(*i Old i*)
+
+(* UNEXPORTED
+Hint Resolve Rplus_eq_compat_l: v62.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rplus_eq_reg_l.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Rplus_eq_reg_l: real.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rplus_0_r_uniq.con" as lemma.
+
+(*#**********************************************************)
+
+(*#*       Multiplication                                   *)
+
+(*#**********************************************************)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rinv_r.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Rinv_r: real.
+*)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rinv_l_sym.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RIneq/Rinv_r_sym.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Rinv_l_sym Rinv_r_sym: real.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rmult_0_r.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Rmult_0_r: real v62.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rmult_0_l.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Rmult_0_l: real v62.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rmult_ne.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Rmult_ne: real v62.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rmult_1_r.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Rmult_1_r: real.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rmult_eq_compat_l.con" as lemma.
+
+(*i OLD i*)
+
+(* UNEXPORTED
+Hint Resolve Rmult_eq_compat_l: v62.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rmult_eq_reg_l.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rmult_integral.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rmult_eq_0_compat.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Rmult_eq_0_compat: real.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rmult_eq_0_compat_r.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rmult_eq_0_compat_l.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rmult_neq_0_reg.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rmult_integral_contrapositive.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Rmult_integral_contrapositive: real.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rmult_plus_distr_r.con" as lemma.
+
+(*#* Square function *)
+
+(*#**********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rsqr.con" as definition.
+
+(*#**********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rsqr_0.con" as lemma.
+
+(*#**********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rsqr_0_uniq.con" as lemma.
+
+(*#********************************************************)
+
+(*#*      Opposite                                        *)
+
+(*#********************************************************)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Ropp_eq_compat.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Ropp_eq_compat: real.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Ropp_0.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Ropp_0: real v62.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Ropp_eq_0_compat.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Ropp_eq_0_compat: real.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Ropp_involutive.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Ropp_involutive: real.
+*)
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Ropp_neq_0_compat.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Ropp_neq_0_compat: real.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Ropp_plus_distr.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Ropp_plus_distr: real.
+*)
+
+(*#* Opposite and multiplication *)
+
+inline procedural "cic:/Coq/Reals/RIneq/Ropp_mult_distr_l_reverse.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Ropp_mult_distr_l_reverse: real.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rmult_opp_opp.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Rmult_opp_opp: real.
+*)
+
+inline procedural "cic:/Coq/Reals/RIneq/Ropp_mult_distr_r_reverse.con" as lemma.
+
+(*#* Substraction *)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rminus_0_r.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Rminus_0_r: real.
+*)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rminus_0_l.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Rminus_0_l: real.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Ropp_minus_distr.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Ropp_minus_distr: real.
+*)
+
+inline procedural "cic:/Coq/Reals/RIneq/Ropp_minus_distr'.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Ropp_minus_distr': real.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rminus_diag_eq.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Rminus_diag_eq: real.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rminus_diag_uniq.con" as lemma.
+
+(* UNEXPORTED
+Hint Immediate Rminus_diag_uniq: real.
+*)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rminus_diag_uniq_sym.con" as lemma.
+
+(* UNEXPORTED
+Hint Immediate Rminus_diag_uniq_sym: real.
+*)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rplus_minus.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Rplus_minus: real.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rminus_eq_contra.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Rminus_eq_contra: real.
+*)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rminus_not_eq.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Rminus_not_eq: real.
+*)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rminus_not_eq_right.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Rminus_not_eq_right: real.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rmult_minus_distr_l.con" as lemma.
+
+(*#* Inverse *)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rinv_1.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Rinv_1: real.
+*)
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rinv_neq_0_compat.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Rinv_neq_0_compat: real.
+*)
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rinv_involutive.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Rinv_involutive: real.
+*)
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rinv_mult_distr.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Ropp_inv_permute.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RIneq/Rinv_r_simpl_r.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RIneq/Rinv_r_simpl_l.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RIneq/Rinv_r_simpl_m.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Rinv_r_simpl_l Rinv_r_simpl_r Rinv_r_simpl_m: real.
+*)
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rinv_mult_simpl.con" as lemma.
+
+(*#* Order and addition *)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rplus_lt_compat_r.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Rplus_lt_compat_r: real.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rplus_lt_reg_r.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rplus_le_compat_l.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rplus_le_compat_r.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Rplus_le_compat_l Rplus_le_compat_r: real.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rplus_le_reg_l.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/sum_inequa_Rle_lt.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rplus_lt_compat.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RIneq/Rplus_le_compat.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rplus_lt_le_compat.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rplus_le_lt_compat.con" as lemma.
+
+(* UNEXPORTED
+Hint Immediate Rplus_lt_compat Rplus_le_compat Rplus_lt_le_compat
+  Rplus_le_lt_compat: real.
+*)
+
+(*#* Order and Opposite *)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Ropp_gt_lt_contravar.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Ropp_gt_lt_contravar.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Ropp_lt_gt_contravar.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Ropp_lt_gt_contravar: real.
+*)
+
+inline procedural "cic:/Coq/Reals/RIneq/Ropp_lt_cancel.con" as lemma.
+
+(* UNEXPORTED
+Hint Immediate Ropp_lt_cancel: real.
+*)
+
+inline procedural "cic:/Coq/Reals/RIneq/Ropp_lt_contravar.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Ropp_lt_contravar: real.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Ropp_le_ge_contravar.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Ropp_le_ge_contravar: real.
+*)
+
+inline procedural "cic:/Coq/Reals/RIneq/Ropp_le_cancel.con" as lemma.
+
+(* UNEXPORTED
+Hint Immediate Ropp_le_cancel: real.
+*)
+
+inline procedural "cic:/Coq/Reals/RIneq/Ropp_le_contravar.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Ropp_le_contravar: real.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Ropp_ge_le_contravar.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Ropp_ge_le_contravar: real.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Ropp_0_lt_gt_contravar.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Ropp_0_lt_gt_contravar: real.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Ropp_0_gt_lt_contravar.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Ropp_0_gt_lt_contravar: real.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Ropp_lt_gt_0_contravar.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Ropp_gt_lt_0_contravar.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Ropp_lt_gt_0_contravar Ropp_gt_lt_0_contravar: real.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Ropp_0_le_ge_contravar.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Ropp_0_le_ge_contravar: real.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Ropp_0_ge_le_contravar.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Ropp_0_ge_le_contravar: real.
+*)
+
+(*#* Order and multiplication *)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rmult_lt_compat_r.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Rmult_lt_compat_r.
+*)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rmult_lt_reg_l.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RIneq/Rmult_lt_gt_compat_neg_l.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rmult_le_compat_l.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Rmult_le_compat_l: real.
+*)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rmult_le_compat_r.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Rmult_le_compat_r: real.
+*)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rmult_le_reg_l.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RIneq/Rmult_le_compat_neg_l.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Rmult_le_compat_neg_l: real.
+*)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rmult_le_ge_compat_neg_l.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Rmult_le_ge_compat_neg_l: real.
+*)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rmult_le_compat.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Rmult_le_compat: real.
+*)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rmult_gt_0_lt_compat.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rmult_ge_0_gt_0_lt_compat.con" as lemma.
+
+(*#* Order and Substractions *)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rlt_minus.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Rlt_minus: real.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rle_minus.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rminus_lt.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rminus_le.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/tech_Rplus.con" as lemma.
+
+(* UNEXPORTED
+Hint Immediate tech_Rplus: real.
+*)
+
+(*#* Order and the square function *)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rle_0_sqr.con" as lemma.
+
+(*#**********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rlt_0_sqr.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Rle_0_sqr Rlt_0_sqr: real.
+*)
+
+(*#* Zero is less than one *)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rlt_0_1.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Rlt_0_1: real.
+*)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rle_0_1.con" as lemma.
+
+(*#* Order and inverse *)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rinv_0_lt_compat.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Rinv_0_lt_compat: real.
+*)
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rinv_lt_0_compat.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Rinv_lt_0_compat: real.
+*)
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rinv_lt_contravar.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RIneq/Rinv_1_lt_contravar.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Rinv_1_lt_contravar: real.
+*)
+
+(*#********************************************************)
+
+(*#*      Greater                                         *)
+
+(*#********************************************************)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rge_antisym.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rnot_lt_ge.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rnot_lt_le.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rnot_gt_le.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rgt_ge.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rge_gt_trans.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rgt_ge_trans.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rgt_trans.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rge_trans.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rle_lt_0_plus_1.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Rle_lt_0_plus_1: real.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rlt_plus_1.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Rlt_plus_1: real.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/tech_Rgt_minus.con" as lemma.
+
+(*#**********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rplus_gt_compat_l.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Rplus_gt_compat_l: real.
+*)
+
+(*#**********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rplus_gt_reg_l.con" as lemma.
+
+(*#**********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rplus_ge_compat_l.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Rplus_ge_compat_l: real.
+*)
+
+(*#**********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rplus_ge_reg_l.con" as lemma.
+
+(*#**********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rmult_ge_compat_r.con" as lemma.
+
+(*#**********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rgt_minus.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/RIneq/minus_Rgt.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rge_minus.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/RIneq/minus_Rge.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rmult_gt_0_compat.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rmult_lt_0_compat.con" as lemma.
+
+(*#**********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rplus_eq_0_l.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RIneq/Rplus_eq_R0.con" as lemma.
+
+(*#**********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rplus_sqr_eq_0_l.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RIneq/Rplus_sqr_eq_0.con" as lemma.
+
+(*#*********************************************************)
+
+(*#*       Injection from [N] to [R]                       *)
+
+(*#*********************************************************)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/S_INR.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/S_O_plus_INR.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/plus_INR.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/minus_INR.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/RIneq/mult_INR.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve plus_INR minus_INR mult_INR: real.
+*)
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/RIneq/lt_INR_0.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve lt_INR_0: real.
+*)
+
+inline procedural "cic:/Coq/Reals/RIneq/lt_INR.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve lt_INR: real.
+*)
+
+inline procedural "cic:/Coq/Reals/RIneq/INR_lt_1.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve INR_lt_1: real.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/INR_pos.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve INR_pos: real.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/pos_INR.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve pos_INR: real.
+*)
+
+inline procedural "cic:/Coq/Reals/RIneq/INR_lt.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve INR_lt: real.
+*)
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/RIneq/le_INR.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve le_INR: real.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/not_INR_O.con" as lemma.
+
+(* UNEXPORTED
+Hint Immediate not_INR_O: real.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/not_O_INR.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve not_O_INR: real.
+*)
+
+inline procedural "cic:/Coq/Reals/RIneq/not_nm_INR.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve not_nm_INR: real.
+*)
+
+inline procedural "cic:/Coq/Reals/RIneq/INR_eq.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve INR_eq: real.
+*)
+
+inline procedural "cic:/Coq/Reals/RIneq/INR_le.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve INR_le: real.
+*)
+
+inline procedural "cic:/Coq/Reals/RIneq/not_1_INR.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve not_1_INR: real.
+*)
+
+(*#*********************************************************)
+
+(*#*      Injection from [Z] to [R]                        *)
+
+(*#*********************************************************)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/IZN.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/INR_IZR_INZ.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RIneq/plus_IZR_NEG_POS.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/plus_IZR.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/mult_IZR.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Ropp_Ropp_IZR.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Z_R_minus.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/lt_O_IZR.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/lt_IZR.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/eq_IZR_R0.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/eq_IZR.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/not_O_IZR.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/RIneq/le_O_IZR.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/le_IZR.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/le_IZR_R1.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/IZR_ge.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RIneq/IZR_le.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RIneq/IZR_lt.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RIneq/one_IZR_lt1.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RIneq/one_IZR_r_R1.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/single_z_r_R1.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/tech_single_z_r_R1.con" as lemma.
+
+(*#****************************************************************)
+
+(*#* Definitions of new types                                     *)
+
+(*#****************************************************************)
+
+inline procedural "cic:/Coq/Reals/RIneq/nonnegreal.ind".
+
+inline procedural "cic:/Coq/Reals/RIneq/posreal.ind".
+
+inline procedural "cic:/Coq/Reals/RIneq/nonposreal.ind".
+
+inline procedural "cic:/Coq/Reals/RIneq/negreal.ind".
+
+inline procedural "cic:/Coq/Reals/RIneq/nonzeroreal.ind".
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/prod_neq_R0.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rmult_le_pos.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RIneq/double.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RIneq/double_var.con" as lemma.
+
+(*#*********************************************************)
+
+(*#* Other rules about < and <=                            *)
+
+(*#*********************************************************)
+
+inline procedural "cic:/Coq/Reals/RIneq/Rplus_lt_0_compat.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RIneq/Rplus_le_lt_0_compat.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RIneq/Rplus_lt_le_0_compat.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RIneq/Rplus_le_le_0_compat.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RIneq/plus_le_is_le.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RIneq/plus_lt_is_lt.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RIneq/Rmult_le_0_lt_compat.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RIneq/le_epsilon.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/RIneq/completeness_weak.con" as lemma.
+

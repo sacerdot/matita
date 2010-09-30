@@ -1,0 +1,190 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Rlimit.v,v 1.23.2.1 2004/07/16 19:31:13 herbelin Exp $ i*)
+
+(*#********************************************************)
+
+(*           Definition of the limit                     *)
+
+(*                                                       *)
+
+(*#********************************************************)
+
+include "Reals/Rbase.ma".
+
+include "Reals/Rfunctions.ma".
+
+include "Logic/Classical_Prop.ma".
+
+(* UNEXPORTED
+Open Local Scope R_scope.
+*)
+
+(*#******************************)
+
+(*      Calculus               *)
+
+(*#******************************)
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rlimit/eps2_Rgt_R0.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rlimit/eps2.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rlimit/eps4.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rlimit/Rlt_eps2_eps.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rlimit/Rlt_eps4_eps.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rlimit/prop_eps.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rlimit/mul_factor.con" as definition.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rlimit/mul_factor_wd.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rlimit/mul_factor_gt.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rlimit/mul_factor_gt_f.con" as lemma.
+
+(*#******************************)
+
+(*      Metric space           *)
+
+(*#******************************)
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rlimit/Metric_Space.ind".
+
+(*#******************************)
+
+(*     Limit in Metric space   *)
+
+(*#******************************)
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rlimit/limit_in.con" as definition.
+
+(*#******************************)
+
+(*    R is a metric space      *)
+
+(*#******************************)
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rlimit/R_met.con" as definition.
+
+(*#******************************)
+
+(*         Limit 1 arg         *)
+
+(*#******************************)
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rlimit/Dgf.con" as definition.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rlimit/limit1_in.con" as definition.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rlimit/tech_limit.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rlimit/tech_limit_contr.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rlimit/lim_x.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rlimit/limit_plus.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rlimit/limit_Ropp.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rlimit/limit_minus.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rlimit/limit_free.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rlimit/limit_mul.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rlimit/adhDa.con" as definition.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rlimit/single_limit.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rlimit/limit_comp.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rlimit/limit_inv.con" as lemma.
+

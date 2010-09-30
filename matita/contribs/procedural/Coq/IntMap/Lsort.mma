@@ -1,0 +1,160 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i 	$Id: Lsort.v,v 1.4.2.1 2004/07/16 19:31:04 herbelin Exp $	 i*)
+
+include "Bool/Bool.ma".
+
+include "Bool/Sumbool.ma".
+
+include "Arith/Arith.ma".
+
+include "ZArith/ZArith.ma".
+
+include "IntMap/Addr.ma".
+
+include "IntMap/Adist.ma".
+
+include "IntMap/Addec.ma".
+
+include "IntMap/Map.ma".
+
+include "Lists/List.ma".
+
+include "IntMap/Mapiter.ma".
+
+(* UNEXPORTED
+Section LSort
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Lsort/LSort/A.var
+*)
+
+inline procedural "cic:/Coq/IntMap/Lsort/ad_less_1.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Lsort/ad_less.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Lsort/ad_bit_0_less.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Lsort/ad_bit_0_gt.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Lsort/ad_less_not_refl.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Lsort/ad_ind_double.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Lsort/ad_rec_double.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Lsort/ad_less_def_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Lsort/ad_less_def_2.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Lsort/ad_less_def_3.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Lsort/ad_less_def_4.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Lsort/ad_less_z.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Lsort/ad_z_less_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Lsort/ad_z_less_2.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Lsort/ad_less_trans.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Lsort/alist_sorted.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Lsort/alist_nth_ad.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Lsort/alist_sorted_1.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Lsort/alist_sorted_imp_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Lsort/alist_sorted_2.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Lsort/alist_sorted_1_imp_2.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Lsort/alist_sorted_2_imp.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Lsort/app_length.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Lsort/aapp_length.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Lsort/alist_nth_ad_aapp_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Lsort/alist_nth_ad_aapp_2.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Lsort/interval_split.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Lsort/alist_conc_sorted.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Lsort/alist_nth_ad_semantics.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Lsort/alist_of_Map_nth_ad.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Lsort/ad_monotonic.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Lsort/ad_double_monotonic.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Lsort/ad_double_plus_un_monotonic.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Lsort/ad_comp_monotonic.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Lsort/ad_comp_double_monotonic.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Lsort/ad_comp_double_plus_un_monotonic.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Lsort/alist_of_Map_sorts_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Lsort/alist_of_Map_sorts.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Lsort/alist_of_Map_sorts1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Lsort/alist_of_Map_sorts2.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Lsort/ad_less_total.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Lsort/alist_too_low.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Lsort/alist_semantics_nth_ad.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Lsort/alist_semantics_tail.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Lsort/alist_semantics_same_tail.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Lsort/alist_sorted_tail.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Lsort/alist_canonical.con" as lemma.
+
+(* UNEXPORTED
+End LSort
+*)
+

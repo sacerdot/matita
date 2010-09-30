@@ -1,0 +1,511 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: List.v,v 1.9.2.1 2004/07/16 19:31:05 herbelin Exp $ i*)
+
+include "Arith/Le.ma".
+
+(* UNEXPORTED
+Section Lists
+*)
+
+(* UNEXPORTED
+cic:/Coq/Lists/List/Lists/A.var
+*)
+
+(* UNEXPORTED
+Set Implicit Arguments.
+*)
+
+inline procedural "cic:/Coq/Lists/List/list.ind".
+
+(* NOTATION
+Infix "::" := cons (at level 60, right associativity) : list_scope.
+*)
+
+(* UNEXPORTED
+Open Scope list_scope.
+*)
+
+(*#************************)
+
+(*#* Discrimination       *)
+
+(*#************************)
+
+inline procedural "cic:/Coq/Lists/List/nil_cons.con" as lemma.
+
+(*#************************)
+
+(*#* Concatenation        *)
+
+(*#************************)
+
+inline procedural "cic:/Coq/Lists/List/app.con" as definition.
+
+(* NOTATION
+Infix "++" := app (right associativity, at level 60) : list_scope.
+*)
+
+inline procedural "cic:/Coq/Lists/List/app_nil_end.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve app_nil_end.
+*)
+
+(* UNEXPORTED
+Ltac now_show c := change c in |- *.
+*)
+
+inline procedural "cic:/Coq/Lists/List/app_ass.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve app_ass.
+*)
+
+inline procedural "cic:/Coq/Lists/List/ass_app.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve ass_app.
+*)
+
+inline procedural "cic:/Coq/Lists/List/app_comm_cons.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/List/app_eq_nil.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/List/app_cons_not_nil.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/List/app_eq_unit.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/List/app_inj_tail.con" as lemma.
+
+(*#************************)
+
+(*#* Head and tail        *)
+
+(*#************************)
+
+inline procedural "cic:/Coq/Lists/List/head.con" as definition.
+
+inline procedural "cic:/Coq/Lists/List/tail.con" as definition.
+
+(*#***************************************)
+
+(*#* Length of lists                     *)
+
+(*#***************************************)
+
+inline procedural "cic:/Coq/Lists/List/length.con" as definition.
+
+(*#*****************************)
+
+(*#* Length order of lists     *)
+
+(*#*****************************)
+
+(* UNEXPORTED
+Section length_order
+*)
+
+inline procedural "cic:/Coq/Lists/List/lel.con" as definition.
+
+(* UNEXPORTED
+cic:/Coq/Lists/List/Lists/length_order/a.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Lists/List/Lists/length_order/b.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Lists/List/Lists/length_order/l.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Lists/List/Lists/length_order/m.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Lists/List/Lists/length_order/n.var
+*)
+
+inline procedural "cic:/Coq/Lists/List/lel_refl.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/List/lel_trans.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/List/lel_cons_cons.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/List/lel_cons.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/List/lel_tail.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/List/lel_nil.con" as lemma.
+
+(* UNEXPORTED
+End length_order
+*)
+
+(* UNEXPORTED
+Hint Resolve lel_refl lel_cons_cons lel_cons lel_nil lel_nil nil_cons.
+*)
+
+(*#********************************)
+
+(*#* The [In] predicate           *)
+
+(*#********************************)
+
+inline procedural "cic:/Coq/Lists/List/In.con" as definition.
+
+inline procedural "cic:/Coq/Lists/List/in_eq.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve in_eq.
+*)
+
+inline procedural "cic:/Coq/Lists/List/in_cons.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve in_cons.
+*)
+
+inline procedural "cic:/Coq/Lists/List/in_nil.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/List/in_inv.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/List/In_dec.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/List/in_app_or.con" as lemma.
+
+(* UNEXPORTED
+Hint Immediate in_app_or.
+*)
+
+inline procedural "cic:/Coq/Lists/List/in_or_app.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve in_or_app.
+*)
+
+(*#**************************)
+
+(*#* Set inclusion on list  *)
+
+(*#**************************)
+
+inline procedural "cic:/Coq/Lists/List/incl.con" as definition.
+
+(* UNEXPORTED
+Hint Unfold incl.
+*)
+
+inline procedural "cic:/Coq/Lists/List/incl_refl.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve incl_refl.
+*)
+
+inline procedural "cic:/Coq/Lists/List/incl_tl.con" as lemma.
+
+(* UNEXPORTED
+Hint Immediate incl_tl.
+*)
+
+inline procedural "cic:/Coq/Lists/List/incl_tran.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/List/incl_appl.con" as lemma.
+
+(* UNEXPORTED
+Hint Immediate incl_appl.
+*)
+
+inline procedural "cic:/Coq/Lists/List/incl_appr.con" as lemma.
+
+(* UNEXPORTED
+Hint Immediate incl_appr.
+*)
+
+inline procedural "cic:/Coq/Lists/List/incl_cons.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve incl_cons.
+*)
+
+inline procedural "cic:/Coq/Lists/List/incl_app.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve incl_app.
+*)
+
+(*#*************************)
+
+(*#* Nth element of a list *)
+
+(*#*************************)
+
+inline procedural "cic:/Coq/Lists/List/nth.con" as definition.
+
+inline procedural "cic:/Coq/Lists/List/nth_ok.con" as definition.
+
+inline procedural "cic:/Coq/Lists/List/nth_in_or_default.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/List/nth_S_cons.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/List/nth_error.con" as definition.
+
+inline procedural "cic:/Coq/Lists/List/nth_default.con" as definition.
+
+inline procedural "cic:/Coq/Lists/List/nth_In.con" as lemma.
+
+(*#*******************************)
+
+(*#* Decidable equality on lists *)
+
+(*#*******************************)
+
+inline procedural "cic:/Coq/Lists/List/list_eq_dec.con" as lemma.
+
+(*#************************)
+
+(*#*  Reverse             *)
+
+(*#************************)
+
+inline procedural "cic:/Coq/Lists/List/rev.con" as definition.
+
+inline procedural "cic:/Coq/Lists/List/distr_rev.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/List/rev_unit.con" as remark.
+
+inline procedural "cic:/Coq/Lists/List/rev_involutive.con" as lemma.
+
+(*#********************************************)
+
+(*#*  Reverse Induction Principle on Lists    *)
+
+(*#********************************************)
+
+(* UNEXPORTED
+Section Reverse_Induction
+*)
+
+(* UNEXPORTED
+Unset Implicit Arguments.
+*)
+
+inline procedural "cic:/Coq/Lists/List/rev_list_ind.con" as remark.
+
+(* UNEXPORTED
+Set Implicit Arguments.
+*)
+
+inline procedural "cic:/Coq/Lists/List/rev_ind.con" as lemma.
+
+(* UNEXPORTED
+End Reverse_Induction
+*)
+
+(* UNEXPORTED
+End Lists
+*)
+
+(* UNEXPORTED
+Implicit Arguments nil [A].
+*)
+
+(* UNEXPORTED
+Hint Resolve nil_cons app_nil_end ass_app app_ass: datatypes v62.
+*)
+
+(* UNEXPORTED
+Hint Resolve app_comm_cons app_cons_not_nil: datatypes v62.
+*)
+
+(* UNEXPORTED
+Hint Immediate app_eq_nil: datatypes v62.
+*)
+
+(* UNEXPORTED
+Hint Resolve app_eq_unit app_inj_tail: datatypes v62.
+*)
+
+(* UNEXPORTED
+Hint Resolve lel_refl lel_cons_cons lel_cons lel_nil lel_nil nil_cons:
+  datatypes v62.
+*)
+
+(* UNEXPORTED
+Hint Resolve in_eq in_cons in_inv in_nil in_app_or in_or_app: datatypes v62.
+*)
+
+(* UNEXPORTED
+Hint Resolve incl_refl incl_tl incl_tran incl_appl incl_appr incl_cons
+  incl_app: datatypes v62.
+*)
+
+(* UNEXPORTED
+Section Functions_on_lists
+*)
+
+(*#***************************************************************)
+
+(*#* Some generic functions on lists and basic functions of them *)
+
+(*#***************************************************************)
+
+(* UNEXPORTED
+Section Map
+*)
+
+(* UNEXPORTED
+cic:/Coq/Lists/List/Functions_on_lists/Map/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Lists/List/Functions_on_lists/Map/B.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Lists/List/Functions_on_lists/Map/f.var
+*)
+
+inline procedural "cic:/Coq/Lists/List/map.con" as definition.
+
+(* UNEXPORTED
+End Map
+*)
+
+inline procedural "cic:/Coq/Lists/List/in_map.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/List/flat_map.con" as definition.
+
+inline procedural "cic:/Coq/Lists/List/list_prod.con" as definition.
+
+inline procedural "cic:/Coq/Lists/List/in_prod_aux.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/List/in_prod.con" as lemma.
+
+(*#* [(list_power x y)] is [y^x], or the set of sequences of elts of [y]
+    indexed by elts of [x], sorted in lexicographic order. *)
+
+inline procedural "cic:/Coq/Lists/List/list_power.con" as definition.
+
+(*#***********************************)
+
+(*#* Left-to-right iterator on lists *)
+
+(*#***********************************)
+
+(* UNEXPORTED
+Section Fold_Left_Recursor
+*)
+
+(* UNEXPORTED
+cic:/Coq/Lists/List/Functions_on_lists/Fold_Left_Recursor/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Lists/List/Functions_on_lists/Fold_Left_Recursor/B.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Lists/List/Functions_on_lists/Fold_Left_Recursor/f.var
+*)
+
+inline procedural "cic:/Coq/Lists/List/fold_left.con" as definition.
+
+(* UNEXPORTED
+End Fold_Left_Recursor
+*)
+
+(*#***********************************)
+
+(*#* Right-to-left iterator on lists *)
+
+(*#***********************************)
+
+(* UNEXPORTED
+Section Fold_Right_Recursor
+*)
+
+(* UNEXPORTED
+cic:/Coq/Lists/List/Functions_on_lists/Fold_Right_Recursor/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Lists/List/Functions_on_lists/Fold_Right_Recursor/B.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Lists/List/Functions_on_lists/Fold_Right_Recursor/f.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Lists/List/Functions_on_lists/Fold_Right_Recursor/a0.var
+*)
+
+inline procedural "cic:/Coq/Lists/List/fold_right.con" as definition.
+
+(* UNEXPORTED
+End Fold_Right_Recursor
+*)
+
+inline procedural "cic:/Coq/Lists/List/fold_symmetric.con" as theorem.
+
+(* UNEXPORTED
+End Functions_on_lists
+*)
+
+(*#* Exporting list notations *)
+
+(* NOTATION
+Infix "::" := cons (at level 60, right associativity) : list_scope.
+*)
+
+(* NOTATION
+Infix "++" := app (right associativity, at level 60) : list_scope.
+*)
+
+(* UNEXPORTED
+Open Scope list_scope.
+*)
+
+(*#* Declare Scope list_scope with key list *)
+
+(* UNEXPORTED
+Delimit Scope list_scope with list.
+*)
+
+(* UNEXPORTED
+Bind Scope list_scope with list.
+*)
+

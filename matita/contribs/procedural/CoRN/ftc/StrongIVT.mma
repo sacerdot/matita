@@ -1,0 +1,182 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "CoRN.ma".
+
+(* $Id: StrongIVT.v,v 1.5 2004/04/23 10:01:01 lcf Exp $ *)
+
+include "ftc/WeakIVT.ma".
+
+include "ftc/CalculusTheorems.ma".
+
+(* UNEXPORTED
+Section IVT'
+*)
+
+(*#* ** Strong IVT for partial functions
+
+The IVT can be generalized to arbitrary partial functions; in the first
+part, we will simply do that, repeating the previous construction.
+
+The same notations and conventions apply as before.
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/StrongIVT/IVT'/a.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/StrongIVT/IVT'/b.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/StrongIVT/IVT'/Hab'.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/StrongIVT/IVT'/Hab.var
+*)
+
+(* begin hide *)
+
+inline procedural "cic:/CoRN/ftc/StrongIVT/IVT'/I.con" "IVT'__" as definition.
+
+inline procedural "cic:/CoRN/ftc/StrongIVT/IVT'/I'.con" "IVT'__" as definition.
+
+(* end hide *)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/StrongIVT/IVT'/F.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/StrongIVT/IVT'/contF.var
+*)
+
+(* begin hide *)
+
+inline procedural "cic:/CoRN/ftc/StrongIVT/IVT'/incF.con" "IVT'__" as definition.
+
+(* end hide *)
+
+(* begin show *)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/StrongIVT/IVT'/incrF.var
+*)
+
+(* end show *)
+
+(* begin hide *)
+
+inline procedural "cic:/CoRN/ftc/StrongIVT/IVT'/Ha.con" "IVT'__" as definition.
+
+inline procedural "cic:/CoRN/ftc/StrongIVT/IVT'/Hb.con" "IVT'__" as definition.
+
+inline procedural "cic:/CoRN/ftc/StrongIVT/IVT'/HFab'.con" "IVT'__" as definition.
+
+(* end hide *)
+
+(* begin show *)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/StrongIVT/IVT'/z.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/StrongIVT/IVT'/Haz.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/StrongIVT/IVT'/Hzb.var
+*)
+
+(* end show *)
+
+inline procedural "cic:/CoRN/ftc/StrongIVT/IVT'_seq_lemma.con" as lemma.
+
+(* end hide *)
+
+inline procedural "cic:/CoRN/ftc/StrongIVT/IVT'_aux_seq_type.ind".
+
+inline procedural "cic:/CoRN/ftc/StrongIVT/IVT'_iter.con" as definition.
+
+inline procedural "cic:/CoRN/ftc/StrongIVT/IVT'_seq.con" as definition.
+
+inline procedural "cic:/CoRN/ftc/StrongIVT/a'_seq.con" as definition.
+
+inline procedural "cic:/CoRN/ftc/StrongIVT/b'_seq.con" as definition.
+
+inline procedural "cic:/CoRN/ftc/StrongIVT/a'_seq_I.con" as definition.
+
+inline procedural "cic:/CoRN/ftc/StrongIVT/b'_seq_I.con" as definition.
+
+inline procedural "cic:/CoRN/ftc/StrongIVT/a'_seq_less_b'_seq.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/StrongIVT/a'_seq_less_z.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/StrongIVT/z_less_b'_seq.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/StrongIVT/a'_seq_mon.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/StrongIVT/b'_seq_mon.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/StrongIVT/a'_seq_b'_seq_dist_n.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/StrongIVT/a'_seq_b'_seq_dist.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/StrongIVT/a'_seq_Cauchy.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/StrongIVT/b'_seq_Cauchy.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/StrongIVT/IVT'/xa.con" "IVT'__" as definition.
+
+inline procedural "cic:/CoRN/ftc/StrongIVT/IVT'/xb.con" "IVT'__" as definition.
+
+inline procedural "cic:/CoRN/ftc/StrongIVT/a'_seq_b'_seq_lim.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/StrongIVT/xa'_in_interval.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/StrongIVT/IVT'_I.con" as lemma.
+
+(* UNEXPORTED
+End IVT'
+*)
+
+(*#* **Other formulations
+
+We now generalize the various statements of the intermediate value
+theorem to more widely applicable forms.
+*)
+
+inline procedural "cic:/CoRN/ftc/StrongIVT/Weak_IVT.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/StrongIVT/IVT_inc.con" as lemma.
+
+(* UNEXPORTED
+Transparent Min.
+*)
+
+inline procedural "cic:/CoRN/ftc/StrongIVT/IVT_dec.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/StrongIVT/IVT'_inc.con" as lemma.
+
+(* UNEXPORTED
+Transparent Min.
+*)
+
+inline procedural "cic:/CoRN/ftc/StrongIVT/IVT'_dec.con" as lemma.
+

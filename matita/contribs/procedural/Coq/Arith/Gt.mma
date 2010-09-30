@@ -1,0 +1,164 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Gt.v,v 1.8.2.1 2004/07/16 19:31:00 herbelin Exp $ i*)
+
+include "Arith/Le.ma".
+
+include "Arith/Lt.ma".
+
+include "Arith/Plus.ma".
+
+(* UNEXPORTED
+Open Local Scope nat_scope.
+*)
+
+(* UNEXPORTED
+Implicit Types m n p : nat.
+*)
+
+(*#* Order and successor *)
+
+inline procedural "cic:/Coq/Arith/Gt/gt_Sn_O.con" as theorem.
+
+(* UNEXPORTED
+Hint Resolve gt_Sn_O: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/Gt/gt_Sn_n.con" as theorem.
+
+(* UNEXPORTED
+Hint Resolve gt_Sn_n: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/Gt/gt_n_S.con" as theorem.
+
+(* UNEXPORTED
+Hint Resolve gt_n_S: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/Gt/gt_S_n.con" as lemma.
+
+(* UNEXPORTED
+Hint Immediate gt_S_n: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/Gt/gt_S.con" as theorem.
+
+inline procedural "cic:/Coq/Arith/Gt/gt_pred.con" as lemma.
+
+(* UNEXPORTED
+Hint Immediate gt_pred: arith v62.
+*)
+
+(*#* Irreflexivity *)
+
+inline procedural "cic:/Coq/Arith/Gt/gt_irrefl.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve gt_irrefl: arith v62.
+*)
+
+(*#* Asymmetry *)
+
+inline procedural "cic:/Coq/Arith/Gt/gt_asym.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve gt_asym: arith v62.
+*)
+
+(*#* Relating strict and large orders *)
+
+inline procedural "cic:/Coq/Arith/Gt/le_not_gt.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve le_not_gt: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/Gt/gt_not_le.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve gt_not_le: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/Gt/le_S_gt.con" as theorem.
+
+(* UNEXPORTED
+Hint Immediate le_S_gt: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/Gt/gt_S_le.con" as lemma.
+
+(* UNEXPORTED
+Hint Immediate gt_S_le: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/Gt/gt_le_S.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve gt_le_S: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/Gt/le_gt_S.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve le_gt_S: arith v62.
+*)
+
+(*#* Transitivity *)
+
+inline procedural "cic:/Coq/Arith/Gt/le_gt_trans.con" as theorem.
+
+inline procedural "cic:/Coq/Arith/Gt/gt_le_trans.con" as theorem.
+
+inline procedural "cic:/Coq/Arith/Gt/gt_trans.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Gt/gt_trans_S.con" as theorem.
+
+(* UNEXPORTED
+Hint Resolve gt_trans_S le_gt_trans gt_le_trans: arith v62.
+*)
+
+(*#* Comparison to 0 *)
+
+inline procedural "cic:/Coq/Arith/Gt/gt_O_eq.con" as theorem.
+
+(*#* Simplification and compatibility *)
+
+inline procedural "cic:/Coq/Arith/Gt/plus_gt_reg_l.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Gt/plus_gt_compat_l.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve plus_gt_compat_l: arith v62.
+*)
+

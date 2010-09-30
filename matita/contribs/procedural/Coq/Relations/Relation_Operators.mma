@@ -1,0 +1,290 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Relation_Operators.v,v 1.8.2.1 2004/07/16 19:31:16 herbelin Exp $ i*)
+
+(*#***************************************************************************)
+
+(*                      Bruno Barras, Cristina Cornes                       *)
+
+(*                                                                          *)
+
+(*  Some of these definitons were taken from :                              *)
+
+(*     Constructing Recursion Operators in Type Theory                      *)
+
+(*     L. Paulson  JSC (1986) 2, 325-355                                    *)
+
+(*#***************************************************************************)
+
+include "Relations/Relation_Definitions.ma".
+
+include "Lists/List.ma".
+
+(*#* Some operators to build relations *)
+
+(* UNEXPORTED
+Section Transitive_Closure
+*)
+
+(* UNEXPORTED
+cic:/Coq/Relations/Relation_Operators/Transitive_Closure/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Relations/Relation_Operators/Transitive_Closure/R.var
+*)
+
+inline procedural "cic:/Coq/Relations/Relation_Operators/clos_trans.ind".
+
+(* UNEXPORTED
+End Transitive_Closure
+*)
+
+(* UNEXPORTED
+Section Reflexive_Transitive_Closure
+*)
+
+(* UNEXPORTED
+cic:/Coq/Relations/Relation_Operators/Reflexive_Transitive_Closure/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Relations/Relation_Operators/Reflexive_Transitive_Closure/R.var
+*)
+
+inline procedural "cic:/Coq/Relations/Relation_Operators/clos_refl_trans.ind".
+
+(* UNEXPORTED
+End Reflexive_Transitive_Closure
+*)
+
+(* UNEXPORTED
+Section Reflexive_Symetric_Transitive_Closure
+*)
+
+(* UNEXPORTED
+cic:/Coq/Relations/Relation_Operators/Reflexive_Symetric_Transitive_Closure/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Relations/Relation_Operators/Reflexive_Symetric_Transitive_Closure/R.var
+*)
+
+inline procedural "cic:/Coq/Relations/Relation_Operators/clos_refl_sym_trans.ind".
+
+(* UNEXPORTED
+End Reflexive_Symetric_Transitive_Closure
+*)
+
+(* UNEXPORTED
+Section Transposee
+*)
+
+(* UNEXPORTED
+cic:/Coq/Relations/Relation_Operators/Transposee/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Relations/Relation_Operators/Transposee/R.var
+*)
+
+inline procedural "cic:/Coq/Relations/Relation_Operators/transp.con" as definition.
+
+(* UNEXPORTED
+End Transposee
+*)
+
+(* UNEXPORTED
+Section Union
+*)
+
+(* UNEXPORTED
+cic:/Coq/Relations/Relation_Operators/Union/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Relations/Relation_Operators/Union/R1.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Relations/Relation_Operators/Union/R2.var
+*)
+
+inline procedural "cic:/Coq/Relations/Relation_Operators/union.con" as definition.
+
+(* UNEXPORTED
+End Union
+*)
+
+(* UNEXPORTED
+Section Disjoint_Union
+*)
+
+(* UNEXPORTED
+cic:/Coq/Relations/Relation_Operators/Disjoint_Union/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Relations/Relation_Operators/Disjoint_Union/B.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Relations/Relation_Operators/Disjoint_Union/leA.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Relations/Relation_Operators/Disjoint_Union/leB.var
+*)
+
+inline procedural "cic:/Coq/Relations/Relation_Operators/le_AsB.ind".
+
+(* UNEXPORTED
+End Disjoint_Union
+*)
+
+(* UNEXPORTED
+Section Lexicographic_Product
+*)
+
+(* Lexicographic order on dependent pairs *)
+
+(* UNEXPORTED
+cic:/Coq/Relations/Relation_Operators/Lexicographic_Product/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Relations/Relation_Operators/Lexicographic_Product/B.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Relations/Relation_Operators/Lexicographic_Product/leA.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Relations/Relation_Operators/Lexicographic_Product/leB.var
+*)
+
+inline procedural "cic:/Coq/Relations/Relation_Operators/lexprod.ind".
+
+(* UNEXPORTED
+End Lexicographic_Product
+*)
+
+(* UNEXPORTED
+Section Symmetric_Product
+*)
+
+(* UNEXPORTED
+cic:/Coq/Relations/Relation_Operators/Symmetric_Product/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Relations/Relation_Operators/Symmetric_Product/B.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Relations/Relation_Operators/Symmetric_Product/leA.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Relations/Relation_Operators/Symmetric_Product/leB.var
+*)
+
+inline procedural "cic:/Coq/Relations/Relation_Operators/symprod.ind".
+
+(* UNEXPORTED
+End Symmetric_Product
+*)
+
+(* UNEXPORTED
+Section Swap
+*)
+
+(* UNEXPORTED
+cic:/Coq/Relations/Relation_Operators/Swap/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Relations/Relation_Operators/Swap/R.var
+*)
+
+inline procedural "cic:/Coq/Relations/Relation_Operators/swapprod.ind".
+
+(* UNEXPORTED
+End Swap
+*)
+
+(* UNEXPORTED
+Section Lexicographic_Exponentiation
+*)
+
+(* UNEXPORTED
+cic:/Coq/Relations/Relation_Operators/Lexicographic_Exponentiation/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Relations/Relation_Operators/Lexicographic_Exponentiation/leA.var
+*)
+
+(* UNAVAILABLE OBJECT: cic:/Coq/Relations/Relation_Operators/Lexicographic_Exponentiation/Nil.con *)
+
+inline procedural "cic:/Coq/Relations/Relation_Operators/Lexicographic_Exponentiation/Nil.con" "Lexicographic_Exponentiation__" as definition.
+
+(* UNAVAILABLE OBJECT: cic:/Coq/Relations/Relation_Operators/Lexicographic_Exponentiation/List.con *)
+
+inline procedural "cic:/Coq/Relations/Relation_Operators/Lexicographic_Exponentiation/List.con" "Lexicographic_Exponentiation__" as definition.
+
+inline procedural "cic:/Coq/Relations/Relation_Operators/Ltl.ind".
+
+inline procedural "cic:/Coq/Relations/Relation_Operators/Desc.ind".
+
+inline procedural "cic:/Coq/Relations/Relation_Operators/Pow.con" as definition.
+
+inline procedural "cic:/Coq/Relations/Relation_Operators/lex_exp.con" as definition.
+
+(* UNEXPORTED
+End Lexicographic_Exponentiation
+*)
+
+(* UNEXPORTED
+Hint Unfold transp union: sets v62.
+*)
+
+(* UNEXPORTED
+Hint Resolve t_step rt_step rt_refl rst_step rst_refl: sets v62.
+*)
+
+(* UNEXPORTED
+Hint Immediate rst_sym: sets v62.
+*)
+

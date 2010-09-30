@@ -1,0 +1,153 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i 	$Id: Adalloc.v,v 1.10.2.1 2004/07/16 19:31:04 herbelin Exp $	 i*)
+
+include "Bool/Bool.ma".
+
+include "Bool/Sumbool.ma".
+
+include "ZArith/ZArith.ma".
+
+include "Arith/Arith.ma".
+
+include "IntMap/Addr.ma".
+
+include "IntMap/Adist.ma".
+
+include "IntMap/Addec.ma".
+
+include "IntMap/Map.ma".
+
+include "IntMap/Fset.ma".
+
+(* UNEXPORTED
+Section AdAlloc
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Adalloc/AdAlloc/A.var
+*)
+
+inline procedural "cic:/Coq/IntMap/Adalloc/nat_of_ad.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Adalloc/nat_le.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Adalloc/nat_le_correct.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adalloc/nat_le_complete.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adalloc/nat_le_correct_conv.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adalloc/nat_le_complete_conv.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adalloc/ad_of_nat.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Adalloc/ad_of_nat_of_ad.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adalloc/nat_of_ad_of_nat.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adalloc/ad_le.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Adalloc/ad_le_refl.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adalloc/ad_le_antisym.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adalloc/ad_le_trans.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adalloc/ad_le_lt_trans.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adalloc/ad_lt_le_trans.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adalloc/ad_lt_trans.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adalloc/ad_lt_le_weak.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adalloc/ad_min.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Adalloc/ad_min_choice.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adalloc/ad_min_le_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adalloc/ad_min_le_2.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adalloc/ad_min_le_3.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adalloc/ad_min_le_4.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adalloc/ad_min_le_5.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adalloc/ad_min_lt_3.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adalloc/ad_min_lt_4.con" as lemma.
+
+(*#* Allocator: returns an address not in the domain of [m].
+  This allocator is optimal in that it returns the lowest possible address,
+  in the usual ordering on integers. It is not the most efficient, however. *)
+
+inline procedural "cic:/Coq/IntMap/Adalloc/ad_alloc_opt.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Adalloc/ad_alloc_opt_allocates_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adalloc/ad_alloc_opt_allocates.con" as lemma.
+
+(*#* Moreover, this is optimal: all addresses below [(ad_alloc_opt m)]
+      are in [dom m]: *)
+
+inline procedural "cic:/Coq/IntMap/Adalloc/nat_of_ad_double.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adalloc/nat_of_ad_double_plus_un.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adalloc/ad_le_double_mono.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adalloc/ad_le_double_plus_un_mono.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adalloc/ad_le_double_mono_conv.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adalloc/ad_le_double_plus_un_mono_conv.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adalloc/ad_lt_double_mono.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adalloc/ad_lt_double_plus_un_mono.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adalloc/ad_lt_double_mono_conv.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adalloc/ad_lt_double_plus_un_mono_conv.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adalloc/ad_alloc_opt_optimal_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Adalloc/ad_alloc_opt_optimal.con" as lemma.
+
+(* UNEXPORTED
+End AdAlloc
+*)
+

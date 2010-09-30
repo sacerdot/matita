@@ -1,0 +1,108 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Exp_prop.v,v 1.16.2.1 2004/07/16 19:31:10 herbelin Exp $ i*)
+
+include "Reals/Rbase.ma".
+
+include "Reals/Rfunctions.ma".
+
+include "Reals/SeqSeries.ma".
+
+include "Reals/Rtrigo.ma".
+
+include "Reals/Ranalysis1.ma".
+
+include "Reals/PSeries_reg.ma".
+
+include "Arith/Div2.ma".
+
+include "Arith/Even.ma".
+
+include "Arith/Max.ma".
+
+(* UNEXPORTED
+Open Local Scope nat_scope.
+*)
+
+(* UNEXPORTED
+Open Local Scope R_scope.
+*)
+
+inline procedural "cic:/Coq/Reals/Exp_prop/E1.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Exp_prop/E1_cvg.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Exp_prop/Reste_E.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Exp_prop/exp_form.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Exp_prop/maj_Reste_E.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Exp_prop/Rle_Rinv.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Exp_prop/div2_double.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Exp_prop/div2_S_double.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Exp_prop/div2_not_R0.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Exp_prop/Reste_E_maj.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Exp_prop/maj_Reste_cv_R0.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Exp_prop/Reste_E_cv.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Exp_prop/exp_plus.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Exp_prop/exp_pos_pos.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Exp_prop/exp_pos.con" as lemma.
+
+(* ((exp h)-1)/h -> 0 quand h->0 *)
+
+inline procedural "cic:/Coq/Reals/Exp_prop/derivable_pt_lim_exp_0.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Exp_prop/derivable_pt_lim_exp.con" as lemma.
+

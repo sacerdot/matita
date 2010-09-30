@@ -1,0 +1,88 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Znat.v,v 1.3.2.1 2004/07/16 19:31:22 herbelin Exp $ i*)
+
+(*#* Binary Integers (Pierre Cr\233\gut, CNET, Lannion, France) *)
+
+include "Arith/Arith.ma".
+
+include "NArith/BinPos.ma".
+
+include "ZArith/BinInt.ma".
+
+include "ZArith/Zcompare.ma".
+
+include "ZArith/Zorder.ma".
+
+include "Logic/Decidable.ma".
+
+include "Arith/Peano_dec.ma".
+
+include "Arith/Compare_dec.ma".
+
+(* UNEXPORTED
+Open Local Scope Z_scope.
+*)
+
+inline procedural "cic:/Coq/ZArith/Znat/neq.con" as definition.
+
+(*#*********************************************************************)
+
+(*#* Properties of the injection from nat into Z *)
+
+inline procedural "cic:/Coq/ZArith/Znat/inj_S.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/Znat/inj_plus.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/Znat/inj_mult.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/Znat/inj_neq.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/Znat/inj_le.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/Znat/inj_lt.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/Znat/inj_gt.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/Znat/inj_ge.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/Znat/inj_eq.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/Znat/intro_Z.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/Znat/inj_minus1.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/Znat/inj_minus2.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/Znat/Zpos_eq_Z_of_nat_o_nat_of_P.con" as theorem.
+

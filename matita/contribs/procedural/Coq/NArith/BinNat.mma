@@ -1,0 +1,138 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: BinNat.v,v 1.7.2.1 2004/07/16 19:31:07 herbelin Exp $ i*)
+
+include "NArith/BinPos.ma".
+
+(*#*********************************************************************)
+
+(*#* Binary natural numbers *)
+
+inline procedural "cic:/Coq/NArith/BinNat/N.ind".
+
+(*#* Declare binding key for scope positive_scope *)
+
+(* UNEXPORTED
+Delimit Scope N_scope with N.
+*)
+
+(*#* Automatically open scope N_scope for the constructors of N *)
+
+(* UNEXPORTED
+Bind Scope N_scope with N.
+*)
+
+(* UNEXPORTED
+Arguments Scope Npos [N_scope].
+*)
+
+(* UNEXPORTED
+Open Local Scope N_scope.
+*)
+
+(*#* Operation x -> 2*x+1 *)
+
+inline procedural "cic:/Coq/NArith/BinNat/Ndouble_plus_one.con" as definition.
+
+(*#* Operation x -> 2*x *)
+
+inline procedural "cic:/Coq/NArith/BinNat/Ndouble.con" as definition.
+
+(*#* Successor *)
+
+inline procedural "cic:/Coq/NArith/BinNat/Nsucc.con" as definition.
+
+(*#* Addition *)
+
+inline procedural "cic:/Coq/NArith/BinNat/Nplus.con" as definition.
+
+(* NOTATION
+Infix "+" := Nplus : N_scope.
+*)
+
+(*#* Multiplication *)
+
+inline procedural "cic:/Coq/NArith/BinNat/Nmult.con" as definition.
+
+(* NOTATION
+Infix "*" := Nmult : N_scope.
+*)
+
+(*#* Order *)
+
+inline procedural "cic:/Coq/NArith/BinNat/Ncompare.con" as definition.
+
+(* NOTATION
+Infix "?=" := Ncompare (at level 70, no associativity) : N_scope.
+*)
+
+(*#* Peano induction on binary natural numbers *)
+
+inline procedural "cic:/Coq/NArith/BinNat/Nind.con" as theorem.
+
+(*#* Properties of addition *)
+
+inline procedural "cic:/Coq/NArith/BinNat/Nplus_0_l.con" as theorem.
+
+inline procedural "cic:/Coq/NArith/BinNat/Nplus_0_r.con" as theorem.
+
+inline procedural "cic:/Coq/NArith/BinNat/Nplus_comm.con" as theorem.
+
+inline procedural "cic:/Coq/NArith/BinNat/Nplus_assoc.con" as theorem.
+
+inline procedural "cic:/Coq/NArith/BinNat/Nplus_succ.con" as theorem.
+
+inline procedural "cic:/Coq/NArith/BinNat/Nsucc_inj.con" as theorem.
+
+inline procedural "cic:/Coq/NArith/BinNat/Nplus_reg_l.con" as theorem.
+
+(*#* Properties of multiplication *)
+
+inline procedural "cic:/Coq/NArith/BinNat/Nmult_1_l.con" as theorem.
+
+inline procedural "cic:/Coq/NArith/BinNat/Nmult_1_r.con" as theorem.
+
+inline procedural "cic:/Coq/NArith/BinNat/Nmult_comm.con" as theorem.
+
+inline procedural "cic:/Coq/NArith/BinNat/Nmult_assoc.con" as theorem.
+
+inline procedural "cic:/Coq/NArith/BinNat/Nmult_plus_distr_r.con" as theorem.
+
+inline procedural "cic:/Coq/NArith/BinNat/Nmult_reg_r.con" as theorem.
+
+inline procedural "cic:/Coq/NArith/BinNat/Nmult_0_l.con" as theorem.
+
+(*#* Properties of comparison *)
+
+inline procedural "cic:/Coq/NArith/BinNat/Ncompare_Eq_eq.con" as theorem.
+

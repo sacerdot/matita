@@ -1,0 +1,38 @@
+proceduralHelpers.cmi: 
+proceduralClassify.cmi: 
+proceduralOptimizer.cmi: 
+proceduralTypes.cmi: 
+proceduralMode.cmi: 
+proceduralConversion.cmi: 
+procedural1.cmi: proceduralTypes.cmi 
+procedural2.cmi: proceduralTypes.cmi 
+proceduralTeX.cmi: proceduralTypes.cmi 
+acic2Procedural.cmi: 
+proceduralHelpers.cmo: proceduralHelpers.cmi 
+proceduralHelpers.cmx: proceduralHelpers.cmi 
+proceduralClassify.cmo: proceduralHelpers.cmi proceduralClassify.cmi 
+proceduralClassify.cmx: proceduralHelpers.cmx proceduralClassify.cmi 
+proceduralOptimizer.cmo: proceduralHelpers.cmi proceduralClassify.cmi \
+    proceduralOptimizer.cmi 
+proceduralOptimizer.cmx: proceduralHelpers.cmx proceduralClassify.cmx \
+    proceduralOptimizer.cmi 
+proceduralTypes.cmo: proceduralHelpers.cmi proceduralTypes.cmi 
+proceduralTypes.cmx: proceduralHelpers.cmx proceduralTypes.cmi 
+proceduralMode.cmo: proceduralClassify.cmi proceduralMode.cmi 
+proceduralMode.cmx: proceduralClassify.cmx proceduralMode.cmi 
+proceduralConversion.cmo: proceduralHelpers.cmi proceduralConversion.cmi 
+proceduralConversion.cmx: proceduralHelpers.cmx proceduralConversion.cmi 
+procedural1.cmo: proceduralTypes.cmi procedural1.cmi 
+procedural1.cmx: proceduralTypes.cmx procedural1.cmi 
+procedural2.cmo: proceduralTypes.cmi proceduralHelpers.cmi \
+    proceduralConversion.cmi proceduralClassify.cmi procedural2.cmi 
+procedural2.cmx: proceduralTypes.cmx proceduralHelpers.cmx \
+    proceduralConversion.cmx proceduralClassify.cmx procedural2.cmi 
+proceduralTeX.cmo: proceduralTypes.cmi proceduralHelpers.cmi \
+    proceduralTeX.cmi 
+proceduralTeX.cmx: proceduralTypes.cmx proceduralHelpers.cmx \
+    proceduralTeX.cmi 
+acic2Procedural.cmo: proceduralTypes.cmi proceduralTeX.cmi \
+    proceduralHelpers.cmi procedural2.cmi procedural1.cmi acic2Procedural.cmi 
+acic2Procedural.cmx: proceduralTypes.cmx proceduralTeX.cmx \
+    proceduralHelpers.cmx procedural2.cmx procedural1.cmx acic2Procedural.cmi 

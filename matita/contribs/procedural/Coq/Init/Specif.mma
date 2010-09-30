@@ -1,0 +1,273 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Specif.v,v 1.25.2.1 2004/07/16 19:31:04 herbelin Exp $ i*)
+
+(* UNEXPORTED
+Set Implicit Arguments.
+*)
+
+(*#* Basic specifications : Sets containing logical information *)
+
+include "Init/Notations.ma".
+
+include "Init/Datatypes.ma".
+
+include "Init/Logic.ma".
+
+(*#* Subsets *)
+
+(*#* [(sig A P)], or more suggestively [{x:A | (P x)}], denotes the subset 
+    of elements of the Set [A] which satisfy the predicate [P].
+    Similarly [(sig2 A P Q)], or [{x:A | (P x) & (Q x)}], denotes the subset 
+    of elements of the Set [A] which satisfy both [P] and [Q]. *)
+
+inline procedural "cic:/Coq/Init/Specif/sig.ind".
+
+inline procedural "cic:/Coq/Init/Specif/sig2.ind".
+
+(*#* [(sigS A P)], or more suggestively [{x:A & (P x)}], is a subtle variant
+    of subset where [P] is now of type [Set].
+    Similarly for [(sigS2 A P Q)], also written [{x:A & (P x) & (Q x)}]. *)
+
+inline procedural "cic:/Coq/Init/Specif/sigS.ind".
+
+inline procedural "cic:/Coq/Init/Specif/sigS2.ind".
+
+(* UNEXPORTED
+Arguments Scope sig [type_scope type_scope].
+*)
+
+(* UNEXPORTED
+Arguments Scope sig2 [type_scope type_scope type_scope].
+*)
+
+(* UNEXPORTED
+Arguments Scope sigS [type_scope type_scope].
+*)
+
+(* UNEXPORTED
+Arguments Scope sigS2 [type_scope type_scope type_scope].
+*)
+
+(* NOTATION
+Notation "{ x : A  |  P }" := (sig (fun x:A => P)) : type_scope.
+*)
+
+(* NOTATION
+Notation "{ x : A  |  P  &  Q }" := (sig2 (fun x:A => P) (fun x:A => Q)) :
+  type_scope.
+*)
+
+(* NOTATION
+Notation "{ x : A  &  P }" := (sigS (fun x:A => P)) : type_scope.
+*)
+
+(* NOTATION
+Notation "{ x : A  &  P  &  Q }" := (sigS2 (fun x:A => P) (fun x:A => Q)) :
+  type_scope.
+*)
+
+(* NOTATION
+Add Printing Let sig.
+*)
+
+(* NOTATION
+Add Printing Let sig2.
+*)
+
+(* NOTATION
+Add Printing Let sigS.
+*)
+
+(* NOTATION
+Add Printing Let sigS2.
+*)
+
+(*#* Projections of sig *)
+
+(* UNEXPORTED
+Section Subset_projections
+*)
+
+(* UNEXPORTED
+cic:/Coq/Init/Specif/Subset_projections/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Init/Specif/Subset_projections/P.var
+*)
+
+inline procedural "cic:/Coq/Init/Specif/proj1_sig.con" as definition.
+
+inline procedural "cic:/Coq/Init/Specif/proj2_sig.con" as definition.
+
+(* UNEXPORTED
+End Subset_projections
+*)
+
+(*#* Projections of sigS *)
+
+(* UNEXPORTED
+Section Projections
+*)
+
+(* UNEXPORTED
+cic:/Coq/Init/Specif/Projections/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Init/Specif/Projections/P.var
+*)
+
+(*#* An element [y] of a subset [{x:A & (P x)}] is the pair of an [a] of 
+     type [A] and of a proof [h] that [a] satisfies [P].
+     Then [(projS1 y)] is the witness [a]
+     and [(projS2 y)] is the proof of [(P a)] *)
+
+inline procedural "cic:/Coq/Init/Specif/projS1.con" as definition.
+
+inline procedural "cic:/Coq/Init/Specif/projS2.con" as definition.
+
+(* UNEXPORTED
+End Projections
+*)
+
+(*#* Extended_booleans *)
+
+inline procedural "cic:/Coq/Init/Specif/sumbool.ind".
+
+(* NOTATION
+Add Printing If sumbool.
+*)
+
+inline procedural "cic:/Coq/Init/Specif/sumor.ind".
+
+(* NOTATION
+Add Printing If sumor.
+*)
+
+(*#* Choice *)
+
+(* UNEXPORTED
+Section Choice_lemmas
+*)
+
+(*#* The following lemmas state various forms of the axiom of choice *)
+
+(* UNEXPORTED
+cic:/Coq/Init/Specif/Choice_lemmas/S.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Init/Specif/Choice_lemmas/S'.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Init/Specif/Choice_lemmas/R.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Init/Specif/Choice_lemmas/R'.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Init/Specif/Choice_lemmas/R1.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Init/Specif/Choice_lemmas/R2.var
+*)
+
+inline procedural "cic:/Coq/Init/Specif/Choice.con" as lemma.
+
+inline procedural "cic:/Coq/Init/Specif/Choice2.con" as lemma.
+
+inline procedural "cic:/Coq/Init/Specif/bool_choice.con" as lemma.
+
+(* UNEXPORTED
+End Choice_lemmas
+*)
+
+(*#* A result of type [(Exc A)] is either a normal value of type [A] or 
+     an [error] :
+     [Inductive Exc [A:Set] : Set := value : A->(Exc A) | error : (Exc A)]
+     it is implemented using the option type. *)
+
+inline procedural "cic:/Coq/Init/Specif/Exc.con" as definition.
+
+inline procedural "cic:/Coq/Init/Specif/value.con" as definition.
+
+inline procedural "cic:/Coq/Init/Specif/error.con" as definition.
+
+(* UNEXPORTED
+Implicit Arguments error [A].
+*)
+
+inline procedural "cic:/Coq/Init/Specif/except.con" as definition.
+
+(* for compatibility with previous versions *)
+
+(* UNEXPORTED
+Implicit Arguments except [P].
+*)
+
+inline procedural "cic:/Coq/Init/Specif/absurd_set.con" as theorem.
+
+(* UNEXPORTED
+Hint Resolve left right inleft inright: core v62.
+*)
+
+(*#* Sigma Type at Type level [sigT] *)
+
+inline procedural "cic:/Coq/Init/Specif/sigT.ind".
+
+(* UNEXPORTED
+Section projections_sigT
+*)
+
+(* UNEXPORTED
+cic:/Coq/Init/Specif/projections_sigT/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Init/Specif/projections_sigT/P.var
+*)
+
+inline procedural "cic:/Coq/Init/Specif/projT1.con" as definition.
+
+inline procedural "cic:/Coq/Init/Specif/projT2.con" as definition.
+
+(* UNEXPORTED
+End projections_sigT
+*)
+

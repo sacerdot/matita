@@ -1,0 +1,127 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Zcomplements.v,v 1.26.2.1 2004/07/16 19:31:21 herbelin Exp $ i*)
+
+include "ZArith/ZArith_base.ma".
+
+include "Arith/Wf_nat.ma".
+
+(* UNEXPORTED
+Open Local Scope Z_scope.
+*)
+
+(*#*********************************************************************)
+
+(*#* About parity *)
+
+inline procedural "cic:/Coq/ZArith/Zcomplements/two_or_two_plus_one.con" as lemma.
+
+(*#*********************************************************************)
+
+(*#* The biggest power of 2 that is stricly less than [a]
+
+    Easy to compute: replace all "1" of the binary representation by
+    "0", except the first "1" (or the first one :-) *)
+
+inline procedural "cic:/Coq/ZArith/Zcomplements/floor_pos.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/Zcomplements/floor.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/Zcomplements/floor_gt0.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zcomplements/floor_ok.con" as lemma.
+
+(*#*********************************************************************)
+
+(*#* Two more induction principles over [Z]. *)
+
+inline procedural "cic:/Coq/ZArith/Zcomplements/Z_lt_abs_rec.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/Zcomplements/Z_lt_abs_induction.con" as theorem.
+
+(*#* To do case analysis over the sign of [z] *)
+
+inline procedural "cic:/Coq/ZArith/Zcomplements/Zcase_sign.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zcomplements/sqr_pos.con" as lemma.
+
+(*#*********************************************************************)
+
+(*#* A list length in Z, tail recursive.  *)
+
+include "Lists/List.ma".
+
+inline procedural "cic:/Coq/ZArith/Zcomplements/Zlength_aux.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/Zcomplements/Zlength.con" as definition.
+
+(* UNEXPORTED
+Implicit Arguments Zlength [A].
+*)
+
+(* UNEXPORTED
+Section Zlength_properties
+*)
+
+(* UNEXPORTED
+cic:/Coq/ZArith/Zcomplements/Zlength_properties/A.var
+*)
+
+(* UNEXPORTED
+Implicit Type l : list A.
+*)
+
+inline procedural "cic:/Coq/ZArith/Zcomplements/Zlength_correct.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zcomplements/Zlength_nil.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zcomplements/Zlength_cons.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zcomplements/Zlength_nil_inv.con" as lemma.
+
+(* UNEXPORTED
+End Zlength_properties
+*)
+
+(* UNEXPORTED
+Implicit Arguments Zlength_correct [A].
+*)
+
+(* UNEXPORTED
+Implicit Arguments Zlength_cons [A].
+*)
+
+(* UNEXPORTED
+Implicit Arguments Zlength_nil_inv [A].
+*)
+

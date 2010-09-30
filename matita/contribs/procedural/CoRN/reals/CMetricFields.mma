@@ -1,0 +1,93 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "CoRN.ma".
+
+(* $Id: CMetricFields.v,v 1.6 2004/04/23 10:01:03 lcf Exp $ *)
+
+include "reals/CReals1.ma".
+
+(* UNEXPORTED
+Section CMetric_Fields
+*)
+
+(*#* *Metric Fields *)
+
+inline procedural "cic:/CoRN/reals/CMetricFields/is_CMetricField.ind".
+
+inline procedural "cic:/CoRN/reals/CMetricFields/CMetricField.ind".
+
+(* COERCION
+cic:/matita/CoRN-Procedural/reals/CMetricFields/cmf_crr.con
+*)
+
+(* UNEXPORTED
+End CMetric_Fields
+*)
+
+(* NOTATION
+Notation MAbs := (cmf_abs _).
+*)
+
+(* UNEXPORTED
+Section basics
+*)
+
+inline procedural "cic:/CoRN/reals/CMetricFields/MAbs_one.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/CMetricFields/Hulp.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/CMetricFields/MAbs_one_recip_one.con" as lemma.
+
+(* end hide *)
+
+(* UNEXPORTED
+End basics
+*)
+
+(* UNEXPORTED
+Section CMetric_Field_Cauchy
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/CMetricFields/CMetric_Field_Cauchy/F.var
+*)
+
+(*#*
+%\begin{convention}% Let [F:CMetricField].
+%\end{convention}%
+*)
+
+inline procedural "cic:/CoRN/reals/CMetricFields/MCauchy_prop.con" as definition.
+
+inline procedural "cic:/CoRN/reals/CMetricFields/MCauchySeq.ind".
+
+(* COERCION
+cic:/matita/CoRN-Procedural/reals/CMetricFields/MCS_seq.con
+*)
+
+inline procedural "cic:/CoRN/reals/CMetricFields/MseqLimit.con" as definition.
+
+inline procedural "cic:/CoRN/reals/CMetricFields/is_MCauchyCompl.con" as definition.
+
+(* UNEXPORTED
+End CMetric_Field_Cauchy
+*)
+
+(* UNEXPORTED
+Implicit Arguments MseqLimit [F].
+*)
+

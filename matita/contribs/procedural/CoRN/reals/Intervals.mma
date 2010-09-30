@@ -1,0 +1,329 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "CoRN.ma".
+
+(* $Id: Intervals.v,v 1.10 2004/04/23 10:01:04 lcf Exp $ *)
+
+include "algebra/CSetoidInc.ma".
+
+include "reals/RealLists.ma".
+
+(* UNEXPORTED
+Section Intervals
+*)
+
+(*#* * Intervals
+In this section we define (compact) intervals of the real line and
+some useful functions to work with them.
+
+** Definitions
+
+We start by defining the compact interval [[a,b]] as being the set of
+points less or equal than [b] and greater or equal than [a].  We
+require [a [<=] b], as we want to work only in nonempty intervals.
+*)
+
+inline procedural "cic:/CoRN/reals/Intervals/compact.con" as definition.
+
+(*#*
+%\begin{convention}% Let [a,b : IR] and [Hab : a [<=] b].
+%\end{convention}%
+
+As expected, both [a] and [b] are members of [[a,b]].  Also they are
+members of the interval [[Min(a,b),Max(a,b)]].
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/Intervals/Intervals/a.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/Intervals/Intervals/b.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/Intervals/Intervals/Hab.var
+*)
+
+inline procedural "cic:/CoRN/reals/Intervals/compact_inc_lft.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/Intervals/compact_inc_rht.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/Intervals/compact_Min_lft.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/Intervals/compact_Min_rht.con" as lemma.
+
+(*#*
+As we will be interested in taking functions with domain in a compact
+interval, we want this predicate to be well defined.
+*)
+
+inline procedural "cic:/CoRN/reals/Intervals/compact_wd.con" as lemma.
+
+(*#*
+Also, it will sometimes be necessary to rewrite the endpoints of an interval.
+*)
+
+inline procedural "cic:/CoRN/reals/Intervals/compact_wd'.con" as lemma.
+
+(*#*
+As we identify subsets with predicates, inclusion is simply implication.
+*)
+
+(*#*
+Finally, we define a restriction operator that takes a function [F]
+and a well defined predicate [P] included in the domain of [F] and
+returns the restriction $F|_P$# of F to P#.
+*)
+
+inline procedural "cic:/CoRN/reals/Intervals/Frestr.con" as definition.
+
+(* UNEXPORTED
+End Intervals
+*)
+
+(* NOTATION
+Notation Compact := (compact _ _).
+*)
+
+(* UNEXPORTED
+Implicit Arguments Frestr [F P].
+*)
+
+(* NOTATION
+Notation FRestr := (Frestr (compact_wd _ _ _)).
+*)
+
+(* UNEXPORTED
+Section More_Intervals
+*)
+
+inline procedural "cic:/CoRN/reals/Intervals/included_refl'.con" as lemma.
+
+(*#* We prove some inclusions of compact intervals.  *)
+
+inline procedural "cic:/CoRN/reals/Intervals/compact_map1.con" as definition.
+
+inline procedural "cic:/CoRN/reals/Intervals/compact_map2.con" as definition.
+
+inline procedural "cic:/CoRN/reals/Intervals/compact_map3.con" as definition.
+
+(* UNEXPORTED
+End More_Intervals
+*)
+
+(* UNEXPORTED
+Hint Resolve included_refl' compact_map1 compact_map2 compact_map3 : included.
+*)
+
+(* UNEXPORTED
+Section Totally_Bounded
+*)
+
+(*#* ** Totally Bounded
+
+Totally bounded sets will play an important role in what is
+to come.  The definition (equivalent to the classical one) states that
+[P] is totally bounded iff
+%\[\forall_{\varepsilon>0}\exists_{x_1,\ldots,x_n}\forall_{y\in P}
+\exists_{1\leq i\leq n}|y-x_i|<\varepsilon\]%#&forall;e&gt;0
+&exist;x<sub>1</sub>,...,x<sub>n</sub>&forall;y&isin;P&exist;
+1&le;i&le;n.|y-x<sub>i</sub>|&lt;e#.
+
+Notice the use of lists for quantification.
+*)
+
+inline procedural "cic:/CoRN/reals/Intervals/totally_bounded.con" as definition.
+
+(*#*
+This definition is classically, but not constructively, equivalent to
+the definition of compact (if completeness is assumed); the next
+result, classically equivalent to the Heine-Borel theorem, justifies
+that we take the definition of totally bounded to be the relevant one
+and that we defined compacts as we did.
+*)
+
+inline procedural "cic:/CoRN/reals/Intervals/compact_is_totally_bounded.con" as lemma.
+
+(*#*
+Suprema and infima will be needed throughout; we define them here both
+for arbitrary subsets of [IR] and for images of functions.
+*)
+
+inline procedural "cic:/CoRN/reals/Intervals/set_glb_IR.con" as definition.
+
+inline procedural "cic:/CoRN/reals/Intervals/set_lub_IR.con" as definition.
+
+inline procedural "cic:/CoRN/reals/Intervals/fun_image.con" as definition.
+
+inline procedural "cic:/CoRN/reals/Intervals/fun_glb_IR.con" as definition.
+
+inline procedural "cic:/CoRN/reals/Intervals/fun_lub_IR.con" as definition.
+
+(* begin hide *)
+
+inline procedural "cic:/CoRN/reals/Intervals/Totally_Bounded/aux_seq_lub.con" "Totally_Bounded__" as definition.
+
+inline procedural "cic:/CoRN/reals/Intervals/Totally_Bounded/aux_seq_lub_prop.con" "Totally_Bounded__" as definition.
+
+(* end hide *)
+
+(*#*
+The following are probably the most important results in this section.
+*)
+
+inline procedural "cic:/CoRN/reals/Intervals/totally_bounded_has_lub.con" as lemma.
+
+(* begin hide *)
+
+inline procedural "cic:/CoRN/reals/Intervals/Totally_Bounded/aux_seq_glb.con" "Totally_Bounded__" as definition.
+
+inline procedural "cic:/CoRN/reals/Intervals/Totally_Bounded/aux_seq_glb_prop.con" "Totally_Bounded__" as definition.
+
+(* end hide *)
+
+inline procedural "cic:/CoRN/reals/Intervals/totally_bounded_has_glb.con" as lemma.
+
+(* UNEXPORTED
+End Totally_Bounded
+*)
+
+(* UNEXPORTED
+Section Compact
+*)
+
+(*#* ** Compact sets
+
+In this section we dwell a bit farther into the definition of compactness
+and explore some of its properties.
+
+The following characterization of inclusion can be very useful:
+*)
+
+inline procedural "cic:/CoRN/reals/Intervals/included_compact.con" as lemma.
+
+(*#*
+At several points in our future development of a theory we will need
+to partition a compact interval in subintervals of length smaller than
+some predefined value [eps]. Although this seems a
+consequence of every compact interval being totally bounded, it is in
+fact a stronger property.  In this section we perform that
+construction (requiring the endpoints of the interval to be distinct)
+and prove some of its good properties.
+
+%\begin{convention}% Let [a,b : IR], [Hab : (a [<=] b)] and denote by [I]
+the compact interval [[a,b]].  Also assume that [a [<] b], and let [e] be
+a positive real number.
+%\end{convention}%
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/Intervals/Compact/a.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/Intervals/Compact/b.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/Intervals/Compact/Hab.var
+*)
+
+(* begin hide *)
+
+inline procedural "cic:/CoRN/reals/Intervals/Compact/I.con" "Compact__" as definition.
+
+(* end hide *)
+
+(* UNEXPORTED
+cic:/CoRN/reals/Intervals/Compact/Hab'.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/Intervals/Compact/e.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/Intervals/Compact/He.var
+*)
+
+(*#*
+We start by finding a natural number [n] such that [(b[-]a) [/] n [<] e].
+*)
+
+inline procedural "cic:/CoRN/reals/Intervals/compact_nat.con" as definition.
+
+(*#* Obviously such an [n] must be greater than zero.*)
+
+inline procedural "cic:/CoRN/reals/Intervals/pos_compact_nat.con" as lemma.
+
+(*#*
+We now define a sequence on [n] points in [[a,b]] by
+[x_i [=] Min(a,b) [+]i[*] (b[-]a) [/]n] and
+prove that all of its points are really in that interval.
+*)
+
+inline procedural "cic:/CoRN/reals/Intervals/compact_part.con" as definition.
+
+inline procedural "cic:/CoRN/reals/Intervals/compact_part_hyp.con" as lemma.
+
+(*#*
+This sequence is strictly increasing and each two consecutive points
+are apart by less than [e].*)
+
+inline procedural "cic:/CoRN/reals/Intervals/compact_less.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/Intervals/compact_leEq.con" as lemma.
+
+(*#* When we proceed to integration, this lemma will also be useful: *)
+
+inline procedural "cic:/CoRN/reals/Intervals/compact_partition_lemma.con" as lemma.
+
+(*#* The next lemma provides an upper bound for the distance between two points in an interval: *)
+
+inline procedural "cic:/CoRN/reals/Intervals/compact_elements.con" as lemma.
+
+(* UNEXPORTED
+Opaque Min Max.
+*)
+
+(*#* The following is a variation on the previous lemma: *)
+
+inline procedural "cic:/CoRN/reals/Intervals/compact_elements'.con" as lemma.
+
+(*#* The following lemma is a bit more specific: it shows that we can
+also estimate the distance from the center of a compact interval to
+any of its points. *)
+
+inline procedural "cic:/CoRN/reals/Intervals/compact_bnd_AbsIR.con" as lemma.
+
+(*#* Finally, two more useful lemmas to prove inclusion of compact
+intervals.  They will be necessary for the definition and proof of the
+elementary properties of the integral.  *)
+
+inline procedural "cic:/CoRN/reals/Intervals/included2_compact.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/Intervals/included3_compact.con" as lemma.
+
+(* UNEXPORTED
+End Compact
+*)
+
+(* UNEXPORTED
+Hint Resolve included_compact included2_compact included3_compact : included.
+*)
+

@@ -1,0 +1,108 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+include "Init/Prelude.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Sumbool.v,v 1.12.2.1 2004/07/16 19:31:03 herbelin Exp $ i*)
+
+(*#* Here are collected some results about the type sumbool (see INIT/Specif.v)
+   [sumbool A B], which is written [{A}+{B}], is the informative
+   disjunction "A or B", where A and B are logical propositions.
+   Its extraction is isomorphic to the type of booleans. *)
+
+(*#* A boolean is either [true] or [false], and this is decidable *)
+
+inline procedural "cic:/Coq/Bool/Sumbool/sumbool_of_bool.con" as definition.
+
+(* UNEXPORTED
+Hint Resolve sumbool_of_bool: bool.
+*)
+
+inline procedural "cic:/Coq/Bool/Sumbool/bool_eq_rec.con" as definition.
+
+inline procedural "cic:/Coq/Bool/Sumbool/bool_eq_ind.con" as definition.
+
+(*i pourquoi ce machin-la est dans BOOL et pas dans LOGIC ?  Papageno i*)
+
+(*#* Logic connectives on type [sumbool] *)
+
+(* UNEXPORTED
+Section connectives
+*)
+
+(* UNEXPORTED
+cic:/Coq/Bool/Sumbool/connectives/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Bool/Sumbool/connectives/B.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Bool/Sumbool/connectives/C.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Bool/Sumbool/connectives/D.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Bool/Sumbool/connectives/H1.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Bool/Sumbool/connectives/H2.var
+*)
+
+inline procedural "cic:/Coq/Bool/Sumbool/sumbool_and.con" as definition.
+
+inline procedural "cic:/Coq/Bool/Sumbool/sumbool_or.con" as definition.
+
+inline procedural "cic:/Coq/Bool/Sumbool/sumbool_not.con" as definition.
+
+(* UNEXPORTED
+End connectives
+*)
+
+(* UNEXPORTED
+Hint Resolve sumbool_and sumbool_or sumbool_not: core.
+*)
+
+(*#* Any decidability function in type [sumbool] can be turned into a function
+    returning a boolean with the corresponding specification: *)
+
+inline procedural "cic:/Coq/Bool/Sumbool/bool_of_sumbool.con" as definition.
+
+(* UNEXPORTED
+Implicit Arguments bool_of_sumbool.
+*)
+

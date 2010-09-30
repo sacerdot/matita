@@ -1,0 +1,149 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*#* This is a proof in the pure Calculus of Construction that
+    classical logic in Prop + dependent elimination of disjunction entails
+    proof-irrelevance.
+
+    Since, dependent elimination is derivable in the Calculus of
+    Inductive Constructions (CCI), we get proof-irrelevance from classical
+    logic in the CCI.
+
+    Reference:
+
+    - [Coquand] T. Coquand, "Metamathematical Investigations of a
+      Calculus of Constructions", Proceedings of Logic in Computer Science
+      (LICS'90), 1990.
+
+    Proof skeleton: classical logic + dependent elimination of
+    disjunction + discrimination of proofs implies the existence of a
+    retract from [Prop] into [bool], hence inconsistency by encoding any
+    paradox of system U- (e.g. Hurkens' paradox).
+*)
+
+include "Logic/Hurkens.ma".
+
+(* UNEXPORTED
+Section Proof_irrelevance_CC
+*)
+
+(* UNEXPORTED
+cic:/Coq/Logic/ProofIrrelevance/Proof_irrelevance_CC/or.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Logic/ProofIrrelevance/Proof_irrelevance_CC/or_introl.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Logic/ProofIrrelevance/Proof_irrelevance_CC/or_intror.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Logic/ProofIrrelevance/Proof_irrelevance_CC/or_elim.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Logic/ProofIrrelevance/Proof_irrelevance_CC/or_elim_redl.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Logic/ProofIrrelevance/Proof_irrelevance_CC/or_elim_redr.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Logic/ProofIrrelevance/Proof_irrelevance_CC/or_dep_elim.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Logic/ProofIrrelevance/Proof_irrelevance_CC/em.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Logic/ProofIrrelevance/Proof_irrelevance_CC/B.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Logic/ProofIrrelevance/Proof_irrelevance_CC/b1.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Logic/ProofIrrelevance/Proof_irrelevance_CC/b2.var
+*)
+
+(*#* [p2b] and [b2p] form a retract if [~b1=b2] *)
+
+inline procedural "cic:/Coq/Logic/ProofIrrelevance/p2b.con" as definition.
+
+inline procedural "cic:/Coq/Logic/ProofIrrelevance/b2p.con" as definition.
+
+inline procedural "cic:/Coq/Logic/ProofIrrelevance/p2p1.con" as lemma.
+
+inline procedural "cic:/Coq/Logic/ProofIrrelevance/p2p2.con" as lemma.
+
+(*#* Using excluded-middle a second time, we get proof-irrelevance *)
+
+inline procedural "cic:/Coq/Logic/ProofIrrelevance/proof_irrelevance_cc.con" as theorem.
+
+(* UNEXPORTED
+End Proof_irrelevance_CC
+*)
+
+(*#* The Calculus of Inductive Constructions (CCI) enjoys dependent
+    elimination, hence classical logic in CCI entails proof-irrelevance.
+*)
+
+(* UNEXPORTED
+Section Proof_irrelevance_CCI
+*)
+
+(* UNEXPORTED
+cic:/Coq/Logic/ProofIrrelevance/Proof_irrelevance_CCI/em.var
+*)
+
+inline procedural "cic:/Coq/Logic/ProofIrrelevance/or_elim_redl.con" as definition.
+
+inline procedural "cic:/Coq/Logic/ProofIrrelevance/or_elim_redr.con" as definition.
+
+inline procedural "cic:/Coq/Logic/ProofIrrelevance/or_indd.con" as theorem.
+
+inline procedural "cic:/Coq/Logic/ProofIrrelevance/proof_irrelevance_cci.con" as theorem.
+
+(* UNEXPORTED
+End Proof_irrelevance_CCI
+*)
+
+(*#* Remark: in CCI, [bool] can be taken in [Set] as well in the
+    paradox and since [~true=false] for [true] and [false] in
+    [bool], we get the inconsistency of [em : forall A:Prop, {A}+{~A}] in CCI
+*)
+

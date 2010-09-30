@@ -1,0 +1,67 @@
+<HR><!------------------------------------------------------------------------>
+<H2>Matita (prover) 1.0.0</H2>
+The HELM Team and contributors<BR>
+University of Bologna, Department of Computer Science<BR>
+
+<H3>Architecture</H3>
+
+Matita (v. 0.5.7) is an Interactive Theorem Prover comprising
+a fully automatic module (prover) for problems falling in 
+the first order unit equality case.
+
+<P>
+An overall description of the system and its architecture can be found 
+in [UIMPA], but there is no paper devoted to the automatic prover built
+in the system.
+
+<H3>Strategies</H3>
+
+The prover is based on standard superposition calculus for unit equality 
+clauses.
+
+<H3>Implementation</H3>
+
+Matita is written in Objective Caml, a functional language similar to ML
+developed at INRIA. The automatic prover participating to the CASC is 
+a module of 4000 lines, designed with simplicity and ease of integration in mind.
+It uses the functor abstraction mechanism of the OCaml language to achieve
+a good degree of reusability (i.e. comparison over terms is an abstract notion,
+that can be instantiated with a reduction aware relation for higher order logics
+like the Calculus of Inductive Constructions on which Matita is based, or a simpler
+alpha equivalence relation for the TPTP first order language). Matita is based
+on the Curry-Howard Isomorphism, i.e. proofs are lambda-terms of the CIC calculus. 
+The automatic prover is thus able to produce a trace suitable for proof term
+reconstruction [HOPR].
+
+The ATP system registered to the CASC competition will be part
+of the upcoming 1.0 release of the Matita interactive theorem prover, and
+is thus not part of any officially released versions, but can be downloaded
+using the SVN repository.
+<PRE>
+    <A HREF="http://matita.cs.unibo.it">http://matita.cs.unibo.it</A></PRE>
+
+<H3>Expected Competition Performance</H3>
+
+Since the system never participated to the CASC, there is no
+real expectation, but we hope not to finish last ;-)
+
+<H3>References</H3>
+<DL>
+
+<DT> UIMPA
+<DD> Asperti, Sacerdoti Coen, Tassi, Zacchiroli. 2007
+     <STRONG>User Interaction with the Matita Proof Assistant</STRONG>,
+     <EM>Journal of Automated Reasoning</EM>
+     Special Issue  on User Interfaces for Theorem Proving
+     pp. 109-139
+     Springer Netherlands
+<DT> HOPR
+<DD> Asperti, Tassi. 2007
+     <STRONG> Higher order proof reconstruction from paramodulation-based refutations: 
+              the unit equality case</STRONG>,
+     <EM> MKM 2007: The 6th International Conference on Mathematical Knowledge Management</EM>,
+     LNAI, Springer
+</DL>
+<P>
+
+<HR><!------------------------------------------------------------------------>

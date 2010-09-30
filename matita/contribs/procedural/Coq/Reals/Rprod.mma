@@ -1,0 +1,84 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Rprod.v,v 1.10.2.1 2004/07/16 19:31:13 herbelin Exp $ i*)
+
+include "Arith/Compare.ma".
+
+include "Reals/Rbase.ma".
+
+include "Reals/Rfunctions.ma".
+
+include "Reals/Rseries.ma".
+
+include "Reals/PartSum.ma".
+
+include "Reals/Binomial.ma".
+
+(* UNEXPORTED
+Open Local Scope R_scope.
+*)
+
+(* TT Ak; 1<=k<=N *)
+
+inline procedural "cic:/Coq/Reals/Rprod/prod_f_SO.con" as definition.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Rprod/prod_SO_split.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Rprod/prod_SO_pos.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Rprod/prod_SO_Rle.con" as lemma.
+
+(* Application to factorial *)
+
+inline procedural "cic:/Coq/Reals/Rprod/fact_prodSO.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rprod/le_n_2n.con" as lemma.
+
+(* We prove that (N!)\178\<=(2N-k)!*k! forall k in [|O;2N|] *)
+
+inline procedural "cic:/Coq/Reals/Rprod/RfactN_fact2N_factk.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Rprod/INR_fact_lt_0.con" as lemma.
+
+(* We have the following inequality : (C 2N k) <= (C 2N N) forall k in [|O;2N|] *)
+
+inline procedural "cic:/Coq/Reals/Rprod/C_maj.con" as lemma.
+

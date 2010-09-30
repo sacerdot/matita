@@ -1,0 +1,32 @@
+
+Input                  Should be parsed as             Derived constraint
+                                                       on precedence
+--------------------------------------------------------------------------------
+\lambda x.x y          \lambda x.(x y)               lambda > apply
+S x = y                  (= (S x) y)                   apply  > infix operators
+\forall x.x=x	       (\forall x.(= x x))	       infix operators > binders
+\lambda x.x \to x    \lambda. (x \to x)                \to > \lambda
+--------------------------------------------------------------------------------
+
+Precedence total order:
+
+  apply > infix operators > to > binders
+
+where binders are all binders except lambda (i.e. \forall, \pi, \exists)
+
+to test:
+  
+./test_parser term << EOT 
+  \lambda x.x y
+  S x = y
+  \forall x.x=x
+  \lambda x.x \to x
+EOT
+  
+should respond with:
+  
+  \lambda x.(x y)
+  (eq (S x) y)
+  \forall x.(eq x x)
+  \lambda x.(x \to x)
+

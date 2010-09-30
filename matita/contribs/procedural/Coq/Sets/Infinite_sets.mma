@@ -1,0 +1,144 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*#***************************************************************************)
+
+(*                                                                          *)
+
+(*                         Naive Set Theory in Coq                          *)
+
+(*                                                                          *)
+
+(*                     INRIA                        INRIA                   *)
+
+(*              Rocquencourt                        Sophia-Antipolis        *)
+
+(*                                                                          *)
+
+(*                                 Coq V6.1                                 *)
+
+(*									    *)
+
+(*			         Gilles Kahn 				    *)
+
+(*				 Gerard Huet				    *)
+
+(*									    *)
+
+(*									    *)
+
+(*                                                                          *)
+
+(* Acknowledgments: This work was started in July 1993 by F. Prost. Thanks  *)
+
+(* to the Newton Institute for providing an exceptional work environment    *)
+
+(* in Summer 1995. Several developments by E. Ledinot were an inspiration.  *)
+
+(*#***************************************************************************)
+
+(*i $Id: Infinite_sets.v,v 1.5.2.1 2004/07/16 19:31:17 herbelin Exp $ i*)
+
+include "Sets/Finite_sets.ma".
+
+include "Sets/Constructive_sets.ma".
+
+include "Logic/Classical_Type.ma".
+
+include "Sets/Classical_sets.ma".
+
+include "Sets/Powerset.ma".
+
+include "Sets/Powerset_facts.ma".
+
+include "Sets/Powerset_Classical_facts.ma".
+
+include "Arith/Gt.ma".
+
+include "Arith/Lt.ma".
+
+include "Arith/Le.ma".
+
+include "Sets/Finite_sets_facts.ma".
+
+include "Sets/Image.ma".
+
+(* UNEXPORTED
+Section Approx
+*)
+
+(* UNEXPORTED
+cic:/Coq/Sets/Infinite_sets/Approx/U.var
+*)
+
+inline procedural "cic:/Coq/Sets/Infinite_sets/Approximant.ind".
+
+(* UNEXPORTED
+End Approx
+*)
+
+(* UNEXPORTED
+Hint Resolve Defn_of_Approximant.
+*)
+
+(* UNEXPORTED
+Section Infinite_sets
+*)
+
+(* UNEXPORTED
+cic:/Coq/Sets/Infinite_sets/Infinite_sets/U.var
+*)
+
+inline procedural "cic:/Coq/Sets/Infinite_sets/make_new_approximant.con" as lemma.
+
+inline procedural "cic:/Coq/Sets/Infinite_sets/approximants_grow.con" as lemma.
+
+inline procedural "cic:/Coq/Sets/Infinite_sets/approximants_grow'.con" as lemma.
+
+inline procedural "cic:/Coq/Sets/Infinite_sets/approximant_can_be_any_size.con" as lemma.
+
+(* UNEXPORTED
+cic:/Coq/Sets/Infinite_sets/Infinite_sets/V.var
+*)
+
+inline procedural "cic:/Coq/Sets/Infinite_sets/Image_set_continuous.con" as theorem.
+
+inline procedural "cic:/Coq/Sets/Infinite_sets/Image_set_continuous'.con" as theorem.
+
+inline procedural "cic:/Coq/Sets/Infinite_sets/Pigeonhole_bis.con" as theorem.
+
+inline procedural "cic:/Coq/Sets/Infinite_sets/Pigeonhole_ter.con" as theorem.
+
+(* UNEXPORTED
+End Infinite_sets
+*)
+

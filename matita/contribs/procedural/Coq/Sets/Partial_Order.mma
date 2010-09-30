@@ -1,0 +1,130 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*#***************************************************************************)
+
+(*                                                                          *)
+
+(*                         Naive Set Theory in Coq                          *)
+
+(*                                                                          *)
+
+(*                     INRIA                        INRIA                   *)
+
+(*              Rocquencourt                        Sophia-Antipolis        *)
+
+(*                                                                          *)
+
+(*                                 Coq V6.1                                 *)
+
+(*									    *)
+
+(*			         Gilles Kahn 				    *)
+
+(*				 Gerard Huet				    *)
+
+(*									    *)
+
+(*									    *)
+
+(*                                                                          *)
+
+(* Acknowledgments: This work was started in July 1993 by F. Prost. Thanks  *)
+
+(* to the Newton Institute for providing an exceptional work environment    *)
+
+(* in Summer 1995. Several developments by E. Ledinot were an inspiration.  *)
+
+(*#***************************************************************************)
+
+(*i $Id: Partial_Order.v,v 1.6.2.1 2004/07/16 19:31:18 herbelin Exp $ i*)
+
+include "Sets/Ensembles.ma".
+
+include "Sets/Relations_1.ma".
+
+(* UNEXPORTED
+Section Partial_orders
+*)
+
+(* UNEXPORTED
+cic:/Coq/Sets/Partial_Order/Partial_orders/U.var
+*)
+
+inline procedural "cic:/Coq/Sets/Partial_Order/Carrier.con" as definition.
+
+inline procedural "cic:/Coq/Sets/Partial_Order/Rel.con" as definition.
+
+inline procedural "cic:/Coq/Sets/Partial_Order/PO.ind".
+
+(* UNEXPORTED
+cic:/Coq/Sets/Partial_Order/Partial_orders/p.var
+*)
+
+inline procedural "cic:/Coq/Sets/Partial_Order/Strict_Rel_of.con" as definition.
+
+inline procedural "cic:/Coq/Sets/Partial_Order/covers.ind".
+
+(* UNEXPORTED
+End Partial_orders
+*)
+
+(* UNEXPORTED
+Hint Unfold Carrier_of Rel_of Strict_Rel_of: sets v62.
+*)
+
+(* UNEXPORTED
+Hint Resolve Definition_of_covers: sets v62.
+*)
+
+(* UNEXPORTED
+Section Partial_order_facts
+*)
+
+(* UNEXPORTED
+cic:/Coq/Sets/Partial_Order/Partial_order_facts/U.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Sets/Partial_Order/Partial_order_facts/D.var
+*)
+
+inline procedural "cic:/Coq/Sets/Partial_Order/Strict_Rel_Transitive_with_Rel.con" as lemma.
+
+inline procedural "cic:/Coq/Sets/Partial_Order/Strict_Rel_Transitive_with_Rel_left.con" as lemma.
+
+inline procedural "cic:/Coq/Sets/Partial_Order/Strict_Rel_Transitive.con" as lemma.
+
+(* UNEXPORTED
+End Partial_order_facts
+*)
+

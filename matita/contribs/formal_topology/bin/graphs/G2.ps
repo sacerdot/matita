@@ -1,0 +1,7135 @@
+%!PS-Adobe-3.0 EPSF-3.0
+%%Creator: Graphviz version 2.20.2 (Sun Oct 12 22:28:10 UTC 2008)
+%%For: (claudio) claudio,,,
+%%Title: G
+%%Pages: (atend)
+%%BoundingBox: (atend)
+%%EndComments
+save
+%%BeginProlog
+/DotDict 200 dict def
+DotDict begin
+
+/setupLatin1 {
+mark
+/EncodingVector 256 array def
+ EncodingVector 0
+
+ISOLatin1Encoding 0 255 getinterval putinterval
+EncodingVector 45 /hyphen put
+
+% Set up ISO Latin 1 character encoding
+/starnetISO {
+        dup dup findfont dup length dict begin
+        { 1 index /FID ne { def }{ pop pop } ifelse
+        } forall
+        /Encoding EncodingVector def
+        currentdict end definefont
+} def
+/Times-Roman starnetISO def
+/Times-Italic starnetISO def
+/Times-Bold starnetISO def
+/Times-BoldItalic starnetISO def
+/Helvetica starnetISO def
+/Helvetica-Oblique starnetISO def
+/Helvetica-Bold starnetISO def
+/Helvetica-BoldOblique starnetISO def
+/Courier starnetISO def
+/Courier-Oblique starnetISO def
+/Courier-Bold starnetISO def
+/Courier-BoldOblique starnetISO def
+cleartomark
+} bind def
+
+%%BeginResource: procset graphviz 0 0
+/coord-font-family /Times-Roman def
+/default-font-family /Times-Roman def
+/coordfont coord-font-family findfont 8 scalefont def
+
+/InvScaleFactor 1.0 def
+/set_scale {
+       dup 1 exch div /InvScaleFactor exch def
+       scale
+} bind def
+
+% styles
+/solid { [] 0 setdash } bind def
+/dashed { [9 InvScaleFactor mul dup ] 0 setdash } bind def
+/dotted { [1 InvScaleFactor mul 6 InvScaleFactor mul] 0 setdash } bind def
+/invis {/fill {newpath} def /stroke {newpath} def /show {pop newpath} def} bind def
+/bold { 2 setlinewidth } bind def
+/filled { } bind def
+/unfilled { } bind def
+/rounded { } bind def
+/diagonals { } bind def
+
+% hooks for setting color 
+/nodecolor { sethsbcolor } bind def
+/edgecolor { sethsbcolor } bind def
+/graphcolor { sethsbcolor } bind def
+/nopcolor {pop pop pop} bind def
+
+/beginpage {	% i j npages
+	/npages exch def
+	/j exch def
+	/i exch def
+	/str 10 string def
+	npages 1 gt {
+		gsave
+			coordfont setfont
+			0 0 moveto
+			(\() show i str cvs show (,) show j str cvs show (\)) show
+		grestore
+	} if
+} bind def
+
+/set_font {
+	findfont exch
+	scalefont setfont
+} def
+
+% draw text fitted to its expected width
+/alignedtext {			% width text
+	/text exch def
+	/width exch def
+	gsave
+		width 0 gt {
+			[] 0 setdash
+			text stringwidth pop width exch sub text length div 0 text ashow
+		} if
+	grestore
+} def
+
+/boxprim {				% xcorner ycorner xsize ysize
+		4 2 roll
+		moveto
+		2 copy
+		exch 0 rlineto
+		0 exch rlineto
+		pop neg 0 rlineto
+		closepath
+} bind def
+
+/ellipse_path {
+	/ry exch def
+	/rx exch def
+	/y exch def
+	/x exch def
+	matrix currentmatrix
+	newpath
+	x y translate
+	rx ry scale
+	0 0 1 0 360 arc
+	setmatrix
+} bind def
+
+/endpage { showpage } bind def
+/showpage { } def
+
+/layercolorseq
+	[	% layer color sequence - darkest to lightest
+		[0 0 0]
+		[.2 .8 .8]
+		[.4 .8 .8]
+		[.6 .8 .8]
+		[.8 .8 .8]
+	]
+def
+
+/layerlen layercolorseq length def
+
+/setlayer {/maxlayer exch def /curlayer exch def
+	layercolorseq curlayer 1 sub layerlen mod get
+	aload pop sethsbcolor
+	/nodecolor {nopcolor} def
+	/edgecolor {nopcolor} def
+	/graphcolor {nopcolor} def
+} bind def
+
+/onlayer { curlayer ne {invis} if } def
+
+/onlayers {
+	/myupper exch def
+	/mylower exch def
+	curlayer mylower lt
+	curlayer myupper gt
+	or
+	{invis} if
+} def
+
+/curlayer 0 def
+
+%%EndResource
+%%EndProlog
+%%BeginSetup
+14 default-font-family set_font
+1 setmiterlimit
+% /arrowlength 10 def
+% /arrowwidth 5 def
+
+% make sure pdfmark is harmless for PS-interpreters other than Distiller
+/pdfmark where {pop} {userdict /pdfmark /cleartomark load put} ifelse
+% make '<<' and '>>' safe on PS Level 1 devices
+/languagelevel where {pop languagelevel}{1} ifelse
+2 lt {
+    userdict (<<) cvn ([) cvn load put
+    userdict (>>) cvn ([) cvn load put
+} if
+
+%%EndSetup
+setupLatin1
+%%Page: 1 1
+%%PageBoundingBox: 36 36 3080 1088
+%%PageOrientation: Portrait
+0 0 1 beginpage
+gsave
+36 36 3044 1052 boxprim clip newpath
+1 1 set_scale 0 rotate 40 40 translate
+% v0
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+992 18 38.22 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+972.5 13.9 moveto 39 (-i-=c-i-) alignedtext
+grestore
+% v1
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+631 306 52.81 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+601 301.9 moveto 60 (c--c=cc--c) alignedtext
+grestore
+% v1->v0
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 652 289 moveto
+713 240 895 96 964 40 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 966.1 42.8 moveto
+972 34 lineto
+961.9 37.2 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 966.1 42.8 moveto
+972 34 lineto
+961.9 37.2 lineto
+closepath stroke
+grestore
+% v2
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+475 378 27 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+467 373.9 moveto 16 (--c) alignedtext
+grestore
+% v2->v1
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 496 367 moveto
+501 365 506 362 511 360 curveto
+536 348 566 335 589 324 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 590.28 327.26 moveto
+598 320 lineto
+587.44 320.86 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 590.28 327.26 moveto
+598 320 lineto
+587.44 320.86 lineto
+closepath stroke
+grestore
+% v3
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+286 378 43.78 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+262.5 373.9 moveto 47 (c--=cc--) alignedtext
+grestore
+% v3->v1
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 325 370 moveto
+387 357 506 332 576 317 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 576.88 320.39 moveto
+586 315 lineto
+575.51 313.53 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 576.88 320.39 moveto
+586 315 lineto
+575.51 313.53 lineto
+closepath stroke
+grestore
+% v4
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+98 450 30.77 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+83.5 445.9 moveto 29 (c=cc) alignedtext
+grestore
+% v4->v2
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 124 440 moveto
+131 437 140 434 148 432 curveto
+203 418 365 393 438 383 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 438.4 386.48 moveto
+448 382 lineto
+437.7 379.51 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 438.4 386.48 moveto
+448 382 lineto
+437.7 379.51 lineto
+closepath stroke
+grestore
+% v4->v3
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 124 440 moveto
+155 428 207 408 244 394 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 246.02 396.96 moveto
+254 390 lineto
+243.42 390.46 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 246.02 396.96 moveto
+254 390 lineto
+243.42 390.46 lineto
+closepath stroke
+grestore
+% v5
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+1242 90 52.12 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+1212.5 85.9 moveto 59 (-ici-=c-ici-) alignedtext
+grestore
+% v5->v0
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1202 78 moveto
+1156 65 1081 44 1035 30 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1035.58 26.52 moveto
+1025 27 lineto
+1033.57 33.23 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1035.58 26.52 moveto
+1025 27 lineto
+1033.57 33.23 lineto
+closepath stroke
+grestore
+% v6
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+1412 162 56.98 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+1379 157.9 moveto 66 (-ic-c=c-ic-c) alignedtext
+grestore
+% v6->v5
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1378 147 moveto
+1351 135 1314 120 1285 108 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1285.58 104.46 moveto
+1275 104 lineto
+1282.98 110.96 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1285.58 104.46 moveto
+1275 104 lineto
+1282.98 110.96 lineto
+closepath stroke
+grestore
+% v7
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+1540 234 52.12 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+1510.5 229.9 moveto 59 (-i-ic=c-i-ic) alignedtext
+grestore
+% v7->v6
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1513 219 moveto
+1494 209 1469 194 1449 183 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1450.44 179.8 moveto
+1440 178 lineto
+1447.04 185.92 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1450.44 179.8 moveto
+1440 178 lineto
+1447.04 185.92 lineto
+closepath stroke
+grestore
+% v8
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+1360 378 66.21 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+1320 373.9 moveto 80 (c--cic=cc--cic) alignedtext
+grestore
+% v8->v1
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1300 370 moveto
+1273 367 1239 363 1209 360 curveto
+1021 340 799 320 693 311 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 693.3 307.51 moveto
+683 310 lineto
+692.6 314.48 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 693.3 307.51 moveto
+683 310 lineto
+692.6 314.48 lineto
+closepath stroke
+grestore
+% v8->v7
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1383 361 moveto
+1397 350 1414 337 1429 324 curveto
+1447 308 1450 302 1467 288 curveto
+1480 277 1495 266 1508 256 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1510.1 258.8 moveto
+1516 250 lineto
+1505.9 253.2 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1510.1 258.8 moveto
+1516 250 lineto
+1505.9 253.2 lineto
+closepath stroke
+grestore
+% v9
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+980 450 29.19 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+967 445.9 moveto 26 (--cic) alignedtext
+grestore
+% v9->v2
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 958 438 moveto
+953 435 948 433 942 432 curveto
+757 382 697 447 511 396 curveto
+509 395 507 394 505 394 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 505.58 390.46 moveto
+495 390 lineto
+502.98 396.96 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 505.58 390.46 moveto
+495 390 lineto
+502.98 396.96 lineto
+closepath stroke
+grestore
+% v9->v8
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1002 438 moveto
+1007 436 1013 434 1018 432 curveto
+1131 398 1165 416 1280 396 curveto
+1287 395 1293 393 1300 392 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1300.88 395.39 moveto
+1310 390 lineto
+1299.51 388.53 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1300.88 395.39 moveto
+1310 390 lineto
+1299.51 388.53 lineto
+closepath stroke
+grestore
+% v10
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+1771 234 47.95 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+1744.5 229.9 moveto 53 (-ic-=c-ic-) alignedtext
+grestore
+% v10->v6
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1728 225 moveto
+1664 213 1543 188 1470 174 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1470.49 170.53 moveto
+1460 172 lineto
+1469.12 177.39 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1470.49 170.53 moveto
+1460 172 lineto
+1469.12 177.39 lineto
+closepath stroke
+grestore
+% v11
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+1965 306 41.89 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+1942.5 301.9 moveto 45 (-i-i=c-i-i) alignedtext
+grestore
+% v11->v7
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1926 299 moveto
+1851 286 1684 258 1597 244 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1597.49 240.53 moveto
+1587 242 lineto
+1596.12 247.39 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1597.49 240.53 moveto
+1587 242 lineto
+1596.12 247.39 lineto
+closepath stroke
+grestore
+% v11->v10
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1933 294 moveto
+1901 282 1851 264 1815 251 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1815.58 247.46 moveto
+1805 247 lineto
+1812.98 253.96 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1815.58 247.46 moveto
+1805 247 lineto
+1812.98 253.96 lineto
+closepath stroke
+grestore
+% v12
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+2130 450 56.98 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+2097 445.9 moveto 66 (c--ci=cc--ci) alignedtext
+grestore
+% v12->v8
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2089 437 moveto
+2081 435 2072 433 2064 432 curveto
+1805 389 1735 424 1473 396 curveto
+1457 394 1441 392 1426 390 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1426.49 386.53 moveto
+1416 388 lineto
+1425.12 393.39 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1426.49 386.53 moveto
+1416 388 lineto
+1425.12 393.39 lineto
+closepath stroke
+grestore
+% v12->v11
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2110 433 moveto
+2081 407 2025 358 1992 329 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1993.83 325.95 moveto
+1984 322 lineto
+1989.22 331.22 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1993.83 325.95 moveto
+1984 322 lineto
+1989.22 331.22 lineto
+closepath stroke
+grestore
+% v13
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+1915 522 27 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+1905.5 517.9 moveto 19 (--ci) alignedtext
+grestore
+% v13->v9
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1895 510 moveto
+1890 507 1884 505 1879 504 curveto
+1509 408 1390 559 1018 468 curveto
+1016 468 1014 467 1011 466 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1012.56 462.86 moveto
+1002 462 lineto
+1009.72 469.26 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1012.56 462.86 moveto
+1002 462 lineto
+1009.72 469.26 lineto
+closepath stroke
+grestore
+% v13->v12
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1936 510 moveto
+1941 508 1946 506 1951 504 curveto
+1974 495 2033 477 2077 465 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2078.43 468.23 moveto
+2087 462 lineto
+2076.42 461.52 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2078.43 468.23 moveto
+2087 462 lineto
+2076.42 461.52 lineto
+closepath stroke
+grestore
+% v14
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+1242 162 56.98 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+1209 157.9 moveto 66 (c-ci-=cc-ci-) alignedtext
+grestore
+% v14->v5
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1242 144 moveto
+1242 136 1242 127 1242 118 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1245.5 118 moveto
+1242 108 lineto
+1238.5 118 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1245.5 118 moveto
+1242 108 lineto
+1238.5 118 lineto
+closepath stroke
+grestore
+% v15
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+1387 234 75.24 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+1340.5 229.9 moveto 93 (c-cic-c=cc-cic-c) alignedtext
+grestore
+% v15->v6
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1393 216 moveto
+1396 208 1399 198 1403 190 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1406.48 190.58 moveto
+1406 180 lineto
+1399.77 188.57 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1406.48 190.58 moveto
+1406 180 lineto
+1399.77 188.57 lineto
+closepath stroke
+grestore
+% v15->v14
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1354 218 moveto
+1332 207 1304 193 1282 182 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1283.44 178.8 moveto
+1273 177 lineto
+1280.04 184.92 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1283.44 178.8 moveto
+1273 177 lineto
+1280.04 184.92 lineto
+closepath stroke
+grestore
+% v16
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+808 378 62.04 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+771 373.9 moveto 74 (c-c-c=cc-c-c) alignedtext
+grestore
+% v16->v1
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 772 363 moveto
+744 351 705 335 674 324 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 675.56 320.86 moveto
+665 320 lineto
+672.72 327.26 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 675.56 320.86 moveto
+665 320 lineto
+672.72 327.26 lineto
+closepath stroke
+grestore
+% v16->v15
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 854 366 moveto
+862 364 871 362 879 360 curveto
+997 337 1039 375 1147 324 curveto
+1168 313 1165 299 1185 288 curveto
+1225 266 1272 252 1311 245 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1311.88 248.39 moveto
+1321 243 lineto
+1310.51 241.53 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1311.88 248.39 moveto
+1321 243 lineto
+1310.51 241.53 lineto
+closepath stroke
+grestore
+% v17
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+1547 306 70.88 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+1504 301.9 moveto 86 (c-ci-ic=cc-ci-ic) alignedtext
+grestore
+% v17->v7
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1545 288 moveto
+1544 280 1544 271 1543 262 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1546.48 261.6 moveto
+1542 252 lineto
+1539.51 262.3 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1546.48 261.6 moveto
+1542 252 lineto
+1539.51 262.3 lineto
+closepath stroke
+grestore
+% v17->v15
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1512 290 moveto
+1489 279 1457 266 1432 254 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1433.56 250.86 moveto
+1423 250 lineto
+1430.72 257.26 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1433.56 250.86 moveto
+1423 250 lineto
+1430.72 257.26 lineto
+closepath stroke
+grestore
+% v18
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+1280 450 75.24 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+1233.5 445.9 moveto 93 (c-c-cic=cc-c-cic) alignedtext
+grestore
+% v18->v8
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1299 433 moveto
+1310 423 1322 412 1333 402 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1335.78 404.22 moveto
+1341 395 lineto
+1331.17 398.95 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1335.78 404.22 moveto
+1341 395 lineto
+1331.17 398.95 lineto
+closepath stroke
+grestore
+% v18->v16
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1226 437 moveto
+1216 435 1206 434 1196 432 curveto
+1057 409 1019 421 879 396 curveto
+874 395 869 394 863 392 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 863.49 388.53 moveto
+853 390 lineto
+862.12 395.39 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 863.49 388.53 moveto
+853 390 lineto
+862.12 395.39 lineto
+closepath stroke
+grestore
+% v18->v17
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1333 437 moveto
+1364 428 1404 415 1435 396 curveto
+1455 383 1456 374 1473 360 curveto
+1486 349 1501 338 1514 329 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1516.1 331.8 moveto
+1522 323 lineto
+1511.9 326.2 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1516.1 331.8 moveto
+1522 323 lineto
+1511.9 326.2 lineto
+closepath stroke
+grestore
+% v19
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+1653 522 56.98 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+1620 517.9 moveto 66 (c--ic=cc--ic) alignedtext
+grestore
+% v19->v18
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1604 513 moveto
+1546 502 1448 484 1364 468 curveto
+1358 467 1352 465 1346 464 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1346.49 460.53 moveto
+1336 462 lineto
+1345.12 467.39 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1346.49 460.53 moveto
+1336 462 lineto
+1345.12 467.39 lineto
+closepath stroke
+grestore
+% v20
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+1771 306 66.21 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+1731 301.9 moveto 80 (c-cic-=cc-cic-) alignedtext
+grestore
+% v20->v10
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1771 288 moveto
+1771 280 1771 271 1771 262 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1774.5 262 moveto
+1771 252 lineto
+1767.5 262 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1774.5 262 moveto
+1771 252 lineto
+1767.5 262 lineto
+closepath stroke
+grestore
+% v20->v15
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1716 296 moveto
+1658 285 1562 267 1479 252 curveto
+1471 251 1463 249 1455 247 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1455.49 243.53 moveto
+1445 245 lineto
+1454.12 250.39 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1455.49 243.53 moveto
+1445 245 lineto
+1454.12 250.39 lineto
+closepath stroke
+grestore
+% v21
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+2191 378 61.15 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+2155 373.9 moveto 72 (c-ci-i=cc-ci-i) alignedtext
+grestore
+% v21->v11
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2150 365 moveto
+2109 352 2049 333 2009 320 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2009.58 316.52 moveto
+1999 317 lineto
+2007.57 323.23 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2009.58 316.52 moveto
+1999 317 lineto
+2007.57 323.23 lineto
+closepath stroke
+grestore
+% v21->v17
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2133 372 moveto
+2041 362 1854 342 1696 324 curveto
+1671 321 1645 318 1621 315 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1621.3 311.51 moveto
+1611 314 lineto
+1620.6 318.48 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1621.3 311.51 moveto
+1611 314 lineto
+1620.6 318.48 lineto
+closepath stroke
+grestore
+% v21->v20
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2138 369 moveto
+2061 357 1920 332 1837 318 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1837.49 314.53 moveto
+1827 316 lineto
+1836.12 321.39 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1837.49 314.53 moveto
+1827 316 lineto
+1836.12 321.39 lineto
+closepath stroke
+grestore
+% v22
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+2282 522 66.21 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+2242 517.9 moveto 80 (c-c-ci=cc-c-ci) alignedtext
+grestore
+% v22->v12
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2249 506 moveto
+2226 495 2195 481 2171 469 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2172.56 465.86 moveto
+2162 465 lineto
+2169.72 472.26 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2172.56 465.86 moveto
+2162 465 lineto
+2169.72 472.26 lineto
+closepath stroke
+grestore
+% v22->v18
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2235 509 moveto
+2226 507 2216 505 2207 504 curveto
+1836 452 1736 515 1364 468 curveto
+1357 467 1350 466 1343 465 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1343.49 461.53 moveto
+1333 463 lineto
+1342.12 468.39 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1343.49 461.53 moveto
+1333 463 lineto
+1342.12 468.39 lineto
+closepath stroke
+grestore
+% v22->v21
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2334 511 moveto
+2358 503 2384 490 2398 468 curveto
+2406 454 2407 444 2398 432 curveto
+2380 409 2311 395 2258 387 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2258.49 383.53 moveto
+2248 385 lineto
+2257.12 390.39 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2258.49 383.53 moveto
+2248 385 lineto
+2257.12 390.39 lineto
+closepath stroke
+grestore
+% v23
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+2117 594 61.15 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+2081 589.9 moveto 72 (c--ici=cc--ici) alignedtext
+grestore
+% v23->v19
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2073 581 moveto
+2064 579 2055 577 2047 576 curveto
+1903 549 1864 567 1719 540 curveto
+1714 539 1709 538 1705 536 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1705.49 532.53 moveto
+1695 534 lineto
+1704.12 539.39 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1705.49 532.53 moveto
+1695 534 lineto
+1704.12 539.39 lineto
+closepath stroke
+grestore
+% v23->v22
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2151 579 moveto
+2176 568 2211 554 2238 541 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2239.28 544.26 moveto
+2247 537 lineto
+2236.44 537.86 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2239.28 544.26 moveto
+2247 537 lineto
+2236.44 537.86 lineto
+closepath stroke
+grestore
+% v24
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+1069 234 52.12 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+1039.5 229.9 moveto 59 (ci-i-=cci-i-) alignedtext
+grestore
+% v24->v14
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1102 220 moveto
+1130 208 1168 193 1197 180 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1199.02 182.96 moveto
+1207 176 lineto
+1196.42 176.46 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1199.02 182.96 moveto
+1207 176 lineto
+1196.42 176.46 lineto
+closepath stroke
+grestore
+% v25
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+586 378 66.21 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+546 373.9 moveto 80 (cic--c=ccic--c) alignedtext
+grestore
+% v25->v1
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 597 360 moveto
+602 352 609 342 615 332 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 617.67 334.34 moveto
+620 324 lineto
+611.73 330.62 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 617.67 334.34 moveto
+620 324 lineto
+611.73 330.62 lineto
+closepath stroke
+grestore
+% v25->v24
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 627 364 moveto
+682 345 780 312 865 288 curveto
+916 272 975 257 1016 247 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1017.43 250.23 moveto
+1026 244 lineto
+1015.42 243.52 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1017.43 250.23 moveto
+1026 244 lineto
+1015.42 243.52 lineto
+closepath stroke
+grestore
+% v26
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+1265 306 70.88 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+1222 301.9 moveto 86 (ci-ic-c=cci-ic-c) alignedtext
+grestore
+% v26->v15
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1293 289 moveto
+1310 280 1331 267 1349 256 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1350.96 258.92 moveto
+1358 251 lineto
+1347.56 252.8 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1350.96 258.92 moveto
+1358 251 lineto
+1347.56 252.8 lineto
+closepath stroke
+grestore
+% v26->v24
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1224 291 moveto
+1192 279 1148 263 1115 251 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1115.58 247.46 moveto
+1105 247 lineto
+1112.98 253.96 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1115.58 247.46 moveto
+1105 247 lineto
+1112.98 253.96 lineto
+closepath stroke
+grestore
+% v27
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+624 450 75.24 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+577.5 445.9 moveto 93 (cic-c-c=ccic-c-c) alignedtext
+grestore
+% v27->v16
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 663 435 moveto
+692 423 731 408 762 396 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 763.28 399.26 moveto
+771 392 lineto
+760.44 392.86 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 763.28 399.26 moveto
+771 392 lineto
+760.44 392.86 lineto
+closepath stroke
+grestore
+% v27->v25
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 614 432 moveto
+610 424 605 414 600 405 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 602.92 403.04 moveto
+595 396 lineto
+596.8 406.44 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 602.92 403.04 moveto
+595 396 lineto
+596.8 406.44 lineto
+closepath stroke
+grestore
+% v27->v26
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 647 433 moveto
+661 422 680 408 695 396 curveto
+715 380 715 369 737 360 curveto
+822 324 1057 334 1147 324 curveto
+1163 322 1179 319 1195 317 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1195.4 320.48 moveto
+1205 316 lineto
+1194.7 313.51 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1195.4 320.48 moveto
+1205 316 lineto
+1194.7 313.51 lineto
+closepath stroke
+grestore
+% v28
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+583 522 87.05 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+528 517.9 moveto 110 (ci--c=cci--c=cici--c) alignedtext
+grestore
+% v28->v27
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 593 504 moveto
+597 496 603 486 609 477 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 612.2 478.44 moveto
+614 468 lineto
+606.08 475.04 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 612.2 478.44 moveto
+614 468 lineto
+606.08 475.04 lineto
+closepath stroke
+grestore
+% v29
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+286 450 56.98 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+253 445.9 moveto 66 (cic--=ccic--) alignedtext
+grestore
+% v29->v3
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 286 432 moveto
+286 424 286 415 286 406 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 289.5 406 moveto
+286 396 lineto
+282.5 406 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 289.5 406 moveto
+286 396 lineto
+282.5 406 lineto
+closepath stroke
+grestore
+% v29->v25
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 329 438 moveto
+337 436 345 434 352 432 curveto
+423 414 441 412 511 396 curveto
+516 395 521 394 526 392 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 526.88 395.39 moveto
+536 390 lineto
+525.51 388.53 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 526.88 395.39 moveto
+536 390 lineto
+525.51 388.53 lineto
+closepath stroke
+grestore
+% v30
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+1547 378 64.82 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+1508 373.9 moveto 78 (ci-i-ic=cci-i-ic) alignedtext
+grestore
+% v30->v17
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1547 360 moveto
+1547 352 1547 343 1547 334 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1550.5 334 moveto
+1547 324 lineto
+1543.5 334 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1550.5 334 moveto
+1547 324 lineto
+1543.5 334 lineto
+closepath stroke
+grestore
+% v30->v26
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1499 366 moveto
+1451 354 1378 335 1326 321 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1326.49 317.53 moveto
+1316 319 lineto
+1325.12 324.39 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1326.49 317.53 moveto
+1316 319 lineto
+1325.12 324.39 lineto
+closepath stroke
+grestore
+% v31
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+1107 450 79.91 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+1057.5 445.9 moveto 99 (cic--cic=ccic--cic) alignedtext
+grestore
+% v31->v8
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1157 436 moveto
+1199 424 1261 407 1304 394 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1305.43 397.23 moveto
+1314 391 lineto
+1303.42 390.52 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1305.43 397.23 moveto
+1314 391 lineto
+1303.42 390.52 lineto
+closepath stroke
+grestore
+% v31->v25
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1049 437 moveto
+1039 435 1028 434 1018 432 curveto
+984 426 770 401 656 386 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 656.3 382.51 moveto
+646 385 lineto
+655.6 389.48 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 656.3 382.51 moveto
+646 385 lineto
+655.6 389.48 lineto
+closepath stroke
+grestore
+% v31->v30
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1166 438 moveto
+1176 436 1186 434 1196 432 curveto
+1302 413 1329 412 1435 396 curveto
+1450 394 1466 391 1481 389 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1481.88 392.39 moveto
+1491 387 lineto
+1480.51 385.53 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1481.88 392.39 moveto
+1491 387 lineto
+1480.51 385.53 lineto
+closepath stroke
+grestore
+% v32
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+1101 522 89.14 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+1044.5 517.9 moveto 113 (cic-c-cic=ccic-c-cic) alignedtext
+grestore
+% v32->v18
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1141 506 moveto
+1168 495 1204 480 1233 469 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1234.28 472.26 moveto
+1242 465 lineto
+1231.44 465.86 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1234.28 472.26 moveto
+1242 465 lineto
+1231.44 465.86 lineto
+closepath stroke
+grestore
+% v32->v27
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1036 510 moveto
+1025 508 1014 506 1003 504 curveto
+890 485 861 484 746 468 curveto
+730 466 714 463 698 461 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 698.49 457.53 moveto
+688 459 lineto
+697.12 464.39 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 698.49 457.53 moveto
+688 459 lineto
+697.12 464.39 lineto
+closepath stroke
+grestore
+% v32->v31
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1103 504 moveto
+1104 496 1104 487 1105 478 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1108.5 478 moveto
+1105 468 lineto
+1101.5 478 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1108.5 478 moveto
+1105 468 lineto
+1101.5 478 lineto
+closepath stroke
+grestore
+% v33
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+989 594 107.21 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+919.5 589.9 moveto 139 (ci--cic=cci--cic=cici--cic) alignedtext
+grestore
+% v33->v28
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 915 581 moveto
+852 570 760 554 679 540 curveto
+672 539 665 537 658 536 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 658.49 532.53 moveto
+648 534 lineto
+657.12 539.39 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 658.49 532.53 moveto
+648 534 lineto
+657.12 539.39 lineto
+closepath stroke
+grestore
+% v33->v32
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1016 577 moveto
+1031 567 1049 555 1065 545 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1067.62 547.46 moveto
+1074 539 lineto
+1063.74 541.63 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1067.62 547.46 moveto
+1074 539 lineto
+1063.74 541.63 lineto
+closepath stroke
+grestore
+% v34
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+1441 594 70.88 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+1398 589.9 moveto 86 (cic--ic=ccic--ic) alignedtext
+grestore
+% v34->v19
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1484 580 moveto
+1519 568 1568 551 1605 538 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1605.62 541.48 moveto
+1614 535 lineto
+1603.41 534.84 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1605.62 541.48 moveto
+1614 535 lineto
+1603.41 534.84 lineto
+closepath stroke
+grestore
+% v34->v32
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1389 582 moveto
+1379 580 1370 578 1361 576 curveto
+1298 562 1226 547 1174 537 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1174.49 533.53 moveto
+1164 535 lineto
+1173.12 540.39 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1174.49 533.53 moveto
+1164 535 lineto
+1173.12 540.39 lineto
+closepath stroke
+grestore
+% v35
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+1048 666 93.81 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+988.5 661.9 moveto 119 (ci--ic=cci--ic=cici--ic) alignedtext
+grestore
+% v35->v33
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1033 648 moveto
+1026 639 1018 629 1010 620 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1012.8 617.9 moveto
+1004 612 lineto
+1007.2 622.1 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1012.8 617.9 moveto
+1004 612 lineto
+1007.2 622.1 lineto
+closepath stroke
+grestore
+% v35->v34
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1117 654 moveto
+1128 652 1140 650 1151 648 curveto
+1245 631 1269 630 1361 612 curveto
+1367 611 1372 610 1378 608 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1378.88 611.39 moveto
+1388 606 lineto
+1377.51 604.53 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1378.88 611.39 moveto
+1388 606 lineto
+1377.51 604.53 lineto
+closepath stroke
+grestore
+% v36
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+230 738 43.97 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+206 733.9 moveto 48 (cic=ccic) alignedtext
+grestore
+% v36->v4
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 204 723 moveto
+189 714 170 700 157 684 curveto
+108 623 99 526 98 478 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 101.5 478 moveto
+98 468 lineto
+94.5 478 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 101.5 478 moveto
+98 468 lineto
+94.5 478 lineto
+closepath stroke
+grestore
+% v36->v9
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 225 720 moveto
+218 688 208 621 235 576 curveto
+252 548 273 559 299 540 curveto
+318 526 316 513 337 504 curveto
+461 450 812 501 942 468 curveto
+944 468 946 467 949 466 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 950.28 469.26 moveto
+958 462 lineto
+947.44 462.86 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 950.28 469.26 moveto
+958 462 lineto
+947.44 462.86 lineto
+closepath stroke
+grestore
+% v36->v29
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 213 721 moveto
+175 681 89 576 139 504 curveto
+145 495 194 478 234 465 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 235.43 468.23 moveto
+244 462 lineto
+233.42 461.52 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 235.43 468.23 moveto
+244 462 lineto
+233.42 461.52 lineto
+closepath stroke
+grestore
+% v36->v35
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 274 735 moveto
+408 727 814 700 945 684 curveto
+954 683 962 682 971 681 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 971.88 684.39 moveto
+981 679 lineto
+970.51 677.53 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 971.88 684.39 moveto
+981 679 lineto
+970.51 677.53 lineto
+closepath stroke
+grestore
+% v37
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+808 450 52.81 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+778 445.9 moveto 60 (c-c-=cc-c-) alignedtext
+grestore
+% v37->v3
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 762 441 moveto
+745 438 726 434 708 432 curveto
+639 420 435 396 338 384 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 338.3 380.51 moveto
+328 383 lineto
+337.6 387.48 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 338.3 380.51 moveto
+328 383 lineto
+337.6 387.48 lineto
+closepath stroke
+grestore
+% v37->v16
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 808 432 moveto
+808 424 808 415 808 406 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 811.5 406 moveto
+808 396 lineto
+804.5 406 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 811.5 406 moveto
+808 396 lineto
+804.5 406 lineto
+closepath stroke
+grestore
+% v37->v20
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 847 437 moveto
+854 435 862 433 870 432 curveto
+1019 402 1064 437 1209 396 curveto
+1245 385 1250 370 1285 360 curveto
+1433 318 1476 341 1627 324 curveto
+1651 321 1677 318 1701 315 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1701.4 318.48 moveto
+1711 314 lineto
+1700.7 311.51 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1701.4 318.48 moveto
+1711 314 lineto
+1700.7 311.51 lineto
+closepath stroke
+grestore
+% v38
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+2086 666 47.95 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+2059.5 661.9 moveto 53 (c--i=cc--i) alignedtext
+grestore
+% v38->v23
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2094 648 moveto
+2098 640 2102 630 2105 622 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2108.54 622.58 moveto
+2109 612 lineto
+2102.04 619.98 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2108.54 622.58 moveto
+2109 612 lineto
+2102.04 619.98 lineto
+closepath stroke
+grestore
+% v38->v37
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2050 654 moveto
+2042 652 2033 649 2025 648 curveto
+1838 612 1773 687 1597 612 curveto
+1576 602 1579 585 1557 576 curveto
+1427 517 1367 600 1237 540 curveto
+1216 530 1221 513 1199 504 curveto
+1066 442 1015 496 870 468 curveto
+866 467 862 466 857 465 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 857.58 461.52 moveto
+847 462 lineto
+855.57 468.23 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 857.58 461.52 moveto
+847 462 lineto
+855.57 468.23 lineto
+closepath stroke
+grestore
+% v39
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+1771 378 61.15 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+1735 373.9 moveto 72 (ci-ic-=cci-ic-) alignedtext
+grestore
+% v39->v20
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1771 360 moveto
+1771 352 1771 343 1771 334 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1774.5 334 moveto
+1771 324 lineto
+1767.5 334 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1774.5 334 moveto
+1771 324 lineto
+1767.5 334 lineto
+closepath stroke
+grestore
+% v39->v26
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1727 365 moveto
+1719 363 1710 361 1701 360 curveto
+1545 332 1502 349 1345 324 curveto
+1339 323 1333 322 1327 321 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1327.58 317.52 moveto
+1317 318 lineto
+1325.57 324.23 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1327.58 317.52 moveto
+1317 318 lineto
+1325.57 324.23 lineto
+closepath stroke
+grestore
+% v40
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+412 522 66.21 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+372 517.9 moveto 80 (cic-c-=ccic-c-) alignedtext
+grestore
+% v40->v27
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 453 508 moveto
+487 497 534 480 570 468 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 571.43 471.23 moveto
+580 465 lineto
+569.42 464.52 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 571.43 471.23 moveto
+580 465 lineto
+569.42 464.52 lineto
+closepath stroke
+grestore
+% v40->v29
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 383 506 moveto
+365 496 342 482 323 471 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 324.44 467.8 moveto
+314 466 lineto
+321.04 473.92 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 324.44 467.8 moveto
+314 466 lineto
+321.04 473.92 lineto
+closepath stroke
+grestore
+% v40->v37
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 460 510 moveto
+469 508 478 506 487 504 curveto
+585 484 610 484 708 468 curveto
+722 466 737 463 751 460 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 751.88 463.39 moveto
+761 458 lineto
+750.51 456.53 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 751.88 463.39 moveto
+761 458 lineto
+750.51 456.53 lineto
+closepath stroke
+grestore
+% v40->v39
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 459 509 moveto
+468 507 478 505 487 504 curveto
+618 486 1549 522 1668 468 curveto
+1688 458 1686 446 1701 432 curveto
+1713 421 1727 410 1739 401 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1741.1 403.8 moveto
+1747 395 lineto
+1736.9 398.2 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1741.1 403.8 moveto
+1747 395 lineto
+1736.9 398.2 lineto
+closepath stroke
+grestore
+% v41
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+317 594 72.96 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+272.5 589.9 moveto 89 (ci--=cci--=cici--) alignedtext
+grestore
+% v41->v28
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 366 581 moveto
+410 569 473 551 520 539 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 521.43 542.23 moveto
+530 536 lineto
+519.42 535.52 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 521.43 542.23 moveto
+530 536 lineto
+519.42 535.52 lineto
+closepath stroke
+grestore
+% v41->v40
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 340 577 moveto
+352 567 368 555 382 545 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 384.1 547.8 moveto
+390 539 lineto
+379.9 542.2 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 384.1 547.8 moveto
+390 539 lineto
+379.9 542.2 lineto
+closepath stroke
+grestore
+% v42
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+2261 450 55.79 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+2228.5 445.9 moveto 65 (ci-i-i=cci-i-i) alignedtext
+grestore
+% v42->v21
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2244 433 moveto
+2235 423 2225 413 2215 403 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2217.22 400.22 moveto
+2208 395 lineto
+2211.95 404.83 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2217.22 400.22 moveto
+2208 395 lineto
+2211.95 404.83 lineto
+closepath stroke
+grestore
+% v42->v30
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2221 437 moveto
+2213 435 2204 433 2196 432 curveto
+1944 389 1875 434 1621 396 curveto
+1615 395 1610 394 1604 392 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1604.49 388.53 moveto
+1594 390 lineto
+1603.12 395.39 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1604.49 388.53 moveto
+1594 390 lineto
+1603.12 395.39 lineto
+closepath stroke
+grestore
+% v42->v39
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2220 437 moveto
+2212 435 2204 433 2196 432 curveto
+2040 402 1997 423 1841 396 curveto
+1836 395 1831 394 1826 392 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1826.49 388.53 moveto
+1816 390 lineto
+1825.12 395.39 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1826.49 388.53 moveto
+1816 390 lineto
+1825.12 395.39 lineto
+closepath stroke
+grestore
+% v43
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+1799 522 70.88 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+1756 517.9 moveto 86 (cic--ci=ccic--ci) alignedtext
+grestore
+% v43->v12
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1852 510 moveto
+1861 508 1870 506 1879 504 curveto
+1961 486 1983 487 2064 468 curveto
+2068 467 2072 466 2077 465 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2078.43 468.23 moveto
+2087 462 lineto
+2076.42 461.52 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2078.43 468.23 moveto
+2087 462 lineto
+2076.42 461.52 lineto
+closepath stroke
+grestore
+% v43->v31
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1748 509 moveto
+1739 507 1729 505 1719 504 curveto
+1489 470 1427 499 1196 468 curveto
+1189 467 1182 466 1175 464 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1175.49 460.53 moveto
+1165 462 lineto
+1174.12 467.39 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1175.49 460.53 moveto
+1165 462 lineto
+1174.12 467.39 lineto
+closepath stroke
+grestore
+% v43->v42
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1851 510 moveto
+1860 507 1870 506 1879 504 curveto
+2018 480 2056 495 2196 468 curveto
+2201 467 2206 466 2210 464 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2210.88 467.39 moveto
+2220 462 lineto
+2209.51 460.53 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2210.88 467.39 moveto
+2220 462 lineto
+2209.51 460.53 lineto
+closepath stroke
+grestore
+% v44
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+1758 594 79.91 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+1708.5 589.9 moveto 99 (cic-c-ci=ccic-c-ci) alignedtext
+grestore
+% v44->v22
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1816 582 moveto
+1826 579 1837 578 1847 576 curveto
+2006 552 2048 566 2207 540 curveto
+2213 539 2218 538 2224 536 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2224.88 539.39 moveto
+2234 534 lineto
+2223.51 532.53 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2224.88 539.39 moveto
+2234 534 lineto
+2223.51 532.53 lineto
+closepath stroke
+grestore
+% v44->v32
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1701 581 moveto
+1691 579 1679 577 1669 576 curveto
+1479 548 1429 560 1237 540 curveto
+1220 538 1202 536 1185 533 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1185.3 529.51 moveto
+1175 532 lineto
+1184.6 536.48 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1185.3 529.51 moveto
+1175 532 lineto
+1184.6 536.48 lineto
+closepath stroke
+grestore
+% v44->v43
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1768 576 moveto
+1772 568 1778 558 1784 549 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1787.2 550.44 moveto
+1789 540 lineto
+1781.08 547.04 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1787.2 550.44 moveto
+1789 540 lineto
+1781.08 547.04 lineto
+closepath stroke
+grestore
+% v45
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+1492 666 93.81 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+1432.5 661.9 moveto 119 (ci--ci=cci--ci=cici--ci) alignedtext
+grestore
+% v45->v33
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1415 656 moveto
+1337 645 1213 628 1105 612 curveto
+1096 611 1087 609 1078 608 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1078.49 604.53 moveto
+1068 606 lineto
+1077.12 611.39 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1078.49 604.53 moveto
+1068 606 lineto
+1077.12 611.39 lineto
+closepath stroke
+grestore
+% v45->v44
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1546 651 moveto
+1590 639 1651 622 1696 611 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1697.43 614.23 moveto
+1706 608 lineto
+1695.42 607.52 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1697.43 614.23 moveto
+1706 608 lineto
+1695.42 607.52 lineto
+closepath stroke
+grestore
+% v46
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+1679 666 75.05 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+1633 661.9 moveto 92 (cic--ici=ccic--ici) alignedtext
+grestore
+% v46->v23
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1733 654 moveto
+1743 651 1753 650 1763 648 curveto
+1889 626 1923 635 2047 612 curveto
+2052 611 2057 610 2061 608 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2061.88 611.39 moveto
+2071 606 lineto
+2060.51 604.53 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2061.88 611.39 moveto
+2071 606 lineto
+2060.51 604.53 lineto
+closepath stroke
+grestore
+% v46->v34
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1632 652 moveto
+1593 640 1538 624 1497 611 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1497.58 607.52 moveto
+1487 608 lineto
+1495.57 614.23 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1497.58 607.52 moveto
+1487 608 lineto
+1495.57 614.23 lineto
+closepath stroke
+grestore
+% v46->v44
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1698 649 moveto
+1708 639 1720 628 1731 619 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1733.78 621.22 moveto
+1739 612 lineto
+1729.17 615.95 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1733.78 621.22 moveto
+1739 612 lineto
+1729.17 615.95 lineto
+closepath stroke
+grestore
+% v47
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+1418 738 61.15 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+1382 733.9 moveto 72 (cic--i=ccic--i) alignedtext
+grestore
+% v47->v38
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1462 725 moveto
+1471 723 1480 721 1488 720 curveto
+1710 683 1769 712 1991 684 curveto
+2005 682 2020 679 2034 677 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2034.88 680.39 moveto
+2044 675 lineto
+2033.51 673.53 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2034.88 680.39 moveto
+2044 675 lineto
+2033.51 673.53 lineto
+closepath stroke
+grestore
+% v47->v40
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1374 725 moveto
+1366 723 1357 721 1348 720 curveto
+1028 668 895 793 625 612 curveto
+606 598 608 587 587 576 curveto
+568 564 514 548 471 537 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 471.58 533.52 moveto
+461 534 lineto
+469.57 540.23 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 471.58 533.52 moveto
+461 534 lineto
+469.57 540.23 lineto
+closepath stroke
+grestore
+% v47->v46
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1463 726 moveto
+1506 714 1572 696 1620 683 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1621.43 686.23 moveto
+1630 680 lineto
+1619.42 679.52 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1621.43 686.23 moveto
+1630 680 lineto
+1619.42 679.52 lineto
+closepath stroke
+grestore
+% v48
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+1239 738 100.06 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+1175 733.9 moveto 128 (ci--ici=cci--ici=cici--ici) alignedtext
+grestore
+% v48->v35
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1196 722 moveto
+1167 711 1130 697 1100 686 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1101.56 682.86 moveto
+1091 682 lineto
+1098.72 689.26 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1101.56 682.86 moveto
+1091 682 lineto
+1098.72 689.26 lineto
+closepath stroke
+grestore
+% v48->v45
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1293 723 moveto
+1333 712 1388 696 1430 684 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1431.43 687.23 moveto
+1440 681 lineto
+1429.42 680.52 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1431.43 687.23 moveto
+1440 681 lineto
+1429.42 680.52 lineto
+closepath stroke
+grestore
+% v48->v46
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1312 726 moveto
+1324 724 1336 722 1348 720 curveto
+1458 702 1486 703 1595 684 curveto
+1601 683 1608 681 1614 680 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1614.88 683.39 moveto
+1624 678 lineto
+1613.51 676.53 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1614.88 683.39 moveto
+1624 678 lineto
+1613.51 676.53 lineto
+closepath stroke
+grestore
+% v49
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+971 810 79.22 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+922 805.9 moveto 98 (ci--i=cci--i=cici--i) alignedtext
+grestore
+% v49->v41
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 915 797 moveto
+904 795 893 793 883 792 curveto
+783 777 514 807 426 756 curveto
+375 726 342 659 327 621 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 330.26 619.72 moveto
+323 612 lineto
+323.86 622.56 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 330.26 619.72 moveto
+323 612 lineto
+323.86 622.56 lineto
+closepath stroke
+grestore
+% v49->v47
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1028 797 moveto
+1039 795 1049 794 1059 792 curveto
+1187 771 1221 780 1348 756 curveto
+1353 755 1358 754 1364 752 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1364.88 755.39 moveto
+1374 750 lineto
+1363.51 748.53 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1364.88 755.39 moveto
+1374 750 lineto
+1363.51 748.53 lineto
+closepath stroke
+grestore
+% v49->v48
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1022 796 moveto
+1065 785 1126 768 1173 756 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1174.43 759.23 moveto
+1183 753 lineto
+1172.42 752.52 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1174.43 759.23 moveto
+1183 753 lineto
+1172.42 752.52 lineto
+closepath stroke
+grestore
+% v50
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+509 882 54.2 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+478 877.9 moveto 62 (ci=cci=cici) alignedtext
+grestore
+% v50->v13
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 563 880 moveto
+796 869 1707 828 1708 828 curveto
+1837 815 2282 867 2282 738 curveto
+2282 738 2282 738 2282 666 curveto
+2282 625 2293 603 2263 576 curveto
+2211 529 2017 559 1951 540 curveto
+1949 539 1947 539 1945 538 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1946.56 534.86 moveto
+1936 534 lineto
+1943.72 541.26 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1946.56 534.86 moveto
+1936 534 lineto
+1943.72 541.26 lineto
+closepath stroke
+grestore
+% v50->v36
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 480 867 moveto
+429 840 323 786 267 757 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 268.44 753.8 moveto
+258 752 lineto
+265.04 759.92 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 268.44 753.8 moveto
+258 752 lineto
+265.04 759.92 lineto
+closepath stroke
+grestore
+% v50->v49
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 559 876 moveto
+632 866 768 848 883 828 curveto
+890 827 896 825 903 824 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 903.88 827.39 moveto
+913 822 lineto
+902.51 820.53 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 903.88 827.39 moveto
+913 822 lineto
+902.51 820.53 lineto
+closepath stroke
+grestore
+% v51
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+1242 234 27 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+1232.5 229.9 moveto 19 (-ci-) alignedtext
+grestore
+% v51->v14
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1242 216 moveto
+1242 208 1242 199 1242 190 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1245.5 190 moveto
+1242 180 lineto
+1238.5 190 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1245.5 190 moveto
+1242 180 lineto
+1238.5 190 lineto
+closepath stroke
+grestore
+% v52
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+1006 306 132.03 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+919 301.9 moveto 174 (i-i-=i-ci-=ii-i-=i-ici-=ic-ci-=ici-i-) alignedtext
+grestore
+% v52->v24
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1022 288 moveto
+1030 279 1039 269 1047 260 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1050.05 261.83 moveto
+1054 252 lineto
+1044.78 257.22 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1050.05 261.83 moveto
+1054 252 lineto
+1044.78 257.22 lineto
+closepath stroke
+grestore
+% v52->v51
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1060 289 moveto
+1106 275 1169 256 1207 244 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1208.43 247.23 moveto
+1217 241 lineto
+1206.42 240.52 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1208.43 247.23 moveto
+1217 241 lineto
+1206.42 240.52 lineto
+closepath stroke
+grestore
+% v53
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+1387 306 32.86 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+1371 301.9 moveto 32 (-cic-c) alignedtext
+grestore
+% v53->v15
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1387 288 moveto
+1387 280 1387 271 1387 262 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1390.5 262 moveto
+1387 252 lineto
+1383.5 262 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1390.5 262 moveto
+1387 252 lineto
+1383.5 262 lineto
+closepath stroke
+grestore
+% v53->v51
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1362 294 moveto
+1338 282 1300 263 1273 250 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1274.44 246.8 moveto
+1264 245 lineto
+1271.04 252.92 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1274.44 246.8 moveto
+1264 245 lineto
+1271.04 252.92 lineto
+closepath stroke
+grestore
+% v54
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+1879 378 29.19 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+1866 373.9 moveto 26 (-cic-) alignedtext
+grestore
+% v54->v20
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1859 365 moveto
+1844 355 1822 341 1804 329 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1806.1 326.2 moveto
+1796 323 lineto
+1801.9 331.8 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1806.1 326.2 moveto
+1796 323 lineto
+1801.9 331.8 lineto
+closepath stroke
+grestore
+% v54->v53
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1857 366 moveto
+1852 363 1847 361 1841 360 curveto
+1681 315 1632 350 1467 324 curveto
+1454 322 1440 319 1427 316 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1427.49 312.53 moveto
+1417 314 lineto
+1426.12 319.39 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1427.49 312.53 moveto
+1417 314 lineto
+1426.12 319.39 lineto
+closepath stroke
+grestore
+% v55
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+1044 378 155.85 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+939.5 373.9 moveto 209 (i-ic-c=i-cic-c=ii-ic-c=ic-cic-c=ici-ic-c) alignedtext
+grestore
+% v55->v26
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1096 361 moveto
+1131 350 1176 335 1211 323 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1212.43 326.23 moveto
+1221 320 lineto
+1210.42 319.52 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1212.43 326.23 moveto
+1221 320 lineto
+1210.42 319.52 lineto
+closepath stroke
+grestore
+% v55->v52
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1034 360 moveto
+1030 352 1025 342 1020 333 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1022.92 331.04 moveto
+1015 324 lineto
+1016.8 334.44 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1022.92 331.04 moveto
+1015 324 lineto
+1016.8 334.44 lineto
+closepath stroke
+grestore
+% v55->v53
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1151 365 moveto
+1209 356 1282 343 1345 324 curveto
+1348 323 1350 322 1352 321 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1353.43 324.23 moveto
+1362 318 lineto
+1351.42 317.52 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1353.43 324.23 moveto
+1362 318 lineto
+1351.42 317.52 lineto
+closepath stroke
+grestore
+% v56
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+1923 450 132.22 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+1835.5 445.9 moveto 175 (i-ic-=i-cic-=ii-ic-=ic-cic-=ici-ic-) alignedtext
+grestore
+% v56->v39
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1886 433 moveto
+1864 422 1836 409 1812 397 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1813.56 393.86 moveto
+1803 393 lineto
+1810.72 400.26 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1813.56 393.86 moveto
+1803 393 lineto
+1810.72 400.26 lineto
+closepath stroke
+grestore
+% v56->v54
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1912 432 moveto
+1907 424 1900 413 1894 404 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1896.92 402.04 moveto
+1889 395 lineto
+1890.8 405.44 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1896.92 402.04 moveto
+1889 395 lineto
+1890.8 405.44 lineto
+closepath stroke
+grestore
+% v56->v55
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1809 441 moveto
+1648 427 1355 403 1182 389 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1182.3 385.51 moveto
+1172 388 lineto
+1181.6 392.48 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1182.3 385.51 moveto
+1172 388 lineto
+1181.6 392.48 lineto
+closepath stroke
+grestore
+% v57
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+1661 378 30.77 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+1646.5 373.9 moveto 29 (-ci-ic) alignedtext
+grestore
+% v57->v17
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1640 365 moveto
+1624 355 1601 341 1583 329 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1584.26 325.63 moveto
+1574 323 lineto
+1580.38 331.46 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1584.26 325.63 moveto
+1574 323 lineto
+1580.38 331.46 lineto
+closepath stroke
+grestore
+% v57->v53
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1637 366 moveto
+1632 364 1626 362 1621 360 curveto
+1612 356 1493 330 1428 315 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1428.49 311.53 moveto
+1418 313 lineto
+1427.12 318.39 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1428.49 311.53 moveto
+1418 313 lineto
+1427.12 318.39 lineto
+closepath stroke
+grestore
+% v58
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+2362 450 27 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+2351 445.9 moveto 22 (-ci-i) alignedtext
+grestore
+% v58->v21
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2341 439 moveto
+2336 437 2331 434 2326 432 curveto
+2298 419 2265 405 2239 396 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2239.58 392.46 moveto
+2229 392 lineto
+2236.98 398.96 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2239.58 392.46 moveto
+2229 392 lineto
+2236.98 398.96 lineto
+closepath stroke
+grestore
+% v58->v54
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2342 438 moveto
+2337 436 2331 434 2326 432 curveto
+2250 409 2013 389 1918 381 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1918.3 377.51 moveto
+1908 380 lineto
+1917.6 384.48 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1918.3 377.51 moveto
+1908 380 lineto
+1917.6 384.48 lineto
+closepath stroke
+grestore
+% v58->v57
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2342 438 moveto
+2337 435 2331 433 2326 432 curveto
+2057 360 1972 462 1701 396 curveto
+1699 396 1697 395 1694 394 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1695.56 390.86 moveto
+1685 390 lineto
+1692.72 397.26 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1695.56 390.86 moveto
+1685 390 lineto
+1692.72 397.26 lineto
+closepath stroke
+grestore
+% v59
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+1516 450 143.15 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+1421 445.9 moveto 190 (i-i-ic=i-ci-ic=ii-i-ic=ic-ci-ic=ici-i-ic) alignedtext
+grestore
+% v59->v30
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1524 432 moveto
+1528 424 1532 414 1535 406 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1538.54 406.58 moveto
+1539 396 lineto
+1532.04 403.98 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1538.54 406.58 moveto
+1539 396 lineto
+1532.04 403.98 lineto
+closepath stroke
+grestore
+% v59->v55
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1425 436 moveto
+1346 424 1231 406 1148 394 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1148.49 390.53 moveto
+1138 392 lineto
+1147.12 397.39 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1148.49 390.53 moveto
+1138 392 lineto
+1147.12 397.39 lineto
+closepath stroke
+grestore
+% v59->v57
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1551 432 moveto
+1575 421 1605 405 1628 394 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1629.28 397.26 moveto
+1637 390 lineto
+1626.44 390.86 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1629.28 397.26 moveto
+1637 390 lineto
+1626.44 390.86 lineto
+closepath stroke
+grestore
+% v60
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+2079 522 119.02 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+2001 517.9 moveto 156 (i-i-i=i-ci-i=ii-i-i=ic-ci-i=ici-i-i) alignedtext
+grestore
+% v60->v42
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2122 505 moveto
+2150 494 2187 479 2216 468 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2218.02 470.96 moveto
+2226 464 lineto
+2215.42 464.46 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2218.02 470.96 moveto
+2226 464 lineto
+2215.42 464.46 lineto
+closepath stroke
+grestore
+% v60->v56
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2042 505 moveto
+2020 494 1993 482 1970 471 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1971.56 467.86 moveto
+1961 467 lineto
+1968.72 474.26 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1971.56 467.86 moveto
+1961 467 lineto
+1968.72 474.26 lineto
+closepath stroke
+grestore
+% v60->v58
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2162 509 moveto
+2211 500 2273 487 2326 468 curveto
+2328 467 2330 467 2332 466 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2333.28 469.26 moveto
+2341 462 lineto
+2330.44 462.86 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2333.28 469.26 moveto
+2341 462 lineto
+2330.44 462.86 lineto
+closepath stroke
+grestore
+% v60->v59
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1993 510 moveto
+1979 508 1964 506 1951 504 curveto
+1842 490 1718 474 1630 463 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1630.3 459.51 moveto
+1620 462 lineto
+1629.6 466.48 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1630.3 459.51 moveto
+1620 462 lineto
+1629.6 466.48 lineto
+closepath stroke
+grestore
+% v61
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+446 450 84.78 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+393 445.9 moveto 106 (ic--c=iic--c=icic--c) alignedtext
+grestore
+% v61->v25
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 478 433 moveto
+498 423 524 410 546 399 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 547.96 401.92 moveto
+555 394 lineto
+544.56 395.8 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 547.96 401.92 moveto
+555 394 lineto
+544.56 395.8 lineto
+closepath stroke
+grestore
+% v61->v52
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 508 438 moveto
+562 426 635 409 661 396 curveto
+684 384 682 370 704 360 curveto
+738 344 826 329 897 319 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 897.4 322.48 moveto
+907 318 lineto
+896.7 315.51 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 897.4 322.48 moveto
+907 318 lineto
+896.7 315.51 lineto
+closepath stroke
+grestore
+% v62
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+219 522 70.88 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+176 517.9 moveto 86 (ic--=iic--=icic--) alignedtext
+grestore
+% v62->v29
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 236 504 moveto
+244 495 254 485 263 475 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 265.4 477.55 moveto
+270 468 lineto
+260.45 472.6 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 265.4 477.55 moveto
+270 468 lineto
+260.45 472.6 lineto
+closepath stroke
+grestore
+% v62->v61
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 264 508 moveto
+300 497 350 481 389 468 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 390.43 471.23 moveto
+399 465 lineto
+388.42 464.52 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 390.43 471.23 moveto
+399 465 lineto
+388.42 464.52 lineto
+closepath stroke
+grestore
+% v63
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+786 522 98.17 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+723 517.9 moveto 126 (ic-c-c=iic-c-c=icic-c-c) alignedtext
+grestore
+% v63->v27
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 748 505 moveto
+725 494 694 481 670 470 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 670.58 466.46 moveto
+660 466 lineto
+667.98 472.96 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 670.58 466.46 moveto
+660 466 lineto
+667.98 472.96 lineto
+closepath stroke
+grestore
+% v63->v55
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 768 504 moveto
+750 485 728 453 746 432 curveto
+758 418 847 402 925 392 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 925.4 395.48 moveto
+935 391 lineto
+924.7 388.51 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 925.4 395.48 moveto
+935 391 lineto
+924.7 388.51 lineto
+closepath stroke
+grestore
+% v63->v61
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 722 508 moveto
+663 496 577 477 517 465 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 517.49 461.53 moveto
+507 463 lineto
+516.12 468.39 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 517.49 461.53 moveto
+507 463 lineto
+516.12 468.39 lineto
+closepath stroke
+grestore
+% v64
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+493 594 84.78 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+440 589.9 moveto 106 (ic-c-=iic-c-=icic-c-) alignedtext
+grestore
+% v64->v40
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 473 576 moveto
+463 567 450 556 439 546 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 441.55 543.6 moveto
+432 539 lineto
+436.6 548.55 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 441.55 543.6 moveto
+432 539 lineto
+436.6 548.55 lineto
+closepath stroke
+grestore
+% v64->v56
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 562 583 moveto
+582 581 605 578 625 576 curveto
+728 567 1455 579 1549 540 curveto
+1571 530 1567 514 1587 504 curveto
+1607 493 1726 476 1817 463 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1817.4 466.48 moveto
+1827 462 lineto
+1816.7 459.51 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1817.4 466.48 moveto
+1827 462 lineto
+1816.7 459.51 lineto
+closepath stroke
+grestore
+% v64->v62
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 440 580 moveto
+393 568 327 550 279 538 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 279.58 534.52 moveto
+269 535 lineto
+277.57 541.23 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 279.58 534.52 moveto
+269 535 lineto
+277.57 541.23 lineto
+closepath stroke
+grestore
+% v64->v63
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 549 580 moveto
+597 568 666 551 717 538 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 717.88 541.39 moveto
+727 536 lineto
+716.51 534.53 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 717.88 541.39 moveto
+727 536 lineto
+716.51 534.53 lineto
+closepath stroke
+grestore
+% v65
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+1351 522 104.93 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+1283.5 517.9 moveto 135 (ic--cic=iic--cic=icic--cic) alignedtext
+grestore
+% v65->v31
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1298 506 moveto
+1259 495 1206 479 1166 467 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1166.58 463.52 moveto
+1156 464 lineto
+1164.57 470.23 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1166.58 463.52 moveto
+1156 464 lineto
+1164.57 470.23 lineto
+closepath stroke
+grestore
+% v65->v59
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1390 505 moveto
+1413 495 1442 482 1467 471 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1468.28 474.26 moveto
+1476 467 lineto
+1465.44 467.86 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1468.28 474.26 moveto
+1476 467 lineto
+1465.44 467.86 lineto
+closepath stroke
+grestore
+% v65->v61
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1268 511 moveto
+1246 508 1222 506 1199 504 curveto
+907 478 832 503 540 468 curveto
+532 467 525 466 517 465 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 517.49 461.53 moveto
+507 463 lineto
+516.12 468.39 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 517.49 461.53 moveto
+507 463 lineto
+516.12 468.39 lineto
+closepath stroke
+grestore
+% v66
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+1233 594 118.82 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+1155.5 589.9 moveto 155 (ic-c-cic=iic-c-cic=icic-c-cic) alignedtext
+grestore
+% v66->v32
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1201 577 moveto
+1183 567 1160 554 1141 544 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1142.44 540.8 moveto
+1132 539 lineto
+1139.04 546.92 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1142.44 540.8 moveto
+1132 539 lineto
+1139.04 546.92 lineto
+closepath stroke
+grestore
+% v66->v63
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1152 581 moveto
+1072 568 951 549 870 536 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 870.49 532.53 moveto
+860 534 lineto
+869.12 539.39 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 870.49 532.53 moveto
+860 534 lineto
+869.12 539.39 lineto
+closepath stroke
+grestore
+% v66->v65
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1262 576 moveto
+1277 567 1297 555 1314 544 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1315.96 546.92 moveto
+1323 539 lineto
+1312.56 540.8 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1315.96 546.92 moveto
+1323 539 lineto
+1312.56 540.8 lineto
+closepath stroke
+grestore
+% v67
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+1251 666 91.03 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+1193.5 661.9 moveto 115 (ic--ic=iic--ic=icic--ic) alignedtext
+grestore
+% v67->v34
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1293 650 moveto
+1322 639 1361 624 1392 613 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1393.28 616.26 moveto
+1401 609 lineto
+1390.44 609.86 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1393.28 616.26 moveto
+1401 609 lineto
+1390.44 609.86 lineto
+closepath stroke
+grestore
+% v67->v66
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1246 648 moveto
+1244 640 1242 631 1240 622 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1243.23 620.57 moveto
+1237 612 lineto
+1236.52 622.58 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1243.23 620.57 moveto
+1237 612 lineto
+1236.52 622.58 lineto
+closepath stroke
+grestore
+% v68
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+1947 594 91.03 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+1889.5 589.9 moveto 115 (ic--ci=iic--ci=icic--ci) alignedtext
+grestore
+% v68->v43
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1913 577 moveto
+1892 566 1864 554 1841 542 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1842.56 538.86 moveto
+1832 538 lineto
+1839.72 545.26 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1842.56 538.86 moveto
+1832 538 lineto
+1839.72 545.26 lineto
+closepath stroke
+grestore
+% v68->v60
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1978 577 moveto
+1996 568 2019 555 2038 545 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2039.96 547.92 moveto
+2047 540 lineto
+2036.56 541.8 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2039.96 547.92 moveto
+2047 540 lineto
+2036.56 541.8 lineto
+closepath stroke
+grestore
+% v68->v65
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1882 581 moveto
+1870 579 1858 578 1847 576 curveto
+1679 552 1635 561 1465 540 curveto
+1456 539 1447 537 1437 536 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1437.49 532.53 moveto
+1427 534 lineto
+1436.12 539.39 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1437.49 532.53 moveto
+1427 534 lineto
+1436.12 539.39 lineto
+closepath stroke
+grestore
+% v69
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+1877 666 104.93 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+1809.5 661.9 moveto 135 (ic-c-ci=iic-c-ci=icic-c-ci) alignedtext
+grestore
+% v69->v44
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1848 649 moveto
+1832 639 1812 626 1795 616 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1796.44 612.8 moveto
+1786 611 lineto
+1793.04 618.92 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1796.44 612.8 moveto
+1786 611 lineto
+1793.04 618.92 lineto
+closepath stroke
+grestore
+% v69->v66
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1802 653 moveto
+1789 651 1776 650 1763 648 curveto
+1585 625 1540 632 1361 612 curveto
+1350 610 1340 609 1329 608 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1329.3 604.51 moveto
+1319 607 lineto
+1328.6 611.48 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1329.3 604.51 moveto
+1319 607 lineto
+1328.6 611.48 lineto
+closepath stroke
+grestore
+% v69->v68
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1894 648 moveto
+1903 639 1913 629 1922 620 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1925.05 621.83 moveto
+1929 612 lineto
+1919.78 617.22 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1925.05 621.83 moveto
+1929 612 lineto
+1919.78 617.22 lineto
+closepath stroke
+grestore
+% v70
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+1594 738 96.78 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+1532 733.9 moveto 124 (ic--ici=iic--ici=icic--ici) alignedtext
+grestore
+% v70->v46
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1615 720 moveto
+1626 711 1639 700 1650 690 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1652.78 692.22 moveto
+1658 683 lineto
+1648.17 686.95 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1652.78 692.22 moveto
+1658 683 lineto
+1648.17 686.95 lineto
+closepath stroke
+grestore
+% v70->v67
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1529 724 moveto
+1470 713 1385 694 1323 681 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1323.49 677.53 moveto
+1313 679 lineto
+1322.12 684.39 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1323.49 677.53 moveto
+1313 679 lineto
+1322.12 684.39 lineto
+closepath stroke
+grestore
+% v70->v69
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1651 723 moveto
+1697 712 1760 695 1808 683 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1808.88 686.39 moveto
+1818 681 lineto
+1807.51 679.53 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1808.88 686.39 moveto
+1818 681 lineto
+1807.51 679.53 lineto
+closepath stroke
+grestore
+% v71
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+1145 810 77.13 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+1097.5 805.9 moveto 95 (ic--i=iic--i=icic--i) alignedtext
+grestore
+% v71->v47
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1196 796 moveto
+1244 784 1313 766 1362 753 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1363.43 756.23 moveto
+1372 750 lineto
+1361.42 749.52 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1363.43 756.23 moveto
+1372 750 lineto
+1361.42 749.52 lineto
+closepath stroke
+grestore
+% v71->v64
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1090 797 moveto
+1080 795 1069 793 1059 792 curveto
+825 759 755 822 528 756 curveto
+465 737 431 741 397 684 curveto
+389 670 389 661 397 648 curveto
+406 633 421 622 436 614 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 437.96 616.92 moveto
+445 609 lineto
+434.56 610.8 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 437.96 616.92 moveto
+445 609 lineto
+434.56 610.8 lineto
+closepath stroke
+grestore
+% v71->v70
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1201 798 moveto
+1211 795 1221 794 1231 792 curveto
+1345 772 1375 773 1488 756 curveto
+1496 755 1504 753 1513 752 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1513.88 755.39 moveto
+1523 750 lineto
+1512.51 748.53 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1513.88 755.39 moveto
+1523 750 lineto
+1512.51 748.53 lineto
+closepath stroke
+grestore
+% v72
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+2789 450 31.96 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+2774 445.9 moveto 30 (-i=c-i) alignedtext
+grestore
+% v73
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+2883 666 37.02 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+2864 661.9 moveto 38 (c-=cc-) alignedtext
+grestore
+% v73->v72
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2875 648 moveto
+2859 611 2820 522 2801 477 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2804.26 475.72 moveto
+2797 468 lineto
+2797.86 478.56 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2804.26 475.72 moveto
+2797 468 lineto
+2797.86 478.56 lineto
+closepath stroke
+grestore
+% v74
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+3009 738 27 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+3006.5 733.9 moveto 5 (-) alignedtext
+grestore
+% v74->v73
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2988 726 moveto
+2969 715 2939 698 2916 685 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2917.44 681.8 moveto
+2907 680 lineto
+2914.04 687.92 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2917.44 681.8 moveto
+2907 680 lineto
+2914.04 687.92 lineto
+closepath stroke
+grestore
+% v75
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+2733 522 45.86 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+2708 517.9 moveto 50 (-ici=c-ici) alignedtext
+grestore
+% v75->v72
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2747 505 moveto
+2754 496 2762 485 2770 475 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2772.8 477.1 moveto
+2776 467 lineto
+2767.2 472.9 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2772.8 477.1 moveto
+2776 467 lineto
+2767.2 472.9 lineto
+closepath stroke
+grestore
+% v76
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+2733 594 41.19 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+2711 589.9 moveto 44 (-ic=c-ic) alignedtext
+grestore
+% v76->v75
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2733 576 moveto
+2733 568 2733 559 2733 550 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2736.5 550 moveto
+2733 540 lineto
+2729.5 550 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2736.5 550 moveto
+2733 540 lineto
+2729.5 550 lineto
+closepath stroke
+grestore
+% v77
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+2617 594 50.22 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+2588.5 589.9 moveto 57 (c-ci=cc-ci) alignedtext
+grestore
+% v77->v75
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2642 578 moveto
+2659 568 2681 554 2699 543 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2701.62 545.46 moveto
+2708 537 lineto
+2697.74 539.63 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2701.62 545.46 moveto
+2708 537 lineto
+2697.74 539.63 lineto
+closepath stroke
+grestore
+% v78
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+2518 666 27 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+2511 661.9 moveto 14 (-ci) alignedtext
+grestore
+% v78->v77
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2537 652 moveto
+2551 643 2570 628 2587 616 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2589.1 618.8 moveto
+2595 610 lineto
+2584.9 613.2 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2589.1 618.8 moveto
+2595 610 lineto
+2584.9 613.2 lineto
+closepath stroke
+grestore
+% v79
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+2733 666 59.96 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+2697.5 661.9 moveto 71 (c-cic=cc-cic) alignedtext
+grestore
+% v79->v76
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2733 648 moveto
+2733 640 2733 631 2733 622 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2736.5 622 moveto
+2733 612 lineto
+2729.5 622 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2736.5 622 moveto
+2733 612 lineto
+2729.5 622 lineto
+closepath stroke
+grestore
+% v79->v77
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2707 650 moveto
+2690 640 2669 626 2651 615 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2652.44 611.8 moveto
+2642 610 lineto
+2649.04 617.92 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2652.44 611.8 moveto
+2642 610 lineto
+2649.04 617.92 lineto
+closepath stroke
+grestore
+% v80
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+2918 738 46.06 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+2892.5 733.9 moveto 51 (c-c=cc-c) alignedtext
+grestore
+% v80->v73
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2909 720 moveto
+2905 712 2901 702 2896 693 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2899.26 691.72 moveto
+2892 684 lineto
+2892.86 694.56 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2899.26 691.72 moveto
+2892 684 lineto
+2892.86 694.56 lineto
+closepath stroke
+grestore
+% v80->v79
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2885 725 moveto
+2856 714 2812 697 2779 684 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2780.56 680.86 moveto
+2770 680 lineto
+2777.72 687.26 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2780.56 680.86 moveto
+2770 680 lineto
+2777.72 687.26 lineto
+closepath stroke
+grestore
+% v81
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+2709 738 27 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+2698.5 733.9 moveto 21 (-cic) alignedtext
+grestore
+% v81->v78
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2688 726 moveto
+2683 724 2678 722 2673 720 curveto
+2621 699 2605 704 2554 684 curveto
+2552 683 2550 683 2548 682 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2549.44 678.8 moveto
+2539 677 lineto
+2546.04 684.92 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2549.44 678.8 moveto
+2539 677 lineto
+2546.04 684.92 lineto
+closepath stroke
+grestore
+% v81->v79
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2715 720 moveto
+2718 712 2721 702 2724 694 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2727.48 694.58 moveto
+2727 684 lineto
+2720.77 692.57 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2727.48 694.58 moveto
+2727 684 lineto
+2720.77 692.57 lineto
+closepath stroke
+grestore
+% v82
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+2918 810 27 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+2912.5 805.9 moveto 11 (-c) alignedtext
+grestore
+% v82->v74
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2936 796 moveto
+2950 785 2968 770 2984 758 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2986.1 760.8 moveto
+2992 752 lineto
+2981.9 755.2 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2986.1 760.8 moveto
+2992 752 lineto
+2981.9 755.2 lineto
+closepath stroke
+grestore
+% v82->v80
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2918 792 moveto
+2918 784 2918 775 2918 766 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2921.5 766 moveto
+2918 756 lineto
+2914.5 766 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2921.5 766 moveto
+2918 756 lineto
+2914.5 766 lineto
+closepath stroke
+grestore
+% v82->v81
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2896 799 moveto
+2890 796 2884 794 2879 792 curveto
+2821 771 2802 777 2745 756 curveto
+2743 755 2741 755 2739 754 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2740.44 750.8 moveto
+2730 749 lineto
+2737.04 756.92 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2740.44 750.8 moveto
+2730 749 lineto
+2737.04 756.92 lineto
+closepath stroke
+grestore
+% v83
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+2609 666 45.86 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+2584 661.9 moveto 50 (ci-i=cci-i) alignedtext
+grestore
+% v83->v77
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2611 648 moveto
+2612 640 2613 631 2614 622 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2617.49 622.3 moveto
+2615 612 lineto
+2610.52 621.6 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2617.49 622.3 moveto
+2615 612 lineto
+2610.52 621.6 lineto
+closepath stroke
+grestore
+% v84
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+2423 738 112.77 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+2349.5 733.9 moveto 147 (i-i=i-ci=ii-i=i-ici=ic-ci=ici-i) alignedtext
+grestore
+% v84->v78
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2446 720 moveto
+2460 710 2478 697 2492 686 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2494.1 688.8 moveto
+2500 680 lineto
+2489.9 683.2 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2494.1 688.8 moveto
+2500 680 lineto
+2489.9 683.2 lineto
+closepath stroke
+grestore
+% v84->v83
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2466 721 moveto
+2497 709 2537 694 2566 683 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2568.02 685.96 moveto
+2576 679 lineto
+2565.42 679.46 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2568.02 685.96 moveto
+2576 679 lineto
+2565.42 679.46 lineto
+closepath stroke
+grestore
+% v85
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+2804 738 50.22 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+2775.5 733.9 moveto 57 (cic-=ccic-) alignedtext
+grestore
+% v85->v73
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2823 721 moveto
+2834 711 2847 700 2858 689 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2860.4 691.55 moveto
+2865 682 lineto
+2855.45 686.6 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2860.4 691.55 moveto
+2865 682 lineto
+2855.45 686.6 lineto
+closepath stroke
+grestore
+% v85->v83
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2769 725 moveto
+2736 713 2687 695 2652 682 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2653.56 678.86 moveto
+2643 678 lineto
+2650.72 685.26 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2653.56 678.86 moveto
+2643 678 lineto
+2650.72 685.26 lineto
+closepath stroke
+grestore
+% v86
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+2609 738 54.9 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+2577.5 733.9 moveto 63 (ci-ic=cci-ic) alignedtext
+grestore
+% v86->v79
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2636 722 moveto
+2654 712 2677 698 2696 687 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2697.96 689.92 moveto
+2705 682 lineto
+2694.56 683.8 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2697.96 689.92 moveto
+2705 682 lineto
+2694.56 683.8 lineto
+closepath stroke
+grestore
+% v86->v83
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2609 720 moveto
+2609 712 2609 703 2609 694 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2612.5 694 moveto
+2609 684 lineto
+2605.5 694 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2612.5 694 moveto
+2609 684 lineto
+2605.5 694 lineto
+closepath stroke
+grestore
+% v87
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+2810 810 59.96 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+2774.5 805.9 moveto 71 (cic-c=ccic-c) alignedtext
+grestore
+% v87->v80
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2835 793 moveto
+2850 783 2870 770 2886 759 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2887.96 761.92 moveto
+2895 754 lineto
+2884.56 755.8 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2887.96 761.92 moveto
+2895 754 lineto
+2884.56 755.8 lineto
+closepath stroke
+grestore
+% v87->v85
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2808 792 moveto
+2807 784 2807 775 2806 766 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2809.5 766 moveto
+2806 756 lineto
+2802.5 766 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2809.5 766 moveto
+2806 756 lineto
+2802.5 766 lineto
+closepath stroke
+grestore
+% v87->v86
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2771 796 moveto
+2738 784 2691 767 2656 754 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2656.58 750.52 moveto
+2646 751 lineto
+2654.57 757.23 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2656.58 750.52 moveto
+2646 751 lineto
+2654.57 757.23 lineto
+closepath stroke
+grestore
+% v88
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+2826 882 63.93 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+2788 877.9 moveto 76 (ci-=cci-=cici-) alignedtext
+grestore
+% v88->v87
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2822 864 moveto
+2820 856 2818 847 2816 838 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2819.39 837.12 moveto
+2814 828 lineto
+2812.53 838.49 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2819.39 837.12 moveto
+2814 828 lineto
+2812.53 838.49 lineto
+closepath stroke
+grestore
+% v89
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+2476 810 116.24 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+2400 805.9 moveto 152 (i-ic=i-cic=ii-ic=ic-cic=ici-ic) alignedtext
+grestore
+% v89->v81
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2542 795 moveto
+2581 786 2630 772 2673 756 curveto
+2675 755 2677 754 2679 753 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2680.28 756.26 moveto
+2688 749 lineto
+2677.44 749.86 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2680.28 756.26 moveto
+2688 749 lineto
+2677.44 749.86 lineto
+closepath stroke
+grestore
+% v89->v84
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2463 792 moveto
+2457 784 2449 773 2442 764 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2444.8 761.9 moveto
+2436 756 lineto
+2439.2 766.1 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2444.8 761.9 moveto
+2436 756 lineto
+2439.2 766.1 lineto
+closepath stroke
+grestore
+% v89->v86
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2508 793 moveto
+2527 783 2551 769 2571 759 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2572.96 761.92 moveto
+2580 754 lineto
+2569.56 755.8 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2572.96 761.92 moveto
+2580 754 lineto
+2569.56 755.8 lineto
+closepath stroke
+grestore
+% v90
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+2671 810 61.15 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+2635 805.9 moveto 72 (ic-=iic-=icic-) alignedtext
+grestore
+% v90->v84
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2627 797 moveto
+2588 786 2531 770 2487 757 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2487.58 753.52 moveto
+2477 754 lineto
+2485.57 760.23 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2487.58 753.52 moveto
+2477 754 lineto
+2485.57 760.23 lineto
+closepath stroke
+grestore
+% v90->v85
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2701 794 moveto
+2720 784 2746 769 2767 758 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2768.96 760.92 moveto
+2776 753 lineto
+2765.56 754.8 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2768.96 760.92 moveto
+2776 753 lineto
+2765.56 754.8 lineto
+closepath stroke
+grestore
+% v91
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+2669 882 75.05 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+2623 877.9 moveto 92 (ic-c=iic-c=icic-c) alignedtext
+grestore
+% v91->v87
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2701 866 moveto
+2722 856 2748 841 2770 831 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2771.96 833.92 moveto
+2779 826 lineto
+2768.56 827.8 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2771.96 833.92 moveto
+2779 826 lineto
+2768.56 827.8 lineto
+closepath stroke
+grestore
+% v91->v89
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2628 867 moveto
+2599 856 2560 842 2530 831 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2530.58 827.46 moveto
+2520 827 lineto
+2527.98 833.96 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2530.58 827.46 moveto
+2520 827 lineto
+2527.98 833.96 lineto
+closepath stroke
+grestore
+% v91->v90
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2670 864 moveto
+2670 856 2670 847 2670 838 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2673.49 838.3 moveto
+2671 828 lineto
+2666.52 837.6 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2673.49 838.3 moveto
+2671 828 lineto
+2666.52 837.6 lineto
+closepath stroke
+grestore
+% v92
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+2826 954 43.08 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+2803 949.9 moveto 46 (ici-=iici-) alignedtext
+grestore
+% v92->v88
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2826 936 moveto
+2826 928 2826 919 2826 910 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2829.5 910 moveto
+2826 900 lineto
+2822.5 910 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2829.5 910 moveto
+2826 900 lineto
+2822.5 910 lineto
+closepath stroke
+grestore
+% v92->v91
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2797 941 moveto
+2773 930 2740 915 2713 902 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2714.56 898.86 moveto
+2704 898 lineto
+2711.72 905.26 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2714.56 898.86 moveto
+2704 898 lineto
+2711.72 905.26 lineto
+closepath stroke
+grestore
+% v93
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+2872 1026 45.17 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+2847.5 1021.9 moveto 49 (i-=i-c=ii-) alignedtext
+grestore
+% v93->v82
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2876 1008 moveto
+2881 984 2891 939 2899 900 curveto
+2903 879 2908 856 2912 838 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2915.47 838.49 moveto
+2914 828 lineto
+2908.61 837.12 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2915.47 838.49 moveto
+2914 828 lineto
+2908.61 837.12 lineto
+closepath stroke
+grestore
+% v93->v92
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2861 1008 moveto
+2856 1000 2849 990 2843 980 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2845.8 977.9 moveto
+2837 972 lineto
+2840.2 982.1 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2845.8 977.9 moveto
+2837 972 lineto
+2840.2 982.1 lineto
+closepath stroke
+grestore
+% v94
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+184 450 27 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+179.5 445.9 moveto 9 (--) alignedtext
+grestore
+% v94->v2
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 205 438 moveto
+210 436 215 434 220 432 curveto
+296 405 388 389 438 382 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 438.4 385.48 moveto
+448 381 lineto
+437.7 378.51 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 438.4 385.48 moveto
+448 381 lineto
+437.7 378.51 lineto
+closepath stroke
+grestore
+% v94->v3
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 203 437 moveto
+217 427 238 412 256 400 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 258.1 402.8 moveto
+264 394 lineto
+253.9 397.2 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 258.1 402.8 moveto
+264 394 lineto
+253.9 397.2 lineto
+closepath stroke
+grestore
+% v95
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+906 450 27.1 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+894.5 445.9 moveto 23 (-c-c) alignedtext
+grestore
+% v95->v2
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 886 438 moveto
+881 435 875 433 870 432 curveto
+716 387 666 440 511 396 curveto
+509 395 507 394 505 394 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 505.58 390.46 moveto
+495 390 lineto
+502.98 396.96 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 505.58 390.46 moveto
+495 390 lineto
+502.98 396.96 lineto
+closepath stroke
+grestore
+% v95->v16
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 888 436 moveto
+874 427 855 413 839 401 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 841.1 398.2 moveto
+831 395 lineto
+836.9 403.8 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 841.1 398.2 moveto
+831 395 lineto
+836.9 403.8 lineto
+closepath stroke
+grestore
+% v95->v53
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 926 438 moveto
+931 436 937 434 942 432 curveto
+1057 396 1095 431 1209 396 curveto
+1225 391 1307 348 1354 324 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1355.96 326.92 moveto
+1363 319 lineto
+1352.56 320.8 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1355.96 326.92 moveto
+1363 319 lineto
+1352.56 320.8 lineto
+closepath stroke
+grestore
+% v96
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+967 522 27 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+959 517.9 moveto 16 (-c-) alignedtext
+grestore
+% v96->v37
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 945 512 moveto
+921 501 880 483 849 468 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 850.56 464.86 moveto
+840 464 lineto
+847.72 471.26 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 850.56 464.86 moveto
+840 464 lineto
+847.72 471.26 lineto
+closepath stroke
+grestore
+% v96->v54
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 987 510 moveto
+992 507 998 505 1003 504 curveto
+1304 424 1401 547 1701 468 curveto
+1731 460 1807 419 1849 395 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1850.96 397.92 moveto
+1858 390 lineto
+1847.56 391.8 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1850.96 397.92 moveto
+1858 390 lineto
+1847.56 391.8 lineto
+closepath stroke
+grestore
+% v96->v94
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 942 514 moveto
+928 510 910 506 893 504 curveto
+597 460 510 544 220 468 curveto
+218 467 216 466 214 466 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 214.58 462.46 moveto
+204 462 lineto
+211.98 468.96 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 214.58 462.46 moveto
+204 462 lineto
+211.98 468.96 lineto
+closepath stroke
+grestore
+% v96->v95
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 953 506 moveto
+945 496 935 484 926 474 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 928.22 471.22 moveto
+919 466 lineto
+922.95 475.83 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 928.22 471.22 moveto
+919 466 lineto
+922.95 475.83 lineto
+closepath stroke
+grestore
+% v97
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+692 594 57.87 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+658 589.9 moveto 68 (ici--c=iici--c) alignedtext
+grestore
+% v97->v28
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 667 578 moveto
+653 568 634 556 618 545 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 619.26 541.63 moveto
+609 539 lineto
+615.38 547.46 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 619.26 541.63 moveto
+609 539 lineto
+615.38 547.46 lineto
+closepath stroke
+grestore
+% v97->v63
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 714 577 moveto
+726 568 742 556 755 546 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 757.1 548.8 moveto
+763 540 lineto
+752.9 543.2 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 757.1 548.8 moveto
+763 540 lineto
+752.9 543.2 lineto
+closepath stroke
+grestore
+% v98
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+591 666 68.79 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+549.5 661.9 moveto 83 (i--c=i-c-c=ii--c) alignedtext
+grestore
+% v98->v95
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 644 654 moveto
+678 645 723 632 759 612 curveto
+781 599 781 588 802 576 curveto
+840 553 867 574 893 540 curveto
+907 522 910 497 909 478 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 912.5 478 moveto
+909 468 lineto
+905.5 478 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 912.5 478 moveto
+909 468 lineto
+905.5 478 lineto
+closepath stroke
+grestore
+% v98->v97
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 615 649 moveto
+628 640 646 627 661 617 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 663.1 619.8 moveto
+669 611 lineto
+658.9 614.2 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 663.1 619.8 moveto
+669 611 lineto
+658.9 614.2 lineto
+closepath stroke
+grestore
+% v99
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+455 666 48.84 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+427.5 661.9 moveto 55 (ici--=iici--) alignedtext
+grestore
+% v99->v41
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 427 651 moveto
+407 640 380 627 357 615 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 358.44 611.8 moveto
+348 610 lineto
+355.04 617.92 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 358.44 611.8 moveto
+348 610 lineto
+355.04 617.92 lineto
+closepath stroke
+grestore
+% v99->v64
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 464 648 moveto
+468 640 474 630 479 621 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 482.2 622.44 moveto
+484 612 lineto
+476.08 619.04 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 482.2 622.44 moveto
+484 612 lineto
+476.08 619.04 lineto
+closepath stroke
+grestore
+% v99->v97
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 492 654 moveto
+499 652 506 650 513 648 curveto
+556 634 605 620 640 609 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 641.43 612.23 moveto
+650 606 lineto
+639.42 605.52 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 641.43 612.23 moveto
+650 606 lineto
+639.42 605.52 lineto
+closepath stroke
+grestore
+% v100
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+591 738 54.2 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+560 733.9 moveto 62 (i--=i-c-=ii--) alignedtext
+grestore
+% v100->v96
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 618 722 moveto
+658 699 733 654 794 612 curveto
+816 597 818 589 840 576 curveto
+870 558 907 543 934 533 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 934.62 536.48 moveto
+943 530 lineto
+932.41 529.84 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 934.62 536.48 moveto
+943 530 lineto
+932.41 529.84 lineto
+closepath stroke
+grestore
+% v100->v98
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 591 720 moveto
+591 712 591 703 591 694 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 594.5 694 moveto
+591 684 lineto
+587.5 694 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 594.5 694 moveto
+591 684 lineto
+587.5 694 lineto
+closepath stroke
+grestore
+% v100->v99
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 562 723 moveto
+542 713 514 697 492 686 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 493.44 682.8 moveto
+483 681 lineto
+490.04 688.92 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 493.44 682.8 moveto
+483 681 lineto
+490.04 688.92 lineto
+closepath stroke
+grestore
+% v101
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+1507 522 32.86 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+1491 517.9 moveto 32 (-c-cic) alignedtext
+grestore
+% v101->v9
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1483 510 moveto
+1477 507 1471 505 1465 504 curveto
+1272 456 1211 519 1018 468 curveto
+1016 468 1014 467 1011 466 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1012.56 462.86 moveto
+1002 462 lineto
+1009.72 469.26 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1012.56 462.86 moveto
+1002 462 lineto
+1009.72 469.26 lineto
+closepath stroke
+grestore
+% v101->v18
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1482 510 moveto
+1476 508 1471 506 1465 504 curveto
+1425 489 1378 476 1341 466 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1341.58 462.52 moveto
+1331 463 lineto
+1339.57 469.23 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1341.58 462.52 moveto
+1331 463 lineto
+1339.57 469.23 lineto
+closepath stroke
+grestore
+% v101->v57
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1534 511 moveto
+1540 509 1547 506 1554 504 curveto
+1605 486 1637 510 1668 468 curveto
+1682 450 1678 424 1672 406 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1675.23 404.57 moveto
+1669 396 lineto
+1668.52 406.58 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1675.23 404.57 moveto
+1669 396 lineto
+1668.52 406.58 lineto
+closepath stroke
+grestore
+% v101->v95
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1483 510 moveto
+1477 507 1471 505 1465 504 curveto
+1239 449 1167 529 942 468 curveto
+940 467 938 466 936 466 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 936.58 462.46 moveto
+926 462 lineto
+933.98 468.96 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 936.58 462.46 moveto
+926 462 lineto
+933.98 468.96 lineto
+closepath stroke
+grestore
+% v102
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+1633 594 27 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+1623.5 589.9 moveto 19 (--ic) alignedtext
+grestore
+% v102->v19
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1638 576 moveto
+1640 568 1643 559 1645 550 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1648.48 550.58 moveto
+1648 540 lineto
+1641.77 548.57 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1648.48 550.58 moveto
+1648 540 lineto
+1641.77 548.57 lineto
+closepath stroke
+grestore
+% v102->v101
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1612 582 moveto
+1593 571 1562 554 1539 540 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1540.44 536.8 moveto
+1530 535 lineto
+1537.04 542.92 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1540.44 536.8 moveto
+1530 535 lineto
+1537.04 542.92 lineto
+closepath stroke
+grestore
+% v103
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+2225 594 29.19 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+2212 589.9 moveto 26 (-c-ci) alignedtext
+grestore
+% v103->v13
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2203 582 moveto
+2198 580 2192 578 2187 576 curveto
+2085 544 2052 572 1951 540 curveto
+1949 539 1947 539 1945 538 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1946.56 534.86 moveto
+1936 534 lineto
+1943.72 541.26 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1946.56 534.86 moveto
+1936 534 lineto
+1943.72 541.26 lineto
+closepath stroke
+grestore
+% v103->v22
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2238 578 moveto
+2245 569 2254 558 2261 548 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2264.05 549.83 moveto
+2268 540 lineto
+2258.78 545.22 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2264.05 549.83 moveto
+2268 540 lineto
+2258.78 545.22 lineto
+closepath stroke
+grestore
+% v103->v58
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2254 591 moveto
+2285 586 2333 573 2357 540 curveto
+2370 522 2370 497 2368 478 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2371.39 477.12 moveto
+2366 468 lineto
+2364.53 478.49 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2371.39 477.12 moveto
+2366 468 lineto
+2364.53 478.49 lineto
+closepath stroke
+grestore
+% v103->v101
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2203 582 moveto
+2198 579 2192 577 2187 576 curveto
+1929 509 1852 577 1587 540 curveto
+1574 538 1560 535 1547 532 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1547.49 528.53 moveto
+1537 530 lineto
+1546.12 535.39 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1547.49 528.53 moveto
+1537 530 lineto
+1546.12 535.39 lineto
+closepath stroke
+grestore
+% v104
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+2179 666 27 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+2168 661.9 moveto 22 (--ici) alignedtext
+grestore
+% v104->v23
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2166 650 moveto
+2158 641 2148 630 2139 620 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2141.22 617.22 moveto
+2132 612 lineto
+2135.95 621.83 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2141.22 617.22 moveto
+2132 612 lineto
+2135.95 621.83 lineto
+closepath stroke
+grestore
+% v104->v102
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2159 654 moveto
+2154 651 2148 649 2143 648 curveto
+1940 591 1873 668 1669 612 curveto
+1667 611 1665 610 1663 610 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1663.58 606.46 moveto
+1653 606 lineto
+1660.98 612.96 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1663.58 606.46 moveto
+1653 606 lineto
+1660.98 612.96 lineto
+closepath stroke
+grestore
+% v104->v103
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2190 649 moveto
+2195 641 2202 630 2209 620 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2212.2 621.44 moveto
+2214 611 lineto
+2206.08 618.04 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2212.2 621.44 moveto
+2214 611 lineto
+2206.08 618.04 lineto
+closepath stroke
+grestore
+% v105
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+2123 738 27 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+2117 733.9 moveto 12 (--i) alignedtext
+grestore
+% v105->v38
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2114 721 moveto
+2110 713 2104 702 2100 693 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2102.92 691.04 moveto
+2095 684 lineto
+2096.8 694.44 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2102.92 691.04 moveto
+2095 684 lineto
+2096.8 694.44 lineto
+closepath stroke
+grestore
+% v105->v96
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2101 727 moveto
+2081 717 2052 701 2029 684 curveto
+2010 670 2012 657 1991 648 curveto
+1818 570 1741 684 1564 612 curveto
+1541 602 1545 585 1521 576 curveto
+1307 489 1226 600 1003 540 curveto
+1001 539 999 538 997 538 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 997.58 534.46 moveto
+987 534 lineto
+994.98 540.96 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 997.58 534.46 moveto
+987 534 lineto
+994.98 540.96 lineto
+closepath stroke
+grestore
+% v105->v104
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 2136 722 moveto
+2143 713 2152 701 2160 690 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2162.8 692.1 moveto
+2166 682 lineto
+2157.2 687.9 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2162.8 692.1 moveto
+2166 682 lineto
+2157.2 687.9 lineto
+closepath stroke
+grestore
+% v106
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+864 666 71.77 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+820 661.9 moveto 88 (ici--cic=iici--cic) alignedtext
+grestore
+% v106->v33
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 893 649 moveto
+910 640 932 627 950 616 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 951.96 618.92 moveto
+959 611 lineto
+948.56 612.8 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 951.96 618.92 moveto
+959 611 lineto
+948.56 612.8 lineto
+closepath stroke
+grestore
+% v106->v66
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 917 654 moveto
+926 652 936 650 945 648 curveto
+1012 634 1088 620 1145 610 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1145.88 613.39 moveto
+1155 608 lineto
+1144.51 606.53 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1145.88 613.39 moveto
+1155 608 lineto
+1144.51 606.53 lineto
+closepath stroke
+grestore
+% v106->v97
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 827 650 moveto
+800 639 765 625 737 613 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 737.58 609.46 moveto
+727 609 lineto
+734.98 615.96 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 737.58 609.46 moveto
+727 609 lineto
+734.98 615.96 lineto
+closepath stroke
+grestore
+% v107
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+825 738 88.94 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+769 733.9 moveto 112 (i--cic=i-c-cic=ii--cic) alignedtext
+grestore
+% v107->v98
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 776 723 moveto
+737 711 685 695 646 683 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 646.58 679.52 moveto
+636 680 lineto
+644.57 686.23 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 646.58 679.52 moveto
+636 680 lineto
+644.57 686.23 lineto
+closepath stroke
+grestore
+% v107->v101
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 806 720 moveto
+798 710 788 697 783 684 curveto
+778 668 776 662 783 648 curveto
+795 624 810 628 830 612 curveto
+850 596 850 585 873 576 curveto
+996 527 1337 570 1465 540 curveto
+1468 540 1470 539 1473 538 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1474.28 541.26 moveto
+1482 534 lineto
+1471.44 534.86 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1474.28 541.26 moveto
+1482 534 lineto
+1471.44 534.86 lineto
+closepath stroke
+grestore
+% v107->v106
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 835 720 moveto
+839 712 844 702 849 693 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 852.2 694.44 moveto
+854 684 lineto
+846.08 691.04 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 852.2 694.44 moveto
+854 684 lineto
+846.08 691.04 lineto
+closepath stroke
+grestore
+% v108
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+1021 738 62.04 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+984 733.9 moveto 74 (ici--ic=iici--ic) alignedtext
+grestore
+% v108->v35
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1028 720 moveto
+1031 712 1034 702 1038 694 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1041.48 694.58 moveto
+1041 684 lineto
+1034.77 692.57 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1041.48 694.58 moveto
+1041 684 lineto
+1034.77 692.57 lineto
+closepath stroke
+grestore
+% v108->v67
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1063 725 moveto
+1100 714 1152 697 1192 684 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1193.43 687.23 moveto
+1202 681 lineto
+1191.42 680.52 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1193.43 687.23 moveto
+1202 681 lineto
+1191.42 680.52 lineto
+closepath stroke
+grestore
+% v108->v106
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 988 723 moveto
+965 712 933 698 907 686 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 908.56 682.86 moveto
+898 682 lineto
+905.72 689.26 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 908.56 682.86 moveto
+898 682 lineto
+905.72 689.26 lineto
+closepath stroke
+grestore
+% v109
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+825 810 48.84 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+797.5 805.9 moveto 55 (i--ic=ii--ic) alignedtext
+grestore
+% v109->v102
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 861 798 moveto
+869 796 876 794 883 792 curveto
+975 769 1008 798 1092 756 curveto
+1113 745 1110 730 1130 720 curveto
+1220 675 1262 728 1351 684 curveto
+1372 673 1369 658 1389 648 curveto
+1426 628 1538 608 1597 599 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1597.4 602.48 moveto
+1607 598 lineto
+1596.7 595.51 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1597.4 602.48 moveto
+1607 598 lineto
+1596.7 595.51 lineto
+closepath stroke
+grestore
+% v109->v107
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 825 792 moveto
+825 784 825 775 825 766 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 828.5 766 moveto
+825 756 lineto
+821.5 766 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 828.5 766 moveto
+825 756 lineto
+821.5 766 lineto
+closepath stroke
+grestore
+% v109->v108
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 860 797 moveto
+891 785 937 768 972 755 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 973.43 758.23 moveto
+982 752 lineto
+971.42 751.52 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 973.43 758.23 moveto
+982 752 lineto
+971.42 751.52 lineto
+closepath stroke
+grestore
+% v110
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+1771 738 62.04 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+1734 733.9 moveto 74 (ici--ci=iici--ci) alignedtext
+grestore
+% v110->v45
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1725 726 moveto
+1679 715 1609 696 1558 684 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1558.58 680.52 moveto
+1548 681 lineto
+1556.57 687.23 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1558.58 680.52 moveto
+1548 681 lineto
+1556.57 687.23 lineto
+closepath stroke
+grestore
+% v110->v69
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1796 721 moveto
+1809 712 1827 700 1842 690 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1844.62 692.46 moveto
+1851 684 lineto
+1840.74 686.63 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1844.62 692.46 moveto
+1851 684 lineto
+1840.74 686.63 lineto
+closepath stroke
+grestore
+% v110->v106
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1727 725 moveto
+1718 723 1709 721 1700 720 curveto
+1368 670 1278 728 945 684 curveto
+938 683 932 682 925 681 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 925.49 677.53 moveto
+915 679 lineto
+924.12 684.39 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 925.49 677.53 moveto
+915 679 lineto
+924.12 684.39 lineto
+closepath stroke
+grestore
+% v111
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+1624 810 75.05 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+1578 805.9 moveto 92 (i--ci=i-c-ci=ii--ci) alignedtext
+grestore
+% v111->v103
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1697 806 moveto
+1834 797 2119 777 2159 756 curveto
+2194 736 2199 721 2215 684 curveto
+2223 664 2225 640 2226 622 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2229.5 622 moveto
+2226 612 lineto
+2222.5 622 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2229.5 622 moveto
+2226 612 lineto
+2222.5 622 lineto
+closepath stroke
+grestore
+% v111->v107
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1552 804 moveto
+1391 792 1009 762 950 756 curveto
+936 754 921 752 907 750 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 907.3 746.51 moveto
+897 749 lineto
+906.6 753.48 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 907.3 746.51 moveto
+897 749 lineto
+906.6 753.48 lineto
+closepath stroke
+grestore
+% v111->v110
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1657 794 moveto
+1679 783 1707 769 1730 758 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1731.28 761.26 moveto
+1739 754 lineto
+1728.44 754.86 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1731.28 761.26 moveto
+1739 754 lineto
+1728.44 754.86 lineto
+closepath stroke
+grestore
+% v112
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+1306 810 66.21 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+1266 805.9 moveto 80 (ici--ici=iici--ici) alignedtext
+grestore
+% v112->v48
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1289 792 moveto
+1281 783 1272 773 1263 764 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1265.22 761.22 moveto
+1256 756 lineto
+1259.95 765.83 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1265.22 761.22 moveto
+1256 756 lineto
+1259.95 765.83 lineto
+closepath stroke
+grestore
+% v112->v70
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1355 798 moveto
+1402 786 1474 768 1526 755 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1527.43 758.23 moveto
+1536 752 lineto
+1525.42 751.52 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1527.43 758.23 moveto
+1536 752 lineto
+1525.42 751.52 lineto
+closepath stroke
+grestore
+% v112->v108
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1257 798 moveto
+1207 785 1130 766 1078 752 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1078.49 748.53 moveto
+1068 750 lineto
+1077.12 755.39 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1078.49 748.53 moveto
+1068 750 lineto
+1077.12 755.39 lineto
+closepath stroke
+grestore
+% v112->v110
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1368 804 moveto
+1446 795 1584 778 1700 756 curveto
+1705 755 1710 754 1715 752 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1715.88 755.39 moveto
+1725 750 lineto
+1714.51 748.53 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1715.88 755.39 moveto
+1725 750 lineto
+1714.51 748.53 lineto
+closepath stroke
+grestore
+% v113
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+1200 882 53.01 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+1169.5 877.9 moveto 61 (i--ici=ii--ici) alignedtext
+grestore
+% v113->v104
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1252 879 moveto
+1443 866 2092 818 2159 756 curveto
+2175 740 2180 714 2180 694 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2183.5 694 moveto
+2180 684 lineto
+2176.5 694 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2183.5 694 moveto
+2180 684 lineto
+2176.5 694 lineto
+closepath stroke
+grestore
+% v113->v109
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1150 876 moveto
+1088 867 977 850 883 828 curveto
+879 827 876 826 872 825 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 872.58 821.52 moveto
+862 822 lineto
+870.57 828.23 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 872.58 821.52 moveto
+862 822 lineto
+870.57 828.23 lineto
+closepath stroke
+grestore
+% v113->v111
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1248 874 moveto
+1322 861 1466 837 1553 822 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1553.88 825.39 moveto
+1563 820 lineto
+1552.51 818.53 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1553.88 825.39 moveto
+1563 820 lineto
+1552.51 818.53 lineto
+closepath stroke
+grestore
+% v113->v112
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1224 866 moveto
+1238 856 1257 844 1273 833 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1275.62 835.46 moveto
+1282 827 lineto
+1271.74 829.63 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1275.62 835.46 moveto
+1282 827 lineto
+1271.74 829.63 lineto
+closepath stroke
+grestore
+% v114
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+971 882 53.01 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+940.5 877.9 moveto 61 (ici--i=iici--i) alignedtext
+grestore
+% v114->v49
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 971 864 moveto
+971 856 971 847 971 838 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 974.5 838 moveto
+971 828 lineto
+967.5 838 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 974.5 838 moveto
+971 828 lineto
+967.5 838 lineto
+closepath stroke
+grestore
+% v114->v71
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1005 868 moveto
+1031 857 1068 842 1097 830 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1099.02 832.96 moveto
+1107 826 lineto
+1096.42 826.46 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1099.02 832.96 moveto
+1107 826 lineto
+1096.42 826.46 lineto
+closepath stroke
+grestore
+% v114->v99
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 919 878 moveto
+832 868 652 839 528 756 curveto
+504 740 484 713 471 693 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 473.46 690.38 moveto
+465 684 lineto
+467.63 694.26 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 473.46 690.38 moveto
+465 684 lineto
+467.63 694.26 lineto
+closepath stroke
+grestore
+% v114->v112
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1017 873 moveto
+1069 862 1156 844 1231 828 curveto
+1236 827 1241 826 1246 824 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1246.88 827.39 moveto
+1256 822 lineto
+1245.51 820.53 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1246.88 827.39 moveto
+1256 822 lineto
+1245.51 820.53 lineto
+closepath stroke
+grestore
+% v115
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+971 954 39.11 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+950.5 949.9 moveto 41 (i--i=ii--i) alignedtext
+grestore
+% v115->v100
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 946 940 moveto
+881 903 704 802 627 759 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 628.44 755.8 moveto
+618 754 lineto
+625.04 761.92 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 628.44 755.8 moveto
+618 754 lineto
+625.04 761.92 lineto
+closepath stroke
+grestore
+% v115->v105
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1008 948 moveto
+1117 931 1441 880 1708 828 curveto
+1850 800 2016 763 2087 746 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 2087.88 749.39 moveto
+2097 744 lineto
+2086.51 742.53 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 2087.88 749.39 moveto
+2097 744 lineto
+2086.51 742.53 lineto
+closepath stroke
+grestore
+% v115->v113
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 1003 944 moveto
+1041 932 1106 911 1151 897 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1152.43 900.23 moveto
+1161 894 lineto
+1150.42 893.52 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1152.43 900.23 moveto
+1161 894 lineto
+1150.42 893.52 lineto
+closepath stroke
+grestore
+% v115->v114
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 971 936 moveto
+971 928 971 919 971 910 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 974.5 910 moveto
+971 900 lineto
+967.5 910 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 974.5 910 moveto
+971 900 lineto
+967.5 910 lineto
+closepath stroke
+grestore
+% v116
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+27 522 27 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+25 517.9 moveto 4 (.) alignedtext
+grestore
+% v116->v4
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 42 507 moveto
+52 497 65 484 76 473 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 78.4 475.55 moveto
+83 466 lineto
+73.45 470.6 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 78.4 475.55 moveto
+83 466 lineto
+73.45 470.6 lineto
+closepath stroke
+grestore
+% v116->v94
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 49 512 moveto
+76 499 122 479 153 464 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 154.28 467.26 moveto
+162 460 lineto
+151.44 460.86 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 154.28 467.26 moveto
+162 460 lineto
+151.44 460.86 lineto
+closepath stroke
+grestore
+% v117
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+305 882 52.12 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+275.5 877.9 moveto 59 (ic=iic=icic) alignedtext
+grestore
+% v117->v36
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 296 864 moveto
+283 839 260 794 244 765 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 246.92 763.04 moveto
+239 756 lineto
+240.8 766.44 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 246.92 763.04 moveto
+239 756 lineto
+240.8 766.44 lineto
+closepath stroke
+grestore
+% v117->v62
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 280 866 moveto
+249 845 198 805 177 756 curveto
+148 685 183 594 205 549 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 208.14 550.56 moveto
+209 540 lineto
+201.74 547.72 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 208.14 550.56 moveto
+209 540 lineto
+201.74 547.72 lineto
+closepath stroke
+grestore
+% v117->v109
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 353 875 moveto
+451 861 666 832 769 817 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 769.4 820.48 moveto
+779 816 lineto
+768.7 813.51 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 769.4 820.48 moveto
+779 816 lineto
+768.7 813.51 lineto
+closepath stroke
+grestore
+% v118
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+693 954 36.83 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+674.5 949.9 moveto 37 (ici=iici) alignedtext
+grestore
+% v118->v50
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 664 943 moveto
+634 931 588 913 553 900 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 554.56 896.86 moveto
+544 896 lineto
+551.72 903.26 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 554.56 896.86 moveto
+544 896 lineto
+551.72 903.26 lineto
+closepath stroke
+grestore
+% v118->v113
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 729 949 moveto
+815 937 1035 906 1141 890 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 1141.4 893.48 moveto
+1151 889 lineto
+1140.7 886.51 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 1141.4 893.48 moveto
+1151 889 lineto
+1140.7 886.51 lineto
+closepath stroke
+grestore
+% v118->v114
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 726 946 moveto
+773 933 862 910 918 895 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 918.88 898.39 moveto
+928 893 lineto
+917.51 891.53 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 918.88 898.39 moveto
+928 893 lineto
+917.51 891.53 lineto
+closepath stroke
+grestore
+% v118->v117
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 658 948 moveto
+591 936 443 907 361 893 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 361.49 889.53 moveto
+351 891 lineto
+360.12 896.39 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 361.49 889.53 moveto
+351 891 lineto
+360.12 896.39 lineto
+closepath stroke
+grestore
+% v119
+gsave
+1 setlinewidth
+0.000 0.000 0.000 nodecolor
+693 1026 27 18 ellipse_path stroke
+0.000 0.000 0.000 nodecolor
+14 /Times-Roman set_font
+684.5 1021.9 moveto 17 (i=ii) alignedtext
+grestore
+% v119->v115
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 719 1019 moveto
+766 1008 868 981 927 966 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 928.43 969.23 moveto
+937 963 lineto
+926.42 962.52 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 928.43 969.23 moveto
+937 963 lineto
+926.42 962.52 lineto
+closepath stroke
+grestore
+% v119->v116
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 666 1023 moveto
+542 1009 36 947 36 882 curveto
+36 882 36 882 36 666 curveto
+36 625 33 579 30 550 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 33.48 549.6 moveto
+29 540 lineto
+26.51 550.3 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 33.48 549.6 moveto
+29 540 lineto
+26.51 550.3 lineto
+closepath stroke
+grestore
+% v119->v118
+gsave
+1 setlinewidth
+0.000 0.000 0.000 edgecolor
+newpath 693 1008 moveto
+693 1000 693 991 693 982 curveto
+stroke
+0.000 0.000 0.000 edgecolor
+newpath 696.5 982 moveto
+693 972 lineto
+689.5 982 lineto
+closepath fill
+1 setlinewidth
+solid
+0.000 0.000 0.000 edgecolor
+newpath 696.5 982 moveto
+693 972 lineto
+689.5 982 lineto
+closepath stroke
+grestore
+endpage
+showpage
+grestore
+%%PageTrailer
+%%EndPage: 1
+%%Trailer
+%%Pages: 1
+%%BoundingBox: 36 36 3080 1088
+end
+restore
+%%EOF

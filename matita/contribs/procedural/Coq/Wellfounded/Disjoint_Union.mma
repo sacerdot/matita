@@ -1,0 +1,74 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Disjoint_Union.v,v 1.9.2.1 2004/07/16 19:31:19 herbelin Exp $ i*)
+
+(*#* Author: Cristina Cornes
+    From : Constructing Recursion Operators in Type Theory                 
+           L. Paulson  JSC (1986) 2, 325-355 *)
+
+include "Relations/Relation_Operators.ma".
+
+(* UNEXPORTED
+Section Wf_Disjoint_Union
+*)
+
+(* UNEXPORTED
+cic:/Coq/Wellfounded/Disjoint_Union/Wf_Disjoint_Union/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Wellfounded/Disjoint_Union/Wf_Disjoint_Union/B.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Wellfounded/Disjoint_Union/Wf_Disjoint_Union/leA.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Wellfounded/Disjoint_Union/Wf_Disjoint_Union/leB.var
+*)
+
+(* NOTATION
+Notation Le_AsB := (le_AsB A B leA leB).
+*)
+
+inline procedural "cic:/Coq/Wellfounded/Disjoint_Union/acc_A_sum.con" as lemma.
+
+inline procedural "cic:/Coq/Wellfounded/Disjoint_Union/acc_B_sum.con" as lemma.
+
+inline procedural "cic:/Coq/Wellfounded/Disjoint_Union/wf_disjoint_sum.con" as lemma.
+
+(* UNEXPORTED
+End Wf_Disjoint_Union
+*)
+

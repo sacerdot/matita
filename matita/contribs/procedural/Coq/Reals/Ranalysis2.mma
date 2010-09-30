@@ -1,0 +1,74 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Ranalysis2.v,v 1.11.2.1 2004/07/16 19:31:12 herbelin Exp $ i*)
+
+include "Reals/Rbase.ma".
+
+include "Reals/Rfunctions.ma".
+
+include "Reals/Ranalysis1.ma".
+
+(* UNEXPORTED
+Open Local Scope R_scope.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Ranalysis2/formule.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis2/Rmin_pos.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis2/maj_term1.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis2/maj_term2.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis2/maj_term3.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis2/maj_term4.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis2/D_x_no_cond.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis2/Rabs_4.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis2/Rlt_4.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis2/Rmin_2.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis2/quadruple.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis2/quadruple_var.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Ranalysis2/continuous_neq_0.con" as lemma.
+

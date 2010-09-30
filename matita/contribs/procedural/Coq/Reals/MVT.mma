@@ -1,0 +1,130 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: MVT.v,v 1.10.2.1 2004/07/16 19:31:10 herbelin Exp $ i*)
+
+include "Reals/Rbase.ma".
+
+include "Reals/Rfunctions.ma".
+
+include "Reals/Ranalysis1.ma".
+
+include "Reals/Rtopology.ma".
+
+(* UNEXPORTED
+Open Local Scope R_scope.
+*)
+
+(* The Mean Value Theorem *)
+
+inline procedural "cic:/Coq/Reals/MVT/MVT.con" as theorem.
+
+(* Corollaries ... *)
+
+inline procedural "cic:/Coq/Reals/MVT/MVT_cor1.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/MVT/MVT_cor2.con" as theorem.
+
+inline procedural "cic:/Coq/Reals/MVT/MVT_cor3.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/MVT/Rolle.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/MVT/nonneg_derivative_1.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/MVT/nonpos_derivative_0.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/MVT/increasing_decreasing_opp.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/MVT/nonpos_derivative_1.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/MVT/positive_derivative.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/MVT/strictincreasing_strictdecreasing_opp.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/MVT/negative_derivative.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/MVT/null_derivative_0.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/MVT/increasing_decreasing.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/MVT/null_derivative_1.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/MVT/derive_increasing_interv_ax.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/MVT/derive_increasing_interv.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/MVT/derive_increasing_interv_var.con" as lemma.
+
+(*#*********)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/MVT/IAF.con" as theorem.
+
+inline procedural "cic:/Coq/Reals/MVT/IAF_var.con" as lemma.
+
+(* If f has a null derivative in ]a,b[ and is continue in [a,b], *)
+
+(* then f is constant on [a,b] *)
+
+inline procedural "cic:/Coq/Reals/MVT/null_derivative_loc.con" as lemma.
+
+(* Unicity of the antiderivative *)
+
+inline procedural "cic:/Coq/Reals/MVT/antiderivative_Ucte.con" as lemma.
+

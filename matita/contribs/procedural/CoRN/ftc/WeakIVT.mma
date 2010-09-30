@@ -1,0 +1,275 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "CoRN.ma".
+
+(* $Id: WeakIVT.v,v 1.9 2004/04/23 10:01:01 lcf Exp $ *)
+
+(*#* printing ** %\ensuremath\times% #&times;# *)
+
+(* begin hide *)
+
+(* NOTATION
+Infix "**" := prodT (at level 20).
+*)
+
+(* end hide *)
+
+include "ftc/Continuity.ma".
+
+(*#* *IVT for Partial Functions
+
+In general, we cannot prove the classically valid Intermediate Value
+Theorem for arbitrary partial functions, which states that in any
+interval [[a,b]], for any value [z] between [f(a)] and [f(b)]
+there exists $x\in[a,b]$#x&isin;[a,b]# such that [f(x) [=] z].
+
+However, as is usually the case, there are some good aproximation results.  We
+will prove them here.
+*)
+
+(* UNEXPORTED
+Section Lemma1
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/WeakIVT/Lemma1/a.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/WeakIVT/Lemma1/b.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/WeakIVT/Lemma1/Hab.var
+*)
+
+(* begin hide *)
+
+inline procedural "cic:/CoRN/ftc/WeakIVT/Lemma1/I.con" "Lemma1__" as definition.
+
+(* end hide *)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/WeakIVT/Lemma1/F.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/WeakIVT/Lemma1/contF.var
+*)
+
+(*#* **First Lemmas
+
+%\begin{convention}% Let [a, b : IR] and [Hab : a [<=] b] and denote by [I]
+the interval [[a,b]].  Let [F] be a continuous function on [I].
+%\end{convention}%
+
+We begin by proving that, if [f(a) [<] f(b)], then for every [y] in 
+[[f(a),f(b)]] there is an $x\in[a,b]$#x&isin;[a,b]# such that [f(x)] is close
+enough to [z].
+*)
+
+inline procedural "cic:/CoRN/ftc/WeakIVT/Weak_IVT_ap_lft.con" as lemma.
+
+(* UNEXPORTED
+End Lemma1
+*)
+
+(* UNEXPORTED
+Section Lemma2
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/WeakIVT/Lemma2/a.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/WeakIVT/Lemma2/b.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/WeakIVT/Lemma2/Hab.var
+*)
+
+(* begin hide *)
+
+inline procedural "cic:/CoRN/ftc/WeakIVT/Lemma2/I.con" "Lemma2__" as definition.
+
+(* end hide *)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/WeakIVT/Lemma2/F.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/WeakIVT/Lemma2/contF.var
+*)
+
+(*#*
+If [f(b) [<] f(a)], a similar result holds:
+*)
+
+inline procedural "cic:/CoRN/ftc/WeakIVT/Weak_IVT_ap_rht.con" as lemma.
+
+(* UNEXPORTED
+End Lemma2
+*)
+
+(* UNEXPORTED
+Section IVT
+*)
+
+(*#* **The IVT
+
+We will now assume that [a [<] b] and that [F] is not only
+continuous, but also strictly increasing in [I].  Under
+these assumptions, we can build two sequences of values which
+converge to [x0] such that [f(x0) [=] z].
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/WeakIVT/IVT/a.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/WeakIVT/IVT/b.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/WeakIVT/IVT/Hab'.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/WeakIVT/IVT/Hab.var
+*)
+
+(* begin hide *)
+
+inline procedural "cic:/CoRN/ftc/WeakIVT/IVT/I.con" "IVT__" as definition.
+
+(* end hide *)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/WeakIVT/IVT/F.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/WeakIVT/IVT/contF.var
+*)
+
+(* begin hide *)
+
+inline procedural "cic:/CoRN/ftc/WeakIVT/IVT/incF.con" "IVT__" as definition.
+
+(* end hide *)
+
+(* begin show *)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/WeakIVT/IVT/incrF.var
+*)
+
+(* end show *)
+
+(* begin hide *)
+
+inline procedural "cic:/CoRN/ftc/WeakIVT/IVT/Ha.con" "IVT__" as definition.
+
+inline procedural "cic:/CoRN/ftc/WeakIVT/IVT/Hb.con" "IVT__" as definition.
+
+inline procedural "cic:/CoRN/ftc/WeakIVT/IVT/HFab'.con" "IVT__" as definition.
+
+(* end hide *)
+
+(* begin show *)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/WeakIVT/IVT/z.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/WeakIVT/IVT/Haz.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/WeakIVT/IVT/Hzb.var
+*)
+
+(* end show *)
+
+(*#* Given any two points [x [<] y] in [[a,b]] such that [x [<=] z [<=] y],
+we can find [x' [<] y'] such that $|x'-y'|=\frac23|x-y|$#|x'-y'|=2/3|x-y|#
+and [x' [<=] z [<=] y'].
+*)
+
+inline procedural "cic:/CoRN/ftc/WeakIVT/IVT_seq_lemma.con" as lemma.
+
+(* end hide *)
+
+(*#*
+We now iterate this construction.
+*)
+
+inline procedural "cic:/CoRN/ftc/WeakIVT/IVT_aux_seq_type.ind".
+
+inline procedural "cic:/CoRN/ftc/WeakIVT/IVT_iter.con" as definition.
+
+inline procedural "cic:/CoRN/ftc/WeakIVT/IVT_seq.con" as definition.
+
+(*#*
+We now define the sequences built from this iteration, starting with [a] and [b].
+*)
+
+inline procedural "cic:/CoRN/ftc/WeakIVT/a_seq.con" as definition.
+
+inline procedural "cic:/CoRN/ftc/WeakIVT/b_seq.con" as definition.
+
+inline procedural "cic:/CoRN/ftc/WeakIVT/a_seq_I.con" as definition.
+
+inline procedural "cic:/CoRN/ftc/WeakIVT/b_seq_I.con" as definition.
+
+inline procedural "cic:/CoRN/ftc/WeakIVT/a_seq_less_b_seq.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/WeakIVT/a_seq_leEq_z.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/WeakIVT/z_leEq_b_seq.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/WeakIVT/a_seq_mon.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/WeakIVT/b_seq_mon.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/WeakIVT/a_seq_b_seq_dist_n.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/WeakIVT/a_seq_b_seq_dist.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/WeakIVT/a_seq_Cauchy.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/WeakIVT/b_seq_Cauchy.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/WeakIVT/IVT/xa.con" "IVT__" as definition.
+
+inline procedural "cic:/CoRN/ftc/WeakIVT/IVT/xb.con" "IVT__" as definition.
+
+inline procedural "cic:/CoRN/ftc/WeakIVT/a_seq_b_seq_lim.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/WeakIVT/xa_in_interval.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/WeakIVT/IVT_I.con" as lemma.
+
+(* UNEXPORTED
+End IVT
+*)
+

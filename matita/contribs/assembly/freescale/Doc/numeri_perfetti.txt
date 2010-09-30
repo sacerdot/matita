@@ -1,0 +1,302 @@
+
+NUMERI AUREI: Somma divisori(x)=x
+ Fino a 0xFFFF sono 6/28/496/8128
+
+static unsigned int result[16]={ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
+                            -> { 6, 28, 496, 8128 ... }
+
+void main(void)
+{
+unsigned int res_pos=0,tested_num=0,divisor=0;
+unsigned long int acc=0;
+
+for(tested_num=1;tested_num<2;tested_num++)
+ {
+ for(acc=0,divisor=1;divisor<tested_num;divisor++)
+  {
+  if(!(tested_num%divisor))
+   { acc+=divisor; }
+  }
+ 
+ if(acc==tested_num)
+  { result[res_pos++]=tested_num; }
+ }
+}
+
+*************************************
+
+A: 0x00 HX: 0x1A00 PC: 0x18BE SP: 0x016F Z:1 (I:1)
+A: 0x00 HX: num    PC: 0x1950 SP: 0x016F Z:1 (I:1)
+
+T(n) = 80+65*sum[i=1,n]{sum[k=1,i]{k}}
+cioe'
+T(n) = 80+(65*n*(n+1)*(n+2))/6
+
+   n  clocki clockf        clocktot      T(n)
+1000: 543 -> 156.302.031 | 156.301.488 | 10.865.855.080
+ 900: 543 -> 121.788.732 | 121.788.189 |  7.923.844.580
+ 800: 543 ->  91.818.647 |  91.818.104 |  5.567.484.080
+ 700: 543 ->  66.162.370 |  66.161.827 |  3.731.773.580
+ 600: 543 ->  44.814.748 |  44.814.205 |  2.351.713.080
+ 500: 543 ->  27.866.608 |  27.866.065 |  1.362.302.580
+*497: 543 ->  27.430.121 |  27.429.578 |  1.337.976.265
+ 496: 543 ->  27.284.097 |  27.283.554 |  1.329.932.320
+ 400: 543 ->  15.384.865 |  15.384.322 |    698.542.080
+ 300: 543 ->   7.308.541 |   7.307.998 |    295.431.580
+ 200: 543 ->   3.178.553 |   3.178.010 |     87.971.080
+ 100: 543 ->     826.875 |     826.332 |     11.160.580
+  50: 543 ->     218.618 |     218.075 |      1.436.580 
+ *29: 543 ->      77.875 |      77.332 |        292.255
+  28: 543 ->      72.452 |      71.909 |        263.980
+  20: 543 ->      38.104 |      37.561 |        100.180
+  10: 543 ->      10.307 |       9.764 |         14.380
+  *7: 543 ->       5.411 |       4.868 |          5.540
+   6: 543 ->       3.778 |       3.235 |          3.720
+   5: 543 ->       2.849 |       2.306 |          2.355
+   4: 543 ->       1.813 |       1.270 |          1.380
+   3: 543 ->       1.182 |         639 |            730
+   2: 543 ->         700 |         157 |            340
+   1: 543 ->         623 |          80 |            145
+
+quindi tempo di esecuzione e T(n), cioe' o(n^3)
+
+*********************************************
+
+static unsigned int result[16]={ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
+word result[16] = 0x0100
+
+void main(void)
+{
+unsigned int res_pos=0,tested_num=0,divisor=0;
+unsigned long int acc=0;
+
+18BE A7 F6    AIS #-10 <----------- INGRESSO MAIN
+18C0 95       TSX
+18C1 6F 09    CLR 9,X
+18C3 6F 08    CLR 8,X
+18C5 6F 01    CLR 1,X
+18C7 7F       CLR ,X
+18C8 6F 03    CLR 3,X
+18CA 6F 02    CLR 2,X
+18CC CD 19 51 JSR 0x1951 ; 0x1951
+
+for(tested_num=1;tested_num<2;tested_num++)
+ {
+
+18CF 9E FF 01 STHX 1,SP
+18D2 20 72    BRA *+116 ; 0x1946
+18D4 AD 7B    BSR *+125 ; 0x1951
+18D6 9E FF 03 STHX 3,SP
+
+ for(acc=0,divisor=1;divisor<tested_num;divisor++)
+  {
+  if(!(tested_num%divisor))
+   { acc+=divisor; }
+  }
+
+18D9 20 3B    BRA *+61 ; 0x1916
+18DB 9E FE 01 LDHX 1,SP
+18DE 89       PSHX
+18DF 8B       PSHH
+18E0 9E FE 05 LDHX 5,SP
+18E3 CD 1A 1A JSR 0x1A1A ; 0x1A1A
+18E6 A7 02    AIS #2
+18E8 65 00 00 CPHX #0x0000
+18EB 26 1F    BNE *+33 ; 0x190C
+18ED 95       TSX
+18EE E6 03    LDA 3,X
+18F0 EE 02    LDX 2,X
+18F2 87       PSHA
+18F3 89       PSHX
+18F4 4F       CLRA
+18F5 87       PSHA
+18F6 87       PSHA
+18F7 95       TSX
+18F8 89       PSHX
+19F9 8B       PSHH
+18FA AF 08    AIX #8
+18FC 89       PSHX
+18FD 8B       PSHH
+18FE 9E FE 03 LDHX 3,SP
+1901 CD 1A 2A JSR 0x1A2A ; 0x1A2A
+1904 95       TSX
+1905 AF 0E    AIX #14
+1907 CD 1A 30 JSR 0x1A30 ; 0x1A30
+190A A7 06    AIS #6
+190C C7 18 00 STA 0x1800 ; <----------- WATCHDOG
+190F 95       TSX
+1910 6C 03    INC 3,X
+1912 26 02    BNE *+4 ; 0x1916
+1914 6C 02    INC 2,X
+1916 9E FE 01 LDHX 1,SP
+1919 9E F3 03 CPHX 3,SP
+191C 22 BD    BHI *-65 ; 0x18DB
+
+ if(acc==tested_num)
+  { result[res_pos++]=tested_num; }
+ }
+}
+
+191E 9E F3 07 CPHX 7,SP
+1921 26 1D    BNE *+31 ; 0x1940
+1923 9E FE 05 LDHX 5,SP
+1926 26 18    BNE *+26 ; 0x1940
+1928 9E FE 09 LDHX 9,SP
+192B 89       PSHX
+192C AF 01    AIX #1
+192E 9E FF 0A STHX 10,SP
+1931 88       PULX
+1932 58       LSLX
+1933 9E E6 02 LDA 2,SP
+1936 8C       CLRH
+1937 D7 01 01 STA 257,X
+193A 9E E6 01 LDA 1,SP
+193D D7 01 00 STA 256,X
+1940 95       TSX
+1941 6C 01    INC 1,X
+1943 26 01    BNE *+3 ; 0x1946
+1945 7C       INC ,X
+1946 9E FE 01 LDHX 1,SP
+1949 65 00 01 CPHX #0x0001 <----------------- END_NUM
+194C 25 86    BCS *-120 ; 0x18D4
+194E A7 0A    AIS #10
+1950 81       RTS <------------- USCITA MAIN
+
+1951 5F       CLRX
+1952 8C       CLRH
+1953 9E FF 09 STHX 9,SP
+1956 8C       CLRH
+1957 9E FF 07 STHX 7,SP
+195A 5C       INCX
+195B 81       RTS <----------- FINE MAIN
+
+static void _PUSH_ARGS_L(void) { ... }
+195C E6 03    LDA 3,X
+195E 87       PSHA
+195F E6 02    LDA 2,X
+1961 87       PSHA
+1962 9E AE    LDHX ,X
+1964 89       PSHX
+1965 8B       PSHH
+1966 9E FE 07 LDHX 7,SP
+1969 E6 03    LDA 3,X
+196B 9E E7 11 STA 17,SP
+196E E6 02    LDA 2,X
+1970 9E E7 10 STA 16,SP
+1973 9E AE    LDHX ,X
+1975 9E FF 0E STHX 14,SP
+1978 9E FE 05 LDHX 5,SP
+197B FC       JMP ,X
+
+static void _ENTER_BINARY_L(void) { ... }
+197C 87       PSHA
+197D 89       PSHX
+197E 8B       PSHH
+197F 89       PSHX
+1980 8B       PSHH
+1981 9E FE 06 LDHX 6,SP
+1984 89       PSHX
+1985 8B       PSHH
+1986 9E FE 0A LDHX 10,SP
+1989 9E FF 08 STHX 8,SP
+198C 9E FE 0C LDHX 12,SP
+198F CC 19 5C JMP 0x195C
+
+static void _IDIVMOD (char dummy_sgn, int j, int dummy, int i, ...) { ... }
+1992 9E 6D 04 TST 4,SP
+1995 26 1A    BNE *+28 ; 0x19B1
+1997 95       TSX
+1998 E6 07    LDA 7,X
+199A EE 04    LDX 4,X
+199C 8C       CLRH
+199D 52       DIV
+199E 9E E7 04 STA 4,SP
+19A1 9E E6 09 LDA 9,SP
+19A4 52       DIV
+19A5 9E E7 05 STA 5,SP
+19A8 9E 6F 08 CLR 8,SP
+19AB 8B       PSHH
+19AC 86       PULA
+19AD 9E E7 09 STA 9,SP
+19B0 81       RTS
+19B1 4F       CLRA
+19B2 87       PSHA
+19B3 AE 08    LDX #0x08
+19B5 98       CLC
+19B6 9E 69 0A ROL 10,SP
+19B9 9E 69 09 ROL 9,SP
+19BC 9E 69 01 ROL 1,SP
+19BF 9E E6 05 LDA 5,SP
+19C2 9E E1 01 CMP 1,SP
+19C5 22 1D    BHI *+31 ; 0x19E4
+19C7 26 08    BNE *+10 ; 0x19D1
+19C9 9E E6 0E LDA 6,SP
+19CC 9E E1 09 CMP 9,SP
+19CF 22 13    BHI *+21 ; 0x19E4
+19D1 9E E6 09 LDA 9,SP
+19D4 9E E0 06 SUB 6,SP
+19D7 9E E7 09 STA 9,SP
+19DA 9E E6 01 LDA 1,SP
+19DD 9E E2 05 SBC 5,SP
+19E0 9E E7 01 STA 1,SP
+19E3 99       SEC
+19E4 5B D0    DBNZX *-46 ; 0x19B6
+19E6 9E E6 0A LDA 10,SP
+19E9 49       ROLA
+19EA 9E E7 06 STA 6,SP
+19ED 9E E6 09 LDA 9,SP
+19F0 9E E7 0A STA 10,SP
+19F3 86       PULA
+19F4 9E E7 08 STA 8,SP
+19F7 9E 6F 04 CLR 4,SP
+19FA 81       RTS
+
+static void _LADD_k_is_k_plus_j(_PARAM_BINARY_L) { ... }
+19FB 95       TSX
+19FC E6 12    LDA 18,X
+19FE EB 05    ADD 5,X
+1A00 E7 12    STA 18,X
+1A02 E6 11    LDA 17,X
+1A04 E9 04    ADC 4,X
+1A06 E7 11    STA 17,X
+1A08 E6 10    LDA 16,X
+1A0A E9 03    ADC 3,X
+1A0C E7 10    STA 16,X
+1A0E E6 0F    LDA 15,X
+1A10 E9 02    ADC 2,X
+1A12 E7 0F    STA 15,X
+1A14 A7 0A    AIS #10
+1A16 8A       PULH
+1A17 88       PULX
+1A18 86       PULA
+1A19 81       RTS
+
+void _IMODU_STAR08(int i, ...) { ... }
+1A1A A7 FE    AIS #-2
+1A1C 9E FF 01 STHX 1,SP
+1A1F 87       PSHA
+1A20 CD 19 92 JSR 0x1992 ; 0x1992
+1A23 86       PULA
+1A24 A7 02    AIS #2
+1A26 9E FE 03 LDHX 3,SP
+1A29 81       RTS
+
+void _LADD(void) { ... }
+1A2A CD 19 7C JSR 0x197C ; 0x197C
+1A2D CD 19 FB JSR 0x19FB ; 0x19FB
+
+void _POP32(void) { ... }
+1A30 87       PSHA
+1A31 9E E6 04 LDA 4,SP
+1A34 F7       STA ,X
+1A35 9E E6 05 LDA 5,SP
+1A38 E7 01    STA 1,X
+1A3A 9E E6 06 LDA 6,SP
+1A3D E7 02    STA 2,X
+1A3F 9E E6 07 LDA 7,SP
+1A42 E7 03    STA 3,X
+1A44 86       PULA
+1A45 8A       PULH
+1A46 88       PULX
+1A47 A7 04    AIS #4
+1A49 FC       JMP ,X

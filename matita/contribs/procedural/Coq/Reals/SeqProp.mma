@@ -1,0 +1,190 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: SeqProp.v,v 1.13.2.1 2004/07/16 19:31:15 herbelin Exp $ i*)
+
+include "Reals/Rbase.ma".
+
+include "Reals/Rfunctions.ma".
+
+include "Reals/Rseries.ma".
+
+include "Logic/Classical.ma".
+
+include "Arith/Max.ma".
+
+(* UNEXPORTED
+Open Local Scope R_scope.
+*)
+
+inline procedural "cic:/Coq/Reals/SeqProp/Un_decreasing.con" as definition.
+
+inline procedural "cic:/Coq/Reals/SeqProp/opp_seq.con" as definition.
+
+inline procedural "cic:/Coq/Reals/SeqProp/has_ub.con" as definition.
+
+inline procedural "cic:/Coq/Reals/SeqProp/has_lb.con" as definition.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/SeqProp/growing_cv.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/SeqProp/decreasing_growing.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/SeqProp/decreasing_cv.con" as lemma.
+
+(*#**********)
+
+inline procedural "cic:/Coq/Reals/SeqProp/maj_sup.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/SeqProp/min_inf.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/SeqProp/majorant.con" as definition.
+
+inline procedural "cic:/Coq/Reals/SeqProp/minorant.con" as definition.
+
+inline procedural "cic:/Coq/Reals/SeqProp/maj_ss.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/SeqProp/min_ss.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/SeqProp/sequence_majorant.con" as definition.
+
+inline procedural "cic:/Coq/Reals/SeqProp/sequence_minorant.con" as definition.
+
+inline procedural "cic:/Coq/Reals/SeqProp/Wn_decreasing.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/SeqProp/Vn_growing.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/SeqProp/Vn_Un_Wn_order.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/SeqProp/min_maj.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/SeqProp/maj_min.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/SeqProp/cauchy_maj.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/SeqProp/cauchy_opp.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/SeqProp/cauchy_min.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/SeqProp/maj_cv.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/SeqProp/min_cv.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/SeqProp/cond_eq.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/SeqProp/not_Rlt.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/SeqProp/approx_maj.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/SeqProp/approx_min.con" as lemma.
+
+(* Unicity of limit for convergent sequences *)
+
+inline procedural "cic:/Coq/Reals/SeqProp/UL_sequence.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/SeqProp/CV_plus.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/SeqProp/cv_cvabs.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/SeqProp/CV_Cauchy.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/SeqProp/maj_by_pos.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/SeqProp/CV_mult.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/SeqProp/tech9.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/SeqProp/tech10.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/SeqProp/tech13.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/SeqProp/growing_ineq.con" as lemma.
+
+(* Un->l => (-Un) -> (-l) *)
+
+inline procedural "cic:/Coq/Reals/SeqProp/CV_opp.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/SeqProp/decreasing_ineq.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/SeqProp/CV_minus.con" as lemma.
+
+(* Un -> +oo *)
+
+inline procedural "cic:/Coq/Reals/SeqProp/cv_infty.con" as definition.
+
+(* Un -> +oo => /Un -> O *)
+
+inline procedural "cic:/Coq/Reals/SeqProp/cv_infty_cv_R0.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/SeqProp/decreasing_prop.con" as lemma.
+
+(* |x|^n/n! -> 0 *)
+
+inline procedural "cic:/Coq/Reals/SeqProp/cv_speed_pow_fact.con" as lemma.
+

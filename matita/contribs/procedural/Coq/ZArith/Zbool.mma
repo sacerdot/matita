@@ -1,0 +1,115 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(* $Id: Zbool.v,v 1.4.2.1 2004/07/16 19:31:21 herbelin Exp $ *)
+
+include "ZArith/BinInt.ma".
+
+include "ZArith/Zeven.ma".
+
+include "ZArith/Zorder.ma".
+
+include "ZArith/Zcompare.ma".
+
+include "ZArith/ZArith_dec.ma".
+
+include "Bool/Sumbool.ma".
+
+(*#* The decidability of equality and order relations over
+    type [Z] give some boolean functions with the adequate specification. *)
+
+inline procedural "cic:/Coq/ZArith/Zbool/Z_lt_ge_bool.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/Zbool/Z_ge_lt_bool.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/Zbool/Z_le_gt_bool.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/Zbool/Z_gt_le_bool.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/Zbool/Z_eq_bool.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/Zbool/Z_noteq_bool.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/Zbool/Zeven_odd_bool.con" as definition.
+
+(*#*********************************************************************)
+
+(*#* Boolean comparisons of binary integers *)
+
+inline procedural "cic:/Coq/ZArith/Zbool/Zle_bool.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/Zbool/Zge_bool.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/Zbool/Zlt_bool.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/Zbool/Zgt_bool.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/Zbool/Zeq_bool.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/Zbool/Zneq_bool.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/Zbool/Zle_cases.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zbool/Zlt_cases.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zbool/Zge_cases.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zbool/Zgt_cases.con" as lemma.
+
+(*#* Lemmas on [Zle_bool] used in contrib/graphs *)
+
+inline procedural "cic:/Coq/ZArith/Zbool/Zle_bool_imp_le.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zbool/Zle_imp_le_bool.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zbool/Zle_bool_refl.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zbool/Zle_bool_antisym.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zbool/Zle_bool_trans.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zbool/Zle_bool_total.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/Zbool/Zle_bool_plus_mono.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zbool/Zone_pos.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zbool/Zone_min_pos.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zbool/Zle_is_le_bool.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zbool/Zge_is_le_bool.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zbool/Zlt_is_le_bool.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zbool/Zgt_is_le_bool.con" as lemma.
+

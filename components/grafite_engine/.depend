@@ -1,0 +1,14 @@
+grafiteTypes.cmi: 
+grafiteSync.cmi: grafiteTypes.cmi 
+nCicCoercDeclaration.cmi: grafiteTypes.cmi 
+grafiteEngine.cmi: grafiteTypes.cmi 
+grafiteTypes.cmo: grafiteTypes.cmi 
+grafiteTypes.cmx: grafiteTypes.cmi 
+grafiteSync.cmo: grafiteTypes.cmi grafiteSync.cmi 
+grafiteSync.cmx: grafiteTypes.cmx grafiteSync.cmi 
+nCicCoercDeclaration.cmo: grafiteTypes.cmi nCicCoercDeclaration.cmi 
+nCicCoercDeclaration.cmx: grafiteTypes.cmx nCicCoercDeclaration.cmi 
+grafiteEngine.cmo: nCicCoercDeclaration.cmi grafiteTypes.cmi grafiteSync.cmi \
+    grafiteEngine.cmi 
+grafiteEngine.cmx: nCicCoercDeclaration.cmx grafiteTypes.cmx grafiteSync.cmx \
+    grafiteEngine.cmi 

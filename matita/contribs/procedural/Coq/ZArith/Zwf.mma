@@ -1,0 +1,112 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(* $Id: Zwf.v,v 1.7.2.1 2004/07/16 19:31:22 herbelin Exp $ *)
+
+include "ZArith/ZArith_base.ma".
+
+include "Arith/Wf_nat.ma".
+
+(* UNEXPORTED
+Open Local Scope Z_scope.
+*)
+
+(*#* Well-founded relations on Z. *)
+
+(*#* We define the following family of relations on [Z x Z]: 
+
+    [x (Zwf c) y]   iff   [x < y & c <= y]
+ *)
+
+inline procedural "cic:/Coq/ZArith/Zwf/Zwf.con" as definition.
+
+(*#* and we prove that [(Zwf c)] is well founded *)
+
+(* UNEXPORTED
+Section wf_proof
+*)
+
+(* UNEXPORTED
+cic:/Coq/ZArith/Zwf/wf_proof/c.var
+*)
+
+(*#* The proof of well-foundness is classic: we do the proof by induction
+    on a measure in nat, which is here [|x-c|] *)
+
+(* UNAVAILABLE OBJECT: cic:/Coq/ZArith/Zwf/wf_proof/f.con *****************)
+
+inline procedural "cic:/Coq/ZArith/Zwf/wf_proof/f.con" "wf_proof__" as definition.
+
+inline procedural "cic:/Coq/ZArith/Zwf/Zwf_well_founded.con" as lemma.
+
+(* UNEXPORTED
+End wf_proof
+*)
+
+(* UNEXPORTED
+Hint Resolve Zwf_well_founded: datatypes v62.
+*)
+
+(*#* We also define the other family of relations:
+
+    [x (Zwf_up c) y]   iff   [y < x <= c]
+ *)
+
+inline procedural "cic:/Coq/ZArith/Zwf/Zwf_up.con" as definition.
+
+(*#* and we prove that [(Zwf_up c)] is well founded *)
+
+(* UNEXPORTED
+Section wf_proof_up
+*)
+
+(* UNEXPORTED
+cic:/Coq/ZArith/Zwf/wf_proof_up/c.var
+*)
+
+(*#* The proof of well-foundness is classic: we do the proof by induction
+    on a measure in nat, which is here [|c-x|] *)
+
+(* UNAVAILABLE OBJECT: cic:/Coq/ZArith/Zwf/wf_proof_up/f.con **************)
+
+inline procedural "cic:/Coq/ZArith/Zwf/wf_proof_up/f.con" "wf_proof_up__" as definition.
+
+inline procedural "cic:/Coq/ZArith/Zwf/Zwf_up_well_founded.con" as lemma.
+
+(* UNEXPORTED
+End wf_proof_up
+*)
+
+(* UNEXPORTED
+Hint Resolve Zwf_up_well_founded: datatypes v62.
+*)
+

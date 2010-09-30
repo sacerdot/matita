@@ -1,0 +1,206 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Rbasic_fun.v,v 1.22.2.1 2004/07/16 19:31:12 herbelin Exp $ i*)
+
+(*#********************************************************)
+
+(*#*          Complements for the real numbers            *)
+
+(*                                                       *)
+
+(*#********************************************************)
+
+include "Reals/Rbase.ma".
+
+include "Reals/R_Ifp.ma".
+
+(* UNEXPORTED
+Open Local Scope R_scope.
+*)
+
+(* UNEXPORTED
+Implicit Type r : R.
+*)
+
+(*#******************************)
+
+(*#*          Rmin              *)
+
+(*#******************************)
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rbasic_fun/Rmin.con" as definition.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rbasic_fun/Rmin_Rgt_l.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rbasic_fun/Rmin_Rgt_r.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rbasic_fun/Rmin_Rgt.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rbasic_fun/Rmin_l.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rbasic_fun/Rmin_r.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rbasic_fun/Rmin_comm.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rbasic_fun/Rmin_stable_in_posreal.con" as lemma.
+
+(*#******************************)
+
+(*#*          Rmax              *)
+
+(*#******************************)
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rbasic_fun/Rmax.con" as definition.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rbasic_fun/Rmax_Rle.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rbasic_fun/RmaxLess1.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rbasic_fun/RmaxLess2.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rbasic_fun/RmaxSym.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rbasic_fun/RmaxRmult.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rbasic_fun/Rmax_stable_in_negreal.con" as lemma.
+
+(*#******************************)
+
+(*#*          Rabsolu           *)
+
+(*#******************************)
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rbasic_fun/Rcase_abs.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rbasic_fun/Rabs.con" as definition.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rbasic_fun/Rabs_R0.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rbasic_fun/Rabs_R1.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rbasic_fun/Rabs_no_R0.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rbasic_fun/Rabs_left.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rbasic_fun/Rabs_right.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rbasic_fun/Rabs_left1.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rbasic_fun/Rabs_pos.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rbasic_fun/RRle_abs.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rbasic_fun/Rabs_pos_eq.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rbasic_fun/Rabs_Rabsolu.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rbasic_fun/Rabs_pos_lt.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rbasic_fun/Rabs_minus_sym.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rbasic_fun/Rabs_mult.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rbasic_fun/Rabs_Rinv.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rbasic_fun/Rabs_Ropp.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rbasic_fun/Rabs_triang.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rbasic_fun/Rabs_triang_inv.con" as lemma.
+
+(* ||a|-|b||<=|a-b| *)
+
+inline procedural "cic:/Coq/Reals/Rbasic_fun/Rabs_triang_inv2.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rbasic_fun/Rabs_def1.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rbasic_fun/Rabs_def2.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rbasic_fun/RmaxAbs.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rbasic_fun/Rabs_Zabs.con" as lemma.
+

@@ -1,0 +1,127 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Div2.v,v 1.15.2.1 2004/07/16 19:31:00 herbelin Exp $ i*)
+
+include "Arith/Lt.ma".
+
+include "Arith/Plus.ma".
+
+include "Arith/Compare_dec.ma".
+
+include "Arith/Even.ma".
+
+(* UNEXPORTED
+Open Local Scope nat_scope.
+*)
+
+(* UNEXPORTED
+Implicit Type n : nat.
+*)
+
+(*#* Here we define [n/2] and prove some of its properties *)
+
+inline procedural "cic:/Coq/Arith/Div2/div2.con" as definition.
+
+(*#* Since [div2] is recursively defined on [0], [1] and [(S (S n))], it is
+    useful to prove the corresponding induction principle *)
+
+inline procedural "cic:/Coq/Arith/Div2/ind_0_1_SS.con" as lemma.
+
+(*#* [0 <n  =>  n/2 < n] *)
+
+inline procedural "cic:/Coq/Arith/Div2/lt_div2.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve lt_div2: arith.
+*)
+
+(*#* Properties related to the parity *)
+
+inline procedural "cic:/Coq/Arith/Div2/even_odd_div2.con" as lemma.
+
+(*#* Specializations *)
+
+inline procedural "cic:/Coq/Arith/Div2/even_div2.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Div2/div2_even.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Div2/odd_div2.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Div2/div2_odd.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve even_div2 div2_even odd_div2 div2_odd: arith.
+*)
+
+(*#* Properties related to the double ([2n]) *)
+
+inline procedural "cic:/Coq/Arith/Div2/double.con" as definition.
+
+(* UNEXPORTED
+Hint Unfold double: arith.
+*)
+
+inline procedural "cic:/Coq/Arith/Div2/double_S.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Div2/double_plus.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve double_S: arith.
+*)
+
+inline procedural "cic:/Coq/Arith/Div2/even_odd_double.con" as lemma.
+
+(*#* Specializations *)
+
+inline procedural "cic:/Coq/Arith/Div2/even_double.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Div2/double_even.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Div2/odd_double.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Div2/double_odd.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve even_double double_even odd_double double_odd: arith.
+*)
+
+(*#* Application: 
+    - if [n] is even then there is a [p] such that [n = 2p]
+    - if [n] is odd  then there is a [p] such that [n = 2p+1]
+
+    (Immediate: it is [n/2]) *)
+
+inline procedural "cic:/Coq/Arith/Div2/even_2n.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Div2/odd_S2n.con" as lemma.
+

@@ -1,0 +1,118 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+include "Init/Prelude.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Relation_Definitions.v,v 1.6.2.1 2004/07/16 19:31:16 herbelin Exp $ i*)
+
+(* UNEXPORTED
+Section Relation_Definition
+*)
+
+(* UNEXPORTED
+cic:/Coq/Relations/Relation_Definitions/Relation_Definition/A.var
+*)
+
+inline procedural "cic:/Coq/Relations/Relation_Definitions/relation.con" as definition.
+
+(* UNEXPORTED
+cic:/Coq/Relations/Relation_Definitions/Relation_Definition/R.var
+*)
+
+(* UNEXPORTED
+Section General_Properties_of_Relations
+*)
+
+inline procedural "cic:/Coq/Relations/Relation_Definitions/reflexive.con" as definition.
+
+inline procedural "cic:/Coq/Relations/Relation_Definitions/transitive.con" as definition.
+
+inline procedural "cic:/Coq/Relations/Relation_Definitions/symmetric.con" as definition.
+
+inline procedural "cic:/Coq/Relations/Relation_Definitions/antisymmetric.con" as definition.
+
+(* for compatibility with Equivalence in  ../PROGRAMS/ALG/  *)
+
+inline procedural "cic:/Coq/Relations/Relation_Definitions/equiv.con" as definition.
+
+(* UNEXPORTED
+End General_Properties_of_Relations
+*)
+
+(* UNEXPORTED
+Section Sets_of_Relations
+*)
+
+inline procedural "cic:/Coq/Relations/Relation_Definitions/preorder.ind".
+
+inline procedural "cic:/Coq/Relations/Relation_Definitions/order.ind".
+
+inline procedural "cic:/Coq/Relations/Relation_Definitions/equivalence.ind".
+
+inline procedural "cic:/Coq/Relations/Relation_Definitions/PER.ind".
+
+(* UNEXPORTED
+End Sets_of_Relations
+*)
+
+(* UNEXPORTED
+Section Relations_of_Relations
+*)
+
+inline procedural "cic:/Coq/Relations/Relation_Definitions/inclusion.con" as definition.
+
+inline procedural "cic:/Coq/Relations/Relation_Definitions/same_relation.con" as definition.
+
+inline procedural "cic:/Coq/Relations/Relation_Definitions/commut.con" as definition.
+
+(* UNEXPORTED
+End Relations_of_Relations
+*)
+
+(* UNEXPORTED
+End Relation_Definition
+*)
+
+(* UNEXPORTED
+Hint Unfold reflexive transitive antisymmetric symmetric: sets v62.
+*)
+
+(* UNEXPORTED
+Hint Resolve Build_preorder Build_order Build_equivalence Build_PER
+  preord_refl preord_trans ord_refl ord_trans ord_antisym equiv_refl
+  equiv_trans equiv_sym per_sym per_trans: sets v62.
+*)
+
+(* UNEXPORTED
+Hint Unfold inclusion same_relation commut: sets v62.
+*)
+

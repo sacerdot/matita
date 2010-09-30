@@ -1,0 +1,283 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "CoRN.ma".
+
+(* $Id: NRootIR.v,v 1.5 2004/04/23 10:01:05 lcf Exp $ *)
+
+(*#* printing NRoot %\ensuremath{\sqrt[n]{\cdot}}% *)
+
+(*#* printing sqrt %\ensuremath{\sqrt{\cdot}}% *)
+
+include "reals/OddPolyRootIR.ma".
+
+(*#* * Roots of Real Numbers *)
+
+(* UNEXPORTED
+Section NRoot
+*)
+
+(*#* ** Existence of roots
+
+%\begin{convention}% Let [n] be a natural number and [c] a nonnegative real.
+[p] is the auxiliary polynomial [_X_[^]n[-] (_C_ c)].
+%\end{convention}%
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/NRootIR/NRoot/n.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/NRootIR/NRoot/n_pos.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/NRootIR/NRoot/c.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/NRootIR/NRoot/c_nonneg.var
+*)
+
+(* begin hide *)
+
+inline procedural "cic:/CoRN/reals/NRootIR/NRoot/p.con" "NRoot__" as definition.
+
+(* end hide *)
+
+inline procedural "cic:/CoRN/reals/NRootIR/CnrootIR.con" as lemma.
+
+(* UNEXPORTED
+End NRoot
+*)
+
+(*#* We define the root of order [n] for any nonnegative real number and 
+prove its main properties: 
+ - $\left(\sqrt[n]x\right)^n=x$#(sqrt(n) x)^n =x#;
+ - $0\leq\sqrt[n]x$#0&le;sqrt(n)x#;
+ - if [Zero [<] x] then $0<\sqrt[n]x$#0&lt;sqrt(n)x#;
+ - $\sqrt[n]{x^n}=x$#sqrt(n) x^n =x#;
+ - the nth root is monotonous;
+ - in particular, if [x [<] One] then $\sqrt[n]x<1$#sqrt(n) x&lt;1#.
+
+[(nroot ??)] will be written as [NRoot].
+*)
+
+(* UNEXPORTED
+Section Nth_Root
+*)
+
+inline procedural "cic:/CoRN/reals/NRootIR/nroot.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/NRootIR/NRoot.con" as definition.
+
+inline procedural "cic:/CoRN/reals/NRootIR/NRoot_power.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve NRoot_power: algebra.
+*)
+
+inline procedural "cic:/CoRN/reals/NRootIR/NRoot_nonneg.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/NRootIR/NRoot_pos.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/NRootIR/NRoot_power'.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/NRootIR/NRoot_pres_less.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/NRootIR/NRoot_less_one.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/NRootIR/NRoot_cancel.con" as lemma.
+
+(*#* %\begin{convention}% Let [x,y] be nonnegative real numbers.
+%\end{convention}% *)
+
+(* UNEXPORTED
+cic:/CoRN/reals/NRootIR/Nth_Root/x.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/NRootIR/Nth_Root/y.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/NRootIR/Nth_Root/Hx.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/NRootIR/Nth_Root/Hy.var
+*)
+
+inline procedural "cic:/CoRN/reals/NRootIR/NRoot_wd.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/NRootIR/NRoot_unique.con" as lemma.
+
+(* UNEXPORTED
+End Nth_Root
+*)
+
+(* UNEXPORTED
+Implicit Arguments NRoot [x n].
+*)
+
+(* UNEXPORTED
+Hint Resolve NRoot_power NRoot_power': algebra.
+*)
+
+inline procedural "cic:/CoRN/reals/NRootIR/NRoot_resp_leEq.con" as lemma.
+
+(*#**********************************)
+
+(* UNEXPORTED
+Section Square_root
+*)
+
+(*#**********************************)
+
+(*#* ** Square root *)
+
+inline procedural "cic:/CoRN/reals/NRootIR/sqrt.con" as definition.
+
+inline procedural "cic:/CoRN/reals/NRootIR/sqrt_sqr.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve sqrt_sqr: algebra.
+*)
+
+inline procedural "cic:/CoRN/reals/NRootIR/sqrt_nonneg.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/NRootIR/sqrt_wd.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve sqrt_wd: algebra_c.
+*)
+
+inline procedural "cic:/CoRN/reals/NRootIR/sqrt_to_nonneg.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/NRootIR/sqrt_to_nonpos.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/NRootIR/sqrt_mult.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve sqrt_mult: algebra.
+*)
+
+inline procedural "cic:/CoRN/reals/NRootIR/sqrt_mult_wd.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/NRootIR/sqrt_less.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/NRootIR/sqrt_less'.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/NRootIR/sqrt_resp_leEq.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/NRootIR/sqrt_resp_less.con" as lemma.
+
+(* UNEXPORTED
+End Square_root
+*)
+
+(* UNEXPORTED
+Hint Resolve sqrt_wd: algebra_c.
+*)
+
+(* UNEXPORTED
+Hint Resolve sqrt_sqr sqrt_mult: algebra.
+*)
+
+(* UNEXPORTED
+Section Absolute_Props
+*)
+
+(*#* ** More on absolute value
+
+With the help of square roots, we can prove some more properties of absolute 
+values in [IR].
+*)
+
+inline procedural "cic:/CoRN/reals/NRootIR/AbsIR_sqrt_sqr.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve AbsIR_sqrt_sqr: algebra.
+*)
+
+inline procedural "cic:/CoRN/reals/NRootIR/AbsIR_resp_mult.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/NRootIR/AbsIR_mult_pos.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/NRootIR/AbsIR_mult_pos'.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/NRootIR/AbsIR_nexp.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/NRootIR/AbsIR_nexp_op.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/NRootIR/AbsIR_less_square.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/NRootIR/AbsIR_leEq_square.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/NRootIR/AbsIR_division.con" as lemma.
+
+(*#* Some special cases. *)
+
+inline procedural "cic:/CoRN/reals/NRootIR/AbsIR_recip.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/NRootIR/AbsIR_div_two.con" as lemma.
+
+(*#* Cauchy-Schwartz for IR and variants on that subject. *)
+
+inline procedural "cic:/CoRN/reals/NRootIR/triangle_IR.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/NRootIR/triangle_SumIR.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/NRootIR/triangle_IR_minus.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/NRootIR/weird_triangleIR.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/NRootIR/triangle_IR_minus'.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/NRootIR/triangle_SumxIR.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/NRootIR/triangle_Sum2IR.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/NRootIR/AbsIR_str_bnd_AbsIR.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/NRootIR/AbsIR_bnd_AbsIR.con" as lemma.
+
+(* UNEXPORTED
+End Absolute_Props
+*)
+
+(* UNEXPORTED
+Section Consequences
+*)
+
+(*#* **Cauchy sequences
+
+With these results, we can also prove that the sequence of reciprocals of a 
+Cauchy sequence that is never zero and whose Limit is not zero is also a 
+Cauchy sequence.
+*)
+
+inline procedural "cic:/CoRN/reals/NRootIR/Cauchy_Lim_recip.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/NRootIR/Cauchy_recip.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/NRootIR/Lim_recip.con" as lemma.
+
+(* UNEXPORTED
+End Consequences
+*)
+

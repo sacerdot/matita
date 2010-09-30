@@ -1,0 +1,497 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: BinInt.v,v 1.5.2.1 2004/07/16 19:31:20 herbelin Exp $ i*)
+
+(*#**********************************************************)
+
+(*#* Binary Integers (Pierre Cr\233\gut, CNET, Lannion, France) *)
+
+(*#**********************************************************)
+
+include "NArith/BinPos.ma".
+
+include "NArith/Pnat.ma".
+
+include "NArith/BinNat.ma".
+
+include "Arith/Plus.ma".
+
+include "Arith/Mult.ma".
+
+(*#*********************************************************************)
+
+(*#* Binary integer numbers *)
+
+inline procedural "cic:/Coq/ZArith/BinInt/Z.ind".
+
+(*#* Declare Scope Z_scope with Key Z *)
+
+(* UNEXPORTED
+Delimit Scope Z_scope with Z.
+*)
+
+(*#* Automatically open scope positive_scope for the constructors of Z *)
+
+(* UNEXPORTED
+Bind Scope Z_scope with Z.
+*)
+
+(* UNEXPORTED
+Arguments Scope Zpos [positive_scope].
+*)
+
+(* UNEXPORTED
+Arguments Scope Zneg [positive_scope].
+*)
+
+(*#* Subtraction of positive into Z *)
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zdouble_plus_one.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zdouble_minus_one.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zdouble.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/BinInt/ZPminus.con" as definition.
+
+(*#* Addition on integers *)
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zplus.con" as definition.
+
+(* NOTATION
+Infix "+" := Zplus : Z_scope.
+*)
+
+(*#* Opposite *)
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zopp.con" as definition.
+
+(* NOTATION
+Notation "- x" := (Zopp x) : Z_scope.
+*)
+
+(*#* Successor on integers *)
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zsucc.con" as definition.
+
+(*#* Predecessor on integers *)
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zpred.con" as definition.
+
+(*#* Subtraction on integers *)
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zminus.con" as definition.
+
+(* NOTATION
+Infix "-" := Zminus : Z_scope.
+*)
+
+(*#* Multiplication on integers *)
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zmult.con" as definition.
+
+(* NOTATION
+Infix "*" := Zmult : Z_scope.
+*)
+
+(*#* Comparison of integers *)
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zcompare.con" as definition.
+
+(* NOTATION
+Infix "?=" := Zcompare (at level 70, no associativity) : Z_scope.
+*)
+
+(* UNEXPORTED
+Ltac elim_compare com1 com2 :=
+  case (Dcompare (com1 ?= com2)%Z);
+   [ idtac | let x := fresh "H" in
+             (intro x; case x; clear x) ].
+*)
+
+(*#* Sign function *)
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zsgn.con" as definition.
+
+(*#* Direct, easier to handle variants of successor and addition *)
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zsucc'.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zpred'.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zplus'.con" as definition.
+
+(* UNEXPORTED
+Open Local Scope Z_scope.
+*)
+
+(*#*********************************************************************)
+
+(*#* Inductive specification of Z *)
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zind.con" as theorem.
+
+(*#*********************************************************************)
+
+(*#* Properties of opposite on binary integer numbers *)
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zopp_neg.con" as theorem.
+
+(*#* [opp] is involutive *)
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zopp_involutive.con" as theorem.
+
+(*#* Injectivity of the opposite *)
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zopp_inj.con" as theorem.
+
+(*#*********************************************************************)
+
+(* Properties of the direct definition of successor and predecessor *)
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zpred'_succ'.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zsucc'_discr.con" as lemma.
+
+(*#*********************************************************************)
+
+(*#* Other properties of binary integer numbers *)
+
+inline procedural "cic:/Coq/ZArith/BinInt/ZL0.con" as lemma.
+
+(*#*********************************************************************)
+
+(*#* Properties of the addition on integers *)
+
+(*#* zero is left neutral for addition *)
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zplus_0_l.con" as theorem.
+
+(*#* zero is right neutral for addition *)
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zplus_0_r.con" as theorem.
+
+(*#* addition is commutative *)
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zplus_comm.con" as theorem.
+
+(*#* opposite distributes over addition *)
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zopp_plus_distr.con" as theorem.
+
+(*#* opposite is inverse for addition *)
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zplus_opp_r.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zplus_opp_l.con" as theorem.
+
+(* UNEXPORTED
+Hint Local Resolve Zplus_0_l Zplus_0_r.
+*)
+
+(*#* addition is associative *)
+
+inline procedural "cic:/Coq/ZArith/BinInt/weak_assoc.con" as lemma.
+
+(* UNEXPORTED
+Hint Local Resolve weak_assoc.
+*)
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zplus_assoc.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zplus_assoc_reverse.con" as lemma.
+
+(*#* Associativity mixed with commutativity *)
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zplus_permute.con" as theorem.
+
+(*#* addition simplifies *)
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zplus_reg_l.con" as theorem.
+
+(*#* addition and successor permutes *)
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zplus_succ_l.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zplus_succ_r.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zplus_succ_comm.con" as lemma.
+
+(*#* Misc properties, usually redundant or non natural *)
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zplus_0_r_reverse.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zplus_0_simpl_l.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zplus_0_simpl_l_reverse.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zplus_eq_compat.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zplus_opp_expand.con" as lemma.
+
+(*#*********************************************************************)
+
+(*#* Properties of successor and predecessor on binary integer numbers *)
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zsucc_discr.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zpos_succ_morphism.con" as theorem.
+
+(*#* successor and predecessor are inverse functions *)
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zsucc_pred.con" as theorem.
+
+(* UNEXPORTED
+Hint Immediate Zsucc_pred: zarith.
+*)
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zpred_succ.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zsucc_inj.con" as theorem.
+
+(*#* Misc properties, usually redundant or non natural *)
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zsucc_eq_compat.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zsucc_inj_contrapositive.con" as lemma.
+
+(*#*********************************************************************)
+
+(*#* Properties of subtraction on binary integer numbers *)
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zminus_0_r.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zminus_0_l_reverse.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zminus_diag.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zminus_diag_reverse.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zplus_minus_eq.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zminus_plus.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zplus_minus.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zminus_succ_l.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zminus_plus_simpl_l.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zminus_plus_simpl_l_reverse.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zminus_plus_simpl_r.con" as lemma.
+
+(*#* Misc redundant properties *)
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zeq_minus.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zminus_eq.con" as lemma.
+
+(*#*********************************************************************)
+
+(*#* Properties of multiplication on binary integer numbers *)
+
+(*#* One is neutral for multiplication *)
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zmult_1_l.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zmult_1_r.con" as theorem.
+
+(*#* Zero property of multiplication *)
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zmult_0_l.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zmult_0_r.con" as theorem.
+
+(* UNEXPORTED
+Hint Local Resolve Zmult_0_l Zmult_0_r.
+*)
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zmult_0_r_reverse.con" as lemma.
+
+(*#* Commutativity of multiplication *)
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zmult_comm.con" as theorem.
+
+(*#* Associativity of multiplication *)
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zmult_assoc.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zmult_assoc_reverse.con" as lemma.
+
+(*#* Associativity mixed with commutativity *)
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zmult_permute.con" as theorem.
+
+(*#* Z is integral *)
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zmult_integral_l.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zmult_integral.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zmult_1_inversion_l.con" as lemma.
+
+(*#* Multiplication and Opposite *)
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zopp_mult_distr_l.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zopp_mult_distr_r.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zopp_mult_distr_l_reverse.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zmult_opp_comm.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zmult_opp_opp.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zopp_eq_mult_neg_1.con" as theorem.
+
+(*#* Distributivity of multiplication over addition *)
+
+inline procedural "cic:/Coq/ZArith/BinInt/weak_Zmult_plus_distr_r.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zmult_plus_distr_r.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zmult_plus_distr_l.con" as theorem.
+
+(*#* Distributivity of multiplication over subtraction *)
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zmult_minus_distr_r.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zmult_minus_distr_l.con" as lemma.
+
+(*#* Simplification of multiplication for non-zero integers *)
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zmult_reg_l.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zmult_reg_r.con" as lemma.
+
+(*#* Addition and multiplication by 2 *)
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zplus_diag_eq_mult_2.con" as lemma.
+
+(*#* Multiplication and successor *)
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zmult_succ_r.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zmult_succ_r_reverse.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zmult_succ_l.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zmult_succ_l_reverse.con" as lemma.
+
+(*#* Misc redundant properties *)
+
+inline procedural "cic:/Coq/ZArith/BinInt/Z_eq_mult.con" as lemma.
+
+(*#*********************************************************************)
+
+(*#* Relating binary positive numbers and binary integers *)
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zpos_xI.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zpos_xO.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zneg_xI.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zneg_xO.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zpos_plus_distr.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zneg_plus_distr.con" as lemma.
+
+(*#*********************************************************************)
+
+(*#* Order relations *)
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zlt.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zgt.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zle.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zge.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zne.con" as definition.
+
+(* NOTATION
+Infix "<=" := Zle : Z_scope.
+*)
+
+(* NOTATION
+Infix "<" := Zlt : Z_scope.
+*)
+
+(* NOTATION
+Infix ">=" := Zge : Z_scope.
+*)
+
+(* NOTATION
+Infix ">" := Zgt : Z_scope.
+*)
+
+(* NOTATION
+Notation "x <= y <= z" := (x <= y /\ y <= z) : Z_scope.
+*)
+
+(* NOTATION
+Notation "x <= y < z" := (x <= y /\ y < z) : Z_scope.
+*)
+
+(* NOTATION
+Notation "x < y < z" := (x < y /\ y < z) : Z_scope.
+*)
+
+(* NOTATION
+Notation "x < y <= z" := (x < y /\ y <= z) : Z_scope.
+*)
+
+(*#*********************************************************************)
+
+(*#* Absolute value on integers *)
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zabs_nat.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zabs.con" as definition.
+
+(*#*********************************************************************)
+
+(*#* From [nat] to [Z] *)
+
+inline procedural "cic:/Coq/ZArith/BinInt/Z_of_nat.con" as definition.
+
+include "NArith/BinNat.ma".
+
+inline procedural "cic:/Coq/ZArith/BinInt/Zabs_N.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/BinInt/Z_of_N.con" as definition.
+

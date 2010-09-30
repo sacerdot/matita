@@ -1,0 +1,158 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Lexicographic_Product.v,v 1.12.2.1 2004/07/16 19:31:19 herbelin Exp $ i*)
+
+(*#* Authors: Bruno Barras, Cristina Cornes *)
+
+include "Logic/Eqdep.ma".
+
+include "Relations/Relation_Operators.ma".
+
+include "Wellfounded/Transitive_Closure.ma".
+
+(*#*  From : Constructing Recursion Operators in Type Theory            
+     L. Paulson  JSC (1986) 2, 325-355 *)
+
+(* UNEXPORTED
+Section WfLexicographic_Product
+*)
+
+(* UNEXPORTED
+cic:/Coq/Wellfounded/Lexicographic_Product/WfLexicographic_Product/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Wellfounded/Lexicographic_Product/WfLexicographic_Product/B.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Wellfounded/Lexicographic_Product/WfLexicographic_Product/leA.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Wellfounded/Lexicographic_Product/WfLexicographic_Product/leB.var
+*)
+
+(* NOTATION
+Notation LexProd := (lexprod A B leA leB).
+*)
+
+(* UNEXPORTED
+Hint Resolve t_step Acc_clos_trans wf_clos_trans.
+*)
+
+inline procedural "cic:/Coq/Wellfounded/Lexicographic_Product/acc_A_B_lexprod.con" as lemma.
+
+inline procedural "cic:/Coq/Wellfounded/Lexicographic_Product/wf_lexprod.con" as theorem.
+
+(* UNEXPORTED
+End WfLexicographic_Product
+*)
+
+(* UNEXPORTED
+Section Wf_Symmetric_Product
+*)
+
+(* UNEXPORTED
+cic:/Coq/Wellfounded/Lexicographic_Product/Wf_Symmetric_Product/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Wellfounded/Lexicographic_Product/Wf_Symmetric_Product/B.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Wellfounded/Lexicographic_Product/Wf_Symmetric_Product/leA.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Wellfounded/Lexicographic_Product/Wf_Symmetric_Product/leB.var
+*)
+
+(* NOTATION
+Notation Symprod := (symprod A B leA leB).
+*)
+
+(*i
+  Local sig_prod:=
+         [x:A*B]<{_:A&B}>Case x of [a:A][b:B](existS A [_:A]B a b) end.
+
+Lemma incl_sym_lexprod: (included (A*B) Symprod  
+            (R_o_f (A*B) {_:A&B} sig_prod (lexprod A [_:A]B leA [_:A]leB))).
+Proof.
+ Red.
+ Induction x.
+ (Induction y1;Intros).
+ Red.
+ Unfold sig_prod .
+ Inversion_clear H.
+ (Apply left_lex;Auto with sets).
+
+ (Apply right_lex;Auto with sets).
+Qed.
+i*)
+
+inline procedural "cic:/Coq/Wellfounded/Lexicographic_Product/Acc_symprod.con" as lemma.
+
+inline procedural "cic:/Coq/Wellfounded/Lexicographic_Product/wf_symprod.con" as lemma.
+
+(* UNEXPORTED
+End Wf_Symmetric_Product
+*)
+
+(* UNEXPORTED
+Section Swap
+*)
+
+(* UNEXPORTED
+cic:/Coq/Wellfounded/Lexicographic_Product/Swap/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Wellfounded/Lexicographic_Product/Swap/R.var
+*)
+
+(* NOTATION
+Notation SwapProd := (swapprod A R).
+*)
+
+inline procedural "cic:/Coq/Wellfounded/Lexicographic_Product/swap_Acc.con" as lemma.
+
+inline procedural "cic:/Coq/Wellfounded/Lexicographic_Product/Acc_swapprod.con" as lemma.
+
+inline procedural "cic:/Coq/Wellfounded/Lexicographic_Product/wf_swapprod.con" as lemma.
+
+(* UNEXPORTED
+End Swap
+*)
+

@@ -1,0 +1,163 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Mult.v,v 1.21.2.1 2004/07/16 19:31:00 herbelin Exp $ i*)
+
+include "Arith/Plus.ma".
+
+include "Arith/Minus.ma".
+
+include "Arith/Lt.ma".
+
+include "Arith/Le.ma".
+
+(* UNEXPORTED
+Open Local Scope nat_scope.
+*)
+
+(* UNEXPORTED
+Implicit Types m n p : nat.
+*)
+
+(*#* Zero property *)
+
+inline procedural "cic:/Coq/Arith/Mult/mult_0_r.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Mult/mult_0_l.con" as lemma.
+
+(*#* Distributivity *)
+
+inline procedural "cic:/Coq/Arith/Mult/mult_plus_distr_r.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve mult_plus_distr_r: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/Mult/mult_plus_distr_l.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Mult/mult_minus_distr_r.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve mult_minus_distr_r: arith v62.
+*)
+
+(*#* Associativity *)
+
+inline procedural "cic:/Coq/Arith/Mult/mult_assoc_reverse.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve mult_assoc_reverse: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/Mult/mult_assoc.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve mult_assoc: arith v62.
+*)
+
+(*#* Commutativity *)
+
+inline procedural "cic:/Coq/Arith/Mult/mult_comm.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve mult_comm: arith v62.
+*)
+
+(*#* 1 is neutral *)
+
+inline procedural "cic:/Coq/Arith/Mult/mult_1_l.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve mult_1_l: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/Mult/mult_1_r.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve mult_1_r: arith v62.
+*)
+
+(*#* Compatibility with orders *)
+
+inline procedural "cic:/Coq/Arith/Mult/mult_O_le.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve mult_O_le: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/Mult/mult_le_compat_l.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve mult_le_compat_l: arith.
+*)
+
+inline procedural "cic:/Coq/Arith/Mult/mult_le_compat_r.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Mult/mult_le_compat.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Mult/mult_S_lt_compat_l.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve mult_S_lt_compat_l: arith.
+*)
+
+inline procedural "cic:/Coq/Arith/Mult/mult_lt_compat_r.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Mult/mult_S_le_reg_l.con" as lemma.
+
+(*#* n|->2*n and n|->2n+1 have disjoint image *)
+
+inline procedural "cic:/Coq/Arith/Mult/odd_even_lem.con" as theorem.
+
+(*#* Tail-recursive mult *)
+
+(*#* [tail_mult] is an alternative definition for [mult] which is 
+    tail-recursive, whereas [mult] is not. This can be useful 
+    when extracting programs. *)
+
+inline procedural "cic:/Coq/Arith/Mult/mult_acc.con" as definition.
+
+inline procedural "cic:/Coq/Arith/Mult/mult_acc_aux.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Mult/tail_mult.con" as definition.
+
+inline procedural "cic:/Coq/Arith/Mult/mult_tail_mult.con" as lemma.
+
+(*#* [TailSimpl] transforms any [tail_plus] and [tail_mult] into [plus] 
+    and [mult] and simplify *)
+
+(* UNEXPORTED
+Ltac tail_simpl :=
+  repeat rewrite <- plus_tail_plus; repeat rewrite <- mult_tail_mult;
+   simpl in |- *.
+*)
+

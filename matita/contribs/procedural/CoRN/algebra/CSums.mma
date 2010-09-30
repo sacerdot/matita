@@ -1,0 +1,246 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "CoRN.ma".
+
+(* $Id: CSums.v,v 1.8 2004/04/23 10:00:54 lcf Exp $ *)
+
+(*#* printing Sum0 %\ensuremath{\sum_0}% #&sum;<sub>0</sub># *)
+
+(*#* printing Sum1 %\ensuremath{\sum_1}% #&sum;<sub>1</sub># *)
+
+(*#* printing Sum2 %\ensuremath{\sum_2}% #&sum;<sub>2</sub># *)
+
+(*#* printing Sum %\ensuremath{\sum}% #&sum;# *)
+
+(*#* printing Sumx %\ensuremath{\sum'}% #&sum;'&*)
+
+include "algebra/CAbGroups.ma".
+
+(*#* * Sums
+
+%\begin{convention}% Let [G] be an abelian group.
+%\end{convention}%
+*)
+
+(* UNEXPORTED
+Section Sums
+*)
+
+(* UNEXPORTED
+cic:/CoRN/algebra/CSums/Sums/G.var
+*)
+
+(* Sum1 and Sum use subtraction *)
+
+inline procedural "cic:/CoRN/algebra/CSums/Sumlist.con" as definition.
+
+inline procedural "cic:/CoRN/algebra/CSums/Sumx.con" as definition.
+
+(*#*
+It is sometimes useful to view a function defined on $\{0,\ldots,i-1\}$
+#{0, ... i-1}# as a function on the natural numbers which evaluates to
+[Zero] when the input is greater than or equal to [i].
+*)
+
+inline procedural "cic:/CoRN/algebra/CSums/part_tot_nat_fun.con" as definition.
+
+inline procedural "cic:/CoRN/algebra/CSums/part_tot_nat_fun_ch1.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CSums/part_tot_nat_fun_ch2.con" as lemma.
+
+(*#* [Sum0] defines the sum for [i=0..(n-1)] *)
+
+inline procedural "cic:/CoRN/algebra/CSums/Sum0.con" as definition.
+
+(*#* [Sum1] defines the sum for [i=m..(n-1)] *)
+
+inline procedural "cic:/CoRN/algebra/CSums/Sum1.con" as definition.
+
+inline procedural "cic:/CoRN/algebra/CSums/Sum.con" as definition.
+
+(* Sum i=m..n *)
+
+(*#* [Sum2] is similar to [Sum1], but does not require the summand to be
+defined outside where it is being added. *)
+
+inline procedural "cic:/CoRN/algebra/CSums/Sum2.con" as definition.
+
+inline procedural "cic:/CoRN/algebra/CSums/Sum_one.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Sum_one: algebra.
+*)
+
+inline procedural "cic:/CoRN/algebra/CSums/Sum_empty.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Sum_empty: algebra.
+*)
+
+inline procedural "cic:/CoRN/algebra/CSums/Sum_Sum.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Sum_Sum: algebra.
+*)
+
+inline procedural "cic:/CoRN/algebra/CSums/Sum_first.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CSums/Sum_last.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Sum_last: algebra.
+*)
+
+inline procedural "cic:/CoRN/algebra/CSums/Sum_last'.con" as lemma.
+
+(*#*
+We add some extensionality results which will be quite useful
+when working with integration.
+*)
+
+inline procedural "cic:/CoRN/algebra/CSums/Sum0_strext.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CSums/Sum_strext.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CSums/Sumx_strext.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CSums/Sum0_strext'.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CSums/Sum_strext'.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CSums/Sum0_wd.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CSums/Sum_wd.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CSums/Sumx_wd.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CSums/Sum_wd'.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CSums/Sum2_wd.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CSums/Sum0_plus_Sum0.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Sum0_plus_Sum0: algebra.
+*)
+
+inline procedural "cic:/CoRN/algebra/CSums/Sum_plus_Sum.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CSums/Sumx_plus_Sumx.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CSums/Sum2_plus_Sum2.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CSums/inv_Sum0.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve inv_Sum0: algebra.
+*)
+
+inline procedural "cic:/CoRN/algebra/CSums/inv_Sum.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve inv_Sum: algebra.
+*)
+
+inline procedural "cic:/CoRN/algebra/CSums/inv_Sumx.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CSums/inv_Sum2.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CSums/Sum_minus_Sum.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Sum_minus_Sum: algebra.
+*)
+
+inline procedural "cic:/CoRN/algebra/CSums/Sumx_minus_Sumx.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CSums/Sum2_minus_Sum2.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CSums/Sum_apzero.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CSums/Sum_zero.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CSums/Sum_term.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CSums/Sum0_shift.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Sum0_shift: algebra.
+*)
+
+inline procedural "cic:/CoRN/algebra/CSums/Sum_shift.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CSums/Sum_big_shift.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CSums/Sumx_Sum0.con" as lemma.
+
+(* UNEXPORTED
+End Sums
+*)
+
+(* UNEXPORTED
+Implicit Arguments Sum [G].
+*)
+
+(* UNEXPORTED
+Implicit Arguments Sum0 [G].
+*)
+
+(* UNEXPORTED
+Implicit Arguments Sumx [G n].
+*)
+
+(* UNEXPORTED
+Implicit Arguments Sum2 [G m n].
+*)
+
+(*#*
+The next results are useful for calculating some special sums,
+often referred to as ``Mengolli Sums''.
+%\begin{convention}% Let [G] be an abelian group.
+%\end{convention}%
+*)
+
+(* UNEXPORTED
+Section More_Sums
+*)
+
+(* UNEXPORTED
+cic:/CoRN/algebra/CSums/More_Sums/G.var
+*)
+
+inline procedural "cic:/CoRN/algebra/CSums/Mengolli_Sum.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CSums/Mengolli_Sum_gen.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CSums/str_Mengolli_Sum_gen.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CSums/Sumx_to_Sum.con" as lemma.
+
+(* UNEXPORTED
+End More_Sums
+*)
+
+(* UNEXPORTED
+Hint Resolve Sum_one Sum_Sum Sum_first Sum_last Sum_last' Sum_wd
+  Sum_plus_Sum: algebra.
+*)
+
+(* UNEXPORTED
+Hint Resolve Sum_minus_Sum inv_Sum inv_Sum0: algebra.
+*)
+

@@ -1,0 +1,64 @@
+.unnamed.ma datatypes/list.ma sets/setoids.ma
+PTS/subst.ma basics/list2.ma
+topology/igft3.ma arithmetics/nat.ma datatypes/bool.ma topology/igft.ma
+basics/functions.ma Plogic/connectives.ma Plogic/equality.ma
+nat/compare.ma datatypes/bool.ma nat/order.ma
+arithmetics/compare.ma arithmetics/nat.ma
+datatypes/list-setoids.ma datatypes/list.ma sets/setoids.ma sets/setoids1.ma
+datatypes/list-theory.ma arithmetics/nat.ma datatypes/list.ma
+logic/pts.ma 
+basics/relations.ma Plogic/connectives.ma
+Plogic/equality.ma logic/pts.ma
+Plogic/connectives.ma Plogic/equality.ma
+sets/categories.ma sets/sets.ma
+datatypes/pairs.ma logic/pts.ma
+algebra/magmas.ma sets/sets.ma
+Plogic/russell_support.ma Plogic/connectives.ma Plogic/jmeq.ma datatypes/sums.ma logic/connectives.ma
+topology/cantor.ma nat/nat.ma topology/igft.ma
+logic/cprop.ma hints_declaration.ma sets/setoids1.ma
+TPTP.ma basics/eq.ma
+sets/setoids2.ma properties/relations2.ma sets/setoids1.ma
+nat/plus.ma algebra/abelian_magmas.ma algebra/unital_magmas.ma nat/big_ops.ma
+sets/sets.ma logic/connectives.ma logic/cprop.ma properties/relations1.ma sets/setoids1.ma
+PTS/gpts.ma PTS/subst.ma
+re/re-setoids.ma datatypes/bool-setoids.ma datatypes/list-setoids.ma datatypes/pairs-setoids.ma hints_declaration.ma sets/sets.ma
+topology/igft2.ma arithmetics/nat.ma topology/igft.ma
+arithmetics/Z.ma arithmetics/nat.ma
+datatypes/bool.ma logic/pts.ma
+logic/connectives.ma logic/pts.ma
+properties/relations2.ma logic/pts.ma
+algebra/bool.ma logic/connectives.ma
+sets/categories2.ma sets/categories.ma sets/setoids2.ma sets/sets.ma
+basics/list2.ma arithmetics/nat.ma basics/list.ma
+arithmetics/nat.ma basics/bool.ma basics/eq.ma basics/functions.ma hints_declaration.ma
+sets/setoids1.ma hints_declaration.ma properties/relations1.ma sets/setoids.ma
+nat/minus.ma nat/order.ma
+logic/cologic.ma Plogic/connectives.ma Plogic/equality.ma datatypes/bool.ma logic/equality.ma logic/pts.ma
+SET171^3.ma TPTP.ma
+datatypes/list.ma logic/pts.ma
+Plogic/jmeq.ma Plogic/equality.ma
+sets/partitions.ma datatypes/pairs.ma nat/compare.ma nat/minus.ma nat/plus.ma sets/sets.ma
+topology/igft-setoid.ma sets/sets.ma
+sets/setoids.ma hints_declaration.ma logic/connectives.ma properties/relations.ma
+properties/relations.ma logic/pts.ma
+nat/big_ops.ma algebra/magmas.ma nat/order.ma
+arithmetics/R.ma arithmetics/nat.ma datatypes/pairs.ma datatypes/sums.ma topology/igft.ma
+arithmetics/minimization.ma arithmetics/nat.ma
+algebra/unital_magmas.ma algebra/magmas.ma
+properties/relations1.ma logic/pts.ma
+basics/bool.ma basics/eq.ma basics/functions.ma
+datatypes/bool-setoids.ma datatypes/bool.ma sets/setoids.ma
+logic/equality.ma logic/connectives.ma properties/relations.ma
+datatypes/pairs-setoids.ma datatypes/pairs.ma sets/setoids.ma
+topology/igft4.ma arithmetics/nat.ma datatypes/bool.ma topology/igft.ma
+basics/eq.ma basics/relations.ma
+datatypes/sums.ma datatypes/pairs.ma
+hints_declaration.ma logic/pts.ma
+logic/destruct_bb.ma logic/equality.ma
+topology/igft.ma logic/equality.ma sets/sets.ma
+algebra/abelian_magmas.ma algebra/magmas.ma
+overlap/o-algebra.ma sets/categories2.ma
+re/re.ma arithmetics/nat.ma datatypes/list.ma datatypes/pairs.ma hints_declaration.ma
+basics/list.ma basics/bool.ma basics/eq.ma
+nat/nat.ma hints_declaration.ma logic/equality.ma sets/setoids.ma
+nat/order.ma nat/nat.ma sets/sets.ma

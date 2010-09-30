@@ -1,0 +1,4220 @@
+BOO007-2
+Order
+ == is 100
+ _ is 99
+ a is 98
+ add is 93
+ additive_id1 is 77
+ additive_id2 is 76
+ additive_identity is 82
+ additive_inverse1 is 84
+ additive_inverse2 is 83
+ b is 97
+ c is 96
+ commutativity_of_add is 92
+ commutativity_of_multiply is 91
+ distributivity1 is 90
+ distributivity2 is 89
+ distributivity3 is 88
+ distributivity4 is 87
+ inverse is 86
+ multiplicative_id1 is 79
+ multiplicative_id2 is 78
+ multiplicative_identity is 85
+ multiplicative_inverse1 is 81
+ multiplicative_inverse2 is 80
+ multiply is 95
+ prove_associativity is 94
+Facts
+ Id :   4, {_}: add ?2 ?3 =?= add ?3 ?2 [3, 2] by commutativity_of_add ?2 ?3
+ Id :   6, {_}:
+          multiply ?5 ?6 =?= multiply ?6 ?5
+          [6, 5] by commutativity_of_multiply ?5 ?6
+ Id :   8, {_}:
+          add (multiply ?8 ?9) ?10 =<= multiply (add ?8 ?10) (add ?9 ?10)
+          [10, 9, 8] by distributivity1 ?8 ?9 ?10
+ Id :  10, {_}:
+          add ?12 (multiply ?13 ?14) =<= multiply (add ?12 ?13) (add ?12 ?14)
+          [14, 13, 12] by distributivity2 ?12 ?13 ?14
+ Id :  12, {_}:
+          multiply (add ?16 ?17) ?18
+          =<=
+          add (multiply ?16 ?18) (multiply ?17 ?18)
+          [18, 17, 16] by distributivity3 ?16 ?17 ?18
+ Id :  14, {_}:
+          multiply ?20 (add ?21 ?22)
+          =<=
+          add (multiply ?20 ?21) (multiply ?20 ?22)
+          [22, 21, 20] by distributivity4 ?20 ?21 ?22
+ Id :  16, {_}:
+          add ?24 (inverse ?24) =>= multiplicative_identity
+          [24] by additive_inverse1 ?24
+ Id :  18, {_}:
+          add (inverse ?26) ?26 =>= multiplicative_identity
+          [26] by additive_inverse2 ?26
+ Id :  20, {_}:
+          multiply ?28 (inverse ?28) =>= additive_identity
+          [28] by multiplicative_inverse1 ?28
+ Id :  22, {_}:
+          multiply (inverse ?30) ?30 =>= additive_identity
+          [30] by multiplicative_inverse2 ?30
+ Id :  24, {_}:
+          multiply ?32 multiplicative_identity =>= ?32
+          [32] by multiplicative_id1 ?32
+ Id :  26, {_}:
+          multiply multiplicative_identity ?34 =>= ?34
+          [34] by multiplicative_id2 ?34
+ Id :  28, {_}: add ?36 additive_identity =>= ?36 [36] by additive_id1 ?36
+ Id :  30, {_}: add additive_identity ?38 =>= ?38 [38] by additive_id2 ?38
+Goal
+ Id :   2, {_}:
+          multiply a (multiply b c) =<= multiply (multiply a b) c
+          [] by prove_associativity
+Found proof, 6.095314s
+BOO007-4
+Order
+ == is 100
+ _ is 99
+ a is 98
+ add is 93
+ additive_id1 is 87
+ additive_identity is 88
+ additive_inverse1 is 83
+ b is 97
+ c is 96
+ commutativity_of_add is 92
+ commutativity_of_multiply is 91
+ distributivity1 is 90
+ distributivity2 is 89
+ inverse is 84
+ multiplicative_id1 is 85
+ multiplicative_identity is 86
+ multiplicative_inverse1 is 82
+ multiply is 95
+ prove_associativity is 94
+Facts
+ Id :   4, {_}: add ?2 ?3 =?= add ?3 ?2 [3, 2] by commutativity_of_add ?2 ?3
+ Id :   6, {_}:
+          multiply ?5 ?6 =?= multiply ?6 ?5
+          [6, 5] by commutativity_of_multiply ?5 ?6
+ Id :   8, {_}:
+          add ?8 (multiply ?9 ?10) =<= multiply (add ?8 ?9) (add ?8 ?10)
+          [10, 9, 8] by distributivity1 ?8 ?9 ?10
+ Id :  10, {_}:
+          multiply ?12 (add ?13 ?14)
+          =<=
+          add (multiply ?12 ?13) (multiply ?12 ?14)
+          [14, 13, 12] by distributivity2 ?12 ?13 ?14
+ Id :  12, {_}: add ?16 additive_identity =>= ?16 [16] by additive_id1 ?16
+ Id :  14, {_}:
+          multiply ?18 multiplicative_identity =>= ?18
+          [18] by multiplicative_id1 ?18
+ Id :  16, {_}:
+          add ?20 (inverse ?20) =>= multiplicative_identity
+          [20] by additive_inverse1 ?20
+ Id :  18, {_}:
+          multiply ?22 (inverse ?22) =>= additive_identity
+          [22] by multiplicative_inverse1 ?22
+Goal
+ Id :   2, {_}:
+          multiply a (multiply b c) =<= multiply (multiply a b) c
+          [] by prove_associativity
+Timeout !
+FAILURE in 625 iterations
+BOO031-1
+Order
+ == is 100
+ _ is 99
+ a is 98
+ add is 95
+ additive_inverse is 83
+ associativity_of_add is 80
+ associativity_of_multiply is 79
+ b is 97
+ c is 96
+ distributivity is 92
+ inverse is 89
+ l1 is 91
+ l2 is 87
+ l3 is 90
+ l4 is 86
+ multiplicative_inverse is 81
+ multiply is 94
+ n0 is 82
+ n1 is 84
+ property3 is 88
+ property3_dual is 85
+ prove_multiply_add_property is 93
+Facts
+ Id :   4, {_}:
+          add (multiply ?2 ?3) (add (multiply ?3 ?4) (multiply ?4 ?2))
+          =>=
+          multiply (add ?2 ?3) (multiply (add ?3 ?4) (add ?4 ?2))
+          [4, 3, 2] by distributivity ?2 ?3 ?4
+ Id :   6, {_}:
+          add ?6 (multiply ?7 (multiply ?6 ?8)) =>= ?6
+          [8, 7, 6] by l1 ?6 ?7 ?8
+ Id :   8, {_}:
+          add (add (multiply ?10 ?11) (multiply ?11 ?12)) ?11 =>= ?11
+          [12, 11, 10] by l3 ?10 ?11 ?12
+ Id :  10, {_}:
+          multiply (add ?14 (inverse ?14)) ?15 =>= ?15
+          [15, 14] by property3 ?14 ?15
+ Id :  12, {_}:
+          multiply ?17 (add ?18 (add ?17 ?19)) =>= ?17
+          [19, 18, 17] by l2 ?17 ?18 ?19
+ Id :  14, {_}:
+          multiply (multiply (add ?21 ?22) (add ?22 ?23)) ?22 =>= ?22
+          [23, 22, 21] by l4 ?21 ?22 ?23
+ Id :  16, {_}:
+          add (multiply ?25 (inverse ?25)) ?26 =>= ?26
+          [26, 25] by property3_dual ?25 ?26
+ Id :  18, {_}: add ?28 (inverse ?28) =>= n1 [28] by additive_inverse ?28
+ Id :  20, {_}:
+          multiply ?30 (inverse ?30) =>= n0
+          [30] by multiplicative_inverse ?30
+ Id :  22, {_}:
+          add (add ?32 ?33) ?34 =?= add ?32 (add ?33 ?34)
+          [34, 33, 32] by associativity_of_add ?32 ?33 ?34
+ Id :  24, {_}:
+          multiply (multiply ?36 ?37) ?38 =?= multiply ?36 (multiply ?37 ?38)
+          [38, 37, 36] by associativity_of_multiply ?36 ?37 ?38
+Goal
+ Id :   2, {_}:
+          multiply a (add b c) =<= add (multiply b a) (multiply c a)
+          [] by prove_multiply_add_property
+Timeout !
+FAILURE in 413 iterations
+BOO034-1
+Order
+ == is 100
+ _ is 99
+ a is 98
+ associativity is 88
+ b is 96
+ c is 94
+ d is 93
+ e is 92
+ f is 91
+ g is 90
+ inverse is 97
+ left_inverse is 85
+ multiply is 95
+ prove_single_axiom is 89
+ right_inverse is 84
+ ternary_multiply_1 is 87
+ ternary_multiply_2 is 86
+Facts
+ Id :   4, {_}:
+          multiply (multiply ?2 ?3 ?4) ?5 (multiply ?2 ?3 ?6)
+          =>=
+          multiply ?2 ?3 (multiply ?4 ?5 ?6)
+          [6, 5, 4, 3, 2] by associativity ?2 ?3 ?4 ?5 ?6
+ Id :   6, {_}: multiply ?8 ?9 ?9 =>= ?9 [9, 8] by ternary_multiply_1 ?8 ?9
+ Id :   8, {_}:
+          multiply ?11 ?11 ?12 =>= ?11
+          [12, 11] by ternary_multiply_2 ?11 ?12
+ Id :  10, {_}:
+          multiply (inverse ?14) ?14 ?15 =>= ?15
+          [15, 14] by left_inverse ?14 ?15
+ Id :  12, {_}:
+          multiply ?17 ?18 (inverse ?18) =>= ?17
+          [18, 17] by right_inverse ?17 ?18
+Goal
+ Id :   2, {_}:
+          multiply (multiply a (inverse a) b)
+            (inverse (multiply (multiply c d e) f (multiply c d g)))
+            (multiply d (multiply g f e) c)
+          =>=
+          b
+          [] by prove_single_axiom
+Timeout !
+FAILURE in 424 iterations
+BOO072-1
+Order
+ == is 100
+ _ is 99
+ a is 97
+ add is 96
+ b is 98
+ dn1 is 93
+ huntinton_1 is 95
+ inverse is 94
+Facts
+ Id :   4, {_}:
+          inverse
+            (add (inverse (add (inverse (add ?2 ?3)) ?4))
+              (inverse
+                (add ?2 (inverse (add (inverse ?4) (inverse (add ?4 ?5)))))))
+          =>=
+          ?4
+          [5, 4, 3, 2] by dn1 ?2 ?3 ?4 ?5
+Goal
+ Id :   2, {_}: add b a =>= add a b [] by huntinton_1
+Found proof, 0.440809s
+BOO073-1
+Order
+ == is 100
+ _ is 99
+ a is 98
+ add is 96
+ b is 97
+ c is 95
+ dn1 is 92
+ huntinton_2 is 94
+ inverse is 93
+Facts
+ Id :   4, {_}:
+          inverse
+            (add (inverse (add (inverse (add ?2 ?3)) ?4))
+              (inverse
+                (add ?2 (inverse (add (inverse ?4) (inverse (add ?4 ?5)))))))
+          =>=
+          ?4
+          [5, 4, 3, 2] by dn1 ?2 ?3 ?4 ?5
+Goal
+ Id :   2, {_}: add (add a b) c =>= add a (add b c) [] by huntinton_2
+Found proof, 95.580028s
+BOO076-1
+Order
+ == is 100
+ _ is 99
+ a is 98
+ b is 97
+ c is 96
+ nand is 95
+ prove_meredith_2_basis_2 is 94
+ sh_1 is 93
+Facts
+ Id :   4, {_}:
+          nand (nand ?2 (nand (nand ?3 ?2) ?2)) (nand ?3 (nand ?4 ?2)) =>= ?3
+          [4, 3, 2] by sh_1 ?2 ?3 ?4
+Goal
+ Id :   2, {_}:
+          nand a (nand b (nand a c)) =<= nand (nand (nand c b) b) a
+          [] by prove_meredith_2_basis_2
+Timeout !
+FAILURE in 277 iterations
+COL003-1
+Order
+ == is 100
+ _ is 99
+ apply is 97
+ b is 95
+ b_definition is 94
+ f is 98
+ prove_strong_fixed_point is 96
+ w is 93
+ w_definition is 92
+Facts
+ Id :   4, {_}:
+          apply (apply (apply b ?3) ?4) ?5 =>= apply ?3 (apply ?4 ?5)
+          [5, 4, 3] by b_definition ?3 ?4 ?5
+ Id :   6, {_}:
+          apply (apply w ?7) ?8 =?= apply (apply ?7 ?8) ?8
+          [8, 7] by w_definition ?7 ?8
+Goal
+ Id :   2, {_}:
+          apply ?1 (f ?1) =<= apply (f ?1) (apply ?1 (f ?1))
+          [1] by prove_strong_fixed_point ?1
+Timeout !
+FAILURE in 1120 iterations
+COL003-12
+Order
+ == is 100
+ _ is 99
+ apply is 96
+ b is 94
+ b_definition is 93
+ fixed_pt is 97
+ prove_strong_fixed_point is 95
+ strong_fixed_point is 98
+ w is 92
+ w_definition is 91
+Facts
+ Id :   4, {_}:
+          apply (apply (apply b ?2) ?3) ?4 =>= apply ?2 (apply ?3 ?4)
+          [4, 3, 2] by b_definition ?2 ?3 ?4
+ Id :   6, {_}:
+          apply (apply w ?6) ?7 =?= apply (apply ?6 ?7) ?7
+          [7, 6] by w_definition ?6 ?7
+ Id :   8, {_}:
+          strong_fixed_point
+          =<=
+          apply (apply b (apply w w))
+            (apply (apply b w) (apply (apply b b) b))
+          [] by strong_fixed_point
+Goal
+ Id :   2, {_}:
+          apply strong_fixed_point fixed_pt
+          =<=
+          apply fixed_pt (apply strong_fixed_point fixed_pt)
+          [] by prove_strong_fixed_point
+Timeout !
+FAILURE in 1252 iterations
+COL003-20
+Order
+ == is 100
+ _ is 99
+ apply is 96
+ b is 94
+ b_definition is 93
+ fixed_pt is 97
+ prove_strong_fixed_point is 95
+ strong_fixed_point is 98
+ w is 92
+ w_definition is 91
+Facts
+ Id :   4, {_}:
+          apply (apply (apply b ?2) ?3) ?4 =>= apply ?2 (apply ?3 ?4)
+          [4, 3, 2] by b_definition ?2 ?3 ?4
+ Id :   6, {_}:
+          apply (apply w ?6) ?7 =?= apply (apply ?6 ?7) ?7
+          [7, 6] by w_definition ?6 ?7
+ Id :   8, {_}:
+          strong_fixed_point
+          =<=
+          apply (apply b (apply w w))
+            (apply (apply b (apply b w)) (apply (apply b b) b))
+          [] by strong_fixed_point
+Goal
+ Id :   2, {_}:
+          apply strong_fixed_point fixed_pt
+          =<=
+          apply fixed_pt (apply strong_fixed_point fixed_pt)
+          [] by prove_strong_fixed_point
+Timeout !
+FAILURE in 1223 iterations
+COL006-6
+Order
+ == is 100
+ _ is 99
+ apply is 96
+ fixed_pt is 97
+ k is 92
+ k_definition is 91
+ prove_strong_fixed_point is 95
+ s is 94
+ s_definition is 93
+ strong_fixed_point is 98
+Facts
+ Id :   4, {_}:
+          apply (apply (apply s ?2) ?3) ?4
+          =?=
+          apply (apply ?2 ?4) (apply ?3 ?4)
+          [4, 3, 2] by s_definition ?2 ?3 ?4
+ Id :   6, {_}: apply (apply k ?6) ?7 =>= ?6 [7, 6] by k_definition ?6 ?7
+ Id :   8, {_}:
+          strong_fixed_point
+          =<=
+          apply
+            (apply s
+              (apply k
+                (apply (apply s (apply (apply s k) k)) (apply (apply s k) k))))
+            (apply (apply s (apply (apply s (apply k s)) k))
+              (apply k
+                (apply (apply s (apply (apply s k) k)) (apply (apply s k) k))))
+          [] by strong_fixed_point
+Goal
+ Id :   2, {_}:
+          apply strong_fixed_point fixed_pt
+          =<=
+          apply fixed_pt (apply strong_fixed_point fixed_pt)
+          [] by prove_strong_fixed_point
+Timeout !
+FAILURE in 1708 iterations
+COL011-1
+Order
+ == is 100
+ _ is 99
+ apply is 97
+ combinator is 98
+ o is 95
+ o_definition is 94
+ prove_fixed_point is 96
+ q1 is 93
+ q1_definition is 92
+Facts
+ Id :   4, {_}:
+          apply (apply o ?3) ?4 =?= apply ?4 (apply ?3 ?4)
+          [4, 3] by o_definition ?3 ?4
+ Id :   6, {_}:
+          apply (apply (apply q1 ?6) ?7) ?8 =>= apply ?6 (apply ?8 ?7)
+          [8, 7, 6] by q1_definition ?6 ?7 ?8
+Goal
+ Id :   2, {_}: ?1 =<= apply combinator ?1 [1] by prove_fixed_point ?1
+Timeout !
+FAILURE in 1839 iterations
+COL037-1
+Order
+ == is 100
+ _ is 99
+ apply is 97
+ b is 93
+ b_definition is 92
+ c is 91
+ c_definition is 90
+ f is 98
+ prove_fixed_point is 96
+ s is 95
+ s_definition is 94
+Facts
+ Id :   4, {_}:
+          apply (apply (apply s ?3) ?4) ?5
+          =?=
+          apply (apply ?3 ?5) (apply ?4 ?5)
+          [5, 4, 3] by s_definition ?3 ?4 ?5
+ Id :   6, {_}:
+          apply (apply (apply b ?7) ?8) ?9 =>= apply ?7 (apply ?8 ?9)
+          [9, 8, 7] by b_definition ?7 ?8 ?9
+ Id :   8, {_}:
+          apply (apply (apply c ?11) ?12) ?13 =>= apply (apply ?11 ?13) ?12
+          [13, 12, 11] by c_definition ?11 ?12 ?13
+Goal
+ Id :   2, {_}:
+          apply ?1 (f ?1) =<= apply (f ?1) (apply ?1 (f ?1))
+          [1] by prove_fixed_point ?1
+Timeout !
+FAILURE in 944 iterations
+COL038-1
+Order
+ == is 100
+ _ is 99
+ apply is 97
+ b is 95
+ b_definition is 94
+ f is 98
+ m is 93
+ m_definition is 92
+ prove_fixed_point is 96
+ v is 91
+ v_definition is 90
+Facts
+ Id :   4, {_}:
+          apply (apply (apply b ?3) ?4) ?5 =>= apply ?3 (apply ?4 ?5)
+          [5, 4, 3] by b_definition ?3 ?4 ?5
+ Id :   6, {_}: apply m ?7 =?= apply ?7 ?7 [7] by m_definition ?7
+ Id :   8, {_}:
+          apply (apply (apply v ?9) ?10) ?11 =>= apply (apply ?11 ?9) ?10
+          [11, 10, 9] by v_definition ?9 ?10 ?11
+Goal
+ Id :   2, {_}:
+          apply ?1 (f ?1) =<= apply (f ?1) (apply ?1 (f ?1))
+          [1] by prove_fixed_point ?1
+Timeout !
+FAILURE in 1682 iterations
+COL043-3
+Order
+ == is 100
+ _ is 99
+ apply is 96
+ b is 94
+ b_definition is 93
+ fixed_pt is 97
+ h is 92
+ h_definition is 91
+ prove_strong_fixed_point is 95
+ strong_fixed_point is 98
+Facts
+ Id :   4, {_}:
+          apply (apply (apply b ?2) ?3) ?4 =>= apply ?2 (apply ?3 ?4)
+          [4, 3, 2] by b_definition ?2 ?3 ?4
+ Id :   6, {_}:
+          apply (apply (apply h ?6) ?7) ?8
+          =?=
+          apply (apply (apply ?6 ?7) ?8) ?7
+          [8, 7, 6] by h_definition ?6 ?7 ?8
+ Id :   8, {_}:
+          strong_fixed_point
+          =<=
+          apply
+            (apply b
+              (apply
+                (apply b
+                  (apply
+                    (apply h
+                      (apply (apply b (apply (apply b h) (apply b b)))
+                        (apply h (apply (apply b h) (apply b b))))) h)) b)) b
+          [] by strong_fixed_point
+Goal
+ Id :   2, {_}:
+          apply strong_fixed_point fixed_pt
+          =<=
+          apply fixed_pt (apply strong_fixed_point fixed_pt)
+          [] by prove_strong_fixed_point
+Timeout !
+FAILURE in 1406 iterations
+COL044-8
+Order
+ == is 100
+ _ is 99
+ apply is 96
+ b is 94
+ b_definition is 93
+ fixed_pt is 97
+ n is 92
+ n_definition is 91
+ prove_strong_fixed_point is 95
+ strong_fixed_point is 98
+Facts
+ Id :   4, {_}:
+          apply (apply (apply b ?2) ?3) ?4 =>= apply ?2 (apply ?3 ?4)
+          [4, 3, 2] by b_definition ?2 ?3 ?4
+ Id :   6, {_}:
+          apply (apply (apply n ?6) ?7) ?8
+          =?=
+          apply (apply (apply ?6 ?8) ?7) ?8
+          [8, 7, 6] by n_definition ?6 ?7 ?8
+ Id :   8, {_}:
+          strong_fixed_point
+          =<=
+          apply
+            (apply b
+              (apply
+                (apply b
+                  (apply
+                    (apply n
+                      (apply n
+                        (apply (apply b (apply b b))
+                          (apply n (apply (apply b b) n))))) n)) b)) b
+          [] by strong_fixed_point
+Goal
+ Id :   2, {_}:
+          apply strong_fixed_point fixed_pt
+          =<=
+          apply fixed_pt (apply strong_fixed_point fixed_pt)
+          [] by prove_strong_fixed_point
+Timeout !
+FAILURE in 1249 iterations
+COL046-1
+Order
+ == is 100
+ _ is 99
+ apply is 97
+ b is 93
+ b_definition is 92
+ f is 98
+ m is 91
+ m_definition is 90
+ prove_fixed_point is 96
+ s is 95
+ s_definition is 94
+Facts
+ Id :   4, {_}:
+          apply (apply (apply s ?3) ?4) ?5
+          =?=
+          apply (apply ?3 ?5) (apply ?4 ?5)
+          [5, 4, 3] by s_definition ?3 ?4 ?5
+ Id :   6, {_}:
+          apply (apply (apply b ?7) ?8) ?9 =>= apply ?7 (apply ?8 ?9)
+          [9, 8, 7] by b_definition ?7 ?8 ?9
+ Id :   8, {_}: apply m ?11 =?= apply ?11 ?11 [11] by m_definition ?11
+Goal
+ Id :   2, {_}:
+          apply ?1 (f ?1) =<= apply (f ?1) (apply ?1 (f ?1))
+          [1] by prove_fixed_point ?1
+Timeout !
+FAILURE in 1258 iterations
+COL049-1
+Order
+ == is 100
+ _ is 99
+ apply is 97
+ b is 95
+ b_definition is 94
+ f is 98
+ m is 91
+ m_definition is 90
+ prove_strong_fixed_point is 96
+ w is 93
+ w_definition is 92
+Facts
+ Id :   4, {_}:
+          apply (apply (apply b ?3) ?4) ?5 =>= apply ?3 (apply ?4 ?5)
+          [5, 4, 3] by b_definition ?3 ?4 ?5
+ Id :   6, {_}:
+          apply (apply w ?7) ?8 =?= apply (apply ?7 ?8) ?8
+          [8, 7] by w_definition ?7 ?8
+ Id :   8, {_}: apply m ?10 =?= apply ?10 ?10 [10] by m_definition ?10
+Goal
+ Id :   2, {_}:
+          apply ?1 (f ?1) =<= apply (f ?1) (apply ?1 (f ?1))
+          [1] by prove_strong_fixed_point ?1
+Timeout !
+FAILURE in 1565 iterations
+COL057-1
+Order
+ == is 100
+ _ is 99
+ apply is 97
+ b is 93
+ b_definition is 92
+ c is 91
+ c_definition is 90
+ f is 98
+ i is 89
+ i_definition is 88
+ prove_strong_fixed_point is 96
+ s is 95
+ s_definition is 94
+Facts
+ Id :   4, {_}:
+          apply (apply (apply s ?3) ?4) ?5
+          =?=
+          apply (apply ?3 ?5) (apply ?4 ?5)
+          [5, 4, 3] by s_definition ?3 ?4 ?5
+ Id :   6, {_}:
+          apply (apply (apply b ?7) ?8) ?9 =>= apply ?7 (apply ?8 ?9)
+          [9, 8, 7] by b_definition ?7 ?8 ?9
+ Id :   8, {_}:
+          apply (apply (apply c ?11) ?12) ?13 =>= apply (apply ?11 ?13) ?12
+          [13, 12, 11] by c_definition ?11 ?12 ?13
+ Id :  10, {_}: apply i ?15 =>= ?15 [15] by i_definition ?15
+Goal
+ Id :   2, {_}:
+          apply ?1 (f ?1) =<= apply (f ?1) (apply ?1 (f ?1))
+          [1] by prove_strong_fixed_point ?1
+Timeout !
+FAILURE in 1505 iterations
+COL060-1
+Order
+ == is 100
+ _ is 99
+ apply is 97
+ b is 93
+ b_definition is 92
+ f is 98
+ g is 96
+ h is 95
+ prove_q_combinator is 94
+ t is 91
+ t_definition is 90
+Facts
+ Id :   4, {_}:
+          apply (apply (apply b ?3) ?4) ?5 =>= apply ?3 (apply ?4 ?5)
+          [5, 4, 3] by b_definition ?3 ?4 ?5
+ Id :   6, {_}:
+          apply (apply t ?7) ?8 =>= apply ?8 ?7
+          [8, 7] by t_definition ?7 ?8
+Goal
+ Id :   2, {_}:
+          apply (apply (apply ?1 (f ?1)) (g ?1)) (h ?1)
+          =>=
+          apply (g ?1) (apply (f ?1) (h ?1))
+          [1] by prove_q_combinator ?1
+Found proof, 0.103279s
+COL061-1
+Order
+ == is 100
+ _ is 99
+ apply is 97
+ b is 93
+ b_definition is 92
+ f is 98
+ g is 96
+ h is 95
+ prove_q1_combinator is 94
+ t is 91
+ t_definition is 90
+Facts
+ Id :   4, {_}:
+          apply (apply (apply b ?3) ?4) ?5 =>= apply ?3 (apply ?4 ?5)
+          [5, 4, 3] by b_definition ?3 ?4 ?5
+ Id :   6, {_}:
+          apply (apply t ?7) ?8 =>= apply ?8 ?7
+          [8, 7] by t_definition ?7 ?8
+Goal
+ Id :   2, {_}:
+          apply (apply (apply ?1 (f ?1)) (g ?1)) (h ?1)
+          =>=
+          apply (f ?1) (apply (h ?1) (g ?1))
+          [1] by prove_q1_combinator ?1
+Found proof, 0.116546s
+COL063-1
+Order
+ == is 100
+ _ is 99
+ apply is 97
+ b is 93
+ b_definition is 92
+ f is 98
+ g is 96
+ h is 95
+ prove_f_combinator is 94
+ t is 91
+ t_definition is 90
+Facts
+ Id :   4, {_}:
+          apply (apply (apply b ?3) ?4) ?5 =>= apply ?3 (apply ?4 ?5)
+          [5, 4, 3] by b_definition ?3 ?4 ?5
+ Id :   6, {_}:
+          apply (apply t ?7) ?8 =>= apply ?8 ?7
+          [8, 7] by t_definition ?7 ?8
+Goal
+ Id :   2, {_}:
+          apply (apply (apply ?1 (f ?1)) (g ?1)) (h ?1)
+          =>=
+          apply (apply (h ?1) (g ?1)) (f ?1)
+          [1] by prove_f_combinator ?1
+Found proof, 1.828433s
+COL064-1
+Order
+ == is 100
+ _ is 99
+ apply is 97
+ b is 93
+ b_definition is 92
+ f is 98
+ g is 96
+ h is 95
+ prove_v_combinator is 94
+ t is 91
+ t_definition is 90
+Facts
+ Id :   4, {_}:
+          apply (apply (apply b ?3) ?4) ?5 =>= apply ?3 (apply ?4 ?5)
+          [5, 4, 3] by b_definition ?3 ?4 ?5
+ Id :   6, {_}:
+          apply (apply t ?7) ?8 =>= apply ?8 ?7
+          [8, 7] by t_definition ?7 ?8
+Goal
+ Id :   2, {_}:
+          apply (apply (apply ?1 (f ?1)) (g ?1)) (h ?1)
+          =>=
+          apply (apply (h ?1) (f ?1)) (g ?1)
+          [1] by prove_v_combinator ?1
+Found proof, 13.759082s
+COL065-1
+Order
+ == is 100
+ _ is 99
+ apply is 97
+ b is 92
+ b_definition is 91
+ f is 98
+ g is 96
+ h is 95
+ i is 94
+ prove_g_combinator is 93
+ t is 90
+ t_definition is 89
+Facts
+ Id :   4, {_}:
+          apply (apply (apply b ?3) ?4) ?5 =>= apply ?3 (apply ?4 ?5)
+          [5, 4, 3] by b_definition ?3 ?4 ?5
+ Id :   6, {_}:
+          apply (apply t ?7) ?8 =>= apply ?8 ?7
+          [8, 7] by t_definition ?7 ?8
+Goal
+ Id :   2, {_}:
+          apply (apply (apply (apply ?1 (f ?1)) (g ?1)) (h ?1)) (i ?1)
+          =>=
+          apply (apply (f ?1) (i ?1)) (apply (g ?1) (h ?1))
+          [1] by prove_g_combinator ?1
+Found proof, 68.133820s
+GRP014-1
+Order
+ == is 100
+ _ is 99
+ a is 98
+ b is 97
+ c is 96
+ group_axiom is 92
+ inverse is 93
+ multiply is 95
+ prove_associativity is 94
+Facts
+ Id :   4, {_}:
+          multiply ?2
+            (inverse
+              (multiply
+                (multiply
+                  (inverse
+                    (multiply (inverse ?3) (multiply (inverse ?2) ?4))) ?5)
+                (inverse (multiply ?3 ?5))))
+          =>=
+          ?4
+          [5, 4, 3, 2] by group_axiom ?2 ?3 ?4 ?5
+Goal
+ Id :   2, {_}:
+          multiply a (multiply b c) =<= multiply (multiply a b) c
+          [] by prove_associativity
+Found proof, 3.453474s
+GRP024-5
+Order
+ == is 100
+ _ is 99
+ a is 98
+ associativity is 88
+ associativity_of_commutator is 86
+ b is 97
+ c is 96
+ commutator is 95
+ identity is 92
+ inverse is 90
+ left_identity is 91
+ left_inverse is 89
+ multiply is 94
+ name is 87
+ prove_center is 93
+Facts
+ Id :   4, {_}: multiply identity ?2 =>= ?2 [2] by left_identity ?2
+ Id :   6, {_}: multiply (inverse ?4) ?4 =>= identity [4] by left_inverse ?4
+ Id :   8, {_}:
+          multiply (multiply ?6 ?7) ?8 =?= multiply ?6 (multiply ?7 ?8)
+          [8, 7, 6] by associativity ?6 ?7 ?8
+ Id :  10, {_}:
+          commutator ?10 ?11
+          =<=
+          multiply (inverse ?10) (multiply (inverse ?11) (multiply ?10 ?11))
+          [11, 10] by name ?10 ?11
+ Id :  12, {_}:
+          commutator (commutator ?13 ?14) ?15
+          =?=
+          commutator ?13 (commutator ?14 ?15)
+          [15, 14, 13] by associativity_of_commutator ?13 ?14 ?15
+Goal
+ Id :   2, {_}:
+          multiply a (commutator b c) =<= multiply (commutator b c) a
+          [] by prove_center
+Timeout !
+FAILURE in 602 iterations
+GRP114-1
+Order
+ == is 100
+ _ is 99
+ a is 98
+ associativity is 89
+ identity is 93
+ intersection is 85
+ intersection_associative is 79
+ intersection_commutative is 81
+ intersection_idempotent is 84
+ intersection_union_absorbtion is 76
+ inverse is 91
+ inverse_involution is 87
+ inverse_of_identity is 88
+ inverse_product_lemma is 86
+ left_identity is 92
+ left_inverse is 90
+ multiply is 95
+ multiply_intersection1 is 74
+ multiply_intersection2 is 72
+ multiply_union1 is 75
+ multiply_union2 is 73
+ negative_part is 96
+ positive_part is 97
+ prove_product is 94
+ union is 83
+ union_associative is 78
+ union_commutative is 80
+ union_idempotent is 82
+ union_intersection_absorbtion is 77
+Facts
+ Id :   4, {_}: multiply identity ?2 =>= ?2 [2] by left_identity ?2
+ Id :   6, {_}: multiply (inverse ?4) ?4 =>= identity [4] by left_inverse ?4
+ Id :   8, {_}:
+          multiply (multiply ?6 ?7) ?8 =?= multiply ?6 (multiply ?7 ?8)
+          [8, 7, 6] by associativity ?6 ?7 ?8
+ Id :  10, {_}: inverse identity =>= identity [] by inverse_of_identity
+ Id :  12, {_}: inverse (inverse ?11) =>= ?11 [11] by inverse_involution ?11
+ Id :  14, {_}:
+          inverse (multiply ?13 ?14) =<= multiply (inverse ?14) (inverse ?13)
+          [14, 13] by inverse_product_lemma ?13 ?14
+ Id :  16, {_}:
+          intersection ?16 ?16 =>= ?16
+          [16] by intersection_idempotent ?16
+ Id :  18, {_}: union ?18 ?18 =>= ?18 [18] by union_idempotent ?18
+ Id :  20, {_}:
+          intersection ?20 ?21 =?= intersection ?21 ?20
+          [21, 20] by intersection_commutative ?20 ?21
+ Id :  22, {_}:
+          union ?23 ?24 =?= union ?24 ?23
+          [24, 23] by union_commutative ?23 ?24
+ Id :  24, {_}:
+          intersection ?26 (intersection ?27 ?28)
+          =?=
+          intersection (intersection ?26 ?27) ?28
+          [28, 27, 26] by intersection_associative ?26 ?27 ?28
+ Id :  26, {_}:
+          union ?30 (union ?31 ?32) =?= union (union ?30 ?31) ?32
+          [32, 31, 30] by union_associative ?30 ?31 ?32
+ Id :  28, {_}:
+          union (intersection ?34 ?35) ?35 =>= ?35
+          [35, 34] by union_intersection_absorbtion ?34 ?35
+ Id :  30, {_}:
+          intersection (union ?37 ?38) ?38 =>= ?38
+          [38, 37] by intersection_union_absorbtion ?37 ?38
+ Id :  32, {_}:
+          multiply ?40 (union ?41 ?42)
+          =<=
+          union (multiply ?40 ?41) (multiply ?40 ?42)
+          [42, 41, 40] by multiply_union1 ?40 ?41 ?42
+ Id :  34, {_}:
+          multiply ?44 (intersection ?45 ?46)
+          =<=
+          intersection (multiply ?44 ?45) (multiply ?44 ?46)
+          [46, 45, 44] by multiply_intersection1 ?44 ?45 ?46
+ Id :  36, {_}:
+          multiply (union ?48 ?49) ?50
+          =<=
+          union (multiply ?48 ?50) (multiply ?49 ?50)
+          [50, 49, 48] by multiply_union2 ?48 ?49 ?50
+ Id :  38, {_}:
+          multiply (intersection ?52 ?53) ?54
+          =<=
+          intersection (multiply ?52 ?54) (multiply ?53 ?54)
+          [54, 53, 52] by multiply_intersection2 ?52 ?53 ?54
+ Id :  40, {_}:
+          positive_part ?56 =<= union ?56 identity
+          [56] by positive_part ?56
+ Id :  42, {_}:
+          negative_part ?58 =<= intersection ?58 identity
+          [58] by negative_part ?58
+Goal
+ Id :   2, {_}:
+          multiply (positive_part a) (negative_part a) =>= a
+          [] by prove_product
+Timeout !
+FAILURE in 1190 iterations
+GRP164-2
+Order
+ == is 100
+ _ is 99
+ a is 98
+ associativity is 87
+ associativity_of_glb is 84
+ associativity_of_lub is 83
+ b is 97
+ c is 96
+ glb_absorbtion is 79
+ greatest_lower_bound is 94
+ idempotence_of_gld is 81
+ idempotence_of_lub is 82
+ identity is 92
+ inverse is 89
+ least_upper_bound is 95
+ left_identity is 90
+ left_inverse is 88
+ lub_absorbtion is 80
+ monotony_glb1 is 77
+ monotony_glb2 is 75
+ monotony_lub1 is 78
+ monotony_lub2 is 76
+ multiply is 91
+ prove_distrun is 93
+ symmetry_of_glb is 86
+ symmetry_of_lub is 85
+Facts
+ Id :   4, {_}: multiply identity ?2 =>= ?2 [2] by left_identity ?2
+ Id :   6, {_}: multiply (inverse ?4) ?4 =>= identity [4] by left_inverse ?4
+ Id :   8, {_}:
+          multiply (multiply ?6 ?7) ?8 =?= multiply ?6 (multiply ?7 ?8)
+          [8, 7, 6] by associativity ?6 ?7 ?8
+ Id :  10, {_}:
+          greatest_lower_bound ?10 ?11 =?= greatest_lower_bound ?11 ?10
+          [11, 10] by symmetry_of_glb ?10 ?11
+ Id :  12, {_}:
+          least_upper_bound ?13 ?14 =?= least_upper_bound ?14 ?13
+          [14, 13] by symmetry_of_lub ?13 ?14
+ Id :  14, {_}:
+          greatest_lower_bound ?16 (greatest_lower_bound ?17 ?18)
+          =?=
+          greatest_lower_bound (greatest_lower_bound ?16 ?17) ?18
+          [18, 17, 16] by associativity_of_glb ?16 ?17 ?18
+ Id :  16, {_}:
+          least_upper_bound ?20 (least_upper_bound ?21 ?22)
+          =?=
+          least_upper_bound (least_upper_bound ?20 ?21) ?22
+          [22, 21, 20] by associativity_of_lub ?20 ?21 ?22
+ Id :  18, {_}:
+          least_upper_bound ?24 ?24 =>= ?24
+          [24] by idempotence_of_lub ?24
+ Id :  20, {_}:
+          greatest_lower_bound ?26 ?26 =>= ?26
+          [26] by idempotence_of_gld ?26
+ Id :  22, {_}:
+          least_upper_bound ?28 (greatest_lower_bound ?28 ?29) =>= ?28
+          [29, 28] by lub_absorbtion ?28 ?29
+ Id :  24, {_}:
+          greatest_lower_bound ?31 (least_upper_bound ?31 ?32) =>= ?31
+          [32, 31] by glb_absorbtion ?31 ?32
+ Id :  26, {_}:
+          multiply ?34 (least_upper_bound ?35 ?36)
+          =<=
+          least_upper_bound (multiply ?34 ?35) (multiply ?34 ?36)
+          [36, 35, 34] by monotony_lub1 ?34 ?35 ?36
+ Id :  28, {_}:
+          multiply ?38 (greatest_lower_bound ?39 ?40)
+          =<=
+          greatest_lower_bound (multiply ?38 ?39) (multiply ?38 ?40)
+          [40, 39, 38] by monotony_glb1 ?38 ?39 ?40
+ Id :  30, {_}:
+          multiply (least_upper_bound ?42 ?43) ?44
+          =<=
+          least_upper_bound (multiply ?42 ?44) (multiply ?43 ?44)
+          [44, 43, 42] by monotony_lub2 ?42 ?43 ?44
+ Id :  32, {_}:
+          multiply (greatest_lower_bound ?46 ?47) ?48
+          =<=
+          greatest_lower_bound (multiply ?46 ?48) (multiply ?47 ?48)
+          [48, 47, 46] by monotony_glb2 ?46 ?47 ?48
+Goal
+ Id :   2, {_}:
+          greatest_lower_bound a (least_upper_bound b c)
+          =<=
+          least_upper_bound (greatest_lower_bound a b)
+            (greatest_lower_bound a c)
+          [] by prove_distrun
+Timeout !
+FAILURE in 1400 iterations
+GRP167-1
+Order
+ == is 100
+ _ is 99
+ a is 98
+ associativity is 89
+ associativity_of_glb is 84
+ associativity_of_lub is 83
+ glb_absorbtion is 79
+ greatest_lower_bound is 88
+ idempotence_of_gld is 81
+ idempotence_of_lub is 82
+ identity is 93
+ inverse is 91
+ lat4_1 is 74
+ lat4_2 is 73
+ lat4_3 is 72
+ lat4_4 is 71
+ least_upper_bound is 86
+ left_identity is 92
+ left_inverse is 90
+ lub_absorbtion is 80
+ monotony_glb1 is 77
+ monotony_glb2 is 75
+ monotony_lub1 is 78
+ monotony_lub2 is 76
+ multiply is 95
+ negative_part is 96
+ positive_part is 97
+ prove_lat4 is 94
+ symmetry_of_glb is 87
+ symmetry_of_lub is 85
+Facts
+ Id :   4, {_}: multiply identity ?2 =>= ?2 [2] by left_identity ?2
+ Id :   6, {_}: multiply (inverse ?4) ?4 =>= identity [4] by left_inverse ?4
+ Id :   8, {_}:
+          multiply (multiply ?6 ?7) ?8 =?= multiply ?6 (multiply ?7 ?8)
+          [8, 7, 6] by associativity ?6 ?7 ?8
+ Id :  10, {_}:
+          greatest_lower_bound ?10 ?11 =?= greatest_lower_bound ?11 ?10
+          [11, 10] by symmetry_of_glb ?10 ?11
+ Id :  12, {_}:
+          least_upper_bound ?13 ?14 =?= least_upper_bound ?14 ?13
+          [14, 13] by symmetry_of_lub ?13 ?14
+ Id :  14, {_}:
+          greatest_lower_bound ?16 (greatest_lower_bound ?17 ?18)
+          =?=
+          greatest_lower_bound (greatest_lower_bound ?16 ?17) ?18
+          [18, 17, 16] by associativity_of_glb ?16 ?17 ?18
+ Id :  16, {_}:
+          least_upper_bound ?20 (least_upper_bound ?21 ?22)
+          =?=
+          least_upper_bound (least_upper_bound ?20 ?21) ?22
+          [22, 21, 20] by associativity_of_lub ?20 ?21 ?22
+ Id :  18, {_}:
+          least_upper_bound ?24 ?24 =>= ?24
+          [24] by idempotence_of_lub ?24
+ Id :  20, {_}:
+          greatest_lower_bound ?26 ?26 =>= ?26
+          [26] by idempotence_of_gld ?26
+ Id :  22, {_}:
+          least_upper_bound ?28 (greatest_lower_bound ?28 ?29) =>= ?28
+          [29, 28] by lub_absorbtion ?28 ?29
+ Id :  24, {_}:
+          greatest_lower_bound ?31 (least_upper_bound ?31 ?32) =>= ?31
+          [32, 31] by glb_absorbtion ?31 ?32
+ Id :  26, {_}:
+          multiply ?34 (least_upper_bound ?35 ?36)
+          =<=
+          least_upper_bound (multiply ?34 ?35) (multiply ?34 ?36)
+          [36, 35, 34] by monotony_lub1 ?34 ?35 ?36
+ Id :  28, {_}:
+          multiply ?38 (greatest_lower_bound ?39 ?40)
+          =<=
+          greatest_lower_bound (multiply ?38 ?39) (multiply ?38 ?40)
+          [40, 39, 38] by monotony_glb1 ?38 ?39 ?40
+ Id :  30, {_}:
+          multiply (least_upper_bound ?42 ?43) ?44
+          =<=
+          least_upper_bound (multiply ?42 ?44) (multiply ?43 ?44)
+          [44, 43, 42] by monotony_lub2 ?42 ?43 ?44
+ Id :  32, {_}:
+          multiply (greatest_lower_bound ?46 ?47) ?48
+          =<=
+          greatest_lower_bound (multiply ?46 ?48) (multiply ?47 ?48)
+          [48, 47, 46] by monotony_glb2 ?46 ?47 ?48
+ Id :  34, {_}:
+          positive_part ?50 =<= least_upper_bound ?50 identity
+          [50] by lat4_1 ?50
+ Id :  36, {_}:
+          negative_part ?52 =<= greatest_lower_bound ?52 identity
+          [52] by lat4_2 ?52
+ Id :  38, {_}:
+          least_upper_bound ?54 (greatest_lower_bound ?55 ?56)
+          =<=
+          greatest_lower_bound (least_upper_bound ?54 ?55)
+            (least_upper_bound ?54 ?56)
+          [56, 55, 54] by lat4_3 ?54 ?55 ?56
+ Id :  40, {_}:
+          greatest_lower_bound ?58 (least_upper_bound ?59 ?60)
+          =<=
+          least_upper_bound (greatest_lower_bound ?58 ?59)
+            (greatest_lower_bound ?58 ?60)
+          [60, 59, 58] by lat4_4 ?58 ?59 ?60
+Goal
+ Id :   2, {_}:
+          a =<= multiply (positive_part a) (negative_part a)
+          [] by prove_lat4
+Timeout !
+FAILURE in 1375 iterations
+GRP178-2
+Order
+ == is 100
+ _ is 99
+ a is 98
+ associativity is 88
+ associativity_of_glb is 84
+ associativity_of_lub is 83
+ b is 97
+ c is 96
+ glb_absorbtion is 79
+ greatest_lower_bound is 94
+ idempotence_of_gld is 81
+ idempotence_of_lub is 82
+ identity is 92
+ inverse is 90
+ least_upper_bound is 86
+ left_identity is 91
+ left_inverse is 89
+ lub_absorbtion is 80
+ monotony_glb1 is 77
+ monotony_glb2 is 75
+ monotony_lub1 is 78
+ monotony_lub2 is 76
+ multiply is 95
+ p09b_1 is 74
+ p09b_2 is 73
+ p09b_3 is 72
+ p09b_4 is 71
+ prove_p09b is 93
+ symmetry_of_glb is 87
+ symmetry_of_lub is 85
+Facts
+ Id :   4, {_}: multiply identity ?2 =>= ?2 [2] by left_identity ?2
+ Id :   6, {_}: multiply (inverse ?4) ?4 =>= identity [4] by left_inverse ?4
+ Id :   8, {_}:
+          multiply (multiply ?6 ?7) ?8 =?= multiply ?6 (multiply ?7 ?8)
+          [8, 7, 6] by associativity ?6 ?7 ?8
+ Id :  10, {_}:
+          greatest_lower_bound ?10 ?11 =?= greatest_lower_bound ?11 ?10
+          [11, 10] by symmetry_of_glb ?10 ?11
+ Id :  12, {_}:
+          least_upper_bound ?13 ?14 =?= least_upper_bound ?14 ?13
+          [14, 13] by symmetry_of_lub ?13 ?14
+ Id :  14, {_}:
+          greatest_lower_bound ?16 (greatest_lower_bound ?17 ?18)
+          =?=
+          greatest_lower_bound (greatest_lower_bound ?16 ?17) ?18
+          [18, 17, 16] by associativity_of_glb ?16 ?17 ?18
+ Id :  16, {_}:
+          least_upper_bound ?20 (least_upper_bound ?21 ?22)
+          =?=
+          least_upper_bound (least_upper_bound ?20 ?21) ?22
+          [22, 21, 20] by associativity_of_lub ?20 ?21 ?22
+ Id :  18, {_}:
+          least_upper_bound ?24 ?24 =>= ?24
+          [24] by idempotence_of_lub ?24
+ Id :  20, {_}:
+          greatest_lower_bound ?26 ?26 =>= ?26
+          [26] by idempotence_of_gld ?26
+ Id :  22, {_}:
+          least_upper_bound ?28 (greatest_lower_bound ?28 ?29) =>= ?28
+          [29, 28] by lub_absorbtion ?28 ?29
+ Id :  24, {_}:
+          greatest_lower_bound ?31 (least_upper_bound ?31 ?32) =>= ?31
+          [32, 31] by glb_absorbtion ?31 ?32
+ Id :  26, {_}:
+          multiply ?34 (least_upper_bound ?35 ?36)
+          =<=
+          least_upper_bound (multiply ?34 ?35) (multiply ?34 ?36)
+          [36, 35, 34] by monotony_lub1 ?34 ?35 ?36
+ Id :  28, {_}:
+          multiply ?38 (greatest_lower_bound ?39 ?40)
+          =<=
+          greatest_lower_bound (multiply ?38 ?39) (multiply ?38 ?40)
+          [40, 39, 38] by monotony_glb1 ?38 ?39 ?40
+ Id :  30, {_}:
+          multiply (least_upper_bound ?42 ?43) ?44
+          =<=
+          least_upper_bound (multiply ?42 ?44) (multiply ?43 ?44)
+          [44, 43, 42] by monotony_lub2 ?42 ?43 ?44
+ Id :  32, {_}:
+          multiply (greatest_lower_bound ?46 ?47) ?48
+          =<=
+          greatest_lower_bound (multiply ?46 ?48) (multiply ?47 ?48)
+          [48, 47, 46] by monotony_glb2 ?46 ?47 ?48
+ Id :  34, {_}: greatest_lower_bound identity a =>= identity [] by p09b_1
+ Id :  36, {_}: greatest_lower_bound identity b =>= identity [] by p09b_2
+ Id :  38, {_}: greatest_lower_bound identity c =>= identity [] by p09b_3
+ Id :  40, {_}: greatest_lower_bound a b =>= identity [] by p09b_4
+Goal
+ Id :   2, {_}:
+          greatest_lower_bound a (multiply b c) =>= greatest_lower_bound a c
+          [] by prove_p09b
+Timeout !
+FAILURE in 2472 iterations
+GRP181-4
+Order
+ == is 100
+ _ is 99
+ a is 98
+ associativity is 90
+ associativity_of_glb is 85
+ associativity_of_lub is 84
+ b is 97
+ c is 72
+ glb_absorbtion is 80
+ greatest_lower_bound is 89
+ idempotence_of_gld is 82
+ idempotence_of_lub is 83
+ identity is 95
+ inverse is 92
+ least_upper_bound is 87
+ left_identity is 93
+ left_inverse is 91
+ lub_absorbtion is 81
+ monotony_glb1 is 78
+ monotony_glb2 is 76
+ monotony_lub1 is 79
+ monotony_lub2 is 77
+ multiply is 94
+ p12x_1 is 75
+ p12x_2 is 74
+ p12x_3 is 73
+ p12x_4 is 71
+ p12x_5 is 70
+ p12x_6 is 69
+ p12x_7 is 68
+ prove_p12x is 96
+ symmetry_of_glb is 88
+ symmetry_of_lub is 86
+Facts
+ Id :   4, {_}: multiply identity ?2 =>= ?2 [2] by left_identity ?2
+ Id :   6, {_}: multiply (inverse ?4) ?4 =>= identity [4] by left_inverse ?4
+ Id :   8, {_}:
+          multiply (multiply ?6 ?7) ?8 =?= multiply ?6 (multiply ?7 ?8)
+          [8, 7, 6] by associativity ?6 ?7 ?8
+ Id :  10, {_}:
+          greatest_lower_bound ?10 ?11 =?= greatest_lower_bound ?11 ?10
+          [11, 10] by symmetry_of_glb ?10 ?11
+ Id :  12, {_}:
+          least_upper_bound ?13 ?14 =?= least_upper_bound ?14 ?13
+          [14, 13] by symmetry_of_lub ?13 ?14
+ Id :  14, {_}:
+          greatest_lower_bound ?16 (greatest_lower_bound ?17 ?18)
+          =?=
+          greatest_lower_bound (greatest_lower_bound ?16 ?17) ?18
+          [18, 17, 16] by associativity_of_glb ?16 ?17 ?18
+ Id :  16, {_}:
+          least_upper_bound ?20 (least_upper_bound ?21 ?22)
+          =?=
+          least_upper_bound (least_upper_bound ?20 ?21) ?22
+          [22, 21, 20] by associativity_of_lub ?20 ?21 ?22
+ Id :  18, {_}:
+          least_upper_bound ?24 ?24 =>= ?24
+          [24] by idempotence_of_lub ?24
+ Id :  20, {_}:
+          greatest_lower_bound ?26 ?26 =>= ?26
+          [26] by idempotence_of_gld ?26
+ Id :  22, {_}:
+          least_upper_bound ?28 (greatest_lower_bound ?28 ?29) =>= ?28
+          [29, 28] by lub_absorbtion ?28 ?29
+ Id :  24, {_}:
+          greatest_lower_bound ?31 (least_upper_bound ?31 ?32) =>= ?31
+          [32, 31] by glb_absorbtion ?31 ?32
+ Id :  26, {_}:
+          multiply ?34 (least_upper_bound ?35 ?36)
+          =<=
+          least_upper_bound (multiply ?34 ?35) (multiply ?34 ?36)
+          [36, 35, 34] by monotony_lub1 ?34 ?35 ?36
+ Id :  28, {_}:
+          multiply ?38 (greatest_lower_bound ?39 ?40)
+          =<=
+          greatest_lower_bound (multiply ?38 ?39) (multiply ?38 ?40)
+          [40, 39, 38] by monotony_glb1 ?38 ?39 ?40
+ Id :  30, {_}:
+          multiply (least_upper_bound ?42 ?43) ?44
+          =<=
+          least_upper_bound (multiply ?42 ?44) (multiply ?43 ?44)
+          [44, 43, 42] by monotony_lub2 ?42 ?43 ?44
+ Id :  32, {_}:
+          multiply (greatest_lower_bound ?46 ?47) ?48
+          =<=
+          greatest_lower_bound (multiply ?46 ?48) (multiply ?47 ?48)
+          [48, 47, 46] by monotony_glb2 ?46 ?47 ?48
+ Id :  34, {_}: inverse identity =>= identity [] by p12x_1
+ Id :  36, {_}: inverse (inverse ?51) =>= ?51 [51] by p12x_2 ?51
+ Id :  38, {_}:
+          inverse (multiply ?53 ?54) =<= multiply (inverse ?54) (inverse ?53)
+          [54, 53] by p12x_3 ?53 ?54
+ Id :  40, {_}:
+          greatest_lower_bound a c =>= greatest_lower_bound b c
+          [] by p12x_4
+ Id :  42, {_}: least_upper_bound a c =>= least_upper_bound b c [] by p12x_5
+ Id :  44, {_}:
+          inverse (greatest_lower_bound ?58 ?59)
+          =<=
+          least_upper_bound (inverse ?58) (inverse ?59)
+          [59, 58] by p12x_6 ?58 ?59
+ Id :  46, {_}:
+          inverse (least_upper_bound ?61 ?62)
+          =<=
+          greatest_lower_bound (inverse ?61) (inverse ?62)
+          [62, 61] by p12x_7 ?61 ?62
+Goal
+ Id :   2, {_}: a =>= b [] by prove_p12x
+Timeout !
+FAILURE in 1207 iterations
+GRP183-4
+Order
+ == is 100
+ _ is 99
+ a is 98
+ associativity is 89
+ associativity_of_glb is 86
+ associativity_of_lub is 85
+ glb_absorbtion is 81
+ greatest_lower_bound is 94
+ idempotence_of_gld is 83
+ idempotence_of_lub is 84
+ identity is 97
+ inverse is 95
+ least_upper_bound is 96
+ left_identity is 91
+ left_inverse is 90
+ lub_absorbtion is 82
+ monotony_glb1 is 79
+ monotony_glb2 is 77
+ monotony_lub1 is 80
+ monotony_lub2 is 78
+ multiply is 92
+ p20x_1 is 76
+ p20x_3 is 75
+ prove_20x is 93
+ symmetry_of_glb is 88
+ symmetry_of_lub is 87
+Facts
+ Id :   4, {_}: multiply identity ?2 =>= ?2 [2] by left_identity ?2
+ Id :   6, {_}: multiply (inverse ?4) ?4 =>= identity [4] by left_inverse ?4
+ Id :   8, {_}:
+          multiply (multiply ?6 ?7) ?8 =?= multiply ?6 (multiply ?7 ?8)
+          [8, 7, 6] by associativity ?6 ?7 ?8
+ Id :  10, {_}:
+          greatest_lower_bound ?10 ?11 =?= greatest_lower_bound ?11 ?10
+          [11, 10] by symmetry_of_glb ?10 ?11
+ Id :  12, {_}:
+          least_upper_bound ?13 ?14 =?= least_upper_bound ?14 ?13
+          [14, 13] by symmetry_of_lub ?13 ?14
+ Id :  14, {_}:
+          greatest_lower_bound ?16 (greatest_lower_bound ?17 ?18)
+          =?=
+          greatest_lower_bound (greatest_lower_bound ?16 ?17) ?18
+          [18, 17, 16] by associativity_of_glb ?16 ?17 ?18
+ Id :  16, {_}:
+          least_upper_bound ?20 (least_upper_bound ?21 ?22)
+          =?=
+          least_upper_bound (least_upper_bound ?20 ?21) ?22
+          [22, 21, 20] by associativity_of_lub ?20 ?21 ?22
+ Id :  18, {_}:
+          least_upper_bound ?24 ?24 =>= ?24
+          [24] by idempotence_of_lub ?24
+ Id :  20, {_}:
+          greatest_lower_bound ?26 ?26 =>= ?26
+          [26] by idempotence_of_gld ?26
+ Id :  22, {_}:
+          least_upper_bound ?28 (greatest_lower_bound ?28 ?29) =>= ?28
+          [29, 28] by lub_absorbtion ?28 ?29
+ Id :  24, {_}:
+          greatest_lower_bound ?31 (least_upper_bound ?31 ?32) =>= ?31
+          [32, 31] by glb_absorbtion ?31 ?32
+ Id :  26, {_}:
+          multiply ?34 (least_upper_bound ?35 ?36)
+          =<=
+          least_upper_bound (multiply ?34 ?35) (multiply ?34 ?36)
+          [36, 35, 34] by monotony_lub1 ?34 ?35 ?36
+ Id :  28, {_}:
+          multiply ?38 (greatest_lower_bound ?39 ?40)
+          =<=
+          greatest_lower_bound (multiply ?38 ?39) (multiply ?38 ?40)
+          [40, 39, 38] by monotony_glb1 ?38 ?39 ?40
+ Id :  30, {_}:
+          multiply (least_upper_bound ?42 ?43) ?44
+          =<=
+          least_upper_bound (multiply ?42 ?44) (multiply ?43 ?44)
+          [44, 43, 42] by monotony_lub2 ?42 ?43 ?44
+ Id :  32, {_}:
+          multiply (greatest_lower_bound ?46 ?47) ?48
+          =<=
+          greatest_lower_bound (multiply ?46 ?48) (multiply ?47 ?48)
+          [48, 47, 46] by monotony_glb2 ?46 ?47 ?48
+ Id :  34, {_}: inverse identity =>= identity [] by p20x_1
+ Id :  36, {_}: inverse (inverse ?51) =>= ?51 [51] by p20x_1 ?51
+ Id :  38, {_}:
+          inverse (multiply ?53 ?54) =<= multiply (inverse ?54) (inverse ?53)
+          [54, 53] by p20x_3 ?53 ?54
+Goal
+ Id :   2, {_}:
+          greatest_lower_bound (least_upper_bound a identity)
+            (least_upper_bound (inverse a) identity)
+          =>=
+          identity
+          [] by prove_20x
+Timeout !
+FAILURE in 933 iterations
+GRP184-1
+Order
+ == is 100
+ _ is 99
+ a is 98
+ associativity is 89
+ associativity_of_glb is 86
+ associativity_of_lub is 85
+ glb_absorbtion is 81
+ greatest_lower_bound is 95
+ idempotence_of_gld is 83
+ idempotence_of_lub is 84
+ identity is 97
+ inverse is 94
+ least_upper_bound is 96
+ left_identity is 91
+ left_inverse is 90
+ lub_absorbtion is 82
+ monotony_glb1 is 79
+ monotony_glb2 is 77
+ monotony_lub1 is 80
+ monotony_lub2 is 78
+ multiply is 93
+ prove_p21 is 92
+ symmetry_of_glb is 88
+ symmetry_of_lub is 87
+Facts
+ Id :   4, {_}: multiply identity ?2 =>= ?2 [2] by left_identity ?2
+ Id :   6, {_}: multiply (inverse ?4) ?4 =>= identity [4] by left_inverse ?4
+ Id :   8, {_}:
+          multiply (multiply ?6 ?7) ?8 =?= multiply ?6 (multiply ?7 ?8)
+          [8, 7, 6] by associativity ?6 ?7 ?8
+ Id :  10, {_}:
+          greatest_lower_bound ?10 ?11 =?= greatest_lower_bound ?11 ?10
+          [11, 10] by symmetry_of_glb ?10 ?11
+ Id :  12, {_}:
+          least_upper_bound ?13 ?14 =?= least_upper_bound ?14 ?13
+          [14, 13] by symmetry_of_lub ?13 ?14
+ Id :  14, {_}:
+          greatest_lower_bound ?16 (greatest_lower_bound ?17 ?18)
+          =?=
+          greatest_lower_bound (greatest_lower_bound ?16 ?17) ?18
+          [18, 17, 16] by associativity_of_glb ?16 ?17 ?18
+ Id :  16, {_}:
+          least_upper_bound ?20 (least_upper_bound ?21 ?22)
+          =?=
+          least_upper_bound (least_upper_bound ?20 ?21) ?22
+          [22, 21, 20] by associativity_of_lub ?20 ?21 ?22
+ Id :  18, {_}:
+          least_upper_bound ?24 ?24 =>= ?24
+          [24] by idempotence_of_lub ?24
+ Id :  20, {_}:
+          greatest_lower_bound ?26 ?26 =>= ?26
+          [26] by idempotence_of_gld ?26
+ Id :  22, {_}:
+          least_upper_bound ?28 (greatest_lower_bound ?28 ?29) =>= ?28
+          [29, 28] by lub_absorbtion ?28 ?29
+ Id :  24, {_}:
+          greatest_lower_bound ?31 (least_upper_bound ?31 ?32) =>= ?31
+          [32, 31] by glb_absorbtion ?31 ?32
+ Id :  26, {_}:
+          multiply ?34 (least_upper_bound ?35 ?36)
+          =<=
+          least_upper_bound (multiply ?34 ?35) (multiply ?34 ?36)
+          [36, 35, 34] by monotony_lub1 ?34 ?35 ?36
+ Id :  28, {_}:
+          multiply ?38 (greatest_lower_bound ?39 ?40)
+          =<=
+          greatest_lower_bound (multiply ?38 ?39) (multiply ?38 ?40)
+          [40, 39, 38] by monotony_glb1 ?38 ?39 ?40
+ Id :  30, {_}:
+          multiply (least_upper_bound ?42 ?43) ?44
+          =<=
+          least_upper_bound (multiply ?42 ?44) (multiply ?43 ?44)
+          [44, 43, 42] by monotony_lub2 ?42 ?43 ?44
+ Id :  32, {_}:
+          multiply (greatest_lower_bound ?46 ?47) ?48
+          =<=
+          greatest_lower_bound (multiply ?46 ?48) (multiply ?47 ?48)
+          [48, 47, 46] by monotony_glb2 ?46 ?47 ?48
+Goal
+ Id :   2, {_}:
+          multiply (least_upper_bound a identity)
+            (inverse (greatest_lower_bound a identity))
+          =>=
+          multiply (inverse (greatest_lower_bound a identity))
+            (least_upper_bound a identity)
+          [] by prove_p21
+Timeout !
+FAILURE in 1398 iterations
+GRP184-3
+Order
+ == is 100
+ _ is 99
+ a is 98
+ associativity is 89
+ associativity_of_glb is 86
+ associativity_of_lub is 85
+ glb_absorbtion is 81
+ greatest_lower_bound is 95
+ idempotence_of_gld is 83
+ idempotence_of_lub is 84
+ identity is 97
+ inverse is 94
+ least_upper_bound is 96
+ left_identity is 91
+ left_inverse is 90
+ lub_absorbtion is 82
+ monotony_glb1 is 79
+ monotony_glb2 is 77
+ monotony_lub1 is 80
+ monotony_lub2 is 78
+ multiply is 93
+ prove_p21x is 92
+ symmetry_of_glb is 88
+ symmetry_of_lub is 87
+Facts
+ Id :   4, {_}: multiply identity ?2 =>= ?2 [2] by left_identity ?2
+ Id :   6, {_}: multiply (inverse ?4) ?4 =>= identity [4] by left_inverse ?4
+ Id :   8, {_}:
+          multiply (multiply ?6 ?7) ?8 =?= multiply ?6 (multiply ?7 ?8)
+          [8, 7, 6] by associativity ?6 ?7 ?8
+ Id :  10, {_}:
+          greatest_lower_bound ?10 ?11 =?= greatest_lower_bound ?11 ?10
+          [11, 10] by symmetry_of_glb ?10 ?11
+ Id :  12, {_}:
+          least_upper_bound ?13 ?14 =?= least_upper_bound ?14 ?13
+          [14, 13] by symmetry_of_lub ?13 ?14
+ Id :  14, {_}:
+          greatest_lower_bound ?16 (greatest_lower_bound ?17 ?18)
+          =?=
+          greatest_lower_bound (greatest_lower_bound ?16 ?17) ?18
+          [18, 17, 16] by associativity_of_glb ?16 ?17 ?18
+ Id :  16, {_}:
+          least_upper_bound ?20 (least_upper_bound ?21 ?22)
+          =?=
+          least_upper_bound (least_upper_bound ?20 ?21) ?22
+          [22, 21, 20] by associativity_of_lub ?20 ?21 ?22
+ Id :  18, {_}:
+          least_upper_bound ?24 ?24 =>= ?24
+          [24] by idempotence_of_lub ?24
+ Id :  20, {_}:
+          greatest_lower_bound ?26 ?26 =>= ?26
+          [26] by idempotence_of_gld ?26
+ Id :  22, {_}:
+          least_upper_bound ?28 (greatest_lower_bound ?28 ?29) =>= ?28
+          [29, 28] by lub_absorbtion ?28 ?29
+ Id :  24, {_}:
+          greatest_lower_bound ?31 (least_upper_bound ?31 ?32) =>= ?31
+          [32, 31] by glb_absorbtion ?31 ?32
+ Id :  26, {_}:
+          multiply ?34 (least_upper_bound ?35 ?36)
+          =<=
+          least_upper_bound (multiply ?34 ?35) (multiply ?34 ?36)
+          [36, 35, 34] by monotony_lub1 ?34 ?35 ?36
+ Id :  28, {_}:
+          multiply ?38 (greatest_lower_bound ?39 ?40)
+          =<=
+          greatest_lower_bound (multiply ?38 ?39) (multiply ?38 ?40)
+          [40, 39, 38] by monotony_glb1 ?38 ?39 ?40
+ Id :  30, {_}:
+          multiply (least_upper_bound ?42 ?43) ?44
+          =<=
+          least_upper_bound (multiply ?42 ?44) (multiply ?43 ?44)
+          [44, 43, 42] by monotony_lub2 ?42 ?43 ?44
+ Id :  32, {_}:
+          multiply (greatest_lower_bound ?46 ?47) ?48
+          =<=
+          greatest_lower_bound (multiply ?46 ?48) (multiply ?47 ?48)
+          [48, 47, 46] by monotony_glb2 ?46 ?47 ?48
+Goal
+ Id :   2, {_}:
+          multiply (least_upper_bound a identity)
+            (inverse (greatest_lower_bound a identity))
+          =>=
+          multiply (inverse (greatest_lower_bound a identity))
+            (least_upper_bound a identity)
+          [] by prove_p21x
+Timeout !
+FAILURE in 1398 iterations
+GRP185-2
+Order
+ == is 100
+ _ is 99
+ a is 98
+ associativity is 89
+ associativity_of_glb is 85
+ associativity_of_lub is 84
+ b is 97
+ glb_absorbtion is 80
+ greatest_lower_bound is 88
+ idempotence_of_gld is 82
+ idempotence_of_lub is 83
+ identity is 95
+ inverse is 91
+ least_upper_bound is 94
+ left_identity is 92
+ left_inverse is 90
+ lub_absorbtion is 81
+ monotony_glb1 is 78
+ monotony_glb2 is 76
+ monotony_lub1 is 79
+ monotony_lub2 is 77
+ multiply is 96
+ p22a_1 is 75
+ p22a_2 is 74
+ p22a_3 is 73
+ prove_p22a is 93
+ symmetry_of_glb is 87
+ symmetry_of_lub is 86
+Facts
+ Id :   4, {_}: multiply identity ?2 =>= ?2 [2] by left_identity ?2
+ Id :   6, {_}: multiply (inverse ?4) ?4 =>= identity [4] by left_inverse ?4
+ Id :   8, {_}:
+          multiply (multiply ?6 ?7) ?8 =?= multiply ?6 (multiply ?7 ?8)
+          [8, 7, 6] by associativity ?6 ?7 ?8
+ Id :  10, {_}:
+          greatest_lower_bound ?10 ?11 =?= greatest_lower_bound ?11 ?10
+          [11, 10] by symmetry_of_glb ?10 ?11
+ Id :  12, {_}:
+          least_upper_bound ?13 ?14 =?= least_upper_bound ?14 ?13
+          [14, 13] by symmetry_of_lub ?13 ?14
+ Id :  14, {_}:
+          greatest_lower_bound ?16 (greatest_lower_bound ?17 ?18)
+          =?=
+          greatest_lower_bound (greatest_lower_bound ?16 ?17) ?18
+          [18, 17, 16] by associativity_of_glb ?16 ?17 ?18
+ Id :  16, {_}:
+          least_upper_bound ?20 (least_upper_bound ?21 ?22)
+          =?=
+          least_upper_bound (least_upper_bound ?20 ?21) ?22
+          [22, 21, 20] by associativity_of_lub ?20 ?21 ?22
+ Id :  18, {_}:
+          least_upper_bound ?24 ?24 =>= ?24
+          [24] by idempotence_of_lub ?24
+ Id :  20, {_}:
+          greatest_lower_bound ?26 ?26 =>= ?26
+          [26] by idempotence_of_gld ?26
+ Id :  22, {_}:
+          least_upper_bound ?28 (greatest_lower_bound ?28 ?29) =>= ?28
+          [29, 28] by lub_absorbtion ?28 ?29
+ Id :  24, {_}:
+          greatest_lower_bound ?31 (least_upper_bound ?31 ?32) =>= ?31
+          [32, 31] by glb_absorbtion ?31 ?32
+ Id :  26, {_}:
+          multiply ?34 (least_upper_bound ?35 ?36)
+          =<=
+          least_upper_bound (multiply ?34 ?35) (multiply ?34 ?36)
+          [36, 35, 34] by monotony_lub1 ?34 ?35 ?36
+ Id :  28, {_}:
+          multiply ?38 (greatest_lower_bound ?39 ?40)
+          =<=
+          greatest_lower_bound (multiply ?38 ?39) (multiply ?38 ?40)
+          [40, 39, 38] by monotony_glb1 ?38 ?39 ?40
+ Id :  30, {_}:
+          multiply (least_upper_bound ?42 ?43) ?44
+          =<=
+          least_upper_bound (multiply ?42 ?44) (multiply ?43 ?44)
+          [44, 43, 42] by monotony_lub2 ?42 ?43 ?44
+ Id :  32, {_}:
+          multiply (greatest_lower_bound ?46 ?47) ?48
+          =<=
+          greatest_lower_bound (multiply ?46 ?48) (multiply ?47 ?48)
+          [48, 47, 46] by monotony_glb2 ?46 ?47 ?48
+ Id :  34, {_}: inverse identity =>= identity [] by p22a_1
+ Id :  36, {_}: inverse (inverse ?51) =>= ?51 [51] by p22a_2 ?51
+ Id :  38, {_}:
+          inverse (multiply ?53 ?54) =<= multiply (inverse ?54) (inverse ?53)
+          [54, 53] by p22a_3 ?53 ?54
+Goal
+ Id :   2, {_}:
+          least_upper_bound (least_upper_bound (multiply a b) identity)
+            (multiply (least_upper_bound a identity)
+              (least_upper_bound b identity))
+          =>=
+          multiply (least_upper_bound a identity)
+            (least_upper_bound b identity)
+          [] by prove_p22a
+Timeout !
+FAILURE in 944 iterations
+GRP185-3
+Order
+ == is 100
+ _ is 99
+ a is 98
+ associativity is 88
+ associativity_of_glb is 85
+ associativity_of_lub is 84
+ b is 97
+ glb_absorbtion is 80
+ greatest_lower_bound is 93
+ idempotence_of_gld is 82
+ idempotence_of_lub is 83
+ identity is 95
+ inverse is 90
+ least_upper_bound is 94
+ left_identity is 91
+ left_inverse is 89
+ lub_absorbtion is 81
+ monotony_glb1 is 78
+ monotony_glb2 is 76
+ monotony_lub1 is 79
+ monotony_lub2 is 77
+ multiply is 96
+ prove_p22b is 92
+ symmetry_of_glb is 87
+ symmetry_of_lub is 86
+Facts
+ Id :   4, {_}: multiply identity ?2 =>= ?2 [2] by left_identity ?2
+ Id :   6, {_}: multiply (inverse ?4) ?4 =>= identity [4] by left_inverse ?4
+ Id :   8, {_}:
+          multiply (multiply ?6 ?7) ?8 =?= multiply ?6 (multiply ?7 ?8)
+          [8, 7, 6] by associativity ?6 ?7 ?8
+ Id :  10, {_}:
+          greatest_lower_bound ?10 ?11 =?= greatest_lower_bound ?11 ?10
+          [11, 10] by symmetry_of_glb ?10 ?11
+ Id :  12, {_}:
+          least_upper_bound ?13 ?14 =?= least_upper_bound ?14 ?13
+          [14, 13] by symmetry_of_lub ?13 ?14
+ Id :  14, {_}:
+          greatest_lower_bound ?16 (greatest_lower_bound ?17 ?18)
+          =?=
+          greatest_lower_bound (greatest_lower_bound ?16 ?17) ?18
+          [18, 17, 16] by associativity_of_glb ?16 ?17 ?18
+ Id :  16, {_}:
+          least_upper_bound ?20 (least_upper_bound ?21 ?22)
+          =?=
+          least_upper_bound (least_upper_bound ?20 ?21) ?22
+          [22, 21, 20] by associativity_of_lub ?20 ?21 ?22
+ Id :  18, {_}:
+          least_upper_bound ?24 ?24 =>= ?24
+          [24] by idempotence_of_lub ?24
+ Id :  20, {_}:
+          greatest_lower_bound ?26 ?26 =>= ?26
+          [26] by idempotence_of_gld ?26
+ Id :  22, {_}:
+          least_upper_bound ?28 (greatest_lower_bound ?28 ?29) =>= ?28
+          [29, 28] by lub_absorbtion ?28 ?29
+ Id :  24, {_}:
+          greatest_lower_bound ?31 (least_upper_bound ?31 ?32) =>= ?31
+          [32, 31] by glb_absorbtion ?31 ?32
+ Id :  26, {_}:
+          multiply ?34 (least_upper_bound ?35 ?36)
+          =<=
+          least_upper_bound (multiply ?34 ?35) (multiply ?34 ?36)
+          [36, 35, 34] by monotony_lub1 ?34 ?35 ?36
+ Id :  28, {_}:
+          multiply ?38 (greatest_lower_bound ?39 ?40)
+          =<=
+          greatest_lower_bound (multiply ?38 ?39) (multiply ?38 ?40)
+          [40, 39, 38] by monotony_glb1 ?38 ?39 ?40
+ Id :  30, {_}:
+          multiply (least_upper_bound ?42 ?43) ?44
+          =<=
+          least_upper_bound (multiply ?42 ?44) (multiply ?43 ?44)
+          [44, 43, 42] by monotony_lub2 ?42 ?43 ?44
+ Id :  32, {_}:
+          multiply (greatest_lower_bound ?46 ?47) ?48
+          =<=
+          greatest_lower_bound (multiply ?46 ?48) (multiply ?47 ?48)
+          [48, 47, 46] by monotony_glb2 ?46 ?47 ?48
+Goal
+ Id :   2, {_}:
+          greatest_lower_bound (least_upper_bound (multiply a b) identity)
+            (multiply (least_upper_bound a identity)
+              (least_upper_bound b identity))
+          =>=
+          least_upper_bound (multiply a b) identity
+          [] by prove_p22b
+Timeout !
+FAILURE in 1232 iterations
+GRP186-1
+Order
+ == is 100
+ _ is 99
+ a is 98
+ associativity is 88
+ associativity_of_glb is 85
+ associativity_of_lub is 84
+ b is 97
+ glb_absorbtion is 80
+ greatest_lower_bound is 92
+ idempotence_of_gld is 82
+ idempotence_of_lub is 83
+ identity is 95
+ inverse is 93
+ least_upper_bound is 94
+ left_identity is 90
+ left_inverse is 89
+ lub_absorbtion is 81
+ monotony_glb1 is 78
+ monotony_glb2 is 76
+ monotony_lub1 is 79
+ monotony_lub2 is 77
+ multiply is 96
+ prove_p23 is 91
+ symmetry_of_glb is 87
+ symmetry_of_lub is 86
+Facts
+ Id :   4, {_}: multiply identity ?2 =>= ?2 [2] by left_identity ?2
+ Id :   6, {_}: multiply (inverse ?4) ?4 =>= identity [4] by left_inverse ?4
+ Id :   8, {_}:
+          multiply (multiply ?6 ?7) ?8 =?= multiply ?6 (multiply ?7 ?8)
+          [8, 7, 6] by associativity ?6 ?7 ?8
+ Id :  10, {_}:
+          greatest_lower_bound ?10 ?11 =?= greatest_lower_bound ?11 ?10
+          [11, 10] by symmetry_of_glb ?10 ?11
+ Id :  12, {_}:
+          least_upper_bound ?13 ?14 =?= least_upper_bound ?14 ?13
+          [14, 13] by symmetry_of_lub ?13 ?14
+ Id :  14, {_}:
+          greatest_lower_bound ?16 (greatest_lower_bound ?17 ?18)
+          =?=
+          greatest_lower_bound (greatest_lower_bound ?16 ?17) ?18
+          [18, 17, 16] by associativity_of_glb ?16 ?17 ?18
+ Id :  16, {_}:
+          least_upper_bound ?20 (least_upper_bound ?21 ?22)
+          =?=
+          least_upper_bound (least_upper_bound ?20 ?21) ?22
+          [22, 21, 20] by associativity_of_lub ?20 ?21 ?22
+ Id :  18, {_}:
+          least_upper_bound ?24 ?24 =>= ?24
+          [24] by idempotence_of_lub ?24
+ Id :  20, {_}:
+          greatest_lower_bound ?26 ?26 =>= ?26
+          [26] by idempotence_of_gld ?26
+ Id :  22, {_}:
+          least_upper_bound ?28 (greatest_lower_bound ?28 ?29) =>= ?28
+          [29, 28] by lub_absorbtion ?28 ?29
+ Id :  24, {_}:
+          greatest_lower_bound ?31 (least_upper_bound ?31 ?32) =>= ?31
+          [32, 31] by glb_absorbtion ?31 ?32
+ Id :  26, {_}:
+          multiply ?34 (least_upper_bound ?35 ?36)
+          =<=
+          least_upper_bound (multiply ?34 ?35) (multiply ?34 ?36)
+          [36, 35, 34] by monotony_lub1 ?34 ?35 ?36
+ Id :  28, {_}:
+          multiply ?38 (greatest_lower_bound ?39 ?40)
+          =<=
+          greatest_lower_bound (multiply ?38 ?39) (multiply ?38 ?40)
+          [40, 39, 38] by monotony_glb1 ?38 ?39 ?40
+ Id :  30, {_}:
+          multiply (least_upper_bound ?42 ?43) ?44
+          =<=
+          least_upper_bound (multiply ?42 ?44) (multiply ?43 ?44)
+          [44, 43, 42] by monotony_lub2 ?42 ?43 ?44
+ Id :  32, {_}:
+          multiply (greatest_lower_bound ?46 ?47) ?48
+          =<=
+          greatest_lower_bound (multiply ?46 ?48) (multiply ?47 ?48)
+          [48, 47, 46] by monotony_glb2 ?46 ?47 ?48
+Goal
+ Id :   2, {_}:
+          least_upper_bound (multiply a b) identity
+          =<=
+          multiply a (inverse (greatest_lower_bound a (inverse b)))
+          [] by prove_p23
+Timeout !
+FAILURE in 1205 iterations
+GRP186-2
+Order
+ == is 100
+ _ is 99
+ a is 98
+ associativity is 88
+ associativity_of_glb is 85
+ associativity_of_lub is 84
+ b is 97
+ glb_absorbtion is 80
+ greatest_lower_bound is 92
+ idempotence_of_gld is 82
+ idempotence_of_lub is 83
+ identity is 95
+ inverse is 93
+ least_upper_bound is 94
+ left_identity is 90
+ left_inverse is 89
+ lub_absorbtion is 81
+ monotony_glb1 is 78
+ monotony_glb2 is 76
+ monotony_lub1 is 79
+ monotony_lub2 is 77
+ multiply is 96
+ p23_1 is 75
+ p23_2 is 74
+ p23_3 is 73
+ prove_p23 is 91
+ symmetry_of_glb is 87
+ symmetry_of_lub is 86
+Facts
+ Id :   4, {_}: multiply identity ?2 =>= ?2 [2] by left_identity ?2
+ Id :   6, {_}: multiply (inverse ?4) ?4 =>= identity [4] by left_inverse ?4
+ Id :   8, {_}:
+          multiply (multiply ?6 ?7) ?8 =?= multiply ?6 (multiply ?7 ?8)
+          [8, 7, 6] by associativity ?6 ?7 ?8
+ Id :  10, {_}:
+          greatest_lower_bound ?10 ?11 =?= greatest_lower_bound ?11 ?10
+          [11, 10] by symmetry_of_glb ?10 ?11
+ Id :  12, {_}:
+          least_upper_bound ?13 ?14 =?= least_upper_bound ?14 ?13
+          [14, 13] by symmetry_of_lub ?13 ?14
+ Id :  14, {_}:
+          greatest_lower_bound ?16 (greatest_lower_bound ?17 ?18)
+          =?=
+          greatest_lower_bound (greatest_lower_bound ?16 ?17) ?18
+          [18, 17, 16] by associativity_of_glb ?16 ?17 ?18
+ Id :  16, {_}:
+          least_upper_bound ?20 (least_upper_bound ?21 ?22)
+          =?=
+          least_upper_bound (least_upper_bound ?20 ?21) ?22
+          [22, 21, 20] by associativity_of_lub ?20 ?21 ?22
+ Id :  18, {_}:
+          least_upper_bound ?24 ?24 =>= ?24
+          [24] by idempotence_of_lub ?24
+ Id :  20, {_}:
+          greatest_lower_bound ?26 ?26 =>= ?26
+          [26] by idempotence_of_gld ?26
+ Id :  22, {_}:
+          least_upper_bound ?28 (greatest_lower_bound ?28 ?29) =>= ?28
+          [29, 28] by lub_absorbtion ?28 ?29
+ Id :  24, {_}:
+          greatest_lower_bound ?31 (least_upper_bound ?31 ?32) =>= ?31
+          [32, 31] by glb_absorbtion ?31 ?32
+ Id :  26, {_}:
+          multiply ?34 (least_upper_bound ?35 ?36)
+          =<=
+          least_upper_bound (multiply ?34 ?35) (multiply ?34 ?36)
+          [36, 35, 34] by monotony_lub1 ?34 ?35 ?36
+ Id :  28, {_}:
+          multiply ?38 (greatest_lower_bound ?39 ?40)
+          =<=
+          greatest_lower_bound (multiply ?38 ?39) (multiply ?38 ?40)
+          [40, 39, 38] by monotony_glb1 ?38 ?39 ?40
+ Id :  30, {_}:
+          multiply (least_upper_bound ?42 ?43) ?44
+          =<=
+          least_upper_bound (multiply ?42 ?44) (multiply ?43 ?44)
+          [44, 43, 42] by monotony_lub2 ?42 ?43 ?44
+ Id :  32, {_}:
+          multiply (greatest_lower_bound ?46 ?47) ?48
+          =<=
+          greatest_lower_bound (multiply ?46 ?48) (multiply ?47 ?48)
+          [48, 47, 46] by monotony_glb2 ?46 ?47 ?48
+ Id :  34, {_}: inverse identity =>= identity [] by p23_1
+ Id :  36, {_}: inverse (inverse ?51) =>= ?51 [51] by p23_2 ?51
+ Id :  38, {_}:
+          inverse (multiply ?53 ?54) =<= multiply (inverse ?54) (inverse ?53)
+          [54, 53] by p23_3 ?53 ?54
+Goal
+ Id :   2, {_}:
+          least_upper_bound (multiply a b) identity
+          =<=
+          multiply a (inverse (greatest_lower_bound a (inverse b)))
+          [] by prove_p23
+Timeout !
+FAILURE in 964 iterations
+GRP187-1
+Order
+ == is 100
+ _ is 99
+ a is 98
+ associativity is 90
+ associativity_of_glb is 85
+ associativity_of_lub is 84
+ b is 97
+ glb_absorbtion is 80
+ greatest_lower_bound is 89
+ idempotence_of_gld is 82
+ idempotence_of_lub is 83
+ identity is 94
+ inverse is 92
+ least_upper_bound is 87
+ left_identity is 93
+ left_inverse is 91
+ lub_absorbtion is 81
+ monotony_glb1 is 78
+ monotony_glb2 is 76
+ monotony_lub1 is 79
+ monotony_lub2 is 77
+ multiply is 96
+ p33_1 is 75
+ prove_p33 is 95
+ symmetry_of_glb is 88
+ symmetry_of_lub is 86
+Facts
+ Id :   4, {_}: multiply identity ?2 =>= ?2 [2] by left_identity ?2
+ Id :   6, {_}: multiply (inverse ?4) ?4 =>= identity [4] by left_inverse ?4
+ Id :   8, {_}:
+          multiply (multiply ?6 ?7) ?8 =?= multiply ?6 (multiply ?7 ?8)
+          [8, 7, 6] by associativity ?6 ?7 ?8
+ Id :  10, {_}:
+          greatest_lower_bound ?10 ?11 =?= greatest_lower_bound ?11 ?10
+          [11, 10] by symmetry_of_glb ?10 ?11
+ Id :  12, {_}:
+          least_upper_bound ?13 ?14 =?= least_upper_bound ?14 ?13
+          [14, 13] by symmetry_of_lub ?13 ?14
+ Id :  14, {_}:
+          greatest_lower_bound ?16 (greatest_lower_bound ?17 ?18)
+          =?=
+          greatest_lower_bound (greatest_lower_bound ?16 ?17) ?18
+          [18, 17, 16] by associativity_of_glb ?16 ?17 ?18
+ Id :  16, {_}:
+          least_upper_bound ?20 (least_upper_bound ?21 ?22)
+          =?=
+          least_upper_bound (least_upper_bound ?20 ?21) ?22
+          [22, 21, 20] by associativity_of_lub ?20 ?21 ?22
+ Id :  18, {_}:
+          least_upper_bound ?24 ?24 =>= ?24
+          [24] by idempotence_of_lub ?24
+ Id :  20, {_}:
+          greatest_lower_bound ?26 ?26 =>= ?26
+          [26] by idempotence_of_gld ?26
+ Id :  22, {_}:
+          least_upper_bound ?28 (greatest_lower_bound ?28 ?29) =>= ?28
+          [29, 28] by lub_absorbtion ?28 ?29
+ Id :  24, {_}:
+          greatest_lower_bound ?31 (least_upper_bound ?31 ?32) =>= ?31
+          [32, 31] by glb_absorbtion ?31 ?32
+ Id :  26, {_}:
+          multiply ?34 (least_upper_bound ?35 ?36)
+          =<=
+          least_upper_bound (multiply ?34 ?35) (multiply ?34 ?36)
+          [36, 35, 34] by monotony_lub1 ?34 ?35 ?36
+ Id :  28, {_}:
+          multiply ?38 (greatest_lower_bound ?39 ?40)
+          =<=
+          greatest_lower_bound (multiply ?38 ?39) (multiply ?38 ?40)
+          [40, 39, 38] by monotony_glb1 ?38 ?39 ?40
+ Id :  30, {_}:
+          multiply (least_upper_bound ?42 ?43) ?44
+          =<=
+          least_upper_bound (multiply ?42 ?44) (multiply ?43 ?44)
+          [44, 43, 42] by monotony_lub2 ?42 ?43 ?44
+ Id :  32, {_}:
+          multiply (greatest_lower_bound ?46 ?47) ?48
+          =<=
+          greatest_lower_bound (multiply ?46 ?48) (multiply ?47 ?48)
+          [48, 47, 46] by monotony_glb2 ?46 ?47 ?48
+ Id :  34, {_}:
+          greatest_lower_bound (least_upper_bound a (inverse a))
+            (least_upper_bound b (inverse b))
+          =>=
+          identity
+          [] by p33_1
+Goal
+ Id :   2, {_}: multiply a b =>= multiply b a [] by prove_p33
+Timeout !
+FAILURE in 1541 iterations
+GRP200-1
+Order
+ == is 100
+ _ is 99
+ a is 98
+ b is 97
+ c is 95
+ identity is 93
+ left_division is 90
+ left_division_multiply is 88
+ left_identity is 92
+ left_inverse is 83
+ moufang1 is 82
+ multiply is 96
+ multiply_left_division is 89
+ multiply_right_division is 86
+ prove_moufang2 is 94
+ right_division is 87
+ right_division_multiply is 85
+ right_identity is 91
+ right_inverse is 84
+Facts
+ Id :   4, {_}: multiply identity ?2 =>= ?2 [2] by left_identity ?2
+ Id :   6, {_}: multiply ?4 identity =>= ?4 [4] by right_identity ?4
+ Id :   8, {_}:
+          multiply ?6 (left_division ?6 ?7) =>= ?7
+          [7, 6] by multiply_left_division ?6 ?7
+ Id :  10, {_}:
+          left_division ?9 (multiply ?9 ?10) =>= ?10
+          [10, 9] by left_division_multiply ?9 ?10
+ Id :  12, {_}:
+          multiply (right_division ?12 ?13) ?13 =>= ?12
+          [13, 12] by multiply_right_division ?12 ?13
+ Id :  14, {_}:
+          right_division (multiply ?15 ?16) ?16 =>= ?15
+          [16, 15] by right_division_multiply ?15 ?16
+ Id :  16, {_}:
+          multiply ?18 (right_inverse ?18) =>= identity
+          [18] by right_inverse ?18
+ Id :  18, {_}:
+          multiply (left_inverse ?20) ?20 =>= identity
+          [20] by left_inverse ?20
+ Id :  20, {_}:
+          multiply (multiply ?22 (multiply ?23 ?24)) ?22
+          =?=
+          multiply (multiply ?22 ?23) (multiply ?24 ?22)
+          [24, 23, 22] by moufang1 ?22 ?23 ?24
+Goal
+ Id :   2, {_}:
+          multiply (multiply (multiply a b) c) b
+          =>=
+          multiply a (multiply b (multiply c b))
+          [] by prove_moufang2
+Timeout !
+FAILURE in 712 iterations
+GRP202-1
+Order
+ == is 100
+ _ is 99
+ a is 98
+ b is 97
+ c is 96
+ identity is 93
+ left_division is 90
+ left_division_multiply is 88
+ left_identity is 92
+ left_inverse is 83
+ moufang3 is 82
+ multiply is 95
+ multiply_left_division is 89
+ multiply_right_division is 86
+ prove_moufang1 is 94
+ right_division is 87
+ right_division_multiply is 85
+ right_identity is 91
+ right_inverse is 84
+Facts
+ Id :   4, {_}: multiply identity ?2 =>= ?2 [2] by left_identity ?2
+ Id :   6, {_}: multiply ?4 identity =>= ?4 [4] by right_identity ?4
+ Id :   8, {_}:
+          multiply ?6 (left_division ?6 ?7) =>= ?7
+          [7, 6] by multiply_left_division ?6 ?7
+ Id :  10, {_}:
+          left_division ?9 (multiply ?9 ?10) =>= ?10
+          [10, 9] by left_division_multiply ?9 ?10
+ Id :  12, {_}:
+          multiply (right_division ?12 ?13) ?13 =>= ?12
+          [13, 12] by multiply_right_division ?12 ?13
+ Id :  14, {_}:
+          right_division (multiply ?15 ?16) ?16 =>= ?15
+          [16, 15] by right_division_multiply ?15 ?16
+ Id :  16, {_}:
+          multiply ?18 (right_inverse ?18) =>= identity
+          [18] by right_inverse ?18
+ Id :  18, {_}:
+          multiply (left_inverse ?20) ?20 =>= identity
+          [20] by left_inverse ?20
+ Id :  20, {_}:
+          multiply (multiply (multiply ?22 ?23) ?22) ?24
+          =?=
+          multiply ?22 (multiply ?23 (multiply ?22 ?24))
+          [24, 23, 22] by moufang3 ?22 ?23 ?24
+Goal
+ Id :   2, {_}:
+          multiply (multiply a (multiply b c)) a
+          =>=
+          multiply (multiply a b) (multiply c a)
+          [] by prove_moufang1
+Timeout !
+FAILURE in 674 iterations
+GRP404-1
+Order
+ == is 100
+ _ is 99
+ a2 is 95
+ b2 is 98
+ inverse is 97
+ multiply is 96
+ prove_these_axioms_2 is 94
+ single_axiom is 93
+Facts
+ Id :   4, {_}:
+          multiply ?2
+            (inverse
+              (multiply (inverse (multiply (inverse (multiply ?2 ?3)) ?4))
+                (inverse (multiply ?3 (multiply (inverse ?3) ?3)))))
+          =>=
+          ?4
+          [4, 3, 2] by single_axiom ?2 ?3 ?4
+Goal
+ Id :   2, {_}:
+          multiply (multiply (inverse b2) b2) a2 =>= a2
+          [] by prove_these_axioms_2
+Timeout !
+FAILURE in 342 iterations
+GRP405-1
+Order
+ == is 100
+ _ is 99
+ a3 is 98
+ b3 is 97
+ c3 is 95
+ inverse is 93
+ multiply is 96
+ prove_these_axioms_3 is 94
+ single_axiom is 92
+Facts
+ Id :   4, {_}:
+          multiply ?2
+            (inverse
+              (multiply (inverse (multiply (inverse (multiply ?2 ?3)) ?4))
+                (inverse (multiply ?3 (multiply (inverse ?3) ?3)))))
+          =>=
+          ?4
+          [4, 3, 2] by single_axiom ?2 ?3 ?4
+Goal
+ Id :   2, {_}:
+          multiply (multiply a3 b3) c3 =>= multiply a3 (multiply b3 c3)
+          [] by prove_these_axioms_3
+Found proof, 234.971871s
+GRP422-1
+Order
+ == is 100
+ _ is 99
+ a2 is 95
+ b2 is 98
+ inverse is 97
+ multiply is 96
+ prove_these_axioms_2 is 94
+ single_axiom is 93
+Facts
+ Id :   4, {_}:
+          inverse
+            (multiply
+              (inverse
+                (multiply ?2
+                  (inverse
+                    (multiply (inverse ?3)
+                      (multiply (inverse ?4)
+                        (inverse (multiply (inverse ?4) ?4)))))))
+              (multiply ?2 ?4))
+          =>=
+          ?3
+          [4, 3, 2] by single_axiom ?2 ?3 ?4
+Goal
+ Id :   2, {_}:
+          multiply (multiply (inverse b2) b2) a2 =>= a2
+          [] by prove_these_axioms_2
+Found proof, 14.541466s
+GRP423-1
+Order
+ == is 100
+ _ is 99
+ a3 is 98
+ b3 is 97
+ c3 is 95
+ inverse is 93
+ multiply is 96
+ prove_these_axioms_3 is 94
+ single_axiom is 92
+Facts
+ Id :   4, {_}:
+          inverse
+            (multiply
+              (inverse
+                (multiply ?2
+                  (inverse
+                    (multiply (inverse ?3)
+                      (multiply (inverse ?4)
+                        (inverse (multiply (inverse ?4) ?4)))))))
+              (multiply ?2 ?4))
+          =>=
+          ?3
+          [4, 3, 2] by single_axiom ?2 ?3 ?4
+Goal
+ Id :   2, {_}:
+          multiply (multiply a3 b3) c3 =>= multiply a3 (multiply b3 c3)
+          [] by prove_these_axioms_3
+Found proof, 12.056212s
+GRP444-1
+Order
+ == is 100
+ _ is 99
+ a3 is 98
+ b3 is 97
+ c3 is 95
+ inverse is 93
+ multiply is 96
+ prove_these_axioms_3 is 94
+ single_axiom is 92
+Facts
+ Id :   4, {_}:
+          inverse
+            (multiply ?2
+              (multiply ?3
+                (multiply (multiply ?4 (inverse ?4))
+                  (inverse (multiply ?5 (multiply ?2 ?3))))))
+          =>=
+          ?5
+          [5, 4, 3, 2] by single_axiom ?2 ?3 ?4 ?5
+Goal
+ Id :   2, {_}:
+          multiply (multiply a3 b3) c3 =>= multiply a3 (multiply b3 c3)
+          [] by prove_these_axioms_3
+Found proof, 21.164993s
+GRP452-1
+Order
+ == is 100
+ _ is 99
+ a2 is 95
+ b2 is 98
+ divide is 93
+ inverse is 97
+ multiply is 96
+ prove_these_axioms_2 is 94
+ single_axiom is 92
+Facts
+ Id :   4, {_}:
+          divide
+            (divide (divide ?2 ?2)
+              (divide ?2 (divide ?3 (divide (divide (divide ?2 ?2) ?2) ?4))))
+            ?4
+          =>=
+          ?3
+          [4, 3, 2] by single_axiom ?2 ?3 ?4
+ Id :   6, {_}:
+          multiply ?6 ?7 =<= divide ?6 (divide (divide ?8 ?8) ?7)
+          [8, 7, 6] by multiply ?6 ?7 ?8
+ Id :   8, {_}:
+          inverse ?10 =<= divide (divide ?11 ?11) ?10
+          [11, 10] by inverse ?10 ?11
+Goal
+ Id :   2, {_}:
+          multiply (multiply (inverse b2) b2) a2 =>= a2
+          [] by prove_these_axioms_2
+Found proof, 0.549585s
+GRP453-1
+Order
+ == is 100
+ _ is 99
+ a3 is 98
+ b3 is 97
+ c3 is 95
+ divide is 93
+ inverse is 91
+ multiply is 96
+ prove_these_axioms_3 is 94
+ single_axiom is 92
+Facts
+ Id :   4, {_}:
+          divide
+            (divide (divide ?2 ?2)
+              (divide ?2 (divide ?3 (divide (divide (divide ?2 ?2) ?2) ?4))))
+            ?4
+          =>=
+          ?3
+          [4, 3, 2] by single_axiom ?2 ?3 ?4
+ Id :   6, {_}:
+          multiply ?6 ?7 =<= divide ?6 (divide (divide ?8 ?8) ?7)
+          [8, 7, 6] by multiply ?6 ?7 ?8
+ Id :   8, {_}:
+          inverse ?10 =<= divide (divide ?11 ?11) ?10
+          [11, 10] by inverse ?10 ?11
+Goal
+ Id :   2, {_}:
+          multiply (multiply a3 b3) c3 =>= multiply a3 (multiply b3 c3)
+          [] by prove_these_axioms_3
+Found proof, 0.716819s
+GRP471-1
+Order
+ == is 100
+ _ is 99
+ a3 is 98
+ b3 is 97
+ c3 is 95
+ divide is 93
+ inverse is 92
+ multiply is 96
+ prove_these_axioms_3 is 94
+ single_axiom is 91
+Facts
+ Id :   4, {_}:
+          divide (inverse (divide ?2 (divide ?3 (divide ?4 ?5))))
+            (divide (divide ?5 ?4) ?2)
+          =>=
+          ?3
+          [5, 4, 3, 2] by single_axiom ?2 ?3 ?4 ?5
+ Id :   6, {_}:
+          multiply ?7 ?8 =<= divide ?7 (inverse ?8)
+          [8, 7] by multiply ?7 ?8
+Goal
+ Id :   2, {_}:
+          multiply (multiply a3 b3) c3 =>= multiply a3 (multiply b3 c3)
+          [] by prove_these_axioms_3
+Found proof, 115.504740s
+GRP477-1
+Order
+ == is 100
+ _ is 99
+ a3 is 98
+ b3 is 97
+ c3 is 95
+ divide is 93
+ inverse is 92
+ multiply is 96
+ prove_these_axioms_3 is 94
+ single_axiom is 91
+Facts
+ Id :   4, {_}:
+          divide (inverse (divide (divide (divide ?2 ?3) ?4) (divide ?5 ?4)))
+            (divide ?3 ?2)
+          =>=
+          ?5
+          [5, 4, 3, 2] by single_axiom ?2 ?3 ?4 ?5
+ Id :   6, {_}:
+          multiply ?7 ?8 =<= divide ?7 (inverse ?8)
+          [8, 7] by multiply ?7 ?8
+Goal
+ Id :   2, {_}:
+          multiply (multiply a3 b3) c3 =>= multiply a3 (multiply b3 c3)
+          [] by prove_these_axioms_3
+Found proof, 11.020022s
+GRP506-1
+Order
+ == is 100
+ _ is 99
+ a2 is 95
+ b2 is 98
+ inverse is 97
+ multiply is 96
+ prove_these_axioms_2 is 94
+ single_axiom is 93
+Facts
+ Id :   4, {_}:
+          multiply
+            (inverse
+              (multiply
+                (inverse
+                  (multiply (inverse (multiply ?2 ?3)) (multiply ?3 ?2)))
+                (multiply (inverse (multiply ?4 ?5))
+                  (multiply ?4
+                    (inverse
+                      (multiply (multiply ?6 (inverse ?7)) (inverse ?5)))))))
+            ?7
+          =>=
+          ?6
+          [7, 6, 5, 4, 3, 2] by single_axiom ?2 ?3 ?4 ?5 ?6 ?7
+Goal
+ Id :   2, {_}:
+          multiply (multiply (inverse b2) b2) a2 =>= a2
+          [] by prove_these_axioms_2
+Timeout !
+FAILURE in 184 iterations
+GRP508-1
+Order
+ == is 100
+ _ is 99
+ a is 98
+ b is 97
+ inverse is 94
+ multiply is 96
+ prove_these_axioms_4 is 95
+ single_axiom is 93
+Facts
+ Id :   4, {_}:
+          multiply
+            (inverse
+              (multiply
+                (inverse
+                  (multiply (inverse (multiply ?2 ?3)) (multiply ?3 ?2)))
+                (multiply (inverse (multiply ?4 ?5))
+                  (multiply ?4
+                    (inverse
+                      (multiply (multiply ?6 (inverse ?7)) (inverse ?5)))))))
+            ?7
+          =>=
+          ?6
+          [7, 6, 5, 4, 3, 2] by single_axiom ?2 ?3 ?4 ?5 ?6 ?7
+Goal
+ Id :   2, {_}: multiply a b =>= multiply b a [] by prove_these_axioms_4
+Timeout !
+FAILURE in 183 iterations
+LAT080-1
+Order
+ == is 100
+ _ is 99
+ a is 98
+ join is 95
+ meet is 97
+ prove_normal_axioms_1 is 96
+ single_axiom is 94
+Facts
+ Id :   4, {_}:
+          join (meet (join (meet ?2 ?3) (meet ?3 (join ?2 ?3))) ?4)
+            (meet
+              (join (meet ?2 (join (join (meet ?5 ?3) (meet ?3 ?6)) ?3))
+                (meet
+                  (join
+                    (meet ?3
+                      (meet (meet (join ?5 (join ?3 ?6)) (join ?7 ?3)) ?3))
+                    (meet ?8
+                      (join ?3
+                        (meet (meet (join ?5 (join ?3 ?6)) (join ?7 ?3)) ?3))))
+                  (join ?2 (join (join (meet ?5 ?3) (meet ?3 ?6)) ?3))))
+              (join (join (meet ?2 ?3) (meet ?3 (join ?2 ?3))) ?4))
+          =>=
+          ?3
+          [8, 7, 6, 5, 4, 3, 2] by single_axiom ?2 ?3 ?4 ?5 ?6 ?7 ?8
+Goal
+ Id :   2, {_}: meet a a =>= a [] by prove_normal_axioms_1
+Found proof, 13.776911s
+LAT087-1
+Order
+ == is 100
+ _ is 99
+ a is 98
+ b is 97
+ join is 95
+ meet is 96
+ prove_normal_axioms_8 is 94
+ single_axiom is 93
+Facts
+ Id :   4, {_}:
+          join (meet (join (meet ?2 ?3) (meet ?3 (join ?2 ?3))) ?4)
+            (meet
+              (join (meet ?2 (join (join (meet ?5 ?3) (meet ?3 ?6)) ?3))
+                (meet
+                  (join
+                    (meet ?3
+                      (meet (meet (join ?5 (join ?3 ?6)) (join ?7 ?3)) ?3))
+                    (meet ?8
+                      (join ?3
+                        (meet (meet (join ?5 (join ?3 ?6)) (join ?7 ?3)) ?3))))
+                  (join ?2 (join (join (meet ?5 ?3) (meet ?3 ?6)) ?3))))
+              (join (join (meet ?2 ?3) (meet ?3 (join ?2 ?3))) ?4))
+          =>=
+          ?3
+          [8, 7, 6, 5, 4, 3, 2] by single_axiom ?2 ?3 ?4 ?5 ?6 ?7 ?8
+Goal
+ Id :   2, {_}: join a (meet a b) =>= a [] by prove_normal_axioms_8
+Found proof, 13.866156s
+LAT093-1
+Order
+ == is 100
+ _ is 99
+ a is 97
+ b is 98
+ join is 94
+ meet is 96
+ prove_wal_axioms_2 is 95
+ single_axiom is 93
+Facts
+ Id :   4, {_}:
+          join (meet (join (meet ?2 ?3) (meet ?3 (join ?2 ?3))) ?4)
+            (meet
+              (join (meet ?2 (join (join (meet ?3 ?5) (meet ?6 ?3)) ?3))
+                (meet
+                  (join (meet ?3 (meet (meet (join ?3 ?5) (join ?6 ?3)) ?3))
+                    (meet ?7
+                      (join ?3 (meet (meet (join ?3 ?5) (join ?6 ?3)) ?3))))
+                  (join ?2 (join (join (meet ?3 ?5) (meet ?6 ?3)) ?3))))
+              (join (join (meet ?2 ?3) (meet ?3 (join ?2 ?3))) ?4))
+          =>=
+          ?3
+          [7, 6, 5, 4, 3, 2] by single_axiom ?2 ?3 ?4 ?5 ?6 ?7
+Goal
+ Id :   2, {_}: meet b a =>= meet a b [] by prove_wal_axioms_2
+Found proof, 13.533964s
+LAT138-1
+Order
+ == is 100
+ _ is 99
+ a is 98
+ absorption1 is 90
+ absorption2 is 89
+ associativity_of_join is 85
+ associativity_of_meet is 86
+ b is 97
+ c is 96
+ commutativity_of_join is 87
+ commutativity_of_meet is 88
+ equation_H7 is 84
+ idempotence_of_join is 91
+ idempotence_of_meet is 92
+ join is 94
+ meet is 95
+ prove_H6 is 93
+Facts
+ Id :   4, {_}: meet ?2 ?2 =>= ?2 [2] by idempotence_of_meet ?2
+ Id :   6, {_}: join ?4 ?4 =>= ?4 [4] by idempotence_of_join ?4
+ Id :   8, {_}: meet ?6 (join ?6 ?7) =>= ?6 [7, 6] by absorption1 ?6 ?7
+ Id :  10, {_}: join ?9 (meet ?9 ?10) =>= ?9 [10, 9] by absorption2 ?9 ?10
+ Id :  12, {_}:
+          meet ?12 ?13 =?= meet ?13 ?12
+          [13, 12] by commutativity_of_meet ?12 ?13
+ Id :  14, {_}:
+          join ?15 ?16 =?= join ?16 ?15
+          [16, 15] by commutativity_of_join ?15 ?16
+ Id :  16, {_}:
+          meet (meet ?18 ?19) ?20 =?= meet ?18 (meet ?19 ?20)
+          [20, 19, 18] by associativity_of_meet ?18 ?19 ?20
+ Id :  18, {_}:
+          join (join ?22 ?23) ?24 =?= join ?22 (join ?23 ?24)
+          [24, 23, 22] by associativity_of_join ?22 ?23 ?24
+ Id :  20, {_}:
+          meet ?26 (join ?27 (meet ?26 ?28))
+          =<=
+          meet ?26
+            (join ?27
+              (meet ?26 (join (meet ?26 ?27) (meet ?28 (join ?26 ?27)))))
+          [28, 27, 26] by equation_H7 ?26 ?27 ?28
+Goal
+ Id :   2, {_}:
+          meet a (join b (meet a c))
+          =<=
+          meet a (join (meet a (join b (meet a c))) (meet c (join a b)))
+          [] by prove_H6
+Timeout !
+FAILURE in 250 iterations
+LAT140-1
+Order
+ == is 100
+ _ is 99
+ a is 98
+ absorption1 is 90
+ absorption2 is 89
+ associativity_of_join is 85
+ associativity_of_meet is 86
+ b is 97
+ c is 96
+ commutativity_of_join is 87
+ commutativity_of_meet is 88
+ equation_H21 is 84
+ idempotence_of_join is 91
+ idempotence_of_meet is 92
+ join is 94
+ meet is 95
+ prove_H2 is 93
+Facts
+ Id :   4, {_}: meet ?2 ?2 =>= ?2 [2] by idempotence_of_meet ?2
+ Id :   6, {_}: join ?4 ?4 =>= ?4 [4] by idempotence_of_join ?4
+ Id :   8, {_}: meet ?6 (join ?6 ?7) =>= ?6 [7, 6] by absorption1 ?6 ?7
+ Id :  10, {_}: join ?9 (meet ?9 ?10) =>= ?9 [10, 9] by absorption2 ?9 ?10
+ Id :  12, {_}:
+          meet ?12 ?13 =?= meet ?13 ?12
+          [13, 12] by commutativity_of_meet ?12 ?13
+ Id :  14, {_}:
+          join ?15 ?16 =?= join ?16 ?15
+          [16, 15] by commutativity_of_join ?15 ?16
+ Id :  16, {_}:
+          meet (meet ?18 ?19) ?20 =?= meet ?18 (meet ?19 ?20)
+          [20, 19, 18] by associativity_of_meet ?18 ?19 ?20
+ Id :  18, {_}:
+          join (join ?22 ?23) ?24 =?= join ?22 (join ?23 ?24)
+          [24, 23, 22] by associativity_of_join ?22 ?23 ?24
+ Id :  20, {_}:
+          join (meet ?26 ?27) (meet ?26 ?28)
+          =<=
+          meet ?26
+            (join (meet ?27 (join ?26 (meet ?27 ?28)))
+              (meet ?28 (join ?26 ?27)))
+          [28, 27, 26] by equation_H21 ?26 ?27 ?28
+Goal
+ Id :   2, {_}:
+          meet a (join b (meet a c))
+          =<=
+          meet a (join b (meet c (join (meet a (join b c)) (meet b c))))
+          [] by prove_H2
+Timeout !
+FAILURE in 250 iterations
+LAT146-1
+Order
+ == is 100
+ _ is 99
+ a is 98
+ absorption1 is 89
+ absorption2 is 88
+ associativity_of_join is 84
+ associativity_of_meet is 85
+ b is 97
+ c is 96
+ commutativity_of_join is 86
+ commutativity_of_meet is 87
+ d is 95
+ equation_H34 is 83
+ idempotence_of_join is 90
+ idempotence_of_meet is 91
+ join is 93
+ meet is 94
+ prove_H28 is 92
+Facts
+ Id :   4, {_}: meet ?2 ?2 =>= ?2 [2] by idempotence_of_meet ?2
+ Id :   6, {_}: join ?4 ?4 =>= ?4 [4] by idempotence_of_join ?4
+ Id :   8, {_}: meet ?6 (join ?6 ?7) =>= ?6 [7, 6] by absorption1 ?6 ?7
+ Id :  10, {_}: join ?9 (meet ?9 ?10) =>= ?9 [10, 9] by absorption2 ?9 ?10
+ Id :  12, {_}:
+          meet ?12 ?13 =?= meet ?13 ?12
+          [13, 12] by commutativity_of_meet ?12 ?13
+ Id :  14, {_}:
+          join ?15 ?16 =?= join ?16 ?15
+          [16, 15] by commutativity_of_join ?15 ?16
+ Id :  16, {_}:
+          meet (meet ?18 ?19) ?20 =?= meet ?18 (meet ?19 ?20)
+          [20, 19, 18] by associativity_of_meet ?18 ?19 ?20
+ Id :  18, {_}:
+          join (join ?22 ?23) ?24 =?= join ?22 (join ?23 ?24)
+          [24, 23, 22] by associativity_of_join ?22 ?23 ?24
+ Id :  20, {_}:
+          meet ?26 (join ?27 (meet ?28 ?29))
+          =<=
+          meet ?26 (join ?27 (meet ?28 (join ?27 (meet ?29 (join ?27 ?28)))))
+          [29, 28, 27, 26] by equation_H34 ?26 ?27 ?28 ?29
+Goal
+ Id :   2, {_}:
+          meet a (join b (meet a (meet c d)))
+          =<=
+          meet a (join b (meet c (meet d (join a (meet b d)))))
+          [] by prove_H28
+Timeout !
+FAILURE in 250 iterations
+LAT148-1
+Order
+ == is 100
+ _ is 99
+ a is 98
+ absorption1 is 90
+ absorption2 is 89
+ associativity_of_join is 85
+ associativity_of_meet is 86
+ b is 97
+ c is 96
+ commutativity_of_join is 87
+ commutativity_of_meet is 88
+ equation_H34 is 84
+ idempotence_of_join is 91
+ idempotence_of_meet is 92
+ join is 94
+ meet is 95
+ prove_H7 is 93
+Facts
+ Id :   4, {_}: meet ?2 ?2 =>= ?2 [2] by idempotence_of_meet ?2
+ Id :   6, {_}: join ?4 ?4 =>= ?4 [4] by idempotence_of_join ?4
+ Id :   8, {_}: meet ?6 (join ?6 ?7) =>= ?6 [7, 6] by absorption1 ?6 ?7
+ Id :  10, {_}: join ?9 (meet ?9 ?10) =>= ?9 [10, 9] by absorption2 ?9 ?10
+ Id :  12, {_}:
+          meet ?12 ?13 =?= meet ?13 ?12
+          [13, 12] by commutativity_of_meet ?12 ?13
+ Id :  14, {_}:
+          join ?15 ?16 =?= join ?16 ?15
+          [16, 15] by commutativity_of_join ?15 ?16
+ Id :  16, {_}:
+          meet (meet ?18 ?19) ?20 =?= meet ?18 (meet ?19 ?20)
+          [20, 19, 18] by associativity_of_meet ?18 ?19 ?20
+ Id :  18, {_}:
+          join (join ?22 ?23) ?24 =?= join ?22 (join ?23 ?24)
+          [24, 23, 22] by associativity_of_join ?22 ?23 ?24
+ Id :  20, {_}:
+          meet ?26 (join ?27 (meet ?28 ?29))
+          =<=
+          meet ?26 (join ?27 (meet ?28 (join ?27 (meet ?29 (join ?27 ?28)))))
+          [29, 28, 27, 26] by equation_H34 ?26 ?27 ?28 ?29
+Goal
+ Id :   2, {_}:
+          meet a (join b (meet a c))
+          =<=
+          meet a (join b (meet a (join (meet a b) (meet c (join a b)))))
+          [] by prove_H7
+Timeout !
+FAILURE in 250 iterations
+LAT152-1
+Order
+ == is 100
+ _ is 99
+ a is 98
+ absorption1 is 90
+ absorption2 is 89
+ associativity_of_join is 85
+ associativity_of_meet is 86
+ b is 97
+ c is 96
+ commutativity_of_join is 87
+ commutativity_of_meet is 88
+ equation_H40 is 84
+ idempotence_of_join is 91
+ idempotence_of_meet is 92
+ join is 94
+ meet is 95
+ prove_H6 is 93
+Facts
+ Id :   4, {_}: meet ?2 ?2 =>= ?2 [2] by idempotence_of_meet ?2
+ Id :   6, {_}: join ?4 ?4 =>= ?4 [4] by idempotence_of_join ?4
+ Id :   8, {_}: meet ?6 (join ?6 ?7) =>= ?6 [7, 6] by absorption1 ?6 ?7
+ Id :  10, {_}: join ?9 (meet ?9 ?10) =>= ?9 [10, 9] by absorption2 ?9 ?10
+ Id :  12, {_}:
+          meet ?12 ?13 =?= meet ?13 ?12
+          [13, 12] by commutativity_of_meet ?12 ?13
+ Id :  14, {_}:
+          join ?15 ?16 =?= join ?16 ?15
+          [16, 15] by commutativity_of_join ?15 ?16
+ Id :  16, {_}:
+          meet (meet ?18 ?19) ?20 =?= meet ?18 (meet ?19 ?20)
+          [20, 19, 18] by associativity_of_meet ?18 ?19 ?20
+ Id :  18, {_}:
+          join (join ?22 ?23) ?24 =?= join ?22 (join ?23 ?24)
+          [24, 23, 22] by associativity_of_join ?22 ?23 ?24
+ Id :  20, {_}:
+          meet ?26 (join ?27 (meet ?28 (join ?26 ?29)))
+          =<=
+          meet ?26 (join ?27 (meet ?28 (join ?29 (meet ?28 (join ?26 ?27)))))
+          [29, 28, 27, 26] by equation_H40 ?26 ?27 ?28 ?29
+Goal
+ Id :   2, {_}:
+          meet a (join b (meet a c))
+          =<=
+          meet a (join (meet a (join b (meet a c))) (meet c (join a b)))
+          [] by prove_H6
+Timeout !
+FAILURE in 249 iterations
+LAT156-1
+Order
+ == is 100
+ _ is 99
+ a is 98
+ absorption1 is 90
+ absorption2 is 89
+ associativity_of_join is 85
+ associativity_of_meet is 86
+ b is 97
+ c is 96
+ commutativity_of_join is 87
+ commutativity_of_meet is 88
+ equation_H49 is 84
+ idempotence_of_join is 91
+ idempotence_of_meet is 92
+ join is 94
+ meet is 95
+ prove_H6 is 93
+Facts
+ Id :   4, {_}: meet ?2 ?2 =>= ?2 [2] by idempotence_of_meet ?2
+ Id :   6, {_}: join ?4 ?4 =>= ?4 [4] by idempotence_of_join ?4
+ Id :   8, {_}: meet ?6 (join ?6 ?7) =>= ?6 [7, 6] by absorption1 ?6 ?7
+ Id :  10, {_}: join ?9 (meet ?9 ?10) =>= ?9 [10, 9] by absorption2 ?9 ?10
+ Id :  12, {_}:
+          meet ?12 ?13 =?= meet ?13 ?12
+          [13, 12] by commutativity_of_meet ?12 ?13
+ Id :  14, {_}:
+          join ?15 ?16 =?= join ?16 ?15
+          [16, 15] by commutativity_of_join ?15 ?16
+ Id :  16, {_}:
+          meet (meet ?18 ?19) ?20 =?= meet ?18 (meet ?19 ?20)
+          [20, 19, 18] by associativity_of_meet ?18 ?19 ?20
+ Id :  18, {_}:
+          join (join ?22 ?23) ?24 =?= join ?22 (join ?23 ?24)
+          [24, 23, 22] by associativity_of_join ?22 ?23 ?24
+ Id :  20, {_}:
+          meet ?26 (join ?27 (meet ?28 (join ?26 ?29)))
+          =<=
+          meet ?26 (join ?27 (join (meet ?26 ?28) (meet ?28 (join ?27 ?29))))
+          [29, 28, 27, 26] by equation_H49 ?26 ?27 ?28 ?29
+Goal
+ Id :   2, {_}:
+          meet a (join b (meet a c))
+          =<=
+          meet a (join (meet a (join b (meet a c))) (meet c (join a b)))
+          [] by prove_H6
+Timeout !
+FAILURE in 249 iterations
+LAT159-1
+Order
+ == is 100
+ _ is 99
+ a is 98
+ absorption1 is 90
+ absorption2 is 89
+ associativity_of_join is 85
+ associativity_of_meet is 86
+ b is 97
+ c is 96
+ commutativity_of_join is 87
+ commutativity_of_meet is 88
+ equation_H50 is 84
+ idempotence_of_join is 91
+ idempotence_of_meet is 92
+ join is 94
+ meet is 95
+ prove_H7 is 93
+Facts
+ Id :   4, {_}: meet ?2 ?2 =>= ?2 [2] by idempotence_of_meet ?2
+ Id :   6, {_}: join ?4 ?4 =>= ?4 [4] by idempotence_of_join ?4
+ Id :   8, {_}: meet ?6 (join ?6 ?7) =>= ?6 [7, 6] by absorption1 ?6 ?7
+ Id :  10, {_}: join ?9 (meet ?9 ?10) =>= ?9 [10, 9] by absorption2 ?9 ?10
+ Id :  12, {_}:
+          meet ?12 ?13 =?= meet ?13 ?12
+          [13, 12] by commutativity_of_meet ?12 ?13
+ Id :  14, {_}:
+          join ?15 ?16 =?= join ?16 ?15
+          [16, 15] by commutativity_of_join ?15 ?16
+ Id :  16, {_}:
+          meet (meet ?18 ?19) ?20 =?= meet ?18 (meet ?19 ?20)
+          [20, 19, 18] by associativity_of_meet ?18 ?19 ?20
+ Id :  18, {_}:
+          join (join ?22 ?23) ?24 =?= join ?22 (join ?23 ?24)
+          [24, 23, 22] by associativity_of_join ?22 ?23 ?24
+ Id :  20, {_}:
+          meet ?26 (join ?27 (meet ?28 (join ?26 ?29)))
+          =<=
+          meet ?26 (join ?27 (meet ?28 (join ?26 (meet ?28 (join ?27 ?29)))))
+          [29, 28, 27, 26] by equation_H50 ?26 ?27 ?28 ?29
+Goal
+ Id :   2, {_}:
+          meet a (join b (meet a c))
+          =<=
+          meet a (join b (meet a (join (meet a b) (meet c (join a b)))))
+          [] by prove_H7
+Timeout !
+FAILURE in 250 iterations
+LAT164-1
+Order
+ == is 100
+ _ is 99
+ a is 98
+ absorption1 is 90
+ absorption2 is 89
+ associativity_of_join is 85
+ associativity_of_meet is 86
+ b is 97
+ c is 96
+ commutativity_of_join is 87
+ commutativity_of_meet is 88
+ equation_H76 is 84
+ idempotence_of_join is 91
+ idempotence_of_meet is 92
+ join is 94
+ meet is 95
+ prove_H6 is 93
+Facts
+ Id :   4, {_}: meet ?2 ?2 =>= ?2 [2] by idempotence_of_meet ?2
+ Id :   6, {_}: join ?4 ?4 =>= ?4 [4] by idempotence_of_join ?4
+ Id :   8, {_}: meet ?6 (join ?6 ?7) =>= ?6 [7, 6] by absorption1 ?6 ?7
+ Id :  10, {_}: join ?9 (meet ?9 ?10) =>= ?9 [10, 9] by absorption2 ?9 ?10
+ Id :  12, {_}:
+          meet ?12 ?13 =?= meet ?13 ?12
+          [13, 12] by commutativity_of_meet ?12 ?13
+ Id :  14, {_}:
+          join ?15 ?16 =?= join ?16 ?15
+          [16, 15] by commutativity_of_join ?15 ?16
+ Id :  16, {_}:
+          meet (meet ?18 ?19) ?20 =?= meet ?18 (meet ?19 ?20)
+          [20, 19, 18] by associativity_of_meet ?18 ?19 ?20
+ Id :  18, {_}:
+          join (join ?22 ?23) ?24 =?= join ?22 (join ?23 ?24)
+          [24, 23, 22] by associativity_of_join ?22 ?23 ?24
+ Id :  20, {_}:
+          meet ?26 (join ?27 (meet ?28 (join ?27 ?29)))
+          =<=
+          meet ?26 (join ?27 (meet ?28 (join ?29 (meet ?26 ?27))))
+          [29, 28, 27, 26] by equation_H76 ?26 ?27 ?28 ?29
+Goal
+ Id :   2, {_}:
+          meet a (join b (meet a c))
+          =<=
+          meet a (join (meet a (join b (meet a c))) (meet c (join a b)))
+          [] by prove_H6
+Timeout !
+FAILURE in 250 iterations
+LAT165-1
+Order
+ == is 100
+ _ is 99
+ a is 98
+ absorption1 is 89
+ absorption2 is 88
+ associativity_of_join is 84
+ associativity_of_meet is 85
+ b is 97
+ c is 96
+ commutativity_of_join is 86
+ commutativity_of_meet is 87
+ d is 95
+ equation_H76 is 83
+ idempotence_of_join is 90
+ idempotence_of_meet is 91
+ join is 94
+ meet is 93
+ prove_H77 is 92
+Facts
+ Id :   4, {_}: meet ?2 ?2 =>= ?2 [2] by idempotence_of_meet ?2
+ Id :   6, {_}: join ?4 ?4 =>= ?4 [4] by idempotence_of_join ?4
+ Id :   8, {_}: meet ?6 (join ?6 ?7) =>= ?6 [7, 6] by absorption1 ?6 ?7
+ Id :  10, {_}: join ?9 (meet ?9 ?10) =>= ?9 [10, 9] by absorption2 ?9 ?10
+ Id :  12, {_}:
+          meet ?12 ?13 =?= meet ?13 ?12
+          [13, 12] by commutativity_of_meet ?12 ?13
+ Id :  14, {_}:
+          join ?15 ?16 =?= join ?16 ?15
+          [16, 15] by commutativity_of_join ?15 ?16
+ Id :  16, {_}:
+          meet (meet ?18 ?19) ?20 =?= meet ?18 (meet ?19 ?20)
+          [20, 19, 18] by associativity_of_meet ?18 ?19 ?20
+ Id :  18, {_}:
+          join (join ?22 ?23) ?24 =?= join ?22 (join ?23 ?24)
+          [24, 23, 22] by associativity_of_join ?22 ?23 ?24
+ Id :  20, {_}:
+          meet ?26 (join ?27 (meet ?28 (join ?27 ?29)))
+          =<=
+          meet ?26 (join ?27 (meet ?28 (join ?29 (meet ?26 ?27))))
+          [29, 28, 27, 26] by equation_H76 ?26 ?27 ?28 ?29
+Goal
+ Id :   2, {_}:
+          meet a (join b (meet c (join b d)))
+          =<=
+          meet a (join b (meet c (join d (meet a (meet b c)))))
+          [] by prove_H77
+Timeout !
+FAILURE in 269 iterations
+LAT166-1
+Order
+ == is 100
+ _ is 99
+ a is 98
+ absorption1 is 89
+ absorption2 is 88
+ associativity_of_join is 84
+ associativity_of_meet is 85
+ b is 97
+ c is 96
+ commutativity_of_join is 86
+ commutativity_of_meet is 87
+ d is 95
+ equation_H77 is 83
+ idempotence_of_join is 90
+ idempotence_of_meet is 91
+ join is 94
+ meet is 93
+ prove_H78 is 92
+Facts
+ Id :   4, {_}: meet ?2 ?2 =>= ?2 [2] by idempotence_of_meet ?2
+ Id :   6, {_}: join ?4 ?4 =>= ?4 [4] by idempotence_of_join ?4
+ Id :   8, {_}: meet ?6 (join ?6 ?7) =>= ?6 [7, 6] by absorption1 ?6 ?7
+ Id :  10, {_}: join ?9 (meet ?9 ?10) =>= ?9 [10, 9] by absorption2 ?9 ?10
+ Id :  12, {_}:
+          meet ?12 ?13 =?= meet ?13 ?12
+          [13, 12] by commutativity_of_meet ?12 ?13
+ Id :  14, {_}:
+          join ?15 ?16 =?= join ?16 ?15
+          [16, 15] by commutativity_of_join ?15 ?16
+ Id :  16, {_}:
+          meet (meet ?18 ?19) ?20 =?= meet ?18 (meet ?19 ?20)
+          [20, 19, 18] by associativity_of_meet ?18 ?19 ?20
+ Id :  18, {_}:
+          join (join ?22 ?23) ?24 =?= join ?22 (join ?23 ?24)
+          [24, 23, 22] by associativity_of_join ?22 ?23 ?24
+ Id :  20, {_}:
+          meet ?26 (join ?27 (meet ?28 (join ?27 ?29)))
+          =<=
+          meet ?26 (join ?27 (meet ?28 (join ?29 (meet ?26 (meet ?27 ?28)))))
+          [29, 28, 27, 26] by equation_H77 ?26 ?27 ?28 ?29
+Goal
+ Id :   2, {_}:
+          meet a (join b (meet c (join b d)))
+          =<=
+          meet a (join b (meet c (join d (meet b (join a d)))))
+          [] by prove_H78
+Timeout !
+FAILURE in 269 iterations
+LAT169-1
+Order
+ == is 100
+ _ is 99
+ a is 98
+ absorption1 is 90
+ absorption2 is 89
+ associativity_of_join is 85
+ associativity_of_meet is 86
+ b is 97
+ c is 96
+ commutativity_of_join is 87
+ commutativity_of_meet is 88
+ equation_H21_dual is 84
+ idempotence_of_join is 91
+ idempotence_of_meet is 92
+ join is 95
+ meet is 94
+ prove_H58 is 93
+Facts
+ Id :   4, {_}: meet ?2 ?2 =>= ?2 [2] by idempotence_of_meet ?2
+ Id :   6, {_}: join ?4 ?4 =>= ?4 [4] by idempotence_of_join ?4
+ Id :   8, {_}: meet ?6 (join ?6 ?7) =>= ?6 [7, 6] by absorption1 ?6 ?7
+ Id :  10, {_}: join ?9 (meet ?9 ?10) =>= ?9 [10, 9] by absorption2 ?9 ?10
+ Id :  12, {_}:
+          meet ?12 ?13 =?= meet ?13 ?12
+          [13, 12] by commutativity_of_meet ?12 ?13
+ Id :  14, {_}:
+          join ?15 ?16 =?= join ?16 ?15
+          [16, 15] by commutativity_of_join ?15 ?16
+ Id :  16, {_}:
+          meet (meet ?18 ?19) ?20 =?= meet ?18 (meet ?19 ?20)
+          [20, 19, 18] by associativity_of_meet ?18 ?19 ?20
+ Id :  18, {_}:
+          join (join ?22 ?23) ?24 =?= join ?22 (join ?23 ?24)
+          [24, 23, 22] by associativity_of_join ?22 ?23 ?24
+ Id :  20, {_}:
+          meet (join ?26 ?27) (join ?26 ?28)
+          =<=
+          join ?26
+            (meet (join ?27 (meet ?26 (join ?27 ?28)))
+              (join ?28 (meet ?26 ?27)))
+          [28, 27, 26] by equation_H21_dual ?26 ?27 ?28
+Goal
+ Id :   2, {_}:
+          meet a (join b c)
+          =<=
+          meet a (join b (meet (join a b) (join c (meet a b))))
+          [] by prove_H58
+Timeout !
+FAILURE in 268 iterations
+LAT170-1
+Order
+ == is 100
+ _ is 99
+ a is 98
+ absorption1 is 90
+ absorption2 is 89
+ associativity_of_join is 85
+ associativity_of_meet is 86
+ b is 97
+ c is 96
+ commutativity_of_join is 87
+ commutativity_of_meet is 88
+ equation_H49_dual is 84
+ idempotence_of_join is 91
+ idempotence_of_meet is 92
+ join is 95
+ meet is 94
+ prove_H58 is 93
+Facts
+ Id :   4, {_}: meet ?2 ?2 =>= ?2 [2] by idempotence_of_meet ?2
+ Id :   6, {_}: join ?4 ?4 =>= ?4 [4] by idempotence_of_join ?4
+ Id :   8, {_}: meet ?6 (join ?6 ?7) =>= ?6 [7, 6] by absorption1 ?6 ?7
+ Id :  10, {_}: join ?9 (meet ?9 ?10) =>= ?9 [10, 9] by absorption2 ?9 ?10
+ Id :  12, {_}:
+          meet ?12 ?13 =?= meet ?13 ?12
+          [13, 12] by commutativity_of_meet ?12 ?13
+ Id :  14, {_}:
+          join ?15 ?16 =?= join ?16 ?15
+          [16, 15] by commutativity_of_join ?15 ?16
+ Id :  16, {_}:
+          meet (meet ?18 ?19) ?20 =?= meet ?18 (meet ?19 ?20)
+          [20, 19, 18] by associativity_of_meet ?18 ?19 ?20
+ Id :  18, {_}:
+          join (join ?22 ?23) ?24 =?= join ?22 (join ?23 ?24)
+          [24, 23, 22] by associativity_of_join ?22 ?23 ?24
+ Id :  20, {_}:
+          join ?26 (meet ?27 (join ?28 (meet ?26 ?29)))
+          =<=
+          join ?26 (meet ?27 (meet (join ?26 ?28) (join ?28 (meet ?27 ?29))))
+          [29, 28, 27, 26] by equation_H49_dual ?26 ?27 ?28 ?29
+Goal
+ Id :   2, {_}:
+          meet a (join b c)
+          =<=
+          meet a (join b (meet (join a b) (join c (meet a b))))
+          [] by prove_H58
+Timeout !
+FAILURE in 269 iterations
+LAT173-1
+Order
+ == is 100
+ _ is 99
+ a is 98
+ absorption1 is 89
+ absorption2 is 88
+ associativity_of_join is 84
+ associativity_of_meet is 85
+ b is 97
+ c is 96
+ commutativity_of_join is 86
+ commutativity_of_meet is 87
+ d is 95
+ equation_H76_dual is 83
+ idempotence_of_join is 90
+ idempotence_of_meet is 91
+ join is 94
+ meet is 93
+ prove_H40 is 92
+Facts
+ Id :   4, {_}: meet ?2 ?2 =>= ?2 [2] by idempotence_of_meet ?2
+ Id :   6, {_}: join ?4 ?4 =>= ?4 [4] by idempotence_of_join ?4
+ Id :   8, {_}: meet ?6 (join ?6 ?7) =>= ?6 [7, 6] by absorption1 ?6 ?7
+ Id :  10, {_}: join ?9 (meet ?9 ?10) =>= ?9 [10, 9] by absorption2 ?9 ?10
+ Id :  12, {_}:
+          meet ?12 ?13 =?= meet ?13 ?12
+          [13, 12] by commutativity_of_meet ?12 ?13
+ Id :  14, {_}:
+          join ?15 ?16 =?= join ?16 ?15
+          [16, 15] by commutativity_of_join ?15 ?16
+ Id :  16, {_}:
+          meet (meet ?18 ?19) ?20 =?= meet ?18 (meet ?19 ?20)
+          [20, 19, 18] by associativity_of_meet ?18 ?19 ?20
+ Id :  18, {_}:
+          join (join ?22 ?23) ?24 =?= join ?22 (join ?23 ?24)
+          [24, 23, 22] by associativity_of_join ?22 ?23 ?24
+ Id :  20, {_}:
+          join ?26 (meet ?27 (join ?28 (meet ?27 ?29)))
+          =<=
+          join ?26 (meet ?27 (join ?28 (meet ?29 (join ?26 ?27))))
+          [29, 28, 27, 26] by equation_H76_dual ?26 ?27 ?28 ?29
+Goal
+ Id :   2, {_}:
+          meet a (join b (meet c (join a d)))
+          =<=
+          meet a (join b (meet c (join d (meet c (join a b)))))
+          [] by prove_H40
+Timeout !
+FAILURE in 269 iterations
+LAT175-1
+Order
+ == is 100
+ _ is 99
+ a is 98
+ absorption1 is 89
+ absorption2 is 88
+ associativity_of_join is 84
+ associativity_of_meet is 85
+ b is 97
+ c is 96
+ commutativity_of_join is 86
+ commutativity_of_meet is 87
+ d is 95
+ equation_H79_dual is 83
+ idempotence_of_join is 90
+ idempotence_of_meet is 91
+ join is 93
+ meet is 94
+ prove_H32 is 92
+Facts
+ Id :   4, {_}: meet ?2 ?2 =>= ?2 [2] by idempotence_of_meet ?2
+ Id :   6, {_}: join ?4 ?4 =>= ?4 [4] by idempotence_of_join ?4
+ Id :   8, {_}: meet ?6 (join ?6 ?7) =>= ?6 [7, 6] by absorption1 ?6 ?7
+ Id :  10, {_}: join ?9 (meet ?9 ?10) =>= ?9 [10, 9] by absorption2 ?9 ?10
+ Id :  12, {_}:
+          meet ?12 ?13 =?= meet ?13 ?12
+          [13, 12] by commutativity_of_meet ?12 ?13
+ Id :  14, {_}:
+          join ?15 ?16 =?= join ?16 ?15
+          [16, 15] by commutativity_of_join ?15 ?16
+ Id :  16, {_}:
+          meet (meet ?18 ?19) ?20 =?= meet ?18 (meet ?19 ?20)
+          [20, 19, 18] by associativity_of_meet ?18 ?19 ?20
+ Id :  18, {_}:
+          join (join ?22 ?23) ?24 =?= join ?22 (join ?23 ?24)
+          [24, 23, 22] by associativity_of_join ?22 ?23 ?24
+ Id :  20, {_}:
+          join ?26 (meet ?27 (join ?28 (meet ?26 ?29)))
+          =<=
+          join ?26 (meet (join ?26 (meet ?27 (join ?26 ?28))) (join ?28 ?29))
+          [29, 28, 27, 26] by equation_H79_dual ?26 ?27 ?28 ?29
+Goal
+ Id :   2, {_}:
+          meet a (join b (meet a (meet c d)))
+          =<=
+          meet a (join b (meet c (join (meet a d) (meet b d))))
+          [] by prove_H32
+Timeout !
+FAILURE in 250 iterations
+RNG009-7
+Fatal error: exception Assert_failure("tptp_cnf.ml", 4, 25)
+RNG019-6
+Order
+ == is 100
+ _ is 99
+ add is 94
+ additive_identity is 91
+ additive_inverse is 85
+ additive_inverse_additive_inverse is 82
+ associativity_for_addition is 78
+ associator is 93
+ commutativity_for_addition is 79
+ commutator is 75
+ distribute1 is 81
+ distribute2 is 80
+ left_additive_identity is 90
+ left_additive_inverse is 84
+ left_alternative is 76
+ left_multiplicative_zero is 87
+ multiply is 88
+ prove_linearised_form1 is 92
+ right_additive_identity is 89
+ right_additive_inverse is 83
+ right_alternative is 77
+ right_multiplicative_zero is 86
+ u is 96
+ v is 95
+ x is 98
+ y is 97
+Facts
+ Id :   4, {_}:
+          add additive_identity ?2 =>= ?2
+          [2] by left_additive_identity ?2
+ Id :   6, {_}:
+          add ?4 additive_identity =>= ?4
+          [4] by right_additive_identity ?4
+ Id :   8, {_}:
+          multiply additive_identity ?6 =>= additive_identity
+          [6] by left_multiplicative_zero ?6
+ Id :  10, {_}:
+          multiply ?8 additive_identity =>= additive_identity
+          [8] by right_multiplicative_zero ?8
+ Id :  12, {_}:
+          add (additive_inverse ?10) ?10 =>= additive_identity
+          [10] by left_additive_inverse ?10
+ Id :  14, {_}:
+          add ?12 (additive_inverse ?12) =>= additive_identity
+          [12] by right_additive_inverse ?12
+ Id :  16, {_}:
+          additive_inverse (additive_inverse ?14) =>= ?14
+          [14] by additive_inverse_additive_inverse ?14
+ Id :  18, {_}:
+          multiply ?16 (add ?17 ?18)
+          =<=
+          add (multiply ?16 ?17) (multiply ?16 ?18)
+          [18, 17, 16] by distribute1 ?16 ?17 ?18
+ Id :  20, {_}:
+          multiply (add ?20 ?21) ?22
+          =<=
+          add (multiply ?20 ?22) (multiply ?21 ?22)
+          [22, 21, 20] by distribute2 ?20 ?21 ?22
+ Id :  22, {_}:
+          add ?24 ?25 =?= add ?25 ?24
+          [25, 24] by commutativity_for_addition ?24 ?25
+ Id :  24, {_}:
+          add ?27 (add ?28 ?29) =?= add (add ?27 ?28) ?29
+          [29, 28, 27] by associativity_for_addition ?27 ?28 ?29
+ Id :  26, {_}:
+          multiply (multiply ?31 ?32) ?32 =?= multiply ?31 (multiply ?32 ?32)
+          [32, 31] by right_alternative ?31 ?32
+ Id :  28, {_}:
+          multiply (multiply ?34 ?34) ?35 =?= multiply ?34 (multiply ?34 ?35)
+          [35, 34] by left_alternative ?34 ?35
+ Id :  30, {_}:
+          associator ?37 ?38 ?39
+          =<=
+          add (multiply (multiply ?37 ?38) ?39)
+            (additive_inverse (multiply ?37 (multiply ?38 ?39)))
+          [39, 38, 37] by associator ?37 ?38 ?39
+ Id :  32, {_}:
+          commutator ?41 ?42
+          =<=
+          add (multiply ?42 ?41) (additive_inverse (multiply ?41 ?42))
+          [42, 41] by commutator ?41 ?42
+Goal
+ Id :   2, {_}:
+          associator x y (add u v)
+          =<=
+          add (associator x y u) (associator x y v)
+          [] by prove_linearised_form1
+Timeout !
+FAILURE in 393 iterations
+RNG019-7
+Order
+ == is 100
+ _ is 99
+ add is 94
+ additive_identity is 91
+ additive_inverse is 85
+ additive_inverse_additive_inverse is 82
+ associativity_for_addition is 78
+ associator is 93
+ commutativity_for_addition is 79
+ commutator is 75
+ distribute1 is 81
+ distribute2 is 80
+ distributivity_of_difference1 is 71
+ distributivity_of_difference2 is 70
+ distributivity_of_difference3 is 69
+ distributivity_of_difference4 is 68
+ inverse_product1 is 73
+ inverse_product2 is 72
+ left_additive_identity is 90
+ left_additive_inverse is 84
+ left_alternative is 76
+ left_multiplicative_zero is 87
+ multiply is 88
+ product_of_inverses is 74
+ prove_linearised_form1 is 92
+ right_additive_identity is 89
+ right_additive_inverse is 83
+ right_alternative is 77
+ right_multiplicative_zero is 86
+ u is 96
+ v is 95
+ x is 98
+ y is 97
+Facts
+ Id :   4, {_}:
+          add additive_identity ?2 =>= ?2
+          [2] by left_additive_identity ?2
+ Id :   6, {_}:
+          add ?4 additive_identity =>= ?4
+          [4] by right_additive_identity ?4
+ Id :   8, {_}:
+          multiply additive_identity ?6 =>= additive_identity
+          [6] by left_multiplicative_zero ?6
+ Id :  10, {_}:
+          multiply ?8 additive_identity =>= additive_identity
+          [8] by right_multiplicative_zero ?8
+ Id :  12, {_}:
+          add (additive_inverse ?10) ?10 =>= additive_identity
+          [10] by left_additive_inverse ?10
+ Id :  14, {_}:
+          add ?12 (additive_inverse ?12) =>= additive_identity
+          [12] by right_additive_inverse ?12
+ Id :  16, {_}:
+          additive_inverse (additive_inverse ?14) =>= ?14
+          [14] by additive_inverse_additive_inverse ?14
+ Id :  18, {_}:
+          multiply ?16 (add ?17 ?18)
+          =<=
+          add (multiply ?16 ?17) (multiply ?16 ?18)
+          [18, 17, 16] by distribute1 ?16 ?17 ?18
+ Id :  20, {_}:
+          multiply (add ?20 ?21) ?22
+          =<=
+          add (multiply ?20 ?22) (multiply ?21 ?22)
+          [22, 21, 20] by distribute2 ?20 ?21 ?22
+ Id :  22, {_}:
+          add ?24 ?25 =?= add ?25 ?24
+          [25, 24] by commutativity_for_addition ?24 ?25
+ Id :  24, {_}:
+          add ?27 (add ?28 ?29) =?= add (add ?27 ?28) ?29
+          [29, 28, 27] by associativity_for_addition ?27 ?28 ?29
+ Id :  26, {_}:
+          multiply (multiply ?31 ?32) ?32 =?= multiply ?31 (multiply ?32 ?32)
+          [32, 31] by right_alternative ?31 ?32
+ Id :  28, {_}:
+          multiply (multiply ?34 ?34) ?35 =?= multiply ?34 (multiply ?34 ?35)
+          [35, 34] by left_alternative ?34 ?35
+ Id :  30, {_}:
+          associator ?37 ?38 ?39
+          =<=
+          add (multiply (multiply ?37 ?38) ?39)
+            (additive_inverse (multiply ?37 (multiply ?38 ?39)))
+          [39, 38, 37] by associator ?37 ?38 ?39
+ Id :  32, {_}:
+          commutator ?41 ?42
+          =<=
+          add (multiply ?42 ?41) (additive_inverse (multiply ?41 ?42))
+          [42, 41] by commutator ?41 ?42
+ Id :  34, {_}:
+          multiply (additive_inverse ?44) (additive_inverse ?45)
+          =>=
+          multiply ?44 ?45
+          [45, 44] by product_of_inverses ?44 ?45
+ Id :  36, {_}:
+          multiply (additive_inverse ?47) ?48
+          =>=
+          additive_inverse (multiply ?47 ?48)
+          [48, 47] by inverse_product1 ?47 ?48
+ Id :  38, {_}:
+          multiply ?50 (additive_inverse ?51)
+          =>=
+          additive_inverse (multiply ?50 ?51)
+          [51, 50] by inverse_product2 ?50 ?51
+ Id :  40, {_}:
+          multiply ?53 (add ?54 (additive_inverse ?55))
+          =<=
+          add (multiply ?53 ?54) (additive_inverse (multiply ?53 ?55))
+          [55, 54, 53] by distributivity_of_difference1 ?53 ?54 ?55
+ Id :  42, {_}:
+          multiply (add ?57 (additive_inverse ?58)) ?59
+          =<=
+          add (multiply ?57 ?59) (additive_inverse (multiply ?58 ?59))
+          [59, 58, 57] by distributivity_of_difference2 ?57 ?58 ?59
+ Id :  44, {_}:
+          multiply (additive_inverse ?61) (add ?62 ?63)
+          =<=
+          add (additive_inverse (multiply ?61 ?62))
+            (additive_inverse (multiply ?61 ?63))
+          [63, 62, 61] by distributivity_of_difference3 ?61 ?62 ?63
+ Id :  46, {_}:
+          multiply (add ?65 ?66) (additive_inverse ?67)
+          =<=
+          add (additive_inverse (multiply ?65 ?67))
+            (additive_inverse (multiply ?66 ?67))
+          [67, 66, 65] by distributivity_of_difference4 ?65 ?66 ?67
+Goal
+ Id :   2, {_}:
+          associator x y (add u v)
+          =<=
+          add (associator x y u) (associator x y v)
+          [] by prove_linearised_form1
+Timeout !
+FAILURE in 546 iterations
+RNG020-6
+Order
+ == is 100
+ _ is 99
+ add is 95
+ additive_identity is 91
+ additive_inverse is 85
+ additive_inverse_additive_inverse is 82
+ associativity_for_addition is 78
+ associator is 93
+ commutativity_for_addition is 79
+ commutator is 75
+ distribute1 is 81
+ distribute2 is 80
+ left_additive_identity is 90
+ left_additive_inverse is 84
+ left_alternative is 76
+ left_multiplicative_zero is 87
+ multiply is 88
+ prove_linearised_form2 is 92
+ right_additive_identity is 89
+ right_additive_inverse is 83
+ right_alternative is 77
+ right_multiplicative_zero is 86
+ u is 97
+ v is 96
+ x is 98
+ y is 94
+Facts
+ Id :   4, {_}:
+          add additive_identity ?2 =>= ?2
+          [2] by left_additive_identity ?2
+ Id :   6, {_}:
+          add ?4 additive_identity =>= ?4
+          [4] by right_additive_identity ?4
+ Id :   8, {_}:
+          multiply additive_identity ?6 =>= additive_identity
+          [6] by left_multiplicative_zero ?6
+ Id :  10, {_}:
+          multiply ?8 additive_identity =>= additive_identity
+          [8] by right_multiplicative_zero ?8
+ Id :  12, {_}:
+          add (additive_inverse ?10) ?10 =>= additive_identity
+          [10] by left_additive_inverse ?10
+ Id :  14, {_}:
+          add ?12 (additive_inverse ?12) =>= additive_identity
+          [12] by right_additive_inverse ?12
+ Id :  16, {_}:
+          additive_inverse (additive_inverse ?14) =>= ?14
+          [14] by additive_inverse_additive_inverse ?14
+ Id :  18, {_}:
+          multiply ?16 (add ?17 ?18)
+          =<=
+          add (multiply ?16 ?17) (multiply ?16 ?18)
+          [18, 17, 16] by distribute1 ?16 ?17 ?18
+ Id :  20, {_}:
+          multiply (add ?20 ?21) ?22
+          =<=
+          add (multiply ?20 ?22) (multiply ?21 ?22)
+          [22, 21, 20] by distribute2 ?20 ?21 ?22
+ Id :  22, {_}:
+          add ?24 ?25 =?= add ?25 ?24
+          [25, 24] by commutativity_for_addition ?24 ?25
+ Id :  24, {_}:
+          add ?27 (add ?28 ?29) =?= add (add ?27 ?28) ?29
+          [29, 28, 27] by associativity_for_addition ?27 ?28 ?29
+ Id :  26, {_}:
+          multiply (multiply ?31 ?32) ?32 =?= multiply ?31 (multiply ?32 ?32)
+          [32, 31] by right_alternative ?31 ?32
+ Id :  28, {_}:
+          multiply (multiply ?34 ?34) ?35 =?= multiply ?34 (multiply ?34 ?35)
+          [35, 34] by left_alternative ?34 ?35
+ Id :  30, {_}:
+          associator ?37 ?38 ?39
+          =<=
+          add (multiply (multiply ?37 ?38) ?39)
+            (additive_inverse (multiply ?37 (multiply ?38 ?39)))
+          [39, 38, 37] by associator ?37 ?38 ?39
+ Id :  32, {_}:
+          commutator ?41 ?42
+          =<=
+          add (multiply ?42 ?41) (additive_inverse (multiply ?41 ?42))
+          [42, 41] by commutator ?41 ?42
+Goal
+ Id :   2, {_}:
+          associator x (add u v) y
+          =<=
+          add (associator x u y) (associator x v y)
+          [] by prove_linearised_form2
+Timeout !
+FAILURE in 398 iterations
+RNG026-6
+Order
+ == is 100
+ _ is 99
+ a is 98
+ add is 92
+ additive_identity is 90
+ additive_inverse is 91
+ additive_inverse_additive_inverse is 82
+ associativity_for_addition is 78
+ associator is 93
+ b is 97
+ c is 95
+ commutativity_for_addition is 79
+ commutator is 75
+ d is 94
+ distribute1 is 81
+ distribute2 is 80
+ left_additive_identity is 88
+ left_additive_inverse is 84
+ left_alternative is 76
+ left_multiplicative_zero is 86
+ multiply is 96
+ prove_teichmuller_identity is 89
+ right_additive_identity is 87
+ right_additive_inverse is 83
+ right_alternative is 77
+ right_multiplicative_zero is 85
+Facts
+ Id :   4, {_}:
+          add additive_identity ?2 =>= ?2
+          [2] by left_additive_identity ?2
+ Id :   6, {_}:
+          add ?4 additive_identity =>= ?4
+          [4] by right_additive_identity ?4
+ Id :   8, {_}:
+          multiply additive_identity ?6 =>= additive_identity
+          [6] by left_multiplicative_zero ?6
+ Id :  10, {_}:
+          multiply ?8 additive_identity =>= additive_identity
+          [8] by right_multiplicative_zero ?8
+ Id :  12, {_}:
+          add (additive_inverse ?10) ?10 =>= additive_identity
+          [10] by left_additive_inverse ?10
+ Id :  14, {_}:
+          add ?12 (additive_inverse ?12) =>= additive_identity
+          [12] by right_additive_inverse ?12
+ Id :  16, {_}:
+          additive_inverse (additive_inverse ?14) =>= ?14
+          [14] by additive_inverse_additive_inverse ?14
+ Id :  18, {_}:
+          multiply ?16 (add ?17 ?18)
+          =<=
+          add (multiply ?16 ?17) (multiply ?16 ?18)
+          [18, 17, 16] by distribute1 ?16 ?17 ?18
+ Id :  20, {_}:
+          multiply (add ?20 ?21) ?22
+          =<=
+          add (multiply ?20 ?22) (multiply ?21 ?22)
+          [22, 21, 20] by distribute2 ?20 ?21 ?22
+ Id :  22, {_}:
+          add ?24 ?25 =?= add ?25 ?24
+          [25, 24] by commutativity_for_addition ?24 ?25
+ Id :  24, {_}:
+          add ?27 (add ?28 ?29) =?= add (add ?27 ?28) ?29
+          [29, 28, 27] by associativity_for_addition ?27 ?28 ?29
+ Id :  26, {_}:
+          multiply (multiply ?31 ?32) ?32 =?= multiply ?31 (multiply ?32 ?32)
+          [32, 31] by right_alternative ?31 ?32
+ Id :  28, {_}:
+          multiply (multiply ?34 ?34) ?35 =?= multiply ?34 (multiply ?34 ?35)
+          [35, 34] by left_alternative ?34 ?35
+ Id :  30, {_}:
+          associator ?37 ?38 ?39
+          =<=
+          add (multiply (multiply ?37 ?38) ?39)
+            (additive_inverse (multiply ?37 (multiply ?38 ?39)))
+          [39, 38, 37] by associator ?37 ?38 ?39
+ Id :  32, {_}:
+          commutator ?41 ?42
+          =<=
+          add (multiply ?42 ?41) (additive_inverse (multiply ?41 ?42))
+          [42, 41] by commutator ?41 ?42
+Goal
+ Id :   2, {_}:
+          add
+            (add (associator (multiply a b) c d)
+              (associator a b (multiply c d)))
+            (additive_inverse
+              (add
+                (add (associator a (multiply b c) d)
+                  (multiply a (associator b c d)))
+                (multiply (associator a b c) d)))
+          =>=
+          additive_identity
+          [] by prove_teichmuller_identity
+Timeout !
+FAILURE in 406 iterations
+RNG027-7
+Order
+ == is 100
+ _ is 99
+ add is 92
+ additive_identity is 93
+ additive_inverse is 87
+ additive_inverse_additive_inverse is 84
+ associativity_for_addition is 80
+ associator is 77
+ commutativity_for_addition is 81
+ commutator is 76
+ cx is 97
+ cy is 96
+ cz is 98
+ distribute1 is 83
+ distribute2 is 82
+ distributivity_of_difference1 is 72
+ distributivity_of_difference2 is 71
+ distributivity_of_difference3 is 70
+ distributivity_of_difference4 is 69
+ inverse_product1 is 74
+ inverse_product2 is 73
+ left_additive_identity is 91
+ left_additive_inverse is 86
+ left_alternative is 78
+ left_multiplicative_zero is 89
+ multiply is 95
+ product_of_inverses is 75
+ prove_right_moufang is 94
+ right_additive_identity is 90
+ right_additive_inverse is 85
+ right_alternative is 79
+ right_multiplicative_zero is 88
+Facts
+ Id :   4, {_}:
+          add additive_identity ?2 =>= ?2
+          [2] by left_additive_identity ?2
+ Id :   6, {_}:
+          add ?4 additive_identity =>= ?4
+          [4] by right_additive_identity ?4
+ Id :   8, {_}:
+          multiply additive_identity ?6 =>= additive_identity
+          [6] by left_multiplicative_zero ?6
+ Id :  10, {_}:
+          multiply ?8 additive_identity =>= additive_identity
+          [8] by right_multiplicative_zero ?8
+ Id :  12, {_}:
+          add (additive_inverse ?10) ?10 =>= additive_identity
+          [10] by left_additive_inverse ?10
+ Id :  14, {_}:
+          add ?12 (additive_inverse ?12) =>= additive_identity
+          [12] by right_additive_inverse ?12
+ Id :  16, {_}:
+          additive_inverse (additive_inverse ?14) =>= ?14
+          [14] by additive_inverse_additive_inverse ?14
+ Id :  18, {_}:
+          multiply ?16 (add ?17 ?18)
+          =<=
+          add (multiply ?16 ?17) (multiply ?16 ?18)
+          [18, 17, 16] by distribute1 ?16 ?17 ?18
+ Id :  20, {_}:
+          multiply (add ?20 ?21) ?22
+          =<=
+          add (multiply ?20 ?22) (multiply ?21 ?22)
+          [22, 21, 20] by distribute2 ?20 ?21 ?22
+ Id :  22, {_}:
+          add ?24 ?25 =?= add ?25 ?24
+          [25, 24] by commutativity_for_addition ?24 ?25
+ Id :  24, {_}:
+          add ?27 (add ?28 ?29) =?= add (add ?27 ?28) ?29
+          [29, 28, 27] by associativity_for_addition ?27 ?28 ?29
+ Id :  26, {_}:
+          multiply (multiply ?31 ?32) ?32 =?= multiply ?31 (multiply ?32 ?32)
+          [32, 31] by right_alternative ?31 ?32
+ Id :  28, {_}:
+          multiply (multiply ?34 ?34) ?35 =?= multiply ?34 (multiply ?34 ?35)
+          [35, 34] by left_alternative ?34 ?35
+ Id :  30, {_}:
+          associator ?37 ?38 ?39
+          =<=
+          add (multiply (multiply ?37 ?38) ?39)
+            (additive_inverse (multiply ?37 (multiply ?38 ?39)))
+          [39, 38, 37] by associator ?37 ?38 ?39
+ Id :  32, {_}:
+          commutator ?41 ?42
+          =<=
+          add (multiply ?42 ?41) (additive_inverse (multiply ?41 ?42))
+          [42, 41] by commutator ?41 ?42
+ Id :  34, {_}:
+          multiply (additive_inverse ?44) (additive_inverse ?45)
+          =>=
+          multiply ?44 ?45
+          [45, 44] by product_of_inverses ?44 ?45
+ Id :  36, {_}:
+          multiply (additive_inverse ?47) ?48
+          =>=
+          additive_inverse (multiply ?47 ?48)
+          [48, 47] by inverse_product1 ?47 ?48
+ Id :  38, {_}:
+          multiply ?50 (additive_inverse ?51)
+          =>=
+          additive_inverse (multiply ?50 ?51)
+          [51, 50] by inverse_product2 ?50 ?51
+ Id :  40, {_}:
+          multiply ?53 (add ?54 (additive_inverse ?55))
+          =<=
+          add (multiply ?53 ?54) (additive_inverse (multiply ?53 ?55))
+          [55, 54, 53] by distributivity_of_difference1 ?53 ?54 ?55
+ Id :  42, {_}:
+          multiply (add ?57 (additive_inverse ?58)) ?59
+          =<=
+          add (multiply ?57 ?59) (additive_inverse (multiply ?58 ?59))
+          [59, 58, 57] by distributivity_of_difference2 ?57 ?58 ?59
+ Id :  44, {_}:
+          multiply (additive_inverse ?61) (add ?62 ?63)
+          =<=
+          add (additive_inverse (multiply ?61 ?62))
+            (additive_inverse (multiply ?61 ?63))
+          [63, 62, 61] by distributivity_of_difference3 ?61 ?62 ?63
+ Id :  46, {_}:
+          multiply (add ?65 ?66) (additive_inverse ?67)
+          =<=
+          add (additive_inverse (multiply ?65 ?67))
+            (additive_inverse (multiply ?66 ?67))
+          [67, 66, 65] by distributivity_of_difference4 ?65 ?66 ?67
+Goal
+ Id :   2, {_}:
+          multiply cz (multiply cx (multiply cy cx))
+          =<=
+          multiply (multiply (multiply cz cx) cy) cx
+          [] by prove_right_moufang
+Timeout !
+FAILURE in 538 iterations
+RNG028-9
+Order
+ == is 100
+ _ is 99
+ add is 91
+ additive_identity is 92
+ additive_inverse is 86
+ additive_inverse_additive_inverse is 83
+ associativity_for_addition is 79
+ associator is 94
+ commutativity_for_addition is 80
+ commutator is 76
+ distribute1 is 82
+ distribute2 is 81
+ distributivity_of_difference1 is 72
+ distributivity_of_difference2 is 71
+ distributivity_of_difference3 is 70
+ distributivity_of_difference4 is 69
+ inverse_product1 is 74
+ inverse_product2 is 73
+ left_additive_identity is 90
+ left_additive_inverse is 85
+ left_alternative is 77
+ left_multiplicative_zero is 88
+ multiply is 96
+ product_of_inverses is 75
+ prove_left_moufang is 93
+ right_additive_identity is 89
+ right_additive_inverse is 84
+ right_alternative is 78
+ right_multiplicative_zero is 87
+ x is 98
+ y is 97
+ z is 95
+Facts
+ Id :   4, {_}:
+          add additive_identity ?2 =>= ?2
+          [2] by left_additive_identity ?2
+ Id :   6, {_}:
+          add ?4 additive_identity =>= ?4
+          [4] by right_additive_identity ?4
+ Id :   8, {_}:
+          multiply additive_identity ?6 =>= additive_identity
+          [6] by left_multiplicative_zero ?6
+ Id :  10, {_}:
+          multiply ?8 additive_identity =>= additive_identity
+          [8] by right_multiplicative_zero ?8
+ Id :  12, {_}:
+          add (additive_inverse ?10) ?10 =>= additive_identity
+          [10] by left_additive_inverse ?10
+ Id :  14, {_}:
+          add ?12 (additive_inverse ?12) =>= additive_identity
+          [12] by right_additive_inverse ?12
+ Id :  16, {_}:
+          additive_inverse (additive_inverse ?14) =>= ?14
+          [14] by additive_inverse_additive_inverse ?14
+ Id :  18, {_}:
+          multiply ?16 (add ?17 ?18)
+          =<=
+          add (multiply ?16 ?17) (multiply ?16 ?18)
+          [18, 17, 16] by distribute1 ?16 ?17 ?18
+ Id :  20, {_}:
+          multiply (add ?20 ?21) ?22
+          =<=
+          add (multiply ?20 ?22) (multiply ?21 ?22)
+          [22, 21, 20] by distribute2 ?20 ?21 ?22
+ Id :  22, {_}:
+          add ?24 ?25 =?= add ?25 ?24
+          [25, 24] by commutativity_for_addition ?24 ?25
+ Id :  24, {_}:
+          add ?27 (add ?28 ?29) =?= add (add ?27 ?28) ?29
+          [29, 28, 27] by associativity_for_addition ?27 ?28 ?29
+ Id :  26, {_}:
+          multiply (multiply ?31 ?32) ?32 =?= multiply ?31 (multiply ?32 ?32)
+          [32, 31] by right_alternative ?31 ?32
+ Id :  28, {_}:
+          multiply (multiply ?34 ?34) ?35 =?= multiply ?34 (multiply ?34 ?35)
+          [35, 34] by left_alternative ?34 ?35
+ Id :  30, {_}:
+          associator ?37 ?38 ?39
+          =<=
+          add (multiply (multiply ?37 ?38) ?39)
+            (additive_inverse (multiply ?37 (multiply ?38 ?39)))
+          [39, 38, 37] by associator ?37 ?38 ?39
+ Id :  32, {_}:
+          commutator ?41 ?42
+          =<=
+          add (multiply ?42 ?41) (additive_inverse (multiply ?41 ?42))
+          [42, 41] by commutator ?41 ?42
+ Id :  34, {_}:
+          multiply (additive_inverse ?44) (additive_inverse ?45)
+          =>=
+          multiply ?44 ?45
+          [45, 44] by product_of_inverses ?44 ?45
+ Id :  36, {_}:
+          multiply (additive_inverse ?47) ?48
+          =>=
+          additive_inverse (multiply ?47 ?48)
+          [48, 47] by inverse_product1 ?47 ?48
+ Id :  38, {_}:
+          multiply ?50 (additive_inverse ?51)
+          =>=
+          additive_inverse (multiply ?50 ?51)
+          [51, 50] by inverse_product2 ?50 ?51
+ Id :  40, {_}:
+          multiply ?53 (add ?54 (additive_inverse ?55))
+          =<=
+          add (multiply ?53 ?54) (additive_inverse (multiply ?53 ?55))
+          [55, 54, 53] by distributivity_of_difference1 ?53 ?54 ?55
+ Id :  42, {_}:
+          multiply (add ?57 (additive_inverse ?58)) ?59
+          =<=
+          add (multiply ?57 ?59) (additive_inverse (multiply ?58 ?59))
+          [59, 58, 57] by distributivity_of_difference2 ?57 ?58 ?59
+ Id :  44, {_}:
+          multiply (additive_inverse ?61) (add ?62 ?63)
+          =<=
+          add (additive_inverse (multiply ?61 ?62))
+            (additive_inverse (multiply ?61 ?63))
+          [63, 62, 61] by distributivity_of_difference3 ?61 ?62 ?63
+ Id :  46, {_}:
+          multiply (add ?65 ?66) (additive_inverse ?67)
+          =<=
+          add (additive_inverse (multiply ?65 ?67))
+            (additive_inverse (multiply ?66 ?67))
+          [67, 66, 65] by distributivity_of_difference4 ?65 ?66 ?67
+Goal
+ Id :   2, {_}:
+          associator x (multiply y x) z =<= multiply x (associator x y z)
+          [] by prove_left_moufang
+Timeout !
+FAILURE in 537 iterations
+RNG029-7
+Order
+ == is 100
+ _ is 99
+ add is 92
+ additive_identity is 93
+ additive_inverse is 87
+ additive_inverse_additive_inverse is 84
+ associativity_for_addition is 80
+ associator is 77
+ commutativity_for_addition is 81
+ commutator is 76
+ distribute1 is 83
+ distribute2 is 82
+ distributivity_of_difference1 is 72
+ distributivity_of_difference2 is 71
+ distributivity_of_difference3 is 70
+ distributivity_of_difference4 is 69
+ inverse_product1 is 74
+ inverse_product2 is 73
+ left_additive_identity is 91
+ left_additive_inverse is 86
+ left_alternative is 78
+ left_multiplicative_zero is 89
+ multiply is 96
+ product_of_inverses is 75
+ prove_middle_moufang is 94
+ right_additive_identity is 90
+ right_additive_inverse is 85
+ right_alternative is 79
+ right_multiplicative_zero is 88
+ x is 98
+ y is 97
+ z is 95
+Facts
+ Id :   4, {_}:
+          add additive_identity ?2 =>= ?2
+          [2] by left_additive_identity ?2
+ Id :   6, {_}:
+          add ?4 additive_identity =>= ?4
+          [4] by right_additive_identity ?4
+ Id :   8, {_}:
+          multiply additive_identity ?6 =>= additive_identity
+          [6] by left_multiplicative_zero ?6
+ Id :  10, {_}:
+          multiply ?8 additive_identity =>= additive_identity
+          [8] by right_multiplicative_zero ?8
+ Id :  12, {_}:
+          add (additive_inverse ?10) ?10 =>= additive_identity
+          [10] by left_additive_inverse ?10
+ Id :  14, {_}:
+          add ?12 (additive_inverse ?12) =>= additive_identity
+          [12] by right_additive_inverse ?12
+ Id :  16, {_}:
+          additive_inverse (additive_inverse ?14) =>= ?14
+          [14] by additive_inverse_additive_inverse ?14
+ Id :  18, {_}:
+          multiply ?16 (add ?17 ?18)
+          =<=
+          add (multiply ?16 ?17) (multiply ?16 ?18)
+          [18, 17, 16] by distribute1 ?16 ?17 ?18
+ Id :  20, {_}:
+          multiply (add ?20 ?21) ?22
+          =<=
+          add (multiply ?20 ?22) (multiply ?21 ?22)
+          [22, 21, 20] by distribute2 ?20 ?21 ?22
+ Id :  22, {_}:
+          add ?24 ?25 =?= add ?25 ?24
+          [25, 24] by commutativity_for_addition ?24 ?25
+ Id :  24, {_}:
+          add ?27 (add ?28 ?29) =?= add (add ?27 ?28) ?29
+          [29, 28, 27] by associativity_for_addition ?27 ?28 ?29
+ Id :  26, {_}:
+          multiply (multiply ?31 ?32) ?32 =?= multiply ?31 (multiply ?32 ?32)
+          [32, 31] by right_alternative ?31 ?32
+ Id :  28, {_}:
+          multiply (multiply ?34 ?34) ?35 =?= multiply ?34 (multiply ?34 ?35)
+          [35, 34] by left_alternative ?34 ?35
+ Id :  30, {_}:
+          associator ?37 ?38 ?39
+          =<=
+          add (multiply (multiply ?37 ?38) ?39)
+            (additive_inverse (multiply ?37 (multiply ?38 ?39)))
+          [39, 38, 37] by associator ?37 ?38 ?39
+ Id :  32, {_}:
+          commutator ?41 ?42
+          =<=
+          add (multiply ?42 ?41) (additive_inverse (multiply ?41 ?42))
+          [42, 41] by commutator ?41 ?42
+ Id :  34, {_}:
+          multiply (additive_inverse ?44) (additive_inverse ?45)
+          =>=
+          multiply ?44 ?45
+          [45, 44] by product_of_inverses ?44 ?45
+ Id :  36, {_}:
+          multiply (additive_inverse ?47) ?48
+          =>=
+          additive_inverse (multiply ?47 ?48)
+          [48, 47] by inverse_product1 ?47 ?48
+ Id :  38, {_}:
+          multiply ?50 (additive_inverse ?51)
+          =>=
+          additive_inverse (multiply ?50 ?51)
+          [51, 50] by inverse_product2 ?50 ?51
+ Id :  40, {_}:
+          multiply ?53 (add ?54 (additive_inverse ?55))
+          =<=
+          add (multiply ?53 ?54) (additive_inverse (multiply ?53 ?55))
+          [55, 54, 53] by distributivity_of_difference1 ?53 ?54 ?55
+ Id :  42, {_}:
+          multiply (add ?57 (additive_inverse ?58)) ?59
+          =<=
+          add (multiply ?57 ?59) (additive_inverse (multiply ?58 ?59))
+          [59, 58, 57] by distributivity_of_difference2 ?57 ?58 ?59
+ Id :  44, {_}:
+          multiply (additive_inverse ?61) (add ?62 ?63)
+          =<=
+          add (additive_inverse (multiply ?61 ?62))
+            (additive_inverse (multiply ?61 ?63))
+          [63, 62, 61] by distributivity_of_difference3 ?61 ?62 ?63
+ Id :  46, {_}:
+          multiply (add ?65 ?66) (additive_inverse ?67)
+          =<=
+          add (additive_inverse (multiply ?65 ?67))
+            (additive_inverse (multiply ?66 ?67))
+          [67, 66, 65] by distributivity_of_difference4 ?65 ?66 ?67
+Goal
+ Id :   2, {_}:
+          multiply (multiply x y) (multiply z x)
+          =<=
+          multiply (multiply x (multiply y z)) x
+          [] by prove_middle_moufang
+Timeout !
+FAILURE in 537 iterations
+RNG035-7
+Fatal error: exception Assert_failure("tptp_cnf.ml", 4, 25)
+ROB006-1
+Order
+ == is 100
+ _ is 99
+ a is 98
+ absorbtion is 88
+ add is 95
+ associativity_of_add is 92
+ b is 97
+ c is 90
+ commutativity_of_add is 93
+ d is 89
+ negate is 96
+ prove_huntingtons_axiom is 94
+ robbins_axiom is 91
+Facts
+ Id :   4, {_}: add ?2 ?3 =?= add ?3 ?2 [3, 2] by commutativity_of_add ?2 ?3
+ Id :   6, {_}:
+          add (add ?5 ?6) ?7 =?= add ?5 (add ?6 ?7)
+          [7, 6, 5] by associativity_of_add ?5 ?6 ?7
+ Id :   8, {_}:
+          negate (add (negate (add ?9 ?10)) (negate (add ?9 (negate ?10))))
+          =>=
+          ?9
+          [10, 9] by robbins_axiom ?9 ?10
+ Id :  10, {_}: add c d =>= d [] by absorbtion
+Goal
+ Id :   2, {_}:
+          add (negate (add a (negate b)))
+            (negate (add (negate a) (negate b)))
+          =>=
+          b
+          [] by prove_huntingtons_axiom
+Timeout !
+FAILURE in 163 iterations
+ROB006-2
+Order
+ == is 100
+ _ is 99
+ absorbtion is 90
+ add is 98
+ associativity_of_add is 95
+ c is 92
+ commutativity_of_add is 96
+ d is 91
+ negate is 94
+ prove_idempotence is 97
+ robbins_axiom is 93
+Facts
+ Id :   4, {_}: add ?3 ?4 =?= add ?4 ?3 [4, 3] by commutativity_of_add ?3 ?4
+ Id :   6, {_}:
+          add (add ?6 ?7) ?8 =?= add ?6 (add ?7 ?8)
+          [8, 7, 6] by associativity_of_add ?6 ?7 ?8
+ Id :   8, {_}:
+          negate (add (negate (add ?10 ?11)) (negate (add ?10 (negate ?11))))
+          =>=
+          ?10
+          [11, 10] by robbins_axiom ?10 ?11
+ Id :  10, {_}: add c d =>= d [] by absorbtion
+Goal
+ Id :   2, {_}: add ?1 ?1 =>= ?1 [1] by prove_idempotence ?1
+Timeout !
+FAILURE in 253 iterations

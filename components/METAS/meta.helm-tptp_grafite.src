@@ -1,0 +1,5 @@
+requires="helm-acic_content helm-grafite helm-lexicon"
+version="0.0.1"
+archive(byte)="tptp_grafite.cma"
+archive(native)="tptp_grafite.cmxa"
+linkopts=""

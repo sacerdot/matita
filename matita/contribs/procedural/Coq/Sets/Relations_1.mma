@@ -1,0 +1,120 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+include "Init/Prelude.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*#***************************************************************************)
+
+(*                                                                          *)
+
+(*                         Naive Set Theory in Coq                          *)
+
+(*                                                                          *)
+
+(*                     INRIA                        INRIA                   *)
+
+(*              Rocquencourt                        Sophia-Antipolis        *)
+
+(*                                                                          *)
+
+(*                                 Coq V6.1                                 *)
+
+(*									    *)
+
+(*			         Gilles Kahn 				    *)
+
+(*				 Gerard Huet				    *)
+
+(*									    *)
+
+(*									    *)
+
+(*                                                                          *)
+
+(* Acknowledgments: This work was started in July 1993 by F. Prost. Thanks  *)
+
+(* to the Newton Institute for providing an exceptional work environment    *)
+
+(* in Summer 1995. Several developments by E. Ledinot were an inspiration.  *)
+
+(*#***************************************************************************)
+
+(*i $Id: Relations_1.v,v 1.4.2.1 2004/07/16 19:31:18 herbelin Exp $ i*)
+
+(* UNEXPORTED
+Section Relations_1
+*)
+
+(* UNEXPORTED
+cic:/Coq/Sets/Relations_1/Relations_1/U.var
+*)
+
+inline procedural "cic:/Coq/Sets/Relations_1/Relation.con" as definition.
+
+(* UNEXPORTED
+cic:/Coq/Sets/Relations_1/Relations_1/R.var
+*)
+
+inline procedural "cic:/Coq/Sets/Relations_1/Reflexive.con" as definition.
+
+inline procedural "cic:/Coq/Sets/Relations_1/Transitive.con" as definition.
+
+inline procedural "cic:/Coq/Sets/Relations_1/Symmetric.con" as definition.
+
+inline procedural "cic:/Coq/Sets/Relations_1/Antisymmetric.con" as definition.
+
+inline procedural "cic:/Coq/Sets/Relations_1/contains.con" as definition.
+
+inline procedural "cic:/Coq/Sets/Relations_1/same_relation.con" as definition.
+
+inline procedural "cic:/Coq/Sets/Relations_1/Preorder.ind".
+
+inline procedural "cic:/Coq/Sets/Relations_1/Order.ind".
+
+inline procedural "cic:/Coq/Sets/Relations_1/Equivalence.ind".
+
+inline procedural "cic:/Coq/Sets/Relations_1/PER.ind".
+
+(* UNEXPORTED
+End Relations_1
+*)
+
+(* UNEXPORTED
+Hint Unfold Reflexive Transitive Antisymmetric Symmetric contains
+  same_relation: sets v62.
+*)
+
+(* UNEXPORTED
+Hint Resolve Definition_of_preorder Definition_of_order
+  Definition_of_equivalence Definition_of_PER: sets v62.
+*)
+

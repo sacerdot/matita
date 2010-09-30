@@ -1,0 +1,132 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: PartSum.v,v 1.11.2.1 2004/07/16 19:31:11 herbelin Exp $ i*)
+
+include "Reals/Rbase.ma".
+
+include "Reals/Rfunctions.ma".
+
+include "Reals/Rseries.ma".
+
+include "Reals/Rcomplete.ma".
+
+include "Arith/Max.ma".
+
+(* UNEXPORTED
+Open Local Scope R_scope.
+*)
+
+inline procedural "cic:/Coq/Reals/PartSum/tech1.con" as lemma.
+
+(* Chasles' relation *)
+
+inline procedural "cic:/Coq/Reals/PartSum/tech2.con" as lemma.
+
+(* Sum of geometric sequences *)
+
+inline procedural "cic:/Coq/Reals/PartSum/tech3.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/PartSum/tech4.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/PartSum/tech5.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/PartSum/tech6.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/PartSum/tech7.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/PartSum/tech11.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/PartSum/tech12.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/PartSum/scal_sum.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/PartSum/decomp_sum.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/PartSum/plus_sum.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/PartSum/sum_eq.con" as lemma.
+
+(* Unicity of the limit defined by convergent series *)
+
+inline procedural "cic:/Coq/Reals/PartSum/uniqueness_sum.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/PartSum/minus_sum.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/PartSum/sum_decomposition.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/PartSum/sum_Rle.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/PartSum/Rsum_abs.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/PartSum/sum_cte.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/PartSum/sum_growing.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/PartSum/Rabs_triang_gen.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/PartSum/cond_pos_sum.con" as lemma.
+
+(* Cauchy's criterion for series *)
+
+inline procedural "cic:/Coq/Reals/PartSum/Cauchy_crit_series.con" as definition.
+
+(* If (|An|) satisfies the Cauchy's criterion for series, then (An) too *)
+
+inline procedural "cic:/Coq/Reals/PartSum/cauchy_abs.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/PartSum/cv_cauchy_1.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/PartSum/cv_cauchy_2.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/PartSum/sum_eq_R0.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/PartSum/SP.con" as definition.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/PartSum/sum_incr.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/PartSum/sum_cv_maj.con" as lemma.
+

@@ -1,0 +1,74 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(* $Id: ZArith_base.v,v 1.5.2.1 2004/07/16 19:31:20 herbelin Exp $ *)
+
+(*#* Library for manipulating integers based on binary encoding.
+    These are the basic modules, required by [Omega] and [Ring] for instance. 
+    The full library is [ZArith]. *)
+
+include "NArith/BinPos.ma".
+
+include "NArith/BinNat.ma".
+
+include "ZArith/BinInt.ma".
+
+include "ZArith/Zcompare.ma".
+
+include "ZArith/Zorder.ma".
+
+include "ZArith/Zeven.ma".
+
+include "ZArith/Zmin.ma".
+
+include "ZArith/Zabs.ma".
+
+include "ZArith/Znat.ma".
+
+include "ZArith/auxiliary.ma".
+
+include "ZArith/ZArith_dec.ma".
+
+include "ZArith/Zbool.ma".
+
+include "ZArith/Zmisc.ma".
+
+include "ZArith/Wf_Z.ma".
+
+(* UNEXPORTED
+Hint Resolve Zle_refl Zplus_comm Zplus_assoc Zmult_comm Zmult_assoc Zplus_0_l
+  Zplus_0_r Zmult_1_l Zplus_opp_l Zplus_opp_r Zmult_plus_distr_l
+  Zmult_plus_distr_r: zarith.
+*)
+
+include "ZArith/Zhints.ma".
+

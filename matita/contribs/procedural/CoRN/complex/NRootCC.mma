@@ -1,0 +1,646 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "CoRN.ma".
+
+(* $Id: NRootCC.v,v 1.9 2004/04/23 10:00:55 lcf Exp $ *)
+
+(*#* printing sqrt_Half %\ensuremath{\sqrt{\frac12}}% *)
+
+(*#* printing sqrt_I %\ensuremath{\sqrt{\imath}}% *)
+
+(*#* printing nroot_I %\ensuremath{\sqrt[n]{\imath}}% *)
+
+(*#* printing nroot_minus_I %\ensuremath{\sqrt[n]{-\imath}}% *)
+
+include "complex/CComplex.ma".
+
+(*#* * Roots of Complex Numbers
+
+Properties of non-zero complex numbers
+*)
+
+(* UNEXPORTED
+Section CC_ap_zero
+*)
+
+inline procedural "cic:/CoRN/complex/NRootCC/cc_ap_zero.con" as lemma.
+
+inline procedural "cic:/CoRN/complex/NRootCC/C_cc_ap_zero.con" as lemma.
+
+(* UNEXPORTED
+End CC_ap_zero
+*)
+
+(*#* Weird lemma. *)
+
+(* UNEXPORTED
+Section Imag_to_Real
+*)
+
+inline procedural "cic:/CoRN/complex/NRootCC/imag_to_real.con" as lemma.
+
+(* UNEXPORTED
+End Imag_to_Real
+*)
+
+(*#* ** Roots of the imaginary unit *)
+
+(* UNEXPORTED
+Section NRootI
+*)
+
+inline procedural "cic:/CoRN/complex/NRootCC/sqrt_Half.con" as definition.
+
+inline procedural "cic:/CoRN/complex/NRootCC/sqrt_I.con" as definition.
+
+inline procedural "cic:/CoRN/complex/NRootCC/sqrt_I_nexp.con" as lemma.
+
+inline procedural "cic:/CoRN/complex/NRootCC/nroot_I_nexp_aux.con" as lemma.
+
+inline procedural "cic:/CoRN/complex/NRootCC/nroot_I.con" as definition.
+
+inline procedural "cic:/CoRN/complex/NRootCC/nroot_I_nexp.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve nroot_I_nexp: algebra.
+*)
+
+inline procedural "cic:/CoRN/complex/NRootCC/nroot_minus_I.con" as definition.
+
+inline procedural "cic:/CoRN/complex/NRootCC/nroot_minus_I_nexp.con" as lemma.
+
+(* UNEXPORTED
+End NRootI
+*)
+
+(*#* ** Roots of complex numbers *)
+
+(* UNEXPORTED
+Section NRootCC_1
+*)
+
+(*#* We define the nth root of a complex number with a non zero imaginary part.
+*)
+
+(* UNEXPORTED
+Section NRootCC_1_ap_real
+*)
+
+(*#*
+%\begin{convention}% Let [a,b : IR] and [b_ : (b [#] Zero)].
+Define [c2 := a[^]2[+]b[^]2], [c := sqrt c2], [a'2 := (c[+]a) [*]Half],
+[a' := sqrt a'2], [b'2 := (c[-]a) [*]Half] and [b' := sqrt b'2].
+%\end{convention}%
+*)
+
+(* UNEXPORTED
+cic:/CoRN/complex/NRootCC/NRootCC_1/NRootCC_1_ap_real/a.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/complex/NRootCC/NRootCC_1/NRootCC_1_ap_real/b.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/complex/NRootCC/NRootCC_1/NRootCC_1_ap_real/b_.var
+*)
+
+(* begin hide *)
+
+inline procedural "cic:/CoRN/complex/NRootCC/NRootCC_1/NRootCC_1_ap_real/c2.con" "NRootCC_1__NRootCC_1_ap_real__" as definition.
+
+(* end hide *)
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrCC1_c2pos.con" as lemma.
+
+(* begin hide *)
+
+inline procedural "cic:/CoRN/complex/NRootCC/NRootCC_1/NRootCC_1_ap_real/c.con" "NRootCC_1__NRootCC_1_ap_real__" as definition.
+
+inline procedural "cic:/CoRN/complex/NRootCC/NRootCC_1/NRootCC_1_ap_real/a'2.con" "NRootCC_1__NRootCC_1_ap_real__" as definition.
+
+(* end hide *)
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrCC1_a'2pos.con" as lemma.
+
+(* begin hide *)
+
+inline procedural "cic:/CoRN/complex/NRootCC/NRootCC_1/NRootCC_1_ap_real/a'.con" "NRootCC_1__NRootCC_1_ap_real__" as definition.
+
+inline procedural "cic:/CoRN/complex/NRootCC/NRootCC_1/NRootCC_1_ap_real/b'2.con" "NRootCC_1__NRootCC_1_ap_real__" as definition.
+
+(* end hide *)
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrCC1_b'2pos.con" as lemma.
+
+(* begin hide *)
+
+inline procedural "cic:/CoRN/complex/NRootCC/NRootCC_1/NRootCC_1_ap_real/b'.con" "NRootCC_1__NRootCC_1_ap_real__" as definition.
+
+(* end hide *)
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrCC1_a3.con" as lemma.
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrCC1_a4.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve nrCC1_a4: algebra.
+*)
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrCC1_a5.con" as lemma.
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrCC1_a6.con" as lemma.
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrCC1_a6'.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve nrCC1_a5: algebra.
+*)
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrCC1_a7_upper.con" as lemma.
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrCC1_a7_lower.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve nrCC1_a3 nrCC1_a7_upper nrCC1_a7_lower: algebra.
+*)
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrootCC_1_upper.con" as lemma.
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrootCC_1_lower.con" as lemma.
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrootCC_1_ap_real.con" as lemma.
+
+(* UNEXPORTED
+End NRootCC_1_ap_real
+*)
+
+(*#* We now define the nth root of a complex number with a non zero real part.
+*)
+
+(* UNEXPORTED
+Section NRootCC_1_ap_imag
+*)
+
+(*#*
+%\begin{convention}% Let [a,b : IR] and [a_ : (a [#] Zero)] and define
+[c' := (a[+I*]b) [*][--]II := a'[+I*]b'].
+%\end{convention}%
+*)
+
+(* UNEXPORTED
+cic:/CoRN/complex/NRootCC/NRootCC_1/NRootCC_1_ap_imag/a.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/complex/NRootCC/NRootCC_1/NRootCC_1_ap_imag/b.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/complex/NRootCC/NRootCC_1/NRootCC_1_ap_imag/a_.var
+*)
+
+(* begin hide *)
+
+inline procedural "cic:/CoRN/complex/NRootCC/NRootCC_1/NRootCC_1_ap_imag/c'.con" "NRootCC_1__NRootCC_1_ap_imag__" as definition.
+
+inline procedural "cic:/CoRN/complex/NRootCC/NRootCC_1/NRootCC_1_ap_imag/a'.con" "NRootCC_1__NRootCC_1_ap_imag__" as definition.
+
+inline procedural "cic:/CoRN/complex/NRootCC/NRootCC_1/NRootCC_1_ap_imag/b'.con" "NRootCC_1__NRootCC_1_ap_imag__" as definition.
+
+(* end hide *)
+
+(* UNEXPORTED
+Hint Resolve sqrt_I_nexp: algebra.
+*)
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrootCC_1_ap_imag.con" as lemma.
+
+(* UNEXPORTED
+End NRootCC_1_ap_imag
+*)
+
+(*#* We now define the roots of arbitrary non zero complex numbers. *)
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrootCC_1.con" as lemma.
+
+(* UNEXPORTED
+End NRootCC_1
+*)
+
+(* UNEXPORTED
+Section NRootCC_2
+*)
+
+(*#*
+%\begin{convention}% Let [n : nat] and [c,z : CC] and [c_:(c [#] Zero)].
+%\end{convention}%
+*)
+
+(* UNEXPORTED
+cic:/CoRN/complex/NRootCC/NRootCC_2/n.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/complex/NRootCC/NRootCC_2/c.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/complex/NRootCC/NRootCC_2/z.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/complex/NRootCC/NRootCC_2/c_.var
+*)
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrootCC_2'.con" as lemma.
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrootCC_2.con" as lemma.
+
+(* UNEXPORTED
+End NRootCC_2
+*)
+
+(* UNEXPORTED
+Section NRootCC_3
+*)
+
+inline procedural "cic:/CoRN/complex/NRootCC/Im_poly.con" as definition.
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrCC3_a1.con" as lemma.
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrCC3_a2.con" as lemma.
+
+(*#*
+%\begin{convention}% Let [a,b : IR], [b_ : (b [#] Zero)] and [n : nat].
+%\end{convention}%
+*)
+
+(* UNEXPORTED
+cic:/CoRN/complex/NRootCC/NRootCC_3/a.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/complex/NRootCC/NRootCC_3/b.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/complex/NRootCC/NRootCC_3/b_.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/complex/NRootCC/NRootCC_3/n.var
+*)
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrCC3_poly''.con" as definition.
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrCC3_a3.con" as lemma.
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrCC3_a4.con" as lemma.
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrCC3_a5.con" as lemma.
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrCC3_a6.con" as lemma.
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrCC3_poly'.con" as definition.
+
+(* UNEXPORTED
+Hint Resolve nrCC3_a3: algebra.
+*)
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrCC3_a7.con" as lemma.
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrCC3_a8.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve nth_coeff_p_mult_c_: algebra.
+*)
+
+(* UNEXPORTED
+Hint Resolve nrCC3_a6: algebra.
+*)
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrCC3_a9.con" as lemma.
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrootCC_3_poly.con" as definition.
+
+(* UNEXPORTED
+Hint Resolve nrCC3_a1 nrCC3_a7: algebra.
+*)
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrootCC_3_.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve nrootCC_3_: algebra.
+*)
+
+(* UNEXPORTED
+Hint Resolve calculate_Im: algebra.
+*)
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrootCC_3.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve nrCC3_a2: algebra.
+*)
+
+(* UNEXPORTED
+Hint Resolve nrCC3_a9: algebra.
+*)
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrootCC_3_degree.con" as lemma.
+
+(* UNEXPORTED
+End NRootCC_3
+*)
+
+(* UNEXPORTED
+Section NRootCC_3'
+*)
+
+(*#*
+%\begin{convention}% Let [c:IR], [n:nat] and [n_:(lt (0) n)].
+%\end{convention}%
+*)
+
+(* UNEXPORTED
+cic:/CoRN/complex/NRootCC/NRootCC_3'/c.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/complex/NRootCC/NRootCC_3'/n.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/complex/NRootCC/NRootCC_3'/n_.var
+*)
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrootCC_3'_poly.con" as definition.
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrootCC_3'.con" as lemma.
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrootCC_3'_degree.con" as lemma.
+
+(* UNEXPORTED
+End NRootCC_3'
+*)
+
+(* UNEXPORTED
+Section NRootCC_4
+*)
+
+(* UNEXPORTED
+Section NRootCC_4_ap_real
+*)
+
+(*#*
+%\begin{convention}% Let [a,b : IR], [b_ : (b [#] Zero)], [n : nat] and
+[n_:(odd n)]; define [c := a[+I*]b].
+%\end{convention}%
+*)
+
+(* UNEXPORTED
+cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/a.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/b.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/b_.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/n.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/n_.var
+*)
+
+(* begin hide *)
+
+inline procedural "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/c.con" "NRootCC_4__NRootCC_4_ap_real__" as definition.
+
+(* end hide *)
+
+(* UNEXPORTED
+Section NRootCC_4_solutions
+*)
+
+(* UNEXPORTED
+Hint Resolve nrootCC_3: algebra.
+*)
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrCC4_a1.con" as lemma.
+
+(*#*
+%\begin{convention}% Let [r2',c2 : IR] and [r2'_ : (r2' [#] Zero)].
+%\end{convention}%
+*)
+
+(* UNEXPORTED
+cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/NRootCC_4_solutions/r2'.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/NRootCC_4_solutions/c2.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/NRootCC_4_solutions/r2'_.var
+*)
+
+(* UNEXPORTED
+Hint Resolve nrootCC_3': algebra.
+*)
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrCC4_a1'.con" as lemma.
+
+(* UNEXPORTED
+End NRootCC_4_solutions
+*)
+
+(* UNEXPORTED
+Section NRootCC_4_equations
+*)
+
+(*#*
+%\begin{convention}% Let [r,y2 : IR] be such that
+[(r[+I*]One) [^]n[*] (CC_conj c) [-] (r[+I*][--]One) [^]n[*]c [=] Zero]
+and [(y2[*] (r[^] (2) [+]One)) [^]n [=] a[^] (2) [+]b[^] (2)].
+%\end{convention}%
+*)
+
+(* UNEXPORTED
+cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/NRootCC_4_equations/r.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/NRootCC_4_equations/r_property.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/NRootCC_4_equations/y2.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/NRootCC_4_equations/y2_property.var
+*)
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrCC4_a2.con" as lemma.
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrCC4_a3.con" as lemma.
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrCC4_a4.con" as lemma.
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrCC4_y.con" as definition.
+
+inline procedural "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/NRootCC_4_equations/y.con" "NRootCC_4__NRootCC_4_ap_real__NRootCC_4_equations__" as definition.
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrCC4_x.con" as definition.
+
+inline procedural "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/NRootCC_4_equations/x.con" "NRootCC_4__NRootCC_4_ap_real__NRootCC_4_equations__" as definition.
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrCC4_a5.con" as lemma.
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrCC4_a6.con" as lemma.
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrCC4_z.con" as definition.
+
+inline procedural "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_real/NRootCC_4_equations/z.con" "NRootCC_4__NRootCC_4_ap_real__NRootCC_4_equations__" as definition.
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrCC4_a7.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve nrCC4_a6: algebra.
+*)
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrCC4_a8.con" as lemma.
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrCC4_a9.con" as lemma.
+
+(* UNEXPORTED
+End NRootCC_4_equations
+*)
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrCC4_a10.con" as lemma.
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrootCC_4_ap_real.con" as lemma.
+
+(* UNEXPORTED
+End NRootCC_4_ap_real
+*)
+
+(* UNEXPORTED
+Section NRootCC_4_ap_imag
+*)
+
+(*#*
+%\begin{convention}% Let [a,b : IR] and [n : nat] with [a [#] Zero]
+and [(odd n)]; define [c' := (a[+I*]b) [*]II := a'[+I*]b'].
+%\end{convention}%
+*)
+
+(* UNEXPORTED
+cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_imag/a.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_imag/b.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_imag/a_.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_imag/n.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_imag/n_.var
+*)
+
+(* begin hide *)
+
+inline procedural "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_imag/c'.con" "NRootCC_4__NRootCC_4_ap_imag__" as definition.
+
+inline procedural "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_imag/a'.con" "NRootCC_4__NRootCC_4_ap_imag__" as definition.
+
+inline procedural "cic:/CoRN/complex/NRootCC/NRootCC_4/NRootCC_4_ap_imag/b'.con" "NRootCC_4__NRootCC_4_ap_imag__" as definition.
+
+(* end hide *)
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrootCC_4_ap_real'.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve nroot_minus_I_nexp: algebra.
+*)
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrootCC_4_ap_imag.con" as lemma.
+
+(* UNEXPORTED
+End NRootCC_4_ap_imag
+*)
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrootCC_4.con" as lemma.
+
+(* UNEXPORTED
+End NRootCC_4
+*)
+
+(*#* Finally, the general definition of nth root. *)
+
+(* UNEXPORTED
+Section NRootCC_5
+*)
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrCC_5a2.con" as lemma.
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrCC_5a3.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve nrCC_5a3: algebra.
+*)
+
+(*#*
+%\begin{convention}% Let [c : CC] with [c [#] Zero].
+%\end{convention}%
+*)
+
+(* UNEXPORTED
+cic:/CoRN/complex/NRootCC/NRootCC_5/c.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/complex/NRootCC/NRootCC_5/c_.var
+*)
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrCC_5a4.con" as lemma.
+
+inline procedural "cic:/CoRN/complex/NRootCC/nrootCC_5.con" as lemma.
+
+(* UNEXPORTED
+End NRootCC_5
+*)
+
+(*#* Final definition *)
+
+inline procedural "cic:/CoRN/complex/NRootCC/CnrootCC.con" as definition.
+

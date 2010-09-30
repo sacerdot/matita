@@ -1,0 +1,176 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Newman.v,v 1.7.2.1 2004/07/16 19:31:16 herbelin Exp $ i*)
+
+include "Relations/Rstar.ma".
+
+(* UNEXPORTED
+Section Newman
+*)
+
+(* UNEXPORTED
+cic:/Coq/Relations/Newman/Newman/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Relations/Newman/Newman/R.var
+*)
+
+(* UNAVAILABLE OBJECT: cic:/Coq/Relations/Newman/Newman/Rstar.con *********)
+
+inline procedural "cic:/Coq/Relations/Newman/Newman/Rstar.con" "Newman__" as definition.
+
+(* UNAVAILABLE OBJECT: cic:/Coq/Relations/Newman/Newman/Rstar_reflexive.con *)
+
+inline procedural "cic:/Coq/Relations/Newman/Newman/Rstar_reflexive.con" "Newman__" as definition.
+
+(* UNAVAILABLE OBJECT: cic:/Coq/Relations/Newman/Newman/Rstar_transitive.con *)
+
+inline procedural "cic:/Coq/Relations/Newman/Newman/Rstar_transitive.con" "Newman__" as definition.
+
+(* UNAVAILABLE OBJECT: cic:/Coq/Relations/Newman/Newman/Rstar_Rstar'.con **)
+
+inline procedural "cic:/Coq/Relations/Newman/Newman/Rstar_Rstar'.con" "Newman__" as definition.
+
+inline procedural "cic:/Coq/Relations/Newman/coherence.con" as definition.
+
+inline procedural "cic:/Coq/Relations/Newman/coherence_intro.con" as theorem.
+
+(*#* A very simple case of coherence : *)
+
+inline procedural "cic:/Coq/Relations/Newman/Rstar_coherence.con" as lemma.
+
+(*#* coherence is symmetric *)
+
+inline procedural "cic:/Coq/Relations/Newman/coherence_sym.con" as lemma.
+
+inline procedural "cic:/Coq/Relations/Newman/confluence.con" as definition.
+
+inline procedural "cic:/Coq/Relations/Newman/local_confluence.con" as definition.
+
+inline procedural "cic:/Coq/Relations/Newman/noetherian.con" as definition.
+
+(* UNEXPORTED
+Section Newman_section
+*)
+
+(*#* The general hypotheses of the theorem *)
+
+(* UNEXPORTED
+cic:/Coq/Relations/Newman/Newman/Newman_section/Hyp1.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Relations/Newman/Newman/Newman_section/Hyp2.var
+*)
+
+(*#* The induction hypothesis *)
+
+(* UNEXPORTED
+Section Induct
+*)
+
+(* UNEXPORTED
+cic:/Coq/Relations/Newman/Newman/Newman_section/Induct/x.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Relations/Newman/Newman/Newman_section/Induct/hyp_ind.var
+*)
+
+(*#* Confluence in [x] *)
+
+(* UNEXPORTED
+cic:/Coq/Relations/Newman/Newman/Newman_section/Induct/y.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Relations/Newman/Newman/Newman_section/Induct/z.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Relations/Newman/Newman/Newman_section/Induct/h1.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Relations/Newman/Newman/Newman_section/Induct/h2.var
+*)
+
+(*#* particular case [x->u] and [u->*y]   *)
+
+(* UNEXPORTED
+Section Newman_
+*)
+
+(* UNEXPORTED
+cic:/Coq/Relations/Newman/Newman/Newman_section/Induct/Newman_/u.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Relations/Newman/Newman/Newman_section/Induct/Newman_/t1.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Relations/Newman/Newman/Newman_section/Induct/Newman_/t2.var
+*)
+
+(*#* In the usual diagram, we assume also [x->v] and [v->*z] *)
+
+inline procedural "cic:/Coq/Relations/Newman/Diagram.con" as theorem.
+
+inline procedural "cic:/Coq/Relations/Newman/caseRxy.con" as theorem.
+
+(*i case x->v->*z i*)
+
+(* UNEXPORTED
+End Newman_
+*)
+
+inline procedural "cic:/Coq/Relations/Newman/Ind_proof.con" as theorem.
+
+(*i case x->u->*z i*)
+
+(* UNEXPORTED
+End Induct
+*)
+
+inline procedural "cic:/Coq/Relations/Newman/Newman.con" as theorem.
+
+(* UNEXPORTED
+End Newman_section
+*)
+
+(* UNEXPORTED
+End Newman
+*)
+

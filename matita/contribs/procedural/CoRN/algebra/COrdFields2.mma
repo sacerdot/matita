@@ -1,0 +1,378 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "CoRN.ma".
+
+include "algebra/COrdFields.ma".
+
+(*#* printing one_div_succ %\ensuremath{\frac1{\cdot+1}}% *)
+
+(*#* printing Half %\ensuremath{\frac12}% #&frac12;# *)
+
+(*#**********************************)
+
+(* UNEXPORTED
+Section Properties_of_leEq
+*)
+
+(*#**********************************)
+
+(*#*
+** Properties of [[<=]]
+%\begin{convention}% Let [R] be an ordered field.
+%\end{convention}%
+*)
+
+(* UNEXPORTED
+cic:/CoRN/algebra/COrdFields2/Properties_of_leEq/R.var
+*)
+
+(* UNEXPORTED
+Section addition
+*)
+
+(*#*
+*** Addition and subtraction%\label{section:leEq-plus-minus}%
+*)
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/plus_resp_leEq.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/plus_resp_leEq_lft.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/minus_resp_leEq.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/inv_resp_leEq.con" as lemma.
+
+(* UNEXPORTED
+Transparent cg_minus.
+*)
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/minus_resp_leEq_rht.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/plus_resp_leEq_both.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/plus_resp_less_leEq.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/plus_resp_leEq_less.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/minus_resp_less_leEq.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/minus_resp_leEq_both.con" as lemma.
+
+(*#* Cancellation properties
+*)
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/plus_cancel_leEq_rht.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/inv_cancel_leEq.con" as lemma.
+
+(*#* Laws for shifting
+*)
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/shift_plus_leEq.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/shift_leEq_plus.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/shift_plus_leEq'.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/shift_leEq_plus'.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/shift_leEq_rht.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/shift_leEq_lft.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/shift_minus_leEq.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/shift_leEq_minus.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/shift_leEq_minus'.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/shift_zero_leEq_minus.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/shift_zero_leEq_minus'.con" as lemma.
+
+(* UNEXPORTED
+End addition
+*)
+
+(* UNEXPORTED
+Section multiplication
+*)
+
+(*#*
+*** Multiplication and division
+
+Multiplication and division respect [[<=]]
+*)
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/mult_resp_leEq_rht.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/mult_resp_leEq_lft.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/mult_resp_leEq_both.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/recip_resp_leEq.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/div_resp_leEq.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve recip_resp_leEq: algebra.
+*)
+
+(*#* Cancellation properties
+*)
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/mult_cancel_leEq.con" as lemma.
+
+(*#* Laws for shifting
+*)
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/shift_mult_leEq.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/shift_mult_leEq'.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/shift_leEq_mult'.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/shift_div_leEq.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/shift_div_leEq'.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/shift_leEq_div.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve shift_leEq_div: algebra.
+*)
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/eps_div_leEq_eps.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/nonneg_div_two.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/nonneg_div_two'.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/nonneg_div_three.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/nonneg_div_three'.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/nonneg_div_four.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/nonneg_div_four'.con" as lemma.
+
+(* UNEXPORTED
+End multiplication
+*)
+
+(* UNEXPORTED
+Section misc
+*)
+
+(*#*
+*** Miscellaneous Properties
+*)
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/sqr_nonneg.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/nring_nonneg.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/suc_leEq_dub.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/leEq_nring.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/cc_abs_aid.con" as lemma.
+
+include "tactics/Transparent_algebra.ma".
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/nexp_resp_pos.con" as lemma.
+
+include "tactics/Opaque_algebra.ma".
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/mult_resp_nonneg.con" as lemma.
+
+include "tactics/Transparent_algebra.ma".
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/nexp_resp_nonneg.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/power_resp_leEq.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/nexp_resp_less.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/power_cancel_leEq.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/power_cancel_less.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/nat_less_bin_nexp.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/Sum_resp_leEq.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/Sumx_resp_leEq.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/Sum2_resp_leEq.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/approach_zero.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/approach_zero_weak.con" as lemma.
+
+(* UNEXPORTED
+End misc
+*)
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/equal_less_leEq.con" as lemma.
+
+(* UNEXPORTED
+End Properties_of_leEq
+*)
+
+(*#**********************************)
+
+(* UNEXPORTED
+Section PosP_properties
+*)
+
+(*#**********************************)
+
+(*#*
+** Properties of positive numbers
+%\begin{convention}% Let [R] be an ordered field.
+%\end{convention}%
+*)
+
+(* UNEXPORTED
+cic:/CoRN/algebra/COrdFields2/PosP_properties/R.var
+*)
+
+(* begin hide *)
+
+(* NOTATION
+Notation ZeroR := (Zero:R).
+*)
+
+(* NOTATION
+Notation OneR := (One:R).
+*)
+
+(* end hide *)
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/mult_pos_imp.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/plus_resp_pos_nonneg.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/plus_resp_nonneg_pos.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/pos_square.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/mult_cancel_pos_rht.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/mult_cancel_pos_lft.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/pos_wd.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/even_power_pos.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/odd_power_cancel_pos.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/plus_resp_pos.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/pos_nring_S.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/square_eq_pos.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/square_eq_neg.con" as lemma.
+
+(* UNEXPORTED
+End PosP_properties
+*)
+
+(* UNEXPORTED
+Hint Resolve mult_resp_nonneg.
+*)
+
+(*#*
+** Properties of one over successor
+%\begin{convention}% Let [R] be an ordered field.
+%\end{convention}%
+*)
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/one_div_succ.con" as definition.
+
+(* UNEXPORTED
+Implicit Arguments one_div_succ [R].
+*)
+
+(* UNEXPORTED
+Section One_div_succ_properties
+*)
+
+(* UNEXPORTED
+cic:/CoRN/algebra/COrdFields2/One_div_succ_properties/R.var
+*)
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/one_div_succ_resp_leEq.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/one_div_succ_pos.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/one_div_succ_resp_less.con" as lemma.
+
+(* UNEXPORTED
+End One_div_succ_properties
+*)
+
+(*#*
+** Properties of [Half]
+*)
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/Half.con" as definition.
+
+(* UNEXPORTED
+Implicit Arguments Half [R].
+*)
+
+(* UNEXPORTED
+Section Half_properties
+*)
+
+(*#*
+%\begin{convention}%
+Let [R] be an ordered field.
+%\end{convention}%
+*)
+
+(* UNEXPORTED
+cic:/CoRN/algebra/COrdFields2/Half_properties/R.var
+*)
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/half_1.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve half_1: algebra.
+*)
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/pos_half.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/half_1'.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/half_2.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/half_lt1.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/COrdFields2/half_3.con" as lemma.
+
+(* UNEXPORTED
+End Half_properties
+*)
+
+(* UNEXPORTED
+Hint Resolve half_1 half_1' half_2: algebra.
+*)
+

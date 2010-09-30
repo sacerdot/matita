@@ -1,0 +1,4 @@
+requires="helm-hmysql helm-cic_proof_checking"
+version="0.0.1"
+archive(byte)="metadata.cma"
+archive(native)="metadata.cmxa"

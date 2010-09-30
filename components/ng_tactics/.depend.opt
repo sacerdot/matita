@@ -1,0 +1,32 @@
+nCicTacReduction.cmi: 
+nTacStatus.cmi: 
+nCicElim.cmi: 
+nTactics.cmi: nTacStatus.cmi 
+zipTree.cmi: 
+andOrTree.cmi: zipTree.cmi 
+nnAuto.cmi: nTacStatus.cmi 
+nAuto.cmi: nTacStatus.cmi 
+nInversion.cmi: nTacStatus.cmi 
+nDestructTac.cmi: nTacStatus.cmi 
+nCicTacReduction.cmo: nCicTacReduction.cmi 
+nCicTacReduction.cmx: nCicTacReduction.cmi 
+nTacStatus.cmo: nCicTacReduction.cmi nTacStatus.cmi 
+nTacStatus.cmx: nCicTacReduction.cmx nTacStatus.cmi 
+nCicElim.cmo: nCicElim.cmi 
+nCicElim.cmx: nCicElim.cmi 
+nTactics.cmo: nTacStatus.cmi nCicElim.cmi nTactics.cmi 
+nTactics.cmx: nTacStatus.cmx nCicElim.cmx nTactics.cmi 
+zipTree.cmo: zipTree.cmi 
+zipTree.cmx: zipTree.cmi 
+andOrTree.cmo: zipTree.cmi andOrTree.cmi 
+andOrTree.cmx: zipTree.cmx andOrTree.cmi 
+nnAuto.cmo: nTactics.cmi nTacStatus.cmi nCicTacReduction.cmi nnAuto.cmi 
+nnAuto.cmx: nTactics.cmx nTacStatus.cmx nCicTacReduction.cmx nnAuto.cmi 
+nAuto.cmo: zipTree.cmi nnAuto.cmi nTactics.cmi nTacStatus.cmi andOrTree.cmi \
+    nAuto.cmi 
+nAuto.cmx: zipTree.cmx nnAuto.cmx nTactics.cmx nTacStatus.cmx andOrTree.cmx \
+    nAuto.cmi 
+nInversion.cmo: nTactics.cmi nCicElim.cmi nInversion.cmi 
+nInversion.cmx: nTactics.cmx nCicElim.cmx nInversion.cmi 
+nDestructTac.cmo: nTactics.cmi nTacStatus.cmi nDestructTac.cmi 
+nDestructTac.cmx: nTactics.cmx nTacStatus.cmx nDestructTac.cmi 

@@ -1,0 +1,150 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: RList.v,v 1.10.2.1 2004/07/16 19:31:11 herbelin Exp $ i*)
+
+include "Reals/Rbase.ma".
+
+include "Reals/Rfunctions.ma".
+
+(* UNEXPORTED
+Open Local Scope R_scope.
+*)
+
+inline procedural "cic:/Coq/Reals/RList/Rlist.ind".
+
+inline procedural "cic:/Coq/Reals/RList/In.con" as definition.
+
+inline procedural "cic:/Coq/Reals/RList/Rlength.con" as definition.
+
+inline procedural "cic:/Coq/Reals/RList/MaxRlist.con" as definition.
+
+inline procedural "cic:/Coq/Reals/RList/MinRlist.con" as definition.
+
+inline procedural "cic:/Coq/Reals/RList/MaxRlist_P1.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RList/AbsList.con" as definition.
+
+inline procedural "cic:/Coq/Reals/RList/MinRlist_P1.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RList/AbsList_P1.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RList/MinRlist_P2.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RList/AbsList_P2.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RList/MaxRlist_P2.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RList/pos_Rl.con" as definition.
+
+inline procedural "cic:/Coq/Reals/RList/pos_Rl_P1.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RList/pos_Rl_P2.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RList/Rlist_P1.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RList/ordered_Rlist.con" as definition.
+
+inline procedural "cic:/Coq/Reals/RList/insert.con" as definition.
+
+inline procedural "cic:/Coq/Reals/RList/cons_Rlist.con" as definition.
+
+inline procedural "cic:/Coq/Reals/RList/cons_ORlist.con" as definition.
+
+inline procedural "cic:/Coq/Reals/RList/app_Rlist.con" as definition.
+
+inline procedural "cic:/Coq/Reals/RList/mid_Rlist.con" as definition.
+
+inline procedural "cic:/Coq/Reals/RList/Rtail.con" as definition.
+
+inline procedural "cic:/Coq/Reals/RList/FF.con" as definition.
+
+inline procedural "cic:/Coq/Reals/RList/RList_P0.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RList/RList_P1.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RList/RList_P2.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RList/RList_P3.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RList/RList_P4.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RList/RList_P5.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RList/RList_P6.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RList/RList_P7.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RList/RList_P8.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RList/RList_P9.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RList/RList_P10.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RList/RList_P11.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RList/RList_P12.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RList/RList_P13.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RList/RList_P14.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RList/RList_P15.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RList/RList_P16.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RList/RList_P17.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RList/RList_P18.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RList/RList_P19.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RList/RList_P20.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RList/RList_P21.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RList/RList_P22.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RList/RList_P23.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RList/RList_P24.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RList/RList_P25.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RList/RList_P26.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RList/RList_P27.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RList/RList_P28.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RList/RList_P29.con" as lemma.
+

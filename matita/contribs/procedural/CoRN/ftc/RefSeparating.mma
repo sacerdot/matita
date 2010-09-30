@@ -1,0 +1,217 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "CoRN.ma".
+
+(* $Id: RefSeparating.v,v 1.7 2004/04/23 10:01:01 lcf Exp $ *)
+
+(* begin hide *)
+
+include "ftc/COrdLemmas.ma".
+
+include "ftc/Partitions.ma".
+
+(* UNEXPORTED
+Section Separating_Partition
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/RefSeparating/Separating_Partition/a.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/RefSeparating/Separating_Partition/b.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/RefSeparating/Separating_Partition/Hab.var
+*)
+
+inline procedural "cic:/CoRN/ftc/RefSeparating/Separating_Partition/I.con" "Separating_Partition__" as definition.
+
+(* UNEXPORTED
+cic:/CoRN/ftc/RefSeparating/Separating_Partition/F.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/RefSeparating/Separating_Partition/contF.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/RefSeparating/Separating_Partition/incF.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/RefSeparating/Separating_Partition/Hab'.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/RefSeparating/Separating_Partition/n.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/RefSeparating/Separating_Partition/P.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/RefSeparating/Separating_Partition/alpha.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/RefSeparating/Separating_Partition/Halpha.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/RefSeparating/Separating_Partition/csi.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/RefSeparating/Separating_Partition/Hcsi.var
+*)
+
+inline procedural "cic:/CoRN/ftc/RefSeparating/Separating_Partition/M.con" "Separating_Partition__" as definition.
+
+inline procedural "cic:/CoRN/ftc/RefSeparating/RS'_pos_n.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSeparating/SPap_n.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSeparating/Separating_Partition/delta.con" "Separating_Partition__" as definition.
+
+inline procedural "cic:/CoRN/ftc/RefSeparating/RS'_delta_pos.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSeparating/RS'_delta_csi.con" as lemma.
+
+(* UNEXPORTED
+cic:/CoRN/ftc/RefSeparating/Separating_Partition/Hab''.var
+*)
+
+inline procedural "cic:/CoRN/ftc/RefSeparating/sep__part_lemma.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSeparating/sep__part_h.con" as definition.
+
+inline procedural "cic:/CoRN/ftc/RefSeparating/sep__part_h_bnd.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSeparating/sep__part_h_mon_1.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSeparating/sep__part_h_mon_2.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSeparating/sep__part_h_mon_3.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSeparating/sep__part_app_n.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSeparating/sep__part_h_lemma.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSeparating/sep__part_h_lemma2.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSeparating/sep__part_h_lemma3.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSeparating/RS'_delta2_delta4.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSeparating/RS'_m1.con" as definition.
+
+inline procedural "cic:/CoRN/ftc/RefSeparating/RS'_m.con" as definition.
+
+(* NOTATION
+Notation m := RS'_m.
+*)
+
+inline procedural "cic:/CoRN/ftc/RefSeparating/sep__part_length.con" as definition.
+
+inline procedural "cic:/CoRN/ftc/RefSeparating/RS'_m_m1.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSeparating/RS'_pos_m.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSeparating/sep__part_fun.con" as definition.
+
+inline procedural "cic:/CoRN/ftc/RefSeparating/sep__part_fun_bnd.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSeparating/sep__part_fun_0.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSeparating/sep__part_fun_i.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSeparating/sep__part_fun_m.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSeparating/sep__part_fun_i'.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSeparating/sep__part_fun_bnd'.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSeparating/sep__part_fun_wd.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSeparating/sep__part_fun_mon.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSeparating/sep__part.con" as definition.
+
+inline procedural "cic:/CoRN/ftc/RefSeparating/sep__part_fun_mon_pts.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSeparating/sep__part_mon.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSeparating/sep__part_mon_Mesh.con" as lemma.
+
+(* UNEXPORTED
+cic:/CoRN/ftc/RefSeparating/Separating_Partition/g.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/RefSeparating/Separating_Partition/gP.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/RefSeparating/Separating_Partition/gP'.var
+*)
+
+inline procedural "cic:/CoRN/ftc/RefSeparating/sep__part_pts.con" as definition.
+
+inline procedural "cic:/CoRN/ftc/RefSeparating/sep__part_pts_lemma.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSeparating/sep__part_pts_in_Partition.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSeparating/RS'_Hsep_S.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSeparating/RS'_Hsep.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSeparating/RS'_h.con" as definition.
+
+(* NOTATION
+Notation h := RS'_h.
+*)
+
+(* NOTATION
+Notation just1 := (incF _ (Pts_part_lemma _ _ _ _ _ _ gP _ _)).
+*)
+
+(* NOTATION
+Notation just2 :=
+  (incF _ (Pts_part_lemma _ _ _ _ _ _ sep__part_pts_in_Partition _ _)).
+*)
+
+inline procedural "cic:/CoRN/ftc/RefSeparating/sep__part_suRS'_m1.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSeparating/sep__part_Sum2.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSeparating/sep__part_Sum3.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSeparating/sep__part_Sum4.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSeparating/sep__part_aux.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/RefSeparating/sep__part_Sum.con" as lemma.
+
+(* UNEXPORTED
+End Separating_Partition
+*)
+
+(* end hide *)
+

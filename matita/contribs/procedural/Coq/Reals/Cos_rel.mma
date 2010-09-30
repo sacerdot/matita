@@ -1,0 +1,70 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Cos_rel.v,v 1.12.2.1 2004/07/16 19:31:10 herbelin Exp $ i*)
+
+include "Reals/Rbase.ma".
+
+include "Reals/Rfunctions.ma".
+
+include "Reals/SeqSeries.ma".
+
+include "Reals/Rtrigo_def.ma".
+
+(* UNEXPORTED
+Open Local Scope R_scope.
+*)
+
+inline procedural "cic:/Coq/Reals/Cos_rel/A1.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Cos_rel/B1.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Cos_rel/C1.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Cos_rel/Reste1.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Cos_rel/Reste2.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Cos_rel/Reste.con" as definition.
+
+(* Here is the main result that will be used to prove that (cos (x+y))=(cos x)(cos y)-(sin x)(sin y) *)
+
+inline procedural "cic:/Coq/Reals/Cos_rel/cos_plus_form.con" as theorem.
+
+inline procedural "cic:/Coq/Reals/Cos_rel/pow_sqr.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Cos_rel/A1_cvg.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Cos_rel/C1_cvg.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Cos_rel/B1_cvg.con" as lemma.
+

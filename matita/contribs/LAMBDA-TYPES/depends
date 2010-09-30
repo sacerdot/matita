@@ -1,0 +1,696 @@
+Basic-2/clear/defs.ma Basic-2/clear/defs.mma
+Basic-1/lift/defs.ma Basic-1/s/defs.ma Basic-1/tlist/defs.ma
+Basic-1/subst0/dec.ma Basic-1/lift/props.ma Basic-1/subst0/defs.ma
+Basic-2/sc3/props.mma Basic-1/sc3/props.ma Basic-2/arity/aprem.ma Basic-2/arity/lift1.ma Basic-2/csuba/arity.ma Basic-2/drop1/getl.ma Basic-2/drop1/props.ma Basic-2/lift1/props.ma Basic-2/llt/props.ma Basic-2/nf2/lift1.ma Basic-2/sc3/defs.ma Basic-2/sn3/lift1.ma
+Basic-2/pr3/subst1.ma Basic-2/pr3/subst1.mma
+Basic-2/csubt/csuba.mma Basic-1/csubt/csuba.ma Basic-2/ty3/arity.ma
+Basic-2/sn3/props.mma Basic-1/sn3/props.ma Basic-2/nf2/iso.ma Basic-2/pr3/iso.ma Basic-2/sn3/fwd.ma Basic-2/sn3/nf2.ma
+Basic-2/pr1/defs.ma Basic-2/pr1/defs.mma
+Basic-2/arity/props.mma Basic-1/arity/props.ma Basic-2/arity/fwd.ma
+Basic-2/flt/defs.mma Basic-2/C/defs.ma
+Basic-2/clen/getl.ma Basic-2/clen/getl.mma
+Basic-2/drop/defs.ma Basic-2/drop/defs.mma
+Legacy-1/theory.ma Legacy-1/coq/props.ma
+Basic-1/csubt/defs.ma Basic-1/ty3/defs.ma
+Basic-1/clear/drop.ma Basic-1/clear/fwd.ma Basic-1/drop/fwd.ma
+Basic-1/lift1/props.ma Basic-1/drop1/defs.ma Basic-1/lift/props.ma
+Basic-1/nf2/lift1.ma Basic-1/drop1/fwd.ma Basic-1/nf2/props.ma
+Basic-1/flt/defs.ma Basic-1/C/defs.ma
+Basic-2/getl/props.ma Basic-2/getl/props.mma
+Basic-1/pc3/subst1.ma Basic-1/pc3/props.ma Basic-1/pr3/subst1.ma
+Basic-2/pr0/defs.mma Basic-2/subst0/defs.ma
+Basic-1/drop1/fwd.ma Basic-1/drop1/defs.ma
+Basic-2/arity/cimp.mma Basic-1/arity/cimp.ma Basic-2/arity/defs.ma Basic-2/cimp/props.ma
+Basic-2/ty3/props.ma Basic-2/ty3/props.mma
+Basic-2/drop1/getl.mma Basic-1/drop1/getl.ma Basic-2/drop1/fwd.ma Basic-2/getl/drop.ma
+Basic-2/subst/defs.ma Basic-2/subst/defs.mma
+Basic-2/lift1/defs.mma Basic-2/lift/defs.ma
+Basic-2/A/defs.mma Basic-2/preamble.ma
+Basic-2/csubt/clear.ma Basic-2/csubt/clear.mma
+Basic-1/csuba/defs.ma Basic-1/arity/defs.ma
+Basic-2/csuba/props.ma Basic-2/csuba/props.mma
+Basic-1/csubc/fwd.ma Basic-1/csubc/defs.ma
+Basic-2/pc3/wcpr0.mma Basic-1/pc3/wcpr0.ma Basic-2/pc3/props.ma Basic-2/wcpr0/getl.ma
+Basic-2/subst/props.mma Basic-1/subst/props.ma Basic-2/lift/props.ma Basic-2/subst/fwd.ma Basic-2/subst0/defs.ma
+Legacy-1/coq/defs.ma Legacy-1/preamble.ma
+Basic-1/tlt/props.ma Basic-1/tlt/defs.ma
+Basic-2/pr1/pr1.ma Basic-2/pr1/pr1.mma
+Ground-1/ext/arith.ma Ground-1/preamble.ma
+Basic-2/subst1/props.ma Basic-2/subst1/props.mma
+Basic-2/llt/props.mma Basic-1/llt/props.ma Basic-2/leq/defs.ma Basic-2/llt/defs.ma
+Basic-2/sn3/nf2.mma Basic-1/sn3/nf2.ma Basic-2/nf2/dec.ma Basic-2/nf2/pr3.ma Basic-2/sn3/defs.ma
+Basic-1/pr3/pr3.ma Basic-1/pr2/pr2.ma Basic-1/pr3/props.ma
+Basic-1/lift1/defs.ma Basic-1/lift/defs.ma
+Basic-2/sty1/cnt.ma Basic-2/sty1/cnt.mma
+Basic-1/wf3/props.ma Basic-1/app/defs.ma Basic-1/wf3/ty3.ma
+Basic-2/wf3/getl.ma Basic-2/wf3/getl.mma
+Basic-2/arity/subst0.ma Basic-2/arity/subst0.mma
+Basic-2/pr0/props.mma Basic-1/pr0/props.ma Basic-2/pr0/defs.ma Basic-2/subst0/subst0.ma
+Basic-2/csubt/csuba.ma Basic-2/csubt/csuba.mma
+Basic-2/csubst0/clear.mma Basic-1/csubst0/clear.ma Basic-2/clear/fwd.ma Basic-2/csubst0/fwd.ma Basic-2/csubst0/props.ma
+Basic-2/nf2/arity.mma Basic-1/nf2/arity.ma Basic-2/arity/subst0.ma Basic-2/nf2/fwd.ma
+Basic-1/fsubst0/defs.ma Basic-1/csubst0/defs.ma
+Basic-1/G/defs.ma Basic-1/preamble.ma
+Basic-2/tlist/props.ma Basic-2/tlist/props.mma
+Basic-2/subst0/props.ma Basic-2/subst0/props.mma
+Basic-2/ex2/defs.mma Basic-2/C/defs.ma
+Basic-1/ty3/defs.ma Basic-1/G/defs.ma Basic-1/pc3/defs.ma
+Basic-2/clear/props.ma Basic-2/clear/props.mma
+Basic-2/nf2/iso.ma Basic-2/nf2/iso.mma
+Basic-1/theory.ma Basic-1/csubt/csuba.ma Basic-1/ex0/props.ma Basic-1/ex1/props.ma Basic-1/ex2/props.ma Basic-1/pr3/wcpr0.ma Basic-1/sty1/cnt.ma Basic-1/subst/props.ma Basic-1/subst0/tlt.ma Basic-1/ty3/fwd_nf2.ma Basic-1/ty3/nf2.ma Basic-1/ty3/sty0.ma Basic-1/wcpr0/fwd.ma Basic-1/wf3/props.ma
+Basic-2/wf3/getl.mma Basic-1/wf3/getl.ma Basic-2/ty3/dec.ma Basic-2/wf3/clear.ma
+Basic-2/csubst1/fwd.mma Basic-1/csubst1/fwd.ma Basic-2/csubst0/fwd.ma Basic-2/csubst1/defs.ma Basic-2/subst1/props.ma
+Basic-2/app/defs.mma Basic-2/C/defs.ma
+Basic-1/pr0/defs.ma Basic-1/subst0/defs.ma
+Basic-1/nf2/defs.ma Basic-1/pr2/defs.ma
+Basic-2/asucc/defs.mma Basic-2/A/defs.ma Basic-2/G/defs.ma
+Basic-2/lift/fwd.ma Basic-2/lift/fwd.mma
+Basic-2/csubst1/props.ma Basic-2/csubst1/props.mma
+Basic-2/sty1/props.ma Basic-2/sty1/props.mma
+Basic-2/ex1/defs.mma Basic-2/C/defs.ma
+Basic-2/subst1/subst1.mma Basic-1/subst1/subst1.ma Basic-2/subst0/subst0.ma Basic-2/subst1/fwd.ma
+Basic-2/pr2/props.mma Basic-1/pr2/props.ma Basic-2/getl/clear.ma Basic-2/getl/drop.ma Basic-2/pr0/props.ma Basic-2/pr2/defs.ma
+Basic-2/arity/pr3.ma Basic-2/arity/pr3.mma
+Basic-1/pr2/clen.ma Basic-1/clen/getl.ma Basic-1/pr2/props.ma
+Basic-2/wcpr0/fwd.ma Basic-2/wcpr0/fwd.mma
+Basic-2/ty3/dec.mma Basic-1/ty3/dec.ma Basic-2/getl/dec.ma Basic-2/getl/flt.ma Basic-2/pc3/dec.ma
+Basic-2/sty0/props.mma Basic-1/sty0/props.ma Basic-2/getl/drop.ma Basic-2/sty0/defs.ma
+Basic-2/T/props.mma Basic-1/T/props.ma Basic-2/T/defs.ma
+Basic-1/wf3/defs.ma Basic-1/ty3/defs.ma
+Basic-2/csubst0/props.ma Basic-2/csubst0/props.mma
+Basic-2/pr0/dec.mma Basic-1/pr0/dec.ma Basic-2/T/dec.ma Basic-2/T/props.ma Basic-2/pr0/fwd.ma Basic-2/subst0/dec.ma
+Basic-1/drop1/getl.ma Basic-1/drop1/fwd.ma Basic-1/getl/drop.ma
+Basic-2/arity/props.ma Basic-2/arity/props.mma
+Basic-2/C/defs.ma Basic-2/C/defs.mma
+Basic-1/getl/flt.ma Basic-1/clear/props.ma Basic-1/flt/props.ma Basic-1/getl/fwd.ma
+Basic-2/llt/props.ma Basic-2/llt/props.mma
+Basic-2/drop/defs.mma Basic-2/C/defs.ma Basic-2/lift/defs.ma Basic-2/r/defs.ma
+Basic-2/leq/asucc.mma Basic-1/leq/asucc.ma Basic-2/leq/props.ma
+Basic-2/csubt/getl.ma Basic-2/csubt/getl.mma
+Basic-2/clen/getl.mma Basic-1/clen/getl.ma Basic-2/clen/defs.ma Basic-2/getl/props.ma
+Basic-2/sty0/props.ma Basic-2/sty0/props.mma
+Basic-2/tlist/props.mma Basic-1/tlist/props.ma Basic-2/tlist/defs.ma
+Ground-1/blt/defs.ma Ground-1/preamble.ma
+Basic-1/sc3/defs.ma Basic-1/arity/defs.ma Basic-1/drop1/defs.ma Basic-1/sn3/defs.ma
+Basic-2/ex0/defs.mma Basic-2/A/defs.ma Basic-2/G/defs.ma
+Basic-2/nf2/dec.mma Basic-1/nf2/dec.ma Basic-2/C/props.ma Basic-2/nf2/defs.ma Basic-2/pr0/dec.ma Basic-2/pr2/clen.ma Basic-2/pr2/fwd.ma
+Basic-1/subst/fwd.ma Basic-1/subst/defs.ma
+Basic-2/iso/defs.ma Basic-2/iso/defs.mma
+Basic-2/aplus/props.ma Basic-2/aplus/props.mma
+Basic-2/s/props.mma Basic-1/s/props.ma Basic-2/s/defs.ma
+Basic-2/pr2/subst1.mma Basic-1/pr2/subst1.ma Basic-2/csubst1/fwd.ma Basic-2/csubst1/getl.ma Basic-2/getl/drop.ma Basic-2/pr0/fwd.ma Basic-2/pr0/subst1.ma Basic-2/pr2/defs.ma Basic-2/subst1/subst1.ma
+Basic-1/llt/defs.ma Basic-1/A/defs.ma
+Basic-2/ty3/fsubst0.mma Basic-1/ty3/fsubst0.ma Basic-2/getl/getl.ma Basic-2/pc3/fsubst0.ma Basic-2/ty3/props.ma
+Basic-2/pc3/defs.ma Basic-2/pc3/defs.mma
+Basic-1/ty3/fsubst0.ma Basic-1/getl/getl.ma Basic-1/pc3/fsubst0.ma Basic-1/ty3/props.ma
+Basic-1/subst1/props.ma Basic-1/subst0/props.ma Basic-1/subst1/defs.ma
+Basic-1/wcpr0/defs.ma Basic-1/C/defs.ma Basic-1/pr0/defs.ma
+Basic-2/csuba/getl.ma Basic-2/csuba/getl.mma
+Basic-2/nf2/defs.mma Basic-2/pr2/defs.ma
+Ground-1/preamble.ma Legacy-1/theory.ma
+Basic-2/asucc/fwd.mma Basic-1/asucc/fwd.ma Basic-2/asucc/defs.ma
+Basic-2/pr3/props.ma Basic-2/pr3/props.mma
+Basic-2/nf2/props.mma Basic-1/nf2/props.ma Basic-2/nf2/defs.ma Basic-2/pr2/fwd.ma
+Basic-1/s/props.ma Basic-1/s/defs.ma
+Basic-1/tlist/defs.ma Basic-1/T/defs.ma
+Basic-1/arity/subst0.ma Basic-1/arity/props.ma Basic-1/csubst0/getl.ma Basic-1/fsubst0/fwd.ma Basic-1/getl/getl.ma Basic-1/subst0/dec.ma Basic-1/subst0/fwd.ma
+Basic-2/csubv/drop.ma Basic-2/csubv/drop.mma
+Basic-2/nf2/iso.mma Basic-1/nf2/iso.ma Basic-2/iso/props.ma Basic-2/nf2/pr3.ma Basic-2/pr3/fwd.ma
+Legacy-1/definitions.ma Legacy-1/coq/defs.ma
+Basic-2/getl/defs.ma Basic-2/getl/defs.mma
+Basic-2/cimp/defs.mma Basic-2/getl/defs.ma
+Basic-2/wf3/clear.ma Basic-2/wf3/clear.mma
+Basic-1/csubv/getl.ma Basic-1/csubv/clear.ma Basic-1/csubv/drop.ma Basic-1/getl/fwd.ma
+Basic-2/clear/fwd.ma Basic-2/clear/fwd.mma
+Basic-1/subst0/props.ma Basic-1/subst0/fwd.ma
+Basic-1/cnt/props.ma Basic-1/cnt/defs.ma Basic-1/lift/fwd.ma
+Basic-2/getl/fwd.ma Basic-2/getl/fwd.mma
+Basic-1/r/props.ma Basic-1/r/defs.ma Basic-1/s/defs.ma
+Basic-2/arity/aprem.mma Basic-1/arity/aprem.ma Basic-2/aprem/props.ma Basic-2/arity/cimp.ma Basic-2/arity/props.ma
+Basic-2/leq/asucc.ma Basic-2/leq/asucc.mma
+Basic-2/ex1/defs.ma Basic-2/ex1/defs.mma
+Basic-2/arity/cimp.ma Basic-2/arity/cimp.mma
+Basic-2/ty3/fwd_nf2.mma Basic-1/ty3/fwd_nf2.ma Basic-2/nf2/fwd.ma Basic-2/pc3/nf2.ma Basic-2/ty3/arity_props.ma
+Basic-1/drop/fwd.ma Basic-1/drop/defs.ma
+Basic-2/subst1/subst1.ma Basic-2/subst1/subst1.mma
+Basic-2/pr2/props.ma Basic-2/pr2/props.mma
+Basic-2/aplus/props.mma Basic-1/aplus/props.ma Basic-2/aplus/defs.ma Basic-2/next_plus/props.ma
+Basic-1/csubst0/clear.ma Basic-1/clear/fwd.ma Basic-1/csubst0/fwd.ma Basic-1/csubst0/props.ma
+Basic-1/csubc/getl.ma Basic-1/csubc/clear.ma Basic-1/csubc/drop.ma
+Basic-1/csubt/pc3.ma Basic-1/csubt/getl.ma Basic-1/pc3/left.ma
+Basic-2/csubc/drop1.mma Basic-1/csubc/drop1.ma Basic-2/csubc/drop.ma
+Basic-2/pr3/wcpr0.ma Basic-2/pr3/wcpr0.mma
+Basic-1/sc3/arity.ma Basic-1/csubc/arity.ma Basic-1/csubc/drop1.ma Basic-1/csubc/getl.ma Basic-1/csubc/props.ma
+Basic-1/csubc/drop1.ma Basic-1/csubc/drop.ma
+Basic-2/csubc/drop.ma Basic-2/csubc/drop.mma
+Basic-2/pr3/pr1.ma Basic-2/pr3/pr1.mma
+Basic-2/C/props.ma Basic-2/C/props.mma
+Basic-2/wf3/fwd.ma Basic-2/wf3/fwd.mma
+Basic-2/pr2/fwd.mma Basic-1/pr2/fwd.ma Basic-2/getl/clear.ma Basic-2/getl/drop.ma Basic-2/pr0/fwd.ma Basic-2/pr2/defs.ma
+Basic-1/pr3/defs.ma Basic-1/pr2/defs.ma
+Basic-2/pr2/clen.mma Basic-1/pr2/clen.ma Basic-2/clen/getl.ma Basic-2/pr2/props.ma
+Basic-2/pc3/defs.mma Basic-2/pr3/defs.ma
+Basic-2/pr1/props.ma Basic-2/pr1/props.mma
+Basic-2/ty3/arity_props.ma Basic-2/ty3/arity_props.mma
+Ground-1/plist/props.ma Ground-1/plist/defs.ma
+Basic-2/flt/props.ma Basic-2/flt/props.mma
+Basic-1/leq/defs.ma Basic-1/aplus/defs.ma
+Ground-1/ext/tactics.ma Ground-1/preamble.ma
+Basic-2/iso/defs.mma Basic-2/T/defs.ma
+Basic-2/drop1/fwd.mma Basic-1/drop1/fwd.ma Basic-2/drop1/defs.ma
+Basic-2/sn3/fwd.mma Basic-1/sn3/fwd.ma Basic-2/pr3/props.ma Basic-2/sn3/defs.ma
+Ground-2/plist/defs.mma Ground-2/preamble.ma
+Basic-1/arity/lift1.ma Basic-1/arity/props.ma Basic-1/drop1/fwd.ma
+Basic-2/csubc/csuba.mma Basic-1/csubc/csuba.ma Basic-2/csubc/defs.ma Basic-2/sc3/props.ma
+Basic-1/s/defs.ma Basic-1/T/defs.ma
+Basic-2/wcpr0/getl.ma Basic-2/wcpr0/getl.mma
+Basic-2/pr0/props.ma Basic-2/pr0/props.mma
+Basic-2/lift1/props.ma Basic-2/lift1/props.mma
+Basic-2/wcpr0/getl.mma Basic-1/wcpr0/getl.ma Basic-2/getl/props.ma Basic-2/wcpr0/defs.ma
+Basic-2/lift1/props.mma Basic-1/lift1/props.ma Basic-2/drop1/defs.ma Basic-2/lift/props.ma
+Basic-1/pr1/pr1.ma Basic-1/pr0/pr0.ma Basic-1/pr1/props.ma
+Ground-1/types/defs.ma Ground-1/preamble.ma
+Basic-2/pc3/pc1.mma Basic-1/pc3/pc1.ma Basic-2/pc1/defs.ma Basic-2/pc3/defs.ma Basic-2/pr3/pr1.ma
+Basic-1/sn3/lift1.ma Basic-1/drop1/fwd.ma Basic-1/lift1/fwd.ma Basic-1/sn3/props.ma
+Basic-1/sc3/props.ma Basic-1/arity/aprem.ma Basic-1/arity/lift1.ma Basic-1/csuba/arity.ma Basic-1/drop1/getl.ma Basic-1/drop1/props.ma Basic-1/lift1/props.ma Basic-1/llt/props.ma Basic-1/nf2/lift1.ma Basic-1/sc3/defs.ma Basic-1/sn3/lift1.ma
+Basic-2/sn3/fwd.ma Basic-2/sn3/fwd.mma
+Basic-2/lift/props.mma Basic-1/lift/props.ma Basic-2/lift/fwd.ma Basic-2/s/props.ma
+Basic-2/csubc/drop.mma Basic-1/csubc/drop.ma Basic-2/csubc/fwd.ma Basic-2/sc3/props.ma
+Basic-1/lift/tlt.ma Basic-1/lift/fwd.ma Basic-1/tlt/props.ma
+Basic-2/ty3/fwd.ma Basic-2/ty3/fwd.mma
+Basic-1/next_plus/props.ma Basic-1/next_plus/defs.ma
+Basic-1/aprem/defs.ma Basic-1/A/defs.ma
+Basic-1/ex0/defs.ma Basic-1/A/defs.ma Basic-1/G/defs.ma
+Basic-2/pr3/iso.mma Basic-1/pr3/iso.ma Basic-2/iso/props.ma Basic-2/pr3/fwd.ma Basic-2/tlist/props.ma
+Basic-2/pc1/defs.mma Basic-2/pr1/defs.ma
+Basic-2/getl/dec.ma Basic-2/getl/dec.mma
+Basic-2/getl/props.mma Basic-1/getl/props.ma Basic-2/clear/props.ma Basic-2/drop/props.ma Basic-2/getl/fwd.ma
+Basic-2/lift1/fwd.ma Basic-2/lift1/fwd.mma
+Basic-2/subst0/props.mma Basic-1/subst0/props.ma Basic-2/subst0/fwd.ma
+Basic-1/getl/drop.ma Basic-1/clear/drop.ma Basic-1/getl/props.ma
+Basic-1/nf2/iso.ma Basic-1/iso/props.ma Basic-1/nf2/pr3.ma Basic-1/pr3/fwd.ma
+Basic-2/ty3/sty0.mma Basic-1/ty3/sty0.ma Basic-2/sty0/fwd.ma Basic-2/ty3/pr3_props.ma
+Basic-1/arity/defs.ma Basic-1/getl/defs.ma Basic-1/leq/defs.ma
+Basic-2/ex2/props.ma Basic-2/ex2/props.mma
+Basic-1/tlt/defs.ma Basic-1/T/defs.ma
+Basic-2/wf3/ty3.mma Basic-1/wf3/ty3.ma Basic-2/wf3/getl.ma
+Basic-2/csubst1/defs.ma Basic-2/csubst1/defs.mma
+Basic-1/csubt/fwd.ma Basic-1/csubt/defs.ma
+Basic-1/csubc/clear.ma Basic-1/csubc/fwd.ma
+Basic-2/pc3/fwd.ma Basic-2/pc3/fwd.mma
+Basic-1/subst0/defs.ma Basic-1/lift/defs.ma
+Basic-2/getl/drop.mma Basic-1/getl/drop.ma Basic-2/clear/drop.ma Basic-2/getl/props.ma
+Basic-2/nf2/arity.ma Basic-2/nf2/arity.mma
+Basic-1/ty3/subst1.ma Basic-1/getl/getl.ma Basic-1/pc3/subst1.ma Basic-1/ty3/props.ma
+Basic-2/subst0/fwd.mma Basic-1/subst0/fwd.ma Basic-2/lift/props.ma Basic-2/subst0/defs.ma
+Basic-2/pc1/props.mma Basic-1/pc1/props.ma Basic-2/pc1/defs.ma Basic-2/pr1/pr1.ma
+Legacy-2/preamble.ma Legacy-1/preamble.ma Legacy-1/coq/defs.ma Legacy-1/coq/props.ma Legacy-1/theory.ma
+Basic-2/csuba/drop.mma Basic-1/csuba/drop.ma Basic-2/csuba/fwd.ma Basic-2/drop/fwd.ma
+Basic-2/csubc/fwd.mma Basic-1/csubc/fwd.ma Basic-2/csubc/defs.ma
+Basic-1/csubc/csuba.ma Basic-1/csubc/defs.ma Basic-1/sc3/props.ma
+Basic-2/clear/props.mma Basic-1/clear/props.ma Basic-2/clear/fwd.ma
+Basic-2/ex1/props.ma Basic-2/ex1/props.mma
+Basic-2/csubt/ty3.ma Basic-2/csubt/ty3.mma
+Basic-2/ty3/nf2.mma Basic-1/ty3/nf2.ma Basic-2/nf2/arity.ma Basic-2/pc3/nf2.ma Basic-2/ty3/arity.ma
+Ground-2/blt/props.mma Ground-1/blt/props.ma Ground-2/blt/defs.ma
+Ground-1/blt/props.ma Ground-1/blt/defs.ma
+Basic-1/csubv/props.ma Basic-1/T/props.ma Basic-1/csubv/defs.ma
+Basic-2/drop/props.ma Basic-2/drop/props.mma
+Basic-2/csubst0/getl.ma Basic-2/csubst0/getl.mma
+Basic-2/subst0/tlt.ma Basic-2/subst0/tlt.mma
+Basic-2/csubv/defs.mma Basic-2/C/defs.ma
+Basic-1/pr3/subst1.ma Basic-1/pr2/subst1.ma Basic-1/pr3/defs.ma
+Basic-2/csubt/ty3.mma Basic-1/csubt/ty3.ma Basic-2/csubt/pc3.ma Basic-2/csubt/props.ma
+Basic-2/ex0/props.ma Basic-2/ex0/props.mma
+Basic-1/ty3/pr3_props.ma Basic-1/ty3/pr3.ma
+Basic-2/ty3/subst1.mma Basic-1/ty3/subst1.ma Basic-2/getl/getl.ma Basic-2/pc3/subst1.ma Basic-2/ty3/props.ma
+Basic-1/clear/defs.ma Basic-1/C/defs.ma
+Basic-2/subst0/subst0.ma Basic-2/subst0/subst0.mma
+Legacy-2/coq/defs.mma Legacy-2/preamble.ma
+Basic-1/csuba/clear.ma Basic-1/clear/fwd.ma Basic-1/csuba/defs.ma
+Basic-2/aprem/props.mma Basic-1/aprem/props.ma Basic-2/aprem/fwd.ma Basic-2/leq/defs.ma
+Basic-2/pc3/props.mma Basic-1/pc3/props.ma Basic-2/pc3/defs.ma Basic-2/pr3/pr3.ma
+Basic-2/pc3/left.mma Basic-1/pc3/left.ma Basic-2/pc3/props.ma
+Basic-2/C/props.mma Basic-1/C/props.ma Basic-2/C/defs.ma Basic-2/T/props.ma
+Basic-2/pr3/wcpr0.mma Basic-1/pr3/wcpr0.ma Basic-2/pr3/props.ma Basic-2/wcpr0/getl.ma
+Basic-2/clear/drop.mma Basic-1/clear/drop.ma Basic-2/clear/fwd.ma Basic-2/drop/fwd.ma
+Basic-2/ty3/dec.ma Basic-2/ty3/dec.mma
+Basic-1/getl/props.ma Basic-1/clear/props.ma Basic-1/drop/props.ma Basic-1/getl/fwd.ma
+Basic-2/asucc/defs.ma Basic-2/asucc/defs.mma
+Basic-2/ty3/fsubst0.ma Basic-2/ty3/fsubst0.mma
+Basic-1/sty1/defs.ma Basic-1/sty0/defs.ma
+Basic-2/ty3/sty0.ma Basic-2/ty3/sty0.mma
+Basic-2/nf2/props.ma Basic-2/nf2/props.mma
+Basic-2/cimp/props.ma Basic-2/cimp/props.mma
+Basic-2/ex1/props.mma Basic-1/ex1/props.ma Basic-2/arity/defs.ma Basic-2/ex1/defs.ma Basic-2/leq/props.ma Basic-2/nf2/pr3.ma Basic-2/nf2/props.ma Basic-2/pc3/fwd.ma Basic-2/ty3/fwd.ma
+Basic-1/subst/defs.ma Basic-1/lift/defs.ma
+Basic-2/ty3/pr3.ma Basic-2/ty3/pr3.mma
+Basic-2/sn3/defs.mma Basic-2/pr3/defs.ma
+Ground-2/types/props.mma Ground-1/types/props.ma Ground-2/types/defs.ma
+Basic-2/T/defs.ma Basic-2/T/defs.mma
+Basic-2/csubst0/drop.mma Basic-1/csubst0/drop.ma Basic-2/csubst0/fwd.ma Basic-2/drop/fwd.ma Basic-2/s/props.ma
+Basic-2/nf2/fwd.ma Basic-2/nf2/fwd.mma
+Basic-1/csubt/props.ma Basic-1/csubt/defs.ma
+Basic-1/csubst1/defs.ma Basic-1/csubst0/defs.ma
+Basic-2/pc3/dec.ma Basic-2/pc3/dec.mma
+Basic-2/csubt/defs.mma Basic-2/ty3/defs.ma
+Basic-1/pc3/left.ma Basic-1/pc3/props.ma
+Basic-2/getl/clear.mma Basic-1/getl/clear.ma Basic-2/clear/drop.ma Basic-2/getl/props.ma
+Basic-2/cimp/props.mma Basic-1/cimp/props.ma Basic-2/cimp/defs.ma Basic-2/getl/getl.ma
+Basic-2/aprem/fwd.ma Basic-2/aprem/fwd.mma
+Basic-1/pr3/pr1.ma Basic-1/pr1/defs.ma Basic-1/pr3/defs.ma
+Basic-2/r/defs.ma Basic-2/r/defs.mma
+Basic-1/ty3/arity.ma Basic-1/arity/pr3.ma Basic-1/asucc/fwd.ma Basic-1/ty3/pr3_props.ma
+Basic-1/C/props.ma Basic-1/C/defs.ma Basic-1/T/props.ma
+Basic-1/pc3/fsubst0.ma Basic-1/csubst0/getl.ma Basic-1/fsubst0/defs.ma Basic-1/pc3/left.ma
+Basic-1/wf3/fwd.ma Basic-1/wf3/defs.ma
+Basic-1/arity/fwd.ma Basic-1/arity/defs.ma Basic-1/getl/drop.ma Basic-1/leq/asucc.ma
+Basic-2/pr2/defs.ma Basic-2/pr2/defs.mma
+Basic-2/asucc/fwd.ma Basic-2/asucc/fwd.mma
+Basic-2/leq/defs.mma Basic-2/aplus/defs.ma
+Basic-2/A/defs.ma Basic-2/A/defs.mma
+Basic-1/csubst0/getl.ma Basic-1/csubst0/clear.ma Basic-1/csubst0/drop.ma Basic-1/getl/fwd.ma
+Basic-2/pc1/defs.ma Basic-2/pc1/defs.mma
+Basic-2/csubc/drop1.ma Basic-2/csubc/drop1.mma
+Basic-2/csubc/getl.mma Basic-1/csubc/getl.ma Basic-2/csubc/clear.ma Basic-2/csubc/drop.ma
+Basic-2/pc3/props.ma Basic-2/pc3/props.mma
+Basic-1/ty3/fwd_nf2.ma Basic-1/nf2/fwd.ma Basic-1/pc3/nf2.ma Basic-1/ty3/arity_props.ma
+Basic-2/sty0/fwd.mma Basic-1/sty0/fwd.ma Basic-2/sty0/defs.ma
+Basic-1/clen/getl.ma Basic-1/clen/defs.ma Basic-1/getl/props.ma
+Basic-1/drop/defs.ma Basic-1/C/defs.ma Basic-1/lift/defs.ma Basic-1/r/defs.ma
+Basic-2/csubt/props.mma Basic-1/csubt/props.ma Basic-2/csubt/defs.ma
+Basic-2/drop1/defs.ma Basic-2/drop1/defs.mma
+Basic-2/sn3/defs.ma Basic-2/sn3/defs.mma
+Basic-1/sty1/props.ma Basic-1/sty0/props.ma Basic-1/sty1/defs.ma
+Basic-2/ty3/pr3.mma Basic-1/ty3/pr3.ma Basic-2/csubt/ty3.ma Basic-2/pc1/props.ma Basic-2/pc3/pc1.ma Basic-2/pc3/wcpr0.ma Basic-2/ty3/fsubst0.ma Basic-2/ty3/subst1.ma
+Basic-2/iso/props.ma Basic-2/iso/props.mma
+Ground-2/ext/tactics.ma Ground-2/ext/tactics.mma
+Basic-1/sn3/fwd.ma Basic-1/pr3/props.ma Basic-1/sn3/defs.ma
+Ground-2/plist/props.ma Ground-2/plist/props.mma
+Basic-1/csubt/getl.ma Basic-1/csubt/clear.ma Basic-1/csubt/drop.ma Basic-1/getl/clear.ma
+Ground-1/definitions.ma Ground-1/blt/defs.ma Ground-1/plist/defs.ma Ground-1/types/defs.ma
+Basic-2/nf2/pr3.mma Basic-1/nf2/pr3.ma Basic-2/nf2/defs.ma Basic-2/pr3/pr3.ma
+Basic-1/ty3/props.ma Basic-1/pc3/fwd.ma Basic-1/ty3/fwd.ma
+Basic-2/pr3/pr1.mma Basic-1/pr3/pr1.ma Basic-2/pr1/defs.ma Basic-2/pr3/defs.ma
+Basic-1/ty3/fwd.ma Basic-1/pc3/props.ma Basic-1/ty3/defs.ma
+Basic-1/sty0/props.ma Basic-1/getl/drop.ma Basic-1/sty0/defs.ma
+Basic-2/arity/lift1.ma Basic-2/arity/lift1.mma
+Basic-2/csubt/drop.ma Basic-2/csubt/drop.mma
+Basic-2/getl/getl.mma Basic-1/getl/getl.ma Basic-2/getl/clear.ma Basic-2/getl/drop.ma
+Basic-2/app/defs.ma Basic-2/app/defs.mma
+Basic-2/pc3/wcpr0.ma Basic-2/pc3/wcpr0.mma
+Basic-2/lift/fwd.mma Basic-1/lift/fwd.ma Basic-2/lift/defs.ma
+Basic-2/csubv/props.mma Basic-1/csubv/props.ma Basic-2/T/props.ma Basic-2/csubv/defs.ma
+Basic-1/drop1/props.ma Basic-1/drop/props.ma Basic-1/drop1/fwd.ma Basic-1/getl/defs.ma
+Basic-1/cnt/defs.ma Basic-1/T/defs.ma
+Basic-1/spare.ma Basic-1/theory.ma
+Ground-2/plist/defs.ma Ground-2/plist/defs.mma
+Basic-1/csuba/getl.ma Basic-1/csuba/clear.ma Basic-1/csuba/drop.ma Basic-1/getl/clear.ma
+Ground-2/ext/arith.mma Ground-1/ext/arith.ma Ground-2/preamble.ma
+Basic-2/ty3/fwd.mma Basic-1/ty3/fwd.ma Basic-2/pc3/props.ma Basic-2/ty3/defs.ma
+Basic-2/nf2/dec.ma Basic-2/nf2/dec.mma
+Basic-2/csuba/getl.mma Basic-1/csuba/getl.ma Basic-2/csuba/clear.ma Basic-2/csuba/drop.ma Basic-2/getl/clear.ma
+Basic-2/csubv/defs.ma Basic-2/csubv/defs.mma
+Basic-2/pc1/props.ma Basic-2/pc1/props.mma
+Basic-2/csuba/drop.ma Basic-2/csuba/drop.mma
+Basic-1/pc3/fwd.ma Basic-1/pc3/props.ma Basic-1/pr3/fwd.ma
+Basic-2/drop1/defs.mma Basic-2/drop/defs.ma Basic-2/lift1/defs.ma
+Ground-1/types/props.ma Ground-1/types/defs.ma
+Basic-2/pr0/fwd.mma Basic-1/pr0/fwd.ma Basic-2/pr0/props.ma
+Basic-1/pr1/defs.ma Basic-1/pr0/defs.ma
+Basic-1/csubv/drop.ma Basic-1/csubv/props.ma Basic-1/drop/fwd.ma
+Basic-2/pr2/pr2.ma Basic-2/pr2/pr2.mma
+Basic-2/pr0/subst1.ma Basic-2/pr0/subst1.mma
+Basic-2/nf2/pr3.ma Basic-2/nf2/pr3.mma
+Basic-2/next_plus/defs.ma Basic-2/next_plus/defs.mma
+Basic-2/lift/defs.mma Basic-2/s/defs.ma Basic-2/tlist/defs.ma
+Ground-1/theory.ma Ground-1/blt/props.ma Ground-1/ext/arith.ma Ground-1/ext/tactics.ma Ground-1/plist/props.ma Ground-1/types/props.ma
+Basic-2/csubst1/props.mma Basic-1/csubst1/props.ma Basic-2/csubst1/defs.ma Basic-2/subst1/defs.ma
+Basic-2/nf2/fwd.mma Basic-1/nf2/fwd.ma Basic-2/T/props.ma Basic-2/nf2/defs.ma Basic-2/pr2/clen.ma Basic-2/subst0/dec.ma
+Ground-2/types/defs.mma Ground-2/preamble.ma
+Basic-2/csubc/clear.ma Basic-2/csubc/clear.mma
+Basic-2/wf3/fwd.mma Basic-1/wf3/fwd.ma Basic-2/wf3/defs.ma
+Basic-2/subst0/defs.ma Basic-2/subst0/defs.mma
+Basic-1/arity/cimp.ma Basic-1/arity/defs.ma Basic-1/cimp/props.ma
+Basic-2/tlt/defs.mma Basic-2/T/defs.ma
+Basic-2/csubc/defs.ma Basic-2/csubc/defs.mma
+Basic-1/fsubst0/fwd.ma Basic-1/fsubst0/defs.ma
+Basic-1/wcpr0/fwd.ma Basic-1/wcpr0/defs.ma
+Legacy-2/coq/props.mma Legacy-1/coq/props.ma Legacy-2/coq/defs.ma
+Basic-1/csubc/drop.ma Basic-1/csubc/fwd.ma Basic-1/sc3/props.ma
+Basic-2/wf3/defs.mma Basic-2/ty3/defs.ma
+Basic-2/pr0/subst1.mma Basic-1/pr0/subst1.ma Basic-2/pr0/props.ma Basic-2/subst1/defs.ma
+Basic-2/csubst1/getl.mma Basic-1/csubst1/getl.ma Basic-2/csubst0/getl.ma Basic-2/csubst1/props.ma Basic-2/drop/props.ma Basic-2/subst1/props.ma
+Basic-2/pr2/subst1.ma Basic-2/pr2/subst1.mma
+Basic-2/csuba/arity.mma Basic-1/csuba/arity.ma Basic-2/arity/props.ma Basic-2/csuba/getl.ma Basic-2/csuba/props.ma Basic-2/csubv/getl.ma
+Basic-1/arity/pr3.ma Basic-1/arity/subst0.ma Basic-1/csuba/arity.ma Basic-1/pr0/fwd.ma Basic-1/pr1/defs.ma Basic-1/pr3/defs.ma Basic-1/wcpr0/getl.ma
+Basic-2/pr3/iso.ma Basic-2/pr3/iso.mma
+Basic-2/ty3/arity.mma Basic-1/ty3/arity.ma Basic-2/arity/pr3.ma Basic-2/asucc/fwd.ma Basic-2/ty3/pr3_props.ma
+Basic-2/pc3/pc1.ma Basic-2/pc3/pc1.mma
+Basic-2/csubc/csuba.ma Basic-2/csubc/csuba.mma
+Basic-1/llt/props.ma Basic-1/leq/defs.ma Basic-1/llt/defs.ma
+Basic-2/getl/clear.ma Basic-2/getl/clear.mma
+Basic-2/sty0/fwd.ma Basic-2/sty0/fwd.mma
+Basic-1/sty1/cnt.ma Basic-1/cnt/props.ma Basic-1/sty1/props.ma
+Legacy-2/coq/props.ma Legacy-2/coq/props.mma
+Basic-1/wf3/getl.ma Basic-1/ty3/dec.ma Basic-1/wf3/clear.ma
+Basic-2/csubv/props.ma Basic-2/csubv/props.mma
+Basic-2/csubst0/getl.mma Basic-1/csubst0/getl.ma Basic-2/csubst0/clear.ma Basic-2/csubst0/drop.ma Basic-2/getl/fwd.ma
+Basic-2/ty3/arity_props.mma Basic-1/ty3/arity_props.ma Basic-2/sc3/arity.ma Basic-2/ty3/arity.ma
+Basic-1/ty3/dec.ma Basic-1/getl/dec.ma Basic-1/getl/flt.ma Basic-1/pc3/dec.ma
+Basic-2/ty3/pr3_props.mma Basic-1/ty3/pr3_props.ma Basic-2/ty3/pr3.ma
+Basic-2/csuba/fwd.ma Basic-2/csuba/fwd.mma
+Basic-2/pr3/pr3.mma Basic-1/pr3/pr3.ma Basic-2/pr2/pr2.ma Basic-2/pr3/props.ma
+Basic-2/csubt/clear.mma Basic-1/csubt/clear.ma Basic-2/clear/fwd.ma Basic-2/csubt/defs.ma
+Basic-2/tlt/props.mma Basic-1/tlt/props.ma Basic-2/tlt/defs.ma
+Basic-2/csubc/arity.mma Basic-1/csubc/arity.ma Basic-2/csubc/csuba.ma
+Basic-2/csuba/clear.ma Basic-2/csuba/clear.mma
+Basic-1/ty3/pr3.ma Basic-1/csubt/ty3.ma Basic-1/pc1/props.ma Basic-1/pc3/pc1.ma Basic-1/pc3/wcpr0.ma Basic-1/ty3/fsubst0.ma Basic-1/ty3/subst1.ma
+Basic-1/pr3/props.ma Basic-1/pr1/props.ma Basic-1/pr2/props.ma Basic-1/pr3/pr1.ma
+Basic-2/clen/defs.mma Basic-2/C/defs.ma Basic-2/s/defs.ma
+Basic-2/iso/props.mma Basic-1/iso/props.ma Basic-2/iso/fwd.ma
+Basic-1/lift/fwd.ma Basic-1/lift/defs.ma
+Basic-2/csubt/fwd.mma Basic-1/csubt/fwd.ma Basic-2/csubt/defs.ma
+Legacy-2/theory.ma Legacy-2/coq/props.ma
+Basic-2/sn3/props.ma Basic-2/sn3/props.mma
+Basic-1/nf2/fwd.ma Basic-1/T/props.ma Basic-1/nf2/defs.ma Basic-1/pr2/clen.ma Basic-1/subst0/dec.ma
+Basic-1/pc3/dec.ma Basic-1/nf2/fwd.ma Basic-1/ty3/arity_props.ma
+Basic-2/fsubst0/defs.mma Basic-2/csubst0/defs.ma
+Basic-1/getl/defs.ma Basic-1/clear/defs.ma Basic-1/drop/defs.ma
+Basic-2/ex2/defs.ma Basic-2/ex2/defs.mma
+Basic-1/wf3/clear.ma Basic-1/wf3/fwd.ma
+Basic-2/next_plus/defs.mma Basic-2/G/defs.ma
+Basic-1/clear/fwd.ma Basic-1/clear/defs.ma
+Basic-1/subst/props.ma Basic-1/lift/props.ma Basic-1/subst/fwd.ma Basic-1/subst0/defs.ma
+Basic-1/wcpr0/getl.ma Basic-1/getl/props.ma Basic-1/wcpr0/defs.ma
+Basic-2/preamble.ma Basic-1/definitions.ma Ground-2/theory.ma
+Basic-2/csubv/clear.mma Basic-1/csubv/clear.ma Basic-2/clear/fwd.ma Basic-2/csubv/defs.ma
+Basic-2/csuba/fwd.mma Basic-1/csuba/fwd.ma Basic-2/csuba/defs.ma
+Basic-2/getl/getl.ma Basic-2/getl/getl.mma
+Basic-1/leq/asucc.ma Basic-1/leq/props.ma
+Basic-2/T/defs.mma Basic-2/preamble.ma
+Basic-2/subst/defs.mma Basic-2/lift/defs.ma
+Basic-2/pr3/fwd.mma Basic-1/pr3/fwd.ma Basic-2/pr2/fwd.ma Basic-2/pr3/props.ma
+Basic-1/pr2/props.ma Basic-1/getl/clear.ma Basic-1/getl/drop.ma Basic-1/pr0/props.ma Basic-1/pr2/defs.ma
+Basic-2/csubt/props.ma Basic-2/csubt/props.mma
+Basic-2/pr0/fwd.ma Basic-2/pr0/fwd.mma
+Basic-2/leq/fwd.ma Basic-2/leq/fwd.mma
+Basic-1/pr3/wcpr0.ma Basic-1/pr3/props.ma Basic-1/wcpr0/getl.ma
+Basic-2/pc3/subst1.mma Basic-1/pc3/subst1.ma Basic-2/pc3/props.ma Basic-2/pr3/subst1.ma
+Basic-2/lift1/fwd.mma Basic-1/lift1/fwd.ma Basic-2/lift/fwd.ma Basic-2/lift1/defs.ma
+Basic-1/iso/defs.ma Basic-1/T/defs.ma
+Basic-1/pc3/defs.ma Basic-1/pr3/defs.ma
+Basic-2/ty3/props.mma Basic-1/ty3/props.ma Basic-2/pc3/fwd.ma Basic-2/ty3/fwd.ma
+Basic-2/pc3/fsubst0.ma Basic-2/pc3/fsubst0.mma
+Basic-2/pr1/props.mma Basic-1/pr1/props.ma Basic-2/T/props.ma Basic-2/pr0/subst1.ma Basic-2/pr1/defs.ma Basic-2/subst1/props.ma
+Basic-1/pr1/props.ma Basic-1/T/props.ma Basic-1/pr0/subst1.ma Basic-1/pr1/defs.ma Basic-1/subst1/props.ma
+Basic-2/leq/props.ma Basic-2/leq/props.mma
+Basic-2/csuba/props.mma Basic-1/csuba/props.ma Basic-2/csuba/defs.ma
+Basic-2/sty0/defs.ma Basic-2/sty0/defs.mma
+Basic-1/flt/props.ma Basic-1/C/props.ma Basic-1/flt/defs.ma
+Basic-2/leq/fwd.mma Basic-1/leq/fwd.ma Basic-2/leq/defs.ma
+Basic-2/G/defs.ma Basic-2/G/defs.mma
+Basic-2/csubst0/clear.ma Basic-2/csubst0/clear.mma
+Basic-2/theory.ma Basic-2/csubt/csuba.ma Basic-2/ex0/props.ma Basic-2/ex1/props.ma Basic-2/ex2/props.ma Basic-2/pr3/wcpr0.ma Basic-2/sty1/cnt.ma Basic-2/subst/props.ma Basic-2/subst0/tlt.ma Basic-2/ty3/fwd_nf2.ma Basic-2/ty3/nf2.ma Basic-2/ty3/sty0.ma Basic-2/wcpr0/fwd.ma Basic-2/wf3/props.ma
+Basic-2/cnt/defs.mma Basic-2/T/defs.ma
+Basic-1/C/defs.ma Basic-1/T/defs.ma
+Basic-2/flt/defs.ma Basic-2/flt/defs.mma
+Basic-2/pc3/dec.mma Basic-1/pc3/dec.ma Basic-2/nf2/fwd.ma Basic-2/ty3/arity_props.ma
+Basic-2/cimp/defs.ma Basic-2/cimp/defs.mma
+Basic-2/wf3/ty3.ma Basic-2/wf3/ty3.mma
+Basic-2/ty3/fwd_nf2.ma Basic-2/ty3/fwd_nf2.mma
+Basic-2/subst0/fwd.ma Basic-2/subst0/fwd.mma
+Basic-2/pr2/pr2.mma Basic-1/pr2/pr2.ma Basic-2/getl/props.ma Basic-2/pr0/pr0.ma Basic-2/pr2/defs.ma
+Basic-2/csubst0/drop.ma Basic-2/csubst0/drop.mma
+Basic-1/getl/fwd.ma Basic-1/clear/fwd.ma Basic-1/drop/fwd.ma Basic-1/getl/defs.ma
+Legacy-2/coq/defs.ma Legacy-2/coq/defs.mma
+Basic-1/definitions.ma Basic-1/app/defs.ma Basic-1/aprem/defs.ma Basic-1/cimp/defs.ma Basic-1/clen/defs.ma Basic-1/cnt/defs.ma Basic-1/csuba/defs.ma Basic-1/csubc/defs.ma Basic-1/csubst1/defs.ma Basic-1/csubt/defs.ma Basic-1/csubv/defs.ma Basic-1/ex0/defs.ma Basic-1/ex1/defs.ma Basic-1/ex2/defs.ma Basic-1/flt/defs.ma Basic-1/fsubst0/defs.ma Basic-1/iso/defs.ma Basic-1/llt/defs.ma Basic-1/next_plus/defs.ma Basic-1/nf2/defs.ma Basic-1/pc1/defs.ma Basic-1/sty1/defs.ma Basic-1/subst/defs.ma Basic-1/subst1/defs.ma Basic-1/tlt/defs.ma Basic-1/wcpr0/defs.ma Basic-1/wf3/defs.ma
+Basic-2/r/props.mma Basic-1/r/props.ma Basic-2/r/defs.ma Basic-2/s/defs.ma
+Basic-1/pr0/props.ma Basic-1/pr0/defs.ma Basic-1/subst0/subst0.ma
+Basic-2/pr3/props.mma Basic-1/pr3/props.ma Basic-2/pr1/props.ma Basic-2/pr2/props.ma Basic-2/pr3/pr1.ma
+Basic-2/csubc/props.mma Basic-1/csubc/props.ma Basic-2/csubc/defs.ma Basic-2/sc3/props.ma
+Basic-1/ex1/defs.ma Basic-1/C/defs.ma
+Basic-2/getl/flt.mma Basic-1/getl/flt.ma Basic-2/clear/props.ma Basic-2/flt/props.ma Basic-2/getl/fwd.ma
+Basic-1/drop/props.ma Basic-1/drop/fwd.ma Basic-1/lift/props.ma Basic-1/r/props.ma
+Basic-2/clen/defs.ma Basic-2/clen/defs.mma
+Basic-2/sty1/props.mma Basic-1/sty1/props.ma Basic-2/sty0/props.ma Basic-2/sty1/defs.ma
+Basic-2/lift/defs.ma Basic-2/lift/defs.mma
+Basic-1/subst0/tlt.ma Basic-1/lift/props.ma Basic-1/lift/tlt.ma Basic-1/subst0/defs.ma
+Basic-1/nf2/dec.ma Basic-1/C/props.ma Basic-1/nf2/defs.ma Basic-1/pr0/dec.ma Basic-1/pr2/clen.ma Basic-1/pr2/fwd.ma
+Basic-2/getl/dec.mma Basic-1/getl/dec.ma Basic-2/getl/props.ma
+Basic-1/csubst0/fwd.ma Basic-1/csubst0/defs.ma
+Basic-2/ty3/defs.ma Basic-2/ty3/defs.mma
+Basic-2/pr0/pr0.ma Basic-2/pr0/pr0.mma
+Basic-1/lift1/fwd.ma Basic-1/lift/fwd.ma Basic-1/lift1/defs.ma
+Ground-2/plist/props.mma Ground-1/plist/props.ma Ground-2/plist/defs.ma
+Basic-2/iso/fwd.ma Basic-2/iso/fwd.mma
+Basic-2/aplus/defs.ma Basic-2/aplus/defs.mma
+Basic-1/asucc/defs.ma Basic-1/A/defs.ma Basic-1/G/defs.ma
+Basic-2/drop1/props.ma Basic-2/drop1/props.mma
+Basic-1/next_plus/defs.ma Basic-1/G/defs.ma
+Basic-1/nf2/pr3.ma Basic-1/nf2/defs.ma Basic-1/pr3/pr3.ma
+Basic-1/subst1/defs.ma Basic-1/subst0/defs.ma
+Basic-1/pr2/pr2.ma Basic-1/getl/props.ma Basic-1/pr0/pr0.ma Basic-1/pr2/defs.ma
+Basic-2/pr0/defs.ma Basic-2/pr0/defs.mma
+Basic-2/wcpr0/fwd.mma Basic-1/wcpr0/fwd.ma Basic-2/wcpr0/defs.ma
+Basic-2/wcpr0/defs.mma Basic-2/C/defs.ma Basic-2/pr0/defs.ma
+Basic-2/nf2/lift1.ma Basic-2/nf2/lift1.mma
+Basic-2/drop/props.mma Basic-1/drop/props.ma Basic-2/drop/fwd.ma Basic-2/lift/props.ma Basic-2/r/props.ma
+Basic-1/cimp/props.ma Basic-1/cimp/defs.ma Basic-1/getl/getl.ma
+Basic-2/pr0/dec.ma Basic-2/pr0/dec.mma
+Basic-2/drop1/fwd.ma Basic-2/drop1/fwd.mma
+Basic-2/pr2/clen.ma Basic-2/pr2/clen.mma
+Basic-2/nf2/defs.ma Basic-2/nf2/defs.mma
+Basic-1/ex2/props.ma Basic-1/arity/fwd.ma Basic-1/ex2/defs.ma Basic-1/nf2/defs.ma Basic-1/pr2/fwd.ma
+Basic-2/subst1/fwd.mma Basic-1/subst1/fwd.ma Basic-2/subst0/props.ma Basic-2/subst1/defs.ma
+Ground-2/types/props.ma Ground-2/types/props.mma
+Basic-2/lift/props.ma Basic-2/lift/props.mma
+Basic-1/nf2/arity.ma Basic-1/arity/subst0.ma Basic-1/nf2/fwd.ma
+Basic-2/csubc/fwd.ma Basic-2/csubc/fwd.mma
+Basic-2/wf3/defs.ma Basic-2/wf3/defs.mma
+Basic-2/sc3/defs.mma Basic-2/arity/defs.ma Basic-2/drop1/defs.ma Basic-2/sn3/defs.ma
+Basic-2/csubst1/getl.ma Basic-2/csubst1/getl.mma
+Basic-2/tlt/props.ma Basic-2/tlt/props.mma
+Basic-2/cnt/props.mma Basic-1/cnt/props.ma Basic-2/cnt/defs.ma Basic-2/lift/fwd.ma
+Ground-2/ext/arith.ma Ground-2/ext/arith.mma
+Basic-2/getl/flt.ma Basic-2/getl/flt.mma
+Basic-2/subst1/fwd.ma Basic-2/subst1/fwd.mma
+Basic-1/pr3/iso.ma Basic-1/iso/props.ma Basic-1/pr3/fwd.ma Basic-1/tlist/props.ma
+Basic-1/ex1/props.ma Basic-1/arity/defs.ma Basic-1/ex1/defs.ma Basic-1/leq/props.ma Basic-1/nf2/pr3.ma Basic-1/nf2/props.ma Basic-1/pc3/fwd.ma Basic-1/ty3/fwd.ma
+Basic-1/csubt/ty3.ma Basic-1/csubt/pc3.ma Basic-1/csubt/props.ma
+Basic-2/wf3/props.ma Basic-2/wf3/props.mma
+Basic-1/pc3/pc1.ma Basic-1/pc1/defs.ma Basic-1/pc3/defs.ma Basic-1/pr3/pr1.ma
+Basic-1/csubst1/props.ma Basic-1/csubst1/defs.ma Basic-1/subst1/defs.ma
+Basic-2/sc3/defs.ma Basic-2/sc3/defs.mma
+Ground-2/blt/defs.ma Ground-2/blt/defs.mma
+Basic-2/fsubst0/fwd.ma Basic-2/fsubst0/fwd.mma
+Basic-2/subst0/dec.ma Basic-2/subst0/dec.mma
+Basic-1/csubst0/drop.ma Basic-1/csubst0/fwd.ma Basic-1/drop/fwd.ma Basic-1/s/props.ma
+Basic-1/getl/dec.ma Basic-1/getl/props.ma
+Basic-2/llt/defs.ma Basic-2/llt/defs.mma
+Basic-2/pr1/pr1.mma Basic-1/pr1/pr1.ma Basic-2/pr0/pr0.ma Basic-2/pr1/props.ma
+Basic-1/csubst0/props.ma Basic-1/csubst0/defs.ma
+Basic-2/csuba/clear.mma Basic-1/csuba/clear.ma Basic-2/clear/fwd.ma Basic-2/csuba/defs.ma
+Basic-2/wf3/props.mma Basic-1/wf3/props.ma Basic-2/app/defs.ma Basic-2/wf3/ty3.ma
+Basic-2/pr2/fwd.ma Basic-2/pr2/fwd.mma
+Ground-2/preamble.ma Ground-1/definitions.ma Legacy-2/theory.ma
+Basic-2/flt/props.mma Basic-1/flt/props.ma Basic-2/C/props.ma Basic-2/flt/defs.ma
+Basic-2/sn3/nf2.ma Basic-2/sn3/nf2.mma
+Basic-1/csubst1/fwd.ma Basic-1/csubst0/fwd.ma Basic-1/csubst1/defs.ma Basic-1/subst1/props.ma
+Basic-1/ty3/arity_props.ma Basic-1/sc3/arity.ma Basic-1/ty3/arity.ma
+Basic-1/drop1/defs.ma Basic-1/drop/defs.ma Basic-1/lift1/defs.ma
+Basic-1/ex0/props.ma Basic-1/aplus/props.ma Basic-1/ex0/defs.ma Basic-1/leq/defs.ma
+Basic-2/ty3/nf2.ma Basic-2/ty3/nf2.mma
+Basic-2/csubt/defs.ma Basic-2/csubt/defs.mma
+Basic-2/clear/drop.ma Basic-2/clear/drop.mma
+Basic-1/aprem/props.ma Basic-1/aprem/fwd.ma Basic-1/leq/defs.ma
+Basic-2/csubst0/fwd.mma Basic-1/csubst0/fwd.ma Basic-2/csubst0/defs.ma
+Basic-1/nf2/props.ma Basic-1/nf2/defs.ma Basic-1/pr2/fwd.ma
+Basic-2/ty3/pr3_props.ma Basic-2/ty3/pr3_props.mma
+Basic-1/csubc/arity.ma Basic-1/csubc/csuba.ma
+Basic-2/arity/pr3.mma Basic-1/arity/pr3.ma Basic-2/arity/subst0.ma Basic-2/csuba/arity.ma Basic-2/pr0/fwd.ma Basic-2/pr1/defs.ma Basic-2/pr3/defs.ma Basic-2/wcpr0/getl.ma
+Basic-2/aprem/defs.mma Basic-2/A/defs.ma
+Basic-2/pc3/subst1.ma Basic-2/pc3/subst1.mma
+Basic-1/csubt/drop.ma Basic-1/csubt/fwd.ma Basic-1/drop/fwd.ma
+Basic-2/subst0/tlt.mma Basic-1/subst0/tlt.ma Basic-2/lift/props.ma Basic-2/lift/tlt.ma Basic-2/subst0/defs.ma
+Ground-2/blt/defs.mma Ground-2/preamble.ma
+Basic-2/csubc/clear.mma Basic-1/csubc/clear.ma Basic-2/csubc/fwd.ma
+Legacy-1/preamble.ma 
+Basic-2/subst0/subst0.mma Basic-1/subst0/subst0.ma Basic-2/subst0/props.ma
+Basic-2/drop/fwd.ma Basic-2/drop/fwd.mma
+Basic-2/pc3/nf2.ma Basic-2/pc3/nf2.mma
+Basic-2/s/defs.ma Basic-2/s/defs.mma
+Basic-2/csuba/defs.ma Basic-2/csuba/defs.mma
+Basic-2/subst/fwd.ma Basic-2/subst/fwd.mma
+Basic-2/next_plus/props.ma Basic-2/next_plus/props.mma
+Basic-2/lift1/defs.ma Basic-2/lift1/defs.mma
+Basic-1/pr0/fwd.ma Basic-1/pr0/props.ma
+Basic-1/leq/fwd.ma Basic-1/leq/defs.ma
+Basic-2/subst/props.ma Basic-2/subst/props.mma
+Basic-2/pr3/defs.ma Basic-2/pr3/defs.mma
+Basic-1/csuba/drop.ma Basic-1/csuba/fwd.ma Basic-1/drop/fwd.ma
+Basic-1/csubv/defs.ma Basic-1/C/defs.ma
+Basic-1/aprem/fwd.ma Basic-1/aprem/defs.ma
+Ground-1/plist/defs.ma Ground-1/preamble.ma
+Basic-2/csubv/drop.mma Basic-1/csubv/drop.ma Basic-2/csubv/props.ma Basic-2/drop/fwd.ma
+Basic-1/csubst1/getl.ma Basic-1/csubst0/getl.ma Basic-1/csubst1/props.ma Basic-1/drop/props.ma Basic-1/subst1/props.ma
+Basic-2/aprem/fwd.mma Basic-1/aprem/fwd.ma Basic-2/aprem/defs.ma
+Basic-2/T/props.ma Basic-2/T/props.mma
+Basic-1/pr0/subst1.ma Basic-1/pr0/props.ma Basic-1/subst1/defs.ma
+Basic-1/arity/aprem.ma Basic-1/aprem/props.ma Basic-1/arity/cimp.ma Basic-1/arity/props.ma
+Basic-2/leq/defs.ma Basic-2/leq/defs.mma
+Basic-2/s/defs.mma Basic-2/T/defs.ma
+Basic-1/subst1/subst1.ma Basic-1/subst0/subst0.ma Basic-1/subst1/fwd.ma
+Basic-2/arity/fwd.mma Basic-1/arity/fwd.ma Basic-2/arity/defs.ma Basic-2/getl/drop.ma Basic-2/leq/asucc.ma
+Ground-2/ext/tactics.mma Ground-1/ext/tactics.ma Ground-2/preamble.ma
+Basic-2/leq/props.mma Basic-1/leq/props.ma Basic-2/aplus/props.ma Basic-2/leq/fwd.ma
+Basic-2/subst1/props.mma Basic-1/subst1/props.ma Basic-2/subst0/props.ma Basic-2/subst1/defs.ma
+Basic-2/pr3/fwd.ma Basic-2/pr3/fwd.mma
+Basic-1/asucc/fwd.ma Basic-1/asucc/defs.ma
+Basic-1/csuba/arity.ma Basic-1/arity/props.ma Basic-1/csuba/getl.ma Basic-1/csuba/props.ma Basic-1/csubv/getl.ma
+Basic-1/pc3/props.ma Basic-1/pc3/defs.ma Basic-1/pr3/pr3.ma
+Basic-1/csubc/defs.ma Basic-1/sc3/defs.ma
+Basic-2/cnt/props.ma Basic-2/cnt/props.mma
+Basic-2/pr0/pr0.mma Basic-1/pr0/pr0.ma Basic-2/lift/tlt.ma Basic-2/pr0/fwd.ma
+Basic-2/pc3/nf2.mma Basic-1/pc3/nf2.ma Basic-2/nf2/pr3.ma Basic-2/pc3/defs.ma
+Basic-1/ty3/sty0.ma Basic-1/sty0/fwd.ma Basic-1/ty3/pr3_props.ma
+Basic-1/wf3/ty3.ma Basic-1/wf3/getl.ma
+Basic-1/csubv/clear.ma Basic-1/clear/fwd.ma Basic-1/csubv/defs.ma
+Basic-1/csubc/props.ma Basic-1/csubc/defs.ma Basic-1/sc3/props.ma
+Basic-1/iso/props.ma Basic-1/iso/fwd.ma
+Basic-2/csubc/defs.mma Basic-2/sc3/defs.ma
+Basic-1/pr2/subst1.ma Basic-1/csubst1/fwd.ma Basic-1/csubst1/getl.ma Basic-1/getl/drop.ma Basic-1/pr0/fwd.ma Basic-1/pr0/subst1.ma Basic-1/pr2/defs.ma Basic-1/subst1/subst1.ma
+Basic-2/lift/tlt.ma Basic-2/lift/tlt.mma
+Basic-2/r/defs.mma Basic-2/T/defs.ma
+Basic-2/drop1/getl.ma Basic-2/drop1/getl.mma
+Basic-2/csubt/pc3.ma Basic-2/csubt/pc3.mma
+Basic-2/sc3/arity.ma Basic-2/sc3/arity.mma
+Basic-2/ex0/defs.ma Basic-2/ex0/defs.mma
+Basic-2/fsubst0/fwd.mma Basic-1/fsubst0/fwd.ma Basic-2/fsubst0/defs.ma
+Basic-2/wf3/clear.mma Basic-1/wf3/clear.ma Basic-2/wf3/fwd.ma
+Basic-2/csubt/drop.mma Basic-1/csubt/drop.ma Basic-2/csubt/fwd.ma Basic-2/drop/fwd.ma
+Basic-2/pc3/fsubst0.mma Basic-1/pc3/fsubst0.ma Basic-2/csubst0/getl.ma Basic-2/fsubst0/defs.ma Basic-2/pc3/left.ma
+Basic-1/getl/clear.ma Basic-1/clear/drop.ma Basic-1/getl/props.ma
+Basic-1/pc3/wcpr0.ma Basic-1/pc3/props.ma Basic-1/wcpr0/getl.ma
+Basic-1/pr0/pr0.ma Basic-1/lift/tlt.ma Basic-1/pr0/fwd.ma
+Basic-2/clear/fwd.mma Basic-1/clear/fwd.ma Basic-2/clear/defs.ma
+Basic-1/iso/fwd.ma Basic-1/iso/defs.ma Basic-1/tlist/defs.ma
+Basic-2/T/dec.mma Basic-1/T/dec.ma Basic-2/T/defs.ma
+Basic-1/pr2/defs.ma Basic-1/getl/defs.ma Basic-1/pr0/defs.ma
+Ground-1/spare.ma Ground-1/theory.ma
+Basic-2/ex0/props.mma Basic-1/ex0/props.ma Basic-2/aplus/props.ma Basic-2/ex0/defs.ma Basic-2/leq/defs.ma
+Basic-2/tlt/defs.ma Basic-2/tlt/defs.mma
+Basic-1/pc1/props.ma Basic-1/pc1/defs.ma Basic-1/pr1/pr1.ma
+Basic-2/drop/fwd.mma Basic-1/drop/fwd.ma Basic-2/drop/defs.ma
+Basic-2/getl/defs.mma Basic-2/clear/defs.ma Basic-2/drop/defs.ma
+Basic-2/wcpr0/defs.ma Basic-2/wcpr0/defs.mma
+Basic-1/pr0/dec.ma Basic-1/T/dec.ma Basic-1/T/props.ma Basic-1/pr0/fwd.ma Basic-1/subst0/dec.ma
+Basic-1/pc1/defs.ma Basic-1/pr1/defs.ma
+Basic-1/sn3/defs.ma Basic-1/pr3/defs.ma
+Basic-2/csubst0/fwd.ma Basic-2/csubst0/fwd.mma
+Basic-1/T/defs.ma Basic-1/preamble.ma
+Basic-1/csubt/clear.ma Basic-1/clear/fwd.ma Basic-1/csubt/defs.ma
+Basic-1/csuba/props.ma Basic-1/csuba/defs.ma
+Basic-2/sn3/lift1.ma Basic-2/sn3/lift1.mma
+Basic-2/T/dec.ma Basic-2/T/dec.mma
+Basic-2/next_plus/props.mma Basic-1/next_plus/props.ma Basic-2/next_plus/defs.ma
+Basic-2/csubv/getl.ma Basic-2/csubv/getl.mma
+Basic-2/subst1/defs.ma Basic-2/subst1/defs.mma
+Basic-2/csuba/defs.mma Basic-2/arity/defs.ma
+Basic-2/tlist/defs.ma Basic-2/tlist/defs.mma
+Basic-2/sn3/lift1.mma Basic-1/sn3/lift1.ma Basic-2/drop1/fwd.ma Basic-2/lift1/fwd.ma Basic-2/sn3/props.ma
+Basic-2/arity/lift1.mma Basic-1/arity/lift1.ma Basic-2/arity/props.ma Basic-2/drop1/fwd.ma
+Basic-2/ty3/defs.mma Basic-2/G/defs.ma Basic-2/pc3/defs.ma
+Basic-2/sc3/props.ma Basic-2/sc3/props.mma
+Basic-2/subst/fwd.mma Basic-1/subst/fwd.ma Basic-2/subst/defs.ma
+Basic-2/subst1/defs.mma Basic-2/subst0/defs.ma
+Basic-1/r/defs.ma Basic-1/T/defs.ma
+Basic-1/csubt/csuba.ma Basic-1/ty3/arity.ma
+Basic-2/ex2/props.mma Basic-1/ex2/props.ma Basic-2/arity/fwd.ma Basic-2/ex2/defs.ma Basic-2/nf2/defs.ma Basic-2/pr2/fwd.ma
+Basic-2/lift/tlt.mma Basic-1/lift/tlt.ma Basic-2/lift/fwd.ma Basic-2/tlt/props.ma
+Basic-2/getl/drop.ma Basic-2/getl/drop.mma
+Basic-1/tlist/props.ma Basic-1/tlist/defs.ma
+Basic-1/A/defs.ma Basic-1/preamble.ma
+Basic-1/clear/props.ma Basic-1/clear/fwd.ma
+Basic-2/tlist/defs.mma Basic-2/T/defs.ma
+Basic-1/T/dec.ma Basic-1/T/defs.ma
+Basic-1/app/defs.ma Basic-1/C/defs.ma
+Basic-2/pr3/pr3.ma Basic-2/pr3/pr3.mma
+Basic-2/csubc/getl.ma Basic-2/csubc/getl.mma
+Basic-1/pr2/fwd.ma Basic-1/getl/clear.ma Basic-1/getl/drop.ma Basic-1/pr0/fwd.ma Basic-1/pr2/defs.ma
+Basic-1/sn3/nf2.ma Basic-1/nf2/dec.ma Basic-1/nf2/pr3.ma Basic-1/sn3/defs.ma
+Basic-2/csubt/fwd.ma Basic-2/csubt/fwd.mma
+Basic-2/subst0/defs.mma Basic-2/lift/defs.ma
+Basic-2/clear/defs.mma Basic-2/C/defs.ma
+Basic-2/G/defs.mma Basic-2/preamble.ma
+Basic-2/csubst1/defs.mma Basic-2/csubst0/defs.ma
+Basic-1/ty3/nf2.ma Basic-1/nf2/arity.ma Basic-1/pc3/nf2.ma Basic-1/ty3/arity.ma
+Basic-2/csubst0/defs.ma Basic-2/csubst0/defs.mma
+Basic-1/csuba/fwd.ma Basic-1/csuba/defs.ma
+Legacy-1/coq/props.ma Legacy-1/coq/defs.ma
+Basic-2/sty1/defs.mma Basic-2/sty0/defs.ma
+Basic-1/subst0/subst0.ma Basic-1/subst0/props.ma
+Basic-1/arity/props.ma Basic-1/arity/fwd.ma
+Basic-2/csubst1/fwd.ma Basic-2/csubst1/fwd.mma
+Basic-2/csubv/getl.mma Basic-1/csubv/getl.ma Basic-2/csubv/clear.ma Basic-2/csubv/drop.ma Basic-2/getl/fwd.ma
+Legacy-1/spare.ma Legacy-1/theory.ma
+Basic-2/sc3/arity.mma Basic-1/sc3/arity.ma Basic-2/csubc/arity.ma Basic-2/csubc/drop1.ma Basic-2/csubc/getl.ma Basic-2/csubc/props.ma
+Basic-1/subst0/fwd.ma Basic-1/lift/props.ma Basic-1/subst0/defs.ma
+Basic-1/pc3/nf2.ma Basic-1/nf2/pr3.ma Basic-1/pc3/defs.ma
+Basic-2/csubt/pc3.mma Basic-1/csubt/pc3.ma Basic-2/csubt/getl.ma Basic-2/pc3/left.ma
+Basic-1/sn3/props.ma Basic-1/nf2/iso.ma Basic-1/pr3/iso.ma Basic-1/sn3/fwd.ma Basic-1/sn3/nf2.ma
+Ground-2/blt/props.ma Ground-2/blt/props.mma
+Basic-1/aplus/props.ma Basic-1/aplus/defs.ma Basic-1/next_plus/props.ma
+Basic-2/pc3/left.ma Basic-2/pc3/left.mma
+Basic-2/csubst0/defs.mma Basic-2/C/defs.ma Basic-2/subst0/defs.ma
+Basic-2/sty0/defs.mma Basic-2/G/defs.ma Basic-2/getl/defs.ma
+Basic-2/aprem/props.ma Basic-2/aprem/props.mma
+Basic-2/arity/defs.mma Basic-2/getl/defs.ma Basic-2/leq/defs.ma
+Basic-2/aplus/defs.mma Basic-2/asucc/defs.ma
+Basic-2/llt/defs.mma Basic-2/A/defs.ma
+Basic-2/csubc/arity.ma Basic-2/csubc/arity.mma
+Ground-2/types/defs.ma Ground-2/types/defs.mma
+Basic-2/iso/fwd.mma Basic-1/iso/fwd.ma Basic-2/iso/defs.ma Basic-2/tlist/defs.ma
+Basic-1/T/props.ma Basic-1/T/defs.ma
+Basic-2/pc3/fwd.mma Basic-1/pc3/fwd.ma Basic-2/pc3/props.ma Basic-2/pr3/fwd.ma
+Basic-2/aprem/defs.ma Basic-2/aprem/defs.mma
+Basic-1/sty0/fwd.ma Basic-1/sty0/defs.ma
+Basic-2/subst0/dec.mma Basic-1/subst0/dec.ma Basic-2/lift/props.ma Basic-2/subst0/defs.ma
+Basic-2/pr3/subst1.mma Basic-1/pr3/subst1.ma Basic-2/pr2/subst1.ma Basic-2/pr3/defs.ma
+Basic-1/aplus/defs.ma Basic-1/asucc/defs.ma
+Basic-2/csubst0/props.mma Basic-1/csubst0/props.ma Basic-2/csubst0/defs.ma
+Basic-1/getl/getl.ma Basic-1/getl/clear.ma Basic-1/getl/drop.ma
+Basic-2/sty1/defs.ma Basic-2/sty1/defs.mma
+Basic-1/pr3/fwd.ma Basic-1/pr2/fwd.ma Basic-1/pr3/props.ma
+Basic-2/arity/defs.ma Basic-2/arity/defs.mma
+Basic-2/pr3/defs.mma Basic-2/pr2/defs.ma
+Basic-1/lift/props.ma Basic-1/lift/fwd.ma Basic-1/s/props.ma
+Basic-2/csubt/getl.mma Basic-1/csubt/getl.ma Basic-2/csubt/clear.ma Basic-2/csubt/drop.ma Basic-2/getl/clear.ma
+Basic-1/leq/props.ma Basic-1/aplus/props.ma Basic-1/leq/fwd.ma
+Basic-2/s/props.ma Basic-2/s/props.mma
+Basic-2/drop1/props.mma Basic-1/drop1/props.ma Basic-2/drop/props.ma Basic-2/drop1/fwd.ma Basic-2/getl/defs.ma
+Basic-2/arity/aprem.ma Basic-2/arity/aprem.mma
+Basic-1/sty0/defs.ma Basic-1/G/defs.ma Basic-1/getl/defs.ma
+Basic-2/getl/fwd.mma Basic-1/getl/fwd.ma Basic-2/clear/fwd.ma Basic-2/drop/fwd.ma Basic-2/getl/defs.ma
+Basic-1/subst1/fwd.ma Basic-1/subst0/props.ma Basic-1/subst1/defs.ma
+Basic-2/ty3/subst1.ma Basic-2/ty3/subst1.mma
+Basic-2/pr2/defs.mma Basic-2/getl/defs.ma Basic-2/pr0/defs.ma
+Ground-2/theory.ma Ground-2/blt/props.ma Ground-2/ext/arith.ma Ground-2/ext/tactics.ma Ground-2/plist/props.ma Ground-2/types/props.ma
+Basic-1/preamble.ma Ground-1/theory.ma
+Basic-2/csuba/arity.ma Basic-2/csuba/arity.mma
+Basic-1/cimp/defs.ma Basic-1/getl/defs.ma
+Basic-2/nf2/lift1.mma Basic-1/nf2/lift1.ma Basic-2/drop1/fwd.ma Basic-2/nf2/props.ma
+Basic-1/ex2/defs.ma Basic-1/C/defs.ma
+Basic-2/r/props.ma Basic-2/r/props.mma
+Basic-1/csubst0/defs.ma Basic-1/C/defs.ma Basic-1/subst0/defs.ma
+Basic-2/ty3/arity.ma Basic-2/ty3/arity.mma
+Basic-2/sty1/cnt.mma Basic-1/sty1/cnt.ma Basic-2/cnt/props.ma Basic-2/sty1/props.ma
+Basic-2/csubv/clear.ma Basic-2/csubv/clear.mma
+Basic-2/fsubst0/defs.ma Basic-2/fsubst0/defs.mma
+Basic-2/C/defs.mma Basic-2/T/defs.ma
+Basic-2/csubc/props.ma Basic-2/csubc/props.mma
+Basic-2/cnt/defs.ma Basic-2/cnt/defs.mma
+Basic-2/arity/fwd.ma Basic-2/arity/fwd.mma
+Basic-2/pr1/defs.mma Basic-2/pr0/defs.ma
+Basic-1/clen/defs.ma Basic-1/C/defs.ma Basic-1/s/defs.ma
+Basic-2/arity/subst0.mma Basic-1/arity/subst0.ma Basic-2/arity/props.ma Basic-2/csubst0/getl.ma Basic-2/fsubst0/fwd.ma Basic-2/getl/getl.ma Basic-2/subst0/dec.ma Basic-2/subst0/fwd.ma

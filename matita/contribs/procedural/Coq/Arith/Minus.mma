@@ -1,0 +1,126 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Minus.v,v 1.14.2.1 2004/07/16 19:31:00 herbelin Exp $ i*)
+
+(*#* Subtraction (difference between two natural numbers) *)
+
+include "Arith/Lt.ma".
+
+include "Arith/Le.ma".
+
+(* UNEXPORTED
+Open Local Scope nat_scope.
+*)
+
+(* UNEXPORTED
+Implicit Types m n p : nat.
+*)
+
+(*#* 0 is right neutral *)
+
+inline procedural "cic:/Coq/Arith/Minus/minus_n_O.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve minus_n_O: arith v62.
+*)
+
+(*#* Permutation with successor *)
+
+inline procedural "cic:/Coq/Arith/Minus/minus_Sn_m.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve minus_Sn_m: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/Minus/pred_of_minus.con" as theorem.
+
+(*#* Diagonal *)
+
+inline procedural "cic:/Coq/Arith/Minus/minus_n_n.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve minus_n_n: arith v62.
+*)
+
+(*#* Simplification *)
+
+inline procedural "cic:/Coq/Arith/Minus/minus_plus_simpl_l_reverse.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve minus_plus_simpl_l_reverse: arith v62.
+*)
+
+(*#* Relation with plus *)
+
+inline procedural "cic:/Coq/Arith/Minus/plus_minus.con" as lemma.
+
+(* UNEXPORTED
+Hint Immediate plus_minus: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/Minus/minus_plus.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve minus_plus: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/Minus/le_plus_minus.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve le_plus_minus: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/Minus/le_plus_minus_r.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve le_plus_minus_r: arith v62.
+*)
+
+(*#* Relation with order *)
+
+inline procedural "cic:/Coq/Arith/Minus/le_minus.con" as theorem.
+
+inline procedural "cic:/Coq/Arith/Minus/lt_minus.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve lt_minus: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/Minus/lt_O_minus_lt.con" as lemma.
+
+(* UNEXPORTED
+Hint Immediate lt_O_minus_lt: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/Minus/not_le_minus_0.con" as theorem.
+

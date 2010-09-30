@@ -1,0 +1,186 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Rpower.v,v 1.17.2.1 2004/07/16 19:31:13 herbelin Exp $ i*)
+
+(*i Due to L.Thery i*)
+
+(*#***********************************************************)
+
+(* Definitions of log and Rpower : R->R->R; main properties *)
+
+(*#***********************************************************)
+
+include "Reals/Rbase.ma".
+
+include "Reals/Rfunctions.ma".
+
+include "Reals/SeqSeries.ma".
+
+include "Reals/Rtrigo.ma".
+
+include "Reals/Ranalysis1.ma".
+
+include "Reals/Exp_prop.ma".
+
+include "Reals/Rsqrt_def.ma".
+
+include "Reals/R_sqrt.ma".
+
+include "Reals/MVT.ma".
+
+include "Reals/Ranalysis4.ma".
+
+(* UNEXPORTED
+Open Local Scope R_scope.
+*)
+
+inline procedural "cic:/Coq/Reals/Rpower/P_Rmin.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rpower/exp_le_3.con" as lemma.
+
+(*#*****************************************************************)
+
+(*                        Properties of  Exp                      *)
+
+(*#*****************************************************************)
+
+inline procedural "cic:/Coq/Reals/Rpower/exp_increasing.con" as theorem.
+
+inline procedural "cic:/Coq/Reals/Rpower/exp_lt_inv.con" as theorem.
+
+inline procedural "cic:/Coq/Reals/Rpower/exp_ineq1.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rpower/ln_exists1.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Rpower/ln_exists.con" as lemma.
+
+(* Definition of log R+* -> R *)
+
+inline procedural "cic:/Coq/Reals/Rpower/Rln.con" as definition.
+
+(* Extension on R *)
+
+inline procedural "cic:/Coq/Reals/Rpower/ln.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Rpower/exp_ln.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rpower/exp_inv.con" as theorem.
+
+inline procedural "cic:/Coq/Reals/Rpower/exp_Ropp.con" as theorem.
+
+(*#*****************************************************************)
+
+(*                        Properties of  Ln                       *)
+
+(*#*****************************************************************)
+
+inline procedural "cic:/Coq/Reals/Rpower/ln_increasing.con" as theorem.
+
+inline procedural "cic:/Coq/Reals/Rpower/ln_exp.con" as theorem.
+
+inline procedural "cic:/Coq/Reals/Rpower/ln_1.con" as theorem.
+
+inline procedural "cic:/Coq/Reals/Rpower/ln_lt_inv.con" as theorem.
+
+inline procedural "cic:/Coq/Reals/Rpower/ln_inv.con" as theorem.
+
+inline procedural "cic:/Coq/Reals/Rpower/ln_mult.con" as theorem.
+
+inline procedural "cic:/Coq/Reals/Rpower/ln_Rinv.con" as theorem.
+
+inline procedural "cic:/Coq/Reals/Rpower/ln_continue.con" as theorem.
+
+(*#*****************************************************************)
+
+(*                        Definition of  Rpower                   *)
+
+(*#*****************************************************************)
+
+inline procedural "cic:/Coq/Reals/Rpower/Rpower.con" as definition.
+
+(* NOTATION
+Infix Local "^R" := Rpower (at level 30, right associativity) : R_scope.
+*)
+
+(*#*****************************************************************)
+
+(*                        Properties of  Rpower                   *)
+
+(*#*****************************************************************)
+
+inline procedural "cic:/Coq/Reals/Rpower/Rpower_plus.con" as theorem.
+
+inline procedural "cic:/Coq/Reals/Rpower/Rpower_mult.con" as theorem.
+
+inline procedural "cic:/Coq/Reals/Rpower/Rpower_O.con" as theorem.
+
+inline procedural "cic:/Coq/Reals/Rpower/Rpower_1.con" as theorem.
+
+inline procedural "cic:/Coq/Reals/Rpower/Rpower_pow.con" as theorem.
+
+inline procedural "cic:/Coq/Reals/Rpower/Rpower_lt.con" as theorem.
+
+inline procedural "cic:/Coq/Reals/Rpower/Rpower_sqrt.con" as theorem.
+
+inline procedural "cic:/Coq/Reals/Rpower/Rpower_Ropp.con" as theorem.
+
+inline procedural "cic:/Coq/Reals/Rpower/Rle_Rpower.con" as theorem.
+
+inline procedural "cic:/Coq/Reals/Rpower/ln_lt_2.con" as theorem.
+
+(*#*************************************)
+
+(* Differentiability of Ln and Rpower *)
+
+(*#*************************************)
+
+inline procedural "cic:/Coq/Reals/Rpower/limit1_ext.con" as theorem.
+
+inline procedural "cic:/Coq/Reals/Rpower/limit1_imp.con" as theorem.
+
+inline procedural "cic:/Coq/Reals/Rpower/Rinv_Rdiv.con" as theorem.
+
+inline procedural "cic:/Coq/Reals/Rpower/Dln.con" as theorem.
+
+inline procedural "cic:/Coq/Reals/Rpower/derivable_pt_lim_ln.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rpower/D_in_imp.con" as theorem.
+
+inline procedural "cic:/Coq/Reals/Rpower/D_in_ext.con" as theorem.
+
+inline procedural "cic:/Coq/Reals/Rpower/Dpower.con" as theorem.
+
+inline procedural "cic:/Coq/Reals/Rpower/derivable_pt_lim_power.con" as theorem.
+

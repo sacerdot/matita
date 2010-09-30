@@ -1,0 +1,163 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+include "Init/Prelude.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Berardi.v,v 1.5.2.2 2004/08/03 17:42:43 herbelin Exp $ i*)
+
+(*#* This file formalizes Berardi's paradox which says that in
+   the calculus of constructions, excluded middle (EM) and axiom of
+   choice (AC) imply proof irrelevance (PI).
+   Here, the axiom of choice is not necessary because of the use
+   of inductive types.
+<<
+@article{Barbanera-Berardi:JFP96,
+   author    = {F. Barbanera and S. Berardi},
+   title     = {Proof-irrelevance out of Excluded-middle and Choice
+                in the Calculus of Constructions},
+   journal   = {Journal of Functional Programming},
+   year      = {1996},
+   volume    = {6},
+   number    = {3},
+   pages     = {519-525}
+}
+>> *)
+
+(* UNEXPORTED
+Set Implicit Arguments.
+*)
+
+(* UNEXPORTED
+Section Berardis_paradox
+*)
+
+(*#* Excluded middle *)
+
+(* UNEXPORTED
+cic:/Coq/Logic/Berardi/Berardis_paradox/EM.var
+*)
+
+(*#* Conditional on any proposition. *)
+
+inline procedural "cic:/Coq/Logic/Berardi/IFProp.con" as definition.
+
+(*#* Axiom of choice applied to disjunction.
+    Provable in Coq because of dependent elimination. *)
+
+inline procedural "cic:/Coq/Logic/Berardi/AC_IF.con" as lemma.
+
+(*#* We assume a type with two elements. They play the role of booleans.
+    The main theorem under the current assumptions is that [T=F] *)
+
+(* UNEXPORTED
+cic:/Coq/Logic/Berardi/Berardis_paradox/Bool.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Logic/Berardi/Berardis_paradox/T.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Logic/Berardi/Berardis_paradox/F.var
+*)
+
+(*#* The powerset operator *)
+
+inline procedural "cic:/Coq/Logic/Berardi/pow.con" as definition.
+
+(*#* A piece of theory about retracts *)
+
+(* UNEXPORTED
+Section Retracts
+*)
+
+(* UNEXPORTED
+cic:/Coq/Logic/Berardi/Berardis_paradox/Retracts/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Logic/Berardi/Berardis_paradox/Retracts/B.var
+*)
+
+inline procedural "cic:/Coq/Logic/Berardi/retract.ind".
+
+inline procedural "cic:/Coq/Logic/Berardi/retract_cond.ind".
+
+(*#* The dependent elimination above implies the axiom of choice: *)
+
+inline procedural "cic:/Coq/Logic/Berardi/AC.con" as lemma.
+
+(* UNEXPORTED
+End Retracts
+*)
+
+(*#* This lemma is basically a commutation of implication and existential
+    quantification:  (EX x | A -> P(x))  <=> (A -> EX x | P(x))
+    which is provable in classical logic ( => is already provable in
+    intuitionnistic logic). *)
+
+inline procedural "cic:/Coq/Logic/Berardi/L1.con" as lemma.
+
+(*#* The paradoxical set *)
+
+inline procedural "cic:/Coq/Logic/Berardi/U.con" as definition.
+
+(*#* Bijection between [U] and [(pow U)] *)
+
+inline procedural "cic:/Coq/Logic/Berardi/f.con" as definition.
+
+inline procedural "cic:/Coq/Logic/Berardi/g.con" as definition.
+
+(*#* We deduce that the powerset of [U] is a retract of [U].
+    This lemma is stated in Berardi's article, but is not used
+    afterwards. *)
+
+inline procedural "cic:/Coq/Logic/Berardi/retract_pow_U_U.con" as lemma.
+
+(*#* Encoding of Russel's paradox *)
+
+(*#* The boolean negation. *)
+
+inline procedural "cic:/Coq/Logic/Berardi/Not_b.con" as definition.
+
+(*#* the set of elements not belonging to itself *)
+
+inline procedural "cic:/Coq/Logic/Berardi/R.con" as definition.
+
+inline procedural "cic:/Coq/Logic/Berardi/not_has_fixpoint.con" as lemma.
+
+inline procedural "cic:/Coq/Logic/Berardi/classical_proof_irrelevence.con" as theorem.
+
+(* UNEXPORTED
+End Berardis_paradox
+*)
+

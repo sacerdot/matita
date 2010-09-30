@@ -1,0 +1,223 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Zpower.v,v 1.11.2.1 2004/07/16 19:31:22 herbelin Exp $ i*)
+
+include "ZArith/ZArith_base.ma".
+
+include "ZArith/Zcomplements.ma".
+
+(* UNEXPORTED
+Open Local Scope Z_scope.
+*)
+
+(* UNEXPORTED
+Section section1
+*)
+
+(*#* [Zpower_nat z n] is the n-th power of [z] when [n] is an unary
+    integer (type [nat]) and [z] a signed integer (type [Z]) *)
+
+inline procedural "cic:/Coq/ZArith/Zpower/Zpower_nat.con" as definition.
+
+(*#* [Zpower_nat_is_exp] says [Zpower_nat] is a morphism for
+    [plus : nat->nat] and [Zmult : Z->Z] *)
+
+inline procedural "cic:/Coq/ZArith/Zpower/Zpower_nat_is_exp.con" as lemma.
+
+(*#* [Zpower_pos z n] is the n-th power of [z] when [n] is an binary
+    integer (type [positive]) and [z] a signed integer (type [Z]) *)
+
+inline procedural "cic:/Coq/ZArith/Zpower/Zpower_pos.con" as definition.
+
+(*#* This theorem shows that powers of unary and binary integers
+   are the same thing, modulo the function convert : [positive -> nat] *)
+
+inline procedural "cic:/Coq/ZArith/Zpower/Zpower_pos_nat.con" as theorem.
+
+(*#* Using the theorem [Zpower_pos_nat] and the lemma [Zpower_nat_is_exp] we
+   deduce that the function [[n:positive](Zpower_pos z n)] is a morphism
+   for [add : positive->positive] and [Zmult : Z->Z] *)
+
+inline procedural "cic:/Coq/ZArith/Zpower/Zpower_pos_is_exp.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/Zpower/Zpower.con" as definition.
+
+(* NOTATION
+Infix "^" := Zpower : Z_scope.
+*)
+
+(* UNEXPORTED
+Hint Immediate Zpower_nat_is_exp: zarith.
+*)
+
+(* UNEXPORTED
+Hint Immediate Zpower_pos_is_exp: zarith.
+*)
+
+(* UNEXPORTED
+Hint Unfold Zpower_pos: zarith.
+*)
+
+(* UNEXPORTED
+Hint Unfold Zpower_nat: zarith.
+*)
+
+inline procedural "cic:/Coq/ZArith/Zpower/Zpower_exp.con" as lemma.
+
+(* UNEXPORTED
+End section1
+*)
+
+(* Exporting notation "^" *)
+
+(* NOTATION
+Infix "^" := Zpower : Z_scope.
+*)
+
+(* UNEXPORTED
+Hint Immediate Zpower_nat_is_exp: zarith.
+*)
+
+(* UNEXPORTED
+Hint Immediate Zpower_pos_is_exp: zarith.
+*)
+
+(* UNEXPORTED
+Hint Unfold Zpower_pos: zarith.
+*)
+
+(* UNEXPORTED
+Hint Unfold Zpower_nat: zarith.
+*)
+
+(* UNEXPORTED
+Section Powers_of_2
+*)
+
+(*#* For the powers of two, that will be widely used, a more direct
+   calculus is possible. We will also prove some properties such
+   as [(x:positive) x < 2^x] that are true for all integers bigger
+   than 2 but more difficult to prove and useless. *)
+
+(*#* [shift n m] computes [2^n * m], or [m] shifted by [n] positions *)
+
+inline procedural "cic:/Coq/ZArith/Zpower/shift_nat.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/Zpower/shift_pos.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/Zpower/shift.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/Zpower/two_power_nat.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/Zpower/two_power_pos.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/Zpower/two_power_nat_S.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zpower/shift_nat_plus.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zpower/shift_nat_correct.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/Zpower/two_power_nat_correct.con" as theorem.
+
+(*#* Second we show that [two_power_pos] and [two_power_nat] are the same *)
+
+inline procedural "cic:/Coq/ZArith/Zpower/shift_pos_nat.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zpower/two_power_pos_nat.con" as lemma.
+
+(*#* Then we deduce that [two_power_pos] is also correct *)
+
+inline procedural "cic:/Coq/ZArith/Zpower/shift_pos_correct.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/Zpower/two_power_pos_correct.con" as theorem.
+
+(*#* Some consequences *)
+
+inline procedural "cic:/Coq/ZArith/Zpower/two_power_pos_is_exp.con" as theorem.
+
+(*#* The exponentiation [z -> 2^z] for [z] a signed integer. 
+    For convenience, we assume that [2^z = 0] for all [z < 0]
+    We could also define a inductive type [Log_result] with
+    3 contructors [ Zero | Pos positive -> | minus_infty]
+    but it's more complexe and not so useful. *)
+
+inline procedural "cic:/Coq/ZArith/Zpower/two_p.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/Zpower/two_p_is_exp.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/Zpower/two_p_gt_ZERO.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zpower/two_p_S.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zpower/two_p_pred.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zpower/Zlt_lt_double.con" as lemma.
+
+(* UNEXPORTED
+End Powers_of_2
+*)
+
+(* UNEXPORTED
+Hint Resolve two_p_gt_ZERO: zarith.
+*)
+
+(* UNEXPORTED
+Hint Immediate two_p_pred two_p_S: zarith.
+*)
+
+(* UNEXPORTED
+Section power_div_with_rest
+*)
+
+(*#* Division by a power of two.
+    To [n:Z] and [p:positive], [q],[r] are associated such that
+    [n = 2^p.q + r] and [0 <= r < 2^p] *)
+
+(*#* Invariant: [d*q + r = d'*q + r /\ d' = 2*d /\ 0<= r < d /\ 0 <= r' < d'] *)
+
+inline procedural "cic:/Coq/ZArith/Zpower/Zdiv_rest_aux.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/Zpower/Zdiv_rest.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/Zpower/Zdiv_rest_correct1.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zpower/Zdiv_rest_correct2.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zpower/Zdiv_rest_proofs.ind".
+
+inline procedural "cic:/Coq/ZArith/Zpower/Zdiv_rest_correct.con" as lemma.
+
+(* UNEXPORTED
+End power_div_with_rest
+*)
+

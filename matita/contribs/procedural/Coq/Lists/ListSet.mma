@@ -1,0 +1,192 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: ListSet.v,v 1.13.2.1 2004/07/16 19:31:05 herbelin Exp $ i*)
+
+(*#* A Library for finite sets, implemented as lists 
+    A Library with similar interface will soon be available under
+    the name TreeSet in the theories/Trees directory *)
+
+(*#* PolyList is loaded, but not exported.
+    This allow to "hide" the definitions, functions and theorems of PolyList
+    and to see only the ones of ListSet *)
+
+include "Lists/List.ma".
+
+(* UNEXPORTED
+Set Implicit Arguments.
+*)
+
+(* UNEXPORTED
+Section first_definitions
+*)
+
+(* UNEXPORTED
+cic:/Coq/Lists/ListSet/first_definitions/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Lists/ListSet/first_definitions/Aeq_dec.var
+*)
+
+inline procedural "cic:/Coq/Lists/ListSet/set.con" as definition.
+
+inline procedural "cic:/Coq/Lists/ListSet/empty_set.con" as definition.
+
+inline procedural "cic:/Coq/Lists/ListSet/set_add.con" as definition.
+
+inline procedural "cic:/Coq/Lists/ListSet/set_mem.con" as definition.
+
+(*#* If [a] belongs to [x], removes [a] from [x]. If not, does nothing *)
+
+inline procedural "cic:/Coq/Lists/ListSet/set_remove.con" as definition.
+
+inline procedural "cic:/Coq/Lists/ListSet/set_inter.con" as definition.
+
+inline procedural "cic:/Coq/Lists/ListSet/set_union.con" as definition.
+
+(*#* returns the set of all els of [x] that does not belong to [y] *)
+
+inline procedural "cic:/Coq/Lists/ListSet/set_diff.con" as definition.
+
+inline procedural "cic:/Coq/Lists/ListSet/set_In.con" as definition.
+
+inline procedural "cic:/Coq/Lists/ListSet/set_In_dec.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/ListSet/set_mem_ind.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/ListSet/set_mem_ind2.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/ListSet/set_mem_correct1.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/ListSet/set_mem_correct2.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/ListSet/set_mem_complete1.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/ListSet/set_mem_complete2.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/ListSet/set_add_intro1.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/ListSet/set_add_intro2.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve set_add_intro1 set_add_intro2.
+*)
+
+inline procedural "cic:/Coq/Lists/ListSet/set_add_intro.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/ListSet/set_add_elim.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/ListSet/set_add_elim2.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve set_add_intro set_add_elim set_add_elim2.
+*)
+
+inline procedural "cic:/Coq/Lists/ListSet/set_add_not_empty.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/ListSet/set_union_intro1.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/ListSet/set_union_intro2.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve set_union_intro2 set_union_intro1.
+*)
+
+inline procedural "cic:/Coq/Lists/ListSet/set_union_intro.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/ListSet/set_union_elim.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/ListSet/set_union_emptyL.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/ListSet/set_union_emptyR.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/ListSet/set_inter_intro.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/ListSet/set_inter_elim1.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/ListSet/set_inter_elim2.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve set_inter_elim1 set_inter_elim2.
+*)
+
+inline procedural "cic:/Coq/Lists/ListSet/set_inter_elim.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/ListSet/set_diff_intro.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/ListSet/set_diff_elim1.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/ListSet/set_diff_elim2.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/ListSet/set_diff_trivial.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve set_diff_intro set_diff_trivial.
+*)
+
+(* UNEXPORTED
+End first_definitions
+*)
+
+(* UNEXPORTED
+Section other_definitions
+*)
+
+(* UNEXPORTED
+cic:/Coq/Lists/ListSet/other_definitions/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Lists/ListSet/other_definitions/B.var
+*)
+
+inline procedural "cic:/Coq/Lists/ListSet/set_prod.con" as definition.
+
+(*#* [B^A], set of applications from [A] to [B] *)
+
+inline procedural "cic:/Coq/Lists/ListSet/set_power.con" as definition.
+
+inline procedural "cic:/Coq/Lists/ListSet/set_map.con" as definition.
+
+inline procedural "cic:/Coq/Lists/ListSet/set_fold_left.con" as definition.
+
+inline procedural "cic:/Coq/Lists/ListSet/set_fold_right.con" as definition.
+
+(* UNEXPORTED
+End other_definitions
+*)
+
+(* UNEXPORTED
+Unset Implicit Arguments.
+*)
+

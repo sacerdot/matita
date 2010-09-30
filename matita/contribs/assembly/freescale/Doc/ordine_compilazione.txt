@@ -1,0 +1,32 @@
+
+tutte le definizioni fanno capo a
+ cic:/matita/freescale/...
+
+extra.ma
+exadecim.ma
+byte8.ma
+word16.ma
+aux_bases.ma
+opcode.ma
+table_HC05.ma
+table_HC05_tests.ma
+table_HC08.ma
+table_HC08_tests.ma
+table_HCS08.ma
+table_HCS08_tests.ma
+table_RS08.ma
+table_RS08_tests.ma
+translation.ma
+memory_struct.ma
+memory_func.ma
+memory_trees.ma
+memory_bits.ma
+memory_abs.ma
+status.ma
+model.ma
+load_write.ma
+multivm.ma
+micro_tests.ma
+medium_tests_tools.ma
+medium_tests_lemmas.ma
+medium_tests.ma

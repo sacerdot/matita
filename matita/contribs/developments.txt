@@ -1,0 +1,14 @@
+Root directories of current matita developments 
+
+software/matita/legacy
+software/matita/library
+software/matita/library_auto
+software/matita/tests
+software/matita/dama
+software/matita/contribs/PREDICATIVE-TOPOLOGY
+software/matita/contribs/RELATIONAL
+software/matita/contribs/LOGIC
+software/matita/contribs/LAMBDA-TYPES/Unified-Sub
+software/matita/contribs/LAMBDA-TYPES/Base-1
+software/matita/contribs/LAMBDA-TYPES/LambdaDelta-1
+software/matita/contribs/LAMBDA-TYPES/Base-2

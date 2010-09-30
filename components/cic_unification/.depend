@@ -1,0 +1,23 @@
+cicMetaSubst.cmi: 
+cicMkImplicit.cmi: 
+termUtil.cmi: 
+coercGraph.cmi: 
+cicUnification.cmi: 
+cicReplace.cmi: 
+cicRefine.cmi: 
+cicMetaSubst.cmo: cicMetaSubst.cmi 
+cicMetaSubst.cmx: cicMetaSubst.cmi 
+cicMkImplicit.cmo: cicMkImplicit.cmi 
+cicMkImplicit.cmx: cicMkImplicit.cmi 
+termUtil.cmo: cicMkImplicit.cmi termUtil.cmi 
+termUtil.cmx: cicMkImplicit.cmx termUtil.cmi 
+coercGraph.cmo: termUtil.cmi cicMkImplicit.cmi coercGraph.cmi 
+coercGraph.cmx: termUtil.cmx cicMkImplicit.cmx coercGraph.cmi 
+cicUnification.cmo: coercGraph.cmi cicMetaSubst.cmi cicUnification.cmi 
+cicUnification.cmx: coercGraph.cmx cicMetaSubst.cmx cicUnification.cmi 
+cicReplace.cmo: cicReplace.cmi 
+cicReplace.cmx: cicReplace.cmi 
+cicRefine.cmo: coercGraph.cmi cicUnification.cmi cicReplace.cmi \
+    cicMkImplicit.cmi cicMetaSubst.cmi cicRefine.cmi 
+cicRefine.cmx: coercGraph.cmx cicUnification.cmx cicReplace.cmx \
+    cicMkImplicit.cmx cicMetaSubst.cmx cicRefine.cmi 

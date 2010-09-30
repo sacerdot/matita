@@ -1,0 +1,164 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i 	$Id: Fset.v,v 1.5.2.1 2004/07/16 19:31:04 herbelin Exp $	 i*)
+
+(*s Sets operations on maps *)
+
+include "Bool/Bool.ma".
+
+include "Bool/Sumbool.ma".
+
+include "ZArith/ZArith.ma".
+
+include "IntMap/Addr.ma".
+
+include "IntMap/Adist.ma".
+
+include "IntMap/Addec.ma".
+
+include "IntMap/Map.ma".
+
+(* UNEXPORTED
+Section Dom
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Fset/Dom/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Fset/Dom/B.var
+*)
+
+inline procedural "cic:/Coq/IntMap/Fset/MapDomRestrTo.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Fset/MapDomRestrTo_semantics.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Fset/MapDomRestrBy.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Fset/MapDomRestrBy_semantics.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Fset/in_dom.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Fset/in_dom_M0.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Fset/in_dom_M1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Fset/in_dom_M1_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Fset/in_dom_M1_2.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Fset/in_dom_some.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Fset/in_dom_none.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Fset/in_dom_put.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Fset/in_dom_put_behind.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Fset/in_dom_remove.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Fset/in_dom_merge.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Fset/in_dom_delta.con" as lemma.
+
+(* UNEXPORTED
+End Dom
+*)
+
+(* UNEXPORTED
+Section InDom
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Fset/InDom/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Fset/InDom/B.var
+*)
+
+inline procedural "cic:/Coq/IntMap/Fset/in_dom_restrto.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Fset/in_dom_restrby.con" as lemma.
+
+(* UNEXPORTED
+End InDom
+*)
+
+inline procedural "cic:/Coq/IntMap/Fset/FSet.con" as definition.
+
+(* UNEXPORTED
+Section FSetDefs
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Fset/FSetDefs/A.var
+*)
+
+inline procedural "cic:/Coq/IntMap/Fset/in_FSet.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Fset/MapDom.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Fset/MapDom_semantics_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Fset/MapDom_semantics_2.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Fset/MapDom_semantics_3.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Fset/MapDom_semantics_4.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Fset/MapDom_Dom.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Fset/FSetUnion.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Fset/in_FSet_union.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Fset/FSetInter.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Fset/in_FSet_inter.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Fset/FSetDiff.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Fset/in_FSet_diff.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Fset/FSetDelta.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Fset/in_FSet_delta.con" as lemma.
+
+(* UNEXPORTED
+End FSetDefs
+*)
+
+inline procedural "cic:/Coq/IntMap/Fset/FSet_Dom.con" as lemma.
+

@@ -1,0 +1,152 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Rseries.v,v 1.11.2.1 2004/07/16 19:31:13 herbelin Exp $ i*)
+
+include "Reals/Rbase.ma".
+
+include "Reals/Rfunctions.ma".
+
+include "Logic/Classical.ma".
+
+include "Arith/Compare.ma".
+
+(* UNEXPORTED
+Open Local Scope R_scope.
+*)
+
+(* UNEXPORTED
+Implicit Type r : R.
+*)
+
+(* classical is needed for [Un_cv_crit] *)
+
+(*#********************************************************)
+
+(*           Definition of sequence and properties       *)
+
+(*                                                       *)
+
+(*#********************************************************)
+
+(* UNEXPORTED
+Section sequence
+*)
+
+(*#********)
+
+(* UNEXPORTED
+cic:/Coq/Reals/Rseries/sequence/Un.var
+*)
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rseries/Rmax_N.con" as definition.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rseries/EUn.con" as definition.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rseries/Un_cv.con" as definition.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rseries/Cauchy_crit.con" as definition.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rseries/Un_growing.con" as definition.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rseries/EUn_noempty.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rseries/Un_in_EUn.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rseries/Un_bound_imp.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rseries/growing_prop.con" as lemma.
+
+(* classical is needed: [not_all_not_ex] *)
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rseries/Un_cv_crit.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rseries/finite_greater.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rseries/cauchy_bound.con" as lemma.
+
+(* UNEXPORTED
+End sequence
+*)
+
+(*#****************************************************************)
+
+(*           Definition of Power Series and properties           *)
+
+(*                                                               *)
+
+(*#****************************************************************)
+
+(* UNEXPORTED
+Section Isequence
+*)
+
+(*#********)
+
+(* UNEXPORTED
+cic:/Coq/Reals/Rseries/Isequence/An.var
+*)
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rseries/Pser.con" as definition.
+
+(* UNEXPORTED
+End Isequence
+*)
+
+inline procedural "cic:/Coq/Reals/Rseries/GP_infinite.con" as lemma.
+

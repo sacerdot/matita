@@ -1,0 +1,80 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i 	$Id: Addec.v,v 1.7.2.1 2004/07/16 19:31:04 herbelin Exp $	 i*)
+
+(*#* Equality on adresses *)
+
+include "Bool/Bool.ma".
+
+include "Bool/Sumbool.ma".
+
+include "ZArith/ZArith.ma".
+
+include "IntMap/Addr.ma".
+
+inline procedural "cic:/Coq/IntMap/Addec/ad_eq_1.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Addec/ad_eq.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Addec/ad_eq_correct.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addec/ad_eq_complete.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addec/ad_eq_comm.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addec/ad_xor_eq_true.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addec/ad_xor_eq_false.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addec/ad_bit_0_1_not_double.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addec/ad_not_div_2_not_double.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addec/ad_bit_0_0_not_double_plus_un.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addec/ad_not_div_2_not_double_plus_un.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addec/ad_bit_0_neq.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addec/ad_div_eq.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addec/ad_div_neq.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addec/ad_div_bit_eq.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addec/ad_div_bit_neq.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addec/ad_neq.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addec/ad_double_or_double_plus_un.con" as lemma.
+

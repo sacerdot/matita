@@ -1,0 +1,131 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*#***************************************************************************)
+
+(*                                                                          *)
+
+(*                         Naive Set Theory in Coq                          *)
+
+(*                                                                          *)
+
+(*                     INRIA                        INRIA                   *)
+
+(*              Rocquencourt                        Sophia-Antipolis        *)
+
+(*                                                                          *)
+
+(*                                 Coq V6.1                                 *)
+
+(*									    *)
+
+(*			         Gilles Kahn 				    *)
+
+(*				 Gerard Huet				    *)
+
+(*									    *)
+
+(*									    *)
+
+(*                                                                          *)
+
+(* Acknowledgments: This work was started in July 1993 by F. Prost. Thanks  *)
+
+(* to the Newton Institute for providing an exceptional work environment    *)
+
+(* in Summer 1995. Several developments by E. Ledinot were an inspiration.  *)
+
+(*#***************************************************************************)
+
+(*i $Id: Classical_sets.v,v 1.4.2.1 2004/07/16 19:31:17 herbelin Exp $ i*)
+
+include "Sets/Ensembles.ma".
+
+include "Sets/Constructive_sets.ma".
+
+include "Logic/Classical_Type.ma".
+
+(* Hints Unfold  not . *)
+
+(* UNEXPORTED
+Section Ensembles_classical
+*)
+
+(* UNEXPORTED
+cic:/Coq/Sets/Classical_sets/Ensembles_classical/U.var
+*)
+
+inline procedural "cic:/Coq/Sets/Classical_sets/not_included_empty_Inhabited.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve not_included_empty_Inhabited.
+*)
+
+inline procedural "cic:/Coq/Sets/Classical_sets/not_empty_Inhabited.con" as lemma.
+
+inline procedural "cic:/Coq/Sets/Classical_sets/Inhabited_Setminus.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Inhabited_Setminus.
+*)
+
+inline procedural "cic:/Coq/Sets/Classical_sets/Strict_super_set_contains_new_element.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Strict_super_set_contains_new_element.
+*)
+
+inline procedural "cic:/Coq/Sets/Classical_sets/Subtract_intro.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Subtract_intro.
+*)
+
+inline procedural "cic:/Coq/Sets/Classical_sets/Subtract_inv.con" as lemma.
+
+inline procedural "cic:/Coq/Sets/Classical_sets/Included_Strict_Included.con" as lemma.
+
+inline procedural "cic:/Coq/Sets/Classical_sets/Strict_Included_inv.con" as lemma.
+
+inline procedural "cic:/Coq/Sets/Classical_sets/not_SIncl_empty.con" as lemma.
+
+inline procedural "cic:/Coq/Sets/Classical_sets/Complement_Complement.con" as lemma.
+
+(* UNEXPORTED
+End Ensembles_classical
+*)
+
+(* UNEXPORTED
+Hint Resolve Strict_super_set_contains_new_element Subtract_intro
+  not_SIncl_empty: sets v62.
+*)
+

@@ -1,0 +1,7 @@
+requires="helm-cic helm-logger helm-getter"
+version="0.0.1"
+archive(byte)="cic_proof_checking.cma"
+archive(native)="cic_proof_checking.cmxa"
+archive(byte,miniReduction)="cicSubstitution.cmo cicMiniReduction.cmo"
+archive(native,miniReduction)="cicSubstitution.cmx cicMiniReduction.cmx"
+linkopts=""

@@ -1,0 +1,371 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+include "Init/Prelude.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Bool.v,v 1.29.2.1 2004/07/16 19:31:01 herbelin Exp $ i*)
+
+(*#* Booleans  *)
+
+(*#* The type [bool] is defined in the prelude as
+    [Inductive bool : Set := true : bool | false : bool] *)
+
+(*#* Interpretation of booleans as Proposition *)
+
+inline procedural "cic:/Coq/Bool/Bool/Is_true.con" as definition.
+
+(* UNEXPORTED
+Hint Unfold Is_true: bool.
+*)
+
+inline procedural "cic:/Coq/Bool/Bool/Is_true_eq_left.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/Bool/Is_true_eq_right.con" as lemma.
+
+(* UNEXPORTED
+Hint Immediate Is_true_eq_right Is_true_eq_left: bool.
+*)
+
+(*#******************)
+
+(*#* Discrimination *)
+
+(*#******************)
+
+inline procedural "cic:/Coq/Bool/Bool/diff_true_false.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve diff_true_false: bool v62.
+*)
+
+inline procedural "cic:/Coq/Bool/Bool/diff_false_true.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve diff_false_true: bool v62.
+*)
+
+inline procedural "cic:/Coq/Bool/Bool/eq_true_false_abs.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve eq_true_false_abs: bool.
+*)
+
+inline procedural "cic:/Coq/Bool/Bool/not_true_is_false.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/Bool/not_false_is_true.con" as lemma.
+
+(*#*********************)
+
+(*#* Order on booleans *)
+
+(*#*********************)
+
+inline procedural "cic:/Coq/Bool/Bool/leb.con" as definition.
+
+(* UNEXPORTED
+Hint Unfold leb: bool v62.
+*)
+
+(*#************)
+
+(*#* Equality *)
+
+(*#************)
+
+inline procedural "cic:/Coq/Bool/Bool/eqb.con" as definition.
+
+inline procedural "cic:/Coq/Bool/Bool/eqb_refl.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/Bool/eqb_eq.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/Bool/Is_true_eq_true.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/Bool/Is_true_eq_true2.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/Bool/eqb_subst.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/Bool/eqb_reflx.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/Bool/eqb_prop.con" as lemma.
+
+(*#***********************)
+
+(*#* Logical combinators *)
+
+(*#***********************)
+
+inline procedural "cic:/Coq/Bool/Bool/ifb.con" as definition.
+
+inline procedural "cic:/Coq/Bool/Bool/andb.con" as definition.
+
+inline procedural "cic:/Coq/Bool/Bool/orb.con" as definition.
+
+inline procedural "cic:/Coq/Bool/Bool/implb.con" as definition.
+
+inline procedural "cic:/Coq/Bool/Bool/xorb.con" as definition.
+
+inline procedural "cic:/Coq/Bool/Bool/negb.con" as definition.
+
+(* NOTATION
+Infix "||" := orb (at level 50, left associativity) : bool_scope.
+*)
+
+(* NOTATION
+Infix "&&" := andb (at level 40, left associativity) : bool_scope.
+*)
+
+(* UNEXPORTED
+Open Scope bool_scope.
+*)
+
+(* UNEXPORTED
+Delimit Scope bool_scope with bool.
+*)
+
+(* UNEXPORTED
+Bind Scope bool_scope with bool.
+*)
+
+(*#*************************)
+
+(*#* Lemmas about [negb]   *)
+
+(*#*************************)
+
+inline procedural "cic:/Coq/Bool/Bool/negb_intro.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/Bool/negb_elim.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/Bool/negb_orb.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/Bool/negb_andb.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/Bool/negb_sym.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/Bool/no_fixpoint_negb.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/Bool/eqb_negb1.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/Bool/eqb_negb2.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/Bool/if_negb.con" as lemma.
+
+(*#***************************)
+
+(*#* A few lemmas about [or] *)
+
+(*#***************************)
+
+inline procedural "cic:/Coq/Bool/Bool/orb_prop.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/Bool/orb_prop2.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/Bool/orb_true_intro.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve orb_true_intro: bool v62.
+*)
+
+inline procedural "cic:/Coq/Bool/Bool/orb_b_true.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve orb_b_true: bool v62.
+*)
+
+inline procedural "cic:/Coq/Bool/Bool/orb_true_b.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/Bool/orb_true_elim.con" as definition.
+
+inline procedural "cic:/Coq/Bool/Bool/orb_false_intro.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve orb_false_intro: bool v62.
+*)
+
+inline procedural "cic:/Coq/Bool/Bool/orb_b_false.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve orb_b_false: bool v62.
+*)
+
+inline procedural "cic:/Coq/Bool/Bool/orb_false_b.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve orb_false_b: bool v62.
+*)
+
+inline procedural "cic:/Coq/Bool/Bool/orb_false_elim.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/Bool/orb_neg_b.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve orb_neg_b: bool v62.
+*)
+
+inline procedural "cic:/Coq/Bool/Bool/orb_comm.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/Bool/orb_assoc.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve orb_comm orb_assoc orb_b_false orb_false_b: bool v62.
+*)
+
+(*#****************************)
+
+(*#* A few lemmas about [and] *)
+
+(*#****************************)
+
+inline procedural "cic:/Coq/Bool/Bool/andb_prop.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve andb_prop: bool v62.
+*)
+
+inline procedural "cic:/Coq/Bool/Bool/andb_true_eq.con" as definition.
+
+inline procedural "cic:/Coq/Bool/Bool/andb_prop2.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve andb_prop2: bool v62.
+*)
+
+inline procedural "cic:/Coq/Bool/Bool/andb_true_intro.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve andb_true_intro: bool v62.
+*)
+
+inline procedural "cic:/Coq/Bool/Bool/andb_true_intro2.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve andb_true_intro2: bool v62.
+*)
+
+inline procedural "cic:/Coq/Bool/Bool/andb_false_intro1.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/Bool/andb_false_intro2.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/Bool/andb_b_false.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/Bool/andb_false_b.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/Bool/andb_b_true.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/Bool/andb_true_b.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/Bool/andb_false_elim.con" as definition.
+
+(* UNEXPORTED
+Hint Resolve andb_false_elim: bool v62.
+*)
+
+inline procedural "cic:/Coq/Bool/Bool/andb_neg_b.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve andb_neg_b: bool v62.
+*)
+
+inline procedural "cic:/Coq/Bool/Bool/andb_comm.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/Bool/andb_assoc.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve andb_comm andb_assoc: bool v62.
+*)
+
+(*#******************************)
+
+(*#* Properties of [xorb]       *)
+
+(*#******************************)
+
+inline procedural "cic:/Coq/Bool/Bool/xorb_false.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/Bool/false_xorb.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/Bool/xorb_true.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/Bool/true_xorb.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/Bool/xorb_nilpotent.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/Bool/xorb_comm.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/Bool/xorb_assoc.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/Bool/xorb_eq.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/Bool/xorb_move_l_r_1.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/Bool/xorb_move_l_r_2.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/Bool/xorb_move_r_l_1.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/Bool/xorb_move_r_l_2.con" as lemma.
+
+(*#******************************)
+
+(*#* De Morgan's law            *)
+
+(*#******************************)
+
+inline procedural "cic:/Coq/Bool/Bool/demorgan1.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/Bool/demorgan2.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/Bool/demorgan3.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/Bool/demorgan4.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/Bool/absoption_andb.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/Bool/absoption_orb.con" as lemma.
+
+(*#* Misc. equalities between booleans (to be used by Auto) *)
+
+inline procedural "cic:/Coq/Bool/Bool/bool_1.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/Bool/bool_2.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/Bool/bool_3.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/Bool/bool_4.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/Bool/bool_5.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/Bool/bool_6.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve bool_1 bool_2 bool_3 bool_4 bool_5 bool_6.
+*)
+

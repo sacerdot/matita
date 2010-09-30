@@ -1,0 +1,106 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+include "Init/Prelude.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*                              Hurkens.v                               *)
+
+(*#***********************************************************************)
+
+(*#* This is Hurkens paradox [Hurkens] in system U-, adapted by Herman
+    Geuvers [Geuvers] to show the inconsistency in the pure calculus of
+    constructions of a retract from Prop into a small type.
+
+    References:
+
+    - [Hurkens] A. J. Hurkens, "A simplification of Girard's paradox",
+      Proceedings of the 2nd international conference Typed Lambda-Calculi
+      and Applications (TLCA'95), 1995.
+
+    - [Geuvers] "Inconsistency of Classical Logic in Type Theory", 2001
+      (see www.cs.kun.nl/~herman/note.ps.gz).
+*)
+
+(* UNEXPORTED
+Section Paradox
+*)
+
+(* UNEXPORTED
+cic:/Coq/Logic/Hurkens/Paradox/bool.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Logic/Hurkens/Paradox/p2b.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Logic/Hurkens/Paradox/b2p.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Logic/Hurkens/Paradox/p2p1.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Logic/Hurkens/Paradox/p2p2.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Logic/Hurkens/Paradox/B.var
+*)
+
+inline procedural "cic:/Coq/Logic/Hurkens/V.con" as definition.
+
+inline procedural "cic:/Coq/Logic/Hurkens/U.con" as definition.
+
+inline procedural "cic:/Coq/Logic/Hurkens/sb.con" as definition.
+
+inline procedural "cic:/Coq/Logic/Hurkens/le.con" as definition.
+
+inline procedural "cic:/Coq/Logic/Hurkens/induct.con" as definition.
+
+inline procedural "cic:/Coq/Logic/Hurkens/WF.con" as definition.
+
+inline procedural "cic:/Coq/Logic/Hurkens/I.con" as definition.
+
+inline procedural "cic:/Coq/Logic/Hurkens/Omega.con" as lemma.
+
+inline procedural "cic:/Coq/Logic/Hurkens/lemma1.con" as lemma.
+
+inline procedural "cic:/Coq/Logic/Hurkens/lemma2.con" as lemma.
+
+inline procedural "cic:/Coq/Logic/Hurkens/paradox.con" as theorem.
+
+(* UNEXPORTED
+End Paradox
+*)
+

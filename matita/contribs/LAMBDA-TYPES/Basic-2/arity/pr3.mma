@@ -1,0 +1,30 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Basic-2/csuba/arity.ma".
+
+include "Basic-2/pr3/defs.ma".
+
+include "Basic-2/pr1/defs.ma".
+
+include "Basic-2/wcpr0/getl.ma".
+
+include "Basic-2/pr0/fwd.ma".
+
+include "Basic-2/arity/subst0.ma".
+
+inline "Basic-1/arity/pr3.ma" procedural.
+

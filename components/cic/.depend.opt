@@ -1,0 +1,32 @@
+cicUniv.cmi: 
+unshare.cmi: cic.cmx 
+deannotate.cmi: cic.cmx 
+cicParser.cmi: cic.cmx 
+cicUtil.cmi: cic.cmx 
+helmLibraryObjects.cmi: cic.cmx 
+libraryObjects.cmi: 
+cic_indexable.cmi: cic.cmx 
+path_indexing.cmi: cic.cmx 
+cicInspect.cmi: cic.cmx 
+cic.cmo: cicUniv.cmi 
+cic.cmx: cicUniv.cmx 
+cicUniv.cmo: cicUniv.cmi 
+cicUniv.cmx: cicUniv.cmi 
+unshare.cmo: cicUniv.cmi cic.cmx unshare.cmi 
+unshare.cmx: cicUniv.cmx cic.cmx unshare.cmi 
+deannotate.cmo: unshare.cmi cic.cmx deannotate.cmi 
+deannotate.cmx: unshare.cmx cic.cmx deannotate.cmi 
+cicParser.cmo: deannotate.cmi cicUniv.cmi cic.cmx cicParser.cmi 
+cicParser.cmx: deannotate.cmx cicUniv.cmx cic.cmx cicParser.cmi 
+cicUtil.cmo: cicUniv.cmi cic.cmx cicUtil.cmi 
+cicUtil.cmx: cicUniv.cmx cic.cmx cicUtil.cmi 
+helmLibraryObjects.cmo: cic.cmx helmLibraryObjects.cmi 
+helmLibraryObjects.cmx: cic.cmx helmLibraryObjects.cmi 
+libraryObjects.cmo: libraryObjects.cmi 
+libraryObjects.cmx: libraryObjects.cmi 
+cic_indexable.cmo: cicUtil.cmi cic.cmx cic_indexable.cmi 
+cic_indexable.cmx: cicUtil.cmx cic.cmx cic_indexable.cmi 
+path_indexing.cmo: cic.cmx path_indexing.cmi 
+path_indexing.cmx: cic.cmx path_indexing.cmi 
+cicInspect.cmo: cic.cmx cicInspect.cmi 
+cicInspect.cmx: cic.cmx cicInspect.cmi 

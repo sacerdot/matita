@@ -1,0 +1,308 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "CoRN.ma".
+
+(* $Id: TaylorSeries.v,v 1.7 2004/04/23 10:01:08 lcf Exp $ *)
+
+include "transc/PowerSeries.ma".
+
+include "ftc/Taylor.ma".
+
+(*#* *Taylor Series
+
+We now generalize our work on Taylor's theorem to define the Taylor
+series of an infinitely many times differentiable function as a power
+series.  We prove convergence (always) of the Taylor series and give
+criteria for when the sum of this series is the original function.
+
+**Definitions
+
+%\begin{convention}% Let [J] be a proper interval and [F] an
+infinitely many times differentiable function in [J].  Let [a] be a
+point of [J].
+%\end{convention}%
+*)
+
+(* UNEXPORTED
+Section Definitions
+*)
+
+(* UNEXPORTED
+cic:/CoRN/transc/TaylorSeries/Definitions/J.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/transc/TaylorSeries/Definitions/pJ.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/transc/TaylorSeries/Definitions/F.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/transc/TaylorSeries/Definitions/diffF.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/transc/TaylorSeries/Definitions/a.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/transc/TaylorSeries/Definitions/Ha.var
+*)
+
+inline procedural "cic:/CoRN/transc/TaylorSeries/Taylor_Series'.con" as definition.
+
+(*#*
+%\begin{convention}% Assume also that [f] is the sequence of
+derivatives of [F].
+%\end{convention}%
+*)
+
+(* UNEXPORTED
+cic:/CoRN/transc/TaylorSeries/Definitions/f.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/transc/TaylorSeries/Definitions/derF.var
+*)
+
+inline procedural "cic:/CoRN/transc/TaylorSeries/Taylor_Series.con" as definition.
+
+(* UNEXPORTED
+Opaque N_Deriv.
+*)
+
+(*#* Characterizations of the Taylor remainder. *)
+
+inline procedural "cic:/CoRN/transc/TaylorSeries/Taylor_Rem_char.con" as lemma.
+
+inline procedural "cic:/CoRN/transc/TaylorSeries/abs_Taylor_Rem_char.con" as lemma.
+
+(* UNEXPORTED
+End Definitions
+*)
+
+(* UNEXPORTED
+Section Convergence_in_IR
+*)
+
+(*#* **Convergence
+
+Our interval is now the real line.  We begin by proving some helpful
+continuity properties, then define a boundedness condition for the
+derivatives of [F] that guarantees convergence of its Taylor series to
+[F].
+*)
+
+(* UNEXPORTED
+cic:/CoRN/transc/TaylorSeries/Convergence_in_IR/H.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/transc/TaylorSeries/Convergence_in_IR/F.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/transc/TaylorSeries/Convergence_in_IR/a.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/transc/TaylorSeries/Convergence_in_IR/Ha.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/transc/TaylorSeries/Convergence_in_IR/f.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/transc/TaylorSeries/Convergence_in_IR/derF.var
+*)
+
+inline procedural "cic:/CoRN/transc/TaylorSeries/Taylor_Series_imp_cont.con" as lemma.
+
+inline procedural "cic:/CoRN/transc/TaylorSeries/Taylor_Series_lemma_cont.con" as lemma.
+
+inline procedural "cic:/CoRN/transc/TaylorSeries/Taylor_bnd.con" as definition.
+
+(* begin show *)
+
+(* UNEXPORTED
+cic:/CoRN/transc/TaylorSeries/Convergence_in_IR/bndf.var
+*)
+
+(* end show *)
+
+(* UNEXPORTED
+Opaque nexp_op fac.
+*)
+
+(* begin hide *)
+
+inline procedural "cic:/CoRN/transc/TaylorSeries/Convergence_in_IR/H1.con" "Convergence_in_IR__" as definition.
+
+(* UNEXPORTED
+Transparent nexp_op.
+*)
+
+inline procedural "cic:/CoRN/transc/TaylorSeries/Taylor_Series_conv_lemma1.con" as lemma.
+
+inline procedural "cic:/CoRN/transc/TaylorSeries/Taylor_Series_conv_lemma2.con" as lemma.
+
+(* end hide *)
+
+(*#* The Taylor series always converges on the realline. *)
+
+(* UNEXPORTED
+Transparent nexp_op.
+*)
+
+(* UNEXPORTED
+Opaque nexp_op.
+*)
+
+inline procedural "cic:/CoRN/transc/TaylorSeries/Taylor_Series_conv_IR.con" as lemma.
+
+(* begin hide *)
+
+(* UNEXPORTED
+Transparent nexp_op.
+*)
+
+inline procedural "cic:/CoRN/transc/TaylorSeries/Taylor_majoration_lemma.con" as lemma.
+
+(* UNEXPORTED
+Opaque N_Deriv fac.
+*)
+
+inline procedural "cic:/CoRN/transc/TaylorSeries/Taylor_Series_conv_lemma3.con" as lemma.
+
+(* end hide *)
+
+(*#*
+We now prove that, under our assumptions, it actually converges to the
+original function.  For generality and also usability, however, we
+will separately assume convergence.
+*)
+
+(* begin show *)
+
+(* UNEXPORTED
+cic:/CoRN/transc/TaylorSeries/Convergence_in_IR/Hf.var
+*)
+
+(* end show *)
+
+(* UNEXPORTED
+Transparent fac.
+*)
+
+(* UNEXPORTED
+Opaque mult.
+*)
+
+inline procedural "cic:/CoRN/transc/TaylorSeries/Taylor_Series_conv_to_fun.con" as lemma.
+
+(* UNEXPORTED
+End Convergence_in_IR
+*)
+
+(* UNEXPORTED
+Section Other_Results
+*)
+
+(*#*
+The condition for the previous lemma is not very easy to prove.  We
+give some helpful lemmas.
+*)
+
+inline procedural "cic:/CoRN/transc/TaylorSeries/Taylor_bnd_trans.con" as lemma.
+
+(* begin hide *)
+
+(* UNEXPORTED
+Opaque nexp_op.
+*)
+
+inline procedural "cic:/CoRN/transc/TaylorSeries/convergence_lemma.con" as lemma.
+
+(* end hide *)
+
+inline procedural "cic:/CoRN/transc/TaylorSeries/bnd_imp_Taylor_bnd.con" as lemma.
+
+(*#*
+Finally, a uniqueness criterium: two functions [F] and [G] are equal,
+provided that their derivatives coincide at a given point and their
+Taylor series converge to themselves.
+*)
+
+(* UNEXPORTED
+cic:/CoRN/transc/TaylorSeries/Other_Results/F.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/transc/TaylorSeries/Other_Results/G.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/transc/TaylorSeries/Other_Results/a.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/transc/TaylorSeries/Other_Results/f.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/transc/TaylorSeries/Other_Results/g.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/transc/TaylorSeries/Other_Results/derF.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/transc/TaylorSeries/Other_Results/derG.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/transc/TaylorSeries/Other_Results/bndf.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/transc/TaylorSeries/Other_Results/bndg.var
+*)
+
+(* begin show *)
+
+(* UNEXPORTED
+cic:/CoRN/transc/TaylorSeries/Other_Results/Heq.var
+*)
+
+(* end show *)
+
+(* begin hide *)
+
+inline procedural "cic:/CoRN/transc/TaylorSeries/Other_Results/Hf.con" "Other_Results__" as definition.
+
+(* end hide *)
+
+inline procedural "cic:/CoRN/transc/TaylorSeries/Taylor_unique_crit.con" as lemma.
+
+(* UNEXPORTED
+End Other_Results
+*)
+

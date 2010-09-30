@@ -1,0 +1,191 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+include "Init/Prelude.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Streams.v,v 1.15.2.1 2004/07/16 19:31:05 herbelin Exp $ i*)
+
+(* UNEXPORTED
+Set Implicit Arguments.
+*)
+
+(*#* Streams *)
+
+(* UNEXPORTED
+Section Streams
+*)
+
+(* UNEXPORTED
+cic:/Coq/Lists/Streams/Streams/A.var
+*)
+
+inline procedural "cic:/Coq/Lists/Streams/Stream.ind".
+
+inline procedural "cic:/Coq/Lists/Streams/hd.con" as definition.
+
+inline procedural "cic:/Coq/Lists/Streams/tl.con" as definition.
+
+inline procedural "cic:/Coq/Lists/Streams/Str_nth_tl.con" as definition.
+
+inline procedural "cic:/Coq/Lists/Streams/Str_nth.con" as definition.
+
+inline procedural "cic:/Coq/Lists/Streams/unfold_Stream.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/Streams/tl_nth_tl.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve tl_nth_tl: datatypes v62.
+*)
+
+inline procedural "cic:/Coq/Lists/Streams/Str_nth_tl_plus.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/Streams/Str_nth_plus.con" as lemma.
+
+(*#* Extensional Equality between two streams  *)
+
+inline procedural "cic:/Coq/Lists/Streams/EqSt.ind".
+
+(*#* A coinduction principle *)
+
+(* UNEXPORTED
+Ltac coinduction proof :=
+  cofix proof; intros; constructor;
+   [ clear proof | try (apply proof; clear proof) ].
+*)
+
+(*#* Extensional equality is an equivalence relation *)
+
+inline procedural "cic:/Coq/Lists/Streams/EqSt_reflex.con" as theorem.
+
+inline procedural "cic:/Coq/Lists/Streams/sym_EqSt.con" as theorem.
+
+inline procedural "cic:/Coq/Lists/Streams/trans_EqSt.con" as theorem.
+
+(*#* The definition given is equivalent to require the elements at each
+    position to be equal *)
+
+inline procedural "cic:/Coq/Lists/Streams/eqst_ntheq.con" as theorem.
+
+inline procedural "cic:/Coq/Lists/Streams/ntheq_eqst.con" as theorem.
+
+(* UNEXPORTED
+Section Stream_Properties
+*)
+
+(* UNEXPORTED
+cic:/Coq/Lists/Streams/Streams/Stream_Properties/P.var
+*)
+
+(*i
+Inductive Exists : Stream -> Prop :=
+  | Here    : forall x:Stream, P x -> Exists x
+  | Further : forall x:Stream, ~ P x -> Exists (tl x) -> Exists x.
+i*)
+
+inline procedural "cic:/Coq/Lists/Streams/Exists.ind".
+
+inline procedural "cic:/Coq/Lists/Streams/ForAll.ind".
+
+(* UNEXPORTED
+Section Co_Induction_ForAll
+*)
+
+(* UNEXPORTED
+cic:/Coq/Lists/Streams/Streams/Stream_Properties/Co_Induction_ForAll/Inv.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Lists/Streams/Streams/Stream_Properties/Co_Induction_ForAll/InvThenP.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Lists/Streams/Streams/Stream_Properties/Co_Induction_ForAll/InvIsStable.var
+*)
+
+inline procedural "cic:/Coq/Lists/Streams/ForAll_coind.con" as theorem.
+
+(* UNEXPORTED
+End Co_Induction_ForAll
+*)
+
+(* UNEXPORTED
+End Stream_Properties
+*)
+
+(* UNEXPORTED
+End Streams
+*)
+
+(* UNEXPORTED
+Section Map
+*)
+
+(* UNEXPORTED
+cic:/Coq/Lists/Streams/Map/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Lists/Streams/Map/B.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Lists/Streams/Map/f.var
+*)
+
+inline procedural "cic:/Coq/Lists/Streams/map.con" as definition.
+
+(* UNEXPORTED
+End Map
+*)
+
+(* UNEXPORTED
+Section Constant_Stream
+*)
+
+(* UNEXPORTED
+cic:/Coq/Lists/Streams/Constant_Stream/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Lists/Streams/Constant_Stream/a.var
+*)
+
+inline procedural "cic:/Coq/Lists/Streams/const.con" as definition.
+
+(* UNEXPORTED
+End Constant_Stream
+*)
+
+(* UNEXPORTED
+Unset Implicit Arguments.
+*)
+

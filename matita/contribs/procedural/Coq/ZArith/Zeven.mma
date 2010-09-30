@@ -1,0 +1,92 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Zeven.v,v 1.3.2.1 2004/07/16 19:31:21 herbelin Exp $ i*)
+
+include "ZArith/BinInt.ma".
+
+(*#*********************************************************************)
+
+(*#* About parity: even and odd predicates on Z, division by 2 on Z *)
+
+(*#*********************************************************************)
+
+(*#* [Zeven], [Zodd], [Zdiv2] and their related properties *)
+
+inline procedural "cic:/Coq/ZArith/Zeven/Zeven.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/Zeven/Zodd.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/Zeven/Zeven_bool.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/Zeven/Zodd_bool.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/Zeven/Zeven_odd_dec.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/Zeven/Zeven_dec.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/Zeven/Zodd_dec.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/Zeven/Zeven_not_Zodd.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zeven/Zodd_not_Zeven.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zeven/Zeven_Sn.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zeven/Zodd_Sn.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zeven/Zeven_pred.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zeven/Zodd_pred.con" as lemma.
+
+(* UNEXPORTED
+Hint Unfold Zeven Zodd: zarith.
+*)
+
+(*#*********************************************************************)
+
+(*#* [Zdiv2] is defined on all [Z], but notice that for odd negative
+    integers it is not the euclidean quotient: in that case we have [n =
+    2*(n/2)-1] *)
+
+inline procedural "cic:/Coq/ZArith/Zeven/Zdiv2.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/Zeven/Zeven_div2.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zeven/Zodd_div2.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zeven/Zodd_div2_neg.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zeven/Z_modulo_2.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zeven/Zsplit2.con" as lemma.
+

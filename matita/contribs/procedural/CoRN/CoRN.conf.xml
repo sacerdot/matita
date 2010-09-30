@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<helm_registry>
+  <section name="package">      
+    <key name="input_name">CoRN</key>
+    <key name="output_name">CoRN</key>
+    <key name="input_base_uri">cic:/CoRN</key>
+    <key name="output_base_uri">cic:/matita/procedural/CoRN</key>
+    <key name="input_path">/projects/helm/exportation/CoRN</key>
+    <key name="output_path">contribs/procedural/CoRN</key>
+    <key name="input_type">.v</key>
+    <key name="output_type">procedural</key>
+<!--
+    <key name="coercion">Z_of_nat cic:/Coq/ZArith/BinInt/Z_of_nat.con</key>
+    <key name="coercion">Zpos cic:/Coq/ZArith/BinInt/Z.ind#xpointer(1/1/2)</key>
+    <key name="coercion">nat_of_P cic:/Coq/NArith/BinPos/nat_of_P.con</key>
+-->  
+  </section>
+</helm_registry>

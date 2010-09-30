@@ -1,0 +1,65 @@
+Unsatisfiable/ALG005-1.ma ... OK TIME NEEDED: 41.94 Rating : 0.07 1
+Unsatisfiable/ALG006-1.ma ... OK TIME NEEDED: 3.74 Rating : 0.00 2
+Unsatisfiable/ALG007-1.ma ... OK TIME NEEDED: 11.45 Rating : 0.00 3
+Unsatisfiable/BOO001-1.ma ... OK TIME NEEDED: 1.05 Rating : 0.00 4
+Unsatisfiable/BOO002-1.ma ... OK TIME NEEDED: 12.91 Rating : 0.07 5
+Unsatisfiable/BOO002-2.ma ... OK TIME NEEDED: 8.25 Rating : 0.00 6
+Unsatisfiable/BOO003-2.ma ... FAIL Rating : 0.00 7
+Unsatisfiable/BOO003-4.ma ... OK TIME NEEDED: 0.13 Rating : 0.00 8
+Unsatisfiable/BOO004-2.ma ... OK TIME NEEDED: 0.27 Rating : 0.00 9
+Unsatisfiable/BOO004-4.ma ... OK TIME NEEDED: 0.09 Rating : 0.00 10
+Unsatisfiable/BOO005-2.ma ... OK TIME NEEDED: 0.25 Rating : 0.00 11
+Unsatisfiable/BOO005-4.ma ... OK TIME NEEDED: 0.10 Rating : 0.00 12
+Unsatisfiable/BOO006-2.ma ... OK TIME NEEDED: 0.68 Rating : 0.00 13
+Unsatisfiable/BOO006-4.ma ... OK TIME NEEDED: 0.69 Rating : 0.00 14
+Unsatisfiable/BOO007-2.ma ... OK TIME NEEDED: 97.44 Rating : 0.14 15
+Unsatisfiable/BOO007-4.ma ... FAIL Rating : 0.07 16
+Unsatisfiable/BOO008-2.ma ... OK TIME NEEDED: 101.88 Rating : 0.07 17
+Unsatisfiable/BOO008-4.ma ... OK TIME NEEDED: 140.95 Rating : 0.00 18
+Unsatisfiable/BOO009-2.ma ... OK TIME NEEDED: 1.83 Rating : 0.00 19
+Unsatisfiable/BOO009-4.ma ... OK TIME NEEDED: 0.71 Rating : 0.00 20
+Unsatisfiable/BOO010-2.ma ... OK TIME NEEDED: 1.81 Rating : 0.00 21
+Unsatisfiable/BOO010-4.ma ... OK TIME NEEDED: 0.73 Rating : 0.00 22
+Unsatisfiable/BOO011-2.ma ... OK TIME NEEDED: 0.01 Rating : 0.00 23
+Unsatisfiable/BOO011-4.ma ... OK TIME NEEDED: 0.01 Rating : 0.00 24
+Unsatisfiable/BOO012-2.ma ... OK TIME NEEDED: 0.41 Rating : 0.00 25
+Unsatisfiable/BOO012-4.ma ... OK TIME NEEDED: 0.38 Rating : 0.00 26
+Unsatisfiable/BOO013-2.ma ... OK TIME NEEDED: 0.11 Rating : 0.00 27
+Unsatisfiable/BOO013-4.ma ... OK TIME NEEDED: 0.21 Rating : 0.00 28
+Unsatisfiable/BOO014-2.ma ... OK TIME NEEDED: 7.91 Rating : 0.00 29
+Unsatisfiable/BOO014-4.ma ... OK TIME NEEDED: 47.97 Rating : 0.00 30
+Unsatisfiable/BOO015-2.ma ... OK TIME NEEDED: 10.04 Rating : 0.00 31
+Unsatisfiable/BOO015-4.ma ... FAIL Rating : 0.00 32
+Unsatisfiable/BOO016-2.ma ... OK TIME NEEDED: 0.92 Rating : 0.00 33
+Unsatisfiable/BOO017-2.ma ... OK TIME NEEDED: 1.60 Rating : 0.00 34
+Unsatisfiable/BOO018-4.ma ... OK TIME NEEDED: 0.02 Rating : 0.00 35
+Unsatisfiable/BOO021-1.ma ... OK TIME NEEDED: 0.02 Rating : 0.07 36
+Unsatisfiable/BOO022-1.ma ... FAIL Rating : 0.07 37
+Unsatisfiable/BOO023-1.ma ... OK TIME NEEDED: 100.75 Rating : 0.50 38
+Unsatisfiable/BOO024-1.ma ... OK TIME NEEDED: 2.61 Rating : 0.00 39
+Unsatisfiable/BOO025-1.ma ... OK TIME NEEDED: 3.36 Rating : 0.07 40
+Unsatisfiable/BOO026-1.ma ... OK TIME NEEDED: 23.65 Rating : 0.07 41
+Unsatisfiable/BOO028-1.ma ... FAIL Rating : 0.07 42
+Unsatisfiable/BOO029-1.ma ... OK TIME NEEDED: 59.89 Rating : 0.00 43
+Unsatisfiable/BOO031-1.ma ... FAIL Rating : 0.21 44
+Unsatisfiable/BOO034-1.ma ... FAIL Rating : 0.21 45
+Unsatisfiable/BOO067-1.ma ... FAIL Rating : 0.21 46
+Unsatisfiable/BOO068-1.ma ... OK TIME NEEDED: 1.71 Rating : 0.00 47
+Unsatisfiable/BOO069-1.ma ... OK TIME NEEDED: 0.92 Rating : 0.00 48
+Unsatisfiable/BOO070-1.ma ... OK TIME NEEDED: 1.96 Rating : 0.00 49
+Unsatisfiable/BOO071-1.ma ... OK TIME NEEDED: 0.95 Rating : 0.00 50
+Unsatisfiable/BOO072-1.ma ... FAIL Rating : 0.07 51
+Unsatisfiable/BOO073-1.ma ... FAIL Rating : 0.36 52
+Unsatisfiable/BOO074-1.ma ... FAIL Rating : 0.07 53
+Unsatisfiable/BOO075-1.ma ... OK TIME NEEDED: 0.79 Rating : 0.00 54
+Unsatisfiable/BOO076-1.ma ... FAIL Rating : 0.71 55
+Unsatisfiable/COL001-1.ma ... OK TIME NEEDED: 83.67 Rating : 0.07 56
+Unsatisfiable/COL001-2.ma ... OK TIME NEEDED: 6.02 Rating : 0.07 57
+Unsatisfiable/COL002-1.ma ... OK TIME NEEDED: 3.93 Rating : 0.00 58
+Unsatisfiable/COL002-4.ma ... FAIL Rating : 0.07 59
+Unsatisfiable/COL002-5.ma ... FAIL Rating : 0.43 60
+Unsatisfiable/COL003-1.ma ... FAIL Rating : 0.79 61
+Unsatisfiable/COL004-1.ma ... FAIL Rating : 0.57 62
+Unsatisfiable/COL004-3.ma ... FAIL Rating : 0.21 63
+Unsatisfiable/COL006-1.ma ... FAIL Rating : 0.57 64
+Unsatisfiable/COL006-5.ma 

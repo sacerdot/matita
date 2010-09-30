@@ -1,0 +1,583 @@
+
+<!-- ============ User Notation ====================== -->
+<chapter id="sec_usernotation">
+ <title>Extending the syntax</title>
+  Introduction: &TODO;
+ <sect1>
+  <title>notation</title>
+  <titleabbrev>notation</titleabbrev>
+   <para><userinput>notation usage &quot;presentation&quot; associativity with precedence p for content</userinput></para>
+  <para id="notation">
+    <variablelist>
+      <varlistentry role="tactic.synopsis">
+        <term>Synopsis:</term>
+        <listitem>
+          <para><emphasis role="bold">notation</emphasis>
+           [&usage;] <emphasis role="bold">&quot;</emphasis>&notation_lhs;<emphasis role="bold">&quot;</emphasis> [&associativity;] <emphasis role="bold">with</emphasis> <emphasis role="bold">precedence</emphasis> &nat;
+           <emphasis role="bold">for</emphasis>
+           &notation_rhs;
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+       <term>Action:</term>
+       <listitem>
+         <para>Declares a mapping between the presentation
+          AST <command>presentation</command> and the content AST
+          <command>content</command>. The declared presentation AST fragment
+          <command>presentation</command> is at precedence level
+          <command>p</command>. The precedence level is used to determine where
+          parentheses must be inserted. In particular, the content AST fragment
+          <command>content</command> is actually a pattern, since it contains
+          placeholders (variables) for sub-ASTs. Every placeholder for a term
+          is given an expected precedence level. Parentheses must be inserted
+          around sub-ASTs having a precedence level strictly smaller than the
+          expected one.</para>
+          <para>If <command>presentation</command> describes a binary
+          infix operator and if no precedence level is explicitly given for the
+          operator arguments, an <command>associativity</command> declaration
+          can be given to automatically choose the right level for the operands.
+          Otherwise, no <command>associativity</command> can be given.</para>
+         <para>If <command>direction</command> is
+          omitted, the mapping is bi-directional and is used both during
+          parsing and pretty-printing of terms. If <command>direction</command>
+          is <command>&gt;</command>, the mapping is used only during parsing;
+          if it is <command>&lt;</command>, it is used only during
+          pretty-printing. Thus it is possible to use simple notations to type
+          for writing the term, and nicer ones for rendering it.</para>
+       </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Notation arguments:</term>
+        <listitem>
+
+    <table frame="topbot" rowsep="0" colsep="0" role="grammar">
+      <title>usage</title>
+      <tgroup cols="4">
+      <tbody>
+       <row>
+        <entry id="grammar.usage">&usage;</entry>
+        <entry>::=</entry>
+        <entry><emphasis role="bold">&lt;</emphasis></entry>
+        <entry>Only for pretty-printing</entry>
+       </row>
+       <row>
+        <entry/>
+        <entry>|</entry>
+        <entry><emphasis role="bold">&gt;</emphasis></entry>
+        <entry>Only for parsing</entry>
+       </row>
+      </tbody>
+      </tgroup>
+     </table>
+
+    <table frame="topbot" rowsep="0" colsep="0" role="grammar">
+      <title>associativity</title>
+      <tgroup cols="4">
+      <tbody>
+       <row>
+        <entry id="grammar.associativity">&associativity;</entry>
+        <entry>::=</entry>
+        <entry><emphasis role="bold">left</emphasis> <emphasis role="bold">associative</emphasis></entry>
+        <entry>Left associative</entry>
+       </row>
+       <row>
+        <entry/>
+        <entry>|</entry>
+        <entry><emphasis role="bold">right</emphasis> <emphasis role="bold">associative</emphasis></entry>
+        <entry>Right associative</entry>
+       </row>
+       <row>
+        <entry/>
+        <entry>|</entry>
+        <entry><emphasis role="bold">non</emphasis> <emphasis role="bold">associative</emphasis></entry>
+        <entry>Non associative (default)</entry>
+       </row>
+      </tbody>
+      </tgroup>
+     </table>
+
+    <table frame="topbot" rowsep="0" colsep="0" role="grammar">
+      <title>notation_rhs</title>
+      <tgroup cols="4">
+      <tbody>
+       <row>
+        <entry id="grammar.notation_rhs">&notation_rhs;</entry>
+        <entry>::=</entry>
+        <entry>&unparsed_ast;</entry>
+        <entry>&TODO;</entry>
+       </row>
+       <row>
+        <entry></entry>
+        <entry>|</entry>
+        <entry>&unparsed_meta;</entry>
+        <entry>&TODO;</entry>
+       </row>
+      </tbody>
+      </tgroup>
+     </table>
+
+    <table frame="topbot" rowsep="0" colsep="0" role="grammar">
+      <title>unparsed_ast</title>
+      <tgroup cols="4">
+      <tbody>
+       <row>
+        <entry id="grammar.unparsed_ast">&unparsed_ast;</entry>
+        <entry>::=</entry>
+        <entry><emphasis role="bold">@{</emphasis>&enriched_term;<emphasis role="bold">}</emphasis></entry>
+        <entry>A content level AST (a term which is parsed, but not disambiguated).</entry>
+       </row>
+       <row>
+        <entry></entry>
+        <entry>|</entry>
+        <entry><emphasis role="bold">@</emphasis>&id;</entry>
+        <entry><command>@id</command> is just an abbreviation for <command>@{id}</command></entry>
+       </row>
+       <row>
+        <entry></entry>
+        <entry>|</entry>
+        <entry><emphasis role="bold">@</emphasis>&csymbol;</entry>
+        <entry><command>@'symbol</command> is just an abbreviation for <command>@{'symbol}</command></entry>
+       </row>
+      </tbody>
+      </tgroup>
+     </table>
+
+    <table frame="topbot" rowsep="0" colsep="0" role="grammar">
+      <title>enriched_term</title>
+      <tgroup cols="4">
+      <tbody>
+       <row>
+        <entry id="grammar.enriched_term">&enriched_term;</entry>
+        <entry>::=</entry>
+        <entry>〈〈A term that may contain occurrences of &unparsed_meta;, even as variable names in binders, and occurrences of &csymbol;〉〉</entry>
+        <entry>&TODO;</entry>
+       </row>
+      </tbody>
+      </tgroup>
+     </table>
+
+    <table frame="topbot" rowsep="0" colsep="0" role="grammar">
+      <title>unparsed_meta</title>
+      <tgroup cols="4">
+      <tbody>
+       <row>
+        <entry id="grammar.unparsed_meta">&unparsed_meta;</entry>
+        <entry>::=</entry>
+        <entry><emphasis role="bold">${</emphasis>&level2_meta;<emphasis role="bold">}</emphasis></entry>
+        <entry>&TODO;</entry>
+       </row>
+       <row>
+        <entry></entry>
+        <entry>|</entry>
+        <entry><emphasis role="bold">$</emphasis>&id;</entry>
+        <entry><command>$id</command> is just an abbreviation for <command>${id}</command></entry>
+       </row>
+       <row>
+        <entry></entry>
+        <entry>|</entry>
+        <entry><emphasis role="bold">$</emphasis><emphasis role="bold">_</emphasis></entry>
+        <entry><command>$_</command> is just an abbreviation for <command>${_}</command></entry>
+       </row>
+      </tbody>
+      </tgroup>
+     </table>
+
+    <table frame="topbot" rowsep="0" colsep="0" role="grammar">
+      <title>level2_meta</title>
+      <tgroup cols="4">
+      <tbody>
+       <row>
+        <entry id="grammar.level2_meta">&level2_meta;</entry>
+        <entry>::=</entry>
+        <entry>&unparsed_ast;</entry>
+        <entry>&TODO;</entry>
+       </row>
+       <row>
+        <entry></entry>
+        <entry>|</entry>
+        <entry><emphasis role="bold">term</emphasis> &nat; &id;</entry>
+        <entry>&TODO;</entry>
+       </row>
+       <row>
+        <entry></entry>
+        <entry>|</entry>
+        <entry><emphasis role="bold">number</emphasis> &id;</entry>
+        <entry>&TODO;</entry>
+       </row>
+       <row>
+        <entry></entry>
+        <entry>|</entry>
+        <entry><emphasis role="bold">ident</emphasis> &id;</entry>
+        <entry>&TODO;</entry>
+       </row>
+       <row>
+        <entry></entry>
+        <entry>|</entry>
+        <entry><emphasis role="bold">fresh</emphasis> &id;</entry>
+        <entry>&TODO;</entry>
+       </row>
+       <row>
+        <entry></entry>
+        <entry>|</entry>
+        <entry><emphasis role="bold">anonymous</emphasis></entry>
+        <entry>&TODO;</entry>
+       </row>
+       <row>
+        <entry></entry>
+        <entry>|</entry>
+        <entry>&id;</entry>
+        <entry>&TODO;</entry>
+       </row>
+       <row>
+        <entry></entry>
+        <entry>|</entry>
+        <entry><emphasis role="bold">fold</emphasis> [<emphasis role="bold">left</emphasis>|<emphasis role="bold">right</emphasis>] &level2_meta; <emphasis role="bold">rec</emphasis> &id; &level2_meta;</entry>
+        <entry>&TODO;</entry>
+       </row>
+       <row>
+        <entry></entry>
+        <entry>|</entry>
+        <entry><emphasis role="bold">default</emphasis> &level2_meta; &level2_meta;</entry>
+        <entry>&TODO;</entry>
+       </row>
+       <row>
+        <entry></entry>
+        <entry>|</entry>
+        <entry><emphasis role="bold">if</emphasis> &level2_meta; <emphasis role="bold">then</emphasis> &level2_meta; <emphasis role="bold">else</emphasis> &level2_meta;</entry>
+        <entry>&TODO;</entry>
+       </row>
+       <row>
+        <entry></entry>
+        <entry>|</entry>
+        <entry><emphasis role="bold">fail</emphasis></entry>
+        <entry>&TODO;</entry>
+       </row>
+      </tbody>
+      </tgroup>
+     </table>
+
+    <table frame="topbot" rowsep="0" colsep="0" role="grammar">
+      <title>notation_lhs</title>
+      <tgroup cols="4">
+      <tbody>
+       <row>
+        <entry id="grammar.notation_lhs">&notation_lhs;</entry>
+        <entry>::=</entry>
+        <entry>&layout; [&layout;]…</entry>
+       </row>
+      </tbody>
+      </tgroup>
+    </table>
+
+    <table frame="topbot" rowsep="0" colsep="0" role="grammar">
+      <title>layout</title>
+      <tgroup cols="4">
+      <tbody>
+       <row>
+        <entry id="grammar.layout">&layout;</entry>
+        <entry>::=</entry>
+        <entry>&layout; <emphasis role="bold">\sub</emphasis> &layout;</entry>
+        <entry>Subscript</entry>
+       </row>
+       <row>
+        <entry></entry>
+        <entry>|</entry>
+        <entry>&layout; <emphasis role="bold">\sup</emphasis> &layout;</entry>
+        <entry>Superscript</entry>
+       </row>
+       <row>
+        <entry></entry>
+        <entry>|</entry>
+        <entry>&layout; <emphasis role="bold">\below</emphasis> &layout;</entry>
+        <entry></entry>
+       </row>
+       <row>
+        <entry></entry>
+        <entry>|</entry>
+        <entry>&layout; <emphasis role="bold">\above</emphasis> &layout;</entry>
+        <entry></entry>
+       </row>
+       <row>
+        <entry></entry>
+        <entry>|</entry>
+        <entry>&layout; <emphasis role="bold">\over</emphasis> &layout;</entry>
+        <entry></entry>
+       </row>
+       <row>
+        <entry></entry>
+        <entry>|</entry>
+        <entry>&layout; <emphasis role="bold">\atop</emphasis> &layout;</entry>
+        <entry></entry>
+       </row>
+       <row>
+        <entry></entry>
+        <entry>|</entry>
+        <entry>&layout; <emphasis role="bold">\frac</emphasis> &layout;</entry>
+        <entry>Fraction</entry>
+       </row>
+       <row>
+        <entry></entry>
+        <entry>|</entry>
+        <entry><emphasis role="bold">\infrule</emphasis> &layout; &layout; &layout;</entry>
+        <entry>Inference rule (premises, conclusion, rule name)</entry>
+       </row>
+       <row>
+        <entry></entry>
+        <entry>|</entry>
+        <entry><emphasis role="bold">\sqrt</emphasis> &layout;</entry>
+        <entry>Square root</entry>
+       </row>
+       <row>
+        <entry></entry>
+        <entry>|</entry>
+        <entry><emphasis role="bold">\root</emphasis> &layout; <emphasis role="bold">\of</emphasis> &layout;</entry>
+        <entry>Generalized root</entry>
+       </row>
+       <row>
+        <entry></entry>
+        <entry>|</entry>
+        <entry><emphasis role="bold">hbox</emphasis> <emphasis role="bold">(</emphasis> &layout; [&layout;]… <emphasis role="bold">)</emphasis></entry>
+        <entry>Horizontal box</entry>
+       </row>
+       <row>
+        <entry></entry>
+        <entry>|</entry>
+        <entry><emphasis role="bold">vbox</emphasis> <emphasis role="bold">(</emphasis> &layout; [&layout;]… <emphasis role="bold">)</emphasis></entry>
+        <entry>Vertical box</entry>
+       </row>
+       <row>
+        <entry></entry>
+        <entry>|</entry>
+        <entry><emphasis role="bold">hvbox</emphasis> <emphasis role="bold">(</emphasis> &layout; [&layout;]… <emphasis role="bold">)</emphasis></entry>
+        <entry>Horizontal and vertical box</entry>
+       </row>
+       <row>
+        <entry></entry>
+        <entry>|</entry>
+        <entry><emphasis role="bold">hovbox</emphasis> <emphasis role="bold">(</emphasis> &layout; [&layout;]… <emphasis role="bold">)</emphasis></entry>
+        <entry>Horizontal or vertical box</entry>
+       </row>
+       <row>
+        <entry></entry>
+        <entry>|</entry>
+        <entry><emphasis role="bold">break</emphasis></entry>
+        <entry>Breakable space</entry>
+       </row>
+       <row>
+        <entry></entry>
+        <entry>|</entry>
+        <entry><emphasis role="bold">(</emphasis> &layout; [&layout;]… <emphasis role="bold">)</emphasis></entry>
+        <entry>Group</entry>
+       </row>
+       <row>
+        <entry></entry>
+        <entry>|</entry>
+        <entry>&id;</entry>
+        <entry>Placeholder for a term with no explicit precedence</entry>
+       </row>
+       <row>
+        <entry></entry>
+        <entry>|</entry>
+        <entry><emphasis role="bold">term</emphasis> &nat; &id;</entry>
+        <entry>Placeholder for a term with explicit expected precedence</entry>
+       </row>
+       <row>
+        <entry></entry>
+        <entry>|</entry>
+        <entry><emphasis role="bold">number</emphasis> &id;</entry>
+        <entry>Placeholder for a natural number</entry>
+       </row>
+       <row>
+        <entry></entry>
+        <entry>|</entry>
+        <entry><emphasis role="bold">ident</emphasis> &id;</entry>
+        <entry>Placeholder for an identifier</entry>
+       </row>
+       <row>
+        <entry></entry>
+        <entry>|</entry>
+        <entry>&literal;</entry>
+        <entry>Literal</entry>
+       </row>
+       <row>
+        <entry></entry>
+        <entry>|</entry>
+        <entry><emphasis role="bold">opt</emphasis> &layout;</entry>
+        <entry>Optional layout (it can be omitted for parsing)</entry>
+       </row>
+       <row>
+        <entry></entry>
+        <entry>|</entry>
+        <entry><emphasis role="bold">list0</emphasis> &layout;
+               [<emphasis role="bold">sep</emphasis> &literal;]</entry>
+        <entry>List of layouts separated by <command>sep</command> (default:
+               any blank)</entry>
+       </row>
+
+       <row>
+        <entry></entry>
+        <entry>|</entry>
+        <entry><emphasis role="bold">list1</emphasis> &layout;
+               [<emphasis role="bold">sep</emphasis> &literal;]</entry>
+        <entry>Non empty list of layouts separated by <command>sep</command>
+               (default: any blank)</entry>
+       </row>
+
+       <row>
+        <entry></entry>
+        <entry>|</entry>
+        <entry><emphasis role="bold">mstyle</emphasis> &id; value (&layout;)
+        </entry>
+        <entry>Style attributes like color #ff0000</entry>
+       </row>
+
+       <row>
+        <entry></entry>
+        <entry>|</entry>
+        <entry><emphasis role="bold">mpadded</emphasis> &id; value (&layout;)
+        </entry>
+        <entry>padding attributes like width -150%</entry>
+       </row>
+
+       <row>
+        <entry></entry>
+        <entry>|</entry>
+	<entry><emphasis role="bold">maction</emphasis> (&layout;)
+		[ (&layout;) … ]
+        </entry>
+        <entry>Alternative notations (output only)</entry>
+       </row>
+
+
+      </tbody>
+      </tgroup>
+    </table>
+
+    <table frame="topbot" rowsep="0" colsep="0" role="grammar">
+      <title>literal</title>
+      <tgroup cols="4">
+      <tbody>
+       <row>
+        <entry id="grammar.literal">&literal;</entry>
+        <entry>::=</entry>
+        <entry>&symbol;</entry>
+        <entry>Unicode symbol</entry>
+       </row>
+       <row>
+        <entry></entry>
+        <entry>|</entry>
+        <entry>&nat;</entry>
+        <entry>Natural number (a constant)</entry>
+       </row>
+       <row>
+        <entry></entry>
+        <entry>|</entry>
+        <entry><emphasis role="bold">&apos;</emphasis>&id;<emphasis role="bold">&apos;</emphasis></entry>
+        <entry>New keyword for the lexer</entry>
+       </row>
+      </tbody>
+      </tgroup>
+    </table>
+
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </para>
+ </sect1>
+ <sect1>
+   <title>interpretation</title>
+   <titleabbrev>interpretation</titleabbrev>
+   <para><userinput>interpretation &quot;description&quot; 'symbol p<subscript>1</subscript> … p<subscript>n</subscript> =
+         rhs</userinput></para>
+   <para id="interpretation">
+    <variablelist>
+      <varlistentry role="tactic.synopsis">
+        <term>Synopsis:</term>
+        <listitem>
+          <para><emphasis role="bold">interpretation</emphasis>
+           &qstring; &csymbol; [&interpretation_argument;]…
+           <emphasis role="bold">=</emphasis>
+           &interpretation_rhs;
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+       <term>Action:</term>
+       <listitem>
+         <para>It declares a bi-directional mapping <command>{…}</command> between the content-level AST <command>'symbol t<subscript>1</subscript> … t<subscript>n</subscript></command> and the semantic term <command>rhs[{t<subscript>1</subscript>}/p<subscript>1</subscript>;…;{t<subscript>n</subscript>}/p<subscript>n</subscript>]</command>
+          (the simultaneous substitution in <command>rhs</command> of the
+          interpretation <command>{…}</command> of every content-level
+          actual argument <command>t<subscript>i</subscript></command> for its
+          corresponding formal parameter
+          <command>p<subscript>i</subscript></command>). The
+          <command>description</command> must be a textual description of the
+          meaning associated to <command>'symbol</command> by this
+          interpretation, and is used by the user interface of Matita to
+          provide feedback on the interpretation of ambiguous terms.
+         </para>
+       </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Interpretation arguments:</term>
+        <listitem>
+
+    <table frame="topbot" rowsep="0" colsep="0" role="grammar">
+      <title>interpretation_argument</title>
+      <tgroup cols="4">
+      <tbody>
+       <row>
+        <entry id="grammar.interpretation_argument">&interpretation_argument;</entry>
+        <entry>::=</entry>
+        <entry>[<emphasis role="bold">η</emphasis><emphasis role="bold">.</emphasis>]… &id;</entry>
+        <entry>A formal parameter. If the name of the formal parameter is
+         prefixed by n symbols &quot;η&quot;, then the mapping performs
+         (multiple) η-expansions to grant that the semantic actual
+         parameter begins with at least n λ-abstractions.</entry>
+       </row>
+      </tbody>
+      </tgroup>
+     </table>
+    <table frame="topbot" rowsep="0" colsep="0" role="grammar">
+      <title>interpretation_rhs</title>
+      <tgroup cols="4">
+      <tbody>
+       <row>
+        <entry id="grammar.interpretation_rhs">&interpretation_rhs;</entry>
+        <entry>::=</entry>
+        <entry>&uri;</entry>
+        <entry>A constant, specified by its URI</entry>
+       </row>
+       <row>
+        <entry></entry>
+        <entry>|</entry>
+        <entry>&id;</entry>
+        <entry>A constant, specified by its name, or a bound variable. If
+               the constant name is ambiguous, the one corresponding to the
+               last implicitly or explicitly specified alias is used.</entry>
+       </row>
+       <row>
+        <entry></entry>
+        <entry>|</entry>
+        <entry><emphasis role="bold">?</emphasis></entry>
+        <entry>An implicit parameter</entry>
+       </row>
+       <row>
+        <entry></entry>
+        <entry>|</entry>
+        <entry><emphasis role="bold">(</emphasis>
+               &interpretation_rhs;
+               [&interpretation_rhs;]…
+               <emphasis role="bold">)</emphasis></entry>
+        <entry>An application</entry>
+       </row>
+      </tbody>
+      </tgroup>
+     </table>
+
+        </listitem>
+      </varlistentry>
+    </variablelist>
+   </para>
+ </sect1>
+</chapter>

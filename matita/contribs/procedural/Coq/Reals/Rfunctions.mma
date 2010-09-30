@@ -1,0 +1,331 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Rfunctions.v,v 1.31.2.1 2004/07/16 19:31:12 herbelin Exp $ i*)
+
+(*i Some properties about pow and sum have been made with John Harrison i*)
+
+(*i Some Lemmas (about pow and powerRZ) have been done by Laurent Thery i*)
+
+(*#*******************************************************)
+
+(*#*          Definition of the sum functions            *)
+
+(*                                                      *)
+
+(*#*******************************************************)
+
+include "Reals/Rbase.ma".
+
+include "Reals/R_Ifp.ma".
+
+include "Reals/Rbasic_fun.ma".
+
+include "Reals/R_sqr.ma".
+
+include "Reals/SplitAbsolu.ma".
+
+include "Reals/SplitRmult.ma".
+
+include "Reals/ArithProp.ma".
+
+include "ZArith/Zpower.ma".
+
+(* UNEXPORTED
+Open Local Scope nat_scope.
+*)
+
+(* UNEXPORTED
+Open Local Scope R_scope.
+*)
+
+(*#******************************)
+
+(*#*  Lemmas about factorial    *)
+
+(*#******************************)
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rfunctions/INR_fact_neq_0.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rfunctions/fact_simpl.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rfunctions/simpl_fact.con" as lemma.
+
+(*#******************************)
+
+(*          Power              *)
+
+(*#******************************)
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rfunctions/pow.con" as definition.
+
+(* NOTATION
+Infix "^" := pow : R_scope.
+*)
+
+inline procedural "cic:/Coq/Reals/Rfunctions/pow_O.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rfunctions/pow_1.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rfunctions/pow_add.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rfunctions/pow_nonzero.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve pow_O pow_1 pow_add pow_nonzero: real.
+*)
+
+inline procedural "cic:/Coq/Reals/Rfunctions/pow_RN_plus.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rfunctions/pow_lt.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve pow_lt: real.
+*)
+
+inline procedural "cic:/Coq/Reals/Rfunctions/Rlt_pow_R1.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Rlt_pow_R1: real.
+*)
+
+inline procedural "cic:/Coq/Reals/Rfunctions/Rlt_pow.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Rlt_pow: real.
+*)
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rfunctions/tech_pow_Rmult.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rfunctions/tech_pow_Rplus.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rfunctions/poly.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rfunctions/Power_monotonic.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rfunctions/RPow_abs.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rfunctions/Pow_x_infinity.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rfunctions/pow_ne_zero.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rfunctions/Rinv_pow.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rfunctions/pow_lt_1_zero.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rfunctions/pow_R1.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rfunctions/pow_Rsqr.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rfunctions/pow_le.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Rfunctions/pow_1_even.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Rfunctions/pow_1_odd.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Rfunctions/pow_1_abs.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rfunctions/pow_mult.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rfunctions/pow_incr.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rfunctions/pow_R1_Rle.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rfunctions/Rle_pow.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rfunctions/pow1.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rfunctions/pow_Rabs.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rfunctions/pow_maj_Rabs.con" as lemma.
+
+(*#******************************)
+
+(*#*         PowerRZ            *)
+
+(*#******************************)
+
+(*i Due to L.Thery i*)
+
+(* UNEXPORTED
+Ltac case_eq name :=
+  generalize (refl_equal name); pattern name at -1 in |- *; case name.
+*)
+
+inline procedural "cic:/Coq/Reals/Rfunctions/powerRZ.con" as definition.
+
+(* NOTATION
+Infix Local "^Z" := powerRZ (at level 30, right associativity) : R_scope.
+*)
+
+inline procedural "cic:/Coq/Reals/Rfunctions/Zpower_NR0.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rfunctions/powerRZ_O.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rfunctions/powerRZ_1.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rfunctions/powerRZ_NOR.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rfunctions/powerRZ_add.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve powerRZ_O powerRZ_1 powerRZ_NOR powerRZ_add: real.
+*)
+
+inline procedural "cic:/Coq/Reals/Rfunctions/Zpower_nat_powerRZ.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rfunctions/powerRZ_lt.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve powerRZ_lt: real.
+*)
+
+inline procedural "cic:/Coq/Reals/Rfunctions/powerRZ_le.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve powerRZ_le: real.
+*)
+
+inline procedural "cic:/Coq/Reals/Rfunctions/Zpower_nat_powerRZ_absolu.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rfunctions/powerRZ_R1.con" as lemma.
+
+(*#******************************)
+
+(* For easy interface          *)
+
+(*#******************************)
+
+(* decimal_exp r z is defined as r 10^z *)
+
+inline procedural "cic:/Coq/Reals/Rfunctions/decimal_exp.con" as definition.
+
+(*#******************************)
+
+(*#* Sum of n first naturals    *)
+
+(*#******************************)
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rfunctions/sum_nat_f_O.con" as definition.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rfunctions/sum_nat_f.con" as definition.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rfunctions/sum_nat_O.con" as definition.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rfunctions/sum_nat.con" as definition.
+
+(*#******************************)
+
+(*#*            Sum             *)
+
+(*#******************************)
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rfunctions/sum_f_R0.con" as definition.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rfunctions/sum_f.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Rfunctions/GP_finite.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rfunctions/sum_f_R0_triangle.con" as lemma.
+
+(*#******************************)
+
+(*        Distance  in R       *)
+
+(*#******************************)
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rfunctions/R_dist.con" as definition.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rfunctions/R_dist_pos.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rfunctions/R_dist_sym.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rfunctions/R_dist_refl.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rfunctions/R_dist_eq.con" as lemma.
+
+(*#**********)
+
+inline procedural "cic:/Coq/Reals/Rfunctions/R_dist_tri.con" as lemma.
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rfunctions/R_dist_plus.con" as lemma.
+
+(*#******************************)
+
+(*#*       Infinit Sum          *)
+
+(*#******************************)
+
+(*#********)
+
+inline procedural "cic:/Coq/Reals/Rfunctions/infinit_sum.con" as definition.
+

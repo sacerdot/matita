@@ -1,0 +1,64 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Rcomplete.v,v 1.10.2.1 2004/07/16 19:31:12 herbelin Exp $ i*)
+
+include "Reals/Rbase.ma".
+
+include "Reals/Rfunctions.ma".
+
+include "Reals/Rseries.ma".
+
+include "Reals/SeqProp.ma".
+
+include "Arith/Max.ma".
+
+(* UNEXPORTED
+Open Local Scope R_scope.
+*)
+
+(*#***************************************************)
+
+(*              R is complete :                     *)
+
+(*        Each sequence which satisfies             *)
+
+(*       the Cauchy's criterion converges           *)
+
+(*                                                  *)
+
+(*    Proof with adjacent sequences (Vn and Wn)     *)
+
+(*#***************************************************)
+
+inline procedural "cic:/Coq/Reals/Rcomplete/R_complete.con" as theorem.
+

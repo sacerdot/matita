@@ -1,0 +1,186 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i 	$Id: Mapc.v,v 1.4.2.1 2004/07/16 19:31:04 herbelin Exp $	 i*)
+
+include "Bool/Bool.ma".
+
+include "Bool/Sumbool.ma".
+
+include "Arith/Arith.ma".
+
+include "ZArith/ZArith.ma".
+
+include "IntMap/Addr.ma".
+
+include "IntMap/Adist.ma".
+
+include "IntMap/Addec.ma".
+
+include "IntMap/Map.ma".
+
+include "IntMap/Mapaxioms.ma".
+
+include "IntMap/Fset.ma".
+
+include "IntMap/Mapiter.ma".
+
+include "IntMap/Mapsubset.ma".
+
+include "Lists/List.ma".
+
+include "IntMap/Lsort.ma".
+
+include "IntMap/Mapcard.ma".
+
+include "IntMap/Mapcanon.ma".
+
+(* UNEXPORTED
+Section MapC
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapc/MapC/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapc/MapC/B.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapc/MapC/C.var
+*)
+
+inline procedural "cic:/Coq/IntMap/Mapc/MapPut_as_Merge_c.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapc/MapPut_behind_as_Merge_c.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapc/MapMerge_empty_m_c.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapc/MapMerge_assoc_c.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapc/MapMerge_idempotent_c.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapc/MapMerge_RestrTo_l_c.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapc/MapRemove_as_RestrBy_c.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapc/MapDomRestrTo_assoc_c.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapc/MapDomRestrTo_idempotent_c.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapc/MapDomRestrTo_Dom_c.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapc/MapDomRestrBy_Dom_c.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapc/MapDomRestrBy_By_c.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapc/MapDomRestrBy_By_comm_c.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapc/MapDomRestrBy_To_c.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapc/MapDomRestrBy_To_comm_c.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapc/MapDomRestrTo_By_c.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapc/MapDomRestrTo_By_comm_c.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapc/MapDomRestrTo_To_comm_c.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapc/MapMerge_DomRestrTo_c.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapc/MapMerge_DomRestrBy_c.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapc/MapDelta_nilpotent_c.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapc/MapDelta_as_Merge_c.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapc/MapDelta_as_DomRestrBy_c.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapc/MapDelta_as_DomRestrBy_2_c.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapc/MapDelta_sym_c.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapc/MapDom_Split_1_c.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapc/MapDom_Split_2_c.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapc/MapDom_Split_3_c.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapc/Map_of_alist_of_Map_c.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapc/alist_of_Map_of_alist_c.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapc/MapSubset_antisym_c.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapc/FSubset_antisym_c.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapc/MapDisjoint_empty_c.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapc/MapDelta_disjoint_c.con" as lemma.
+
+(* UNEXPORTED
+End MapC
+*)
+
+inline procedural "cic:/Coq/IntMap/Mapc/FSetDelta_assoc_c.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapc/FSet_ext_c.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapc/FSetUnion_comm_c.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapc/FSetUnion_assoc_c.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapc/FSetUnion_M0_s_c.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapc/FSetUnion_s_M0_c.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapc/FSetUnion_idempotent.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapc/FSetInter_comm_c.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapc/FSetInter_assoc_c.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapc/FSetInter_M0_s_c.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapc/FSetInter_s_M0_c.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapc/FSetInter_idempotent.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapc/FSetUnion_Inter_l_c.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapc/FSetUnion_Inter_r.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapc/FSetInter_Union_l_c.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapc/FSetInter_Union_r.con" as lemma.
+

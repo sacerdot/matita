@@ -1,0 +1,236 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "CoRN.ma".
+
+(* $Id: FieldReflection.v,v 1.4 2004/04/23 10:01:06 lcf Exp $ *)
+
+(* begin hide *)
+
+include "algebra/CFields.ma".
+
+include "tactics/AlgReflection.ma".
+
+(* UNEXPORTED
+Section Field_Interpretation_Function
+*)
+
+(* UNEXPORTED
+cic:/CoRN/tactics/FieldReflection/Field_Interpretation_Function/F.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/tactics/FieldReflection/Field_Interpretation_Function/val.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/tactics/FieldReflection/Field_Interpretation_Function/unop.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/tactics/FieldReflection/Field_Interpretation_Function/binop.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/tactics/FieldReflection/Field_Interpretation_Function/pfun.var
+*)
+
+inline procedural "cic:/CoRN/tactics/FieldReflection/interpF.ind".
+
+inline procedural "cic:/CoRN/tactics/FieldReflection/wfF.con" as definition.
+
+inline procedural "cic:/CoRN/tactics/FieldReflection/xexprF.ind".
+
+inline procedural "cic:/CoRN/tactics/FieldReflection/xforgetF.con" as definition.
+
+inline procedural "cic:/CoRN/tactics/FieldReflection/xinterpF.con" as definition.
+
+inline procedural "cic:/CoRN/tactics/FieldReflection/xexprF2interpF.con" as lemma.
+
+inline procedural "cic:/CoRN/tactics/FieldReflection/xexprF_diagram_commutes.con" as definition.
+
+inline procedural "cic:/CoRN/tactics/FieldReflection/xexprF2wfF.con" as lemma.
+
+inline procedural "cic:/CoRN/tactics/FieldReflection/fexprF.ind".
+
+inline procedural "cic:/CoRN/tactics/FieldReflection/fexprF_var.con" as definition.
+
+inline procedural "cic:/CoRN/tactics/FieldReflection/fexprF_int.con" as definition.
+
+inline procedural "cic:/CoRN/tactics/FieldReflection/fexprF_plus.con" as definition.
+
+inline procedural "cic:/CoRN/tactics/FieldReflection/fexprF_mult.con" as definition.
+
+inline procedural "cic:/CoRN/tactics/FieldReflection/fforgetF.con" as definition.
+
+inline procedural "cic:/CoRN/tactics/FieldReflection/fexprF2interpF.con" as lemma.
+
+inline procedural "cic:/CoRN/tactics/FieldReflection/fexprF2wfF.con" as lemma.
+
+include "tactics/Opaque_algebra.ma".
+
+inline procedural "cic:/CoRN/tactics/FieldReflection/refl_interpF.con" as lemma.
+
+inline procedural "cic:/CoRN/tactics/FieldReflection/interpF_wd.con" as lemma.
+
+(* UNEXPORTED
+End Field_Interpretation_Function
+*)
+
+(* UNEXPORTED
+Section Field_NormCorrect
+*)
+
+(* UNEXPORTED
+cic:/CoRN/tactics/FieldReflection/Field_NormCorrect/F.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/tactics/FieldReflection/Field_NormCorrect/val.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/tactics/FieldReflection/Field_NormCorrect/unop.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/tactics/FieldReflection/Field_NormCorrect/binop.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/tactics/FieldReflection/Field_NormCorrect/pfun.var
+*)
+
+(* NOTATION
+Notation II := (interpF F val unop binop pfun).
+*)
+
+(*
+four kinds of exprs:
+
+  I	(expr_int _)
+  V	(expr_var _)
+  M	(expr_mult V M)
+	I
+  P	(expr_plus M P)
+	I
+
+M: sorted on V
+P: sorted on M, all M's not an I
+*)
+
+(* UNEXPORTED
+Opaque Zmult.
+*)
+
+inline procedural "cic:/CoRN/tactics/FieldReflection/MI_mult_corr_F.con" as lemma.
+
+(* UNEXPORTED
+Transparent Zmult.
+*)
+
+(* UNEXPORTED
+Opaque MI_mult.
+*)
+
+inline procedural "cic:/CoRN/tactics/FieldReflection/MV_mult_corr_F.con" as lemma.
+
+(* UNEXPORTED
+Transparent MI_mult.
+*)
+
+(* UNEXPORTED
+Opaque MV_mult MI_mult.
+*)
+
+inline procedural "cic:/CoRN/tactics/FieldReflection/MM_mult_corr_F.con" as lemma.
+
+(* UNEXPORTED
+Transparent MV_mult MI_mult.
+*)
+
+(* UNEXPORTED
+Opaque MV_mult.
+*)
+
+inline procedural "cic:/CoRN/tactics/FieldReflection/MM_plus_corr_F.con" as lemma.
+
+(* UNEXPORTED
+Transparent MV_mult.
+*)
+
+(* UNEXPORTED
+Opaque MM_plus.
+*)
+
+inline procedural "cic:/CoRN/tactics/FieldReflection/PM_plus_corr_F.con" as lemma.
+
+(* UNEXPORTED
+Transparent MM_plus.
+*)
+
+(* UNEXPORTED
+Opaque PM_plus.
+*)
+
+inline procedural "cic:/CoRN/tactics/FieldReflection/PP_plus_corr_F.con" as lemma.
+
+(* UNEXPORTED
+Transparent PM_plus.
+*)
+
+(* UNEXPORTED
+Opaque PM_plus MM_mult MI_mult.
+*)
+
+inline procedural "cic:/CoRN/tactics/FieldReflection/PM_mult_corr_F.con" as lemma.
+
+(* UNEXPORTED
+Opaque PM_mult.
+*)
+
+inline procedural "cic:/CoRN/tactics/FieldReflection/PP_mult_corr_F.con" as lemma.
+
+(* UNEXPORTED
+Transparent PP_plus PM_mult PP_mult PM_plus MI_mult.
+*)
+
+inline procedural "cic:/CoRN/tactics/FieldReflection/FF_plus_corr_F.con" as lemma.
+
+inline procedural "cic:/CoRN/tactics/FieldReflection/FF_mult_corr_F.con" as lemma.
+
+(* UNEXPORTED
+Transparent FF_div.
+*)
+
+inline procedural "cic:/CoRN/tactics/FieldReflection/FF_div_corr_F.con" as lemma.
+
+inline procedural "cic:/CoRN/tactics/FieldReflection/NormF_corr.con" as lemma.
+
+inline procedural "cic:/CoRN/tactics/FieldReflection/Norm_wfF.con" as lemma.
+
+inline procedural "cic:/CoRN/tactics/FieldReflection/expr_is_zero_corr_F.con" as lemma.
+
+inline procedural "cic:/CoRN/tactics/FieldReflection/Tactic_lemma_zero_F.con" as lemma.
+
+inline procedural "cic:/CoRN/tactics/FieldReflection/Tactic_lemmaF.con" as lemma.
+
+(* UNEXPORTED
+End Field_NormCorrect
+*)
+
+(* end hide *)
+

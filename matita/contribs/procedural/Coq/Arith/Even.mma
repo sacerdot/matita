@@ -1,0 +1,122 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+include "Init/Prelude.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Even.v,v 1.14.2.1 2004/07/16 19:31:00 herbelin Exp $ i*)
+
+(*#* Here we define the predicates [even] and [odd] by mutual induction
+    and we prove the decidability and the exclusion of those predicates.
+    The main results about parity are proved in the module Div2. *)
+
+(* UNEXPORTED
+Open Local Scope nat_scope.
+*)
+
+(* UNEXPORTED
+Implicit Types m n : nat.
+*)
+
+inline procedural "cic:/Coq/Arith/Even/even.ind".
+
+(* UNEXPORTED
+Hint Constructors even: arith.
+*)
+
+(* UNEXPORTED
+Hint Constructors odd: arith.
+*)
+
+inline procedural "cic:/Coq/Arith/Even/even_or_odd.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Even/even_odd_dec.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Even/not_even_and_odd.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Even/even_plus_aux.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Even/even_even_plus.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Even/odd_even_plus.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Even/even_plus_even_inv_r.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Even/even_plus_even_inv_l.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Even/even_plus_odd_inv_r.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Even/even_plus_odd_inv_l.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve even_even_plus odd_even_plus: arith.
+*)
+
+inline procedural "cic:/Coq/Arith/Even/odd_plus_l.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Even/odd_plus_r.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Even/odd_plus_even_inv_l.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Even/odd_plus_even_inv_r.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Even/odd_plus_odd_inv_l.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Even/odd_plus_odd_inv_r.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve odd_plus_l odd_plus_r: arith.
+*)
+
+inline procedural "cic:/Coq/Arith/Even/even_mult_aux.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Even/even_mult_l.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Even/even_mult_r.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve even_mult_l even_mult_r: arith.
+*)
+
+inline procedural "cic:/Coq/Arith/Even/even_mult_inv_r.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Even/even_mult_inv_l.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Even/odd_mult.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve even_mult_l even_mult_r odd_mult: arith.
+*)
+
+inline procedural "cic:/Coq/Arith/Even/odd_mult_inv_l.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Even/odd_mult_inv_r.con" as lemma.
+

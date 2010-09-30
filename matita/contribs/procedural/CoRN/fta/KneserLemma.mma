@@ -1,0 +1,155 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "CoRN.ma".
+
+(* $Id: KneserLemma.v,v 1.7 2004/04/23 10:00:57 lcf Exp $ *)
+
+(*#* printing Smallest %\ensuremath{\frac13^{2n^2+n}}% *)
+
+(*#* printing eta_0 %\ensuremath{\eta_0}% #&eta;<SUB>0</SUB># *)
+
+include "complex/NRootCC.ma".
+
+include "complex/AbsCC.ma".
+
+include "fta/MainLemma.ma".
+
+(*#* ** Kneser Lemma *)
+
+(* UNEXPORTED
+Section Kneser_Lemma
+*)
+
+(*#*
+%\begin{convention}% Let [b : nat->CC], [n : nat] and [c : IR]
+such that [0 < n], [b_0 := b 0], [b_n := (b n) [=] One] and
+[(AbsCC b_0) [<] c].
+%\end{convention}%
+*)
+
+(* UNEXPORTED
+cic:/CoRN/fta/KneserLemma/Kneser_Lemma/b.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/fta/KneserLemma/Kneser_Lemma/n.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/fta/KneserLemma/Kneser_Lemma/gt_n_0.var
+*)
+
+(* begin hide *)
+
+inline procedural "cic:/CoRN/fta/KneserLemma/Kneser_Lemma/b_0.con" "Kneser_Lemma__" as definition.
+
+inline procedural "cic:/CoRN/fta/KneserLemma/Kneser_Lemma/b_n.con" "Kneser_Lemma__" as definition.
+
+(* end hide *)
+
+(* UNEXPORTED
+cic:/CoRN/fta/KneserLemma/Kneser_Lemma/b_n_1.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/fta/KneserLemma/Kneser_Lemma/c.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/fta/KneserLemma/Kneser_Lemma/b_0_lt_c.var
+*)
+
+(*#* 
+%\begin{convention}% We define the following local abbreviations:
+ - [two_n := 2 * n]
+ - [Small := p3m n]
+ - [Smaller := p3m (two_n * n)]
+ - [Smallest := Small[*]Smaller]
+ - [q := One[-]Smallest]
+ - [a i := AbsCC (b i)]
+
+%\end{convention}%
+*)
+
+(* begin hide *)
+
+inline procedural "cic:/CoRN/fta/KneserLemma/Kneser_Lemma/two_n.con" "Kneser_Lemma__" as definition.
+
+inline procedural "cic:/CoRN/fta/KneserLemma/Kneser_Lemma/Small.con" "Kneser_Lemma__" as definition.
+
+inline procedural "cic:/CoRN/fta/KneserLemma/Kneser_Lemma/Smaller.con" "Kneser_Lemma__" as definition.
+
+inline procedural "cic:/CoRN/fta/KneserLemma/Kneser_Lemma/Smallest.con" "Kneser_Lemma__" as definition.
+
+inline procedural "cic:/CoRN/fta/KneserLemma/Kneser_Lemma/q.con" "Kneser_Lemma__" as definition.
+
+(* end hide *)
+
+inline procedural "cic:/CoRN/fta/KneserLemma/b_0'_exists.con" as lemma.
+
+inline procedural "cic:/CoRN/fta/KneserLemma/Kneser_Lemma/eta_0.con" "Kneser_Lemma__" as definition.
+
+inline procedural "cic:/CoRN/fta/KneserLemma/eta_0_pos.con" as lemma.
+
+inline procedural "cic:/CoRN/fta/KneserLemma/eta_exists.con" as lemma.
+
+inline procedural "cic:/CoRN/fta/KneserLemma/eps_exists_1.con" as lemma.
+
+(* less_cotransitive_unfolded on 
+  {Zero  [<]  y[/]x[//]H3[-]Half[*]eps} + 
+  {y[/]x[//]H3[-]Half[*]eps  [<]  Half[*]eps}. *)
+
+inline procedural "cic:/CoRN/fta/KneserLemma/eps_exists.con" as lemma.
+
+(* begin hide *)
+
+inline procedural "cic:/CoRN/fta/KneserLemma/Kneser_Lemma/a.con" "Kneser_Lemma__" as definition.
+
+(* end hide *)
+
+inline procedural "cic:/CoRN/fta/KneserLemma/z_exists.con" as lemma.
+
+(* end hide *)
+
+inline procedural "cic:/CoRN/fta/KneserLemma/Kneser_1'.con" as lemma.
+
+inline procedural "cic:/CoRN/fta/KneserLemma/Kneser_1''.con" as lemma.
+
+inline procedural "cic:/CoRN/fta/KneserLemma/Kneser_1.con" as lemma.
+
+inline procedural "cic:/CoRN/fta/KneserLemma/Kneser_2a.con" as lemma.
+
+inline procedural "cic:/CoRN/fta/KneserLemma/Kneser_2b.con" as lemma.
+
+(* end hide *)
+
+inline procedural "cic:/CoRN/fta/KneserLemma/Kneser_2c.con" as lemma.
+
+(* end hide *)
+
+inline procedural "cic:/CoRN/fta/KneserLemma/Kneser_2.con" as lemma.
+
+(* end hide *)
+
+inline procedural "cic:/CoRN/fta/KneserLemma/Kneser_3.con" as lemma.
+
+(* UNEXPORTED
+End Kneser_Lemma
+*)
+
+inline procedural "cic:/CoRN/fta/KneserLemma/Kneser.con" as lemma.
+

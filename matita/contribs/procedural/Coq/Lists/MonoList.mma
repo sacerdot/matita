@@ -1,0 +1,203 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: MonoList.v,v 1.2.2.1 2004/07/16 19:31:05 herbelin Exp $ i*)
+
+(*#* THIS IS A OLD CONTRIB. IT IS NO LONGER MAINTAINED ***)
+
+include "Arith/Le.ma".
+
+inline procedural "cic:/Coq/Lists/MonoList/List_Dom.con".
+
+inline procedural "cic:/Coq/Lists/MonoList/A.con" as definition.
+
+inline procedural "cic:/Coq/Lists/MonoList/list.ind".
+
+inline procedural "cic:/Coq/Lists/MonoList/app.con" as definition.
+
+inline procedural "cic:/Coq/Lists/MonoList/app_nil_end.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve app_nil_end: list v62.
+*)
+
+inline procedural "cic:/Coq/Lists/MonoList/app_ass.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve app_ass: list v62.
+*)
+
+inline procedural "cic:/Coq/Lists/MonoList/ass_app.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve ass_app: list v62.
+*)
+
+inline procedural "cic:/Coq/Lists/MonoList/tail.con" as definition.
+
+inline procedural "cic:/Coq/Lists/MonoList/nil_cons.con" as lemma.
+
+(*#***************************************)
+
+(* Length of lists                      *)
+
+(*#***************************************)
+
+inline procedural "cic:/Coq/Lists/MonoList/length.con" as definition.
+
+(*#*****************************)
+
+(* Length order of lists      *)
+
+(*#*****************************)
+
+(* UNEXPORTED
+Section length_order
+*)
+
+inline procedural "cic:/Coq/Lists/MonoList/lel.con" as definition.
+
+(* UNEXPORTED
+Hint Unfold lel: list.
+*)
+
+(* UNEXPORTED
+cic:/Coq/Lists/MonoList/length_order/a.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Lists/MonoList/length_order/b.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Lists/MonoList/length_order/l.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Lists/MonoList/length_order/m.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Lists/MonoList/length_order/n.var
+*)
+
+inline procedural "cic:/Coq/Lists/MonoList/lel_refl.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/MonoList/lel_trans.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/MonoList/lel_cons_cons.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/MonoList/lel_cons.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/MonoList/lel_tail.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/MonoList/lel_nil.con" as lemma.
+
+(* UNEXPORTED
+End length_order
+*)
+
+(* UNEXPORTED
+Hint Resolve lel_refl lel_cons_cons lel_cons lel_nil lel_nil nil_cons: list
+  v62.
+*)
+
+inline procedural "cic:/Coq/Lists/MonoList/In.con" as definition.
+
+inline procedural "cic:/Coq/Lists/MonoList/in_eq.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve in_eq: list v62.
+*)
+
+inline procedural "cic:/Coq/Lists/MonoList/in_cons.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve in_cons: list v62.
+*)
+
+inline procedural "cic:/Coq/Lists/MonoList/in_app_or.con" as lemma.
+
+(* UNEXPORTED
+Hint Immediate in_app_or: list v62.
+*)
+
+inline procedural "cic:/Coq/Lists/MonoList/in_or_app.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve in_or_app: list v62.
+*)
+
+inline procedural "cic:/Coq/Lists/MonoList/incl.con" as definition.
+
+(* UNEXPORTED
+Hint Unfold incl: list v62.
+*)
+
+inline procedural "cic:/Coq/Lists/MonoList/incl_refl.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve incl_refl: list v62.
+*)
+
+inline procedural "cic:/Coq/Lists/MonoList/incl_tl.con" as lemma.
+
+(* UNEXPORTED
+Hint Immediate incl_tl: list v62.
+*)
+
+inline procedural "cic:/Coq/Lists/MonoList/incl_tran.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/MonoList/incl_appl.con" as lemma.
+
+(* UNEXPORTED
+Hint Immediate incl_appl: list v62.
+*)
+
+inline procedural "cic:/Coq/Lists/MonoList/incl_appr.con" as lemma.
+
+(* UNEXPORTED
+Hint Immediate incl_appr: list v62.
+*)
+
+inline procedural "cic:/Coq/Lists/MonoList/incl_cons.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve incl_cons: list v62.
+*)
+
+inline procedural "cic:/Coq/Lists/MonoList/incl_app.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve incl_app: list v62.
+*)
+

@@ -1,0 +1,42 @@
+#define u1 struct { byte; word; }
+#define u2 struct { word; byte; }
+#define u3 struct { array[2] of u1; array[3] of u2; }
+#define u4 struct { array[3] of u1; array[2] of u2; }
+#define u5 struct { dword; u3; u4; array[5] of word; }
+
+{
+	u5 var5;
+	byte index=0x00;
+
+	while(index<0x02)
+		{
+		const array[4] of u1 const1=[{0x00,0x0000},{0x01,0x0001},{0x02,0x0002},{0x03,0x0003}];
+		const array[4] of u2 const2=[{0x0000,0x00},{0x0001,0x01},{0x0002,0x02},{0x0003,0x03}];
+
+		var5.1.0[index].0=const1[index].0+(index*0x03);
+		var5.1.0[index].1=const1[index].1*(b2w(index)-0x1234);
+		var5.2.1[index].0=const1[index].1&(b2w(index)/0xABCD);
+		var5.2.1[index].1=const1[index].0^(!index);
+
+		if(index!=0x00)
+			{
+			dword tmp=0x1234FEDC;
+
+			var5.0=tmp;
+			}
+		elsif(index==0x01)
+			{
+			array[7] of array[8] of array [9] of byte tmp;
+
+			tmp[0x02][0x01][0x00]=index;
+			}
+		else
+			{
+			array[10] of u5 tmp;
+
+			tmp[0x00].0=var5.0;
+			}
+
+		index=index+0x01;
+		}
+}

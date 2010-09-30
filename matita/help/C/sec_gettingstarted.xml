@@ -1,0 +1,171 @@
+
+<!-- ============= Getting started ============================== -->
+
+<chapter id="sec_gettingstarted">
+  <title>Getting started</title>
+  <para> If you are already familiar with the Calculus of (Co)Inductive
+  Constructions (CIC) and with interactive theorem provers with procedural
+  proof languages (expecially Coq), getting started with Matita is relatively
+  easy. You just need to learn how to type Unicode symbols, how to browse
+  and search the library and how to author a proof script.</para>
+
+  <sect1 id="unicode">
+   <title>How to type Unicode symbols</title>
+   <para>Unicode characters can be typed in several ways:</para>
+    <itemizedlist>
+      <listitem><para>Using the &quot;Ctrl+Shift+Unicode code&quot; standard Gnome shortcut. E.g. Ctrl+Shift+3a9 generates &quot;Ω&quot;.</para>
+     </listitem>
+     <listitem><para>Typing the ligature &quot;\name&quot; where &quot;name&quot;
+		     is a standard Unicode or LaTeX name for the character or an 
+		     ASCII art resembling the shape of the character. Pressing
+      &quot;Alt+L&quot; or Space or Enter just after the last character 
+      of the name converts
+      the ligature to the Unicode symbol. 
+      E.g. &quot;\Delta&quot; followed by Alt+L generates
+      &quot;Δ&quot;, while pressing Alt-L after &quot;=>&quot; generates
+      &quot;⇒&quot;</para>
+     </listitem>
+     <listitem>
+	     <para>Typing a symbol and rotating trough its equivalence class
+		   with Alt-L. E.g. pressing Alt-L after an  &quot;l&quot;
+		   generates a &quot;λ&quot;, while pressing Alt-L after an
+		   &quot;→&quot; once generates &quot;⇉&quot; and pressing
+		   Alt-L again generates &quot;⇒&quot;.
+         </para>
+     </listitem>
+    </itemizedlist>
+    <para>
+    The comprehensive list of symbols names or shortcuts and their equivalence
+    classes is available clicking on the &quot;TeX/UTF-8 table&quot; item
+    of the &quot;View&quot; menu.
+    </para>
+    <para>
+	    There is a memory mechanism related to equivalence classes that
+	    remembers your last choice, making it the default one. For example,
+	    if you use &quot;_&quot; to generate &quot;⎻&quot; 
+	    (that is the third choice, after &quot;⎽&quot; and &quot;⎼&quot;), 
+	    the next time you type Alt-L
+	    after &quot;_&quot; you immediately get &quot;⎻&quot;.
+    </para>
+  </sect1>
+  <sect1 id="cicbrowser">
+   <title>Browsing and searching</title>
+   <para>The CIC browser is used to browse and search the library.
+    You can open a new CIC browser selecting &quot;New Cic Browser&quot;
+    from the &quot;View&quot; menu of Matita, or by pressing &quot;F3&quot;.
+    The CIC browser is similar to a traditional Web browser.</para>
+   <sect2 id="browsinglib">
+    <title>Browsing the library</title>
+    <para>To browse the library, type in the location bar the absolute URI of
+    the theorem, definition or library fragment you are interested in.
+    &quot;cic:/&quot; is the root of the library. Contributions developed
+    in Matita are under &quot;cic:/matita&quot;; all the others are
+    part of the library of Coq.</para>
+    <para>Following the hyperlinks it is possible to navigate in the Web
+    of mathematical notions. Proof are rendered in pseudo-natural language
+    and mathematical notation is used for formulae. For now, mathematical
+    notation must be included in the current script to be activated, but we
+    plan to remove this limitation.</para>
+   </sect2>
+   <sect2 id="aboutproof">
+    <title>Looking at a proof under development</title>
+    <para>A proof under development is not yet part of the library.
+     The special URI &quot;about:proof&quot; can be used to browse the
+     proof currently under development, if there is one.
+     The &quot;home&quot; button of the CIC browser sets the location bar to
+     &quot;about:proof&quot;.
+    </para>
+   </sect2>
+   <sect2 id="whelp">
+    <title>Searching the library</title>
+    <para>The query bar of the CIC browser can be used to search the library
+     of Matita for theorems or definitions that match certain criteria.
+     The criteria is given by typing a term in the query bar and selecting
+     an action in the drop down menu right of it.</para>
+    <sect3 id="locate">
+     <title>Searching by name</title>
+     <para>     &TODO;</para>
+   </sect3>
+    <sect3 id="hint">
+     <title>List of lemmas that can be applied</title>
+     <para>     &TODO;</para>
+   </sect3>
+    <sect3 id="match">
+     <title>Searching by exact match</title>
+     <para>     &TODO;</para>
+   </sect3>
+    <sect3 id="elim">
+     <title>List of elimination principles for a given type</title>
+     <para>     &TODO;</para>
+   </sect3>
+    <sect3 id="instance">
+     <title>Searching by instantiation</title>
+     <para>     &TODO;</para>
+   </sect3>
+   </sect2>
+  </sect1>
+  <sect1 id="authoring">
+   <title>Authoring</title>
+   <sect2 id="compilation">
+   <title>How to compile a script</title>
+   <para>
+	Scripts are compiled to base URIs. Base URIs are of the form
+	&quot;cic:/matita/path&quot; and are given once for all for a set
+	of scripts using the &quot;root&quot; file. 
+   </para>
+   <para>
+	A &quot;root&quot; file has to be placed in the root of a script set,
+	for example, consider the following files and directories, and
+	assume you keep files in &quot;list&quot; separated from files
+	in &quot;sort&quot; (for example the former directory may contain
+	functions and proofs about lists, while latter sorting algorithms
+	for lists):
+<programlisting><![CDATA[
+  list/
+    list.ma (* depending just on the standard library *)
+    utils/
+      swap.ma (* including list.ma *)
+  sort/
+    qsort.ma (* including utils/swap.ma *)
+]]></programlisting>
+	To be able to compile properly the contents of &quot;list&quot;
+	a file called root has to be placed in it. The file should be like
+	the following snippet.
+<programlisting><![CDATA[
+  baseuri=cic:/matita/mydatastructures
+]]></programlisting>
+	This file tells &appname; that objects generated by 
+	&quot;list.ma&quot; have to be placed in 
+	&quot;cic:/matita/mydatastructures/list&quot; while 
+	objects generated by 
+	&quot;swap.ma&quot; have to be placed in 
+	&quot;cic:/matita/mydatastructures/utils/swap&quot;.
+  </para>
+  <para>
+	Once you created the root file, you must generate a depend file.
+	Enter the &quot;list&quot; directory (the root of yuor file set)
+	and type &quot;matitadep&quot;. Remember to regenerate the depend file
+	every time you alter the dependencies of your files (for example 
+	including other scripts).
+	You can now compile you files typing &quot;matitac&quot;.
+  </para>
+  <para>
+	  To compile the &quot;sort&quot; directory, create a root file
+	  in &quot;sort/&quot; like the following one and then run 
+	  &quot;matitadep&quot;.
+<programlisting><![CDATA[
+  baseuri=cic:/matita/myalgorithms
+  include_paths=../list
+]]></programlisting>
+	The include_paths field can declare a list of paths separated by space.
+	Please omit any &quot;/&quot; from the end of base URIs or paths.
+  </para>
+ </sect2>
+   <sect2 id="authoringinterface">
+    <title>The authoring interface</title>
+    <para>&TODO;</para>
+   </sect2>
+ </sect1>
+</chapter>
+
+

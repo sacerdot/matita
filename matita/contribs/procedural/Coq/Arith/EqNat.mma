@@ -1,0 +1,76 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+include "Init/Prelude.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: EqNat.v,v 1.14.2.1 2004/07/16 19:31:00 herbelin Exp $ i*)
+
+(*#* Equality on natural numbers *)
+
+(* UNEXPORTED
+Open Local Scope nat_scope.
+*)
+
+(* UNEXPORTED
+Implicit Types m n x y : nat.
+*)
+
+inline procedural "cic:/Coq/Arith/EqNat/eq_nat.con" as definition.
+
+inline procedural "cic:/Coq/Arith/EqNat/eq_nat_refl.con" as theorem.
+
+(* UNEXPORTED
+Hint Resolve eq_nat_refl: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/EqNat/eq_eq_nat.con" as theorem.
+
+(* UNEXPORTED
+Hint Immediate eq_eq_nat: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/EqNat/eq_nat_eq.con" as theorem.
+
+(* UNEXPORTED
+Hint Immediate eq_nat_eq: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/EqNat/eq_nat_elim.con" as theorem.
+
+inline procedural "cic:/Coq/Arith/EqNat/eq_nat_decide.con" as theorem.
+
+inline procedural "cic:/Coq/Arith/EqNat/beq_nat.con" as definition.
+
+inline procedural "cic:/Coq/Arith/EqNat/beq_nat_refl.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/EqNat/beq_nat_eq.con" as definition.
+

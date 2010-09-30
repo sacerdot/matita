@@ -1,0 +1,120 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "CoRN.ma".
+
+(* $Id: CSetoidInc.v,v 1.3 2004/04/22 14:49:43 lcf Exp $ *)
+
+(*#* printing included %\ensuremath{\subseteq}% #&sube;# *)
+
+include "algebra/CSetoidFun.ma".
+
+(* UNEXPORTED
+Section inclusion
+*)
+
+(*#* ** Inclusion
+
+Let [S] be a setoid, and [P], [Q], [R] be predicates on [S]. *)
+
+(* UNEXPORTED
+cic:/CoRN/algebra/CSetoidInc/inclusion/S.var
+*)
+
+inline procedural "cic:/CoRN/algebra/CSetoidInc/included.con" as definition.
+
+(* UNEXPORTED
+Section Basics
+*)
+
+(* UNEXPORTED
+cic:/CoRN/algebra/CSetoidInc/inclusion/Basics/P.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/algebra/CSetoidInc/inclusion/Basics/Q.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/algebra/CSetoidInc/inclusion/Basics/R.var
+*)
+
+inline procedural "cic:/CoRN/algebra/CSetoidInc/included_refl.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CSetoidInc/included_trans.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CSetoidInc/included_conj.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CSetoidInc/included_conj'.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CSetoidInc/included_conj''.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CSetoidInc/included_conj_lft.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CSetoidInc/included_conj_rht.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CSetoidInc/included_extend.con" as lemma.
+
+(* UNEXPORTED
+End Basics
+*)
+
+(*#*
+%\begin{convention}% Let [I,R:S->CProp] and [F G:(PartFunct S)], and denote
+by [P] and [Q], respectively, the domains of [F] and [G].
+%\end{convention}%
+*)
+
+(* UNEXPORTED
+cic:/CoRN/algebra/CSetoidInc/inclusion/F.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/algebra/CSetoidInc/inclusion/G.var
+*)
+
+(* begin hide *)
+
+inline procedural "cic:/CoRN/algebra/CSetoidInc/inclusion/P.con" "inclusion__" as definition.
+
+inline procedural "cic:/CoRN/algebra/CSetoidInc/inclusion/Q.con" "inclusion__" as definition.
+
+(* end hide *)
+
+(* UNEXPORTED
+cic:/CoRN/algebra/CSetoidInc/inclusion/R.var
+*)
+
+inline procedural "cic:/CoRN/algebra/CSetoidInc/included_FComp.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CSetoidInc/included_FComp'.con" as lemma.
+
+(* UNEXPORTED
+End inclusion
+*)
+
+(* UNEXPORTED
+Implicit Arguments included [S].
+*)
+
+(* UNEXPORTED
+Hint Resolve included_refl included_FComp : included.
+*)
+
+(* UNEXPORTED
+Hint Immediate included_trans included_FComp' : included.
+*)
+

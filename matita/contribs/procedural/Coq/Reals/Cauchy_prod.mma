@@ -1,0 +1,58 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Cauchy_prod.v,v 1.10.2.1 2004/07/16 19:31:10 herbelin Exp $ i*)
+
+include "Reals/Rbase.ma".
+
+include "Reals/Rfunctions.ma".
+
+include "Reals/Rseries.ma".
+
+include "Reals/PartSum.ma".
+
+(* UNEXPORTED
+Open Local Scope R_scope.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Cauchy_prod/sum_N_predN.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Cauchy_prod/sum_plus.con" as lemma.
+
+(* The main result *)
+
+inline procedural "cic:/Coq/Reals/Cauchy_prod/cauchy_finite.con" as theorem.
+

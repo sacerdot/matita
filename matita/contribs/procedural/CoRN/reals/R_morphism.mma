@@ -1,0 +1,360 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "CoRN.ma".
+
+(* begin hide *)
+
+(* In this file a notion of morphism between two arbitrary real number 
+   structures, is introduced together with te proofs that this notion of 
+   morphism preserves the basic algebraic structure. *)
+
+include "reals/CReals.ma".
+
+(* This comes from CReals1.v *)
+
+inline procedural "cic:/CoRN/reals/R_morphism/Cauchy_Lim_prop2.con" as definition.
+
+(* UNEXPORTED
+Section morphism
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/R_morphism/morphism/R1.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/R_morphism/morphism/R2.var
+*)
+
+(* UNEXPORTED
+Section morphism_details
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/R_morphism/morphism/morphism_details/phi.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/R_morphism/morphism/morphism_details/p1.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/R_morphism/morphism/morphism_details/p2.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/R_morphism/morphism/morphism_details/f1.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/R_morphism/morphism/morphism_details/f2.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/R_morphism/morphism/morphism_details/g1.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/R_morphism/morphism/morphism_details/g2.var
+*)
+
+inline procedural "cic:/CoRN/reals/R_morphism/fun_pres_relation.con" as definition.
+
+inline procedural "cic:/CoRN/reals/R_morphism/fun_pres_un_fun.con" as definition.
+
+inline procedural "cic:/CoRN/reals/R_morphism/fun_pres_bin_fun.con" as definition.
+
+(*
+Definition fun_pres_partial_fun:=(x:R1;H1:x[#]Zero;H2:(phi x)[#]Zero)
+(phi (nzinj R1 (i1 (nzpro R1 x H1))))[=](nzinj R2 (i2 (nzpro R2 (phi x) H2))).
+*)
+
+inline procedural "cic:/CoRN/reals/R_morphism/fun_pres_Lim.con" as definition.
+
+(* UNEXPORTED
+End morphism_details
+*)
+
+inline procedural "cic:/CoRN/reals/R_morphism/Homomorphism.ind".
+
+(* COERCION
+cic:/matita/CoRN-Procedural/reals/R_morphism/map.con
+*)
+
+(* This might be useful later... 
+Definition Homo_as_CSetoid_fun:=
+    [f:Homomorphism]
+         (Build_CSetoid_fun R1 R2 f 
+           (fun_strext_imp_wd R1 R2 f (!map_strext f))
+           (!map_strext f)
+          ).
+*****************)
+
+inline procedural "cic:/CoRN/reals/R_morphism/map_strext_unfolded.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/R_morphism/map_wd_unfolded.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/R_morphism/map_pres_less_unfolded.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/R_morphism/map_pres_plus_unfolded.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/R_morphism/map_pres_mult_unfolded.con" as lemma.
+
+(* Now we start to derive some useful properties of a Homomorphism *)
+
+inline procedural "cic:/CoRN/reals/R_morphism/map_pres_zero.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/R_morphism/map_pres_zero_unfolded.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/R_morphism/map_pres_minus.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/R_morphism/map_pres_minus_unfolded.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/R_morphism/map_pres_apartness.con" as lemma.
+
+(* Merely a useful special case *)
+
+inline procedural "cic:/CoRN/reals/R_morphism/map_pres_ap_zero.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/R_morphism/map_pres_one.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/R_morphism/map_pres_one_unfolded.con" as lemma.
+
+(* I will not use the following lemma *)
+
+inline procedural "cic:/CoRN/reals/R_morphism/map_pres_inv_unfolded.con" as lemma.
+
+(* UNEXPORTED
+End morphism
+*)
+
+(* UNEXPORTED
+Section composition
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/R_morphism/composition/R1.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/R_morphism/composition/R2.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/R_morphism/composition/R3.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/R_morphism/composition/f.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/R_morphism/composition/g.var
+*)
+
+inline procedural "cic:/CoRN/reals/R_morphism/compose.con" as definition.
+
+inline procedural "cic:/CoRN/reals/R_morphism/compose_strext.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/R_morphism/compose_pres_less.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/R_morphism/compose_pres_plus.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/R_morphism/compose_pres_mult.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/R_morphism/compose_pres_Lim.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/R_morphism/Compose.con" as definition.
+
+(* UNEXPORTED
+End composition
+*)
+
+(* UNEXPORTED
+Section isomorphism
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/R_morphism/isomorphism/R1.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/R_morphism/isomorphism/R2.var
+*)
+
+(* UNEXPORTED
+Section identity_map
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/R_morphism/isomorphism/identity_map/R3.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/R_morphism/isomorphism/identity_map/f.var
+*)
+
+inline procedural "cic:/CoRN/reals/R_morphism/map_is_id.con" as definition.
+
+(* UNEXPORTED
+End identity_map
+*)
+
+inline procedural "cic:/CoRN/reals/R_morphism/Isomorphism.ind".
+
+(* UNEXPORTED
+End isomorphism
+*)
+
+(* UNEXPORTED
+Section surjective_map
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/R_morphism/surjective_map/R1.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/R_morphism/surjective_map/R2.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/R_morphism/surjective_map/f.var
+*)
+
+inline procedural "cic:/CoRN/reals/R_morphism/map_is_surjective.con" as definition.
+
+(* UNEXPORTED
+End surjective_map
+*)
+
+(* UNEXPORTED
+Section simplification
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/R_morphism/simplification/R1.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/R_morphism/simplification/R2.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/R_morphism/simplification/f.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/R_morphism/simplification/H1.var
+*)
+
+inline procedural "cic:/CoRN/reals/R_morphism/f_well_def.con" as lemma.
+
+(* UNEXPORTED
+Section with_less
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/R_morphism/simplification/with_less/H2.var
+*)
+
+inline procedural "cic:/CoRN/reals/R_morphism/less_pres_f.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/R_morphism/leEq_pres_f.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/R_morphism/f_pres_leEq.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/R_morphism/f_pres_apartness.con" as lemma.
+
+(* UNEXPORTED
+End with_less
+*)
+
+(* UNEXPORTED
+Section with_plus
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/R_morphism/simplification/with_plus/H3.var
+*)
+
+inline procedural "cic:/CoRN/reals/R_morphism/f_pres_Zero.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/R_morphism/f_pres_minus.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/R_morphism/f_pres_min.con" as lemma.
+
+(* UNEXPORTED
+End with_plus
+*)
+
+(* UNEXPORTED
+Section with_plus_less
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/R_morphism/simplification/with_plus_less/H2.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/R_morphism/simplification/with_plus_less/H3.var
+*)
+
+inline procedural "cic:/CoRN/reals/R_morphism/f_pres_ap_zero.con" as lemma.
+
+(* UNEXPORTED
+Section surjectivity_helps
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/R_morphism/simplification/with_plus_less/surjectivity_helps/f_surj.var
+*)
+
+inline procedural "cic:/CoRN/reals/R_morphism/f_pres_Lim.con" as lemma.
+
+(* UNEXPORTED
+End surjectivity_helps
+*)
+
+(* UNEXPORTED
+Section with_mult_plus_less
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/R_morphism/simplification/with_plus_less/with_mult_plus_less/H4.var
+*)
+
+inline procedural "cic:/CoRN/reals/R_morphism/f_pres_one.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/R_morphism/f_pres_inv.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/R_morphism/simplified_Homomorphism.con" as definition.
+
+(* UNEXPORTED
+End with_mult_plus_less
+*)
+
+(* UNEXPORTED
+End with_plus_less
+*)
+
+(* UNEXPORTED
+End simplification
+*)
+
+(* end hide *)
+

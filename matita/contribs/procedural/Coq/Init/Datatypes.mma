@@ -1,0 +1,166 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Datatypes.v,v 1.26.2.1 2004/07/16 19:31:03 herbelin Exp $ i*)
+
+include "Init/Notations.ma".
+
+include "Init/Logic.ma".
+
+(* UNEXPORTED
+Set Implicit Arguments.
+*)
+
+(*#* [unit] is a singleton datatype with sole inhabitant [tt] *)
+
+inline procedural "cic:/Coq/Init/Datatypes/unit.ind".
+
+(*#* [bool] is the datatype of the booleans values [true] and [false] *)
+
+inline procedural "cic:/Coq/Init/Datatypes/bool.ind".
+
+(* NOTATION
+Add Printing If bool.
+*)
+
+(*#* [nat] is the datatype of natural numbers built from [O] and successor [S];
+    note that zero is the letter O, not the numeral 0 *)
+
+inline procedural "cic:/Coq/Init/Datatypes/nat.ind".
+
+(* UNEXPORTED
+Delimit Scope nat_scope with nat.
+*)
+
+(* UNEXPORTED
+Bind Scope nat_scope with nat.
+*)
+
+(* UNEXPORTED
+Arguments Scope S [nat_scope].
+*)
+
+(*#* [Empty_set] has no inhabitant *)
+
+inline procedural "cic:/Coq/Init/Datatypes/Empty_set.ind".
+
+(*#* [identity A a] is the family of datatypes on [A] whose sole non-empty
+    member is the singleton datatype [identity A a a] whose
+    sole inhabitant is denoted [refl_identity A a] *)
+
+inline procedural "cic:/Coq/Init/Datatypes/identity.ind".
+
+(* UNEXPORTED
+Hint Resolve refl_identity: core v62.
+*)
+
+(* UNEXPORTED
+Implicit Arguments identity_ind [A].
+*)
+
+(* UNEXPORTED
+Implicit Arguments identity_rec [A].
+*)
+
+(* UNEXPORTED
+Implicit Arguments identity_rect [A].
+*)
+
+(*#* [option A] is the extension of A with a dummy element None *)
+
+inline procedural "cic:/Coq/Init/Datatypes/option.ind".
+
+(* UNEXPORTED
+Implicit Arguments None [A].
+*)
+
+(*#* [sum A B], equivalently [A + B], is the disjoint sum of [A] and [B] *)
+
+(* Syntax defined in Specif.v *)
+
+inline procedural "cic:/Coq/Init/Datatypes/sum.ind".
+
+(* NOTATION
+Notation "x + y" := (sum x y) : type_scope.
+*)
+
+(*#* [prod A B], written [A * B], is the product of [A] and [B];
+    the pair [pair A B a b] of [a] and [b] is abbreviated [(a,b)] *)
+
+inline procedural "cic:/Coq/Init/Datatypes/prod.ind".
+
+(* NOTATION
+Add Printing Let prod.
+*)
+
+(* NOTATION
+Notation "x * y" := (prod x y) : type_scope.
+*)
+
+(* NOTATION
+Notation "( x , y , .. , z )" := (pair .. (pair x y) .. z) : core_scope.
+*)
+
+(* UNEXPORTED
+Section projections
+*)
+
+(* UNEXPORTED
+cic:/Coq/Init/Datatypes/projections/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Init/Datatypes/projections/B.var
+*)
+
+inline procedural "cic:/Coq/Init/Datatypes/fst.con" as definition.
+
+inline procedural "cic:/Coq/Init/Datatypes/snd.con" as definition.
+
+(* UNEXPORTED
+End projections
+*)
+
+(* UNEXPORTED
+Hint Resolve pair inl inr: core v62.
+*)
+
+inline procedural "cic:/Coq/Init/Datatypes/surjective_pairing.con" as lemma.
+
+inline procedural "cic:/Coq/Init/Datatypes/injective_projections.con" as lemma.
+
+(*#* Comparison *)
+
+inline procedural "cic:/Coq/Init/Datatypes/comparison.ind".
+
+inline procedural "cic:/Coq/Init/Datatypes/CompOpp.con" as definition.
+

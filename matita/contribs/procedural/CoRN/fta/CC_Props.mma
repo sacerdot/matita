@@ -1,0 +1,103 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "CoRN.ma".
+
+(* $Id: CC_Props.v,v 1.3 2004/04/23 10:00:56 lcf Exp $ *)
+
+include "complex/AbsCC.ma".
+
+(*#* * More properties of complex numbers
+** Sequences and limits *)
+
+(* UNEXPORTED
+Hint Resolve AbsIR_sqrt_sqr: algebra.
+*)
+
+inline procedural "cic:/CoRN/fta/CC_Props/absCC_absIR_re.con" as lemma.
+
+inline procedural "cic:/CoRN/fta/CC_Props/absCC_absIR_im.con" as lemma.
+
+inline procedural "cic:/CoRN/fta/CC_Props/seq_re.con" as definition.
+
+inline procedural "cic:/CoRN/fta/CC_Props/seq_im.con" as definition.
+
+inline procedural "cic:/CoRN/fta/CC_Props/CC_Cauchy_prop.con" as definition.
+
+inline procedural "cic:/CoRN/fta/CC_Props/CC_CauchySeq.ind".
+
+(* COERCION
+cic:/matita/CoRN-Procedural/fta/CC_Props/CC_seq.con
+*)
+
+inline procedural "cic:/CoRN/fta/CC_Props/re_is_Cauchy.con" as lemma.
+
+inline procedural "cic:/CoRN/fta/CC_Props/im_is_Cauchy.con" as lemma.
+
+inline procedural "cic:/CoRN/fta/CC_Props/CC_Cauchy2re.con" as definition.
+
+inline procedural "cic:/CoRN/fta/CC_Props/CC_Cauchy2im.con" as definition.
+
+inline procedural "cic:/CoRN/fta/CC_Props/LimCC.con" as definition.
+
+inline procedural "cic:/CoRN/fta/CC_Props/CC_SeqLimit.con" as definition.
+
+inline procedural "cic:/CoRN/fta/CC_Props/AbsSmall_sqr.con" as lemma.
+
+inline procedural "cic:/CoRN/fta/CC_Props/AbsSmall_AbsCC.con" as lemma.
+
+inline procedural "cic:/CoRN/fta/CC_Props/LimCC_is_lim.con" as lemma.
+
+inline procedural "cic:/CoRN/fta/CC_Props/CC_SeqLimit_uniq.con" as lemma.
+
+inline procedural "cic:/CoRN/fta/CC_Props/CC_SeqLimit_unq.con" as lemma.
+
+(*#* ** Continuity for [CC]
+*)
+
+(* UNEXPORTED
+Section Continuity_for_CC
+*)
+
+(*#*
+%\begin{convention}% Let [f : CC->CC].
+%\end{convention}%
+*)
+
+(* UNEXPORTED
+cic:/CoRN/fta/CC_Props/Continuity_for_CC/f.var
+*)
+
+(* (CSetoid_un_op CC). *)
+
+inline procedural "cic:/CoRN/fta/CC_Props/CCfunLim.con" as definition.
+
+inline procedural "cic:/CoRN/fta/CC_Props/CCcontinAt.con" as definition.
+
+inline procedural "cic:/CoRN/fta/CC_Props/CCcontin.con" as definition.
+
+inline procedural "cic:/CoRN/fta/CC_Props/CCfunLim_SeqLimit.con" as lemma.
+
+inline procedural "cic:/CoRN/fta/CC_Props/f_seq.con" as definition.
+
+inline procedural "cic:/CoRN/fta/CC_Props/poly_pres_lim.con" as lemma.
+
+(* UNEXPORTED
+End Continuity_for_CC
+*)
+
+inline procedural "cic:/CoRN/fta/CC_Props/seq_yields_zero.con" as lemma.
+

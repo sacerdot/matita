@@ -1,0 +1,88 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+include "Init/Prelude.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Rstar.v,v 1.8.2.1 2004/07/16 19:31:16 herbelin Exp $ i*)
+
+(*#* Properties of a binary relation [R] on type [A] *)
+
+(* UNEXPORTED
+Section Rstar
+*)
+
+(* UNEXPORTED
+cic:/Coq/Relations/Rstar/Rstar/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Relations/Rstar/Rstar/R.var
+*)
+
+(*#* Definition of the reflexive-transitive closure [R*] of [R] *)
+
+(*#* Smallest reflexive [P] containing [R o P] *)
+
+inline procedural "cic:/Coq/Relations/Rstar/Rstar.con" as definition.
+
+inline procedural "cic:/Coq/Relations/Rstar/Rstar_reflexive.con" as theorem.
+
+inline procedural "cic:/Coq/Relations/Rstar/Rstar_R.con" as theorem.
+
+(*#* We conclude with transitivity of [Rstar] : *)
+
+inline procedural "cic:/Coq/Relations/Rstar/Rstar_transitive.con" as theorem.
+
+(*#* Another characterization of [R*] *)
+
+(*#* Smallest reflexive [P] containing [R o R*] *)
+
+inline procedural "cic:/Coq/Relations/Rstar/Rstar'.con" as definition.
+
+inline procedural "cic:/Coq/Relations/Rstar/Rstar'_reflexive.con" as theorem.
+
+inline procedural "cic:/Coq/Relations/Rstar/Rstar'_R.con" as theorem.
+
+(*#* Equivalence of the two definitions: *)
+
+inline procedural "cic:/Coq/Relations/Rstar/Rstar'_Rstar.con" as theorem.
+
+inline procedural "cic:/Coq/Relations/Rstar/Rstar_Rstar'.con" as theorem.
+
+(*#* Property of Commutativity of two relations *)
+
+inline procedural "cic:/Coq/Relations/Rstar/commut.con" as definition.
+
+(* UNEXPORTED
+End Rstar
+*)
+

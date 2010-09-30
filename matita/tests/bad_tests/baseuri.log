@@ -1,0 +1,4 @@
+[0;32mInfo:  [0mexecution of baseuri.ma started:
+[0;34mDebug: [0mExecuting: ``set "baseuri" "cic:/matita/tests/baseuri/"''
+[0;34mDebug: [0mExecuting: ``set "baseuri" "cic:/matita/tests/baseuri/"''
+[0;31mError: [0mError: Redefinition of 'baseuri' is forbidden.

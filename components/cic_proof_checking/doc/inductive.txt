@@ -1,0 +1,41 @@
+Table of allowed eliminations:
+
+            +--------------------+----------------------------------+  
+            |   Inductive Type   |    Elimination to                |
+            +--------------------+----------------------------------+
+            | Sort | "Smallness" | Prop | SetI | SetP | CProp| Type |
+            +--------------------+----------------------------------+
+            | Prop     empty     | yes    yes    yes    yes    yes  |
+            | Prop     unit      | yes    yes    yes    yes    yes  |
+            | Prop     small     | yes    no2    no2    no2    no12 |
+            | Prop               | yes    no2    no2    no2    no12 |
+            | SetI     empty     | yes    yes    --     yes    yes  |
+            | SetI     small     | yes    yes    --     yes    yes  |
+            | SetI               | yes    yes    --     no1    no1  |
+            | SetP     empty     | yes    --     yes    yes    yes  |
+            | SetP     small     | yes    --     yes    yes    yes  |
+            | SetP               | na3    na3    na3    na3    na3  |
+            | CProp    empty     | yes    yes    yes    yes    yes  |
+            | CProp    small     | yes    yes    yes    yes    yes  |
+            | CProp              | yes    yes    yes    yes    yes  |       
+            | Type               | yes    yes    yes    yes    yes  |
+            +--------------------+----------------------------------+
+
+Legenda:
+  no: elimination not allowed
+  na: not allowed, the inductive definition is rejected
+ 
+  1 : due to paradoxes a la Hurkens 
+  2 : due to code extraction + proof irreleveance incompatibility
+      (if you define Bool in Prop, you will be able to prove true<>false)
+  3 : inductive type is rejected due to universe inconsistency 
+  
+  SetP : Predicative Set
+  SetI : Impredicative Set
+
+  non-informative : Constructor arguments are in Prop only
+  small : Constructor arguments are not in Type and SetP and CProp
+  unit : Non (mutually) recursive /\ only one constructor /\ non-informative
+  empty : in Coq:    no constructors and non mutually recursive
+          in Matita: no constructors (but eventually mutually recursive
+                     with non-empty types)

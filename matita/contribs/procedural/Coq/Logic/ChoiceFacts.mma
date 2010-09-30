@@ -1,0 +1,73 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+include "Init/Prelude.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: ChoiceFacts.v,v 1.7.2.2 2004/08/01 09:29:59 herbelin Exp $ i*)
+
+(*#* We show that the functional formulation of the axiom of Choice
+   (usual formulation in type theory) is equivalent to its relational
+   formulation (only formulation of set theory) + the axiom of
+   (parametric) definite description (aka axiom of unique choice) *)
+
+(*#* This shows that the axiom of choice can be assumed (under its
+   relational formulation) without known inconsistency with classical logic,
+   though definite description conflicts with classical logic *)
+
+inline procedural "cic:/Coq/Logic/ChoiceFacts/RelationalChoice.con" as definition.
+
+inline procedural "cic:/Coq/Logic/ChoiceFacts/FunctionalChoice.con" as definition.
+
+inline procedural "cic:/Coq/Logic/ChoiceFacts/ParamDefiniteDescription.con" as definition.
+
+inline procedural "cic:/Coq/Logic/ChoiceFacts/description_rel_choice_imp_funct_choice.con" as lemma.
+
+inline procedural "cic:/Coq/Logic/ChoiceFacts/funct_choice_imp_rel_choice.con" as lemma.
+
+inline procedural "cic:/Coq/Logic/ChoiceFacts/funct_choice_imp_description.con" as lemma.
+
+inline procedural "cic:/Coq/Logic/ChoiceFacts/FunChoice_Equiv_RelChoice_and_ParamDefinDescr.con" as theorem.
+
+(*#* We show that the guarded relational formulation of the axiom of Choice
+   comes from the non guarded formulation in presence either of the
+   independance of premises or proof-irrelevance *)
+
+inline procedural "cic:/Coq/Logic/ChoiceFacts/GuardedRelationalChoice.con" as definition.
+
+inline procedural "cic:/Coq/Logic/ChoiceFacts/ProofIrrelevance.con" as definition.
+
+inline procedural "cic:/Coq/Logic/ChoiceFacts/rel_choice_and_proof_irrel_imp_guarded_rel_choice.con" as lemma.
+
+inline procedural "cic:/Coq/Logic/ChoiceFacts/IndependenceOfPremises.con" as definition.
+
+inline procedural "cic:/Coq/Logic/ChoiceFacts/rel_choice_indep_of_premises_imp_guarded_rel_choice.con" as lemma.
+

@@ -1,0 +1,48 @@
+(*
+    ||M||  This file is part of HELM, an Hypertextual, Electronic        
+    ||A||  Library of Mathematics, developed at the Computer Science     
+    ||T||  Department, University of Bologna, Italy.                     
+    ||I||                                                                
+    ||T||  HELM is free software; you can redistribute it and/or         
+    ||A||  modify it under the terms of the GNU General Public License   
+    \   /  version 2 or (at your option) any later version.      
+     \ /   This software is distributed as is, NO WARRANTY.     
+      V_______________________________________________________________ *)
+
+(* $Id$ *)
+
+exception UnificationFailure of string Lazy.t;;
+exception Uncertain of string Lazy.t;;
+exception AssertFailure of string Lazy.t;;
+
+val unify :
+  #NRstatus.status ->
+  ?test_eq_only:bool -> (* default: false *)
+  ?swap:bool -> (* default: false *)
+  NCic.metasenv -> NCic.substitution -> NCic.context -> 
+  NCic.term -> NCic.term ->
+   NCic.metasenv * NCic.substitution
+
+(* this should be moved elsewhere *)
+val fix_sorts: 
+  NCic.metasenv -> NCic.substitution -> 
+    NCic.term -> NCic.metasenv * NCic.term
+
+(* delift_type_wrt_terms st m s c t args
+ *   lift t (length args) 
+ *      [ rel 1 ... rel (len args) / lift (length args) (arg_1 .. arg_n) ]
+ *)      
+val delift_type_wrt_terms:
+  #NRstatus.status -> 
+  NCic.metasenv -> NCic.substitution -> NCic.context -> 
+  NCic.term -> NCic.term list -> 
+   NCic.metasenv * NCic.substitution * NCic.term
+
+val sortfy :
+    exn ->
+    NCic.metasenv ->
+    NCic.substitution ->
+    NCic.context ->
+    NCic.term -> NCic.metasenv * NCic.substitution * NCic.term
+
+val debug : bool ref

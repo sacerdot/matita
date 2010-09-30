@@ -1,0 +1,120 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Ranalysis4.v,v 1.19.2.1 2004/07/16 19:31:12 herbelin Exp $ i*)
+
+include "Reals/Rbase.ma".
+
+include "Reals/Rfunctions.ma".
+
+include "Reals/SeqSeries.ma".
+
+include "Reals/Rtrigo.ma".
+
+include "Reals/Ranalysis1.ma".
+
+include "Reals/Ranalysis3.ma".
+
+include "Reals/Exp_prop.ma".
+
+(* UNEXPORTED
+Open Local Scope R_scope.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Ranalysis4/derivable_pt_inv.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Ranalysis4/pr_nu_var.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Ranalysis4/pr_nu_var2.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Ranalysis4/derivable_inv.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis4/derive_pt_inv.con" as lemma.
+
+(* Rabsolu *)
+
+inline procedural "cic:/Coq/Reals/Ranalysis4/Rabs_derive_1.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis4/Rabs_derive_2.con" as lemma.
+
+(* Rabsolu is derivable for all x <> 0 *)
+
+inline procedural "cic:/Coq/Reals/Ranalysis4/Rderivable_pt_abs.con" as lemma.
+
+(* Rabsolu is continuous for all x *)
+
+inline procedural "cic:/Coq/Reals/Ranalysis4/Rcontinuity_abs.con" as lemma.
+
+(* Finite sums : Sum a_k x^k *)
+
+inline procedural "cic:/Coq/Reals/Ranalysis4/continuity_finite_sum.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis4/derivable_pt_lim_fs.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis4/derivable_pt_lim_finite_sum.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis4/derivable_pt_finite_sum.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis4/derivable_finite_sum.con" as lemma.
+
+(* Regularity of hyperbolic functions *)
+
+inline procedural "cic:/Coq/Reals/Ranalysis4/derivable_pt_lim_cosh.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis4/derivable_pt_lim_sinh.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis4/derivable_pt_exp.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis4/derivable_pt_cosh.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis4/derivable_pt_sinh.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis4/derivable_exp.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis4/derivable_cosh.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis4/derivable_sinh.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis4/derive_pt_exp.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis4/derive_pt_cosh.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis4/derive_pt_sinh.con" as lemma.
+

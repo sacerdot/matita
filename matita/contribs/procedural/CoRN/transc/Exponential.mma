@@ -1,0 +1,308 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "CoRN.ma".
+
+(* $Id: Exponential.v,v 1.7 2004/04/23 10:01:07 lcf Exp $ *)
+
+include "transc/TaylorSeries.ma".
+
+(* UNEXPORTED
+Opaque Min Max.
+*)
+
+(*#* *Exponential and Logarithmic Functions
+
+The main properties of the exponential and logarithmic functions.
+
+**Properties of Exponential
+
+Exponential is strongly extensional and well defined.
+*)
+
+inline procedural "cic:/CoRN/transc/Exponential/Exp_strext.con" as lemma.
+
+inline procedural "cic:/CoRN/transc/Exponential/Exp_wd.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Exp_wd: algebra.
+*)
+
+inline procedural "cic:/CoRN/transc/Exponential/Exp_zero.con" as lemma.
+
+(*#* $e^1=e$#e<sup>1</sup>=e#, where [e] was defined a long time ago.
+*)
+
+inline procedural "cic:/CoRN/transc/Exponential/Exp_one.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Exp_zero Exp_one: algebra.
+*)
+
+(*#*
+The exponential function is its own derivative, and continuous.
+*)
+
+inline procedural "cic:/CoRN/transc/Exponential/Derivative_Exp.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Derivative_Exp: derivate.
+*)
+
+inline procedural "cic:/CoRN/transc/Exponential/Continuous_Exp.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Continuous_Exp: continuous.
+*)
+
+(*#*
+Negative numbers are projected into the interval [[0,1]].
+*)
+
+inline procedural "cic:/CoRN/transc/Exponential/One_less_Exp.con" as lemma.
+
+inline procedural "cic:/CoRN/transc/Exponential/One_leEq_Exp.con" as lemma.
+
+inline procedural "cic:/CoRN/transc/Exponential/Exp_pos'.con" as lemma.
+
+(*#*
+Exponential is the unique function which evaluates to 1 at 0 and is
+its own derivative.
+*)
+
+inline procedural "cic:/CoRN/transc/Exponential/Exp_unique_lemma.con" as lemma.
+
+inline procedural "cic:/CoRN/transc/Exponential/Exp_bnd.con" as lemma.
+
+(* UNEXPORTED
+Opaque Expon.
+*)
+
+(* UNEXPORTED
+Transparent Expon.
+*)
+
+inline procedural "cic:/CoRN/transc/Exponential/Exp_unique.con" as lemma.
+
+(* UNEXPORTED
+Opaque Expon.
+*)
+
+inline procedural "cic:/CoRN/transc/Exponential/Exp_plus_pos.con" as lemma.
+
+(*#* The usual rules for computing the exponential of a sum. *)
+
+inline procedural "cic:/CoRN/transc/Exponential/Exp_plus.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Exp_plus: algebra.
+*)
+
+inline procedural "cic:/CoRN/transc/Exponential/Exp_plus'.con" as lemma.
+
+inline procedural "cic:/CoRN/transc/Exponential/Exp_inv_char.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Exp_inv_char: algebra.
+*)
+
+(*#* The exponential of any number is always positive---and thus apart
+from zero.
+*)
+
+inline procedural "cic:/CoRN/transc/Exponential/Exp_pos.con" as lemma.
+
+inline procedural "cic:/CoRN/transc/Exponential/Exp_ap_zero.con" as lemma.
+
+(*#*
+And the rules for the exponential of differences.
+*)
+
+inline procedural "cic:/CoRN/transc/Exponential/Exp_inv.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Exp_inv: algebra.
+*)
+
+inline procedural "cic:/CoRN/transc/Exponential/Exp_minus.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Exp_minus: algebra.
+*)
+
+inline procedural "cic:/CoRN/transc/Exponential/Exp_inv'.con" as lemma.
+
+inline procedural "cic:/CoRN/transc/Exponential/Exp_minus'.con" as lemma.
+
+(*#* Exponential is a monotonous function. *)
+
+inline procedural "cic:/CoRN/transc/Exponential/Exp_less_One.con" as lemma.
+
+inline procedural "cic:/CoRN/transc/Exponential/Exp_leEq_One.con" as lemma.
+
+inline procedural "cic:/CoRN/transc/Exponential/Exp_resp_less.con" as lemma.
+
+inline procedural "cic:/CoRN/transc/Exponential/Exp_resp_leEq.con" as lemma.
+
+(*#* **Properties of Logarithm
+
+The logarithm is a continuous function with derivative [One[/]x].
+*)
+
+inline procedural "cic:/CoRN/transc/Exponential/Derivative_Log.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Derivative_Log: derivate.
+*)
+
+inline procedural "cic:/CoRN/transc/Exponential/Continuous_Log.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Continuous_Log: continuous.
+*)
+
+(*#* Logarithm of [One]. *)
+
+inline procedural "cic:/CoRN/transc/Exponential/Log_one.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Log_one: algebra.
+*)
+
+(*#* The logarithm is (strongly) extensional. *)
+
+inline procedural "cic:/CoRN/transc/Exponential/Log_strext.con" as lemma.
+
+inline procedural "cic:/CoRN/transc/Exponential/Log_wd.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Log_wd: algebra.
+*)
+
+(*#* The rule for the logarithm of the product. *)
+
+(* UNEXPORTED
+Opaque Logarithm.
+*)
+
+(* UNEXPORTED
+Transparent Logarithm.
+*)
+
+inline procedural "cic:/CoRN/transc/Exponential/Log_mult.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Log_mult: algebra.
+*)
+
+inline procedural "cic:/CoRN/transc/Exponential/Log_mult'.con" as lemma.
+
+(*#* A characterization of the domain of the logarithm. *)
+
+inline procedural "cic:/CoRN/transc/Exponential/Log_domain.con" as lemma.
+
+(* UNEXPORTED
+Opaque Expon Logarithm.
+*)
+
+(*#* $\log(e^x)=x$#log(e<sup>x</sup>)=x# for all [x], both as a
+numerical and as a functional equation.
+*)
+
+inline procedural "cic:/CoRN/transc/Exponential/Log_Exp_inv.con" as lemma.
+
+inline procedural "cic:/CoRN/transc/Exponential/Log_Exp.con" as lemma.
+
+(* UNEXPORTED
+Transparent Logarithm.
+*)
+
+(* UNEXPORTED
+Hint Resolve Log_Exp: algebra.
+*)
+
+inline procedural "cic:/CoRN/transc/Exponential/Exp_Log_lemma.con" as lemma.
+
+(*#* The converse expression. *)
+
+inline procedural "cic:/CoRN/transc/Exponential/Exp_Log.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Exp_Log: algebra.
+*)
+
+(*#* Exponential and logarithm are injective. *)
+
+inline procedural "cic:/CoRN/transc/Exponential/Exp_cancel.con" as lemma.
+
+inline procedural "cic:/CoRN/transc/Exponential/Log_cancel.con" as lemma.
+
+(* UNEXPORTED
+Opaque Logarithm.
+*)
+
+(*#* And the final characterization as inverse functions. *)
+
+inline procedural "cic:/CoRN/transc/Exponential/Exp_Log_inv.con" as lemma.
+
+inline procedural "cic:/CoRN/transc/Exponential/Log_E.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Log_E: algebra.
+*)
+
+(*#* Several rules regarding inequalities. *)
+
+inline procedural "cic:/CoRN/transc/Exponential/Log_cancel_less.con" as lemma.
+
+inline procedural "cic:/CoRN/transc/Exponential/Log_cancel_leEq.con" as lemma.
+
+inline procedural "cic:/CoRN/transc/Exponential/Log_resp_less.con" as lemma.
+
+inline procedural "cic:/CoRN/transc/Exponential/Log_resp_leEq.con" as lemma.
+
+inline procedural "cic:/CoRN/transc/Exponential/Exp_cancel_less.con" as lemma.
+
+inline procedural "cic:/CoRN/transc/Exponential/Exp_cancel_leEq.con" as lemma.
+
+inline procedural "cic:/CoRN/transc/Exponential/Log_less_Zero.con" as lemma.
+
+inline procedural "cic:/CoRN/transc/Exponential/Log_leEq_Zero.con" as lemma.
+
+inline procedural "cic:/CoRN/transc/Exponential/Zero_less_Log.con" as lemma.
+
+inline procedural "cic:/CoRN/transc/Exponential/Zero_leEq_Log.con" as lemma.
+
+(*#* Finally, rules for logarithm of quotients. *)
+
+inline procedural "cic:/CoRN/transc/Exponential/Log_recip_char.con" as lemma.
+
+inline procedural "cic:/CoRN/transc/Exponential/Log_recip.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Log_recip: algebra.
+*)
+
+inline procedural "cic:/CoRN/transc/Exponential/Log_recip'.con" as lemma.
+
+inline procedural "cic:/CoRN/transc/Exponential/Log_div.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Log_div: algebra.
+*)
+
+inline procedural "cic:/CoRN/transc/Exponential/Log_div'.con" as lemma.
+

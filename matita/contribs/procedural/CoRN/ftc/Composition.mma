@@ -1,0 +1,533 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "CoRN.ma".
+
+(* $Id: Composition.v,v 1.4 2004/04/23 10:00:58 lcf Exp $ *)
+
+include "ftc/MoreFunctions.ma".
+
+(* UNEXPORTED
+Section Maps_into_Compacts
+*)
+
+(* UNEXPORTED
+Section Part_Funct
+*)
+
+(*#* *Composition
+
+Preservation results for functional composition are treated in this
+separate file.  We start by defining some auxiliary predicates, and
+then prove the preservation of continuity through composition and the
+chain rule for differentiation, both for compact and arbitrary
+intervals.
+
+%\begin{convention}% Throughout this section:
+- [a, b : IR] and [I] will denote [[a,b]];
+- [c, d : IR] and [J] will denote [[c,d]];
+- [F, F', G, G'] will be partial functions.
+
+%\end{convention}%
+
+** Maps into Compacts
+
+Both continuity and differentiability proofs require extra hypothesis
+on the functions involved---namely, that every compact interval is
+mapped into another compact interval.  We define this concept for
+partial functions, and prove some trivial results.
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Maps_into_Compacts/Part_Funct/F.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Maps_into_Compacts/Part_Funct/G.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Maps_into_Compacts/Part_Funct/a.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Maps_into_Compacts/Part_Funct/b.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Maps_into_Compacts/Part_Funct/Hab.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Maps_into_Compacts/Part_Funct/c.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Maps_into_Compacts/Part_Funct/d.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Maps_into_Compacts/Part_Funct/Hcd.var
+*)
+
+(* begin hide *)
+
+inline procedural "cic:/CoRN/ftc/Composition/Maps_into_Compacts/Part_Funct/I.con" "Maps_into_Compacts__Part_Funct__" as definition.
+
+(* end hide *)
+
+(* begin show *)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Maps_into_Compacts/Part_Funct/Hf.var
+*)
+
+(* end show *)
+
+inline procedural "cic:/CoRN/ftc/Composition/maps_into_compacts.con" as definition.
+
+(* begin show *)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Maps_into_Compacts/Part_Funct/maps.var
+*)
+
+(* end show *)
+
+inline procedural "cic:/CoRN/ftc/Composition/maps_lemma'.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/Composition/maps_lemma.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/Composition/maps_lemma_less.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/Composition/maps_lemma_inc.con" as lemma.
+
+(* UNEXPORTED
+End Part_Funct
+*)
+
+(* UNEXPORTED
+End Maps_into_Compacts
+*)
+
+(* UNEXPORTED
+Section Mapping
+*)
+
+(*#*
+As was the case for division of partial functions, this condition
+completely characterizes the domain of the composite function.
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Mapping/F.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Mapping/G.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Mapping/a.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Mapping/b.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Mapping/Hab.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Mapping/c.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Mapping/d.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Mapping/Hcd.var
+*)
+
+(* begin show *)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Mapping/Hf.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Mapping/Hg.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Mapping/maps.var
+*)
+
+(* end show *)
+
+inline procedural "cic:/CoRN/ftc/Composition/included_comp.con" as lemma.
+
+(* UNEXPORTED
+End Mapping
+*)
+
+(* UNEXPORTED
+Section Interval_Continuity
+*)
+
+(*#* **Continuity
+
+We now prove that the composition of two continuous partial functions is continuous.
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Interval_Continuity/a.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Interval_Continuity/b.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Interval_Continuity/Hab.var
+*)
+
+(* begin hide *)
+
+inline procedural "cic:/CoRN/ftc/Composition/Interval_Continuity/I.con" "Interval_Continuity__" as definition.
+
+(* end hide *)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Interval_Continuity/c.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Interval_Continuity/d.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Interval_Continuity/Hcd.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Interval_Continuity/F.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Interval_Continuity/G.var
+*)
+
+(* begin show *)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Interval_Continuity/contF.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Interval_Continuity/contG.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Interval_Continuity/Hmap.var
+*)
+
+(* end show *)
+
+inline procedural "cic:/CoRN/ftc/Composition/Continuous_I_comp.con" as lemma.
+
+(* UNEXPORTED
+End Interval_Continuity
+*)
+
+(* UNEXPORTED
+Section Derivative
+*)
+
+(*#* **Derivative
+
+We now work with the derivative relation and prove the chain rule for partial functions.
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Derivative/F.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Derivative/F'.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Derivative/G.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Derivative/G'.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Derivative/a.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Derivative/b.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Derivative/Hab'.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Derivative/c.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Derivative/d.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Derivative/Hcd'.var
+*)
+
+(* begin hide *)
+
+inline procedural "cic:/CoRN/ftc/Composition/Derivative/Hab.con" "Derivative__" as definition.
+
+inline procedural "cic:/CoRN/ftc/Composition/Derivative/Hcd.con" "Derivative__" as definition.
+
+inline procedural "cic:/CoRN/ftc/Composition/Derivative/I.con" "Derivative__" as definition.
+
+(* end hide *)
+
+(* begin show *)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Derivative/derF.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Derivative/derG.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Derivative/Hmap.var
+*)
+
+(* end show *)
+
+inline procedural "cic:/CoRN/ftc/Composition/included_comp'.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/Composition/maps'.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/Composition/Derivative_I_comp.con" as lemma.
+
+(*#*
+The next lemma will be useful when we move on to differentiability.
+*)
+
+inline procedural "cic:/CoRN/ftc/Composition/Diffble_I_comp_aux.con" as lemma.
+
+(* UNEXPORTED
+End Derivative
+*)
+
+(* UNEXPORTED
+Section Differentiability
+*)
+
+(*#* **Differentiability
+
+Finally, we move on to differentiability.
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Differentiability/F.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Differentiability/G.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Differentiability/a.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Differentiability/b.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Differentiability/Hab'.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Differentiability/c.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Differentiability/d.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Differentiability/Hcd'.var
+*)
+
+(* begin hide *)
+
+inline procedural "cic:/CoRN/ftc/Composition/Differentiability/Hab.con" "Differentiability__" as definition.
+
+inline procedural "cic:/CoRN/ftc/Composition/Differentiability/Hcd.con" "Differentiability__" as definition.
+
+inline procedural "cic:/CoRN/ftc/Composition/Differentiability/I.con" "Differentiability__" as definition.
+
+(* end hide *)
+
+(* begin show *)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Differentiability/diffF.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Differentiability/diffG.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Differentiability/Hmap.var
+*)
+
+(* end show *)
+
+inline procedural "cic:/CoRN/ftc/Composition/Diffble_I_comp.con" as lemma.
+
+(* UNEXPORTED
+End Differentiability
+*)
+
+(* UNEXPORTED
+Section Generalized_Intervals
+*)
+
+(*#* **Generalizations
+
+We now generalize this results to arbitrary intervals.  We begin by generalizing the notion of mapping compacts into compacts.
+
+%\begin{convention}% We assume [I,J] to be proper intervals.
+%\end{convention}%
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Generalized_Intervals/I.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Generalized_Intervals/J.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Generalized_Intervals/pI.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Generalized_Intervals/pJ.var
+*)
+
+inline procedural "cic:/CoRN/ftc/Composition/maps_compacts_into.con" as definition.
+
+(*#*
+Now everything comes naturally:
+*)
+
+inline procedural "cic:/CoRN/ftc/Composition/comp_inc_lemma.con" as lemma.
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Generalized_Intervals/F.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Generalized_Intervals/F'.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Generalized_Intervals/G.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Generalized_Intervals/G'.var
+*)
+
+(* begin show *)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Generalized_Intervals/Hmap.var
+*)
+
+(* end show *)
+
+inline procedural "cic:/CoRN/ftc/Composition/Continuous_comp.con" as lemma.
+
+(* begin show *)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Composition/Generalized_Intervals/Hmap'.var
+*)
+
+(* end show *)
+
+inline procedural "cic:/CoRN/ftc/Composition/Derivative_comp.con" as lemma.
+
+(* UNEXPORTED
+End Generalized_Intervals
+*)
+
+(* UNEXPORTED
+Section Corollaries
+*)
+
+(*#*
+Finally, some criteria to prove that a function with a specific domain maps compacts into compacts:
+*)
+
+inline procedural "cic:/CoRN/ftc/Composition/positive_fun.con" as definition.
+
+inline procedural "cic:/CoRN/ftc/Composition/negative_fun.con" as definition.
+
+inline procedural "cic:/CoRN/ftc/Composition/positive_imp_maps_compacts_into.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/Composition/negative_imp_maps_compacts_into.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/Composition/Continuous_imp_maps_compacts_into.con" as lemma.
+
+(*#*
+As a corollary, we get the generalization of differentiability property.
+*)
+
+inline procedural "cic:/CoRN/ftc/Composition/Diffble_comp.con" as lemma.
+
+(* UNEXPORTED
+End Corollaries
+*)
+
+(* UNEXPORTED
+Hint Immediate included_comp: included.
+*)
+
+(* UNEXPORTED
+Hint Immediate Continuous_I_comp Continuous_comp: continuous.
+*)
+

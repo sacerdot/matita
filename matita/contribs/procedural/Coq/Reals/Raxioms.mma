@@ -1,0 +1,254 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Raxioms.v,v 1.20.2.1 2004/07/16 19:31:12 herbelin Exp $ i*)
+
+(*#********************************************************)
+
+(*#*    Axiomatisation of the classical reals             *)
+
+(*#********************************************************)
+
+include "ZArith/ZArith_base.ma".
+
+include "Reals/Rdefinitions.ma".
+
+(* UNEXPORTED
+Open Local Scope R_scope.
+*)
+
+(*#********************************************************)
+
+(*               Field axioms                            *)
+
+(*#********************************************************)
+
+(*#********************************************************)
+
+(*#*      Addition                                        *)
+
+(*#********************************************************)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Raxioms/Rplus_comm.con".
+
+(* UNEXPORTED
+Hint Resolve Rplus_comm: real.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Raxioms/Rplus_assoc.con".
+
+(* UNEXPORTED
+Hint Resolve Rplus_assoc: real.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Raxioms/Rplus_opp_r.con".
+
+(* UNEXPORTED
+Hint Resolve Rplus_opp_r: real v62.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Raxioms/Rplus_0_l.con".
+
+(* UNEXPORTED
+Hint Resolve Rplus_0_l: real.
+*)
+
+(*#**********************************************************)
+
+(*#*       Multiplication                                   *)
+
+(*#**********************************************************)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Raxioms/Rmult_comm.con".
+
+(* UNEXPORTED
+Hint Resolve Rmult_comm: real v62.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Raxioms/Rmult_assoc.con".
+
+(* UNEXPORTED
+Hint Resolve Rmult_assoc: real v62.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Raxioms/Rinv_l.con".
+
+(* UNEXPORTED
+Hint Resolve Rinv_l: real.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Raxioms/Rmult_1_l.con".
+
+(* UNEXPORTED
+Hint Resolve Rmult_1_l: real.
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Raxioms/R1_neq_R0.con".
+
+(* UNEXPORTED
+Hint Resolve R1_neq_R0: real.
+*)
+
+(*#********************************************************)
+
+(*#*      Distributivity                                  *)
+
+(*#********************************************************)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Raxioms/Rmult_plus_distr_l.con".
+
+(* UNEXPORTED
+Hint Resolve Rmult_plus_distr_l: real v62.
+*)
+
+(*#********************************************************)
+
+(*#*      Order axioms                                    *)
+
+(*#********************************************************)
+
+(*#********************************************************)
+
+(*#*      Total Order                                     *)
+
+(*#********************************************************)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Raxioms/total_order_T.con".
+
+(*#********************************************************)
+
+(*#*      Lower                                           *)
+
+(*#********************************************************)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Raxioms/Rlt_asym.con".
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Raxioms/Rlt_trans.con".
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Raxioms/Rplus_lt_compat_l.con".
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Raxioms/Rmult_lt_compat_l.con".
+
+(* UNEXPORTED
+Hint Resolve Rlt_asym Rplus_lt_compat_l Rmult_lt_compat_l: real.
+*)
+
+(*#*********************************************************)
+
+(*#*      Injection from N to R                            *)
+
+(*#*********************************************************)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Raxioms/INR.con" as definition.
+
+(* UNEXPORTED
+Arguments Scope INR [nat_scope].
+*)
+
+(*#*********************************************************)
+
+(*#*      Injection from [Z] to [R]                        *)
+
+(*#*********************************************************)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Raxioms/IZR.con" as definition.
+
+(* UNEXPORTED
+Arguments Scope IZR [Z_scope].
+*)
+
+(*#*********************************************************)
+
+(*#*      [R] Archimedian                                  *)
+
+(*#*********************************************************)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Raxioms/archimed.con".
+
+(*#*********************************************************)
+
+(*#*      [R] Complete                                     *)
+
+(*#*********************************************************)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Raxioms/is_upper_bound.con" as definition.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Raxioms/bound.con" as definition.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Raxioms/is_lub.con" as definition.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Raxioms/completeness.con".
+

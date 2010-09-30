@@ -1,0 +1,187 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*#***************************************************************************)
+
+(*                                                                          *)
+
+(*                         Naive Set Theory in Coq                          *)
+
+(*                                                                          *)
+
+(*                     INRIA                        INRIA                   *)
+
+(*              Rocquencourt                        Sophia-Antipolis        *)
+
+(*                                                                          *)
+
+(*                                 Coq V6.1                                 *)
+
+(*									    *)
+
+(*			         Gilles Kahn 				    *)
+
+(*				 Gerard Huet				    *)
+
+(*									    *)
+
+(*									    *)
+
+(*                                                                          *)
+
+(* Acknowledgments: This work was started in July 1993 by F. Prost. Thanks  *)
+
+(* to the Newton Institute for providing an exceptional work environment    *)
+
+(* in Summer 1995. Several developments by E. Ledinot were an inspiration.  *)
+
+(*#***************************************************************************)
+
+(*i $Id: Constructive_sets.v,v 1.5.2.1 2004/07/16 19:31:17 herbelin Exp $ i*)
+
+include "Sets/Ensembles.ma".
+
+(* UNEXPORTED
+Section Ensembles_facts
+*)
+
+(* UNEXPORTED
+cic:/Coq/Sets/Constructive_sets/Ensembles_facts/U.var
+*)
+
+inline procedural "cic:/Coq/Sets/Constructive_sets/Extension.con" as lemma.
+
+inline procedural "cic:/Coq/Sets/Constructive_sets/Noone_in_empty.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Noone_in_empty.
+*)
+
+inline procedural "cic:/Coq/Sets/Constructive_sets/Included_Empty.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Included_Empty.
+*)
+
+inline procedural "cic:/Coq/Sets/Constructive_sets/Add_intro1.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Add_intro1.
+*)
+
+inline procedural "cic:/Coq/Sets/Constructive_sets/Add_intro2.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Add_intro2.
+*)
+
+inline procedural "cic:/Coq/Sets/Constructive_sets/Inhabited_add.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Inhabited_add.
+*)
+
+inline procedural "cic:/Coq/Sets/Constructive_sets/Inhabited_not_empty.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Inhabited_not_empty.
+*)
+
+inline procedural "cic:/Coq/Sets/Constructive_sets/Add_not_Empty.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Add_not_Empty.
+*)
+
+inline procedural "cic:/Coq/Sets/Constructive_sets/not_Empty_Add.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve not_Empty_Add.
+*)
+
+inline procedural "cic:/Coq/Sets/Constructive_sets/Singleton_inv.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Singleton_inv.
+*)
+
+inline procedural "cic:/Coq/Sets/Constructive_sets/Singleton_intro.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Singleton_intro.
+*)
+
+inline procedural "cic:/Coq/Sets/Constructive_sets/Union_inv.con" as lemma.
+
+inline procedural "cic:/Coq/Sets/Constructive_sets/Add_inv.con" as lemma.
+
+inline procedural "cic:/Coq/Sets/Constructive_sets/Intersection_inv.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Intersection_inv.
+*)
+
+inline procedural "cic:/Coq/Sets/Constructive_sets/Couple_inv.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Couple_inv.
+*)
+
+inline procedural "cic:/Coq/Sets/Constructive_sets/Setminus_intro.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Setminus_intro.
+*)
+
+inline procedural "cic:/Coq/Sets/Constructive_sets/Strict_Included_intro.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Strict_Included_intro.
+*)
+
+inline procedural "cic:/Coq/Sets/Constructive_sets/Strict_Included_strict.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Strict_Included_strict.
+*)
+
+(* UNEXPORTED
+End Ensembles_facts
+*)
+
+(* UNEXPORTED
+Hint Resolve Singleton_inv Singleton_intro Add_intro1 Add_intro2
+  Intersection_inv Couple_inv Setminus_intro Strict_Included_intro
+  Strict_Included_strict Noone_in_empty Inhabited_not_empty Add_not_Empty
+  not_Empty_Add Inhabited_add Included_Empty: sets v62.
+*)
+

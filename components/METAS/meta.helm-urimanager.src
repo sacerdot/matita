@@ -1,0 +1,5 @@
+requires="str"
+version="0.0.1"
+archive(byte)="urimanager.cma"
+archive(native)="urimanager.cmxa"
+linkopts=""

@@ -1,0 +1,112 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: ZArith_dec.v,v 1.11.2.1 2004/07/16 19:31:20 herbelin Exp $ i*)
+
+include "Bool/Sumbool.ma".
+
+include "ZArith/BinInt.ma".
+
+include "ZArith/Zorder.ma".
+
+include "ZArith/Zcompare.ma".
+
+(* UNEXPORTED
+Open Local Scope Z_scope.
+*)
+
+inline procedural "cic:/Coq/ZArith/ZArith_dec/Dcompare_inf.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/ZArith_dec/Zcompare_rec.con" as lemma.
+
+(* UNEXPORTED
+Section decidability
+*)
+
+(* UNEXPORTED
+cic:/Coq/ZArith/ZArith_dec/decidability/x.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/ZArith/ZArith_dec/decidability/y.var
+*)
+
+(*#* Decidability of equality on binary integers *)
+
+inline procedural "cic:/Coq/ZArith/ZArith_dec/Z_eq_dec.con" as definition.
+
+(*#* Decidability of order on binary integers *)
+
+inline procedural "cic:/Coq/ZArith/ZArith_dec/Z_lt_dec.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/ZArith_dec/Z_le_dec.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/ZArith_dec/Z_gt_dec.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/ZArith_dec/Z_ge_dec.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/ZArith_dec/Z_lt_ge_dec.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/ZArith_dec/Z_lt_le_dec.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/ZArith_dec/Z_le_gt_dec.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/ZArith_dec/Z_gt_le_dec.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/ZArith_dec/Z_ge_lt_dec.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/ZArith_dec/Z_le_lt_eq_dec.con" as definition.
+
+(* UNEXPORTED
+End decidability
+*)
+
+(*#* Cotransitivity of order on binary integers *)
+
+inline procedural "cic:/Coq/ZArith/ZArith_dec/Zlt_cotrans.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/ZArith_dec/Zlt_cotrans_pos.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/ZArith_dec/Zlt_cotrans_neg.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/ZArith_dec/not_Zeq_inf.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/ZArith_dec/Z_dec.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/ZArith_dec/Z_dec'.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/ZArith_dec/Z_zerop.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/ZArith_dec/Z_notzerop.con" as definition.
+
+inline procedural "cic:/Coq/ZArith/ZArith_dec/Z_noteq_dec.con" as definition.
+

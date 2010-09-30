@@ -1,0 +1,315 @@
+model/rings/Zring.mma CoRN.ma algebra/CRings.ma model/abgroups/Zabgroup.ma
+algebra/Cauchy_COF.ma algebra/Cauchy_COF.mma
+reals/RealFuncts.ma reals/RealFuncts.mma
+tactics/Step.ma tactics/Step.mma
+algebra/CSemiGroups.ma algebra/CSemiGroups.mma
+reals/OddPolyRootIR.mma CoRN.ma reals/IVT.ma
+ftc/Composition.mma CoRN.ma ftc/MoreFunctions.ma
+tactics/FieldReflection.ma tactics/FieldReflection.mma
+algebra/Expon.mma CoRN.ma algebra/COrdCauchy.ma tactics/Transparent_algebra.ma
+ftc/TaylorLemma.mma CoRN.ma ftc/Rolle.ma
+model/non_examples/N_no_group.mma CoRN.ma algebra/CGroups.ma model/monoids/Nmonoid.ma
+algebra/CVectorSpace.mma CoRN.ma algebra/CFields.ma
+reals/CReals.ma reals/CReals.mma
+CoRN.ma preamble.ma
+devel/loeb/per/lst2fun.ma devel/loeb/per/lst2fun.mma
+algebra/CSemiGroups.mma CoRN.ma algebra/CSetoidInc.ma
+model/setoids/Nsetoid.mma CoRN.ma algebra/CSetoidFun.ma model/structures/Nsec.ma
+ftc/Partitions.ma ftc/Partitions.mma
+metrics/IR_CPMSpace.mma CoRN.ma metrics/ContFunctions.ma
+model/abgroups/QSposabgroup.mma CoRN.ma algebra/CAbGroups.ma model/groups/QSposgroup.ma
+model/structures/Npossec.ma model/structures/Npossec.mma
+model/structures/Qsec.ma model/structures/Qsec.mma
+fta/CC_Props.ma fta/CC_Props.mma
+algebra/CPoly_Degree.ma algebra/CPoly_Degree.mma
+ftc/MoreIntegrals.mma CoRN.ma ftc/Integral.ma ftc/MoreFunctions.ma
+algebra/CRings.ma algebra/CRings.mma
+transc/Pi.mma CoRN.ma transc/SinCos.ma
+algebra/CPolynomials.mma CoRN.ma tactics/RingReflection.ma
+ftc/Rolle.ma ftc/Rolle.mma
+reals/CSumsReals.ma reals/CSumsReals.mma
+ftc/NthDerivative.mma CoRN.ma ftc/Differentiability.ma
+ftc/FunctSums.mma CoRN.ma ftc/PartFunEquality.ma reals/CSumsReals.ma
+ftc/RefSeparated.ma ftc/RefSeparated.mma
+ftc/FTC.ma ftc/FTC.mma
+model/monoids/Nposmonoid.mma CoRN.ma algebra/CMonoids.ma model/semigroups/Npossemigroup.ma
+ftc/IntervalFunct.mma CoRN.ma ftc/PartFunEquality.ma
+algebra/ListType.ma algebra/ListType.mma
+reals/RealLists.mma CoRN.ma reals/CReals1.ma
+model/ordfields/Qordfield.ma model/ordfields/Qordfield.mma
+metrics/ContFunctions.ma metrics/ContFunctions.mma
+algebra/Cauchy_COF.mma CoRN.ma algebra/COrdCauchy.ma tactics/RingReflection.ma
+transc/Trigonometric.ma transc/Trigonometric.mma
+reals/CMetricFields.ma reals/CMetricFields.mma
+complex/NRootCC.ma complex/NRootCC.mma
+ftc/RefLemma.mma CoRN.ma ftc/RefSepRef.ma ftc/RefSeparated.ma ftc/RefSeparating.ma
+model/monoids/Nposmonoid.ma model/monoids/Nposmonoid.mma
+tactics/DiffTactics2.ma tactics/DiffTactics2.mma
+model/structures/Npossec.mma CoRN.ma model/structures/Nsec.ma
+ftc/PartInterval.mma CoRN.ma ftc/IntervalFunct.ma
+transc/Pi.ma transc/Pi.mma
+metrics/IR_CPMSpace.ma metrics/IR_CPMSpace.mma
+model/fields/Qfield.ma model/fields/Qfield.mma
+reals/Q_in_CReals.mma CoRN.ma model/monoids/Nmonoid.ma model/reals/Cauchy_IR.ma model/rings/Zring.ma
+algebra/CPoly_NthCoeff.mma CoRN.ma algebra/CPolynomials.ma
+algebra/CPoly_ApZero.ma algebra/CPoly_ApZero.mma
+metrics/CMetricSpaces.ma metrics/CMetricSpaces.mma
+model/semigroups/Zsemigroup.ma model/semigroups/Zsemigroup.mma
+model/semigroups/Npossemigroup.ma model/semigroups/Npossemigroup.mma
+model/monoids/Qmonoid.mma CoRN.ma algebra/CMonoids.ma model/semigroups/Qsemigroup.ma
+algebra/CVectorSpace.ma algebra/CVectorSpace.mma
+tactics/FieldReflection.mma CoRN.ma algebra/CFields.ma tactics/AlgReflection.ma tactics/Opaque_algebra.ma
+reals/Bridges_iso.ma reals/Bridges_iso.mma
+ftc/StrongIVT.ma ftc/StrongIVT.mma
+tactics/AlgReflection.mma CoRN.ma algebra/CLogic.ma
+algebra/CSetoids.mma CoRN.ma algebra/CLogic.ma tactics/Step.ma
+reals/Bridges_LUB.ma reals/Bridges_LUB.mma
+fta/FTA.ma fta/FTA.mma
+ftc/MoreFunctions.ma ftc/MoreFunctions.mma
+algebra/CLogic.ma algebra/CLogic.mma
+model/abgroups/Qabgroup.ma model/abgroups/Qabgroup.mma
+ftc/RefSepRef.ma ftc/RefSepRef.mma
+ftc/FunctSeries.mma CoRN.ma ftc/FunctSequence.ma reals/Series.ma
+ftc/Differentiability.mma CoRN.ma ftc/DerivativeOps.ma ftc/PartInterval.ma
+reals/iso_CReals.ma reals/iso_CReals.mma
+model/semigroups/QSpossemigroup.ma model/semigroups/QSpossemigroup.mma
+ftc/MoreFunctions.mma CoRN.ma ftc/MoreIntervals.ma
+model/ordfields/Qordfield.mma CoRN.ma algebra/COrdFields.ma model/fields/Qfield.ma
+metrics/CPMSTheory.ma metrics/CPMSTheory.mma
+ftc/FTC.mma CoRN.ma ftc/CalculusTheorems.ma ftc/MoreIntegrals.ma
+model/non_examples/Npos_no_monoid.ma model/non_examples/Npos_no_monoid.mma
+ftc/Rolle.mma CoRN.ma ftc/MoreFunctions.ma tactics/DiffTactics2.ma
+reals/Cauchy_CReals.ma reals/Cauchy_CReals.mma
+ftc/IntervalFunct.ma ftc/IntervalFunct.mma
+model/semigroups/Qpossemigroup.ma model/semigroups/Qpossemigroup.mma
+algebra/CSetoidInc.mma CoRN.ma algebra/CSetoidFun.ma
+algebra/CSetoids.ma algebra/CSetoids.mma
+model/monoids/Qposmonoid.mma CoRN.ma algebra/CMonoids.ma model/semigroups/Qpossemigroup.ma
+algebra/CSetoidFun.mma CoRN.ma algebra/CSetoids.ma
+transc/TaylorSeries.ma transc/TaylorSeries.mma
+model/semigroups/Npossemigroup.mma CoRN.ma algebra/CSemiGroups.ma model/semigroups/Nsemigroup.ma model/setoids/Npossetoid.ma
+algebra/CAbGroups.ma algebra/CAbGroups.mma
+fta/KeyLemma.mma CoRN.ma reals/NRootIR.ma
+algebra/CPoly_ApZero.mma CoRN.ma algebra/COrdFields2.ma algebra/CPoly_Degree.ma tactics/Opaque_algebra.ma tactics/Transparent_algebra.ma
+complex/Complex_Exponential.mma CoRN.ma complex/AbsCC.ma transc/Exponential.ma transc/Pi.ma
+model/groups/Qposgroup.ma model/groups/Qposgroup.mma
+reals/CReals1.mma CoRN.ma algebra/CPoly_ApZero.ma algebra/Expon.ma reals/Max_AbsIR.ma
+algebra/COrdFields.ma algebra/COrdFields.mma
+model/monoids/QSposmonoid.ma model/monoids/QSposmonoid.mma
+ftc/Integral.mma CoRN.ma ftc/RefLemma.ma
+ftc/MoreIntervals.ma ftc/MoreIntervals.mma
+tactics/Transparent_algebra.ma tactics/Transparent_algebra.mma
+model/setoids/Nsetoid.ma model/setoids/Nsetoid.mma
+algebra/CLogic.mma CoRN.ma algebra/Basics.ma
+model/semigroups/Qpossemigroup.mma CoRN.ma algebra/CSemiGroups.ma model/setoids/Qpossetoid.ma
+complex/AbsCC.mma CoRN.ma complex/CComplex.ma
+tactics/Opaque_algebra.ma tactics/Opaque_algebra.mma
+reals/CPoly_Contin.mma CoRN.ma reals/RealFuncts.ma
+reals/IVT.ma reals/IVT.mma
+tactics/Transparent_algebra.mma CoRN.ma
+reals/CauchySeq.ma reals/CauchySeq.mma
+complex/CComplex.mma CoRN.ma reals/NRootIR.ma tactics/Opaque_algebra.ma tactics/Transparent_algebra.ma
+transc/Trigonometric.mma CoRN.ma transc/TaylorSeries.ma
+reals/RealLists.ma reals/RealLists.mma
+ftc/CalculusTheorems.ma ftc/CalculusTheorems.mma
+ftc/Differentiability.ma ftc/Differentiability.mma
+model/groups/QSposgroup.mma CoRN.ma algebra/CGroups.ma model/monoids/QSposmonoid.ma
+devel/loeb/per/lst2fun.mma CoRN.ma algebra/CSetoids.ma
+transc/TrigMon.ma transc/TrigMon.mma
+ftc/StrongIVT.mma CoRN.ma ftc/CalculusTheorems.ma ftc/WeakIVT.ma
+tactics/DiffTactics3.mma CoRN.ma ftc/Composition.ma ftc/MoreFunSeries.ma tactics/DiffTactics2.ma
+model/setoids/Zsetoid.ma model/setoids/Zsetoid.mma
+metrics/CPseudoMSpaces.ma metrics/CPseudoMSpaces.mma
+model/groups/Qgroup.ma model/groups/Qgroup.mma
+fta/CPoly_Shift.ma fta/CPoly_Shift.mma
+algebra/COrdAbs.mma CoRN.ma algebra/COrdFields2.ma
+ftc/RefSeparated.mma CoRN.ma ftc/COrdLemmas.ma ftc/Partitions.ma
+ftc/NthDerivative.ma ftc/NthDerivative.mma
+ftc/Taylor.ma ftc/Taylor.mma
+model/setoids/Qsetoid.ma model/setoids/Qsetoid.mma
+metrics/Prod_Sub.mma CoRN.ma metrics/IR_CPMSpace.ma
+metrics/CPseudoMSpaces.mma CoRN.ma reals/Intervals.ma
+algebra/CSums.ma algebra/CSums.mma
+reals/CMetricFields.mma CoRN.ma reals/CReals1.ma
+tactics/DiffTactics1.ma tactics/DiffTactics1.mma
+reals/Bridges_iso.mma CoRN.ma reals/Bridges_LUB.ma
+fta/CPoly_Shift.mma CoRN.ma complex/CComplex.ma
+model/rings/Zring.ma model/rings/Zring.mma
+ftc/Derivative.ma ftc/Derivative.mma
+complex/AbsCC.ma complex/AbsCC.mma
+ftc/MoreIntervals.mma CoRN.ma ftc/NthDerivative.ma
+transc/InvTrigonom.mma CoRN.ma ftc/StrongIVT.ma transc/RealPowers.ma transc/TrigMon.ma
+ftc/CalculusTheorems.mma CoRN.ma ftc/Rolle.ma tactics/DiffTactics3.ma
+algebra/CPoly_Degree.mma CoRN.ma algebra/CFields.ma algebra/CPoly_NthCoeff.ma
+model/groups/Zgroup.ma model/groups/Zgroup.mma
+transc/SinCos.ma transc/SinCos.mma
+tactics/Opaque_algebra.mma CoRN.ma
+reals/iso_CReals.mma CoRN.ma reals/Q_dense.ma reals/R_morphism.ma
+algebra/COrdCauchy.ma algebra/COrdCauchy.mma
+model/rings/Qring.ma model/rings/Qring.mma
+reals/Max_AbsIR.mma CoRN.ma reals/CauchySeq.ma
+model/setoids/Qsetoid.mma CoRN.ma algebra/CSetoidFun.ma model/structures/Qsec.ma
+algebra/COrdCauchy.mma CoRN.ma algebra/COrdAbs.ma
+model/monoids/Zmonoid.mma CoRN.ma algebra/CMonoids.ma model/semigroups/Zsemigroup.ma
+ftc/COrdLemmas.mma CoRN.ma algebra/COrdCauchy.ma
+ftc/PartFunEquality.mma CoRN.ma reals/Intervals.ma tactics/DiffTactics1.ma
+ftc/DerivativeOps.ma ftc/DerivativeOps.mma
+algebra/ListType.mma CoRN.ma
+metrics/Equiv.ma metrics/Equiv.mma
+ftc/RefLemma.ma ftc/RefLemma.mma
+model/reals/Cauchy_IR.ma model/reals/Cauchy_IR.mma
+fta/CPoly_Contin1.ma fta/CPoly_Contin1.mma
+fta/KeyLemma.ma fta/KeyLemma.mma
+model/fields/Qfield.mma CoRN.ma algebra/CFields.ma model/rings/Qring.ma
+ftc/Continuity.mma CoRN.ma ftc/FunctSums.ma reals/NRootIR.ma
+model/abgroups/Zabgroup.ma model/abgroups/Zabgroup.mma
+algebra/COrdFields2.mma CoRN.ma algebra/COrdFields.ma tactics/Opaque_algebra.ma tactics/Transparent_algebra.ma
+reals/Bridges_LUB.mma CoRN.ma algebra/Expon.ma reals/iso_CReals.ma
+ftc/FunctSeries.ma ftc/FunctSeries.mma
+preamble.ma coq.ma
+algebra/CAbMonoids.mma CoRN.ma algebra/CMonoids.ma
+ftc/FunctSequence.ma ftc/FunctSequence.mma
+model/groups/Zgroup.mma CoRN.ma algebra/CGroups.ma model/monoids/Zmonoid.ma
+tactics/AlgReflection.ma tactics/AlgReflection.mma
+algebra/CSetoidInc.ma algebra/CSetoidInc.mma
+reals/CReals.mma CoRN.ma algebra/COrdCauchy.ma
+devel/loeb/IDA/Ch6.mma CoRN.ma algebra/CMonoids.ma algebra/CSemiGroups.ma devel/loeb/per/csetfun.ma devel/loeb/per/lst2fun.ma model/monoids/Nmonoid.ma model/monoids/Zmonoid.ma model/semigroups/Zsemigroup.ma model/setoids/Nsetoid.ma model/setoids/Qsetoid.ma model/setoids/Zsetoid.ma
+ftc/DerivativeOps.mma CoRN.ma ftc/Derivative.ma
+model/semigroups/QSpossemigroup.mma CoRN.ma algebra/CSemiGroups.ma model/setoids/Qpossetoid.ma
+algebra/CRings.mma CoRN.ma algebra/CSums.ma
+transc/Exponential.ma transc/Exponential.mma
+model/groups/Qgroup.mma CoRN.ma algebra/CGroups.ma model/monoids/Qmonoid.ma
+tactics/DiffTactics1.mma CoRN.ma
+complex/CComplex.ma complex/CComplex.mma
+transc/Exponential.mma CoRN.ma transc/TaylorSeries.ma
+reals/Q_in_CReals.ma reals/Q_in_CReals.mma
+fta/FTAreg.ma fta/FTAreg.mma
+fta/MainLemma.ma fta/MainLemma.mma
+tactics/GroupReflection.ma tactics/GroupReflection.mma
+algebra/CSums.mma CoRN.ma algebra/CAbGroups.ma
+model/semigroups/Qsemigroup.ma model/semigroups/Qsemigroup.mma
+metrics/CMetricSpaces.mma CoRN.ma metrics/Equiv.ma metrics/Prod_Sub.ma
+tactics/RingReflection.mma CoRN.ma algebra/CRings.ma tactics/AlgReflection.ma
+ftc/Composition.ma ftc/Composition.mma
+metrics/CPMSTheory.mma CoRN.ma metrics/Prod_Sub.ma
+ftc/MoreFunSeries.ma ftc/MoreFunSeries.mma
+tactics/GroupReflection.mma CoRN.ma algebra/CAbGroups.ma tactics/AlgReflection.ma
+transc/RealPowers.mma CoRN.ma transc/Exponential.ma
+algebra/CFields.ma algebra/CFields.mma
+model/monoids/QSposmonoid.mma CoRN.ma algebra/CMonoids.ma model/semigroups/QSpossemigroup.ma
+model/structures/Qpossec.mma CoRN.ma algebra/CLogic.ma model/structures/Qsec.ma
+ftc/PartInterval.ma ftc/PartInterval.mma
+tactics/RingReflection.ma tactics/RingReflection.mma
+reals/Intervals.ma reals/Intervals.mma
+model/non_examples/Npos_no_monoid.mma CoRN.ma algebra/CMonoids.ma model/semigroups/Npossemigroup.ma
+transc/SinCos.mma CoRN.ma transc/Trigonometric.ma
+reals/CPoly_Contin.ma reals/CPoly_Contin.mma
+reals/R_morphism.mma CoRN.ma reals/CReals.ma
+model/non_examples/Npos_no_group.mma CoRN.ma algebra/CGroups.ma model/monoids/Nposmonoid.ma
+tactics/Step.mma CoRN.ma
+model/abgroups/Qabgroup.mma CoRN.ma algebra/CAbGroups.ma model/groups/Qgroup.ma
+ftc/RefSepRef.mma CoRN.ma ftc/COrdLemmas.ma ftc/Partitions.ma
+model/structures/Zsec.mma CoRN.ma algebra/CLogic.ma
+fta/FTA.mma CoRN.ma fta/CPoly_Rev.ma fta/FTAreg.ma
+model/semigroups/Nsemigroup.mma CoRN.ma algebra/CSemiGroups.ma model/setoids/Nsetoid.ma
+ftc/WeakIVT.mma CoRN.ma ftc/Continuity.ma
+ftc/Derivative.mma CoRN.ma ftc/Continuity.ma
+ftc/Taylor.mma CoRN.ma ftc/TaylorLemma.ma
+ftc/MoreFunSeries.mma CoRN.ma ftc/FunctSeries.ma ftc/MoreFunctions.ma
+model/monoids/Zmonoid.ma model/monoids/Zmonoid.mma
+ftc/COrdLemmas.ma ftc/COrdLemmas.mma
+reals/Intervals.mma CoRN.ma algebra/CSetoidInc.ma reals/RealLists.ma
+model/groups/QSposgroup.ma model/groups/QSposgroup.mma
+model/non_examples/Npos_no_group.ma model/non_examples/Npos_no_group.mma
+model/structures/Qsec.mma CoRN.ma algebra/CLogic.ma model/structures/Zsec.ma
+transc/RealPowers.ma transc/RealPowers.mma
+algebra/COrdAbs.ma algebra/COrdAbs.mma
+fta/CPoly_Contin1.mma CoRN.ma fta/CC_Props.ma
+model/monoids/Qmonoid.ma model/monoids/Qmonoid.mma
+complex/Complex_Exponential.ma complex/Complex_Exponential.mma
+algebra/CFields.mma CoRN.ma algebra/CRings.ma
+reals/NRootIR.mma CoRN.ma reals/OddPolyRootIR.ma
+transc/PowerSeries.mma CoRN.ma ftc/FTC.ma
+algebra/CMonoids.mma CoRN.ma algebra/CSemiGroups.ma
+reals/Series.mma CoRN.ma reals/CSumsReals.ma reals/NRootIR.ma
+reals/NRootIR.ma reals/NRootIR.mma
+model/structures/Zsec.ma model/structures/Zsec.mma
+model/setoids/Zsetoid.mma CoRN.ma algebra/CSetoidFun.ma model/structures/Zsec.ma
+transc/TaylorSeries.mma CoRN.ma ftc/Taylor.ma transc/PowerSeries.ma
+model/non_examples/N_no_group.ma model/non_examples/N_no_group.mma
+fta/CPoly_Rev.mma CoRN.ma algebra/CPoly_Degree.ma
+devel/loeb/IDA/Ch6.ma devel/loeb/IDA/Ch6.mma
+reals/Q_dense.ma reals/Q_dense.mma
+model/monoids/Nmonoid.mma CoRN.ma algebra/CMonoids.ma model/semigroups/Nsemigroup.ma
+model/reals/Cauchy_IR.mma CoRN.ma model/ordfields/Qordfield.ma reals/Cauchy_CReals.ma
+algebra/CGroups.ma algebra/CGroups.mma
+reals/OddPolyRootIR.ma reals/OddPolyRootIR.mma
+model/setoids/Npossetoid.mma CoRN.ma algebra/CSetoidFun.ma model/setoids/Nsetoid.ma model/structures/Npossec.ma
+reals/IVT.mma CoRN.ma reals/CPoly_Contin.ma
+complex/NRootCC.mma CoRN.ma complex/CComplex.ma
+model/semigroups/Nsemigroup.ma model/semigroups/Nsemigroup.mma
+devel/loeb/per/csetfun.mma CoRN.ma algebra/CGroups.ma algebra/CMonoids.ma algebra/CSemiGroups.ma algebra/CSetoidFun.ma algebra/CSetoids.ma
+ftc/RefSeparating.mma CoRN.ma ftc/COrdLemmas.ma ftc/Partitions.ma
+model/abgroups/QSposabgroup.ma model/abgroups/QSposabgroup.mma
+ftc/Continuity.ma ftc/Continuity.mma
+algebra/Basics.ma algebra/Basics.mma
+transc/PowerSeries.ma transc/PowerSeries.mma
+reals/CauchySeq.mma CoRN.ma reals/CReals.ma tactics/Transparent_algebra.ma
+reals/Q_dense.mma CoRN.ma reals/Q_in_CReals.ma tactics/Opaque_algebra.ma
+ftc/FunctSequence.mma CoRN.ma ftc/Continuity.ma ftc/PartInterval.ma
+ftc/TaylorLemma.ma ftc/TaylorLemma.mma
+model/groups/Qposgroup.mma CoRN.ma algebra/CGroups.ma model/monoids/Qposmonoid.ma
+reals/CReals1.ma reals/CReals1.mma
+model/structures/Nsec.ma model/structures/Nsec.mma
+model/setoids/Npossetoid.ma model/setoids/Npossetoid.mma
+model/semigroups/Qsemigroup.mma CoRN.ma algebra/CSemiGroups.ma model/setoids/Qsetoid.ma
+algebra/COrdFields.mma CoRN.ma tactics/FieldReflection.ma tactics/Opaque_algebra.ma tactics/Transparent_algebra.ma
+fta/MainLemma.mma CoRN.ma fta/KeyLemma.ma reals/CSumsReals.ma
+fta/FTAreg.mma CoRN.ma fta/CPoly_Contin1.ma fta/CPoly_Shift.ma fta/KneserLemma.ma
+transc/TrigMon.mma CoRN.ma transc/Pi.ma
+algebra/CAbGroups.mma CoRN.ma algebra/CGroups.ma
+algebra/CPoly_NthCoeff.ma algebra/CPoly_NthCoeff.mma
+model/structures/Nsec.mma CoRN.ma algebra/CLogic.ma
+model/abgroups/Qposabgroup.mma CoRN.ma algebra/CAbGroups.ma model/groups/Qposgroup.ma
+ftc/FunctSums.ma ftc/FunctSums.mma
+model/setoids/Qpossetoid.ma model/setoids/Qpossetoid.mma
+reals/Series.ma reals/Series.mma
+model/monoids/Nmonoid.ma model/monoids/Nmonoid.mma
+reals/R_morphism.ma reals/R_morphism.mma
+model/semigroups/Zsemigroup.mma CoRN.ma algebra/CSemiGroups.ma model/setoids/Zsetoid.ma
+ftc/WeakIVT.ma ftc/WeakIVT.mma
+model/structures/Qpossec.ma model/structures/Qpossec.mma
+algebra/COrdFields2.ma algebra/COrdFields2.mma
+metrics/Equiv.mma CoRN.ma metrics/IR_CPMSpace.ma
+ftc/Integral.ma ftc/Integral.mma
+algebra/CPolynomials.ma algebra/CPolynomials.mma
+model/abgroups/Qposabgroup.ma model/abgroups/Qposabgroup.mma
+metrics/Prod_Sub.ma metrics/Prod_Sub.mma
+reals/Max_AbsIR.ma reals/Max_AbsIR.mma
+algebra/CAbMonoids.ma algebra/CAbMonoids.mma
+fta/CC_Props.mma CoRN.ma complex/AbsCC.ma
+algebra/CGroups.mma CoRN.ma algebra/CMonoids.ma
+ftc/MoreIntegrals.ma ftc/MoreIntegrals.mma
+model/rings/Qring.mma CoRN.ma algebra/CRings.ma model/abgroups/Qabgroup.ma model/rings/Zring.ma
+fta/KneserLemma.ma fta/KneserLemma.mma
+transc/InvTrigonom.ma transc/InvTrigonom.mma
+algebra/CSetoidFun.ma algebra/CSetoidFun.mma
+ftc/RefSeparating.ma ftc/RefSeparating.mma
+algebra/Basics.mma CoRN.ma algebra/ListType.ma
+reals/CSumsReals.mma CoRN.ma reals/CReals1.ma
+tactics/DiffTactics3.ma tactics/DiffTactics3.mma
+metrics/ContFunctions.mma CoRN.ma metrics/CPseudoMSpaces.ma
+ftc/PartFunEquality.ma ftc/PartFunEquality.mma
+model/abgroups/Zabgroup.mma CoRN.ma algebra/CAbGroups.ma model/groups/Zgroup.ma
+reals/Cauchy_CReals.mma CoRN.ma algebra/Cauchy_COF.ma reals/CReals.ma
+algebra/Expon.ma algebra/Expon.mma
+devel/loeb/per/csetfun.ma devel/loeb/per/csetfun.mma
+algebra/CMonoids.ma algebra/CMonoids.mma
+ftc/Partitions.mma CoRN.ma ftc/Continuity.ma
+model/setoids/Qpossetoid.mma CoRN.ma algebra/CSetoidFun.ma model/setoids/Qsetoid.ma model/structures/Qpossec.ma
+fta/CPoly_Rev.ma fta/CPoly_Rev.mma
+tactics/DiffTactics2.mma CoRN.ma ftc/Differentiability.ma
+reals/RealFuncts.mma CoRN.ma reals/CReals1.ma
+model/monoids/Qposmonoid.ma model/monoids/Qposmonoid.mma
+fta/KneserLemma.mma CoRN.ma complex/AbsCC.ma complex/NRootCC.ma fta/MainLemma.ma
+coq.ma 

@@ -1,0 +1,288 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "CoRN.ma".
+
+(* $Id: IVT.v,v 1.5 2004/04/23 10:01:04 lcf Exp $ *)
+
+include "reals/CPoly_Contin.ma".
+
+(* UNEXPORTED
+Section Nested_Intervals
+*)
+
+(*#* * Intermediate Value Theorem
+
+** Nested intervals
+
+%\begin{convention}% Let [a,b:nat->IR] be sequences such that:
+- [a] is increasing;
+- [b] is decreasing;
+- [forall (i:nat), (a i) [<] (b i)];
+- for every positive real number [eps], there is an [i] such that [(b i) [<] (a i) [+]eps].
+
+%\end{convention}%
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/IVT/Nested_Intervals/a.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/IVT/Nested_Intervals/b.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/IVT/Nested_Intervals/a_mon.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/IVT/Nested_Intervals/b_mon.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/IVT/Nested_Intervals/a_b.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/IVT/Nested_Intervals/b_a.var
+*)
+
+inline procedural "cic:/CoRN/reals/IVT/a_mon'.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/IVT/b_mon'.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/IVT/a_b'.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/IVT/intervals_cauchy.con" as lemma.
+
+(* begin hide *)
+
+inline procedural "cic:/CoRN/reals/IVT/Nested_Intervals/a'.con" "Nested_Intervals__" as definition.
+
+(* end hide *)
+
+inline procedural "cic:/CoRN/reals/IVT/Cnested_intervals_limit.con" as lemma.
+
+(*#* %\begin{convention}% Let [f] be a continuous real function.
+%\end{convention}%
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/IVT/Nested_Intervals/f.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/IVT/Nested_Intervals/f_contin.var
+*)
+
+inline procedural "cic:/CoRN/reals/IVT/f_contin_pos.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/IVT/f_contin_neg.con" as lemma.
+
+(*#* Assume also that [forall i, f (a i) [<=] Zero [<=] f (b i)]. *)
+
+(* UNEXPORTED
+cic:/CoRN/reals/IVT/Nested_Intervals/f_a.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/IVT/Nested_Intervals/f_b.var
+*)
+
+inline procedural "cic:/CoRN/reals/IVT/Cnested_intervals_zero.con" as lemma.
+
+(* UNEXPORTED
+End Nested_Intervals
+*)
+
+(* UNEXPORTED
+Section Bisection
+*)
+
+(*#* ** Bissections *)
+
+(* UNEXPORTED
+cic:/CoRN/reals/IVT/Bisection/f.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/IVT/Bisection/f_apzero_interval.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/IVT/Bisection/a.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/IVT/Bisection/b.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/IVT/Bisection/a_b.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/IVT/Bisection/f_a.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/IVT/Bisection/f_b.var
+*)
+
+(*#*
+%\begin{convention}% Let [Small] denote [Two[/]ThreeNZ], [lft] be [(Two[*]a[+]b) [/]ThreeNZ] and [rht] be [(a[+]Two[*]b) [/]ThreeNZ].
+%\end{convention}%
+*)
+
+(* begin hide *)
+
+inline procedural "cic:/CoRN/reals/IVT/Bisection/Small.con" "Bisection__" as definition.
+
+inline procedural "cic:/CoRN/reals/IVT/Bisection/lft.con" "Bisection__" as definition.
+
+inline procedural "cic:/CoRN/reals/IVT/Bisection/rht.con" "Bisection__" as definition.
+
+(* end hide *)
+
+inline procedural "cic:/CoRN/reals/IVT/a_lft.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/IVT/rht_b.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/IVT/lft_rht.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/IVT/smaller_lft.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/IVT/smaller_rht.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve smaller_lft smaller_rht: algebra.
+*)
+
+inline procedural "cic:/CoRN/reals/IVT/Cbisect'.con" as lemma.
+
+(* UNEXPORTED
+End Bisection
+*)
+
+(* UNEXPORTED
+Section Bisect_Interval
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/IVT/Bisect_Interval/f.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/IVT/Bisect_Interval/C_f_apzero_interval.var
+*)
+
+(* begin hide *)
+
+inline procedural "cic:/CoRN/reals/IVT/Bisect_Interval/Small.con" "Bisect_Interval__" as definition.
+
+(* end hide *)
+
+inline procedural "cic:/CoRN/reals/IVT/bisect_interval.ind".
+
+inline procedural "cic:/CoRN/reals/IVT/Cbisect_exists.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/IVT/bisect.con" as definition.
+
+inline procedural "cic:/CoRN/reals/IVT/bisect_prop.con" as lemma.
+
+(* UNEXPORTED
+End Bisect_Interval
+*)
+
+(* UNEXPORTED
+Section IVT_Op
+*)
+
+(*#* ** IVT for operations
+Same conventions as before.
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/IVT/IVT_Op/f.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/IVT/IVT_Op/f_contin.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/IVT/IVT_Op/f_apzero_interval.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/IVT/IVT_Op/a.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/IVT/IVT_Op/b.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/IVT/IVT_Op/a_b.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/IVT/IVT_Op/f_a.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/IVT/IVT_Op/f_b.var
+*)
+
+(* begin hide *)
+
+inline procedural "cic:/CoRN/reals/IVT/IVT_Op/Small.con" "IVT_Op__" as definition.
+
+(* end hide *)
+
+inline procedural "cic:/CoRN/reals/IVT/interval_sequence.con" as definition.
+
+inline procedural "cic:/CoRN/reals/IVT/IVT_Op/a_.con" "IVT_Op__" as definition.
+
+inline procedural "cic:/CoRN/reals/IVT/IVT_Op/b_.con" "IVT_Op__" as definition.
+
+inline procedural "cic:/CoRN/reals/IVT/intervals_smaller.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/IVT/intervals_small''.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/IVT/intervals_small'.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/IVT/intervals_small.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/IVT/Civt_op.con" as lemma.
+
+(* UNEXPORTED
+End IVT_Op
+*)
+
+(* UNEXPORTED
+Section IVT_Poly
+*)
+
+(*#* ** IVT for polynomials *)
+
+inline procedural "cic:/CoRN/reals/IVT/Civt_poly.con" as lemma.
+
+(* UNEXPORTED
+End IVT_Poly
+*)
+

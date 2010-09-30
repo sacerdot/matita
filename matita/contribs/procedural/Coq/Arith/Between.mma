@@ -1,0 +1,161 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Between.v,v 1.12.2.1 2004/07/16 19:30:59 herbelin Exp $ i*)
+
+include "Arith/Le.ma".
+
+include "Arith/Lt.ma".
+
+(* UNEXPORTED
+Open Local Scope nat_scope.
+*)
+
+(* UNEXPORTED
+Implicit Types k l p q r : nat.
+*)
+
+(* UNEXPORTED
+Section Between
+*)
+
+(* UNEXPORTED
+cic:/Coq/Arith/Between/Between/P.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Arith/Between/Between/Q.var
+*)
+
+inline procedural "cic:/Coq/Arith/Between/between.ind".
+
+(* UNEXPORTED
+Hint Constructors between: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/Between/bet_eq.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve bet_eq: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/Between/between_le.con" as lemma.
+
+(* UNEXPORTED
+Hint Immediate between_le: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/Between/between_Sk_l.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve between_Sk_l: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/Between/between_restr.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Between/exists_between.ind".
+
+(* UNEXPORTED
+Hint Constructors exists_between: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/Between/exists_le_S.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Between/exists_lt.con" as lemma.
+
+(* UNEXPORTED
+Hint Immediate exists_le_S exists_lt: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/Between/exists_S_le.con" as lemma.
+
+(* UNEXPORTED
+Hint Immediate exists_S_le: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/Between/in_int.con" as definition.
+
+inline procedural "cic:/Coq/Arith/Between/in_int_intro.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve in_int_intro: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/Between/in_int_lt.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Between/in_int_p_Sq.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Between/in_int_S.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve in_int_S: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/Between/in_int_Sp_q.con" as lemma.
+
+(* UNEXPORTED
+Hint Immediate in_int_Sp_q: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/Between/between_in_int.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Between/in_int_between.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Between/exists_in_int.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Between/in_int_exists.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Between/between_or_exists.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Between/between_not_exists.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Between/P_nth.ind".
+
+inline procedural "cic:/Coq/Arith/Between/nth_le.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Between/eventually.con" as definition.
+
+inline procedural "cic:/Coq/Arith/Between/event_O.con" as lemma.
+
+(* UNEXPORTED
+End Between
+*)
+
+(* UNEXPORTED
+Hint Resolve nth_O bet_S bet_emp bet_eq between_Sk_l exists_S exists_le
+  in_int_S in_int_intro: arith v62.
+*)
+
+(* UNEXPORTED
+Hint Immediate in_int_Sp_q exists_le_S exists_S_le: arith v62.
+*)
+

@@ -1,0 +1,113 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Wf_Z.v,v 1.20.2.1 2004/07/16 19:31:20 herbelin Exp $ i*)
+
+include "ZArith/BinInt.ma".
+
+include "ZArith/Zcompare.ma".
+
+include "ZArith/Zorder.ma".
+
+include "ZArith/Znat.ma".
+
+include "ZArith/Zmisc.ma".
+
+include "Arith/Wf_nat.ma".
+
+(* UNEXPORTED
+Open Local Scope Z_scope.
+*)
+
+(*#* Our purpose is to write an induction shema for {0,1,2,...}
+  similar to the [nat] schema (Theorem [Natlike_rec]). For that the
+  following implications will be used :
+<<
+ (n:nat)(Q n)==(n:nat)(P (inject_nat n)) ===> (x:Z)`x > 0) -> (P x)
+
+       	     /\
+             ||
+             ||
+
+  (Q O) (n:nat)(Q n)->(Q (S n)) <=== (P 0) (x:Z) (P x) -> (P (Zs x))
+
+      	       	       	       	<=== (inject_nat (S n))=(Zs (inject_nat n))
+
+      	       	       	       	<=== inject_nat_complete
+>>
+  Then the  diagram will be closed and the theorem proved. *)
+
+inline procedural "cic:/Coq/ZArith/Wf_Z/Z_of_nat_complete.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Wf_Z/ZL4_inf.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Wf_Z/Z_of_nat_complete_inf.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Wf_Z/Z_of_nat_prop.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Wf_Z/Z_of_nat_set.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Wf_Z/natlike_ind.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Wf_Z/natlike_rec.con" as lemma.
+
+(* UNEXPORTED
+Section Efficient_Rec
+*)
+
+(*#* [natlike_rec2] is the same as [natlike_rec], but with a different proof, designed 
+     to give a better extracted term. *)
+
+(* UNAVAILABLE OBJECT: cic:/Coq/ZArith/Wf_Z/Efficient_Rec/R.con ***********)
+
+inline procedural "cic:/Coq/ZArith/Wf_Z/Efficient_Rec/R.con" "Efficient_Rec__" as definition.
+
+(* UNAVAILABLE OBJECT: cic:/Coq/ZArith/Wf_Z/Efficient_Rec/R_wf.con ********)
+
+inline procedural "cic:/Coq/ZArith/Wf_Z/Efficient_Rec/R_wf.con" "Efficient_Rec__" as definition.
+
+inline procedural "cic:/Coq/ZArith/Wf_Z/natlike_rec2.con" as lemma.
+
+(*#* A variant of the previous using [Zpred] instead of [Zs]. *)
+
+inline procedural "cic:/Coq/ZArith/Wf_Z/natlike_rec3.con" as lemma.
+
+(*#* A more general induction principal using [Zlt]. *)
+
+inline procedural "cic:/Coq/ZArith/Wf_Z/Z_lt_rec.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Wf_Z/Z_lt_induction.con" as lemma.
+
+(* UNEXPORTED
+End Efficient_Rec
+*)
+

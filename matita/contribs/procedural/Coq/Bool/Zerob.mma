@@ -1,0 +1,60 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Zerob.v,v 1.8.2.1 2004/07/16 19:31:03 herbelin Exp $ i*)
+
+include "Arith/Arith.ma".
+
+include "Bool/Bool.ma".
+
+(* UNEXPORTED
+Open Local Scope nat_scope.
+*)
+
+inline procedural "cic:/Coq/Bool/Zerob/zerob.con" as definition.
+
+inline procedural "cic:/Coq/Bool/Zerob/zerob_true_intro.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve zerob_true_intro: bool.
+*)
+
+inline procedural "cic:/Coq/Bool/Zerob/zerob_true_elim.con" as lemma.
+
+inline procedural "cic:/Coq/Bool/Zerob/zerob_false_intro.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve zerob_false_intro: bool.
+*)
+
+inline procedural "cic:/Coq/Bool/Zerob/zerob_false_elim.con" as lemma.
+

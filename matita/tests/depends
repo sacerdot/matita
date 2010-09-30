@@ -1,0 +1,377 @@
+TPTP/Veloci/GRP595-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP570-1.p.ma logic/equality.ma
+dependent_guarded_bove_capretta.ma nat/nat.ma
+interactive/test5.ma 
+TPTP/Veloci/SYN083-1.p.ma logic/equality.ma
+TPTP/Veloci/COL008-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP604-1.p.ma logic/equality.ma
+record.ma 
+TPTP/Veloci/COL060-3.p.ma logic/equality.ma
+TPTP/Veloci/GRP516-1.p.ma logic/equality.ma
+TPTP/Veloci/COL016-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP612-1.p.ma logic/equality.ma
+reduction_old_preamble.ma 
+TPTP/Veloci/COL024-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP139-1.p.ma logic/equality.ma
+TPTP/Veloci/BOO006-2.p.ma logic/equality.ma
+TPTP/Veloci/ROB010-1.p.ma logic/equality.ma
+TPTP/Veloci/LCL157-1.p.ma logic/equality.ma
+TPTP/Veloci/LCL132-1.p.ma logic/equality.ma
+constructor.ma coq.ma
+TPTP/Veloci/GRP565-1.p.ma logic/equality.ma
+elim.ma coq.ma
+TPTP/Veloci/GRP155-1.p.ma logic/equality.ma
+TPTP/Veloci/BOO004-4.p.ma logic/equality.ma
+TPTP/Veloci/LCL140-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP598-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP573-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP188-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP485-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP460-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP163-1.p.ma logic/equality.ma
+TPTP/Veloci/BOO012-4.p.ma logic/equality.ma
+TPTP/Veloci/GRP581-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP493-1.p.ma logic/equality.ma
+TPTP/Veloci/COL063-3.p.ma logic/equality.ma
+TPTP/Veloci/LCL112-2.p.ma logic/equality.ma
+formal_topology.ma logic/connectives.ma
+esempio_oliboni.ma logic/equality.ma nat/nat.ma
+TPTP/Veloci/RNG023-7.p.ma logic/equality.ma
+test2.ma coq.ma
+replace.ma coq.ma
+TPTP/Veloci/COL064-7.p.ma logic/equality.ma
+TPTP/Veloci/BOO009-2.p.ma logic/equality.ma
+TPTP/Veloci/GRP510-1.p.ma logic/equality.ma
+TPTP/Veloci/COL010-1.p.ma logic/equality.ma
+TPTP/Veloci/COL061-2.p.ma logic/equality.ma
+TPTP/Veloci/BOO017-2.p.ma logic/equality.ma
+TPTP/Veloci/LCL135-1.p.ma logic/equality.ma
+elim_pattern.ma nat/plus.ma
+assumption.ma coq.ma
+interactive/grafite.ma 
+TPTP/Veloci/GRP551-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP141-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP463-1.p.ma logic/equality.ma
+fix_betareduction.ma coq.ma
+TPTP/Veloci/GRP606-1.p.ma logic/equality.ma
+coercions_dependent.ma decidable_kit/list_aux.ma list/list.ma nat/nat.ma
+TPTP/Veloci/GRP518-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP584-1.p.ma logic/equality.ma
+paramodulation/boolean_algebra.ma coq.ma
+TPTP/Veloci/GRP496-1.p.ma logic/equality.ma
+TPTP/Veloci/COL084-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP174-1.p.ma logic/equality.ma
+TPTP/Veloci/RNG011-5.p.ma logic/equality.ma
+TPTP/Veloci/GRP614-1.p.ma logic/equality.ma
+inversion.ma coq.ma
+TPTP/Veloci/GRP592-1.p.ma logic/equality.ma
+bad_tests/baseuri.ma 
+TPTP/Veloci/GRP182-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP116-1.p.ma logic/equality.ma
+coercions.ma nat/compare.ma nat/times.ma
+TPTP/Veloci/GRP011-4.p.ma logic/equality.ma
+TPTP/Veloci/GRP149-1.p.ma logic/equality.ma
+TPTP/Veloci/COL013-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP567-1.p.ma logic/equality.ma
+TPTP/Veloci/COL064-2.p.ma logic/equality.ma
+comments.ma coq.ma
+TPTP/Veloci/COL021-1.p.ma logic/equality.ma
+TPTP/Veloci/BOO006-4.p.ma logic/equality.ma
+TPTP/Veloci/BOO003-2.p.ma logic/equality.ma
+TPTP/Veloci/RNG024-6.p.ma logic/equality.ma
+bool.ma coq.ma
+ng_tactics.ma logic/connectives.ma nat/plus.ma ng_pts.ma
+TPTP/Veloci/BOO011-2.p.ma logic/equality.ma
+TPTP/Veloci/LCL154-1.p.ma logic/equality.ma
+ng_auto.ma 
+TPTP/Veloci/LCL114-2.p.ma logic/equality.ma
+letrec.ma 
+TPTP/Veloci/BOO001-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP160-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP600-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP512-1.p.ma logic/equality.ma
+TPTP/Veloci/COL063-5.p.ma logic/equality.ma
+continuationals.ma coq.ma
+TPTP/Veloci/GRP490-1.p.ma logic/equality.ma
+TPTP/Veloci/BOO034-1.p.ma logic/equality.ma
+ng_pts.ma 
+fold.ma coq.ma
+TPTP/Veloci/GRP545-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP520-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP457-1.p.ma logic/equality.ma
+TPTP/Veloci/COL064-9.p.ma logic/equality.ma
+TPTP/Veloci/BOO009-4.p.ma logic/equality.ma
+TPTP/Veloci/LAT040-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP578-1.p.ma logic/equality.ma
+change.ma coq.ma
+TPTP/Veloci/GRP143-1.p.ma logic/equality.ma
+TPTP/Veloci/BOO075-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP168-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP586-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP561-1.p.ma logic/equality.ma
+reduction_old.ma reduction_old_preamble.ma
+TPTP/Veloci/GRP498-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP176-1.p.ma logic/equality.ma
+overred.ma logic/equality.ma
+TPTP/Veloci/COL007-1.p.ma logic/equality.ma
+reduction_new.ma reduction_new_preamble.ma
+TPTP/Veloci/COL058-2.p.ma logic/equality.ma
+TPTP/Veloci/GRP603-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP515-1.p.ma logic/equality.ma
+TPTP/Veloci/COL015-1.p.ma logic/equality.ma
+TPTP/Veloci/RNG007-4.p.ma logic/equality.ma
+TPTP/Veloci/GRP548-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP182-3.p.ma logic/equality.ma
+TPTP/Veloci/COL048-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP189-2.p.ma logic/equality.ma
+TPTP/Veloci/BOO005-2.p.ma logic/equality.ma
+TPTP/Veloci/GRP556-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP146-1.p.ma logic/equality.ma
+TPTP/Veloci/COL064-4.p.ma logic/equality.ma
+TPTP/Veloci/LCL156-1.p.ma logic/equality.ma
+contradiction.ma coq.ma
+TPTP/Veloci/GRP564-1.p.ma logic/equality.ma
+inversion2.ma coq.ma
+TPTP/Veloci/GRP154-1.p.ma logic/equality.ma
+TPTP/Veloci/BOO003-4.p.ma logic/equality.ma
+TPTP/Veloci/ROB009-1.p.ma logic/equality.ma
+TPTP/Veloci/LCL164-1.p.ma logic/equality.ma
+ng_elim.ma ng_pts.ma
+TPTP/Veloci/GRP597-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP572-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP484-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP162-1.p.ma logic/equality.ma
+fix_che_non_passa_ma_dovrebbe.ma list/list.ma nat/nat.ma
+subsumption.ma logic/equality.ma
+TPTP/Veloci/BOO011-4.p.ma logic/equality.ma
+TPTP/Veloci/GRP580-1.p.ma logic/equality.ma
+TPTP/Veloci/COL062-3.p.ma logic/equality.ma
+TPTP/Veloci/GRP492-1.p.ma logic/equality.ma
+cut.ma coq.ma
+TPTP/Veloci/LAT034-1.p.ma logic/equality.ma
+TPTP/Veloci/COL018-1.p.ma logic/equality.ma
+coercions_contravariant.ma logic/equality.ma nat/nat.ma
+tinycals.ma logic/connectives.ma
+interactive/automatic_insertion.ma 
+clearbody.ma coq.ma
+ng_copy2.ma ng_copy.ma
+TPTP/Veloci/COL060-2.p.ma logic/equality.ma
+TPTP/Veloci/LCL134-1.p.ma logic/equality.ma
+TPTP/Veloci/BOO016-2.p.ma logic/equality.ma
+TPTP/Veloci/LAT039-2.p.ma logic/equality.ma
+TPTP/Veloci/GRP542-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP454-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP186-4.p.ma logic/equality.ma
+TPTP/Veloci/GRP157-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP509-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP550-1.p.ma logic/equality.ma
+ng_commands.ma nat/nat.ma ng_pts.ma
+TPTP/Veloci/GRP487-1.p.ma logic/equality.ma
+paratest.ma nat/plus.ma
+TPTP/Veloci/GRP605-1.p.ma logic/equality.ma
+paramodulation/BOO075-1.ma 
+fguidi.ma logic/connectives.ma nat/nat.ma
+TPTP/Veloci/GRP583-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP517-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP495-1.p.ma logic/equality.ma
+TPTP/Veloci/COL083-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP173-1.p.ma logic/equality.ma
+coercions_propagation.ma logic/connectives.ma nat/orders.ma
+TPTP/Veloci/LAT045-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP558-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP010-4.p.ma logic/equality.ma
+interactive/test_instance.ma 
+TPTP/Veloci/COL012-1.p.ma logic/equality.ma
+ng_lexiconn.ma ng_pts.ma
+TPTP/Veloci/COL063-2.p.ma logic/equality.ma
+first.ma 
+ng_coercions.ma ng_pts.ma
+TPTP/Veloci/BOO005-4.p.ma logic/equality.ma
+TPTP/Veloci/COL045-1.p.ma logic/equality.ma
+interactive/test7.ma 
+bad_induction.ma logic/equality.ma nat/nat.ma
+TPTP/Veloci/RNG023-6.p.ma logic/equality.ma
+ng_include.ma nat/plus.ma ng_pts.ma
+color.ma logic/equality.ma nat/nat.ma
+TPTP/Veloci/COL064-6.p.ma logic/equality.ma
+apply2.ma nat/nat.ma
+metasenv_ordering.ma coq.ma
+TPTP/Veloci/LCL153-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP608-1.p.ma logic/equality.ma
+TPTP/Veloci/BOO010-2.p.ma logic/equality.ma
+pullback.ma logic/equality.ma
+TPTP/Veloci/COL086-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP151-1.p.ma logic/equality.ma
+reduction_new_preamble.ma 
+TPTP/Veloci/LCL161-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP616-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP206-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP023-2.p.ma logic/equality.ma
+decompose.ma logic/connectives.ma
+TPTP/Veloci/GRP481-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP118-1.p.ma logic/equality.ma
+generalize.ma coq.ma
+TPTP/Veloci/GRP511-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP192-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP569-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP544-1.p.ma logic/equality.ma
+dependent_type_inference.ma nat/nat.ma
+TPTP/Veloci/GRP456-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP159-1.p.ma logic/equality.ma
+TPTP/Veloci/ROB030-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP552-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP577-1.p.ma logic/equality.ma
+TPTP/Veloci/BOO013-2.p.ma logic/equality.ma
+rewrite.ma coq.ma
+TPTP/Veloci/GRP497-1.p.ma logic/equality.ma
+bad_tests/auto.ma coq.ma
+diabolic_fix.ma nat/nat.ma
+TPTP/Veloci/GRP001-2.p.ma logic/equality.ma
+test4.ma coq.ma
+clear.ma coq.ma
+TPTP/Veloci/GRP602-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP514-1.p.ma logic/equality.ma
+TPTP/Veloci/LCL139-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP547-1.p.ma logic/equality.ma
+TPTP/Veloci/BOO069-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP459-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP137-1.p.ma logic/equality.ma
+TPTP/Veloci/COL004-3.p.ma logic/equality.ma
+TPTP/Veloci/GRP188-2.p.ma logic/equality.ma
+apply.ma coq.ma
+TPTP/Veloci/GRP467-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP145-1.p.ma logic/equality.ma
+TPTP/Veloci/LCL155-1.p.ma logic/equality.ma
+TPTP/Veloci/COL063-4.p.ma logic/equality.ma
+TPTP/Veloci/GRP588-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP153-1.p.ma logic/equality.ma
+paramodulation.ma coq.ma
+TPTP/Veloci/GRP596-1.p.ma logic/equality.ma
+coercions_nonuniform.ma 
+TPTP/Veloci/GRP161-1.p.ma logic/equality.ma
+TPTP/Veloci/COL064-8.p.ma logic/equality.ma
+TPTP/Veloci/LDA001-1.p.ma logic/equality.ma
+TPTP/Veloci/BOO010-4.p.ma logic/equality.ma
+TPTP/Veloci/COL050-1.p.ma logic/equality.ma
+TPTP/Veloci/LCL110-2.p.ma logic/equality.ma
+TPTP/Veloci/GRP491-1.p.ma logic/equality.ma
+TPTP/Veloci/COL061-3.p.ma logic/equality.ma
+TPTP/Veloci/COL017-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP613-1.p.ma logic/equality.ma
+compose.ma logic/equality.ma
+TPTP/Veloci/COL025-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP115-1.p.ma logic/equality.ma
+unifhint.ma list/list.ma nat/nat.ma nat/plus.ma
+letrecand.ma nat/nat.ma
+hard_refine.ma coq.ma
+paramodulation/group.ma coq.ma
+TPTP/Veloci/LCL158-1.p.ma logic/equality.ma
+TPTP/Veloci/LCL133-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP566-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP541-1.p.ma logic/equality.ma
+decl.ma nat/orders.ma nat/times.ma
+TPTP/Veloci/GRP156-1.p.ma logic/equality.ma
+mysql_escaping.ma 
+TPTP/Veloci/LCL141-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP182-2.p.ma logic/equality.ma
+interactive/drop.ma 
+interactive/test6.ma 
+TPTP/Veloci/GRP599-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP574-1.p.ma logic/equality.ma
+TPTP/Veloci/LDA007-3.p.ma logic/equality.ma
+unfold.ma coq.ma
+TPTP/Veloci/GRP486-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP189-1.p.ma logic/equality.ma
+TPTP/Veloci/BOO071-1.p.ma logic/equality.ma
+TPTP/Veloci/BOO013-4.p.ma logic/equality.ma
+TPTP/Veloci/GRP582-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP494-1.p.ma logic/equality.ma
+TPTP/Veloci/COL064-3.p.ma logic/equality.ma
+TPTP/Veloci/LCL113-2.p.ma logic/equality.ma
+TPTP/Veloci/RNG008-4.p.ma logic/equality.ma
+demodulation_matita.ma nat/minus.ma
+TPTP/Veloci/ROB002-1.p.ma logic/equality.ma
+tacticals.ma 
+TPTP/Veloci/GRP549-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP001-4.p.ma logic/equality.ma
+TPTP/Veloci/GRP590-1.p.ma logic/equality.ma
+applys.ma nat/div_and_mod.ma nat/factorial.ma nat/primes.ma
+TPTP/Veloci/RNG024-7.p.ma logic/equality.ma
+injection.ma coq.ma
+second.ma first.ma
+TPTP/Veloci/COL062-2.p.ma logic/equality.ma
+match_inference.ma 
+ng_includeB.ma ng_include.ma
+unifhint_simple.ma logic/equality.ma
+simpl.ma coq.ma
+TPTP/Veloci/COL063-6.p.ma logic/equality.ma
+TPTP/Veloci/GRP142-1.p.ma logic/equality.ma
+third.ma first.ma second.ma
+TPTP/Veloci/GRP560-1.p.ma logic/equality.ma
+ng_coercion_and_hints.ma ng_pts.ma
+TPTP/Veloci/GRP150-1.p.ma logic/equality.ma
+TPTP/Veloci/COL085-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP615-1.p.ma logic/equality.ma
+TPTP/Veloci/LAT039-1.p.ma logic/equality.ma
+luo.ma Z/times.ma logic/equality.ma
+TPTP/Veloci/GRP022-2.p.ma logic/equality.ma
+TPTP/Veloci/GRP186-3.p.ma logic/equality.ma
+coercions_russell.ma datatypes/bool.ma datatypes/constructors.ma list/list.ma list/sort.ma nat/compare.ma nat/orders.ma
+ng_copy.ma 
+TPTP/Veloci/GRP117-1.p.ma logic/equality.ma
+multiple_inheritance.ma logic/equality.ma
+test3.ma coq.ma
+TPTP/Veloci/ROB013-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP168-2.p.ma logic/equality.ma
+TPTP/Veloci/GRP012-4.p.ma logic/equality.ma
+naiveparamod.ma logic/equality.ma
+TPTP/Veloci/GRP176-2.p.ma logic/equality.ma
+TPTP/Veloci/COL014-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP568-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP543-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP455-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP158-1.p.ma logic/equality.ma
+TPTP/Veloci/COL022-1.p.ma logic/equality.ma
+TPTP/Veloci/BOO004-2.p.ma logic/equality.ma
+TPTP/Veloci/GRP576-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP488-1.p.ma logic/equality.ma
+TPTP/Veloci/COL058-3.p.ma logic/equality.ma
+dependent_injection.ma coq.ma
+TPTP/Veloci/BOO012-2.p.ma logic/equality.ma
+TPTP/Veloci/LCL115-2.p.ma logic/equality.ma
+absurd.ma coq.ma
+TPTP/Veloci/GRP182-4.p.ma logic/equality.ma
+destruct.ma datatypes/constructors.ma logic/equality.ma nat/nat.ma
+TPTP/Veloci/COL064-5.p.ma logic/equality.ma
+TPTP/Veloci/GRP513-1.p.ma logic/equality.ma
+TPTP/Veloci/LAT033-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP546-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP136-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP458-1.p.ma logic/equality.ma
+coercions_open.ma logic/equality.ma nat/nat.ma
+paramodulation/irratsqrt2.ma nat/minus.ma nat/times.ma
+ng_uris_and_notation.ma nat/nat.ma ng_pts.ma
+TPTP/Veloci/GRP144-1.p.ma logic/equality.ma
+TPTP/Veloci/LAT008-1.p.ma logic/equality.ma
+TPTP/Veloci/BOO018-4.p.ma logic/equality.ma
+demodulation_coq.ma coq.ma
+TPTP/Veloci/GRP562-1.p.ma logic/equality.ma
+TPTP/Veloci/GRP152-1.p.ma logic/equality.ma
+Z/times.ma 
+coq.ma 
+datatypes/bool.ma 
+datatypes/constructors.ma 
+decidable_kit/list_aux.ma 
+list/list.ma 
+list/sort.ma 
+logic/connectives.ma 
+logic/equality.ma 
+nat/compare.ma 
+nat/div_and_mod.ma 
+nat/factorial.ma 
+nat/minus.ma 
+nat/nat.ma 
+nat/orders.ma 
+nat/plus.ma 
+nat/primes.ma 
+nat/times.ma 

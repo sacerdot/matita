@@ -1,0 +1,119 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+include "Init/Prelude.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Eqdep_dec.v,v 1.14.2.1 2004/07/16 19:31:06 herbelin Exp $ i*)
+
+(*#* We prove that there is only one proof of [x=x], i.e [(refl_equal ? x)].
+   This holds if the equality upon the set of [x] is decidable.
+   A corollary of this theorem is the equality of the right projections
+   of two equal dependent pairs.
+
+   Author:   Thomas Kleymann |<tms@dcs.ed.ac.uk>| in Lego
+             adapted to Coq by B. Barras
+
+   Credit:   Proofs up to [K_dec] follows an outline by Michael Hedberg
+*)
+
+(*#* We need some dependent elimination schemes *)
+
+(* UNEXPORTED
+Set Implicit Arguments.
+*)
+
+(*#* Bijection between [eq] and [eqT] *)
+
+inline procedural "cic:/Coq/Logic/Eqdep_dec/eq2eqT.con" as definition.
+
+inline procedural "cic:/Coq/Logic/Eqdep_dec/eqT2eq.con" as definition.
+
+inline procedural "cic:/Coq/Logic/Eqdep_dec/eq_eqT_bij.con" as lemma.
+
+inline procedural "cic:/Coq/Logic/Eqdep_dec/eqT_eq_bij.con" as lemma.
+
+(* UNEXPORTED
+Section DecidableEqDep
+*)
+
+(* UNEXPORTED
+cic:/Coq/Logic/Eqdep_dec/DecidableEqDep/A.var
+*)
+
+(* UNAVAILABLE OBJECT: cic:/Coq/Logic/Eqdep_dec/DecidableEqDep/comp.con ***)
+
+inline procedural "cic:/Coq/Logic/Eqdep_dec/DecidableEqDep/comp.con" "DecidableEqDep__" as definition.
+
+inline procedural "cic:/Coq/Logic/Eqdep_dec/trans_sym_eqT.con" as remark.
+
+(* UNEXPORTED
+cic:/Coq/Logic/Eqdep_dec/DecidableEqDep/eq_dec.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Logic/Eqdep_dec/DecidableEqDep/x.var
+*)
+
+(* UNAVAILABLE OBJECT: cic:/Coq/Logic/Eqdep_dec/DecidableEqDep/nu.con *****)
+
+inline procedural "cic:/Coq/Logic/Eqdep_dec/DecidableEqDep/nu.con" "DecidableEqDep__" as definition.
+
+(* UNAVAILABLE OBJECT: cic:/Coq/Logic/Eqdep_dec/DecidableEqDep/nu_constant.con *)
+
+inline procedural "cic:/Coq/Logic/Eqdep_dec/DecidableEqDep/nu_constant.con" "DecidableEqDep__" as definition.
+
+(* UNAVAILABLE OBJECT: cic:/Coq/Logic/Eqdep_dec/DecidableEqDep/nu_inv.con *)
+
+inline procedural "cic:/Coq/Logic/Eqdep_dec/DecidableEqDep/nu_inv.con" "DecidableEqDep__" as definition.
+
+inline procedural "cic:/Coq/Logic/Eqdep_dec/nu_left_inv.con" as remark.
+
+inline procedural "cic:/Coq/Logic/Eqdep_dec/eq_proofs_unicity.con" as theorem.
+
+inline procedural "cic:/Coq/Logic/Eqdep_dec/K_dec.con" as theorem.
+
+(*#* The corollary *)
+
+(* UNAVAILABLE OBJECT: cic:/Coq/Logic/Eqdep_dec/DecidableEqDep/proj.con ***)
+
+inline procedural "cic:/Coq/Logic/Eqdep_dec/DecidableEqDep/proj.con" "DecidableEqDep__" as definition.
+
+inline procedural "cic:/Coq/Logic/Eqdep_dec/inj_right_pair.con" as theorem.
+
+(* UNEXPORTED
+End DecidableEqDep
+*)
+
+(*#* We deduce the [K] axiom for (decidable) Set *)
+
+inline procedural "cic:/Coq/Logic/Eqdep_dec/K_dec_set.con" as theorem.
+

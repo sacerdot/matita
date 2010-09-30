@@ -1,0 +1,244 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Peano.v,v 1.23.2.1 2004/07/16 19:31:03 herbelin Exp $ i*)
+
+(*#* Natural numbers [nat] built from [O] and [S] are defined in Datatypes.v *)
+
+(*#* This module defines the following operations on natural numbers :
+    - predecessor [pred]
+    - addition [plus]
+    - multiplication [mult]
+    - less or equal order [le]
+    - less [lt]
+    - greater or equal [ge]
+    - greater [gt]
+
+   This module states various lemmas and theorems about natural numbers,
+   including Peano's axioms of arithmetic (in Coq, these are in fact provable)
+   Case analysis on [nat] and induction on [nat * nat] are provided too *)
+
+include "Init/Notations.ma".
+
+include "Init/Datatypes.ma".
+
+include "Init/Logic.ma".
+
+(* UNEXPORTED
+Open Scope nat_scope.
+*)
+
+inline procedural "cic:/Coq/Init/Peano/eq_S.con" as definition.
+
+(* UNEXPORTED
+Hint Resolve (f_equal S): v62.
+*)
+
+(* UNEXPORTED
+Hint Resolve (f_equal (A:=nat)): core.
+*)
+
+(*#* The predecessor function *)
+
+inline procedural "cic:/Coq/Init/Peano/pred.con" as definition.
+
+(* UNEXPORTED
+Hint Resolve (f_equal pred): v62.
+*)
+
+inline procedural "cic:/Coq/Init/Peano/pred_Sn.con" as theorem.
+
+inline procedural "cic:/Coq/Init/Peano/eq_add_S.con" as theorem.
+
+(* UNEXPORTED
+Hint Immediate eq_add_S: core v62.
+*)
+
+(*#* A consequence of the previous axioms *)
+
+inline procedural "cic:/Coq/Init/Peano/not_eq_S.con" as theorem.
+
+(* UNEXPORTED
+Hint Resolve not_eq_S: core v62.
+*)
+
+inline procedural "cic:/Coq/Init/Peano/IsSucc.con" as definition.
+
+inline procedural "cic:/Coq/Init/Peano/O_S.con" as theorem.
+
+(* UNEXPORTED
+Hint Resolve O_S: core v62.
+*)
+
+inline procedural "cic:/Coq/Init/Peano/n_Sn.con" as theorem.
+
+(* UNEXPORTED
+Hint Resolve n_Sn: core v62.
+*)
+
+(*#* Addition *)
+
+inline procedural "cic:/Coq/Init/Peano/plus.con" as definition.
+
+(* UNEXPORTED
+Hint Resolve (f_equal2 plus): v62.
+*)
+
+(* UNEXPORTED
+Hint Resolve (f_equal2 (A1:=nat) (A2:=nat)): core.
+*)
+
+(* NOTATION
+Infix "+" := plus : nat_scope.
+*)
+
+inline procedural "cic:/Coq/Init/Peano/plus_n_O.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve plus_n_O: core v62.
+*)
+
+inline procedural "cic:/Coq/Init/Peano/plus_O_n.con" as lemma.
+
+inline procedural "cic:/Coq/Init/Peano/plus_n_Sm.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve plus_n_Sm: core v62.
+*)
+
+inline procedural "cic:/Coq/Init/Peano/plus_Sn_m.con" as lemma.
+
+(*#* Multiplication *)
+
+inline procedural "cic:/Coq/Init/Peano/mult.con" as definition.
+
+(* UNEXPORTED
+Hint Resolve (f_equal2 mult): core v62.
+*)
+
+(* NOTATION
+Infix "*" := mult : nat_scope.
+*)
+
+inline procedural "cic:/Coq/Init/Peano/mult_n_O.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve mult_n_O: core v62.
+*)
+
+inline procedural "cic:/Coq/Init/Peano/mult_n_Sm.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve mult_n_Sm: core v62.
+*)
+
+(*#* Definition of subtraction on [nat] : [m-n] is [0] if [n>=m] *)
+
+inline procedural "cic:/Coq/Init/Peano/minus.con" as definition.
+
+(* NOTATION
+Infix "-" := minus : nat_scope.
+*)
+
+(*#* Definition of the usual orders, the basic properties of [le] and [lt] 
+    can be found in files Le and Lt *)
+
+(*#* An inductive definition to define the order *)
+
+inline procedural "cic:/Coq/Init/Peano/le.ind".
+
+(* NOTATION
+Infix "<=" := le : nat_scope.
+*)
+
+(* UNEXPORTED
+Hint Constructors le: core v62.
+*)
+
+(*i equivalent to : "Hints Resolve le_n le_S : core v62." i*)
+
+inline procedural "cic:/Coq/Init/Peano/lt.con" as definition.
+
+(* UNEXPORTED
+Hint Unfold lt: core v62.
+*)
+
+(* NOTATION
+Infix "<" := lt : nat_scope.
+*)
+
+inline procedural "cic:/Coq/Init/Peano/ge.con" as definition.
+
+(* UNEXPORTED
+Hint Unfold ge: core v62.
+*)
+
+(* NOTATION
+Infix ">=" := ge : nat_scope.
+*)
+
+inline procedural "cic:/Coq/Init/Peano/gt.con" as definition.
+
+(* UNEXPORTED
+Hint Unfold gt: core v62.
+*)
+
+(* NOTATION
+Infix ">" := gt : nat_scope.
+*)
+
+(* NOTATION
+Notation "x <= y <= z" := (x <= y /\ y <= z) : nat_scope.
+*)
+
+(* NOTATION
+Notation "x <= y < z" := (x <= y /\ y < z) : nat_scope.
+*)
+
+(* NOTATION
+Notation "x < y < z" := (x < y /\ y < z) : nat_scope.
+*)
+
+(* NOTATION
+Notation "x < y <= z" := (x < y /\ y <= z) : nat_scope.
+*)
+
+(*#* Pattern-Matching on natural numbers *)
+
+inline procedural "cic:/Coq/Init/Peano/nat_case.con" as theorem.
+
+(*#* Principle of double induction *)
+
+inline procedural "cic:/Coq/Init/Peano/nat_double_ind.con" as theorem.
+
+(*#* Notations *)
+

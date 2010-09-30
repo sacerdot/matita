@@ -1,0 +1,76 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Min.v,v 1.10.2.1 2004/07/16 19:31:00 herbelin Exp $ i*)
+
+include "Arith/Arith.ma".
+
+(* UNEXPORTED
+Open Local Scope nat_scope.
+*)
+
+(* UNEXPORTED
+Implicit Types m n : nat.
+*)
+
+(*#* minimum of two natural numbers *)
+
+inline procedural "cic:/Coq/Arith/Min/min.con" as definition.
+
+(*#* Simplifications of [min] *)
+
+inline procedural "cic:/Coq/Arith/Min/min_SS.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Min/min_comm.con" as lemma.
+
+(*#* [min] and [le] *)
+
+inline procedural "cic:/Coq/Arith/Min/min_l.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Min/min_r.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Min/le_min_l.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Min/le_min_r.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve min_l min_r le_min_l le_min_r: arith v62.
+*)
+
+(*#* [min n m] is equal to [n] or [m] *)
+
+inline procedural "cic:/Coq/Arith/Min/min_dec.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Min/min_case.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Min/min_case2.con" as lemma.
+

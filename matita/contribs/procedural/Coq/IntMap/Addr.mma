@@ -1,0 +1,144 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i 	$Id: Addr.v,v 1.8.2.1 2004/07/16 19:31:04 herbelin Exp $	 i*)
+
+(*#* Representation of adresses by the [positive] type of binary numbers *)
+
+include "Bool/Bool.ma".
+
+include "ZArith/ZArith.ma".
+
+inline procedural "cic:/Coq/IntMap/Addr/ad.ind".
+
+inline procedural "cic:/Coq/IntMap/Addr/ad_sum.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addr/p_xor.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Addr/ad_xor.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Addr/ad_xor_neutral_left.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addr/ad_xor_neutral_right.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addr/ad_xor_comm.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addr/ad_xor_nilpotent.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addr/ad_bit_1.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Addr/ad_bit.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Addr/eqf.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Addr/ad_faithful_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addr/ad_faithful_2.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addr/ad_faithful_3.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addr/ad_faithful_4.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addr/ad_faithful.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addr/adf_xor.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Addr/ad_xor_sem_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addr/ad_xor_sem_2.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addr/ad_xor_sem_3.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addr/ad_xor_sem_4.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addr/ad_xor_sem_5.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addr/ad_xor_sem_6.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addr/ad_xor_semantics.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addr/eqf_sym.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addr/eqf_refl.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addr/eqf_trans.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addr/adf_xor_eq.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addr/ad_xor_eq.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addr/adf_xor_assoc.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addr/eqf_xor_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addr/ad_xor_assoc.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addr/ad_double.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Addr/ad_double_plus_un.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Addr/ad_div_2.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Addr/ad_double_div_2.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addr/ad_double_plus_un_div_2.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addr/ad_double_inj.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addr/ad_double_plus_un_inj.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addr/ad_bit_0.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Addr/ad_double_bit_0.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addr/ad_double_plus_un_bit_0.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addr/ad_div_2_double.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addr/ad_div_2_double_plus_un.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addr/ad_bit_0_correct.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addr/ad_div_2_correct.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addr/ad_xor_bit_0.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addr/ad_xor_div_2.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addr/ad_neg_bit_0.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addr/ad_neg_bit_0_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addr/ad_neg_bit_0_2.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Addr/ad_same_bit_0.con" as lemma.
+

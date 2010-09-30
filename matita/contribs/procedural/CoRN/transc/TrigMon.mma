@@ -1,0 +1,101 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "CoRN.ma".
+
+(* $Id: TrigMon.v,v 1.9 2004/04/23 10:01:08 lcf Exp $ *)
+
+include "transc/Pi.ma".
+
+(* UNEXPORTED
+Opaque Sine Cosine.
+*)
+
+(*#*
+Sign properties: cosine is positive in
+$(-\frac{\pi}2,\frac{\pi}2)$#(-&pi;/2,&pi;/2)#, sine in
+$(0,\pi)$#(0,&pi;)# and tangent in $(0,\frac{\pi}2)$#0,&pi;/2)#.
+*)
+
+inline procedural "cic:/CoRN/transc/TrigMon/Cos_pos.con" as lemma.
+
+inline procedural "cic:/CoRN/transc/TrigMon/Sin_pos.con" as lemma.
+
+inline procedural "cic:/CoRN/transc/TrigMon/Tan_pos.con" as lemma.
+
+inline procedural "cic:/CoRN/transc/TrigMon/Cos_nonneg.con" as lemma.
+
+inline procedural "cic:/CoRN/transc/TrigMon/Sin_nonneg.con" as lemma.
+
+(*#* Consequences. *)
+
+inline procedural "cic:/CoRN/transc/TrigMon/Abs_Sin_less_One.con" as lemma.
+
+inline procedural "cic:/CoRN/transc/TrigMon/Abs_Cos_less_One.con" as lemma.
+
+(*#*
+Sine is (strictly) increasing in [[ [--]Pi[/]Two,Pi[/]Two]]; cosine
+is (strictly) decreasing in [[Zero,Pi]].
+*)
+
+inline procedural "cic:/CoRN/transc/TrigMon/Sin_resp_leEq.con" as lemma.
+
+inline procedural "cic:/CoRN/transc/TrigMon/Cos_resp_leEq.con" as lemma.
+
+(* begin hide *)
+
+inline procedural "cic:/CoRN/transc/TrigMon/Cos_resp_less_aux.con" as lemma.
+
+inline procedural "cic:/CoRN/transc/TrigMon/Cos_resp_less_aux'.con" as lemma.
+
+(* end hide *)
+
+inline procedural "cic:/CoRN/transc/TrigMon/Cos_resp_less.con" as lemma.
+
+inline procedural "cic:/CoRN/transc/TrigMon/Sin_resp_less.con" as lemma.
+
+(* UNEXPORTED
+Section Tangent
+*)
+
+(*#* **Derivative of Tangent
+
+Finally, two formulas for the derivative of the tangent function and
+monotonicity properties.
+*)
+
+inline procedural "cic:/CoRN/transc/TrigMon/bnd_Cos.con" as lemma.
+
+(* UNEXPORTED
+Opaque Sine Cosine.
+*)
+
+inline procedural "cic:/CoRN/transc/TrigMon/Derivative_Tan_1.con" as lemma.
+
+inline procedural "cic:/CoRN/transc/TrigMon/Derivative_Tan_2.con" as lemma.
+
+inline procedural "cic:/CoRN/transc/TrigMon/Tan_resp_less.con" as lemma.
+
+inline procedural "cic:/CoRN/transc/TrigMon/Tan_resp_leEq.con" as lemma.
+
+(* UNEXPORTED
+End Tangent
+*)
+
+(* UNEXPORTED
+Hint Resolve Derivative_Tan_1 Derivative_Tan_2: derivate.
+*)
+

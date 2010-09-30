@@ -1,0 +1,431 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "CoRN.ma".
+
+(* $Id: CGroups.v,v 1.9 2004/04/23 10:00:52 lcf Exp $ *)
+
+(*#* printing [-] %\ensuremath-% #&minus;# *)
+
+(*#* printing [--] %\ensuremath-% #&minus;# *)
+
+(*#* printing {-} %\ensuremath-% #&minus;# *)
+
+(*#* printing {--} %\ensuremath-% #&minus;# *)
+
+include "algebra/CMonoids.ma".
+
+(* Begin_SpecReals *)
+
+(*#*
+* Groups
+** Definition of the notion of Group
+*)
+
+inline procedural "cic:/CoRN/algebra/CGroups/is_inverse.con" as definition.
+
+(* UNEXPORTED
+Implicit Arguments is_inverse [S].
+*)
+
+inline procedural "cic:/CoRN/algebra/CGroups/is_CGroup.con" as definition.
+
+inline procedural "cic:/CoRN/algebra/CGroups/CGroup.ind".
+
+(* COERCION
+cic:/matita/CoRN-Procedural/algebra/CGroups/cg_crr.con
+*)
+
+(* End_SpecReals *)
+
+(* Begin_SpecReals *)
+
+(* UNEXPORTED
+Implicit Arguments cg_inv [c].
+*)
+
+(* NOTATION
+Notation "[--] x" := (cg_inv x) (at level 2, right associativity).
+*)
+
+inline procedural "cic:/CoRN/algebra/CGroups/cg_minus.con" as definition.
+
+(*#*
+%\begin{nameconvention}%
+In the names of lemmas, we will denote [[--] ] with [inv],
+and [ [-] ] with [minus].
+%\end{nameconvention}%
+*)
+
+(* UNEXPORTED
+Implicit Arguments cg_minus [G].
+*)
+
+(* NOTATION
+Infix "[-]" := cg_minus (at level 50, left associativity).
+*)
+
+(* End_SpecReals *)
+
+(*#*
+** Group axioms
+%\begin{convention}% Let [G] be a group.
+%\end{convention}%
+*)
+
+(* UNEXPORTED
+Section CGroup_axioms
+*)
+
+(* UNEXPORTED
+cic:/CoRN/algebra/CGroups/CGroup_axioms/G.var
+*)
+
+inline procedural "cic:/CoRN/algebra/CGroups/cg_inverse.con" as lemma.
+
+(* UNEXPORTED
+End CGroup_axioms
+*)
+
+(*#*
+** Group basics
+General properties of groups.
+%\begin{convention}% Let [G] be a group.
+%\end{convention}%
+*)
+
+(* UNEXPORTED
+Section CGroup_basics
+*)
+
+(* UNEXPORTED
+cic:/CoRN/algebra/CGroups/CGroup_basics/G.var
+*)
+
+inline procedural "cic:/CoRN/algebra/CGroups/cg_rht_inv_unfolded.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CGroups/cg_lft_inv_unfolded.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CGroups/cg_minus_correct.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve cg_rht_inv_unfolded cg_lft_inv_unfolded cg_minus_correct:
+  algebra.
+*)
+
+inline procedural "cic:/CoRN/algebra/CGroups/cg_inverse'.con" as lemma.
+
+(* Hints for Auto *)
+
+inline procedural "cic:/CoRN/algebra/CGroups/cg_minus_unfolded.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve cg_minus_unfolded: algebra.
+*)
+
+inline procedural "cic:/CoRN/algebra/CGroups/cg_minus_wd.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve cg_minus_wd: algebra_c.
+*)
+
+inline procedural "cic:/CoRN/algebra/CGroups/cg_minus_strext.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CGroups/cg_minus_is_csetoid_bin_op.con" as definition.
+
+inline procedural "cic:/CoRN/algebra/CGroups/grp_inv_assoc.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve grp_inv_assoc: algebra.
+*)
+
+inline procedural "cic:/CoRN/algebra/CGroups/cg_inv_unique.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CGroups/cg_inv_inv.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve cg_inv_inv: algebra.
+*)
+
+inline procedural "cic:/CoRN/algebra/CGroups/cg_cancel_lft.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CGroups/cg_cancel_rht.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CGroups/cg_inv_unique'.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CGroups/cg_inv_unique_2.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CGroups/cg_zero_inv.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve cg_zero_inv: algebra.
+*)
+
+inline procedural "cic:/CoRN/algebra/CGroups/cg_inv_zero.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CGroups/cg_inv_op.con" as lemma.
+
+(*#*
+Useful for interactive proof development.
+*)
+
+inline procedural "cic:/CoRN/algebra/CGroups/x_minus_x.con" as lemma.
+
+(*#*
+** Sub-groups
+%\begin{convention}% Let [P] be a predicate on [G] containing
+[Zero] and closed under [[+]] and [[--] ].
+%\end{convention}%
+*)
+
+(* UNEXPORTED
+Section SubCGroups
+*)
+
+(* UNEXPORTED
+cic:/CoRN/algebra/CGroups/CGroup_basics/SubCGroups/P.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/algebra/CGroups/CGroup_basics/SubCGroups/Punit.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/algebra/CGroups/CGroup_basics/SubCGroups/op_pres_P.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/algebra/CGroups/CGroup_basics/SubCGroups/inv_pres_P.var
+*)
+
+inline procedural "cic:/CoRN/algebra/CGroups/CGroup_basics/SubCGroups/subcrr.con" "CGroup_basics__SubCGroups__" as definition.
+
+inline procedural "cic:/CoRN/algebra/CGroups/CGroup_basics/SubCGroups/subinv.con" "CGroup_basics__SubCGroups__" as definition.
+
+inline procedural "cic:/CoRN/algebra/CGroups/isgrp_scrr.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CGroups/Build_SubCGroup.con" as definition.
+
+(* UNEXPORTED
+End SubCGroups
+*)
+
+(* UNEXPORTED
+End CGroup_basics
+*)
+
+(* UNEXPORTED
+Hint Resolve cg_rht_inv_unfolded cg_lft_inv_unfolded: algebra.
+*)
+
+(* UNEXPORTED
+Hint Resolve cg_inv_inv cg_minus_correct cg_zero_inv cg_inv_zero: algebra.
+*)
+
+(* UNEXPORTED
+Hint Resolve cg_minus_unfolded grp_inv_assoc cg_inv_op: algebra.
+*)
+
+(* UNEXPORTED
+Hint Resolve cg_minus_wd: algebra_c.
+*)
+
+(*#*
+** Associative properties of groups
+%\begin{convention}% Let [G] be a group.
+%\end{convention}%
+*)
+
+(* UNEXPORTED
+Section Assoc_properties
+*)
+
+(* UNEXPORTED
+cic:/CoRN/algebra/CGroups/Assoc_properties/G.var
+*)
+
+inline procedural "cic:/CoRN/algebra/CGroups/assoc_2.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CGroups/zero_minus.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CGroups/cg_cancel_mixed.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CGroups/plus_resp_eq.con" as lemma.
+
+(* UNEXPORTED
+End Assoc_properties
+*)
+
+(* UNEXPORTED
+Hint Resolve assoc_2 minus_plus zero_minus cg_cancel_mixed plus_resp_eq:
+  algebra.
+*)
+
+(*#*
+** Apartness in Constructive Groups
+Specific properties of apartness.
+%\begin{convention}% Let [G] be a group.
+%\end{convention}%
+*)
+
+(* UNEXPORTED
+Section cgroups_apartness
+*)
+
+(* UNEXPORTED
+cic:/CoRN/algebra/CGroups/cgroups_apartness/G.var
+*)
+
+inline procedural "cic:/CoRN/algebra/CGroups/cg_add_ap_zero.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CGroups/op_rht_resp_ap.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CGroups/cg_ap_cancel_rht.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CGroups/plus_cancel_ap_rht.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CGroups/minus_ap_zero.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CGroups/zero_minus_apart.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CGroups/inv_resp_ap_zero.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CGroups/inv_resp_ap.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CGroups/minus_resp_ap_rht.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CGroups/minus_resp_ap_lft.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CGroups/minus_cancel_ap_rht.con" as lemma.
+
+(* UNEXPORTED
+End cgroups_apartness
+*)
+
+(* UNEXPORTED
+Hint Resolve op_rht_resp_ap: algebra.
+*)
+
+(* UNEXPORTED
+Hint Resolve minus_ap_zero zero_minus_apart inv_resp_ap_zero: algebra.
+*)
+
+(* UNEXPORTED
+Section CGroup_Ops
+*)
+
+(*#*
+** Functional operations
+
+As before, we lift our group operations to the function space of the group.
+
+%\begin{convention}%
+Let [G] be a group and [F,F':(PartFunct G)] with domains given respectively
+by [P] and [Q].
+%\end{convention}%
+*)
+
+(* UNEXPORTED
+cic:/CoRN/algebra/CGroups/CGroup_Ops/G.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/algebra/CGroups/CGroup_Ops/F.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/algebra/CGroups/CGroup_Ops/F'.var
+*)
+
+(* begin hide *)
+
+inline procedural "cic:/CoRN/algebra/CGroups/CGroup_Ops/P.con" "CGroup_Ops__" as definition.
+
+inline procedural "cic:/CoRN/algebra/CGroups/CGroup_Ops/Q.con" "CGroup_Ops__" as definition.
+
+(* end hide *)
+
+(* UNEXPORTED
+Section Part_Function_Inv
+*)
+
+inline procedural "cic:/CoRN/algebra/CGroups/part_function_inv_strext.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CGroups/Finv.con" as definition.
+
+(* UNEXPORTED
+End Part_Function_Inv
+*)
+
+(* UNEXPORTED
+Section Part_Function_Minus
+*)
+
+inline procedural "cic:/CoRN/algebra/CGroups/part_function_minus_strext.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CGroups/Fminus.con" as definition.
+
+(* UNEXPORTED
+End Part_Function_Minus
+*)
+
+(*#*
+%\begin{convention}% Let [R:G->CProp].
+%\end{convention}%
+*)
+
+(* UNEXPORTED
+cic:/CoRN/algebra/CGroups/CGroup_Ops/R.var
+*)
+
+inline procedural "cic:/CoRN/algebra/CGroups/included_FInv.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CGroups/included_FInv'.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CGroups/included_FMinus.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CGroups/included_FMinus'.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CGroups/included_FMinus''.con" as lemma.
+
+(* UNEXPORTED
+End CGroup_Ops
+*)
+
+(* UNEXPORTED
+Implicit Arguments Finv [G].
+*)
+
+(* NOTATION
+Notation "{--} x" := (Finv x) (at level 2, right associativity).
+*)
+
+(* UNEXPORTED
+Implicit Arguments Fminus [G].
+*)
+
+(* NOTATION
+Infix "{-}" := Fminus (at level 50, left associativity).
+*)
+
+(* UNEXPORTED
+Hint Resolve included_FInv included_FMinus : included.
+*)
+
+(* UNEXPORTED
+Hint Immediate included_FInv' included_FMinus' included_FMinus'' : included.
+*)
+

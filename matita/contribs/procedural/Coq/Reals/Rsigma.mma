@@ -1,0 +1,76 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Rsigma.v,v 1.12.2.1 2004/07/16 19:31:13 herbelin Exp $ i*)
+
+include "Reals/Rbase.ma".
+
+include "Reals/Rfunctions.ma".
+
+include "Reals/Rseries.ma".
+
+include "Reals/PartSum.ma".
+
+(* UNEXPORTED
+Open Local Scope R_scope.
+*)
+
+(* UNEXPORTED
+Set Implicit Arguments.
+*)
+
+(* UNEXPORTED
+Section Sigma
+*)
+
+(* UNEXPORTED
+cic:/Coq/Reals/Rsigma/Sigma/f.var
+*)
+
+inline procedural "cic:/Coq/Reals/Rsigma/sigma.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Rsigma/sigma_split.con" as theorem.
+
+inline procedural "cic:/Coq/Reals/Rsigma/sigma_diff.con" as theorem.
+
+inline procedural "cic:/Coq/Reals/Rsigma/sigma_diff_neg.con" as theorem.
+
+inline procedural "cic:/Coq/Reals/Rsigma/sigma_first.con" as theorem.
+
+inline procedural "cic:/Coq/Reals/Rsigma/sigma_last.con" as theorem.
+
+inline procedural "cic:/Coq/Reals/Rsigma/sigma_eq_arg.con" as theorem.
+
+(* UNEXPORTED
+End Sigma
+*)
+

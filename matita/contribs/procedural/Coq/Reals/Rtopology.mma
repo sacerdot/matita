@@ -1,0 +1,244 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Rtopology.v,v 1.19.2.1 2004/07/16 19:31:13 herbelin Exp $ i*)
+
+include "Reals/Rbase.ma".
+
+include "Reals/Rfunctions.ma".
+
+include "Reals/Ranalysis1.ma".
+
+include "Reals/RList.ma".
+
+include "Logic/Classical_Prop.ma".
+
+include "Logic/Classical_Pred_Type.ma".
+
+(* UNEXPORTED
+Open Local Scope R_scope.
+*)
+
+inline procedural "cic:/Coq/Reals/Rtopology/included.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Rtopology/disc.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Rtopology/neighbourhood.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Rtopology/open_set.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Rtopology/complementary.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Rtopology/closed_set.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Rtopology/intersection_domain.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Rtopology/union_domain.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Rtopology/interior.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Rtopology/interior_P1.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtopology/interior_P2.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtopology/point_adherent.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Rtopology/adherence.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Rtopology/adherence_P1.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtopology/included_trans.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtopology/interior_P3.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtopology/complementary_P1.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtopology/adherence_P2.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtopology/adherence_P3.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtopology/eq_Dom.con" as definition.
+
+(* NOTATION
+Infix "=_D" := eq_Dom (at level 70, no associativity).
+*)
+
+inline procedural "cic:/Coq/Reals/Rtopology/open_set_P1.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtopology/closed_set_P1.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtopology/neighbourhood_P1.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtopology/open_set_P2.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtopology/open_set_P3.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtopology/open_set_P4.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtopology/open_set_P5.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtopology/disc_P1.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtopology/continuity_P1.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtopology/image_rec.con" as definition.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Rtopology/continuity_P2.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Rtopology/continuity_P3.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Rtopology/Rsepare.con" as theorem.
+
+inline procedural "cic:/Coq/Reals/Rtopology/family.ind".
+
+inline procedural "cic:/Coq/Reals/Rtopology/family_open_set.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Rtopology/domain_finite.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Rtopology/family_finite.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Rtopology/covering.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Rtopology/covering_open_set.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Rtopology/covering_finite.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Rtopology/restriction_family.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtopology/subfamily.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Rtopology/compact.con" as definition.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Rtopology/family_P1.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtopology/bounded.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Rtopology/open_set_P6.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Rtopology/compact_P1.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Rtopology/compact_P2.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Rtopology/compact_EMP.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtopology/compact_eqDom.con" as lemma.
+
+(* Borel-Lebesgue's lemma *)
+
+inline procedural "cic:/Coq/Reals/Rtopology/compact_P3.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtopology/compact_P4.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Rtopology/compact_P5.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Rtopology/compact_carac.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtopology/image_dir.con" as definition.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Rtopology/continuity_compact.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtopology/Rlt_Rminus.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtopology/prolongement_C0.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Rtopology/continuity_ab_maj.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Rtopology/continuity_ab_min.con" as lemma.
+
+(*#*******************************************************)
+
+(*         Proof of Bolzano-Weierstrass theorem         *)
+
+(*#*******************************************************)
+
+inline procedural "cic:/Coq/Reals/Rtopology/ValAdh.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Rtopology/intersection_family.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Rtopology/ValAdh_un_exists.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtopology/ValAdh_un.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Rtopology/ValAdh_un_prop.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtopology/adherence_P4.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtopology/family_closed_set.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Rtopology/intersection_vide_in.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Rtopology/intersection_vide_finite_in.con" as definition.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Rtopology/compact_P6.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtopology/Bolzano_Weierstrass.con" as theorem.
+
+(*#*******************************************************)
+
+(*               Proof of Heine's theorem               *)
+
+(*#*******************************************************)
+
+inline procedural "cic:/Coq/Reals/Rtopology/uniform_continuity.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Rtopology/is_lub_u.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtopology/domain_P1.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtopology/Heine.con" as theorem.
+

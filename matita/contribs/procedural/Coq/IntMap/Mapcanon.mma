@@ -1,0 +1,162 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i 	$Id: Mapcanon.v,v 1.4.2.1 2004/07/16 19:31:04 herbelin Exp $	 i*)
+
+include "Bool/Bool.ma".
+
+include "Bool/Sumbool.ma".
+
+include "Arith/Arith.ma".
+
+include "ZArith/ZArith.ma".
+
+include "IntMap/Addr.ma".
+
+include "IntMap/Adist.ma".
+
+include "IntMap/Addec.ma".
+
+include "IntMap/Map.ma".
+
+include "IntMap/Mapaxioms.ma".
+
+include "IntMap/Mapiter.ma".
+
+include "IntMap/Fset.ma".
+
+include "Lists/List.ma".
+
+include "IntMap/Lsort.ma".
+
+include "IntMap/Mapsubset.ma".
+
+include "IntMap/Mapcard.ma".
+
+(* UNEXPORTED
+Section MapCanon
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapcanon/MapCanon/A.var
+*)
+
+inline procedural "cic:/Coq/IntMap/Mapcanon/mapcanon.ind".
+
+inline procedural "cic:/Coq/IntMap/Mapcanon/mapcanon_M2.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcanon/mapcanon_M2_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcanon/mapcanon_M2_2.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcanon/M2_eqmap_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcanon/M2_eqmap_2.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcanon/mapcanon_unique.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcanon/MapPut1_canon.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcanon/MapPut_canon.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcanon/MapPut_behind_canon.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcanon/makeM2_canon.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcanon/MapCanonicalize.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Mapcanon/mapcanon_exists_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcanon/mapcanon_exists_2.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcanon/mapcanon_exists.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcanon/MapRemove_canon.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcanon/MapMerge_canon.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcanon/MapDelta_canon.con" as lemma.
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapcanon/MapCanon/B.var
+*)
+
+inline procedural "cic:/Coq/IntMap/Mapcanon/MapDomRestrTo_canon.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcanon/MapDomRestrBy_canon.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcanon/Map_of_alist_canon.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcanon/MapSubset_c_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcanon/MapSubset_c_2.con" as lemma.
+
+(* UNEXPORTED
+End MapCanon
+*)
+
+(* UNEXPORTED
+Section FSetCanon
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapcanon/FSetCanon/A.var
+*)
+
+inline procedural "cic:/Coq/IntMap/Mapcanon/MapDom_canon.con" as lemma.
+
+(* UNEXPORTED
+End FSetCanon
+*)
+
+(* UNEXPORTED
+Section MapFoldCanon
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapcanon/MapFoldCanon/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapcanon/MapFoldCanon/B.var
+*)
+
+inline procedural "cic:/Coq/IntMap/Mapcanon/MapFold_canon_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcanon/MapFold_canon.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcanon/MapCollect_canon.con" as lemma.
+
+(* UNEXPORTED
+End MapFoldCanon
+*)
+

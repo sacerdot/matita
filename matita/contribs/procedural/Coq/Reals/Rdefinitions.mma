@@ -1,0 +1,152 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Rdefinitions.v,v 1.14.2.1 2004/07/16 19:31:12 herbelin Exp $ i*)
+
+(*#********************************************************)
+
+(*#*          Definitions for the axiomatization          *)
+
+(*                                                       *)
+
+(*#********************************************************)
+
+include "ZArith/ZArith_base.ma".
+
+inline procedural "cic:/Coq/Reals/Rdefinitions/R.con".
+
+(* Declare Scope positive_scope with Key R *)
+
+(* UNEXPORTED
+Delimit Scope R_scope with R.
+*)
+
+(* Automatically open scope R_scope for arguments of type R *)
+
+(* UNEXPORTED
+Bind Scope R_scope with R.
+*)
+
+inline procedural "cic:/Coq/Reals/Rdefinitions/R0.con".
+
+inline procedural "cic:/Coq/Reals/Rdefinitions/R1.con".
+
+inline procedural "cic:/Coq/Reals/Rdefinitions/Rplus.con".
+
+inline procedural "cic:/Coq/Reals/Rdefinitions/Rmult.con".
+
+inline procedural "cic:/Coq/Reals/Rdefinitions/Ropp.con".
+
+inline procedural "cic:/Coq/Reals/Rdefinitions/Rinv.con".
+
+inline procedural "cic:/Coq/Reals/Rdefinitions/Rlt.con".
+
+inline procedural "cic:/Coq/Reals/Rdefinitions/up.con".
+
+(* NOTATION
+Infix "+" := Rplus : R_scope.
+*)
+
+(* NOTATION
+Infix "*" := Rmult : R_scope.
+*)
+
+(* NOTATION
+Notation "- x" := (Ropp x) : R_scope.
+*)
+
+(* NOTATION
+Notation "/ x" := (Rinv x) : R_scope.
+*)
+
+(* NOTATION
+Infix "<" := Rlt : R_scope.
+*)
+
+(*i*******************************************************i*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Rdefinitions/Rgt.con" as definition.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Rdefinitions/Rle.con" as definition.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Rdefinitions/Rge.con" as definition.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Rdefinitions/Rminus.con" as definition.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Rdefinitions/Rdiv.con" as definition.
+
+(* NOTATION
+Infix "-" := Rminus : R_scope.
+*)
+
+(* NOTATION
+Infix "/" := Rdiv : R_scope.
+*)
+
+(* NOTATION
+Infix "<=" := Rle : R_scope.
+*)
+
+(* NOTATION
+Infix ">=" := Rge : R_scope.
+*)
+
+(* NOTATION
+Infix ">" := Rgt : R_scope.
+*)
+
+(* NOTATION
+Notation "x <= y <= z" := ((x <= y)%R /\ (y <= z)%R) : R_scope.
+*)
+
+(* NOTATION
+Notation "x <= y < z" := ((x <= y)%R /\ (y < z)%R) : R_scope.
+*)
+
+(* NOTATION
+Notation "x < y < z" := ((x < y)%R /\ (y < z)%R) : R_scope.
+*)
+
+(* NOTATION
+Notation "x < y <= z" := ((x < y)%R /\ (y <= z)%R) : R_scope.
+*)
+

@@ -1,0 +1,192 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Uniset.v,v 1.9.2.1 2004/07/16 19:31:18 herbelin Exp $ i*)
+
+(*#* Sets as characteristic functions *)
+
+(* G. Huet 1-9-95 *)
+
+(* Updated Papageno 12/98 *)
+
+include "Bool/Bool.ma".
+
+(* UNEXPORTED
+Set Implicit Arguments.
+*)
+
+(* UNEXPORTED
+Section defs
+*)
+
+(* UNEXPORTED
+cic:/Coq/Sets/Uniset/defs/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Sets/Uniset/defs/eqA.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Sets/Uniset/defs/eqA_dec.var
+*)
+
+inline procedural "cic:/Coq/Sets/Uniset/uniset.ind".
+
+inline procedural "cic:/Coq/Sets/Uniset/charac.con" as definition.
+
+inline procedural "cic:/Coq/Sets/Uniset/Emptyset.con" as definition.
+
+inline procedural "cic:/Coq/Sets/Uniset/Fullset.con" as definition.
+
+inline procedural "cic:/Coq/Sets/Uniset/Singleton.con" as definition.
+
+inline procedural "cic:/Coq/Sets/Uniset/In.con" as definition.
+
+(* UNEXPORTED
+Hint Unfold In.
+*)
+
+(*#* uniset inclusion *)
+
+inline procedural "cic:/Coq/Sets/Uniset/incl.con" as definition.
+
+(* UNEXPORTED
+Hint Unfold incl.
+*)
+
+(*#* uniset equality *)
+
+inline procedural "cic:/Coq/Sets/Uniset/seq.con" as definition.
+
+(* UNEXPORTED
+Hint Unfold seq.
+*)
+
+inline procedural "cic:/Coq/Sets/Uniset/leb_refl.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve leb_refl.
+*)
+
+inline procedural "cic:/Coq/Sets/Uniset/incl_left.con" as lemma.
+
+inline procedural "cic:/Coq/Sets/Uniset/incl_right.con" as lemma.
+
+inline procedural "cic:/Coq/Sets/Uniset/seq_refl.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve seq_refl.
+*)
+
+inline procedural "cic:/Coq/Sets/Uniset/seq_trans.con" as lemma.
+
+inline procedural "cic:/Coq/Sets/Uniset/seq_sym.con" as lemma.
+
+(*#* uniset union *)
+
+inline procedural "cic:/Coq/Sets/Uniset/union.con" as definition.
+
+inline procedural "cic:/Coq/Sets/Uniset/union_empty_left.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve union_empty_left.
+*)
+
+inline procedural "cic:/Coq/Sets/Uniset/union_empty_right.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve union_empty_right.
+*)
+
+inline procedural "cic:/Coq/Sets/Uniset/union_comm.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve union_comm.
+*)
+
+inline procedural "cic:/Coq/Sets/Uniset/union_ass.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve union_ass.
+*)
+
+inline procedural "cic:/Coq/Sets/Uniset/seq_left.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve seq_left.
+*)
+
+inline procedural "cic:/Coq/Sets/Uniset/seq_right.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve seq_right.
+*)
+
+(*#* All the proofs that follow duplicate [Multiset_of_A] *)
+
+(*#* Here we should make uniset an abstract datatype, by hiding [Charac],
+    [union], [charac]; all further properties are proved abstractly *)
+
+include "Sets/Permut.ma".
+
+inline procedural "cic:/Coq/Sets/Uniset/union_rotate.con" as lemma.
+
+inline procedural "cic:/Coq/Sets/Uniset/seq_congr.con" as lemma.
+
+inline procedural "cic:/Coq/Sets/Uniset/union_perm_left.con" as lemma.
+
+inline procedural "cic:/Coq/Sets/Uniset/uniset_twist1.con" as lemma.
+
+inline procedural "cic:/Coq/Sets/Uniset/uniset_twist2.con" as lemma.
+
+(*#* specific for treesort *)
+
+inline procedural "cic:/Coq/Sets/Uniset/treesort_twist1.con" as lemma.
+
+inline procedural "cic:/Coq/Sets/Uniset/treesort_twist2.con" as lemma.
+
+(*i theory of minter to do similarly 
+Require Min.
+(* uniset intersection *)
+Definition minter := [m1,m2:uniset]
+    (Charac [a:A](andb (charac m1 a)(charac m2 a))).
+i*)
+
+(* UNEXPORTED
+End defs
+*)
+
+(* UNEXPORTED
+Unset Implicit Arguments.
+*)
+

@@ -1,0 +1,140 @@
+<!--
+  Data used to fill template "hbugs_tutor.TPL.ml"
+
+  @ADDR@              tutor ip address
+  @PORT@              tutor tcp port
+  @TACTIC@            tactic to use (OCaml function, must have type
+                      ProofEngineTypes.tactic)
+  @HINT@              hint to be sent to client (content of Hbugs_types.Eureka
+                      type constructor, must have type Hbugs_types.hint, see
+                      hbugs_types.ml)
+  @HINT_TYPE@         hint type (3rd argument of Hbugs_types.Register_tutor type
+                      constructor, must have type Hbugs_types.hint_type)
+  @DESCRIPTION@       human readable tutor description
+  @ENVIRONMENT_FILE@  file from which restore proof checking environment on boot
+
+  "source" attribute  corresponding OCaml source file
+
+  INVARIANT:  XML element name below are lowercase version of @TAGS@ used in
+              template
+
+  TODO: hint type isn't yet well formalized
+-->
+
+<tutors>
+
+  <!-- DEBUGGING -->
+<!--
+  <tutor source="wait_tutor.ml">
+    <addr>127.0.0.1</addr>
+    <port>50111</port>
+    <tactic>Wait.wait_tac</tactic>
+    <hint>Hbugs_types.Use_ring_Luke</hint>
+    <hint_type>Use Ring Luke</hint_type>
+    <description>WAIT FOREVER tutor</description>
+    <environment_file>wait.environment</environment_file>
+  </tutor>
+-->
+
+  <tutor source="ring_tutor.ml">
+    <addr>127.0.0.1</addr>
+    <port>50001</port>
+    <tactic>Ring.ring_tac</tactic>
+    <hint>Hbugs_types.Use_ring_Luke</hint>
+    <hint_type>Use Ring Luke</hint_type>
+    <description>Ring tutor</description>
+    <environment_file>ring.environment</environment_file>
+  </tutor>
+  <tutor source="fourier_tutor.ml">
+    <addr>127.0.0.1</addr>
+    <port>50002</port>
+    <tactic>FourierR.fourier_tac</tactic>
+    <hint>Hbugs_types.Use_fourier_Luke</hint>
+    <hint_type>Use Fourier Luke</hint_type>
+    <description>Fourier tutor</description>
+    <environment_file>fourier.environment</environment_file>
+  </tutor>
+  <tutor source="reflexivity_tutor.ml">
+    <addr>127.0.0.1</addr>
+    <port>50003</port>
+    <tactic>EqualityTactics.reflexivity_tac</tactic>
+    <hint>Hbugs_types.Use_reflexivity_Luke</hint>
+    <hint_type>Use Reflexivity Luke</hint_type>
+    <description>Reflexivity tutor</description>
+    <environment_file>reflexivity.environment</environment_file>
+  </tutor>
+  <tutor source="symmetry_tutor.ml">
+    <addr>127.0.0.1</addr>
+    <port>50004</port>
+    <tactic>EqualityTactics.symmetry_tac</tactic>
+    <hint>Hbugs_types.Use_symmetry_Luke</hint>
+    <hint_type>Use Symmetry Luke</hint_type>
+    <description>Symmetry tutor</description>
+    <environment_file>symmetry.environment</environment_file>
+  </tutor>
+  <tutor source="assumption_tutor.ml">
+    <addr>127.0.0.1</addr>
+    <port>50005</port>
+    <tactic>VariousTactics.assumption_tac</tactic>
+    <hint>Hbugs_types.Use_assumption_Luke</hint>
+    <hint_type>Use Assumption Luke</hint_type>
+    <description>Assumption tutor</description>
+    <environment_file>assumption.environment</environment_file>
+  </tutor>
+  <tutor source="contradiction_tutor.ml">
+    <addr>127.0.0.1</addr>
+    <port>50006</port>
+    <tactic>NegationTactics.contradiction_tac</tactic>
+    <hint>Hbugs_types.Use_contradiction_Luke</hint>
+    <hint_type>Use Contradiction Luke</hint_type>
+    <description>Contradiction tutor</description>
+    <environment_file>contradiction.environment</environment_file>
+  </tutor>
+  <tutor source="exists_tutor.ml">
+    <addr>127.0.0.1</addr>
+    <port>50007</port>
+    <tactic>IntroductionTactics.exists_tac</tactic>
+    <hint>Hbugs_types.Use_exists_Luke</hint>
+    <hint_type>Use Exists Luke</hint_type>
+    <description>Exists tutor</description>
+    <environment_file>exists.environment</environment_file>
+  </tutor>
+  <tutor source="split_tutor.ml">
+    <addr>127.0.0.1</addr>
+    <port>50008</port>
+    <tactic>IntroductionTactics.split_tac</tactic>
+    <hint>Hbugs_types.Use_split_Luke</hint>
+    <hint_type>Use Split Luke</hint_type>
+    <description>Split tutor</description>
+    <environment_file>split.environment</environment_file>
+  </tutor>
+  <tutor source="left_tutor.ml">
+    <addr>127.0.0.1</addr>
+    <port>50009</port>
+    <tactic>IntroductionTactics.left_tac</tactic>
+    <hint>Hbugs_types.Use_left_Luke</hint>
+    <hint_type>Use Left Luke</hint_type>
+    <description>Left tutor</description>
+    <environment_file>left.environment</environment_file>
+  </tutor>
+  <tutor source="right_tutor.ml">
+    <addr>127.0.0.1</addr>
+    <port>50010</port>
+    <tactic>IntroductionTactics.right_tac</tactic>
+    <hint>Hbugs_types.Use_right_Luke</hint>
+    <hint_type>Use Right Luke</hint_type>
+    <description>Right tutor</description>
+    <environment_file>right.environment</environment_file>
+  </tutor>
+  <tutor source="search_pattern_apply_tutor.ml">
+    <no_auto /> <!-- this imply that settings below are not significant -->
+    <addr>127.0.0.1</addr>
+    <port>50011</port>
+    <tactic>PrimitiveTactics.apply_tac</tactic>
+    <hint>Hbugs_types.Use_apply_Luke</hint>
+    <hint_type>Use Apply Luke (with argument)</hint_type>
+    <description>Search pattern apply tutor</description>
+    <environment_file>search_pattern_apply.environment</environment_file>
+  </tutor>
+</tutors>
+

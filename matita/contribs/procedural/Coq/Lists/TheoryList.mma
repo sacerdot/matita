@@ -1,0 +1,292 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: TheoryList.v,v 1.15.2.1 2004/07/16 19:31:06 herbelin Exp $ i*)
+
+(*#* Some programs and results about lists following CAML Manual *)
+
+include "Lists/List.ma".
+
+(* UNEXPORTED
+Set Implicit Arguments.
+*)
+
+(* UNEXPORTED
+Section Lists
+*)
+
+(* UNEXPORTED
+cic:/Coq/Lists/TheoryList/Lists/A.var
+*)
+
+(*#*********************)
+
+(*#* The null function *)
+
+(*#*********************)
+
+inline procedural "cic:/Coq/Lists/TheoryList/Isnil.con" as definition.
+
+inline procedural "cic:/Coq/Lists/TheoryList/Isnil_nil.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Isnil_nil.
+*)
+
+inline procedural "cic:/Coq/Lists/TheoryList/not_Isnil_cons.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve Isnil_nil not_Isnil_cons.
+*)
+
+inline procedural "cic:/Coq/Lists/TheoryList/Isnil_dec.con" as lemma.
+
+(*#***********************)
+
+(*#* The Uncons function *)
+
+(*#***********************)
+
+inline procedural "cic:/Coq/Lists/TheoryList/Uncons.con" as lemma.
+
+(*#*******************************)
+
+(*#* The head function           *)
+
+(*#*******************************)
+
+inline procedural "cic:/Coq/Lists/TheoryList/Hd.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/TheoryList/Tl.con" as lemma.
+
+(*#***************************************)
+
+(*#* Length of lists                     *)
+
+(*#***************************************)
+
+(* length is defined in List *)
+
+inline procedural "cic:/Coq/Lists/TheoryList/Length_l.con" as definition.
+
+(* A tail recursive version *)
+
+inline procedural "cic:/Coq/Lists/TheoryList/Length_l_pf.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/TheoryList/Length.con" as lemma.
+
+(*#******************************)
+
+(*#* Members of lists           *)
+
+(*#******************************)
+
+inline procedural "cic:/Coq/Lists/TheoryList/In_spec.ind".
+
+(* UNEXPORTED
+Hint Resolve in_hd in_tl.
+*)
+
+(* UNEXPORTED
+Hint Unfold In.
+*)
+
+(* UNEXPORTED
+Hint Resolve in_cons.
+*)
+
+inline procedural "cic:/Coq/Lists/TheoryList/In_In_spec.con" as theorem.
+
+inline procedural "cic:/Coq/Lists/TheoryList/AllS.ind".
+
+(* UNEXPORTED
+Hint Resolve allS_nil allS_cons.
+*)
+
+(* UNEXPORTED
+cic:/Coq/Lists/TheoryList/Lists/eqA_dec.var
+*)
+
+inline procedural "cic:/Coq/Lists/TheoryList/mem.con" as definition.
+
+(* UNEXPORTED
+Hint Unfold In.
+*)
+
+inline procedural "cic:/Coq/Lists/TheoryList/Mem.con" as lemma.
+
+(*#********************************)
+
+(*#* Index of elements            *)
+
+(*#********************************)
+
+include "Arith/Le.ma".
+
+include "Arith/Lt.ma".
+
+inline procedural "cic:/Coq/Lists/TheoryList/nth_spec.ind".
+
+(* UNEXPORTED
+Hint Resolve nth_spec_O nth_spec_S.
+*)
+
+inline procedural "cic:/Coq/Lists/TheoryList/fst_nth_spec.ind".
+
+(* UNEXPORTED
+Hint Resolve fst_nth_O fst_nth_S.
+*)
+
+inline procedural "cic:/Coq/Lists/TheoryList/fst_nth_nth.con" as lemma.
+
+(* UNEXPORTED
+Hint Immediate fst_nth_nth.
+*)
+
+inline procedural "cic:/Coq/Lists/TheoryList/nth_lt_O.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/TheoryList/nth_le_length.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/TheoryList/Nth_func.con" as definition.
+
+inline procedural "cic:/Coq/Lists/TheoryList/Nth.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/TheoryList/Item.con" as lemma.
+
+include "Arith/Minus.ma".
+
+include "Bool/DecBool.ma".
+
+inline procedural "cic:/Coq/Lists/TheoryList/index_p.con" as definition.
+
+inline procedural "cic:/Coq/Lists/TheoryList/Index_p.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/TheoryList/Index.con" as lemma.
+
+(* UNEXPORTED
+Section Find_sec
+*)
+
+(* UNEXPORTED
+cic:/Coq/Lists/TheoryList/Lists/Find_sec/R.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Lists/TheoryList/Lists/Find_sec/P.var
+*)
+
+inline procedural "cic:/Coq/Lists/TheoryList/InR.ind".
+
+(* UNEXPORTED
+Hint Resolve inR_hd inR_tl.
+*)
+
+inline procedural "cic:/Coq/Lists/TheoryList/InR_inv.con" as definition.
+
+inline procedural "cic:/Coq/Lists/TheoryList/InR_INV.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/TheoryList/InR_cons_inv.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/TheoryList/InR_or_app.con" as lemma.
+
+inline procedural "cic:/Coq/Lists/TheoryList/InR_app_or.con" as lemma.
+
+(* UNEXPORTED
+cic:/Coq/Lists/TheoryList/Lists/Find_sec/RS_dec.var
+*)
+
+inline procedural "cic:/Coq/Lists/TheoryList/find.con" as definition.
+
+inline procedural "cic:/Coq/Lists/TheoryList/Find.con" as lemma.
+
+(* UNEXPORTED
+cic:/Coq/Lists/TheoryList/Lists/Find_sec/B.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Lists/TheoryList/Lists/Find_sec/T.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Lists/TheoryList/Lists/Find_sec/TS_dec.var
+*)
+
+inline procedural "cic:/Coq/Lists/TheoryList/try_find.con" as definition.
+
+inline procedural "cic:/Coq/Lists/TheoryList/Try_find.con" as lemma.
+
+(* UNEXPORTED
+End Find_sec
+*)
+
+(* UNEXPORTED
+Section Assoc_sec
+*)
+
+(* UNEXPORTED
+cic:/Coq/Lists/TheoryList/Lists/Assoc_sec/B.var
+*)
+
+inline procedural "cic:/Coq/Lists/TheoryList/assoc.con" as definition.
+
+inline procedural "cic:/Coq/Lists/TheoryList/AllS_assoc.ind".
+
+(* UNEXPORTED
+Hint Resolve allS_assoc_nil allS_assoc_cons.
+*)
+
+(* The specification seems too weak: it is enough to return b if the
+   list has at least an element (a,b); probably the intention is to have
+   the specification
+
+   (a:A)(l:(list A*B)){b:B|(In_spec (a,b) l)}+{(AllS_assoc [a':A]~(a=a') l)}.
+*)
+
+inline procedural "cic:/Coq/Lists/TheoryList/Assoc.con" as lemma.
+
+(* UNEXPORTED
+End Assoc_sec
+*)
+
+(* UNEXPORTED
+End Lists
+*)
+
+(* UNEXPORTED
+Hint Resolve Isnil_nil not_Isnil_cons in_hd in_tl in_cons allS_nil allS_cons:
+  datatypes.
+*)
+
+(* UNEXPORTED
+Hint Immediate fst_nth_nth: datatypes.
+*)
+

@@ -1,0 +1,84 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+include "Init/Prelude.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Inverse_Image.v,v 1.10.2.1 2004/07/16 19:31:19 herbelin Exp $ i*)
+
+(*#* Author: Bruno Barras *)
+
+(* UNEXPORTED
+Section Inverse_Image
+*)
+
+(* UNEXPORTED
+cic:/Coq/Wellfounded/Inverse_Image/Inverse_Image/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Wellfounded/Inverse_Image/Inverse_Image/B.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Wellfounded/Inverse_Image/Inverse_Image/R.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Wellfounded/Inverse_Image/Inverse_Image/f.var
+*)
+
+(* UNAVAILABLE OBJECT: cic:/Coq/Wellfounded/Inverse_Image/Inverse_Image/Rof.con *)
+
+inline procedural "cic:/Coq/Wellfounded/Inverse_Image/Inverse_Image/Rof.con" "Inverse_Image__" as definition.
+
+inline procedural "cic:/Coq/Wellfounded/Inverse_Image/Acc_lemma.con" as remark.
+
+inline procedural "cic:/Coq/Wellfounded/Inverse_Image/Acc_inverse_image.con" as lemma.
+
+inline procedural "cic:/Coq/Wellfounded/Inverse_Image/wf_inverse_image.con" as theorem.
+
+(* UNEXPORTED
+cic:/Coq/Wellfounded/Inverse_Image/Inverse_Image/F.var
+*)
+
+(* UNAVAILABLE OBJECT: cic:/Coq/Wellfounded/Inverse_Image/Inverse_Image/RoF.con *)
+
+inline procedural "cic:/Coq/Wellfounded/Inverse_Image/Inverse_Image/RoF.con" "Inverse_Image__" as definition.
+
+inline procedural "cic:/Coq/Wellfounded/Inverse_Image/Acc_inverse_rel.con" as lemma.
+
+inline procedural "cic:/Coq/Wellfounded/Inverse_Image/wf_inverse_rel.con" as theorem.
+
+(* UNEXPORTED
+End Inverse_Image
+*)
+

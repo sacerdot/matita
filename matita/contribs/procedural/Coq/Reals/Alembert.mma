@@ -1,0 +1,78 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Alembert.v,v 1.14.2.1 2004/07/16 19:31:10 herbelin Exp $ i*)
+
+include "Reals/Rbase.ma".
+
+include "Reals/Rfunctions.ma".
+
+include "Reals/Rseries.ma".
+
+include "Reals/SeqProp.ma".
+
+include "Reals/PartSum.ma".
+
+include "Arith/Max.ma".
+
+(* UNEXPORTED
+Open Local Scope R_scope.
+*)
+
+(*#**************************************************)
+
+(* Various versions of the criterion of D'Alembert *)
+
+(*#**************************************************)
+
+inline procedural "cic:/Coq/Reals/Alembert/Alembert_C1.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Alembert/Alembert_C2.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Alembert/AlembertC3_step1.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Alembert/AlembertC3_step2.con" as lemma.
+
+(* An useful criterion of convergence for power series *)
+
+inline procedural "cic:/Coq/Reals/Alembert/Alembert_C3.con" as theorem.
+
+inline procedural "cic:/Coq/Reals/Alembert/Alembert_C4.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Alembert/Alembert_C5.con" as lemma.
+
+(* Convergence of power series in D(O,1/k) *)
+
+(*     k=0 is described in Alembert_C3     *)
+
+inline procedural "cic:/Coq/Reals/Alembert/Alembert_C6.con" as lemma.
+

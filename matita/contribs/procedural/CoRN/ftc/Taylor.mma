@@ -1,0 +1,196 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "CoRN.ma".
+
+(* $Id: Taylor.v,v 1.10 2004/04/23 10:01:01 lcf Exp $ *)
+
+include "ftc/TaylorLemma.ma".
+
+(* UNEXPORTED
+Opaque Min Max N_Deriv.
+*)
+
+(* UNEXPORTED
+Section More_Taylor_Defs
+*)
+
+(*#* **General case
+
+The generalization to arbitrary intervals just needs a few more definitions.
+
+%\begin{convention}% Let [I] be a proper interval, [F:PartIR] and
+[a,b:IR] be points of [I].
+%\end{convention}%
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Taylor/More_Taylor_Defs/I.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Taylor/More_Taylor_Defs/pI.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Taylor/More_Taylor_Defs/F.var
+*)
+
+(* begin show *)
+
+inline procedural "cic:/CoRN/ftc/Taylor/More_Taylor_Defs/deriv_Sn.con" "More_Taylor_Defs__" as definition.
+
+(* end show *)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Taylor/More_Taylor_Defs/a.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Taylor/More_Taylor_Defs/b.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Taylor/More_Taylor_Defs/Ha.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Taylor/More_Taylor_Defs/Hb.var
+*)
+
+(* begin show *)
+
+inline procedural "cic:/CoRN/ftc/Taylor/More_Taylor_Defs/fi.con" "More_Taylor_Defs__" as definition.
+
+inline procedural "cic:/CoRN/ftc/Taylor/More_Taylor_Defs/funct_i.con" "More_Taylor_Defs__" as definition.
+
+(* end show *)
+
+inline procedural "cic:/CoRN/ftc/Taylor/Taylor_Seq'.con" as definition.
+
+(* begin hide *)
+
+inline procedural "cic:/CoRN/ftc/Taylor/TaylorB.con" as lemma.
+
+(* end hide *)
+
+inline procedural "cic:/CoRN/ftc/Taylor/Taylor_Rem.con" as definition.
+
+(* begin hide *)
+
+inline procedural "cic:/CoRN/ftc/Taylor/Taylor_Sumx_lemma.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/Taylor/Taylor_lemma_ap.con" as lemma.
+
+(* end hide *)
+
+inline procedural "cic:/CoRN/ftc/Taylor/Taylor'.con" as theorem.
+
+(* UNEXPORTED
+End More_Taylor_Defs
+*)
+
+(* UNEXPORTED
+Section Taylor_Theorem
+*)
+
+(*#*
+And finally the ``nice'' version, when we know the expression of the
+derivatives of [F].
+
+%\begin{convention}% Let [f] be the sequence of derivatives of [F] of
+order up to [n] and [F'] be the nth-derivative of [F].
+%\end{convention}%
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Taylor/Taylor_Theorem/I.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Taylor/Taylor_Theorem/pI.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Taylor/Taylor_Theorem/F.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Taylor/Taylor_Theorem/n.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Taylor/Taylor_Theorem/f.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Taylor/Taylor_Theorem/goodF.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Taylor/Taylor_Theorem/goodF'.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Taylor/Taylor_Theorem/derF.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Taylor/Taylor_Theorem/F'.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Taylor/Taylor_Theorem/derF'.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Taylor/Taylor_Theorem/a.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Taylor/Taylor_Theorem/b.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Taylor/Taylor_Theorem/Ha.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/Taylor/Taylor_Theorem/Hb.var
+*)
+
+(* begin show *)
+
+inline procedural "cic:/CoRN/ftc/Taylor/Taylor_Theorem/funct_i.con" "Taylor_Theorem__" as definition.
+
+inline procedural "cic:/CoRN/ftc/Taylor/Taylor_Seq.con" as definition.
+
+inline procedural "cic:/CoRN/ftc/Taylor/Taylor_Theorem/deriv_Sn.con" "Taylor_Theorem__" as definition.
+
+(* end show *)
+
+inline procedural "cic:/CoRN/ftc/Taylor/Taylor_aux.con" as lemma.
+
+(* UNEXPORTED
+Transparent N_Deriv.
+*)
+
+inline procedural "cic:/CoRN/ftc/Taylor/Taylor.con" as theorem.
+
+(* UNEXPORTED
+End Taylor_Theorem
+*)
+

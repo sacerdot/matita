@@ -1,0 +1,200 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "CoRN.ma".
+
+(* $Id: CPseudoMSpaces.v,v 1.3 2004/04/23 10:01:02 lcf Exp $ *)
+
+include "reals/Intervals.ma".
+
+(*#* *Metric Spaces
+*)
+
+(* UNEXPORTED
+Section Relations
+*)
+
+(*#* **Relations necessary for Pseudo Metric Spaces and Metric Spaces
+%\begin{convention}%
+Let [A : CSetoid], [d : (CSetoid_bin_fun A A IR)].
+%\end{convention}%
+*)
+
+(* UNEXPORTED
+cic:/CoRN/metrics/CPseudoMSpaces/Relations/A.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/metrics/CPseudoMSpaces/Relations/d.var
+*)
+
+(* UNEXPORTED
+Set Implicit Arguments.
+*)
+
+(* UNEXPORTED
+Unset Strict Implicit.
+*)
+
+inline procedural "cic:/CoRN/metrics/CPseudoMSpaces/com.con" as definition.
+
+inline procedural "cic:/CoRN/metrics/CPseudoMSpaces/nneg.con" as definition.
+
+inline procedural "cic:/CoRN/metrics/CPseudoMSpaces/pos_imp_ap.con" as definition.
+
+inline procedural "cic:/CoRN/metrics/CPseudoMSpaces/tri_ineq.con" as definition.
+
+(* UNEXPORTED
+Set Strict Implicit.
+*)
+
+(* UNEXPORTED
+Unset Implicit Arguments.
+*)
+
+inline procedural "cic:/CoRN/metrics/CPseudoMSpaces/diag_zero.con" as definition.
+
+inline procedural "cic:/CoRN/metrics/CPseudoMSpaces/apdiag_imp_grzero.con" as definition.
+
+(* UNEXPORTED
+End Relations
+*)
+
+(* UNEXPORTED
+Section Definition_PsMS0
+*)
+
+(*#* **Definition of Pseudo Metric Space
+*)
+
+(*#*
+A pseudo metric space consists of a setoid and a %''pseudo metric''% #"pseudo metric"#, also called
+%''distance''% #"distance"#, a binairy function that fulfils certain properties.
+*)
+
+inline procedural "cic:/CoRN/metrics/CPseudoMSpaces/is_CPsMetricSpace.ind".
+
+inline procedural "cic:/CoRN/metrics/CPseudoMSpaces/CPsMetricSpace.ind".
+
+(* COERCION
+cic:/matita/CoRN-Procedural/metrics/CPseudoMSpaces/cms_crr.con
+*)
+
+(* UNEXPORTED
+End Definition_PsMS0
+*)
+
+(* UNEXPORTED
+Implicit Arguments cms_d [c].
+*)
+
+(* NOTATION
+Infix "[-d]" := cms_d (at level 68, left associativity).
+*)
+
+(* UNEXPORTED
+Section PsMS_axioms
+*)
+
+(*#* **Pseudo Metric Space axioms
+%\begin{convention}%
+Let [A] be a pseudo metric space.
+%\end{convention}%
+*)
+
+(* UNEXPORTED
+cic:/CoRN/metrics/CPseudoMSpaces/PsMS_axioms/A.var
+*)
+
+inline procedural "cic:/CoRN/metrics/CPseudoMSpaces/CPsMetricSpace_is_CPsMetricSpace.con" as lemma.
+
+inline procedural "cic:/CoRN/metrics/CPseudoMSpaces/d_com.con" as lemma.
+
+inline procedural "cic:/CoRN/metrics/CPseudoMSpaces/d_nneg.con" as lemma.
+
+inline procedural "cic:/CoRN/metrics/CPseudoMSpaces/d_pos_imp_ap.con" as lemma.
+
+inline procedural "cic:/CoRN/metrics/CPseudoMSpaces/d_tri_ineq.con" as lemma.
+
+(* UNEXPORTED
+End PsMS_axioms
+*)
+
+(* UNEXPORTED
+Section PsMS_basics
+*)
+
+(*#* **Pseudo Metric Space basics
+%\begin{convention}%
+Let [Y] be a pseudo metric space.
+%\end{convention}%
+*)
+
+(* UNEXPORTED
+cic:/CoRN/metrics/CPseudoMSpaces/PsMS_basics/Y.var
+*)
+
+inline procedural "cic:/CoRN/metrics/CPseudoMSpaces/rev_tri_ineq.con" as lemma.
+
+(*#*
+Instead of taking [pos_imp_ap] as axiom, 
+we could as well have taken [diag_zero]. 
+*)
+
+inline procedural "cic:/CoRN/metrics/CPseudoMSpaces/diag_zero_imp_pos_imp_ap.con" as lemma.
+
+inline procedural "cic:/CoRN/metrics/CPseudoMSpaces/pos_imp_ap_imp_diag_zero.con" as lemma.
+
+inline procedural "cic:/CoRN/metrics/CPseudoMSpaces/is_CPsMetricSpace_diag_zero.con" as lemma.
+
+(* UNEXPORTED
+End PsMS_basics
+*)
+
+(* UNEXPORTED
+Section Zerof
+*)
+
+(*#* **Zero function
+*)
+
+(*#*
+Every setoid forms with the binary function that always returns zero, 
+a pseudo metric space. 
+*)
+
+inline procedural "cic:/CoRN/metrics/CPseudoMSpaces/zero_fun.con" as definition.
+
+inline procedural "cic:/CoRN/metrics/CPseudoMSpaces/zero_fun_strext.con" as lemma.
+
+inline procedural "cic:/CoRN/metrics/CPseudoMSpaces/Zero_fun.con" as definition.
+
+inline procedural "cic:/CoRN/metrics/CPseudoMSpaces/zero_fun_com.con" as lemma.
+
+inline procedural "cic:/CoRN/metrics/CPseudoMSpaces/zero_fun_nneg.con" as lemma.
+
+inline procedural "cic:/CoRN/metrics/CPseudoMSpaces/zero_fun_pos_imp_ap.con" as lemma.
+
+inline procedural "cic:/CoRN/metrics/CPseudoMSpaces/zero_fun_tri_ineq.con" as lemma.
+
+inline procedural "cic:/CoRN/metrics/CPseudoMSpaces/zf_is_CPsMetricSpace.con" as definition.
+
+inline procedural "cic:/CoRN/metrics/CPseudoMSpaces/zf_as_CPsMetricSpace.con" as definition.
+
+(* UNEXPORTED
+End Zerof
+*)
+

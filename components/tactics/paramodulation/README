@@ -1,0 +1,45 @@
+make saturate per compilare l'eseguibile da riga di comando (make saturate.opt per la versione ottimizzata)
+
+./saturate -h per vedere una lista di parametri:
+
+./saturate: unknown option `-h'.
+Usage:
+  -full Enable full mode
+  -f Enable/disable full-reduction strategy (default: enabled)
+  -r Weight-Age equality selection ratio (default: 4)
+  -s symbols-based selection ratio (relative to the weight ratio, default: 0)
+  -c Configuration file (for the db connection)
+  -o Term ordering. Possible values are:
+        kbo: Knuth-Bendix ordering
+        nr-kbo: Non-recursive variant of kbo (default)
+        lpo: Lexicographic path ordering
+  -l Time limit in seconds (default: no limit)
+  -w Maximal width (default: 3)
+  -d Maximal depth (default: 3)
+  -retrieve retrieve only
+  -help  Display this list of options
+  --help  Display this list of options
+
+
+./saturate -l 10 -demod-equalities
+
+dove -l 10 e` il timeout in secondi.
+
+Il programma legge da standard input il teorema, per esempio
+
+\forall n:nat.n + n = 2 * n
+\forall n:R.n + n = 2 * n
+\forall n:R.n+n=n+n
+
+l'input termina con una riga vuota (quindi basta un doppio invio alla fine)
+
+In output, oltre ai vari messaggi di debug, vengono stampati gli insiemi
+active e passive alla fine dell'esecuzione. Consiglio di redirigere l'output
+su file, per esempio usando tee:
+
+./saturate -l 10 -demod-equalities | tee output.txt
+
+Il formato di stampa e` quello per gli oggetti di tipo equality (usa la
+funzione Inference.string_of_equality)
+
+

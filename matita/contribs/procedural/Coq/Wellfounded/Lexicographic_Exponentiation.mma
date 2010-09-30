@@ -1,0 +1,121 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Lexicographic_Exponentiation.v,v 1.10.2.1 2004/07/16 19:31:19 herbelin Exp $ i*)
+
+(*#* Author: Cristina Cornes
+
+    From : Constructing Recursion Operators in Type Theory                
+           L. Paulson  JSC (1986) 2, 325-355  *)
+
+include "Logic/Eqdep.ma".
+
+include "Lists/List.ma".
+
+include "Relations/Relation_Operators.ma".
+
+include "Wellfounded/Transitive_Closure.ma".
+
+(* UNEXPORTED
+Section Wf_Lexicographic_Exponentiation
+*)
+
+(* UNEXPORTED
+cic:/Coq/Wellfounded/Lexicographic_Exponentiation/Wf_Lexicographic_Exponentiation/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Wellfounded/Lexicographic_Exponentiation/Wf_Lexicographic_Exponentiation/leA.var
+*)
+
+(* NOTATION
+Notation Power := (Pow A leA).
+*)
+
+(* NOTATION
+Notation Lex_Exp := (lex_exp A leA).
+*)
+
+(* NOTATION
+Notation ltl := (Ltl A leA).
+*)
+
+(* NOTATION
+Notation Descl := (Desc A leA).
+*)
+
+(* NOTATION
+Notation List := (list A).
+*)
+
+(* NOTATION
+Notation Nil := (nil (A:=A)).
+*)
+
+(* useless but symmetric *)
+
+(* NOTATION
+Notation Cons := (cons (A:=A)).
+*)
+
+(* NOTATION
+Notation "<< x , y >>" := (exist Descl x y) (at level 0, x, y at level 100).
+*)
+
+(* UNEXPORTED
+Hint Resolve d_one d_nil t_step.
+*)
+
+inline procedural "cic:/Coq/Wellfounded/Lexicographic_Exponentiation/left_prefix.con" as lemma.
+
+inline procedural "cic:/Coq/Wellfounded/Lexicographic_Exponentiation/right_prefix.con" as lemma.
+
+inline procedural "cic:/Coq/Wellfounded/Lexicographic_Exponentiation/desc_prefix.con" as lemma.
+
+inline procedural "cic:/Coq/Wellfounded/Lexicographic_Exponentiation/desc_tail.con" as lemma.
+
+inline procedural "cic:/Coq/Wellfounded/Lexicographic_Exponentiation/dist_aux.con" as lemma.
+
+inline procedural "cic:/Coq/Wellfounded/Lexicographic_Exponentiation/dist_Desc_concat.con" as lemma.
+
+inline procedural "cic:/Coq/Wellfounded/Lexicographic_Exponentiation/desc_end.con" as lemma.
+
+inline procedural "cic:/Coq/Wellfounded/Lexicographic_Exponentiation/ltl_unit.con" as lemma.
+
+inline procedural "cic:/Coq/Wellfounded/Lexicographic_Exponentiation/acc_app.con" as lemma.
+
+inline procedural "cic:/Coq/Wellfounded/Lexicographic_Exponentiation/wf_lex_exp.con" as theorem.
+
+(* UNEXPORTED
+End Wf_Lexicographic_Exponentiation
+*)
+

@@ -1,0 +1,99 @@
+
+A: 0x00 HX: 0x0D4B SP: 0x0D4A PC: 0x18E0 Z:1
+A: 0x00 HX: LUNG/2 SP: 0x0D4A PC: 0x192B Z:1
+
+   8: 178806 -> 179480 :   674 = 42+79*   8
+  16: 178806 -> 180112 :  1306 = 42+79*  16
+  32: 178806 -> 181376 :  2570 = 42+79*  32
+  64: 178806 -> 183904 :  5098 = 42+79*  64
+ 128: 178806 -> 188960 : 10154 = 42+79* 128
+ 256: 178806 -> 199072 : 20266 = 42+79* 256
+ 511: 178806 -> 219138 : 40332 = 42+79* 511
+ 512: 178806 -> 219301 : 40495 < 42+79* 512 = 40490
+ 514: 178806 -> 219459 : 40653 < 42+79* 514 = 40648
+1024: 178806 -> 259754 : 80948 > 42+79*1024 = 80938
+
+ottima definizione esatta del tempo di esecuzione!
+
+T(n)=42+79*n+5*(n/512) oppure T(n)=42+79*n+5*(n>>9)
+
+dati 0x100-> 3072 byte
+
+**********************************************
+
+static unsigned char dati[3072]={...};
+
+void swap(unsigned char *a, unsigned char *b)
+ { unsigned char tmp=*a; *a=*b; *b=tmp; return; }
+
+18BE       PSHX
+18BF       PSHH
+18C0       LDHX 5,SP
+18C3       LDA ,X
+18C4       LDHX 1,SP
+18C7       PSHA
+18C8       LDA ,X
+18C9       LDHX 6,SP
+18CC       STA ,X
+18CD       LDHX 2,SP
+18D0       PULA
+18D1       STA ,X
+18D2       AIS #2
+18D4       RTS
+
+18D5-18DF ...
+
+void main(void)
+{
+ unsigned int pos=0,limit=0;
+
+ for(limit=3072;pos<(limit/2);pos++)
+  { swap(&dati[pos],&dati[limit-pos-1]); }
+
+18E0       LDHX #LUNG
+18E3       STHX 4,SP
+18E6 20 32 BRA *+52 ; 191A
+18E8       TSX
+18E9       LDA 2,X
+18EB       ADD #0x00
+18ED       PSHA
+18EE       LDA 1,X
+18F0       ADC #0x01
+18F2       PSHA
+18F3       LDA 4,X
+18F5       SUB 2,X
+18F7       STA ,X
+18F8       LDA 3,X
+18FA       SBC 1,X
+18FC       PSHA
+18FD       LDX ,X
+18FE       PULH
+18FF       AIX #-1
+1901       TXA
+1902       ADD #0x00
+1904       PSHH
+1905       TSX
+1906       STA 3,X
+1908       PULA
+1909       ADC #0x01
+190B       LDX 3,X
+190D       PSHA
+190E       PULH
+190F AD AD BSR *-81 ; 18BE
+1911       AIS #2
+1913       TSX
+1914       INC 2,X
+1916 26 02 BNE *+4 ; 191A
+1918       INC 1,X
+191A       TSX
+191B       LDA 3,X
+191D       PSHA
+191E       PULH
+191F       LSRA
+1920       TSX
+1921       LDX 4,X
+1923       RORX
+1924       PSHA
+1925       PULH
+1926       CPHX 2,SP
+1929 22 BD BHI *-65 ; 18E8

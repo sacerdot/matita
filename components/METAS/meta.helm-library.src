@@ -1,0 +1,5 @@
+requires="helm-cic_acic helm-metadata"
+version="0.0.1"
+archive(byte)="library.cma"
+archive(native)="library.cmxa"
+linkopts=""

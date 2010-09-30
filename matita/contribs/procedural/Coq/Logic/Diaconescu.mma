@@ -1,0 +1,100 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Diaconescu.v,v 1.5.2.3 2004/08/01 09:36:44 herbelin Exp $ i*)
+
+(*#* R. Diaconescu [Diaconescu] showed that the Axiom of Choice in Set Theory
+   entails Excluded-Middle; S. Lacas and B. Werner [LacasWerner]
+   adapted the proof to show that the axiom of choice in equivalence
+   classes entails Excluded-Middle in Type Theory.
+
+   This is an adaptatation of the proof by Hugo Herbelin to show that
+   the relational form of the Axiom of Choice + Extensionality for
+   predicates entails Excluded-Middle
+
+   [Diaconescu] R. Diaconescu, Axiom of Choice and Complementation, in
+   Proceedings of AMS, vol 51, pp 176-178, 1975.
+
+   [LacasWerner] S. Lacas, B Werner, Which Choices imply the excluded middle?,
+   preprint, 1999.
+
+*)
+
+(* UNEXPORTED
+Section PredExt_GuardRelChoice_imp_EM
+*)
+
+(*#* The axiom of extensionality for predicates *)
+
+inline procedural "cic:/Coq/Logic/Diaconescu/PredicateExtensionality.con" as definition.
+
+(*#* From predicate extensionality we get propositional extensionality
+   hence proof-irrelevance *)
+
+include "Logic/ClassicalFacts.ma".
+
+(* UNEXPORTED
+cic:/Coq/Logic/Diaconescu/PredExt_GuardRelChoice_imp_EM/pred_extensionality.var
+*)
+
+inline procedural "cic:/Coq/Logic/Diaconescu/prop_ext.con" as lemma.
+
+inline procedural "cic:/Coq/Logic/Diaconescu/proof_irrel.con" as lemma.
+
+(*#* From proof-irrelevance and relational choice, we get guarded
+   relational choice *)
+
+include "Logic/ChoiceFacts.ma".
+
+(* UNEXPORTED
+cic:/Coq/Logic/Diaconescu/PredExt_GuardRelChoice_imp_EM/rel_choice.var
+*)
+
+inline procedural "cic:/Coq/Logic/Diaconescu/guarded_rel_choice.con" as lemma.
+
+(*#* The form of choice we need: there is a functional relation which chooses
+    an element in any non empty subset of bool *)
+
+include "Bool/Bool.ma".
+
+inline procedural "cic:/Coq/Logic/Diaconescu/AC.con" as lemma.
+
+(*#* The proof of the excluded middle *)
+
+(*#* Remark: P could have been in Set or Type *)
+
+inline procedural "cic:/Coq/Logic/Diaconescu/pred_ext_and_rel_choice_imp_EM.con" as theorem.
+
+(* UNEXPORTED
+End PredExt_GuardRelChoice_imp_EM
+*)
+

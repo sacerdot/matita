@@ -1,0 +1,57 @@
+//   clusterrank = none;
+  fillcolor = "gray93";
+  fontsize = 24;
+  node [fontsize = 24];
+  /* libs clusters */
+  subgraph cluster_presentation {
+    label = "Terms at the content and presentation level";
+    labelloc = "b";
+    labeljust = "r";
+    style = "filled";
+    color = "white"
+    acic_content;
+    cic_disambiguation;
+    content_pres;
+    grafite_parser;
+    lexicon;
+  }
+  subgraph cluster_partially {
+    label = "Partially specified terms";
+    labelloc = "t";
+    labeljust = "l";
+    style = "filled";
+    color = "white"
+    cic_unification;
+    tactics;
+    grafite;
+    grafite_engine;
+  }
+  subgraph cluster_fully {
+    label = "Fully specified terms";
+    labelloc = "b";
+    labeljust = "l";
+    style = "filled";
+    color = "white"
+    cic;
+    cic_proof_checking;
+    getter;
+    metadata;
+    urimanager;
+    whelp;
+    library;
+    cic_acic;
+  }
+  subgraph cluster_utilities {
+    label = "Utilities";
+    labelloc = "b";
+    labeljust = "r";
+    style = "filled";
+    color = "white"
+    extlib;
+    hgdome;
+    hmysql;
+    registry;
+    utf8_macros;
+    xml;
+    logger;
+  }

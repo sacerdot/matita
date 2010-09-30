@@ -1,0 +1,206 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i 	$Id: Mapcard.v,v 1.5.2.1 2004/07/16 19:31:04 herbelin Exp $	 i*)
+
+include "Bool/Bool.ma".
+
+include "Bool/Sumbool.ma".
+
+include "Arith/Arith.ma".
+
+include "ZArith/ZArith.ma".
+
+include "IntMap/Addr.ma".
+
+include "IntMap/Adist.ma".
+
+include "IntMap/Addec.ma".
+
+include "IntMap/Map.ma".
+
+include "IntMap/Mapaxioms.ma".
+
+include "IntMap/Mapiter.ma".
+
+include "IntMap/Fset.ma".
+
+include "IntMap/Mapsubset.ma".
+
+include "Lists/List.ma".
+
+include "IntMap/Lsort.ma".
+
+include "Arith/Peano_dec.ma".
+
+(* UNEXPORTED
+Section MapCard
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapcard/MapCard/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapcard/MapCard/B.var
+*)
+
+inline procedural "cic:/Coq/IntMap/Mapcard/MapCard_M0.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcard/MapCard_M1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcard/MapCard_is_O.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcard/MapCard_is_not_O.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcard/MapCard_is_one.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcard/MapCard_is_one_unique.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcard/length_as_fold.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcard/length_as_fold_2.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcard/MapCard_as_Fold_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcard/MapCard_as_Fold.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcard/MapCard_as_length.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcard/MapCard_Put1_equals_2.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcard/MapCard_Put_sum.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcard/MapCard_Put_lb.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcard/MapCard_Put_ub.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcard/MapCard_Put_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcard/MapCard_Put_2.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcard/MapCard_Put_1_conv.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcard/MapCard_Put_2_conv.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcard/MapCard_ext.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcard/MapCard_Dom.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcard/MapCard_Dom_Put_behind.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcard/MapCard_Put_behind_Put.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcard/MapCard_Put_behind_sum.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcard/MapCard_makeM2.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcard/MapCard_Remove_sum.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcard/MapCard_Remove_ub.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcard/MapCard_Remove_lb.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcard/MapCard_Remove_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcard/MapCard_Remove_2.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcard/MapCard_Remove_1_conv.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcard/MapCard_Remove_2_conv.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcard/MapMerge_Restr_Card.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcard/MapMerge_disjoint_Card.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcard/MapSplit_Card.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcard/MapMerge_Card_ub.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcard/MapDomRestrTo_Card_ub_l.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcard/MapDomRestrBy_Card_ub_l.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcard/MapMerge_Card_disjoint.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcard/MapCard_is_Sn.con" as lemma.
+
+(* UNEXPORTED
+End MapCard
+*)
+
+(* UNEXPORTED
+Section MapCard2
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapcard/MapCard2/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapcard/MapCard2/B.var
+*)
+
+inline procedural "cic:/Coq/IntMap/Mapcard/MapSubset_card_eq_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcard/MapDomRestrTo_Card_ub_r.con" as lemma.
+
+(* UNEXPORTED
+End MapCard2
+*)
+
+(* UNEXPORTED
+Section MapCard3
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapcard/MapCard3/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapcard/MapCard3/B.var
+*)
+
+inline procedural "cic:/Coq/IntMap/Mapcard/MapMerge_Card_lb_l.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcard/MapMerge_Card_lb_r.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcard/MapDomRestrBy_Card_lb.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcard/MapSubset_Card_le.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapcard/MapSubset_card_eq.con" as lemma.
+
+(* UNEXPORTED
+End MapCard3
+*)
+

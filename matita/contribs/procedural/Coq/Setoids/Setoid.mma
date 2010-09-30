@@ -1,0 +1,98 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+include "Init/Prelude.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Setoid.v,v 1.5.2.1 2004/07/16 19:31:17 herbelin Exp $: i*)
+
+(* UNEXPORTED
+Section Setoid
+*)
+
+(* UNEXPORTED
+cic:/Coq/Setoids/Setoid/Setoid/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Setoids/Setoid/Setoid/Aeq.var
+*)
+
+inline procedural "cic:/Coq/Setoids/Setoid/Setoid_Theory.ind".
+
+(* UNEXPORTED
+End Setoid
+*)
+
+inline procedural "cic:/Coq/Setoids/Setoid/Prop_S.con" as definition.
+
+(* NOTATION
+Add Setoid Prop iff Prop_S.
+*)
+
+(* UNEXPORTED
+Hint Resolve (Seq_refl Prop iff Prop_S): setoid.
+*)
+
+(* UNEXPORTED
+Hint Resolve (Seq_sym Prop iff Prop_S): setoid.
+*)
+
+(* UNEXPORTED
+Hint Resolve (Seq_trans Prop iff Prop_S): setoid.
+*)
+
+(* UNAVAILABLE OBJECT: cic:/Coq/Setoids/Setoid/or_ext1.con ****************)
+
+inline procedural "cic:/Coq/Setoids/Setoid/or_ext1.con" as theorem.
+
+inline procedural "cic:/Coq/Setoids/Setoid/or_ext2.con" as theorem.
+
+(* UNAVAILABLE OBJECT: cic:/Coq/Setoids/Setoid/and_ext1.con ***************)
+
+inline procedural "cic:/Coq/Setoids/Setoid/and_ext1.con" as theorem.
+
+inline procedural "cic:/Coq/Setoids/Setoid/and_ext2.con" as theorem.
+
+(* UNAVAILABLE OBJECT: cic:/Coq/Setoids/Setoid/not_ext1.con ***************)
+
+inline procedural "cic:/Coq/Setoids/Setoid/not_ext1.con" as theorem.
+
+inline procedural "cic:/Coq/Setoids/Setoid/not_ext2.con" as theorem.
+
+inline procedural "cic:/Coq/Setoids/Setoid/fleche.con" as definition.
+
+(* UNAVAILABLE OBJECT: cic:/Coq/Setoids/Setoid/fleche_ext1.con ************)
+
+inline procedural "cic:/Coq/Setoids/Setoid/fleche_ext1.con" as theorem.
+
+inline procedural "cic:/Coq/Setoids/Setoid/fleche_ext2.con" as theorem.
+

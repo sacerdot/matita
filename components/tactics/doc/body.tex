@@ -1,0 +1,474 @@
+
+\section{Tinycals: \MATITA{} tacticals}
+
+\subsection{Introduction}
+
+% outline:
+% - script
+
+Most of modern mainstream proof assistants enable input of proofs of
+propositions using a textual language. Compilation units written in such
+languages are sequence of textual \emph{statements} and are usually called
+\emph{scripts} as a whole. Scripts are so entangled with proof assistants that
+they drived the design of state of the art of their Graphical User Interfaces
+(GUIs). Fig.~\ref{fig:proofgeneral} is a screenshot of Proof General, a generic
+proof assistant interface based on Emacs widely used and compatible with systems
+like Coq, Isabelle, PhoX, LEGO, and many more. Other system specific GUIs exist
+but share the same design, understanding it and they way such GUIs are operated
+is relevant to our discussion.
+
+%\begin{figure}[ht]
+% \begin{center}
+%  \includegraphic{pics/pg-coq-screenshot}
+%  \caption{Proof General: a generic interface for proof assistants}
+%  \label{fig:proofgeneral}
+% \end{center}
+%\end{figure}
+
+% - modo di lavorare
+
+The paradigm behind such GUIs is quite simple. The window on the left is an
+editable text area containing the script and split in two by an \emph{execution
+point} (the point where background color changes). The part starting at the
+beginning of the script and ending at the marker (distinguishable for having a
+light blue background in the picture) contains the sequence of statements which
+have already been fed into the system. We will call this former part
+\emph{locked area} since the user is not free to change it as her willing. The
+remaining part, which extends until the end of the script, is named
+\emph{scratch area} and can be freely modified. The window on the right is
+read-only for the user and includes at the top the current proof status, when
+some proof is ongoing, and at the bottom a message area used for error messages
+or other feedback from the system to the user. The user usually proceed
+alternating editing of the scratch area and execution point movements (forward
+to evaluate statements and backward to retract statements if she need to change
+something in the locked area).
+
+Execution point movements are not free, but constrained by the structure of the
+script language used. The granularity is that of statements. In systems like Coq
+or \MATITA{} examples of statements are: inductive definitions, theorems, and
+tactics. \emph{Tactics} are the building blocks of proofs. For example, the
+following script snippet contains a theorem about a relationship of natural
+minus with natural plus, along with its proof (line numbers have been added for
+the sake of presentation) as it can be found in the standard library of the
+\MATITA{} proof assistant:
+
+%\begin{example}
+%\begin{Verbatim}
+%theorem eq_minus_minus_minus_plus: \forall n,m,p:nat. (n-m)-p = n-(m+p).
+% intros.
+% cut (m+p \le n \or m+p \nleq n).
+% elim Hcut.
+% symmetry.
+% apply plus_to_minus.
+% rewrite > assoc_plus.
+% rewrite > (sym_plus p).
+% rewrite < plus_minus_m_m.
+% rewrite > sym_plus.
+% rewrite < plus_minus_m_m.
+% reflexivity.
+% apply (trans_le ? (m+p)).
+% rewrite < sym_plus.
+% apply le_plus_n.
+% assumption.
+% apply le_plus_to_minus_r.
+% rewrite > sym_plus.
+% assumption.   
+% rewrite > (eq_minus_n_m_O n (m+p)).
+% rewrite > (eq_minus_n_m_O (n-m) p).
+% reflexivity.
+% apply le_plus_to_minus.
+% apply lt_to_le.
+% rewrite < sym_plus.
+% apply not_le_to_lt.
+% assumption.
+% apply lt_to_le.
+% apply not_le_to_lt.
+% assumption.          
+% apply (decidable_le (m+p) n).
+%qed.
+%\end{Verbatim}
+%\end{example}
+
+The script snippet is made of 32 statements, one per line (but this is not a
+requirement of the \MATITA{} script language, namely \emph{Grafite}). The first
+statement is the assertion that the user want to prove a proposition with a
+given type, specified after the ``\texttt{:}'', its execution will cause
+\MATITA{} to enter the proof state showing to the user the list of goals that
+still need to be proved to conclude the proof. The last statement (\texttt{Qed})
+is an assertion that the proof is completed. All intertwining statements are
+tactic applications.
+
+Given the constraint we mentioned about execution point, while inserting (or
+replaying) the above script, the user may position it at the end of any line,
+having feedback about the status of the proof in that point. See for example
+Fig.~\ref{fig:matita} where an intermediate proof status is shown.
+
+%\begin{figure}[ht]
+% \begin{center}
+%  \includegraphic{matita_screenshot}
+%  \caption{Matita: ongoing proof}
+%  \label{fig:matita}
+% \end{center}
+%\end{figure}
+
+% - script: sorgenti di un linguaggio imperativo, oggetti la loro semantica
+% - script = sequenza di comandi
+
+You can create an analogy among scripts and sources written in an imperative
+programming language, seeing proofs as the denotational semantics of that
+language. In such analogy the language used in the script of
+Fig.~\ref{fig:matita} is rather poor offering as the only programming construct
+the sequential composition of tactic application. What enables step by step
+execution is the operational semantics of each tactic application (i.e. how it
+changes the current proof status).
+
+%  - pro: concisi
+
+This kind of scripts have both advantages and drawbacks. Among advantages we can
+for sure list the effectiveness of the language. In spite of being longer than
+the corresponding informal text version of the proof (a gap hardly fillable with
+proof assistants~\cite{debrujinfactor}), the script is fast to write in
+interactive use, enable cut and paste approaches, and gives a lot of flexibility
+(once the syntax is known of course) in tactic application via additional flags
+that can be easily passed to them.
+
+%  - cons: non strutturati, hanno senso solo via reply
+
+Unfortunately, drawbacks are non negligible. Scripts like those of
+Fig.~\ref{fig:matita} are completely unstructured and hardly can be assigned a
+meaning simply looking at them. Even experienced users, that knows the details
+of all involved tactics, can hardly figure what a script mean without replaying
+the proof in their heads. This indeed is a key aspect of scripts: they are
+meaningful via \emph{reply}. People interested in understanding a formal proof
+written as a script usually start the preferred tool and execute it step by
+step. A contrasting approach compared to what happens with high level
+programming languages where looking at the code is usually enough to understand
+its details.
+
+%  - cons: poco robusti (wrt cambiamenti nelle tattiche, nello statement, ...)
+
+Additionally, scripts are usually not robust against changes, intending with
+that term both changes in the statement that need to be proved (e.g.
+strenghtening of an inductive hypothesis) and changes in the implementation of
+involved tactics. This drawback can force backward compatibility and slow down
+systems development. A real-life example in the history of \MATITA{} was the
+reordering of goals after tactic application; the total time needed to port the
+(tiny at the time) standard library of no more that 30 scripts was 2 days work.
+Having the scripts being structured the task could have been done in much less
+time and even automated.
+
+Tacticals are an attempt at solving this drawbacks.
+
+\subsection{Tacticals}
+
+% - script = sequenza di comandi + tatticali
+
+\ldots descrizione dei tatticali \ldots
+
+%  - pro: fattorizzazione
+
+Tacticals as described above have several advantages with respect to plain
+sequential application of tactics. First of all they enable a great amount of
+factorization of proofs using the sequential composition ``;'' operator. Think
+for example at proofs by induction on inductive types with several constructors,
+which are so frequent when formalizing properties from the computer science
+field. It is often the case that several, or even all, cases can be dealt with
+uniform strategies, which can in turn by coded in a single script snipped which
+can appear only once, at the right hand side of a ``;''.
+
+%  - pro: robustezza
+
+Scripts properly written using the tacticals above are even more robust with
+respect to changes. The additional amount of flexibility is given by
+``conditional'' constructs like \texttt{try}, \texttt{solve}, and
+\texttt{first}. Using them the scripts no longer contain a single way of
+proceeding from one status of the proof to another, they can list more. The wise
+proof coder may exploit this mechanism providing fallbacks in order to be more
+robust to future changes in tactics implementation. Of course she is not
+required to!
+
+%  - pro: strutturazione delle prove (via branching)
+
+Finally, the branching constructs \texttt{[}, \texttt{|}, and \texttt{]} enable
+proof structuring. Consider for example an alternative, branching based, version
+of the example above:
+
+%\begin{example}
+%\begin{Verbatim}
+%...
+%\end{Verbatim}
+%\end{example}
+
+Tactic applications are the same of the previous version of the script, but
+branching tacticals are used. The above version is highly more readable and
+without executing it key points of the proofs like induction cases can be
+observed.
+
+%  - tradeoff: utilizzo dei tatticali vs granularita' dell'esecuzione
+%    (impossibile eseguire passo passo)
+
+One can now wonder why thus all scripts are not written in a robust, concise and
+structured fashion. The reason is the existence of an unfortunate tradeoff
+between the need of using tacticals and the impossibility of executing step by
+step \emph{inside} them. Indeed, trying to mimic the structured version of the
+proof above in GUIs like Proof General or CoqIDE will result in a single macro
+step that will bring you from the beginning of the proof directly at the end of
+it!
+
+Tinycals as implemented in \MATITA{} are a solution to this problem, preserving
+the usual tacticals semantics, giving meaning to intermediate execution point
+inside complex tacticals.
+
+\subsection{Tinycals}
+
+\subsection{Tinycals semantics}
+
+\subsubsection{Language}
+
+\[
+\begin{array}{rcll}
+ S & ::= & & \mbox{(\textbf{continuationals})}\\
+   &     & \TACTIC{T} & \mbox{(tactic)}\\[2ex]
+   &  |  & \DOT & \mbox{(dot)} \\
+   &  |  & \SEMICOLON & \mbox{(semicolon)} \\
+   &  |  & \BRANCH & \mbox{(branch)} \\
+   &  |  & \SHIFT & \mbox{(shift)} \\
+   &  |  & \POS{i} & \mbox{(relative positioning)} \\
+   &  |  & \MERGE & \mbox{(merge)} \\[2ex]
+   &  |  & \FOCUS{g_1,\dots,g_n} & \mbox{(absolute positioning)} \\
+   &  |  & \UNFOCUS & \mbox{(unfocus)} \\[2ex]
+   &  |  & S ~ S & \mbox{(sequential composition)} \\[2ex]
+   T & : := & & \mbox{(\textbf{tactics})}\\
+     &   & \SKIP & \mbox{(skip)} \\
+     & | & \mathtt{reflexivity} & \\
+     & | & \mathtt{apply}~t & \\
+     & | & \dots &
+\end{array}
+\]
+
+\subsubsection{Status}
+
+\[
+\begin{array}{rcll}
+ \xi & & & \mbox{(proof status)} \\
+ \mathit{goal} & & & \mbox{(proof goal)} \\[2ex]
+
+ \SWITCH & = & \OPEN~\mathit{goal} ~ | ~ \CLOSED~\mathit{goal} & \\
+ \mathit{locator} & = & \INT\times\SWITCH & \\
+ \mathit{tag} & = & \BRANCHTAG ~ | ~ \FOCUSTAG \\[2ex]
+
+ \Gamma & = & \mathit{locator}~\LIST & \mbox{(context)} \\
+ \tau & = & \mathit{locator}~\LIST & \mbox{(todo)} \\
+ \kappa & = & \mathit{locator}~\LIST & \mbox{(dot's future)} \\[2ex]
+
+ \mathit{stack} & = & (\Gamma\times\tau\times\kappa\times\mathit{tag})~\LIST
+ \\[2ex]
+
+ \mathit{status} & = & \xi\times\mathit{stack} \\
+\end{array}
+\]
+
+\paragraph{Utilities}
+\begin{itemize}
+ \item $\ZEROPOS([g_1;\cdots;g_n]) =
+  [\langle 0,\OPEN~g_1\rangle;\cdots;\langle 0,\OPEN~g_n\rangle]$
+ \item $\INITPOS([\langle i_1,s_1\rangle;\cdots;\langle i_n,s_n\rangle]) =
+  [\langle 1,s_1\rangle;\cdots;\langle n,s_n\rangle]$
+ \item $\ISFRESH(s) =
+  \left\{
+  \begin{array}{ll}
+   \mathit{true} & \mathrm{if} ~ s = \langle n, \OPEN~g\rangle\land n > 0 \\
+   \mathit{false} & \mathrm{otherwise} \\
+  \end{array}
+  \right.$
+ \item $\FILTEROPEN(\mathit{locs})=
+  \left\{
+  \begin{array}{ll}
+   [] & \mathrm{if}~\mathit{locs} = [] \\
+   \langle i,\OPEN~g\rangle :: \FILTEROPEN(\mathit{tl})
+   & \mathrm{if}~\mathit{locs} = \langle i,\OPEN~g\rangle :: \mathit{tl} \\
+   \FILTEROPEN(\mathit{tl})
+   & \mathrm{if}~\mathit{locs} = \mathit{hd} :: \mathit{tl} \\
+  \end{array}
+  \right.$
+ \item $\REMOVEGOALS(G,\mathit{locs}) =
+  \left\{
+  \begin{array}{ll}
+   [] & \mathrm{if}~\mathit{locs} = [] \\
+   \REMOVEGOALS(G,\mathit{tl})
+   & \mathrm{if}~\mathit{locs} = \langle i,\OPEN~g\rangle :: \mathit{tl}
+     \land g\in G\\
+   hd :: \REMOVEGOALS(G,\mathit{tl})
+   & \mathrm{if}~\mathit{locs} = \mathit{hd} :: \mathit{tl} \\
+  \end{array}
+  \right.$
+ \item $\DEEPCLOSE(G,S)$: (intuition) given a set of goals $G$ and a stack $S$
+  it returns a new stack $S'$ identical to the given one with the exceptions
+  that each locator whose goal is in $G$ is marked as closed in $\Gamma$ stack
+  components and removed from $\tau$ and $\kappa$ components.
+ \item $\GOALS(S)$: (inutition) return all goals appearing in whatever position
+  on a given stack $S$, appearing in an \OPEN{} switch.
+\end{itemize}
+
+\paragraph{Invariants}
+\begin{itemize}
+ \item $\forall~\mathrm{entry}~\ENTRY{\Gamma}{\tau}{\kappa}{t}, \forall s
+  \in\tau\cup\kappa, \exists g, s = \OPEN~g$ (each locator on the stack in
+  $\tau$ and $\kappa$ components has an \OPEN~switch).
+ \item Unless \FOCUS{} is used the stack contains no duplicate goals.
+ \item $\forall~\mathrm{locator}~l\in\Gamma \mbox{(with the exception of the
+  top-level $\Gamma$)}, \ISFRESH(l)$.
+\end{itemize}
+
+\subsubsection{Semantics}
+
+\[
+\begin{array}{rcll}
+ \SEMOP{\cdot} & : & C -> \mathit{status} -> \mathit{status} &
+  \mbox{(continuationals semantics)} \\
+ \TSEMOP{\cdot} & : & T -> \xi -> \SWITCH ->
+  \xi\times\GOAL~\LIST\times\GOAL~\LIST & \mbox{(tactics semantics)} \\
+\end{array}
+\]
+
+\[
+\begin{array}{rcl}
+ \mathit{apply\_tac} & : & T -> \xi -> \GOAL ->
+  \xi\times\GOAL~\LIST\times\GOAL~\LIST
+\end{array}
+\]
+
+\[
+\begin{array}{rlcc}
+ \TSEM{T}{\xi}{\OPEN~g} & = & \mathit{apply\_tac}(T,\xi,n) & T\neq\SKIP\\
+ \TSEM{\SKIP}{\xi}{\CLOSED~g} & = & \langle \xi, [], [g]\rangle &
+\end{array}
+\]
+
+\[
+\begin{array}{rcl}
+
+ \SEM{\TACTIC{T}}{\ENTRY{\GIN}{\tau}{\kappa}{t}::S}
+ & =
+ & \langle
+   \xi_n,
+   \ENTRY{\Gamma'}{\tau'}{\kappa'}{t}
+%    \ENTRY{\ZEROPOS(G^o_n)}{\tau\setminus G^c_n}{\kappa\setminus G^o_n}{t}
+   :: \DEEPCLOSE(G^c_n,S)
+   \rangle
+ \\[1ex]
+ \multicolumn{3}{l}{\hspace{\sidecondlen}\mathit{where} ~ n\geq 1}
+ \\[1ex]
+ \multicolumn{3}{l}{\hspace{\sidecondlen}\mathit{and} ~
+  \Gamma' = \ZEROPOS(G^o_n)
+  \land \tau' = \REMOVEGOALS(G^c_n,\tau)
+  \land \kappa' = \REMOVEGOALS(G^o_n,\kappa)
+ }
+ \\[1ex]
+ \multicolumn{3}{l}{\hspace{\sidecondlen}\mathit{and} ~
+ \left\{
+ \begin{array}{rcll}
+  \langle\xi_0, G^o_0, G^c_0\rangle & = & \langle\xi, [], []\rangle \\
+  \langle\xi_{i+1}, G^o_{i+1}, G^c_{i+1}\rangle
+  & =
+  & \langle\xi_i, G^o_i, G^c_i\rangle
+  & l_{i+1}\in G^c_i \\
+  \langle\xi_{i+1}, G^o_{i+1}, G^c_{i+1}\rangle
+  & =
+  & \langle\xi, (G^o_i\setminus G^c)\cup G^o, G^c_i\cup G^c\rangle
+  & l_{i+1}\not\in G^c_i \\[1ex]
+  & & \mathit{where} ~ \langle\xi,G^o,G^c\rangle=\TSEM{T}{\xi_i}{l_{i+1}} \\
+ \end{array}
+ \right.
+ }
+ \\[6ex]
+
+ \SEM{~\DOT~}{\ENTRY{\Gamma}{\tau}{\kappa}{t}::S}
+ & =
+ & \langle \xi, \ENTRY{l_1}{\tau}{\GIN[2]\cup\kappa}{t}::S \rangle
+ \\[1ex]
+ & & \mathrm{where} ~ \FILTEROPEN(\Gamma)=\GIN \land n\geq 1
+ \\[2ex]
+
+ \SEM{~\DOT~}{\ENTRY{\Gamma}{\tau}{l::\kappa}{t}::S}
+ & =
+ & \langle \xi, \ENTRY{[l]}{\tau}{\kappa}{t}::S \rangle
+ \\[1ex]
+ & & \mathrm{where} ~ \FILTEROPEN(\Gamma)=[]
+ \\[2ex]
+
+ \SEM{~\SEMICOLON~}{S} & = & \langle \xi, S \rangle \\[1ex]
+
+ \SEM{~\BRANCH~}{\ENTRY{\GIN}{\tau}{\kappa}{t}::S}
+ \quad 
+ & =
+ & \langle\xi, \ENTRY{[l_1']}{[]}{[]}{\BRANCHTAG}
+   ::\ENTRY{[l_2';\cdots;l_n']}{\tau}{\kappa}{t}::S
+ \\[1ex]
+ & & \mathrm{where} ~ n\geq 2 ~ \land ~ \INITPOS(\GIN)=[l_1';\cdots;l_n']
+ \\[2ex]
+
+ \SEM{~\SHIFT~}
+  {\ENTRY{\Gamma}{\tau}{\kappa}{\BRANCHTAG}::\ENTRY{\GIN}{\tau'}{\kappa'}{t'}
+  ::S}
+ & =
+ & \langle
+   \xi, \ENTRY{[l_1]}{\tau\cup\FILTEROPEN(\Gamma)}{[]}{\BRANCHTAG}
+	::\ENTRY{\GIN[2]}{\tau'}{\kappa'}{t'}::S
+   \rangle
+ \\[1ex]
+ & & \mathrm{where} ~ n\geq 1
+ \\[2ex]
+
+ \SEM{~\POS{i}~}
+  {\ENTRY{[l]}{[]}{[]}{\BRANCHTAG}::\ENTRY{\Gamma'}{\tau'}{\kappa'}{t'}::S}
+ & =
+ & \langle \xi, \ENTRY{[l_i]}{[]}{[]}{\BRANCHTAG}
+   ::\ENTRY{l :: (\Gamma'\setminus [l_i])}{\tau'}{\kappa'}{t'}::S \rangle
+ \\[1ex]
+ & & \mathrm{where} ~ \langle i,l'\rangle = l_i\in \Gamma'~\land~\ISFRESH(l)
+ \\[2ex]
+
+ \SEM{~\POS{i}~}
+  {\ENTRY{\Gamma}{\tau}{\kappa}{\BRANCHTAG}
+  ::\ENTRY{\Gamma'}{\tau'}{\kappa'}{t'}::S}
+ & =
+ & \langle \xi, \ENTRY{[l_i]}{[]}{[]}{\BRANCHTAG}
+ ::\ENTRY{\Gamma'\setminus [l_i]}{\tau'\cup\FILTEROPEN(\Gamma)}{\kappa'}{t'}::S
+   \rangle
+ \\[1ex]
+ & & \mathrm{where} ~ \langle i, l'\rangle = l_i\in \Gamma'
+ \\[2ex]
+
+ \SEM{~\MERGE~}
+  {\ENTRY{\Gamma}{\tau}{\kappa}{\BRANCHTAG}::\ENTRY{\Gamma'}{\tau'}{\kappa'}{t'}
+  ::S}
+ & =
+ & \langle \xi,
+   \ENTRY{\tau\cup\FILTEROPEN(\Gamma)\cup\Gamma'\cup\kappa}{\tau'}{\kappa'}{t'}
+   :: S
+   \rangle
+ \\[2ex]
+
+ \SEM{\FOCUS{g_1,\dots,g_n}}{S}
+ & = 
+ & \langle \xi, \ENTRY{\ZEROPOS([g_1;\cdots;g_n])}{[]}{[]}{\FOCUSTAG}
+   ::\DEEPCLOSE(S)
+   \rangle
+ \\[1ex]
+ & & \mathrm{where} ~
+ \forall i=1,\dots,n,~g_i\in\GOALS(S)
+ \\[2ex]
+
+ \SEM{\UNFOCUS}{\ENTRY{[]}{[]}{[]}{\FOCUSTAG}::S}
+ & = 
+ & \langle \xi, S\rangle \\[2ex]
+
+\end{array}
+\]
+
+\subsection{Related works}
+
+In~\cite{fk:strata2003}, Kirchner described a small step semantics for Coq
+tacticals and PVS strategies.
+

@@ -1,0 +1,213 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i 	$Id: Map.v,v 1.7.2.1 2004/07/16 19:31:04 herbelin Exp $	 i*)
+
+(*#* Definition of finite sets as trees indexed by adresses *)
+
+include "Bool/Bool.ma".
+
+include "Bool/Sumbool.ma".
+
+include "ZArith/ZArith.ma".
+
+include "IntMap/Addr.ma".
+
+include "IntMap/Adist.ma".
+
+include "IntMap/Addec.ma".
+
+(* UNEXPORTED
+Section MapDefs
+*)
+
+(*#* We define maps from ad to A. *)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Map/MapDefs/A.var
+*)
+
+inline procedural "cic:/Coq/IntMap/Map/Map.ind".
+
+inline procedural "cic:/Coq/IntMap/Map/option.ind".
+
+inline procedural "cic:/Coq/IntMap/Map/option_sum.con" as lemma.
+
+(*#* The semantics of maps is given by the function [MapGet].
+      The semantics of a map [m] is a partial, finite function from
+      [ad] to [A]: *)
+
+inline procedural "cic:/Coq/IntMap/Map/MapGet.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Map/newMap.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Map/MapSingleton.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Map/eqm.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Map/newMap_semantics.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Map/MapSingleton_semantics.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Map/M1_semantics_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Map/M1_semantics_2.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Map/Map2_semantics_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Map/Map2_semantics_1_eq.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Map/Map2_semantics_2.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Map/Map2_semantics_2_eq.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Map/MapGet_M2_bit_0_0.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Map/MapGet_M2_bit_0_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Map/MapGet_M2_bit_0_if.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Map/MapGet_M2_bit_0.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Map/Map2_semantics_3.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Map/Map2_semantics_3_eq.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Map/MapPut1.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Map/MapGet_if_commute.con" as lemma.
+
+(*i
+  Lemma MapGet_M2_bit_0_1' : (m,m',m'',m''':Map)
+      (a:ad) (MapGet (if (ad_bit_0 a) then (M2 m m') else (M2 m'' m''')) a)=
+             (MapGet (if (ad_bit_0 a) then m' else m'') (ad_div_2 a)).
+  Proof.
+    Intros. Rewrite (MapGet_if_commute (ad_bit_0 a)). Rewrite (MapGet_if_commute (ad_bit_0 a)).
+    Cut (ad_bit_0 a)=false\/(ad_bit_0 a)=true. Intros. Elim H. Intros. Rewrite H0.
+    Apply MapGet_M2_bit_0_0. Assumption.
+    Intros. Rewrite H0. Apply MapGet_M2_bit_0_1. Assumption.
+    Case (ad_bit_0 a); Auto.
+  Qed.
+  i*)
+
+inline procedural "cic:/Coq/IntMap/Map/MapGet_if_same.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Map/MapGet_M2_bit_0_2.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Map/MapPut1_semantics_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Map/MapPut1_semantics_2.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Map/MapGet_M2_both_NONE.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Map/MapPut1_semantics_3.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Map/MapPut1_semantics.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Map/MapPut1_semantics'.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Map/MapPut.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Map/MapPut_semantics_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Map/MapPut_semantics_2_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Map/MapPut_semantics_2_2.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Map/MapPut_semantics_2.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Map/MapPut_semantics_3_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Map/MapPut_semantics.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Map/MapPut_behind.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Map/MapPut_behind_semantics_3_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Map/MapPut_behind_as_before_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Map/MapPut_behind_as_before.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Map/MapPut_behind_new.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Map/MapPut_behind_semantics.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Map/makeM2.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Map/makeM2_M2.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Map/MapRemove.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Map/MapRemove_semantics.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Map/MapCard.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Map/MapMerge.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Map/MapMerge_semantics.con" as lemma.
+
+(*#* [MapInter], [MapRngRestrTo], [MapRngRestrBy], [MapInverse] 
+      not implemented: need a decidable equality on [A]. *)
+
+inline procedural "cic:/Coq/IntMap/Map/MapDelta.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Map/MapDelta_semantics_comm.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Map/MapDelta_semantics_1_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Map/MapDelta_semantics_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Map/MapDelta_semantics_2_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Map/MapDelta_semantics_2_2.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Map/MapDelta_semantics_2.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Map/MapDelta_semantics_3_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Map/MapDelta_semantics_3.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Map/MapDelta_semantics.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Map/MapEmptyp.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Map/MapEmptyp_correct.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Map/MapEmptyp_complete.con" as lemma.
+
+(*#* [MapSplit] not implemented: not the preferred way of recursing over Maps
+      (use [MapSweep], [MapCollect], or [MapFold] in Mapiter.v. *)
+
+(* UNEXPORTED
+End MapDefs
+*)
+

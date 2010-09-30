@@ -1,0 +1,185 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*#***************************************************************************)
+
+(*                                                                          *)
+
+(*                         Naive Set Theory in Coq                          *)
+
+(*                                                                          *)
+
+(*                     INRIA                        INRIA                   *)
+
+(*              Rocquencourt                        Sophia-Antipolis        *)
+
+(*                                                                          *)
+
+(*                                 Coq V6.1                                 *)
+
+(*									    *)
+
+(*			         Gilles Kahn 				    *)
+
+(*				 Gerard Huet				    *)
+
+(*									    *)
+
+(*									    *)
+
+(*                                                                          *)
+
+(* Acknowledgments: This work was started in July 1993 by F. Prost. Thanks  *)
+
+(* to the Newton Institute for providing an exceptional work environment    *)
+
+(* in Summer 1995. Several developments by E. Ledinot were an inspiration.  *)
+
+(*#***************************************************************************)
+
+(*i $Id: Powerset_facts.v,v 1.8.2.1 2004/07/16 19:31:18 herbelin Exp $ i*)
+
+include "Sets/Ensembles.ma".
+
+include "Sets/Constructive_sets.ma".
+
+include "Sets/Relations_1.ma".
+
+include "Sets/Relations_1_facts.ma".
+
+include "Sets/Partial_Order.ma".
+
+include "Sets/Cpo.ma".
+
+include "Sets/Powerset.ma".
+
+(* UNEXPORTED
+Section Sets_as_an_algebra
+*)
+
+(* UNEXPORTED
+cic:/Coq/Sets/Powerset_facts/Sets_as_an_algebra/U.var
+*)
+
+(* UNEXPORTED
+Hint Unfold not.
+*)
+
+inline procedural "cic:/Coq/Sets/Powerset_facts/Empty_set_zero.con" as theorem.
+
+(* UNEXPORTED
+Hint Resolve Empty_set_zero.
+*)
+
+inline procedural "cic:/Coq/Sets/Powerset_facts/Empty_set_zero'.con" as theorem.
+
+(* UNEXPORTED
+Hint Resolve Empty_set_zero'.
+*)
+
+inline procedural "cic:/Coq/Sets/Powerset_facts/less_than_empty.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve less_than_empty.
+*)
+
+inline procedural "cic:/Coq/Sets/Powerset_facts/Union_commutative.con" as theorem.
+
+inline procedural "cic:/Coq/Sets/Powerset_facts/Union_associative.con" as theorem.
+
+(* UNEXPORTED
+Hint Resolve Union_associative.
+*)
+
+inline procedural "cic:/Coq/Sets/Powerset_facts/Union_idempotent.con" as theorem.
+
+inline procedural "cic:/Coq/Sets/Powerset_facts/Union_absorbs.con" as lemma.
+
+inline procedural "cic:/Coq/Sets/Powerset_facts/Couple_as_union.con" as theorem.
+
+inline procedural "cic:/Coq/Sets/Powerset_facts/Triple_as_union.con" as theorem.
+
+inline procedural "cic:/Coq/Sets/Powerset_facts/Triple_as_Couple.con" as theorem.
+
+inline procedural "cic:/Coq/Sets/Powerset_facts/Triple_as_Couple_Singleton.con" as theorem.
+
+inline procedural "cic:/Coq/Sets/Powerset_facts/Intersection_commutative.con" as theorem.
+
+inline procedural "cic:/Coq/Sets/Powerset_facts/Distributivity.con" as theorem.
+
+inline procedural "cic:/Coq/Sets/Powerset_facts/Distributivity'.con" as theorem.
+
+inline procedural "cic:/Coq/Sets/Powerset_facts/Union_add.con" as theorem.
+
+(* UNEXPORTED
+Hint Resolve Union_add.
+*)
+
+inline procedural "cic:/Coq/Sets/Powerset_facts/Non_disjoint_union.con" as theorem.
+
+inline procedural "cic:/Coq/Sets/Powerset_facts/Non_disjoint_union'.con" as theorem.
+
+inline procedural "cic:/Coq/Sets/Powerset_facts/singlx.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve singlx.
+*)
+
+inline procedural "cic:/Coq/Sets/Powerset_facts/incl_add.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve incl_add.
+*)
+
+inline procedural "cic:/Coq/Sets/Powerset_facts/incl_add_x.con" as lemma.
+
+inline procedural "cic:/Coq/Sets/Powerset_facts/Add_commutative.con" as lemma.
+
+inline procedural "cic:/Coq/Sets/Powerset_facts/Add_commutative'.con" as lemma.
+
+inline procedural "cic:/Coq/Sets/Powerset_facts/Add_distributes.con" as lemma.
+
+inline procedural "cic:/Coq/Sets/Powerset_facts/setcover_intro.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve setcover_intro.
+*)
+
+(* UNEXPORTED
+End Sets_as_an_algebra
+*)
+
+(* UNEXPORTED
+Hint Resolve Empty_set_zero Empty_set_zero' Union_associative Union_add
+  singlx incl_add: sets v62.
+*)
+

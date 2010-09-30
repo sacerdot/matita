@@ -1,0 +1,26 @@
+o-basic_pairs.ma notation.ma o-algebra.ma
+basic_pairs_to_basic_topologies.ma basic_pairs.ma basic_pairs_to_o-basic_pairs.ma basic_topologies.ma o-basic_pairs_to_o-basic_topologies.ma
+o-concrete_spaces.ma o-basic_pairs.ma o-saturations.ma
+o-saturations.ma o-algebra.ma
+saturations.ma relations.ma
+basic_pairs.ma notation.ma relations.ma
+formal_topologies.ma basic_topologies.ma
+o-formal_topologies.ma o-basic_topologies.ma
+o-algebra.ma categories.ma
+categories.ma cprop_connectives.ma
+saturations_to_o-saturations.ma o-saturations.ma relations_to_o-algebra.ma saturations.ma
+subsets.ma categories.ma
+basic_topologies.ma relations.ma saturations.ma
+concrete_spaces.ma basic_pairs.ma
+relations.ma subsets.ma
+r-o-basic_pairs.ma apply_functor.ma basic_pairs_to_o-basic_pairs.ma o-basic_pairs_to_o-basic_topologies.ma
+concrete_spaces_to_o-concrete_spaces.ma basic_pairs_to_o-basic_pairs.ma concrete_spaces.ma o-concrete_spaces.ma
+o-basic_topologies.ma o-algebra.ma o-saturations.ma
+basic_pairs_to_o-basic_pairs.ma basic_pairs.ma o-basic_pairs.ma relations_to_o-algebra.ma
+notation.ma 
+basic_topologies_to_o-basic_topologies.ma basic_topologies.ma o-basic_topologies.ma relations_to_o-algebra.ma
+cprop_connectives.ma logic/connectives.ma
+apply_functor.ma categories.ma notation.ma
+relations_to_o-algebra.ma o-algebra.ma relations.ma
+o-basic_pairs_to_o-basic_topologies.ma notation.ma o-basic_pairs.ma o-basic_topologies.ma
+logic/connectives.ma 

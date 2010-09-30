@@ -1,0 +1,56 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Euclid.v,v 1.7.2.1 2004/07/16 19:31:00 herbelin Exp $ i*)
+
+include "Arith/Mult.ma".
+
+include "Arith/Compare_dec.ma".
+
+include "Arith/Wf_nat.ma".
+
+(* UNEXPORTED
+Open Local Scope nat_scope.
+*)
+
+(* UNEXPORTED
+Implicit Types a b n q r : nat.
+*)
+
+inline procedural "cic:/Coq/Arith/Euclid/diveucl.ind".
+
+inline procedural "cic:/Coq/Arith/Euclid/eucl_dev.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Euclid/quotient.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Euclid/modulo.con" as lemma.
+

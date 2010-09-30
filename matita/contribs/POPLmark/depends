@@ -1,0 +1,12 @@
+Fsub/part1a.ma Fsub/defn.ma
+Fsub/util.ma list/in.ma list/list.ma logic/equality.ma nat/compare.ma
+Fsub/defn.ma Fsub/util.ma
+Fsub/adeq.ma Fsub/part1a.ma
+Fsub/part1adb.ma Fsub/defndb.ma nat/le_arith.ma nat/lt_arith.ma
+Fsub/defndb.ma Fsub/util.ma nat/le_arith.ma nat/lt_arith.ma
+list/in.ma 
+list/list.ma 
+logic/equality.ma 
+nat/compare.ma 
+nat/le_arith.ma 
+nat/lt_arith.ma 

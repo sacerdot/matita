@@ -1,0 +1,7 @@
+hSql.cmi: 
+hSqlite3.cmo: 
+hSqlite3.cmx: 
+hMysql.cmo: 
+hMysql.cmx: 
+hSql.cmo: hSqlite3.cmo hMysql.cmo hSql.cmi 
+hSql.cmx: hSqlite3.cmx hMysql.cmx hSql.cmi 

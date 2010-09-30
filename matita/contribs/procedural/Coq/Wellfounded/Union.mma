@@ -1,0 +1,76 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Union.v,v 1.9.2.1 2004/07/16 19:31:19 herbelin Exp $ i*)
+
+(*#* Author: Bruno Barras *)
+
+include "Relations/Relation_Operators.ma".
+
+include "Relations/Relation_Definitions.ma".
+
+include "Wellfounded/Transitive_Closure.ma".
+
+(* UNEXPORTED
+Section WfUnion
+*)
+
+(* UNEXPORTED
+cic:/Coq/Wellfounded/Union/WfUnion/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Wellfounded/Union/WfUnion/R1.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Wellfounded/Union/WfUnion/R2.var
+*)
+
+(* NOTATION
+Notation Union := (union A R1 R2).
+*)
+
+(* UNEXPORTED
+Hint Resolve Acc_clos_trans wf_clos_trans.
+*)
+
+inline procedural "cic:/Coq/Wellfounded/Union/strip_commut.con" as remark.
+
+inline procedural "cic:/Coq/Wellfounded/Union/Acc_union.con" as lemma.
+
+inline procedural "cic:/Coq/Wellfounded/Union/wf_union.con" as theorem.
+
+(* UNEXPORTED
+End WfUnion
+*)
+

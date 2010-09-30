@@ -1,0 +1,103 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+include "Init/Prelude.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Permut.v,v 1.6.2.1 2004/07/16 19:31:18 herbelin Exp $ i*)
+
+(* G. Huet 1-9-95 *)
+
+(*#* We consider a Set [U], given with a commutative-associative operator [op],
+    and a congruence [cong]; we show permutation lemmas *)
+
+(* UNEXPORTED
+Section Axiomatisation
+*)
+
+(* UNEXPORTED
+cic:/Coq/Sets/Permut/Axiomatisation/U.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Sets/Permut/Axiomatisation/op.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Sets/Permut/Axiomatisation/cong.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Sets/Permut/Axiomatisation/op_comm.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Sets/Permut/Axiomatisation/op_ass.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Sets/Permut/Axiomatisation/cong_left.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Sets/Permut/Axiomatisation/cong_right.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Sets/Permut/Axiomatisation/cong_trans.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Sets/Permut/Axiomatisation/cong_sym.var
+*)
+
+(*#* Remark. we do not need: [Hypothesis cong_refl : (x:U)(cong x x)]. *)
+
+inline procedural "cic:/Coq/Sets/Permut/cong_congr.con" as lemma.
+
+inline procedural "cic:/Coq/Sets/Permut/comm_right.con" as lemma.
+
+inline procedural "cic:/Coq/Sets/Permut/comm_left.con" as lemma.
+
+inline procedural "cic:/Coq/Sets/Permut/perm_right.con" as lemma.
+
+inline procedural "cic:/Coq/Sets/Permut/perm_left.con" as lemma.
+
+inline procedural "cic:/Coq/Sets/Permut/op_rotate.con" as lemma.
+
+(* Needed for treesort ... *)
+
+inline procedural "cic:/Coq/Sets/Permut/twist.con" as lemma.
+
+(* UNEXPORTED
+End Axiomatisation
+*)
+

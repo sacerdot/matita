@@ -1,0 +1,173 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Heap.v,v 1.3.2.1 2004/07/16 19:31:19 herbelin Exp $ i*)
+
+(*#* A development of Treesort on Heap trees *)
+
+(* G. Huet 1-9-95 uses Multiset *)
+
+include "Lists/List.ma".
+
+include "Sets/Multiset.ma".
+
+include "Sorting/Permutation.ma".
+
+include "Relations/Relations.ma".
+
+include "Sorting/Sorting.ma".
+
+(* UNEXPORTED
+Section defs
+*)
+
+(* UNEXPORTED
+cic:/Coq/Sorting/Heap/defs/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Sorting/Heap/defs/leA.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Sorting/Heap/defs/eqA.var
+*)
+
+(* UNAVAILABLE OBJECT: cic:/Coq/Sorting/Heap/defs/gtA.con *****************)
+
+inline procedural "cic:/Coq/Sorting/Heap/defs/gtA.con" "defs__" as definition.
+
+(* UNEXPORTED
+cic:/Coq/Sorting/Heap/defs/leA_dec.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Sorting/Heap/defs/eqA_dec.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Sorting/Heap/defs/leA_refl.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Sorting/Heap/defs/leA_trans.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/Sorting/Heap/defs/leA_antisym.var
+*)
+
+(* UNEXPORTED
+Hint Resolve leA_refl.
+*)
+
+(* UNEXPORTED
+Hint Immediate eqA_dec leA_dec leA_antisym.
+*)
+
+(* UNAVAILABLE OBJECT: cic:/Coq/Sorting/Heap/defs/emptyBag.con ************)
+
+inline procedural "cic:/Coq/Sorting/Heap/defs/emptyBag.con" "defs__" as definition.
+
+(* UNAVAILABLE OBJECT: cic:/Coq/Sorting/Heap/defs/singletonBag.con ********)
+
+inline procedural "cic:/Coq/Sorting/Heap/defs/singletonBag.con" "defs__" as definition.
+
+inline procedural "cic:/Coq/Sorting/Heap/Tree.ind".
+
+(*#* [a] is lower than a Tree [T] if [T] is a Leaf
+    or [T] is a Node holding [b>a] *)
+
+inline procedural "cic:/Coq/Sorting/Heap/leA_Tree.con" as definition.
+
+inline procedural "cic:/Coq/Sorting/Heap/leA_Tree_Leaf.con" as lemma.
+
+inline procedural "cic:/Coq/Sorting/Heap/leA_Tree_Node.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve leA_Tree_Leaf leA_Tree_Node.
+*)
+
+(*#* The heap property *)
+
+inline procedural "cic:/Coq/Sorting/Heap/is_heap.ind".
+
+(* UNEXPORTED
+Hint Constructors is_heap.
+*)
+
+inline procedural "cic:/Coq/Sorting/Heap/invert_heap.con" as lemma.
+
+(* This lemma ought to be generated automatically by the Inversion tools *)
+
+inline procedural "cic:/Coq/Sorting/Heap/is_heap_rec.con" as lemma.
+
+inline procedural "cic:/Coq/Sorting/Heap/low_trans.con" as lemma.
+
+(*#* contents of a tree as a multiset *)
+
+(*#* Nota Bene : In what follows the definition of SingletonBag
+    in not used. Actually, we could just take as postulate:
+    [Parameter SingletonBag : A->multiset].  *)
+
+inline procedural "cic:/Coq/Sorting/Heap/contents.con" as definition.
+
+(*#* equivalence of two trees is equality of corresponding multisets *)
+
+inline procedural "cic:/Coq/Sorting/Heap/equiv_Tree.con" as definition.
+
+(*#* specification of heap insertion *)
+
+inline procedural "cic:/Coq/Sorting/Heap/insert_spec.ind".
+
+inline procedural "cic:/Coq/Sorting/Heap/insert.con" as lemma.
+
+(*#* building a heap from a list *)
+
+inline procedural "cic:/Coq/Sorting/Heap/build_heap.ind".
+
+inline procedural "cic:/Coq/Sorting/Heap/list_to_heap.con" as lemma.
+
+(*#* building the sorted list *)
+
+inline procedural "cic:/Coq/Sorting/Heap/flat_spec.ind".
+
+inline procedural "cic:/Coq/Sorting/Heap/heap_to_list.con" as lemma.
+
+(*#* specification of treesort *)
+
+inline procedural "cic:/Coq/Sorting/Heap/treesort.con" as theorem.
+
+(* UNEXPORTED
+End defs
+*)
+

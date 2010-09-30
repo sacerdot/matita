@@ -1,0 +1,4 @@
+requires="helm-metadata"
+version="0.0.1"
+archive(byte)="whelp.cma"
+archive(native)="whelp.cmxa"

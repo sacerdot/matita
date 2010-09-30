@@ -1,0 +1,4 @@
+MAILTO=helm@cs.unibo.it
+HOME=/home/sacerdot/
+#SVNOPTIONS='-r {2006-01-09}'
+03 15 * * * sh /home/sacerdot/miohelm/matita/scripts/crontab.sh

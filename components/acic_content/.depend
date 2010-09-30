@@ -1,0 +1,30 @@
+content.cmi: 
+acic2content.cmi: content.cmi 
+content2cic.cmi: content.cmi 
+cicNotationUtil.cmi: cicNotationPt.cmo 
+cicNotationEnv.cmi: cicNotationPt.cmo 
+cicNotationPp.cmi: cicNotationPt.cmo cicNotationEnv.cmi 
+acic2astMatcher.cmi: cicNotationPt.cmo 
+termAcicContent.cmi: cicNotationPt.cmo 
+cicNotationPt.cmo: 
+cicNotationPt.cmx: 
+content.cmo: content.cmi 
+content.cmx: content.cmi 
+acic2content.cmo: content.cmi acic2content.cmi 
+acic2content.cmx: content.cmx acic2content.cmi 
+content2cic.cmo: content.cmi content2cic.cmi 
+content2cic.cmx: content.cmx content2cic.cmi 
+cicNotationUtil.cmo: cicNotationPt.cmo cicNotationUtil.cmi 
+cicNotationUtil.cmx: cicNotationPt.cmx cicNotationUtil.cmi 
+cicNotationEnv.cmo: cicNotationUtil.cmi cicNotationPt.cmo cicNotationEnv.cmi 
+cicNotationEnv.cmx: cicNotationUtil.cmx cicNotationPt.cmx cicNotationEnv.cmi 
+cicNotationPp.cmo: cicNotationPt.cmo cicNotationEnv.cmi cicNotationPp.cmi 
+cicNotationPp.cmx: cicNotationPt.cmx cicNotationEnv.cmx cicNotationPp.cmi 
+acic2astMatcher.cmo: cicNotationUtil.cmi cicNotationPt.cmo cicNotationPp.cmi \
+    acic2astMatcher.cmi 
+acic2astMatcher.cmx: cicNotationUtil.cmx cicNotationPt.cmx cicNotationPp.cmx \
+    acic2astMatcher.cmi 
+termAcicContent.cmo: cicNotationUtil.cmi cicNotationPt.cmo cicNotationPp.cmi \
+    acic2content.cmi acic2astMatcher.cmi termAcicContent.cmi 
+termAcicContent.cmx: cicNotationUtil.cmx cicNotationPt.cmx cicNotationPp.cmx \
+    acic2content.cmx acic2astMatcher.cmx termAcicContent.cmi 

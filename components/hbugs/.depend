@@ -1,0 +1,20 @@
+hbugs_common.cmi: hbugs_types.cmi 
+hbugs_id_generator.cmi: hbugs_types.cmi 
+hbugs_messages.cmi: hbugs_types.cmi 
+hbugs_client.cmi: hbugs_types.cmi 
+hbugs_misc.cmo: hbugs_misc.cmi 
+hbugs_misc.cmx: hbugs_misc.cmi 
+hbugs_common.cmo: hbugs_types.cmi hbugs_common.cmi 
+hbugs_common.cmx: hbugs_types.cmi hbugs_common.cmi 
+hbugs_id_generator.cmo: hbugs_id_generator.cmi 
+hbugs_id_generator.cmx: hbugs_id_generator.cmi 
+hbugs_messages.cmo: hbugs_types.cmi hbugs_misc.cmi hbugs_messages.cmi 
+hbugs_messages.cmx: hbugs_types.cmi hbugs_misc.cmx hbugs_messages.cmi 
+hbugs_client_gui.cmo: hbugs_client_gui.cmi 
+hbugs_client_gui.cmx: hbugs_client_gui.cmi 
+hbugs_client.cmo: hbugs_types.cmi hbugs_misc.cmi hbugs_messages.cmi \
+    hbugs_id_generator.cmi hbugs_common.cmi hbugs_client_gui.cmi \
+    hbugs_client.cmi 
+hbugs_client.cmx: hbugs_types.cmi hbugs_misc.cmx hbugs_messages.cmx \
+    hbugs_id_generator.cmx hbugs_common.cmx hbugs_client_gui.cmx \
+    hbugs_client.cmi 

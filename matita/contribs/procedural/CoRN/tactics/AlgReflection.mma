@@ -1,0 +1,130 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "CoRN.ma".
+
+(* $Id: AlgReflection.v,v 1.2 2004/03/26 16:07:03 lcf Exp $ *)
+
+(* begin hide *)
+
+include "algebra/CLogic.ma".
+
+(* UNEXPORTED
+Section Syntactic_Expressions
+*)
+
+inline procedural "cic:/CoRN/tactics/AlgReflection/varindex.con" as definition.
+
+inline procedural "cic:/CoRN/tactics/AlgReflection/pfunindex.con" as definition.
+
+inline procedural "cic:/CoRN/tactics/AlgReflection/unopindex.con" as definition.
+
+inline procedural "cic:/CoRN/tactics/AlgReflection/binopindex.con" as definition.
+
+inline procedural "cic:/CoRN/tactics/AlgReflection/expr.ind".
+
+inline procedural "cic:/CoRN/tactics/AlgReflection/expr_zero.con" as definition.
+
+inline procedural "cic:/CoRN/tactics/AlgReflection/expr_one.con" as definition.
+
+inline procedural "cic:/CoRN/tactics/AlgReflection/expr_nat.con" as definition.
+
+inline procedural "cic:/CoRN/tactics/AlgReflection/expr_inv.con" as definition.
+
+inline procedural "cic:/CoRN/tactics/AlgReflection/expr_minus.con" as definition.
+
+inline procedural "cic:/CoRN/tactics/AlgReflection/expr_power.con" as definition.
+
+(* UNEXPORTED
+End Syntactic_Expressions
+*)
+
+(* UNEXPORTED
+Section Normalization_Function
+*)
+
+inline procedural "cic:/CoRN/tactics/AlgReflection/eq_nat.con" as definition.
+
+inline procedural "cic:/CoRN/tactics/AlgReflection/lt_nat.con" as definition.
+
+inline procedural "cic:/CoRN/tactics/AlgReflection/le_nat.con" as definition.
+
+inline procedural "cic:/CoRN/tactics/AlgReflection/eq_int.con" as definition.
+
+inline procedural "cic:/CoRN/tactics/AlgReflection/lt_int.con" as definition.
+
+inline procedural "cic:/CoRN/tactics/AlgReflection/le_int.con" as definition.
+
+inline procedural "cic:/CoRN/tactics/AlgReflection/eq_expr.con" as definition.
+
+inline procedural "cic:/CoRN/tactics/AlgReflection/lt_expr.con" as definition.
+
+inline procedural "cic:/CoRN/tactics/AlgReflection/le_expr.con" as definition.
+
+inline procedural "cic:/CoRN/tactics/AlgReflection/eq_monom.con" as definition.
+
+inline procedural "cic:/CoRN/tactics/AlgReflection/lt_monom.con" as definition.
+
+inline procedural "cic:/CoRN/tactics/AlgReflection/MI_mult.con" as definition.
+
+inline procedural "cic:/CoRN/tactics/AlgReflection/MV_mult.con" as definition.
+
+inline procedural "cic:/CoRN/tactics/AlgReflection/MM_mult.con" as definition.
+
+inline procedural "cic:/CoRN/tactics/AlgReflection/MM_plus.con" as definition.
+
+inline procedural "cic:/CoRN/tactics/AlgReflection/PM_plus.con" as definition.
+
+inline procedural "cic:/CoRN/tactics/AlgReflection/PP_plus.con" as definition.
+
+inline procedural "cic:/CoRN/tactics/AlgReflection/PM_mult.con" as definition.
+
+inline procedural "cic:/CoRN/tactics/AlgReflection/PP_mult.con" as definition.
+
+inline procedural "cic:/CoRN/tactics/AlgReflection/FF_plus.con" as definition.
+
+inline procedural "cic:/CoRN/tactics/AlgReflection/FF_mult.con" as definition.
+
+inline procedural "cic:/CoRN/tactics/AlgReflection/FF_div.con" as definition.
+
+inline procedural "cic:/CoRN/tactics/AlgReflection/NormR.con" as definition.
+
+inline procedural "cic:/CoRN/tactics/AlgReflection/NormG.con" as definition.
+
+inline procedural "cic:/CoRN/tactics/AlgReflection/NormF.con" as definition.
+
+inline procedural "cic:/CoRN/tactics/AlgReflection/expr_is_zero.con" as definition.
+
+(* UNEXPORTED
+End Normalization_Function
+*)
+
+(* UNEXPORTED
+Section Correctness_Results
+*)
+
+inline procedural "cic:/CoRN/tactics/AlgReflection/eq_nat_corr.con" as lemma.
+
+inline procedural "cic:/CoRN/tactics/AlgReflection/eq_int_corr.con" as lemma.
+
+inline procedural "cic:/CoRN/tactics/AlgReflection/eq_expr_corr.con" as lemma.
+
+(* UNEXPORTED
+End Correctness_Results
+*)
+
+(* end hide *)
+

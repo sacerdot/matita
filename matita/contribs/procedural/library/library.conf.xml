@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<helm_registry>
+  <section name="package">      
+    <key name="input_name">library</key>
+    <key name="output_name">library</key>
+    <key name="input_base_uri">cic:/matita</key>
+    <key name="output_base_uri">cic:/matita/procedural/library</key>
+    <key name="input_path">library</key>
+    <key name="output_path">contribs/procedural/library</key>
+    <key name="input_type">grafite</key>
+    <key name="output_type">procedural</key>    
+    <key name="heading_lines">14</key>
+    <key name="theory_file"></key>
+    <key name="inline">* debug-6</key>
+    <key name="inline">logic/equality/symmetric_eq nodefaults</key>
+    <key name="inline">logic/equality/transitive_eq nodefaults</key>
+    <key name="inline">logic/equality/eq_elim_r nodefaults</key>
+    <key name="inline">logic/equality/eq_f nodefaults</key>
+    <key name="inline">logic/equality/eq_f' nodefaults</key>
+    <key name="inline">Z/plus/eq_plus_Zplus coercions</key>
+    <key name="inline">Z/times/Ztimes_Zplus_pos_neg_pos cr</key>
+  </section>
+</helm_registry>

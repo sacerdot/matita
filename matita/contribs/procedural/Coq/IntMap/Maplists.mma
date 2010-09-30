@@ -1,0 +1,170 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i 	$Id: Maplists.v,v 1.4.2.1 2004/07/16 19:31:04 herbelin Exp $	 i*)
+
+include "IntMap/Addr.ma".
+
+include "IntMap/Addec.ma".
+
+include "IntMap/Map.ma".
+
+include "IntMap/Fset.ma".
+
+include "IntMap/Mapaxioms.ma".
+
+include "IntMap/Mapsubset.ma".
+
+include "IntMap/Mapcard.ma".
+
+include "IntMap/Mapcanon.ma".
+
+include "IntMap/Mapc.ma".
+
+include "Bool/Bool.ma".
+
+include "Bool/Sumbool.ma".
+
+include "Lists/List.ma".
+
+include "Arith/Arith.ma".
+
+include "IntMap/Mapiter.ma".
+
+include "IntMap/Mapfold.ma".
+
+(* UNEXPORTED
+Section MapLists
+*)
+
+inline procedural "cic:/Coq/IntMap/Maplists/ad_in_list.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Maplists/ad_list_stutters.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Maplists/ad_in_list_forms_circuit.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Maplists/ad_list_stutters_has_circuit.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Maplists/Elems.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Maplists/Elems_canon.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Maplists/Elems_app.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Maplists/Elems_rev.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Maplists/ad_in_elems_in_list.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Maplists/ad_list_not_stutters_card.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Maplists/ad_list_card.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Maplists/ad_list_stutters_card.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Maplists/ad_list_not_stutters_card_conv.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Maplists/ad_list_stutters_card_conv.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Maplists/ad_in_list_l.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Maplists/ad_list_stutters_app_l.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Maplists/ad_in_list_r.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Maplists/ad_list_stutters_app_r.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Maplists/ad_list_stutters_app_conv_l.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Maplists/ad_list_stutters_app_conv_r.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Maplists/ad_in_list_app_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Maplists/ad_in_list_app.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Maplists/ad_in_list_rev.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Maplists/ad_list_has_circuit_stutters.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Maplists/ad_list_stutters_prev_l.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Maplists/ad_list_stutters_prev_conv_l.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Maplists/ad_list_stutters_prev_r.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Maplists/ad_list_stutters_prev_conv_r.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Maplists/ad_list_Elems.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Maplists/ad_list_app_length.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Maplists/ad_list_stutters_permute.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Maplists/ad_list_rev_length.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Maplists/ad_list_stutters_rev.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Maplists/ad_list_app_rev.con" as lemma.
+
+(* UNEXPORTED
+Section ListOfDomDef
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Maplists/MapLists/ListOfDomDef/A.var
+*)
+
+inline procedural "cic:/Coq/IntMap/Maplists/ad_list_of_dom.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Maplists/ad_in_list_of_dom_in_dom.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Maplists/Elems_of_list_of_dom.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Maplists/Elems_of_list_of_dom_c.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Maplists/ad_list_of_dom_card_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Maplists/ad_list_of_dom_card.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Maplists/ad_list_of_dom_not_stutters.con" as lemma.
+
+(* UNEXPORTED
+End ListOfDomDef
+*)
+
+inline procedural "cic:/Coq/IntMap/Maplists/ad_list_of_dom_Dom_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Maplists/ad_list_of_dom_Dom.con" as lemma.
+
+(* UNEXPORTED
+End MapLists
+*)
+

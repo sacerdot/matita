@@ -1,0 +1,121 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "CoRN.ma".
+
+(* $Id: CalculusTheorems.v,v 1.6 2004/04/23 10:00:57 lcf Exp $ *)
+
+include "ftc/Rolle.ma".
+
+include "tactics/DiffTactics3.ma".
+
+(* UNEXPORTED
+Opaque Min Max.
+*)
+
+(* UNEXPORTED
+Section Various_Theorems
+*)
+
+(*#* *Calculus Theorems
+
+This file is intended to present a collection of miscellaneous, mostly
+technical results in differential calculus that are interesting or
+useful in future work.
+
+We begin with some properties of continuous functions.  Every
+continuous function commutes with the limit of a numerical sequence
+(sometimes called Heine continuity).
+*)
+
+inline procedural "cic:/CoRN/ftc/CalculusTheorems/Continuous_imp_comm_Lim.con" as lemma.
+
+(*#*
+This is a tricky result: if [F] is continuous and positive in both [[a,b]]
+and [(b,c]], then it is positive in [[a,c]].
+*)
+
+inline procedural "cic:/CoRN/ftc/CalculusTheorems/Continuous_imp_pos.con" as lemma.
+
+(*#*
+Similar results for increasing functions:
+*)
+
+inline procedural "cic:/CoRN/ftc/CalculusTheorems/strict_inc_glues.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/CalculusTheorems/strict_inc_glues'.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/CalculusTheorems/strict_dec_glues.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/CalculusTheorems/strict_dec_glues'.con" as lemma.
+
+(*#* More on glueing intervals. *)
+
+inline procedural "cic:/CoRN/ftc/CalculusTheorems/olor_pos_clor_nonneg.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/CalculusTheorems/olor_pos_olcr_nonneg.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/CalculusTheorems/olor_pos_clcr_nonneg.con" as lemma.
+
+(*#*
+Any function that has the null function as its derivative must be constant.
+*)
+
+inline procedural "cic:/CoRN/ftc/CalculusTheorems/FConst_prop.con" as lemma.
+
+(*#* As a corollary, two functions with the same derivative must differ
+by a constant.
+*)
+
+inline procedural "cic:/CoRN/ftc/CalculusTheorems/Feq_crit_with_const.con" as lemma.
+
+(*#* This yields the following known result: any differential equation
+of the form [f'=g] with initial condition [f(a) [=] b] has a unique solution.
+*)
+
+inline procedural "cic:/CoRN/ftc/CalculusTheorems/Feq_criterium.con" as lemma.
+
+(*#*
+Finally, a well known result: any function with a (strictly) positive
+derivative is (strictly) increasing.  Although the two lemmas look
+quite similar the proofs are completely different, both from the
+formalization and from the mathematical point of view.
+*)
+
+inline procedural "cic:/CoRN/ftc/CalculusTheorems/Derivative_imp_resp_less.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/CalculusTheorems/Derivative_imp_resp_leEq.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/CalculusTheorems/Derivative_imp_resp_less'.con" as lemma.
+
+(*#* From these results we can finally prove that exponentiation to a
+real power preserves the less or equal than relation!
+*)
+
+(* UNEXPORTED
+Opaque nring.
+*)
+
+(* UNEXPORTED
+Transparent nring.
+*)
+
+inline procedural "cic:/CoRN/ftc/CalculusTheorems/nexp_resp_leEq_odd.con" as lemma.
+
+(* UNEXPORTED
+End Various_Theorems
+*)
+

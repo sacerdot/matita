@@ -1,0 +1,87 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Zmin.v,v 1.3.2.1 2004/07/16 19:31:21 herbelin Exp $ i*)
+
+(*#* Binary Integers (Pierre Cr\233\gut (CNET, Lannion, France) *)
+
+include "Arith/Arith.ma".
+
+include "ZArith/BinInt.ma".
+
+include "ZArith/Zcompare.ma".
+
+include "ZArith/Zorder.ma".
+
+(* UNEXPORTED
+Open Local Scope Z_scope.
+*)
+
+(*#*********************************************************************)
+
+(*#* Minimum on binary integer numbers *)
+
+inline procedural "cic:/Coq/ZArith/Zmin/Zmin.con" as definition.
+
+(*#* Properties of minimum on binary integer numbers *)
+
+inline procedural "cic:/Coq/ZArith/Zmin/Zmin_SS.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zmin/Zle_min_l.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zmin/Zle_min_r.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zmin/Zmin_case.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zmin/Zmin_or.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zmin/Zmin_n_n.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zmin/Zmin_plus.con" as lemma.
+
+(*#*********************************************************************)
+
+(*#* Maximum of two binary integer numbers *)
+
+inline procedural "cic:/Coq/ZArith/Zmin/Zmax.con" as definition.
+
+(*#* Properties of maximum on binary integer numbers *)
+
+(* UNEXPORTED
+Ltac CaseEq name :=
+  generalize (refl_equal name); pattern name at -1 in |- *; case name.
+*)
+
+inline procedural "cic:/Coq/ZArith/Zmin/Zmax1.con" as theorem.
+
+inline procedural "cic:/Coq/ZArith/Zmin/Zmax2.con" as theorem.
+

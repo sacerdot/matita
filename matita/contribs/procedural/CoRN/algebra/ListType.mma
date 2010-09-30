@@ -1,0 +1,261 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "CoRN.ma".
+
+(* begin hide *)
+
+(*#**********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team    *)
+
+(* <O___,, *        INRIA-Rocquencourt  &  LRI-CNRS-Orsay              *)
+
+(*   \VV/  *************************************************************)
+
+(*    //   *      This file is distributed under the terms of the      *)
+
+(*         *       GNU Lesser General Public License Version 2.1       *)
+
+(*#**********************************************************************)
+
+(*i $Id: ListType.v,v 1.2 2004/03/26 16:07:02 lcf Exp $ i*)
+
+(* THIS IS A OLD CONTRIB. IT IS NO LONGER MAINTAINED ***)
+
+(* Moved to Type for CoRN *)
+
+(* end hide *)
+
+(*#*
+%\cleardoublepage\setcounter{page}{1}%
+*Lists in Type
+
+This file contains a variant of the development of lists in the standard
+library of Coq but moved to the Type level.
+*)
+
+(* UNEXPORTED
+Section List
+*)
+
+(* UNEXPORTED
+cic:/CoRN/algebra/ListType/List/A.var
+*)
+
+inline procedural "cic:/CoRN/algebra/ListType/list.ind".
+
+inline procedural "cic:/CoRN/algebra/ListType/app.con" as definition.
+
+inline procedural "cic:/CoRN/algebra/ListType/app_nil_end.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve app_nil_end: list v62.
+*)
+
+inline procedural "cic:/CoRN/algebra/ListType/app_ass.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve app_ass: list v62.
+*)
+
+inline procedural "cic:/CoRN/algebra/ListType/ass_app.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve ass_app: list v62.
+*)
+
+inline procedural "cic:/CoRN/algebra/ListType/tail.con" as definition.
+
+inline procedural "cic:/CoRN/algebra/ListType/nil_cons.con" as lemma.
+
+(*#***************************************)
+
+(* Length of lists                      *)
+
+(*#***************************************)
+
+inline procedural "cic:/CoRN/algebra/ListType/length.con" as definition.
+
+(*#*****************************)
+
+(* Length order of lists      *)
+
+(*#*****************************)
+
+(* UNEXPORTED
+Section length_order
+*)
+
+inline procedural "cic:/CoRN/algebra/ListType/lel.con" as definition.
+
+(* UNEXPORTED
+Hint Unfold lel: list.
+*)
+
+(* UNEXPORTED
+cic:/CoRN/algebra/ListType/List/length_order/a.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/algebra/ListType/List/length_order/b.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/algebra/ListType/List/length_order/l.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/algebra/ListType/List/length_order/m.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/algebra/ListType/List/length_order/n.var
+*)
+
+inline procedural "cic:/CoRN/algebra/ListType/lel_refl.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/ListType/lel_trans.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/ListType/lel_cons_cons.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/ListType/lel_cons.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/ListType/lel_tail.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/ListType/lel_nil.con" as lemma.
+
+(* UNEXPORTED
+End length_order
+*)
+
+(* UNEXPORTED
+Hint Resolve lel_refl lel_cons_cons lel_cons lel_nil lel_nil nil_cons: list
+  v62.
+*)
+
+inline procedural "cic:/CoRN/algebra/ListType/In.con" as definition.
+
+inline procedural "cic:/CoRN/algebra/ListType/in_eq.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve in_eq: list v62.
+*)
+
+inline procedural "cic:/CoRN/algebra/ListType/in_cons.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve in_cons: list v62.
+*)
+
+inline procedural "cic:/CoRN/algebra/ListType/in_app_or.con" as lemma.
+
+(* UNEXPORTED
+Hint Immediate in_app_or: list v62.
+*)
+
+inline procedural "cic:/CoRN/algebra/ListType/in_or_app.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve in_or_app: list v62.
+*)
+
+inline procedural "cic:/CoRN/algebra/ListType/incl.con" as definition.
+
+(* UNEXPORTED
+Hint Unfold incl: list v62.
+*)
+
+inline procedural "cic:/CoRN/algebra/ListType/incl_refl.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve incl_refl: list v62.
+*)
+
+inline procedural "cic:/CoRN/algebra/ListType/incl_tl.con" as lemma.
+
+(* UNEXPORTED
+Hint Immediate incl_tl: list v62.
+*)
+
+inline procedural "cic:/CoRN/algebra/ListType/incl_tran.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/ListType/incl_appl.con" as lemma.
+
+(* UNEXPORTED
+Hint Immediate incl_appl: list v62.
+*)
+
+inline procedural "cic:/CoRN/algebra/ListType/incl_appr.con" as lemma.
+
+(* UNEXPORTED
+Hint Immediate incl_appr: list v62.
+*)
+
+inline procedural "cic:/CoRN/algebra/ListType/incl_cons.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve incl_cons: list v62.
+*)
+
+inline procedural "cic:/CoRN/algebra/ListType/incl_app.con" as lemma.
+
+(* UNEXPORTED
+End List
+*)
+
+(* UNEXPORTED
+Implicit Arguments length [A].
+*)
+
+(* UNEXPORTED
+Implicit Arguments In [A].
+*)
+
+(* UNEXPORTED
+Implicit Arguments cons [A].
+*)
+
+(* UNEXPORTED
+Section Map
+*)
+
+(* UNEXPORTED
+cic:/CoRN/algebra/ListType/Map/A.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/algebra/ListType/Map/B.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/algebra/ListType/Map/f.var
+*)
+
+inline procedural "cic:/CoRN/algebra/ListType/map.con" as definition.
+
+(* UNEXPORTED
+End Map
+*)
+
+(* UNEXPORTED
+Implicit Arguments map [A B].
+*)
+
+(* UNEXPORTED
+Hint Resolve incl_app: list v62.
+*)
+

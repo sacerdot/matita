@@ -1,0 +1,330 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "CoRN.ma".
+
+(* $Id: NthDerivative.v,v 1.5 2004/04/20 22:38:50 hinderer Exp $ *)
+
+include "ftc/Differentiability.ma".
+
+(* UNEXPORTED
+Section Nth_Derivative
+*)
+
+(*#* *Nth Derivative
+
+We now study higher order differentiability.
+
+%\begin{convention}% Throughout this section:
+ - [a, b] will be real numbers with [a [<] b];
+ - [I] will denote the compact interval [[a,b]];
+ - [F, G, H] will denote partial functions.
+
+%\end{convention}%
+
+**Definitions
+
+We first define what we mean by the derivative of order [n] of a function.
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/NthDerivative/Nth_Derivative/a.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/NthDerivative/Nth_Derivative/b.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/NthDerivative/Nth_Derivative/Hab'.var
+*)
+
+(* begin hide *)
+
+inline procedural "cic:/CoRN/ftc/NthDerivative/Nth_Derivative/Hab.con" "Nth_Derivative__" as definition.
+
+inline procedural "cic:/CoRN/ftc/NthDerivative/Nth_Derivative/I.con" "Nth_Derivative__" as definition.
+
+(* end hide *)
+
+inline procedural "cic:/CoRN/ftc/NthDerivative/Derivative_I_n.con" as definition.
+
+(*#*
+Unlike first order differentiability, for our definition to be
+workable it is better to define directly what it means for a function
+to be [n] times differentiable instead of quantifying over the
+[Derivative_I_n] relation.
+*)
+
+inline procedural "cic:/CoRN/ftc/NthDerivative/Diffble_I_n.con" as definition.
+
+(* UNEXPORTED
+End Nth_Derivative
+*)
+
+(* UNEXPORTED
+Implicit Arguments Derivative_I_n [a b].
+*)
+
+(* UNEXPORTED
+Implicit Arguments Diffble_I_n [a b].
+*)
+
+(* UNEXPORTED
+Section Trivia
+*)
+
+(*#* **Trivia
+
+These are the expected extensionality and uniqueness results.
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/NthDerivative/Trivia/a.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/NthDerivative/Trivia/b.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/NthDerivative/Trivia/Hab'.var
+*)
+
+(* begin hide *)
+
+inline procedural "cic:/CoRN/ftc/NthDerivative/Trivia/Hab.con" "Trivia__" as definition.
+
+inline procedural "cic:/CoRN/ftc/NthDerivative/Trivia/I.con" "Trivia__" as definition.
+
+(* end hide *)
+
+inline procedural "cic:/CoRN/ftc/NthDerivative/Diffble_I_n_wd.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/NthDerivative/Derivative_I_n_wdr.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/NthDerivative/Derivative_I_n_wdl.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/NthDerivative/Derivative_I_n_unique.con" as lemma.
+
+(* UNEXPORTED
+End Trivia
+*)
+
+(* UNEXPORTED
+Section Basic_Results
+*)
+
+(*#* **Basic Results
+
+We now explore the concept of [n] times differentiability.  Notice
+that, unlike the first order case, we do not pay so much attention to
+the relation of [n] times derivative, but focus rather on the
+definition of [Diffble_I_n].
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/NthDerivative/Basic_Results/a.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/NthDerivative/Basic_Results/b.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/NthDerivative/Basic_Results/Hab'.var
+*)
+
+(* begin hide *)
+
+inline procedural "cic:/CoRN/ftc/NthDerivative/Basic_Results/Hab.con" "Basic_Results__" as definition.
+
+inline procedural "cic:/CoRN/ftc/NthDerivative/Basic_Results/I.con" "Basic_Results__" as definition.
+
+(* end hide *)
+
+(*#*
+We begin by showing that having a higher order derivative implies being differentiable.
+*)
+
+inline procedural "cic:/CoRN/ftc/NthDerivative/Diffble_I_n_imp_diffble.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/NthDerivative/deriv_n_imp_diffble.con" as lemma.
+
+(*#*
+If a function is [n] times differentiable then it is also [m] times differentiable for every [m] less or equal than [n].
+*)
+
+inline procedural "cic:/CoRN/ftc/NthDerivative/le_imp_Diffble_I.con" as lemma.
+
+(*#*
+The next result consolidates our intuition that a function is [n]
+times differentiable if we can build from it a chain of [n]
+derivatives.
+*)
+
+inline procedural "cic:/CoRN/ftc/NthDerivative/Diffble_I_imp_le.con" as lemma.
+
+(*#*
+As expected, an [n] times differentiable in [[a,b]] function must be
+defined in that interval.
+*)
+
+inline procedural "cic:/CoRN/ftc/NthDerivative/Diffble_I_n_imp_inc.con" as lemma.
+
+(*#*
+Also, the notions of derivative and differentiability are related as expected.
+*)
+
+inline procedural "cic:/CoRN/ftc/NthDerivative/Diffble_I_n_imp_deriv_n.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/NthDerivative/deriv_n_imp_Diffble_I_n.con" as lemma.
+
+(*#*
+From this we can prove that if [F] has an nth order derivative in
+[[a,b]] then both [F] and its derivative are defined in that interval.
+*)
+
+inline procedural "cic:/CoRN/ftc/NthDerivative/Derivative_I_n_imp_inc.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/NthDerivative/Derivative_I_n_imp_inc'.con" as lemma.
+
+(* UNEXPORTED
+Section aux
+*)
+
+(*#*
+First order differentiability is just a special case.
+*)
+
+(* begin show *)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/NthDerivative/Basic_Results/aux/F.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/NthDerivative/Basic_Results/aux/diffF.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/NthDerivative/Basic_Results/aux/diffFn.var
+*)
+
+(* end show *)
+
+inline procedural "cic:/CoRN/ftc/NthDerivative/deriv_1_deriv.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/NthDerivative/deriv_1_deriv'.con" as lemma.
+
+(* UNEXPORTED
+End aux
+*)
+
+(*#*
+As usual, nth order derivability is preserved by shrinking the interval.
+*)
+
+inline procedural "cic:/CoRN/ftc/NthDerivative/included_imp_deriv_n.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/NthDerivative/included_imp_diffble_n.con" as lemma.
+
+(*#*
+And finally we have an addition rule for the order of the derivative.
+*)
+
+inline procedural "cic:/CoRN/ftc/NthDerivative/Derivative_I_n_plus.con" as lemma.
+
+(* UNEXPORTED
+End Basic_Results
+*)
+
+(* UNEXPORTED
+Section More_Results
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/NthDerivative/More_Results/a.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/NthDerivative/More_Results/b.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/NthDerivative/More_Results/Hab'.var
+*)
+
+(* begin hide *)
+
+inline procedural "cic:/CoRN/ftc/NthDerivative/More_Results/Hab.con" "More_Results__" as definition.
+
+inline procedural "cic:/CoRN/ftc/NthDerivative/More_Results/I.con" "More_Results__" as definition.
+
+(* end hide *)
+
+(*#* **The Nth Derivative
+
+We now define an operator that returns an nth order derivative of an
+n-times differentiable function.  This is analogous to the quantifier
+elimination which we would get if we had defined nth differentiability
+as an existential quantification of the nth derivative relation.
+*)
+
+inline procedural "cic:/CoRN/ftc/NthDerivative/n_deriv_I.con" as definition.
+
+(*#*
+This operator is well defined and works as expected.
+*)
+
+inline procedural "cic:/CoRN/ftc/NthDerivative/n_deriv_I_wd.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/NthDerivative/n_deriv_lemma.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/NthDerivative/n_deriv_inc.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/NthDerivative/n_deriv_inc'.con" as lemma.
+
+(*#*
+Some basic properties of this operation.
+*)
+
+inline procedural "cic:/CoRN/ftc/NthDerivative/n_Sn_deriv.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/NthDerivative/n_deriv_plus.con" as lemma.
+
+(* UNEXPORTED
+End More_Results
+*)
+
+(* UNEXPORTED
+Section More_on_n_deriv
+*)
+
+(*#*
+Some not so basic properties of this operation (needed in rather specific situations).
+*)
+
+inline procedural "cic:/CoRN/ftc/NthDerivative/n_deriv_I_wd'.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/NthDerivative/n_deriv_I_wd''.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/NthDerivative/n_deriv_I_strext'.con" as lemma.
+
+(* UNEXPORTED
+End More_on_n_deriv
+*)
+

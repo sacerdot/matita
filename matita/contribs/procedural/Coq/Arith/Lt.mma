@@ -1,0 +1,180 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Lt.v,v 1.11.2.1 2004/07/16 19:31:00 herbelin Exp $ i*)
+
+include "Arith/Le.ma".
+
+(* UNEXPORTED
+Open Local Scope nat_scope.
+*)
+
+(* UNEXPORTED
+Implicit Types m n p : nat.
+*)
+
+(*#* Irreflexivity *)
+
+inline procedural "cic:/Coq/Arith/Lt/lt_irrefl.con" as theorem.
+
+(* UNEXPORTED
+Hint Resolve lt_irrefl: arith v62.
+*)
+
+(*#* Relationship between [le] and [lt] *)
+
+inline procedural "cic:/Coq/Arith/Lt/lt_le_S.con" as theorem.
+
+(* UNEXPORTED
+Hint Immediate lt_le_S: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/Lt/lt_n_Sm_le.con" as theorem.
+
+(* UNEXPORTED
+Hint Immediate lt_n_Sm_le: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/Lt/le_lt_n_Sm.con" as theorem.
+
+(* UNEXPORTED
+Hint Immediate le_lt_n_Sm: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/Lt/le_not_lt.con" as theorem.
+
+inline procedural "cic:/Coq/Arith/Lt/lt_not_le.con" as theorem.
+
+(* UNEXPORTED
+Hint Immediate le_not_lt lt_not_le: arith v62.
+*)
+
+(*#* Asymmetry *)
+
+inline procedural "cic:/Coq/Arith/Lt/lt_asym.con" as theorem.
+
+(*#* Order and successor *)
+
+inline procedural "cic:/Coq/Arith/Lt/lt_n_Sn.con" as theorem.
+
+(* UNEXPORTED
+Hint Resolve lt_n_Sn: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/Lt/lt_S.con" as theorem.
+
+(* UNEXPORTED
+Hint Resolve lt_S: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/Lt/lt_n_S.con" as theorem.
+
+(* UNEXPORTED
+Hint Resolve lt_n_S: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/Lt/lt_S_n.con" as theorem.
+
+(* UNEXPORTED
+Hint Immediate lt_S_n: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/Lt/lt_O_Sn.con" as theorem.
+
+(* UNEXPORTED
+Hint Resolve lt_O_Sn: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/Lt/lt_n_O.con" as theorem.
+
+(* UNEXPORTED
+Hint Resolve lt_n_O: arith v62.
+*)
+
+(*#* Predecessor *)
+
+inline procedural "cic:/Coq/Arith/Lt/S_pred.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Lt/lt_pred.con" as lemma.
+
+(* UNEXPORTED
+Hint Immediate lt_pred: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/Lt/lt_pred_n_n.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve lt_pred_n_n: arith v62.
+*)
+
+(*#* Transitivity properties *)
+
+inline procedural "cic:/Coq/Arith/Lt/lt_trans.con" as theorem.
+
+inline procedural "cic:/Coq/Arith/Lt/lt_le_trans.con" as theorem.
+
+inline procedural "cic:/Coq/Arith/Lt/le_lt_trans.con" as theorem.
+
+(* UNEXPORTED
+Hint Resolve lt_trans lt_le_trans le_lt_trans: arith v62.
+*)
+
+(*#* Large = strict or equal *)
+
+inline procedural "cic:/Coq/Arith/Lt/le_lt_or_eq.con" as theorem.
+
+inline procedural "cic:/Coq/Arith/Lt/lt_le_weak.con" as theorem.
+
+(* UNEXPORTED
+Hint Immediate lt_le_weak: arith v62.
+*)
+
+(*#* Dichotomy *)
+
+inline procedural "cic:/Coq/Arith/Lt/le_or_lt.con" as theorem.
+
+inline procedural "cic:/Coq/Arith/Lt/nat_total_order.con" as theorem.
+
+(*#* Comparison to 0 *)
+
+inline procedural "cic:/Coq/Arith/Lt/neq_O_lt.con" as theorem.
+
+(* UNEXPORTED
+Hint Immediate neq_O_lt: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/Lt/lt_O_neq.con" as theorem.
+
+(* UNEXPORTED
+Hint Immediate lt_O_neq: arith v62.
+*)
+

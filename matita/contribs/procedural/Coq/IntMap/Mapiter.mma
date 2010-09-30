@@ -1,0 +1,204 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i 	$Id: Mapiter.v,v 1.4.2.1 2004/07/16 19:31:04 herbelin Exp $	 i*)
+
+include "Bool/Bool.ma".
+
+include "Bool/Sumbool.ma".
+
+include "ZArith/ZArith.ma".
+
+include "IntMap/Addr.ma".
+
+include "IntMap/Adist.ma".
+
+include "IntMap/Addec.ma".
+
+include "IntMap/Map.ma".
+
+include "IntMap/Mapaxioms.ma".
+
+include "IntMap/Fset.ma".
+
+include "Lists/List.ma".
+
+(* UNEXPORTED
+Section MapIter
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapiter/MapIter/A.var
+*)
+
+(* UNEXPORTED
+Section MapSweepDef
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapiter/MapIter/MapSweepDef/f.var
+*)
+
+inline procedural "cic:/Coq/IntMap/Mapiter/MapSweep2.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Mapiter/MapSweep1.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Mapiter/MapSweep.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Mapiter/MapSweep_semantics_1_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapiter/MapSweep_semantics_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapiter/MapSweep_semantics_2_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapiter/MapSweep_semantics_2_2.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapiter/MapSweep_semantics_2.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapiter/MapSweep_semantics_3_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapiter/MapSweep_semantics_3.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapiter/MapSweep_semantics_4_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapiter/MapSweep_semantics_4.con" as lemma.
+
+(* UNEXPORTED
+End MapSweepDef
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapiter/MapIter/B.var
+*)
+
+inline procedural "cic:/Coq/IntMap/Mapiter/MapCollect1.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Mapiter/MapCollect.con" as definition.
+
+(* UNEXPORTED
+Section MapFoldDef
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapiter/MapIter/MapFoldDef/M.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapiter/MapIter/MapFoldDef/neutral.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapiter/MapIter/MapFoldDef/op.var
+*)
+
+inline procedural "cic:/Coq/IntMap/Mapiter/MapFold1.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Mapiter/MapFold.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Mapiter/MapFold_empty.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapiter/MapFold_M1.con" as lemma.
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapiter/MapIter/MapFoldDef/State.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapiter/MapIter/MapFoldDef/f.var
+*)
+
+inline procedural "cic:/Coq/IntMap/Mapiter/MapFold1_state.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Mapiter/MapFold_state.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Mapiter/pair_sp.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapiter/MapFold_state_stateless_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapiter/MapFold_state_stateless.con" as lemma.
+
+(* UNEXPORTED
+End MapFoldDef
+*)
+
+inline procedural "cic:/Coq/IntMap/Mapiter/MapCollect_as_Fold.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapiter/alist.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Mapiter/anil.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Mapiter/acons.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Mapiter/aapp.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Mapiter/alist_of_Map.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Mapiter/alist_semantics.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Mapiter/alist_semantics_app.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapiter/alist_of_Map_semantics_1_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapiter/ad_inj.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Mapiter/ad_comp_double_inj.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapiter/ad_comp_double_plus_un_inj.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapiter/alist_of_Map_semantics_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapiter/alist_of_Map_semantics.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapiter/Map_of_alist.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Mapiter/Map_of_alist_semantics.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapiter/Map_of_alist_of_Map.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapiter/alist_of_Map_of_alist.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapiter/fold_right_aapp.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapiter/MapFold_as_fold_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapiter/MapFold_as_fold.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapiter/alist_MapMerge_semantics.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapiter/alist_MapMerge_semantics_disjoint.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapiter/alist_semantics_disjoint_comm.con" as lemma.
+
+(* UNEXPORTED
+End MapIter
+*)
+

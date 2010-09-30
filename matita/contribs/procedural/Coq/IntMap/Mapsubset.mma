@@ -1,0 +1,284 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i 	$Id: Mapsubset.v,v 1.4.2.1 2004/07/16 19:31:05 herbelin Exp $	 i*)
+
+include "Bool/Bool.ma".
+
+include "Bool/Sumbool.ma".
+
+include "Arith/Arith.ma".
+
+include "ZArith/ZArith.ma".
+
+include "IntMap/Addr.ma".
+
+include "IntMap/Adist.ma".
+
+include "IntMap/Addec.ma".
+
+include "IntMap/Map.ma".
+
+include "IntMap/Fset.ma".
+
+include "IntMap/Mapaxioms.ma".
+
+include "IntMap/Mapiter.ma".
+
+(* UNEXPORTED
+Section MapSubsetDef
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapsubset/MapSubsetDef/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapsubset/MapSubsetDef/B.var
+*)
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/MapSubset.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/MapSubset_1.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/MapSubset_2.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/MapSubset_imp_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/MapSubset_1_imp.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/map_dom_empty_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/map_dom_empty_2.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/MapSubset_imp_2.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/MapSubset_2_imp.con" as lemma.
+
+(* UNEXPORTED
+End MapSubsetDef
+*)
+
+(* UNEXPORTED
+Section MapSubsetOrder
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapsubset/MapSubsetOrder/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapsubset/MapSubsetOrder/B.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapsubset/MapSubsetOrder/C.var
+*)
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/MapSubset_refl.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/MapSubset_antisym.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/MapSubset_trans.con" as lemma.
+
+(* UNEXPORTED
+End MapSubsetOrder
+*)
+
+(* UNEXPORTED
+Section FSubsetOrder
+*)
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/FSubset_refl.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/FSubset_antisym.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/FSubset_trans.con" as lemma.
+
+(* UNEXPORTED
+End FSubsetOrder
+*)
+
+(* UNEXPORTED
+Section MapSubsetExtra
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapsubset/MapSubsetExtra/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapsubset/MapSubsetExtra/B.var
+*)
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/MapSubset_Dom_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/MapSubset_Dom_2.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/MapSubset_1_Dom.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/MapSubset_Put.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/MapSubset_Put_mono.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/MapSubset_Put_behind.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/MapSubset_Put_behind_mono.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/MapSubset_Remove.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/MapSubset_Remove_mono.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/MapSubset_Merge_l.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/MapSubset_Merge_r.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/MapSubset_Merge_mono.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/MapSubset_DomRestrTo_l.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/MapSubset_DomRestrTo_r.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/MapSubset_ext.con" as lemma.
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapsubset/MapSubsetExtra/C.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapsubset/MapSubsetExtra/D.var
+*)
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/MapSubset_DomRestrTo_mono.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/MapSubset_DomRestrBy_l.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/MapSubset_DomRestrBy_mono.con" as lemma.
+
+(* UNEXPORTED
+End MapSubsetExtra
+*)
+
+(* UNEXPORTED
+Section MapDisjointDef
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapsubset/MapDisjointDef/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapsubset/MapDisjointDef/B.var
+*)
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/MapDisjoint.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/MapDisjoint_1.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/MapDisjoint_2.con" as definition.
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/MapDisjoint_imp_1.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/MapDisjoint_1_imp.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/MapDisjoint_imp_2.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/MapDisjoint_2_imp.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/Map_M0_disjoint.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/Map_disjoint_M0.con" as lemma.
+
+(* UNEXPORTED
+End MapDisjointDef
+*)
+
+(* UNEXPORTED
+Section MapDisjointExtra
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapsubset/MapDisjointExtra/A.var
+*)
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapsubset/MapDisjointExtra/B.var
+*)
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/MapDisjoint_ext.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/MapMerge_disjoint.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/MapDisjoint_M2_l.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/MapDisjoint_M2_r.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/MapDisjoint_M2.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/MapDisjoint_M1_l.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/MapDisjoint_M1_r.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/MapDisjoint_M1_conv_l.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/MapDisjoint_M1_conv_r.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/MapDisjoint_sym.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/MapDisjoint_empty.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/MapDelta_disjoint.con" as lemma.
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapsubset/MapDisjointExtra/C.var
+*)
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/MapDomRestr_disjoint.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/MapDelta_RestrTo_disjoint.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/MapDelta_RestrTo_disjoint_2.con" as lemma.
+
+(* UNEXPORTED
+cic:/Coq/IntMap/Mapsubset/MapDisjointExtra/D.var
+*)
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/MapSubset_Disjoint.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/MapSubset_Disjoint_l.con" as lemma.
+
+inline procedural "cic:/Coq/IntMap/Mapsubset/MapSubset_Disjoint_r.con" as lemma.
+
+(* UNEXPORTED
+End MapDisjointExtra
+*)
+

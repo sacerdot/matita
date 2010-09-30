@@ -1,0 +1,6 @@
+whelp.cmi: 
+fwdQueries.cmi: 
+whelp.cmo: whelp.cmi 
+whelp.cmx: whelp.cmi 
+fwdQueries.cmo: fwdQueries.cmi 
+fwdQueries.cmx: fwdQueries.cmi 

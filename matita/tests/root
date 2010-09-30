@@ -1,0 +1,2 @@
+baseuri=cic:/matita/tests
+include_paths=../legacy

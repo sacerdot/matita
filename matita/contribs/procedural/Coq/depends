@@ -1,0 +1,394 @@
+Logic/Hurkens.ma Logic/Hurkens.mma
+Reals/Binomial.mma Coq.ma Reals/PartSum.ma Reals/Rbase.ma Reals/Rfunctions.ma
+Sets/Finite_sets.ma Sets/Finite_sets.mma
+Logic/Classical_Pred_Type.mma Coq.ma Logic/Classical_Prop.ma
+Logic/ChoiceFacts.ma Logic/ChoiceFacts.mma
+Reals/Rgeom.mma Coq.ma Reals/R_sqrt.ma Reals/Rbase.ma Reals/Rfunctions.ma Reals/Rtrigo.ma Reals/SeqSeries.ma
+Logic/Classical.mma Coq.ma Logic/Classical_Pred_Type.ma Logic/Classical_Prop.ma
+Lists/MonoList.mma Arith/Le.ma Coq.ma
+Init/Notations.ma Init/Notations.mma
+Reals/Ranalysis.ma Reals/Ranalysis.mma
+ZArith/ZArith.ma ZArith/ZArith.mma
+ZArith/Zwf.mma Arith/Wf_nat.ma Coq.ma ZArith/ZArith_base.ma
+Sets/Relations_2_facts.ma Sets/Relations_2_facts.mma
+Reals/Rsqrt_def.mma Bool/Sumbool.ma Coq.ma Reals/Ranalysis1.ma Reals/Rbase.ma Reals/Rfunctions.ma Reals/SeqSeries.ma
+Reals/Rbasic_fun.ma Reals/Rbasic_fun.mma
+Arith/Euclid.mma Arith/Compare_dec.ma Arith/Mult.ma Arith/Wf_nat.ma Coq.ma
+Arith/Minus.mma Arith/Le.ma Arith/Lt.ma Coq.ma
+Reals/Raxioms.ma Reals/Raxioms.mma
+Init/Prelude.ma Init/Prelude.mma
+ZArith/Zorder.mma Arith/Arith.ma Coq.ma Logic/Decidable.ma NArith/BinPos.ma ZArith/BinInt.ma ZArith/Zcompare.ma
+ZArith/Zsqrt.ma ZArith/Zsqrt.mma
+Reals/Rseries.mma Arith/Compare.ma Coq.ma Logic/Classical.ma Reals/Rbase.ma Reals/Rfunctions.ma
+Lists/ListSet.mma Coq.ma Lists/List.ma
+Arith/Le.ma Arith/Le.mma
+Setoids/Setoid.mma Coq.ma Init/Prelude.ma
+Logic/ProofIrrelevance.ma Logic/ProofIrrelevance.mma
+ZArith/Zeven.mma Coq.ma ZArith/BinInt.ma
+ZArith/Zcompare.mma Arith/Gt.ma Arith/Lt.ma Arith/Mult.ma Arith/Plus.ma Coq.ma NArith/BinPos.ma ZArith/BinInt.ma
+Arith/Between.ma Arith/Between.mma
+ZArith/Zpower.mma Coq.ma ZArith/ZArith_base.ma ZArith/Zcomplements.ma
+Logic/Classical_Pred_Set.ma Logic/Classical_Pred_Set.mma
+ZArith/ZArith_base.mma Coq.ma NArith/BinNat.ma NArith/BinPos.ma ZArith/BinInt.ma ZArith/Wf_Z.ma ZArith/ZArith_dec.ma ZArith/Zabs.ma ZArith/Zbool.ma ZArith/Zcompare.ma ZArith/Zeven.ma ZArith/Zhints.ma ZArith/Zmin.ma ZArith/Zmisc.ma ZArith/Znat.ma ZArith/Zorder.ma ZArith/auxiliary.ma
+Arith/Compare.mma Arith/Arith.ma Arith/Compare_dec.ma Arith/Min.ma Arith/Peano_dec.ma Arith/Wf_nat.ma Coq.ma
+Reals/Ranalysis4.mma Coq.ma Reals/Exp_prop.ma Reals/Ranalysis1.ma Reals/Ranalysis3.ma Reals/Rbase.ma Reals/Rfunctions.ma Reals/Rtrigo.ma Reals/SeqSeries.ma
+Coq.ma preamble.ma
+ZArith/Znat.mma Arith/Arith.ma Arith/Compare_dec.ma Arith/Peano_dec.ma Coq.ma Logic/Decidable.ma NArith/BinPos.ma ZArith/BinInt.ma ZArith/Zcompare.ma ZArith/Zorder.ma
+Reals/Integration.ma Reals/Integration.mma
+Logic/RelationalChoice.mma Coq.ma Init/Prelude.ma
+ZArith/Zpower.ma ZArith/Zpower.mma
+Init/Prelude.mma Coq.ma Init/Datatypes.ma Init/Logic.ma Init/Notations.ma Init/Peano.ma Init/Specif.ma Init/Wf.ma
+Bool/IfProp.mma Bool/Bool.ma Coq.ma
+Arith/Even.mma Coq.ma Init/Prelude.ma
+Lists/TheoryList.ma Lists/TheoryList.mma
+Arith/Wf_nat.ma Arith/Wf_nat.mma
+IntMap/Mapsubset.mma Arith/Arith.ma Bool/Bool.ma Bool/Sumbool.ma Coq.ma IntMap/Addec.ma IntMap/Addr.ma IntMap/Adist.ma IntMap/Fset.ma IntMap/Map.ma IntMap/Mapaxioms.ma IntMap/Mapiter.ma ZArith/ZArith.ma
+Wellfounded/Union.mma Coq.ma Relations/Relation_Definitions.ma Relations/Relation_Operators.ma Wellfounded/Transitive_Closure.ma
+Wellfounded/Wellfounded.ma Wellfounded/Wellfounded.mma
+Sets/Multiset.ma Sets/Multiset.mma
+Logic/ClassicalFacts.ma Logic/ClassicalFacts.mma
+Reals/RiemannInt.mma Arith/Max.ma Coq.ma Logic/Classical_Pred_Type.ma Logic/Classical_Prop.ma Reals/Ranalysis.ma Reals/Rbase.ma Reals/Rfunctions.ma Reals/RiemannInt_SF.ma Reals/SeqSeries.ma
+Wellfounded/Inverse_Image.mma Coq.ma Init/Prelude.ma
+Reals/Rsigma.ma Reals/Rsigma.mma
+Bool/BoolEq.ma Bool/BoolEq.mma
+Wellfounded/Disjoint_Union.ma Wellfounded/Disjoint_Union.mma
+Wellfounded/Inverse_Image.ma Wellfounded/Inverse_Image.mma
+Reals/R_sqrt.mma Coq.ma Reals/Rbase.ma Reals/Rfunctions.ma Reals/Rsqrt_def.ma
+Bool/BoolEq.mma Bool/Bool.ma Coq.ma
+Lists/List.mma Arith/Le.ma Coq.ma
+Reals/Rsigma.mma Coq.ma Reals/PartSum.ma Reals/Rbase.ma Reals/Rfunctions.ma Reals/Rseries.ma
+Logic/ClassicalDescription.mma Coq.ma Logic/Classical.ma
+Reals/Ranalysis1.ma Reals/Ranalysis1.mma
+Wellfounded/Transitive_Closure.ma Wellfounded/Transitive_Closure.mma
+ZArith/ZArith_base.ma ZArith/ZArith_base.mma
+Logic/Classical_Pred_Set.mma Coq.ma Logic/Classical_Prop.ma
+ZArith/Zeven.ma ZArith/Zeven.mma
+Init/Logic_Type.ma Init/Logic_Type.mma
+Relations/Operators_Properties.mma Coq.ma Relations/Relation_Definitions.ma Relations/Relation_Operators.ma
+Bool/DecBool.ma Bool/DecBool.mma
+Reals/Rtopology.mma Coq.ma Logic/Classical_Pred_Type.ma Logic/Classical_Prop.ma Reals/RList.ma Reals/Ranalysis1.ma Reals/Rbase.ma Reals/Rfunctions.ma
+Arith/EqNat.ma Arith/EqNat.mma
+Wellfounded/Union.ma Wellfounded/Union.mma
+Sets/Uniset.ma Sets/Uniset.mma
+Sorting/Sorting.mma Coq.ma Lists/List.ma Relations/Relations.ma Sets/Multiset.ma Sorting/Permutation.ma
+Init/Wf.mma Coq.ma Init/Datatypes.ma Init/Logic.ma Init/Notations.ma
+Sets/Ensembles.mma Coq.ma Init/Prelude.ma
+Reals/Cos_plus.mma Arith/Max.ma Coq.ma Reals/Cos_rel.ma Reals/Rbase.ma Reals/Rfunctions.ma Reals/Rtrigo_def.ma Reals/SeqSeries.ma
+Reals/SplitAbsolu.mma Coq.ma Reals/Rbasic_fun.ma
+Relations/Operators_Properties.ma Relations/Operators_Properties.mma
+Arith/Peano_dec.mma Coq.ma Logic/Decidable.ma
+Reals/PartSum.mma Arith/Max.ma Coq.ma Reals/Rbase.ma Reals/Rcomplete.ma Reals/Rfunctions.ma Reals/Rseries.ma
+Reals/Rtrigo_fun.ma Reals/Rtrigo_fun.mma
+Logic/Decidable.ma Logic/Decidable.mma
+Arith/Div.ma Arith/Div.mma
+Sets/Relations_3_facts.mma Coq.ma Sets/Relations_1.ma Sets/Relations_1_facts.ma Sets/Relations_2.ma Sets/Relations_2_facts.ma Sets/Relations_3.ma
+Arith/Compare.ma Arith/Compare.mma
+Logic/Hurkens.mma Coq.ma Init/Prelude.ma
+Arith/Min.mma Arith/Arith.ma Coq.ma
+Reals/R_sqr.mma Coq.ma Reals/Rbase.ma Reals/Rbasic_fun.ma
+Bool/Bool.mma Coq.ma Init/Prelude.ma
+Reals/Alembert.ma Reals/Alembert.mma
+IntMap/Allmaps.mma Coq.ma IntMap/Adalloc.ma IntMap/Addec.ma IntMap/Addr.ma IntMap/Adist.ma IntMap/Fset.ma IntMap/Lsort.ma IntMap/Map.ma IntMap/Mapaxioms.ma IntMap/Mapc.ma IntMap/Mapcanon.ma IntMap/Mapcard.ma IntMap/Mapfold.ma IntMap/Mapiter.ma IntMap/Maplists.ma IntMap/Mapsubset.ma
+Sets/Relations_2.mma Coq.ma Sets/Relations_1.ma
+Reals/Rtrigo_fun.mma Coq.ma Reals/Rbase.ma Reals/Rfunctions.ma Reals/SeqSeries.ma
+Init/Wf.ma Init/Wf.mma
+Reals/Rtrigo_alt.ma Reals/Rtrigo_alt.mma
+Reals/Cos_rel.ma Reals/Cos_rel.mma
+Logic/Classical_Prop.mma Coq.ma Logic/ProofIrrelevance.ma
+IntMap/Adist.ma IntMap/Adist.mma
+Reals/PartSum.ma Reals/PartSum.mma
+Reals/Rdefinitions.ma Reals/Rdefinitions.mma
+Sets/Relations_1_facts.mma Coq.ma Sets/Relations_1.ma
+Reals/Exp_prop.ma Reals/Exp_prop.mma
+Reals/Rfunctions.mma Coq.ma Reals/ArithProp.ma Reals/R_Ifp.ma Reals/R_sqr.ma Reals/Rbase.ma Reals/Rbasic_fun.ma Reals/SplitAbsolu.ma Reals/SplitRmult.ma ZArith/Zpower.ma
+Logic/ProofIrrelevance.mma Coq.ma Logic/Hurkens.ma
+Wellfounded/Well_Ordering.ma Wellfounded/Well_Ordering.mma
+Reals/Rtrigo_reg.mma Coq.ma Reals/PSeries_reg.ma Reals/Ranalysis1.ma Reals/Rbase.ma Reals/Rfunctions.ma Reals/Rtrigo.ma Reals/SeqSeries.ma
+Reals/Rseries.ma Reals/Rseries.mma
+Logic/Eqdep.ma Logic/Eqdep.mma
+Reals/Raxioms.mma Coq.ma Reals/Rdefinitions.ma ZArith/ZArith_base.ma
+ZArith/Zwf.ma ZArith/Zwf.mma
+ZArith/Zabs.mma Arith/Arith.ma Coq.ma NArith/BinPos.ma ZArith/BinInt.ma ZArith/ZArith_dec.ma ZArith/Zorder.ma
+ZArith/Zmin.mma Arith/Arith.ma Coq.ma ZArith/BinInt.ma ZArith/Zcompare.ma ZArith/Zorder.ma
+Reals/Rsqrt_def.ma Reals/Rsqrt_def.mma
+Reals/R_sqrt.ma Reals/R_sqrt.mma
+Sets/Finite_sets_facts.ma Sets/Finite_sets_facts.mma
+Reals/Rbasic_fun.mma Coq.ma Reals/R_Ifp.ma Reals/Rbase.ma
+Reals/Ranalysis2.mma Coq.ma Reals/Ranalysis1.ma Reals/Rbase.ma Reals/Rfunctions.ma
+Arith/Between.mma Arith/Le.ma Arith/Lt.ma Coq.ma
+Init/Peano.ma Init/Peano.mma
+Arith/Plus.ma Arith/Plus.mma
+Setoids/Setoid.ma Setoids/Setoid.mma
+Reals/AltSeries.ma Reals/AltSeries.mma
+Reals/Rprod.ma Reals/Rprod.mma
+Sets/Permut.ma Sets/Permut.mma
+Sets/Relations_3.ma Sets/Relations_3.mma
+Reals/Rtopology.ma Reals/Rtopology.mma
+Relations/Relations.ma Relations/Relations.mma
+IntMap/Map.ma IntMap/Map.mma
+IntMap/Mapsubset.ma IntMap/Mapsubset.mma
+ZArith/BinInt.mma Arith/Mult.ma Arith/Plus.ma Coq.ma NArith/BinNat.ma NArith/BinPos.ma NArith/Pnat.ma
+Sets/Powerset.ma Sets/Powerset.mma
+Reals/R_Ifp.mma Coq.ma Reals/Rbase.ma
+Reals/Rderiv.mma Coq.ma Logic/Classical_Pred_Type.ma Logic/Classical_Prop.ma Reals/Rbase.ma Reals/Rfunctions.ma Reals/Rlimit.ma
+Sets/Powerset_Classical_facts.ma Sets/Powerset_Classical_facts.mma
+Sets/Uniset.mma Bool/Bool.ma Coq.ma Sets/Permut.ma
+Lists/List.ma Lists/List.mma
+ZArith/ZArith_dec.ma ZArith/ZArith_dec.mma
+IntMap/Mapcanon.ma IntMap/Mapcanon.mma
+IntMap/Allmaps.ma IntMap/Allmaps.mma
+Wellfounded/Lexicographic_Exponentiation.mma Coq.ma Lists/List.ma Logic/Eqdep.ma Relations/Relation_Operators.ma Wellfounded/Transitive_Closure.ma
+Sets/Powerset_facts.mma Coq.ma Sets/Constructive_sets.ma Sets/Cpo.ma Sets/Ensembles.ma Sets/Partial_Order.ma Sets/Powerset.ma Sets/Relations_1.ma Sets/Relations_1_facts.ma
+Reals/Alembert.mma Arith/Max.ma Coq.ma Reals/PartSum.ma Reals/Rbase.ma Reals/Rfunctions.ma Reals/Rseries.ma Reals/SeqProp.ma
+ZArith/Zbool.ma ZArith/Zbool.mma
+Sets/Partial_Order.mma Coq.ma Sets/Ensembles.ma Sets/Relations_1.ma
+Logic/ClassicalFacts.mma Coq.ma Init/Prelude.ma
+Reals/Rdefinitions.mma Coq.ma ZArith/ZArith_base.ma
+Reals/PSeries_reg.ma Reals/PSeries_reg.mma
+IntMap/Adalloc.ma IntMap/Adalloc.mma
+Reals/R_Ifp.ma Reals/R_Ifp.mma
+Logic/Classical_Prop.ma Logic/Classical_Prop.mma
+IntMap/Mapiter.mma Bool/Bool.ma Bool/Sumbool.ma Coq.ma IntMap/Addec.ma IntMap/Addr.ma IntMap/Adist.ma IntMap/Fset.ma IntMap/Map.ma IntMap/Mapaxioms.ma Lists/List.ma ZArith/ZArith.ma
+Wellfounded/Inclusion.ma Wellfounded/Inclusion.mma
+ZArith/auxiliary.mma Arith/Arith.ma Arith/Compare_dec.ma Arith/Peano_dec.ma Coq.ma Logic/Decidable.ma ZArith/BinInt.ma ZArith/Zorder.ma
+Reals/RIneq.ma Reals/RIneq.mma
+Init/Logic.mma Coq.ma Init/Notations.ma
+Lists/ListSet.ma Lists/ListSet.mma
+Relations/Relation_Definitions.ma Relations/Relation_Definitions.mma
+Wellfounded/Disjoint_Union.mma Coq.ma Relations/Relation_Operators.ma
+Sets/Finite_sets_facts.mma Arith/Gt.ma Arith/Lt.ma Coq.ma Logic/Classical_Type.ma Sets/Classical_sets.ma Sets/Constructive_sets.ma Sets/Finite_sets.ma Sets/Powerset.ma Sets/Powerset_Classical_facts.ma Sets/Powerset_facts.ma
+Arith/Div2.mma Arith/Compare_dec.ma Arith/Even.ma Arith/Lt.ma Arith/Plus.ma Coq.ma
+Init/Notations.mma Coq.ma
+Sorting/Permutation.ma Sorting/Permutation.mma
+Arith/Bool_nat.mma Arith/Compare_dec.ma Arith/Peano_dec.ma Bool/Sumbool.ma Coq.ma
+Arith/Min.ma Arith/Min.mma
+IntMap/Mapfold.mma Bool/Bool.ma Bool/Sumbool.ma Coq.ma IntMap/Addec.ma IntMap/Addr.ma IntMap/Adist.ma IntMap/Fset.ma IntMap/Lsort.ma IntMap/Map.ma IntMap/Mapaxioms.ma IntMap/Mapiter.ma IntMap/Mapsubset.ma Lists/List.ma ZArith/ZArith.ma
+Logic/RelationalChoice.ma Logic/RelationalChoice.mma
+Reals/ArithProp.ma Reals/ArithProp.mma
+Reals/Rprod.mma Arith/Compare.ma Coq.ma Reals/Binomial.ma Reals/PartSum.ma Reals/Rbase.ma Reals/Rfunctions.ma Reals/Rseries.ma
+Sets/Constructive_sets.ma Sets/Constructive_sets.mma
+Sets/Constructive_sets.mma Coq.ma Sets/Ensembles.ma
+Logic/Diaconescu.mma Bool/Bool.ma Coq.ma Logic/ChoiceFacts.ma Logic/ClassicalFacts.ma
+Reals/Rbase.mma Coq.ma Reals/DiscrR.ma Reals/RIneq.ma Reals/Raxioms.ma Reals/Rdefinitions.ma
+Sets/Powerset_facts.ma Sets/Powerset_facts.mma
+IntMap/Adist.mma Arith/Arith.ma Arith/Min.ma Bool/Bool.ma Coq.ma IntMap/Addr.ma ZArith/ZArith.ma
+NArith/BinPos.mma Coq.ma Init/Prelude.ma
+Lists/Streams.ma Lists/Streams.mma
+NArith/NArith.ma NArith/NArith.mma
+Relations/Newman.ma Relations/Newman.mma
+Reals/SplitRmult.ma Reals/SplitRmult.mma
+Arith/Arith.mma Arith/Between.ma Arith/Compare_dec.ma Arith/Factorial.ma Arith/Gt.ma Arith/Le.ma Arith/Lt.ma Arith/Minus.ma Arith/Mult.ma Arith/Peano_dec.ma Arith/Plus.ma Coq.ma
+Reals/Ranalysis4.ma Reals/Ranalysis4.mma
+Reals/Rbase.ma Reals/Rbase.mma
+Arith/Lt.ma Arith/Lt.mma
+Arith/Gt.ma Arith/Gt.mma
+Bool/Bool.ma Bool/Bool.mma
+Bool/Zerob.ma Bool/Zerob.mma
+ZArith/Znumtheory.mma Coq.ma ZArith/ZArith_base.ma ZArith/Zcomplements.ma ZArith/Zdiv.ma
+Arith/Factorial.ma Arith/Factorial.mma
+IntMap/Map.mma Bool/Bool.ma Bool/Sumbool.ma Coq.ma IntMap/Addec.ma IntMap/Addr.ma IntMap/Adist.ma ZArith/ZArith.ma
+Reals/Rfunctions.ma Reals/Rfunctions.mma
+ZArith/Zmisc.ma ZArith/Zmisc.mma
+ZArith/BinInt.ma ZArith/BinInt.mma
+ZArith/Zcompare.ma ZArith/Zcompare.mma
+Reals/Sqrt_reg.ma Reals/Sqrt_reg.mma
+Reals/SeqSeries.ma Reals/SeqSeries.mma
+IntMap/Mapc.mma Arith/Arith.ma Bool/Bool.ma Bool/Sumbool.ma Coq.ma IntMap/Addec.ma IntMap/Addr.ma IntMap/Adist.ma IntMap/Fset.ma IntMap/Lsort.ma IntMap/Map.ma IntMap/Mapaxioms.ma IntMap/Mapcanon.ma IntMap/Mapcard.ma IntMap/Mapiter.ma IntMap/Mapsubset.ma Lists/List.ma ZArith/ZArith.ma
+Bool/Bvector.ma Bool/Bvector.mma
+Reals/Exp_prop.mma Arith/Div2.ma Arith/Even.ma Arith/Max.ma Coq.ma Reals/PSeries_reg.ma Reals/Ranalysis1.ma Reals/Rbase.ma Reals/Rfunctions.ma Reals/Rtrigo.ma Reals/SeqSeries.ma
+ZArith/Zlogarithm.mma Coq.ma ZArith/ZArith_base.ma ZArith/Zcomplements.ma ZArith/Zpower.ma
+Reals/Reals.ma Reals/Reals.mma
+Arith/Mult.ma Arith/Mult.mma
+ZArith/Wf_Z.ma ZArith/Wf_Z.mma
+Arith/Div.mma Arith/Compare_dec.ma Arith/Le.ma Coq.ma
+Arith/EqNat.mma Coq.ma Init/Prelude.ma
+Bool/DecBool.mma Coq.ma Init/Prelude.ma
+Arith/Minus.ma Arith/Minus.mma
+ZArith/Zbool.mma Bool/Sumbool.ma Coq.ma ZArith/BinInt.ma ZArith/ZArith_dec.ma ZArith/Zcompare.ma ZArith/Zeven.ma ZArith/Zorder.ma
+NArith/BinNat.mma Coq.ma NArith/BinPos.ma
+Logic/Classical_Type.mma Coq.ma Logic/Classical_Pred_Type.ma Logic/Classical_Prop.ma
+Wellfounded/Transitive_Closure.mma Coq.ma Relations/Relation_Definitions.ma Relations/Relation_Operators.ma
+Logic/Eqdep.mma Coq.ma Init/Prelude.ma
+Reals/Rtrigo_reg.ma Reals/Rtrigo_reg.mma
+Init/Specif.mma Coq.ma Init/Datatypes.ma Init/Logic.ma Init/Notations.ma
+Sets/Infinite_sets.mma Arith/Gt.ma Arith/Le.ma Arith/Lt.ma Coq.ma Logic/Classical_Type.ma Sets/Classical_sets.ma Sets/Constructive_sets.ma Sets/Finite_sets.ma Sets/Finite_sets_facts.ma Sets/Image.ma Sets/Powerset.ma Sets/Powerset_Classical_facts.ma Sets/Powerset_facts.ma
+Sets/Relations_1_facts.ma Sets/Relations_1_facts.mma
+Arith/Div2.ma Arith/Div2.mma
+Wellfounded/Lexicographic_Product.ma Wellfounded/Lexicographic_Product.mma
+Init/Peano.mma Coq.ma Init/Datatypes.ma Init/Logic.ma Init/Notations.ma
+Logic/Berardi.ma Logic/Berardi.mma
+Init/Datatypes.ma Init/Datatypes.mma
+Reals/SplitRmult.mma Coq.ma Reals/Rbase.ma
+Sets/Relations_2.ma Sets/Relations_2.mma
+Reals/RList.ma Reals/RList.mma
+Arith/Max.mma Arith/Arith.ma Coq.ma
+preamble.ma 
+ZArith/Zorder.ma ZArith/Zorder.mma
+Sets/Image.ma Sets/Image.mma
+NArith/BinPos.ma NArith/BinPos.mma
+ZArith/Zcomplements.ma ZArith/Zcomplements.mma
+Reals/Rtrigo_def.mma Arith/Max.ma Coq.ma Reals/Rbase.ma Reals/Rfunctions.ma Reals/Rtrigo_fun.ma Reals/SeqSeries.ma
+Reals/PSeries_reg.mma Arith/Even.ma Arith/Max.ma Coq.ma Reals/Ranalysis1.ma Reals/Rbase.ma Reals/Rfunctions.ma Reals/SeqSeries.ma
+NArith/NArith.mma Coq.ma NArith/BinNat.ma NArith/BinPos.ma
+NArith/BinNat.ma NArith/BinNat.mma
+ZArith/ZArith_dec.mma Bool/Sumbool.ma Coq.ma ZArith/BinInt.ma ZArith/Zcompare.ma ZArith/Zorder.ma
+Relations/Relation_Definitions.mma Coq.ma Init/Prelude.ma
+Sorting/Sorting.ma Sorting/Sorting.mma
+Sets/Image.mma Arith/Gt.ma Arith/Le.ma Arith/Lt.ma Coq.ma Logic/Classical_Type.ma Sets/Classical_sets.ma Sets/Constructive_sets.ma Sets/Finite_sets.ma Sets/Finite_sets_facts.ma Sets/Powerset.ma Sets/Powerset_Classical_facts.ma Sets/Powerset_facts.ma
+Reals/Rlimit.mma Coq.ma Logic/Classical_Prop.ma Reals/Rbase.ma Reals/Rfunctions.ma
+Bool/IfProp.ma Bool/IfProp.mma
+Reals/NewtonInt.ma Reals/NewtonInt.mma
+Reals/Rtrigo_def.ma Reals/Rtrigo_def.mma
+IntMap/Adalloc.mma Arith/Arith.ma Bool/Bool.ma Bool/Sumbool.ma Coq.ma IntMap/Addec.ma IntMap/Addr.ma IntMap/Adist.ma IntMap/Fset.ma IntMap/Map.ma ZArith/ZArith.ma
+Reals/Rgeom.ma Reals/Rgeom.mma
+Bool/Sumbool.mma Coq.ma Init/Prelude.ma
+Arith/Compare_dec.mma Arith/Gt.ma Arith/Le.ma Arith/Lt.ma Coq.ma Logic/Decidable.ma
+Sorting/Permutation.mma Coq.ma Lists/List.ma Relations/Relations.ma Sets/Multiset.ma
+Sets/Classical_sets.mma Coq.ma Logic/Classical_Type.ma Sets/Constructive_sets.ma Sets/Ensembles.ma
+IntMap/Maplists.ma IntMap/Maplists.mma
+Arith/Bool_nat.ma Arith/Bool_nat.mma
+Logic/JMeq.ma Logic/JMeq.mma
+Reals/DiscrR.mma Coq.ma Reals/RIneq.ma
+IntMap/Mapc.ma IntMap/Mapc.mma
+IntMap/Maplists.mma Arith/Arith.ma Bool/Bool.ma Bool/Sumbool.ma Coq.ma IntMap/Addec.ma IntMap/Addr.ma IntMap/Fset.ma IntMap/Map.ma IntMap/Mapaxioms.ma IntMap/Mapc.ma IntMap/Mapcanon.ma IntMap/Mapcard.ma IntMap/Mapfold.ma IntMap/Mapiter.ma IntMap/Mapsubset.ma Lists/List.ma
+Sets/Relations_3.mma Coq.ma Sets/Relations_1.ma Sets/Relations_2.ma
+Arith/Peano_dec.ma Arith/Peano_dec.mma
+IntMap/Mapaxioms.ma IntMap/Mapaxioms.mma
+Reals/Binomial.ma Reals/Binomial.mma
+Logic/Eqdep_dec.ma Logic/Eqdep_dec.mma
+Init/Datatypes.mma Coq.ma Init/Logic.ma Init/Notations.ma
+Wellfounded/Inclusion.mma Coq.ma Relations/Relation_Definitions.ma
+Sets/Infinite_sets.ma Sets/Infinite_sets.mma
+Sets/Multiset.mma Arith/Plus.ma Coq.ma Sets/Permut.ma
+Logic/Classical.ma Logic/Classical.mma
+IntMap/Mapaxioms.mma Bool/Bool.ma Bool/Sumbool.ma Coq.ma IntMap/Addec.ma IntMap/Addr.ma IntMap/Adist.ma IntMap/Fset.ma IntMap/Map.ma ZArith/ZArith.ma
+IntMap/Mapiter.ma IntMap/Mapiter.mma
+Reals/SplitAbsolu.ma Reals/SplitAbsolu.mma
+Reals/Ranalysis3.ma Reals/Ranalysis3.mma
+Logic/ChoiceFacts.mma Coq.ma Init/Prelude.ma
+Reals/Ranalysis3.mma Coq.ma Reals/Ranalysis1.ma Reals/Ranalysis2.ma Reals/Rbase.ma Reals/Rfunctions.ma
+Arith/Lt.mma Arith/Le.ma Coq.ma
+Reals/Rpower.mma Coq.ma Reals/Exp_prop.ma Reals/MVT.ma Reals/R_sqrt.ma Reals/Ranalysis1.ma Reals/Ranalysis4.ma Reals/Rbase.ma Reals/Rfunctions.ma Reals/Rsqrt_def.ma Reals/Rtrigo.ma Reals/SeqSeries.ma
+Reals/Rderiv.ma Reals/Rderiv.mma
+Reals/Cos_plus.ma Reals/Cos_plus.mma
+Reals/MVT.ma Reals/MVT.mma
+Reals/SeqProp.ma Reals/SeqProp.mma
+Arith/Le.mma Coq.ma Init/Prelude.ma
+ZArith/auxiliary.ma ZArith/auxiliary.mma
+Sets/Powerset.mma Coq.ma Sets/Cpo.ma Sets/Ensembles.ma Sets/Partial_Order.ma Sets/Relations_1.ma Sets/Relations_1_facts.ma
+Reals/SeqSeries.mma Arith/Max.ma Coq.ma Reals/Alembert.ma Reals/AltSeries.ma Reals/Binomial.ma Reals/Cauchy_prod.ma Reals/PartSum.ma Reals/Rbase.ma Reals/Rcomplete.ma Reals/Rfunctions.ma Reals/Rprod.ma Reals/Rseries.ma Reals/Rsigma.ma Reals/SeqProp.ma
+Reals/RiemannInt.ma Reals/RiemannInt.mma
+IntMap/Mapfold.ma IntMap/Mapfold.mma
+Wellfounded/Lexicographic_Product.mma Coq.ma Logic/Eqdep.ma Relations/Relation_Operators.ma Wellfounded/Transitive_Closure.ma
+Sets/Integers.ma Sets/Integers.mma
+Logic/Berardi.mma Coq.ma Init/Prelude.ma
+IntMap/Mapcard.ma IntMap/Mapcard.mma
+ZArith/Zlogarithm.ma ZArith/Zlogarithm.mma
+ZArith/Zhints.mma Coq.ma ZArith/BinInt.ma ZArith/Wf_Z.ma ZArith/Zabs.ma ZArith/Zcompare.ma ZArith/Zmin.ma ZArith/Zmisc.ma ZArith/Znat.ma ZArith/Zorder.ma ZArith/auxiliary.ma
+Reals/Cauchy_prod.mma Coq.ma Reals/PartSum.ma Reals/Rbase.ma Reals/Rfunctions.ma Reals/Rseries.ma
+Lists/MonoList.ma Lists/MonoList.mma
+Reals/Integration.mma Coq.ma Reals/NewtonInt.ma Reals/RiemannInt.ma Reals/RiemannInt_SF.ma
+Sets/Permut.mma Coq.ma Init/Prelude.ma
+Reals/Rtrigo_calc.ma Reals/Rtrigo_calc.mma
+Reals/DiscrR.ma Reals/DiscrR.mma
+Sets/Relations_2_facts.mma Coq.ma Sets/Relations_1.ma Sets/Relations_1_facts.ma Sets/Relations_2.ma
+Bool/Zerob.mma Arith/Arith.ma Bool/Bool.ma Coq.ma
+ZArith/Znumtheory.ma ZArith/Znumtheory.mma
+Reals/R_sqr.ma Reals/R_sqr.mma
+ZArith/Zdiv.ma ZArith/Zdiv.mma
+Relations/Relations.mma Coq.ma Relations/Operators_Properties.ma Relations/Relation_Definitions.ma Relations/Relation_Operators.ma
+IntMap/Mapcard.mma Arith/Arith.ma Arith/Peano_dec.ma Bool/Bool.ma Bool/Sumbool.ma Coq.ma IntMap/Addec.ma IntMap/Addr.ma IntMap/Adist.ma IntMap/Fset.ma IntMap/Lsort.ma IntMap/Map.ma IntMap/Mapaxioms.ma IntMap/Mapiter.ma IntMap/Mapsubset.ma Lists/List.ma ZArith/ZArith.ma
+Reals/Rtrigo.mma Coq.ma Logic/Classical_Prop.ma Reals/Cos_plus.ma Reals/Cos_rel.ma Reals/Rbase.ma Reals/Rfunctions.ma Reals/Rtrigo_alt.ma Reals/Rtrigo_def.ma Reals/Rtrigo_fun.ma Reals/SeqSeries.ma ZArith/ZArith_base.ma ZArith/Zcomplements.ma
+Arith/Factorial.mma Arith/Lt.ma Arith/Mult.ma Arith/Plus.ma Coq.ma
+Sorting/Heap.mma Coq.ma Lists/List.ma Relations/Relations.ma Sets/Multiset.ma Sorting/Permutation.ma Sorting/Sorting.ma
+Sets/Cpo.mma Coq.ma Sets/Ensembles.ma Sets/Partial_Order.ma Sets/Relations_1.ma
+Reals/Sqrt_reg.mma Coq.ma Reals/R_sqrt.ma Reals/Ranalysis1.ma Reals/Rbase.ma Reals/Rfunctions.ma
+Init/Logic_Type.mma Coq.ma Init/Datatypes.ma Init/Logic.ma
+Relations/Relation_Operators.ma Relations/Relation_Operators.mma
+Arith/Plus.mma Arith/Le.ma Arith/Lt.ma Coq.ma
+Arith/Gt.mma Arith/Le.ma Arith/Lt.ma Arith/Plus.ma Coq.ma
+Init/Specif.ma Init/Specif.mma
+Relations/Newman.mma Coq.ma Relations/Rstar.ma
+IntMap/Lsort.mma Arith/Arith.ma Bool/Bool.ma Bool/Sumbool.ma Coq.ma IntMap/Addec.ma IntMap/Addr.ma IntMap/Adist.ma IntMap/Map.ma IntMap/Mapiter.ma Lists/List.ma ZArith/ZArith.ma
+Arith/Mult.mma Arith/Le.ma Arith/Lt.ma Arith/Minus.ma Arith/Plus.ma Coq.ma
+Arith/Max.ma Arith/Max.mma
+Sets/Relations_1.ma Sets/Relations_1.mma
+Reals/RList.mma Coq.ma Reals/Rbase.ma Reals/Rfunctions.ma
+Reals/Rpower.ma Reals/Rpower.mma
+ZArith/Zdiv.mma Coq.ma ZArith/ZArith_base.ma ZArith/Zbool.ma ZArith/Zcomplements.ma
+Reals/RiemannInt_SF.mma Coq.ma Logic/Classical_Prop.ma Reals/Ranalysis.ma Reals/Rbase.ma Reals/Rfunctions.ma
+IntMap/Addr.ma IntMap/Addr.mma
+Arith/Compare_dec.ma Arith/Compare_dec.mma
+Lists/TheoryList.mma Arith/Le.ma Arith/Lt.ma Arith/Minus.ma Bool/DecBool.ma Coq.ma Lists/List.ma
+Reals/RiemannInt_SF.ma Reals/RiemannInt_SF.mma
+Logic/Classical_Type.ma Logic/Classical_Type.mma
+Arith/Euclid.ma Arith/Euclid.mma
+Reals/Rcomplete.mma Arith/Max.ma Coq.ma Reals/Rbase.ma Reals/Rfunctions.ma Reals/Rseries.ma Reals/SeqProp.ma
+Logic/ClassicalChoice.ma Logic/ClassicalChoice.mma
+Reals/NewtonInt.mma Coq.ma Reals/Ranalysis.ma Reals/Rbase.ma Reals/Rfunctions.ma Reals/Rtrigo.ma Reals/SeqSeries.ma
+NArith/Pnat.mma Arith/Gt.ma Arith/Le.ma Arith/Lt.ma Arith/Minus.ma Arith/Mult.ma Arith/Plus.ma Coq.ma NArith/BinPos.ma
+Sets/Relations_3_facts.ma Sets/Relations_3_facts.mma
+Reals/MVT.mma Coq.ma Reals/Ranalysis1.ma Reals/Rbase.ma Reals/Rfunctions.ma Reals/Rtopology.ma
+Sets/Relations_1.mma Coq.ma Init/Prelude.ma
+IntMap/Fset.ma IntMap/Fset.mma
+Logic/JMeq.mma Coq.ma Logic/Eqdep.ma
+ZArith/Zsqrt.mma Coq.ma ZArith/ZArith_base.ma
+Wellfounded/Lexicographic_Exponentiation.ma Wellfounded/Lexicographic_Exponentiation.mma
+Reals/Rlimit.ma Reals/Rlimit.mma
+Reals/Rtrigo_calc.mma Coq.ma Reals/R_sqrt.ma Reals/Rbase.ma Reals/Rfunctions.ma Reals/Rtrigo.ma Reals/SeqSeries.ma
+IntMap/Addec.mma Bool/Bool.ma Bool/Sumbool.ma Coq.ma IntMap/Addr.ma ZArith/ZArith.ma
+Bool/Bvector.mma Arith/Arith.ma Bool/Bool.ma Bool/Sumbool.ma Coq.ma
+ZArith/Zhints.ma ZArith/Zhints.mma
+Relations/Rstar.ma Relations/Rstar.mma
+Relations/Relation_Operators.mma Coq.ma Lists/List.ma Relations/Relation_Definitions.ma
+Reals/Cauchy_prod.ma Reals/Cauchy_prod.mma
+IntMap/Lsort.ma IntMap/Lsort.mma
+IntMap/Fset.mma Bool/Bool.ma Bool/Sumbool.ma Coq.ma IntMap/Addec.ma IntMap/Addr.ma IntMap/Adist.ma IntMap/Map.ma ZArith/ZArith.ma
+ZArith/Wf_Z.mma Arith/Wf_nat.ma Coq.ma ZArith/BinInt.ma ZArith/Zcompare.ma ZArith/Zmisc.ma ZArith/Znat.ma ZArith/Zorder.ma
+Reals/Ranalysis.mma Coq.ma Reals/Exp_prop.ma Reals/MVT.ma Reals/PSeries_reg.ma Reals/RList.ma Reals/R_sqrt.ma Reals/Ranalysis1.ma Reals/Ranalysis2.ma Reals/Ranalysis3.ma Reals/Ranalysis4.ma Reals/Rbase.ma Reals/Rfunctions.ma Reals/Rgeom.ma Reals/Rpower.ma Reals/Rsqrt_def.ma Reals/Rtopology.ma Reals/Rtrigo.ma Reals/Rtrigo_calc.ma Reals/Rtrigo_reg.ma Reals/SeqSeries.ma Reals/Sqrt_reg.ma
+Arith/Even.ma Arith/Even.mma
+Reals/Cos_rel.mma Coq.ma Reals/Rbase.ma Reals/Rfunctions.ma Reals/Rtrigo_def.ma Reals/SeqSeries.ma
+ZArith/Znat.ma ZArith/Znat.mma
+Logic/ClassicalChoice.mma Coq.ma Logic/ChoiceFacts.ma Logic/ClassicalDescription.ma Logic/RelationalChoice.ma
+IntMap/Addec.ma IntMap/Addec.mma
+ZArith/Zbinary.mma Bool/Bvector.ma Coq.ma ZArith/ZArith.ma ZArith/Zpower.ma
+Wellfounded/Well_Ordering.mma Coq.ma Logic/Eqdep.ma
+IntMap/Addr.mma Bool/Bool.ma Coq.ma ZArith/ZArith.ma
+Sets/Partial_Order.ma Sets/Partial_Order.mma
+Reals/AltSeries.mma Arith/Max.ma Coq.ma Reals/PartSum.ma Reals/Rbase.ma Reals/Rfunctions.ma Reals/Rseries.ma Reals/SeqProp.ma
+Reals/Ranalysis1.mma Coq.ma Reals/Rbase.ma Reals/Rderiv.ma Reals/Rfunctions.ma Reals/Rlimit.ma
+Logic/Diaconescu.ma Logic/Diaconescu.mma
+ZArith/Zmisc.mma Bool/Bool.ma Coq.ma ZArith/BinInt.ma ZArith/Zcompare.ma ZArith/Zorder.ma
+NArith/Pnat.ma NArith/Pnat.mma
+Reals/Rtrigo.ma Reals/Rtrigo.mma
+Reals/ArithProp.mma Arith/Div2.ma Arith/Even.ma Coq.ma Reals/Rbase.ma Reals/Rbasic_fun.ma
+Reals/Ranalysis2.ma Reals/Ranalysis2.mma
+Arith/Wf_nat.mma Arith/Lt.ma Coq.ma
+Logic/Eqdep_dec.mma Coq.ma Init/Prelude.ma
+Reals/Rcomplete.ma Reals/Rcomplete.mma
+Sets/Ensembles.ma Sets/Ensembles.mma
+Logic/Decidable.mma Coq.ma Init/Prelude.ma
+ZArith/Zabs.ma ZArith/Zabs.mma
+ZArith/Zmin.ma ZArith/Zmin.mma
+Sets/Powerset_Classical_facts.mma Coq.ma Logic/Classical_Type.ma Sets/Classical_sets.ma Sets/Constructive_sets.ma Sets/Cpo.ma Sets/Ensembles.ma Sets/Partial_Order.ma Sets/Powerset.ma Sets/Powerset_facts.ma Sets/Relations_1.ma Sets/Relations_1_facts.ma
+Sets/Integers.mma Arith/Compare_dec.ma Arith/Gt.ma Arith/Le.ma Arith/Lt.ma Coq.ma Logic/Classical_Type.ma Sets/Classical_sets.ma Sets/Constructive_sets.ma Sets/Cpo.ma Sets/Finite_sets.ma Sets/Finite_sets_facts.ma Sets/Image.ma Sets/Infinite_sets.ma Sets/Partial_Order.ma Sets/Powerset.ma Sets/Powerset_Classical_facts.ma Sets/Powerset_facts.ma Sets/Relations_1.ma
+Init/Logic.ma Init/Logic.mma
+Sets/Classical_sets.ma Sets/Classical_sets.mma
+Sets/Finite_sets.mma Coq.ma Sets/Constructive_sets.ma Sets/Ensembles.ma
+ZArith/Zbinary.ma ZArith/Zbinary.mma
+Arith/Arith.ma Arith/Arith.mma
+Logic/ClassicalDescription.ma Logic/ClassicalDescription.mma
+Lists/Streams.mma Coq.ma Init/Prelude.ma
+Reals/SeqProp.mma Arith/Max.ma Coq.ma Logic/Classical.ma Reals/Rbase.ma Reals/Rfunctions.ma Reals/Rseries.ma
+Reals/RIneq.mma Coq.ma Reals/Raxioms.ma
+ZArith/ZArith.mma Coq.ma ZArith/ZArith_base.ma ZArith/Zcomplements.ma ZArith/Zdiv.ma ZArith/Zlogarithm.ma ZArith/Zpower.ma ZArith/Zsqrt.ma
+Sorting/Heap.ma Sorting/Heap.mma
+Sets/Cpo.ma Sets/Cpo.mma
+Relations/Rstar.mma Coq.ma Init/Prelude.ma
+Reals/Reals.mma Coq.ma Reals/Integration.ma Reals/Ranalysis.ma Reals/Rbase.ma Reals/Rfunctions.ma Reals/Rtrigo.ma Reals/SeqSeries.ma
+IntMap/Mapcanon.mma Arith/Arith.ma Bool/Bool.ma Bool/Sumbool.ma Coq.ma IntMap/Addec.ma IntMap/Addr.ma IntMap/Adist.ma IntMap/Fset.ma IntMap/Lsort.ma IntMap/Map.ma IntMap/Mapaxioms.ma IntMap/Mapcard.ma IntMap/Mapiter.ma IntMap/Mapsubset.ma Lists/List.ma ZArith/ZArith.ma
+Bool/Sumbool.ma Bool/Sumbool.mma
+Wellfounded/Wellfounded.mma Coq.ma Wellfounded/Disjoint_Union.ma Wellfounded/Inclusion.ma Wellfounded/Inverse_Image.ma Wellfounded/Lexicographic_Exponentiation.ma Wellfounded/Lexicographic_Product.ma Wellfounded/Transitive_Closure.ma Wellfounded/Union.ma Wellfounded/Well_Ordering.ma
+ZArith/Zcomplements.mma Arith/Wf_nat.ma Coq.ma Lists/List.ma ZArith/ZArith_base.ma
+Logic/Classical_Pred_Type.ma Logic/Classical_Pred_Type.mma
+Reals/Rtrigo_alt.mma Coq.ma Reals/Rbase.ma Reals/Rfunctions.ma Reals/Rtrigo_def.ma Reals/SeqSeries.ma

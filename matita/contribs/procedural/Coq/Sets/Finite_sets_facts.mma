@@ -1,0 +1,152 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*#***************************************************************************)
+
+(*                                                                          *)
+
+(*                         Naive Set Theory in Coq                          *)
+
+(*                                                                          *)
+
+(*                     INRIA                        INRIA                   *)
+
+(*              Rocquencourt                        Sophia-Antipolis        *)
+
+(*                                                                          *)
+
+(*                                 Coq V6.1                                 *)
+
+(*									    *)
+
+(*			         Gilles Kahn 				    *)
+
+(*				 Gerard Huet				    *)
+
+(*									    *)
+
+(*									    *)
+
+(*                                                                          *)
+
+(* Acknowledgments: This work was started in July 1993 by F. Prost. Thanks  *)
+
+(* to the Newton Institute for providing an exceptional work environment    *)
+
+(* in Summer 1995. Several developments by E. Ledinot were an inspiration.  *)
+
+(*#***************************************************************************)
+
+(*i $Id: Finite_sets_facts.v,v 1.7.2.1 2004/07/16 19:31:17 herbelin Exp $ i*)
+
+include "Sets/Finite_sets.ma".
+
+include "Sets/Constructive_sets.ma".
+
+include "Logic/Classical_Type.ma".
+
+include "Sets/Classical_sets.ma".
+
+include "Sets/Powerset.ma".
+
+include "Sets/Powerset_facts.ma".
+
+include "Sets/Powerset_Classical_facts.ma".
+
+include "Arith/Gt.ma".
+
+include "Arith/Lt.ma".
+
+(* UNEXPORTED
+Section Finite_sets_facts
+*)
+
+(* UNEXPORTED
+cic:/Coq/Sets/Finite_sets_facts/Finite_sets_facts/U.var
+*)
+
+inline procedural "cic:/Coq/Sets/Finite_sets_facts/finite_cardinal.con" as lemma.
+
+inline procedural "cic:/Coq/Sets/Finite_sets_facts/cardinal_finite.con" as lemma.
+
+inline procedural "cic:/Coq/Sets/Finite_sets_facts/Add_preserves_Finite.con" as theorem.
+
+(* UNEXPORTED
+Hint Resolve Add_preserves_Finite.
+*)
+
+inline procedural "cic:/Coq/Sets/Finite_sets_facts/Singleton_is_finite.con" as theorem.
+
+(* UNEXPORTED
+Hint Resolve Singleton_is_finite.
+*)
+
+inline procedural "cic:/Coq/Sets/Finite_sets_facts/Union_preserves_Finite.con" as theorem.
+
+inline procedural "cic:/Coq/Sets/Finite_sets_facts/Finite_downward_closed.con" as lemma.
+
+inline procedural "cic:/Coq/Sets/Finite_sets_facts/Intersection_preserves_finite.con" as lemma.
+
+inline procedural "cic:/Coq/Sets/Finite_sets_facts/cardinalO_empty.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve cardinalO_empty.
+*)
+
+inline procedural "cic:/Coq/Sets/Finite_sets_facts/inh_card_gt_O.con" as lemma.
+
+inline procedural "cic:/Coq/Sets/Finite_sets_facts/card_soustr_1.con" as lemma.
+
+inline procedural "cic:/Coq/Sets/Finite_sets_facts/cardinal_is_functional.con" as lemma.
+
+inline procedural "cic:/Coq/Sets/Finite_sets_facts/cardinal_Empty.con" as lemma.
+
+inline procedural "cic:/Coq/Sets/Finite_sets_facts/cardinal_unicity.con" as lemma.
+
+inline procedural "cic:/Coq/Sets/Finite_sets_facts/card_Add_gen.con" as lemma.
+
+inline procedural "cic:/Coq/Sets/Finite_sets_facts/incl_st_card_lt.con" as lemma.
+
+inline procedural "cic:/Coq/Sets/Finite_sets_facts/incl_card_le.con" as lemma.
+
+inline procedural "cic:/Coq/Sets/Finite_sets_facts/G_aux.con" as lemma.
+
+(* UNEXPORTED
+Hint Unfold not.
+*)
+
+inline procedural "cic:/Coq/Sets/Finite_sets_facts/Generalized_induction_on_finite_sets.con" as lemma.
+
+(* UNEXPORTED
+End Finite_sets_facts
+*)
+

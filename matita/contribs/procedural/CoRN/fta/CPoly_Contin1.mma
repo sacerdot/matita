@@ -1,0 +1,60 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "CoRN.ma".
+
+(* $Id: CPoly_Contin1.v,v 1.3 2004/04/23 10:00:56 lcf Exp $ *)
+
+include "fta/CC_Props.ma".
+
+(*#* * Continuity of complex polynomials
+*)
+
+(* UNEXPORTED
+Section Mult_CC_Continuous
+*)
+
+inline procedural "cic:/CoRN/fta/CPoly_Contin1/mult_absCC.con" as lemma.
+
+inline procedural "cic:/CoRN/fta/CPoly_Contin1/estimate_absCC.con" as lemma.
+
+inline procedural "cic:/CoRN/fta/CPoly_Contin1/mult_CC_contin.con" as lemma.
+
+(* UNEXPORTED
+End Mult_CC_Continuous
+*)
+
+(* UNEXPORTED
+Section CPoly_CC_Continuous
+*)
+
+(*#*
+%\begin{convention}% Let [g] be a polynomial over the complex numbers.
+%\end{convention}%
+*)
+
+(* UNEXPORTED
+cic:/CoRN/fta/CPoly_Contin1/CPoly_CC_Continuous/g.var
+*)
+
+inline procedural "cic:/CoRN/fta/CPoly_Contin1/cpoly_CC_contin.con" as lemma.
+
+inline procedural "cic:/CoRN/fta/CPoly_Contin1/contin_polyCC.con" as lemma.
+
+(* UNEXPORTED
+End CPoly_CC_Continuous
+*)
+

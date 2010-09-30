@@ -1,0 +1,86 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Compare_dec.v,v 1.13.2.1 2004/07/16 19:31:00 herbelin Exp $ i*)
+
+include "Arith/Le.ma".
+
+include "Arith/Lt.ma".
+
+include "Arith/Gt.ma".
+
+include "Logic/Decidable.ma".
+
+(* UNEXPORTED
+Open Local Scope nat_scope.
+*)
+
+(* UNEXPORTED
+Implicit Types m n x y : nat.
+*)
+
+inline procedural "cic:/Coq/Arith/Compare_dec/zerop.con" as definition.
+
+inline procedural "cic:/Coq/Arith/Compare_dec/lt_eq_lt_dec.con" as definition.
+
+inline procedural "cic:/Coq/Arith/Compare_dec/gt_eq_gt_dec.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Compare_dec/le_lt_dec.con" as lemma.
+
+inline procedural "cic:/Coq/Arith/Compare_dec/le_le_S_dec.con" as definition.
+
+inline procedural "cic:/Coq/Arith/Compare_dec/le_ge_dec.con" as definition.
+
+inline procedural "cic:/Coq/Arith/Compare_dec/le_gt_dec.con" as definition.
+
+inline procedural "cic:/Coq/Arith/Compare_dec/le_lt_eq_dec.con" as definition.
+
+(*#* Proofs of decidability *)
+
+inline procedural "cic:/Coq/Arith/Compare_dec/dec_le.con" as theorem.
+
+inline procedural "cic:/Coq/Arith/Compare_dec/dec_lt.con" as theorem.
+
+inline procedural "cic:/Coq/Arith/Compare_dec/dec_gt.con" as theorem.
+
+inline procedural "cic:/Coq/Arith/Compare_dec/dec_ge.con" as theorem.
+
+inline procedural "cic:/Coq/Arith/Compare_dec/not_eq.con" as theorem.
+
+inline procedural "cic:/Coq/Arith/Compare_dec/not_le.con" as theorem.
+
+inline procedural "cic:/Coq/Arith/Compare_dec/not_gt.con" as theorem.
+
+inline procedural "cic:/Coq/Arith/Compare_dec/not_ge.con" as theorem.
+
+inline procedural "cic:/Coq/Arith/Compare_dec/not_lt.con" as theorem.
+

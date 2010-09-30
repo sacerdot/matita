@@ -1,0 +1,194 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: RiemannInt_SF.v,v 1.16.2.1 2004/07/16 19:31:13 herbelin Exp $ i*)
+
+include "Reals/Rbase.ma".
+
+include "Reals/Rfunctions.ma".
+
+include "Reals/Ranalysis.ma".
+
+include "Logic/Classical_Prop.ma".
+
+(* UNEXPORTED
+Open Local Scope R_scope.
+*)
+
+(* UNEXPORTED
+Set Implicit Arguments.
+*)
+
+(*#*************************************************)
+
+(* Each bounded subset of N has a maximal element *)
+
+(*#*************************************************)
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/Nbound.con" as definition.
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/IZN_var.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/Nzorn.con" as lemma.
+
+(*#******************************************)
+
+(*             Step functions              *)
+
+(*#******************************************)
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/open_interval.con" as definition.
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/co_interval.con" as definition.
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/adapted_couple.con" as definition.
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/adapted_couple_opt.con" as definition.
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/is_subdivision.con" as definition.
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/IsStepFun.con" as definition.
+
+(* Class of step functions *)
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/StepFun.ind".
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/subdivision.con" as definition.
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/subdivision_val.con" as definition.
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/Int_SF.con" as definition.
+
+(* Integral of step functions *)
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/RiemannInt_SF.con" as definition.
+
+(*#*******************************)
+
+(* Properties of step functions *)
+
+(*#*******************************)
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/StepFun_P1.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/StepFun_P2.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/StepFun_P3.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/StepFun_P4.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/StepFun_P5.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/StepFun_P6.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/StepFun_P7.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/StepFun_P8.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/StepFun_P9.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/StepFun_P10.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/StepFun_P11.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/StepFun_P12.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/StepFun_P13.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/StepFun_P14.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/StepFun_P15.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/StepFun_P16.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/StepFun_P17.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/StepFun_P18.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/StepFun_P19.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/StepFun_P20.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/StepFun_P21.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/StepFun_P22.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/StepFun_P23.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/StepFun_P24.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/StepFun_P25.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/StepFun_P26.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/StepFun_P27.con" as lemma.
+
+(* The set of step functions on [a,b] is a vectorial space *)
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/StepFun_P28.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/StepFun_P29.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/StepFun_P30.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/StepFun_P31.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/StepFun_P32.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/StepFun_P33.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/StepFun_P34.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/StepFun_P35.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/StepFun_P36.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/StepFun_P37.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/StepFun_P38.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/StepFun_P39.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/StepFun_P40.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/StepFun_P41.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/StepFun_P42.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/StepFun_P43.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/StepFun_P44.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/StepFun_P45.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/RiemannInt_SF/StepFun_P46.con" as lemma.
+

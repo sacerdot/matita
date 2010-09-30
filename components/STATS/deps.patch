@@ -1,0 +1,23 @@
+--- .clustersdep.dot	2006-01-26 10:10:46.000000000 +0100
++++ .clustersdep.new	2006-01-26 10:10:44.000000000 +0100
+@@ -1,11 +1,8 @@
+ digraph G {
+   xml [label="xml\n.5 klocs"];
+-  xmldiff [label="xmldiff\n.3 klocs"];
+   whelp [label="whelp\n.3 klocs"];
+   utf8_macros [label="utf8_macros\n.2 klocs"];
+   urimanager [label="urimanager\n.2 klocs"];
+-  thread [label="thread\n.2 klocs"];
+-  paramodulation [label="paramodulation\n5.9 klocs"];
+   tactics [label="tactics\n10.0 klocs"];
+   registry [label="registry\n.6 klocs"];
+   metadata [label="metadata\n1.9 klocs"];
+@@ -42,7 +39,7 @@
+ "cic_unification" -> "library";
+ "library" -> "metadata";
+ "library" -> "cic_acic";
+-"metadata" -> "cic_proof_checking";
++"metadata" -> "cic";
+ "metadata" -> "hmysql";
+ "grafite" -> "cic";
+ "content_pres" -> "utf8_macros";

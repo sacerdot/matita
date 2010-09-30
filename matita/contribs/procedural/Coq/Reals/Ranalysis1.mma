@@ -1,0 +1,405 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Ranalysis1.v,v 1.21.2.1 2004/07/16 19:31:12 herbelin Exp $ i*)
+
+include "Reals/Rbase.ma".
+
+include "Reals/Rfunctions.ma".
+
+include "Reals/Rlimit.ma".
+
+include "Reals/Rderiv.ma".
+
+(* UNEXPORTED
+Open Local Scope R_scope.
+*)
+
+(* UNEXPORTED
+Implicit Type f : R -> R.
+*)
+
+(*#***************************************************)
+
+(*#*           Basic operations on functions         *)
+
+(*#***************************************************)
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/plus_fct.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/opp_fct.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/mult_fct.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/mult_real_fct.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/minus_fct.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/div_fct.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/div_real_fct.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/comp.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/inv_fct.con" as definition.
+
+(* NOTATION
+Infix "+" := plus_fct : Rfun_scope.
+*)
+
+(* NOTATION
+Notation "- x" := (opp_fct x) : Rfun_scope.
+*)
+
+(* NOTATION
+Infix "*" := mult_fct : Rfun_scope.
+*)
+
+(* NOTATION
+Infix "-" := minus_fct : Rfun_scope.
+*)
+
+(* NOTATION
+Infix "/" := div_fct : Rfun_scope.
+*)
+
+(* NOTATION
+Notation Local "f1 'o' f2" := (comp f1 f2)
+  (at level 20, right associativity) : Rfun_scope.
+*)
+
+(* NOTATION
+Notation "/ x" := (inv_fct x) : Rfun_scope.
+*)
+
+(* UNEXPORTED
+Delimit Scope Rfun_scope with F.
+*)
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/fct_cte.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/id.con" as definition.
+
+(*#***************************************************)
+
+(*#*            Variations of functions              *)
+
+(*#***************************************************)
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/increasing.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/decreasing.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/strict_increasing.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/strict_decreasing.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/constant.con" as definition.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/no_cond.con" as definition.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/constant_D_eq.con" as definition.
+
+(*#**************************************************)
+
+(*#*      Definition of continuity as a limit       *)
+
+(*#**************************************************)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/continuity_pt.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/continuity.con" as definition.
+
+(* UNEXPORTED
+Arguments Scope continuity_pt [Rfun_scope R_scope].
+*)
+
+(* UNEXPORTED
+Arguments Scope continuity [Rfun_scope].
+*)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/continuity_pt_plus.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/continuity_pt_opp.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/continuity_pt_minus.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/continuity_pt_mult.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/continuity_pt_const.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/continuity_pt_scal.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/continuity_pt_inv.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/div_eq_inv.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/continuity_pt_div.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/continuity_pt_comp.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/continuity_plus.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/continuity_opp.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/continuity_minus.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/continuity_mult.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/continuity_const.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/continuity_scal.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/continuity_inv.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/continuity_div.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/continuity_comp.con" as lemma.
+
+(*#****************************************************)
+
+(*#*  Derivative's definition using Landau's kernel   *)
+
+(*#****************************************************)
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derivable_pt_lim.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derivable_pt_abs.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derivable_pt.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derivable.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derive_pt.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derive.con" as definition.
+
+(* UNEXPORTED
+Arguments Scope derivable_pt_lim [Rfun_scope R_scope].
+*)
+
+(* UNEXPORTED
+Arguments Scope derivable_pt_abs [Rfun_scope R_scope R_scope].
+*)
+
+(* UNEXPORTED
+Arguments Scope derivable_pt [Rfun_scope R_scope].
+*)
+
+(* UNEXPORTED
+Arguments Scope derivable [Rfun_scope].
+*)
+
+(* UNEXPORTED
+Arguments Scope derive_pt [Rfun_scope R_scope _].
+*)
+
+(* UNEXPORTED
+Arguments Scope derive [Rfun_scope _].
+*)
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/antiderivative.con" as definition.
+
+(*#***********************************)
+
+(*#* Class of differential functions *)
+
+(*#***********************************)
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/Differential.ind".
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/Differential_D2.ind".
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/uniqueness_step1.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/uniqueness_step2.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/uniqueness_step3.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/uniqueness_limite.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derive_pt_eq.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derive_pt_eq_0.con" as lemma.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derive_pt_eq_1.con" as lemma.
+
+(*#*******************************************************************)
+
+(*#* Equivalence of this definition with the one using limit concept *)
+
+(*#*******************************************************************)
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derive_pt_D_in.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derivable_pt_lim_D_in.con" as lemma.
+
+(*#**********************************)
+
+(*#*   derivability -> continuity   *)
+
+(*#**********************************)
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derivable_derive.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derivable_continuous_pt.con" as theorem.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derivable_continuous.con" as theorem.
+
+(*#***************************************************************)
+
+(*#*                      Main rules                             *)
+
+(*#***************************************************************)
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derivable_pt_lim_plus.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derivable_pt_lim_opp.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derivable_pt_lim_minus.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derivable_pt_lim_mult.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derivable_pt_lim_const.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derivable_pt_lim_scal.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derivable_pt_lim_id.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derivable_pt_lim_Rsqr.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derivable_pt_lim_comp.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derivable_pt_plus.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derivable_pt_opp.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derivable_pt_minus.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derivable_pt_mult.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derivable_pt_const.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derivable_pt_scal.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derivable_pt_id.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derivable_pt_Rsqr.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derivable_pt_comp.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derivable_plus.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derivable_opp.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derivable_minus.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derivable_mult.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derivable_const.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derivable_scal.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derivable_id.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derivable_Rsqr.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derivable_comp.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derive_pt_plus.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derive_pt_opp.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derive_pt_minus.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derive_pt_mult.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derive_pt_const.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derive_pt_scal.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derive_pt_id.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derive_pt_Rsqr.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derive_pt_comp.con" as lemma.
+
+(* Pow *)
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/pow_fct.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derivable_pt_lim_pow_pos.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derivable_pt_lim_pow.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derivable_pt_pow.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derivable_pow.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/derive_pt_pow.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/pr_nu.con" as lemma.
+
+(*#***********************************************************)
+
+(*#*             Local extremum's condition                  *)
+
+(*#***********************************************************)
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/deriv_maximum.con" as theorem.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/deriv_minimum.con" as theorem.
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/deriv_constant2.con" as theorem.
+
+(*#*********)
+
+inline procedural "cic:/Coq/Reals/Ranalysis1/nonneg_derivative_0.con" as lemma.
+

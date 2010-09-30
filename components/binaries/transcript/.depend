@@ -1,0 +1,24 @@
+gallina8Parser.cmi: types.cmo 
+grafiteParser.cmi: types.cmo 
+grafite.cmi: types.cmo 
+engine.cmi: 
+types.cmo: 
+types.cmx: 
+options.cmo: 
+options.cmx: 
+gallina8Parser.cmo: types.cmo options.cmo gallina8Parser.cmi 
+gallina8Parser.cmx: types.cmx options.cmx gallina8Parser.cmi 
+gallina8Lexer.cmo: options.cmo gallina8Parser.cmi 
+gallina8Lexer.cmx: options.cmx gallina8Parser.cmx 
+grafiteParser.cmo: types.cmo options.cmo grafiteParser.cmi 
+grafiteParser.cmx: types.cmx options.cmx grafiteParser.cmi 
+grafiteLexer.cmo: options.cmo grafiteParser.cmi 
+grafiteLexer.cmx: options.cmx grafiteParser.cmx 
+grafite.cmo: types.cmo options.cmo grafite.cmi 
+grafite.cmx: types.cmx options.cmx grafite.cmi 
+engine.cmo: types.cmo options.cmo grafiteParser.cmi grafiteLexer.cmo \
+    grafite.cmi gallina8Parser.cmi gallina8Lexer.cmo engine.cmi 
+engine.cmx: types.cmx options.cmx grafiteParser.cmx grafiteLexer.cmx \
+    grafite.cmx gallina8Parser.cmx gallina8Lexer.cmx engine.cmi 
+top.cmo: options.cmo engine.cmi 
+top.cmx: options.cmx engine.cmx 

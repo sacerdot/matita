@@ -1,0 +1,152 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Rtrigo_calc.v,v 1.15.2.1 2004/07/16 19:31:14 herbelin Exp $ i*)
+
+include "Reals/Rbase.ma".
+
+include "Reals/Rfunctions.ma".
+
+include "Reals/SeqSeries.ma".
+
+include "Reals/Rtrigo.ma".
+
+include "Reals/R_sqrt.ma".
+
+(* UNEXPORTED
+Open Local Scope R_scope.
+*)
+
+inline procedural "cic:/Coq/Reals/Rtrigo_calc/tan_PI.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtrigo_calc/sin_3PI2.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtrigo_calc/tan_2PI.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtrigo_calc/sin_cos_PI4.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtrigo_calc/sin_PI3_cos_PI6.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtrigo_calc/sin_PI6_cos_PI3.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtrigo_calc/PI6_RGT_0.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtrigo_calc/PI6_RLT_PI2.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtrigo_calc/sin_PI6.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtrigo_calc/sqrt2_neq_0.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtrigo_calc/R1_sqrt2_neq_0.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtrigo_calc/sqrt3_2_neq_0.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtrigo_calc/Rlt_sqrt2_0.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtrigo_calc/Rlt_sqrt3_0.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtrigo_calc/PI4_RGT_0.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtrigo_calc/cos_PI4.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtrigo_calc/sin_PI4.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtrigo_calc/tan_PI4.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtrigo_calc/cos3PI4.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtrigo_calc/sin3PI4.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtrigo_calc/cos_PI6.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtrigo_calc/tan_PI6.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtrigo_calc/sin_PI3.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtrigo_calc/cos_PI3.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtrigo_calc/tan_PI3.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtrigo_calc/sin_2PI3.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtrigo_calc/cos_2PI3.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtrigo_calc/tan_2PI3.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtrigo_calc/cos_5PI4.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtrigo_calc/sin_5PI4.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtrigo_calc/sin_cos5PI4.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtrigo_calc/Rgt_3PI2_0.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtrigo_calc/Rgt_2PI_0.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtrigo_calc/Rlt_PI_3PI2.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtrigo_calc/Rlt_3PI2_2PI.con" as lemma.
+
+(*#**************************************************************)
+
+(* Radian -> Degree | Degree -> Radian                         *)
+
+(*#**************************************************************)
+
+inline procedural "cic:/Coq/Reals/Rtrigo_calc/plat.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Rtrigo_calc/toRad.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Rtrigo_calc/toDeg.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Rtrigo_calc/rad_deg.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtrigo_calc/toRad_inj.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtrigo_calc/deg_rad.con" as lemma.
+
+inline procedural "cic:/Coq/Reals/Rtrigo_calc/sind.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Rtrigo_calc/cosd.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Rtrigo_calc/tand.con" as definition.
+
+inline procedural "cic:/Coq/Reals/Rtrigo_calc/Rsqr_sin_cos_d_one.con" as lemma.
+
+(*#**************************************************)
+
+(*                Other properties                 *)
+
+(*#**************************************************)
+
+inline procedural "cic:/Coq/Reals/Rtrigo_calc/sin_lb_ge_0.con" as lemma.
+

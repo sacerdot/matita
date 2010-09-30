@@ -1,0 +1,384 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+include "Init/Prelude.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: BinPos.v,v 1.7.2.1 2004/07/16 19:31:07 herbelin Exp $ i*)
+
+(*#*********************************************************************)
+
+(*#* Binary positive numbers *)
+
+(*#* Original development by Pierre Cr\233\gut, CNET, Lannion, France *)
+
+inline procedural "cic:/Coq/NArith/BinPos/positive.ind".
+
+(*#* Declare binding key for scope positive_scope *)
+
+(* UNEXPORTED
+Delimit Scope positive_scope with positive.
+*)
+
+(*#* Automatically open scope positive_scope for type positive, xO and xI *)
+
+(* UNEXPORTED
+Bind Scope positive_scope with positive.
+*)
+
+(* UNEXPORTED
+Arguments Scope xO [positive_scope].
+*)
+
+(* UNEXPORTED
+Arguments Scope xI [positive_scope].
+*)
+
+(*#* Successor *)
+
+inline procedural "cic:/Coq/NArith/BinPos/Psucc.con" as definition.
+
+(*#* Addition *)
+
+inline procedural "cic:/Coq/NArith/BinPos/Pplus.con" as definition.
+
+(* NOTATION
+Infix "+" := Pplus : positive_scope.
+*)
+
+(* UNEXPORTED
+Open Local Scope positive_scope.
+*)
+
+(*#* From binary positive numbers to Peano natural numbers *)
+
+inline procedural "cic:/Coq/NArith/BinPos/Pmult_nat.con" as definition.
+
+inline procedural "cic:/Coq/NArith/BinPos/nat_of_P.con" as definition.
+
+(*#* From Peano natural numbers to binary positive numbers *)
+
+inline procedural "cic:/Coq/NArith/BinPos/P_of_succ_nat.con" as definition.
+
+(*#* Operation x -> 2*x-1 *)
+
+inline procedural "cic:/Coq/NArith/BinPos/Pdouble_minus_one.con" as definition.
+
+(*#* Predecessor *)
+
+inline procedural "cic:/Coq/NArith/BinPos/Ppred.con" as definition.
+
+(*#* An auxiliary type for subtraction *)
+
+inline procedural "cic:/Coq/NArith/BinPos/positive_mask.ind".
+
+(*#* Operation x -> 2*x+1 *)
+
+inline procedural "cic:/Coq/NArith/BinPos/Pdouble_plus_one_mask.con" as definition.
+
+(*#* Operation x -> 2*x *)
+
+inline procedural "cic:/Coq/NArith/BinPos/Pdouble_mask.con" as definition.
+
+(*#* Operation x -> 2*x-2 *)
+
+inline procedural "cic:/Coq/NArith/BinPos/Pdouble_minus_two.con" as definition.
+
+(*#* Subtraction of binary positive numbers into a positive numbers mask *)
+
+inline procedural "cic:/Coq/NArith/BinPos/Pminus_mask.con" as definition.
+
+(*#* Subtraction of binary positive numbers x and y, returns 1 if x<=y *)
+
+inline procedural "cic:/Coq/NArith/BinPos/Pminus.con" as definition.
+
+(* NOTATION
+Infix "-" := Pminus : positive_scope.
+*)
+
+(*#* Multiplication on binary positive numbers *)
+
+inline procedural "cic:/Coq/NArith/BinPos/Pmult.con" as definition.
+
+(* NOTATION
+Infix "*" := Pmult : positive_scope.
+*)
+
+(*#* Division by 2 rounded below but for 1 *)
+
+inline procedural "cic:/Coq/NArith/BinPos/Pdiv2.con" as definition.
+
+(* NOTATION
+Infix "/" := Pdiv2 : positive_scope.
+*)
+
+(*#* Comparison on binary positive numbers *)
+
+inline procedural "cic:/Coq/NArith/BinPos/Pcompare.con" as definition.
+
+(* NOTATION
+Infix "?=" := Pcompare (at level 70, no associativity) : positive_scope.
+*)
+
+(*#*********************************************************************)
+
+(*#* Miscellaneous properties of binary positive numbers *)
+
+inline procedural "cic:/Coq/NArith/BinPos/ZL11.con" as lemma.
+
+(*#*********************************************************************)
+
+(*#* Properties of successor on binary positive numbers *)
+
+(*#* Specification of [xI] in term of [Psucc] and [xO] *)
+
+inline procedural "cic:/Coq/NArith/BinPos/xI_succ_xO.con" as lemma.
+
+inline procedural "cic:/Coq/NArith/BinPos/Psucc_discr.con" as lemma.
+
+(*#* Successor and double *)
+
+inline procedural "cic:/Coq/NArith/BinPos/Psucc_o_double_minus_one_eq_xO.con" as lemma.
+
+inline procedural "cic:/Coq/NArith/BinPos/Pdouble_minus_one_o_succ_eq_xI.con" as lemma.
+
+inline procedural "cic:/Coq/NArith/BinPos/xO_succ_permute.con" as lemma.
+
+inline procedural "cic:/Coq/NArith/BinPos/double_moins_un_xO_discr.con" as lemma.
+
+(*#* Successor and predecessor *)
+
+inline procedural "cic:/Coq/NArith/BinPos/Psucc_not_one.con" as lemma.
+
+inline procedural "cic:/Coq/NArith/BinPos/Ppred_succ.con" as lemma.
+
+inline procedural "cic:/Coq/NArith/BinPos/Psucc_pred.con" as lemma.
+
+(*#* Injectivity of successor *)
+
+inline procedural "cic:/Coq/NArith/BinPos/Psucc_inj.con" as lemma.
+
+(*#*********************************************************************)
+
+(*#* Properties of addition on binary positive numbers *)
+
+(*#* Specification of [Psucc] in term of [Pplus] *)
+
+inline procedural "cic:/Coq/NArith/BinPos/Pplus_one_succ_r.con" as lemma.
+
+inline procedural "cic:/Coq/NArith/BinPos/Pplus_one_succ_l.con" as lemma.
+
+(*#* Specification of [Pplus_carry] *)
+
+inline procedural "cic:/Coq/NArith/BinPos/Pplus_carry_spec.con" as theorem.
+
+(*#* Commutativity *)
+
+inline procedural "cic:/Coq/NArith/BinPos/Pplus_comm.con" as theorem.
+
+(*#* Permutation of [Pplus] and [Psucc] *)
+
+inline procedural "cic:/Coq/NArith/BinPos/Pplus_succ_permute_r.con" as theorem.
+
+inline procedural "cic:/Coq/NArith/BinPos/Pplus_succ_permute_l.con" as theorem.
+
+inline procedural "cic:/Coq/NArith/BinPos/Pplus_carry_pred_eq_plus.con" as theorem.
+
+(*#* No neutral for addition on strictly positive numbers *)
+
+inline procedural "cic:/Coq/NArith/BinPos/Pplus_no_neutral.con" as lemma.
+
+inline procedural "cic:/Coq/NArith/BinPos/Pplus_carry_no_neutral.con" as lemma.
+
+(*#* Simplification *)
+
+inline procedural "cic:/Coq/NArith/BinPos/Pplus_carry_plus.con" as lemma.
+
+inline procedural "cic:/Coq/NArith/BinPos/Pplus_reg_r.con" as lemma.
+
+inline procedural "cic:/Coq/NArith/BinPos/Pplus_reg_l.con" as lemma.
+
+inline procedural "cic:/Coq/NArith/BinPos/Pplus_carry_reg_r.con" as lemma.
+
+inline procedural "cic:/Coq/NArith/BinPos/Pplus_carry_reg_l.con" as lemma.
+
+(*#* Addition on positive is associative *)
+
+inline procedural "cic:/Coq/NArith/BinPos/Pplus_assoc.con" as theorem.
+
+(*#* Commutation of addition with the double of a positive number *)
+
+inline procedural "cic:/Coq/NArith/BinPos/Pplus_xI_double_minus_one.con" as lemma.
+
+inline procedural "cic:/Coq/NArith/BinPos/Pplus_xO_double_minus_one.con" as lemma.
+
+(*#* Misc *)
+
+inline procedural "cic:/Coq/NArith/BinPos/Pplus_diag.con" as lemma.
+
+(*#*********************************************************************)
+
+(*#* Peano induction on binary positive positive numbers *)
+
+inline procedural "cic:/Coq/NArith/BinPos/plus_iter.con" as definition.
+
+inline procedural "cic:/Coq/NArith/BinPos/plus_iter_eq_plus.con" as lemma.
+
+inline procedural "cic:/Coq/NArith/BinPos/plus_iter_xO.con" as lemma.
+
+inline procedural "cic:/Coq/NArith/BinPos/plus_iter_xI.con" as lemma.
+
+inline procedural "cic:/Coq/NArith/BinPos/iterate_add.con" as lemma.
+
+(*#* Peano induction *)
+
+inline procedural "cic:/Coq/NArith/BinPos/Pind.con" as theorem.
+
+(*#* Peano recursion *)
+
+inline procedural "cic:/Coq/NArith/BinPos/Prec.con" as definition.
+
+(*#* Peano case analysis *)
+
+inline procedural "cic:/Coq/NArith/BinPos/Pcase.con" as theorem.
+
+(*
+Check
+  (let fact := Prec positive xH (fun p r => Psucc p * r) in
+   let seven := xI (xI xH) in
+   let five_thousand_forty :=
+     xO (xO (xO (xO (xI (xI (xO (xI (xI (xI (xO (xO xH))))))))))) in
+   refl_equal _:fact seven = five_thousand_forty).
+*)
+
+(*#*********************************************************************)
+
+(*#* Properties of multiplication on binary positive numbers *)
+
+(*#* One is right neutral for multiplication *)
+
+inline procedural "cic:/Coq/NArith/BinPos/Pmult_1_r.con" as lemma.
+
+(*#* Right reduction properties for multiplication *)
+
+inline procedural "cic:/Coq/NArith/BinPos/Pmult_xO_permute_r.con" as lemma.
+
+inline procedural "cic:/Coq/NArith/BinPos/Pmult_xI_permute_r.con" as lemma.
+
+(*#* Commutativity of multiplication *)
+
+inline procedural "cic:/Coq/NArith/BinPos/Pmult_comm.con" as theorem.
+
+(*#* Distributivity of multiplication over addition *)
+
+inline procedural "cic:/Coq/NArith/BinPos/Pmult_plus_distr_l.con" as theorem.
+
+inline procedural "cic:/Coq/NArith/BinPos/Pmult_plus_distr_r.con" as theorem.
+
+(*#* Associativity of multiplication *)
+
+inline procedural "cic:/Coq/NArith/BinPos/Pmult_assoc.con" as theorem.
+
+(*#* Parity properties of multiplication *)
+
+inline procedural "cic:/Coq/NArith/BinPos/Pmult_xI_mult_xO_discr.con" as lemma.
+
+inline procedural "cic:/Coq/NArith/BinPos/Pmult_xO_discr.con" as lemma.
+
+(*#* Simplification properties of multiplication *)
+
+inline procedural "cic:/Coq/NArith/BinPos/Pmult_reg_r.con" as theorem.
+
+inline procedural "cic:/Coq/NArith/BinPos/Pmult_reg_l.con" as theorem.
+
+(*#* Inversion of multiplication *)
+
+inline procedural "cic:/Coq/NArith/BinPos/Pmult_1_inversion_l.con" as lemma.
+
+(*#*********************************************************************)
+
+(*#* Properties of comparison on binary positive numbers *)
+
+inline procedural "cic:/Coq/NArith/BinPos/Pcompare_not_Eq.con" as theorem.
+
+inline procedural "cic:/Coq/NArith/BinPos/Pcompare_Eq_eq.con" as theorem.
+
+inline procedural "cic:/Coq/NArith/BinPos/Pcompare_Gt_Lt.con" as lemma.
+
+inline procedural "cic:/Coq/NArith/BinPos/Pcompare_Lt_Gt.con" as lemma.
+
+inline procedural "cic:/Coq/NArith/BinPos/Pcompare_Lt_Lt.con" as lemma.
+
+inline procedural "cic:/Coq/NArith/BinPos/Pcompare_Gt_Gt.con" as lemma.
+
+inline procedural "cic:/Coq/NArith/BinPos/Dcompare.con" as lemma.
+
+(* UNEXPORTED
+Ltac ElimPcompare c1 c2 :=
+  elim (Dcompare ((c1 ?= c2) Eq));
+   [ idtac | let x := fresh "H" in
+             (intro x; case x; clear x) ].
+*)
+
+inline procedural "cic:/Coq/NArith/BinPos/Pcompare_refl.con" as theorem.
+
+inline procedural "cic:/Coq/NArith/BinPos/Pcompare_antisym.con" as lemma.
+
+inline procedural "cic:/Coq/NArith/BinPos/ZC1.con" as lemma.
+
+inline procedural "cic:/Coq/NArith/BinPos/ZC2.con" as lemma.
+
+inline procedural "cic:/Coq/NArith/BinPos/ZC3.con" as lemma.
+
+inline procedural "cic:/Coq/NArith/BinPos/ZC4.con" as lemma.
+
+(*#*********************************************************************)
+
+(*#* Properties of subtraction on binary positive numbers *)
+
+inline procedural "cic:/Coq/NArith/BinPos/double_eq_zero_inversion.con" as lemma.
+
+inline procedural "cic:/Coq/NArith/BinPos/double_plus_one_zero_discr.con" as lemma.
+
+inline procedural "cic:/Coq/NArith/BinPos/double_plus_one_eq_one_inversion.con" as lemma.
+
+inline procedural "cic:/Coq/NArith/BinPos/double_eq_one_discr.con" as lemma.
+
+inline procedural "cic:/Coq/NArith/BinPos/Pminus_mask_diag.con" as theorem.
+
+inline procedural "cic:/Coq/NArith/BinPos/ZL10.con" as lemma.
+
+(*#* Properties of subtraction valid only for x>y *)
+
+inline procedural "cic:/Coq/NArith/BinPos/Pminus_mask_Gt.con" as lemma.
+
+inline procedural "cic:/Coq/NArith/BinPos/Pplus_minus.con" as theorem.
+

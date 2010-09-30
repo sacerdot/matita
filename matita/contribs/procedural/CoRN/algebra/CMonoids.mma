@@ -1,0 +1,185 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "CoRN.ma".
+
+(* $Id: CMonoids.v,v 1.3 2004/04/07 15:07:57 lcf Exp $ *)
+
+(*#* printing Zero %\ensuremath{\mathbf0}% #0# *)
+
+include "algebra/CSemiGroups.ma".
+
+(* Begin_SpecReals *)
+
+(*#*
+* Monoids %\label{section:monoids}%
+** Definition of monoids
+*)
+
+inline procedural "cic:/CoRN/algebra/CMonoids/is_rht_unit.con" as definition.
+
+(* End_SpecReals *)
+
+inline procedural "cic:/CoRN/algebra/CMonoids/is_lft_unit.con" as definition.
+
+(* UNEXPORTED
+Implicit Arguments is_lft_unit [S].
+*)
+
+(* Begin_SpecReals *)
+
+(* UNEXPORTED
+Implicit Arguments is_rht_unit [S].
+*)
+
+inline procedural "cic:/CoRN/algebra/CMonoids/is_CMonoid.ind".
+
+inline procedural "cic:/CoRN/algebra/CMonoids/CMonoid.ind".
+
+(* COERCION
+cic:/matita/CoRN-Procedural/algebra/CMonoids/cm_crr.con
+*)
+
+(*#*
+%\begin{nameconvention}%
+In the names of lemmas, we will denote [Zero] with [zero].
+We denote [ [#] Zero] in the names of lemmas by [ap_zero]
+(and not, e.g.%\% [nonzero]).
+%\end{nameconvention}%
+*)
+
+(* Begin_SpecReals *)
+
+(*#*
+The predicate "non-zero" is defined.
+In lemmas we will continue to write [x [#] Zero], rather than
+[(nonZeroP x)], but the predicate is useful for some high-level definitions,
+e.g. for the setoid of non-zeros.
+*)
+
+(* NOTATION
+Notation Zero := (cm_unit _).
+*)
+
+inline procedural "cic:/CoRN/algebra/CMonoids/nonZeroP.con" as definition.
+
+(* End_SpecReals *)
+
+(* UNEXPORTED
+Implicit Arguments nonZeroP [M].
+*)
+
+(*#*
+** Monoid axioms
+%\begin{convention}% Let [M] be a monoid.
+%\end{convention}%
+*)
+
+(* UNEXPORTED
+Section CMonoid_axioms
+*)
+
+(* UNEXPORTED
+cic:/CoRN/algebra/CMonoids/CMonoid_axioms/M.var
+*)
+
+inline procedural "cic:/CoRN/algebra/CMonoids/CMonoid_is_CMonoid.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CMonoids/cm_rht_unit.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CMonoids/cm_lft_unit.con" as lemma.
+
+(* UNEXPORTED
+End CMonoid_axioms
+*)
+
+(*#*
+** Monoid basics
+%\begin{convention}% Let [M] be a monoid.
+%\end{convention}%
+*)
+
+(* UNEXPORTED
+Section CMonoid_basics
+*)
+
+(* UNEXPORTED
+cic:/CoRN/algebra/CMonoids/CMonoid_basics/M.var
+*)
+
+inline procedural "cic:/CoRN/algebra/CMonoids/cm_rht_unit_unfolded.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CMonoids/cm_lft_unit_unfolded.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve cm_rht_unit_unfolded cm_lft_unit_unfolded: algebra.
+*)
+
+inline procedural "cic:/CoRN/algebra/CMonoids/cm_unit_unique_lft.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CMonoids/cm_unit_unique_rht.con" as lemma.
+
+(* Begin_SpecReals *)
+
+(*#*
+The proof component of the monoid is irrelevant.
+*)
+
+inline procedural "cic:/CoRN/algebra/CMonoids/is_CMonoid_proof_irr.con" as lemma.
+
+(* End_SpecReals *)
+
+(*#*
+** Submonoids
+%\begin{convention}%
+Let [P] a predicate on [M] containing [Zero] and closed under [[+]].
+%\end{convention}%
+*)
+
+(* UNEXPORTED
+Section SubCMonoids
+*)
+
+(* UNEXPORTED
+cic:/CoRN/algebra/CMonoids/CMonoid_basics/SubCMonoids/P.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/algebra/CMonoids/CMonoid_basics/SubCMonoids/Punit.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/algebra/CMonoids/CMonoid_basics/SubCMonoids/op_pres_P.var
+*)
+
+inline procedural "cic:/CoRN/algebra/CMonoids/CMonoid_basics/SubCMonoids/subcrr.con" "CMonoid_basics__SubCMonoids__" as definition.
+
+inline procedural "cic:/CoRN/algebra/CMonoids/ismon_scrr.con" as lemma.
+
+inline procedural "cic:/CoRN/algebra/CMonoids/Build_SubCMonoid.con" as definition.
+
+(* UNEXPORTED
+End SubCMonoids
+*)
+
+(* UNEXPORTED
+End CMonoid_basics
+*)
+
+(* UNEXPORTED
+Hint Resolve cm_rht_unit_unfolded cm_lft_unit_unfolded: algebra.
+*)
+

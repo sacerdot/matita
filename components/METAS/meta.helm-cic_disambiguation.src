@@ -1,0 +1,4 @@
+requires="helm-whelp helm-acic_content helm-cic_unification helm-disambiguation"
+version="0.0.1"
+archive(byte)="cic_disambiguation.cma"
+archive(native)="cic_disambiguation.cmxa"

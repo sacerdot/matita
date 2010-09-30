@@ -1,0 +1,124 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+include "Init/Prelude.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $Id: Le.v,v 1.14.2.1 2004/07/16 19:31:00 herbelin Exp $ i*)
+
+(*#* Order on natural numbers *)
+
+(* UNEXPORTED
+Open Local Scope nat_scope.
+*)
+
+(* UNEXPORTED
+Implicit Types m n p : nat.
+*)
+
+(*#* Reflexivity *)
+
+inline procedural "cic:/Coq/Arith/Le/le_refl.con" as theorem.
+
+(*#* Transitivity *)
+
+inline procedural "cic:/Coq/Arith/Le/le_trans.con" as theorem.
+
+(* UNEXPORTED
+Hint Resolve le_trans: arith v62.
+*)
+
+(*#* Order, successor and predecessor *)
+
+inline procedural "cic:/Coq/Arith/Le/le_n_S.con" as theorem.
+
+inline procedural "cic:/Coq/Arith/Le/le_n_Sn.con" as theorem.
+
+inline procedural "cic:/Coq/Arith/Le/le_O_n.con" as theorem.
+
+(* UNEXPORTED
+Hint Resolve le_n_S le_n_Sn le_O_n le_n_S: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/Le/le_pred_n.con" as theorem.
+
+(* UNEXPORTED
+Hint Resolve le_pred_n: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/Le/le_Sn_le.con" as theorem.
+
+(* UNEXPORTED
+Hint Immediate le_Sn_le: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/Le/le_S_n.con" as theorem.
+
+(* UNEXPORTED
+Hint Immediate le_S_n: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/Le/le_pred.con" as theorem.
+
+(*#* Comparison to 0 *)
+
+inline procedural "cic:/Coq/Arith/Le/le_Sn_O.con" as theorem.
+
+(* UNEXPORTED
+Hint Resolve le_Sn_O: arith v62.
+*)
+
+inline procedural "cic:/Coq/Arith/Le/le_n_O_eq.con" as theorem.
+
+(* UNEXPORTED
+Hint Immediate le_n_O_eq: arith v62.
+*)
+
+(*#* Negative properties *)
+
+inline procedural "cic:/Coq/Arith/Le/le_Sn_n.con" as theorem.
+
+(* UNEXPORTED
+Hint Resolve le_Sn_n: arith v62.
+*)
+
+(*#* Antisymmetry *)
+
+inline procedural "cic:/Coq/Arith/Le/le_antisym.con" as theorem.
+
+(* UNEXPORTED
+Hint Immediate le_antisym: arith v62.
+*)
+
+(*#* A different elimination principle for the order on natural numbers *)
+
+inline procedural "cic:/Coq/Arith/Le/le_elim_rel.con" as lemma.
+

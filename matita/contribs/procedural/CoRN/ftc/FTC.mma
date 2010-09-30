@@ -1,0 +1,479 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "CoRN.ma".
+
+(* $Id: FTC.v,v 1.5 2004/04/23 10:00:58 lcf Exp $ *)
+
+(*#* printing [-S-] %\ensuremath{\int}% #&int;# *)
+
+include "ftc/MoreIntegrals.ma".
+
+include "ftc/CalculusTheorems.ma".
+
+(* UNEXPORTED
+Opaque Min.
+*)
+
+(* UNEXPORTED
+Section Indefinite_Integral
+*)
+
+(*#* *The Fundamental Theorem of Calculus
+
+Finally we can prove the fundamental theorem of calculus and its most
+important corollaries, which are the main tools to formalize most of
+real analysis.
+
+**Indefinite Integrals
+
+We define the indefinite integral of a function in a proper interval
+in the obvious way; we just need to state a first lemma so that the
+continuity proofs become unnecessary.
+
+%\begin{convention}% Let [I : interval], [F : PartIR] be continuous in [I]
+and [a] be a point in [I].
+%\end{convention}%
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/FTC/Indefinite_Integral/I.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/FTC/Indefinite_Integral/F.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/FTC/Indefinite_Integral/contF.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/FTC/Indefinite_Integral/a.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/FTC/Indefinite_Integral/Ha.var
+*)
+
+inline procedural "cic:/CoRN/ftc/FTC/prim_lemma.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/FTC/Fprim_strext.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/FTC/Fprim.con" as definition.
+
+(* UNEXPORTED
+End Indefinite_Integral
+*)
+
+(* UNEXPORTED
+Implicit Arguments Fprim [I F].
+*)
+
+(* NOTATION
+Notation "[-S-] F" := (Fprim F) (at level 20).
+*)
+
+(* UNEXPORTED
+Section FTC
+*)
+
+(*#* **The FTC
+
+We can now prove our main theorem.  We begin by remarking that the
+primitive function is always continuous.
+
+%\begin{convention}% Assume that [J : interval], [F : PartIR] is
+continuous in [J] and [x0] is a point in [J].  Denote by [G] the
+indefinite integral of [F] from [x0].
+%\end{convention}%
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/FTC/FTC/J.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/FTC/FTC/F.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/FTC/FTC/contF.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/FTC/FTC/x0.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/FTC/FTC/Hx0.var
+*)
+
+(* begin hide *)
+
+inline procedural "cic:/CoRN/ftc/FTC/FTC/G.con" "FTC__" as definition.
+
+(* end hide *)
+
+inline procedural "cic:/CoRN/ftc/FTC/Continuous_prim.con" as lemma.
+
+(*#*
+The derivative of [G] is simply [F].
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/FTC/FTC/pJ.var
+*)
+
+inline procedural "cic:/CoRN/ftc/FTC/FTC1.con" as theorem.
+
+(*#*
+Any other function [G0] with derivative [F] must differ from [G] by a constant.
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/FTC/FTC/G0.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/FTC/FTC/derG0.var
+*)
+
+inline procedural "cic:/CoRN/ftc/FTC/FTC2.con" as theorem.
+
+(*#*
+The following is another statement of the Fundamental Theorem of Calculus, also known as Barrow's rule.
+*)
+
+(* begin hide *)
+
+inline procedural "cic:/CoRN/ftc/FTC/FTC/G0_inc.con" "FTC__" as definition.
+
+(* end hide *)
+
+(* UNEXPORTED
+Opaque G.
+*)
+
+inline procedural "cic:/CoRN/ftc/FTC/Barrow.con" as theorem.
+
+(* end hide *)
+
+(* UNEXPORTED
+End FTC
+*)
+
+(* UNEXPORTED
+Hint Resolve Continuous_prim: continuous.
+*)
+
+(* UNEXPORTED
+Hint Resolve FTC1: derivate.
+*)
+
+(* UNEXPORTED
+Section Limit_of_Integral_Seq
+*)
+
+(*#* **Corollaries
+
+With these tools in our hand, we can prove several useful results.
+
+%\begin{convention}% From this point onwards:
+ - [J : interval];
+ - [f : nat->PartIR] is a sequence of continuous functions (in [J]);
+ - [F : PartIR] is continuous in [J].
+
+%\end{convention}%
+
+In the first place, if a sequence of continuous functions converges
+then the sequence of their primitives also converges, and the limit
+commutes with the indefinite integral.
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/J.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/f.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/F.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/contf.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/contF.var
+*)
+
+(* UNEXPORTED
+Section Compact
+*)
+
+(*#*
+We need to prove this result first for compact intervals.
+
+%\begin{convention}% Assume that [a, b, x0 : IR] with [(f n)] and [F]
+continuous in [[a,b]], $x0\in[a,b]$#x0&isin;[a,b]#; denote by
+[(g n)] and [G] the indefinite integrals respectively of [(f n)] and
+[F] with origin [x0].
+%\end{convention}%
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/Compact/a.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/Compact/b.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/Compact/Hab.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/Compact/contIf.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/Compact/contIF.var
+*)
+
+(* begin show *)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/Compact/convF.var
+*)
+
+(* end show *)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/Compact/x0.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/Compact/Hx0.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/Compact/Hx0'.var
+*)
+
+(* begin hide *)
+
+inline procedural "cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/Compact/g.con" "Limit_of_Integral_Seq__Compact__" as definition.
+
+inline procedural "cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/Compact/G.con" "Limit_of_Integral_Seq__Compact__" as definition.
+
+(* end hide *)
+
+(* begin show *)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/Compact/contg.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/Compact/contG.var
+*)
+
+(* end show *)
+
+inline procedural "cic:/CoRN/ftc/FTC/fun_lim_seq_integral.con" as lemma.
+
+(* UNEXPORTED
+End Compact
+*)
+
+(*#*
+And now we can generalize it step by step.
+*)
+
+inline procedural "cic:/CoRN/ftc/FTC/limit_of_integral.con" as lemma.
+
+inline procedural "cic:/CoRN/ftc/FTC/limit_of_Integral.con" as lemma.
+
+(* UNEXPORTED
+Section General
+*)
+
+(*#*
+Finally, with [x0, g, G] as before,
+*)
+
+(* begin show *)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/General/convF.var
+*)
+
+(* end show *)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/General/x0.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/General/Hx0.var
+*)
+
+(* begin hide *)
+
+inline procedural "cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/General/g.con" "Limit_of_Integral_Seq__General__" as definition.
+
+inline procedural "cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/General/G.con" "Limit_of_Integral_Seq__General__" as definition.
+
+(* end hide *)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/General/contg.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/FTC/Limit_of_Integral_Seq/General/contG.var
+*)
+
+inline procedural "cic:/CoRN/ftc/FTC/fun_lim_seq_integral_IR.con" as lemma.
+
+(* UNEXPORTED
+End General
+*)
+
+(* UNEXPORTED
+End Limit_of_Integral_Seq
+*)
+
+(* UNEXPORTED
+Section Limit_of_Derivative_Seq
+*)
+
+(*#*
+Similar results hold for the sequence of derivatives of a converging sequence; this time the proof is easier, as we can do it directly for any kind of interval.
+
+%\begin{convention}% Let [g] be the sequence of derivatives of [f] and [G] be the derivative of [F].
+%\end{convention}%
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/FTC/Limit_of_Derivative_Seq/J.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/FTC/Limit_of_Derivative_Seq/pJ.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/FTC/Limit_of_Derivative_Seq/f.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/FTC/Limit_of_Derivative_Seq/g.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/FTC/Limit_of_Derivative_Seq/F.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/FTC/Limit_of_Derivative_Seq/G.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/FTC/Limit_of_Derivative_Seq/contf.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/FTC/Limit_of_Derivative_Seq/contF.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/FTC/Limit_of_Derivative_Seq/convF.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/FTC/Limit_of_Derivative_Seq/contg.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/FTC/Limit_of_Derivative_Seq/contG.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/FTC/Limit_of_Derivative_Seq/convG.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/FTC/Limit_of_Derivative_Seq/derf.var
+*)
+
+inline procedural "cic:/CoRN/ftc/FTC/fun_lim_seq_derivative.con" as lemma.
+
+(* UNEXPORTED
+End Limit_of_Derivative_Seq
+*)
+
+(* UNEXPORTED
+Section Derivative_Series
+*)
+
+(*#*
+As a very important case of this result, we get a rule for deriving series.
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/FTC/Derivative_Series/J.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/FTC/Derivative_Series/pJ.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/FTC/Derivative_Series/f.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/FTC/Derivative_Series/g.var
+*)
+
+(* begin show *)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/FTC/Derivative_Series/convF.var
+*)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/FTC/Derivative_Series/convG.var
+*)
+
+(* end show *)
+
+(* UNEXPORTED
+cic:/CoRN/ftc/FTC/Derivative_Series/derF.var
+*)
+
+inline procedural "cic:/CoRN/ftc/FTC/Derivative_FSeries.con" as lemma.
+
+(* UNEXPORTED
+End Derivative_Series
+*)
+

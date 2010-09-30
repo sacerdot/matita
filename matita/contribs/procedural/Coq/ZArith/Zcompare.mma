@@ -1,0 +1,142 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*i $$ i*)
+
+include "NArith/BinPos.ma".
+
+include "ZArith/BinInt.ma".
+
+include "Arith/Lt.ma".
+
+include "Arith/Gt.ma".
+
+include "Arith/Plus.ma".
+
+include "Arith/Mult.ma".
+
+(* UNEXPORTED
+Open Local Scope Z_scope.
+*)
+
+(*#*********************************************************************)
+
+(*#* Binary Integers (Pierre Cr\233\gut, CNET, Lannion, France)            *)
+
+(*#*********************************************************************)
+
+(*#*********************************************************************)
+
+(*#* Comparison on integers *)
+
+inline procedural "cic:/Coq/ZArith/Zcompare/Zcompare_refl.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zcompare/Zcompare_Eq_eq.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zcompare/Zcompare_Eq_iff_eq.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zcompare/Zcompare_antisym.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zcompare/Zcompare_Gt_Lt_antisym.con" as lemma.
+
+(*#* Transitivity of comparison *)
+
+inline procedural "cic:/Coq/ZArith/Zcompare/Zcompare_Gt_trans.con" as lemma.
+
+(*#* Comparison and opposite *)
+
+inline procedural "cic:/Coq/ZArith/Zcompare/Zcompare_opp.con" as lemma.
+
+(* UNEXPORTED
+Hint Local Resolve Pcompare_refl.
+*)
+
+(*#* Comparison first-order specification *)
+
+inline procedural "cic:/Coq/ZArith/Zcompare/Zcompare_Gt_spec.con" as lemma.
+
+(*#* Comparison and addition *)
+
+inline procedural "cic:/Coq/ZArith/Zcompare/weaken_Zcompare_Zplus_compatible.con" as lemma.
+
+(* UNEXPORTED
+Hint Local Resolve ZC4.
+*)
+
+inline procedural "cic:/Coq/ZArith/Zcompare/weak_Zcompare_Zplus_compatible.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zcompare/Zcompare_plus_compat.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zcompare/Zplus_compare_compat.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zcompare/Zcompare_succ_Gt.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zcompare/Zcompare_Gt_not_Lt.con" as lemma.
+
+(*#* Successor and comparison *)
+
+inline procedural "cic:/Coq/ZArith/Zcompare/Zcompare_succ_compat.con" as lemma.
+
+(*#* Multiplication and comparison *)
+
+inline procedural "cic:/Coq/ZArith/Zcompare/Zcompare_mult_compat.con" as lemma.
+
+(*#* Reverting [x ?= y] to trichotomy *)
+
+inline procedural "cic:/Coq/ZArith/Zcompare/rename.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zcompare/Zcompare_elim.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zcompare/Zcompare_eq_case.con" as lemma.
+
+(*#* Decompose an egality between two [?=] relations into 3 implications *)
+
+inline procedural "cic:/Coq/ZArith/Zcompare/Zcompare_egal_dec.con" as lemma.
+
+(*#* Relating [x ?= y] to [Zle], [Zlt], [Zge] or [Zgt] *)
+
+inline procedural "cic:/Coq/ZArith/Zcompare/Zle_compare.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zcompare/Zlt_compare.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zcompare/Zge_compare.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zcompare/Zgt_compare.con" as lemma.
+
+(*#*********************************************************************)
+
+(* Other properties *)
+
+inline procedural "cic:/Coq/ZArith/Zcompare/Zmult_compare_compat_l.con" as lemma.
+
+inline procedural "cic:/Coq/ZArith/Zcompare/Zmult_compare_compat_r.con" as lemma.
+

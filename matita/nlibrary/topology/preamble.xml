@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html>
+ <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <style type="text/css">
+pre, code { 
+	font-family: monospace; 
+}
+
+p code, li code {
+	font-size: 130%;
+	border-style: dashed;
+	border-width: 1px;
+	padding-top: 0.2em;
+	padding-bottom: 0.2em;
+	padding-left: 0.3em;
+	padding-right: 0.3em;
+	line-height: 1.8em;
+	border-color: grey;
+} 
+
+pre { 
+	font-size: 120%; 
+	margin-right: 5em; 
+	margin-left: 2em; 
+}
+
+img, .img { 
+	margin-left: auto; 
+	margin-right: auto; 
+	display: block;
+}
+
+date {
+	font-size:60%;
+	text-align:right;
+	width: 100%;
+	display:block;
+}
+
+body {
+	margin-right: 3cm;
+	margin-left: 3cm;
+}
+
+
+p { text-align: justify; } 
+  </style>
+  <script type="text/javascript" src="sh_main.js"></script>
+  <script type="text/javascript" src="sh_grafite.js"></script>
+  <link type="text/css" rel="stylesheet" href="sh_gedit.css">
+  <script type="text/javascript">
+  function syntaxon(){
+    var pres=document.getElementsByTagName("pre")
+    for (i=0; i < pres.length; i++) {
+      pres[i].className="sh_grafite";
+    }
+    sh_highlightDocument();
+  }
+  </script>
+ </head>
+ <body onload="syntaxon();">

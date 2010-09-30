@@ -1,0 +1,61 @@
+BIN = ../../../
+
+DIR = $(shell basename $$PWD)
+
+H = @
+
+TRANSCRIPT = $(BIN)../components/binaries/transcript/transcript.opt
+
+LOG = log.txt
+
+MMAS = $(shell find -name "*.mma")
+MAS = $(MMAS:%.mma=%.ma)
+
+$(DIR) all:
+	$(H)$(RM) $(LOG)
+	$(H)$(BIN)matitac $(MATITAOPTIONS) 2>> $(LOG)
+$(DIR).opt opt all.opt:
+	$(H)$(RM) $(LOG)
+	$(H)$(BIN)matitac.opt $(MATITAOPTIONS) 2>> $(LOG)
+
+%.ma: 
+	$(H)$(RM) $(LOG)
+	$(H)$(BIN)matitac $(MATITAOPTIONS) $*.mma 2>> $(LOG)
+%.mo: 
+	$(H)$(RM) $(LOG)
+	$(H)$(BIN)matitac $(MATITAOPTIONS) $*.ma 2>> $(LOG)
+%.ma.opt: 
+	$(H)$(RM) $(LOG)
+	$(H)$(BIN)matitac.opt $(MATITAOPTIONS) $*.mma 2>> $(LOG)
+%.mo.opt: 
+	$(H)$(RM) $(LOG)
+	$(H)$(BIN)matitac.opt $(MATITAOPTIONS) $*.ma 2>> $(LOG)
+
+clean:
+	$(H)$(BIN)matitaclean $(MATITAOPTIONS)
+	$(H)$(RM) $(MAS)
+clean.opt:
+	$(H)$(BIN)matitaclean.opt $(MATITAOPTIONS)
+	$(H)$(RM) $(MAS)
+depend:
+	$(H)(BIN)matitadep $(MATITAOPTIONS)
+depend.opt:
+	$(H)$(BIN)matitadep.opt $(MATITAOPTIONS)
+
+ifneq ($(strip $(MAS)),)
+clean.ma:
+	$(H)$(BIN)matitaclean.opt $(MATITAOPTIONS) $(MAS)
+	$(H)$(RM) $(MAS)
+else
+clean.ma:
+	$(H)echo no files to clean
+endif
+
+mma: $(DEVEL).conf.xml clean.ma
+	$(H)$(TRANSCRIPT) $(TRANSCRIPTOPTIONS) -C $(BIN) $(DEVEL)
+
+%.ts: $(DEVEL).conf.xml
+	$(H)$(BIN)matitaclean.opt $(MATITAOPTIONS) $*.ma
+	$(H)$(RM) $*.ma
+	$(H)$(TRANSCRIPT) $(TRANSCRIPTOPTIONS) -C $(BIN) $* $(DEVEL)
+

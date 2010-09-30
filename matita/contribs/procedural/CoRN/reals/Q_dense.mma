@@ -1,0 +1,175 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "CoRN.ma".
+
+(* begin hide *)
+
+include "reals/Q_in_CReals.ma".
+
+(*#***** Opaque_algebra.v will be loaded in line 151 ******)
+
+inline procedural "cic:/CoRN/reals/Q_dense/or_not_and.con" as lemma.
+
+(* UNEXPORTED
+Section Interval_definition
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/Q_dense/Interval_definition/OF.var
+*)
+
+inline procedural "cic:/CoRN/reals/Q_dense/Interval.ind".
+
+(* COERCION
+cic:/matita/CoRN-Procedural/reals/Q_dense/pair_crr.con
+*)
+
+inline procedural "cic:/CoRN/reals/Q_dense/Length.con" as definition.
+
+(* UNEXPORTED
+End Interval_definition
+*)
+
+inline procedural "cic:/CoRN/reals/Q_dense/Rat_Interval.con" as definition.
+
+(* we have this in Q_COrdField... *)
+
+inline procedural "cic:/CoRN/reals/Q_dense/Qlt_eq_gt_dec'.con" as lemma.
+
+(*
+Lemma ex_informative_on_Q:(P:Q_as_COrdField->Prop)(Ex [q:Q_as_COrdField](P q))
+                             ->{q:Q_as_COrdField | (P q)}.
+Proof.
+ Intro.
+ Intro.
+ Apply ex_informative.
+ Assumption.
+Qed.
+*)
+
+(* UNEXPORTED
+Section COrdField_extra
+*)
+
+(* UNEXPORTED
+cic:/CoRN/reals/Q_dense/COrdField_extra/OF.var
+*)
+
+inline procedural "cic:/CoRN/reals/Q_dense/AbsSmall_pos_reflexive.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/Q_dense/AbsSmall_neg_reflexive.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/Q_dense/AbsSmall_subinterval.con" as lemma.
+
+(* UNEXPORTED
+End COrdField_extra
+*)
+
+(* UNEXPORTED
+Section Rational_sequence
+*)
+
+include "tactics/Opaque_algebra.ma".
+
+(*#*** WARNING: A file is being loaded *****)
+
+(* UNEXPORTED
+cic:/CoRN/reals/Q_dense/Rational_sequence/R1.var
+*)
+
+inline procedural "cic:/CoRN/reals/Q_dense/start_l.con" as definition.
+
+inline procedural "cic:/CoRN/reals/Q_dense/start_of_sequence2.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/Q_dense/start_r.con" as definition.
+
+inline procedural "cic:/CoRN/reals/Q_dense/start_of_sequence_property.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/Q_dense/l_less_r.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/Q_dense/shrink23.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/Q_dense/shrink13.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/Q_dense/shrink24.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/Q_dense/cotrans_analyze.con" as definition.
+
+inline procedural "cic:/CoRN/reals/Q_dense/cotrans_analyze_strong.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/Q_dense/trichotomy.con" as definition.
+
+inline procedural "cic:/CoRN/reals/Q_dense/trichotomy_strong1.con" as lemma.
+
+(* NOTATION
+Notation "( A , B )" := (pairT A B).
+*)
+
+inline procedural "cic:/CoRN/reals/Q_dense/if_cotrans.con" as definition.
+
+inline procedural "cic:/CoRN/reals/Q_dense/if_cotrans_strong.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/Q_dense/Intrvl.con" as definition.
+
+inline procedural "cic:/CoRN/reals/Q_dense/G.con" as definition.
+
+(* UNEXPORTED
+Opaque Q_as_CField.
+*)
+
+inline procedural "cic:/CoRN/reals/Q_dense/delta_Intrvl.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/Q_dense/Length_Intrvl.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/Q_dense/Intrvl_inside_l_n.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/Q_dense/Intrvl_inside_r_n.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/Q_dense/G_m_n_lower.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/Q_dense/G_m_n_upper.con" as lemma.
+
+(* UNEXPORTED
+Opaque Q_as_COrdField.
+*)
+
+inline procedural "cic:/CoRN/reals/Q_dense/a_simple_inequality.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/Q_dense/G_conversion_rate2.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/Q_dense/CS_seq_G.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/Q_dense/G_as_CauchySeq.con" as definition.
+
+inline procedural "cic:/CoRN/reals/Q_dense/CS_seq_inj_Q_G.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/Q_dense/inj_Q_G_as_CauchySeq.con" as definition.
+
+inline procedural "cic:/CoRN/reals/Q_dense/x_in_Intrvl_l.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/Q_dense/x_in_Intrvl_r.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/Q_dense/G_conversion_rate_resp_x.con" as lemma.
+
+inline procedural "cic:/CoRN/reals/Q_dense/x_is_SeqLimit_G.con" as lemma.
+
+(* UNEXPORTED
+End Rational_sequence
+*)
+
+(* end hide *)
+

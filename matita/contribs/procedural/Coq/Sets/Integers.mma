@@ -1,0 +1,158 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* This file was automatically generated: do not edit *********************)
+
+include "Coq.ma".
+
+(*#***********************************************************************)
+
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+
+(* <O___,, * CNRS-Ecole Polytechnique-INRIA Futurs-Universite Paris Sud *)
+
+(*   \VV/  **************************************************************)
+
+(*    //   *      This file is distributed under the terms of the       *)
+
+(*         *       GNU Lesser General Public License Version 2.1        *)
+
+(*#***********************************************************************)
+
+(*#***************************************************************************)
+
+(*                                                                          *)
+
+(*                         Naive Set Theory in Coq                          *)
+
+(*                                                                          *)
+
+(*                     INRIA                        INRIA                   *)
+
+(*              Rocquencourt                        Sophia-Antipolis        *)
+
+(*                                                                          *)
+
+(*                                 Coq V6.1                                 *)
+
+(*									    *)
+
+(*			         Gilles Kahn 				    *)
+
+(*				 Gerard Huet				    *)
+
+(*									    *)
+
+(*									    *)
+
+(*                                                                          *)
+
+(* Acknowledgments: This work was started in July 1993 by F. Prost. Thanks  *)
+
+(* to the Newton Institute for providing an exceptional work environment    *)
+
+(* in Summer 1995. Several developments by E. Ledinot were an inspiration.  *)
+
+(*#***************************************************************************)
+
+(*i $Id: Integers.v,v 1.6.2.1 2004/07/16 19:31:17 herbelin Exp $ i*)
+
+include "Sets/Finite_sets.ma".
+
+include "Sets/Constructive_sets.ma".
+
+include "Logic/Classical_Type.ma".
+
+include "Sets/Classical_sets.ma".
+
+include "Sets/Powerset.ma".
+
+include "Sets/Powerset_facts.ma".
+
+include "Sets/Powerset_Classical_facts.ma".
+
+include "Arith/Gt.ma".
+
+include "Arith/Lt.ma".
+
+include "Arith/Le.ma".
+
+include "Sets/Finite_sets_facts.ma".
+
+include "Sets/Image.ma".
+
+include "Sets/Infinite_sets.ma".
+
+include "Arith/Compare_dec.ma".
+
+include "Sets/Relations_1.ma".
+
+include "Sets/Partial_Order.ma".
+
+include "Sets/Cpo.ma".
+
+(* UNEXPORTED
+Section Integers_sect
+*)
+
+inline procedural "cic:/Coq/Sets/Integers/Integers.ind".
+
+(* UNEXPORTED
+Hint Resolve Integers_defn.
+*)
+
+inline procedural "cic:/Coq/Sets/Integers/le_reflexive.con" as lemma.
+
+inline procedural "cic:/Coq/Sets/Integers/le_antisym.con" as lemma.
+
+inline procedural "cic:/Coq/Sets/Integers/le_trans.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve le_reflexive le_antisym le_trans.
+*)
+
+inline procedural "cic:/Coq/Sets/Integers/le_Order.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve le_Order.
+*)
+
+inline procedural "cic:/Coq/Sets/Integers/triv_nat.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve triv_nat.
+*)
+
+inline procedural "cic:/Coq/Sets/Integers/nat_po.con" as definition.
+
+(* UNEXPORTED
+Hint Unfold nat_po.
+*)
+
+inline procedural "cic:/Coq/Sets/Integers/le_total_order.con" as lemma.
+
+(* UNEXPORTED
+Hint Resolve le_total_order.
+*)
+
+inline procedural "cic:/Coq/Sets/Integers/Finite_subset_has_lub.con" as lemma.
+
+inline procedural "cic:/Coq/Sets/Integers/Integers_has_no_ub.con" as lemma.
+
+inline procedural "cic:/Coq/Sets/Integers/Integers_infinite.con" as lemma.
+
+(* UNEXPORTED
+End Integers_sect
+*)
+

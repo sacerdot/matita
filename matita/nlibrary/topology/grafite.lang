@@ -1,0 +1,16 @@
+preproc = "napply|ncases|nelim|nletin|ncut|nauto|nwhd|nnormalize|nassumption|ngeneralize|nchange|nrewrite|nlapply"
+
+number = 
+'\<[+-]?((0x[[:xdigit:]]+)|(([[:digit:]]*\.)?
+[[:digit:]]+([eE][+-]?[[:digit:]]+)?))u?((int(?:8|16|32|64))|L)?\>'
+
+string delim "\"" "\"" escape "\\"
+
+keyword = "match|with|in|naxiom|nlemma|ntheorem|nrecord|for|ninductive|ncoinductive|ndefinition|nlet|rec|corec|notation|interpretation|nqed|include"
+
+comment delim "(*" "*)" multiline nested 
+
+type = '\<(?:CProp|Type|Prop)\>'
+
+symbol = "[","]","\|","$","@","{","}"
+
