@@ -43,3 +43,5 @@ val apply_subst_metasenv : NCic.substitution -> NCic.metasenv -> NCic.metasenv
 
 val count_occurrences :
     subst:NCic.substitution -> int -> NCic.term -> int
+(* quick, but with false negatives (since no ~subst), check for closed terms *)
+val looks_closed : NCic.term -> bool

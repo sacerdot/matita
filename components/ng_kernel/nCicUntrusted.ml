@@ -317,7 +317,7 @@ let count_occurrences ~subst n t =
   let occurrences = ref 0 in
   let rec aux k _ = function
     | C.Rel m when m = n+k -> incr occurrences
-    | C.Rel m -> ()
+    | C.Rel _m -> ()
     | C.Implicit _ -> ()
     | C.Meta (_,(_,(C.Irl 0 | C.Ctx []))) -> (* closed meta *) ()
     | C.Meta (mno,(s,l)) ->
@@ -333,4 +333,18 @@ let count_occurrences ~subst n t =
   in
    aux 0 () t;
    !occurrences
+;;
+
+exception Found_variable
+
+let looks_closed t = 
+  let rec aux k _ = function
+    | C.Rel m when k < m -> raise Found_variable
+    | C.Rel _m -> ()
+    | C.Implicit _ -> ()
+    | C.Meta (_,(_,(C.Irl 0 | C.Ctx []))) -> (* closed meta *) ()
+    | C.Meta _ -> raise Found_variable
+    | t -> NCicUtils.fold (fun _ k -> k + 1) k aux () t
+  in
+  try aux 0 () t; true with Found_variable -> false
 ;;

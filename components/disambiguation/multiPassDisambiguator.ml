@@ -51,6 +51,8 @@ let passes () = (* <fresh_instances?, aliases, coercions?> *)
       (* for demo to reduce the number of interpretations *)
     (true, `Library, true);
   ]
+ else if !debug then
+  [ (true, `Multi, true); ]
  else
   [ (true, `Mono, false);
     (true, `Multi, false);

@@ -828,34 +828,41 @@ nlemma sub_dot_star :
     @; //;##]
 nqed.
 
-STOP
-
 (* theorem 16: 1 *)
 alias symbol "pc" (instance 13) = "cat lang".
 alias symbol "in_pl" (instance 23) = "in_pl".
 alias symbol "in_pl" (instance 5) = "in_pl".
 alias symbol "eclose" (instance 21) = "eclose".
-ntheorem bull_cup : ∀S:Alpha. ∀e:pitem S.  𝐋\p (•e) =  𝐋\p e ∪ 𝐋 .|e|.
+ntheorem bull_cup : ∀S:Alpha. ∀e:pitem S.  𝐋\p (•e) =  𝐋\p e ∪ 𝐋 |e|.
 #S e; nelim e; //;
-  ##[ #a; napply extP; #w; nnormalize; @; *; /3/ by or_introl, or_intror;
-  ##| #a; napply extP; #w; nnormalize; @; *; /3/ by or_introl; *;
+  ##[ #a; napply ext_set; #w; @; *; /3/ by or_introl, or_intror;
+  ##| #a; napply ext_set; #w; @; *; /3/ by or_introl; *;
   ##| #e1 e2 IH1 IH2;  
-      nchange in ⊢ (??(??(%))?) with (•e1 ⊙ 〈e2,false〉);
-      nrewrite > (odot_dot_aux S (•e1) 〈e2,false〉 IH2);
-      nrewrite > (IH1 …); nrewrite > (cup_dotD …);
-      nrewrite > (cupA …); nrewrite > (cupC ?? (𝐋\p ?) …);
-      nchange in match (𝐋\p 〈?,?〉) with (𝐋\p e2 ∪ {}); nrewrite > (cup0 …);
-      nrewrite < (erase_dot …); nrewrite < (cupA …); //;
+      nchange in match (•(e1·e2)) with (•e1 ⊙ 〈e2,false〉);
+      napply (.=_1 (odot_dot_aux ?? 〈e2,false〉 IH2));
+      napply (.=_1 (IH1 ╪_1 #) ╪_1 #);
+      napply (.=_1 (cup_dotD …) ╪_1 #);
+      napply (.=_1 (cupA …));
+      napply (.=_1 # ╪_1 ((erase_dot ???)^-1 ╪_1 (cup0 ??)));
+      napply (.=_1 # ╪_1 (cupC…));
+      napply (.=_1 (cupA …)^-1);
+      //;
   ##| #e1 e2 IH1 IH2;
-      nchange in match (•(?+?)) with (•e1 ⊕ •e2); nrewrite > (oplus_cup …);
-      nrewrite > (IH1 …); nrewrite > (IH2 …); nrewrite > (cupA …);
-      nrewrite > (cupC ? (𝐋\p e2)…);nrewrite < (cupA ??? (𝐋\p e2)…);
-      nrewrite > (cupC ?? (𝐋\p e2)…); nrewrite < (cupA …); 
-      nrewrite < (erase_plus …); //.
+      nchange in match (•(?+?)) with (•e1 ⊕ •e2);
+      napply (.=_1 (oplus_cup …));
+      napply (.=_1 IH1 ╪_1 IH2);
+      napply (.=_1 (cupA …));
+      napply (.=_1 # ╪_1 (# ╪_1 (cupC…)));
+      napply (.=_1 # ╪_1 (cupA ????)^-1);
+      napply (.=_1 # ╪_1 (cupC…));
+      napply (.=_1 (cupA ????)^-1);
+      napply (.=_1 # ╪_1 (erase_plus ???)^-1);
+      //;
   ##| #e; nletin e' ≝ (\fst (•e)); nletin b' ≝ (\snd (•e)); #IH;
-      nchange in match (𝐋\p ?) with  (𝐋\p 〈e'^*,true〉);
+      nchange in match (𝐋\p ?) with (𝐋\p 〈e'^*,true〉);
       nchange in match (𝐋\p ?) with (𝐋\p (e'^* ) ∪ {[ ]});
-      nchange in ⊢ (??(??%?)?) with (𝐋\p e' · 𝐋 .|e'|^* );
+STOP
+      nchange in match (𝐋\p (pk ? e')) with (𝐋\p e' · 𝐋  |e'|^* );
       nrewrite > (erase_bull…e);
       nrewrite > (erase_star …);
       nrewrite > (?: 𝐋\p e' =  𝐋\p e ∪ (𝐋 .|e| - ϵ b')); ##[##2:
@@ -866,7 +873,7 @@ ntheorem bull_cup : ∀S:Alpha. ∀e:pitem S.  𝐋\p (•e) =  𝐋\p e ∪ �
       nrewrite > (cup_dotD…); nrewrite > (cupA…); 
       nrewrite > (?: ((?·?)∪{[]} = 𝐋 .|e^*|)); //;
       nchange in match (𝐋 .|e^*|) with ((𝐋. |e|)^* ); napply sub_dot_star;##]
- nqed.
+nqed.
 
 (* theorem 16: 3 *)      
 nlemma odot_dot: 

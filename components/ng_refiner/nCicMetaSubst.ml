@@ -349,6 +349,9 @@ let delift ~unify metasenv subst context n l t =
           lb
   in
   let rec aux (context,k,in_scope) (metasenv, subst as ms) t = 
+   (* XXX if t is closed, we should just terminate. Speeds up hints! *)
+   if NCicUntrusted.looks_closed t then ms, t
+   else 
    match unify_list in_scope metasenv subst context k t with
    | Some x -> x
    | None -> 

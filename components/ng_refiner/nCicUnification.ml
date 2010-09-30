@@ -97,7 +97,7 @@ let outside exc_opt =
    let time2 = Unix.gettimeofday () in
    let time1 =
     match !times with time1::tl -> times := tl; time1 | [] -> assert false in
-   prerr_endline ("}}} " ^ string_of_float (time2 -. time1));
+   prerr_endline ("}}} " ^ !indent ^ " " ^ string_of_float (time2 -. time1));
    (match exc_opt with
    | Some e ->  prerr_endline ("exception raised: " ^ Printexc.to_string e)
    | None -> ());
@@ -730,6 +730,32 @@ and unify rdb test_eq_only metasenv subst context t1 t2 swap =
               | Uncertain _ as exn -> raise exn
               | _ -> assert false
     in
+    let fo_unif_heads_and_cont_or_unwind_and_hints 
+      test_eq_only metasenv subst m1 m2 cont hm1 hm2
+     =
+      let ms, continuation = 
+        (* calling the continuation inside the outermost try is an option
+           and makes unification stronger, but looks not frequent to me
+           that heads unify but not the arguments and that an hints can fix 
+           that *)
+        try fo_unif test_eq_only metasenv subst m1 m2, cont
+        with 
+        | UnificationFailure _ 
+        | KeepReducing _ | Uncertain _ as exn ->
+           let (t1,norm1),(t2,norm2) = hm1, hm2 in
+           match 
+             try_hints metasenv subst 
+              (norm1,NCicReduction.unwind t1) (norm2,NCicReduction.unwind t2)
+           with
+            | Some x -> x, fun x -> x
+            | None -> 
+                match exn with 
+                | KeepReducing msg -> raise (KeepReducingThis (msg,hm1,hm2))
+                | UnificationFailure _ | Uncertain _ as exn -> raise exn
+                | _ -> assert false
+      in
+        continuation ms
+    in
     let height_of = function
      | NCic.Const (Ref.Ref (_,Ref.Def h)) 
      | NCic.Const (Ref.Ref (_,Ref.Fix (_,_,h))) 
@@ -767,7 +793,7 @@ and unify rdb test_eq_only metasenv subst context t1 t2 swap =
             match t1 with
             | C.Const r -> NCicEnvironment.get_relevance r
             | _ -> [] *) in
-          let unif_from_stack t1 t2 b metasenv subst =
+          let unif_from_stack (metasenv, subst) (t1, t2, b) =
               try
                 let t1 = NCicReduction.from_stack ~delta:max_int t1 in
                 let t2 = NCicReduction.from_stack ~delta:max_int t2 in
@@ -784,14 +810,19 @@ and unify rdb test_eq_only metasenv subst context t1 t2 swap =
                 NCicReduction.unwind (k2,e2,t2,List.rev l2),
                 todo
           in
-        let hh1,hh2,todo=check_stack (List.rev s1) (List.rev s2) relevance [] in
+          let check_stack l1 l2 r =
+            match t1, t2 with
+            | NCic.Meta _, _ | _, NCic.Meta _ ->
+                (NCicReduction.unwind (k1,e1,t1,s1)),
+                (NCicReduction.unwind (k2,e2,t2,s2)),[]     
+            | _ -> check_stack l1 l2 r []
+          in
+        let hh1,hh2,todo = check_stack (List.rev s1) (List.rev s2) relevance in
         try
-         let metasenv,subst =
-          fo_unif_w_hints test_eq_only metasenv subst (norm1,hh1) (norm2,hh2) in
-         List.fold_left
-          (fun (metasenv,subst) (x1,x2,r) ->
-            unif_from_stack x1 x2 r metasenv subst
-          ) (metasenv,subst) todo
+          fo_unif_heads_and_cont_or_unwind_and_hints
+            test_eq_only metasenv subst (norm1,hh1) (norm2,hh2) 
+            (fun ms -> List.fold_left unif_from_stack ms todo)
+            m1 m2
         with
          | KeepReducing _ -> assert false
          | KeepReducingThis _ ->
