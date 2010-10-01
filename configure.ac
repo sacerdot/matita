@@ -63,7 +63,6 @@ gdome2 \
 http \
 lablgtk2 \
 lablgtksourceview2.gtksourceview2 \
-lablgtkmathview \
 mysql \
 netstring \
 ulex08 \
@@ -95,7 +94,6 @@ $FINDLIB_COMREQUIRES \
 FINDLIB_REQUIRES="\
 $FINDLIB_CREQUIRES \
 lablgtk2.glade \
-lablgtkmathview \
 lablgtksourceview2.gtksourceview2 \
 helm-xmldiff \
 "

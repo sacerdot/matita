@@ -85,8 +85,7 @@ let empty_boxml = lazy (
     ~qualifiedName:(Gdome.domString "box") ~doctype:None)
 
   (** shown for goals closed by side effects *)
-let closed_goal_mathml = lazy (
-  domImpl#createDocumentFromURI ~uri:BuildTimeConf.closed_xml ())
+let closed_goal_mathml = lazy "chiuso per side effect..."
 
 (* ids_to_terms should not be passed here, is just for debugging *)
 let find_root_id annobj id ids_to_father_ids ids_to_terms ids_to_inner_types =
@@ -180,6 +179,28 @@ let rec has_maction (elt :Gdome.element) =
 class clickableMathView obj =
 let text_width = 80 in
 object (self)
+  inherit GSourceView2.source_view obj
+
+  method has_selection = (assert false : bool)
+  method strings_of_selection = (assert false : (paste_kind * string) list)
+  method update_font_size = (assert false : unit)
+  method set_href_callback = (function _ -> () : (string -> unit) option -> unit)
+  method private set_cic_info = (function _ -> () : (Cic.conjecture option * (Cic.id, Cic.term) Hashtbl.t *
+         (Cic.id, Cic.hypothesis) Hashtbl.t *
+         (Cic.id, Cic.id option) Hashtbl.t * ('a, 'b) Hashtbl.t * 'c option) option -> unit)
+  (* dal widget di Luca *)
+  method load_root ~root =
+    self#buffer#delete ~start:(self#buffer#get_iter `START)
+    ~stop:(self#buffer#get_iter `END);
+    self#buffer#insert root
+  method remove_selections = (() : unit)
+  method set_selection = (fun _ -> () : Gdome.element option -> unit)
+  method get_selections = (assert false : Gdome.element list)
+  method set_font_size font_size =
+   self#misc#modify_font_by_name
+     (sprintf "%s %d" BuildTimeConf.script_font font_size)
+
+(* MATITA1.0
   inherit GMathViewAux.multi_selection_math_view obj
 
   val mutable href_callback: (string -> unit) option = None
@@ -557,16 +578,26 @@ IDIOTA: PRIMA SI FA LA LOCATE, POI LA PATTERN_OF. MEGLIO UN'UNICA pattern_of CHE
           paste_kind, HExtlib.unopt (self#string_of_selection ~paste_kind))
         [ `Term; `Pattern ]
     with Failure _ -> failwith "no selection"
-
+*)
 end
 
+open GtkSourceView2
+
 let clickableMathView ?hadjustment ?vadjustment ?font_size ?log_verbosity =
+  SourceView.make_params [] ~cont:(
+    GtkText.View.make_params ~cont:(
+      GContainer.pack_container ~create:(fun pl ->
+        let obj = SourceView.new_ () in
+        Gobject.set_params (Gobject.try_cast obj "GtkSourceView") pl;
+        new clickableMathView obj)))
+  (* MATITA1.0
   GtkBase.Widget.size_params
-    ~cont:(OgtkMathViewProps.pack_return (fun p ->
-      OgtkMathViewProps.set_params
-        (new clickableMathView (GtkMathViewProps.MathView_GMetaDOM.create p))
+    ~cont:(OgtkSourceView2Props.pack_return (fun p ->
+      OgtkSourceView2Props.set_params
+        (new clickableMathView (GtkSourceView2Props.MathView_GMetaDOM.create p))
         ~font_size:None ~log_verbosity:None))
     []
+    *)
 
 class cicMathView obj =
 object (self)
@@ -576,68 +607,73 @@ object (self)
 
   method load_sequent metasenv metano =
     let sequent = CicUtil.lookup_meta metano metasenv in
-    let (mathml, unsh_sequent,
+    let (txt, unsh_sequent,
       (_, (ids_to_terms, ids_to_father_ids, ids_to_hypotheses,_ )))
     =
-      ApplyTransformation.mml_of_cic_sequent metasenv sequent
+      ApplyTransformation.txt_of_cic_sequent_all
+       ~map_unicode_to_tex:false 80 (*MATITA 1.0??*) metasenv sequent
     in
     self#set_cic_info
       (Some (Some unsh_sequent,
         ids_to_terms, ids_to_hypotheses, ids_to_father_ids,
         Hashtbl.create 1, None));
+   (*MATITA 1.0
     if BuildTimeConf.debug then begin
       let name =
        "/tmp/sequent_viewer_" ^ string_of_int (Unix.getuid ()) ^ ".xml" in
       HLog.debug ("load_sequent: dumping MathML to ./" ^ name);
-      ignore (domImpl#saveDocumentToFile ~name ~doc:mathml ())
-    end;
-    self#load_root ~root:mathml#get_documentElement
+      ignore (domImpl#saveDocumentToFile ~name ~doc:txt ())
+    end; *)
+    self#load_root ~root:txt
 
   method nload_sequent:
    'status. #NCicCoercion.status as 'status -> NCic.metasenv ->
      NCic.substitution -> int -> unit
    = fun status metasenv subst metano ->
     let sequent = List.assoc metano metasenv in
-    let mathml =
-     ApplyTransformation.nmml_of_cic_sequent status metasenv subst
-      (metano,sequent)
+    let txt =
+     ApplyTransformation.ntxt_of_cic_sequent
+      ~map_unicode_to_tex:false 80 status metasenv subst (metano,sequent)
     in
-    if BuildTimeConf.debug then begin
+    (* MATITA 1.0 if BuildTimeConf.debug then begin
       let name =
        "/tmp/sequent_viewer_" ^ string_of_int (Unix.getuid ()) ^ ".xml" in
       HLog.debug ("load_sequent: dumping MathML to ./" ^ name);
       ignore (domImpl#saveDocumentToFile ~name ~doc:mathml ())
-    end;
-    self#load_root ~root:mathml#get_documentElement
+    end;*)
+    self#load_root ~root:txt
 
   method load_object obj =
     let use_diff = false in (* ZACK TODO use XmlDiff when re-rendering? *)
-    let (mathml,
+    let (txt,
       (annobj, (ids_to_terms, ids_to_father_ids, _, ids_to_hypotheses, _, ids_to_inner_types)))
     =
-      ApplyTransformation.mml_of_cic_object obj
+      ApplyTransformation.txt_of_cic_object_all ~map_unicode_to_tex:false
+       80 [] obj
     in
     self#set_cic_info
       (Some (None, ids_to_terms, ids_to_hypotheses, ids_to_father_ids, ids_to_inner_types, Some annobj));
     (match current_mathml with
     | Some current_mathml when use_diff ->
+assert false (*MATITA1.0
         self#freeze;
         XmlDiff.update_dom ~from:current_mathml mathml;
-        self#thaw
+        self#thaw*)
     |  _ ->
-        if BuildTimeConf.debug then begin
+        (* MATITA1.0 if BuildTimeConf.debug then begin
           let name =
            "/tmp/cic_browser_" ^ string_of_int (Unix.getuid ()) ^ ".xml" in
           HLog.debug ("cic_browser: dumping MathML to ./" ^ name);
           ignore (domImpl#saveDocumentToFile ~name ~doc:mathml ())
-        end;
-        self#load_root ~root:mathml#get_documentElement;
-        current_mathml <- Some mathml);
+        end;*)
+        self#load_root ~root:txt;
+        current_mathml <- Some txt);
 
   method load_nobject :
    'status. #NCicCoercion.status as 'status -> NCic.obj -> unit
    = fun status obj ->
-    let mathml = ApplyTransformation.nmml_of_cic_object status obj in
+    let txt = ApplyTransformation.ntxt_of_cic_object ~map_unicode_to_tex:false
+    80 status obj in
 (*
     self#set_cic_info
       (Some (None, ids_to_terms, ids_to_hypotheses, ids_to_father_ids, ids_to_inner_types, Some annobj));
@@ -648,13 +684,13 @@ object (self)
         self#thaw
     |  _ ->
 *)
-        if BuildTimeConf.debug then begin
+        (* MATITA1.0 if BuildTimeConf.debug then begin
           let name =
            "/tmp/cic_browser_" ^ string_of_int (Unix.getuid ()) ^ ".xml" in
           HLog.debug ("cic_browser: dumping MathML to ./" ^ name);
           ignore (domImpl#saveDocumentToFile ~name ~doc:mathml ())
-        end;
-        self#load_root ~root:mathml#get_documentElement;
+        end;*)
+        self#load_root ~root:txt;
         (*current_mathml <- Some mathml*)(*)*);
 end
 
@@ -896,7 +932,7 @@ class sequentsViewer ~(notebook:GPack.notebook) ~(cicMathView:cicMathView) () =
                cicMathView#nload_sequent status menv subst goal)
       | Stack.Closed goal ->
           let doc = Lazy.force closed_goal_mathml in
-          cicMathView#load_root ~root:doc#get_documentElement);
+          cicMathView#load_root ~root:doc);
       (try
         cicMathView#set_selection None;
         List.assoc goal_switch goal2win ()
@@ -917,26 +953,49 @@ class sequentsViewer ~(notebook:GPack.notebook) ~(cicMathView:cicMathView) () =
   end
 
  (** constructors *)
-
 type 'widget constructor =
-  ?hadjustment:GData.adjustment ->
-  ?vadjustment:GData.adjustment ->
-  ?font_size:int ->
-  ?log_verbosity:int ->
-  ?width:int ->
-  ?height:int ->
-  ?packing:(GObj.widget -> unit) ->
-  ?show:bool ->
-  unit ->
-    'widget
+ ?hadjustment:GData.adjustment ->
+ ?vadjustment:GData.adjustment ->
+ ?font_size:int ->
+ ?log_verbosity:int ->
+ ?auto_indent:bool ->
+ ?highlight_current_line:bool ->
+ ?indent_on_tab:bool ->
+ ?indent_width:int ->
+ ?insert_spaces_instead_of_tabs:bool ->
+ ?right_margin_position:int ->
+ ?show_line_marks:bool ->
+ ?show_line_numbers:bool ->
+ ?show_right_margin:bool ->
+ ?smart_home_end:SourceView2Enums.source_smart_home_end_type ->
+ ?tab_width:int ->
+ ?editable:bool ->
+ ?cursor_visible:bool ->
+ ?justification:GtkEnums.justification ->
+ ?wrap_mode:GtkEnums.wrap_mode ->
+ ?accepts_tab:bool ->
+ ?border_width:int ->
+ ?width:int ->
+ ?height:int ->
+ ?packing:(GObj.widget -> unit) ->
+ ?show:bool -> unit ->
+  'widget
 
 let cicMathView ?hadjustment ?vadjustment ?font_size ?log_verbosity =
+  SourceView.make_params [] ~cont:(
+    GtkText.View.make_params ~cont:(
+      GContainer.pack_container ~create:(fun pl ->
+        let obj = SourceView.new_ () in
+        Gobject.set_params (Gobject.try_cast obj "GtkSourceView") pl;
+        new cicMathView obj)))
+(* MATITA 1.0
   GtkBase.Widget.size_params
     ~cont:(OgtkMathViewProps.pack_return (fun p ->
       OgtkMathViewProps.set_params
         (new cicMathView (GtkMathViewProps.MathView_GMetaDOM.create p))
         ~font_size ~log_verbosity))
     []
+*)
 
 let blank_uri = BuildTimeConf.blank_uri
 let current_proof_uri = BuildTimeConf.current_proof_uri
@@ -1303,7 +1362,7 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
 
     method private blank () =
       self#_showMath;
-      mathView#load_root (Lazy.force empty_mathml)#get_documentElement
+      mathView#load_root ""
 
     method private _loadCheck term =
       failwith "not implemented _loadCheck";
@@ -1601,6 +1660,7 @@ let mathViewer () =
       (self#get_browser reuse)#load entry
 
     method screenshot status sequents metasenv subst (filename as ofn) =
+      () (*MATITA 1.0
        let w = GWindow.window ~title:"screenshot" () in
        let width = 500 in
        let height = 2000 in
@@ -1659,6 +1719,7 @@ let mathViewer () =
        List.iter (fun x,_ -> Sys.remove x) filenames;
        List.iter Sys.remove (List.flatten items);
        w#destroy ();
+    *)
   end
 
 let refresh_all_browsers () =

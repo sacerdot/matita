@@ -1659,6 +1659,5 @@ let _ =
   Disambiguate.set_choose_interp_callback (interactive_interp_choice ());
   (* gtk initialization *)
   GtkMain.Rc.add_default_file BuildTimeConf.gtkrc_file; (* loads gtk rc *)
-  GMathView.add_configuration_path BuildTimeConf.gtkmathview_conf;
   ignore (GMain.Main.init ())
 

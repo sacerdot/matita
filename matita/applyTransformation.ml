@@ -74,6 +74,15 @@ let nmml_of_cic_sequent status metasenv subst sequent =
   let xmlpres = mpres_document pres_sequent in
    Xml2Gdome.document_of_xml DomMisc.domImpl xmlpres
 
+let ntxt_of_cic_sequent ~map_unicode_to_tex size status metasenv subst sequent =
+  let content_sequent,ids_to_refs =
+   NTermCicContent.nmap_sequent status ~metasenv ~subst sequent in 
+  let pres_sequent = 
+   Sequent2pres.nsequent2pres ids_to_refs subst content_sequent in
+  let pres_sequent = CicNotationPres.mpres_of_box pres_sequent in
+   BoxPp.render_to_string ~map_unicode_to_tex
+    (function x::_ -> x | _ -> assert false) size pres_sequent
+
 let mml_of_cic_object obj =
   let (annobj, ids_to_terms, ids_to_father_ids, ids_to_inner_sorts,
     ids_to_inner_types, ids_to_conjectures, ids_to_hypotheses)
@@ -97,7 +106,15 @@ let nmml_of_cic_object status obj =
   Xml2Gdome.document_of_xml DomMisc.domImpl xmlpres
 ;;
 
-let txt_of_cic_sequent ~map_unicode_to_tex size metasenv sequent =
+let ntxt_of_cic_object ~map_unicode_to_tex size status obj =
+ let cobj,ids_to_nrefs = NTermCicContent.nmap_obj status obj in 
+ let pres_sequent = Content2pres.ncontent2pres ~ids_to_nrefs cobj in
+ let pres_sequent = CicNotationPres.mpres_of_box pres_sequent in
+  BoxPp.render_to_string ~map_unicode_to_tex
+   (function x::_ -> x | _ -> assert false) size pres_sequent
+;;
+
+let txt_of_cic_sequent_all ~map_unicode_to_tex size metasenv sequent =
   let unsh_sequent,(asequent,ids_to_terms,
     ids_to_father_ids,ids_to_inner_sorts,ids_to_hypotheses)
   =
@@ -106,10 +123,20 @@ let txt_of_cic_sequent ~map_unicode_to_tex size metasenv sequent =
   let content_sequent = Acic2content.map_sequent asequent in 
   let pres_sequent = 
    CicNotationPres.mpres_of_box
-    (Sequent2pres.sequent2pres ~ids_to_inner_sorts content_sequent)
-  in
+    (Sequent2pres.sequent2pres ~ids_to_inner_sorts content_sequent) in
+  let txt =
   BoxPp.render_to_string ~map_unicode_to_tex
     (function x::_ -> x | _ -> assert false) size pres_sequent
+  in
+  (txt,
+   unsh_sequent,
+   (asequent,
+    (ids_to_terms,ids_to_father_ids,ids_to_hypotheses,ids_to_inner_sorts)))
+
+let txt_of_cic_sequent ~map_unicode_to_tex size metasenv sequent =
+ let txt,_,_ = txt_of_cic_sequent_all ~map_unicode_to_tex size metasenv sequent
+ in txt
+;;
 
 let txt_of_cic_sequent_conclusion ~map_unicode_to_tex ~output_type size
  metasenv sequent =
@@ -196,15 +223,17 @@ let enable_notations = function
    | false ->
       CicNotation.set_active_notations []
 
-let txt_of_cic_object 
+let txt_of_cic_object_all
  ~map_unicode_to_tex ?skip_thm_and_qed ?skip_initial_lambdas n params obj 
 =
   let get_aobj obj = 
      try   
-        let aobj,_,_,ids_to_inner_sorts,ids_to_inner_types,_,_ =
+        let
+          aobj,ids_to_terms,ids_to_father_ids,ids_to_inner_sorts,ids_to_inner_types,ids_to_conjectures,ids_to_hypotheses =
             Cic2acic.acic_object_of_cic_object obj
         in
-        aobj, ids_to_inner_sorts, ids_to_inner_types
+        aobj, ids_to_terms, ids_to_father_ids, ids_to_inner_sorts,
+        ids_to_inner_types,ids_to_conjectures,ids_to_hypotheses
      with 
         | E.Object_not_found uri -> 
              let msg = "txt_of_cic_object: object not found: " ^ UM.string_of_uri uri in
@@ -213,6 +242,7 @@ let txt_of_cic_object
              let msg = "txt_of_cic_object: " ^ Printexc.to_string e in
              failwith msg
   in
+  (*MATITA1.0
   if List.mem G.IPProcedural params then begin
 
      Procedural2.debug := A2P.is_debug 1 params;
@@ -226,7 +256,8 @@ let txt_of_cic_object
 (*	
      let _ = ProceduralTeX.tex_of_obj Format.std_formatter obj in
 *)	
-     let aobj, ids_to_inner_sorts, ids_to_inner_types = get_aobj obj in
+     let  aobj, ids_to_terms, ids_to_father_ids, ids_to_inner_sorts,
+       ids_to_inner_types,ids_to_conjectures,ids_to_hypothesis = get_aobj obj in
      let term_pp = term2pres ~map_unicode_to_tex (n - 8) ids_to_inner_sorts in
      let lazy_term_pp = term_pp in
      let obj_pp = CicNotationPp.pp_obj term_pp in
@@ -267,8 +298,9 @@ let txt_of_cic_object
            ~ids_to_inner_sorts ~ids_to_inner_types ~info params aobj 
      in
      String.concat "" (List.map aux script) ^ "\n\n"
-  end else
-     let aobj, ids_to_inner_sorts, ids_to_inner_types = get_aobj obj in
+  end else *)
+     let  aobj, ids_to_terms, ids_to_father_ids, ids_to_inner_sorts,
+       ids_to_inner_types,ids_to_conjectures,ids_to_hypotheses = get_aobj obj in
      let cobj = 
        Acic2content.annobj2content ids_to_inner_sorts ids_to_inner_types aobj 
      in
@@ -276,12 +308,24 @@ let txt_of_cic_object
         Content2pres.content2pres 
            ?skip_initial_lambdas ?skip_thm_and_qed ~ids_to_inner_sorts cobj 
      in
-     remove_closed_substs (
+     let txt =
+      remove_closed_substs (
         BoxPp.render_to_string ~map_unicode_to_tex
            (function _::x::_ -> x | _ -> assert false) n
            (CicNotationPres.mpres_of_box bobj)
         ^ "\n\n"
-     )
+      )
+     in
+      (txt,(aobj,
+       (ids_to_terms, ids_to_father_ids, ids_to_conjectures, ids_to_hypotheses,
+      ids_to_inner_sorts,ids_to_inner_types)))
+
+let txt_of_cic_object
+ ~map_unicode_to_tex ?skip_thm_and_qed ?skip_initial_lambdas n params obj 
+=
+ let txt,_ = txt_of_cic_object_all
+  ~map_unicode_to_tex ?skip_thm_and_qed ?skip_initial_lambdas n params obj
+ in txt
 
 let cic_prefix = Str.regexp_string "cic:/"
 let matita_prefix = Str.regexp_string "cic:/matita/"

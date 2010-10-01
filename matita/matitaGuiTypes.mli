@@ -105,7 +105,14 @@ type paste_kind = [ `Term | `Pattern ]
   * callback *)
 class type clickableMathView =
 object
-  inherit GMathViewAux.multi_selection_math_view
+  inherit GSourceView2.source_view
+
+  method load_root : root:string -> unit
+  method remove_selections: unit
+  method set_selection: Gdome.element option -> unit
+  method get_selections: Gdome.element list
+  method set_font_size: int -> unit
+
 
     (** set hyperlink callback. None disable hyperlink handling *)
   method set_href_callback: (string -> unit) option -> unit
