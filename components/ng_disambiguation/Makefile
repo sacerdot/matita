@@ -4,6 +4,7 @@ PREDICATES =
 INTERFACE_FILES = nCicDisambiguate.mli 
 
 IMPLEMENTATION_FILES = \
+	disambiguateChoices.ml \
   $(INTERFACE_FILES:%.mli=%.ml) nnumber_notation.ml
 EXTRA_OBJECTS_TO_INSTALL = 
 EXTRA_OBJECTS_TO_CLEAN =

@@ -1,4 +1,4 @@
-requires="helm-content_pres helm-ng_library helm-cic_disambiguation camlp5.gramlib"
+requires="helm-content_pres helm-ng_library camlp5.gramlib"
 version="0.0.1"
 archive(byte)="lexicon.cma"
 archive(native)="lexicon.cmxa"

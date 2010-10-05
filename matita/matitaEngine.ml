@@ -30,16 +30,6 @@ module G = GrafiteAst
 let debug = false ;;
 let debug_print = if debug then prerr_endline else ignore ;;
 
-let disambiguate_tactic text prefix_len lexicon_status_ref grafite_status goal tac =
- let metasenv,tac =
-  GrafiteDisambiguate.disambiguate_tactic
-   lexicon_status_ref
-   (GrafiteTypes.get_proof_context grafite_status goal)
-   (GrafiteTypes.get_proof_metasenv grafite_status) (Some goal)
-   tac
- in
-  GrafiteTypes.set_metasenv metasenv grafite_status,tac
-
 let disambiguate_command lexicon_status_ref grafite_status cmd =
  let baseuri = grafite_status#baseuri in
  let lexicon_status,metasenv,cmd =
@@ -48,15 +38,6 @@ let disambiguate_command lexicon_status_ref grafite_status cmd =
  in
   lexicon_status_ref := lexicon_status;
   GrafiteTypes.set_metasenv metasenv grafite_status,cmd
-
-let disambiguate_macro lexicon_status_ref grafite_status macro context =
- let metasenv,macro =
-  GrafiteDisambiguate.disambiguate_macro
-   lexicon_status_ref
-   (GrafiteTypes.get_proof_metasenv grafite_status)
-   context macro
- in
-  GrafiteTypes.set_metasenv metasenv grafite_status,macro
 
 let eval_macro_screenshot (status : GrafiteTypes.status) name =
   let _,_,metasenv,subst,_ = status#obj in
@@ -89,9 +70,9 @@ let eval_ast ?do_heavy_checks status (text,prefix_len,ast) =
         status, `Old []
      | ast -> 
   GrafiteEngine.eval_ast
-   ~disambiguate_tactic:(disambiguate_tactic text prefix_len lexicon_status_ref)
+   ~disambiguate_tactic:((* MATITA 1.0*) fun _ -> assert false)
    ~disambiguate_command:(disambiguate_command lexicon_status_ref)
-   ~disambiguate_macro:(disambiguate_macro lexicon_status_ref)
+   ~disambiguate_macro:((* MATITA 1.0*) fun _ -> assert false)
    ?do_heavy_checks status (text,prefix_len,ast)
  in
  let new_status =

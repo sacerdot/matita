@@ -73,7 +73,6 @@ zip \
 
 FINDLIB_COMREQUIRES="\
 helm-disambiguation \
-helm-cic_disambiguation \
 helm-grafite \
 helm-grafite_engine \
 helm-tptp_grafite \

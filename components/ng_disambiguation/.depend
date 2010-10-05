@@ -1,4 +1,6 @@
 nCicDisambiguate.cmi: 
+disambiguateChoices.cmo: disambiguateChoices.cmi 
+disambiguateChoices.cmx: disambiguateChoices.cmi 
 nCicDisambiguate.cmo: nCicDisambiguate.cmi 
 nCicDisambiguate.cmx: nCicDisambiguate.cmi 
 nnumber_notation.cmo: 

@@ -34,26 +34,12 @@ type lazy_tactic =
   (Cic.term, Cic.lazy_term, Cic.lazy_term GrafiteAst.reduction, string) 
     GrafiteAst.tactic
 
-val disambiguate_tactic:
- LexiconEngine.status ref ->
- Cic.context ->
- Cic.metasenv -> int option ->
- tactic Disambiguate.disambiguator_input ->
-  Cic.metasenv * lazy_tactic
-
 val disambiguate_command: 
  LexiconEngine.status as 'status ->
  ?baseuri:string ->
  Cic.metasenv ->
  ((CicNotationPt.term,CicNotationPt.term CicNotationPt.obj) GrafiteAst.command) Disambiguate.disambiguator_input ->
   'status * Cic.metasenv * (Cic.term,Cic.obj) GrafiteAst.command
-
-val disambiguate_macro:
- LexiconEngine.status ref ->
- Cic.metasenv ->
- Cic.context ->
- ((CicNotationPt.term,CicNotationPt.term) GrafiteAst.macro) Disambiguate.disambiguator_input ->
-  Cic.metasenv * (Cic.term,Cic.lazy_term) GrafiteAst.macro
 
 val disambiguate_nterm :
  NCic.term option -> 

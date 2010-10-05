@@ -1,4 +1,4 @@
-requires="helm-whelp helm-acic_content helm-ng_refiner helm-disambiguation helm-cic_disambiguation"
+requires="helm-acic_content helm-ng_refiner helm-disambiguation"
 version="0.0.1"
 archive(byte)="ng_disambiguation.cma"
 archive(native)="ng_disambiguation.cmxa"

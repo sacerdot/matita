@@ -27,11 +27,9 @@ MODULES =			\
 	acic_content		\
 	grafite			\
 	cic_unification		\
-	whelp			\
 	tactics			\
 	acic_procedural         \
 	disambiguation	        \
-	cic_disambiguation	\
 	ng_kernel               \
 	ng_refiner              \
 	ng_disambiguation	\

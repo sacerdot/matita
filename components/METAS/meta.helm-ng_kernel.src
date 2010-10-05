@@ -1,4 +1,4 @@
-requires="helm-cic_proof_checking helm-library helm-metadata"
+requires="helm-cic_proof_checking helm-library"
 version="0.0.1"
 archive(byte)="ng_kernel.cma"
 archive(native)="ng_kernel.cmxa"

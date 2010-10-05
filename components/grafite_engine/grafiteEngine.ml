@@ -1231,68 +1231,7 @@ let rec eval_command = {ec_go = fun ~disambiguate_command opts status
      status, `Old [] (*CSC: TO BE FIXED *)
   | GrafiteAst.Set (loc, name, value) -> status, `Old []
 (*       GrafiteTypes.set_option status name value,[] *)
-  | GrafiteAst.Obj (loc,obj) ->
-     let ext,name =
-      match obj with
-         Cic.Constant (name,_,_,_,_)
-       | Cic.CurrentProof (name,_,_,_,_,_) -> ".con",name
-       | Cic.InductiveDefinition (types,_,_,_) ->
-          ".ind",
-          (match types with (name,_,_,_)::_ -> name | _ -> assert false)
-       | _ -> assert false in
-     let buri = status#baseuri in 
-     let uri = UriManager.uri_of_string (buri ^ "/" ^ name ^ ext) in
-     let obj = CicRefine.pack_coercion_obj obj in
-     let metasenv = GrafiteTypes.get_proof_metasenv status in
-     match obj with
-     | Cic.CurrentProof (_,metasenv',bo,ty,_, attrs) ->
-         let name = UriManager.name_of_uri uri in
-         if not(CicPp.check name ty) then
-           HLog.warn ("Bad name: " ^ name);
-         if opts.do_heavy_checks then
-           begin
-             let dbd = LibraryDb.instance () in
-             let similar = Whelp.match_term ~dbd ty in
-             let similar_len = List.length similar in
-             if similar_len> 30 then
-               (HLog.message
-                 ("Duplicate check will compare your theorem with " ^ 
-                   string_of_int similar_len ^ 
-                   " theorems, this may take a while."));
-             let convertible =
-               List.filter (
-                 fun u ->
-                   let t = CicUtil.term_of_uri u in
-                   let ty',g = 
-                     CicTypeChecker.type_of_aux' 
-                       metasenv' [] t CicUniv.oblivion_ugraph
-                   in
-                   fst(CicReduction.are_convertible [] ty' ty g)) 
-               similar 
-             in
-             (match convertible with
-             | [] -> ()
-             | x::_ -> 
-                 HLog.warn  
-                 ("Theorem already proved: " ^ UriManager.string_of_uri x ^ 
-                  "\nPlease use a variant."));
-           end;
-         let _subst = [] in
-         let initial_proof = (Some uri, metasenv', _subst, lazy bo, ty, attrs) in
-         let initial_stack = Continuationals.Stack.of_metasenv metasenv' in
-          status#set_proof_status
-           (GrafiteTypes.Incomplete_proof
-            { GrafiteTypes.proof = initial_proof; stack = initial_stack }),
-          `Old []
-     | _ ->
-         if metasenv <> [] then
-          raise (GrafiteTypes.Command_error (
-            "metasenv not empty while giving a definition with body: " ^
-            CicMetaSubst.ppmetasenv [] metasenv));
-         let status, lemmas = add_obj uri obj status in 
-         let status,new_lemmas = add_coercions_of_lemmas lemmas status in
-          status#set_proof_status GrafiteTypes.No_proof,
-           `Old (uri::new_lemmas@lemmas)
+  | GrafiteAst.Obj (loc,obj) -> (* MATITA 1.0 *) assert false
  in
   match status#proof_status with
      GrafiteTypes.Intermediate _ ->

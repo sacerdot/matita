@@ -1,6 +1,0 @@
-alias id foo = cic:/a.con
-alias id bar = cic:/b.con
-alias symbol "plus" (instance 0) = "real plus"
-alias symbol "plus" (instance 1) = "natural plus"
-alias num (instance 0) = "real number"
-alias num (instance 1) = "natural number"

@@ -154,6 +154,7 @@ let lapply_tac ?(mk_fresh_name_callback = FreshNamesGenerator.mk_fresh_name ~sub
 let fwd_simpl_tac
      ?(mk_fresh_name_callback = FNG.mk_fresh_name ~subst:[])
      ~dbd hyp =
+assert false (* MATITA 1.0
    let lapply_tac to_what lemma = 
       lapply_tac ~mk_fresh_name_callback ~how_many:1 ~to_what:[to_what] lemma
    in
@@ -171,3 +172,4 @@ let fwd_simpl_tac
             PET.apply_tactic tac status
    in
    PET.mk_tactic fwd_simpl_tac
+   *)
