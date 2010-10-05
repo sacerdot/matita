@@ -87,22 +87,6 @@
                     <child>
                       <widget class="GtkMenu" id="BrowserViewMenu_menu">
                         <child>
-                          <widget class="GtkMenuItem" id="DepGraphMenuItem">
-                            <property name="visible">True</property>
-                            <property name="tooltip" translatable="yes">View the graph of objects on which the current one depends on</property>
-                            <property name="label" translatable="yes">(Direct) Dependencies</property>
-                            <property name="use_underline">True</property>
-                          </widget>
-                        </child>
-                        <child>
-                          <widget class="GtkMenuItem" id="InvDepGraphMenuItem">
-                            <property name="visible">True</property>
-                            <property name="tooltip" translatable="yes">View the graph of objects which depends on the current one</property>
-                            <property name="label" translatable="yes">(Inverse) Dependencies</property>
-                            <property name="use_underline">True</property>
-                          </widget>
-                        </child>
-                        <child>
                           <widget class="GtkMenuItem" id="univMenuItem">
                             <property name="visible">True</property>
                             <property name="label" translatable="yes">Universes</property>
@@ -263,57 +247,6 @@
               <packing>
                 <property name="expand">False</property>
                 <property name="position">1</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="GtkHBox" id="whelpBarBox">
-                <property name="visible">True</property>
-                <property name="border_width">3</property>
-                <property name="spacing">6</property>
-                <child>
-                  <widget class="GtkImage" id="WhelpBarImage">
-                    <property name="visible">True</property>
-                    <property name="stock">gtk-missing-image</property>
-                  </widget>
-                  <packing>
-                    <property name="expand">False</property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="GtkEntry" id="queryInputText">
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="invisible_char">*</property>
-                  </widget>
-                  <packing>
-                    <property name="position">1</property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="GtkVBox" id="whelpBarComboVbox">
-                    <property name="visible">True</property>
-                    <child>
-                      <widget class="GtkAlignment" id="alignment4">
-                        <property name="visible">True</property>
-                        <child>
-                          <placeholder/>
-                        </child>
-                      </widget>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">False</property>
-                      </packing>
-                    </child>
-                  </widget>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="position">2</property>
-                  </packing>
-                </child>
-              </widget>
-              <packing>
-                <property name="expand">False</property>
-                <property name="position">2</property>
               </packing>
             </child>
             <child>

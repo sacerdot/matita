@@ -345,12 +345,6 @@ let pp_macro ~term_pp ~lazy_term_pp =
   in
   let pp_reduction_kind = pp_reduction_kind ~term_pp:lazy_term_pp in
   function 
-  (* Whelp *)
-  | WInstance (_, term) -> "whelp instance " ^ term_pp term
-  | WHint (_, t) -> "whelp hint " ^ term_pp t
-  | WLocate (_, s) -> "whelp locate \"" ^ s ^ "\""
-  | WElim (_, t) -> "whelp elim " ^ term_pp t
-  | WMatch (_, term) -> "whelp match " ^ term_pp term
   (* real macros *)
   | Eval (_, kind, term) -> 
       Printf.sprintf "eval %s on %s" (pp_reduction_kind kind) (term_pp term) 

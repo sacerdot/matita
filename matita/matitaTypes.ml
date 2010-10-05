@@ -48,11 +48,8 @@ type mathViewer_entry =
   | `Cic of Cic.term * Cic.metasenv
   | `NCic of NCic.term * NCic.context * NCic.metasenv * NCic.substitution
   | `Dir of string  (* "directory" in cic uris namespace *)
-  | `HBugs of [ `Tutors ] (* list of available HBugs tutors *)
-  | `Metadata of [ `Deps of [`Fwd | `Back] * UriManager.uri ]
   | `Uri of UriManager.uri (* cic object uri *)
   | `NRef of NReference.reference (* cic object uri *)
-  | `Whelp of string * UriManager.uri list (* query and results *)
   | `Univs of UriManager.uri
   ]
 
@@ -69,20 +66,8 @@ let string_of_entry = function
   | `Cic (_, _) -> "term:"
   | `NCic (_, _, _, _) -> "nterm:"
   | `Dir uri -> uri
-  | `HBugs `Tutors -> "hbugs:/tutors/"
-  | `Metadata meta ->
-      "metadata:/" ^
-      (match meta with
-      | `Deps (dir, uri) ->
-          "deps/" ^
-          let suri =
-            let suri = UriManager.string_of_uri uri in
-            let len = String.length suri in
-            String.sub suri 4 (len - 4) in (* strip "cic:" prefix *)
-          (match dir with | `Fwd -> "forward" | `Back -> "backward") ^ suri)
   | `Uri uri -> UriManager.string_of_uri uri
   | `NRef nref -> NReference.string_of_reference nref
-  | `Whelp (query, _) -> query
   | `Univs uri -> "univs:" ^ UriManager.string_of_uri uri
 
 let entry_of_string = function

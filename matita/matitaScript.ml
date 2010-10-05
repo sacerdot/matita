@@ -433,90 +433,9 @@ let rec eval_macro include_paths (buffer : GText.buffer) guistuff grafite_status
   (* no idea why ocaml wants this *)
   let parsed_text_length = String.length parsed_text in
   let dbd = LibraryDb.instance () in
-  let pp_macro = ApplyTransformation.txt_of_macro ~map_unicode_to_tex:true in
   match mac with
-  (* WHELP's stuff *)
-  | TA.WMatch (loc, term) -> 
-     let l =  Whelp.match_term ~dbd term in
-     let entry = `Whelp (pp_macro [] [] mac, l) in
-     guistuff.mathviewer#show_uri_list ~reuse:true ~entry l;
-     [], "", parsed_text_length
-  | TA.WInstance (loc, term) ->
-     let l = Whelp.instance ~dbd term in
-     let entry = `Whelp (pp_macro [] [] mac, l) in
-     guistuff.mathviewer#show_uri_list ~reuse:true ~entry l;
-     [], "", parsed_text_length
-  | TA.WLocate (loc, s) -> 
-     let l = Whelp.locate ~dbd s in
-     let entry = `Whelp (pp_macro [] [] mac, l) in
-     guistuff.mathviewer#show_uri_list ~reuse:true ~entry l;
-     [], "", parsed_text_length
-  | TA.WElim (loc, term) ->
-     let uri =
-       match term with
-       | Cic.MutInd (uri,n,_) -> UriManager.uri_of_uriref uri n None 
-       | _ -> failwith "Not a MutInd"
-     in
-     let l = Whelp.elim ~dbd uri in
-     let entry = `Whelp (pp_macro [] [] mac, l) in
-     guistuff.mathviewer#show_uri_list ~reuse:true ~entry l;
-     [], "", parsed_text_length
-  | TA.WHint (loc, term) ->
-     let _subst = [] in
-     let s = ((None,[0,[],term], _subst, lazy (Cic.Meta (0,[])) ,term, []),0) in
-     let l = List.map fst (MQ.experimental_hint ~dbd s) in
-     let entry = `Whelp (pp_macro [] [] mac, l) in
-     guistuff.mathviewer#show_uri_list ~reuse:true ~entry l;
-     [], "", parsed_text_length
   (* REAL macro *)
-  | TA.Hint (loc, rewrite) -> 
-      let user_goal' =
-       match user_goal with
-          Some n -> n
-        | None -> raise NoUnfinishedProof
-      in
-      let proof = GrafiteTypes.get_current_proof grafite_status in
-      let proof_status = proof,user_goal' in
-      if rewrite then
-        let l = MQ.equations_for_goal ~dbd proof_status in
-        let l = List.filter (fun u -> not (LibraryObjects.in_eq_URIs u)) l in
-        let entry = 
-          `Whelp (pp_macro [] [] (TA.WHint(loc, Cic.Implicit None)), l) in
-        guistuff.mathviewer#show_uri_list ~reuse:true ~entry l;
-        [], "", parsed_text_length
-      else
-        let l = List.map fst (MQ.experimental_hint ~dbd proof_status) in
-        let selected = guistuff.urichooser l in
-        (match selected with
-        | [] -> [], "", parsed_text_length
-        | [uri] -> 
-            let suri = UriManager.string_of_uri uri in
-            let ast loc =
-              TA.Executable (loc, (TA.Tactic (loc,
-               Some (TA.Apply (loc, CicNotationPt.Uri (suri, None))),
-               TA.Dot loc))) in
-            let text =
-             comment parsed_text ^ "\n" ^
-              pp_eager_statement_ast (ast HExtlib.dummy_floc)
-              ~map_unicode_to_tex:(Helm_registry.get_bool
-                "matita.paste_unicode_as_tex")
-            in
-            let text_len = MatitaGtkMisc.utf8_string_length text in
-            let loc = HExtlib.floc_of_loc (0,text_len) in
-            let statement = `Ast (GrafiteParser.LSome (ast loc),text) in
-            let res,_,_parsed_text_len =
-             eval_statement include_paths buffer guistuff 
-              grafite_status user_goal script statement
-            in
-             (* we need to replace all the parsed_text *)
-             res,"",String.length parsed_text
-        | _ -> 
-            HLog.error 
-              "The result of the urichooser should be only 1 uri, not:\n";
-            List.iter (
-              fun u -> HLog.error (UriManager.string_of_uri u ^ "\n")
-            ) selected;
-            assert false)
+  | TA.Hint (loc, rewrite) -> (* MATITA 1.0 *) assert false
   | TA.Eval (_, kind, term) -> 
       let metasenv = GrafiteTypes.get_proof_metasenv grafite_status in
       let context =

@@ -1010,35 +1010,16 @@ type term_source =
 class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
   ()
 =
-  let whelp_RE = Pcre.regexp "^\\s*whelp" in
   let uri_RE =
     Pcre.regexp
       "^cic:/([^/]+/)*[^/]+\\.(con|ind|var)(#xpointer\\(\\d+(/\\d+)+\\))?$"
   in
   let dir_RE = Pcre.regexp "^cic:((/([^/]+/)*[^/]+(/)?)|/|)$" in
-  let metadata_RE = Pcre.regexp "^metadata:/(deps)/(forward|backward)/(.*)$" in
-  let whelp_query_RE = Pcre.regexp
-    "^\\s*whelp\\s+([^\\s]+)\\s+(\"|\\()(.*)(\\)|\")$" 
-  in
-  let is_metadata txt = Pcre.pmatch ~rex:metadata_RE txt in
-  let is_whelp txt = Pcre.pmatch ~rex:whelp_RE txt in
   let is_uri txt = Pcre.pmatch ~rex:uri_RE txt in
   let is_dir txt = Pcre.pmatch ~rex:dir_RE txt in
   let gui = get_gui () in
   let (win: MatitaGuiTypes.browserWin) = gui#newBrowserWin () in
   let gviz = LablGraphviz.graphviz ~packing:win#graphScrolledWin#add () in
-  let queries = ["Locate";"Hint";"Match";"Elim";"Instance"] in
-  let combo,_ = GEdit.combo_box_text ~strings:queries () in
-  let activate_combo_query input q =
-    let q' = String.lowercase q in
-    let rec aux i = function
-      | [] -> failwith ("Whelp query '" ^ q ^ "' not found")
-      | h::_ when String.lowercase h = q' -> i
-      | _::tl -> aux (i+1) tl
-    in
-    win#queryInputText#set_text input;
-    combo#set_active (aux 0 queries);
-  in
   let searchText = 
     GSourceView2.source_view ~auto_indent:false ~editable:false ()
   in
@@ -1061,15 +1042,6 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
      in
      ignore(win#entrySearch#connect#activate ~callback);
      ignore(win#buttonSearch#connect#clicked ~callback);
-  in
-  let set_whelp_query txt =
-    let query, arg = 
-      try
-        let q = Pcre.extract ~rex:whelp_query_RE txt in
-        q.(1), q.(3)
-      with Not_found -> failwith "Malformed Whelp query"
-    in
-    activate_combo_query arg query;
   in
   let toplevel = win#toplevel in
   let mathView = cicMathView ~packing:win#scrolledBrowser#add () in
@@ -1151,25 +1123,6 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
     val dep_contextual_menu = GMenu.menu ()
 
     initializer
-      activate_combo_query "" "locate";
-      win#whelpBarComboVbox#add combo#coerce;
-      let start_query () = 
-       let query = 
-         try
-           String.lowercase (List.nth queries combo#active) 
-         with Not_found -> assert false in
-       let input = win#queryInputText#text in
-       let statement = 
-         if query = "locate" then
-             "whelp " ^ query ^ " \"" ^ input ^ "\"." 
-           else
-             "whelp " ^ query ^ " (" ^ input ^ ")." 
-       in
-        (MatitaScript.current ())#advance ~statement ()
-      in
-      ignore(win#queryInputText#connect#activate ~callback:start_query);
-      ignore(combo#connect#changed ~callback:start_query);
-      win#whelpBarImage#set_file (MatitaMisc.image_path "whelp.png");
       win#mathOrListNotebook#set_show_tabs false;
       win#browserForwardButton#misc#set_sensitive false;
       win#browserBackButton#misc#set_sensitive false;
@@ -1208,14 +1161,6 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
         | button when button = right_button ->
             dep_contextual_menu#popup ~button ~time
         | _ -> ());
-      connect_menu_item win#depGraphMenuItem (fun () ->
-        match self#currentCicUri with
-        | Some uri -> self#load (`Metadata (`Deps (`Fwd, uri)))
-        | None -> ());
-      connect_menu_item win#invDepGraphMenuItem (fun () ->
-        match self#currentCicUri with
-        | Some uri -> self#load (`Metadata (`Deps (`Back, uri)))
-        | None -> ());
       connect_menu_item win#browserCloseMenuItem (fun () ->
         let my_id = Oo.id self in
         cicBrowsers := List.filter (fun b -> Oo.id b <> my_id) !cicBrowsers;
@@ -1262,8 +1207,7 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
       (** @return None if no object uri can be built from the current entry *)
     method private currentCicUri =
       match current_entry with
-      | `Uri uri
-      | `Metadata (`Deps (_, uri)) -> Some uri
+      | `Uri uri -> Some uri
       | _ -> None
 
     val model =
@@ -1348,15 +1292,9 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
                self#_loadTermNCic term metasenv subst ctx
           | `Dir dir -> self#_loadDir dir
           | `HBugs `Tutors -> self#_loadHBugsTutors
-          | `Metadata (`Deps ((`Fwd | `Back) as dir, uri)) ->
-              self#dependencies dir uri ()
           | `Uri uri -> self#_loadUriManagerUri uri
           | `NRef nref -> self#_loadNReference nref
-          | `Univs uri -> self#_loadUnivs uri
-          | `Whelp (query, results) -> 
-              set_whelp_query query;
-              self#_loadList (List.map (fun r -> "obj",
-                UriManager.string_of_uri r) results));
+          | `Univs uri -> self#_loadUnivs uri);
           self#setEntry entry
         end)
 
@@ -1557,14 +1495,6 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
 
     (**  this is what the browser does when you enter a string an hit enter *)
     method loadInput txt =
-      let parse_metadata s =
-        let subs = Pcre.extract ~rex:metadata_RE s in
-        let uri = UriManager.uri_of_string ("cic:/" ^ subs.(3)) in
-        match subs.(1), subs.(2) with
-        | "deps", "forward" -> `Deps (`Fwd, uri)
-        | "deps", "backward" -> `Deps (`Back, uri)
-        | _ -> assert false
-      in
       let txt = HExtlib.trim_blanks txt in
       (* (* ZACK: what the heck? *)
       let fix_uri txt =
@@ -1572,17 +1502,11 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
           (UriManager.strip_xpointer (UriManager.uri_of_string txt))
       in
       *)
-      if is_whelp txt then begin
-        set_whelp_query txt;  
-        (MatitaScript.current ())#advance ~statement:(txt ^ ".") ()
-      end else begin
         let entry =
           match txt with
           | txt when is_uri txt ->
               `Uri (UriManager.uri_of_string ((*fix_uri*) txt))
           | txt when is_dir txt -> `Dir (MatitaMisc.normalize_dir txt)
-          | txt when is_metadata txt -> `Metadata (parse_metadata txt)
-          | "hbugs:/tutors/" -> `HBugs `Tutors
           | txt ->
              (try
                MatitaTypes.entry_of_string txt
@@ -1592,7 +1516,6 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
         in
         self#_load entry;
         self#_historyAdd entry
-      end
 
       (** {2 methods accessing underlying GtkMathView} *)
 

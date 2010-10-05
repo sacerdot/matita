@@ -34,11 +34,8 @@ type mathViewer_entry =
   | `Cic of Cic.term * Cic.metasenv
   | `NCic of NCic.term * NCic.context * NCic.metasenv * NCic.substitution
   | `Dir of string
-  | `HBugs of [ `Tutors ]
-  | `Metadata of [ `Deps of [`Fwd | `Back] * UriManager.uri ]
   | `Uri of UriManager.uri
   | `NRef of NReference.reference
-  | `Whelp of string * UriManager.uri list 
   | `Univs of UriManager.uri
   ]
 

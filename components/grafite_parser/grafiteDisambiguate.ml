@@ -892,18 +892,6 @@ let disambiguate_macro
   let disambiguate_reduction_kind = 
     disambiguate_reduction_kind text prefix_len lexicon_status_ref in
   match macro with
-   | GrafiteAst.WMatch (loc,term) ->
-      let metasenv,term = disambiguate_term context metasenv term in
-       metasenv,GrafiteAst.WMatch (loc,term)
-   | GrafiteAst.WInstance (loc,term) ->
-      let metasenv,term = disambiguate_term context metasenv term in
-       metasenv,GrafiteAst.WInstance (loc,term)
-   | GrafiteAst.WElim (loc,term) ->
-      let metasenv,term = disambiguate_term context metasenv term in
-       metasenv,GrafiteAst.WElim (loc,term)
-   | GrafiteAst.WHint (loc,term) ->
-      let metasenv,term = disambiguate_term context metasenv term in
-       metasenv,GrafiteAst.WHint (loc,term)
    | GrafiteAst.Check (loc,term) ->
       let metasenv,term = disambiguate_term context metasenv term in
        metasenv,GrafiteAst.Check (loc,term)
@@ -916,6 +904,5 @@ let disambiguate_macro
         disambiguate_auto_params disambiguate_term metasenv context params in
       metasenv, GrafiteAst.AutoInteractive (loc, params)
    | GrafiteAst.Hint _
-   | GrafiteAst.WLocate _
    | GrafiteAst.Inline _ as macro ->
       metasenv,macro

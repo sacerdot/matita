@@ -730,16 +730,6 @@ EXTEND
            if rew = None then G.Hint (loc, false) else G.Hint (loc,true)
       | IDENT "auto"; params = auto_params ->
           G.AutoInteractive (loc,params)
-      | [ IDENT "whelp"; "match" ] ; t = term -> 
-          G.WMatch (loc,t)
-      | [ IDENT "whelp"; IDENT "instance" ] ; t = term -> 
-          G.WInstance (loc,t)
-      | [ IDENT "whelp"; IDENT "locate" ] ; id = QSTRING -> 
-          G.WLocate (loc,id)
-      | [ IDENT "whelp"; IDENT "elim" ] ; t = term ->
-          G.WElim (loc, t)
-      | [ IDENT "whelp"; IDENT "hint" ] ; t = term -> 
-          G.WHint (loc,t)
       ]
     ];
     alias_spec: [

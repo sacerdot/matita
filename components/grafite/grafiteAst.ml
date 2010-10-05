@@ -184,12 +184,6 @@ type inline_param = IPPrefix of string         (* undocumented *)
                   | IPCR                       (* detect convertible rewriting *)
 
 type ('term,'lazy_term) macro = 
-  (* Whelp's stuff *)
-  | WHint of loc * 'term
-  | WMatch of loc * 'term 
-  | WInstance of loc * 'term 
-  | WLocate of loc * string
-  | WElim of loc * 'term
   (* real macros *)
   | Eval of loc * 'lazy_term reduction * 'term
   | Check of loc * 'term 
