@@ -152,3 +152,5 @@ val utf8_parsed_text: string -> Stdpp.location -> string * int
 val utf8_string_length: string -> int
 
 val escape_pango_markup: string -> string
+
+val matita_lang: GSourceView2.source_language

@@ -183,7 +183,9 @@ object (self)
 
   method has_selection = (assert false : bool)
   method strings_of_selection = (assert false : (paste_kind * string) list)
-  method update_font_size = (assert false : unit)
+  method update_font_size =
+   self#misc#modify_font_by_name
+     (sprintf "%s %d" BuildTimeConf.script_font !current_font_size)
   method set_href_callback = (function _ -> () : (string -> unit) option -> unit)
   method private set_cic_info = (function _ -> () : (Cic.conjecture option * (Cic.id, Cic.term) Hashtbl.t *
          (Cic.id, Cic.hypothesis) Hashtbl.t *
@@ -199,6 +201,11 @@ object (self)
   method set_font_size font_size =
    self#misc#modify_font_by_name
      (sprintf "%s %d" BuildTimeConf.script_font font_size)
+
+  initializer
+    self#set_font_size !current_font_size;
+    self#source_buffer#set_language (Some MatitaGtkMisc.matita_lang);
+    self#source_buffer#set_highlight_syntax true
 
 (* MATITA1.0
   inherit GMathViewAux.multi_selection_math_view obj

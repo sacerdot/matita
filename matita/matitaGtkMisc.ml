@@ -420,4 +420,16 @@ let escape_pango_markup text =
    text
 ;;
 
-    
+let matita_lang =
+ let source_language_manager =
+  GSourceView2.source_language_manager ~default:true in
+ source_language_manager#set_search_path
+  (BuildTimeConf.runtime_base_dir ::
+    source_language_manager#search_path);
+ match source_language_manager#language "grafite" with
+ | None ->
+     HLog.error(sprintf "can't load a language file for \"grafite\" in %s"
+      BuildTimeConf.runtime_base_dir);
+     assert false
+ | Some x -> x
+;;

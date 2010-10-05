@@ -887,18 +887,8 @@ class gui () =
           else raise exn);
         (* script *)
       let _ =
-        let source_language_manager =
-         GSourceView2.source_language_manager ~default:true in
-        source_language_manager#set_search_path
-         (BuildTimeConf.runtime_base_dir ::
-           source_language_manager#search_path);
-        match source_language_manager#language "grafite" with
-        | None ->
-            HLog.warn(sprintf "can't load a language file for \"grafite\" in %s"
-              BuildTimeConf.runtime_base_dir)
-        | Some x as matita_lang ->
-            source_buffer#set_language matita_lang;
-            source_buffer#set_highlight_syntax true
+       source_buffer#set_language (Some MatitaGtkMisc.matita_lang);
+       source_buffer#set_highlight_syntax true
       in
       let disableSave () =
         (s())#assignFileName None;
