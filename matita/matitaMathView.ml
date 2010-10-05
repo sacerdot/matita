@@ -205,7 +205,8 @@ object (self)
   initializer
     self#set_font_size !current_font_size;
     self#source_buffer#set_language (Some MatitaGtkMisc.matita_lang);
-    self#source_buffer#set_highlight_syntax true
+    self#source_buffer#set_highlight_syntax true;
+    self#set_editable false
 
 (* MATITA1.0
   inherit GMathViewAux.multi_selection_math_view obj
