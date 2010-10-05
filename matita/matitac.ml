@@ -68,7 +68,6 @@ let main () =
   let bin = Filename.basename Sys.argv.(0) in
   if      Pcre.pmatch ~pat:"^matitadep"    bin then Matitadep.main ()
   else if Pcre.pmatch ~pat:"^matitaclean"  bin then Matitaclean.main ()
-  else if Pcre.pmatch ~pat:"^matitawiki"   bin then MatitaWiki.main ()
   else exit (main_compiler ())
 ;;
 

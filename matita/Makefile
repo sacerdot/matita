@@ -25,7 +25,7 @@ OCAMLOPT = $(OCAMLFIND) opt $(OCAMLC_FLAGS) $(OCAMLOPT_DEBUG_FLAGS)
 OCAMLDEP = $(OCAMLFIND) ocamldep $(OCAMLDEP_FLAGS)
 INSTALL_PROGRAMS= matita matitac
 INSTALL_PROGRAMS_LINKS_MATITA= 
-INSTALL_PROGRAMS_LINKS_MATITAC= matitadep matitaclean matitawiki
+INSTALL_PROGRAMS_LINKS_MATITAC= matitadep matitaclean
 
 MATITA_FLAGS = -noprofile
 NODB=false
@@ -43,7 +43,6 @@ MLI = \
 	matitacLib.mli		\
 	matitaInit.mli		\
 	matitaGtkMisc.mli	\
-	matitaAutoGui.mli	\
 	virtuals.mli 		\
 	matitaScript.mli	\
 	predefined_virtuals.mli \
@@ -58,7 +57,6 @@ CMLI =				\
 	matitaExcPp.mli 	\
 	matitacLib.mli		\
 	matitaInit.mli		\
-	matitaWiki.mli		\
 	$(NULL)
 MAINCMLI =			\
 	matitadep.mli		\
@@ -71,11 +69,10 @@ CML = buildTimeConf.ml $(CMLI:%.mli=%.ml)
 MAINCML = $(MAINCMLI:%.mli=%.ml)
 
 PROGRAMS_BYTE = \
-	matita matitac matitadep matitaclean \
-	matitawiki
+	matita matitac matitadep matitaclean
 PROGRAMS = $(PROGRAMS_BYTE) 
 PROGRAMS_OPT = $(patsubst %,%.opt,$(PROGRAMS_BYTE))
-NOINST_PROGRAMS = dump_moo 
+NOINST_PROGRAMS =
 NOINST_PROGRAMS_OPT = $(patsubst %,%.opt,$(EXTRA_PROGRAMS))
 
 .PHONY: all
@@ -126,13 +123,6 @@ matita.opt: matita.ml $(LIBX_DEPS) $(CMXS)
 	$(H)echo "  OCAMLOPT $<"
 	$(H)$(OCAMLOPT) $(PKGS) -linkpkg -o $@ $(CMXS) matita.ml
 
-dump_moo: dump_moo.ml buildTimeConf.cmo
-	$(H)echo "  OCAMLC $<"
-	$(H)$(OCAMLC) $(PKGS) -linkpkg -o $@ buildTimeConf.cmo $<
-dump_moo.opt: dump_moo.ml buildTimeConf.cmx
-	$(H)echo "OCAMLOPT $<"
-	$(H)$(OCAMLOPT) $(PKGS) -linkpkg -o $@ buildTimeConf.cmx $<
-
 matitac: matitac.ml $(CLIB_DEPS) $(CCMOS) $(MAINCMOS)
 	$(H)echo "  OCAMLC $<"
 	$(H)$(OCAMLC) $(CPKGS) -linkpkg -o $@ $(CCMOS) $(MAINCMOS) matitac.ml
@@ -152,11 +142,6 @@ clean-rottened:
 matitadep: matitac
 	$(H)test -f $@ || ln -s $< $@
 matitadep.opt: matitac.opt
-	$(H)test -f $@ || ln -s $< $@
-
-matitawiki: matitac
-	$(H)test -f $@ || ln -s $< $@
-matitawiki.opt: matitac.opt
 	$(H)test -f $@ || ln -s $< $@
 
 matitaclean: matitac
@@ -338,11 +323,6 @@ matita.opt.static: $(STATIC_LINK) $(LIBX_DEPS) $(CMXS) matita.ml
 		$(OCAMLOPT) $(PKGS) -linkpkg -o $@ $(CMXS) matita.ml \
 		$(STATIC_EXTRA_LIBS)
 	strip $@
-dump_moo.opt.static: $(STATIC_LINK) buildTimeConf.cmx dump_moo.ml
-	$(STATIC_LINK) $(STATIC_CLIBS) -- \
-		$(OCAMLOPT) $(PKGS) -linkpkg -o $@ $^ \
-		$(STATIC_EXTRA_CLIBS)
-	strip $@
 matitac.opt.static: $(STATIC_LINK) $(CLIBX_DEPS) $(CCMXS) $(MAINCMXS) matitac.ml
 	$(STATIC_LINK) $(STATIC_CLIBS) -- \
 		$(OCAMLOPT) $(CPKGS) -linkpkg -o $@ $(CCMXS) $(MAINCMXS) matitac.ml \
@@ -351,8 +331,6 @@ matitac.opt.static: $(STATIC_LINK) $(CLIBX_DEPS) $(CCMXS) $(MAINCMXS) matitac.ml
 matitadep.opt.static: matitac.opt.static
 	$(H)test -f $@ || ln -s $< $@
 matitaclean.opt.static: matitac.opt.static
-	$(H)test -f $@ || ln -s $< $@
-matitawiki.opt.static: matitac.opt.static
 	$(H)test -f $@ || ln -s $< $@
 
 %.upx: %

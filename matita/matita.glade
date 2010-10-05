@@ -1292,19 +1292,6 @@
                               </widget>
                             </child>
                             <child>
-                              <widget class="GtkImageMenuItem" id="showAutoGuiMenuItem">
-                                <property name="visible">True</property>
-                                <property name="tooltip" translatable="yes">Displays a window helpful to drive automation</property>
-                                <property name="label" translatable="yes">Auto GUI</property>
-                                <property name="use_underline">True</property>
-                                <child internal-child="image">
-                                  <widget class="GtkImage" id="menu-item-image19">
-                                    <property name="stock">gtk-media-pause</property>
-                                  </widget>
-                                </child>
-                              </widget>
-                            </child>
-                            <child>
                               <widget class="GtkMenuItem" id="showTermGrammarMenuItem">
                                 <property name="visible">True</property>
                                 <property name="tooltip" translatable="yes">Displays the terms grammar as extended by the user</property>

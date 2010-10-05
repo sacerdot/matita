@@ -1008,8 +1008,6 @@ class gui () =
         (fun _ -> 
           let c = MatitaMathView.cicBrowser () in
           c#load (`About `Hints));
-      connect_menu_item main#showAutoGuiMenuItem 
-        (fun _ -> MatitaAutoGui.auto_dialog Auto.get_auto_status);
       connect_menu_item main#showTermGrammarMenuItem 
         (fun _ -> 
           let c = MatitaMathView.cicBrowser () in
@@ -1379,8 +1377,7 @@ class gui () =
 
     method private updateFontSize () =
       self#sourceView#misc#modify_font_by_name
-        (sprintf "%s %d" BuildTimeConf.script_font font_size);
-      MatitaAutoGui.set_font_size font_size
+        (sprintf "%s %d" BuildTimeConf.script_font font_size)
 
     method increaseFontSize () =
       font_size <- font_size + 1;
