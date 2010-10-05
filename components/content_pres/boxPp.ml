@@ -33,7 +33,7 @@ let string_space = " "
 let string_space_len = String.length string_space
 let string_indent = (* string_space *) ""
 let string_indent_len = String.length string_indent
-let string_ink = "##"
+let string_ink = "---------------------------"
 let string_ink_len = String.length string_ink
 
 let contains_attrs contained container =
