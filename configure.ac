@@ -75,7 +75,6 @@ FINDLIB_COMREQUIRES="\
 helm-disambiguation \
 helm-grafite \
 helm-grafite_engine \
-helm-tptp_grafite \
 helm-ng_disambiguation \
 helm-ng_cic_content \
 helm-grafite_parser \
