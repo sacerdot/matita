@@ -8,7 +8,6 @@ INTERFACE_FILES = \
 	zipTree.mli \
 	andOrTree.mli \
         nnAuto.mli \
-	nAuto.mli \
 	nDestructTac.mli \
 	nInversion.mli
 

@@ -1748,3 +1748,12 @@ let auto_tac ~params:(univ,flags) ?(trace_ref=ref []) status =
     s
 ;;
 
+let auto_tac ~params:(_,flags as params) ?trace_ref =
+  if List.mem_assoc "demod" flags then 
+    demod_tac ~params 
+  else if List.mem_assoc "paramod" flags then 
+    paramod_tac ~params 
+  else if List.mem_assoc "fast_paramod" flags then 
+    fast_eq_check_tac ~params  
+  else auto_tac ~params ?trace_ref
+;;
