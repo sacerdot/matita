@@ -11,7 +11,7 @@ MODULES =			\
 	hgdome			\
 	registry		\
  	hmysql 			\
-	syntax_extensions \
+	syntax_extensions	\
 	thread			\
 	xmldiff			\
 	urimanager		\
@@ -38,7 +38,6 @@ MODULES =			\
 	ng_library 		\
 	content_pres		\
 	lexicon			\
-	tptp_grafite            \
 	grafite_parser          \
 	ng_tactics		\
 	grafite_engine          \
