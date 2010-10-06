@@ -211,8 +211,6 @@ let _ =
       (fun mi () -> MultiPassDisambiguator.only_one_pass := mi#active);
     addDebugCheckbox "tactics logging" 
       (fun mi () -> NTacStatus.debug := mi#active);
-    addDebugCheckbox "auto logging"
-      (fun mi () -> NAuto.debug := mi#active);
     addDebugCheckbox "disambiguation/refiner/unification/metasubst logging"
       (fun mi () -> NCicRefiner.debug := mi#active; NCicUnification.debug :=
               mi#active; MultiPassDisambiguator.debug := mi#active; NCicMetaSubst.debug := mi#active);
