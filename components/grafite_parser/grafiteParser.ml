@@ -520,11 +520,9 @@ EXTEND
   ]
 ];
   auto_fixed_param: [
-   [ IDENT "paramodulation"
-   | IDENT "demod"
+   [ IDENT "demod"
    | IDENT "fast_paramod"
    | IDENT "paramod"
-   | IDENT "slir"
    | IDENT "depth"
    | IDENT "width"
    | IDENT "size"

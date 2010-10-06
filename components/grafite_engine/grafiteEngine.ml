@@ -778,9 +778,9 @@ let eval_ng_tac tac =
           (text,prefix_len,concl))
        ) seqs)
   | GrafiteAst.NAuto (_loc, (None,a)) -> 
-      NAuto.auto_tac ~params:(None,a) ?trace_ref:None
+      NnAuto.auto_tac ~params:(None,a) ?trace_ref:None
   | GrafiteAst.NAuto (_loc, (Some l,a)) ->
-      NAuto.auto_tac
+      NnAuto.auto_tac
 	~params:(Some List.map (fun x -> "",0,x) l,a) ?trace_ref:None
   | GrafiteAst.NBranch _ -> NTactics.branch_tac ~force:false
   | GrafiteAst.NCases (_loc, what, where) ->
