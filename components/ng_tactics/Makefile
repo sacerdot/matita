@@ -5,8 +5,6 @@ INTERFACE_FILES = \
 	nTacStatus.mli \
 	nCicElim.mli \
 	nTactics.mli \
-	zipTree.mli \
-	andOrTree.mli \
         nnAuto.mli \
 	nDestructTac.mli \
 	nInversion.mli
