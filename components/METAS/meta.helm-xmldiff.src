@@ -1,4 +1,0 @@
-requires="gdome2"
-version="0.0.1"
-archive(byte)="xmldiff.cma"
-archive(native)="xmldiff.cmxa"

@@ -13,7 +13,6 @@ MODULES =			\
 	hmysql 			\
 	syntax_extensions	\
 	thread			\
-	xmldiff			\
 	urimanager		\
 	logger			\
 	getter			\

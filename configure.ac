@@ -90,7 +90,6 @@ FINDLIB_REQUIRES="\
 $FINDLIB_CREQUIRES \
 lablgtk2.glade \
 lablgtksourceview2.gtksourceview2 \
-helm-xmldiff \
 "
 for r in $FINDLIB_LIBSREQUIRES $FINDLIB_REQUIRES
 do
