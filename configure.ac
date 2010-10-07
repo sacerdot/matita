@@ -82,7 +82,6 @@ helm-content_pres \
 helm-hgdome \
 helm-ng_paramodulation \
 helm-ng_tactics \
-helm-cic_exportation \
 "
 FINDLIB_CREQUIRES=" \
 $FINDLIB_COMREQUIRES \

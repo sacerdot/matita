@@ -2,8 +2,6 @@ PACKAGE = ng_library
 PREDICATES =
 
 INTERFACE_FILES = \
-	nCic2OCic.mli \
-	oCic2NCic.mli  \
 	nCicLibrary.mli
 
 IMPLEMENTATION_FILES = \
@@ -14,10 +12,10 @@ EXTRA_OBJECTS_TO_CLEAN =
 %.cmi: OCAMLOPTIONS += -w Ae
 %.cmx: OCAMLOPTIONS += -w Ae
 
-all: rt check
+all:
 %: %.ml $(PACKAGE).cma
 	$(OCAMLC) -package helm-$(PACKAGE) -linkpkg -o $@ $<
-all.opt opt: rt.opt check.opt
+all.opt opt:
 %.opt: %.ml $(PACKAGE).cmxa
 	$(OCAMLOPT) -package helm-$(PACKAGE) -linkpkg -o $@ $<
 

@@ -3,7 +3,7 @@ H=@
 #CSC: saturate is broken after the huge refactoring of auto/paramodulation
 #CSC: by Andrea
 #BINARIES=extractor  table_creator  utilities saturate
-BINARIES=extractor  table_creator  utilities transcript heights
+BINARIES=transcript heights
 
 all: $(BINARIES:%=rec@all@%) 
 opt: $(BINARIES:%=rec@opt@%)

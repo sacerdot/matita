@@ -85,6 +85,8 @@ val nast_of_cic :
 
 type id = string
 
+val hide_coercions: bool ref
+
 val nmap_sequent:
  #NCicCoercion.status -> metasenv:NCic.metasenv -> subst:NCic.substitution ->
   int * NCic.conjecture ->

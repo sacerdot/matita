@@ -82,13 +82,9 @@ let add_aliases_for_object status uri =
   | Cic.CurrentProof _ -> assert false
   
 let add_aliases_for_objs status =
- function
-    `Old uris ->
-      List.fold_left
-       (fun status uri ->
-         let obj,_ = CicEnvironment.get_obj CicUniv.oblivion_ugraph uri in
-          add_aliases_for_object status uri obj) status uris
-  | `New nrefs ->
+  function
+   `Old _ -> assert false (* MATITA 1.0 *)
+ | `New nrefs ->
      List.fold_left
       (fun status nref ->
         let references = NCicLibrary.aliases_of nref in

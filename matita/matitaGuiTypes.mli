@@ -130,11 +130,9 @@ object
   inherit clickableMathView
 
     (** load a sequent and render it into parent widget *)
-  method load_sequent: Cic.metasenv -> int -> unit
   method nload_sequent:
    #NCicCoercion.status -> NCic.metasenv -> NCic.substitution -> int -> unit
 
-  method load_object: Cic.obj -> unit
   method load_nobject: #NCicCoercion.status -> NCic.obj -> unit
 end
 

@@ -3,13 +3,10 @@ PREDICATES =
 
 INTERFACE_FILES =		\
 	content.mli		\
-	acic2content.mli	\
-	content2cic.mli		\
 	cicNotationUtil.mli	\
 	cicNotationEnv.mli	\
 	cicNotationPp.mli	\
-	acic2astMatcher.mli	\
-	termAcicContent.mli	\
+	termAcicContent.mli \
 	$(NULL)
 IMPLEMENTATION_FILES =		\
 	cicNotationPt.ml	\

@@ -67,7 +67,7 @@ let eval_ast ?do_heavy_checks status (text,prefix_len,ast) =
      | G.Executable (_, G.Command (_, G.Coercion _)) when dump ->
 (* FG: some commands can not be executed when mmas are parsed *************)
 (* To be removed when mmas will be executed                               *)
-        status, `Old []
+        status, `New []
      | ast -> 
   GrafiteEngine.eval_ast
    ~disambiguate_command:(disambiguate_command lexicon_status_ref)
@@ -87,18 +87,11 @@ let eval_ast ?do_heavy_checks status (text,prefix_len,ast) =
      let v = LexiconAst.description_of_alias value in
      let b =
       try
-       (* this hack really sucks! *)
-       UriManager.buri_of_uri (UriManager.uri_of_string v) = baseuri
+       let NReference.Ref (uri,_) = NReference.reference_of_string v in
+        NUri.baseuri_of_uri uri = baseuri
       with
-       UriManager.IllFormedUri _ ->
-        try
-         (* this too! *)
-         let NReference.Ref (uri,_) = NReference.reference_of_string v in
-         let ouri = NCic2OCic.ouri_of_nuri uri in
-          UriManager.buri_of_uri ouri = baseuri
-        with
-         NReference.IllFormedReference _ ->
-          false (* v is a description, not a URI *)
+       NReference.IllFormedReference _ ->
+        false (* v is a description, not a URI *)
      in
       if b then 
        status,acc

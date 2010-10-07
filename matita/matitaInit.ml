@@ -97,8 +97,6 @@ let initialize_db init_status =
   wants [ ConfigurationFile; CmdLine ] init_status;
   if not (already_configured [ Db ] init_status) then
     begin
-      if not (Helm_registry.get_bool "matita.system") then
-        MetadataTypes.ownerize_tables (Helm_registry.get "matita.owner");
       LibraryDb.create_owner_environment ();
       Db::init_status
     end
@@ -112,11 +110,6 @@ let initialize_environment init_status =
       Http_getter.init ();
       if Helm_registry.get_bool "matita.system" then
         Http_getter_storage.activate_system_mode ();
-      CicEnvironment.set_trust (* environment trust *)
-        (let trust =
-          Helm_registry.get_opt_default Helm_registry.get_bool
-            ~default:true "matita.environment_trust" in
-         fun _ -> trust);
       Getter::Environment::init_status
     end
   else
@@ -293,7 +286,5 @@ let initialize_environment () =
   status := initialize_environment !status
 
 let _ =
-  CicFix.init ();
-  CicRecord.init ();
-  CicElim.init ()
+  CicFix.init ()
 ;;

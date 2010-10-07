@@ -32,12 +32,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-val content2pres:
-  ?skip_initial_lambdas:int -> ?skip_thm_and_qed:bool ->
-  ids_to_inner_sorts:(Cic.id, CicNotationPt.sort_kind) Hashtbl.t ->
-  Cic.annterm Content.cobj ->
-    CicNotationPres.boxml_markup
-
 val ncontent2pres:
   ?skip_initial_lambdas:int -> ?skip_thm_and_qed:bool ->
   ids_to_nrefs:(NTermCicContent.id, NReference.reference) Hashtbl.t ->

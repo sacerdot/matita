@@ -46,6 +46,7 @@ let safe_buri_of_suri suri =
     UM.IllFormedUri _ -> suri
 
 let one_step_depend cache_of_processed_baseuri suri dbtype dbd =
+  assert false (* MATITA 1.0
   let buri = safe_buri_of_suri suri in
   if Hashtbl.mem cache_of_processed_baseuri buri then 
     []
@@ -90,8 +91,10 @@ let one_step_depend cache_of_processed_baseuri suri dbtype dbd =
       with
         exn -> raise exn (* no errors should be accepted *)
     end
+    *)
     
 let db_uris_of_baseuri buri =
+  [] (* MATITA 1.0
  let dbd = LibraryDb.instance () in
  let dbtype = 
    if Helm_registry.get_bool "matita.system" then HSql.Library else HSql.User
@@ -122,6 +125,7 @@ let db_uris_of_baseuri buri =
   HExtlib.list_uniq l
  with
   exn -> raise exn (* no errors should be accepted *)
+  *)
 ;;
 
 let close_uri_list cache_of_processed_baseuri uri_to_remove =
@@ -214,6 +218,7 @@ let moo_root_dir = lazy (
 ;;
 
 let clean_baseuris ?(verbose=true) buris =
+  prerr_endline "CLEAN_BASEURIS to be removed MATITA 1.0"; (* MATITA 1.0
   let cache_of_processed_baseuri = Hashtbl.create 1024 in
   let dbd = LibraryDb.instance () in
   let dbtype = 
@@ -273,3 +278,4 @@ let clean_baseuris ?(verbose=true) buris =
        MetadataTypes.count_tbl()]
     end
    end
+   *)

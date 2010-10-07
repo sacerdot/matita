@@ -8,8 +8,6 @@ INTERFACE_FILES = \
 	coercDb.mli \
 	cicCoercion.mli \
 	librarySync.mli \
-	cicElim.mli \
-	cicRecord.mli \
 	cicFix.mli \
 	libraryClean.mli \
 	$(NULL)

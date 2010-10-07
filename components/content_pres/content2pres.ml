@@ -897,20 +897,6 @@ let params2pres params =
       let params = spatiate (List.map param2pres p) in
       [B.b_space;
        B.b_h [] (B.b_text [] "[" :: params @ [ B.b_text [] "]" ])]
-
-let recursion_kind2pres params kind =
-  let kind =
-    match kind with
-    | `Recursive _ -> "Recursive definition"
-    | `CoRecursive -> "CoRecursive definition"
-    | `Inductive i -> 
-        "Inductive definition with "^string_of_int i^" fixed parameter(s)"
-    | `CoInductive i -> 
-        "Co-Inductive definition with "^string_of_int i^" fixed parameter(s)"
-  in
-  B.b_h [] (B.b_kw kind :: params2pres params)
-;;
-
 let inductive2pres term2pres ind =
   let constructor2pres decl =
     B.b_h [] [
@@ -970,12 +956,6 @@ let definition2pres ?recno term2pres d =
    B.b_h [] [B.b_space;term2pres body] ]
 ;;
 
-let joint_def2pres ?recno term2pres def =
-  match def with
-  | `Inductive ind -> inductive2pres term2pres ind
-  | _ -> assert false
-;;
-
 let njoint_def2pres ?recno term2pres def =
   match def with
   | `Inductive ind -> inductive2pres term2pres ind
@@ -1011,63 +991,6 @@ let njoint_def2pres term2pres joint_kind defs =
             if i > 0 then [B.b_kw " and ";x] else [x])
           (List.map (njoint_def2pres term2pres) defs)))
 ;;
-
-let content2pres0
-  ?skip_initial_lambdas ?(skip_thm_and_qed=false) term2pres 
-  (id,params,metasenv,obj) 
-=
-  match obj with
-  | `Def (Content.Const, thesis, `Proof p) ->
-      let name = get_name p.Content.proof_name in
-      let proof = proof2pres true term2pres ?skip_initial_lambdas p in
-      if skip_thm_and_qed then
-        proof
-      else
-      B.b_v
-        [Some "helm","xref","id"]
-        ([ B.b_h [] (B.b_kw ("theorem " ^ name) :: 
-          params2pres params @ [B.b_kw ":"]);
-           B.H ([],[B.indent (term2pres thesis) ; B.b_kw "." ])] @
-         metasenv2pres term2pres metasenv @
-         [proof ; B.b_kw "qed."])
-  | `Def (_, ty, `Definition body) ->
-      let name = get_name body.Content.def_name in
-      B.b_v
-        [Some "helm","xref","id"]
-        ([B.b_h []
-           (B.b_kw ("definition " ^ name) :: params2pres params @ [B.b_kw ":"]);
-          B.indent (term2pres ty)] @
-          metasenv2pres term2pres metasenv @
-          [B.b_kw ":=";
-           B.indent (term2pres body.Content.def_term);
-           B.b_kw "."])
-  | `Decl (_, `Declaration decl)
-  | `Decl (_, `Hypothesis decl) ->
-      let name = get_name decl.Content.dec_name in
-      B.b_v
-        [Some "helm","xref","id"]
-        ([B.b_h [] (B.b_kw ("axiom " ^ name) :: params2pres params);
-          B.b_kw "Type:";
-          B.indent (term2pres decl.Content.dec_type)] @
-          metasenv2pres term2pres metasenv)
-  | `Joint joint ->
-      B.b_v []
-        (recursion_kind2pres params joint.Content.joint_kind
-        :: List.map (joint_def2pres term2pres) joint.Content.joint_defs)
-  | _ -> raise ToDo
-
-let content2pres 
-  ?skip_initial_lambdas ?skip_thm_and_qed ~ids_to_inner_sorts 
-=
-  content2pres0 ?skip_initial_lambdas ?skip_thm_and_qed
-    (fun ?(prec=90) annterm ->
-      let ast, ids_to_uris =
-       TermAcicContent.ast_of_acic ~output_type:`Term ids_to_inner_sorts annterm
-      in
-       CicNotationPres.box_of_mpres
-        (CicNotationPres.render
-          ~lookup_uri:(CicNotationPres.lookup_uri ids_to_uris) ~prec
-          (TermContentPres.pp_ast ast)))
 
 let ncontent2pres0
   ?skip_initial_lambdas ?(skip_thm_and_qed=false) term2pres 

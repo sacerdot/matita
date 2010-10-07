@@ -18,10 +18,6 @@ MODULES =			\
 	logger			\
 	getter			\
 	cic			\
-	cic_proof_checking	\
-	cic_acic		\
-	cic_exportation		\
-	metadata		\
 	library			\
 	ng_kernel		\
 	acic_content		\

@@ -74,6 +74,7 @@ let paths_and_uris_of_obj uri =
   xmlunivgraphpath, univgraphuri
 
 let save_object_to_disk uri obj ugraph univlist =
+  assert false (*
   let write f x =
     if not (Helm_registry.get_opt_default 
               Helm_registry.bool "matita.nodisk" ~default:false) 
@@ -135,18 +136,25 @@ let save_object_to_disk uri obj ugraph univlist =
          write (Xml.pp ~gzip:true bodyxml) (Some xmlbodypath);
          [bodyuri, xmlbodypath]
      | _-> assert false) 
+     *)
 
 
 let typecheck_obj =
  let profiler = HExtlib.profile "add_obj.typecheck_obj" in
-  fun uri obj -> profiler.HExtlib.profile (CicTypeChecker.typecheck_obj uri) obj
+  fun uri obj ->
+  assert false (* MATITA 1.0
+     profiler.HExtlib.profile (CicTypeChecker.typecheck_obj uri) obj
+  *)
 
 let index_obj =
  let profiler = HExtlib.profile "add_obj.index_obj" in
   fun ~dbd ~uri ->
+  assert false (* MATITA 1.0
    profiler.HExtlib.profile (fun uri -> MetadataDb.index_obj ~dbd ~uri) uri
+   *)
 
 let remove_obj uri =
+  assert false (* MATITA 1.0
   let derived_uris_of_uri uri =
    let innertypesuri, bodyuri, univgraphuri = uris_of_obj uri in
     innertypesuri::univgraphuri::(match bodyuri with None -> [] | Some u -> [u])
@@ -166,8 +174,10 @@ let remove_obj uri =
   List.iter (fun uri -> ignore (LibraryDb.remove_uri uri)) uris_to_remove ;
   CicEnvironment.remove_obj uri
 ;;
+*)
 
 let rec add_obj uri obj ~pack_coercion_obj =
+  assert false (* MATITA 1.0
   let obj = 
     if CoercDb.is_a_coercion (Cic.Const (uri, [])) = None
     then pack_coercion_obj obj
@@ -217,10 +227,12 @@ let rec add_obj uri obj ~pack_coercion_obj =
     CoercDb.restore old_db;
     raise exn
   (* /ATOMIC *)
+    *)
 
 and
  add_coercion ~add_composites ~pack_coercion_obj uri arity saturations baseuri 
 =
+  assert false (* MATITA 1.0
   let coer_ty,_ =
     let coer = CicUtil.term_of_uri uri in
     CicTypeChecker.type_of_aux' [] [] coer CicUniv.oblivion_ugraph 
@@ -369,6 +381,7 @@ and
     CoercDb.add_coercion (src_carr, tgt_carr, uri, saturations, cpos);
 (*     CoercDb.prefer uri; *)
     lemmas
+    *)
 ;;
 
     

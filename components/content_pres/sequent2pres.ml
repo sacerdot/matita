@@ -95,17 +95,6 @@ let sequent2pres0 term2pres (_,_,context,ty) =
        Box.b_space; 
        pres_goal]))])
 
-let sequent2pres ~ids_to_inner_sorts =
-  sequent2pres0
-    (fun annterm ->
-      let ast, ids_to_uris =
-       TermAcicContent.ast_of_acic ~output_type:`Term ids_to_inner_sorts annterm
-      in
-      CicNotationPres.box_of_mpres
-        (CicNotationPres.render
-          ~lookup_uri:(CicNotationPres.lookup_uri ids_to_uris)
-          (TermContentPres.pp_ast ast)))
-
 let nsequent2pres ~ids_to_nrefs ~subst =
  let lookup_uri id =
   try

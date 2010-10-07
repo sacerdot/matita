@@ -20,6 +20,10 @@ let name_of_uri (_, uri) =
   Filename.chop_extension name
 ;;
 
+let baseuri_of_uri (_,uri) =
+ Filename.dirname uri
+;;
+
 module OrderedStrings =
  struct
   type t = string

@@ -44,22 +44,6 @@ let concat_nuris uris nuris =
    | `New uris, `New nuris -> `New (nuris@uris)
    | _ -> assert false
 ;;
-(** create a ProofEngineTypes.mk_fresh_name_type function which uses given
-  * names as long as they are available, then it fallbacks to name generation
-  * using FreshNamesGenerator module *)
-let namer_of names =
-  let len = List.length names in
-  let count = ref 0 in
-  fun metasenv context name ~typ ->
-    if !count < len then begin
-      let name = match List.nth names !count with
-         | Some s -> Cic.Name s
-	 | None   -> Cic.Anonymous
-      in
-      incr count;
-      name
-    end else
-      FreshNamesGenerator.mk_fresh_name ~subst:[] metasenv context name ~typ
 
 type eval_ast =
  {ea_go:
@@ -302,7 +286,7 @@ let eval_add_constraint status u1 u2 =
  let status = basic_eval_add_constraint (u1,u2) status in
  let dump = inject_constraint (u1,u2)::status#dump in
  let status = status#set_dump dump in
-  status,`Old []
+  status,`New []
 ;;
 
 let add_coercions_of_lemmas lemmas status =
@@ -686,7 +670,7 @@ let rec eval_command = {ec_go = fun ~disambiguate_command opts status
   match cmd with
   | GrafiteAst.Default (loc, what, uris) as cmd ->
      LibraryObjects.set_default what uris;
-     GrafiteTypes.add_moo_content [cmd] status,`Old []
+     GrafiteTypes.add_moo_content [cmd] status,`New []
   | GrafiteAst.Drop loc -> raise Drop
   | GrafiteAst.Include (loc, mode, new_or_old, baseuri) ->
      (* Old Include command is not recursive; new one is *)
@@ -713,9 +697,9 @@ let rec eval_command = {ec_go = fun ~disambiguate_command opts status
        GrafiteTypes.add_moo_content
         [GrafiteAst.Include (loc,mode,`New,baseuri)] status
       in
-       status,`Old []
-  | GrafiteAst.Print (_,_) -> status,`Old []
-  | GrafiteAst.Set (loc, name, value) -> status, `Old []
+       status,`New []
+  | GrafiteAst.Print (_,_) -> status,`New []
+  | GrafiteAst.Set (loc, name, value) -> status, `New []
 (*       GrafiteTypes.set_option status name value,[] *)
   | GrafiteAst.Obj (loc,obj) -> (* MATITA 1.0 *) assert false
  in
@@ -761,7 +745,7 @@ let rec eval_command = {ec_go = fun ~disambiguate_command opts status
          ~disambiguate_macro:(fun _ _ -> assert false)
          status ast
       in
-       assert (lemmas=`Old []);
+       assert (lemmas=`New []);
        status)
     status moo
 } and eval_ast = {ea_go = fun ~disambiguate_command
@@ -776,7 +760,7 @@ let rec eval_command = {ec_go = fun ~disambiguate_command opts status
   | GrafiteAst.Comment (_,c) -> 
       eval_comment.ecm_go ~disambiguate_command opts status (text,prefix_len,c) 
 } and eval_comment = { ecm_go = fun ~disambiguate_command opts status (text,prefix_len,c) -> 
-    status, `Old []
+    status, `New []
 }
 ;;
 

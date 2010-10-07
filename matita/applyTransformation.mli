@@ -33,17 +33,6 @@
 (*                                                                         *)
 (***************************************************************************)
 
-val mml_of_cic_sequent:
- Cic.metasenv ->                              (* metasenv *)
- Cic.conjecture ->                            (* sequent *)
-  Gdome.document *                              (* Math ML *)
-   Cic.conjecture *                             (* unshared sequent *)
-   (Cic.annconjecture *                         (* annsequent *)
-    ((Cic.id, Cic.term) Hashtbl.t *             (* id -> term *)
-     (Cic.id, Cic.id option) Hashtbl.t *        (* id -> father id *)
-     (Cic.id, Cic.hypothesis) Hashtbl.t *       (* id -> hypothesis *)
-     (Cic.id, Cic2acic.sort_kind) Hashtbl.t))   (* ids_to_inner_sorts *)
-
 val nmml_of_cic_sequent:
  #NCicCoercion.status ->
  NCic.metasenv -> NCic.substitution ->          (* metasenv, substitution *)
@@ -57,65 +46,7 @@ val ntxt_of_cic_sequent:
  int * NCic.conjecture ->                       (* sequent *)
   string                                        (* text *)
 
-val mml_of_cic_object:
-  Cic.obj ->                                  (* object *)
-    Gdome.document *                            (* Math ML *)
-     (Cic.annobj *                              (* annobj *)
-      ((Cic.id, Cic.term) Hashtbl.t *           (* id -> term *)
-       (Cic.id, Cic.id option) Hashtbl.t *      (* id -> father id *)
-       (Cic.id, Cic.conjecture) Hashtbl.t *     (* id -> conjecture *)
-       (Cic.id, Cic.hypothesis) Hashtbl.t *     (* id -> hypothesis *)
-       (Cic.id, Cic2acic.sort_kind) Hashtbl.t * (* ids_to_inner_sorts *)
-       (Cic.id, Cic2acic.anntypes) Hashtbl.t))  (* ids_to_inner_types *)
-
 val nmml_of_cic_object: #NCicCoercion.status -> NCic.obj -> Gdome.document
 
 val ntxt_of_cic_object:
  map_unicode_to_tex:bool -> int -> #NCicCoercion.status -> NCic.obj -> string
-
-val txt_of_cic_sequent_all:
- map_unicode_to_tex:bool -> int ->
- Cic.metasenv ->                              (* metasenv *)
- Cic.conjecture ->                            (* sequent *)
-  string *                                    (* text *)
-   Cic.conjecture *                             (* unshared sequent *)
-   (Cic.annconjecture *                         (* annsequent *)
-    ((Cic.id, Cic.term) Hashtbl.t *             (* id -> term *)
-     (Cic.id, Cic.id option) Hashtbl.t *        (* id -> father id *)
-     (Cic.id, Cic.hypothesis) Hashtbl.t *       (* id -> hypothesis *)
-     (Cic.id, Cic2acic.sort_kind) Hashtbl.t))   (* ids_to_inner_sorts *)
-
-val txt_of_cic_term: 
-  map_unicode_to_tex:bool -> int -> Cic.metasenv -> Cic.context -> Cic.term ->
-   string 
-val txt_of_cic_sequent: 
-  map_unicode_to_tex:bool -> int -> Cic.metasenv -> Cic.conjecture -> string
-val txt_of_cic_sequent_conclusion: 
-  map_unicode_to_tex:bool -> output_type:[`Pattern | `Term] -> int ->
-   Cic.metasenv -> Cic.conjecture -> string
-
-(* columns, params, object *)
-val txt_of_cic_object: 
-  map_unicode_to_tex:bool -> 
-  ?skip_thm_and_qed:bool -> ?skip_initial_lambdas:int -> 
-  int -> GrafiteAst.inline_param list -> Cic.obj ->
-    string
-
-val txt_of_cic_object_all: 
-  map_unicode_to_tex:bool -> 
-  ?skip_thm_and_qed:bool -> ?skip_initial_lambdas:int -> 
-  int -> GrafiteAst.inline_param list -> Cic.obj ->
-    string *                                    (* text *)
-     (Cic.annobj *                              (* annobj *)
-      ((Cic.id, Cic.term) Hashtbl.t *           (* id -> term *)
-       (Cic.id, Cic.id option) Hashtbl.t *      (* id -> father id *)
-       (Cic.id, Cic.conjecture) Hashtbl.t *     (* id -> conjecture *)
-       (Cic.id, Cic.hypothesis) Hashtbl.t *     (* id -> hypothesis *)
-       (Cic.id, Cic2acic.sort_kind) Hashtbl.t * (* ids_to_inner_sorts *)
-       (Cic.id, Cic2acic.anntypes) Hashtbl.t))  (* ids_to_inner_types *)
-
-val txt_of_macro:
-  map_unicode_to_tex:bool ->
-    Cic.metasenv ->
-    Cic.context ->
-    (Cic.term, Cic.lazy_term) GrafiteAst.macro -> string

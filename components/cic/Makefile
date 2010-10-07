@@ -11,7 +11,8 @@ INTERFACE_FILES = \
 	libraryObjects.mli      \
 	cic_indexable.mli \
 	path_indexing.mli       \
-	cicInspect.mli
+	cicInspect.mli \
+	cicPp.mli
 IMPLEMENTATION_FILES = \
 	cic.ml $(INTERFACE_FILES:%.mli=%.ml)
 EXTRA_OBJECTS_TO_INSTALL = cic.ml cic.cmi

@@ -60,7 +60,7 @@ let instance =
 let xpointer_RE = Pcre.regexp "#.*$"
 let file_scheme_RE = Pcre.regexp "^file://"
 
-let clean_owner_environment () =
+let clean_owner_environment () = assert false (* MATITA 1.0
   let dbd = instance () in
   let obj_tbl = MetadataTypes.obj_tbl () in
   let sort_tbl = MetadataTypes.sort_tbl () in
@@ -107,9 +107,10 @@ let clean_owner_environment () =
       | HSql.No_such_index -> ()
       | _ -> raise exn
     ) statements;
+    *)
 ;;
 
-let create_owner_environment () = 
+let create_owner_environment () = () (* MATITA 1.0
   let dbd = instance () in
   let obj_tbl = MetadataTypes.obj_tbl () in
   let sort_tbl = MetadataTypes.sort_tbl () in
@@ -151,6 +152,7 @@ let create_owner_environment () =
               raise exc
           | _ -> ())
   statements
+  *)
 ;;
 
 (* removes uri from the ownerized tables, and returns the list of other objects
@@ -159,7 +161,7 @@ let create_owner_environment () =
  * contain all defined objects. but to double check we do not garbage the
  * metadata...
  *)
-let remove_uri uri =
+let remove_uri uri = assert false (* MATITA 1.0
   let obj_tbl = MetadataTypes.obj_tbl () in
   let sort_tbl = MetadataTypes.sort_tbl () in
   let rel_tbl = MetadataTypes.rel_tbl () in
@@ -188,9 +190,10 @@ let remove_uri uri =
       exn -> raise exn (* no errors should be accepted *)
     )
   [obj_tbl;sort_tbl;rel_tbl;name_tbl;(*conclno_tbl;conclno_hyp_tbl*)count_tbl];
+  *)
 ;;
 
-let xpointers_of_ind uri =
+let xpointers_of_ind uri = assert false (* MATITA 1.0
   let dbd = instance () in
   let name_tbl =  MetadataTypes.name_tbl () in
   let dbtype = 
@@ -209,4 +212,4 @@ let xpointers_of_ind uri =
   let l = ref [] in
   HSql.iter rc (fun a ->  match a.(0) with None ->()|Some a -> l := a:: !l);
   List.map UriManager.uri_of_string !l
-
+*)

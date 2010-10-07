@@ -34,6 +34,8 @@ let debug_print s = if debug then prerr_endline (Lazy.force s) else ()
 
 type id = string
 
+let hide_coercions = ref true;;
+
 (*
 type interpretation_id = int
 
@@ -143,7 +145,7 @@ let nast_of_cic0 status
          | Some n -> idref (Ast.Num (string_of_int n, -1))
          | None ->
             let args =
-             if not !Acic2content.hide_coercions then args
+             if not !hide_coercions then args
              else
               match
                NCicCoercion.match_coercion status ~metasenv ~context ~subst t

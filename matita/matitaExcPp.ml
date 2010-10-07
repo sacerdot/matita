@@ -122,8 +122,6 @@ let rec to_string =
   | CicNotationParser.Parse_error err ->
       None, sprintf "Parse error: %s" err
   | UriManager.IllFormedUri uri -> None, sprintf "invalid uri: %s" uri
-  | CicEnvironment.Object_not_found uri ->
-      None, sprintf "object not found: %s" (UriManager.string_of_uri uri)
   | Unix.Unix_error (code, api, param) ->
       let err = Unix.error_message code in
       None, "Unix Error (" ^ api ^ "): " ^ err
@@ -159,10 +157,6 @@ let rec to_string =
      None, "NCicUnification failure: " ^ Lazy.force msg
   | NCicUnification.Uncertain msg ->
      None, "NCicUnification uncertain: " ^ Lazy.force msg
-  | CicTypeChecker.TypeCheckerFailure msg ->
-     None, "Type checking error: " ^ Lazy.force msg
-  | CicTypeChecker.AssertFailure msg ->
-     None, "Type checking assertion failed: " ^ Lazy.force msg
   | LibrarySync.AlreadyDefined s -> 
      None, "Already defined: " ^ UriManager.string_of_uri s
   | DisambiguateChoices.Choice_not_found msg ->

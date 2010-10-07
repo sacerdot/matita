@@ -55,23 +55,6 @@ let uris_for_inductive_type uri obj =
     | _ -> [uri] 
 ;;
 
-let is_equational_fact ty =
-  let rec aux ctx t = 
-    match CicReduction.whd ctx t with 
-    | Cic.Prod (name,src,tgt) ->
-        let s,u = 
-          CicTypeChecker.type_of_aux' [] ctx src CicUniv.oblivion_ugraph
-        in
-        if fst (CicReduction.are_convertible ctx s (Cic.Sort Cic.Prop) u) then
-          false
-        else
-          aux (Some (name,Cic.Decl src)::ctx) tgt
-    | Cic.Appl [ Cic.MutInd (u,_,_) ; _; _; _] -> LibraryObjects.is_eq_URI u
-    | _ -> false
-  in 
-    aux [] ty
-;;
-    
 let add_coercion ~pack_coercion_obj ~add_composites status uri arity
  saturations baseuri
 =

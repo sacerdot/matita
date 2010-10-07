@@ -15,6 +15,7 @@ type uri
 
 val string_of_uri: uri -> string
 val name_of_uri: uri -> string
+val baseuri_of_uri: uri -> string
 val uri_of_string: string -> uri
 val eq: uri -> uri -> bool
 val compare: uri -> uri -> int

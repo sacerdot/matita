@@ -140,6 +140,8 @@ let get_include_paths options =
 ;;
 
 let activate_extraction baseuri fname =
+  ()
+  (* MATITA 1.0
  if Helm_registry.get_bool "matita.extract" then
   let mangled_baseuri =
    let baseuri = String.sub baseuri 5 (String.length baseuri - 5) in
@@ -152,6 +154,7 @@ let activate_extraction baseuri fname =
     (fun ~add_obj ~add_coercion _ obj ->
       output_string f (CicExportation.ppobj baseuri obj);
       flush f; []);
+      *)
 ;;
 
 let compile atstart options fname =

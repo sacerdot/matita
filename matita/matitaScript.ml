@@ -191,7 +191,6 @@ let eval_nmacro include_paths (buffer : GText.buffer) guistuff grafite_status us
   | TA.NAutoInteractive (_, (Some _,_)) -> assert false
 
 let rec eval_macro include_paths (buffer : GText.buffer) guistuff grafite_status user_goal unparsed_text parsed_text script mac =
-  let module CTC = CicTypeChecker in
   (* no idea why ocaml wants this *)
   let parsed_text_length = String.length parsed_text in
   let dbd = LibraryDb.instance () in

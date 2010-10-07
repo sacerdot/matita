@@ -64,6 +64,7 @@ let rec get_nth l n =
 (* name associated to the greatest DeBrujin index in t                     *)
 let pp ?metasenv =
 let rec pp t l =
+  assert false (* MATITA 1.0
  let module C = Cic in
    match t with
       C.Rel n ->
@@ -248,6 +249,7 @@ and pp_exp_named_subst exp_named_subst l =
      (function (uri,t) -> UriManager.name_of_uri uri ^ " \\Assign " ^ pp t l)
      exp_named_subst
    ) ^ "]"
+ *)
 in
  pp
 ;;
@@ -400,6 +402,7 @@ let legal_suffix string =
     string_name is here a pair (last,string_name).*)
 
 let rec check_rec ctx string_name =
+  assert false (*
   function
     | Cic.Rel m -> 
 	(match List.nth ctx (m-1) with
@@ -463,6 +466,7 @@ let rec check_rec ctx string_name =
         in
         List.fold_right 
 	  (fun (_,_,bo) s -> check_rec (onames@ctx) s bo) fl string_name
+    *)
 
 let check_name ?(allow_suffix=false) ctx name term =
   let (_,tail) = check_rec ctx ("",name) term in

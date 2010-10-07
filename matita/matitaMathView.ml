@@ -89,6 +89,7 @@ let closed_goal_mathml = lazy "chiuso per side effect..."
 
 (* ids_to_terms should not be passed here, is just for debugging *)
 let find_root_id annobj id ids_to_father_ids ids_to_terms ids_to_inner_types =
+  assert false (* MATITA 1.0
   let find_parent id ids =
     let rec aux id =
 (*       (prerr_endline (sprintf "id %s = %s" id
@@ -128,6 +129,7 @@ let find_root_id annobj id ids_to_father_ids ids_to_terms ids_to_inner_types =
       return_father id (mk_ids (ty::inner_types))
   | Cic.AInductiveDefinition _ ->
       assert false  (* TODO *)
+      *)
 
   (** @return string content of a dom node having a single text child node, e.g.
    * <m:mi xlink:href="...">bool</m:mi> *)
@@ -613,27 +615,6 @@ object (self)
 
   val mutable current_mathml = None
 
-  method load_sequent metasenv metano =
-    let sequent = CicUtil.lookup_meta metano metasenv in
-    let (txt, unsh_sequent,
-      (_, (ids_to_terms, ids_to_father_ids, ids_to_hypotheses,_ )))
-    =
-      ApplyTransformation.txt_of_cic_sequent_all
-       ~map_unicode_to_tex:false 80 (*MATITA 1.0??*) metasenv sequent
-    in
-    self#set_cic_info
-      (Some (Some unsh_sequent,
-        ids_to_terms, ids_to_hypotheses, ids_to_father_ids,
-        Hashtbl.create 1, None));
-   (*MATITA 1.0
-    if BuildTimeConf.debug then begin
-      let name =
-       "/tmp/sequent_viewer_" ^ string_of_int (Unix.getuid ()) ^ ".xml" in
-      HLog.debug ("load_sequent: dumping MathML to ./" ^ name);
-      ignore (domImpl#saveDocumentToFile ~name ~doc:txt ())
-    end; *)
-    self#load_root ~root:txt
-
   method nload_sequent:
    'status. #NCicCoercion.status as 'status -> NCic.metasenv ->
      NCic.substitution -> int -> unit
@@ -650,32 +631,6 @@ object (self)
       ignore (domImpl#saveDocumentToFile ~name ~doc:mathml ())
     end;*)
     self#load_root ~root:txt
-
-  method load_object obj =
-    let use_diff = false in (* ZACK TODO use XmlDiff when re-rendering? *)
-    let (txt,
-      (annobj, (ids_to_terms, ids_to_father_ids, _, ids_to_hypotheses, _, ids_to_inner_types)))
-    =
-      ApplyTransformation.txt_of_cic_object_all ~map_unicode_to_tex:false
-       80 [] obj
-    in
-    self#set_cic_info
-      (Some (None, ids_to_terms, ids_to_hypotheses, ids_to_father_ids, ids_to_inner_types, Some annobj));
-    (match current_mathml with
-    | Some current_mathml when use_diff ->
-assert false (*MATITA1.0
-        self#freeze;
-        XmlDiff.update_dom ~from:current_mathml mathml;
-        self#thaw*)
-    |  _ ->
-        (* MATITA1.0 if BuildTimeConf.debug then begin
-          let name =
-           "/tmp/cic_browser_" ^ string_of_int (Unix.getuid ()) ^ ".xml" in
-          HLog.debug ("cic_browser: dumping MathML to ./" ^ name);
-          ignore (domImpl#saveDocumentToFile ~name ~doc:mathml ())
-        end;*)
-        self#load_root ~root:txt;
-        current_mathml <- Some txt);
 
   method load_nobject :
    'status. #NCicCoercion.status as 'status -> NCic.obj -> unit
@@ -855,7 +810,7 @@ class sequentsViewer ~(notebook:GPack.notebook) ~(cicMathView:cicMathView) () =
       (match goal_switch with
       | Stack.Open goal ->
          (match _metasenv with
-             `Old menv -> cicMathView#load_sequent menv goal
+             `Old menv -> assert false (* MATITA 1.0 *)
            | `New (menv,subst) ->
                cicMathView#nload_sequent status menv subst goal)
       | Stack.Closed goal ->
@@ -1036,7 +991,6 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
   object (self)
     inherit scriptAccessor
     
-    val mutable gviz_graph = MetadataDeps.DepGraph.dummy
     val mutable gviz_uri = UriManager.uri_of_string "cic:/dummy.con";
 
     val dep_contextual_menu = GMenu.menu ()
@@ -1096,27 +1050,6 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
         match self#currentCicUri with
         | Some uri -> self#load (`Univs uri)
         | None -> ());
-
-      (* fill dep graph contextual menu *)
-      let go_menu_item =
-        GMenu.image_menu_item ~label:"Browse it"
-          ~packing:dep_contextual_menu#append () in
-      let expand_menu_item =
-        GMenu.image_menu_item ~label:"Expand"
-          ~packing:dep_contextual_menu#append () in
-      let collapse_menu_item =
-        GMenu.image_menu_item ~label:"Collapse"
-          ~packing:dep_contextual_menu#append () in
-      dep_contextual_menu#append (go_menu_item :> GMenu.menu_item);
-      dep_contextual_menu#append (expand_menu_item :> GMenu.menu_item);
-      dep_contextual_menu#append (collapse_menu_item :> GMenu.menu_item);
-      connect_menu_item go_menu_item (fun () -> self#load (`Uri gviz_uri));
-      connect_menu_item expand_menu_item (fun () ->
-        MetadataDeps.DepGraph.expand gviz_uri gviz_graph;
-        self#redraw_gviz ~center_on:gviz_uri ());
-      connect_menu_item collapse_menu_item (fun () ->
-        MetadataDeps.DepGraph.collapse gviz_uri gviz_graph;
-        self#redraw_gviz ~center_on:gviz_uri ());
 
       self#_load (`About `Blank);
       toplevel#show ()
@@ -1210,9 +1143,9 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
                self#_loadTermNCic term metasenv subst ctx
           | `Dir dir -> self#_loadDir dir
           | `HBugs `Tutors -> self#_loadHBugsTutors
-          | `Uri uri -> self#_loadUriManagerUri uri
+          | `Uri uri -> assert false (* MATITA 1.0 *)
           | `NRef nref -> self#_loadNReference nref
-          | `Univs uri -> self#_loadUnivs uri);
+          | `Univs uri -> assert false (* MATITA 1.0 *));
           self#setEntry entry
         end)
 
@@ -1232,7 +1165,7 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
       if Sys.command "which dot" = 0 then
        let tmpfile, oc = Filename.open_temp_file "matita" ".dot" in
        let fmt = Format.formatter_of_out_channel oc in
-       MetadataDeps.DepGraph.render fmt gviz_graph;
+       (* MATITA 1.0 MetadataDeps.DepGraph.render fmt gviz_graph;*)
        close_out oc;
        gviz#load_graph_from_file ~gviz_cmd:"tred | dot" tmpfile;
        (match center_on with
@@ -1246,6 +1179,7 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
         ~parent:win#toplevel ()
 
     method private dependencies direction uri () =
+      assert false (* MATITA 1.0
       let dbd = LibraryDb.instance () in
       let graph =
         match direction with
@@ -1253,7 +1187,7 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
         | `Back -> MetadataDeps.DepGraph.inverse_deps ~dbd uri in
       gviz_graph <- graph;  (** XXX check this for memory consuption *)
       self#redraw_gviz ~center_on:uri ();
-      self#_showGviz
+      self#_showGviz *)
 
     method private coerchgraph tred () =
       load_coerchgraph tred ();
@@ -1310,29 +1244,10 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
            self#script#grafite_status#obj
        | _ -> self#blank ()
 
-      (** loads a cic uri from the environment
-      * @param uri UriManager.uri *)
-    method private _loadUriManagerUri uri =
-      let uri = UriManager.strip_xpointer uri in
-      let (obj, _) = CicEnvironment.get_obj CicUniv.empty_ugraph uri in
-      self#_loadObj obj
-
     method private _loadNReference (NReference.Ref (uri,_)) =
       let obj = NCicEnvironment.get_checked_obj uri in
       self#_loadNObj self#script#grafite_status obj
 
-    method private _loadUnivs uri =
-      let uri = UriManager.strip_xpointer uri in
-      let (_, u) = CicEnvironment.get_obj CicUniv.empty_ugraph uri in
-      let _,us = CicUniv.do_rank u in
-      let l = 
-        List.map 
-          (fun u -> 
-           [ CicUniv.string_of_universe u ; string_of_int (CicUniv.get_rank u)])
-          us 
-      in
-      self#_loadList2 l
-      
     method private _loadDir dir = 
       let content = Http_getter.ls ~local:false dir in
       let l =
@@ -1353,13 +1268,6 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
     method private setEntry entry =
       win#browserUri#set_text (MatitaTypes.string_of_entry entry);
       current_entry <- entry
-
-    method private _loadObj obj =
-      (* showMath must be done _before_ loading the document, since if the
-       * widget is not mapped (hidden by the notebook) the document is not
-       * rendered *)
-      self#_showMath;
-      mathView#load_object obj
 
     method private _loadNObj status obj =
       (* showMath must be done _before_ loading the document, since if the

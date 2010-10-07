@@ -32,11 +32,6 @@
 (*                                                                         *)
 (***************************************************************************)
 
-val sequent2pres :
-  ids_to_inner_sorts:(Cic.id, CicNotationPt.sort_kind) Hashtbl.t ->
-  Cic.annterm Content.conjecture ->
-    CicNotationPres.boxml_markup
-
 val nsequent2pres :
  ids_to_nrefs:(NTermCicContent.id, NReference.reference) Hashtbl.t ->
  subst:NCic.substitution -> CicNotationPt.term Content.conjecture ->

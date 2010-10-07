@@ -163,7 +163,7 @@ let _ =
       (fun mi () -> NCicRefiner.debug := mi#active; NCicUnification.debug :=
               mi#active; MultiPassDisambiguator.debug := mi#active; NCicMetaSubst.debug := mi#active);
     addDebugCheckbox "reduction logging"
-      (fun mi () -> NCicReduction.debug := mi#active; CicReduction.ndebug := mi#active);
+      (fun mi () -> NCicReduction.debug := mi#active);
     addDebugSeparator ();
     addDebugItem "Expand virtuals"
     (fun _ -> (MatitaScript.current ())#expandAllVirtuals);

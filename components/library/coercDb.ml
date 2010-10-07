@@ -70,6 +70,7 @@ let string_of_carr = function
 ;;
 
 let eq_carr ?(exact=false) src tgt =
+  assert false (* MATITA 1.0
   match src, tgt with
   | Uri src, Uri tgt -> 
       let coarse_eq = UriManager.eq src tgt in
@@ -83,6 +84,7 @@ let eq_carr ?(exact=false) src tgt =
   | Fun _,Fun _ when not exact -> true (* only one Funclass *)
   | Fun i,Fun j when i = j -> true (* only one Funclass *)
   | _, _ -> false
+  *)
 ;;
 
 let to_list db =

@@ -1,4 +1,0 @@
-requires="helm-cic_proof_checking"
-version="0.0.1"
-archive(byte)="cic_acic.cma"
-archive(native)="cic_acic.cmxa"

@@ -8,6 +8,7 @@ libraryObjects.cmi:
 cic_indexable.cmi: cic.cmx 
 path_indexing.cmi: cic.cmx 
 cicInspect.cmi: cic.cmx 
+cicPp.cmi: cic.cmx 
 cic.cmo: cicUniv.cmi 
 cic.cmx: cicUniv.cmx 
 cicUniv.cmo: cicUniv.cmi 
@@ -30,3 +31,5 @@ path_indexing.cmo: cic.cmx path_indexing.cmi
 path_indexing.cmx: cic.cmx path_indexing.cmi 
 cicInspect.cmo: cic.cmx cicInspect.cmi 
 cicInspect.cmx: cic.cmx cicInspect.cmi 
+cicPp.cmo: cicUtil.cmi cicUniv.cmi cic.cmx cicPp.cmi 
+cicPp.cmx: cicUtil.cmx cicUniv.cmx cic.cmx cicPp.cmi 

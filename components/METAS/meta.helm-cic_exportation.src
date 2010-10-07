@@ -1,5 +1,0 @@
-requires="helm-cic_acic"
-version="0.0.1"
-archive(byte)="cic_exportation.cma"
-archive(native)="cic_exportation.cmxa"
-linkopts=""

@@ -867,7 +867,7 @@ class gui () =
           | false ->
               CicNotation.set_active_notations []);
       MatitaGtkMisc.toggle_callback ~check:main#hideCoercionsMenuItem
-        ~callback:(fun enabled -> Acic2content.hide_coercions := enabled);
+        ~callback:(fun enabled -> NTermCicContent.hide_coercions := enabled);
       MatitaGtkMisc.toggle_callback ~check:main#unicodeAsTexMenuItem
         ~callback:(fun enabled ->
           Helm_registry.set_bool "matita.paste_unicode_as_tex" enabled);

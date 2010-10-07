@@ -385,15 +385,8 @@ let get_obj u =
   with Sys_error _ ->
    try NUri.UriMap.find u !cache
    with Not_found ->
-    let ouri = NCic2OCic.ouri_of_nuri u in
-    try
-      let o,_ = CicEnvironment.get_obj CicUniv.oblivion_ugraph ouri in
-      let l = OCic2NCic.convert_obj ouri o in
-      List.iter (fun (u,_,_,_,_ as o) -> cache:= NUri.UriMap.add u o !cache) l;
-      HExtlib.list_last l
-    with CicEnvironment.Object_not_found u -> 
-      raise (NCicEnvironment.ObjectNotFound 
-               (lazy (NUri.string_of_uri (OCic2NCic.nuri_of_ouri u))))
+    raise (NCicEnvironment.ObjectNotFound 
+             (lazy (NUri.string_of_uri u)))
 ;;
 
 let clear_cache () = cache := NUri.UriMap.empty;;

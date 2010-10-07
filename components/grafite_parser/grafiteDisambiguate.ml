@@ -71,13 +71,8 @@ let ncic_mk_choice = function
   | LexiconAst.Ident_alias (name, uri) -> 
      uri, `Sym_interp 
       (fun l->assert(l = []);
-        try
-         let nref = NReference.reference_of_string uri in
-          NCic.Const nref
-        with
-         NReference.IllFormedReference _ ->
-          let uri = UriManager.uri_of_string uri in
-           fst (OCic2NCic.convert_term uri (CicUtil.term_of_uri uri)))
+        let nref = NReference.reference_of_string uri in
+         NCic.Const nref)
 ;;
 
 
@@ -203,7 +198,7 @@ let disambiguate_nobj estatus ?baseuri (text,prefix_len,obj) =
      | CicNotationPt.Theorem (_,name,_,_,_) -> name ^ ".con"
      | CicNotationPt.Inductive _ -> assert false
    in
-     UriManager.uri_of_string (baseuri ^ "/" ^ name)
+     NUri.uri_of_string (baseuri ^ "/" ^ name)
   in
   let diff, _, _, cic =
    singleton "third"
@@ -212,7 +207,7 @@ let disambiguate_nobj estatus ?baseuri (text,prefix_len,obj) =
       ~description_of_alias:LexiconAst.description_of_alias
       ~mk_choice:ncic_mk_choice
       ~mk_implicit ~fix_instance
-      ~uri:(OCic2NCic.nuri_of_ouri uri)
+      ~uri
       ~rdb:estatus
       ~aliases:estatus#lstatus.LexiconEngine.aliases
       ~universe:(Some estatus#lstatus.LexiconEngine.multi_aliases) 
