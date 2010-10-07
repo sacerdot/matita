@@ -320,31 +320,6 @@ let add_coercions_of_lemmas lemmas status =
    status#set_coercions (CoercDb.dump ()), 
   lemmas
 
-let eval_coercion status ~add_composites uri arity saturations =
- let uri = 
-   try CicUtil.uri_of_term uri 
-   with Invalid_argument _ -> 
-     raise (Invalid_argument "coercion can only be constants/constructors")
- in
- let status, lemmas =
-  GrafiteSync.add_coercion ~add_composites 
-    ~pack_coercion_obj:CicRefine.pack_coercion_obj
-   status uri arity saturations status#baseuri in
- let moo_content = coercion_moo_statement_of (uri,arity,saturations,0) in
- let status = GrafiteTypes.add_moo_content [moo_content] status in 
-  add_coercions_of_lemmas lemmas status
-
-let eval_prefer_coercion status c =
- let uri = 
-   try CicUtil.uri_of_term c 
-   with Invalid_argument _ -> 
-     raise (Invalid_argument "coercion can only be constants/constructors")
- in
- let status = GrafiteSync.prefer_coercion status uri in
- let moo_content = GrafiteAst.PreferCoercion (HExtlib.dummy_floc,c) in
- let status = GrafiteTypes.add_moo_content [moo_content] status in 
- status, `Old []
-
 let eval_ng_punct (_text, _prefix_len, punct) =
   match punct with
   | GrafiteAst.Dot _ -> NTactics.dot_tac 
@@ -709,13 +684,6 @@ let rec eval_command = {ec_go = fun ~disambiguate_command opts status
  let status,cmd = disambiguate_command status (text,prefix_len,cmd) in
  let status,uris =
   match cmd with
-  | GrafiteAst.PreferCoercion (loc, coercion) ->
-     eval_prefer_coercion status coercion
-  | GrafiteAst.Coercion (loc, uri, add_composites, arity, saturations) ->
-     let res,uris =
-      eval_coercion status ~add_composites uri arity saturations
-     in
-      res,`Old uris
   | GrafiteAst.Default (loc, what, uris) as cmd ->
      LibraryObjects.set_default what uris;
      GrafiteTypes.add_moo_content [cmd] status,`Old []

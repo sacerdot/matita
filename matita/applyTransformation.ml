@@ -157,44 +157,6 @@ let txt_of_cic_term ~map_unicode_to_tex size metasenv context t =
    metasenv fake_sequent 
 ;;
 
-ignore (
- CicMetaSubst.set_ppterm_in_context
-  (fun ~metasenv subst term context ->
-    try
-     let context' = CicMetaSubst.apply_subst_context subst context in
-     let metasenv = CicMetaSubst.apply_subst_metasenv subst metasenv in
-     let term' = CicMetaSubst.apply_subst subst term in
-     let res =
-      txt_of_cic_term
-       ~map_unicode_to_tex:(Helm_registry.get_bool "matita.paste_unicode_as_tex")
-       30 metasenv context' term' in
-      if String.contains res '\n' then
-       "\n" ^ res ^ "\n"
-      else
-       res
-    with
-       Sys.Break as exn -> raise exn
-     | exn ->
-        "[[ Exception raised during pretty-printing: " ^
-         (try
-           Printexc.to_string exn
-          with
-             Sys.Break as exn -> raise exn
-           | _ -> "<<exception raised pretty-printing the exception>>"
-         ) ^ " ]] " ^
-        (CicMetaSubst.use_low_level_ppterm_in_context := true;
-         try
-          let res =
-           CicMetaSubst.ppterm_in_context ~metasenv subst term context
-          in
-           CicMetaSubst.use_low_level_ppterm_in_context := false;
-           res
-         with
-          exc -> 
-           CicMetaSubst.use_low_level_ppterm_in_context := false;
-           raise exc))
-);;
-
 (****************************************************************************)
 (* txt_of_cic_object: IMPROVE ME *)
 
@@ -349,68 +311,6 @@ let discharge_uri params uri =
    UM.uri_of_string s
 
 let discharge_name s = s ^ "_discharged"
-
-let txt_of_inline_uri ~map_unicode_to_tex params suri =
-(*   
-   Ds.debug := true;
-*)
-   let print_exc = Printexc.to_string in
-   let dbd = LibraryDb.instance () in   
-   let sorted_uris = MetadataDeps.sorted_uris_of_baseuri ~dbd suri in
-   let error uri e =
-      let msg  = 
-         Printf.sprintf 
-            "ERROR IN THE GENERATION OF %s\nEXCEPTION: %s" 
-            (UM.string_of_uri uri) e
-      in
-      Printf.eprintf "%s\n" msg;
-      GrafiteTypes.command_error msg
-   in
-   let map uri =
-      Librarian.time_stamp "AT: BEGIN MAP";
-      try
-(* FG: for now the explicit variables must be discharged *)
-        let do_it obj =
-	   let r = txt_of_cic_object ~map_unicode_to_tex 78 params obj in
-	   Librarian.time_stamp "AT: END MAP  "; r
-	in
-	let obj, real = 
-	   let s = UM.string_of_uri uri in
-	   if Str.string_match matita_prefix s 0 then begin
-	      Librarian.time_stamp "AT: GETTING OBJECT";
-	      let obj, _ = E.get_obj Un.default_ugraph uri in
-	      Librarian.time_stamp "AT: DONE          ";
-              obj, true
-	   end else
-	      Ds.discharge_uri discharge_name (discharge_uri params) uri
-	in
-	if real then do_it obj else
-	let newuri = discharge_uri params uri in
-	let _lemmas = LS.add_obj ~pack_coercion_obj:CicRefine.pack_coercion_obj newuri obj in
-	do_it obj
-      with
-         | TC.TypeCheckerFailure s ->
-	    error uri ("failure  : " ^ Lazy.force s)
-         | TC.AssertFailure s      ->
-	    error uri ("assert   : " ^ Lazy.force s)
-         | E.Object_not_found u    ->
-	    error uri ("not found: " ^ UM.string_of_uri u)
-	 | e                       -> error uri (print_exc e)
-   in
-   String.concat "" (List.map map sorted_uris)
-
-let txt_of_inline_macro ~map_unicode_to_tex params name =
-   let suri = 
-      if Librarian.is_uri name then name else
-      let include_paths = 
-         Helm_registry.get_list Helm_registry.string "matita.includes"
-      in
-      let _, baseuri, _, _ = 
-         Librarian.baseuri_of_script ~include_paths name
-      in
-      baseuri ^ "/"
-   in
-   txt_of_inline_uri ~map_unicode_to_tex params suri
 
 let txt_of_macro ~map_unicode_to_tex metasenv context m =
    GrafiteAstPp.pp_macro

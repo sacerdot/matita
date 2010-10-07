@@ -114,11 +114,6 @@ val txt_of_cic_object_all:
        (Cic.id, Cic2acic.sort_kind) Hashtbl.t * (* ids_to_inner_sorts *)
        (Cic.id, Cic2acic.anntypes) Hashtbl.t))  (* ids_to_inner_types *)
 
-(* params, uri or baseuri *)
-val txt_of_inline_macro:
-  map_unicode_to_tex:bool -> GrafiteAst.inline_param list -> string ->
-    string
-
 val txt_of_macro:
   map_unicode_to_tex:bool ->
     Cic.metasenv ->

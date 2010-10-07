@@ -70,13 +70,6 @@ let dump f =
    let nl () =  output_string och (pp_statement nl_ast) in
    MatitaMisc.out_preamble och;
    let grafite_parser_cb = function
-      | G.Executable (_, G.Macro (_, G.Inline (_, uri, params))) ->
-         let str =
-            ApplyTransformation.txt_of_inline_macro params uri
-	       ~map_unicode_to_tex:
-	          (Helm_registry.get_bool "matita.paste_unicode_as_tex")
-	 in
-         output_string och str
       | G.Executable (loc, G.Command (_, G.Include (_, false, _, _))) -> ()
       | stm ->
          output_string och (pp_statement stm); nl (); nl ()

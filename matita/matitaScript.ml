@@ -224,14 +224,6 @@ let rec eval_macro include_paths (buffer : GText.buffer) guistuff grafite_status
       guistuff.mathviewer#show_entry (`Cic (t_and_ty,metasenv));
       [(grafite_status#set_proof_status No_proof), parsed_text ],"", 
         parsed_text_length *)
-  | TA.Inline (_, suri, params) ->
-       let str = "\n\n" ^ 
-         ApplyTransformation.txt_of_inline_macro
-          ~map_unicode_to_tex:(Helm_registry.get_bool
-            "matita.paste_unicode_as_tex")
-          params suri 
-       in
-       [], str, String.length parsed_text
                                 
 and eval_executable include_paths (buffer : GText.buffer) guistuff
 grafite_status user_goal unparsed_text skipped_txt nonskipped_txt

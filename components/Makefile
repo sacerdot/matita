@@ -26,7 +26,6 @@ MODULES =			\
 	ng_kernel		\
 	acic_content		\
 	grafite			\
-	cic_unification		\
 	disambiguation	        \
 	ng_kernel               \
 	ng_refiner              \

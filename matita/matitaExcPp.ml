@@ -134,9 +134,6 @@ let rec to_string =
       sprintf "format/version mismatch for file '%s', please recompile it'"
         fname
   | Continuationals.Error s -> None, "Tactical error: " ^ Lazy.force s
-  | CicRefine.RefineFailure msg
-  | CicRefine.AssertFailure msg ->
-     None, "Refiner error: " ^ Lazy.force msg
   | NCicRefiner.RefineFailure msg ->
      None, "NRefiner failure: " ^ snd (Lazy.force msg)
   | NCicRefiner.Uncertain msg ->

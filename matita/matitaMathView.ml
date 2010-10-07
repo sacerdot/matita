@@ -1023,12 +1023,6 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
       let status = (MatitaScript.current ())#grafite_status in
       NCicCoercion.generate_dot_file status fmt;
       Pp.trailer fmt;
-      Pp.header 
-        ~name:"OLDCoercions"
-        ~node_attrs:["fontsize", "9"; "width", ".4"; "height", ".4"]
-        ~edge_attrs:["fontsize", "10"] fmt;
-      CoercGraph.generate_dot_file fmt;
-      Pp.trailer fmt;
       Pp.raw "@." fmt;
       close_out oc;
       if tred then
@@ -1042,8 +1036,6 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
   object (self)
     inherit scriptAccessor
     
-    (* Whelp bar queries *)
-
     val mutable gviz_graph = MetadataDeps.DepGraph.dummy
     val mutable gviz_uri = UriManager.uri_of_string "cic:/dummy.con";
 

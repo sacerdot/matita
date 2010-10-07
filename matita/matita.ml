@@ -148,7 +148,7 @@ let _ =
 *)
     addDebugSeparator ();
     addDebugCheckbox "high level pretty printer" ~init:true
-      (fun mi () -> CicMetaSubst.use_low_level_ppterm_in_context := mi#active);
+      (fun mi () -> assert false (* MATITA 1.0 *));
     addDebugSeparator ();
     addDebugItem "always show all disambiguation errors"
       (fun _ -> MatitaGui.all_disambiguation_passes := true);
