@@ -1,4 +1,0 @@
-requires="helm-extlib helm-cic_proof_checking helm-cic_unification"
-version="0.0.1"
-archive(byte)="tactics.cma"
-archive(native)="tactics.cmxa"

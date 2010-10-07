@@ -143,8 +143,6 @@ object
   method reset: unit
   method load_logo: unit
   method load_logo_with_qed: unit
-  method load_sequents:
-   #NCicCoercion.status -> GrafiteTypes.incomplete_proof -> unit
   method nload_sequents: #NTacStatus.tac_status -> unit
   method goto_sequent:
    #NCicCoercion.status -> int -> unit (* to be called _after_ load_sequents *)

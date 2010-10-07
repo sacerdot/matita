@@ -1,6 +1,7 @@
 PACKAGE = ng_tactics
 
 INTERFACE_FILES = \
+  continuationals.mli \
 	nCicTacReduction.mli \
 	nTacStatus.mli \
 	nCicElim.mli \

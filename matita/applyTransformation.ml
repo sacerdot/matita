@@ -44,9 +44,7 @@ module G  = GrafiteAst
 module GE = GrafiteEngine
 module LS = LibrarySync
 module Ds = CicDischarge
-module PO = ProceduralOptimizer
 module N = CicNotationPt
-module A2P = Acic2Procedural
 
 let mpres_document pres_box =
   Xml.add_xml_declaration (CicNotationPres.print_box pres_box)
@@ -356,11 +354,7 @@ let txt_of_inline_uri ~map_unicode_to_tex params suri =
 (*   
    Ds.debug := true;
 *)
-   let print_exc = function
-      | ProofEngineHelpers.Bad_pattern s as e ->
-           Printexc.to_string e ^ " " ^ Lazy.force s
-      | e -> Printexc.to_string e
-   in
+   let print_exc = Printexc.to_string in
    let dbd = LibraryDb.instance () in   
    let sorted_uris = MetadataDeps.sorted_uris_of_baseuri ~dbd suri in
    let error uri e =
@@ -417,31 +411,6 @@ let txt_of_inline_macro ~map_unicode_to_tex params name =
       baseuri ^ "/"
    in
    txt_of_inline_uri ~map_unicode_to_tex params suri
-
-(****************************************************************************)
-(* procedural_txt_of_cic_term *)
-
-let procedural_txt_of_cic_term ~map_unicode_to_tex n params context term =
-  let term, _info = PO.optimize_term context term in
-  let annterm, ids_to_inner_sorts, ids_to_inner_types = 
-     try Cic2acic.acic_term_of_cic_term context term
-     with e -> 
-        let msg = "procedural_txt_of_cic_term: " ^ Printexc.to_string e in
-        failwith msg
-  in
-  let term_pp = term2pres ~map_unicode_to_tex (n - 8) ids_to_inner_sorts in
-  let lazy_term_pp = term_pp in
-  let obj_pp = CicNotationPp.pp_obj term_pp in
-  let aux = GrafiteAstPp.pp_statement
-     ~map_unicode_to_tex ~term_pp ~lazy_term_pp ~obj_pp in
-  let script = 
-     A2P.procedural_of_acic_term 
-        ~ids_to_inner_sorts ~ids_to_inner_types params context annterm 
-  in
-  String.concat "" (List.map aux script)
-;;
-
-(****************************************************************************)
 
 let txt_of_macro ~map_unicode_to_tex metasenv context m =
    GrafiteAstPp.pp_macro

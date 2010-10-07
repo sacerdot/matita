@@ -37,9 +37,8 @@ type lazy_tactic =
 val disambiguate_command: 
  LexiconEngine.status as 'status ->
  ?baseuri:string ->
- Cic.metasenv ->
  ((CicNotationPt.term,CicNotationPt.term CicNotationPt.obj) GrafiteAst.command) Disambiguate.disambiguator_input ->
-  'status * Cic.metasenv * (Cic.term,Cic.obj) GrafiteAst.command
+  'status * (Cic.term,Cic.obj) GrafiteAst.command
 
 val disambiguate_nterm :
  NCic.term option -> 

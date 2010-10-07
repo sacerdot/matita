@@ -124,9 +124,3 @@ val txt_of_macro:
     Cic.metasenv ->
     Cic.context ->
     (Cic.term, Cic.lazy_term) GrafiteAst.macro -> string
-
-(* columns, rendering depth, context, term *)
-val procedural_txt_of_cic_term: 
-  map_unicode_to_tex:bool -> int -> GrafiteAst.inline_param list -> 
-  Cic.context -> Cic.term ->
-    string

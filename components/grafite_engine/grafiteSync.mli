@@ -23,11 +23,6 @@
  * http://helm.cs.unibo.it/
  *)
 
-val add_obj:
-  pack_coercion_obj:(Cic.obj -> Cic.obj) ->
-  UriManager.uri -> Cic.obj -> GrafiteTypes.status ->
-   GrafiteTypes.status * UriManager.uri list
-
 val add_coercion:
   pack_coercion_obj:(Cic.obj -> Cic.obj) ->
   add_composites:bool -> GrafiteTypes.status ->

@@ -294,7 +294,6 @@ let initialize_environment () =
 
 let _ =
   CicFix.init ();
-  Inversion_principle.init ();
   CicRecord.init ();
   CicElim.init ()
 ;;

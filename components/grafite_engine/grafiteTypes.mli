@@ -31,30 +31,15 @@ exception Command_error of string
 
 val command_error: string -> 'a   (** @raise Command_error *)
 
-type incomplete_proof = {
-  proof: ProofEngineTypes.proof;
-  stack: Continuationals.Stack.t;
-}
-
-type proof_status =
-    No_proof
-  | Incomplete_proof of incomplete_proof
-  | Proof of ProofEngineTypes.proof
-  | Intermediate of Cic.metasenv
-
 class status :
  string ->
   object ('self)
    method moo_content_rev: GrafiteMarshal.moo
    method set_moo_content_rev: GrafiteMarshal.moo -> 'self
-   method proof_status: proof_status
-   method set_proof_status: proof_status -> 'self
    method objects: UriManager.uri list
    method set_objects: UriManager.uri list -> 'self
    method coercions: CoercDb.coerc_db
    method set_coercions: CoercDb.coerc_db -> 'self
-   method automation_cache:AutomationCache.cache
-   method set_automation_cache:AutomationCache.cache -> 'self  
    method baseuri: string
    method set_baseuri: string -> 'self
    method ng_mode: [`ProofMode | `CommandMode]
@@ -67,12 +52,3 @@ val dump_status : status -> unit
 
   (** list is not reversed, head command will be the first emitted *)
 val add_moo_content: GrafiteMarshal.ast_command list -> status -> status
-
-val get_current_proof: status -> ProofEngineTypes.proof
-val get_proof_metasenv: status ->  Cic.metasenv
-val get_stack: status -> Continuationals.Stack.t
-val get_proof_context : status -> int -> Cic.context
-val get_proof_conclusion : status -> int -> Cic.term
-
-val set_stack: Continuationals.Stack.t -> status -> status
-val set_metasenv: Cic.metasenv -> status -> status

@@ -98,13 +98,7 @@ let dump f =
    end
 ;;
 
-let get_macro_context = function
-   | Some status when status#proof_status = GrafiteTypes.No_proof -> []
-   | Some status                ->
-      let stack = GrafiteTypes.get_stack status in
-      let goal = Continuationals.Stack.find_goal stack in
-      GrafiteTypes.get_proof_context status goal
-   | None                       -> assert false
+let get_macro_context = function _ -> []
 ;;
    
 let pp_times fname rc big_bang big_bang_u big_bang_s = 
@@ -256,20 +250,10 @@ let compile atstart options fname =
        aux_for_dump print_cb grafite_status
     in
     let elapsed = Unix.time () -. time in
-    let proof_status,moo_content_rev,lexicon_content_rev = 
-      grafite_status#proof_status, grafite_status#moo_content_rev, 
+    let moo_content_rev,lexicon_content_rev = 
+      grafite_status#moo_content_rev, 
        grafite_status#lstatus.LexiconEngine.lexicon_content_rev
     in
-    if proof_status <> GrafiteTypes.No_proof then
-     (HLog.error
-      "there are still incomplete proofs at the end of the script"; 
-     pp_times fname false big_bang big_bang_u big_bang_s;
-(*
-     LexiconSync.time_travel 
-       ~present:lexicon_status ~past:initial_lexicon_status;
-*)
-     clean_exit baseuri false)
-    else
      (if Helm_registry.get_bool "matita.moo" then begin
         (* FG: we do not generate .moo when dumping .mma files *)
         GrafiteMarshal.save_moo moo_fname moo_content_rev;

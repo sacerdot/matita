@@ -25,8 +25,6 @@
 
 (* $Id$ *)
 
-module PEH = ProofEngineHelpers
-
 exception Drop
 (* mo file name, ma file name *)
 exception IncludedFileNotCompiled of string * string 
@@ -63,348 +61,9 @@ let namer_of names =
     end else
       FreshNamesGenerator.mk_fresh_name ~subst:[] metasenv context name ~typ
 
-let rec tactic_of_ast status ast =
-  let module PET = ProofEngineTypes in
-  match ast with
-  (* Higher order tactics *)
-  | GrafiteAst.Do (loc, n, tactic) ->
-     Tacticals.do_tactic n (tactic_of_ast status tactic)
-  | GrafiteAst.Seq (loc, tactics) ->  (* tac1; tac2; ... *)
-     Tacticals.seq (List.map (tactic_of_ast status) tactics)
-  | GrafiteAst.Repeat (loc, tactic) ->
-     Tacticals.repeat_tactic (tactic_of_ast status tactic)
-  | GrafiteAst.Then (loc, tactic, tactics) ->  (* tac; [ tac1 | ... ] *)
-     Tacticals.thens
-      (tactic_of_ast status tactic)
-      (List.map (tactic_of_ast status) tactics)
-  | GrafiteAst.First (loc, tactics) ->
-     Tacticals.first (List.map (tactic_of_ast status) tactics)
-  | GrafiteAst.Try (loc, tactic) ->
-     Tacticals.try_tactic (tactic_of_ast status tactic)
-  | GrafiteAst.Solve (loc, tactics) ->
-     Tacticals.solve_tactics (List.map (tactic_of_ast status) tactics)
-  | GrafiteAst.Progress (loc, tactic) ->
-     Tacticals.progress_tactic (tactic_of_ast status tactic)
-  (* First order tactics *)
-  | GrafiteAst.Absurd (_, term) -> Tactics.absurd term
-  | GrafiteAst.Apply (_, term) -> Tactics.apply term
-  | GrafiteAst.ApplyRule (_, term) -> Tactics.apply term
-  | GrafiteAst.ApplyP (_, term) -> Tactics.applyP term
-  | GrafiteAst.ApplyS (_, term, params) ->
-     Tactics.applyS ~term ~params ~dbd:(LibraryDb.instance ())
-       ~automation_cache:status#automation_cache
-  | GrafiteAst.Assumption _ -> Tactics.assumption
-  | GrafiteAst.AutoBatch (_,params) ->
-      Tactics.auto ~params ~dbd:(LibraryDb.instance ()) 
-	~automation_cache:status#automation_cache
-  | GrafiteAst.Cases (_, what, pattern, (howmany, names)) ->
-      Tactics.cases_intros ?howmany ~mk_fresh_name_callback:(namer_of names)
-        ~pattern what
-  | GrafiteAst.Change (_, pattern, with_what) ->
-     Tactics.change ~pattern with_what
-  | GrafiteAst.Clear (_,id) -> Tactics.clear id
-  | GrafiteAst.ClearBody (_,id) -> Tactics.clearbody id
-  | GrafiteAst.Compose (_,t1,t2,times,(howmany, names)) -> 
-      Tactics.compose times t1 t2 ?howmany
-        ~mk_fresh_name_callback:(namer_of names)
-  | GrafiteAst.Contradiction _ -> Tactics.contradiction
-  | GrafiteAst.Constructor (_, n) -> Tactics.constructor n
-  | GrafiteAst.Cut (_, ident, term) ->
-     let names = match ident with None -> [] | Some id -> [Some id] in
-     Tactics.cut ~mk_fresh_name_callback:(namer_of names) term
-  | GrafiteAst.Decompose (_, names) ->
-      let mk_fresh_name_callback = namer_of names in
-      Tactics.decompose ~mk_fresh_name_callback ()
-  | GrafiteAst.Demodulate (_, params) -> 
-      Tactics.demodulate 
-	~dbd:(LibraryDb.instance ()) ~params 
-          ~automation_cache:status#automation_cache
-  | GrafiteAst.Destruct (_,xterms) -> Tactics.destruct xterms
-  | GrafiteAst.Elim (_, what, using, pattern, (depth, names)) ->
-      Tactics.elim_intros ?using ?depth ~mk_fresh_name_callback:(namer_of names)
-        ~pattern what
-  | GrafiteAst.ElimType (_, what, using, (depth, names)) ->
-      Tactics.elim_type ?using ?depth ~mk_fresh_name_callback:(namer_of names)
-        what
-  | GrafiteAst.Exact (_, term) -> Tactics.exact term
-  | GrafiteAst.Exists _ -> Tactics.exists
-  | GrafiteAst.Fail _ -> Tactics.fail
-  | GrafiteAst.Fold (_, reduction_kind, term, pattern) ->
-      let reduction =
-        match reduction_kind with
-        | `Normalize ->
-            PET.const_lazy_reduction
-              (CicReduction.normalize ~delta:false ~subst:[])
-        | `Simpl -> PET.const_lazy_reduction ProofEngineReduction.simpl
-        | `Unfold None ->
-            PET.const_lazy_reduction (ProofEngineReduction.unfold ?what:None)
-        | `Unfold (Some lazy_term) ->
-           (fun context metasenv ugraph ->
-             let what, metasenv, ugraph = lazy_term context metasenv ugraph in
-             ProofEngineReduction.unfold ~what, metasenv, ugraph)
-        | `Whd ->
-            PET.const_lazy_reduction (CicReduction.whd ~delta:false ~subst:[])
-      in
-      Tactics.fold ~reduction ~term ~pattern
-  | GrafiteAst.Fourier _ -> Tactics.fourier
-  | GrafiteAst.FwdSimpl (_, hyp, names) -> 
-     Tactics.fwd_simpl ~mk_fresh_name_callback:(namer_of names)
-      ~dbd:(LibraryDb.instance ()) hyp
-  | GrafiteAst.Generalize (_,pattern,ident) ->
-     let names = match ident with None -> [] | Some id -> [Some id] in
-     Tactics.generalize ~mk_fresh_name_callback:(namer_of names) pattern 
-  | GrafiteAst.IdTac _ -> Tactics.id
-  | GrafiteAst.Intros (_, (howmany, names)) ->
-      PrimitiveTactics.intros_tac ?howmany
-        ~mk_fresh_name_callback:(namer_of names) ()
-  | GrafiteAst.Inversion (_, term) ->
-      Tactics.inversion term
-  | GrafiteAst.LApply (_, linear, how_many, to_what, what, ident) ->
-      let names = match ident with None -> [] | Some id -> [Some id] in
-      Tactics.lapply ~mk_fresh_name_callback:(namer_of names) 
-        ~linear ?how_many ~to_what what
-  | GrafiteAst.Left _ -> Tactics.left
-  | GrafiteAst.LetIn (loc,term,name) ->
-      Tactics.letin term ~mk_fresh_name_callback:(namer_of [Some name])
-  | GrafiteAst.Reduce (_, reduction_kind, pattern) ->
-      (match reduction_kind with
-	 | `Normalize -> Tactics.normalize ~pattern
-	 | `Simpl -> Tactics.simpl ~pattern 
-	 | `Unfold what -> Tactics.unfold ~pattern what
-	 | `Whd -> Tactics.whd ~pattern)
-  | GrafiteAst.Reflexivity _ -> Tactics.reflexivity
-  | GrafiteAst.Replace (_, pattern, with_what) ->
-     Tactics.replace ~pattern ~with_what
-  | GrafiteAst.Rewrite (_, direction, t, pattern, names) ->
-     EqualityTactics.rewrite_tac ~direction ~pattern t 
-(* to be replaced with ~mk_fresh_name_callback:(namer_of names) *)
-     (List.map (function Some s -> s | None -> assert false) names)
-  | GrafiteAst.Right _ -> Tactics.right
-  | GrafiteAst.Ring _ -> Tactics.ring
-  | GrafiteAst.Split _ -> Tactics.split
-  | GrafiteAst.Symmetry _ -> Tactics.symmetry
-  | GrafiteAst.Transitivity (_, term) -> Tactics.transitivity term
-  (* Implementazioni Aggiunte *)
-  | GrafiteAst.Assume (_, id, t) -> Declarative.assume id t
-  | GrafiteAst.Suppose (_, t, id, t1) -> Declarative.suppose t id t1
-  | GrafiteAst.By_just_we_proved (_, just, ty, id, t1) ->
-     Declarative.by_just_we_proved ~dbd:(LibraryDb.instance())
-      ~automation_cache:status#automation_cache just ty id t1
-  | GrafiteAst.We_need_to_prove (_, t, id, t2) ->
-     Declarative.we_need_to_prove t id t2
-  | GrafiteAst.Bydone (_, t) ->
-     Declarative.bydone ~dbd:(LibraryDb.instance())
-      ~automation_cache:status#automation_cache t
-  | GrafiteAst.We_proceed_by_cases_on (_, t, t1) ->
-     Declarative.we_proceed_by_cases_on t t1
-  | GrafiteAst.We_proceed_by_induction_on (_, t, t1) ->
-     Declarative.we_proceed_by_induction_on t t1
-  | GrafiteAst.Byinduction (_, t, id) -> Declarative.byinduction t id
-  | GrafiteAst.Thesisbecomes (_, t) -> Declarative.thesisbecomes t
-  | GrafiteAst.ExistsElim (_, just, id1, t1, id2, t2) ->
-     Declarative.existselim ~dbd:(LibraryDb.instance())
-      ~automation_cache:status#automation_cache just id1 t1 id2 t2
-  | GrafiteAst.Case (_,id,params) -> Declarative.case id params
-  | GrafiteAst.AndElim(_,just,id1,t1,id2,t2) ->
-     Declarative.andelim ~dbd:(LibraryDb.instance ())
-      ~automation_cache:status#automation_cache just id1 t1 id2 t2
-  | GrafiteAst.RewritingStep (_,termine,t1,t2,cont) ->
-     Declarative.rewritingstep ~dbd:(LibraryDb.instance ())
-      ~automation_cache:status#automation_cache termine t1 t2 cont
-
-let classify_tactic tactic = 
-  match tactic with
-  (* tactics that can't close the goal (return a goal we want to "select") *)
-  | GrafiteAst.Rewrite _ 
-  | GrafiteAst.Split _ 
-  | GrafiteAst.Replace _ 
-  | GrafiteAst.Reduce _
-  | GrafiteAst.IdTac _ 
-  | GrafiteAst.Generalize _ 
-  | GrafiteAst.Elim _ 
-  | GrafiteAst.Cut _
-  | GrafiteAst.Decompose _ -> true
-  (* tactics like apply *)
-  | _ -> false
-  
-let reorder_metasenv start refine tactic goals current_goal always_opens_a_goal=
-(*   let print_m name metasenv =
-    prerr_endline (">>>>> " ^ name);
-    prerr_endline (CicMetaSubst.ppmetasenv [] metasenv)
-  in *)
-  (* phase one calculates:
-   *   new_goals_from_refine:  goals added by refine
-   *   head_goal:              the first goal opened by ythe tactic 
-   *   other_goals:            other goals opened by the tactic
-   *)
-  let new_goals_from_refine = PEH.compare_metasenvs start refine in
-  let new_goals_from_tactic = PEH.compare_metasenvs refine tactic in
-  let head_goal, other_goals, goals = 
-    match goals with
-    | [] -> None,[],goals
-    | hd::tl -> 
-        (* assert (List.mem hd new_goals_from_tactic);
-         * invalidato dalla goal_tac
-         * *)
-        Some hd, List.filter ((<>) hd) new_goals_from_tactic, List.filter ((<>)
-        hd) goals
-  in
-  let produced_goals = 
-    match head_goal with
-    | None -> new_goals_from_refine @ other_goals
-    | Some x -> x :: new_goals_from_refine @ other_goals
-  in
-  (* extract the metas generated by refine and tactic *)
-  let metas_for_tactic_head = 
-    match head_goal with
-    | None -> []
-    | Some head_goal -> List.filter (fun (n,_,_) -> n = head_goal) tactic in
-  let metas_for_tactic_goals = 
-    List.map 
-      (fun x -> List.find (fun (metano,_,_) -> metano = x) tactic)
-    goals 
-  in
-  let metas_for_refine_goals = 
-    List.filter (fun (n,_,_) -> List.mem n new_goals_from_refine) tactic in
-  let produced_metas, goals = 
-    let produced_metas =
-      if always_opens_a_goal then
-        metas_for_tactic_head @ metas_for_refine_goals @ 
-          metas_for_tactic_goals
-      else begin
-(*         print_m "metas_for_refine_goals" metas_for_refine_goals;
-        print_m "metas_for_tactic_head" metas_for_tactic_head;
-        print_m "metas_for_tactic_goals" metas_for_tactic_goals; *)
-        metas_for_refine_goals @ metas_for_tactic_head @ 
-          metas_for_tactic_goals
-      end
-    in
-    let goals = List.map (fun (metano, _, _) -> metano)  produced_metas in
-    produced_metas, goals
-  in
-  (* residual metas, preserving the original order *)
-  let before, after = 
-    let rec split e =
-      function 
-      | [] -> [],[]
-      | (metano, _, _) :: tl when metano = e -> 
-          [], List.map (fun (x,_,_) -> x) tl
-      | (metano, _, _) :: tl -> let b, a = split e tl in metano :: b, a
-    in
-    let find n metasenv =
-      try
-        Some (List.find (fun (metano, _, _) -> metano = n) metasenv)
-      with Not_found -> None
-    in
-    let extract l =
-      List.fold_right 
-        (fun n acc -> 
-          match find n tactic with
-          | Some x -> x::acc
-          | None -> acc
-        ) l [] in
-    let before_l, after_l = split current_goal start in
-    let before_l = 
-      List.filter (fun x -> not (List.mem x produced_goals)) before_l in
-    let after_l = 
-      List.filter (fun x -> not (List.mem x produced_goals)) after_l in
-    let before = extract before_l in
-    let after = extract after_l in
-      before, after
-  in
-(* |+   DEBUG CODE  +|
-  print_m "BEGIN" start;
-  prerr_endline ("goal was: " ^ string_of_int current_goal);
-  prerr_endline ("and metas from refine are:");
-  List.iter 
-    (fun t -> prerr_string (" " ^ string_of_int t)) 
-  new_goals_from_refine;
-  prerr_endline "";
-  print_m "before" before;
-  print_m "metas_for_tactic_head" metas_for_tactic_head;
-  print_m "metas_for_refine_goals" metas_for_refine_goals;
-  print_m "metas_for_tactic_goals" metas_for_tactic_goals;
-  print_m "produced_metas" produced_metas;
-  print_m "after" after; 
-|+   FINE DEBUG CODE +| *)
-  before @ produced_metas @ after, goals 
-  
-let apply_tactic ~disambiguate_tactic (text,prefix_len,tactic) (status, goal) =
- let starting_metasenv = GrafiteTypes.get_proof_metasenv status in
- let before = List.map (fun g, _, _ -> g) starting_metasenv in
- let status, tactic = disambiguate_tactic status goal (text,prefix_len,tactic) in
- let metasenv_after_refinement =  GrafiteTypes.get_proof_metasenv status in
- let proof = GrafiteTypes.get_current_proof status in
- let proof_status = proof, goal in
- let always_opens_a_goal = classify_tactic tactic in
- let tactic = tactic_of_ast status tactic in
- let (proof, opened) = ProofEngineTypes.apply_tactic tactic proof_status in
- let after = ProofEngineTypes.goals_of_proof proof in
- let opened_goals, closed_goals = Tacticals.goals_diff ~before ~after ~opened in
- let proof, opened_goals = 
-  let uri, metasenv_after_tactic, subst, t, ty, attrs = proof in
-  let reordered_metasenv, opened_goals = 
-    reorder_metasenv
-     starting_metasenv
-     metasenv_after_refinement metasenv_after_tactic
-     opened goal always_opens_a_goal
-  in
-  let proof' = uri, reordered_metasenv, [], t, ty, attrs in
-  proof', opened_goals
- in
- let incomplete_proof =
-   match status#proof_status with
-   | GrafiteTypes.Incomplete_proof p -> p
-   | _ -> assert false
- in
-  status#set_proof_status
-   (GrafiteTypes.Incomplete_proof
-     { incomplete_proof with GrafiteTypes.proof = proof }),
- opened_goals, closed_goals
-
-let apply_atomic_tactical ~disambiguate_tactic ~patch (text,prefix_len,tactic) (status, goal) =
- let starting_metasenv = GrafiteTypes.get_proof_metasenv status in
- let before = List.map (fun g, _, _ -> g) starting_metasenv in
- let status, tactic = disambiguate_tactic status goal (text,prefix_len,tactic) in
- let metasenv_after_refinement =  GrafiteTypes.get_proof_metasenv status in
- let proof = GrafiteTypes.get_current_proof status in
- let proof_status = proof, goal in
- let always_opens_a_goal = classify_tactic tactic in
- let tactic = tactic_of_ast status tactic in
- let tactic = patch tactic in
- let (proof, opened) = ProofEngineTypes.apply_tactic tactic proof_status in
- let after = ProofEngineTypes.goals_of_proof proof in
- let opened_goals, closed_goals = Tacticals.goals_diff ~before ~after ~opened in
- let proof, opened_goals = 
-  let uri, metasenv_after_tactic, _subst, t, ty, attrs = proof in
-  let reordered_metasenv, opened_goals = 
-    reorder_metasenv
-     starting_metasenv
-     metasenv_after_refinement metasenv_after_tactic
-     opened goal always_opens_a_goal
-  in
-  let proof' = uri, reordered_metasenv, _subst, t, ty, attrs in
-  proof', opened_goals
- in
- let incomplete_proof =
-   match status#proof_status with
-   | GrafiteTypes.Incomplete_proof p -> p
-   | _ -> assert false
- in
-  status#set_proof_status
-   (GrafiteTypes.Incomplete_proof
-     { incomplete_proof with GrafiteTypes.proof = proof }),
- opened_goals, closed_goals
 type eval_ast =
  {ea_go:
   'term 'lazy_term 'reduction 'obj 'ident.
-  disambiguate_tactic:
-   (GrafiteTypes.status ->
-    ProofEngineTypes.goal ->
-    (('term, 'lazy_term, 'reduction, 'ident) GrafiteAst.tactic)
-    disambiguator_input ->
-    GrafiteTypes.status *
-   (Cic.term, Cic.lazy_term, Cic.lazy_term GrafiteAst.reduction, string) GrafiteAst.tactic) ->
 
   disambiguate_command:
    (GrafiteTypes.status ->
@@ -445,13 +104,6 @@ type 'a eval_comment =
 
 type 'a eval_executable =
  {ee_go: 'term 'lazy_term 'reduction 'obj 'ident.
-  disambiguate_tactic:
-   (GrafiteTypes.status ->
-    ProofEngineTypes.goal ->
-    (('term, 'lazy_term, 'reduction, 'ident) GrafiteAst.tactic)
-    disambiguator_input ->
-    GrafiteTypes.status *
-   (Cic.term, Cic.lazy_term, Cic.lazy_term GrafiteAst.reduction, string) GrafiteAst.tactic) ->
 
   disambiguate_command:
    (GrafiteTypes.status ->
@@ -692,62 +344,6 @@ let eval_prefer_coercion status c =
  let moo_content = GrafiteAst.PreferCoercion (HExtlib.dummy_floc,c) in
  let status = GrafiteTypes.add_moo_content [moo_content] status in 
  status, `Old []
-
-module MatitaStatus =
- struct
-  type input_status = GrafiteTypes.status * ProofEngineTypes.goal
-
-  type output_status =
-    GrafiteTypes.status * ProofEngineTypes.goal list * ProofEngineTypes.goal list
-
-  type tactic = input_status -> output_status
-
-  let mk_tactic tac = tac
-  let apply_tactic tac = tac
-  let goals (_, opened, closed) = opened, closed
-  let get_stack (status, _) = GrafiteTypes.get_stack status
-  
-  let set_stack stack (status, opened, closed) = 
-    GrafiteTypes.set_stack stack status, opened, closed
-
-  let inject (status, _) = (status, [], [])
-  let focus goal (status, _, _) = (status, goal)
- end
-
-module MatitaTacticals = Continuationals.Make(MatitaStatus)
-
-let tactic_of_ast' tac =
- MatitaTacticals.Tactical (MatitaTacticals.Tactic (MatitaStatus.mk_tactic tac))
-
-let punctuation_tactical_of_ast (text,prefix_len,punct) =
- match punct with
-  | GrafiteAst.Dot _loc -> MatitaTacticals.Dot
-  | GrafiteAst.Semicolon _loc -> MatitaTacticals.Semicolon
-  | GrafiteAst.Branch _loc -> MatitaTacticals.Branch
-  | GrafiteAst.Shift _loc -> MatitaTacticals.Shift
-  | GrafiteAst.Pos (_loc, i) -> MatitaTacticals.Pos i
-  | GrafiteAst.Merge _loc -> MatitaTacticals.Merge
-  | GrafiteAst.Wildcard _loc -> MatitaTacticals.Wildcard
-
-let non_punctuation_tactical_of_ast (text,prefix_len,punct) =
- match punct with
-  | GrafiteAst.Focus (_loc,goals) -> MatitaTacticals.Focus goals
-  | GrafiteAst.Unfocus _loc -> MatitaTacticals.Unfocus
-  | GrafiteAst.Skip _loc -> MatitaTacticals.Tactical MatitaTacticals.Skip
-
-let eval_tactical status tac =
-  let status, _, _ = MatitaTacticals.eval tac (status, ~-1) in
-  let status =  (* is proof completed? *)
-    match status#proof_status with
-    | GrafiteTypes.Incomplete_proof
-       { GrafiteTypes.stack = stack; proof = proof }
-      when Continuationals.Stack.is_empty stack ->
-       status#set_proof_status (GrafiteTypes.Proof proof)
-    | _ -> status
-  in
-  status
-
-let add_obj = GrafiteSync.add_obj ~pack_coercion_obj:CicRefine.pack_coercion_obj
 
 let eval_ng_punct (_text, _prefix_len, punct) =
   match punct with
@@ -1113,59 +709,11 @@ let rec eval_command = {ec_go = fun ~disambiguate_command opts status
  let status,cmd = disambiguate_command status (text,prefix_len,cmd) in
  let status,uris =
   match cmd with
-  | GrafiteAst.Index (loc,None,uri) -> 
-	assert false (* TODO: for user input *)
-  | GrafiteAst.Index (loc,Some key,uri) -> 
-      let universe = 
-        status#automation_cache.AutomationCache.univ
-      in
-      let universe = Universe.index universe key (CicUtil.term_of_uri uri) in
-      let cache = { 
-        status#automation_cache with AutomationCache.univ = universe } 
-      in
-      let status = status#set_automation_cache cache in
-(* debug
-      let msg =
-       let candidates = Universe.get_candidates status.GrafiteTypes.universe key in
-       ("candidates for " ^ (CicPp.ppterm key) ^ " = " ^ 
-	  (String.concat "\n" (List.map CicPp.ppterm candidates))) 
-     in
-     prerr_endline msg;
-*)
-      let status = GrafiteTypes.add_moo_content [cmd] status in
-      status,`Old [] 
-  | GrafiteAst.Select (_,uri) as cmd ->
-      if List.mem cmd status#moo_content_rev then status, `Old []
-      else 
-       let cache = 
-         AutomationCache.add_term_to_active status#automation_cache
-           [] [] [] (CicUtil.term_of_uri uri) None
-       in
-       let status = status#set_automation_cache cache in
-       let status = GrafiteTypes.add_moo_content [cmd] status in
-       status, `Old []
-  | GrafiteAst.Pump (_,steps) ->
-      let cache = 
-        AutomationCache.pump status#automation_cache steps
-      in
-      let status = status#set_automation_cache cache in
-      status, `Old []
   | GrafiteAst.PreferCoercion (loc, coercion) ->
      eval_prefer_coercion status coercion
   | GrafiteAst.Coercion (loc, uri, add_composites, arity, saturations) ->
      let res,uris =
       eval_coercion status ~add_composites uri arity saturations
-     in
-      res,`Old uris
-  | GrafiteAst.Inverter (loc, name, indty, params) ->
-     let buri = status#baseuri in 
-     let uri = UriManager.uri_of_string (buri ^ "/" ^ name ^ ".con") in
-     let indty_uri = 
-       try CicUtil.uri_of_term indty
-       with Invalid_argument _ ->
-         raise (Invalid_argument "not an inductive type to invert") in
-     let res,uris =
-      Inversion_principle.build_inverter ~add_obj status uri indty_uri params
      in
       res,`Old uris
   | GrafiteAst.Default (loc, what, uris) as cmd ->
@@ -1198,66 +746,16 @@ let rec eval_command = {ec_go = fun ~disambiguate_command opts status
         [GrafiteAst.Include (loc,mode,`New,baseuri)] status
       in
        status,`Old []
-  | GrafiteAst.Print (_,"proofterm") ->
-      let _,_,_,p,_, _ = GrafiteTypes.get_current_proof status in
-      prerr_endline (Auto.pp_proofterm (Lazy.force p));
-      status,`Old []
   | GrafiteAst.Print (_,_) -> status,`Old []
-  | GrafiteAst.Qed loc ->
-      let uri, metasenv, _subst, bo, ty, attrs =
-        match status#proof_status with
-        | GrafiteTypes.Proof (Some uri, metasenv, subst, body, ty, attrs) ->
-            uri, metasenv, subst, body, ty, attrs
-        | GrafiteTypes.Proof (None, metasenv, subst, body, ty, attrs) -> 
-            raise (GrafiteTypes.Command_error 
-              ("Someone allows to start a theorem without giving the "^
-               "name/uri. This should be fixed!"))
-        | _->
-          raise
-           (GrafiteTypes.Command_error "You can't Qed an incomplete theorem")
-      in
-      if metasenv <> [] then 
-        raise
-         (GrafiteTypes.Command_error
-           "Proof not completed! metasenv is not empty!");
-      let name = UriManager.name_of_uri uri in
-      let obj = Cic.Constant (name,Some (Lazy.force bo),ty,[],attrs) in
-      let status, lemmas = add_obj uri obj status in
-       status#set_proof_status GrafiteTypes.No_proof,
-        (*CSC: I throw away the arities *)
-        `Old (uri::lemmas)
-  | GrafiteAst.Relation (loc, id, a, aeq, refl, sym, trans) -> 
-     Setoids.add_relation id a aeq refl sym trans;
-     status, `Old [] (*CSC: TO BE FIXED *)
   | GrafiteAst.Set (loc, name, value) -> status, `Old []
 (*       GrafiteTypes.set_option status name value,[] *)
   | GrafiteAst.Obj (loc,obj) -> (* MATITA 1.0 *) assert false
  in
-  match status#proof_status with
-     GrafiteTypes.Intermediate _ ->
-      status#set_proof_status GrafiteTypes.No_proof,uris
-   | _ -> status,uris
+  status,uris
 
-} and eval_executable = {ee_go = fun ~disambiguate_tactic ~disambiguate_command
+} and eval_executable = {ee_go = fun ~disambiguate_command
 ~disambiguate_macro opts status (text,prefix_len,ex) ->
   match ex with
-  | GrafiteAst.Tactic (_(*loc*), Some tac, punct) ->
-     let tac = apply_tactic ~disambiguate_tactic (text,prefix_len,tac) in
-     let status = eval_tactical status (tactic_of_ast' tac) in
-     (* CALL auto on every goal, easy way of testing it  
-     let auto = 
-       GrafiteAst.AutoBatch 
-         (loc, ([],["depth","2";"timeout","1";"type","1"])) in
-     (try
-       let auto = apply_tactic ~disambiguate_tactic ("",0,auto) in
-       let _ = eval_tactical status (tactic_of_ast' auto) in 
-       print_endline "GOOD"; () 
-     with ProofEngineTypes.Fail _ -> print_endline "BAD" | _ -> ());*)
-      eval_tactical status
-       (punctuation_tactical_of_ast (text,prefix_len,punct)),`Old []
-  | GrafiteAst.Tactic (_, None, punct) ->
-      eval_tactical status
-       (punctuation_tactical_of_ast (text,prefix_len,punct)),`Old []
   | GrafiteAst.NTactic (_(*loc*), tacl) ->
       if status#ng_mode <> `ProofMode then
        raise (GrafiteTypes.Command_error "Not in proof mode")
@@ -1270,13 +768,6 @@ let rec eval_command = {ec_go = fun ~disambiguate_command opts status
           status tacl
        in
         status,`New []
-  | GrafiteAst.NonPunctuationTactical (_, tac, punct) ->
-     let status = 
-      eval_tactical status
-       (non_punctuation_tactical_of_ast (text,prefix_len,tac))
-     in
-      eval_tactical status
-       (punctuation_tactical_of_ast (text,prefix_len,punct)),`Old []
   | GrafiteAst.Command (_, cmd) ->
       eval_command.ec_go ~disambiguate_command opts status (text,prefix_len,cmd)
   | GrafiteAst.NCommand (_, cmd) ->
@@ -1298,7 +789,6 @@ let rec eval_command = {ec_go = fun ~disambiguate_command opts status
       let ast = ast_of_cmd ast in
       let status,lemmas =
        eval_ast.ea_go
-         ~disambiguate_tactic:(fun status _ (_,_,tactic) -> status,tactic)
          ~disambiguate_command:(fun status (_,_,cmd) -> status,cmd)
          ~disambiguate_macro:(fun _ _ -> assert false)
          status ast
@@ -1306,14 +796,14 @@ let rec eval_command = {ec_go = fun ~disambiguate_command opts status
        assert (lemmas=`Old []);
        status)
     status moo
-} and eval_ast = {ea_go = fun ~disambiguate_tactic ~disambiguate_command
+} and eval_ast = {ea_go = fun ~disambiguate_command
 ~disambiguate_macro ?(do_heavy_checks=false) status
 (text,prefix_len,st)
 ->
   let opts = { do_heavy_checks = do_heavy_checks ; } in
   match st with
   | GrafiteAst.Executable (_,ex) ->
-     eval_executable.ee_go ~disambiguate_tactic ~disambiguate_command
+     eval_executable.ee_go ~disambiguate_command
       ~disambiguate_macro opts status (text,prefix_len,ex)
   | GrafiteAst.Comment (_,c) -> 
       eval_comment.ecm_go ~disambiguate_command opts status (text,prefix_len,c) 

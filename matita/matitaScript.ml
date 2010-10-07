@@ -128,243 +128,6 @@ let pp_eager_statement_ast =
   GrafiteAstPp.pp_statement ~term_pp:CicNotationPp.pp_term
     ~lazy_term_pp:(fun _ -> assert false) ~obj_pp:(fun _ -> assert false)
 
-(* naive implementation of procedural proof script generation, 
- * starting from an applicatiove *auto generated) proof.
- * this is out of place, but I like it :-P *)
-let cic2grafite context menv t =
-  (* indents a proof script in a stupid way, better than nothing *)
-  let stupid_indenter s =
-    let next s = 
-      let idx_square_o = try String.index s '[' with Not_found -> -1 in
-      let idx_square_c = try String.index s ']' with Not_found -> -1 in
-      let idx_pipe = try String.index s '|' with Not_found -> -1 in
-      let tok = 
-        List.sort (fun (i,_) (j,_) -> compare i j)
-          [idx_square_o,'[';idx_square_c,']';idx_pipe,'|']
-      in
-      let tok = List.filter (fun (i,_) -> i <> -1) tok in
-      match tok with
-      | (i,c)::_ -> Some (i,c)
-      | _ -> None
-    in
-    let break_apply n s =
-      let tab = String.make (n+1) ' ' in
-      Pcre.replace ~templ:(".\n" ^ tab ^ "apply") ~pat:"\\.apply" s
-    in
-    let rec ind n s =
-      match next s with
-      | None -> 
-          s
-      | Some (position, char) ->
-          try 
-            let s1, s2 = 
-              String.sub s 0 position, 
-              String.sub s (position+1) (String.length s - (position+1))
-            in
-            match char with
-            | '[' -> break_apply n s1 ^ "\n" ^ String.make (n+2) ' ' ^
-                       "[" ^ ind (n+2) s2
-            | '|' -> break_apply n s1 ^ "\n" ^ String.make n ' ' ^ 
-                       "|" ^ ind n s2
-            | ']' -> break_apply n s1 ^ "\n" ^ String.make n ' ' ^ 
-                       "]" ^ ind (n-2) s2
-            | _ -> assert false
-          with
-          Invalid_argument err -> 
-            prerr_endline err;
-            s
-    in
-     ind 0 s
-  in
-  let module PT = CicNotationPt in
-  let module GA = GrafiteAst in
-  let pp_t context t =
-    let names = 
-      List.map (function Some (n,_) -> Some n | None -> None) context 
-    in
-    CicPp.pp t names
-  in
-  let sort_of context t = 
-    try
-      let ty,_ = 
-        CicTypeChecker.type_of_aux' menv context t
-          CicUniv.oblivion_ugraph 
-      in
-      let sort,_ = CicTypeChecker.type_of_aux' menv context ty
-          CicUniv.oblivion_ugraph
-      in
-      match sort with
-      | Cic.Sort Cic.Prop -> true
-      | _ -> false
-    with
-      CicTypeChecker.TypeCheckerFailure _ ->
-        HLog.error "auto proof to sript transformation error"; false
-  in
-  let floc = HExtlib.dummy_floc in
-  (* minimalisti cic.term -> pt.term *)
-  let print_term c t =
-    let rec aux c = function
-      | Cic.Rel _
-      | Cic.MutConstruct _ 
-      | Cic.MutInd _ 
-      | Cic.Const _ as t -> 
-          PT.Ident (pp_t c t, None)
-      | Cic.Appl l -> PT.Appl (List.map (aux c) l)
-      | Cic.Implicit _ -> PT.Implicit `JustOne
-      | Cic.Lambda (Cic.Name n, s, t) ->
-          PT.Binder (`Lambda, (PT.Ident (n,None), Some (aux c s)),
-            aux (Some (Cic.Name n, Cic.Decl s)::c) t)
-      | Cic.Prod (Cic.Name n, s, t) ->
-          PT.Binder (`Forall, (PT.Ident (n,None), Some (aux c s)),
-            aux (Some (Cic.Name n, Cic.Decl s)::c) t)
-      | Cic.LetIn (Cic.Name n, s, ty, t) ->
-          PT.Binder (`Lambda, (PT.Ident (n,None), Some (aux c s)),
-            aux (Some (Cic.Name n, Cic.Def (s,ty))::c) t)
-      | Cic.Meta _ -> PT.Implicit `JustOne
-      | Cic.Sort (Cic.Type u) -> PT.Sort (`Type u)
-      | Cic.Sort Cic.Set -> PT.Sort `Set
-      | Cic.Sort (Cic.CProp u) -> PT.Sort (`CProp u)
-      | Cic.Sort Cic.Prop -> PT.Sort `Prop
-      | _ as t -> PT.Ident ("ERROR: "^CicPp.ppterm t, None)
-    in
-    aux c t
-  in
-  (* prints an applicative proof, that is an auto proof.
-   * don't use in the general case! *)
-  let rec print_proof context = function
-    | Cic.Rel _
-    | Cic.Const _ as t -> 
-        [GA.Executable (floc, 
-          GA.Tactic (floc,
-          Some (GA.Apply (floc, print_term context t)), GA.Dot floc))]
-    | Cic.Appl (he::tl) ->
-        let tl = List.map (fun t -> t, sort_of context t) tl in
-        let subgoals = 
-          HExtlib.filter_map (function (t,true) -> Some t | _ -> None) tl
-        in
-        let args = 
-          List.map (function | (t,true) -> Cic.Implicit None | (t,_) -> t) tl
-        in
-        if List.length subgoals > 1 then
-          (* branch *)
-          [GA.Executable (floc, 
-            GA.Tactic (floc,
-              Some (GA.Apply (floc, print_term context (Cic.Appl (he::args)))),
-              GA.Semicolon floc))] @
-          [GA.Executable (floc, GA.Tactic (floc, None, GA.Branch floc))] @
-          (HExtlib.list_concat 
-          ~sep:[GA.Executable (floc, GA.Tactic (floc, None,GA.Shift floc))]
-            (List.map (print_proof context) subgoals)) @
-          [GA.Executable (floc, GA.Tactic (floc, None,GA.Merge floc))]
-        else
-          (* simple apply *)
-          [GA.Executable (floc, 
-            GA.Tactic (floc,
-            Some (GA.Apply 
-              (floc, print_term context (Cic.Appl (he::args)) )), GA.Dot floc))]
-          @
-          (match subgoals with
-          | [] -> []
-          | [x] -> print_proof context x
-          | _ -> assert false)
-    | Cic.Lambda (Cic.Name n, ty, bo) ->
-        [GA.Executable (floc, 
-          GA.Tactic (floc,
-            Some (GA.Cut (floc, Some n, (print_term context ty))),
-            GA.Branch floc))] @
-        (print_proof (Some (Cic.Name n, Cic.Decl ty)::context) bo) @
-        [GA.Executable (floc, GA.Tactic (floc, None,GA.Shift floc))] @
-        [GA.Executable (floc, GA.Tactic (floc, 
-          Some (GA.Assumption floc),GA.Merge floc))]
-    | _ -> []
-    (*
-        debug_print (lazy (CicPp.ppterm t));
-        assert false
-        *)
-  in
-  (* performs a lambda closure of the proof term abstracting metas.
-   * this is really an approximation of a closure, local subst of metas 
-   * is not kept into account *)
-  let close_pt menv context t =
-    let metas = CicUtil.metas_of_term t in
-    let metas = 
-      HExtlib.list_uniq ~eq:(fun (i,_) (j,_) -> i = j)
-        (List.sort (fun (i,_) (j,_) -> compare i j) metas)
-    in
-    let mk_rels_and_collapse_metas metas = 
-      let rec aux i map acc acc1 = function 
-        | [] -> acc, acc1, map
-        | (j,_ as m)::tl -> 
-            let _,_,ty = CicUtil.lookup_meta j menv in
-            try 
-              let n = List.assoc ty map in
-              aux i map (Cic.Rel n :: acc) (m::acc1) tl 
-            with Not_found -> 
-              let map = (ty, i)::map in
-              aux (i+1) map (Cic.Rel i :: acc) (m::acc1) tl
-      in
-      aux 1 [] [] [] metas
-    in
-    let rels, metas, map = mk_rels_and_collapse_metas metas in
-    let n_lambdas = List.length map in
-    let t = 
-      if metas = [] then 
-        t 
-      else
-        let t =
-          ProofEngineReduction.replace_lifting
-           ~what:(List.map (fun (x,_) -> Cic.Meta (x,[])) metas)
-           ~with_what:rels
-           ~context:context
-           ~equality:(fun _ x y ->
-             match x,y with
-             | Cic.Meta(i,_), Cic.Meta(j,_) when i=j -> true
-             | _ -> false)
-           ~where:(CicSubstitution.lift n_lambdas t)
-        in
-        let rec mk_lam = function 
-          | [] -> t 
-          | (ty,n)::tl -> 
-              let name = "fresh_"^ string_of_int n in
-              Cic.Lambda (Cic.Name name, ty, mk_lam tl)
-        in
-         mk_lam 
-          (fst (List.fold_left 
-            (fun (l,liftno) (ty,_)  -> 
-              (l @ [CicSubstitution.lift liftno ty,liftno] , liftno+1))
-            ([],0) map))
-    in
-      t
-  in
-  let ast = print_proof context (close_pt menv context t) in
-  let pp t = 
-    (* ZACK: setting width to 80 will trigger a bug of BoxPp.render_to_string
-     * which will show up using the following command line:
-     * ./tptp2grafite -tptppath ~tassi/TPTP-v3.1.1 GRP170-1 *)
-    let width = max_int in
-    let term_pp content_term =
-      let pres_term = TermContentPres.pp_ast content_term in
-      let lookup_uri = fun _ -> None in
-      let markup = CicNotationPres.render ~lookup_uri pres_term in
-      let s = "(" ^ BoxPp.render_to_string
-       ~map_unicode_to_tex:(Helm_registry.get_bool
-         "matita.paste_unicode_as_tex")
-       List.hd width markup ^ ")" in
-      Pcre.substitute 
-        ~pat:"\\\\forall [Ha-z][a-z0-9_]*" ~subst:(fun x -> "\n" ^ x) s
-    in
-    CicNotationPp.set_pp_term term_pp;
-    let lazy_term_pp = fun x -> assert false in
-    let obj_pp = CicNotationPp.pp_obj CicNotationPp.pp_term in
-    GrafiteAstPp.pp_statement
-     ~map_unicode_to_tex:(Helm_registry.get_bool
-       "matita.paste_unicode_as_tex")
-     ~term_pp ~lazy_term_pp ~obj_pp t
-  in
-  let script = String.concat "" (List.map pp ast) in
-  prerr_endline script;
-  stupid_indenter script
-;;
 let eval_nmacro include_paths (buffer : GText.buffer) guistuff grafite_status user_goal unparsed_text parsed_text script mac =
   let parsed_text_length = String.length parsed_text in
   match mac with
@@ -428,7 +191,6 @@ let eval_nmacro include_paths (buffer : GText.buffer) guistuff grafite_status us
   | TA.NAutoInteractive (_, (Some _,_)) -> assert false
 
 let rec eval_macro include_paths (buffer : GText.buffer) guistuff grafite_status user_goal unparsed_text parsed_text script mac =
-  let module MQ = MetadataQuery in
   let module CTC = CicTypeChecker in
   (* no idea why ocaml wants this *)
   let parsed_text_length = String.length parsed_text in
@@ -436,7 +198,7 @@ let rec eval_macro include_paths (buffer : GText.buffer) guistuff grafite_status
   match mac with
   (* REAL macro *)
   | TA.Hint (loc, rewrite) -> (* MATITA 1.0 *) assert false
-  | TA.Eval (_, kind, term) -> 
+  | TA.Eval (_, kind, term) -> assert false (* MATITA 1.0
       let metasenv = GrafiteTypes.get_proof_metasenv grafite_status in
       let context =
        match user_goal with
@@ -461,88 +223,7 @@ let rec eval_macro include_paths (buffer : GText.buffer) guistuff grafite_status
       let t_and_ty = Cic.Cast (term,ty) in
       guistuff.mathviewer#show_entry (`Cic (t_and_ty,metasenv));
       [(grafite_status#set_proof_status No_proof), parsed_text ],"", 
-        parsed_text_length 
-  | TA.Check (_,term) ->
-      let metasenv = GrafiteTypes.get_proof_metasenv grafite_status in
-      let context =
-       match user_goal with
-          None -> []
-        | Some n -> GrafiteTypes.get_proof_context grafite_status n in
-      let ty,_ = CTC.type_of_aux' metasenv context term CicUniv.empty_ugraph in
-      let t_and_ty = Cic.Cast (term,ty) in
-      guistuff.mathviewer#show_entry (`Cic (t_and_ty,metasenv));
-      [], "", parsed_text_length
-  | TA.AutoInteractive (_, params) ->
-      let user_goal' =
-       match user_goal with
-          Some n -> n
-        | None -> raise NoUnfinishedProof
-      in
-      let proof = GrafiteTypes.get_current_proof grafite_status in
-      let proof_status = proof,user_goal' in
-      (try
-        let _,menv,_,_,_,_ = proof in
-        let i,cc,ty = CicUtil.lookup_meta user_goal' menv in
-        let timestamp = Unix.gettimeofday () in
-        let (_,menv,subst,_,_,_), _ = 
-          ProofEngineTypes.apply_tactic
-            (Auto.auto_tac ~dbd ~params
-              ~automation_cache:grafite_status#automation_cache) 
-            proof_status
-        in
-        let proof_term = 
-          let irl = 
-            CicMkImplicit.identity_relocation_list_for_metavariable cc
-          in
-          CicMetaSubst.apply_subst subst (Cic.Meta (i,irl))
-        in
-        let time = Unix.gettimeofday () -. timestamp in
-        let size, depth = Auto.size_and_depth cc menv proof_term in
-        let trailer = 
-          Printf.sprintf 
-            "\n(* end auto(%s) proof: TIME=%4.2f SIZE=%d DEPTH=%d *)"
-            Auto.revision time size depth
-        in
-        let proof_script = 
-          if List.exists (fun (s,_) -> s = "paramodulation") (snd params) then
-              let proof_term, how_many_lambdas = 
-                Auto.lambda_close ~prefix_name:"orrible_hack_" 
-                  proof_term menv cc 
-              in
-              let ty,_ = 
-                CicTypeChecker.type_of_aux'
-                  [] [] proof_term CicUniv.empty_ugraph
-              in
-              prerr_endline (CicPp.ppterm proof_term ^ " n lambda= " ^ string_of_int how_many_lambdas);
-              (* use declarative output *)
-              let obj =
-                (* il proof_term vive in cc, devo metterci i lambda no? *)
-                (Cic.CurrentProof ("xxx",[],proof_term,ty,[],[]))
-              in
-               ApplyTransformation.txt_of_cic_object
-                ~map_unicode_to_tex:(Helm_registry.get_bool
-                  "matita.paste_unicode_as_tex")
-                ~skip_thm_and_qed:true
-                ~skip_initial_lambdas:how_many_lambdas
-                80 [] obj
-          else
-            if true then
-              (* use cic2grafite *)
-              cic2grafite cc menv proof_term 
-            else
-              (* alternative using FG stuff *)
-              let map_unicode_to_tex =
-	         Helm_registry.get_bool "matita.paste_unicode_as_tex"
-	      in
-	      ApplyTransformation.procedural_txt_of_cic_term
-                 ~map_unicode_to_tex 78 [] cc proof_term
-        in
-        let text = comment parsed_text ^ "\n" ^ proof_script ^ trailer in
-        [],text,parsed_text_length
-      with
-        ProofEngineTypes.Fail _ as exn -> 
-          raise exn
-          (* [], comment parsed_text ^ "\nfail.\n", parsed_text_length *))
+        parsed_text_length *)
   | TA.Inline (_, suri, params) ->
        let str = "\n\n" ^ 
          ApplyTransformation.txt_of_inline_macro
@@ -566,10 +247,7 @@ script ex loc
   with
      MatitaTypes.Cancel -> [], "", 0
    | GrafiteEngine.Macro (_loc,lazy_macro) ->
-      let context =
-       match user_goal with
-          None -> []
-        | Some n -> GrafiteTypes.get_proof_context grafite_status n in
+      let context = [] in
       let grafite_status,macro = lazy_macro context in
        eval_macro include_paths buffer guistuff grafite_status
         user_goal unparsed_text (skipped_txt ^ nonskipped_txt) script macro
@@ -737,7 +415,7 @@ object (self)
       * Invariant: this list length is 1 + length of statements *)
 
   (** goal as seen by the user (i.e. metano corresponding to current tab) *)
-  val mutable userGoal = None
+  val mutable userGoal = (None : int option)
 
   (** text mark and tag representing locked part of a script *)
   val locked_mark =
@@ -791,12 +469,7 @@ object (self)
    buffer#insert ~iter:(buffer#get_iter_at_mark (`MARK locked_mark)) newtext;
    (* here we need to set the Goal in case we are going to cursor (or to
       bottom) and we will face a macro *)
-   match self#grafite_status#proof_status with
-      Incomplete_proof p ->
-       userGoal <-
-         (try Some (Continuationals.Stack.find_goal p.stack)
-         with Failure _ -> None)
-    | _ -> userGoal <- None
+    userGoal <- None
 
   method private _retract offset grafite_status new_statements
    new_history
@@ -1063,27 +736,8 @@ object (self)
   with Invalid_argument "Array.make" ->
      HLog.error "The script is too big!\n"
   
-  method onGoingProof () =
-    match self#grafite_status#proof_status with
-    | No_proof | Proof _ -> false
-    | Incomplete_proof _ -> true
-    | Intermediate _ -> assert false
-
-(*   method proofStatus = MatitaTypes.get_proof_status self#status *)
-  method proofMetasenv = GrafiteTypes.get_proof_metasenv self#grafite_status
-
-  method proofContext =
-   match userGoal with
-      None -> []
-    | Some n -> GrafiteTypes.get_proof_context self#grafite_status n
-
-  method proofConclusion =
-   match userGoal with
-      None -> assert false
-    | Some n ->
-       GrafiteTypes.get_proof_conclusion self#grafite_status n
-
-  method stack = GrafiteTypes.get_stack self#grafite_status
+  method stack = (assert false : Continuationals.Stack.t) (* MATITA 1.0 GrafiteTypes.get_stack
+  self#grafite_status *)
   method setGoal n = userGoal <- n
   method goal = userGoal
 

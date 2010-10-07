@@ -45,7 +45,6 @@ type abouts =
 type mathViewer_entry =
   [ `About of abouts  (* current proof *)
   | `Check of string  (* term *)
-  | `Cic of Cic.term * Cic.metasenv
   | `NCic of NCic.term * NCic.context * NCic.metasenv * NCic.substitution
   | `Dir of string  (* "directory" in cic uris namespace *)
   | `Uri of UriManager.uri (* cic object uri *)
@@ -63,7 +62,6 @@ let string_of_entry = function
   | `About `Grammar -> "about:grammar"
   | `About `Hints -> "about:hints"
   | `Check _ -> "check:"
-  | `Cic (_, _) -> "term:"
   | `NCic (_, _, _, _) -> "nterm:"
   | `Dir uri -> uri
   | `Uri uri -> UriManager.string_of_uri uri

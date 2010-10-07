@@ -1,4 +1,0 @@
-requires="helm-acic_content helm-grafite helm-tactics"
-version="0.0.1"
-archive(byte)="acic_procedural.cma"
-archive(native)="acic_procedural.cmxa"

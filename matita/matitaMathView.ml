@@ -768,86 +768,6 @@ class sequentsViewer ~(notebook:GPack.notebook) ~(cicMathView:cicMathView) () =
       _metasenv <- `Old []; 
       self#script#setGoal None
 
-    method load_sequents : 'status. #NCicCoercion.status as 'status -> 'a
-     = fun status { proof= (_,metasenv,_subst,_,_, _) as proof; stack = stack } 
-     ->
-      _metasenv <- `Old metasenv;
-      pages <- 0;
-      let win goal_switch =
-        let w =
-          GBin.scrolled_window ~hpolicy:`AUTOMATIC ~vpolicy:`ALWAYS
-            ~shadow_type:`IN ~show:true ()
-        in
-        let reparent () =
-          scrolledWin <- Some w;
-          match cicMathView#misc#parent with
-          | None -> w#add cicMathView#coerce
-          | Some parent ->
-             let parent =
-              match cicMathView#misc#parent with
-                 None -> assert false
-               | Some p -> GContainer.cast_container p
-             in
-              parent#remove cicMathView#coerce;
-              w#add cicMathView#coerce
-        in
-        goal2win <- (goal_switch, reparent) :: goal2win;
-        w#coerce
-      in
-      assert (
-        let stack_goals = Stack.open_goals stack in
-        let proof_goals = ProofEngineTypes.goals_of_proof proof in
-        if
-          HExtlib.list_uniq (List.sort Pervasives.compare stack_goals)
-          <> List.sort Pervasives.compare proof_goals
-        then begin
-          prerr_endline ("STACK GOALS = " ^ String.concat " " (List.map string_of_int stack_goals));
-          prerr_endline ("PROOF GOALS = " ^ String.concat " " (List.map string_of_int proof_goals));
-          false
-        end
-        else true
-      );
-      let render_switch =
-        function Stack.Open i ->`Meta i | Stack.Closed i ->`Closed (`Meta i)
-      in
-      let page = ref 0 in
-      let added_goals = ref [] in
-        (* goals can be duplicated on the tack due to focus, but we should avoid
-         * multiple labels in the user interface *)
-      let add_tab markup goal_switch =
-        let goal = Stack.goal_of_switch goal_switch in
-        if not (List.mem goal !added_goals) then begin
-          ignore(notebook#append_page 
-            ~tab_label:(tab_label markup) (win goal_switch));
-          page2goal <- (!page, goal_switch) :: page2goal;
-          goal2page <- (goal_switch, !page) :: goal2page;
-          incr page;
-          pages <- pages + 1;
-          added_goals := goal :: !added_goals
-        end
-      in
-      let add_switch _ _ (_, sw) = add_tab (render_switch sw) sw in
-      Stack.iter  (** populate notebook with tabs *)
-        ~env:(fun depth tag (pos, sw) ->
-          let markup =
-            match depth, pos with
-            | 0, 0 -> `Current (render_switch sw)
-            | 0, _ -> `Shift (pos, `Current (render_switch sw))
-            | 1, pos when Stack.head_tag stack = `BranchTag ->
-                `Shift (pos, render_switch sw)
-            | _ -> render_switch sw
-          in
-          add_tab markup sw)
-        ~cont:add_switch ~todo:add_switch
-        stack;
-      switch_page_callback <-
-        Some (notebook#connect#switch_page ~callback:(fun page ->
-          let goal_switch =
-            try List.assoc page page2goal with Not_found -> assert false
-          in
-          self#script#setGoal (Some (goal_of_switch goal_switch));
-          self#render_page status ~page ~goal_switch))
-
     method nload_sequents : 'status. #NTacStatus.tac_status as 'status -> unit
     = fun status ->
      let _,_,metasenv,subst,_ = status#obj in
@@ -1010,7 +930,6 @@ let current_proof_uri = BuildTimeConf.current_proof_uri
 
 type term_source =
   [ `Ast of CicNotationPt.term
-  | `Cic of Cic.term * Cic.metasenv
   | `NCic of NCic.term * NCic.context * NCic.metasenv * NCic.substitution
   | `String of string
   ]
@@ -1295,7 +1214,6 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
           | `About `TeX -> self#tex ()
           | `About `Grammar -> self#grammar () 
           | `Check term -> self#_loadCheck term
-          | `Cic (term, metasenv) -> self#_loadTermCic term metasenv
           | `NCic (term, ctx, metasenv, subst) -> 
                self#_loadTermNCic term metasenv subst ctx
           | `Dir dir -> self#_loadDir dir
@@ -1394,25 +1312,11 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
 
     method private home () =
       self#_showMath;
-      match self#script#grafite_status#proof_status with
-      | Proof  (uri, metasenv, _subst, bo, ty, attrs) ->
-         let name = UriManager.name_of_uri (HExtlib.unopt uri) in
-         let obj =
-          Cic.CurrentProof (name, metasenv, Lazy.force bo, ty, [], attrs)
-         in
-          self#_loadObj obj
-      | Incomplete_proof { proof = (uri, metasenv, _subst, bo, ty, attrs) } ->
-         let name = UriManager.name_of_uri (HExtlib.unopt uri) in
-         let obj =
-          Cic.CurrentProof (name, metasenv, Lazy.force bo, ty, [], attrs)
-         in
-          self#_loadObj obj
-      | _ ->
-        match self#script#grafite_status#ng_mode with
-           `ProofMode ->
-             self#_loadNObj self#script#grafite_status
-             self#script#grafite_status#obj
-         | _ -> self#blank ()
+      match self#script#grafite_status#ng_mode with
+         `ProofMode ->
+           self#_loadNObj self#script#grafite_status
+           self#script#grafite_status#obj
+       | _ -> self#blank ()
 
       (** loads a cic uri from the environment
       * @param uri UriManager.uri *)
@@ -1471,13 +1375,6 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
        * rendered *)
       self#_showMath;
       mathView#load_nobject status obj
-
-    method private _loadTermCic term metasenv =
-      let context = self#script#proofContext in
-      let dummyno = CicMkImplicit.new_meta metasenv [] in
-      let sequent = (dummyno, context, term) in
-      mathView#load_sequent (sequent :: metasenv) dummyno;
-      self#_showMath
 
     method private _loadTermNCic term m s c =
       let d = 0 in

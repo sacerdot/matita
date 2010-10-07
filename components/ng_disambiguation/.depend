@@ -3,5 +3,5 @@ disambiguateChoices.cmo: disambiguateChoices.cmi
 disambiguateChoices.cmx: disambiguateChoices.cmi 
 nCicDisambiguate.cmo: nCicDisambiguate.cmi 
 nCicDisambiguate.cmx: nCicDisambiguate.cmi 
-nnumber_notation.cmo: 
-nnumber_notation.cmx: 
+nnumber_notation.cmo: disambiguateChoices.cmi 
+nnumber_notation.cmx: disambiguateChoices.cmx 

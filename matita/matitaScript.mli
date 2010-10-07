@@ -63,12 +63,6 @@ object
 
   (** {2 Current proof} (if any) *)
 
-  (** @return true if there is an ongoing proof, false otherise *)
-  method onGoingProof: unit -> bool
-
-  method proofMetasenv: Cic.metasenv          (** @raise Statement_error *)
-  method proofContext: Cic.context            (** @raise Statement_error *)
-  method proofConclusion: Cic.term            (** @raise Statement_error *)
   method stack: Continuationals.Stack.t       (** @raise Statement_error *)
 
   method setGoal: int option -> unit

@@ -33,14 +33,6 @@ exception NMacro of GrafiteAst.loc * GrafiteAst.nmacro
 type 'a disambiguator_input = string * int * 'a
 
 val eval_ast :
-  disambiguate_tactic:
-   (GrafiteTypes.status ->
-    ProofEngineTypes.goal ->
-    (('term, 'lazy_term, 'reduction, 'ident) GrafiteAst.tactic)
-    disambiguator_input ->
-    GrafiteTypes.status *
-   (Cic.term, Cic.lazy_term, Cic.lazy_term GrafiteAst.reduction, string) GrafiteAst.tactic) ->
-
   disambiguate_command:
    (GrafiteTypes.status ->
     (('term,'obj) GrafiteAst.command) disambiguator_input ->

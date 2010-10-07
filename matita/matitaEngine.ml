@@ -32,12 +32,12 @@ let debug_print = if debug then prerr_endline else ignore ;;
 
 let disambiguate_command lexicon_status_ref grafite_status cmd =
  let baseuri = grafite_status#baseuri in
- let lexicon_status,metasenv,cmd =
+ let lexicon_status,cmd =
   GrafiteDisambiguate.disambiguate_command ~baseuri
-   !lexicon_status_ref (GrafiteTypes.get_proof_metasenv grafite_status) cmd
+   !lexicon_status_ref cmd
  in
   lexicon_status_ref := lexicon_status;
-  GrafiteTypes.set_metasenv metasenv grafite_status,cmd
+  grafite_status,cmd
 
 let eval_macro_screenshot (status : GrafiteTypes.status) name =
   let _,_,metasenv,subst,_ = status#obj in
@@ -70,7 +70,6 @@ let eval_ast ?do_heavy_checks status (text,prefix_len,ast) =
         status, `Old []
      | ast -> 
   GrafiteEngine.eval_ast
-   ~disambiguate_tactic:((* MATITA 1.0*) fun _ -> assert false)
    ~disambiguate_command:(disambiguate_command lexicon_status_ref)
    ~disambiguate_macro:((* MATITA 1.0*) fun _ -> assert false)
    ?do_heavy_checks status (text,prefix_len,ast)

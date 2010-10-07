@@ -133,10 +133,7 @@ let rec to_string =
       None,
       sprintf "format/version mismatch for file '%s', please recompile it'"
         fname
-  | ProofEngineTypes.Fail msg -> None, "Tactic error: " ^ Lazy.force msg
   | Continuationals.Error s -> None, "Tactical error: " ^ Lazy.force s
-  | ProofEngineHelpers.Bad_pattern msg ->
-     None, "Bad pattern: " ^ Lazy.force msg
   | CicRefine.RefineFailure msg
   | CicRefine.AssertFailure msg ->
      None, "Refiner error: " ^ Lazy.force msg

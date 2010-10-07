@@ -25,7 +25,7 @@
 
 exception Error of string Lazy.t
 
-type goal = ProofEngineTypes.goal
+type goal = int
 
 (** {2 Goal stack} *)
 

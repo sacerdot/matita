@@ -93,11 +93,12 @@ let _ =
   let browser_observer _ = MatitaMathView.refresh_all_browsers () in
   let sequents_observer grafite_status =
     sequents_viewer#reset;
-    match grafite_status#proof_status with
-    | Incomplete_proof ({ stack = stack } as incomplete_proof) ->
-        sequents_viewer#load_sequents grafite_status incomplete_proof;
+    match grafite_status#ng_mode with
+       `ProofMode ->
+        sequents_viewer#nload_sequents grafite_status;
         (try
-          script#setGoal (Some (Continuationals.Stack.find_goal stack));
+          script#setGoal
+           (Some (Continuationals.Stack.find_goal grafite_status#stack));
           let goal =
            match script#goal with
               None -> assert false
@@ -105,24 +106,7 @@ let _ =
           in
            sequents_viewer#goto_sequent grafite_status goal
         with Failure _ -> script#setGoal None);
-    | Proof proof -> sequents_viewer#load_logo_with_qed
-    | No_proof ->
-       (match grafite_status#ng_mode with
-           `ProofMode ->
-            sequents_viewer#nload_sequents grafite_status;
-            (try
-              script#setGoal
-               (Some (Continuationals.Stack.find_goal grafite_status#stack));
-              let goal =
-               match script#goal with
-                  None -> assert false
-                | Some n -> n
-              in
-               sequents_viewer#goto_sequent grafite_status goal
-            with Failure _ -> script#setGoal None);
-         | `CommandMode -> sequents_viewer#load_logo
-       )
-    | Intermediate _ -> assert false (* only the engine may be in this state *)
+     | `CommandMode -> sequents_viewer#load_logo
   in
   script#addObserver sequents_observer;
   script#addObserver browser_observer
@@ -162,42 +146,6 @@ let _ =
          (fun x l -> (LexiconAstPp.pp_command x)::l)
          (filter status.LexiconEngine.lexicon_content_rev) [])));
 *)
-    addDebugItem "print metasenv goals and stack to stderr"
-      (fun _ ->
-        prerr_endline ("metasenv goals: " ^ String.concat " "
-          (List.map (fun (g, _, _) -> string_of_int g)
-            (MatitaScript.current ())#proofMetasenv));
-        prerr_endline ("stack: " ^ Continuationals.Stack.pp
-          (GrafiteTypes.get_stack (MatitaScript.current ())#grafite_status)));
-     addDebugItem "Print current proof term" 
-       (fun _ -> 
-        HLog.debug
-          (CicPp.ppterm 
-            (match 
-            (MatitaScript.current ())#grafite_status#proof_status
-            with
-            | GrafiteTypes.No_proof -> (Cic.Implicit None)
-            | Incomplete_proof i -> 
-                 let _,_,_subst,p,_, _ = i.GrafiteTypes.proof in 
-                 Lazy.force p
-            | Proof p -> let _,_,_subst,p,_, _ = p in Lazy.force p
-            | Intermediate _ -> assert false)));
-     addDebugItem "Print current proof (natural language) to stderr" 
-       (fun _ -> 
-        prerr_endline 
-          (ApplyTransformation.txt_of_cic_object 120 [] 
-            ~map_unicode_to_tex:(Helm_registry.get_bool
-              "matita.paste_unicode_as_tex")
-            (match 
-            (MatitaScript.current ())#grafite_status#proof_status
-            with
-            | GrafiteTypes.No_proof -> assert false
-            | Incomplete_proof i -> 
-                let _,m,_subst,p,ty, attrs = i.GrafiteTypes.proof in 
-                Cic.CurrentProof ("current (incomplete) proof",m,Lazy.force p,ty,[],attrs)
-            | Proof (_,m,_subst,p,ty, attrs) -> 
-                Cic.CurrentProof ("current proof",m,Lazy.force p,ty,[],attrs)
-            | Intermediate _ -> assert false)));
     addDebugSeparator ();
     addDebugCheckbox "high level pretty printer" ~init:true
       (fun mi () -> CicMetaSubst.use_low_level_ppterm_in_context := mi#active);

@@ -72,12 +72,9 @@ let clean_current_baseuri grafite_status =
 let save_moo grafite_status = 
   let script = MatitaScript.current () in
   let baseuri = grafite_status#baseuri in
-  let no_pstatus = 
-    grafite_status#proof_status = GrafiteTypes.No_proof 
-  in
-  match script#bos, script#eos, no_pstatus with
-  | true, _, _ -> ()
-  | _, true, true ->
+  match script#bos, script#eos with
+  | true, _ -> ()
+  | _, true ->
      let moo_fname = 
        LibraryMisc.obj_file_of_baseuri ~must_exist:false ~baseuri
         ~writable:true in

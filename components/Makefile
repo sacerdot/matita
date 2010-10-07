@@ -10,7 +10,7 @@ MODULES =			\
 	xml			\
 	hgdome			\
 	registry		\
- 	hmysql 			\
+	hmysql 			\
 	syntax_extensions	\
 	thread			\
 	xmldiff			\
@@ -27,8 +27,6 @@ MODULES =			\
 	acic_content		\
 	grafite			\
 	cic_unification		\
-	tactics			\
-	acic_procedural         \
 	disambiguation	        \
 	ng_kernel               \
 	ng_refiner              \

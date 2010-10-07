@@ -31,7 +31,6 @@ type abouts = [ `Blank | `Current_proof | `Us | `Coercions
 type mathViewer_entry =
   [ `About of abouts
   | `Check of string
-  | `Cic of Cic.term * Cic.metasenv
   | `NCic of NCic.term * NCic.context * NCic.metasenv * NCic.substitution
   | `Dir of string
   | `Uri of UriManager.uri

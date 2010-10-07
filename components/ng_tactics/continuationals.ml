@@ -33,7 +33,7 @@ let debug_print s = if debug then prerr_endline (Lazy.force s) else ()
 exception Error of string lazy_t
 let fail msg = raise (Error msg)
 
-type goal = ProofEngineTypes.goal
+type goal = int
 
 module Stack =
 struct

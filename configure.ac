@@ -78,10 +78,8 @@ helm-grafite_engine \
 helm-ng_disambiguation \
 helm-ng_cic_content \
 helm-grafite_parser \
-helm-acic_procedural \
 helm-content_pres \
 helm-hgdome \
-helm-tactics \
 helm-ng_paramodulation \
 helm-ng_tactics \
 helm-cic_exportation \
@@ -209,7 +207,6 @@ AC_OUTPUT([
   components/extlib/componentsConf.ml
   matita/matita.conf.xml
   matita/buildTimeConf.ml
-  matita/gtkmathview.matita.conf.xml
   matita/help/C/version.txt
   Makefile.defs
 ])
