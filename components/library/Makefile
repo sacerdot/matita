@@ -4,13 +4,6 @@ PREDICATES =
 INTERFACE_FILES = \
 	librarian.mli \
 	libraryMisc.mli \
-	libraryDb.mli \
-	coercDb.mli \
-	cicCoercion.mli \
-	librarySync.mli \
-	cicElim.mli \
-	cicRecord.mli \
-	cicFix.mli \
 	libraryClean.mli \
 	$(NULL)
 IMPLEMENTATION_FILES = \

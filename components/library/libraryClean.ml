@@ -37,6 +37,7 @@ module UM = UriManager;;
 let decompile = ref (fun ~baseuri -> assert false);;
 let set_decompile_cb f = decompile := f;;
 
+(*
 let strip_xpointer s = Pcre.replace ~pat:"#.*$" s ;;
 
 let safe_buri_of_suri suri =
@@ -46,6 +47,7 @@ let safe_buri_of_suri suri =
     UM.IllFormedUri _ -> suri
 
 let one_step_depend cache_of_processed_baseuri suri dbtype dbd =
+  assert false (* MATITA 1.0
   let buri = safe_buri_of_suri suri in
   if Hashtbl.mem cache_of_processed_baseuri buri then 
     []
@@ -90,8 +92,10 @@ let one_step_depend cache_of_processed_baseuri suri dbtype dbd =
       with
         exn -> raise exn (* no errors should be accepted *)
     end
+    *)
     
 let db_uris_of_baseuri buri =
+  [] (* MATITA 1.0
  let dbd = LibraryDb.instance () in
  let dbtype = 
    if Helm_registry.get_bool "matita.system" then HSql.Library else HSql.User
@@ -122,6 +126,7 @@ let db_uris_of_baseuri buri =
   HExtlib.list_uniq l
  with
   exn -> raise exn (* no errors should be accepted *)
+  *)
 ;;
 
 let close_uri_list cache_of_processed_baseuri uri_to_remove =
@@ -212,14 +217,14 @@ let moo_root_dir = lazy (
   in
   String.sub url 7 (String.length url - 7))
 ;;
+*)
+
+let rec close_db cache_of_processed_baseuri uris next =
+  prerr_endline "CLOSE_DB "; uris (* MATITA 1.0 *)
+;;
 
 let clean_baseuris ?(verbose=true) buris =
   let cache_of_processed_baseuri = Hashtbl.create 1024 in
-  let dbd = LibraryDb.instance () in
-  let dbtype = 
-    if Helm_registry.get_bool "matita.system" then HSql.Library else HSql.User
-  in
-  Hashtbl.clear cache_of_processed_baseuri;
   let buris = List.map Http_getter_misc.strip_trailing_slash buris in
   debug_prerr "clean_baseuris called on:";
   if debug then
@@ -234,42 +239,12 @@ let clean_baseuris ?(verbose=true) buris =
    (fun baseuri ->
      !decompile ~baseuri;
      try 
-      let obj_file =
-       LibraryMisc.obj_file_of_baseuri ~must_exist:false ~writable:true ~baseuri
+      let lexiconfile =
+       LibraryMisc.lexicon_file_of_baseuri 
+        ~must_exist:false ~writable:true ~baseuri
       in
-       HExtlib.safe_remove obj_file ;
-       HExtlib.safe_remove 
-         (LibraryMisc.lexicon_file_of_baseuri 
-           ~must_exist:false ~writable:true ~baseuri) ;
-       HExtlib.rmdir_descend (Filename.chop_extension obj_file)
+       HExtlib.safe_remove lexiconfile;
+       HExtlib.rmdir_descend (Filename.chop_extension lexiconfile)
      with Http_getter_types.Key_not_found _ -> ())
    (HExtlib.list_uniq (List.fast_sort Pervasives.compare
-     (List.map (UriManager.buri_of_uri) l @ buris)));
-  List.iter
-   (let last_baseuri = ref "" in
-    fun uri ->
-     let buri = UriManager.buri_of_uri uri in
-     if buri <> !last_baseuri then
-      begin
-        if not (Helm_registry.get_bool "matita.verbose") then
-            (print_endline ("matitaclean " ^ buri ^ "/");flush stdout)
-          else 
-            HLog.message ("Removing: " ^ buri ^ "/*");
-       last_baseuri := buri
-      end;
-     LibrarySync.remove_obj uri
-   ) l;
-  if HSql.isMysql dbtype dbd then
-   begin
-   cleaned_no := !cleaned_no + List.length l;
-   if !cleaned_no > 30 && HSql.isMysql dbtype dbd then
-    begin
-     cleaned_no := 0;
-     List.iter
-      (function table ->
-        ignore (HSql.exec dbtype dbd ("OPTIMIZE TABLE " ^ table)))
-      [MetadataTypes.name_tbl (); MetadataTypes.rel_tbl ();
-       MetadataTypes.sort_tbl (); MetadataTypes.obj_tbl();
-       MetadataTypes.count_tbl()]
-    end
-   end
+     (List.map (UriManager.buri_of_uri) l @ buris)))

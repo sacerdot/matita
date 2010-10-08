@@ -25,5 +25,4 @@
 
 val set_decompile_cb: (baseuri: string -> unit) -> unit
 
-val db_uris_of_baseuri : string -> string list
 val clean_baseuris : ?verbose:bool -> string list -> unit
