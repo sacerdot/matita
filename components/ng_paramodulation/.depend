@@ -9,7 +9,6 @@ superposition.cmi: terms.cmi orderings.cmi index.cmi
 stats.cmi: terms.cmi orderings.cmi 
 paramod.cmi: terms.cmi orderings.cmi 
 nCicBlob.cmi: terms.cmi 
-cicBlob.cmi: terms.cmi 
 nCicProof.cmi: terms.cmi 
 nCicParamod.cmi: 
 terms.cmo: terms.cmi 
@@ -38,8 +37,6 @@ paramod.cmx: terms.cmx superposition.cmx pp.cmx orderings.cmx index.cmx \
     foUtils.cmx foUnif.cmx paramod.cmi 
 nCicBlob.cmo: terms.cmi foUtils.cmi nCicBlob.cmi 
 nCicBlob.cmx: terms.cmx foUtils.cmx nCicBlob.cmi 
-cicBlob.cmo: terms.cmi cicBlob.cmi 
-cicBlob.cmx: terms.cmx cicBlob.cmi 
 nCicProof.cmo: terms.cmi pp.cmi nCicBlob.cmi foSubst.cmi nCicProof.cmi 
 nCicProof.cmx: terms.cmx pp.cmx nCicBlob.cmx foSubst.cmx nCicProof.cmi 
 nCicParamod.cmo: terms.cmi pp.cmi paramod.cmi orderings.cmi nCicProof.cmi \
