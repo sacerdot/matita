@@ -183,15 +183,6 @@ type inline_param = IPPrefix of string         (* undocumented *)
                   | IPComments                 (* show statistics *)
                   | IPCR                       (* detect convertible rewriting *)
 
-type ('term,'lazy_term) macro = 
-  (* real macros *)
-  | Eval of loc * 'lazy_term reduction * 'term
-  | Check of loc * 'term 
-  | Hint of loc * bool
-  | AutoInteractive of loc * 'term auto_params
-  | Inline of loc * string * inline_param list
-     (* URI or base-uri, parameters *) 
-
 type nmacro =
   | NCheck of loc * NotationPt.term
   | Screenshot of loc * string
@@ -202,20 +193,9 @@ type nmacro =
  * marshalling *)
 let magic = 34
 
-type ('term,'obj) command =
-  | Index of loc * 'term option (* key *) * UriManager.uri (* value *)
-  | Select of loc * UriManager.uri
-  | Pump of loc * int
-  | Coercion of loc * 'term * bool (* add_obj *) *
-     int (* arity *) * int (* saturations *)
-  | PreferCoercion of loc * 'term
-  | Inverter of loc * string * 'term * bool list
-  | Default of loc * string * UriManager.uri list
+type command =
   | Drop of loc
   | Include of loc * bool (* normal? *) * [`New | `OldAndNew] * string 
-  | Obj of loc * 'obj
-  | Relation of
-     loc * string * 'term * 'term * 'term option * 'term option * 'term option
   | Set of loc * string * string
   | Print of loc * string
   | Qed of loc
@@ -247,9 +227,8 @@ type non_punctuation_tactical =
   | Skip of loc
 
 type ('term, 'lazy_term, 'reduction, 'obj, 'ident) code =
-  | Command of loc * ('term, 'obj) command
+  | Command of loc * command
   | NCommand of loc * ncommand
-  | Macro of loc * ('term,'lazy_term) macro 
   | NMacro of loc * nmacro 
   | NTactic of loc * ntactic list
   | Tactic of loc * ('term, 'lazy_term, 'reduction, 'ident) tactic option

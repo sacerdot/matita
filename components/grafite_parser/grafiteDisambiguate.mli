@@ -33,8 +33,8 @@ type tactic =
 val disambiguate_command: 
  LexiconEngine.status as 'status ->
  ?baseuri:string ->
- ((NotationPt.term,NotationPt.term NotationPt.obj) GrafiteAst.command) Disambiguate.disambiguator_input ->
-  'status * (Cic.term,Cic.obj) GrafiteAst.command
+ GrafiteAst.command Disambiguate.disambiguator_input ->
+  'status * GrafiteAst.command
 
 val disambiguate_nterm :
  NCic.term option -> 

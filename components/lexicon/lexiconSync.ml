@@ -73,14 +73,6 @@ let add_alias_for_constant status uri =
  let new_env = build_aliases [(name,uri)] in
  LexiconEngine.set_proof_aliases status new_env
 
-let add_aliases_for_object status uri =
- function
-    Cic.InductiveDefinition (types,_,_,_) ->
-     add_aliases_for_inductive_def status types uri
-  | Cic.Constant _ -> add_alias_for_constant status uri
-  | Cic.Variable _
-  | Cic.CurrentProof _ -> assert false
-  
 let add_aliases_for_objs status =
   function
    `Old _ -> assert false (* MATITA 1.0 *)

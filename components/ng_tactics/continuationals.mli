@@ -41,7 +41,6 @@ sig
 
   val find_goal: t -> goal            (** find "next" goal *)
   val is_empty: t -> bool             (** a singleton empty level *)
-  val of_metasenv: Cic.metasenv -> t
   val of_nmetasenv: (goal * 'a) list -> t
   val head_switches: t -> switch list (** top level switches *)
   val head_goals: t -> goal list      (** top level goals *)

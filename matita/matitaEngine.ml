@@ -65,15 +65,8 @@ let eval_ast ?do_heavy_checks status (text,prefix_len,ast) =
  let lexicon_status_ref = ref (status :> LexiconEngine.status) in
  let baseuri = status#baseuri in
  let new_status,new_objs =
-  match ast with 
-     | G.Executable (_, G.Command (_, G.Coercion _)) when dump ->
-(* FG: some commands can not be executed when mmas are parsed *************)
-(* To be removed when mmas will be executed                               *)
-        status, `New []
-     | ast -> 
   GrafiteEngine.eval_ast
    ~disambiguate_command:(disambiguate_command lexicon_status_ref)
-   ~disambiguate_macro:((* MATITA 1.0*) fun _ -> assert false)
    ?do_heavy_checks status (text,prefix_len,ast)
  in
  let new_status =

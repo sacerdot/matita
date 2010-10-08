@@ -31,20 +31,11 @@ open DisambiguateTypes
 
 exception Choice_not_found of string Lazy.t
 
-let num_choices = ref []
 let nnum_choices = ref []
 
-let add_num_choice choice = num_choices := choice :: !num_choices
 let nadd_num_choice choice = nnum_choices := choice :: !nnum_choices
 
 let has_description dsc = (fun x -> fst x = dsc)
-
-let lookup_num_choices () = !num_choices
-
-let lookup_num_by_dsc dsc =
-  try
-    List.find (has_description dsc) !num_choices
-  with Not_found -> raise (Choice_not_found (lazy ("Num with dsc " ^  dsc)))
 
 let nlookup_num_by_dsc dsc =
   try

@@ -213,18 +213,8 @@ let disambiguate_nobj estatus ?baseuri (text,prefix_len,obj) =
 ;;
 let disambiguate_command estatus ?baseuri (text,prefix_len,cmd)=
   match cmd with
-   | GrafiteAst.Index(loc,key,uri) -> (* MATITA 1.0 *) assert false
-   | GrafiteAst.Select (loc,uri) -> 
-        estatus, GrafiteAst.Select(loc,uri)
-   | GrafiteAst.PreferCoercion (loc,t) -> (* MATITA 1.0 *) assert false
-   | GrafiteAst.Coercion (loc,t,b,a,s) -> (* MATITA 1.0 *) assert false
-   | GrafiteAst.Inverter (loc,n,indty,params) -> (* MATITA 1.0 *) assert false
-   | GrafiteAst.Default _
    | GrafiteAst.Drop _
    | GrafiteAst.Include _
    | GrafiteAst.Print _
-   | GrafiteAst.Qed _
    | GrafiteAst.Set _ as cmd ->
        estatus,cmd
-   | GrafiteAst.Obj (loc,obj) -> (* MATITA 1.0 *) assert false
-   | GrafiteAst.Relation (loc,id,a,aeq,refl,sym,trans) -> (* MATITA 1.0 *) assert false

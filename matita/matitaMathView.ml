@@ -193,9 +193,9 @@ object (self)
    self#misc#modify_font_by_name
      (sprintf "%s %d" BuildTimeConf.script_font !current_font_size)
   method set_href_callback = (function _ -> () : (string -> unit) option -> unit)
-  method private set_cic_info = (function _ -> () : (Cic.conjecture option * (Cic.id, Cic.term) Hashtbl.t *
+  method private set_cic_info = (function _ -> () : unit (*(Cic.conjecture option * (Cic.id, Cic.term) Hashtbl.t *
          (Cic.id, Cic.hypothesis) Hashtbl.t *
-         (Cic.id, Cic.id option) Hashtbl.t * ('a, 'b) Hashtbl.t * 'c option) option -> unit)
+         (Cic.id, Cic.id option) Hashtbl.t * ('a, 'b) Hashtbl.t * 'c option)*) option -> unit)
   (* dal widget di Luca *)
   method load_root ~root =
     self#buffer#delete ~start:(self#buffer#get_iter `START)

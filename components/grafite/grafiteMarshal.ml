@@ -25,7 +25,7 @@
 
 (* $Id$ *)
 
-type ast_command = (Cic.term,Cic.obj) GrafiteAst.command
+type ast_command = GrafiteAst.command
 type moo = ast_command list
 
 let format_name = "grafite"
@@ -41,15 +41,12 @@ let rehash_cmd_uris =
   let rehash_uri uri =
     UriManager.uri_of_string (UriManager.string_of_uri uri) in
   function
-  | GrafiteAst.Default (loc, name, uris) ->
-      let uris = List.map rehash_uri uris in
-      GrafiteAst.Default (loc, name, uris)
   | GrafiteAst.Include _ as cmd -> cmd
   | cmd ->
       prerr_endline "Found a command not expected in a .moo:";
       let term_pp _ = assert false in
       let obj_pp _ = assert false in
-      prerr_endline (GrafiteAstPp.pp_command ~term_pp ~obj_pp cmd);
+      prerr_endline (GrafiteAstPp.pp_command cmd);
       assert false
 
 let save_moo ~fname moo = save_moo_to_file ~fname (List.rev moo)

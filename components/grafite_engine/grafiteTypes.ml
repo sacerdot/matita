@@ -55,19 +55,7 @@ class status = fun (b : string) ->
 
 let add_moo_content cmds status =
   let content = status#moo_content_rev in
-  let content' =
-    List.fold_right
-      (fun cmd acc ->
-(*         prerr_endline ("adding to moo command: " ^ GrafiteAstPp.pp_command cmd); *)
-        match cmd with
-        | GrafiteAst.Default _ 
-        | GrafiteAst.Index _
-        | GrafiteAst.Coercion _ ->
-            if List.mem cmd content then acc
-            else cmd :: acc
-        | _ -> cmd :: acc)
-      cmds content
-  in
+  let content' = cmds@content in
 (*   prerr_endline ("new moo content: " ^ String.concat " " (List.map
     GrafiteAstPp.pp_command content')); *)
    status#set_moo_content_rev content'

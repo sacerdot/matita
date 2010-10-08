@@ -43,14 +43,7 @@ val pp_reduction_kind:
   'a GrafiteAst.reduction ->
     string
 
-val pp_command:
- term_pp:('term -> string) ->
-  obj_pp:('obj -> string) ->
-   ('term,'obj) GrafiteAst.command -> string
-val pp_macro: 
-  term_pp:('term -> string) -> 
-  lazy_term_pp:('lazy_term -> string) ->
-    ('term,'lazy_term) GrafiteAst.macro -> string
+val pp_command: GrafiteAst.command -> string
 val pp_comment:
   map_unicode_to_tex:bool ->
   term_pp:('term -> string) ->

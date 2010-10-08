@@ -217,7 +217,6 @@ let compile atstart options fname =
     in
     let grafite_status =
      let rec aux_for_dump x grafite_status =
-     try
       match
        MatitaEngine.eval_from_stream ~first_statement_only:false ~include_paths
         grafite_status buf x
@@ -226,21 +225,6 @@ let compile atstart options fname =
       | (g,None)::_ -> g
       | (g,Some _)::_ ->
          raise (AttemptToInsertAnAlias (g :> LexiconEngine.status))
-     with MatitaEngine.EnrichedWithStatus 
-            (GrafiteEngine.Macro (floc, f), grafite) as exn ->
-            match f (get_macro_context (Some grafite)) with 
-            | _, GrafiteAst.Inline (_, _suri, _params) ->
-(*              
-	      let str =
-               ApplyTransformation.txt_of_inline_macro style prefix suri
-                ?flavour
-		~map_unicode_to_tex:(Helm_registry.get_bool
-                  "matita.paste_unicode_as_tex")
-	      in
-              !out str;
-*)
-              aux_for_dump x grafite
-            |_-> raise exn
      in
        aux_for_dump print_cb grafite_status
     in

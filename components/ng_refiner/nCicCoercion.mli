@@ -13,9 +13,6 @@
 
 type db
 
-val set_convert_term:
- (UriManager.uri -> Cic.term -> NCic.term * NCic.obj list) -> unit
-
 class type g_status =
  object
   inherit NCicUnifHint.g_status

@@ -315,46 +315,6 @@ let pp_nmacro = function
   | Screenshot (_, name) -> Printf.sprintf "screenshot \"%s\"" name
 ;;
 
-let pp_macro ~term_pp ~lazy_term_pp = 
-  let term_pp = pp_arg ~term_pp in
-  let flavour_pp = function
-     | `Definition       -> "definition"
-     | `Fact             -> "fact"
-     | `Lemma            -> "lemma"
-     | `Remark           -> "remark"
-     | `Theorem          -> "theorem"
-     | `Variant          -> "variant"
-     | `Axiom            -> "axiom"
-     | `MutualDefinition -> assert false
-  in
-  let pp_inline_params l =
-     let pp_param = function
-        | IPPrefix prefix -> "prefix = \"" ^ prefix ^ "\""
-	| IPAs flavour  -> flavour_pp flavour
-	| IPCoercions   -> "coercions"
-	| IPDebug debug -> "debug = " ^ string_of_int debug
-	| IPProcedural  -> "procedural"
-	| IPNoDefaults  -> "nodefaults"
-	| IPDepth depth -> "depth = " ^ string_of_int depth
-	| IPLevel level -> "level = " ^ string_of_int level
-	| IPComments    -> "comments"
-	| IPCR          -> "cr"
-     in
-     let s = String.concat " " (List.map pp_param l) in
-     if s = "" then s else " " ^ s
-  in
-  let pp_reduction_kind = pp_reduction_kind ~term_pp:lazy_term_pp in
-  function 
-  (* real macros *)
-  | Eval (_, kind, term) -> 
-      Printf.sprintf "eval %s on %s" (pp_reduction_kind kind) (term_pp term) 
-  | Check (_, term) -> Printf.sprintf "check %s" (term_pp term)
-  | Hint (_, true) -> "hint rewrite"
-  | Hint (_, false) -> "hint"
-  | AutoInteractive (_,params) -> "auto " ^ pp_auto_params ~term_pp params
-  | Inline (_, suri, params) ->  
-      Printf.sprintf "inline \"%s\"%s" suri (pp_inline_params params) 
-
 let pp_associativity = function
   | Gramext.LeftA -> "left associative"
   | Gramext.RightA -> "right associative"
@@ -388,36 +348,13 @@ let pp_ncommand ~obj_pp = function
             map)
 ;;
     
-let pp_command ~term_pp ~obj_pp = function
-  | Index (_,_,uri) -> "Indexing " ^ UriManager.string_of_uri uri
-  | Select (_,uri) -> "Selecting " ^ UriManager.string_of_uri uri
-  | Coercion (_, t, do_composites, i, j) ->
-     pp_coercion ~term_pp t do_composites i j
-  | PreferCoercion (_,t) -> 
-     "prefer coercion " ^ term_pp t
-  | Inverter (_,n,ty,params) ->
-     "inverter " ^ n ^ " for " ^ term_pp ty ^ " " ^ List.fold_left (fun acc x -> acc ^ (match x with true -> "%" | _ -> "?")) "" params
-  | Default (_,what,uris) -> pp_default what uris
+let pp_command = function
   | Drop _ -> "drop"
   | Include (_,true,`OldAndNew,path) -> "include \"" ^ path ^ "\""
   | Include (_,false,`OldAndNew,path) -> "include source \"" ^ path ^ "\""
   | Include (_,_,`New,path) -> "RECURSIVELY INCLUDING " ^ path
-  | Obj (_,obj) -> obj_pp obj
-  | Qed _ -> "qed"
-  | Relation (_,id,a,aeq,refl,sym,trans) ->
-     "relation " ^ term_pp aeq ^ " on " ^ term_pp a ^
-     (match refl with
-         Some r -> " reflexivity proved by " ^ term_pp r
-       | None -> "") ^
-     (match sym with
-         Some r -> " symmetry proved by " ^ term_pp r
-       | None -> "") ^
-     (match trans with
-         Some r -> " transitivity proved by " ^ term_pp r
-       | None -> "")
   | Print (_,s) -> "print " ^ s
   | Set (_, name, value) -> Printf.sprintf "set \"%s\" \"%s\"" name value
-  | Pump (_) -> "not supported"
 
 let pp_punctuation_tactical =
   function
@@ -439,7 +376,6 @@ let pp_non_punctuation_tactical =
 let pp_executable ~map_unicode_to_tex ~term_pp ~lazy_term_pp ~obj_pp =
   function
   | NMacro (_, macro) -> pp_nmacro macro ^ "."
-  | Macro (_, macro) -> pp_macro ~term_pp ~lazy_term_pp macro ^ "."
   | Tactic (_, Some tac, punct) ->
       pp_tactic ~map_unicode_to_tex ~term_pp ~lazy_term_pp tac
       ^ pp_punctuation_tactical punct
@@ -450,7 +386,7 @@ let pp_executable ~map_unicode_to_tex ~term_pp ~lazy_term_pp ~obj_pp =
   | NonPunctuationTactical (_, tac, punct) ->
      pp_non_punctuation_tactical tac
      ^ pp_punctuation_tactical punct
-  | Command (_, cmd) -> pp_command ~term_pp ~obj_pp cmd ^ "."
+  | Command (_, cmd) -> pp_command cmd ^ "."
   | NCommand (_, cmd) -> 
       let obj_pp = Obj.magic obj_pp in
       pp_ncommand ~obj_pp cmd ^ "."

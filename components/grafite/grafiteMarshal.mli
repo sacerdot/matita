@@ -23,7 +23,7 @@
  * http://helm.cs.unibo.it/
  *)
 
-type ast_command = (Cic.term,Cic.obj) GrafiteAst.command
+type ast_command = GrafiteAst.command
 type moo = ast_command list
 
 val save_moo: fname:string -> moo -> unit

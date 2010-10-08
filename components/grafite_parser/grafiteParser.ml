@@ -101,10 +101,6 @@ let nmk_rec_corec ind_kind defs loc =
  let loc,t = mk_rec_corec ind_kind defs loc in
   G.NObj (loc,t)
 
-let mk_rec_corec ind_kind defs loc = 
- let loc,t = mk_rec_corec ind_kind defs loc in
-  G.Obj (loc,t)
-
 let npunct_of_punct = function
   | G.Branch loc -> G.NBranch loc
   | G.Shift loc -> G.NShift loc
@@ -717,19 +713,6 @@ EXTEND
         (params,name,typ,fields)
     ] ];
 
-    macro: [
-      [ [ IDENT "check"   ]; t = term ->
-          G.Check (loc, t)
-      | [ IDENT "eval" ]; kind = reduction_kind; "on"; t = tactic_term ->
-          G.Eval (loc, kind, t)
-      | IDENT "inline"; suri = QSTRING; params = inline_params -> 
-           G.Inline (loc, suri, params)
-      | [ IDENT "hint" ]; rew = OPT (IDENT "rewrite")  -> 
-           if rew = None then G.Hint (loc, false) else G.Hint (loc,true)
-      | IDENT "auto"; params = auto_params ->
-          G.AutoInteractive (loc,params)
-      ]
-    ];
     alias_spec: [
       [ IDENT "id"; id = QSTRING; SYMBOL "="; uri = QSTRING ->
         let alpha = "[a-zA-Z]" in
@@ -895,66 +878,6 @@ EXTEND
         G.Set (loc, n, v)
     | IDENT "drop" -> G.Drop loc
     | IDENT "print"; s = IDENT -> G.Print (loc,s)
-    | IDENT "qed" -> G.Qed loc
-    | IDENT "variant" ; name = IDENT; SYMBOL ":"; 
-      typ = term; SYMBOL <:unicode<def>> ; newname = IDENT ->
-        G.Obj (loc, 
-          N.Theorem 
-            (`Variant,name,typ,Some (N.Ident (newname, None)), `Regular))
-    | flavour = theorem_flavour; name = IDENT; SYMBOL ":"; typ = term;
-      body = OPT [ SYMBOL <:unicode<def>> (* ≝ *); body = term -> body ] ->
-        G.Obj (loc, N.Theorem (flavour, name, typ, body,`Regular))
-    | flavour = theorem_flavour; name = IDENT; SYMBOL <:unicode<def>> (* ≝ *);
-      body = term ->
-        G.Obj (loc,
-          N.Theorem (flavour, name, N.Implicit `JustOne, Some body,`Regular))
-    | IDENT "axiom"; name = IDENT; SYMBOL ":"; typ = term ->
-        G.Obj (loc, N.Theorem (`Axiom, name, typ, None, `Regular))
-    | LETCOREC ; defs = let_defs -> 
-        mk_rec_corec `CoInductive defs loc
-    | LETREC ; defs = let_defs -> 
-        mk_rec_corec `Inductive defs loc
-    | IDENT "inductive"; spec = inductive_spec ->
-        let (params, ind_types) = spec in
-        G.Obj (loc, N.Inductive (params, ind_types))
-    | IDENT "coinductive"; spec = inductive_spec ->
-        let (params, ind_types) = spec in
-        let ind_types = (* set inductive flags to false (coinductive) *)
-          List.map (fun (name, _, term, ctors) -> (name, false, term, ctors))
-            ind_types
-        in
-        G.Obj (loc, N.Inductive (params, ind_types))
-    | IDENT "coercion" ; 
-      t = [ u = URI -> N.Uri (u,None) | t = tactic_term ; OPT "with" -> t ] ;
-      arity = OPT int ; saturations = OPT int; 
-      composites = OPT (IDENT "nocomposites") ->
-        let arity = match arity with None -> 0 | Some x -> x in
-        let saturations = match saturations with None -> 0 | Some x -> x in
-        let composites = match composites with None -> true | Some _ -> false in
-        G.Coercion
-         (loc, t, composites, arity, saturations)
-    | IDENT "prefer" ; IDENT "coercion"; t = tactic_term ->
-        G.PreferCoercion (loc, t)
-    | IDENT "pump" ; steps = int ->
-        G.Pump(loc,steps)
-    | IDENT "inverter"; name = IDENT; IDENT "for";
-        indty = tactic_term; paramspec = inverter_param_list ->
-          G.Inverter
-            (loc, name, indty, paramspec)
-    | IDENT "record" ; (params,name,ty,fields) = record_spec ->
-        G.Obj (loc, N.Record (params,name,ty,fields))
-    | IDENT "default" ; what = QSTRING ; uris = LIST1 URI ->
-       let uris = List.map UriManager.uri_of_string uris in
-        G.Default (loc,what,uris)
-    | IDENT "relation" ; aeq = tactic_term ; "on" ; a = tactic_term ;
-      refl = OPT [ IDENT "reflexivity" ; IDENT "proved" ; IDENT "by" ;
-                   refl = tactic_term -> refl ] ;
-      sym = OPT [ IDENT "symmetry" ; IDENT "proved" ; IDENT "by" ;
-                   sym = tactic_term -> sym ] ;
-      trans = OPT [ IDENT "transitivity" ; IDENT "proved" ; IDENT "by" ;
-                   trans = tactic_term -> trans ] ;
-      "as" ; id = IDENT ->
-       G.Relation (loc,id,a,aeq,refl,sym,trans)
   ]];
   lexicon_command: [ [
       IDENT "alias" ; spec = alias_spec ->
@@ -988,7 +911,6 @@ EXTEND
     | SYMBOL "#" ; SYMBOL "#" ; tac = non_punctuation_tactical; 
         punct = punctuation_tactical ->
           G.NTactic (loc, [nnon_punct_of_punct tac; npunct_of_punct punct])
-    | mac = macro; SYMBOL "." -> G.Macro (loc, mac)
     ]
   ];
   comment: [

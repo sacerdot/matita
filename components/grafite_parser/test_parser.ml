@@ -91,13 +91,6 @@ let process_stream istream =
                   | Some id ->
                       prerr_endline "removing last notation rule ...";
                       NotationParser.delete id) *)
-              | G.Executable (_, G.Macro (_, G.Check (_, t))) -> 
-                  prerr_endline (sprintf "ast: %s" (NotationPp.pp_term t));
-                  let t' = TermContentPres.pp_ast t in
-                  prerr_endline (sprintf "rendered ast: %s"
-                    (NotationPp.pp_term t'));
-                  let tbl = Hashtbl.create 0 in
-                  dump_xml t' tbl "out.xml"
               | statement ->
                   prerr_endline
                    ("Unsupported statement: " ^

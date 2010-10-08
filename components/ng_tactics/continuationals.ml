@@ -114,10 +114,6 @@ struct
     | [ [], [], [], `NoTag ] -> true
     | _ -> false
 
-  let of_metasenv metasenv =
-    let goals = List.map (fun (g, _, _) -> g) metasenv in
-    [ zero_pos goals, [], [], `NoTag ]
-  
   let of_nmetasenv metasenv =
     let goals = List.map (fun (g, _) -> g) metasenv in
     [ zero_pos goals, [], [], `NoTag ]

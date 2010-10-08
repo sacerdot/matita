@@ -31,18 +31,10 @@ open DisambiguateTypes
 exception Choice_not_found of string Lazy.t
 
   (** register a new number choice *)
-val add_num_choice: Cic.term codomain_item -> unit
-
-  (** register a new number choice *)
 val nadd_num_choice: NCic.term codomain_item -> unit
 
 (** {2 Choices lookup}
  * for user defined aliases *)
-
-val lookup_num_choices: unit -> Cic.term codomain_item list
-
-  (** @param dsc description (1st component of codomain_item) *)
-val lookup_num_by_dsc: string -> Cic.term codomain_item
 
   (** @param dsc description (1st component of codomain_item) *)
 val nlookup_num_by_dsc: string -> NCic.term codomain_item

@@ -25,9 +25,6 @@
 
 exception Drop
 exception IncludedFileNotCompiled of string * string
-exception Macro of
- GrafiteAst.loc *
-  (Cic.context -> GrafiteTypes.status * (Cic.term,unit) GrafiteAst.macro)
 exception NMacro of GrafiteAst.loc * GrafiteAst.nmacro
 
 type 'a disambiguator_input = string * int * 'a
@@ -35,13 +32,8 @@ type 'a disambiguator_input = string * int * 'a
 val eval_ast :
   disambiguate_command:
    (GrafiteTypes.status ->
-    (('term,'obj) GrafiteAst.command) disambiguator_input ->
-    GrafiteTypes.status * (Cic.term, Cic.obj) GrafiteAst.command) ->
-
-  disambiguate_macro:
-   (GrafiteTypes.status ->
-    (('term,'lazy_term) GrafiteAst.macro) disambiguator_input ->
-    Cic.context -> GrafiteTypes.status * (Cic.term,unit) GrafiteAst.macro) ->
+    (GrafiteAst.command) disambiguator_input ->
+    GrafiteTypes.status * GrafiteAst.command) ->
 
   ?do_heavy_checks:bool ->
   GrafiteTypes.status ->

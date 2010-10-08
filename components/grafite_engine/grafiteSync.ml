@@ -27,34 +27,6 @@
 
 open Printf
 
-let is_a_variant obj = 
-  match obj with
-    | Cic.Constant(_,_,_,_,attrs) ->
-	List.exists (fun x -> x = `Flavour `Variant) attrs
-    | _ -> false
-
-let uris_for_inductive_type uri obj =
-  match obj with 
-    | Cic.InductiveDefinition(types,_,_,_) ->
-	let suri = UriManager.string_of_uri uri in
-	let uris,_ =
-	  List.fold_left
-	    (fun (acc,i) (_,_,_,constructors)->
-	       let is = string_of_int i in	     
-	       let newacc,_ =
-		 List.fold_left
-		   (fun (acc,j) _ ->
-		      let js = string_of_int j in
-			UriManager.uri_of_string
-			  (suri^"#xpointer(1/"^is^"/"^js^")")::acc,j+1) 
-		   (acc,1) constructors
-	       in
-	       newacc,i+1)
-	    ([],1) types 
-	in uris
-    | _ -> [uri] 
-;;
-
   (** @return l2 \ l1 *)
 let uri_list_diff l2 l1 =
   let module S = UriManager.UriSet in

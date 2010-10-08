@@ -71,29 +71,8 @@ let out_command och cmd =
 let command_of_obj obj =
    G.Executable (floc, G.Command (floc, obj))
 
-let command_of_macro macro =
-   G.Executable (floc, G.Macro (floc, macro))
-
 let require moo value =
    command_of_obj (G.Include (floc, moo, `OldAndNew, value ^ ".ma"))
-
-let coercion value =
-   command_of_obj (G.Coercion (floc, UM.uri_of_string value, true, 0, 0))
-
-let inline kind uri prefix flavour params =
-    let params = match prefix with
-       | ""     -> params
-       | prefix -> G.IPPrefix prefix :: params
-    in
-    let params = match flavour with
-       | None         -> params
-       | Some flavour -> G.IPAs flavour :: params
-    in
-    let params = match kind with
-       | T.Declarative -> params
-       | T.Procedural  -> G.IPProcedural :: params 
-    in    
-    command_of_macro (G.Inline (floc, uri, params))
 
 let out_alias och name uri =
    Printf.fprintf och "alias id \"%s\" = \"%s\".\n\n" name uri
@@ -117,13 +96,6 @@ let commit kind och items =
          if !O.comments then out_unexported och "NOTATION" (snd specs) (**)
       | T.Inline (_, T.Var, src, _, _, _) ->
          if !O.comments then out_unexported och "UNEXPORTED" src
-(* FG: we do not export variables because we cook the other objects         
- *	 let name = UriManager.name_of_uri (UriManager.uri_of_string src) in
- *       out_alias och name src
- *)
-      | T.Inline (_, _, src, pre, fl, params) -> 
-         if !O.getter then check och src; 
-	 out_command och (inline kind src pre fl params)
       | T.Section specs     -> 
          if !O.comments then out_unexported och "UNEXPORTED" (trd specs)
       | T.Comment comment   -> 

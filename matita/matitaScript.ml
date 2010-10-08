@@ -190,40 +190,7 @@ let eval_nmacro include_paths (buffer : GText.buffer) guistuff grafite_status us
       [s, nl ^ trace ^ thms ^ ";"], "", parsed_text_length
   | TA.NAutoInteractive (_, (Some _,_)) -> assert false
 
-let rec eval_macro include_paths (buffer : GText.buffer) guistuff grafite_status user_goal unparsed_text parsed_text script mac =
-  (* no idea why ocaml wants this *)
-  let parsed_text_length = String.length parsed_text in
-  match mac with
-  (* REAL macro *)
-  | TA.Hint (loc, rewrite) -> (* MATITA 1.0 *) assert false
-  | TA.Eval (_, kind, term) -> assert false (* MATITA 1.0
-      let metasenv = GrafiteTypes.get_proof_metasenv grafite_status in
-      let context =
-       match user_goal with
-          None -> []
-        | Some n -> GrafiteTypes.get_proof_context grafite_status n in
-      let ty,_ = CTC.type_of_aux' metasenv context term CicUniv.empty_ugraph in
-      let term = 
-        match kind with
-        | `Normalize ->
-             CicReduction.normalize ~delta:true ~subst:[] context term
-        | `Simpl -> 
-            ProofEngineReduction.simpl context term
-        | `Unfold None ->
-            ProofEngineReduction.unfold ?what:None context term
-        | `Unfold (Some lazy_term) ->
-             let what, _, _ = 
-               lazy_term context metasenv CicUniv.empty_ugraph in
-             ProofEngineReduction.unfold ~what context term
-        | `Whd ->
-            CicReduction.whd ~delta:true ~subst:[] context term
-      in
-      let t_and_ty = Cic.Cast (term,ty) in
-      guistuff.mathviewer#show_entry (`Cic (t_and_ty,metasenv));
-      [(grafite_status#set_proof_status No_proof), parsed_text ],"", 
-        parsed_text_length *)
-                                
-and eval_executable include_paths (buffer : GText.buffer) guistuff
+let rec eval_executable include_paths (buffer : GText.buffer) guistuff
 grafite_status user_goal unparsed_text skipped_txt nonskipped_txt
 script ex loc
 =
@@ -236,11 +203,6 @@ script ex loc
      (TA.Executable (loc, ex))
   with
      MatitaTypes.Cancel -> [], "", 0
-   | GrafiteEngine.Macro (_loc,lazy_macro) ->
-      let context = [] in
-      let grafite_status,macro = lazy_macro context in
-       eval_macro include_paths buffer guistuff grafite_status
-        user_goal unparsed_text (skipped_txt ^ nonskipped_txt) script macro
    | GrafiteEngine.NMacro (_loc,macro) ->
        eval_nmacro include_paths buffer guistuff grafite_status
         user_goal unparsed_text (skipped_txt ^ nonskipped_txt) script macro
