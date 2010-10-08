@@ -65,6 +65,7 @@ let near (x1, y1) (x2, y2) =
   let distance = sqrt (((x2 -. x1) ** 2.) +. ((y2 -. y1) ** 2.)) in
   (distance < 4.)
 
+(*
 let mathml_ns = Gdome.domString "http://www.w3.org/1998/Math/MathML"
 let xlink_ns = Gdome.domString "http://www.w3.org/1999/xlink"
 let helm_ns = Gdome.domString "http://www.cs.unibo.it/helm"
@@ -83,10 +84,12 @@ let empty_mathml = lazy (
 let empty_boxml = lazy (
   domImpl#createDocument ~namespaceURI:(Some DomMisc.boxml_ns) 
     ~qualifiedName:(Gdome.domString "box") ~doctype:None)
+    *)
 
   (** shown for goals closed by side effects *)
 let closed_goal_mathml = lazy "chiuso per side effect..."
 
+(*
 (* ids_to_terms should not be passed here, is just for debugging *)
 let find_root_id annobj id ids_to_father_ids ids_to_terms ids_to_inner_types =
   assert false (* MATITA 1.0
@@ -177,6 +180,7 @@ let rec has_maction (elt :Gdome.element) =
         has_maction (new Gdome.element_of_node node)
     | _ -> false
 ;;
+*)
 
 class clickableMathView obj =
 let text_width = 80 in
@@ -198,8 +202,8 @@ object (self)
     ~stop:(self#buffer#get_iter `END);
     self#buffer#insert root
   method remove_selections = (() : unit)
-  method set_selection = (fun _ -> () : Gdome.element option -> unit)
-  method get_selections = (assert false : Gdome.element list)
+  method set_selection = (fun _ -> () : unit option -> unit)
+  method get_selections = (assert false : unit list)
   method set_font_size font_size =
    self#misc#modify_font_by_name
      (sprintf "%s %d" BuildTimeConf.script_font font_size)

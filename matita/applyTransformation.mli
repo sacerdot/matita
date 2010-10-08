@@ -33,20 +33,12 @@
 (*                                                                         *)
 (***************************************************************************)
 
-val nmml_of_cic_sequent:
- #NCicCoercion.status ->
- NCic.metasenv -> NCic.substitution ->          (* metasenv, substitution *)
- int * NCic.conjecture ->                       (* sequent *)
-  Gdome.document                                (* Math ML *)
-
 val ntxt_of_cic_sequent:
  map_unicode_to_tex:bool -> int ->
  #NCicCoercion.status ->
  NCic.metasenv -> NCic.substitution ->          (* metasenv, substitution *)
  int * NCic.conjecture ->                       (* sequent *)
   string                                        (* text *)
-
-val nmml_of_cic_object: #NCicCoercion.status -> NCic.obj -> Gdome.document
 
 val ntxt_of_cic_object:
  map_unicode_to_tex:bool -> int -> #NCicCoercion.status -> NCic.obj -> string

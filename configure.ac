@@ -79,7 +79,6 @@ helm-ng_disambiguation \
 helm-ng_cic_content \
 helm-grafite_parser \
 helm-content_pres \
-helm-hgdome \
 helm-ng_paramodulation \
 helm-ng_tactics \
 "

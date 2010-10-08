@@ -109,8 +109,8 @@ object
 
   method load_root : root:string -> unit
   method remove_selections: unit
-  method set_selection: Gdome.element option -> unit
-  method get_selections: Gdome.element list
+  method set_selection: unit option -> unit
+  method get_selections: unit list
   method set_font_size: int -> unit
 
 

@@ -40,6 +40,7 @@ let disambiguate_command lexicon_status_ref grafite_status cmd =
   grafite_status,cmd
 
 let eval_macro_screenshot (status : GrafiteTypes.status) name =
+  assert false (* MATITA 1.0
   let _,_,metasenv,subst,_ = status#obj in
   let sequent = List.hd metasenv in
   let mathml = 
@@ -56,6 +57,7 @@ let eval_macro_screenshot (status : GrafiteTypes.status) name =
     Filename.quote (name^".png")));
   HLog.debug ("generated " ^ name ^ ".png");
   status, `New []
+  *)
 ;;
 
 let eval_ast ?do_heavy_checks status (text,prefix_len,ast) =
