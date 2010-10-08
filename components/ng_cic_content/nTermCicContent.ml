@@ -322,7 +322,7 @@ let rec nast_of_cic1 status ~idref ~output_type ~metasenv ~subst ~context term =
       in
       let _, symbol, args, _ =
         try
-          TermAcicContent.find_level2_patterns32 pid
+          Interpretations.find_level2_patterns32 pid
         with Not_found -> assert false
       in
       let ast = instantiate32 idrefs env symbol args in
@@ -335,8 +335,8 @@ let load_patterns32 t =
  in
   set_compiled32 (lazy (Ncic2astMatcher.Matcher32.compiler t))
 in
- TermAcicContent.add_load_patterns32 load_patterns32;
- TermAcicContent.init ()
+ Interpretations.add_load_patterns32 load_patterns32;
+ Interpretations.init ()
 ;;
 
 (*

@@ -2,7 +2,7 @@ content.cmi:
 cicNotationUtil.cmi: cicNotationPt.cmo 
 cicNotationEnv.cmi: cicNotationPt.cmo 
 cicNotationPp.cmi: cicNotationPt.cmo cicNotationEnv.cmi 
-termAcicContent.cmi: cicNotationPt.cmo 
+interpretations.cmi: cicNotationPt.cmo 
 cicNotationPt.cmo: 
 cicNotationPt.cmx: 
 content.cmo: content.cmi 
@@ -13,7 +13,7 @@ cicNotationEnv.cmo: cicNotationUtil.cmi cicNotationPt.cmo cicNotationEnv.cmi
 cicNotationEnv.cmx: cicNotationUtil.cmx cicNotationPt.cmx cicNotationEnv.cmi 
 cicNotationPp.cmo: cicNotationPt.cmo cicNotationEnv.cmi cicNotationPp.cmi 
 cicNotationPp.cmx: cicNotationPt.cmx cicNotationEnv.cmx cicNotationPp.cmi 
-termAcicContent.cmo: cicNotationUtil.cmi cicNotationPt.cmo cicNotationPp.cmi \
-    termAcicContent.cmi 
-termAcicContent.cmx: cicNotationUtil.cmx cicNotationPt.cmx cicNotationPp.cmx \
-    termAcicContent.cmi 
+interpretations.cmo: cicNotationUtil.cmi cicNotationPt.cmo \
+    interpretations.cmi 
+interpretations.cmx: cicNotationUtil.cmx cicNotationPt.cmx \
+    interpretations.cmi 

@@ -51,7 +51,7 @@ val get_all_interpretations: unit -> (interpretation_id * string) list
 val get_active_interpretations: unit -> interpretation_id list
 val set_active_interpretations: interpretation_id list -> unit
 
-  (** {2 content -> acic} *)
+  (** {2 content -> cic} *)
 
   (** @param env environment from argument_pattern to cic terms
    * @param pat cic_appl_pattern *)

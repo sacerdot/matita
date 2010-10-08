@@ -1,4 +1,4 @@
-PACKAGE = acic_content
+PACKAGE = content
 PREDICATES =
 
 INTERFACE_FILES =		\
@@ -6,7 +6,7 @@ INTERFACE_FILES =		\
 	cicNotationUtil.mli	\
 	cicNotationEnv.mli	\
 	cicNotationPp.mli	\
-	termAcicContent.mli \
+	interpretations.mli \
 	$(NULL)
 IMPLEMENTATION_FILES =		\
 	cicNotationPt.ml	\

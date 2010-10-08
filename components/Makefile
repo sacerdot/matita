@@ -19,7 +19,7 @@ MODULES =			\
 	cic			\
 	library			\
 	ng_kernel		\
-	acic_content		\
+	content		\
 	grafite			\
 	disambiguation	        \
 	ng_kernel               \

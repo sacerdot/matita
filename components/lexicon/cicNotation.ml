@@ -29,7 +29,7 @@ open LexiconAst
 
 type notation_id =
   | RuleId of CicNotationParser.rule_id
-  | InterpretationId of TermAcicContent.interpretation_id
+  | InterpretationId of Interpretations.interpretation_id
   | PrettyPrinterId of TermContentPres.pretty_printer_id
 
 let compare_notation_id x y = 
@@ -77,7 +77,7 @@ let process_notation st =
       in
       !rule_id @ pp_id
   | Interpretation (loc, dsc, l2, l3) ->
-      let interp_id = TermAcicContent.add_interpretation dsc l2 l3 in
+      let interp_id = Interpretations.add_interpretation dsc l2 l3 in
        [InterpretationId interp_id]
   | st -> []
 
@@ -90,17 +90,17 @@ let remove_notation = function
       RefCounter.decr ~delete_cb:(fun _ -> CicNotationParser.delete id)
         !parser_ref_counter item
   | PrettyPrinterId id -> TermContentPres.remove_pretty_printer id
-  | InterpretationId id -> TermAcicContent.remove_interpretation id
+  | InterpretationId id -> Interpretations.remove_interpretation id
 
 let get_all_notations () =
   List.map
     (fun (interp_id, dsc) ->
       InterpretationId interp_id, "interpretation: " ^ dsc)
-    (TermAcicContent.get_all_interpretations ())
+    (Interpretations.get_all_interpretations ())
 
 let get_active_notations () =
   List.map (fun id -> InterpretationId id)
-    (TermAcicContent.get_active_interpretations ())
+    (Interpretations.get_active_interpretations ())
 
 let set_active_notations ids =
   let interp_ids =
@@ -108,7 +108,7 @@ let set_active_notations ids =
       (function InterpretationId interp_id -> Some interp_id | _ -> None)
       ids
   in
-  TermAcicContent.set_active_interpretations interp_ids
+  Interpretations.set_active_interpretations interp_ids
 
 let history = ref [];;
 
@@ -117,13 +117,13 @@ let push () =
  parser_ref_counter := initial_parser_ref_counter ();
  rule_ids_to_items := initial_rule_ids_to_items ();
  TermContentPres.push ();
- TermAcicContent.push ();
+ Interpretations.push ();
  CicNotationParser.push ()
 ;;
 
 let pop () =
  TermContentPres.pop ();
- TermAcicContent.pop ();
+ Interpretations.pop ();
  CicNotationParser.pop ();
  match !history with
  | [] -> assert false
