@@ -157,8 +157,6 @@ let rec to_string =
      None, "NCicUnification failure: " ^ Lazy.force msg
   | NCicUnification.Uncertain msg ->
      None, "NCicUnification uncertain: " ^ Lazy.force msg
-  | LibrarySync.AlreadyDefined s -> 
-     None, "Already defined: " ^ UriManager.string_of_uri s
   | DisambiguateChoices.Choice_not_found msg ->
      None, ("Disambiguation choice not found: " ^ Lazy.force msg)
   | MatitaEngine.EnrichedWithStatus (exn,_) ->

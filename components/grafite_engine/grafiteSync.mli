@@ -23,16 +23,6 @@
  * http://helm.cs.unibo.it/
  *)
 
-val add_coercion:
-  pack_coercion_obj:(Cic.obj -> Cic.obj) ->
-  add_composites:bool -> GrafiteTypes.status ->
-  UriManager.uri -> int -> int ->
-  string (* baseuri *) ->
-    GrafiteTypes.status * UriManager.uri list
-
-val prefer_coercion: 
-  GrafiteTypes.status -> UriManager.uri -> GrafiteTypes.status 
-
 val time_travel: 
   present:GrafiteTypes.status -> ?past:GrafiteTypes.status -> unit -> unit
 

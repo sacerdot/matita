@@ -10,7 +10,6 @@ MODULES =			\
 	xml			\
 	hgdome			\
 	registry		\
-	hmysql 			\
 	syntax_extensions	\
 	thread			\
 	urimanager		\

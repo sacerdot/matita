@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<helm_registry>
-  <section name="db">
-    <key name="metadata">mysql://mowgli.cs.unibo.it mowgli helm none legacy</key>
-    <key name="type">legacy</key>
-  </section>
-</helm_registry>

@@ -1,4 +1,0 @@
-requires="helm-registry sqlite3 mysql helm-extlib"
-version="0.0.1"
-archive(byte)="hmysql.cma"
-archive(native)="hmysql.cmxa"

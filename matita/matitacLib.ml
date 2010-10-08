@@ -185,8 +185,7 @@ let compile atstart options fname =
        ~must_exist:false ~baseuri ~writable:true
     in
     (* cleanup of previously compiled objects *)
-    if (not (Http_getter_storage.is_empty ~local:true baseuri) ||
-        LibraryClean.db_uris_of_baseuri baseuri <> []) 
+    if (not (Http_getter_storage.is_empty ~local:true baseuri))
       then begin
       HLog.message ("baseuri " ^ baseuri ^ " is not empty");
       HLog.message ("cleaning baseuri " ^ baseuri);

@@ -97,7 +97,6 @@ let initialize_db init_status =
   wants [ ConfigurationFile; CmdLine ] init_status;
   if not (already_configured [ Db ] init_status) then
     begin
-      LibraryDb.create_owner_environment ();
       Db::init_status
     end
   else
@@ -284,7 +283,3 @@ let parse_cmdline_and_configuration_file () =
 
 let initialize_environment () =
   status := initialize_environment !status
-
-let _ =
-  CicFix.init ()
-;;

@@ -64,44 +64,6 @@ let index_coercion status name c src tgt arity arg =
   status#set_coerc_db (db_src, db_tgt)
 ;;
 
-let index_old_db odb (status : #status) =
-  List.fold_left 
-    (fun status (_,tgt,clist) -> 
-       List.fold_left 
-         (fun status (uri,_,arg) ->
-           try
-            let c=fst (!convert_term uri (CicUtil.term_of_uri uri)) in
-            let arity = match tgt with | CoercDb.Fun i -> i | _ -> 0 in
-            let src, tgt = 
-              let cty = NCicTypeChecker.typeof ~subst:[] ~metasenv:[] [] c in
-              let scty, metasenv,_ = 
-                NCicMetaSubst.saturate ~delta:max_int [] [] [] cty (arity+1) 
-              in
-              match scty with
-              | NCic.Prod (_, src, tgt) -> 
-                 let tgt =
-                   NCicSubstitution.subst (NCic.Meta (-1,(0,NCic.Irl 0))) tgt
-                 in
-(*
-            debug (lazy (Printf.sprintf "indicizzo %s (%d)) : %s ===> %s" 
-              (NCicPp.ppterm ~metasenv ~subst:[] ~context:[] scty) (arity+1)
-              (NCicPp.ppterm ~metasenv ~subst:[] ~context:[] src)
-              (NCicPp.ppterm ~metasenv ~subst:[] ~context:[] tgt));
-*)
-                src, tgt
-              | t -> 
-                  debug (lazy (
-                    NCicPp.ppterm ~metasenv ~subst:[] ~context:[] t));
-                  assert false
-            in
-            index_coercion status "foo" c src tgt arity arg
-           with 
-           | NCicEnvironment.BadDependency _ 
-           | NCicTypeChecker.TypeCheckerFailure _ -> status)
-         status clist)
-    status (CoercDb.to_list odb)
-;;
-
 let look_for_coercion status metasenv subst context infty expty =
  let db_src,db_tgt = status#coerc_db in
   match 

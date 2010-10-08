@@ -39,15 +39,12 @@ class status = fun (b : string) ->
   object
    val moo_content_rev = ([] : GrafiteMarshal.moo)
    val objects = ([] : UriManager.uri list)
-   val coercions = CoercDb.empty_coerc_db
    val baseuri = b
    val ng_mode = (`CommandMode : [`CommandMode | `ProofMode])
    method moo_content_rev = moo_content_rev
    method set_moo_content_rev v = {< moo_content_rev = v >}
    method objects = objects
    method set_objects v = {< objects = v >}
-   method coercions = coercions
-   method set_coercions v = {< coercions = v >}
    method baseuri = baseuri
    method set_baseuri v = {< baseuri = v >}
    method ng_mode = ng_mode;

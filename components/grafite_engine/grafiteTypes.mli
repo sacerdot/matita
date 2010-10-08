@@ -38,8 +38,6 @@ class status :
    method set_moo_content_rev: GrafiteMarshal.moo -> 'self
    method objects: UriManager.uri list
    method set_objects: UriManager.uri list -> 'self
-   method coercions: CoercDb.coerc_db
-   method set_coercions: CoercDb.coerc_db -> 'self
    method baseuri: string
    method set_baseuri: string -> 'self
    method ng_mode: [`ProofMode | `CommandMode]

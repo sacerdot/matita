@@ -289,21 +289,6 @@ let eval_add_constraint status u1 u2 =
   status,`New []
 ;;
 
-let add_coercions_of_lemmas lemmas status =
-  let moo_content = 
-    HExtlib.filter_map 
-      (fun uri ->
-        match CoercDb.is_a_coercion (Cic.Const (uri,[])) with
-        | None -> None
-        | Some (_,tgt,_,sat,_) ->
-            let arity = match tgt with CoercDb.Fun n -> n | _ -> 0 in
-            Some (coercion_moo_statement_of (uri,arity,sat,0)))
-      lemmas
-  in
-  let status = GrafiteTypes.add_moo_content moo_content status in 
-   status#set_coercions (CoercDb.dump ()), 
-  lemmas
-
 let eval_ng_punct (_text, _prefix_len, punct) =
   match punct with
   | GrafiteAst.Dot _ -> NTactics.dot_tac 

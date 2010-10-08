@@ -55,24 +55,6 @@ let uris_for_inductive_type uri obj =
     | _ -> [uri] 
 ;;
 
-let add_coercion ~pack_coercion_obj ~add_composites status uri arity
- saturations baseuri
-=
- let lemmas = 
-   LibrarySync.add_coercion ~add_composites ~pack_coercion_obj 
-    uri arity saturations baseuri in
- let status = 
-  (status
-    #set_coercions (CoercDb.dump ())) ; 
-    #set_objects (lemmas @ status#objects)
- in
- let status = NCicCoercion.index_old_db (CoercDb.dump ()) status in
-  status, lemmas
-
-let prefer_coercion status u = 
-  CoercDb.prefer u;
-   status#set_coercions (CoercDb.dump ())
- 
   (** @return l2 \ l1 *)
 let uri_list_diff l2 l1 =
   let module S = UriManager.UriSet in
@@ -86,25 +68,17 @@ let initial_status lexicon_status baseuri =
 ;;
 
 let time_travel  ~present ?(past=initial_status present present#baseuri) () =
-  let objs_to_remove =
-   uri_list_diff present#objects past#objects in
-  List.iter LibrarySync.remove_obj objs_to_remove;
-  CoercDb.restore past#coercions;
   NCicLibrary.time_travel past
 ;;
 
 let init lexicon_status =
-  CoercDb.restore CoercDb.empty_coerc_db;
-  LibraryObjects.reset_defaults ();
   initial_status lexicon_status
   ;;
 let pop () =
-  LibrarySync.pop ();
   LibraryObjects.pop ()
 ;;
 
 let push () =
-  LibrarySync.push ();
   LibraryObjects.push ()
 ;;
 

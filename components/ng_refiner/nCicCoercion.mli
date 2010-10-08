@@ -40,9 +40,6 @@ val index_coercion:
   #status as 'status -> string ->
    NCic.term -> NCic.term -> NCic.term -> int -> int -> 'status
 
-  (* gets the old imperative coercion DB (list format) *)
-val index_old_db: CoercDb.coerc_db -> (#status as 'status) -> 'status
-
 val look_for_coercion:
     #status ->
     NCic.metasenv -> NCic.substitution -> NCic.context -> 

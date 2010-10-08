@@ -31,7 +31,6 @@ module NP = NotationPp
 module GP = GrafiteAstPp
 module G  = GrafiteAst
 module H  = HExtlib
-module HG = Http_getter
 
 let floc = H.dummy_floc
 
@@ -100,7 +99,7 @@ let out_alias och name uri =
    Printf.fprintf och "alias id \"%s\" = \"%s\".\n\n" name uri
 
 let check och src =
-   if HG.exists ~local:false src then () else
+   if Http_getter.exists ~local:false src then () else
    let msg = "UNAVAILABLE OBJECT: " ^ src in
    out_line_comment och msg;
    prerr_endline msg

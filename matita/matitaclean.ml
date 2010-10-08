@@ -58,7 +58,6 @@ let ask_confirmation _ =
 let clean_all () =
   if Helm_registry.get_bool "matita.system" then
     ask_confirmation ();
-  LibraryDb.clean_owner_environment ();
   let prefixes = 
     HExtlib.filter_map 
       (fun s -> 
