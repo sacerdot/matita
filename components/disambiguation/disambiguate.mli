@@ -82,9 +82,9 @@ val resolve :
 
 val find_in_context: string -> string option list -> int
 val domain_of_term: context:
-  string option list -> CicNotationPt.term -> domain
+  string option list -> NotationPt.term -> domain
 val domain_of_obj: 
-  context:string option list -> CicNotationPt.term CicNotationPt.obj -> domain
+  context:string option list -> NotationPt.term NotationPt.obj -> domain
 
 val disambiguate_thing:
   context:'context ->

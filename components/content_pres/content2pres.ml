@@ -916,7 +916,7 @@ let definition2pres ?recno term2pres d =
   let name = match d.Content.def_name with Some x -> x|_->assert false in
   let rno = match recno with None -> -1 (* cofix *) | Some x -> x in
   let ty = d.Content.def_type in
-  let module P = CicNotationPt in
+  let module P = NotationPt in
   let rec split_pi i t = 
     if i <= 1 then 
       match t with 
@@ -994,7 +994,7 @@ let njoint_def2pres term2pres joint_kind defs =
 
 let ncontent2pres0
   ?skip_initial_lambdas ?(skip_thm_and_qed=false) term2pres 
-  (id,params,metasenv,obj : CicNotationPt.term Content.cobj) 
+  (id,params,metasenv,obj : NotationPt.term Content.cobj) 
 =
   match obj with
   | `Def (Content.Const, thesis, `Proof p) ->

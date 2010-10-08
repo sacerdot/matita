@@ -48,7 +48,7 @@ class pstatus =
    = fun o -> (self#set_estatus o)#set_obj o#obj
   end
 
-type tactic_term = CicNotationPt.term Disambiguate.disambiguator_input
+type tactic_term = NotationPt.term Disambiguate.disambiguator_input
 type tactic_pattern = GrafiteAst.npattern Disambiguate.disambiguator_input
 
 let pp_tac_status status = 

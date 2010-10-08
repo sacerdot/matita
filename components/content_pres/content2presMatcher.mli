@@ -27,8 +27,8 @@ module Matcher21:
 sig
   (** @param l2_patterns level 2 (AST) patterns *)
   val compiler :
-    (CicNotationPt.term * int) list ->
-      (CicNotationPt.term ->
-        (CicNotationEnv.t * CicNotationPt.term list * int) option)
+    (NotationPt.term * int) list ->
+      (NotationPt.term ->
+        (NotationEnv.t * NotationPt.term list * int) option)
 end
 

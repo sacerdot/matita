@@ -30,15 +30,15 @@ type interpretation_id
 
 val add_interpretation:
   string ->                                       (* id / description *)
-  string * CicNotationPt.argument_pattern list -> (* symbol, level 2 pattern *)
-  CicNotationPt.cic_appl_pattern ->               (* level 3 pattern *)
+  string * NotationPt.argument_pattern list -> (* symbol, level 2 pattern *)
+  NotationPt.cic_appl_pattern ->               (* level 3 pattern *)
     interpretation_id
 
   (** @raise Interpretation_not_found *)
 val lookup_interpretations:
   ?sorted:bool -> string -> (* symbol *)
-    (string * CicNotationPt.argument_pattern list *
-      CicNotationPt.cic_appl_pattern) list
+    (string * NotationPt.argument_pattern list *
+      NotationPt.cic_appl_pattern) list
 
 exception Interpretation_not_found
 
@@ -60,7 +60,7 @@ val instantiate_appl_pattern:
   mk_implicit:(bool -> 'term) ->
   term_of_uri : (UriManager.uri -> 'term) ->
   term_of_nref : (NReference.reference -> 'term) ->
-  (string * 'term) list -> CicNotationPt.cic_appl_pattern ->
+  (string * 'term) list -> NotationPt.cic_appl_pattern ->
     'term
 
 val push: unit -> unit
@@ -70,8 +70,8 @@ val pop: unit -> unit
 val find_level2_patterns32:
  int ->
   string * string *
-   CicNotationPt.argument_pattern list * CicNotationPt.cic_appl_pattern
+   NotationPt.argument_pattern list * NotationPt.cic_appl_pattern
 
 val add_load_patterns32: 
- ((bool * CicNotationPt.cic_appl_pattern * int) list -> unit) -> unit
+ ((bool * NotationPt.cic_appl_pattern * int) list -> unit) -> unit
 val init: unit -> unit

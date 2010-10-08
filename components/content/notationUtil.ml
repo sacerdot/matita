@@ -25,7 +25,7 @@
 
 (* $Id$ *)
 
-module Ast = CicNotationPt
+module Ast = NotationPt
 
 let visit_ast ?(special_k = fun _ -> assert false) 
   ?(map_xref_option= fun x -> x) ?(map_case_indty= fun x -> x) 
@@ -400,20 +400,20 @@ let freshen_obj obj =
    List.map (fun (n,t) -> (freshen_term n, HExtlib.map_option freshen_term t))
   in
   match obj with
-  | CicNotationPt.Inductive (params, indtypes) ->
+  | NotationPt.Inductive (params, indtypes) ->
       let indtypes =
         List.map
           (fun (n, co, ty, ctors) -> (n, co, ty, freshen_name_ty ctors))
           indtypes
       in
-      CicNotationPt.Inductive (freshen_capture_variables params, indtypes)
-  | CicNotationPt.Theorem (flav, n, t, ty_opt,p) ->
+      NotationPt.Inductive (freshen_capture_variables params, indtypes)
+  | NotationPt.Theorem (flav, n, t, ty_opt,p) ->
       let ty_opt =
         match ty_opt with None -> None | Some ty -> Some (freshen_term ty)
       in
-      CicNotationPt.Theorem (flav, n, freshen_term t, ty_opt,p)
-  | CicNotationPt.Record (params, n, ty, fields) ->
-      CicNotationPt.Record (freshen_capture_variables params, n,
+      NotationPt.Theorem (flav, n, freshen_term t, ty_opt,p)
+  | NotationPt.Record (params, n, ty, fields) ->
+      NotationPt.Record (freshen_capture_variables params, n,
         freshen_term ty, freshen_name_ty_b fields)
 
 let freshen_term = freshen_term ?index:None

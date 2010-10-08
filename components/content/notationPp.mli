@@ -31,25 +31,25 @@
  *
  * TODO the proper implementation of a pp_obj function like the one below should
  * be as follows. Change its type to
- *  pp_obj: CicNotationPt.obj -> CicNotationPres.markup
+ *  pp_obj: NotationPt.obj -> NotationPres.markup
  * and parametrize it over a function with the following type
- *  pp_term: CicNotationPt.term -> CicNotationPres.markup
+ *  pp_term: NotationPt.term -> NotationPres.markup
  * The obtained markup can then be printed using CicNotationPres.print_xml or
  * BoxPp.render_to_string(s)
  *)
 
-val pp_term: CicNotationPt.term -> string
-val pp_obj: ('term -> string) -> 'term CicNotationPt.obj -> string
+val pp_term: NotationPt.term -> string
+val pp_obj: ('term -> string) -> 'term NotationPt.obj -> string
 
-val pp_env: CicNotationEnv.t -> string
-val pp_value: CicNotationEnv.value -> string
-val pp_value_type: CicNotationEnv.value_type -> string
+val pp_env: NotationEnv.t -> string
+val pp_value: NotationEnv.value -> string
+val pp_value_type: NotationEnv.value_type -> string
 
-val pp_pos: CicNotationPt.child_pos -> string
-val pp_attribute: CicNotationPt.term_attribute -> string
+val pp_pos: NotationPt.child_pos -> string
+val pp_attribute: NotationPt.term_attribute -> string
 
-val pp_cic_appl_pattern: CicNotationPt.cic_appl_pattern -> string
+val pp_cic_appl_pattern: NotationPt.cic_appl_pattern -> string
 
  (** non re-entrant change of pp_term function above *)
-val set_pp_term: (CicNotationPt.term -> string) -> unit
+val set_pp_term: (NotationPt.term -> string) -> unit
 

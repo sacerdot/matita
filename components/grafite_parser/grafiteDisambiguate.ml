@@ -28,8 +28,8 @@
 exception BaseUriNotSetYet
 
 type tactic = 
- (CicNotationPt.term, CicNotationPt.term, 
-  CicNotationPt.term GrafiteAst.reduction, string) 
+ (NotationPt.term, NotationPt.term, 
+  NotationPt.term GrafiteAst.reduction, string) 
    GrafiteAst.tactic
    
 type lazy_tactic = 
@@ -138,7 +138,7 @@ let disambiguate_nterm expty estatus context metasenv subst thing
 
 
 type pattern = 
-  CicNotationPt.term Disambiguate.disambiguator_input option * 
+  NotationPt.term Disambiguate.disambiguator_input option * 
   (string * NCic.term) list * NCic.term option
 
 let disambiguate_npattern (text, prefix_len, (wanted, hyp_paths, goal_path)) =
@@ -193,10 +193,10 @@ let disambiguate_nobj estatus ?baseuri (text,prefix_len,obj) =
    in
    let name = 
      match obj with
-     | CicNotationPt.Inductive (_,(name,_,_,_)::_)
-     | CicNotationPt.Record (_,name,_,_) -> name ^ ".ind"
-     | CicNotationPt.Theorem (_,name,_,_,_) -> name ^ ".con"
-     | CicNotationPt.Inductive _ -> assert false
+     | NotationPt.Inductive (_,(name,_,_,_)::_)
+     | NotationPt.Record (_,name,_,_) -> name ^ ".ind"
+     | NotationPt.Theorem (_,name,_,_,_) -> name ^ ".con"
+     | NotationPt.Inductive _ -> assert false
    in
      NUri.uri_of_string (baseuri ^ "/" ^ name)
   in

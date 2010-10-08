@@ -124,23 +124,23 @@ let rec eval_command ?(mode=L.WithPreferences) sstatus cmd =
   | L.Interpretation (loc, dsc, (symbol, args), cic_appl_pattern) ->
      let rec disambiguate =
       function
-         CicNotationPt.ApplPattern l ->
-          CicNotationPt.ApplPattern (List.map disambiguate l)
-       | CicNotationPt.VarPattern id
+         NotationPt.ApplPattern l ->
+          NotationPt.ApplPattern (List.map disambiguate l)
+       | NotationPt.VarPattern id
           when not
            (List.exists
-            (function (CicNotationPt.IdentArg (_,id')) -> id'=id) args)
+            (function (NotationPt.IdentArg (_,id')) -> id'=id) args)
           ->
            let item = DisambiguateTypes.Id id in
             begin try
               match DisambiguateTypes.Environment.find item status.aliases with
                  L.Ident_alias (_, uri) ->
                   (try
-                    CicNotationPt.NRefPattern
+                    NotationPt.NRefPattern
                      (NReference.reference_of_string uri)
                    with
                     NReference.IllFormedReference _ ->
-                     CicNotationPt.UriPattern (UriManager.uri_of_string uri))
+                     NotationPt.UriPattern (UriManager.uri_of_string uri))
                | _ -> assert false
              with Not_found -> 
               prerr_endline ("LexiconEngine.eval_command: domain item not found: " ^ 

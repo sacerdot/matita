@@ -26,7 +26,7 @@
 (** {2 Types} *)
 
 type value =
-  | TermValue of CicNotationPt.term
+  | TermValue of NotationPt.term
   | StringValue of string
   | NumValue of string
   | OptValue of value option
@@ -50,13 +50,13 @@ type declaration = string * value_type
 type binding = string * (value_type * value)
 type t = binding list
 
-val declaration_of_var: CicNotationPt.pattern_variable -> declaration
-val value_of_term: CicNotationPt.term -> value
-val term_of_value: value -> CicNotationPt.term
+val declaration_of_var: NotationPt.pattern_variable -> declaration
+val value_of_term: NotationPt.term -> value
+val term_of_value: value -> NotationPt.term
 val well_typed: value_type -> value -> bool
 
 val declarations_of_env: t -> declaration list
-val declarations_of_term: CicNotationPt.term -> declaration list
+val declarations_of_term: NotationPt.term -> declaration list
 val combine: declaration list -> value list -> t  (** @raise Invalid_argument *)
 
 (** {2 Environment lookup} *)
@@ -65,7 +65,7 @@ val lookup_value:   t -> string -> value  (** @raise Value_not_found *)
 
 (** lookup_* functions below may raise Value_not_found and Type_mismatch *)
 
-val lookup_term:    t -> string -> CicNotationPt.term
+val lookup_term:    t -> string -> NotationPt.term
 val lookup_string:  t -> string -> string
 val lookup_num:     t -> string -> string
 val lookup_opt:     t -> string -> value option

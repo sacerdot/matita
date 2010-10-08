@@ -11,7 +11,7 @@
 
 (* $Id: nCic.ml 9058 2008-10-13 17:42:30Z tassi $ *)
 
-val mk_elims: NCic.obj -> CicNotationPt.term CicNotationPt.obj list
-val mk_projections: NCic.obj -> CicNotationPt.term CicNotationPt.obj list
+val mk_elims: NCic.obj -> NotationPt.term NotationPt.obj list
+val mk_projections: NCic.obj -> NotationPt.term NotationPt.obj list
 val ast_of_sort : 
   NCic.sort -> [> `NCProp of string | `NType of string | `Prop ]  * string

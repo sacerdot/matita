@@ -27,10 +27,10 @@
 
 open Printf
 
-module Ast = CicNotationPt
-module Env = CicNotationEnv
-module Pp = CicNotationPp
-module Util = CicNotationUtil
+module Ast = NotationPt
+module Env = NotationEnv
+module Pp = NotationPp
+module Util = NotationUtil
 
 let get_tag term0 =
   let subterms = ref [] in
@@ -39,7 +39,7 @@ let get_tag term0 =
     Ast.Implicit `JustOne
   in
   let rec aux t = 
-    CicNotationUtil.visit_ast 
+    NotationUtil.visit_ast 
       ~map_xref_option:(fun _ -> None)
       ~map_case_indty:(fun _ -> None)
       ~map_case_outtype:(fun _ _ -> None)
@@ -67,8 +67,8 @@ struct
       | _ -> PatternMatcher.Constructor
     let tag_of_pattern = get_tag
     let tag_of_term t = get_tag t
-    let string_of_term = CicNotationPp.pp_term
-    let string_of_pattern = CicNotationPp.pp_term
+    let string_of_term = NotationPp.pp_term
+    let string_of_pattern = NotationPp.pp_term
   end
 
   module M = PatternMatcher.Matcher (Pattern21)

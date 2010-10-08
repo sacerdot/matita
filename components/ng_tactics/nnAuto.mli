@@ -29,7 +29,7 @@ val smart_apply_tac:
 
 val auto_tac:
   params:(NTacStatus.tactic_term list option * (string * string) list) -> 
-   ?trace_ref:CicNotationPt.term list ref -> 
+   ?trace_ref:NotationPt.term list ref -> 
    's NTacStatus.tactic
 
 val keys_of_type: 

@@ -27,7 +27,7 @@
 
 open Printf
 
-module Ast = CicNotationPt
+module Ast = NotationPt
 module Mpres = Mpresentation
 
 type mathml_markup = boxml_markup Mpres.mpres
@@ -102,7 +102,7 @@ let box_of mathonly spec attrs children =
 	let kind, spacing, indent = spec in
 	let dress children =
 	  if spacing then
-	    CicNotationUtil.dress small_skip children
+	    NotationUtil.dress small_skip children
 	  else
 	    children
 	in
@@ -283,7 +283,7 @@ let render ~lookup_uri ?(prec=(-1)) =
             let substs' =
               box_of mathonly (A.H, false, false) []
                 (open_brace
-                :: (CicNotationUtil.dress semicolon
+                :: (NotationUtil.dress semicolon
                     (List.map
                       (fun (name, t) ->
                         box_of mathonly (A.H, false, false) [] [
@@ -299,7 +299,7 @@ let render ~lookup_uri ?(prec=(-1)) =
         let local_context l =
           box_of mathonly (A.H, false, false) []
             ([ Mpres.Mtext ([], "[") ] @ 
-            (CicNotationUtil.dress (Mpres.Mtext ([],  ";"))
+            (NotationUtil.dress (Mpres.Mtext ([],  ";"))
               (List.map 
                 (function 
                 | None -> Mpres.Mtext ([],  "_")
@@ -316,7 +316,7 @@ let render ~lookup_uri ?(prec=(-1)) =
     | A.Magic _
     | A.Variable _ -> assert false  (* should have been instantiated *)
     | t ->
-        prerr_endline ("unexpected ast: " ^ CicNotationPp.pp_term t);
+        prerr_endline ("unexpected ast: " ^ NotationPp.pp_term t);
         assert false
   and aux_attributes xmlattrs mathonly xref  prec t =
     let reset = ref false in
@@ -357,7 +357,7 @@ let render ~lookup_uri ?(prec=(-1)) =
               then ((*prerr_endline "reset";*)t')
               else add_parens child_prec prec t')
     in
-(*     prerr_endline (CicNotationPp.pp_term t); *)
+(*     prerr_endline (NotationPp.pp_term t); *)
     aux_attribute t
   and aux_literal xmlattrs xref prec l =
     let attrs = make_href xmlattrs xref in
@@ -400,7 +400,7 @@ let render ~lookup_uri ?(prec=(-1)) =
     | A.Box ((_, spacing, _) as kind, terms) ->
         let children =
           aux_children mathonly spacing xref  prec
-            (CicNotationUtil.ungroup terms)
+            (NotationUtil.ungroup terms)
         in
         box_of mathonly kind attrs children
     | A.Mstyle (l,terms) -> 
@@ -408,19 +408,19 @@ let render ~lookup_uri ?(prec=(-1)) =
           (List.map (fun (k,v) -> None,k,v) l, 
            box_of mathonly (A.H, false, false) attrs 
             (aux_children mathonly false xref  prec 
-              (CicNotationUtil.ungroup terms)))
+              (NotationUtil.ungroup terms)))
     | A.Mpadded (l,terms) -> 
         Mpres.Mpadded 
           (List.map (fun (k,v) -> None,k,v) l, 
            box_of mathonly (A.H, false, false) attrs 
             (aux_children mathonly false xref  prec 
-              (CicNotationUtil.ungroup terms)))
+              (NotationUtil.ungroup terms)))
     | A.Maction alternatives -> 
          toggle_action (List.map invoke_reinit alternatives)
     | A.Group terms ->
 	let children =
           aux_children mathonly false xref  prec
-            (CicNotationUtil.ungroup terms)
+            (NotationUtil.ungroup terms)
         in
         box_of mathonly (A.H, false, false) attrs children
     | A.Break -> assert false (* TODO? *)

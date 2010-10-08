@@ -43,15 +43,15 @@ let rehash_cmd_uris =
   | LexiconAst.Interpretation (loc, dsc, args, cic_appl_pattern) ->
       let rec aux =
         function
-        | CicNotationPt.UriPattern uri ->
-            CicNotationPt.UriPattern (rehash_uri uri)
-        | CicNotationPt.NRefPattern (NReference.Ref (uri,spec)) ->
+        | NotationPt.UriPattern uri ->
+            NotationPt.UriPattern (rehash_uri uri)
+        | NotationPt.NRefPattern (NReference.Ref (uri,spec)) ->
            let uri = NCicLibrary.refresh_uri uri in
-            CicNotationPt.NRefPattern (NReference.reference_of_spec uri spec)
-        | CicNotationPt.ApplPattern args ->
-            CicNotationPt.ApplPattern (List.map aux args)
-        | CicNotationPt.VarPattern _
-        | CicNotationPt.ImplicitPattern as pat -> pat
+            NotationPt.NRefPattern (NReference.reference_of_spec uri spec)
+        | NotationPt.ApplPattern args ->
+            NotationPt.ApplPattern (List.map aux args)
+        | NotationPt.VarPattern _
+        | NotationPt.ImplicitPattern as pat -> pat
       in
       let appl_pattern = aux cic_appl_pattern in
       LexiconAst.Interpretation (loc, dsc, args, appl_pattern)

@@ -25,7 +25,7 @@
 
 (* $Id$ *)
 
-module Ast = CicNotationPt
+module Ast = NotationPt
 
 type value =
   | TermValue of Ast.term
@@ -125,7 +125,7 @@ let rec well_typed ty value =
 
 let declarations_of_env = List.map (fun (name, (ty, _)) -> (name, ty))
 let declarations_of_term p =
-  List.map declaration_of_var (CicNotationUtil.variables_of_term p)
+  List.map declaration_of_var (NotationUtil.variables_of_term p)
 
 let rec combine decls values =
   match decls, values with

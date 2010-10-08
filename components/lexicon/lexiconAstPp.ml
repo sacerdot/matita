@@ -29,8 +29,8 @@ open Printf
 
 open LexiconAst
 
-let pp_l1_pattern = CicNotationPp.pp_term
-let pp_l2_pattern = CicNotationPp.pp_term
+let pp_l1_pattern = NotationPp.pp_term
+let pp_l2_pattern = NotationPp.pp_term
 
 let pp_alias = function
   | Ident_alias (id, uri) -> sprintf "alias id \"%s\" = \"%s\"." id uri
@@ -50,7 +50,7 @@ let pp_associativity = function
 let pp_precedence i = sprintf "with precedence %d" i
 
 let pp_argument_pattern = function
-  | CicNotationPt.IdentArg (eta_depth, name) ->
+  | NotationPt.IdentArg (eta_depth, name) ->
       let eta_buf = Buffer.create 5 in
       for i = 1 to eta_depth do
         Buffer.add_string eta_buf "\\eta."
@@ -61,7 +61,7 @@ let pp_interpretation dsc symbol arg_patterns cic_appl_pattern =
   sprintf "interpretation \"%s\" '%s %s = %s."
     dsc symbol
     (String.concat " " (List.map pp_argument_pattern arg_patterns))
-    (CicNotationPp.pp_cic_appl_pattern cic_appl_pattern)
+    (NotationPp.pp_cic_appl_pattern cic_appl_pattern)
  
 let pp_dir_opt = function
   | None -> ""

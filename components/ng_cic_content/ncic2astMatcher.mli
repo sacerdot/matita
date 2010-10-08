@@ -29,7 +29,7 @@ module Matcher32:
 sig
   (** @param l3_patterns level 3 (CIC) patterns (AKA cic_appl_pattern) *)
   val compiler :
-    (CicNotationPt.cic_appl_pattern * int) list ->
+    (NotationPt.cic_appl_pattern * int) list ->
       (NCic.term ->
         ((string * NCic.term) list * NCic.term list * int) option)
 end

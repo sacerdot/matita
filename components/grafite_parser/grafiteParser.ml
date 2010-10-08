@@ -25,7 +25,7 @@
 
 (* $Id$ *)
 
-module N  = CicNotationPt
+module N  = NotationPt
 module G  = GrafiteAst
 module L  = LexiconAst
 module LE = LexiconEngine
@@ -222,7 +222,7 @@ EXTEND
            | N.Implicit _ -> false
            | N.UserInput -> true
            | _ -> raise (Invalid_argument "malformed target parameter list 1")) l
-      | _ -> raise (Invalid_argument ("malformed target parameter list 2\n" ^ CicNotationPp.pp_term params)) ]
+      | _ -> raise (Invalid_argument ("malformed target parameter list 2\n" ^ NotationPp.pp_term params)) ]
   ];
   direction: [
     [ SYMBOL ">" -> `LeftToRight
@@ -868,7 +868,7 @@ EXTEND
     | IDENT "universe"; IDENT "constraint"; u1 = tactic_term; 
         SYMBOL <:unicode<lt>> ; u2 = tactic_term ->
         let urify = function 
-          | CicNotationPt.AttributedTerm (_, CicNotationPt.Sort (`NType i)) ->
+          | NotationPt.AttributedTerm (_, NotationPt.Sort (`NType i)) ->
               NUri.uri_of_string ("cic:/matita/pts/Type"^i^".univ")
           | _ -> raise (Failure "only a Type[…] sort can be constrained")
         in

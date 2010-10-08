@@ -34,5 +34,5 @@
 
 val nsequent2pres :
  ids_to_nrefs:(NTermCicContent.id, NReference.reference) Hashtbl.t ->
- subst:NCic.substitution -> CicNotationPt.term Content.conjecture ->
+ subst:NCic.substitution -> NotationPt.term Content.conjecture ->
   CicNotationPres.boxml_markup

@@ -16,7 +16,7 @@ open Printf
 open DisambiguateTypes
 open UriManager
 
-module Ast = CicNotationPt
+module Ast = NotationPt
 module NRef = NReference 
 
 let debug_print s = prerr_endline (Lazy.force s);;
@@ -115,24 +115,24 @@ let interpretate_term_and_interpretate_term_option
   assert (uri = None);
 
   let rec aux ~localize loc context = function
-    | CicNotationPt.AttributedTerm (`Loc loc, term) ->
+    | NotationPt.AttributedTerm (`Loc loc, term) ->
         let res = aux ~localize loc context term in
         if localize then 
          NCicUntrusted.NCicHash.add localization_tbl res loc;
        res
-    | CicNotationPt.AttributedTerm (_, term) -> aux ~localize loc context term
-    | CicNotationPt.Appl (CicNotationPt.Appl inner :: args) ->
-        aux ~localize loc context (CicNotationPt.Appl (inner @ args))
-    | CicNotationPt.Appl 
-        (CicNotationPt.AttributedTerm (att,(CicNotationPt.Appl inner))::args)->
+    | NotationPt.AttributedTerm (_, term) -> aux ~localize loc context term
+    | NotationPt.Appl (NotationPt.Appl inner :: args) ->
+        aux ~localize loc context (NotationPt.Appl (inner @ args))
+    | NotationPt.Appl 
+        (NotationPt.AttributedTerm (att,(NotationPt.Appl inner))::args)->
         aux ~localize loc context 
-          (CicNotationPt.AttributedTerm (att,CicNotationPt.Appl (inner @ args)))
-    | CicNotationPt.Appl (CicNotationPt.Symbol (symb, i) :: args) ->
+          (NotationPt.AttributedTerm (att,NotationPt.Appl (inner @ args)))
+    | NotationPt.Appl (NotationPt.Symbol (symb, i) :: args) ->
         let cic_args = List.map (aux ~localize loc context) args in
         Disambiguate.resolve ~mk_choice ~env (Symbol (symb, i)) (`Args cic_args)
-    | CicNotationPt.Appl terms ->
+    | NotationPt.Appl terms ->
        NCic.Appl (List.map (aux ~localize loc context) terms)
-    | CicNotationPt.Binder (binder_kind, (var, typ), body) ->
+    | NotationPt.Binder (binder_kind, (var, typ), body) ->
         let cic_type = aux_option ~localize loc context `Type typ in
         let cic_name = cic_name_of_name var  in
         let cic_body = aux ~localize loc (cic_name :: context) body in
@@ -143,7 +143,7 @@ let interpretate_term_and_interpretate_term_option
         | `Exists ->
             Disambiguate.resolve ~env ~mk_choice (Symbol ("exists", 0))
               (`Args [ cic_type; NCic.Lambda (cic_name, cic_type, cic_body) ]))
-    | CicNotationPt.Case (term, indty_ident, outtype, branches) ->
+    | NotationPt.Case (term, indty_ident, outtype, branches) ->
         let cic_term = aux ~localize loc context term in
         let cic_outtype = aux_option ~localize loc context `Term outtype in
         let do_branch ((_, _, args), term) =
@@ -289,8 +289,8 @@ let interpretate_term_and_interpretate_term_option
                     function
                        0 -> term
                      | n ->
-                        CicNotationPt.Binder
-                         (`Lambda, (CicNotationPt.Ident ("_", None), None),
+                        NotationPt.Binder
+                         (`Lambda, (NotationPt.Ident ("_", None), None),
                            mk_lambdas (n - 1))
                    in
                     (("wildcard",None,[]),
@@ -299,11 +299,11 @@ let interpretate_term_and_interpretate_term_option
           let branches = sort branches cl in
            NCic.Match (indtype_ref, cic_outtype, cic_term,
             (List.map do_branch branches))
-    | CicNotationPt.Cast (t1, t2) ->
+    | NotationPt.Cast (t1, t2) ->
         let cic_t1 = aux ~localize loc context t1 in
         let cic_t2 = aux ~localize loc context t2 in
         NCic.LetIn ("_",cic_t2,cic_t1, NCic.Rel 1)
-    | CicNotationPt.LetIn ((name, typ), def, body) ->
+    | NotationPt.LetIn ((name, typ), def, body) ->
         let cic_def = aux ~localize loc context def in
         let cic_name = cic_name_of_name name in
         let cic_typ =
@@ -313,11 +313,11 @@ let interpretate_term_and_interpretate_term_option
         in
         let cic_body = aux ~localize loc (cic_name :: context) body in
         NCic.LetIn (cic_name, cic_typ, cic_def, cic_body)
-    | CicNotationPt.LetRec (_kind, _defs, _body) -> NCic.Implicit `Term
-    | CicNotationPt.Ident _
-    | CicNotationPt.Uri _
-    | CicNotationPt.NRef _ when is_path -> raise Disambiguate.PathNotWellFormed
-    | CicNotationPt.Ident (name, subst) ->
+    | NotationPt.LetRec (_kind, _defs, _body) -> NCic.Implicit `Term
+    | NotationPt.Ident _
+    | NotationPt.Uri _
+    | NotationPt.NRef _ when is_path -> raise Disambiguate.PathNotWellFormed
+    | NotationPt.Ident (name, subst) ->
        assert (subst = None);
        (try
              NCic.Rel (find_in_context name context)
@@ -325,59 +325,59 @@ let interpretate_term_and_interpretate_term_option
          try NCic.Const (List.assoc name obj_context)
          with Not_found ->
             Disambiguate.resolve ~env ~mk_choice (Id name) (`Args []))
-    | CicNotationPt.Uri (uri, subst) ->
+    | NotationPt.Uri (uri, subst) ->
        assert (subst = None);
        (try
          NCic.Const (!reference_of_oxuri(UriManager.uri_of_string uri))
         with NRef.IllFormedReference _ ->
-         CicNotationPt.fail loc "Ill formed reference")
-    | CicNotationPt.NRef nref -> NCic.Const nref
-    | CicNotationPt.NCic t -> 
+         NotationPt.fail loc "Ill formed reference")
+    | NotationPt.NRef nref -> NCic.Const nref
+    | NotationPt.NCic t -> 
            let context = (* to make metas_of_term happy *)
              List.map (fun x -> x,NCic.Decl (NCic.Implicit `Type)) context in
            assert(NCicUntrusted.metas_of_term [] context t = []); t
-    | CicNotationPt.Implicit `Vector -> NCic.Implicit `Vector
-    | CicNotationPt.Implicit `JustOne -> NCic.Implicit `Term
-    | CicNotationPt.Implicit (`Tagged s) -> NCic.Implicit (`Tagged s)
-    | CicNotationPt.UserInput -> NCic.Implicit `Hole
-    | CicNotationPt.Num (num, i) -> 
+    | NotationPt.Implicit `Vector -> NCic.Implicit `Vector
+    | NotationPt.Implicit `JustOne -> NCic.Implicit `Term
+    | NotationPt.Implicit (`Tagged s) -> NCic.Implicit (`Tagged s)
+    | NotationPt.UserInput -> NCic.Implicit `Hole
+    | NotationPt.Num (num, i) -> 
         Disambiguate.resolve ~env ~mk_choice (Num i) (`Num_arg num)
-    | CicNotationPt.Meta (index, subst) ->
+    | NotationPt.Meta (index, subst) ->
         let cic_subst =
          List.map
           (function None -> assert false| Some t -> aux ~localize loc context t)
           subst
         in
          NCic.Meta (index, (0, NCic.Ctx cic_subst))
-    | CicNotationPt.Sort `Prop -> NCic.Sort NCic.Prop
-    | CicNotationPt.Sort `Set -> NCic.Sort (NCic.Type
+    | NotationPt.Sort `Prop -> NCic.Sort NCic.Prop
+    | NotationPt.Sort `Set -> NCic.Sort (NCic.Type
        [`Type,NUri.uri_of_string "cic:/matita/pts/Type.univ"])
-    | CicNotationPt.Sort (`Type _u) -> NCic.Sort (NCic.Type
+    | NotationPt.Sort (`Type _u) -> NCic.Sort (NCic.Type
        [`Type,NUri.uri_of_string "cic:/matita/pts/Type0.univ"])
-    | CicNotationPt.Sort (`NType s) -> NCic.Sort (NCic.Type
+    | NotationPt.Sort (`NType s) -> NCic.Sort (NCic.Type
        [`Type,NUri.uri_of_string ("cic:/matita/pts/Type" ^ s ^ ".univ")])
-    | CicNotationPt.Sort (`NCProp s) -> NCic.Sort (NCic.Type
+    | NotationPt.Sort (`NCProp s) -> NCic.Sort (NCic.Type
        [`CProp,NUri.uri_of_string ("cic:/matita/pts/Type" ^ s ^ ".univ")])
-    | CicNotationPt.Sort (`CProp _u) -> NCic.Sort (NCic.Type
+    | NotationPt.Sort (`CProp _u) -> NCic.Sort (NCic.Type
        [`CProp,NUri.uri_of_string "cic:/matita/pts/Type.univ"])
-    | CicNotationPt.Symbol (symbol, instance) ->
+    | NotationPt.Symbol (symbol, instance) ->
         Disambiguate.resolve ~env ~mk_choice 
          (Symbol (symbol, instance)) (`Args [])
-    | CicNotationPt.Variable _
-    | CicNotationPt.Magic _
-    | CicNotationPt.Layout _
-    | CicNotationPt.Literal _ -> assert false (* god bless Bologna *)
+    | NotationPt.Variable _
+    | NotationPt.Magic _
+    | NotationPt.Layout _
+    | NotationPt.Literal _ -> assert false (* god bless Bologna *)
   and aux_option ~localize loc context annotation = function
     | None -> NCic.Implicit annotation
-    | Some (CicNotationPt.AttributedTerm (`Loc loc, term)) ->
+    | Some (NotationPt.AttributedTerm (`Loc loc, term)) ->
         let res = aux_option ~localize loc context annotation (Some term) in
         if localize then 
           NCicUntrusted.NCicHash.add localization_tbl res loc;
         res
-    | Some (CicNotationPt.AttributedTerm (_, term)) ->
+    | Some (NotationPt.AttributedTerm (_, term)) ->
         aux_option ~localize loc context annotation (Some term)
-    | Some CicNotationPt.Implicit `JustOne -> NCic.Implicit annotation
-    | Some CicNotationPt.Implicit `Vector -> NCic.Implicit `Vector
+    | Some NotationPt.Implicit `JustOne -> NCic.Implicit annotation
+    | Some NotationPt.Implicit `Vector -> NCic.Implicit `Vector
     | Some term -> aux ~localize loc context term
   in
    (fun ~context -> aux ~localize:true HExtlib.dummy_floc context),
@@ -442,7 +442,7 @@ let interpretate_obj
    interpretate_term_option ~mk_choice ~localization_tbl ~obj_context in
  let uri = match uri with | None -> assert false | Some u -> u in
  match obj with
- | CicNotationPt.Theorem (flavour, name, ty, bo, pragma) ->
+ | NotationPt.Theorem (flavour, name, ty, bo, pragma) ->
      let ty' = 
        interpretate_term 
          ~obj_context:[] ~context:[] ~env ~uri:None ~is_path:false ty 
@@ -459,7 +459,7 @@ let interpretate_obj
           NCic.Constant ([],name,Some (NCic.Implicit `Term),ty',attrs)
       | Some bo,_ ->
         (match bo with
-         | CicNotationPt.LetRec (kind, defs, _) ->
+         | NotationPt.LetRec (kind, defs, _) ->
              let inductive = kind = `Inductive in
              let _,obj_context =
                List.fold_left
@@ -476,7 +476,7 @@ let interpretate_obj
                    let add_binders kind t =
                     List.fold_right
                      (fun var t -> 
-                        CicNotationPt.Binder (kind, var, t)) params t
+                        NotationPt.Binder (kind, var, t)) params t
                    in
                    let cic_body =
                      interpretate_term 
@@ -501,14 +501,14 @@ let interpretate_obj
              in
              let attrs = `Provided, new_flavour_of_flavour flavour, pragma in
              NCic.Constant ([],name,Some bo,ty',attrs)))
- | CicNotationPt.Inductive (params,tyl) ->
+ | NotationPt.Inductive (params,tyl) ->
     let context,params =
      let context,res =
       List.fold_left
        (fun (context,res) (name,t) ->
          let t =
           match t with
-             None -> CicNotationPt.Implicit `JustOne
+             None -> NotationPt.Implicit `JustOne
            | Some t -> t in
          let name = cic_name_of_name name in
          let t =
@@ -557,14 +557,14 @@ let interpretate_obj
      let attrs = `Provided, `Regular in
      uri, height, [], [], 
      NCic.Inductive (inductive,leftno,tyl,attrs)
- | CicNotationPt.Record (params,name,ty,fields) ->
+ | NotationPt.Record (params,name,ty,fields) ->
     let context,params =
      let context,res =
       List.fold_left
        (fun (context,res) (name,t) ->
          let t =
           match t with
-             None -> CicNotationPt.Implicit `JustOne
+             None -> NotationPt.Implicit `JustOne
            | Some t -> t in
          let name = cic_name_of_name name in
          let t =
@@ -621,11 +621,11 @@ let disambiguate_term ~context ~metasenv ~subst ~expty
   let mk_localization_tbl x = NCicUntrusted.NCicHash.create x in
    let res,b =
     MultiPassDisambiguator.disambiguate_thing
-     ~freshen_thing:CicNotationUtil.freshen_term
+     ~freshen_thing:NotationUtil.freshen_term
      ~context ~metasenv ~initial_ugraph:() ~aliases
      ~mk_implicit ~description_of_alias ~fix_instance
      ~string_context_of_context:(List.map (fun (x,_) -> Some x))
-     ~universe ~uri:None ~pp_thing:CicNotationPp.pp_term
+     ~universe ~uri:None ~pp_thing:NotationPp.pp_term
      ~passes:(MultiPassDisambiguator.passes ())
      ~lookup_in_library ~domain_of_thing:Disambiguate.domain_of_term
      ~interpretate_thing:(interpretate_term ~obj_context:[] ~mk_choice (?create_dummy_ids:None))
@@ -643,13 +643,13 @@ let disambiguate_obj
   let mk_localization_tbl x = NCicUntrusted.NCicHash.create x in
    let res,b =
     MultiPassDisambiguator.disambiguate_thing
-     ~freshen_thing:CicNotationUtil.freshen_obj
+     ~freshen_thing:NotationUtil.freshen_obj
      ~context:[] ~metasenv:[] ~subst:[] ~initial_ugraph:() ~aliases
      ~mk_implicit ~description_of_alias ~fix_instance
      ~string_context_of_context:(List.map (fun (x,_) -> Some x))
      ~universe 
      ~uri:(Some uri)
-     ~pp_thing:(CicNotationPp.pp_obj CicNotationPp.pp_term)
+     ~pp_thing:(NotationPp.pp_obj NotationPp.pp_term)
      ~passes:(MultiPassDisambiguator.passes ())
      ~lookup_in_library ~domain_of_thing:Disambiguate.domain_of_obj
      ~interpretate_thing:(interpretate_obj ~mk_choice)

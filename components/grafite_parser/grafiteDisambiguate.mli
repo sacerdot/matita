@@ -26,8 +26,8 @@
 exception BaseUriNotSetYet
 
 type tactic = 
- (CicNotationPt.term, CicNotationPt.term, 
-  CicNotationPt.term GrafiteAst.reduction, string) 
+ (NotationPt.term, NotationPt.term, 
+  NotationPt.term GrafiteAst.reduction, string) 
    GrafiteAst.tactic
 
 type lazy_tactic = 
@@ -37,24 +37,24 @@ type lazy_tactic =
 val disambiguate_command: 
  LexiconEngine.status as 'status ->
  ?baseuri:string ->
- ((CicNotationPt.term,CicNotationPt.term CicNotationPt.obj) GrafiteAst.command) Disambiguate.disambiguator_input ->
+ ((NotationPt.term,NotationPt.term NotationPt.obj) GrafiteAst.command) Disambiguate.disambiguator_input ->
   'status * (Cic.term,Cic.obj) GrafiteAst.command
 
 val disambiguate_nterm :
  NCic.term option -> 
  (#NEstatus.status as 'status) ->
  NCic.context -> NCic.metasenv -> NCic.substitution ->
- CicNotationPt.term Disambiguate.disambiguator_input ->
+ NotationPt.term Disambiguate.disambiguator_input ->
    NCic.metasenv * NCic.substitution * 'status * NCic.term
 
 val disambiguate_nobj :
  #NEstatus.status as 'status ->
  ?baseuri:string ->
- (CicNotationPt.term CicNotationPt.obj) Disambiguate.disambiguator_input ->
+ (NotationPt.term NotationPt.obj) Disambiguate.disambiguator_input ->
   'status * NCic.obj
 
 type pattern = 
-  CicNotationPt.term Disambiguate.disambiguator_input option * 
+  NotationPt.term Disambiguate.disambiguator_input option * 
   (string * NCic.term) list * NCic.term option
 
 val disambiguate_npattern:

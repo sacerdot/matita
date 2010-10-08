@@ -65,7 +65,7 @@ val mk_choice:
   mk_implicit: (bool -> 'term) ->
   term_of_uri: (UriManager.uri -> 'term) ->
   term_of_nref: (NReference.reference -> 'term) ->
-  string * CicNotationPt.argument_pattern list *
-  CicNotationPt.cic_appl_pattern ->
+  string * NotationPt.argument_pattern list *
+  NotationPt.cic_appl_pattern ->
     'term codomain_item
 

@@ -33,7 +33,7 @@ type ('term, 'lazy_term, 'ident) pattern =
   'lazy_term option * ('ident * 'term) list * 'term option
 
 type npattern = 
- CicNotationPt.term option * (string * CicNotationPt.term) list * CicNotationPt.term option
+ NotationPt.term option * (string * NotationPt.term) list * NotationPt.term option
 
 type 'lazy_term reduction =
   [ `Normalize
@@ -50,28 +50,28 @@ type 'term just =
  | `Auto of 'term auto_params ]
 
 type ntactic =
-   | NApply of loc * CicNotationPt.term
-   | NSmartApply of loc * CicNotationPt.term
-   | NAssert of loc * ((string * [`Decl of CicNotationPt.term | `Def of CicNotationPt.term * CicNotationPt.term]) list * CicNotationPt.term) list
-   | NCases of loc * CicNotationPt.term * npattern  
+   | NApply of loc * NotationPt.term
+   | NSmartApply of loc * NotationPt.term
+   | NAssert of loc * ((string * [`Decl of NotationPt.term | `Def of NotationPt.term * NotationPt.term]) list * NotationPt.term) list
+   | NCases of loc * NotationPt.term * npattern  
    | NCase1 of loc * string
-   | NChange of loc * npattern * CicNotationPt.term
-   | NConstructor of loc * int option * CicNotationPt.term list
-   | NCut of loc * CicNotationPt.term
-(* | NDiscriminate of loc * CicNotationPt.term
-   | NSubst of loc * CicNotationPt.term *)
+   | NChange of loc * npattern * NotationPt.term
+   | NConstructor of loc * int option * NotationPt.term list
+   | NCut of loc * NotationPt.term
+(* | NDiscriminate of loc * NotationPt.term
+   | NSubst of loc * NotationPt.term *)
    | NDestruct of loc * string list option * string list
-   | NElim of loc * CicNotationPt.term * npattern  
+   | NElim of loc * NotationPt.term * npattern  
    | NGeneralize of loc * npattern
    | NId of loc
    | NIntro of loc * string
    | NIntros of loc * string list
-   | NInversion of loc * CicNotationPt.term * npattern  
-   | NLApply of loc * CicNotationPt.term
-   | NLetIn of loc * npattern * CicNotationPt.term * string
+   | NInversion of loc * NotationPt.term * npattern  
+   | NLApply of loc * NotationPt.term
+   | NLetIn of loc * npattern * NotationPt.term * string
    | NReduce of loc * [ `Normalize of bool | `Whd of bool ] * npattern
-   | NRewrite of loc * direction * CicNotationPt.term * npattern
-   | NAuto of loc * CicNotationPt.term auto_params
+   | NRewrite of loc * direction * NotationPt.term * npattern
+   | NAuto of loc * NotationPt.term auto_params
    | NDot of loc
    | NSemicolon of loc
    | NBranch of loc
@@ -193,9 +193,9 @@ type ('term,'lazy_term) macro =
      (* URI or base-uri, parameters *) 
 
 type nmacro =
-  | NCheck of loc * CicNotationPt.term
+  | NCheck of loc * NotationPt.term
   | Screenshot of loc * string
-  | NAutoInteractive of loc * CicNotationPt.term auto_params
+  | NAutoInteractive of loc * NotationPt.term auto_params
   | NIntroGuess of loc
 
 (** To be increased each time the command type below changes, used for "safe"
@@ -221,15 +221,15 @@ type ('term,'obj) command =
   | Qed of loc
 
 type ncommand =
-  | UnificationHint of loc * CicNotationPt.term * int (* term, precedence *)
-  | NObj of loc * CicNotationPt.term CicNotationPt.obj
-  | NDiscriminator of loc * CicNotationPt.term
-  | NInverter of loc * string * CicNotationPt.term * bool list option * CicNotationPt.term option
+  | UnificationHint of loc * NotationPt.term * int (* term, precedence *)
+  | NObj of loc * NotationPt.term NotationPt.obj
+  | NDiscriminator of loc * NotationPt.term
+  | NInverter of loc * string * NotationPt.term * bool list option * NotationPt.term option
   | NUnivConstraint of loc * NUri.uri * NUri.uri
   | NCopy of loc * string * NUri.uri * (NUri.uri * NUri.uri) list
   | NCoercion of loc * string *
-      CicNotationPt.term * CicNotationPt.term *
-      (string * CicNotationPt.term) * CicNotationPt.term
+      NotationPt.term * NotationPt.term *
+      (string * NotationPt.term) * NotationPt.term
   | NQed of loc
 
 type punctuation_tactical =

@@ -543,7 +543,7 @@ let rec eval_ncommand opts status (text,prefix_len,cmd) =
                try
                  let metasenv,subst,status,t =
                   GrafiteDisambiguate.disambiguate_nterm None status [] [] []
-                   ("",0,CicNotationPt.Ident (name,None)) in
+                   ("",0,NotationPt.Ident (name,None)) in
                  assert (metasenv = [] && subst = []);
                  let status, nuris = 
                    NCicCoercDeclaration.

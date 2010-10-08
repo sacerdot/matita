@@ -31,15 +31,15 @@ type interpretation_id
 
 val add_interpretation:
   string ->                                       (* id / description *)
-  string * CicNotationPt.argument_pattern list -> (* symbol, level 2 pattern *)
-  CicNotationPt.cic_appl_pattern ->               (* level 3 pattern *)
+  string * NotationPt.argument_pattern list -> (* symbol, level 2 pattern *)
+  NotationPt.cic_appl_pattern ->               (* level 3 pattern *)
     interpretation_id
 
   (** @raise Interpretation_not_found *)
 val lookup_interpretations:
   string -> (* symbol *)
-    (string * CicNotationPt.argument_pattern list *
-      CicNotationPt.cic_appl_pattern) list
+    (string * NotationPt.argument_pattern list *
+      NotationPt.cic_appl_pattern) list
 
 exception Interpretation_not_found
 
@@ -56,9 +56,9 @@ val set_active_interpretations: interpretation_id list -> unit
 
 val ast_of_acic:
   output_type:[`Pattern|`Term] ->
-  (Cic.id, CicNotationPt.sort_kind) Hashtbl.t ->    (* id -> sort *)
+  (Cic.id, NotationPt.sort_kind) Hashtbl.t ->    (* id -> sort *)
   Cic.annterm ->                                    (* acic *)
-    CicNotationPt.term                              (* ast *)
+    NotationPt.term                              (* ast *)
     * (Cic.id, UriManager.uri) Hashtbl.t            (* id -> uri *)
 
   (** {2 content -> acic} *)
@@ -69,7 +69,7 @@ val instantiate_appl_pattern:
   mk_appl:('term list -> 'term) -> 
   mk_implicit:(bool -> 'term) ->
   term_of_uri : (UriManager.uri -> 'term) ->
-  (string * 'term) list -> CicNotationPt.cic_appl_pattern ->
+  (string * 'term) list -> NotationPt.cic_appl_pattern ->
     'term
 
 val push: unit -> unit
@@ -80,7 +80,7 @@ val pop: unit -> unit
 val nast_of_cic :
  output_type:[`Pattern | `Term ] ->
   subst:NCic.substitution -> context:NCic.context -> NCic.term ->
-   CicNotationPt.term
+   NotationPt.term
 *)
 
 type id = string
@@ -90,10 +90,10 @@ val hide_coercions: bool ref
 val nmap_sequent:
  #NCicCoercion.status -> metasenv:NCic.metasenv -> subst:NCic.substitution ->
   int * NCic.conjecture ->
-   CicNotationPt.term Content.conjecture *
+   NotationPt.term Content.conjecture *
     (id, NReference.reference) Hashtbl.t    (* id -> reference *)
 
 val nmap_obj:
  #NCicCoercion.status -> NCic.obj ->
-  CicNotationPt.term Content.cobj *
+  NotationPt.term Content.cobj *
    (id, NReference.reference) Hashtbl.t    (* id -> reference *)

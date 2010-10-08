@@ -1,19 +1,17 @@
 content.cmi: 
-cicNotationUtil.cmi: cicNotationPt.cmo 
-cicNotationEnv.cmi: cicNotationPt.cmo 
-cicNotationPp.cmi: cicNotationPt.cmo cicNotationEnv.cmi 
-interpretations.cmi: cicNotationPt.cmo 
-cicNotationPt.cmo: 
-cicNotationPt.cmx: 
+notationUtil.cmi: 
+notationEnv.cmi: 
+notationPp.cmi: 
+interpretations.cmi: notationPt.cmo 
+notationPt.cmo: 
+notationPt.cmx: 
 content.cmo: content.cmi 
 content.cmx: content.cmi 
-cicNotationUtil.cmo: cicNotationPt.cmo cicNotationUtil.cmi 
-cicNotationUtil.cmx: cicNotationPt.cmx cicNotationUtil.cmi 
-cicNotationEnv.cmo: cicNotationUtil.cmi cicNotationPt.cmo cicNotationEnv.cmi 
-cicNotationEnv.cmx: cicNotationUtil.cmx cicNotationPt.cmx cicNotationEnv.cmi 
-cicNotationPp.cmo: cicNotationPt.cmo cicNotationEnv.cmi cicNotationPp.cmi 
-cicNotationPp.cmx: cicNotationPt.cmx cicNotationEnv.cmx cicNotationPp.cmi 
-interpretations.cmo: cicNotationUtil.cmi cicNotationPt.cmo \
-    interpretations.cmi 
-interpretations.cmx: cicNotationUtil.cmx cicNotationPt.cmx \
-    interpretations.cmi 
+notationUtil.cmo: notationPt.cmo notationUtil.cmi 
+notationUtil.cmx: notationPt.cmx notationUtil.cmi 
+notationEnv.cmo: notationUtil.cmi notationPt.cmo notationEnv.cmi 
+notationEnv.cmx: notationUtil.cmx notationPt.cmx notationEnv.cmi 
+notationPp.cmo: notationPt.cmo notationEnv.cmi notationPp.cmi 
+notationPp.cmx: notationPt.cmx notationEnv.cmx notationPp.cmi 
+interpretations.cmo: notationUtil.cmi notationPt.cmo interpretations.cmi 
+interpretations.cmx: notationUtil.cmx notationPt.cmx interpretations.cmi 

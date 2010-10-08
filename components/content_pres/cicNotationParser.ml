@@ -27,8 +27,8 @@
 
 open Printf
 
-module Ast = CicNotationPt
-module Env = CicNotationEnv
+module Ast = NotationPt
+module Env = NotationEnv
 
 exception Parse_error of string
 exception Level_not_found of int
@@ -110,7 +110,7 @@ type binding =
   | Env of (string * Env.value_type) list
 
 let make_action action bindings =
-  let rec aux (vl : CicNotationEnv.t) =
+  let rec aux (vl : NotationEnv.t) =
     function
       [] -> Gramext.action (fun (loc: Ast.location) -> action vl loc)
     | NoBinding :: tl -> Gramext.action (fun _ -> aux vl tl)
@@ -136,7 +136,7 @@ let make_action action bindings =
           (fun (v:'a list) ->
             aux ((name, (Env.ListType t, Env.ListValue v)) :: vl) tl)
     | Env _ :: tl ->
-        Gramext.action (fun (v:CicNotationEnv.t) -> aux (v @ vl) tl)
+        Gramext.action (fun (v:NotationEnv.t) -> aux (v @ vl) tl)
     (* LUCA: DEFCON 3 END *)
   in
     aux [] (List.rev bindings)
@@ -160,7 +160,7 @@ let extract_term_production pattern =
     | Ast.Magic m -> aux_magic m
     | Ast.Variable v -> aux_variable v
     | t ->
-        prerr_endline (CicNotationPp.pp_term t);
+        prerr_endline (NotationPp.pp_term t);
         assert false
   and aux_literal =
     function
@@ -192,7 +192,7 @@ let extract_term_production pattern =
     match magic with
     | Ast.Opt p ->
         let p_bindings, p_atoms, p_names, p_action = inner_pattern p in
-        let action (env_opt : CicNotationEnv.t option) (loc : Ast.location) =
+        let action (env_opt : NotationEnv.t option) (loc : Ast.location) =
           match env_opt with
           | Some env -> List.map Env.opt_binding_some env
           | None -> List.map Env.opt_binding_of_name p_names
@@ -204,8 +204,8 @@ let extract_term_production pattern =
     | Ast.List0 (p, _)
     | Ast.List1 (p, _) ->
         let p_bindings, p_atoms, p_names, p_action = inner_pattern p in
-        let action (env_list : CicNotationEnv.t list) (loc : Ast.location) =
-          CicNotationEnv.coalesce_env p_names env_list
+        let action (env_list : NotationEnv.t list) (loc : Ast.location) =
+          NotationEnv.coalesce_env p_names env_list
         in
         let gram_of_list s =
           match magic with
@@ -232,7 +232,7 @@ let extract_term_production pattern =
     let p_bindings, p_atoms = List.split (aux p) in
     let p_names = flatten_opt p_bindings in
     let action =
-      make_action (fun (env : CicNotationEnv.t) (loc : Ast.location) -> env)
+      make_action (fun (env : NotationEnv.t) (loc : Ast.location) -> env)
         p_bindings
     in
     p_bindings, p_atoms, p_names, action
@@ -256,7 +256,7 @@ let compare_rule_id x y =
 let initial_owned_keywords () = Hashtbl.create 23
 let owned_keywords = ref (initial_owned_keywords ())
 
-type checked_l1_pattern = CL1P of CicNotationPt.term * int
+type checked_l1_pattern = CL1P of NotationPt.term * int
 
 let check_l1_pattern level1_pattern pponly level associativity =
   let variables = ref 0 in
@@ -328,7 +328,7 @@ let check_l1_pattern level1_pattern pponly level associativity =
     raise (Parse_error ("You can not specify an associative notation " ^
     "at level "^string_of_int min_precedence ^ "; increase it"));
   let cp = aux level1_pattern in
-(*   prerr_endline ("checked_pattern: " ^ CicNotationPp.pp_term cp); *)
+(*   prerr_endline ("checked_pattern: " ^ NotationPp.pp_term cp); *)
   if !variables <> 2 && associativity <> Gramext.NonA then
     raise (Parse_error ("Exactly 2 variables must be specified in an "^
      "associative notation"));
@@ -348,11 +348,11 @@ let extend (CL1P (level1_pattern,precedence)) action =
           Some (*Gramext.NonA*) Gramext.NonA,
           [ p_atoms, 
             (make_action
-              (fun (env: CicNotationEnv.t) (loc: Ast.location) ->
+              (fun (env: NotationEnv.t) (loc: Ast.location) ->
                 (action env loc))
               p_bindings) ]]]
   in
-  let keywords = CicNotationUtil.keywords_of_term level1_pattern in
+  let keywords = NotationUtil.keywords_of_term level1_pattern in
   let rule_id = p_atoms in
   List.iter CicNotationLexer.add_level2_ast_keyword keywords;
   Hashtbl.add !owned_keywords rule_id keywords;  (* keywords may be [] *)
@@ -424,7 +424,7 @@ EXTEND
   GLOBAL: level1_pattern;
 
   level1_pattern: [ 
-    [ p = l1_pattern; EOI -> fun l -> CicNotationUtil.boxify (p l) ] 
+    [ p = l1_pattern; EOI -> fun l -> NotationUtil.boxify (p l) ] 
   ];
   l1_pattern: [ 
     [ p = LIST1 l1_simple_pattern -> 
@@ -513,9 +513,9 @@ EXTEND
       | "maction"; m = LIST1 [ LPAREN; l = l1_pattern; RPAREN -> l ] ->
            return_term_of_level loc 
             (fun l -> Ast.Layout (Ast.Maction (List.map (fun x ->
-              CicNotationUtil.group (x l)) m)))
+              NotationUtil.group (x l)) m)))
       | LPAREN; p = l1_pattern; RPAREN ->
-          return_term_of_level loc (fun l -> CicNotationUtil.group (p l))
+          return_term_of_level loc (fun l -> NotationUtil.group (p l))
       ]
     | "simple" NONA
       [ i = IDENT -> 
@@ -670,7 +670,7 @@ EXTEND
           let rec find_arg name n = function 
             | [] ->
                 Ast.fail loc (sprintf "Argument %s not found"
-                  (CicNotationPp.pp_term name))
+                  (NotationPp.pp_term name))
             | (l,_) :: tl -> 
                 (match position_of name 0 l with
                 | None, len -> find_arg name (n + len) tl

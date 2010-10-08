@@ -29,7 +29,7 @@ class pstatus :
    method set_pstatus: #g_pstatus -> 'self
   end
 
-type tactic_term = CicNotationPt.term Disambiguate.disambiguator_input
+type tactic_term = NotationPt.term Disambiguate.disambiguator_input
 type tactic_pattern = GrafiteAst.npattern Disambiguate.disambiguator_input
 
 type cic_term 

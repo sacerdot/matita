@@ -30,7 +30,7 @@ open Printf
 open DisambiguateTypes
 open UriManager
 
-module Ast = CicNotationPt
+module Ast = NotationPt
 
 (* the integer is an offset to be added to each location *)
 exception Ambiguous_input

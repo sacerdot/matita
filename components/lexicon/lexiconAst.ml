@@ -44,16 +44,16 @@ type command =
   | Include of loc * string * inclusion_mode * string (* _,buri,_,path *)
   | Alias of loc * alias_spec
       (** parameters, name, type, fields *) 
-  | Notation of loc * direction option * CicNotationPt.term * Gramext.g_assoc *
-      int * CicNotationPt.term
+  | Notation of loc * direction option * NotationPt.term * Gramext.g_assoc *
+      int * NotationPt.term
       (* direction, l1 pattern, associativity, precedence, l2 pattern *)
   | Interpretation of loc *
-      string * (string * CicNotationPt.argument_pattern list) *
-        CicNotationPt.cic_appl_pattern
+      string * (string * NotationPt.argument_pattern list) *
+        NotationPt.cic_appl_pattern
       (* description (i.e. id), symbol, arg pattern, appl pattern *)
 
 (* composed magic: term + command magics. No need to change this value *)
-let magic = magic + 10000 * CicNotationPt.magic
+let magic = magic + 10000 * NotationPt.magic
 
 let description_of_alias =
  function

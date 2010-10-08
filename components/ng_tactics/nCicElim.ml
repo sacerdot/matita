@@ -20,7 +20,7 @@ let fresh_name =
 
 let mk_id id =
  let id = if id = "_" then fresh_name () else id in
-  CicNotationPt.Ident (id,None)
+  NotationPt.Ident (id,None)
 ;;
 
 (*CSC: cut&paste from nCicReduction.split_prods, but does not check that
@@ -38,8 +38,8 @@ let mk_appl =
  function
     [] -> assert false
   | [x] -> x
-  | CicNotationPt.Appl l1 :: l2 -> CicNotationPt.Appl (l1 @ l2)
-  | l -> CicNotationPt.Appl l
+  | NotationPt.Appl l1 :: l2 -> NotationPt.Appl (l1 @ l2)
+  | l -> NotationPt.Appl l
 ;;
 
 let mk_elim uri leftno it (outsort,suffix) pragma =
@@ -55,11 +55,11 @@ let mk_elim uri leftno it (outsort,suffix) pragma =
  let rec_arg = mk_id (fresh_name ()) in
  let p_ty =
   List.fold_right
-   (fun name res -> CicNotationPt.Binder (`Forall,(name,None),res)) args
-   (CicNotationPt.Binder
+   (fun name res -> NotationPt.Binder (`Forall,(name,None),res)) args
+   (NotationPt.Binder
     (`Forall,
      (rec_arg,Some (mk_appl (mk_id ind_name :: params @ args))),
-     CicNotationPt.Sort outsort)) in
+     NotationPt.Sort outsort)) in
  let args = args @ [rec_arg] in
  let k_names = List.map (function _,name,_ -> name_of_k name) cl in
  let final_params =
@@ -92,29 +92,29 @@ let mk_elim uri leftno it (outsort,suffix) pragma =
                    name, Some (
                    List.fold_right
                     (fun id res ->
-                      CicNotationPt.Binder (`Lambda,(id,None),res))
+                      NotationPt.Binder (`Lambda,(id,None),res))
                     abs
-                    (CicNotationPt.Appl
+                    (NotationPt.Appl
                      (rec_name ::
                       params @
                       [p_name] @
                       k_names @
-                      List.map (fun _ -> CicNotationPt.Implicit `JustOne)
+                      List.map (fun _ -> NotationPt.Implicit `JustOne)
                        (List.tl args) @
                       [mk_appl (name::abs)])))
               | _ -> mk_id name,None
        ) cargs in
      let cargs,recursive_args = List.split cargs_and_recursive_args in
      let recursive_args = HExtlib.filter_map (fun x -> x) recursive_args in
-      CicNotationPt.Pattern (name,None,List.map (fun x -> x,None) cargs),
+      NotationPt.Pattern (name,None,List.map (fun x -> x,None) cargs),
        mk_appl (name_of_k name :: cargs @ recursive_args)
    ) cl
  in
- let bo = CicNotationPt.Case (rec_arg,Some (ind_name,None),None,branches) in
+ let bo = NotationPt.Case (rec_arg,Some (ind_name,None),None,branches) in
  let recno = List.length final_params in
  let where = recno - 1 in
  let res =
-  CicNotationPt.LetRec (`Inductive,
+  NotationPt.LetRec (`Inductive,
    [final_params, (rec_name,ty), bo, where], rec_name)
  in
 (*
@@ -122,7 +122,7 @@ let mk_elim uri leftno it (outsort,suffix) pragma =
    (BoxPp.render_to_string
      ~map_unicode_to_tex:false
      (function x::_ -> x | _ -> assert false)
-     80 (CicNotationPres.render (fun _ -> None)
+     80 (NotationPres.render (fun _ -> None)
      (TermContentPres.pp_ast res)));
   prerr_endline "#####";
   let cobj = ("xxx", [], None, `Joint {
@@ -136,7 +136,7 @@ let mk_elim uri leftno it (outsort,suffix) pragma =
             def_term = bo;
             def_type = 
               List.fold_right 
-                (fun x t -> CicNotationPt.Binder(`Forall,x,t))
+                (fun x t -> NotationPt.Binder(`Forall,x,t))
                 final_params cty
           }
        ];
@@ -147,11 +147,11 @@ let mk_elim uri leftno it (outsort,suffix) pragma =
   prerr_endline (
    (BoxPp.render_to_string ~map_unicode_to_tex:false
      (function x::_ -> x | _ -> assert false) 80 
-     (CicNotationPres.mpres_of_box boxml)));
+     (NotationPres.mpres_of_box boxml)));
 *)
-  CicNotationPt.Theorem
+  NotationPt.Theorem
    (`Definition,srec_name,
-      CicNotationPt.Implicit `JustOne,Some res,pragma)
+      NotationPt.Implicit `JustOne,Some res,pragma)
 ;;
 
 let ast_of_sort s =
@@ -190,7 +190,7 @@ let mk_lambda =
  function
     [] -> assert false 
   | [t] -> t
-  | l -> CicNotationPt.Appl l
+  | l -> NotationPt.Appl l
 ;;
 
 let rec count_prods = function NCic.Prod (_,_,t) -> 1 + count_prods t | _ -> 0;;
@@ -208,21 +208,21 @@ let rec pp rels =
  function
     NCic.Rel i -> List.nth rels (i - 1)
   | NCic.Const _ as t ->
-     CicNotationPt.Ident
+     NotationPt.Ident
       (NCicPp.ppterm ~metasenv:[] ~subst:[] ~context:[] t,None)
-  | NCic.Sort s -> CicNotationPt.Sort (fst (ast_of_sort s))
+  | NCic.Sort s -> NotationPt.Sort (fst (ast_of_sort s))
   | NCic.Meta _
   | NCic.Implicit _ -> assert false
-  | NCic.Appl l -> CicNotationPt.Appl (List.map (pp rels) l)
+  | NCic.Appl l -> NotationPt.Appl (List.map (pp rels) l)
   | NCic.Prod (n,s,t) ->
      let n = mk_id n in
-      CicNotationPt.Binder (`Pi, (n,Some (pp rels s)), pp (n::rels) t)
+      NotationPt.Binder (`Pi, (n,Some (pp rels s)), pp (n::rels) t)
   | NCic.Lambda (n,s,t) ->
      let n = mk_id n in
-      CicNotationPt.Binder (`Lambda, (n,Some (pp rels s)), pp (n::rels) t)
+      NotationPt.Binder (`Lambda, (n,Some (pp rels s)), pp (n::rels) t)
   | NCic.LetIn (n,s,ty,t) ->
      let n = mk_id n in
-      CicNotationPt.LetIn ((n, Some (pp rels ty)), pp rels s, pp (n::rels) t)
+      NotationPt.LetIn ((n, Some (pp rels ty)), pp rels s, pp (n::rels) t)
   | NCic.Match (NReference.Ref (uri,_) as r,outty,te,patterns) ->
     let name = NUri.name_of_uri uri in
     let case_indty = Some (name, None) in
@@ -245,11 +245,11 @@ let rec pp rels =
         List.map2
           (fun (_, name, ty) pat ->
             let capture_variables,rhs = eat_branch leftno rels ty pat in
-             CicNotationPt.Pattern (name, None, capture_variables), rhs
+             NotationPt.Pattern (name, None, capture_variables), rhs
           ) constructors patterns
       with Invalid_argument _ -> assert false
     in
-     CicNotationPt.Case (pp rels te, case_indty, Some (pp rels outty), patterns)
+     NotationPt.Case (pp rels te, case_indty, Some (pp rels outty), patterns)
 ;;
 
 let mk_projection leftno tyname consname consty (projname,_,_) i =
@@ -260,19 +260,19 @@ let mk_projection leftno tyname consname consty (projname,_,_) i =
      let arg = mk_id "xxx" in
      let arg_ty = mk_appl (mk_id tyname :: List.rev names) in
      let bvar = mk_id "yyy" in
-     let underscore = CicNotationPt.Ident ("_",None),None in
+     let underscore = NotationPt.Ident ("_",None),None in
      let bvars =
       HExtlib.mk_list underscore i @ [bvar,None] @
        HExtlib.mk_list underscore (argsno - i -1) in
-     let branch = CicNotationPt.Pattern (consname,None,bvars), bvar in
+     let branch = NotationPt.Pattern (consname,None,bvars), bvar in
      let projs,outtype = nth_prod [] i ty in
      let rels =
       List.map
        (fun name -> mk_appl (mk_id name :: List.rev names @ [arg])) projs
       @ names in
      let outtype = pp rels outtype in
-     let outtype= CicNotationPt.Binder (`Lambda, (arg, Some arg_ty), outtype) in
-      [arg, Some arg_ty], CicNotationPt.Case (arg,None,Some outtype,[branch])
+     let outtype= NotationPt.Binder (`Lambda, (arg, Some arg_ty), outtype) in
+      [arg, Some arg_ty], NotationPt.Case (arg,None,Some outtype,[branch])
    | _,NCic.Prod (name,_,t) ->
       let name = mk_id name in
       let params,body = aux (name::names) t (leftno - 1) in
@@ -282,16 +282,16 @@ let mk_projection leftno tyname consname consty (projname,_,_) i =
  let params,bo = aux [] consty leftno in
  let pprojname = mk_id projname in
  let res =
-  CicNotationPt.LetRec (`Inductive,
+  NotationPt.LetRec (`Inductive,
    [params, (pprojname,None), bo, leftno], pprojname) in
 (* prerr_endline
    (BoxPp.render_to_string
      ~map_unicode_to_tex:false
      (function x::_ -> x | _ -> assert false)
-     80 (CicNotationPres.render (fun _ -> None)
+     80 (NotationPres.render (fun _ -> None)
      (TermContentPres.pp_ast res)));*)
-  CicNotationPt.Theorem
-   (`Definition,projname,CicNotationPt.Implicit `JustOne,Some res,`Projection)
+  NotationPt.Theorem
+   (`Definition,projname,NotationPt.Implicit `JustOne,Some res,`Projection)
 ;;
 
 let mk_projections (_,_,_,_,obj) =

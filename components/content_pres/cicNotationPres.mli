@@ -41,7 +41,7 @@ val lookup_uri: (Cic.id,UriManager.uri) Hashtbl.t -> Cic.id -> string option
  * @param ids_to_uris mapping id -> uri for hyperlinking
  * @param prec precedence level *)
 val render:
- lookup_uri:(Cic.id -> string option) -> ?prec:int -> CicNotationPt.term ->
+ lookup_uri:(Cic.id -> string option) -> ?prec:int -> NotationPt.term ->
   markup
 
 (** level 0 -> xml stream *)
@@ -50,7 +50,7 @@ val print_xml: markup -> Xml.token Stream.t
 (* |+* level 1 -> xml stream
  * @param ids_to_uris +|
 val render_to_boxml:
-  (Cic.id, string) Hashtbl.t -> CicNotationPt.term -> Xml.token Stream.t *)
+  (Cic.id, string) Hashtbl.t -> NotationPt.term -> Xml.token Stream.t *)
 
 val print_box:    boxml_markup -> Xml.token Stream.t
 val print_mpres:  mathml_markup -> Xml.token Stream.t

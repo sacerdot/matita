@@ -27,7 +27,7 @@
 
 open Printf
 
-module Ast = CicNotationPt
+module Ast = NotationPt
 
 let debug = false
 let debug_print s = if debug then prerr_endline (Lazy.force s) else ()
@@ -89,7 +89,7 @@ let destroy_nat =
 (* CODICE c&p da NCicPp *)
 let nast_of_cic0 status
  ~(idref:
-    ?reference:NReference.reference -> CicNotationPt.term -> CicNotationPt.term)
+    ?reference:NReference.reference -> NotationPt.term -> NotationPt.term)
  ~output_type ~metasenv ~subst k ~context =
   function
     | NCic.Rel n ->
@@ -277,7 +277,7 @@ let instantiate32 idrefs env symbol args =
         in
         let rec add_lambda t n =
           if n > 0 then
-            let name = CicNotationUtil.fresh_name () in
+            let name = NotationUtil.fresh_name () in
             Ast.Binder (`Lambda, (Ast.Ident (name, None), None),
               Ast.Appl [add_lambda t (n - 1); Ast.Ident (name, None)])
           else
@@ -305,7 +305,7 @@ let rec nast_of_cic1 status ~idref ~output_type ~metasenv ~subst ~context term =
            idref
             ~reference:
               (match term with NCic.Const nref -> nref | _ -> assert false)
-           (CicNotationPt.Ident ("dummy",None))
+           (NotationPt.Ident ("dummy",None))
           in
            match attrterm with
               Ast.AttributedTerm (`IdRef id, _) -> id
@@ -345,7 +345,7 @@ let ast_of_acic ~output_type id_to_sort annterm =
     ^ CicPp.ppterm (Deannotate.deannotate_term annterm)));
   let term_info = { sort = id_to_sort; uri = Hashtbl.create 211 } in
   let ast = ast_of_acic1 ~output_type term_info annterm in
-  debug_print (lazy ("ast_of_acic -> " ^ CicNotationPp.pp_term ast));
+  debug_print (lazy ("ast_of_acic -> " ^ NotationPp.pp_term ast));
   ast, term_info.uri
 
 let fresh_id =

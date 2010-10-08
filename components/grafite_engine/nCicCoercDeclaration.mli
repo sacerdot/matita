@@ -14,10 +14,10 @@
 val eval_ncoercion: 
    #GrafiteTypes.status as 'status ->
      string ->
-     CicNotationPt.term ->
-     CicNotationPt.term ->
-     string * CicNotationPt.term ->
-     CicNotationPt.term -> 'status * [> `New of NUri.uri list ]
+     NotationPt.term ->
+     NotationPt.term ->
+     string * NotationPt.term ->
+     NotationPt.term -> 'status * [> `New of NUri.uri list ]
 
 (* for records, the term is the projection, already refined, while the
  * first integer is the number of left params and the second integer is 

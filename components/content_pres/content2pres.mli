@@ -35,6 +35,6 @@
 val ncontent2pres:
   ?skip_initial_lambdas:int -> ?skip_thm_and_qed:bool ->
   ids_to_nrefs:(NTermCicContent.id, NReference.reference) Hashtbl.t ->
-  CicNotationPt.term Content.cobj ->
+  NotationPt.term Content.cobj ->
     CicNotationPres.boxml_markup
 

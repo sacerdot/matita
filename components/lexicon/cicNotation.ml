@@ -60,7 +60,7 @@ let process_notation st =
             let id =
               CicNotationParser.extend l1 
                 (fun env loc ->
-                  CicNotationPt.AttributedTerm
+                  NotationPt.AttributedTerm
                    (`Loc loc,TermContentPres.instantiate_level2 env l2)) in
             rule_id := [ RuleId id ];
             Hashtbl.add !rule_ids_to_items id item

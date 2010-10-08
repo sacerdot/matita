@@ -28,7 +28,7 @@
 type pretty_printer_id
 
 val add_pretty_printer:
-  CicNotationPt.term ->             (* level 2 pattern *)
+  NotationPt.term ->             (* level 2 pattern *)
   CicNotationParser.checked_l1_pattern ->
     pretty_printer_id
 
@@ -39,14 +39,14 @@ val remove_pretty_printer: pretty_printer_id -> unit
 
   (** {2 content -> pres} *)
 
-val pp_ast: CicNotationPt.term -> CicNotationPt.term
+val pp_ast: NotationPt.term -> NotationPt.term
 
   (** {2 pres -> content} *)
 
   (** fills a term pattern instantiating variable magics *)
 val instantiate_level2:
-  CicNotationEnv.t -> CicNotationPt.term ->
-    CicNotationPt.term
+  NotationEnv.t -> NotationPt.term ->
+    NotationPt.term
 
 val push: unit -> unit
 val pop: unit -> unit

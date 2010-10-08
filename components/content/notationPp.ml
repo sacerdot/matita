@@ -27,8 +27,8 @@
 
 open Printf
 
-module Ast = CicNotationPt
-module Env = CicNotationEnv
+module Ast = NotationPt
+module Env = NotationEnv
 
   (* when set to true debugging information, not in sync with input syntax, will
    * be added to the output of pp_term.

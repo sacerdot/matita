@@ -884,7 +884,7 @@ let blank_uri = BuildTimeConf.blank_uri
 let current_proof_uri = BuildTimeConf.current_proof_uri
 
 type term_source =
-  [ `Ast of CicNotationPt.term
+  [ `Ast of NotationPt.term
   | `NCic of NCic.term * NCic.context * NCic.metasenv * NCic.substitution
   | `String of string
   ]

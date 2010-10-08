@@ -23,7 +23,7 @@ let fresh_name =
 
 let mk_id id =
  let id = if id = "_" then fresh_name () else id in
-  CicNotationPt.Ident (id,None)
+  NotationPt.Ident (id,None)
 ;;
 
 let rec split_arity ~subst context te =
@@ -37,13 +37,13 @@ let mk_appl =
  function
     [] -> assert false
   | [x] -> x
-  | l -> CicNotationPt.Appl l
+  | l -> NotationPt.Appl l
 ;;
 
 let rec mk_prods l t =
   match l with
     [] -> t
-  | hd::tl -> CicNotationPt.Binder (`Forall, (mk_id hd, None), mk_prods tl t)
+  | hd::tl -> NotationPt.Binder (`Forall, (mk_id hd, None), mk_prods tl t)
 ;;
 
 let rec mk_arrows ?(pattern=false) xs ys selection target = 
@@ -51,7 +51,7 @@ let rec mk_arrows ?(pattern=false) xs ys selection target =
     [],[],[] -> target
   | false :: l,x::xs,y::ys -> mk_arrows ~pattern xs ys l target
   | true :: l,x::xs,y::ys  -> 
-     CicNotationPt.Binder (`Forall, (mk_id "_", Some (mk_appl [if pattern then CicNotationPt.Implicit `JustOne else mk_id "eq" ; CicNotationPt.Implicit `JustOne;x;y])),
+     NotationPt.Binder (`Forall, (mk_id "_", Some (mk_appl [if pattern then NotationPt.Implicit `JustOne else mk_id "eq" ; NotationPt.Implicit `JustOne;x;y])),
                            mk_arrows ~pattern xs ys l target)
   | _ -> raise (Invalid_argument "ninverter: the selection doesn't match the arity of the specified inductive type")
 ;;
@@ -118,15 +118,15 @@ let mk_inverter name is_ind it leftno ?selection outsort status baseuri =
      let outsort, suffix = NCicElim.ast_of_sort outsort in
      let theorem =
       mk_prods xs
-       (CicNotationPt.Binder (`Forall, (mk_id "P", Some (mk_prods (HExtlib.mk_list "_" (List.length ys)) (CicNotationPt.Sort outsort))),
-       mk_prods hyplist (CicNotationPt.Binder (`Forall, (mk_id "Hterm", Some (mk_appl (List.map mk_id (ind_name::xs)))), mk_appl (mk_id "P"::id_rs)))))
+       (NotationPt.Binder (`Forall, (mk_id "P", Some (mk_prods (HExtlib.mk_list "_" (List.length ys)) (NotationPt.Sort outsort))),
+       mk_prods hyplist (NotationPt.Binder (`Forall, (mk_id "Hterm", Some (mk_appl (List.map mk_id (ind_name::xs)))), mk_appl (mk_id "P"::id_rs)))))
      in
      let status, theorem =
       GrafiteDisambiguate.disambiguate_nobj status ~baseuri 
        (baseuri ^ name ^ ".def",0,
-         CicNotationPt.Theorem
+         NotationPt.Theorem
           (`Theorem,name,theorem,
-            Some (CicNotationPt.Implicit (`Tagged "inv")),`InversionPrinciple))
+            Some (NotationPt.Implicit (`Tagged "inv")),`InversionPrinciple))
      in 
      let uri,height,nmenv,nsubst,nobj = theorem in
      let ninitial_stack = Continuationals.Stack.of_nmetasenv nmenv in
@@ -138,18 +138,18 @@ let mk_inverter name is_ind it leftno ?selection outsort status baseuri =
        let rs = List.map (fun x -> mk_id x) rs in
          mk_arrows rs rs selection (mk_appl (mk_id "P"::rs)) in
     
-     let cut = mk_appl [CicNotationPt.Binder (`Lambda, (mk_id "Hcut", Some cut_theorem),
+     let cut = mk_appl [NotationPt.Binder (`Lambda, (mk_id "Hcut", Some cut_theorem),
                         
-CicNotationPt.Implicit (`Tagged "end"));
-                        CicNotationPt.Implicit (`Tagged "cut")] in
+NotationPt.Implicit (`Tagged "end"));
+                        NotationPt.Implicit (`Tagged "cut")] in
      let intros = List.map (fun x -> pp (lazy x); NTactics.intro_tac x) (xs@["P"]@hyplist@["Hterm"]) in
      let where =
       "",0,(None,[],
        Some (
         mk_arrows ~pattern:true
-         (HExtlib.mk_list (CicNotationPt.Implicit `JustOne) (List.length ys))
-         (HExtlib.mk_list CicNotationPt.UserInput (List.length ys))
-         selection CicNotationPt.UserInput)) in
+         (HExtlib.mk_list (NotationPt.Implicit `JustOne) (List.length ys))
+         (HExtlib.mk_list NotationPt.UserInput (List.length ys))
+         selection NotationPt.UserInput)) in
      let elim_tac = if is_ind then NTactics.elim_tac else NTactics.cases_tac in
      let status =
       NTactics.block_tac 

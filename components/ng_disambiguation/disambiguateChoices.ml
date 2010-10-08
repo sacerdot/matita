@@ -57,7 +57,7 @@ let mk_choice  ~mk_appl ~mk_implicit ~term_of_uri ~term_of_nref (dsc, args, appl
   (fun cic_args ->
     let env',rest =
       let names =
-        List.map (function CicNotationPt.IdentArg (_, name) -> name) args
+        List.map (function NotationPt.IdentArg (_, name) -> name) args
       in
        let rec combine_with_rest l1 l2 =
         match l1,l2 with

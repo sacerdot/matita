@@ -28,9 +28,9 @@ type 'a localized_option =
  | LNone of GrafiteAst.loc
 
 type ast_statement =
-  (CicNotationPt.term, CicNotationPt.term,
-   CicNotationPt.term GrafiteAst.reduction, 
-   CicNotationPt.term CicNotationPt.obj, string)
+  (NotationPt.term, NotationPt.term,
+   NotationPt.term GrafiteAst.reduction, 
+   NotationPt.term NotationPt.obj, string)
     GrafiteAst.statement
 
 exception NoInclusionPerformed of string (* full path *)

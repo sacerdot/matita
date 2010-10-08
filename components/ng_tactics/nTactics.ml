@@ -18,7 +18,7 @@ let debug_print s = if debug then prerr_endline (Lazy.force s) else ()
 
 open Continuationals.Stack
 open NTacStatus
-module Ast = CicNotationPt
+module Ast = NotationPt
 
 let id_tac status = status ;;
 let print_tac print_status message status = 

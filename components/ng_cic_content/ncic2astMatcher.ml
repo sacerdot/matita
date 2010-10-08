@@ -25,8 +25,8 @@
 
 (* $Id: acic2astMatcher.ml 9271 2008-11-28 18:28:58Z fguidi $ *)
 
-module Ast = CicNotationPt
-module Util = CicNotationUtil
+module Ast = NotationPt
+module Util = NotationUtil
 
 let reference_of_oxuri = ref (fun _ -> assert false);;
 let set_reference_of_oxuri f = reference_of_oxuri := f;;
@@ -65,7 +65,7 @@ struct
     type pattern_t = Ast.cic_appl_pattern
     type term_t = NCic.term
 
-    let string_of_pattern = CicNotationPp.pp_cic_appl_pattern
+    let string_of_pattern = NotationPp.pp_cic_appl_pattern
     let string_of_term t =
      (*CSC: ??? *)
      NCicPp.ppterm ~metasenv:[] ~subst:[] ~context:[] t

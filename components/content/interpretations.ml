@@ -27,7 +27,7 @@
 
 open Printf
 
-module Ast = CicNotationPt
+module Ast = NotationPt
 module Obj = LibraryObjects
 
 let debug = false
@@ -41,21 +41,6 @@ type term_info =
   { sort: (Cic.id, Ast.sort_kind) Hashtbl.t;
     uri: (Cic.id, UriManager.uri) Hashtbl.t;
   }
-
-let destroy_nat annterm =
-  let is_zero = function
-    | Cic.AMutConstruct (_, uri, 0, 1, _) when Obj.is_nat_URI uri -> true
-    | _ -> false
-  in
-  let is_succ = function
-    | Cic.AMutConstruct (_, uri, 0, 2, _) when Obj.is_nat_URI uri -> true
-    | _ -> false
-  in
-  let rec aux acc = function
-    | Cic.AAppl (_, [he ; tl]) when is_succ he -> aux (acc + 1) tl
-    | t when is_zero t -> Some acc
-    | _ -> None in
-  aux 0 annterm
 
   (* persistent state *)
 
@@ -108,7 +93,7 @@ let instantiate32 term_info idrefs env symbol args =
         in
         let rec add_lambda t n =
           if n > 0 then
-            let name = CicNotationUtil.fresh_name () in
+            let name = NotationUtil.fresh_name () in
             Ast.Binder (`Lambda, (Ast.Ident (name, None), None),
               Ast.Appl [add_lambda t (n - 1); Ast.Ident (name, None)])
           else

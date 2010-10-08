@@ -125,7 +125,7 @@ let wrap_with_make include_paths (f : #LexiconEngine.status GrafiteParser.statem
 ;;
 
 let pp_eager_statement_ast =
-  GrafiteAstPp.pp_statement ~term_pp:CicNotationPp.pp_term
+  GrafiteAstPp.pp_statement ~term_pp:NotationPp.pp_term
     ~lazy_term_pp:(fun _ -> assert false) ~obj_pp:(fun _ -> assert false)
 
 let eval_nmacro include_paths (buffer : GText.buffer) guistuff grafite_status user_goal unparsed_text parsed_text script mac =
@@ -151,7 +151,7 @@ let eval_nmacro include_paths (buffer : GText.buffer) guistuff grafite_status us
       let m, s, status, t = 
         GrafiteDisambiguate.disambiguate_nterm 
           None status ctx menv subst (parsed_text,parsed_text_length,
-            CicNotationPt.Cast (t,CicNotationPt.Implicit `JustOne))  
+            NotationPt.Cast (t,NotationPt.Implicit `JustOne))  
           (* XXX use the metasenv, if possible *)
       in
       guistuff.mathviewer#show_entry (`NCic (t,ctx,m,s));
@@ -181,7 +181,7 @@ let eval_nmacro include_paths (buffer : GText.buffer) guistuff grafite_status us
         | thms -> 
            String.concat ", "  
              (HExtlib.filter_map (function 
-               | CicNotationPt.NRef r -> Some (NCicPp.r2s true r) 
+               | NotationPt.NRef r -> Some (NCicPp.r2s true r) 
                | _ -> None) 
              thms)
       in

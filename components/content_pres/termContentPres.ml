@@ -27,8 +27,8 @@
 
 open Printf
 
-module Ast = CicNotationPt
-module Env = CicNotationEnv
+module Ast = NotationPt
+module Env = NotationEnv
 
 let debug = false
 let debug_print s = if debug then prerr_endline (Lazy.force s) else ()
@@ -122,7 +122,7 @@ let pp_ast0 t k =
               (Ast.AttributedTerm (`Level level, k hd)) :: aux_args 71 tl
         in
         add_level_info Ast.apply_prec 
-          (hovbox true true (CicNotationUtil.dress break (aux_args 70 ts)))
+          (hovbox true true (NotationUtil.dress break (aux_args 70 ts)))
     | Ast.Binder (binder_kind, (id, ty), body) ->
         add_level_info Ast.binder_prec
           (hvbox false true
@@ -275,7 +275,7 @@ let pp_ast0 t k =
     | Ast.Uri (_, None) | Ast.Uri (_, Some [])
     | Ast.Literal _
     | Ast.UserInput as leaf -> leaf
-    | t -> CicNotationUtil.visit_ast ~special_k k t
+    | t -> NotationUtil.visit_ast ~special_k k t
   and aux_sort sort_kind = xml_of_sort sort_kind
   and aux_ty = function
     | None -> builtin_symbol "?"
@@ -289,7 +289,7 @@ let pp_ast0 t k =
   and special_k = function
     | Ast.AttributedTerm (attrs, t) -> Ast.AttributedTerm (attrs, k t)
     | t ->
-        prerr_endline ("unexpected special: " ^ CicNotationPp.pp_term t);
+        prerr_endline ("unexpected special: " ^ NotationPp.pp_term t);
         assert false
   in
   aux t
@@ -338,13 +338,13 @@ let instantiate21 idrefs env l1 =
     function
       Ast.AttributedTerm (attr, t) ->
         Ast.AttributedTerm (attr, subst_singleton pos env t)
-    | t -> CicNotationUtil.group (subst pos env t)
+    | t -> NotationUtil.group (subst pos env t)
   and subst pos env = function
     | Ast.AttributedTerm (attr, t) ->
-(*         prerr_endline ("loosing attribute " ^ CicNotationPp.pp_attribute attr); *)
+(*         prerr_endline ("loosing attribute " ^ NotationPp.pp_attribute attr); *)
         subst pos env t
     | Ast.Variable var ->
-        let name, expected_ty = CicNotationEnv.declaration_of_var var in
+        let name, expected_ty = NotationEnv.declaration_of_var var in
         let ty, value =
           try
             List.assoc name env
@@ -352,15 +352,15 @@ let instantiate21 idrefs env l1 =
             prerr_endline ("name " ^ name ^ " not found in environment");
             assert false
         in
-        assert (CicNotationEnv.well_typed ty value); (* INVARIANT *)
+        assert (NotationEnv.well_typed ty value); (* INVARIANT *)
         (* following assertion should be a conditional that makes this
          * instantiation fail *)
-        if not (CicNotationEnv.well_typed expected_ty value) then
+        if not (NotationEnv.well_typed expected_ty value) then
          begin
           prerr_endline ("The variable " ^ name ^ " is used with the wrong type in the notation declaration");
           assert false
          end;
-        let value = CicNotationEnv.term_of_value value in
+        let value = NotationEnv.term_of_value value in
         let value = 
           match expected_ty with
           | Env.TermType l -> Ast.AttributedTerm (`Level l,value) 
@@ -374,15 +374,15 @@ let instantiate21 idrefs env l1 =
         | `Keyword k -> [ add_keyword_attrs t ]
         | _ -> [ t ])
     | Ast.Layout l -> [ Ast.Layout (subst_layout pos env l) ]
-    | t -> [ CicNotationUtil.visit_ast (subst_singleton pos env) t ]
+    | t -> [ NotationUtil.visit_ast (subst_singleton pos env) t ]
   and subst_magic pos env = function
     | Ast.List0 (p, sep_opt)
     | Ast.List1 (p, sep_opt) ->
-        let rec_decls = CicNotationEnv.declarations_of_term p in
+        let rec_decls = NotationEnv.declarations_of_term p in
         let rec_values =
-          List.map (fun (n, _) -> CicNotationEnv.lookup_list env n) rec_decls
+          List.map (fun (n, _) -> NotationEnv.lookup_list env n) rec_decls
         in
-        let values = CicNotationUtil.ncombine rec_values in
+        let values = NotationUtil.ncombine rec_values in
         let sep =
           match sep_opt with
             | None -> []
@@ -391,24 +391,24 @@ let instantiate21 idrefs env l1 =
         let rec instantiate_list acc = function
           | [] -> List.rev acc
 	  | value_set :: [] ->
-	      let env = CicNotationEnv.combine rec_decls value_set in
-              instantiate_list (CicNotationUtil.group (subst pos env p) :: acc)
+	      let env = NotationEnv.combine rec_decls value_set in
+              instantiate_list (NotationUtil.group (subst pos env p) :: acc)
                 []
           | value_set :: tl ->
-              let env = CicNotationEnv.combine rec_decls value_set in
+              let env = NotationEnv.combine rec_decls value_set in
               let terms = subst pos env p in
-              instantiate_list (CicNotationUtil.group (terms @ sep) :: acc) tl
+              instantiate_list (NotationUtil.group (terms @ sep) :: acc) tl
         in
         if values = [] then []
         else [hovbox false false (instantiate_list [] values)]
     | Ast.Opt p ->
-        let opt_decls = CicNotationEnv.declarations_of_term p in
+        let opt_decls = NotationEnv.declarations_of_term p in
         let env =
           let rec build_env = function
             | [] -> []
             | (name, ty) :: tl ->
                   (* assumption: if one of the value is None then all are *)
-                (match CicNotationEnv.lookup_opt env name with
+                (match NotationEnv.lookup_opt env name with
                 | None -> raise Exit
                 | Some v -> (name, (ty, v)) :: build_env tl)
           in
@@ -424,7 +424,7 @@ let instantiate21 idrefs env l1 =
     | Ast.Box (kind, tl) ->
         let tl' = subst_children pos env tl in
         Ast.Box (kind, List.concat tl')
-    | l -> CicNotationUtil.visit_layout (subst_singleton pos env) l
+    | l -> NotationUtil.visit_layout (subst_singleton pos env) l
   and subst_children pos env =
     function
     | [] -> []
@@ -451,20 +451,20 @@ let instantiate21 idrefs env l1 =
 
 let rec pp_ast1 term = 
   let rec pp_value = function
-    | CicNotationEnv.NumValue _ as v -> v
-    | CicNotationEnv.StringValue _ as v -> v
-(*     | CicNotationEnv.TermValue t when t == term -> CicNotationEnv.TermValue (pp_ast0 t pp_ast1) *)
-    | CicNotationEnv.TermValue t -> CicNotationEnv.TermValue (pp_ast1 t)
-    | CicNotationEnv.OptValue None as v -> v
-    | CicNotationEnv.OptValue (Some v) -> 
-        CicNotationEnv.OptValue (Some (pp_value v))
-    | CicNotationEnv.ListValue vl ->
-        CicNotationEnv.ListValue (List.map pp_value vl)
+    | NotationEnv.NumValue _ as v -> v
+    | NotationEnv.StringValue _ as v -> v
+(*     | NotationEnv.TermValue t when t == term -> NotationEnv.TermValue (pp_ast0 t pp_ast1) *)
+    | NotationEnv.TermValue t -> NotationEnv.TermValue (pp_ast1 t)
+    | NotationEnv.OptValue None as v -> v
+    | NotationEnv.OptValue (Some v) -> 
+        NotationEnv.OptValue (Some (pp_value v))
+    | NotationEnv.ListValue vl ->
+        NotationEnv.ListValue (List.map pp_value vl)
   in
   let ast_env_of_env env =
     List.map (fun (var, (ty, value)) -> (var, (ty, pp_value value))) env
   in
-(* prerr_endline ("pattern matching from 2 to 1 on term " ^ CicNotationPp.pp_term term); *)
+(* prerr_endline ("pattern matching from 2 to 1 on term " ^ NotationPp.pp_term term); *)
   match term with
   | Ast.AttributedTerm (attrs, term') ->
       Ast.AttributedTerm (attrs, pp_ast1 term')
@@ -473,7 +473,7 @@ let rec pp_ast1 term =
       | None -> pp_ast0 term pp_ast1
       | Some (env, ctors, pid) ->
           let idrefs =
-            List.flatten (List.map CicNotationUtil.get_idrefs ctors)
+            List.flatten (List.map NotationUtil.get_idrefs ctors)
           in
           let l1 =
             try
@@ -488,7 +488,7 @@ let load_patterns21 t =
 let pp_ast ast =
   debug_print (lazy "pp_ast <-");
   let ast' = pp_ast1 ast in
-  debug_print (lazy ("pp_ast -> " ^ CicNotationPp.pp_term ast'));
+  debug_print (lazy ("pp_ast -> " ^ NotationPp.pp_term ast'));
   ast'
 
 exception Pretty_printer_not_found
@@ -514,7 +514,7 @@ let fresh_id =
 let add_pretty_printer l2 (CicNotationParser.CL1P (l1,precedence)) =
   let id = fresh_id () in
   let l1' = add_level_info precedence (fill_pos_info l1) in
-  let l2' = CicNotationUtil.strip_attributes l2 in
+  let l2' = NotationUtil.strip_attributes l2 in
   Hashtbl.add !level1_patterns21 id l1';
   pattern21_matrix := (l2', id) :: !pattern21_matrix;
   load_patterns21 !pattern21_matrix;
@@ -575,18 +575,18 @@ let tail_names names env =
   aux [] env
 
 let instantiate_level2 env term =
-(*   prerr_endline ("istanzio: " ^ CicNotationPp.pp_term term); *)
+(*   prerr_endline ("istanzio: " ^ NotationPp.pp_term term); *)
   let fresh_env = ref [] in
   let lookup_fresh_name n =
     try
       List.assoc n !fresh_env
     with Not_found ->
-      let new_name = CicNotationUtil.fresh_name () in
+      let new_name = NotationUtil.fresh_name () in
       fresh_env := (n, new_name) :: !fresh_env;
       new_name
   in
   let rec aux env term =
-(*    prerr_endline ("ENV " ^ CicNotationPp.pp_env env); *)
+(*    prerr_endline ("ENV " ^ NotationPp.pp_env env); *)
     match term with
     | Ast.AttributedTerm (a, term) -> (*Ast.AttributedTerm (a, *)aux env term
     | Ast.Appl terms -> Ast.Appl (List.map (aux env) terms)
@@ -645,8 +645,8 @@ let instantiate_level2 env term =
     | Ast.Ascription (term, name) -> assert false
   and aux_magic env = function
     | Ast.Default (some_pattern, none_pattern) ->
-        let some_pattern_names = CicNotationUtil.names_of_term some_pattern in
-        let none_pattern_names = CicNotationUtil.names_of_term none_pattern in
+        let some_pattern_names = NotationUtil.names_of_term some_pattern in
+        let none_pattern_names = NotationUtil.names_of_term none_pattern in
         let opt_names =
           List.filter
             (fun name -> not (List.mem name none_pattern_names))
@@ -665,13 +665,13 @@ let instantiate_level2 env term =
             | _ ->
                 prerr_endline (sprintf
                   "lookup of %s in env %s did not return an optional value"
-                  name (CicNotationPp.pp_env env));
+                  name (NotationPp.pp_env env));
                 assert false))
     | Ast.Fold (`Left, base_pattern, names, rec_pattern) ->
         let acc_name = List.hd names in (* names can't be empty, cfr. parser *)
         let meta_names =
           List.filter ((<>) acc_name)
-            (CicNotationUtil.names_of_term rec_pattern)
+            (NotationUtil.names_of_term rec_pattern)
         in
         (match meta_names with
         | [] -> assert false (* as above *)
@@ -693,7 +693,7 @@ let instantiate_level2 env term =
         let acc_name = List.hd names in (* names can't be empty, cfr. parser *)
         let meta_names =
           List.filter ((<>) acc_name)
-            (CicNotationUtil.names_of_term rec_pattern)
+            (NotationUtil.names_of_term rec_pattern)
         in
         (match meta_names with
         | [] -> assert false (* as above *)
@@ -711,7 +711,7 @@ let instantiate_level2 env term =
             in
             instantiate_fold_right env)
     | Ast.If (_, p_true, p_false) as t ->
-        aux env (CicNotationUtil.find_branch (Ast.Magic t))
+        aux env (NotationUtil.find_branch (Ast.Magic t))
     | Ast.Fail -> assert false
     | _ -> assert false
   in

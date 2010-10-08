@@ -27,7 +27,7 @@ module T = Types
 module O = Options
 
 module UM = UriManager
-module NP = CicNotationPp
+module NP = NotationPp
 module GP = GrafiteAstPp
 module G  = GrafiteAst
 module H  = HExtlib

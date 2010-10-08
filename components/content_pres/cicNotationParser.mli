@@ -26,17 +26,17 @@
 exception Parse_error of string
 exception Level_not_found of int
 
-type checked_l1_pattern = private CL1P of CicNotationPt.term * int
+type checked_l1_pattern = private CL1P of NotationPt.term * int
 
 (** {2 Parsing functions} *)
 
   (** concrete syntax pattern: notation level 1, the 
    *  integer is the precedence *)
-val parse_level1_pattern: int -> Ulexing.lexbuf -> CicNotationPt.term
+val parse_level1_pattern: int -> Ulexing.lexbuf -> NotationPt.term
 
   (** AST pattern: notation level 2 *)
-val parse_level2_ast: Ulexing.lexbuf -> CicNotationPt.term
-val parse_level2_meta: Ulexing.lexbuf -> CicNotationPt.term
+val parse_level2_ast: Ulexing.lexbuf -> NotationPt.term
+val parse_level2_meta: Ulexing.lexbuf -> NotationPt.term
 
 (** {2 Grammar extension} *)
 
@@ -45,11 +45,11 @@ type rule_id
 val compare_rule_id : rule_id -> rule_id -> int
 
 val check_l1_pattern: (* level1_pattern, pponly, precedence, assoc *)
- CicNotationPt.term -> bool ->  int -> Gramext.g_assoc -> checked_l1_pattern
+ NotationPt.term -> bool ->  int -> Gramext.g_assoc -> checked_l1_pattern
 
 val extend:
   checked_l1_pattern ->
-  (CicNotationEnv.t -> CicNotationPt.location -> CicNotationPt.term) ->
+  (NotationEnv.t -> NotationPt.location -> NotationPt.term) ->
     rule_id
 
 val delete: rule_id -> unit
@@ -59,16 +59,16 @@ val delete: rule_id -> unit
 
 val level2_ast_grammar: unit -> Grammar.g
 
-val term : unit -> CicNotationPt.term Grammar.Entry.e
+val term : unit -> NotationPt.term Grammar.Entry.e
 
 val let_defs : unit ->
-  (CicNotationPt.term CicNotationPt.capture_variable list * CicNotationPt.term CicNotationPt.capture_variable * CicNotationPt.term * int) list
+  (NotationPt.term NotationPt.capture_variable list * NotationPt.term NotationPt.capture_variable * NotationPt.term * int) list
     Grammar.Entry.e
 
 val protected_binder_vars : unit ->
-  (CicNotationPt.term list * CicNotationPt.term option) Grammar.Entry.e
+  (NotationPt.term list * NotationPt.term option) Grammar.Entry.e
 
-val parse_term: Ulexing.lexbuf -> CicNotationPt.term
+val parse_term: Ulexing.lexbuf -> NotationPt.term
 
 (** {2 Debugging} *)
 

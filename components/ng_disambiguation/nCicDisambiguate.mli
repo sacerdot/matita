@@ -30,7 +30,7 @@ val disambiguate_term :
     DisambiguateTypes.input_or_locate_uri_type ->
     DisambiguateTypes.Environment.key ->
     'alias list) ->
-  CicNotationPt.term Disambiguate.disambiguator_input ->
+  NotationPt.term Disambiguate.disambiguator_input ->
   ((DisambiguateTypes.domain_item * 'alias) list *
    NCic.metasenv *                  
    NCic.substitution *
@@ -51,10 +51,10 @@ val disambiguate_obj :
     DisambiguateTypes.Environment.key ->
      'alias list) ->
   uri:NUri.uri ->
-  string * int * CicNotationPt.term CicNotationPt.obj ->
+  string * int * NotationPt.term NotationPt.obj ->
   ((DisambiguateTypes.Environment.key * 'alias) list * NCic.metasenv *
    NCic.substitution * NCic.obj)
   list * bool
 
-val disambiguate_path: CicNotationPt.term -> NCic.term
+val disambiguate_path: NotationPt.term -> NCic.term
 

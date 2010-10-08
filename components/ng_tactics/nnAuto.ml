@@ -18,7 +18,7 @@ let debug_print = noprint
 
 open Continuationals.Stack
 open NTacStatus
-module Ast = CicNotationPt
+module Ast = NotationPt
 
 (* ======================= statistics  ========================= *)
 
@@ -73,7 +73,7 @@ let print_stat tbl =
     Pervasives.compare (relevance v1) (relevance v2) in
   let l = List.sort vcompare l in
   let vstring (a,v)=
-      CicNotationPp.pp_term (Ast.NCic (NCic.Const a)) ^ ": rel = " ^
+      NotationPp.pp_term (Ast.NCic (NCic.Const a)) ^ ": rel = " ^
       (string_of_float (relevance v)) ^
       "; uses = " ^ (string_of_int !(v.uses)) ^
       "; nom = " ^ (string_of_int !(v.nominations)) in
@@ -140,7 +140,7 @@ let is_a_fact_obj s uri =
 
 let is_a_fact_ast status subst metasenv ctx cand = 
  debug_print ~depth:0 
-   (lazy ("------- checking " ^ CicNotationPp.pp_term cand)); 
+   (lazy ("------- checking " ^ NotationPp.pp_term cand)); 
  let status, t = disambiguate status ctx ("",0,cand) None in
  let status,t = term_of_cic_term status t ctx in
  let ty = NCicTypeChecker.typeof subst metasenv ctx t in
@@ -815,14 +815,14 @@ type cache =
 let add_to_trace ~depth cache t =
   match t with
     | Ast.NRef _ -> 
-	debug_print ~depth (lazy ("Adding to trace: " ^ CicNotationPp.pp_term t));
+	debug_print ~depth (lazy ("Adding to trace: " ^ NotationPp.pp_term t));
 	{cache with trace = t::cache.trace}
     | Ast.NCic _  (* local candidate *)
     | _  -> (*not an application *) cache 
 
 let pptrace tr = 
   (lazy ("Proof Trace: " ^ (String.concat ";" 
-			      (List.map CicNotationPp.pp_term tr))))
+			      (List.map NotationPp.pp_term tr))))
 (* not used
 let remove_from_trace cache t =
   match t with
@@ -896,7 +896,7 @@ let sort_candidates status ctx candidates =
      List.sort (fun (a,_) (b,_) -> a - b) candidates in 
   let candidates = List.map snd candidates in
     debug_print (lazy ("candidates =\n" ^ (String.concat "\n" 
-	(List.map CicNotationPp.pp_term candidates))));
+	(List.map NotationPp.pp_term candidates))));
     candidates
 
 let sort_new_elems l =
@@ -904,7 +904,7 @@ let sort_new_elems l =
 
 let try_candidate ?(smart=0) flags depth status eq_cache ctx t =
  try
-  debug_print ~depth (lazy ("try " ^ CicNotationPp.pp_term t));
+  debug_print ~depth (lazy ("try " ^ NotationPp.pp_term t));
   let status = 
     if smart= 0 then NTactics.apply_tac ("",0,t) status 
     else if smart = 1 then smart_apply_auto ("",0,t) eq_cache status 
@@ -1626,7 +1626,7 @@ auto_main flags signature cache depth status: unit =
 	       (lazy ("(re)considering goal " ^ 
 		       (string_of_int g) ^" : "^ppterm status gty)); 
              debug_print (~depth:depth) 
-               (lazy ("Case: " ^ CicNotationPp.pp_term t));
+               (lazy ("Case: " ^ NotationPp.pp_term t));
              let depth,cache =
 	       if t=Ast.Ident("__whd",None) || 
                   t=Ast.Ident("__intros",None) 

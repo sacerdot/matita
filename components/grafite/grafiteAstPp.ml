@@ -90,43 +90,43 @@ let pp_just ~term_pp =
 ;;
 
 let rec pp_ntactic ~map_unicode_to_tex =
- let term_pp = CicNotationPp.pp_term in
+ let term_pp = NotationPp.pp_term in
  let lazy_term_pp = fun _ -> assert false in
  let pp_tactic_pattern =
   pp_tactic_pattern ~map_unicode_to_tex ~lazy_term_pp ~term_pp in
  function
-  | NApply (_,t) -> "napply " ^ CicNotationPp.pp_term t
+  | NApply (_,t) -> "napply " ^ NotationPp.pp_term t
   | NSmartApply (_,t) -> "fixme"
   | NAuto (_,(None,flgs)) ->
       "nautobatch" ^
         String.concat " " (List.map (fun a,b -> a ^ "=" ^ b) flgs)
   | NAuto (_,(Some l,flgs)) ->
       "nautobatch" ^ " by " ^
-         (String.concat "," (List.map CicNotationPp.pp_term l)) ^
+         (String.concat "," (List.map NotationPp.pp_term l)) ^
         String.concat " " (List.map (fun a,b -> a ^ "=" ^ b) flgs)
-  | NCases (_,what,where) -> "ncases " ^ CicNotationPp.pp_term what ^
+  | NCases (_,what,where) -> "ncases " ^ NotationPp.pp_term what ^
       assert false ^ " " ^ assert false
   | NConstructor (_,None,l) -> "@ " ^
-      String.concat " " (List.map CicNotationPp.pp_term l)
+      String.concat " " (List.map NotationPp.pp_term l)
   | NConstructor (_,Some x,l) -> "@" ^ string_of_int x ^ " " ^
-      String.concat " " (List.map CicNotationPp.pp_term l)
+      String.concat " " (List.map NotationPp.pp_term l)
   | NCase1 (_,n) -> "*" ^ n ^ ":"
   | NChange (_,what,wwhat) -> "nchange " ^ assert false ^ 
-      " with " ^ CicNotationPp.pp_term wwhat
-  | NCut (_,t) -> "ncut " ^ CicNotationPp.pp_term t
-(*| NDiscriminate (_,t) -> "ndiscriminate " ^ CicNotationPp.pp_term t
-  | NSubst (_,t) -> "nsubst " ^ CicNotationPp.pp_term t *)
+      " with " ^ NotationPp.pp_term wwhat
+  | NCut (_,t) -> "ncut " ^ NotationPp.pp_term t
+(*| NDiscriminate (_,t) -> "ndiscriminate " ^ NotationPp.pp_term t
+  | NSubst (_,t) -> "nsubst " ^ NotationPp.pp_term t *)
   | NDestruct (_,dom,skip) -> "ndestruct ..." 
-  | NElim (_,what,where) -> "nelim " ^ CicNotationPp.pp_term what ^
+  | NElim (_,what,where) -> "nelim " ^ NotationPp.pp_term what ^
       assert false ^ " " ^ assert false
   | NId _ -> "nid"
   | NIntro (_,n) -> "#" ^ n
-  | NInversion (_,what,where) -> "ninversion " ^ CicNotationPp.pp_term what ^
+  | NInversion (_,what,where) -> "ninversion " ^ NotationPp.pp_term what ^
       assert false ^ " " ^ assert false
-  | NLApply (_,t) -> "lapply " ^ CicNotationPp.pp_term t
+  | NLApply (_,t) -> "lapply " ^ NotationPp.pp_term t
   | NRewrite (_,dir,n,where) -> "nrewrite " ^
      (match dir with `LeftToRight -> ">" | `RightToLeft -> "<") ^
-     " " ^ CicNotationPp.pp_term n ^ " " ^ pp_tactic_pattern where
+     " " ^ NotationPp.pp_term n ^ " " ^ pp_tactic_pattern where
   | NReduce _ | NGeneralize _ | NLetIn _ | NAssert _ -> "TO BE IMPLEMENTED"
   | NDot _ -> "##."
   | NSemicolon _ -> "##;"
@@ -311,7 +311,7 @@ let pp_arg ~term_pp arg =
      "(" ^ s ^ ")"
   
 let pp_nmacro = function
-  | NCheck (_, term) -> Printf.sprintf "ncheck %s" (CicNotationPp.pp_term term)
+  | NCheck (_, term) -> Printf.sprintf "ncheck %s" (NotationPp.pp_term term)
   | Screenshot (_, name) -> Printf.sprintf "screenshot \"%s\"" name
 ;;
 
@@ -373,7 +373,7 @@ let pp_coercion ~term_pp t do_composites arity saturations=
 
 let pp_ncommand ~obj_pp = function
   | UnificationHint (_,t, n) -> 
-      "unification hint " ^ string_of_int n ^ " " ^ CicNotationPp.pp_term t
+      "unification hint " ^ string_of_int n ^ " " ^ NotationPp.pp_term t
   | NDiscriminator (_,_)
   | NInverter (_,_,_,_,_)
   | NUnivConstraint (_) -> "not supported"

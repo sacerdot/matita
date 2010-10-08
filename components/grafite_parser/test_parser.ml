@@ -63,7 +63,7 @@ let pp_precedence = string_of_int
 
 let process_stream istream =
   let char_count = ref 0 in
-  let module P = CicNotationPt in
+  let module P = NotationPt in
   let module G = GrafiteAst in
   let status =
    ref
@@ -90,12 +90,12 @@ let process_stream istream =
                   | None -> ()
                   | Some id ->
                       prerr_endline "removing last notation rule ...";
-                      CicNotationParser.delete id) *)
+                      NotationParser.delete id) *)
               | G.Executable (_, G.Macro (_, G.Check (_, t))) -> 
-                  prerr_endline (sprintf "ast: %s" (CicNotationPp.pp_term t));
+                  prerr_endline (sprintf "ast: %s" (NotationPp.pp_term t));
                   let t' = TermContentPres.pp_ast t in
                   prerr_endline (sprintf "rendered ast: %s"
-                    (CicNotationPp.pp_term t'));
+                    (NotationPp.pp_term t'));
                   let tbl = Hashtbl.create 0 in
                   dump_xml t' tbl "out.xml"
               | statement ->
@@ -104,7 +104,7 @@ let process_stream istream =
                      GrafiteAstPp.pp_statement
                       ~map_unicode_to_tex:(Helm_registry.get_bool
                         "matita.paste_unicode_as_tex")
-                      ~term_pp:CicNotationPp.pp_term
+                      ~term_pp:NotationPp.pp_term
                       ~lazy_term_pp:(fun _ -> "_lazy_term_here_")
                       ~obj_pp:(fun _ -> "_obj_here_")
                       statement)

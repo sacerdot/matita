@@ -3,13 +3,13 @@ PREDICATES =
 
 INTERFACE_FILES =		\
 	content.mli		\
-	cicNotationUtil.mli	\
-	cicNotationEnv.mli	\
-	cicNotationPp.mli	\
+	notationUtil.mli	\
+	notationEnv.mli	\
+	notationPp.mli	\
 	interpretations.mli \
 	$(NULL)
 IMPLEMENTATION_FILES =		\
-	cicNotationPt.ml	\
+	notationPt.ml	\
 	$(INTERFACE_FILES:%.mli=%.ml)
 
 include ../../Makefile.defs

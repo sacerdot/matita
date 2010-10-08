@@ -41,20 +41,20 @@ let fresh_name =
 
 let mk_id id =
  let id = if id = "_" then fresh_name () else id in
-  CicNotationPt.Ident (id,None)
+  NotationPt.Ident (id,None)
 ;;
 
 let rec mk_prods l t =
   match l with
     [] -> t
-  | hd::tl -> CicNotationPt.Binder (`Forall, (mk_id hd, None), mk_prods tl t)
+  | hd::tl -> NotationPt.Binder (`Forall, (mk_id hd, None), mk_prods tl t)
 ;;
 
 let mk_appl =
  function
     [] -> assert false
   | [x] -> x
-  | l -> CicNotationPt.Appl l
+  | l -> NotationPt.Appl l
 ;;
 
 let rec iter f n acc =
@@ -124,7 +124,7 @@ let nargs it nleft consno =
   let _,_,t_k = List.nth cl consno in
   List.length (arg_list nleft t_k) ;;
 
-let default_pattern = "",0,(None,[],Some CicNotationPt.UserInput);;
+let default_pattern = "",0,(None,[],Some NotationPt.UserInput);;
 
 (* returns the discrimination = injection+contradiction principle *)
 
@@ -135,8 +135,8 @@ let mk_discriminator it ~use_jmeq nleft xyty status =
   let mk_eq tys ts us es n =
     if use_jmeq then
       mk_appl [mk_id "jmeq";
-               CicNotationPt.Implicit `JustOne; List.nth ts n;
-               CicNotationPt.Implicit `JustOne; List.nth us n] 
+               NotationPt.Implicit `JustOne; List.nth ts n;
+               NotationPt.Implicit `JustOne; List.nth us n] 
     else
     (* eqty = Tn u0 e0...un-1 en-1 *)
     let eqty = mk_appl 
@@ -170,54 +170,54 @@ let mk_discriminator it ~use_jmeq nleft xyty status =
     let tys = List.map 
                 (fun x -> iter 
                   (fun i acc -> 
-                    CicNotationPt.Binder (`Lambda, (mk_id ("x" ^ string_of_int i), None),
-                    CicNotationPt.Binder (`Lambda, (mk_id ("p" ^ string_of_int i), None),
+                    NotationPt.Binder (`Lambda, (mk_id ("x" ^ string_of_int i), None),
+                    NotationPt.Binder (`Lambda, (mk_id ("p" ^ string_of_int i), None),
                     acc))) (x-1) 
-                 (CicNotationPt.Implicit (`Tagged ("T" ^ (string_of_int x)))))
+                 (NotationPt.Implicit (`Tagged ("T" ^ (string_of_int x)))))
                (HExtlib.list_seq 0 nargs) in
     let tys = tys @ 
       [iter (fun i acc -> 
-        CicNotationPt.Binder (`Lambda, (mk_id ("x" ^ string_of_int i), None),
-        CicNotationPt.Binder (`Lambda, (mk_id ("p" ^ string_of_int i), None),
+        NotationPt.Binder (`Lambda, (mk_id ("x" ^ string_of_int i), None),
+        NotationPt.Binder (`Lambda, (mk_id ("p" ^ string_of_int i), None),
         acc))) (nargs-1)
-        (mk_appl [mk_id "eq"; CicNotationPt.Implicit `JustOne;
+        (mk_appl [mk_id "eq"; NotationPt.Implicit `JustOne;
           mk_appl (mk_id (kname it i)::
            List.map (fun x -> mk_id ("x" ^string_of_int x))
               (HExtlib.list_seq 0 (List.length ts)));
               mk_appl (mk_id (kname it j)::us)])]
     in
-    (** CicNotationPt.Binder (`Lambda, (mk_id "e", 
+    (** NotationPt.Binder (`Lambda, (mk_id "e", 
       Some (mk_appl 
         [mk_id "eq";
-         CicNotationPt.Implicit `JustOne;
+         NotationPt.Implicit `JustOne;
          mk_appl (mk_id (kname it i)::ts);
          mk_appl (mk_id (kname it j)::us)])),
     let ts = ts @ [mk_id "e"] in 
     let refl2 = mk_appl
                   [mk_id "refl";
-                   CicNotationPt.Implicit `JustOne;
+                   NotationPt.Implicit `JustOne;
                    mk_appl (mk_id (kname it j)::us)] in
     let us = us @ [refl2] in *)
-    CicNotationPt.Binder (`Forall, (mk_id "P", Some (CicNotationPt.Sort (`NType "1") )),
+    NotationPt.Binder (`Forall, (mk_id "P", Some (NotationPt.Sort (`NType "1") )),
       if i = j then 
-       CicNotationPt.Binder (`Forall, (mk_id "_",
+       NotationPt.Binder (`Forall, (mk_id "_",
         Some (iter (fun i acc -> 
-              CicNotationPt.Binder (`Forall, (List.nth es i, Some (mk_eq tys ts us es i)), acc))
+              NotationPt.Binder (`Forall, (List.nth es i, Some (mk_eq tys ts us es i)), acc))
               (nargs-1) 
-              (** (CicNotationPt.Binder (`Forall, (mk_id "_", 
+              (** (NotationPt.Binder (`Forall, (mk_id "_", 
                 Some (mk_eq tys ts us es nargs)),*)
                 (mk_id "P"))), mk_id "P")
       else mk_id "P")
   in
 
-  let inner i ts = CicNotationPt.Case 
+  let inner i ts = NotationPt.Case 
               (mk_id "y",None,
-               (*Some (CicNotationPt.Binder (`Lambda, (mk_id "y",None), 
-                 CicNotationPt.Binder (`Forall, (mk_id "_", Some
-                 (mk_appl [mk_id "eq";CicNotationPt.Implicit
-                 `JustOne;(*CicNotationPt.Implicit `JustOne*)
+               (*Some (NotationPt.Binder (`Lambda, (mk_id "y",None), 
+                 NotationPt.Binder (`Forall, (mk_id "_", Some
+                 (mk_appl [mk_id "eq";NotationPt.Implicit
+                 `JustOne;(*NotationPt.Implicit `JustOne*)
                   mk_appl (mk_id (kname it i)::ts);mk_id "y"])),
-                 CicNotationPt.Implicit `JustOne )))*)
+                 NotationPt.Implicit `JustOne )))*)
                   None,
                   List.map
                   (fun j -> 
@@ -226,13 +226,13 @@ let mk_discriminator it ~use_jmeq nleft xyty status =
                                 (nargs_kty - 1) [] in
                      let nones = 
                        iter (fun _ acc -> None::acc) (nargs_kty - 1) [] in
-                     CicNotationPt.Pattern (kname it j,
+                     NotationPt.Pattern (kname it j,
                                             None,
                                             List.combine us nones), 
                                 branch i j ts us)
                   (HExtlib.list_seq 0 (List.length cl)))
   in
-  let outer = CicNotationPt.Case
+  let outer = NotationPt.Case
                 (mk_id "x",None,
                  None ,
                  List.map
@@ -242,15 +242,15 @@ let mk_discriminator it ~use_jmeq nleft xyty status =
                                  (nargs_kty - 1) [] in
                      let nones = 
                        iter (fun _ acc -> None::acc) (nargs_kty - 1) [] in
-                      CicNotationPt.Pattern (kname it i,
+                      NotationPt.Pattern (kname it i,
                                              None,
                                              List.combine ts nones),
                                 inner i ts)
                    (HExtlib.list_seq 0 (List.length cl))) in
-  let principle = CicNotationPt.Binder (`Lambda, (mk_id "x", Some xyty),
-                        CicNotationPt.Binder (`Lambda, (mk_id "y", Some xyty), outer))
+  let principle = NotationPt.Binder (`Lambda, (mk_id "x", Some xyty),
+                        NotationPt.Binder (`Lambda, (mk_id "y", Some xyty), outer))
   in
-  pp (lazy ("discriminator = " ^ (CicNotationPp.pp_term principle)));
+  pp (lazy ("discriminator = " ^ (NotationPp.pp_term principle)));
   
   status, principle 
 ;;
@@ -332,13 +332,13 @@ let discriminate_tac ~context cur_eq status =
   NTactics.block_tac (
     [(fun status ->
      let status, discr = mk_discriminator it ~use_jmeq leftno xyty status in
-     let cut_term = mk_prods params (CicNotationPt.Binder (`Forall, (mk_id "x",
+     let cut_term = mk_prods params (NotationPt.Binder (`Forall, (mk_id "x",
                              Some xyty),
-                         CicNotationPt.Binder (`Forall, (mk_id "y", Some xyty),
-                          CicNotationPt.Binder (`Forall, (mk_id "e",
-                           Some (mk_appl [mk_id "eq";CicNotationPt.Implicit `JustOne; mk_id "x"; mk_id "y"])),
+                         NotationPt.Binder (`Forall, (mk_id "y", Some xyty),
+                          NotationPt.Binder (`Forall, (mk_id "e",
+                           Some (mk_appl [mk_id "eq";NotationPt.Implicit `JustOne; mk_id "x"; mk_id "y"])),
                            mk_appl [discr; mk_id "x"; mk_id "y"(*;mk_id "e"*)])))) in
-     let status = print_tac (lazy ("cut_term = "^ CicNotationPp.pp_term cut_term)) status in
+     let status = print_tac (lazy ("cut_term = "^ NotationPp.pp_term cut_term)) status in
       NTactics.cut_tac ("",0, cut_term)
       status);
     NTactics.branch_tac;
@@ -356,7 +356,7 @@ let discriminate_tac ~context cur_eq status =
     print_tac (lazy "ci sono 3");
     NTactics.intro_tac "#discriminate";
     NTactics.apply_tac ("",0,mk_appl ([mk_id "#discriminate"]@
-                                HExtlib.mk_list (CicNotationPt.Implicit `JustOne) (List.length params + 2) @
+                                HExtlib.mk_list (NotationPt.Implicit `JustOne) (List.length params + 2) @
                                 [mk_id eq_name ]));
     NTactics.reduce_tac ~reduction:(`Normalize true) ~where:default_pattern;
     NTactics.clear_tac ["#discriminate"];
@@ -403,7 +403,7 @@ let subst_tac ~context ~dir skip cur_eq =
     else 
     let gen_tac x = 
       NTactics.generalize_tac 
-      ~where:("",0,(Some (mk_id x),[], Some CicNotationPt.UserInput)) in
+      ~where:("",0,(Some (mk_id x),[], Some NotationPt.UserInput)) in
     NTactics.block_tac ((List.map gen_tac names_to_gen)@
                 [NTactics.clear_tac names_to_gen;
                  NTactics.rewrite_tac ~dir 
@@ -434,14 +434,14 @@ let clearid_tac ~context skip cur_eq =
     let names_to_gen = names_to_gen @ [eq_name] in
     let gen_tac x = 
       NTactics.generalize_tac 
-      ~where:("",0,(Some (mk_id x),[], Some CicNotationPt.UserInput)) in
+      ~where:("",0,(Some (mk_id x),[], Some NotationPt.UserInput)) in
     NTactics.block_tac ((List.map gen_tac names_to_gen)@
                 [NTactics.clear_tac names_to_gen;
                  NTactics.apply_tac ("",0, mk_appl [streicher_id;
-						    CicNotationPt.Implicit `JustOne;
-						    CicNotationPt.Implicit `JustOne;
-						    CicNotationPt.Implicit `JustOne;
-						    CicNotationPt.Implicit `JustOne]);
+						    NotationPt.Implicit `JustOne;
+						    NotationPt.Implicit `JustOne;
+						    NotationPt.Implicit `JustOne;
+						    NotationPt.Implicit `JustOne]);
                  NTactics.reduce_tac ~reduction:(`Normalize true)
                    ~where:default_pattern] @
                  (let names_to_intro = 
@@ -462,14 +462,14 @@ let clearid_tac ~context skip cur_eq =
     let names_to_gen = names_to_gen @ [eq_name] in
     let gen_tac x = 
       NTactics.generalize_tac 
-      ~where:("",0,(Some (mk_id x),[], Some CicNotationPt.UserInput)) in
+      ~where:("",0,(Some (mk_id x),[], Some NotationPt.UserInput)) in
     NTactics.block_tac ((List.map gen_tac names_to_gen)@
                 [NTactics.clear_tac names_to_gen;
                  NTactics.apply_tac ("",0, mk_appl [streicher_id;
-						    CicNotationPt.Implicit `JustOne;
-						    CicNotationPt.Implicit `JustOne;
-						    CicNotationPt.Implicit `JustOne;
-						    CicNotationPt.Implicit `JustOne]);
+						    NotationPt.Implicit `JustOne;
+						    NotationPt.Implicit `JustOne;
+						    NotationPt.Implicit `JustOne;
+						    NotationPt.Implicit `JustOne]);
                  NTactics.reduce_tac ~reduction:(`Normalize true)
                    ~where:default_pattern] @
                  (let names_to_intro = 
@@ -486,21 +486,21 @@ let clearid_tac ~context skip cur_eq =
     let names_to_gen = names_to_gen (* @ [eq_name]*) in
     let gen_tac x = 
       NTactics.generalize_tac 
-      ~where:("",0,(Some (mk_id x),[], Some CicNotationPt.UserInput)) in
+      ~where:("",0,(Some (mk_id x),[], Some NotationPt.UserInput)) in
     let gen_eq = NTactics.generalize_tac
      ~where:("",0,(Some (mk_appl [mk_id "jmeq_to_eq";
-                                  CicNotationPt.Implicit `JustOne; 
-                                  CicNotationPt.Implicit `JustOne; 
-                                  CicNotationPt.Implicit `JustOne; 
-                                  mk_id eq_name]),[], Some CicNotationPt.UserInput)) in
+                                  NotationPt.Implicit `JustOne; 
+                                  NotationPt.Implicit `JustOne; 
+                                  NotationPt.Implicit `JustOne; 
+                                  mk_id eq_name]),[], Some NotationPt.UserInput)) in
     NTactics.block_tac ((List.map gen_tac names_to_gen)@gen_eq::
                 [NTactics.clear_tac names_to_gen;
                  NTactics.try_tac (NTactics.clear_tac [eq_name]);
                  NTactics.apply_tac ("",0, mk_appl [streicher_id;
-						    CicNotationPt.Implicit `JustOne;
-						    CicNotationPt.Implicit `JustOne;
-						    CicNotationPt.Implicit `JustOne;
-						    CicNotationPt.Implicit `JustOne]);
+						    NotationPt.Implicit `JustOne;
+						    NotationPt.Implicit `JustOne;
+						    NotationPt.Implicit `JustOne;
+						    NotationPt.Implicit `JustOne]);
                  NTactics.reduce_tac ~reduction:(`Normalize true)
                    ~where:default_pattern] @
                  (let names_to_intro = List.rev names_to_gen in
