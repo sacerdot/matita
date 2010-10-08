@@ -28,7 +28,6 @@
 open Printf
 
 module Ast = NotationPt
-module Obj = LibraryObjects
 
 let debug = false
 let debug_print s = if debug then prerr_endline (Lazy.force s) else ()

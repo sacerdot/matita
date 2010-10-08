@@ -40,8 +40,6 @@ struct
     | NRef of NReference.reference
     | Appl of cic_mask_t list
 
-    let uri_of_term t = CicUtil.uri_of_term (Deannotate.deannotate_term t)
-
     let mask_of_cic = function
       | NCic.Appl tl -> Appl (List.map (fun _ -> Blob) tl), tl
       | NCic.Const nref -> NRef nref, []

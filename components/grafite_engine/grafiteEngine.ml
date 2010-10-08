@@ -653,9 +653,6 @@ let rec eval_command = {ec_go = fun ~disambiguate_command opts status
  let status,cmd = disambiguate_command status (text,prefix_len,cmd) in
  let status,uris =
   match cmd with
-  | GrafiteAst.Default (loc, what, uris) as cmd ->
-     LibraryObjects.set_default what uris;
-     GrafiteTypes.add_moo_content [cmd] status,`New []
   | GrafiteAst.Drop loc -> raise Drop
   | GrafiteAst.Include (loc, mode, new_or_old, baseuri) ->
      (* Old Include command is not recursive; new one is *)

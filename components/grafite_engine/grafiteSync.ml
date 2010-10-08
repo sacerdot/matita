@@ -74,11 +74,9 @@ let time_travel  ~present ?(past=initial_status present present#baseuri) () =
 let init lexicon_status =
   initial_status lexicon_status
   ;;
-let pop () =
-  LibraryObjects.pop ()
+let pop () = ()
 ;;
 
-let push () =
-  LibraryObjects.push ()
+let push () = ()
 ;;
 

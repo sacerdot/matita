@@ -44,14 +44,6 @@ let rehash_cmd_uris =
   | GrafiteAst.Default (loc, name, uris) ->
       let uris = List.map rehash_uri uris in
       GrafiteAst.Default (loc, name, uris)
-  | GrafiteAst.PreferCoercion (loc, uri) ->
-      GrafiteAst.PreferCoercion (loc, CicUtil.rehash_term uri)
-  | GrafiteAst.Coercion (loc, uri, close, arity, saturations) ->
-      GrafiteAst.Coercion (loc, CicUtil.rehash_term uri, close, arity, saturations)
-  | GrafiteAst.Index (loc, key, uri) ->
-      GrafiteAst.Index (loc, HExtlib.map_option CicUtil.rehash_term key, rehash_uri uri)
-  | GrafiteAst.Select (loc, uri) -> 
-      GrafiteAst.Select (loc, rehash_uri uri)
   | GrafiteAst.Include _ as cmd -> cmd
   | cmd ->
       prerr_endline "Found a command not expected in a .moo:";
