@@ -32,10 +32,6 @@ type tactic =
   NotationPt.term GrafiteAst.reduction, string) 
    GrafiteAst.tactic
    
-type lazy_tactic = 
-  (Cic.term, Cic.lazy_term, Cic.lazy_term GrafiteAst.reduction, string) 
-    GrafiteAst.tactic
-
 let singleton msg = function
   | [x], _ -> x
   | l, _   ->

@@ -57,9 +57,6 @@ val lookup_symbol_by_dsc:
   term_of_nref: (NReference.reference -> 'term) ->
   string -> string -> 'term codomain_item
 
-val cic_lookup_symbol_by_dsc: 
-  string -> string -> Cic.term codomain_item
-
 val mk_choice:
   mk_appl: ('term list -> 'term) ->
   mk_implicit: (bool -> 'term) ->

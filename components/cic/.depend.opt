@@ -1,11 +1,8 @@
 cicUniv.cmi: 
-cicUtil.cmi: cic.cmx 
 cicPp.cmi: cic.cmx 
 cic.cmo: cicUniv.cmi 
 cic.cmx: cicUniv.cmx 
 cicUniv.cmo: cicUniv.cmi 
 cicUniv.cmx: cicUniv.cmi 
-cicUtil.cmo: cicUniv.cmi cic.cmx cicUtil.cmi 
-cicUtil.cmx: cicUniv.cmx cic.cmx cicUtil.cmi 
 cicPp.cmo: cic.cmx cicPp.cmi 
 cicPp.cmx: cic.cmx cicPp.cmi 

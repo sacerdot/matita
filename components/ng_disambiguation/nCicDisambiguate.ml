@@ -352,14 +352,10 @@ let interpretate_term_and_interpretate_term_option
     | NotationPt.Sort `Prop -> NCic.Sort NCic.Prop
     | NotationPt.Sort `Set -> NCic.Sort (NCic.Type
        [`Type,NUri.uri_of_string "cic:/matita/pts/Type.univ"])
-    | NotationPt.Sort (`Type _u) -> NCic.Sort (NCic.Type
-       [`Type,NUri.uri_of_string "cic:/matita/pts/Type0.univ"])
     | NotationPt.Sort (`NType s) -> NCic.Sort (NCic.Type
        [`Type,NUri.uri_of_string ("cic:/matita/pts/Type" ^ s ^ ".univ")])
     | NotationPt.Sort (`NCProp s) -> NCic.Sort (NCic.Type
        [`CProp,NUri.uri_of_string ("cic:/matita/pts/Type" ^ s ^ ".univ")])
-    | NotationPt.Sort (`CProp _u) -> NCic.Sort (NCic.Type
-       [`CProp,NUri.uri_of_string "cic:/matita/pts/Type.univ"])
     | NotationPt.Symbol (symbol, instance) ->
         Disambiguate.resolve ~env ~mk_choice 
          (Symbol (symbol, instance)) (`Args [])

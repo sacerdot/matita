@@ -43,12 +43,6 @@ type term_info =
   { sort: (Cic.id, Ast.sort_kind) Hashtbl.t;
     uri: (Cic.id, UriManager.uri) Hashtbl.t;
   }
-
-let get_types uri =
-  let o,_ = CicEnvironment.get_obj CicUniv.oblivion_ugraph uri in
-    match o with
-      | Cic.InductiveDefinition (l,_,leftno,_) -> l, leftno 
-      | _ -> assert false
 *)
 
 let idref register_ref =
@@ -340,14 +334,6 @@ in
 ;;
 
 (*
-let ast_of_acic ~output_type id_to_sort annterm =
-  debug_print (lazy ("ast_of_acic <- "
-    ^ CicPp.ppterm (Deannotate.deannotate_term annterm)));
-  let term_info = { sort = id_to_sort; uri = Hashtbl.create 211 } in
-  let ast = ast_of_acic1 ~output_type term_info annterm in
-  debug_print (lazy ("ast_of_acic -> " ^ NotationPp.pp_term ast));
-  ast, term_info.uri
-
 let fresh_id =
   fun () ->
     incr counter;

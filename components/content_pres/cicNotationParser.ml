@@ -582,9 +582,7 @@ EXTEND
     [ "Prop" -> `Prop
     | "Set" -> `Set
     | "Type"; SYMBOL "["; n = [ NUMBER| IDENT ]; SYMBOL "]" -> `NType n
-    | "Type" -> `Type (CicUniv.fresh ()) 
     | "CProp"; SYMBOL "["; n = [ NUMBER| IDENT ]; SYMBOL "]" -> `NCProp n
-    | "CProp" -> `CProp (CicUniv.fresh ())
     ]
   ];
   explicit_subst: [

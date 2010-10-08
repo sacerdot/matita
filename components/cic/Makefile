@@ -1,10 +1,7 @@
 PACKAGE = cic
 PREDICATES =
 
-INTERFACE_FILES = \
-	cicUniv.mli		\
-	cicUtil.mli		\
-	cicPp.mli
+INTERFACE_FILES =
 IMPLEMENTATION_FILES = \
 	cic.ml $(INTERFACE_FILES:%.mli=%.ml)
 EXTRA_OBJECTS_TO_INSTALL = cic.ml cic.cmi

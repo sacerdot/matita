@@ -48,8 +48,6 @@ type implicit_annotation = [ `Closed | `Type | `Hole ]
 type sort =
    Prop
  | Set
- | Type of CicUniv.universe
- | CProp of CicUniv.universe
 
 type name =
  | Name of string
@@ -220,10 +218,6 @@ and annhypothesis =
 
 and anncontext = annhypothesis list
 ;;
-
-type lazy_term =
- context -> metasenv -> CicUniv.universe_graph ->
-  term * metasenv * CicUniv.universe_graph
 
 type anntarget =
    Object of annobj         (* if annobj is a Constant, this is its type *)

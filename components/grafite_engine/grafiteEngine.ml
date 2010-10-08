@@ -30,7 +30,7 @@ exception Drop
 exception IncludedFileNotCompiled of string * string 
 exception Macro of
  GrafiteAst.loc *
-  (Cic.context -> GrafiteTypes.status * (Cic.term,Cic.lazy_term) GrafiteAst.macro)
+  (Cic.context -> GrafiteTypes.status * (Cic.term,unit) GrafiteAst.macro)
 exception NMacro of GrafiteAst.loc * GrafiteAst.nmacro
 
 type 'a disambiguator_input = string * int * 'a
@@ -57,7 +57,7 @@ type eval_ast =
   disambiguate_macro:
    (GrafiteTypes.status ->
     (('term,'lazy_term) GrafiteAst.macro) disambiguator_input ->
-    Cic.context -> GrafiteTypes.status * (Cic.term,Cic.lazy_term) GrafiteAst.macro) ->
+    Cic.context -> GrafiteTypes.status * (Cic.term,unit) GrafiteAst.macro) ->
 
   ?do_heavy_checks:bool ->
   GrafiteTypes.status ->
@@ -97,7 +97,7 @@ type 'a eval_executable =
   disambiguate_macro:
    (GrafiteTypes.status ->
     (('term,'lazy_term) GrafiteAst.macro) disambiguator_input ->
-    Cic.context -> GrafiteTypes.status * (Cic.term,Cic.lazy_term) GrafiteAst.macro) ->
+    Cic.context -> GrafiteTypes.status * (Cic.term,unit) GrafiteAst.macro) ->
 
   options ->
   GrafiteTypes.status ->
@@ -108,10 +108,6 @@ type 'a eval_executable =
 type 'a eval_from_moo =
  { efm_go: GrafiteTypes.status -> string -> GrafiteTypes.status }
       
-let coercion_moo_statement_of (uri,arity, saturations,_) =
-  GrafiteAst.Coercion
-   (HExtlib.dummy_floc, CicUtil.term_of_uri uri, false, arity, saturations)
-
 let basic_eval_unification_hint (t,n) status =
  NCicUnifHint.add_user_provided_hint status t n
 ;;

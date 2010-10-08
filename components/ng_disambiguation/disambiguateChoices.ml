@@ -88,11 +88,3 @@ let lookup_symbol_by_dsc ~mk_appl ~mk_implicit ~term_of_uri ~term_of_nref symbol
       (List.find (fun (dsc', _, _) -> dsc = dsc') interpretations)
   with Interpretations.Interpretation_not_found | Not_found ->
     raise (Choice_not_found (lazy (sprintf "Symbol %s, dsc %s" symbol dsc)))
-
-let cic_lookup_symbol_by_dsc = lookup_symbol_by_dsc
-  ~mk_implicit:(function 
-     | true -> Cic.Implicit (Some `Type)
-     | false -> Cic.Implicit None)
-  ~mk_appl:(function (Cic.Appl l)::tl -> Cic.Appl (l@tl) | l -> Cic.Appl l)
-  ~term_of_uri:CicUtil.term_of_uri ~term_of_nref:(fun _ -> assert false)
-;;

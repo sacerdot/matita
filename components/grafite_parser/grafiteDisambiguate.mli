@@ -30,10 +30,6 @@ type tactic =
   NotationPt.term GrafiteAst.reduction, string) 
    GrafiteAst.tactic
 
-type lazy_tactic = 
-  (Cic.term, Cic.lazy_term, Cic.lazy_term GrafiteAst.reduction, string) 
-    GrafiteAst.tactic
-
 val disambiguate_command: 
  LexiconEngine.status as 'status ->
  ?baseuri:string ->

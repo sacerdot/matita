@@ -29,8 +29,7 @@
 
 type binder_kind = [ `Lambda | `Pi | `Exists | `Forall ]
 type induction_kind = [ `Inductive | `CoInductive ]
-type sort_kind = [ `Prop | `Set | `Type of CicUniv.universe | `CProp of
-CicUniv.universe | `NType of string |`NCProp of string]
+type sort_kind = [ `Prop | `Set | `NType of string |`NCProp of string]
 type fold_kind = [ `Left | `Right ]
 
 type location = Stdpp.location

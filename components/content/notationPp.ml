@@ -154,8 +154,6 @@ let rec pp_term ?(pp_parens = true) t =
     | Ast.Num (num, _) -> num
     | Ast.Sort `Set -> "Set"
     | Ast.Sort `Prop -> "Prop"
-    | Ast.Sort (`Type _) -> "Type"
-    | Ast.Sort (`CProp _)-> "CProp"
     | Ast.Sort (`NType s)-> "Type[" ^ s ^ "]"
     | Ast.Sort (`NCProp s)-> "CProp[" ^ s ^ "]"
     | Ast.Symbol (name, _) -> "'" ^ name
