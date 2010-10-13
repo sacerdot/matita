@@ -94,13 +94,14 @@ let process_stream istream =
               | statement ->
                   prerr_endline
                    ("Unsupported statement: " ^
-                     GrafiteAstPp.pp_statement
+                     GrafiteAstPp.pp_statement statement
                       ~map_unicode_to_tex:(Helm_registry.get_bool
-                        "matita.paste_unicode_as_tex")
+                        "matita.paste_unicode_as_tex"))
+(*
                       ~term_pp:NotationPp.pp_term
                       ~lazy_term_pp:(fun _ -> "_lazy_term_here_")
                       ~obj_pp:(fun _ -> "_obj_here_")
-                      statement)
+                      statement)*)
         with
         | End_of_file -> raise End_of_file
         | HExtlib.Localized (floc,CicNotationParser.Parse_error msg) ->

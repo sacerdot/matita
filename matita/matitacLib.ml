@@ -34,11 +34,8 @@ exception AttemptToInsertAnAlias of LexiconEngine.status
 let slash_n_RE = Pcre.regexp "\\n" ;;
 
 let pp_ast_statement grafite_status stm =
-  let stm = GrafiteAstPp.pp_statement
+  let stm = GrafiteAstPp.pp_statement stm
     ~map_unicode_to_tex:(Helm_registry.get_bool "matita.paste_unicode_as_tex")
-    ~term_pp:NotationPp.pp_term
-    ~lazy_term_pp:NotationPp.pp_term ~obj_pp:(NotationPp.pp_obj
-    NotationPp.pp_term) stm
   in
   let stm = Pcre.replace ~rex:slash_n_RE stm in
   let stm =
@@ -59,18 +56,16 @@ let dump f =
    let floc = H.dummy_floc in
    let nl_ast = G.Comment (floc, G.Note (floc, "")) in
    let pp_statement stm =
-     GrafiteAstPp.pp_statement ~term_pp:NotationPp.pp_term
+     GrafiteAstPp.pp_statement stm        
        ~map_unicode_to_tex:(Helm_registry.get_bool
          "matita.paste_unicode_as_tex")
-       ~lazy_term_pp:NotationPp.pp_term 
-       ~obj_pp:(NotationPp.pp_obj NotationPp.pp_term) stm
    in
    let pp_lexicon = LexiconAstPp.pp_command in
    let och = open_out f in
    let nl () =  output_string och (pp_statement nl_ast) in
    MatitaMisc.out_preamble och;
    let grafite_parser_cb = function
-      | G.Executable (loc, G.Command (_, G.Include (_, false, _, _))) -> ()
+      | G.Executable (loc, G.Command (_, G.Include (_,_))) -> ()
       | stm ->
          output_string och (pp_statement stm); nl (); nl ()
    in

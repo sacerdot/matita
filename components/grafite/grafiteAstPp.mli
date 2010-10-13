@@ -23,53 +23,9 @@
  * http://helm.cs.unibo.it/
  *)
 
-val pp_tactic:
-  map_unicode_to_tex:bool ->
-  term_pp:('term -> string) ->
-  lazy_term_pp:('lazy_term -> string) ->
-  ('term, 'lazy_term, 'term GrafiteAst.reduction, string)
-  GrafiteAst.tactic ->
-    string
-
-val pp_tactic_pattern:
-  map_unicode_to_tex:bool ->
-  term_pp:('term -> string) ->
-  lazy_term_pp:('lazy_term -> string) ->
-  ('term, 'lazy_term, string) GrafiteAst.pattern ->
-    string
-
-val pp_reduction_kind:
-  term_pp:('a -> string) ->
-  'a GrafiteAst.reduction ->
-    string
-
 val pp_command: GrafiteAst.command -> string
-val pp_comment:
-  map_unicode_to_tex:bool ->
-  term_pp:('term -> string) ->
-  lazy_term_pp:('lazy_term -> string) ->
-  obj_pp:('obj -> string) ->
-  ('term, 'lazy_term, 'term GrafiteAst.reduction, 'obj, string)
-  GrafiteAst.comment ->
-    string
+val pp_comment: map_unicode_to_tex:bool -> GrafiteAst.comment -> string
 
-val pp_executable:
-  map_unicode_to_tex:bool ->
-  term_pp:('term -> string) ->
-  lazy_term_pp:('lazy_term -> string) ->
-  obj_pp:('obj -> string) ->
-  ('term, 'lazy_term, 'term GrafiteAst.reduction, 'obj, string)
-  GrafiteAst.code ->
-    string
+val pp_executable: map_unicode_to_tex:bool -> GrafiteAst.code -> string
 
-val pp_statement:
-  term_pp:('term -> string) ->
-  lazy_term_pp:('lazy_term -> string) ->
-  obj_pp:('obj -> string) ->
-  ('term, 'lazy_term, 'term GrafiteAst.reduction, 'obj, string)
-  GrafiteAst.statement ->
-  map_unicode_to_tex:bool ->
-    string
-
-val pp_punctuation_tactical: GrafiteAst.punctuation_tactical -> string
-
+val pp_statement: GrafiteAst.statement -> map_unicode_to_tex:bool -> string

@@ -27,10 +27,11 @@
 
 exception BaseUriNotSetYet
 
+(*
 type tactic = 
  (NotationPt.term, NotationPt.term, 
   NotationPt.term GrafiteAst.reduction, string) 
-   GrafiteAst.tactic
+   GrafiteAst.tactic *)
    
 let singleton msg = function
   | [x], _ -> x
@@ -211,9 +212,9 @@ let disambiguate_nobj estatus ?baseuri (text,prefix_len,obj) =
   let estatus = LexiconEngine.set_proof_aliases estatus diff in
    estatus, cic
 ;;
+
 let disambiguate_command estatus ?baseuri (text,prefix_len,cmd)=
   match cmd with
-   | GrafiteAst.Drop _
    | GrafiteAst.Include _
    | GrafiteAst.Print _
    | GrafiteAst.Set _ as cmd ->

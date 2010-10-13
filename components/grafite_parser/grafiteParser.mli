@@ -27,11 +27,7 @@ type 'a localized_option =
    LSome of 'a
  | LNone of GrafiteAst.loc
 
-type ast_statement =
-  (NotationPt.term, NotationPt.term,
-   NotationPt.term GrafiteAst.reduction, 
-   NotationPt.term NotationPt.obj, string)
-    GrafiteAst.statement
+type ast_statement = GrafiteAst.statement
 
 exception NoInclusionPerformed of string (* full path *)
 

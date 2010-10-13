@@ -198,22 +198,6 @@ let make_script_name st script name =
    let ext = if script.is_ma then ".ma" else ".mma" in
    Filename.concat st.output_path (name ^ ext)
 
-let get_iparams st name =
-   let debug debug = GA.IPDebug debug in
-   let map = function
-      | "comments"   -> GA.IPComments
-      | "nodefaults" -> GA.IPNoDefaults
-      | "coercions"  -> GA.IPCoercions
-      | "cr"         -> GA.IPCR
-      | s            -> 
-	 try Scanf.sscanf s "debug-%u" debug with
-	    | Scanf.Scan_failure _
-	    | Failure _
-	    | End_of_file ->
-	       failwith ("unknown inline parameter: " ^ s)
-   in
-   List.map map (X.list_assoc_all name st.iparams) 
-
 let commit st name =
    let i = get_index st name in
    let script = st.scripts.(i) in
@@ -241,20 +225,14 @@ let produce st =
       let in_base_uri = Filename.concat st.input_base_uri name in
       let out_base_uri = Filename.concat st.output_base_uri name in
       let filter path = function
-         | T.Inline (b, k, obj, p, f, params)   -> 
+         | T.Inline (b, k, obj, p, f)   -> 
 	    let obj, p = 
 	       if b then Filename.concat (make_path path) obj, make_prefix path
 	       else obj, p
 	    in
 	    let ext = G.string_of_inline_kind k in
 	    let s = Filename.concat in_base_uri (obj ^ ext) in
-	    let params = 
-	       params @
-	       get_iparams st "*" @
-	       get_iparams st ("*" ^ ext) @
-	       get_iparams st (Filename.concat name obj)
-	    in
-	    path, Some (T.Inline (b, k, s, p, f, params))
+	    path, Some (T.Inline (b, k, s, p, f))
 	 | T.Include (moo, s)           ->
 	    begin 
 	       try path, Some (T.Include (moo, List.assoc s st.requires))

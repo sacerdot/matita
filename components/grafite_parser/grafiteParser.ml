@@ -36,8 +36,7 @@ type 'a localized_option =
    LSome of 'a
  | LNone of G.loc
 
-type ast_statement =
-  (N.term, N.term, N.term G.reduction, N.term N.obj, string) G.statement
+type ast_statement = G.statement
 
 type 'status statement =
   ?never_include:bool -> 
@@ -101,6 +100,7 @@ let nmk_rec_corec ind_kind defs loc =
  let loc,t = mk_rec_corec ind_kind defs loc in
   G.NObj (loc,t)
 
+(*
 let npunct_of_punct = function
   | G.Branch loc -> G.NBranch loc
   | G.Shift loc -> G.NShift loc
@@ -109,21 +109,14 @@ let npunct_of_punct = function
   | G.Merge loc -> G.NMerge loc
   | G.Semicolon loc -> G.NSemicolon loc
   | G.Dot loc -> G.NDot loc
-;;
+;; 
+
 let nnon_punct_of_punct = function
   | G.Skip loc -> G.NSkip loc
   | G.Unfocus loc -> G.NUnfocus loc
   | G.Focus (loc,l) -> G.NFocus (loc,l)
-;;
-let npunct_of_punct = function
-  | G.Branch loc -> G.NBranch loc
-  | G.Shift loc -> G.NShift loc
-  | G.Pos (loc, i) -> G.NPos (loc, i)
-  | G.Wildcard loc -> G.NWildcard loc
-  | G.Merge loc -> G.NMerge loc
-  | G.Semicolon loc -> G.NSemicolon loc
-  | G.Dot loc -> G.NDot loc
-;;
+;; *)
+
 let cons_ntac t p = 
   match t with
   | G.NTactic(loc,[t]) -> G.NTactic(loc,[t;p])
@@ -322,6 +315,7 @@ EXTEND
     | SYMBOL "*"; n=IDENT -> G.NTactic(loc,[ G.NCase1 (loc,n)])
     ]
   ];
+(*
   tactic: [
     [ IDENT "absurd"; t = tactic_term ->
         G.Absurd (loc, t)
@@ -444,7 +438,7 @@ EXTEND
     | IDENT "symmetry" ->
         G.Symmetry loc
     | IDENT "transitivity"; t = tactic_term ->
-        G.Transitivity (loc, t)
+        G.Transitivity (loc, t) 
      (* Produzioni Aggiunte *)
     | IDENT "assume" ; id = IDENT ; SYMBOL ":" ; t = tactic_term ->
         G.Assume (loc, id, t)
@@ -512,9 +506,9 @@ EXTEND
        | IDENT "proof" -> `Proof
        | params = auto_params -> `Auto params];
       cont = rewriting_step_continuation ->
-       G.RewritingStep(loc, None, t1, t2, cont)
-  ]
-];
+       G.RewritingStep(loc, None, t1, t2, cont) 
+  ] 
+]; *)
   auto_fixed_param: [
    [ IDENT "demod"
    | IDENT "fast_paramod"
@@ -549,6 +543,7 @@ EXTEND
    ]
 ];
 
+(*
   inline_params:[
    [ params = LIST0 
       [ IDENT "prefix"; SYMBOL "="; prefix = QSTRING -> G.IPPrefix prefix  
@@ -563,7 +558,7 @@ EXTEND
       | IDENT "cr" -> G.IPCR
       ] -> params
    ]
-];
+];*)
   by_continuation: [
     [ WEPROVED; ty = tactic_term ; LPAREN ; id = IDENT ; RPAREN ; t1 = OPT [IDENT "that" ; IDENT "is" ; IDENT "equivalent" ; "to" ; t2 = tactic_term -> t2] -> BYC_weproved (ty,Some id,t1)
     | WEPROVED; ty = tactic_term ; t1 = OPT [IDENT "that" ; IDENT "is" ; IDENT "equivalent" ; "to" ; t2 = tactic_term -> t2] ; 
@@ -581,6 +576,7 @@ EXTEND
     | -> false
     ]
 ];
+(*
   atomic_tactical:
     [ "sequence" LEFTA
       [ t1 = SELF; SYMBOL ";"; t2 = SELF ->
@@ -614,6 +610,7 @@ EXTEND
       | tac = tactic -> tac
         ]
       ];
+*)
   npunctuation_tactical:
     [
       [ SYMBOL "[" -> G.NBranch loc
@@ -626,6 +623,7 @@ EXTEND
       | SYMBOL "." -> G.NDot loc
       ]
     ];
+(*
   punctuation_tactical:
     [
       [ SYMBOL "[" -> G.Branch loc
@@ -642,6 +640,14 @@ EXTEND
       [ IDENT "focus"; goals = LIST1 int -> G.Focus (loc, goals)
       | IDENT "unfocus" -> G.Unfocus loc
       | IDENT "skip" -> G.Skip loc
+      ]
+      ];
+*)
+  nnon_punctuation_tactical:
+    [ "simple" NONA
+      [ IDENT "focus"; goals = LIST1 int -> G.NFocus (loc, goals)
+      | IDENT "unfocus" -> G.NUnfocus loc
+      | IDENT "skip" -> G.NSkip loc
       ]
       ];
   ntheorem_flavour: [
@@ -873,12 +879,6 @@ EXTEND
           List.map (fun a,b -> NUri.uri_of_string a, NUri.uri_of_string b) m)
   ]];
 
-  grafite_command: [ [
-      IDENT "set"; n = QSTRING; v = QSTRING ->
-        G.Set (loc, n, v)
-    | IDENT "drop" -> G.Drop loc
-    | IDENT "print"; s = IDENT -> G.Print (loc,s)
-  ]];
   lexicon_command: [ [
       IDENT "alias" ; spec = alias_spec ->
         L.Alias (loc, spec)
@@ -889,28 +889,24 @@ EXTEND
         L.Interpretation (loc, id, (symbol, args), l3)
   ]];
   executable: [
-    [ cmd = grafite_command; SYMBOL "." -> G.Command (loc, cmd)
-    | ncmd = grafite_ncommand; SYMBOL "." -> G.NCommand (loc, ncmd)
-    | tac = atomic_tactical LEVEL "loops"; punct = punctuation_tactical ->
-        G.Tactic (loc, Some tac, punct)
-    | punct = punctuation_tactical -> G.Tactic (loc, None, punct)
+    [ ncmd = grafite_ncommand; SYMBOL "." -> G.NCommand (loc, ncmd)
+(*    | tac = atomic_tactical LEVEL "loops"; punct = punctuation_tactical ->
+        G.Tactic (loc, Some tac, punct) *)
+(*    | punct = punctuation_tactical -> G.Tactic (loc, None, punct) *)
     | tac = ntactic; OPT [ SYMBOL "#" ; SYMBOL "#" ] ; 
-      punct = punctuation_tactical ->
-        cons_ntac tac (npunct_of_punct punct)
+      punct = npunctuation_tactical -> cons_ntac tac punct
 (*
     | tac = ntactic; punct = punctuation_tactical ->
         cons_ntac tac (npunct_of_punct punct)
 *)
     | SYMBOL "#" ; SYMBOL "#" ; punct = npunctuation_tactical ->
         G.NTactic (loc, [punct])
-    | tac = non_punctuation_tactical; punct = punctuation_tactical ->
-        G.NonPunctuationTactical (loc, tac, punct)
-    | SYMBOL "#" ; SYMBOL "#" ; tac = non_punctuation_tactical; 
-        SYMBOL "#" ; SYMBOL "#" ; punct = punctuation_tactical ->
-          G.NTactic (loc, [nnon_punct_of_punct tac; npunct_of_punct punct])
-    | SYMBOL "#" ; SYMBOL "#" ; tac = non_punctuation_tactical; 
-        punct = punctuation_tactical ->
-          G.NTactic (loc, [nnon_punct_of_punct tac; npunct_of_punct punct])
+    | SYMBOL "#" ; SYMBOL "#" ; tac = nnon_punctuation_tactical; 
+        SYMBOL "#" ; SYMBOL "#" ; punct = npunctuation_tactical ->
+          G.NTactic (loc, [tac; punct])
+    | SYMBOL "#" ; SYMBOL "#" ; tac = nnon_punctuation_tactical; 
+        punct = npunctuation_tactical ->
+          G.NTactic (loc, [tac; punct])
     ]
   ];
   comment: [
@@ -940,13 +936,13 @@ EXTEND
          begin
 	  let stm =
 	   G.Executable
-            (loc, G.Command (loc, G.Include (iloc,normal,`OldAndNew,fname))) in
+            (loc, G.Command (loc, G.Include (iloc,fname))) in
           !grafite_callback stm;
 	  let status =
            LE.eval_command status (L.Include (iloc,buri,mode,fullpath)) in
           let stm =
 	   G.Executable
-            (loc,G.Command (loc,G.Include (iloc,normal,`OldAndNew,buri)))
+            (loc,G.Command (loc,G.Include (iloc,buri)))
 	  in
 	   status, LSome stm
          end

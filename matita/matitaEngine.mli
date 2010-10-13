@@ -27,9 +27,7 @@ val eval_ast :
   ?do_heavy_checks:bool ->
   GrafiteTypes.status ->
   string * int *
-  ((NotationPt.term, NotationPt.term,
-   NotationPt.term GrafiteAst.reduction, NotationPt.term NotationPt.obj, string)
-   GrafiteAst.statement) ->
+  GrafiteAst.statement ->
   (GrafiteTypes.status *
    (DisambiguateTypes.domain_item * LexiconAst.alias_spec) option) list
 
@@ -49,9 +47,6 @@ val eval_from_stream :
   ?watch_statuses:(GrafiteTypes.status -> unit) ->
   GrafiteTypes.status ->
   Ulexing.lexbuf ->
-  (GrafiteTypes.status ->
-   (NotationPt.term, NotationPt.term,
-    NotationPt.term GrafiteAst.reduction, NotationPt.term NotationPt.obj, string)
-   GrafiteAst.statement -> unit) ->
+  (GrafiteTypes.status -> GrafiteAst.statement -> unit) ->
   (GrafiteTypes.status *
    (DisambiguateTypes.domain_item * LexiconAst.alias_spec) option) list

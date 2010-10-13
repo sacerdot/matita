@@ -65,14 +65,14 @@ let out_command och cmd =
    let term_pp = NP.pp_term in
    let lazy_term_pp = NP.pp_term in
    let obj_pp = NP.pp_obj NP.pp_term in
-   let s = GP.pp_statement ~map_unicode_to_tex:false ~term_pp ~lazy_term_pp ~obj_pp cmd in
+   let s = GP.pp_statement cmd ~map_unicode_to_tex:false in
    Printf.fprintf och "%s\n\n" s
 
 let command_of_obj obj =
    G.Executable (floc, G.Command (floc, obj))
 
 let require moo value =
-   command_of_obj (G.Include (floc, moo, `OldAndNew, value ^ ".ma"))
+   command_of_obj (G.Include (floc, value ^ ".ma"))
 
 let out_alias och name uri =
    Printf.fprintf och "alias id \"%s\" = \"%s\".\n\n" name uri
@@ -94,7 +94,7 @@ let commit kind och items =
          if !O.comments then out_unexported och "COERCION" (snd specs)
       | T.Notation specs        -> 
          if !O.comments then out_unexported och "NOTATION" (snd specs) (**)
-      | T.Inline (_, T.Var, src, _, _, _) ->
+      | T.Inline (_, T.Var, src, _, _) ->
          if !O.comments then out_unexported och "UNEXPORTED" src
       | T.Section specs     -> 
          if !O.comments then out_unexported och "UNEXPORTED" (trd specs)

@@ -127,7 +127,7 @@
          { out "OK" $1; [T.Verbatim $1] }
       | TH SPC id line drops
          { out "TH" $3;
-	   let a, b = mk_flavour $1 in [T.Inline (false, a, $3, "", b, [])] 
+	   let a, b = mk_flavour $1 in [T.Inline (false, a, $3, "", b)] 
 	 }
       | UNX line drops { out "UNX" $1; [T.Verbatim ($1 ^ $2 ^ $3)] }
       | PS steps       { out "PS" $2; [] }

@@ -53,8 +53,8 @@ type eval_ast =
 
   ?do_heavy_checks:bool ->
   GrafiteTypes.status ->
-  (('term, 'lazy_term, 'reduction, 'obj, 'ident) GrafiteAst.statement)
-  disambiguator_input ->
+(*  (('term, 'lazy_term, 'reduction, 'obj, 'ident) GrafiteAst.statement) *)
+  GrafiteAst.statement disambiguator_input ->
   GrafiteTypes.status * [`Old of UriManager.uri list | `New of NUri.uri list]
  }
 
@@ -73,8 +73,7 @@ type 'a eval_comment =
   disambiguate_command:
    (GrafiteTypes.status -> GrafiteAst.command disambiguator_input ->
     GrafiteTypes.status * GrafiteAst.command) -> 
-  options -> GrafiteTypes.status -> 
-    (('term,'lazy_term,'reduction_kind,'obj,'ident) GrafiteAst.comment) disambiguator_input ->
+  options -> GrafiteTypes.status -> GrafiteAst.comment disambiguator_input ->
    GrafiteTypes.status * [`Old of UriManager.uri list | `New of NUri.uri list]
  }
 
@@ -87,8 +86,7 @@ type 'a eval_executable =
     GrafiteTypes.status * GrafiteAst.command) ->
 
   options ->
-  GrafiteTypes.status ->
-  (('term, 'lazy_term, 'reduction, 'obj, 'ident) GrafiteAst.code) disambiguator_input ->
+  GrafiteTypes.status -> GrafiteAst.code disambiguator_input ->
   GrafiteTypes.status * [`Old of UriManager.uri list | `New of NUri.uri list]
  }
 
@@ -272,6 +270,7 @@ let eval_add_constraint status u1 u2 =
   status,`New []
 ;;
 
+(* Not used
 let eval_ng_punct (_text, _prefix_len, punct) =
   match punct with
   | GrafiteAst.Dot _ -> NTactics.dot_tac 
@@ -281,7 +280,7 @@ let eval_ng_punct (_text, _prefix_len, punct) =
   | GrafiteAst.Pos (_,l) -> NTactics.pos_tac l
   | GrafiteAst.Wildcard _ -> NTactics.wildcard_tac 
   | GrafiteAst.Merge _ -> NTactics.merge_tac 
-;;
+;; *)
 
 let eval_ng_tac tac =
  let rec aux f (text, prefix_len, tac) =
@@ -636,9 +635,8 @@ let rec eval_command = {ec_go = fun ~disambiguate_command opts status
  let status,cmd = disambiguate_command status (text,prefix_len,cmd) in
  let status,uris =
   match cmd with
-  | GrafiteAst.Drop loc -> raise Drop
-  | GrafiteAst.Include (loc, mode, new_or_old, baseuri) ->
-     (* Old Include command is not recursive; new one is *)
+  | GrafiteAst.Include (loc, baseuri) ->
+     (* Old Include command is not recursive; new one is 
      let status =
       if new_or_old = `OldAndNew then
        let moopath_rw, moopath_r = 
@@ -654,13 +652,13 @@ let rec eval_command = {ec_go = fun ~disambiguate_command opts status
         eval_from_moo.efm_go status moopath
       else
        status
-     in
+     in *)
       let status =
        NCicLibrary.Serializer.require ~baseuri:(NUri.uri_of_string baseuri)
         status in
       let status =
        GrafiteTypes.add_moo_content
-        [GrafiteAst.Include (loc,mode,`New,baseuri)] status
+        [GrafiteAst.Include (loc,baseuri)] status
       in
        status,`New []
   | GrafiteAst.Print (_,_) -> status,`New []

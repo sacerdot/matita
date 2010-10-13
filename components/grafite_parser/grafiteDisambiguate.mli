@@ -25,10 +25,11 @@
 
 exception BaseUriNotSetYet
 
+(*
 type tactic = 
  (NotationPt.term, NotationPt.term, 
   NotationPt.term GrafiteAst.reduction, string) 
-   GrafiteAst.tactic
+   GrafiteAst.tactic *)
 
 val disambiguate_command: 
  LexiconEngine.status as 'status ->

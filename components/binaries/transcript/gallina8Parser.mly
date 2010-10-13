@@ -37,7 +37,7 @@
 
    let mk_vars local idents =
       let kind = if local then T.Var else T.Con in
-      let map ident = T.Inline (local, kind, trim ident, "", None, []) in
+      let map ident = T.Inline (local, kind, trim ident, "", None) in
       List.map map idents
 
    let strip2 s =
@@ -65,7 +65,7 @@
         | _            -> assert false
 
    let mk_morphism ext =
-      let generate s = T.Inline (false, T.Con, ext ^ s, "", Some `Theorem, []) in
+      let generate s = T.Inline (false, T.Con, ext ^ s, "", Some `Theorem) in
       List.rev_map generate ["2"; "1"]
 
 %}
@@ -297,25 +297,25 @@
    macro_step:
       | th ident opt_lskips def xskips FS
          { out "TH" $2;
-	   [T.Inline (false, T.Con, trim $2, "", mk_flavour $1, [])]
+	   [T.Inline (false, T.Con, trim $2, "", mk_flavour $1)]
 	 }
       | th ident lskips fs just FS 
          { out "TH" $2;
-	   $5 @ [T.Inline (false, T.Con, trim $2, "", mk_flavour $1, [])]
+	   $5 @ [T.Inline (false, T.Con, trim $2, "", mk_flavour $1)]
 	 }
       | gen ident def xskips FS
          { out "TH" $2;
-	   [T.Inline (false, T.Con, trim $2, "", mk_flavour $1, [])]
+	   [T.Inline (false, T.Con, trim $2, "", mk_flavour $1)]
 	 }      
       | mor ident cn ident fs just FS
          { out "MOR" $4; $6 @ mk_morphism (trim $4)                 }
       | xlet ident opt_lskips def xskips FS
          { out "TH" $2;
-	   [T.Inline (true, T.Con, trim $2, "", mk_flavour $1, [])]
+	   [T.Inline (true, T.Con, trim $2, "", mk_flavour $1)]
 	 }
       | xlet ident lskips fs just FS 
          { out "TH" $2;
-	   $5 @ [T.Inline (true, T.Con, trim $2, "", mk_flavour $1, [])]
+	   $5 @ [T.Inline (true, T.Con, trim $2, "", mk_flavour $1)]
 	 }
       | var idents cn xskips FS
          { out "VAR" (cat $2); mk_vars true $2                      }
@@ -323,7 +323,7 @@
          { out "AX" (cat $2); mk_vars false $2                      }
       | ind ident skips FS
          { out "IND" $2;
-	   T.Inline (false, T.Ind, trim $2, "", None, []) :: snd $3
+	   T.Inline (false, T.Ind, trim $2, "", None) :: snd $3
 	 }
       | sec ident FS
          { out "SEC" $2; [T.Section (true, trim $2, $1 ^ $2)]       }

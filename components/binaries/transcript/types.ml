@@ -37,7 +37,7 @@ type prefix = string
 
 type flavour = Cic.object_flavour option
 
-type params = GrafiteAst.inline_param list
+(* type params = GrafiteAst.inline_param list *)
 
 type item = Heading of (string * int)
           | Line of string
@@ -47,7 +47,7 @@ type item = Heading of (string * int)
           | Coercion of (local * string)
 	  | Notation of (local * string)
 	  | Section of (local * string * string)
-	  | Inline of (local * inline_kind * source * prefix * flavour * params)
+	  | Inline of (local * inline_kind * source * prefix * flavour)
           | Verbatim of string
 	  | Discard of string
 

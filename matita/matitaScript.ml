@@ -124,9 +124,7 @@ let wrap_with_make include_paths (f : #LexiconEngine.status GrafiteParser.statem
       else raise (Failure ("Compiling: " ^ tgt))
 ;;
 
-let pp_eager_statement_ast =
-  GrafiteAstPp.pp_statement ~term_pp:NotationPp.pp_term
-    ~lazy_term_pp:(fun _ -> assert false) ~obj_pp:(fun _ -> assert false)
+let pp_eager_statement_ast = GrafiteAstPp.pp_statement 
 
 let eval_nmacro include_paths (buffer : GText.buffer) guistuff grafite_status user_goal unparsed_text parsed_text script mac =
   let parsed_text_length = String.length parsed_text in
