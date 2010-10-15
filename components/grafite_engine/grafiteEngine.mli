@@ -32,7 +32,7 @@ type 'a disambiguator_input = string * int * 'a
 val eval_ast :
   disambiguate_command:
    (GrafiteTypes.status ->
-    (GrafiteAst.command) disambiguator_input ->
+    GrafiteAst.command disambiguator_input ->
     GrafiteTypes.status * GrafiteAst.command) ->
 
   ?do_heavy_checks:bool ->

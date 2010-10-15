@@ -42,56 +42,6 @@ let concat_nuris uris nuris =
    | _ -> assert false
 ;;
 
-type eval_ast =
- {ea_go:
-  'term 'lazy_term 'reduction 'obj 'ident.
-
-  disambiguate_command:
-   (GrafiteTypes.status ->
-    (GrafiteAst.command) disambiguator_input ->
-    GrafiteTypes.status * GrafiteAst.command) ->
-
-  ?do_heavy_checks:bool ->
-  GrafiteTypes.status ->
-  GrafiteAst.statement disambiguator_input ->
-  GrafiteTypes.status * [`Old of UriManager.uri list | `New of NUri.uri list]
- }
-
-type 'a eval_command =
- {ec_go: 'term 'obj.
-  disambiguate_command:
-   (GrafiteTypes.status -> GrafiteAst.command disambiguator_input ->
-    GrafiteTypes.status * GrafiteAst.command) -> 
-  options -> GrafiteTypes.status -> 
-    GrafiteAst.command disambiguator_input ->
-   GrafiteTypes.status * [`Old of UriManager.uri list | `New of NUri.uri list]
- }
-
-type 'a eval_comment =
- {ecm_go: 'term 'lazy_term 'reduction_kind 'obj 'ident.
-  disambiguate_command:
-   (GrafiteTypes.status -> GrafiteAst.command disambiguator_input ->
-    GrafiteTypes.status * GrafiteAst.command) -> 
-  options -> GrafiteTypes.status -> GrafiteAst.comment disambiguator_input ->
-   GrafiteTypes.status * [`Old of UriManager.uri list | `New of NUri.uri list]
- }
-
-type 'a eval_executable =
- {ee_go: 'term 'lazy_term 'reduction 'obj 'ident.
-
-  disambiguate_command:
-   (GrafiteTypes.status ->
-    GrafiteAst.command disambiguator_input ->
-    GrafiteTypes.status * GrafiteAst.command) ->
-
-  options ->
-  GrafiteTypes.status -> GrafiteAst.code disambiguator_input ->
-  GrafiteTypes.status * [`Old of UriManager.uri list | `New of NUri.uri list]
- }
-
-type 'a eval_from_moo =
- { efm_go: GrafiteTypes.status -> string -> GrafiteTypes.status }
-      
 let basic_eval_unification_hint (t,n) status =
  NCicUnifHint.add_user_provided_hint status t n
 ;;
@@ -617,8 +567,10 @@ let rec eval_ncommand opts status (text,prefix_len,cmd) =
       eval_add_constraint status [`Type,u1] [`Type,u2]
 ;;
 
-let rec eval_command = {ec_go = fun ~disambiguate_command opts status
-(text,prefix_len,cmd) ->
+let eval_comment ~disambiguate_command opts status (text,prefix_len,c) =
+ status, `New []
+
+let rec eval_command ~disambiguate_command opts status (text,prefix_len,cmd) =
  let status,cmd = disambiguate_command status (text,prefix_len,cmd) in
  let status,uris =
   match cmd with
@@ -634,7 +586,7 @@ let rec eval_command = {ec_go = fun ~disambiguate_command opts status
          if Sys.file_exists moopath_rw then moopath_rw else
            raise (IncludedFileNotCompiled (moopath_rw,baseuri))
       in
-       eval_from_moo.efm_go status moopath
+       eval_from_moo status moopath
      in
       let status =
        NCicLibrary.Serializer.require ~baseuri:(NUri.uri_of_string baseuri)
@@ -649,8 +601,7 @@ let rec eval_command = {ec_go = fun ~disambiguate_command opts status
  in
   status,uris
 
-} and eval_executable = {ee_go = fun ~disambiguate_command
- opts status (text,prefix_len,ex) ->
+and eval_executable ~disambiguate_command opts status (text,prefix_len,ex) =
   match ex with
   | GrafiteAst.NTactic (_(*loc*), tacl) ->
       if status#ng_mode <> `ProofMode then
@@ -665,13 +616,13 @@ let rec eval_command = {ec_go = fun ~disambiguate_command opts status
        in
         status,`New []
   | GrafiteAst.Command (_, cmd) ->
-      eval_command.ec_go ~disambiguate_command opts status (text,prefix_len,cmd)
+      eval_command ~disambiguate_command opts status (text,prefix_len,cmd)
   | GrafiteAst.NCommand (_, cmd) ->
       eval_ncommand opts status (text,prefix_len,cmd)
   | GrafiteAst.NMacro (loc, macro) ->
      raise (NMacro (loc,macro))
 
-} and eval_from_moo = {efm_go = fun status fname ->
+and eval_from_moo status fname =
   let ast_of_cmd cmd =
     ("",0,GrafiteAst.Executable (HExtlib.dummy_floc,
       GrafiteAst.Command (HExtlib.dummy_floc,
@@ -682,28 +633,20 @@ let rec eval_command = {ec_go = fun ~disambiguate_command opts status
     (fun status ast -> 
       let ast = ast_of_cmd ast in
       let status,lemmas =
-       eval_ast.ea_go
-         ~disambiguate_command:(fun status (_,_,cmd) -> status,cmd)
+       eval_ast ~disambiguate_command:(fun status (_,_,cmd) -> status,cmd)
          status ast
       in
        assert (lemmas=`New []);
        status)
     status moo
-} and eval_ast = {ea_go = fun ~disambiguate_command
-?(do_heavy_checks=false) status
+
+and eval_ast ~disambiguate_command ?(do_heavy_checks=false) status
 (text,prefix_len,st)
-->
+=
   let opts = { do_heavy_checks = do_heavy_checks ; } in
   match st with
   | GrafiteAst.Executable (_,ex) ->
-     eval_executable.ee_go ~disambiguate_command
-      opts status (text,prefix_len,ex)
+     eval_executable ~disambiguate_command opts status (text,prefix_len,ex)
   | GrafiteAst.Comment (_,c) -> 
-      eval_comment.ecm_go ~disambiguate_command opts status (text,prefix_len,c) 
-} and eval_comment = { ecm_go = fun ~disambiguate_command opts status (text,prefix_len,c) -> 
-    status, `New []
-}
+      eval_comment ~disambiguate_command opts status (text,prefix_len,c) 
 ;;
-
-
-let eval_ast = eval_ast.ea_go
