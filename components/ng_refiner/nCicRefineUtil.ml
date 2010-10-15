@@ -128,12 +128,14 @@ let replace_lifting ~equality ~context ~what ~with_what ~where =
        NCic.Match (it,substaux k ctx what outt, substaux k ctx what t,
         List.map (substaux k ctx what) pl)
  in
+(*
   prerr_endline "*** replace lifting -- what:";
   List.iter (fun x -> prerr_endline (NCicPp.ppterm ~metasenv:[] ~subst:[] ~context x)) what;
   prerr_endline "\n*** replace lifting -- with what:";
   List.iter (fun x -> prerr_endline (NCicPp.ppterm ~metasenv:[] ~subst:[] ~context x)) with_what;
   prerr_endline "\n*** replace lifting -- where:";
   prerr_endline (NCicPp.ppterm ~metasenv:[] ~subst:[] ~context where);
+*)
 
   substaux 1 context what where
 ;;

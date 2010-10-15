@@ -31,10 +31,8 @@ let debug = false ;;
 let debug_print = if debug then prerr_endline else ignore ;;
 
 let disambiguate_command lexicon_status_ref grafite_status cmd =
- let baseuri = grafite_status#baseuri in
  let lexicon_status,cmd =
-  GrafiteDisambiguate.disambiguate_command ~baseuri
-   !lexicon_status_ref cmd
+  GrafiteDisambiguate.disambiguate_command !lexicon_status_ref cmd
  in
   lexicon_status_ref := lexicon_status;
   grafite_status,cmd

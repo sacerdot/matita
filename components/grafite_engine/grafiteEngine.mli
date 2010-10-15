@@ -37,7 +37,6 @@ val eval_ast :
 
   ?do_heavy_checks:bool ->
   GrafiteTypes.status ->
-  (* (('term, 'lazy_term, 'reduction, 'obj, 'ident) GrafiteAst.statement) *)
   GrafiteAst.statement disambiguator_input ->
    (* the new status and generated objects, if any *)
    GrafiteTypes.status * [`Old of UriManager.uri list | `New of NUri.uri list]

@@ -53,7 +53,6 @@ type eval_ast =
 
   ?do_heavy_checks:bool ->
   GrafiteTypes.status ->
-(*  (('term, 'lazy_term, 'reduction, 'obj, 'ident) GrafiteAst.statement) *)
   GrafiteAst.statement disambiguator_input ->
   GrafiteTypes.status * [`Old of UriManager.uri list | `New of NUri.uri list]
  }
@@ -269,18 +268,6 @@ let eval_add_constraint status u1 u2 =
  let status = status#set_dump dump in
   status,`New []
 ;;
-
-(* Not used
-let eval_ng_punct (_text, _prefix_len, punct) =
-  match punct with
-  | GrafiteAst.Dot _ -> NTactics.dot_tac 
-  | GrafiteAst.Semicolon _ -> fun x -> x
-  | GrafiteAst.Branch _ -> NTactics.branch_tac ~force:false
-  | GrafiteAst.Shift _ -> NTactics.shift_tac 
-  | GrafiteAst.Pos (_,l) -> NTactics.pos_tac l
-  | GrafiteAst.Wildcard _ -> NTactics.wildcard_tac 
-  | GrafiteAst.Merge _ -> NTactics.merge_tac 
-;; *)
 
 let eval_ng_tac tac =
  let rec aux f (text, prefix_len, tac) =
@@ -636,23 +623,19 @@ let rec eval_command = {ec_go = fun ~disambiguate_command opts status
  let status,uris =
   match cmd with
   | GrafiteAst.Include (loc, baseuri) ->
-     (* Old Include command is not recursive; new one is 
      let status =
-      if new_or_old = `OldAndNew then
-       let moopath_rw, moopath_r = 
-        LibraryMisc.obj_file_of_baseuri 
-          ~must_exist:false ~baseuri ~writable:true,
-        LibraryMisc.obj_file_of_baseuri 
-          ~must_exist:false ~baseuri ~writable:false in
-       let moopath = 
-        if Sys.file_exists moopath_r then moopath_r else
-          if Sys.file_exists moopath_rw then moopath_rw else
-            raise (IncludedFileNotCompiled (moopath_rw,baseuri))
-       in
-        eval_from_moo.efm_go status moopath
-      else
-       status
-     in *)
+      let moopath_rw, moopath_r = 
+       LibraryMisc.obj_file_of_baseuri 
+         ~must_exist:false ~baseuri ~writable:true,
+       LibraryMisc.obj_file_of_baseuri 
+         ~must_exist:false ~baseuri ~writable:false in
+      let moopath = 
+       if Sys.file_exists moopath_r then moopath_r else
+         if Sys.file_exists moopath_rw then moopath_rw else
+           raise (IncludedFileNotCompiled (moopath_rw,baseuri))
+      in
+       eval_from_moo.efm_go status moopath
+     in
       let status =
        NCicLibrary.Serializer.require ~baseuri:(NUri.uri_of_string baseuri)
         status in

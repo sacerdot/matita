@@ -25,15 +25,8 @@
 
 exception BaseUriNotSetYet
 
-(*
-type tactic = 
- (NotationPt.term, NotationPt.term, 
-  NotationPt.term GrafiteAst.reduction, string) 
-   GrafiteAst.tactic *)
-
 val disambiguate_command: 
  LexiconEngine.status as 'status ->
- ?baseuri:string ->
  GrafiteAst.command Disambiguate.disambiguator_input ->
   'status * GrafiteAst.command
 

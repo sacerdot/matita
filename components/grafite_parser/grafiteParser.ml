@@ -101,16 +101,6 @@ let nmk_rec_corec ind_kind defs loc =
   G.NObj (loc,t)
 
 (*
-let npunct_of_punct = function
-  | G.Branch loc -> G.NBranch loc
-  | G.Shift loc -> G.NShift loc
-  | G.Pos (loc, i) -> G.NPos (loc, i)
-  | G.Wildcard loc -> G.NWildcard loc
-  | G.Merge loc -> G.NMerge loc
-  | G.Semicolon loc -> G.NSemicolon loc
-  | G.Dot loc -> G.NDot loc
-;; 
-
 let nnon_punct_of_punct = function
   | G.Skip loc -> G.NSkip loc
   | G.Unfocus loc -> G.NUnfocus loc
@@ -315,200 +305,6 @@ EXTEND
     | SYMBOL "*"; n=IDENT -> G.NTactic(loc,[ G.NCase1 (loc,n)])
     ]
   ];
-(*
-  tactic: [
-    [ IDENT "absurd"; t = tactic_term ->
-        G.Absurd (loc, t)
-    | IDENT "apply"; IDENT "rule"; t = tactic_term ->
-        G.ApplyRule (loc, t)
-    | IDENT "apply"; t = tactic_term ->
-        G.Apply (loc, t)
-    | IDENT "applyP"; t = tactic_term ->
-        G.ApplyP (loc, t)
-    | IDENT "applyS"; t = tactic_term ; params = auto_params ->
-        G.ApplyS (loc, t, params)
-    | IDENT "assumption" ->
-        G.Assumption loc
-    | IDENT "autobatch";  params = auto_params ->
-        G.AutoBatch (loc,params)
-    | IDENT "cases"; what = tactic_term;
-      pattern = OPT pattern_spec;
-      specs = intros_spec ->
-        let pattern = match pattern with
-           | None         -> None, [], Some N.UserInput
-           | Some pattern -> pattern   
-        in
-        G.Cases (loc, what, pattern, specs)
-    | IDENT "clear"; ids = LIST1 IDENT ->
-        G.Clear (loc, ids)
-    | IDENT "clearbody"; id = IDENT ->
-        G.ClearBody (loc,id)
-    | IDENT "change"; what = pattern_spec; "with"; t = tactic_term ->
-        G.Change (loc, what, t)
-    | IDENT "compose"; times = OPT int; t1 = tactic_term; t2 = 
-      OPT [ "with"; t = tactic_term -> t ]; specs = intros_spec ->
-        let times = match times with None -> 1 | Some i -> i in
-        G.Compose (loc, t1, t2, times, specs)
-    | IDENT "constructor"; n = int ->
-        G.Constructor (loc, n)
-    | IDENT "contradiction" ->
-        G.Contradiction loc
-    | IDENT "cut"; t = tactic_term; ident = OPT [ "as"; id = IDENT -> id] ->
-        G.Cut (loc, ident, t)
-    | IDENT "decompose"; idents = OPT [ "as"; idents = LIST1 new_name -> idents ] ->
-        let idents = match idents with None -> [] | Some idents -> idents in
-        G.Decompose (loc, idents)
-    | IDENT "demodulate"; p = auto_params -> G.Demodulate (loc, p)
-    | IDENT "destruct"; xts = OPT [ ts = tactic_term_list1 -> ts ] ->
-        G.Destruct (loc, xts)
-    | IDENT "elim"; what = tactic_term; using = using; 
-       pattern = OPT pattern_spec;
-       ispecs = intros_spec ->
-        let pattern = match pattern with
-           | None         -> None, [], Some N.UserInput
-           | Some pattern -> pattern   
-          in
-          G.Elim (loc, what, using, pattern, ispecs)
-    | IDENT "elimType"; what = tactic_term; using = using;
-      (num, idents) = intros_spec ->
-        G.ElimType (loc, what, using, (num, idents))
-    | IDENT "exact"; t = tactic_term ->
-        G.Exact (loc, t)
-    | IDENT "exists" ->
-        G.Exists loc
-    | IDENT "fail" -> G.Fail loc
-    | IDENT "fold"; kind = reduction_kind; t = tactic_term; p = pattern_spec ->
-        let (pt,_,_) = p in
-          if pt <> None then
-            raise (HExtlib.Localized (loc, CicNotationParser.Parse_error
-              ("the pattern cannot specify the term to replace, only its"
-              ^ " paths in the hypotheses and in the conclusion")))
-       else
-         G.Fold (loc, kind, t, p)
-    | IDENT "fourier" ->
-        G.Fourier loc
-    | IDENT "fwd"; hyp = IDENT; idents = OPT [ "as"; idents = LIST1 new_name -> idents ] ->
-        let idents = match idents with None -> [] | Some idents -> idents in
-        G.FwdSimpl (loc, hyp, idents)
-    | IDENT "generalize"; p=pattern_spec; id = OPT ["as" ; id = IDENT -> id] ->
-       G.Generalize (loc,p,id)
-    | IDENT "id" -> G.IdTac loc
-    | IDENT "intro"; ident = OPT IDENT ->
-        let idents = match ident with None -> [] | Some id -> [Some id] in
-        G.Intros (loc, (Some 1, idents))
-    | IDENT "intros"; specs = intros_spec ->
-        G.Intros (loc, specs)
-    | IDENT "inversion"; t = tactic_term ->
-        G.Inversion (loc, t)
-    | IDENT "lapply"; 
-      linear = OPT [ IDENT "linear" ];
-      depth = OPT [ IDENT "depth"; SYMBOL "="; i = int -> i ];
-      what = tactic_term; 
-      to_what = OPT [ "to" ; t = tactic_term_list1 -> t ];
-      ident = OPT [ "as" ; ident = IDENT -> ident ] ->
-        let linear = match linear with None -> false | Some _ -> true in 
-        let to_what = match to_what with None -> [] | Some to_what -> to_what in
-        G.LApply (loc, linear, depth, to_what, what, ident)
-    | IDENT "left" -> G.Left loc
-    | IDENT "letin"; where = IDENT ; SYMBOL <:unicode<def>> ; t = tactic_term ->
-        G.LetIn (loc, t, where)
-    | kind = reduction_kind; p = pattern_spec ->
-        G.Reduce (loc, kind, p)
-    | IDENT "reflexivity" ->
-        G.Reflexivity loc
-    | IDENT "replace"; p = pattern_spec; "with"; t = tactic_term ->
-        G.Replace (loc, p, t)
-    | IDENT "rewrite" ; d = direction; t = tactic_term ; p = pattern_spec;
-       xnames = OPT [ "as"; n = ident_list0 -> n ] ->
-       let (pt,_,_) = p in
-        if pt <> None then
-         raise
-          (HExtlib.Localized (loc,
-           (CicNotationParser.Parse_error
-            "the pattern cannot specify the term to rewrite, only its paths in the hypotheses and in the conclusion")))
-        else
-         let n = match xnames with None -> [] | Some names -> names in 
-         G.Rewrite (loc, d, t, p, n)
-    | IDENT "right" ->
-        G.Right loc
-    | IDENT "ring" ->
-        G.Ring loc
-    | IDENT "split" ->
-        G.Split loc
-    | IDENT "symmetry" ->
-        G.Symmetry loc
-    | IDENT "transitivity"; t = tactic_term ->
-        G.Transitivity (loc, t) 
-     (* Produzioni Aggiunte *)
-    | IDENT "assume" ; id = IDENT ; SYMBOL ":" ; t = tactic_term ->
-        G.Assume (loc, id, t)
-    | IDENT "suppose" ; t = tactic_term ; LPAREN ; id = IDENT ; RPAREN ; 
-      t1 = OPT [IDENT "that" ; IDENT "is" ; IDENT "equivalent" ; "to" ; 
-                t' = tactic_term -> t']->
-        G.Suppose (loc, t, id, t1)
-    | "let" ; id1 = IDENT ; SYMBOL ":" ; t1 = tactic_term ;
-      IDENT "such" ; IDENT "that" ; t2=tactic_term ; LPAREN ; 
-      id2 = IDENT ; RPAREN -> 
-        G.ExistsElim (loc, `Auto (None,[]), id1, t1, id2, t2)
-    | just =
-       [ IDENT "using"; t=tactic_term -> `Term t
-       | params = auto_params -> `Auto params] ;
-      cont=by_continuation ->
-       (match cont with
-           BYC_done -> G.Bydone (loc, just)
-         | BYC_weproved (ty,id,t1) ->
-            G.By_just_we_proved(loc, just, ty, id, t1)
-         | BYC_letsuchthat (id1,t1,id2,t2) ->
-            G.ExistsElim (loc, just, id1, t1, id2, t2)
-         | BYC_wehaveand (id1,t1,id2,t2) ->
-            G.AndElim (loc, just, id1, t1, id2, t2))
-    | IDENT "we" ; IDENT "need" ; "to" ; IDENT "prove" ; t = tactic_term ; id = OPT [ LPAREN ; id = IDENT ; RPAREN -> id ] ; t1 = OPT [IDENT "or" ; IDENT "equivalently"; t' = tactic_term -> t']->
-        G.We_need_to_prove (loc, t, id, t1)
-    | IDENT "we" ; IDENT "proceed" ; IDENT "by" ; IDENT "cases" ; "on" ; t=tactic_term ; "to" ; IDENT "prove" ; t1=tactic_term ->  
-        G.We_proceed_by_cases_on (loc, t, t1)
-    | IDENT "we" ; IDENT "proceed" ; IDENT "by" ; IDENT "induction" ; "on" ; t=tactic_term ; "to" ; IDENT "prove" ; t1=tactic_term ->  
-        G.We_proceed_by_induction_on (loc, t, t1)
-    | IDENT "by" ; IDENT "induction" ; IDENT "hypothesis" ; IDENT "we" ; IDENT "know" ; t=tactic_term ; LPAREN ; id = IDENT ; RPAREN ->
-        G.Byinduction(loc, t, id)
-    | IDENT "the" ; IDENT "thesis" ; IDENT "becomes" ; t=tactic_term ->
-        G.Thesisbecomes(loc, t)
-    | IDENT "case" ; id = IDENT ; params=LIST0[LPAREN ; i=IDENT ;
-        SYMBOL":" ; t=tactic_term ; RPAREN -> i,t] ->
-         G.Case(loc,id,params)
-      (* DO NOT FACTORIZE with the two following, camlp5 sucks*)
-    | IDENT "conclude"; 
-      termine = tactic_term;
-      SYMBOL "=" ;
-      t1=tactic_term ;
-      t2 =
-       [ IDENT "using"; t=tactic_term -> `Term t
-       | IDENT "using"; IDENT "once"; term=tactic_term -> `SolveWith term
-       | IDENT "proof" -> `Proof
-       | params = auto_params -> `Auto params];
-      cont = rewriting_step_continuation ->
-       G.RewritingStep(loc, Some (None,termine), t1, t2, cont)
-    | IDENT "obtain" ; name = IDENT;
-      termine = tactic_term;
-      SYMBOL "=" ;
-      t1=tactic_term ;
-      t2 =
-       [ IDENT "using"; t=tactic_term -> `Term t
-       | IDENT "using"; IDENT "once"; term=tactic_term -> `SolveWith term
-       | IDENT "proof" -> `Proof
-       | params = auto_params -> `Auto params];
-      cont = rewriting_step_continuation ->
-       G.RewritingStep(loc, Some (Some name,termine), t1, t2, cont)
-    | SYMBOL "=" ;
-      t1=tactic_term ;
-      t2 =
-       [ IDENT "using"; t=tactic_term -> `Term t
-       | IDENT "using"; IDENT "once"; term=tactic_term -> `SolveWith term
-       | IDENT "proof" -> `Proof
-       | params = auto_params -> `Auto params];
-      cont = rewriting_step_continuation ->
-       G.RewritingStep(loc, None, t1, t2, cont) 
-  ] 
-]; *)
   auto_fixed_param: [
    [ IDENT "demod"
    | IDENT "fast_paramod"
@@ -543,22 +339,6 @@ EXTEND
    ]
 ];
 
-(*
-  inline_params:[
-   [ params = LIST0 
-      [ IDENT "prefix"; SYMBOL "="; prefix = QSTRING -> G.IPPrefix prefix  
-      | flavour = inline_flavour -> G.IPAs flavour
-      | IDENT "coercions" -> G.IPCoercions
-      | IDENT "debug"; SYMBOL "="; debug = int -> G.IPDebug debug 
-      | IDENT "procedural" -> G.IPProcedural
-      | IDENT "nodefaults" -> G.IPNoDefaults
-      | IDENT "depth"; SYMBOL "="; depth = int -> G.IPDepth depth 
-      | IDENT "level"; SYMBOL "="; level = int -> G.IPLevel level 
-      | IDENT "comments" -> G.IPComments
-      | IDENT "cr" -> G.IPCR
-      ] -> params
-   ]
-];*)
   by_continuation: [
     [ WEPROVED; ty = tactic_term ; LPAREN ; id = IDENT ; RPAREN ; t1 = OPT [IDENT "that" ; IDENT "is" ; IDENT "equivalent" ; "to" ; t2 = tactic_term -> t2] -> BYC_weproved (ty,Some id,t1)
     | WEPROVED; ty = tactic_term ; t1 = OPT [IDENT "that" ; IDENT "is" ; IDENT "equivalent" ; "to" ; t2 = tactic_term -> t2] ; 
@@ -576,7 +356,7 @@ EXTEND
     | -> false
     ]
 ];
-(*
+(* MATITA 1.0
   atomic_tactical:
     [ "sequence" LEFTA
       [ t1 = SELF; SYMBOL ";"; t2 = SELF ->
@@ -623,26 +403,6 @@ EXTEND
       | SYMBOL "." -> G.NDot loc
       ]
     ];
-(*
-  punctuation_tactical:
-    [
-      [ SYMBOL "[" -> G.Branch loc
-      | SYMBOL "|" -> G.Shift loc
-      | i = LIST1 int SEP SYMBOL ","; SYMBOL ":" -> G.Pos (loc, i)
-      | SYMBOL "*"; SYMBOL ":" -> G.Wildcard loc
-      | SYMBOL "]" -> G.Merge loc
-      | SYMBOL ";" -> G.Semicolon loc
-      | SYMBOL "." -> G.Dot loc
-      ]
-    ];
-  non_punctuation_tactical:
-    [ "simple" NONA
-      [ IDENT "focus"; goals = LIST1 int -> G.Focus (loc, goals)
-      | IDENT "unfocus" -> G.Unfocus loc
-      | IDENT "skip" -> G.Skip loc
-      ]
-      ];
-*)
   nnon_punctuation_tactical:
     [ "simple" NONA
       [ IDENT "focus"; goals = LIST1 int -> G.NFocus (loc, goals)
@@ -890,15 +650,8 @@ EXTEND
   ]];
   executable: [
     [ ncmd = grafite_ncommand; SYMBOL "." -> G.NCommand (loc, ncmd)
-(*    | tac = atomic_tactical LEVEL "loops"; punct = punctuation_tactical ->
-        G.Tactic (loc, Some tac, punct) *)
-(*    | punct = punctuation_tactical -> G.Tactic (loc, None, punct) *)
     | tac = ntactic; OPT [ SYMBOL "#" ; SYMBOL "#" ] ; 
       punct = npunctuation_tactical -> cons_ntac tac punct
-(*
-    | tac = ntactic; punct = punctuation_tactical ->
-        cons_ntac tac (npunct_of_punct punct)
-*)
     | SYMBOL "#" ; SYMBOL "#" ; punct = npunctuation_tactical ->
         G.NTactic (loc, [punct])
     | SYMBOL "#" ; SYMBOL "#" ; tac = nnon_punctuation_tactical; 

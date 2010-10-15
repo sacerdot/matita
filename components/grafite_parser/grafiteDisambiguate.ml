@@ -27,12 +27,6 @@
 
 exception BaseUriNotSetYet
 
-(*
-type tactic = 
- (NotationPt.term, NotationPt.term, 
-  NotationPt.term GrafiteAst.reduction, string) 
-   GrafiteAst.tactic *)
-   
 let singleton msg = function
   | [x], _ -> x
   | l, _   ->
@@ -213,7 +207,7 @@ let disambiguate_nobj estatus ?baseuri (text,prefix_len,obj) =
    estatus, cic
 ;;
 
-let disambiguate_command estatus ?baseuri (text,prefix_len,cmd)=
+let disambiguate_command estatus (text,prefix_len,cmd)=
   match cmd with
    | GrafiteAst.Include _
    | GrafiteAst.Print _
