@@ -36,8 +36,6 @@ class status :
   object ('self)
    method moo_content_rev: GrafiteMarshal.moo
    method set_moo_content_rev: GrafiteMarshal.moo -> 'self
-   method objects: UriManager.uri list
-   method set_objects: UriManager.uri list -> 'self
    method baseuri: string
    method set_baseuri: string -> 'self
    method ng_mode: [`ProofMode | `CommandMode]
@@ -45,8 +43,6 @@ class status :
    (* Warning: #stack and #obj are meaningful iff #ng_mode is `ProofMode *)
    inherit NTacStatus.tac_status
   end
-
-val dump_status : status -> unit
 
   (** list is not reversed, head command will be the first emitted *)
 val add_moo_content: GrafiteMarshal.ast_command list -> status -> status

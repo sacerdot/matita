@@ -164,7 +164,8 @@ let compile atstart options fname =
       BuildTimeConf.core_notation_script 
   in
   atstart (); (* FG: do not invoke before loading the core notation script *)  
-  let grafite_status = GrafiteSync.init lexicon_status baseuri in
+  let grafite_status =
+   (new GrafiteTypes.status baseuri)#set_lstatus lexicon_status#lstatus in
   let big_bang = Unix.gettimeofday () in
   let { Unix.tms_utime = big_bang_u ; Unix.tms_stime = big_bang_s} = 
     Unix.times () 
@@ -333,16 +334,13 @@ module F =
       let matita_debug = Helm_registry.get_bool "matita.debug" in
       let compile atstart opts fname =
         try
-          GrafiteSync.push ();
           GrafiteParser.push ();
           let rc = compile atstart opts fname in
           GrafiteParser.pop ();
-          GrafiteSync.pop ();
           rc
         with 
         | Sys.Break ->
             GrafiteParser.pop ();
-            GrafiteSync.pop ();
             false
         | exn when not matita_debug ->
             HLog.error ("Unexpected " ^ snd(MatitaExcPp.to_string exn));

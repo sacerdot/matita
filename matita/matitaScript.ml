@@ -284,7 +284,8 @@ let initial_statuses current baseuri =
  (match current with
      Some current ->
       LexiconSync.time_travel ~present:current ~past:empty_lstatus;
-      GrafiteSync.time_travel ~present:current ();
+      NCicLibrary.time_travel
+       ((new GrafiteTypes.status current#baseuri)#set_lstatus current#lstatus);
       (* CSC: there is a known bug in invalidation; temporary fix here *)
       NCicEnvironment.invalidate ()
    | None -> ());
@@ -292,7 +293,7 @@ let initial_statuses current baseuri =
    CicNotation2.load_notation ~include_paths:[] empty_lstatus
      BuildTimeConf.core_notation_script 
  in
- let grafite_status = GrafiteSync.init lexicon_status baseuri in
+ let grafite_status = (new GrafiteTypes.status baseuri)#set_lstatus lexicon_status#lstatus in
   grafite_status
 in
 let read_include_paths file =
@@ -428,7 +429,8 @@ object (self)
     match history with s::_ -> s | [] -> assert false
    in
     LexiconSync.time_travel ~present:cur_grafite_status ~past:grafite_status;
-    GrafiteSync.time_travel ~present:cur_grafite_status ~past:grafite_status ();
+    NCicLibrary.time_travel
+     ((new GrafiteTypes.status cur_grafite_status#baseuri)#set_lstatus cur_grafite_status#lstatus);
     statements <- new_statements;
     history <- new_history;
     self#moveMark (- offset)

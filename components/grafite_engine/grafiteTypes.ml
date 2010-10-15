@@ -38,13 +38,10 @@ class status = fun (b : string) ->
  in
   object
    val moo_content_rev = ([] : GrafiteMarshal.moo)
-   val objects = ([] : UriManager.uri list)
    val baseuri = b
    val ng_mode = (`CommandMode : [`CommandMode | `ProofMode])
    method moo_content_rev = moo_content_rev
    method set_moo_content_rev v = {< moo_content_rev = v >}
-   method objects = objects
-   method set_objects v = {< objects = v >}
    method baseuri = baseuri
    method set_baseuri v = {< baseuri = v >}
    method ng_mode = ng_mode;
@@ -59,12 +56,3 @@ let add_moo_content cmds status =
 (*   prerr_endline ("new moo content: " ^ String.concat " " (List.map
     GrafiteAstPp.pp_command content')); *)
    status#set_moo_content_rev content'
-
-let dump_status status = 
-  HLog.message "status.aliases:\n";
-  HLog.message "status.proof_status:"; 
-  HLog.message "status.options\n";
-  HLog.message "status.coercions\n";
-  HLog.message "status.objects:\n";
-  List.iter 
-    (fun u -> HLog.message (UriManager.string_of_uri u)) status#objects 

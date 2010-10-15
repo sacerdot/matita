@@ -3,7 +3,6 @@ PREDICATES =
 
 INTERFACE_FILES = \
 	grafiteTypes.mli \
-	grafiteSync.mli \
 	nCicCoercDeclaration.mli \
 	grafiteEngine.mli \
 	$(NULL)
