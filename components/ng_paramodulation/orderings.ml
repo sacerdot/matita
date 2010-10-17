@@ -40,7 +40,8 @@ let rec eq_foterm f x y =
     match x, y with
     | Terms.Leaf t1, Terms.Leaf t2 -> f t1 t2
     | Terms.Var i, Terms.Var j -> i = j
-    | Terms.Node l1, Terms.Node l2 -> List.for_all2 (eq_foterm f) l1 l2
+    | Terms.Node l1, Terms.Node l2 when List.length l1 = List.length l2 -> 
+        List.for_all2 (eq_foterm f) l1 l2
     | _ -> false
 ;;
   

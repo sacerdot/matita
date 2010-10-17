@@ -259,16 +259,16 @@ and restrict metasenv subst i (restrictions as orig) =
     | NCicUtils.Meta_not_found _ -> assert false
 ;;
 
-let rec flexible_arg context subst = function 
+let rec is_flexible context ~subst = function 
   | NCic.Meta (i,_) ->
       (try 
         let _,_,t,_ = List.assoc i subst in
-        flexible_arg context subst t
+        is_flexible context ~subst t
       with Not_found -> true)
   | NCic.Appl (NCic.Meta (i,_) :: args)-> 
       (try 
         let _,_,t,_ = List.assoc i subst in
-        flexible_arg context subst 
+        is_flexible context ~subst 
           (NCicReduction.head_beta_reduce ~delta:max_int 
             (NCic.Appl (t :: args)))
       with Not_found -> true)
@@ -283,7 +283,7 @@ let rec flexible_arg context subst = function
          match List.nth context (i-1)
          with 
          | _,NCic.Def (bo,_) ->
-               flexible_arg context subst
+               is_flexible context ~subst
                  (NCicSubstitution.lift i bo)
          | _ -> false
       with 
@@ -332,11 +332,11 @@ let delift ~unify metasenv subst context n l t =
     match l with
     | _, NCic.Irl _ -> fun _ _ _ _ _ -> None
     | shift, NCic.Ctx l -> fun metasenv subst context k t ->
-       if flexible_arg context subst t || contains_in_scope subst t then None else
+       if is_flexible context ~subst t || contains_in_scope subst t then None else
          let lb = 
            List.map (fun t -> 
             let t = NCicSubstitution.lift (k+shift) t in
-            t, flexible_arg context subst t) 
+            t, is_flexible context ~subst t) 
            l 
          in
          HExtlib.list_findopt
@@ -349,9 +349,6 @@ let delift ~unify metasenv subst context n l t =
           lb
   in
   let rec aux (context,k,in_scope) (metasenv, subst as ms) t = 
-   (* XXX if t is closed, we should just terminate. Speeds up hints! *)
-   if NCicUntrusted.looks_closed t then ms, t
-   else 
    match unify_list in_scope metasenv subst context k t with
    | Some x -> x
    | None -> 

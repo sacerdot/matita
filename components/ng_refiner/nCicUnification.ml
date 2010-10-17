@@ -566,24 +566,58 @@ and unify rdb test_eq_only metasenv subst context t1 t2 swap =
           instantiate rdb test_eq_only metasenv subst context n lc 
            (NCicReduction.head_beta_reduce ~subst t) (not swap)
 
+       (* higher order unification case *)
        | NCic.Appl (NCic.Meta (i,l) as meta :: args), _ ->
-          let metasenv, lambda_Mj =
-            lambda_intros rdb metasenv subst context (List.length args)
-             (NCicTypeChecker.typeof ~metasenv ~subst context meta)
-          in
-          let metasenv, subst = 
-           unify rdb test_eq_only metasenv subst context 
-            (C.Meta (i,l)) lambda_Mj swap
-          in
-          let metasenv, subst = 
-            unify rdb test_eq_only metasenv subst context t1 t2 swap
-          in
-          (try
-            let name, ctx, term, ty = NCicUtils.lookup_subst i subst in
-            let term = eta_reduce subst term in
-            let subst = List.filter (fun (j,_) -> j <> i) subst in
-            metasenv, ((i, (name, ctx, term, ty)) :: subst)
-          with Not_found -> assert false)
+           (* this easy_case handles "(? ?) =?= (f a)", same number of 
+            * args, preferring the instantiation "f" over "\_.f a" for the
+            * metavariable in head position. Since the arguments of the meta
+            * are flexible, delift would ignore them generating a constant
+            * function even in the easy case above *)
+           let easy_case = 
+             match t2 with
+             | NCic.Appl (f :: f_args)  
+               when List.length args = List.length f_args && 
+               List.exists (NCicMetaSubst.is_flexible context ~subst) args ->
+                 (try 
+                    let metasenv, subst = 
+                      unify rdb test_eq_only metasenv subst context meta f swap
+                    in
+                    Some (List.fold_left2 
+                      (fun (m, s) t1 t2 -> 
+                        unify rdb test_eq_only m s context t1 t2 swap)
+                        (metasenv, subst) args f_args)
+                  with UnificationFailure _ | Uncertain _ | KeepReducing _ ->
+                    None) 
+             | _ -> None
+           in
+           (match easy_case with
+           | Some ms -> ms
+           | None ->
+               (* This case handles "(?_f ..ti..) =?= t2", abstracting every
+                * non flexible ti (delift skips local context items that are
+                * flexible) from t2 in two steps:
+                *  1) ?_f := \..xi.. .?
+                *  2) ?_f ..ti..  =?= t2 --unif_machines-->
+                      ?_f[..ti..] =?= t2 --instantiate-->
+                      delift [..ti..] t2 *)
+               let metasenv, lambda_Mj =
+                 lambda_intros rdb metasenv subst context (List.length args)
+                  (NCicTypeChecker.typeof ~metasenv ~subst context meta)
+               in
+               let metasenv, subst = 
+                 unify rdb test_eq_only metasenv subst context 
+                   (C.Meta (i,l)) lambda_Mj swap
+               in
+               let metasenv, subst = 
+                 unify rdb test_eq_only metasenv subst context t1 t2 swap
+               in
+               (try
+                 let name, ctx, term, ty = NCicUtils.lookup_subst i subst in
+                 let term = eta_reduce subst term in
+                 let subst = List.filter (fun (j,_) -> j <> i) subst in
+                 metasenv, ((i, (name, ctx, term, ty)) :: subst)
+               with Not_found -> assert false))
+
        | _, NCic.Appl (NCic.Meta (_,_) :: _) ->
            unify rdb test_eq_only metasenv subst context t2 t1 (not swap)
 

@@ -71,3 +71,5 @@ val pack_lc : int * NCic.lc_kind -> int * NCic.lc_kind
 
 val is_out_scope_tag : NCic.meta_attrs -> bool
 val int_of_out_scope_tag : NCic.meta_attrs -> int
+
+val is_flexible : NCic.context -> subst:NCic.substitution -> NCic.term -> bool
