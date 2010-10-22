@@ -429,8 +429,7 @@ object (self)
     match history with s::_ -> s | [] -> assert false
    in
     LexiconSync.time_travel ~present:cur_grafite_status ~past:grafite_status;
-    NCicLibrary.time_travel
-     ((new GrafiteTypes.status cur_grafite_status#baseuri)#set_lstatus cur_grafite_status#lstatus);
+    NCicLibrary.time_travel grafite_status;
     statements <- new_statements;
     history <- new_history;
     self#moveMark (- offset)
