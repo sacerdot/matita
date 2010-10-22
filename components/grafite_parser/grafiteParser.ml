@@ -107,12 +107,6 @@ let nnon_punct_of_punct = function
   | G.Focus (loc,l) -> G.NFocus (loc,l)
 ;; *)
 
-let cons_ntac t p = 
-  match t with
-  | G.NTactic(loc,[t]) -> G.NTactic(loc,[t;p])
-  | x -> x
-;;
-
 type by_continuation =
    BYC_done
  | BYC_weproved of N.term * string option * N.term option
@@ -145,11 +139,11 @@ EXTEND
     | IDENT "whd" -> `Whd ]
   ];
   nreduction_kind: [
-    [ IDENT "nnormalize" ; delta = OPT [ IDENT "nodelta" -> () ] ->
+    [ IDENT "normalize" ; delta = OPT [ IDENT "nodelta" -> () ] ->
        let delta = match delta with None -> true | _ -> false in
         `Normalize delta
     (*| IDENT "unfold"; t = OPT tactic_term -> `Unfold t*)
-    | IDENT "nwhd" ; delta = OPT [ IDENT "nodelta" -> () ] ->
+    | IDENT "whd" ; delta = OPT [ IDENT "nodelta" -> () ] ->
        let delta = match delta with None -> true | _ -> false in
         `Whd delta]
   ];
@@ -222,9 +216,10 @@ EXTEND
   ];
   using: [ [ using = OPT [ IDENT "using"; t = tactic_term -> t ] -> using ] ];
   ntactic: [
-    [ IDENT "napply"; t = tactic_term -> G.NTactic(loc,[G.NApply (loc, t)])
-    | IDENT "napplyS"; t = tactic_term -> G.NTactic(loc,[G.NSmartApply(loc, t)])
-    | IDENT "nassert";
+    [ SYMBOL "@"; t = tactic_term -> G.NTactic(loc,[G.NApply (loc, t)])
+    | IDENT "apply"; t = tactic_term -> G.NTactic(loc,[G.NApply (loc, t)])
+    | IDENT "applyS"; t = tactic_term -> G.NTactic(loc,[G.NSmartApply(loc, t)])
+    | IDENT "assert";
        seqs = LIST0 [
         hyps = LIST0
          [ id = IDENT ; SYMBOL ":" ; ty = tactic_term -> id,`Decl ty
@@ -234,7 +229,7 @@ EXTEND
         SYMBOL <:unicode<vdash>>;
         concl = tactic_term -> (List.rev hyps,concl) ] ->
          G.NTactic(loc,[G.NAssert (loc, seqs)])
-    | IDENT "nauto"; params = auto_params -> 
+    | IDENT "auto"; params = auto_params -> 
         G.NTactic(loc,[G.NAuto (loc, params)])
     | SYMBOL "/"; num = OPT NUMBER ; 
        params = nauto_params; SYMBOL "/" ; 
@@ -256,41 +251,43 @@ EXTEND
        | Some `Trace ->
 	   G.NMacro(loc,
              G.NAutoInteractive (loc, (None,["slir","";"depth",depth]@params))))
-    | IDENT "nintros" -> G.NMacro (loc, G.NIntroGuess loc)
-    | IDENT "ncheck"; t = term -> G.NMacro(loc,G.NCheck (loc,t))
+    | IDENT "intros" -> G.NMacro (loc, G.NIntroGuess loc)
+    | IDENT "check"; t = term -> G.NMacro(loc,G.NCheck (loc,t))
     | IDENT "screenshot"; fname = QSTRING -> 
         G.NMacro(loc,G.Screenshot (loc, fname))
-    | IDENT "ncases"; what = tactic_term ; where = pattern_spec ->
+    | IDENT "cases"; what = tactic_term ; where = pattern_spec ->
         G.NTactic(loc,[G.NCases (loc, what, where)])
-    | IDENT "nchange"; what = pattern_spec; "with"; with_what = tactic_term -> 
+    | IDENT "change"; what = pattern_spec; "with"; with_what = tactic_term -> 
         G.NTactic(loc,[G.NChange (loc, what, with_what)])
     | SYMBOL "@"; num = OPT NUMBER; l = LIST0 tactic_term -> 
         G.NTactic(loc,[G.NConstructor (loc, (match num with None -> None | Some x -> Some (int_of_string x)),l)])
-    | IDENT "ncut"; t = tactic_term -> G.NTactic(loc,[G.NCut (loc, t)])
-(*  | IDENT "ndiscriminate"; t = tactic_term -> G.NDiscriminate (loc, t)
-    | IDENT "nsubst"; t = tactic_term -> G.NSubst (loc, t) *)
-    | IDENT "ndestruct"; just = OPT [ dom = ident_list1 -> dom ];
+    | IDENT "cut"; t = tactic_term -> G.NTactic(loc,[G.NCut (loc, t)])
+(*  | IDENT "discriminate"; t = tactic_term -> G.NDiscriminate (loc, t)
+    | IDENT "subst"; t = tactic_term -> G.NSubst (loc, t) *)
+    | IDENT "destruct"; just = OPT [ dom = ident_list1 -> dom ];
       exclude = OPT [ IDENT "skip"; skip = ident_list1 -> skip ]
         -> let exclude' = match exclude with None -> [] | Some l -> l in
            G.NTactic(loc,[G.NDestruct (loc,just,exclude')])
-    | IDENT "nelim"; what = tactic_term ; where = pattern_spec ->
+    | IDENT "elim"; what = tactic_term ; where = pattern_spec ->
         G.NTactic(loc,[G.NElim (loc, what, where)])
-    | IDENT "ngeneralize"; p=pattern_spec ->
+    | IDENT "generalize"; p=pattern_spec ->
         G.NTactic(loc,[G.NGeneralize (loc, p)])
-    | IDENT "ninversion"; what = tactic_term ; where = pattern_spec ->
+    | IDENT "inversion"; what = tactic_term ; where = pattern_spec ->
         G.NTactic(loc,[G.NInversion (loc, what, where)])
-    | IDENT "nlapply"; t = tactic_term -> G.NTactic(loc,[G.NLApply (loc, t)])
-    | IDENT "nletin"; name = IDENT ; SYMBOL <:unicode<def>> ; t = tactic_term;
+    | IDENT "lapply"; t = tactic_term -> G.NTactic(loc,[G.NLApply (loc, t)])
+    | IDENT "letin"; name = IDENT ; SYMBOL <:unicode<def>> ; t = tactic_term;
         where = pattern_spec ->
         G.NTactic(loc,[G.NLetIn (loc,where,t,name)])
     | kind = nreduction_kind; p = pattern_spec ->
         G.NTactic(loc,[G.NReduce (loc, kind, p)])
-    | IDENT "nrewrite"; dir = direction; what = tactic_term ; where = pattern_spec ->	
+    | dir = direction; what = tactic_term ; where = pattern_spec ->	
         G.NTactic(loc,[G.NRewrite (loc, dir, what, where)])
-    | IDENT "ntry"; tac = SELF -> 
+    | IDENT "rewrite"; dir = direction; what = tactic_term ; where = pattern_spec ->	
+        G.NTactic(loc,[G.NRewrite (loc, dir, what, where)])
+    | IDENT "try"; tac = SELF -> 
         let tac = match tac with G.NTactic(_,[t]) -> t | _ -> assert false in
         G.NTactic(loc,[ G.NTry (loc,tac)])
-    | IDENT "nrepeat"; tac = SELF -> 
+    | IDENT "repeat"; tac = SELF -> 
         let tac = match tac with G.NTactic(_,[t]) -> t | _ -> assert false in
         G.NTactic(loc,[ G.NRepeat (loc,tac)])
     | LPAREN; l = LIST1 SELF; RPAREN -> 
@@ -298,8 +295,8 @@ EXTEND
           List.flatten 
             (List.map (function G.NTactic(_,t) -> t | _ -> assert false) l) in
         G.NTactic(loc,[G.NBlock (loc,l)])
-    | IDENT "nassumption" -> G.NTactic(loc,[ G.NAssumption loc])
-    | SYMBOL "#"; ns=LIST0 IDENT -> G.NTactic(loc,[ G.NIntros (loc,ns)])
+    | IDENT "assumption" -> G.NTactic(loc,[ G.NAssumption loc])
+    | SYMBOL "#"; ns=IDENT -> G.NTactic(loc,[ G.NIntros (loc,[ns])])
     | SYMBOL "#"; SYMBOL "_" -> G.NTactic(loc,[ G.NIntro (loc,"_")])
     | SYMBOL "*" -> G.NTactic(loc,[ G.NCase1 (loc,"_")])
     | SYMBOL "*"; n=IDENT -> G.NTactic(loc,[ G.NCase1 (loc,n)])
@@ -411,11 +408,11 @@ EXTEND
       ]
       ];
   ntheorem_flavour: [
-    [ [ IDENT "ndefinition"  ] -> `Definition
-    | [ IDENT "nfact"        ] -> `Fact
-    | [ IDENT "nlemma"       ] -> `Lemma
-    | [ IDENT "nremark"      ] -> `Remark
-    | [ IDENT "ntheorem"     ] -> `Theorem
+    [ [ IDENT "definition"  ] -> `Definition
+    | [ IDENT "fact"        ] -> `Fact
+    | [ IDENT "lemma"       ] -> `Lemma
+    | [ IDENT "remark"      ] -> `Remark
+    | [ IDENT "theorem"     ] -> `Theorem
     ]
   ];
   theorem_flavour: [
@@ -586,17 +583,17 @@ EXTEND
      ]];
 
   grafite_ncommand: [ [
-      IDENT "nqed" -> G.NQed loc
+      IDENT "qed" -> G.NQed loc
     | nflavour = ntheorem_flavour; name = IDENT; SYMBOL ":"; typ = term;
       body = OPT [ SYMBOL <:unicode<def>> (* ≝ *); body = term -> body ] ->
         G.NObj (loc, N.Theorem (nflavour, name, typ, body,`Regular))
     | nflavour = ntheorem_flavour; name = IDENT; SYMBOL <:unicode<def>> (* ≝ *);
       body = term ->
         G.NObj (loc, N.Theorem (nflavour, name, N.Implicit `JustOne, Some body,`Regular))
-    | IDENT "naxiom"; name = IDENT; SYMBOL ":"; typ = term ->
+    | IDENT "axiom"; name = IDENT; SYMBOL ":"; typ = term ->
         G.NObj (loc, N.Theorem (`Axiom, name, typ, None, `Regular))
-    | IDENT "ndiscriminator" ; indty = tactic_term -> G.NDiscriminator (loc,indty)
-    | IDENT "ninverter"; name = IDENT; IDENT "for" ; indty = tactic_term ;
+    | IDENT "discriminator" ; indty = tactic_term -> G.NDiscriminator (loc,indty)
+    | IDENT "inverter"; name = IDENT; IDENT "for" ; indty = tactic_term ;
       paramspec = OPT inverter_param_list ; 
       outsort = OPT [ SYMBOL ":" ; outsort = term -> outsort ] -> 
         G.NInverter (loc,name,indty,paramspec,outsort)
@@ -604,10 +601,10 @@ EXTEND
         nmk_rec_corec `CoInductive defs loc
     | NLETREC ; defs = let_defs -> 
         nmk_rec_corec `Inductive defs loc
-    | IDENT "ninductive"; spec = inductive_spec ->
+    | IDENT "inductive"; spec = inductive_spec ->
         let (params, ind_types) = spec in
         G.NObj (loc, N.Inductive (params, ind_types))
-    | IDENT "ncoinductive"; spec = inductive_spec ->
+    | IDENT "coinductive"; spec = inductive_spec ->
         let (params, ind_types) = spec in
         let ind_types = (* set inductive flags to false (coinductive) *)
           List.map (fun (name, _, term, ctors) -> (name, false, term, ctors))
@@ -626,14 +623,14 @@ EXTEND
          G.NUnivConstraint (loc,u1,u2)
     | IDENT "unification"; IDENT "hint"; n = int; t = tactic_term ->
         G.UnificationHint (loc, t, n)
-    | IDENT "ncoercion"; name = IDENT; SYMBOL ":"; ty = term; 
+    | IDENT "coercion"; name = IDENT; SYMBOL ":"; ty = term; 
         SYMBOL <:unicode<def>>; t = term; "on"; 
         id = [ IDENT | PIDENT ]; SYMBOL ":"; source = term;
         "to"; target = term ->
           G.NCoercion(loc,name,t,ty,(id,source),target)     
-    | IDENT "nrecord" ; (params,name,ty,fields) = record_spec ->
+    | IDENT "record" ; (params,name,ty,fields) = record_spec ->
         G.NObj (loc, N.Record (params,name,ty,fields))
-    | IDENT "ncopy" ; s = IDENT; IDENT "from"; u = URI; "with"; 
+    | IDENT "copy" ; s = IDENT; IDENT "from"; u = URI; "with"; 
       m = LIST0 [ u1 = URI; SYMBOL <:unicode<mapsto>>; u2 = URI -> u1,u2 ] ->
         G.NCopy (loc,s,NUri.uri_of_string u,
           List.map (fun a,b -> NUri.uri_of_string a, NUri.uri_of_string b) m)
@@ -650,16 +647,16 @@ EXTEND
   ]];
   executable: [
     [ ncmd = grafite_ncommand; SYMBOL "." -> G.NCommand (loc, ncmd)
-    | tac = ntactic; OPT [ SYMBOL "#" ; SYMBOL "#" ] ; 
-      punct = npunctuation_tactical -> cons_ntac tac punct
-    | SYMBOL "#" ; SYMBOL "#" ; punct = npunctuation_tactical ->
-        G.NTactic (loc, [punct])
-    | SYMBOL "#" ; SYMBOL "#" ; tac = nnon_punctuation_tactical; 
-        SYMBOL "#" ; SYMBOL "#" ; punct = npunctuation_tactical ->
-          G.NTactic (loc, [tac; punct])
-    | SYMBOL "#" ; SYMBOL "#" ; tac = nnon_punctuation_tactical; 
+    | punct = npunctuation_tactical -> G.NTactic (loc, [punct])
+    | tac = nnon_punctuation_tactical(*; punct = npunctuation_tactical*) ->
+          G.NTactic (loc, [tac])
+    | tac = ntactic (*; punct = npunctuation_tactical*) ->
+         tac 
+(*
+    | tac = nnon_punctuation_tactical; 
         punct = npunctuation_tactical ->
           G.NTactic (loc, [tac; punct])
+*)
     ]
   ];
   comment: [

@@ -287,7 +287,7 @@
           <match>∀|∃|λ|=|→|⇒|…|≝|≡|\?</match>
         </context>
         <context id="tinycals" style-ref="tinycals">
-          <match>\[|\||\]|\{|\}|@|\$|#|\\\\|;|\.|:>|:</match>
+		<match>\[|\||\]|\{|\}|>|//|&lt;|@|\$|#|\\\\|;|\.|:>|:</match>
         </context>
       </include>
     </context>
