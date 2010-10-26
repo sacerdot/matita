@@ -28,6 +28,8 @@
 
 type interpretation_id
 
+type cic_id = string
+
 val add_interpretation:
   string ->                                       (* id / description *)
   string * NotationPt.argument_pattern list -> (* symbol, level 2 pattern *)

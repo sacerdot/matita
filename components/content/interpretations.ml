@@ -36,9 +36,11 @@ type interpretation_id = int
 
 let idref id t = Ast.AttributedTerm (`IdRef id, t)
 
+type cic_id = string
+
 type term_info =
-  { sort: (Cic.id, Ast.sort_kind) Hashtbl.t;
-    uri: (Cic.id, UriManager.uri) Hashtbl.t;
+  { sort: (cic_id, Ast.sort_kind) Hashtbl.t;
+    uri: (cic_id, UriManager.uri) Hashtbl.t;
   }
 
   (* persistent state *)

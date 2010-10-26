@@ -13,8 +13,8 @@ formal_topology/basic_topologies_to_o-basic_topologies.ma formal_topology/basic_
 dama/models/nat_order_continuous.ma dama/models/increasing_supremum_stabilizes.ma dama/models/nat_ordered_uniform.ma
 nat/factorial2.ma nat/exp.ma nat/factorial.ma
 nat/orders.ma higher_order_defs/ordering.ma nat/nat.ma
-technicalities/setoids.ma datatypes/constructors.ma logic/coimplication.ma logic/connectives2.ma
 nat/sieve.ma list/sort.ma nat/primes.ma
+technicalities/setoids.ma datatypes/constructors.ma logic/coimplication.ma logic/connectives2.ma
 formal_topology/subsets.ma formal_topology/categories.ma
 nat/div_and_mod_diseq.ma nat/lt_arith.ma
 logic/cprop_connectives.ma logic/connectives.ma
@@ -86,14 +86,14 @@ algebra/finite_groups.ma algebra/groups.ma nat/relevant_equations.ma
 decidable_kit/decidable.ma datatypes/bool.ma decidable_kit/streicher.ma logic/connectives.ma nat/compare.ma
 nat/pi_p.ma nat/generic_iter_p.ma nat/iteration2.ma nat/primes.ma
 algebra/semigroups.ma higher_order_defs/functions.ma
-dama/lebesgue.ma dama/ordered_set.ma dama/property_exhaustivity.ma dama/sandwich.ma
 dama/models/discrete_uniformity.ma dama/bishop_set_rewrite.ma dama/uniform.ma
+dama/lebesgue.ma dama/ordered_set.ma dama/property_exhaustivity.ma dama/sandwich.ma
 formal_topology/relations.ma formal_topology/subsets.ma
 higher_order_defs/relations.ma logic/connectives.ma
 nat/factorization.ma nat/ord.ma
 nat/neper.ma nat/binomial.ma nat/chebyshev.ma nat/div_and_mod_diseq.ma nat/iteration2.ma nat/log.ma
+formal_topology/r-o-basic_pairs.ma formal_topology/apply_functor.ma formal_topology/basic_pairs_to_o-basic_pairs.ma formal_topology/o-basic_pairs_to_o-basic_topologies.ma
 Z/moebius.ma Z/sigma_p.ma nat/factorization.ma
-formal_topology/r-o-basic_pairs.ma formal_topology/apply_functor.ma formal_topology/basic_pairs_to_o-basic_pairs.ma formal_topology/o-basic_pairs_to_o-basic_topologies.ma logic/equality.ma
 demo/toolbox.ma logic/cprop_connectives.ma
 nat/iteration2.ma nat/count.ma nat/generic_iter_p.ma nat/ord.ma nat/primes.ma
 logic/coimplication.ma logic/connectives.ma
@@ -115,8 +115,8 @@ higher_order_defs/ordering.ma logic/equality.ma
 nat/congruence.ma nat/primes.ma nat/relevant_equations.ma
 logic/equality.ma higher_order_defs/relations.ma
 formal_topology/o-concrete_spaces.ma formal_topology/o-basic_pairs.ma formal_topology/o-saturations.ma
-formal_topology/o-basic_topologies.ma formal_topology/o-algebra.ma formal_topology/o-saturations.ma
 formal_topology/concrete_spaces_to_o-concrete_spaces.ma formal_topology/basic_pairs_to_o-basic_pairs.ma formal_topology/concrete_spaces.ma formal_topology/o-concrete_spaces.ma
+formal_topology/o-basic_topologies.ma formal_topology/o-algebra.ma formal_topology/o-saturations.ma
 dama/property_exhaustivity.ma dama/ordered_uniform.ma dama/property_sigma.ma
 Z/compare.ma Z/orders.ma nat/compare.ma
 nat/gcd.ma nat/lt_arith.ma nat/primes.ma
@@ -126,14 +126,14 @@ algebra/monoids.ma algebra/semigroups.ma
 nat/div_and_mod.ma datatypes/constructors.ma nat/minus.ma
 nat/sqrt.ma nat/compare.ma nat/log.ma nat/times.ma
 datatypes/categories.ma logic/cprop_connectives.ma
-formal_topology/o-basic_pairs.ma formal_topology/notation.ma formal_topology/o-algebra.ma
 formal_topology/categories.ma formal_topology/cprop_connectives.ma logic/equality.ma
+formal_topology/o-basic_pairs.ma formal_topology/notation.ma formal_topology/o-algebra.ma
 nat/relevant_equations.ma nat/gcd.ma nat/minus.ma nat/times.ma
 formal_topology/notation.ma 
 dama/nat_ordered_set.ma nat/orders.ma dama/bishop_set.ma nat/compare.ma
 Q/fraction/finv.ma Q/fraction/fraction.ma Z/plus.ma
 dama/russell_support.ma logic/cprop_connectives.ma nat/nat.ma
-formal_topology/relations_to_o-algebra.ma formal_topology/o-algebra.ma formal_topology/relations.ma
+formal_topology/relations_to_o-algebra.ma formal_topology/notation.ma formal_topology/o-algebra.ma formal_topology/relations.ma
 nat/binomial.ma nat/factorial2.ma nat/iteration2.ma
 nat/log.ma datatypes/constructors.ma nat/div_and_mod_diseq.ma nat/iteration2.ma nat/minimization.ma nat/primes.ma nat/relevant_equations.ma
 R/root.ma logic/connectives.ma Q/q/q.ma R/r.ma
@@ -145,10 +145,10 @@ didactic/exercises/natural_deduction_theories.ma didactic/support/natural_deduct
 Q/fraction/fraction.ma Z/compare.ma nat/factorization.ma
 nat/plus.ma nat/nat.ma
 formal_topology/o-formal_topologies.ma formal_topology/o-basic_topologies.ma
+list/sort.ma datatypes/bool.ma datatypes/constructors.ma list/in.ma
 dama/sequence.ma nat/nat.ma
 nat/primes.ma nat/div_and_mod.ma nat/factorial.ma nat/minimization.ma nat/sigma_and_pi.ma
 nat/gcd_properties1.ma nat/gcd.ma
-list/sort.ma datatypes/bool.ma datatypes/constructors.ma list/in.ma
 didactic/exercises/natural_deduction.ma didactic/support/natural_deduction.ma
 formal_topology/basic_pairs_to_o-basic_pairs.ma formal_topology/basic_pairs.ma formal_topology/o-basic_pairs.ma formal_topology/relations_to_o-algebra.ma
 dama/bishop_set_rewrite.ma dama/bishop_set.ma

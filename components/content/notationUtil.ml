@@ -350,19 +350,6 @@ let rec find_branch =
     | Ast.Magic (Ast.If (_, t, _)) -> find_branch t
     | t -> t
 
-let cic_name_of_name = function
-  | Ast.Ident ("_", None) -> Cic.Anonymous
-  | Ast.Ident (name, None) -> Cic.Name name
-  | _ -> assert false
-
-let name_of_cic_name =
-(*   let add_dummy_xref t = Ast.AttributedTerm (`IdRef "", t) in *)
-  (* ZACK why we used to generate dummy xrefs? *)
-  let add_dummy_xref t = t in
-  function
-  | Cic.Name s -> add_dummy_xref (Ast.Ident (s, None))
-  | Cic.Anonymous -> add_dummy_xref (Ast.Ident ("_", None))
-
 let fresh_index = ref ~-1
 
 type notation_id = int

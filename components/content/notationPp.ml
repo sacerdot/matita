@@ -279,17 +279,6 @@ let pp_params pp_term = function
   | [] -> ""
   | params -> " " ^ String.concat " " (List.map (pp_capture_variable pp_term) params)
       
-let pp_flavour = function
-  | `Definition -> "definition"
-  | `MutualDefinition -> assert false
-  | `Fact -> "fact"
-  | `Goal -> "goal"
-  | `Lemma -> "lemma"
-  | `Remark -> "remark"
-  | `Theorem -> "theorem"
-  | `Variant -> "variant"
-  | `Axiom -> "axiom"
-
 let pp_fields pp_term fields =
   (if fields <> [] then "\n" else "") ^ 
   String.concat ";\n" 
@@ -322,11 +311,9 @@ let pp_obj pp_term = function
             (pp_term typ) (pp_constructors constructors)
         in
         fst_typ_pp ^ String.concat "" (List.map pp_type tl))
- | Ast.Theorem (`MutualDefinition, name, typ, body,_) ->
-    sprintf "<<pretty printing of mutual definitions not implemented yet>>"
  | Ast.Theorem (flavour, name, typ, body,_) ->
     sprintf "%s %s:\n %s\n%s"
-      (pp_flavour flavour)
+      (NCicPp.string_of_flavour flavour)
       name
       (pp_term typ)
       (match body with

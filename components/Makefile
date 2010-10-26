@@ -14,7 +14,6 @@ MODULES =			\
 	urimanager		\
 	logger			\
 	getter			\
-	cic			\
 	library			\
 	ng_kernel		\
 	content		\

@@ -35,13 +35,14 @@ val box_of_mpres: mathml_markup -> boxml_markup
 
 (** {2 Rendering} *)
 
-val lookup_uri: (Cic.id,UriManager.uri) Hashtbl.t -> Cic.id -> string option
+val lookup_uri: (Interpretations.cic_id,UriManager.uri) Hashtbl.t ->
+  Interpretations.cic_id -> string option
 
 (** level 1 -> level 0
  * @param ids_to_uris mapping id -> uri for hyperlinking
  * @param prec precedence level *)
 val render:
- lookup_uri:(Cic.id -> string option) -> ?prec:int -> NotationPt.term ->
+ lookup_uri:(Interpretations.cic_id -> string option) -> ?prec:int -> NotationPt.term ->
   markup
 
 (** level 0 -> xml stream *)

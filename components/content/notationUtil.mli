@@ -82,9 +82,6 @@ val find_appl_pattern_uris:
 val find_branch:
   NotationPt.term -> NotationPt.term
 
-val cic_name_of_name: NotationPt.term -> Cic.name
-val name_of_cic_name: Cic.name -> NotationPt.term
-
   (** Symbol/Numbers instances *)
 
 val freshen_term: NotationPt.term -> NotationPt.term

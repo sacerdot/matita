@@ -87,7 +87,7 @@ type inductiveType =
  (* relevance, typename, arity, constructors *)
 
 type def_flavour = (* presentational *)
-  [ `Definition | `Fact | `Lemma | `Theorem | `Corollary | `Example ]
+  [ `Axiom | `Definition | `Fact | `Lemma | `Theorem | `Corollary | `Example ]
 
 type def_pragma = (* pragmatic of the object *)
   [ `Coercion of int

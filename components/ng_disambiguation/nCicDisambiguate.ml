@@ -410,17 +410,6 @@ let disambiguate_path path =
     ~uri:None ~is_path:true ~localization_tbl) ~context:[] path
 ;;
 
-let new_flavour_of_flavour = function 
-  | `Definition -> `Definition
-  | `MutualDefinition -> `Definition 
-  | `Fact -> `Fact
-  | `Lemma -> `Lemma
-  | `Remark -> `Example
-  | `Theorem -> `Theorem
-  | `Variant -> `Corollary 
-  | `Axiom -> `Fact
-;;
-
 let ncic_name_of_ident = function
   | Ast.Ident (name, None) -> name
   | _ -> assert false
@@ -447,11 +436,11 @@ let interpretate_obj
      uri, height, [], [], 
      (match bo,flavour with
       | None,`Axiom -> 
-          let attrs = `Provided, new_flavour_of_flavour flavour, pragma in
+          let attrs = `Provided, flavour, pragma in
           NCic.Constant ([],name,None,ty',attrs)
       | Some _,`Axiom -> assert false
       | None,_ ->
-          let attrs = `Provided, new_flavour_of_flavour flavour, pragma in
+          let attrs = `Provided, flavour, pragma in
           NCic.Constant ([],name,Some (NCic.Implicit `Term),ty',attrs)
       | Some bo,_ ->
         (match bo with
@@ -488,14 +477,14 @@ let interpretate_obj
                    ([],ncic_name_of_ident name, decr_idx, cic_type, cic_body))
                  defs
              in
-             let attrs = `Provided, new_flavour_of_flavour flavour, pragma in
+             let attrs = `Provided, flavour, pragma in
              NCic.Fixpoint (inductive,inductiveFuns,attrs)
          | bo -> 
              let bo = 
                interpretate_term 
                 ~obj_context:[] ~context:[] ~env ~uri:None ~is_path:false bo
              in
-             let attrs = `Provided, new_flavour_of_flavour flavour, pragma in
+             let attrs = `Provided, flavour, pragma in
              NCic.Constant ([],name,Some bo,ty',attrs)))
  | NotationPt.Inductive (params,tyl) ->
     let context,params =

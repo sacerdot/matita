@@ -16,6 +16,8 @@ val set_get_obj: (NUri.uri -> NCic.obj) -> unit
 
 val r2s: bool -> NReference.reference -> string
 
+val string_of_flavour: NCic.def_flavour -> string
+
 val ppterm: 
   context:NCic.context -> 
   subst:NCic.substitution -> 

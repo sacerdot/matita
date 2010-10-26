@@ -70,11 +70,6 @@ let add_raw_attribute ~text t = N.AttributedTerm (`Raw text, t)
 let default_associativity = Gramext.NonA
         
 let mk_rec_corec ind_kind defs loc = 
- (* In case of mutual definitions here we produce just
-    the syntax tree for the first one. The others will be
-    generated from the completely specified term just before
-    insertion in the environment. We use the flavour
-    `MutualDefinition to rememer this. *)
   let name,ty = 
     match defs with
     | (params,(N.Ident (name, None), ty),_,_) :: _ ->
@@ -88,13 +83,7 @@ let mk_rec_corec ind_kind defs loc =
     | _ -> assert false 
   in
   let body = N.Ident (name,None) in
-  let flavour =
-   if List.length defs = 1 then
-    `Definition
-   else
-    `MutualDefinition
-  in
-   (loc, N.Theorem(flavour, name, ty, Some (N.LetRec (ind_kind, defs, body)), `Regular))
+   (loc, N.Theorem(`Definition, name, ty, Some (N.LetRec (ind_kind, defs, body)), `Regular))
 
 let nmk_rec_corec ind_kind defs loc = 
  let loc,t = mk_rec_corec ind_kind defs loc in
@@ -411,23 +400,10 @@ EXTEND
     [ [ IDENT "definition"  ] -> `Definition
     | [ IDENT "fact"        ] -> `Fact
     | [ IDENT "lemma"       ] -> `Lemma
-    | [ IDENT "remark"      ] -> `Remark
+    | [ IDENT "example"     ] -> `Example
     | [ IDENT "theorem"     ] -> `Theorem
+    | [ IDENT "corollary"   ] -> `Corollary
     ]
-  ];
-  theorem_flavour: [
-    [ [ IDENT "definition"  ] -> `Definition
-    | [ IDENT "fact"        ] -> `Fact
-    | [ IDENT "lemma"       ] -> `Lemma
-    | [ IDENT "remark"      ] -> `Remark
-    | [ IDENT "theorem"     ] -> `Theorem
-    ]
-  ];
-  inline_flavour: [
-     [ attr = theorem_flavour -> attr
-     | [ IDENT "axiom"     ]  -> `Axiom
-     | [ IDENT "variant"   ]  -> `Variant
-     ]
   ];
   inductive_spec: [ [
     fst_name = IDENT; 

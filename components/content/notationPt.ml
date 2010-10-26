@@ -178,7 +178,7 @@ type 'term inductive_type = string * bool * 'term * (string * 'term) list
 type 'term obj =
   | Inductive of 'term capture_variable list * 'term inductive_type list
       (** parameters, list of loc * mutual inductive types *)
-  | Theorem of Cic.object_flavour * string * 'term * 'term option * NCic.def_pragma
+  | Theorem of NCic.def_flavour * string * 'term * 'term option * NCic.def_pragma
       (** flavour, name, type, body
        * - name is absent when an unnamed theorem is being proved, tipically in
        *   interactive usage

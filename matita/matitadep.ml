@@ -68,7 +68,7 @@ let generate_theory theory_file deps =
    end
 
 let main () =
-(*  let _ = print_times "inizio" in *)
+  let _ = print_times "inizio" in
   let include_paths = ref [] in
   let use_stdout = ref false in
   let theory_file = ref "" in
@@ -155,9 +155,9 @@ let main () =
               Hashtbl.add include_deps     ma_file ma_file
               Hashtbl.add include_deps_dot ma_file baseuri
   *)
-(*  let _ = print_times "prima di iter1" in *)
+  let _ = print_times "prima di iter1" in 
   List.iter (fun ma_file -> ignore (baseuri_of_script ma_file)) ma_files;
-(*  let _ = print_times "in mezzo alle due iter" in *)
+  let _ = print_times "in mezzo alle due iter" in 
   let map s _ l = s :: l in
   let ma_files = Hashtbl.fold map baseuri_of [] in
   List.iter
@@ -168,9 +168,11 @@ let main () =
       in
       let ma_baseuri = baseuri_of_script ma_file in
       let dependencies = 
+  let _ = print_times "prima deps_of_iter" in 
          try DependenciesParser.deps_of_file ma_file
 	 with Sys_error _ -> []
       in
+  let _ = print_times "dopo deps_of_iter" in 
       let handle_uri uri =
          if not (Http_getter_storage.is_legacy uri) then
          let dep = resolve uri ma_baseuri in
@@ -198,7 +200,7 @@ let main () =
        dependencies)
    ma_files;
   (* generate regular depend output *)
-(*  let _ = print_times "dopo di iter2" in *)
+  let _ = print_times "dopo di iter2" in 
   let deps =
     List.fold_left
      (fun acc ma_file -> 
@@ -247,4 +249,4 @@ let main () =
       ignore(Sys.command ("tred "^ !dot_file^"| dot -Tpng -o"^dot_name^".png"));
       HLog.message ("Type 'eog "^dot_name^".png' to view the graph"); 
     end;
-(*    let _ = print_times "fine" in () *)
+    let _ = print_times "fine" in () 

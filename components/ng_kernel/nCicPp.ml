@@ -272,12 +272,13 @@ let string_of_generated = function
 ;;
 
 let string_of_flavour = function
-  | `Definition -> "Definition"
-  | `Fact -> "Fact"
-  | `Lemma -> "Lemma"
-  | `Theorem -> "Theorem"
-  | `Corollary -> "Corollary"
-  | `Example -> "Example"
+  | `Axiom -> "axiom"
+  | `Definition -> "definition"
+  | `Fact -> "fact"
+  | `Lemma -> "lemma"
+  | `Theorem -> "theorem"
+  | `Corollary -> "corollary"
+  | `Example -> "example"
 ;;
         
 let string_of_pragma = function

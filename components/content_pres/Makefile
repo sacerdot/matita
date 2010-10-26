@@ -21,17 +21,10 @@ cicNotationPres.cmi: OCAMLOPTIONS += -rectypes
 cicNotationPres.cmo: OCAMLOPTIONS += -rectypes
 cicNotationPres.cmx: OCAMLOPTIONS += -rectypes
 
-all: test_lexer
-clean: clean_tests
+all:
+clean:
 
 LOCAL_LINKOPTS = -package helm-content_pres -linkpkg
-test: test_lexer
-test_lexer: test_lexer.ml $(PACKAGE).cma
-	@echo "  OCAMLC $<"
-	@$(OCAMLC) $(LOCAL_LINKOPTS) -o $@ $<
-
-clean_tests:
-	rm -f test_lexer{,.opt}
 
 cicNotationLexer.cmo: OCAMLC = $(OCAMLC_P4)
 cicNotationParser.cmo: OCAMLC = $(OCAMLC_P4)
