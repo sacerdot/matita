@@ -76,8 +76,7 @@ val group: NotationPt.term list -> NotationPt.term
 val ungroup: NotationPt.term list -> NotationPt.term list
 
 val find_appl_pattern_uris:
-  NotationPt.cic_appl_pattern ->
-   [`Uri of UriManager.uri | `NRef of NReference.reference] list
+  NotationPt.cic_appl_pattern -> NReference.reference list
 
 val find_branch:
   NotationPt.term -> NotationPt.term

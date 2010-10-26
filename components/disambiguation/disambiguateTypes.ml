@@ -73,14 +73,14 @@ type interactive_user_uri_choice_type =
   selection_mode:[`SINGLE | `MULTIPLE] ->
   ?ok:string ->
   ?enable_button_for_non_vars:bool ->
-  title:string -> msg:string -> id:string -> UriManager.uri list ->
-   UriManager.uri list
+  title:string -> msg:string -> id:string -> NReference.reference list ->
+   NReference.reference list
 
 type interactive_interpretation_choice_type = string -> int ->
   (Stdpp.location list * string * string) list list -> int list
 
 type input_or_locate_uri_type = 
-  title:string -> ?id:string -> unit -> UriManager.uri option
+  title:string -> ?id:string -> unit -> NReference.reference option
 
 let string_of_domain_item = function
   | Id s -> Printf.sprintf "ID(%s)" s

@@ -37,7 +37,7 @@ let fail floc msg =
   let (x, y) = HExtlib.loc_of_floc floc in
   failwith (Printf.sprintf "Error at characters %d - %d: %s" x y msg)
 
-type href = UriManager.uri
+type href = NReference.reference
 
 type child_pos = [ `Left | `Right | `Inner ]
 
@@ -165,7 +165,6 @@ type argument_pattern =
   | IdentArg of int * string (* eta-depth, name *)
 
 type cic_appl_pattern =
-  | UriPattern of UriManager.uri
   | NRefPattern of NReference.reference
   | VarPattern of string
   | ImplicitPattern

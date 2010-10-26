@@ -995,7 +995,7 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
   object (self)
     inherit scriptAccessor
     
-    val mutable gviz_uri = UriManager.uri_of_string "cic:/dummy.con";
+    val mutable gviz_uri = NReference.reference_of_string "cic:/dummy.dec";
 
     val dep_contextual_menu = GMenu.menu ()
 
@@ -1021,20 +1021,14 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
           handle_error (fun () -> self#loadInput (self#_getSelectedUri ()))));
       mathView#set_href_callback (Some (fun uri ->
         handle_error (fun () ->
-         let uri =
-          try
-           `Uri (UriManager.uri_of_string uri)
-          with
-           UriManager.IllFormedUri _ ->
-            `NRef (NReference.reference_of_string uri)
-         in
+         let uri = `NRef (NReference.reference_of_string uri) in
           self#load uri)));
       gviz#connect_href (fun button_ev attrs ->
         let time = GdkEvent.Button.time button_ev in
         let uri = List.assoc "href" attrs in
-        gviz_uri <- UriManager.uri_of_string uri;
+        gviz_uri <- NReference.reference_of_string uri;
         match GdkEvent.Button.button button_ev with
-        | button when button = left_button -> self#load (`Uri gviz_uri)
+        | button when button = left_button -> self#load (`NRef gviz_uri)
         | button when button = right_button ->
             dep_contextual_menu#popup ~button ~time
         | _ -> ());
@@ -1050,10 +1044,6 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
       win#hBugsTutorsMenuItem#misc#hide ();
       connect_menu_item win#browserUrlMenuItem (fun () ->
         win#browserUri#misc#grab_focus ());
-      connect_menu_item win#univMenuItem (fun () ->
-        match self#currentCicUri with
-        | Some uri -> self#load (`Univs uri)
-        | None -> ());
 
       self#_load (`About `Blank);
       toplevel#show ()
@@ -1063,7 +1053,7 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
       (** @return None if no object uri can be built from the current entry *)
     method private currentCicUri =
       match current_entry with
-      | `Uri uri -> Some uri
+      | `NRef uri -> Some uri
       | _ -> None
 
     val model =
@@ -1147,9 +1137,7 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
                self#_loadTermNCic term metasenv subst ctx
           | `Dir dir -> self#_loadDir dir
           | `HBugs `Tutors -> self#_loadHBugsTutors
-          | `Uri uri -> assert false (* MATITA 1.0 *)
-          | `NRef nref -> self#_loadNReference nref
-          | `Univs uri -> assert false (* MATITA 1.0 *));
+          | `NRef nref -> self#_loadNReference nref);
           self#setEntry entry
         end)
 
@@ -1174,7 +1162,7 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
        gviz#load_graph_from_file ~gviz_cmd:"tred | dot" tmpfile;
        (match center_on with
        | None -> ()
-       | Some uri -> gviz#center_on_href (UriManager.string_of_uri uri));
+       | Some uri -> gviz#center_on_href (NReference.string_of_reference uri));
        HExtlib.safe_remove tmpfile
       else
        MatitaGtkMisc.report_error ~title:"graphviz error"
@@ -1314,7 +1302,7 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
         let entry =
           match txt with
           | txt when is_uri txt ->
-              `Uri (UriManager.uri_of_string ((*fix_uri*) txt))
+              `NRef (NReference.reference_of_string ((*fix_uri*) txt))
           | txt when is_dir txt -> `Dir (MatitaMisc.normalize_dir txt)
           | txt ->
              (try

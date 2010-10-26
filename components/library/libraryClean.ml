@@ -32,7 +32,7 @@ let debug_prerr = if debug then prerr_endline else ignore
 
 module HGT = Http_getter_types;;
 module HG = Http_getter;;
-module UM = UriManager;;
+(*module UM = UriManager;;*)
 
 let decompile = ref (fun ~baseuri -> assert false);;
 let set_decompile_cb f = decompile := f;;
@@ -231,10 +231,10 @@ let clean_baseuris ?(verbose=true) buris =
     List.iter debug_prerr buris; 
   let l = close_db cache_of_processed_baseuri [] buris in
   let l = HExtlib.list_uniq (List.fast_sort Pervasives.compare l) in
-  let l = List.map UriManager.uri_of_string l in
+  let l = List.map NUri.uri_of_string l in
   debug_prerr "clean_baseuri will remove:";
   if debug then
-    List.iter (fun u -> debug_prerr (UriManager.string_of_uri u)) l; 
+    List.iter (fun u -> debug_prerr (NUri.string_of_uri u)) l; 
   List.iter
    (fun baseuri ->
      !decompile ~baseuri;
@@ -247,4 +247,4 @@ let clean_baseuris ?(verbose=true) buris =
        HExtlib.rmdir_descend (Filename.chop_extension lexiconfile)
      with Http_getter_types.Key_not_found _ -> ())
    (HExtlib.list_uniq (List.fast_sort Pervasives.compare
-     (List.map (UriManager.buri_of_uri) l @ buris)))
+     (List.map NUri.baseuri_of_uri l @ buris)))

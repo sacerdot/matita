@@ -87,13 +87,6 @@
                     <child>
                       <widget class="GtkMenu" id="BrowserViewMenu_menu">
                         <child>
-                          <widget class="GtkMenuItem" id="univMenuItem">
-                            <property name="visible">True</property>
-                            <property name="label" translatable="yes">Universes</property>
-                            <property name="use_underline">True</property>
-                          </widget>
-                        </child>
-                        <child>
                           <widget class="GtkMenuItem" id="HBugsTutorsMenuItem">
                             <property name="visible">True</property>
                             <property name="label" translatable="yes">HBugs Tutors</property>

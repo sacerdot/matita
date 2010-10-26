@@ -1399,11 +1399,10 @@ let interactive_uri_choice
   ~id uris
 =
   let gui = instance () in
-  let nonvars_uris = lazy (List.filter (non UriManager.uri_is_var) uris) in
   if (selection_mode <> `SINGLE) &&
     (Helm_registry.get_opt_default Helm_registry.get_bool ~default:true "matita.auto_disambiguation")
   then
-    Lazy.force nonvars_uris
+    uris
   else begin
     let dialog = gui#newUriDialog () in
     if hide_uri_entry then
@@ -1429,7 +1428,7 @@ let interactive_uri_choice
           | _ -> ()));
     dialog#uriChoiceDialog#set_title title;
     dialog#uriChoiceLabel#set_text msg;
-    List.iter model#easy_append (List.map UriManager.string_of_uri uris);
+    List.iter model#easy_append (List.map NReference.string_of_reference uris);
     dialog#uriChoiceConstantsButton#misc#set_sensitive nonvars_button;
     let return v =
       choices := v;
@@ -1438,20 +1437,20 @@ let interactive_uri_choice
     in
     ignore (dialog#uriChoiceDialog#event#connect#delete (fun _ -> true));
     connect_button dialog#uriChoiceConstantsButton (fun _ ->
-      return (Some (Lazy.force nonvars_uris)));
+      return (Some uris));
     if ok_action = `AUTO then
       connect_button dialog#uriChoiceAutoButton (fun _ ->
         Helm_registry.set_bool "matita.auto_disambiguation" true;
-        return (Some (Lazy.force nonvars_uris)))
+        return (Some uris))
     else
       connect_button dialog#uriChoiceAutoButton (fun _ ->
         match model#easy_selection () with
         | [] -> ()
-        | uris -> return (Some (List.map UriManager.uri_of_string uris)));
+        | uris -> return (Some (List.map NReference.reference_of_string uris)));
     connect_button dialog#uriChoiceSelectedButton (fun _ ->
       match model#easy_selection () with
       | [] -> ()
-      | uris -> return (Some (List.map UriManager.uri_of_string uris)));
+      | uris -> return (Some (List.map NReference.reference_of_string uris)));
     connect_button dialog#uriChoiceAbortButton (fun _ -> return None);
     dialog#uriChoiceDialog#show ();
     GtkThread.main ();

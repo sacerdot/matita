@@ -151,10 +151,7 @@ let exists ~local uri =
    let uri = deref_index_theory ~local uri in
     Http_getter_storage.exists ~local (uri ^ xml_suffix)
 	
-let is_an_obj s = 
-  try 
-    s <> UriManager.buri_of_uri (UriManager.uri_of_string s)
-  with UriManager.IllFormedUri _ -> true
+let is_an_obj s = s <> NUri.baseuri_of_uri (NUri.uri_of_string s)
     
 let resolve ~local ~writable uri =
   if remote () then
@@ -363,13 +360,13 @@ let getalluris () =
 
 (* Shorthands from now on *)
 
-let getxml' uri = getxml (UriManager.string_of_uri uri)
+let getxml' uri = getxml (NUri.string_of_uri uri)
 let resolve' ~local ~writable uri =
-  resolve ~local ~writable (UriManager.string_of_uri uri)
+  resolve ~local ~writable (NUri.string_of_uri uri)
 ;;
-let exists' ~local uri = exists ~local (UriManager.string_of_uri uri)
+let exists' ~local uri = exists ~local (NUri.string_of_uri uri)
 let filename' ~local ~writable uri =
-  filename ~local ~writable (UriManager.string_of_uri uri)
+  filename ~local ~writable (NUri.string_of_uri uri)
 ;;
 
 let tilde_expand_key k =

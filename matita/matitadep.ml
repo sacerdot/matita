@@ -28,7 +28,6 @@
 module S = Set.Make (String)
 
 module GA = GrafiteAst 
-module U = UriManager
 module HR = Helm_registry
 
 let print_times msg = 
@@ -104,7 +103,7 @@ let main () =
       HLog.error ("possibly incorrect verbatim URIs in the .ma file.");
       None
   in
-  let buri alias = U.buri_of_uri (U.uri_of_string alias) in
+  let buri alias = NUri.baseuri_of_uri (NUri.uri_of_string alias) in
   let resolve alias current_buri =
     let buri = buri alias in
     if buri <> current_buri then Some buri else None 
@@ -190,7 +189,7 @@ let main () =
       List.iter 
        (function
          | DependenciesParser.UriDep uri      ->
-            let uri = UriManager.string_of_uri uri in
+            let uri = NUri.string_of_uri uri in
 	    handle_uri uri 
          | DependenciesParser.InlineDep path  ->
 	    if Librarian.is_uri path

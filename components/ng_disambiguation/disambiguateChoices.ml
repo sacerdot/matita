@@ -42,7 +42,7 @@ let nlookup_num_by_dsc dsc =
     List.find (has_description dsc) !nnum_choices
   with Not_found -> raise (Choice_not_found (lazy ("Num with dsc " ^  dsc)))
 
-let mk_choice  ~mk_appl ~mk_implicit ~term_of_uri ~term_of_nref (dsc, args, appl_pattern)=
+let mk_choice  ~mk_appl ~mk_implicit ~term_of_nref (dsc, args, appl_pattern)=
   dsc,
   `Sym_interp
   (fun cic_args ->
@@ -66,16 +66,16 @@ let mk_choice  ~mk_appl ~mk_implicit ~term_of_uri ~term_of_nref (dsc, args, appl
     in
      let combined =
       Interpretations.instantiate_appl_pattern 
-        ~mk_appl ~mk_implicit ~term_of_uri ~term_of_nref env' appl_pattern
+        ~mk_appl ~mk_implicit ~term_of_nref env' appl_pattern
      in
       match rest with
          [] -> combined
        | _::_ -> mk_appl (combined::rest))
 
-let lookup_symbol_by_dsc ~mk_appl ~mk_implicit ~term_of_uri ~term_of_nref symbol dsc =
+let lookup_symbol_by_dsc ~mk_appl ~mk_implicit ~term_of_nref symbol dsc =
   let interpretations = Interpretations.lookup_interpretations ~sorted:false symbol in
   try
-    mk_choice ~mk_appl ~mk_implicit ~term_of_uri ~term_of_nref
+    mk_choice ~mk_appl ~mk_implicit ~term_of_nref
       (List.find (fun (dsc', _, _) -> dsc = dsc') interpretations)
   with Interpretations.Interpretation_not_found | Not_found ->
     raise (Choice_not_found (lazy (sprintf "Symbol %s, dsc %s" symbol dsc)))

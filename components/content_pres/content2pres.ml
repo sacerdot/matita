@@ -881,22 +881,6 @@ let metasenv2pres term2pres = function
             (let _ = incr counter; in (string_of_int !counter)))) ::
          (List.map (conjecture2pres term2pres) metasenv'))]
 
-let params2pres params =
-  let param2pres uri =
-    B.b_text [Some "xlink", "href", UriManager.string_of_uri uri]
-      (UriManager.name_of_uri uri)
-  in
-  let rec spatiate = function
-    | [] -> []
-    | hd :: [] -> [hd]
-    | hd :: tl -> hd :: B.b_text [] ", " :: spatiate tl
-  in
-  match params with
-  | [] -> []
-  | p ->
-      let params = spatiate (List.map param2pres p) in
-      [B.b_space;
-       B.b_h [] (B.b_text [] "[" :: params @ [ B.b_text [] "]" ])]
 let inductive2pres term2pres ind =
   let constructor2pres decl =
     B.b_h [] [
@@ -994,7 +978,7 @@ let njoint_def2pres term2pres joint_kind defs =
 
 let ncontent2pres0
   ?skip_initial_lambdas ?(skip_thm_and_qed=false) term2pres 
-  (id,params,metasenv,obj : NotationPt.term Content.cobj) 
+  (id,metasenv,obj : NotationPt.term Content.cobj) 
 =
   match obj with
   | `Def (Content.Const, thesis, `Proof p) ->
@@ -1006,7 +990,7 @@ let ncontent2pres0
       B.b_v
         [Some "helm","xref","id"]
         ([ B.b_h [] (B.b_kw ("ntheorem " ^ name) :: 
-          params2pres params @ [B.b_kw ":"]);
+          [B.b_kw ":"]);
            B.H ([],[B.indent (term2pres thesis) ; B.b_kw "." ])] @
          metasenv2pres term2pres metasenv @
          [proof ; B.b_kw "qed."])
@@ -1015,7 +999,7 @@ let ncontent2pres0
       B.b_v
         [Some "helm","xref","id"]
         ([B.b_h []
-           (B.b_kw ("ndefinition " ^ name) :: params2pres params @ [B.b_kw ":"]);
+           (B.b_kw ("ndefinition " ^ name) :: [B.b_kw ":"]);
           B.indent (term2pres ty)] @
           metasenv2pres term2pres metasenv @
           [B.b_kw ":=";
@@ -1026,7 +1010,7 @@ let ncontent2pres0
       let name = get_name decl.Content.dec_name in
       B.b_v
         [Some "helm","xref","id"]
-        ([B.b_h [] (B.b_kw ("naxiom " ^ name) :: params2pres params);
+        ([B.b_h [] (B.b_kw ("naxiom " ^ name) :: []);
           B.b_kw "Type:";
           B.indent (term2pres decl.Content.dec_type)] @
           metasenv2pres term2pres metasenv)

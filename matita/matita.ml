@@ -82,14 +82,8 @@ let _ =
   sequents_viewer#load_logo;
   cic_math_view#set_href_callback
     (Some (fun uri ->
-      let uri =
-       try
-        `Uri (UriManager.uri_of_string uri)
-       with
-        UriManager.IllFormedUri _ ->
-         `NRef (NReference.reference_of_string uri)
-      in
-      (MatitaMathView.cicBrowser ())#load uri));
+      let uri = `NRef (NReference.reference_of_string uri) in
+       (MatitaMathView.cicBrowser ())#load uri));
   let browser_observer _ = MatitaMathView.refresh_all_browsers () in
   let sequents_observer grafite_status =
     sequents_viewer#reset;

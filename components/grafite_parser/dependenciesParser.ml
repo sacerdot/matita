@@ -30,12 +30,12 @@ exception UnableToInclude of string
   (* statements meaningful for matitadep *)
 type dependency =
   | IncludeDep of string
-  | UriDep of UriManager.uri
+  | UriDep of NUri.uri
   | InlineDep of string
 
 let pp_dependency = function
   | IncludeDep str -> "include \"" ^ str ^ "\""
-  | UriDep uri -> "uri \"" ^ UriManager.string_of_uri uri ^ "\""
+  | UriDep uri -> "uri \"" ^ NUri.string_of_uri uri ^ "\""
   | InlineDep str -> "inline \"" ^ str ^ "\"" 
 
 let parse_dependencies lexbuf = 
@@ -48,12 +48,11 @@ let parse_dependencies lexbuf =
       (parser
       | [< '("QSTRING", s) >] ->
           (* because of alias id qstring = qstring :-( *)
-          (try
-            true, (UriDep (UriManager.uri_of_string s) :: acc)
-           with
-            UriManager.IllFormedUri _ -> true, acc)
+          if String.sub s 0 5 <> "cic:/" then true,acc
+          else
+            true, (UriDep (NUri.uri_of_string s) :: acc)
       | [< '("URI", u) >] ->
-          true, (UriDep (UriManager.uri_of_string u) :: acc)
+          true, (UriDep (NUri.uri_of_string u) :: acc)
       | [< '("IDENT", "include"); '("QSTRING", fname) >] ->
           true, (IncludeDep fname :: acc)
       | [< '("IDENT", "include"); '("IDENT", "source"); '("QSTRING", fname) >] ->

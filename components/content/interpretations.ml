@@ -40,7 +40,7 @@ type cic_id = string
 
 type term_info =
   { sort: (cic_id, Ast.sort_kind) Hashtbl.t;
-    uri: (cic_id, UriManager.uri) Hashtbl.t;
+    uri: (cic_id, NReference.reference) Hashtbl.t;
   }
 
   (* persistent state *)
@@ -188,7 +188,7 @@ let remove_interpretation id =
 let init () = List.iter (fun f -> f []) !load_patterns32s
 
 let instantiate_appl_pattern 
-  ~mk_appl ~mk_implicit ~term_of_uri ~term_of_nref env appl_pattern 
+  ~mk_appl ~mk_implicit ~term_of_nref env appl_pattern 
 =
   let lookup name =
     try List.assoc name env
@@ -197,7 +197,6 @@ let instantiate_appl_pattern
       assert false
   in
   let rec aux = function
-    | Ast.UriPattern uri -> term_of_uri uri
     | Ast.NRefPattern nref -> term_of_nref nref
     | Ast.ImplicitPattern -> mk_implicit false
     | Ast.VarPattern name -> lookup name

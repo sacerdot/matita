@@ -67,7 +67,7 @@ let first_line s =
 
 type guistuff = {
   mathviewer:MatitaTypes.mathViewer;
-  urichooser: UriManager.uri list -> UriManager.uri list;
+  urichooser: NReference.reference list -> NReference.reference list;
   ask_confirmation: title:string -> message:string -> [`YES | `NO | `CANCEL];
 }
 

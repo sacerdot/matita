@@ -27,7 +27,6 @@
 
 open Printf
 
-module UM = UriManager
 module TA = GrafiteAst
 
 let clean_suffixes = [ ".moo"; ".lexicon"; ".metadata"; ".xml.gz" ]
@@ -107,14 +106,15 @@ let main () =
    List.fold_left
      (fun uris_to_remove suri ->
        let uri = 
-         try
-           UM.buri_of_uri (UM.uri_of_string suri)
-         with UM.IllFormedUri _ ->
+         (*MATITA 1.0, CSC: verify that suri is a reasonable uri *)
+         (*try*)
+           NUri.baseuri_of_uri (NUri.uri_of_string suri)
+         (*with UM.IllFormedUri _ ->
            let _,u,_,_ = Librarian.baseuri_of_script ~include_paths:[] suri in
            if Librarian.is_uri u then u else begin
              HLog.error (sprintf "File %s defines a bad baseuri: %s" suri u);
              exit 1
-           end 
+           end *)
        in
         uri::uris_to_remove) [] files
   in

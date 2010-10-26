@@ -17,12 +17,12 @@ val eval_ncoercion:
      NotationPt.term ->
      NotationPt.term ->
      string * NotationPt.term ->
-     NotationPt.term -> 'status * [> `New of NUri.uri list ]
+     NotationPt.term -> 'status * NUri.uri list
 
 (* for records, the term is the projection, already refined, while the
  * first integer is the number of left params and the second integer is 
  * the arity in the `:arity>` syntax *)
 val basic_eval_and_record_ncoercion_from_t_cpos_arity: 
    #GrafiteTypes.status as 'status ->
-     string * NCic.term * int * int -> 'status * [> `New of NUri.uri list ]
+     string * NCic.term * int * int -> 'status * NUri.uri list
 

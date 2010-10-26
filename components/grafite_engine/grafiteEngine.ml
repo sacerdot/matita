@@ -36,12 +36,6 @@ type options = {
   do_heavy_checks: bool ; 
 }
 
-let concat_nuris uris nuris =
-   match uris,nuris with
-   | `New uris, `New nuris -> `New (nuris@uris)
-   | _ -> assert false
-;;
-
 let basic_eval_unification_hint (t,n) status =
  NCicUnifHint.add_user_provided_hint status t n
 ;;
@@ -67,7 +61,7 @@ let eval_unification_hint status t n =
  let status = basic_eval_unification_hint (t,n) status in
  let dump = inject_unification_hint (t,n)::status#dump in
  let status = status#set_dump dump in
-  status,`New []
+  status,[]
 ;;
 
 let basic_index_obj l status =
@@ -216,7 +210,7 @@ let eval_add_constraint status u1 u2 =
  let status = basic_eval_add_constraint (u1,u2) status in
  let dump = inject_constraint (u1,u2)::status#dump in
  let status = status#set_dump dump in
-  status,`New []
+  status,[]
 ;;
 
 let eval_ng_tac tac =
@@ -385,7 +379,7 @@ let rec eval_ncommand opts status (text,prefix_len,cmd) =
            let uris = uri::List.rev uris_rev in
 *)
            let status = status#set_ng_mode `CommandMode in
-           let status = LexiconSync.add_aliases_for_objs status (`New [uri]) in
+           let status = LexiconSync.add_aliases_for_objs status [uri] in
            let status,uris =
             List.fold_left
              (fun (status,uris) boxml ->
@@ -400,13 +394,13 @@ let rec eval_ncommand opts status (text,prefix_len,cmd) =
                     status, uris
                   end
                 else
-                  nstatus, concat_nuris uris nuris
+                  nstatus, uris@nuris
                with
                | MultiPassDisambiguator.DisambiguationError _
                | NCicTypeChecker.TypeCheckerFailure _ ->
                   (*HLog.warn "error in generating projection/eliminator";*)
                   status,uris
-             ) (status,`New [] (* uris *)) boxml in             
+             ) (status,[] (* uris *)) boxml in             
            let _,_,_,_,nobj = obj in 
            let status = match nobj with
                NCic.Inductive (is_ind,leftno,[it],_) ->
@@ -423,7 +417,7 @@ let rec eval_ncommand opts status (text,prefix_len,cmd) =
                        let _,_,menv,_,_ = invobj in
                        fst (match menv with
                              [] -> eval_ncommand opts status ("",0,GrafiteAst.NQed Stdpp.dummy_loc)
-                           | _ -> status,`New []))
+                           | _ -> status,[]))
                        (* XXX *)
                       with _ -> (*HLog.warn "error in generating inversion principle"; *)
                                 let status = status#set_ng_mode `CommandMode in status)
@@ -454,7 +448,7 @@ let rec eval_ncommand opts status (text,prefix_len,cmd) =
                      basic_eval_and_record_ncoercion_from_t_cpos_arity 
                       status (name,t,cpos,arity)
                  in
-                 let uris = concat_nuris nuris uris in
+                 let uris = nuris@uris in
                  status, uris
                with MultiPassDisambiguator.DisambiguationError _-> 
                  HLog.warn ("error in generating coercion: "^name);
@@ -513,7 +507,7 @@ let rec eval_ncommand opts status (text,prefix_len,cmd) =
       (match nmenv with
           [] ->
            eval_ncommand opts status ("",0,GrafiteAst.NQed Stdpp.dummy_loc)
-        | _ -> status,`New [])
+        | _ -> status,[])
   | GrafiteAst.NDiscriminator (_,_) -> assert false (*(loc, indty) ->
       if status#ng_mode <> `CommandMode then
         raise (GrafiteTypes.Command_error "Not in command mode")
@@ -531,7 +525,7 @@ let rec eval_ncommand opts status (text,prefix_len,cmd) =
           (match menv with
                [] -> eval_ncommand opts status ("",0,GrafiteAst.NQed Stdpp.dummy_loc)
              | _ -> prerr_endline ("Discriminator: non empty metasenv");
-                    status, `New []) *)
+                    status, []) *)
   | GrafiteAst.NInverter (loc, name, indty, selection, sort) ->
      if status#ng_mode <> `CommandMode then
       raise (GrafiteTypes.Command_error "Not in command mode")
@@ -568,7 +562,7 @@ let rec eval_ncommand opts status (text,prefix_len,cmd) =
 ;;
 
 let eval_comment ~disambiguate_command opts status (text,prefix_len,c) =
- status, `New []
+ status, []
 
 let rec eval_command ~disambiguate_command opts status (text,prefix_len,cmd) =
  let status,cmd = disambiguate_command status (text,prefix_len,cmd) in
@@ -595,9 +589,9 @@ let rec eval_command ~disambiguate_command opts status (text,prefix_len,cmd) =
        GrafiteTypes.add_moo_content
         [GrafiteAst.Include (loc,baseuri)] status
       in
-       status,`New []
-  | GrafiteAst.Print (_,_) -> status,`New []
-  | GrafiteAst.Set (loc, name, value) -> status, `New []
+       status,[]
+  | GrafiteAst.Print (_,_) -> status,[]
+  | GrafiteAst.Set (loc, name, value) -> status, []
  in
   status,uris
 
@@ -614,7 +608,7 @@ and eval_executable ~disambiguate_command opts status (text,prefix_len,ex) =
             subst_metasenv_and_fix_names status)
           status tacl
        in
-        status,`New []
+        status,[]
   | GrafiteAst.Command (_, cmd) ->
       eval_command ~disambiguate_command opts status (text,prefix_len,cmd)
   | GrafiteAst.NCommand (_, cmd) ->
@@ -636,7 +630,7 @@ and eval_from_moo status fname =
        eval_ast ~disambiguate_command:(fun status (_,_,cmd) -> status,cmd)
          status ast
       in
-       assert (lemmas=`New []);
+       assert (lemmas=[]);
        status)
     status moo
 

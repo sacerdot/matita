@@ -60,7 +60,6 @@ val set_active_interpretations: interpretation_id list -> unit
 val instantiate_appl_pattern:
   mk_appl:('term list -> 'term) -> 
   mk_implicit:(bool -> 'term) ->
-  term_of_uri : (UriManager.uri -> 'term) ->
   term_of_nref : (NReference.reference -> 'term) ->
   (string * 'term) list -> NotationPt.cic_appl_pattern ->
     'term

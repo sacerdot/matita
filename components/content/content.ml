@@ -164,7 +164,6 @@ type 'term in_object_context_element =
 
 type 'term cobj  = 
         id *                            (* id *)
-        UriManager.uri list *           (* params *)
         'term conjecture list option *  (* optional metasenv *) 
         'term in_object_context_element (* actual object *)
 ;;

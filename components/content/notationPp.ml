@@ -104,7 +104,7 @@ let rec pp_term ?(pp_parens = true) t =
               sprintf " in %s%s" ty
               (match debug_printing, href_opt with
               | true, Some uri ->
-                  sprintf "(i.e.%s)" (UriManager.string_of_uri uri)
+                  sprintf "(i.e.%s)" (NReference.string_of_reference uri)
               | _ -> ""))	  
 	  (match typ with None -> "" | Some t -> sprintf " return %s" (pp_term t))          
           (pp_patterns patterns)
@@ -183,7 +183,7 @@ and pp_pattern =
      let head_pp =
        head ^
        (match debug_printing, href with
-       | true, Some uri -> sprintf "(i.e.%s)" (UriManager.string_of_uri uri)
+       | true, Some uri -> sprintf "(i.e.%s)" (NReference.string_of_reference uri)
        | _ -> "")
      in
      sprintf "%s \\Rightarrow %s"
@@ -347,7 +347,6 @@ let pp_env env =
       env)
 
 let rec pp_cic_appl_pattern = function
-  | Ast.UriPattern uri -> UriManager.string_of_uri uri
   | Ast.NRefPattern nref -> NReference.string_of_reference nref
   | Ast.VarPattern name -> name
   | Ast.ImplicitPattern -> "?"

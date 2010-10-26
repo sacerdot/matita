@@ -43,7 +43,7 @@ val interactive_uri_choice:
   ?hide_uri_entry:bool -> ?hide_try:bool -> ?ok_label:string ->
   ?ok_action:[`AUTO|`SELECT] ->
   ?copy_cb:(string -> unit) -> unit ->
-  id:'a -> UriManager.uri list -> UriManager.uri list
+  id:'a -> NReference.reference list -> NReference.reference list
 
   (** @raise MatitaTypes.Cancel *)
 val interactive_interp_choice:

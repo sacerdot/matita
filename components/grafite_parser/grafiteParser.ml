@@ -461,9 +461,7 @@ EXTEND
         let ident = "\\("^alpha^ident_cont^"*"^decoration^"*\\|_"^ident_cont^"+"^decoration^"*\\)" in
         let rex = Str.regexp ("^"^ident^"$") in
         if Str.string_match rex id 0 then
-          if (try ignore (UriManager.uri_of_string uri); true
-              with UriManager.IllFormedUri _ -> false) ||
-             (try ignore (NReference.reference_of_string uri); true
+          if (try ignore (NReference.reference_of_string uri); true
               with NReference.IllFormedReference _ -> false)
           then
             L.Ident_alias (id, uri)
@@ -532,8 +530,7 @@ EXTEND
       ]
     ];
     level3_term: [
-      [ u = URI -> N.UriPattern (UriManager.uri_of_string u)
-      | r = NREF -> N.NRefPattern (NReference.reference_of_string r)
+      [ r = NREF -> N.NRefPattern (NReference.reference_of_string r)
       | IMPLICIT -> N.ImplicitPattern
       | id = IDENT -> N.VarPattern id
       | LPAREN; terms = LIST1 SELF; RPAREN ->

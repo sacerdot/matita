@@ -81,7 +81,7 @@ let ident_w_href href i =
   match href with
   | None -> ident i
   | Some href ->
-      let href = UriManager.string_of_uri href in
+      let href = NReference.string_of_reference href in
       add_xml_attrs [Some "xlink", "href", href] (ident i)
 
 let binder_symbol s =

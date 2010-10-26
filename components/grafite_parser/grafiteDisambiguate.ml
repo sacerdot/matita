@@ -52,7 +52,6 @@ let ncic_mk_choice = function
            | false -> NCic.Implicit `Term)
         ~mk_appl:(function 
            (NCic.Appl l)::tl -> NCic.Appl (l@tl) | l -> NCic.Appl l)
-        ~term_of_uri:(fun _ -> assert false)
         ~term_of_nref:(fun nref -> NCic.Const nref)
        name dsc
   | LexiconAst.Number_alias (_, dsc) -> 

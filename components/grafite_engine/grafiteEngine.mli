@@ -39,4 +39,4 @@ val eval_ast :
   GrafiteTypes.status ->
   GrafiteAst.statement disambiguator_input ->
    (* the new status and generated objects, if any *)
-   GrafiteTypes.status * [`Old of UriManager.uri list | `New of NUri.uri list]
+   GrafiteTypes.status * NUri.uri list

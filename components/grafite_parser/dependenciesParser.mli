@@ -28,7 +28,7 @@ exception UnableToInclude of string
   (* statements meaningful for matitadep *)
 type dependency =
   | IncludeDep of string
-  | UriDep of UriManager.uri
+  | UriDep of NUri.uri
   | InlineDep of string
 
 val pp_dependency: dependency -> string

@@ -203,7 +203,7 @@ let add_parens child_prec curr_prec t =
 let lookup_uri ids_to_uris id =
  try
    let uri = Hashtbl.find ids_to_uris id in
-   Some (UriManager.string_of_uri uri)
+   Some (NReference.string_of_reference uri)
  with Not_found -> None
 ;;
 

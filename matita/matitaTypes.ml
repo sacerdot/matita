@@ -47,9 +47,7 @@ type mathViewer_entry =
   | `Check of string  (* term *)
   | `NCic of NCic.term * NCic.context * NCic.metasenv * NCic.substitution
   | `Dir of string  (* "directory" in cic uris namespace *)
-  | `Uri of UriManager.uri (* cic object uri *)
   | `NRef of NReference.reference (* cic object uri *)
-  | `Univs of UriManager.uri
   ]
 
 let string_of_entry = function
@@ -64,9 +62,7 @@ let string_of_entry = function
   | `Check _ -> "check:"
   | `NCic (_, _, _, _) -> "nterm:"
   | `Dir uri -> uri
-  | `Uri uri -> UriManager.string_of_uri uri
   | `NRef nref -> NReference.string_of_reference nref
-  | `Univs uri -> "univs:" ^ UriManager.string_of_uri uri
 
 let entry_of_string = function
   | "about:blank" -> `About `Blank
@@ -87,7 +83,7 @@ class type mathViewer =
      *)
     method show_entry: ?reuse:bool -> mathViewer_entry -> unit
     method show_uri_list:
-      ?reuse:bool -> entry:mathViewer_entry -> UriManager.uri list -> unit
+      ?reuse:bool -> entry:mathViewer_entry -> NReference.reference list -> unit
     method screenshot: 
       GrafiteTypes.status -> NCic.metasenv -> NCic.metasenv ->
         NCic.substitution -> string -> unit

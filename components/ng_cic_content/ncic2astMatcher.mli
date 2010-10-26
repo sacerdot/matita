@@ -23,8 +23,6 @@
  * http://helm.cs.unibo.it/
  *)
 
-val set_reference_of_oxuri: (UriManager.uri -> NReference.reference) -> unit
-
 module Matcher32:
 sig
   (** @param l3_patterns level 3 (CIC) patterns (AKA cic_appl_pattern) *)

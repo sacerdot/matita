@@ -28,9 +28,6 @@
 module Ast = NotationPt
 module Util = NotationUtil
 
-let reference_of_oxuri = ref (fun _ -> assert false);;
-let set_reference_of_oxuri f = reference_of_oxuri := f;;
-
 module Matcher32 =
 struct
   module Pattern32 =
@@ -50,7 +47,6 @@ struct
       Hashtbl.hash mask, tl
 
     let mask_of_appl_pattern = function
-      | Ast.UriPattern uri -> NRef (!reference_of_oxuri uri), []
       | Ast.NRefPattern nref -> NRef nref, []
       | Ast.ImplicitPattern
       | Ast.VarPattern _ -> Blob, []
@@ -71,7 +67,6 @@ struct
     let classify = function
       | Ast.ImplicitPattern
       | Ast.VarPattern _ -> PatternMatcher.Variable
-      | Ast.UriPattern _
       | Ast.NRefPattern _
       | Ast.ApplPattern _ -> PatternMatcher.Constructor
   end

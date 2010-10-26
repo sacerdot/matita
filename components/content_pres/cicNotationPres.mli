@@ -35,7 +35,7 @@ val box_of_mpres: mathml_markup -> boxml_markup
 
 (** {2 Rendering} *)
 
-val lookup_uri: (Interpretations.cic_id,UriManager.uri) Hashtbl.t ->
+val lookup_uri: (Interpretations.cic_id,NReference.reference) Hashtbl.t ->
   Interpretations.cic_id -> string option
 
 (** level 1 -> level 0

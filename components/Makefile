@@ -11,15 +11,13 @@ MODULES =			\
 	registry		\
 	syntax_extensions	\
 	thread			\
-	urimanager		\
 	logger			\
+	ng_kernel		\
 	getter			\
 	library			\
-	ng_kernel		\
 	content		\
 	grafite			\
 	disambiguation	        \
-	ng_kernel               \
 	ng_refiner              \
 	ng_disambiguation	\
 	ng_cic_content		\

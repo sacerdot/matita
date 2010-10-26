@@ -589,7 +589,7 @@ in
   let res =
    match kind with
     | NCic.Fixpoint (is_rec, ifl, _) -> 
-         (gen_id object_prefix seed, [], conjectures,
+         (gen_id object_prefix seed, conjectures,
             `Joint
               { K.joint_id = gen_id joint_prefix seed;
                 K.joint_kind = 
@@ -599,7 +599,7 @@ in
                 K.joint_defs = List.map (build_fixpoint is_rec seed) ifl
               }) 
     | NCic.Inductive (is_ind, lno, itl, _) ->
-         (gen_id object_prefix seed, [], conjectures,
+         (gen_id object_prefix seed, conjectures,
             `Joint
               { K.joint_id = gen_id joint_prefix seed;
                 K.joint_kind = 
@@ -609,12 +609,12 @@ in
     | NCic.Constant (_,_,Some bo,ty,_) ->
        let ty = nast_of_cic ~context:[] ty in
        let bo = nast_of_cic ~context:[] bo in
-        (gen_id object_prefix seed, [], conjectures,
+        (gen_id object_prefix seed, conjectures,
           `Def (K.Const,ty,
             build_def_item seed [] [] (get_id bo) (NUri.name_of_uri uri) bo ty))
     | NCic.Constant (_,_,None,ty,_) ->
        let ty = nast_of_cic ~context:[] ty in
-         (gen_id object_prefix seed, [], conjectures,
+         (gen_id object_prefix seed, conjectures,
            `Decl (K.Const,
              (*CSC: ??? get_id ty here used to be the id of the axiom! *)
              build_decl_item seed (get_id ty) (NUri.name_of_uri uri) ty))

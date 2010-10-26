@@ -45,14 +45,12 @@ val nlookup_num_by_dsc: string -> NCic.term codomain_item
 val lookup_symbol_by_dsc: 
   mk_appl: ('term list -> 'term) ->
   mk_implicit: (bool -> 'term) ->
-  term_of_uri: (UriManager.uri -> 'term) ->
   term_of_nref: (NReference.reference -> 'term) ->
   string -> string -> 'term codomain_item
 
 val mk_choice:
   mk_appl: ('term list -> 'term) ->
   mk_implicit: (bool -> 'term) ->
-  term_of_uri: (UriManager.uri -> 'term) ->
   term_of_nref: (NReference.reference -> 'term) ->
   string * NotationPt.argument_pattern list *
   NotationPt.cic_appl_pattern ->

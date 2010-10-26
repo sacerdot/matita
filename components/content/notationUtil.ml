@@ -328,21 +328,13 @@ let dressn ~sep:sauces =
 let find_appl_pattern_uris ap =
   let rec aux acc =
     function
-    | Ast.UriPattern uri -> `Uri uri :: acc
-    | Ast.NRefPattern nref -> `NRef nref :: acc
+    | Ast.NRefPattern nref -> nref :: acc
     | Ast.ImplicitPattern
     | Ast.VarPattern _ -> acc
     | Ast.ApplPattern apl -> List.fold_left aux acc apl
   in
   let uris = aux [] ap in
-  let cmp u1 u2 =
-   match u1,u2 with
-      `Uri u1, `Uri u2 -> UriManager.compare u1 u2
-    | `NRef r1, `NRef r2 -> NReference.compare r1 r2
-    | `Uri _,`NRef _ -> -1
-    | `NRef _, `Uri _ -> 1
-  in
-  HExtlib.list_uniq (List.fast_sort cmp uris)
+  HExtlib.list_uniq (List.fast_sort NReference.compare uris)
 
 let rec find_branch =
   function

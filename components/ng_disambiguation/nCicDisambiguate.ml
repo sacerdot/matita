@@ -14,16 +14,12 @@
 open Printf
 
 open DisambiguateTypes
-open UriManager
 
 module Ast = NotationPt
 module NRef = NReference 
 
 let debug_print s = prerr_endline (Lazy.force s);;
 let debug_print _ = ();;
-
-let reference_of_oxuri = ref (fun _ -> assert false);;
-let set_reference_of_oxuri f = reference_of_oxuri := f;;
 
 let cic_name_of_name = function
   | Ast.Ident (n, None) ->  n
@@ -328,7 +324,7 @@ let interpretate_term_and_interpretate_term_option
     | NotationPt.Uri (uri, subst) ->
        assert (subst = None);
        (try
-         NCic.Const (!reference_of_oxuri(UriManager.uri_of_string uri))
+         NCic.Const (NReference.reference_of_string uri)
         with NRef.IllFormedReference _ ->
          NotationPt.fail loc "Ill formed reference")
     | NotationPt.NRef nref -> NCic.Const nref

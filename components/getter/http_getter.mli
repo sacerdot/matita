@@ -60,10 +60,10 @@ val ls: local:bool -> string -> ls_item list
 
   (** {2 UriManager shorthands} *)
 
-val getxml'     : UriManager.uri -> string
-val resolve'    : local:bool -> writable:bool -> UriManager.uri -> string
-val exists'     : local:bool -> UriManager.uri -> bool
-val filename'     : local:bool -> writable:bool -> UriManager.uri -> string
+val getxml'     : NUri.uri -> string
+val resolve'    : local:bool -> writable:bool -> NUri.uri -> string
+val exists'     : local:bool -> NUri.uri -> bool
+val filename'     : local:bool -> writable:bool -> NUri.uri -> string
 
   (** {2 Misc} *)
 

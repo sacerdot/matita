@@ -311,7 +311,7 @@ let basic_eval_and_record_ncoercion_from_t_cpos_arity
   let status, uris =
    basic_eval_and_record_ncoercion (name,t,src,tgt,cpos,arity) status
   in
-   status,`New uris
+   status,uris
 ;;
 
 let eval_ncoercion status name t ty (id,src) tgt = 
@@ -330,6 +330,6 @@ let eval_ncoercion status name t ty (id,src) tgt =
  let status, uris =
   basic_eval_and_record_ncoercion (name,t,src,tgt,cpos,arity) status
  in
-  status,`New uris
+  status,uris
 ;;
 

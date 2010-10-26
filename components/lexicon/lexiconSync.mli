@@ -24,8 +24,7 @@
  *)
 
 val add_aliases_for_objs:
- #LexiconEngine.status as 'status ->
-  [`Old of UriManager.uri list | `New of NUri.uri list]-> 'status
+ #LexiconEngine.status as 'status -> NUri.uri list -> 'status
 
 val time_travel: 
   present:#LexiconEngine.status -> past:#LexiconEngine.status -> unit

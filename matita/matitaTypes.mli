@@ -33,9 +33,7 @@ type mathViewer_entry =
   | `Check of string
   | `NCic of NCic.term * NCic.context * NCic.metasenv * NCic.substitution
   | `Dir of string
-  | `Uri of UriManager.uri
   | `NRef of NReference.reference
-  | `Univs of UriManager.uri
   ]
 
 val string_of_entry : mathViewer_entry -> string
@@ -45,7 +43,7 @@ class type mathViewer =
   object
     method show_entry : ?reuse:bool -> mathViewer_entry -> unit
     method show_uri_list :
-      ?reuse:bool -> entry:mathViewer_entry -> UriManager.uri list -> unit
+      ?reuse:bool -> entry:mathViewer_entry -> NReference.reference list -> unit
     method screenshot: 
       GrafiteTypes.status -> NCic.metasenv -> NCic.metasenv ->
         NCic.substitution -> string -> unit

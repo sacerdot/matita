@@ -11,8 +11,6 @@
 
 (* $Id: nCic.ml 9058 2008-10-13 17:42:30Z tassi $ *)
 
-val set_reference_of_oxuri: (UriManager.uri -> NReference.reference) -> unit
-
 val disambiguate_term :
   context:NCic.context ->
   metasenv:NCic.metasenv -> 

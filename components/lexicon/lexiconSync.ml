@@ -45,51 +45,20 @@ let alias_diff ~from status =
     status#lstatus.LexiconEngine.aliases []
 ;;
 
-(** given a uri and a type list (the contructors types) builds a list of pairs
- *  (name,uri) that is used to generate automatic aliases **)
-let extract_alias types uri = 
-  fst(List.fold_left (
-    fun (acc,i) (name, _, _, cl) -> 
-      (name, UriManager.uri_of_uriref uri i None) ::
-      (fst(List.fold_left (
-        fun (acc,j) (name,_) ->
-          (((name,UriManager.uri_of_uriref uri i
-          (Some j)) :: acc) , j+1)
-        ) (acc,1) cl)),i+1
-  ) ([],0) types)
-
-let build_aliases =
- List.map
-  (fun (name,uri) ->
-    DisambiguateTypes.Id name, LexiconAst.Ident_alias (name, 
-     UriManager.string_of_uri uri))
-
-let add_aliases_for_inductive_def status types uri = 
-  let aliases = build_aliases (extract_alias types uri) in
-   LexiconEngine.set_proof_aliases status aliases
-
-let add_alias_for_constant status uri =
- let name = UriManager.name_of_uri uri in
- let new_env = build_aliases [(name,uri)] in
- LexiconEngine.set_proof_aliases status new_env
-
 let add_aliases_for_objs status =
-  function
-   `Old _ -> assert false (* MATITA 1.0 *)
- | `New nrefs ->
-     List.fold_left
-      (fun status nref ->
-        let references = NCicLibrary.aliases_of nref in
-        let new_env =
-         List.map
-          (fun u ->
-            let name = NCicPp.r2s true u in
-             DisambiguateTypes.Id name,
-              LexiconAst.Ident_alias (name,NReference.string_of_reference u)
-          ) references
-        in
-         LexiconEngine.set_proof_aliases status new_env
-      ) status nrefs
+ List.fold_left
+  (fun status nref ->
+    let references = NCicLibrary.aliases_of nref in
+    let new_env =
+     List.map
+      (fun u ->
+        let name = NCicPp.r2s true u in
+         DisambiguateTypes.Id name,
+          LexiconAst.Ident_alias (name,NReference.string_of_reference u)
+      ) references
+    in
+     LexiconEngine.set_proof_aliases status new_env
+  ) status
  
 module OrderedId = 
 struct

@@ -28,7 +28,6 @@
 open Printf
 
 open DisambiguateTypes
-open UriManager
 
 module Ast = NotationPt
 

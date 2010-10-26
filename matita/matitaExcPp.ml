@@ -121,7 +121,6 @@ let rec to_string =
   | GrafiteTypes.Command_error msg -> None, "Error: " ^ msg
   | CicNotationParser.Parse_error err ->
       None, sprintf "Parse error: %s" err
-  | UriManager.IllFormedUri uri -> None, sprintf "invalid uri: %s" uri
   | Unix.Unix_error (code, api, param) ->
       let err = Unix.error_message code in
       None, "Unix Error (" ^ api ^ "): " ^ err

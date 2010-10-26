@@ -135,12 +135,7 @@ let rec eval_command ?(mode=L.WithPreferences) sstatus cmd =
             begin try
               match DisambiguateTypes.Environment.find item status.aliases with
                  L.Ident_alias (_, uri) ->
-                  (try
-                    NotationPt.NRefPattern
-                     (NReference.reference_of_string uri)
-                   with
-                    NReference.IllFormedReference _ ->
-                     NotationPt.UriPattern (UriManager.uri_of_string uri))
+                  NotationPt.NRefPattern (NReference.reference_of_string uri)
                | _ -> assert false
              with Not_found -> 
               prerr_endline ("LexiconEngine.eval_command: domain item not found: " ^ 

@@ -38,8 +38,6 @@ let load_moo_from_file ~fname =
   (raw: moo)
 
 let rehash_cmd_uris =
-  let rehash_uri uri =
-    UriManager.uri_of_string (UriManager.string_of_uri uri) in
   function
   | GrafiteAst.Include _ as cmd -> cmd
   | cmd ->

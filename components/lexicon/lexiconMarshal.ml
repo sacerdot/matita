@@ -37,14 +37,10 @@ let load_lexicon_from_file ~fname =
   (raw: lexicon)
 
 let rehash_cmd_uris =
-  let rehash_uri uri =
-    UriManager.uri_of_string (UriManager.string_of_uri uri) in
   function
   | LexiconAst.Interpretation (loc, dsc, args, cic_appl_pattern) ->
       let rec aux =
         function
-        | NotationPt.UriPattern uri ->
-            NotationPt.UriPattern (rehash_uri uri)
         | NotationPt.NRefPattern (NReference.Ref (uri,spec)) ->
            let uri = NCicLibrary.refresh_uri uri in
             NotationPt.NRefPattern (NReference.reference_of_spec uri spec)

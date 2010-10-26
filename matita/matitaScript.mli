@@ -86,7 +86,7 @@ end
 val script: 
   source_view:GSourceView2.source_view -> 
   mathviewer: MatitaTypes.mathViewer-> 
-  urichooser: (UriManager.uri list -> UriManager.uri list) -> 
+  urichooser: (NReference.reference list -> NReference.reference list) -> 
   ask_confirmation: 
     (title:string -> message:string -> [`YES | `NO | `CANCEL]) -> 
   set_star: (bool -> unit) ->
