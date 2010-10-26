@@ -15,43 +15,43 @@
 include "logic/connectives.ma".
 include "properties/relations.ma".
 
-ninductive eq (A: Type[0]) (a: A) : A → CProp[0] ≝
+inductive eq (A: Type[0]) (a: A) : A → CProp[0] ≝
  refl: eq A a a.
 
-nlemma eq_rect_Type0_r':
+lemma eq_rect_Type0_r':
  ∀A.∀a,x.∀p:eq ? x a.∀P: ∀x:A. eq ? x a → Type[0]. P a (refl A a) → P x p.
- #A; #a; #x; #p; ncases p; #P; #H; nassumption.
-nqed.
+ #A; #a; #x; #p; cases p; #P; #H; assumption.
+qed.
 
-nlemma eq_rect_Type0_r:
+lemma eq_rect_Type0_r:
  ∀A.∀a.∀P: ∀x:A. eq ? x a → Type[0]. P a (refl A a) → ∀x.∀p:eq ? x a.P x p.
- #A; #a; #P; #p; #x0; #p0; napply (eq_rect_Type0_r' ??? p0); nassumption.
-nqed.
+ #A; #a; #P; #p; #x0; #p0; apply (eq_rect_Type0_r' ??? p0); assumption.
+qed.
 
-nlemma eq_rect_CProp0_r':
+lemma eq_rect_CProp0_r':
  ∀A.∀a,x.∀p:eq ? x a.∀P: ∀x:A. eq ? x a → CProp[0]. P a (refl A a) → P x p.
- #A; #a; #x; #p; ncases p; #P; #H; nassumption.
-nqed.
+ #A; #a; #x; #p; cases p; #P; #H; assumption.
+qed.
 
-nlemma eq_rect_CProp0_r:
+lemma eq_rect_CProp0_r:
  ∀A.∀a.∀P: ∀x:A. eq ? x a → CProp[0]. P a (refl A a) → ∀x.∀p:eq ? x a.P x p.
- #A; #a; #P; #p; #x0; #p0; napply (eq_rect_CProp0_r' ??? p0); nassumption.
-nqed.
+ #A; #a; #P; #p; #x0; #p0; apply (eq_rect_CProp0_r' ??? p0); assumption.
+qed.
 
-nlemma eq_ind_r :
+lemma eq_ind_r :
  ∀A.∀a.∀P: ∀x:A. eq ? x a → Prop. P a (refl A a) → ∀x.∀p:eq ? x a.P x p.
- #A; #a; #P; #p; #x0; #p0; napply (eq_rect_CProp0_r' ??? p0); nassumption.
-nqed.
+ #A; #a; #P; #p; #x0; #p0; apply (eq_rect_CProp0_r' ??? p0); assumption.
+qed.
 
 interpretation "leibnitz's equality" 'eq t x y = (eq t x y).
 
-interpretation "leibnitz's non-equality" 'neq t x y = (Not (eq t x y)).
+interpretation "leibnitz's on-equality" 'neq t x y = (Not (eq t x y)).
 
-ndefinition R0 ≝ λT:Type[0].λt:T.t.
+definition R0 ≝ λT:Type[0].λt:T.t.
   
-ndefinition R1 ≝ eq_rect_Type0.
+definition R1 ≝ eq_rect_Type0.
 
-ndefinition R2 :
+definition R2 :
   ∀T0:Type[0].
   ∀a0:T0.
   ∀T1:∀x0:T0. a0=x0 → Type[0].
@@ -64,12 +64,12 @@ ndefinition R2 :
   ∀e1:R1 ?? T1 a1 ? e0 = b1.
   T2 b0 e0 b1 e1.
 #T0;#a0;#T1;#a1;#T2;#a2;#b0;#e0;#b1;#e1;
-napply (eq_rect_Type0 ????? e1);
-napply (R1 ?? ? ?? e0);
-napply a2;
-nqed.
+apply (eq_rect_Type0 ????? e1);
+apply (R1 ?? ? ?? e0);
+apply a2;
+qed.
 
-ndefinition R3 :
+definition R3 :
   ∀T0:Type[0].
   ∀a0:T0.
   ∀T1:∀x0:T0. a0=x0 → Type[0].
@@ -87,12 +87,12 @@ ndefinition R3 :
   ∀e2:R2 ???? T2 a2 b0 e0 ? e1 = b2.
   T3 b0 e0 b1 e1 b2 e2.
 #T0;#a0;#T1;#a1;#T2;#a2;#T3;#a3;#b0;#e0;#b1;#e1;#b2;#e2;
-napply (eq_rect_Type0 ????? e2);
-napply (R2 ?? ? ???? e0 ? e1);
-napply a3;
-nqed.
+apply (eq_rect_Type0 ????? e2);
+apply (R2 ?? ? ???? e0 ? e1);
+apply a3;
+qed.
 
-ndefinition R4 :
+definition R4 :
   ∀T0:Type[0].
   ∀a0:T0.
   ∀T1:∀x0:T0. eq T0 a0 x0 → Type[0].
@@ -122,36 +122,36 @@ ndefinition R4 :
   ∀e3:eq (T3 …) (R3 T0 a0 T1 a1 T2 a2 T3 a3 b0 e0 b1 e1 b2 e2) b3.
   T4 b0 e0 b1 e1 b2 e2 b3 e3.
 #T0;#a0;#T1;#a1;#T2;#a2;#T3;#a3;#T4;#a4;#b0;#e0;#b1;#e1;#b2;#e2;#b3;#e3;
-napply (eq_rect_Type0 ????? e3);
-napply (R3 ????????? e0 ? e1 ? e2);
-napply a4;
-nqed.
+apply (eq_rect_Type0 ????? e3);
+apply (R3 ????????? e0 ? e1 ? e2);
+apply a4;
+qed.
 
-naxiom streicherK : ∀T:Type[0].∀t:T.∀P:t = t → Type[2].P (refl ? t) → ∀p.P p. 
+axiom streicherK : ∀T:Type[0].∀t:T.∀P:t = t → Type[2].P (refl ? t) → ∀p.P p. 
 
-ndefinition EQ: ∀A:Type[0]. equivalence_relation A.
- #A; napply mk_equivalence_relation
-  [ napply eq
-  | napply refl
-  | #x; #y; #H; nrewrite < H; napply refl
-  | #x; #y; #z; #Hyx; #Hxz; nrewrite < Hxz; nassumption]
-nqed.
+definition EQ: ∀A:Type[0]. equivalence_relation A.
+ #A; apply mk_equivalence_relation
+  [ apply eq
+  | apply refl
+  | #x; #y; #H; rewrite < H; apply refl
+  | #x; #y; #z; #Hyx; #Hxz; rewrite < Hxz; assumption]
+qed.
 
-naxiom T1 : Type[0].
-naxiom T2 : T1 → Type[0].
-naxiom t1 : T1.
-naxiom t2 : ∀x:T1. T2 x.
+axiom T1 : Type[0].
+axiom T2 : T1 → Type[0].
+axiom t1 : T1.
+axiom t2 : ∀x:T1. T2 x.
 
-ninductive I2 : ∀r1:T1.T2 r1 → Type[0] ≝ 
+inductive I2 : ∀r1:T1.T2 r1 → Type[0] ≝ 
 | i2c1 : ∀x1:T1.∀x2:T2 x1. I2 x1 x2
 | i2c2 : I2 t1 (t2 t1).
 
-(* nlemma i2d : ∀a,b.∀x,y:I2 a b.
+(* lemma i2d : ∀a,b.∀x,y:I2 a b.
              ∀e1:a = a.∀e2:R1 T1 a (λz,p.T2 z) b a e1 = b.
              ∀e: R2 T1 a (λz,p.T2 z) b (λz1,p1,z2,p2.I2 z1 z2) x a e1 b e2 = y.
              Type[2].
 #a;#b;#x;#y;
-napply (
+apply (
 match x return (λr1,r2,r.
                  ∀e1:r1 = a. ∀e2:R1 T1 r1 (λz,p. T2 z) r2 a e1 = b.
                  ∀e :R2 T1 r1 (λz,p. T2 z) r2 (λz1,p1,z2,p2. I2 z1 z2) r a e1 b e2 = y. Type[2]) with 
@@ -164,7 +164,7 @@ match x return (λr1,r2,r.
     [ i2c1 y1 y2 ⇒ ?
     | i2c2 ⇒ ? ])
  [#e1; #e2; #e;
-  napply (∀P:Type[1].
+  apply (∀P:Type[1].
                      (∀f1:x1 = y1. ∀f2: R1 T1 x1 (λz,p.T2 z) x2 y1 f1 = y2.
                       ∀f: R2 T1 x1 (λz,p.T2 z) x2
                           (λz1,p1,z2,p2.eq ? 
@@ -179,7 +179,7 @@ match x return (λr1,r2,r.
   *)                          (i2c1 y1 y2)) 
                           ? y1 f1 y2 f2 = refl (I2 y1 y2) (i2c1 y1 y2).P) 
                    → P);
-  napply (∀P:Type[1].
+  apply (∀P:Type[1].
                      (∀f1:x1 = y1. ∀f2: R1 T1 x1 (λz,p.T2 z) x2 y1 f1 = y2. 
                       ∀f: R2 T1 x1 (λz,p.T2 z) x2
                           (λz1,p1,z2,p2.eq (I2 y1 y2) 
@@ -193,7 +193,7 @@ match x return (λr1,r2,r.
 
 
 
-ndefinition i2d : ∀a,b.∀x,y:I2 a b.
+definition i2d : ∀a,b.∀x,y:I2 a b.
                   ∀e1:a = a.∀e2:R1 T1 a (λz,p.T2 z) b a e1 = b.
                   ∀e: R2 T1 a (λz,p.T2 z) b (λz1,p1,z2,p2.I2 z1 z2) x a e1 b e2 = y.Type[2] ≝
 λa,b,x,y. 

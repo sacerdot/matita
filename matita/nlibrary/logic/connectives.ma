@@ -14,43 +14,43 @@
 
 include "logic/pts.ma".
 
-ninductive True: CProp[0] ≝
+inductive True: CProp[0] ≝
   I : True.
 
-ninductive False: CProp[0] ≝.
+inductive False: CProp[0] ≝.
 
-ndefinition Not: CProp[0] → CProp[0] ≝
+definition Not: CProp[0] → CProp[0] ≝
   λA. A → False.
 
-interpretation "logical not" 'not x = (Not x).
+interpretation "logical ot" 'not x = (Not x).
 
-ninductive And (A,B:CProp[0]) : CProp[0] ≝
+inductive And (A,B:CProp[0]) : CProp[0] ≝
     conj : A → B → And A B.
 
 interpretation "logical and" 'and x y = (And x y).
 
-ninductive Or (A,B:CProp[0]) : CProp[0] ≝
+inductive Or (A,B:CProp[0]) : CProp[0] ≝
      or_introl : A → Or A B
    | or_intror : B → Or A B.
 
 interpretation "logical or" 'or x y = (Or x y).
 
-ninductive Ex (A:Type[0]) (P:A → CProp[0]) : CProp[0] ≝
+inductive Ex (A:Type[0]) (P:A → CProp[0]) : CProp[0] ≝
     ex_intro: ∀x:A. P x → Ex A P.
 
 
-ninductive Ex1 (A:Type[1]) (P:A → CProp[0]) : CProp[1] ≝
+inductive Ex1 (A:Type[1]) (P:A → CProp[0]) : CProp[1] ≝
     ex_intro1: ∀x:A. P x → Ex1 A P.
 
 interpretation "exists1" 'exists x = (Ex1 ? x).
 interpretation "exists" 'exists x = (Ex ? x).
 
-ninductive sigma (A : Type[0]) (P : A → CProp[0]) : Type[0] ≝ 
+inductive sigma (A : Type[0]) (P : A → CProp[0]) : Type[0] ≝ 
  sig_intro : ∀x:A.P x → sigma A P. 
 
 interpretation "sigma" 'sigma \eta.p = (sigma ? p). 
 
-nrecord iff (A,B: CProp[0]) : CProp[0] ≝
+record iff (A,B: CProp[0]) : CProp[0] ≝
  { if: A → B;
    fi: B → A
  }.
