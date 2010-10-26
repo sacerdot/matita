@@ -7,7 +7,7 @@ INTERFACE_FILES = 			\
 	cicNotation2.mli		\
 	nEstatus.mli			\
 	grafiteDisambiguate.mli 	\
-	print_grammar.mli 		\
+	print_grammar.mli 	\
 	$(NULL)
 IMPLEMENTATION_FILES = $(INTERFACE_FILES:%.mli=%.ml)
 

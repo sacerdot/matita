@@ -13,7 +13,6 @@
 
 type eq_sig_type = Eq | EqInd_l | EqInd_r | Refl
 
-val set_reference_of_oxuri: (UriManager.uri -> NReference.reference) -> unit
 val set_default_sig: unit -> unit
 val get_sig: eq_sig_type -> NCic.term
 

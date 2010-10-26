@@ -39,32 +39,6 @@ let set_default_sig () =
   (*prerr_endline "setting default sig";*)
   eqsig := default_sig
 
-let set_reference_of_oxuri reference_of_oxuri = 
-  prerr_endline "setting oxuri in nCicProof";
-  let nsig = function
-    | Eq -> 
-        NCic.Const
-          (reference_of_oxuri 
-             (UriManager.uri_of_string 
-                "cic:/matita/logic/equality/eq.ind#xpointer(1/1)"))  
-    | EqInd_l -> 
-        NCic.Const
-          (reference_of_oxuri 
-             (UriManager.uri_of_string 
-                "cic:/matita/logic/equality/eq_ind.con"))
-    | EqInd_r -> 
-        NCic.Const
-          (reference_of_oxuri 
-             (UriManager.uri_of_string 
-                "cic:/matita/logic/equality/eq_elim_r.con"))
-    | Refl ->
-        NCic.Const
-          (reference_of_oxuri 
-             (UriManager.uri_of_string 
-                "cic:/matita/logic/equality/eq.ind#xpointer(1/1/1)"))
-  in eqsig:= nsig
-  ;;
-
 (* let debug c r = prerr_endline r; c *)
 let debug c _ = c;;
 

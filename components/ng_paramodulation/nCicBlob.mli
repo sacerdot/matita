@@ -11,7 +11,6 @@
 
 (* $Id: terms.mli 9822 2009-06-03 15:37:06Z tassi $ *)
 
-val set_reference_of_oxuri: (UriManager.uri -> NReference.reference) -> unit
 val set_eqP: NCic.term -> unit
 val set_default_eqP: unit -> unit
 

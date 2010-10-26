@@ -33,18 +33,6 @@ let setoid_eq =
 
 let set_default_eqP() = eqPref := default_eqP
 
-let set_reference_of_oxuri f = 
-  let eqnew = function 
-      _ -> 
-	let r = f(UriManager.uri_of_string 
-          "cic:/matita/logic/equality/eq.ind#xpointer(1/1)")
-	in
-	  NCic.Const r
-  in
-    eqPref := eqnew
-;;
-
-
 module type NCicContext =
   sig
     val metasenv : NCic.metasenv
