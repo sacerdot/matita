@@ -167,8 +167,6 @@ let parse_cmdline init_status =
     wants [Registry] init_status;
     let includes = ref [] in
     let default_includes = [ 
-      BuildTimeConf.stdlib_dir_devel;
-      BuildTimeConf.stdlib_dir_installed ; 
       BuildTimeConf.new_stdlib_dir_devel;
       BuildTimeConf.new_stdlib_dir_installed ; 
     ] 
