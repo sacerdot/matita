@@ -34,8 +34,6 @@ val command_error: string -> 'a   (** @raise Command_error *)
 class status :
  string ->
   object ('self)
-   method moo_content_rev: GrafiteMarshal.moo
-   method set_moo_content_rev: GrafiteMarshal.moo -> 'self
    method baseuri: string
    method set_baseuri: string -> 'self
    method ng_mode: [`ProofMode | `CommandMode]
@@ -43,6 +41,3 @@ class status :
    (* Warning: #stack and #obj are meaningful iff #ng_mode is `ProofMode *)
    inherit NTacStatus.tac_status
   end
-
-  (** list is not reversed, head command will be the first emitted *)
-val add_moo_content: GrafiteMarshal.ast_command list -> status -> status

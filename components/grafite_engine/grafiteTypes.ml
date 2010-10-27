@@ -37,11 +37,8 @@ class status = fun (b : string) ->
    NCic.Constant([],"",None,NCic.Implicit `Closed,(`Provided,`Theorem,`Regular))
  in
   object
-   val moo_content_rev = ([] : GrafiteMarshal.moo)
    val baseuri = b
    val ng_mode = (`CommandMode : [`CommandMode | `ProofMode])
-   method moo_content_rev = moo_content_rev
-   method set_moo_content_rev v = {< moo_content_rev = v >}
    method baseuri = baseuri
    method set_baseuri v = {< baseuri = v >}
    method ng_mode = ng_mode;
@@ -49,10 +46,3 @@ class status = fun (b : string) ->
    (* Warning: #stack and #obj are meaningful iff #ng_mode is `ProofMode *)
    inherit ([Continuationals.Stack.t] NTacStatus.status fake_obj (Continuationals.Stack.empty))
  end
-
-let add_moo_content cmds status =
-  let content = status#moo_content_rev in
-  let content' = cmds@content in
-(*   prerr_endline ("new moo content: " ^ String.concat " " (List.map
-    GrafiteAstPp.pp_command content')); *)
-   status#set_moo_content_rev content'

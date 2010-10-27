@@ -75,14 +75,10 @@ let save_moo grafite_status =
   match script#bos, script#eos with
   | true, _ -> ()
   | _, true ->
-     let moo_fname = 
-       LibraryMisc.obj_file_of_baseuri ~must_exist:false ~baseuri
-        ~writable:true in
      let lexicon_fname =
        LibraryMisc.lexicon_file_of_baseuri 
          ~must_exist:false ~baseuri ~writable:true
      in
-     GrafiteMarshal.save_moo moo_fname grafite_status#moo_content_rev;
      LexiconMarshal.save_lexicon lexicon_fname
       grafite_status#lstatus.LexiconEngine.lexicon_content_rev;
      NCicLibrary.Serializer.serialize ~baseuri:(NUri.uri_of_string baseuri)

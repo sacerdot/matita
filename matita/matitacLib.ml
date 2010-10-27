@@ -225,13 +225,11 @@ let compile atstart options fname =
        aux_for_dump print_cb grafite_status
     in
     let elapsed = Unix.time () -. time in
-    let moo_content_rev,lexicon_content_rev = 
-      grafite_status#moo_content_rev, 
-       grafite_status#lstatus.LexiconEngine.lexicon_content_rev
+    let lexicon_content_rev = 
+     grafite_status#lstatus.LexiconEngine.lexicon_content_rev
     in
      (if Helm_registry.get_bool "matita.moo" then begin
         (* FG: we do not generate .moo when dumping .mma files *)
-        GrafiteMarshal.save_moo moo_fname moo_content_rev;
         LexiconMarshal.save_lexicon lexicon_fname lexicon_content_rev;
         NCicLibrary.Serializer.serialize ~baseuri:(NUri.uri_of_string baseuri)
          grafite_status#dump

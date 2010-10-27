@@ -3,7 +3,6 @@ PREDICATES =
 
 INTERFACE_FILES =		\
 	grafiteAstPp.mli	\
-	grafiteMarshal.mli	\
 	$(NULL)
 IMPLEMENTATION_FILES =		\
 	grafiteAst.ml		\
