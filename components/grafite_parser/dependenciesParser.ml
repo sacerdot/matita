@@ -48,9 +48,11 @@ let parse_dependencies lexbuf =
       (parser
       | [< '("QSTRING", s) >] ->
           (* because of alias id qstring = qstring :-( *)
-          if String.sub s 0 5 <> "cic:/" then true,acc
-          else
-            true, (UriDep (NUri.uri_of_string s) :: acc)
+          (try
+            if String.sub s 0 5 <> "cic:/" then true,acc
+            else
+              true, (UriDep (NUri.uri_of_string s) :: acc)
+           with Invalid_argument _ -> true,acc)
       | [< '("URI", u) >] ->
           true, (UriDep (NUri.uri_of_string u) :: acc)
       | [< '("IDENT", "include"); '("QSTRING", fname) >] ->
