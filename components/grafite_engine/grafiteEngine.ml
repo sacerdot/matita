@@ -27,7 +27,7 @@
 
 exception Drop
 (* mo file name, ma file name *)
-exception IncludedFileNotCompiled of string * string 
+(*exception IncludedFileNotCompiled of string * string *)
 exception NMacro of GrafiteAst.loc * GrafiteAst.nmacro
 
 type 'a disambiguator_input = string * int * 'a
@@ -569,6 +569,7 @@ let rec eval_command ~disambiguate_command opts status (text,prefix_len,cmd) =
  let status,uris =
   match cmd with
   | GrafiteAst.Include (loc, baseuri) ->
+      (*
      let status =
       let moopath_rw, moopath_r = 
        LibraryMisc.obj_file_of_baseuri 
@@ -582,14 +583,14 @@ let rec eval_command ~disambiguate_command opts status (text,prefix_len,cmd) =
       in
        eval_from_moo status moopath
      in
-      let status =
+      let status = *)
        NCicLibrary.Serializer.require ~baseuri:(NUri.uri_of_string baseuri)
-        status in
+        status (*in
       let status =
        GrafiteTypes.add_moo_content
         [GrafiteAst.Include (loc,baseuri)] status
       in
-       status,[]
+      status,[] *), []
   | GrafiteAst.Print (_,_) -> status,[]
   | GrafiteAst.Set (loc, name, value) -> status, []
  in

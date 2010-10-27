@@ -12,6 +12,7 @@
 (* $Id$ *)
 
 exception LibraryOutOfSync of string Lazy.t
+exception IncludedFileNotCompiled of string * string 
 
 let magic = 2;;
 
@@ -67,7 +68,9 @@ let require_path path =
    dump
 ;;
 
-let require0 ~baseuri = require_path (path_of_baseuri baseuri);;
+let require0 ~baseuri =
+  require_path (path_of_baseuri baseuri)
+;;
 
 let db_path () = Helm_registry.get "matita.basedir" ^ "/ng_db.ng";;
 
@@ -275,10 +278,29 @@ module Serializer =
 
   let serialize = serialize
 
+  let require2 ~baseuri status =
+   try
+    includes := baseuri::!includes;
+    let dump = require0 ~baseuri in
+     List.fold_right !require1#run dump status
+   with
+    Sys_error _ ->
+     raise (IncludedFileNotCompiled(path_of_baseuri baseuri,NUri.string_of_uri baseuri))
+
+  let record_include =
+   let aux baseuri ~refresh_uri_in_universe ~refresh_uri_in_term =
+     (* memorizzo baseuri in una tabella; *)
+     require2 ~baseuri
+   in
+    register#run "include"
+     object(self : 'a register_type)
+      method run = aux
+     end
+
   let require ~baseuri status =
-   includes := baseuri::!includes;
-   let dump = require0 ~baseuri in
-    List.fold_right !require1#run dump status
+   let status = require2 ~baseuri status in
+   let dump = record_include baseuri :: status#dump in
+    status#set_dump dump
 end
 
 

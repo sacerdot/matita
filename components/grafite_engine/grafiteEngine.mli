@@ -24,7 +24,7 @@
  *)
 
 exception Drop
-exception IncludedFileNotCompiled of string * string
+(*exception IncludedFileNotCompiled of string * string*)
 exception NMacro of GrafiteAst.loc * GrafiteAst.nmacro
 
 type 'a disambiguator_input = string * int * 'a
