@@ -1,7 +1,15 @@
 grafitetypes -> tac -> auto + eq + (grafitedisambiguate = lexicon+nciccoercion)
            |--> dumpable                                    |             |
-           |--> nciclibrary                             interpretation unif_hint
+           |--> nciclibrary                                 |       unif_hint
+                                                            |
+                    interpretation + termcontentpres = cicnotation
+                                                         
+
+
+
 
 ntermciccontent = nciccoercion+interpretation
                        |
                   unif_hint
+
+applytransformation = ntermciccontent+termcontentpres

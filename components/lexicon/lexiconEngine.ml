@@ -49,18 +49,18 @@ let initial_status = {
 
 class type g_status =
  object
-  inherit Interpretations.g_status
+  inherit CicNotation.g_status
   method lstatus: lexicon_status
  end
 
 class status =
  object(self)
-  inherit Interpretations.status
+  inherit CicNotation.status
   val lstatus = initial_status
   method lstatus = lstatus
   method set_lstatus v = {< lstatus = v >}
   method set_lexicon_engine_status : 'status. #g_status as 'status -> 'self
-   = fun o -> (self#set_lstatus o#lstatus)#set_interp_status o
+   = fun o -> (self#set_lstatus o#lstatus)#set_notation_status o
  end
 
 let dump_aliases out msg status =

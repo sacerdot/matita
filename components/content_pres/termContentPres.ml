@@ -296,39 +296,45 @@ let pp_ast0 t k =
 
   (* persistent state *)
 
-let initial_level1_patterns21 () = Hashtbl.create 211
-let level1_patterns21 = ref (initial_level1_patterns21 ())
-let compiled21 = ref None
-let pattern21_matrix = ref []
-let counter = ref ~-1 
+module IntMap = Map.Make(struct type t = int let compare = compare end);;
 
-let stack = ref [];;
+type db = {
+ level1_patterns21: NotationPt.term IntMap.t;
+ compiled21: ((NotationPt.term -> (NotationEnv.t * NotationPt.term list * int) option)) Lazy.t option;
+ pattern21_matrix: (NotationPt.term * pattern_id) list;
+ counter: pattern_id
+}
 
-let push () =
-  stack := (!counter,!level1_patterns21,!compiled21,!pattern21_matrix)::!stack;
-  counter := ~-1;
-  level1_patterns21 := initial_level1_patterns21 ();
-  compiled21 := None;
-  pattern21_matrix := []
-;;
+let initial_db = {
+ level1_patterns21 = IntMap.empty;
+ compiled21 = None;
+ pattern21_matrix = [];
+ counter = ~-1 
+}
 
-let pop () =
- match !stack with
-    [] -> assert false
-  | (ocounter,olevel1_patterns21,ocompiled21,opatterns21_matrix)::old ->
-     stack := old;
-     counter := ocounter;
-     level1_patterns21 := olevel1_patterns21;
-     compiled21 := ocompiled21;
-     pattern21_matrix := opatterns21_matrix
-;;
+class type g_status =
+  object
+    method content_pres_db: db
+  end
+ 
+class status =
+ object
+   val content_pres_db = initial_db  
+   method content_pres_db = content_pres_db
+   method set_content_pres_db v = {< content_pres_db = v >}
+   method set_content_pres_status
+    : 'status. #g_status as 'status -> 'self
+    = fun o -> {< content_pres_db = o#content_pres_db >}
+ end
 
-let get_compiled21 () =
-  match !compiled21 with
+let get_compiled21 status =
+  match status#content_pres_db.compiled21 with
   | None -> assert false
   | Some f -> Lazy.force f
 
-let set_compiled21 f = compiled21 := Some f
+let set_compiled21 status f =
+ status#set_content_pres_db
+  { status#content_pres_db with compiled21 = Some f }
 
 let add_idrefs =
   List.fold_right (fun idref t -> Ast.AttributedTerm (`IdRef idref, t))
@@ -449,12 +455,12 @@ let instantiate21 idrefs env l1 =
   in
     subst_singleton `Left env l1
 
-let rec pp_ast1 term = 
+let rec pp_ast1 status term = 
   let rec pp_value = function
     | NotationEnv.NumValue _ as v -> v
     | NotationEnv.StringValue _ as v -> v
 (*     | NotationEnv.TermValue t when t == term -> NotationEnv.TermValue (pp_ast0 t pp_ast1) *)
-    | NotationEnv.TermValue t -> NotationEnv.TermValue (pp_ast1 t)
+    | NotationEnv.TermValue t -> NotationEnv.TermValue (pp_ast1 status t)
     | NotationEnv.OptValue None as v -> v
     | NotationEnv.OptValue (Some v) -> 
         NotationEnv.OptValue (Some (pp_value v))
@@ -467,31 +473,29 @@ let rec pp_ast1 term =
 (* prerr_endline ("pattern matching from 2 to 1 on term " ^ NotationPp.pp_term term); *)
   match term with
   | Ast.AttributedTerm (attrs, term') ->
-      Ast.AttributedTerm (attrs, pp_ast1 term')
+      Ast.AttributedTerm (attrs, pp_ast1 status term')
   | _ ->
-      (match (get_compiled21 ()) term with
-      | None -> pp_ast0 term pp_ast1
+      (match get_compiled21 status term with
+      | None -> pp_ast0 term (pp_ast1 status)
       | Some (env, ctors, pid) ->
           let idrefs =
             List.flatten (List.map NotationUtil.get_idrefs ctors)
           in
           let l1 =
             try
-              Hashtbl.find !level1_patterns21 pid
+              IntMap.find pid status#content_pres_db.level1_patterns21
             with Not_found -> assert false
           in
           instantiate21 idrefs (ast_env_of_env env) l1)
 
-let load_patterns21 t =
-  set_compiled21 (lazy (Content2presMatcher.Matcher21.compiler t))
+let load_patterns21 status t =
+  set_compiled21 status (lazy (Content2presMatcher.Matcher21.compiler t))
 
-let pp_ast ast =
+let pp_ast status ast =
   debug_print (lazy "pp_ast <-");
-  let ast' = pp_ast1 ast in
+  let ast' = pp_ast1 status ast in
   debug_print (lazy ("pp_ast -> " ^ NotationPp.pp_term ast'));
   ast'
-
-exception Pretty_printer_not_found
 
 let fill_pos_info l1_pattern = l1_pattern
 (*   let rec aux toplevel pos =
@@ -506,26 +510,22 @@ let fill_pos_info l1_pattern = l1_pattern
   in
   aux true l1_pattern *)
 
-let fresh_id =
-  fun () ->
-    incr counter;
-    !counter
+let fresh_id status =
+  let counter = status#content_pres_db.counter+1 in
+   status#set_content_pres_db ({ status#content_pres_db with counter = counter  }), counter
 
-let add_pretty_printer l2 (CicNotationParser.CL1P (l1,precedence)) =
-  let id = fresh_id () in
+let add_pretty_printer status l2 (CicNotationParser.CL1P (l1,precedence)) =
+  let status,id = fresh_id status in
   let l1' = add_level_info precedence (fill_pos_info l1) in
   let l2' = NotationUtil.strip_attributes l2 in
-  Hashtbl.add !level1_patterns21 id l1';
-  pattern21_matrix := (l2', id) :: !pattern21_matrix;
-  load_patterns21 !pattern21_matrix;
-  id
-
-let remove_pretty_printer id =
-  (try
-    Hashtbl.remove !level1_patterns21 id;
-  with Not_found -> raise Pretty_printer_not_found);
-  pattern21_matrix := List.filter (fun (_, id') -> id <> id') !pattern21_matrix;
-  load_patterns21 !pattern21_matrix
+  let status =
+   status#set_content_pres_db
+    { status#content_pres_db with
+       level1_patterns21 =
+        IntMap.add id l1' status#content_pres_db.level1_patterns21;
+       pattern21_matrix = (l2',id)::status#content_pres_db.pattern21_matrix } in
+  let status = load_patterns21 status status#content_pres_db.pattern21_matrix in
+   status,id
 
   (* presentation -> content *)
 
@@ -716,10 +716,3 @@ let instantiate_level2 env term =
     | _ -> assert false
   in
   aux env term
-
-  (* initialization *)
-
-let _ = load_patterns21 []
-
-
-

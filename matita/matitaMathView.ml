@@ -620,7 +620,7 @@ object (self)
   val mutable current_mathml = None
 
   method nload_sequent:
-   'status. #NTermCicContent.status as 'status -> NCic.metasenv ->
+   'status. #ApplyTransformation.status as 'status -> NCic.metasenv ->
      NCic.substitution -> int -> unit
    = fun status metasenv subst metano ->
     let sequent = List.assoc metano metasenv in
@@ -637,7 +637,7 @@ object (self)
     self#load_root ~root:txt
 
   method load_nobject :
-   'status. #NTermCicContent.status as 'status -> NCic.obj -> unit
+   'status. #ApplyTransformation.status as 'status -> NCic.obj -> unit
    = fun status obj ->
     let txt = ApplyTransformation.ntxt_of_cic_object ~map_unicode_to_tex:false
     80 status obj in
@@ -808,7 +808,7 @@ class sequentsViewer ~(notebook:GPack.notebook) ~(cicMathView:cicMathView) () =
           self#render_page status ~page ~goal_switch))
 
     method private render_page:
-     'status. #NTermCicContent.status as 'status -> page:int ->
+     'status. #ApplyTransformation.status as 'status -> page:int ->
        goal_switch:Stack.switch -> unit
      = fun status ~page ~goal_switch ->
       (match goal_switch with
@@ -825,7 +825,7 @@ class sequentsViewer ~(notebook:GPack.notebook) ~(cicMathView:cicMathView) () =
         List.assoc goal_switch goal2win ()
       with Not_found -> assert false)
 
-    method goto_sequent: 'status. #NTermCicContent.status as 'status -> int -> unit
+    method goto_sequent: 'status. #ApplyTransformation.status as 'status -> int -> unit
      = fun status goal ->
       let goal_switch, page =
         try

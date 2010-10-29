@@ -23,23 +23,33 @@
  * http://helm.cs.unibo.it/
  *)
 
-  (** {2 Persistant state handling} *)
+  (** {2 state handling} *)
+
+type db
+
+class type g_status =
+  object
+    method content_pres_db: db
+  end
+
+class status :
+  object ('self)
+    method content_pres_db: db
+    method set_content_pres_db: db -> 'self
+    method set_content_pres_status: #g_status -> 'self
+  end
 
 type pretty_printer_id
 
 val add_pretty_printer:
+ #status as 'status ->
   NotationPt.term ->             (* level 2 pattern *)
   CicNotationParser.checked_l1_pattern ->
-    pretty_printer_id
-
-exception Pretty_printer_not_found
-
-  (** @raise Pretty_printer_not_found *)
-val remove_pretty_printer: pretty_printer_id -> unit
+   'status * pretty_printer_id
 
   (** {2 content -> pres} *)
 
-val pp_ast: NotationPt.term -> NotationPt.term
+val pp_ast: #status -> NotationPt.term -> NotationPt.term
 
   (** {2 pres -> content} *)
 
@@ -47,6 +57,3 @@ val pp_ast: NotationPt.term -> NotationPt.term
 val instantiate_level2:
   NotationEnv.t -> NotationPt.term ->
     NotationPt.term
-
-val push: unit -> unit
-val pop: unit -> unit

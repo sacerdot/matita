@@ -1020,7 +1020,7 @@ let ncontent2pres0
           joint.Content.joint_kind joint.Content.joint_defs]
   | _ -> raise ToDo
 
-let ncontent2pres ?skip_initial_lambdas ?skip_thm_and_qed ~ids_to_nrefs =
+let ncontent2pres status ?skip_initial_lambdas ?skip_thm_and_qed ~ids_to_nrefs =
  let lookup_uri id =
   try
    let nref = Hashtbl.find ids_to_nrefs id in
@@ -1030,4 +1030,5 @@ let ncontent2pres ?skip_initial_lambdas ?skip_thm_and_qed ~ids_to_nrefs =
   ncontent2pres0 ?skip_initial_lambdas ?skip_thm_and_qed
     (fun ?(prec=90) ast ->
       CicNotationPres.box_of_mpres
-       (CicNotationPres.render ~lookup_uri ~prec (TermContentPres.pp_ast ast)))
+       (CicNotationPres.render ~lookup_uri ~prec
+         (TermContentPres.pp_ast status ast)))

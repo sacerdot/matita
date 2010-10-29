@@ -95,7 +95,7 @@ let sequent2pres0 term2pres (_,_,context,ty) =
        Box.b_space; 
        pres_goal]))])
 
-let nsequent2pres ~ids_to_nrefs ~subst =
+let nsequent2pres status ~ids_to_nrefs ~subst =
  let lookup_uri id =
   try
    let nref = Hashtbl.find ids_to_nrefs id in
@@ -106,4 +106,4 @@ let nsequent2pres ~ids_to_nrefs ~subst =
     (fun ast ->
       CicNotationPres.box_of_mpres
        (CicNotationPres.render ~lookup_uri
-         (TermContentPres.pp_ast ast)))
+         (TermContentPres.pp_ast status ast)))

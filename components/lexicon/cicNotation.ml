@@ -32,6 +32,21 @@ type notation_id =
   | InterpretationId of Interpretations.interpretation_id
   | PrettyPrinterId of TermContentPres.pretty_printer_id
 
+class type g_status =
+ object ('self)
+  inherit Interpretations.g_status
+  inherit TermContentPres.g_status
+ end
+
+class status =
+ object (self)
+  inherit Interpretations.status
+  inherit TermContentPres.status
+  method set_notation_status
+   : 'status. #g_status as 'status -> 'self
+      = fun o -> (self#set_interp_status o)#set_content_pres_status o
+ end
+
 let compare_notation_id x y = 
   match x,y with
   | RuleId i1, RuleId i2 -> CicNotationParser.compare_rule_id i1 i2
@@ -67,13 +82,12 @@ let process_notation status st =
           in
           RefCounter.incr ~create_cb !parser_ref_counter item
       in
-      let pp_id =
+      let status,pp_id =
         if dir <> Some `LeftToRight then
-          [ PrettyPrinterId
-              (TermContentPres.add_pretty_printer 
-                l2 l1) ]
+         let status,id = TermContentPres.add_pretty_printer status l2 l1 in
+          status,[ PrettyPrinterId id ]
         else
-          []
+          status,[]
       in
        status,!rule_id @ pp_id
   | Interpretation (loc, dsc, l2, l3) ->
@@ -91,7 +105,7 @@ let remove_notation = function
         with Not_found -> assert false in
       RefCounter.decr ~delete_cb:(fun _ -> CicNotationParser.delete id)
         !parser_ref_counter item
-  | PrettyPrinterId id -> TermContentPres.remove_pretty_printer id
+  | PrettyPrinterId id -> ()
   | InterpretationId id -> ()
 
 let history = ref [];;
@@ -100,12 +114,10 @@ let push () =
  history := (!parser_ref_counter,!rule_ids_to_items) :: !history;
  parser_ref_counter := initial_parser_ref_counter ();
  rule_ids_to_items := initial_rule_ids_to_items ();
- TermContentPres.push ();
  CicNotationParser.push ()
 ;;
 
 let pop () =
- TermContentPres.pop ();
  CicNotationParser.pop ();
  match !history with
  | [] -> assert false
