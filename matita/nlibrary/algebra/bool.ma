@@ -14,20 +14,20 @@
 
 include "logic/connectives.ma".
 
-ninductive eq (A: Type[1]) (a: A) : A → CProp[0] ≝
+inductive eq (A: Type[1]) (a: A) : A → CProp[0] ≝
  refl: eq A a a. 
 
 interpretation "leibnitz's equality" 'eq t x y = (eq t x y).
  
-nlemma eq_ind_CProp0 : ∀A:Type[1].∀a:A.∀P:A → CProp[0].P a → ∀b:A.a = b → P b.
-#A; #a; #P; #p; #b; #E; ncases E; nassumption;
-nqed.
+lemma eq_ind_CProp0 : ∀A:Type[1].∀a:A.∀P:A → CProp[0].P a → ∀b:A.a = b → P b.
+#A; #a; #P; #p; #b; #E; cases E; assumption;
+qed.
 
-nlemma eq_ind_r_CProp0 : ∀A:Type[1].∀a:A.∀P:A → CProp[0].P a → ∀b:A.b = a → P b.
-#A; #a; #P; #p; #b; #E; ncases E in p; //;
-nqed. 
+lemma eq_ind_r_CProp0 : ∀A:Type[1].∀a:A.∀P:A → CProp[0].P a → ∀b:A.b = a → P b.
+#A; #a; #P; #p; #b; #E; cases E in p; //;
+qed. 
 
-nlemma csc : 
+lemma csc : 
  (∀x,y,z.(x∨(y∨z)) = ((x∨y)∨z)) →
  (∀x,y,z.(x∧(y∧z)) = ((x∧y)∧z)) →
  (∀x,y.(x∨y) = (y∨x)) →
@@ -47,7 +47,7 @@ nlemma csc :
  ∀a,b.((a ∧ ¬b) ∨ b) = (a ∨ b).
 #H1; #H2; #H3; #H4; #H5; #H6; #H7; #H8; #H9; #H10; #H11; #H12;
 #H13; #H14; #H15; #H16; #a; #b;
-nletin proof ≝ (
+letin proof ≝ (
 let clause_11: ∀x24. eq CProp[0] (And x24 True) x24
  ≝ λx24. H7 x24 in
  let clause_2: ∀x2. eq CProp[0] (Or x2 (Not x2)) True
@@ -86,5 +86,5 @@ let clause_11: ∀x24. eq CProp[0] (And x24 True) x24
                 (λx:CProp[0]. eq CProp[0] x (Or a b)) clause_190
                 (Or (And a (Not b)) b) (clause_15 (And a (Not b)) b) in
           clause_1);
-napply proof;
-nqed.
+apply proof;
+qed.

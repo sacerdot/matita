@@ -14,9 +14,9 @@
 
 include "logic/pts.ma".
 
-ninductive bool: Type[0] ≝ true: bool | false: bool.
+inductive bool: Type[0] ≝ true: bool | false: bool.
  
-ndefinition orb ≝ λa,b:bool. match a with [ true ⇒ true | _ ⇒ b ].
+definition orb ≝ λa,b:bool. match a with [ true ⇒ true | _ ⇒ b ].
 
 notation "a || b" left associative with precedence 30 for @{'orb $a $b}.
 interpretation "orb" 'orb a b = (orb a b).

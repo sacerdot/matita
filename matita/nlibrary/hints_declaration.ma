@@ -58,12 +58,12 @@ notation > "≔ (list0 ( (list1 (ident x) sep , ) opt (: T) ) sep ,) opt (; (lis
 
 include "logic/pts.ma".
 
-ndefinition hint_declaration_Type0  ≝  λA:Type[0] .λa,b:A.Prop.
-ndefinition hint_declaration_Type1  ≝  λA:Type[1].λa,b:A.Prop.
-ndefinition hint_declaration_Type2  ≝  λa,b:Type[2].Prop.
-ndefinition hint_declaration_CProp0 ≝  λA:CProp[0].λa,b:A.Prop.
-ndefinition hint_declaration_CProp1 ≝  λA:CProp[1].λa,b:A.Prop.
-ndefinition hint_declaration_CProp2 ≝  λa,b:CProp[2].Prop.
+definition hint_declaration_Type0  ≝  λA:Type[0] .λa,b:A.Prop.
+definition hint_declaration_Type1  ≝  λA:Type[1].λa,b:A.Prop.
+definition hint_declaration_Type2  ≝  λa,b:Type[2].Prop.
+definition hint_declaration_CProp0 ≝  λA:CProp[0].λa,b:A.Prop.
+definition hint_declaration_CProp1 ≝  λA:CProp[1].λa,b:A.Prop.
+definition hint_declaration_CProp2 ≝  λa,b:CProp[2].Prop.
   
 interpretation "hint_decl_Type2"  'hint_decl a b = (hint_declaration_Type2 a b).
 interpretation "hint_decl_CProp2" 'hint_decl a b = (hint_declaration_CProp2 a b).
@@ -73,20 +73,20 @@ interpretation "hint_decl_CProp0" 'hint_decl a b = (hint_declaration_CProp0 ? a 
 interpretation "hint_decl_Type0"  'hint_decl a b = (hint_declaration_Type0 ? a b).
 
 (* Non uniform coercions support *)
-nrecord lock2 (S : Type[2]) (s : S) : Type[3] ≝ {
+record lock2 (S : Type[2]) (s : S) : Type[3] ≝ {
   force2 : Type[2];
   lift2  : force2
 }.
 
-nrecord lock1 (S : Type[1]) (s : S) : Type[2] ≝ {
+record lock1 (S : Type[1]) (s : S) : Type[2] ≝ {
   force1 : Type[1];
   lift1  : force1
 }.
 
-ncoercion lift1 : ∀S:Type[1].∀s:S.∀l:lock1 S s. force1 S s l ≝ lift1 
+coercion lift1 : ∀S:Type[1].∀s:S.∀l:lock1 S s. force1 S s l ≝ lift1 
  on s : ? to force1 ???.
 
-ncoercion lift2 : ∀S:Type[2].∀s:S.∀l:lock2 S s. force2 S s l ≝ lift2
+coercion lift2 : ∀S:Type[2].∀s:S.∀l:lock2 S s. force2 S s l ≝ lift2
  on s : ? to force2 ???.
 
 (* Example of a non uniform coercion declaration 

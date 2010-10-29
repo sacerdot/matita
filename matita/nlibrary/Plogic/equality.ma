@@ -14,26 +14,26 @@
 
 include "logic/pts.ma".
 
-ninductive eq (A:Type[2]) (x:A) : A → Prop ≝
+inductive eq (A:Type[2]) (x:A) : A → Prop ≝
     refl: eq A x x.
     
 interpretation "leibnitz's equality" 'eq t x y = (eq t x y).
 
-nlemma eq_rect_r:
- ∀A.∀a,x.∀p:eq ? x a.∀P: ∀x:A. eq ? x a → Type. P a (refl A a) → P x p.
- #A; #a; #x; #p; ncases p; #P; #H; nassumption.
-nqed.
+lemma eq_rect_r:
+ ∀A.∀a,x.∀p:eq ? x a.∀P: ∀x:A. eq ? x a → Type[0]. P a (refl A a) → P x p.
+ #A; #a; #x; #p; cases p; #P; #H; assumption.
+qed.
 
-nlemma eq_ind_r :
+lemma eq_ind_r :
  ∀A.∀a.∀P: ∀x:A. x = a → Prop. P a (refl A a) → ∀x.∀p:eq ? x a.P x p.
- #A; #a; #P; #p; #x0; #p0; napply (eq_rect_r ? ? ? p0); nassumption.
-nqed.
+ #A; #a; #P; #p; #x0; #p0; apply (eq_rect_r ? ? ? p0); assumption.
+qed.
 
-nlemma eq_rect_Type2_r :
-  ∀A:Type.∀a.∀P: ∀x:A. eq ? x a → Type[2]. P a (refl A a) → ∀x.∀p:eq ? x a.P x p.
-  #A;#a;#P;#H;#x;#p;ngeneralize in match H;ngeneralize in match P;
-  ncases p;//;
-nqed.
+lemma eq_rect_Type2_r :
+  ∀A:Type[0].∀a.∀P: ∀x:A. eq ? x a → Type[2]. P a (refl A a) → ∀x.∀p:eq ? x a.P x p.
+  #A;#a;#P;#H;#x;#p;generalize in match H;generalize in match P;
+  cases p;//;
+qed.
 
 (*
 nlemma eq_ind_r :
