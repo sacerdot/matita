@@ -63,22 +63,23 @@ let rec pp_ntactic ~map_unicode_to_tex =
          (String.concat "," (List.map NotationPp.pp_term l)) ^
         String.concat " " (List.map (fun a,b -> a ^ "=" ^ b) flgs)
   | NCases (_,what,where) -> "ncases " ^ NotationPp.pp_term what ^
-      assert false ^ " " ^ assert false
+      "...to be implemented..." ^ " " ^ "...to be implemented..."
   | NConstructor (_,None,l) -> "@ " ^
       String.concat " " (List.map NotationPp.pp_term l)
   | NConstructor (_,Some x,l) -> "@" ^ string_of_int x ^ " " ^
       String.concat " " (List.map NotationPp.pp_term l)
   | NCase1 (_,n) -> "*" ^ n ^ ":"
-  | NChange (_,what,wwhat) -> "nchange " ^ assert false ^ 
+  | NChange (_,what,wwhat) -> "nchange " ^ "...to be implemented..." ^ 
       " with " ^ NotationPp.pp_term wwhat
   | NCut (_,t) -> "ncut " ^ NotationPp.pp_term t
 (*| NDiscriminate (_,t) -> "ndiscriminate " ^ NotationPp.pp_term t
   | NSubst (_,t) -> "nsubst " ^ NotationPp.pp_term t *)
   | NDestruct (_,dom,skip) -> "ndestruct ..." 
   | NElim (_,what,where) -> "nelim " ^ NotationPp.pp_term what ^
-      assert false ^ " " ^ assert false
+      "...to be implemented..." ^ " " ^ "...to be implemented..."
   | NId _ -> "nid"
   | NIntro (_,n) -> "#" ^ n
+  | NIntros (_,l) -> "#" ^ String.concat " " l
   | NInversion (_,what,where) -> "ninversion " ^ NotationPp.pp_term what ^
       assert false ^ " " ^ assert false
   | NLApply (_,t) -> "lapply " ^ NotationPp.pp_term t
@@ -86,19 +87,19 @@ let rec pp_ntactic ~map_unicode_to_tex =
      (match dir with `LeftToRight -> ">" | `RightToLeft -> "<") ^
      " " ^ NotationPp.pp_term n ^ " " ^ pp_tactic_pattern where
   | NReduce _ | NGeneralize _ | NLetIn _ | NAssert _ -> "TO BE IMPLEMENTED"
-  | NDot _ -> "##."
-  | NSemicolon _ -> "##;"
-  | NBranch _ -> "##["
-  | NShift _ -> "##|"
-  | NPos (_, l) -> "##" ^String.concat "," (List.map string_of_int l)^ ":"
-  | NPosbyname (_, s) -> "##" ^ s ^ ":"
-  | NWildcard _ -> "##*:"
-  | NMerge _ -> "##]"
+  | NDot _ -> "."
+  | NSemicolon _ -> ";"
+  | NBranch _ -> "["
+  | NShift _ -> "|"
+  | NPos (_, l) -> String.concat "," (List.map string_of_int l)^ ":"
+  | NPosbyname (_, s) -> s ^ ":"
+  | NWildcard _ -> "*:"
+  | NMerge _ -> "]"
   | NFocus (_,l) -> 
-      Printf.sprintf "##focus %s" 
+      Printf.sprintf "focus %s" 
         (String.concat " " (List.map string_of_int l))
-  | NUnfocus _ -> "##unfocus"
-  | NSkip _ -> "##skip"
+  | NUnfocus _ -> "unfocus"
+  | NSkip _ -> "skip"
   | NTry (_,tac) -> "ntry " ^ pp_ntactic ~map_unicode_to_tex tac
   | NAssumption _ -> "nassumption"
   | NBlock (_,l) -> 

@@ -52,8 +52,6 @@ let regexp we_proved = "we" utf8_blank+ "proved"
 let regexp we_have = "we" utf8_blank+ "have"
 let regexp let_rec = "let" utf8_blank+ "rec" 
 let regexp let_corec = "let" utf8_blank+  "corec"
-let regexp nlet_rec = "nlet" utf8_blank+ "rec" 
-let regexp nlet_corec = "nlet" utf8_blank+  "corec"
 let regexp ident_decoration = '\'' | '?' | '`'
 let regexp ident_cont = ident_letter | xml_digit | '_'
 let regexp ident_start = ident_letter 
@@ -307,8 +305,6 @@ and level2_ast_token =
   lexer
   | let_rec -> return lexbuf ("LETREC","")
   | let_corec -> return lexbuf ("LETCOREC","")
-  | nlet_rec -> return lexbuf ("NLETREC","")
-  | nlet_corec -> return lexbuf ("NLETCOREC","")
   | we_proved -> return lexbuf ("WEPROVED","")
   | we_have -> return lexbuf ("WEHAVE","")
   | utf8_blank+ -> ligatures_token level2_ast_token lexbuf

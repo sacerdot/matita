@@ -163,7 +163,7 @@ notation "hvbox(a break \mod b)"
   left associative with precedence 55
 for @{ 'module $a $b }.
 
-notation "a \frac b" 
+notation < "a \frac b" 
   non associative with precedence 90
 for @{ 'divide $a $b }.
 

@@ -340,7 +340,6 @@ let rec eval_ncommand opts status (text,prefix_len,cmd) =
           | _ -> obj_kind
         in
         let obj = uri,height,[],[],obj_kind in
-        prerr_endline ("pp new obj \n"^NCicPp.ppobj obj);
         let old_status = status in
         let status = NCicLibrary.add_obj status obj in
         let index_obj =
@@ -390,6 +389,7 @@ let rec eval_ncommand opts status (text,prefix_len,cmd) =
                 if nstatus#ng_mode <> `CommandMode then
                   begin
                     (*HLog.warn "error in generating projection/eliminator";*)
+                    assert(status#ng_mode = `CommandMode);
                     status, uris
                   end
                 else

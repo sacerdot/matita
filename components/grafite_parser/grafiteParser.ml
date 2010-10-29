@@ -218,28 +218,25 @@ EXTEND
         SYMBOL <:unicode<vdash>>;
         concl = tactic_term -> (List.rev hyps,concl) ] ->
          G.NTactic(loc,[G.NAssert (loc, seqs)])
-    | IDENT "auto"; params = auto_params -> 
-        G.NTactic(loc,[G.NAuto (loc, params)])
+    (*| IDENT "auto"; params = auto_params -> 
+        G.NTactic(loc,[G.NAuto (loc, params)])*)
     | SYMBOL "/"; num = OPT NUMBER ; 
-       params = nauto_params; SYMBOL "/" ; 
-       just = OPT [ IDENT "by"; by = 
-         [ univ = tactic_term_list1 -> `Univ univ
-         | SYMBOL "{"; SYMBOL "}" -> `EmptyUniv
-         | SYMBOL "_" -> `Trace ] -> by ] ->
+       just_and_params = auto_params; SYMBOL "/" ->
+       let just,params = just_and_params in
        let depth = match num with Some n -> n | None -> "1" in
        (match just with
        | None -> 
-	   G.NTactic(loc,
-            [G.NAuto(loc,(None,["slir","";"depth",depth]@params))])
+	         G.NTactic(loc,
+            [G.NAuto(loc,(None,["depth",depth]@params))])
        | Some (`Univ univ) ->
-	   G.NTactic(loc,
-            [G.NAuto(loc,(Some univ,["slir","";"depth",depth]@params))])
+	         G.NTactic(loc,
+            [G.NAuto(loc,(Some univ,["depth",depth]@params))])
        | Some `EmptyUniv ->
-	   G.NTactic(loc,
-            [G.NAuto(loc,(Some [],["slir","";"depth",depth]@params))])
+	         G.NTactic(loc,
+            [G.NAuto(loc,(Some [],["depth",depth]@params))])
        | Some `Trace ->
-	   G.NMacro(loc,
-             G.NAutoInteractive (loc, (None,["slir","";"depth",depth]@params))))
+	         G.NMacro(loc,
+             G.NAutoInteractive (loc, (None,["depth",depth]@params))))
     | IDENT "intros" -> G.NMacro (loc, G.NIntroGuess loc)
     | IDENT "check"; t = term -> G.NMacro(loc,G.NCheck (loc,t))
     | IDENT "screenshot"; fname = QSTRING -> 
@@ -310,18 +307,10 @@ EXTEND
          i = auto_fixed_param -> i,""
        | i = auto_fixed_param ; SYMBOL "="; v = [ v = int ->
               string_of_int v | v = IDENT -> v ] -> i,v ]; 
-      tl = OPT [ IDENT "by"; tl = tactic_term_list1 -> tl] -> tl,
-      (* (match tl with Some l -> l | None -> []), *)
-      params
-   ]
-];
-  nauto_params: [
-    [ params = 
-      LIST0 [
-         i = auto_fixed_param -> i,""
-       | i = auto_fixed_param ; SYMBOL "="; v = [ v = int ->
-              string_of_int v | v = IDENT -> v ] -> i,v ] ->
-      params
+      just = OPT [ IDENT "by"; by = 
+        [ univ = tactic_term_list1 -> `Univ univ
+        | SYMBOL "{"; SYMBOL "}" -> `EmptyUniv
+        | SYMBOL "_" -> `Trace ] -> by ] -> just,params
    ]
 ];
 
