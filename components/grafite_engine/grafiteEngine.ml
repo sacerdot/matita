@@ -46,10 +46,8 @@ let inject_unification_hint =
  =
   let t = refresh_uri_in_term t in basic_eval_unification_hint (t,n)
  in
-  NCicLibrary.Serializer.register#run "unification_hints"
-   object(_ : 'a NCicLibrary.register_type)
-     method run = basic_eval_unification_hint
-   end
+  GrafiteTypes.Serializer.register#run "unification_hints"
+   basic_eval_unification_hint
 ;;
 
 let eval_unification_hint status t n = 
@@ -83,10 +81,7 @@ let record_index_obj =
         (fun ks,v -> List.map refresh_uri_in_term ks, refresh_uri_in_term v) 
       l)
  in
-  NCicLibrary.Serializer.register#run "index_obj"
-   object(_ : 'a NCicLibrary.register_type)
-     method run = aux
-   end
+  GrafiteTypes.Serializer.register#run "index_obj" aux
 ;;
 
 let compute_keys status uri height kind = 
@@ -167,10 +162,7 @@ let record_index_eq =
    ~refresh_uri_in_term 
    = index_eq (NCicLibrary.refresh_uri uri) 
  in
-  NCicLibrary.Serializer.register#run "index_eq"
-   object(_ : 'a NCicLibrary.register_type)
-     method run = basic_index_eq
-   end
+  GrafiteTypes.Serializer.register#run "index_eq" basic_index_eq
 ;;
 
 let index_eq_for_auto status uri =
@@ -199,10 +191,7 @@ let inject_constraint =
   let u2 = refresh_uri_in_universe u2 in 
   basic_eval_add_constraint (u1,u2)
  in
-  NCicLibrary.Serializer.register#run "constraints"
-   object(_:'a NCicLibrary.register_type)
-     method run = basic_eval_add_constraint 
-   end
+  GrafiteTypes.Serializer.register#run "constraints" basic_eval_add_constraint 
 ;;
 
 let eval_add_constraint status u1 u2 = 
@@ -568,8 +557,11 @@ let rec eval_command ~disambiguate_command opts status (text,prefix_len,cmd) =
  let status,uris =
   match cmd with
   | GrafiteAst.Include (loc, baseuri) ->
-       NCicLibrary.Serializer.require ~baseuri:(NUri.uri_of_string baseuri)
-        status, []
+     let status,obj =
+       GrafiteTypes.Serializer.require ~baseuri:(NUri.uri_of_string baseuri)
+        status in
+     let status = status#set_dump (obj::status#dump) in
+       status,[]
   | GrafiteAst.Print (_,_) -> status,[]
   | GrafiteAst.Set (loc, name, value) -> status, []
  in

@@ -25,6 +25,21 @@
 
 (* $Id$ *)
 
+class g_status =
+  object
+   inherit LexiconEngine.g_status
+   inherit NCicCoercion.g_status
+  end
+
+class status =
+ object (self)
+  inherit LexiconEngine.status
+  inherit NCicCoercion.status
+  method set_grafite_disambiguate_status
+   : 'status. #g_status as 'status -> 'self
+      = fun o -> (self#set_lexicon_engine_status o)#set_coercion_status o
+ end
+
 exception BaseUriNotSetYet
 
 let singleton msg = function
@@ -39,14 +54,14 @@ let singleton msg = function
 let __Implicit = "__Implicit__"
 let __Closed_Implicit = "__Closed_Implicit__"
 
-let ncic_mk_choice = function
+let ncic_mk_choice status = function
   | LexiconAst.Symbol_alias (name, _, dsc) ->
      if name = __Implicit then
        dsc, `Sym_interp (fun _ -> NCic.Implicit `Term)
      else if name = __Closed_Implicit then 
        dsc, `Sym_interp (fun _ -> NCic.Implicit `Closed)
      else
-       DisambiguateChoices.lookup_symbol_by_dsc 
+       DisambiguateChoices.lookup_symbol_by_dsc status
         ~mk_implicit:(function 
            | true -> NCic.Implicit `Closed
            | false -> NCic.Implicit `Term)
@@ -117,7 +132,7 @@ let disambiguate_nterm expty estatus context metasenv subst thing
         ~expty 
         ~universe:(Some estatus#lstatus.LexiconEngine.multi_aliases)
         ~lookup_in_library:nlookup_in_library
-        ~mk_choice:ncic_mk_choice
+        ~mk_choice:(ncic_mk_choice estatus)
         ~mk_implicit ~fix_instance
         ~description_of_alias:LexiconAst.description_of_alias
         ~context ~metasenv ~subst thing)
@@ -195,7 +210,7 @@ let disambiguate_nobj estatus ?baseuri (text,prefix_len,obj) =
     (NCicDisambiguate.disambiguate_obj
       ~lookup_in_library:nlookup_in_library
       ~description_of_alias:LexiconAst.description_of_alias
-      ~mk_choice:ncic_mk_choice
+      ~mk_choice:(ncic_mk_choice estatus)
       ~mk_implicit ~fix_instance
       ~uri
       ~rdb:estatus
@@ -205,10 +220,3 @@ let disambiguate_nobj estatus ?baseuri (text,prefix_len,obj) =
   let estatus = LexiconEngine.set_proof_aliases estatus diff in
    estatus, cic
 ;;
-
-let disambiguate_command estatus (text,prefix_len,cmd)=
-  match cmd with
-   | GrafiteAst.Include _
-   | GrafiteAst.Print _
-   | GrafiteAst.Set _ as cmd ->
-       estatus,cmd

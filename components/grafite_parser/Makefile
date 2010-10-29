@@ -5,7 +5,6 @@ INTERFACE_FILES = 			\
 	dependenciesParser.mli  	\
 	grafiteParser.mli		\
 	cicNotation2.mli		\
-	nEstatus.mli			\
 	grafiteDisambiguate.mli 	\
 	print_grammar.mli 	\
 	$(NULL)

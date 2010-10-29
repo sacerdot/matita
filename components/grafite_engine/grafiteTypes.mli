@@ -34,10 +34,13 @@ val command_error: string -> 'a   (** @raise Command_error *)
 class status :
  string ->
   object ('self)
+   (* Warning: #stack and #obj are meaningful iff #ng_mode is `ProofMode *)
+   inherit NTacStatus.tac_status
+   inherit NCicLibrary.dumpable_status
    method baseuri: string
    method set_baseuri: string -> 'self
    method ng_mode: [`ProofMode | `CommandMode]
    method set_ng_mode: [`ProofMode | `CommandMode] -> 'self
-   (* Warning: #stack and #obj are meaningful iff #ng_mode is `ProofMode *)
-   inherit NTacStatus.tac_status
   end
+
+module Serializer: NCicLibrary.SerializerType with type dumpable_status = status

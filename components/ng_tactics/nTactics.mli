@@ -71,20 +71,8 @@ val constructor_tac :
         ?num:int -> args:NTacStatus.tactic_term list -> 's NTacStatus.tactic
 
 val atomic_tac :
-    (((int * Continuationals.Stack.switch) list * 'a list * 'b list *
-      [> `NoTag ])
-     list NTacStatus.status ->
-     (< auto_cache : NCicLibrary.automation_cache;
-        eq_cache : NCicLibrary.unit_eq_cache;
-        coerc_db : NCicCoercion.db; dump : NCicLibrary.obj list;
-        lstatus : LexiconEngine.lexicon_status; obj : NCic.obj;
-        set_coerc_db : NCicCoercion.db -> 'c;
-        set_coercion_status : 'd. (#NCicCoercion.g_status as 'd) -> 'c;
-        set_uhint_db : NCicUnifHint.db -> 'c;
-        set_unifhint_status : 'e. (#NCicUnifHint.g_status as 'e) -> 'c;
-        timestamp : NCicLibrary.timestamp; uhint_db : NCicUnifHint.db; .. >
-      as 'c)) ->
-    (#NTacStatus.tac_status as 'f) -> 'f
+ (NTacStatus.tac_status -> 'c #NTacStatus.status) ->
+   (#NTacStatus.tac_status as 'f) -> 'f
 
 type indtyinfo 
 

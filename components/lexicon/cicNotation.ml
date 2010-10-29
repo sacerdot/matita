@@ -45,7 +45,7 @@ let initial_rule_ids_to_items ()= Hashtbl.create 113
 let parser_ref_counter = ref (initial_parser_ref_counter ());;
 let rule_ids_to_items = ref (initial_rule_ids_to_items ());;
 
-let process_notation st =
+let process_notation status st =
   match st with
   | Notation (loc, dir, l1, associativity, precedence, l2) ->
       let l1 = 
@@ -75,11 +75,13 @@ let process_notation st =
         else
           []
       in
-      !rule_id @ pp_id
+       status,!rule_id @ pp_id
   | Interpretation (loc, dsc, l2, l3) ->
-      let interp_id = Interpretations.add_interpretation dsc l2 l3 in
-       [InterpretationId interp_id]
-  | st -> []
+      let status,interp_id =
+        Interpretations.add_interpretation status dsc l2 l3
+      in
+       status,[InterpretationId interp_id]
+  | st -> status,[]
 
 let remove_notation = function
   | RuleId id ->
@@ -90,25 +92,7 @@ let remove_notation = function
       RefCounter.decr ~delete_cb:(fun _ -> CicNotationParser.delete id)
         !parser_ref_counter item
   | PrettyPrinterId id -> TermContentPres.remove_pretty_printer id
-  | InterpretationId id -> Interpretations.remove_interpretation id
-
-let get_all_notations () =
-  List.map
-    (fun (interp_id, dsc) ->
-      InterpretationId interp_id, "interpretation: " ^ dsc)
-    (Interpretations.get_all_interpretations ())
-
-let get_active_notations () =
-  List.map (fun id -> InterpretationId id)
-    (Interpretations.get_active_interpretations ())
-
-let set_active_notations ids =
-  let interp_ids =
-    HExtlib.filter_map
-      (function InterpretationId interp_id -> Some interp_id | _ -> None)
-      ids
-  in
-  Interpretations.set_active_interpretations interp_ids
+  | InterpretationId id -> ()
 
 let history = ref [];;
 
@@ -117,13 +101,11 @@ let push () =
  parser_ref_counter := initial_parser_ref_counter ();
  rule_ids_to_items := initial_rule_ids_to_items ();
  TermContentPres.push ();
- Interpretations.push ();
  CicNotationParser.push ()
 ;;
 
 let pop () =
  TermContentPres.pop ();
- Interpretations.pop ();
  CicNotationParser.pop ();
  match !history with
  | [] -> assert false

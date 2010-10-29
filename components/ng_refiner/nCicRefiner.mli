@@ -16,7 +16,7 @@ exception Uncertain of (Stdpp.location * string) Lazy.t;;
 exception AssertFailure of string Lazy.t;;
 
 val typeof :
- #NRstatus.status ->
+ #NCicCoercion.status ->
  ?localise:(NCic.term -> Stdpp.location) ->
   NCic.metasenv -> NCic.substitution -> NCic.context -> 
   NCic.term -> NCic.term option -> (* term, expected type *)
@@ -24,7 +24,7 @@ val typeof :
     (*  menv, subst,refined term, type *)
 
 val typeof_obj :
- #NRstatus.status ->
+ #NCicCoercion.status ->
  ?localise:(NCic.term -> Stdpp.location) ->
   NCic.obj -> NCic.obj
 

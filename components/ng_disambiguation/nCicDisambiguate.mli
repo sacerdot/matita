@@ -22,7 +22,7 @@ val disambiguate_term :
   mk_choice:('alias -> NCic.term DisambiguateTypes.codomain_item) ->
   aliases:'alias DisambiguateTypes.Environment.t ->
   universe:'alias list DisambiguateTypes.Environment.t option ->
-  rdb:#NRstatus.status ->
+  rdb:#NCicCoercion.status ->
   lookup_in_library:(
     DisambiguateTypes.interactive_user_uri_choice_type ->
     DisambiguateTypes.input_or_locate_uri_type ->
@@ -42,7 +42,7 @@ val disambiguate_obj :
   mk_choice:('alias -> NCic.term DisambiguateTypes.codomain_item) ->
   aliases:'alias DisambiguateTypes.Environment.t ->
   universe:'alias list DisambiguateTypes.Environment.t option ->
-  rdb:#NRstatus.status ->
+  rdb:#NCicCoercion.status ->
   lookup_in_library:(
     DisambiguateTypes.interactive_user_uri_choice_type ->
     DisambiguateTypes.input_or_locate_uri_type ->

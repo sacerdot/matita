@@ -249,7 +249,7 @@ let distribute_tac tac (status : #tac_status) =
        ((status#set_stack stack)#set_obj(sn:>lowtac_status)#obj)#set_estatus sn
 ;;
 
-let atomic_tac htac : #tac_status as 'a -> 'a = distribute_tac (exec htac) ;;
+let atomic_tac htac: #tac_status as 'a -> 'a = distribute_tac (exec htac) ;;
 
 let repeat_tac t s = 
   let rec repeat t (status : #tac_status as 'a) : 'a = 

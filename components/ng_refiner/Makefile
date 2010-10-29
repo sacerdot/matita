@@ -6,8 +6,7 @@ INTERFACE_FILES = \
 	nCicMetaSubst.mli \
 	nCicUnifHint.mli \
 	nCicCoercion.mli \
-	nRstatus.mli \
-        nCicRefineUtil.mli \
+  nCicRefineUtil.mli \
 	nCicUnification.mli \
 	nCicRefiner.mli
 

@@ -14,16 +14,47 @@
 exception Error of string lazy_t * exn option
 val fail: ?exn:exn -> string lazy_t -> 'a
 
+type automation_cache = NDiscriminationTree.DiscriminationTree.t
+type unit_eq_cache = NCicParamod.state
+
+class type g_eq_status =
+ object
+   method eq_cache : unit_eq_cache 
+ end
+
+class eq_status :
+ object('self)
+  inherit g_eq_status
+  method set_eq_cache: unit_eq_cache -> 'self
+  method set_eq_status: #g_eq_status -> 'self
+ end
+
+class type g_auto_status =
+ object
+  method auto_cache : automation_cache
+ end
+
+class auto_status :
+ object('self)
+  inherit g_auto_status
+  method set_auto_cache: automation_cache -> 'self
+  method set_auto_status: #g_auto_status -> 'self
+ end
+
 class type g_pstatus =
  object
-  inherit NEstatus.g_status
+  inherit GrafiteDisambiguate.g_status
+  inherit g_auto_status
+  inherit g_eq_status
   method obj: NCic.obj
  end
 
 class pstatus :
  NCic.obj ->
   object ('self)
-   inherit NEstatus.status
+   inherit GrafiteDisambiguate.status
+   inherit auto_status
+   inherit eq_status
    method obj: NCic.obj
    method set_obj: NCic.obj -> 'self
    method set_pstatus: #g_pstatus -> 'self

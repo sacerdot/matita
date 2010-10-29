@@ -16,6 +16,9 @@ let pp x =
  if !debug then prerr_endline (Lazy.force x) else ()
 ;;
 
+type automation_cache = NDiscriminationTree.DiscriminationTree.t
+type unit_eq_cache = NCicParamod.state
+
 exception Error of string lazy_t * exn option
 let fail ?exn msg = raise (Error (msg,exn))
 
@@ -31,21 +34,56 @@ let wrap fname f x =
   | NCicMetaSubst.MetaSubstFailure _ as exn -> fail ~exn (lazy fname)
 ;;
 
+class type g_eq_status =
+ object
+   method eq_cache : unit_eq_cache 
+ end
+
+class eq_status =
+ object(self)
+  val eq_cache = NCicParamod.empty_state
+  method eq_cache = eq_cache
+  method set_eq_cache v = {< eq_cache = v >}
+  method set_eq_status
+   : 'status. #g_eq_status as 'status -> 'self
+   = fun o -> self#set_eq_cache o#eq_cache
+ end
+
+class type g_auto_status =
+ object
+   method auto_cache : automation_cache
+ end
+
+class auto_status =
+ object(self)
+  val auto_cache = NDiscriminationTree.DiscriminationTree.empty
+  method auto_cache = auto_cache
+  method set_auto_cache v = {< auto_cache = v >}
+  method set_auto_status
+   : 'status. #g_auto_status as 'status -> 'self
+   = fun o -> self#set_auto_cache o#auto_cache
+ end
+
 class type g_pstatus =
  object
-  inherit NEstatus.g_status
+  inherit GrafiteDisambiguate.g_status
+  inherit g_auto_status
+  inherit g_eq_status
   method obj: NCic.obj
  end
 
 class pstatus =
  fun (o: NCic.obj) ->
  object (self)
-   inherit NEstatus.status
+   inherit GrafiteDisambiguate.status
+   inherit auto_status
+   inherit eq_status
    val obj = o
    method obj = obj
    method set_obj o = {< obj = o >}
    method set_pstatus : 'status. #g_pstatus as 'status -> 'self
-   = fun o -> (self#set_estatus o)#set_obj o#obj
+   = fun o ->
+    (((self#set_lexicon_engine_status o)#set_obj o#obj)#set_auto_status o)#set_eq_status o
   end
 
 type tactic_term = NotationPt.term Disambiguate.disambiguator_input

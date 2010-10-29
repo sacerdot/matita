@@ -37,12 +37,16 @@ class status = fun (b : string) ->
    NCic.Constant([],"",None,NCic.Implicit `Closed,(`Provided,`Theorem,`Regular))
  in
   object
+   (* Warning: #stack and #obj are meaningful iff #ng_mode is `ProofMode *)
+   inherit ([Continuationals.Stack.t] NTacStatus.status fake_obj (Continuationals.Stack.empty))
+   inherit NCicLibrary.dumpable_status
    val baseuri = b
    val ng_mode = (`CommandMode : [`CommandMode | `ProofMode])
    method baseuri = baseuri
    method set_baseuri v = {< baseuri = v >}
    method ng_mode = ng_mode;
    method set_ng_mode v = {< ng_mode = v >}
-   (* Warning: #stack and #obj are meaningful iff #ng_mode is `ProofMode *)
-   inherit ([Continuationals.Stack.t] NTacStatus.status fake_obj (Continuationals.Stack.empty))
  end
+
+module Serializer =
+ NCicLibrary.Serializer(struct type dumpable_status = status end)

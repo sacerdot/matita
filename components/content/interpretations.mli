@@ -24,34 +24,48 @@
  *)
 
 
-  (** {2 Persistant state handling} *)
+  (** {2 State handling} *)
+
+type db
+
+class type g_status =
+  object
+    method interp_db: db
+  end
+
+class status :
+  object ('self)
+    method interp_db: db
+    method set_interp_db: db -> 'self
+    method set_interp_status: #g_status -> 'self
+  end
 
 type interpretation_id
 
 type cic_id = string
 
 val add_interpretation:
+  #status as 'status ->
   string ->                                       (* id / description *)
   string * NotationPt.argument_pattern list -> (* symbol, level 2 pattern *)
   NotationPt.cic_appl_pattern ->               (* level 3 pattern *)
-    interpretation_id
+    'status * interpretation_id
 
-  (** @raise Interpretation_not_found *)
-val lookup_interpretations:
-  ?sorted:bool -> string -> (* symbol *)
-    (string * NotationPt.argument_pattern list *
-      NotationPt.cic_appl_pattern) list
+val set_load_patterns32: 
+ ((bool * NotationPt.cic_appl_pattern * int) list -> unit) -> unit
 
 exception Interpretation_not_found
 
   (** @raise Interpretation_not_found *)
-val remove_interpretation: interpretation_id -> unit
+val lookup_interpretations:
+  #status ->
+   ?sorted:bool -> string -> (* symbol *)
+    (string * NotationPt.argument_pattern list *
+      NotationPt.cic_appl_pattern) list
 
   (** {3 Interpretations toggling} *)
 
-val get_all_interpretations: unit -> (interpretation_id * string) list
-val get_active_interpretations: unit -> interpretation_id list
-val set_active_interpretations: interpretation_id list -> unit
+val toggle_active_interpretations: #status as 'status -> bool -> 'status
 
   (** {2 content -> cic} *)
 
@@ -64,15 +78,7 @@ val instantiate_appl_pattern:
   (string * 'term) list -> NotationPt.cic_appl_pattern ->
     'term
 
-val push: unit -> unit
-val pop: unit -> unit
-
-(* for Matita NG *)
 val find_level2_patterns32:
- int ->
-  string * string *
-   NotationPt.argument_pattern list * NotationPt.cic_appl_pattern
-
-val add_load_patterns32: 
- ((bool * NotationPt.cic_appl_pattern * int) list -> unit) -> unit
-val init: unit -> unit
+  #status -> int ->
+   string * string * NotationPt.argument_pattern list *
+    NotationPt.cic_appl_pattern

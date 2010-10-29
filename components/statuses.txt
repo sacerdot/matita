@@ -1,0 +1,7 @@
+grafitetypes -> tac -> auto + eq + (grafitedisambiguate = lexicon +nciccoercion)
+           |--> dumpable                                    |
+           |--> nciclibrary                             interpretation
+
+ntermciccontent -> nciccoercion+interpretation
+                       |
+                  unif_hint

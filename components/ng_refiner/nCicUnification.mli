@@ -16,7 +16,7 @@ exception Uncertain of string Lazy.t;;
 exception AssertFailure of string Lazy.t;;
 
 val unify :
-  #NRstatus.status ->
+  #NCicCoercion.status ->
   ?test_eq_only:bool -> (* default: false *)
   ?swap:bool -> (* default: false *)
   NCic.metasenv -> NCic.substitution -> NCic.context -> 
@@ -33,7 +33,7 @@ val fix_sorts:
  *      [ rel 1 ... rel (len args) / lift (length args) (arg_1 .. arg_n) ]
  *)      
 val delift_type_wrt_terms:
-  #NRstatus.status -> 
+  #NCicCoercion.status -> 
   NCic.metasenv -> NCic.substitution -> NCic.context -> 
   NCic.term -> NCic.term list -> 
    NCic.metasenv * NCic.substitution * NCic.term

@@ -36,14 +36,11 @@ type id = string
 
 let hide_coercions = ref true;;
 
-(*
-type interpretation_id = int
-
-type term_info =
-  { sort: (Cic.id, Ast.sort_kind) Hashtbl.t;
-    uri: (Cic.id, UriManager.uri) Hashtbl.t;
-  }
-*)
+class status =
+  object
+    inherit NCicCoercion.status
+    inherit Interpretations.status
+  end
 
 let idref register_ref =
  let id = ref 0 in
@@ -207,44 +204,7 @@ let nast_of_cic0 status
          idref (Ast.Case (k ~context te, indty, Some (k ~context outty), patterns))
 ;;
 
-  (* persistent state *)
-
-(*
-let initial_level2_patterns32 () = Hashtbl.create 211
-let initial_interpretations () = Hashtbl.create 211
-
-let level2_patterns32 = ref (initial_level2_patterns32 ())
-(* symb -> id list ref *)
-let interpretations = ref (initial_interpretations ())
-*)
 let compiled32 = ref None
-(*
-let pattern32_matrix = ref []
-let counter = ref ~-1 
-
-let stack = ref []
-
-let push () =
- stack := (!counter,!level2_patterns32,!interpretations,!compiled32,!pattern32_matrix)::!stack;
- counter := ~-1;
- level2_patterns32 := initial_level2_patterns32 ();
- interpretations := initial_interpretations ();
- compiled32 := None;
- pattern32_matrix := []
-;;
-
-let pop () =
- match !stack with
-    [] -> assert false
-  | (ocounter,olevel2_patterns32,ointerpretations,ocompiled32,opattern32_matrix)::old ->
-   stack := old;
-   counter := ocounter;
-   level2_patterns32 := olevel2_patterns32;
-   interpretations := ointerpretations;
-   compiled32 := ocompiled32;
-   pattern32_matrix := opattern32_matrix
-;;
-*)
 
 let get_compiled32 () =
   match !compiled32 with
@@ -316,7 +276,7 @@ let rec nast_of_cic1 status ~idref ~output_type ~metasenv ~subst ~context term =
       in
       let _, symbol, args, _ =
         try
-          Interpretations.find_level2_patterns32 pid
+          Interpretations.find_level2_patterns32 status pid
         with Not_found -> assert false
       in
       let ast = instantiate32 idrefs env symbol args in
@@ -328,101 +288,7 @@ let load_patterns32 t =
   HExtlib.filter_map (function (true, ap, id) -> Some (ap, id) | _ -> None) t
  in
   set_compiled32 (lazy (Ncic2astMatcher.Matcher32.compiler t))
-in
- Interpretations.add_load_patterns32 load_patterns32;
- Interpretations.init ()
 ;;
-
-(*
-let fresh_id =
-  fun () ->
-    incr counter;
-    !counter
-
-let add_interpretation dsc (symbol, args) appl_pattern =
-  let id = fresh_id () in
-  Hashtbl.add !level2_patterns32 id (dsc, symbol, args, appl_pattern);
-  pattern32_matrix := (true, appl_pattern, id) :: !pattern32_matrix;
-  load_patterns32 !pattern32_matrix;
-  (try
-    let ids = Hashtbl.find !interpretations symbol in
-    ids := id :: !ids
-  with Not_found -> Hashtbl.add !interpretations symbol (ref [id]));
-  id
-
-let get_all_interpretations () =
-  List.map
-    (function (_, _, id) ->
-      let (dsc, _, _, _) =
-        try
-          Hashtbl.find !level2_patterns32 id
-        with Not_found -> assert false
-      in
-      (id, dsc))
-    !pattern32_matrix
-
-let get_active_interpretations () =
-  HExtlib.filter_map (function (true, _, id) -> Some id | _ -> None)
-    !pattern32_matrix
-
-let set_active_interpretations ids =
-  let pattern32_matrix' =
-    List.map
-      (function 
-        | (_, ap, id) when List.mem id ids -> (true, ap, id)
-        | (_, ap, id) -> (false, ap, id))
-      !pattern32_matrix
-  in
-  pattern32_matrix := pattern32_matrix';
-  load_patterns32 !pattern32_matrix
-
-exception Interpretation_not_found
-
-let lookup_interpretations symbol =
-  try
-   HExtlib.list_uniq
-    (List.sort Pervasives.compare
-     (List.map
-      (fun id ->
-        let (dsc, _, args, appl_pattern) =
-          try
-            Hashtbl.find !level2_patterns32 id
-          with Not_found -> assert false 
-        in
-        dsc, args, appl_pattern)
-      !(Hashtbl.find !interpretations symbol)))
-  with Not_found -> raise Interpretation_not_found
-
-let remove_interpretation id =
-  (try
-    let dsc, symbol, _, _ = Hashtbl.find !level2_patterns32 id in
-    let ids = Hashtbl.find !interpretations symbol in
-    ids := List.filter ((<>) id) !ids;
-    Hashtbl.remove !level2_patterns32 id;
-  with Not_found -> raise Interpretation_not_found);
-  pattern32_matrix :=
-    List.filter (fun (_, _, id') -> id <> id') !pattern32_matrix;
-  load_patterns32 !pattern32_matrix
-
-let _ = load_patterns32 []
-
-let instantiate_appl_pattern 
-  ~mk_appl ~mk_implicit ~term_of_uri env appl_pattern 
-=
-  let lookup name =
-    try List.assoc name env
-    with Not_found ->
-      prerr_endline (sprintf "Name %s not found" name);
-      assert false
-  in
-  let rec aux = function
-    | Ast.UriPattern uri -> term_of_uri uri
-    | Ast.ImplicitPattern -> mk_implicit false
-    | Ast.VarPattern name -> lookup name
-    | Ast.ApplPattern terms -> mk_appl (List.map aux terms)
-  in
-  aux appl_pattern
-*)
 
 let nmap_sequent0 status ~idref ~metasenv ~subst (i,(n,context,ty)) =
  let module K = Content in
@@ -621,3 +487,5 @@ in
  in
   res,ids_to_refs
 ;;
+
+Interpretations.set_load_patterns32 load_patterns32

@@ -87,13 +87,19 @@ type id = string
 
 val hide_coercions: bool ref
 
+class status :
+  object ('self)
+    inherit NCicCoercion.status
+    inherit Interpretations.status
+  end
+
 val nmap_sequent:
- #NCicCoercion.status -> metasenv:NCic.metasenv -> subst:NCic.substitution ->
+ #status as 'a -> metasenv:NCic.metasenv -> subst:NCic.substitution ->
   int * NCic.conjecture ->
    NotationPt.term Content.conjecture *
     (id, NReference.reference) Hashtbl.t    (* id -> reference *)
 
 val nmap_obj:
- #NCicCoercion.status -> NCic.obj ->
+ #status -> NCic.obj ->
   NotationPt.term Content.cobj *
    (id, NReference.reference) Hashtbl.t    (* id -> reference *)

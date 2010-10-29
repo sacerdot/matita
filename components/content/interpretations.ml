@@ -32,6 +32,9 @@ module Ast = NotationPt
 let debug = false
 let debug_print s = if debug then prerr_endline (Lazy.force s) else ()
 
+let load_patterns32 = ref (fun _ -> assert false);;
+let set_load_patterns32 f = load_patterns32 := f;;
+
 type interpretation_id = int
 
 let idref id t = Ast.AttributedTerm (`IdRef id, t)
@@ -43,38 +46,42 @@ type term_info =
     uri: (cic_id, NReference.reference) Hashtbl.t;
   }
 
-  (* persistent state *)
+module IntMap = Map.Make(struct type t = int let compare = compare end);;
+module StringMap = Map.Make(String);;
 
-let initial_level2_patterns32 () = Hashtbl.create 211
-let initial_interpretations () = Hashtbl.create 211
+type db = {
+  counter: int;
+  pattern32_matrix: (bool * NotationPt.cic_appl_pattern * interpretation_id) list;
+  level2_patterns32:
+   (string * string * NotationPt.argument_pattern list *
+     NotationPt.cic_appl_pattern) IntMap.t;
+  interpretations: interpretation_id list StringMap.t; (* symb -> id list *)
+}
 
-let level2_patterns32 = ref (initial_level2_patterns32 ())
-(* symb -> id list ref *)
-let interpretations = ref (initial_interpretations ())
-let pattern32_matrix = ref []
-let counter = ref ~-1 
-let find_level2_patterns32 pid = Hashtbl.find !level2_patterns32 pid;;
+let initial_db = {
+   counter = -1; 
+   pattern32_matrix = [];
+   level2_patterns32 = IntMap.empty;
+   interpretations = StringMap.empty
+}
 
-let stack = ref []
+class type g_status =
+  object
+    method interp_db: db
+  end
+ 
+class status =
+ object
+   val interp_db = initial_db  
+   method interp_db = interp_db
+   method set_interp_db v = {< interp_db = v >}
+   method set_interp_status
+    : 'status. #g_status as 'status -> 'self
+    = fun o -> {< interp_db = o#interp_db >}
+ end
 
-let push () =
- stack := (!counter,!level2_patterns32,!interpretations,!pattern32_matrix)::!stack;
- counter := ~-1;
- level2_patterns32 := initial_level2_patterns32 ();
- interpretations := initial_interpretations ();
- pattern32_matrix := []
-;;
-
-let pop () =
- match !stack with
-    [] -> assert false
-  | (ocounter,olevel2_patterns32,ointerpretations,opattern32_matrix)::old ->
-   stack := old;
-   counter := ocounter;
-   level2_patterns32 := olevel2_patterns32;
-   interpretations := ointerpretations;
-   pattern32_matrix := opattern32_matrix
-;;
+let find_level2_patterns32 status pid =
+ IntMap.find pid status#interp_db.level2_patterns32
 
 let add_idrefs =
   List.fold_right (fun idref t -> Ast.AttributedTerm (`IdRef idref, t))
@@ -109,83 +116,50 @@ let instantiate32 term_info idrefs env symbol args =
   if args = [] then head
   else Ast.Appl (head :: List.map instantiate_arg args)
 
-let load_patterns32s = ref [];;
+let fresh_id status =
+  let counter = status#interp_db.counter+1 in
+   status#set_interp_db ({ status#interp_db with counter = counter  }), counter
 
-let add_load_patterns32 f = load_patterns32s := f :: !load_patterns32s;;
-let fresh_id =
-  fun () ->
-    incr counter;
-    !counter
-
-let add_interpretation dsc (symbol, args) appl_pattern =
-  let id = fresh_id () in
-  Hashtbl.add !level2_patterns32 id (dsc, symbol, args, appl_pattern);
-  pattern32_matrix := (true, appl_pattern, id) :: !pattern32_matrix;
-  List.iter (fun f -> f !pattern32_matrix) !load_patterns32s;
-  (try
-    let ids = Hashtbl.find !interpretations symbol in
-    ids := id :: !ids
-  with Not_found -> Hashtbl.add !interpretations symbol (ref [id]));
-  id
-
-let get_all_interpretations () =
-  List.map
-    (function (_, _, id) ->
-      let (dsc, _, _, _) =
-        try
-          Hashtbl.find !level2_patterns32 id
-        with Not_found -> assert false
-      in
-      (id, dsc))
-    !pattern32_matrix
-
-let get_active_interpretations () =
-  HExtlib.filter_map (function (true, _, id) -> Some id | _ -> None)
-    !pattern32_matrix
-
-let set_active_interpretations ids =
-  let pattern32_matrix' =
-    List.map
-      (function 
-        | (_, ap, id) when List.mem id ids -> (true, ap, id)
-        | (_, ap, id) -> (false, ap, id))
-      !pattern32_matrix
+let add_interpretation (status : #status) dsc (symbol, args) appl_pattern =
+  let status,id = fresh_id status in
+  let ids =
+   try
+    StringMap.find symbol status#interp_db.interpretations
+   with Not_found -> [id] in
+  let status =
+   status#set_interp_db { status#interp_db with
+    level2_patterns32 =
+      IntMap.add id (dsc, symbol, args, appl_pattern)
+       status#interp_db.level2_patterns32;
+    pattern32_matrix = (true,appl_pattern,id)::status#interp_db.pattern32_matrix;
+    interpretations = StringMap.add symbol ids status#interp_db.interpretations
+   }
   in
-  pattern32_matrix := pattern32_matrix';
-  List.iter (fun f -> f !pattern32_matrix) !load_patterns32s
+   !load_patterns32 status#interp_db.pattern32_matrix;
+   status,id
+
+let toggle_active_interpretations status b =
+  status#set_interp_db { status#interp_db with
+   pattern32_matrix =
+     List.map (fun (_,ap,id) -> b,ap,id) status#interp_db.pattern32_matrix }
 
 exception Interpretation_not_found
 
-let lookup_interpretations ?(sorted=true) symbol =
+let lookup_interpretations status ?(sorted=true) symbol =
   try
     let raw = 
       List.map (
         fun id ->
           let (dsc, _, args, appl_pattern) =
-            try
-              Hashtbl.find !level2_patterns32 id
+            try IntMap.find id status#interp_db.level2_patterns32
             with Not_found -> assert false 
           in
           dsc, args, appl_pattern
-      )
-      !(Hashtbl.find !interpretations symbol)
+      ) (StringMap.find symbol status#interp_db.interpretations)
     in
     if sorted then HExtlib.list_uniq (List.sort Pervasives.compare raw)
               else raw
   with Not_found -> raise Interpretation_not_found
-
-let remove_interpretation id =
-  (try
-    let dsc, symbol, _, _ = Hashtbl.find !level2_patterns32 id in
-    let ids = Hashtbl.find !interpretations symbol in
-    ids := List.filter ((<>) id) !ids;
-    Hashtbl.remove !level2_patterns32 id;
-  with Not_found -> raise Interpretation_not_found);
-  pattern32_matrix :=
-    List.filter (fun (_, _, id') -> id <> id') !pattern32_matrix;
-  List.iter (fun f -> f !pattern32_matrix) !load_patterns32s
-
-let init () = List.iter (fun f -> f []) !load_patterns32s
 
 let instantiate_appl_pattern 
   ~mk_appl ~mk_implicit ~term_of_nref env appl_pattern 
@@ -203,4 +177,3 @@ let instantiate_appl_pattern
     | Ast.ApplPattern terms -> mk_appl (List.map aux terms)
   in
   aux appl_pattern
-

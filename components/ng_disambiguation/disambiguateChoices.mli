@@ -43,6 +43,7 @@ val nlookup_num_by_dsc: string -> NCic.term codomain_item
    * @param dsc description (1st component of codomain_item)
    *)
 val lookup_symbol_by_dsc: 
+  #Interpretations.status ->
   mk_appl: ('term list -> 'term) ->
   mk_implicit: (bool -> 'term) ->
   term_of_nref: (NReference.reference -> 'term) ->

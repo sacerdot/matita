@@ -13,39 +13,11 @@
 
 exception LibraryOutOfSync of string Lazy.t
 
-type automation_cache = NDiscriminationTree.DiscriminationTree.t
-type unit_eq_cache = NCicParamod.state
-
-class type g_eq_status =
- object
-   method eq_cache : unit_eq_cache 
- end
-
-class eq_status :
- object('self)
-  inherit g_eq_status
-  method set_eq_cache: unit_eq_cache -> 'self
-  method set_eq_status: #g_eq_status -> 'self
- end
-
-class type g_auto_status =
- object
-  method auto_cache : automation_cache
- end
-
-class auto_status :
- object('self)
-  inherit g_auto_status
-  method set_auto_cache: automation_cache -> 'self
-  method set_auto_status: #g_auto_status -> 'self
- end
-
 type timestamp
 
 class type g_status =
  object
   method timestamp: timestamp
-  inherit NRstatus.g_status
  end
 
 class status :
@@ -73,35 +45,29 @@ val init: unit -> unit
 
 type obj
 
-class type g_dumpable_status =
- object
-  inherit g_status
-  inherit g_auto_status
-  inherit g_eq_status
-  method dump: obj list
- end
-  
-class dumpable_status :
- object ('self)
-  inherit status
-  inherit auto_status
-  inherit eq_status
-  inherit g_dumpable_status
-  method set_dump: obj list -> 'self
-  method set_dumpable_status: #g_dumpable_status -> 'self
- end
-
-type 'a register_type =
- < run: 'status.
-    'a -> refresh_uri_in_universe:(NCic.universe ->
-      NCic.universe) -> refresh_uri_in_term:(NCic.term -> NCic.term) ->
-       (#dumpable_status as 'status) -> 'status >
-
-module Serializer:
+module type SerializerType =
  sig
+  type dumpable_status
+
+  type 'a register_type =
+   'a ->
+    refresh_uri_in_universe:(NCic.universe -> NCic.universe) ->
+    refresh_uri_in_term:(NCic.term -> NCic.term) ->
+     dumpable_status -> dumpable_status
+
   val register: < run: 'a.  string -> 'a register_type -> ('a -> obj) >
   val serialize: baseuri:NUri.uri -> obj list -> unit
-  val require: baseuri:NUri.uri -> (#dumpable_status as 'status) -> 'status
+   (* the obj is the "include" command to be added to the dump list *)
+  val require: baseuri:NUri.uri -> dumpable_status -> dumpable_status * obj
+ end
+
+module Serializer(D: sig type dumpable_status end) :
+  SerializerType with type dumpable_status = D.dumpable_status
+
+class dumpable_status :
+ object ('self)
+  method dump: obj list
+  method set_dump: obj list -> 'self
  end
 
 (* CSC: only required during old-to-NG phase, to be deleted *)

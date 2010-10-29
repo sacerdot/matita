@@ -12,7 +12,7 @@
 (* $Id: orderings.ml 9869 2009-06-11 22:52:38Z denes $ *)
 
 val nparamod :
-  #NRstatus.status ->
+  #NCicCoercion.status ->
   NCic.metasenv -> NCic.substitution -> NCic.context -> 
     (NCic.term * NCic.term) -> (NCic.term * NCic.term) list ->
      (NCic.term * NCic.term * NCic.metasenv * NCic.substitution) list
@@ -24,19 +24,19 @@ val index_obj: state -> NUri.uri -> state
 val is_equation: NCic.metasenv ->
            NCic.substitution -> NCic.context -> NCic.term -> bool
 val paramod : 
-  #NRstatus.status ->
+  #NCicCoercion.status ->
   NCic.metasenv -> NCic.substitution -> NCic.context ->
   state -> 
   (NCic.term * NCic.term) -> 
   (NCic.term * NCic.term * NCic.metasenv * NCic.substitution) list
 val fast_eq_check : 
-  #NRstatus.status ->
+  #NCicCoercion.status ->
   NCic.metasenv -> NCic.substitution -> NCic.context ->
   state -> 
   (NCic.term * NCic.term) -> 
   (NCic.term * NCic.term * NCic.metasenv * NCic.substitution) list
 val demod : 
-  #NRstatus.status ->
+  #NCicCoercion.status ->
   NCic.metasenv -> NCic.substitution -> NCic.context ->
   state -> 
   (NCic.term * NCic.term) -> 

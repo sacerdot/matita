@@ -146,48 +146,13 @@ let load_db,set_global_aliases,get_global_aliases,add_deps,get_deps,remove_deps=
 
 let init = load_db;;
 
-type automation_cache = NDiscriminationTree.DiscriminationTree.t
-type unit_eq_cache = NCicParamod.state
-
-class type g_eq_status =
- object
-   method eq_cache : unit_eq_cache 
- end
-
-class eq_status =
- object(self)
-  val eq_cache = NCicParamod.empty_state
-  method eq_cache = eq_cache
-  method set_eq_cache v = {< eq_cache = v >}
-  method set_eq_status
-   : 'status. #g_eq_status as 'status -> 'self
-   = fun o -> self#set_eq_cache o#eq_cache
- end
-
-class type g_auto_status =
- object
-   method auto_cache : automation_cache
- end
-
-class auto_status =
- object(self)
-  val auto_cache = NDiscriminationTree.DiscriminationTree.empty
-  method auto_cache = auto_cache
-  method set_auto_cache v = {< auto_cache = v >}
-  method set_auto_status
-   : 'status. #g_auto_status as 'status -> 'self
-   = fun o -> self#set_auto_cache o#auto_cache
- end
-
 class type g_status =
  object
-  inherit NRstatus.g_status
   method timestamp: timestamp
  end
 
 class status =
  object(self)
-  inherit NRstatus.status
   val timestamp = (time0 : timestamp)
   method timestamp = timestamp
   method set_timestamp v = {< timestamp = v >}
@@ -224,37 +189,39 @@ let serialize ~baseuri dump =
   
 type obj = string * Obj.t
 
-
-class type g_dumpable_status =
- object
-  inherit g_status
-  inherit g_auto_status
-  inherit g_eq_status
-  method dump: obj list
- end
-
 class dumpable_status =
  object(self)
-  inherit status
-  inherit auto_status
-  inherit eq_status
   val dump = ([] : obj list)
   method dump = dump
   method set_dump v = {< dump = v >}
-  method set_dumpable_status : 'status. #g_dumpable_status as 'status -> 'self
-   = fun o -> 
-     (((self#set_dump o#dump)#set_coercion_status o)#set_auto_status o)#set_eq_status o
  end
 
-type 'a register_type =
- < run: 'status.
-    'a -> refresh_uri_in_universe:(NCic.universe ->
-      NCic.universe) -> refresh_uri_in_term:(NCic.term -> NCic.term) ->
-       (#dumpable_status as 'status) -> 'status >
+module type SerializerType =
+ sig
+  type dumpable_status
 
-module Serializer =
+  type 'a register_type =
+   'a ->
+    refresh_uri_in_universe:(NCic.universe -> NCic.universe) ->
+    refresh_uri_in_term:(NCic.term -> NCic.term) ->
+     dumpable_status -> dumpable_status
+
+  val register: < run: 'a.  string -> 'a register_type -> ('a -> obj) >
+  val serialize: baseuri:NUri.uri -> obj list -> unit
+   (* the obj is the "include" command to be added to the dump list *)
+  val require: baseuri:NUri.uri -> dumpable_status -> dumpable_status * obj
+ end
+
+module Serializer(D: sig type dumpable_status end) =
  struct
-  let require1 = ref (object method run : 'status. obj -> (#dumpable_status as 'status) -> 'status  = fun _ -> assert false end (* unknown data*))
+  type dumpable_status = D.dumpable_status
+  type 'a register_type =
+   'a ->
+    refresh_uri_in_universe:(NCic.universe -> NCic.universe) ->
+    refresh_uri_in_term:(NCic.term -> NCic.term) ->
+     dumpable_status -> dumpable_status
+
+  let require1 = ref (fun _ -> assert false) (* unknown data*)
   let already_registered = ref []
 
   let register =
@@ -265,14 +232,11 @@ module Serializer =
      already_registered := tag :: !already_registered;
      let old_require1 = !require1 in
      require1 :=
-       object
-        method run : 'status. obj -> (#dumpable_status as 'status) -> 'status =
-         fun ((tag',data) as x) ->
-         if tag=tag' then
-          require#run (Obj.magic data) ~refresh_uri_in_universe ~refresh_uri_in_term
-         else
-          old_require1#run x
-       end;
+      (fun ((tag',data) as x) ->
+        if tag=tag' then
+         require (Obj.magic data) ~refresh_uri_in_universe ~refresh_uri_in_term
+        else
+         old_require1 x);
      (fun x -> tag,Obj.repr x)
    end
 
@@ -282,7 +246,7 @@ module Serializer =
    try
     includes := baseuri::!includes;
     let dump = require0 ~baseuri in
-     List.fold_right !require1#run dump status
+     List.fold_right !require1 dump status
    with
     Sys_error _ ->
      raise (IncludedFileNotCompiled(path_of_baseuri baseuri,NUri.string_of_uri baseuri))
@@ -292,15 +256,11 @@ module Serializer =
      (* memorizzo baseuri in una tabella; *)
      require2 ~baseuri
    in
-    register#run "include"
-     object(self : 'a register_type)
-      method run = aux
-     end
+    register#run "include" aux
 
   let require ~baseuri status =
    let status = require2 ~baseuri status in
-   let dump = record_include baseuri :: status#dump in
-    status#set_dump dump
+    status,record_include baseuri
 end
 
 

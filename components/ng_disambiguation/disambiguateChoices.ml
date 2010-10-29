@@ -72,8 +72,9 @@ let mk_choice  ~mk_appl ~mk_implicit ~term_of_nref (dsc, args, appl_pattern)=
          [] -> combined
        | _::_ -> mk_appl (combined::rest))
 
-let lookup_symbol_by_dsc ~mk_appl ~mk_implicit ~term_of_nref symbol dsc =
-  let interpretations = Interpretations.lookup_interpretations ~sorted:false symbol in
+let lookup_symbol_by_dsc status ~mk_appl ~mk_implicit ~term_of_nref symbol dsc =
+  let interpretations =
+   Interpretations.lookup_interpretations status ~sorted:false symbol in
   try
     mk_choice ~mk_appl ~mk_implicit ~term_of_nref
       (List.find (fun (dsc', _, _) -> dsc = dsc') interpretations)

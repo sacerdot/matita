@@ -25,20 +25,28 @@
 
 exception BaseUriNotSetYet
 
-val disambiguate_command: 
- LexiconEngine.status as 'status ->
- GrafiteAst.command Disambiguate.disambiguator_input ->
-  'status * GrafiteAst.command
+class g_status :
+  object
+  inherit LexiconEngine.g_status
+  inherit NCicCoercion.g_status
+  end
+
+class status :
+ object
+  inherit LexiconEngine.status
+  inherit NCicCoercion.status
+  method set_grafite_disambiguate_status: #g_status -> 'self
+ end
 
 val disambiguate_nterm :
  NCic.term option -> 
- (#NEstatus.status as 'status) ->
+ (#status as 'status) ->
  NCic.context -> NCic.metasenv -> NCic.substitution ->
  NotationPt.term Disambiguate.disambiguator_input ->
    NCic.metasenv * NCic.substitution * 'status * NCic.term
 
 val disambiguate_nobj :
- #NEstatus.status as 'status ->
+ #status as 'status ->
  ?baseuri:string ->
  (NotationPt.term NotationPt.obj) Disambiguate.disambiguator_input ->
   'status * NCic.obj

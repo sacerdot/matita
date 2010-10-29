@@ -291,10 +291,7 @@ let record_ncoercion =
  let aux_l l ~refresh_uri_in_universe ~refresh_uri_in_term =
    List.fold_right (aux ~refresh_uri_in_universe ~refresh_uri_in_term) l
  in
-  NCicLibrary.Serializer.register#run "ncoercion"
-   object(self : 'a NCicLibrary.register_type)
-    method run = aux_l 
-   end
+  GrafiteTypes.Serializer.register#run "ncoercion" aux_l 
 ;;
 
 let basic_eval_and_record_ncoercion infos status =
