@@ -205,10 +205,10 @@ let compare_statuses ~past ~present =
 let exec tac (low_status : #lowtac_status) g =
   let stack = [ [0,Open g], [], [], `NoTag ] in
   let status =
-   (new NTacStatus.status low_status#obj stack)#set_estatus low_status
+   (new NTacStatus.status low_status#obj stack)#set_pstatus low_status
   in
   let status = tac status in
-   (low_status#set_estatus status)#set_obj status#obj
+   (low_status#set_pstatus status)#set_obj status#obj
 ;;
 
 let distribute_tac tac (status : #tac_status) =
@@ -236,7 +236,7 @@ let distribute_tac tac (status : #tac_status) =
             in
             aux s go gc loc_tl
       in
-      let s0 = (new NTacStatus.status status#obj ())#set_estatus status in
+      let s0 = (new NTacStatus.status status#obj ())#set_pstatus status in
       let s0, go0, gc0 = s0, [], [] in
       let sn, gon, gcn = aux s0 go0 gc0 g in
       debug_print (lazy ("opened: "
@@ -246,7 +246,7 @@ let distribute_tac tac (status : #tac_status) =
       let stack =
         (zero_pos gon, t @~- gcn, k @~- gcn, tag) :: deep_close gcn s
       in
-       ((status#set_stack stack)#set_obj(sn:>lowtac_status)#obj)#set_estatus sn
+       ((status#set_stack stack)#set_obj(sn:>lowtac_status)#obj)#set_pstatus sn
 ;;
 
 let atomic_tac htac: #tac_status as 'a -> 'a = distribute_tac (exec htac) ;;

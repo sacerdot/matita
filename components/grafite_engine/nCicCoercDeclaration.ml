@@ -311,8 +311,7 @@ let basic_eval_and_record_ncoercion_from_t_cpos_arity
    status,uris
 ;;
 
-let eval_ncoercion status name t ty (id,src) tgt = 
-
+let eval_ncoercion (status: #GrafiteTypes.status) name t ty (id,src) tgt = 
  let metasenv,subst,status,ty =
   GrafiteDisambiguate.disambiguate_nterm None status [] [] [] ("",0,ty) in
  assert (metasenv=[]);
@@ -321,7 +320,6 @@ let eval_ncoercion status name t ty (id,src) tgt =
   GrafiteDisambiguate.disambiguate_nterm (Some ty) status [] [] [] ("",0,t) in
  assert (metasenv=[]);
  let t = NCicUntrusted.apply_subst subst [] t in
-
  let status, src, tgt, cpos, arity = 
    src_tgt_cpos_arity_of_ty_id_src_tgt status ty id src tgt in
  let status, uris =

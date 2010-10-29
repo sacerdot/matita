@@ -25,14 +25,14 @@
 
 exception BaseUriNotSetYet
 
-class g_status :
-  object
+class type g_status =
+ object
   inherit LexiconEngine.g_status
   inherit NCicCoercion.g_status
-  end
+ end
 
 class status :
- object
+ object ('self)
   inherit LexiconEngine.status
   inherit NCicCoercion.status
   method set_grafite_disambiguate_status: #g_status -> 'self

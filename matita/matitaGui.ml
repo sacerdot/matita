@@ -81,7 +81,7 @@ let save_moo grafite_status =
      in
      LexiconMarshal.save_lexicon lexicon_fname
       grafite_status#lstatus.LexiconEngine.lexicon_content_rev;
-     NCicLibrary.Serializer.serialize ~baseuri:(NUri.uri_of_string baseuri)
+     GrafiteTypes.Serializer.serialize ~baseuri:(NUri.uri_of_string baseuri)
       grafite_status#dump
   | _ -> clean_current_baseuri grafite_status 
 ;;
@@ -856,12 +856,14 @@ class gui () =
           | false -> main#toplevel#unfullscreen ());
       main#fullscreenMenuItem#set_active false;
       MatitaGtkMisc.toggle_callback ~check:main#ppNotationMenuItem
-        ~callback:(function
-          | true ->
-              CicNotation.set_active_notations
-                (List.map fst (CicNotation.get_all_notations ()))
-          | false ->
-              CicNotation.set_active_notations []);
+        ~callback:(
+          let s = s () in
+          let status =
+           Interpretations.toggle_active_interpretations s#grafite_status
+          in
+           assert false (* MATITA1.0 ???
+           s#set_grafite_status status*)
+         );
       MatitaGtkMisc.toggle_callback ~check:main#hideCoercionsMenuItem
         ~callback:(fun enabled -> NTermCicContent.hide_coercions := enabled);
       MatitaGtkMisc.toggle_callback ~check:main#unicodeAsTexMenuItem

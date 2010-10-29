@@ -146,19 +146,11 @@ let load_db,set_global_aliases,get_global_aliases,add_deps,get_deps,remove_deps=
 
 let init = load_db;;
 
-class type g_status =
- object
-  method timestamp: timestamp
- end
-
 class status =
  object(self)
   val timestamp = (time0 : timestamp)
   method timestamp = timestamp
   method set_timestamp v = {< timestamp = v >}
-  method set_library_status
-   : 'status. #g_status as 'status -> 'self
-   = fun o -> self#set_timestamp o#timestamp
  end
 
 let time_travel status =

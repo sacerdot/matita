@@ -25,7 +25,7 @@
 
 (* $Id$ *)
 
-class g_status =
+class type g_status =
   object
    inherit LexiconEngine.g_status
    inherit NCicCoercion.g_status

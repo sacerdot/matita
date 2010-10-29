@@ -131,9 +131,9 @@ object
 
     (** load a sequent and render it into parent widget *)
   method nload_sequent:
-   #NCicCoercion.status -> NCic.metasenv -> NCic.substitution -> int -> unit
+   #NTermCicContent.status -> NCic.metasenv -> NCic.substitution -> int -> unit
 
-  method load_nobject: #NCicCoercion.status -> NCic.obj -> unit
+  method load_nobject: #NTermCicContent.status -> NCic.obj -> unit
 end
 
 class type sequentsViewer =
@@ -143,7 +143,7 @@ object
   method load_logo_with_qed: unit
   method nload_sequents: #NTacStatus.tac_status -> unit
   method goto_sequent:
-   #NCicCoercion.status -> int -> unit (* to be called _after_ load_sequents *)
+   #NTermCicContent.status -> int -> unit (* to be called _after_ load_sequents *)
 
   method cicMathView: cicMathView
 end

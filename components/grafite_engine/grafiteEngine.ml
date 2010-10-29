@@ -549,11 +549,9 @@ let rec eval_ncommand opts status (text,prefix_len,cmd) =
       eval_add_constraint status [`Type,u1] [`Type,u2]
 ;;
 
-let eval_comment ~disambiguate_command opts status (text,prefix_len,c) =
- status, []
+let eval_comment opts status (text,prefix_len,c) = status, []
 
-let rec eval_command ~disambiguate_command opts status (text,prefix_len,cmd) =
- let status,cmd = disambiguate_command status (text,prefix_len,cmd) in
+let rec eval_command opts status (text,prefix_len,cmd) =
  let status,uris =
   match cmd with
   | GrafiteAst.Include (loc, baseuri) ->
@@ -567,7 +565,7 @@ let rec eval_command ~disambiguate_command opts status (text,prefix_len,cmd) =
  in
   status,uris
 
-and eval_executable ~disambiguate_command opts status (text,prefix_len,ex) =
+and eval_executable opts status (text,prefix_len,ex) =
   match ex with
   | GrafiteAst.NTactic (_(*loc*), tacl) ->
       if status#ng_mode <> `ProofMode then
@@ -582,19 +580,17 @@ and eval_executable ~disambiguate_command opts status (text,prefix_len,ex) =
        in
         status,[]
   | GrafiteAst.Command (_, cmd) ->
-      eval_command ~disambiguate_command opts status (text,prefix_len,cmd)
+      eval_command opts status (text,prefix_len,cmd)
   | GrafiteAst.NCommand (_, cmd) ->
       eval_ncommand opts status (text,prefix_len,cmd)
   | GrafiteAst.NMacro (loc, macro) ->
      raise (NMacro (loc,macro))
 
-and eval_ast ~disambiguate_command ?(do_heavy_checks=false) status
-(text,prefix_len,st)
-=
+and eval_ast ?(do_heavy_checks=false) status (text,prefix_len,st) =
   let opts = { do_heavy_checks = do_heavy_checks ; } in
   match st with
   | GrafiteAst.Executable (_,ex) ->
-     eval_executable ~disambiguate_command opts status (text,prefix_len,ex)
+     eval_executable opts status (text,prefix_len,ex)
   | GrafiteAst.Comment (_,c) -> 
-      eval_comment ~disambiguate_command opts status (text,prefix_len,c) 
+      eval_comment opts status (text,prefix_len,c) 
 ;;

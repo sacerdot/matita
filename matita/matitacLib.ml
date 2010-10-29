@@ -231,7 +231,7 @@ let compile atstart options fname =
      (if Helm_registry.get_bool "matita.moo" then begin
         (* FG: we do not generate .moo when dumping .mma files *)
         LexiconMarshal.save_lexicon lexicon_fname lexicon_content_rev;
-        NCicLibrary.Serializer.serialize ~baseuri:(NUri.uri_of_string baseuri)
+        GrafiteTypes.Serializer.serialize ~baseuri:(NUri.uri_of_string baseuri)
          grafite_status#dump
      end;
      let tm = Unix.gmtime elapsed in

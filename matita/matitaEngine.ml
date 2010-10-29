@@ -30,13 +30,6 @@ module G = GrafiteAst
 let debug = false ;;
 let debug_print = if debug then prerr_endline else ignore ;;
 
-let disambiguate_command lexicon_status_ref grafite_status cmd =
- let lexicon_status,cmd =
-  GrafiteDisambiguate.disambiguate_command !lexicon_status_ref cmd
- in
-  lexicon_status_ref := lexicon_status;
-  grafite_status,cmd
-
 let eval_macro_screenshot (status : GrafiteTypes.status) name =
   assert false (* MATITA 1.0
   let _,_,metasenv,subst,_ = status#obj in
@@ -63,9 +56,7 @@ let eval_ast ?do_heavy_checks status (text,prefix_len,ast) =
  let lexicon_status_ref = ref (status :> LexiconEngine.status) in
  let baseuri = status#baseuri in
  let new_status,new_objs =
-  GrafiteEngine.eval_ast
-   ~disambiguate_command:(disambiguate_command lexicon_status_ref)
-   ?do_heavy_checks status (text,prefix_len,ast)
+  GrafiteEngine.eval_ast ?do_heavy_checks status (text,prefix_len,ast)
  in
  let new_status =
   if !lexicon_status_ref#lstatus != status#lstatus then

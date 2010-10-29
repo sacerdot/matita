@@ -15,16 +15,10 @@ exception LibraryOutOfSync of string Lazy.t
 
 type timestamp
 
-class type g_status =
- object
-  method timestamp: timestamp
- end
-
 class status :
  object ('self)
-  inherit g_status
+  method timestamp: timestamp
   method set_timestamp: timestamp -> 'self
-  method set_library_status: #g_status -> 'self
  end
 
 (* it also checks it and add it to the environment *)

@@ -37,6 +37,7 @@ class status :
    (* Warning: #stack and #obj are meaningful iff #ng_mode is `ProofMode *)
    inherit NTacStatus.tac_status
    inherit NCicLibrary.dumpable_status
+   inherit NCicLibrary.status
    method baseuri: string
    method set_baseuri: string -> 'self
    method ng_mode: [`ProofMode | `CommandMode]

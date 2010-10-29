@@ -29,11 +29,6 @@ exception NMacro of GrafiteAst.loc * GrafiteAst.nmacro
 type 'a disambiguator_input = string * int * 'a
 
 val eval_ast :
-  disambiguate_command:
-   (GrafiteTypes.status ->
-    GrafiteAst.command disambiguator_input ->
-    GrafiteTypes.status * GrafiteAst.command) ->
-
   ?do_heavy_checks:bool ->
   GrafiteTypes.status ->
   GrafiteAst.statement disambiguator_input ->
