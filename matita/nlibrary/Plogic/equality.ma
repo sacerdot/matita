@@ -43,28 +43,28 @@ ncases p0; #Heq; nassumption.
 nqed.
 *)
 
-ntheorem rewrite_l: ∀A:Type[2].∀x.∀P:A → Prop. P x → ∀y. x = y → P y.
-#A; #x; #P; #Hx; #y; #Heq;ncases Heq;nassumption.
-nqed. 
+theorem rewrite_l: ∀A:Type[2].∀x.∀P:A → Prop. P x → ∀y. x = y → P y.
+#A; #x; #P; #Hx; #y; #Heq;cases Heq;assumption.
+qed. 
 
-ntheorem sym_eq: ∀A:Type[2].∀x,y:A. x = y → y = x.
-#A; #x; #y; #Heq; napply (rewrite_l A x (λz.z=x)); 
-##[ @; ##| nassumption; ##]
-nqed.
+theorem sym_eq: ∀A:Type[2].∀x,y:A. x = y → y = x.
+#A; #x; #y; #Heq; apply (rewrite_l A x (λz.z=x)); 
+[ @ | assumption ]
+qed.
 
-ntheorem rewrite_r: ∀A:Type[2].∀x.∀P:A → Prop. P x → ∀y. y = x → P y.
-#A; #x; #P; #Hx; #y; #Heq;ncases (sym_eq ? ? ?Heq);nassumption.
-nqed.
+theorem rewrite_r: ∀A:Type[2].∀x.∀P:A → Prop. P x → ∀y. y = x → P y.
+#A; #x; #P; #Hx; #y; #Heq; cases (sym_eq ? ? ?Heq); assumption.
+qed.
 
-ntheorem eq_coerc: ∀A,B:Type[1].A→(A=B)→B.
-#A; #B; #Ha; #Heq;nelim Heq; nassumption.
-nqed.
+theorem eq_coerc: ∀A,B:Type[1].A→(A=B)→B.
+#A; #B; #Ha; #Heq;elim Heq; assumption.
+qed.
 
-ndefinition R0 ≝ λT:Type[0].λt:T.t.
+definition R0 ≝ λT:Type[0].λt:T.t.
   
-ndefinition R1 ≝ eq_rect_Type0.
+definition R1 ≝ eq_rect_Type0.
 
-ndefinition R2 :
+definition R2 :
   ∀T0:Type[0].
   ∀a0:T0.
   ∀T1:∀x0:T0. a0=x0 → Type[0].
@@ -77,12 +77,12 @@ ndefinition R2 :
   ∀e1:R1 ?? T1 a1 ? e0 = b1.
   T2 b0 e0 b1 e1.
 #T0;#a0;#T1;#a1;#T2;#a2;#b0;#e0;#b1;#e1;
-napply (eq_rect_Type0 ????? e1);
-napply (R1 ?? ? ?? e0);
-napply a2;
-nqed.
+apply (eq_rect_Type0 ????? e1);
+apply (R1 ?? ? ?? e0);
+apply a2;
+qed.
 
-ndefinition R3 :
+definition R3 :
   ∀T0:Type[0].
   ∀a0:T0.
   ∀T1:∀x0:T0. a0=x0 → Type[0].
@@ -100,12 +100,12 @@ ndefinition R3 :
   ∀e2:R2 ???? T2 a2 b0 e0 ? e1 = b2.
   T3 b0 e0 b1 e1 b2 e2.
 #T0;#a0;#T1;#a1;#T2;#a2;#T3;#a3;#b0;#e0;#b1;#e1;#b2;#e2;
-napply (eq_rect_Type0 ????? e2);
-napply (R2 ?? ? ???? e0 ? e1);
-napply a3;
-nqed.
+apply (eq_rect_Type0 ????? e2);
+apply (R2 ?? ? ???? e0 ? e1);
+apply a3;
+qed.
 
-ndefinition R4 :
+definition R4 :
   ∀T0:Type[0].
   ∀a0:T0.
   ∀T1:∀x0:T0. eq T0 a0 x0 → Type[0].
@@ -135,9 +135,9 @@ ndefinition R4 :
   ∀e3:eq (T3 …) (R3 T0 a0 T1 a1 T2 a2 T3 a3 b0 e0 b1 e1 b2 e2) b3.
   T4 b0 e0 b1 e1 b2 e2 b3 e3.
 #T0;#a0;#T1;#a1;#T2;#a2;#T3;#a3;#T4;#a4;#b0;#e0;#b1;#e1;#b2;#e2;#b3;#e3;
-napply (eq_rect_Type0 ????? e3);
-napply (R3 ????????? e0 ? e1 ? e2);
-napply a4;
-nqed.
+apply (eq_rect_Type0 ????? e3);
+apply (R3 ????????? e0 ? e1 ? e2);
+apply a4;
+qed.
 
-naxiom streicherK : ∀T:Type[2].∀t:T.∀P:t = t → Type[2].P (refl ? t) → ∀p.P p.
+axiom streicherK : ∀T:Type[2].∀t:T.∀P:t = t → Type[2].P (refl ? t) → ∀p.P p.
