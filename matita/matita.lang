@@ -92,15 +92,15 @@
          <keyword>axiom</keyword>
 
 	 <!-- nobjects -->
-         <keyword>ntheorem</keyword>
-         <keyword>nrecord</keyword>
-         <keyword>ndefinition</keyword>
-         <keyword>ninductive</keyword>
-         <keyword>ncoinductive</keyword>
-         <keyword>nlet</keyword>
-         <keyword>nlemma</keyword>
-         <keyword>nremark</keyword>
-         <keyword>naxiom</keyword>
+         <keyword>theorem</keyword>
+         <keyword>record</keyword>
+         <keyword>definition</keyword>
+         <keyword>inductive</keyword>
+         <keyword>coinductive</keyword>
+         <keyword>let</keyword>
+         <keyword>lemma</keyword>
+         <keyword>remark</keyword>
+         <keyword>axiom</keyword>
 
          <!-- tactics -->
          <keyword>absurd</keyword>
@@ -182,22 +182,22 @@
          <keyword>rule</keyword>	    	 
 
          <!-- ntactics -->
-         <keyword>napply</keyword>	    	 
-         <keyword>napplyS</keyword>	    	 
-         <keyword>ncases</keyword>	    	 
-         <keyword>nletin</keyword>	    	 
-         <keyword>nauto</keyword>	    	 
-         <keyword>nelim</keyword>	    	 
-         <keyword>nwhd</keyword>	    	 
-         <keyword>nnormalize</keyword>	    	 
-         <keyword>nassumption</keyword>	    	 
-         <keyword>ngeneralize</keyword>	    	 
-         <keyword>nchange</keyword>	    	 
-         <keyword>nrewrite</keyword>	    	 
-         <keyword>ncut</keyword>	    	 
-         <keyword>ninversion</keyword>
-         <keyword>nlapply</keyword>
-         <keyword>ndestruct</keyword> 
+         <keyword>apply</keyword>	    	 
+         <keyword>applyS</keyword>	    	 
+         <keyword>cases</keyword>	    	 
+         <keyword>letin</keyword>	    	 
+         <keyword>auto</keyword>	    	 
+         <keyword>elim</keyword>	    	 
+         <keyword>whd</keyword>	    	 
+         <keyword>normalize</keyword>	    	 
+         <keyword>assumption</keyword>	    	 
+         <keyword>generalize</keyword>	    	 
+         <keyword>change</keyword>	    	 
+         <keyword>rewrite</keyword>	    	 
+         <keyword>cut</keyword>	    	 
+         <keyword>inversion</keyword>
+         <keyword>lapply</keyword>
+         <keyword>destruct</keyword> 
 
           <!-- commands -->
           <keyword>alias</keyword>
@@ -234,9 +234,9 @@
           <!-- ncommands -->
           <keyword>unification</keyword>
           <keyword>hint</keyword>
-          <keyword>ncoercion</keyword>
-          <keyword>ninverter</keyword>
-          <keyword>nqed</keyword>
+          <keyword>coercion</keyword>
+          <keyword>inverter</keyword>
+          <keyword>qed</keyword>
 
           <!-- macros -->
           <keyword>inline</keyword>
@@ -246,14 +246,14 @@
           <keyword>hint</keyword>
           <keyword>set</keyword>
           <keyword>auto</keyword>
-          <keyword>nodefaults</keyword>
+          <keyword>odefaults</keyword>
           <keyword>coercions</keyword>
           <keyword>comments</keyword>
           <keyword>debug</keyword>
           <keyword>cr</keyword>
          
           <!-- nmacros -->
-          <keyword>ncheck</keyword>
+          <keyword>check</keyword>
          
           <!-- tinycals -->
           <keyword>try</keyword>
