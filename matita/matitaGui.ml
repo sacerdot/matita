@@ -856,10 +856,10 @@ class gui () =
           | false -> main#toplevel#unfullscreen ());
       main#fullscreenMenuItem#set_active false;
       MatitaGtkMisc.toggle_callback ~check:main#ppNotationMenuItem
-        ~callback:(
+        ~callback:(function b ->
           let s = s () in
           let status =
-           Interpretations.toggle_active_interpretations s#grafite_status
+           Interpretations.toggle_active_interpretations s#grafite_status b
           in
            assert false (* MATITA1.0 ???
            s#set_grafite_status status*)
