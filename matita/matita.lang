@@ -54,14 +54,6 @@
 	<context id="character-constant" style-ref="string">
 	  <match>('\%{char-esc}')|('[^\\']')</match>
 	</context>
-	<context id="whelp_macros" style-ref="macros">
-	 <prefix>whelp *</prefix>
-         <keyword>elim</keyword>
-         <keyword>hint</keyword>
-         <keyword>instance</keyword>
-         <keyword>locate</keyword>
-         <keyword>match</keyword>
-	</context>
 	<context id="latex" style-ref="latex">
 	 <prefix>\\</prefix>
          <keyword>def</keyword>
@@ -82,16 +74,8 @@
 	</context>
 	<!-- Flow control & common keywords -->
 	<context id="keywords" style-ref="keyword">
-	 <!-- objects -->
-         <keyword>theorem</keyword>
-         <keyword>definition</keyword>
-         <keyword>lemma</keyword>
-         <keyword>fact</keyword>
-         <keyword>remark</keyword>
-         <keyword>variant</keyword>
-         <keyword>axiom</keyword>
 
-	 <!-- nobjects -->
+	 <!-- objects -->
          <keyword>theorem</keyword>
          <keyword>record</keyword>
          <keyword>definition</keyword>
@@ -103,85 +87,6 @@
          <keyword>axiom</keyword>
 
          <!-- tactics -->
-         <keyword>absurd</keyword>
-         <keyword>apply</keyword>
-         <keyword>applyP</keyword>
-         <keyword>assumption</keyword>
-         <keyword>autobatch</keyword>
-         <keyword>cases</keyword>
-         <keyword>clear</keyword>
-         <keyword>clearbody</keyword>
-         <keyword>change</keyword>
-         <keyword>compose</keyword>
-         <keyword>constructor</keyword>
-         <keyword>contradiction</keyword>
-         <keyword>cut</keyword>
-         <keyword>decompose</keyword>
-         <keyword>destruct</keyword>
-         <keyword>elim</keyword>
-         <keyword>elimType</keyword>
-         <keyword>exact</keyword>
-         <keyword>exists</keyword>
-         <keyword>fail</keyword>
-         <keyword>fold</keyword>
-         <keyword>fourier</keyword>
-         <keyword>fwd</keyword>
-         <keyword>generalize</keyword>
-         <keyword>id</keyword>
-         <keyword>intro</keyword>
-         <keyword>intros</keyword>
-         <keyword>inversion</keyword>
-         <keyword>lapply</keyword>
-         <keyword>linear</keyword>
-         <keyword>left</keyword>
-         <keyword>letin</keyword>
-         <keyword>normalize</keyword>
-         <keyword>reflexivity</keyword>
-         <keyword>replace</keyword>
-         <keyword>rewrite</keyword>
-         <keyword>ring</keyword>
-         <keyword>right</keyword>
-         <keyword>symmetry</keyword>
-         <keyword>simplify</keyword>
-         <keyword>split</keyword>
-         <keyword>to</keyword>
-         <keyword>transitivity</keyword>
-         <keyword>unfold</keyword>
-         <keyword>whd</keyword>
-         <keyword>assume</keyword>
-         <keyword>suppose</keyword>
-         <keyword>by</keyword>
-         <keyword>is</keyword>
-         <keyword>or</keyword>
-         <keyword>equivalent</keyword>
-         <keyword>equivalently</keyword>
-         <keyword>we</keyword> 
-         <keyword>prove</keyword>
-         <keyword>proved</keyword>
-         <keyword>need</keyword>
-         <keyword>proceed</keyword>
-         <keyword>induction</keyword>
-         <keyword>inductive</keyword>
-         <keyword>case</keyword>
-         <keyword>base</keyword>
-         <keyword>let</keyword>
-         <keyword>such</keyword>
-         <keyword>that</keyword>
-         <keyword>by</keyword>
-         <keyword>have</keyword>
-         <keyword>and</keyword>
-         <keyword>the</keyword>
-         <keyword>thesis</keyword>
-         <keyword>becomes</keyword>
-         <keyword>hypothesis</keyword>
-         <keyword>know</keyword>
-         <keyword>case</keyword>	    	 
-         <keyword>obtain</keyword>	    	 
-         <keyword>conclude</keyword>	    	 
-         <keyword>done</keyword>	    	 
-         <keyword>rule</keyword>	    	 
-
-         <!-- ntactics -->
          <keyword>apply</keyword>	    	 
          <keyword>applyS</keyword>	    	 
          <keyword>cases</keyword>	    	 
@@ -231,7 +136,7 @@
           <keyword>with</keyword>
          
          
-          <!-- ncommands -->
+          <!-- commands -->
           <keyword>unification</keyword>
           <keyword>hint</keyword>
           <keyword>coercion</keyword>
@@ -239,21 +144,15 @@
           <keyword>qed</keyword>
 
           <!-- macros -->
-          <keyword>inline</keyword>
-          <keyword>procedural</keyword>
           <keyword>check</keyword>
           <keyword>eval</keyword>
           <keyword>hint</keyword>
           <keyword>set</keyword>
           <keyword>auto</keyword>
-          <keyword>odefaults</keyword>
+          <keyword>nodefaults</keyword>
           <keyword>coercions</keyword>
           <keyword>comments</keyword>
           <keyword>debug</keyword>
-          <keyword>cr</keyword>
-         
-          <!-- nmacros -->
-          <keyword>check</keyword>
          
           <!-- tinycals -->
           <keyword>try</keyword>
@@ -268,12 +167,6 @@
 	</context>
 	<context id="types" style-ref="type">
 	  <!-- sorts -->
-          <keyword>Set</keyword>
-          <keyword>Prop</keyword>
-          <keyword>Type</keyword>
-          <keyword>CProp</keyword>
-
-	  <!-- nsorts -->
           <keyword>Prop</keyword>
           <keyword>Type[0]</keyword>
           <keyword>CProp[0]</keyword>
