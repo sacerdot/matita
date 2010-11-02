@@ -35,8 +35,6 @@ let debug_print s = if debug then prerr_endline (Lazy.force s) else ()
 let load_patterns32 = ref (fun _ -> assert false);;
 let set_load_patterns32 f = load_patterns32 := f;;
 
-type interpretation_id = int
-
 let idref id t = Ast.AttributedTerm (`IdRef id, t)
 
 type cic_id = string
@@ -51,11 +49,11 @@ module StringMap = Map.Make(String);;
 
 type db = {
   counter: int;
-  pattern32_matrix: (bool * NotationPt.cic_appl_pattern * interpretation_id) list;
+  pattern32_matrix: (bool * NotationPt.cic_appl_pattern * int) list;
   level2_patterns32:
    (string * string * NotationPt.argument_pattern list *
      NotationPt.cic_appl_pattern) IntMap.t;
-  interpretations: interpretation_id list StringMap.t; (* symb -> id list *)
+  interpretations: int list StringMap.t; (* symb -> id list *)
 }
 
 let initial_db = {
@@ -136,7 +134,7 @@ let add_interpretation (status : #status) dsc (symbol, args) appl_pattern =
    }
   in
    !load_patterns32 status#interp_db.pattern32_matrix;
-   status,id
+   status
 
 let toggle_active_interpretations status b =
   status#set_interp_db { status#interp_db with

@@ -37,14 +37,12 @@ type lexicon_status = {
   aliases: L.alias_spec DisambiguateTypes.Environment.t;
   multi_aliases: L.alias_spec list DisambiguateTypes.Environment.t;
   lexicon_content_rev: LexiconMarshal.lexicon;
-  notation_ids: CicNotation.notation_id list;      (** in-scope notation ids *)
 }
 
 let initial_status = {
   aliases = DisambiguateTypes.Environment.empty;
   multi_aliases = DisambiguateTypes.Environment.empty;
   lexicon_content_rev = [];
-  notation_ids = [];
 }
 
 class type g_status =
@@ -153,9 +151,7 @@ let rec eval_command ?(mode=L.WithPreferences) sstatus cmd =
        (loc, dsc, (symbol, args), disambiguate cic_appl_pattern)
   | _-> cmd
  in
- let sstatus,notation_ids' = CicNotation.process_notation sstatus cmd in
- let status =
-   { status with notation_ids = notation_ids' @ status.notation_ids } in
+ let sstatus = CicNotation.process_notation sstatus cmd in
  let sstatus = sstatus#set_lstatus status in
   match cmd with
   | L.Include (loc, baseuri, mode, fullpath) ->

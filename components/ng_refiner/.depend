@@ -2,10 +2,9 @@ nDiscriminationTree.cmi:
 nCicMetaSubst.cmi: 
 nCicUnifHint.cmi: 
 nCicCoercion.cmi: nCicUnifHint.cmi 
-nRstatus.cmi: nCicCoercion.cmi 
 nCicRefineUtil.cmi: 
-nCicUnification.cmi: nRstatus.cmi 
-nCicRefiner.cmi: nRstatus.cmi 
+nCicUnification.cmi: nCicCoercion.cmi 
+nCicRefiner.cmi: nCicCoercion.cmi 
 nDiscriminationTree.cmo: nDiscriminationTree.cmi 
 nDiscriminationTree.cmx: nDiscriminationTree.cmi 
 nCicMetaSubst.cmo: nCicMetaSubst.cmi 
@@ -16,8 +15,6 @@ nCicCoercion.cmo: nDiscriminationTree.cmi nCicUnifHint.cmi nCicMetaSubst.cmi \
     nCicCoercion.cmi 
 nCicCoercion.cmx: nDiscriminationTree.cmx nCicUnifHint.cmx nCicMetaSubst.cmx \
     nCicCoercion.cmi 
-nRstatus.cmo: nCicCoercion.cmi nRstatus.cmi 
-nRstatus.cmx: nCicCoercion.cmx nRstatus.cmi 
 nCicRefineUtil.cmo: nCicMetaSubst.cmi nCicRefineUtil.cmi 
 nCicRefineUtil.cmx: nCicMetaSubst.cmx nCicRefineUtil.cmi 
 nCicUnification.cmo: nCicUnifHint.cmi nCicMetaSubst.cmi nCicUnification.cmi 

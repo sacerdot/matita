@@ -264,8 +264,8 @@ let rec visit_entries fmt todo pped =
       visit_entries fmt todo pped
 ;;
 
-let ebnf_of_term () =
-  let g_entry = Grammar.Entry.obj (CicNotationParser.term ()) in
+let ebnf_of_term status =
+  let g_entry = Grammar.Entry.obj (CicNotationParser.term status) in
   let buff = Buffer.create 100 in
   let fmt = Format.formatter_of_buffer buff in
   visit_entries fmt [g_entry] [];

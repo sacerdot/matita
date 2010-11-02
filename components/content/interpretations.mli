@@ -40,8 +40,6 @@ class status :
     method set_interp_status: #g_status -> 'self
   end
 
-type interpretation_id
-
 type cic_id = string
 
 val add_interpretation:
@@ -49,7 +47,7 @@ val add_interpretation:
   string ->                                       (* id / description *)
   string * NotationPt.argument_pattern list -> (* symbol, level 2 pattern *)
   NotationPt.cic_appl_pattern ->               (* level 3 pattern *)
-    'status * interpretation_id
+    'status
 
 val set_load_patterns32: 
  ((bool * NotationPt.cic_appl_pattern * int) list -> unit) -> unit

@@ -554,7 +554,18 @@ let eval_comment opts status (text,prefix_len,c) = status, []
 let rec eval_command opts status (text,prefix_len,cmd) =
  let status,uris =
   match cmd with
-  | GrafiteAst.Include (loc, baseuri) ->
+  | GrafiteAst.Include (loc, fname, mode, _) ->
+                  let include_paths = assert false in
+                  let never_include = assert false in
+                  let mode = assert false in
+                  let baseuri = assert false in
+      let status =
+	let _root, buri, fullpath, _rrelpath = 
+          Librarian.baseuri_of_script ~include_paths fname in
+        if never_include then raise (GrafiteParser.NoInclusionPerformed fullpath) 
+        else
+           LexiconEngine.eval_command status (LexiconAst.Include (loc,buri,mode,fullpath)) 
+      in
      let status,obj =
        GrafiteTypes.Serializer.require ~baseuri:(NUri.uri_of_string baseuri)
         status in

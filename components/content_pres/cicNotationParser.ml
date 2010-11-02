@@ -46,32 +46,17 @@ type ('a,'b,'c,'d) grammars = {
   level2_meta: 'b Grammar.Entry.e;
 }
 
-let initial_grammars () =
-  let level1_pattern_grammar = 
-    Grammar.gcreate (CicNotationLexer.level1_pattern_lexer ()) in
-  let level2_ast_grammar = 
-    Grammar.gcreate (CicNotationLexer.level2_ast_lexer ()) in
-  let level2_meta_grammar = 
-    Grammar.gcreate (CicNotationLexer.level2_meta_lexer ()) in
-  let level1_pattern =
-    Grammar.Entry.create level1_pattern_grammar "level1_pattern" in
-  let level2_ast = Grammar.Entry.create level2_ast_grammar "level2_ast" in
-  let term = Grammar.Entry.create level2_ast_grammar "term" in
-  let let_defs = Grammar.Entry.create level2_ast_grammar "let_defs" in
-  let protected_binder_vars = 
-    Grammar.Entry.create level2_ast_grammar "protected_binder_vars" in
-  let level2_meta = Grammar.Entry.create level2_meta_grammar "level2_meta" in
-  { level1_pattern=level1_pattern;
-    level2_ast=level2_ast;
-    term=term;
-    let_defs=let_defs;
-    protected_binder_vars=protected_binder_vars;
-    level2_meta=level2_meta;
-    level2_ast_grammar=level2_ast_grammar;
-}
-;;
+type checked_l1_pattern = CL1P of NotationPt.term * int
 
-let grammars = ref (initial_grammars ());;
+type db = {
+  grammars: 
+    (int -> NotationPt.term, 
+    Ast.term,
+    (Ast.term Ast.capture_variable list *
+      Ast.term Ast.capture_variable * Ast.term * int) list, 
+    Ast.term list * Ast.term option) grammars;
+  items: (checked_l1_pattern * int * Gramext.g_assoc * NotationPt.term) list
+}
 
 let int_of_string s =
   try
@@ -90,11 +75,12 @@ let gram_symbol s = Gramext.Stoken ("SYMBOL", s)
 let gram_ident s = Gramext.Stoken ("IDENT", s)
 let gram_number s = Gramext.Stoken ("NUMBER", s)
 let gram_keyword s = Gramext.Stoken ("", s)
-let gram_term = function
+let gram_term status = function
   | Ast.Self _ -> Gramext.Sself
   | Ast.Level precedence ->
       Gramext.Snterml 
-        (Grammar.Entry.obj (!grammars.term: 'a Grammar.Entry.e), 
+        (Grammar.Entry.obj 
+          (status#notation_parser_db.grammars.term: 'a Grammar.Entry.e), 
          level_of precedence)
 ;;
 
@@ -152,7 +138,7 @@ let flatten_opt =
   aux []
 
   (* given a level 1 pattern computes the new RHS of "term" grammar entry *)
-let extract_term_production pattern =
+let extract_term_production status pattern =
   let rec aux = function
     | Ast.AttributedTerm (_, t) -> aux t
     | Ast.Literal l -> aux_literal l
@@ -224,7 +210,7 @@ let extract_term_production pattern =
     function
     | Ast.NumVar s -> [Binding (s, Env.NumType), gram_number ""]
     | Ast.TermVar (s,(Ast.Self level|Ast.Level level as lv)) -> 
-        [Binding (s, Env.TermType level), gram_term lv]
+        [Binding (s, Env.TermType level), gram_term status lv]
     | Ast.IdentVar s -> [Binding (s, Env.StringType), gram_ident ""]
     | Ast.Ascription (p, s) -> assert false (* TODO *)
     | Ast.FreshVar _ -> assert false
@@ -252,11 +238,6 @@ let compare_rule_id x y =
   in
     aux (x,y)
 
-  (* mapping: rule_id -> owned keywords. (rule_id, string list) Hashtbl.t *)
-let initial_owned_keywords () = Hashtbl.create 23
-let owned_keywords = ref (initial_owned_keywords ())
-
-type checked_l1_pattern = CL1P of NotationPt.term * int
 
 let check_l1_pattern level1_pattern pponly level associativity =
   let variables = ref 0 in
@@ -335,14 +316,28 @@ let check_l1_pattern level1_pattern pponly level associativity =
   CL1P (cp,level)
 ;;
 
-let extend (CL1P (level1_pattern,precedence)) action =
+let extend status (CL1P (level1_pattern,precedence)) action =
+  assert false
+(*
+            CicNotationParser.new_parser ();
+            let create_cb_old (l1, precedence, associativity, l2) =
+              ignore(
+                CicNotationParser.extend l1 
+                  (fun env loc ->
+                    NotationPt.AttributedTerm
+                     (`Loc loc,TermContentPres.instantiate_level2 env l2))) 
+            in
+            RefCounter.iter create_cb_old !parser_ref_counter;
+*)
+(*
   let p_bindings, p_atoms =
-    List.split (extract_term_production level1_pattern)
+    List.split (extract_term_production status level1_pattern)
   in
   let level = level_of precedence in
-  let _ =
+  let () =
     Grammar.extend
-      [ Grammar.Entry.obj (!grammars.term: 'a Grammar.Entry.e),
+      [ Grammar.Entry.obj 
+        (status#notation_parser_db.grammars.term: 'a Grammar.Entry.e),
         Some (Gramext.Level level),
         [ None,
           Some (*Gramext.NonA*) Gramext.NonA,
@@ -355,22 +350,10 @@ let extend (CL1P (level1_pattern,precedence)) action =
   let keywords = NotationUtil.keywords_of_term level1_pattern in
   let rule_id = p_atoms in
   List.iter CicNotationLexer.add_level2_ast_keyword keywords;
-  Hashtbl.add !owned_keywords rule_id keywords;  (* keywords may be [] *)
   rule_id
-
-let delete rule_id =
-  let atoms = rule_id in
-  (try
-    let keywords = Hashtbl.find !owned_keywords rule_id in
-    List.iter CicNotationLexer.remove_level2_ast_keyword keywords
-  with Not_found -> assert false);
-  Grammar.delete_rule !grammars.term atoms
+*)
 
 (** {2 Grammar} *)
-
-let parse_level1_pattern_ref = ref (fun _ _ -> assert false)
-let parse_level2_ast_ref = ref (fun _ -> assert false)
-let parse_level2_meta_ref = ref (fun _ -> assert false)
 
 let fold_cluster binder terms ty body =
   List.fold_right
@@ -393,8 +376,37 @@ let return_term loc term = Ast.AttributedTerm (`Loc loc, term)
 let return_term_of_level loc term l = 
   Ast.AttributedTerm (`Loc loc, term l)
 
+(** {2 API implementation} *)
+
+let exc_located_wrapper f =
+  try
+    f ()
+  with
+  | Stdpp.Exc_located (floc, Stream.Error msg) ->
+      raise (HExtlib.Localized (floc, Parse_error msg))
+  | Stdpp.Exc_located (floc, HExtlib.Localized (_,exn)) ->
+      raise (HExtlib.Localized (floc, (Parse_error (Printexc.to_string exn))))
+  | Stdpp.Exc_located (floc, exn) ->
+      raise (HExtlib.Localized (floc, (Parse_error (Printexc.to_string exn))))
+
+let parse_level1_pattern grammars precedence lexbuf =
+  exc_located_wrapper
+    (fun () -> Grammar.Entry.parse grammars.level1_pattern (Obj.magic lexbuf) precedence)
+
+let parse_level2_ast grammars lexbuf =
+  exc_located_wrapper
+    (fun () -> Grammar.Entry.parse grammars.level2_ast (Obj.magic lexbuf))
+
+let parse_level2_meta grammars lexbuf =
+  exc_located_wrapper
+    (fun () -> Grammar.Entry.parse grammars.level2_meta (Obj.magic lexbuf))
+
+let parse_term grammars lexbuf =
+  exc_located_wrapper
+    (fun () -> (Grammar.Entry.parse grammars.term (Obj.magic lexbuf)))
+
   (* create empty precedence level for "term" *)
-let initialize_grammars () =
+let initialize_grammars grammars =
   let dummy_action =
     Gramext.action (fun _ ->
       failwith "internal error, lexer generated a dummy token")
@@ -414,12 +426,12 @@ let initialize_grammars () =
     aux [] last
   in
   Grammar.extend
-    [ Grammar.Entry.obj (!grammars.term: 'a Grammar.Entry.e),
+    [ Grammar.Entry.obj (grammars.term: 'a Grammar.Entry.e),
       None,
       mk_level_list min_precedence max_precedence ];
 (* {{{ Grammar for concrete syntax patterns, notation level 1 *)
   begin
-  let level1_pattern = !grammars.level1_pattern in
+  let level1_pattern = grammars.level1_pattern in
 EXTEND
   GLOBAL: level1_pattern;
 
@@ -533,7 +545,7 @@ EXTEND
 (* }}} *)
 (* {{{ Grammar for ast magics, notation level 2 *)
   begin
-  let level2_meta = !grammars.level2_meta in
+  let level2_meta = grammars.level2_meta in
 EXTEND
   GLOBAL: level2_meta;
   l2_variable: [
@@ -563,7 +575,7 @@ EXTEND
     [ magic = l2_magic -> Ast.Magic magic
     | var = l2_variable -> Ast.Variable var
     | blob = UNPARSED_AST ->
-        !parse_level2_ast_ref (Ulexing.from_utf8_string blob)
+        parse_level2_ast grammars (Ulexing.from_utf8_string blob)
     ]
   ];
 END
@@ -571,10 +583,10 @@ END
 (* }}} *)
 (* {{{ Grammar for ast patterns, notation level 2 *)
   begin
-  let level2_ast = !grammars.level2_ast in
-  let term = !grammars.term in
-  let let_defs = !grammars.let_defs in
-  let protected_binder_vars = !grammars.protected_binder_vars in
+  let level2_ast = grammars.level2_ast in
+  let term = grammars.term in
+  let let_defs = grammars.let_defs in
+  let protected_binder_vars = grammars.protected_binder_vars in
 EXTEND
   GLOBAL: level2_ast term let_defs protected_binder_vars;
   level2_ast: [ [ p = term -> p ] ];
@@ -635,7 +647,7 @@ EXTEND
         List.map (fun n -> Ast.Ident (n, None)) names, Some ty
     | name = IDENT -> [Ast.Ident (name, None)], None
     | blob = UNPARSED_META ->
-        let meta = !parse_level2_meta_ref (Ulexing.from_utf8_string blob) in
+        let meta = parse_level2_meta grammars (Ulexing.from_utf8_string blob) in
         match meta with
         | Ast.Variable (Ast.FreshVar _) -> [meta], None
         | Ast.Variable (Ast.TermVar ("_",_)) -> [Ast.Ident ("_", None)], None
@@ -645,7 +657,7 @@ EXTEND
   single_arg: [
     [ name = IDENT -> Ast.Ident (name, None)
     | blob = UNPARSED_META ->
-        let meta = !parse_level2_meta_ref (Ulexing.from_utf8_string blob) in
+        let meta = parse_level2_meta grammars (Ulexing.from_utf8_string blob) in
         match meta with
         | Ast.Variable (Ast.FreshVar _)
         | Ast.Variable (Ast.IdentVar _) -> meta
@@ -776,80 +788,77 @@ EXTEND
           return_term loc (Ast.Cast (p1, p2))
       | LPAREN; p = term; RPAREN -> p
       | blob = UNPARSED_META ->
-          !parse_level2_meta_ref (Ulexing.from_utf8_string blob)
+          parse_level2_meta grammars (Ulexing.from_utf8_string blob)
       ]
     ];
 END
-  end
+  end;
 (* }}} *)
+  grammars
 ;;
 
-let _ = initialize_grammars ();;
-
-let history = ref [];;
-
-let push () =
-  CicNotationLexer.push ();
-  history := (!owned_keywords,!grammars) :: !history;
-  owned_keywords := (initial_owned_keywords ());
-  grammars := initial_grammars ();
-  initialize_grammars ()
+let initial_grammars =
+  let lexers = CicNotationLexer.mk_lexers [] in
+  let level1_pattern_grammar = 
+    Grammar.gcreate lexers.CicNotationLexer.level1_pattern_lexer in
+  let level2_ast_grammar = 
+    Grammar.gcreate lexers.CicNotationLexer.level2_ast_lexer in
+  let level2_meta_grammar = 
+    Grammar.gcreate lexers.CicNotationLexer.level2_meta_lexer in
+  let level1_pattern =
+    Grammar.Entry.create level1_pattern_grammar "level1_pattern" in
+  let level2_ast = Grammar.Entry.create level2_ast_grammar "level2_ast" in
+  let term = Grammar.Entry.create level2_ast_grammar "term" in
+  let let_defs = Grammar.Entry.create level2_ast_grammar "let_defs" in
+  let protected_binder_vars = 
+    Grammar.Entry.create level2_ast_grammar "protected_binder_vars" in
+  let level2_meta = Grammar.Entry.create level2_meta_grammar "level2_meta" in
+  initialize_grammars { level1_pattern=level1_pattern;
+    level2_ast=level2_ast;
+    term=term;
+    let_defs=let_defs;
+    protected_binder_vars=protected_binder_vars;
+    level2_meta=level2_meta;
+    level2_ast_grammar=level2_ast_grammar;
+  }
 ;;
 
-let pop () =
-  CicNotationLexer.pop ();
-  match !history with
-  | [] -> assert false
-  | (kw,gram) :: old_history ->
-      owned_keywords := kw;
-      grammars := gram;
-      history := old_history
-;;
+class type g_status =
+ object
+  method notation_parser_db: db
+ end
 
-(** {2 API implementation} *)
+class status =
+ object(self)
+  val db = { grammars = initial_grammars ; items = [] }
+  method notation_parser_db = db
+  method set_notation_parser_db v = {< db = v >}
+  method set_notation_parser_status
+   : 'status. #g_status as 'status -> 'self
+   = fun o -> {< db = o#notation_parser_db >}
+ end
 
-let exc_located_wrapper f =
-  try
-    f ()
-  with
-  | Stdpp.Exc_located (floc, Stream.Error msg) ->
-      raise (HExtlib.Localized (floc, Parse_error msg))
-  | Stdpp.Exc_located (floc, HExtlib.Localized (_,exn)) ->
-      raise (HExtlib.Localized (floc, (Parse_error (Printexc.to_string exn))))
-  | Stdpp.Exc_located (floc, exn) ->
-      raise (HExtlib.Localized (floc, (Parse_error (Printexc.to_string exn))))
+let parse_level1_pattern status =
+  parse_level1_pattern status#notation_parser_db.grammars 
+let parse_level2_ast status =
+  parse_level2_ast status#notation_parser_db.grammars 
+let parse_level2_meta status =
+  parse_level2_meta status#notation_parser_db.grammars
+let parse_term status =
+  parse_term status#notation_parser_db.grammars
 
-let parse_level1_pattern precedence lexbuf =
-  exc_located_wrapper
-    (fun () -> Grammar.Entry.parse !grammars.level1_pattern (Obj.magic lexbuf) precedence)
-
-let parse_level2_ast lexbuf =
-  exc_located_wrapper
-    (fun () -> Grammar.Entry.parse !grammars.level2_ast (Obj.magic lexbuf))
-
-let parse_level2_meta lexbuf =
-  exc_located_wrapper
-    (fun () -> Grammar.Entry.parse !grammars.level2_meta (Obj.magic lexbuf))
-
-let _ =
-  parse_level1_pattern_ref := parse_level1_pattern;
-  parse_level2_ast_ref := parse_level2_ast;
-  parse_level2_meta_ref := parse_level2_meta
-
-let parse_term lexbuf =
-  exc_located_wrapper
-    (fun () -> (Grammar.Entry.parse !grammars.term (Obj.magic lexbuf)))
-
-let level2_ast_grammar () = !grammars.level2_ast_grammar
-let term  () = !grammars.term
-let let_defs  () = !grammars.let_defs
-let protected_binder_vars  () = !grammars.protected_binder_vars
-
+let level2_ast_grammar status = 
+  status#notation_parser_db.grammars.level2_ast_grammar
+let term status = status#notation_parser_db.grammars.term
+let let_defs status = status#notation_parser_db.grammars.let_defs
+let protected_binder_vars status = 
+  status#notation_parser_db.grammars.protected_binder_vars
 
 (** {2 Debugging} *)
 
-let print_l2_pattern () =
-  Grammar.print_entry Format.std_formatter (Grammar.Entry.obj !grammars.term);
+let print_l2_pattern status =
+  Grammar.print_entry Format.std_formatter 
+    (Grammar.Entry.obj status#notation_parser_db.grammars.term);
   Format.pp_print_flush Format.std_formatter ();
   flush stdout  
 

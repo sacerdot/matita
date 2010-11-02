@@ -26,12 +26,15 @@
 (* $Id$ *)
 
 let load_notation status ~include_paths fname =
+        assert false
+(*
   let ic = open_in fname in
   let lexbuf = Ulexing.from_utf8_channel ic in
   let status = ref status in
   try
    while true do
-    status := fst (GrafiteParser.parse_statement ~include_paths lexbuf !status)
+    status := fst (GrafiteParser.parse_statement lexbuf !status)
    done;
    assert false
   with End_of_file -> close_in ic; !status
+*)

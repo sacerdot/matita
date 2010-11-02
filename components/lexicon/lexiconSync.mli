@@ -26,9 +26,6 @@
 val add_aliases_for_objs:
  #LexiconEngine.status as 'status -> NUri.uri list -> 'status
 
-val time_travel: 
-  present:#LexiconEngine.status -> past:#LexiconEngine.status -> unit
-
   (** perform a diff between the aliases contained in two statuses, assuming
     * that the second one can only have more aliases than the first one
     * @return the list of aliases that should be added to aliases of from in
@@ -37,5 +34,3 @@ val alias_diff:
  from:#LexiconEngine.status -> #LexiconEngine.status ->
   (DisambiguateTypes.domain_item * LexiconAst.alias_spec) list
 
-val push: unit -> unit
-val pop: unit -> unit

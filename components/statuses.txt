@@ -2,7 +2,7 @@ grafitetypes -> tac -> auto + eq + (grafitedisambiguate = lexicon+nciccoercion)
            |--> dumpable                                    |             |
            |--> nciclibrary                                 |       unif_hint
                                                             |
-                    interpretation + termcontentpres = cicnotation
+     interpretation + termcontentpres + notation_parser= cicnotation
                                                          
 
 

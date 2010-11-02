@@ -40,7 +40,8 @@ let pp_dependency = function
 
 let parse_dependencies lexbuf = 
   let tok_stream,_ =
-    (CicNotationLexer.level2_ast_lexer ()).Token.tok_func (Obj.magic lexbuf)
+    let lexers = (CicNotationLexer.mk_lexers []) in
+    lexers.CicNotationLexer.level2_ast_lexer.Token.tok_func (Obj.magic lexbuf)
   in
   let rec parse acc = 
    let continue, acc =

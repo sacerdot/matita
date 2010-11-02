@@ -1,8 +1,7 @@
 dependenciesParser.cmi: 
 grafiteParser.cmi: 
 cicNotation2.cmi: 
-nEstatus.cmi: 
-grafiteDisambiguate.cmi: nEstatus.cmi 
+grafiteDisambiguate.cmi: 
 print_grammar.cmi: 
 dependenciesParser.cmo: dependenciesParser.cmi 
 dependenciesParser.cmx: dependenciesParser.cmi 
@@ -10,8 +9,6 @@ grafiteParser.cmo: grafiteParser.cmi
 grafiteParser.cmx: grafiteParser.cmi 
 cicNotation2.cmo: grafiteParser.cmi cicNotation2.cmi 
 cicNotation2.cmx: grafiteParser.cmx cicNotation2.cmi 
-nEstatus.cmo: nEstatus.cmi 
-nEstatus.cmx: nEstatus.cmi 
 grafiteDisambiguate.cmo: grafiteDisambiguate.cmi 
 grafiteDisambiguate.cmx: grafiteDisambiguate.cmi 
 print_grammar.cmo: print_grammar.cmi 

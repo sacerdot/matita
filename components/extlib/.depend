@@ -6,7 +6,6 @@ hLog.cmi:
 trie.cmi: 
 discrimination_tree.cmi: 
 hTopoSort.cmi: 
-refCounter.cmi: 
 graphvizPp.cmi: 
 componentsConf.cmo: componentsConf.cmi 
 componentsConf.cmx: componentsConf.cmi 
@@ -24,7 +23,5 @@ discrimination_tree.cmo: trie.cmi discrimination_tree.cmi
 discrimination_tree.cmx: trie.cmx discrimination_tree.cmi 
 hTopoSort.cmo: hTopoSort.cmi 
 hTopoSort.cmx: hTopoSort.cmi 
-refCounter.cmo: refCounter.cmi 
-refCounter.cmx: refCounter.cmi 
 graphvizPp.cmo: graphvizPp.cmi 
 graphvizPp.cmx: graphvizPp.cmi 

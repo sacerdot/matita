@@ -15,7 +15,5 @@ lexiconEngine.cmo: lexiconMarshal.cmi lexiconAstPp.cmi lexiconAst.cmo \
     cicNotation.cmi lexiconEngine.cmi 
 lexiconEngine.cmx: lexiconMarshal.cmx lexiconAstPp.cmx lexiconAst.cmx \
     cicNotation.cmx lexiconEngine.cmi 
-lexiconSync.cmo: lexiconEngine.cmi lexiconAst.cmo cicNotation.cmi \
-    lexiconSync.cmi 
-lexiconSync.cmx: lexiconEngine.cmx lexiconAst.cmx cicNotation.cmx \
-    lexiconSync.cmi 
+lexiconSync.cmo: lexiconEngine.cmi lexiconAst.cmo lexiconSync.cmi 
+lexiconSync.cmx: lexiconEngine.cmx lexiconAst.cmx lexiconSync.cmi 

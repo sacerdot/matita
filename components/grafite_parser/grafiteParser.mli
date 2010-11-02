@@ -31,24 +31,26 @@ type ast_statement = GrafiteAst.statement
 
 exception NoInclusionPerformed of string (* full path *)
 
-type 'status statement =
-  ?never_include:bool -> 
-    (* do not call LexiconEngine to do includes, always raise NoInclusionPerformed *) 
-  include_paths:string list ->
-  (#LexiconEngine.status as 'status) ->
-    'status * ast_statement localized_option
+type db 
 
-val parse_statement: Ulexing.lexbuf -> #LexiconEngine.status statement  (** @raise End_of_file *)
+class type g_status =
+ object
+  inherit LexiconEngine.g_status
+  method parser_db: db
+ end
 
-val statement: unit -> #LexiconEngine.status statement Grammar.Entry.e
+class status :
+ object('self)
+  inherit LexiconEngine.status
+  method parser_db : db
+  method set_parser_db : db -> 'self
+  method set_parser_status : 'status. #g_status as 'status -> 'self
+ end
 
-(* this callback is called before every grafite statement *)
-val set_grafite_callback:
-   (ast_statement -> unit) -> unit 
-
-(* this callback is called before every lexicon command *)
-val set_lexicon_callback:
-   (LexiconAst.command -> unit) -> unit 
-
-val push : unit -> unit
-val pop : unit -> unit
+ (* never_include: do not call LexiconEngine to do includes, 
+  * always raise NoInclusionPerformed *) 
+(** @raise End_of_file *)
+val parse_statement: 
+  #status ->
+  Ulexing.lexbuf -> 
+    ast_statement localized_option

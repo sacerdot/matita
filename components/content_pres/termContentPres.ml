@@ -524,8 +524,7 @@ let add_pretty_printer status l2 (CicNotationParser.CL1P (l1,precedence)) =
        level1_patterns21 =
         IntMap.add id l1' status#content_pres_db.level1_patterns21;
        pattern21_matrix = (l2',id)::status#content_pres_db.pattern21_matrix } in
-  let status = load_patterns21 status status#content_pres_db.pattern21_matrix in
-   status,id
+  load_patterns21 status status#content_pres_db.pattern21_matrix 
 
   (* presentation -> content *)
 

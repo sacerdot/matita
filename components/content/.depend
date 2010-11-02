@@ -1,7 +1,7 @@
 content.cmi: 
-notationUtil.cmi: 
-notationEnv.cmi: 
-notationPp.cmi: 
+notationUtil.cmi: notationPt.cmo 
+notationEnv.cmi: notationPt.cmo 
+notationPp.cmi: notationPt.cmo notationEnv.cmi 
 interpretations.cmi: notationPt.cmo 
 notationPt.cmo: 
 notationPt.cmx: 

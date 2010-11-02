@@ -59,29 +59,3 @@ let add_aliases_for_objs status =
     in
      LexiconEngine.set_proof_aliases status new_env
   ) status
- 
-module OrderedId = 
-struct
-  type t = CicNotation.notation_id
-  let compare =  CicNotation.compare_notation_id
-end
-
-module IdSet  = Set.Make (OrderedId)
-
-  (** @return l2 \ l1 *)
-let id_list_diff l2 l1 =
-  let module S = IdSet in
-  let s1 = List.fold_left (fun set uri -> S.add uri set) S.empty l1 in
-  let s2 = List.fold_left (fun set uri -> S.add uri set) S.empty l2 in
-  let diff = S.diff s2 s1 in
-  S.fold (fun uri uris -> uri :: uris) diff []
-
-let time_travel ~present ~past =
-  let notation_to_remove =
-    id_list_diff present#lstatus.LexiconEngine.notation_ids
-     past#lstatus.LexiconEngine.notation_ids
-  in
-   List.iter CicNotation.remove_notation notation_to_remove
-
-let push () = CicNotation.push ();;
-let pop () = CicNotation.pop ();;

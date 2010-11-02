@@ -29,6 +29,9 @@ open Printf
 
 exception Error of int * int * string
 
+module StringSet = Set.Make(String)
+
+(* Lexer *)
 let regexp number = xml_digit+
 let regexp utf8_blank = " " | "\r\n" | "\n" | "\t" | [160] (* this is a nbsp *)
 let regexp percentage = 
@@ -110,22 +113,6 @@ let level2_meta_keywords =
     "default";
     "anonymous"; "ident"; "number"; "term"; "fresh"
   ]
-
-  (* (string, unit) Hashtbl.t, to exploit multiple bindings *)
-let initial_level2_ast_keywords () = Hashtbl.create 23;;
-
-let level2_ast_keywords = ref (initial_level2_ast_keywords ())
-
-let initialize_keywords () =
-  List.iter (fun k -> Hashtbl.add !level2_ast_keywords k ())
-  [ "CProp"; "Prop"; "Type"; "Set"; "let"; "match";
-  "with"; "in"; "and"; "to"; "as"; "on"; "return"; "done" ]
-;;
-
-let _ = initialize_keywords ();;
-
-let add_level2_ast_keyword k = Hashtbl.add !level2_ast_keywords k ()
-let remove_level2_ast_keyword k = Hashtbl.remove !level2_ast_keywords k
 
   (* (string, int) Hashtbl.t, with multiple bindings.
    * int is the unicode codepoint *)
@@ -286,7 +273,7 @@ let rec comment_token acc depth =
       comment_token acc depth lexbuf
 
   (** @param k continuation to be invoked when no ligature has been found *)
-let rec ligatures_token k =
+let ligatures_token k =
   lexer
   | ligature ->
       let lexeme = Ulexing.utf8_lexeme lexbuf in
@@ -301,21 +288,21 @@ let rec ligatures_token k =
       Ulexing.rollback lexbuf;
       k lexbuf
 
-and level2_ast_token =
+let rec level2_ast_token status =
   lexer
   | let_rec -> return lexbuf ("LETREC","")
   | let_corec -> return lexbuf ("LETCOREC","")
   | we_proved -> return lexbuf ("WEPROVED","")
   | we_have -> return lexbuf ("WEHAVE","")
-  | utf8_blank+ -> ligatures_token level2_ast_token lexbuf
+  | utf8_blank+ -> ligatures_token (level2_ast_token status) lexbuf
   | meta ->
      let s = Ulexing.utf8_lexeme lexbuf in
       return lexbuf ("META", String.sub s 1 (String.length s - 1))
   | implicit -> return lexbuf ("IMPLICIT", "")
   | placeholder -> return lexbuf ("PLACEHOLDER", "")
-  | ident -> handle_keywords lexbuf (Hashtbl.mem !level2_ast_keywords) "IDENT"
+  | ident -> handle_keywords lexbuf (fun x -> StringSet.mem x status) "IDENT"
   | variable_ident -> return lexbuf ("IDENT", Ulexing.utf8_lexeme lexbuf)
-  | pident -> handle_keywords lexbuf (Hashtbl.mem !level2_ast_keywords) "PIDENT"
+  | pident -> handle_keywords lexbuf (fun x -> StringSet.mem x status) "PIDENT"
   | number -> return lexbuf ("NUMBER", Ulexing.utf8_lexeme lexbuf)
   | tex_token -> return lexbuf (expand_macro lexbuf)
   | nreference -> return lexbuf ("NREF", Ulexing.utf8_lexeme lexbuf)
@@ -338,7 +325,7 @@ and level2_ast_token =
         Ulexing.utf8_sub_lexeme lexbuf 2 (Ulexing.lexeme_length lexbuf - 4)
       in
       return lexbuf ("NOTE", comment) *)
-      ligatures_token level2_ast_token lexbuf
+      ligatures_token (level2_ast_token status) lexbuf
   | begincomment -> return lexbuf ("BEGINCOMMENT","")
   | endcomment -> return lexbuf ("ENDCOMMENT","")
   | eof -> return_eoi lexbuf
@@ -365,44 +352,26 @@ and level1_pattern_token =
   | _ -> return_symbol lexbuf (Ulexing.utf8_lexeme lexbuf)
 
 let level1_pattern_token = ligatures_token level1_pattern_token
-let level2_ast_token = ligatures_token level2_ast_token
+let level2_ast_token status = ligatures_token (level2_ast_token status)
 
 (* API implementation *)
+type lexers = {
+        level1_pattern_lexer : (string * string) Token.glexer;
+        level2_ast_lexer : (string * string) Token.glexer;
+        level2_meta_lexer : (string * string) Token.glexer
+}
 
-let initial_level1_pattern_lexer () = mk_lexer level1_pattern_token
-let initial_level2_ast_lexer () = mk_lexer level2_ast_token
-let initial_level2_meta_lexer () = mk_lexer level2_meta_token
-
-
-let level1_pattern_lexer_ref = ref (initial_level1_pattern_lexer ())
-let level2_ast_lexer_ref = ref (initial_level2_ast_lexer ())
-let level2_meta_lexer_ref = ref (initial_level2_meta_lexer ())
-
-let level1_pattern_lexer () = !level1_pattern_lexer_ref
-let level2_ast_lexer () = !level2_ast_lexer_ref
-let level2_meta_lexer () = !level2_meta_lexer_ref 
-
-let history = ref [];;
-
-let push () =
-  history :=
-    (!level2_ast_keywords,!level1_pattern_lexer_ref,
-     !level2_ast_lexer_ref,!level2_meta_lexer_ref) :: !history;
-  level2_ast_keywords := initial_level2_ast_keywords ();
-  initialize_keywords ();
-  level1_pattern_lexer_ref := initial_level1_pattern_lexer ();
-  level2_ast_lexer_ref := initial_level2_ast_lexer ();
-  level2_meta_lexer_ref := initial_level2_meta_lexer ();
+let mk_lexers keywords = 
+  let initial_keywords = 
+   [ "CProp"; "Prop"; "Type"; "Set"; "let"; "match";
+   "with"; "in"; "and"; "to"; "as"; "on"; "return"; "done" ]
+  in
+  let status = 
+    List.fold_right StringSet.add (initial_keywords @ keywords) StringSet.empty 
+  in 
+  {
+        level1_pattern_lexer = mk_lexer level1_pattern_token;
+        level2_ast_lexer = mk_lexer (level2_ast_token status);
+        level2_meta_lexer = mk_lexer level2_meta_token
+  }
 ;;
-
-let pop () =
-  match !history with
-  | [] -> assert false
-  | (kwd,pl,al,ml) :: tl -> 
-      level2_ast_keywords := kwd;
-      level1_pattern_lexer_ref := pl;
-      level2_ast_lexer_ref := al;
-      level2_meta_lexer_ref := ml;
-      history := tl
-;;
-

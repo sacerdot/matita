@@ -84,7 +84,7 @@ type nmacro =
 let magic = 35
 
 type command =
-  | Include of loc * string 
+  | Include of loc * string * unit * string
   | Set of loc * string * string
   | Print of loc * string
 

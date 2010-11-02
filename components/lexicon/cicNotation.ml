@@ -27,38 +27,22 @@
 
 open LexiconAst
 
-type notation_id =
-  | RuleId of CicNotationParser.rule_id
-  | InterpretationId of Interpretations.interpretation_id
-  | PrettyPrinterId of TermContentPres.pretty_printer_id
-
 class type g_status =
  object ('self)
   inherit Interpretations.g_status
   inherit TermContentPres.g_status
+  inherit CicNotationParser.g_status
  end
 
 class status =
  object (self)
   inherit Interpretations.status
   inherit TermContentPres.status
+  inherit CicNotationParser.status
   method set_notation_status
    : 'status. #g_status as 'status -> 'self
-      = fun o -> (self#set_interp_status o)#set_content_pres_status o
+      = fun o -> ((self#set_interp_status o)#set_content_pres_status o)#set_notation_parser_status o
  end
-
-let compare_notation_id x y = 
-  match x,y with
-  | RuleId i1, RuleId i2 -> CicNotationParser.compare_rule_id i1 i2
-  | RuleId _, _ -> ~-1
-  | _, RuleId _ -> 1
-  | x,y -> Pervasives.compare x y
-
-let initial_parser_ref_counter () = RefCounter.create ()
-let initial_rule_ids_to_items ()= Hashtbl.create 113
-
-let parser_ref_counter = ref (initial_parser_ref_counter ());;
-let rule_ids_to_items = ref (initial_rule_ids_to_items ());;
 
 let process_notation status st =
   match st with
@@ -67,62 +51,23 @@ let process_notation status st =
         CicNotationParser.check_l1_pattern
          l1 (dir = Some `RightToLeft) precedence associativity
       in
-      let item = (l1, precedence, associativity, l2) in
-      let rule_id = ref [] in
-      let _ =
+      let status =
         if dir <> Some `RightToLeft then
-          let create_cb (l1, precedence, associativity, l2) =
-            let id =
-              CicNotationParser.extend l1 
-                (fun env loc ->
-                  NotationPt.AttributedTerm
-                   (`Loc loc,TermContentPres.instantiate_level2 env l2)) in
-            rule_id := [ RuleId id ];
-            Hashtbl.add !rule_ids_to_items id item
-          in
-          RefCounter.incr ~create_cb !parser_ref_counter item
+          CicNotationParser.extend status l1 
+            (fun env loc ->
+              NotationPt.AttributedTerm
+               (`Loc loc,TermContentPres.instantiate_level2 env l2)) 
+        else status
       in
-      let status,pp_id =
+      let status =
         if dir <> Some `LeftToRight then
-         let status,id = TermContentPres.add_pretty_printer status l2 l1 in
-          status,[ PrettyPrinterId id ]
+         let status = TermContentPres.add_pretty_printer status l2 l1 in
+          status
         else
-          status,[]
+          status
       in
-       status,!rule_id @ pp_id
-  | Interpretation (loc, dsc, l2, l3) ->
-      let status,interp_id =
-        Interpretations.add_interpretation status dsc l2 l3
-      in
-       status,[InterpretationId interp_id]
-  | st -> status,[]
+       status
+  | Interpretation (loc, dsc, l2, l3) -> 
+      Interpretations.add_interpretation status dsc l2 l3
+  | st -> status
 
-let remove_notation = function
-  | RuleId id ->
-      let item =
-        try
-          Hashtbl.find !rule_ids_to_items id
-        with Not_found -> assert false in
-      RefCounter.decr ~delete_cb:(fun _ -> CicNotationParser.delete id)
-        !parser_ref_counter item
-  | PrettyPrinterId id -> ()
-  | InterpretationId id -> ()
-
-let history = ref [];;
-
-let push () =
- history := (!parser_ref_counter,!rule_ids_to_items) :: !history;
- parser_ref_counter := initial_parser_ref_counter ();
- rule_ids_to_items := initial_rule_ids_to_items ();
- CicNotationParser.push ()
-;;
-
-let pop () =
- CicNotationParser.pop ();
- match !history with
- | [] -> assert false
- | (prc,riti) :: tail ->
-     parser_ref_counter := prc;
-     rule_ids_to_items := riti;
-     history := tail;
-;;

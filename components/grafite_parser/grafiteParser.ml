@@ -38,32 +38,23 @@ type 'a localized_option =
 
 type ast_statement = G.statement
 
-type 'status statement =
-  ?never_include:bool -> 
-    (* do not call LexiconEngine to do includes, always raise NoInclusionPerformed *) 
-  include_paths:string list -> (#LE.status as 'status) ->
-    'status * ast_statement localized_option
+let exc_located_wrapper f =
+  try
+    f ()
+  with
+  | Stdpp.Exc_located (_, End_of_file) -> raise End_of_file
+  | Stdpp.Exc_located (floc, Stream.Error msg) ->
+      raise (HExtlib.Localized (floc,CicNotationParser.Parse_error msg))
+  | Stdpp.Exc_located (floc, HExtlib.Localized(_,exn)) ->
+      raise (HExtlib.Localized 
+        (floc,CicNotationParser.Parse_error (Printexc.to_string exn)))
+  | Stdpp.Exc_located (floc, exn) ->
+      raise (HExtlib.Localized 
+        (floc,CicNotationParser.Parse_error (Printexc.to_string exn)))
 
-type 'status parser_status = {
-  grammar : Grammar.g;
-  term : N.term Grammar.Entry.e;
-  statement : #LE.status as 'status statement Grammar.Entry.e;
-}
-
-let grafite_callback = ref (fun _ -> ())
-let set_grafite_callback cb = grafite_callback := cb
-
-let lexicon_callback = ref (fun _ -> ())
-let set_lexicon_callback cb = lexicon_callback := cb
-
-let initial_parser () = 
-  let grammar = CicNotationParser.level2_ast_grammar () in
-  let term = CicNotationParser.term () in
-  let statement = Grammar.Entry.create grammar "statement" in
-  { grammar = grammar; term = term; statement = statement }
-;;
-
-let grafite_parser = ref (initial_parser ())
+let parse_statement grafite_parser lexbuf =
+  exc_located_wrapper
+    (fun () -> (Grammar.Entry.parse (Obj.magic grafite_parser) (Obj.magic lexbuf)))
 
 let add_raw_attribute ~text t = N.AttributedTerm (`Raw text, t)
 
@@ -102,30 +93,25 @@ type by_continuation =
  | BYC_letsuchthat of string * N.term * string * N.term
  | BYC_wehaveand of string * N.term * string * N.term
 
-let initialize_parser () =
+let mk_parser statement lstatus =
+(*   let grammar = CicNotationParser.level2_ast_grammar lstatus in *)
+  let term = CicNotationParser.term lstatus in
+  let let_defs = CicNotationParser.let_defs lstatus in
+  let protected_binder_vars = CicNotationParser.protected_binder_vars lstatus in
   (* {{{ parser initialization *)
-  let term = !grafite_parser.term in
-  let statement = !grafite_parser.statement in
-  let let_defs = CicNotationParser.let_defs () in
-  let protected_binder_vars = CicNotationParser.protected_binder_vars () in
 EXTEND
   GLOBAL: term statement;
   constructor: [ [ name = IDENT; SYMBOL ":"; typ = term -> (name, typ) ] ];
   tactic_term: [ [ t = term LEVEL "90" -> t ] ];
+(* MATITA 1.0
   new_name: [
     [ SYMBOL "_" -> None
     | id = IDENT -> Some id ]
     ];
-  ident_list0: [ [ LPAREN; idents = LIST0 new_name; RPAREN -> idents ] ];
+*)
   ident_list1: [ [ LPAREN; idents = LIST1 IDENT; RPAREN -> idents ] ];
   tactic_term_list1: [
     [ tactic_terms = LIST1 tactic_term SEP SYMBOL "," -> tactic_terms ]
-  ];
-  reduction_kind: [
-    [ IDENT "normalize" -> `Normalize
-    | IDENT "simplify" -> `Simpl
-    | IDENT "unfold"; t = OPT tactic_term -> `Unfold t
-    | IDENT "whd" -> `Whd ]
   ];
   nreduction_kind: [
     [ IDENT "normalize" ; delta = OPT [ IDENT "nodelta" -> () ] ->
@@ -191,11 +177,7 @@ EXTEND
     | SYMBOL "<" -> `RightToLeft ]
   ];
   int: [ [ num = NUMBER -> int_of_string num ] ];
-  intros_names: [
-   [ idents = OPT ident_list0 ->
-      match idents with None -> [] | Some idents -> idents
-   ]
-  ];
+(* MATITA 1.0
   intros_spec: [
     [ OPT [ IDENT "names" ]; 
       num = OPT [ num = int -> num ]; 
@@ -203,7 +185,8 @@ EXTEND
         num, idents
     ]
   ];
-  using: [ [ using = OPT [ IDENT "using"; t = tactic_term -> t ] -> using ] ];
+*)
+(* MATITA 1.0  using: [ [ using = OPT [ IDENT "using"; t = tactic_term -> t ] -> using ]  ]; *)
   ntactic: [
     [ SYMBOL "@"; t = tactic_term -> G.NTactic(loc,[G.NApply (loc, t)])
     | IDENT "apply"; t = tactic_term -> G.NTactic(loc,[G.NApply (loc, t)])
@@ -314,6 +297,7 @@ EXTEND
    ]
 ];
 
+(* MATITA 1.0
   by_continuation: [
     [ WEPROVED; ty = tactic_term ; LPAREN ; id = IDENT ; RPAREN ; t1 = OPT [IDENT "that" ; IDENT "is" ; IDENT "equivalent" ; "to" ; t2 = tactic_term -> t2] -> BYC_weproved (ty,Some id,t1)
     | WEPROVED; ty = tactic_term ; t1 = OPT [IDENT "that" ; IDENT "is" ; IDENT "equivalent" ; "to" ; t2 = tactic_term -> t2] ; 
@@ -326,11 +310,14 @@ EXTEND
               BYC_wehaveand (id1,t1,id2,t2)
     ]
 ];
+*)
+(* MATITA 1.0
   rewriting_step_continuation : [
     [ "done" -> true
     | -> false
     ]
 ];
+*)
 (* MATITA 1.0
   atomic_tactical:
     [ "sequence" LEFTA
@@ -498,11 +485,11 @@ EXTEND
         p2 = 
           [ blob = UNPARSED_AST ->
               add_raw_attribute ~text:(Printf.sprintf "@{%s}" blob)
-                (CicNotationParser.parse_level2_ast
+                (CicNotationParser.parse_level2_ast lstatus
                   (Ulexing.from_utf8_string blob))
           | blob = UNPARSED_META ->
               add_raw_attribute ~text:(Printf.sprintf "${%s}" blob)
-                (CicNotationParser.parse_level2_meta
+                (CicNotationParser.parse_level2_meta lstatus
                   (Ulexing.from_utf8_string blob))
           ] ->
             let assoc =
@@ -512,7 +499,7 @@ EXTEND
             in
             let p1 =
               add_raw_attribute ~text:s
-                (CicNotationParser.parse_level1_pattern prec
+                (CicNotationParser.parse_level1_pattern lstatus prec
                   (Ulexing.from_utf8_string s))
             in
             (dir, p1, assoc, prec, p2)
@@ -630,86 +617,50 @@ EXTEND
   ];
   statement: [
     [ ex = executable ->
-       fun ?(never_include=false) ~include_paths status ->
-          let stm = G.Executable (loc, ex) in
-          !grafite_callback stm;
-	  status, LSome stm
+          LSome (G.Executable (loc, ex))
     | com = comment ->
-       fun ?(never_include=false) ~include_paths status -> 
-          let stm = G.Comment (loc, com) in
-          !grafite_callback stm;
-	  status, LSome stm
+          LSome (G.Comment (loc, com))
     | (iloc,fname,normal,mode) = include_command ; SYMBOL "."  ->
-       fun ?(never_include=false) ~include_paths status ->
-	let _root, buri, fullpath, _rrelpath = 
-          Librarian.baseuri_of_script ~include_paths fname in
-        if never_include then raise (NoInclusionPerformed fullpath)
-        else
-         begin
-	  let stm =
-	   G.Executable
-            (loc, G.Command (loc, G.Include (iloc,fname))) in
-          !grafite_callback stm;
-	  let status =
-           LE.eval_command status (L.Include (iloc,buri,mode,fullpath)) in
-          let stm =
-	   G.Executable
-            (loc,G.Command (loc,G.Include (iloc,buri)))
-	  in
-	   status, LSome stm
-         end
+	  LSome (G.Executable 
+            (loc,G.Command (loc,G.Include (iloc,fname,(),""))))
     | scom = lexicon_command ; SYMBOL "." ->
+                    assert false
+(*
        fun ?(never_include=false) ~include_paths status ->
-          !lexicon_callback scom;	  
 	  let status = LE.eval_command status scom in
           status, LNone loc
+*)
     | EOI -> raise End_of_file
     ]
   ];
-END
+  END;
 (* }}} *)
+  statement
 ;;
 
-let _ = initialize_parser () ;;
+type db = ast_statement localized_option Grammar.Entry.e ;;
 
-let exc_located_wrapper f =
-  try
-    f ()
-  with
-  | Stdpp.Exc_located (_, End_of_file) -> raise End_of_file
-  | Stdpp.Exc_located (floc, Stream.Error msg) ->
-      raise (HExtlib.Localized (floc,CicNotationParser.Parse_error msg))
-  | Stdpp.Exc_located (floc, HExtlib.Localized(_,exn)) ->
-      raise
-       (HExtlib.Localized (floc,CicNotationParser.Parse_error (Printexc.to_string exn)))
-  | Stdpp.Exc_located (floc, exn) ->
-      raise
-       (HExtlib.Localized (floc,CicNotationParser.Parse_error (Printexc.to_string exn)))
+class type g_status =
+ object
+  inherit LexiconEngine.g_status
+  method parser_db: db
+ end
 
-let parse_statement lexbuf =
-  exc_located_wrapper
-    (fun () -> (Grammar.Entry.parse (Obj.magic !grafite_parser.statement) (Obj.magic lexbuf)))
+class status =
+  let lstatus = assert false in
+  let grammar = CicNotationParser.level2_ast_grammar lstatus in
+ object
+  inherit LexiconEngine.status
+  val db = 
+   mk_parser (Grammar.Entry.create grammar "statement") lstatus  
+  method parser_db = db
+  method set_parser_db v = {< db = v >}
+  method set_parser_status
+   : 'status. #g_status as 'status -> 'self
+   = fun o -> {< db = o#parser_db >}#set_lexicon_engine_status o
+ end
 
-let statement () = Obj.magic !grafite_parser.statement
-
-let history = ref [] ;;
-
-let push () =
-  LexiconSync.push ();
-  history := !grafite_parser :: !history;
-  grafite_parser := initial_parser ();
-  initialize_parser ()
-;;
-
-let pop () =
-  LexiconSync.pop ();
-  match !history with
-  | [] -> assert false
-  | gp :: tail ->
-      grafite_parser := gp;
-      history := tail
-;;
+let parse_statement status = 
+  parse_statement status#parser_db
 
 (* vim:set foldmethod=marker: *)
-
-

@@ -26,54 +26,60 @@
 exception Parse_error of string
 exception Level_not_found of int
 
+type db
+
+class type g_status =
+ object
+  method notation_parser_db: db
+ end
+
+class status:
+ object('self)
+  inherit g_status
+  method set_notation_parser_db: db -> 'self
+  method set_notation_parser_status: 'status. #g_status as 'status -> 'self
+ end
+
 type checked_l1_pattern = private CL1P of NotationPt.term * int
 
 (** {2 Parsing functions} *)
 
   (** concrete syntax pattern: notation level 1, the 
    *  integer is the precedence *)
-val parse_level1_pattern: int -> Ulexing.lexbuf -> NotationPt.term
+val parse_level1_pattern: #status -> int -> Ulexing.lexbuf -> NotationPt.term
 
   (** AST pattern: notation level 2 *)
-val parse_level2_ast: Ulexing.lexbuf -> NotationPt.term
-val parse_level2_meta: Ulexing.lexbuf -> NotationPt.term
+val parse_level2_ast: #status -> Ulexing.lexbuf -> NotationPt.term
+val parse_level2_meta: #status -> Ulexing.lexbuf -> NotationPt.term
 
 (** {2 Grammar extension} *)
-
-type rule_id
-
-val compare_rule_id : rule_id -> rule_id -> int
 
 val check_l1_pattern: (* level1_pattern, pponly, precedence, assoc *)
  NotationPt.term -> bool ->  int -> Gramext.g_assoc -> checked_l1_pattern
 
 val extend:
+  #status as 'status -> 
   checked_l1_pattern ->
   (NotationEnv.t -> NotationPt.location -> NotationPt.term) ->
-    rule_id
-
-val delete: rule_id -> unit
+    'status
 
 (** {2 Grammar entries}
  * needed by grafite parser *)
 
-val level2_ast_grammar: unit -> Grammar.g
+val level2_ast_grammar: #status -> Grammar.g
 
-val term : unit -> NotationPt.term Grammar.Entry.e
+val term : #status -> NotationPt.term Grammar.Entry.e
 
-val let_defs : unit ->
+val let_defs : #status ->
   (NotationPt.term NotationPt.capture_variable list * NotationPt.term NotationPt.capture_variable * NotationPt.term * int) list
     Grammar.Entry.e
 
-val protected_binder_vars : unit ->
+val protected_binder_vars : #status ->
   (NotationPt.term list * NotationPt.term option) Grammar.Entry.e
 
-val parse_term: Ulexing.lexbuf -> NotationPt.term
+val parse_term: #status -> Ulexing.lexbuf -> NotationPt.term
 
 (** {2 Debugging} *)
 
   (** print "level2_pattern" entry on stdout, flushing afterwards *)
-val print_l2_pattern: unit -> unit
-
-val push: unit -> unit
-val pop: unit -> unit
+val print_l2_pattern: #status -> unit

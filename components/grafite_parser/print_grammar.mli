@@ -25,4 +25,4 @@
 
 (* $Id: print_grammar.ml 6977 2006-10-25 12:41:21Z sacerdot $ *)
 
-val ebnf_of_term: unit -> string
+val ebnf_of_term: #GrafiteParser.status -> string

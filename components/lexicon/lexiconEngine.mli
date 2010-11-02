@@ -29,7 +29,6 @@ type lexicon_status = {
   aliases: LexiconAst.alias_spec DisambiguateTypes.Environment.t;
   multi_aliases: LexiconAst.alias_spec list DisambiguateTypes.Environment.t;
   lexicon_content_rev: LexiconMarshal.lexicon;
-  notation_ids: CicNotation.notation_id list;      (** in-scope notation ids *)
 }
 
 class type g_status =

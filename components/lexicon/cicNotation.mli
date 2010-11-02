@@ -23,27 +23,21 @@
  * http://helm.cs.unibo.it/
  *)
 
-type notation_id
-
 class type g_status =
  object ('self)
   inherit Interpretations.g_status
   inherit TermContentPres.g_status
+  inherit CicNotationParser.g_status
  end
 
 class status :
  object ('self)
   inherit Interpretations.status
   inherit TermContentPres.status
+  inherit CicNotationParser.status
   method set_notation_status: #g_status -> 'self
  end
 
-val compare_notation_id : notation_id -> notation_id -> int
-
 val process_notation:
- #status as 'status -> LexiconAst.command -> 'status * notation_id list
+ #status as 'status -> LexiconAst.command -> 'status 
 
-val remove_notation: notation_id -> unit
-
-val push: unit -> unit
-val pop: unit -> unit

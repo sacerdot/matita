@@ -7,8 +7,8 @@ content2presMatcher.cmi:
 termContentPres.cmi: cicNotationParser.cmi 
 boxPp.cmi: mpresentation.cmi cicNotationPres.cmi box.cmi 
 cicNotationPres.cmi: mpresentation.cmi box.cmi 
-content2pres.cmi: cicNotationPres.cmi 
-sequent2pres.cmi: cicNotationPres.cmi 
+content2pres.cmi: termContentPres.cmi cicNotationPres.cmi 
+sequent2pres.cmi: termContentPres.cmi cicNotationPres.cmi 
 renderingAttrs.cmo: renderingAttrs.cmi 
 renderingAttrs.cmx: renderingAttrs.cmi 
 cicNotationLexer.cmo: cicNotationLexer.cmi 

@@ -39,13 +39,11 @@ class status :
     method set_content_pres_status: #g_status -> 'self
   end
 
-type pretty_printer_id
-
 val add_pretty_printer:
  #status as 'status ->
   NotationPt.term ->             (* level 2 pattern *)
   CicNotationParser.checked_l1_pattern ->
-   'status * pretty_printer_id
+   'status
 
   (** {2 content -> pres} *)
 

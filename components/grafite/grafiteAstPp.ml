@@ -130,7 +130,7 @@ let pp_ncommand = function
 ;;
     
 let pp_command = function
-  | Include (_,path) -> "include \"" ^ path ^ "\""
+  | Include (_,path,_,_) -> "include \"" ^ path ^ "\""
   | Print (_,s) -> "print " ^ s
   | Set (_, name, value) -> Printf.sprintf "set \"%s\" \"%s\"" name value
 

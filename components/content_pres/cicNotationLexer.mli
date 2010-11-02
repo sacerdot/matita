@@ -28,20 +28,12 @@
    * error message *)
 exception Error of int * int * string
 
-  (** XXX ZACK DEFCON 4 BEGIN: never use the tok_func field of the glexers below
-   * passing values of type char Stream.t, they should be in fact Ulexing.lexbuf
-   * casted with Obj.magic :-/ Read the comment in the .ml for the rationale *)
+type lexers = {
+        level1_pattern_lexer : (string * string) Token.glexer;
+        level2_ast_lexer : (string * string) Token.glexer;
+        level2_meta_lexer : (string * string) Token.glexer
+}
 
-val level1_pattern_lexer: unit -> (string * string) Token.glexer
-val level2_ast_lexer: unit -> (string * string) Token.glexer
-val level2_meta_lexer: unit -> (string * string) Token.glexer
+val mk_lexers : string list -> lexers
 
-  (** XXX ZACK DEFCON 4 END *)
 
-val add_level2_ast_keyword: string -> unit    (** non idempotent *)
-val remove_level2_ast_keyword: string -> unit (** non idempotent *)
-
-(** {2 Ligatures} *)
-
-val push: unit -> unit
-val pop: unit -> unit

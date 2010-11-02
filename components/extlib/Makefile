@@ -10,7 +10,6 @@ INTERFACE_FILES =		\
 	trie.mli 		\
 	discrimination_tree.mli 		\
 	hTopoSort.mli 		\
-	refCounter.mli 		\
 	graphvizPp.mli		\
 	$(NULL)
 IMPLEMENTATION_FILES = \
