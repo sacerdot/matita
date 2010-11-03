@@ -1,4 +1,4 @@
-(* Copyright (C) 2005, HELM Team.
+(* Copyright (C) 2004-2005, HELM Team.
  * 
  * This file is part of HELM, an Hypertextual, Electronic
  * Library of Mathematics, developed at the Computer Science
@@ -25,49 +25,32 @@
 
 (* $Id$ *)
 
-open LexiconAst
+type lexicon_status = {
+  aliases: GrafiteAst.alias_spec DisambiguateTypes.Environment.t;
+  multi_aliases: GrafiteAst.alias_spec list DisambiguateTypes.Environment.t
+}
+
+let initial_status = {
+  aliases = DisambiguateTypes.Environment.empty;
+  multi_aliases = DisambiguateTypes.Environment.empty
+}
 
 class type g_status =
- object ('self)
+ object
   inherit Interpretations.g_status
   inherit TermContentPres.g_status
   inherit CicNotationParser.g_status
+  method lstatus: lexicon_status
  end
 
 class status =
- object (self)
+ object(self)
   inherit Interpretations.status
   inherit TermContentPres.status
   inherit CicNotationParser.status
-  method set_notation_status
-   : 'status. #g_status as 'status -> 'self
-      = fun o -> ((self#set_interp_status o)#set_content_pres_status o)#set_notation_parser_status o
+  val lstatus = initial_status
+  method lstatus = lstatus
+  method set_lstatus v = {< lstatus = v >}
+  method set_lexicon_engine_status : 'status. #g_status as 'status -> 'self
+   = fun o -> (((self#set_lstatus o#lstatus)#set_interp_status o)#set_content_pres_status o)#set_notation_parser_status o
  end
-
-let process_notation status st =
-  match st with
-  | Notation (loc, dir, l1, associativity, precedence, l2) ->
-      let l1 = 
-        CicNotationParser.check_l1_pattern
-         l1 (dir = Some `RightToLeft) precedence associativity
-      in
-      let status =
-        if dir <> Some `RightToLeft then
-          CicNotationParser.extend status l1 
-            (fun env loc ->
-              NotationPt.AttributedTerm
-               (`Loc loc,TermContentPres.instantiate_level2 env l2)) 
-        else status
-      in
-      let status =
-        if dir <> Some `LeftToRight then
-         let status = TermContentPres.add_pretty_printer status l2 l1 in
-          status
-        else
-          status
-      in
-       status
-  | Interpretation (loc, dsc, l2, l3) -> 
-      Interpretations.add_interpretation status dsc l2 l3
-  | st -> status
-

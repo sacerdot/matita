@@ -23,33 +23,10 @@
  * http://helm.cs.unibo.it/
  *)
 
-exception IncludedFileNotCompiled of string * string
-
-type lexicon_status = {
-  aliases: LexiconAst.alias_spec DisambiguateTypes.Environment.t;
-  multi_aliases: LexiconAst.alias_spec list DisambiguateTypes.Environment.t;
-  lexicon_content_rev: LexiconMarshal.lexicon;
-}
-
-class type g_status =
- object
-  inherit CicNotation.g_status
-  method lstatus: lexicon_status
- end
-
-class status :
- object ('self)
-  inherit g_status
-  inherit CicNotation.status
-  method set_lstatus: lexicon_status -> 'self
-  method set_lexicon_engine_status: #g_status -> 'self
- end
-
-val eval_command : #status as 'status -> LexiconAst.command -> 'status
-
 val set_proof_aliases:
- #status as 'status ->
-  (DisambiguateTypes.domain_item * LexiconAst.alias_spec) list -> 'status
+ #LexiconTypes.status as 'status ->
+  GrafiteAst.inclusion_mode ->
+  (DisambiguateTypes.domain_item * GrafiteAst.alias_spec) list -> 'status
 
 (* args: print function, message (may be empty), status *) 
-val dump_aliases: (string -> unit) -> string -> #status -> unit
+val dump_aliases: (string -> unit) -> string -> #LexiconTypes.status -> unit

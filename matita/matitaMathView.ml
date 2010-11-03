@@ -1036,12 +1036,6 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
         let my_id = Oo.id self in
         cicBrowsers := List.filter (fun b -> Oo.id b <> my_id) !cicBrowsers;
         win#toplevel#misc#hide(); win#toplevel#destroy ());
-      (* remove hbugs *)
-      (*
-      connect_menu_item win#hBugsTutorsMenuItem (fun () ->
-        self#load (`HBugs `Tutors));
-      *)
-      win#hBugsTutorsMenuItem#misc#hide ();
       connect_menu_item win#browserUrlMenuItem (fun () ->
         win#browserUri#misc#grab_focus ());
 
@@ -1104,7 +1098,6 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
     method private _showList2 = win#mathOrListNotebook#goto_page 5
     method private _showSearch = win#mathOrListNotebook#goto_page 6
     method private _showGviz = win#mathOrListNotebook#goto_page  3
-    method private _showHBugs = win#mathOrListNotebook#goto_page 4
 
     method private back () =
       try
@@ -1136,7 +1129,6 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
           | `NCic (term, ctx, metasenv, subst) -> 
                self#_loadTermNCic term metasenv subst ctx
           | `Dir dir -> self#_loadDir dir
-          | `HBugs `Tutors -> self#_loadHBugsTutors
           | `NRef nref -> self#_loadNReference nref);
           self#setEntry entry
         end)
@@ -1226,7 +1218,7 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
       self#_showSearch
 
     method private grammar () =
-      self#_loadText (Print_grammar.ebnf_of_term ());
+      self#_loadText (Print_grammar.ebnf_of_term self#script#grafite_status);
 
     method private home () =
       self#_showMath;
@@ -1253,9 +1245,6 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
       in
       lastDir <- dir;
       self#_loadList l
-
-    method private _loadHBugsTutors =
-      self#_showHBugs
 
     method private setEntry entry =
       win#browserUri#set_text (MatitaTypes.string_of_entry entry);

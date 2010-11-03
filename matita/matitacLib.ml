@@ -29,7 +29,7 @@ open Printf
 
 open GrafiteTypes
 
-exception AttemptToInsertAnAlias of LexiconEngine.status
+exception AttemptToInsertAnAlias of LexiconTypes.status
 
 let slash_n_RE = Pcre.regexp "\\n" ;;
 
@@ -47,43 +47,6 @@ let pp_ast_statement grafite_status stm =
 
 let clean_exit baseuri rc =
   LibraryClean.clean_baseuris ~verbose:false [baseuri]; rc
-;;
-
-let dump f =
-   let module G = GrafiteAst in
-   let module L = LexiconAst in
-   let module H = HExtlib in
-   let floc = H.dummy_floc in
-   let nl_ast = G.Comment (floc, G.Note (floc, "")) in
-   let pp_statement stm =
-     GrafiteAstPp.pp_statement stm        
-       ~map_unicode_to_tex:(Helm_registry.get_bool
-         "matita.paste_unicode_as_tex")
-   in
-   let pp_lexicon = LexiconAstPp.pp_command in
-   let och = open_out f in
-   let nl () =  output_string och (pp_statement nl_ast) in
-   MatitaMisc.out_preamble och;
-   let grafite_parser_cb = function
-      | G.Executable (loc, G.Command (_, G.Include (_,_))) -> ()
-      | stm ->
-         output_string och (pp_statement stm); nl (); nl ()
-   in
-   let lexicon_parser_cb cmd =
-         output_string och (pp_lexicon cmd); nl (); nl ()
-   in
-   begin fun () ->
-      Helm_registry.set_bool "matita.moo" false;
-      GrafiteParser.set_grafite_callback grafite_parser_cb;
-      GrafiteParser.set_lexicon_callback lexicon_parser_cb
-   end, 
-   begin fun x ->
-      close_out och;
-      GrafiteParser.set_grafite_callback (fun _ -> ());
-      GrafiteParser.set_lexicon_callback (fun _ -> ());
-      Helm_registry.set_bool "matita.moo" true;
-      x
-   end
 ;;
 
 let get_macro_context = function _ -> []
@@ -160,7 +123,7 @@ let compile atstart options fname =
   if Http_getter_storage.is_read_only baseuri then assert false;
   activate_extraction baseuri fname ;
   let lexicon_status = 
-    CicNotation2.load_notation ~include_paths:[] (new LexiconEngine.status)
+    CicNotation2.load_notation ~include_paths:[] (new LexiconTypes.status)
       BuildTimeConf.core_notation_script 
   in
   atstart (); (* FG: do not invoke before loading the core notation script *)  
@@ -172,14 +135,6 @@ let compile atstart options fname =
   in
   let time = Unix.time () in
   try
-    (* sanity checks *)
-    let moo_fname = 
-     LibraryMisc.obj_file_of_baseuri ~must_exist:false ~baseuri ~writable:true
-    in
-    let lexicon_fname= 
-     LibraryMisc.lexicon_file_of_baseuri 
-       ~must_exist:false ~baseuri ~writable:true
-    in
     (* cleanup of previously compiled objects *)
     if (not (Http_getter_storage.is_empty ~local:true baseuri))
       then begin
@@ -220,19 +175,14 @@ let compile atstart options fname =
       | [] -> grafite_status
       | (g,None)::_ -> g
       | (g,Some _)::_ ->
-         raise (AttemptToInsertAnAlias (g :> LexiconEngine.status))
+         raise (AttemptToInsertAnAlias (g :> LexiconTypes.status))
      in
        aux_for_dump print_cb grafite_status
     in
     let elapsed = Unix.time () -. time in
-    let lexicon_content_rev = 
-     grafite_status#lstatus.LexiconEngine.lexicon_content_rev
-    in
      (if Helm_registry.get_bool "matita.moo" then begin
-        (* FG: we do not generate .moo when dumping .mma files *)
-        LexiconMarshal.save_lexicon lexicon_fname lexicon_content_rev;
-        GrafiteTypes.Serializer.serialize ~baseuri:(NUri.uri_of_string baseuri)
-         grafite_status#dump
+       GrafiteTypes.Serializer.serialize ~baseuri:(NUri.uri_of_string baseuri)
+        grafite_status#dump
      end;
      let tm = Unix.gmtime elapsed in
      let sec = string_of_int tm.Unix.tm_sec ^ "''" in
@@ -332,29 +282,16 @@ module F =
       let matita_debug = Helm_registry.get_bool "matita.debug" in
       let compile atstart opts fname =
         try
-          GrafiteParser.push ();
-          let rc = compile atstart opts fname in
-          GrafiteParser.pop ();
-          rc
+        (* MATITA 1.0: c'erano le push/pop per il parser; ma per
+         * l'environment nuovo? *)
+         compile atstart opts fname
         with 
-        | Sys.Break ->
-            GrafiteParser.pop ();
-            false
+        | Sys.Break -> false
         | exn when not matita_debug ->
             HLog.error ("Unexpected " ^ snd(MatitaExcPp.to_string exn));
             assert false
       in
-      if Filename.check_suffix fname ".mma" then 
-         let generated = Filename.chop_suffix fname ".mma" ^ ".ma" in
-         let atstart, atexit = dump generated in
-         let res = compile atstart options fname in
-         let r = compact (atexit res) in
-         if r then r else begin
-(*            Sys.remove generated; *)
-            Printf.printf "rm %s\n" generated; flush stdout; r
-         end
-      else
-         compact (compile ignore options fname)
+       compact (compile ignore options fname)
     ;;
 
     let load_deps_file = Librarian.load_deps_file;;

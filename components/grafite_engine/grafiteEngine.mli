@@ -23,12 +23,12 @@
  * http://helm.cs.unibo.it/
  *)
 
-exception Drop
 exception NMacro of GrafiteAst.loc * GrafiteAst.nmacro
 
 type 'a disambiguator_input = string * int * 'a
 
 val eval_ast :
+  include_paths:string list ->
   ?do_heavy_checks:bool ->
   GrafiteTypes.status ->
   GrafiteAst.statement disambiguator_input ->

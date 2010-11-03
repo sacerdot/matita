@@ -29,19 +29,17 @@ type 'a localized_option =
 
 type ast_statement = GrafiteAst.statement
 
-exception NoInclusionPerformed of string (* full path *)
-
 type db 
 
 class type g_status =
  object
-  inherit LexiconEngine.g_status
+  inherit LexiconTypes.g_status
   method parser_db: db
  end
 
 class status :
  object('self)
-  inherit LexiconEngine.status
+  inherit LexiconTypes.status
   method parser_db : db
   method set_parser_db : db -> 'self
   method set_parser_status : 'status. #g_status as 'status -> 'self

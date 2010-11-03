@@ -24,12 +24,13 @@
  *)
 
 val eval_ast :
+  include_paths: string list ->
   ?do_heavy_checks:bool ->
   GrafiteTypes.status ->
   string * int *
   GrafiteAst.statement ->
   (GrafiteTypes.status *
-   (DisambiguateTypes.domain_item * LexiconAst.alias_spec) option) list
+   (DisambiguateTypes.domain_item * GrafiteAst.alias_spec) option) list
 
 
 (* heavy checks slow down the compilation process but give you some interesting
@@ -49,4 +50,4 @@ val eval_from_stream :
   Ulexing.lexbuf ->
   (GrafiteTypes.status -> GrafiteAst.statement -> unit) ->
   (GrafiteTypes.status *
-   (DisambiguateTypes.domain_item * LexiconAst.alias_spec) option) list
+   (DisambiguateTypes.domain_item * GrafiteAst.alias_spec) option) list

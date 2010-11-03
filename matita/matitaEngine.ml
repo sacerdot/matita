@@ -51,12 +51,12 @@ let eval_macro_screenshot (status : GrafiteTypes.status) name =
   *)
 ;;
 
-let eval_ast ?do_heavy_checks status (text,prefix_len,ast) =
- let dump = not (Helm_registry.get_bool "matita.moo") in
- let lexicon_status_ref = ref (status :> LexiconEngine.status) in
+let eval_ast ~include_paths ?do_heavy_checks status (text,prefix_len,ast) =
+ let lexicon_status_ref = ref (status :> LexiconTypes.status) in
  let baseuri = status#baseuri in
  let new_status,new_objs =
-  GrafiteEngine.eval_ast ?do_heavy_checks status (text,prefix_len,ast)
+  GrafiteEngine.eval_ast ~include_paths ?do_heavy_checks status
+   (text,prefix_len,ast)
  in
  let new_status =
   if !lexicon_status_ref#lstatus != status#lstatus then
@@ -68,7 +68,7 @@ let eval_ast ?do_heavy_checks status (text,prefix_len,ast) =
  let _,intermediate_states = 
   List.fold_left
    (fun (status,acc) (k,value) -> 
-     let v = LexiconAst.description_of_alias value in
+     let v = GrafiteAst.description_of_alias value in
      let b =
       try
        let NReference.Ref (uri,_) = NReference.reference_of_string v in
@@ -81,7 +81,8 @@ let eval_ast ?do_heavy_checks status (text,prefix_len,ast) =
        status,acc
       else
        let new_status =
-        LexiconEngine.set_proof_aliases status [k,value]
+        LexiconEngine.set_proof_aliases status
+         GrafiteAst.WithPreferences [k,value]
        in
         new_status, (new_status ,Some (k,value))::acc
    ) (status,[]) new_aliases
@@ -105,25 +106,26 @@ let eval_from_stream ~first_statement_only ~include_paths
   let stop,g,s = 
    try
      let cont =
-       try Some (GrafiteParser.parse_statement ~include_paths str status)
+       try Some (GrafiteParser.parse_statement status str)
        with End_of_file -> None in
      match cont with
      | None -> true, status, statuses
-     | Some (status,ast) ->
+     | Some ast ->
        (match ast with
            GrafiteParser.LNone _ ->
             watch_statuses status ;
             false, status, ((status,None)::statuses)
          | GrafiteParser.LSome ast ->
             cb status ast;
-            let new_statuses = eval_ast ?do_heavy_checks status ("",0,ast) in
+            let new_statuses =
+              eval_ast ~include_paths ?do_heavy_checks status ("",0,ast) in
             if enforce_no_new_aliases then
              List.iter 
               (fun (_,alias) ->
                 match alias with
                   None -> ()
                 | Some (k,value) ->
-                   let newtxt = LexiconAstPp.pp_alias value in
+                   let newtxt = GrafiteAstPp.pp_alias value in
                     raise (TryingToAdd newtxt)) new_statuses;
             let status =
              match new_statuses with

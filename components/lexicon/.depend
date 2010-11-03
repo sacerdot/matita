@@ -1,19 +1,9 @@
-lexiconAstPp.cmi: lexiconAst.cmo 
-lexiconMarshal.cmi: lexiconAst.cmo 
-cicNotation.cmi: lexiconAst.cmo 
-lexiconEngine.cmi: lexiconMarshal.cmi lexiconAst.cmo cicNotation.cmi 
-lexiconSync.cmi: lexiconEngine.cmi lexiconAst.cmo 
-lexiconAst.cmo: 
-lexiconAst.cmx: 
-lexiconAstPp.cmo: lexiconAst.cmo lexiconAstPp.cmi 
-lexiconAstPp.cmx: lexiconAst.cmx lexiconAstPp.cmi 
-lexiconMarshal.cmo: lexiconAstPp.cmi lexiconAst.cmo lexiconMarshal.cmi 
-lexiconMarshal.cmx: lexiconAstPp.cmx lexiconAst.cmx lexiconMarshal.cmi 
-cicNotation.cmo: lexiconAst.cmo cicNotation.cmi 
-cicNotation.cmx: lexiconAst.cmx cicNotation.cmi 
-lexiconEngine.cmo: lexiconMarshal.cmi lexiconAstPp.cmi lexiconAst.cmo \
-    cicNotation.cmi lexiconEngine.cmi 
-lexiconEngine.cmx: lexiconMarshal.cmx lexiconAstPp.cmx lexiconAst.cmx \
-    cicNotation.cmx lexiconEngine.cmi 
-lexiconSync.cmo: lexiconEngine.cmi lexiconAst.cmo lexiconSync.cmi 
-lexiconSync.cmx: lexiconEngine.cmx lexiconAst.cmx lexiconSync.cmi 
+lexiconTypes.cmi: 
+lexiconEngine.cmi: lexiconTypes.cmi 
+lexiconSync.cmi: lexiconTypes.cmi 
+lexiconTypes.cmo: lexiconTypes.cmi 
+lexiconTypes.cmx: lexiconTypes.cmi 
+lexiconEngine.cmo: lexiconTypes.cmi lexiconEngine.cmi 
+lexiconEngine.cmx: lexiconTypes.cmx lexiconEngine.cmi 
+lexiconSync.cmo: lexiconTypes.cmi lexiconEngine.cmi lexiconSync.cmi 
+lexiconSync.cmx: lexiconTypes.cmx lexiconEngine.cmx lexiconSync.cmi 

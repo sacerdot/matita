@@ -12,6 +12,7 @@
 (* $Id$ *)
 
 exception LibraryOutOfSync of string Lazy.t
+exception IncludedFileNotCompiled of string * string 
 
 type timestamp
 

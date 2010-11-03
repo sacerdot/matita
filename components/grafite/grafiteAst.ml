@@ -83,12 +83,22 @@ type nmacro =
  * marshalling *)
 let magic = 35
 
+(* composed magic: term + command magics. No need to change this value *)
+let magic = magic + 10000 * NotationPt.magic
+
 type command =
-  | Include of loc * string * unit * string
   | Set of loc * string * string
   | Print of loc * string
 
+type alias_spec =
+  | Ident_alias of string * string        (* identifier, uri *)
+  | Symbol_alias of string * int * string (* name, instance no, description *)
+  | Number_alias of int * string          (* instance no, description *)
+
+type inclusion_mode = WithPreferences | WithoutPreferences (* aka aliases *)
+
 type ncommand =
+  | Include of loc * inclusion_mode * string (* _,buri,_,path *)
   | UnificationHint of loc * NotationPt.term * int (* term, precedence *)
   | NObj of loc * NotationPt.term NotationPt.obj
   | NDiscriminator of loc * NotationPt.term
@@ -99,6 +109,16 @@ type ncommand =
       NotationPt.term * NotationPt.term *
       (string * NotationPt.term) * NotationPt.term
   | NQed of loc
+  (* ex lexicon commands *)
+  | Alias of loc * alias_spec
+      (** parameters, name, type, fields *) 
+  | Notation of loc * direction option * NotationPt.term * Gramext.g_assoc *
+      int * NotationPt.term
+      (* direction, l1 pattern, associativity, precedence, l2 pattern *)
+  | Interpretation of loc *
+      string * (string * NotationPt.argument_pattern list) *
+        NotationPt.cic_appl_pattern
+      (* description (i.e. id), symbol, arg pattern, appl pattern *)
 
 type code =
   | Command of loc * command
@@ -113,3 +133,9 @@ type comment =
 type statement =
   | Executable of loc * code
   | Comment of loc * comment
+
+let description_of_alias =
+ function
+    Ident_alias (_,desc)
+  | Symbol_alias (_,_,desc)
+  | Number_alias (_,desc) -> desc

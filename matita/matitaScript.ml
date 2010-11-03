@@ -80,7 +80,7 @@ let eval_with_engine include_paths guistuff grafite_status user_goal
   let text = skipped_txt ^ nonskipped_txt in
   let prefix_len = MatitaGtkMisc.utf8_string_length skipped_txt in
   let enriched_history_fragment =
-   MatitaEngine.eval_ast ~do_heavy_checks:(Helm_registry.get_bool
+   MatitaEngine.eval_ast ~include_paths ~do_heavy_checks:(Helm_registry.get_bool
      "matita.do_heavy_checks")
     grafite_status (text,prefix_len,st)
   in
@@ -92,7 +92,7 @@ let eval_with_engine include_paths guistuff grafite_status user_goal
        match alias with
        | None -> (status,to_prepend ^ nonskipped_txt)::acc,""
        | Some (k,value) ->
-            let newtxt = LexiconAstPp.pp_alias value in
+            let newtxt = GrafiteAstPp.pp_alias value in
             (status,to_prepend ^ newtxt ^ "\n")::acc, "")
       ([],skipped_txt) enriched_history_fragment
   in
@@ -103,11 +103,10 @@ let eval_with_engine include_paths guistuff grafite_status user_goal
  * so that we can ensure the inclusion is performed after the included file 
  * is compiled (if needed). matitac does not need that, since it compiles files
  * in the good order, here files may be compiled on demand. *)
-let wrap_with_make include_paths (f : #LexiconEngine.status GrafiteParser.statement) x = 
-  try      
-    f ~never_include:true ~include_paths x
-  with
-  | GrafiteParser.NoInclusionPerformed mafilename ->
+let wrap_with_make include_paths f x = 
+  match f x with
+     GrafiteParser.LSome (GrafiteAst.Executable (_,GrafiteAst.NCommand
+     (_,GrafiteAst.Include (_,_,mafilename)))) as cmd ->
       let root, buri, _, tgt = 
         try Librarian.baseuri_of_script ~include_paths mafilename
         with Librarian.NoRootFor _ -> 
@@ -115,13 +114,10 @@ let wrap_with_make include_paths (f : #LexiconEngine.status GrafiteParser.statem
           HLog.error "please create it.";
           raise (Failure ("No root file for "^mafilename))
       in
-      let b = MatitacLib.Make.make root [tgt] in
-      if b then 
-        try f ~include_paths x with LexiconEngine.IncludedFileNotCompiled _ ->
-         raise 
-           (Failure ("Including: "^tgt^
-             "\nNothing to do... did you run matitadep?"))
+      if MatitacLib.Make.make root [tgt] then
+       cmd
       else raise (Failure ("Compiling: " ^ tgt))
+   | cmd -> cmd
 ;;
 
 let pp_eager_statement_ast = GrafiteAstPp.pp_statement 
@@ -209,17 +205,17 @@ script ex loc
 and eval_statement include_paths (buffer : GText.buffer) guistuff 
  grafite_status user_goal script statement
 =
-  let (grafite_status,st), unparsed_text =
+  let st,unparsed_text =
     match statement with
     | `Raw text ->
         if Pcre.pmatch ~rex:only_dust_RE text then raise Margin;
         let ast = 
          wrap_with_make include_paths
-          (GrafiteParser.parse_statement (Ulexing.from_utf8_string text)) 
-            grafite_status
+          (GrafiteParser.parse_statement grafite_status)
+            (Ulexing.from_utf8_string text)
         in
           ast, text
-    | `Ast (st, text) -> (grafite_status, st), text
+    | `Ast (st, text) -> st, text
   in
   let text_of_loc floc = 
     let nonskipped_txt,_ = MatitaGtkMisc.utf8_parsed_text unparsed_text floc in
@@ -280,10 +276,9 @@ class script  ~(source_view: GSourceView2.source_view)
 let buffer = source_view#buffer in
 let source_buffer = source_view#source_buffer in
 let initial_statuses current baseuri =
- let empty_lstatus = new LexiconEngine.status in
+ let empty_lstatus = new LexiconTypes.status in
  (match current with
      Some current ->
-      LexiconSync.time_travel ~present:current ~past:empty_lstatus;
       NCicLibrary.time_travel
        ((new GrafiteTypes.status current#baseuri)#set_lstatus current#lstatus);
       (* CSC: there is a known bug in invalidation; temporary fix here *)
@@ -422,13 +417,7 @@ object (self)
       bottom) and we will face a macro *)
     userGoal <- None
 
-  method private _retract offset grafite_status new_statements
-   new_history
-  =
-   let cur_grafite_status =
-    match history with s::_ -> s | [] -> assert false
-   in
-    LexiconSync.time_travel ~present:cur_grafite_status ~past:grafite_status;
+  method private _retract offset grafite_status new_statements new_history =
     NCicLibrary.time_travel grafite_status;
     statements <- new_statements;
     history <- new_history;
@@ -700,11 +689,9 @@ object (self)
   method eos = 
     let rec is_there_only_comments lexicon_status s = 
       if Pcre.pmatch ~rex:only_dust_RE s then raise Margin;
-      let lexicon_status,st =
-       GrafiteParser.parse_statement (Ulexing.from_utf8_string s)
-        ~include_paths:self#include_paths lexicon_status
-      in
-      match st with
+      match
+       GrafiteParser.parse_statement lexicon_status (Ulexing.from_utf8_string s)
+      with
       | GrafiteParser.LSome (GrafiteAst.Comment (loc,_)) -> 
           let _,parsed_text_length = MatitaGtkMisc.utf8_parsed_text s loc in
           (* CSC: why +1 in the following lines ???? *)
@@ -717,7 +704,7 @@ object (self)
     in
     try is_there_only_comments self#grafite_status self#getFuture
     with 
-    | LexiconEngine.IncludedFileNotCompiled _
+    | NCicLibrary.IncludedFileNotCompiled _
     | HExtlib.Localized _
     | CicNotationParser.Parse_error _ -> false
     | Margin | End_of_file -> true

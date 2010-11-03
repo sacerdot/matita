@@ -27,10 +27,7 @@
 
 module N  = NotationPt
 module G  = GrafiteAst
-module L  = LexiconAst
 module LE = LexiconEngine
-
-exception NoInclusionPerformed of string (* full path *)
 
 type 'a localized_option =
    LSome of 'a
@@ -440,7 +437,7 @@ EXTEND
           if (try ignore (NReference.reference_of_string uri); true
               with NReference.IllFormedReference _ -> false)
           then
-            L.Ident_alias (id, uri)
+            G.Ident_alias (id, uri)
           else
             raise
              (HExtlib.Localized (loc, CicNotationParser.Parse_error (Printf.sprintf "Not a valid uri: %s" uri)))
@@ -453,14 +450,14 @@ EXTEND
           let instance =
             match instance with Some i -> i | None -> 0
           in
-          L.Symbol_alias (symbol, instance, dsc)
+          G.Symbol_alias (symbol, instance, dsc)
       | IDENT "num";
         instance = OPT [ LPAREN; IDENT "instance"; n = int; RPAREN -> n ];
         SYMBOL "="; dsc = QSTRING ->
           let instance =
             match instance with Some i -> i | None -> 0
           in
-          L.Number_alias (instance, dsc)
+          G.Number_alias (instance, dsc)
       ]
      ];
     argument: [
@@ -524,11 +521,9 @@ EXTEND
     
     include_command: [ [
         IDENT "include" ; path = QSTRING -> 
-          loc,path,true,L.WithPreferences
-      | IDENT "include" ; IDENT "source" ; path = QSTRING -> 
-          loc,path,false,L.WithPreferences	  
+          loc,path,G.WithPreferences
       | IDENT "include'" ; path = QSTRING -> 
-          loc,path,true,L.WithoutPreferences
+          loc,path,G.WithoutPreferences
      ]];
 
   grafite_ncommand: [ [
@@ -587,12 +582,12 @@ EXTEND
 
   lexicon_command: [ [
       IDENT "alias" ; spec = alias_spec ->
-        L.Alias (loc, spec)
+        G.Alias (loc, spec)
     | IDENT "notation"; (dir, l1, assoc, prec, l2) = notation ->
-        L.Notation (loc, dir, l1, assoc, prec, l2)
+        G.Notation (loc, dir, l1, assoc, prec, l2)
     | IDENT "interpretation"; id = QSTRING;
       (symbol, args, l3) = interpretation ->
-        L.Interpretation (loc, id, (symbol, args), l3)
+        G.Interpretation (loc, id, (symbol, args), l3)
   ]];
   executable: [
     [ ncmd = grafite_ncommand; SYMBOL "." -> G.NCommand (loc, ncmd)
@@ -617,16 +612,14 @@ EXTEND
   ];
   statement: [
     [ ex = executable ->
-          LSome (G.Executable (loc, ex))
+         LSome (G.Executable (loc, ex))
     | com = comment ->
-          LSome (G.Comment (loc, com))
-    | (iloc,fname,normal,mode) = include_command ; SYMBOL "."  ->
-	  LSome (G.Executable 
-            (loc,G.Command (loc,G.Include (iloc,fname,(),""))))
+         LSome (G.Comment (loc, com))
+    | (iloc,fname,mode) = include_command ; SYMBOL "."  ->
+	       LSome (G.Executable (loc,G.NCommand (loc,G.Include (iloc,mode,fname))))
     | scom = lexicon_command ; SYMBOL "." ->
                     assert false
 (*
-       fun ?(never_include=false) ~include_paths status ->
 	  let status = LE.eval_command status scom in
           status, LNone loc
 *)
@@ -642,7 +635,7 @@ type db = ast_statement localized_option Grammar.Entry.e ;;
 
 class type g_status =
  object
-  inherit LexiconEngine.g_status
+  inherit LexiconTypes.g_status
   method parser_db: db
  end
 
@@ -650,7 +643,7 @@ class status =
   let lstatus = assert false in
   let grammar = CicNotationParser.level2_ast_grammar lstatus in
  object
-  inherit LexiconEngine.status
+  inherit LexiconTypes.status
   val db = 
    mk_parser (Grammar.Entry.create grammar "statement") lstatus  
   method parser_db = db

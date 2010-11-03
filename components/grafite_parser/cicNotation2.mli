@@ -25,5 +25,5 @@
 
 (** @param fname file from which load notation *)
 val load_notation:
- #LexiconEngine.status as 'status -> include_paths:string list -> string ->
+ #LexiconTypes.status as 'status -> include_paths:string list -> string ->
   'status

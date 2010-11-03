@@ -38,6 +38,7 @@ class status :
    inherit NTacStatus.tac_status
    inherit NCicLibrary.dumpable_status
    inherit NCicLibrary.status
+   inherit GrafiteParser.status
    method baseuri: string
    method set_baseuri: string -> 'self
    method ng_mode: [`ProofMode | `CommandMode]

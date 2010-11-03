@@ -75,12 +75,6 @@ let save_moo grafite_status =
   match script#bos, script#eos with
   | true, _ -> ()
   | _, true ->
-     let lexicon_fname =
-       LibraryMisc.lexicon_file_of_baseuri 
-         ~must_exist:false ~baseuri ~writable:true
-     in
-     LexiconMarshal.save_lexicon lexicon_fname
-      grafite_status#lstatus.LexiconEngine.lexicon_content_rev;
      GrafiteTypes.Serializer.serialize ~baseuri:(NUri.uri_of_string baseuri)
       grafite_status#dump
   | _ -> clean_current_baseuri grafite_status 
@@ -326,13 +320,13 @@ let rec interactive_error_interp ~all_passes
                   let alias =
                    match k with
                    | DisambiguateTypes.Id id ->
-                       LexiconAst.Ident_alias (id, desc)
+                       GrafiteAst.Ident_alias (id, desc)
                    | DisambiguateTypes.Symbol (symb, i)-> 
-                       LexiconAst.Symbol_alias (symb, i, desc)
+                       GrafiteAst.Symbol_alias (symb, i, desc)
                    | DisambiguateTypes.Num i ->
-                       LexiconAst.Number_alias (i, desc)
+                       GrafiteAst.Number_alias (i, desc)
                   in
-                   LexiconAstPp.pp_alias alias)
+                   GrafiteAstPp.pp_alias alias)
                 diff) ^ "\n"
            in
             source_buffer#insert

@@ -114,10 +114,12 @@ let compact_disambiguation_errors all_passes errorll =
 
 let rec to_string = 
   function
-  | HExtlib.Localized (floc,exn) ->
+    HExtlib.Localized (floc,exn) ->
       let _,msg = to_string exn in
       let (x, y) = HExtlib.loc_of_floc floc in
        Some floc, sprintf "Error at %d-%d: %s" x y msg
+  | NCicLibrary.IncludedFileNotCompiled (s1,s2) ->
+      None, "Including: "^s1^" "^s2^ "\nNothing to do... did you run matitadep?"
   | GrafiteTypes.Command_error msg -> None, "Error: " ^ msg
   | CicNotationParser.Parse_error err ->
       None, sprintf "Parse error: %s" err

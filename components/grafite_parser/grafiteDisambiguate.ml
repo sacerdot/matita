@@ -27,13 +27,13 @@
 
 class type g_status =
   object
-   inherit LexiconEngine.g_status
+   inherit LexiconTypes.g_status
    inherit NCicCoercion.g_status
   end
 
 class status =
  object (self)
-  inherit LexiconEngine.status
+  inherit LexiconTypes.status
   inherit NCicCoercion.status
   method set_grafite_disambiguate_status
    : 'status. #g_status as 'status -> 'self
@@ -55,7 +55,7 @@ let __Implicit = "__Implicit__"
 let __Closed_Implicit = "__Closed_Implicit__"
 
 let ncic_mk_choice status = function
-  | LexiconAst.Symbol_alias (name, _, dsc) ->
+  | GrafiteAst.Symbol_alias (name, _, dsc) ->
      if name = __Implicit then
        dsc, `Sym_interp (fun _ -> NCic.Implicit `Term)
      else if name = __Closed_Implicit then 
@@ -69,11 +69,11 @@ let ncic_mk_choice status = function
            (NCic.Appl l)::tl -> NCic.Appl (l@tl) | l -> NCic.Appl l)
         ~term_of_nref:(fun nref -> NCic.Const nref)
        name dsc
-  | LexiconAst.Number_alias (_, dsc) -> 
+  | GrafiteAst.Number_alias (_, dsc) -> 
      let desc,f = DisambiguateChoices.nlookup_num_by_dsc dsc in
       desc, `Num_interp
        (fun num -> match f with `Num_interp f -> f num | _ -> assert false)
-  | LexiconAst.Ident_alias (name, uri) -> 
+  | GrafiteAst.Ident_alias (name, uri) -> 
      uri, `Sym_interp 
       (fun l->assert(l = []);
         let nref = NReference.reference_of_string uri in
@@ -84,9 +84,9 @@ let ncic_mk_choice status = function
 let mk_implicit b =
   match b with
   | false -> 
-      LexiconAst.Symbol_alias (__Implicit,-1,"Fake Implicit")
+      GrafiteAst.Symbol_alias (__Implicit,-1,"Fake Implicit")
   | true -> 
-      LexiconAst.Symbol_alias (__Closed_Implicit,-1,"Fake Closed Implicit")
+      GrafiteAst.Symbol_alias (__Closed_Implicit,-1,"Fake Closed Implicit")
 ;;
 
 let nlookup_in_library 
@@ -97,7 +97,7 @@ let nlookup_in_library
      (try
        let references = NCicLibrary.resolve id in
         List.map
-         (fun u -> LexiconAst.Ident_alias (id,NReference.string_of_reference u)
+         (fun u -> GrafiteAst.Ident_alias (id,NReference.string_of_reference u)
          ) references
       with
        NCicEnvironment.ObjectNotFound _ -> [])
@@ -109,13 +109,13 @@ let fix_instance item l =
     DisambiguateTypes.Symbol (_,n) ->
      List.map
       (function
-          LexiconAst.Symbol_alias (s,_,d) -> LexiconAst.Symbol_alias (s,n,d)
+          GrafiteAst.Symbol_alias (s,_,d) -> GrafiteAst.Symbol_alias (s,n,d)
         | _ -> assert false
       ) l
   | DisambiguateTypes.Num n ->
      List.map
       (function
-          LexiconAst.Number_alias (_,d) -> LexiconAst.Number_alias (n,d)
+          GrafiteAst.Number_alias (_,d) -> GrafiteAst.Number_alias (n,d)
         | _ -> assert false
       ) l
   | DisambiguateTypes.Id _ -> l
@@ -128,16 +128,18 @@ let disambiguate_nterm expty estatus context metasenv subst thing
     singleton "first"
       (NCicDisambiguate.disambiguate_term
         ~rdb:estatus
-        ~aliases:estatus#lstatus.LexiconEngine.aliases
+        ~aliases:estatus#lstatus.LexiconTypes.aliases
         ~expty 
-        ~universe:(Some estatus#lstatus.LexiconEngine.multi_aliases)
+        ~universe:(Some estatus#lstatus.LexiconTypes.multi_aliases)
         ~lookup_in_library:nlookup_in_library
         ~mk_choice:(ncic_mk_choice estatus)
         ~mk_implicit ~fix_instance
-        ~description_of_alias:LexiconAst.description_of_alias
+        ~description_of_alias:GrafiteAst.description_of_alias
         ~context ~metasenv ~subst thing)
   in
-  let estatus = LexiconEngine.set_proof_aliases estatus diff in
+  let estatus =
+    LexiconEngine.set_proof_aliases estatus GrafiteAst.WithPreferences diff
+  in
    metasenv, subst, estatus, cic
 ;;
 
@@ -209,14 +211,15 @@ let disambiguate_nobj estatus ?baseuri (text,prefix_len,obj) =
    singleton "third"
     (NCicDisambiguate.disambiguate_obj
       ~lookup_in_library:nlookup_in_library
-      ~description_of_alias:LexiconAst.description_of_alias
+      ~description_of_alias:GrafiteAst.description_of_alias
       ~mk_choice:(ncic_mk_choice estatus)
       ~mk_implicit ~fix_instance
       ~uri
       ~rdb:estatus
-      ~aliases:estatus#lstatus.LexiconEngine.aliases
-      ~universe:(Some estatus#lstatus.LexiconEngine.multi_aliases) 
+      ~aliases:estatus#lstatus.LexiconTypes.aliases
+      ~universe:(Some estatus#lstatus.LexiconTypes.multi_aliases) 
       (text,prefix_len,obj)) in
-  let estatus = LexiconEngine.set_proof_aliases estatus diff in
+  let estatus = LexiconEngine.set_proof_aliases estatus
+  GrafiteAst.WithPreferences diff in
    estatus, cic
 ;;

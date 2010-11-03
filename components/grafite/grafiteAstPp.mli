@@ -28,4 +28,6 @@ val pp_comment: map_unicode_to_tex:bool -> GrafiteAst.comment -> string
 
 val pp_executable: map_unicode_to_tex:bool -> GrafiteAst.code -> string
 
+val pp_alias: GrafiteAst.alias_spec -> string
+
 val pp_statement: GrafiteAst.statement -> map_unicode_to_tex:bool -> string

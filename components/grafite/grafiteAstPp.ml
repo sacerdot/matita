@@ -26,6 +26,7 @@
 (* $Id$ *)
 
 open GrafiteAst
+open Printf
 
 let tactical_terminator = ""
 let tactic_terminator = tactical_terminator
@@ -112,6 +113,53 @@ let pp_nmacro = function
   | Screenshot (_, name) -> Printf.sprintf "screenshot \"%s\"" name
 ;;
 
+let pp_l1_pattern = NotationPp.pp_term
+let pp_l2_pattern = NotationPp.pp_term
+
+let pp_alias = function
+  | Ident_alias (id, uri) -> sprintf "alias id \"%s\" = \"%s\"." id uri
+  | Symbol_alias (symb, instance, desc) ->
+      sprintf "alias symbol \"%s\" %s= \"%s\"."
+        symb
+        (if instance=0 then "" else "(instance "^ string_of_int instance ^ ") ")
+        desc
+  | Number_alias (instance,desc) ->
+      sprintf "alias num (instance %d) = \"%s\"." instance desc
+  
+let pp_associativity = function
+  | Gramext.LeftA -> "left associative"
+  | Gramext.RightA -> "right associative"
+  | Gramext.NonA -> "non associative"
+
+let pp_precedence i = sprintf "with precedence %d" i
+
+let pp_argument_pattern = function
+  | NotationPt.IdentArg (eta_depth, name) ->
+      let eta_buf = Buffer.create 5 in
+      for i = 1 to eta_depth do
+        Buffer.add_string eta_buf "\\eta."
+      done;
+      sprintf "%s%s" (Buffer.contents eta_buf) name
+
+let pp_interpretation dsc symbol arg_patterns cic_appl_pattern = 
+  sprintf "interpretation \"%s\" '%s %s = %s."
+    dsc symbol
+    (String.concat " " (List.map pp_argument_pattern arg_patterns))
+    (NotationPp.pp_cic_appl_pattern cic_appl_pattern)
+ 
+let pp_dir_opt = function
+  | None -> ""
+  | Some `LeftToRight -> "> "
+  | Some `RightToLeft -> "< "
+
+let pp_notation dir_opt l1_pattern assoc prec l2_pattern = 
+  sprintf "notation %s\"%s\" %s %s for %s."
+    (pp_dir_opt dir_opt)
+    (pp_l1_pattern l1_pattern)
+    (pp_associativity assoc)
+    (pp_precedence prec)
+    (pp_l2_pattern l2_pattern)
+
 let pp_ncommand = function
   | UnificationHint (_,t, n) -> 
       "unification hint " ^ string_of_int n ^ " " ^ NotationPp.pp_term t
@@ -127,10 +175,19 @@ let pp_ncommand = function
           (List.map 
             (fun (a,b) -> NUri.string_of_uri a ^ " ↦ " ^ NUri.string_of_uri b) 
             map)
+  | Include (_,mode,path) -> (* not precise, since path is absolute *)
+      if mode = WithPreferences then
+        "include \"" ^ path ^ "\"."
+      else
+        "include' \"" ^ path ^ "\"."
+  | Alias (_,s) -> pp_alias s
+  | Interpretation (_, dsc, (symbol, arg_patterns), cic_appl_pattern) ->
+      pp_interpretation dsc symbol arg_patterns cic_appl_pattern
+  | Notation (_, dir_opt, l1_pattern, assoc, prec, l2_pattern) ->
+      pp_notation dir_opt l1_pattern assoc prec l2_pattern
 ;;
     
 let pp_command = function
-  | Include (_,path,_,_) -> "include \"" ^ path ^ "\""
   | Print (_,s) -> "print " ^ s
   | Set (_, name, value) -> Printf.sprintf "set \"%s\" \"%s\"" name value
 

@@ -1,4 +1,4 @@
-(* Copyright (C) 2005, HELM Team.
+(* Copyright (C) 2004-2005, HELM Team.
  * 
  * This file is part of HELM, an Hypertextual, Electronic
  * Library of Mathematics, developed at the Computer Science
@@ -23,21 +23,25 @@
  * http://helm.cs.unibo.it/
  *)
 
+type lexicon_status = {
+  aliases: GrafiteAst.alias_spec DisambiguateTypes.Environment.t;
+  multi_aliases: GrafiteAst.alias_spec list DisambiguateTypes.Environment.t
+}
+
 class type g_status =
- object ('self)
+ object
   inherit Interpretations.g_status
   inherit TermContentPres.g_status
   inherit CicNotationParser.g_status
+  method lstatus: lexicon_status
  end
 
 class status :
  object ('self)
+  inherit g_status
   inherit Interpretations.status
   inherit TermContentPres.status
   inherit CicNotationParser.status
-  method set_notation_status: #g_status -> 'self
+  method set_lstatus: lexicon_status -> 'self
+  method set_lexicon_engine_status: #g_status -> 'self
  end
-
-val process_notation:
- #status as 'status -> LexiconAst.command -> 'status 
-

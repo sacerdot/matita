@@ -25,7 +25,6 @@
 
 (* $Id$ *)
 
-exception Drop
 (* mo file name, ma file name *)
 exception NMacro of GrafiteAst.loc * GrafiteAst.nmacro
 
@@ -292,8 +291,18 @@ let subst_metasenv_and_fix_names status =
 ;;
 
 
-let rec eval_ncommand opts status (text,prefix_len,cmd) =
+let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
   match cmd with
+  | GrafiteAst.Include (loc, mode, fname) ->
+	   let _root, baseuri, _fullpath, _rrelpath = 
+       Librarian.baseuri_of_script ~include_paths fname in
+     let status,obj =
+       GrafiteTypes.Serializer.require ~baseuri:(NUri.uri_of_string baseuri)
+        status in
+     let status = status#set_dump (obj::status#dump) in
+     assert false (* mode must be passed to GrafiteTypes.Serializer.require
+     somehow *)
+       status,[]
   | GrafiteAst.UnificationHint (loc, t, n) -> eval_unification_hint status t n
   | GrafiteAst.NCoercion (loc, name, t, ty, source, target) ->
       NCicCoercDeclaration.eval_ncoercion status name t ty source target
@@ -372,7 +381,7 @@ let rec eval_ncommand opts status (text,prefix_len,cmd) =
              (fun (status,uris) boxml ->
                try
                 let nstatus,nuris =
-                 eval_ncommand opts status
+                 eval_ncommand ~include_paths opts status
                   ("",0,GrafiteAst.NObj (HExtlib.dummy_floc,boxml))
                 in
                 if nstatus#ng_mode <> `CommandMode then
@@ -404,7 +413,8 @@ let rec eval_ncommand opts status (text,prefix_len,cmd) =
                           is_ind it leftno outsort status status#baseuri in
                        let _,_,menv,_,_ = invobj in
                        fst (match menv with
-                             [] -> eval_ncommand opts status ("",0,GrafiteAst.NQed Stdpp.dummy_loc)
+                             [] -> eval_ncommand ~include_paths opts status
+                                    ("",0,GrafiteAst.NQed Stdpp.dummy_loc)
                            | _ -> status,[]))
                        (* XXX *)
                       with _ -> (*HLog.warn "error in generating inversion principle"; *)
@@ -478,7 +488,7 @@ let rec eval_ncommand opts status (text,prefix_len,cmd) =
        let status = status#set_stack ninitial_stack in
        let status = subst_metasenv_and_fix_names status in
        let status = status#set_ng_mode `ProofMode in
-       eval_ncommand opts status ("",0,GrafiteAst.NQed Stdpp.dummy_loc)
+       eval_ncommand ~include_paths opts status ("",0,GrafiteAst.NQed Stdpp.dummy_loc)
   | GrafiteAst.NObj (loc,obj) ->
      if status#ng_mode <> `CommandMode then
       raise (GrafiteTypes.Command_error "Not in command mode")
@@ -494,7 +504,7 @@ let rec eval_ncommand opts status (text,prefix_len,cmd) =
       let status = status#set_ng_mode `ProofMode in
       (match nmenv with
           [] ->
-           eval_ncommand opts status ("",0,GrafiteAst.NQed Stdpp.dummy_loc)
+           eval_ncommand ~include_paths opts status ("",0,GrafiteAst.NQed Stdpp.dummy_loc)
         | _ -> status,[])
   | GrafiteAst.NDiscriminator (_,_) -> assert false (*(loc, indty) ->
       if status#ng_mode <> `CommandMode then
@@ -511,7 +521,7 @@ let rec eval_ncommand opts status (text,prefix_len,cmd) =
         let status,obj =  NDestructTac.mk_discriminator it status in
         let _,_,menv,_,_ = obj in
           (match menv with
-               [] -> eval_ncommand opts status ("",0,GrafiteAst.NQed Stdpp.dummy_loc)
+               [] -> eval_ncommand ~include_paths opts status ("",0,GrafiteAst.NQed Stdpp.dummy_loc)
              | _ -> prerr_endline ("Discriminator: non empty metasenv");
                     status, []) *)
   | GrafiteAst.NInverter (loc, name, indty, selection, sort) ->
@@ -543,10 +553,86 @@ let rec eval_ncommand opts status (text,prefix_len,cmd) =
      let _,_,menv,_,_ = obj in
      (match menv with
         [] ->
-          eval_ncommand opts status ("",0,GrafiteAst.NQed Stdpp.dummy_loc)
+          eval_ncommand ~include_paths opts status ("",0,GrafiteAst.NQed Stdpp.dummy_loc)
       | _ -> assert false)
   | GrafiteAst.NUnivConstraint (loc,u1,u2) ->
       eval_add_constraint status [`Type,u1] [`Type,u2]
+  (* ex lexicon commands *)
+  | GrafiteAst.Interpretation (loc, dsc, (symbol, args), cic_appl_pattern) ->
+     let rec disambiguate =
+      function
+         NotationPt.ApplPattern l ->
+          NotationPt.ApplPattern (List.map disambiguate l)
+       | NotationPt.VarPattern id
+          when not
+           (List.exists
+            (function (NotationPt.IdentArg (_,id')) -> id'=id) args)
+          ->
+           let item = DisambiguateTypes.Id id in
+            begin try
+              match DisambiguateTypes.Environment.find item status#lstatus.LexiconTypes.aliases with
+                 GrafiteAst.Ident_alias (_, uri) ->
+                  NotationPt.NRefPattern (NReference.reference_of_string uri)
+               | _ -> assert false
+             with Not_found -> 
+              prerr_endline
+               ("LexiconEngine.eval_command: domain item not found: " ^ 
+               (DisambiguateTypes.string_of_domain_item item));
+              LexiconEngine.dump_aliases prerr_endline "" status;
+              raise 
+               (Failure
+                ((DisambiguateTypes.string_of_domain_item item) ^ " not found"))
+	          end
+       | p -> p
+     in
+     let cic_appl_pattern = disambiguate cic_appl_pattern in
+     let status =
+      Interpretations.add_interpretation status
+       dsc (symbol, args) cic_appl_pattern in
+     let mode = assert false in (* VEDI SOTTO *)
+     let diff =
+      [DisambiguateTypes.Symbol (symbol, 0),
+        GrafiteAst.Symbol_alias (symbol,0,dsc)] in
+     let status = LexiconEngine.set_proof_aliases status mode diff in
+     assert false (* MANCA SALVATAGGIO SU DISCO CHE DEVE TENERE IN CONTO
+      IL MODE WithPreference/WithOutPreferences*)
+  | GrafiteAst.Notation (loc, dir, l1, associativity, precedence, l2) ->
+      let l1 = 
+        CicNotationParser.check_l1_pattern
+         l1 (dir = Some `RightToLeft) precedence associativity
+      in
+      let status =
+        if dir <> Some `RightToLeft then
+          CicNotationParser.extend status l1 
+            (fun env loc ->
+              NotationPt.AttributedTerm
+               (`Loc loc,TermContentPres.instantiate_level2 env l2)) 
+        else status
+      in
+      let status =
+        if dir <> Some `LeftToRight then
+         let status = TermContentPres.add_pretty_printer status l2 l1 in
+          status
+        else
+          status
+      in
+       assert false (* MANCA SALVATAGGIO SU DISCO *)
+       status
+  | GrafiteAst.Alias (loc, spec) -> 
+     let diff =
+      (*CSC: Warning: this code should be factorized with the corresponding
+             code in DisambiguatePp *)
+      match spec with
+      | GrafiteAst.Ident_alias (id,uri) -> 
+         [DisambiguateTypes.Id id,spec]
+      | GrafiteAst.Symbol_alias (symb, instance, desc) ->
+         [DisambiguateTypes.Symbol (symb,instance),spec]
+      | GrafiteAst.Number_alias (instance,desc) ->
+         [DisambiguateTypes.Num instance,spec]
+     in
+      let mode = assert false in (* VEDI SOPRA *)
+      LexiconEngine.set_proof_aliases status mode diff;
+      assert false (* MANCA SALVATAGGIO SU DISCO *)
 ;;
 
 let eval_comment opts status (text,prefix_len,c) = status, []
@@ -554,29 +640,12 @@ let eval_comment opts status (text,prefix_len,c) = status, []
 let rec eval_command opts status (text,prefix_len,cmd) =
  let status,uris =
   match cmd with
-  | GrafiteAst.Include (loc, fname, mode, _) ->
-                  let include_paths = assert false in
-                  let never_include = assert false in
-                  let mode = assert false in
-                  let baseuri = assert false in
-      let status =
-	let _root, buri, fullpath, _rrelpath = 
-          Librarian.baseuri_of_script ~include_paths fname in
-        if never_include then raise (GrafiteParser.NoInclusionPerformed fullpath) 
-        else
-           LexiconEngine.eval_command status (LexiconAst.Include (loc,buri,mode,fullpath)) 
-      in
-     let status,obj =
-       GrafiteTypes.Serializer.require ~baseuri:(NUri.uri_of_string baseuri)
-        status in
-     let status = status#set_dump (obj::status#dump) in
-       status,[]
   | GrafiteAst.Print (_,_) -> status,[]
   | GrafiteAst.Set (loc, name, value) -> status, []
  in
   status,uris
 
-and eval_executable opts status (text,prefix_len,ex) =
+and eval_executable ~include_paths opts status (text,prefix_len,ex) =
   match ex with
   | GrafiteAst.NTactic (_(*loc*), tacl) ->
       if status#ng_mode <> `ProofMode then
@@ -593,15 +662,16 @@ and eval_executable opts status (text,prefix_len,ex) =
   | GrafiteAst.Command (_, cmd) ->
       eval_command opts status (text,prefix_len,cmd)
   | GrafiteAst.NCommand (_, cmd) ->
-      eval_ncommand opts status (text,prefix_len,cmd)
+      eval_ncommand ~include_paths opts status (text,prefix_len,cmd)
   | GrafiteAst.NMacro (loc, macro) ->
      raise (NMacro (loc,macro))
 
-and eval_ast ?(do_heavy_checks=false) status (text,prefix_len,st) =
+and eval_ast ~include_paths ?(do_heavy_checks=false) status (text,prefix_len,st)
+=
   let opts = { do_heavy_checks = do_heavy_checks ; } in
   match st with
   | GrafiteAst.Executable (_,ex) ->
-     eval_executable opts status (text,prefix_len,ex)
+     eval_executable ~include_paths opts status (text,prefix_len,ex)
   | GrafiteAst.Comment (_,c) -> 
       eval_comment opts status (text,prefix_len,c) 
 ;;

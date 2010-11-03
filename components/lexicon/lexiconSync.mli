@@ -24,13 +24,12 @@
  *)
 
 val add_aliases_for_objs:
- #LexiconEngine.status as 'status -> NUri.uri list -> 'status
+ #LexiconTypes.status as 'status -> NUri.uri list -> 'status
 
   (** perform a diff between the aliases contained in two statuses, assuming
     * that the second one can only have more aliases than the first one
     * @return the list of aliases that should be added to aliases of from in
     * order to be equal to aliases of the second argument *)
 val alias_diff:
- from:#LexiconEngine.status -> #LexiconEngine.status ->
-  (DisambiguateTypes.domain_item * LexiconAst.alias_spec) list
-
+ from:#LexiconTypes.status -> #LexiconTypes.status ->
+  (DisambiguateTypes.domain_item * GrafiteAst.alias_spec) list

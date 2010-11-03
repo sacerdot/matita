@@ -41,6 +41,7 @@ class status = fun (b : string) ->
    inherit ([Continuationals.Stack.t] NTacStatus.status fake_obj (Continuationals.Stack.empty))
    inherit NCicLibrary.dumpable_status
    inherit NCicLibrary.status
+   inherit GrafiteParser.status
    val baseuri = b
    val ng_mode = (`CommandMode : [`CommandMode | `ProofMode])
    method baseuri = baseuri
