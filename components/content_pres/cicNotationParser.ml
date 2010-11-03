@@ -48,6 +48,11 @@ type ('a,'b,'c,'d) grammars = {
 
 type checked_l1_pattern = CL1P of NotationPt.term * int
 
+type binding =
+  | NoBinding
+  | Binding of string * Env.value_type
+  | Env of (string * Env.value_type) list
+
 type db = {
   grammars: 
     (int -> NotationPt.term, 
@@ -55,7 +60,8 @@ type db = {
     (Ast.term Ast.capture_variable list *
       Ast.term Ast.capture_variable * Ast.term * int) list, 
     Ast.term list * Ast.term option) grammars;
-  items: (checked_l1_pattern * int * Gramext.g_assoc * NotationPt.term) list
+  keywords: string list;
+  items: (string * Ast.term * (NotationEnv.t -> Ast.location -> Ast.term)) list
 }
 
 let int_of_string s =
@@ -80,7 +86,7 @@ let gram_term status = function
   | Ast.Level precedence ->
       Gramext.Snterml 
         (Grammar.Entry.obj 
-          (status#notation_parser_db.grammars.term: 'a Grammar.Entry.e), 
+          (status#notation_parser_db.grammars.term : 'a Grammar.Entry.e), 
          level_of precedence)
 ;;
 
@@ -89,11 +95,6 @@ let gram_of_literal =
   | `Symbol s -> gram_symbol s
   | `Keyword s -> gram_keyword s
   | `Number s -> gram_number s
-
-type binding =
-  | NoBinding
-  | Binding of string * Env.value_type
-  | Env of (string * Env.value_type) list
 
 let make_action action bindings =
   let rec aux (vl : NotationEnv.t) =
@@ -315,43 +316,6 @@ let check_l1_pattern level1_pattern pponly level associativity =
      "associative notation"));
   CL1P (cp,level)
 ;;
-
-let extend status (CL1P (level1_pattern,precedence)) action =
-  assert false
-(*
-            CicNotationParser.new_parser ();
-            let create_cb_old (l1, precedence, associativity, l2) =
-              ignore(
-                CicNotationParser.extend l1 
-                  (fun env loc ->
-                    NotationPt.AttributedTerm
-                     (`Loc loc,TermContentPres.instantiate_level2 env l2))) 
-            in
-            RefCounter.iter create_cb_old !parser_ref_counter;
-*)
-(*
-  let p_bindings, p_atoms =
-    List.split (extract_term_production status level1_pattern)
-  in
-  let level = level_of precedence in
-  let () =
-    Grammar.extend
-      [ Grammar.Entry.obj 
-        (status#notation_parser_db.grammars.term: 'a Grammar.Entry.e),
-        Some (Gramext.Level level),
-        [ None,
-          Some (*Gramext.NonA*) Gramext.NonA,
-          [ p_atoms, 
-            (make_action
-              (fun (env: NotationEnv.t) (loc: Ast.location) ->
-                (action env loc))
-              p_bindings) ]]]
-  in
-  let keywords = NotationUtil.keywords_of_term level1_pattern in
-  let rule_id = p_atoms in
-  List.iter CicNotationLexer.add_level2_ast_keyword keywords;
-  rule_id
-*)
 
 (** {2 Grammar} *)
 
@@ -797,8 +761,8 @@ END
   grammars
 ;;
 
-let initial_grammars =
-  let lexers = CicNotationLexer.mk_lexers [] in
+let initial_grammars keywords =
+  let lexers = CicNotationLexer.mk_lexers keywords in
   let level1_pattern_grammar = 
     Grammar.gcreate lexers.CicNotationLexer.level1_pattern_lexer in
   let level2_ast_grammar = 
@@ -828,15 +792,46 @@ class type g_status =
   method notation_parser_db: db
  end
 
-class status =
- object(self)
-  val db = { grammars = initial_grammars ; items = [] }
+class status ~keywords:kwds =
+ object
+  val db = { grammars = initial_grammars kwds; keywords = kwds; items = [] }
   method notation_parser_db = db
   method set_notation_parser_db v = {< db = v >}
   method set_notation_parser_status
    : 'status. #g_status as 'status -> 'self
    = fun o -> {< db = o#notation_parser_db >}
  end
+
+let extend (status : #status) (CL1P (level1_pattern,precedence)) action =
+        (* move inside constructor XXX *)
+  let add1item status (level, level1_pattern, action) =
+    let p_bindings, p_atoms =
+      List.split (extract_term_production status level1_pattern) in
+    Grammar.extend
+      [ Grammar.Entry.obj 
+        (status#notation_parser_db.grammars.term : 'a Grammar.Entry.e),
+        Some (Gramext.Level level),
+        [ None,
+          Some (*Gramext.NonA*) Gramext.NonA,
+          [ p_atoms, 
+            (make_action
+              (fun (env: NotationEnv.t) (loc: Ast.location) ->
+                (action env loc))
+            p_bindings) ]]];
+    status
+  in
+  let current_item = 
+    let level = level_of precedence in
+    level, level1_pattern, action in
+  let keywords = NotationUtil.keywords_of_term level1_pattern @
+    status#notation_parser_db.keywords in
+  let items = current_item :: status#notation_parser_db.items in 
+  let status = status#set_notation_parser_status (new status ~keywords) in
+  let status = status#set_notation_parser_db 
+    {status#notation_parser_db with items = items} in
+  List.fold_left add1item status items
+;;
+
 
 let parse_level1_pattern status =
   parse_level1_pattern status#notation_parser_db.grammars 

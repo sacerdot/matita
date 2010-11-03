@@ -45,6 +45,11 @@ class status :
   method set_parser_status : 'status. #g_status as 'status -> 'self
  end
 
+val extend : #status as 'status ->
+           CicNotationParser.checked_l1_pattern ->
+           (NotationEnv.t -> NotationPt.location -> NotationPt.term) -> 'status
+
+
  (* never_include: do not call LexiconEngine to do includes, 
   * always raise NoInclusionPerformed *) 
 (** @raise End_of_file *)

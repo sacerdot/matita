@@ -33,7 +33,7 @@ class type g_status =
   method notation_parser_db: db
  end
 
-class status:
+class status: keywords:string list ->
  object('self)
   inherit g_status
   method set_notation_parser_db: db -> 'self

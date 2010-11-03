@@ -578,6 +578,7 @@ EXTEND
       m = LIST0 [ u1 = URI; SYMBOL <:unicode<mapsto>>; u2 = URI -> u1,u2 ] ->
         G.NCopy (loc,s,NUri.uri_of_string u,
           List.map (fun a,b -> NUri.uri_of_string a, NUri.uri_of_string b) m)
+    | lc = lexicon_command -> lc
   ]];
 
   lexicon_command: [ [
@@ -617,12 +618,6 @@ EXTEND
          LSome (G.Comment (loc, com))
     | (iloc,fname,mode) = include_command ; SYMBOL "."  ->
 	       LSome (G.Executable (loc,G.NCommand (loc,G.Include (iloc,mode,fname))))
-    | scom = lexicon_command ; SYMBOL "." ->
-                    assert false
-(*
-	  let status = LE.eval_command status scom in
-          status, LNone loc
-*)
     | EOI -> raise End_of_file
     ]
   ];
@@ -640,18 +635,26 @@ class type g_status =
  end
 
 class status =
-  let lstatus = assert false in
-  let grammar = CicNotationParser.level2_ast_grammar lstatus in
- object
-  inherit LexiconTypes.status
-  val db = 
-   mk_parser (Grammar.Entry.create grammar "statement") lstatus  
-  method parser_db = db
-  method set_parser_db v = {< db = v >}
+ object(self)
+  inherit LexiconTypes.status as super
+  val mutable db = None
+  method parser_db = match db with None -> assert false | Some x -> x
+  method set_parser_db v = {< db = Some v >}
   method set_parser_status
    : 'status. #g_status as 'status -> 'self
-   = fun o -> {< db = o#parser_db >}#set_lexicon_engine_status o
+   = fun o -> {< db = Some o#parser_db >}#set_lexicon_engine_status o
+  initializer
+   let grammar = CicNotationParser.level2_ast_grammar self in
+   db <- Some (mk_parser (Grammar.Entry.create grammar "statement") self)
  end
+
+let extend status l1 action = 
+  let status = CicNotationParser.extend status l1 action in
+  let grammar = CicNotationParser.level2_ast_grammar status in
+  status#set_parser_db
+    (mk_parser (Grammar.Entry.create grammar "statement") status)
+;;
+
 
 let parse_statement status = 
   parse_statement status#parser_db

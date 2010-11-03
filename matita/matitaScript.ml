@@ -284,10 +284,7 @@ let initial_statuses current baseuri =
       (* CSC: there is a known bug in invalidation; temporary fix here *)
       NCicEnvironment.invalidate ()
    | None -> ());
- let lexicon_status =
-   CicNotation2.load_notation ~include_paths:[] empty_lstatus
-     BuildTimeConf.core_notation_script 
- in
+ let lexicon_status = empty_lstatus in
  let grafite_status = (new GrafiteTypes.status baseuri)#set_lstatus lexicon_status#lstatus in
   grafite_status
 in

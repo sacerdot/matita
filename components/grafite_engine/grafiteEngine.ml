@@ -589,12 +589,13 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
      let status =
       Interpretations.add_interpretation status
        dsc (symbol, args) cic_appl_pattern in
-     let mode = assert false in (* VEDI SOTTO *)
+     let mode = GrafiteAst.WithPreferences (*assert false*) in (* VEDI SOTTO *)
      let diff =
       [DisambiguateTypes.Symbol (symbol, 0),
         GrafiteAst.Symbol_alias (symbol,0,dsc)] in
      let status = LexiconEngine.set_proof_aliases status mode diff in
-     assert false (* MANCA SALVATAGGIO SU DISCO CHE DEVE TENERE IN CONTO
+     status, []
+     (*assert false*) (* MANCA SALVATAGGIO SU DISCO CHE DEVE TENERE IN CONTO
       IL MODE WithPreference/WithOutPreferences*)
   | GrafiteAst.Notation (loc, dir, l1, associativity, precedence, l2) ->
       let l1 = 
@@ -603,7 +604,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
       in
       let status =
         if dir <> Some `RightToLeft then
-          CicNotationParser.extend status l1 
+          GrafiteParser.extend status l1 
             (fun env loc ->
               NotationPt.AttributedTerm
                (`Loc loc,TermContentPres.instantiate_level2 env l2)) 
@@ -616,8 +617,8 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
         else
           status
       in
-       assert false (* MANCA SALVATAGGIO SU DISCO *)
-       status
+(*        assert false (* MANCA SALVATAGGIO SU DISCO *) *)
+      status, [] (* capire [] XX *)
   | GrafiteAst.Alias (loc, spec) -> 
      let diff =
       (*CSC: Warning: this code should be factorized with the corresponding

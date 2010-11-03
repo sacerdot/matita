@@ -47,7 +47,7 @@ class status =
  object(self)
   inherit Interpretations.status
   inherit TermContentPres.status
-  inherit CicNotationParser.status
+  inherit CicNotationParser.status ~keywords:[]
   val lstatus = initial_status
   method lstatus = lstatus
   method set_lstatus v = {< lstatus = v >}

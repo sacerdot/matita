@@ -4,7 +4,6 @@ PREDICATES =
 INTERFACE_FILES = 			\
 	dependenciesParser.mli  	\
 	grafiteParser.mli		\
-	cicNotation2.mli		\
 	grafiteDisambiguate.mli 	\
 	print_grammar.mli 	\
 	$(NULL)

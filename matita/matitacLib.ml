@@ -122,10 +122,7 @@ let compile atstart options fname =
     Librarian.baseuri_of_script ~include_paths fname in
   if Http_getter_storage.is_read_only baseuri then assert false;
   activate_extraction baseuri fname ;
-  let lexicon_status = 
-    CicNotation2.load_notation ~include_paths:[] (new LexiconTypes.status)
-      BuildTimeConf.core_notation_script 
-  in
+  let lexicon_status = new LexiconTypes.status in
   atstart (); (* FG: do not invoke before loading the core notation script *)  
   let grafite_status =
    (new GrafiteTypes.status baseuri)#set_lstatus lexicon_status#lstatus in
