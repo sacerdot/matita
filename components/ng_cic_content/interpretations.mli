@@ -26,8 +26,6 @@
 
   (** {2 State handling} *)
 
-type id = string
-
 val hide_coercions: bool ref
 
 type db
@@ -45,8 +43,6 @@ class status :
     method set_interp_db: db -> 'self
     method set_interp_status: #g_status -> 'self
   end
-
-type cic_id = string
 
 val add_interpretation:
   #status as 'status ->
@@ -83,9 +79,9 @@ val nmap_sequent:
  #status -> metasenv:NCic.metasenv -> subst:NCic.substitution ->
   int * NCic.conjecture ->
    NotationPt.term Content.conjecture *
-    (id, NReference.reference) Hashtbl.t    (* id -> reference *)
+    (Content.id, NReference.reference) Hashtbl.t    (* id -> reference *)
 
 val nmap_obj:
  #status -> NCic.obj ->
   NotationPt.term Content.cobj *
-   (id, NReference.reference) Hashtbl.t    (* id -> reference *)
+   (Content.id, NReference.reference) Hashtbl.t    (* id -> reference *)

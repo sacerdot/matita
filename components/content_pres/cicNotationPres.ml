@@ -200,13 +200,6 @@ let add_parens child_prec curr_prec t =
       BoxPp.render_to_string (function x::_->x|_->assert false)
         ~map_unicode_to_tex:false 80 t);*)t)
 
-let lookup_uri ids_to_uris id =
- try
-   let uri = Hashtbl.find ids_to_uris id in
-   Some (NReference.string_of_reference uri)
- with Not_found -> None
-;;
-
 let render ~lookup_uri ?(prec=(-1)) =
   let module A = Ast in
   let module P = Mpresentation in
