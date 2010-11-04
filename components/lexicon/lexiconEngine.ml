@@ -31,7 +31,7 @@ let dump_aliases out msg status =
       (fun _ x -> out (GrafiteAstPp.pp_alias x))
       status#lstatus.LexiconTypes.aliases
    
-let set_proof_aliases status mode new_aliases =
+let set_proof_aliases status ~implicit_aliases mode new_aliases =
  if mode = GrafiteAst.WithoutPreferences then
    status
  else
@@ -50,6 +50,10 @@ let set_proof_aliases status mode new_aliases =
      status#lstatus.LexiconTypes.multi_aliases new_aliases
    in
    let new_status =
-    {LexiconTypes.multi_aliases = multi_aliases ; aliases = aliases}
+    {LexiconTypes.multi_aliases = multi_aliases ;
+     aliases = aliases;
+     new_aliases =
+      (if implicit_aliases then new_aliases else []) @
+        status#lstatus.LexiconTypes.new_aliases}
    in
     status#set_lstatus new_status

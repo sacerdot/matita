@@ -220,7 +220,7 @@ let moo_root_dir = lazy (
 *)
 
 let rec close_db cache_of_processed_baseuri uris next =
-  prerr_endline "CLOSE_DB "; uris (* MATITA 1.0 *)
+  uris (* MATITA 1.0 *)
 ;;
 
 let clean_baseuris ?(verbose=true) buris =

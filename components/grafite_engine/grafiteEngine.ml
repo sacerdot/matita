@@ -57,7 +57,7 @@ let eval_unification_hint status t n =
  let status = basic_eval_unification_hint (t,n) status in
  let dump = inject_unification_hint (t,n)::status#dump in
  let status = status#set_dump dump in
-  status,[]
+  status
 ;;
 
 let basic_index_obj l status =
@@ -197,7 +197,7 @@ let eval_add_constraint status u1 u2 =
  let status = basic_eval_add_constraint (u1,u2) status in
  let dump = inject_constraint (u1,u2)::status#dump in
  let status = status#set_dump dump in
-  status,[]
+  status
 ;;
 
 let eval_ng_tac tac =
@@ -300,12 +300,15 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
        GrafiteTypes.Serializer.require ~baseuri:(NUri.uri_of_string baseuri)
         status in
      let status = status#set_dump (obj::status#dump) in
-     assert false (* mode must be passed to GrafiteTypes.Serializer.require
+     assert false; (* mode must be passed to GrafiteTypes.Serializer.require
      somehow *)
-       status,[]
+       status
   | GrafiteAst.UnificationHint (loc, t, n) -> eval_unification_hint status t n
   | GrafiteAst.NCoercion (loc, name, t, ty, source, target) ->
+     let status, composites =
       NCicCoercDeclaration.eval_ncoercion status name t ty source target
+     in
+      LexiconSync.add_aliases_for_objs status composites
   | GrafiteAst.NQed loc ->
      if status#ng_mode <> `ProofMode then
       raise (GrafiteTypes.Command_error "Not in proof mode")
@@ -376,11 +379,11 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
 *)
            let status = status#set_ng_mode `CommandMode in
            let status = LexiconSync.add_aliases_for_objs status [uri] in
-           let status,uris =
+           let status =
             List.fold_left
-             (fun (status,uris) boxml ->
+             (fun status boxml ->
                try
-                let nstatus,nuris =
+                let nstatus =
                  eval_ncommand ~include_paths opts status
                   ("",0,GrafiteAst.NObj (HExtlib.dummy_floc,boxml))
                 in
@@ -388,16 +391,16 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
                   begin
                     (*HLog.warn "error in generating projection/eliminator";*)
                     assert(status#ng_mode = `CommandMode);
-                    status, uris
+                    status
                   end
                 else
-                  nstatus, uris@nuris
+                  nstatus
                with
                | MultiPassDisambiguator.DisambiguationError _
                | NCicTypeChecker.TypeCheckerFailure _ ->
                   (*HLog.warn "error in generating projection/eliminator";*)
-                  status,uris
-             ) (status,[] (* uris *)) boxml in             
+                  status
+             ) status boxml in             
            let _,_,_,_,nobj = obj in 
            let status = match nobj with
                NCic.Inductive (is_ind,leftno,[it],_) ->
@@ -412,10 +415,10 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
                             (snd (NCicElim.ast_of_sort outsort)))
                           is_ind it leftno outsort status status#baseuri in
                        let _,_,menv,_,_ = invobj in
-                       fst (match menv with
+                        (match menv with
                              [] -> eval_ncommand ~include_paths opts status
                                     ("",0,GrafiteAst.NQed Stdpp.dummy_loc)
-                           | _ -> status,[]))
+                           | _ -> status))
                        (* XXX *)
                       with _ -> (*HLog.warn "error in generating inversion principle"; *)
                                 let status = status#set_ng_mode `CommandMode in status)
@@ -433,9 +436,9 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
                  (fun (name,is_coercion,arity) ->
                    if is_coercion then Some(name,leftno,arity) else None) fields
             | _ -> [] in
-           let status,uris =
+           let status =
             List.fold_left
-             (fun (status,uris) (name,cpos,arity) ->
+             (fun status (name,cpos,arity) ->
                try
                  let metasenv,subst,status,t =
                   GrafiteDisambiguate.disambiguate_nterm None status [] [] []
@@ -446,14 +449,13 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
                      basic_eval_and_record_ncoercion_from_t_cpos_arity 
                       status (name,t,cpos,arity)
                  in
-                 let uris = nuris@uris in
-                 status, uris
+                  LexiconSync.add_aliases_for_objs status nuris
                with MultiPassDisambiguator.DisambiguationError _-> 
                  HLog.warn ("error in generating coercion: "^name);
-                 status, uris) 
-             (status,uris) coercions
+                 status) 
+             status coercions
            in
-            status,uris
+            status
           with
            exn ->
             NCicLibrary.time_travel old_status;
@@ -505,7 +507,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
       (match nmenv with
           [] ->
            eval_ncommand ~include_paths opts status ("",0,GrafiteAst.NQed Stdpp.dummy_loc)
-        | _ -> status,[])
+        | _ -> status)
   | GrafiteAst.NDiscriminator (_,_) -> assert false (*(loc, indty) ->
       if status#ng_mode <> `CommandMode then
         raise (GrafiteTypes.Command_error "Not in command mode")
@@ -593,8 +595,10 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
      let diff =
       [DisambiguateTypes.Symbol (symbol, 0),
         GrafiteAst.Symbol_alias (symbol,0,dsc)] in
-     let status = LexiconEngine.set_proof_aliases status mode diff in
-     status, []
+     let status =
+      LexiconEngine.set_proof_aliases status ~implicit_aliases:false mode diff
+     in
+     status
      (*assert false*) (* MANCA SALVATAGGIO SU DISCO CHE DEVE TENERE IN CONTO
       IL MODE WithPreference/WithOutPreferences*)
   | GrafiteAst.Notation (loc, dir, l1, associativity, precedence, l2) ->
@@ -618,7 +622,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
           status
       in
 (*        assert false (* MANCA SALVATAGGIO SU DISCO *) *)
-      status, [] (* capire [] XX *)
+      status (* capire [] XX *)
   | GrafiteAst.Alias (loc, spec) -> 
      let diff =
       (*CSC: Warning: this code should be factorized with the corresponding
@@ -632,21 +636,13 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
          [DisambiguateTypes.Num instance,spec]
      in
       let mode = assert false in (* VEDI SOPRA *)
-      LexiconEngine.set_proof_aliases status mode diff;
+      LexiconEngine.set_proof_aliases status ~implicit_aliases:false mode diff;
       assert false (* MANCA SALVATAGGIO SU DISCO *)
 ;;
 
-let eval_comment opts status (text,prefix_len,c) = status, []
+let eval_comment opts status (text,prefix_len,c) = status
 
-let rec eval_command opts status (text,prefix_len,cmd) =
- let status,uris =
-  match cmd with
-  | GrafiteAst.Print (_,_) -> status,[]
-  | GrafiteAst.Set (loc, name, value) -> status, []
- in
-  status,uris
-
-and eval_executable ~include_paths opts status (text,prefix_len,ex) =
+let rec eval_executable ~include_paths opts status (text,prefix_len,ex) =
   match ex with
   | GrafiteAst.NTactic (_(*loc*), tacl) ->
       if status#ng_mode <> `ProofMode then
@@ -659,9 +655,7 @@ and eval_executable ~include_paths opts status (text,prefix_len,ex) =
             subst_metasenv_and_fix_names status)
           status tacl
        in
-        status,[]
-  | GrafiteAst.Command (_, cmd) ->
-      eval_command opts status (text,prefix_len,cmd)
+        status
   | GrafiteAst.NCommand (_, cmd) ->
       eval_ncommand ~include_paths opts status (text,prefix_len,cmd)
   | GrafiteAst.NMacro (loc, macro) ->

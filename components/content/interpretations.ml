@@ -122,7 +122,7 @@ let add_interpretation (status : #status) dsc (symbol, args) appl_pattern =
   let status,id = fresh_id status in
   let ids =
    try
-    StringMap.find symbol status#interp_db.interpretations
+    id::StringMap.find symbol status#interp_db.interpretations
    with Not_found -> [id] in
   let status =
    status#set_interp_db { status#interp_db with

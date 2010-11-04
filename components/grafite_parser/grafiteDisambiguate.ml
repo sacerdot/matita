@@ -138,7 +138,8 @@ let disambiguate_nterm expty estatus context metasenv subst thing
         ~context ~metasenv ~subst thing)
   in
   let estatus =
-    LexiconEngine.set_proof_aliases estatus GrafiteAst.WithPreferences diff
+    LexiconEngine.set_proof_aliases estatus ~implicit_aliases:true
+     GrafiteAst.WithPreferences diff
   in
    metasenv, subst, estatus, cic
 ;;
@@ -219,7 +220,9 @@ let disambiguate_nobj estatus ?baseuri (text,prefix_len,obj) =
       ~aliases:estatus#lstatus.LexiconTypes.aliases
       ~universe:(Some estatus#lstatus.LexiconTypes.multi_aliases) 
       (text,prefix_len,obj)) in
-  let estatus = LexiconEngine.set_proof_aliases estatus
-  GrafiteAst.WithPreferences diff in
+  let estatus =
+   LexiconEngine.set_proof_aliases estatus ~implicit_aliases:true
+    GrafiteAst.WithPreferences diff
+  in
    estatus, cic
 ;;

@@ -86,10 +86,6 @@ let magic = 35
 (* composed magic: term + command magics. No need to change this value *)
 let magic = magic + 10000 * NotationPt.magic
 
-type command =
-  | Set of loc * string * string
-  | Print of loc * string
-
 type alias_spec =
   | Ident_alias of string * string        (* identifier, uri *)
   | Symbol_alias of string * int * string (* name, instance no, description *)
@@ -97,7 +93,7 @@ type alias_spec =
 
 type inclusion_mode = WithPreferences | WithoutPreferences (* aka aliases *)
 
-type ncommand =
+type command =
   | Include of loc * inclusion_mode * string (* _,buri,_,path *)
   | UnificationHint of loc * NotationPt.term * int (* term, precedence *)
   | NObj of loc * NotationPt.term NotationPt.obj
@@ -121,8 +117,7 @@ type ncommand =
       (* description (i.e. id), symbol, arg pattern, appl pattern *)
 
 type code =
-  | Command of loc * command
-  | NCommand of loc * ncommand
+  | NCommand of loc * command
   | NMacro of loc * nmacro 
   | NTactic of loc * ntactic list
              

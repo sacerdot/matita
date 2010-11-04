@@ -23,7 +23,6 @@
  * http://helm.cs.unibo.it/
  *)
 
-val pp_command: GrafiteAst.command -> string
 val pp_comment: map_unicode_to_tex:bool -> GrafiteAst.comment -> string
 
 val pp_executable: map_unicode_to_tex:bool -> GrafiteAst.code -> string

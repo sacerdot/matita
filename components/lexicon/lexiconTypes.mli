@@ -25,7 +25,8 @@
 
 type lexicon_status = {
   aliases: GrafiteAst.alias_spec DisambiguateTypes.Environment.t;
-  multi_aliases: GrafiteAst.alias_spec list DisambiguateTypes.Environment.t
+  multi_aliases: GrafiteAst.alias_spec list DisambiguateTypes.Environment.t;
+  new_aliases: (DisambiguateTypes.domain_item * GrafiteAst.alias_spec) list
 }
 
 class type g_status =

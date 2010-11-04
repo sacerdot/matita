@@ -52,19 +52,13 @@ let eval_macro_screenshot (status : GrafiteTypes.status) name =
 ;;
 
 let eval_ast ~include_paths ?do_heavy_checks status (text,prefix_len,ast) =
- let lexicon_status_ref = ref (status :> LexiconTypes.status) in
  let baseuri = status#baseuri in
- let new_status,new_objs =
+ let status =
+  status#set_lstatus { status#lstatus with LexiconTypes.new_aliases = [] } in
+ let status =
   GrafiteEngine.eval_ast ~include_paths ?do_heavy_checks status
-   (text,prefix_len,ast)
- in
- let new_status =
-  if !lexicon_status_ref#lstatus != status#lstatus then
-   new_status#set_lstatus (!lexicon_status_ref#lstatus)
-  else
-   new_status in
- let new_status = LexiconSync.add_aliases_for_objs new_status new_objs in
- let new_aliases = LexiconSync.alias_diff ~from:status new_status in
+   (text,prefix_len,ast) in
+ let new_aliases = status#lstatus.LexiconTypes.new_aliases in
  let _,intermediate_states = 
   List.fold_left
    (fun (status,acc) (k,value) -> 
@@ -80,14 +74,14 @@ let eval_ast ~include_paths ?do_heavy_checks status (text,prefix_len,ast) =
       if b then 
        status,acc
       else
-       let new_status =
-        LexiconEngine.set_proof_aliases status
+       let status =
+        LexiconEngine.set_proof_aliases status ~implicit_aliases:false
          GrafiteAst.WithPreferences [k,value]
        in
-        new_status, (new_status ,Some (k,value))::acc
+        status, (status ,Some (k,value))::acc
    ) (status,[]) new_aliases
  in
-  ((new_status),None)::intermediate_states
+  (status,None)::intermediate_states
 ;;
 
 exception TryingToAdd of string

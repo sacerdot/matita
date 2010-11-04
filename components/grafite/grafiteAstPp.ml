@@ -187,16 +187,11 @@ let pp_ncommand = function
       pp_notation dir_opt l1_pattern assoc prec l2_pattern
 ;;
     
-let pp_command = function
-  | Print (_,s) -> "print " ^ s
-  | Set (_, name, value) -> Printf.sprintf "set \"%s\" \"%s\"" name value
-
 let pp_executable ~map_unicode_to_tex =
   function
   | NMacro (_, macro) -> pp_nmacro macro ^ "."
   | NTactic (_,tacl) ->
       String.concat " " (List.map (pp_ntactic ~map_unicode_to_tex) tacl)
-  | Command (_, cmd) -> pp_command cmd ^ "."
   | NCommand (_, cmd) -> pp_ncommand cmd ^ "."
                       
 let pp_comment ~map_unicode_to_tex =

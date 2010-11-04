@@ -25,26 +25,6 @@
 
 (* $Id$ *)
 
-let alias_diff ~from status = 
-  let module Map = DisambiguateTypes.Environment in
-  Map.fold
-    (fun domain_item codomain_item acc ->
-      let description1 = GrafiteAst.description_of_alias codomain_item in
-      try
-       let description2 = 
-          GrafiteAst.description_of_alias 
-            (Map.find domain_item from#lstatus.LexiconTypes.aliases)
-       in
-        if description1 <> description2 then
-         (domain_item,codomain_item)::acc
-        else
-          acc
-      with
-       Not_found ->
-         (domain_item,codomain_item)::acc)
-    status#lstatus.LexiconTypes.aliases []
-;;
-
 let add_aliases_for_objs status =
  List.fold_left
   (fun status nref ->
@@ -57,5 +37,6 @@ let add_aliases_for_objs status =
           GrafiteAst.Ident_alias (name,NReference.string_of_reference u)
       ) references
     in
-     LexiconEngine.set_proof_aliases status GrafiteAst.WithPreferences new_env
+     LexiconEngine.set_proof_aliases status ~implicit_aliases:false
+      GrafiteAst.WithPreferences new_env
   ) status

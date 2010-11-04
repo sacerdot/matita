@@ -25,6 +25,7 @@
 
 val set_proof_aliases:
  #LexiconTypes.status as 'status ->
+  implicit_aliases:bool -> (* implicit ones are made explicit *)
   GrafiteAst.inclusion_mode ->
   (DisambiguateTypes.domain_item * GrafiteAst.alias_spec) list -> 'status
 

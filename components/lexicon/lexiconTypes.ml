@@ -27,12 +27,14 @@
 
 type lexicon_status = {
   aliases: GrafiteAst.alias_spec DisambiguateTypes.Environment.t;
-  multi_aliases: GrafiteAst.alias_spec list DisambiguateTypes.Environment.t
+  multi_aliases: GrafiteAst.alias_spec list DisambiguateTypes.Environment.t;
+  new_aliases: (DisambiguateTypes.domain_item * GrafiteAst.alias_spec) list
 }
 
 let initial_status = {
   aliases = DisambiguateTypes.Environment.empty;
-  multi_aliases = DisambiguateTypes.Environment.empty
+  multi_aliases = DisambiguateTypes.Environment.empty;
+  new_aliases = []
 }
 
 class type g_status =
