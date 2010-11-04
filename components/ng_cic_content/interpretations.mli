@@ -38,8 +38,8 @@ class type g_status =
 
 class status :
   object ('self)
+    inherit g_status
     inherit NCicCoercion.status
-    method interp_db: db
     method set_interp_db: db -> 'self
     method set_interp_status: #g_status -> 'self
   end

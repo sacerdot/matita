@@ -52,10 +52,10 @@ class type g_pstatus =
 class pstatus :
  NCic.obj ->
   object ('self)
+   inherit g_pstatus
    inherit GrafiteDisambiguate.status
    inherit auto_status
    inherit eq_status
-   method obj: NCic.obj
    method set_obj: NCic.obj -> 'self
    method set_pstatus: #g_pstatus -> 'self
   end
@@ -130,8 +130,8 @@ class type ['stack] g_status =
 class ['stack] status :
  NCic.obj -> 'stack ->
   object ('self)
+   inherit ['stack] g_status
    inherit pstatus
-   method stack: 'stack
    method set_stack: 'stack -> 'self
    method set_status: 'stack #g_status -> 'self
   end

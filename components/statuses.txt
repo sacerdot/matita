@@ -4,8 +4,7 @@ grafitetypes(baseuri,ng_mode)
  |--> grafiteparser(db=ast_statement grammarentry)
  |     |--> cicnotationparser(db=grammars+keywords+items)
  |
- |--> termcontentpres(db=level1_patterns21,compiled21,
- |                       pattern21_matrix,counter)
+ |--> termcontentpres(db=level1_patterns21,compiled21,pattern21_matrix,counter)
  |
  |--> tac(obj,stack)
        |--> auto(automation_cache)

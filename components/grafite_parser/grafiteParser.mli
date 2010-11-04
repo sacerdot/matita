@@ -39,8 +39,8 @@ class type g_status =
 
 class status :
  object('self)
+  inherit g_status
   inherit CicNotationParser.status
-  method parser_db : db
   method set_parser_db : db -> 'self
   method set_parser_status : 'status. #g_status as 'status -> 'self
  end

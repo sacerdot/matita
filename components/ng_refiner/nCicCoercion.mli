@@ -21,9 +21,8 @@ class type g_status =
 
 class status :
  object ('self)
-  inherit NCicUnifHint.status
   inherit g_status
-  method coerc_db: db
+  inherit NCicUnifHint.status
   method set_coerc_db: db -> 'self
   method set_coercion_status: #g_status -> 'self
  end
