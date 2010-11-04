@@ -1,16 +1,20 @@
-grafitetypes -> tac -> auto + eq + (grafitedisambiguate = lexicon+nciccoercion)
-           |--> dumpable                                    |             |
-           |--> nciclibrary                                 |       unif_hint
-           |--> grafiteparser -> lexicon -> ...             |
-                                                            |-> interpretation
-                                                            |-> termcontentpres
-                                                            |-> notation_parser
-
+grafitetypes
+ |--> dumpable
+ |--> nciclibrary
+ |--> grafiteparser -----
+ |--> tac               |
+       |--> auto        |
+       |--> eq          |
+       |-------------> lexicon
+                        |--> notation_parser
+                        |--> interpretation
+                        |       |--> nciccoercion --> unif_hint
+                        |--> termcontentpres
 
 applytransformation
     |
-    |-> ntermciccontent = nciccoercion+interpretation
-    |                       |
-    |                    unif_hint
+    |-> interpretation -> nciccoercion
+    |                         |
+    |                     unif_hint
     |
     |-> termcontentpres

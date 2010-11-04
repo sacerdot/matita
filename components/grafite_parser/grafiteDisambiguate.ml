@@ -28,16 +28,14 @@
 class type g_status =
   object
    inherit LexiconTypes.g_status
-   inherit NCicCoercion.g_status
   end
 
 class status =
  object (self)
   inherit LexiconTypes.status
-  inherit NCicCoercion.status
   method set_grafite_disambiguate_status
    : 'status. #g_status as 'status -> 'self
-      = fun o -> (self#set_lexicon_engine_status o)#set_coercion_status o
+      = fun o -> (self#set_lexicon_engine_status o)
  end
 
 exception BaseUriNotSetYet

@@ -25,28 +25,15 @@
 
 exception BaseUriNotSetYet
 
-class type g_status =
- object
-  inherit LexiconTypes.g_status
-  inherit NCicCoercion.g_status
- end
-
-class status :
- object ('self)
-  inherit LexiconTypes.status
-  inherit NCicCoercion.status
-  method set_grafite_disambiguate_status: #g_status -> 'self
- end
-
 val disambiguate_nterm :
  NCic.term option -> 
- (#status as 'status) ->
+ (#LexiconTypes.status as 'status) ->
  NCic.context -> NCic.metasenv -> NCic.substitution ->
  NotationPt.term Disambiguate.disambiguator_input ->
    NCic.metasenv * NCic.substitution * 'status * NCic.term
 
 val disambiguate_nobj :
- #status as 'status ->
+ #LexiconTypes.status as 'status ->
  ?baseuri:string ->
  (NotationPt.term NotationPt.obj) Disambiguate.disambiguator_input ->
   'status * NCic.obj

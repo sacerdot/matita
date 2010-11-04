@@ -43,7 +43,7 @@ class auto_status :
 
 class type g_pstatus =
  object
-  inherit GrafiteDisambiguate.g_status
+  inherit LexiconTypes.g_status
   inherit g_auto_status
   inherit g_eq_status
   method obj: NCic.obj
@@ -52,7 +52,7 @@ class type g_pstatus =
 class pstatus :
  NCic.obj ->
   object ('self)
-   inherit GrafiteDisambiguate.status
+   inherit LexiconTypes.status
    inherit auto_status
    inherit eq_status
    method obj: NCic.obj
