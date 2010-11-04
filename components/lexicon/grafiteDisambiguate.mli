@@ -23,11 +23,7 @@
  * http://helm.cs.unibo.it/
  *)
 
-type db = {
-  aliases: GrafiteAst.alias_spec DisambiguateTypes.Environment.t;
-  multi_aliases: GrafiteAst.alias_spec list DisambiguateTypes.Environment.t;
-  new_aliases: (DisambiguateTypes.domain_item * GrafiteAst.alias_spec) list
-}
+type db
 
 class type g_status =
  object
@@ -42,6 +38,10 @@ class status :
   method set_disambiguate_db: db -> 'self
   method set_disambiguate_status: #g_status -> 'self
  end
+
+val eval_with_new_aliases:
+ #status as 'status -> ('status -> 'a) ->
+  (DisambiguateTypes.domain_item * GrafiteAst.alias_spec) list * 'a
 
 val set_proof_aliases:
  #status as 'status ->
@@ -71,3 +71,8 @@ type pattern =
 
 val disambiguate_npattern:
   GrafiteAst.npattern Disambiguate.disambiguator_input -> pattern
+
+val disambiguate_cic_appl_pattern:
+ #status ->
+  NotationPt.argument_pattern list ->
+   NotationPt.cic_appl_pattern -> NotationPt.cic_appl_pattern

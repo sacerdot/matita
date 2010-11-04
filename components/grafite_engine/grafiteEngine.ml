@@ -609,37 +609,10 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
       eval_add_constraint status [`Type,u1] [`Type,u2]
   (* ex lexicon commands *)
   | GrafiteAst.Interpretation (loc, dsc, (symbol, args), cic_appl_pattern) ->
-     let rec disambiguate =
-      function
-         NotationPt.ApplPattern l ->
-          NotationPt.ApplPattern (List.map disambiguate l)
-       | NotationPt.VarPattern id
-          when not
-           (List.exists
-            (function (NotationPt.IdentArg (_,id')) -> id'=id) args)
-          ->
-           let item = DisambiguateTypes.Id id in
-            begin
-             try
-              match
-               DisambiguateTypes.Environment.find item
-                status#disambiguate_db.GrafiteDisambiguate.aliases
-              with
-                 GrafiteAst.Ident_alias (_, uri) ->
-                  NotationPt.NRefPattern (NReference.reference_of_string uri)
-               | _ -> assert false
-             with Not_found -> 
-              prerr_endline
-               ("LexiconEngine.eval_command: domain item not found: " ^ 
-               (DisambiguateTypes.string_of_domain_item item));
-              GrafiteDisambiguate.dump_aliases prerr_endline "" status;
-              raise 
-               (Failure
-                ((DisambiguateTypes.string_of_domain_item item) ^ " not found"))
-	          end
-       | p -> p
+     let cic_appl_pattern =
+      GrafiteDisambiguate.disambiguate_cic_appl_pattern status args
+       cic_appl_pattern
      in
-     let cic_appl_pattern = disambiguate cic_appl_pattern in
       eval_interpretation status (dsc,(symbol, args),cic_appl_pattern)
   | GrafiteAst.Notation (loc, dir, l1, associativity, precedence, l2) ->
       let l1 = 

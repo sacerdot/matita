@@ -54,6 +54,14 @@ class status =
       = fun o -> ((self#set_interp_status o)#set_disambiguate_db o#disambiguate_db)
  end
 
+let eval_with_new_aliases status f =
+ let status =
+  status#set_disambiguate_db { status#disambiguate_db with new_aliases = [] } in
+ let res = f status in
+ let new_aliases = status#disambiguate_db.new_aliases in
+  new_aliases,res
+;;
+
 let dump_aliases out msg status =
    out (if msg = "" then "aliases dump:" else msg ^ ": aliases dump:");
    DisambiguateTypes.Environment.iter (fun _ x -> out (GrafiteAstPp.pp_alias x))
@@ -271,4 +279,38 @@ let disambiguate_nobj estatus ?baseuri (text,prefix_len,obj) =
     diff
   in
    estatus, cic
+;;
+
+let disambiguate_cic_appl_pattern status args =
+ let rec disambiguate =
+  function
+    NotationPt.ApplPattern l ->
+     NotationPt.ApplPattern (List.map disambiguate l)
+  | NotationPt.VarPattern id
+     when not
+      (List.exists
+       (function (NotationPt.IdentArg (_,id')) -> id'=id) args)
+     ->
+      let item = DisambiguateTypes.Id id in
+       begin
+        try
+         match
+          DisambiguateTypes.Environment.find item
+           status#disambiguate_db.aliases
+         with
+            GrafiteAst.Ident_alias (_, uri) ->
+             NotationPt.NRefPattern (NReference.reference_of_string uri)
+          | _ -> assert false
+        with Not_found -> 
+         prerr_endline
+          ("LexiconEngine.eval_command: domain item not found: " ^ 
+          (DisambiguateTypes.string_of_domain_item item));
+         dump_aliases prerr_endline "" status;
+         raise 
+          (Failure
+           ((DisambiguateTypes.string_of_domain_item item) ^ " not found"))
+             end
+  | p -> p
+ in
+  disambiguate
 ;;
