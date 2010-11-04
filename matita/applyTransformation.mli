@@ -33,17 +33,11 @@
 (*                                                                         *)
 (***************************************************************************)
 
-class status :
-  object ('self)
-    inherit Interpretations.status
-    inherit TermContentPres.status
-  end
-
 val ntxt_of_cic_sequent:
- map_unicode_to_tex:bool -> int -> #status ->
+ map_unicode_to_tex:bool -> int -> #LexiconTypes.status ->
  NCic.metasenv -> NCic.substitution ->          (* metasenv, substitution *)
  int * NCic.conjecture ->                       (* sequent *)
   string                                        (* text *)
 
 val ntxt_of_cic_object:
- map_unicode_to_tex:bool -> int -> #status -> NCic.obj -> string
+ map_unicode_to_tex:bool -> int -> #LexiconTypes.status -> NCic.obj -> string

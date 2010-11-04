@@ -33,7 +33,6 @@ class type g_status =
  object
   inherit Interpretations.g_status
   inherit TermContentPres.g_status
-  inherit CicNotationParser.g_status
   method lstatus: lexicon_status
  end
 
@@ -42,7 +41,6 @@ class status :
   inherit g_status
   inherit Interpretations.status
   inherit TermContentPres.status
-  inherit CicNotationParser.status
   method set_lstatus: lexicon_status -> 'self
   method set_lexicon_engine_status: #g_status -> 'self
  end

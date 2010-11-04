@@ -41,7 +41,6 @@ class type g_status =
  object
   inherit Interpretations.g_status
   inherit TermContentPres.g_status
-  inherit CicNotationParser.g_status
   method lstatus: lexicon_status
  end
 
@@ -49,10 +48,9 @@ class status =
  object(self)
   inherit Interpretations.status
   inherit TermContentPres.status
-  inherit CicNotationParser.status ~keywords:[]
   val lstatus = initial_status
   method lstatus = lstatus
   method set_lstatus v = {< lstatus = v >}
   method set_lexicon_engine_status : 'status. #g_status as 'status -> 'self
-   = fun o -> (((self#set_lstatus o#lstatus)#set_interp_status o)#set_content_pres_status o)#set_notation_parser_status o
+   = fun o -> ((self#set_lstatus o#lstatus)#set_interp_status o)#set_content_pres_status o
  end

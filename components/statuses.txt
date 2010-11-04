@@ -6,15 +6,5 @@ grafitetypes
        |--> auto         
        |--> eq           
        |--> lexicon
-             |--> notation_parser
-             |--> interpretation
-             |       |--> nciccoercion --> unif_hint
+             |--> interpretation --> nciccoercion --> unif_hint
              |--> termcontentpres
-
-applytransformation
-    |
-    |-> interpretation -> nciccoercion
-    |                         |
-    |                     unif_hint
-    |
-    |-> termcontentpres
