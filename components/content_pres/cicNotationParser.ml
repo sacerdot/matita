@@ -48,6 +48,9 @@ type ('a,'b,'c,'d) grammars = {
 
 type checked_l1_pattern = CL1P of NotationPt.term * int
 
+let refresh_uri_in_checked_l1_pattern (CL1P (t,n)) =
+ CL1P (NotationUtil.refresh_uri_in_term t, n)
+
 type binding =
   | NoBinding
   | Binding of string * Env.value_type

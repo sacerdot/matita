@@ -92,3 +92,4 @@ type notation_id
 
 val fresh_id: unit -> notation_id
 
+val refresh_uri_in_term: NotationPt.term -> NotationPt.term

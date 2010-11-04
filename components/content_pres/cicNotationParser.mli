@@ -42,6 +42,8 @@ class status: keywords:string list ->
 
 type checked_l1_pattern = private CL1P of NotationPt.term * int
 
+val refresh_uri_in_checked_l1_pattern: checked_l1_pattern -> checked_l1_pattern 
+
 (** {2 Parsing functions} *)
 
   (** concrete syntax pattern: notation level 1, the 

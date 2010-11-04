@@ -74,7 +74,7 @@ let basic_eval_interpretation (dsc, (symbol, args), cic_appl_pattern) status =
  let status =
   Interpretations.add_interpretation status dsc (symbol, args) cic_appl_pattern
  in
- let mode = GrafiteAst.WithPreferences (*assert false*) in (* VEDI SOTTO *)
+ let mode = GrafiteAst.WithPreferences (*assert false*) in (* MATITA 1.0 VEDI SOTTO *)
  let diff =
   [DisambiguateTypes.Symbol (symbol, 0), GrafiteAst.Symbol_alias (symbol,0,dsc)]
  in
@@ -107,6 +107,69 @@ let eval_interpretation status data=
   status#set_dump dump
 ;;
 
+let basic_eval_alias (mode,diff) status =
+  GrafiteDisambiguate.set_proof_aliases status ~implicit_aliases:false mode diff
+;;
+
+let inject_alias =
+ let basic_eval_alias (mode,diff) ~refresh_uri_in_universe ~refresh_uri_in_term=
+   basic_eval_alias (mode,diff)
+ in
+  GrafiteTypes.Serializer.register#run "alias" basic_eval_alias
+;;
+
+let eval_alias status data= 
+ let status = basic_eval_alias data status in
+ let dump = inject_alias data::status#dump in
+  status#set_dump dump
+;;
+
+let basic_eval_input_notation (l1,l2) status =
+  GrafiteParser.extend status l1 
+   (fun env loc ->
+     NotationPt.AttributedTerm
+      (`Loc loc,TermContentPres.instantiate_level2 env l2)) 
+;;
+
+let inject_input_notation =
+ let basic_eval_input_notation (l1,l2)
+  ~refresh_uri_in_universe ~refresh_uri_in_term
+ =
+   let l1 = CicNotationParser.refresh_uri_in_checked_l1_pattern l1 in
+   let l2 = NotationUtil.refresh_uri_in_term l2 in
+    basic_eval_input_notation (l1,l2)
+ in
+  GrafiteTypes.Serializer.register#run "input_notation"
+   basic_eval_input_notation
+;;
+
+let eval_input_notation status data= 
+ let status = basic_eval_input_notation data status in
+ let dump = inject_input_notation data::status#dump in
+  status#set_dump dump
+;;
+
+let basic_eval_output_notation (l1,l2) status =
+ TermContentPres.add_pretty_printer status l2 l1
+;;
+
+let inject_output_notation =
+ let basic_eval_output_notation (l1,l2)
+  ~refresh_uri_in_universe ~refresh_uri_in_term
+ =
+  let l1 = CicNotationParser.refresh_uri_in_checked_l1_pattern l1 in
+  let l2 = NotationUtil.refresh_uri_in_term l2 in
+   basic_eval_output_notation (l1,l2)
+ in
+  GrafiteTypes.Serializer.register#run "output_notation"
+   basic_eval_output_notation
+;;
+
+let eval_output_notation status data= 
+ let status = basic_eval_output_notation data status in
+ let dump = inject_output_notation data::status#dump in
+  status#set_dump dump
+;;
 
 let record_index_obj = 
  let aux l 
@@ -338,7 +401,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
        GrafiteTypes.Serializer.require ~baseuri:(NUri.uri_of_string baseuri)
         status in
      let status = status#set_dump (obj::status#dump) in
-     assert false; (* mode must be passed to GrafiteTypes.Serializer.require
+     (*assert false;*) (*  MATITA 1.0mode must be passed to GrafiteTypes.Serializer.require
      somehow *)
        status
   | GrafiteAst.UnificationHint (loc, t, n) -> eval_unification_hint status t n
@@ -620,15 +683,10 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
          l1 (dir = Some `RightToLeft) precedence associativity
       in
       let status =
-        if dir <> Some `RightToLeft then
-          GrafiteParser.extend status l1 
-            (fun env loc ->
-              NotationPt.AttributedTerm
-               (`Loc loc,TermContentPres.instantiate_level2 env l2)) 
+        if dir <> Some `RightToLeft then eval_input_notation status (l1,l2)
         else status
       in
-       if dir <> Some `LeftToRight then
-        TermContentPres.add_pretty_printer status l2 l1
+       if dir <> Some `LeftToRight then eval_output_notation status (l1,l2)
        else status
   | GrafiteAst.Alias (loc, spec) -> 
      let diff =
@@ -643,8 +701,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
          [DisambiguateTypes.Num instance,spec]
      in
       let mode = GrafiteAst.WithPreferences in(*assert false in (* VEDI SOPRA *) MATITA 1.0*)
-      GrafiteDisambiguate.set_proof_aliases status ~implicit_aliases:false mode diff
-      (* assert false (* MANCA SALVATAGGIO SU DISCO *) *)
+       eval_alias status (mode,diff)
 ;;
 
 let eval_comment opts status (text,prefix_len,c) = status

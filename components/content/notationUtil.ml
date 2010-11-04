@@ -397,3 +397,4 @@ let freshen_obj obj =
 
 let freshen_term = freshen_term ?index:None
 
+let refresh_uri_in_term t = assert false
