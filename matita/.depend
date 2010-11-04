@@ -6,10 +6,8 @@ lablGraphviz.cmo: lablGraphviz.cmi
 lablGraphviz.cmx: lablGraphviz.cmi 
 matitaclean.cmo: matitaMisc.cmi matitaInit.cmi matitaclean.cmi 
 matitaclean.cmx: matitaMisc.cmx matitaInit.cmx matitaclean.cmi 
-matitacLib.cmo: matitaMisc.cmi matitaExcPp.cmi matitaEngine.cmi \
-    buildTimeConf.cmo matitacLib.cmi 
-matitacLib.cmx: matitaMisc.cmx matitaExcPp.cmx matitaEngine.cmx \
-    buildTimeConf.cmx matitacLib.cmi 
+matitacLib.cmo: matitaExcPp.cmi matitaEngine.cmi matitacLib.cmi 
+matitacLib.cmx: matitaExcPp.cmx matitaEngine.cmx matitacLib.cmi 
 matitac.cmo: matitadep.cmi matitaclean.cmi matitacLib.cmi matitaMisc.cmi \
     matitaInit.cmi 
 matitac.cmx: matitadep.cmx matitaclean.cmx matitacLib.cmx matitaMisc.cmx \

@@ -1,9 +1,6 @@
 grafiteDisambiguate.cmi: 
-lexiconTypes.cmi: grafiteDisambiguate.cmi 
-lexiconSync.cmi: lexiconTypes.cmi 
+lexiconSync.cmi: grafiteDisambiguate.cmi 
 grafiteDisambiguate.cmo: grafiteDisambiguate.cmi 
 grafiteDisambiguate.cmx: grafiteDisambiguate.cmi 
-lexiconTypes.cmo: grafiteDisambiguate.cmi lexiconTypes.cmi 
-lexiconTypes.cmx: grafiteDisambiguate.cmx lexiconTypes.cmi 
-lexiconSync.cmo: lexiconSync.cmi 
-lexiconSync.cmx: lexiconSync.cmi 
+lexiconSync.cmo: grafiteDisambiguate.cmi lexiconSync.cmi 
+lexiconSync.cmx: grafiteDisambiguate.cmx lexiconSync.cmi 
