@@ -70,6 +70,44 @@ let basic_index_obj l status =
     status#auto_cache l) 
 ;;     
 
+let basic_eval_interpretation (dsc, (symbol, args), cic_appl_pattern) status =
+ let status =
+  Interpretations.add_interpretation status dsc (symbol, args) cic_appl_pattern
+ in
+ let mode = GrafiteAst.WithPreferences (*assert false*) in (* VEDI SOTTO *)
+ let diff =
+  [DisambiguateTypes.Symbol (symbol, 0), GrafiteAst.Symbol_alias (symbol,0,dsc)]
+ in
+  LexiconEngine.set_proof_aliases status ~implicit_aliases:false mode diff
+;;
+
+let inject_interpretation =
+ let basic_eval_interpretation (dsc, (symbol, args), cic_appl_pattern)
+   ~refresh_uri_in_universe ~refresh_uri_in_term
+ =
+  let rec refresh =
+   function
+      NotationPt.NRefPattern (NReference.Ref (uri,spec)) ->
+       NotationPt.NRefPattern
+        (NReference.reference_of_spec (NCicLibrary.refresh_uri uri) spec)
+    | NotationPt.VarPattern _
+    | NotationPt.ImplicitPattern as x -> x
+    | NotationPt.ApplPattern l -> NotationPt.ApplPattern (List.map refresh l)
+  in
+  let cic_appl_pattern = refresh cic_appl_pattern in
+   basic_eval_interpretation (dsc, (symbol, args), cic_appl_pattern)
+ in
+  GrafiteTypes.Serializer.register#run "interpretation"
+   basic_eval_interpretation
+;;
+
+let eval_interpretation status data= 
+ let status = basic_eval_interpretation data status in
+ let dump = inject_interpretation data::status#dump in
+  status#set_dump dump
+;;
+
+
 let record_index_obj = 
  let aux l 
    ~refresh_uri_in_universe 
@@ -532,31 +570,41 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
      else
       let metasenv,subst,status,sort = match sort with
         | None -> [],[],status,NCic.Sort NCic.Prop
-        | Some s -> GrafiteDisambiguate.disambiguate_nterm None status [] [] []
-                      (text,prefix_len,s) 
+        | Some s ->
+           GrafiteDisambiguate.disambiguate_nterm None status [] [] []
+            (text,prefix_len,s) 
       in
       assert (metasenv = []);
       let sort = NCicReduction.whd ~subst [] sort in
-      let sort = match sort with 
+      let sort =
+       match sort with 
           NCic.Sort s -> s
-        | _ ->  raise (Invalid_argument (Printf.sprintf "ninverter: found target %s, which is not a sort" 
-                                           (NCicPp.ppterm ~metasenv ~subst ~context:[] sort)))
-      in
+        | _ ->
+           raise (Invalid_argument (Printf.sprintf
+            "ninverter: found target %s, which is not a sort"
+             (NCicPp.ppterm ~metasenv ~subst ~context:[] sort))) in
       let status = status#set_ng_mode `ProofMode in
       let metasenv,subst,status,indty =
-       GrafiteDisambiguate.disambiguate_nterm None status [] [] subst (text,prefix_len,indty) in
-      let indtyno,(_,leftno,tys,_,_) = match indty with
-          NCic.Const ((NReference.Ref (_,NReference.Ind (_,indtyno,_))) as r) -> 
-            indtyno, NCicEnvironment.get_checked_indtys r
-        | _ -> prerr_endline ("engine: indty ="  ^ NCicPp.ppterm ~metasenv:[] ~subst:[] ~context:[] indty) ; assert false in
+       GrafiteDisambiguate.disambiguate_nterm None status [] [] subst
+        (text,prefix_len,indty) in
+      let indtyno,(_,leftno,tys,_,_) =
+       match indty with
+          NCic.Const ((NReference.Ref (_,NReference.Ind (_,indtyno,_))) as r) ->
+           indtyno, NCicEnvironment.get_checked_indtys r
+        | _ ->
+          prerr_endline ("engine: indty ="  ^ NCicPp.ppterm ~metasenv:[]
+           ~subst:[] ~context:[] indty);
+          assert false in
       let it = List.nth tys indtyno in
-     let status,obj = NInversion.mk_inverter name true it leftno ?selection sort 
-                        status status#baseuri in
-     let _,_,menv,_,_ = obj in
-     (match menv with
-        [] ->
-          eval_ncommand ~include_paths opts status ("",0,GrafiteAst.NQed Stdpp.dummy_loc)
-      | _ -> assert false)
+      let status,obj =
+       NInversion.mk_inverter name true it leftno ?selection sort 
+        status status#baseuri in
+      let _,_,menv,_,_ = obj in
+       (match menv with
+          [] ->
+            eval_ncommand ~include_paths opts status
+             ("",0,GrafiteAst.NQed Stdpp.dummy_loc)
+        | _ -> assert false)
   | GrafiteAst.NUnivConstraint (loc,u1,u2) ->
       eval_add_constraint status [`Type,u1] [`Type,u2]
   (* ex lexicon commands *)
@@ -571,8 +619,12 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
             (function (NotationPt.IdentArg (_,id')) -> id'=id) args)
           ->
            let item = DisambiguateTypes.Id id in
-            begin try
-              match DisambiguateTypes.Environment.find item status#lstatus.LexiconTypes.aliases with
+            begin
+             try
+              match
+               DisambiguateTypes.Environment.find item
+                status#lstatus.LexiconTypes.aliases
+              with
                  GrafiteAst.Ident_alias (_, uri) ->
                   NotationPt.NRefPattern (NReference.reference_of_string uri)
                | _ -> assert false
@@ -588,19 +640,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
        | p -> p
      in
      let cic_appl_pattern = disambiguate cic_appl_pattern in
-     let status =
-      Interpretations.add_interpretation status
-       dsc (symbol, args) cic_appl_pattern in
-     let mode = GrafiteAst.WithPreferences (*assert false*) in (* VEDI SOTTO *)
-     let diff =
-      [DisambiguateTypes.Symbol (symbol, 0),
-        GrafiteAst.Symbol_alias (symbol,0,dsc)] in
-     let status =
-      LexiconEngine.set_proof_aliases status ~implicit_aliases:false mode diff
-     in
-     status
-     (*assert false*) (* MANCA SALVATAGGIO SU DISCO CHE DEVE TENERE IN CONTO
-      IL MODE WithPreference/WithOutPreferences*)
+      eval_interpretation status (dsc,(symbol, args),cic_appl_pattern)
   | GrafiteAst.Notation (loc, dir, l1, associativity, precedence, l2) ->
       let l1 = 
         CicNotationParser.check_l1_pattern
@@ -614,15 +654,9 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
                (`Loc loc,TermContentPres.instantiate_level2 env l2)) 
         else status
       in
-      let status =
-        if dir <> Some `LeftToRight then
-         let status = TermContentPres.add_pretty_printer status l2 l1 in
-          status
-        else
-          status
-      in
-(*        assert false (* MANCA SALVATAGGIO SU DISCO *) *)
-      status (* capire [] XX *)
+       if dir <> Some `LeftToRight then
+        TermContentPres.add_pretty_printer status l2 l1
+       else status
   | GrafiteAst.Alias (loc, spec) -> 
      let diff =
       (*CSC: Warning: this code should be factorized with the corresponding
@@ -635,9 +669,9 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
       | GrafiteAst.Number_alias (instance,desc) ->
          [DisambiguateTypes.Num instance,spec]
      in
-      let mode = assert false in (* VEDI SOPRA *)
-      LexiconEngine.set_proof_aliases status ~implicit_aliases:false mode diff;
-      assert false (* MANCA SALVATAGGIO SU DISCO *)
+      let mode = GrafiteAst.WithPreferences in(*assert false in (* VEDI SOPRA *) MATITA 1.0*)
+      LexiconEngine.set_proof_aliases status ~implicit_aliases:false mode diff
+      (* assert false (* MANCA SALVATAGGIO SU DISCO *) *)
 ;;
 
 let eval_comment opts status (text,prefix_len,c) = status
