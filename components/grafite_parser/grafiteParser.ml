@@ -630,19 +630,19 @@ type db = ast_statement localized_option Grammar.Entry.e ;;
 
 class type g_status =
  object
-  inherit LexiconTypes.g_status
+  inherit CicNotationParser.g_status
   method parser_db: db
  end
 
 class status =
  object(self)
-  inherit LexiconTypes.status as super
+  inherit CicNotationParser.status ~keywords:[]
   val mutable db = None
   method parser_db = match db with None -> assert false | Some x -> x
   method set_parser_db v = {< db = Some v >}
   method set_parser_status
    : 'status. #g_status as 'status -> 'self
-   = fun o -> {< db = Some o#parser_db >}#set_lexicon_engine_status o
+   = fun o -> {< db = Some o#parser_db >}#set_notation_parser_status o
   initializer
    let grammar = CicNotationParser.level2_ast_grammar self in
    db <- Some (mk_parser (Grammar.Entry.create grammar "statement") self)

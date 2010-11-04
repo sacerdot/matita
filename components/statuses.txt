@@ -1,15 +1,15 @@
 grafitetypes
  |--> dumpable
  |--> nciclibrary
- |--> grafiteparser -----
- |--> tac               |
-       |--> auto        |
-       |--> eq          |
-       |-------------> lexicon
-                        |--> notation_parser
-                        |--> interpretation
-                        |       |--> nciccoercion --> unif_hint
-                        |--> termcontentpres
+ |--> grafiteparser --> notation_parser
+ |--> tac                
+       |--> auto         
+       |--> eq           
+       |--> lexicon
+             |--> notation_parser
+             |--> interpretation
+             |       |--> nciccoercion --> unif_hint
+             |--> termcontentpres
 
 applytransformation
     |
