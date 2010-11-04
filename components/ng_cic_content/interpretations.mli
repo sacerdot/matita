@@ -23,18 +23,64 @@
  * http://helm.cs.unibo.it/
  *)
 
+
+  (** {2 State handling} *)
+
 type id = string
 
 val hide_coercions: bool ref
 
+type db
+
+class type g_status =
+  object
+    inherit NCicCoercion.g_status
+    method interp_db: db
+  end
+
 class status :
   object ('self)
     inherit NCicCoercion.status
-    inherit Interpretations.status
+    method interp_db: db
+    method set_interp_db: db -> 'self
+    method set_interp_status: #g_status -> 'self
   end
 
+type cic_id = string
+
+val add_interpretation:
+  #status as 'status ->
+  string ->                                       (* id / description *)
+  string * NotationPt.argument_pattern list -> (* symbol, level 2 pattern *)
+  NotationPt.cic_appl_pattern ->               (* level 3 pattern *)
+    'status
+
+exception Interpretation_not_found
+
+  (** @raise Interpretation_not_found *)
+val lookup_interpretations:
+  #status ->
+   ?sorted:bool -> string -> (* symbol *)
+    (string * NotationPt.argument_pattern list *
+      NotationPt.cic_appl_pattern) list
+
+  (** {3 Interpretations toggling} *)
+
+val toggle_active_interpretations: #status as 'status -> bool -> 'status
+
+  (** {2 content -> cic} *)
+
+  (** @param env environment from argument_pattern to cic terms
+   * @param pat cic_appl_pattern *)
+val instantiate_appl_pattern:
+  mk_appl:('term list -> 'term) -> 
+  mk_implicit:(bool -> 'term) ->
+  term_of_nref : (NReference.reference -> 'term) ->
+  (string * 'term) list -> NotationPt.cic_appl_pattern ->
+    'term
+
 val nmap_sequent:
- #status as 'a -> metasenv:NCic.metasenv -> subst:NCic.substitution ->
+ #status -> metasenv:NCic.metasenv -> subst:NCic.substitution ->
   int * NCic.conjecture ->
    NotationPt.term Content.conjecture *
     (id, NReference.reference) Hashtbl.t    (* id -> reference *)

@@ -35,13 +35,12 @@
 
 class status :
   object ('self)
-    inherit NTermCicContent.status
+    inherit Interpretations.status
     inherit TermContentPres.status
   end
 
 val ntxt_of_cic_sequent:
- map_unicode_to_tex:bool -> int ->
- #status ->
+ map_unicode_to_tex:bool -> int -> #status ->
  NCic.metasenv -> NCic.substitution ->          (* metasenv, substitution *)
  int * NCic.conjecture ->                       (* sequent *)
   string                                        (* text *)

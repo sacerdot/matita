@@ -6,7 +6,6 @@ INTERFACE_FILES =		\
 	notationUtil.mli	\
 	notationEnv.mli	\
 	notationPp.mli	\
-	interpretations.mli \
 	$(NULL)
 IMPLEMENTATION_FILES =		\
 	notationPt.ml	\

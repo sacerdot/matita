@@ -37,7 +37,7 @@
 
 class status =
   object
-    inherit NTermCicContent.status
+    inherit Interpretations.status
     inherit TermContentPres.status
   end
 
@@ -47,7 +47,7 @@ let mpres_document pres_box =
 
 let ntxt_of_cic_sequent ~map_unicode_to_tex size status metasenv subst sequent =
   let content_sequent,ids_to_refs =
-   NTermCicContent.nmap_sequent status ~metasenv ~subst sequent in 
+   Interpretations.nmap_sequent status ~metasenv ~subst sequent in 
   let pres_sequent = 
    Sequent2pres.nsequent2pres status ids_to_refs subst content_sequent in
   let pres_sequent = CicNotationPres.mpres_of_box pres_sequent in
@@ -55,7 +55,7 @@ let ntxt_of_cic_sequent ~map_unicode_to_tex size status metasenv subst sequent =
     (function x::_ -> x | _ -> assert false) size pres_sequent
 
 let ntxt_of_cic_object ~map_unicode_to_tex size status obj =
- let cobj,ids_to_nrefs = NTermCicContent.nmap_obj status obj in 
+ let cobj,ids_to_nrefs = Interpretations.nmap_obj status obj in 
  let pres_sequent = Content2pres.ncontent2pres status ~ids_to_nrefs cobj in
  let pres_sequent = CicNotationPres.mpres_of_box pres_sequent in
   BoxPp.render_to_string ~map_unicode_to_tex

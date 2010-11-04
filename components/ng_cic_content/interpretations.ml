@@ -23,24 +23,65 @@
  * http://helm.cs.unibo.it/
  *)
 
-(* $Id: termAcicContent.ml 9304 2008-12-05 23:12:39Z sacerdot $ *)
+(* $Id$ *)
 
 open Printf
 
 module Ast = NotationPt
 
+
 let debug = false
 let debug_print s = if debug then prerr_endline (Lazy.force s) else ()
 
 type id = string
-
 let hide_coercions = ref true;;
 
-class status =
+type cic_id = string
+
+type term_info =
+  { sort: (cic_id, Ast.sort_kind) Hashtbl.t;
+    uri: (cic_id, NReference.reference) Hashtbl.t;
+  }
+
+module IntMap = Map.Make(struct type t = int let compare = compare end);;
+module StringMap = Map.Make(String);;
+
+type db = {
+  counter: int;
+  pattern32_matrix: (bool * NotationPt.cic_appl_pattern * int) list;
+  level2_patterns32:
+   (string * string * NotationPt.argument_pattern list *
+     NotationPt.cic_appl_pattern) IntMap.t;
+  interpretations: int list StringMap.t; (* symb -> id list *)
+  compiled32:
+   (NCic.term -> ((string * NCic.term) list * NCic.term list * int) option)
+    Lazy.t
+}
+
+let initial_db = {
+   counter = -1; 
+   pattern32_matrix = [];
+   level2_patterns32 = IntMap.empty;
+   interpretations = StringMap.empty;
+   compiled32 = lazy (fun _ -> assert false)
+}
+
+class type g_status =
   object
-    inherit NCicCoercion.status
-    inherit Interpretations.status
+    inherit NCicCoercion.g_status
+    method interp_db: db
   end
+ 
+class status =
+ object
+   inherit NCicCoercion.status
+   val interp_db = initial_db  
+   method interp_db = interp_db
+   method set_interp_db v = {< interp_db = v >}
+   method set_interp_status
+    : 'status. #g_status as 'status -> 'self
+    = fun o -> {< interp_db = o#interp_db >}#set_coercion_status o
+ end
 
 let idref register_ref =
  let id = ref 0 in
@@ -56,6 +97,112 @@ let level_of_uri u =
   assert(String.length name > String.length "Type");
   String.sub name 4 (String.length name - 4)
 ;;
+
+let find_level2_patterns32 status pid =
+ IntMap.find pid status#interp_db.level2_patterns32
+
+let add_idrefs =
+  List.fold_right (fun idref t -> Ast.AttributedTerm (`IdRef idref, t))
+
+let instantiate32 idrefs env symbol args =
+  let rec instantiate_arg = function
+    | Ast.IdentArg (n, name) ->
+        let t = 
+          try List.assoc name env 
+          with Not_found -> prerr_endline ("name not found in env: "^name);
+                            assert false
+        in
+        let rec count_lambda = function
+          | Ast.AttributedTerm (_, t) -> count_lambda t
+          | Ast.Binder (`Lambda, _, body) -> 1 + count_lambda body
+          | _ -> 0
+        in
+        let rec add_lambda t n =
+          if n > 0 then
+            let name = NotationUtil.fresh_name () in
+            Ast.Binder (`Lambda, (Ast.Ident (name, None), None),
+              Ast.Appl [add_lambda t (n - 1); Ast.Ident (name, None)])
+          else
+            t
+        in
+        add_lambda t (n - count_lambda t)
+  in
+  let head =
+    let symbol = Ast.Symbol (symbol, 0) in
+    add_idrefs idrefs symbol
+  in
+  if args = [] then head
+  else Ast.Appl (head :: List.map instantiate_arg args)
+
+let fresh_id status =
+  let counter = status#interp_db.counter+1 in
+   status#set_interp_db ({ status#interp_db with counter = counter  }), counter
+
+let load_patterns32 status t =
+ let t =
+  HExtlib.filter_map (function (true, ap, id) -> Some (ap, id) | _ -> None) t
+ in
+  status#set_interp_db
+   {status#interp_db with
+     compiled32 = lazy (Ncic2astMatcher.Matcher32.compiler t) }
+;;
+
+let add_interpretation status dsc (symbol, args) appl_pattern =
+  let status,id = fresh_id status in
+  let ids =
+   try
+    id::StringMap.find symbol status#interp_db.interpretations
+   with Not_found -> [id] in
+  let status =
+   status#set_interp_db { status#interp_db with
+    level2_patterns32 =
+      IntMap.add id (dsc, symbol, args, appl_pattern)
+       status#interp_db.level2_patterns32;
+    pattern32_matrix = (true,appl_pattern,id)::status#interp_db.pattern32_matrix;
+    interpretations = StringMap.add symbol ids status#interp_db.interpretations
+   }
+  in
+   load_patterns32 status status#interp_db.pattern32_matrix
+
+let toggle_active_interpretations status b =
+  status#set_interp_db { status#interp_db with
+   pattern32_matrix =
+     List.map (fun (_,ap,id) -> b,ap,id) status#interp_db.pattern32_matrix }
+
+exception Interpretation_not_found
+
+let lookup_interpretations status ?(sorted=true) symbol =
+  try
+    let raw = 
+      List.map (
+        fun id ->
+          let (dsc, _, args, appl_pattern) =
+            try IntMap.find id status#interp_db.level2_patterns32
+            with Not_found -> assert false 
+          in
+          dsc, args, appl_pattern
+      ) (StringMap.find symbol status#interp_db.interpretations)
+    in
+    if sorted then HExtlib.list_uniq (List.sort Pervasives.compare raw)
+              else raw
+  with Not_found -> raise Interpretation_not_found
+
+let instantiate_appl_pattern 
+  ~mk_appl ~mk_implicit ~term_of_nref env appl_pattern 
+=
+  let lookup name =
+    try List.assoc name env
+    with Not_found ->
+      prerr_endline (sprintf "Name %s not found" name);
+      assert false
+  in
+  let rec aux = function
+    | Ast.NRefPattern nref -> term_of_nref nref
+    | Ast.ImplicitPattern -> mk_implicit false
+    | Ast.VarPattern name -> lookup name
+    | Ast.ApplPattern terms -> mk_appl (List.map aux terms)
+  in
+  aux appl_pattern
 
 let destroy_nat =
   let is_nat_URI = NUri.eq (NUri.uri_of_string
@@ -204,50 +351,8 @@ let nast_of_cic0 status
          idref (Ast.Case (k ~context te, indty, Some (k ~context outty), patterns))
 ;;
 
-let compiled32 = ref None
-
-let get_compiled32 () =
-  match !compiled32 with
-  | None -> assert false
-  | Some f -> Lazy.force f
-
-let set_compiled32 f = compiled32 := Some f
-
-let add_idrefs =
-  List.fold_right (fun idref t -> Ast.AttributedTerm (`IdRef idref, t))
-
-let instantiate32 idrefs env symbol args =
-  let rec instantiate_arg = function
-    | Ast.IdentArg (n, name) ->
-        let t = 
-          try List.assoc name env 
-          with Not_found -> prerr_endline ("name not found in env: "^name);
-                            assert false
-        in
-        let rec count_lambda = function
-          | Ast.AttributedTerm (_, t) -> count_lambda t
-          | Ast.Binder (`Lambda, _, body) -> 1 + count_lambda body
-          | _ -> 0
-        in
-        let rec add_lambda t n =
-          if n > 0 then
-            let name = NotationUtil.fresh_name () in
-            Ast.Binder (`Lambda, (Ast.Ident (name, None), None),
-              Ast.Appl [add_lambda t (n - 1); Ast.Ident (name, None)])
-          else
-            t
-        in
-        add_lambda t (n - count_lambda t)
-  in
-  let head =
-    let symbol = Ast.Symbol (symbol, 0) in
-    add_idrefs idrefs symbol
-  in
-  if args = [] then head
-  else Ast.Appl (head :: List.map instantiate_arg args)
-
 let rec nast_of_cic1 status ~idref ~output_type ~metasenv ~subst ~context term =
-  match (get_compiled32 ()) term with
+  match Lazy.force status#interp_db.compiled32 term with
   | None ->
      nast_of_cic0 status ~idref ~output_type ~metasenv ~subst
       (nast_of_cic1 status ~idref ~output_type ~metasenv ~subst) ~context term 
@@ -276,18 +381,11 @@ let rec nast_of_cic1 status ~idref ~output_type ~metasenv ~subst ~context term =
       in
       let _, symbol, args, _ =
         try
-          Interpretations.find_level2_patterns32 status pid
+         find_level2_patterns32 status pid
         with Not_found -> assert false
       in
       let ast = instantiate32 idrefs env symbol args in
       idref ast (*Ast.AttributedTerm (`IdRef (idref term), ast)*)
-;;
-
-let load_patterns32 t =
- let t =
-  HExtlib.filter_map (function (true, ap, id) -> Some (ap, id) | _ -> None) t
- in
-  set_compiled32 (lazy (Ncic2astMatcher.Matcher32.compiler t))
 ;;
 
 let nmap_sequent0 status ~idref ~metasenv ~subst (i,(n,context,ty)) =
@@ -487,5 +585,3 @@ in
  in
   res,ids_to_refs
 ;;
-
-Interpretations.set_load_patterns32 load_patterns32

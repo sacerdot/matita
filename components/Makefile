@@ -15,12 +15,12 @@ MODULES =			\
 	ng_kernel		\
 	getter			\
 	library			\
-	content		\
+	content		        \
 	grafite			\
-	disambiguation	        \
 	ng_refiner              \
-	ng_disambiguation	\
 	ng_cic_content		\
+	disambiguation	        \
+	ng_disambiguation	\
 	ng_paramodulation	\
 	ng_library 		\
 	content_pres		\

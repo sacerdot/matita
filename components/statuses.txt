@@ -7,8 +7,10 @@ grafitetypes -> tac -> auto + eq + (grafitedisambiguate = lexicon+nciccoercion)
                                                             |-> notation_parser
 
 
-ntermciccontent = nciccoercion+interpretation
-                       |
-                  unif_hint
-
-applytransformation = ntermciccontent+termcontentpres
+applytransformation
+    |
+    |-> ntermciccontent = nciccoercion+interpretation
+    |                       |
+    |                    unif_hint
+    |
+    |-> termcontentpres

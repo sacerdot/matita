@@ -2,7 +2,7 @@ PACKAGE = ng_cic_content
 
 INTERFACE_FILES = \
 	ncic2astMatcher.mli \
-	nTermCicContent.mli
+	interpretations.mli
 
 IMPLEMENTATION_FILES = $(INTERFACE_FILES:%.mli=%.ml)
 

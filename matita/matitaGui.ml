@@ -859,7 +859,7 @@ class gui () =
            s#set_grafite_status status*)
          );
       MatitaGtkMisc.toggle_callback ~check:main#hideCoercionsMenuItem
-        ~callback:(fun enabled -> NTermCicContent.hide_coercions := enabled);
+        ~callback:(fun enabled -> Interpretations.hide_coercions := enabled);
       MatitaGtkMisc.toggle_callback ~check:main#unicodeAsTexMenuItem
         ~callback:(fun enabled ->
           Helm_registry.set_bool "matita.paste_unicode_as_tex" enabled);
