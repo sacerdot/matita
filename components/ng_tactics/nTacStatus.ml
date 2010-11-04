@@ -66,7 +66,7 @@ class auto_status =
 
 class type g_pstatus =
  object
-  inherit LexiconTypes.g_status
+  inherit GrafiteDisambiguate.g_status
   inherit g_auto_status
   inherit g_eq_status
   method obj: NCic.obj
@@ -75,7 +75,7 @@ class type g_pstatus =
 class pstatus =
  fun (o: NCic.obj) ->
  object (self)
-   inherit LexiconTypes.status
+   inherit GrafiteDisambiguate.status
    inherit auto_status
    inherit eq_status
    val obj = o
@@ -83,7 +83,7 @@ class pstatus =
    method set_obj o = {< obj = o >}
    method set_pstatus : 'status. #g_pstatus as 'status -> 'self
    = fun o ->
-    (((self#set_lexicon_engine_status o)#set_obj o#obj)#set_auto_status o)#set_eq_status o
+    (((self#set_disambiguate_status o)#set_obj o#obj)#set_auto_status o)#set_eq_status o
   end
 
 type tactic_term = NotationPt.term Disambiguate.disambiguator_input
@@ -195,7 +195,7 @@ let disambiguate status context t ty =
  in
  let uri,height,metasenv,subst,obj = status#obj in
  let metasenv, subst, status, t = 
-   GrafiteDisambiguate.disambiguate_nterm expty status context metasenv subst t 
+   GrafiteDisambiguate.disambiguate_nterm status expty context metasenv subst t 
  in
  let new_pstatus = uri,height,metasenv,subst,obj in
   status#set_obj new_pstatus, (context, t) 

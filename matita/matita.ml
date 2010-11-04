@@ -128,7 +128,7 @@ let _ =
     in
     addDebugItem "dump aliases" (fun _ ->
       let status = script#grafite_status in
-      LexiconEngine.dump_aliases prerr_endline "" status);
+      GrafiteDisambiguate.dump_aliases prerr_endline "" status);
 (* FG: DEBUGGING   
     addDebugItem "dump interpretations" (fun _ ->
       let status = script#lexicon_status in

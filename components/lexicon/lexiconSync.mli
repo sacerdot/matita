@@ -24,4 +24,4 @@
  *)
 
 val add_aliases_for_objs:
- #LexiconTypes.status as 'status -> NUri.uri list -> 'status
+ #GrafiteDisambiguate.status as 'status -> NUri.uri list -> 'status

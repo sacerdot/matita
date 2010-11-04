@@ -23,7 +23,7 @@
  * http://helm.cs.unibo.it/
  *)
 
-type lexicon_status = {
+type db = {
   aliases: GrafiteAst.alias_spec DisambiguateTypes.Environment.t;
   multi_aliases: GrafiteAst.alias_spec list DisambiguateTypes.Environment.t;
   new_aliases: (DisambiguateTypes.domain_item * GrafiteAst.alias_spec) list
@@ -32,15 +32,42 @@ type lexicon_status = {
 class type g_status =
  object
   inherit Interpretations.g_status
-  inherit TermContentPres.g_status
-  method lstatus: lexicon_status
+  method disambiguate_db: db
  end
 
 class status :
  object ('self)
   inherit g_status
   inherit Interpretations.status
-  inherit TermContentPres.status
-  method set_lstatus: lexicon_status -> 'self
-  method set_lexicon_engine_status: #g_status -> 'self
+  method set_disambiguate_db: db -> 'self
+  method set_disambiguate_status: #g_status -> 'self
  end
+
+val set_proof_aliases:
+ #status as 'status ->
+  implicit_aliases:bool -> (* implicit ones are made explicit *)
+  GrafiteAst.inclusion_mode ->
+  (DisambiguateTypes.domain_item * GrafiteAst.alias_spec) list -> 'status
+
+(* args: print function, message (may be empty), status *) 
+val dump_aliases: (string -> unit) -> string -> #status -> unit
+
+exception BaseUriNotSetYet
+
+val disambiguate_nterm :
+ #status as 'status ->
+ NCic.term option -> NCic.context -> NCic.metasenv -> NCic.substitution ->
+ NotationPt.term Disambiguate.disambiguator_input ->
+   NCic.metasenv * NCic.substitution * 'status * NCic.term
+
+val disambiguate_nobj :
+ #status as 'status -> ?baseuri:string ->
+ (NotationPt.term NotationPt.obj) Disambiguate.disambiguator_input ->
+  'status * NCic.obj
+
+type pattern = 
+  NotationPt.term Disambiguate.disambiguator_input option * 
+  (string * NCic.term) list * NCic.term option
+
+val disambiguate_npattern:
+  GrafiteAst.npattern Disambiguate.disambiguator_input -> pattern

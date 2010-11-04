@@ -51,7 +51,7 @@ let inject_unification_hint =
 
 let eval_unification_hint status t n = 
  let metasenv,subst,status,t =
-  GrafiteDisambiguate.disambiguate_nterm None status [] [] [] ("",0,t) in
+  GrafiteDisambiguate.disambiguate_nterm status None [] [] [] ("",0,t) in
  assert (metasenv=[]);
  let t = NCicUntrusted.apply_subst subst [] t in
  let status = basic_eval_unification_hint (t,n) status in
@@ -78,7 +78,7 @@ let basic_eval_interpretation (dsc, (symbol, args), cic_appl_pattern) status =
  let diff =
   [DisambiguateTypes.Symbol (symbol, 0), GrafiteAst.Symbol_alias (symbol,0,dsc)]
  in
-  LexiconEngine.set_proof_aliases status ~implicit_aliases:false mode diff
+  GrafiteDisambiguate.set_proof_aliases status ~implicit_aliases:false mode diff
 ;;
 
 let inject_interpretation =
@@ -479,7 +479,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
              (fun status (name,cpos,arity) ->
                try
                  let metasenv,subst,status,t =
-                  GrafiteDisambiguate.disambiguate_nterm None status [] [] []
+                  GrafiteDisambiguate.disambiguate_nterm status None [] [] []
                    ("",0,NotationPt.Ident (name,None)) in
                  assert (metasenv = [] && subst = []);
                  let status, nuris = 
@@ -571,7 +571,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
       let metasenv,subst,status,sort = match sort with
         | None -> [],[],status,NCic.Sort NCic.Prop
         | Some s ->
-           GrafiteDisambiguate.disambiguate_nterm None status [] [] []
+           GrafiteDisambiguate.disambiguate_nterm status None [] [] []
             (text,prefix_len,s) 
       in
       assert (metasenv = []);
@@ -585,7 +585,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
              (NCicPp.ppterm ~metasenv ~subst ~context:[] sort))) in
       let status = status#set_ng_mode `ProofMode in
       let metasenv,subst,status,indty =
-       GrafiteDisambiguate.disambiguate_nterm None status [] [] subst
+       GrafiteDisambiguate.disambiguate_nterm status None [] [] subst
         (text,prefix_len,indty) in
       let indtyno,(_,leftno,tys,_,_) =
        match indty with
@@ -623,7 +623,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
              try
               match
                DisambiguateTypes.Environment.find item
-                status#lstatus.LexiconTypes.aliases
+                status#disambiguate_db.GrafiteDisambiguate.aliases
               with
                  GrafiteAst.Ident_alias (_, uri) ->
                   NotationPt.NRefPattern (NReference.reference_of_string uri)
@@ -632,7 +632,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
               prerr_endline
                ("LexiconEngine.eval_command: domain item not found: " ^ 
                (DisambiguateTypes.string_of_domain_item item));
-              LexiconEngine.dump_aliases prerr_endline "" status;
+              GrafiteDisambiguate.dump_aliases prerr_endline "" status;
               raise 
                (Failure
                 ((DisambiguateTypes.string_of_domain_item item) ^ " not found"))
@@ -670,7 +670,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
          [DisambiguateTypes.Num instance,spec]
      in
       let mode = GrafiteAst.WithPreferences in(*assert false in (* VEDI SOPRA *) MATITA 1.0*)
-      LexiconEngine.set_proof_aliases status ~implicit_aliases:false mode diff
+      GrafiteDisambiguate.set_proof_aliases status ~implicit_aliases:false mode diff
       (* assert false (* MANCA SALVATAGGIO SU DISCO *) *)
 ;;
 

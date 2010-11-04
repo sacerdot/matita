@@ -29,7 +29,7 @@ open Printf
 
 open GrafiteTypes
 
-exception AttemptToInsertAnAlias of LexiconTypes.status
+exception AttemptToInsertAnAlias of GrafiteDisambiguate.status
 
 let slash_n_RE = Pcre.regexp "\\n" ;;
 
@@ -122,10 +122,10 @@ let compile atstart options fname =
     Librarian.baseuri_of_script ~include_paths fname in
   if Http_getter_storage.is_read_only baseuri then assert false;
   activate_extraction baseuri fname ;
-  let lexicon_status = new LexiconTypes.status in
+  let lexicon_status = new GrafiteDisambiguate.status in
   atstart (); (* FG: do not invoke before loading the core notation script *)  
   let grafite_status =
-   (new GrafiteTypes.status baseuri)#set_lstatus lexicon_status#lstatus in
+   (new GrafiteTypes.status baseuri)#set_disambiguate_db lexicon_status#disambiguate_db in
   let big_bang = Unix.gettimeofday () in
   let { Unix.tms_utime = big_bang_u ; Unix.tms_stime = big_bang_s} = 
     Unix.times () 
@@ -172,7 +172,7 @@ let compile atstart options fname =
       | [] -> grafite_status
       | (g,None)::_ -> g
       | (g,Some _)::_ ->
-         raise (AttemptToInsertAnAlias (g :> LexiconTypes.status))
+         raise (AttemptToInsertAnAlias (g :> GrafiteDisambiguate.status))
      in
        aux_for_dump print_cb grafite_status
     in

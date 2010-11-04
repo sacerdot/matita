@@ -4,8 +4,7 @@ PREDICATES =
 INTERFACE_FILES = 			\
 	dependenciesParser.mli  	\
 	grafiteParser.mli		\
-	grafiteDisambiguate.mli 	\
-	print_grammar.mli 	\
+	print_grammar.mli 	        \
 	$(NULL)
 IMPLEMENTATION_FILES = $(INTERFACE_FILES:%.mli=%.ml)
 

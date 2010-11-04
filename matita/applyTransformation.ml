@@ -35,6 +35,12 @@
 
 (* $Id$ *)
 
+class status =
+ object
+  inherit Interpretations.status
+  inherit TermContentPres.status
+ end
+
 let mpres_document pres_box =
   Xml.add_xml_declaration (CicNotationPres.print_box pres_box)
 

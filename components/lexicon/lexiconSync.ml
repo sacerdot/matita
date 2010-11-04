@@ -37,6 +37,6 @@ let add_aliases_for_objs status =
           GrafiteAst.Ident_alias (name,NReference.string_of_reference u)
       ) references
     in
-     LexiconEngine.set_proof_aliases status ~implicit_aliases:false
+     GrafiteDisambiguate.set_proof_aliases status ~implicit_aliases:false
       GrafiteAst.WithPreferences new_env
   ) status

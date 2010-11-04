@@ -144,7 +144,7 @@ let eval_nmacro include_paths (buffer : GText.buffer) guistuff grafite_status us
       in
       let m, s, status, t = 
         GrafiteDisambiguate.disambiguate_nterm 
-          None status ctx menv subst (parsed_text,parsed_text_length,
+          status None ctx menv subst (parsed_text,parsed_text_length,
             NotationPt.Cast (t,NotationPt.Implicit `JustOne))  
           (* XXX use the metasenv, if possible *)
       in
@@ -276,16 +276,16 @@ class script  ~(source_view: GSourceView2.source_view)
 let buffer = source_view#buffer in
 let source_buffer = source_view#source_buffer in
 let initial_statuses current baseuri =
- let empty_lstatus = new LexiconTypes.status in
+ let empty_lstatus = new GrafiteDisambiguate.status in
  (match current with
      Some current ->
       NCicLibrary.time_travel
-       ((new GrafiteTypes.status current#baseuri)#set_lstatus current#lstatus);
+       ((new GrafiteTypes.status current#baseuri)#set_disambiguate_db current#disambiguate_db);
       (* CSC: there is a known bug in invalidation; temporary fix here *)
       NCicEnvironment.invalidate ()
    | None -> ());
  let lexicon_status = empty_lstatus in
- let grafite_status = (new GrafiteTypes.status baseuri)#set_lstatus lexicon_status#lstatus in
+ let grafite_status = (new GrafiteTypes.status baseuri)#set_disambiguate_db lexicon_status#disambiguate_db in
   grafite_status
 in
 let read_include_paths file =

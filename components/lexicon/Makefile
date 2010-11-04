@@ -2,8 +2,7 @@ PACKAGE = lexicon
 PREDICATES =
 
 INTERFACE_FILES =		\
-	lexiconTypes.mli	\
-	lexiconEngine.mli \
+	grafiteDisambiguate.mli \
 	lexiconSync.mli		\
 	$(NULL)
 IMPLEMENTATION_FILES =		\

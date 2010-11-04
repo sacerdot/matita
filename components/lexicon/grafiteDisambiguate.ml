@@ -25,18 +25,66 @@
 
 (* $Id$ *)
 
+type db = {
+  aliases: GrafiteAst.alias_spec DisambiguateTypes.Environment.t;
+  multi_aliases: GrafiteAst.alias_spec list DisambiguateTypes.Environment.t;
+  new_aliases: (DisambiguateTypes.domain_item * GrafiteAst.alias_spec) list
+}
+
+let initial_status = {
+  aliases = DisambiguateTypes.Environment.empty;
+  multi_aliases = DisambiguateTypes.Environment.empty;
+  new_aliases = []
+}
+
 class type g_status =
   object
-   inherit LexiconTypes.g_status
+   inherit Interpretations.g_status
+   method disambiguate_db: db
   end
 
 class status =
  object (self)
-  inherit LexiconTypes.status
-  method set_grafite_disambiguate_status
+  inherit Interpretations.status
+  val disambiguate_db = initial_status
+  method disambiguate_db = disambiguate_db
+  method set_disambiguate_db v = {< disambiguate_db = v >}
+  method set_disambiguate_status
    : 'status. #g_status as 'status -> 'self
-      = fun o -> (self#set_lexicon_engine_status o)
+      = fun o -> ((self#set_interp_status o)#set_disambiguate_db o#disambiguate_db)
  end
+
+let dump_aliases out msg status =
+   out (if msg = "" then "aliases dump:" else msg ^ ": aliases dump:");
+   DisambiguateTypes.Environment.iter (fun _ x -> out (GrafiteAstPp.pp_alias x))
+    status#disambiguate_db.aliases
+   
+let set_proof_aliases status ~implicit_aliases mode new_aliases =
+ if mode = GrafiteAst.WithoutPreferences then
+   status
+ else
+   (* MATITA 1.0
+   let new_commands =
+     List.map
+      (fun _,alias -> GrafiteAst.Alias (HExtlib.dummy_floc, alias)) new_aliases
+   in *)
+   let aliases =
+    List.fold_left (fun acc (d,c) -> DisambiguateTypes.Environment.add d c acc)
+     status#disambiguate_db.aliases new_aliases in
+   let multi_aliases =
+    List.fold_left (fun acc (d,c) -> 
+      DisambiguateTypes.Environment.cons GrafiteAst.description_of_alias 
+         d c acc)
+     status#disambiguate_db.multi_aliases new_aliases
+   in
+   let new_status =
+    {multi_aliases = multi_aliases ;
+     aliases = aliases;
+     new_aliases =
+      (if implicit_aliases then new_aliases else []) @
+        status#disambiguate_db.new_aliases}
+   in
+    status#set_disambiguate_db new_status
 
 exception BaseUriNotSetYet
 
@@ -120,15 +168,15 @@ let fix_instance item l =
 ;;
 
 
-let disambiguate_nterm expty estatus context metasenv subst thing
+let disambiguate_nterm estatus expty context metasenv subst thing
 =
   let diff, metasenv, subst, cic =
     singleton "first"
       (NCicDisambiguate.disambiguate_term
         ~rdb:estatus
-        ~aliases:estatus#lstatus.LexiconTypes.aliases
+        ~aliases:estatus#disambiguate_db.aliases
         ~expty 
-        ~universe:(Some estatus#lstatus.LexiconTypes.multi_aliases)
+        ~universe:(Some estatus#disambiguate_db.multi_aliases)
         ~lookup_in_library:nlookup_in_library
         ~mk_choice:(ncic_mk_choice estatus)
         ~mk_implicit ~fix_instance
@@ -136,8 +184,8 @@ let disambiguate_nterm expty estatus context metasenv subst thing
         ~context ~metasenv ~subst thing)
   in
   let estatus =
-    LexiconEngine.set_proof_aliases estatus ~implicit_aliases:true
-     GrafiteAst.WithPreferences diff
+   set_proof_aliases estatus ~implicit_aliases:true GrafiteAst.WithPreferences
+    diff
   in
    metasenv, subst, estatus, cic
 ;;
@@ -215,12 +263,12 @@ let disambiguate_nobj estatus ?baseuri (text,prefix_len,obj) =
       ~mk_implicit ~fix_instance
       ~uri
       ~rdb:estatus
-      ~aliases:estatus#lstatus.LexiconTypes.aliases
-      ~universe:(Some estatus#lstatus.LexiconTypes.multi_aliases) 
+      ~aliases:estatus#disambiguate_db.aliases
+      ~universe:(Some estatus#disambiguate_db.multi_aliases) 
       (text,prefix_len,obj)) in
   let estatus =
-   LexiconEngine.set_proof_aliases estatus ~implicit_aliases:true
-    GrafiteAst.WithPreferences diff
+   set_proof_aliases estatus ~implicit_aliases:true GrafiteAst.WithPreferences
+    diff
   in
    estatus, cic
 ;;

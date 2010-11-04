@@ -54,11 +54,11 @@ let eval_macro_screenshot (status : GrafiteTypes.status) name =
 let eval_ast ~include_paths ?do_heavy_checks status (text,prefix_len,ast) =
  let baseuri = status#baseuri in
  let status =
-  status#set_lstatus { status#lstatus with LexiconTypes.new_aliases = [] } in
+  status#set_disambiguate_db { status#disambiguate_db with GrafiteDisambiguate.new_aliases = [] } in
  let status =
   GrafiteEngine.eval_ast ~include_paths ?do_heavy_checks status
    (text,prefix_len,ast) in
- let new_aliases = status#lstatus.LexiconTypes.new_aliases in
+ let new_aliases = status#disambiguate_db.GrafiteDisambiguate.new_aliases in
  let _,intermediate_states = 
   List.fold_left
    (fun (status,acc) (k,value) -> 
@@ -75,7 +75,7 @@ let eval_ast ~include_paths ?do_heavy_checks status (text,prefix_len,ast) =
        status,acc
       else
        let status =
-        LexiconEngine.set_proof_aliases status ~implicit_aliases:false
+        GrafiteDisambiguate.set_proof_aliases status ~implicit_aliases:false
          GrafiteAst.WithPreferences [k,value]
        in
         status, (status ,Some (k,value))::acc

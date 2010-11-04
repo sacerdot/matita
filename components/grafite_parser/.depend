@@ -1,12 +1,9 @@
 dependenciesParser.cmi: 
 grafiteParser.cmi: 
-grafiteDisambiguate.cmi: 
 print_grammar.cmi: grafiteParser.cmi 
 dependenciesParser.cmo: dependenciesParser.cmi 
 dependenciesParser.cmx: dependenciesParser.cmi 
 grafiteParser.cmo: grafiteParser.cmi 
 grafiteParser.cmx: grafiteParser.cmi 
-grafiteDisambiguate.cmo: grafiteDisambiguate.cmi 
-grafiteDisambiguate.cmx: grafiteDisambiguate.cmi 
 print_grammar.cmo: print_grammar.cmi 
 print_grammar.cmx: print_grammar.cmi 

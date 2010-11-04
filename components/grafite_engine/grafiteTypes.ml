@@ -42,6 +42,7 @@ class status = fun (b : string) ->
    inherit NCicLibrary.dumpable_status
    inherit NCicLibrary.status
    inherit GrafiteParser.status
+   inherit TermContentPres.status
    val baseuri = b
    val ng_mode = (`CommandMode : [`CommandMode | `ProofMode])
    method baseuri = baseuri

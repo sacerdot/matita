@@ -131,9 +131,9 @@ object
 
     (** load a sequent and render it into parent widget *)
   method nload_sequent:
-   #LexiconTypes.status -> NCic.metasenv -> NCic.substitution -> int -> unit
+   #ApplyTransformation.status -> NCic.metasenv -> NCic.substitution -> int -> unit
 
-  method load_nobject: #LexiconTypes.status -> NCic.obj -> unit
+  method load_nobject: #ApplyTransformation.status -> NCic.obj -> unit
 end
 
 class type sequentsViewer =
@@ -141,9 +141,9 @@ object
   method reset: unit
   method load_logo: unit
   method load_logo_with_qed: unit
-  method nload_sequents: #NTacStatus.tac_status -> unit
+  method nload_sequents: #GrafiteTypes.status -> unit
   method goto_sequent:
-   #LexiconTypes.status -> int -> unit (* to be called _after_ load_sequents *)
+   #ApplyTransformation.status -> int -> unit (* to be called _after_ load_sequents *)
 
   method cicMathView: cicMathView
 end

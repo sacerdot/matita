@@ -27,7 +27,6 @@
 
 module N  = NotationPt
 module G  = GrafiteAst
-module LE = LexiconEngine
 
 type 'a localized_option =
    LSome of 'a

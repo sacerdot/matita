@@ -1,9 +1,9 @@
-lexiconTypes.cmi: 
-lexiconEngine.cmi: lexiconTypes.cmi 
+grafiteDisambiguate.cmi: 
+lexiconTypes.cmi: grafiteDisambiguate.cmi 
 lexiconSync.cmi: lexiconTypes.cmi 
-lexiconTypes.cmo: lexiconTypes.cmi 
-lexiconTypes.cmx: lexiconTypes.cmi 
-lexiconEngine.cmo: lexiconTypes.cmi lexiconEngine.cmi 
-lexiconEngine.cmx: lexiconTypes.cmx lexiconEngine.cmi 
-lexiconSync.cmo: lexiconTypes.cmi lexiconEngine.cmi lexiconSync.cmi 
-lexiconSync.cmx: lexiconTypes.cmx lexiconEngine.cmx lexiconSync.cmi 
+grafiteDisambiguate.cmo: grafiteDisambiguate.cmi 
+grafiteDisambiguate.cmx: grafiteDisambiguate.cmi 
+lexiconTypes.cmo: grafiteDisambiguate.cmi lexiconTypes.cmi 
+lexiconTypes.cmx: grafiteDisambiguate.cmx lexiconTypes.cmi 
+lexiconSync.cmo: lexiconSync.cmi 
+lexiconSync.cmx: lexiconSync.cmi 
