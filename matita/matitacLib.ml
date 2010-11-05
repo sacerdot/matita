@@ -113,17 +113,14 @@ let activate_extraction baseuri fname =
       *)
 ;;
 
-let compile atstart options fname =
+let compile options fname =
   let matita_debug = Helm_registry.get_bool "matita.debug" in
   let include_paths = get_include_paths options in
   let root,baseuri,fname,_tgt = 
     Librarian.baseuri_of_script ~include_paths fname in
   if Http_getter_storage.is_read_only baseuri then assert false;
   activate_extraction baseuri fname ;
-  let lexicon_status = new GrafiteDisambiguate.status in
-  atstart (); (* FG: do not invoke before loading the core notation script *)  
-  let grafite_status =
-   (new GrafiteTypes.status baseuri)#set_disambiguate_db lexicon_status#disambiguate_db in
+  let grafite_status = new GrafiteTypes.status baseuri in
   let big_bang = Unix.gettimeofday () in
   let { Unix.tms_utime = big_bang_u ; Unix.tms_stime = big_bang_s} = 
     Unix.times () 
@@ -258,18 +255,18 @@ module F =
 
     let build options fname =
       let matita_debug = Helm_registry.get_bool "matita.debug" in
-      let compile atstart opts fname =
+      let compile opts fname =
         try
         (* MATITA 1.0: c'erano le push/pop per il parser; ma per
          * l'environment nuovo? *)
-         compile atstart opts fname
+         compile opts fname
         with 
         | Sys.Break -> false
         | exn when not matita_debug ->
             HLog.error ("Unexpected " ^ snd(MatitaExcPp.to_string exn));
             assert false
       in
-       compact (compile ignore options fname)
+       compact (compile options fname)
     ;;
 
     let load_deps_file = Librarian.load_deps_file;;
