@@ -48,6 +48,7 @@ module type SerializerType =
    'a ->
     refresh_uri_in_universe:(NCic.universe -> NCic.universe) ->
     refresh_uri_in_term:(NCic.term -> NCic.term) ->
+    refresh_uri_in_reference:(NReference.reference -> NReference.reference) ->
      dumpable_status -> dumpable_status
 
   val register: < run: 'a.  string -> 'a register_type -> ('a -> obj) >

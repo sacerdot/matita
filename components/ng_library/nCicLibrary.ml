@@ -22,13 +22,15 @@ let refresh_uri_in_universe =
  List.map (fun (x,u) -> x, refresh_uri u)
 ;;
 
+let refresh_uri_in_reference (NReference.Ref (uri,spec)) =
+ NReference.reference_of_spec (refresh_uri uri) spec
+
 let rec refresh_uri_in_term =
  function
   | NCic.Meta (i,(n,NCic.Ctx l)) ->
      NCic.Meta (i,(n,NCic.Ctx (List.map refresh_uri_in_term l)))
   | NCic.Meta _ as t -> t
-  | NCic.Const (NReference.Ref (u,spec)) ->
-     NCic.Const (NReference.reference_of_spec (refresh_uri u) spec)
+  | NCic.Const ref -> NCic.Const (refresh_uri_in_reference ref)
   | NCic.Sort (NCic.Type l) -> NCic.Sort (NCic.Type (refresh_uri_in_universe l))
   | NCic.Match (NReference.Ref (uri,spec),outtype,term,pl) ->
      let r = NReference.reference_of_spec (refresh_uri uri) spec in
@@ -196,6 +198,7 @@ module type SerializerType =
    'a ->
     refresh_uri_in_universe:(NCic.universe -> NCic.universe) ->
     refresh_uri_in_term:(NCic.term -> NCic.term) ->
+    refresh_uri_in_reference:(NReference.reference -> NReference.reference) ->
      dumpable_status -> dumpable_status
 
   val register: < run: 'a.  string -> 'a register_type -> ('a -> obj) >
@@ -211,6 +214,7 @@ module Serializer(D: sig type dumpable_status end) =
    'a ->
     refresh_uri_in_universe:(NCic.universe -> NCic.universe) ->
     refresh_uri_in_term:(NCic.term -> NCic.term) ->
+    refresh_uri_in_reference:(NReference.reference -> NReference.reference) ->
      dumpable_status -> dumpable_status
 
   let require1 = ref (fun _ -> assert false) (* unknown data*)
@@ -227,6 +231,7 @@ module Serializer(D: sig type dumpable_status end) =
       (fun ((tag',data) as x) ->
         if tag=tag' then
          require (Obj.magic data) ~refresh_uri_in_universe ~refresh_uri_in_term
+          ~refresh_uri_in_reference
         else
          old_require1 x);
      (fun x -> tag,Obj.repr x)
@@ -244,7 +249,8 @@ module Serializer(D: sig type dumpable_status end) =
      raise (IncludedFileNotCompiled(path_of_baseuri baseuri,NUri.string_of_uri baseuri))
 
   let record_include =
-   let aux baseuri ~refresh_uri_in_universe ~refresh_uri_in_term =
+   let aux baseuri ~refresh_uri_in_universe ~refresh_uri_in_term
+   ~refresh_uri_in_reference =
      (* memorizzo baseuri in una tabella; *)
      require2 ~baseuri
    in

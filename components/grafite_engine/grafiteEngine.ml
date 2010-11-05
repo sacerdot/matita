@@ -40,8 +40,7 @@ let basic_eval_unification_hint (t,n) status =
 
 let inject_unification_hint =
  let basic_eval_unification_hint (t,n) 
-   ~refresh_uri_in_universe 
-   ~refresh_uri_in_term
+   ~refresh_uri_in_universe ~refresh_uri_in_term ~refresh_uri_in_reference
  =
   let t = refresh_uri_in_term t in basic_eval_unification_hint (t,n)
  in
@@ -83,7 +82,7 @@ let basic_eval_interpretation (dsc, (symbol, args), cic_appl_pattern) status =
 
 let inject_interpretation =
  let basic_eval_interpretation (dsc, (symbol, args), cic_appl_pattern)
-   ~refresh_uri_in_universe ~refresh_uri_in_term
+   ~refresh_uri_in_universe ~refresh_uri_in_term ~refresh_uri_in_reference
  =
   let rec refresh =
    function
@@ -112,7 +111,8 @@ let basic_eval_alias (mode,diff) status =
 ;;
 
 let inject_alias =
- let basic_eval_alias (mode,diff) ~refresh_uri_in_universe ~refresh_uri_in_term=
+ let basic_eval_alias (mode,diff) ~refresh_uri_in_universe ~refresh_uri_in_term
+   ~refresh_uri_in_reference =
    basic_eval_alias (mode,diff)
  in
   GrafiteTypes.Serializer.register#run "alias" basic_eval_alias
@@ -133,10 +133,14 @@ let basic_eval_input_notation (l1,l2) status =
 
 let inject_input_notation =
  let basic_eval_input_notation (l1,l2)
-  ~refresh_uri_in_universe ~refresh_uri_in_term
+  ~refresh_uri_in_universe ~refresh_uri_in_term ~refresh_uri_in_reference
  =
-   let l1 = CicNotationParser.refresh_uri_in_checked_l1_pattern l1 in
-   let l2 = NotationUtil.refresh_uri_in_term l2 in
+   let l1 =
+    CicNotationParser.refresh_uri_in_checked_l1_pattern
+     ~refresh_uri_in_term ~refresh_uri_in_reference l1 in
+   let l2 = NotationUtil.refresh_uri_in_term
+     ~refresh_uri_in_term ~refresh_uri_in_reference l2
+   in
     basic_eval_input_notation (l1,l2)
  in
   GrafiteTypes.Serializer.register#run "input_notation"
@@ -155,10 +159,14 @@ let basic_eval_output_notation (l1,l2) status =
 
 let inject_output_notation =
  let basic_eval_output_notation (l1,l2)
-  ~refresh_uri_in_universe ~refresh_uri_in_term
+  ~refresh_uri_in_universe ~refresh_uri_in_term ~refresh_uri_in_reference
  =
-  let l1 = CicNotationParser.refresh_uri_in_checked_l1_pattern l1 in
-  let l2 = NotationUtil.refresh_uri_in_term l2 in
+  let l1 =
+   CicNotationParser.refresh_uri_in_checked_l1_pattern
+    ~refresh_uri_in_term ~refresh_uri_in_reference l1 in
+  let l2 = NotationUtil.refresh_uri_in_term
+    ~refresh_uri_in_term ~refresh_uri_in_reference l2
+  in
    basic_eval_output_notation (l1,l2)
  in
   GrafiteTypes.Serializer.register#run "output_notation"
@@ -172,9 +180,8 @@ let eval_output_notation status data=
 ;;
 
 let record_index_obj = 
- let aux l 
-   ~refresh_uri_in_universe 
-   ~refresh_uri_in_term
+ let aux l ~refresh_uri_in_universe 
+   ~refresh_uri_in_term ~refresh_uri_in_reference
  =
     basic_index_obj
       (List.map 
@@ -258,8 +265,7 @@ let index_eq uri status =
 
 let record_index_eq =
  let basic_index_eq uri
-   ~refresh_uri_in_universe 
-   ~refresh_uri_in_term 
+   ~refresh_uri_in_universe ~refresh_uri_in_term ~refresh_uri_in_reference 
    = index_eq (NCicLibrary.refresh_uri uri) 
  in
   GrafiteTypes.Serializer.register#run "index_eq" basic_index_eq
@@ -284,8 +290,7 @@ let basic_eval_add_constraint (u1,u2) status =
 
 let inject_constraint =
  let basic_eval_add_constraint (u1,u2) 
-       ~refresh_uri_in_universe 
-       ~refresh_uri_in_term
+       ~refresh_uri_in_universe ~refresh_uri_in_term ~refresh_uri_in_reference
  =
   let u1 = refresh_uri_in_universe u1 in 
   let u2 = refresh_uri_in_universe u2 in 

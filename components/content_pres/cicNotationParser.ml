@@ -48,8 +48,11 @@ type ('a,'b,'c,'d) grammars = {
 
 type checked_l1_pattern = CL1P of NotationPt.term * int
 
-let refresh_uri_in_checked_l1_pattern (CL1P (t,n)) =
- CL1P (NotationUtil.refresh_uri_in_term t, n)
+let refresh_uri_in_checked_l1_pattern ~refresh_uri_in_term
+     ~refresh_uri_in_reference (CL1P (t,n))
+=
+ CL1P (NotationUtil.refresh_uri_in_term ~refresh_uri_in_term
+ ~refresh_uri_in_reference t, n)
 
 type binding =
   | NoBinding

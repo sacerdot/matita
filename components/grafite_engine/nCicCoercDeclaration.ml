@@ -282,14 +282,16 @@ let basic_eval_ncoercion (name,t,s,d,p,a) status =
 ;;
 
 let record_ncoercion =
- let aux (name,t,s,d,p,a) ~refresh_uri_in_universe ~refresh_uri_in_term =
+ let aux (name,t,s,d,p,a) ~refresh_uri_in_term =
   let t = refresh_uri_in_term t in
   let s = refresh_uri_in_term s in
   let d = refresh_uri_in_term d in
    basic_index_ncoercion (name,t,s,d,p,a)
  in
- let aux_l l ~refresh_uri_in_universe ~refresh_uri_in_term =
-   List.fold_right (aux ~refresh_uri_in_universe ~refresh_uri_in_term) l
+ let aux_l l ~refresh_uri_in_universe ~refresh_uri_in_term
+  ~refresh_uri_in_reference
+ =
+   List.fold_right (aux ~refresh_uri_in_term) l
  in
   GrafiteTypes.Serializer.register#run "ncoercion" aux_l 
 ;;

@@ -397,4 +397,19 @@ let freshen_obj obj =
 
 let freshen_term = freshen_term ?index:None
 
-let refresh_uri_in_term t = assert false
+let rec refresh_uri_in_term ~refresh_uri_in_term:refresh_in_cic
+ ~refresh_uri_in_reference
+=
+ function
+    NotationPt.NRef ref -> NotationPt.NRef (refresh_uri_in_reference ref)
+  | NotationPt.NCic t -> NotationPt.NCic (refresh_in_cic t)
+  | t ->
+     visit_ast
+     (refresh_uri_in_term ~refresh_uri_in_term:refresh_in_cic
+       ~refresh_uri_in_reference) t
+      ~special_k:(fun x -> x)
+      ~map_xref_option:(function Some ref -> Some (refresh_uri_in_reference ref)
+                         | x -> x)
+      ~map_case_indty:(function (Some (s,Some ref)) -> Some (s, Some
+                        (refresh_uri_in_reference ref)) | x -> x)
+;;

@@ -92,4 +92,7 @@ type notation_id
 
 val fresh_id: unit -> notation_id
 
-val refresh_uri_in_term: NotationPt.term -> NotationPt.term
+val refresh_uri_in_term:
+ refresh_uri_in_term:(NCic.term -> NCic.term) ->
+ refresh_uri_in_reference:(NReference.reference -> NReference.reference) ->
+  NotationPt.term -> NotationPt.term

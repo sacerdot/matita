@@ -42,7 +42,10 @@ class status: keywords:string list ->
 
 type checked_l1_pattern = private CL1P of NotationPt.term * int
 
-val refresh_uri_in_checked_l1_pattern: checked_l1_pattern -> checked_l1_pattern 
+val refresh_uri_in_checked_l1_pattern:
+ refresh_uri_in_term:(NCic.term -> NCic.term) ->
+ refresh_uri_in_reference:(NReference.reference -> NReference.reference) ->
+  checked_l1_pattern -> checked_l1_pattern 
 
 (** {2 Parsing functions} *)
 
