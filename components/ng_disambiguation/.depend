@@ -1,7 +1,14 @@
+disambiguateChoices.cmi: 
 nCicDisambiguate.cmi: 
+nnumber_notation.cmi: 
+grafiteDisambiguate.cmi: 
 disambiguateChoices.cmo: disambiguateChoices.cmi 
 disambiguateChoices.cmx: disambiguateChoices.cmi 
 nCicDisambiguate.cmo: nCicDisambiguate.cmi 
 nCicDisambiguate.cmx: nCicDisambiguate.cmi 
-nnumber_notation.cmo: disambiguateChoices.cmi 
-nnumber_notation.cmx: disambiguateChoices.cmx 
+nnumber_notation.cmo: disambiguateChoices.cmi nnumber_notation.cmi 
+nnumber_notation.cmx: disambiguateChoices.cmx nnumber_notation.cmi 
+grafiteDisambiguate.cmo: nCicDisambiguate.cmi disambiguateChoices.cmi \
+    grafiteDisambiguate.cmi 
+grafiteDisambiguate.cmx: nCicDisambiguate.cmx disambiguateChoices.cmx \
+    grafiteDisambiguate.cmi 

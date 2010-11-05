@@ -18,13 +18,12 @@ MODULES =			\
 	content		        \
 	grafite			\
 	ng_refiner              \
+	ng_library 		\
 	ng_cic_content		\
 	disambiguation	        \
 	ng_disambiguation	\
 	ng_paramodulation	\
-	ng_library 		\
 	content_pres		\
-	lexicon			\
 	grafite_parser          \
 	ng_tactics		\
 	grafite_engine          \

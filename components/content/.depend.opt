@@ -1,8 +1,7 @@
 content.cmi: 
-notationUtil.cmi: 
-notationEnv.cmi: 
-notationPp.cmi: 
-interpretations.cmi: notationPt.cmx 
+notationUtil.cmi: notationPt.cmx 
+notationEnv.cmi: notationPt.cmx 
+notationPp.cmi: notationPt.cmx notationEnv.cmi 
 notationPt.cmo: 
 notationPt.cmx: 
 content.cmo: content.cmi 
@@ -13,5 +12,3 @@ notationEnv.cmo: notationUtil.cmi notationPt.cmx notationEnv.cmi
 notationEnv.cmx: notationUtil.cmx notationPt.cmx notationEnv.cmi 
 notationPp.cmo: notationPt.cmx notationEnv.cmi notationPp.cmi 
 notationPp.cmx: notationPt.cmx notationEnv.cmx notationPp.cmi 
-interpretations.cmo: notationUtil.cmi notationPt.cmx interpretations.cmi 
-interpretations.cmx: notationUtil.cmx notationPt.cmx interpretations.cmi 

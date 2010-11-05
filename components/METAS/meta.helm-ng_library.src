@@ -1,4 +1,4 @@
-requires="helm-ng_refiner helm-ng_cic_content helm-ng_disambiguation helm-ng_paramodulation"
+requires="helm-ng_refiner helm-registry helm-library"
 version="0.0.1"
 archive(byte)="ng_library.cma"
 archive(native)="ng_library.cmxa"

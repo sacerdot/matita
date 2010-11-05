@@ -2,7 +2,7 @@ continuationals.cmi:
 nCicTacReduction.cmi: 
 nTacStatus.cmi: continuationals.cmi 
 nCicElim.cmi: 
-nTactics.cmi: nTacStatus.cmi continuationals.cmi 
+nTactics.cmi: nTacStatus.cmi 
 nnAuto.cmi: nTacStatus.cmi 
 nDestructTac.cmi: nTacStatus.cmi 
 nInversion.cmi: nTacStatus.cmi 
