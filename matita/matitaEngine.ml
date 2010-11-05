@@ -53,7 +53,7 @@ let eval_macro_screenshot (status : GrafiteTypes.status) name =
 
 let eval_ast ~include_paths ?do_heavy_checks status (text,prefix_len,ast) =
  let baseuri = status#baseuri in
- let new_aliases,status =
+ let new_aliases,new_status =
   GrafiteDisambiguate.eval_with_new_aliases status
    (fun status ->
      GrafiteEngine.eval_ast ~include_paths ?do_heavy_checks status
@@ -78,9 +78,9 @@ let eval_ast ~include_paths ?do_heavy_checks status (text,prefix_len,ast) =
          GrafiteAst.WithPreferences [k,value]
        in
         status, (status ,Some (k,value))::acc
-   ) (status,[]) new_aliases
+   ) (status,[]) new_aliases (* WARNING: this must be the old status! *)
  in
-  (status,None)::intermediate_states
+  (new_status,None)::intermediate_states
 ;;
 
 exception TryingToAdd of string
