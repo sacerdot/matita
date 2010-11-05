@@ -44,7 +44,6 @@ val eval_from_stream :
   include_paths:string list ->
   ?do_heavy_checks:bool ->
   ?enforce_no_new_aliases:bool -> (* default true *)
-  ?watch_statuses:(GrafiteTypes.status -> unit) ->
   GrafiteTypes.status ->
   Ulexing.lexbuf ->
   (GrafiteTypes.status -> GrafiteAst.statement -> unit) ->

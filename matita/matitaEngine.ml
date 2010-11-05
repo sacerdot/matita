@@ -87,7 +87,7 @@ exception TryingToAdd of string
 exception EnrichedWithStatus of exn * GrafiteTypes.status
 
 let eval_from_stream ~include_paths ?do_heavy_checks
- ?(enforce_no_new_aliases=true) ?(watch_statuses=fun _ -> ()) status str cb 
+ ?(enforce_no_new_aliases=true) status str cb 
 =
  let matita_debug = Helm_registry.get_bool "matita.debug" in
  let rec loop status statuses =
@@ -100,9 +100,7 @@ let eval_from_stream ~include_paths ?do_heavy_checks
      | None -> true, status, statuses
      | Some ast ->
        (match ast with
-           GrafiteParser.LNone _ ->
-            watch_statuses status ;
-            false, status, ((status,None)::statuses)
+           GrafiteParser.LNone _ -> false, status, ((status,None)::statuses)
          | GrafiteParser.LSome ast ->
             cb status ast;
             let new_statuses =
@@ -120,7 +118,6 @@ let eval_from_stream ~include_paths ?do_heavy_checks
                 [] -> assert false
               | (s,_)::_ -> s
             in
-             watch_statuses status ;
              false, status, (new_statuses @ statuses))
    with exn when not matita_debug ->
      raise (EnrichedWithStatus (exn, status))
