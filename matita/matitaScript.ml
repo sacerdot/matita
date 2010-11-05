@@ -188,7 +188,7 @@ and eval_statement include_paths (buffer : GText.buffer) guistuff
     match statement with
     | `Raw text ->
         if Pcre.pmatch ~rex:only_dust_RE text then raise Margin;
-        let ast = MatitaEngine.toplevel grafite_status include_paths text in
+        let ast = MatitaEngine.get_ast grafite_status include_paths text in
          ast, text
     | `Ast (st, text) -> st, text
   in

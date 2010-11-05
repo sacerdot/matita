@@ -23,6 +23,12 @@
  * http://helm.cs.unibo.it/
  *)
 
+val get_ast:
+  #GrafiteParser.status -> include_paths:string list -> string ->
+    GrafiteAst.statement
+
+(* heavy checks slow down the compilation process but give you some interesting
+ * infos like if the theorem is a duplicate *)
 val eval_ast :
   include_paths: string list ->
   ?do_heavy_checks:bool ->
@@ -33,21 +39,7 @@ val eval_ast :
    (DisambiguateTypes.domain_item * GrafiteAst.alias_spec) option) list
 
 
-(* heavy checks slow down the compilation process but give you some interesting
- * infos like if the theorem is a duplicate *)
-
 exception EnrichedWithStatus of exn * GrafiteTypes.status
-
-(* should be used only by the compiler since it looses the
-   * disambiguation_context (text,prefix_len,_) *)
-val eval_from_stream :
-  include_paths:string list -> ?do_heavy_checks:bool -> GrafiteTypes.status ->
-   Ulexing.lexbuf -> (GrafiteTypes.status -> GrafiteAst.statement -> unit) ->
-    GrafiteTypes.status
-
-val toplevel:
-  #GrafiteParser.status -> include_paths:string list -> string ->
-    GrafiteParser.ast_statement
 
 (* EX MATITACLIB *)
 module Make : sig

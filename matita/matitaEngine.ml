@@ -366,14 +366,8 @@ module Make = Librarian.Make(F)
 
 (* FINE EX MATITACLIB *)
 
-
-
-(* this function calls the parser in a way that it does not perform inclusions,
- * so that we can ensure the inclusion is performed after the included file 
- * is compiled (if needed). matitac does not need that, since it compiles files
- * in the good order, here files may be compiled on demand. *)
-let wrap_with_make include_paths f x = 
-  match f x with
+let get_ast status ~include_paths text = 
+  match GrafiteParser.parse_statement status (Ulexing.from_utf8_string text)with
      (GrafiteAst.Executable
        (_,GrafiteAst.NCommand (_,GrafiteAst.Include (_,_,mafilename)))) as cmd
      ->
@@ -388,10 +382,4 @@ let wrap_with_make include_paths f x =
        cmd
       else raise (Failure ("Compiling: " ^ tgt))
    | cmd -> cmd
-;;
-
-let toplevel status ~include_paths text =
- wrap_with_make include_paths
-  (GrafiteParser.parse_statement status)
-    (Ulexing.from_utf8_string text)
 ;;
