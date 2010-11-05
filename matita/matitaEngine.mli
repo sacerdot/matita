@@ -27,6 +27,7 @@ exception TryingToAdd of string Lazy.t
 exception EnrichedWithStatus of exn * GrafiteTypes.status
 exception AlreadyLoaded of string Lazy.t
 exception FailureCompiling of string * exn
+exception CircularDependency of string
 
 val get_ast:
   GrafiteTypes.status -> include_paths:string list -> Ulexing.lexbuf ->

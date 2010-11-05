@@ -33,6 +33,7 @@ exception TryingToAdd of string Lazy.t
 exception EnrichedWithStatus of exn * GrafiteTypes.status
 exception AlreadyLoaded of string Lazy.t
 exception FailureCompiling of string * exn
+exception CircularDependency of string
 
 let debug = false ;;
 let debug_print = if debug then prerr_endline else ignore ;;
@@ -87,11 +88,6 @@ let cut prefix s =
   assert (lens > lenp);
   assert (String.sub s 0 lenp = prefix);
   String.sub s lenp (lens-lenp)
-;;
-
-(*MATITA 1.0 assert false;; (* chiamare enrich_include_paths *)*)
-let enrich_include_paths ~include_paths =
- include_paths @ Helm_registry.get_list Helm_registry.string "matita.includes" 
 ;;
 
 let activate_extraction baseuri fname =
@@ -166,7 +162,7 @@ let eval_ast ~include_paths ?do_heavy_checks status (text,prefix_len,ast) =
   (new_status,None)::intermediate_states
 ;;
 
-let rec get_ast status ~include_paths strm = 
+let rec get_ast status ~compiling ~include_paths strm = 
   match GrafiteParser.parse_statement status strm with
      (GrafiteAst.Executable
        (_,GrafiteAst.NCommand (_,GrafiteAst.Include (_,_,mafilename)))) as cmd
@@ -178,17 +174,17 @@ let rec get_ast status ~include_paths strm =
           HLog.error "please create it.";
           raise (Failure ("No root file for "^mafilename))
       in
-       ignore (assert_ng ~include_paths ~root tgt);
+       ignore (assert_ng ~compiling ~include_paths ~root tgt);
        cmd
    | cmd -> cmd
 
-and eval_from_stream ~include_paths ?do_heavy_checks status str cb =
+and eval_from_stream ~compiling ~include_paths ?do_heavy_checks status str cb =
  let matita_debug = Helm_registry.get_bool "matita.debug" in
  let rec loop status =
   let stop,status = 
    try
      let cont =
-       try Some (get_ast status ~include_paths str)
+       try Some (get_ast status ~compiling ~include_paths str)
        with End_of_file -> None in
      match cont with
      | None -> true, status
@@ -211,7 +207,9 @@ and eval_from_stream ~include_paths ?do_heavy_checks status str cb =
  in
   loop status
 
-and compile ~include_paths fname =
+and compile ~compiling ~include_paths fname =
+  if List.mem fname compiling then raise (CircularDependency fname);
+  let compiling = fname::compiling in
   let matita_debug = Helm_registry.get_bool "matita.debug" in
   let root,baseuri,fname,_tgt = 
     Librarian.baseuri_of_script ~include_paths fname in
@@ -257,7 +255,7 @@ and compile ~include_paths fname =
       else pp_ast_statement
     in
     let grafite_status =
-     eval_from_stream ~include_paths grafite_status buf print_cb in
+     eval_from_stream ~compiling ~include_paths grafite_status buf print_cb in
     let elapsed = Unix.time () -. time in
      (if Helm_registry.get_bool "matita.moo" then begin
        GrafiteTypes.Serializer.serialize ~baseuri:(NUri.uri_of_string baseuri)
@@ -289,7 +287,7 @@ and compile ~include_paths fname =
 
 (* BIG BUG: if a file recursively includes itself, anything can happen,
  * from divergence to inclusion of an old copy of itself *)
-and assert_ng ~include_paths ~root mapath =
+and assert_ng ~compiling ~include_paths ~root mapath =
  let root',baseuri,_,_ = Librarian.baseuri_of_script ~include_paths mapath in
  assert (root=root');
  let baseuri = NUri.uri_of_string baseuri in
@@ -306,7 +304,9 @@ and assert_ng ~include_paths ~root mapath =
   match ngtime with
      Some ngtime ->
       let preamble = GrafiteTypes.Serializer.dependencies_of baseuri in
-      let children_bad= List.exists (assert_ng ~include_paths ~root) preamble in
+      let children_bad =
+       List.exists (assert_ng ~compiling ~include_paths ~root) preamble
+      in
        children_bad || matime > ngtime
    | None -> true
  in
@@ -317,4 +317,8 @@ and assert_ng ~include_paths ~root mapath =
      (* maybe recompiling it I would get the same... *)
      raise (AlreadyLoaded (lazy mapath))
    else
-    (compile ~include_paths mapath; true)
+    (compile ~compiling ~include_paths mapath; true)
+;;
+
+let assert_ng = assert_ng ~compiling:[]
+let get_ast = get_ast ~compiling:[]
