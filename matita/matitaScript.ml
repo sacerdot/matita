@@ -99,28 +99,6 @@ let eval_with_engine include_paths guistuff grafite_status user_goal
   res,"",parsed_text_length
 ;;
 
-(* this function calls the parser in a way that it does not perform inclusions,
- * so that we can ensure the inclusion is performed after the included file 
- * is compiled (if needed). matitac does not need that, since it compiles files
- * in the good order, here files may be compiled on demand. *)
-let wrap_with_make include_paths f x = 
-  match f x with
-     (GrafiteAst.Executable
-       (_,GrafiteAst.NCommand (_,GrafiteAst.Include (_,_,mafilename)))) as cmd
-     ->
-      let root, buri, _, tgt = 
-        try Librarian.baseuri_of_script ~include_paths mafilename
-        with Librarian.NoRootFor _ -> 
-          HLog.error ("The included file '"^mafilename^"' has no root file,");
-          HLog.error "please create it.";
-          raise (Failure ("No root file for "^mafilename))
-      in
-      if MatitacLib.Make.make root [tgt] then
-       cmd
-      else raise (Failure ("Compiling: " ^ tgt))
-   | cmd -> cmd
-;;
-
 let pp_eager_statement_ast = GrafiteAstPp.pp_statement 
 
 let eval_nmacro include_paths (buffer : GText.buffer) guistuff grafite_status user_goal unparsed_text parsed_text script mac =
@@ -210,12 +188,8 @@ and eval_statement include_paths (buffer : GText.buffer) guistuff
     match statement with
     | `Raw text ->
         if Pcre.pmatch ~rex:only_dust_RE text then raise Margin;
-        let ast = 
-         wrap_with_make include_paths
-          (GrafiteParser.parse_statement grafite_status)
-            (Ulexing.from_utf8_string text)
-        in
-          ast, text
+        let ast = MatitaEngine.toplevel grafite_status include_paths text in
+         ast, text
     | `Ast (st, text) -> st, text
   in
   let text_of_loc floc = 

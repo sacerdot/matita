@@ -44,3 +44,13 @@ val eval_from_stream :
   include_paths:string list -> ?do_heavy_checks:bool -> GrafiteTypes.status ->
    Ulexing.lexbuf -> (GrafiteTypes.status -> GrafiteAst.statement -> unit) ->
     GrafiteTypes.status
+
+val toplevel:
+  #GrafiteParser.status -> include_paths:string list -> string ->
+    GrafiteParser.ast_statement
+
+(* EX MATITACLIB *)
+module Make : sig
+   val make: string -> string list -> bool
+end
+(* FINE EX MATITACLIB *)

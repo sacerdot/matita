@@ -38,9 +38,8 @@ MLI = \
 	matitaTypes.mli		\
 	matitaMisc.mli		\
 	applyTransformation.mli	\
-	matitaEngine.mli	\
 	matitaExcPp.mli 	\
-	matitacLib.mli		\
+	matitaEngine.mli	\
 	matitaInit.mli		\
 	matitaGtkMisc.mli	\
 	virtuals.mli 		\
@@ -53,9 +52,8 @@ CMLI =				\
 	matitaTypes.mli		\
 	matitaMisc.mli		\
 	applyTransformation.mli	\
-	matitaEngine.mli	\
 	matitaExcPp.mli 	\
-	matitacLib.mli		\
+	matitaEngine.mli	\
 	matitaInit.mli		\
 	$(NULL)
 MAINCMLI =			\

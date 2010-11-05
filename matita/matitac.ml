@@ -57,7 +57,7 @@ let main_compiler () =
   if system_mode then HLog.message "Compiling in system space";
   (* here we go *)
   if not (Helm_registry.get_bool "matita.verbose") then MatitaMisc.shutup ();
-  if MatitacLib.Make.make root target then 
+  if MatitaEngine.Make.make root target then 
     (HLog.message "Compilation successful"; 0)
   else
     (HLog.message "Compilation failed"; 1)
