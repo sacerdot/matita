@@ -288,7 +288,7 @@ and compile ~compiling ~include_paths fname =
 (* BIG BUG: if a file recursively includes itself, anything can happen,
  * from divergence to inclusion of an old copy of itself *)
 and assert_ng ~compiling ~include_paths ~root mapath =
- let root',baseuri,_,_ = Librarian.baseuri_of_script ~include_paths mapath in
+ let root',baseuri,fullmapath,_ = Librarian.baseuri_of_script ~include_paths mapath in
  assert (root=root');
  let baseuri = NUri.uri_of_string baseuri in
  let ngpath = NCicLibrary.ng_path_of_baseuri baseuri in
@@ -297,8 +297,8 @@ and assert_ng ~compiling ~include_paths ~root mapath =
    Some (Unix.stat ngpath).Unix.st_mtime
   with Unix.Unix_error (Unix.ENOENT, "stat", f) when f = ngpath -> None in
  let matime =
-  try (Unix.stat mapath).Unix.st_mtime
-  with Unix.Unix_error (Unix.ENOENT, "stat", f) when f = mapath -> assert false
+  try (Unix.stat fullmapath).Unix.st_mtime
+  with Unix.Unix_error (Unix.ENOENT, "stat", f) when f = fullmapath -> assert false
  in
  let to_be_compiled =
   match ngtime with
@@ -317,7 +317,7 @@ and assert_ng ~compiling ~include_paths ~root mapath =
      (* maybe recompiling it I would get the same... *)
      raise (AlreadyLoaded (lazy mapath))
    else
-    (compile ~compiling ~include_paths mapath; true)
+    (compile ~compiling ~include_paths fullmapath; true)
 ;;
 
 let assert_ng = assert_ng ~compiling:[]
