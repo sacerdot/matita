@@ -76,7 +76,7 @@ let save_moo grafite_status =
   | true, _ -> ()
   | _, true ->
      GrafiteTypes.Serializer.serialize ~baseuri:(NUri.uri_of_string baseuri)
-      grafite_status#dump
+      ~dependencies:grafite_status#dependencies grafite_status#dump
   | _ -> clean_current_baseuri grafite_status 
 ;;
     

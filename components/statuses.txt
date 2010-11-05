@@ -1,4 +1,4 @@
-grafitetypes(baseuri,ng_mode)
+grafitetypes(baseuri,ng_mode,dependencies)
  |--> dumpable(dump)
  |--> nciclibrary(timestamp)
  |--> grafiteparser(db=ast_statement grammarentry)

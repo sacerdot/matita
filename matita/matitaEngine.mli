@@ -23,8 +23,13 @@
  * http://helm.cs.unibo.it/
  *)
 
+exception TryingToAdd of string Lazy.t
+exception EnrichedWithStatus of exn * GrafiteTypes.status
+exception AlreadyLoaded of string Lazy.t
+exception FailureCompiling of string * exn
+
 val get_ast:
-  #GrafiteParser.status -> include_paths:string list -> string ->
+  GrafiteTypes.status -> include_paths:string list -> Ulexing.lexbuf ->
     GrafiteAst.statement
 
 (* heavy checks slow down the compilation process but give you some interesting
@@ -38,11 +43,4 @@ val eval_ast :
   (GrafiteTypes.status *
    (DisambiguateTypes.domain_item * GrafiteAst.alias_spec) option) list
 
-
-exception EnrichedWithStatus of exn * GrafiteTypes.status
-
-(* EX MATITACLIB *)
-module Make : sig
-   val make: string -> string list -> bool
-end
-(* FINE EX MATITACLIB *)
+val assert_ng : include_paths:string list -> root:string -> string -> bool

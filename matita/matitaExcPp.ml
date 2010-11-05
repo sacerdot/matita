@@ -147,6 +147,13 @@ let rec to_string =
      None, "NCicEnvironment object not found: " ^ Lazy.force msg
   | NCicEnvironment.AlreadyDefined msg ->
      None, "NCicEnvironment already defined: " ^ Lazy.force msg
+  | MatitaEngine.TryingToAdd msg ->
+     None, "Attempt to insert an alias in batch mode: " ^ Lazy.force msg
+  | MatitaEngine.AlreadyLoaded msg ->
+     None, "The file " ^ Lazy.force msg ^ " needs recompilation but it is
+     already loaded; undo the inclusion and try again."
+  | MatitaEngine.FailureCompiling (filename,exn) ->
+     None, "Compiling " ^ filename ^ ": " ^ snd (to_string exn)
   | NCicRefiner.AssertFailure msg ->
      None, "NRefiner assert failure: " ^ Lazy.force msg
   | NCicEnvironment.BadDependency (msg,e) ->
@@ -160,10 +167,8 @@ let rec to_string =
      None, "NCicUnification uncertain: " ^ Lazy.force msg
   | DisambiguateChoices.Choice_not_found msg ->
      None, ("Disambiguation choice not found: " ^ Lazy.force msg)
-     (* MATITA 1.0
   | MatitaEngine.EnrichedWithStatus (exn,_) ->
      None, "EnrichedWithStatus "^snd(to_string exn)
-     *)
   | NTacStatus.Error (msg,None) ->
      None, "NTactic error: " ^ Lazy.force msg 
   | NTacStatus.Error (msg,Some exn) ->

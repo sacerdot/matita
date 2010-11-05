@@ -26,9 +26,92 @@
 (* $Id$ *)
 
 module G = GrafiteAst
+open GrafiteTypes
+open Printf
+
+exception TryingToAdd of string Lazy.t
+exception EnrichedWithStatus of exn * GrafiteTypes.status
+exception AlreadyLoaded of string Lazy.t
+exception FailureCompiling of string * exn
 
 let debug = false ;;
 let debug_print = if debug then prerr_endline else ignore ;;
+
+let slash_n_RE = Pcre.regexp "\\n" ;;
+
+let pp_ast_statement grafite_status stm =
+  let stm = GrafiteAstPp.pp_statement stm
+    ~map_unicode_to_tex:(Helm_registry.get_bool "matita.paste_unicode_as_tex")
+  in
+  let stm = Pcre.replace ~rex:slash_n_RE stm in
+  let stm =
+      if String.length stm > 50 then String.sub stm 0 50 ^ " ..."
+      else stm
+  in
+    HLog.debug ("Executing: ``" ^ stm ^ "''")
+;;
+
+let clean_exit baseuri exn =
+  LibraryClean.clean_baseuris ~verbose:false [baseuri];
+  raise (FailureCompiling (baseuri,exn))
+;;
+
+let pp_times fname rc big_bang big_bang_u big_bang_s = 
+  if not (Helm_registry.get_bool "matita.verbose") then
+    let { Unix.tms_utime = u ; Unix.tms_stime = s} = Unix.times () in
+    let r = Unix.gettimeofday () -. big_bang in
+    let u = u -. big_bang_u in
+    let s = s -. big_bang_s in
+    let extra = try Sys.getenv "BENCH_EXTRA_TEXT" with Not_found -> "" in
+    let rc,rcascii = 
+      if rc then "[0;32mOK[0m","Ok" else "[0;31mFAIL[0m","Fail" in
+    let times = 
+      let fmt t = 
+        let seconds = int_of_float t in
+        let cents = int_of_float ((t -. floor t) *. 100.0) in
+        let minutes = seconds / 60 in
+        let seconds = seconds mod 60 in
+        Printf.sprintf "%dm%02d.%02ds" minutes seconds cents
+      in
+      Printf.sprintf "%s %s %s" (fmt r) (fmt u) (fmt s)
+    in
+    let s = Printf.sprintf "%-4s %s %s" rc times extra in
+    print_endline s;
+    flush stdout;
+    HLog.message ("Compilation of "^Filename.basename fname^": "^rc)
+;;
+
+let cut prefix s = 
+  let lenp = String.length prefix in
+  let lens = String.length s in
+  assert (lens > lenp);
+  assert (String.sub s 0 lenp = prefix);
+  String.sub s lenp (lens-lenp)
+;;
+
+(*MATITA 1.0 assert false;; (* chiamare enrich_include_paths *)*)
+let enrich_include_paths ~include_paths =
+ include_paths @ Helm_registry.get_list Helm_registry.string "matita.includes" 
+;;
+
+let activate_extraction baseuri fname =
+  ()
+  (* MATITA 1.0
+ if Helm_registry.get_bool "matita.extract" then
+  let mangled_baseuri =
+   let baseuri = String.sub baseuri 5 (String.length baseuri - 5) in
+     let baseuri = Pcre.replace ~pat:"/" ~templ:"_" baseuri in
+      String.uncapitalize baseuri in
+  let f =
+    open_out
+     (Filename.dirname fname ^ "/" ^ mangled_baseuri ^ ".ml") in
+   LibrarySync.add_object_declaration_hook
+    (fun ~add_obj ~add_coercion _ obj ->
+      output_string f (CicExportation.ppobj baseuri obj);
+      flush f; []);
+      *)
+;;
+
 
 let eval_macro_screenshot (status : GrafiteTypes.status) name =
   assert false (* MATITA 1.0
@@ -83,16 +166,29 @@ let eval_ast ~include_paths ?do_heavy_checks status (text,prefix_len,ast) =
   (new_status,None)::intermediate_states
 ;;
 
-exception TryingToAdd of string
-exception EnrichedWithStatus of exn * GrafiteTypes.status
+let rec get_ast status ~include_paths strm = 
+  match GrafiteParser.parse_statement status strm with
+     (GrafiteAst.Executable
+       (_,GrafiteAst.NCommand (_,GrafiteAst.Include (_,_,mafilename)))) as cmd
+     ->
+      let root, buri, _, tgt = 
+        try Librarian.baseuri_of_script ~include_paths mafilename
+        with Librarian.NoRootFor _ -> 
+          HLog.error ("The included file '"^mafilename^"' has no root file,");
+          HLog.error "please create it.";
+          raise (Failure ("No root file for "^mafilename))
+      in
+       ignore (assert_ng ~include_paths ~root tgt);
+       cmd
+   | cmd -> cmd
 
-let eval_from_stream ~include_paths ?do_heavy_checks status str cb =
+and eval_from_stream ~include_paths ?do_heavy_checks status str cb =
  let matita_debug = Helm_registry.get_bool "matita.debug" in
  let rec loop status =
   let stop,status = 
    try
      let cont =
-       try Some (GrafiteParser.parse_statement status str)
+       try Some (get_ast status ~include_paths str)
        with End_of_file -> None in
      match cont with
      | None -> true, status
@@ -104,7 +200,7 @@ let eval_from_stream ~include_paths ?do_heavy_checks status str cb =
          match new_statuses with
             [s,None] -> s
           | _::(_,Some (_,value))::_ ->
-                raise (TryingToAdd (GrafiteAstPp.pp_alias value))
+                raise (TryingToAdd (lazy (GrafiteAstPp.pp_alias value)))
           | _ -> assert false
         in
          false, status
@@ -114,101 +210,14 @@ let eval_from_stream ~include_paths ?do_heavy_checks status str cb =
   if stop then status else loop status
  in
   loop status
-;;
 
-(* EX MATITACLIB *)
-open Printf
-
-open GrafiteTypes
-
-let slash_n_RE = Pcre.regexp "\\n" ;;
-
-let pp_ast_statement grafite_status stm =
-  let stm = GrafiteAstPp.pp_statement stm
-    ~map_unicode_to_tex:(Helm_registry.get_bool "matita.paste_unicode_as_tex")
-  in
-  let stm = Pcre.replace ~rex:slash_n_RE stm in
-  let stm =
-      if String.length stm > 50 then String.sub stm 0 50 ^ " ..."
-      else stm
-  in
-    HLog.debug ("Executing: ``" ^ stm ^ "''")
-;;
-
-let clean_exit baseuri rc =
-  LibraryClean.clean_baseuris ~verbose:false [baseuri]; rc
-;;
-
-let pp_times fname rc big_bang big_bang_u big_bang_s = 
-  if not (Helm_registry.get_bool "matita.verbose") then
-    let { Unix.tms_utime = u ; Unix.tms_stime = s} = Unix.times () in
-    let r = Unix.gettimeofday () -. big_bang in
-    let u = u -. big_bang_u in
-    let s = s -. big_bang_s in
-    let extra = try Sys.getenv "BENCH_EXTRA_TEXT" with Not_found -> "" in
-    let rc,rcascii = 
-      if rc then "[0;32mOK[0m","Ok" else "[0;31mFAIL[0m","Fail" in
-    let times = 
-      let fmt t = 
-        let seconds = int_of_float t in
-        let cents = int_of_float ((t -. floor t) *. 100.0) in
-        let minutes = seconds / 60 in
-        let seconds = seconds mod 60 in
-        Printf.sprintf "%dm%02d.%02ds" minutes seconds cents
-      in
-      Printf.sprintf "%s %s %s" (fmt r) (fmt u) (fmt s)
-    in
-    let s = Printf.sprintf "%-4s %s %s" rc times extra in
-    print_endline s;
-    flush stdout;
-    HLog.message ("Compilation of "^Filename.basename fname^": "^rc)
-;;
-
-let cut prefix s = 
-  let lenp = String.length prefix in
-  let lens = String.length s in
-  assert (lens > lenp);
-  assert (String.sub s 0 lenp = prefix);
-  String.sub s lenp (lens-lenp)
-;;
-
-let get_include_paths options =
-  let include_paths = 
-    try List.assoc "include_paths" options with Not_found -> "" 
-  in
-  let include_paths = Str.split (Str.regexp " ") include_paths in
-  let include_paths = 
-    include_paths @ 
-    Helm_registry.get_list Helm_registry.string "matita.includes" 
-  in
-    include_paths
-;;
-
-let activate_extraction baseuri fname =
-  ()
-  (* MATITA 1.0
- if Helm_registry.get_bool "matita.extract" then
-  let mangled_baseuri =
-   let baseuri = String.sub baseuri 5 (String.length baseuri - 5) in
-     let baseuri = Pcre.replace ~pat:"/" ~templ:"_" baseuri in
-      String.uncapitalize baseuri in
-  let f =
-    open_out
-     (Filename.dirname fname ^ "/" ^ mangled_baseuri ^ ".ml") in
-   LibrarySync.add_object_declaration_hook
-    (fun ~add_obj ~add_coercion _ obj ->
-      output_string f (CicExportation.ppobj baseuri obj);
-      flush f; []);
-      *)
-;;
-
-let compile options fname =
+and compile ~include_paths fname =
   let matita_debug = Helm_registry.get_bool "matita.debug" in
-  let include_paths = get_include_paths options in
   let root,baseuri,fname,_tgt = 
     Librarian.baseuri_of_script ~include_paths fname in
   if Http_getter_storage.is_read_only baseuri then assert false;
   activate_extraction baseuri fname ;
+  (* MATITA 1.0: debbo fare time_travel sulla ng_library? *)
   let grafite_status = new GrafiteTypes.status baseuri in
   let big_bang = Unix.gettimeofday () in
   let { Unix.tms_utime = big_bang_u ; Unix.tms_stime = big_bang_s} = 
@@ -248,12 +257,11 @@ let compile options fname =
       else pp_ast_statement
     in
     let grafite_status =
-     eval_from_stream ~include_paths grafite_status buf print_cb
-    in
+     eval_from_stream ~include_paths grafite_status buf print_cb in
     let elapsed = Unix.time () -. time in
      (if Helm_registry.get_bool "matita.moo" then begin
        GrafiteTypes.Serializer.serialize ~baseuri:(NUri.uri_of_string baseuri)
-        grafite_status#dump
+        ~dependencies:grafite_status#dependencies grafite_status#dump
      end;
      let tm = Unix.gmtime elapsed in
      let sec = string_of_int tm.Unix.tm_sec ^ "''" in
@@ -265,121 +273,48 @@ let compile options fname =
      in
      HLog.message 
        (sprintf "execution of %s completed in %s." fname (hou^min^sec));
-     pp_times fname true big_bang big_bang_u big_bang_s;
-(*
+     pp_times fname true big_bang big_bang_u big_bang_s
+(* MATITA 1.0: debbo fare time_travel sulla ng_library?
      LexiconSync.time_travel 
        ~present:lexicon_status ~past:initial_lexicon_status;
-*)
-     true)
+*))
   with 
   (* all exceptions should be wrapped to allow lexicon-undo (LS.time_travel) *)
-  | EnrichedWithStatus (exn, _grafite) as exn' ->
-      (match exn with
-      | Sys.Break -> HLog.error "user break!"
-      | HExtlib.Localized (floc,CicNotationParser.Parse_error err) ->
-          let (x, y) = HExtlib.loc_of_floc floc in
-          HLog.error (sprintf "Parse error at %d-%d: %s" x y err)
-      | exn when matita_debug -> raise exn'
-      | exn -> HLog.error (snd (MatitaExcPp.to_string exn))
-      );
-(*       LexiconSync.time_travel ~present:lexicon ~past:initial_lexicon_status;
+  | exn when not matita_debug ->
+(* MATITA 1.0: debbo fare time_travel sulla ng_library?
+       LexiconSync.time_travel ~present:lexicon ~past:initial_lexicon_status;
  *       *)
       pp_times fname false big_bang big_bang_u big_bang_s;
-      clean_exit baseuri false
-  | Sys.Break when not matita_debug ->
-     HLog.error "user break!";
-     pp_times fname false big_bang big_bang_u big_bang_s;
-     clean_exit baseuri false
-  | exn when not matita_debug ->
-       HLog.error 
-         ("Unwrapped exception, please fix: "^ snd (MatitaExcPp.to_string exn));
-       pp_times fname false big_bang big_bang_u big_bang_s;
-       clean_exit baseuri false
+      clean_exit baseuri exn
 
-module F = 
-  struct 
-    type source_object = string
-    type target_object = string
-    let string_of_source_object s = s;;
-    let string_of_target_object s = s;;
-
-    let is_readonly_buri_of opts file = 
-     let buri = List.assoc "baseuri" opts in
-     Http_getter_storage.is_read_only (Librarian.mk_baseuri buri file)
-    ;;
-
-    let root_and_target_of opts mafile = 
-      try
-        let include_paths = get_include_paths opts in
-        let root,baseuri,_,relpath =
-          Librarian.baseuri_of_script ~include_paths mafile 
-        in
-        let obj_writeable, obj_read_only =
-           if Filename.check_suffix mafile ".mma" then 
-              Filename.chop_suffix mafile ".mma" ^ ".ma",
-              Filename.chop_suffix mafile ".mma" ^ ".ma"
-           else
-              LibraryMisc.obj_file_of_baseuri 
-                        ~must_exist:false ~baseuri ~writable:true,
-              LibraryMisc.obj_file_of_baseuri 
-                        ~must_exist:false ~baseuri ~writable:false
-        in
-        Some root, relpath, obj_writeable, obj_read_only
-      with Librarian.NoRootFor x -> None, "", "", ""
-    ;;
-
-    let mtime_of_source_object s =
-      try Some (Unix.stat s).Unix.st_mtime
-      with Unix.Unix_error (Unix.ENOENT, "stat", f) when f = s -> None
-    ;;
-
-    let mtime_of_target_object s =
-      try Some (Unix.stat s).Unix.st_mtime
-      with Unix.Unix_error (Unix.ENOENT, "stat", f) when f = s -> None
-    ;;
-
-(* FG: a problem was noticed in relising memory between subsequent *)
-(*     invocations of the compiler. The following might help       *)
-    let compact r = Gc.compact (); r
-
-    let build options fname =
-      let matita_debug = Helm_registry.get_bool "matita.debug" in
-      let compile opts fname =
-        try
-        (* MATITA 1.0: c'erano le push/pop per il parser; ma per
-         * l'environment nuovo? *)
-         compile opts fname
-        with 
-        | Sys.Break -> false
-        | exn when not matita_debug ->
-            HLog.error ("Unexpected " ^ snd(MatitaExcPp.to_string exn));
-            assert false
-      in
-       compact (compile options fname)
-    ;;
-
-    let load_deps_file = Librarian.load_deps_file;;
-
-  end 
-
-module Make = Librarian.Make(F) 
-
-(* FINE EX MATITACLIB *)
-
-let get_ast status ~include_paths text = 
-  match GrafiteParser.parse_statement status (Ulexing.from_utf8_string text)with
-     (GrafiteAst.Executable
-       (_,GrafiteAst.NCommand (_,GrafiteAst.Include (_,_,mafilename)))) as cmd
-     ->
-      let root, buri, _, tgt = 
-        try Librarian.baseuri_of_script ~include_paths mafilename
-        with Librarian.NoRootFor _ -> 
-          HLog.error ("The included file '"^mafilename^"' has no root file,");
-          HLog.error "please create it.";
-          raise (Failure ("No root file for "^mafilename))
-      in
-      if Make.make root [tgt] then
-       cmd
-      else raise (Failure ("Compiling: " ^ tgt))
-   | cmd -> cmd
-;;
+(* BIG BUG: if a file recursively includes itself, anything can happen,
+ * from divergence to inclusion of an old copy of itself *)
+and assert_ng ~include_paths ~root mapath =
+ let root',baseuri,_,_ = Librarian.baseuri_of_script ~include_paths mapath in
+ assert (root=root');
+ let baseuri = NUri.uri_of_string baseuri in
+ let ngpath = NCicLibrary.ng_path_of_baseuri baseuri in
+ let ngtime =
+  try
+   Some (Unix.stat ngpath).Unix.st_mtime
+  with Unix.Unix_error (Unix.ENOENT, "stat", f) when f = ngpath -> None in
+ let matime =
+  try (Unix.stat mapath).Unix.st_mtime
+  with Unix.Unix_error (Unix.ENOENT, "stat", f) when f = mapath -> assert false
+ in
+ let to_be_compiled =
+  match ngtime with
+     Some ngtime ->
+      let preamble = GrafiteTypes.Serializer.dependencies_of baseuri in
+      let children_bad= List.exists (assert_ng ~include_paths ~root) preamble in
+       children_bad || matime > ngtime
+   | None -> true
+ in
+  if not to_be_compiled then false
+  else
+   (* MATITA 1.0: SHOULD TAKE THIS FROM THE STATUS *)
+   if List.mem baseuri (NCicLibrary.get_already_included ()) then
+     (* maybe recompiling it I would get the same... *)
+     raise (AlreadyLoaded (lazy mapath))
+   else
+    (compile ~include_paths mapath; true)

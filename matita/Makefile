@@ -25,7 +25,7 @@ OCAMLOPT = $(OCAMLFIND) opt $(OCAMLC_FLAGS) $(OCAMLOPT_DEBUG_FLAGS)
 OCAMLDEP = $(OCAMLFIND) ocamldep $(OCAMLDEP_FLAGS)
 INSTALL_PROGRAMS= matita matitac
 INSTALL_PROGRAMS_LINKS_MATITA= 
-INSTALL_PROGRAMS_LINKS_MATITAC= matitadep matitaclean
+INSTALL_PROGRAMS_LINKS_MATITAC= matitaclean
 
 MATITA_FLAGS = -noprofile
 NODB=false
@@ -38,8 +38,8 @@ MLI = \
 	matitaTypes.mli		\
 	matitaMisc.mli		\
 	applyTransformation.mli	\
-	matitaExcPp.mli 	\
 	matitaEngine.mli	\
+	matitaExcPp.mli 	\
 	matitaInit.mli		\
 	matitaGtkMisc.mli	\
 	virtuals.mli 		\
@@ -52,12 +52,11 @@ CMLI =				\
 	matitaTypes.mli		\
 	matitaMisc.mli		\
 	applyTransformation.mli	\
-	matitaExcPp.mli 	\
 	matitaEngine.mli	\
+	matitaExcPp.mli 	\
 	matitaInit.mli		\
 	$(NULL)
 MAINCMLI =			\
-	matitadep.mli		\
 	matitaclean.mli		\
 	$(NULL)
 # objects for matita (GTK GUI)
@@ -67,7 +66,7 @@ CML = buildTimeConf.ml $(CMLI:%.mli=%.ml)
 MAINCML = $(MAINCMLI:%.mli=%.ml)
 
 PROGRAMS_BYTE = \
-	matita matitac matitadep matitaclean
+	matita matitac matitaclean
 PROGRAMS = $(PROGRAMS_BYTE) 
 PROGRAMS_OPT = $(patsubst %,%.opt,$(PROGRAMS_BYTE))
 NOINST_PROGRAMS =
@@ -137,11 +136,6 @@ rottener.opt: rottener.ml $(CLIBX_DEPS) $(CCMXS) $(MAINCMXS)
 clean-rottened:
 	find . -type f -name "*.ma.*.rottened" -exec rm {} \;
 
-matitadep: matitac
-	$(H)test -f $@ || ln -s $< $@
-matitadep.opt: matitac.opt
-	$(H)test -f $@ || ln -s $< $@
-
 matitaclean: matitac
 	$(H)test -f $@ || ln -s $< $@
 matitaclean.opt: matitac.opt
@@ -195,9 +189,9 @@ tests.opt: $(foreach d,$(TEST_DIRS_OPT),$(d)-test-opt)
 cleantests: $(foreach d,$(TEST_DIRS),$(d)-cleantests)
 cleantests.opt: $(foreach d,$(TEST_DIRS_OPT),$(d)-cleantests-opt)
 
-%-test: matitac matitadep matitaclean 
+%-test: matitac matitaclean 
 	-cd $* && make -k clean all
-%-test-opt: matitac.opt matitadep.opt matitaclean.opt
+%-test-opt: matitac.opt matitaclean.opt
 	-cd $* && make -k clean.opt opt
 %-cleantests: matitaclean
 	-cd $* && make clean
@@ -210,8 +204,6 @@ ifeq ($(DISTRIBUTED),yes)
 
 
 dist_library: install_preliminaries 
-	$(H)echo "depend"
-	$(H)cd $(WHERE)/ma/standard-library;(HOME=$(WHERE) USER=builder MATITA_RT_BASE_DIR=$(WHERE) MATITA_FLAGS='$(MATITA_CFLAGS)' $(WHERE)/matitadep)
 	$(H)echo "publish"
 	$(H)cd $(WHERE)/ma/standard-library;(HOME=$(WHERE) USER=builder MATITA_RT_BASE_DIR=$(WHERE) MATITA_FLAGS='$(MATITA_CFLAGS)' $(WHERE)/matitac -system -noinnertypes)
 	$(H)echo "destroy"
@@ -326,8 +318,6 @@ matitac.opt.static: $(STATIC_LINK) $(CLIBX_DEPS) $(CCMXS) $(MAINCMXS) matitac.ml
 		$(OCAMLOPT) $(CPKGS) -linkpkg -o $@ $(CCMXS) $(MAINCMXS) matitac.ml \
 		$(STATIC_EXTRA_CLIBS)
 	strip $@
-matitadep.opt.static: matitac.opt.static
-	$(H)test -f $@ || ln -s $< $@
 matitaclean.opt.static: matitac.opt.static
 	$(H)test -f $@ || ln -s $< $@
 

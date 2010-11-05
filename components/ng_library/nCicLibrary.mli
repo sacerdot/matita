@@ -52,9 +52,11 @@ module type SerializerType =
      dumpable_status -> dumpable_status
 
   val register: < run: 'a.  string -> 'a register_type -> ('a -> obj) >
-  val serialize: baseuri:NUri.uri -> obj list -> unit
+  val serialize: baseuri:NUri.uri -> dependencies:string list -> obj list ->
+       unit
    (* the obj is the "include" command to be added to the dump list *)
   val require: baseuri:NUri.uri -> dumpable_status -> dumpable_status * obj
+  val dependencies_of: baseuri:NUri.uri -> string list
  end
 
 module Serializer(D: sig type dumpable_status end) :
@@ -66,7 +68,11 @@ class dumpable_status :
   method set_dump: obj list -> 'self
  end
 
-(* CSC: only required during old-to-NG phase, to be deleted *)
 val refresh_uri: NUri.uri -> NUri.uri
+
+val ng_path_of_baseuri: ?no_suffix:bool -> NUri.uri -> string
+
+(* IMPERATIVE STUFF, TO BE PUT IN THE STATUS *)
+val get_already_included: unit -> NUri.uri list
 
 (* EOF *)

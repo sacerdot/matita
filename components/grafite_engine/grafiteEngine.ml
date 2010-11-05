@@ -406,6 +406,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
        GrafiteTypes.Serializer.require ~baseuri:(NUri.uri_of_string baseuri)
         status in
      let status = status#set_dump (obj::status#dump) in
+     let status = status#set_dependencies (fname::status#dependencies) in
      (*assert false;*) (*  MATITA 1.0mode must be passed to GrafiteTypes.Serializer.require
      somehow *)
        status

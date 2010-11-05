@@ -57,7 +57,7 @@ let main_compiler () =
   if system_mode then HLog.message "Compiling in system space";
   (* here we go *)
   if not (Helm_registry.get_bool "matita.verbose") then MatitaMisc.shutup ();
-  if MatitaEngine.Make.make root target then 
+  if List.for_all (MatitaEngine.assert_ng ~include_paths:[] ~root) target then 
     (HLog.message "Compilation successful"; 0)
   else
     (HLog.message "Compilation failed"; 1)
@@ -66,8 +66,7 @@ let main_compiler () =
 let main () =
   Sys.catch_break true;
   let bin = Filename.basename Sys.argv.(0) in
-  if      Pcre.pmatch ~pat:"^matitadep"    bin then Matitadep.main ()
-  else if Pcre.pmatch ~pat:"^matitaclean"  bin then Matitaclean.main ()
+  if Pcre.pmatch ~pat:"^matitaclean"  bin then Matitaclean.main ()
   else exit (main_compiler ())
 ;;
 

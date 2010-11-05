@@ -48,7 +48,7 @@ let refresh_uri_in_obj (uri,height,metasenv,subst,obj_kind) =
   NCicUntrusted.map_obj_kind refresh_uri_in_term obj_kind
 ;;
 
-let path_of_baseuri ?(no_suffix=false) baseuri =
+let ng_path_of_baseuri ?(no_suffix=false) baseuri =
  let uri = NUri.string_of_uri baseuri in
  let path = String.sub uri 4 (String.length uri - 4) in
  let path = Helm_registry.get "matita.basedir" ^ path in
@@ -70,12 +70,9 @@ let require_path path =
    dump
 ;;
 
-let require0 ~baseuri =
-  require_path (path_of_baseuri baseuri)
-;;
+let require0 ~baseuri = require_path (ng_path_of_baseuri baseuri)
 
 let db_path () = Helm_registry.get "matita.basedir" ^ "/ng_db.ng";;
-
 
 type timestamp =
  [ `Obj of NUri.uri * NCic.obj 
@@ -90,6 +87,8 @@ let storage = ref [];;
 let local_aliases = ref [];;
 let cache = ref NUri.UriMap.empty;;
 let includes = ref [];;
+
+let get_already_included () = !includes;;
 
 let load_db,set_global_aliases,get_global_aliases,add_deps,get_deps,remove_deps=
  let global_aliases = ref [] in
@@ -149,7 +148,7 @@ let load_db,set_global_aliases,get_global_aliases,add_deps,get_deps,remove_deps=
 let init = load_db;;
 
 class status =
- object(self)
+ object
   val timestamp = (time0 : timestamp)
   method timestamp = timestamp
   method set_timestamp v = {< timestamp = v >}
@@ -164,14 +163,14 @@ let time_travel status =
    storage := sto; local_aliases := ali; cache := cac; includes := inc
 ;;
 
-let serialize ~baseuri dump =
- let ch = open_out (path_of_baseuri baseuri) in
- Marshal.to_channel ch (magic,dump) [];
+let serialize ~baseuri ~dependencies dump =
+ let ch = open_out (ng_path_of_baseuri baseuri) in
+ Marshal.to_channel ch (magic,(dependencies,dump)) [];
  close_out ch;
  List.iter
   (function 
    | `Obj (uri,obj) ->
-       let ch = open_out (path_of_baseuri uri) in
+       let ch = open_out (ng_path_of_baseuri uri) in
        Marshal.to_channel ch (magic,obj) [];
        close_out ch
    | `Constr _ -> ()
@@ -184,7 +183,7 @@ let serialize ~baseuri dump =
 type obj = string * Obj.t
 
 class dumpable_status =
- object(self)
+ object
   val dump = ([] : obj list)
   method dump = dump
   method set_dump v = {< dump = v >}
@@ -202,9 +201,10 @@ module type SerializerType =
      dumpable_status -> dumpable_status
 
   val register: < run: 'a.  string -> 'a register_type -> ('a -> obj) >
-  val serialize: baseuri:NUri.uri -> obj list -> unit
+  val serialize: baseuri:NUri.uri -> dependencies:string list -> obj list -> unit
    (* the obj is the "include" command to be added to the dump list *)
   val require: baseuri:NUri.uri -> dumpable_status -> dumpable_status * obj
+  val dependencies_of: baseuri:NUri.uri -> string list
  end
 
 module Serializer(D: sig type dumpable_status end) =
@@ -242,11 +242,13 @@ module Serializer(D: sig type dumpable_status end) =
   let require2 ~baseuri status =
    try
     includes := baseuri::!includes;
-    let dump = require0 ~baseuri in
+    let _dependencies,dump = require0 ~baseuri in
      List.fold_right !require1 dump status
    with
     Sys_error _ ->
-     raise (IncludedFileNotCompiled(path_of_baseuri baseuri,NUri.string_of_uri baseuri))
+     raise (IncludedFileNotCompiled(ng_path_of_baseuri baseuri,NUri.string_of_uri baseuri))
+
+  let dependencies_of ~baseuri = fst (require0 ~baseuri)
 
   let record_include =
    let aux baseuri ~refresh_uri_in_universe ~refresh_uri_in_term
@@ -266,8 +268,8 @@ let decompile ~baseuri =
  let baseuris = get_deps baseuri in
  List.iter (fun baseuri ->
   remove_deps baseuri;
-  HExtlib.safe_remove (path_of_baseuri baseuri);
-  let basepath = path_of_baseuri ~no_suffix:true baseuri in
+  HExtlib.safe_remove (ng_path_of_baseuri baseuri);
+  let basepath = ng_path_of_baseuri ~no_suffix:true baseuri in
   try
    let od = Unix.opendir basepath in
    let rec aux names =

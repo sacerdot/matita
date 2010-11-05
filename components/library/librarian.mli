@@ -58,48 +58,5 @@ val mk_baseuri: string -> string -> string
  *)
 val find_roots_in_dir: string -> string list
 
-(* make implementation *)
-type options = (string * string) list
-
-module type Format =
-  sig
-    type source_object
-    type target_object
-    val load_deps_file: string -> (source_object * source_object list) list
-    val string_of_source_object: source_object -> string
-    val string_of_target_object: target_object -> string
-    val build: options -> source_object -> bool
-    val root_and_target_of: 
-          options -> source_object -> 
-	   (* root, relative source, writeable target, read only target *)
-	   string option * source_object * target_object * target_object
-    val mtime_of_source_object: source_object -> float option
-    val mtime_of_target_object: target_object -> float option
-    val is_readonly_buri_of: options -> source_object -> bool
-  end
-
-module Make :
-  functor (F : Format) ->
-    sig
-      (* make [root dir] [targets], targets = [] means make all *)
-      val make : string -> F.source_object list ->  bool
-    end
-
-(* deps are made with scripts names, for example lines like
- *
- *   nat/plus.ma nat/nat.ma logic/equality.ma
- *
- * state that plus.ma needs nat and equality
- *)
-val load_deps_file: string -> (string * string list) list
-val write_deps_file: string option -> (string * string list) list -> unit
-
-(* FG ***********************************************************************)
-
 (* true if the argunent starts with a uri scheme prefix *)
 val is_uri: string -> bool
-
-(* Valid values: 0: no debug; 1: normal debug; > 1: extra debug *)
-val debug: int ref
-
-val time_stamp: string -> unit

@@ -1,10 +1,9 @@
 PACKAGE = grafite_parser
 PREDICATES =
 
-INTERFACE_FILES = 			\
-	dependenciesParser.mli  	\
+INTERFACE_FILES = 		\
 	grafiteParser.mli		\
-	print_grammar.mli 	        \
+	print_grammar.mli 	\
 	$(NULL)
 IMPLEMENTATION_FILES = $(INTERFACE_FILES:%.mli=%.ml)
 
