@@ -3,7 +3,6 @@ PREDICATES =
 
 INTERFACE_FILES =		\
 	grafiteDisambiguate.mli \
-	lexiconSync.mli		\
 	$(NULL)
 IMPLEMENTATION_FILES =		\
 	$(INTERFACE_FILES:%.mli=%.ml)

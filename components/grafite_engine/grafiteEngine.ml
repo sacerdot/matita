@@ -409,7 +409,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
      let status, composites =
       NCicCoercDeclaration.eval_ncoercion status name t ty source target
      in
-      LexiconSync.add_aliases_for_objs status composites
+      GrafiteDisambiguate.add_aliases_for_objs status composites
   | GrafiteAst.NQed loc ->
      if status#ng_mode <> `ProofMode then
       raise (GrafiteTypes.Command_error "Not in proof mode")
@@ -479,7 +479,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
            let uris = uri::List.rev uris_rev in
 *)
            let status = status#set_ng_mode `CommandMode in
-           let status = LexiconSync.add_aliases_for_objs status [uri] in
+           let status = GrafiteDisambiguate.add_aliases_for_objs status [uri] in
            let status =
             List.fold_left
              (fun status boxml ->
@@ -550,7 +550,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
                      basic_eval_and_record_ncoercion_from_t_cpos_arity 
                       status (name,t,cpos,arity)
                  in
-                  LexiconSync.add_aliases_for_objs status nuris
+                  GrafiteDisambiguate.add_aliases_for_objs status nuris
                with MultiPassDisambiguator.DisambiguationError _-> 
                  HLog.warn ("error in generating coercion: "^name);
                  status) 
