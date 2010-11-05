@@ -99,26 +99,23 @@ let eval_from_stream ~include_paths ?do_heavy_checks
      match cont with
      | None -> true, status, statuses
      | Some ast ->
-       (match ast with
-           GrafiteParser.LNone _ -> false, status, ((status,None)::statuses)
-         | GrafiteParser.LSome ast ->
-            cb status ast;
-            let new_statuses =
-              eval_ast ~include_paths ?do_heavy_checks status ("",0,ast) in
-            if enforce_no_new_aliases then
-             List.iter 
-              (fun (_,alias) ->
-                match alias with
-                  None -> ()
-                | Some (k,value) ->
-                   let newtxt = GrafiteAstPp.pp_alias value in
-                    raise (TryingToAdd newtxt)) new_statuses;
-            let status =
-             match new_statuses with
-                [] -> assert false
-              | (s,_)::_ -> s
-            in
-             false, status, (new_statuses @ statuses))
+        cb status ast;
+        let new_statuses =
+          eval_ast ~include_paths ?do_heavy_checks status ("",0,ast) in
+        if enforce_no_new_aliases then
+         List.iter 
+          (fun (_,alias) ->
+            match alias with
+              None -> ()
+            | Some (k,value) ->
+               let newtxt = GrafiteAstPp.pp_alias value in
+                raise (TryingToAdd newtxt)) new_statuses;
+        let status =
+         match new_statuses with
+            [] -> assert false
+          | (s,_)::_ -> s
+        in
+         false, status, (new_statuses @ statuses)
    with exn when not matita_debug ->
      raise (EnrichedWithStatus (exn, status))
   in

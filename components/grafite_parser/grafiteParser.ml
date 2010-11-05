@@ -28,10 +28,6 @@
 module N  = NotationPt
 module G  = GrafiteAst
 
-type 'a localized_option =
-   LSome of 'a
- | LNone of G.loc
-
 type ast_statement = G.statement
 
 let exc_located_wrapper f =
@@ -611,12 +607,10 @@ EXTEND
     ]
   ];
   statement: [
-    [ ex = executable ->
-         LSome (G.Executable (loc, ex))
-    | com = comment ->
-         LSome (G.Comment (loc, com))
+    [ ex = executable -> G.Executable (loc, ex)
+    | com = comment -> G.Comment (loc, com)
     | (iloc,fname,mode) = include_command ; SYMBOL "."  ->
-	       LSome (G.Executable (loc,G.NCommand (loc,G.Include (iloc,mode,fname))))
+	       G.Executable (loc,G.NCommand (loc,G.Include (iloc,mode,fname)))
     | EOI -> raise End_of_file
     ]
   ];
@@ -625,7 +619,7 @@ EXTEND
   statement
 ;;
 
-type db = ast_statement localized_option Grammar.Entry.e ;;
+type db = ast_statement Grammar.Entry.e ;;
 
 class type g_status =
  object

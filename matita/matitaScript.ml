@@ -105,8 +105,9 @@ let eval_with_engine include_paths guistuff grafite_status user_goal
  * in the good order, here files may be compiled on demand. *)
 let wrap_with_make include_paths f x = 
   match f x with
-     GrafiteParser.LSome (GrafiteAst.Executable (_,GrafiteAst.NCommand
-     (_,GrafiteAst.Include (_,_,mafilename)))) as cmd ->
+     (GrafiteAst.Executable
+       (_,GrafiteAst.NCommand (_,GrafiteAst.Include (_,_,mafilename)))) as cmd
+     ->
       let root, buri, _, tgt = 
         try Librarian.baseuri_of_script ~include_paths mafilename
         with Librarian.NoRootFor _ -> 
@@ -227,20 +228,16 @@ and eval_statement include_paths (buffer : GText.buffer) guistuff
     txt,nonskipped_txt,skipped_txt,len
   in 
   match st with
-  | GrafiteParser.LNone loc ->
-      let parsed_text, _, _, parsed_text_length = text_of_loc loc in
-       [grafite_status,parsed_text],"",
-        parsed_text_length
-  | GrafiteParser.LSome (GrafiteAst.Executable (loc, ex)) ->
+  | GrafiteAst.Executable (loc, ex) ->
      let _, nonskipped, skipped, parsed_text_length = text_of_loc loc in
       eval_executable include_paths buffer guistuff 
        grafite_status user_goal unparsed_text skipped nonskipped script ex loc
-  | GrafiteParser.LSome (GrafiteAst.Comment (loc, GrafiteAst.Code (_, ex))) 
+  | GrafiteAst.Comment (loc, GrafiteAst.Code (_, ex))
     when Helm_registry.get_bool "matita.execcomments" ->
      let _, nonskipped, skipped, parsed_text_length = text_of_loc loc in
       eval_executable include_paths buffer guistuff 
        grafite_status user_goal unparsed_text skipped nonskipped script ex loc
-  | GrafiteParser.LSome (GrafiteAst.Comment (loc, _)) -> 
+  | GrafiteAst.Comment (loc, _) -> 
       let parsed_text, _, _, parsed_text_length = text_of_loc loc in
       let remain_len = String.length unparsed_text - parsed_text_length in
       let s = String.sub unparsed_text parsed_text_length remain_len in
@@ -689,15 +686,14 @@ object (self)
       match
        GrafiteParser.parse_statement lexicon_status (Ulexing.from_utf8_string s)
       with
-      | GrafiteParser.LSome (GrafiteAst.Comment (loc,_)) -> 
+      | GrafiteAst.Comment (loc,_) -> 
           let _,parsed_text_length = MatitaGtkMisc.utf8_parsed_text s loc in
           (* CSC: why +1 in the following lines ???? *)
           let parsed_text_length = parsed_text_length + 1 in
           let remain_len = String.length s - parsed_text_length in
           let next = String.sub s parsed_text_length remain_len in
           is_there_only_comments lexicon_status next
-      | GrafiteParser.LNone _
-      | GrafiteParser.LSome (GrafiteAst.Executable _) -> false
+      | GrafiteAst.Executable _ -> false
     in
     try is_there_only_comments self#grafite_status self#getFuture
     with 

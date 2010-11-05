@@ -23,10 +23,6 @@
  * http://helm.cs.unibo.it/
  *)
 
-type 'a localized_option =
-   LSome of 'a
- | LNone of GrafiteAst.loc
-
 type ast_statement = GrafiteAst.statement
 
 type db 
@@ -53,7 +49,4 @@ val extend : #status as 'status ->
  (* never_include: do not call LexiconEngine to do includes, 
   * always raise NoInclusionPerformed *) 
 (** @raise End_of_file *)
-val parse_statement: 
-  #status ->
-  Ulexing.lexbuf -> 
-    ast_statement localized_option
+val parse_statement: #status -> Ulexing.lexbuf -> ast_statement
