@@ -28,8 +28,6 @@
 module N  = NotationPt
 module G  = GrafiteAst
 
-type ast_statement = G.statement
-
 let exc_located_wrapper f =
   try
     f ()
@@ -619,7 +617,7 @@ EXTEND
   statement
 ;;
 
-type db = ast_statement Grammar.Entry.e ;;
+type db = GrafiteAst.statement Grammar.Entry.e ;;
 
 class type g_status =
  object

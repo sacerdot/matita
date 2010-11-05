@@ -23,8 +23,6 @@
  * http://helm.cs.unibo.it/
  *)
 
-type ast_statement = GrafiteAst.statement
-
 type db 
 
 class type g_status =
@@ -49,4 +47,4 @@ val extend : #status as 'status ->
  (* never_include: do not call LexiconEngine to do includes, 
   * always raise NoInclusionPerformed *) 
 (** @raise End_of_file *)
-val parse_statement: #status -> Ulexing.lexbuf -> ast_statement
+val parse_statement: #status -> Ulexing.lexbuf -> GrafiteAst.statement
