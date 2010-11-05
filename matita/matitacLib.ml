@@ -166,8 +166,7 @@ let compile atstart options fname =
     let grafite_status =
      let rec aux_for_dump x grafite_status =
       match
-       MatitaEngine.eval_from_stream ~first_statement_only:false ~include_paths
-        grafite_status buf x
+       MatitaEngine.eval_from_stream ~include_paths grafite_status buf x
       with
       | [] -> grafite_status
       | (g,None)::_ -> g

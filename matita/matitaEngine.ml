@@ -86,16 +86,11 @@ let eval_ast ~include_paths ?do_heavy_checks status (text,prefix_len,ast) =
 exception TryingToAdd of string
 exception EnrichedWithStatus of exn * GrafiteTypes.status
 
-let eval_from_stream ~first_statement_only ~include_paths 
- ?do_heavy_checks ?(enforce_no_new_aliases=true)
- ?(watch_statuses=fun _ -> ()) status str cb 
+let eval_from_stream ~include_paths ?do_heavy_checks
+ ?(enforce_no_new_aliases=true) ?(watch_statuses=fun _ -> ()) status str cb 
 =
  let matita_debug = Helm_registry.get_bool "matita.debug" in
  let rec loop status statuses =
-  let loop =
-   if first_statement_only then fun _ statuses -> statuses
-   else loop
-  in
   let stop,g,s = 
    try
      let cont =

@@ -41,7 +41,6 @@ exception EnrichedWithStatus of exn * GrafiteTypes.status
 (* should be used only by the compiler since it looses the
    * disambiguation_context (text,prefix_len,_) *)
 val eval_from_stream :
-  first_statement_only:bool ->
   include_paths:string list ->
   ?do_heavy_checks:bool ->
   ?enforce_no_new_aliases:bool -> (* default true *)
