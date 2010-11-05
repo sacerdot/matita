@@ -63,7 +63,7 @@ let initial_db = {
    pattern32_matrix = [];
    level2_patterns32 = IntMap.empty;
    interpretations = StringMap.empty;
-   compiled32 = lazy (fun _ -> assert false)
+   compiled32 = lazy (Ncic2astMatcher.Matcher32.compiler [])
 }
 
 class type g_status =
