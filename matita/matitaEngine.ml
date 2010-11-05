@@ -86,40 +86,32 @@ let eval_ast ~include_paths ?do_heavy_checks status (text,prefix_len,ast) =
 exception TryingToAdd of string
 exception EnrichedWithStatus of exn * GrafiteTypes.status
 
-let eval_from_stream ~include_paths ?do_heavy_checks
- ?(enforce_no_new_aliases=true) status str cb 
-=
+let eval_from_stream ~include_paths ?do_heavy_checks status str cb =
  let matita_debug = Helm_registry.get_bool "matita.debug" in
- let rec loop status statuses =
-  let stop,g,s = 
+ let rec loop status =
+  let stop,status = 
    try
      let cont =
        try Some (GrafiteParser.parse_statement status str)
        with End_of_file -> None in
      match cont with
-     | None -> true, status, statuses
+     | None -> true, status
      | Some ast ->
         cb status ast;
         let new_statuses =
           eval_ast ~include_paths ?do_heavy_checks status ("",0,ast) in
-        if enforce_no_new_aliases then
-         List.iter 
-          (fun (_,alias) ->
-            match alias with
-              None -> ()
-            | Some (k,value) ->
-               let newtxt = GrafiteAstPp.pp_alias value in
-                raise (TryingToAdd newtxt)) new_statuses;
         let status =
          match new_statuses with
-            [] -> assert false
-          | (s,_)::_ -> s
+            [s,None] -> s
+          | _::(_,Some (_,value))::_ ->
+                raise (TryingToAdd (GrafiteAstPp.pp_alias value))
+          | _ -> assert false
         in
-         false, status, (new_statuses @ statuses)
+         false, status
    with exn when not matita_debug ->
      raise (EnrichedWithStatus (exn, status))
   in
-  if stop then s else loop g s
+  if stop then status else loop status
  in
-  loop status []
+  loop status
 ;;

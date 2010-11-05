@@ -29,8 +29,6 @@ open Printf
 
 open GrafiteTypes
 
-exception AttemptToInsertAnAlias of GrafiteDisambiguate.status
-
 let slash_n_RE = Pcre.regexp "\\n" ;;
 
 let pp_ast_statement grafite_status stm =
@@ -164,16 +162,7 @@ let compile atstart options fname =
       else pp_ast_statement
     in
     let grafite_status =
-     let rec aux_for_dump x grafite_status =
-      match
-       MatitaEngine.eval_from_stream ~include_paths grafite_status buf x
-      with
-      | [] -> grafite_status
-      | (g,None)::_ -> g
-      | (g,Some _)::_ ->
-         raise (AttemptToInsertAnAlias (g :> GrafiteDisambiguate.status))
-     in
-       aux_for_dump print_cb grafite_status
+     MatitaEngine.eval_from_stream ~include_paths grafite_status buf print_cb
     in
     let elapsed = Unix.time () -. time in
      (if Helm_registry.get_bool "matita.moo" then begin
@@ -198,13 +187,6 @@ let compile atstart options fname =
      true)
   with 
   (* all exceptions should be wrapped to allow lexicon-undo (LS.time_travel) *)
-  | AttemptToInsertAnAlias lexicon_status -> 
-     pp_times fname false big_bang big_bang_u big_bang_s;
-(*
-     LexiconSync.time_travel 
-       ~present:lexicon_status ~past:initial_lexicon_status;
-*)
-     clean_exit baseuri false
   | MatitaEngine.EnrichedWithStatus (exn, _grafite) as exn' ->
       (match exn with
       | Sys.Break -> HLog.error "user break!"
