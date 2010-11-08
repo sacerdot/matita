@@ -49,7 +49,8 @@ val set_proof_aliases:
   GrafiteAst.inclusion_mode ->
   (DisambiguateTypes.domain_item * GrafiteAst.alias_spec) list -> 'status
 
-val add_aliases_for_objs: #status as 'status -> NUri.uri list -> 'status
+val aliases_for_objs:
+  NUri.uri list -> (DisambiguateTypes.domain_item * GrafiteAst.alias_spec) list
 
 (* args: print function, message (may be empty), status *) 
 val dump_aliases: (string -> unit) -> string -> #status -> unit

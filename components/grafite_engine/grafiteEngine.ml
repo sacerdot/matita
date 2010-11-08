@@ -413,9 +413,10 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
   | GrafiteAst.UnificationHint (loc, t, n) -> eval_unification_hint status t n
   | GrafiteAst.NCoercion (loc, name, t, ty, source, target) ->
      let status, composites =
-      NCicCoercDeclaration.eval_ncoercion status name t ty source target
-     in
-      GrafiteDisambiguate.add_aliases_for_objs status composites
+      NCicCoercDeclaration.eval_ncoercion status name t ty source target in
+     let mode = GrafiteAst.WithPreferences in (* MATITA 1.0: fixme *)
+     let aliases = GrafiteDisambiguate.aliases_for_objs composites in
+      eval_alias status (mode,aliases)
   | GrafiteAst.NQed loc ->
      if status#ng_mode <> `ProofMode then
       raise (GrafiteTypes.Command_error "Not in proof mode")
@@ -485,7 +486,9 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
            let uris = uri::List.rev uris_rev in
 *)
            let status = status#set_ng_mode `CommandMode in
-           let status = GrafiteDisambiguate.add_aliases_for_objs status [uri] in
+           let xxaliases = GrafiteDisambiguate.aliases_for_objs [uri] in
+           let mode = GrafiteAst.WithPreferences in (* MATITA 1.0: fixme *)
+           let status = eval_alias status (mode,xxaliases) in
            let status =
             List.fold_left
              (fun status boxml ->
@@ -554,9 +557,9 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
                  let status, nuris = 
                    NCicCoercDeclaration.
                      basic_eval_and_record_ncoercion_from_t_cpos_arity 
-                      status (name,t,cpos,arity)
-                 in
-                  GrafiteDisambiguate.add_aliases_for_objs status nuris
+                      status (name,t,cpos,arity) in
+                 let aliases = GrafiteDisambiguate.aliases_for_objs nuris in
+                  eval_alias status (mode,aliases)
                with MultiPassDisambiguator.DisambiguationError _-> 
                  HLog.warn ("error in generating coercion: "^name);
                  status) 

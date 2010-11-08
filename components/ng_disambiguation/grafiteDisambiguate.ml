@@ -315,18 +315,14 @@ let disambiguate_cic_appl_pattern status args =
   disambiguate
 ;;
 
-let add_aliases_for_objs status =
- List.fold_left
-  (fun status nref ->
-    let references = NCicLibrary.aliases_of nref in
-    let new_env =
-     List.map
-      (fun u ->
-        let name = NCicPp.r2s true u in
-         DisambiguateTypes.Id name,
-          GrafiteAst.Ident_alias (name,NReference.string_of_reference u)
-      ) references
-    in
-     set_proof_aliases status ~implicit_aliases:false
-      GrafiteAst.WithPreferences new_env
-  ) status
+let aliases_for_objs refs =
+ List.concat
+  (List.map
+    (fun nref ->
+      let references = NCicLibrary.aliases_of nref in
+       List.map
+        (fun u ->
+          let name = NCicPp.r2s true u in
+           DisambiguateTypes.Id name,
+            GrafiteAst.Ident_alias (name,NReference.string_of_reference u)
+        ) references) refs)
