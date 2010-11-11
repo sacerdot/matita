@@ -218,8 +218,9 @@ EXTEND
         G.NTactic(loc,[G.NCases (loc, what, where)])
     | IDENT "change"; what = pattern_spec; "with"; with_what = tactic_term -> 
         G.NTactic(loc,[G.NChange (loc, what, with_what)])
-    | SYMBOL "@"; num = OPT NUMBER; l = LIST0 tactic_term -> 
-        G.NTactic(loc,[G.NConstructor (loc, (match num with None -> None | Some x -> Some (int_of_string x)),l)])
+    | (*SYMBOL "^"*)PLACEHOLDER; num = OPT NUMBER; 
+	l = OPT [ SYMBOL "{"; l = LIST1 tactic_term; SYMBOL "}" -> l ] -> 
+        G.NTactic(loc,[G.NConstructor (loc, (match num with None -> None | Some x -> Some (int_of_string x)),match l with None -> [] | Some l -> l)])
     | IDENT "cut"; t = tactic_term -> G.NTactic(loc,[G.NCut (loc, t)])
 (*  | IDENT "discriminate"; t = tactic_term -> G.NDiscriminate (loc, t)
     | IDENT "subst"; t = tactic_term -> G.NSubst (loc, t) *)
@@ -534,9 +535,9 @@ EXTEND
       paramspec = OPT inverter_param_list ; 
       outsort = OPT [ SYMBOL ":" ; outsort = term -> outsort ] -> 
         G.NInverter (loc,name,indty,paramspec,outsort)
-    | NLETCOREC ; defs = let_defs -> 
+    | LETCOREC ; defs = let_defs -> 
         nmk_rec_corec `CoInductive defs loc
-    | NLETREC ; defs = let_defs -> 
+    | LETREC ; defs = let_defs -> 
         nmk_rec_corec `Inductive defs loc
     | IDENT "inductive"; spec = inductive_spec ->
         let (params, ind_types) = spec in
