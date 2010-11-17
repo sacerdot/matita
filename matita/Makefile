@@ -141,8 +141,11 @@ matitaclean: matitac
 matitaclean.opt: matitac.opt
 	$(H)test -f $@ || ln -s $< $@
 
-matitaGeneratedGui.ml: matita.glade
+matitaGeneratedGui.ml: matita.glade.utf8
 	$(H)$(LABLGLADECC) -embed $< > matitaGeneratedGui.ml
+
+matita.glade.utf8: matita.glade
+	$(H)xmllint --encode UTF8 $< > $@
 
 .PHONY: clean
 clean:
