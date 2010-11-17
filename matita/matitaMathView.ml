@@ -1052,8 +1052,6 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
 
     val model =
       new MatitaGtkMisc.taggedStringListModel tags win#whelpResultTreeview
-    val model_univs =
-      new MatitaGtkMisc.multiStringListModel ~cols:2 win#universesTreeview
 
     val mutable lastDir = ""  (* last loaded "directory" *)
 
@@ -1093,11 +1091,11 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
      * 
      * Use only these functions to switch between the tabs
      *)
-    method private _showMath = win#mathOrListNotebook#goto_page  0
-    method private _showList = win#mathOrListNotebook#goto_page  1
-    method private _showList2 = win#mathOrListNotebook#goto_page 5
-    method private _showSearch = win#mathOrListNotebook#goto_page 6
-    method private _showGviz = win#mathOrListNotebook#goto_page  3
+    method private _showMath = win#mathOrListNotebook#goto_page   0
+    method private _showList = win#mathOrListNotebook#goto_page   1
+    method private _showEgg  = win#mathOrListNotebook#goto_page   2
+    method private _showGviz = win#mathOrListNotebook#goto_page   3
+    method private _showSearch = win#mathOrListNotebook#goto_page 4
 
     method private back () =
       try
@@ -1142,7 +1140,7 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
 (*       self#_showMath *)
 
     method private egg () =
-      win#mathOrListNotebook#goto_page 2;
+      self#_showEgg;
       Lazy.force load_easter_egg
 
     method private redraw_gviz ?center_on () =
@@ -1269,11 +1267,6 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
       List.iter (fun (tag, s) -> model#easy_append ~tag s) l;
       self#_showList
 
-    method private _loadList2 l =
-      model_univs#list_store#clear ();
-      List.iter model_univs#easy_mappend l;
-      self#_showList2
-    
     (** { public methods, all must call _load!! } *)
       
     method load entry =

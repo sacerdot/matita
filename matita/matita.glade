@@ -80,24 +80,6 @@
                     </child>
                   </widget>
                 </child>
-                <child>
-                  <widget class="GtkMenuItem" id="BrowserViewMenu">
-                    <property name="visible">True</property>
-                    <property name="label" translatable="yes">_View</property>
-                    <property name="use_underline">True</property>
-                    <child>
-                      <widget class="GtkMenu" id="BrowserViewMenu_menu">
-                        <child>
-                          <widget class="GtkMenuItem" id="HBugsTutorsMenuItem">
-                            <property name="visible">True</property>
-                            <property name="label" translatable="yes">HBugs Tutors</property>
-                            <property name="use_underline">True</property>
-                          </widget>
-                        </child>
-                      </widget>
-                    </child>
-                  </widget>
-                </child>
               </widget>
               <packing>
                 <property name="expand">False</property>
@@ -290,9 +272,9 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="GtkLabel" id="listLabel">
+                  <widget class="GtkLabel" id="WhelpResult">
                     <property name="visible">True</property>
-                    <property name="label" translatable="yes">WhelpResults</property>
+                    <property name="label" translatable="yes">WhelpResult</property>
                   </widget>
                   <packing>
                     <property name="position">1</property>
@@ -355,131 +337,6 @@
                   </widget>
                   <packing>
                     <property name="position">3</property>
-                    <property name="tab_fill">False</property>
-                    <property name="type">tab</property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="GtkVBox" id="vbox16">
-                    <property name="visible">True</property>
-                    <property name="orientation">vertical</property>
-                    <child>
-                      <widget class="GtkScrolledWindow" id="scrolledwindow13">
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <child>
-                          <widget class="GtkTreeView" id="HBugsTutorsList">
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                          </widget>
-                        </child>
-                      </widget>
-                      <packing>
-                        <property name="position">0</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <widget class="GtkToolbar" id="toolbar3">
-                        <property name="visible">True</property>
-                        <property name="toolbar_style">both</property>
-                        <child>
-                          <widget class="GtkToolItem" id="toolitem47">
-                            <property name="visible">True</property>
-                            <child>
-                              <widget class="GtkButton" id="HBugsRefreshButton">
-                                <property name="label">gtk-refresh</property>
-                                <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="receives_default">False</property>
-                                <property name="use_stock">True</property>
-                              </widget>
-                            </child>
-                          </widget>
-                          <packing>
-                            <property name="expand">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="GtkToolItem" id="toolitem48">
-                            <property name="visible">True</property>
-                            <child>
-                              <widget class="GtkButton" id="HBugsUnsubscribeButton">
-                                <property name="label">gtk-remove</property>
-                                <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="receives_default">False</property>
-                                <property name="use_stock">True</property>
-                              </widget>
-                            </child>
-                          </widget>
-                          <packing>
-                            <property name="expand">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="GtkToolItem" id="toolitem49">
-                            <property name="visible">True</property>
-                            <child>
-                              <widget class="GtkButton" id="HBugsSubscribeButton">
-                                <property name="label">gtk-add</property>
-                                <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="receives_default">False</property>
-                                <property name="use_stock">True</property>
-                              </widget>
-                            </child>
-                          </widget>
-                          <packing>
-                            <property name="expand">False</property>
-                          </packing>
-                        </child>
-                      </widget>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">False</property>
-                        <property name="position">1</property>
-                      </packing>
-                    </child>
-                  </widget>
-                  <packing>
-                    <property name="position">4</property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="GtkLabel" id="label29">
-                    <property name="visible">True</property>
-                    <property name="label" translatable="yes">HBugs</property>
-                  </widget>
-                  <packing>
-                    <property name="position">4</property>
-                    <property name="tab_fill">False</property>
-                    <property name="type">tab</property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="GtkScrolledWindow" id="textScrolledWin">
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="hscrollbar_policy">automatic</property>
-                    <property name="vscrollbar_policy">automatic</property>
-                    <child>
-                      <widget class="GtkTreeView" id="universesTreeview">
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                      </widget>
-                    </child>
-                  </widget>
-                  <packing>
-                    <property name="position">5</property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="GtkLabel" id="universes">
-                    <property name="visible">True</property>
-                    <property name="label" translatable="yes">Universes</property>
-                  </widget>
-                  <packing>
-                    <property name="position">5</property>
                     <property name="tab_fill">False</property>
                     <property name="type">tab</property>
                   </packing>
@@ -590,16 +447,16 @@
                     </child>
                   </widget>
                   <packing>
-                    <property name="position">6</property>
+                    <property name="position">4</property>
                   </packing>
                 </child>
                 <child>
-                  <widget class="GtkLabel" id="label1">
+                  <widget class="GtkLabel" id="SearchText">
                     <property name="visible">True</property>
                     <property name="label" translatable="yes">SearchText</property>
                   </widget>
                   <packing>
-                    <property name="position">6</property>
+                    <property name="position">4</property>
                     <property name="tab_fill">False</property>
                     <property name="type">tab</property>
                   </packing>
@@ -797,7 +654,7 @@
                           <widget class="GtkMenu" id="fileMenu_menu">
                             <child>
                               <widget class="GtkImageMenuItem" id="newMenuItem">
-                                <property name="label">_New</property>
+                                <property name="label">gtk-new</property>
                                 <property name="visible">True</property>
                                 <property name="use_underline">True</property>
                                 <property name="use_stock">True</property>
@@ -806,7 +663,7 @@
                             </child>
                             <child>
                               <widget class="GtkImageMenuItem" id="openMenuItem">
-                                <property name="label">_Open...</property>
+                                <property name="label">gtk-open</property>
                                 <property name="visible">True</property>
                                 <property name="use_underline">True</property>
                                 <property name="use_stock">True</property>
@@ -815,7 +672,7 @@
                             </child>
                             <child>
                               <widget class="GtkImageMenuItem" id="saveMenuItem">
-                                <property name="label">_Save</property>
+                                <property name="label">gtk-save</property>
                                 <property name="visible">True</property>
                                 <property name="use_underline">True</property>
                                 <property name="use_stock">True</property>
@@ -824,7 +681,7 @@
                             </child>
                             <child>
                               <widget class="GtkImageMenuItem" id="saveAsMenuItem">
-                                <property name="label">Save _as ...</property>
+                                <property name="label">gtk-save-as</property>
                                 <property name="visible">True</property>
                                 <property name="use_underline">True</property>
                                 <property name="use_stock">True</property>
@@ -838,7 +695,7 @@
                             </child>
                             <child>
                               <widget class="GtkImageMenuItem" id="quitMenuItem">
-                                <property name="label">_Quit</property>
+                                <property name="label">gtk-quit</property>
                                 <property name="visible">True</property>
                                 <property name="use_underline">True</property>
                                 <property name="use_stock">True</property>
@@ -858,7 +715,7 @@
                           <widget class="GtkMenu" id="editMenu_menu">
                             <child>
                               <widget class="GtkImageMenuItem" id="undoMenuItem">
-                                <property name="label">_Undo</property>
+                                <property name="label">gtk-undo</property>
                                 <property name="visible">True</property>
                                 <property name="sensitive">False</property>
                                 <property name="use_underline">True</property>
@@ -868,7 +725,7 @@
                             </child>
                             <child>
                               <widget class="GtkImageMenuItem" id="redoMenuItem">
-                                <property name="label">_Redo</property>
+                                <property name="label">gtk-redo</property>
                                 <property name="visible">True</property>
                                 <property name="sensitive">False</property>
                                 <property name="use_underline">True</property>
@@ -883,7 +740,7 @@
                             </child>
                             <child>
                               <widget class="GtkImageMenuItem" id="cutMenuItem">
-                                <property name="label">Cu_t</property>
+                                <property name="label">gtk-cut</property>
                                 <property name="visible">True</property>
                                 <property name="use_underline">True</property>
                                 <property name="use_stock">True</property>
@@ -892,7 +749,7 @@
                             </child>
                             <child>
                               <widget class="GtkImageMenuItem" id="copyMenuItem">
-                                <property name="label">_Copy</property>
+                                <property name="label">gtk-copy</property>
                                 <property name="visible">True</property>
                                 <property name="use_underline">True</property>
                                 <property name="use_stock">True</property>
@@ -901,7 +758,7 @@
                             </child>
                             <child>
                               <widget class="GtkImageMenuItem" id="pasteMenuItem">
-                                <property name="label">_Paste</property>
+                                <property name="label">gtk-paste</property>
                                 <property name="visible">True</property>
                                 <property name="use_underline">True</property>
                                 <property name="use_stock">True</property>
@@ -933,7 +790,7 @@
                             </child>
                             <child>
                               <widget class="GtkImageMenuItem" id="deleteMenuItem">
-                                <property name="label">_Delete</property>
+                                <property name="label">gtk-delete</property>
                                 <property name="visible">True</property>
                                 <property name="use_underline">True</property>
                                 <property name="use_stock">True</property>
@@ -958,7 +815,7 @@
                             </child>
                             <child>
                               <widget class="GtkImageMenuItem" id="findReplMenuItem">
-                                <property name="label">_Find &amp; replace ...</property>
+                                <property name="label">gtk-find-and-replace</property>
                                 <property name="visible">True</property>
                                 <property name="use_underline">True</property>
                                 <property name="use_stock">True</property>
@@ -997,18 +854,20 @@
                         <child>
                           <widget class="GtkMenu" id="scriptMenu_menu">
                             <child>
-                              <widget class="GtkMenuItem" id="scriptAdvanceMenuItem">
+                              <widget class="GtkImageMenuItem" id="scriptAdvanceMenuItem">
+                                <property name="label">gtk-go-down</property>
                                 <property name="visible">True</property>
-                                <property name="label" translatable="yes">Execute 1 phrase</property>
                                 <property name="use_underline">True</property>
+                                <property name="use_stock">True</property>
                                 <accelerator key="Page_Down" signal="activate" modifiers="GDK_CONTROL_MASK | GDK_MOD1_MASK"/>
                               </widget>
                             </child>
                             <child>
-                              <widget class="GtkMenuItem" id="scriptRetractMenuItem">
+                              <widget class="GtkImageMenuItem" id="scriptRetractMenuItem">
+                                <property name="label">gtk-go-up</property>
                                 <property name="visible">True</property>
-                                <property name="label" translatable="yes">Retract 1 phrase</property>
                                 <property name="use_underline">True</property>
+                                <property name="use_stock">True</property>
                                 <accelerator key="Page_Up" signal="activate" modifiers="GDK_CONTROL_MASK | GDK_MOD1_MASK"/>
                               </widget>
                             </child>
@@ -1018,18 +877,20 @@
                               </widget>
                             </child>
                             <child>
-                              <widget class="GtkMenuItem" id="scriptBottomMenuItem">
+                              <widget class="GtkImageMenuItem" id="scriptBottomMenuItem">
+                                <property name="label">gtk-goto-bottom</property>
                                 <property name="visible">True</property>
-                                <property name="label" translatable="yes">Execute all</property>
                                 <property name="use_underline">True</property>
+                                <property name="use_stock">True</property>
                                 <accelerator key="End" signal="activate" modifiers="GDK_CONTROL_MASK | GDK_MOD1_MASK"/>
                               </widget>
                             </child>
                             <child>
-                              <widget class="GtkMenuItem" id="scriptTopMenuItem">
+                              <widget class="GtkImageMenuItem" id="scriptTopMenuItem">
+                                <property name="label">gtk-goto-top</property>
                                 <property name="visible">True</property>
-                                <property name="label" translatable="yes">Restart</property>
                                 <property name="use_underline">True</property>
+                                <property name="use_stock">True</property>
                                 <accelerator key="Home" signal="activate" modifiers="GDK_CONTROL_MASK | GDK_MOD1_MASK"/>
                               </widget>
                             </child>
@@ -1039,10 +900,11 @@
                               </widget>
                             </child>
                             <child>
-                              <widget class="GtkMenuItem" id="scriptJumpMenuItem">
+                              <widget class="GtkImageMenuItem" id="scriptJumpMenuItem">
+                                <property name="label">gtk-jump-to</property>
                                 <property name="visible">True</property>
-                                <property name="label" translatable="yes">Execute until cursor</property>
                                 <property name="use_underline">True</property>
+                                <property name="use_stock">True</property>
                                 <accelerator key="period" signal="activate" modifiers="GDK_CONTROL_MASK | GDK_MOD1_MASK"/>
                               </widget>
                             </child>
@@ -1094,7 +956,7 @@
                             </child>
                             <child>
                               <widget class="GtkImageMenuItem" id="increaseFontSizeMenuItem">
-                                <property name="label">Zoom _in</property>
+                                <property name="label">gtk-zoom-in</property>
                                 <property name="visible">True</property>
                                 <property name="use_underline">True</property>
                                 <property name="use_stock">True</property>
@@ -1103,7 +965,7 @@
                             </child>
                             <child>
                               <widget class="GtkImageMenuItem" id="decreaseFontSizeMenuItem">
-                                <property name="label">Zoom _out</property>
+                                <property name="label">gtk-zoom-out</property>
                                 <property name="visible">True</property>
                                 <property name="use_underline">True</property>
                                 <property name="use_stock">True</property>
@@ -1112,7 +974,7 @@
                             </child>
                             <child>
                               <widget class="GtkImageMenuItem" id="normalFontSizeMenuItem">
-                                <property name="label">_Normal size</property>
+                                <property name="label">gtk-zoom-100</property>
                                 <property name="visible">True</property>
                                 <property name="use_underline">True</property>
                                 <property name="use_stock">True</property>
@@ -1170,12 +1032,11 @@
                               </widget>
                             </child>
                             <child>
-                              <widget class="GtkImageMenuItem" id="showUnicodeTable">
-                                <property name="label">TeX/UTF-8 table</property>
+                              <widget class="GtkMenuItem" id="showUnicodeTable">
                                 <property name="visible">True</property>
                                 <property name="tooltip" translatable="yes">Show the conversion table from TeX like sequences to UTF-8</property>
+                                <property name="label" translatable="yes">TeX/UTF-8 table</property>
                                 <property name="use_underline">True</property>
-                                <property name="use_stock">True</property>
                               </widget>
                             </child>
                           </widget>
@@ -1207,7 +1068,7 @@
                           <widget class="GtkMenu" id="helpMenu_menu">
                             <child>
                               <widget class="GtkImageMenuItem" id="contentsMenuItem">
-                                <property name="label">_Contents</property>
+                                <property name="label">gtk-help</property>
                                 <property name="visible">True</property>
                                 <property name="use_underline">True</property>
                                 <property name="use_stock">True</property>
@@ -1216,7 +1077,7 @@
                             </child>
                             <child>
                               <widget class="GtkImageMenuItem" id="aboutMenuItem">
-                                <property name="label">_About</property>
+                                <property name="label">gtk-about</property>
                                 <property name="visible">True</property>
                                 <property name="use_underline">True</property>
                                 <property name="use_stock">True</property>
