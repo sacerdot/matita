@@ -328,10 +328,7 @@ let interpretate_term_and_interpretate_term_option
         with NRef.IllFormedReference _ ->
          NotationPt.fail loc "Ill formed reference")
     | NotationPt.NRef nref -> NCic.Const nref
-    | NotationPt.NCic t -> 
-           let context = (* to make metas_of_term happy *)
-             List.map (fun x -> x,NCic.Decl (NCic.Implicit `Type)) context in
-           assert(NCicUntrusted.metas_of_term [] context t = []); t
+    | NotationPt.NCic t ->  t
     | NotationPt.Implicit `Vector -> NCic.Implicit `Vector
     | NotationPt.Implicit `JustOne -> NCic.Implicit `Term
     | NotationPt.Implicit (`Tagged s) -> NCic.Implicit (`Tagged s)
