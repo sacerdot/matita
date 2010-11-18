@@ -407,11 +407,6 @@ let domain_diff dom1 dom2 =
 
 let refine_profiler = HExtlib.profile "disambiguate_thing.refine_thing"
 
-type alias_spec =
-  | Ident_alias of string * string        (* identifier, uri *)
-  | Symbol_alias of string * int * string (* name, instance no, description *)
-  | Number_alias of int * string          (* instance no, description *)
-
 let disambiguate_thing 
   ~context ~metasenv ~subst ~use_coercions
   ~string_context_of_context
