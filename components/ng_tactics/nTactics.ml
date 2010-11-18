@@ -476,6 +476,7 @@ type indtyinfo = {
         lefts: NCic.term list;
         rights: NCic.term list;
         reference: NReference.reference;
+        term: NCic.term
  }
 ;;
 
@@ -489,9 +490,10 @@ let analyze_indty_tac ~what indtyref =
   let status, (r,consno,lefts,rights) = analyse_indty status ty_what in
   let leftno = List.length lefts in
   let rightno = List.length rights in
+  let status,what = term_of_cic_term status what (ctx_of goalty) in
   indtyref := Some { 
     rightno = rightno; leftno = leftno; consno = consno;
-    lefts = lefts; rights = rights; reference = r;
+    lefts = lefts; rights = rights; reference = r; term = what
   };
   exec id_tac status goal)
 ;;
@@ -523,8 +525,8 @@ let elim_tac ~what:(txt,len,what) ~where =
           (match !sort with NCic.Sort x -> x | _ -> assert false))
      in
      let eliminator = 
-       let _,_,w = what in
-       Ast.Appl [ Ast.Ident (name,None) ; Ast.Implicit `Vector ; w ]
+       let what = (HExtlib.unopt !indtyinfo).term in
+       Ast.Appl [ Ast.Ident (name,None) ; Ast.Implicit `Vector ; Ast.NCic what ]
      in
      exact_tac ("",0,eliminator) status) ]) 
 ;;
@@ -594,9 +596,13 @@ let cases_tac ~what:(txt,len,what) ~where =
   atomic_tac 
    (block_tac [
       analyze_indty_tac ~what indtyinfo;
-      (fun s -> select_tac 
-       ~where ~job:(`Substexpand ((HExtlib.unopt !indtyinfo).rightno+1))true s);
-      distribute_tac (cases ~what) ])
+      (fun s ->
+        select_tac 
+         ~where ~job:(`Substexpand ((HExtlib.unopt !indtyinfo).rightno+1))true
+         s);
+      (fun s ->
+        distribute_tac
+         (cases ~what:("",0,Ast.NCic (HExtlib.unopt !indtyinfo).term)) s); ])
 ;;
 
 let case1_tac name =
@@ -689,8 +695,8 @@ let inversion_tac ~what:(txt,len,what) ~where =
           (match !sort with NCic.Sort x -> x | _ -> assert false))
      in
      let eliminator = 
-       let _,_,w = what in
-       Ast.Appl [ Ast.Ident (name,None) ; Ast.Implicit `Vector ; w ]
+       let what = (HExtlib.unopt !indtyinfo).term in
+       Ast.Appl [ Ast.Ident (name,None) ; Ast.Implicit `Vector ; Ast.NCic what ]
      in
      exact_tac ("",0,eliminator) status) ]) 
 ;;
