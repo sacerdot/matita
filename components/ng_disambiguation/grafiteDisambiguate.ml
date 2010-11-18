@@ -71,11 +71,6 @@ let set_proof_aliases status ~implicit_aliases mode new_aliases =
  if mode = GrafiteAst.WithoutPreferences then
    status
  else
-   (* MATITA 1.0
-   let new_commands =
-     List.map
-      (fun _,alias -> GrafiteAst.Alias (HExtlib.dummy_floc, alias)) new_aliases
-   in *)
    let aliases =
     List.fold_left (fun acc (d,c) -> DisambiguateTypes.Environment.add d c acc)
      status#disambiguate_db.aliases new_aliases in

@@ -2,9 +2,9 @@ PACKAGE = ng_disambiguation
 PREDICATES =
 
 INTERFACE_FILES =		\
+	nnumber_notation.mli    \
 	disambiguateChoices.mli \
   nCicDisambiguate.mli    \
-	nnumber_notation.mli    \
 	grafiteDisambiguate.mli \
 	$(NULL)
 IMPLEMENTATION_FILES =		\

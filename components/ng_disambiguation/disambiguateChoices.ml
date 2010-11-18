@@ -31,16 +31,13 @@ open DisambiguateTypes
 
 exception Choice_not_found of string Lazy.t
 
-let nnum_choices = ref []
-
-let nadd_num_choice choice = nnum_choices := choice :: !nnum_choices
-
 let has_description dsc = (fun x -> fst x = dsc)
 
 let nlookup_num_by_dsc dsc =
-  try
-    List.find (has_description dsc) !nnum_choices
-  with Not_found -> raise (Choice_not_found (lazy ("Num with dsc " ^  dsc)))
+ if dsc <> "natural number" then
+  raise (Choice_not_found (lazy ("Num with dsc " ^  dsc)))
+ else
+  "natural number", `Num_interp Nnumber_notation.ninterp_natural_number
 
 let mk_choice  ~mk_appl ~mk_implicit ~term_of_nref (dsc, args, appl_pattern)=
   dsc,

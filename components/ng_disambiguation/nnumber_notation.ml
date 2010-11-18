@@ -41,7 +41,7 @@ let ninterp_natural_number num =
       | None     -> error "no default natural numbers"
    in
   *)
-   let nat_URI = NUri.uri_of_string "cic:/matita/ng/arithmetics/nat/nat.ind" in
+   let nat_URI = NUri.uri_of_string "cic:/matita/arithmetics/nat/nat.ind" in
    let o () =
     NCic.Const
      (NReference.reference_of_spec nat_URI (NReference.Con (0,1,0))) in
@@ -51,8 +51,3 @@ let ninterp_natural_number num =
       (NReference.reference_of_spec nat_URI (NReference.Con (0,2,0)));
       t] in
    build_nat o s num
-
-let _ =
-  DisambiguateChoices.nadd_num_choice
-    ("nnatural number", `Num_interp ninterp_natural_number);
-;;

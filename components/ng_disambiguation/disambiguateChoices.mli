@@ -30,9 +30,6 @@ open DisambiguateTypes
   (** raised by lookup_XXXX below *)
 exception Choice_not_found of string Lazy.t
 
-  (** register a new number choice *)
-val nadd_num_choice: NCic.term codomain_item -> unit
-
 (** {2 Choices lookup}
  * for user defined aliases *)
 

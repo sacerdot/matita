@@ -25,4 +25,4 @@
 
 (* $Id: number_notation.ml 9771 2009-05-14 13:43:55Z fguidi $ *)
 
-(* Works by side-effects only *)
+val ninterp_natural_number: string -> NCic.term
