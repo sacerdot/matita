@@ -16,9 +16,9 @@ NCicBlob.set_default_eqP()
 NCicProof.set_default_sig()
 ;;
 
-let debug _ = ();;
+let noprint _ = ();;
 let print s = prerr_endline (Lazy.force s);; 
-let debug = print;;
+let debug = noprint;; 
 
 module B(C : NCicBlob.NCicContext): Orderings.Blob 
   with type t = NCic.term and type input = NCic.term 

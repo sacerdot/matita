@@ -14,7 +14,7 @@ open Printf
 let print ?(depth=0) s = 
   prerr_endline (String.make depth '\t'^Lazy.force s) 
 let noprint ?(depth=0) _ = () 
-let debug_print = print
+let debug_print = noprint
 
 open Continuationals.Stack
 open NTacStatus
