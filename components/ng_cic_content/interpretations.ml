@@ -206,7 +206,7 @@ let instantiate_appl_pattern
 
 let destroy_nat =
   let is_nat_URI = NUri.eq (NUri.uri_of_string
-  "cic:/matita/ng/arithmetics/nat/nat.ind") in
+  "cic:/matita/arithmetics/nat/nat.ind") in
   let is_zero = function
     | NCic.Const (NReference.Ref (uri, NReference.Con (0, 1, 0))) when
        is_nat_URI uri -> true
