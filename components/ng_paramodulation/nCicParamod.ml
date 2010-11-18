@@ -18,6 +18,7 @@ NCicProof.set_default_sig()
 
 let debug _ = ();;
 let print s = prerr_endline (Lazy.force s);; 
+let debug = print;;
 
 module B(C : NCicBlob.NCicContext): Orderings.Blob 
   with type t = NCic.term and type input = NCic.term 
@@ -163,7 +164,6 @@ let is_equation metasenv subst context ty =
     | NCic.Appl (eq ::tl) when eq = CB.eqP -> true
     | _ -> false
 ;;
-
 
 (*
 let demodulate rdb metasenv subst context s goal =

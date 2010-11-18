@@ -13,7 +13,7 @@
 
 let print s = prerr_endline (Lazy.force s) ;; 
 let noprint s = ();;  
-let debug = noprint;;
+let debug = print;;
 
 let monster = 100;;
     

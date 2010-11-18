@@ -14,7 +14,7 @@ open Printf
 let print ?(depth=0) s = 
   prerr_endline (String.make depth '\t'^Lazy.force s) 
 let noprint ?(depth=0) _ = () 
-let debug_print = noprint
+let debug_print = print
 
 open Continuationals.Stack
 open NTacStatus
@@ -563,7 +563,7 @@ let smart_apply t unit_eq status g =
   noprint(lazy("pty " ^ (NCicPp.ppterm ctx [] [] ty)));
   let eq_coerc =       
     let uri = 
-      NUri.uri_of_string "cic:/matita/ng/Plogic/equality/eq_coerc.con" in
+      NUri.uri_of_string "cic:/matita/basics/logic/eq_coerc.con" in
     let ref = NReference.reference_of_spec uri (NReference.Def(2)) in
       NCic.Const ref
   in

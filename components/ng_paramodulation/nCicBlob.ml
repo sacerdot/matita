@@ -14,8 +14,8 @@
 let eqPref = ref (fun _ -> assert false);;
 let set_eqP t = eqPref := fun _ -> t;;
 
-let default_eqP() = 
-  let uri = NUri.uri_of_string "cic:/matita/ng/Plogic/equality/eq.ind" in
+let default_eqP() =
+  let uri = NUri.uri_of_string "cic:/matita/basics/logic/eq.ind" in
   let ref = NReference.reference_of_spec uri (NReference.Ind(true,0,2)) in
     NCic.Const ref
 ;;

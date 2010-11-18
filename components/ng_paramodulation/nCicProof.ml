@@ -19,19 +19,19 @@ let get_sig = fun x -> !eqsig x;;
 
 let default_sig = function
   | Eq -> 
-      let uri = NUri.uri_of_string "cic:/matita/ng/Plogic/equality/eq.ind" in
+      let uri = NUri.uri_of_string "cic:/matita/basics/logic/eq.ind" in
       let ref = NReference.reference_of_spec uri (NReference.Ind(true,0,2)) in
         NCic.Const ref
   | EqInd_l -> 
-      let uri = NUri.uri_of_string "cic:/matita/ng/Plogic/equality/rewrite_l.con" in
+      let uri = NUri.uri_of_string "cic:/matita/basics/logic/rewrite_l.con" in
       let ref = NReference.reference_of_spec uri (NReference.Def(1)) in
         NCic.Const ref
   | EqInd_r -> 
-      let uri = NUri.uri_of_string "cic:/matita/ng/Plogic/equality/rewrite_r.con" in
+      let uri = NUri.uri_of_string "cic:/matita/basics/logic/rewrite_r.con" in
       let ref = NReference.reference_of_spec uri (NReference.Def(3)) in
         NCic.Const ref
   | Refl ->
-      let uri = NUri.uri_of_string "cic:/matita/ng/Plogic/equality/eq.ind" in
+      let uri = NUri.uri_of_string "cic:/matita/basics/logic/eq.ind" in
       let ref = NReference.reference_of_spec uri (NReference.Con(0,1,2)) in
         NCic.Const ref
 
