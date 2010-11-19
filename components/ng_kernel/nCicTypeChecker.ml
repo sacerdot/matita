@@ -762,7 +762,7 @@ and check_mutual_inductive_defs uri ~metasenv ~subst leftno tyl =
        let sx_context_ty_rev,_ = HExtlib.split_nth leftno (List.rev context) in
        List.iter
          (fun (k_relev,_,te) ->
-	   let k_relev =
+           let k_relev =
             try snd (HExtlib.split_nth leftno k_relev)
             with Failure _ -> k_relev in
            let te = debruijn uri len [] ~subst te in
@@ -815,11 +815,11 @@ and check_mutual_inductive_defs uri ~metasenv ~subst leftno tyl =
              raise
                (TypeCheckerFailure
                  (lazy ("Non positive occurence in "^NUri.string_of_uri
-		 uri)))
-           else check_relevance ~subst ~metasenv context k_relev te) 
+                 uri)))
+           else check_relevance ~subst ~metasenv context k_relev te)
          cl;
         check_relevance ~subst ~metasenv [] it_relev ty;
-	i+1)
+        i+1)
     tyl 1)
 
 and check_relevance ~subst ~metasenv context relevance ty =
@@ -834,10 +834,10 @@ and check_relevance ~subst ~metasenv context relevance ty =
     | C.Prod (name,so,de) ->
         let sort = typeof ~subst ~metasenv context so in
         (match (relevance,R.whd ~subst context sort) with
-	  | [],_ -> ()
+          | [],_ -> ()
           | false::tl,C.Sort C.Prop -> aux ((name,(C.Decl so))::context) tl de
-	  | true::_,C.Sort C.Prop
-	  | false::_,C.Sort _
+          | true::_,C.Sort C.Prop
+          | false::_,C.Sort _
           | false::_,C.Meta _ -> error context ty
           | true::tl,C.Sort _
           | true::tl,C.Meta _ -> aux ((name,(C.Decl so))::context) tl de
@@ -1124,18 +1124,18 @@ and get_relevance ~metasenv ~subst context t args =
            let sort = typeof ~subst ~metasenv context so in
            let new_ty = S.subst ~avoid_beta_redexes:true arg de in
            (*prerr_endline ("so: " ^ PP.ppterm ~subst ~metasenv:[]
-	     ~context so);
+             ~context so);
            prerr_endline ("sort: " ^ PP.ppterm ~subst ~metasenv:[]
-	     ~context sort);*)
-	   (match R.whd ~subst context sort with
+             ~context sort);*)
+           (match R.whd ~subst context sort with
               | C.Sort C.Prop ->
                   false::(aux context new_ty tl)
               | C.Sort _
-     	      | C.Meta _ -> true::(aux context new_ty tl)
+                   | C.Meta _ -> true::(aux context new_ty tl)
               | _ -> raise (TypeCheckerFailure (lazy (Printf.sprintf
-     	        "Prod: the type %s of the source of %s is not a sort" 
-     	         (PP.ppterm ~subst ~metasenv ~context sort)
-     		 (PP.ppterm ~subst ~metasenv ~context so)))))
+                     "Prod: the type %s of the source of %s is not a sort" 
+                      (PP.ppterm ~subst ~metasenv ~context sort)
+                      (PP.ppterm ~subst ~metasenv ~context so)))))
        | _ ->
           raise 
             (TypeCheckerFailure
@@ -1280,7 +1280,7 @@ let typecheck_obj (uri,height,metasenv,subst,kind) =
         List.fold_left
          (fun (types,kl) (relevance,name,k,ty,_) ->
            let _ = typeof ~subst ~metasenv [] ty in
-	    check_relevance ~subst ~metasenv [] relevance ty;
+            check_relevance ~subst ~metasenv [] relevance ty;
             ((name,C.Decl ty)::types, k::kl)
          ) ([],[]) fl
       in

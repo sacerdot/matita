@@ -823,10 +823,10 @@ and unify rdb test_eq_only metasenv subst context t1 t2 swap =
            ppterm ~metasenv ~subst ~context 
              (NCicReduction.unwind (k2,e2,t2,s2))));
          pp (lazy (string_of_bool norm1 ^ " ?? " ^ string_of_bool norm2));
-          let relevance = [] (* TO BE UNDERSTOOD 
+          let relevance =
             match t1 with
             | C.Const r -> NCicEnvironment.get_relevance r
-            | _ -> [] *) in
+            | _ -> [] in
           let unif_from_stack (metasenv, subst) (t1, t2, b) =
               try
                 let t1 = NCicReduction.from_stack ~delta:max_int t1 in
@@ -839,7 +839,7 @@ and unify rdb test_eq_only metasenv subst context t1 t2 swap =
             match l1,l2,r with
             | x1::tl1, x2::tl2, r::tr-> check_stack tl1 tl2 tr ((x1,x2,r)::todo)
             | x1::tl1, x2::tl2, []-> check_stack tl1 tl2 [] ((x1,x2,true)::todo)
-            | l1, l2, _ -> 
+            | l1, l2, _ ->
                NCicReduction.unwind (k1,e1,t1,List.rev l1),
                 NCicReduction.unwind (k2,e2,t2,List.rev l2),
                 todo
@@ -848,10 +848,11 @@ and unify rdb test_eq_only metasenv subst context t1 t2 swap =
             match t1, t2 with
             | NCic.Meta _, _ | _, NCic.Meta _ ->
                 (NCicReduction.unwind (k1,e1,t1,s1)),
-                (NCicReduction.unwind (k2,e2,t2,s2)),[]     
+                (NCicReduction.unwind (k2,e2,t2,s2)),[]
             | _ -> check_stack l1 l2 r []
           in
-        let hh1,hh2,todo = check_stack (List.rev s1) (List.rev s2) relevance in
+        let hh1,hh2,todo =
+          check_stack (List.rev s1) (List.rev s2) (List.rev relevance) in
         try
           fo_unif_heads_and_cont_or_unwind_and_hints
             test_eq_only metasenv subst (norm1,hh1) (norm2,hh2) 

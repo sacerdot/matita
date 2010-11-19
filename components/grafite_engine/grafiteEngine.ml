@@ -396,6 +396,61 @@ let subst_metasenv_and_fix_names status =
    status#set_obj(u,h,NCicUntrusted.apply_subst_metasenv subst metasenv,subst,o)
 ;;
 
+let is_proof_irrelevant context ty =
+  match
+    NCicReduction.whd ~subst:[] context
+     (NCicTypeChecker.typeof ~subst:[] ~metasenv:[] context ty)
+  with
+     NCic.Sort NCic.Prop -> true
+   | NCic.Sort _ -> false
+   | _ -> assert false
+;;
+
+let rec relevance_of ?(context=[]) ty =
+ match NCicReduction.whd ~subst:[] context ty with
+    NCic.Prod (n,s,t) ->
+     not (is_proof_irrelevant context s) ::
+      relevance_of ~context:((n,NCic.Decl s)::context) t
+  | _ -> []
+;;
+
+let compute_relevance uri =
+ function
+    NCic.Constant (_,name,bo,ty,attrs) ->
+     let relevance = relevance_of ty in
+      NCic.Constant (relevance,name,bo,ty,attrs)
+  | NCic.Fixpoint (ind,funs,attrs) ->
+     let funs =
+       List.map
+       (fun (_,name,recno,ty,bo) ->
+         let relevance = relevance_of ty in
+          relevance,name,recno,ty,bo
+        ) funs
+     in
+      NCic.Fixpoint (ind,funs,attrs)
+  | NCic.Inductive (ind,leftno,tys,attrs) ->
+     let context =
+      List.rev_map (fun (_,name,arity,_) -> name,NCic.Decl arity) tys in
+     let tysno = List.length tys in
+     let tys =
+       List.map
+        (fun (_,name,arity,cons) ->
+         let relevance = relevance_of arity in
+         let cons =
+          List.map
+           (fun (_,name,ty) ->
+             let dety =
+               NCicTypeChecker.debruijn uri tysno ~subst:[] [] ty in
+             let relevance = relevance_of ~context dety in
+              relevance,name,ty
+           ) cons
+         in
+          (relevance,name,arity,cons)
+        ) tys
+     in
+      NCic.Inductive (ind,leftno,tys,attrs)
+;;
+
 
 let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
   match cmd with
@@ -448,6 +503,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
               NCicUntrusted.map_obj_kind (fix ()) obj_kind 
           | _ -> obj_kind
         in
+        let obj_kind = compute_relevance uri obj_kind in
         let obj = uri,height,[],[],obj_kind in
         let old_status = status in
         let status = NCicLibrary.add_obj status obj in
