@@ -118,9 +118,14 @@ let eval_nmacro include_paths (buffer : GText.buffer) guistuff grafite_status us
       let status = script#grafite_status in
       let _,_,menv,subst,_ = status#obj in
       let ctx = 
-        try let _,(_,ctx,_) = List.hd menv in ctx
-        with Failure "hd" -> []
-      in
+       match Continuationals.Stack.head_goals status#stack with
+          [] -> []
+        | g::tl ->
+           if tl <> [] then
+            HLog.warn
+             "Many goals focused. Using the context of the first one\n";
+           let _, ctx, _ = NCicUtils.lookup_meta g menv in
+            ctx in
       let m, s, status, t = 
         GrafiteDisambiguate.disambiguate_nterm 
           status None ctx menv subst (parsed_text,parsed_text_length,
