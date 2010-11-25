@@ -575,17 +575,21 @@ and unify rdb test_eq_only metasenv subst context t1 t2 swap =
             * function even in the easy case above *)
            let easy_case = 
              match t2 with
-             | NCic.Appl (f :: f_args)  
-               when List.length args = List.length f_args && 
+             | NCic.Appl (f :: f_args)
+               when 
                List.exists (NCicMetaSubst.is_flexible context ~subst) args ->
+                let mlen = List.length args in
+                let flen = List.length f_args in
+                let min_len = min mlen flen in
+                let mhe,margs = HExtlib.split_nth (mlen - min_len) args in
+                let fhe,fargs = HExtlib.split_nth (flen - min_len) f_args in
                  (try 
-                    let metasenv, subst = 
-                      unify rdb test_eq_only metasenv subst context meta f swap
-                    in
                     Some (List.fold_left2 
                       (fun (m, s) t1 t2 -> 
-                        unify rdb test_eq_only m s context t1 t2 swap)
-                        (metasenv, subst) args f_args)
+                        unify rdb test_eq_only m s context t1 t2 swap
+                      ) (metasenv,subst)
+                        ((NCicUntrusted.mk_appl meta mhe)::margs)
+                        ((NCicUntrusted.mk_appl f fhe)::fargs))
                   with UnificationFailure _ | Uncertain _ | KeepReducing _ ->
                     None) 
              | _ -> None
