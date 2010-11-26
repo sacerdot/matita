@@ -382,8 +382,8 @@ let rec instantiate rdb test_eq_only metasenv subst context n lc t swap =
        | _ ->
         let lty = NCicSubstitution.subst_meta lc ty in
         pp (lazy ("On the types: " ^
-          ppterm ~metasenv ~subst ~context lty ^ "=<=" ^
-          ppterm ~metasenv ~subst ~context ty_t)); 
+          ppterm ~metasenv ~subst ~context ty_t ^ "=<=" ^
+          ppterm ~metasenv ~subst ~context lty)); 
         let metasenv, subst = 
           unify rdb false metasenv subst context ty_t lty false
         in
@@ -557,6 +557,17 @@ and unify rdb test_eq_only metasenv subst context t1 t2 swap =
              let len1 = List.length cc1 in
              let len2 = List.length cc2 in
               len2 < len1 && cc2 = fst (HExtlib.split_nth len2 cc1) ->
+          instantiate rdb test_eq_only metasenv subst context m lc'
+            (NCicReduction.head_beta_reduce ~subst t1) (not swap)
+       | C.Meta (n,lc), C.Meta (m,lc') when
+          let _,_,tyn = NCicUtils.lookup_meta n metasenv in
+          let _,_,tym = NCicUtils.lookup_meta m metasenv in
+          let tyn = NCicSubstitution.subst_meta lc tyn in
+          let tym = NCicSubstitution.subst_meta lc tym in
+           match tyn,tym with
+              NCic.Sort NCic.Type u1, NCic.Sort NCic.Type u2 ->
+               NCicEnvironment.universe_lt u1 u2
+            | _,_ -> false ->
           instantiate rdb test_eq_only metasenv subst context m lc'
             (NCicReduction.head_beta_reduce ~subst t1) (not swap)
        | C.Meta (n,lc), t -> 
@@ -866,7 +877,7 @@ and unify rdb test_eq_only metasenv subst context t1 t2 swap =
          | KeepReducing _ -> assert false
          | KeepReducingThis _ ->
             assert (not (norm1 && norm2));
-	    unif_machines metasenv subst (small_delta_step ~subst m1 m2)
+            unif_machines metasenv subst (small_delta_step ~subst m1 m2)
          | UnificationFailure _ | Uncertain _ when (not (norm1 && norm2))
            -> unif_machines metasenv subst (small_delta_step ~subst m1 m2)
          | UnificationFailure msg

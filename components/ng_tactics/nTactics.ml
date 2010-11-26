@@ -542,6 +542,7 @@ let rewrite_tac ~dir ~what:(_,_,what) ~where status =
      `LeftToRight -> "eq" ^ suffix ^ "_r"
    | `RightToLeft -> "eq" ^ suffix
  in
+ let what = Ast.Appl [what; Ast.Implicit `Vector] in
   block_tac
    [ select_tac ~where ~job:(`Substexpand 2) true;
      exact_tac
