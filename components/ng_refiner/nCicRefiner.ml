@@ -301,7 +301,7 @@ let rec typeof rdb
        let hbr t = 
          if upto > 0 then NCicReduction.head_beta_reduce ~upto t else t 
        in
-       let refine_appl () =
+       let refine_appl metasenv subst args =
          let metasenv, subst, he, ty_he = 
             typeof_aux metasenv subst context None he in
          let metasenv, subst, t, ty = 
@@ -316,8 +316,36 @@ let rec typeof rdb
            let metasenv, subst, he, ty_he = 
               typeof_aux metasenv subst context expty he in
            metasenv, subst, hbr he, ty_he
-         with Uncertain _ | RefineFailure _ -> refine_appl ()
-       else refine_appl ()
+         with Uncertain _ | RefineFailure _ -> refine_appl metasenv subst args
+       else
+        (* CSC: whd can be useful on he and expty ... *)
+        (match he, expty with
+            C.Const (Ref.Ref (uri1,Ref.Con _)),
+             Some (C.Appl (C.Const (Ref.Ref (uri2,Ref.Ind _) as ref)::expargs))
+             when NUri.eq uri1 uri2 ->
+              (try
+               let _,leftno,_,_,_ = NCicEnvironment.get_checked_indtys ref in
+               let leftargs,rightargs = HExtlib.split_nth leftno args in
+               let leftexpargs,_ = HExtlib.split_nth leftno expargs in
+               let metasenv,subst,leftargs_rev =
+                List.fold_left2
+                 (fun (metasenv,subst,args) arg exparg ->
+                   let metasenv,subst,arg,_ =
+                    typeof_aux metasenv subst context None arg in
+                   let metasenv,subst =
+                    NCicUnification.unify rdb metasenv subst context arg exparg
+                   in
+                    metasenv,subst,arg::args
+                 ) (metasenv,subst,[]) leftargs leftexpargs
+               in
+                (* some checks are re-done here, but it would be complex to
+                 * avoid them (e.g. we did not check yet that the constructor
+                 * is a construtor for that inductive type) *)
+                refine_appl metasenv subst ((List.rev leftargs_rev)@rightargs)
+              with
+               | Sys.Break as exn -> raise exn
+               | _ -> refine_appl metasenv subst args (* to try coercions *))
+          | _ -> refine_appl metasenv subst args)
    | C.Appl _ -> raise (AssertFailure (lazy "Appl of length < 2"))
    | C.Match (Ref.Ref (_,Ref.Ind (_,tyno,_)) as r,
           outtype,(term as orig_term),pl) as orig ->
