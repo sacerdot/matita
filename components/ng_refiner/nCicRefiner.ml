@@ -318,7 +318,7 @@ let rec typeof rdb
            metasenv, subst, hbr he, ty_he
          with Uncertain _ | RefineFailure _ -> refine_appl metasenv subst args
        else
-        (* CSC: whd can be useful on he and expty ... *)
+        (* CSC: whd can be useful on he too... *)
         (match he with
             C.Const (Ref.Ref (uri1,Ref.Con _)) -> (
              match
@@ -328,26 +328,39 @@ let rec typeof rdb
                 when NUri.eq uri1 uri2 ->
                 (try
                  let _,leftno,_,_,_ = NCicEnvironment.get_checked_indtys ref in
-                 let leftargs,rightargs = HExtlib.split_nth leftno args in
                  let leftexpargs,_ = HExtlib.split_nth leftno expargs in
-                 let metasenv,subst,leftargs_rev =
-                  List.fold_left2
-                   (fun (metasenv,subst,args) arg exparg ->
-                     let metasenv,subst,arg,_ =
-                      typeof_aux metasenv subst context None arg in
-                     let metasenv,subst =
-                      NCicUnification.unify rdb metasenv subst context arg exparg
-                     in
-                      metasenv,subst,arg::args
-                   ) (metasenv,subst,[]) leftargs leftexpargs
-                 in
-                  (* some checks are re-done here, but it would be complex to
-                   * avoid them (e.g. we did not check yet that the constructor
-                   * is a construtor for that inductive type) *)
-                  refine_appl metasenv subst ((List.rev leftargs_rev)@rightargs)
+                  let rec instantiate metasenv subst revargs args =
+                   function
+                     [] ->
+                      (* some checks are re-done here, but it would be complex
+                         to avoid them (e.g. we did not check yet that the
+                         constructor is a constructor for that inductive type)*)
+                      refine_appl metasenv subst ((List.rev revargs)@args)
+                   | (exparg::expargs) as allexpargs ->
+                      match args with
+                         [] -> raise (Failure "Not enough args")
+                       | (C.Implicit `Vector::args) as allargs ->
+                          (try
+                            instantiate metasenv subst revargs args allexpargs
+                           with
+                              Sys.Break as exn -> raise exn
+                            | _ ->
+                             instantiate metasenv subst revargs
+                              (C.Implicit `Term :: allargs) allexpargs)
+                       | arg::args ->
+                          let metasenv,subst,arg,_ =
+                           typeof_aux metasenv subst context None arg in
+                          let metasenv,subst =
+                           NCicUnification.unify rdb metasenv subst context
+                            arg exparg
+                          in
+                           instantiate metasenv subst(arg::revargs) args expargs
+                  in
+                   instantiate metasenv subst [] args leftexpargs 
                 with
                  | Sys.Break as exn -> raise exn
-                 | _ -> refine_appl metasenv subst args (* to try coercions *))
+                 | _ ->
+                    refine_appl metasenv subst args (* to try coercions *))
               | _ -> refine_appl metasenv subst args)
           | _ -> refine_appl metasenv subst args)
    | C.Appl _ -> raise (AssertFailure (lazy "Appl of length < 2"))
