@@ -287,11 +287,15 @@ let to_subst status i entry =
   status#set_obj (name,height,metasenv,subst,obj)
 ;;
 
-let instantiate status i t =
+let instantiate status ?refine:(dorefine=true) i t =
  let _,_,metasenv,_,_ = status#obj in
  let gname, context, gty = List.assoc i metasenv in
- let status, (_,t), (_,ty) = refine status context t (Some (context,gty)) in
-  to_subst status i (gname,context,t,ty)
+  if dorefine then
+   let status, (_,t), (_,ty) = refine status context t (Some (context,gty)) in
+    to_subst status i (gname,context,t,ty)
+  else
+   let status,(_,ty) = typeof status context t in
+    to_subst status i (gname,context,snd t,ty)
 ;;
 
 let instantiate_with_ast status i t =

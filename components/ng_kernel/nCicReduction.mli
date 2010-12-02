@@ -44,6 +44,7 @@ val reduce_machine :
      delta:int -> ?subst:NCic.substitution -> NCic.context -> machine -> 
       machine * bool
 val from_stack : delta:int -> stack_item -> machine
+val from_env : delta:int -> environment_item -> machine
 val unwind : machine -> NCic.term
 
 val split_prods:

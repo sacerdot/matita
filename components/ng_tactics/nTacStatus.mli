@@ -107,7 +107,7 @@ val mk_meta:
  #pstatus as 'status -> ?attrs:NCic.meta_attrs -> NCic.context ->
    [ `Decl of cic_term | `Def of cic_term ] -> NCicUntrusted.meta_kind ->
      'status * cic_term
-val instantiate: #pstatus as 'status -> int -> cic_term -> 'status
+val instantiate: #pstatus as 'status -> ?refine:bool -> int -> cic_term -> 'status
 val instantiate_with_ast: #pstatus as 'status -> int -> tactic_term -> 'status
 
 val select_term:

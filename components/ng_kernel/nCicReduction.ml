@@ -61,7 +61,7 @@ module CallByValueByNameForUnwind' : Strategy = struct
    lazy (fst (reduce ~delta:0 c)), 
    (fun delta -> fst (reduce ~delta c)),
    lazy (unwind c)
-  let from_stack ~delta (c0,c,_) = if delta = 0 then Lazy.force c0 else c delta 
+  let from_stack ~delta (c0,c,_) = if delta = 0 then Lazy.force c0 else c delta
   let from_stack_list_for_unwind ~unwind:_ l = 
    List.map (fun (_,_,c) -> Lazy.force c) l
   let from_env ~delta (c0,c,_) = if delta = 0 then Lazy.force c0 else c delta
@@ -433,6 +433,7 @@ type machine = int * environment_item list * NCic.term * stack_item list
 
 let reduce_machine = R.reduce
 let from_stack = RS.from_stack
+let from_env = RS.from_env
 let unwind = R.unwind
 
 let _ = 

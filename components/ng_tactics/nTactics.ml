@@ -371,7 +371,7 @@ let select0_tac ~where:(wanted,hyps,where) ~job  =
    let status, instance = 
      mk_meta status newgoalctx (`Decl newgoalty) `IsTerm
    in
-   instantiate status goal instance)
+   instantiate ~refine:false status goal instance)
 ;;
 
 let select_tac ~where ~job move_down_hyps = 
