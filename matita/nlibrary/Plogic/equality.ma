@@ -49,7 +49,7 @@ qed.
 
 theorem sym_eq: ∀A:Type[2].∀x,y:A. x = y → y = x.
 #A; #x; #y; #Heq; apply (rewrite_l A x (λz.z=x)); 
-[ @ | assumption ]
+[ % | assumption ]
 qed.
 
 theorem rewrite_r: ∀A:Type[2].∀x.∀P:A → Prop. P x → ∀y. y = x → P y.

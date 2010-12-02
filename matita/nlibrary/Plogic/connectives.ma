@@ -14,66 +14,62 @@
 
 include "Plogic/equality.ma".
 
-ninductive True: Prop ≝  
+inductive True: Prop ≝  
 I : True.
 
-default "true" cic:/matita/basics/connectives/True.ind.
-
-ninductive False: Prop ≝ .
-
-default "false" cic:/matita/basics/connectives/False.ind.
+inductive False: Prop ≝ .
 
 (*
 ndefinition Not: Prop → Prop ≝
 λA. A → False. *)
 
-ninductive Not (A:Prop): Prop ≝
+inductive Not (A:Prop): Prop ≝
 nmk: (A → False) → Not A.
 
 interpretation "logical not" 'not x = (Not x).
 
-ntheorem absurd : ∀ A:Prop. A → ¬A → False.
-#A; #H; #Hn; nelim Hn;/2/; nqed.
+theorem absurd : ∀ A:Prop. A → ¬A → False.
+#A; #H; #Hn; elim Hn;/2/; qed.
 
 (*
 ntheorem absurd : ∀ A,C:Prop. A → ¬A → C.
 #A; #C; #H; #Hn; nelim (Hn H).
 nqed. *)
 
-ntheorem not_to_not : ∀A,B:Prop. (A → B) → ¬B →¬A.
-/4/; nqed.
+theorem not_to_not : ∀A,B:Prop. (A → B) → ¬B →¬A.
+/4/; qed.
 
-ninductive And (A,B:Prop) : Prop ≝
+inductive And (A,B:Prop) : Prop ≝
     conj : A → B → And A B.
 
 interpretation "logical and" 'and x y = (And x y).
 
-ntheorem proj1: ∀A,B:Prop. A ∧ B → A.
-#A; #B; #AB; nelim AB; //.
-nqed.
+theorem proj1: ∀A,B:Prop. A ∧ B → A.
+#A; #B; #AB; elim AB; //.
+qed.
 
-ntheorem proj2: ∀ A,B:Prop. A ∧ B → B.
-#A; #B; #AB; nelim AB; //.
-nqed.
+theorem proj2: ∀ A,B:Prop. A ∧ B → B.
+#A; #B; #AB; elim AB; //.
+qed.
 
-ninductive Or (A,B:Prop) : Prop ≝
+inductive Or (A,B:Prop) : Prop ≝
      or_introl : A → (Or A B)
    | or_intror : B → (Or A B).
 
 interpretation "logical or" 'or x y = (Or x y).
 
-ndefinition decidable : Prop → Prop ≝ 
+definition decidable : Prop → Prop ≝ 
 λ A:Prop. A ∨ ¬ A.
 
-ninductive ex (A:Type[0]) (P:A → Prop) : Prop ≝
+inductive ex (A:Type[0]) (P:A → Prop) : Prop ≝
     ex_intro: ∀ x:A. P x →  ex A P.
     
 interpretation "exists" 'exists x = (ex ? x).
 
-ninductive ex2 (A:Type[0]) (P,Q:A \to Prop) : Prop ≝
+inductive ex2 (A:Type[0]) (P,Q:A \to Prop) : Prop ≝
     ex_intro2: ∀ x:A. P x → Q x → ex2 A P Q.
 
-ndefinition iff :=
+definition iff :=
  λ A,B. (A → B) ∧ (B → A).
 
 interpretation "iff" 'iff a b = (iff a b).  
