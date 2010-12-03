@@ -377,7 +377,7 @@ let eval_ng_tac tac =
   | GrafiteAst.NUnfocus _ -> NTactics.unfocus_tac
   | GrafiteAst.NWildcard _ -> NTactics.wildcard_tac 
   | GrafiteAst.NTry (_,tac) -> NTactics.try_tac
-      (aux f (text, prefix_len, tac))
+      (f f (text, prefix_len, tac))
   | GrafiteAst.NAssumption _ -> NTactics.assumption_tac
   | GrafiteAst.NBlock (_,l) -> 
       NTactics.block_tac (List.map (fun x -> aux f (text,prefix_len,x)) l)

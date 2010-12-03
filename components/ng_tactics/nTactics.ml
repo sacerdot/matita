@@ -261,10 +261,13 @@ let repeat_tac t s =
 
 
 let try_tac tac status =
+ let try_tac status =
   try
     tac status
   with NTacStatus.Error _ ->
     status
+ in
+  atomic_tac try_tac status
 ;;
 
 let first_tac tacl status =

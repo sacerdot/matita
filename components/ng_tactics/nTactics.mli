@@ -23,7 +23,7 @@ val merge_tac: 's NTacStatus.tactic
 val focus_tac: int list -> 's NTacStatus.tactic
 val unfocus_tac: 's NTacStatus.tactic
 val skip_tac: 's NTacStatus.tactic
-val try_tac: 's NTacStatus.tactic -> 's NTacStatus.tactic
+val try_tac: NTacStatus.tac_status NTacStatus.tactic -> 's NTacStatus.tactic
 val repeat_tac: NTacStatus.tac_status NTacStatus.tactic -> 's NTacStatus.tactic
 
 val compare_statuses : past:#NTacStatus.lowtac_status -> present:#NTacStatus.lowtac_status -> int list * int list
