@@ -575,6 +575,7 @@ let tail_names names env =
 
 let instantiate_level2 env term =
 (*   prerr_endline ("istanzio: " ^ NotationPp.pp_term term); *)
+prerr_endline ("istanzio: " ^ NotationPp.pp_term term);
   let fresh_env = ref [] in
   let lookup_fresh_name n =
     try
@@ -584,8 +585,9 @@ let instantiate_level2 env term =
       fresh_env := (n, new_name) :: !fresh_env;
       new_name
   in
+prerr_endline ("ENV " ^ NotationPp.pp_env env);
   let rec aux env term =
-(*    prerr_endline ("ENV " ^ NotationPp.pp_env env); *)
+prerr_endline ("istanzio_deep: " ^ NotationPp.pp_term term);
     match term with
     | Ast.AttributedTerm (a, term) -> (*Ast.AttributedTerm (a, *)aux env term
     | Ast.Appl terms -> Ast.Appl (List.map (aux env) terms)
@@ -637,7 +639,10 @@ let instantiate_level2 env term =
   and aux_meta_substs env meta_substs = List.map (aux_opt env) meta_substs
   and aux_variable env = function
     | Ast.NumVar name -> Ast.Num (Env.lookup_num env name, 0)
-    | Ast.IdentVar name -> Ast.Ident (Env.lookup_string env name, None)
+    | Ast.IdentVar name ->
+       (match Env.lookup_string env name with
+           Env.Ident x -> Ast.Ident (x, None)
+         | Env.Var x -> Ast.Variable (Ast.IdentVar x))
     | Ast.TermVar (name,(Ast.Level l|Ast.Self l)) -> 
         Ast.AttributedTerm (`Level l,Env.lookup_term env name)
     | Ast.FreshVar name -> Ast.Ident (lookup_fresh_name name, None)

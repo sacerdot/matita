@@ -27,9 +27,13 @@
 
 module Ast = NotationPt
 
+type ident_or_var =
+   Ident of string
+ | Var of string
+
 type value =
   | TermValue of Ast.term
-  | StringValue of string
+  | StringValue of ident_or_var
   | NumValue of string
   | OptValue of value option
   | ListValue of value list
@@ -103,12 +107,12 @@ let declaration_of_var = function
 
 let value_of_term = function
   | Ast.Num (s, _) -> NumValue s
-  | Ast.Ident (s, None) -> StringValue s
+  | Ast.Ident (s, None) -> StringValue (Var s)
   | t -> TermValue t
 
 let term_of_value = function
   | NumValue s -> Ast.Num (s, 0)
-  | StringValue s -> Ast.Ident (s, None)
+  | StringValue (Ident s) -> Ast.Ident (s, None)
   | TermValue t -> t
   | _ -> assert false (* TO BE UNDERSTOOD *)
 

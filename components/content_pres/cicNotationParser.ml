@@ -36,11 +36,12 @@ exception Level_not_found of int
 let min_precedence = 0
 let max_precedence = 100
 
-type ('a,'b,'c,'d) grammars = {
+type ('a,'b,'c,'d,'e) grammars = {
   level1_pattern: 'a Grammar.Entry.e;
   level2_ast: 'b Grammar.Entry.e;
   level2_ast_grammar : Grammar.g;
   term: 'b Grammar.Entry.e;
+  ident: 'e Grammar.Entry.e;
   let_defs: 'c Grammar.Entry.e;
   protected_binder_vars: 'd Grammar.Entry.e;
   level2_meta: 'b Grammar.Entry.e;
@@ -65,7 +66,7 @@ type db = {
     Ast.term,
     (Ast.term Ast.capture_variable list *
       Ast.term Ast.capture_variable * Ast.term * int) list, 
-    Ast.term list * Ast.term option) grammars;
+    Ast.term list * Ast.term option, Env.ident_or_var) grammars;
   keywords: string list;
   items: (string * Ast.term * (NotationEnv.t -> Ast.location -> Ast.term)) list
 }
@@ -84,7 +85,10 @@ let level_of precedence =
   string_of_int precedence 
 
 let gram_symbol s = Gramext.Stoken ("SYMBOL", s)
-let gram_ident s = Gramext.Stoken ("IDENT", s)
+let gram_ident status =
+ Gramext.Snterm (Grammar.Entry.obj
+  (status#notation_parser_db.grammars.ident : 'a Grammar.Entry.e))
+  (*Gramext.Stoken ("IDENT", s)*)
 let gram_number s = Gramext.Stoken ("NUMBER", s)
 let gram_keyword s = Gramext.Stoken ("", s)
 let gram_term status = function
@@ -114,7 +118,7 @@ let make_action action bindings =
             aux ((name, (Env.TermType l, Env.TermValue v))::vl) tl)
     | Binding (name, Env.StringType) :: tl ->
         Gramext.action
-          (fun (v:string) ->
+          (fun (v:Env.ident_or_var) ->
             aux ((name, (Env.StringType, Env.StringValue v)) :: vl) tl)
     | Binding (name, Env.NumType) :: tl ->
         Gramext.action
@@ -218,7 +222,7 @@ let extract_term_production status pattern =
     | Ast.NumVar s -> [Binding (s, Env.NumType), gram_number ""]
     | Ast.TermVar (s,(Ast.Self level|Ast.Level level as lv)) -> 
         [Binding (s, Env.TermType level), gram_term status lv]
-    | Ast.IdentVar s -> [Binding (s, Env.StringType), gram_ident ""]
+    | Ast.IdentVar s -> [Binding (s, Env.StringType), gram_ident status]
     | Ast.Ascription (p, s) -> assert false (* TODO *)
     | Ast.FreshVar _ -> assert false
   and inner_pattern p =
@@ -556,9 +560,10 @@ END
   let level2_ast = grammars.level2_ast in
   let term = grammars.term in
   let let_defs = grammars.let_defs in
+  let ident = grammars.ident in
   let protected_binder_vars = grammars.protected_binder_vars in
 EXTEND
-  GLOBAL: level2_ast term let_defs protected_binder_vars;
+  GLOBAL: level2_ast term let_defs protected_binder_vars ident;
   level2_ast: [ [ p = term -> p ] ];
   sort: [
     [ "Prop" -> `Prop
@@ -633,6 +638,19 @@ EXTEND
         | Ast.Variable (Ast.IdentVar _) -> meta
         | Ast.Variable (Ast.TermVar ("_",_)) -> Ast.Ident ("_", None)
         | _ -> failwith "Invalid index name."
+    ]
+  ];
+  ident: [
+    [ name = IDENT -> Env.Ident name
+    | blob = UNPARSED_META ->
+        let meta = parse_level2_meta grammars (Ulexing.from_utf8_string blob) in
+        match meta with
+        | Ast.Variable (Ast.FreshVar _) ->
+           (* it makes sense: extend Env.ident_or_var *)
+            assert false
+        | Ast.Variable (Ast.IdentVar name) -> Env.Var name
+        | Ast.Variable (Ast.TermVar ("_",_)) -> Env.Var "_"
+        | _ -> failwith ("Invalid index name: " ^ blob)
     ]
   ];
   let_defs: [
@@ -779,6 +797,7 @@ let initial_grammars keywords =
     Grammar.Entry.create level1_pattern_grammar "level1_pattern" in
   let level2_ast = Grammar.Entry.create level2_ast_grammar "level2_ast" in
   let term = Grammar.Entry.create level2_ast_grammar "term" in
+  let ident = Grammar.Entry.create level2_ast_grammar "ident" in
   let let_defs = Grammar.Entry.create level2_ast_grammar "let_defs" in
   let protected_binder_vars = 
     Grammar.Entry.create level2_ast_grammar "protected_binder_vars" in
@@ -786,6 +805,7 @@ let initial_grammars keywords =
   initialize_grammars { level1_pattern=level1_pattern;
     level2_ast=level2_ast;
     term=term;
+    ident=ident;
     let_defs=let_defs;
     protected_binder_vars=protected_binder_vars;
     level2_meta=level2_meta;
@@ -823,7 +843,7 @@ let extend (status : #status) (CL1P (level1_pattern,precedence)) action =
             (make_action
               (fun (env: NotationEnv.t) (loc: Ast.location) ->
                 (action env loc))
-            p_bindings) ]]];
+              p_bindings) ]]];
     status
   in
   let current_item = 

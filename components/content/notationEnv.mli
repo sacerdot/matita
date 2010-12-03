@@ -25,9 +25,13 @@
 
 (** {2 Types} *)
 
+type ident_or_var =
+   Ident of string
+ | Var of string
+
 type value =
   | TermValue of NotationPt.term
-  | StringValue of string
+  | StringValue of ident_or_var
   | NumValue of string
   | OptValue of value option
   | ListValue of value list
@@ -66,7 +70,7 @@ val lookup_value:   t -> string -> value  (** @raise Value_not_found *)
 (** lookup_* functions below may raise Value_not_found and Type_mismatch *)
 
 val lookup_term:    t -> string -> NotationPt.term
-val lookup_string:  t -> string -> string
+val lookup_string:  t -> string -> ident_or_var
 val lookup_num:     t -> string -> string
 val lookup_opt:     t -> string -> value option
 val lookup_list:    t -> string -> value list

@@ -101,7 +101,7 @@ struct
           | Ast.Variable (Ast.NumVar name), (Ast.Num (s, _)) ->
               name, (Env.NumType, Env.NumValue s)
           | Ast.Variable (Ast.IdentVar name), (Ast.Ident (s, None)) ->
-              name, (Env.StringType, Env.StringValue s)
+              name, (Env.StringType, Env.StringValue (Env.Ident s))
           | _ -> assert false)
         pl tl
     with Invalid_argument _ -> assert false

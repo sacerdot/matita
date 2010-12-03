@@ -325,7 +325,8 @@ let pp_obj pp_term = function
 
 let rec pp_value = function
   | Env.TermValue t -> sprintf "$%s$" (pp_term t)
-  | Env.StringValue s -> sprintf "\"%s\"" s
+  | Env.StringValue (Env.Ident s) -> sprintf "\"%s\"" s
+  | Env.StringValue (Env.Var s) -> sprintf "\"${ident %s}\"" s
   | Env.NumValue n -> n
   | Env.OptValue (Some v) -> "Some " ^ pp_value v
   | Env.OptValue None -> "None"
