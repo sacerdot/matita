@@ -322,6 +322,10 @@ theorem lt_O_n_elim: ∀n:nat. O < n →
 #n (elim n) // #abs @False_ind /2/
 qed.
 
+theorem S_pred: ∀n. 0 < n → S(pred n) = n.
+#n #posn (cases posn) //
+qed.
+
 (*
 theorem lt_pred: \forall n,m. 
   O < n \to n < m \to pred n < pred m. 
@@ -330,11 +334,6 @@ apply nat_elim2
   |intros.apply False_ind.apply (not_le_Sn_O ? H1)
   |intros.simplify.unfold.apply le_S_S_to_le.assumption
   ]
-qed.
-
-theorem S_pred: \forall n:nat.lt O n \to eq nat n (S (pred n)).
-intro.elim n.apply False_ind.exact (not_le_Sn_O O H).
-apply eq_f.apply pred_Sn.
 qed.
 
 theorem le_pred_to_le:
@@ -856,6 +855,7 @@ pred n - pred m = n - m.
 #n #m #posn #posm @(lt_O_n_elim n posn) @(lt_O_n_elim m posm) //.
 qed.
 
+
 (*
 
 theorem le_SO_minus: \forall n,m:nat.S n \leq m \to S O \leq m-n.
@@ -938,11 +938,20 @@ qed.
 theorem distributive_times_minus: distributive ? times minus.
 #a #b #c
 (cases (decidable_lt b c)) #Hbc
- [>(eq_minus_O …) /2/ >(eq_minus_O …) // 
+ [> eq_minus_O /2/ >eq_minus_O // 
   @monotonic_le_times_r /2/
- |@sym_eq (applyS plus_to_minus) <(distributive_times_plus …) 
- (* STRANO *)
-  @(eq_f …b) (applyS plus_minus_m_m) /2/
+ |@sym_eq (applyS plus_to_minus) <distributive_times_plus 
+  @eq_f (applyS plus_minus_m_m) /2/
+qed.
+
+theorem minus_minus: ∀n,m,p. n-m-p = n -(m+p).
+#n #m #p 
+cases (decidable_le (m+p) n) #Hlt
+  [@plus_to_minus @plus_to_minus <associative_plus
+   @minus_to_plus //
+  |cut (n ≤ m+p) [@(transitive_le … (le_n_Sn …)) @not_le_to_lt //]
+   #H >eq_minus_O /2/ >eq_minus_O // 
+  ]
 qed.
 
 (*********************** boolean arithmetics ********************) 

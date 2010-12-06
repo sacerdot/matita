@@ -9,662 +9,300 @@
      \ /      
       V_______________________________________________________________ *)
 
-include "arithmetics/nat.ma".
+include "basics/types.ma".
+include "arithmetics/div_and_mod.ma".
 
-let rec bigop' (n:nat) (filter: nat → bool) (A:Type[0]) (f: nat → A) 
-   (nil: A) (op: A → A → A)  ≝
+definition sameF_upto: nat → ∀A.relation(nat→A)  ≝
+λk.λA.λf,g.∀i. i < k → f i = g i.
+     
+definition sameF_p: nat → (nat → bool) →∀A.relation(nat→A)  ≝
+λk,p,A,f,g.∀i. i < k → p i = true → f i = g i.
+
+lemma sameF_upto_le: ∀A,f,g,n,m. 
+ n ≤m → sameF_upto m A f g → sameF_upto n A f g.
+#A #f #g #n #m #lenm #samef #i #ltin @samef /2/
+qed.
+
+lemma sameF_p_le: ∀A,p,f,g,n,m. 
+ n ≤m → sameF_p m p A f g → sameF_p n p A f g.
+#A #p #f #g #n #m #lenm #samef #i #ltin #pi @samef /2/
+qed.
+
+(*
+definition sumF ≝ λA.λf,g:nat → A.λn,i.
+if_then_else ? (leb n i) (g (i-n)) (f i). 
+
+lemma sumF_unfold: ∀A,f,g,n,i. 
+sumF A f g n i = if_then_else ? (leb n i) (g (i-n)) (f i). 
+// qed. *)
+
+definition prodF ≝
+ λA,B.λf:nat→A.λg:nat→B.λm,x.〈 f(div x m), g(mod x m) 〉.
+
+(* bigop *)
+let rec bigop (n:nat) (p:nat → bool) (B:Type[0])
+   (nil: B) (op: B → B → B)  (f: nat → B) ≝
   match n with
    [ O ⇒ nil
    | S k ⇒ 
-      match filter k with
-      [true ⇒ op (f k) (bigop' k filter A f nil op)
-      |false ⇒ bigop' k filter A f nil op]
+      match p k with
+      [true ⇒ op (f k) (bigop k p B nil op f)
+      |false ⇒ bigop k p B nil op f]
    ].
+   
+notation "\big  [ op , nil ]_{ ident i < n | p } f"
+  with precedence 80
+for @{'bigop $n $op $nil (λ${ident i}. $p) (λ${ident i}. $f)}.
 
+notation "\big [ op , nil ]_{ ident i < n } f"
+  with precedence 80
+for @{'bigop $n $op $nil (λ${ident i}.true) (λ${ident i}. $f)}.
+
+interpretation "bigop" 'bigop n op nil p f = (bigop n p ? nil op f).
+
+notation "\big  [ op , nil ]_{ ident j ∈ [a,b[ | p } f"
+  with precedence 80
+for @{'bigop ($b-$a) $op $nil (λ${ident j}.((λ${ident j}.$p) (${ident j}+$a)))
+  (λ${ident j}.((λ${ident j}.$f)(${ident j}+$a)))}.
+  
+notation "\big  [ op , nil ]_{ ident j ∈ [a,b[ } f"
+  with precedence 80
+for @{'bigop ($b-$a) $op $nil (λ${ident j}.((λ${ident j}.$true) (${ident j}+$a)))
+  (λ${ident j}.((λ${ident j}.$f)(${ident j}+$a)))}.  
+ 
+(* notation "\big  [ op , nil ]_{( term 50) a ≤ ident j < b | p } f"
+  with precedence 80
+for @{\big[$op,$nil]_{${ident j} < ($b-$a) | ((λ${ident j}.$p) (${ident j}+$a))}((λ${ident j}.$f)(${ident j}+$a))}.
+*)
+ 
+interpretation "bigop" 'bigop n op nil p f = (bigop n p ? nil op f).
+   
+lemma bigop_Strue: ∀k,p,B,nil,op.∀f:nat→B. p k = true →
+  \big[op,nil]_{i < S k | p i}(f i) =
+    op (f k) (\big[op,nil]_{i < k | p i}(f i)).
+#k #p #B #nil #op #f #H normalize >H // qed.
+
+lemma bigop_Sfalse: ∀k,p,B,nil,op.∀f:nat→B. p k = false →
+  \big[op,nil]_{ i < S k | p i}(f i) =
+    \big[op,nil]_{i < k | p i}(f i).
+#k #p #B #nil #op #f #H normalize >H // qed. 
+ 
+lemma same_bigop : ∀k,p1,p2,B,nil,op.∀f,g:nat→B. 
+  sameF_upto k bool p1 p2 → sameF_p k p1 B f g →
+  \big[op,nil]_{i < k | p1 i}(f i) = 
+    \big[op,nil]_{i < k | p2 i}(g i).
+#k #p1 #p2 #B #nil #op #f #g (elim k) // 
+#n #Hind #samep #samef normalize >Hind /2/
+<(samep … (le_n …)) cases(true_or_false (p1 n)) #H1 >H1 
+normalize // <(samef … (le_n …) H1) // 
+qed.
+
+theorem pad_bigop: ∀k,n,p,B,nil,op.∀f:nat→B. n ≤ k → 
+\big[op,nil]_{i < n | p i}(f i)
+  = \big[op,nil]_{i < k | if_then_else ? (leb n i) false (p i)}(f i).
+#k #n #p #B #nil #op #f #lenk (elim lenk) 
+  [@same_bigop #i #lti // >(not_le_to_leb_false …) /2/
+  |#j #leup #Hind >bigop_Sfalse >(le_to_leb_true … leup) // 
+  ] qed.
+
+record Aop (A:Type[0]) (nil:A) : Type[0] ≝
+  {op :2> A → A → A; 
+   nill:∀a. op nil a = a; 
+   nilr:∀a. op a nil = a;
+   assoc: ∀a,b,c.op a (op b c) = op (op a b) c
+  }.
+
+theorem bigop_sum: ∀k1,k2,p1,p2,B.∀nil.∀op:Aop B nil.∀f,g:nat→B.
+op (\big[op,nil]_{i<k1|p1 i}(f i)) \big[op,nil]_{i<k2|p2 i}(g i) =
+      \big[op,nil]_{i<k1+k2|if_then_else ? (leb k2 i) (p1 (i-k2)) (p2 i)}
+        (if_then_else ? (leb k2 i) (f (i-k2)) (g i)).
+#k1 #k2 #p1 #p2 #B #nil #op #f #g (elim k1)
+  [normalize >nill @same_bigop #i #lti 
+   >(lt_to_leb_false … lti) normalize /2/
+  |#i #Hind normalize <minus_plus_m_m (cases (p1 i)) 
+   >(le_to_leb_true … (le_plus_n …)) normalize <Hind //
+   <assoc //
+  ]
+qed.
+
+lemma plus_minus1: ∀a,b,c. c ≤ b → a + (b -c) = a + b -c.
+#a #b #c #lecb @sym_eq @plus_to_minus >(commutative_plus c)
+>associative_plus <plus_minus_m_m //
+qed.
+
+theorem bigop_I: ∀n,p,B.∀nil.∀op:Aop B nil.∀f:nat→B.
+\big[op,nil]_{i∈[0,n[ |p i}(f i) = \big[op,nil]_{i < n|p i}(f i). 
+#n #p #B #nil #op #f <minus_n_O @same_bigop //
+qed.
+          
+theorem bigop_sumI: ∀a,b,c,p,B.∀nil.∀op:Aop B nil.∀f:nat→B.
+a ≤ b → b ≤ c →
+\big[op,nil]_{i∈[a,c[ |p i}(f i) = 
+  op (\big[op,nil]_{i ∈ [b,c[ |p i}(f i)) 
+      \big[op,nil]_{i ∈ [a,b[ |p i}(f i).
+#a #b # c #p #B #nil #op #f #leab #lebc 
+>(plus_minus_m_m (c-a) (b-a)) in ⊢ (??%?) /2/
+>minus_minus >(commutative_plus a) <plus_minus_m_m //
+>bigop_sum (cut (∀i. b -a ≤ i → i+a = i-(b-a)+b))
+  [#i #lei >plus_minus // <plus_minus1 
+     [@eq_f @sym_eq @plus_to_minus /2/ | /2/]] 
+#H @same_bigop #i #ltic @leb_elim normalize // #lei <H //
+qed.   
+
+theorem bigop_prod: ∀k1,k2,p1,p2,B.∀nil.∀op:Aop B nil.∀f: nat →nat → B.
+\big[op,nil]_{x<k1|p1 x}(\big[op,nil]_{i<k2|p2 x i}(f x i)) =
+  \big[op,nil]_{i<k1*k2|andb (p1 (div i k2)) (p2 (div i k2) (i \mod k2))}
+     (f (div i k2) (i \mod k2)).
+#k1 #k2 #p1 #p2 #B #nil #op #f (elim k1) //
+#n #Hind cases(true_or_false (p1 n)) #Hp1
+  [>bigop_Strue // >Hind >bigop_sum @same_bigop
+   #i #lti @leb_elim // #lei cut (i = n*k2+(i-n*k2)) /2/
+   #eqi [|#H] (>eqi in ⊢ (???%))
+     >div_plus_times /2/ >Hp1 >(mod_plus_times …) /2/
+  |>bigop_Sfalse // >Hind >(pad_bigop (S n*k2)) // @same_bigop
+   #i #lti @leb_elim // #lei cut (i = n*k2+(i-n*k2)) /2/
+   #eqi >eqi in ⊢ (???%) >div_plus_times /2/ 
+  ]
+qed.
+
+record ACop (A:Type[0]) (nil:A) : Type[0] ≝
+  {aop :> Aop A nil; 
+   comm: ∀a,b.aop a b = aop b a
+  }.
+  
+lemma bigop_diff: ∀p,B.∀nil.∀op:ACop B nil.∀f:nat → B.∀i,n.
+  i < n → p i = true →
+  \big[op,nil]_{x<n|p x}(f x)=
+    op (f i) (\big[op,nil]_{x<n|andb(notb(eqb i x))(p x)}(f x)).
+#p #B #nil #op #f #i #n (elim n) 
+  [#ltO @False_ind /2/
+  |#n #Hind #lein #pi cases (le_to_or_lt_eq … (le_S_S_to_le …lein)) #Hi
+    [cut (andb(notb(eqb i n))(p n) = (p n))
+      [>(not_eq_to_eqb_false … (lt_to_not_eq … Hi)) //] #Hcut
+     cases (true_or_false (p n)) #pn 
+      [>bigop_Strue // >bigop_Strue //
+       >assoc >(comm ?? op (f i) (f n)) <assoc >Hind //
+      |>bigop_Sfalse // >bigop_Sfalse // >Hind //  
+      ]
+    |<Hi >bigop_Strue // @eq_f >bigop_Sfalse  
+       [@same_bigop // #k #ltki >not_eq_to_eqb_false /2/
+       |>eq_to_eqb_true // 
+       ]
+     ]
+   ]
+qed.
+
+(* range *)
 record range (A:Type[0]): Type[0] ≝
-  {h:nat→A; upto:nat; filter:nat→bool}.
-
-definition same_upto: nat → ∀A.relation (range A) ≝
-λk.λA.λI,J.
-  ∀i. i < k → 
-    ((filter A I i) = (filter A J i) ∧
-     ((filter A I i) = true → (h A I i) = (h A J i))).
-     
-definition same: ∀A.relation (range A) ≝
-λA.λI,J. (upto A I = upto A J) ∧ same_upto (upto A I) A I J.
-
-definition pad: ∀A.nat→range A→range A ≝
-  λA.λk.λI.mk_range A (h A I) k 
-   (λi.if_then_else ? (leb (upto A I) i) false (filter A I i)).
+  {enum:nat→A; upto:nat; filter:nat→bool}.
   
-definition same1: ∀A.relation (range A) ≝
-λA.λI,J.
-  let maxIJ ≝ (max (upto A I) (upto A J)) in
-  same_upto maxIJ A (pad A maxIJ I) (pad A maxIJ J).
+definition sub_hk: (nat→nat)→(nat→nat)→∀A:Type[0].relation (range A) ≝
+λh,k,A,I,J.∀i.i<(upto A I) → (filter A I i)=true → 
+  (h i < upto A J
+  ∧ filter A J (h i) = true
+  ∧ k (h i) = i).
 
-(*     
-definition same: ∀A.relation (range A) ≝
-λA.λI,J.
-  ∀i. i < max (upto A I) (upto A J) → 
-    ((filter A I i) = (filter A J i) ∧
-     ((filter A I i) = true → (h A I i) = (h A J i))). *)
-     
-definition bigop: ∀A,B:Type[0].(range A)→B→(B→B→B)→(A→B)→B ≝
-  λA,B.λI.λnil.λop.λf. 
-    bigop' (upto A I) (filter A I) B (λx.f(h A I x)) nil op.
-
-theorem same_bigop: ∀A,B.∀I,J:range A. ∀nil.∀op.∀f.
-  same A I J → bigop A B I nil op f = bigop A B J nil op f. 
-#A #B #I #J #nil #op #f * #equp normalize <equp #same
-@(le_gen ? (upto A I)) #i (elim i) // #i #Hind #lti
-(lapply (same i lti)) * #eqfilter 
-(lapply (Hind (transitive_le … (le_n_Sn i) (lti)))) #eqbigop
-normalize <eqfilter (cases (filter A I i)) normalize //
-#H (lapply (H (refl ??))) // qed.
-
-theorem pad_bigog: ∀A,B.∀I:range A. ∀nil.∀op.∀f.∀k.
-  upto A I ≤ k → bigop A B I nil op f = bigop A B (pad A k I) nil op f. 
-#A #B #I #nil #op #f #k #lek (elim lek) 
-[@same_bigop % // #i #lti % // normalize 
- >(not_le_to_leb_false …) // @lt_to_not_le //
-|#n #leup #Hind normalize <Hind >(le_to_leb_true … leup) normalize //
-] qed.
-
-theorem iter_p_gen_false: \forall A:Type. \forall g: nat \to A. \forall baseA:A.
-\forall plusA: A \to A \to A. \forall n.
-iter_p_gen n (\lambda x.false) A g baseA plusA = baseA.
-intros.
-elim n
-[ reflexivity
-| simplify.
-  assumption
-]
-qed.
-
-theorem iter_p_gen_plusA: \forall A:Type. \forall n,k:nat.\forall p:nat \to bool.
-\forall g: nat \to A. \forall baseA:A. \forall plusA: A \to A \to A.
-(symmetric A plusA) \to (\forall a:A. (plusA a baseA) = a) \to (associative A plusA)
-\to
-iter_p_gen (k + n) p A g baseA plusA 
-= (plusA (iter_p_gen k (\lambda x.p (x+n)) A (\lambda x.g (x+n)) baseA plusA)
-         (iter_p_gen n p A g baseA plusA)).
-intros.
-
-elim k
-[ simplify.
-  rewrite > H in \vdash (? ? ? %).
-  rewrite > (H1 ?).
-  reflexivity
-| apply (bool_elim ? (p (n1+n)))
-  [ intro.     
-    rewrite > (true_to_iter_p_gen_Sn ? ? ? ? ? ? H4).
-    rewrite > (true_to_iter_p_gen_Sn n1 (\lambda x.p (x+n)) ? ? ? ? H4).
-    rewrite > (H2 (g (n1 + n)) ? ?).
-    rewrite < H3.
-    reflexivity
-  | intro.
-    rewrite > (false_to_iter_p_gen_Sn ? ? ? ? ? ? H4).
-    rewrite > (false_to_iter_p_gen_Sn n1 (\lambda x.p (x+n)) ? ? ? ? H4).
-    assumption
-  ]
-]
-qed.
-
-theorem false_to_eq_iter_p_gen: \forall A:Type. \forall n,m:nat.\forall p:nat \to bool.
-\forall g: nat \to A. \forall baseA:A. \forall plusA: A \to A \to A. 
-n \le m \to (\forall i:nat. n \le i \to i < m \to p i = false)
-\to iter_p_gen m p A g baseA plusA = iter_p_gen n p A g baseA plusA.
-intros 8.
-elim H
-[ reflexivity
-| simplify.
-  rewrite > H3
-  [ simplify.
-    apply H2.
-    intros.
-    apply H3
-    [ apply H4
-    | apply le_S.
-      assumption
-    ]
-  | assumption
-  |apply le_n
-  ]
-]
-qed.
-
-(* a therem slightly more general than the previous one *)
-theorem or_false_eq_baseA_to_eq_iter_p_gen: \forall A:Type. \forall n,m:nat.\forall p:nat \to bool.
-\forall g: nat \to A. \forall baseA:A. \forall plusA: A \to A \to A.
-(\forall a. plusA baseA a = a) \to
-n \le m \to (\forall i:nat. n \le i \to i < m \to p i = false \lor g i = baseA)
-\to iter_p_gen m p A g baseA plusA = iter_p_gen n p A g baseA plusA.
-intros 9.
-elim H1
-[reflexivity
-|apply (bool_elim ? (p n1));intro
-  [elim (H4 n1)
-    [apply False_ind.
-     apply not_eq_true_false.
-     rewrite < H5.
-     rewrite < H6.
-     reflexivity
-    |rewrite > true_to_iter_p_gen_Sn
-      [rewrite > H6.
-       rewrite > H.
-       apply H3.intros.
-       apply H4
-        [assumption
-        |apply le_S.assumption
-        ]
-      |assumption
-      ]
-    |assumption
-    |apply le_n
-    ]
-  |rewrite > false_to_iter_p_gen_Sn
-    [apply H3.intros.
-     apply H4
-      [assumption
-      |apply le_S.assumption
-      ]
-    |assumption
-    ]
-  ]
-]
-qed.
-    
-theorem iter_p_gen2 : 
-\forall n,m:nat.
-\forall p1,p2:nat \to bool.
-\forall A:Type.
-\forall g: nat \to nat \to A.
-\forall baseA: A.
-\forall plusA: A \to A \to A.
-(symmetric A plusA) \to (associative A plusA) \to (\forall a:A.(plusA a  baseA) = a)
-\to
-iter_p_gen (n*m) 
-  (\lambda x.andb (p1 (div x m)) (p2 (mod x m)))
-  A 
-  (\lambda x.g (div x m) (mod x m)) 
-  baseA
-  plusA  =
-iter_p_gen n p1 A
-  (\lambda x.iter_p_gen m p2 A (g x) baseA plusA)
-  baseA plusA.
-intros.
-elim n
-[ simplify.
-  reflexivity
-| apply (bool_elim ? (p1 n1))
-  [ intro.
-    rewrite > (true_to_iter_p_gen_Sn ? ? ? ? ? ? H4).
-    simplify in \vdash (? ? (? % ? ? ? ? ?) ?).
-    rewrite > iter_p_gen_plusA
-    [ rewrite < H3.
-      apply eq_f2
-      [ apply eq_iter_p_gen
-        [ intros.
-          rewrite > sym_plus.
-          rewrite > (div_plus_times ? ? ? H5).
-          rewrite > (mod_plus_times ? ? ? H5).
-          rewrite > H4.
-          simplify.
-          reflexivity
-        | intros.
-          rewrite > sym_plus.
-          rewrite > (div_plus_times ? ? ? H5).
-          rewrite > (mod_plus_times ? ? ? H5).
-          reflexivity.   
-        ]
-      | reflexivity
-      ]
-    | assumption
-    | assumption
-    | assumption
-    ]
-  | intro.
-    rewrite > (false_to_iter_p_gen_Sn ? ? ? ? ? ? H4).
-    simplify in \vdash (? ? (? % ? ? ? ? ?) ?).
-    rewrite > iter_p_gen_plusA
-    [ rewrite > H3.
-      apply (trans_eq ? ? (plusA baseA
-           (iter_p_gen n1 p1 A (\lambda x:nat.iter_p_gen m p2 A (g x) baseA plusA) baseA plusA )))
-      [ apply eq_f2
-        [ rewrite > (eq_iter_p_gen ? (\lambda x.false) A ? (\lambda x:nat.g ((x+n1*m)/m) ((x+n1*m)\mod m)))
-          [ apply iter_p_gen_false
-          | intros.
-            rewrite > sym_plus.
-            rewrite > (div_plus_times ? ? ? H5).
-            rewrite > (mod_plus_times ? ? ? H5).
-            rewrite > H4.
-            simplify.reflexivity
-          | intros.reflexivity.
-          ]
-        | reflexivity
-        ]
-      | rewrite < H.
-        rewrite > H2.
-        reflexivity.  
-      ]
-    | assumption
-    | assumption
-    | assumption
-    ]
-  ]
-]
-qed.
-
-theorem iter_p_gen2': 
-\forall n,m:nat.
-\forall p1: nat \to bool.
-\forall p2: nat \to nat \to bool.
-\forall A:Type.
-\forall g: nat \to nat \to A.
-\forall baseA: A.
-\forall plusA: A \to A \to A.
-(symmetric A plusA) \to (associative A plusA) \to (\forall a:A.(plusA a  baseA) = a)
-\to
-iter_p_gen (n*m) 
-  (\lambda x.andb (p1 (div x m)) (p2 (div x m)(mod x m)))
-  A 
-  (\lambda x.g (div x m) (mod x m)) 
-  baseA
-  plusA  =
-iter_p_gen n p1 A
-  (\lambda x.iter_p_gen m (p2 x) A (g x) baseA plusA)
-  baseA plusA.
-intros.
-elim n
-[ simplify.
-  reflexivity
-| apply (bool_elim ? (p1 n1))
-  [ intro.
-    rewrite > (true_to_iter_p_gen_Sn ? ? ? ? ? ? H4).
-    simplify in \vdash (? ? (? % ? ? ? ? ?) ?).
-    rewrite > iter_p_gen_plusA
-    [ rewrite < H3.
-      apply eq_f2
-      [ apply eq_iter_p_gen
-        [ intros.
-          rewrite > sym_plus.
-          rewrite > (div_plus_times ? ? ? H5).
-          rewrite > (mod_plus_times ? ? ? H5).
-          rewrite > H4.
-          simplify.
-          reflexivity
-        | intros.
-          rewrite > sym_plus.
-          rewrite > (div_plus_times ? ? ? H5).
-          rewrite > (mod_plus_times ? ? ? H5).
-          reflexivity.   
-        ]
-      | reflexivity
-      ]
-    | assumption
-    | assumption
-    | assumption
-    ]
-  | intro.
-    rewrite > (false_to_iter_p_gen_Sn ? ? ? ? ? ? H4).
-    simplify in \vdash (? ? (? % ? ? ? ? ?) ?).
-    rewrite > iter_p_gen_plusA
-    [ rewrite > H3.
-      apply (trans_eq ? ? (plusA baseA
-           (iter_p_gen n1 p1 A (\lambda x:nat.iter_p_gen m (p2 x) A (g x) baseA plusA) baseA plusA )))
-      [ apply eq_f2
-        [ rewrite > (eq_iter_p_gen ? (\lambda x.false) A ? (\lambda x:nat.g ((x+n1*m)/m) ((x+n1*m)\mod m)))
-          [ apply iter_p_gen_false
-          | intros.
-            rewrite > sym_plus.
-            rewrite > (div_plus_times ? ? ? H5).
-            rewrite > (mod_plus_times ? ? ? H5).
-            rewrite > H4.
-            simplify.reflexivity
-          | intros.reflexivity.
-          ]
-        | reflexivity
-        ]
-      | rewrite < H.
-        rewrite > H2.
-        reflexivity.  
-      ]
-    | assumption
-    | assumption
-    | assumption
-    ]
-  ]
-]
-qed.
-
-lemma iter_p_gen_gi: 
-\forall A:Type.
-\forall g: nat \to A.
-\forall baseA:A.
-\forall plusA: A \to A \to A.
-\forall n,i:nat.
-\forall p:nat \to bool.
-(symmetric A plusA) \to  (associative A plusA) \to (\forall a:A.(plusA a  baseA) = a) 
-  \to 
+definition iso: ∀A:Type[0].relation (range A) ≝
+  λA,I,J.∃h,k. 
+    (∀i. i < (upto A I) → (filter A I i) = true → 
+       enum A I i = enum A J (h i)) ∧
+    sub_hk h k A I J ∧ sub_hk k h A J I.
   
-i < n \to p i = true \to
-(iter_p_gen n p A g baseA plusA) = 
-(plusA (g i) (iter_p_gen n (\lambda x:nat. andb (p x) (notb (eqb x i))) A g baseA plusA)).
-intros 5.
-elim n
-[ apply False_ind.
-  apply (not_le_Sn_O i).
-  assumption
-| apply (bool_elim ? (p n1));intro
-  [ elim (le_to_or_lt_eq i n1)
-    [ rewrite > true_to_iter_p_gen_Sn
-      [ rewrite > true_to_iter_p_gen_Sn
-        [ rewrite < (H2 (g i) ? ?).
-          rewrite > (H1 (g i) (g n1)).
-          rewrite > (H2 (g n1) ? ?).
-          apply eq_f2
-          [ reflexivity
-          | apply H
-            [ assumption
-            | assumption
-            | assumption 
-            | assumption
-            | assumption
-            ]
-          ]
-        | rewrite > H6.simplify.
-          change with (notb (eqb n1 i) = notb false).
-          apply eq_f.
-          apply not_eq_to_eqb_false.
-          unfold Not.intro.
-          apply (lt_to_not_eq ? ? H7).
-          apply sym_eq.assumption
-        ]
-      | assumption
-      ]
-    | rewrite > true_to_iter_p_gen_Sn
-      [ rewrite > H7.
-        apply eq_f2
-        [ reflexivity
-        | rewrite > false_to_iter_p_gen_Sn
-          [ apply eq_iter_p_gen
-            [ intros.
-              elim (p x)
-              [ simplify.
-                change with (notb false = notb (eqb x n1)).
-                apply eq_f.
-                apply sym_eq. 
-                apply not_eq_to_eqb_false.
-                apply (lt_to_not_eq ? ? H8)
-              | reflexivity
-              ]
-            | intros.
-              reflexivity
-            ]
-          | rewrite > H6.
-            rewrite > (eq_to_eqb_true ? ? (refl_eq ? n1)).
-            reflexivity
-          ]
-        ]
-      | assumption
-      ]
-    | apply le_S_S_to_le.
-      assumption
-    ]
-  | rewrite > false_to_iter_p_gen_Sn
-    [ elim (le_to_or_lt_eq i n1)
-      [ rewrite > false_to_iter_p_gen_Sn
-        [ apply H
-          [ assumption
-          | assumption
-          | assumption
-          | assumption
-          | assumption
-          ]
-        | rewrite > H6.reflexivity
-        ]
-      | apply False_ind. 
-        apply not_eq_true_false.
-        rewrite < H5.
-        rewrite > H7.
-        assumption
-      | apply le_S_S_to_le.
-        assumption
-      ]
-    | assumption
-    ]
-  ] 
-] 
+lemma sub_hkO: ∀h,k,A,I,J. upto A I = 0 → sub_hk h k A I J.
+#h #k #A #I #J #up0 #i #lti >up0 @False_ind /2/
 qed.
 
-(* invariance under permutation; single sum *)
-theorem eq_iter_p_gen_gh: 
-\forall A:Type.
-\forall baseA: A.
-\forall plusA: A \to A \to A.
-(symmetric A plusA) \to (associative A plusA) \to (\forall a:A.(plusA a  baseA) = a) \to
-\forall g: nat \to A.
-\forall h,h1: nat \to nat.
-\forall n,n1:nat.
-\forall p1,p2:nat \to bool.
-(\forall i. i < n \to p1 i = true \to p2 (h i) = true) \to
-(\forall i. i < n \to p1 i = true \to h1 (h i) = i) \to 
-(\forall i. i < n \to p1 i = true \to h i < n1) \to 
-(\forall j. j < n1 \to p2 j = true \to p1 (h1 j) = true) \to
-(\forall j. j < n1 \to p2 j = true \to h (h1 j) = j) \to 
-(\forall j. j < n1 \to p2 j = true \to h1 j < n) \to 
-
-iter_p_gen n p1 A (\lambda x.g(h x)) baseA plusA = 
-iter_p_gen n1 p2 A g baseA plusA.
-intros 10.
-elim n
-[ generalize in match H8.
-  elim n1
-  [ reflexivity
-  | apply (bool_elim ? (p2 n2));intro
-    [ apply False_ind.
-      apply (not_le_Sn_O (h1 n2)).
-      apply H10
-      [ apply le_n
-      | assumption
-      ]
-    | rewrite > false_to_iter_p_gen_Sn
-      [ apply H9.
-        intros.  
-        apply H10
-        [ apply le_S.
-          apply H12
-        | assumption
-        ]
-      | assumption
-      ]
-    ]
-  ]
-| apply (bool_elim ? (p1 n1));intro
-  [ rewrite > true_to_iter_p_gen_Sn
-    [ rewrite > (iter_p_gen_gi A g baseA plusA n2 (h n1))
-      [ apply eq_f2
-        [ reflexivity
-        | apply H3
-          [ intros.
-            rewrite > H4
-            [ simplify.
-              change with ((\not eqb (h i) (h n1))= \not false).
-              apply eq_f.
-              apply not_eq_to_eqb_false.
-              unfold Not.
-              intro.
-              apply (lt_to_not_eq ? ? H11).
-              rewrite < H5
-              [ rewrite < (H5 n1)
-                [ apply eq_f.
-                  assumption
-                | apply le_n
-                | assumption
-                ]
-              | apply le_S.
-                assumption
-              | assumption
-              ]
-            | apply le_S.assumption
-            | assumption
-            ]
-          | intros.
-            apply H5
-            [ apply le_S.
-              assumption
-            | assumption
-            ]
-          | intros.
-            apply H6
-            [ apply le_S.assumption
-            | assumption
-            ]
-          | intros.
-            apply H7
-            [ assumption
-            | generalize in match H12.
-              elim (p2 j)
-              [ reflexivity
-              | assumption
-              ]
-            ]
-          | intros.
-            apply H8
-            [ assumption
-            | generalize in match H12.
-              elim (p2 j)
-              [ reflexivity
-              | assumption
-              ]
-            ]
-          | intros.
-            elim (le_to_or_lt_eq (h1 j) n1)
-            [ assumption
-            | generalize in match H12.
-              elim (p2 j)
-              [ simplify in H13.
-                absurd (j = (h n1))
-                [ rewrite < H13.
-                  rewrite > H8
-                  [ reflexivity
-                  | assumption
-                  | apply andb_true_true; [2: apply H12]
-                  ]
-                | apply eqb_false_to_not_eq.
-                  generalize in match H14.
-                  elim (eqb j (h n1))
-                  [ apply sym_eq.assumption
-                  | reflexivity
-                  ]
-                ]
-              | simplify in H14.
-                apply False_ind.
-                apply not_eq_true_false.
-                apply sym_eq.assumption
-              ]
-            | apply le_S_S_to_le.
-              apply H9
-              [ assumption
-              | generalize in match H12.
-                elim (p2 j)
-                [ reflexivity
-                | assumption
-                ]
-              ]
-            ]
-          ]
-        ]
-      | assumption  
-      | assumption
-      | assumption  
-      | apply H6
-        [ apply le_n
-        | assumption
-        ]
-      | apply H4
-        [ apply le_n
-        | assumption
-        ]
-      ]
-    | assumption
-    ]
-  | rewrite > false_to_iter_p_gen_Sn
-    [ apply H3
-      [ intros.
-        apply H4[apply le_S.assumption|assumption]
-      | intros.
-        apply H5[apply le_S.assumption|assumption]
-      | intros.
-        apply H6[apply le_S.assumption|assumption]
-      | intros.
-        apply H7[assumption|assumption]
-      | intros.
-        apply H8[assumption|assumption]
-      | intros.
-        elim (le_to_or_lt_eq (h1 j) n1)
-        [ assumption
-        | absurd (j = (h n1))
-          [ rewrite < H13.
-            rewrite > H8
-            [ reflexivity
-            | assumption
-            | assumption
-            ]
-          | unfold Not.intro.
-            apply not_eq_true_false.
-            rewrite < H10.
-            rewrite < H13.
-            rewrite > H7
-            [ reflexivity
-            | assumption
-            | assumption
-            ]
-          ]
-        | apply le_S_S_to_le.
-          apply H9
-          [ assumption
-          | assumption
-          ]
-        ]
-      ]
-    | assumption
-    ]
-  ]
-]
+lemma sub0_to_false: ∀h,k,A,I,J. upto A I = 0 → sub_hk h k A J I → 
+  ∀i. i < upto A J → filter A J i = false.
+#h #k #A #I #J #up0 #sub #i #lti cases(true_or_false (filter A J i)) //
+#ptrue (cases (sub i lti ptrue)) * #hi @False_ind /2/ 
 qed.
 
-theorem eq_iter_p_gen_pred: 
-\forall A:Type.
-\forall baseA: A.
-\forall plusA: A \to A \to A.
-\forall n,p,g.
-p O = true \to
-(symmetric A plusA) \to (associative A plusA) \to (\forall a:A.(plusA a  baseA) = a) \to
-iter_p_gen (S n) (\lambda i.p (pred i)) A (\lambda i.g(pred i)) baseA plusA = 
-plusA (iter_p_gen n p A g baseA plusA) (g O).
-intros.
-elim n
-  [rewrite > true_to_iter_p_gen_Sn
-    [simplify.apply H1
-    |assumption
+lemma sub_lt: ∀A,e,p,n,m. n ≤ m → 
+  sub_hk (λx.x) (λx.x) A (mk_range A e n p) (mk_range A e m p).
+#A #e #f #n #m #lenm #i #lti #fi % // % /2/
+qed. 
+
+theorem transitive_sub: ∀h1,k1,h2,k2,A,I,J,K. 
+  sub_hk h1 k1 A I J → sub_hk h2 k2 A J K → 
+    sub_hk (λx.h2(h1 x)) (λx.k1(k2 x)) A I K.
+#h1 #k1 #h2 #k2 #A #I #J #K #sub1 #sub2 #i #lti #fi 
+cases(sub1 i lti fi) * #lth1i #fh1i #ei 
+cases(sub2 (h1 i) lth1i fh1i) * #H1 #H2 #H3 % // % // 
+qed. 
+
+theorem bigop_iso: ∀n1,n2,p1,p2,B.∀nil.∀op:ACop B nil.∀f1,f2.
+  iso B (mk_range B f1 n1 p1) (mk_range B f2 n2 p2) →
+  \big[op,nil]_{i<n1|p1 i}(f1 i) = \big[op,nil]_{i<n2|p2 i}(f2 i).
+#n1 #n2 #p1 #p2 #B #nil #op #f1 #f2 * #h * #k * * #same
+@(le_gen ? n1) #i (generalize in match p2) (elim i) 
+  [(elim n2) // #m #Hind #p2 #_ #sub1 #sub2
+   >bigop_Sfalse 
+    [@(Hind ? (le_O_n ?)) [/2/ | @(transitive_sub … (sub_lt …) sub2) //]
+    |@(sub0_to_false … sub2) //
     ]
-  |apply (bool_elim ? (p n1));intro
-    [rewrite > true_to_iter_p_gen_Sn
-      [rewrite > true_to_iter_p_gen_Sn in ⊢ (? ? ? %)
-        [rewrite > H2 in ⊢ (? ? ? %).
-         apply eq_f.assumption
-        |assumption
-        ]
-      |assumption
+  |#n #Hind #p2 #ltn #sub1 #sub2 (cut (n ≤n1)) [/2/] #len
+   cases(true_or_false (p1 n)) #p1n
+    [>bigop_Strue // (cases (sub1 n (le_n …) p1n)) * #hn #p2hn #eqn
+     >(bigop_diff … (h n) n2) // >same // 
+     @eq_f @(Hind ? len)
+      [#i #ltin #p1i (cases (sub1 i (le_S … ltin) p1i)) * 
+       #h1i #p2h1i #eqi % // % // >not_eq_to_eqb_false normalize // 
+       @(not_to_not ??? (lt_to_not_eq ? ? ltin)) // 
+      |#j #ltj #p2j (cases (sub2 j ltj (andb_true_r …p2j))) * 
+       #ltkj #p1kj #eqj % // % // 
+       (cases (le_to_or_lt_eq …(le_S_S_to_le …ltkj))) //
+       #eqkj @False_ind generalize in match p2j @eqb_elim 
+       normalize /2/
       ]
-    |rewrite > false_to_iter_p_gen_Sn
-      [rewrite > false_to_iter_p_gen_Sn in ⊢ (? ? ? %);assumption
-      |assumption
+    |>bigop_Sfalse // @(Hind ? len) 
+      [@(transitive_sub … (sub_lt …) sub1) //
+      |#i #lti #p2i cases(sub2 i lti p2i) * #ltki #p1ki #eqi
+       % // % // cases(le_to_or_lt_eq …(le_S_S_to_le …ltki)) //
+       #eqki @False_ind /2/
       ]
     ]
   ]
 qed.
+
+(* Sigma e Pi - da generalizzare *)
+notation "Σ_{ ident i < n | p } f"
+  with precedence 80
+for @{'bigop $n plus 0 (λ${ident i}.p) (λ${ident i}. $f)}.
+
+notation "Σ_{ ident i < n } f"
+  with precedence 80
+for @{'bigop $n plus 0 (λ${ident i}.true) (λ${ident i}. $f)}.
+
+notation "Σ_{ ident j ∈ [a,b[ } f"
+  with precedence 80
+for @{'bigop ($b-$a) plus 0 (λ${ident j}.((λ${ident j}.true) (${ident j}+$a)))
+  (λ${ident j}.((λ${ident j}.$f)(${ident j}+$a)))}.
+  
+notation "Σ_{ ident j ∈ [a,b[ | p } f"
+  with precedence 80
+for @{'bigop ($b-$a) plus 0 (λ${ident j}.((λ${ident j}.$p) (${ident j}+$a)))
+  (λ${ident j}.((λ${ident j}.$f)(${ident j}+$a)))}.
+ 
+notation "Π_{ ident i < n | p} f"
+  with precedence 80
+for @{'bigop $n times 1 (λ${ident i}.$p) (λ${ident i}. $f)}.
+ 
+notation "Π_{ ident i < n } f"
+  with precedence 80
+for @{'bigop $n times 1 (λ${ident i}.true) (λ${ident i}. $f)}.
+
+notation "Π_{ ident j ∈ [a,b[ } f"
+  with precedence 80
+for @{'bigop ($b-$a) times 1 (λ${ident j}.((λ${ident j}.true) (${ident j}+$a)))
+  (λ${ident j}.((λ${ident j}.$f)(${ident j}+$a)))}.
+  
+notation "Π_{ ident j ∈ [a,b[ | p } f"
+  with precedence 80
+for @{'bigop ($b-$a) times 1 (λ${ident j}.((λ${ident j}.$p) (${ident j}+$a)))
+  (λ${ident j}.((λ${ident j}.$f)(${ident j}+$a)))}.
+ 
+(*
     
 definition p_ord_times \def
 \lambda p,m,x.
@@ -1121,332 +759,6 @@ elim n
 ]
 qed.
 
-(* old version - proved without theorem iter_p_gen_knm
-theorem iter_p_gen_2_eq: 
-\forall A:Type.
-\forall baseA: A.
-\forall plusA: A \to A \to A. 
-(symmetric A plusA) \to 
-(associative A plusA) \to 
-(\forall a:A.(plusA a  baseA) = a)\to
-\forall g: nat \to nat \to A.
-\forall h11,h12,h21,h22: nat \to nat \to nat. 
-\forall n1,m1,n2,m2.
-\forall p11,p21:nat \to bool.
-\forall p12,p22:nat \to nat \to bool.
-(\forall i,j. i < n2 \to j < m2 \to p21 i = true \to p22 i j = true \to 
-p11 (h11 i j) = true \land p12 (h11 i j) (h12 i j) = true
-\land h21 (h11 i j) (h12 i j) = i \land h22 (h11 i j) (h12 i j) = j
-\land h11 i j < n1 \land h12 i j < m1) \to
-(\forall i,j. i < n1 \to j < m1 \to p11 i = true \to p12 i j = true \to 
-p21 (h21 i j) = true \land p22 (h21 i j) (h22 i j) = true
-\land h11 (h21 i j) (h22 i j) = i \land h12 (h21 i j) (h22 i j) = j
-\land (h21 i j) < n2 \land (h22 i j) < m2) \to
-iter_p_gen n1 p11 A 
-     (\lambda x:nat .iter_p_gen m1 (p12 x) A (\lambda y. g x y) baseA plusA) 
-     baseA plusA =
-iter_p_gen n2 p21 A 
-    (\lambda x:nat .iter_p_gen m2 (p22 x) A  (\lambda y. g (h11 x y) (h12 x y)) baseA plusA )
-    baseA plusA.
-intros.
-rewrite < (iter_p_gen2' ? ? ? ? ? ? ? ? H H1 H2).
-rewrite < (iter_p_gen2' ? ? ? ? ? ? ? ? H H1 H2).
-apply sym_eq.
-letin h := (\lambda x.(h11 (x/m2) (x\mod m2))*m1 + (h12 (x/m2) (x\mod m2))).
-letin h1 := (\lambda x.(h21 (x/m1) (x\mod m1))*m2 + (h22 (x/m1) (x\mod m1))).
-apply (trans_eq ? ? 
-  (iter_p_gen (n2*m2) (\lambda x:nat.p21 (x/m2)\land p22 (x/m2) (x\mod m2)) A
-  (\lambda x:nat.g ((h x)/m1) ((h x)\mod m1)) baseA plusA ))
-  [clear h.clear h1.
-   apply eq_iter_p_gen1
-    [intros.reflexivity
-    |intros.
-     cut (O < m2)
-      [cut (x/m2 < n2)
-        [cut (x \mod m2 < m2)
-          [elim (and_true ? ? H6).
-           elim (H3 ? ? Hcut1 Hcut2 H7 H8).
-           elim H9.clear H9.
-           elim H11.clear H11.
-           elim H9.clear H9.
-           elim H11.clear H11.
-           apply eq_f2
-            [apply sym_eq.
-             apply div_plus_times.
-             assumption
-            | apply sym_eq.
-              apply mod_plus_times.
-              assumption
-            ]
-          |apply lt_mod_m_m.
-           assumption
-          ]
-        |apply (lt_times_n_to_lt m2)
-          [assumption
-          |apply (le_to_lt_to_lt ? x)
-            [apply (eq_plus_to_le ? ? (x \mod m2)).
-             apply div_mod.
-             assumption
-            |assumption
-            ]
-          ]
-        ]
-      |apply not_le_to_lt.unfold.intro.
-       generalize in match H5.
-       apply (le_n_O_elim ? H7).
-       rewrite < times_n_O.
-       apply le_to_not_lt.
-       apply le_O_n  
-      ]      
-    ]
-  |apply (eq_iter_p_gen_gh ? ? ? H H1 H2 ? h h1);intros
-    [cut (O < m2)
-      [cut (i/m2 < n2)
-        [cut (i \mod m2 < m2)
-          [elim (and_true ? ? H6).
-           elim (H3 ? ? Hcut1 Hcut2 H7 H8).
-           elim H9.clear H9.
-           elim H11.clear H11.
-           elim H9.clear H9.
-           elim H11.clear H11.
-           cut ((h11 (i/m2) (i\mod m2)*m1+h12 (i/m2) (i\mod m2))/m1 = 
-                 h11 (i/m2) (i\mod m2))
-            [cut ((h11 (i/m2) (i\mod m2)*m1+h12 (i/m2) (i\mod m2))\mod m1 =
-                  h12 (i/m2) (i\mod m2))
-              [rewrite > Hcut3.
-               rewrite > Hcut4.
-               rewrite > H9.
-               rewrite > H15.
-               reflexivity
-              |apply mod_plus_times. 
-               assumption
-              ]
-            |apply div_plus_times.
-             assumption
-            ]
-          |apply lt_mod_m_m.
-           assumption
-          ]
-        |apply (lt_times_n_to_lt m2)
-          [assumption
-          |apply (le_to_lt_to_lt ? i)
-            [apply (eq_plus_to_le ? ? (i \mod m2)).
-             apply div_mod.
-             assumption
-            |assumption
-            ]
-          ]
-        ]
-      |apply not_le_to_lt.unfold.intro.
-       generalize in match H5.
-       apply (le_n_O_elim ? H7).
-       rewrite < times_n_O.
-       apply le_to_not_lt.
-       apply le_O_n  
-      ]      
-    |cut (O < m2)
-      [cut (i/m2 < n2)
-        [cut (i \mod m2 < m2)
-          [elim (and_true ? ? H6).
-           elim (H3 ? ? Hcut1 Hcut2 H7 H8).
-           elim H9.clear H9.
-           elim H11.clear H11.
-           elim H9.clear H9.
-           elim H11.clear H11.
-           cut ((h11 (i/m2) (i\mod m2)*m1+h12 (i/m2) (i\mod m2))/m1 = 
-                 h11 (i/m2) (i\mod m2))
-            [cut ((h11 (i/m2) (i\mod m2)*m1+h12 (i/m2) (i\mod m2))\mod m1 =
-                  h12 (i/m2) (i\mod m2))
-              [rewrite > Hcut3.
-               rewrite > Hcut4.
-               rewrite > H13.
-               rewrite > H14.
-               apply sym_eq.
-               apply div_mod.
-               assumption
-              |apply mod_plus_times. 
-               assumption
-              ]
-            |apply div_plus_times.
-             assumption
-            ]
-          |apply lt_mod_m_m.
-           assumption
-          ]
-        |apply (lt_times_n_to_lt m2)
-          [assumption
-          |apply (le_to_lt_to_lt ? i)
-            [apply (eq_plus_to_le ? ? (i \mod m2)).
-             apply div_mod.
-             assumption
-            |assumption
-            ]
-          ]
-        ]
-      |apply not_le_to_lt.unfold.intro.
-       generalize in match H5.
-       apply (le_n_O_elim ? H7).
-       rewrite < times_n_O.
-       apply le_to_not_lt.
-       apply le_O_n  
-      ]      
-    |cut (O < m2)
-      [cut (i/m2 < n2)
-        [cut (i \mod m2 < m2)
-          [elim (and_true ? ? H6).
-           elim (H3 ? ? Hcut1 Hcut2 H7 H8).
-           elim H9.clear H9.
-           elim H11.clear H11.
-           elim H9.clear H9.
-           elim H11.clear H11.
-           apply lt_times_plus_times
-            [assumption|assumption]
-          |apply lt_mod_m_m.
-           assumption
-          ]
-        |apply (lt_times_n_to_lt m2)
-          [assumption
-          |apply (le_to_lt_to_lt ? i)
-            [apply (eq_plus_to_le ? ? (i \mod m2)).
-             apply div_mod.
-             assumption
-            |assumption
-            ]
-          ]
-        ]
-      |apply not_le_to_lt.unfold.intro.
-       generalize in match H5.
-       apply (le_n_O_elim ? H7).
-       rewrite < times_n_O.
-       apply le_to_not_lt.
-       apply le_O_n  
-      ]
-    |cut (O < m1)
-      [cut (j/m1 < n1)
-        [cut (j \mod m1 < m1)
-          [elim (and_true ? ? H6).
-           elim (H4 ? ? Hcut1 Hcut2 H7 H8).
-           elim H9.clear H9.
-           elim H11.clear H11.
-           elim H9.clear H9.
-           elim H11.clear H11.
-           cut ((h21 (j/m1) (j\mod m1)*m2+h22 (j/m1) (j\mod m1))/m2 = 
-                 h21 (j/m1) (j\mod m1))
-            [cut ((h21 (j/m1) (j\mod m1)*m2+h22 (j/m1) (j\mod m1))\mod m2 =
-                  h22 (j/m1) (j\mod m1))
-              [rewrite > Hcut3.
-               rewrite > Hcut4.
-               rewrite > H9.
-               rewrite > H15.
-               reflexivity
-              |apply mod_plus_times. 
-               assumption
-              ]
-            |apply div_plus_times.
-             assumption
-            ]
-          |apply lt_mod_m_m.
-           assumption
-          ] 
-        |apply (lt_times_n_to_lt m1)
-          [assumption
-          |apply (le_to_lt_to_lt ? j)
-            [apply (eq_plus_to_le ? ? (j \mod m1)).
-             apply div_mod.
-             assumption
-            |assumption
-            ]
-          ]
-        ]
-      |apply not_le_to_lt.unfold.intro.
-       generalize in match H5.
-       apply (le_n_O_elim ? H7).
-       rewrite < times_n_O.
-       apply le_to_not_lt.
-       apply le_O_n  
-      ] 
-    |cut (O < m1)
-      [cut (j/m1 < n1)
-        [cut (j \mod m1 < m1)
-          [elim (and_true ? ? H6).
-           elim (H4 ? ? Hcut1 Hcut2 H7 H8).
-           elim H9.clear H9.
-           elim H11.clear H11.
-           elim H9.clear H9.
-           elim H11.clear H11.
-           cut ((h21 (j/m1) (j\mod m1)*m2+h22 (j/m1) (j\mod m1))/m2 = 
-                 h21 (j/m1) (j\mod m1))
-            [cut ((h21 (j/m1) (j\mod m1)*m2+h22 (j/m1) (j\mod m1))\mod m2 =
-                  h22 (j/m1) (j\mod m1))
-              [rewrite > Hcut3.
-               rewrite > Hcut4.               
-               rewrite > H13.
-               rewrite > H14.
-               apply sym_eq.
-               apply div_mod.
-               assumption
-              |apply mod_plus_times. 
-               assumption
-              ]
-            |apply div_plus_times.
-             assumption
-            ]
-          |apply lt_mod_m_m.
-           assumption
-          ] 
-        |apply (lt_times_n_to_lt m1)
-          [assumption
-          |apply (le_to_lt_to_lt ? j)
-            [apply (eq_plus_to_le ? ? (j \mod m1)).
-             apply div_mod.
-             assumption
-            |assumption
-            ]
-          ]
-        ]
-      |apply not_le_to_lt.unfold.intro.
-       generalize in match H5.
-       apply (le_n_O_elim ? H7).
-       rewrite < times_n_O.
-       apply le_to_not_lt.
-       apply le_O_n  
-      ] 
-    |cut (O < m1)
-      [cut (j/m1 < n1)
-        [cut (j \mod m1 < m1)
-          [elim (and_true ? ? H6).
-           elim (H4 ? ? Hcut1 Hcut2 H7 H8).
-           elim H9.clear H9.
-           elim H11.clear H11.
-           elim H9.clear H9.
-           elim H11.clear H11.
-           apply (lt_times_plus_times ? ? ? m2)
-            [assumption|assumption]
-          |apply lt_mod_m_m.
-           assumption
-          ] 
-        |apply (lt_times_n_to_lt m1)
-          [assumption
-          |apply (le_to_lt_to_lt ? j)
-            [apply (eq_plus_to_le ? ? (j \mod m1)).
-             apply div_mod.
-             assumption
-            |assumption
-            ]
-          ]
-        ]
-      |apply not_le_to_lt.unfold.intro.
-       generalize in match H5.
-       apply (le_n_O_elim ? H7).
-       rewrite < times_n_O.
-       apply le_to_not_lt.
-       apply le_O_n  
-      ]
-    ]
-  ]
-qed.*)
-
-
 theorem iter_p_gen_2_eq: 
 \forall A:Type.
 \forall baseA: A.
@@ -1693,4 +1005,4 @@ apply (iter_p_gen_2_eq A baseA plusA H H1 H2 (\lambda x,y. g x y) (\lambda x,y.y
     |assumption
     ]
   ]
-qed.
+qed. *)

@@ -85,7 +85,7 @@ qed.
 lemma max_not_exists: ∀f.∀n.
  (∀i. i < n → f i = false) → max n f = O.
 #f #n #ffalse @(le_gen ? n) #i (elim i) // #j #Hind #ltj
-normalize >(ffalse j …) // @Hind /2/
+normalize >ffalse // @Hind /2/
 qed.
 
 lemma fmax_false: ∀f.∀n,m.max n f = m → f m = false → m = O. 
@@ -122,7 +122,7 @@ qed.
 theorem max_f_g: ∀f,g,n.(∀i. i < n → f i = g i) → 
   max n f = max n g.
 #f #g #n (elim n) //
-#m #Hind #ext normalize >(ext … (le_n …)) >(Hind …) //
+#m #Hind #ext normalize >ext >Hind //
 #i #ltim @ext /2/
 qed.
 
@@ -130,14 +130,14 @@ theorem le_max_f_max_g: ∀f,g,n. (∀i. i < n → f i = true → g i =true) →
 max n f ≤ max n g.
 #f #g #n (elim n) //
 #m #Hind #ext normalize (cases (true_or_false (f m))) #Heq >Heq 
-  [>(ext m …) //
+  [>ext //
   |(cases (g m)) normalize [@le_max_n] @Hind #i #ltim @ext /2/
 qed.
 
 theorem f_max_true : ∀ f.∀n.
 (∃i:nat. i < n ∧ f i = true) → f (max n f) = true. 
 #f #n cases(max_to_max_spec f n (max n f) (refl …)) //
-#Hall * #x * #ltx #fx @False_ind @(absurd … fx) >(Hall x ?) /2/
+#Hall * #x * #ltx #fx @False_ind @(absurd … fx) >Hall /2/
 qed.
 
 (* minimization *)
@@ -191,7 +191,7 @@ n ≤ m  → ∀b.min n b f ≤ min m b f.
   |#n #m #Hind #leSS #b
    (cases (true_or_false (f b))) #fb 
     [lapply (true_min …fb) //
-    |>(false_min f n b fb) >(false_min f m b fb) @Hind /2/
+    |>false_min // >false_min // @Hind /2/
     ]
   ]
 qed.
@@ -217,8 +217,8 @@ theorem fmin_true: ∀f.∀n,m,b.
   [#m #b normalize #eqmb >eqmb #leSb @(False_ind) 
    @(absurd … leSb) //
   |#n #Hind #m #b (cases (true_or_false (f b))) #caseb
-    [>(true_min f b caseb (S n)) //
-    |>(false_min … caseb) #eqm #ltm @(Hind m (S b)) /2/
+    [>true_min //
+    |>false_min // #eqm #ltm @(Hind m (S b)) /2/
     ]
   ]
 qed.
@@ -230,9 +230,9 @@ lemma min_exists: ∀f.∀t,m. m < t → f m = true →
   [#b #lebm #ismin #eqtb @False_ind @(absurd … lebm) <eqtb
    @lt_to_not_le //
   |#d #Hind #b #lebm #ismin #eqt cases(le_to_or_lt_eq …lebm)
-    [#ltbm >(false_min …) /2/ @Hind // 
+    [#ltbm >false_min /2/ @Hind // 
       [#i #H #H1 @ismin /2/ | >eqt normalize //]
-    |#eqbm >(true_min …) //
+    |#eqbm >true_min //
     ]
   ]
 qed.
@@ -240,8 +240,8 @@ qed.
 lemma min_not_exists: ∀f.∀n,b.
  (∀i. b ≤ i → i < n + b → f i = false) → min n b f = n + b.
 #f #n (elim n) // 
-#p #Hind #b #ffalse >(false_min …)
-  [>(Hind …) // #i #H #H1 @ffalse /2/
+#p #Hind #b #ffalse >false_min
+  [>Hind // #i #H #H1 @ffalse /2/
   |@ffalse //
   ]
 qed.
@@ -252,8 +252,8 @@ lemma fmin_false: ∀f.∀n,b.let m ≝ min n b f in
 #i #Hind #b normalize cases(true_or_false … (f b)) #fb >fb
 normalize 
   [#eqm @False_ind @(absurd … fb) // 
-  |>(plus_n_Sm …) @Hind]
-qed. 
+  |>plus_n_Sm @Hind]
+qed.
 
 inductive min_spec (n,b:nat) (f:nat→bool) : nat→Prop ≝
  | found : ∀m:nat. b ≤ m → m < n + b → f m =true →
@@ -284,7 +284,7 @@ qed.
 theorem min_f_g: ∀f,g,n,b.(∀i. b ≤ i → i < n + b → f i = g i) → 
   min n b f = min n b g.
 #f #g #n (elim n) //
-#m #Hind #b #ext normalize >(ext b (le_n b) ?) // >(Hind …) //
+#m #Hind #b #ext normalize >(ext b (le_n b) ?) // >Hind //
 #i #ltib #ltim @ext /2/
 qed.
 
@@ -292,7 +292,7 @@ theorem le_min_f_min_g: ∀f,g,n,b. (∀i. b ≤ i → i < n +b → f i = true �
 min n b g ≤ min n b f.
 #f #g #n (elim n) //
 #m #Hind #b #ext normalize (cases (true_or_false (f b))) #Heq >Heq 
-  [>(ext b …) //
+  [>ext //
   |(cases (g b)) normalize /2/ @Hind #i #ltb #ltim #fi
     @ext /2/
 qed.
@@ -300,5 +300,5 @@ qed.
 theorem f_min_true : ∀ f.∀n,b.
 (∃i:nat. b ≤ i ∧ i < n ∧ f i = true) → f (min n b f) = true. 
 #f #n #b cases(min_to_min_spec f n b (min n b f) (refl …)) //
-#Hall * #x * * #leb #ltx #fx @False_ind @(absurd … fx) >(Hall x ??) /2/
+#Hall * #x * * #leb #ltx #fx @False_ind @(absurd … fx) >Hall /2/
 qed.

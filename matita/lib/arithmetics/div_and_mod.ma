@@ -62,7 +62,7 @@ n=(div_aux p n m)*(S m) + (mod_aux p n m).
   [#n #m normalize //
   |#q #Hind #n #m normalize
      @(leb_elim n m) #lenm normalize //
-     >(associative_plus ???) <(Hind (n-(S m)) m)
+     >associative_plus <(Hind (n-(S m)) m)
      applyS plus_minus_m_m (* bello *) /2/
 qed.
 
@@ -211,13 +211,13 @@ definition n_divides \def \lambda n,m:nat.n_divides_aux n n m O. *)
 
 theorem lt_div_S: ∀n,m. O < m → n < S(n / m)*m.
 #n #m #posm (change with (n < m +(n/m)*m))
->(div_mod n m) in ⊢ (? % ?) >(commutative_plus ? ?) 
+>(div_mod n m) in ⊢ (? % ?) >commutative_plus 
 @monotonic_lt_plus_l @lt_mod_m_m // 
 qed.
 
 theorem le_div: ∀n,m. O < n → m/n ≤ m.
 #n #m #posn
->(div_mod m n) in \vdash (? ? %) @(transitive_le ? (m/n*n)) /2/
+>(div_mod m n) in ⊢ (? ? %) @(transitive_le ? (m/n*n)) /2/
 qed.
 
 theorem le_plus_mod: ∀m,n,q. O < q →
@@ -242,10 +242,10 @@ theorem le_plus_div: ∀m,n,q. O < q →
 #m #n #q #posq @(le_times_to_le … posq)
 @(le_plus_to_le_r ((m+n) \mod q))
 (* bruttino *)
->(commutative_times …) in ⊢ (? ? %) <(div_mod …)
+>commutative_times in ⊢ (? ? %) <div_mod
 >(div_mod m q) in ⊢ (? ? (? % ?)) >(div_mod n q) in ⊢ (? ? (? ? %))
->(commutative_plus …) in ⊢ (? ? (? % ?)) >(associative_plus …) in ⊢ (? ? %)
-<(associative_plus …) in ⊢ (? ? (? ? %)) (applyS monotonic_le_plus_l) /2/
+>commutative_plus in ⊢ (? ? (? % ?)) >associative_plus in ⊢ (? ? %)
+<associative_plus in ⊢ (? ? (? ? %)) (applyS monotonic_le_plus_l) /2/
 qed.
 
 theorem le_times_to_le_div: ∀a,b,c:nat. 
@@ -368,7 +368,7 @@ split
 ]
 qed. *)
 
-theorem le_plus_to_minus_r: ∀a,b,c. a + b \le c → a \le c -b.
+theorem le_plus_to_minus_r: ∀a,b,c. a + b ≤ c → a ≤ c -b.
 #a #b #c #H @(le_plus_to_le_r … b) /2/
 qed.
 
@@ -397,15 +397,15 @@ qed.
 theorem div_times_times: ∀a,b,c:nat. O < c → O < b → 
   (a/b) = (a*c)/(b*c).
 #a #b #c #posc #posb
->(commutative_times b c) <(eq_div_div_div_times … )//
->(div_times … posc)//
+>(commutative_times b) <eq_div_div_div_times //
+>div_times //
 qed.
 
 theorem times_mod: ∀a,b,c:nat.
 O < c → O < b → (a*c) \mod (b*c) = c*(a\mod b).
 #a #b #c #posc #posb
 @(div_mod_spec_to_eq2 (a*c) (b*c) (a/b) ((a*c) \mod (b*c)) (a/b) (c*(a \mod b)))
-  [>(div_times_times … posc posb …) @div_mod_spec_div_mod /2/
+  [>(div_times_times … posc) // @div_mod_spec_div_mod /2/
   |@div_mod_spec_intro
     [(applyS monotonic_lt_times_l) /2/
     |(applyS (eq_f …(λx.x*c))) //
@@ -418,10 +418,10 @@ theorem le_div_times_m: ∀a,i,m. O < i → O < m →
 #a #i #m #posi #posm
 @(transitive_le ? ((a*m/i)/m))
   [@monotonic_div /2/
-  |>(eq_div_div_div_div … posi posm) >(div_times …) //
+  |>eq_div_div_div_div // >div_times //
   ]
 qed.
-       
+
 (* serve ?
 theorem le_div_times_Sm: ∀a,i,m. O < i → O < m →
 a / i ≤ (a * S (m / i))/m.
