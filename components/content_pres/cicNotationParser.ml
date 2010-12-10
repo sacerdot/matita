@@ -375,10 +375,6 @@ let parse_level2_meta grammars lexbuf =
   exc_located_wrapper
     (fun () -> Grammar.Entry.parse grammars.level2_meta (Obj.magic lexbuf))
 
-let parse_term grammars lexbuf =
-  exc_located_wrapper
-    (fun () -> (Grammar.Entry.parse grammars.term (Obj.magic lexbuf)))
-
   (* create empty precedence level for "term" *)
 let initialize_grammars grammars =
   let dummy_action =
@@ -865,8 +861,6 @@ let parse_level2_ast status =
   parse_level2_ast status#notation_parser_db.grammars 
 let parse_level2_meta status =
   parse_level2_meta status#notation_parser_db.grammars
-let parse_term status =
-  parse_term status#notation_parser_db.grammars
 
 let level2_ast_grammar status = 
   status#notation_parser_db.grammars.level2_ast_grammar

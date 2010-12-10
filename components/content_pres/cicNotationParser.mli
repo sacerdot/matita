@@ -82,8 +82,6 @@ val let_defs : #status ->
 val protected_binder_vars : #status ->
   (NotationPt.term list * NotationPt.term option) Grammar.Entry.e
 
-val parse_term: #status -> Ulexing.lexbuf -> NotationPt.term
-
 (** {2 Debugging} *)
 
   (** print "level2_pattern" entry on stdout, flushing afterwards *)
