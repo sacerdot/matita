@@ -518,6 +518,8 @@ EXTEND
     include_command: [ [
         IDENT "include" ; path = QSTRING -> 
           loc,path,G.WithPreferences
+      | IDENT "include" ; IDENT "alias"; path = QSTRING -> 
+          loc,path,G.OnlyPreferences
       | IDENT "include'" ; path = QSTRING -> 
           loc,path,G.WithoutPreferences
      ]];

@@ -92,7 +92,7 @@ type alias_spec =
   | Symbol_alias of string * int * string (* name, instance no, description *)
   | Number_alias of int * string          (* instance no, description *)
 
-type inclusion_mode = WithPreferences | WithoutPreferences (* aka aliases *)
+type inclusion_mode = WithPreferences | WithoutPreferences | OnlyPreferences (* aka aliases *)
 
 type command =
   | Include of loc * inclusion_mode * string (* _,buri,_,path *)

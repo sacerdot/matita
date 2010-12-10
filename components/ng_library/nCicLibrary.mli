@@ -49,13 +49,15 @@ module type SerializerType =
     refresh_uri_in_universe:(NCic.universe -> NCic.universe) ->
     refresh_uri_in_term:(NCic.term -> NCic.term) ->
     refresh_uri_in_reference:(NReference.reference -> NReference.reference) ->
+    alias_only:bool ->
      dumpable_status -> dumpable_status
 
   val register: < run: 'a.  string -> 'a register_type -> ('a -> obj) >
   val serialize: baseuri:NUri.uri -> dependencies:string list -> obj list ->
        unit
    (* the obj is the "include" command to be added to the dump list *)
-  val require: baseuri:NUri.uri -> dumpable_status -> dumpable_status * obj
+  val require: baseuri:
+   NUri.uri -> alias_only:bool -> dumpable_status -> dumpable_status * obj
   val dependencies_of: baseuri:NUri.uri -> string list
  end
 

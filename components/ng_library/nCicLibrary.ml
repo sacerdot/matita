@@ -198,12 +198,14 @@ module type SerializerType =
     refresh_uri_in_universe:(NCic.universe -> NCic.universe) ->
     refresh_uri_in_term:(NCic.term -> NCic.term) ->
     refresh_uri_in_reference:(NReference.reference -> NReference.reference) ->
+    alias_only:bool ->
      dumpable_status -> dumpable_status
 
   val register: < run: 'a.  string -> 'a register_type -> ('a -> obj) >
   val serialize: baseuri:NUri.uri -> dependencies:string list -> obj list -> unit
    (* the obj is the "include" command to be added to the dump list *)
-  val require: baseuri:NUri.uri -> dumpable_status -> dumpable_status * obj
+  val require: baseuri:
+   NUri.uri -> alias_only:bool -> dumpable_status -> dumpable_status * obj
   val dependencies_of: baseuri:NUri.uri -> string list
  end
 
@@ -215,9 +217,10 @@ module Serializer(D: sig type dumpable_status end) =
     refresh_uri_in_universe:(NCic.universe -> NCic.universe) ->
     refresh_uri_in_term:(NCic.term -> NCic.term) ->
     refresh_uri_in_reference:(NReference.reference -> NReference.reference) ->
+    alias_only:bool ->
      dumpable_status -> dumpable_status
 
-  let require1 = ref (fun _ -> assert false) (* unknown data*)
+  let require1 = ref (fun ~alias_only:_ _ -> assert false) (* unknown data*)
   let already_registered = ref []
 
   let register =
@@ -228,22 +231,22 @@ module Serializer(D: sig type dumpable_status end) =
      already_registered := tag :: !already_registered;
      let old_require1 = !require1 in
      require1 :=
-      (fun ((tag',data) as x) ->
+      (fun ~alias_only ((tag',data) as x) ->
         if tag=tag' then
          require (Obj.magic data) ~refresh_uri_in_universe ~refresh_uri_in_term
-          ~refresh_uri_in_reference
+          ~refresh_uri_in_reference ~alias_only
         else
-         old_require1 x);
+         old_require1 ~alias_only x);
      (fun x -> tag,Obj.repr x)
    end
 
   let serialize = serialize
 
-  let require2 ~baseuri status =
+  let require2 ~baseuri ~alias_only status =
    try
     includes := baseuri::!includes;
     let _dependencies,dump = require0 ~baseuri in
-     List.fold_right !require1 dump status
+     List.fold_right (!require1 ~alias_only) dump status
    with
     Sys_error _ ->
      raise (IncludedFileNotCompiled(ng_path_of_baseuri baseuri,NUri.string_of_uri baseuri))
@@ -251,15 +254,19 @@ module Serializer(D: sig type dumpable_status end) =
   let dependencies_of ~baseuri = fst (require0 ~baseuri)
 
   let record_include =
-   let aux baseuri ~refresh_uri_in_universe ~refresh_uri_in_term
-   ~refresh_uri_in_reference =
-     (* memorizzo baseuri in una tabella; *)
-     require2 ~baseuri
+   let aux baseuri ~refresh_uri_in_universe:_ ~refresh_uri_in_term:_
+   ~refresh_uri_in_reference:_ ~alias_only =
+     let alias_only =
+      alias_only || List.mem baseuri (get_already_included ())
+     in
+      require2 ~baseuri ~alias_only
    in
     register#run "include" aux
 
-  let require ~baseuri status =
-   let status = require2 ~baseuri status in
+  let require ~baseuri ~alias_only status =
+   let alias_only =
+    alias_only || List.mem baseuri (get_already_included ()) in
+   let status = require2 ~baseuri ~alias_only status in
     status,record_include baseuri
 end
 

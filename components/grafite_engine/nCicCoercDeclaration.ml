@@ -289,9 +289,12 @@ let record_ncoercion =
    basic_index_ncoercion (name,t,s,d,p,a)
  in
  let aux_l l ~refresh_uri_in_universe ~refresh_uri_in_term
-  ~refresh_uri_in_reference
+  ~refresh_uri_in_reference ~alias_only status
  =
-   List.fold_right (aux ~refresh_uri_in_term) l
+  if not alias_only then
+   List.fold_right (aux ~refresh_uri_in_term) l status
+  else
+   status
  in
   GrafiteTypes.Serializer.register#run "ncoercion" aux_l 
 ;;

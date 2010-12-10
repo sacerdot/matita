@@ -41,8 +41,12 @@ let basic_eval_unification_hint (t,n) status =
 let inject_unification_hint =
  let basic_eval_unification_hint (t,n) 
    ~refresh_uri_in_universe ~refresh_uri_in_term ~refresh_uri_in_reference
+   ~alias_only status
  =
-  let t = refresh_uri_in_term t in basic_eval_unification_hint (t,n)
+  if not alias_only then
+   let t = refresh_uri_in_term t in basic_eval_unification_hint (t,n) status
+  else
+   status
  in
   GrafiteTypes.Serializer.register#run "unification_hints"
    basic_eval_unification_hint
@@ -69,9 +73,12 @@ let basic_index_obj l status =
     status#auto_cache l) 
 ;;     
 
-let basic_eval_interpretation (dsc, (symbol, args), cic_appl_pattern) status =
+let basic_eval_interpretation ~alias_only (dsc, (symbol, args), cic_appl_pattern) status =
  let status =
-  Interpretations.add_interpretation status dsc (symbol, args) cic_appl_pattern
+  if not alias_only then
+   Interpretations.add_interpretation status dsc (symbol, args) cic_appl_pattern
+  else
+   status
  in
  let mode = GrafiteAst.WithPreferences (*assert false*) in (* MATITA 1.0 VEDI SOTTO *)
  let diff =
@@ -83,6 +90,7 @@ let basic_eval_interpretation (dsc, (symbol, args), cic_appl_pattern) status =
 let inject_interpretation =
  let basic_eval_interpretation (dsc, (symbol, args), cic_appl_pattern)
    ~refresh_uri_in_universe ~refresh_uri_in_term ~refresh_uri_in_reference
+   ~alias_only
  =
   let rec refresh =
    function
@@ -94,14 +102,14 @@ let inject_interpretation =
     | NotationPt.ApplPattern l -> NotationPt.ApplPattern (List.map refresh l)
   in
   let cic_appl_pattern = refresh cic_appl_pattern in
-   basic_eval_interpretation (dsc, (symbol, args), cic_appl_pattern)
+   basic_eval_interpretation ~alias_only (dsc, (symbol, args), cic_appl_pattern)
  in
   GrafiteTypes.Serializer.register#run "interpretation"
    basic_eval_interpretation
 ;;
 
 let eval_interpretation status data= 
- let status = basic_eval_interpretation data status in
+ let status = basic_eval_interpretation ~alias_only:false data status in
  let dump = inject_interpretation data::status#dump in
   status#set_dump dump
 ;;
@@ -112,7 +120,7 @@ let basic_eval_alias (mode,diff) status =
 
 let inject_alias =
  let basic_eval_alias (mode,diff) ~refresh_uri_in_universe ~refresh_uri_in_term
-   ~refresh_uri_in_reference =
+   ~refresh_uri_in_reference ~alias_only =
    basic_eval_alias (mode,diff)
  in
   GrafiteTypes.Serializer.register#run "alias" basic_eval_alias
@@ -134,14 +142,18 @@ let basic_eval_input_notation (l1,l2) status =
 let inject_input_notation =
  let basic_eval_input_notation (l1,l2)
   ~refresh_uri_in_universe ~refresh_uri_in_term ~refresh_uri_in_reference
+  ~alias_only status
  =
-   let l1 =
-    CicNotationParser.refresh_uri_in_checked_l1_pattern
-     ~refresh_uri_in_term ~refresh_uri_in_reference l1 in
-   let l2 = NotationUtil.refresh_uri_in_term
-     ~refresh_uri_in_term ~refresh_uri_in_reference l2
-   in
-    basic_eval_input_notation (l1,l2)
+   if not alias_only then
+    let l1 =
+     CicNotationParser.refresh_uri_in_checked_l1_pattern
+      ~refresh_uri_in_term ~refresh_uri_in_reference l1 in
+    let l2 = NotationUtil.refresh_uri_in_term
+      ~refresh_uri_in_term ~refresh_uri_in_reference l2
+    in
+     basic_eval_input_notation (l1,l2) status
+   else
+    status
  in
   GrafiteTypes.Serializer.register#run "input_notation"
    basic_eval_input_notation
@@ -160,14 +172,18 @@ let basic_eval_output_notation (l1,l2) status =
 let inject_output_notation =
  let basic_eval_output_notation (l1,l2)
   ~refresh_uri_in_universe ~refresh_uri_in_term ~refresh_uri_in_reference
+  ~alias_only status
  =
-  let l1 =
-   CicNotationParser.refresh_uri_in_checked_l1_pattern
-    ~refresh_uri_in_term ~refresh_uri_in_reference l1 in
-  let l2 = NotationUtil.refresh_uri_in_term
-    ~refresh_uri_in_term ~refresh_uri_in_reference l2
-  in
-   basic_eval_output_notation (l1,l2)
+  if not alias_only then
+   let l1 =
+    CicNotationParser.refresh_uri_in_checked_l1_pattern
+     ~refresh_uri_in_term ~refresh_uri_in_reference l1 in
+   let l2 = NotationUtil.refresh_uri_in_term
+     ~refresh_uri_in_term ~refresh_uri_in_reference l2
+   in
+    basic_eval_output_notation (l1,l2) status
+  else
+   status
  in
   GrafiteTypes.Serializer.register#run "output_notation"
    basic_eval_output_notation
@@ -181,12 +197,15 @@ let eval_output_notation status data=
 
 let record_index_obj = 
  let aux l ~refresh_uri_in_universe 
-   ~refresh_uri_in_term ~refresh_uri_in_reference
+   ~refresh_uri_in_term ~refresh_uri_in_reference ~alias_only status
  =
+  if not alias_only then
     basic_index_obj
       (List.map 
         (fun ks,v -> List.map refresh_uri_in_term ks, refresh_uri_in_term v) 
-      l)
+      l) status
+  else
+   status
  in
   GrafiteTypes.Serializer.register#run "index_obj" aux
 ;;
@@ -266,7 +285,9 @@ let index_eq uri status =
 let record_index_eq =
  let basic_index_eq uri
    ~refresh_uri_in_universe ~refresh_uri_in_term ~refresh_uri_in_reference 
-   = index_eq (NCicLibrary.refresh_uri uri) 
+   ~alias_only status
+   = if not alias_only then index_eq (NCicLibrary.refresh_uri uri) status else
+     status
  in
   GrafiteTypes.Serializer.register#run "index_eq" basic_index_eq
 ;;
@@ -290,11 +311,15 @@ let basic_eval_add_constraint (u1,u2) status =
 
 let inject_constraint =
  let basic_eval_add_constraint (u1,u2) 
-       ~refresh_uri_in_universe ~refresh_uri_in_term ~refresh_uri_in_reference
+     ~refresh_uri_in_universe ~refresh_uri_in_term ~refresh_uri_in_reference
+     ~alias_only status
  =
-  let u1 = refresh_uri_in_universe u1 in 
-  let u2 = refresh_uri_in_universe u2 in 
-  basic_eval_add_constraint (u1,u2)
+  if not alias_only then
+   let u1 = refresh_uri_in_universe u1 in 
+   let u2 = refresh_uri_in_universe u2 in 
+    basic_eval_add_constraint (u1,u2) status
+  else
+   status
  in
   GrafiteTypes.Serializer.register#run "constraints" basic_eval_add_constraint 
 ;;
@@ -458,13 +483,13 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
   | GrafiteAst.Include (loc, mode, fname) ->
 	   let _root, baseuri, _fullpath, _rrelpath = 
        Librarian.baseuri_of_script ~include_paths fname in
+     let baseuri = NUri.uri_of_string baseuri in
+     (* MATITA 1.0: keep WithoutPreferences? *)
+     let alias_only = (mode = GrafiteAst.OnlyPreferences) in
      let status,obj =
-       GrafiteTypes.Serializer.require ~baseuri:(NUri.uri_of_string baseuri)
-        status in
+      GrafiteTypes.Serializer.require ~alias_only ~baseuri status in
      let status = status#set_dump (obj::status#dump) in
      let status = status#set_dependencies (fname::status#dependencies) in
-     (*assert false;*) (*  MATITA 1.0mode must be passed to GrafiteTypes.Serializer.require
-     somehow *)
        status
   | GrafiteAst.UnificationHint (loc, t, n) -> eval_unification_hint status t n
   | GrafiteAst.NCoercion (loc, name, t, ty, source, target) ->
