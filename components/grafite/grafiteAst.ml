@@ -41,6 +41,7 @@ type ntactic =
    | NCases of loc * NotationPt.term * npattern  
    | NCase1 of loc * string
    | NChange of loc * npattern * NotationPt.term
+   | NClear of loc * string list
    | NConstructor of loc * int option * NotationPt.term list
    | NCut of loc * NotationPt.term
 (* | NDiscriminate of loc * NotationPt.term

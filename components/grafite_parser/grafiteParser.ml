@@ -218,6 +218,8 @@ EXTEND
         G.NTactic(loc,[G.NCases (loc, what, where)])
     | IDENT "change"; what = pattern_spec; "with"; with_what = tactic_term -> 
         G.NTactic(loc,[G.NChange (loc, what, with_what)])
+    | SYMBOL "-"; ids = LIST1 IDENT ->
+        G.NTactic(loc,[G.NClear (loc, ids)])
     | (*SYMBOL "^"*)PLACEHOLDER; num = OPT NUMBER; 
 	l = OPT [ SYMBOL "{"; l = LIST1 tactic_term; SYMBOL "}" -> l ] -> 
         G.NTactic(loc,[G.NConstructor (loc, (match num with None -> None | Some x -> Some (int_of_string x)),match l with None -> [] | Some l -> l)])

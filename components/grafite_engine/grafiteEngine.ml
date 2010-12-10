@@ -343,6 +343,7 @@ let eval_ng_tac tac =
   | GrafiteAst.NCut (_loc, t) -> NTactics.cut_tac (text,prefix_len,t) 
 (*| GrafiteAst.NDiscriminate (_,what) -> NDestructTac.discriminate_tac ~what:(text,prefix_len,what)
   | GrafiteAst.NSubst (_,what) -> NDestructTac.subst_tac ~what:(text,prefix_len,what)*)
+  | GrafiteAst.NClear (_loc, l) -> NTactics.clear_tac l
   | GrafiteAst.NDestruct (_,dom,skip) -> NDestructTac.destruct_tac dom skip
   | GrafiteAst.NDot _ -> NTactics.dot_tac 
   | GrafiteAst.NElim (_loc, what, where) ->

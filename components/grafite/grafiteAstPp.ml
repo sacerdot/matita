@@ -75,6 +75,7 @@ let rec pp_ntactic ~map_unicode_to_tex =
   | NCut (_,t) -> "ncut " ^ NotationPp.pp_term t
 (*| NDiscriminate (_,t) -> "ndiscriminate " ^ NotationPp.pp_term t
   | NSubst (_,t) -> "nsubst " ^ NotationPp.pp_term t *)
+  | NClear (_,l) -> "nclear " ^ String.concat " " l
   | NDestruct (_,dom,skip) -> "ndestruct ..." 
   | NElim (_,what,where) -> "nelim " ^ NotationPp.pp_term what ^
       "...to be implemented..." ^ " " ^ "...to be implemented..."
