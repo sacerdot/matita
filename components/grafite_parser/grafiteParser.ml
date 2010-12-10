@@ -42,9 +42,9 @@ let exc_located_wrapper f =
       raise (HExtlib.Localized 
         (floc,CicNotationParser.Parse_error (Printexc.to_string exn)))
 
-let parse_statement grafite_parser lexbuf =
+let parse_statement grafite_parser parsable =
   exc_located_wrapper
-    (fun () -> (Grammar.Entry.parse (Obj.magic grafite_parser) (Obj.magic lexbuf)))
+    (fun () -> (Grammar.Entry.parse_parsable (Obj.magic grafite_parser) parsable))
 
 let add_raw_attribute ~text t = N.AttributedTerm (`Raw text, t)
 

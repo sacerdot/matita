@@ -30,7 +30,7 @@ exception FailureCompiling of string * exn
 exception CircularDependency of string
 
 val get_ast:
-  GrafiteTypes.status -> include_paths:string list -> Ulexing.lexbuf ->
+  GrafiteTypes.status -> include_paths:string list -> Grammar.parsable ->
     GrafiteAst.statement
 
 (* heavy checks slow down the compilation process but give you some interesting

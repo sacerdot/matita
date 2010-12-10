@@ -193,7 +193,9 @@ and eval_statement include_paths (buffer : GText.buffer) guistuff
     match statement with
     | `Raw text ->
         if Pcre.pmatch ~rex:only_dust_RE text then raise Margin;
-        let strm = Ulexing.from_utf8_string text in
+        let grammar = CicNotationParser.level2_ast_grammar grafite_status in
+        let strm =
+         Grammar.parsable grammar (Obj.magic(Ulexing.from_utf8_string text)) in
         let ast = MatitaEngine.get_ast grafite_status include_paths strm in
          ast, text
     | `Ast (st, text) -> st, text
@@ -663,9 +665,10 @@ object (self)
   method eos = 
     let rec is_there_only_comments lexicon_status s = 
       if Pcre.pmatch ~rex:only_dust_RE s then raise Margin;
-      match
-       GrafiteParser.parse_statement lexicon_status (Ulexing.from_utf8_string s)
-      with
+      let grammar = CicNotationParser.level2_ast_grammar lexicon_status in
+      let strm =
+       Grammar.parsable grammar (Obj.magic(Ulexing.from_utf8_string s)) in
+      match GrafiteParser.parse_statement lexicon_status strm with
       | GrafiteAst.Comment (loc,_) -> 
           let _,parsed_text_length = MatitaGtkMisc.utf8_parsed_text s loc in
           (* CSC: why +1 in the following lines ???? *)

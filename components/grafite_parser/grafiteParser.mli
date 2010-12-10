@@ -47,4 +47,4 @@ val extend : #status as 'status ->
  (* never_include: do not call LexiconEngine to do includes, 
   * always raise NoInclusionPerformed *) 
 (** @raise End_of_file *)
-val parse_statement: #status -> Ulexing.lexbuf -> GrafiteAst.statement
+val parse_statement: #status -> Grammar.parsable -> GrafiteAst.statement
