@@ -29,15 +29,15 @@ nmk: (A → False) → Not A.
 interpretation "logical not" 'not x = (Not x).
 
 theorem absurd : ∀ A:Prop. A → ¬A → False.
-#A; #H; #Hn; elim Hn;/2/; qed.
+#A  #H  #Hn  elim Hn /2/  qed.
 
 (*
 ntheorem absurd : ∀ A,C:Prop. A → ¬A → C.
-#A; #C; #H; #Hn; nelim (Hn H).
+#A  #C  #H  #Hn  nelim (Hn H).
 nqed. *)
 
 theorem not_to_not : ∀A,B:Prop. (A → B) → ¬B →¬A.
-/4/; qed.
+/4/  qed.
 
 inductive And (A,B:Prop) : Prop ≝
     conj : A → B → And A B.
@@ -45,11 +45,11 @@ inductive And (A,B:Prop) : Prop ≝
 interpretation "logical and" 'and x y = (And x y).
 
 theorem proj1: ∀A,B:Prop. A ∧ B → A.
-#A; #B; #AB; elim AB; //.
+#A  #B  #AB  elim AB  //.
 qed.
 
 theorem proj2: ∀ A,B:Prop. A ∧ B → B.
-#A; #B; #AB; elim AB; //.
+#A  #B  #AB  elim AB  //.
 qed.
 
 inductive Or (A,B:Prop) : Prop ≝

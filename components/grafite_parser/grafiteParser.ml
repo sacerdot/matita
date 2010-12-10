@@ -42,6 +42,12 @@ let exc_located_wrapper f =
       raise (HExtlib.Localized 
         (floc,CicNotationParser.Parse_error (Printexc.to_string exn)))
 
+type parsable = Grammar.parsable
+
+let parsable_statement status buf =
+ let grammar = CicNotationParser.level2_ast_grammar status in
+  Grammar.parsable grammar (Obj.magic buf)
+
 let parse_statement grafite_parser parsable =
   exc_located_wrapper
     (fun () -> (Grammar.Entry.parse_parsable (Obj.magic grafite_parser) parsable))

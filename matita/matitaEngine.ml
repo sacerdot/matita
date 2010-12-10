@@ -249,10 +249,9 @@ and compile ~compiling ~include_paths fname =
         (Filename.dirname 
           (Http_getter.filename ~local:true ~writable:true (baseuri ^
           "foo.con")));
-    let grammar = CicNotationParser.level2_ast_grammar grafite_status in
     let buf =
-     Grammar.parsable grammar
-      (Obj.magic (Ulexing.from_utf8_channel (open_in fname)))
+     GrafiteParser.parsable_statement grafite_status
+      (Ulexing.from_utf8_channel (open_in fname))
     in
     let print_cb =
       if not (Helm_registry.get_bool "matita.verbose") then (fun _ _ -> ())
