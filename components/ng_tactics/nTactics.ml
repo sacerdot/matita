@@ -476,29 +476,24 @@ type indtyinfo = {
         rightno: int;
         leftno: int;
         consno: int;
-        lefts: NCic.term list;
-        rights: NCic.term list;
         reference: NReference.reference;
-        term: NCic.term
  }
 ;;
 
 let ref_of_indtyinfo iti = iti.reference;;
 
 let analyze_indty_tac ~what indtyref =
- distribute_tac (fun status goal ->
+ distribute_tac (fun (status as orig_status) goal ->
   let goalty = get_goalty status goal in
   let status, what = disambiguate status (ctx_of goalty) what None in
   let status, ty_what = typeof status (ctx_of what) what in 
   let status, (r,consno,lefts,rights) = analyse_indty status ty_what in
   let leftno = List.length lefts in
   let rightno = List.length rights in
-  let status,what = term_of_cic_term status what (ctx_of goalty) in
   indtyref := Some { 
-    rightno = rightno; leftno = leftno; consno = consno;
-    lefts = lefts; rights = rights; reference = r; term = what
+    rightno = rightno; leftno = leftno; consno = consno; reference = r;
   };
-  exec id_tac status goal)
+  exec id_tac orig_status goal)
 ;;
 
 let sort_of_goal_tac sortref = distribute_tac (fun status goal ->
@@ -528,8 +523,8 @@ let elim_tac ~what:(txt,len,what) ~where =
           (match !sort with NCic.Sort x -> x | _ -> assert false))
      in
      let eliminator = 
-       let what = (HExtlib.unopt !indtyinfo).term in
-       Ast.Appl [ Ast.Ident (name,None) ; Ast.Implicit `Vector ; Ast.NCic what ]
+       let _,_,w = what in
+       Ast.Appl [ Ast.Ident (name,None) ; Ast.Implicit `Vector ; w ]
      in
      exact_tac ("",0,eliminator) status) ]) 
 ;;
@@ -600,13 +595,9 @@ let cases_tac ~what:(txt,len,what) ~where =
   atomic_tac 
    (block_tac [
       analyze_indty_tac ~what indtyinfo;
-      (fun s ->
-        select_tac 
-         ~where ~job:(`Substexpand ((HExtlib.unopt !indtyinfo).rightno+1))true
-         s);
-      (fun s ->
-        distribute_tac
-         (cases ~what:("",0,Ast.NCic (HExtlib.unopt !indtyinfo).term)) s); ])
+      (fun s -> select_tac 
+       ~where ~job:(`Substexpand ((HExtlib.unopt !indtyinfo).rightno+1))true s);
+      distribute_tac (cases ~what) ])
 ;;
 
 let case1_tac name =
@@ -699,8 +690,8 @@ let inversion_tac ~what:(txt,len,what) ~where =
           (match !sort with NCic.Sort x -> x | _ -> assert false))
      in
      let eliminator = 
-       let what = (HExtlib.unopt !indtyinfo).term in
-       Ast.Appl [ Ast.Ident (name,None) ; Ast.Implicit `Vector ; Ast.NCic what ]
+       let _,_,w = what in
+       Ast.Appl [ Ast.Ident (name,None) ; Ast.Implicit `Vector ; w ]
      in
      exact_tac ("",0,eliminator) status) ]) 
 ;;
