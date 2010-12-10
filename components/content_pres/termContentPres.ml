@@ -575,7 +575,6 @@ let tail_names names env =
 
 let instantiate_level2 env term =
 (*   prerr_endline ("istanzio: " ^ NotationPp.pp_term term); *)
-prerr_endline ("istanzio: " ^ NotationPp.pp_term term);
   let fresh_env = ref [] in
   let lookup_fresh_name n =
     try
@@ -585,9 +584,7 @@ prerr_endline ("istanzio: " ^ NotationPp.pp_term term);
       fresh_env := (n, new_name) :: !fresh_env;
       new_name
   in
-prerr_endline ("ENV " ^ NotationPp.pp_env env);
   let rec aux env term =
-prerr_endline ("istanzio_deep: " ^ NotationPp.pp_term term);
     match term with
     | Ast.AttributedTerm (a, term) -> (*Ast.AttributedTerm (a, *)aux env term
     | Ast.Appl terms -> Ast.Appl (List.map (aux env) terms)
