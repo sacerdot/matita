@@ -288,14 +288,12 @@ and compile ~compiling ~include_paths fname =
       pp_times fname false big_bang big_bang_u big_bang_s;
       clean_exit baseuri exn
 
-(* BIG BUG: if a file recursively includes itself, anything can happen,
- * from divergence to inclusion of an old copy of itself *)
 and assert_ng ~compiling ~include_paths ~root mapath =
  let root',baseuri,fullmapath,_ = Librarian.baseuri_of_script ~include_paths mapath in
  assert (root=root');
  let baseuri = NUri.uri_of_string baseuri in
- let ngpath = NCicLibrary.ng_path_of_baseuri baseuri in
- let ngtime =
+ let ngtime_of baseuri =
+  let ngpath = NCicLibrary.ng_path_of_baseuri baseuri in
   try
    Some (Unix.stat ngpath).Unix.st_mtime
   with Unix.Unix_error (Unix.ENOENT, "stat", f) when f = ngpath -> None in
@@ -303,12 +301,22 @@ and assert_ng ~compiling ~include_paths ~root mapath =
   try (Unix.stat fullmapath).Unix.st_mtime
   with Unix.Unix_error (Unix.ENOENT, "stat", f) when f = fullmapath -> assert false
  in
+ let ngtime = ngtime_of baseuri in
  let to_be_compiled =
   match ngtime with
      Some ngtime ->
       let preamble = GrafiteTypes.Serializer.dependencies_of baseuri in
       let children_bad =
-       List.exists (assert_ng ~compiling ~include_paths ~root) preamble
+       List.exists
+        (fun mapath ->
+             assert_ng ~compiling ~include_paths ~root mapath
+          || let _,baseuri,_,_ =
+               Librarian.baseuri_of_script ~include_paths mapath in
+             let baseuri = NUri.uri_of_string baseuri in
+              (match ngtime_of baseuri with
+                  Some child_ngtime -> child_ngtime > ngtime
+                | None -> assert false)
+        ) preamble
       in
        children_bad || matime > ngtime
    | None -> true
