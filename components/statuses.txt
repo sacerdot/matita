@@ -1,5 +1,5 @@
-grafitetypes(baseuri,ng_mode,dependencies)
- |--> dumpable(dump)
+grafitetypes(baseuri,ng_mode)
+ |--> dumpable(dump=objs+dependencies+includes)
  |--> nciclibrary(timestamp)
  |--> grafiteparser(db=ast_statement grammarentry)
  |     |--> cicnotationparser(db=grammars+keywords+items)

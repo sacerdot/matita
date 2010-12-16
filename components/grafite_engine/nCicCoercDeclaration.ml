@@ -301,8 +301,7 @@ let record_ncoercion =
 
 let basic_eval_and_record_ncoercion infos status =
  let uris, cinfos, status = basic_eval_ncoercion infos status in
- let dump = record_ncoercion (infos::cinfos) :: status#dump in
-  status#set_dump dump, uris
+  NCicLibrary.dump_obj status (record_ncoercion (infos::cinfos)), uris
 ;;
 
 let basic_eval_and_record_ncoercion_from_t_cpos_arity 

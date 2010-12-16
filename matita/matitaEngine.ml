@@ -57,6 +57,7 @@ let clean_exit baseuri exn =
   raise (FailureCompiling (baseuri,exn))
 ;;
 
+
 let pp_times fname rc big_bang big_bang_u big_bang_s = 
   if not (Helm_registry.get_bool "matita.verbose") then
     let { Unix.tms_utime = u ; Unix.tms_stime = s} = Unix.times () in
@@ -178,7 +179,8 @@ let rec get_ast status ~compiling ~include_paths strm =
      (GrafiteAst.Executable
        (_,GrafiteAst.NCommand (_,GrafiteAst.Include (_,_,mafilename)))) as cmd
      ->
-       ignore (assert_ng ~compiling ~include_paths mafilename);
+       let already_included = NCicLibrary.get_already_included status in
+       ignore(assert_ng ~already_included ~compiling ~include_paths mafilename);
        cmd
    | cmd -> cmd
 
@@ -266,7 +268,7 @@ and compile ~compiling ~include_paths fname =
     let elapsed = Unix.time () -. time in
      (if Helm_registry.get_bool "matita.moo" then begin
        GrafiteTypes.Serializer.serialize ~baseuri:(NUri.uri_of_string baseuri)
-        ~dependencies:grafite_status#dependencies grafite_status#dump
+        grafite_status
      end;
      let tm = Unix.gmtime elapsed in
      let sec = string_of_int tm.Unix.tm_sec ^ "''" in
@@ -292,7 +294,7 @@ and compile ~compiling ~include_paths fname =
       pp_times fname false big_bang big_bang_u big_bang_s;
       clean_exit baseuri exn
 
-and assert_ng ~compiling ~include_paths mapath =
+and assert_ng ~already_included ~compiling ~include_paths mapath =
  let _,baseuri,fullmapath,_ = Librarian.baseuri_of_script ~include_paths mapath in
  let baseuri = NUri.uri_of_string baseuri in
  let ngtime_of baseuri =
@@ -312,7 +314,7 @@ and assert_ng ~compiling ~include_paths mapath =
       let children_bad =
        List.exists
         (fun mapath ->
-             assert_ng ~compiling ~include_paths mapath
+             assert_ng ~already_included ~compiling ~include_paths mapath
           || let _,baseuri,_,_ =
                Librarian.baseuri_of_script ~include_paths mapath in
              let baseuri = NUri.uri_of_string baseuri in
@@ -326,13 +328,12 @@ and assert_ng ~compiling ~include_paths mapath =
  in
   if not to_be_compiled then false
   else
-   (* MATITA 1.0: SHOULD TAKE THIS FROM THE STATUS *)
-   if List.mem baseuri (NCicLibrary.get_already_included ()) then
+   if List.mem baseuri already_included then
      (* maybe recompiling it I would get the same... *)
      raise (AlreadyLoaded (lazy mapath))
    else
     (compile ~compiling ~include_paths fullmapath; true)
 ;;
 
-let assert_ng = assert_ng ~compiling:[]
+let assert_ng = assert_ng ~already_included:[] ~compiling:[]
 let get_ast = get_ast ~compiling:[]

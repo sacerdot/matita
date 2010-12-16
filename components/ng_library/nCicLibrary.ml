@@ -77,18 +77,12 @@ let db_path () = Helm_registry.get "matita.basedir" ^ "/ng_db.ng";;
 type timestamp =
  [ `Obj of NUri.uri * NCic.obj 
  | `Constr of NCic.universe * NCic.universe] list *
- (NUri.uri * string * NReference.reference) list *
- NCic.obj NUri.UriMap.t *
- NUri.uri list
+ (NUri.uri * string * NReference.reference) list
 ;;
 
-let time0 = [],[],NUri.UriMap.empty,[];;
+let time0 = [],[];;
 let storage = ref [];;
 let local_aliases = ref [];;
-let cache = ref NUri.UriMap.empty;;
-let includes = ref [];;
-
-let get_already_included () = !includes;;
 
 let load_db,set_global_aliases,get_global_aliases,add_deps,get_deps,remove_deps=
  let global_aliases = ref [] in
@@ -155,39 +149,41 @@ class status =
  end
 
 let time_travel status =
- let sto,ali,cac,inc = status#timestamp in
+ let sto,ali = status#timestamp in
   let diff_len = List.length !storage - List.length sto in
   let to_be_deleted,_ = HExtlib.split_nth diff_len !storage in
    if List.length to_be_deleted > 0 then
      NCicEnvironment.invalidate_item (HExtlib.list_last to_be_deleted);
-   storage := sto; local_aliases := ali; cache := cac; includes := inc
+   storage := sto; local_aliases := ali
 ;;
 
-let serialize ~baseuri ~dependencies dump =
- let ch = open_out (ng_path_of_baseuri baseuri) in
- Marshal.to_channel ch (magic,(dependencies,dump)) [];
- close_out ch;
- List.iter
-  (function 
-   | `Obj (uri,obj) ->
-       let ch = open_out (ng_path_of_baseuri uri) in
-       Marshal.to_channel ch (magic,obj) [];
-       close_out ch
-   | `Constr _ -> ()
-  ) !storage;
- set_global_aliases (!local_aliases @ get_global_aliases ());
- List.iter (fun u -> add_deps u [baseuri]) !includes;
- time_travel (new status)
-;;
-  
 type obj = string * Obj.t
+(* CSC: includes & dependencies to be unified! *)
+type dump =
+ { objs: obj list ; includes: NUri.uri list; dependencies: string list }
+
+class type g_dumpable_status =
+ object
+  method dump: dump
+ end
 
 class dumpable_status =
  object
-  val dump = ([] : obj list)
-  method dump = dump
-  method set_dump v = {< dump = v >}
+  val db = { objs = []; includes = []; dependencies = [] }
+  method dump = db
+  method set_dump v = {< db = v >}
+  method set_dumpable_status
+   : 'status. #g_dumpable_status as 'status -> 'self
+   = fun o -> {< db = o#dump >}
  end
+
+let get_already_included status =
+ status#dump.includes
+;;
+
+let dump_obj status obj =
+ status#set_dump {status#dump with objs = obj::status#dump.objs }
+;;
 
 module type SerializerType =
  sig
@@ -202,16 +198,16 @@ module type SerializerType =
      dumpable_status -> dumpable_status
 
   val register: < run: 'a.  string -> 'a register_type -> ('a -> obj) >
-  val serialize: baseuri:NUri.uri -> dependencies:string list -> obj list -> unit
-   (* the obj is the "include" command to be added to the dump list *)
-  val require: baseuri:
-   NUri.uri -> alias_only:bool -> dumpable_status -> dumpable_status * obj
+  val serialize: baseuri:NUri.uri -> dumpable_status -> unit
+  val require:
+   baseuri:NUri.uri -> fname:string -> alias_only:bool ->
+    dumpable_status -> dumpable_status
   val dependencies_of: baseuri:NUri.uri -> string list
  end
 
-module Serializer(D: sig type dumpable_status end) =
+module Serializer(D: sig type dumpable_s val get: dumpable_s -> dumpable_status  val set: dumpable_s -> dumpable_status -> dumpable_s end) =
  struct
-  type dumpable_status = D.dumpable_status
+  type dumpable_status = D.dumpable_s
   type 'a register_type =
    'a ->
     refresh_uri_in_universe:(NCic.universe -> NCic.universe) ->
@@ -240,11 +236,32 @@ module Serializer(D: sig type dumpable_status end) =
      (fun x -> tag,Obj.repr x)
    end
 
-  let serialize = serialize
+  let serialize ~baseuri status =
+   let status = D.get status in
+   let ch = open_out (ng_path_of_baseuri baseuri) in
+   Marshal.to_channel ch (magic,(status#dump.dependencies,status#dump.objs)) [];
+   close_out ch;
+   List.iter
+    (function 
+     | `Obj (uri,obj) ->
+         let ch = open_out (ng_path_of_baseuri uri) in
+         Marshal.to_channel ch (magic,obj) [];
+         close_out ch
+     | `Constr _ -> ()
+    ) !storage;
+   set_global_aliases (!local_aliases @ get_global_aliases ());
+   List.iter (fun u -> add_deps u [baseuri]) status#dump.includes;
+   time_travel (new status)
 
-  let require2 ~baseuri ~alias_only status =
+  let require2 ~baseuri ~fname ~alias_only status =
    try
-    includes := baseuri::!includes;
+    let s = D.get status in
+    let status =
+      D.set status
+       (s#set_dump
+         {s#dump with
+           includes = baseuri::s#dump.includes;
+           dependencies = fname::s#dump.dependencies}) in
     let _dependencies,dump = require0 ~baseuri in
      List.fold_right (!require1 ~alias_only) dump status
    with
@@ -254,53 +271,25 @@ module Serializer(D: sig type dumpable_status end) =
   let dependencies_of ~baseuri = fst (require0 ~baseuri)
 
   let record_include =
-   let aux baseuri ~refresh_uri_in_universe:_ ~refresh_uri_in_term:_
-   ~refresh_uri_in_reference:_ ~alias_only =
+   let aux (baseuri,fname) ~refresh_uri_in_universe:_ ~refresh_uri_in_term:_
+   ~refresh_uri_in_reference:_ ~alias_only status =
      let alias_only =
-      alias_only || List.mem baseuri (get_already_included ())
+      alias_only || List.mem baseuri (get_already_included (D.get status))
      in
-      require2 ~baseuri ~alias_only
+      require2 ~baseuri ~fname ~alias_only status
    in
     register#run "include" aux
 
-  let require ~baseuri ~alias_only status =
+  let require ~baseuri ~fname ~alias_only status =
    let alias_only =
-    alias_only || List.mem baseuri (get_already_included ()) in
-   let status = require2 ~baseuri ~alias_only status in
-    status,record_include baseuri
+    alias_only || List.mem baseuri (get_already_included (D.get status)) in
+   let status = require2 ~baseuri ~fname ~alias_only status in
+   let s = D.get status in
+    D.set status
+     (s#set_dump
+       {s#dump with
+         objs = record_include (baseuri,fname)::s#dump.objs })
 end
-
-
-let decompile ~baseuri =
- let baseuris = get_deps baseuri in
- List.iter (fun baseuri ->
-  remove_deps baseuri;
-  HExtlib.safe_remove (ng_path_of_baseuri baseuri);
-  let basepath = ng_path_of_baseuri ~no_suffix:true baseuri in
-  try
-   let od = Unix.opendir basepath in
-   let rec aux names =
-    try
-     let name = Unix.readdir od in
-      if name <> "." && name <> ".." then aux (name::names) else aux names
-    with
-     End_of_file -> names in
-   let names = List.map (fun name -> basepath ^ "/" ^ name) (aux []) in
-    Unix.closedir od;
-    List.iter Unix.unlink names;
-    HExtlib.rmdir_descend basepath;
-    set_global_aliases
-     (List.filter
-      (fun (_,_,NReference.Ref (nuri,_)) ->
-        Filename.dirname (NUri.string_of_uri nuri) <> NUri.string_of_uri baseuri
-      ) (get_global_aliases ()))
-  with
-   Unix.Unix_error _ -> () (* raised by Unix.opendir, we hope :-) *)
- ) baseuris
-;;
-
-LibraryClean.set_decompile_cb
- (fun ~baseuri -> decompile ~baseuri:(NUri.uri_of_string baseuri));;
 
 let fetch_obj uri =
  let obj = require0 ~baseuri:uri in
@@ -354,13 +343,13 @@ let add_obj status ((u,_,_,_,_) as obj) =
          ) il)
   in
   local_aliases := references @ !local_aliases;
-  status#set_timestamp (!storage,!local_aliases,!cache,!includes)
+  status#set_timestamp (!storage,!local_aliases)
 ;;
 
 let add_constraint status u1 u2 = 
   NCicEnvironment.add_lt_constraint u1 u2;
   storage := (`Constr (u1,u2)) :: !storage;
-  status#set_timestamp (!storage,!local_aliases,!cache,!includes)
+  status#set_timestamp (!storage,!local_aliases)
 ;;
 
 let get_obj u =
@@ -372,13 +361,8 @@ let get_obj u =
  with Not_found ->
   try fetch_obj u
   with Sys_error _ ->
-   try NUri.UriMap.find u !cache
-   with Not_found ->
-    raise (NCicEnvironment.ObjectNotFound 
-             (lazy (NUri.string_of_uri u)))
+   raise (NCicEnvironment.ObjectNotFound (lazy (NUri.string_of_uri u)))
 ;;
-
-let clear_cache () = cache := NUri.UriMap.empty;;
 
 NCicEnvironment.set_get_obj get_obj;;
 NCicPp.set_get_obj get_obj;;

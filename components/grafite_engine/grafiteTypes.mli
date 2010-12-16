@@ -40,8 +40,6 @@ class status :
    inherit NCicLibrary.status
    inherit GrafiteParser.status
    inherit TermContentPres.status
-   method dependencies: string list
-   method set_dependencies: string list -> 'self
    method baseuri: string
    method set_baseuri: string -> 'self
    method ng_mode: [`ProofMode | `CommandMode]

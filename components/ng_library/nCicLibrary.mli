@@ -31,14 +31,27 @@ val resolve: string -> NReference.reference list
 (* warning: get_obj may raise (NCicEnvironment.ObjectNotFoud l) *)
 val get_obj: NUri.uri -> NCic.obj (* changes the current timestamp *)
 
-val clear_cache : unit -> unit
-
 val time_travel: #status -> unit
-val decompile: baseuri:NUri.uri -> unit
 
 val init: unit -> unit
 
 type obj
+type dump
+
+class type g_dumpable_status =
+ object
+  method dump: dump
+ end
+
+class dumpable_status :
+ object ('self)
+  inherit g_dumpable_status
+  method set_dump: dump -> 'self
+  method set_dumpable_status: #g_dumpable_status -> 'self
+ end
+
+val get_already_included: #dumpable_status -> NUri.uri list
+val dump_obj: #dumpable_status as 'status -> obj -> 'status
 
 module type SerializerType =
  sig
@@ -53,28 +66,17 @@ module type SerializerType =
      dumpable_status -> dumpable_status
 
   val register: < run: 'a.  string -> 'a register_type -> ('a -> obj) >
-  val serialize: baseuri:NUri.uri -> dependencies:string list -> obj list ->
-       unit
-   (* the obj is the "include" command to be added to the dump list *)
+  val serialize: baseuri:NUri.uri -> dumpable_status -> unit
   val require: baseuri:
-   NUri.uri -> alias_only:bool -> dumpable_status -> dumpable_status * obj
+   NUri.uri -> fname:string -> alias_only:bool ->
+    dumpable_status -> dumpable_status
   val dependencies_of: baseuri:NUri.uri -> string list
  end
 
-module Serializer(D: sig type dumpable_status end) :
-  SerializerType with type dumpable_status = D.dumpable_status
-
-class dumpable_status :
- object ('self)
-  method dump: obj list
-  method set_dump: obj list -> 'self
- end
+module Serializer(D: sig type dumpable_s val get: dumpable_s -> dumpable_status  val set: dumpable_s -> dumpable_status -> dumpable_s end) :
+  SerializerType with type dumpable_status = D.dumpable_s
 
 val refresh_uri: NUri.uri -> NUri.uri
 
 val ng_path_of_baseuri: ?no_suffix:bool -> NUri.uri -> string
-
-(* IMPERATIVE STUFF, TO BE PUT IN THE STATUS *)
-val get_already_included: unit -> NUri.uri list
-
 (* EOF *)

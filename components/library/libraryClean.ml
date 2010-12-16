@@ -224,6 +224,7 @@ let rec close_db cache_of_processed_baseuri uris next =
 ;;
 
 let clean_baseuris ?(verbose=true) buris =
+ (* MATITA 1.0 *) () (*
   let cache_of_processed_baseuri = Hashtbl.create 1024 in
   let buris = List.map Http_getter_misc.strip_trailing_slash buris in
   debug_prerr "clean_baseuris called on:";
@@ -248,3 +249,4 @@ let clean_baseuris ?(verbose=true) buris =
      with Http_getter_types.Key_not_found _ -> ())
    (HExtlib.list_uniq (List.fast_sort Pervasives.compare
      (List.map NUri.baseuri_of_uri l @ buris)))
+*)

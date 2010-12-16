@@ -30,8 +30,8 @@ exception FailureCompiling of string * exn
 exception CircularDependency of string
 
 val get_ast:
-  GrafiteTypes.status -> include_paths:string list -> GrafiteParser.parsable ->
-    GrafiteAst.statement
+ GrafiteTypes.status -> include_paths:string list -> GrafiteParser.parsable ->
+  GrafiteAst.statement
 
 (* heavy checks slow down the compilation process but give you some interesting
  * infos like if the theorem is a duplicate *)
@@ -44,4 +44,4 @@ val eval_ast :
   (GrafiteTypes.status *
    (DisambiguateTypes.domain_item * GrafiteAst.alias_spec) option) list
 
-val assert_ng : include_paths:string list -> string -> bool
+val assert_ng: include_paths:string list -> string -> bool

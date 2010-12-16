@@ -58,9 +58,7 @@ let eval_unification_hint status t n =
  assert (metasenv=[]);
  let t = NCicUntrusted.apply_subst subst [] t in
  let status = basic_eval_unification_hint (t,n) status in
- let dump = inject_unification_hint (t,n)::status#dump in
- let status = status#set_dump dump in
-  status
+  NCicLibrary.dump_obj status (inject_unification_hint (t,n))
 ;;
 
 let basic_index_obj l status =
@@ -110,8 +108,7 @@ let inject_interpretation =
 
 let eval_interpretation status data= 
  let status = basic_eval_interpretation ~alias_only:false data status in
- let dump = inject_interpretation data::status#dump in
-  status#set_dump dump
+  NCicLibrary.dump_obj status (inject_interpretation data)
 ;;
 
 let basic_eval_alias (mode,diff) status =
@@ -128,8 +125,7 @@ let inject_alias =
 
 let eval_alias status data= 
  let status = basic_eval_alias data status in
- let dump = inject_alias data::status#dump in
-  status#set_dump dump
+  NCicLibrary.dump_obj status (inject_alias data)
 ;;
 
 let basic_eval_input_notation (l1,l2) status =
@@ -161,8 +157,7 @@ let inject_input_notation =
 
 let eval_input_notation status data= 
  let status = basic_eval_input_notation data status in
- let dump = inject_input_notation data::status#dump in
-  status#set_dump dump
+  NCicLibrary.dump_obj status (inject_input_notation data)
 ;;
 
 let basic_eval_output_notation (l1,l2) status =
@@ -191,8 +186,7 @@ let inject_output_notation =
 
 let eval_output_notation status data= 
  let status = basic_eval_output_notation data status in
- let dump = inject_output_notation data::status#dump in
-  status#set_dump dump
+  NCicLibrary.dump_obj status (inject_output_notation data)
 ;;
 
 let record_index_obj = 
@@ -272,8 +266,7 @@ let index_obj_for_auto status (uri, height, _, _, kind) =
  (*prerr_endline (string_of_int height);*)
   let data = compute_keys status uri height kind in
   let status = basic_index_obj data status in
-  let dump = record_index_obj data :: status#dump in   
-  status#set_dump dump
+   NCicLibrary.dump_obj status (record_index_obj data)
 ;; 
 
 let index_eq uri status =
@@ -298,8 +291,7 @@ let index_eq_for_auto status uri =
      if newstatus#eq_cache == status#eq_cache then status 
      else
        ((*prerr_endline ("recording " ^ (NUri.string_of_uri uri));*)
-	let dump = record_index_eq uri :: newstatus#dump 
-	in newstatus#set_dump dump)
+        NCicLibrary.dump_obj newstatus (record_index_eq uri))
  else 
    ((*prerr_endline "Not a fact";*)
    status)
@@ -326,9 +318,7 @@ let inject_constraint =
 
 let eval_add_constraint status u1 u2 = 
  let status = basic_eval_add_constraint (u1,u2) status in
- let dump = inject_constraint (u1,u2)::status#dump in
- let status = status#set_dump dump in
-  status
+  NCicLibrary.dump_obj status (inject_constraint (u1,u2))
 ;;
 
 let eval_ng_tac tac =
@@ -486,11 +476,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
      let baseuri = NUri.uri_of_string baseuri in
      (* MATITA 1.0: keep WithoutPreferences? *)
      let alias_only = (mode = GrafiteAst.OnlyPreferences) in
-     let status,obj =
-      GrafiteTypes.Serializer.require ~alias_only ~baseuri status in
-     let status = status#set_dump (obj::status#dump) in
-     let status = status#set_dependencies (fname::status#dependencies) in
-       status
+      GrafiteTypes.Serializer.require ~alias_only ~baseuri ~fname status
   | GrafiteAst.UnificationHint (loc, t, n) -> eval_unification_hint status t n
   | GrafiteAst.NCoercion (loc, name, t, ty, source, target) ->
      let status, composites =

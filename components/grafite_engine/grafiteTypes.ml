@@ -45,14 +45,15 @@ class status = fun (b : string) ->
    inherit TermContentPres.status
    val baseuri = b
    val ng_mode = (`CommandMode : [`CommandMode | `ProofMode])
-   val dependencies = ([] : string list)
    method baseuri = baseuri
    method set_baseuri v = {< baseuri = v >}
    method ng_mode = ng_mode;
    method set_ng_mode v = {< ng_mode = v >}
-   method dependencies = dependencies
-   method set_dependencies v = {< dependencies = v >}
  end
 
 module Serializer =
- NCicLibrary.Serializer(struct type dumpable_status = status end)
+ NCicLibrary.Serializer(struct
+  type dumpable_s = status
+  let get status = (status : #status :> NCicLibrary.dumpable_status)
+  let set (status : dumpable_s) dump_status = status#set_dumpable_status dump_status
+ end)
