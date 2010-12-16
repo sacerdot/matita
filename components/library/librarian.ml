@@ -80,17 +80,10 @@ let find_root_for ~include_paths file =
    let rec find_path_for file =
       try HExtlib.find_in include_paths file
       with Failure "find_in" -> 
-         if Filename.check_suffix file ".ma" then begin
-            let mma = Filename.chop_suffix file ".ma" ^ ".mma" in
-            HLog.warn ("We look for: " ^ mma);
-            let path = find_path_for mma in
-	    Filename.chop_suffix path ".mma" ^ ".ma"
-         end else begin
-            HLog.error ("We are in: " ^ Sys.getcwd ());
-            HLog.error ("Unable to find: "^file^"\nPaths explored:");
-            List.iter (fun x -> HLog.error (" - "^x)) include_paths;
-            raise (NoRootFor file)
-         end         
+       HLog.error ("We are in: " ^ Sys.getcwd ());
+       HLog.error ("Unable to find: "^file^"\nPaths explored:");
+       List.iter (fun x -> HLog.error (" - "^x)) include_paths;
+       raise (NoRootFor file)
    in
    let path = find_path_for file in   
    let path = absolutize path in
