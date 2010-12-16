@@ -44,4 +44,4 @@ val eval_ast :
   (GrafiteTypes.status *
    (DisambiguateTypes.domain_item * GrafiteAst.alias_spec) option) list
 
-val assert_ng : include_paths:string list -> root:string -> string -> bool
+val assert_ng : include_paths:string list -> string -> bool

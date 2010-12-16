@@ -30,11 +30,13 @@ let main_compiler () =
   MatitaInit.initialize_all ();
   (* targets and deps *)
   let targets = Helm_registry.get_list Helm_registry.string "matita.args" in
-  let target, root = 
+  let targets = 
     match targets with
     | [] ->
       (match Librarian.find_roots_in_dir (Sys.getcwd ()) with
-      | [x] -> [], Filename.dirname x
+      | [x] ->
+         let root = Filename.dirname x in
+          HExtlib.find ~test:(fun path -> Filename.check_suffix path ".ma") root
       | [] -> 
          prerr_endline "No targets and no root found"; exit 1
       | roots -> 
@@ -42,22 +44,21 @@ let main_compiler () =
          prerr_endline ("Too many roots found:\n\t" ^ String.concat "\n\t" roots);
          prerr_endline ("\nEnter one of these directories and retry");
          exit 1);
-    | hds -> 
-      let roots_and_targets = 
-       List.map (fun (root, buri, file, target) -> root,target)
-        (List.map (Librarian.baseuri_of_script ~include_paths:[]) hds) in
-      let roots,targets = List.split roots_and_targets in
-      let root = List.hd roots in
-      if (List.exists (fun root' -> root' <> root) roots) then
-       (prerr_endline "Only targets in the same root can be specified.";exit 1);
-      targets, root
+    | _ -> targets
   in
   (* must be called after init since args are set by cmdline parsing *)
   let system_mode =  Helm_registry.get_bool "matita.system" in
   if system_mode then HLog.message "Compiling in system space";
   (* here we go *)
   if not (Helm_registry.get_bool "matita.verbose") then MatitaMisc.shutup ();
-  if List.for_all (MatitaEngine.assert_ng ~include_paths:[] ~root) target then 
+  if List.fold_left
+   (fun b t ->
+     (try
+       ignore (MatitaEngine.assert_ng ~include_paths:[] t); true
+      with
+       MatitaEngine.FailureCompiling _ -> false) && b
+     ) true targets
+  then 
     (HLog.message "Compilation successful"; 0)
   else
     (HLog.message "Compilation failed"; 1)

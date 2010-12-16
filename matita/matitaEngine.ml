@@ -162,19 +162,23 @@ let eval_ast ~include_paths ?do_heavy_checks status (text,prefix_len,ast) =
   (new_status,None)::intermediate_states
 ;;
 
+let baseuri_of_script ~include_paths fname =
+ try Librarian.baseuri_of_script ~include_paths fname
+ with
+   Librarian.NoRootFor _ -> 
+    HLog.error ("The included file '"^fname^"' has no root file,");
+    HLog.error "please create it.";
+    raise (Failure ("No root file for "^fname))
+  | Librarian.FileNotFound _ -> 
+    raise (Failure ("File not found: "^fname))
+;;
+
 let rec get_ast status ~compiling ~include_paths strm = 
   match GrafiteParser.parse_statement status strm with
      (GrafiteAst.Executable
        (_,GrafiteAst.NCommand (_,GrafiteAst.Include (_,_,mafilename)))) as cmd
      ->
-      let root, buri, _, tgt = 
-        try Librarian.baseuri_of_script ~include_paths mafilename
-        with Librarian.NoRootFor _ -> 
-          HLog.error ("The included file '"^mafilename^"' has no root file,");
-          HLog.error "please create it.";
-          raise (Failure ("No root file for "^mafilename))
-      in
-       ignore (assert_ng ~compiling ~include_paths ~root tgt);
+       ignore (assert_ng ~compiling ~include_paths mafilename);
        cmd
    | cmd -> cmd
 
@@ -288,9 +292,8 @@ and compile ~compiling ~include_paths fname =
       pp_times fname false big_bang big_bang_u big_bang_s;
       clean_exit baseuri exn
 
-and assert_ng ~compiling ~include_paths ~root mapath =
- let root',baseuri,fullmapath,_ = Librarian.baseuri_of_script ~include_paths mapath in
- assert (root=root');
+and assert_ng ~compiling ~include_paths mapath =
+ let _,baseuri,fullmapath,_ = Librarian.baseuri_of_script ~include_paths mapath in
  let baseuri = NUri.uri_of_string baseuri in
  let ngtime_of baseuri =
   let ngpath = NCicLibrary.ng_path_of_baseuri baseuri in
@@ -309,7 +312,7 @@ and assert_ng ~compiling ~include_paths ~root mapath =
       let children_bad =
        List.exists
         (fun mapath ->
-             assert_ng ~compiling ~include_paths ~root mapath
+             assert_ng ~compiling ~include_paths mapath
           || let _,baseuri,_,_ =
                Librarian.baseuri_of_script ~include_paths mapath in
              let baseuri = NUri.uri_of_string baseuri in

@@ -23,6 +23,7 @@
  * http://helm.cs.unibo.it/
  *)
 
+exception FileNotFound of string
 exception NoRootFor of string
 
 let absolutize path =
@@ -83,7 +84,7 @@ let find_root_for ~include_paths file =
        HLog.error ("We are in: " ^ Sys.getcwd ());
        HLog.error ("Unable to find: "^file^"\nPaths explored:");
        List.iter (fun x -> HLog.error (" - "^x)) include_paths;
-       raise (NoRootFor file)
+       raise (FileNotFound file)
    in
    let path = find_path_for file in   
    let path = absolutize path in
@@ -128,7 +129,7 @@ let baseuri_of_script ~include_paths file =
     match l1, l2 with
     | h1::tl1,h2::tl2 when h1 = h2 -> substract tl1 tl2
     | l,[] -> l
-    | _ -> raise (NoRootFor (file ^" "^path^" "^root))
+    | _ -> assert false
   in
   let extra_buri = substract lpath lroot in
   let extra = String.concat "/" extra_buri in

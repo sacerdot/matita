@@ -24,6 +24,7 @@
  *)
 
 exception NoRootFor of string
+exception FileNotFound of string
 
 (* make a relative path absolute *)
 val absolutize: string -> string 
