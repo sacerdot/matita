@@ -190,7 +190,7 @@ n ≤ m  → ∀b.min n b f ≤ min m b f.
   [#n #leSO @False_ind /2/ 
   |#n #m #Hind #leSS #b
    (cases (true_or_false (f b))) #fb 
-    [lapply (true_min …fb) //
+    [lapply (true_min …fb) #H >H >H //
     |>false_min // >false_min // @Hind /2/
     ]
   ]
@@ -298,7 +298,7 @@ min n b g ≤ min n b f.
 qed.
 
 theorem f_min_true : ∀ f.∀n,b.
-(∃i:nat. b ≤ i ∧ i < n ∧ f i = true) → f (min n b f) = true. 
+(∃i:nat. b ≤ i ∧ i < n + b ∧ f i = true) → f (min n b f) = true. 
 #f #n #b cases(min_to_min_spec f n b (min n b f) (refl …)) //
 #Hall * #x * * #leb #ltx #fx @False_ind @(absurd … fx) >Hall /2/
 qed.

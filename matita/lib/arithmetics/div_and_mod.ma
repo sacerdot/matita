@@ -136,7 +136,6 @@ theorem div_times: ∀a,b:nat. O < b → a*b/b = a.
 @(div_mod_spec_to_eq (a*b) b … O (div_mod_spec_div_mod …))
 // @div_mod_spec_intro // qed.
 
-(*
 theorem div_n_n: ∀n:nat. O < n → n / n = 1.
 /2/ qed.
 
@@ -148,7 +147,7 @@ theorem eq_div_O: ∀n,m. n < m → n / m = O.
 theorem mod_n_n: ∀n:nat. O < n → n \mod n = O.
 #n #posn 
 @(div_mod_spec_to_eq2 n n … 1 0 (div_mod_spec_div_mod …))
-/2/ qed. *)
+/2/ qed. 
 
 theorem mod_S: ∀n,m:nat. O < m → S (n \mod m) < m → 
 ((S n) \mod m) = S (n \mod m).
@@ -407,7 +406,7 @@ O < c → O < b → (a*c) \mod (b*c) = c*(a\mod b).
 @(div_mod_spec_to_eq2 (a*c) (b*c) (a/b) ((a*c) \mod (b*c)) (a/b) (c*(a \mod b)))
   [>(div_times_times … posc) // @div_mod_spec_div_mod /2/
   |@div_mod_spec_intro
-    [(applyS monotonic_lt_times_l) /2/
+    [applyS (monotonic_lt_times_r … c posc) /2/
     |(applyS (eq_f …(λx.x*c))) //
     ]
   ]

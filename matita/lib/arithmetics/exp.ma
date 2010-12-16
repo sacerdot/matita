@@ -75,11 +75,10 @@ qed.
 
 theorem le_exp: ∀n,m,p:nat. O < p →
   n ≤m → p^n ≤ p^m.
-@nat_elim2 
-  [#n #m #ltm #len @lt_O_exp //
-  |#n #m #_ #len @False_ind /2/
-  |#n #m #Hind #p #posp #lenm normalize @le_times //
-   @Hind /2/
+@nat_elim2 #n #m
+  [#ltm #len @lt_O_exp //
+  |#_ #len @False_ind /2/
+  |#Hind #p #posp #lenm normalize @le_times // @Hind /2/
   ]
 qed.
 

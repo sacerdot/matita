@@ -265,7 +265,7 @@ theorem bigop_iso: ∀n1,n2,p1,p2,B.∀nil.∀op:ACop B nil.∀f1,f2.
   ]
 qed.
 
-(* Sigma e Pi - da generalizzare *)
+(* Sigma e Pi *)
 notation "Σ_{ ident i < n | p } f"
   with precedence 80
 for @{'bigop $n plus 0 (λ${ident i}.p) (λ${ident i}. $f)}.

@@ -151,6 +151,9 @@ theorem associative_times: associative nat times.
 lemma times_times: ∀x,y,z. x*(y*z) = y*(x*z).
 // qed. 
 
+theorem times_n_1 : ∀n:nat. n = n * 1.
+#n // qed.
+
 (* ci servono questi risultati? 
 theorem times_O_to_O: ∀n,m:nat.n*m=O → n=O ∨ m=O.
 napply nat_elim2 /2/ 
@@ -452,58 +455,46 @@ cut (∀q:nat. q ≤ n → P q) /2/
 qed.
 
 (* some properties of functions *)
-(*
-definition increasing \def \lambda f:nat \to nat. 
-\forall n:nat. f n < f (S n).
 
-theorem increasing_to_monotonic: \forall f:nat \to nat.
-increasing f \to monotonic nat lt f.
-unfold monotonic.unfold lt.unfold increasing.unfold lt.intros.elim H1.apply H.
-apply (trans_le ? (f n1)).
-assumption.apply (trans_le ? (S (f n1))).
-apply le_n_Sn.
-apply H.
+definition increasing ≝ λf:nat → nat. ∀n:nat. f n < f (S n).
+
+theorem increasing_to_monotonic: ∀f:nat → nat.
+  increasing f → monotonic nat lt f.
+#f #incr #n #m #ltnm (elim ltnm) /2/
 qed.
 
-theorem le_n_fn: \forall f:nat \to nat. (increasing f) 
-\to \forall n:nat. n \le (f n).
-intros.elim n.
-apply le_O_n.
-apply (trans_le ? (S (f n1))).
-apply le_S_S.apply H1.
-simplify in H. unfold increasing in H.unfold lt in H.apply H.
+theorem le_n_fn: ∀f:nat → nat. 
+  increasing f → ∀n:nat. n ≤ f n.
+#f #incr #n (elim n) /2/
 qed.
 
-theorem increasing_to_le: \forall f:nat \to nat. (increasing f) 
-\to \forall m:nat. \exists i. m \le (f i).
-intros.elim m.
-apply (ex_intro ? ? O).apply le_O_n.
-elim H1.
-apply (ex_intro ? ? (S a)).
-apply (trans_le ? (S (f a))).
-apply le_S_S.assumption.
-simplify in H.unfold increasing in H.unfold lt in H.
-apply H.
+theorem increasing_to_le: ∀f:nat → nat. 
+  increasing f → ∀m:nat.∃i.m ≤ f i.
+#f #incr #m (elim m) /2/#n * #a #lenfa
+@(ex_intro ?? (S a)) /2/
 qed.
 
-theorem increasing_to_le2: \forall f:nat \to nat. (increasing f) 
-\to \forall m:nat. (f O) \le m \to 
-\exists i. (f i) \le m \land m <(f (S i)).
-intros.elim H1.
-apply (ex_intro ? ? O).
-split.apply le_n.apply H.
-elim H3.elim H4.
-cut ((S n1) < (f (S a)) \lor (S n1) = (f (S a))).
-elim Hcut.
-apply (ex_intro ? ? a).
-split.apply le_S. assumption.assumption.
-apply (ex_intro ? ? (S a)).
-split.rewrite < H7.apply le_n.
-rewrite > H7.
-apply H.
-apply le_to_or_lt_eq.apply H6.
+theorem increasing_to_le2: ∀f:nat → nat. increasing f → 
+  ∀m:nat. f 0 ≤ m → ∃i. f i ≤ m ∧ m < f (S i).
+#f #incr #m #lem (elim lem)
+  [@(ex_intro ? ? O) /2/
+  |#n #len * #a * #len #ltnr (cases(le_to_or_lt_eq … ltnr)) #H
+    [@(ex_intro ? ? a) % /2/ 
+    |@(ex_intro ? ? (S a)) % //
+    ]
+  ]
 qed.
-*)
+
+theorem increasing_to_injective: ∀f:nat → nat.
+  increasing f → injective nat nat f.
+#f #incr #n #m cases(decidable_le n m)
+  [#lenm cases(le_to_or_lt_eq … lenm) //
+   #lenm #eqf @False_ind @(absurd … eqf) @lt_to_not_eq 
+   @increasing_to_monotonic //
+  |#nlenm #eqf @False_ind @(absurd … eqf) @sym_not_eq 
+   @lt_to_not_eq @increasing_to_monotonic /2/
+  ]
+qed.
 
 (*********************** monotonicity ***************************)
 theorem monotonic_le_plus_r: 
@@ -692,8 +683,8 @@ simplify.rewrite < plus_n_O.rewrite < plus_n_O.assumption.
 apply lt_plus.assumption.assumption.
 qed. *)
 
-theorem monotonic_lt_times_l: 
-  ∀c:nat. O < c → monotonic nat lt (λt.(t*c)).
+theorem monotonic_lt_times_r: 
+  ∀c:nat. O < c → monotonic nat lt (λt.(c*t)).
 #c #posc #n #m #ltnm
 (elim ltnm) normalize
   [/2/ 
@@ -701,9 +692,10 @@ theorem monotonic_lt_times_l:
   ]
 qed.
 
-theorem monotonic_lt_times_r: 
-  ∀c:nat. O < c → monotonic nat lt (λt.(c*t)).
-/2/ qed.
+theorem monotonic_lt_times_l: 
+  ∀c:nat. O < c → monotonic nat lt (λt.(t*c)).
+/2/
+qed.
 
 theorem lt_to_le_to_lt_times: 
 ∀n,m,p,q:nat. n < m → p ≤ q → O < q → n*p < m*q.
