@@ -6,14 +6,8 @@ lablGraphviz.cmo: lablGraphviz.cmi
 lablGraphviz.cmx: lablGraphviz.cmi 
 matitaclean.cmo: matitaMisc.cmi matitaInit.cmi matitaclean.cmi 
 matitaclean.cmx: matitaMisc.cmx matitaInit.cmx matitaclean.cmi 
-matitacLib.cmo: matitaExcPp.cmi matitaEngine.cmi matitacLib.cmi 
-matitacLib.cmx: matitaExcPp.cmx matitaEngine.cmx matitacLib.cmi 
-matitac.cmo: matitadep.cmi matitaclean.cmi matitacLib.cmi matitaMisc.cmi \
-    matitaInit.cmi 
-matitac.cmx: matitadep.cmx matitaclean.cmx matitacLib.cmx matitaMisc.cmx \
-    matitaInit.cmx 
-matitadep.cmo: matitaMisc.cmi matitaInit.cmi matitadep.cmi 
-matitadep.cmx: matitaMisc.cmx matitaInit.cmx matitadep.cmi 
+matitac.cmo: matitaclean.cmi matitaMisc.cmi matitaInit.cmi matitaEngine.cmi 
+matitac.cmx: matitaclean.cmx matitaMisc.cmx matitaInit.cmx matitaEngine.cmx 
 matitaEngine.cmo: matitaEngine.cmi 
 matitaEngine.cmx: matitaEngine.cmi 
 matitaExcPp.cmo: matitaEngine.cmi matitaExcPp.cmi 
@@ -48,10 +42,10 @@ matita.cmo: predefined_virtuals.cmi matitaTypes.cmi matitaScript.cmi \
 matita.cmx: predefined_virtuals.cmx matitaTypes.cmx matitaScript.cmx \
     matitaMathView.cmx matitaInit.cmx matitaGui.cmx matitaGtkMisc.cmx \
     buildTimeConf.cmx 
-matitaScript.cmo: virtuals.cmi matitacLib.cmi matitaTypes.cmi \
-    matitaGtkMisc.cmi matitaEngine.cmi buildTimeConf.cmo matitaScript.cmi 
-matitaScript.cmx: virtuals.cmx matitacLib.cmx matitaTypes.cmx \
-    matitaGtkMisc.cmx matitaEngine.cmx buildTimeConf.cmx matitaScript.cmi 
+matitaScript.cmo: virtuals.cmi matitaTypes.cmi matitaGtkMisc.cmi \
+    matitaEngine.cmi buildTimeConf.cmo matitaScript.cmi 
+matitaScript.cmx: virtuals.cmx matitaTypes.cmx matitaGtkMisc.cmx \
+    matitaEngine.cmx buildTimeConf.cmx matitaScript.cmi 
 matitaTypes.cmo: matitaTypes.cmi 
 matitaTypes.cmx: matitaTypes.cmi 
 predefined_virtuals.cmo: virtuals.cmi predefined_virtuals.cmi 
@@ -61,8 +55,6 @@ virtuals.cmx: virtuals.cmi
 applyTransformation.cmi: 
 lablGraphviz.cmi: 
 matitaclean.cmi: 
-matitacLib.cmi: 
-matitadep.cmi: 
 matitaEngine.cmi: 
 matitaExcPp.cmi: 
 matitaGtkMisc.cmi: matitaGeneratedGui.cmo 

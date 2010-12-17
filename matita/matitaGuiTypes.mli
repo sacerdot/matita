@@ -100,42 +100,6 @@ end
 
 type paste_kind = [ `Term | `Pattern ]
 
-  (** multi selection gtkMathView which handle mactions and hyperlinks. Mactions
-  * are handled internally. Hyperlinks are handled by calling an user provided
-  * callback *)
-class type clickableMathView =
-object
-  inherit GSourceView2.source_view
-
-  method load_root : root:string -> unit
-  method remove_selections: unit
-  method set_selection: unit option -> unit
-  method get_selections: unit list
-  method set_font_size: int -> unit
-
-
-    (** set hyperlink callback. None disable hyperlink handling *)
-  method set_href_callback: (string -> unit) option -> unit
-  
-  method has_selection: bool
-
-    (** @raise Failure "no selection" *)
-  method strings_of_selection: (paste_kind * string) list
-
-  method update_font_size: unit
-end
-
-class type cicMathView =
-object
-  inherit clickableMathView
-
-    (** load a sequent and render it into parent widget *)
-  method nload_sequent:
-   #ApplyTransformation.status -> NCic.metasenv -> NCic.substitution -> int -> unit
-
-  method load_nobject: #ApplyTransformation.status -> NCic.obj -> unit
-end
-
 class type sequentsViewer =
 object
   method reset: unit
@@ -144,16 +108,9 @@ object
   method nload_sequents: #GrafiteTypes.status -> unit
   method goto_sequent:
    #ApplyTransformation.status -> int -> unit (* to be called _after_ load_sequents *)
-
-  method cicMathView: cicMathView
 end
 
 class type cicBrowser =
 object
   method load: MatitaTypes.mathViewer_entry -> unit
-  (* method loadList: string list -> MatitaTypes.mathViewer_entry -> unit *)
-  method loadInput: string -> unit
-  method mathView: clickableMathView
-  method win: browserWin
 end
-

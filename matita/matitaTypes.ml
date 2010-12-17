@@ -82,8 +82,6 @@ class type mathViewer =
      *  opens a new one. default is false
      *)
     method show_entry: ?reuse:bool -> mathViewer_entry -> unit
-    method show_uri_list:
-      ?reuse:bool -> entry:mathViewer_entry -> NReference.reference list -> unit
     method screenshot: 
       GrafiteTypes.status -> NCic.metasenv -> NCic.metasenv ->
         NCic.substitution -> string -> unit

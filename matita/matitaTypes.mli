@@ -42,8 +42,6 @@ val entry_of_string : string -> mathViewer_entry
 class type mathViewer =
   object
     method show_entry : ?reuse:bool -> mathViewer_entry -> unit
-    method show_uri_list :
-      ?reuse:bool -> entry:mathViewer_entry -> NReference.reference list -> unit
     method screenshot: 
       GrafiteTypes.status -> NCic.metasenv -> NCic.metasenv ->
         NCic.substitution -> string -> unit

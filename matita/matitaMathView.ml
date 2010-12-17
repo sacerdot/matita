@@ -31,6 +31,41 @@ open GrafiteTypes
 open MatitaGtkMisc
 open MatitaGuiTypes
 
+class type _clickableMathView =
+object
+  inherit GObj.widget
+
+  method load_root : root:string -> unit
+(*
+  method action_toggle: Gdome.element -> bool
+*)
+  method remove_selections: unit
+  method set_selection: unit (*Gdome.element*) option -> unit
+  method get_selections: unit (*Gdome.element*) list
+  method set_font_size: int -> unit
+
+    (** set hyperlink callback. None disable hyperlink handling *)
+  method set_href_callback: (string -> unit) option -> unit
+  
+  method has_selection: bool
+
+    (** @raise Failure "no selection" *)
+  method strings_of_selection: (paste_kind * string) list
+
+  method update_font_size: unit
+end
+
+class type _cicMathView =
+object
+  inherit _clickableMathView
+
+    (** load a sequent and render it into parent widget *)
+  method nload_sequent:
+   #ApplyTransformation.status -> NCic.metasenv -> NCic.substitution -> int -> unit
+
+  method load_nobject: #ApplyTransformation.status -> NCic.obj -> unit
+end
+
 module Stack = Continuationals.Stack
 
 (** inherit from this class if you want to access current script *)
@@ -1055,7 +1090,7 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
 
     val mutable lastDir = ""  (* last loaded "directory" *)
 
-    method mathView = (mathView :> MatitaGuiTypes.clickableMathView)
+    method mathView = (mathView :> _clickableMathView)
 
     method private _getSelectedUri () =
       match model#easy_selection () with
@@ -1312,7 +1347,7 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
 let sequentsViewer ~(notebook:GPack.notebook) ~(cicMathView:cicMathView) ():
   MatitaGuiTypes.sequentsViewer
 =
-  new sequentsViewer ~notebook ~cicMathView ()
+  (new sequentsViewer ~notebook ~cicMathView ():> MatitaGuiTypes.sequentsViewer)
 
 let cicBrowser () =
   let size = BuildTimeConf.browser_history_size in
@@ -1358,9 +1393,6 @@ let mathViewer () =
           
     method show_entry ?(reuse=false) t = (self#get_browser reuse)#load t
       
-    method show_uri_list ?(reuse=false) ~entry l =
-      (self#get_browser reuse)#load entry
-
     method screenshot status sequents metasenv subst (filename as ofn) =
       () (*MATITA 1.0
        let w = GWindow.window ~title:"screenshot" () in
@@ -1432,7 +1464,7 @@ let update_font_sizes () =
   (cicMathView_instance ())#update_font_size
 
 let get_math_views () =
-  ((cicMathView_instance ()) :> MatitaGuiTypes.clickableMathView)
+  ((cicMathView_instance ()) :> _clickableMathView)
   :: (List.map (fun b -> b#mathView) !cicBrowsers)
 
 let find_selection_owner () =
