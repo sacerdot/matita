@@ -875,34 +875,6 @@ class sequentsViewer ~(notebook:GPack.notebook) ~(cicMathView:cicMathView) () =
   end
 
  (** constructors *)
-type 'widget constructor =
- ?hadjustment:GData.adjustment ->
- ?vadjustment:GData.adjustment ->
- ?font_size:int ->
- ?log_verbosity:int ->
- ?auto_indent:bool ->
- ?highlight_current_line:bool ->
- ?indent_on_tab:bool ->
- ?indent_width:int ->
- ?insert_spaces_instead_of_tabs:bool ->
- ?right_margin_position:int ->
- ?show_line_marks:bool ->
- ?show_line_numbers:bool ->
- ?show_right_margin:bool ->
- ?smart_home_end:SourceView2Enums.source_smart_home_end_type ->
- ?tab_width:int ->
- ?editable:bool ->
- ?cursor_visible:bool ->
- ?justification:GtkEnums.justification ->
- ?wrap_mode:GtkEnums.wrap_mode ->
- ?accepts_tab:bool ->
- ?border_width:int ->
- ?width:int ->
- ?height:int ->
- ?packing:(GObj.widget -> unit) ->
- ?show:bool -> unit ->
-  'widget
-
 let cicMathView ?hadjustment ?vadjustment ?font_size ?log_verbosity =
   SourceView.make_params [] ~cont:(
     GtkText.View.make_params ~cont:(
