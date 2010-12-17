@@ -633,20 +633,12 @@ end
 open GtkSourceView2
 
 let clickableMathView ?hadjustment ?vadjustment ?font_size ?log_verbosity =
-  SourceView.make_params [] ~cont:(
+ (SourceView.make_params [] ~cont:(
     GtkText.View.make_params ~cont:(
       GContainer.pack_container ~create:(fun pl ->
         let obj = SourceView.new_ () in
         Gobject.set_params (Gobject.try_cast obj "GtkSourceView") pl;
-        new clickableMathView obj)))
-  (* MATITA1.0
-  GtkBase.Widget.size_params
-    ~cont:(OgtkSourceView2Props.pack_return (fun p ->
-      OgtkSourceView2Props.set_params
-        (new clickableMathView (GtkSourceView2Props.MathView_GMetaDOM.create p))
-        ~font_size:None ~log_verbosity:None))
-    []
-    *)
+        new clickableMathView obj))) (*:> _clickableMathView*))
 
 class cicMathView obj =
 object (self)
@@ -709,7 +701,7 @@ let tab_label meta_markup =
 
 let goal_of_switch = function Stack.Open g | Stack.Closed g -> g
 
-class sequentsViewer ~(notebook:GPack.notebook) ~(cicMathView:cicMathView) () =
+class sequentsViewer ~(notebook:GPack.notebook) ~(cicMathView:_cicMathView) () =
   object (self)
     inherit scriptAccessor
 
@@ -875,21 +867,14 @@ class sequentsViewer ~(notebook:GPack.notebook) ~(cicMathView:cicMathView) () =
   end
 
  (** constructors *)
-let cicMathView ?hadjustment ?vadjustment ?font_size ?log_verbosity =
-  SourceView.make_params [] ~cont:(
+
+let cicMathView ?hadjustment ?vadjustment ?font_size ?log_verbosity ?auto_indent ?highlight_current_line ?indent_on_tab ?indent_width ?insert_spaces_instead_of_tabs ?right_margin_position ?show_line_marks ?show_line_numbers ?show_right_margin ?smart_home_end ?tab_width ?editable ?cursor_visible ?justification ?wrap_mode ?accepts_tab ?border_width ?width ?height ?packing ?show () =
+ (SourceView.make_params [] ~cont:(
     GtkText.View.make_params ~cont:(
       GContainer.pack_container ~create:(fun pl ->
         let obj = SourceView.new_ () in
         Gobject.set_params (Gobject.try_cast obj "GtkSourceView") pl;
-        new cicMathView obj)))
-(* MATITA 1.0
-  GtkBase.Widget.size_params
-    ~cont:(OgtkMathViewProps.pack_return (fun p ->
-      OgtkMathViewProps.set_params
-        (new cicMathView (GtkMathViewProps.MathView_GMetaDOM.create p))
-        ~font_size ~log_verbosity))
-    []
-*)
+        new cicMathView obj))) ?auto_indent ?highlight_current_line ?indent_on_tab ?indent_width ?insert_spaces_instead_of_tabs ?right_margin_position ?show_line_marks ?show_line_numbers ?show_right_margin ?smart_home_end ?tab_width ?editable ?cursor_visible ?justification ?wrap_mode ?accepts_tab ?border_width ?width ?height ?packing ?show () :> _cicMathView)
 
 let blank_uri = BuildTimeConf.blank_uri
 let current_proof_uri = BuildTimeConf.current_proof_uri
@@ -1316,7 +1301,7 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
 
   end
   
-let sequentsViewer ~(notebook:GPack.notebook) ~(cicMathView:cicMathView) ():
+let sequentsViewer ~(notebook:GPack.notebook) ~(cicMathView:_cicMathView) ():
   MatitaGuiTypes.sequentsViewer
 =
   (new sequentsViewer ~notebook ~cicMathView ():> MatitaGuiTypes.sequentsViewer)
@@ -1344,8 +1329,16 @@ let cicBrowser () =
   let history = new MatitaMisc.browser_history size (`About `Blank) in
   aux history
 
-let default_cicMathView () = cicMathView ~show:true ()
-let cicMathView_instance = MatitaMisc.singleton default_cicMathView
+let default_cicMathView () =
+ let res = cicMathView ~show:true () in
+  res#set_href_callback
+    (Some (fun uri ->
+      let uri = `NRef (NReference.reference_of_string uri) in
+       (cicBrowser ())#load uri));
+  res
+
+let cicMathView_instance =
+ MatitaMisc.singleton default_cicMathView
 
 let default_sequentsViewer () =
   let gui = get_gui () in
