@@ -1050,17 +1050,17 @@ class gui () =
         ignore(MatitaMathView.cicBrowser ()));
       connect_menu_item main#increaseFontSizeMenuItem (fun () ->
         self#increaseFontSize ();
-        MatitaMathView.increase_font_size ();
+        MatitaMisc.increase_font_size ();
         MatitaMathView.update_font_sizes ());
       connect_menu_item main#decreaseFontSizeMenuItem (fun () ->
         self#decreaseFontSize ();
-        MatitaMathView.decrease_font_size ();
+        MatitaMisc.decrease_font_size ();
         MatitaMathView.update_font_sizes ());
       connect_menu_item main#normalFontSizeMenuItem (fun () ->
         self#resetFontSize ();
-        MatitaMathView.reset_font_size ();
+        MatitaMisc.reset_font_size ();
         MatitaMathView.update_font_sizes ());
-      MatitaMathView.reset_font_size ();
+      MatitaMisc.reset_font_size ();
 
       (** selections / clipboards handling *)
 
@@ -1375,7 +1375,7 @@ class gui () =
 let gui () = 
   let g = new gui () in
   gui_instance := Some g;
-  MatitaMathView.set_gui g;
+  MatitaMisc.set_gui g;
   g
   
 let instance = singleton gui

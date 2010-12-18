@@ -184,3 +184,27 @@ let out_preamble och =
    in 
    print lines;
    out_line_comment och "This file was automatically generated: do not edit"
+
+  (* is there any lablgtk2 constant corresponding to the various mouse
+   * buttons??? *)
+let left_button = 1
+let middle_button = 2
+let right_button = 3
+
+let default_font_size () =
+  Helm_registry.get_opt_default Helm_registry.int
+    ~default:BuildTimeConf.default_font_size "matita.font_size"
+let current_font_size = ref ~-1
+let get_current_font_size () = !current_font_size
+let increase_font_size () = incr current_font_size
+let decrease_font_size () = decr current_font_size
+let reset_font_size () = current_font_size := default_font_size ()
+
+let gui_instance = ref None
+let set_gui (gui : MatitaGuiTypes.gui) = gui_instance := Some gui
+
+(** CSC: these functions should completely disappear (bad design) *)
+let get_gui () =
+  match !gui_instance with
+  | None -> assert false
+  | Some gui -> gui

@@ -2,6 +2,10 @@ applyTransformation.cmo: applyTransformation.cmi
 applyTransformation.cmx: applyTransformation.cmi 
 buildTimeConf.cmo: 
 buildTimeConf.cmx: 
+cicMathView.cmo: matitaMisc.cmi matitaGuiTypes.cmi matitaGtkMisc.cmi \
+    buildTimeConf.cmo applyTransformation.cmi cicMathView.cmi 
+cicMathView.cmx: matitaMisc.cmx matitaGuiTypes.cmi matitaGtkMisc.cmx \
+    buildTimeConf.cmx applyTransformation.cmx cicMathView.cmi 
 lablGraphviz.cmo: lablGraphviz.cmi 
 lablGraphviz.cmx: lablGraphviz.cmi 
 matitaclean.cmo: matitaMisc.cmi matitaInit.cmi matitaclean.cmi 
@@ -28,14 +32,14 @@ matitaInit.cmo: matitaExcPp.cmi buildTimeConf.cmo matitaInit.cmi
 matitaInit.cmx: matitaExcPp.cmx buildTimeConf.cmx matitaInit.cmi 
 matitaMathView.cmo: virtuals.cmi matitaTypes.cmi matitaScript.cmi \
     matitaMisc.cmi matitaGuiTypes.cmi matitaGtkMisc.cmi matitaExcPp.cmi \
-    lablGraphviz.cmi buildTimeConf.cmo applyTransformation.cmi \
-    matitaMathView.cmi 
+    lablGraphviz.cmi cicMathView.cmi buildTimeConf.cmo \
+    applyTransformation.cmi matitaMathView.cmi 
 matitaMathView.cmx: virtuals.cmx matitaTypes.cmx matitaScript.cmx \
     matitaMisc.cmx matitaGuiTypes.cmi matitaGtkMisc.cmx matitaExcPp.cmx \
-    lablGraphviz.cmx buildTimeConf.cmx applyTransformation.cmx \
-    matitaMathView.cmi 
-matitaMisc.cmo: buildTimeConf.cmo matitaMisc.cmi 
-matitaMisc.cmx: buildTimeConf.cmx matitaMisc.cmi 
+    lablGraphviz.cmx cicMathView.cmx buildTimeConf.cmx \
+    applyTransformation.cmx matitaMathView.cmi 
+matitaMisc.cmo: matitaGuiTypes.cmi buildTimeConf.cmo matitaMisc.cmi 
+matitaMisc.cmx: matitaGuiTypes.cmi buildTimeConf.cmx matitaMisc.cmi 
 matita.cmo: predefined_virtuals.cmi matitaTypes.cmi matitaScript.cmi \
     matitaMathView.cmi matitaInit.cmi matitaGui.cmi matitaGtkMisc.cmi \
     buildTimeConf.cmo 
@@ -53,6 +57,7 @@ predefined_virtuals.cmx: virtuals.cmx predefined_virtuals.cmi
 virtuals.cmo: virtuals.cmi 
 virtuals.cmx: virtuals.cmi 
 applyTransformation.cmi: 
+cicMathView.cmi: matitaGuiTypes.cmi applyTransformation.cmi 
 lablGraphviz.cmi: 
 matitaclean.cmi: 
 matitaEngine.cmi: 
@@ -63,7 +68,7 @@ matitaGuiTypes.cmi: matitaTypes.cmi matitaGeneratedGui.cmo \
     applyTransformation.cmi 
 matitaInit.cmi: 
 matitaMathView.cmi: matitaTypes.cmi matitaGuiTypes.cmi 
-matitaMisc.cmi: 
+matitaMisc.cmi: matitaGuiTypes.cmi 
 matitaScript.cmi: matitaTypes.cmi 
 matitaTypes.cmi: 
 predefined_virtuals.cmi: 

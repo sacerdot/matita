@@ -32,10 +32,6 @@ val mathViewer:               unit -> MatitaTypes.mathViewer
 
 (** {2 Global changes} *)
 
-val increase_font_size:   unit -> unit
-val decrease_font_size:   unit -> unit
-val reset_font_size:      unit -> unit
-
 val refresh_all_browsers: unit -> unit  (** act on all cicBrowsers *)
 val update_font_sizes:    unit -> unit
 
@@ -51,7 +47,3 @@ val empty_clipboard: unit -> unit (** empty the clipboard *)
 
   (** @raise Failure "empty clipboard" *)
 val paste_clipboard: MatitaGuiTypes.paste_kind -> string
-
-(** {2 Initialization} *)
-
-val set_gui: MatitaGuiTypes.gui -> unit

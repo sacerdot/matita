@@ -79,3 +79,17 @@ val shutup: unit -> unit
 
   (** outputs the preamble of a generated .ma file *)
 val out_preamble: out_channel -> unit
+
+val left_button: int
+val right_button: int
+
+(** {2 Global changes} *)
+
+val get_current_font_size: unit -> int
+val increase_font_size:   unit -> unit
+val decrease_font_size:   unit -> unit
+val reset_font_size:      unit -> unit
+
+(** CSC: these functions should completely disappear (bad design) *)
+val set_gui: MatitaGuiTypes.gui -> unit
+val get_gui: unit -> MatitaGuiTypes.gui
