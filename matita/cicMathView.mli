@@ -33,11 +33,9 @@ object
   method update_font_size: unit
 
   method load_root : root:document_element -> unit
-  method action_toggle: document_element -> bool
   method remove_selections: unit
   method set_selection: document_element option -> unit
   method get_selections: document_element list
-  method has_selection: bool
 
     (** @raise Failure "no selection" *)
   method strings_of_selection: (MatitaGuiTypes.paste_kind * string) list

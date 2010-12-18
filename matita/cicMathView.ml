@@ -40,11 +40,9 @@ object
   method update_font_size: unit
 
   method load_root : root:document_element -> unit
-  method action_toggle: document_element -> bool
   method remove_selections: unit
   method set_selection: document_element option -> unit
   method get_selections: document_element list
-  method has_selection: bool
 
     (** @raise Failure "no selection" *)
   method strings_of_selection: (MatitaGuiTypes.paste_kind * string) list
@@ -179,7 +177,6 @@ let text_width = 80 in
 object (self)
   inherit GSourceView2.source_view obj
 
-  method has_selection = (assert false : bool)
   method strings_of_selection = (assert false : (paste_kind * string) list)
   method update_font_size =
    self#misc#modify_font_by_name
@@ -565,8 +562,6 @@ IDIOTA: PRIMA SI FA LA LOCATE, POI LA PATTERN_OF. MEGLIO UN'UNICA pattern_of CHE
     match self#get_selections with
     | [] -> None
     | node :: _ -> Some (self#string_of_node ~paste_kind node)
-
-  method has_selection = self#get_selections <> []
 
     (** @return an associative list format -> string with all possible selection
      * formats. Rationale: in order to convert the selection to TERM or PATTERN
