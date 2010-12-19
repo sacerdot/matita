@@ -82,7 +82,4 @@ class type mathViewer =
      *  opens a new one. default is false
      *)
     method show_entry: ?reuse:bool -> mathViewer_entry -> unit
-    method screenshot: 
-      GrafiteTypes.status -> NCic.metasenv -> NCic.metasenv ->
-        NCic.substitution -> string -> unit
   end

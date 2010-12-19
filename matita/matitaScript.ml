@@ -112,7 +112,7 @@ let eval_nmacro include_paths (buffer : GText.buffer) guistuff grafite_status us
          let selected = Continuationals.Stack.head_goals status#stack in
          List.filter (fun x,_ -> List.mem x selected) menv         
        in
-       guistuff.mathviewer#screenshot status sequents menv subst name;
+       CicMathView.screenshot status sequents menv subst name;
        [status, parsed_text], "", parsed_text_length
   | TA.NCheck (_,t) ->
       let status = script#grafite_status in

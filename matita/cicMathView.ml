@@ -30,6 +30,9 @@ open MatitaGtkMisc
 open MatitaGuiTypes
 open GtkSourceView2
 
+let matita_script_current = ref (fun _ -> assert false);;
+let register_matita_script_current f = matita_script_current := f;;
+
 type document_element = string
 
 class type cicMathView =
@@ -368,7 +371,7 @@ object (self)
           (GrafiteAst.Tactic (loc,
             Some (GrafiteAst.Reduce (loc, kind, pat)),
             GrafiteAst.Semicolon loc)) in
-      (MatitaScript.current ())#advance ~statement () in
+      (!matita_script_current ())#advance ~statement () in
     connect_menu_item copy gui#copy;
     connect_menu_item normalize (reduction_action `Normalize);
     connect_menu_item simplify (reduction_action `Simpl);
@@ -503,7 +506,7 @@ object (self)
     else string_of_dom_node node
 
   method private string_of_cic_sequent ~output_type cic_sequent =
-    let script = MatitaScript.current () in
+    let script = !matita_script_current () in
     let metasenv =
       if script#onGoingProof () then script#proofMetasenv else [] in
     let map_unicode_to_tex =
@@ -640,3 +643,64 @@ let cicMathView (*?auto_indent ?highlight_current_line ?indent_on_tab ?indent_wi
         let obj = SourceView.new_ () in
         Gobject.set_params (Gobject.try_cast obj "GtkSourceView") pl;
         new _cicMathView obj)(*)) ?auto_indent ?highlight_current_line ?indent_on_tab ?indent_width ?insert_spaces_instead_of_tabs ?right_margin_position ?show_line_marks ?show_line_numbers ?show_right_margin ?smart_home_end ?tab_width ?editable ?cursor_visible ?justification ?wrap_mode ?accepts_tab ?border_width*) [] ?width ?height ?packing ?show () :> cicMathView)
+
+let screenshot status sequents metasenv subst (filename as ofn) =
+ () (*MATITA 1.0
+  let w = GWindow.window ~title:"screenshot" () in
+  let width = 500 in
+  let height = 2000 in
+  let m = GMathView.math_view 
+     ~font_size:(MatitaMisc.get_current_font_size ()) ~width ~height
+     ~packing:w#add
+     ~show:true ()
+  in
+  w#show ();
+  let filenames = 
+   HExtlib.list_mapi
+    (fun (mno,_ as sequent) i ->
+       let mathml = 
+         ApplyTransformation.nmml_of_cic_sequent 
+           status metasenv subst sequent
+       in
+       m#load_root ~root:mathml#get_documentElement;
+       let pixmap = m#get_buffer in
+       let pixbuf = GdkPixbuf.create ~width ~height () in
+       GdkPixbuf.get_from_drawable ~dest:pixbuf pixmap;
+       let filename = 
+         filename ^ "-raw" ^ string_of_int i ^ ".png" 
+       in
+       GdkPixbuf.save ~filename ~typ:"png" pixbuf;
+       filename,mno)
+    sequents
+  in
+  let items = 
+    List.map (fun (x,mno) -> 
+      ignore(Sys.command
+        (Printf.sprintf
+         ("convert "^^
+         " '(' -gravity west -bordercolor grey -border 1 label:%d ')' "^^
+         " '(' -trim -bordercolor white -border 5 "^^
+           " -bordercolor grey -border 1 %s ')' -append %s ")
+         mno
+         (Filename.quote x)
+         (Filename.quote (x ^ ".label.png"))));
+        x ^ ".label.png")
+    filenames
+  in
+  let rec div2 = function 
+    | [] -> []
+    | [x] -> [[x]]
+    | x::y::tl -> [x;y] :: div2 tl
+  in
+  let items = div2 items in
+  ignore(Sys.command (Printf.sprintf 
+    "convert %s -append  %s" 
+     (String.concat ""
+       (List.map (fun items ->
+         Printf.sprintf " '(' %s +append ')' "
+           (String.concat 
+              (" '(' -gravity center -size 10x10 xc: ')' ") items)) items))
+    (Filename.quote (ofn ^ ".png")))); 
+  List.iter (fun x,_ -> Sys.remove x) filenames;
+  List.iter Sys.remove (List.flatten items);
+  w#destroy ()*)

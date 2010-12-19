@@ -702,67 +702,6 @@ let mathViewer () =
           
     method show_entry ?(reuse=false) t = (self#get_browser reuse)#load t
       
-    method screenshot status sequents metasenv subst (filename as ofn) =
-      () (*MATITA 1.0
-       let w = GWindow.window ~title:"screenshot" () in
-       let width = 500 in
-       let height = 2000 in
-       let m = GMathView.math_view 
-          ~font_size:(MatitaMisc.get_current_font_size ()) ~width ~height
-          ~packing:w#add
-          ~show:true ()
-       in
-       w#show ();
-       let filenames = 
-        HExtlib.list_mapi
-         (fun (mno,_ as sequent) i ->
-            let mathml = 
-              ApplyTransformation.nmml_of_cic_sequent 
-                status metasenv subst sequent
-            in
-            m#load_root ~root:mathml#get_documentElement;
-            let pixmap = m#get_buffer in
-            let pixbuf = GdkPixbuf.create ~width ~height () in
-            GdkPixbuf.get_from_drawable ~dest:pixbuf pixmap;
-            let filename = 
-              filename ^ "-raw" ^ string_of_int i ^ ".png" 
-            in
-            GdkPixbuf.save ~filename ~typ:"png" pixbuf;
-            filename,mno)
-         sequents
-       in
-       let items = 
-         List.map (fun (x,mno) -> 
-           ignore(Sys.command
-             (Printf.sprintf
-              ("convert "^^
-              " '(' -gravity west -bordercolor grey -border 1 label:%d ')' "^^
-              " '(' -trim -bordercolor white -border 5 "^^
-                " -bordercolor grey -border 1 %s ')' -append %s ")
-              mno
-              (Filename.quote x)
-              (Filename.quote (x ^ ".label.png"))));
-             x ^ ".label.png")
-         filenames
-       in
-       let rec div2 = function 
-         | [] -> []
-         | [x] -> [[x]]
-         | x::y::tl -> [x;y] :: div2 tl
-       in
-       let items = div2 items in
-       ignore(Sys.command (Printf.sprintf 
-         "convert %s -append  %s" 
-          (String.concat ""
-            (List.map (fun items ->
-              Printf.sprintf " '(' %s +append ')' "
-                (String.concat 
-                   (" '(' -gravity center -size 10x10 xc: ')' ") items)) items))
-         (Filename.quote (ofn ^ ".png")))); 
-       List.iter (fun x,_ -> Sys.remove x) filenames;
-       List.iter Sys.remove (List.flatten items);
-       w#destroy ();
-    *)
   end
 
 let refresh_all_browsers () =

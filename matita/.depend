@@ -47,9 +47,9 @@ matita.cmx: predefined_virtuals.cmx matitaTypes.cmx matitaScript.cmx \
     matitaMathView.cmx matitaInit.cmx matitaGui.cmx matitaGtkMisc.cmx \
     buildTimeConf.cmx 
 matitaScript.cmo: virtuals.cmi matitaTypes.cmi matitaGtkMisc.cmi \
-    matitaEngine.cmi buildTimeConf.cmo matitaScript.cmi 
+    matitaEngine.cmi cicMathView.cmi buildTimeConf.cmo matitaScript.cmi 
 matitaScript.cmx: virtuals.cmx matitaTypes.cmx matitaGtkMisc.cmx \
-    matitaEngine.cmx buildTimeConf.cmx matitaScript.cmi 
+    matitaEngine.cmx cicMathView.cmx buildTimeConf.cmx matitaScript.cmi 
 matitaTypes.cmo: matitaTypes.cmi 
 matitaTypes.cmx: matitaTypes.cmi 
 predefined_virtuals.cmo: virtuals.cmi predefined_virtuals.cmi 

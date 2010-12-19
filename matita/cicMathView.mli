@@ -59,3 +59,9 @@ val cicMathView :
 
 val empty_mathml: document_element Lazy.t
 val closed_goal_mathml: document_element Lazy.t
+
+val screenshot: 
+ GrafiteTypes.status -> NCic.metasenv -> NCic.metasenv ->
+  NCic.substitution -> string -> unit
+
+val register_matita_script_current: (unit -> < advance: unit; onGoingProf: bool; metasenv: NCic.metasenv >) -> unit
