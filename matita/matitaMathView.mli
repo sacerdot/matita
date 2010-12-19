@@ -28,14 +28,19 @@ val cicBrowser: unit -> MatitaGuiTypes.cicBrowser
 
 (** {2 Singleton instances} *)
 val sequentsViewer_instance:  unit -> MatitaGuiTypes.sequentsViewer
-val mathViewer:               unit -> MatitaTypes.mathViewer
 
 (** {2 Global changes} *)
 
 val refresh_all_browsers: unit -> unit  (** act on all cicBrowsers *)
 val update_font_sizes:    unit -> unit
 
-  (** {3 Clipboard & Selection handling} *)
+(** {2 Rendering in a browser} *)
+
+(** @param reuse if set reused last opened cic browser otherwise 
+*  opens a new one. default is false *)
+val show_entry: ?reuse:bool -> MatitaTypes.mathViewer_entry -> unit
+
+(** {2 Clipboard & Selection handling} *)
 
 val has_selection: unit -> bool
 

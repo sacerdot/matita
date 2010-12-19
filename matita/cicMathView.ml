@@ -30,8 +30,9 @@ open MatitaGtkMisc
 open MatitaGuiTypes
 open GtkSourceView2
 
-let matita_script_current = ref (fun _ -> assert false);;
+let matita_script_current = ref (fun _ -> (assert false : < advance: ?statement:string -> unit -> unit; grafite_status: GrafiteTypes.status; setGoal: int option -> unit >));;
 let register_matita_script_current f = matita_script_current := f;;
+let get_matita_script_current () = !matita_script_current ();;
 
 type document_element = string
 
@@ -371,7 +372,7 @@ object (self)
           (GrafiteAst.Tactic (loc,
             Some (GrafiteAst.Reduce (loc, kind, pat)),
             GrafiteAst.Semicolon loc)) in
-      (!matita_script_current ())#advance ~statement () in
+      (get_matita_script_current ())#advance ~statement () in
     connect_menu_item copy gui#copy;
     connect_menu_item normalize (reduction_action `Normalize);
     connect_menu_item simplify (reduction_action `Simpl);
@@ -506,7 +507,7 @@ object (self)
     else string_of_dom_node node
 
   method private string_of_cic_sequent ~output_type cic_sequent =
-    let script = !matita_script_current () in
+    let script = get_matita_script_current () in
     let metasenv =
       if script#onGoingProof () then script#proofMetasenv else [] in
     let map_unicode_to_tex =

@@ -64,4 +64,7 @@ val screenshot:
  GrafiteTypes.status -> NCic.metasenv -> NCic.metasenv ->
   NCic.substitution -> string -> unit
 
-val register_matita_script_current: (unit -> < advance: unit; onGoingProf: bool; metasenv: NCic.metasenv >) -> unit
+(* CSC: these functions should completely disappear; bad design;
+   the object type is MatitaScript.script *)
+val register_matita_script_current: (unit -> < advance: ?statement:string -> unit -> unit; grafite_status: GrafiteTypes.status; setGoal: int option -> unit >) -> unit
+val get_matita_script_current: unit -> < advance: ?statement:string -> unit -> unit; grafite_status: GrafiteTypes.status; setGoal: int option -> unit >

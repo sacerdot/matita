@@ -85,7 +85,6 @@ end
    * "*") on the side of a script name *)
 val script: 
   source_view:GSourceView2.source_view -> 
-  mathviewer: MatitaTypes.mathViewer-> 
   urichooser: (NReference.reference list -> NReference.reference list) -> 
   ask_confirmation: 
     (title:string -> message:string -> [`YES | `NO | `CANCEL]) -> 

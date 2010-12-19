@@ -50,7 +50,6 @@ let script =
   let s = 
     MatitaScript.script 
       ~source_view:gui#sourceView
-      ~mathviewer:(MatitaMathView.mathViewer ())
       ~urichooser:(fun uris ->
         try
           MatitaGui.interactive_uri_choice ~selection_mode:`SINGLE

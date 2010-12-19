@@ -38,8 +38,3 @@ type mathViewer_entry =
 
 val string_of_entry : mathViewer_entry -> string
 val entry_of_string : string -> mathViewer_entry
-
-class type mathViewer =
-  object
-    method show_entry : ?reuse:bool -> mathViewer_entry -> unit
-  end

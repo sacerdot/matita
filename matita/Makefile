@@ -44,9 +44,9 @@ MLI = \
 	matitaGtkMisc.mli	\
 	virtuals.mli 		\
 	cicMathView.mli 	\
-	matitaScript.mli	\
 	predefined_virtuals.mli \
 	matitaMathView.mli 	\
+	matitaScript.mli	\
 	matitaGui.mli		\
 	$(NULL)
 CMLI =				\

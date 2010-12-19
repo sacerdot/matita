@@ -75,11 +75,3 @@ let entry_of_string = function
   | "about:grammar"    -> `About `Grammar
   | _ ->  (* only about entries supported ATM *)
       raise (Invalid_argument "entry_of_string")
-
-class type mathViewer =
-  object
-    (** @param reuse if set reused last opened cic browser otherwise 
-     *  opens a new one. default is false
-     *)
-    method show_entry: ?reuse:bool -> mathViewer_entry -> unit
-  end

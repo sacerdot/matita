@@ -66,7 +66,6 @@ let first_line s =
   with Not_found -> s
 
 type guistuff = {
-  mathviewer:MatitaTypes.mathViewer;
   urichooser: NReference.reference list -> NReference.reference list;
   ask_confirmation: title:string -> message:string -> [`YES | `NO | `CANCEL];
 }
@@ -132,7 +131,7 @@ let eval_nmacro include_paths (buffer : GText.buffer) guistuff grafite_status us
             NotationPt.Cast (t,NotationPt.Implicit `JustOne))  
           (* XXX use the metasenv, if possible *)
       in
-      guistuff.mathviewer#show_entry (`NCic (t,ctx,m,s));
+      MatitaMathView.show_entry (`NCic (t,ctx,m,s));
       [status, parsed_text], "", parsed_text_length
   | TA.NIntroGuess _loc ->
       let names_ref = ref [] in
@@ -247,7 +246,6 @@ let fresh_script_id =
   fun () -> incr i; !i
 
 class script  ~(source_view: GSourceView2.source_view)
-              ~(mathviewer: MatitaTypes.mathViewer) 
               ~set_star
               ~ask_confirmation
               ~urichooser 
@@ -287,7 +285,6 @@ object (self)
   val scriptId = fresh_script_id ()
 
   val guistuff = {
-    mathviewer = mathviewer;
     urichooser = urichooser;
     ask_confirmation = ask_confirmation;
   }
@@ -697,13 +694,14 @@ end
 
 let _script = ref None
 
-let script ~source_view ~mathviewer ~urichooser ~ask_confirmation ~set_star ()
+let script ~source_view ~urichooser ~ask_confirmation ~set_star ()
 =
-  let s = new script 
-    ~source_view ~mathviewer ~ask_confirmation ~urichooser ~set_star () 
-  in
+  let s = new script ~source_view ~ask_confirmation ~urichooser ~set_star () in
   _script := Some s;
   s
 
 let current () = match !_script with None -> assert false | Some s -> s
 
+let _ =
+ CicMathView.register_matita_script_current (current :> unit -> < advance: ?statement:string -> unit -> unit; grafite_status: GrafiteTypes.status; setGoal: int option -> unit >)
+;;

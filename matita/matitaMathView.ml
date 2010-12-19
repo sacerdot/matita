@@ -37,7 +37,7 @@ module Stack = Continuationals.Stack
 (** inherit from this class if you want to access current script *)
 class scriptAccessor =
 object (self)
-  method private script = MatitaScript.current ()
+  method private script = get_matita_script_current ()
 end
 
 let cicBrowsers = ref []
@@ -292,7 +292,7 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
       let module Pp = GraphvizPp.Dot in
       let filename, oc = Filename.open_temp_file "matita" ".dot" in
       let fmt = Format.formatter_of_out_channel oc in
-      let status = (MatitaScript.current ())#grafite_status in
+      let status = (get_matita_script_current ())#grafite_status in
       Pp.header 
         ~name:"Hints"
         ~graph_type:"graph"
@@ -315,7 +315,7 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
         ~name:"Coercions"
         ~node_attrs:["fontsize", "9"; "width", ".4"; "height", ".4"]
         ~edge_attrs:["fontsize", "10"] fmt;
-      let status = (MatitaScript.current ())#grafite_status in
+      let status = (get_matita_script_current ())#grafite_status in
       NCicCoercion.generate_dot_file status fmt;
       Pp.trailer fmt;
       Pp.raw "@." fmt;
@@ -594,7 +594,7 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
     method private _loadTermNCic term m s c =
       let d = 0 in
       let m = (0,([],c,term))::m in
-      let status = (MatitaScript.current ())#grafite_status in
+      let status = (get_matita_script_current ())#grafite_status in
       mathView#nload_sequent status m s d;
       self#_showMath
 
@@ -690,19 +690,20 @@ let default_sequentsViewer () =
   sequentsViewer ~notebook:gui#main#sequentsNotebook ~cicMathView ()
 let sequentsViewer_instance = MatitaMisc.singleton default_sequentsViewer
 
-let mathViewer () = 
-  object(self)
-    method private get_browser reuse = 
-      if reuse then
-        (match !cicBrowsers with
-        | [] -> cicBrowser ()
-        | b :: _ -> (b :> MatitaGuiTypes.cicBrowser))
-      else
-        (cicBrowser ())
           
-    method show_entry ?(reuse=false) t = (self#get_browser reuse)#load t
-      
-  end
+(** @param reuse if set reused last opened cic browser otherwise 
+*  opens a new one. default is false *)
+let show_entry ?(reuse=false) t =
+ let browser =
+  if reuse then
+   (match !cicBrowsers with
+       [] -> cicBrowser ()
+     | b :: _ -> (b :> MatitaGuiTypes.cicBrowser))
+  else
+   cicBrowser ()
+ in
+  browser#load t
+;;
 
 let refresh_all_browsers () =
   List.iter (fun b -> b#refresh ~force:false ()) !cicBrowsers
