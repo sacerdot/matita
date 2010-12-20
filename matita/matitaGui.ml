@@ -191,7 +191,7 @@ class interpErrorModel =
 
 exception UseLibrary;;
 
-let rec interactive_error_interp ~all_passes
+let interactive_error_interp ~all_passes
   (source_buffer:GSourceView2.source_buffer) notify_exn offset errorll filename
 = 
   (* hook to save a script for each disambiguation error *)
@@ -342,16 +342,6 @@ let rec interactive_error_interp ~all_passes
        GtkThread.main ()
 
 
-(** Selection handling
- * Two clipboards are used: "clipboard" and "primary".
- * "primary" is used by X, when you hit the middle button mouse is content is
- *    pasted between applications. In Matita this selection always contain the
- *    textual version of the selected term.
- * "clipboard" is used inside Matita only and support ATM two different targets:
- *    "TERM" and "PATTERN", in the future other targets like "MATHMLCONTENT" may
- *    be added
- *)
-
 class gui () =
     (* creation order _is_ relevant for windows placement *)
   let main = new mainWin () in
@@ -361,38 +351,12 @@ class gui () =
     [ main#mainWinEventBox ]
   in
   let console = new console ~buffer:main#logTextView#buffer () in
-  let (source_view: GSourceView2.source_view) =
-    GSourceView2.source_view
-      ~auto_indent:true
-      ~insert_spaces_instead_of_tabs:true ~tab_width:2
-      ~right_margin_position:80 ~show_right_margin:true
-      ~smart_home_end:`AFTER
-      ~packing:main#scriptScrolledWin#add
-      ()
-  in
-  let default_font_size =
-    Helm_registry.get_opt_default Helm_registry.int
-      ~default:BuildTimeConf.default_font_size "matita.font_size"
-  in
-  let similarsymbols_tag_name = "similarsymbolos" in
-  let similarsymbols_tag = `NAME similarsymbols_tag_name in
-  let source_buffer = source_view#source_buffer in
+  let source_view () = (MatitaScript.current ())#source_view in
   object (self)
     val mutable chosen_file = None
     val mutable _ok_not_exists = false
     val mutable _only_directory = false
-    val mutable font_size = default_font_size
-    val mutable similarsymbols = []
-    val mutable similarsymbols_orig = []
-    val clipboard = GData.clipboard Gdk.Atom.clipboard
-    val primary = GData.clipboard Gdk.Atom.primary
       
-    method private reset_similarsymbols =
-      similarsymbols <- []; 
-      similarsymbols_orig <- []; 
-      try source_buffer#delete_mark similarsymbols_tag
-      with GText.No_such_mark _ -> ()
-   
     initializer
       let s () = MatitaScript.current () in
         (* glade's check widgets *)
@@ -456,28 +420,30 @@ class gui () =
       in
       let hide_find_Repl () = findRepl#toplevel#misc#hide () in
       let find_forward _ = 
+          let source_view = source_view () in
           let highlight start end_ =
-            source_buffer#move_mark `INSERT ~where:start;
-            source_buffer#move_mark `SEL_BOUND ~where:end_;
+            source_view#source_buffer#move_mark `INSERT ~where:start;
+            source_view#source_buffer#move_mark `SEL_BOUND ~where:end_;
             source_view#scroll_mark_onscreen `INSERT
           in
           let text = findRepl#findEntry#text in
-          let iter = source_buffer#get_iter `SEL_BOUND in
+          let iter = source_view#source_buffer#get_iter `SEL_BOUND in
           match iter#forward_search text with
           | None -> 
-              (match source_buffer#start_iter#forward_search text with
+              (match source_view#source_buffer#start_iter#forward_search text with
               | None -> ()
               | Some (start,end_) -> highlight start end_)
           | Some (start,end_) -> highlight start end_ 
       in
       let replace _ =
+        let source_view = source_view () in
         let text = findRepl#replaceEntry#text in
-        let ins = source_buffer#get_iter `INSERT in
-        let sel = source_buffer#get_iter `SEL_BOUND in
+        let ins = source_view#source_buffer#get_iter `INSERT in
+        let sel = source_view#source_buffer#get_iter `SEL_BOUND in
         if ins#compare sel < 0 then 
           begin
-            ignore(source_buffer#delete_selection ());
-            source_buffer#insert text
+            ignore(source_view#source_buffer#delete_selection ());
+            source_view#source_buffer#insert text
           end
       in
       connect_button findRepl#findButton find_forward;
@@ -485,175 +451,57 @@ class gui () =
       connect_button findRepl#cancelButton (fun _ -> hide_find_Repl ());
       ignore(findRepl#toplevel#event#connect#delete 
         ~callback:(fun _ -> hide_find_Repl ();true));
-      let safe_undo =
-       fun () ->
-        (* phase 1: we save the actual status of the marks and we undo *)
-        let locked_mark = `MARK ((MatitaScript.current ())#locked_mark) in
-        let locked_iter = source_view#buffer#get_iter_at_mark locked_mark in
-        let locked_iter_offset = locked_iter#offset in
-        let mark2 =
-         `MARK
-           (source_view#buffer#create_mark ~name:"lock_point"
-             ~left_gravity:true locked_iter) in
-        source_view#source_buffer#undo ();
-        (* phase 2: we save the cursor position and we redo, restoring
-           the previous status of all the marks *)
-        let cursor_iter = source_view#buffer#get_iter_at_mark `INSERT in
-        let mark =
-         `MARK
-           (source_view#buffer#create_mark ~name:"undo_point"
-             ~left_gravity:true cursor_iter)
-        in
-         source_view#source_buffer#redo ();
-         let mark_iter = source_view#buffer#get_iter_at_mark mark in
-         let mark2_iter = source_view#buffer#get_iter_at_mark mark2 in
-         let mark2_iter = mark2_iter#set_offset locked_iter_offset in
-          source_view#buffer#move_mark locked_mark ~where:mark2_iter;
-          source_view#buffer#delete_mark mark;
-          source_view#buffer#delete_mark mark2;
-          (* phase 3: if after the undo the cursor was in the locked area,
-             then we move it there again and we perform a goto *)
-          if mark_iter#offset < locked_iter_offset then
-           begin
-            source_view#buffer#move_mark `INSERT ~where:mark_iter;
-            (MatitaScript.current ())#goto `Cursor ();
-           end;
-          (* phase 4: we perform again the undo. This time we are sure that
-             the text to undo is not locked *)
-          source_view#source_buffer#undo ();
-          source_view#misc#grab_focus () in
-      let safe_redo =
-       fun () ->
-        (* phase 1: we save the actual status of the marks, we redo and
-           we undo *)
-        let locked_mark = `MARK ((MatitaScript.current ())#locked_mark) in
-        let locked_iter = source_view#buffer#get_iter_at_mark locked_mark in
-        let locked_iter_offset = locked_iter#offset in
-        let mark2 =
-         `MARK
-           (source_view#buffer#create_mark ~name:"lock_point"
-             ~left_gravity:true locked_iter) in
-        source_view#source_buffer#redo ();
-        source_view#source_buffer#undo ();
-        (* phase 2: we save the cursor position and we restore
-           the previous status of all the marks *)
-        let cursor_iter = source_view#buffer#get_iter_at_mark `INSERT in
-        let mark =
-         `MARK
-           (source_view#buffer#create_mark ~name:"undo_point"
-             ~left_gravity:true cursor_iter)
-        in
-         let mark_iter = source_view#buffer#get_iter_at_mark mark in
-         let mark2_iter = source_view#buffer#get_iter_at_mark mark2 in
-         let mark2_iter = mark2_iter#set_offset locked_iter_offset in
-          source_view#buffer#move_mark locked_mark ~where:mark2_iter;
-          source_view#buffer#delete_mark mark;
-          source_view#buffer#delete_mark mark2;
-          (* phase 3: if after the undo the cursor is in the locked area,
-             then we move it there again and we perform a goto *)
-          if mark_iter#offset < locked_iter_offset then
-           begin
-            source_view#buffer#move_mark `INSERT ~where:mark_iter;
-            (MatitaScript.current ())#goto `Cursor ();
-           end;
-          (* phase 4: we perform again the redo. This time we are sure that
-             the text to redo is not locked *)
-          source_view#source_buffer#redo ();
-          source_view#misc#grab_focus ()
-      in
-      connect_menu_item main#undoMenuItem safe_undo;
+      connect_menu_item main#undoMenuItem
+       (fun () -> (MatitaScript.current ())#safe_undo);
 (*CSC: XXX
       ignore(source_view#source_buffer#connect#can_undo
         ~callback:main#undoMenuItem#misc#set_sensitive);
 *) main#undoMenuItem#misc#set_sensitive true;
-      connect_menu_item main#redoMenuItem safe_redo;
+      connect_menu_item main#redoMenuItem
+       (fun () -> (MatitaScript.current ())#safe_redo);
 (*CSC: XXX
       ignore(source_view#source_buffer#connect#can_redo
         ~callback:main#redoMenuItem#misc#set_sensitive);
 *) main#redoMenuItem#misc#set_sensitive true;
-      ignore(source_view#connect#after#populate_popup
-       ~callback:(fun pre_menu ->
-         let menu = new GMenu.menu pre_menu in
-         let menuItems = menu#children in
-         let undoMenuItem, redoMenuItem =
-          match menuItems with
-             [undo;redo;sep1;cut;copy;paste;delete;sep2;
-              selectall;sep3;inputmethod;insertunicodecharacter] ->
-                List.iter menu#remove [ copy; cut; delete; paste ];
-                undo,redo
-           | _ -> assert false in
-         let add_menu_item =
-           let i = ref 2 in (* last occupied position *)
-           fun ?label ?stock () ->
-             incr i;
-             GMenu.image_menu_item ?label ?stock ~packing:(menu#insert ~pos:!i)
-              ()
-         in
-         let copy = add_menu_item ~stock:`COPY () in
-         let cut = add_menu_item ~stock:`CUT () in
-         let delete = add_menu_item ~stock:`DELETE () in
-         let paste = add_menu_item ~stock:`PASTE () in
-         let paste_pattern = add_menu_item ~label:"Paste as pattern" () in
-         copy#misc#set_sensitive self#canCopy;
-         cut#misc#set_sensitive self#canCut;
-         delete#misc#set_sensitive self#canDelete;
-         paste#misc#set_sensitive self#canPaste;
-         paste_pattern#misc#set_sensitive self#canPastePattern;
-         connect_menu_item copy self#copy;
-         connect_menu_item cut self#cut;
-         connect_menu_item delete self#delete;
-         connect_menu_item paste self#paste;
-         connect_menu_item paste_pattern self#pastePattern;
-         let new_undoMenuItem =
-          GMenu.image_menu_item
-           ~image:(GMisc.image ~stock:`UNDO ())
-           ~use_mnemonic:true
-           ~label:"_Undo"
-           ~packing:(menu#insert ~pos:0) () in
-         new_undoMenuItem#misc#set_sensitive
-          (undoMenuItem#misc#get_flag `SENSITIVE);
-         menu#remove (undoMenuItem :> GMenu.menu_item);
-         connect_menu_item new_undoMenuItem safe_undo;
-         let new_redoMenuItem =
-          GMenu.image_menu_item
-           ~image:(GMisc.image ~stock:`REDO ())
-           ~use_mnemonic:true
-           ~label:"_Redo"
-           ~packing:(menu#insert ~pos:1) () in
-         new_redoMenuItem#misc#set_sensitive
-          (redoMenuItem#misc#get_flag `SENSITIVE);
-          menu#remove (redoMenuItem :> GMenu.menu_item);
-          connect_menu_item new_redoMenuItem safe_redo));
-
       connect_menu_item main#editMenu (fun () ->
-        main#copyMenuItem#misc#set_sensitive self#canCopy;
-        main#cutMenuItem#misc#set_sensitive self#canCut;
-        main#deleteMenuItem#misc#set_sensitive self#canDelete;
-        main#pasteMenuItem#misc#set_sensitive self#canPaste;
-        main#pastePatternMenuItem#misc#set_sensitive self#canPastePattern);
-      connect_menu_item main#copyMenuItem self#copy;
-      connect_menu_item main#cutMenuItem self#cut;
-      connect_menu_item main#deleteMenuItem self#delete;
-      connect_menu_item main#pasteMenuItem self#paste;
-      connect_menu_item main#pastePatternMenuItem self#pastePattern;
+        main#copyMenuItem#misc#set_sensitive
+         (MatitaScript.current ())#canCopy;
+        main#cutMenuItem#misc#set_sensitive
+         (MatitaScript.current ())#canCut;
+        main#deleteMenuItem#misc#set_sensitive
+         (MatitaScript.current ())#canDelete;
+        main#pasteMenuItem#misc#set_sensitive
+         (MatitaScript.current ())#canPaste;
+        main#pastePatternMenuItem#misc#set_sensitive
+         (MatitaScript.current ())#canPastePattern);
+      connect_menu_item main#copyMenuItem
+         (fun () -> (MatitaScript.current ())#copy ());
+      connect_menu_item main#cutMenuItem
+         (fun () -> (MatitaScript.current ())#cut ());
+      connect_menu_item main#deleteMenuItem
+         (fun () -> (MatitaScript.current ())#delete ());
+      connect_menu_item main#pasteMenuItem
+         (fun () -> (MatitaScript.current ())#paste ());
+      connect_menu_item main#pastePatternMenuItem
+         (fun () -> (MatitaScript.current ())#pastePattern ());
       connect_menu_item main#selectAllMenuItem (fun () ->
-        source_buffer#move_mark `INSERT source_buffer#start_iter;
-        source_buffer#move_mark `SEL_BOUND source_buffer#end_iter);
+       let source_view = source_view () in
+        source_view#source_buffer#move_mark `INSERT source_view#source_buffer#start_iter;
+        source_view#source_buffer#move_mark `SEL_BOUND source_view#source_buffer#end_iter);
       connect_menu_item main#findReplMenuItem show_find_Repl;
       connect_menu_item main#externalEditorMenuItem self#externalEditor;
-      connect_menu_item main#ligatureButton self#nextSimilarSymbol;
-      ignore(source_buffer#connect#after#insert_text 
-       ~callback:(fun iter str -> 
-          if main#menuitemAutoAltL#active && (str = " " || str = "\n") then 
-            ignore(self#expand_virtual_if_any iter str)));
+      connect_menu_item main#ligatureButton
+       (fun () -> (MatitaScript.current ())#nextSimilarSymbol);
       ignore (findRepl#findEntry#connect#activate find_forward);
         (* interface lockers *)
       let lock_world _ =
+       let source_view = source_view () in
         main#buttonsToolbar#misc#set_sensitive false;
         main#scriptMenu#misc#set_sensitive false;
         source_view#set_editable false
       in
       let unlock_world _ =
+       let source_view = source_view () in
         main#buttonsToolbar#misc#set_sensitive true;
         main#scriptMenu#misc#set_sensitive true;
         source_view#set_editable true;
@@ -661,7 +509,7 @@ class gui () =
         GtkThread.sync (fun () -> ()) ()
       in
       let worker_thread = ref None in
-      let notify_exn exn =
+      let notify_exn (source_view : GSourceView2.source_view) exn =
        let floc, msg = MatitaExcPp.to_string exn in
         begin
          match floc with
@@ -672,56 +520,58 @@ class gui () =
              let locked_mark = script#locked_mark in
              let error_tag = script#error_tag in
              let baseoffset =
-              (source_buffer#get_iter_at_mark (`MARK locked_mark))#offset in
+              (source_view#source_buffer#get_iter_at_mark (`MARK locked_mark))#offset in
              let x' = baseoffset + x in
              let y' = baseoffset + y in
-             let x_iter = source_buffer#get_iter (`OFFSET x') in
-             let y_iter = source_buffer#get_iter (`OFFSET y') in
-             source_buffer#apply_tag error_tag ~start:x_iter ~stop:y_iter;
+             let x_iter = source_view#source_buffer#get_iter (`OFFSET x') in
+             let y_iter = source_view#source_buffer#get_iter (`OFFSET y') in
+             source_view#source_buffer#apply_tag error_tag ~start:x_iter ~stop:y_iter;
              let id = ref None in
-             id := Some (source_buffer#connect#changed ~callback:(fun () ->
-               source_buffer#remove_tag error_tag
-                 ~start:source_buffer#start_iter
-                 ~stop:source_buffer#end_iter;
+             id := Some (source_view#source_buffer#connect#changed ~callback:(fun () ->
+               source_view#source_buffer#remove_tag error_tag
+                 ~start:source_view#source_buffer#start_iter
+                 ~stop:source_view#source_buffer#end_iter;
                match !id with
                | None -> assert false (* a race condition occurred *)
                | Some id ->
-                   (new GObj.gobject_ops source_buffer#as_buffer)#disconnect id));
-             source_buffer#place_cursor
-              (source_buffer#get_iter (`OFFSET x'));
+                   (new GObj.gobject_ops source_view#source_buffer#as_buffer)#disconnect id));
+             source_view#source_buffer#place_cursor
+              (source_view#source_buffer#get_iter (`OFFSET x'));
         end;
         HLog.error msg in
-      let locker f () =
+      let locker f script =
+       let source_view = script#source_view in
        let thread_main =
         fun () -> 
           lock_world ();
           let saved_use_library= !MultiPassDisambiguator.use_library in
           try
            MultiPassDisambiguator.use_library := !all_disambiguation_passes;
-           f ();
+           f script;
            MultiPassDisambiguator.use_library := saved_use_library;
            unlock_world ()
           with
            | MultiPassDisambiguator.DisambiguationError (offset,errorll) ->
               (try
                 interactive_error_interp 
-                 ~all_passes:!all_disambiguation_passes source_buffer
-                 notify_exn offset errorll (s())#filename
+                 ~all_passes:!all_disambiguation_passes source_view#source_buffer
+                 (notify_exn source_view) offset errorll (s())#filename
                with
                 | UseLibrary ->
                    MultiPassDisambiguator.use_library := true;
-                   (try f ()
+                   (try f script
                     with
                     | MultiPassDisambiguator.DisambiguationError (offset,errorll) ->
-                       interactive_error_interp ~all_passes:true source_buffer
-                        notify_exn offset errorll (s())#filename
+                       interactive_error_interp ~all_passes:true source_view#source_buffer
+                        (notify_exn source_view) offset errorll (s())#filename
                     | exc ->
-                       notify_exn exc);
-                | exc -> notify_exn exc);
+                       notify_exn source_view exc);
+                | exc -> notify_exn source_view exc);
               MultiPassDisambiguator.use_library := saved_use_library;
               unlock_world ()
            | exc ->
-              (try notify_exn exc with Sys.Break as e -> notify_exn e);
+              (try notify_exn source_view exc
+               with Sys.Break as e -> notify_exn source_view e);
               unlock_world ()
        in
        (*thread_main ();*)
@@ -746,12 +596,11 @@ class gui () =
          match !worker_thread with
             None -> assert false
           | Some t -> interrupt := Some (Thread.id t) in
-      let keep_focus f =
-        fun () ->
+      let keep_focus f (script: MatitaScript.script) =
          try
-          f (); source_view#misc#grab_focus ()
+          f script; script#source_view#misc#grab_focus ()
          with
-          exc -> source_view#misc#grab_focus (); raise exc in
+          exc -> script#source_view#misc#grab_focus (); raise exc in
       
         (* file selection win *)
       ignore (fileSel#fileSelectionWin#event#connect#delete (fun _ -> true));
@@ -794,48 +643,48 @@ class gui () =
           else main#tacticsButtonsHandlebox#misc#hide ())
         ~check:main#menuitemPalette;
       connect_button main#butImpl_intro
-        (fun () -> source_buffer#insert "apply rule (⇒#i […] (…));\n");
+        (fun () -> (source_view ())#source_buffer#insert "apply rule (⇒#i […] (…));\n");
       connect_button main#butAnd_intro
-        (fun () -> source_buffer#insert 
+        (fun () -> (source_view ())#source_buffer#insert 
           "apply rule (∧#i (…) (…));\n\t[\n\t|\n\t]\n");
       connect_button main#butOr_intro_left
-        (fun () -> source_buffer#insert "apply rule (∨#i_l (…));\n");
+        (fun () -> (source_view ())#source_buffer#insert "apply rule (∨#i_l (…));\n");
       connect_button main#butOr_intro_right
-        (fun () -> source_buffer#insert "apply rule (∨#i_r (…));\n");
+        (fun () -> (source_view ())#source_buffer#insert "apply rule (∨#i_r (…));\n");
       connect_button main#butNot_intro
-        (fun () -> source_buffer#insert "apply rule (¬#i […] (…));\n");
+        (fun () -> (source_view ())#source_buffer#insert "apply rule (¬#i […] (…));\n");
       connect_button main#butTop_intro
-        (fun () -> source_buffer#insert "apply rule (⊤#i);\n");
+        (fun () -> (source_view ())#source_buffer#insert "apply rule (⊤#i);\n");
       connect_button main#butImpl_elim
-        (fun () -> source_buffer#insert 
+        (fun () -> (source_view ())#source_buffer#insert 
           "apply rule (⇒#e (…) (…));\n\t[\n\t|\n\t]\n");
       connect_button main#butAnd_elim_left
-        (fun () -> source_buffer#insert "apply rule (∧#e_l (…));\n");
+        (fun () -> (source_view ())#source_buffer#insert "apply rule (∧#e_l (…));\n");
       connect_button main#butAnd_elim_right
-        (fun () -> source_buffer#insert "apply rule (∧#e_r (…));\n");
+        (fun () -> (source_view ())#source_buffer#insert "apply rule (∧#e_r (…));\n");
       connect_button main#butOr_elim
-        (fun () -> source_buffer#insert 
+        (fun () -> (source_view ())#source_buffer#insert 
           "apply rule (∨#e (…) […] (…) […] (…));\n\t[\n\t|\n\t|\n\t]\n");
       connect_button main#butNot_elim
-        (fun () -> source_buffer#insert 
+        (fun () -> (source_view ())#source_buffer#insert 
           "apply rule (¬#e (…) (…));\n\t[\n\t|\n\t]\n");
       connect_button main#butBot_elim
-        (fun () -> source_buffer#insert "apply rule (⊥#e (…));\n");
+        (fun () -> (source_view ())#source_buffer#insert "apply rule (⊥#e (…));\n");
       connect_button main#butRAA
-        (fun () -> source_buffer#insert "apply rule (RAA […] (…));\n");
+        (fun () -> (source_view ())#source_buffer#insert "apply rule (RAA […] (…));\n");
       connect_button main#butUseLemma
-        (fun () -> source_buffer#insert "apply rule (lem #premises name …);\n");
+        (fun () -> (source_view ())#source_buffer#insert "apply rule (lem #premises name …);\n");
       connect_button main#butDischarge
-        (fun () -> source_buffer#insert "apply rule (discharge […]);\n");
+        (fun () -> (source_view ())#source_buffer#insert "apply rule (discharge […]);\n");
       
       connect_button main#butForall_intro
-        (fun () -> source_buffer#insert "apply rule (∀#i {…} (…));\n");
+        (fun () -> (source_view ())#source_buffer#insert "apply rule (∀#i {…} (…));\n");
       connect_button main#butForall_elim
-        (fun () -> source_buffer#insert "apply rule (∀#e {…} (…));\n");
+        (fun () -> (source_view ())#source_buffer#insert "apply rule (∀#e {…} (…));\n");
       connect_button main#butExists_intro
-        (fun () -> source_buffer#insert "apply rule (∃#i {…} (…));\n");
+        (fun () -> (source_view ())#source_buffer#insert "apply rule (∃#i {…} (…));\n");
       connect_button main#butExists_elim
-        (fun () -> source_buffer#insert 
+        (fun () -> (source_view ())#source_buffer#insert 
           "apply rule (∃#e (…) {…} […] (…));\n\t[\n\t|\n\t]\n");
 
     
@@ -868,13 +717,9 @@ class gui () =
         | MatitaScript.ActionCancelled s -> HLog.error s
         | exn ->
           if not (Helm_registry.get_bool "matita.debug") then
-           notify_exn exn
+           (*CSC: MatitaScript.current ??? *)
+           notify_exn (MatitaScript.current ())#source_view exn
           else raise exn);
-        (* script *)
-      let _ =
-       source_buffer#set_language (Some MatitaGtkMisc.matita_lang);
-       source_buffer#set_highlight_syntax true
-      in
       let disableSave () =
         (s())#assignFileName None;
         main#saveMenuItem#misc#set_sensitive false
@@ -898,6 +743,7 @@ class gui () =
         else saveAsScript ()
       in
       let abandon_script () =
+       let source_view = source_view () in
         let grafite_status = (s ())#grafite_status in
         if source_view#buffer#modified then
           (match ask_unsaved main#toplevel with
@@ -907,6 +753,7 @@ class gui () =
         save_moo grafite_status
       in
       let loadScript () =
+        let source_view = source_view () in
         let script = s () in 
         try 
           match self#chooseFile () with
@@ -925,6 +772,7 @@ class gui () =
         with MatitaTypes.Cancel -> ()
       in
       let newScript () = 
+        let source_view = source_view () in
         abandon_script ();
         source_view#source_buffer#begin_not_undoable_action ();
         (s ())#reset (); 
@@ -933,20 +781,22 @@ class gui () =
         disableSave ()
       in
       let cursor () =
-        source_buffer#place_cursor
-          (source_buffer#get_iter_at_mark (`NAME "locked")) in
-      let advance _ = (MatitaScript.current ())#advance (); cursor () in
-      let retract _ = (MatitaScript.current ())#retract (); cursor () in
-      let top _ = (MatitaScript.current ())#goto `Top (); cursor () in
-      let bottom _ = (MatitaScript.current ())#goto `Bottom (); cursor () in
-      let jump _ = (MatitaScript.current ())#goto `Cursor (); cursor () in
-      let advance = locker (keep_focus advance) in
-      let retract = locker (keep_focus retract) in
-      let top = locker (keep_focus top) in
-      let bottom = locker (keep_focus bottom) in
-      let jump = locker (keep_focus jump) in
+       let source_view = source_view () in
+        source_view#source_buffer#place_cursor
+          (source_view#source_buffer#get_iter_at_mark (`NAME "locked")) in
+      let advance (script: MatitaScript.script) = script#advance (); cursor () in
+      let retract (script: MatitaScript.script) = script#retract (); cursor () in
+      let top (script: MatitaScript.script) = script#goto `Top (); cursor () in
+      let bottom (script: MatitaScript.script) = script#goto `Bottom (); cursor () in
+      let jump (script: MatitaScript.script) = script#goto `Cursor (); cursor () in
+      let advance () = locker (keep_focus advance) (MatitaScript.current ()) in
+      let retract () = locker (keep_focus retract) (MatitaScript.current ()) in
+      let top () = locker (keep_focus top) (MatitaScript.current ()) in
+      let bottom () = locker (keep_focus bottom) (MatitaScript.current ()) in
+      let jump () = locker (keep_focus jump) (MatitaScript.current ()) in
         (* quit *)
       self#setQuitCallback (fun () -> 
+(*CSC: iterare su tutti gli script! 
         let script = MatitaScript.current () in
         if source_view#buffer#modified then
           match ask_unsaved main#toplevel with
@@ -958,7 +808,7 @@ class gui () =
           | `CANCEL -> ()
         else 
           (save_moo script#grafite_status;
-          GMain.Main.quit ()));
+          GMain.Main.quit ())*) assert false);
       connect_button main#scriptAdvanceButton advance;
       connect_button main#scriptRetractButton retract;
       connect_button main#scriptTopButton top;
@@ -990,8 +840,6 @@ class gui () =
         (fun _ -> 
           let c = MatitaMathView.cicBrowser () in
           c#load (`About `TeX));
-         (* script monospace font stuff *)  
-      self#updateFontSize ();
         (* debug menu *)
       main#debugMenu#misc#hide ();
         (* HBUGS *)
@@ -1001,8 +849,6 @@ class gui () =
       main#hintMediumImage#set_file (image_path "matita-bulb-medium.png");
       main#hintHighImage#set_file (image_path "matita-bulb-high.png");
       *)
-        (* focus *)
-      self#sourceView#misc#grab_focus ();
         (* main win dimension *)
       let width = Gdk.Screen.width ~screen:(Gdk.Screen.default ()) () in
       let height = Gdk.Screen.height ~screen:(Gdk.Screen.default ()) () in
@@ -1014,177 +860,18 @@ class gui () =
       let script_w = main_w * 6 / 10 in
       main#toplevel#resize ~width:main_w ~height:main_h;
       main#hpaneScriptSequent#set_position script_w;
-        (* source_view *)
-      ignore(source_view#connect#after#paste_clipboard 
-        ~callback:(fun () -> (MatitaScript.current ())#clean_dirty_lock));
-      (* clean_locked is set to true only "during" a PRIMARY paste
-         operation (i.e. by clicking with the second mouse button) *)
-      let clean_locked = ref false in
-      ignore(source_view#event#connect#button_press
-        ~callback:
-          (fun button ->
-            if GdkEvent.Button.button button = 2 then
-             clean_locked := true;
-            false
-          ));
-      ignore(source_view#event#connect#button_release
-        ~callback:(fun button -> clean_locked := false; false));
-      ignore(source_view#buffer#connect#after#apply_tag
-       ~callback:(
-         fun tag ~start:_ ~stop:_ ->
-          if !clean_locked &&
-             tag#get_oid = (MatitaScript.current ())#locked_tag#get_oid
-          then
-           begin
-            clean_locked := false;
-            (MatitaScript.current ())#clean_dirty_lock;
-            clean_locked := true
-           end));
       (* math view handling *)
       connect_menu_item main#newCicBrowserMenuItem (fun () ->
         ignore(MatitaMathView.cicBrowser ()));
-      connect_menu_item main#increaseFontSizeMenuItem (fun () ->
-        self#increaseFontSize ();
-        MatitaMisc.increase_font_size ();
-        MatitaMathView.update_font_sizes ());
-      connect_menu_item main#decreaseFontSizeMenuItem (fun () ->
-        self#decreaseFontSize ();
-        MatitaMisc.decrease_font_size ();
-        MatitaMathView.update_font_sizes ());
-      connect_menu_item main#normalFontSizeMenuItem (fun () ->
-        self#resetFontSize ();
-        MatitaMisc.reset_font_size ();
-        MatitaMathView.update_font_sizes ());
-      MatitaMisc.reset_font_size ();
-
-      (** selections / clipboards handling *)
-
-    method markupSelected = MatitaMathView.has_selection ()
-    method private textSelected =
-      (source_buffer#get_iter_at_mark `INSERT)#compare
-        (source_buffer#get_iter_at_mark `SEL_BOUND) <> 0
-    method private somethingSelected = self#markupSelected || self#textSelected
-    method private markupStored = MatitaMathView.has_clipboard ()
-    method private textStored = clipboard#text <> None
-    method private somethingStored = self#markupStored || self#textStored
-
-    method canCopy = self#somethingSelected
-    method canCut = self#textSelected
-    method canDelete = self#textSelected
-    method canPaste = self#somethingStored
-    method canPastePattern = self#markupStored
-
-    method copy () =
-      if self#textSelected
-      then begin
-        MatitaMathView.empty_clipboard ();
-        source_view#buffer#copy_clipboard clipboard;
-      end else
-        MatitaMathView.copy_selection ()
-    method cut () =
-      source_view#buffer#cut_clipboard clipboard;
-      MatitaMathView.empty_clipboard ()
-    method delete () = ignore (source_view#buffer#delete_selection ())
-    method paste () =
-      if MatitaMathView.has_clipboard ()
-      then source_view#buffer#insert (MatitaMathView.paste_clipboard `Term)
-      else source_view#buffer#paste_clipboard clipboard;
-      (MatitaScript.current ())#clean_dirty_lock
-    method pastePattern () =
-      source_view#buffer#insert (MatitaMathView.paste_clipboard `Pattern)
-    
-    method private expand_virtual_if_any iter tok =
-      try
-       let len = MatitaGtkMisc.utf8_string_length tok in
-       let last_word =
-        let prev = iter#copy#backward_chars len in
-         prev#get_slice ~stop:(prev#copy#backward_find_char 
-          (fun x -> Glib.Unichar.isspace x || x = Glib.Utf8.first_char "\\"))
-       in
-       let inplaceof, symb = Virtuals.symbol_of_virtual last_word in
-       self#reset_similarsymbols;
-       let s = Glib.Utf8.from_unichar symb in
-       assert(Glib.Utf8.validate s);
-       source_buffer#delete ~start:iter 
-         ~stop:(iter#copy#backward_chars
-           (MatitaGtkMisc.utf8_string_length inplaceof + len));
-       source_buffer#insert ~iter
-         (if inplaceof.[0] = '\\' then s else (s ^ tok));
-       true
-      with Virtuals.Not_a_virtual -> false
-         
-    val similar_memory = Hashtbl.create 97
-    val mutable old_used_memory = false
-
-    method private nextSimilarSymbol () = 
-      let write_similarsymbol s =
-        let s = Glib.Utf8.from_unichar s in
-        let iter = source_buffer#get_iter_at_mark `INSERT in
-        assert(Glib.Utf8.validate s);
-        source_buffer#delete ~start:iter ~stop:(iter#copy#backward_chars 1);
-        source_buffer#insert ~iter:(source_buffer#get_iter_at_mark `INSERT) s;
-        (try source_buffer#delete_mark similarsymbols_tag
-         with GText.No_such_mark _ -> ());
-        ignore(source_buffer#create_mark ~name:similarsymbols_tag_name
-          (source_buffer#get_iter_at_mark `INSERT));
-      in
-      let new_similarsymbol =
-        try
-          let iter_ins = source_buffer#get_iter_at_mark `INSERT in
-          let iter_lig = source_buffer#get_iter_at_mark similarsymbols_tag in
-          not (iter_ins#equal iter_lig)
-        with GText.No_such_mark _ -> true
-      in
-      if new_similarsymbol then
-        (if not(self#expand_virtual_if_any (source_buffer#get_iter_at_mark `INSERT) "")then
-          let last_symbol = 
-            let i = source_buffer#get_iter_at_mark `INSERT in
-            Glib.Utf8.first_char (i#get_slice ~stop:(i#copy#backward_chars 1))
-          in
-          (match Virtuals.similar_symbols last_symbol with
-          | [] ->  ()
-          | eqclass ->
-              similarsymbols_orig <- eqclass;
-              let is_used = 
-                try Hashtbl.find similar_memory similarsymbols_orig  
-                with Not_found -> 
-                  let is_used = List.map (fun x -> x,false) eqclass in
-                  Hashtbl.add similar_memory eqclass is_used; 
-                  is_used
-              in
-              let hd, next, tl = 
-                let used, unused = 
-                  List.partition (fun s -> List.assoc s is_used) eqclass 
-                in
-                match used @ unused with a::b::c -> a,b,c | _ -> assert false
-              in
-              let hd, tl = 
-                if hd = last_symbol then next, tl @ [hd] else hd, (next::tl)
-              in
-              old_used_memory <- List.assoc hd is_used;
-              let is_used = 
-                (hd,true) :: List.filter (fun (x,_) -> x <> hd) is_used
-              in
-              Hashtbl.replace similar_memory similarsymbols_orig is_used;
-              write_similarsymbol hd;
-              similarsymbols <- tl @ [ hd ]))
-      else 
-        match similarsymbols with
-        | [] -> ()
-        | hd :: tl ->
-            let is_used = Hashtbl.find similar_memory similarsymbols_orig in
-            let last = HExtlib.list_last tl in
-            let old_used_for_last = old_used_memory in
-            old_used_memory <- List.assoc hd is_used;
-            let is_used = 
-              (hd, true) :: (last,old_used_for_last) ::
-                List.filter (fun (x,_) -> x <> last && x <> hd) is_used 
-            in
-            Hashtbl.replace similar_memory similarsymbols_orig is_used;
-            similarsymbols <- tl @ [ hd ];
-            write_similarsymbol hd
+      connect_menu_item main#increaseFontSizeMenuItem
+        MatitaMisc.increase_font_size;
+      connect_menu_item main#decreaseFontSizeMenuItem
+        MatitaMisc.decrease_font_size;
+      connect_menu_item main#normalFontSizeMenuItem
+        MatitaMisc.reset_font_size;
 
     method private externalEditor () =
+     let source_view = source_view () in
       let cmd = Helm_registry.get "matita.external_editor" in
 (* ZACK uncomment to enable interactive ask of external editor command *)
 (*      let cmd =
@@ -1200,8 +887,8 @@ class gui () =
       let script = MatitaScript.current () in
       let fname = script#filename in
       let slice mark =
-        source_buffer#start_iter#get_slice
-          ~stop:(source_buffer#get_iter_at_mark mark)
+        source_view#source_buffer#start_iter#get_slice
+          ~stop:(source_view#source_buffer#get_iter_at_mark mark)
       in
       let locked = `MARK script#locked_mark in
       let string_pos mark = string_of_int (String.length (slice mark)) in
@@ -1214,21 +901,21 @@ class gui () =
               cmd))
       in
       let locked_before = slice locked in
-      let locked_offset = (source_buffer#get_iter_at_mark locked)#offset in
+      let locked_offset = (source_view#source_buffer#get_iter_at_mark locked)#offset in
       ignore (Unix.system cmd);
-      source_buffer#set_text (HExtlib.input_file fname);
-      let locked_iter = source_buffer#get_iter (`OFFSET locked_offset) in
-      source_buffer#move_mark locked locked_iter;
-      source_buffer#apply_tag script#locked_tag
-        ~start:source_buffer#start_iter ~stop:locked_iter;
+      source_view#source_buffer#set_text (HExtlib.input_file fname);
+      let locked_iter = source_view#source_buffer#get_iter (`OFFSET locked_offset) in
+      source_view#source_buffer#move_mark locked locked_iter;
+      source_view#source_buffer#apply_tag script#locked_tag
+        ~start:source_view#source_buffer#start_iter ~stop:locked_iter;
       let locked_after = slice locked in
       let line = ref 0 in
       let col = ref 0 in
       try
         for i = 0 to String.length locked_before - 1 do
           if locked_before.[i] <> locked_after.[i] then begin
-            source_buffer#place_cursor
-              ~where:(source_buffer#get_iter (`LINEBYTE (!line, !col)));
+            source_view#source_buffer#place_cursor
+              ~where:(source_view#source_buffer#get_iter (`LINEBYTE (!line, !col)));
             script#goto `Cursor ();
             raise Exit
           end else if locked_before.[i] = '\n' then begin
@@ -1241,6 +928,7 @@ class gui () =
       | Invalid_argument _ -> script#goto `Bottom ()
 
     method loadScript file =       
+     let source_view = source_view () in
       let script = MatitaScript.current () in
       script#reset (); 
       script#assignFileName (Some file);
@@ -1261,8 +949,6 @@ class gui () =
       self#main#saveMenuItem#misc#set_sensitive true
         
     method console = console
-    method sourceView: GSourceView2.source_view =
-      (source_view: GSourceView2.source_view)
     method fileSel = fileSel
     method findRepl = findRepl
     method main = main
@@ -1337,22 +1023,6 @@ class gui () =
       dialog#textDialog#show ();
       GtkThread.main ();
       !text
-
-    method private updateFontSize () =
-      self#sourceView#misc#modify_font_by_name
-        (sprintf "%s %d" BuildTimeConf.script_font font_size)
-
-    method increaseFontSize () =
-      font_size <- font_size + 1;
-      self#updateFontSize ()
-
-    method decreaseFontSize () =
-      font_size <- font_size - 1;
-      self#updateFontSize ()
-
-    method resetFontSize () =
-      font_size <- default_font_size;
-      self#updateFontSize ()
 
   end
 

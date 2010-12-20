@@ -191,14 +191,24 @@ let left_button = 1
 let middle_button = 2
 let right_button = 3
 
+(* Font size management *)
 let default_font_size () =
   Helm_registry.get_opt_default Helm_registry.int
     ~default:BuildTimeConf.default_font_size "matita.font_size"
-let current_font_size = ref ~-1
+let current_font_size = ref (default_font_size ())
+let font_size_observers = ref [];;
+let observe_font_size (f: int -> unit) =
+ f !current_font_size;
+ font_size_observers := f :: !font_size_observers;;
+let observe () =
+ List.iter (fun f -> f !current_font_size) !font_size_observers;;
 let get_current_font_size () = !current_font_size
-let increase_font_size () = incr current_font_size
-let decrease_font_size () = decr current_font_size
-let reset_font_size () = current_font_size := default_font_size ()
+let increase_font_size () =
+ incr current_font_size; observe ()
+let decrease_font_size () =
+ decr current_font_size; observe ()
+let reset_font_size () =
+ current_font_size := default_font_size (); observe ()
 
 let gui_instance = ref None
 let set_gui (gui : MatitaGuiTypes.gui) = gui_instance := Some gui

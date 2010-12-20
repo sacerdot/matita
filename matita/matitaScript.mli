@@ -40,6 +40,14 @@ object
 
   method addObserver : (GrafiteTypes.status -> unit) -> unit
 
+  (** {2 Unicode handling} *)
+  method nextSimilarSymbol: unit
+
+  (** {2 Undo/redo} *)
+
+  method safe_undo: unit
+  method safe_redo: unit
+
   (** {2 History} *)
 
   method advance : ?statement:string -> unit -> unit
@@ -47,6 +55,22 @@ object
   method goto: [`Top | `Bottom | `Cursor] -> unit -> unit
   method reset: unit -> unit
   method template: unit -> unit
+
+    (** {2 Selections / clipboards handling} *)
+
+  method markupSelected: bool
+  method canCopy: bool
+  method canCut: bool
+  method canDelete: bool
+  (*CSC: WRONG CODE: we should look in the clipboard instead! *)
+  method canPaste: bool
+  method canPastePattern: bool
+
+  method copy:         unit -> unit
+  method cut:          unit -> unit
+  method delete:       unit -> unit
+  method paste:        unit -> unit
+  method pastePattern: unit -> unit
 
   (** {2 Load/save} *)
   
@@ -74,6 +98,7 @@ object
   (** misc *)
   method clean_dirty_lock: unit
   method set_star: bool -> unit
+  method source_view: GSourceView2.source_view
   
   (* debug *)
   method dump : unit -> unit
@@ -82,8 +107,7 @@ object
 end
 
 val script: 
-  source_view:GSourceView2.source_view -> 
-  urichooser: (NReference.reference list -> NReference.reference list) -> 
+  urichooser: (GSourceView2.source_view -> NReference.reference list -> NReference.reference list) -> 
   ask_confirmation: 
     (title:string -> message:string -> [`YES | `NO | `CANCEL]) -> 
   unit -> 

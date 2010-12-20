@@ -49,10 +49,8 @@ object
   method fileSel :      MatitaGeneratedGui.fileSelectionWin
   method main :         MatitaGeneratedGui.mainWin
   method findRepl :     MatitaGeneratedGui.findReplWin
-(*   method toolbar :      MatitaGeneratedGui.toolBarWin *)
 
   method console:       console
-  method sourceView:    GSourceView2.source_view
 
     (** {2 Dialogs instantiation}
      * methods below create a new window on each invocation. You should
@@ -62,22 +60,6 @@ object
   method newUriDialog:          unit -> MatitaGeneratedGui.uriChoiceDialog
   method newConfirmationDialog: unit -> MatitaGeneratedGui.confirmationDialog
   method newEmptyDialog:        unit -> MatitaGeneratedGui.emptyDialog
-
-    (** {2 Selections / clipboards handling} *)
-
-  method canCopy:         bool
-  method canCut:          bool
-  method canDelete:       bool
-  method canPaste:        bool
-  method canPastePattern: bool
-
-  method markupSelected:  bool
-
-  method copy:         unit -> unit
-  method cut:          unit -> unit
-  method delete:       unit -> unit
-  method paste:        unit -> unit
-  method pastePattern: unit -> unit
 
     (** {2 Utility methods} *)
 
@@ -90,11 +72,6 @@ object
   method askText: ?title:string -> ?msg:string -> unit -> string option
 
   method loadScript: string -> unit
-
-    (** {3 Fonts} *)
-  method increaseFontSize: unit -> unit
-  method decreaseFontSize: unit -> unit
-  method resetFontSize: unit -> unit
 end
 
 type paste_kind = [ `Term | `Pattern ]

@@ -29,9 +29,6 @@ class type cicMathView =
 object
   inherit GObj.widget
 
-  method set_font_size: int -> unit
-  method update_font_size: unit
-
   method load_root : root:document_element -> unit
   method remove_selections: unit
   method set_selection: document_element option -> unit

@@ -245,12 +245,28 @@ let fresh_script_id =
   let i = ref 0 in
   fun () -> incr i; !i
 
-class script  ~(source_view: GSourceView2.source_view)
-              ~ask_confirmation
-              ~urichooser 
-              () =
+(** Selection handling
+ * Two clipboards are used: "clipboard" and "primary".
+ * "primary" is used by X, when you hit the middle button mouse is content is
+ *    pasted between applications. In Matita this selection always contain the
+ *    textual version of the selected term.
+ * "clipboard" is used inside Matita only and support ATM two different targets:
+ *    "TERM" and "PATTERN", in the future other targets like "MATHMLCONTENT" may
+ *    be added
+ *)
+class script ~ask_confirmation ~urichooser () =
+let source_view =
+  GSourceView2.source_view
+    ~auto_indent:true
+    ~insert_spaces_instead_of_tabs:true ~tab_width:2
+    ~right_margin_position:80 ~show_right_margin:true
+    ~smart_home_end:`AFTER
+    ~packing:(MatitaMisc.get_gui ())#main#scriptScrolledWin#add
+    () in
 let buffer = source_view#buffer in
 let source_buffer = source_view#source_buffer in
+let similarsymbols_tag_name = "similarsymbolos" in
+let similarsymbols_tag = `NAME similarsymbols_tag_name in
 let initial_statuses current baseuri =
  let empty_lstatus = new GrafiteDisambiguate.status in
  (match current with
@@ -280,17 +296,25 @@ let default_buri = "cic:/matita/tests" in
 let default_fname = ".unnamed.ma" in
 object (self)
   val mutable include_paths_ = []
+  val clipboard = GData.clipboard Gdk.Atom.clipboard
+  (*val primary = GData.clipboard Gdk.Atom.primary*)
+  val mutable similarsymbols = []
+  val mutable similarsymbols_orig = []
+  val similar_memory = Hashtbl.create 97
+  val mutable old_used_memory = false
 
   val scriptId = fresh_script_id ()
 
   val guistuff = {
-    urichooser = urichooser;
+    urichooser = urichooser source_view;
     ask_confirmation = ask_confirmation;
   }
 
   val mutable filename_ = (None : string option)
 
   method has_name = filename_ <> None
+
+  method source_view = source_view
   
   method include_paths =
     include_paths_ @ 
@@ -319,10 +343,106 @@ object (self)
   method filename = match filename_ with None -> default_fname | Some f -> f
 
   initializer 
+    MatitaMisc.observe_font_size (fun font_size ->
+     source_view#misc#modify_font_by_name
+        (sprintf "%s %d" BuildTimeConf.script_font font_size));
+    source_view#misc#grab_focus ();
+    ignore(source_view#source_buffer#set_language
+     (Some MatitaGtkMisc.matita_lang));
+    ignore(source_view#source_buffer#set_highlight_syntax true);
+    ignore(source_view#connect#after#paste_clipboard 
+        ~callback:(fun () -> self#clean_dirty_lock));
     ignore (GMain.Timeout.add ~ms:300000 
        ~callback:(fun _ -> self#_saveToBackupFile ();true));
     ignore (buffer#connect#modified_changed 
-      (fun _ -> self#set_star buffer#modified))
+      (fun _ -> self#set_star buffer#modified));
+    (* clean_locked is set to true only "during" a PRIMARY paste
+       operation (i.e. by clicking with the second mouse button) *)
+    let clean_locked = ref false in
+    ignore(source_view#event#connect#button_press
+      ~callback:
+        (fun button ->
+          if GdkEvent.Button.button button = 2 then
+           clean_locked := true;
+          false
+        ));
+    ignore(source_view#event#connect#button_release
+      ~callback:(fun button -> clean_locked := false; false));
+    ignore(source_view#buffer#connect#after#apply_tag
+     ~callback:(
+       fun tag ~start:_ ~stop:_ ->
+        if !clean_locked &&
+           tag#get_oid = self#locked_tag#get_oid
+        then
+         begin
+          clean_locked := false;
+          self#clean_dirty_lock;
+          clean_locked := true
+         end));
+    ignore(source_view#source_buffer#connect#after#insert_text 
+     ~callback:(fun iter str -> 
+        if (MatitaMisc.get_gui ())#main#menuitemAutoAltL#active && (str = " " || str = "\n") then 
+          ignore(self#expand_virtual_if_any iter str)));
+    ignore(source_view#connect#after#populate_popup
+     ~callback:(fun pre_menu ->
+       let menu = new GMenu.menu pre_menu in
+       let menuItems = menu#children in
+       let undoMenuItem, redoMenuItem =
+        match menuItems with
+           [undo;redo;sep1;cut;copy;paste;delete;sep2;
+            selectall;sep3;inputmethod;insertunicodecharacter] ->
+              List.iter menu#remove [ copy; cut; delete; paste ];
+              undo,redo
+         | _ -> assert false in
+       let add_menu_item =
+         let i = ref 2 in (* last occupied position *)
+         fun ?label ?stock () ->
+           incr i;
+           GMenu.image_menu_item ?label ?stock ~packing:(menu#insert ~pos:!i)
+            ()
+       in
+       let copy = add_menu_item ~stock:`COPY () in
+       let cut = add_menu_item ~stock:`CUT () in
+       let delete = add_menu_item ~stock:`DELETE () in
+       let paste = add_menu_item ~stock:`PASTE () in
+       let paste_pattern = add_menu_item ~label:"Paste as pattern" () in
+       copy#misc#set_sensitive self#canCopy;
+       cut#misc#set_sensitive self#canCut;
+       delete#misc#set_sensitive self#canDelete;
+       paste#misc#set_sensitive self#canPaste;
+       paste_pattern#misc#set_sensitive self#canPastePattern;
+       MatitaGtkMisc.connect_menu_item copy self#copy;
+       MatitaGtkMisc.connect_menu_item cut self#cut;
+       MatitaGtkMisc.connect_menu_item delete self#delete;
+       MatitaGtkMisc.connect_menu_item paste self#paste;
+       MatitaGtkMisc.connect_menu_item paste_pattern self#pastePattern;
+       let new_undoMenuItem =
+        GMenu.image_menu_item
+         ~image:(GMisc.image ~stock:`UNDO ())
+         ~use_mnemonic:true
+         ~label:"_Undo"
+         ~packing:(menu#insert ~pos:0) () in
+       new_undoMenuItem#misc#set_sensitive
+        (undoMenuItem#misc#get_flag `SENSITIVE);
+       menu#remove (undoMenuItem :> GMenu.menu_item);
+       MatitaGtkMisc.connect_menu_item new_undoMenuItem
+        (fun () -> self#safe_undo);
+       let new_redoMenuItem =
+        GMenu.image_menu_item
+         ~image:(GMisc.image ~stock:`REDO ())
+         ~use_mnemonic:true
+         ~label:"_Redo"
+         ~packing:(menu#insert ~pos:1) () in
+       new_redoMenuItem#misc#set_sensitive
+        (redoMenuItem#misc#get_flag `SENSITIVE);
+        menu#remove (redoMenuItem :> GMenu.menu_item);
+        MatitaGtkMisc.connect_menu_item new_redoMenuItem
+         (fun () -> self#safe_redo)));
+    ignore
+     (source_view#source_buffer#begin_not_undoable_action ();
+      self#reset (); 
+      self#template (); 
+      source_view#source_buffer#end_not_undoable_action ())
 
   val mutable statements = []    (** executed statements *)
 
@@ -343,6 +463,216 @@ object (self)
      ~left_gravity:true buffer#start_iter
   val locked_tag = buffer#create_tag [`BACKGROUND "lightblue"; `EDITABLE false]
   val error_tag = buffer#create_tag [`UNDERLINE `SINGLE; `FOREGROUND "red"]
+
+  (** unicode handling *)
+  method nextSimilarSymbol = 
+    let write_similarsymbol s =
+      let s = Glib.Utf8.from_unichar s in
+      let iter = source_view#source_buffer#get_iter_at_mark `INSERT in
+      assert(Glib.Utf8.validate s);
+      source_view#source_buffer#delete ~start:iter ~stop:(iter#copy#backward_chars 1);
+      source_view#source_buffer#insert ~iter:(source_view#source_buffer#get_iter_at_mark `INSERT) s;
+      (try source_view#source_buffer#delete_mark similarsymbols_tag
+       with GText.No_such_mark _ -> ());
+      ignore(source_view#source_buffer#create_mark ~name:similarsymbols_tag_name
+        (source_view#source_buffer#get_iter_at_mark `INSERT));
+    in
+    let new_similarsymbol =
+      try
+        let iter_ins = source_view#source_buffer#get_iter_at_mark `INSERT in
+        let iter_lig = source_view#source_buffer#get_iter_at_mark similarsymbols_tag in
+        not (iter_ins#equal iter_lig)
+      with GText.No_such_mark _ -> true
+    in
+    if new_similarsymbol then
+      (if not(self#expand_virtual_if_any (source_view#source_buffer#get_iter_at_mark `INSERT) "")then
+        let last_symbol = 
+          let i = source_view#source_buffer#get_iter_at_mark `INSERT in
+          Glib.Utf8.first_char (i#get_slice ~stop:(i#copy#backward_chars 1))
+        in
+        (match Virtuals.similar_symbols last_symbol with
+        | [] ->  ()
+        | eqclass ->
+            similarsymbols_orig <- eqclass;
+            let is_used = 
+              try Hashtbl.find similar_memory similarsymbols_orig  
+              with Not_found -> 
+                let is_used = List.map (fun x -> x,false) eqclass in
+                Hashtbl.add similar_memory eqclass is_used; 
+                is_used
+            in
+            let hd, next, tl = 
+              let used, unused = 
+                List.partition (fun s -> List.assoc s is_used) eqclass 
+              in
+              match used @ unused with a::b::c -> a,b,c | _ -> assert false
+            in
+            let hd, tl = 
+              if hd = last_symbol then next, tl @ [hd] else hd, (next::tl)
+            in
+            old_used_memory <- List.assoc hd is_used;
+            let is_used = 
+              (hd,true) :: List.filter (fun (x,_) -> x <> hd) is_used
+            in
+            Hashtbl.replace similar_memory similarsymbols_orig is_used;
+            write_similarsymbol hd;
+            similarsymbols <- tl @ [ hd ]))
+    else 
+      match similarsymbols with
+      | [] -> ()
+      | hd :: tl ->
+          let is_used = Hashtbl.find similar_memory similarsymbols_orig in
+          let last = HExtlib.list_last tl in
+          let old_used_for_last = old_used_memory in
+          old_used_memory <- List.assoc hd is_used;
+          let is_used = 
+            (hd, true) :: (last,old_used_for_last) ::
+              List.filter (fun (x,_) -> x <> last && x <> hd) is_used 
+          in
+          Hashtbl.replace similar_memory similarsymbols_orig is_used;
+          similarsymbols <- tl @ [ hd ];
+          write_similarsymbol hd
+
+  method private reset_similarsymbols =
+   similarsymbols <- []; 
+   similarsymbols_orig <- []; 
+   try source_view#source_buffer#delete_mark similarsymbols_tag
+   with GText.No_such_mark _ -> ()
+ 
+  method private expand_virtual_if_any iter tok =
+    try
+     let len = MatitaGtkMisc.utf8_string_length tok in
+     let last_word =
+      let prev = iter#copy#backward_chars len in
+       prev#get_slice ~stop:(prev#copy#backward_find_char 
+        (fun x -> Glib.Unichar.isspace x || x = Glib.Utf8.first_char "\\"))
+     in
+     let inplaceof, symb = Virtuals.symbol_of_virtual last_word in
+     self#reset_similarsymbols;
+     let s = Glib.Utf8.from_unichar symb in
+     assert(Glib.Utf8.validate s);
+     source_view#source_buffer#delete ~start:iter 
+       ~stop:(iter#copy#backward_chars
+         (MatitaGtkMisc.utf8_string_length inplaceof + len));
+     source_view#source_buffer#insert ~iter
+       (if inplaceof.[0] = '\\' then s else (s ^ tok));
+     true
+    with Virtuals.Not_a_virtual -> false
+    
+  (** selections / clipboards handling *)
+
+  method markupSelected = MatitaMathView.has_selection ()
+  method private textSelected =
+    (source_view#source_buffer#get_iter_at_mark `INSERT)#compare
+      (source_view#source_buffer#get_iter_at_mark `SEL_BOUND) <> 0
+  method private markupStored = MatitaMathView.has_clipboard ()
+  method private textStored = clipboard#text <> None
+  method canCopy = self#textSelected
+  method canCut = self#textSelected
+  method canDelete = self#textSelected
+  (*CSC: WRONG CODE: we should look in the clipboard instead! *)
+  method canPaste = self#markupStored || self#textStored
+  method canPastePattern = self#markupStored
+
+  method safe_undo =
+   (* phase 1: we save the actual status of the marks and we undo *)
+   let locked_mark = `MARK (self#locked_mark) in
+   let locked_iter = source_view#buffer#get_iter_at_mark locked_mark in
+   let locked_iter_offset = locked_iter#offset in
+   let mark2 =
+    `MARK
+      (source_view#buffer#create_mark ~name:"lock_point"
+        ~left_gravity:true locked_iter) in
+   source_view#source_buffer#undo ();
+   (* phase 2: we save the cursor position and we redo, restoring
+      the previous status of all the marks *)
+   let cursor_iter = source_view#buffer#get_iter_at_mark `INSERT in
+   let mark =
+    `MARK
+      (source_view#buffer#create_mark ~name:"undo_point"
+        ~left_gravity:true cursor_iter)
+   in
+    source_view#source_buffer#redo ();
+    let mark_iter = source_view#buffer#get_iter_at_mark mark in
+    let mark2_iter = source_view#buffer#get_iter_at_mark mark2 in
+    let mark2_iter = mark2_iter#set_offset locked_iter_offset in
+     source_view#buffer#move_mark locked_mark ~where:mark2_iter;
+     source_view#buffer#delete_mark mark;
+     source_view#buffer#delete_mark mark2;
+     (* phase 3: if after the undo the cursor was in the locked area,
+        then we move it there again and we perform a goto *)
+     if mark_iter#offset < locked_iter_offset then
+      begin
+       source_view#buffer#move_mark `INSERT ~where:mark_iter;
+       self#goto `Cursor ();
+      end;
+     (* phase 4: we perform again the undo. This time we are sure that
+        the text to undo is not locked *)
+     source_view#source_buffer#undo ();
+     source_view#misc#grab_focus ()
+
+  method safe_redo =
+   (* phase 1: we save the actual status of the marks, we redo and
+      we undo *)
+   let locked_mark = `MARK (self#locked_mark) in
+   let locked_iter = source_view#buffer#get_iter_at_mark locked_mark in
+   let locked_iter_offset = locked_iter#offset in
+   let mark2 =
+    `MARK
+      (source_view#buffer#create_mark ~name:"lock_point"
+        ~left_gravity:true locked_iter) in
+   source_view#source_buffer#redo ();
+   source_view#source_buffer#undo ();
+   (* phase 2: we save the cursor position and we restore
+      the previous status of all the marks *)
+   let cursor_iter = source_view#buffer#get_iter_at_mark `INSERT in
+   let mark =
+    `MARK
+      (source_view#buffer#create_mark ~name:"undo_point"
+        ~left_gravity:true cursor_iter)
+   in
+    let mark_iter = source_view#buffer#get_iter_at_mark mark in
+    let mark2_iter = source_view#buffer#get_iter_at_mark mark2 in
+    let mark2_iter = mark2_iter#set_offset locked_iter_offset in
+     source_view#buffer#move_mark locked_mark ~where:mark2_iter;
+     source_view#buffer#delete_mark mark;
+     source_view#buffer#delete_mark mark2;
+     (* phase 3: if after the undo the cursor is in the locked area,
+        then we move it there again and we perform a goto *)
+     if mark_iter#offset < locked_iter_offset then
+      begin
+       source_view#buffer#move_mark `INSERT ~where:mark_iter;
+       self#goto `Cursor ();
+      end;
+     (* phase 4: we perform again the redo. This time we are sure that
+        the text to redo is not locked *)
+     source_view#source_buffer#redo ();
+     source_view#misc#grab_focus ()
+   
+
+  method copy () =
+   if self#textSelected
+   then begin
+     MatitaMathView.empty_clipboard ();
+     source_view#buffer#copy_clipboard clipboard;
+   end else
+     MatitaMathView.copy_selection ()
+
+  method cut () =
+   source_view#buffer#cut_clipboard clipboard;
+   MatitaMathView.empty_clipboard ()
+
+  method delete () =
+   ignore (source_view#buffer#delete_selection ())
+
+  method paste () =
+    if MatitaMathView.has_clipboard ()
+    then source_view#buffer#insert (MatitaMathView.paste_clipboard `Term)
+    else source_view#buffer#paste_clipboard clipboard;
+    self#clean_dirty_lock
+
+  method pastePattern () =
+    source_view#buffer#insert (MatitaMathView.paste_clipboard `Pattern)
 
   method locked_mark = locked_mark
   method locked_tag = locked_tag
@@ -702,9 +1032,9 @@ end
 
 let _script = ref None
 
-let script ~source_view ~urichooser ~ask_confirmation ()
+let script ~urichooser ~ask_confirmation ()
 =
-  let s = new script ~source_view ~ask_confirmation ~urichooser () in
+  let s = new script ~ask_confirmation ~urichooser () in
   _script := Some s;
   s
 

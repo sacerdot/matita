@@ -632,10 +632,6 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
         self#_load entry;
         self#_historyAdd entry
 
-      (** {2 methods accessing underlying GtkMathView} *)
-
-    method updateFontSize = mathView#set_font_size (MatitaMisc.get_current_font_size ())
-
       (** {2 methods used by constructor only} *)
 
     method win = win
@@ -707,10 +703,6 @@ let show_entry ?(reuse=false) t =
 
 let refresh_all_browsers () =
   List.iter (fun b -> b#refresh ~force:false ()) !cicBrowsers
-
-let update_font_sizes () =
-  List.iter (fun b -> b#updateFontSize) !cicBrowsers;
-  (cicMathView_instance ())#update_font_size
 
 let get_math_views () =
   (cicMathView_instance ()) :: (List.map (fun b -> b#mathView) !cicBrowsers)

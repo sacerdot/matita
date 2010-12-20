@@ -85,10 +85,11 @@ val right_button: int
 
 (** {2 Global changes} *)
 
+val observe_font_size: (int -> unit) -> unit
 val get_current_font_size: unit -> int
-val increase_font_size:   unit -> unit
-val decrease_font_size:   unit -> unit
-val reset_font_size:      unit -> unit
+val increase_font_size: unit -> unit
+val decrease_font_size: unit -> unit
+val reset_font_size: unit -> unit
 
 (** CSC: these functions should completely disappear (bad design) *)
 val set_gui: MatitaGuiTypes.gui -> unit

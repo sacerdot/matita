@@ -32,7 +32,6 @@ val sequentsViewer_instance:  unit -> MatitaGuiTypes.sequentsViewer
 (** {2 Global changes} *)
 
 val refresh_all_browsers: unit -> unit  (** act on all cicBrowsers *)
-val update_font_sizes:    unit -> unit
 
 (** {2 Rendering in a browser} *)
 

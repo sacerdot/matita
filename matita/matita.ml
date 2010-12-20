@@ -49,14 +49,13 @@ let gui = MatitaGui.instance ()
 let script =
   let s = 
     MatitaScript.script 
-      ~source_view:gui#sourceView
-      ~urichooser:(fun uris ->
+      ~urichooser:(fun source_view uris ->
         try
           MatitaGui.interactive_uri_choice ~selection_mode:`SINGLE
           ~title:"Matita: URI chooser" 
           ~msg:"Select the URI" ~hide_uri_entry:true
           ~hide_try:true ~ok_label:"_Apply" ~ok_action:`SELECT
-          ~copy_cb:(fun s -> gui#sourceView#buffer#insert ("\n"^s^"\n"))
+          ~copy_cb:(fun s -> source_view#buffer#insert ("\n"^s^"\n"))
           () ~id:"boh?" uris
         with MatitaTypes.Cancel -> [])
       ~ask_confirmation:
@@ -67,10 +66,6 @@ let script =
   in
   Predefined_virtuals.load_predefined_virtuals ();
   Predefined_virtuals.load_predefined_classes ();
-  gui#sourceView#source_buffer#begin_not_undoable_action ();
-  s#reset (); 
-  s#template (); 
-  gui#sourceView#source_buffer#end_not_undoable_action ();
   s
   
   (* math viewers *)

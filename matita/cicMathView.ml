@@ -40,9 +40,6 @@ class type cicMathView =
 object
   inherit GObj.widget
 
-  method set_font_size: int -> unit
-  method update_font_size: unit
-
   method load_root : root:document_element -> unit
   method remove_selections: unit
   method set_selection: document_element option -> unit
@@ -182,9 +179,6 @@ object (self)
   inherit GSourceView2.source_view obj
 
   method strings_of_selection = (assert false : (paste_kind * string) list)
-  method update_font_size =
-   self#misc#modify_font_by_name
-     (sprintf "%s %d" BuildTimeConf.script_font (MatitaMisc.get_current_font_size ()))
   method set_href_callback = (function _ -> () : (string -> unit) option -> unit)
   method private set_cic_info = (function _ -> () : unit (*(Cic.conjecture option * (Cic.id, Cic.term) Hashtbl.t *
          (Cic.id, Cic.hypothesis) Hashtbl.t *
@@ -198,15 +192,15 @@ object (self)
   method remove_selections = (() : unit)
   method set_selection = (fun _ -> () : document_element option -> unit)
   method get_selections = (assert false : document_element list)
-  method set_font_size font_size =
-   self#misc#modify_font_by_name
-     (sprintf "%s %d" BuildTimeConf.script_font font_size)
 
   initializer
-    self#set_font_size (MatitaMisc.get_current_font_size ());
     self#source_buffer#set_language (Some MatitaGtkMisc.matita_lang);
     self#source_buffer#set_highlight_syntax true;
-    self#set_editable false
+    self#set_editable false;
+    MatitaMisc.observe_font_size
+     (fun size ->
+       self#misc#modify_font_by_name
+        (sprintf "%s %d" BuildTimeConf.script_font size))
 
 (* MATITA1.0
   inherit GMathViewAux.multi_selection_math_view obj
@@ -223,7 +217,6 @@ object (self)
   val maction_cursor = Gdk.Cursor.create `QUESTION_ARROW
 
   initializer
-    self#set_font_size (MatitaMisc.get_current_font_size ());
     ignore (self#connect#selection_changed self#choose_selection_cb);
     ignore (self#event#connect#button_press self#button_press_cb);
     ignore (self#event#connect#button_release self#button_release_cb);
@@ -447,8 +440,6 @@ object (self)
     | Some elt -> aux elt
     | None -> self#set_selection None);
     selection_changed <- true
-
-  method update_font_size = self#set_font_size (MatitaMisc.get_current_font_size ())
 
     (** find a term by id from stored CIC infos @return either `Hyp if the id
      * correspond to an hypothesis or `Term (cic, hyp) if the id correspond to a
