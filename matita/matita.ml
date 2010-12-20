@@ -47,26 +47,25 @@ let _ =
 let gui = MatitaGui.instance ()
 
 let script =
-  let s = 
-    MatitaScript.script 
-      ~urichooser:(fun source_view uris ->
-        try
-          MatitaGui.interactive_uri_choice ~selection_mode:`SINGLE
-          ~title:"Matita: URI chooser" 
-          ~msg:"Select the URI" ~hide_uri_entry:true
-          ~hide_try:true ~ok_label:"_Apply" ~ok_action:`SELECT
-          ~copy_cb:(fun s -> source_view#buffer#insert ("\n"^s^"\n"))
-          () ~id:"boh?" uris
-        with MatitaTypes.Cancel -> [])
-      ~ask_confirmation:
-        (fun ~title ~message -> 
-            MatitaGtkMisc.ask_confirmation ~title ~message 
-            ~parent:gui#main#toplevel ())
-      ()
-  in
+ MatitaScript.script 
+   ~urichooser:(fun source_view uris ->
+     try
+       MatitaGui.interactive_uri_choice ~selection_mode:`SINGLE
+       ~title:"Matita: URI chooser" 
+       ~msg:"Select the URI" ~hide_uri_entry:true
+       ~hide_try:true ~ok_label:"_Apply" ~ok_action:`SELECT
+       ~copy_cb:(fun s -> source_view#buffer#insert ("\n"^s^"\n"))
+       () ~id:"boh?" uris
+     with MatitaTypes.Cancel -> [])
+   ~ask_confirmation:
+     (fun ~title ~message -> 
+         MatitaGtkMisc.ask_confirmation ~title ~message 
+         ~parent:gui#main#toplevel ())
+   ()
+
+let _ =
   Predefined_virtuals.load_predefined_virtuals ();
   Predefined_virtuals.load_predefined_classes ();
-  s
   
   (* math viewers *)
 let _ =
@@ -168,6 +167,7 @@ let _ =
       (fun _ ->
         prerr_endline "Still cleaning the library: don't be impatient!"));
    prerr_endline "Matita is cleaning up. Please wait.";
+   (*CSC: MatitaScript.current () makes no sense here *)
    let baseuri = 
     (MatitaScript.current ())#grafite_status#baseuri
    in
