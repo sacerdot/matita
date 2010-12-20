@@ -59,7 +59,6 @@ object
   method loadFromFile : string -> unit
   method loadFromString : string -> unit
   method saveToFile : unit -> unit
-  method filename : string
 
   (** {2 Current proof} (if any) *)
 
@@ -74,6 +73,7 @@ object
 
   (** misc *)
   method clean_dirty_lock: unit
+  method set_star: bool -> unit
   
   (* debug *)
   method dump : unit -> unit
@@ -81,14 +81,11 @@ object
 
 end
 
-  (** @param set_star callback used to set the modified symbol (usually a star
-   * "*") on the side of a script name *)
 val script: 
   source_view:GSourceView2.source_view -> 
   urichooser: (NReference.reference list -> NReference.reference list) -> 
   ask_confirmation: 
     (title:string -> message:string -> [`YES | `NO | `CANCEL]) -> 
-  set_star: (bool -> unit) ->
   unit -> 
     script
 

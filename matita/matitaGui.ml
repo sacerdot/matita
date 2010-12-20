@@ -839,10 +839,6 @@ class gui () =
           "apply rule (∃#e (…) {…} […] (…));\n\t[\n\t|\n\t]\n");
 
     
-      (* TO BE REMOVED *)
-      main#scriptNotebook#remove_page 1;
-      main#scriptNotebook#set_show_tabs false;
-      (* / TO BE REMOVED *)
       let module Hr = Helm_registry in
       MatitaGtkMisc.toggle_callback ~check:main#fullscreenMenuItem
         ~callback:(function 
@@ -934,8 +930,7 @@ class gui () =
         (s ())#reset (); 
         (s ())#template (); 
         source_view#source_buffer#end_not_undoable_action ();
-        disableSave ();
-        (s ())#assignFileName None
+        disableSave ()
       in
       let cursor () =
         source_buffer#place_cursor
@@ -1262,17 +1257,6 @@ class gui () =
       console#message ("'"^file^"' loaded.");
       self#_enableSaveTo file
       
-    method setStar b =
-      let s = MatitaScript.current () in
-      let w = main#toplevel in
-      let set x = w#set_title x in
-      let name = 
-        "Matita - " ^ Filename.basename s#filename ^ 
-        (if b then "*" else "") ^
-        " in " ^ s#buri_of_current_file 
-      in
-        set name
-        
     method private _enableSaveTo file =
       self#main#saveMenuItem#misc#set_sensitive true
         

@@ -90,7 +90,6 @@ object
   method askText: ?title:string -> ?msg:string -> unit -> string option
 
   method loadScript: string -> unit
-  method setStar: bool -> unit
 
     (** {3 Fonts} *)
   method increaseFontSize: unit -> unit

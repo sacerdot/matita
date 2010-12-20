@@ -59,7 +59,6 @@ let script =
           ~copy_cb:(fun s -> gui#sourceView#buffer#insert ("\n"^s^"\n"))
           () ~id:"boh?" uris
         with MatitaTypes.Cancel -> [])
-      ~set_star:gui#setStar
       ~ask_confirmation:
         (fun ~title ~message -> 
             MatitaGtkMisc.ask_confirmation ~title ~message 

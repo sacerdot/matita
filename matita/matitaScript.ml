@@ -246,7 +246,6 @@ let fresh_script_id =
   fun () -> incr i; !i
 
 class script  ~(source_view: GSourceView2.source_view)
-              ~set_star
               ~ask_confirmation
               ~urichooser 
               () =
@@ -323,7 +322,7 @@ object (self)
     ignore (GMain.Timeout.add ~ms:300000 
        ~callback:(fun _ -> self#_saveToBackupFile ();true));
     ignore (buffer#connect#modified_changed 
-      (fun _ -> set_star buffer#modified))
+      (fun _ -> self#set_star buffer#modified))
 
   val mutable statements = []    (** executed statements *)
 
@@ -511,17 +510,26 @@ object (self)
     buffer#set_modified false
 
   method assignFileName file =
-    let file = 
-      match file with 
-      | Some f -> Some (Librarian.absolutize f)
-      | None -> None
-    in
-    filename_ <- file; 
-    include_paths_ <- 
-      (match file with Some file -> read_include_paths file | None -> []);
-    self#reset_buffer;
-    Sys.chdir self#curdir;
-    HLog.debug ("Moving to " ^ Sys.getcwd ())
+   match file with
+      None ->
+       (MatitaMisc.get_gui ())#main#scriptLabel#set_text default_fname;
+       filename_ <- None;
+       include_paths_ <- [];
+       self#reset_buffer
+    | Some file ->
+       let f = Librarian.absolutize file in
+        (MatitaMisc.get_gui ())#main#scriptLabel#set_text (Filename.basename f);
+        filename_ <- Some f;
+        include_paths_ <- read_include_paths f;
+        self#reset_buffer;
+        Sys.chdir self#curdir;
+        HLog.debug ("Moving to " ^ Sys.getcwd ())
+
+  method set_star b =
+   let label = (MatitaMisc.get_gui ())#main#scriptLabel in
+   label#set_text ((if b then "*" else "") ^ Filename.basename self#filename);
+   label#misc#set_tooltip_text
+    ("URI: " ^ self#buri_of_current_file ^ "\nPATH: " ^ self#filename)
     
   method saveToFile () =
     if self#has_name then
@@ -529,7 +537,7 @@ object (self)
       output_string oc (buffer#get_text ~start:buffer#start_iter
                         ~stop:buffer#end_iter ());
       close_out oc;
-      set_star false;
+      self#set_star false;
       buffer#set_modified false
     else
       HLog.error "Can't save, no filename selected"
@@ -564,7 +572,7 @@ object (self)
     let template = HExtlib.input_file BuildTimeConf.script_template in 
     buffer#insert ~iter:(buffer#get_iter `START) template;
     buffer#set_modified false;
-    set_star false
+    self#set_star false
 
   method goto (pos: [`Top | `Bottom | `Cursor]) () =
   try  
@@ -694,9 +702,9 @@ end
 
 let _script = ref None
 
-let script ~source_view ~urichooser ~ask_confirmation ~set_star ()
+let script ~source_view ~urichooser ~ask_confirmation ()
 =
-  let s = new script ~source_view ~ask_confirmation ~urichooser ~set_star () in
+  let s = new script ~source_view ~ask_confirmation ~urichooser () in
   _script := Some s;
   s
 
