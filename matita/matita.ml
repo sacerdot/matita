@@ -65,7 +65,8 @@ let script =
 
 let _ =
   Predefined_virtuals.load_predefined_virtuals ();
-  Predefined_virtuals.load_predefined_classes ();
+  Predefined_virtuals.load_predefined_classes ()
+;;
   
   (* math viewers *)
 let _ =
@@ -91,6 +92,7 @@ let _ =
   in
   script#addObserver sequents_observer;
   script#addObserver browser_observer
+;;
 
   (** {{{ Debugging *)
 let _ =
