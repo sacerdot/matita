@@ -835,11 +835,6 @@ object (self)
   method activate =
     self#notify
 
-  method loadFromString s =
-    buffer#set_text s;
-    self#reset_buffer;
-    buffer#set_modified true
-
   method loadFromFile f =
     buffer#set_text (HExtlib.input_file f);
     self#reset_buffer;

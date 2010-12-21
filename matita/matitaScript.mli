@@ -82,7 +82,6 @@ object
   method include_paths: string list
   method assignFileName : string option -> unit (* to the current active file *)
   method loadFromFile : string -> unit
-  method loadFromString : string -> unit
   method saveToFile : unit -> unit
 
   (** {2 Current proof} (if any) *)
