@@ -26,7 +26,7 @@
 (** {2 Instances} *)
 val cicBrowser: unit -> MatitaGuiTypes.cicBrowser
 
-(** {2 Singleton instances} *)
+(** {2 To be called just once} *)
 val sequentsViewer_instance:  GPack.notebook -> MatitaGuiTypes.sequentsViewer
 
 (** {2 Global changes} *)

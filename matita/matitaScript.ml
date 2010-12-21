@@ -832,6 +832,9 @@ object (self)
     let grafite_status = self#grafite_status in
     List.iter (fun o -> o grafite_status) observers
 
+  method activate =
+    self#notify
+
   method loadFromString s =
     buffer#set_text s;
     self#reset_buffer;
@@ -1040,14 +1043,17 @@ let script ~urichooser ~ask_confirmation ~parent ~tab_label ()
   _script := s::!_script;
   s
 
-let current () =
+let at_page page =
  let notebook = (MatitaMisc.get_gui ())#main#scriptNotebook in
- let parent = notebook#get_nth_page notebook#current_page in
+ let parent = notebook#get_nth_page page in
   try
    List.find (fun s -> s#has_parent parent) !_script
   with
    Not_found -> assert false
 ;;
+
+let current () =
+ at_page ((MatitaMisc.get_gui ())#main#scriptNotebook#current_page)
 
 let iter_scripts f = List.iter f !_script;;
 

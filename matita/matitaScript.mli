@@ -50,6 +50,7 @@ object
 
   (** {2 History} *)
 
+  method activate : unit
   method advance : ?statement:string -> unit -> unit
   method retract : unit -> unit
   method goto: [`Top | `Bottom | `Cursor] -> unit -> unit
@@ -117,4 +118,5 @@ val script:
     script
 
 val current: unit -> script
+val at_page: int -> script
 val iter_scripts: (script -> unit) -> unit

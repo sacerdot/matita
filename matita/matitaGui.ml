@@ -914,6 +914,8 @@ class gui () =
         MatitaMisc.decrease_font_size;
       connect_menu_item main#normalFontSizeMenuItem
         MatitaMisc.reset_font_size;
+      ignore (main#scriptNotebook#connect#switch_page
+       (fun page -> (MatitaScript.at_page page)#activate));
 
     method private externalEditor () =
      let script = MatitaScript.current () in
@@ -975,7 +977,6 @@ class gui () =
     method newScript () = 
        let scrolledWindow = GBin.scrolled_window () in
        let tab_label = GMisc.label ~text:"foo" () in
-       ignore (main#scriptNotebook#prepend_page ~tab_label:tab_label#coerce scrolledWindow#coerce);
        let script =
         MatitaScript.script 
           ~urichooser:(fun source_view uris ->
@@ -993,6 +994,7 @@ class gui () =
                 ~parent:(MatitaMisc.get_gui ())#main#toplevel ())
           ~parent:scrolledWindow ~tab_label ()
        in
+        ignore (main#scriptNotebook#prepend_page ~tab_label:tab_label#coerce scrolledWindow#coerce);
         main#scriptNotebook#goto_page 0;
         sequents_viewer#reset;
         sequents_viewer#load_logo;
