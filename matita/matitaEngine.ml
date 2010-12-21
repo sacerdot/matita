@@ -110,27 +110,6 @@ let activate_extraction baseuri fname =
 ;;
 
 
-let eval_macro_screenshot (status : GrafiteTypes.status) name =
-  assert false (* MATITA 1.0
-  let _,_,metasenv,subst,_ = status#obj in
-  let sequent = List.hd metasenv in
-  let mathml = 
-    ApplyTransformation.nmml_of_cic_sequent 
-      status metasenv subst sequent 
-  in
-  let domImpl = Gdome.domImplementation () in
-  ignore(domImpl#saveDocumentToFile 
-    ~name:(name^".xml") ~doc:mathml ());
-  ignore(Sys.command ("mathmlsvg --verbose=1 --font-size=20 --cut-filename=no " ^ 
-    Filename.quote (name^".xml")));
-  ignore(Sys.command ("convert " ^ 
-    Filename.quote (name^".svg") ^ " " ^ 
-    Filename.quote (name^".png")));
-  HLog.debug ("generated " ^ name ^ ".png");
-  status, `New []
-  *)
-;;
-
 let eval_ast ~include_paths ?do_heavy_checks status (text,prefix_len,ast) =
  let baseuri = status#baseuri in
  let new_aliases,new_status =
