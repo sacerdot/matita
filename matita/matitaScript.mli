@@ -84,13 +84,6 @@ object
   method loadFromFile : string -> unit
   method saveToFile : unit -> unit
 
-  (** {2 Current proof} (if any) *)
-
-  method stack: Continuationals.Stack.t       (** @raise Statement_error *)
-
-  method setGoal: int option -> unit
-  method goal: int option
-
   (** end of script, true if the whole script has been executed *)
   method eos: bool
   method bos: bool

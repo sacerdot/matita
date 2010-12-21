@@ -30,7 +30,7 @@ open MatitaGtkMisc
 open MatitaGuiTypes
 open GtkSourceView2
 
-let matita_script_current = ref (fun _ -> (assert false : < advance: ?statement:string -> unit -> unit; grafite_status: GrafiteTypes.status; setGoal: int option -> unit >));;
+let matita_script_current = ref (fun _ -> (assert false : < advance: ?statement:string -> unit -> unit; grafite_status: GrafiteTypes.status >));;
 let register_matita_script_current f = matita_script_current := f;;
 let get_matita_script_current () = !matita_script_current ();;
 

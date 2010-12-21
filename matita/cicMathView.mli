@@ -63,5 +63,5 @@ val screenshot:
 
 (* CSC: these functions should completely disappear; bad design;
    the object type is MatitaScript.script *)
-val register_matita_script_current: (unit -> < advance: ?statement:string -> unit -> unit; grafite_status: GrafiteTypes.status; setGoal: int option -> unit >) -> unit
-val get_matita_script_current: unit -> < advance: ?statement:string -> unit -> unit; grafite_status: GrafiteTypes.status; setGoal: int option -> unit >
+val register_matita_script_current: (unit -> < advance: ?statement:string -> unit -> unit; grafite_status: GrafiteTypes.status >) -> unit
+val get_matita_script_current: unit -> < advance: ?statement:string -> unit -> unit; grafite_status: GrafiteTypes.status >

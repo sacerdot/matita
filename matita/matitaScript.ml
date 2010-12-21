@@ -70,8 +70,7 @@ type guistuff = {
   ask_confirmation: title:string -> message:string -> [`YES | `NO | `CANCEL];
 }
 
-let eval_with_engine include_paths guistuff grafite_status user_goal
- skipped_txt nonskipped_txt st
+let eval_with_engine include_paths guistuff grafite_status skipped_txt nonskipped_txt st
 =
   let parsed_text_length =
     String.length skipped_txt + String.length nonskipped_txt 
@@ -100,7 +99,7 @@ let eval_with_engine include_paths guistuff grafite_status user_goal
 
 let pp_eager_statement_ast = GrafiteAstPp.pp_statement 
 
-let eval_nmacro include_paths (buffer : GText.buffer) guistuff grafite_status user_goal unparsed_text parsed_text script mac =
+let eval_nmacro include_paths (buffer : GText.buffer) guistuff grafite_status unparsed_text parsed_text script mac =
   let parsed_text_length = String.length parsed_text in
   match mac with
   | TA.Screenshot (_,name) -> 
@@ -168,25 +167,24 @@ let eval_nmacro include_paths (buffer : GText.buffer) guistuff grafite_status us
   | TA.NAutoInteractive (_, (Some _,_)) -> assert false
 
 let rec eval_executable include_paths (buffer : GText.buffer) guistuff
-grafite_status user_goal unparsed_text skipped_txt nonskipped_txt
-script ex loc
+grafite_status unparsed_text skipped_txt nonskipped_txt script ex loc
 =
   try
    ignore (buffer#move_mark (`NAME "beginning_of_statement")
     ~where:((buffer#get_iter_at_mark (`NAME "locked"))#forward_chars
        (Glib.Utf8.length skipped_txt))) ;
    eval_with_engine include_paths 
-    guistuff grafite_status user_goal skipped_txt nonskipped_txt
+    guistuff grafite_status skipped_txt nonskipped_txt
      (TA.Executable (loc, ex))
   with
      MatitaTypes.Cancel -> [], "", 0
    | GrafiteEngine.NMacro (_loc,macro) ->
        eval_nmacro include_paths buffer guistuff grafite_status
-        user_goal unparsed_text (skipped_txt ^ nonskipped_txt) script macro
+        unparsed_text (skipped_txt ^ nonskipped_txt) script macro
 
 
 and eval_statement include_paths (buffer : GText.buffer) guistuff 
- grafite_status user_goal script statement
+ grafite_status script statement
 =
   let st,unparsed_text =
     match statement with
@@ -212,12 +210,12 @@ and eval_statement include_paths (buffer : GText.buffer) guistuff
   | GrafiteAst.Executable (loc, ex) ->
      let _, nonskipped, skipped, parsed_text_length = text_of_loc loc in
       eval_executable include_paths buffer guistuff 
-       grafite_status user_goal unparsed_text skipped nonskipped script ex loc
+       grafite_status unparsed_text skipped nonskipped script ex loc
   | GrafiteAst.Comment (loc, GrafiteAst.Code (_, ex))
     when Helm_registry.get_bool "matita.execcomments" ->
      let _, nonskipped, skipped, parsed_text_length = text_of_loc loc in
       eval_executable include_paths buffer guistuff 
-       grafite_status user_goal unparsed_text skipped nonskipped script ex loc
+       grafite_status unparsed_text skipped nonskipped script ex loc
   | GrafiteAst.Comment (loc, _) -> 
       let parsed_text, _, _, parsed_text_length = text_of_loc loc in
       let remain_len = String.length unparsed_text - parsed_text_length in
@@ -225,7 +223,7 @@ and eval_statement include_paths (buffer : GText.buffer) guistuff
       let s,text,len = 
        try
         eval_statement include_paths buffer guistuff 
-         grafite_status user_goal script (`Raw s)
+         grafite_status script (`Raw s)
        with
           HExtlib.Localized (floc, exn) ->
            HExtlib.raise_localized_exception 
@@ -454,9 +452,6 @@ object (self)
       * list is the current state, last element is the state at the beginning of
       * the script.
       * Invariant: this list length is 1 + length of statements *)
-
-  (** goal as seen by the user (i.e. metano corresponding to current tab) *)
-  val mutable userGoal = (None : int option)
 
   (** text mark and tag representing locked part of a script *)
   val locked_mark =
@@ -693,7 +688,7 @@ object (self)
    let entries, newtext, parsed_len = 
     try
      eval_statement self#include_paths buffer guistuff
-      self#grafite_status userGoal self (`Raw s)
+      self#grafite_status self (`Raw s)
     with End_of_file -> raise Margin
    in
    let time2 = Unix.gettimeofday () in
@@ -717,10 +712,7 @@ object (self)
      end;
    end;
    self#moveMark (Glib.Utf8.length new_text);
-   buffer#insert ~iter:(buffer#get_iter_at_mark (`MARK locked_mark)) newtext;
-   (* here we need to set the Goal in case we are going to cursor (or to
-      bottom) and we will face a macro *)
-    userGoal <- None
+   buffer#insert ~iter:(buffer#get_iter_at_mark (`MARK locked_mark)) newtext
 
   method private _retract offset grafite_status new_statements new_history =
     NCicLibrary.time_travel grafite_status;
@@ -884,7 +876,6 @@ object (self)
   method private reset_buffer = 
     statements <- [];
     history <- [ initial_statuses (Some self#grafite_status) self#buri_of_current_file ];
-    userGoal <- None;
     self#notify;
     buffer#remove_tag locked_tag ~start:buffer#start_iter ~stop:buffer#end_iter;
     buffer#move_mark (`MARK locked_mark) ~where:buffer#start_iter
@@ -985,11 +976,6 @@ object (self)
   with Invalid_argument "Array.make" ->
      HLog.error "The script is too big!\n"
   
-  method stack = (assert false : Continuationals.Stack.t) (* MATITA 1.0 GrafiteTypes.get_stack
-  self#grafite_status *)
-  method setGoal n = userGoal <- n
-  method goal = userGoal
-
   method bos = 
     match history with
     | _::[] -> true
@@ -1053,5 +1039,5 @@ let current () =
 let iter_scripts f = List.iter f !_script;;
 
 let _ =
- CicMathView.register_matita_script_current (current :> unit -> < advance: ?statement:string -> unit -> unit; grafite_status: GrafiteTypes.status; setGoal: int option -> unit >)
+ CicMathView.register_matita_script_current (current :> unit -> < advance: ?statement:string -> unit -> unit; grafite_status: GrafiteTypes.status >)
 ;;

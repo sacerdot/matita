@@ -1005,15 +1005,11 @@ class gui () =
              `ProofMode ->
               sequents_viewer#nload_sequents grafite_status;
               (try
-                script#setGoal
-                 (Some (Continuationals.Stack.find_goal grafite_status#stack));
                 let goal =
-                 match script#goal with
-                    None -> assert false
-                  | Some n -> n
+                 Continuationals.Stack.find_goal grafite_status#stack
                 in
                  sequents_viewer#goto_sequent grafite_status goal
-              with Failure _ -> script#setGoal None);
+              with Failure _ -> ());
            | `CommandMode -> sequents_viewer#load_logo
         in
         script#addObserver sequents_observer;

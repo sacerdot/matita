@@ -105,8 +105,7 @@ class sequentsViewer ~(notebook:GPack.notebook) ~(cicMathView:cicMathView) () =
       page2goal <- [];
       goal2page <- [];
       goal2win <- [];
-      _metasenv <- `Old []; 
-      self#script#setGoal None
+      _metasenv <- `Old []
 
     method nload_sequents : 'status. #GrafiteTypes.status as 'status -> unit
     = fun (status : #GrafiteTypes.status) ->
@@ -185,7 +184,6 @@ class sequentsViewer ~(notebook:GPack.notebook) ~(cicMathView:cicMathView) () =
           let goal_switch =
             try List.assoc page page2goal with Not_found -> assert false
           in
-          self#script#setGoal (Some (goal_of_switch goal_switch));
           self#render_page status ~page ~goal_switch))
 
     method private render_page:
