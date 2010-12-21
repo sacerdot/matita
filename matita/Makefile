@@ -38,17 +38,14 @@ MLI = \
 	matitaTypes.mli		\
 	matitaMisc.mli		\
 	applyTransformation.mli	\
-	applyTransformationMml.mli	\
 	matitaEngine.mli	\
 	matitaExcPp.mli 	\
 	matitaInit.mli		\
 	matitaGtkMisc.mli	\
 	virtuals.mli 		\
 	cicMathView.mli 	\
-	cicMathViewMml.mli 	\
 	predefined_virtuals.mli \
 	matitaMathView.mli 	\
-	matitaMathViewMml.mli 	\
 	matitaScript.mli	\
 	matitaGui.mli		\
 	$(NULL)
