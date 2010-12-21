@@ -27,7 +27,7 @@
 val cicBrowser: unit -> MatitaGuiTypes.cicBrowser
 
 (** {2 Singleton instances} *)
-val sequentsViewer_instance:  unit -> MatitaGuiTypes.sequentsViewer
+val sequentsViewer_instance:  GPack.notebook -> MatitaGuiTypes.sequentsViewer
 
 (** {2 Global changes} *)
 

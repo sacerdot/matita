@@ -680,12 +680,16 @@ let default_cicMathView () =
 let cicMathView_instance =
  MatitaMisc.singleton default_cicMathView
 
-let default_sequentsViewer () =
-  let gui = MatitaMisc.get_gui () in
+let default_sequentsViewer notebook =
   let cicMathView = cicMathView_instance () in
-  sequentsViewer ~notebook:gui#main#sequentsNotebook ~cicMathView ()
-let sequentsViewer_instance = MatitaMisc.singleton default_sequentsViewer
-
+  sequentsViewer ~notebook ~cicMathView ()
+let sequentsViewer_instance =
+ let already_used = ref false in
+  fun notebook ->
+   if !already_used then assert false
+   else
+    (already_used := true;
+     default_sequentsViewer notebook)
           
 (** @param reuse if set reused last opened cic browser otherwise 
 *  opens a new one. default is false *)

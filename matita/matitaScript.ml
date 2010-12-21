@@ -254,14 +254,14 @@ let fresh_script_id =
  *    "TERM" and "PATTERN", in the future other targets like "MATHMLCONTENT" may
  *    be added
  *)
-class script ~ask_confirmation ~urichooser () =
+class script ~ask_confirmation ~urichooser ~(parent:GBin.scrolled_window) ~tab_label () =
 let source_view =
   GSourceView2.source_view
     ~auto_indent:true
     ~insert_spaces_instead_of_tabs:true ~tab_width:2
     ~right_margin_position:80 ~show_right_margin:true
     ~smart_home_end:`AFTER
-    ~packing:(MatitaMisc.get_gui ())#main#scriptScrolledWin#add
+    ~packing:parent#add_with_viewport
     () in
 let buffer = source_view#buffer in
 let source_buffer = source_view#source_buffer in
@@ -283,14 +283,17 @@ in
 let read_include_paths file =
  try 
    let root, _buri, _fname, _tgt = 
-     Librarian.baseuri_of_script ~include_paths:[] file 
-   in 
-   let rc = 
-    Str.split (Str.regexp " ") 
-     (List.assoc "include_paths" (Librarian.load_root_file (root^"/root")))
+     Librarian.baseuri_of_script ~include_paths:[] file in 
+   let includes =
+    try
+     Str.split (Str.regexp " ") 
+      (List.assoc "include_paths" (Librarian.load_root_file (root^"/root")))
+    with Not_found -> []
    in
-   List.iter (HLog.debug) rc; rc
- with Librarian.NoRootFor _ | Not_found -> []
+   let rc = root :: includes in
+    List.iter (HLog.debug) rc; rc
+ with Librarian.NoRootFor _ | Librarian.FileNotFound _ ->
+  []
 in
 let default_buri = "cic:/matita/tests" in
 let default_fname = ".unnamed.ma" in
@@ -323,7 +326,7 @@ object (self)
   method private curdir =
     try
      let root, _buri, _fname, _tgt = 
-       Librarian.baseuri_of_script ~include_paths:self#include_paths
+      Librarian.baseuri_of_script ~include_paths:self#include_paths
        self#filename 
      in 
      root
@@ -338,11 +341,16 @@ object (self)
             Librarian.baseuri_of_script ~include_paths:self#include_paths f 
           in 
           buri
-        with Librarian.NoRootFor _ -> default_buri
+        with Librarian.NoRootFor _ | Librarian.FileNotFound _ -> default_buri
 
   method filename = match filename_ with None -> default_fname | Some f -> f
 
   initializer 
+    ignore
+     (source_view#source_buffer#begin_not_undoable_action ();
+      self#reset (); 
+      self#template (); 
+      source_view#source_buffer#end_not_undoable_action ());
     MatitaMisc.observe_font_size (fun font_size ->
      source_view#misc#modify_font_by_name
         (sprintf "%s %d" BuildTimeConf.script_font font_size));
@@ -438,11 +446,6 @@ object (self)
         menu#remove (redoMenuItem :> GMenu.menu_item);
         MatitaGtkMisc.connect_menu_item new_redoMenuItem
          (fun () -> self#safe_redo)));
-    ignore
-     (source_view#source_buffer#begin_not_undoable_action ();
-      self#reset (); 
-      self#template (); 
-      source_view#source_buffer#end_not_undoable_action ())
 
   val mutable statements = []    (** executed statements *)
 
@@ -842,24 +845,21 @@ object (self)
   method assignFileName file =
    match file with
       None ->
-       (MatitaMisc.get_gui ())#main#scriptLabel#set_text default_fname;
+       tab_label#set_text default_fname;
        filename_ <- None;
        include_paths_ <- [];
        self#reset_buffer
     | Some file ->
        let f = Librarian.absolutize file in
-        (MatitaMisc.get_gui ())#main#scriptLabel#set_text (Filename.basename f);
+        tab_label#set_text (Filename.basename f);
         filename_ <- Some f;
         include_paths_ <- read_include_paths f;
-        self#reset_buffer;
-        Sys.chdir self#curdir;
-        HLog.debug ("Moving to " ^ Sys.getcwd ())
+        self#reset_buffer
 
   method set_star b =
-   let label = (MatitaMisc.get_gui ())#main#scriptLabel in
-   label#set_text ((if b then "*" else "") ^ Filename.basename self#filename);
-   label#misc#set_tooltip_text
-    ("URI: " ^ self#buri_of_current_file ^ "\nPATH: " ^ self#filename)
+   tab_label#set_text ((if b then "*" else "")^Filename.basename self#filename);
+   tab_label#misc#set_tooltip_text
+    ("URI: " ^ self#buri_of_current_file ^ "\nPATH: " ^ self#filename);
     
   method saveToFile () =
     if self#has_name then
@@ -902,7 +902,7 @@ object (self)
     let template = HExtlib.input_file BuildTimeConf.script_template in 
     buffer#insert ~iter:(buffer#get_iter `START) template;
     buffer#set_modified false;
-    self#set_star false
+    self#set_star false;
 
   method goto (pos: [`Top | `Bottom | `Cursor]) () =
   try  
@@ -1028,17 +1028,28 @@ object (self)
     HLog.debug (sprintf "%d statements:" (List.length statements));
     List.iter HLog.debug statements;
     HLog.debug ("Current file name: " ^ self#filename);
+
+  method has_parent (p : GObj.widget) = parent#coerce#misc#get_oid = p#misc#get_oid
 end
 
-let _script = ref None
+let _script = ref []
 
-let script ~urichooser ~ask_confirmation ()
+let script ~urichooser ~ask_confirmation ~parent ~tab_label ()
 =
-  let s = new script ~ask_confirmation ~urichooser () in
-  _script := Some s;
+  let s = new script ~ask_confirmation ~urichooser ~parent ~tab_label () in
+  _script := s::!_script;
   s
 
-let current () = match !_script with None -> assert false | Some s -> s
+let current () =
+ let notebook = (MatitaMisc.get_gui ())#main#scriptNotebook in
+ let parent = notebook#get_nth_page notebook#current_page in
+  try
+   List.find (fun s -> s#has_parent parent) !_script
+  with
+   Not_found -> assert false
+;;
+
+let iter_scripts f = List.iter f !_script;;
 
 let _ =
  CicMathView.register_matita_script_current (current :> unit -> < advance: ?statement:string -> unit -> unit; grafite_status: GrafiteTypes.status; setGoal: int option -> unit >)

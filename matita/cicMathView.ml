@@ -202,7 +202,7 @@ object (self)
        self#misc#modify_font_by_name
         (sprintf "%s %d" BuildTimeConf.script_font size))
 
-(* MATITA1.0
+(* MATITA 1.0
   inherit GMathViewAux.multi_selection_math_view obj
 
   val mutable href_callback: (string -> unit) option = None
@@ -616,7 +616,7 @@ object (self)
         self#thaw
     |  _ ->
 *)
-        (* MATITA1.0 if BuildTimeConf.debug then begin
+        (* MATITA 1.0 if BuildTimeConf.debug then begin
           let name =
            "/tmp/cic_browser_" ^ string_of_int (Unix.getuid ()) ^ ".xml" in
           HLog.debug ("cic_browser: dumping MathML to ./" ^ name);

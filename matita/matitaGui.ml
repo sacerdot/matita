@@ -37,6 +37,76 @@ let all_disambiguation_passes = ref false
 
 let gui_instance = ref None
 
+(* this is a shit and should be changed :-{ *)
+let interactive_uri_choice
+  ?(selection_mode:[`SINGLE|`MULTIPLE] = `MULTIPLE) ?(title = "")
+  ?(msg = "") ?(nonvars_button = false) ?(hide_uri_entry=false) 
+  ?(hide_try=false) ?(ok_label="_Auto") ?(ok_action:[`SELECT|`AUTO] = `AUTO) 
+  ?copy_cb ()
+  ~id uris
+=
+  let gui = MatitaMisc.get_gui () in
+  if (selection_mode <> `SINGLE) &&
+    (Helm_registry.get_opt_default Helm_registry.get_bool ~default:true "matita.auto_disambiguation")
+  then
+    uris
+  else begin
+    let dialog = gui#newUriDialog () in
+    if hide_uri_entry then
+      dialog#uriEntryHBox#misc#hide ();
+    if hide_try then
+      begin
+      dialog#uriChoiceSelectedButton#misc#hide ();
+      dialog#uriChoiceConstantsButton#misc#hide ();
+      end;
+    dialog#okLabel#set_label ok_label;  
+    dialog#uriChoiceTreeView#selection#set_mode
+      (selection_mode :> Gtk.Tags.selection_mode);
+    let model = new stringListModel dialog#uriChoiceTreeView in
+    let choices = ref None in
+    (match copy_cb with
+    | None -> ()
+    | Some cb ->
+        dialog#copyButton#misc#show ();
+        connect_button dialog#copyButton 
+        (fun _ ->
+          match model#easy_selection () with
+          | [u] -> (cb u)
+          | _ -> ()));
+    dialog#uriChoiceDialog#set_title title;
+    dialog#uriChoiceLabel#set_text msg;
+    List.iter model#easy_append (List.map NReference.string_of_reference uris);
+    dialog#uriChoiceConstantsButton#misc#set_sensitive nonvars_button;
+    let return v =
+      choices := v;
+      dialog#uriChoiceDialog#destroy ();
+      GMain.Main.quit ()
+    in
+    ignore (dialog#uriChoiceDialog#event#connect#delete (fun _ -> true));
+    connect_button dialog#uriChoiceConstantsButton (fun _ ->
+      return (Some uris));
+    if ok_action = `AUTO then
+      connect_button dialog#uriChoiceAutoButton (fun _ ->
+        Helm_registry.set_bool "matita.auto_disambiguation" true;
+        return (Some uris))
+    else
+      connect_button dialog#uriChoiceAutoButton (fun _ ->
+        match model#easy_selection () with
+        | [] -> ()
+        | uris -> return (Some (List.map NReference.reference_of_string uris)));
+    connect_button dialog#uriChoiceSelectedButton (fun _ ->
+      match model#easy_selection () with
+      | [] -> ()
+      | uris -> return (Some (List.map NReference.reference_of_string uris)));
+    connect_button dialog#uriChoiceAbortButton (fun _ -> return None);
+    dialog#uriChoiceDialog#show ();
+    GtkThread.main ();
+    (match !choices with 
+    | None -> raise MatitaTypes.Cancel
+    | Some uris -> uris)
+  end
+
+
 class type browserWin =
   (* this class exists only because GEdit.combo_box_entry is not supported by
    * lablgladecc :-(((( *)
@@ -80,10 +150,10 @@ let save_moo grafite_status =
   | _ -> clean_current_baseuri grafite_status 
 ;;
     
-let ask_unsaved parent =
+let ask_unsaved parent filename =
   MatitaGtkMisc.ask_confirmation 
     ~parent ~title:"Unsaved work!" 
-    ~message:("Your work is <b>unsaved</b>!\n\n"^
+    ~message:("Script <b>" ^ filename ^ "</b> is modified.!\n\n"^
          "<i>Do you want to save the script before continuing?</i>")
     ()
 
@@ -345,13 +415,14 @@ let interactive_error_interp ~all_passes
 class gui () =
     (* creation order _is_ relevant for windows placement *)
   let main = new mainWin () in
+  let sequents_viewer =
+   MatitaMathView.sequentsViewer_instance main#sequentsNotebook in
   let fileSel = new fileSelectionWin () in
   let findRepl = new findReplWin () in
   let keyBindingBoxes = (* event boxes which should receive global key events *)
     [ main#mainWinEventBox ]
   in
   let console = new console ~buffer:main#logTextView#buffer () in
-  let source_view () = (MatitaScript.current ())#source_view in
   object (self)
     val mutable chosen_file = None
     val mutable _ok_not_exists = false
@@ -420,7 +491,7 @@ class gui () =
       in
       let hide_find_Repl () = findRepl#toplevel#misc#hide () in
       let find_forward _ = 
-          let source_view = source_view () in
+          let source_view = (s ())#source_view in
           let highlight start end_ =
             source_view#source_buffer#move_mark `INSERT ~where:start;
             source_view#source_buffer#move_mark `SEL_BOUND ~where:end_;
@@ -436,7 +507,7 @@ class gui () =
           | Some (start,end_) -> highlight start end_ 
       in
       let replace _ =
-        let source_view = source_view () in
+        let source_view = (s ())#source_view in
         let text = findRepl#replaceEntry#text in
         let ins = source_view#source_buffer#get_iter `INSERT in
         let sel = source_view#source_buffer#get_iter `SEL_BOUND in
@@ -485,7 +556,7 @@ class gui () =
       connect_menu_item main#pastePatternMenuItem
          (fun () -> (MatitaScript.current ())#pastePattern ());
       connect_menu_item main#selectAllMenuItem (fun () ->
-       let source_view = source_view () in
+       let source_view = (s ())#source_view in
         source_view#source_buffer#move_mark `INSERT source_view#source_buffer#start_iter;
         source_view#source_buffer#move_mark `SEL_BOUND source_view#source_buffer#end_iter);
       connect_menu_item main#findReplMenuItem show_find_Repl;
@@ -495,13 +566,13 @@ class gui () =
       ignore (findRepl#findEntry#connect#activate find_forward);
         (* interface lockers *)
       let lock_world _ =
-       let source_view = source_view () in
+       let source_view = (s ())#source_view in
         main#buttonsToolbar#misc#set_sensitive false;
         main#scriptMenu#misc#set_sensitive false;
         source_view#set_editable false
       in
       let unlock_world _ =
-       let source_view = source_view () in
+       let source_view = (s ())#source_view in
         main#buttonsToolbar#misc#set_sensitive true;
         main#scriptMenu#misc#set_sensitive true;
         source_view#set_editable true;
@@ -643,48 +714,48 @@ class gui () =
           else main#tacticsButtonsHandlebox#misc#hide ())
         ~check:main#menuitemPalette;
       connect_button main#butImpl_intro
-        (fun () -> (source_view ())#source_buffer#insert "apply rule (⇒#i […] (…));\n");
+        (fun () -> (s ())#source_view#source_buffer#insert "apply rule (⇒#i […] (…));\n");
       connect_button main#butAnd_intro
-        (fun () -> (source_view ())#source_buffer#insert 
+        (fun () -> (s ())#source_view#source_buffer#insert 
           "apply rule (∧#i (…) (…));\n\t[\n\t|\n\t]\n");
       connect_button main#butOr_intro_left
-        (fun () -> (source_view ())#source_buffer#insert "apply rule (∨#i_l (…));\n");
+        (fun () -> (s ())#source_view#source_buffer#insert "apply rule (∨#i_l (…));\n");
       connect_button main#butOr_intro_right
-        (fun () -> (source_view ())#source_buffer#insert "apply rule (∨#i_r (…));\n");
+        (fun () -> (s ())#source_view#source_buffer#insert "apply rule (∨#i_r (…));\n");
       connect_button main#butNot_intro
-        (fun () -> (source_view ())#source_buffer#insert "apply rule (¬#i […] (…));\n");
+        (fun () -> (s ())#source_view#source_buffer#insert "apply rule (¬#i […] (…));\n");
       connect_button main#butTop_intro
-        (fun () -> (source_view ())#source_buffer#insert "apply rule (⊤#i);\n");
+        (fun () -> (s ())#source_view#source_buffer#insert "apply rule (⊤#i);\n");
       connect_button main#butImpl_elim
-        (fun () -> (source_view ())#source_buffer#insert 
+        (fun () -> (s ())#source_view#source_buffer#insert 
           "apply rule (⇒#e (…) (…));\n\t[\n\t|\n\t]\n");
       connect_button main#butAnd_elim_left
-        (fun () -> (source_view ())#source_buffer#insert "apply rule (∧#e_l (…));\n");
+        (fun () -> (s ())#source_view#source_buffer#insert "apply rule (∧#e_l (…));\n");
       connect_button main#butAnd_elim_right
-        (fun () -> (source_view ())#source_buffer#insert "apply rule (∧#e_r (…));\n");
+        (fun () -> (s ())#source_view#source_buffer#insert "apply rule (∧#e_r (…));\n");
       connect_button main#butOr_elim
-        (fun () -> (source_view ())#source_buffer#insert 
+        (fun () -> (s ())#source_view#source_buffer#insert 
           "apply rule (∨#e (…) […] (…) […] (…));\n\t[\n\t|\n\t|\n\t]\n");
       connect_button main#butNot_elim
-        (fun () -> (source_view ())#source_buffer#insert 
+        (fun () -> (s ())#source_view#source_buffer#insert 
           "apply rule (¬#e (…) (…));\n\t[\n\t|\n\t]\n");
       connect_button main#butBot_elim
-        (fun () -> (source_view ())#source_buffer#insert "apply rule (⊥#e (…));\n");
+        (fun () -> (s ())#source_view#source_buffer#insert "apply rule (⊥#e (…));\n");
       connect_button main#butRAA
-        (fun () -> (source_view ())#source_buffer#insert "apply rule (RAA […] (…));\n");
+        (fun () -> (s ())#source_view#source_buffer#insert "apply rule (RAA […] (…));\n");
       connect_button main#butUseLemma
-        (fun () -> (source_view ())#source_buffer#insert "apply rule (lem #premises name …);\n");
+        (fun () -> (s ())#source_view#source_buffer#insert "apply rule (lem #premises name …);\n");
       connect_button main#butDischarge
-        (fun () -> (source_view ())#source_buffer#insert "apply rule (discharge […]);\n");
+        (fun () -> (s ())#source_view#source_buffer#insert "apply rule (discharge […]);\n");
       
       connect_button main#butForall_intro
-        (fun () -> (source_view ())#source_buffer#insert "apply rule (∀#i {…} (…));\n");
+        (fun () -> (s ())#source_view#source_buffer#insert "apply rule (∀#i {…} (…));\n");
       connect_button main#butForall_elim
-        (fun () -> (source_view ())#source_buffer#insert "apply rule (∀#e {…} (…));\n");
+        (fun () -> (s ())#source_view#source_buffer#insert "apply rule (∀#e {…} (…));\n");
       connect_button main#butExists_intro
-        (fun () -> (source_view ())#source_buffer#insert "apply rule (∃#i {…} (…));\n");
+        (fun () -> (s ())#source_view#source_buffer#insert "apply rule (∃#i {…} (…));\n");
       connect_button main#butExists_elim
-        (fun () -> (source_view ())#source_buffer#insert 
+        (fun () -> (s ())#source_view#source_buffer#insert 
           "apply rule (∃#e (…) {…} […] (…));\n\t[\n\t|\n\t]\n");
 
     
@@ -700,7 +771,7 @@ class gui () =
           let status =
            Interpretations.toggle_active_interpretations s#grafite_status b
           in
-           assert false (* MATITA1.0 ???
+           assert false (* MATITA 1.0 ???
            s#set_grafite_status status*)
          );
       MatitaGtkMisc.toggle_callback ~check:main#hideCoercionsMenuItem
@@ -717,15 +788,15 @@ class gui () =
         | MatitaScript.ActionCancelled s -> HLog.error s
         | exn ->
           if not (Helm_registry.get_bool "matita.debug") then
-           (*CSC: MatitaScript.current ??? *)
+           (* MatitaScript.current is problably wrong, but what else
+              can we do? *)
            notify_exn (MatitaScript.current ())#source_view exn
           else raise exn);
       let disableSave () =
         (s())#assignFileName None;
         main#saveMenuItem#misc#set_sensitive false
       in
-      let saveAsScript () =
-        let script = s () in
+      let saveAsScript script =
         match self#chooseFile ~ok_not_exists:true () with
         | Some f -> 
               HExtlib.touch f;
@@ -735,53 +806,21 @@ class gui () =
               self#_enableSaveTo f
         | None -> ()
       in
-      let saveScript () =
-        let script = s () in
+      let saveScript script =
         if script#has_name then 
           (script#saveToFile (); 
-          console#message ("'"^script#filename^"' saved.\n"))
-        else saveAsScript ()
-      in
-      let abandon_script () =
-       let source_view = source_view () in
-        let grafite_status = (s ())#grafite_status in
-        if source_view#buffer#modified then
-          (match ask_unsaved main#toplevel with
-          | `YES -> saveScript ()
-          | `NO -> ()
-          | `CANCEL -> raise MatitaTypes.Cancel);
-        save_moo grafite_status
+           console#message ("'"^script#filename^"' saved.\n"))
+        else saveAsScript script
       in
       let loadScript () =
-        let source_view = source_view () in
-        let script = s () in 
         try 
           match self#chooseFile () with
-          | Some f -> 
-              abandon_script ();
-              script#reset (); 
-              script#assignFileName (Some f);
-              source_view#source_buffer#begin_not_undoable_action ();
-              script#loadFromFile f; 
-              source_view#source_buffer#end_not_undoable_action ();
-              source_view#buffer#move_mark `INSERT source_view#buffer#start_iter;
-              source_view#buffer#place_cursor source_view#buffer#start_iter;
-              console#message ("'"^f^"' loaded.\n");
-              self#_enableSaveTo f
+          | Some f -> self#loadScript f
           | None -> ()
         with MatitaTypes.Cancel -> ()
       in
-      let newScript () = 
-        let source_view = source_view () in
-        abandon_script ();
-        source_view#source_buffer#begin_not_undoable_action ();
-        (s ())#reset (); 
-        (s ())#template (); 
-        source_view#source_buffer#end_not_undoable_action ();
-        disableSave ()
-      in
       let cursor () =
-       let source_view = source_view () in
+       let source_view = (s ())#source_view in
         source_view#source_buffer#place_cursor
           (source_view#source_buffer#get_iter_at_mark (`NAME "locked")) in
       let advance (script: MatitaScript.script) = script#advance (); cursor () in
@@ -796,19 +835,23 @@ class gui () =
       let jump () = locker (keep_focus jump) (MatitaScript.current ()) in
         (* quit *)
       self#setQuitCallback (fun () -> 
-(*CSC: iterare su tutti gli script! 
-        let script = MatitaScript.current () in
-        if source_view#buffer#modified then
-          match ask_unsaved main#toplevel with
-          | `YES -> 
-               saveScript ();
-               save_moo script#grafite_status;
-               GMain.Main.quit ()
-          | `NO -> GMain.Main.quit ()
-          | `CANCEL -> ()
-        else 
-          (save_moo script#grafite_status;
-          GMain.Main.quit ())*) assert false);
+       let cancel = ref false in
+        MatitaScript.iter_scripts
+         (fun script ->
+           if not !cancel then
+            if script#source_view#buffer#modified then
+              match
+               ask_unsaved main#toplevel (Filename.basename script#filename)
+              with
+              | `YES -> 
+                   saveScript script;
+                   save_moo script#grafite_status
+              | `NO -> ()
+              | `CANCEL -> cancel := true
+            else 
+              save_moo script#grafite_status);
+        if not !cancel then
+         GMain.Main.quit ());
       connect_button main#scriptAdvanceButton advance;
       connect_button main#scriptRetractButton retract;
       connect_button main#scriptTopButton top;
@@ -821,9 +864,11 @@ class gui () =
       connect_menu_item main#scriptBottomMenuItem bottom;
       connect_menu_item main#scriptJumpMenuItem jump;
       connect_menu_item main#openMenuItem   loadScript;
-      connect_menu_item main#saveMenuItem   saveScript;
-      connect_menu_item main#saveAsMenuItem saveAsScript;
-      connect_menu_item main#newMenuItem    newScript;
+      connect_menu_item main#saveMenuItem 
+       (fun () -> saveScript (MatitaScript.current ()));
+      connect_menu_item main#saveAsMenuItem
+       (fun () -> saveAsScript (MatitaScript.current ()));
+      connect_menu_item main#newMenuItem    self#newScript;
       connect_menu_item main#showCoercionsGraphMenuItem 
         (fun _ -> 
           let c = MatitaMathView.cicBrowser () in
@@ -871,7 +916,8 @@ class gui () =
         MatitaMisc.reset_font_size;
 
     method private externalEditor () =
-     let source_view = source_view () in
+     let script = MatitaScript.current () in
+     let source_view = script#source_view in
       let cmd = Helm_registry.get "matita.external_editor" in
 (* ZACK uncomment to enable interactive ask of external editor command *)
 (*      let cmd =
@@ -884,7 +930,6 @@ class gui () =
         ask_text ~gui:self ~title:"External editor" ~msg ~multiline:false
           ~default:(Helm_registry.get "matita.external_editor") ()
       in *)
-      let script = MatitaScript.current () in
       let fname = script#filename in
       let slice mark =
         source_view#source_buffer#start_iter#get_slice
@@ -927,9 +972,55 @@ class gui () =
       | Exit -> ()
       | Invalid_argument _ -> script#goto `Bottom ()
 
+    method newScript () = 
+       let scrolledWindow = GBin.scrolled_window () in
+       let tab_label = GMisc.label ~text:"foo" () in
+       ignore (main#scriptNotebook#prepend_page ~tab_label:tab_label#coerce scrolledWindow#coerce);
+       let script =
+        MatitaScript.script 
+          ~urichooser:(fun source_view uris ->
+            try
+             interactive_uri_choice ~selection_mode:`SINGLE
+              ~title:"Matita: URI chooser" 
+              ~msg:"Select the URI" ~hide_uri_entry:true
+              ~hide_try:true ~ok_label:"_Apply" ~ok_action:`SELECT
+              ~copy_cb:(fun s -> source_view#buffer#insert ("\n"^s^"\n"))
+              () ~id:"boh?" uris
+            with MatitaTypes.Cancel -> [])
+          ~ask_confirmation:
+            (fun ~title ~message -> 
+                MatitaGtkMisc.ask_confirmation ~title ~message 
+                ~parent:(MatitaMisc.get_gui ())#main#toplevel ())
+          ~parent:scrolledWindow ~tab_label ()
+       in
+        main#scriptNotebook#goto_page 0;
+        sequents_viewer#reset;
+        sequents_viewer#load_logo;
+        let browser_observer _ = MatitaMathView.refresh_all_browsers () in
+        let sequents_observer grafite_status =
+          sequents_viewer#reset;
+          match grafite_status#ng_mode with
+             `ProofMode ->
+              sequents_viewer#nload_sequents grafite_status;
+              (try
+                script#setGoal
+                 (Some (Continuationals.Stack.find_goal grafite_status#stack));
+                let goal =
+                 match script#goal with
+                    None -> assert false
+                  | Some n -> n
+                in
+                 sequents_viewer#goto_sequent grafite_status goal
+              with Failure _ -> script#setGoal None);
+           | `CommandMode -> sequents_viewer#load_logo
+        in
+        script#addObserver sequents_observer;
+        script#addObserver browser_observer
+
     method loadScript file =       
-     let source_view = source_view () in
-      let script = MatitaScript.current () in
+     self#newScript ();
+     let script = MatitaScript.current () in
+     let source_view = script#source_view in
       script#reset (); 
       script#assignFileName (Some file);
       let file = script#filename in
@@ -944,7 +1035,7 @@ class gui () =
       source_view#buffer#place_cursor source_view#buffer#start_iter;
       console#message ("'"^file^"' loaded.");
       self#_enableSaveTo file
-      
+
     method private _enableSaveTo file =
       self#main#saveMenuItem#misc#set_sensitive true
         
@@ -1035,75 +1126,6 @@ let gui () =
 let instance = singleton gui
 
 let non p x = not (p x)
-
-(* this is a shit and should be changed :-{ *)
-let interactive_uri_choice
-  ?(selection_mode:[`SINGLE|`MULTIPLE] = `MULTIPLE) ?(title = "")
-  ?(msg = "") ?(nonvars_button = false) ?(hide_uri_entry=false) 
-  ?(hide_try=false) ?(ok_label="_Auto") ?(ok_action:[`SELECT|`AUTO] = `AUTO) 
-  ?copy_cb ()
-  ~id uris
-=
-  let gui = instance () in
-  if (selection_mode <> `SINGLE) &&
-    (Helm_registry.get_opt_default Helm_registry.get_bool ~default:true "matita.auto_disambiguation")
-  then
-    uris
-  else begin
-    let dialog = gui#newUriDialog () in
-    if hide_uri_entry then
-      dialog#uriEntryHBox#misc#hide ();
-    if hide_try then
-      begin
-      dialog#uriChoiceSelectedButton#misc#hide ();
-      dialog#uriChoiceConstantsButton#misc#hide ();
-      end;
-    dialog#okLabel#set_label ok_label;  
-    dialog#uriChoiceTreeView#selection#set_mode
-      (selection_mode :> Gtk.Tags.selection_mode);
-    let model = new stringListModel dialog#uriChoiceTreeView in
-    let choices = ref None in
-    (match copy_cb with
-    | None -> ()
-    | Some cb ->
-        dialog#copyButton#misc#show ();
-        connect_button dialog#copyButton 
-        (fun _ ->
-          match model#easy_selection () with
-          | [u] -> (cb u)
-          | _ -> ()));
-    dialog#uriChoiceDialog#set_title title;
-    dialog#uriChoiceLabel#set_text msg;
-    List.iter model#easy_append (List.map NReference.string_of_reference uris);
-    dialog#uriChoiceConstantsButton#misc#set_sensitive nonvars_button;
-    let return v =
-      choices := v;
-      dialog#uriChoiceDialog#destroy ();
-      GMain.Main.quit ()
-    in
-    ignore (dialog#uriChoiceDialog#event#connect#delete (fun _ -> true));
-    connect_button dialog#uriChoiceConstantsButton (fun _ ->
-      return (Some uris));
-    if ok_action = `AUTO then
-      connect_button dialog#uriChoiceAutoButton (fun _ ->
-        Helm_registry.set_bool "matita.auto_disambiguation" true;
-        return (Some uris))
-    else
-      connect_button dialog#uriChoiceAutoButton (fun _ ->
-        match model#easy_selection () with
-        | [] -> ()
-        | uris -> return (Some (List.map NReference.reference_of_string uris)));
-    connect_button dialog#uriChoiceSelectedButton (fun _ ->
-      match model#easy_selection () with
-      | [] -> ()
-      | uris -> return (Some (List.map NReference.reference_of_string uris)));
-    connect_button dialog#uriChoiceAbortButton (fun _ -> return None);
-    dialog#uriChoiceDialog#show ();
-    GtkThread.main ();
-    (match !choices with 
-    | None -> raise MatitaTypes.Cancel
-    | Some uris -> uris)
-  end
 
 class interpModel =
   let cols = new GTree.column_list in

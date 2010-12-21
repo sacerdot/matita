@@ -40,62 +40,13 @@ let _ =
   MatitaInit.initialize_all ()
 ;;
 
-(* let _ = Saturation.init () (* ALB to link paramodulation *) *)
-
-(** {2 GUI callbacks} *)
-
-let gui = MatitaGui.instance ()
-
-let script =
- MatitaScript.script 
-   ~urichooser:(fun source_view uris ->
-     try
-       MatitaGui.interactive_uri_choice ~selection_mode:`SINGLE
-       ~title:"Matita: URI chooser" 
-       ~msg:"Select the URI" ~hide_uri_entry:true
-       ~hide_try:true ~ok_label:"_Apply" ~ok_action:`SELECT
-       ~copy_cb:(fun s -> source_view#buffer#insert ("\n"^s^"\n"))
-       () ~id:"boh?" uris
-     with MatitaTypes.Cancel -> [])
-   ~ask_confirmation:
-     (fun ~title ~message -> 
-         MatitaGtkMisc.ask_confirmation ~title ~message 
-         ~parent:gui#main#toplevel ())
-   ()
-
 let _ =
   Predefined_virtuals.load_predefined_virtuals ();
   Predefined_virtuals.load_predefined_classes ()
 ;;
   
-  (* math viewers *)
-let _ =
-  let sequents_viewer = MatitaMathView.sequentsViewer_instance () in
-  sequents_viewer#load_logo;
-  let browser_observer _ = MatitaMathView.refresh_all_browsers () in
-  let sequents_observer grafite_status =
-    sequents_viewer#reset;
-    match grafite_status#ng_mode with
-       `ProofMode ->
-        sequents_viewer#nload_sequents grafite_status;
-        (try
-          script#setGoal
-           (Some (Continuationals.Stack.find_goal grafite_status#stack));
-          let goal =
-           match script#goal with
-              None -> assert false
-            | Some n -> n
-          in
-           sequents_viewer#goto_sequent grafite_status goal
-        with Failure _ -> script#setGoal None);
-     | `CommandMode -> sequents_viewer#load_logo
-  in
-  script#addObserver sequents_observer;
-  script#addObserver browser_observer
-;;
-
   (** {{{ Debugging *)
-let _ =
+let init_debugging_menu gui =
   if BuildTimeConf.debug ||
      Helm_registry.get_bool "matita.debug_menu" 
   then begin
@@ -116,7 +67,7 @@ let _ =
       ignore (GMenu.separator_item ~packing:gui#main#debugMenu_menu#append ())
     in
     addDebugItem "dump aliases" (fun _ ->
-      let status = script#grafite_status in
+      let status = (MatitaScript.current ())#grafite_status in
       GrafiteDisambiguate.dump_aliases prerr_endline "" status);
 (* FG: DEBUGGING   
     addDebugItem "dump interpretations" (fun _ ->
@@ -159,20 +110,16 @@ let _ =
   at_exit (fun () -> print_endline "\nThanks for using Matita!\n");
   Sys.catch_break true;
   let args = Helm_registry.get_list Helm_registry.string "matita.args" in
-  (try gui#loadScript (List.hd args) with Failure _ -> ());
+  let gui = MatitaGui.instance () in
+  init_debugging_menu gui;
+  if args = [] then
+   gui#newScript ()
+  else
+   List.iter gui#loadScript (List.rev args);
   gui#main#mainWin#show ();
   try
    GtkThread.main ()
-  with Sys.Break ->
-   Sys.set_signal Sys.sigint
-    (Sys.Signal_handle
-      (fun _ ->
-        prerr_endline "Still cleaning the library: don't be impatient!"));
-   prerr_endline "Matita is cleaning up. Please wait.";
-   (*CSC: MatitaScript.current () makes no sense here *)
-   let baseuri = 
-    (MatitaScript.current ())#grafite_status#baseuri
-   in
-     LibraryClean.clean_baseuris [baseuri]
+  with Sys.Break -> ()
+;;
 
 (* vim:set foldmethod=marker: *)

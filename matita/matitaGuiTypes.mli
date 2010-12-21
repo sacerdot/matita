@@ -71,6 +71,7 @@ object
     (** prompt the user for a (multiline) text entry *)
   method askText: ?title:string -> ?msg:string -> unit -> string option
 
+  method newScript: unit -> unit
   method loadScript: string -> unit
 end
 

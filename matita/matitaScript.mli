@@ -99,6 +99,7 @@ object
   method clean_dirty_lock: unit
   method set_star: bool -> unit
   method source_view: GSourceView2.source_view
+  method has_parent: GObj.widget -> bool
   
   (* debug *)
   method dump : unit -> unit
@@ -110,12 +111,10 @@ val script:
   urichooser: (GSourceView2.source_view -> NReference.reference list -> NReference.reference list) -> 
   ask_confirmation: 
     (title:string -> message:string -> [`YES | `NO | `CANCEL]) -> 
+  parent:GBin.scrolled_window ->
+  tab_label:GMisc.label ->
   unit -> 
     script
 
-(* each time script above is called an internal ref is set, instance will return
- * the value of this ref *)
-(* TODO Zack: orrible solution until we found a better one for having a single
- * access point for the script *)
 val current: unit -> script
-
+val iter_scripts: (script -> unit) -> unit
