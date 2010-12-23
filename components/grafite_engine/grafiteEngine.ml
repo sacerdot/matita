@@ -471,12 +471,13 @@ let compute_relevance uri =
 let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
   match cmd with
   | GrafiteAst.Include (loc, mode, fname) ->
-	   let _root, baseuri, _fullpath, _rrelpath = 
+	   let _root, baseuri, fullpath, _rrelpath = 
        Librarian.baseuri_of_script ~include_paths fname in
      let baseuri = NUri.uri_of_string baseuri in
      (* MATITA 1.0: keep WithoutPreferences? *)
      let alias_only = (mode = GrafiteAst.OnlyPreferences) in
-      GrafiteTypes.Serializer.require ~alias_only ~baseuri ~fname status
+      GrafiteTypes.Serializer.require
+       ~alias_only ~baseuri ~fname:fullpath status
   | GrafiteAst.UnificationHint (loc, t, n) -> eval_unification_hint status t n
   | GrafiteAst.NCoercion (loc, name, t, ty, source, target) ->
      let status, composites =

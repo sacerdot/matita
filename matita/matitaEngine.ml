@@ -153,27 +153,30 @@ let baseuri_of_script ~include_paths fname =
     raise (Failure ("File not found: "^fname))
 ;;
 
-let rec get_ast status ~compiling ~include_paths strm = 
+let rec get_ast status ~compiling ~asserted ~include_paths strm = 
   match GrafiteParser.parse_statement status strm with
      (GrafiteAst.Executable
        (_,GrafiteAst.NCommand (_,GrafiteAst.Include (_,_,mafilename)))) as cmd
      ->
-       let already_included = NCicLibrary.get_already_included status in
-       ignore(assert_ng ~already_included ~compiling ~include_paths mafilename);
-       cmd
-   | cmd -> cmd
+       let already_included = NCicLibrary.get_transitively_included status in
+       let asserted,_ =
+        assert_ng ~already_included ~compiling ~asserted ~include_paths
+         mafilename
+       in
+        asserted,cmd
+   | cmd -> asserted,cmd
 
-and eval_from_stream ~compiling ~include_paths ?do_heavy_checks status str cb =
+and eval_from_stream ~compiling ~asserted ~include_paths ?do_heavy_checks status str cb =
  let matita_debug = Helm_registry.get_bool "matita.debug" in
- let rec loop status =
-  let stop,status = 
+ let rec loop asserted status =
+  let asserted,stop,status = 
    try
      let cont =
-       try Some (get_ast status ~compiling ~include_paths str)
+       try Some (get_ast status ~compiling ~asserted ~include_paths str)
        with End_of_file -> None in
      match cont with
-     | None -> true, status
-     | Some ast ->
+     | None -> asserted, true, status
+     | Some (asserted,ast) ->
         cb status ast;
         let new_statuses =
           eval_ast ~include_paths ?do_heavy_checks status ("",0,ast) in
@@ -184,15 +187,15 @@ and eval_from_stream ~compiling ~include_paths ?do_heavy_checks status str cb =
                 raise (TryingToAdd (lazy (GrafiteAstPp.pp_alias value)))
           | _ -> assert false
         in
-         false, status
+         asserted, false, status
    with exn when not matita_debug ->
      raise (EnrichedWithStatus (exn, status))
   in
-  if stop then status else loop status
+  if stop then asserted,status else loop asserted status
  in
-  loop status
+  loop asserted status
 
-and compile ~compiling ~include_paths fname =
+and compile ~compiling ~asserted ~include_paths fname =
   if List.mem fname compiling then raise (CircularDependency fname);
   let compiling = fname::compiling in
   let matita_debug = Helm_registry.get_bool "matita.debug" in
@@ -242,8 +245,8 @@ and compile ~compiling ~include_paths fname =
       if not (Helm_registry.get_bool "matita.verbose") then (fun _ _ -> ())
       else pp_ast_statement
     in
-    let grafite_status =
-     eval_from_stream ~compiling ~include_paths grafite_status buf print_cb in
+    let asserted, grafite_status =
+     eval_from_stream ~compiling ~asserted ~include_paths grafite_status buf print_cb in
     let elapsed = Unix.time () -. time in
      (if Helm_registry.get_bool "matita.moo" then begin
        GrafiteTypes.Serializer.serialize ~baseuri:(NUri.uri_of_string baseuri)
@@ -259,7 +262,8 @@ and compile ~compiling ~include_paths fname =
      in
      HLog.message 
        (sprintf "execution of %s completed in %s." fname (hou^min^sec));
-     pp_times fname true big_bang big_bang_u big_bang_s
+     pp_times fname true big_bang big_bang_u big_bang_s;
+     asserted
 (* MATITA 1.0: debbo fare time_travel sulla ng_library?
      LexiconSync.time_travel 
        ~present:lexicon_status ~past:initial_lexicon_status;
@@ -273,46 +277,58 @@ and compile ~compiling ~include_paths fname =
       pp_times fname false big_bang big_bang_u big_bang_s;
       clean_exit baseuri exn
 
-and assert_ng ~already_included ~compiling ~include_paths mapath =
+and assert_ng ~already_included ~compiling ~asserted ~include_paths mapath =
  let _,baseuri,fullmapath,_ = Librarian.baseuri_of_script ~include_paths mapath in
- let baseuri = NUri.uri_of_string baseuri in
- let ngtime_of baseuri =
-  let ngpath = NCicLibrary.ng_path_of_baseuri baseuri in
-  try
-   Some (Unix.stat ngpath).Unix.st_mtime
-  with Unix.Unix_error (Unix.ENOENT, "stat", f) when f = ngpath -> None in
- let matime =
-  try (Unix.stat fullmapath).Unix.st_mtime
-  with Unix.Unix_error (Unix.ENOENT, "stat", f) when f = fullmapath -> assert false
- in
- let ngtime = ngtime_of baseuri in
- let to_be_compiled =
-  match ngtime with
-     Some ngtime ->
-      let preamble = GrafiteTypes.Serializer.dependencies_of baseuri in
-      let children_bad =
-       List.exists
-        (fun mapath ->
-             assert_ng ~already_included ~compiling ~include_paths mapath
-          || let _,baseuri,_,_ =
-               Librarian.baseuri_of_script ~include_paths mapath in
-             let baseuri = NUri.uri_of_string baseuri in
-              (match ngtime_of baseuri with
-                  Some child_ngtime -> child_ngtime > ngtime
-                | None -> assert false)
-        ) preamble
-      in
-       children_bad || matime > ngtime
-   | None -> true
- in
-  if not to_be_compiled then false
-  else
-   if List.mem baseuri already_included then
-     (* maybe recompiling it I would get the same... *)
-     raise (AlreadyLoaded (lazy mapath))
-   else
-    (compile ~compiling ~include_paths fullmapath; true)
+ if List.mem fullmapath asserted then asserted,false
+ else
+  begin
+   let baseuri = NUri.uri_of_string baseuri in
+   let ngtime_of baseuri =
+    let ngpath = NCicLibrary.ng_path_of_baseuri baseuri in
+    try
+     Some (Unix.stat ngpath).Unix.st_mtime
+    with Unix.Unix_error (Unix.ENOENT, "stat", f) when f = ngpath -> None in
+   let matime =
+    try (Unix.stat fullmapath).Unix.st_mtime
+    with Unix.Unix_error (Unix.ENOENT, "stat", f) when f = fullmapath -> assert false
+   in
+   let ngtime = ngtime_of baseuri in
+   let asserted,to_be_compiled =
+    match ngtime with
+       Some ngtime ->
+        let preamble = GrafiteTypes.Serializer.dependencies_of baseuri in
+        let asserted,children_bad =
+         List.fold_left
+          (fun (asserted,b) mapath ->
+            let asserted,b1 =
+              assert_ng ~already_included ~compiling ~asserted ~include_paths
+               mapath
+            in
+             asserted, b || b1
+              || let _,baseuri,_,_ =
+                   Librarian.baseuri_of_script ~include_paths mapath in
+                 let baseuri = NUri.uri_of_string baseuri in
+                  (match ngtime_of baseuri with
+                      Some child_ngtime -> child_ngtime > ngtime
+                    | None -> assert false)
+          ) (asserted,false) preamble
+        in
+         asserted, children_bad || matime > ngtime
+     | None -> asserted,true
+   in
+    if not to_be_compiled then fullmapath::asserted,false
+    else
+     if List.mem baseuri already_included then
+       (* maybe recompiling it I would get the same... *)
+       raise (AlreadyLoaded (lazy mapath))
+     else
+      let asserted = compile ~compiling ~asserted ~include_paths fullmapath in
+       fullmapath::asserted,true
+  end
 ;;
 
-let assert_ng = assert_ng ~already_included:[] ~compiling:[]
-let get_ast = get_ast ~compiling:[]
+let assert_ng ~include_paths mapath =
+ snd (assert_ng ~include_paths ~already_included:[] ~compiling:[] ~asserted:[]
+  mapath)
+let get_ast status ~include_paths strm =
+ snd (get_ast status ~compiling:[] ~asserted:[] ~include_paths strm)

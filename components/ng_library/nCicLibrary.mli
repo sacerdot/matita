@@ -50,7 +50,7 @@ class dumpable_status :
   method set_dumpable_status: #g_dumpable_status -> 'self
  end
 
-val get_already_included: #dumpable_status -> NUri.uri list
+val get_transitively_included: #dumpable_status -> NUri.uri list
 val dump_obj: #dumpable_status as 'status -> obj -> 'status
 
 module type SerializerType =

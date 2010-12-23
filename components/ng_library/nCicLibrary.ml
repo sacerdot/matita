@@ -158,7 +158,7 @@ let time_travel status =
 ;;
 
 type obj = string * Obj.t
-(* CSC: includes & dependencies to be unified! *)
+(* includes are transitively closed; dependencies are only immediate *)
 type dump =
  { objs: obj list ; includes: NUri.uri list; dependencies: string list }
 
@@ -177,7 +177,7 @@ class dumpable_status =
    = fun o -> {< db = o#dump >}
  end
 
-let get_already_included status =
+let get_transitively_included status =
  status#dump.includes
 ;;
 
@@ -253,15 +253,14 @@ module Serializer(D: sig type dumpable_s val get: dumpable_s -> dumpable_status 
    List.iter (fun u -> add_deps u [baseuri]) status#dump.includes;
    time_travel (new status)
 
-  let require2 ~baseuri ~fname ~alias_only status =
+  let require2 ~baseuri ~alias_only status =
    try
     let s = D.get status in
     let status =
-      D.set status
-       (s#set_dump
-         {s#dump with
-           includes = baseuri::s#dump.includes;
-           dependencies = fname::s#dump.dependencies}) in
+     D.set status
+      (s#set_dump
+        {s#dump with
+        includes = baseuri::s#dump.includes}) in
     let _dependencies,dump = require0 ~baseuri in
      List.fold_right (!require1 ~alias_only) dump status
    with
@@ -274,16 +273,29 @@ module Serializer(D: sig type dumpable_s val get: dumpable_s -> dumpable_status 
    let aux (baseuri,fname) ~refresh_uri_in_universe:_ ~refresh_uri_in_term:_
    ~refresh_uri_in_reference:_ ~alias_only status =
      let alias_only =
-      alias_only || List.mem baseuri (get_already_included (D.get status))
+      alias_only || List.mem baseuri (get_transitively_included (D.get status))
      in
-      require2 ~baseuri ~fname ~alias_only status
+      HLog.warn ("include " ^ (if alias_only then "alias " else "") ^ fname);
+      let status = require2 ~baseuri ~alias_only status in
+      HLog.warn ("done: include " ^ (if alias_only then "alias " else "") ^ fname);
+      status
    in
     register#run "include" aux
 
   let require ~baseuri ~fname ~alias_only status =
    let alias_only =
-    alias_only || List.mem baseuri (get_already_included (D.get status)) in
-   let status = require2 ~baseuri ~fname ~alias_only status in
+    alias_only || List.mem baseuri (get_transitively_included (D.get status)) in
+   let status =
+    if not alias_only then
+     let s = D.get status in
+      D.set status
+       (s#set_dump
+         {s#dump with
+           includes = baseuri::s#dump.includes;
+           dependencies = fname::s#dump.dependencies})
+    else
+     status in
+   let status = require2 ~baseuri ~alias_only status in
    let s = D.get status in
     D.set status
      (s#set_dump
