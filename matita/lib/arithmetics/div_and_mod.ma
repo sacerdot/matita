@@ -367,30 +367,11 @@ split
 ]
 qed. *)
 
-theorem le_plus_to_minus_r: ∀a,b,c. a + b ≤ c → a ≤ c -b.
-#a #b #c #H @(le_plus_to_le_r … b) /2/
-qed.
-
-theorem le_minus_to_plus_r: ∀a,b,c. c ≤ b → a ≤ b - c → a + c ≤ b.
-#a #b #c #Hlecb #H >(plus_minus_m_m … Hlecb) /2/
-qed.
-
-theorem lt_minus_to_plus: ∀a,b,c. a - b < c → a < c + b.
-#a #b #c #H @not_le_to_lt 
-@(not_to_not … (lt_to_not_le …H)) /2/
-qed.
-
-theorem lt_minus_to_plus_r: ∀a,b,c. c ≤ a → 
-  a < b + c → a - c < b.
-#a #b #c #lea #H @not_le_to_lt 
-@(not_to_not … (lt_to_not_le …H)) /2/
-qed. 
-
 theorem lt_to_le_times_to_lt_S_to_div: ∀a,c,b:nat.
 O < b → (b*c) ≤ a → a < (b*(S c)) → a/b = c.
 #a #c #b #posb#lea #lta
 @(div_mod_spec_to_eq … (a-b*c) (div_mod_spec_div_mod … posb …))
-@div_mod_spec_intro [@lt_minus_to_plus_r // |/2/]
+@div_mod_spec_intro [@lt_plus_to_minus // |/2/]
 qed.
 
 theorem div_times_times: ∀a,b,c:nat. O < c → O < b → 

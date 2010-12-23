@@ -81,7 +81,7 @@ theorem congruent_to_divides: ∀n,m,p:nat.O < p →
 #n #m #p #posp #congnm @(quotient ? ? ((n / p)-(m / p)))
 >commutative_times >(div_mod n p) in ⊢ (??%?)
 >(div_mod m p) in ⊢ (??%?) <(commutative_plus (m \mod p))
-<congnm <(minus_minus ? (n \mod p)) <minus_plus_m_m //
+<congnm <(minus_plus ? (n \mod p)) <minus_plus_m_m //
 qed.
 
 theorem mod_times: ∀n,m,p:nat. O < p → 

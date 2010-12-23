@@ -913,8 +913,34 @@ theorem le_minus_to_plus: ∀n,m,p. n-m ≤ p → n≤ p+m.
   [|@le_plus_minus_m_m | @monotonic_le_plus_l // ]
 qed.
 
+theorem le_minus_to_plus_r: ∀a,b,c. c ≤ b → a ≤ b - c → a + c ≤ b.
+#a #b #c #Hlecb #H >(plus_minus_m_m … Hlecb) /2/
+qed.
+
 theorem le_plus_to_minus: ∀n,m,p. n ≤ p+m → n-m ≤ p.
 #n #m #p #lep /2/ qed.
+
+theorem le_plus_to_minus_r: ∀a,b,c. a + b ≤ c → a ≤ c -b.
+#a #b #c #H @(le_plus_to_le_r … b) /2/
+qed.
+
+theorem lt_minus_to_plus: ∀a,b,c. a - b < c → a < c + b.
+#a #b #c #H @not_le_to_lt 
+@(not_to_not … (lt_to_not_le …H)) /2/
+qed.
+
+theorem lt_minus_to_plus_r: ∀a,b,c. a < b - c → a + c < b.
+#a #b #c #H @not_le_to_lt @(not_to_not … (le_plus_to_minus …))
+@lt_to_not_le //
+qed.
+
+theorem lt_plus_to_minus: ∀n,m,p. m ≤ n → n < p+m → n-m < p.
+#n #m #p #lenm #H normalize <minus_Sn_m // @le_plus_to_minus //
+qed.
+
+theorem lt_plus_to_minus_r: ∀a,b,c. a + b < c → a < c - b.
+#a #b #c #H @le_plus_to_minus_r //
+qed. 
 
 theorem monotonic_le_minus_r: 
 ∀p,q,n:nat. q ≤ p → n-p ≤ n-q.
@@ -936,7 +962,7 @@ theorem distributive_times_minus: distributive ? times minus.
   @eq_f (applyS plus_minus_m_m) /2/
 qed.
 
-theorem minus_minus: ∀n,m,p. n-m-p = n -(m+p).
+theorem minus_plus: ∀n,m,p. n-m-p = n -(m+p).
 #n #m #p 
 cases (decidable_le (m+p) n) #Hlt
   [@plus_to_minus @plus_to_minus <associative_plus
@@ -944,6 +970,19 @@ cases (decidable_le (m+p) n) #Hlt
   |cut (n ≤ m+p) [@(transitive_le … (le_n_Sn …)) @not_le_to_lt //]
    #H >eq_minus_O /2/ >eq_minus_O // 
   ]
+qed.
+
+(*
+theorem plus_minus: ∀n,m,p. p ≤ m → (n+m)-p = n +(m-p).
+#n #m #p #lepm @plus_to_minus >(commutative_plus p)
+>associative_plus <plus_minus_m_m //
+qed.  *)
+
+theorem minus_minus: ∀n,m,p:nat. p ≤ m → m ≤ n →
+  p+(n-m) = n-(m-p).
+#n #m #p #lepm #lemn
+@sym_eq @plus_to_minus <associative_plus <plus_minus_m_m //
+<commutative_plus <plus_minus_m_m //
 qed.
 
 (*********************** boolean arithmetics ********************) 

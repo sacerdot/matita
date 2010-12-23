@@ -81,7 +81,7 @@ theorem eq_mod_to_divides: ∀n,m,q. O < q →
   |@(quotient ?? ((div n q)-(div m q)))
    >distributive_times_minus >commutative_times
    >(commutative_times q) cut((n/q)*q = n - (n \mod q)) [//] #H
-   >H >minus_minus >eqmod >commutative_plus 
+   >H >minus_plus >eqmod >commutative_plus 
    <div_mod //
   ]
 qed.

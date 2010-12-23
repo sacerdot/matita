@@ -157,8 +157,8 @@ qed.
 
 (* a particular case of the previous theorem, with c=1 *)
 theorem divides_d_gcd: ∀m,n,d. 
- d ∣ m → d ∣ n → d ∣ gcd n m. 
-/2/ (* bello *)
+ d ∣ m → d ∣ n → d ∣ gcd n m.
+#m #n #d #divdn #divdn applyS (divides_d_times_gcd m n d 1) //
 qed.
 
 theorem eq_minus_gcd_aux: ∀p,m,n.O < n → n ≤ m →  n ≤ p →
@@ -184,13 +184,13 @@ theorem eq_minus_gcd_aux: ∀p,m,n.O < n → n ≤ m →  n ≤ p →
        <commutative_plus >distributive_times_plus_r 
        >(div_mod m n) in ⊢(? ? (? % ?) ?)
        >associative_times <commutative_plus >distributive_times_plus
-       <minus_minus <commutative_plus <plus_minus //
+       <minus_plus <commutative_plus <plus_minus //
       |(* second case *)
         <H @(ex_intro ?? (b+a*(m / n))) @(ex_intro ?? a) %1
         >distributive_times_plus_r
         >(div_mod m n) in ⊢ (? ? (? ? %) ?)
         >distributive_times_plus >associative_times
-        <minus_minus <commutative_plus <plus_minus //
+        <minus_plus <commutative_plus <plus_minus //
       ]
     ]
   ]
