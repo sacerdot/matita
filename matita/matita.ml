@@ -112,10 +112,8 @@ let _ =
   let args = Helm_registry.get_list Helm_registry.string "matita.args" in
   let gui = MatitaGui.instance () in
   init_debugging_menu gui;
-  if args = [] then
-   gui#newScript ()
-  else
-   List.iter gui#loadScript (List.rev args);
+  gui#newScript ();
+  List.iter gui#loadScript (List.rev args);
   gui#main#mainWin#show ();
   try
    GtkThread.main ()
