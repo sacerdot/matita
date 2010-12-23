@@ -792,26 +792,6 @@ class gui () =
               can we do? *)
            notify_exn (MatitaScript.current ())#source_view exn
           else raise exn);
-      let disableSave () =
-        (s())#assignFileName None;
-        main#saveMenuItem#misc#set_sensitive false
-      in
-      let saveAsScript script =
-        match self#chooseFile ~ok_not_exists:true () with
-        | Some f -> 
-              HExtlib.touch f;
-              script#assignFileName (Some f);
-              script#saveToFile (); 
-              console#message ("'"^f^"' saved.\n");
-              self#_enableSaveTo f
-        | None -> ()
-      in
-      let saveScript script =
-        if script#has_name then 
-          (script#saveToFile (); 
-           console#message ("'"^script#filename^"' saved.\n"))
-        else saveAsScript script
-      in
       let loadScript () =
         try 
           match self#chooseFile () with
@@ -839,17 +819,8 @@ class gui () =
         MatitaScript.iter_scripts
          (fun script ->
            if not !cancel then
-            if script#source_view#buffer#modified then
-              match
-               ask_unsaved main#toplevel (Filename.basename script#filename)
-              with
-              | `YES -> 
-                   saveScript script;
-                   save_moo script#grafite_status
-              | `NO -> ()
-              | `CANCEL -> cancel := true
-            else 
-              save_moo script#grafite_status);
+            if not (self#closeScript0 script) then
+             cancel := true);
         if not !cancel then
          GMain.Main.quit ());
       connect_button main#scriptAdvanceButton advance;
@@ -865,10 +836,11 @@ class gui () =
       connect_menu_item main#scriptJumpMenuItem jump;
       connect_menu_item main#openMenuItem   loadScript;
       connect_menu_item main#saveMenuItem 
-       (fun () -> saveScript (MatitaScript.current ()));
+       (fun () -> self#saveScript (MatitaScript.current ()));
       connect_menu_item main#saveAsMenuItem
-       (fun () -> saveAsScript (MatitaScript.current ()));
-      connect_menu_item main#newMenuItem    self#newScript;
+       (fun () -> self#saveAsScript (MatitaScript.current ()));
+      connect_menu_item main#newMenuItem self#newScript;
+      connect_menu_item main#closeMenuItem self#closeScript;
       connect_menu_item main#showCoercionsGraphMenuItem 
         (fun _ -> 
           let c = MatitaMathView.cicBrowser () in
@@ -915,7 +887,10 @@ class gui () =
       connect_menu_item main#normalFontSizeMenuItem
         MatitaMisc.reset_font_size;
       ignore (main#scriptNotebook#connect#switch_page
-       (fun page -> (MatitaScript.at_page page)#activate));
+       (fun page ->
+         let script = MatitaScript.at_page page in
+          script#activate;
+          main#saveMenuItem#misc#set_sensitive script#has_name));
 
     method private externalEditor () =
      let script = MatitaScript.current () in
@@ -973,6 +948,46 @@ class gui () =
       with
       | Exit -> ()
       | Invalid_argument _ -> script#goto `Bottom ()
+
+    method private saveAsScript script = 
+     match self#chooseFile ~ok_not_exists:true () with
+     | Some f -> 
+           HExtlib.touch f;
+           script#assignFileName (Some f);
+           script#saveToFile (); 
+           console#message ("'"^f^"' saved.\n");
+           self#_enableSaveTo f
+     | None -> ()
+
+    method private saveScript script = 
+     if script#has_name then 
+       (script#saveToFile (); 
+        console#message ("'"^script#filename^"' saved.\n"))
+     else self#saveAsScript script
+    
+    (* returns false if closure is aborted by the user *)
+    method private closeScript0 script = 
+      if script#source_view#buffer#modified then
+        match
+         ask_unsaved main#toplevel (Filename.basename script#filename)
+        with
+        | `YES -> 
+             self#saveScript script;
+             save_moo script#grafite_status;
+             true
+        | `NO -> true
+        | `CANCEL -> false
+      else 
+       (save_moo script#grafite_status; true)
+
+    method private closeScript () = 
+     let page = main#scriptNotebook#current_page in
+     let script = MatitaScript.at_page page in 
+     if self#closeScript0 script then
+      begin
+       MatitaScript.destroy page;
+       ignore (main#scriptNotebook#remove_page page)
+      end
 
     method newScript () = 
        let scrolledWindow = GBin.scrolled_window () in
@@ -1037,9 +1052,9 @@ class gui () =
     method private _enableSaveTo file =
       self#main#saveMenuItem#misc#set_sensitive true
         
-    method console = console
-    method fileSel = fileSel
-    method findRepl = findRepl
+    method private console = console
+    method private fileSel = fileSel
+    method private findRepl = findRepl
     method main = main
 
     method newBrowserWin () =
@@ -1059,7 +1074,7 @@ class gui () =
       dialog#check_widgets ();
       dialog
 
-    method newConfirmationDialog () =
+    method private newConfirmationDialog () =
       let dialog = new confirmationDialog () in
       dialog#check_widgets ();
       dialog
@@ -1073,13 +1088,13 @@ class gui () =
       List.iter (fun evbox -> add_key_binding key callback evbox)
         keyBindingBoxes
 
-    method setQuitCallback callback =
+    method private setQuitCallback callback =
       connect_menu_item main#quitMenuItem callback;
       ignore (main#toplevel#event#connect#delete 
         (fun _ -> callback ();true));
       self#addKeyBinding GdkKeysyms._q callback
 
-    method chooseFile ?(ok_not_exists = false) () =
+    method private chooseFile ?(ok_not_exists = false) () =
       _ok_not_exists <- ok_not_exists;
       _only_directory <- false;
       fileSel#fileSelectionWin#show ();
@@ -1094,25 +1109,6 @@ class gui () =
       (* we should check that this is a directory *)
       chosen_file
   
-    method askText ?(title = "") ?(msg = "") () =
-      let dialog = new textDialog () in
-      dialog#textDialog#set_title title;
-      dialog#textDialogLabel#set_label msg;
-      let text = ref None in
-      let return v =
-        text := v;
-        dialog#textDialog#destroy ();
-        GMain.Main.quit ()
-      in
-      ignore (dialog#textDialog#event#connect#delete (fun _ -> true));
-      connect_button dialog#textDialogCancelButton (fun _ -> return None);
-      connect_button dialog#textDialogOkButton (fun _ ->
-        let text = dialog#textDialogTextView#buffer#get_text () in
-        return (Some text));
-      dialog#textDialog#show ();
-      GtkThread.main ();
-      !text
-
   end
 
 let gui () = 

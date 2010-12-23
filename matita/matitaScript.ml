@@ -1036,6 +1036,11 @@ let at_page page =
 let current () =
  at_page ((MatitaMisc.get_gui ())#main#scriptNotebook#current_page)
 
+let destroy page =
+ let s = at_page page in
+  _script := List.filter ((<>) s) !_script
+;;
+
 let iter_scripts f = List.iter f !_script;;
 
 let _ =

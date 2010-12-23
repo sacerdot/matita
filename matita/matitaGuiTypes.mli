@@ -42,15 +42,8 @@ end
 
 class type gui =
 object
-  method setQuitCallback    : (unit -> unit) -> unit
-
     (** {2 Access to singleton instances of lower-level GTK widgets} *)
-
-  method fileSel :      MatitaGeneratedGui.fileSelectionWin
   method main :         MatitaGeneratedGui.mainWin
-  method findRepl :     MatitaGeneratedGui.findReplWin
-
-  method console:       console
 
     (** {2 Dialogs instantiation}
      * methods below create a new window on each invocation. You should
@@ -58,18 +51,9 @@ object
 
   method newBrowserWin:         unit -> browserWin
   method newUriDialog:          unit -> MatitaGeneratedGui.uriChoiceDialog
-  method newConfirmationDialog: unit -> MatitaGeneratedGui.confirmationDialog
   method newEmptyDialog:        unit -> MatitaGeneratedGui.emptyDialog
 
     (** {2 Utility methods} *)
-
-    (** ask the used to choose a file with the file chooser
-    * @param ok_not_exists if set to true returns also non existent files
-    * (useful for save). Defaults to false *)
-  method chooseFile: ?ok_not_exists:bool -> unit -> string option
-
-    (** prompt the user for a (multiline) text entry *)
-  method askText: ?title:string -> ?msg:string -> unit -> string option
 
   method newScript: unit -> unit
   method loadScript: string -> unit

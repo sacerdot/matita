@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <glade-interface>
-  <!-- interface-requires gtk+ 2.6 -->
+  <!-- interface-requires gtk+ 2.16 -->
   <!-- interface-naming-policy toplevel-contextual -->
   <widget class="GtkWindow" id="BrowserWin">
     <property name="width_request">500</property>
@@ -691,6 +691,15 @@
                             <child>
                               <widget class="GtkSeparatorMenuItem" id="separator2">
                                 <property name="visible">True</property>
+                              </widget>
+                            </child>
+                            <child>
+                              <widget class="GtkImageMenuItem" id="closeMenuItem">
+                                <property name="label">gtk-close</property>
+                                <property name="visible">True</property>
+                                <property name="use_underline">True</property>
+                                <property name="use_stock">True</property>
+                                <accelerator key="q" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                               </widget>
                             </child>
                             <child>

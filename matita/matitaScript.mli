@@ -109,6 +109,7 @@ val script:
   unit -> 
     script
 
+val destroy: int -> unit
 val current: unit -> script
 val at_page: int -> script
 val iter_scripts: (script -> unit) -> unit
