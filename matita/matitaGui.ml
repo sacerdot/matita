@@ -840,7 +840,7 @@ class gui () =
       connect_menu_item main#saveAsMenuItem
        (fun () -> self#saveAsScript (MatitaScript.current ()));
       connect_menu_item main#newMenuItem self#newScript;
-      connect_menu_item main#closeMenuItem self#closeScript;
+      connect_menu_item main#closeMenuItem self#closeCurrentScript;
       connect_menu_item main#showCoercionsGraphMenuItem 
         (fun _ -> 
           let c = MatitaMathView.cicBrowser () in
@@ -980,18 +980,30 @@ class gui () =
       else 
        (save_moo script#grafite_status; true)
 
-    method private closeScript () = 
-     let page = main#scriptNotebook#current_page in
-     let script = MatitaScript.at_page page in 
+    method private closeScript page script = 
      if self#closeScript0 script then
       begin
        MatitaScript.destroy page;
        ignore (main#scriptNotebook#remove_page page)
       end
 
+    method private closeCurrentScript () = 
+     let page = main#scriptNotebook#current_page in
+     let script = MatitaScript.at_page page in 
+      self#closeScript page script
+
     method newScript () = 
        let scrolledWindow = GBin.scrolled_window () in
-       let tab_label = GMisc.label ~text:"foo" () in
+       let hbox = GPack.hbox () in
+       let tab_label = GMisc.label ~text:"foo"
+        ~packing:hbox#pack () in
+       let _ =
+        GMisc.label ~text:"" ~packing:(hbox#pack ~expand:true ~fill:true) () in
+       let closebutton =
+        GButton.button ~relief:`NONE ~packing:hbox#pack () in
+       let image =
+        GMisc.image ~stock:`CLOSE ~icon_size:`MENU () in
+       closebutton#set_image image#coerce;
        let script =
         MatitaScript.script 
           ~urichooser:(fun source_view uris ->
@@ -1009,7 +1021,10 @@ class gui () =
                 ~parent:(MatitaMisc.get_gui ())#main#toplevel ())
           ~parent:scrolledWindow ~tab_label ()
        in
-        ignore (main#scriptNotebook#prepend_page ~tab_label:tab_label#coerce scrolledWindow#coerce);
+        ignore (main#scriptNotebook#prepend_page ~tab_label:hbox#coerce
+         scrolledWindow#coerce);
+        ignore (closebutton#connect#clicked (fun () ->
+           self#closeScript (main#scriptNotebook#page_num hbox#coerce) script));
         main#scriptNotebook#goto_page 0;
         sequents_viewer#reset;
         sequents_viewer#load_logo;
