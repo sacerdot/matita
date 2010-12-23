@@ -37,7 +37,6 @@ val get_checked_fixes_or_cofixes:
   NReference.reference -> 
    NCic.inductiveFun list * NCic.f_attr * int
 
-(* invalidate the object and all those that entered the environment after it *)
 val invalidate_item: 
       [ `Obj of NUri.uri * NCic.obj 
       | `Constr of NCic.universe * NCic.universe ] -> unit

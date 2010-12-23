@@ -297,10 +297,6 @@ let index_eq_for_auto status uri =
    status)
 ;; 
 
-let basic_eval_add_constraint (u1,u2) status =
- NCicLibrary.add_constraint status u1 u2
-;;
-
 let inject_constraint =
  let basic_eval_add_constraint (u1,u2) 
      ~refresh_uri_in_universe ~refresh_uri_in_term ~refresh_uri_in_reference
@@ -309,7 +305,11 @@ let inject_constraint =
   if not alias_only then
    let u1 = refresh_uri_in_universe u1 in 
    let u2 = refresh_uri_in_universe u2 in 
-    basic_eval_add_constraint (u1,u2) status
+    (* NCicLibrary.add_constraint adds the constraint to the NCicEnvironment
+     * and also to the storage (for undo/redo). During inclusion of compiled
+     * files the storage must not be touched. *)
+    NCicEnvironment.add_lt_constraint u1 u2;
+    status
   else
    status
  in
@@ -317,7 +317,7 @@ let inject_constraint =
 ;;
 
 let eval_add_constraint status u1 u2 = 
- let status = basic_eval_add_constraint (u1,u2) status in
+ let status = NCicLibrary.add_constraint status u1 u2 in
   NCicLibrary.dump_obj status (inject_constraint (u1,u2))
 ;;
 
@@ -543,16 +543,6 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
        (*prerr_endline (NCicPp.ppobj obj);*)
            let boxml = NCicElim.mk_elims obj in
            let boxml = boxml @ NCicElim.mk_projections obj in
-(*
-           let objs = [] in
-           let timestamp,uris_rev =
-             List.fold_left
-              (fun (status,uris_rev) (uri,_,_,_,_) as obj ->
-                let status = NCicLibrary.add_obj status obj in
-                 status,uri::uris_rev
-              ) (status,[]) objs in
-           let uris = uri::List.rev uris_rev in
-*)
            let status = status#set_ng_mode `CommandMode in
            let xxaliases = GrafiteDisambiguate.aliases_for_objs [uri] in
            let mode = GrafiteAst.WithPreferences in (* MATITA 1.0: fixme *)

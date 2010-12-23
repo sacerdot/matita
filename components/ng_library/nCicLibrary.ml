@@ -153,7 +153,7 @@ let time_travel status =
   let diff_len = List.length !storage - List.length sto in
   let to_be_deleted,_ = HExtlib.split_nth diff_len !storage in
    if List.length to_be_deleted > 0 then
-     NCicEnvironment.invalidate_item (HExtlib.list_last to_be_deleted);
+    List.iter NCicEnvironment.invalidate_item to_be_deleted;
    storage := sto; local_aliases := ali
 ;;
 
@@ -347,6 +347,13 @@ let add_obj status ((u,_,_,_,_) as obj) =
 ;;
 
 let add_constraint status u1 u2 = 
+  if
+   List.exists
+    (function `Constr (u1',u2') when u1=u1' && u2=u2' -> true | _ -> false)
+    !storage
+  then
+   (*CSC: raise an exception here! *)
+   (prerr_endline "CANNOT ADD A CONSTRAINT TWICE"; assert false);
   NCicEnvironment.add_lt_constraint u1 u2;
   storage := (`Constr (u1,u2)) :: !storage;
   status#set_timestamp (!storage,!local_aliases)

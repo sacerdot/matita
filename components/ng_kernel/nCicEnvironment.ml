@@ -254,6 +254,9 @@ let set_typecheck_obj f =
   end
 ;;
 
+(* CSC: old code that performs recursive invalidation; to be removed
+ * once we understand what we really want. Once we removed it, we can
+ * also remove the !history
 let invalidate_item item =
  let item_eq a b = 
    match a, b with
@@ -279,6 +282,16 @@ let invalidate_item item =
      | `Constr _ -> assert false
      ) to_be_deleted
 ;;
+*)
+
+let invalidate_item =
+ function
+    `Obj (uri,_) -> NUri.UriHash.remove cache uri
+  | `Constr ([_,u1],[_,u2]) -> 
+      let w = u1,u2 in
+      lt_constraints := List.filter ((<>) w) !lt_constraints;
+  | `Constr _ -> assert false
+;;
 
 exception Propagate of NUri.uri * exn;;
 
@@ -292,6 +305,7 @@ let check_and_add_obj ((u,_,_,_,_) as obj) =
  let saved_frozen_list = !frozen_list in
  try
    frozen_list := (u,obj)::saved_frozen_list;
+   HLog.warn ("Typechecking of " ^ NUri.string_of_uri u); 
    !typecheck_obj obj;
    frozen_list := saved_frozen_list;
    let obj' = `WellTyped obj in
