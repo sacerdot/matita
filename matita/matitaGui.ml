@@ -1031,7 +1031,10 @@ class gui () =
         script#addObserver browser_observer
 
     method loadScript file =       
-     self#newScript ();
+     let page = main#scriptNotebook#current_page in
+     let script = MatitaScript.at_page page in
+      if script#source_view#buffer#modified || script#has_name then
+       self#newScript ();
      let script = MatitaScript.current () in
      let source_view = script#source_view in
       script#reset (); 
