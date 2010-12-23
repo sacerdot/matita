@@ -260,7 +260,7 @@ module Serializer(D: sig type dumpable_s val get: dumpable_s -> dumpable_status 
      D.set status
       (s#set_dump
         {s#dump with
-        includes = baseuri::s#dump.includes}) in
+        includes = baseuri::List.filter ((<>) baseuri) s#dump.includes}) in
     let _dependencies,dump = require0 ~baseuri in
      List.fold_right (!require1 ~alias_only) dump status
    with
