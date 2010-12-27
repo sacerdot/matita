@@ -271,10 +271,11 @@ let initial_statuses current baseuri =
      Some current ->
       NCicLibrary.time_travel
        ((new GrafiteTypes.status current#baseuri)#set_disambiguate_db current#disambiguate_db);
-      (* CSC: there is a known bug in invalidation; temporary fix here *)
+      (* MATITA 1.0: there is a known bug in invalidation; temporary fix here *)
       NCicEnvironment.invalidate ()
    | None -> ());
  let lexicon_status = empty_lstatus in
+ (* MATITA 1.0: ma serve ancora fare questo back-track sul lexicon_status? *)
  let grafite_status = (new GrafiteTypes.status baseuri)#set_disambiguate_db lexicon_status#disambiguate_db in
   grafite_status
 in
