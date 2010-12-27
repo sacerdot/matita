@@ -136,18 +136,18 @@ class console ~(buffer: GText.buffer) () =
       | `Warning -> self#warning (s ^ "\n")
   end
         
-let clean_current_baseuri grafite_status = 
-  LibraryClean.clean_baseuris [grafite_status#baseuri]
+let clean_current_baseuri status = 
+  LibraryClean.clean_baseuris [status#baseuri]
 
-let save_moo grafite_status = 
+let save_moo status = 
   let script = MatitaScript.current () in
-  let baseuri = grafite_status#baseuri in
+  let baseuri = status#baseuri in
   match script#bos, script#eos with
   | true, _ -> ()
   | _, true ->
      GrafiteTypes.Serializer.serialize ~baseuri:(NUri.uri_of_string baseuri)
-      grafite_status
-  | _ -> clean_current_baseuri grafite_status 
+      status
+  | _ -> clean_current_baseuri status 
 ;;
     
 let ask_unsaved parent filename =
@@ -768,8 +768,7 @@ class gui () =
       MatitaGtkMisc.toggle_callback ~check:main#ppNotationMenuItem
         ~callback:(function b ->
           let s = s () in
-          let status =
-           Interpretations.toggle_active_interpretations s#grafite_status b
+          let status = Interpretations.toggle_active_interpretations s#status b
           in
            assert false (* MATITA 1.0 ???
            s#set_grafite_status status*)
@@ -973,12 +972,12 @@ class gui () =
         with
         | `YES -> 
              self#saveScript script;
-             save_moo script#grafite_status;
+             save_moo script#status;
              true
         | `NO -> true
         | `CANCEL -> false
       else 
-       (save_moo script#grafite_status; true)
+       (save_moo script#status; true)
 
     method private closeScript page script = 
      if self#closeScript0 script then
@@ -1029,16 +1028,16 @@ class gui () =
         sequents_viewer#reset;
         sequents_viewer#load_logo;
         let browser_observer _ = MatitaMathView.refresh_all_browsers () in
-        let sequents_observer grafite_status =
+        let sequents_observer status =
           sequents_viewer#reset;
-          match grafite_status#ng_mode with
+          match status#ng_mode with
              `ProofMode ->
-              sequents_viewer#nload_sequents grafite_status;
+              sequents_viewer#nload_sequents status;
               (try
                 let goal =
-                 Continuationals.Stack.find_goal grafite_status#stack
+                 Continuationals.Stack.find_goal status#stack
                 in
-                 sequents_viewer#goto_sequent grafite_status goal
+                 sequents_viewer#goto_sequent status goal
               with Failure _ -> ());
            | `CommandMode -> sequents_viewer#load_logo
         in

@@ -290,7 +290,7 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
       let module Pp = GraphvizPp.Dot in
       let filename, oc = Filename.open_temp_file "matita" ".dot" in
       let fmt = Format.formatter_of_out_channel oc in
-      let status = (get_matita_script_current ())#grafite_status in
+      let status = (get_matita_script_current ())#status in
       Pp.header 
         ~name:"Hints"
         ~graph_type:"graph"
@@ -313,7 +313,7 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
         ~name:"Coercions"
         ~node_attrs:["fontsize", "9"; "width", ".4"; "height", ".4"]
         ~edge_attrs:["fontsize", "10"] fmt;
-      let status = (get_matita_script_current ())#grafite_status in
+      let status = (get_matita_script_current ())#status in
       NCicCoercion.generate_dot_file status fmt;
       Pp.trailer fmt;
       Pp.raw "@." fmt;
@@ -550,19 +550,17 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
       self#_showSearch
 
     method private grammar () =
-      self#_loadText (Print_grammar.ebnf_of_term self#script#grafite_status);
+      self#_loadText (Print_grammar.ebnf_of_term self#script#status);
 
     method private home () =
       self#_showMath;
-      match self#script#grafite_status#ng_mode with
-         `ProofMode ->
-           self#_loadNObj self#script#grafite_status
-           self#script#grafite_status#obj
+      match self#script#status#ng_mode with
+         `ProofMode -> self#_loadNObj self#script#status self#script#status#obj
        | _ -> self#blank ()
 
     method private _loadNReference (NReference.Ref (uri,_)) =
       let obj = NCicEnvironment.get_checked_obj uri in
-      self#_loadNObj self#script#grafite_status obj
+      self#_loadNObj self#script#status obj
 
     method private _loadDir dir = 
       let content = Http_getter.ls ~local:false dir in
@@ -592,7 +590,7 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
     method private _loadTermNCic term m s c =
       let d = 0 in
       let m = (0,([],c,term))::m in
-      let status = (get_matita_script_current ())#grafite_status in
+      let status = (get_matita_script_current ())#status in
       mathView#nload_sequent status m s d;
       self#_showMath
 

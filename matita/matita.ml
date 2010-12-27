@@ -67,7 +67,7 @@ let init_debugging_menu gui =
       ignore (GMenu.separator_item ~packing:gui#main#debugMenu_menu#append ())
     in
     addDebugItem "dump aliases" (fun _ ->
-      let status = (MatitaScript.current ())#grafite_status in
+      let status = (MatitaScript.current ())#status in
       GrafiteDisambiguate.dump_aliases prerr_endline "" status);
 (* FG: DEBUGGING   
     addDebugItem "dump interpretations" (fun _ ->

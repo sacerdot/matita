@@ -70,7 +70,7 @@ type guistuff = {
   ask_confirmation: title:string -> message:string -> [`YES | `NO | `CANCEL];
 }
 
-let eval_with_engine include_paths guistuff grafite_status skipped_txt nonskipped_txt st
+let eval_with_engine include_paths guistuff status skipped_txt nonskipped_txt st
 =
   let parsed_text_length =
     String.length skipped_txt + String.length nonskipped_txt 
@@ -80,7 +80,7 @@ let eval_with_engine include_paths guistuff grafite_status skipped_txt nonskippe
   let enriched_history_fragment =
    MatitaEngine.eval_ast ~include_paths ~do_heavy_checks:(Helm_registry.get_bool
      "matita.do_heavy_checks")
-    grafite_status (text,prefix_len,st)
+    status (text,prefix_len,st)
   in
   let enriched_history_fragment = List.rev enriched_history_fragment in
   (* really fragile *)
@@ -99,11 +99,11 @@ let eval_with_engine include_paths guistuff grafite_status skipped_txt nonskippe
 
 let pp_eager_statement_ast = GrafiteAstPp.pp_statement 
 
-let eval_nmacro include_paths (buffer : GText.buffer) guistuff grafite_status unparsed_text parsed_text script mac =
+let eval_nmacro include_paths (buffer : GText.buffer) guistuff status unparsed_text parsed_text script mac =
   let parsed_text_length = String.length parsed_text in
   match mac with
   | TA.Screenshot (_,name) -> 
-       let status = script#grafite_status in
+       let status = script#status in
        let _,_,menv,subst,_ = status#obj in
        let name = Filename.dirname (script#filename) ^ "/" ^ name in
        let sequents = 
@@ -113,7 +113,7 @@ let eval_nmacro include_paths (buffer : GText.buffer) guistuff grafite_status un
        CicMathView.screenshot status sequents menv subst name;
        [status, parsed_text], "", parsed_text_length
   | TA.NCheck (_,t) ->
-      let status = script#grafite_status in
+      let status = script#status in
       let _,_,menv,subst,_ = status#obj in
       let ctx = 
        match Continuationals.Stack.head_goals status#stack with
@@ -134,18 +134,13 @@ let eval_nmacro include_paths (buffer : GText.buffer) guistuff grafite_status un
       [status, parsed_text], "", parsed_text_length
   | TA.NIntroGuess _loc ->
       let names_ref = ref [] in
-      let s = 
-        NTactics.intros_tac ~names_ref [] script#grafite_status 
-      in
+      let s = NTactics.intros_tac ~names_ref [] script#status in
       let rex = Pcre.regexp ~flags:[`MULTILINE] "\\A([\\n\\t\\r ]*).*\\Z" in
       let nl = Pcre.replace ~rex ~templ:"$1" parsed_text in
       [s, nl ^ "#" ^ String.concat " " !names_ref ^ ";"], "", parsed_text_length
   | TA.NAutoInteractive (_loc, (None,a)) -> 
       let trace_ref = ref [] in
-      let s = 
-        NnAuto.auto_tac 
-          ~params:(None,a) ~trace_ref script#grafite_status 
-      in
+      let s = NnAuto.auto_tac ~params:(None,a) ~trace_ref script#status in
       let depth = 
         try List.assoc "depth" a
         with Not_found -> ""
@@ -167,33 +162,32 @@ let eval_nmacro include_paths (buffer : GText.buffer) guistuff grafite_status un
   | TA.NAutoInteractive (_, (Some _,_)) -> assert false
 
 let rec eval_executable include_paths (buffer : GText.buffer) guistuff
-grafite_status unparsed_text skipped_txt nonskipped_txt script ex loc
+status unparsed_text skipped_txt nonskipped_txt script ex loc
 =
   try
    ignore (buffer#move_mark (`NAME "beginning_of_statement")
     ~where:((buffer#get_iter_at_mark (`NAME "locked"))#forward_chars
        (Glib.Utf8.length skipped_txt))) ;
-   eval_with_engine include_paths 
-    guistuff grafite_status skipped_txt nonskipped_txt
-     (TA.Executable (loc, ex))
+   eval_with_engine include_paths guistuff status skipped_txt nonskipped_txt
+    (TA.Executable (loc, ex))
   with
      MatitaTypes.Cancel -> [], "", 0
    | GrafiteEngine.NMacro (_loc,macro) ->
-       eval_nmacro include_paths buffer guistuff grafite_status
+       eval_nmacro include_paths buffer guistuff status
         unparsed_text (skipped_txt ^ nonskipped_txt) script macro
 
 
-and eval_statement include_paths (buffer : GText.buffer) guistuff 
- grafite_status script statement
+and eval_statement include_paths (buffer : GText.buffer) guistuff status script
+ statement
 =
   let st,unparsed_text =
     match statement with
     | `Raw text ->
         if Pcre.pmatch ~rex:only_dust_RE text then raise Margin;
         let strm =
-         GrafiteParser.parsable_statement grafite_status
+         GrafiteParser.parsable_statement status
           (Ulexing.from_utf8_string text) in
-        let ast = MatitaEngine.get_ast grafite_status include_paths strm in
+        let ast = MatitaEngine.get_ast status include_paths strm in
          ast, text
     | `Ast (st, text) -> st, text
   in
@@ -209,21 +203,20 @@ and eval_statement include_paths (buffer : GText.buffer) guistuff
   match st with
   | GrafiteAst.Executable (loc, ex) ->
      let _, nonskipped, skipped, parsed_text_length = text_of_loc loc in
-      eval_executable include_paths buffer guistuff 
-       grafite_status unparsed_text skipped nonskipped script ex loc
+      eval_executable include_paths buffer guistuff status unparsed_text
+       skipped nonskipped script ex loc
   | GrafiteAst.Comment (loc, GrafiteAst.Code (_, ex))
     when Helm_registry.get_bool "matita.execcomments" ->
      let _, nonskipped, skipped, parsed_text_length = text_of_loc loc in
-      eval_executable include_paths buffer guistuff 
-       grafite_status unparsed_text skipped nonskipped script ex loc
+      eval_executable include_paths buffer guistuff status unparsed_text
+       skipped nonskipped script ex loc
   | GrafiteAst.Comment (loc, _) -> 
       let parsed_text, _, _, parsed_text_length = text_of_loc loc in
       let remain_len = String.length unparsed_text - parsed_text_length in
       let s = String.sub unparsed_text parsed_text_length remain_len in
       let s,text,len = 
        try
-        eval_statement include_paths buffer guistuff 
-         grafite_status script (`Raw s)
+        eval_statement include_paths buffer guistuff status script (`Raw s)
        with
           HExtlib.Localized (floc, exn) ->
            HExtlib.raise_localized_exception 
@@ -266,18 +259,15 @@ let source_buffer = source_view#source_buffer in
 let similarsymbols_tag_name = "similarsymbolos" in
 let similarsymbols_tag = `NAME similarsymbols_tag_name in
 let initial_statuses current baseuri =
- let empty_lstatus = new GrafiteDisambiguate.status in
+ let status = new GrafiteTypes.status baseuri in
  (match current with
      Some current ->
-      NCicLibrary.time_travel
-       ((new GrafiteTypes.status current#baseuri)#set_disambiguate_db current#disambiguate_db);
+      NCicLibrary.time_travel status;
+(*
       (* MATITA 1.0: there is a known bug in invalidation; temporary fix here *)
-      NCicEnvironment.invalidate ()
+      NCicEnvironment.invalidate () *)
    | None -> ());
- let lexicon_status = empty_lstatus in
- (* MATITA 1.0: ma serve ancora fare questo back-track sul lexicon_status? *)
- let grafite_status = (new GrafiteTypes.status baseuri)#set_disambiguate_db lexicon_status#disambiguate_db in
-  grafite_status
+  status
 in
 let read_include_paths file =
  try 
@@ -679,7 +669,7 @@ object (self)
 
     (* history can't be empty, the invariant above grant that it contains at
      * least the init grafite_status *)
-  method grafite_status = match history with s::_ -> s | _ -> assert false
+  method status = match history with s::_ -> s | _ -> assert false
 
   method private _advance ?statement () =
    let s = match statement with Some s -> s | None -> self#getFuture in
@@ -688,8 +678,7 @@ object (self)
    let time1 = Unix.gettimeofday () in
    let entries, newtext, parsed_len = 
     try
-     eval_statement self#include_paths buffer guistuff
-      self#grafite_status self (`Raw s)
+     eval_statement self#include_paths buffer guistuff self#status self (`Raw s)
     with End_of_file -> raise Margin
    in
    let time2 = Unix.gettimeofday () in
@@ -715,8 +704,8 @@ object (self)
    self#moveMark (Glib.Utf8.length new_text);
    buffer#insert ~iter:(buffer#get_iter_at_mark (`MARK locked_mark)) newtext
 
-  method private _retract offset grafite_status new_statements new_history =
-    NCicLibrary.time_travel grafite_status;
+  method private _retract offset status new_statements new_history =
+    NCicLibrary.time_travel status;
     statements <- new_statements;
     history <- new_history;
     self#moveMark (- offset)
@@ -733,7 +722,7 @@ object (self)
 
   method retract () =
     try
-      let cmp,new_statements,new_history,grafite_status =
+      let cmp,new_statements,new_history,status =
        match statements,history with
           stat::statements, _::(status::_ as history) ->
            assert (Glib.Utf8.validate stat);
@@ -741,8 +730,7 @@ object (self)
        | [],[_] -> raise Margin
        | _,_ -> assert false
       in
-       self#_retract cmp grafite_status new_statements
-        new_history;
+       self#_retract cmp status new_statements new_history;
        self#notify
     with 
     | Margin -> self#notify
@@ -822,8 +810,8 @@ object (self)
     observers <- o :: observers
 
   method private notify =
-    let grafite_status = self#grafite_status in
-    List.iter (fun o -> o grafite_status) observers
+    let status = self#status in
+    List.iter (fun o -> o status) observers
 
   method activate =
     self#notify
@@ -876,7 +864,7 @@ object (self)
   
   method private reset_buffer = 
     statements <- [];
-    history <- [ initial_statuses (Some self#grafite_status) self#buri_of_current_file ];
+    history <- [ initial_statuses (Some self#status) self#buri_of_current_file ];
     self#notify;
     buffer#remove_tag locked_tag ~start:buffer#start_iter ~stop:buffer#end_iter;
     buffer#move_mark (`MARK locked_mark) ~where:buffer#start_iter
@@ -951,9 +939,9 @@ object (self)
         in
         let rec back_until_cursor len = (* go backward until locked < cursor *)
          function
-            statements, ((grafite_status)::_ as history)
+            statements, ((status)::_ as history)
             when len <= 0 ->
-             self#_retract (icmp - len) grafite_status statements
+             self#_retract (icmp - len) status statements
               history
           | statement::tl1, _::tl2 ->
              back_until_cursor (len - MatitaGtkMisc.utf8_string_length statement) (tl1,tl2)
@@ -983,22 +971,22 @@ object (self)
     | _ -> false
 
   method eos = 
-    let rec is_there_only_comments lexicon_status s = 
+    let rec is_there_only_comments status s = 
       if Pcre.pmatch ~rex:only_dust_RE s then raise Margin;
       let strm =
-       GrafiteParser.parsable_statement lexicon_status
+       GrafiteParser.parsable_statement status
         (Ulexing.from_utf8_string s)in
-      match GrafiteParser.parse_statement lexicon_status strm with
+      match GrafiteParser.parse_statement status strm with
       | GrafiteAst.Comment (loc,_) -> 
           let _,parsed_text_length = MatitaGtkMisc.utf8_parsed_text s loc in
           (* CSC: why +1 in the following lines ???? *)
           let parsed_text_length = parsed_text_length + 1 in
           let remain_len = String.length s - parsed_text_length in
           let next = String.sub s parsed_text_length remain_len in
-          is_there_only_comments lexicon_status next
+          is_there_only_comments status next
       | GrafiteAst.Executable _ -> false
     in
-    try is_there_only_comments self#grafite_status self#getFuture
+    try is_there_only_comments self#status self#getFuture
     with 
     | NCicLibrary.IncludedFileNotCompiled _
     | HExtlib.Localized _
@@ -1045,5 +1033,5 @@ let destroy page =
 let iter_scripts f = List.iter f !_script;;
 
 let _ =
- CicMathView.register_matita_script_current (current :> unit -> < advance: ?statement:string -> unit -> unit; grafite_status: GrafiteTypes.status >)
+ CicMathView.register_matita_script_current (current :> unit -> < advance: ?statement:string -> unit -> unit; status: GrafiteTypes.status >)
 ;;

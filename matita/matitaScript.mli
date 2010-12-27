@@ -34,7 +34,7 @@ object
   method error_tag : GText.tag
 
     (** @return current status *)
-  method grafite_status: GrafiteTypes.status
+  method status: GrafiteTypes.status
     
   (** {2 Observers} *)
 
