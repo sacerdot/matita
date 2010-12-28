@@ -26,27 +26,4 @@
   (** for debugging only *)
 val all_disambiguation_passes: bool ref
 
-  (** singleton instance of the gui *)
 val instance: unit -> MatitaGuiTypes.gui
-
-  (** {2 Disambiguation callbacks}
-  * Use singleton gui instance. *)
-
-  (** @param selection_mode selection mode in uri list, default to `MULTIPLE
-    * @param title window title, defaults to ""
-    * @param msg message for the user, defaults to ""
-    * @param nonvars_button enable button to exclude vars?, defaults to false
-    * @raise MatitaTypes.Cancel *)
-val interactive_uri_choice:
-  ?selection_mode:([`SINGLE|`MULTIPLE]) -> ?title:string ->
-  ?msg:string -> ?nonvars_button:bool -> 
-  ?hide_uri_entry:bool -> ?hide_try:bool -> ?ok_label:string ->
-  ?ok_action:[`AUTO|`SELECT] ->
-  ?copy_cb:(string -> unit) -> unit ->
-  id:'a -> NReference.reference list -> NReference.reference list
-
-  (** @raise MatitaTypes.Cancel *)
-val interactive_interp_choice:
-  unit ->
-    DisambiguateTypes.interactive_interpretation_choice_type
-

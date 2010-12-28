@@ -35,8 +35,6 @@ exception Found of int
 
 let all_disambiguation_passes = ref false
 
-let gui_instance = ref None
-
 (* this is a shit and should be changed :-{ *)
 let interactive_uri_choice
   ?(selection_mode:[`SINGLE|`MULTIPLE] = `MULTIPLE) ?(title = "")
@@ -1073,7 +1071,6 @@ class gui () =
 
 let gui () = 
   let g = new gui () in
-  gui_instance := Some g;
   MatitaMisc.set_gui g;
   g
   
