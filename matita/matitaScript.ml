@@ -65,12 +65,7 @@ let first_line s =
     String.sub s 0 nl_pos
   with Not_found -> s
 
-type guistuff = {
-  urichooser: NReference.reference list -> NReference.reference list;
-  ask_confirmation: title:string -> message:string -> [`YES | `NO | `CANCEL];
-}
-
-let eval_with_engine include_paths guistuff status skipped_txt nonskipped_txt st
+let eval_with_engine include_paths status skipped_txt nonskipped_txt st
 =
   let parsed_text_length =
     String.length skipped_txt + String.length nonskipped_txt 
@@ -99,7 +94,7 @@ let eval_with_engine include_paths guistuff status skipped_txt nonskipped_txt st
 
 let pp_eager_statement_ast = GrafiteAstPp.pp_statement 
 
-let eval_nmacro include_paths (buffer : GText.buffer) guistuff status unparsed_text parsed_text script mac =
+let eval_nmacro include_paths (buffer : GText.buffer) status unparsed_text parsed_text script mac =
   let parsed_text_length = String.length parsed_text in
   match mac with
   | TA.Screenshot (_,name) -> 
@@ -161,23 +156,23 @@ let eval_nmacro include_paths (buffer : GText.buffer) guistuff status unparsed_t
       [s, nl ^ trace ^ thms ^ ";"], "", parsed_text_length
   | TA.NAutoInteractive (_, (Some _,_)) -> assert false
 
-let rec eval_executable include_paths (buffer : GText.buffer) guistuff
+let rec eval_executable include_paths (buffer : GText.buffer)
 status unparsed_text skipped_txt nonskipped_txt script ex loc
 =
   try
    ignore (buffer#move_mark (`NAME "beginning_of_statement")
     ~where:((buffer#get_iter_at_mark (`NAME "locked"))#forward_chars
        (Glib.Utf8.length skipped_txt))) ;
-   eval_with_engine include_paths guistuff status skipped_txt nonskipped_txt
+   eval_with_engine include_paths status skipped_txt nonskipped_txt
     (TA.Executable (loc, ex))
   with
      MatitaTypes.Cancel -> [], "", 0
    | GrafiteEngine.NMacro (_loc,macro) ->
-       eval_nmacro include_paths buffer guistuff status
+       eval_nmacro include_paths buffer status
         unparsed_text (skipped_txt ^ nonskipped_txt) script macro
 
 
-and eval_statement include_paths (buffer : GText.buffer) guistuff status script
+and eval_statement include_paths (buffer : GText.buffer) status script
  statement
 =
   let st,unparsed_text =
@@ -203,12 +198,12 @@ and eval_statement include_paths (buffer : GText.buffer) guistuff status script
   match st with
   | GrafiteAst.Executable (loc, ex) ->
      let _, nonskipped, skipped, parsed_text_length = text_of_loc loc in
-      eval_executable include_paths buffer guistuff status unparsed_text
+      eval_executable include_paths buffer status unparsed_text
        skipped nonskipped script ex loc
   | GrafiteAst.Comment (loc, GrafiteAst.Code (_, ex))
     when Helm_registry.get_bool "matita.execcomments" ->
      let _, nonskipped, skipped, parsed_text_length = text_of_loc loc in
-      eval_executable include_paths buffer guistuff status unparsed_text
+      eval_executable include_paths buffer status unparsed_text
        skipped nonskipped script ex loc
   | GrafiteAst.Comment (loc, _) -> 
       let parsed_text, _, _, parsed_text_length = text_of_loc loc in
@@ -216,7 +211,7 @@ and eval_statement include_paths (buffer : GText.buffer) guistuff status script
       let s = String.sub unparsed_text parsed_text_length remain_len in
       let s,text,len = 
        try
-        eval_statement include_paths buffer guistuff status script (`Raw s)
+        eval_statement include_paths buffer status script (`Raw s)
        with
           HExtlib.Localized (floc, exn) ->
            HExtlib.raise_localized_exception 
@@ -245,7 +240,7 @@ let fresh_script_id =
  *    "TERM" and "PATTERN", in the future other targets like "MATHMLCONTENT" may
  *    be added
  *)
-class script ~ask_confirmation ~urichooser ~(parent:GBin.scrolled_window) ~tab_label () =
+class script ~(parent:GBin.scrolled_window) ~tab_label () =
 let source_view =
   GSourceView2.source_view
     ~auto_indent:true
@@ -296,11 +291,6 @@ object (self)
   val mutable old_used_memory = false
 
   val scriptId = fresh_script_id ()
-
-  val guistuff = {
-    urichooser = urichooser source_view;
-    ask_confirmation = ask_confirmation;
-  }
 
   val mutable filename_ = (None : string option)
 
@@ -678,7 +668,7 @@ object (self)
    let time1 = Unix.gettimeofday () in
    let entries, newtext, parsed_len = 
     try
-     eval_statement self#include_paths buffer guistuff self#status self (`Raw s)
+     eval_statement self#include_paths buffer self#status self (`Raw s)
     with End_of_file -> raise Margin
    in
    let time2 = Unix.gettimeofday () in
@@ -1007,9 +997,9 @@ end
 
 let _script = ref []
 
-let script ~urichooser ~ask_confirmation ~parent ~tab_label ()
+let script ~parent ~tab_label ()
 =
-  let s = new script ~ask_confirmation ~urichooser ~parent ~tab_label () in
+  let s = new script ~parent ~tab_label () in
   _script := s::!_script;
   s
 

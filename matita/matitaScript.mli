@@ -101,15 +101,7 @@ object
 end
 
 val script: 
-  urichooser:
-    (GSourceView2.source_view -> NReference.reference list ->
-      NReference.reference list) -> 
-  ask_confirmation: 
-    (title:string -> message:string -> [`YES | `NO | `CANCEL]) -> 
-  parent:GBin.scrolled_window ->
-  tab_label:GMisc.label ->
-  unit -> 
-    script
+ parent:GBin.scrolled_window -> tab_label:GMisc.label -> unit -> script
 
 val destroy: int -> unit
 val current: unit -> script

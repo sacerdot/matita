@@ -45,13 +45,12 @@ let interactive_uri_choice
   ?copy_cb ()
   ~id uris
 =
-  let gui = MatitaMisc.get_gui () in
   if (selection_mode <> `SINGLE) &&
     (Helm_registry.get_opt_default Helm_registry.get_bool ~default:true "matita.auto_disambiguation")
   then
     uris
   else begin
-    let dialog = gui#newUriDialog () in
+    let dialog = new uriChoiceDialog () in
     if hide_uri_entry then
       dialog#uriEntryHBox#misc#hide ();
     if hide_try then
@@ -326,7 +325,6 @@ let interactive_error_interp ~all_passes
             (offset,[[env,diff,lazy (loffset,Lazy.force msg),significant]]));
     | _::_ ->
        let dialog = new disambiguationErrors () in
-       dialog#check_widgets ();
        if all_passes then
         dialog#disambiguationErrorsMoreErrors#misc#set_sensitive false;
        let model = new interpErrorModel dialog#treeview choices in
@@ -430,10 +428,6 @@ class gui () =
       
     initializer
       let s () = MatitaScript.current () in
-        (* glade's check widgets *)
-      List.iter (fun w -> w#check_widgets ())
-        (let c w = (w :> <check_widgets: unit -> unit>) in
-        [ c fileSel; c main; c findRepl]);
         (* key bindings *)
       List.iter (* global key bindings *)
         (fun (key, callback) -> self#addKeyBinding key callback)
@@ -1003,23 +997,7 @@ class gui () =
        let image =
         GMisc.image ~stock:`CLOSE ~icon_size:`MENU () in
        closebutton#set_image image#coerce;
-       let script =
-        MatitaScript.script 
-          ~urichooser:(fun source_view uris ->
-            try
-             interactive_uri_choice ~selection_mode:`SINGLE
-              ~title:"Matita: URI chooser" 
-              ~msg:"Select the URI" ~hide_uri_entry:true
-              ~hide_try:true ~ok_label:"_Apply" ~ok_action:`SELECT
-              ~copy_cb:(fun s -> source_view#buffer#insert ("\n"^s^"\n"))
-              () ~id:"boh?" uris
-            with MatitaTypes.Cancel -> [])
-          ~ask_confirmation:
-            (fun ~title ~message -> 
-                MatitaGtkMisc.ask_confirmation ~title ~message 
-                ~parent:(MatitaMisc.get_gui ())#main#toplevel ())
-          ~parent:scrolledWindow ~tab_label ()
-       in
+       let script = MatitaScript.script ~parent:scrolledWindow ~tab_label () in
         ignore (main#scriptNotebook#prepend_page ~tab_label:hbox#coerce
          scrolledWindow#coerce);
         ignore (closebutton#connect#clicked (fun () ->
@@ -1079,27 +1057,11 @@ class gui () =
         inherit browserWin ()
         val combo = GEdit.entry ()
         initializer
-          self#check_widgets ();
           let combo_widget = combo#coerce in
           uriHBox#pack ~from:`END ~fill:true ~expand:true combo_widget;
           combo#misc#grab_focus ()
         method browserUri = combo
       end
-
-    method newUriDialog () =
-      let dialog = new uriChoiceDialog () in
-      dialog#check_widgets ();
-      dialog
-
-    method private newConfirmationDialog () =
-      let dialog = new confirmationDialog () in
-      dialog#check_widgets ();
-      dialog
-
-    method newEmptyDialog () =
-      let dialog = new emptyDialog () in
-      dialog#check_widgets ();
-      dialog
 
     method private addKeyBinding key callback =
       List.iter (fun evbox -> add_key_binding key callback evbox)
@@ -1190,66 +1152,65 @@ class interpModel =
 let interactive_string_choice 
   text prefix_len ?(title = "") ?(msg = "") () ~id locs uris 
 = 
-  let gui = instance () in
-    let dialog = gui#newUriDialog () in
-    dialog#uriEntryHBox#misc#hide ();
-    dialog#uriChoiceSelectedButton#misc#hide ();
-    dialog#uriChoiceAutoButton#misc#hide ();
-    dialog#uriChoiceConstantsButton#misc#hide ();
-    dialog#uriChoiceTreeView#selection#set_mode
-      (`SINGLE :> Gtk.Tags.selection_mode);
-    let model = new stringListModel dialog#uriChoiceTreeView in
-    let choices = ref None in
-    dialog#uriChoiceDialog#set_title title; 
-    let hack_len = MatitaGtkMisc.utf8_string_length text in
-    let rec colorize acc_len = function
-      | [] -> 
-          let floc = HExtlib.floc_of_loc (acc_len,hack_len) in
-          escape_pango_markup (fst(MatitaGtkMisc.utf8_parsed_text text floc))
-      | he::tl -> 
-          let start, stop =  HExtlib.loc_of_floc he in
-          let floc1 = HExtlib.floc_of_loc (acc_len,start) in
-          let str1,_=MatitaGtkMisc.utf8_parsed_text text floc1 in
-          let str2,_ = MatitaGtkMisc.utf8_parsed_text text he in
-          escape_pango_markup str1 ^ "<b>" ^ 
-          escape_pango_markup str2 ^ "</b>" ^ 
-          colorize stop tl
-    in
+ let dialog = new uriChoiceDialog () in
+ dialog#uriEntryHBox#misc#hide ();
+ dialog#uriChoiceSelectedButton#misc#hide ();
+ dialog#uriChoiceAutoButton#misc#hide ();
+ dialog#uriChoiceConstantsButton#misc#hide ();
+ dialog#uriChoiceTreeView#selection#set_mode
+   (`SINGLE :> Gtk.Tags.selection_mode);
+ let model = new stringListModel dialog#uriChoiceTreeView in
+ let choices = ref None in
+ dialog#uriChoiceDialog#set_title title; 
+ let hack_len = MatitaGtkMisc.utf8_string_length text in
+ let rec colorize acc_len = function
+   | [] -> 
+       let floc = HExtlib.floc_of_loc (acc_len,hack_len) in
+       escape_pango_markup (fst(MatitaGtkMisc.utf8_parsed_text text floc))
+   | he::tl -> 
+       let start, stop =  HExtlib.loc_of_floc he in
+       let floc1 = HExtlib.floc_of_loc (acc_len,start) in
+       let str1,_=MatitaGtkMisc.utf8_parsed_text text floc1 in
+       let str2,_ = MatitaGtkMisc.utf8_parsed_text text he in
+       escape_pango_markup str1 ^ "<b>" ^ 
+       escape_pango_markup str2 ^ "</b>" ^ 
+       colorize stop tl
+ in
 (*     List.iter (fun l -> let start, stop = HExtlib.loc_of_floc l in
-                Printf.eprintf "(%d,%d)" start stop) locs; *)
-    let locs = 
-      List.sort 
-        (fun loc1 loc2 -> 
-          fst (HExtlib.loc_of_floc loc1) - fst (HExtlib.loc_of_floc loc2)) 
-        locs 
-    in
+              Printf.eprintf "(%d,%d)" start stop) locs; *)
+  let locs = 
+    List.sort 
+      (fun loc1 loc2 -> 
+        fst (HExtlib.loc_of_floc loc1) - fst (HExtlib.loc_of_floc loc2)) 
+      locs 
+  in
 (*     prerr_endline "XXXXXXXXXXXXXXXXXXXX";
-    List.iter (fun l -> let start, stop = HExtlib.loc_of_floc l in
-                Printf.eprintf "(%d,%d)" start stop) locs;
-    prerr_endline "XXXXXXXXXXXXXXXXXXXX2"; *)
-    dialog#uriChoiceLabel#set_use_markup true;
-    let txt = colorize 0 locs in
-    let txt,_ = MatitaGtkMisc.utf8_parsed_text txt
-      (HExtlib.floc_of_loc (prefix_len,MatitaGtkMisc.utf8_string_length txt))
-    in
-    dialog#uriChoiceLabel#set_label txt;
-    List.iter model#easy_append uris;
-    let return v =
-      choices := v;
-      dialog#uriChoiceDialog#destroy ();
-      GMain.Main.quit ()
-    in
-    ignore (dialog#uriChoiceDialog#event#connect#delete (fun _ -> true));
-    connect_button dialog#uriChoiceForwardButton (fun _ ->
-      match model#easy_selection () with
-      | [] -> ()
-      | uris -> return (Some uris));
-    connect_button dialog#uriChoiceAbortButton (fun _ -> return None);
-    dialog#uriChoiceDialog#show ();
-    GtkThread.main ();
-    (match !choices with 
-    | None -> raise MatitaTypes.Cancel
-    | Some uris -> uris)
+  List.iter (fun l -> let start, stop = HExtlib.loc_of_floc l in
+              Printf.eprintf "(%d,%d)" start stop) locs;
+  prerr_endline "XXXXXXXXXXXXXXXXXXXX2"; *)
+  dialog#uriChoiceLabel#set_use_markup true;
+  let txt = colorize 0 locs in
+  let txt,_ = MatitaGtkMisc.utf8_parsed_text txt
+    (HExtlib.floc_of_loc (prefix_len,MatitaGtkMisc.utf8_string_length txt))
+  in
+  dialog#uriChoiceLabel#set_label txt;
+  List.iter model#easy_append uris;
+  let return v =
+    choices := v;
+    dialog#uriChoiceDialog#destroy ();
+    GMain.Main.quit ()
+  in
+  ignore (dialog#uriChoiceDialog#event#connect#delete (fun _ -> true));
+  connect_button dialog#uriChoiceForwardButton (fun _ ->
+    match model#easy_selection () with
+    | [] -> ()
+    | uris -> return (Some uris));
+  connect_button dialog#uriChoiceAbortButton (fun _ -> return None);
+  dialog#uriChoiceDialog#show ();
+  GtkThread.main ();
+  (match !choices with 
+  | None -> raise MatitaTypes.Cancel
+  | Some uris -> uris)
 
 let interactive_interp_choice () text prefix_len choices =
 (*List.iter (fun l -> prerr_endline "==="; List.iter (fun (_,id,dsc) -> prerr_endline (id ^ " = " ^ dsc)) l) choices;*)

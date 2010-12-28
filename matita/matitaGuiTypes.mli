@@ -23,17 +23,6 @@
  * http://helm.cs.unibo.it/
  *)
 
-class type console =
-object
-  method message: string -> unit
-  method error: string -> unit
-  method warning: string -> unit
-  method debug: string -> unit
-  method clear: unit -> unit
-
-  method log_callback: HLog.log_callback
-end
-
 class type browserWin =
 object
   inherit MatitaGeneratedGui.browserWin
@@ -43,15 +32,12 @@ end
 class type gui =
 object
     (** {2 Access to singleton instances of lower-level GTK widgets} *)
-  method main :         MatitaGeneratedGui.mainWin
+  method main: MatitaGeneratedGui.mainWin
 
     (** {2 Dialogs instantiation}
      * methods below create a new window on each invocation. You should
      * remember to destroy windows after use *)
-
-  method newBrowserWin:         unit -> browserWin
-  method newUriDialog:          unit -> MatitaGeneratedGui.uriChoiceDialog
-  method newEmptyDialog:        unit -> MatitaGeneratedGui.emptyDialog
+  method newBrowserWin: unit -> browserWin
 
     (** {2 Utility methods} *)
 
