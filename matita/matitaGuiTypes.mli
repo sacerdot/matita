@@ -29,7 +29,6 @@ object
   method main: MatitaGeneratedGui.mainWin
 
     (** {2 Utility methods} *)
-  method newScript: unit -> unit
   method loadScript: string -> unit
 end
 

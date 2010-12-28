@@ -874,6 +874,7 @@ class gui () =
          let script = MatitaScript.at_page page in
           script#activate;
           main#saveMenuItem#misc#set_sensitive script#has_name));
+      self#newScript ()
 
     method private externalEditor () =
      let script = MatitaScript.current () in
@@ -975,7 +976,7 @@ class gui () =
      let script = MatitaScript.at_page page in 
       self#closeScript page script
 
-    method newScript () = 
+    method private newScript () = 
        let scrolledWindow = GBin.scrolled_window () in
        let hbox = GPack.hbox () in
        let tab_label = GMisc.label ~text:"foo"
