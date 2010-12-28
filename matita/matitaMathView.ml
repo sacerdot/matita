@@ -34,12 +34,6 @@ open CicMathView
 
 module Stack = Continuationals.Stack
 
-(** inherit from this class if you want to access current script *)
-class scriptAccessor =
-object (self)
-  method private script = get_matita_script_current ()
-end
-
 let cicBrowsers = ref []
 
 let tab_label meta_markup =
@@ -57,8 +51,6 @@ let goal_of_switch = function Stack.Open g | Stack.Closed g -> g
 
 class sequentsViewer ~(notebook:GPack.notebook) ~(cicMathView:cicMathView) () =
   object (self)
-    inherit scriptAccessor
-
     method cicMathView = cicMathView  (** clickableMathView accessor *)
 
     val mutable pages = 0
@@ -66,7 +58,7 @@ class sequentsViewer ~(notebook:GPack.notebook) ~(cicMathView:cicMathView) () =
     val mutable page2goal = []  (* associative list: page no -> goal no *)
     val mutable goal2page = []  (* the other way round *)
     val mutable goal2win = []   (* associative list: goal no -> scrolled win *)
-    val mutable _metasenv = `Old []
+    val mutable _metasenv = [],[]
     val mutable scrolledWin: GBin.scrolled_window option = None
       (* scrolled window to which the sequentViewer is currently attached *)
     val logo = (GMisc.image
@@ -105,12 +97,12 @@ class sequentsViewer ~(notebook:GPack.notebook) ~(cicMathView:cicMathView) () =
       page2goal <- [];
       goal2page <- [];
       goal2win <- [];
-      _metasenv <- `Old []
+      _metasenv <- [],[]
 
     method nload_sequents : 'status. #GrafiteTypes.status as 'status -> unit
     = fun (status : #GrafiteTypes.status) ->
      let _,_,metasenv,subst,_ = status#obj in
-      _metasenv <- `New (metasenv,subst);
+      _metasenv <- metasenv,subst;
       pages <- 0;
       let win goal_switch =
         let w =
@@ -192,10 +184,8 @@ class sequentsViewer ~(notebook:GPack.notebook) ~(cicMathView:cicMathView) () =
      = fun status ~page ~goal_switch ->
       (match goal_switch with
       | Stack.Open goal ->
-         (match _metasenv with
-             `Old menv -> assert false (* MATITA 1.0 *)
-           | `New (menv,subst) ->
-               cicMathView#nload_sequent status menv subst goal)
+         let menv,subst = _metasenv in
+          cicMathView#nload_sequent status menv subst goal
       | Stack.Closed goal ->
           let root = Lazy.force closed_goal_mathml in
           cicMathView#load_root ~root);
@@ -328,8 +318,6 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
       HExtlib.safe_remove filename
   in
   object (self)
-    inherit scriptAccessor
-    
     val mutable gviz_uri = NReference.reference_of_string "cic:/dummy.dec";
 
     val dep_contextual_menu = GMenu.menu ()
@@ -551,17 +539,19 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
       self#_showSearch
 
     method private grammar () =
-      self#_loadText (Print_grammar.ebnf_of_term self#script#status);
+      self#_loadText
+       (Print_grammar.ebnf_of_term (get_matita_script_current ())#status);
 
     method private home () =
       self#_showMath;
-      match self#script#status#ng_mode with
-         `ProofMode -> self#_loadNObj self#script#status self#script#status#obj
-       | _ -> self#blank ()
+      let status = (get_matita_script_current ())#status in
+       match status#ng_mode with
+          `ProofMode -> self#_loadNObj status status#obj
+        | _ -> self#blank ()
 
     method private _loadNReference (NReference.Ref (uri,_)) =
       let obj = NCicEnvironment.get_checked_obj uri in
-      self#_loadNObj self#script#status obj
+      self#_loadNObj (get_matita_script_current ())#status obj
 
     method private _loadDir dir = 
       let content = Http_getter.ls ~local:false dir in
@@ -687,7 +677,7 @@ let sequentsViewer_instance =
    else
     (already_used := true;
      default_sequentsViewer notebook)
-          
+
 (** @param reuse if set reused last opened cic browser otherwise 
 *  opens a new one. default is false *)
 let show_entry ?(reuse=false) t =
