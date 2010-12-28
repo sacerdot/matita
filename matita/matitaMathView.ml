@@ -633,7 +633,7 @@ let sequentsViewer ~(notebook:GPack.notebook) ~(cicMathView:cicMathView) ():
 =
   (new sequentsViewer ~notebook ~cicMathView ():> MatitaGuiTypes.sequentsViewer)
 
-let cicBrowser () =
+let new_cicBrowser () =
   let size = BuildTimeConf.browser_history_size in
   let rec aux history =
     let browser = new cicBrowser_impl ~history () in
@@ -651,17 +651,31 @@ let cicBrowser () =
       GdkKeysyms._W (fun () -> win#toplevel#destroy ());
 *)
     cicBrowsers := browser :: !cicBrowsers;
-    (browser :> MatitaGuiTypes.cicBrowser)
+    browser
   in
   let history = new MatitaMisc.browser_history size (`About `Blank) in
   aux history
+
+(** @param reuse if set reused last opened cic browser otherwise 
+*  opens a new one. default is false *)
+let cicBrowser ?(reuse=false) t =
+ let browser =
+  if reuse then
+   (match !cicBrowsers with [] -> new_cicBrowser () | b :: _ -> b)
+  else
+   new_cicBrowser ()
+ in
+  match t with
+     None -> ()
+   | Some t -> browser#load t
+;;
 
 let default_cicMathView () =
  let res = cicMathView ~show:true () in
   res#set_href_callback
     (Some (fun uri ->
       let uri = `NRef (NReference.reference_of_string uri) in
-       (cicBrowser ())#load uri));
+       cicBrowser (Some uri)));
   res
 
 let cicMathView_instance =
@@ -670,6 +684,7 @@ let cicMathView_instance =
 let default_sequentsViewer notebook =
   let cicMathView = cicMathView_instance () in
   sequentsViewer ~notebook ~cicMathView ()
+
 let sequentsViewer_instance =
  let already_used = ref false in
   fun notebook ->
@@ -677,20 +692,6 @@ let sequentsViewer_instance =
    else
     (already_used := true;
      default_sequentsViewer notebook)
-
-(** @param reuse if set reused last opened cic browser otherwise 
-*  opens a new one. default is false *)
-let show_entry ?(reuse=false) t =
- let browser =
-  if reuse then
-   (match !cicBrowsers with
-       [] -> cicBrowser ()
-     | b :: _ -> (b :> MatitaGuiTypes.cicBrowser))
-  else
-   cicBrowser ()
- in
-  browser#load t
-;;
 
 let refresh_all_browsers () =
   List.iter (fun b -> b#refresh ~force:false ()) !cicBrowsers

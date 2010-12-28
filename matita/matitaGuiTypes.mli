@@ -43,8 +43,3 @@ object
   method goto_sequent:
    #ApplyTransformation.status -> int -> unit (* to be called _after_ load_sequents *)
 end
-
-class type cicBrowser =
-object
-  method load: MatitaTypes.mathViewer_entry -> unit
-end

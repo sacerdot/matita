@@ -125,7 +125,7 @@ let eval_nmacro include_paths (buffer : GText.buffer) status unparsed_text parse
             NotationPt.Cast (t,NotationPt.Implicit `JustOne))  
           (* XXX use the metasenv, if possible *)
       in
-      MatitaMathView.show_entry (`NCic (t,ctx,m,s));
+      MatitaMathView.cicBrowser (Some (`NCic (t,ctx,m,s)));
       [status, parsed_text], "", parsed_text_length
   | TA.NIntroGuess _loc ->
       let names_ref = ref [] in

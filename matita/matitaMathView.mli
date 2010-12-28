@@ -23,21 +23,16 @@
  * http://helm.cs.unibo.it/
  *)
 
-(** {2 Instances} *)
-val cicBrowser: unit -> MatitaGuiTypes.cicBrowser
-
 (** {2 To be called just once} *)
-val sequentsViewer_instance:  GPack.notebook -> MatitaGuiTypes.sequentsViewer
+val sequentsViewer_instance: GPack.notebook -> MatitaGuiTypes.sequentsViewer
 
 (** {2 Global changes} *)
-
 val refresh_all_browsers: unit -> unit  (** act on all cicBrowsers *)
 
 (** {2 Rendering in a browser} *)
-
 (** @param reuse if set reused last opened cic browser otherwise 
 *  opens a new one. default is false *)
-val show_entry: ?reuse:bool -> MatitaTypes.mathViewer_entry -> unit
+val cicBrowser: ?reuse:bool -> MatitaTypes.mathViewer_entry option -> unit
 
 (** {2 Clipboard & Selection handling} *)
 

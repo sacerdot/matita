@@ -825,21 +825,13 @@ class gui () =
       connect_menu_item main#newMenuItem self#newScript;
       connect_menu_item main#closeMenuItem self#closeCurrentScript;
       connect_menu_item main#showCoercionsGraphMenuItem 
-        (fun _ -> 
-          let c = MatitaMathView.cicBrowser () in
-          c#load (`About `Coercions));
+        (fun _ -> MatitaMathView.cicBrowser (Some (`About `Coercions)));
       connect_menu_item main#showHintsDbMenuItem 
-        (fun _ -> 
-          let c = MatitaMathView.cicBrowser () in
-          c#load (`About `Hints));
+        (fun _ -> MatitaMathView.cicBrowser (Some (`About `Hints)));
       connect_menu_item main#showTermGrammarMenuItem 
-        (fun _ -> 
-          let c = MatitaMathView.cicBrowser () in
-          c#load (`About `Grammar));
+        (fun _ -> MatitaMathView.cicBrowser (Some (`About `Grammar)));
       connect_menu_item main#showUnicodeTable
-        (fun _ -> 
-          let c = MatitaMathView.cicBrowser () in
-          c#load (`About `TeX));
+        (fun _ -> MatitaMathView.cicBrowser (Some (`About `TeX)));
         (* debug menu *)
       main#debugMenu#misc#hide ();
         (* HBUGS *)
@@ -862,7 +854,7 @@ class gui () =
       main#hpaneScriptSequent#set_position script_w;
       (* math view handling *)
       connect_menu_item main#newCicBrowserMenuItem (fun () ->
-        ignore(MatitaMathView.cicBrowser ()));
+        ignore(MatitaMathView.cicBrowser None));
       connect_menu_item main#increaseFontSizeMenuItem
         MatitaMisc.increase_font_size;
       connect_menu_item main#decreaseFontSizeMenuItem
