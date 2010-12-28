@@ -238,7 +238,8 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
   let is_uri txt = Pcre.pmatch ~rex:uri_RE txt in
   let is_dir txt = Pcre.pmatch ~rex:dir_RE txt in
   let gui = MatitaMisc.get_gui () in
-  let (win: MatitaGuiTypes.browserWin) = gui#newBrowserWin () in
+  let win = new MatitaGeneratedGui.browserWin () in
+  let _ = win#browserUri#misc#grab_focus () in
   let gviz = LablGraphviz.graphviz ~packing:win#graphScrolledWin#add () in
   let searchText = 
     GSourceView2.source_view ~auto_indent:false ~editable:false ()

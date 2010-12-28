@@ -106,14 +106,6 @@ let interactive_uri_choice
   end
 
 
-class type browserWin =
-  (* this class exists only because GEdit.combo_box_entry is not supported by
-   * lablgladecc :-(((( *)
-object
-  inherit MatitaGeneratedGui.browserWin
-  method browserUri: GEdit.entry
-end
-
 class console ~(buffer: GText.buffer) () =
   object (self)
     val error_tag   = buffer#create_tag [ `FOREGROUND "red" ]
@@ -1051,17 +1043,6 @@ class gui () =
     method private fileSel = fileSel
     method private findRepl = findRepl
     method main = main
-
-    method newBrowserWin () =
-      object (self)
-        inherit browserWin ()
-        val combo = GEdit.entry ()
-        initializer
-          let combo_widget = combo#coerce in
-          uriHBox#pack ~from:`END ~fill:true ~expand:true combo_widget;
-          combo#misc#grab_focus ()
-        method browserUri = combo
-      end
 
     method private addKeyBinding key callback =
       List.iter (fun evbox -> add_key_binding key callback evbox)

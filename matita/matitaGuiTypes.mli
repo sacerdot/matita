@@ -23,24 +23,12 @@
  * http://helm.cs.unibo.it/
  *)
 
-class type browserWin =
-object
-  inherit MatitaGeneratedGui.browserWin
-  method browserUri: GEdit.entry
-end
-
 class type gui =
 object
     (** {2 Access to singleton instances of lower-level GTK widgets} *)
   method main: MatitaGeneratedGui.mainWin
 
-    (** {2 Dialogs instantiation}
-     * methods below create a new window on each invocation. You should
-     * remember to destroy windows after use *)
-  method newBrowserWin: unit -> browserWin
-
     (** {2 Utility methods} *)
-
   method newScript: unit -> unit
   method loadScript: string -> unit
 end

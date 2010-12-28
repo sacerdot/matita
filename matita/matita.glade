@@ -212,7 +212,15 @@
                       <widget class="GtkHBox" id="UriHBox">
                         <property name="visible">True</property>
                         <child>
-                          <placeholder/>
+                          <widget class="GtkEntry" id="browserUri">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="has_focus">True</property>
+                            <property name="invisible_char">&#x25CF;</property>
+                          </widget>
+                          <packing>
+                            <property name="position">0</property>
+                          </packing>
                         </child>
                       </widget>
                       <packing>
