@@ -27,3 +27,12 @@ B) rendere globali le informazioni sull'inclusione :-( (magari iterando sulla
    1) A -> C, B -> C, C e' caricato, carico oggetti di C, B carica C
       ricompilandolo e mischio oggetti
    2) A -> C, edito A, torno in cima ad A, apro C, non mi fa editare C
+
+
+Idea (Enrico):
+ - ogni oggetto ha il suo status con il suo env che e' una vista su quella
+   globale
+ - c'e' poi l'env attuale globale che e' una cache condivisa del disco;
+   oggetti nella cache del disco sono coppie uri/data;
+   funziona bene se combinato con "carica tutti gli oggetti all'include";
+   funziona bene se combinato con cambio universi e/o assiomi
