@@ -21,9 +21,9 @@ matita: il pulsante close non si ingrigisce quando non ci sono piu' script
         aperti
 
 A) passare lo status con il metodo di pretty-printing in giro ovunque
-B) rendere globali le informazioni sull'inclusione :-( e combinarle con il
-   "non caricare oggetti non ancora inclusi" (oppure auto-includere in un
-   qualche modo) per poter ri-compilare un file. Dovrebbe risolvere due scenari:
+B) rendere globali le informazioni sull'inclusione :-( (magari iterando sulla
+   lista dei locali) e combinarle con il "non caricare oggetti non ancora
+   inclusi" per poter ri-compilare un file. Dovrebbe risolvere due scenari:
    1) A -> C, B -> C, C e' caricato, carico oggetti di C, B carica C
       ricompilandolo e mischio oggetti
    2) A -> C, edito A, torno in cima ad A, apro C, non mi fa editare C
