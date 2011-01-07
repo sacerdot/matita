@@ -72,22 +72,23 @@ interpretation "hint_decl_CProp1" 'hint_decl a b = (hint_declaration_CProp1 ? a 
 interpretation "hint_decl_CProp0" 'hint_decl a b = (hint_declaration_CProp0 ? a b).
 interpretation "hint_decl_Type0"  'hint_decl a b = (hint_declaration_Type0 ? a b).
 
-(* Non uniform coercions support 
-record lock2 (S : Type[2]) (s : S) : Type[3] ≝ {
-  force2 : Type[2];
-  lift2  : force2
+(* Non uniform coercions support
+record solution2 (S : Type[2]) (s : S) : Type[3] ≝ {
+  target2 : Type[2];
+  result2  : target2
 }.
 
-record lock1 (S : Type[1]) (s : S) : Type[2] ≝ {
-  force1 : Type[1];
-  lift1  : force1
+record solution1 (S : Type[1]) (s : S) : Type[2] ≝ {
+  target1 : Type[1];
+  result1  : target1
 }.
 
-coercion zzzlift1 : ∀S:Type[1].∀s:S.∀l:lock1 S s. force1 S s l ≝ lift1 
- on s : ? to force1 ???.
+coercion nonunifcoerc1 : ∀S:Type[1].∀s:S.∀l:solution1 S s. target1 S s l ≝ result1 
+ on s : ? to target1 ???.
 
-coercion zzzlift2 : ∀S:Type[2].∀s:S.∀l:lock2 S s. force2 S s l ≝ lift2
- on s : ? to force2 ???.
+coercion nonunifcoerc2 : ∀S:Type[2].∀s:S.∀l:solution2 S s. target2 S s l ≝ result2
+ on s : ? to target2 ???.
+*)
 
 (* Example of a non uniform coercion declaration 
    
@@ -99,9 +100,8 @@ coercion zzzlift2 : ∀S:Type[2].∀s:S.∀l:lock2 S s. force2 S s l ≝ lift2
 
 unification hint 0 ≔ R : setoid;
    MR ≟ carr R, 
-   lock ≟ mk_lock1 Type[0] MR setoid R 
+   sol ≟ mk_solution1 Type[0] MR setoid R 
 (* ---------------------------------------- *) ⊢ 
-   setoid ≡ force1 ? MR lock.
+   setoid ≡ target1 ? MR sol.
 
-*)
 *)
