@@ -1,5 +1,6 @@
 MATITA 1.0:
   matitaMathView*: selezione semantica, hyperlink, etc.
+  coercion declaration has no "nocomposites" option, and no compact syntax.
 
 Problemi (MATITA 1.0):
   matitaEngine: durante la compilazione, che accade allo storage/env? dovrei
