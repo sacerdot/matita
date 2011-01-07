@@ -63,6 +63,9 @@ module type DiscriminationTree  =
       val in_index : t -> input -> (data -> bool) -> bool
       val retrieve_generalizations : t -> input -> dataset
       val retrieve_unifiables : t -> input -> dataset
+      (* the int is the number of symbools that matched, the list
+       * is sorted with biggest matches first. the same data may match
+       * twice, and thus appear twice with different number of matches *)
       val retrieve_generalizations_sorted : t -> input -> (data * int) list
       val retrieve_unifiables_sorted : t -> input -> (data * int) list
     end

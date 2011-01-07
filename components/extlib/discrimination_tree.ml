@@ -184,7 +184,7 @@ and type data = A.elt and type dataset = A.t =
 
       module O = struct
         type t = A.t * int
-        let compare (_,a) (_,b) = compare a b
+        let compare (_,a) (_,b) = compare b a
       end
       module S = Set.Make(O)
 
