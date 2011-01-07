@@ -63,6 +63,8 @@ module type DiscriminationTree  =
       val in_index : t -> input -> (data -> bool) -> bool
       val retrieve_generalizations : t -> input -> dataset
       val retrieve_unifiables : t -> input -> dataset
+      val retrieve_generalizations_sorted : t -> input -> (data * int) list
+      val retrieve_unifiables_sorted : t -> input -> (data * int) list
     end
 
 

@@ -70,6 +70,8 @@ module type DiscriminationTree =
       val in_index : t -> input -> (data -> bool) -> bool
       val retrieve_generalizations : t -> input -> dataset
       val retrieve_unifiables : t -> input -> dataset
+      val retrieve_generalizations_sorted : t -> input -> (data * int) list
+      val retrieve_unifiables_sorted : t -> input -> (data * int) list
     end
 
 module Make (I:Indexable) (A:Set.S) : DiscriminationTree 
@@ -179,6 +181,43 @@ and type data = A.elt and type dataset = A.t =
 
       let retrieve_generalizations tree term = retrieve false tree term;;
       let retrieve_unifiables tree term = retrieve true tree term;;
+
+      module O = struct
+        type t = A.t * int
+        let compare (_,a) (_,b) = compare a b
+      end
+      module S = Set.Make(O)
+
+      let retrieve_sorted unif tree term =
+        let path = I.path_string_of term in
+        let rec retrieve n path tree =
+          match tree, path with
+          | DiscriminationTree.Node (Some s, _), [] -> S.singleton (s, n)
+          | DiscriminationTree.Node (None, _), [] -> S.empty
+          | DiscriminationTree.Node (_, map), Variable::path when unif ->
+              List.fold_left S.union S.empty
+                (List.map (retrieve n path) (skip_root tree))
+          | DiscriminationTree.Node (_, map), node::path ->
+              S.union
+                 (if not unif && node = Variable then S.empty else
+                  try retrieve (n+1) path (PSMap.find node map)
+                  with Not_found -> S.empty)
+                 (try
+                    match PSMap.find Variable map,skip (arity_of node) path with
+                    | DiscriminationTree.Node (Some s, _), [] -> 
+                       S.singleton (s, n)
+                    | no, path -> retrieve n path no
+                  with Not_found -> S.empty)
+       in
+        List.flatten 
+         (List.map (fun x -> List.map (fun y -> y, snd x) (A.elements (fst x))) 
+          (S.elements (retrieve 0 path tree)))
+      ;;
+
+      let retrieve_generalizations_sorted tree term = 
+        retrieve_sorted false tree term;;
+      let retrieve_unifiables_sorted tree term = 
+        retrieve_sorted true tree term;;
   end
 ;;
 
