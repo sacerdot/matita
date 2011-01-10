@@ -589,7 +589,7 @@ class gui () =
                match !id with
                | None -> assert false (* a race condition occurred *)
                | Some id ->
-                   (new GObj.gobject_ops source_view#source_buffer#as_buffer)#disconnect id));
+                   source_view#source_buffer#misc#disconnect id));
              source_view#source_buffer#place_cursor
               (source_view#source_buffer#get_iter (`OFFSET x'));
         end;
