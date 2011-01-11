@@ -36,6 +36,9 @@ val index_coercion:
   #status as 'status -> string ->
    NCic.term -> NCic.term -> NCic.term -> int -> int -> 'status
 
+(* NOTE: the name of the coercion is used to sort coercions, thus 
+ * two coercions matching the same number of symbols are sorted 
+ * according to their name *)
 val look_for_coercion:
     #status ->
     NCic.metasenv -> NCic.substitution -> NCic.context -> 

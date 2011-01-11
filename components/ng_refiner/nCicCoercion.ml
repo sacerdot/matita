@@ -18,8 +18,7 @@ let convert_term = ref (fun _ _ -> assert false);;
 let set_convert_term f = convert_term := f;;
 
 module COT : Set.OrderedType 
-with type t = string * NCic.term * int * int  * NCic.term *
-NCic.term = 
+with type t = string * NCic.term * int * int  * NCic.term * NCic.term = 
   struct
      type t = string * NCic.term * int * int * NCic.term * NCic.term
      let compare = Pervasives.compare
@@ -84,31 +83,31 @@ let look_for_coercion status metasenv subst context infty expty =
     let set_src = 
       List.fold_left 
         (fun set infty -> 
-          CoercionSet.union (DB.retrieve_unifiables db_src infty) set)
-        CoercionSet.empty src_class
+          DB.Collector.union (DB.retrieve_unifiables_sorted db_src infty) set)
+        DB.Collector.empty src_class
     in
     let set_tgt = 
       List.fold_left 
         (fun set expty -> 
-          CoercionSet.union (DB.retrieve_unifiables db_tgt expty) set)
-        CoercionSet.empty tgt_class
+          DB.Collector.union (DB.retrieve_unifiables_sorted db_tgt expty) set)
+        DB.Collector.empty tgt_class
     in
 
     debug (lazy ("CANDIDATES SRC: " ^ 
       String.concat "," (List.map (fun (name,t,_,_,_,_) ->
         name ^ " :: " ^ NCicPp.ppterm ~metasenv ~subst ~context t) 
-      (CoercionSet.elements set_src))));
+      (DB.Collector.to_list set_src))));
     debug (lazy ("CANDIDATES TGT: " ^ 
       String.concat "," (List.map (fun (name,t,_,_,_,_) ->
         name ^ " :: " ^ NCicPp.ppterm ~metasenv ~subst ~context t) 
-      (CoercionSet.elements set_tgt))));
+      (DB.Collector.to_list set_tgt))));
 
-    let candidates = CoercionSet.inter set_src set_tgt in
+    let candidates = DB.Collector.inter set_src set_tgt in
 
     debug (lazy ("CANDIDATES: " ^ 
       String.concat "," (List.map (fun (name,t,_,_,_,_) ->
         name ^ " :: " ^ NCicPp.ppterm ~metasenv ~subst ~context t) 
-      (CoercionSet.elements candidates))));
+      candidates)));
 
     List.map
       (fun (name,t,arity,arg,_,_) ->
@@ -130,7 +129,7 @@ let look_for_coercion status metasenv subst context infty expty =
               string_of_int (List.length args) ^ " == " ^ string_of_int arg)); 
              
           name,metasenv, NCicUntrusted.mk_appl t args, ty, List.nth args arg)
-      (CoercionSet.elements candidates)
+      candidates
 ;;
 
 (* CSC: very inefficient implementation!

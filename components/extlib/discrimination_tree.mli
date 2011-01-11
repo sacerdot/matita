@@ -63,11 +63,19 @@ module type DiscriminationTree  =
       val in_index : t -> input -> (data -> bool) -> bool
       val retrieve_generalizations : t -> input -> dataset
       val retrieve_unifiables : t -> input -> dataset
-      (* the int is the number of symbools that matched, the list
-       * is sorted with biggest matches first. the same data may match
-       * twice, and thus appear twice with different number of matches *)
-      val retrieve_generalizations_sorted : t -> input -> (data * int) list
-      val retrieve_unifiables_sorted : t -> input -> (data * int) list
+
+      (* the int is the number of symbools that matched, note that
+       * Collector.to_list returns a sorted list, biggest matches first. *)
+      module type Collector = sig
+        type t
+        val empty : t
+        val union : t -> t -> t
+        val inter : t -> t -> data list
+        val to_list : t -> data list
+      end
+      module Collector : Collector
+      val retrieve_generalizations_sorted : t -> input -> Collector.t
+      val retrieve_unifiables_sorted : t -> input -> Collector.t
     end
 
 
