@@ -8,7 +8,6 @@ NULL =
 MODULES =			\
 	extlib			\
 	xml			\
-	hgdome			\
 	registry		\
 	syntax_extensions	\
 	thread			\
