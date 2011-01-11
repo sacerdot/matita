@@ -41,8 +41,6 @@ val toggle_callback:
 val toggle_win:
   ?check:GMenu.check_menu_item -> GWindow.window -> unit -> unit
 
-val add_key_binding: Gdk.keysym -> (unit -> 'a) -> GBin.event_box -> unit
-
 (** Connect a callback to the clicked signal of a button, ignoring its return
   * value *)
 val connect_button: #GButton.button -> (unit -> unit) -> unit

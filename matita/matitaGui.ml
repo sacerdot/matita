@@ -420,14 +420,18 @@ class gui () =
       let s () = MatitaScript.current () in
         (* key bindings *)
       List.iter (* global key bindings *)
-        (fun (key, callback) -> self#addKeyBinding key callback)
+        (fun (key, modifiers, callback) -> 
+                self#addKeyBinding key ~modifiers callback)
 (*
         [ GdkKeysyms._F3,
             toggle_win ~check:main#showProofMenuItem proof#proofWin;
           GdkKeysyms._F4,
             toggle_win ~check:main#showCheckMenuItem check#checkWin;
 *)
-        [ ];
+        [ 
+          GdkKeysyms._Page_Up,   [`CONTROL], main#scriptNotebook#next_page;
+          GdkKeysyms._Page_Down, [`CONTROL], main#scriptNotebook#previous_page
+        ];
         (* about win *)
       let parse_txt_file file =
        let ch = open_in (BuildTimeConf.runtime_base_dir ^ "/" ^ file) in
@@ -752,7 +756,7 @@ class gui () =
       MatitaGtkMisc.toggle_callback ~check:main#ppNotationMenuItem
         ~callback:(function b ->
           let s = s () in
-          let status = Interpretations.toggle_active_interpretations s#status b
+          let _status = Interpretations.toggle_active_interpretations s#status b
           in
            assert false (* MATITA 1.0 ???
            s#set_grafite_status status*)
@@ -1033,8 +1037,9 @@ class gui () =
     method private findRepl = findRepl
     method main = main
 
-    method private addKeyBinding key callback =
-      List.iter (fun evbox -> add_key_binding key callback evbox)
+    method private addKeyBinding key ?modifiers callback =
+(*       List.iter (fun evbox -> add_key_binding key callback evbox) *)
+      List.iter (fun evbox -> connect_key evbox#event key ?modifiers callback)
         keyBindingBoxes
 
     method private setQuitCallback callback =

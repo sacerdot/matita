@@ -78,13 +78,6 @@ let toggle_win ?(check: GMenu.check_menu_item option) (win: GWindow.window) () =
 let toggle_callback ~callback ~(check: GMenu.check_menu_item) =
   ignore (check#connect#toggled (fun _ -> callback check#active))
   
-let add_key_binding key callback (evbox: GBin.event_box) =
-  ignore (evbox#event#connect#key_press (function
-    | key' when GdkEvent.Key.keyval key' = key ->
-        callback ();
-        false
-    | _ -> false))
-
 class multiStringListModel ~cols (tree_view: GTree.view) =
   let column_list = new GTree.column_list in
   let text_columns = 
