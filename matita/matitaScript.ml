@@ -147,7 +147,7 @@ let eval_nmacro include_paths (buffer : GText.buffer) status unparsed_text parse
         | thms -> 
            String.concat ", "  
              (HExtlib.filter_map (function 
-               | NotationPt.NRef r -> Some (NCicPp.r2s true r) 
+               | NotationPt.NRef r -> Some (NCicPp.r2s status true r) 
                | _ -> None) 
              thms)
       in
@@ -254,7 +254,7 @@ let source_buffer = source_view#source_buffer in
 let similarsymbols_tag_name = "similarsymbolos" in
 let similarsymbols_tag = `NAME similarsymbols_tag_name in
 let initial_statuses current baseuri =
- let status = new GrafiteTypes.status baseuri in
+ let status = new MatitaEngine.status baseuri in
  (match current with
      Some current ->
       NCicLibrary.time_travel status;
