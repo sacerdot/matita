@@ -971,20 +971,19 @@ class gui () =
     method private newScript () = 
        let scrolledWindow = GBin.scrolled_window () in
        let hbox = GPack.hbox () in
-       let tab_label = GMisc.label ~text:"foo"
-        ~packing:hbox#pack () in
+       let tab_label = GMisc.label ~text:"foo" ~packing:hbox#pack () in
        let _ =
         GMisc.label ~text:"" ~packing:(hbox#pack ~expand:true ~fill:true) () in
        let closebutton =
         GButton.button ~relief:`NONE ~packing:hbox#pack () in
-       let image =
-        GMisc.image ~stock:`CLOSE ~icon_size:`MENU () in
+       let image = GMisc.image ~stock:`CLOSE ~icon_size:`MENU () in
        closebutton#set_image image#coerce;
        let script = MatitaScript.script ~parent:scrolledWindow ~tab_label () in
         ignore (main#scriptNotebook#prepend_page ~tab_label:hbox#coerce
          scrolledWindow#coerce);
         ignore (closebutton#connect#clicked (fun () ->
-           self#closeScript (main#scriptNotebook#page_num hbox#coerce) script));
+         self#closeScript
+          (main#scriptNotebook#page_num scrolledWindow#coerce) script));
         main#scriptNotebook#goto_page 0;
         sequents_viewer#reset;
         sequents_viewer#load_logo;
