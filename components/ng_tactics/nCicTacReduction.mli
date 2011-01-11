@@ -12,4 +12,5 @@
 (* $Id: nCic.ml 9058 2008-10-13 17:42:30Z tassi $ *)
 
 val normalize:
- ?delta:int -> subst:NCic.substitution -> NCic.context -> NCic.term -> NCic.term
+ #NCic.status -> ?delta:int -> subst:NCic.substitution -> NCic.context ->
+  NCic.term -> NCic.term

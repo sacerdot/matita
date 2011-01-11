@@ -32,8 +32,9 @@ class type g_status =
     method content_pres_db: db
   end
 
-class status :
+class virtual status :
   object ('self)
+    inherit NCic.status
     method content_pres_db: db
     method set_content_pres_db: db -> 'self
     method set_content_pres_status: #g_status -> 'self
@@ -53,5 +54,4 @@ val pp_ast: #status -> NotationPt.term -> NotationPt.term
 
   (** fills a term pattern instantiating variable magics *)
 val instantiate_level2:
-  NotationEnv.t -> NotationPt.term ->
-    NotationPt.term
+ #NCic.status -> NotationEnv.t -> NotationPt.term -> NotationPt.term

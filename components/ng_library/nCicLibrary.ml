@@ -25,27 +25,30 @@ let refresh_uri_in_universe =
 let refresh_uri_in_reference (NReference.Ref (uri,spec)) =
  NReference.reference_of_spec (refresh_uri uri) spec
 
-let rec refresh_uri_in_term =
- function
+let refresh_uri_in_term status =
+ let rec aux =
+  function
   | NCic.Meta (i,(n,NCic.Ctx l)) ->
-     NCic.Meta (i,(n,NCic.Ctx (List.map refresh_uri_in_term l)))
+     NCic.Meta (i,(n,NCic.Ctx (List.map aux l)))
   | NCic.Meta _ as t -> t
   | NCic.Const ref -> NCic.Const (refresh_uri_in_reference ref)
   | NCic.Sort (NCic.Type l) -> NCic.Sort (NCic.Type (refresh_uri_in_universe l))
   | NCic.Match (NReference.Ref (uri,spec),outtype,term,pl) ->
      let r = NReference.reference_of_spec (refresh_uri uri) spec in
-     let outtype = refresh_uri_in_term outtype in
-     let term = refresh_uri_in_term term in
-     let pl = List.map refresh_uri_in_term pl in
+     let outtype = aux outtype in
+     let term = aux term in
+     let pl = List.map aux pl in
       NCic.Match (r,outtype,term,pl)
-  | t -> NCicUtils.map (fun _ _ -> ()) () (fun _ -> refresh_uri_in_term) t
+  | t -> NCicUtils.map status (fun _ _ -> ()) () (fun _ -> aux) t
+in
+ aux
 ;;
 
-let refresh_uri_in_obj (uri,height,metasenv,subst,obj_kind) =
+let refresh_uri_in_obj status (uri,height,metasenv,subst,obj_kind) =
  assert (metasenv = []);
  assert (subst = []);
  refresh_uri uri,height,metasenv,subst,
-  NCicUntrusted.map_obj_kind refresh_uri_in_term obj_kind
+  NCicUntrusted.map_obj_kind (refresh_uri_in_term status) obj_kind
 ;;
 
 let ng_path_of_baseuri ?(no_suffix=false) baseuri =
@@ -141,21 +144,23 @@ let load_db,set_global_aliases,get_global_aliases,add_deps,get_deps,remove_deps=
 
 let init = load_db;;
 
-class status =
+class virtual status =
  object
+  inherit NCic.status
   val timestamp = (time0 : timestamp)
   method timestamp = timestamp
   method set_timestamp v = {< timestamp = v >}
  end
 
-let time_travel status =
- let sto,ali = status#timestamp in
-  let diff_len = List.length !storage - List.length sto in
-  let to_be_deleted,_ = HExtlib.split_nth diff_len !storage in
-   if List.length to_be_deleted > 0 then
-    List.iter NCicEnvironment.invalidate_item to_be_deleted;
-   storage := sto; local_aliases := ali
+let time_travel0 (sto,ali) =
+ let diff_len = List.length !storage - List.length sto in
+ let to_be_deleted,_ = HExtlib.split_nth diff_len !storage in
+  if List.length to_be_deleted > 0 then
+   List.iter NCicEnvironment.invalidate_item to_be_deleted;
+  storage := sto; local_aliases := ali
 ;;
+
+let time_travel status = time_travel0 status#timestamp;;
 
 type obj = string * Obj.t
 (* includes are transitively closed; dependencies are only immediate *)
@@ -192,7 +197,7 @@ module type SerializerType =
   type 'a register_type =
    'a ->
     refresh_uri_in_universe:(NCic.universe -> NCic.universe) ->
-    refresh_uri_in_term:(NCic.term -> NCic.term) ->
+    refresh_uri_in_term:(NCic.status -> NCic.term -> NCic.term) ->
     refresh_uri_in_reference:(NReference.reference -> NReference.reference) ->
     alias_only:bool ->
      dumpable_status -> dumpable_status
@@ -211,7 +216,7 @@ module Serializer(D: sig type dumpable_s val get: dumpable_s -> dumpable_status 
   type 'a register_type =
    'a ->
     refresh_uri_in_universe:(NCic.universe -> NCic.universe) ->
-    refresh_uri_in_term:(NCic.term -> NCic.term) ->
+    refresh_uri_in_term:(NCic.status -> NCic.term -> NCic.term) ->
     refresh_uri_in_reference:(NReference.reference -> NReference.reference) ->
     alias_only:bool ->
      dumpable_status -> dumpable_status
@@ -251,7 +256,7 @@ module Serializer(D: sig type dumpable_s val get: dumpable_s -> dumpable_status 
     ) !storage;
    set_global_aliases (!local_aliases @ get_global_aliases ());
    List.iter (fun u -> add_deps u [baseuri]) status#dump.includes;
-   time_travel (new status)
+   time_travel0 time0
 
   let require2 ~baseuri ~alias_only status =
    try
@@ -303,9 +308,9 @@ module Serializer(D: sig type dumpable_s val get: dumpable_s -> dumpable_status 
          objs = record_include (baseuri,fname)::s#dump.objs })
 end
 
-let fetch_obj uri =
+let fetch_obj status uri =
  let obj = require0 ~baseuri:uri in
-  refresh_uri_in_obj obj
+  refresh_uri_in_obj status obj
 ;;
 
 let resolve name =
@@ -324,7 +329,7 @@ let aliases_of uri =
 ;;
 
 let add_obj status ((u,_,_,_,_) as obj) =
- NCicEnvironment.check_and_add_obj obj;
+ NCicEnvironment.check_and_add_obj status obj;
  storage := (`Obj (u,obj))::!storage;
   let _,height,_,_,obj = obj in
   let references =
@@ -371,17 +376,16 @@ let add_constraint status u1 u2 =
   status#set_timestamp (!storage,!local_aliases)
 ;;
 
-let get_obj u =
+let get_obj status u =
  try 
   List.assq u 
    (HExtlib.filter_map 
     (function `Obj (u,o) -> Some (u,o) | _ -> None )
     !storage)
  with Not_found ->
-  try fetch_obj u
+  try fetch_obj status u
   with Sys_error _ ->
    raise (NCicEnvironment.ObjectNotFound (lazy (NUri.string_of_uri u)))
 ;;
 
 NCicEnvironment.set_get_obj get_obj;;
-NCicPp.set_get_obj get_obj;;

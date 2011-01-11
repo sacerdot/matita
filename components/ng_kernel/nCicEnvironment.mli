@@ -16,25 +16,25 @@ exception ObjectNotFound of string Lazy.t;;
 exception BadDependency of string Lazy.t * exn;;
 exception AlreadyDefined of string Lazy.t;;
 
-val set_get_obj: (NUri.uri -> NCic.obj) -> unit
+val set_get_obj: (NCic.status -> NUri.uri -> NCic.obj) -> unit
 
-val get_checked_obj: NUri.uri -> NCic.obj
+val get_checked_obj: #NCic.status -> NUri.uri -> NCic.obj
 
-val check_and_add_obj: NCic.obj -> unit
+val check_and_add_obj: #NCic.status -> NCic.obj -> unit
 
-val get_relevance: NReference.reference -> bool list
+val get_relevance: #NCic.status -> NReference.reference -> bool list
 
 val get_checked_def:
-  NReference.reference -> 
+  #NCic.status -> NReference.reference -> 
     NCic.relevance * string * NCic.term * NCic.term * NCic.c_attr * int
 
 (* the last integer is the index of the inductive type in the reference *)
 val get_checked_indtys:
-  NReference.reference -> 
+  #NCic.status -> NReference.reference -> 
     bool * int * NCic.inductiveType list * NCic.i_attr * int
 
 val get_checked_fixes_or_cofixes:
-  NReference.reference -> 
+  #NCic.status -> NReference.reference -> 
    NCic.inductiveFun list * NCic.f_attr * int
 
 val invalidate_item: 
@@ -43,7 +43,7 @@ val invalidate_item:
 
 val invalidate: unit -> unit
 
-val set_typecheck_obj: (NCic.obj -> unit) -> unit
+val set_typecheck_obj: (NCic.status -> NCic.obj -> unit) -> unit
 
 (* =========== universes ============= *)
 

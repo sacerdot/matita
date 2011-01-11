@@ -59,10 +59,10 @@ struct
     type pattern_t = Ast.cic_appl_pattern
     type term_t = NCic.term
 
+    (* Debugging functions only *)
     let string_of_pattern = NotationPp.pp_cic_appl_pattern
     let string_of_term t =
-     (*CSC: ??? *)
-     NCicPp.ppterm ~metasenv:[] ~subst:[] ~context:[] t
+     (new NCicPp.status)#ppterm ~metasenv:[] ~subst:[] ~context:[] t
 
     let classify = function
       | Ast.ImplicitPattern
@@ -73,7 +73,7 @@ struct
 
   module M = PatternMatcher.Matcher (Pattern32)
 
-  let compiler rows =
+  let compiler status rows =
     let match_cb rows matched_terms constructors =
      HExtlib.list_findopt
       (fun (pl,pid) _ ->
@@ -93,7 +93,7 @@ struct
           | (name,t)::tl ->
              List.for_all
               (fun (name',t') ->
-                name <> name' || NCicReduction.alpha_eq [] [] [] t t'
+                name <> name' || NCicReduction.alpha_eq status [] [] [] t t'
               ) tl && check_non_linear_patterns tl
         in
          if check_non_linear_patterns env then

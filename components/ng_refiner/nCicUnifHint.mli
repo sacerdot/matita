@@ -20,9 +20,10 @@ class type g_status =
   method uhint_db: db
  end
 
-class status :
+class virtual status :
  object ('self)
   inherit g_status
+  inherit NCic.status
   method set_uhint_db: db -> 'self
   method set_unifhint_status: #g_status -> 'self
  end

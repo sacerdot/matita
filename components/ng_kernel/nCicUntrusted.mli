@@ -12,14 +12,17 @@
 (* $Id$ *)
 
 val map_term_fold_a:
+ #NCic.status ->
  (NCic.hypothesis -> 'k -> 'k) -> 'k ->
  ('k -> 'a -> NCic.term -> 'a * NCic.term) -> 'a -> NCic.term -> 'a * NCic.term
 
 val map_obj_kind: 
   ?skip_body:bool -> (NCic.term -> NCic.term) -> NCic.obj_kind -> NCic.obj_kind
 
-val metas_of_term : NCic.substitution -> NCic.context -> NCic.term -> int list
-val sort_metasenv: NCic.substitution -> NCic.metasenv -> NCic.metasenv
+val metas_of_term :
+ #NCic.status -> NCic.substitution -> NCic.context -> NCic.term -> int list
+val sort_metasenv:
+ #NCic.status -> NCic.substitution -> NCic.metasenv -> NCic.metasenv
 
 type meta_kind = [ `IsSort | `IsType | `IsTerm ]
 val kind_of_meta: NCic.meta_attrs -> meta_kind
@@ -36,12 +39,15 @@ module NCicHash : Hashtbl.S with type key = NCic.term
 val mk_appl : NCic.term -> NCic.term list -> NCic.term 
 
 (* the context is needed only to honour Barendregt's naming convention *)
-val apply_subst : NCic.substitution -> NCic.context -> NCic.term -> NCic.term
-val apply_subst_context : fix_projections:bool -> 
+val apply_subst :
+ #NCic.status -> NCic.substitution -> NCic.context -> NCic.term -> NCic.term
+val apply_subst_context :
+ #NCic.status -> fix_projections:bool -> 
   NCic.substitution -> NCic.context -> NCic.context
-val apply_subst_metasenv : NCic.substitution -> NCic.metasenv -> NCic.metasenv
+val apply_subst_metasenv :
+ #NCic.status -> NCic.substitution -> NCic.metasenv -> NCic.metasenv
 
 val count_occurrences :
-    subst:NCic.substitution -> int -> NCic.term -> int
+ #NCic.status -> subst:NCic.substitution -> int -> NCic.term -> int
 (* quick, but with false negatives (since no ~subst), check for closed terms *)
 val looks_closed : NCic.term -> bool

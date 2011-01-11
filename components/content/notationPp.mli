@@ -38,11 +38,11 @@
  * BoxPp.render_to_string(s)
  *)
 
-val pp_term: NotationPt.term -> string
+val pp_term: #NCic.status -> NotationPt.term -> string
 val pp_obj: ('term -> string) -> 'term NotationPt.obj -> string
 
-val pp_env: NotationEnv.t -> string
-val pp_value: NotationEnv.value -> string
+val pp_env: #NCic.status -> NotationEnv.t -> string
+val pp_value: #NCic.status -> NotationEnv.value -> string
 val pp_value_type: NotationEnv.value_type -> string
 
 val pp_pos: NotationPt.child_pos -> string
@@ -51,5 +51,4 @@ val pp_attribute: NotationPt.term_attribute -> string
 val pp_cic_appl_pattern: NotationPt.cic_appl_pattern -> string
 
  (** non re-entrant change of pp_term function above *)
-val set_pp_term: (NotationPt.term -> string) -> unit
-
+val set_pp_term: (NCic.status -> NotationPt.term -> string) -> unit

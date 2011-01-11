@@ -550,8 +550,9 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
         | _ -> self#blank ()
 
     method private _loadNReference (NReference.Ref (uri,_)) =
-      let obj = NCicEnvironment.get_checked_obj uri in
-      self#_loadNObj (get_matita_script_current ())#status obj
+      let status = (get_matita_script_current ())#status in
+      let obj = NCicEnvironment.get_checked_obj status uri in
+      self#_loadNObj status obj
 
     method private _loadDir dir = 
       let content = Http_getter.ls ~local:false dir in

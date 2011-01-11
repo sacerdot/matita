@@ -83,15 +83,15 @@ module Reduction(RS : Strategy) = struct
   type stack = RS.stack_term list
   type config = int * env * C.term * stack
 
-  let rec unwind (k,e,t,s) =
+  let rec unwind status (k,e,t,s) =
     let t = 
       if k = 0 then t 
       else 
-        NCicSubstitution.psubst ~avoid_beta_redexes:true  
-          (RS.from_env_for_unwind ~unwind) e t
+        NCicSubstitution.psubst status ~avoid_beta_redexes:true
+          (RS.from_env_for_unwind ~unwind:(unwind status)) e t
     in
     if s = [] then t 
-    else C.Appl(t::(RS.from_stack_list_for_unwind ~unwind s))
+    else C.Appl(t::(RS.from_stack_list_for_unwind ~unwind:(unwind status) s))
   ;;
 
   let list_nth l n = try List.nth l n with Failure _ -> assert false;;
@@ -102,7 +102,7 @@ module Reduction(RS : Strategy) = struct
     | _,_ -> assert false
   ;;
 
-  let rec reduce ~delta ?(subst = []) context : config -> config * bool = 
+  let rec reduce status ~delta ?(subst = []) context : config -> config * bool =
    let rec aux = function
      | k, e, C.Rel n, s when n <= k ->
         let k',e',t',s' = RS.from_env ~delta (list_nth e (n-1)) in
@@ -110,27 +110,27 @@ module Reduction(RS : Strategy) = struct
      | k, _, C.Rel n, s as config (* when n > k *) ->
         let x= try Some (List.nth context (n - 1 - k)) with Failure _ -> None in
          (match x with
-         | Some(_,C.Def(x,_)) -> aux (0,[],NCicSubstitution.lift (n - k) x,s)
+         | Some(_,C.Def(x,_)) -> aux (0,[],NCicSubstitution.lift status (n - k) x,s)
          | _ -> config, true)
      | (k, e, C.Meta (n,l), s) as config ->
         (try 
            let _,_, term,_ = NCicUtils.lookup_subst n subst in
-           aux (k, e, NCicSubstitution.subst_meta l term,s)
+           aux (k, e, NCicSubstitution.subst_meta status l term,s)
          with  NCicUtils.Subst_not_found _ -> config, true)
      | (_, _, C.Implicit _, _) -> assert false
      | (_, _, C.Sort _, _)
      | (_, _, C.Prod _, _)
      | (_, _, C.Lambda _, []) as config -> config, true
      | (k, e, C.Lambda (_,_,t), p::s) ->
-         aux (k+1, (RS.stack_to_env ~reduce:(reduce ~subst context) ~unwind p)::e, t,s)
+         aux (k+1, (RS.stack_to_env ~reduce:(reduce status ~subst context) ~unwind:(unwind status) p)::e, t,s)
      | (k, e, C.LetIn (_,_,m,t), s) ->
-        let m' = RS.compute_to_env ~reduce:(reduce ~subst context) ~unwind k e m in
+        let m' = RS.compute_to_env ~reduce:(reduce status ~subst context) ~unwind:(unwind status) k e m in
          aux (k+1, m'::e, t, s)
      | (_, _, C.Appl ([]|[_]), _) -> assert false
      | (k, e, C.Appl (he::tl), s) ->
         let tl' =
          List.map (fun t->RS.compute_to_stack 
-           ~reduce:(reduce ~subst context) ~unwind (k,e,t,[])) tl
+           ~reduce:(reduce status ~subst context) ~unwind:(unwind status) (k,e,t,[])) tl
         in
          aux (k, e, he, tl' @ s)
      | (_, _, C.Const
@@ -138,7 +138,7 @@ module Reduction(RS : Strategy) = struct
          if delta >= height then 
            config, false
          else 
-           let _,_,body,_,_,_ = NCicEnvironment.get_checked_def refer in
+           let _,_,body,_,_,_ = NCicEnvironment.get_checked_def status refer in
            aux (0, [], body, s) 
      | (_, _, C.Const (Ref.Ref (_,
          (Ref.Decl|Ref.Ind _|Ref.Con _|Ref.CoFix _))), _) as config -> 
@@ -150,7 +150,7 @@ module Reduction(RS : Strategy) = struct
             None -> config, true
           | Some arg ->
              let fixes,(_,_,pragma),_ = 
-              NCicEnvironment.get_checked_fixes_or_cofixes refer in
+              NCicEnvironment.get_checked_fixes_or_cofixes status refer in
              if delta >= height then
               match pragma with
                | `Projection ->
@@ -165,8 +165,8 @@ module Reduction(RS : Strategy) = struct
                | (_,_,C.Const (Ref.Ref (_,Ref.Con _)), _) as c ->
                  let new_s =
                   replace recindex s
-                   (RS.compute_to_stack ~reduce:(reduce ~subst context)
-                   ~unwind c) in
+                   (RS.compute_to_stack ~reduce:(reduce status ~subst context)
+                   ~unwind:(unwind status) c) in
                  let _,_,_,_,body = List.nth fixes fixno in
                   aux (0, [], body, new_s)
                | _ -> config, true)
@@ -174,14 +174,14 @@ module Reduction(RS : Strategy) = struct
         let decofix = function
           | (_,_,C.Const(Ref.Ref(_,Ref.CoFix c)as refer),s)->
              let cofixes,_,_ = 
-               NCicEnvironment.get_checked_fixes_or_cofixes refer in
+               NCicEnvironment.get_checked_fixes_or_cofixes status refer in
              let _,_,_,_,body = List.nth cofixes c in
-             let c,_ = reduce ~delta:0 ~subst context (0,[],body,s) in 
+             let c,_ = reduce status ~delta:0 ~subst context (0,[],body,s) in 
              c
           | config -> config
         in
         let match_head = k,e,term,[] in
-        let reduced,_ = reduce ~delta:0 ~subst context match_head in
+        let reduced,_ = reduce status ~delta:0 ~subst context match_head in
         (match decofix reduced with
         | (_, _, C.Const (Ref.Ref (_,Ref.Con (_,j,_))),[]) ->
             aux (k, e, List.nth pl (j-1), s)
@@ -193,8 +193,8 @@ module Reduction(RS : Strategy) = struct
     aux
   ;;
 
-  let whd ?(delta=0) ~subst context t = 
-   unwind (fst (reduce ~delta ~subst context (0, [], t, [])))
+  let whd status ?(delta=0) ~subst context t = 
+   unwind status (fst (reduce status ~delta ~subst context (0, [], t, [])))
   ;;
 
  end
@@ -208,11 +208,12 @@ let whd = R.whd
 
 let (===) x y = Pervasives.compare x y = 0 ;;
 
-let get_relevance = ref (fun ~metasenv:_ ~subst:_ _ _ -> assert false);;
+let get_relevance = ref (fun _ ~metasenv:_ ~subst:_ _ _ -> assert false);;
 
-let set_get_relevance f = get_relevance := f;;
+let set_get_relevance = (:=) get_relevance;;
 
-let alpha_eq ~test_lambda_source aux test_eq_only metasenv subst context t1 t2 =
+let alpha_eq (status:#NCic.status) ~test_lambda_source aux test_eq_only metasenv subst context
+ t1 t2 =
  if t1 === t2 then
    true
  else
@@ -242,33 +243,33 @@ let alpha_eq ~test_lambda_source aux test_eq_only metasenv subst context t1 t2 =
       let l2 = NCicUtils.expand_local_context l2 in
       (try List.for_all2 
         (fun t1 t2 -> aux test_eq_only context 
-          (NCicSubstitution.lift s1 t1) 
-          (NCicSubstitution.lift s2 t2))  
+          (NCicSubstitution.lift status s1 t1) 
+          (NCicSubstitution.lift status s2 t2))  
         l1 l2
       with Invalid_argument "List.for_all2" -> 
         prerr_endline ("Meta " ^ string_of_int n1 ^ 
           " occurrs with local contexts of different lenght\n"^
-          NCicPp.ppterm ~metasenv ~subst ~context t1 ^ " === " ^
-          NCicPp.ppterm ~metasenv ~subst ~context t2);
+          status#ppterm ~metasenv ~subst ~context t1 ^ " === " ^
+          status#ppterm ~metasenv ~subst ~context t2);
         assert false) -> true
 
    | C.Meta (n1,l1), _ ->
       (try 
          let _,_,term,_ = NCicUtils.lookup_subst n1 subst in
-         let term = NCicSubstitution.subst_meta l1 term in
+         let term = NCicSubstitution.subst_meta status l1 term in
           aux test_eq_only context term t2
        with NCicUtils.Subst_not_found _ -> false)
    | _, C.Meta (n2,l2) ->
       (try 
          let _,_,term,_ = NCicUtils.lookup_subst n2 subst in
-         let term = NCicSubstitution.subst_meta l2 term in
+         let term = NCicSubstitution.subst_meta status l2 term in
           aux test_eq_only context t1 term
        with NCicUtils.Subst_not_found _ -> false)
    
    | (C.Appl ((C.Const r1) as hd1::tl1), C.Appl (C.Const r2::tl2)) 
        when (Ref.eq r1 r2 && 
-         List.length (E.get_relevance r1) >= List.length tl1) ->
-     let relevance = E.get_relevance r1 in
+         List.length (E.get_relevance status r1) >= List.length tl1) ->
+     let relevance = E.get_relevance status r1 in
 (* if the types were convertible the following optimization is sound
      let relevance = match r1 with
          | Ref.Ref (_,Ref.Con (_,_,lno)) ->
@@ -284,7 +285,7 @@ let alpha_eq ~test_lambda_source aux test_eq_only metasenv subst context t1 t2 =
         with Invalid_argument _ -> false
            | HExtlib.FailureAt fail ->
              let relevance = 
-               !get_relevance ~metasenv ~subst context hd1 tl1 in
+               !get_relevance (status :> NCic.status) ~metasenv ~subst context hd1 tl1 in
              let _,relevance = HExtlib.split_nth fail relevance in
              let b,relevance = (match relevance with
                | [] -> assert false
@@ -301,7 +302,7 @@ let alpha_eq ~test_lambda_source aux test_eq_only metasenv subst context t1 t2 =
 
    | (C.Appl (hd1::tl1),  C.Appl (hd2::tl2)) ->
        aux test_eq_only context hd1 hd2 &&
-        let relevance = !get_relevance ~metasenv ~subst context hd1 tl1 in
+        let relevance = !get_relevance (status :> NCic.status) ~metasenv ~subst context hd1 tl1 in
         (try
          HExtlib.list_forall_default3
           (fun t1 t2 b -> not b || aux true context t1 t2)
@@ -310,10 +311,10 @@ let alpha_eq ~test_lambda_source aux test_eq_only metasenv subst context t1 t2 =
 
    | (C.Match (Ref.Ref (_,Ref.Ind (_,tyno,_)) as ref1,outtype1,term1,pl1),
       C.Match (ref2,outtype2,term2,pl2)) ->
-       let _,_,itl,_,_ = E.get_checked_indtys ref1 in
+       let _,_,itl,_,_ = E.get_checked_indtys status ref1 in
        let _,_,ty,_ = List.nth itl tyno in
        let rec remove_prods ~subst context ty = 
-         let ty = whd ~subst context ty in
+         let ty = whd status ~subst context ty in
          match ty with
          | C.Sort _ -> ty
          | C.Prod (name,so,ta) -> remove_prods ~subst ((name,(C.Decl so))::context) ta
@@ -334,12 +335,13 @@ let alpha_eq ~test_lambda_source aux test_eq_only metasenv subst context t1 t2 =
 ;;
 
 (* t1, t2 must be well-typed *)
-let are_convertible ~metasenv ~subst =
+let are_convertible status ~metasenv ~subst =
  let rec aux test_eq_only context t1 t2 =
-  let alpha_eq test_eq_only =
-   alpha_eq ~test_lambda_source:false aux test_eq_only metasenv subst context
+  let alpha_eq status test_eq_only =
+   alpha_eq status ~test_lambda_source:false aux test_eq_only metasenv subst
+    context
   in
-   if alpha_eq test_eq_only t1 t2 then 
+   if alpha_eq status test_eq_only t1 t2 then 
      true
    else
      let height_of = function
@@ -350,32 +352,32 @@ let are_convertible ~metasenv ~subst =
       | _ -> 0
      in
      let put_in_whd m1 m2 =
-       R.reduce ~delta:max_int ~subst context m1,
-       R.reduce ~delta:max_int ~subst context m2
+       R.reduce status ~delta:max_int ~subst context m1,
+       R.reduce status ~delta:max_int ~subst context m2
      in
      let small_delta_step 
        ((_,_,t1,_ as m1), norm1 as x1) ((_,_,t2,_ as m2), norm2 as x2) 
      = 
        assert(not (norm1 && norm2));
        if norm1 then
-         x1, R.reduce ~delta:(height_of t2 -1) ~subst context m2
+         x1, R.reduce status ~delta:(height_of t2 -1) ~subst context m2
        else if norm2 then
-         R.reduce ~delta:(height_of t1 -1) ~subst context m1, x2
+         R.reduce status ~delta:(height_of t1 -1) ~subst context m1, x2
        else
         let h1 = height_of t1 in 
         let h2 = height_of t2 in
         let delta = if h1 = h2 then max 0 (h1 -1) else min h1 h2 in
-        R.reduce ~delta ~subst context m1,
-        R.reduce ~delta ~subst context m2
+        R.reduce status ~delta ~subst context m1,
+        R.reduce status ~delta ~subst context m2
      in
      let rec convert_machines test_eq_only
        ((k1,e1,t1,s1),norm1 as m1),((k2,e2,t2,s2), norm2 as m2) 
      =
-       (alpha_eq test_eq_only
-         (R.unwind (k1,e1,t1,[])) (R.unwind (k2,e2,t2,[])) &&
+       (alpha_eq status test_eq_only
+         (R.unwind status (k1,e1,t1,[])) (R.unwind status (k2,e2,t2,[])) &&
         let relevance =
           match t1 with
-              C.Const r -> NCicEnvironment.get_relevance r
+              C.Const r -> NCicEnvironment.get_relevance status r
             | _ -> [] in
         try
          HExtlib.list_forall_default3
@@ -392,14 +394,14 @@ let are_convertible ~metasenv ~subst =
   aux false 
 ;;
 
-let alpha_eq metasenv subst =
+let alpha_eq status metasenv subst =
  let rec aux test_lambda_source context t1 t2 =
-  alpha_eq ~test_lambda_source aux true metasenv subst context t1 t2
+  alpha_eq status ~test_lambda_source aux true metasenv subst context t1 t2
  in
   aux true
 ;;
 
-let rec head_beta_reduce ~delta ~upto ~subst t l =
+let rec head_beta_reduce status ~delta ~upto ~subst t l =
  match upto, t, l with
   | 0, C.Appl l1, _ -> C.Appl (l1 @ l)
   | 0, t, [] -> t
@@ -407,23 +409,23 @@ let rec head_beta_reduce ~delta ~upto ~subst t l =
   | _, C.Meta (n,ctx), _ ->
      (try
        let _,_, term,_ = NCicUtils.lookup_subst n subst in
-       head_beta_reduce ~delta ~upto ~subst 
-         (NCicSubstitution.subst_meta ctx term) l
+       head_beta_reduce status ~delta ~upto ~subst 
+         (NCicSubstitution.subst_meta status ctx term) l
      with NCicUtils.Subst_not_found _ -> if l = [] then t else C.Appl (t::l))
-  | _, C.Appl (hd::tl), _ -> head_beta_reduce ~delta ~upto ~subst hd (tl @ l)
+  | _, C.Appl (hd::tl), _ -> head_beta_reduce status ~delta ~upto ~subst hd (tl @ l)
   | _, C.Lambda(_,_,bo), arg::tl ->
-     let bo = NCicSubstitution.subst arg bo in
-     head_beta_reduce ~delta ~upto:(upto - 1) ~subst bo tl
+     let bo = NCicSubstitution.subst status arg bo in
+     head_beta_reduce status ~delta ~upto:(upto - 1) ~subst bo tl
   | _, C.Const (Ref.Ref (_, Ref.Def height) as re), _ 
     when delta <= height ->
-      let _, _, bo, _, _, _ = NCicEnvironment.get_checked_def re in
-      head_beta_reduce ~upto ~delta ~subst bo l
+      let _, _, bo, _, _, _ = NCicEnvironment.get_checked_def status re in
+      head_beta_reduce status ~upto ~delta ~subst bo l
   | _, t, [] -> t
   | _, t, _ -> C.Appl (t::l)
 ;;
 
-let head_beta_reduce ?(delta=max_int) ?(upto= -1) ?(subst=[]) t = 
-  head_beta_reduce ~delta ~upto ~subst t []
+let head_beta_reduce status ?(delta=max_int) ?(upto= -1) ?(subst=[]) t = 
+  head_beta_reduce status ~delta ~upto ~subst t []
 ;;
 
 type stack_item = RS.stack_term
@@ -437,17 +439,17 @@ let from_env = RS.from_env
 let unwind = R.unwind
 
 let _ = 
-  NCicUtils.set_head_beta_reduce (fun ~upto t -> head_beta_reduce ~upto t);
-  NCicPp.set_head_beta_reduce (fun ~upto t -> head_beta_reduce ~upto t);
+  NCicUtils.set_head_beta_reduce
+   (fun status ~upto t -> head_beta_reduce status ~upto t);
 ;;
 
 (* if n < 0, then splits all prods from an arity, returning a sort *)
-let rec split_prods ~subst context n te =
-  match (n, R.whd ~subst context te) with
+let rec split_prods status ~subst context n te =
+  match (n, R.whd status ~subst context te) with
    | (0, _) -> context,te
    | (n, C.Sort _) when n <= 0 -> context,te
    | (n, C.Prod (name,so,ta)) ->
-       split_prods ~subst ((name,(C.Decl so))::context) (n - 1) ta
+       split_prods status ~subst ((name,(C.Decl so))::context) (n - 1) ta
    | (_, _) -> raise (AssertFailure (lazy "split_prods"))
 ;;
 

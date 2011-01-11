@@ -202,11 +202,25 @@ let compare_statuses ~past ~present =
    (e.g. the tactic could perform a global analysis of the set of goals)
 *)
 
+(* CSC: potential bug here: the new methods still use the instance variables
+   of the old status and not the instance variables of the new one *)
+let change_stack_type (status : 'a #NTacStatus.status) (stack: 'b) : 'b NTacStatus.status =
+ let o =
+  object
+   inherit ['b] NTacStatus.status status#obj stack
+   method ppterm = status#ppterm
+   method ppcontext = status#ppcontext
+   method ppsubst = status#ppsubst
+   method ppobj = status#ppobj
+   method ppmetasenv = status#ppmetasenv
+  end
+ in
+  o#set_pstatus status
+;;
+
 let exec tac (low_status : #lowtac_status) g =
   let stack = [ [0,Open g], [], [], `NoTag ] in
-  let status =
-   (new NTacStatus.status low_status#obj stack)#set_pstatus low_status
-  in
+  let status = change_stack_type low_status stack in
   let status = tac status in
    (low_status#set_pstatus status)#set_obj status#obj
 ;;
@@ -236,7 +250,7 @@ let distribute_tac tac (status : #tac_status) =
             in
             aux s go gc loc_tl
       in
-      let s0 = (new NTacStatus.status status#obj ())#set_pstatus status in
+      let s0 = change_stack_type status () in
       let s0, go0, gc0 = s0, [], [] in
       let sn, gon, gcn = aux s0 go0 gc0 g in
       debug_print (lazy ("opened: "
@@ -318,7 +332,7 @@ let clear_tac names =
      names
    in
    let n,h,metasenv,subst,o = status#obj in
-   let metasenv,subst,_,_ = NCicMetaSubst.restrict metasenv subst goal js in
+   let metasenv,subst,_,_ = NCicMetaSubst.restrict status metasenv subst goal js in
     status#set_obj (n,h,metasenv,subst,o))
 ;;
 
@@ -327,7 +341,7 @@ let generalize0_tac args =
  else exact_tac ("",0,Ast.Appl (Ast.Implicit `JustOne :: args))
 ;;
 
-let select0_tac ~where:(wanted,hyps,where) ~job  =
+let select0_tac ~where ~job  =
  let found, postprocess = 
    match job with
    | `Substexpand argsno -> mk_in_scope, mk_out_scope argsno
@@ -335,6 +349,8 @@ let select0_tac ~where:(wanted,hyps,where) ~job  =
    | `ChangeWith f -> f,(fun s t -> s, t)
  in
  distribute_tac (fun status goal ->
+   let wanted,hyps,where =
+    GrafiteDisambiguate.disambiguate_npattern status where in
    let goalty = get_goalty status goal in
    let path = 
      match where with None -> NCic.Implicit `Term | Some where -> where 
@@ -377,21 +393,21 @@ let select0_tac ~where:(wanted,hyps,where) ~job  =
    instantiate ~refine:false status goal instance)
 ;;
 
-let select_tac ~where ~job move_down_hyps = 
- let (wanted,hyps,where) = GrafiteDisambiguate.disambiguate_npattern where in
- let path = 
-  match where with None -> NCic.Implicit `Term | Some where -> where in
+let select_tac ~where:((txt,txtlen,(wanted,hyps,path)) as where) ~job
+ move_down_hyps
+=
  if not move_down_hyps then
-  select0_tac ~where:(wanted,hyps,Some path) ~job
+  select0_tac ~where ~job
  else
   let path = 
    List.fold_left
-     (fun path (name,path_name) -> NCic.Prod ("_",path_name,path))
-     path (List.rev hyps)
+    (fun path (name,ty) ->
+      NotationPt.Binder (`Forall, (NotationPt.Ident (name,None),Some ty),path))
+    (match path with Some x -> x | None -> NotationPt.UserInput) (List.rev hyps)
   in
    block_tac [ 
      generalize0_tac (List.map (fun (name,_) -> Ast.Ident (name,None)) hyps);
-     select0_tac ~where:(wanted,[],Some path) ~job;
+     select0_tac ~where:(txt,txtlen,(wanted,[],Some path)) ~job;
      clear_tac (List.map fst hyps) ]
 ;;
 
@@ -445,8 +461,7 @@ let reduce_tac ~reduction ~where =
         whd status
          ?delta:(if perform_delta then None else Some max_int) (ctx_of t) t
   in
-  let where = GrafiteDisambiguate.disambiguate_npattern where in
-  select0_tac ~where ~job:(`ChangeWith change)
+  select_tac ~where ~job:(`ChangeWith change) false
 ;;
 
 let change_tac ~where ~with_what =
@@ -455,8 +470,7 @@ let change_tac ~where ~with_what =
     let status = unify status (ctx_of t) t ww in
     status, ww
   in
-  let where = GrafiteDisambiguate.disambiguate_npattern where in
-  select0_tac ~where ~job:(`ChangeWith change)
+  select_tac ~where ~job:(`ChangeWith change) false
 ;;
 
 let letin_tac ~where ~what:(_,_,w) name =
@@ -631,7 +645,7 @@ let assert0_tac (hyps,concl) = distribute_tac (fun status goal ->
   let t2 = mk_cic_term ctx t2 in
   let status,t2 = apply_subst status ctx t2 in
   let status,t2 = term_of_cic_term status t2 ctx in
-  prerr_endline ("COMPARING: " ^ NCicPp.ppterm ~subst:[] ~metasenv:[] ~context:ctx t1 ^ " vs " ^ NCicPp.ppterm ~subst:[] ~metasenv:[] ~context:ctx t2);
+  prerr_endline ("COMPARING: " ^ status#ppterm ~subst:[] ~metasenv:[] ~context:ctx t1 ^ " vs " ^ status#ppterm ~subst:[] ~metasenv:[] ~context:ctx t2);
   assert (t1=t2);
   status
  in

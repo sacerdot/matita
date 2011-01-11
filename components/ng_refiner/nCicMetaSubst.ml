@@ -117,7 +117,7 @@ let purge_restricted restrictions more_restrictions l =
   end
 ;;
 
-let rec force_does_not_occur metasenv subst restrictions t =
+let rec force_does_not_occur status metasenv subst restrictions t =
  let rec aux k ms = function
     | NCic.Rel r when List.mem (r - k) restrictions -> raise Occur
     | NCic.Rel r as orig ->
@@ -128,21 +128,21 @@ let rec force_does_not_occur metasenv subst restrictions t =
     | NCic.Meta (n, (shift,lc as l)) as orig ->
        (try
          let _,_,bo,_ = NCicUtils.lookup_subst n subst in
-          aux k ms (NCicSubstitution.subst_meta l bo)
+          aux k ms (NCicSubstitution.subst_meta status l bo)
         with
          NCicUtils.Subst_not_found _ ->
           (* we ignore the subst since restrict will take care of already
            * instantiated/restricted metavariabels *)
           let l = NCicUtils.expand_local_context lc in
-          let sl = List.map (NCicSubstitution.lift shift) l in 
+          let sl = List.map (NCicSubstitution.lift status shift) l in 
           let (metasenv,subst as ms), _, restrictions_for_n, l' =
              List.fold_right
                (fun t (ms, i, restrictions_for_n, l) ->
                  try 
               (*pp (lazy ("L'ORLO DELLA FOSSA: k= " ^ string_of_int k ^ " shift=" ^
-               string_of_int shift ^ " t=" ^ NCicPp.ppterm ~metasenv ~subst ~context:[] t));*)
+               string_of_int shift ^ " t=" ^ status#ppterm ~metasenv ~subst ~context:[] t));*)
                    let ms, t = aux k ms t in
-              (*pp (lazy ("LA FOSSA: " ^ NCicPp.ppterm ~metasenv ~subst ~context:[] t));*)
+              (*pp (lazy ("LA FOSSA: " ^ status#ppterm ~metasenv ~subst ~context:[] t));*)
                    ms, i-1, restrictions_for_n, t::l
                  with Occur ->
                    ms, i-1, i::restrictions_for_n, l)
@@ -150,7 +150,7 @@ let rec force_does_not_occur metasenv subst restrictions t =
           in
           if restrictions_for_n = [] then
             ms, if sl = l' then orig else (
-                (*pp (lazy ("FINITO: " ^ NCicPp.ppterm ~metasenv:[] ~subst:[]
+                (*pp (lazy ("FINITO: " ^ status#ppterm ~metasenv:[] ~subst:[]
                   ~context:[] (NCic.Meta (n,pack_lc (0, NCic.Ctx l')))));*)
               NCic.Meta (n, pack_lc (0, NCic.Ctx l'))
             )
@@ -158,34 +158,34 @@ let rec force_does_not_occur metasenv subst restrictions t =
             let l' = pack_lc (0, NCic.Ctx l') in
             let _ = pp (lazy ("restrictions for n are:" ^ String.concat "," (List.map string_of_int restrictions_for_n))) in
             let metasenv, subst, newmeta, more_restricted = 
-              restrict metasenv subst n restrictions_for_n in
+              restrict status metasenv subst n restrictions_for_n in
             let _ = pp (lazy ("more restricted: " ^String.concat "," (List.map string_of_int more_restricted))) in
             let l' = purge_restricted restrictions more_restricted l' in
               (metasenv, subst), NCic.Meta (newmeta, l'))
-    | t -> NCicUntrusted.map_term_fold_a (fun _ k -> k+1) k aux ms t
+    | t -> NCicUntrusted.map_term_fold_a status (fun _ k -> k+1) k aux ms t
  in
    aux 0 (metasenv,subst) t 
 
-and force_does_not_occur_in_context metasenv subst restrictions = function
+and force_does_not_occur_in_context status metasenv subst restrictions = function
   | name, NCic.Decl t as orig ->
-      (* pp (lazy ("CCC: hd is" ^ NCicPp.ppterm ~metasenv:[] ~subst:[] ~context:[] t ^
+      (* pp (lazy ("CCC: hd is" ^ status#ppterm ~metasenv:[] ~subst:[] ~context:[] t ^
       "\nCCC: restrictions are:" ^ String.concat "," (List.map string_of_int restrictions)));*)
       let (metasenv, subst), t' =
-        force_does_not_occur metasenv subst restrictions t in
+        force_does_not_occur status metasenv subst restrictions t in
       metasenv, subst, (if t == t' then orig else (name,NCic.Decl t'))
   | name, NCic.Def (bo, ty) as orig ->
       let (metasenv, subst), bo' =
-        force_does_not_occur metasenv subst restrictions bo in
+        force_does_not_occur status metasenv subst restrictions bo in
       let (metasenv, subst), ty' =
-        force_does_not_occur metasenv subst restrictions ty in
+        force_does_not_occur status metasenv subst restrictions ty in
       metasenv, subst, 
        (if bo == bo' && ty == ty' then orig else (name, NCic.Def (bo', ty')))
 
-and erase_in_context metasenv subst pos restrictions = function
+and erase_in_context status metasenv subst pos restrictions = function
   | [] -> metasenv, subst, restrictions, []
   | hd::tl as orig ->
       let metasenv, subst, restricted, tl' = 
-        erase_in_context metasenv subst (pos+1) restrictions tl in
+        erase_in_context status metasenv subst (pos+1) restrictions tl in
       if List.mem pos restricted then
         metasenv, subst, restricted, tl'
       else
@@ -194,24 +194,24 @@ and erase_in_context metasenv subst pos restrictions = function
             let delifted_restricted = 
               List.map ((+) ~-pos) (List.filter ((<=) pos) restricted) in
             force_does_not_occur_in_context 
-              metasenv subst delifted_restricted hd
+              status metasenv subst delifted_restricted hd
           in
            metasenv, subst, restricted, 
             (if hd' == hd && tl' == tl then orig else (hd' :: tl'))
         with Occur ->
             metasenv, subst, (pos :: restricted), tl'
 
-and restrict metasenv subst i (restrictions as orig) =
+and restrict status metasenv subst i (restrictions as orig) =
   assert (restrictions <> []);
   try 
     let name, ctx, bo, ty = NCicUtils.lookup_subst i subst in
       try 
         let metasenv, subst, restrictions, newctx = 
-          erase_in_context metasenv subst 1 restrictions ctx in
+          erase_in_context status metasenv subst 1 restrictions ctx in
         let (metasenv, subst), newty =  
-          force_does_not_occur metasenv subst restrictions ty in
+          force_does_not_occur status metasenv subst restrictions ty in
         let (metasenv, subst), newbo =  
-          force_does_not_occur metasenv subst restrictions bo in
+          force_does_not_occur status metasenv subst restrictions bo in
         let j = newmeta () in
         let subst_entry_j = j, (name, newctx, newbo, newty) in
         let reloc_irl = mk_perforated_irl 0 (List.length ctx) restrictions in
@@ -228,15 +228,15 @@ and restrict metasenv subst i (restrictions as orig) =
             "with %s and at least one of the hypotheses occurs in "^^
             "the substituted term") i  (String.concat ", " 
             (List.map (fun x -> fst (List.nth ctx (x-1))) restrictions)) i
-            (NCicPp.ppterm ~metasenv ~subst ~context:ctx bo))))
+            (status#ppterm ~metasenv ~subst ~context:ctx bo))))
   with NCicUtils.Subst_not_found _ -> 
     try 
       let name, ctx, ty = NCicUtils.lookup_meta i metasenv in
       try
         let metasenv, subst, restrictions, newctx = 
-          erase_in_context metasenv subst 1 restrictions ctx in
+          erase_in_context status metasenv subst 1 restrictions ctx in
         let (metasenv, subst), newty =  
-          force_does_not_occur metasenv subst restrictions ty in
+          force_does_not_occur status metasenv subst restrictions ty in
         let j = newmeta () in
         let metasenv_entry = j, (name, newctx, newty) in
         let reloc_irl = 
@@ -259,17 +259,17 @@ and restrict metasenv subst i (restrictions as orig) =
     | NCicUtils.Meta_not_found _ -> assert false
 ;;
 
-let rec is_flexible context ~subst = function 
+let rec is_flexible status context ~subst = function 
   | NCic.Meta (i,_) ->
       (try 
         let _,_,t,_ = List.assoc i subst in
-        is_flexible context ~subst t
+        is_flexible status context ~subst t
       with Not_found -> true)
   | NCic.Appl (NCic.Meta (i,_) :: args)-> 
       (try 
         let _,_,t,_ = List.assoc i subst in
-        is_flexible context ~subst 
-          (NCicReduction.head_beta_reduce ~delta:max_int 
+        is_flexible status context ~subst 
+          (NCicReduction.head_beta_reduce status ~delta:max_int 
             (NCic.Appl (t :: args)))
       with Not_found -> true)
    (* this is a cheap whd, it only performs zeta-reduction.
@@ -283,13 +283,13 @@ let rec is_flexible context ~subst = function
          match List.nth context (i-1)
          with 
          | _,NCic.Def (bo,_) ->
-               is_flexible context ~subst
-                 (NCicSubstitution.lift i bo)
+               is_flexible status context ~subst
+                 (NCicSubstitution.lift status i bo)
          | _ -> false
       with 
       | Failure _ -> 
           prerr_endline (Printf.sprintf "Rel %d inside context:\n%s" i  
-            (NCicPp.ppcontext ~subst ~metasenv:[] context));
+            (status#ppcontext ~subst ~metasenv:[] context));
           assert false
       | Invalid_argument _ -> assert false)
   | _ -> false
@@ -307,7 +307,7 @@ exception Found;;
 (* INVARIANT: we suppose that t is not another occurrence of Meta(n,_), 
    otherwise the occur check does not make sense in case of unification
    of ?n with ?n *)
-let delift ~unify metasenv subst context n l t =
+let delift status ~unify metasenv subst context n l t =
   (*D*)  inside 'D'; try let rc =  
   let is_in_scope_meta subst = function
     | NCic.Meta (i,_) ->
@@ -332,11 +332,11 @@ let delift ~unify metasenv subst context n l t =
     match l with
     | _, NCic.Irl _ -> fun _ _ _ _ _ -> None
     | shift, NCic.Ctx l -> fun metasenv subst context k t ->
-       if is_flexible context ~subst t || contains_in_scope subst t then None else
+       if is_flexible status context ~subst t || contains_in_scope subst t then None else
          let lb = 
            List.map (fun t -> 
-            let t = NCicSubstitution.lift (k+shift) t in
-            t, is_flexible context ~subst t) 
+            let t = NCicSubstitution.lift status (k+shift) t in
+            t, is_flexible status context ~subst t) 
            l 
          in
          HExtlib.list_findopt
@@ -363,7 +363,7 @@ let delift ~unify metasenv subst context n l t =
                 (* CSC: This bit of reduction hurts performances since it is
                  * possible to  have an exponential explosion of the size of the
                  * proof. required for nat/nth_prime.ma *)
-                  aux (context,k,in_scope) ms (NCicSubstitution.lift n bo))
+                  aux (context,k,in_scope) ms (NCicSubstitution.lift status n bo))
           | _,NCic.Decl _ -> ms, NCic.Rel ((position in_scope (n-k) l) + k)
         with Failure _ -> assert false) (*Unbound variable found in delift*)
     | NCic.Meta (i,_) when i=n ->
@@ -371,7 +371,7 @@ let delift ~unify metasenv subst context n l t =
            "Cannot unify the metavariable ?%d with a term that has "^^
            "as subterm %s in which the same metavariable "^^
            "occurs (occur check)") i 
-            (NCicPp.ppterm ~context ~metasenv ~subst t))))
+            (status#ppterm ~context ~metasenv ~subst t))))
     | NCic.Meta (i,l1) as orig ->
         (try
            let tag,c,t,ty = NCicUtils.lookup_subst i subst in
@@ -386,7 +386,7 @@ let delift ~unify metasenv subst context n l t =
                metasenv, 
                (i,([],c,t,ty)) :: List.filter (fun j,_ -> i <> j) subst
            in
-           aux (context,k,in_scope) ms (NCicSubstitution.subst_meta l1 t)
+           aux (context,k,in_scope) ms (NCicSubstitution.subst_meta status l1 t)
          with NCicUtils.Subst_not_found _ ->
            if snd l1 = NCic.Irl 0 || snd l1 = NCic.Ctx [] then ms, orig
            else
@@ -398,7 +398,7 @@ let delift ~unify metasenv subst context n l t =
                 when shift1 + len1 < shift || shift1 > shift + len ->
                   let restrictions = HExtlib.list_seq 1 (len1 + 1) in
                   let metasenv, subst, newmeta, more_restricted = 
-                   restrict metasenv subst i restrictions in
+                   restrict status metasenv subst i restrictions in
                   let l' = (0,NCic.Irl (max 0 (k-shift1))) in
                   let l' = purge_restricted restrictions more_restricted l' in
                   (metasenv, subst),NCic.Meta (newmeta,l')
@@ -426,7 +426,7 @@ let delift ~unify metasenv subst context n l t =
                     else ms, NCic.Meta (i, (new_shift, lc1))
                   else
                     let metasenv, subst, newmeta, more_restricted = 
-                     restrict metasenv subst i restrictions in
+                     restrict status metasenv subst i restrictions in
                     let newlc_len = len1 - List.length restrictions in 
                     let l' = new_shift, NCic.Irl newlc_len in
                     let l' = purge_restricted restrictions more_restricted l' in
@@ -434,7 +434,7 @@ let delift ~unify metasenv subst context n l t =
 
               | _ ->
                   let lc1 = NCicUtils.expand_local_context lc1 in
-                  let lc1 = List.map (NCicSubstitution.lift shift1) lc1 in
+                  let lc1 = List.map (NCicSubstitution.lift status shift1) lc1 in
                   let rec deliftl tbr j ms = function
                     | [] -> ms, tbr, []
                     | t::tl ->
@@ -449,20 +449,20 @@ let delift ~unify metasenv subst context n l t =
                   pp (lazy ("TO BE RESTRICTED: " ^ 
                    (String.concat "," (List.map string_of_int to_be_r))));
                   let l1 = pack_lc (0, NCic.Ctx lc1') in
-                  pp (lazy ("newmeta:" ^ NCicPp.ppterm
+                  pp (lazy ("newmeta:" ^ status#ppterm
                    ~metasenv ~subst ~context (NCic.Meta (999,l1))));
-                  pp (lazy (NCicPp.ppmetasenv ~subst metasenv));
+                  pp (lazy (status#ppmetasenv ~subst metasenv));
                   if to_be_r = [] then
                     (metasenv, subst), 
                     (if lc1' = lc1 then orig else NCic.Meta (i,l1))
                   else
                     let metasenv, subst, newmeta, more_restricted = 
-                     restrict metasenv subst i to_be_r in
+                     restrict status metasenv subst i to_be_r in
                     let l1 = purge_restricted to_be_r more_restricted l1 in
                      (metasenv, subst), NCic.Meta(newmeta,l1))
 
     | t -> 
-        NCicUntrusted.map_term_fold_a 
+        NCicUntrusted.map_term_fold_a status
           (fun e (c,k,s) -> (e::c,k+1,s)) (context,k,in_scope) aux ms t
   in
 (*
@@ -482,16 +482,16 @@ let delift ~unify metasenv subst context n l t =
       (* related to the delift function.                              *)
       let msg = (lazy (Printf.sprintf
         ("Error trying to abstract %s over [%s]: the algorithm only tried to "^^
-        "abstract over bound variables") (NCicPp.ppterm ~metasenv ~subst
-        ~context t) (String.concat "; " (List.map (NCicPp.ppterm ~metasenv
+        "abstract over bound variables") (status#ppterm ~metasenv ~subst
+        ~context t) (String.concat "; " (List.map (status#ppterm ~metasenv
         ~subst ~context) (let shift, lc = l in List.map (NCicSubstitution.lift
-        shift) (NCicUtils.expand_local_context lc))))))
+        status shift) (NCicUtils.expand_local_context lc))))))
       in
       let shift, lc = l in
       let lc = NCicUtils.expand_local_context lc in
-      let l = List.map (NCicSubstitution.lift shift) lc in
+      let l = List.map (NCicSubstitution.lift status shift) lc in
        if
-        List.exists (fun t-> NCicUntrusted.metas_of_term subst context t <> [])l
+        List.exists (fun t-> NCicUntrusted.metas_of_term status subst context t <> [])l
        then
         raise (Uncertain msg)
        else
@@ -526,21 +526,21 @@ let extend_meta metasenv n =
  with NCicUtils.Meta_not_found _ -> assert false
 ;;
 
-let saturate ?(delta=0) metasenv subst context ty goal_arity =
+let saturate status ?(delta=0) metasenv subst context ty goal_arity =
  assert (goal_arity >= 0);
   let rec aux metasenv = function
    | NCic.Prod (name,s,t) as ty ->
        let metasenv1, _, arg,_ = 
           mk_meta ~attrs:[`Name name] metasenv context ~with_type:s `IsTerm in
        let t, metasenv1, args, pno = 
-           aux metasenv1 (NCicSubstitution.subst arg t) 
+           aux metasenv1 (NCicSubstitution.subst status arg t) 
        in
        if pno + 1 = goal_arity then
          ty, metasenv, [], goal_arity+1
        else
          t, metasenv1, arg::args, pno+1
    | ty ->
-        match NCicReduction.whd ~subst context ty ~delta with
+        match NCicReduction.whd status ~subst context ty ~delta with
         | NCic.Prod _ as ty -> aux metasenv ty
         | ty -> ty, metasenv, [], 0
   in

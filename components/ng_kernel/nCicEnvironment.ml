@@ -24,8 +24,8 @@ let cache = NUri.UriHash.create 313;;
 let history = ref [];;
 let frozen_list = ref [];;
 
-let get_obj = ref (fun _ -> assert false);;
-let set_get_obj f = get_obj := f;;
+let get_obj = ref (fun _ _ -> assert false);;
+let set_get_obj = (:=) get_obj;;
 
 module F = Format 
 
@@ -243,7 +243,7 @@ let allowed_sort_elimination s1 s2 =
   | C.Prop, C.Type _ -> `UnitOnly
 ;;
 
-let typecheck_obj,already_set = ref (fun _ -> assert false), ref false;;
+let typecheck_obj,already_set = ref (fun _ _ -> assert false), ref false;;
 let set_typecheck_obj f =
  if !already_set then
   assert false
@@ -301,12 +301,12 @@ let to_exn f x =
   | `Exn e -> raise e
 ;;
 
-let check_and_add_obj ((u,_,_,_,_) as obj) =
+let check_and_add_obj (status:#NCic.status) ((u,_,_,_,_) as obj) =
  let saved_frozen_list = !frozen_list in
  try
    frozen_list := (u,obj)::saved_frozen_list;
    HLog.warn ("Typechecking of " ^ NUri.string_of_uri u); 
-   !typecheck_obj obj;
+   !typecheck_obj (status :> NCic.status) obj;
    frozen_list := saved_frozen_list;
    let obj' = `WellTyped obj in
    NUri.UriHash.add cache u obj';
@@ -339,27 +339,27 @@ let check_and_add_obj ((u,_,_,_,_) as obj) =
       raise (Propagate (u,e))
 ;;
 
-let get_checked_obj u =
+let get_checked_obj status u =
  if List.exists (fun (k,_) -> NUri.eq u k) !frozen_list
  then
   raise (CircularDependency (lazy (NUri.string_of_uri u)))
  else
   try NUri.UriHash.find cache u
-  with Not_found -> check_and_add_obj (!get_obj u)
+  with Not_found -> check_and_add_obj status (!get_obj (status :> NCic.status) u)
 ;;
 
-let get_checked_obj u = to_exn get_checked_obj u;;
+let get_checked_obj (status:#NCic.status) u = to_exn (get_checked_obj status) u;;
 
-let check_and_add_obj ((u,_,_,_,_) as obj) =
+let check_and_add_obj status ((u,_,_,_,_) as obj) =
  if NUri.UriHash.mem cache u then
   raise (AlreadyDefined (lazy (NUri.string_of_uri u)))
  else
-  ignore (to_exn check_and_add_obj obj)
+  ignore (to_exn (check_and_add_obj status) obj)
 ;;
 
-let get_checked_decl = function
+let get_checked_decl status = function
   | Ref.Ref (uri, Ref.Decl) ->
-      (match get_checked_obj uri with
+      (match get_checked_obj status uri with
       | _,height,_,_, C.Constant (rlv,name,None,ty,att) ->
           rlv,name,ty,att,height
       | _,_,_,_, C.Constant (_,_,Some _,_,_) ->
@@ -368,9 +368,9 @@ let get_checked_decl = function
   | _ -> prerr_endline "get_checked_decl on a non decl"; assert false
 ;;
 
-let get_checked_def = function
+let get_checked_def status = function
   | Ref.Ref (uri, Ref.Def _) ->
-      (match get_checked_obj uri with
+      (match get_checked_obj status uri with
       | _,height,_,_, C.Constant (rlv,name,Some bo,ty,att) ->
           rlv,name,bo,ty,att,height
       | _,_,_,_, C.Constant (_,_,None,_,_) ->
@@ -379,40 +379,40 @@ let get_checked_def = function
   | _ -> prerr_endline "get_checked_def on a non def"; assert false
 ;;
 
-let get_checked_indtys = function
+let get_checked_indtys status = function
   | Ref.Ref (uri, (Ref.Ind (_,n,_)|Ref.Con (n,_,_))) ->
-      (match get_checked_obj uri with
+      (match get_checked_obj status uri with
       | _,_,_,_, C.Inductive (inductive,leftno,tys,att) ->
         inductive,leftno,tys,att,n
       | _ -> prerr_endline "get_checked_indtys on a non ind 2"; assert false)
   | _ -> prerr_endline "get_checked_indtys on a non ind"; assert false
 ;;
 
-let get_checked_fixes_or_cofixes = function
+let get_checked_fixes_or_cofixes status = function
   | Ref.Ref (uri, (Ref.Fix _|Ref.CoFix _))->
-      (match get_checked_obj uri with
+      (match get_checked_obj status uri with
       | _,height,_,_, C.Fixpoint (_,funcs,att) ->
          funcs, att, height
       | _ ->prerr_endline "get_checked_(co)fix on a non (co)fix 2";assert false)
   | _ -> prerr_endline "get_checked_(co)fix on a non (co)fix"; assert false
 ;;
 
-let get_relevance (Ref.Ref (_, infos) as r) =
+let get_relevance status (Ref.Ref (_, infos) as r) =
   match infos with
-     Ref.Def _ -> let res,_,_,_,_,_ = get_checked_def r in res
-   | Ref.Decl -> let res,_,_,_,_ = get_checked_decl r in res
+     Ref.Def _ -> let res,_,_,_,_,_ = get_checked_def status r in res
+   | Ref.Decl -> let res,_,_,_,_ = get_checked_decl status r in res
    | Ref.Ind _ ->
-       let _,_,tl,_,n = get_checked_indtys r in
+       let _,_,tl,_,n = get_checked_indtys status r in
        let res,_,_,_ = List.nth tl n in
          res
     | Ref.Con (_,i,_) ->
-       let _,_,tl,_,n = get_checked_indtys r in
+       let _,_,tl,_,n = get_checked_indtys status r in
        let _,_,_,cl = List.nth tl n in
        let res,_,_ = List.nth cl (i - 1) in
          res
     | Ref.Fix (fixno,_,_)
     | Ref.CoFix fixno ->
-        let fl,_,_ = get_checked_fixes_or_cofixes r in
+        let fl,_,_ = get_checked_fixes_or_cofixes status r in
         let res,_,_,_,_ = List.nth fl fixno in
           res
 ;;

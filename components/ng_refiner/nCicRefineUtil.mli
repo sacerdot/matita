@@ -11,9 +11,10 @@
 
 (* $Id: nCicRefiner.ml 9802 2009-05-25 15:39:26Z tassi $ *)
 
-val alpha_equivalence : NCic.term -> NCic.term -> bool 
+val alpha_equivalence : #NCic.status -> NCic.term -> NCic.term -> bool 
 
 val replace_lifting :
+  #NCic.status ->
   equality:((string * NCic.context_entry) list ->
             NCic.term -> NCic.term -> bool) ->
   context:(string * NCic.context_entry) list ->

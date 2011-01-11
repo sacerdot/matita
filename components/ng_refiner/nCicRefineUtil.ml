@@ -31,7 +31,7 @@ exception Subst_not_found of int
 (* syntactic_equality up to the                 *)
 (* distinction between fake dependent products  *)
 (* and non-dependent products, alfa-conversion  *)
-let alpha_equivalence =
+let alpha_equivalence status =
   let rec aux t t' =
    if t = t' then true
    else
@@ -48,7 +48,7 @@ let alpha_equivalence =
            (fun b t1 t2 -> b && aux t1 t2) true l l'
          with
           Invalid_argument _ -> false)
-     | NCic.Const ref1, NCic.Const ref2 -> t == t'
+     | NCic.Const _, NCic.Const _ -> t == t'
      | NCic.Match (it,outt,t,pl), NCic.Match (it',outt',t',pl') ->
         it == it' &&
          aux outt outt' && aux t t' &&
@@ -65,11 +65,11 @@ let alpha_equivalence =
         i = i' &&
         (try
           List.fold_left2
-           (fun b xt xt' -> b && aux (NCicSubstitution.lift s xt) (NCicSubstitution.lift s' xt'))
+           (fun b xt xt' -> b && aux (NCicSubstitution.lift status s xt) (NCicSubstitution.lift status s' xt'))
            true lc lc'
          with
           Invalid_argument _ -> false)
-     | NCic.Appl [t], t' | t, NCic.Appl [t'] -> assert false
+     | NCic.Appl [_], _ | _, NCic.Appl [_] -> assert false
      | NCic.Sort s, NCic.Sort s' -> s == s'
      | _,_ -> false (* we already know that t != t' *)
   in
@@ -78,7 +78,7 @@ let alpha_equivalence =
 
 exception WhatAndWithWhatDoNotHaveTheSameLength;;
 
-let replace_lifting ~equality ~context ~what ~with_what ~where =
+let replace_lifting status ~equality ~context ~what ~with_what ~where =
   let find_image ctx what t =
    let rec find_image_aux =
     function
@@ -93,27 +93,27 @@ let replace_lifting ~equality ~context ~what ~with_what ~where =
   let add_ctx1 ctx n s ty = (n, NCic.Def (s,ty))::ctx in
   let rec substaux k ctx what t =
    try
-    NCicSubstitution.lift (k-1) (find_image ctx what t)
+    NCicSubstitution.lift status (k-1) (find_image ctx what t)
    with Not_found ->
     match t with
       NCic.Rel _ as t -> t
     | NCic.Meta (i, (shift,l)) -> 
        let l = NCicUtils.expand_local_context l in
        let l' =
-        List.map (fun t -> substaux k ctx what (NCicSubstitution.lift shift t)) l
+        List.map (fun t -> substaux k ctx what (NCicSubstitution.lift status shift t)) l
        in
         NCic.Meta(i,NCicMetaSubst.pack_lc (0, NCic.Ctx l'))
     | NCic.Sort _ as t -> t
     | NCic.Implicit _ as t -> t
     | NCic.Prod (n,s,t) ->
        NCic.Prod
-        (n, substaux k ctx what s, substaux (k + 1) (add_ctx ctx n s) (List.map (NCicSubstitution.lift 1) what) t)
+        (n, substaux k ctx what s, substaux (k + 1) (add_ctx ctx n s) (List.map (NCicSubstitution.lift status 1) what) t)
     | NCic.Lambda (n,s,t) ->
        NCic.Lambda
-        (n, substaux k ctx what s, substaux (k + 1) (add_ctx ctx n s) (List.map (NCicSubstitution.lift 1) what) t)
+        (n, substaux k ctx what s, substaux (k + 1) (add_ctx ctx n s) (List.map (NCicSubstitution.lift status 1) what) t)
     | NCic.LetIn (n,s,ty,t) ->
        NCic.LetIn
-        (n, substaux k ctx what s, substaux k ctx what ty, substaux (k + 1) (add_ctx1 ctx n s ty) (List.map (NCicSubstitution.lift 1) what) t)
+        (n, substaux k ctx what s, substaux k ctx what ty, substaux (k + 1) (add_ctx1 ctx n s ty) (List.map (NCicSubstitution.lift status 1) what) t)
     | NCic.Appl (he::tl) ->
        (* Invariant: no Appl applied to another Appl *)
        let tl' = List.map (substaux k ctx what) tl in

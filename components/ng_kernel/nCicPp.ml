@@ -15,32 +15,26 @@ module C = NCic
 module R = NReference
 module F = Format
 
-let head_beta_reduce = ref (fun ~upto:_ _ -> assert false);;
-let set_head_beta_reduce = (:=) head_beta_reduce;;
-
-let get_obj = ref (fun _ -> assert false);;
-let set_get_obj f = get_obj := f;;
-
-let r2s pp_fix_name r = 
+let r2s status pp_fix_name r = 
   try
     match r with
     | R.Ref (u,R.Ind (_,i,_)) -> 
-        (match !get_obj u with
+        (match NCicEnvironment.get_checked_obj status u with
         | _,_,_,_, C.Inductive (_,_,itl,_) ->
             let _,name,_,_ = List.nth itl i in name
         | _ -> assert false)
     | R.Ref (u,R.Con (i,j,_)) -> 
-        (match !get_obj u with
+        (match NCicEnvironment.get_checked_obj status u with
         | _,_,_,_, C.Inductive (_,_,itl,_) ->
             let _,_,_,cl = List.nth itl i in
             let _,name,_ = List.nth cl (j-1) in name
         | _ -> assert false)
     | R.Ref (u,(R.Decl | R.Def _)) -> 
-        (match !get_obj u with
+        (match NCicEnvironment.get_checked_obj status u with
         | _,_,_,_, C.Constant (_,name,_,_,_) -> name
         | _ -> assert false)
     | R.Ref (u,(R.Fix (i,_,_)|R.CoFix i)) ->
-        (match !get_obj u with
+        (match NCicEnvironment.get_checked_obj status u with
         | _,_,_,_, C.Fixpoint (_,fl,_) -> 
             if pp_fix_name then
               let _,name,_,_,_ = List.nth fl i in name
@@ -63,7 +57,7 @@ let string_of_implicit_annotation = function
   | `Vector -> "…"
 ;;
 
-let ppterm ~formatter:f ~context ~subst ~metasenv:_ ?(inside_fix=false) t =
+let ppterm status ~formatter:f ~context ~subst ~metasenv:_ ?(inside_fix=false) t =
  let rec aux ?(toplevel=false) ctx = function
   | C.Rel m ->
         (try 
@@ -71,7 +65,7 @@ let ppterm ~formatter:f ~context ~subst ~metasenv:_ ?(inside_fix=false) t =
            F.fprintf f "%s" (if name = "_" then "__"^string_of_int m else name)
         with Failure "nth" | Invalid_argument "List.nth" -> 
             F.fprintf f " -%d" (m - List.length ctx))
-  | C.Const r -> F.fprintf f "%s" (r2s inside_fix r)
+  | C.Const r -> F.fprintf f "%s" (r2s status inside_fix r)
   | C.Prod ("_",s,t) -> 
       if not toplevel then F.fprintf f "(";
       F.fprintf f "@[<hov 1>";
@@ -120,14 +114,14 @@ let ppterm ~formatter:f ~context ~subst ~metasenv:_ ?(inside_fix=false) t =
       if pl <> [] then
         begin
           F.fprintf f "@[<hov 2>%s ⇒@;" 
-            (try r2s inside_fix (R.mk_constructor 1 r)
+            (try r2s status inside_fix (R.mk_constructor 1 r)
              with R.IllFormedReference _ -> "#ERROR#");
           aux ~toplevel:true ctx (List.hd pl);
           F.fprintf f "@]";
           ignore(List.fold_left 
             (fun i t -> 
              F.fprintf f "@;| @[<hov 2>%s ⇒@;" 
-               (try r2s inside_fix (R.mk_constructor i r)
+               (try r2s status inside_fix (R.mk_constructor i r)
                 with R.IllFormedReference _ -> "#ERROR#");
              aux ~toplevel:true ctx t; 
              F.fprintf f "@]";
@@ -145,9 +139,9 @@ let ppterm ~formatter:f ~context ~subst ~metasenv:_ ?(inside_fix=false) t =
       aux ctx x
   | C.Appl (C.Meta (n,lc) :: args) when List.mem_assoc n subst -> 
       let _,_,t,_ = List.assoc n subst in
-      let hd = NCicSubstitution.subst_meta lc t in
+      let hd = NCicSubstitution.subst_meta status lc t in
       aux ctx 
-        (!head_beta_reduce ~upto:(List.length args)
+        (NCicReduction.head_beta_reduce (status :> NCic.status) ~upto:(List.length args)
           (match hd with
           | NCic.Appl l -> NCic.Appl (l@args)
           | _ -> NCic.Appl (hd :: args)))
@@ -162,16 +156,16 @@ let ppterm ~formatter:f ~context ~subst ~metasenv:_ ?(inside_fix=false) t =
       F.fprintf f "?%s" (string_of_implicit_annotation annot)
   | C.Meta (n,lc) when List.mem_assoc n subst -> 
        let _,_,t,_ = List.assoc n subst in
-       aux ctx (NCicSubstitution.subst_meta lc t)
+       aux ctx (NCicSubstitution.subst_meta status lc t)
   | C.Meta (n,(shift,C.Irl len)) -> 
        F.fprintf f "?%d(%d,%d)" n shift len
   | C.Meta (n,(shift,C.Ctx l)) -> 
        F.fprintf f "?%d(%d,[" n shift;
        if List.length l > 0 then
          begin 
-           aux ctx (NCicSubstitution.lift shift (List.hd l));
+           aux ctx (NCicSubstitution.lift status shift (List.hd l));
            List.iter (fun x -> F.fprintf f ",";aux ctx x) 
-            (List.map (NCicSubstitution.lift shift) (List.tl l));
+            (List.map (NCicSubstitution.lift status shift) (List.tl l));
          end;
        F.fprintf f "])"
   | C.Sort s -> NCicEnvironment.ppsort f s
@@ -195,24 +189,24 @@ let ppterm ~formatter ~context ~subst ~metasenv ?(margin=80) ?inside_fix t =
   ppterm ~formatter ~context ~subst ~metasenv ?inside_fix t
 ;;
 
-let rec ppcontext ~formatter ?(sep="; ") ~subst ~metasenv = function
+let rec ppcontext status ~formatter ?(sep="; ") ~subst ~metasenv = function
   | [] -> ()
   | (name, NCic.Decl t) :: tl -> 
-      ppcontext ~formatter ~sep ~subst ~metasenv tl;
+      ppcontext status ~formatter ~sep ~subst ~metasenv tl;
       F.fprintf formatter "%s: " name;
-      ppterm ~formatter ~subst ~metasenv ~context:tl t;
+      ppterm status ~formatter ~subst ~metasenv ~context:tl t;
       F.fprintf formatter "%s@;" sep
   | (name, NCic.Def (bo,ty)) :: tl->
-      ppcontext ~formatter ~sep ~subst ~metasenv tl;
+      ppcontext status ~formatter ~sep ~subst ~metasenv tl;
       F.fprintf formatter "%s: " name;
-      ppterm ~formatter ~subst ~metasenv ~context:tl ty;
+      ppterm status ~formatter ~subst ~metasenv ~context:tl ty;
       F.fprintf formatter " := ";
-      ppterm ~formatter ~subst ~metasenv ~context:tl bo;
+      ppterm status ~formatter ~subst ~metasenv ~context:tl bo;
       F.fprintf formatter "%s@;" sep
 ;;
-let ppcontext ~formatter ?sep ~subst ~metasenv c =
+let ppcontext status ~formatter ?sep ~subst ~metasenv c =
   F.fprintf formatter "@[<hov>";
-  ppcontext ~formatter ?sep ~subst ~metasenv c;
+  ppcontext status ~formatter ?sep ~subst ~metasenv c;
   F.fprintf formatter "@]";
 ;;
 
@@ -234,36 +228,36 @@ let ppmetaattrs =
     ")"
 ;;
 
-let rec ppmetasenv ~formatter ~subst metasenv = function
+let rec ppmetasenv status ~formatter ~subst metasenv = function
   | [] -> ()
   | (i,(attrs, ctx, ty)) :: tl ->
       F.fprintf formatter "@[<hov 2>";
-      ppcontext ~formatter ~sep:"; " ~subst ~metasenv ctx;
+      ppcontext status ~formatter ~sep:"; " ~subst ~metasenv ctx;
       F.fprintf formatter "@;⊢@;?%d%s :@;" i (ppmetaattrs attrs);
-      ppterm ~formatter ~metasenv ~subst ~context:ctx ty;
+      ppterm status ~formatter ~metasenv ~subst ~context:ctx ty;
       F.fprintf formatter "@]@\n";
-      ppmetasenv ~formatter ~subst metasenv tl
+      ppmetasenv status ~formatter ~subst metasenv tl
 ;;
 
-let ppmetasenv ~formatter ~subst metasenv =
- ppmetasenv ~formatter ~subst metasenv metasenv
+let ppmetasenv status ~formatter ~subst metasenv =
+ ppmetasenv status ~formatter ~subst metasenv metasenv
 ;;
 
-let rec ppsubst ~formatter ~subst ~metasenv = function
+let rec ppsubst status ~formatter ~subst ~metasenv = function
   | [] -> ()
   | (i,(attrs, ctx, t, ty)) :: tl ->
-      ppcontext ~formatter ~sep:"; " ~subst ~metasenv ctx;
+      ppcontext status ~formatter ~sep:"; " ~subst ~metasenv ctx;
       F.fprintf formatter " ⊢ ?%d%s := " i (ppmetaattrs attrs);
-      ppterm ~formatter ~metasenv ~subst ~context:ctx t;
+      ppterm status ~formatter ~metasenv ~subst ~context:ctx t;
       F.fprintf formatter " : ";
-      ppterm ~formatter ~metasenv ~subst ~context:ctx ty;
+      ppterm status ~formatter ~metasenv ~subst ~context:ctx ty;
       F.fprintf formatter "\n";
-      ppsubst ~formatter ~subst ~metasenv tl
+      ppsubst status ~formatter ~subst ~metasenv tl
 ;;
 
-let ppsubst ~formatter ~metasenv ?(use_subst=true) subst =
+let ppsubst status ~formatter ~metasenv ?(use_subst=true) subst =
  let ssubst = if use_subst then subst else [] in
-  ppsubst ~formatter ~metasenv ~subst:ssubst subst
+  ppsubst status ~formatter ~metasenv ~subst:ssubst subst
 ;;
 
 let string_of_generated = function
@@ -296,9 +290,9 @@ let string_of_fattrs (g,f,p) =
    [ string_of_generated g; string_of_flavour f; string_of_pragma p ]
 ;;
 
-let ppobj ~formatter (u,_,metasenv, subst, o) = 
+let ppobj status ~formatter (u,_,metasenv, subst, o) = 
   F.fprintf formatter "metasenv:\n";
-  ppmetasenv ~formatter ~subst metasenv;
+  ppmetasenv status ~formatter ~subst metasenv;
   F.fprintf formatter "\n";
   F.fprintf formatter "subst:\n";
   (*ppsubst subst ~formatter ~metasenv;*) F.fprintf formatter "...";
@@ -311,9 +305,9 @@ let ppobj ~formatter (u,_,metasenv, subst, o) =
        ~sep:(fun () -> F.fprintf formatter "@\n@[<hov 2>and ")
        (fun (_,name,n,ty,bo) ->
         F.fprintf formatter "%s on %d :@;" name n;
-        ppterm ~formatter ~metasenv ~subst ~context:[] ty;
+        ppterm status ~formatter ~metasenv ~subst ~context:[] ty;
         F.fprintf formatter "@]@;@[<hov 2>:=@;";
-        ppterm ~formatter ~metasenv ~subst ~context:[] ~inside_fix:true bo;
+        ppterm status ~formatter ~metasenv ~subst ~context:[] ~inside_fix:true bo;
         F.fprintf formatter "@]") fl;
       F.fprintf formatter "@; %s" (string_of_fattrs attrs);
       F.fprintf formatter "@]"
@@ -325,42 +319,52 @@ let ppobj ~formatter (u,_,metasenv, subst, o) =
         ~sep:(fun () -> F.fprintf formatter "@\n@[<hov 2>and ")
        (fun (_,name,ty,cl) ->
           F.fprintf formatter "%s:@;" name;
-          ppterm ~formatter ~metasenv ~subst ~context:[] ty;
+          ppterm status ~formatter ~metasenv ~subst ~context:[] ty;
           F.fprintf formatter "@]@;@[<hov 3>:=@;";
           HExtlib.list_iter_sep ~sep:(fun () -> F.fprintf formatter "@;")
            (fun (_,name,ty) ->
              F.fprintf formatter "| %s: " name;
-             ppterm ~formatter ~metasenv ~subst ~context:[] ty;)
+             ppterm status ~formatter ~metasenv ~subst ~context:[] ty;)
            cl;
           F.fprintf formatter "@]"
         ) tyl ;
         F.fprintf formatter "@]"
   | NCic.Constant (_,name,None,ty, _) -> 
      F.fprintf formatter "{%s}@\n@[<hov 2>axiom %s :@;" (NUri.string_of_uri u) name;
-     ppterm ~formatter ~metasenv ~subst ~context:[] ty;
+     ppterm status ~formatter ~metasenv ~subst ~context:[] ty;
      F.fprintf formatter "@]@\n"
   | NCic.Constant (_,name,Some bo,ty, _) ->
      F.fprintf formatter "{%s}@\n@[<hov 0>@[<hov 2>definition %s :@;" (NUri.string_of_uri u) name;
-     ppterm ~formatter ~metasenv ~subst ~context:[] ty;
+     ppterm status ~formatter ~metasenv ~subst ~context:[] ty;
      F.fprintf formatter "@]@;@[<hov 2>:=@;";
-     ppterm ~formatter ~metasenv ~subst ~context:[] bo;
+     ppterm status ~formatter ~metasenv ~subst ~context:[] bo;
      F.fprintf formatter "@]@\n@]"
 ;;
 
-let ppterm ~context ~subst ~metasenv ?margin ?inside_fix t = 
- on_buffer (ppterm ~context ~subst ~metasenv ?margin ?inside_fix) t
+let ppterm status ~context ~subst ~metasenv ?margin ?inside_fix t = 
+ on_buffer (ppterm status ~context ~subst ~metasenv ?margin ?inside_fix) t
 ;;
 
-let ppcontext ?sep ~subst ~metasenv ctx =
- on_buffer (ppcontext ?sep ~subst ~metasenv) ctx
+let ppcontext status ?sep ~subst ~metasenv ctx =
+ on_buffer (ppcontext status ?sep ~subst ~metasenv) ctx
 ;;
 
-let ppmetasenv ~subst metasenv = on_buffer (ppmetasenv ~subst) metasenv;;
-
-let ppsubst ~metasenv ?use_subst subst =
- on_buffer (ppsubst ~metasenv ?use_subst) subst
+let ppmetasenv status ~subst metasenv =
+ on_buffer (ppmetasenv status ~subst) metasenv
 ;;
 
-let ppobj obj = on_buffer ppobj obj;;
+let ppsubst status ~metasenv ?use_subst subst =
+ on_buffer (ppsubst status ~metasenv ?use_subst) subst
+;;
 
-let _ = NCicSubstitution.set_ppterm (ppterm ~margin:80);;
+let ppobj status obj = on_buffer (ppobj status) obj;;
+
+class status =
+ object(self)
+  (* this method is meant to be overridden in ApplyTransformation *)
+  method ppterm = ppterm self
+  method ppcontext = ppcontext self
+  method ppmetasenv = ppmetasenv self
+  method ppsubst = ppsubst self
+  method ppobj = ppobj self
+ end

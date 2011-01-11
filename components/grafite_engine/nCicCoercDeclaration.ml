@@ -54,7 +54,7 @@ let rec cleanup_funclass_skel = function
     | _ -> skel_dummy
 ;;
 
-let src_tgt_of_ty_cpos_arity ty cpos arity =
+let src_tgt_of_ty_cpos_arity status ty cpos arity =
   let pis = count_prod ty in
   let tpos = pis - arity in
   let rec pi_nth i j = function
@@ -72,7 +72,7 @@ let src_tgt_of_ty_cpos_arity ty cpos arity =
       | NCic.Meta _ 
       | NCic.Implicit _ as x -> x
       | NCic.Rel _ -> skel_dummy
-      | t -> NCicUtils.map (fun _ () -> ()) () aux t
+      | t -> NCicUtils.map status (fun _ () -> ()) () aux t
     in
      aux () t
   in 
@@ -80,17 +80,17 @@ let src_tgt_of_ty_cpos_arity ty cpos arity =
   mask (pi_tail 0 tpos ty)
 ;;
 
-let rec cleanup_skel () = function
+let rec cleanup_skel status () = function
   | NCic.Meta _ -> skel_dummy
-  | t -> NCicUtils.map (fun _ () -> ()) () cleanup_skel t
+  | t -> NCicUtils.map status (fun _ () -> ()) () (cleanup_skel status) t
 ;;
 
-let close_in_context t metasenv = 
+let close_in_context status t metasenv = 
   let rec aux m_subst subst ctx = function
    | (i,(tag,[],ty)) :: tl ->
         let name = "x" ^ string_of_int (List.length ctx) in
         let subst = (i,(tag,[],NCic.Rel (List.length tl+1),ty))::subst in
-        let ty = NCicUntrusted.apply_subst (m_subst (List.length ctx)) ctx ty in
+        let ty = NCicUntrusted.apply_subst status (m_subst (List.length ctx)) ctx ty in
         let m_subst m = 
           (i,(tag,[],NCic.Rel (m-List.length ctx),ty))::(m_subst m)
         in
@@ -100,20 +100,20 @@ let close_in_context t metasenv =
                 since metas occurring in t have an empty context,
                 the substitution i build makes sense (i.e, the Rel
                 I pun in the subst will not be lifted by subst_meta *)
-           NCicUntrusted.apply_subst subst ctx
-             (NCicSubstitution.lift (List.length ctx) t)
+           NCicUntrusted.apply_subst status subst ctx
+             (NCicSubstitution.lift status (List.length ctx) t)
    | _ -> assert false
   in
   aux (fun _ -> []) [] [] metasenv
 ;;
 
-let toposort metasenv = 
+let toposort status metasenv = 
   let module T = HTopoSort.Make(
     struct type t = int * NCic.conjecture let compare (i,_) (j,_) = i-j end) 
   in
   let deps (_,(_,_,t)) =
     List.filter (fun (j,_) -> 
-      List.mem j (NCicUntrusted.metas_of_term [] [] t)) metasenv
+      List.mem j (NCicUntrusted.metas_of_term status [] [] t)) metasenv
   in
   T.topological_sort metasenv deps
 ;;
@@ -134,10 +134,10 @@ let src_tgt_cpos_arity_of_ty_id_src_tgt status ty id src tgt =
             let metasenv,subst,status,src =
               GrafiteDisambiguate.disambiguate_nterm 
                 status None ctx [] [] ("",0,src) in
-            let src = NCicUntrusted.apply_subst subst [] src in
+            let src = NCicUntrusted.apply_subst status subst [] src in
             (* CHECK that the declared pattern matches the abstraction *)
             let _ = NCicUnification.unify status metasenv subst ctx ty src in
-            let src = cleanup_skel () src in
+            let src = cleanup_skel status () src in
             status, src, cpos
            with 
            | NCicUnification.UnificationFailure _
@@ -152,7 +152,7 @@ let src_tgt_cpos_arity_of_ty_id_src_tgt status ty id src tgt =
     let metasenv,subst,status,tgt =
       GrafiteDisambiguate.disambiguate_nterm 
         status None [] [] [] ("",0,tgt) in
-    let tgt = NCicUntrusted.apply_subst subst [] tgt in
+    let tgt = NCicUntrusted.apply_subst status subst [] tgt in
     (* CHECK che sia unificabile mancante *)
     let rec count_prod = function
       | NCic.Prod (_,_,x) -> 1 + count_prod x
@@ -161,7 +161,7 @@ let src_tgt_cpos_arity_of_ty_id_src_tgt status ty id src tgt =
     let arity = count_prod tgt in
     let tgt=
       if arity > 0 then cleanup_funclass_skel tgt 
-      else cleanup_skel () tgt 
+      else cleanup_skel status () tgt 
     in
      status, tgt, arity
   in
@@ -217,32 +217,32 @@ let close_graph name t s d to_s from_d p a status =
                 NCicUnification.unify status metasenv subst [] a b)
             (metasenv,[]) upl
          in
-         let bo = NCicUntrusted.apply_subst subst [] bo in
-         let p = NCicUntrusted.apply_subst subst [] p in
-         let metasenv = NCicUntrusted.apply_subst_metasenv subst metasenv in
-         let metasenv = toposort metasenv in
-         let bo = close_in_context bo metasenv in
+         let bo = NCicUntrusted.apply_subst status subst [] bo in
+         let p = NCicUntrusted.apply_subst status subst [] p in
+         let metasenv = NCicUntrusted.apply_subst_metasenv status subst metasenv in
+         let metasenv = toposort status metasenv in
+         let bo = close_in_context status bo metasenv in
          let pos = 
            match p with 
            | NCic.Meta (p,_) -> pos_in_list p (List.map fst metasenv) 
            | t -> raise Stop
          in
-         let ty = NCicTypeChecker.typeof ~metasenv:[] ~subst:[] [] bo in
-         let src,tgt = src_tgt_of_ty_cpos_arity ty pos arity in
+         let ty = NCicTypeChecker.typeof status ~metasenv:[] ~subst:[] [] bo in
+         let src,tgt = src_tgt_of_ty_cpos_arity status ty pos arity in
          let src = only_head src in
          let tgt = only_head tgt in
          debug (lazy(
            "composite " ^ name ^ ": "^
-           NCicPp.ppterm ~metasenv:[] ~subst:[] ~context:[] bo ^ " : " ^
-           NCicPp.ppterm ~metasenv:[] ~subst:[] ~context:[] ty ^ " as " ^
-           NCicPp.ppterm ~metasenv:[] ~subst:[] ~context:[] src ^ " ===> " ^
-           NCicPp.ppterm ~metasenv:[] ~subst:[] ~context:[] tgt ^
+           status#ppterm ~metasenv:[] ~subst:[] ~context:[] bo ^ " : " ^
+           status#ppterm ~metasenv:[] ~subst:[] ~context:[] ty ^ " as " ^
+           status#ppterm ~metasenv:[] ~subst:[] ~context:[] src ^ " ===> " ^
+           status#ppterm ~metasenv:[] ~subst:[] ~context:[] tgt ^
            " cpos=" ^ string_of_int pos ^ " arity=" ^ string_of_int arity));
          let uri = fresh_uri status name ".con" in
          let obj_kind = NCic.Constant 
            ([],name,Some bo,ty,(`Generated,`Definition,`Coercion arity)) 
          in
-         let height = NCicTypeChecker.height_of_obj_kind uri [] obj_kind in
+         let height = NCicTypeChecker.height_of_obj_kind status uri [] obj_kind in
          let obj = uri,height,[],[],obj_kind in
          let c = 
            NCic.Const 
@@ -292,11 +292,11 @@ let record_ncoercion =
   ~refresh_uri_in_reference ~alias_only status
  =
   if not alias_only then
-   List.fold_right (aux ~refresh_uri_in_term) l status
+   List.fold_right (aux ~refresh_uri_in_term:(refresh_uri_in_term (status:>NCic.status))) l status
   else
    status
  in
-  GrafiteTypes.Serializer.register#run "ncoercion" aux_l 
+  GrafiteTypes.Serializer.register#run "ncoercion" aux_l
 ;;
 
 let basic_eval_and_record_ncoercion infos status =
@@ -307,8 +307,8 @@ let basic_eval_and_record_ncoercion infos status =
 let basic_eval_and_record_ncoercion_from_t_cpos_arity 
       status (name,t,cpos,arity) 
 =
-  let ty = NCicTypeChecker.typeof ~subst:[] ~metasenv:[] [] t in
-  let src,tgt = src_tgt_of_ty_cpos_arity ty cpos arity in
+  let ty = NCicTypeChecker.typeof status ~subst:[] ~metasenv:[] [] t in
+  let src,tgt = src_tgt_of_ty_cpos_arity status ty cpos arity in
   let status, uris =
    basic_eval_and_record_ncoercion (name,t,src,tgt,cpos,arity) status
   in
@@ -319,11 +319,11 @@ let eval_ncoercion (status: #GrafiteTypes.status) name t ty (id,src) tgt =
  let metasenv,subst,status,ty =
   GrafiteDisambiguate.disambiguate_nterm status None [] [] [] ("",0,ty) in
  assert (metasenv=[]);
- let ty = NCicUntrusted.apply_subst subst [] ty in
+ let ty = NCicUntrusted.apply_subst status subst [] ty in
  let metasenv,subst,status,t =
   GrafiteDisambiguate.disambiguate_nterm status (Some ty) [] [] [] ("",0,t) in
  assert (metasenv=[]);
- let t = NCicUntrusted.apply_subst subst [] t in
+ let t = NCicUntrusted.apply_subst status subst [] t in
  let status, src, tgt, cpos, arity = 
    src_tgt_cpos_arity_of_ty_id_src_tgt status ty id src tgt in
  let status, uris =

@@ -43,7 +43,7 @@ class type g_status =
    method disambiguate_db: db
   end
 
-class status =
+class virtual status =
  object (self)
   inherit Interpretations.status
   val disambiguate_db = initial_status
@@ -171,26 +171,26 @@ let fix_instance item l =
 ;;
 
 
-let disambiguate_nterm estatus expty context metasenv subst thing
+let disambiguate_nterm status expty context metasenv subst thing
 =
   let diff, metasenv, subst, cic =
     singleton "first"
       (NCicDisambiguate.disambiguate_term
-        ~rdb:estatus
-        ~aliases:estatus#disambiguate_db.aliases
+        status
+        ~aliases:status#disambiguate_db.aliases
         ~expty 
-        ~universe:(Some estatus#disambiguate_db.multi_aliases)
+        ~universe:(Some status#disambiguate_db.multi_aliases)
         ~lookup_in_library:nlookup_in_library
-        ~mk_choice:(ncic_mk_choice estatus)
+        ~mk_choice:(ncic_mk_choice status)
         ~mk_implicit ~fix_instance
         ~description_of_alias:GrafiteAst.description_of_alias
         ~context ~metasenv ~subst thing)
   in
-  let estatus =
-   set_proof_aliases estatus ~implicit_aliases:true GrafiteAst.WithPreferences
+  let status =
+   set_proof_aliases status ~implicit_aliases:true GrafiteAst.WithPreferences
     diff
   in
-   metasenv, subst, estatus, cic
+   metasenv, subst, status, cic
 ;;
 
 
@@ -198,17 +198,15 @@ type pattern =
   NotationPt.term Disambiguate.disambiguator_input option * 
   (string * NCic.term) list * NCic.term option
 
-let disambiguate_npattern (text, prefix_len, (wanted, hyp_paths, goal_path)) =
-  let interp path = NCicDisambiguate.disambiguate_path path in
+let disambiguate_npattern status (text, prefix_len, (wanted, hyp_paths, goal_path)) =
+  let interp path = NCicDisambiguate.disambiguate_path status path in
   let goal_path = HExtlib.map_option interp goal_path in
   let hyp_paths = List.map (fun (name, path) -> name, interp path) hyp_paths in
-  let wanted = 
-    match wanted with None -> None | Some x -> Some (text,prefix_len,x)
-  in
+  let wanted = HExtlib.map_option (fun x -> text,prefix_len,x) wanted in
    (wanted, hyp_paths, goal_path)
 ;;
 
-let disambiguate_reduction_kind text prefix_len lexicon_status_ref = function
+let disambiguate_reduction_kind text prefix_len = function
   | `Unfold (Some t) -> assert false (* MATITA 1.0 *)
   | `Normalize
   | `Simpl
@@ -243,7 +241,7 @@ let disambiguate_just disambiguate_term context metasenv =
        metasenv, `Auto params
 ;;
       
-let disambiguate_nobj estatus ?baseuri (text,prefix_len,obj) =
+let disambiguate_nobj status ?baseuri (text,prefix_len,obj) =
   let uri =
    let baseuri = 
      match baseuri with Some x -> x | None -> raise BaseUriNotSetYet
@@ -260,20 +258,19 @@ let disambiguate_nobj estatus ?baseuri (text,prefix_len,obj) =
   let diff, _, _, cic =
    singleton "third"
     (NCicDisambiguate.disambiguate_obj
+      status
       ~lookup_in_library:nlookup_in_library
       ~description_of_alias:GrafiteAst.description_of_alias
-      ~mk_choice:(ncic_mk_choice estatus)
-      ~mk_implicit ~fix_instance
-      ~uri
-      ~rdb:estatus
-      ~aliases:estatus#disambiguate_db.aliases
-      ~universe:(Some estatus#disambiguate_db.multi_aliases) 
+      ~mk_choice:(ncic_mk_choice status)
+      ~mk_implicit ~fix_instance ~uri
+      ~aliases:status#disambiguate_db.aliases
+      ~universe:(Some status#disambiguate_db.multi_aliases) 
       (text,prefix_len,obj)) in
-  let estatus =
-   set_proof_aliases estatus ~implicit_aliases:true GrafiteAst.WithPreferences
+  let status =
+   set_proof_aliases status ~implicit_aliases:true GrafiteAst.WithPreferences
     diff
   in
-   estatus, cic
+   status, cic
 ;;
 
 let disambiguate_cic_appl_pattern status args =
@@ -310,14 +307,14 @@ let disambiguate_cic_appl_pattern status args =
   disambiguate
 ;;
 
-let aliases_for_objs refs =
+let aliases_for_objs status refs =
  List.concat
   (List.map
     (fun nref ->
       let references = NCicLibrary.aliases_of nref in
        List.map
         (fun u ->
-          let name = NCicPp.r2s true u in
+          let name = NCicPp.r2s status true u in
            DisambiguateTypes.Id name,
             GrafiteAst.Ident_alias (name,NReference.string_of_reference u)
         ) references) refs)

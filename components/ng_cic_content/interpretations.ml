@@ -58,12 +58,12 @@ type db = {
     Lazy.t
 }
 
-let initial_db = {
+let initial_db status = {
    counter = -1; 
    pattern32_matrix = [];
    level2_patterns32 = IntMap.empty;
    interpretations = StringMap.empty;
-   compiled32 = lazy (Ncic2astMatcher.Matcher32.compiler [])
+   compiled32 = lazy (Ncic2astMatcher.Matcher32.compiler status [])
 }
 
 class type g_status =
@@ -72,15 +72,17 @@ class type g_status =
     method interp_db: db
   end
  
-class status =
- object
+class virtual status =
+ object(self)
    inherit NCicCoercion.status
-   val interp_db = initial_db  
-   method interp_db = interp_db
-   method set_interp_db v = {< interp_db = v >}
+   val mutable interp_db = None (* mutable only to initialize it :-( *)
+   method interp_db = match interp_db with None -> assert false | Some x -> x
+   method set_interp_db v = {< interp_db = Some v >}
    method set_interp_status
     : 'status. #g_status as 'status -> 'self
-    = fun o -> {< interp_db = o#interp_db >}#set_coercion_status o
+    = fun o -> {< interp_db = Some o#interp_db >}#set_coercion_status o
+   initializer
+    interp_db <- Some (initial_db self)
  end
 
 let idref register_ref =
@@ -144,7 +146,7 @@ let load_patterns32 status t =
  in
   status#set_interp_db
    {status#interp_db with
-     compiled32 = lazy (Ncic2astMatcher.Matcher32.compiler t) }
+     compiled32 = lazy (Ncic2astMatcher.Matcher32.compiler status t) }
 ;;
 
 let add_interpretation status dsc (symbol, args) appl_pattern =
@@ -237,15 +239,15 @@ let nast_of_cic0 status
           idref (Ast.Ident (name,None))
         with Failure "nth" | Invalid_argument "List.nth" -> 
          idref (Ast.Ident ("-" ^ string_of_int (n - List.length context),None)))
-    | NCic.Const r -> idref ~reference:r (Ast.Ident (NCicPp.r2s true r, None))
+    | NCic.Const r -> idref ~reference:r (Ast.Ident (NCicPp.r2s status true r, None))
     | NCic.Meta (n,lc) when List.mem_assoc n subst -> 
         let _,_,t,_ = List.assoc n subst in
-         k ~context (NCicSubstitution.subst_meta lc t)
+         k ~context (NCicSubstitution.subst_meta status lc t)
     | NCic.Meta (n,(s,l)) ->
        (* CSC: qua non dovremmo espandere *)
        let l = NCicUtils.expand_local_context l in
         idref (Ast.Meta
-         (n, List.map (fun x -> Some (k ~context (NCicSubstitution.lift s x))) l))
+         (n, List.map (fun x -> Some (k ~context (NCicSubstitution.lift status s x))) l))
     | NCic.Sort NCic.Prop -> idref (Ast.Sort `Prop)
     | NCic.Sort NCic.Type [] -> idref (Ast.Sort `Set)
     | NCic.Sort NCic.Type ((`Type,u)::_) -> 
@@ -272,9 +274,9 @@ let nast_of_cic0 status
           ty, k ~context:((n,NCic.Decl s)::context) t))
     | NCic.Appl (NCic.Meta (n,lc) :: args) when List.mem_assoc n subst -> 
        let _,_,t,_ = List.assoc n subst in
-       let hd = NCicSubstitution.subst_meta lc t in
+       let hd = NCicSubstitution.subst_meta status lc t in
         k ~context
-         (NCicReduction.head_beta_reduce ~upto:(List.length args)
+         (NCicReduction.head_beta_reduce status ~upto:(List.length args)
            (match hd with
            | NCic.Appl l -> NCic.Appl (l@args)
            | _ -> NCic.Appl (hd :: args)))
@@ -315,7 +317,7 @@ let nast_of_cic0 status
         let case_indty =
          name, None(*CSC Some (UriManager.uri_of_string puri_str)*) in
         let constructors, leftno =
-         let _,leftno,tys,_,n = NCicEnvironment.get_checked_indtys r in
+         let _,leftno,tys,_,n = NCicEnvironment.get_checked_indtys status r in
          let _,_,_,cl  = List.nth tys n in
           cl,leftno
         in
@@ -388,11 +390,12 @@ let rec nast_of_cic1 status ~idref ~output_type ~metasenv ~subst ~context term =
       idref ast (*Ast.AttributedTerm (`IdRef (idref term), ast)*)
 ;;
 
-let nmap_sequent0 status ~idref ~metasenv ~subst (i,(n,context,ty)) =
+let nmap_context0 status ~idref ~metasenv ~subst context =
  let module K = Content in
  let nast_of_cic =
-  nast_of_cic1 status ~idref ~output_type:`Term ~metasenv ~subst in
- let context',_ =
+  nast_of_cic1 status ~idref ~output_type:`Term ~metasenv ~subst
+ in
+ fst (
   List.fold_right
    (fun item (res,context) ->
      match item with
@@ -418,17 +421,15 @@ let nmap_sequent0 status ~idref ~metasenv ~subst (i,(n,context,ty)) =
                K.def_term = nast_of_cic ~context t;
                K.def_type = nast_of_cic ~context ty
              })::res,item::context
-   ) context ([],[])
- in
-  ("-1",i,context',nast_of_cic ~context ty)
+   ) context ([],[]))
 ;;
 
-let nmap_sequent status ~metasenv ~subst conjecture =
+let nmap_sequent0 status ~idref ~metasenv ~subst (i,(n,context,ty)) =
  let module K = Content in
- let ids_to_refs = Hashtbl.create 211 in
- let register_ref = Hashtbl.add ids_to_refs in
-  nmap_sequent0 status ~idref:(idref register_ref) ~metasenv ~subst conjecture,
-  ids_to_refs
+ let nast_of_cic =
+  nast_of_cic1 status ~idref ~output_type:`Term ~metasenv ~subst in
+ let context' = nmap_context0 status ~idref ~metasenv ~subst context in
+  ("-1",i,context',nast_of_cic ~context ty)
 ;;
 
 let object_prefix = "obj:";;
@@ -501,11 +502,8 @@ let build_decl_item seed id n s =
       }
 ;;
 
-let nmap_obj status (uri,_,metasenv,subst,kind) =
+let nmap_obj0 status ~idref (uri,_,metasenv,subst,kind) =
   let module K = Content in
-  let ids_to_refs = Hashtbl.create 211 in
-  let register_ref = Hashtbl.add ids_to_refs in
-  let idref = idref register_ref in
   let nast_of_cic =
    nast_of_cic1 status ~idref ~output_type:`Term ~metasenv ~subst in
   let seed = ref 0 in
@@ -550,38 +548,52 @@ let build_fixpoint b seed =
             K.def_term = t;
            }
 in
-  let res =
-   match kind with
-    | NCic.Fixpoint (is_rec, ifl, _) -> 
-         (gen_id object_prefix seed, conjectures,
-            `Joint
-              { K.joint_id = gen_id joint_prefix seed;
-                K.joint_kind = 
-                   if is_rec then 
-                        `Recursive (List.map (fun (_,_,i,_,_) -> i) ifl)
-                   else `CoRecursive;
-                K.joint_defs = List.map (build_fixpoint is_rec seed) ifl
-              }) 
-    | NCic.Inductive (is_ind, lno, itl, _) ->
-         (gen_id object_prefix seed, conjectures,
-            `Joint
-              { K.joint_id = gen_id joint_prefix seed;
-                K.joint_kind = 
-                   if is_ind then `Inductive lno else `CoInductive lno;
-                K.joint_defs = List.map (build_inductive is_ind seed) itl
-              }) 
-    | NCic.Constant (_,_,Some bo,ty,_) ->
-       let ty = nast_of_cic ~context:[] ty in
-       let bo = nast_of_cic ~context:[] bo in
-        (gen_id object_prefix seed, conjectures,
-          `Def (K.Const,ty,
-            build_def_item seed [] [] (get_id bo) (NUri.name_of_uri uri) bo ty))
-    | NCic.Constant (_,_,None,ty,_) ->
-       let ty = nast_of_cic ~context:[] ty in
-         (gen_id object_prefix seed, conjectures,
-           `Decl (K.Const,
-             (*CSC: ??? get_id ty here used to be the id of the axiom! *)
-             build_decl_item seed (get_id ty) (NUri.name_of_uri uri) ty))
- in
-  res,ids_to_refs
+ match kind with
+  | NCic.Fixpoint (is_rec, ifl, _) -> 
+       (gen_id object_prefix seed, conjectures,
+          `Joint
+            { K.joint_id = gen_id joint_prefix seed;
+              K.joint_kind = 
+                 if is_rec then 
+                      `Recursive (List.map (fun (_,_,i,_,_) -> i) ifl)
+                 else `CoRecursive;
+              K.joint_defs = List.map (build_fixpoint is_rec seed) ifl
+            }) 
+  | NCic.Inductive (is_ind, lno, itl, _) ->
+       (gen_id object_prefix seed, conjectures,
+          `Joint
+            { K.joint_id = gen_id joint_prefix seed;
+              K.joint_kind = 
+                 if is_ind then `Inductive lno else `CoInductive lno;
+              K.joint_defs = List.map (build_inductive is_ind seed) itl
+            }) 
+  | NCic.Constant (_,_,Some bo,ty,_) ->
+     let ty = nast_of_cic ~context:[] ty in
+     let bo = nast_of_cic ~context:[] bo in
+      (gen_id object_prefix seed, conjectures,
+        `Def (K.Const,ty,
+          build_def_item seed [] [] (get_id bo) (NUri.name_of_uri uri) bo ty))
+  | NCic.Constant (_,_,None,ty,_) ->
+     let ty = nast_of_cic ~context:[] ty in
+       (gen_id object_prefix seed, conjectures,
+         `Decl (K.Const,
+           (*CSC: ??? get_id ty here used to be the id of the axiom! *)
+           build_decl_item seed (get_id ty) (NUri.name_of_uri uri) ty))
 ;;
+
+let with_idrefs foo status obj =
+ let ids_to_refs = Hashtbl.create 211 in
+ let register_ref = Hashtbl.add ids_to_refs in
+  foo status ~idref:(idref register_ref) obj, ids_to_refs
+;;
+
+let nmap_obj status = with_idrefs nmap_obj0 status
+
+let nmap_sequent status ~metasenv ~subst =
+ with_idrefs (nmap_sequent0 ~metasenv ~subst) status
+
+let nmap_term status ~metasenv ~subst ~context =
+ with_idrefs (nast_of_cic1 ~output_type:`Term ~metasenv ~subst ~context) status
+
+let nmap_context status ~metasenv ~subst =
+ with_idrefs (nmap_context0 ~metasenv ~subst) status

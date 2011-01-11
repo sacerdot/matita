@@ -29,6 +29,13 @@ exception AlreadyLoaded of string Lazy.t
 exception FailureCompiling of string * exn
 exception CircularDependency of string
 
+class status:
+ string ->
+  object
+   inherit GrafiteTypes.status
+   inherit ApplyTransformation.status
+  end
+
 val get_ast:
  GrafiteTypes.status -> include_paths:string list -> GrafiteParser.parsable ->
   GrafiteAst.statement

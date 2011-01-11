@@ -109,7 +109,7 @@ let map_space f l =
   ~sep:[space] (List.map (fun x -> [f x]) l)
 ;;
 
-let pp_ast0 t k =
+let pp_ast0 status t k =
   let rec aux =
     function
     | Ast.Appl ts ->
@@ -289,7 +289,7 @@ let pp_ast0 t k =
   and special_k = function
     | Ast.AttributedTerm (attrs, t) -> Ast.AttributedTerm (attrs, k t)
     | t ->
-        prerr_endline ("unexpected special: " ^ NotationPp.pp_term t);
+        prerr_endline ("unexpected special: " ^ NotationPp.pp_term status t);
         assert false
   in
   aux t
@@ -317,8 +317,9 @@ class type g_status =
     method content_pres_db: db
   end
  
-class status =
+class virtual status =
  object
+   inherit NCic.status
    val content_pres_db = initial_db  
    method content_pres_db = content_pres_db
    method set_content_pres_db v = {< content_pres_db = v >}
@@ -459,7 +460,7 @@ let rec pp_ast1 status term =
   let rec pp_value = function
     | NotationEnv.NumValue _ as v -> v
     | NotationEnv.StringValue _ as v -> v
-(*     | NotationEnv.TermValue t when t == term -> NotationEnv.TermValue (pp_ast0 t pp_ast1) *)
+(*     | NotationEnv.TermValue t when t == term -> NotationEnv.TermValue (pp_ast0 status t pp_ast1) *)
     | NotationEnv.TermValue t -> NotationEnv.TermValue (pp_ast1 status t)
     | NotationEnv.OptValue None as v -> v
     | NotationEnv.OptValue (Some v) -> 
@@ -476,7 +477,7 @@ let rec pp_ast1 status term =
       Ast.AttributedTerm (attrs, pp_ast1 status term')
   | _ ->
       (match get_compiled21 status term with
-      | None -> pp_ast0 term (pp_ast1 status)
+      | None -> pp_ast0 status term (pp_ast1 status)
       | Some (env, ctors, pid) ->
           let idrefs =
             List.flatten (List.map NotationUtil.get_idrefs ctors)
@@ -494,7 +495,7 @@ let load_patterns21 status t =
 let pp_ast status ast =
   debug_print (lazy "pp_ast <-");
   let ast' = pp_ast1 status ast in
-  debug_print (lazy ("pp_ast -> " ^ NotationPp.pp_term ast'));
+  debug_print (lazy ("pp_ast -> " ^ NotationPp.pp_term status ast'));
   ast'
 
 let fill_pos_info l1_pattern = l1_pattern
@@ -573,7 +574,7 @@ let tail_names names env =
   in
   aux [] env
 
-let instantiate_level2 env term =
+let instantiate_level2 status env term =
 (*   prerr_endline ("istanzio: " ^ NotationPp.pp_term term); *)
   let fresh_env = ref [] in
   let lookup_fresh_name n =
@@ -666,7 +667,7 @@ let instantiate_level2 env term =
             | _ ->
                 prerr_endline (sprintf
                   "lookup of %s in env %s did not return an optional value"
-                  name (NotationPp.pp_env env));
+                  name (NotationPp.pp_env status env));
                 assert false))
     | Ast.Fold (`Left, base_pattern, names, rec_pattern) ->
         let acc_name = List.hd names in (* names can't be empty, cfr. parser *)

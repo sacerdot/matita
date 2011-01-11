@@ -25,7 +25,7 @@ val unify :
 
 (* this should be moved elsewhere *)
 val fix_sorts: 
-  NCic.metasenv -> NCic.substitution -> 
+  #NCic.status -> NCic.metasenv -> NCic.substitution -> 
     NCic.term -> NCic.metasenv * NCic.term
 
 (* delift_type_wrt_terms st m s c t args
@@ -38,11 +38,8 @@ val delift_type_wrt_terms:
   NCic.term -> NCic.term list -> 
    NCic.metasenv * NCic.substitution * NCic.term
 
-val sortfy :
-    exn ->
-    NCic.metasenv ->
-    NCic.substitution ->
-    NCic.context ->
-    NCic.term -> NCic.metasenv * NCic.substitution * NCic.term
+val sortfy :#
+ NCic.status -> exn -> NCic.metasenv -> NCic.substitution -> NCic.context ->
+  NCic.term -> NCic.metasenv * NCic.substitution * NCic.term
 
 val debug : bool ref

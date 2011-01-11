@@ -23,21 +23,15 @@
  * http://helm.cs.unibo.it/
  *)
 
-  (**
+  (** 
    * @param map_unicode_to_tex if true converts multibye unicode sequences to
    *  TeX-like macros (when possible). Default: true
-   * @return rows list of rows *)
-val render_to_strings: 
-  map_unicode_to_tex:bool ->
-  (CicNotationPres.boxml_markup Mpresentation.mpres Box.box list -> CicNotationPres.boxml_markup) -> 
-  int -> CicNotationPres.markup -> string list
-
-  (** helper function
-   * @param map_unicode_to_tex as above
-   * @return s, concatenation of the return value of render_to_strings above
-   * with newlines as separators *)
+   * @param size
+   * @returns hyperlinks and text
+   *)
 val render_to_string:
   map_unicode_to_tex:bool ->
   (CicNotationPres.boxml_markup Mpresentation.mpres Box.box list -> CicNotationPres.boxml_markup) -> 
-  int -> CicNotationPres.markup -> string
+  int -> CicNotationPres.markup ->
+   (int * int * string) list * string
 

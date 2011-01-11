@@ -33,17 +33,21 @@
 (*                                                                         *)
 (***************************************************************************)
 
+val use_high_level_pretty_printer: bool ref
+
 class status :
  object
+  inherit NCic.cstatus
   inherit Interpretations.status
   inherit TermContentPres.status
  end
 
 val ntxt_of_cic_sequent:
+ metasenv:NCic.metasenv -> subst:NCic.substitution -> (* metasenv,substitution*)
  map_unicode_to_tex:bool -> int -> #status ->
- NCic.metasenv -> NCic.substitution ->          (* metasenv, substitution *)
  int * NCic.conjecture ->                       (* sequent *)
-  string                                        (* text *)
+  (int * int * string) list * string            (* hyperlinks, text *)
 
 val ntxt_of_cic_object:
- map_unicode_to_tex:bool -> int -> #status -> NCic.obj -> string
+ map_unicode_to_tex:bool -> int -> #status -> NCic.obj ->
+  (int * int * string) list * string            (* hyperlinks, text *)

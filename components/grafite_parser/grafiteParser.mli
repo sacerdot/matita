@@ -31,7 +31,7 @@ class type g_status =
   method parser_db: db
  end
 
-class status :
+class virtual status :
  object('self)
   inherit g_status
   inherit CicNotationParser.status

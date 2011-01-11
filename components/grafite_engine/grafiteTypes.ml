@@ -31,7 +31,7 @@ exception Command_error of string
 
 let command_error msg = raise (Command_error msg)
 
-class status = fun (b : string) ->
+class virtual status = fun (b : string) ->
  let fake_obj =
   NUri.uri_of_string "cic:/matita/dummy.decl",0,[],[],
    NCic.Constant([],"",None,NCic.Implicit `Closed,(`Provided,`Theorem,`Regular))

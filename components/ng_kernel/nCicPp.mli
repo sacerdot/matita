@@ -11,34 +11,13 @@
 
 (* $Id$ *)
 
-val set_head_beta_reduce: (upto:int -> NCic.term -> NCic.term) -> unit
-val set_get_obj: (NUri.uri -> NCic.obj) -> unit
-
-val r2s: bool -> NReference.reference -> string
+val r2s: #NCic.status -> bool -> NReference.reference -> string
 
 val string_of_flavour: NCic.def_flavour -> string
 
-val ppterm: 
-  context:NCic.context -> 
-  subst:NCic.substitution -> 
-  metasenv:NCic.metasenv ->
-  ?margin:int ->
-  ?inside_fix:bool ->
-   NCic.term -> string
-
-val ppcontext:
-  ?sep:string ->
-  subst:NCic.substitution -> 
-  metasenv:NCic.metasenv ->
-  NCic.context -> string 
-
-val ppmetasenv:
-  subst:NCic.substitution -> NCic.metasenv -> string
-
-val ppsubst:
- metasenv:NCic.metasenv -> ?use_subst:bool -> NCic.substitution -> string
-
-val ppobj: NCic.obj -> string
+(* low-level pretty printer;
+   all methods are meant to be overridden in ApplyTransformation *)
+class status: NCic.cstatus
 
 (* variants that use a formatter 
 module Format : sig

@@ -25,8 +25,9 @@ val fold:
   (NCic.hypothesis -> 'k -> 'k) -> 'k ->
   ('k -> 'a -> NCic.term -> 'a) -> 'a -> NCic.term -> 'a
 val map:
+ #NCic.status ->
  (NCic.hypothesis -> 'k -> 'k) -> 'k ->
  ('k -> NCic.term -> NCic.term) -> NCic.term -> NCic.term
 
-val set_head_beta_reduce: (upto:int -> NCic.term -> NCic.term) -> unit
+val set_head_beta_reduce: (NCic.status -> upto:int -> NCic.term -> NCic.term) -> unit
 

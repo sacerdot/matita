@@ -51,6 +51,9 @@ let choose_rendering size (best, other) =
   let best_size, _ = best in
   if size >= best_size then best else other
 
+(* merge_columns [ X1 ;  X3 ] returns X1
+                   X2    X4           X2 X3
+                                         X4 *)
 let merge_columns sep cols =
   let sep_len = String.length sep in
   let indent = ref 0 in
@@ -242,6 +245,8 @@ let render_to_strings ~map_unicode_to_tex choose_action size markup =
   snd (aux_mpres markup size)
 
 let render_to_string ~map_unicode_to_tex choose_action size markup =
+ (* CSC: no information about hyperlinks yet *)
+ [],
   String.concat "\n"
     (render_to_strings ~map_unicode_to_tex choose_action size markup)
 

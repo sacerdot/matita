@@ -8,7 +8,6 @@ termContentPres.cmi: cicNotationParser.cmi
 boxPp.cmi: mpresentation.cmi cicNotationPres.cmi box.cmi 
 cicNotationPres.cmi: mpresentation.cmi box.cmi 
 content2pres.cmi: termContentPres.cmi cicNotationPres.cmi 
-sequent2pres.cmi: termContentPres.cmi cicNotationPres.cmi 
 renderingAttrs.cmo: renderingAttrs.cmi 
 renderingAttrs.cmx: renderingAttrs.cmi 
 cicNotationLexer.cmo: cicNotationLexer.cmi 
@@ -37,7 +36,3 @@ content2pres.cmo: termContentPres.cmi renderingAttrs.cmi mpresentation.cmi \
     cicNotationPres.cmi box.cmi content2pres.cmi 
 content2pres.cmx: termContentPres.cmx renderingAttrs.cmx mpresentation.cmx \
     cicNotationPres.cmx box.cmx content2pres.cmi 
-sequent2pres.cmo: termContentPres.cmi mpresentation.cmi cicNotationPres.cmi \
-    box.cmi sequent2pres.cmi 
-sequent2pres.cmx: termContentPres.cmx mpresentation.cmx cicNotationPres.cmx \
-    box.cmx sequent2pres.cmi 

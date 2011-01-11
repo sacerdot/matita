@@ -79,7 +79,8 @@ with type t = NCic.term and type input = NCic.term = struct
   ;;
   
   let compare x y = 
-    if NCicReduction.alpha_eq [] [] [] x y  then 0 
+    (* CSC: NCicPp.status is the best I can put here *)
+    if NCicReduction.alpha_eq (new NCicPp.status) [] [] [] x y  then 0 
     (* if x = y  then 0 *)
     else compare x y
   ;;
@@ -97,7 +98,9 @@ with type t = NCic.term and type input = NCic.term = struct
     | _ -> None
 
   let pp t = 
-    NCicPp.ppterm ~context:C.context ~metasenv:C.metasenv ~subst:C.subst t;;
+    (* CSC: NCicPp.status is the best I can put here *)
+    (new NCicPp.status)#ppterm ~context:C.context
+      ~metasenv:C.metasenv ~subst:C.subst t;;
 
   type input = NCic.term
 
@@ -118,8 +121,9 @@ with type t = NCic.term and type input = NCic.term = struct
 
   let saturate t ty = 
     let sty, _, args = 
-      NCicMetaSubst.saturate ~delta:0 C.metasenv C.subst C.context
-        ty 0
+      (* CSC: NCicPp.status is the best I can put here *)
+      NCicMetaSubst.saturate (new NCicPp.status) ~delta:0 C.metasenv C.subst
+       C.context ty 0
     in
     let proof = 
       if args = [] then Terms.Leaf t 

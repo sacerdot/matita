@@ -66,14 +66,14 @@ let subst_metasenv_and_fix_names status =
   let u,h,metasenv, subst,o = status#obj in
   let o = 
     NCicUntrusted.map_obj_kind ~skip_body:true 
-     (NCicUntrusted.apply_subst subst []) o
+     (NCicUntrusted.apply_subst status subst []) o
   in
-   status#set_obj(u,h,NCicUntrusted.apply_subst_metasenv subst metasenv,subst,o)
+   status#set_obj(u,h,NCicUntrusted.apply_subst_metasenv status subst metasenv,subst,o)
 ;;
 
 (* input: nome della variabile riscritta
  * output: lista dei nomi delle variabili il cui tipo dipende dall'input *)
-let cascade_select_in_ctx ~subst ctx skip iname =
+let cascade_select_in_ctx status ~subst ctx skip iname =
   let lctx, rctx = HExtlib.split_nth (iname - 1) ctx in
   let lctx = List.rev lctx in
   let rec rm_last = function
@@ -85,7 +85,7 @@ let cascade_select_in_ctx ~subst ctx skip iname =
        (fun (acc,context) item -> 
           match item with
             | n,(NCic.Decl s | NCic.Def (s,_)) 
-                  when (not (List.for_all (fun x -> NCicTypeChecker.does_not_occur ~subst context (x-1) x s) acc)
+                  when (not (List.for_all (fun x -> NCicTypeChecker.does_not_occur status ~subst context (x-1) x s) acc)
                    && not (List.mem n skip)) ->
                 List.iter (fun m -> pp (lazy ("acc has " ^ (string_of_int m)))) acc;
                 pp (lazy ("acc occurs in the type of " ^ n));
@@ -95,7 +95,7 @@ let cascade_select_in_ctx ~subst ctx skip iname =
     let indices = rm_last indices in
     let res = List.map (fun n -> let s,_ = List.nth ctx (n-1) in s) indices in
     List.iter (fun n -> pp (lazy n)) res;
-    pp (lazy (NCicPp.ppcontext ~metasenv:[] ~subst ctx));
+    pp (lazy (status#ppcontext ~metasenv:[] ~subst ctx));
     res, indices
 ;;
 
@@ -250,7 +250,7 @@ let mk_discriminator it ~use_jmeq nleft xyty status =
   let principle = NotationPt.Binder (`Lambda, (mk_id "x", Some xyty),
                         NotationPt.Binder (`Lambda, (mk_id "y", Some xyty), outer))
   in
-  pp (lazy ("discriminator = " ^ (NotationPp.pp_term principle)));
+  pp (lazy ("discriminator = " ^ (NotationPp.pp_term status principle)));
   
   status, principle 
 ;;
@@ -315,8 +315,8 @@ let discriminate_tac ~context cur_eq status =
       | NCic.Const (NReference.Ref (uri, NReference.Ind (_,indtyno,_)) as r) 
       | NCic.Appl (NCic.Const 
           (NReference.Ref (uri, NReference.Ind (_,indtyno,_)) as r)::_) -> 
-        uri, indtyno, NCicEnvironment.get_checked_indtys r
-      | _ -> pp (lazy ("discriminate: indty ="  ^ NCicPp.ppterm
+        uri, indtyno, NCicEnvironment.get_checked_indtys status r
+      | _ -> pp (lazy ("discriminate: indty ="  ^ status#ppterm
                   ~metasenv:[] ~subst:[] ~context:[] it)) ; assert false in
     let _,leftno,its,_,_ = its in
     status, leftno, List.nth its indtyno, use_jmeq
@@ -338,7 +338,7 @@ let discriminate_tac ~context cur_eq status =
                           NotationPt.Binder (`Forall, (mk_id "e",
                            Some (mk_appl [mk_id "eq";NotationPt.Implicit `JustOne; mk_id "x"; mk_id "y"])),
                            mk_appl [discr; mk_id "x"; mk_id "y"(*;mk_id "e"*)])))) in
-     let status = print_tac (lazy ("cut_term = "^ NotationPp.pp_term cut_term)) status in
+     let status = print_tac (lazy ("cut_term = "^ NotationPp.pp_term status cut_term)) status in
       NTactics.cut_tac ("",0, cut_term)
       status);
     NTactics.branch_tac;
@@ -372,7 +372,7 @@ let saturate_skip status context skip =
          in match ix with
          | None -> acc
 	 | Some (i,_) -> 
-            fst (cascade_select_in_ctx ~subst:(get_subst status) context [] (i+1)) @ acc) skip skip)
+            fst (cascade_select_in_ctx status ~subst:(get_subst status) context [] (i+1)) @ acc) skip skip)
 ;;
       
 let subst_tac ~context ~dir skip cur_eq =
@@ -395,8 +395,8 @@ let subst_tac ~context ~dir skip cur_eq =
     let names_to_gen, _ = 
       match var with 
       | NCic.Rel var ->
-        cascade_select_in_ctx ~subst:(get_subst status) context skip (var+cur_eq)
-      | _ -> cascade_select_in_ctx ~subst:(get_subst status) context skip cur_eq in
+        cascade_select_in_ctx status ~subst:(get_subst status) context skip (var+cur_eq)
+      | _ -> cascade_select_in_ctx status ~subst:(get_subst status) context skip cur_eq in
     let names_to_gen = List.filter (fun n -> n <> eq_name) names_to_gen in
     if (List.exists (fun x -> List.mem x skip) names_to_gen)
       then oldstatus
@@ -458,7 +458,7 @@ let clearid_tac ~context skip cur_eq =
   let streicher_id = mk_id "streicherK"
   in
     let names_to_gen, _ = 
-      cascade_select_in_ctx ~subst:(get_subst status) context skip cur_eq in
+      cascade_select_in_ctx status ~subst:(get_subst status) context skip cur_eq in
     let names_to_gen = names_to_gen @ [eq_name] in
     let gen_tac x = 
       NTactics.generalize_tac 
@@ -482,7 +482,7 @@ let clearid_tac ~context skip cur_eq =
   let streicher_id = mk_id "streicherK"
   in
     let names_to_gen, _ = 
-      cascade_select_in_ctx ~subst:(get_subst status) context skip cur_eq in
+      cascade_select_in_ctx status ~subst:(get_subst status) context skip cur_eq in
     let names_to_gen = names_to_gen (* @ [eq_name]*) in
     let gen_tac x = 
       NTactics.generalize_tac 
@@ -516,7 +516,7 @@ let get_ctx st goal =
 let select_eq ctx acc domain status goal =
   let classify ~subst ctx' l r =
     (* FIXME: metasenv *)
-    if NCicReduction.are_convertible ~metasenv:[] ~subst ctx' l r 
+    if NCicReduction.are_convertible status ~metasenv:[] ~subst ctx' l r 
       then status, `Identity
       else status, (match hd_of_term l, hd_of_term r with
         | NCic.Const (NReference.Ref (_,NReference.Con (_,ki,nleft)) as kref),
@@ -524,15 +524,15 @@ let select_eq ctx acc domain status goal =
             if ki != kj then `Discriminate (0,true)
             else
               let rit = NReference.mk_indty true kref in
-              let _,_,its,_,itno = NCicEnvironment.get_checked_indtys rit in 
+              let _,_,its,_,itno = NCicEnvironment.get_checked_indtys status rit in 
               let it = List.nth its itno in
               let newprods = nargs it nleft (ki-1) in
               `Discriminate (newprods, false) 
         | NCic.Rel j, _  
-            when NCicTypeChecker.does_not_occur ~subst ctx' (j-1) j r
+            when NCicTypeChecker.does_not_occur status ~subst ctx' (j-1) j r
               && l = NCic.Rel j -> `Subst `LeftToRight
         | _, NCic.Rel j 
-            when NCicTypeChecker.does_not_occur ~subst ctx' (j-1) j l 
+            when NCicTypeChecker.does_not_occur status ~subst ctx' (j-1) j l 
               && r = NCic.Rel j -> `Subst `RightToLeft
         | (NCic.Rel _, _ | _, NCic.Rel _ ) -> `Cycle (* could be a blob too... *)
         | _ -> `Blob) in
@@ -545,14 +545,14 @@ let select_eq ctx acc domain status goal =
           (let _,ctx_ty = HExtlib.split_nth index ctx in 
            let status, ty = NTacStatus.whd status ctx_ty (mk_cic_term ctx_ty ty) in
            let status, ty = term_of_cic_term status ty ctx_ty in
-           pp (lazy (Printf.sprintf "select_eq tries %s" (NCicPp.ppterm ~context:ctx_ty ~subst:[] ~metasenv:[] ty)));
+           pp (lazy (Printf.sprintf "select_eq tries %s" (status#ppterm ~context:ctx_ty ~subst:[] ~metasenv:[] ty)));
            let status, kind = match ty with
            | NCic.Appl [NCic.Const (NReference.Ref (u,_)) ;_;l;r] 
                when NUri.name_of_uri u = "eq" ->
                classify ~subst:(get_subst status) ctx_ty l r
            | NCic.Appl [NCic.Const (NReference.Ref (u,_)) ;lty;l;rty;r]
                when NUri.name_of_uri u = "jmeq" && 
-                 NCicReduction.are_convertible ~metasenv:[] 
+                 NCicReduction.are_convertible status ~metasenv:[] 
                    ~subst:(get_subst status) ctx_ty lty rty
                -> classify ~subst:(get_subst status) ctx_ty l r
            | _ -> status, `NonEq 
@@ -582,7 +582,7 @@ let rec destruct_tac0 nprods acc domain skip status goal =
   pp (lazy ("destruct: acc is " ^ String.concat "," acc ));
   match selection, kind with
   | None, _ -> 
-    pp (lazy (Printf.sprintf "destruct: nprods is %d, no selection, context is %s" nprods (NCicPp.ppcontext ~metasenv:[] ~subst ctx)));
+    pp (lazy (Printf.sprintf "destruct: nprods is %d, no selection, context is %s" nprods (status#ppcontext ~metasenv:[] ~subst ctx)));
       if nprods > 0  then
         let fresh = mk_fresh_name ctx 'e' 0 in 
         let status' = NTactics.exec (NTactics.intro_tac fresh) status goal in
@@ -590,7 +590,7 @@ let rec destruct_tac0 nprods acc domain skip status goal =
       else
         status
   | Some cur_eq, `Discriminate (newprods,conflict) -> 
-    pp (lazy (Printf.sprintf "destruct: discriminate - nprods is %d, selection is %d, context is %s" nprods cur_eq (NCicPp.ppcontext ~metasenv:[] ~subst ctx)));
+    pp (lazy (Printf.sprintf "destruct: discriminate - nprods is %d, selection is %d, context is %s" nprods cur_eq (status#ppcontext ~metasenv:[] ~subst ctx)));
       let status' = NTactics.exec (discriminate_tac ~context:ctx cur_eq) status goal in
       if conflict then status'
       else 
@@ -600,9 +600,9 @@ let rec destruct_tac0 nprods acc domain skip status goal =
              skip 
              status' (get_newgoal status status' goal)
   | Some cur_eq, `Subst dir ->
-    pp (lazy (Printf.sprintf "destruct: subst - nprods is %d, selection is %d, context is %s" nprods cur_eq (NCicPp.ppcontext ~metasenv:[] ~subst ctx)));
+    pp (lazy (Printf.sprintf "destruct: subst - nprods is %d, selection is %d, context is %s" nprods cur_eq (status#ppcontext ~metasenv:[] ~subst ctx)));
     let status' = NTactics.exec (subst_tac ~context:ctx ~dir skip cur_eq) status goal in
-      pp (lazy (Printf.sprintf " ctx after subst = %s" (NCicPp.ppcontext ~metasenv:[] ~subst (get_ctx status' (get_newgoal status status' goal)))));
+      pp (lazy (Printf.sprintf " ctx after subst = %s" (status#ppcontext ~metasenv:[] ~subst (get_ctx status' (get_newgoal status status' goal)))));
     let eq_name,_ = List.nth ctx (cur_eq-1) in
     let newgoal = get_newgoal status status' goal in
     let has_cleared = 
@@ -615,7 +615,7 @@ let rec destruct_tac0 nprods acc domain skip status goal =
     let domain = rm_eq has_cleared domain in
       destruct_tac0 nprods acc domain skip status' newgoal
  | Some cur_eq, `Identity ->
-    pp (lazy (Printf.sprintf "destruct: identity - nprods is %d, selection is %d, context is %s" nprods cur_eq (NCicPp.ppcontext ~metasenv:[] ~subst ctx)));
+    pp (lazy (Printf.sprintf "destruct: identity - nprods is %d, selection is %d, context is %s" nprods cur_eq (status#ppcontext ~metasenv:[] ~subst ctx)));
       let eq_name,_ = List.nth ctx (cur_eq-1) in
       let status' = NTactics.exec (clearid_tac ~context:ctx skip cur_eq) status goal in
       let newgoal = get_newgoal status status' goal in
@@ -629,10 +629,10 @@ let rec destruct_tac0 nprods acc domain skip status goal =
       let domain = rm_eq has_cleared domain in
         destruct_tac0 nprods acc domain skip status' newgoal
   | Some cur_eq, `Cycle -> (* TODO, should never happen *)
-    pp (lazy (Printf.sprintf "destruct: cycle - nprods is %d, selection is %d, context is %s" nprods cur_eq (NCicPp.ppcontext ~metasenv:[] ~subst ctx)));
+    pp (lazy (Printf.sprintf "destruct: cycle - nprods is %d, selection is %d, context is %s" nprods cur_eq (status#ppcontext ~metasenv:[] ~subst ctx)));
       assert false
   | Some cur_eq, `Blob ->
-    pp (lazy (Printf.sprintf "destruct: blob - nprods is %d, selection is %d, context is %s" nprods cur_eq (NCicPp.ppcontext ~metasenv:[] ~subst ctx)));
+    pp (lazy (Printf.sprintf "destruct: blob - nprods is %d, selection is %d, context is %s" nprods cur_eq (status#ppcontext ~metasenv:[] ~subst ctx)));
       assert false
   | _ -> assert false
 ;;

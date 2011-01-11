@@ -39,7 +39,7 @@ class type g_status =
   method coerc_db: db
  end
 
-class status =
+class virtual status =
  object
   inherit NCicUnifHint.status
   val db = empty_db
@@ -50,13 +50,13 @@ class status =
    = fun o -> {< db = o#coerc_db >}#set_unifhint_status o
  end
 
-let index_coercion status name c src tgt arity arg =
+let index_coercion (status:#status) name c src tgt arity arg =
   let db_src,db_tgt = status#coerc_db in
   let data = (name,c,arity,arg,src,tgt) in
   debug (lazy ("INDEX:" ^ 
-    NCicPp.ppterm ~metasenv:[] ~subst:[] ~context:[] src ^ " ===> " ^
-    NCicPp.ppterm ~metasenv:[] ~subst:[] ~context:[] tgt ^ "  :=  " ^
-    NCicPp.ppterm ~metasenv:[] ~subst:[] ~context:[] c ^ " " ^ 
+    status#ppterm ~metasenv:[] ~subst:[] ~context:[] src ^ " ===> " ^
+    status#ppterm ~metasenv:[] ~subst:[] ~context:[] tgt ^ "  :=  " ^
+    status#ppterm ~metasenv:[] ~subst:[] ~context:[] c ^ " " ^ 
     string_of_int arg ^ " " ^ string_of_int arity));
   let db_src = DB.index db_src src data in
   let db_tgt = DB.index db_tgt tgt data in
@@ -66,16 +66,16 @@ let index_coercion status name c src tgt arity arg =
 let look_for_coercion status metasenv subst context infty expty =
  let db_src,db_tgt = status#coerc_db in
   match 
-    NCicUntrusted.apply_subst subst context infty, 
-    NCicUntrusted.apply_subst subst context expty 
+    NCicUntrusted.apply_subst status subst context infty, 
+    NCicUntrusted.apply_subst status subst context expty 
   with
   | (NCic.Meta _ | NCic.Appl (NCic.Meta _::_)), 
     (NCic.Meta _ | NCic.Appl (NCic.Meta _::_)) -> [] 
   | infty, expty ->
 
     debug (lazy ("LOOK FOR COERCIONS: " ^ 
-      NCicPp.ppterm ~metasenv ~subst ~context infty ^ "  |===> " ^
-      NCicPp.ppterm ~metasenv ~subst ~context expty));
+      status#ppterm ~metasenv ~subst ~context infty ^ "  |===> " ^
+      status#ppterm ~metasenv ~subst ~context expty));
 
     let src_class = infty :: NCicUnifHint.eq_class_of status infty in
     let tgt_class = expty :: NCicUnifHint.eq_class_of status expty in
@@ -95,36 +95,36 @@ let look_for_coercion status metasenv subst context infty expty =
 
     debug (lazy ("CANDIDATES SRC: " ^ 
       String.concat "," (List.map (fun (name,t,_,_,_,_) ->
-        name ^ " :: " ^ NCicPp.ppterm ~metasenv ~subst ~context t) 
+        name ^ " :: " ^ status#ppterm ~metasenv ~subst ~context t) 
       (DB.Collector.to_list set_src))));
     debug (lazy ("CANDIDATES TGT: " ^ 
       String.concat "," (List.map (fun (name,t,_,_,_,_) ->
-        name ^ " :: " ^ NCicPp.ppterm ~metasenv ~subst ~context t) 
+        name ^ " :: " ^ status#ppterm ~metasenv ~subst ~context t) 
       (DB.Collector.to_list set_tgt))));
 
     let candidates = DB.Collector.inter set_src set_tgt in
 
     debug (lazy ("CANDIDATES: " ^ 
       String.concat "," (List.map (fun (name,t,_,_,_,_) ->
-        name ^ " :: " ^ NCicPp.ppterm ~metasenv ~subst ~context t) 
+        name ^ " :: " ^ status#ppterm ~metasenv ~subst ~context t) 
       candidates)));
 
     List.map
       (fun (name,t,arity,arg,_,_) ->
           let ty =
-            try NCicTypeChecker.typeof ~metasenv:[] ~subst:[] [] t 
+            try NCicTypeChecker.typeof status ~metasenv:[] ~subst:[] [] t 
             with NCicTypeChecker.TypeCheckerFailure s ->
              prerr_endline ("illtyped coercion: "^Lazy.force s);
-             prerr_endline (NCicPp.ppterm ~metasenv:[] ~subst:[] ~context:[] t);
+             prerr_endline (status#ppterm ~metasenv:[] ~subst:[] ~context:[] t);
              assert false
           in
           let ty, metasenv, args = 
-           NCicMetaSubst.saturate ~delta:max_int metasenv subst context ty arity
+           NCicMetaSubst.saturate status ~delta:max_int metasenv subst context ty arity
           in
 
           debug (lazy (
-            NCicPp.ppterm ~metasenv ~subst:[] ~context:[] ty ^ " --- " ^ 
-            NCicPp.ppterm ~metasenv ~subst ~context
+            status#ppterm ~metasenv ~subst:[] ~context:[] ty ^ " --- " ^ 
+            status#ppterm ~metasenv ~subst ~context
             (NCicUntrusted.mk_appl t args) ^ " --- " ^ 
               string_of_int (List.length args) ^ " == " ^ string_of_int arg)); 
              
@@ -150,9 +150,9 @@ let match_coercion status ~metasenv ~subst ~context t =
            | _,NCic.Appl (he::_) -> he
            | _,_ -> t
          in
-         let b = NCicReduction.alpha_eq metasenv subst context p t in
+         let b = NCicReduction.alpha_eq status metasenv subst context p t in
          if not b then None else
-         let ty = NCicTypeChecker.typeof ~metasenv:[] ~subst:[] [] p in
+         let ty = NCicTypeChecker.typeof status ~metasenv:[] ~subst:[] [] p in
          let pis = 
            let rec aux = function NCic.Prod (_,_,t) -> 1+aux t | _ -> 0 in
            aux ty
@@ -163,7 +163,7 @@ let match_coercion status ~metasenv ~subst ~context t =
       ) db)
 ;;
 
-let generate_dot_file status fmt =
+let generate_dot_file (status:#status) fmt =
   let module Pp = GraphvizPp.Dot in
   let src_db, _ = status#coerc_db in
   let edges = ref [] in
@@ -171,7 +171,7 @@ let generate_dot_file status fmt =
      edges := !edges @ 
       List.map
         (fun (name,t,a,g,sk,dk) -> 
-          debug(lazy (let p = NCicPp.ppterm ~metasenv:[] ~context:[]
+          debug(lazy (let p = status#ppterm ~metasenv:[] ~context:[]
                 ~subst:[] in p t ^ " ::: " ^ p sk ^ " |--> " ^ p dk));
           let eq_s= sk::NCicUnifHint.eq_class_of status sk in
           let eq_t= dk::NCicUnifHint.eq_class_of status dk in
@@ -203,7 +203,7 @@ let generate_dot_file status fmt =
       Pp.node (mangle cl) 
       ~attrs:["label",String.concat "\\n"
         (List.map (fun t->
-          NCicPp.ppterm ~metasenv:[] ~subst:[]
+          status#ppterm ~metasenv:[] ~subst:[]
            ~context:[] t ~margin:max_int
         ) cl)]
       fmt)

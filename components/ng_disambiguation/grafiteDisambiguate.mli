@@ -31,7 +31,7 @@ class type g_status =
   method disambiguate_db: db
  end
 
-class status :
+class virtual status :
  object ('self)
   inherit g_status
   inherit Interpretations.status
@@ -50,7 +50,8 @@ val set_proof_aliases:
   (DisambiguateTypes.domain_item * GrafiteAst.alias_spec) list -> 'status
 
 val aliases_for_objs:
-  NUri.uri list -> (DisambiguateTypes.domain_item * GrafiteAst.alias_spec) list
+ #NCic.status -> NUri.uri list ->
+  (DisambiguateTypes.domain_item * GrafiteAst.alias_spec) list
 
 (* args: print function, message (may be empty), status *) 
 val dump_aliases: (string -> unit) -> string -> #status -> unit
@@ -73,7 +74,7 @@ type pattern =
   (string * NCic.term) list * NCic.term option
 
 val disambiguate_npattern:
-  GrafiteAst.npattern Disambiguate.disambiguator_input -> pattern
+ #NCic.status -> GrafiteAst.npattern Disambiguate.disambiguator_input -> pattern
 
 val disambiguate_cic_appl_pattern:
  #status ->

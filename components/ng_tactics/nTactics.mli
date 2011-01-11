@@ -68,11 +68,11 @@ val assert_tac:
   's NTacStatus.tactic
 
 val constructor_tac : 
-        ?num:int -> args:NTacStatus.tactic_term list -> 's NTacStatus.tactic
+ ?num:int -> args:NTacStatus.tactic_term list -> 's NTacStatus.tactic
 
-val atomic_tac :
- (NTacStatus.tac_status -> 'c #NTacStatus.status) ->
-   (#NTacStatus.tac_status as 'f) -> 'f
+val atomic_tac : NTacStatus.tac_status NTacStatus.tactic -> 's NTacStatus.tactic
+ (*(NTacStatus.tac_status -> 'c #NTacStatus.status) ->
+    (#NTacStatus.tac_status as 'f) -> 'f*)
 
 type indtyinfo 
 

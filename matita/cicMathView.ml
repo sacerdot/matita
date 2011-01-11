@@ -34,7 +34,7 @@ let matita_script_current = ref (fun _ -> (assert false : < advance: ?statement:
 let register_matita_script_current f = matita_script_current := f;;
 let get_matita_script_current () = !matita_script_current ();;
 
-type document_element = string
+type document_element = (int * int * string) list * string (* hyperlinks,text *)
 
 class type cicMathView =
 object
@@ -67,10 +67,10 @@ let xref_ds = Gdome.domString "xref"
 
   (** Gdome.element of a MathML document whose rendering should be blank. Used
   * by cicBrowser to render "about:blank" document *)
-let empty_mathml = lazy ""
+let empty_mathml = lazy ([],"")
 
   (** shown for goals closed by side effects *)
-let closed_goal_mathml = lazy "chiuso per side effect..."
+let closed_goal_mathml = lazy ([],"chiuso per side effect...")
 
 (*
 let rec has_maction (elt :Gdome.element) = 
@@ -184,10 +184,17 @@ object (self)
          (Cic.id, Cic.hypothesis) Hashtbl.t *
          (Cic.id, Cic.id option) Hashtbl.t * ('a, 'b) Hashtbl.t * 'c option)*) option -> unit)
   (* dal widget di Luca *)
-  method load_root ~root =
+  method load_root ~root:(hyperlinks,text) =
     self#buffer#delete ~start:(self#buffer#get_iter `START)
     ~stop:(self#buffer#get_iter `END);
-    self#buffer#insert root
+    self#buffer#insert text;
+    let hyperlink_tag = self#buffer#create_tag [`FOREGROUND "green"] in
+     List.iter
+      ( fun (start,stop,(href : string)) ->
+         self#buffer#apply_tag hyperlink_tag
+          ~start:(self#buffer#get_iter (`OFFSET start))
+          ~stop:(self#buffer#get_iter (`OFFSET stop))
+      ) hyperlinks
   method action_toggle = (fun _ -> assert false : document_element -> bool)
   method remove_selections = (() : unit)
   method set_selection = (fun _ -> () : document_element option -> unit)
@@ -591,7 +598,7 @@ object (self)
     let sequent = List.assoc metano metasenv in
     let txt =
      ApplyTransformation.ntxt_of_cic_sequent
-      ~map_unicode_to_tex:false 80 status metasenv subst (metano,sequent)
+      ~map_unicode_to_tex:false 80 status ~metasenv ~subst (metano,sequent)
     in
     (* MATITA 1.0 if BuildTimeConf.debug then begin
       let name =

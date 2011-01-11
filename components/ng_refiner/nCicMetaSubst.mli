@@ -35,6 +35,7 @@ val maxmeta: unit -> int
  * in the term (for occur check).
  *)
 val delift : 
+  #NCic.status ->
   unify:(NCic.metasenv -> NCic.substitution -> NCic.context ->
     NCic.term -> NCic.term -> (NCic.metasenv * NCic.substitution) option) -> 
   NCic.metasenv -> NCic.substitution -> NCic.context -> 
@@ -46,6 +47,7 @@ val delift :
    additional (i.e. l' does not intersects l) positions whose restriction was
    forced because of type dependencies *)
 val restrict: 
+   #NCic.status ->
     NCic.metasenv ->
     NCic.substitution ->
     int -> int list ->
@@ -63,6 +65,7 @@ val extend_meta: NCic.metasenv -> int -> NCic.metasenv * NCic.term
 
 (* returns the resulting type, the metasenv and the arguments *)
 val saturate:
+   #NCic.status ->
     ?delta:int -> NCic.metasenv -> NCic.substitution -> 
     NCic.context -> NCic.term -> int ->
        NCic.term * NCic.metasenv * NCic.term list
@@ -72,4 +75,5 @@ val pack_lc : int * NCic.lc_kind -> int * NCic.lc_kind
 val is_out_scope_tag : NCic.meta_attrs -> bool
 val int_of_out_scope_tag : NCic.meta_attrs -> int
 
-val is_flexible : NCic.context -> subst:NCic.substitution -> NCic.term -> bool
+val is_flexible:
+ #NCic.status -> NCic.context -> subst:NCic.substitution -> NCic.term -> bool

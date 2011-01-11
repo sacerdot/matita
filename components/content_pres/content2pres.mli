@@ -32,9 +32,22 @@
 (*                                                                        *)
 (**************************************************************************)
 
-val ncontent2pres:
+val nterm2pres:
  #TermContentPres.status ->
-  ?skip_initial_lambdas:int -> ?skip_thm_and_qed:bool ->
   ids_to_nrefs:(Content.id, NReference.reference) Hashtbl.t ->
-  NotationPt.term Content.cobj ->
-    CicNotationPres.boxml_markup
+  ?prec:int -> NotationPt.term -> CicNotationPres.boxml_markup
+
+val ncontext2pres:
+ #TermContentPres.status ->
+  ids_to_nrefs:(Content.id, NReference.reference) Hashtbl.t ->
+  NotationPt.term Content.context -> CicNotationPres.boxml_markup
+
+val nobj2pres:
+ #TermContentPres.status ->
+  ids_to_nrefs:(Content.id, NReference.reference) Hashtbl.t ->
+  NotationPt.term Content.cobj -> CicNotationPres.boxml_markup
+
+val nsequent2pres :
+ #TermContentPres.status ->
+  ids_to_nrefs:(Content.id, NReference.reference) Hashtbl.t ->
+  NotationPt.term Content.conjecture -> CicNotationPres.boxml_markup

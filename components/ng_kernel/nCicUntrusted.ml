@@ -14,7 +14,7 @@
 module C = NCic
 module Ref = NReference
 
-let map_term_fold_a g k f a = function
+let map_term_fold_a status g k f a = function
  | C.Meta _ -> assert false
  | C.Implicit _
  | C.Sort _
@@ -32,7 +32,7 @@ let map_term_fold_a g k f a = function
          | C.Appl l :: tl -> C.Appl (l@tl)
          | _ -> C.Appl l1
        in
-        if fire_beta then NCicReduction.head_beta_reduce ~upto t
+        if fire_beta then NCicReduction.head_beta_reduce status ~upto t
         else t
  | C.Prod (n,s,t) as orig ->
      let a,s1 = f k a s in let a,t1 = f (g (n,C.Decl s) k) a t in
@@ -51,7 +51,7 @@ let map_term_fold_a g k f a = function
         else C.Match(r,oty1,t1,pl1)
 ;;
 
-let metas_of_term subst context term =
+let metas_of_term status subst context term =
   let rec aux ctx acc = function
     | NCic.Rel i -> 
          (match HExtlib.list_skip (i-1) ctx with
@@ -60,12 +60,12 @@ let metas_of_term subst context term =
     | NCic.Meta(i,l) -> 
          (try
            let _,_,bo,_ = NCicUtils.lookup_subst i subst in
-           let bo = NCicSubstitution.subst_meta l bo in
+           let bo = NCicSubstitution.subst_meta status l bo in
            aux ctx acc bo
          with NCicUtils.Subst_not_found _ -> 
             let shift, lc = l in
             let lc = NCicUtils.expand_local_context lc in
-            let l = List.map (NCicSubstitution.lift shift) lc in
+            let l = List.map (NCicSubstitution.lift status shift) lc in
             List.fold_left (aux ctx) (i::acc) l)
     | t -> NCicUtils.fold (fun e c -> e::c) ctx aux acc t
   in
@@ -118,7 +118,7 @@ let map_obj_kind ?(skip_body=false) f =
 
 exception Occurr;;
 
-let clean_or_fix_dependent_abstrations ctx t =
+let clean_or_fix_dependent_abstrations status ctx t =
   let occurrs_1 t =
     let rec aux n _ = function
       | NCic.Meta _ -> ()
@@ -155,20 +155,20 @@ let clean_or_fix_dependent_abstrations ctx t =
   | NCic.Lambda (name,s,t) when List.mem name ctx ->
       let name = fresh ctx name in
       NCic.Lambda (name, aux ctx s, aux (name::ctx) t)
-  | t -> NCicUtils.map (fun (e,_) ctx -> e::ctx) ctx aux t
+  | t -> NCicUtils.map status (fun (e,_) ctx -> e::ctx) ctx aux t
   in
     aux (List.map fst ctx) t
 ;;
 
-let rec fire_projection_redex on_args = function
+let rec fire_projection_redex status on_args = function
   | C.Meta _ as t -> t
   | C.Appl(C.Const(Ref.Ref(_,Ref.Fix(fno,rno,_)) as r)::args as ol)as ot->
-      let l= if on_args then List.map (fire_projection_redex true) ol else ol in
+      let l= if on_args then List.map (fire_projection_redex status true) ol else ol in
       let t = if l == ol then ot else C.Appl l in
-      let ifl,(_,_,pragma),_ = NCicEnvironment.get_checked_fixes_or_cofixes r in
+      let ifl,(_,_,pragma),_ = NCicEnvironment.get_checked_fixes_or_cofixes status r in
       let conclude () =
         if on_args then 
-          let l' = HExtlib.sharing_map (fire_projection_redex true) l in
+          let l' = HExtlib.sharing_map (fire_projection_redex status true) l in
           if l == l' then t else C.Appl l'
         else
           t (* ot is the same *) 
@@ -179,32 +179,33 @@ let rec fire_projection_redex on_args = function
         | C.Appl (C.Const(Ref.Ref(_,Ref.Con _))::_) ->
             let _, _, _, _, fbody = List.nth ifl fno in (* fbody is closed! *)
             let t = C.Appl (fbody::List.tl l) in
-            (match NCicReduction.head_beta_reduce ~delta:max_int t with
+            (match NCicReduction.head_beta_reduce status ~delta:max_int t with
              | C.Match (_,_, C.Appl(C.Const(Ref.Ref(_,Ref.Con (_,_,leftno)))
                 ::kargs),[pat])->
                   let _,kargs = HExtlib.split_nth leftno kargs in
-                   fire_projection_redex false 
-                    (NCicReduction.head_beta_reduce 
+                   fire_projection_redex status false 
+                    (NCicReduction.head_beta_reduce status
                       ~delta:max_int (C.Appl (pat :: kargs)))
             | C.Appl(C.Match(_,_,C.Appl(C.Const(Ref.Ref(_,Ref.Con (_,_,leftno)))
                ::kargs),[pat]) :: args) ->
                   let _,kargs = HExtlib.split_nth leftno kargs in
-                   fire_projection_redex false 
-                    (NCicReduction.head_beta_reduce 
+                   fire_projection_redex status false 
+                    (NCicReduction.head_beta_reduce status 
                       ~delta:max_int (C.Appl (pat :: kargs @ args)))
             | _ -> conclude ()) 
         | _ -> conclude ())
-  | t when on_args -> NCicUtils.map (fun _ x -> x) true fire_projection_redex t
+  | t when on_args ->
+     NCicUtils.map status (fun _ x -> x) true (fire_projection_redex status) t
   | t -> t
 ;;
 
-let apply_subst ?(fix_projections=false) subst context t = 
+let apply_subst status ?(fix_projections=false) subst context t = 
  let rec apply_subst subst () =
  function
     NCic.Meta (i,lc) ->
      (try
        let _,_,t,_ = NCicUtils.lookup_subst i subst in
-       let t = NCicSubstitution.subst_meta lc t in
+       let t = NCicSubstitution.subst_meta status lc t in
         apply_subst subst () t
       with
        NCicUtils.Subst_not_found j when j = i ->
@@ -214,15 +215,15 @@ let apply_subst ?(fix_projections=false) subst context t =
             NCic.Meta
              (i,(0,NCic.Ctx
                  (List.map (fun t ->
-                   apply_subst subst () (NCicSubstitution.lift n t)) l))))
-  | t -> NCicUtils.map (fun _ () -> ()) () (apply_subst subst) t
+                   apply_subst subst () (NCicSubstitution.lift status n t)) l))))
+  | t -> NCicUtils.map status (fun _ () -> ()) () (apply_subst subst) t
  in
- (if fix_projections then fire_projection_redex true else fun x -> x)
-    (clean_or_fix_dependent_abstrations context (apply_subst subst () t))
+ (if fix_projections then fire_projection_redex status true else fun x -> x)
+    (clean_or_fix_dependent_abstrations status context (apply_subst subst () t))
 ;;
 
-let apply_subst_context ~fix_projections subst context =
-  let apply_subst = apply_subst ~fix_projections in
+let apply_subst_context status ~fix_projections subst context =
+  let apply_subst = apply_subst status ~fix_projections in
   let rec aux c = function 
     | [] -> []
     | (name,NCic.Decl t as e) :: tl -> 
@@ -234,17 +235,17 @@ let apply_subst_context ~fix_projections subst context =
     List.rev (aux [] (List.rev context))
 ;;
 
-let rec apply_subst_metasenv subst = function
+let rec apply_subst_metasenv status subst = function
   | [] -> []
   | (i,_) :: _ when List.mem_assoc i subst -> assert false
   | (i,(name,ctx,ty)) :: tl ->
-      (i,(name,apply_subst_context ~fix_projections:true subst ctx,
-               apply_subst ~fix_projections:true subst ctx ty)) ::
-         apply_subst_metasenv subst tl
+      (i,(name,apply_subst_context status ~fix_projections:true subst ctx,
+               apply_subst status ~fix_projections:true subst ctx ty)) ::
+         apply_subst_metasenv status subst tl
 ;;
 
 (* hide optional arg *)
-let apply_subst s c t = apply_subst s c t;;
+let apply_subst status s c t = apply_subst status s c t;;
 
 
 type meta_kind = [ `IsSort | `IsType | `IsTerm ]
@@ -290,30 +291,30 @@ module OT =
   end
 
 module MS = HTopoSort.Make(OT)
-let relations_of_menv subst m c =
+let relations_of_menv status subst m c =
   let i, (_, ctx, ty) = c in
   let m = List.filter (fun (j,_) -> j <> i) m in
-  let m_ty = metas_of_term subst ctx ty in
+  let m_ty = metas_of_term status subst ctx ty in
   let m_ctx =
    snd 
     (List.fold_right
      (fun i (ctx,res) ->
       (i::ctx),
       (match i with
-       | _,NCic.Decl ty -> metas_of_term subst ctx ty
+       | _,NCic.Decl ty -> metas_of_term status subst ctx ty
        | _,NCic.Def (t,ty) -> 
-         metas_of_term subst ctx ty @ metas_of_term subst ctx t) @ res)
+         metas_of_term status subst ctx ty @ metas_of_term status subst ctx t) @ res)
     ctx ([],[]))
   in
   let metas = HExtlib.list_uniq (List.sort compare (m_ty @ m_ctx)) in
   List.filter (fun (i,_) -> List.exists ((=) i) metas) m
 ;;
 
-let sort_metasenv subst (m : NCic.metasenv) =
-  (MS.topological_sort m (relations_of_menv subst m) : NCic.metasenv)
+let sort_metasenv status subst (m : NCic.metasenv) =
+  (MS.topological_sort m (relations_of_menv status subst m) : NCic.metasenv)
 ;;
 
-let count_occurrences ~subst n t = 
+let count_occurrences status ~subst n t = 
   let occurrences = ref 0 in
   let rec aux k _ = function
     | C.Rel m when m = n+k -> incr occurrences
@@ -325,7 +326,7 @@ let count_occurrences ~subst n t =
             (* possible optimization here: try does_not_occur on l and
                perform substitution only if DoesOccur is raised *)
             let _,_,term,_ = NCicUtils.lookup_subst mno subst in
-            aux (k-s) () (NCicSubstitution.subst_meta (0,l) term)
+            aux (k-s) () (NCicSubstitution.subst_meta status (0,l) term)
           with NCicUtils.Subst_not_found _ -> () (*match l with
           | C.Irl len -> if not (n+k >= s+len || s > nn+k) then raise DoesOccur
           | C.Ctx lc -> List.iter (aux (k-s) ()) lc*))

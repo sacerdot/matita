@@ -48,7 +48,7 @@ let debug c _ = c;;
   let eq_refl() = debug (!eqsig Refl) "refl";;
 
 
-  let extract lift vl t =
+  let extract status lift vl t =
     let rec pos i = function 
       | [] -> raise Not_found 
       | j :: tl when j <> i -> 1+ pos i tl
@@ -56,7 +56,7 @@ let debug c _ = c;;
     in
     let vl_len = List.length vl in
     let rec extract = function
-      | Terms.Leaf x -> NCicSubstitution.lift (vl_len+lift) x
+      | Terms.Leaf x -> NCicSubstitution.lift status (vl_len+lift) x
       | Terms.Var j -> 
            (try NCic.Rel (pos j vl) with Not_found -> NCic.Implicit `Term) 
       | Terms.Node l -> NCic.Appl (List.map extract l)
@@ -65,7 +65,7 @@ let debug c _ = c;;
   ;;
 
 
-   let mk_predicate hole_type amount ft p1 vl =
+   let mk_predicate status hole_type amount ft p1 vl =
     let rec aux t p = 
       match p with
       | [] -> NCic.Rel 1
@@ -89,7 +89,7 @@ let debug c _ = c;;
                 HExtlib.list_mapi
                   (fun t i -> 
                     if i = n then aux t tl 
-                    else extract amount (0::vl) t)
+                    else extract status amount (0::vl) t)
                   l
               in            
               NCic.Appl l
@@ -162,7 +162,7 @@ let debug c _ = c;;
     | _ -> assert false
 
 
-   let mk_morphism eq amount ft pl vl =
+   let mk_morphism status eq amount ft pl vl =
     let rec aux t p = 
       match p with
       | [] -> eq
@@ -181,18 +181,18 @@ let debug c _ = c;;
               List.fold_left
                (fun (i,acc) t ->
                  i+1,
-		       let f = extract amount vl f in
+		       let f = extract status amount vl f in
                   if i = n then
                    let imp = NCic.Implicit `Term in
                     NCic.Appl (dag::imp::imp::imp(* f *)::imp::imp::
                                [aux t tl])
                   else
-                    NCicUntrusted.mk_appl acc [extract amount vl t]
-               ) (1,extract amount vl f) l)
+                    NCicUntrusted.mk_appl acc [extract status amount vl t]
+               ) (1,extract status amount vl f) l)
     in aux ft (List.rev pl)
     ;;
 
-  let mk_proof ?(demod=false) (bag : NCic.term Terms.bag) mp subst steps =
+  let mk_proof status ?(demod=false) (bag : NCic.term Terms.bag) mp subst steps=
     let module NCicBlob = 
        NCicBlob.NCicBlob(
 	 struct
@@ -236,7 +236,7 @@ let debug c _ = c;;
     let proof_type =
       let lit,_,_ = get_literal mp in
       let lit = Subst.apply_subst subst lit in
-        extract 0 [] lit in
+        extract status 0 [] lit in
     (* composition of all subst acting on goal *)
     let res_subst =
       let rec rsaux ongoal acc = 
@@ -264,14 +264,14 @@ let debug c _ = c;;
           let lit,vl,proof = get_literal id in
           if not ongoal && id = mp then
             let lit = Subst.apply_subst subst lit in 
-            let eq_ty = extract amount [] lit in
+            let eq_ty = extract status amount [] lit in
             let refl = 
 	      if demod then NCic.Implicit `Term 
 	      else mk_refl eq_ty in
              (* prerr_endline ("Reached m point, id=" ^ (string_of_int id));
                 (NCic.LetIn ("clause_" ^ string_of_int id, eq_ty, refl,
                 aux true ((id,([],lit))::seen) (id::tl))) *)
-              NCicSubstitution.subst 
+              NCicSubstitution.subst status
                 ~avoid_beta_redexes:true ~no_implicit:false refl
                 (aux true ((id,([],lit))::seen) (id::tl))
           else
@@ -284,14 +284,14 @@ let debug c _ = c;;
 	      (*
                prerr_endline ("Exact for " ^ (string_of_int id));
                NCic.LetIn ("clause_" ^ string_of_int id, 
-                 close_with_forall vl (extract amount vl lit),
-                 close_with_lambdas vl (extract amount vl ft),
+                 close_with_forall vl (extract status amount vl lit),
+                 close_with_lambdas vl (extract status amount vl ft),
                  aux ongoal 
                    ((id,(List.map (fun x -> Terms.Var x) vl,lit))::seen) tl)
               *)
-               NCicSubstitution.subst 
+               NCicSubstitution.subst status
                  ~avoid_beta_redexes:true ~no_implicit:false
-                 (close_with_lambdas vl (extract amount vl ft))
+                 (close_with_lambdas vl (extract status amount vl ft))
                  (aux ongoal 
                    ((id,(List.map (fun x -> Terms.Var x) vl,lit))::seen) tl)
           | Terms.Step (_, id1, id2, dir, pos, subst) ->
@@ -307,7 +307,7 @@ let debug c _ = c;;
               let proof_of_id id = 
                 let vars = List.rev (vars_of id seen) in
                 let args = List.map (Subst.apply_subst subst) vars in
-                let args = List.map (extract amount vl) args in
+                let args = List.map (extract status amount vl) args in
                 let rel_for_id = NCic.Rel (List.length vl + position id seen) in
                   if args = [] then rel_for_id                    
                   else NCic.Appl (rel_for_id::args)
@@ -324,9 +324,9 @@ let debug c _ = c;;
                 let id2_ty,l,r = 
                   match ty_of id2 seen with
                   | Terms.Node [ _; t; l; r ] -> 
-                      extract amount vl (Subst.apply_subst subst t),
-                      extract amount vl (Subst.apply_subst subst l),
-                      extract amount vl (Subst.apply_subst subst r)
+                      extract status amount vl (Subst.apply_subst subst t),
+                      extract status amount vl (Subst.apply_subst subst l),
+                      extract status amount vl (Subst.apply_subst subst r)
                   | _ -> assert false
                 in
                   (*prerr_endline "mk_predicate :";
@@ -350,9 +350,9 @@ let debug c _ = c;;
                 let id2_ty,l,r = 
                   match ty_of id2 seen with
                   | Terms.Node [ _; t; l; r ] -> 
-                      extract amount vl (Subst.apply_subst subst t),
-                      extract amount vl (Subst.apply_subst subst l),
-                      extract amount vl (Subst.apply_subst subst r)
+                      extract status amount vl (Subst.apply_subst subst t),
+                      extract status amount vl (Subst.apply_subst subst l),
+                      extract status amount vl (Subst.apply_subst subst r)
                   | _ -> assert false
                 in
 		  (*
@@ -367,7 +367,7 @@ let debug c _ = c;;
                   prerr_endline ("Positions :" ^
                                    (String.concat ", "
                                       (List.map string_of_int pos)));*)
-                mk_predicate 
+                mk_predicate status
                   id2_ty amount (Subst.apply_subst subst id1_ty) pos vl,
                 id2_ty,
                 l,r
@@ -383,14 +383,15 @@ let debug c _ = c;;
               let body = aux ongoal 
                 ((id,(List.map (fun x -> Terms.Var x) vl,lit))::seen) tl 
               in 
-	      let occ= NCicUntrusted.count_occurrences [] 1 body in
+	      let occ =
+               NCicUntrusted.count_occurrences status [] 1 body in
 		if occ <= 1 then
-                  NCicSubstitution.subst 
+                  NCicSubstitution.subst status
                     ~avoid_beta_redexes:true ~no_implicit:false
                     (close_with_lambdas vl rewrite_step) body
                 else
                   NCic.LetIn ("clause_" ^ string_of_int id, 
-                    close_with_forall vl (extract amount vl lit),
+                    close_with_forall vl (extract status amount vl lit),
                            (* NCic.Implicit `Type, *)
                     close_with_lambdas vl rewrite_step, body)
     in 

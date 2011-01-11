@@ -57,7 +57,7 @@ let wrap_exc msg = function
   | e -> raise e
 ;;
 
-let exp_implicit rdb ~localise metasenv subst context with_type t =
+let exp_implicit status ~localise metasenv subst context with_type t =
  function      
   | `Closed ->
       let metasenv,subst,expty =
@@ -66,15 +66,15 @@ let exp_implicit rdb ~localise metasenv subst context with_type t =
         | Some typ ->
            let (metasenv,subst),typ =
             try
-             NCicMetaSubst.delift
+             NCicMetaSubst.delift status
               ~unify:(fun m s c t1 t2 ->
-                try Some (NCicUnification.unify rdb m s c t1 t2)
+                try Some (NCicUnification.unify status m s c t1 t2)
                 with NCicUnification.UnificationFailure _ | NCicUnification.Uncertain _ -> None)
               metasenv subst context 0 (0,NCic.Irl 0) typ
             with
               NCicMetaSubst.MetaSubstFailure _
             | NCicMetaSubst.Uncertain _ ->
-               raise (RefineFailure (lazy (localise t,"Trying to create a closed meta with a non closed type: " ^ NCicPp.ppterm ~metasenv ~subst ~context typ)))
+               raise (RefineFailure (lazy (localise t,"Trying to create a closed meta with a non closed type: " ^ status#ppterm ~metasenv ~subst ~context typ)))
 
            in
             metasenv,subst,Some typ
@@ -91,7 +91,7 @@ let exp_implicit rdb ~localise metasenv subst context with_type t =
   | _ -> assert false
 ;;
 
-let check_allowed_sort_elimination rdb localise r orig =
+let check_allowed_sort_elimination status localise r orig =
    let mkapp he arg =
      match he with
      | C.Appl l -> C.Appl (l @ [arg])
@@ -99,36 +99,36 @@ let check_allowed_sort_elimination rdb localise r orig =
    (* ctx, ind_type @ lefts, sort_of_ind_ty@lefts, outsort *)
    let rec aux metasenv subst context ind arity1 arity2 =
      (*D*)inside 'S'; try let rc = 
-     let arity1 = NCicReduction.whd ~subst context arity1 in
-     pp (lazy(NCicPp.ppterm ~subst ~metasenv ~context arity1 ^ "   elimsto   " ^
-        NCicPp.ppterm ~subst ~metasenv ~context arity2 ^ "\nMENV:\n"^
-        NCicPp.ppmetasenv ~subst metasenv));
+     let arity1 = NCicReduction.whd status ~subst context arity1 in
+     pp (lazy(status#ppterm ~subst ~metasenv ~context arity1 ^ "   elimsto   " ^
+        status#ppterm ~subst ~metasenv ~context arity2 ^ "\nMENV:\n"^
+        status#ppmetasenv ~subst metasenv));
      match arity1 with
      | C.Prod (name,so1,de1) (* , t ==?== C.Prod _ *) ->
         let metasenv, _, meta, _ = 
           NCicMetaSubst.mk_meta metasenv ((name,C.Decl so1)::context) `IsType 
         in
         let metasenv, subst = 
-          try NCicUnification.unify rdb metasenv subst context 
+          try NCicUnification.unify status metasenv subst context 
                 arity2 (C.Prod (name, so1, meta)) 
           with exc -> raise (wrap_exc (lazy (localise orig, Printf.sprintf
             "expected %s, found %s" (* XXX localizzare meglio *)
-            (NCicPp.ppterm ~subst ~metasenv ~context (C.Prod (name, so1, meta)))
-            (NCicPp.ppterm ~subst ~metasenv ~context arity2))) exc)
+            (status#ppterm ~subst ~metasenv ~context (C.Prod (name, so1, meta)))
+            (status#ppterm ~subst ~metasenv ~context arity2))) exc)
         in
         aux metasenv subst ((name, C.Decl so1)::context)
-         (mkapp (NCicSubstitution.lift 1 ind) (C.Rel 1)) de1 meta
+         (mkapp (NCicSubstitution.lift status 1 ind) (C.Rel 1)) de1 meta
      | C.Sort _ (* , t ==?== C.Prod _ *) ->
         let metasenv, _, meta, _ = NCicMetaSubst.mk_meta metasenv [] `IsSort in
         let metasenv, subst = 
-          try NCicUnification.unify rdb metasenv subst context 
+          try NCicUnification.unify status metasenv subst context 
                 arity2 (C.Prod ("_", ind, meta)) 
           with exc -> raise (wrap_exc (lazy (localise orig, Printf.sprintf
             "expected %s, found %s" (* XXX localizzare meglio *)
-            (NCicPp.ppterm ~subst ~metasenv ~context (C.Prod ("_", ind, meta)))
-            (NCicPp.ppterm ~subst ~metasenv ~context arity2))) exc)
+            (status#ppterm ~subst ~metasenv ~context (C.Prod ("_", ind, meta)))
+            (status#ppterm ~subst ~metasenv ~context arity2))) exc)
         in
-        (try NCicTypeChecker.check_allowed_sort_elimination
+        (try NCicTypeChecker.check_allowed_sort_elimination status
             ~metasenv ~subst r context ind arity1 arity2; 
             metasenv, subst
         with exc -> raise (wrap_exc (lazy (localise orig, 
@@ -139,7 +139,7 @@ let check_allowed_sort_elimination rdb localise r orig =
     aux
 ;;
 
-let rec typeof rdb 
+let rec typeof (status:#NCicCoercion.status)
   ?(localise=fun _ -> Stdpp.dummy_loc) 
   metasenv subst context term expty 
 =
@@ -153,19 +153,19 @@ let rec typeof rdb
        | C.Appl _ when skip_appl -> metasenv, subst, t, expty
        | _ ->
           pp (lazy ("forcing infty=expty: "^
-          (NCicPp.ppterm ~metasenv ~subst ~context infty) ^  " === " ^
-          (NCicPp.ppterm ~metasenv ~subst:[] ~context expty)));
+          (status#ppterm ~metasenv ~subst ~context infty) ^  " === " ^
+          (status#ppterm ~metasenv ~subst:[] ~context expty)));
            try 
              let metasenv, subst =
     (*D*)inside 'U'; try let rc = 
-               NCicUnification.unify rdb metasenv subst context infty expty 
+               NCicUnification.unify status metasenv subst context infty expty 
     (*D*)in outside true; rc with exc -> outside false; raise exc
              in
              metasenv, subst, t, expty
            with 
            | NCicUnification.Uncertain _ 
            | NCicUnification.UnificationFailure _ as exc -> 
-             try_coercions rdb ~localise 
+             try_coercions status ~localise 
                metasenv subst context t orig infty expty true exc)
     | None -> metasenv, subst, t, infty
     (*D*)in outside true; rc with exc -> outside false; raise exc
@@ -173,17 +173,17 @@ let rec typeof rdb
   let rec typeof_aux metasenv subst context expty = 
     fun t as orig -> 
     (*D*)inside 'R'; try let rc = 
-    pp (lazy (NCicPp.ppterm ~metasenv ~subst ~context t ^ " ::exp:: " ^
+    pp (lazy (status#ppterm ~metasenv ~subst ~context t ^ " ::exp:: " ^
        match expty with None -> "None" | Some e -> 
-       NCicPp.ppterm ~metasenv ~subst ~context e));
+       status#ppterm ~metasenv ~subst ~context e));
     let metasenv, subst, t, infty = 
     match t with
     | C.Rel n ->
         let infty = 
          (try
            match List.nth context (n - 1) with
-           | (_,C.Decl ty) -> NCicSubstitution.lift n ty
-           | (_,C.Def (_,ty)) -> NCicSubstitution.lift n ty
+           | (_,C.Decl ty) -> NCicSubstitution.lift status n ty
+           | (_,C.Def (_,ty)) -> NCicSubstitution.lift status n ty
          with Failure _ -> 
            raise (RefineFailure (lazy (localise t,"unbound variable"))))
         in
@@ -196,7 +196,7 @@ let rec typeof rdb
          | NCicEnvironment.AssertFailure msg -> raise (AssertFailure msg))
     | C.Implicit infos -> 
          let (metasenv,_,t,ty),subst =
-           exp_implicit rdb ~localise metasenv subst context expty t infos
+           exp_implicit status ~localise metasenv subst context expty t infos
          in
          if expty = None then
           typeof_aux metasenv subst context None t
@@ -209,21 +209,21 @@ let rec typeof rdb
         with NCicUtils.Subst_not_found _ ->
          NCicMetaSubst.extend_meta metasenv n
        in
-       metasenv, subst, t, NCicSubstitution.subst_meta l ty
+       metasenv, subst, t, NCicSubstitution.subst_meta status l ty
     | C.Const _ -> 
-       metasenv, subst, t, NCicTypeChecker.typeof ~subst ~metasenv context t
+       metasenv, subst, t, NCicTypeChecker.typeof status ~subst ~metasenv context t
     | C.Prod (name,(s as orig_s),(t as orig_t)) ->
        let metasenv, subst, s, s1 = typeof_aux metasenv subst context None s in
        let metasenv, subst, s, s1 = 
-         force_to_sort rdb 
+         force_to_sort status 
            metasenv subst context s orig_s localise s1 in
        let context1 = (name,(C.Decl s))::context in
        let metasenv, subst, t, s2 = typeof_aux metasenv subst context1 None t in
        let metasenv, subst, t, s2 = 
-         force_to_sort rdb 
+         force_to_sort status 
            metasenv subst context1 t orig_t localise s2 in
        let metasenv, subst, s, t, ty = 
-         sort_of_prod localise metasenv subst 
+         sort_of_prod status localise metasenv subst 
            context orig_s orig_t (name,s) t (s1,s2)
        in
        metasenv, subst, NCic.Prod(name,s,t), ty
@@ -232,7 +232,7 @@ let rec typeof rdb
          match expty with
          | None -> None, None, false
          | Some expty -> 
-             match NCicReduction.whd ~subst context expty with
+             match NCicReduction.whd status ~subst context expty with
              | C.Prod (_,s,t) -> Some s, Some t, false
              | _ -> None, None, true 
        in
@@ -251,18 +251,18 @@ let rec typeof rdb
                               | _ -> false)
                         with 
                           | _ -> false) -> metasenv, subst, s
-                    | _ ->  check_type rdb ~localise metasenv subst context s in
+                    | _ ->  check_type status ~localise metasenv subst context s in
                   (try 
-                    pp(lazy("Force source to: "^NCicPp.ppterm ~metasenv ~subst
+                    pp(lazy("Force source to: "^status#ppterm ~metasenv ~subst
                        ~context exp_s));
-                    NCicUnification.unify ~test_eq_only:true rdb metasenv subst context s exp_s,s
+                    NCicUnification.unify ~test_eq_only:true status metasenv subst context s exp_s,s
                   with exc -> raise (wrap_exc (lazy (localise orig_s, Printf.sprintf
-                    "Source type %s was expected to be %s" (NCicPp.ppterm ~metasenv
-                    ~subst ~context s) (NCicPp.ppterm ~metasenv ~subst ~context
+                    "Source type %s was expected to be %s" (status#ppterm ~metasenv
+                    ~subst ~context s) (status#ppterm ~metasenv ~subst ~context
                     exp_s))) exc)))
          | None -> 
              let metasenv, subst, s = 
-               check_type rdb ~localise metasenv subst context s in
+               check_type status ~localise metasenv subst context s in
              (metasenv, subst), s
        in
        let context_for_t = (n,C.Decl s) :: context in
@@ -276,7 +276,7 @@ let rec typeof rdb
          metasenv, subst, C.Lambda(n,s,t), C.Prod (n,s,ty_t)
     | C.LetIn (n,ty,t,bo) ->
        let metasenv, subst, ty = 
-         check_type rdb ~localise metasenv subst context ty in
+         check_type status ~localise metasenv subst context ty in
        let metasenv, subst, t, _ = 
          typeof_aux metasenv subst context (Some ty) t in
        let context1 = (n, C.Def (t,ty)) :: context in
@@ -286,26 +286,26 @@ let rec typeof rdb
          | Some x -> 
              let m, s, x = 
                NCicUnification.delift_type_wrt_terms 
-                rdb metasenv subst context1 (NCicSubstitution.lift 1 x)
-                [NCicSubstitution.lift 1 t]
+                status metasenv subst context1 (NCicSubstitution.lift status 1 x)
+                [NCicSubstitution.lift status 1 t]
              in
                m, s, Some x
        in
        let metasenv, subst, bo, bo_ty = 
          typeof_aux metasenv subst context1 expty1 bo 
        in
-       let bo_ty = NCicSubstitution.subst ~avoid_beta_redexes:true t bo_ty in
+       let bo_ty = NCicSubstitution.subst status ~avoid_beta_redexes:true t bo_ty in
        metasenv, subst, C.LetIn (n, ty, t, bo), bo_ty
     | C.Appl ((he as orig_he)::(_::_ as args)) ->
        let upto = match orig_he with C.Meta _ -> List.length args | _ -> 0 in
        let hbr t = 
-         if upto > 0 then NCicReduction.head_beta_reduce ~upto t else t 
+         if upto > 0 then NCicReduction.head_beta_reduce status ~upto t else t 
        in
        let refine_appl metasenv subst args =
          let metasenv, subst, he, ty_he = 
             typeof_aux metasenv subst context None he in
          let metasenv, subst, t, ty = 
-           eat_prods rdb ~localise force_ty metasenv subst context expty t
+           eat_prods status ~localise force_ty metasenv subst context expty t
             orig_he he ty_he args in
          metasenv, subst, hbr t, ty
        in
@@ -322,12 +322,12 @@ let rec typeof rdb
         (match he with
             C.Const (Ref.Ref (uri1,Ref.Con _)) -> (
              match
-              HExtlib.map_option (NCicReduction.whd ~subst context) expty
+              HExtlib.map_option (NCicReduction.whd status ~subst context) expty
              with
                 Some (C.Appl(C.Const(Ref.Ref (uri2,Ref.Ind _) as ref)::expargs))
                 when NUri.eq uri1 uri2 ->
                 (try
-                 let _,leftno,_,_,_ = NCicEnvironment.get_checked_indtys ref in
+                 let _,leftno,_,_,_ = NCicEnvironment.get_checked_indtys status ref in
                  let leftexpargs,_ = HExtlib.split_nth leftno expargs in
                   let rec instantiate metasenv subst revargs args =
                    function
@@ -351,7 +351,7 @@ let rec typeof rdb
                           let metasenv,subst,arg,_ =
                            typeof_aux metasenv subst context None arg in
                           let metasenv,subst =
-                           NCicUnification.unify rdb metasenv subst context
+                           NCicUnification.unify status metasenv subst context
                             arg exparg
                           in
                            instantiate metasenv subst(arg::revargs) args expargs
@@ -366,11 +366,11 @@ let rec typeof rdb
    | C.Appl _ -> raise (AssertFailure (lazy "Appl of length < 2"))
    | C.Match (Ref.Ref (_,Ref.Ind (_,tyno,_)) as r,
           outtype,(term as orig_term),pl) as orig ->
-      let _, leftno, itl, _, _ = NCicEnvironment.get_checked_indtys r in
+      let _, leftno, itl, _, _ = NCicEnvironment.get_checked_indtys status r in
       let _, _, arity, cl = List.nth itl tyno in
       let constructorsno = List.length cl in
       let _, metasenv, args = 
-        NCicMetaSubst.saturate metasenv subst context arity 0 in
+        NCicMetaSubst.saturate status metasenv subst context arity 0 in
       let ind = if args = [] then C.Const r else C.Appl (C.Const r::args) in
       let metasenv, subst, term, _ = 
         typeof_aux metasenv subst context (Some ind) term in
@@ -405,7 +405,7 @@ let rec typeof rdb
       let metasenv, subst, ind, ind_ty = 
         typeof_aux metasenv subst context None ind in
       let metasenv, subst = 
-         check_allowed_sort_elimination rdb localise r orig_term metasenv subst 
+         check_allowed_sort_elimination status localise r orig_term metasenv subst 
            context ind ind_ty outsort 
       in
       (* let's check if the type of branches are right *)
@@ -417,7 +417,7 @@ let rec typeof rdb
         match expty with
         | None -> metasenv, subst
         | Some expty -> 
-           NCicUnification.unify rdb metasenv subst context resty expty 
+           NCicUnification.unify status metasenv subst context resty expty 
       in
 *)
       let _, metasenv, subst, pl =
@@ -431,46 +431,46 @@ let rec typeof rdb
               let metasenv, subst, cons, ty_cons = 
                 typeof_aux metasenv subst context None cons in
               let ty_branch = 
-                NCicTypeChecker.type_of_branch 
+                NCicTypeChecker.type_of_branch status
                   ~subst context leftno outtype cons ty_cons in
               pp (lazy ("TYPEOFBRANCH: " ^
-               NCicPp.ppterm ~metasenv ~subst ~context p ^ " ::inf:: " ^
-               NCicPp.ppterm ~metasenv ~subst ~context ty_branch ));
+               status#ppterm ~metasenv ~subst ~context p ^ " ::inf:: " ^
+               status#ppterm ~metasenv ~subst ~context ty_branch ));
               let metasenv, subst, p, _ = 
                 typeof_aux metasenv subst context (Some ty_branch) p in
               j-1, metasenv, subst, p :: branches)
           pl (List.length pl, metasenv, subst, [])
       in
       let resty = C.Appl (outtype::arguments@[term]) in
-      let resty = NCicReduction.head_beta_reduce ~subst resty in
+      let resty = NCicReduction.head_beta_reduce status ~subst resty in
       metasenv, subst, C.Match (r, outtype, term, pl),resty
     | C.Match _ -> assert false
     in
-    pp (lazy (NCicPp.ppterm ~metasenv ~subst ~context t ^ " ::inf:: "^
-         NCicPp.ppterm ~metasenv ~subst ~context infty ));
+    pp (lazy (status#ppterm ~metasenv ~subst ~context t ^ " ::inf:: "^
+         status#ppterm ~metasenv ~subst ~context infty ));
       force_ty true true metasenv subst context orig t infty expty
     (*D*)in outside true; rc with exc -> outside false; raise exc
   in
     typeof_aux metasenv subst context expty term
 
-and check_type rdb ~localise metasenv subst context (ty as orig_ty) =
+and check_type status ~localise metasenv subst context (ty as orig_ty) =
   let metasenv, subst, ty, sort = 
-    typeof rdb ~localise metasenv subst context ty None
+    typeof status ~localise metasenv subst context ty None
   in
   let metasenv, subst, ty, _ = 
-    force_to_sort rdb metasenv subst context ty orig_ty localise sort
+    force_to_sort status metasenv subst context ty orig_ty localise sort
   in
     metasenv, subst, ty
 
-and try_coercions rdb 
+and try_coercions status 
   ~localise 
   metasenv subst context t orig_t infty expty perform_unification exc 
 =
-  let cs_subst = NCicSubstitution.subst ~avoid_beta_redexes:true in
+  let cs_subst = NCicSubstitution.subst status ~avoid_beta_redexes:true in
   try 
     pp (lazy "WWW: trying coercions -- preliminary unification");
     let metasenv, subst = 
-      NCicUnification.unify rdb metasenv subst context infty expty
+      NCicUnification.unify status metasenv subst context infty expty
     in metasenv, subst, t, expty
   with
   | exn ->
@@ -480,32 +480,32 @@ and try_coercions rdb
       pp (lazy "WWW: no more coercions!");      
       raise (wrap_exc (lazy (localise orig_t, Printf.sprintf
         "The term\n%s\nhas type\n%s\nbut is here used with type\n%s"
-        (NCicPp.ppterm ~metasenv ~subst ~context t)
-        (NCicPp.ppterm ~metasenv ~subst ~context infty)
-        (NCicPp.ppterm ~metasenv ~subst ~context expty))) exc)
+        (status#ppterm ~metasenv ~subst ~context t)
+        (status#ppterm ~metasenv ~subst ~context infty)
+        (status#ppterm ~metasenv ~subst ~context expty))) exc)
   | (_,metasenv, newterm, newtype, meta)::tl ->
       try 
-          pp (lazy("K=" ^ NCicPp.ppterm ~metasenv ~subst ~context newterm));
+          pp (lazy("K=" ^ status#ppterm ~metasenv ~subst ~context newterm));
           pp (lazy ( "UNIFICATION in CTX:\n"^ 
-            NCicPp.ppcontext ~metasenv ~subst context
+            status#ppcontext ~metasenv ~subst context
             ^ "\nMENV: " ^
-            NCicPp.ppmetasenv metasenv ~subst
+            status#ppmetasenv metasenv ~subst
             ^ "\nOF: " ^
-            NCicPp.ppterm ~metasenv ~subst ~context t ^  " === " ^
-            NCicPp.ppterm ~metasenv ~subst ~context meta ^ "\n"));
+            status#ppterm ~metasenv ~subst ~context t ^  " === " ^
+            status#ppterm ~metasenv ~subst ~context meta ^ "\n"));
         let metasenv, subst = 
-          NCicUnification.unify rdb metasenv subst context t meta
+          NCicUnification.unify status metasenv subst context t meta
         in
           pp (lazy ( "UNIFICATION in CTX:\n"^ 
-            NCicPp.ppcontext ~metasenv ~subst context
+            status#ppcontext ~metasenv ~subst context
             ^ "\nMENV: " ^
-            NCicPp.ppmetasenv metasenv ~subst
+            status#ppmetasenv metasenv ~subst
             ^ "\nOF: " ^
-            NCicPp.ppterm ~metasenv ~subst ~context newtype ^  " === " ^
-            NCicPp.ppterm ~metasenv ~subst ~context expty ^ "\n"));
+            status#ppterm ~metasenv ~subst ~context newtype ^  " === " ^
+            status#ppterm ~metasenv ~subst ~context expty ^ "\n"));
         let metasenv, subst = 
           if perform_unification then
-            NCicUnification.unify rdb metasenv subst context newtype expty
+            NCicUnification.unify status metasenv subst context newtype expty
           else metasenv, subst
         in
         metasenv, subst, newterm, newtype
@@ -523,12 +523,12 @@ and try_coercions rdb
         let get_cl_and_left_p refit outty =
           match refit with
           | NReference.Ref (uri, NReference.Ind (_,tyno,leftno)) ->
-             let _, leftno, itl, _, _ = NCicEnvironment.get_checked_indtys r in
+             let _, leftno, itl, _, _ = NCicEnvironment.get_checked_indtys status r in
              let _, _, ty, cl = List.nth itl tyno in
              let constructorsno = List.length cl in
               let count_pis t =
                 let rec aux ctx t = 
-                  match NCicReduction.whd ~subst ~delta:max_int ctx t with
+                  match NCicReduction.whd status ~subst ~delta:max_int ctx t with
                   | NCic.Prod (name,src,tgt) ->
                       let ctx = (name, (NCic.Decl src)) :: ctx in
                       1 + aux ctx tgt
@@ -540,10 +540,10 @@ and try_coercions rdb
                 match t,n with
                 | _,0 -> t
                 | NCic.Lambda (_,_,t),n ->
-                    pp (lazy ("WWW: failing term? "^ NCicPp.ppterm ~subst:[] ~metasenv:[] ~context:[] t)); 
+                    pp (lazy ("WWW: failing term? "^ status#ppterm ~subst:[] ~metasenv:[] ~context:[] t)); 
                     skip_lambda_delifting
                       (* substitute dangling indices with a dummy *)
-                      (NCicSubstitution.subst (NCic.Sort NCic.Prop) t) (n - 1)
+                      (NCicSubstitution.subst status (NCic.Sort NCic.Prop) t) (n - 1)
                 | _ -> assert false
               in
               let get_l_r_p n = function
@@ -578,22 +578,22 @@ and try_coercions rdb
             let rec mkr n = function 
               | [] -> [] | _::tl -> NCic.Rel n :: mkr (n+1) tl
             in
-            pp (lazy ("input replace: " ^ NCicPp.ppterm ~context:ctx ~metasenv:[] ~subst:[] bo));
+            pp (lazy ("input replace: " ^ status#ppterm ~context:ctx ~metasenv:[] ~subst:[] bo));
             let bo =
-            NCicRefineUtil.replace_lifting
-              ~equality:(fun _ -> NCicRefineUtil.alpha_equivalence)
+            NCicRefineUtil.replace_lifting status
+              ~equality:(fun _ -> NCicRefineUtil.alpha_equivalence status)
               ~context:ctx
               ~what:(matched::right_p)
               ~with_what:(NCic.Rel 1::List.rev (mkr 2 right_p))
               ~where:bo
             in
-            pp (lazy ("output replace: " ^ NCicPp.ppterm ~context:ctx ~metasenv:[] ~subst:[] bo));
+            pp (lazy ("output replace: " ^ status#ppterm ~context:ctx ~metasenv:[] ~subst:[] bo));
             bo
           | NCic.Lambda (name, src, tgt),_ ->
               NCic.Lambda (name, src,
                keep_lambdas_and_put_expty 
-                ((name, NCic.Decl src)::ctx) tgt (NCicSubstitution.lift 1 bo)
-                (List.map (NCicSubstitution.lift 1) right_p) (NCicSubstitution.lift 1 matched) (n-1))
+                ((name, NCic.Decl src)::ctx) tgt (NCicSubstitution.lift status 1 bo)
+                (List.map (NCicSubstitution.lift status 1) right_p) (NCicSubstitution.lift status 1 matched) (n-1))
           | _ -> assert false
         in
         (*let eq = NCic.Const (NReference.reference_of_string ("cic:/matita/ng/Plogic/equality/eq.ind(1,0,2)")) in
@@ -608,8 +608,8 @@ and try_coercions rdb
                 let t,k = 
                   aux 
                     ((name, NCic.Decl src) :: context)
-                    (NCicSubstitution.lift 1 outty) (NCic.Rel j::par) (j+1) 
-                    (NCicSubstitution.lift 1 mty) (NCicSubstitution.lift 1 m) tgt
+                    (NCicSubstitution.lift status 1 outty) (NCic.Rel j::par) (j+1) 
+                    (NCicSubstitution.lift status 1 mty) (NCicSubstitution.lift status 1 m) tgt
                 in
                 NCic.Prod (name, src, t), k
             | NCic.Const (Ref.Ref (_,Ref.Ind (_,_,leftno)) as r) ->
@@ -624,8 +624,8 @@ and try_coercions rdb
                 in *)
                 NCic.Prod ("p", 
                  NCic.Appl [eq; mty; m; mty; k],
-                 (NCicSubstitution.lift 1
-                  (NCicReduction.head_beta_reduce ~delta:max_int 
+                 (NCicSubstitution.lift status 1
+                  (NCicReduction.head_beta_reduce status ~delta:max_int 
                    (NCicUntrusted.mk_appl outty [k])))),[mty,m,mty,k]
             | NCic.Appl (NCic.Const (Ref.Ref (_,Ref.Ind (_,_,leftno)) as r)::pl) ->
                 let left_p,right_p = HExtlib.split_nth leftno pl in
@@ -636,7 +636,7 @@ and try_coercions rdb
                 in
                 let right_p = 
                   try match 
-                    NCicTypeChecker.typeof ~subst ~metasenv context k
+                    NCicTypeChecker.typeof status ~subst ~metasenv context k
                   with
                   | NCic.Appl (NCic.Const (Ref.Ref (_,Ref.Ind (_,_,_)))::args) ->
                       snd (HExtlib.split_nth leftno args)
@@ -652,27 +652,27 @@ and try_coercions rdb
                 List.fold_right2 
                   (fun x y (tacc,pacc) ->
                     let xty = 
-          	    try NCicTypeChecker.typeof ~subst ~metasenv context x
+          	    try NCicTypeChecker.typeof status ~subst ~metasenv context x
                       with NCicTypeChecker.TypeCheckerFailure _ -> assert false
                     in
                     let yty = 
-          	    try NCicTypeChecker.typeof ~subst ~metasenv context y
+          	    try NCicTypeChecker.typeof status ~subst ~metasenv context y
                       with NCicTypeChecker.TypeCheckerFailure _ -> assert false
                     in
                     NCic.Prod ("_", NCic.Appl [eq;xty;x;yty;y],
-                     NCicSubstitution.lift 1 tacc), (xty,x,yty,y)::pacc) 
+                     NCicSubstitution.lift status 1 tacc), (xty,x,yty,y)::pacc) 
                   (orig_right_p @ [m]) (right_p @ [k]) 
-                  (NCicReduction.head_beta_reduce ~delta:max_int
+                  (NCicReduction.head_beta_reduce status ~delta:max_int
                       (NCicUntrusted.mk_appl outty (right_p@[k])), [])  
 
   (*              if has_rights then
-                  NCicReduction.head_beta_reduce ~delta:max_int
+                  NCicReduction.head_beta_reduce status ~delta:max_int
                     (NCic.Appl (outty ::right_p @ [k])),k
                 else
                   NCic.Prod ("p", 
                    NCic.Appl [eq; mty; m; k],
-                   (NCicSubstitution.lift 1
-                    (NCicReduction.head_beta_reduce ~delta:max_int 
+                   (NCicSubstitution.lift status 1
+                    (NCicReduction.head_beta_reduce status ~delta:max_int 
                      (NCic.Appl (outty ::right_p @ [k]))))),k*)
             | _ -> assert false
           in
@@ -688,9 +688,9 @@ and try_coercions rdb
             | t,_ -> snd (List.fold_right
                 (fun (xty,x,yty,y) (n,acc) -> n+1, NCic.Lambda ("p" ^ string_of_int n,
                   NCic.Appl [eq; xty; x; yty; y],
-                  NCicSubstitution.lift 1 acc)) eqs (1,t))
+                  NCicSubstitution.lift status 1 acc)) eqs (1,t))
                 (*NCic.Lambda ("p",
-                  NCic.Appl [eq; mty; m; k],NCicSubstitution.lift 1 t)*)
+                  NCic.Appl [eq; mty; m; k],NCicSubstitution.lift status 1 t)*)
           in
           aux (pbo,cty)
         in
@@ -699,7 +699,7 @@ and try_coercions rdb
             let rec aux context mty m = function
               | NCic.Lambda (name, src, tgt) ->
                   let context = (name, NCic.Decl src)::context in
-                  NCic.Lambda (name, src, aux context (NCicSubstitution.lift 1 mty) (NCicSubstitution.lift 1 m) tgt)
+                  NCic.Lambda (name, src, aux context (NCicSubstitution.lift status 1 mty) (NCicSubstitution.lift status 1 m) tgt)
               | t -> 
                   let lhs =
                     match mty with
@@ -712,32 +712,32 @@ and try_coercions rdb
                   List.fold_right2
                     (fun x y acc ->
                       let xty = 
-    		    try NCicTypeChecker.typeof ~subst ~metasenv context x
+    		    try NCicTypeChecker.typeof status ~subst ~metasenv context x
                         with NCicTypeChecker.TypeCheckerFailure _ -> assert false
                       in
                       let yty = 
-    		    try NCicTypeChecker.typeof ~subst ~metasenv context y
+    		    try NCicTypeChecker.typeof status ~subst ~metasenv context y
                         with NCicTypeChecker.TypeCheckerFailure _ -> assert false
                       in
                       NCic.Prod
                       ("_", NCic.Appl [eq;xty;x;yty;y],
-                       (NCicSubstitution.lift 1 acc)))
+                       (NCicSubstitution.lift status 1 acc)))
                     lhs rhs t
   (*                NCic.Prod 
                     ("_", NCic.Appl [eq;mty;m;NCic.Rel 1],
-                    NCicSubstitution.lift 1 t)*)
+                    NCicSubstitution.lift status 1 t)*)
             in
               aux context mty m new_outty
         in (* }}} end helper functions *)
         (* constructors types with left params already instantiated *)
-        let outty = NCicUntrusted.apply_subst subst context outty in
+        let outty = NCicUntrusted.apply_subst status subst context outty in
         let cl, left_p, leftno,rno = 
           get_cl_and_left_p r outty
         in
         let right_p, mty = 
           try
             match 
-              NCicTypeChecker.typeof ~subst ~metasenv context m
+              NCicTypeChecker.typeof status ~subst ~metasenv context m
             with
             | (NCic.Const (Ref.Ref (_,Ref.Ind (_,_,_))) | NCic.Meta _) as mty -> [], mty
             | NCic.Appl ((NCic.Const (Ref.Ref (_,Ref.Ind (_,_,_)))|NCic.Meta _)::args) as mty ->
@@ -746,14 +746,14 @@ and try_coercions rdb
           with NCicTypeChecker.TypeCheckerFailure _ -> 
              raise (AssertFailure(lazy "already ill-typed matched term"))
         in
-        let mty = NCicUntrusted.apply_subst subst context mty in
-        let outty = NCicUntrusted.apply_subst subst context outty in
-        let expty = NCicUntrusted.apply_subst subst context expty in
+        let mty = NCicUntrusted.apply_subst status subst context mty in
+        let outty = NCicUntrusted.apply_subst status subst context outty in
+        let expty = NCicUntrusted.apply_subst status subst context expty in
         let new_outty =
          keep_lambdas_and_put_expty context outty expty right_p m (rno+1)
         in
         pp 
-          (lazy ("CASE: new_outty: " ^ NCicPp.ppterm 
+          (lazy ("CASE: new_outty: " ^ status#ppterm 
            ~context ~metasenv ~subst new_outty));
         let _,pl,subst,metasenv = 
           List.fold_right2
@@ -764,38 +764,38 @@ and try_coercions rdb
                let infty_pbo, _ = 
                  add_params menv s context cty outty mty m i in
                pp 
-                (lazy ("CASE: infty_pbo: "^ NCicPp.ppterm
+                (lazy ("CASE: infty_pbo: "^ status#ppterm
                  ~context ~metasenv ~subst infty_pbo));
                let expty_pbo, eqs = (* k is (K_i left_par k_par) *)
                  add_params menv s context cty new_outty mty m i in
                pp 
-                (lazy ("CASE: expty_pbo: "^ NCicPp.ppterm
+                (lazy ("CASE: expty_pbo: "^ status#ppterm
                  ~context ~metasenv ~subst expty_pbo));
                let pbo = add_lambda_for_refl_m pbo eqs cty in
                pp 
-                 (lazy ("CASE: pbo: " ^ NCicPp.ppterm
+                 (lazy ("CASE: pbo: " ^ status#ppterm
                  ~context ~metasenv ~subst pbo));
                let metasenv, subst, pbo, _ =
-                 try_coercions rdb ~localise menv s context pbo 
+                 try_coercions status ~localise menv s context pbo 
           	 orig_t (*??*) infty_pbo expty_pbo perform_unification exc
                in
                pp 
-                 (lazy ("CASE: pbo2: " ^ NCicPp.ppterm 
+                 (lazy ("CASE: pbo2: " ^ status#ppterm 
                  ~context ~metasenv ~subst pbo));
                (i-1, pbo::acc, subst, metasenv))
             cl pl (List.length pl, [], subst, metasenv)
         in
         (*let metasenv, subst = 
           try 
-            NCicUnification.unify rdb metasenv subst context outty new_outty 
+            NCicUnification.unify status metasenv subst context outty new_outty 
           with _ -> raise (RefineFailure (lazy (localise orig_t, "try_coercions")))
         in*)
         let new_outty = add_pi_for_refl_m context new_outty mty m leftno rno in
-        pp (lazy ("CASE: new_outty: " ^ (NCicPp.ppterm 
+        pp (lazy ("CASE: new_outty: " ^ (status#ppterm 
            ~metasenv ~subst ~context new_outty)));
         let right_tys = 
           List.map 
-            (fun t -> NCicTypeChecker.typeof ~subst ~metasenv context t) right_p in
+            (fun t -> NCicTypeChecker.typeof status ~subst ~metasenv context t) right_p in
         let eqs = 
           List.map2 (fun x y -> NCic.Appl[eq_refl;x;y]) (right_tys@[mty]) 
             (right_p@[m]) in
@@ -809,7 +809,7 @@ and try_coercions rdb
           else mk_fresh_name ctx firstch (n+1)
         in
         (*{{{*) pp (lazy "LAM");
-        pp (lazy ("LAM: t = " ^ NCicPp.ppterm ~metasenv ~subst ~context t));
+        pp (lazy ("LAM: t = " ^ status#ppterm ~metasenv ~subst ~context t));
         let name_con = mk_fresh_name context 'c' 0
           (*FreshNamesGenerator.mk_fresh_name 
             ~subst metasenv context ~typ:src2 Cic.Anonymous*)
@@ -817,53 +817,53 @@ and try_coercions rdb
         let context_src2 = ((name_con, NCic.Decl src2) :: context) in
         (* contravariant part: the argument of f:src->ty *)
         let metasenv, subst, rel1, _ = 
-          try_coercions rdb ~localise metasenv subst context_src2
-           (NCic.Rel 1) orig_t (NCicSubstitution.lift 1 src2) 
-           (NCicSubstitution.lift 1 src) perform_unification exc
+          try_coercions status ~localise metasenv subst context_src2
+           (NCic.Rel 1) orig_t (NCicSubstitution.lift status 1 src2) 
+           (NCicSubstitution.lift status 1 src) perform_unification exc
         in
         (* covariant part: the result of f(c x); x:src2; (c x):src *)
         let name_t, bo = 
           match t with
-          | NCic.Lambda (n,_,bo) -> n, cs_subst rel1 (NCicSubstitution.lift_from 2 1 bo)
-          | _ -> name_con, NCicUntrusted.mk_appl (NCicSubstitution.lift 1 t) [rel1]
+          | NCic.Lambda (n,_,bo) -> n, cs_subst rel1 (NCicSubstitution.lift_from status 2 1 bo)
+          | _ -> name_con, NCicUntrusted.mk_appl (NCicSubstitution.lift status 1 t) [rel1]
         in
         (* we fix the possible dependency problem in the source ty *)
-        let ty = cs_subst rel1 (NCicSubstitution.lift_from 2 1 ty) in
+        let ty = cs_subst rel1 (NCicSubstitution.lift_from status 2 1 ty) in
         let metasenv, subst, bo, _ = 
-          try_coercions rdb ~localise metasenv subst context_src2
+          try_coercions status ~localise metasenv subst context_src2
             bo orig_t ty ty2 perform_unification exc
         in
         let coerced = NCic.Lambda (name_t,src2, bo) in
-        pp (lazy ("LAM: coerced = " ^ NCicPp.ppterm ~metasenv ~subst ~context coerced));
+        pp (lazy ("LAM: coerced = " ^ status#ppterm ~metasenv ~subst ~context coerced));
         metasenv, subst, coerced, expty (*}}}*)
     | _ -> raise exc
   with exc2 ->    
   pp(lazy("try_coercion " ^ 
-    NCicPp.ppterm ~metasenv ~subst ~context infty ^ " |---> " ^
-    NCicPp.ppterm ~metasenv ~subst ~context expty));
+    status#ppterm ~metasenv ~subst ~context infty ^ " |---> " ^
+    status#ppterm ~metasenv ~subst ~context expty));
     first exc
       (NCicCoercion.look_for_coercion 
-        rdb metasenv subst context infty expty)
+        status metasenv subst context infty expty)
 
-and force_to_sort rdb metasenv subst context t orig_t localise ty =
+and force_to_sort status metasenv subst context t orig_t localise ty =
   try 
     let metasenv, subst, ty = 
-      NCicUnification.sortfy (Failure "sortfy") metasenv subst context ty in
+      NCicUnification.sortfy status (Failure "sortfy") metasenv subst context ty in
       metasenv, subst, t, ty
   with
       Failure _ -> 
-        let ty = NCicReduction.whd ~subst context ty in
-          try_coercions rdb ~localise metasenv subst context
+        let ty = NCicReduction.whd status ~subst context ty in
+          try_coercions status ~localise metasenv subst context
             t orig_t ty (NCic.Sort (NCic.Type 
               (match NCicEnvironment.get_universes () with
                | x::_ -> x 
                | _ -> assert false))) false 
              (Uncertain (lazy (localise orig_t, 
-             "The type of " ^ NCicPp.ppterm ~metasenv ~subst ~context t ^
-             " is not a sort: " ^ NCicPp.ppterm ~metasenv ~subst ~context ty)))
+             "The type of " ^ status#ppterm ~metasenv ~subst ~context t ^
+             " is not a sort: " ^ status#ppterm ~metasenv ~subst ~context ty)))
 
-and sort_of_prod 
-  localise metasenv subst context orig_s orig_t (name,s) t (t1, t2) 
+and sort_of_prod status localise metasenv subst context orig_s orig_t (name,s)
+ t (t1, t2) 
 =
    (* force to sort is done in the Prod case in typeof *)
    match t1, t2 with
@@ -881,10 +881,10 @@ and sort_of_prod
       in
       raise (RefineFailure (lazy (localise orig,Printf.sprintf
         "%s is expected to be a type, but its type is %s that is not a sort" 
-         (NCicPp.ppterm ~subst ~metasenv ~context y) 
-         (NCicPp.ppterm ~subst ~metasenv ~context x))))
+         (status#ppterm ~subst ~metasenv ~context y) 
+         (status#ppterm ~subst ~metasenv ~context x))))
 
-and guess_name subst ctx ty = 
+and guess_name status subst ctx ty = 
   let aux initial = "#" ^ String.make 1 initial in
   match ty with
   | C.Const (NReference.Ref (u,_))
@@ -894,11 +894,11 @@ and guess_name subst ctx ty =
   | C.Meta (n,lc) -> 
       (try
          let _,_,t,_ = NCicUtils.lookup_subst n subst in
-         guess_name subst ctx (NCicSubstitution.subst_meta lc t)
+         guess_name status subst ctx (NCicSubstitution.subst_meta status lc t)
       with NCicUtils.Subst_not_found _ -> aux 'M')
   | _ -> aux 'H' 
 
-and eat_prods rdb ~localise force_ty metasenv subst context expty orig_t orig_he he ty_he args =
+and eat_prods status ~localise force_ty metasenv subst context expty orig_t orig_he he ty_he args =
   (*D*)inside 'E'; try let rc = 
   let rec aux metasenv subst args_so_far he ty_he xxx =
   (*D*)inside 'V'; try let rc = 
@@ -906,16 +906,16 @@ and eat_prods rdb ~localise force_ty metasenv subst context expty orig_t orig_he
   | [] ->
      let res = NCicUntrusted.mk_appl he (List.rev args_so_far) in
      pp(lazy("FORCE FINAL APPL: " ^ 
-       NCicPp.ppterm ~metasenv ~subst ~context res ^
-       " of type " ^ NCicPp.ppterm ~metasenv ~subst ~context ty_he
+       status#ppterm ~metasenv ~subst ~context res ^
+       " of type " ^ status#ppterm ~metasenv ~subst ~context ty_he
        ^ " to type " ^ match expty with None -> "None" | Some x -> 
-       NCicPp.ppterm ~metasenv ~subst ~context x));
+       status#ppterm ~metasenv ~subst ~context x));
      (* whatever the term is, we force the type. in case of ((Lambda..) ?...)
       * the application may also be a lambda! *)
      force_ty false false metasenv subst context orig_t res ty_he expty
   | NCic.Implicit `Vector::tl ->
       let has_some_more_pis x =
-        match NCicReduction.whd ~subst context x with
+        match NCicReduction.whd status ~subst context x with
         |  NCic.Meta _ | NCic.Appl (NCic.Meta _::_) -> false
         | _ -> true
       in
@@ -933,17 +933,17 @@ and eat_prods rdb ~localise force_ty metasenv subst context expty orig_t orig_he
         (* instantiating the head could change the has_some_more_pis flag *)
         raise (Uncertain msg))
   | arg::tl ->
-      match NCicReduction.whd ~subst context ty_he with 
+      match NCicReduction.whd status ~subst context ty_he with 
       | C.Prod (_,s,t) ->
           let metasenv, subst, arg, _ = 
-            typeof rdb ~localise metasenv subst context arg (Some s) in
-          let t = NCicSubstitution.subst ~avoid_beta_redexes:true arg t in
+            typeof status ~localise metasenv subst context arg (Some s) in
+          let t = NCicSubstitution.subst status ~avoid_beta_redexes:true arg t in
           aux metasenv subst (arg :: args_so_far) he t tl
       | C.Meta _
       | C.Appl (C.Meta _ :: _) as t ->
           let metasenv, subst, arg, ty_arg = 
-            typeof rdb ~localise metasenv subst context arg None in
-          let name = guess_name subst context ty_arg in
+            typeof status ~localise metasenv subst context arg None in
+          let name = guess_name status subst context ty_arg in
           let metasenv, _, meta, _ = 
             NCicMetaSubst.mk_meta metasenv 
               ((name,C.Decl ty_arg) :: context) `IsType
@@ -951,47 +951,47 @@ and eat_prods rdb ~localise force_ty metasenv subst context expty orig_t orig_he
           let flex_prod = C.Prod (name, ty_arg, meta) in
           (* next line grants that ty_args is a type *)
           let metasenv,subst, flex_prod, _ =
-           typeof rdb ~localise metasenv subst context flex_prod None in
+           typeof status ~localise metasenv subst context flex_prod None in
 (*
           pp (lazy ( "UNIFICATION in CTX:\n"^ 
-            NCicPp.ppcontext ~metasenv ~subst context
+            status#ppcontext ~metasenv ~subst context
             ^ "\nOF: " ^
-            NCicPp.ppterm ~metasenv ~subst ~context t ^  " === " ^
-            NCicPp.ppterm ~metasenv ~subst ~context flex_prod ^ "\n"));
+            status#ppterm ~metasenv ~subst ~context t ^  " === " ^
+            status#ppterm ~metasenv ~subst ~context flex_prod ^ "\n"));
 *)
           let metasenv, subst =
-             try NCicUnification.unify rdb metasenv subst context t flex_prod 
+             try NCicUnification.unify status metasenv subst context t flex_prod 
              with exc -> raise (wrap_exc (lazy (localise orig_he, Printf.sprintf
               ("The term %s has an inferred type %s, but is applied to the" ^^
                " argument %s of type %s")
-              (NCicPp.ppterm ~metasenv ~subst ~context he)
-              (NCicPp.ppterm ~metasenv ~subst ~context t)
-              (NCicPp.ppterm ~metasenv ~subst ~context arg)
-              (NCicPp.ppterm ~metasenv ~subst ~context ty_arg))) 
+              (status#ppterm ~metasenv ~subst ~context he)
+              (status#ppterm ~metasenv ~subst ~context t)
+              (status#ppterm ~metasenv ~subst ~context arg)
+              (status#ppterm ~metasenv ~subst ~context ty_arg))) 
                  (match exc with
                  | NCicUnification.UnificationFailure m -> 
                      NCicUnification.Uncertain m
                  | x -> x))
               (* XXX coerce to funclass *)
           in
-          let meta = NCicSubstitution.subst ~avoid_beta_redexes:true arg meta in
+          let meta = NCicSubstitution.subst status ~avoid_beta_redexes:true arg meta in
           aux metasenv subst (arg :: args_so_far) he meta tl
       | C.Match (_,_,C.Meta _,_) 
       | C.Match (_,_,C.Appl (C.Meta _ :: _),_) 
       | C.Appl (C.Const (NReference.Ref (_, NReference.Fix _)) :: _) ->
           raise (Uncertain (lazy (localise orig_he, Printf.sprintf
             ("The term %s is here applied to %d arguments but expects " ^^
-            "only %d arguments") (NCicPp.ppterm ~metasenv ~subst ~context he)
+            "only %d arguments") (status#ppterm ~metasenv ~subst ~context he)
             (List.length args) (List.length args_so_far))))
       | ty ->
           let metasenv, subst, newhead, newheadty = 
-            try_coercions rdb ~localise metasenv subst context
+            try_coercions status ~localise metasenv subst context
               (NCicUntrusted.mk_appl he (List.rev args_so_far)) orig_he ty
               (NCic.Prod ("_",NCic.Implicit `Term,NCic.Implicit `Term))
               false
               (RefineFailure (lazy (localise orig_he, Printf.sprintf
                ("The term %s is here applied to %d arguments but expects " ^^
-               "only %d arguments") (NCicPp.ppterm ~metasenv ~subst ~context he)
+               "only %d arguments") (status#ppterm ~metasenv ~subst ~context he)
                (List.length args) (List.length args_so_far))))
           in
            aux metasenv subst [] newhead newheadty (arg :: tl)
@@ -1037,9 +1037,9 @@ let relocalise old_localise dt t add =
     (try find add dt t with Not_found -> assert false)
 ;;
 
-let undebruijnate inductive ref t rev_fl =
+let undebruijnate status inductive ref t rev_fl =
   let len = List.length rev_fl in 
-  NCicSubstitution.psubst (fun x -> x) 
+  NCicSubstitution.psubst status (fun x -> x) 
    (HExtlib.list_mapi 
       (fun (_,_,rno,_,_,_) i -> 
          let i = len - i - 1 in
@@ -1052,17 +1052,17 @@ let undebruijnate inductive ref t rev_fl =
 
 
 let typeof_obj 
-  rdb ?(localise=fun _ -> Stdpp.dummy_loc) (uri,height,metasenv,subst,obj)
+  status ?(localise=fun _ -> Stdpp.dummy_loc) (uri,height,metasenv,subst,obj)
 = 
   match obj with 
   | C.Constant (relevance, name, bo, ty, attr) ->
        let metasenv, subst, ty = 
-         check_type rdb ~localise metasenv subst [] ty in
+         check_type status ~localise metasenv subst [] ty in
        let metasenv, subst, bo, ty, height = 
          match bo with
          | Some bo ->
              let metasenv, subst, bo, ty = 
-               typeof rdb ~localise metasenv subst [] bo (Some ty) in
+               typeof status ~localise metasenv subst [] bo (Some ty) in
              let height = (* XXX recalculate *) height in
                metasenv, subst, Some bo, ty, height
          | None -> metasenv, subst, None, ty, 0
@@ -1075,8 +1075,8 @@ let typeof_obj
         List.fold_left
          (fun (types, metasenv, subst, fl) (relevance,name,k,ty,bo) ->
            let metasenv, subst, ty = 
-             check_type rdb ~localise metasenv subst [] ty in
-           let dbo = NCicTypeChecker.debruijn uri len [] ~subst bo in
+             check_type status ~localise metasenv subst [] ty in
+           let dbo = NCicTypeChecker.debruijn status uri len [] ~subst bo in
            let localise = relocalise localise dbo bo in
             (name,C.Decl ty)::types,
               metasenv, subst, (relevance,name,k,ty,dbo,localise)::fl
@@ -1086,7 +1086,7 @@ let typeof_obj
         List.fold_left 
           (fun (metasenv,subst,fl) (relevance,name,k,ty,dbo,localise) ->
             let metasenv, subst, dbo, ty = 
-              typeof rdb ~localise metasenv subst types dbo (Some ty)
+              typeof status ~localise metasenv subst types dbo (Some ty)
             in
             metasenv, subst, (relevance,name,k,ty,dbo)::fl)
           (metasenv, subst, []) rev_fl
@@ -1096,7 +1096,7 @@ let typeof_obj
         List.map 
           (fun (relevance,name,k,ty,dbo) ->
             let bo = 
-              undebruijnate inductive 
+              undebruijnate status inductive 
                (NReference.reference_of_spec uri 
                  (if inductive then NReference.Fix (0,k,0) 
                   else NReference.CoFix 0)) dbo rev_fl
@@ -1112,13 +1112,13 @@ let typeof_obj
       List.fold_left
        (fun (metasenv,subst,res,ctx) (relevance,n,ty,cl) ->
           let metasenv, subst, ty = 
-            check_type rdb ~localise metasenv subst [] ty in
+            check_type status ~localise metasenv subst [] ty in
           metasenv,subst,(relevance,n,ty,cl)::res,(n,NCic.Decl ty)::ctx
        ) (metasenv,subst,[],[]) itl in
      let metasenv,subst,itl,_ =
       List.fold_left
        (fun (metasenv,subst,res,i) (it_relev,n,ty,cl) ->
-         let context,ty_sort = NCicReduction.split_prods ~subst [] ~-1 ty in
+         let context,ty_sort = NCicReduction.split_prods status ~subst [] ~-1 ty in
          let sx_context_ty_rev,_= HExtlib.split_nth leftno (List.rev context) in
          let metasenv,subst,cl =
           List.fold_right
@@ -1126,10 +1126,10 @@ let typeof_obj
 	     let k_relev =
               try snd (HExtlib.split_nth leftno k_relev)
               with Failure _ -> k_relev in
-             let te = NCicTypeChecker.debruijn uri len [] ~subst te in
+             let te = NCicTypeChecker.debruijn status uri len [] ~subst te in
              let metasenv, subst, te = 
-               check_type rdb ~localise metasenv subst tys te in
-             let context,te = NCicReduction.split_prods ~subst tys leftno te in
+               check_type status ~localise metasenv subst tys te in
+             let context,te = NCicReduction.split_prods status ~subst tys leftno te in
              let _,chopped_context_rev =
               HExtlib.split_nth (List.length tys) (List.rev context) in
              let sx_context_te_rev,_ =
@@ -1143,17 +1143,17 @@ let typeof_obj
                     match item1,item2 with
                       (n1,C.Decl ty1),(n2,C.Decl ty2) ->
                         if n1 = n2 then
-                         NCicUnification.unify rdb ~test_eq_only:true metasenv
+                         NCicUnification.unify status ~test_eq_only:true metasenv
                           subst context ty1 ty2,true
                         else
                          (metasenv,subst),false
                     | (n1,C.Def (bo1,ty1)),(n2,C.Def (bo2,ty2)) ->
                         if n1 = n2 then
                          let metasenv,subst =
-                          NCicUnification.unify rdb ~test_eq_only:true metasenv
+                          NCicUnification.unify status ~test_eq_only:true metasenv
                            subst context ty1 ty2
                          in
-                          NCicUnification.unify rdb ~test_eq_only:true metasenv
+                          NCicUnification.unify status ~test_eq_only:true metasenv
                            subst context bo1 bo2,true
                         else
                          (metasenv,subst),false
@@ -1186,7 +1186,7 @@ let typeof_obj
                       let (metasenv, subst), _ = 
                         List.fold_left
                         (fun ((metasenv, subst),l) arg ->
-                          NCicUnification.unify rdb 
+                          NCicUnification.unify status 
                            ~test_eq_only:true metasenv subst context arg 
                              (NCic.Rel (ctxlen - len - l)), l+1
                           )
@@ -1198,20 +1198,20 @@ let typeof_obj
                 in
                aux context (metasenv,subst) te
              in
-             let con_sort= NCicTypeChecker.typeof ~subst ~metasenv context te in
+             let con_sort= NCicTypeChecker.typeof status ~subst ~metasenv context te in
               (match
-                NCicReduction.whd ~subst context con_sort,
-                NCicReduction.whd ~subst [] ty_sort
+                NCicReduction.whd status ~subst context con_sort,
+                NCicReduction.whd status ~subst [] ty_sort
                with
                   (C.Sort (C.Type u1) as s1), (C.Sort (C.Type u2) as s2) ->
                    if not (NCicEnvironment.universe_leq u1 u2) then
                     raise
                      (RefineFailure
                        (lazy(localise te, "The type " ^
-                         NCicPp.ppterm ~metasenv ~subst ~context s1 ^
+                         status#ppterm ~metasenv ~subst ~context s1 ^
                          " of the constructor is not included in the inductive"^
                          " type sort " ^
-                         NCicPp.ppterm ~metasenv ~subst ~context s2)))
+                         status#ppterm ~metasenv ~subst ~context s2)))
                 | C.Sort _, C.Sort C.Prop
                 | C.Sort _, C.Sort C.Type _ -> ()
                 | _, _ ->
@@ -1222,18 +1222,18 @@ let typeof_obj
               (* let's check also the positivity conditions *)
               if 
                not
-               (NCicTypeChecker.are_all_occurrences_positive
+               (NCicTypeChecker.are_all_occurrences_positive status
                  ~subst context uri leftno (i+leftno) leftno (len+leftno) te) 
               then
                 raise
                   (RefineFailure
                     (lazy (localise te,
                       "Non positive occurence in " ^
-                        NCicPp.ppterm ~metasenv ~subst ~context te)))
+                        status#ppterm ~metasenv ~subst ~context te)))
               else
                let relsno = List.length itl + leftno in
                let te = 
-                 NCicSubstitution.psubst 
+                 NCicSubstitution.psubst status
                   (fun i ->
                     if i <= leftno  then
                      NCic.Rel i

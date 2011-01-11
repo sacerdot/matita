@@ -78,7 +78,8 @@ let pp_capture_variable pp_term =
   | term, None -> pp_term (* ~pp_parens:false *) term
   | term, Some typ -> "(" ^ pp_term (* ~pp_parens:false *) term ^ ": " ^ pp_term typ ^ ")"
 
-let rec pp_term ?(pp_parens = true) t =
+let rec pp_term (status : #NCic.status) ?(pp_parens = true) t =
+  let pp_term = pp_term status in
   let t_pp =
     match t with
     | Ast.AttributedTerm (attr, term) when debug_printing ->
@@ -107,7 +108,7 @@ let rec pp_term ?(pp_parens = true) t =
                   sprintf "(i.e.%s)" (NReference.string_of_reference uri)
               | _ -> ""))	  
 	  (match typ with None -> "" | Some t -> sprintf " return %s" (pp_term t))          
-          (pp_patterns patterns)
+          (pp_patterns status patterns)
     | Ast.Cast (t1, t2) -> sprintf "(%s: %s)" (pp_term ~pp_parens:true t1) (pp_term ~pp_parens:true t2)
     | Ast.LetIn ((var,t2), t1, t3) ->
 (*       let t2 = match t2 with None -> Ast.Implicit | Some t -> t in *)
@@ -140,10 +141,10 @@ let rec pp_term ?(pp_parens = true) t =
     | Ast.Ident (name, Some []) | Ast.Ident (name, None)
     | Ast.Uri (name, Some []) | Ast.Uri (name, None) -> name
     | Ast.NRef nref -> NReference.string_of_reference nref
-    | Ast.NCic cic -> NCicPp.ppterm ~metasenv:[] ~context:[] ~subst:[] cic
+    | Ast.NCic cic -> status#ppterm ~metasenv:[] ~context:[] ~subst:[] cic
     | Ast.Ident (name, Some substs)
     | Ast.Uri (name, Some substs) ->
-        sprintf "%s \\subst [%s]" name (pp_substs substs)
+        sprintf "%s \\subst [%s]" name (pp_substs status substs)
     | Ast.Implicit `Vector -> "…"
     | Ast.Implicit `JustOne -> "?"
     | Ast.Implicit (`Tagged name) -> "?"^name
@@ -161,8 +162,8 @@ let rec pp_term ?(pp_parens = true) t =
     | Ast.UserInput -> "%"
 
     | Ast.Literal l -> pp_literal l
-    | Ast.Layout l -> pp_layout l
-    | Ast.Magic m -> pp_magic m
+    | Ast.Layout l -> pp_layout status l
+    | Ast.Magic m -> pp_magic status m
     | Ast.Variable v -> pp_variable v
   in
   match pp_parens, t with
@@ -174,10 +175,11 @@ let rec pp_term ?(pp_parens = true) t =
     | true, Ast.Ident (_, None)    -> t_pp
     | _                            -> sprintf "(%s)" t_pp
 
-and pp_subst (name, term) = sprintf "%s \\Assign %s" name (pp_term term)
-and pp_substs substs = String.concat "; " (List.map pp_subst substs)
+and pp_subst status (name, term) =
+ sprintf "%s \\Assign %s" name (pp_term status term)
+and pp_substs status substs = String.concat "; " (List.map (pp_subst status) substs)
 
-and pp_pattern =
+and pp_pattern status =
  function
     Ast.Pattern (head, href, vars), term ->
      let head_pp =
@@ -191,13 +193,13 @@ and pp_pattern =
        | [] -> head_pp
        | _ ->
            sprintf "(%s %s)" head_pp
-             (String.concat " " (List.map (pp_capture_variable pp_term) vars)))
-       (pp_term term)
+             (String.concat " " (List.map (pp_capture_variable (pp_term status)) vars)))
+       (pp_term status term)
   | Ast.Wildcard, term ->
-     sprintf "_ \\Rightarrow %s" (pp_term term)
+     sprintf "_ \\Rightarrow %s" (pp_term status term)
 
-and pp_patterns patterns =
-  sprintf "[%s]" (String.concat " | " (List.map pp_pattern patterns))
+and pp_patterns status patterns =
+  sprintf "[%s]" (String.concat " | " (List.map (pp_pattern status) patterns))
 
 and pp_box_spec (kind, spacing, indent) =
   let int_of_bool b = if b then 1 else 0 in
@@ -207,7 +209,9 @@ and pp_box_spec (kind, spacing, indent) =
   in
   sprintf "%sBOX%d%d" kind_string (int_of_bool spacing) (int_of_bool indent)
 
-and pp_layout = function
+and pp_layout status =
+ let pp_term = pp_term status in
+ function
   | Ast.Sub (t1, t2) -> sprintf "%s \\SUB %s" (pp_term t1) (pp_term t2)
   | Ast.Sup (t1, t2) -> sprintf "%s \\SUP %s" (pp_term t1) (pp_term t2)
   | Ast.Below (t1, t2) -> sprintf "%s \\BELOW %s" (pp_term t1) (pp_term t2)
@@ -238,7 +242,9 @@ and pp_layout = function
         (String.concat " " (List.map (fun (k,v) -> k^"="^v) l))
         (String.concat " " (List.map pp_term terms))
 
-and pp_magic = function
+and pp_magic status =
+ let pp_term = pp_term status in
+ function
   | Ast.List0 (t, sep_opt) ->
       sprintf "list0 %s%s" (pp_term t) (pp_sep_opt sep_opt)
   | Ast.List1 (t, sep_opt) ->
@@ -272,7 +278,7 @@ and pp_variable = function
   | Ast.FreshVar n -> "fresh " ^ n
 
 let _pp_term = ref (pp_term ~pp_parens:false)
-let pp_term t = !_pp_term t
+let pp_term status t = !_pp_term (status :> NCic.status) t
 let set_pp_term f = _pp_term := f
 
 let pp_params pp_term = function
@@ -323,14 +329,14 @@ let pp_obj pp_term = function
     "record " ^ name ^ " " ^ pp_params pp_term params ^ ": " ^ pp_term ty ^ 
     " \\def {" ^ pp_fields pp_term fields ^ "\n}"
 
-let rec pp_value = function
-  | Env.TermValue t -> sprintf "$%s$" (pp_term t)
+let rec pp_value (status: #NCic.status) = function
+  | Env.TermValue t -> sprintf "$%s$" (pp_term status t)
   | Env.StringValue (Env.Ident s) -> sprintf "\"%s\"" s
   | Env.StringValue (Env.Var s) -> sprintf "\"${ident %s}\"" s
   | Env.NumValue n -> n
-  | Env.OptValue (Some v) -> "Some " ^ pp_value v
+  | Env.OptValue (Some v) -> "Some " ^ pp_value status v
   | Env.OptValue None -> "None"
-  | Env.ListValue l -> sprintf "[%s]" (String.concat "; " (List.map pp_value l))
+  | Env.ListValue l -> sprintf "[%s]" (String.concat "; " (List.map (pp_value status) l))
 
 let rec pp_value_type =
   function
@@ -340,11 +346,11 @@ let rec pp_value_type =
   | Env.OptType t -> "Maybe " ^ pp_value_type t
   | Env.ListType l -> "List " ^ pp_value_type l
 
-let pp_env env =
+let pp_env status env =
   String.concat "; "
     (List.map
       (fun (name, (ty, value)) ->
-        sprintf "%s : %s = %s" name (pp_value_type ty) (pp_value value))
+        sprintf "%s : %s = %s" name (pp_value_type ty) (pp_value status value))
       env)
 
 let rec pp_cic_appl_pattern = function

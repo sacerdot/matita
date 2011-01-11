@@ -32,39 +32,39 @@ let rec mk_rels howmany from =
   | _ -> (NCic.Rel (howmany + from)) :: (mk_rels (howmany-1) from)
 ;;
 
-let refine_term 
- metasenv subst context uri ~rdb ~use_coercions term expty _ ~localization_tbl=
+let refine_term (status: #NCicCoercion.status) metasenv subst context uri ~use_coercions term expty _
+ ~localization_tbl
+=
   assert (uri=None);
   debug_print (lazy (sprintf "TEST_INTERPRETATION: %s" 
-    (NCicPp.ppterm ~metasenv ~subst ~context term)));
+    (status#ppterm ~metasenv ~subst ~context term)));
   try
     let localise t = 
       try NCicUntrusted.NCicHash.find localization_tbl t
       with Not_found -> 
-        prerr_endline ("NOT LOCALISED" ^ NCicPp.ppterm ~metasenv ~subst ~context t);
+        prerr_endline ("NOT LOCALISED" ^ status#ppterm ~metasenv ~subst ~context t);
         (*assert false*) HExtlib.dummy_floc
     in
     let metasenv, subst, term, _ = 
       NCicRefiner.typeof 
-        (rdb#set_coerc_db 
-          (if use_coercions then rdb#coerc_db else NCicCoercion.empty_db))
+        (status#set_coerc_db 
+          (if use_coercions then status#coerc_db else NCicCoercion.empty_db))
         metasenv subst context term expty ~localise 
     in
      Disambiguate.Ok (term, metasenv, subst, ())
   with
   | NCicRefiner.Uncertain loc_msg ->
       debug_print (lazy ("UNCERTAIN: [" ^ snd (Lazy.force loc_msg) ^ "] " ^ 
-        NCicPp.ppterm ~metasenv ~subst ~context term)) ;
+        status#ppterm ~metasenv ~subst ~context term)) ;
       Disambiguate.Uncertain loc_msg
   | NCicRefiner.RefineFailure loc_msg ->
       debug_print (lazy (sprintf "PRUNED:\nterm%s\nmessage:%s"
-        (NCicPp.ppterm ~metasenv ~subst ~context term) (snd(Lazy.force loc_msg))));
+        (status#ppterm ~metasenv ~subst ~context term) (snd(Lazy.force loc_msg))));
       Disambiguate.Ko loc_msg
 ;;
 
-let refine_obj 
-  ~rdb metasenv subst _context _uri 
-  ~use_coercions obj _ _ugraph ~localization_tbl 
+let refine_obj status metasenv subst _context _uri ~use_coercions obj _ _ugraph
+ ~localization_tbl 
 =
   assert (metasenv=[]);
   assert (subst=[]);
@@ -76,8 +76,8 @@ let refine_obj
   try
     let obj =
       NCicRefiner.typeof_obj
-        (rdb#set_coerc_db
-           (if use_coercions then rdb#coerc_db 
+        (status#set_coerc_db
+           (if use_coercions then status#coerc_db 
             else NCicCoercion.empty_db))
         obj ~localise 
     in
@@ -85,11 +85,11 @@ let refine_obj
   with
   | NCicRefiner.Uncertain loc_msg ->
       debug_print (lazy ("UNCERTAIN: [" ^ snd (Lazy.force loc_msg) ^ "] " ^ 
-        NCicPp.ppobj obj)) ;
+        status#ppobj obj)) ;
       Disambiguate.Uncertain loc_msg
   | NCicRefiner.RefineFailure loc_msg ->
       debug_print (lazy (sprintf "PRUNED:\nobj: %s\nmessage: %s"
-        (NCicPp.ppobj obj) (snd(Lazy.force loc_msg))));
+        (status#ppobj obj) (snd(Lazy.force loc_msg))));
       Disambiguate.Ko loc_msg
 ;;
   
@@ -103,9 +103,9 @@ let find_in_context name context =
   in
   aux 1 context
 
-let interpretate_term_and_interpretate_term_option 
-  ?(create_dummy_ids=false) 
-    ~obj_context ~mk_choice ~env ~uri ~is_path ~localization_tbl 
+let interpretate_term_and_interpretate_term_option (status: #NCic.status)
+  ?(create_dummy_ids=false) ~obj_context ~mk_choice ~env ~uri ~is_path
+  ~localization_tbl 
 =
   (* create_dummy_ids shouldbe used only for interpretating patterns *)
   assert (uri = None);
@@ -185,7 +185,7 @@ let interpretate_term_and_interpretate_term_option
               | t ->
                 raise (DisambiguateTypes.Invalid_choice 
                   (lazy (loc,"The type of the term to be matched "^
-                          "is not (co)inductive: " ^ NCicPp.ppterm 
+                          "is not (co)inductive: " ^ status#ppterm 
                           ~metasenv:[] ~subst:[] ~context:[] t))))
           | None ->
               let rec fst_constructor =
@@ -207,7 +207,7 @@ let interpretate_term_and_interpretate_term_option
               (match Disambiguate.resolve ~env ~mk_choice
                 (Id (fst_constructor branches)) (`Args []) with
               | NCic.Const (NReference.Ref (_,NReference.Con _) as r) -> 
-                   let b,_,_,_,_ = NCicEnvironment.get_checked_indtys r in
+                   let b,_,_,_,_= NCicEnvironment.get_checked_indtys status r in
                    NReference.mk_indty b r
               | NCic.Implicit _ ->
                  raise (Disambiguate.Try_again 
@@ -216,16 +216,16 @@ let interpretate_term_and_interpretate_term_option
                 raise (DisambiguateTypes.Invalid_choice 
                   (lazy (loc, 
                   "The type of the term to be matched is not (co)inductive: " 
-                  ^ NCicPp.ppterm ~metasenv:[] ~subst:[] ~context:[] t))))
+                  ^ status#ppterm ~metasenv:[] ~subst:[] ~context:[] t))))
          in
          let _,leftsno,itl,_,indtyp_no =
-          NCicEnvironment.get_checked_indtys indtype_ref in
+          NCicEnvironment.get_checked_indtys status indtype_ref in
          let _,_,_,cl =
           try
            List.nth itl indtyp_no
           with _ -> assert false in
          let rec count_prod t =
-                 match NCicReduction.whd ~subst:[] [] t with
+                 match NCicReduction.whd status ~subst:[] [] t with
                NCic.Prod (_, _, t) -> 1 + (count_prod t)
              | _ -> 0 
          in 
@@ -373,31 +373,32 @@ let interpretate_term_and_interpretate_term_option
    (fun ~context -> aux_option ~localize:true HExtlib.dummy_floc context)
 ;;
 
-let interpretate_term ?(create_dummy_ids=false) ~context ~env ~uri ~is_path ast
-     ~obj_context ~localization_tbl ~mk_choice
+let interpretate_term status ?(create_dummy_ids=false) ~context ~env ~uri
+ ~is_path ast ~obj_context ~localization_tbl ~mk_choice
 =
   let context = List.map fst context in
   fst 
-    (interpretate_term_and_interpretate_term_option 
-      ~obj_context ~mk_choice ~create_dummy_ids ~env ~uri ~is_path ~localization_tbl)
+    (interpretate_term_and_interpretate_term_option status
+      ~obj_context ~mk_choice ~create_dummy_ids ~env ~uri ~is_path
+      ~localization_tbl)
     ~context ast
 ;;
 
-let interpretate_term_option 
-  ?(create_dummy_ids=false) ~context ~env ~uri ~is_path 
-  ~localization_tbl ~mk_choice ~obj_context
+let interpretate_term_option status ?(create_dummy_ids=false) ~context ~env ~uri
+ ~is_path ~localization_tbl ~mk_choice ~obj_context
 =
   let context = List.map fst context in
   snd 
-    (interpretate_term_and_interpretate_term_option 
-      ~obj_context ~mk_choice ~create_dummy_ids ~env ~uri ~is_path ~localization_tbl)
+    (interpretate_term_and_interpretate_term_option status
+      ~obj_context ~mk_choice ~create_dummy_ids ~env ~uri ~is_path
+      ~localization_tbl)
     ~context 
 ;;
 
-let disambiguate_path path =
+let disambiguate_path status path =
   let localization_tbl = NCicUntrusted.NCicHash.create 23 in
   fst
-    (interpretate_term_and_interpretate_term_option 
+    (interpretate_term_and_interpretate_term_option status
     ~obj_context:[] ~mk_choice:(fun _ -> assert false)
     ~create_dummy_ids:true ~env:DisambiguateTypes.Environment.empty
     ~uri:None ~is_path:true ~localization_tbl) ~context:[] path
@@ -408,7 +409,7 @@ let ncic_name_of_ident = function
   | _ -> assert false
 ;;
 
-let interpretate_obj 
+let interpretate_obj status
 (*      ?(create_dummy_ids=false)  *)
      ~context ~env ~uri ~is_path obj ~localization_tbl ~mk_choice 
 =
@@ -422,7 +423,7 @@ let interpretate_obj
  match obj with
  | NotationPt.Theorem (flavour, name, ty, bo, pragma) ->
      let ty' = 
-       interpretate_term 
+       interpretate_term status
          ~obj_context:[] ~context:[] ~env ~uri:None ~is_path:false ty 
      in
      let height = (* XXX calculate *) 0 in
@@ -457,12 +458,12 @@ let interpretate_obj
                         NotationPt.Binder (kind, var, t)) params t
                    in
                    let cic_body =
-                     interpretate_term 
+                     interpretate_term status
                        ~obj_context ~context ~env ~uri:None ~is_path:false
                        (add_binders `Lambda body) 
                    in
                    let cic_type =
-                     interpretate_term_option 
+                     interpretate_term_option status
                        ~obj_context:[]
                        ~context ~env ~uri:None ~is_path:false `Type
                        (HExtlib.map_option (add_binders `Pi) typ)
@@ -474,7 +475,7 @@ let interpretate_obj
              NCic.Fixpoint (inductive,inductiveFuns,attrs)
          | bo -> 
              let bo = 
-               interpretate_term 
+               interpretate_term status
                 ~obj_context:[] ~context:[] ~env ~uri:None ~is_path:false bo
              in
              let attrs = `Provided, flavour, pragma in
@@ -490,7 +491,7 @@ let interpretate_obj
            | Some t -> t in
          let name = cic_name_of_name name in
          let t =
-          interpretate_term ~obj_context:[] ~context ~env ~uri:None
+          interpretate_term status ~obj_context:[] ~context ~env ~uri:None
            ~is_path:false t
          in
           (name,NCic.Decl t)::context,(name,t)::res
@@ -515,14 +516,14 @@ let interpretate_obj
       (fun (name,_,ty,cl) ->
         let ty' =
          add_params
-         (interpretate_term ~obj_context:[] ~context ~env ~uri:None
+         (interpretate_term status ~obj_context:[] ~context ~env ~uri:None
            ~is_path:false ty) in
         let cl' =
          List.map
           (fun (name,ty) ->
             let ty' =
              add_params
-              (interpretate_term ~obj_context ~context ~env ~uri:None
+              (interpretate_term status ~obj_context ~context ~env ~uri:None
                 ~is_path:false ty) in
             let relevance = [] in
              relevance,name,ty'
@@ -546,7 +547,7 @@ let interpretate_obj
            | Some t -> t in
          let name = cic_name_of_name name in
          let t =
-          interpretate_term ~obj_context:[] ~context ~env ~uri:None
+          interpretate_term status ~obj_context:[] ~context ~env ~uri:None
            ~is_path:false t
          in
           (name,NCic.Decl t)::context,(name,t)::res
@@ -558,7 +559,7 @@ let interpretate_obj
     let leftno = List.length params in
     let ty' =
      add_params
-      (interpretate_term ~obj_context:[] ~context ~env ~uri:None
+      (interpretate_term status ~obj_context:[] ~context ~env ~uri:None
         ~is_path:false ty) in
     let nref =
      NReference.reference_of_spec uri (NReference.Ind (true,0,leftno)) in
@@ -568,7 +569,7 @@ let interpretate_obj
       List.fold_left
        (fun (context,res) (name,ty,_coercion,_arity) ->
          let ty =
-          interpretate_term ~obj_context ~context ~env ~uri:None
+          interpretate_term status ~obj_context ~context ~env ~uri:None
            ~is_path:false ty in
          let context' = (name,NCic.Decl ty)::context in
           context',(name,ty)::res
@@ -591,11 +592,10 @@ let interpretate_obj
      NCic.Inductive (true,leftno,tyl,attrs)
 ;;
 
-let disambiguate_term ~context ~metasenv ~subst ~expty
-   ~mk_implicit ~description_of_alias ~fix_instance ~mk_choice
-   ~aliases ~universe ~rdb ~lookup_in_library 
-   (text,prefix_len,term) 
- =
+let disambiguate_term (status: #NCicCoercion.status) ~context ~metasenv ~subst
+ ~expty ~mk_implicit ~description_of_alias ~fix_instance ~mk_choice
+ ~aliases ~universe ~lookup_in_library (text,prefix_len,term) 
+=
   let mk_localization_tbl x = NCicUntrusted.NCicHash.create x in
    let res,b =
     MultiPassDisambiguator.disambiguate_thing
@@ -603,20 +603,19 @@ let disambiguate_term ~context ~metasenv ~subst ~expty
      ~context ~metasenv ~initial_ugraph:() ~aliases
      ~mk_implicit ~description_of_alias ~fix_instance
      ~string_context_of_context:(List.map (fun (x,_) -> Some x))
-     ~universe ~uri:None ~pp_thing:NotationPp.pp_term
+     ~universe ~uri:None ~pp_thing:(NotationPp.pp_term status)
      ~passes:(MultiPassDisambiguator.passes ())
      ~lookup_in_library ~domain_of_thing:Disambiguate.domain_of_term
-     ~interpretate_thing:(interpretate_term ~obj_context:[] ~mk_choice (?create_dummy_ids:None))
-     ~refine_thing:(refine_term ~rdb) (text,prefix_len,term)
+     ~interpretate_thing:(interpretate_term status ~obj_context:[] ~mk_choice (?create_dummy_ids:None))
+     ~refine_thing:(refine_term status) (text,prefix_len,term)
      ~mk_localization_tbl ~expty ~subst
    in
     List.map (function (a,b,c,d,_) -> a,b,c,d) res, b
 ;;
 
-let disambiguate_obj 
+let disambiguate_obj (status: #NCicCoercion.status)
    ~mk_implicit ~description_of_alias ~fix_instance ~mk_choice
-   ~aliases ~universe ~rdb ~lookup_in_library ~uri
-   (text,prefix_len,obj) 
+   ~aliases ~universe ~lookup_in_library ~uri (text,prefix_len,obj) 
  =
   let mk_localization_tbl x = NCicUntrusted.NCicHash.create x in
    let res,b =
@@ -627,11 +626,11 @@ let disambiguate_obj
      ~string_context_of_context:(List.map (fun (x,_) -> Some x))
      ~universe 
      ~uri:(Some uri)
-     ~pp_thing:(NotationPp.pp_obj NotationPp.pp_term)
+     ~pp_thing:(NotationPp.pp_obj (NotationPp.pp_term status))
      ~passes:(MultiPassDisambiguator.passes ())
      ~lookup_in_library ~domain_of_thing:Disambiguate.domain_of_obj
-     ~interpretate_thing:(interpretate_obj ~mk_choice)
-     ~refine_thing:(refine_obj ~rdb) 
+     ~interpretate_thing:(interpretate_obj status ~mk_choice)
+     ~refine_thing:(refine_obj status) 
      (text,prefix_len,obj)
      ~mk_localization_tbl ~expty:None
    in

@@ -26,10 +26,10 @@ let mk_id id =
   NotationPt.Ident (id,None)
 ;;
 
-let rec split_arity ~subst context te =
-  match NCicReduction.whd ~subst context te with
+let rec split_arity status ~subst context te =
+  match NCicReduction.whd status ~subst context te with
    | NCic.Prod (name,so,ta) -> 
-       split_arity ~subst ((name, (NCic.Decl so))::context) ta
+       split_arity status ~subst ((name, (NCic.Decl so))::context) ta
    | t -> context, t
 ;;
 
@@ -60,21 +60,21 @@ let subst_metasenv_and_fix_names status =
   let u,h,metasenv, subst,o = status#obj in
   let o = 
     NCicUntrusted.map_obj_kind ~skip_body:true 
-     (NCicUntrusted.apply_subst subst []) o
+     (NCicUntrusted.apply_subst status subst []) o
   in
-   status#set_obj(u,h,NCicUntrusted.apply_subst_metasenv subst metasenv,subst,o)
+   status#set_obj(u,h,NCicUntrusted.apply_subst_metasenv status subst metasenv,subst,o)
 ;;
 
-let mk_inverter name is_ind it leftno ?selection outsort status baseuri =
+let mk_inverter name is_ind it leftno ?selection outsort (status: #NCic.status) baseuri =
  pp (lazy ("leftno = " ^ string_of_int leftno));
  let _,ind_name,ty,cl = it in
- pp (lazy ("arity: " ^ NCicPp.ppterm ~metasenv:[] ~subst:[] ~context:[] ty));
+ pp (lazy ("arity: " ^ status#ppterm ~metasenv:[] ~subst:[] ~context:[] ty));
  let ncons = List.length cl in
- (**)let params,ty = NCicReduction.split_prods ~subst:[] [] leftno ty in
+ (**)let params,ty = NCicReduction.split_prods status ~subst:[] [] leftno ty in
  let params = List.rev_map (function name,_ -> mk_id name) params in
  pp (lazy ("lunghezza params = " ^ string_of_int (List.length params)));(**)
- let args,sort= split_arity ~subst:[] [] ty in
- pp (lazy ("arity sort: " ^ NCicPp.ppterm ~metasenv:[] ~subst:[] ~context:args sort));
+ let args,sort= split_arity status ~subst:[] [] ty in
+ pp (lazy ("arity sort: " ^ status#ppterm ~metasenv:[] ~subst:[] ~context:args sort));
  (**)let args = List.rev_map (function name,_ -> mk_id name) args in
  pp (lazy ("lunghezza args = " ^ string_of_int (List.length args)));(**)
  let nparams = List.length args in

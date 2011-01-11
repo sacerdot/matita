@@ -19,7 +19,7 @@ class type g_status =
   method coerc_db: db
  end
 
-class status :
+class virtual status :
  object ('self)
   inherit g_status
   inherit NCicUnifHint.status

@@ -17,7 +17,7 @@ module Ref = NReference
 exception Subst_not_found of int
 exception Meta_not_found of int
 
-let head_beta_reduce = ref (fun ~upto:_ _ -> assert false);;
+let head_beta_reduce = ref (fun _ ~upto:_ _ -> assert false);;
 let set_head_beta_reduce = (:=) head_beta_reduce;;
 
 let expand_local_context = function
@@ -56,7 +56,7 @@ let fold g k f acc = function
  | C.Match (_,oty,t,pl) -> List.fold_left (f k) (f k (f k acc oty) t) pl
 ;;
 
-let map g k f = function
+let map status g k f = function
  | C.Meta _ -> assert false
  | C.Implicit _
  | C.Sort _
@@ -74,7 +74,7 @@ let map g k f = function
       | C.Appl l :: tl -> C.Appl (l@tl)
       | l1 -> C.Appl l1
     in
-      if fire_beta then !head_beta_reduce ~upto t
+      if fire_beta then !head_beta_reduce (status :> NCic.status) ~upto t
       else t
  | C.Prod (n,s,t) as orig ->
      let s1 = f k s in let t1 = f (g (n,C.Decl s) k) t in

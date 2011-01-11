@@ -67,8 +67,11 @@ struct
       | _ -> PatternMatcher.Constructor
     let tag_of_pattern = get_tag
     let tag_of_term t = get_tag t
-    let string_of_term = NotationPp.pp_term
-    let string_of_pattern = NotationPp.pp_term
+
+    (* Debugging only *)
+    (*CSC: new NCicPp.status is the best I can do now *)
+    let string_of_term = NotationPp.pp_term (new NCicPp.status)
+    let string_of_pattern = NotationPp.pp_term (new NCicPp.status)
   end
 
   module M = PatternMatcher.Matcher (Pattern21)

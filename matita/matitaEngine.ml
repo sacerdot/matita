@@ -29,8 +29,14 @@ module G = GrafiteAst
 open GrafiteTypes
 open Printf
 
+class status baseuri =
+ object
+  inherit GrafiteTypes.status baseuri
+  inherit ApplyTransformation.status
+ end
+
 exception TryingToAdd of string Lazy.t
-exception EnrichedWithStatus of exn * GrafiteTypes.status
+exception EnrichedWithStatus of exn * status
 exception AlreadyLoaded of string Lazy.t
 exception FailureCompiling of string * exn
 exception CircularDependency of string
@@ -40,8 +46,8 @@ let debug_print = if debug then prerr_endline else ignore ;;
 
 let slash_n_RE = Pcre.regexp "\\n" ;;
 
-let pp_ast_statement grafite_status stm =
-  let stm = GrafiteAstPp.pp_statement stm
+let pp_ast_statement status stm =
+  let stm = GrafiteAstPp.pp_statement status stm
     ~map_unicode_to_tex:(Helm_registry.get_bool "matita.paste_unicode_as_tex")
   in
   let stm = Pcre.replace ~rex:slash_n_RE stm in
@@ -204,7 +210,7 @@ and compile ~compiling ~asserted ~include_paths fname =
   if Http_getter_storage.is_read_only baseuri then assert false;
   activate_extraction baseuri fname ;
   (* MATITA 1.0: debbo fare time_travel sulla ng_library? *)
-  let grafite_status = new GrafiteTypes.status baseuri in
+  let status = new status baseuri in
   let big_bang = Unix.gettimeofday () in
   let { Unix.tms_utime = big_bang_u ; Unix.tms_stime = big_bang_s} = 
     Unix.times () 
@@ -238,19 +244,19 @@ and compile ~compiling ~asserted ~include_paths fname =
           (Http_getter.filename ~local:true ~writable:true (baseuri ^
           "foo.con")));
     let buf =
-     GrafiteParser.parsable_statement grafite_status
+     GrafiteParser.parsable_statement status
       (Ulexing.from_utf8_channel (open_in fname))
     in
     let print_cb =
       if not (Helm_registry.get_bool "matita.verbose") then (fun _ _ -> ())
       else pp_ast_statement
     in
-    let asserted, grafite_status =
-     eval_from_stream ~compiling ~asserted ~include_paths grafite_status buf print_cb in
+    let asserted, status =
+     eval_from_stream ~compiling ~asserted ~include_paths status buf print_cb in
     let elapsed = Unix.time () -. time in
      (if Helm_registry.get_bool "matita.moo" then begin
        GrafiteTypes.Serializer.serialize ~baseuri:(NUri.uri_of_string baseuri)
-        grafite_status
+        status
      end;
      let tm = Unix.gmtime elapsed in
      let sec = string_of_int tm.Unix.tm_sec ^ "''" in

@@ -72,7 +72,7 @@ class type g_pstatus =
   method obj: NCic.obj
  end
 
-class pstatus =
+class virtual pstatus =
  fun (o: NCic.obj) ->
  object (self)
    inherit GrafiteDisambiguate.status
@@ -89,31 +89,26 @@ class pstatus =
 type tactic_term = NotationPt.term Disambiguate.disambiguator_input
 type tactic_pattern = GrafiteAst.npattern Disambiguate.disambiguator_input
 
-let pp_tac_status status = 
-  prerr_endline (NCicPp.ppobj status#obj);
-  prerr_endline ("STACK:\n" ^ Continuationals.Stack.pp status#stack)
-;;
-
 type cic_term = NCic.context * NCic.term
 let ctx_of (c,_) = c ;;
 let mk_cic_term c t = c,t ;;
 
-let ppterm status t =
+let ppterm (status:#pstatus) t =
  let uri,height,metasenv,subst,obj = status#obj in
  let context,t = t in
-  NCicPp.ppterm ~metasenv ~subst ~context t
+  status#ppterm ~metasenv ~subst ~context t
 ;;
 
-let ppcontext status c =
+let ppcontext (status: #pstatus) c =
  let uri,height,metasenv,subst,obj = status#obj in
-  NCicPp.ppcontext ~metasenv ~subst c
+  status#ppcontext ~metasenv ~subst c
 ;;
 
-let ppterm_and_context status t =
+let ppterm_and_context (status: #pstatus) t =
  let uri,height,metasenv,subst,obj = status#obj in
  let context,t = t in
-  NCicPp.ppcontext ~metasenv ~subst context ^ "\n ⊢ "^ 
-  NCicPp.ppterm ~metasenv ~subst ~context t
+  status#ppcontext ~metasenv ~subst context ^ "\n ⊢ "^ 
+  status#ppterm ~metasenv ~subst ~context t
 ;;
 
 let relocate status destination (source,t as orig) =
@@ -125,20 +120,20 @@ let relocate status destination (source,t as orig) =
     let rec compute_ops ctx = function (* destination, source *)
       | (n1, NCic.Decl t1 as e)::cl1 as ex, (n2, NCic.Decl t2)::cl2 ->
           if n1 = n2 && 
-             NCicReduction.are_convertible ctx ~subst ~metasenv t1 t2 then
+             NCicReduction.are_convertible status ctx ~subst ~metasenv t1 t2 then
             compute_ops (e::ctx) (cl1,cl2)
           else
             [ `Delift ctx; `Lift (List.rev ex) ]
       | (n1, NCic.Def (b1,t1) as e)::cl1 as ex, (n2, NCic.Def (b2,t2))::cl2 ->
           if n1 = n2 && 
-             NCicReduction.are_convertible ctx ~subst ~metasenv t1 t2 &&
-             NCicReduction.are_convertible ctx ~subst ~metasenv b1 b2 then
+             NCicReduction.are_convertible status ctx ~subst ~metasenv t1 t2 &&
+             NCicReduction.are_convertible status ctx ~subst ~metasenv b1 b2 then
             compute_ops (e::ctx) (cl1,cl2)
           else
             [ `Delift ctx; `Lift (List.rev ex) ]
       | (n1, NCic.Def (b1,t1) as e)::cl1 as ex, (n2, NCic.Decl t2)::cl2 ->
           if n1 = n2 && 
-             NCicReduction.are_convertible ctx ~subst ~metasenv t1 t2 then
+             NCicReduction.are_convertible status ctx ~subst ~metasenv t1 t2 then
             compute_ops (e::ctx) (cl1,cl2)
           else
             [ `Delift ctx; `Lift (List.rev ex) ]
@@ -154,17 +149,17 @@ let relocate status destination (source,t as orig) =
      (fun (status, (source,t)) -> function 
       | `Lift extra_ctx -> 
            let len = List.length extra_ctx in
-           status, (extra_ctx@source, NCicSubstitution.lift len t)
+           status, (extra_ctx@source, NCicSubstitution.lift status len t)
       | `Delift ctx -> 
             let len_ctx = List.length ctx in
             let irl = mk_irl 1 (List.length ctx) in
             let lc = List.length source - len_ctx, NCic.Ctx irl in
             let u, d, metasenv, subst, o = status#obj in
             pp(lazy("delifting as " ^ 
-              NCicPp.ppterm ~metasenv ~subst ~context:source 
+              status#ppterm ~metasenv ~subst ~context:source 
                (NCic.Meta (0,lc))));
             let (metasenv, subst), t =
-              NCicMetaSubst.delift 
+              NCicMetaSubst.delift status
                  ~unify:(fun m s c t1 t2 -> 
                    try Some (NCicUnification.unify status m s c t1 t2)
                    with 
@@ -205,14 +200,14 @@ let disambiguate a b c d = wrap "disambiguate" (disambiguate a b c) d;;
 let typeof status ctx t =
   let status, (_,t) = relocate status ctx t in
   let _,_,metasenv,subst,_ = status#obj in
-  let ty = NCicTypeChecker.typeof ~subst ~metasenv ctx t in
+  let ty = NCicTypeChecker.typeof status ~subst ~metasenv ctx t in
   status, (ctx, ty)
 ;;
 let typeof a b c = wrap "typeof" (typeof a b) c;;
 
 let saturate status ?delta (ctx,t) =
   let n,h,metasenv,subst,k = status#obj in
-  let t,metasenv,args = NCicMetaSubst.saturate ?delta metasenv subst ctx t 0 in
+  let t,metasenv,args = NCicMetaSubst.saturate status ?delta metasenv subst ctx t 0 in
   let status = status#set_obj (n,h,metasenv,subst,k) in
   status, (ctx,t), List.map (fun x -> ctx,x) args
 ;;
@@ -221,14 +216,14 @@ let saturate a ?delta b = wrap "saturate" (saturate a ?delta) b;;
 let whd status ?delta ctx t =
   let status, (_,t) = relocate status ctx t in
   let _,_,_,subst,_ = status#obj in
-  let t = NCicReduction.whd ~subst ?delta ctx t in
+  let t = NCicReduction.whd status ~subst ?delta ctx t in
   status, (ctx, t)
 ;;
   
 let normalize status ?delta ctx t =
   let status, (_,t) = relocate status ctx t in
   let _,_,_,subst,_ = status#obj in
-  let t = NCicTacReduction.normalize ~subst ?delta ctx t in
+  let t = NCicTacReduction.normalize status ~subst ?delta ctx t in
   status, (ctx, t)
 ;;
   
@@ -245,7 +240,7 @@ let fix_sorts status (ctx,t) =
  let f () =
   let name,height,metasenv,subst,obj = status#obj in
   let metasenv, t = 
-    NCicUnification.fix_sorts metasenv subst t in
+    NCicUnification.fix_sorts status metasenv subst t in
   let status = status#set_obj (name,height,metasenv,subst,obj) in
    status, (ctx,t)
  in
@@ -372,7 +367,7 @@ let select_term
             aux ctx (status,already_found) t
         | NCic.Meta _ -> (status,already_found),t
         | _ ->
-          NCicUntrusted.map_term_fold_a (fun e c -> e::c) ctx aux
+          NCicUntrusted.map_term_fold_a status (fun e c -> e::c) ctx aux
            (status,already_found) t
      in 
        aux ctx (status,false) t
@@ -383,7 +378,7 @@ let select_term
     | _, NCic.Meta (i,lc) when List.mem_assoc i subst ->
         let cic = 
           let _,_,t,_ = NCicUtils.lookup_subst i subst in
-          NCicSubstitution.subst_meta lc t
+          NCicSubstitution.subst_meta status lc t
         in
         select status ctx pat cic
     | NCic.LetIn (_,t1,s1,b1), NCic.LetIn (n,t2,s2,b2) ->
@@ -434,9 +429,9 @@ let select_term
             status,t)
     | NCic.Implicit _, t -> status, t
     | _,t -> 
-        fail (lazy ("malformed pattern: " ^ NCicPp.ppterm ~metasenv:[]
+        fail (lazy ("malformed pattern: " ^ status#ppterm ~metasenv:[]
           ~context:[] ~subst:[] pat ^ " against " ^ 
-          NCicPp.ppterm ~metasenv:[] ~subst:[] ~context:[] t))
+          status#ppterm ~metasenv:[] ~subst:[] ~context:[] t))
   in
   pp(lazy ("select in: "^ppterm low_status (context,term)));
   let status, term = select low_status context path term in
@@ -453,7 +448,7 @@ let analyse_indty status ty =
    | _,NCic.Appl (NCic.Const (NRef.Ref (_,(NRef.Ind _)) as ref) :: args) -> 
          ref, args
    | _,_ -> fail (lazy ("not an inductive type: " ^ ppterm status ty)) in
- let _,lno,tl,_,i = NCicEnvironment.get_checked_indtys ref in
+ let _,lno,tl,_,i = NCicEnvironment.get_checked_indtys status ref in
  let _,_,_,cl = List.nth tl i in
  let consno = List.length cl in
  let left, right = HExtlib.split_nth lno args in
@@ -463,17 +458,17 @@ let analyse_indty status ty =
 let apply_subst status ctx t =
  let status, (_,t) = relocate status ctx t in
  let _,_,_,subst,_ = status#obj in
-  status, (ctx, NCicUntrusted.apply_subst subst ctx t)
+  status, (ctx, NCicUntrusted.apply_subst status subst ctx t)
 ;;
 
 let apply_subst_context status ~fix_projections ctx =
  let _,_,_,subst,_ = status#obj in
-  NCicUntrusted.apply_subst_context ~fix_projections subst ctx
+  NCicUntrusted.apply_subst_context status ~fix_projections subst ctx
 ;;
 
 let metas_of_term status (context,t) =
  let _,_,_,subst,_ = status#obj in
- NCicUntrusted.metas_of_term subst context t
+ NCicUntrusted.metas_of_term status subst context t
 ;;
 
 (* ============= move this elsewhere ====================*)
@@ -484,7 +479,7 @@ class type ['stack] g_status =
   method stack: 'stack
  end
 
-class ['stack] status =
+class virtual ['stack] status =
  fun (o: NCic.obj) (s: 'stack) ->
  object (self)
    inherit (pstatus o)
@@ -495,13 +490,18 @@ class ['stack] status =
    = fun o -> (self#set_pstatus o)#set_stack o#stack
   end
 
-class type lowtac_status = [unit] status
+class type virtual lowtac_status = [unit] status
 
 type 'status lowtactic = #lowtac_status as 'status -> int -> 'status
 
-class type tac_status = [Continuationals.Stack.t] status
+class type virtual tac_status = [Continuationals.Stack.t] status
 
 type 'status tactic = #tac_status as 'status -> 'status
+
+let pp_tac_status (status: #tac_status) = 
+  prerr_endline (status#ppobj status#obj);
+  prerr_endline ("STACK:\n" ^ Continuationals.Stack.pp status#stack)
+;;
 
 module NCicInverseRelIndexable : Discrimination_tree.Indexable
 with type input = cic_term and type constant_name = NUri.uri = struct

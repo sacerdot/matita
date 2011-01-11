@@ -157,7 +157,7 @@ let extract_term_production status pattern =
     | Ast.Magic m -> aux_magic m
     | Ast.Variable v -> aux_variable v
     | t ->
-        prerr_endline (NotationPp.pp_term t);
+        prerr_endline (NotationPp.pp_term status t);
         assert false
   and aux_literal =
     function
@@ -663,8 +663,10 @@ EXTEND
           in
           let rec find_arg name n = function 
             | [] ->
+                (* CSC: new NCicPp.status is the best I can do here
+                   without changing the return type *)
                 Ast.fail loc (sprintf "Argument %s not found"
-                  (NotationPp.pp_term name))
+                  (NotationPp.pp_term (new NCicPp.status) name))
             | (l,_) :: tl -> 
                 (match position_of name 0 l with
                 | None, len -> find_arg name (n + len) tl
@@ -814,7 +816,7 @@ class type g_status =
   method notation_parser_db: db
  end
 
-class status ~keywords:kwds =
+class status0 ~keywords:kwds =
  object
   val db = { grammars = initial_grammars kwds; keywords = kwds; items = [] }
   method notation_parser_db = db
@@ -822,6 +824,12 @@ class status ~keywords:kwds =
   method set_notation_parser_status
    : 'status. #g_status as 'status -> 'self
    = fun o -> {< db = o#notation_parser_db >}
+ end
+
+class virtual status ~keywords:kwds =
+ object
+  inherit NCic.status
+  inherit status0 kwds
  end
 
 let extend (status : #status) (CL1P (level1_pattern,precedence)) action =
@@ -848,7 +856,7 @@ let extend (status : #status) (CL1P (level1_pattern,precedence)) action =
   let keywords = NotationUtil.keywords_of_term level1_pattern @
     status#notation_parser_db.keywords in
   let items = current_item :: status#notation_parser_db.items in 
-  let status = status#set_notation_parser_status (new status ~keywords) in
+  let status = status#set_notation_parser_status (new status0 ~keywords) in
   let status = status#set_notation_parser_db 
     {status#notation_parser_db with items = items} in
   List.fold_left add1item status items

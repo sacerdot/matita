@@ -26,19 +26,21 @@ val set_logger:
 val set_trust : (NCic.obj -> bool) -> unit
 
 val typeof: 
-  subst:NCic.substitution -> metasenv:NCic.metasenv -> 
-  NCic.context -> NCic.term -> 
-    NCic.term
+ #NCic.status -> subst:NCic.substitution -> metasenv:NCic.metasenv -> 
+  NCic.context -> NCic.term -> NCic.term
 
-val height_of_obj_kind: NUri.uri -> subst:NCic.substitution -> NCic.obj_kind -> int
+val height_of_obj_kind:
+ #NCic.status -> NUri.uri -> subst:NCic.substitution -> NCic.obj_kind -> int
 
 val get_relevance : 
+ #NCic.status ->
   metasenv:NCic.metasenv -> subst:NCic.substitution ->
   NCic.context -> NCic.term -> NCic.term list -> bool list
 
 (* type_of_branch subst context leftno outtype 
  *   (constr @ lefts) (ty_constr @ lefts)  *)
 val type_of_branch : 
+ #NCic.status ->
   subst:NCic.substitution ->
     NCic.context -> int -> NCic.term -> NCic.term -> NCic.term -> 
      NCic.term
@@ -47,6 +49,7 @@ val type_of_branch :
  * arity1 = constructor type @ lefts
  * arity2 = outtype *)
 val check_allowed_sort_elimination : 
+ #NCic.status ->
   subst:NCic.substitution ->
   metasenv:NCic.metasenv ->
   NReference.reference -> NCic.context -> 
@@ -54,11 +57,13 @@ val check_allowed_sort_elimination :
 
 (* Functions to be used by the refiner *)
 val debruijn:
- NUri.uri -> int -> subst:NCic.substitution -> NCic.context -> NCic.term ->
-  NCic.term
+ #NCic.status -> NUri.uri -> int -> subst:NCic.substitution -> NCic.context ->
+  NCic.term -> NCic.term
+
 val are_all_occurrences_positive: 
- subst:NCic.substitution ->
-  NCic.context -> NUri.uri -> int -> int -> int -> int -> NCic.term -> bool
+ #NCic.status -> subst:NCic.substitution -> NCic.context -> NUri.uri -> int ->
+  int -> int -> int -> NCic.term -> bool
 
 val does_not_occur :
-    subst:NCic.substitution -> NCic.context -> int -> int -> NCic.term -> bool
+ #NCic.status -> subst:NCic.substitution -> NCic.context -> int -> int ->
+  NCic.term -> bool

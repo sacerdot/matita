@@ -17,7 +17,6 @@ module R = NCicReduction
 module S = NCicSubstitution 
 module U = NCicUtils
 module E = NCicEnvironment
-module PP = NCicPp
 
 exception TypeCheckerFailure of string Lazy.t
 exception AssertFailure of string Lazy.t
@@ -61,7 +60,7 @@ let shift_k e (c,rf,x) = e::c,List.map (fun (k,v) -> k+1,v) rf,x+1;;
 
 (* for debugging only
 let string_of_recfuns ~subst ~metasenv ~context l = 
-  let pp = PP.ppterm ~subst ~metasenv ~context in
+  let pp = status#ppterm ~subst ~metasenv ~context in
   let safe, rest = List.partition (function (_,Safe) -> true | _ -> false) l in
   let dang,unf = List.partition (function (_,UnfFix _)-> false | _->true)rest in
   "\n\tsafes: "^String.concat "," (List.map (fun (i,_)->pp (C.Rel i)) safe) ^
@@ -96,14 +95,14 @@ let fixed_args bos j n nn =
    (let rec f = function 0 -> [] | n -> true :: f (n-1) in f j) bos
 ;;
 
-let debruijn uri number_of_types ~subst context = 
+let debruijn status uri number_of_types ~subst context = 
 (* manca la subst! *)
  let rec aux k t =
   match t with
    | C.Meta (i,(s,l)) ->
       (try
         let _,_,term,_ = U.lookup_subst i subst in
-        let ts = S.subst_meta (0,l) term in
+        let ts = S.subst_meta status (0,l) term in
         let ts' = aux (k-s) ts in
          if ts == ts' then t else ts'
        with U.Subst_not_found _ ->
@@ -115,14 +114,14 @@ let debruijn uri number_of_types ~subst context =
    | C.Const (Ref.Ref (uri1,(Ref.Fix (no,_,_) | Ref.CoFix no))) 
    | C.Const (Ref.Ref (uri1,Ref.Ind (_,no,_))) when NUri.eq uri uri1 ->
       C.Rel (k + number_of_types - no)
-   | t -> U.map (fun _ k -> k+1) k aux t
+   | t -> U.map status (fun _ k -> k+1) k aux t
  in
   aux (List.length context)
 ;;
 
-let sort_of_prod ~metasenv ~subst context (name,s) t (t1, t2) =
-   let t1 = R.whd ~subst context t1 in
-   let t2 = R.whd ~subst ((name,C.Decl s)::context) t2 in
+let sort_of_prod (status:#NCic.status) ~metasenv ~subst context (name,s) t (t1, t2) =
+   let t1 = R.whd status ~subst context t1 in
+   let t2 = R.whd status ~subst ((name,C.Decl s)::context) t2 in
    match t1, t2 with
    | C.Sort _, C.Sort C.Prop -> t2
    | C.Sort (C.Type u1), C.Sort (C.Type u2) ->
@@ -139,49 +138,49 @@ let sort_of_prod ~metasenv ~subst context (name,s) t (t1, t2) =
       in
       raise (TypeCheckerFailure (lazy (Printf.sprintf
         "%s is expected to be a type, but its type is %s that is not a sort" 
-         (PP.ppterm ~subst ~metasenv ~context y) 
-         (PP.ppterm ~subst ~metasenv ~context x))))
+         (status#ppterm ~subst ~metasenv ~context y) 
+         (status#ppterm ~subst ~metasenv ~context x))))
 ;;
 
 (* instantiate_parameters ps (x1:T1)...(xn:Tn)C                             *)
 (* returns ((x_|ps|:T_|ps|)...(xn:Tn)C){ps_1 / x1 ; ... ; ps_|ps| / x_|ps|} *)
-let rec instantiate_parameters params c =
+let rec instantiate_parameters status params c =
   match c, params with
   | c,[] -> c
-  | C.Prod (_,_,ta), he::tl -> instantiate_parameters tl (S.subst he ta)
+  | C.Prod (_,_,ta), he::tl -> instantiate_parameters status tl (S.subst status he ta)
   | _,_ -> raise (AssertFailure (lazy "1"))
 ;;
 
-let specialize_inductive_type_constrs ~subst context ty_term =
-  match R.whd ~subst context ty_term with
+let specialize_inductive_type_constrs status ~subst context ty_term =
+  match R.whd status ~subst context ty_term with
   | C.Const (Ref.Ref (_,Ref.Ind _) as ref)  
   | C.Appl (C.Const (Ref.Ref (_,Ref.Ind _) as ref) :: _ ) as ty ->
       let args = match ty with C.Appl (_::tl) -> tl | _ -> [] in
-      let _, leftno, itl, _, i = E.get_checked_indtys ref in
+      let _, leftno, itl, _, i = E.get_checked_indtys status ref in
       let left_args,_ = HExtlib.split_nth leftno args in
       let _,_,_,cl = List.nth itl i in
       List.map 
-        (fun (rel,name,ty) -> rel, name, instantiate_parameters left_args ty) cl
+        (fun (rel,name,ty) -> rel, name, instantiate_parameters status left_args ty) cl
   | _ -> assert false
 ;;
 
-let specialize_and_abstract_constrs ~subst r_uri r_len context ty_term =
-  let cl = specialize_inductive_type_constrs ~subst context ty_term in
+let specialize_and_abstract_constrs status ~subst r_uri r_len context ty_term =
+  let cl = specialize_inductive_type_constrs status ~subst context ty_term in
   let len = List.length context in
   let context_dcl = 
-    match E.get_checked_obj r_uri with
+    match E.get_checked_obj status r_uri with
     | _,_,_,_, C.Inductive (_,_,tys,_) -> 
         context @ List.map (fun (_,name,arity,_) -> name,C.Decl arity) tys
     | _ -> assert false
   in
   context_dcl,
-  List.map (fun (_,id,ty) -> id, debruijn r_uri r_len ~subst context ty) cl,
+  List.map (fun (_,id,ty) -> id, debruijn status r_uri r_len ~subst context ty) cl,
   len, len + r_len
 ;;
 
 exception DoesOccur;;
 
-let does_not_occur ~subst context n nn t = 
+let does_not_occur status ~subst context n nn t = 
   let rec aux k _ = function
     | C.Rel m when m > n+k && m <= nn+k -> raise DoesOccur
     | C.Rel m when m <= k || m > nn+k -> ()
@@ -196,7 +195,7 @@ let does_not_occur ~subst context n nn t =
             (* possible optimization here: try does_not_occur on l and
                perform substitution only if DoesOccur is raised *)
             let _,_,term,_ = U.lookup_subst mno subst in
-            aux (k-s) () (S.subst_meta (0,l) term)
+            aux (k-s) () (S.subst_meta status (0,l) term)
           with U.Subst_not_found _ -> () (*match l with
           | C.Irl len -> if not (n+k >= s+len || s > nn+k) then raise DoesOccur
           | C.Ctx lc -> List.iter (aux (k-s) ()) lc*))
@@ -206,41 +205,41 @@ let does_not_occur ~subst context n nn t =
    with DoesOccur -> false
 ;;
 
-let rec eat_lambdas ~subst ~metasenv context n te =
-  match (n, R.whd ~subst context te) with
+let rec eat_lambdas (status:#NCic.status) ~subst ~metasenv context n te =
+  match (n, R.whd status ~subst context te) with
   | (0, _) -> (te, context)
   | (n, C.Lambda (name,so,ta)) when n > 0 ->
-      eat_lambdas ~subst ~metasenv ((name,(C.Decl so))::context) (n - 1) ta
+      eat_lambdas status ~subst ~metasenv ((name,(C.Decl so))::context) (n - 1) ta
    | (n, te) ->
       raise (AssertFailure (lazy (Printf.sprintf "eat_lambdas (%d, %s)" n 
-        (PP.ppterm ~subst ~metasenv ~context te))))
+        (status#ppterm ~subst ~metasenv ~context te))))
 ;;
 
-let rec eat_or_subst_lambdas 
+let rec eat_or_subst_lambdas status
   ~subst ~metasenv n te to_be_subst args (context,_,_ as k) 
 =
-  match n, R.whd ~subst context te, to_be_subst, args with
+  match n, R.whd status ~subst context te, to_be_subst, args with
   | (n, C.Lambda (_,_,ta),true::to_be_subst,arg::args) when n > 0 ->
-      eat_or_subst_lambdas ~subst ~metasenv (n - 1) (S.subst arg ta)
+      eat_or_subst_lambdas status ~subst ~metasenv (n - 1) (S.subst status arg ta)
        to_be_subst args k
   | (n, C.Lambda (name,so,ta),false::to_be_subst,_::args) when n > 0 ->
-      eat_or_subst_lambdas ~subst ~metasenv (n - 1) ta to_be_subst args
+      eat_or_subst_lambdas status ~subst ~metasenv (n - 1) ta to_be_subst args
        (shift_k (name,(C.Decl so)) k)
   | (_, te, _, _) -> te, k
 ;;
 
-let check_homogeneous_call ~subst context indparamsno n uri reduct tl =
+let check_homogeneous_call (status:#NCic.status) ~subst context indparamsno n uri reduct tl =
  let last =
   List.fold_left
    (fun k x ->
      if k = 0 then 0
      else
-      match R.whd ~subst context x with
+      match R.whd status ~subst context x with
       | C.Rel m when m = n - (indparamsno - k) -> k - 1
       | _ -> raise (TypeCheckerFailure (lazy 
          ("Argument "^string_of_int (indparamsno - k + 1) ^ " (of " ^
          string_of_int indparamsno ^ " fixed) is not homogeneous in "^
-         "appl:\n"^ PP.ppterm ~context ~subst ~metasenv:[] reduct))))
+         "appl:\n"^ status#ppterm ~context ~subst ~metasenv:[] reduct))))
    indparamsno tl
  in
   if last <> 0 then
@@ -251,7 +250,7 @@ let check_homogeneous_call ~subst context indparamsno n uri reduct tl =
 
 (* Inductive types being checked for positivity have *)
 (* indexes x s.t. n < x <= nn.                       *)
-let rec weakly_positive ~subst context n nn uri indparamsno posuri te =
+let rec weakly_positive status ~subst context n nn uri indparamsno posuri te =
   (*CSC: Not very nice. *)
   let dummy = C.Sort C.Prop in
   (*CSC: to be moved in cicSubstitution? *)
@@ -265,75 +264,75 @@ let rec weakly_positive ~subst context n nn uri indparamsno posuri te =
         when NUri.eq uri' uri -> 
           let _, rargs = HExtlib.split_nth lno tl in
           if rargs = [] then dummy else C.Appl (dummy :: rargs)
-    | t -> U.map (fun _ x->x) () subst_inductive_type_with_dummy t
+    | t -> U.map status (fun _ x->x) () subst_inductive_type_with_dummy t
   in
   (* this function has the same semantics of are_all_occurrences_positive
      but the i-th context entry role is played by dummy and some checks
      are skipped because we already know that are_all_occurrences_positive
      of uri in te. *)
   let rec aux context n nn te =
-    match R.whd ~subst context te with
+    match R.whd status ~subst context te with
      | t when t = dummy -> true
      | C.Meta (i,lc) ->
         (try
           let _,_,term,_ = U.lookup_subst i subst in
-          let t = S.subst_meta lc term in
-           weakly_positive ~subst context n nn uri indparamsno posuri t
+          let t = S.subst_meta status lc term in
+           weakly_positive status ~subst context n nn uri indparamsno posuri t
          with U.Subst_not_found _ -> true)
      | C.Appl (te::rargs) when te = dummy ->
-        List.for_all (does_not_occur ~subst context n nn) rargs
+        List.for_all (does_not_occur status ~subst context n nn) rargs
      | C.Prod (name,source,dest) when
-        does_not_occur ~subst ((name,C.Decl source)::context) 0 1 dest ->
+        does_not_occur status ~subst ((name,C.Decl source)::context) 0 1 dest ->
          (* dummy abstraction, so we behave as in the anonimous case *)
-         strictly_positive ~subst context n nn indparamsno posuri source &&
+         strictly_positive status ~subst context n nn indparamsno posuri source &&
          aux ((name,C.Decl source)::context) (n + 1) (nn + 1) dest
      | C.Prod (name,source,dest) ->
-         does_not_occur ~subst context n nn source &&
+         does_not_occur status ~subst context n nn source &&
          aux ((name,C.Decl source)::context) (n + 1) (nn + 1) dest
      | _ ->
        raise (TypeCheckerFailure (lazy "Malformed inductive constructor type"))
    in
      aux context n nn (subst_inductive_type_with_dummy () te)
 
-and strictly_positive ~subst context n nn indparamsno posuri te =
-  match R.whd ~subst context te with
-   | t when does_not_occur ~subst context n nn t -> true
+and strictly_positive status ~subst context n nn indparamsno posuri te =
+  match R.whd status ~subst context te with
+   | t when does_not_occur status ~subst context n nn t -> true
    | C.Meta (i,lc) ->
       (try
         let _,_,term,_ = U.lookup_subst i subst in
-        let t = S.subst_meta lc term in
-         strictly_positive ~subst context n nn indparamsno posuri t
+        let t = S.subst_meta status lc term in
+         strictly_positive status ~subst context n nn indparamsno posuri t
        with U.Subst_not_found _ -> true)
    | C.Rel _ when indparamsno = 0 -> true
    | C.Appl ((C.Rel m)::tl) as reduct when m > n && m <= nn ->
-      check_homogeneous_call ~subst context indparamsno n posuri reduct tl;
-      List.for_all (does_not_occur ~subst context n nn) tl
+      check_homogeneous_call status ~subst context indparamsno n posuri reduct tl;
+      List.for_all (does_not_occur status ~subst context n nn) tl
    | C.Prod (name,so,ta) ->
-      does_not_occur ~subst context n nn so &&
-       strictly_positive ~subst ((name,C.Decl so)::context) (n+1) (nn+1)
+      does_not_occur status ~subst context n nn so &&
+       strictly_positive status ~subst ((name,C.Decl so)::context) (n+1) (nn+1)
         indparamsno posuri ta
    | C.Appl (C.Const (Ref.Ref (uri,Ref.Ind _) as r)::tl) -> 
-      let _,paramsno,tyl,_,i = E.get_checked_indtys r in
+      let _,paramsno,tyl,_,i = E.get_checked_indtys status r in
       let _,name,ity,cl = List.nth tyl i in
       let ok = List.length tyl = 1 in
       let params, arguments = HExtlib.split_nth paramsno tl in
-      let lifted_params = List.map (S.lift 1) params in
+      let lifted_params = List.map (S.lift status 1) params in
       let cl =
-        List.map (fun (_,_,te) -> instantiate_parameters lifted_params te) cl 
+        List.map (fun (_,_,te) -> instantiate_parameters status lifted_params te) cl 
       in
       ok &&
-      List.for_all (does_not_occur ~subst context n nn) arguments &&
+      List.for_all (does_not_occur status ~subst context n nn) arguments &&
       List.for_all 
-       (weakly_positive ~subst ((name,C.Decl ity)::context) (n+1) (nn+1)
+       (weakly_positive status ~subst ((name,C.Decl ity)::context) (n+1) (nn+1)
          uri indparamsno posuri) cl
    | _ -> false
        
 (* the inductive type indexes are s.t. n < x <= nn *)
-and are_all_occurrences_positive ~subst context uri indparamsno i n nn te =
-  match R.whd ~subst context te with
+and are_all_occurrences_positive (status:#NCic.status) ~subst context uri indparamsno i n nn te =
+  match R.whd status ~subst context te with
   |  C.Appl ((C.Rel m)::tl) as reduct when m = i ->
-      check_homogeneous_call ~subst context indparamsno n uri reduct tl;
-      List.for_all (does_not_occur ~subst context n nn) tl
+      check_homogeneous_call status ~subst context indparamsno n uri reduct tl;
+      List.for_all (does_not_occur status ~subst context n nn) tl
   | C.Rel m when m = i ->
       if indparamsno = 0 then
        true
@@ -342,16 +341,16 @@ and are_all_occurrences_positive ~subst context uri indparamsno i n nn te =
          (lazy ("Non-positive occurence in mutual inductive definition(s) [3]"^
           NUri.string_of_uri uri)))
    | C.Prod (name,source,dest) when
-      does_not_occur ~subst ((name,C.Decl source)::context) 0 1 dest ->
-      strictly_positive ~subst context n nn indparamsno uri source &&
-       are_all_occurrences_positive ~subst 
+      does_not_occur status ~subst ((name,C.Decl source)::context) 0 1 dest ->
+      strictly_positive status ~subst context n nn indparamsno uri source &&
+       are_all_occurrences_positive status ~subst 
         ((name,C.Decl source)::context) uri indparamsno
         (i+1) (n + 1) (nn + 1) dest
    | C.Prod (name,source,dest) ->
-       if not (does_not_occur ~subst context n nn source) then
+       if not (does_not_occur status ~subst context n nn source) then
          raise (TypeCheckerFailure (lazy ("Non-positive occurrence in "^
-         PP.ppterm ~context ~metasenv:[] ~subst te)));
-       are_all_occurrences_positive ~subst ((name,C.Decl source)::context)
+         status#ppterm ~context ~metasenv:[] ~subst te)));
+       are_all_occurrences_positive status ~subst ((name,C.Decl source)::context)
         uri indparamsno (i+1) (n + 1) (nn + 1) dest
    | _ ->
      raise
@@ -361,40 +360,40 @@ and are_all_occurrences_positive ~subst context uri indparamsno i n nn te =
 
 exception NotGuarded of string Lazy.t;;
 
-let type_of_branch ~subst context leftno outty cons tycons = 
+let type_of_branch (status:#NCic.status) ~subst context leftno outty cons tycons = 
  let rec aux liftno context cons tycons =
-   match R.whd ~subst context tycons with
-   | C.Const (Ref.Ref (_,Ref.Ind _)) -> C.Appl [S.lift liftno outty ; cons]
+   match R.whd status ~subst context tycons with
+   | C.Const (Ref.Ref (_,Ref.Ind _)) -> C.Appl [S.lift status liftno outty ; cons]
    | C.Appl (C.Const (Ref.Ref (_,Ref.Ind _))::tl) ->
        let _,arguments = HExtlib.split_nth leftno tl in
-       C.Appl (S.lift liftno outty::arguments@[cons])
+       C.Appl (S.lift status liftno outty::arguments@[cons])
    | C.Prod (name,so,de) ->
        let cons =
-        match S.lift 1 cons with
+        match S.lift status 1 cons with
         | C.Appl l -> C.Appl (l@[C.Rel 1])
         | t -> C.Appl [t ; C.Rel 1]
        in
         C.Prod (name,so, aux (liftno+1) ((name,(C.Decl so))::context) cons de)
    | t -> raise (AssertFailure 
-      (lazy ("type_of_branch, the contructor has type: " ^ NCicPp.ppterm
+      (lazy ("type_of_branch, the contructor has type: " ^ status#ppterm
        ~metasenv:[] ~context:[] ~subst:[] t)))
  in
   aux 0 context cons tycons
 ;;
 
 
-let rec typeof ~subst ~metasenv context term =
+let rec typeof (status:#NCic.status) ~subst ~metasenv context term =
   let rec typeof_aux context = 
-    fun t -> (*prerr_endline (PP.ppterm ~metasenv ~subst ~context t);*)
+    fun t -> (*prerr_endline (status#ppterm ~metasenv ~subst ~context t);*)
     match t with
     | C.Rel n ->
        (try
          match List.nth context (n - 1) with
-         | (_,C.Decl ty) -> S.lift n ty
-         | (_,C.Def (_,ty)) -> S.lift n ty
+         | (_,C.Decl ty) -> S.lift status n ty
+         | (_,C.Def (_,ty)) -> S.lift status n ty
         with Failure _ -> 
           raise (TypeCheckerFailure (lazy ("unbound variable " ^ string_of_int n
-            ^" under: " ^ NCicPp.ppcontext ~metasenv ~subst context))))
+            ^" under: " ^ status#ppcontext ~metasenv ~subst context))))
     | C.Sort s -> 
          (try C.Sort (NCicEnvironment.typeof_sort s) 
          with 
@@ -410,57 +409,57 @@ let rec typeof ~subst ~metasenv context term =
 (*          match ty with C.Implicit _ -> assert false | _ -> c,ty *)
         with U.Meta_not_found _ ->
          raise (AssertFailure (lazy (Printf.sprintf
-          "%s not found in:\n%s" (PP.ppterm ~subst ~metasenv ~context t)
-           (PP.ppmetasenv ~subst metasenv)
+          "%s not found in:\n%s" (status#ppterm ~subst ~metasenv ~context t)
+           (status#ppmetasenv ~subst metasenv)
           )))
        in
         check_metasenv_consistency t ~subst ~metasenv context canonical_ctx l;
-        S.subst_meta l ty
-    | C.Const ref -> type_of_constant ref
+        S.subst_meta status l ty
+    | C.Const ref -> type_of_constant status ref
     | C.Prod (name,s,t) ->
        let sort1 = typeof_aux context s in
        let sort2 = typeof_aux ((name,(C.Decl s))::context) t in
-       sort_of_prod ~metasenv ~subst context (name,s) t (sort1,sort2)
+       sort_of_prod status ~metasenv ~subst context (name,s) t (sort1,sort2)
     | C.Lambda (n,s,t) ->
        let sort = typeof_aux context s in
-       (match R.whd ~subst context sort with
+       (match R.whd status ~subst context sort with
        | C.Meta _ | C.Sort _ -> ()
        | _ ->
          raise
            (TypeCheckerFailure (lazy (Printf.sprintf
              ("Not well-typed lambda-abstraction: " ^^
              "the source %s should be a type; instead it is a term " ^^ 
-             "of type %s") (PP.ppterm ~subst ~metasenv ~context s)
-             (PP.ppterm ~subst ~metasenv ~context sort)))));
+             "of type %s") (status#ppterm ~subst ~metasenv ~context s)
+             (status#ppterm ~subst ~metasenv ~context sort)))));
        let ty = typeof_aux ((n,(C.Decl s))::context) t in
          C.Prod (n,s,ty)
     | C.LetIn (n,ty,t,bo) ->
        let ty_t = typeof_aux context t in
        let _ = typeof_aux context ty in
-       if not (R.are_convertible ~metasenv ~subst context ty_t ty) then
+       if not (R.are_convertible status ~metasenv ~subst context ty_t ty) then
          raise 
           (TypeCheckerFailure 
             (lazy (Printf.sprintf
               "The type of %s is %s but it is expected to be %s" 
-                (PP.ppterm ~subst ~metasenv ~context t) 
-                (PP.ppterm ~subst ~metasenv ~context ty_t) 
-                (PP.ppterm ~subst ~metasenv ~context ty))))
+                (status#ppterm ~subst ~metasenv ~context t) 
+                (status#ppterm ~subst ~metasenv ~context ty_t) 
+                (status#ppterm ~subst ~metasenv ~context ty))))
        else
          let ty_bo = typeof_aux  ((n,C.Def (t,ty))::context) bo in
-         S.subst ~avoid_beta_redexes:true t ty_bo
+         S.subst status ~avoid_beta_redexes:true t ty_bo
     | C.Appl (he::(_::_ as args)) ->
        let ty_he = typeof_aux context he in
        let args_with_ty = List.map (fun t -> t, typeof_aux context t) args in
-       eat_prods ~subst ~metasenv context he ty_he args_with_ty
+       eat_prods status ~subst ~metasenv context he ty_he args_with_ty
    | C.Appl _ -> raise (AssertFailure (lazy "Appl of length < 2"))
    | C.Match (Ref.Ref (_,Ref.Ind (_,tyno,_)) as r,outtype,term,pl) ->
       let outsort = typeof_aux context outtype in
-      let _,leftno,itl,_,_ = E.get_checked_indtys r in
+      let _,leftno,itl,_,_ = E.get_checked_indtys status r in
       let constructorsno =
         let _,_,_,cl = List.nth itl tyno in List.length cl
       in
       let parameters, arguments =
-        let ty = R.whd ~subst context (typeof_aux context term) in
+        let ty = R.whd status ~subst context (typeof_aux context term) in
         let r',tl =
          match ty with
             C.Const (Ref.Ref (_,Ref.Ind _) as r') -> r',[]
@@ -469,27 +468,27 @@ let rec typeof ~subst ~metasenv context term =
              raise 
                (TypeCheckerFailure (lazy (Printf.sprintf
                  "Case analysis: analysed term %s is not an inductive one"
-                 (PP.ppterm ~subst ~metasenv ~context term)))) in
+                 (status#ppterm ~subst ~metasenv ~context term)))) in
         if not (Ref.eq r r') then
          raise
           (TypeCheckerFailure (lazy (Printf.sprintf
             ("Case analysys: analysed term type is %s, but is expected " ^^
              "to be (an application of) %s")
-            (PP.ppterm ~subst ~metasenv ~context ty) 
-            (PP.ppterm ~subst ~metasenv ~context (C.Const r')))))
+            (status#ppterm ~subst ~metasenv ~context ty) 
+            (status#ppterm ~subst ~metasenv ~context (C.Const r')))))
         else
          try HExtlib.split_nth leftno tl
          with
           Failure _ ->
            raise (TypeCheckerFailure (lazy (Printf.sprintf 
            "%s is partially applied" 
-           (PP.ppterm  ~subst ~metasenv ~context ty)))) in
+           (status#ppterm  ~subst ~metasenv ~context ty)))) in
       (* let's control if the sort elimination is allowed: [(I q1 ... qr)|B] *)
       let sort_of_ind_type =
         if parameters = [] then C.Const r
         else C.Appl ((C.Const r)::parameters) in
       let type_of_sort_of_ind_ty = typeof_aux context sort_of_ind_type in
-      check_allowed_sort_elimination ~subst ~metasenv r context
+      check_allowed_sort_elimination status ~subst ~metasenv r context
        sort_of_ind_type type_of_sort_of_ind_ty outsort;
       (* let's check if the type of branches are right *)
       if List.length pl <> constructorsno then
@@ -506,9 +505,9 @@ let rec typeof ~subst ~metasenv context term =
               let ty_p = typeof_aux context p in
               let ty_cons = typeof_aux context cons in
               let ty_branch = 
-                type_of_branch ~subst context leftno outtype cons ty_cons
+                type_of_branch status ~subst context leftno outtype cons ty_cons
               in
-              j+1, R.are_convertible ~metasenv ~subst context ty_p ty_branch,
+              j+1, R.are_convertible status ~metasenv ~subst context ty_p ty_branch,
               ty_p, ty_branch
             else
               j,false,old_p_ty,old_exp_p_ty
@@ -519,13 +518,13 @@ let rec typeof ~subst ~metasenv context term =
          (TypeCheckerFailure 
           (lazy (Printf.sprintf ("Branch for constructor %s :=\n%s\n"^^
           "has type %s\nnot convertible with %s") 
-          (PP.ppterm  ~subst ~metasenv ~context
+          (status#ppterm  ~subst ~metasenv ~context
             (C.Const (Ref.mk_constructor (j-1) r)))
-          (PP.ppterm ~metasenv ~subst ~context (List.nth pl (j-2)))
-          (PP.ppterm ~metasenv ~subst ~context p_ty) 
-          (PP.ppterm ~metasenv ~subst ~context exp_p_ty)))); 
+          (status#ppterm ~metasenv ~subst ~context (List.nth pl (j-2)))
+          (status#ppterm ~metasenv ~subst ~context p_ty) 
+          (status#ppterm ~metasenv ~subst ~context exp_p_ty)))); 
       let res = outtype::arguments@[term] in
-      R.head_beta_reduce (C.Appl res)
+      R.head_beta_reduce status (C.Appl res)
     | C.Match _ -> assert false
 
   (* check_metasenv_consistency checks that the "canonical" context of a
@@ -543,31 +542,31 @@ let rec typeof ~subst ~metasenv context term =
          | _,_,[] ->
             raise (AssertFailure (lazy (Printf.sprintf
              "(2) Local and canonical context %s have different lengths"
-             (PP.ppterm ~subst ~context ~metasenv term))))
+             (status#ppterm ~subst ~context ~metasenv term))))
          | m,[],_::_ ->
             raise (TypeCheckerFailure (lazy (Printf.sprintf
              "Unbound variable -%d in %s" m 
-             (PP.ppterm ~subst ~metasenv ~context term))))
+             (status#ppterm ~subst ~metasenv ~context term))))
          | m,t::tl,ct::ctl ->
             (match t,ct with
                 (_,C.Decl t1), (_,C.Decl t2)
               | (_,C.Def (t1,_)), (_,C.Def (t2,_))
               | (_,C.Def (_,t1)), (_,C.Decl t2) ->
-                 if not (R.are_convertible ~metasenv ~subst tl t1 t2) then
+                 if not (R.are_convertible status ~metasenv ~subst tl t1 t2) then
                   raise 
                       (TypeCheckerFailure 
                         (lazy (Printf.sprintf 
                       ("Not well typed metavariable local context for %s: " ^^ 
                        "%s expected, which is not convertible with %s")
-                      (PP.ppterm ~subst ~metasenv ~context term) 
-                      (PP.ppterm ~subst ~metasenv ~context t2) 
-                      (PP.ppterm ~subst ~metasenv ~context t1))))
+                      (status#ppterm ~subst ~metasenv ~context term) 
+                      (status#ppterm ~subst ~metasenv ~context t2) 
+                      (status#ppterm ~subst ~metasenv ~context t1))))
               | _,_ ->
                raise 
                    (TypeCheckerFailure (lazy (Printf.sprintf 
                     ("Not well typed metavariable local context for %s: " ^^ 
                      "a definition expected, but a declaration found")
-                    (PP.ppterm ~subst ~metasenv ~context term)))));
+                    (status#ppterm ~subst ~metasenv ~context term)))));
             compare (m - 1,tl,ctl)
         in
          compare (n,context,canonical_context)
@@ -578,10 +577,10 @@ let rec typeof ~subst ~metasenv context term =
          let rec lift_metas i = function
            | [] -> []
            | (n,C.Decl t)::tl ->
-               (n,C.Decl (S.subst_meta l (S.lift i t)))::(lift_metas (i+1) tl)
+               (n,C.Decl (S.subst_meta status l (S.lift status i t)))::(lift_metas (i+1) tl)
            | (n,C.Def (t,ty))::tl ->
-               (n,C.Def ((S.subst_meta l (S.lift i t)),
-                          S.subst_meta l (S.lift i ty)))::(lift_metas (i+1) tl)
+               (n,C.Def ((S.subst_meta status l (S.lift status i t)),
+                          S.subst_meta status l (S.lift status i ty)))::(lift_metas (i+1) tl)
          in
           lift_metas 1 canonical_context in
        let l = U.expand_local_context lc_kind in
@@ -599,73 +598,73 @@ let rec typeof ~subst ~metasenv context term =
               | C.Rel n ->
                   (try
                     match List.nth context (n - 1) with
-                    | (_,C.Def (te,_)) -> S.lift n te
+                    | (_,C.Def (te,_)) -> S.lift status n te
                     | _ -> t
                     with Failure _ -> t)
               | _ -> t
              in
-             if not (R.are_convertible ~metasenv ~subst context optimized_t ct)
+             if not (R.are_convertible status ~metasenv ~subst context optimized_t ct)
              then
                raise 
                  (TypeCheckerFailure 
                    (lazy (Printf.sprintf 
                      ("Not well typed metavariable local context: " ^^ 
                       "expected a term convertible with %s, found %s")
-                     (PP.ppterm ~subst ~metasenv ~context ct) 
-                     (PP.ppterm ~subst ~metasenv ~context t))))
+                     (status#ppterm ~subst ~metasenv ~context ct) 
+                     (status#ppterm ~subst ~metasenv ~context t))))
           | t, (_,C.Decl ct) ->
               let type_t = typeof_aux context t in
-              if not (R.are_convertible ~metasenv ~subst context type_t ct) then
+              if not (R.are_convertible status ~metasenv ~subst context type_t ct) then
                 raise (TypeCheckerFailure 
                  (lazy (Printf.sprintf 
                   ("Not well typed metavariable local context: "^^
                   "expected a term of type %s, found %s of type %s") 
-                  (PP.ppterm ~subst ~metasenv ~context ct) 
-                  (PP.ppterm ~subst ~metasenv ~context t) 
-                  (PP.ppterm ~subst ~metasenv ~context type_t))))
+                  (status#ppterm ~subst ~metasenv ~context ct) 
+                  (status#ppterm ~subst ~metasenv ~context t) 
+                  (status#ppterm ~subst ~metasenv ~context type_t))))
         ) l lifted_canonical_context 
        with
        | Invalid_argument "List.iter2" ->
           raise (AssertFailure (lazy (Printf.sprintf
            "(1) Local and canonical context %s have different lengths"
-           (PP.ppterm ~subst ~metasenv ~context term))))
+           (status#ppterm ~subst ~metasenv ~context term))))
 
  in 
    typeof_aux context term
 
-and check_allowed_sort_elimination ~subst ~metasenv r =
+and check_allowed_sort_elimination status ~subst ~metasenv r =
   let mkapp he arg =
     match he with
     | C.Appl l -> C.Appl (l @ [arg])
     | t -> C.Appl [t;arg] in
   let rec aux context ind arity1 arity2 =
-   let arity1 = R.whd ~subst context arity1 in
-   let arity2 = R.whd ~subst context arity2 in
+   let arity1 = R.whd status ~subst context arity1 in
+   let arity2 = R.whd status ~subst context arity2 in
      match arity1,arity2 with
       | C.Prod (name,so1,de1), C.Prod (_,so2,de2) ->
-         if not (R.are_convertible ~metasenv ~subst context so1 so2) then
+         if not (R.are_convertible status ~metasenv ~subst context so1 so2) then
           raise (TypeCheckerFailure (lazy (Printf.sprintf
            "In outtype: expected %s, found %s"
-           (PP.ppterm ~subst ~metasenv ~context so1)
-           (PP.ppterm ~subst ~metasenv ~context so2)
+           (status#ppterm ~subst ~metasenv ~context so1)
+           (status#ppterm ~subst ~metasenv ~context so2)
            )));
          aux ((name, C.Decl so1)::context)
-          (mkapp (S.lift 1 ind) (C.Rel 1)) de1 de2
+          (mkapp (S.lift status 1 ind) (C.Rel 1)) de1 de2
       | C.Sort _, C.Prod (name,so,ta) ->
-         if not (R.are_convertible ~metasenv ~subst context so ind) then
+         if not (R.are_convertible status ~metasenv ~subst context so ind) then
           raise (TypeCheckerFailure (lazy (Printf.sprintf
            "In outtype: expected %s, found %s"
-           (PP.ppterm ~subst ~metasenv ~context ind)
-           (PP.ppterm ~subst ~metasenv ~context so)
+           (status#ppterm ~subst ~metasenv ~context ind)
+           (status#ppterm ~subst ~metasenv ~context so)
            )));
-         (match arity1, R.whd ~subst ((name,C.Decl so)::context) ta with
+         (match arity1, R.whd status ~subst ((name,C.Decl so)::context) ta with
            | C.Sort s1, (C.Sort s2 as arity2) ->
                (match NCicEnvironment.allowed_sort_elimination s1 s2 with
                | `Yes -> ()
                | `UnitOnly ->
        (* TODO: we should pass all these parameters since we
         * have them already *)
-               let _,leftno,itl,_,i = E.get_checked_indtys r in
+               let _,leftno,itl,_,i = E.get_checked_indtys status r in
                let itl_len = List.length itl in
                let _,itname,ittype,cl = List.nth itl i in
                let cl_len = List.length cl in
@@ -675,46 +674,46 @@ and check_allowed_sort_elimination ~subst ~metasenv r =
                  (cl_len = 0 ||
                   (itl_len = 1 && cl_len = 1 &&
                    let _,_,constrty = List.hd cl in
-                     is_non_recursive_singleton 
+                     is_non_recursive_singleton status
                        ~subst r itname ittype constrty &&
-                     is_non_informative ~metasenv ~subst leftno constrty))
+                     is_non_informative status ~metasenv ~subst leftno constrty))
                 then
                  raise (TypeCheckerFailure (lazy
                   ("Sort elimination not allowed: " ^ 
-                   NCicPp.ppterm ~metasenv ~subst ~context arity1 
+                   status#ppterm ~metasenv ~subst ~context arity1 
                    ^ " towards "^
-                   NCicPp.ppterm ~metasenv ~subst ~context arity2
+                   status#ppterm ~metasenv ~subst ~context arity2
                  ))))
            | _ -> ())
       | _,_ -> ()
   in
    aux 
 
-and eat_prods ~subst ~metasenv context he ty_he args_with_ty = 
+and eat_prods status ~subst ~metasenv context he ty_he args_with_ty = 
   let rec aux ty_he = function 
   | [] -> ty_he
   | (arg, ty_arg)::tl ->
-      match R.whd ~subst context ty_he with 
+      match R.whd status ~subst context ty_he with 
       | C.Prod (_,s,t) ->
-          if R.are_convertible ~metasenv ~subst context ty_arg s then
-            aux (S.subst ~avoid_beta_redexes:true arg t) tl
+          if R.are_convertible status ~metasenv ~subst context ty_arg s then
+            aux (S.subst status ~avoid_beta_redexes:true arg t) tl
           else
             raise 
               (TypeCheckerFailure 
                 (lazy (Printf.sprintf
                   ("Appl: wrong application of %s: the argument %s has type"^^
                    "\n%s\nbut it should have type \n%s\nContext:\n%s\n")
-                  (PP.ppterm ~subst ~metasenv ~context he)
-                  (PP.ppterm ~subst ~metasenv ~context arg)
-                  (PP.ppterm ~subst ~metasenv ~context ty_arg)
-                  (PP.ppterm ~subst ~metasenv ~context s)
-                  (PP.ppcontext ~subst ~metasenv context))))
+                  (status#ppterm ~subst ~metasenv ~context he)
+                  (status#ppterm ~subst ~metasenv ~context arg)
+                  (status#ppterm ~subst ~metasenv ~context ty_arg)
+                  (status#ppterm ~subst ~metasenv ~context s)
+                  (status#ppcontext ~subst ~metasenv context))))
        | _ ->
           raise 
             (TypeCheckerFailure
               (lazy (Printf.sprintf
                 "Appl: %s is not a function, it cannot be applied"
-                (PP.ppterm ~subst ~metasenv ~context
+                (status#ppterm ~subst ~metasenv ~context
                  (let res = List.length tl in
                   let eaten = List.length args_with_ty - res in
                    (C.Appl
@@ -723,50 +722,50 @@ and eat_prods ~subst ~metasenv context he ty_he args_with_ty =
   in
     aux ty_he args_with_ty
 
-and is_non_recursive_singleton ~subst (Ref.Ref (uri,_)) iname ity cty =
+and is_non_recursive_singleton status ~subst (Ref.Ref (uri,_)) iname ity cty =
      let ctx = [iname, C.Decl ity] in
-     let cty = debruijn uri 1 [] ~subst cty in
+     let cty = debruijn status uri 1 [] ~subst cty in
      let len = List.length ctx in
      let rec aux ctx n nn t =
-       match R.whd ~subst ctx t with
+       match R.whd status ~subst ctx t with
        | C.Prod (name, src, tgt) ->
-            does_not_occur ~subst ctx n nn src &&
+            does_not_occur status ~subst ctx n nn src &&
              aux ((name, C.Decl src) :: ctx) (n+1) (nn+1) tgt
        | C.Rel k | C.Appl (C.Rel k :: _) when k = nn -> true
        | _ -> assert false
      in
      aux ctx (len-1) len cty
 
-and is_non_informative ~metasenv ~subst paramsno c =
+and is_non_informative status ~metasenv ~subst paramsno c =
  let rec aux context c =
-   match R.whd ~subst context c with
+   match R.whd status ~subst context c with
     | C.Prod (n,so,de) ->
-       let s = typeof ~metasenv ~subst context so in
+       let s = typeof status ~metasenv ~subst context so in
        (s = C.Sort C.Prop || 
         match s with C.Sort (C.Type ((`CProp,_)::_)) -> true | _ -> false) && 
        aux ((n,(C.Decl so))::context) de
     | _ -> true in
- let context',dx = NCicReduction.split_prods ~subst [] paramsno c in
+ let context',dx = NCicReduction.split_prods status ~subst [] paramsno c in
   aux context' dx
 
-and check_mutual_inductive_defs uri ~metasenv ~subst leftno tyl = 
+and check_mutual_inductive_defs status uri ~metasenv ~subst leftno tyl = 
   (* let's check if the arity of the inductive types are well formed *)
-  List.iter (fun (_,_,x,_) -> ignore (typeof ~subst ~metasenv [] x)) tyl;
+  List.iter (fun (_,_,x,_) -> ignore (typeof status ~subst ~metasenv [] x)) tyl;
   (* let's check if the types of the inductive constructors are well formed. *)
   let len = List.length tyl in
   let tys = List.rev_map (fun (_,n,ty,_) -> (n,(C.Decl ty))) tyl in
   ignore
    (List.fold_right
     (fun (it_relev,_,ty,cl) i ->
-       let context,ty_sort = NCicReduction.split_prods ~subst [] ~-1 ty in
+       let context,ty_sort = NCicReduction.split_prods status ~subst [] ~-1 ty in
        let sx_context_ty_rev,_ = HExtlib.split_nth leftno (List.rev context) in
        List.iter
          (fun (k_relev,_,te) ->
            let k_relev =
             try snd (HExtlib.split_nth leftno k_relev)
             with Failure _ -> k_relev in
-           let te = debruijn uri len [] ~subst te in
-           let context,te = NCicReduction.split_prods ~subst tys leftno te in
+           let te = debruijn status uri len [] ~subst te in
+           let context,te = NCicReduction.split_prods status ~subst tys leftno te in
            let _,chopped_context_rev =
             HExtlib.split_nth (List.length tys) (List.rev context) in
            let sx_context_te_rev,_ =
@@ -777,10 +776,10 @@ and check_mutual_inductive_defs uri ~metasenv ~subst leftno tyl =
                 let convertible =
                  match item1,item2 with
                    (_,C.Decl ty1),(_,C.Decl ty2) ->
-                     R.are_convertible ~metasenv ~subst context ty1 ty2
+                     R.are_convertible status ~metasenv ~subst context ty1 ty2
                  | (_,C.Def (bo1,ty1)),(_,C.Def (bo2,ty2)) ->
-                     R.are_convertible ~metasenv ~subst context ty1 ty2 &&
-                      R.are_convertible ~metasenv ~subst context bo1 bo2
+                     R.are_convertible status ~metasenv ~subst context ty1 ty2 &&
+                      R.are_convertible status ~metasenv ~subst context bo1 bo2
                  | _,_ -> false
                 in
                  if not convertible then
@@ -791,15 +790,15 @@ and check_mutual_inductive_defs uri ~metasenv ~subst leftno tyl =
                   item1::context
               ) [] sx_context_ty_rev sx_context_te_rev)
             with Invalid_argument "List.fold_left2" -> assert false);
-           let con_sort = typeof ~subst ~metasenv context te in
-           (match R.whd ~subst context con_sort, R.whd ~subst [] ty_sort with
+           let con_sort = typeof status ~subst ~metasenv context te in
+           (match R.whd status ~subst context con_sort, R.whd status ~subst [] ty_sort with
                (C.Sort (C.Type u1) as s1), (C.Sort (C.Type u2) as s2) ->
                 if not (E.universe_leq u1 u2) then
                  raise
                   (TypeCheckerFailure
-                    (lazy ("The type " ^ PP.ppterm ~metasenv ~subst ~context s1^
+                    (lazy ("The type " ^ status#ppterm ~metasenv ~subst ~context s1^
                       " of the constructor is not included in the inductive" ^
-                      " type sort " ^ PP.ppterm ~metasenv ~subst ~context s2)))
+                      " type sort " ^ status#ppterm ~metasenv ~subst ~context s2)))
              | C.Sort _, C.Sort C.Prop
              | C.Sort _, C.Sort C.Type _ -> ()
              | _, _ ->
@@ -809,31 +808,31 @@ and check_mutual_inductive_defs uri ~metasenv ~subst leftno tyl =
            (* let's check also the positivity conditions *)
            if 
              not
-               (are_all_occurrences_positive ~subst context uri leftno
+               (are_all_occurrences_positive status ~subst context uri leftno
                  (i+leftno) leftno (len+leftno) te) 
            then
              raise
                (TypeCheckerFailure
                  (lazy ("Non positive occurence in "^NUri.string_of_uri
                  uri)))
-           else check_relevance ~subst ~metasenv context k_relev te)
+           else check_relevance status ~subst ~metasenv context k_relev te)
          cl;
-        check_relevance ~subst ~metasenv [] it_relev ty;
+        check_relevance status ~subst ~metasenv [] it_relev ty;
         i+1)
     tyl 1)
 
-and check_relevance ~subst ~metasenv context relevance ty =
+and check_relevance status ~subst ~metasenv context relevance ty =
   let error context ty =
     raise (TypeCheckerFailure 
      (lazy ("Wrong relevance declaration: " ^ 
      String.concat "," (List.map string_of_bool relevance)^ 
-     "\nfor type: "^PP.ppterm ~metasenv ~subst ~context ty)))
+     "\nfor type: "^status#ppterm ~metasenv ~subst ~context ty)))
   in
   let rec aux context relevance ty =
-    match R.whd ~subst context ty with
+    match R.whd status ~subst context ty with
     | C.Prod (name,so,de) ->
-        let sort = typeof ~subst ~metasenv context so in
-        (match (relevance,R.whd ~subst context sort) with
+        let sort = typeof status ~subst ~metasenv context so in
+        (match (relevance,R.whd status ~subst context sort) with
           | [],_ -> ()
           | false::tl,C.Sort C.Prop -> aux ((name,(C.Decl so))::context) tl de
           | true::_,C.Sort C.Prop
@@ -843,41 +842,41 @@ and check_relevance ~subst ~metasenv context relevance ty =
           | true::tl,C.Meta _ -> aux ((name,(C.Decl so))::context) tl de
           | _ -> raise (AssertFailure (lazy (Printf.sprintf
                  "Prod: the type %s of the source of %s is not a sort"
-                  (PP.ppterm ~subst ~metasenv ~context sort)
-                  (PP.ppterm ~subst ~metasenv ~context so)))))
+                  (status#ppterm ~subst ~metasenv ~context sort)
+                  (status#ppterm ~subst ~metasenv ~context so)))))
     | _ -> (match relevance with
       | [] -> ()
       | _::_ -> error context ty)
   in aux context relevance ty
 
-and guarded_by_destructors r_uri r_len ~subst ~metasenv context recfuns t = 
+and guarded_by_destructors (status:#NCic.status) r_uri r_len ~subst ~metasenv context recfuns t = 
  let recursor f k t = U.fold shift_k k (fun k () -> f k) () t in
  let rec aux (context, recfuns, x as k) t = 
 (*
    prerr_endline ("GB:\n" ^ 
-     PP.ppcontext ~subst ~metasenv context^
-     PP.ppterm ~metasenv ~subst ~context t^
+     status#ppcontext ~subst ~metasenv context^
+     status#ppterm ~metasenv ~subst ~context t^
        string_of_recfuns ~subst ~metasenv ~context recfuns);
 *)
   try
   match t with
   | C.Rel m as t when is_dangerous m recfuns -> 
       raise (NotGuarded (lazy 
-        (PP.ppterm ~subst ~metasenv ~context t ^ 
+        (status#ppterm ~subst ~metasenv ~context t ^ 
          " is a partial application of a fix")))
   | C.Appl ((C.Rel m)::tl) as t when is_dangerous m recfuns ->
      let rec_no = get_recno m recfuns in
      if not (List.length tl > rec_no) then 
        raise (NotGuarded (lazy 
-         (PP.ppterm ~context ~subst ~metasenv t ^ 
+         (status#ppterm ~context ~subst ~metasenv t ^ 
          " is a partial application of a fix")))
      else
        let rec_arg = List.nth tl rec_no in
-       if not (is_really_smaller r_uri r_len ~subst ~metasenv k rec_arg) then 
+       if not (is_really_smaller status r_uri r_len ~subst ~metasenv k rec_arg) then 
          raise (NotGuarded (lazy (Printf.sprintf ("Recursive call %s, %s is not"
-          ^^ " smaller.\ncontext:\n%s") (PP.ppterm ~context ~subst ~metasenv
-          t) (PP.ppterm ~context ~subst ~metasenv rec_arg)
-          (PP.ppcontext ~subst ~metasenv context))));
+          ^^ " smaller.\ncontext:\n%s") (status#ppterm ~context ~subst ~metasenv
+          t) (status#ppterm ~context ~subst ~metasenv rec_arg)
+          (status#ppcontext ~subst ~metasenv context))));
        List.iter (aux k) tl
   | C.Appl ((C.Rel m)::tl) when is_unfolded m recfuns ->
        let fixed_args = get_fixed_args m recfuns in
@@ -886,17 +885,17 @@ and guarded_by_destructors r_uri r_len ~subst ~metasenv context recfuns t =
   | C.Rel m ->
      (match List.nth context (m-1) with 
      | _,C.Decl _ -> ()
-     | _,C.Def (bo,_) -> aux k (S.lift m bo))
+     | _,C.Def (bo,_) -> aux k (S.lift status m bo))
   | C.Meta _ -> ()
   | C.Appl (C.Const ((Ref.Ref (uri,Ref.Fix (i,recno,_))) as r)::args) ->
       if List.exists (fun t -> try aux k t;false with NotGuarded _ -> true) args
       then
-      let fl,_,_ = E.get_checked_fixes_or_cofixes r in
+      let fl,_,_ = E.get_checked_fixes_or_cofixes status r in
       let ctx_tys, bos = 
         List.split (List.map (fun (_,name,_,ty,bo) -> (name, C.Decl ty), bo) fl)
       in
       let fl_len = List.length fl in
-      let bos = List.map (debruijn uri fl_len context ~subst) bos in
+      let bos = List.map (debruijn status uri fl_len context ~subst) bos in
       let j = List.fold_left min max_int (List.map (fun (_,_,i,_,_)->i) fl) in
       let ctx_len = List.length context in
         (* we may look for fixed params not only up to j ... *)
@@ -913,18 +912,18 @@ and guarded_by_destructors r_uri r_len ~subst ~metasenv context recfuns t =
         HExtlib.list_mapi
          (fun bo fno ->
           let bo_and_k =
-            eat_or_subst_lambdas ~subst ~metasenv j bo fa args new_k
+            eat_or_subst_lambdas status ~subst ~metasenv j bo fa args new_k
           in
            if
             fno = i &&
             List.length args > recno &&
             (*case where the recursive argument is already really_smaller *)
-            is_really_smaller r_uri r_len ~subst ~metasenv k
+            is_really_smaller status r_uri r_len ~subst ~metasenv k
              (List.nth args recno)
            then
             let bo,(context, _, _ as new_k) = bo_and_k in
             let bo, context' =
-             eat_lambdas ~subst ~metasenv context (recno + 1 - j) bo in
+             eat_lambdas status ~subst ~metasenv context (recno + 1 - j) bo in
             let new_context_part,_ =
              HExtlib.split_nth (List.length context' - List.length context)
               context' in
@@ -938,34 +937,34 @@ and guarded_by_destructors r_uri r_len ~subst ~metasenv context recfuns t =
       in
        List.iter (fun (bo,k) -> aux k bo) bos_and_ks
   | C.Match (Ref.Ref (_,Ref.Ind (true,_,_)),outtype,term,pl) as t ->
-     (match R.whd ~subst context term with
+     (match R.whd status ~subst context term with
      | C.Rel m | C.Appl (C.Rel m :: _ ) as t when is_safe m recfuns || m = x ->
-         let ty = typeof ~subst ~metasenv context term in
+         let ty = typeof status ~subst ~metasenv context term in
          let dc_ctx, dcl, start, stop = 
-           specialize_and_abstract_constrs ~subst r_uri r_len context ty in
+           specialize_and_abstract_constrs status ~subst r_uri r_len context ty in
          let args = match t with C.Appl (_::tl) -> tl | _ -> [] in
          aux k outtype; 
          List.iter (aux k) args; 
          List.iter2
            (fun p (_,dc) ->
-             let rl = recursive_args ~subst ~metasenv dc_ctx start stop dc in
-             let p, k = get_new_safes ~subst k p rl in
+             let rl = recursive_args status ~subst ~metasenv dc_ctx start stop dc in
+             let p, k = get_new_safes status ~subst k p rl in
              aux k p) 
            pl dcl
      | _ -> recursor aux k t)
   | t -> recursor aux k t
   with
    NotGuarded _ as exc ->
-    let t' = R.whd ~delta:0 ~subst context t in
+    let t' = R.whd status ~delta:0 ~subst context t in
     if t = t' then raise exc
     else aux k t'
  in
   try aux (context, recfuns, 1) t
   with NotGuarded s -> raise (TypeCheckerFailure s)
 
-and guarded_by_constructors ~subst ~metasenv context t indURI indlen nn =
+and guarded_by_constructors status ~subst ~metasenv context t indURI indlen nn =
  let rec aux context n nn h te =
-  match R.whd ~subst context te with
+  match R.whd status ~subst context te with
    | C.Rel m when m > n && m <= nn -> h
    | C.Rel _ | C.Meta _ -> true
    | C.Sort _
@@ -974,21 +973,21 @@ and guarded_by_constructors ~subst ~metasenv context t indURI indlen nn =
    | C.Const (Ref.Ref (_,Ref.Ind _))
    | C.LetIn _ -> raise (AssertFailure (lazy "17"))
    | C.Lambda (name,so,de) ->
-      does_not_occur ~subst context n nn so &&
+      does_not_occur status ~subst context n nn so &&
       aux ((name,C.Decl so)::context) (n + 1) (nn + 1) h de
    | C.Appl ((C.Rel m)::tl) when m > n && m <= nn ->
-      h && List.for_all (does_not_occur ~subst context n nn) tl
+      h && List.for_all (does_not_occur status ~subst context n nn) tl
    | C.Const (Ref.Ref (_,Ref.Con _)) -> true
    | C.Appl (C.Const (Ref.Ref (_, Ref.Con (_,j,paramsno))) :: tl) as t ->
-      let ty_t = typeof ~subst ~metasenv context t in
+      let ty_t = typeof status ~subst ~metasenv context t in
       let dc_ctx, dcl, start, stop = 
-        specialize_and_abstract_constrs ~subst indURI indlen context ty_t in
+        specialize_and_abstract_constrs status ~subst indURI indlen context ty_t in
       let _, dc = List.nth dcl (j-1) in
 (*
-        prerr_endline (PP.ppterm ~subst ~metasenv ~context:dc_ctx dc);
-        prerr_endline (PP.ppcontext ~subst ~metasenv dc_ctx);
+        prerr_endline (status#ppterm ~subst ~metasenv ~context:dc_ctx dc);
+        prerr_endline (status#ppcontext ~subst ~metasenv dc_ctx);
  *)
-      let rec_params = recursive_args ~subst ~metasenv dc_ctx start stop dc in
+      let rec_params = recursive_args status ~subst ~metasenv dc_ctx start stop dc in
       let rec analyse_instantiated_type rec_spec args =
        match rec_spec, args with
        | h::rec_spec, he::args -> 
@@ -996,16 +995,16 @@ and guarded_by_constructors ~subst ~metasenv context t indURI indlen nn =
        | _,[] -> true
        | _ -> raise (AssertFailure (lazy 
          ("Too many args for constructor: " ^ String.concat " "
-         (List.map (fun x-> PP.ppterm ~subst ~metasenv ~context x) args))))
+         (List.map (fun x-> status#ppterm ~subst ~metasenv ~context x) args))))
       in
       let _, args = HExtlib.split_nth paramsno tl in
       analyse_instantiated_type rec_params args
    | C.Appl ((C.Match (_,out,te,pl))::_) 
    | C.Match (_,out,te,pl) as t ->
        let tl = match t with C.Appl (_::tl) -> tl | _ -> [] in
-       List.for_all (does_not_occur ~subst context n nn) tl &&
-       does_not_occur ~subst context n nn out &&
-       does_not_occur ~subst context n nn te &&
+       List.for_all (does_not_occur status ~subst context n nn) tl &&
+       does_not_occur status ~subst context n nn out &&
+       does_not_occur status ~subst context n nn te &&
        List.for_all (aux context n nn h) pl
 (* IMPOSSIBLE unsless we allow to pass cofix to other fix/cofix as we do for 
    higher order fix in g_b_destructors.
@@ -1016,81 +1015,81 @@ and guarded_by_constructors ~subst ~metasenv context t indURI indlen nn =
       let fl,_,_ = E.get_checked_fixes_or_cofixes ref in 
       let len = List.length fl in
       let tys = List.map (fun (_,n,_,ty,_) -> n, C.Decl ty) fl in
-      List.for_all (does_not_occur ~subst context n nn) tl &&
+      List.for_all (does_not_occur status ~subst context n nn) tl &&
       List.for_all
        (fun (_,_,_,_,bo) ->
-          aux (context@tys) n nn h (debruijn u len context bo))
+          aux (context@tys) n nn h (debruijn status u len context bo))
        fl
 *)
    | C.Const _
-   | C.Appl _ as t -> does_not_occur ~subst context n nn t
+   | C.Appl _ as t -> does_not_occur status ~subst context n nn t
  in
    aux context 0 nn false t
                                                                       
-and recursive_args ~subst ~metasenv context n nn te =
-  match R.whd ~subst context te with
+and recursive_args status ~subst ~metasenv context n nn te =
+  match R.whd status ~subst context te with
   | C.Rel _ | C.Appl _ | C.Const _ -> []
   | C.Prod (name,so,de) ->
-     (not (does_not_occur ~subst context n nn so)) ::
-      (recursive_args ~subst ~metasenv 
+     (not (does_not_occur status ~subst context n nn so)) ::
+      (recursive_args status ~subst ~metasenv 
         ((name,(C.Decl so))::context) (n+1) (nn + 1) de)
   | t -> 
-     raise (AssertFailure (lazy ("recursive_args:" ^ PP.ppterm ~subst
+     raise (AssertFailure (lazy ("recursive_args:" ^ status#ppterm ~subst
      ~metasenv ~context:[] t)))
 
-and get_new_safes ~subst (context, recfuns, x as k) p rl =
-  match R.whd ~subst context p, rl with
+and get_new_safes status ~subst (context, recfuns, x as k) p rl =
+  match R.whd status ~subst context p, rl with
   | C.Lambda (name,so,ta), b::tl ->
       let recfuns = (if b then [0,Safe] else []) @ recfuns in
-      get_new_safes ~subst 
+      get_new_safes status ~subst 
         (shift_k (name,(C.Decl so)) (context, recfuns, x)) ta tl
   | C.Meta _ as e, _ | e, [] -> e, k
   | _ -> raise (AssertFailure (lazy "Ill formed pattern"))
 
-and is_really_smaller 
+and is_really_smaller status
   r_uri r_len ~subst ~metasenv (context, recfuns, x as k) te 
 =
- match R.whd ~subst context te with
+ match R.whd status ~subst context te with
  | C.Rel m when is_safe m recfuns -> true
  | C.Lambda (name, s, t) ->
-    is_really_smaller r_uri r_len ~subst ~metasenv (shift_k (name,C.Decl s) k) t
+    is_really_smaller status r_uri r_len ~subst ~metasenv (shift_k (name,C.Decl s) k) t
  | C.Appl (he::_) ->
-    is_really_smaller r_uri r_len ~subst ~metasenv k he
+    is_really_smaller status r_uri r_len ~subst ~metasenv k he
  | C.Appl [] | C.Implicit _ -> assert false
  | C.Meta _ -> true 
  | C.Match (Ref.Ref (_,Ref.Ind (isinductive,_,_)),_,term,pl) ->
     (match term with
     | C.Rel m | C.Appl (C.Rel m :: _ ) when is_safe m recfuns || m = x ->
         if not isinductive then
-          List.for_all (is_really_smaller r_uri r_len ~subst ~metasenv k) pl
+          List.for_all (is_really_smaller status r_uri r_len ~subst ~metasenv k) pl
         else
-          let ty = typeof ~subst ~metasenv context term in
+          let ty = typeof status ~subst ~metasenv context term in
           let dc_ctx, dcl, start, stop = 
-            specialize_and_abstract_constrs ~subst r_uri r_len context ty in
+            specialize_and_abstract_constrs status ~subst r_uri r_len context ty in
           List.for_all2
            (fun p (_,dc) -> 
-             let rl = recursive_args ~subst ~metasenv dc_ctx start stop dc in
-             let e, k = get_new_safes ~subst k p rl in
-             is_really_smaller r_uri r_len ~subst ~metasenv k e)
+             let rl = recursive_args status ~subst ~metasenv dc_ctx start stop dc in
+             let e, k = get_new_safes status ~subst k p rl in
+             is_really_smaller status r_uri r_len ~subst ~metasenv k e)
            pl dcl
-    | _ -> List.for_all (is_really_smaller r_uri r_len ~subst ~metasenv k) pl)
+    | _ -> List.for_all (is_really_smaller status r_uri r_len ~subst ~metasenv k) pl)
  | _ -> false
 
-and returns_a_coinductive ~subst context ty =
-  match R.whd ~subst context ty with
+and returns_a_coinductive status ~subst context ty =
+  match R.whd status ~subst context ty with
   | C.Const (Ref.Ref (uri,Ref.Ind (false,_,_)) as ref) 
   | C.Appl (C.Const (Ref.Ref (uri,Ref.Ind (false,_,_)) as ref)::_) ->
-     let _, _, itl, _, _ = E.get_checked_indtys ref in
+     let _, _, itl, _, _ = E.get_checked_indtys status ref in
      Some (uri,List.length itl)
   | C.Prod (n,so,de) ->
-     returns_a_coinductive ~subst ((n,C.Decl so)::context) de
+     returns_a_coinductive status ~subst ((n,C.Decl so)::context) de
   | _ -> None
 
-and type_of_constant ((Ref.Ref (uri,_)) as ref) = 
+and type_of_constant status ((Ref.Ref (uri,_)) as ref) = 
  let error () =
   raise (TypeCheckerFailure (lazy "Inconsistent cached infos in reference"))
  in
-  match E.get_checked_obj uri, ref with
+  match E.get_checked_obj status uri, ref with
   | (_,_,_,_,C.Inductive(isind1,lno1,tl,_)),Ref.Ref(_,Ref.Ind (isind2,i,lno2))->
       if isind1 <> isind2 || lno1 <> lno2 then error ();
       let _,_,arity,_ = List.nth tl i in arity
@@ -1115,33 +1114,33 @@ and type_of_constant ((Ref.Ref (uri,_)) as ref) =
      (lazy ("type_of_constant: environment/reference: " ^
        Ref.string_of_reference ref)))
 
-and get_relevance ~metasenv ~subst context t args = 
-   let ty = typeof ~subst ~metasenv context t in
+and get_relevance status ~metasenv ~subst context t args = 
+   let ty = typeof status ~subst ~metasenv context t in
    let rec aux context ty = function
      | [] -> [] 
-     | arg::tl -> match R.whd ~subst context ty with
+     | arg::tl -> match R.whd status ~subst context ty with
        | C.Prod (_,so,de) -> 
-           let sort = typeof ~subst ~metasenv context so in
-           let new_ty = S.subst ~avoid_beta_redexes:true arg de in
-           (*prerr_endline ("so: " ^ PP.ppterm ~subst ~metasenv:[]
+           let sort = typeof status ~subst ~metasenv context so in
+           let new_ty = S.subst status ~avoid_beta_redexes:true arg de in
+           (*prerr_endline ("so: " ^ status#ppterm ~subst ~metasenv:[]
              ~context so);
-           prerr_endline ("sort: " ^ PP.ppterm ~subst ~metasenv:[]
+           prerr_endline ("sort: " ^ status#ppterm ~subst ~metasenv:[]
              ~context sort);*)
-           (match R.whd ~subst context sort with
+           (match R.whd status ~subst context sort with
               | C.Sort C.Prop ->
                   false::(aux context new_ty tl)
               | C.Sort _
                    | C.Meta _ -> true::(aux context new_ty tl)
               | _ -> raise (TypeCheckerFailure (lazy (Printf.sprintf
                      "Prod: the type %s of the source of %s is not a sort" 
-                      (PP.ppterm ~subst ~metasenv ~context sort)
-                      (PP.ppterm ~subst ~metasenv ~context so)))))
+                      (status#ppterm ~subst ~metasenv ~context sort)
+                      (status#ppterm ~subst ~metasenv ~context so)))))
        | _ ->
           raise 
             (TypeCheckerFailure
               (lazy (Printf.sprintf
                 "Appl: %s is not a function, it cannot be applied"
-                (PP.ppterm ~subst ~metasenv ~context
+                (status#ppterm ~subst ~metasenv ~context
                  (let res = List.length tl in
                   let eaten = List.length args - res in
                    (C.Appl
@@ -1150,42 +1149,42 @@ and get_relevance ~metasenv ~subst context t args =
    in aux context ty args
 ;;
 
-let typecheck_context ~metasenv ~subst context =
+let typecheck_context status ~metasenv ~subst context =
  ignore
   (List.fold_right
    (fun d context  ->
      begin
       match d with
-         _,C.Decl t -> ignore (typeof ~metasenv ~subst:[] context t)
+         _,C.Decl t -> ignore (typeof status ~metasenv ~subst:[] context t)
        | name,C.Def (te,ty) ->
-         ignore (typeof ~metasenv ~subst:[] context ty);
-         let ty' = typeof ~metasenv ~subst:[] context te in
-          if not (R.are_convertible ~metasenv ~subst context ty' ty) then
+         ignore (typeof status ~metasenv ~subst:[] context ty);
+         let ty' = typeof status ~metasenv ~subst:[] context te in
+          if not (R.are_convertible status ~metasenv ~subst context ty' ty) then
            raise (AssertFailure (lazy (Printf.sprintf (
             "the type of the definiens for %s in the context is not "^^
             "convertible with the declared one.\n"^^
             "inferred type:\n%s\nexpected type:\n%s")
-            name (PP.ppterm ~subst ~metasenv ~context ty') 
-            (PP.ppterm ~subst ~metasenv ~context ty))))
+            name (status#ppterm ~subst ~metasenv ~context ty') 
+            (status#ppterm ~subst ~metasenv ~context ty))))
      end;
      d::context
    ) context [])
 ;;
 
-let typecheck_metasenv metasenv =
+let typecheck_metasenv status metasenv =
  ignore
   (List.fold_left
     (fun metasenv (i,(_,context,ty) as conj) ->
       if List.mem_assoc i metasenv then
        raise (TypeCheckerFailure (lazy ("duplicate meta " ^ string_of_int i ^
         " in metasenv")));
-      typecheck_context ~metasenv ~subst:[] context;
-      ignore (typeof ~metasenv ~subst:[] context ty);
+      typecheck_context status ~metasenv ~subst:[] context;
+      ignore (typeof status ~metasenv ~subst:[] context ty);
       metasenv @ [conj]
     ) [] metasenv)
 ;;
 
-let typecheck_subst ~metasenv subst =
+let typecheck_subst status ~metasenv subst =
  ignore
   (List.fold_left
     (fun subst (i,(_,context,ty,bo) as conj) ->
@@ -1195,25 +1194,25 @@ let typecheck_subst ~metasenv subst =
       if List.mem_assoc i metasenv then
        raise (AssertFailure (lazy ("meta " ^ string_of_int i ^
         " is both in the metasenv and in the substitution")));
-      typecheck_context ~metasenv ~subst context;
-      ignore (typeof ~metasenv ~subst context ty);
-      let ty' = typeof ~metasenv ~subst context bo in
-       if not (R.are_convertible ~metasenv ~subst context ty' ty) then
+      typecheck_context status ~metasenv ~subst context;
+      ignore (typeof status ~metasenv ~subst context ty);
+      let ty' = typeof status ~metasenv ~subst context bo in
+       if not (R.are_convertible status ~metasenv ~subst context ty' ty) then
         raise (AssertFailure (lazy (Printf.sprintf (
          "the type of the definiens for %d in the substitution is not "^^
          "convertible with the declared one.\n"^^
          "inferred type:\n%s\nexpected type:\n%s")
          i
-         (PP.ppterm ~subst ~metasenv ~context ty') 
-         (PP.ppterm ~subst ~metasenv ~context ty))));
+         (status#ppterm ~subst ~metasenv ~context ty') 
+         (status#ppterm ~subst ~metasenv ~context ty))));
       subst @ [conj]
     ) [] subst)
 ;;
 
-let height_of_term tl =
+let height_of_term status tl =
  let h = ref 0 in
  let get_height (NReference.Ref (uri,_)) =
-  let _,height,_,_,_ = NCicEnvironment.get_checked_obj uri in
+  let _,height,_,_,_ = NCicEnvironment.get_checked_obj status uri in
    height in
  let rec aux =
   function
@@ -1233,54 +1232,54 @@ let height_of_term tl =
   1 + !h
 ;;
 
-let height_of_obj_kind uri ~subst =
+let height_of_obj_kind status uri ~subst =
  function
     NCic.Inductive _
   | NCic.Constant (_,_,None,_,_)
   | NCic.Fixpoint (false,_,_) -> 0
   | NCic.Fixpoint (true,ifl,_) ->
      let iflno = List.length ifl in
-      height_of_term
+      height_of_term status
        (List.fold_left
         (fun l (_,_,_,ty,bo) ->
-          let bo = debruijn uri iflno [] ~subst bo in
+          let bo = debruijn status uri iflno [] ~subst bo in
            ty::bo::l
        ) [] ifl)
-  | NCic.Constant (_,_,Some bo,ty,_) -> height_of_term [bo;ty]
+  | NCic.Constant (_,_,Some bo,ty,_) -> height_of_term status [bo;ty]
 ;;
 
-let typecheck_obj (uri,height,metasenv,subst,kind) =
+let typecheck_obj status (uri,height,metasenv,subst,kind) =
 (*height must be checked since it is not only an optimization during reduction*)
- let iheight = height_of_obj_kind uri ~subst kind in
+ let iheight = height_of_obj_kind status uri ~subst kind in
  if height <> iheight then
   raise (TypeCheckerFailure (lazy (Printf.sprintf
    "the declared object height (%d) is not the inferred one (%d)"
    height iheight)));
- typecheck_metasenv metasenv;
- typecheck_subst ~metasenv subst;
+ typecheck_metasenv status metasenv;
+ typecheck_subst status ~metasenv subst;
  match kind with
    | C.Constant (relevance,_,Some te,ty,_) ->
-      let _ = typeof ~subst ~metasenv [] ty in
-      let ty_te = typeof ~subst ~metasenv [] te in
-      if not (R.are_convertible ~metasenv ~subst [] ty_te ty) then
+      let _ = typeof status ~subst ~metasenv [] ty in
+      let ty_te = typeof status ~subst ~metasenv [] te in
+      if not (R.are_convertible status ~metasenv ~subst [] ty_te ty) then
        raise (TypeCheckerFailure (lazy (Printf.sprintf (
         "the type of the body is not convertible with the declared one.\n"^^
         "inferred type:\n%s\nexpected type:\n%s")
-        (PP.ppterm ~subst ~metasenv ~context:[] ty_te) 
-        (PP.ppterm ~subst ~metasenv ~context:[] ty))));
-      check_relevance ~subst ~metasenv [] relevance ty
-      (*check_relevance ~in_type:false ~subst ~metasenv relevance te*)
+        (status#ppterm ~subst ~metasenv ~context:[] ty_te) 
+        (status#ppterm ~subst ~metasenv ~context:[] ty))));
+      check_relevance status ~subst ~metasenv [] relevance ty
+      (*check_relevance status ~in_type:false ~subst ~metasenv relevance te*)
    | C.Constant (relevance,_,None,ty,_) ->
-      ignore (typeof ~subst ~metasenv [] ty);
-      check_relevance ~subst ~metasenv [] relevance ty
+      ignore (typeof status ~subst ~metasenv [] ty);
+      check_relevance status ~subst ~metasenv [] relevance ty
    | C.Inductive (_, leftno, tyl, _) -> 
-       check_mutual_inductive_defs uri ~metasenv ~subst leftno tyl
+       check_mutual_inductive_defs status uri ~metasenv ~subst leftno tyl
    | C.Fixpoint (inductive,fl,_) ->
       let types, kl =
         List.fold_left
          (fun (types,kl) (relevance,name,k,ty,_) ->
-           let _ = typeof ~subst ~metasenv [] ty in
-            check_relevance ~subst ~metasenv [] relevance ty;
+           let _ = typeof status ~subst ~metasenv [] ty in
+            check_relevance status ~subst ~metasenv [] relevance ty;
             ((name,C.Decl ty)::types, k::kl)
          ) ([],[]) fl
       in
@@ -1288,25 +1287,25 @@ let typecheck_obj (uri,height,metasenv,subst,kind) =
       let dfl, kl =   
         List.split (List.map2 
           (fun (_,_,_,_,bo) rno -> 
-             let dbo = debruijn uri len [] ~subst bo in
+             let dbo = debruijn status uri len [] ~subst bo in
              dbo, Evil rno)
           fl kl)
       in
       List.iter2 (fun (_,_,x,ty,_) bo ->
-       let ty_bo = typeof ~subst ~metasenv types bo in
-       if not (R.are_convertible ~metasenv ~subst types ty_bo ty)
+       let ty_bo = typeof status ~subst ~metasenv types bo in
+       if not (R.are_convertible status ~metasenv ~subst types ty_bo ty)
        then raise (TypeCheckerFailure (lazy ("(Co)Fix: ill-typed bodies")))
        else
         if inductive then begin
-          let m, context = eat_lambdas ~subst ~metasenv types (x + 1) bo in
+          let m, context = eat_lambdas status ~subst ~metasenv types (x + 1) bo in
           let r_uri, r_len =
             let he =
              match List.hd context with _,C.Decl t -> t | _ -> assert false
             in
-            match R.whd ~subst (List.tl context) he with
+            match R.whd status ~subst (List.tl context) he with
             | C.Const (Ref.Ref (uri,Ref.Ind _) as ref)
             | C.Appl (C.Const (Ref.Ref (uri,Ref.Ind _) as ref) :: _) ->
-                let _,_,itl,_,_ = E.get_checked_indtys ref in
+                let _,_,itl,_,_ = E.get_checked_indtys status ref in
                   uri, List.length itl
             | _ ->
               raise (TypeCheckerFailure
@@ -1316,17 +1315,17 @@ let typecheck_obj (uri,height,metasenv,subst,kind) =
           let rec enum_from k = 
             function [] -> [] | v::tl -> (k,v)::enum_from (k+1) tl 
           in
-          guarded_by_destructors r_uri r_len 
+          guarded_by_destructors status r_uri r_len 
            ~subst ~metasenv context (enum_from (x+2) kl) m
         end else
-         match returns_a_coinductive ~subst [] ty with
+         match returns_a_coinductive status ~subst [] ty with
           | None ->
              raise (TypeCheckerFailure
                (lazy "CoFix: does not return a coinductive type"))
           | Some (r_uri, r_len) ->
              (* guarded by constructors conditions C{f,M} *)
              if not 
-             (guarded_by_constructors ~subst ~metasenv types bo r_uri r_len len)
+             (guarded_by_constructors status ~subst ~metasenv types bo r_uri r_len len)
              then
                raise (TypeCheckerFailure
                 (lazy "CoFix: not guarded by constructors"))
@@ -1348,11 +1347,11 @@ let logger =
 
 let set_logger f = logger := f;;
 
-let typecheck_obj obj =
+let typecheck_obj status obj =
  let u,_,_,_,_ = obj in
  try
   !logger (`Start_type_checking u);
-  typecheck_obj obj;
+  typecheck_obj status obj;
   !logger (`Type_checking_completed u)
  with
     Sys.Break as e ->
@@ -1364,16 +1363,15 @@ let typecheck_obj obj =
 ;;
 
 E.set_typecheck_obj
- (fun obj ->
+ (fun status obj ->
    if trust_obj obj then
     let u,_,_,_,_ = obj in
      !logger (`Trust_obj u)
    else
-    typecheck_obj obj)
+    typecheck_obj status obj)
 ;;
 
 let _ = NCicReduction.set_get_relevance get_relevance;;
-
 
 let indent = ref 0;;
 let debug = true;;

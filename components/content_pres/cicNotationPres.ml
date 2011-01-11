@@ -200,7 +200,7 @@ let add_parens child_prec curr_prec t =
       BoxPp.render_to_string (function x::_->x|_->assert false)
         ~map_unicode_to_tex:false 80 t);*)t)
 
-let render ~lookup_uri ?(prec=(-1)) =
+let render status ~lookup_uri ?(prec=(-1)) =
   let module A = Ast in
   let module P = Mpresentation in
 (*   let use_unicode = true in *)
@@ -309,7 +309,7 @@ let render ~lookup_uri ?(prec=(-1)) =
     | A.Magic _
     | A.Variable _ -> assert false  (* should have been instantiated *)
     | t ->
-        prerr_endline ("unexpected ast: " ^ NotationPp.pp_term t);
+        prerr_endline ("unexpected ast: " ^ NotationPp.pp_term status t);
         assert false
   and aux_attributes xmlattrs mathonly xref  prec t =
     let reset = ref false in

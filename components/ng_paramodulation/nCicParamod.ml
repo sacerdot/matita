@@ -26,14 +26,14 @@ module B(C : NCicBlob.NCicContext): Orderings.Blob
 
 module NCicParamod(C : NCicBlob.NCicContext) = Paramod.Paramod(B(C))
 
-let readback ?(demod=false) rdb metasenv subst context (bag,i,fo_subst,l) =
+let readback status ?(demod=false) metasenv subst context (bag,i,fo_subst,l) =
 (*
   List.iter (fun x ->
      print_endline (Pp.pp_unit_clause ~margin:max_int
      (fst(Terms.M.find x bag)))) l; 
 *)
   (* let stamp = Unix.gettimeofday () in *)
-  let proofterm,prooftype = NCicProof.mk_proof ~demod bag i fo_subst l in
+  let proofterm,prooftype = NCicProof.mk_proof status ~demod bag i fo_subst l in
   (* debug (lazy (Printf.sprintf "Got proof term in %fs"
 		     (Unix.gettimeofday() -. stamp))); *)
 (*
@@ -50,12 +50,12 @@ let readback ?(demod=false) rdb metasenv subst context (bag,i,fo_subst,l) =
     in
       aux 0 metasenv proofterm
   in *)
-  debug (lazy (NCicPp.ppterm ~metasenv ~subst ~context proofterm));
+  debug (lazy (status#ppterm ~metasenv ~subst ~context proofterm));
 (*
   let stamp = Unix.gettimeofday () in
   let metasenv, subst, proofterm, _prooftype = 
     NCicRefiner.typeof 
-      (rdb#set_coerc_db NCicCoercion.empty_db) 
+      (status#set_coerc_db NCicCoercion.empty_db) 
       metasenv subst context proofterm None
   in
     print (lazy (Printf.sprintf "Refined in %fs"
@@ -63,7 +63,7 @@ let readback ?(demod=false) rdb metasenv subst context (bag,i,fo_subst,l) =
 *)
     proofterm, prooftype, metasenv, subst
 
-let nparamod rdb metasenv subst context t table =
+let nparamod status metasenv subst context t table =
   let module C =
     struct 
       let metasenv = metasenv
@@ -87,7 +87,7 @@ let nparamod rdb metasenv subst context t table =
   with 
   | P.Error _ | P.GaveUp | P.Timeout _ -> []
   | P.Unsatisfiable solutions -> 
-      List.map (readback rdb metasenv subst context) solutions
+      List.map (readback status metasenv subst context) solutions
 ;;
   
 module EmptyC = 
@@ -111,8 +111,8 @@ let forward_infer_step s t ty =
     else (debug (lazy "not eq"); s)
 ;;
 
-let index_obj s uri =
-  let obj = NCicEnvironment.get_checked_obj uri in
+let index_obj status s uri =
+  let obj = NCicEnvironment.get_checked_obj status uri in
   debug (lazy ("indexing : " ^ (NUri.string_of_uri uri)));
   debug (lazy ("no : " ^ (string_of_int (fst (Obj.magic uri)))));
   match obj with
@@ -125,17 +125,17 @@ let index_obj s uri =
     | _ -> s
 ;;
 
-let demod rdb metasenv subst context s goal =
+let demod status metasenv subst context s goal =
   (* let stamp = Unix.gettimeofday () in *)
   match P.demod s goal with
     | P.Error _ | P.GaveUp | P.Timeout _ -> []
     | P.Unsatisfiable solutions -> 
       (* print (lazy (Printf.sprintf "Got solutions in %fs"
 		     (Unix.gettimeofday() -. stamp))); *)
-      List.map (readback ~demod:true rdb metasenv subst context) solutions
+      List.map (readback ~demod:true status metasenv subst context) solutions
 ;;
 
-let paramod rdb metasenv subst context s goal =
+let paramod status metasenv subst context s goal =
   (* let stamp = Unix.gettimeofday () in *)
   match P.nparamod ~useage:true ~max_steps:max_int 
     ~timeout:(Unix.gettimeofday () +. 300.0) s goal with
@@ -143,22 +143,22 @@ let paramod rdb metasenv subst context s goal =
   | P.Unsatisfiable solutions -> 
       (* print (lazy (Printf.sprintf "Got solutions in %fs"
 		     (Unix.gettimeofday() -. stamp))); *)
-      List.map (readback rdb metasenv subst context) solutions
+      List.map (readback status metasenv subst context) solutions
 ;;
 
-let fast_eq_check rdb metasenv subst context s goal =
+let fast_eq_check status metasenv subst context s goal =
   (* let stamp = Unix.gettimeofday () in *)
   match P.fast_eq_check s goal with
   | P.Error _ | P.GaveUp | P.Timeout _ -> []
   | P.Unsatisfiable solutions -> 
       (* print (lazy (Printf.sprintf "Got solutions in %fs"
 		     (Unix.gettimeofday() -. stamp))); *)
-      List.map (readback rdb metasenv subst context) solutions
+      List.map (readback status metasenv subst context) solutions
 ;;
 
-let is_equation metasenv subst context ty =
+let is_equation status metasenv subst context ty =
   let hty, _, _ = 
-    NCicMetaSubst.saturate ~delta:0 metasenv subst context
+    NCicMetaSubst.saturate status ~delta:0 metasenv subst context
       ty 0 
   in match hty with
     | NCic.Appl (eq ::tl) when eq = CB.eqP -> true
@@ -166,13 +166,13 @@ let is_equation metasenv subst context ty =
 ;;
 
 (*
-let demodulate rdb metasenv subst context s goal =
+let demodulate status metasenv subst context s goal =
   (* let stamp = Unix.gettimeofday () in *)
   match P.fast_eq_check s goal with
   | P.Error _ | P.GaveUp | P.Timeout _ -> []
   | P.Unsatisfiable solutions -> 
       (* print (lazy (Printf.sprintf "Got solutions in %fs"
 		     (Unix.gettimeofday() -. stamp))); *)
-      List.map (readback rdb metasenv subst context) solutions
+      List.map (readback status metasenv subst context) solutions
 ;;
 *)

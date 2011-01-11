@@ -51,8 +51,9 @@ class type g_status =
   method uhint_db: db
  end
 
-class status =
+class virtual status =
  object
+  inherit NCic.status
   val db = HDB.empty, EQDB.empty
   method uhint_db = db
   method set_uhint_db v = {< db = v >}
@@ -64,7 +65,7 @@ class status =
 let dummy = NCic.Const (NReference.reference_of_string "cic:/dummy_conv.dec");;
 let pair t1 t2 = (NCic.Appl [dummy;t1;t2]) ;;
 
-let index_hint hdb context t1 t2 precedence =
+let index_hint status context t1 t2 precedence =
   assert (
     (match t1 with
     | NCic.Meta _ | NCic.Appl (NCic.Meta _ :: _) -> false | _ -> true)
@@ -76,14 +77,14 @@ let index_hint hdb context t1 t2 precedence =
    * the subst function that lives in the kernel *)
   let hole = NCic.Meta (-1,(0,NCic.Irl 0)) in
   let t1_skeleton = 
-    List.fold_left (fun t _ -> NCicSubstitution.subst hole t) t1 context
+    List.fold_left (fun t _ -> NCicSubstitution.subst status hole t) t1 context
   in
   let t2_skeleton = 
-    List.fold_left (fun t _ -> NCicSubstitution.subst hole t) t2 context
+    List.fold_left (fun t _ -> NCicSubstitution.subst status hole t) t2 context
   in
   let rec cleanup_skeleton () = function
     | NCic.Meta _ -> skel_dummy 
-    | t -> NCicUtils.map (fun _ () -> ()) () cleanup_skeleton t
+    | t -> NCicUtils.map status (fun _ () -> ()) () cleanup_skeleton t
   in
   let t1_skeleton = cleanup_skeleton () t1_skeleton in
   let t2_skeleton = cleanup_skeleton () t2_skeleton in
@@ -103,18 +104,18 @@ let index_hint hdb context t1 t2 precedence =
   let data_t2 = t1_skeleton in
 
   debug(lazy ("INDEXING: " ^ 
-    NCicPp.ppterm ~metasenv:[] ~subst:[] ~context:[] src ^ " |==> " ^
-    NCicPp.ppterm ~metasenv:[] ~subst:[] ~context:[] 
+    status#ppterm ~metasenv:[] ~subst:[] ~context:[] src ^ " |==> " ^
+    status#ppterm ~metasenv:[] ~subst:[] ~context:[] 
       (let _,x,_,_ = data_hint in x)));
 
-  hdb#set_uhint_db (
-      HDB.index (fst (hdb#uhint_db)) src data_hint,
+  status#set_uhint_db (
+      HDB.index (fst (status#uhint_db)) src data_hint,
       EQDB.index  
-        (EQDB.index (snd (hdb#uhint_db)) t2_skeleton (precedence, data_t2))
+        (EQDB.index (snd (status#uhint_db)) t2_skeleton (precedence, data_t2))
         t1_skeleton (precedence, data_t1))
 ;;
 
-let add_user_provided_hint db t precedence =
+let add_user_provided_hint status t precedence =
   let c, a, b = 
     let rec aux ctx = function
       | NCic.Appl l ->
@@ -122,15 +123,15 @@ let add_user_provided_hint db t precedence =
           | b::a::_ -> 
               if
                  let ty_a = 
-                   NCicTypeChecker.typeof ~metasenv:[] ~subst:[] ctx a
+                   NCicTypeChecker.typeof status ~metasenv:[] ~subst:[] ctx a
                  in
                  let ty_b = 
-                   NCicTypeChecker.typeof ~metasenv:[] ~subst:[] ctx b
+                   NCicTypeChecker.typeof status ~metasenv:[] ~subst:[] ctx b
                  in
-                 NCicReduction.are_convertible 
+                 NCicReduction.are_convertible status
                   ~metasenv:[] ~subst:[] ctx ty_a ty_b              
                  &&     
-                 NCicReduction.are_convertible 
+                 NCicReduction.are_convertible status
                   ~metasenv:[] ~subst:[] ctx a b              
               then ctx, a, b
               else raise HintNotValid
@@ -141,7 +142,7 @@ let add_user_provided_hint db t precedence =
     in
       aux [] t
   in
-   index_hint db c a b precedence
+   index_hint status c a b precedence
 ;;
 
 (*
@@ -206,7 +207,7 @@ let db () =
 ;;
 *)
 
-let saturate ?(delta=0) metasenv subst context ty goal_arity =
+let saturate status ?(delta=0) metasenv subst context ty goal_arity =
  assert (goal_arity >= 0);
   let rec aux metasenv = function
    | NCic.Prod (name,s,t) as ty ->
@@ -215,14 +216,14 @@ let saturate ?(delta=0) metasenv subst context ty goal_arity =
            ~with_type:s `IsTerm 
        in
        let t, metasenv1, args, pno = 
-           aux metasenv1 (NCicSubstitution.subst arg t) 
+           aux metasenv1 (NCicSubstitution.subst status arg t) 
        in
        if pno + 1 = goal_arity then
          ty, metasenv, [], goal_arity+1
        else
          t, metasenv1, arg::args, pno+1
    | ty ->
-        match NCicReduction.whd ~subst context ty ~delta with
+        match NCicReduction.whd status ~subst context ty ~delta with
         | NCic.Prod _ as ty -> aux metasenv ty
         | _ -> ty, metasenv, [], 0 (* differs from the other impl in this line*)
   in
@@ -230,7 +231,7 @@ let saturate ?(delta=0) metasenv subst context ty goal_arity =
   res, newmetasenv, arguments
 ;;
 
-let eq_class_of hdb t1 = 
+let eq_class_of (status:#status) t1 = 
  let eq_class =
   if NDiscriminationTree.NCicIndexable.path_string_of t1 = 
      [Discrimination_tree.Variable]
@@ -238,43 +239,43 @@ let eq_class_of hdb t1 =
     [] (* if the trie is unable to handle the key, we skip the query since
           it sould retulr the whole content of the trie *)
   else
-    let candidates = EQDB.retrieve_unifiables (snd hdb#uhint_db) t1 in
+    let candidates = EQDB.retrieve_unifiables (snd status#uhint_db) t1 in
     let candidates = EqSet.elements candidates in
     let candidates = List.sort (fun (x,_) (y,_) -> compare x y) candidates in
     List.map snd candidates
  in
- debug(lazy("eq_class of: " ^ NCicPp.ppterm ~metasenv:[] ~context:[] ~subst:[]
+ debug(lazy("eq_class of: " ^ status#ppterm ~metasenv:[] ~context:[] ~subst:[]
    t1 ^ " is\n" ^ String.concat "\n" 
-   (List.map (NCicPp.ppterm ~subst:[] ~metasenv:[] ~context:[]) eq_class)));
+   (List.map (status#ppterm ~metasenv:[] ~context:[] ~subst:[]) eq_class)));
  eq_class   
 ;;
 
-let look_for_hint hdb metasenv subst context t1 t2 =
+let look_for_hint (status:#status) metasenv subst context t1 t2 =
   if NDiscriminationTree.NCicIndexable.path_string_of t1 =
           [Discrimination_tree.Variable] || 
      NDiscriminationTree.NCicIndexable.path_string_of t2 =
              [Discrimination_tree.Variable] then [] else begin
 
-  debug(lazy ("KEY1: "^NCicPp.ppterm ~metasenv ~subst ~context t1));
-  debug(lazy ("KEY2: "^NCicPp.ppterm ~metasenv ~subst ~context t2));
+  debug(lazy ("KEY1: "^status#ppterm ~metasenv ~subst ~context t1));
+  debug(lazy ("KEY2: "^status#ppterm ~metasenv ~subst ~context t2));
 (*
-  HDB.iter hdb
+  HDB.iter status
    (fun p ds ->
       prerr_endline ("ENTRY: " ^
       NDiscriminationTree.NCicIndexable.string_of_path p ^ " |--> " ^
-      String.concat "|" (List.map (NCicPp.ppterm ~metasenv:[] ~subst:[]
+      String.concat "|" (List.map (status#ppterm ~metasenv:[] ~subst:[]
       ~context:[]) (HintSet.elements ds))));
 *)
-  let candidates1 = HDB.retrieve_unifiables (fst hdb#uhint_db) (pair t1 t2) in
-  let candidates2 = HDB.retrieve_unifiables (fst hdb#uhint_db) (pair t2 t1) in
+  let candidates1 = HDB.retrieve_unifiables (fst status#uhint_db) (pair t1 t2) in
+  let candidates2 = HDB.retrieve_unifiables (fst status#uhint_db) (pair t2 t1) in
   let candidates1 = 
     List.map (fun (prec,_,_,ty) -> 
-       prec,true,saturate ~delta:max_int metasenv subst context ty 0) 
+       prec,true,saturate status ~delta:max_int metasenv subst context ty 0) 
     (HintSet.elements candidates1) 
   in
   let candidates2 = 
     List.map (fun (prec,_,_,ty) -> 
-       prec,false,saturate ~delta:max_int metasenv subst context ty 0) 
+       prec,false,saturate status ~delta:max_int metasenv subst context ty 0) 
     (HintSet.elements candidates2) 
   in
   let rc = 
@@ -287,9 +288,9 @@ let look_for_hint hdb metasenv subst context t1 t2 =
                  NCicMetaSubst.mk_meta ~attrs:[`Name name] m context
                   ~with_type:ty `IsTerm 
                in
-               let t = NCicSubstitution.subst i t in
+               let t = NCicSubstitution.subst status i t in
                aux () (m, (i,bo)::l) t
-           | t -> NCicUntrusted.map_term_fold_a (fun _ () -> ()) () aux acc t
+           | t -> NCicUntrusted.map_term_fold_a status (fun _ () -> ()) () aux acc t
          in
          let (m,l), t = aux () (m,[]) t in
          p,b,(t,m,l))
@@ -313,13 +314,13 @@ let look_for_hint hdb metasenv subst context t1 t2 =
      (fun (metasenv, (t1, t2), premises) ->
          ("\t" ^ String.concat ";  "
                (List.map (fun (a,b) -> 
-                  NCicPp.ppterm ~margin:max_int ~metasenv ~subst ~context a ^
+                  status#ppterm ~margin:max_int ~metasenv ~subst ~context a ^
                   " =?= "^
-                  NCicPp.ppterm ~margin:max_int ~metasenv ~subst ~context b)
+                  status#ppterm ~margin:max_int ~metasenv ~subst ~context b)
                premises) ^     
              "  ==> "^
-             NCicPp.ppterm ~margin:max_int ~metasenv ~subst ~context t1 ^
-             " = "^NCicPp.ppterm ~margin:max_int ~metasenv ~subst ~context t2))
+             status#ppterm ~margin:max_int ~metasenv ~subst ~context t1 ^
+             " = "^status#ppterm ~margin:max_int ~metasenv ~subst ~context t2))
     rc)));
 
   rc
@@ -353,7 +354,7 @@ let pp_hint t p =
 (*    pp_ctx context recproblems *)
    F.fprintf "@]"
   F.fprintf "\vdash@;";
-    NCicPp.ppterm ~fmt ~context:(recproblems@context) ~subst:[] ~metasenv:[];
+    status#ppterm ~fmt ~context:(recproblems@context) ~subst:[] ~metasenv:[];
   F.fprintf "@]"
   F.fprintf formatter "@?";
   prerr_endline (Buffer.contents buff);
@@ -361,7 +362,7 @@ let pp_hint t p =
 ()
 ;;
 
-let generate_dot_file status fmt =
+let generate_dot_file (status:#status) fmt =
   let module Pp = GraphvizPp.Dot in
   let h_db, _ = status#uhint_db in
   let names = ref [] in
@@ -380,18 +381,18 @@ let generate_dot_file status fmt =
         (fun (precedence, l,r, hint) ->
             let l = 
               Str.global_substitute (Str.regexp "\n") (fun _ -> "")
-               (NCicPp.ppterm 
+               (status#ppterm 
                 ~margin:max_int ~metasenv:[] ~context:[] ~subst:[] l) 
             in
             let r = 
               Str.global_substitute (Str.regexp "\n") (fun _ -> "")
-               (NCicPp.ppterm 
+               (status#ppterm 
                 ~margin:max_int ~metasenv:[] ~context:[] ~subst:[] r)
             in
             let shint =  "???" (*
               string_of_int precedence ^ "..." ^
               Str.global_substitute (Str.regexp "\n") (fun _ -> "")
-               (NCicPp.ppterm 
+               (status#ppterm 
                 ~margin:max_int ~metasenv:[] ~context:[] ~subst:[] hint)*)
             in
             nodes := (mangle l,l) :: (mangle r,r) :: !nodes;

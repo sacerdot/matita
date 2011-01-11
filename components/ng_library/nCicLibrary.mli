@@ -16,8 +16,9 @@ exception IncludedFileNotCompiled of string * string
 
 type timestamp
 
-class status :
+class virtual status :
  object ('self)
+  inherit NCic.status
   method timestamp: timestamp
   method set_timestamp: timestamp -> 'self
  end
@@ -29,7 +30,7 @@ val add_constraint:
 val aliases_of: NUri.uri -> NReference.reference list
 val resolve: string -> NReference.reference list
 (* warning: get_obj may raise (NCicEnvironment.ObjectNotFoud l) *)
-val get_obj: NUri.uri -> NCic.obj (* changes the current timestamp *)
+val get_obj: #NCic.status -> NUri.uri -> NCic.obj (* changes the current timestamp *)
 
 val time_travel: #status -> unit
 
@@ -60,7 +61,7 @@ module type SerializerType =
   type 'a register_type =
    'a ->
     refresh_uri_in_universe:(NCic.universe -> NCic.universe) ->
-    refresh_uri_in_term:(NCic.term -> NCic.term) ->
+    refresh_uri_in_term:(NCic.status -> NCic.term -> NCic.term) ->
     refresh_uri_in_reference:(NReference.reference -> NReference.reference) ->
     alias_only:bool ->
      dumpable_status -> dumpable_status

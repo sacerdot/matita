@@ -21,13 +21,13 @@ exception KeepReducingThis of
 
 let (===) x y = Pervasives.compare x y = 0 ;;
 
-let mk_msg metasenv subst context t1 t2 =
+let mk_msg (status:#NCic.status) metasenv subst context t1 t2 =
  (lazy (
-  "Can't unify " ^ NCicPp.ppterm ~metasenv ~subst ~context t1 ^
-  " with " ^ NCicPp.ppterm ~metasenv ~subst ~context t2))
+  "Can't unify " ^ status#ppterm ~metasenv ~subst ~context t1 ^
+  " with " ^ status#ppterm ~metasenv ~subst ~context t2))
 
-let mk_appl ~upto hd tl =
-  NCicReduction.head_beta_reduce ~upto
+let mk_appl status ~upto hd tl =
+  NCicReduction.head_beta_reduce status ~upto
     (match hd with
     | NCic.Appl l -> NCic.Appl (l@tl)
     | _ -> NCic.Appl (hd :: tl))
@@ -35,10 +35,10 @@ let mk_appl ~upto hd tl =
 
 exception WrongShape;;
 
-let eta_reduce subst t = 
+let eta_reduce status subst t = 
   let delift_if_not_occur body =
     try 
-        Some (NCicSubstitution.psubst ~avoid_beta_redexes:true
+        Some (NCicSubstitution.psubst status ~avoid_beta_redexes:true
           (fun () -> raise WrongShape) [()] body)
     with WrongShape -> None
   in 
@@ -48,7 +48,7 @@ let eta_reduce subst t =
     | NCic.Meta (i,lc) as t->
         (try 
           let _,_,t,_ = NCicUtils.lookup_subst i subst in
-          let t = NCicSubstitution.subst_meta lc t in
+          let t = NCicSubstitution.subst_meta status lc t in
           eat_lambdas ctx t
         with NCicUtils.Subst_not_found _ -> ctx, t)
     | t -> ctx, t
@@ -108,15 +108,15 @@ let outside exc_opt =
   end
 ;;
 
-let ppcontext ~metasenv ~subst c = 
-      "\nctx:\n"^ NCicPp.ppcontext ~metasenv ~subst c
+let ppcontext status ~metasenv ~subst c = 
+      "\nctx:\n"^ status#ppcontext ~metasenv ~subst c
 ;;
-let ppmetasenv ~subst m = "\nmenv:\n" ^ NCicPp.ppmetasenv ~subst m;;
+let ppmetasenv status ~subst m = "\nmenv:\n" ^ status#ppmetasenv ~subst m;;
 
-let ppcontext ~metasenv:_metasenv ~subst:_subst _context = "";;
-let ppmetasenv ~subst:_subst _metasenv = "";;
-let ppterm ~metasenv ~subst ~context = NCicPp.ppterm ~metasenv ~subst ~context;;
-(* let ppterm ~metasenv:_ ~subst:_ ~context:_ _ = "";; *)
+let ppcontext _status ~metasenv:_metasenv ~subst:_subst _context = "";;
+let ppmetasenv _status ~subst:_subst _metasenv = "";;
+let ppterm (status:#NCic.status) ~metasenv ~subst ~context = status#ppterm ~metasenv ~subst ~context;;
+(* let ppterm status ~metasenv:_ ~subst:_ ~context:_ _ = "";; *)
 
 let is_locked n subst =
    try
@@ -143,8 +143,8 @@ let rec could_reduce =
   | C.Appl [] | C.LetIn _ | C.Implicit _ -> assert false
 ;;
 
-let rec lambda_intros rdb metasenv subst context argsno ty =
- pp (lazy ("LAMBDA INTROS: " ^ ppterm ~metasenv ~subst ~context ty));
+let rec lambda_intros status metasenv subst context argsno ty =
+ pp (lazy ("LAMBDA INTROS: " ^ ppterm status ~metasenv ~subst ~context ty));
  match argsno with
     0 -> 
        let metasenv, _, bo, _ = 
@@ -152,10 +152,10 @@ let rec lambda_intros rdb metasenv subst context argsno ty =
        in
        metasenv, bo
   | _ ->
-     (match NCicReduction.whd ~subst context ty with
+     (match NCicReduction.whd status ~subst context ty with
          C.Prod (n,so,ta) ->
           let metasenv,bo =
-           lambda_intros rdb metasenv subst
+           lambda_intros status metasenv subst
             ((n,C.Decl so)::context) (argsno - 1) ta
           in
            metasenv,C.Lambda (n,so,bo)
@@ -164,9 +164,9 @@ let rec lambda_intros rdb metasenv subst context argsno ty =
   
 let unopt exc = function None -> raise exc | Some x -> x ;;
 
-let fix metasenv subst is_sup test_eq_only exc t =
+let fix (status:#NCic.status) metasenv subst is_sup test_eq_only exc t =
   (*D*)  inside 'f'; try let rc =  
-  pp (lazy (NCicPp.ppterm ~metasenv ~subst ~context:[] t));
+  pp (lazy (status#ppterm ~metasenv ~subst ~context:[] t));
   let rec aux test_eq_only metasenv = function
     | NCic.Prod (n,so,ta) ->
        let metasenv,so = aux true metasenv so in
@@ -187,7 +187,7 @@ let fix metasenv subst is_sup test_eq_only exc t =
           let metasenv, _ = NCicMetaSubst.extend_meta metasenv n in
            metasenv, orig)
     | t ->
-      NCicUntrusted.map_term_fold_a (fun _ x -> x) test_eq_only aux metasenv t
+      NCicUntrusted.map_term_fold_a status (fun _ x -> x) test_eq_only aux metasenv t
   in
    aux test_eq_only metasenv t
  (*D*)  in outside None; rc with exn -> outside (Some exn); raise exn 
@@ -205,8 +205,8 @@ let metasenv_to_subst n (kind,context,ty) metasenv subst =
    metasenv,subst
 ;;
 
-let rec sortfy exc metasenv subst context t =
- let t = NCicReduction.whd ~subst context t in
+let rec sortfy status exc metasenv subst context t =
+ let t = NCicReduction.whd status ~subst context t in
  let metasenv,subst =
   match t with
    | NCic.Sort _ -> metasenv, subst
@@ -220,14 +220,14 @@ let rec sortfy exc metasenv subst context t =
           | NCic.Implicit (`Typeof _) ->
               metasenv_to_subst n (`IsSort,[],ty) metasenv subst
           | ty ->
-             let metasenv,subst,ty = sortfy exc metasenv subst context ty in
+             let metasenv,subst,ty = sortfy status exc metasenv subst context ty in
               metasenv_to_subst n (`IsSort,[],ty) metasenv subst)
    | NCic.Implicit _ -> assert false
    | _ -> raise exc
  in
   metasenv,subst,t
 
-let tipify exc metasenv subst context t ty =
+let tipify status exc metasenv subst context t ty =
  let is_type attrs =
   match NCicUntrusted.kind_of_meta attrs with
      `IsType | `IsSort -> true
@@ -242,7 +242,7 @@ let tipify exc metasenv subst context t ty =
          metasenv,subst,true
         else
          let _,cc,ty = NCicUtils.lookup_meta n metasenv in
-         let metasenv,subst,ty = sortfy exc metasenv subst cc ty in
+         let metasenv,subst,ty = sortfy status exc metasenv subst cc ty in
          let metasenv = 
            NCicUntrusted.replace_in_metasenv n
             (fun attrs,cc,_ -> NCicUntrusted.set_kind `IsType attrs, cc, ty)
@@ -256,43 +256,43 @@ let tipify exc metasenv subst context t ty =
           metasenv,subst,true
          else
           let _,cc,_,ty = NCicUtils.lookup_subst n subst in
-          let metasenv,subst,ty = sortfy exc metasenv subst cc ty in
+          let metasenv,subst,ty = sortfy status exc metasenv subst cc ty in
           let subst = 
             NCicUntrusted.replace_in_subst n
               (fun attrs,cc,bo,_->NCicUntrusted.set_kind `IsType attrs,cc,bo,ty)
              subst 
           in
-           optimize_meta metasenv subst (NCicSubstitution.subst_meta lc bo))
+           optimize_meta metasenv subst (NCicSubstitution.subst_meta status lc bo))
    | _ -> metasenv,subst,false
  in
   let metasenv,subst,b = optimize_meta metasenv subst t in
    if b then
     metasenv,subst,t
    else
-    let metasenv,subst,_ = sortfy exc metasenv subst context ty in
+    let metasenv,subst,_ = sortfy status exc metasenv subst context ty in
      metasenv,subst,t
 ;;
 
-let rec instantiate rdb test_eq_only metasenv subst context n lc t swap =
+let rec instantiate status test_eq_only metasenv subst context n lc t swap =
  (*D*)  inside 'I'; try let rc =  
-  pp (lazy(string_of_int n^" :=?= "^ppterm ~metasenv ~subst ~context t));
+  pp (lazy(string_of_int n^" :=?= "^ppterm status ~metasenv ~subst ~context t));
   let exc = 
-    UnificationFailure (mk_msg metasenv subst context (NCic.Meta (n,lc)) t) in
+    UnificationFailure (mk_msg status metasenv subst context (NCic.Meta (n,lc)) t) in
   let move_to_subst i ((_,cc,t,_) as infos) metasenv subst =
     let metasenv = List.remove_assoc i metasenv in
-    pp(lazy(string_of_int n ^ " :==> "^ ppterm ~metasenv ~subst ~context:cc t));
+    pp(lazy(string_of_int n ^ " :==> "^ ppterm status ~metasenv ~subst ~context:cc t));
     metasenv, (i,infos) :: subst
   in
   let delift_to_subst test_eq_only n lc (attrs,cc,ty) t context metasenv subst =
     pp (lazy(string_of_int n ^ " := 111 = "^ 
-      ppterm ~metasenv ~subst ~context t));
+      ppterm status ~metasenv ~subst ~context t));
     let (metasenv, subst), t = 
       try 
-        NCicMetaSubst.delift 
+        NCicMetaSubst.delift status
          ~unify:(fun m s c t1 t2 -> 
            let ind = !indent in
            let res = 
-             try Some (unify rdb test_eq_only m s c t1 t2 false)
+             try Some (unify status test_eq_only m s c t1 t2 false)
              with UnificationFailure _ | Uncertain _ -> None
            in
            indent := ind; res) 
@@ -305,25 +305,25 @@ let rec instantiate rdb test_eq_only metasenv subst context n lc t swap =
            raise (UnificationFailure msg)
     in
     pp (lazy(string_of_int n ^ " := 222 = "^
-      ppterm ~metasenv ~subst ~context:cc t^ppmetasenv ~subst metasenv));
+      ppterm status ~metasenv ~subst ~context:cc t^ppmetasenv status ~subst metasenv));
     (* Unifying the types may have already instantiated n. *)
     try
       let _, _,oldt,_ = NCicUtils.lookup_subst n subst in
-      let oldt = NCicSubstitution.subst_meta lc oldt in
-      let t = NCicSubstitution.subst_meta lc t in
+      let oldt = NCicSubstitution.subst_meta status lc oldt in
+      let t = NCicSubstitution.subst_meta status lc t in
       (* conjecture: always fail --> occur check *)
-      unify rdb test_eq_only metasenv subst context t oldt false
+      unify status test_eq_only metasenv subst context t oldt false
     with NCicUtils.Subst_not_found _ -> 
       move_to_subst n (attrs,cc,t,ty) metasenv subst
   in
   let attrs,cc,ty = NCicUtils.lookup_meta n metasenv in
   let kind = NCicUntrusted.kind_of_meta attrs in
-  let metasenv,t = fix metasenv subst swap test_eq_only exc t in
-  let ty_t = NCicTypeChecker.typeof ~metasenv ~subst context t in
+  let metasenv,t = fix status metasenv subst swap test_eq_only exc t in
+  let ty_t = NCicTypeChecker.typeof status ~metasenv ~subst context t in
   let metasenv,subst,t =
    match kind with
-      `IsSort -> sortfy exc metasenv subst context t
-    | `IsType -> tipify exc metasenv subst context t ty_t
+      `IsSort -> sortfy status exc metasenv subst context t
+    | `IsType -> tipify status exc metasenv subst context t ty_t
     | `IsTerm -> metasenv,subst,t in
   match kind with
   | `IsSort ->
@@ -349,10 +349,10 @@ let rec instantiate rdb test_eq_only metasenv subst context n lc t swap =
        | _, NCic.Meta _
        | NCic.Meta _, NCic.Sort _ ->
           pp (lazy ("On the types: " ^
-            ppterm ~metasenv ~subst ~context ty ^ "=<=" ^
-            ppterm ~metasenv ~subst ~context ty_t)); 
+            ppterm status ~metasenv ~subst ~context ty ^ "=<=" ^
+            ppterm status ~metasenv ~subst ~context ty_t)); 
           let metasenv, subst = 
-            unify rdb false metasenv subst context ty_t ty false in
+            unify status false metasenv subst context ty_t ty false in
           delift_to_subst test_eq_only n lc (attrs,cc,ty) t
            context metasenv subst
        | _ -> assert false)
@@ -362,10 +362,10 @@ let rec instantiate rdb test_eq_only metasenv subst context n lc t swap =
          NCic.Implicit (`Typeof _) ->
           let (metasenv, subst), ty_t = 
             try 
-              NCicMetaSubst.delift 
+              NCicMetaSubst.delift status
                ~unify:(fun m s c t1 t2 -> 
                  let ind = !indent in
-                 let res = try Some (unify rdb test_eq_only m s c t1 t2 false )
+                 let res = try Some (unify status test_eq_only m s c t1 t2 false )
                    with UnificationFailure _ | Uncertain _ -> None
                  in
                  indent := ind; res)
@@ -380,30 +380,30 @@ let rec instantiate rdb test_eq_only metasenv subst context n lc t swap =
            delift_to_subst test_eq_only n lc (attrs,cc,ty_t) t context metasenv
             subst 
        | _ ->
-        let lty = NCicSubstitution.subst_meta lc ty in
+        let lty = NCicSubstitution.subst_meta status lc ty in
         pp (lazy ("On the types: " ^
-          ppterm ~metasenv ~subst ~context ty_t ^ "=<=" ^
-          ppterm ~metasenv ~subst ~context lty)); 
+          ppterm status ~metasenv ~subst ~context ty_t ^ "=<=" ^
+          ppterm status ~metasenv ~subst ~context lty)); 
         let metasenv, subst = 
-          unify rdb false metasenv subst context ty_t lty false
+          unify status false metasenv subst context ty_t lty false
         in
         delift_to_subst test_eq_only n lc (attrs,cc,ty) t context metasenv
          subst)
  (*D*)  in outside None; rc with exn -> outside (Some exn); raise exn 
 
-and unify rdb test_eq_only metasenv subst context t1 t2 swap =
+and unify status test_eq_only metasenv subst context t1 t2 swap =
  (*D*) inside 'U'; try let rc =
    let fo_unif test_eq_only metasenv subst (norm1,t1) (norm2,t2) =
     (*D*) inside 'F'; try let rc =  
-     pp (lazy("  " ^ ppterm ~metasenv ~subst ~context t1 ^ 
+     pp (lazy("  " ^ ppterm status ~metasenv ~subst ~context t1 ^ 
           (if swap then " ==>?== " 
            else " ==<?==" ) ^ 
-         ppterm ~metasenv ~subst ~context t2 ^ ppmetasenv
+         ppterm status ~metasenv ~subst ~context t2 ^ ppmetasenv status
          ~subst metasenv));
-     pp (lazy("  " ^ ppterm ~metasenv ~subst:[] ~context t1 ^
+     pp (lazy("  " ^ ppterm status ~metasenv ~subst:[] ~context t1 ^
           (if swap then " ==>??== " 
            else " ==<??==" ) ^ 
-         ppterm ~metasenv ~subst:[] ~context t2 ^ ppmetasenv
+         ppterm status ~metasenv ~subst:[] ~context t2 ^ ppmetasenv status
          ~subst metasenv));
      if t1 === t2 then
        metasenv, subst
@@ -426,26 +426,26 @@ and unify rdb test_eq_only metasenv subst context t1 t2 swap =
        | (C.Sort (C.Type a), C.Sort (C.Type b)) when not test_eq_only ->
            let a, b = if swap then b,a else a,b in
            if NCicEnvironment.universe_leq a b then metasenv, subst
-           else raise (UnificationFailure (mk_msg metasenv subst context t1 t2))
+           else raise (UnificationFailure (mk_msg status metasenv subst context t1 t2))
        | (C.Sort (C.Type a), C.Sort (C.Type b)) -> 
            if NCicEnvironment.universe_eq a b then metasenv, subst
-           else raise (UnificationFailure (mk_msg metasenv subst context t1 t2))
+           else raise (UnificationFailure (mk_msg status metasenv subst context t1 t2))
        | (C.Sort C.Prop,C.Sort (C.Type _)) when not swap -> 
            if (not test_eq_only) then metasenv, subst
-           else raise (UnificationFailure (mk_msg metasenv subst context t1 t2))
+           else raise (UnificationFailure (mk_msg status metasenv subst context t1 t2))
        | (C.Sort (C.Type _), C.Sort C.Prop) when swap -> 
            if (not test_eq_only) then metasenv, subst
-           else raise (UnificationFailure (mk_msg metasenv subst context t1 t2))
+           else raise (UnificationFailure (mk_msg status metasenv subst context t1 t2))
 
        | (C.Lambda (name1,s1,t1), C.Lambda(_,s2,t2)) 
        | (C.Prod (name1,s1,t1), C.Prod(_,s2,t2)) ->
-           let metasenv, subst = unify rdb true metasenv subst context s1 s2 swap in
-           unify rdb test_eq_only metasenv subst ((name1, C.Decl s1)::context) t1 t2 swap
+           let metasenv, subst = unify status true metasenv subst context s1 s2 swap in
+           unify status test_eq_only metasenv subst ((name1, C.Decl s1)::context) t1 t2 swap
        | (C.LetIn (name1,ty1,s1,t1), C.LetIn(_,ty2,s2,t2)) ->
-           let metasenv,subst=unify rdb test_eq_only metasenv subst context ty1 ty2 swap in
-           let metasenv,subst=unify rdb test_eq_only metasenv subst context s1 s2 swap in
+           let metasenv,subst=unify status test_eq_only metasenv subst context ty1 ty2 swap in
+           let metasenv,subst=unify status test_eq_only metasenv subst context s1 s2 swap in
            let context = (name1, C.Def (s1,ty1))::context in
-           unify rdb test_eq_only metasenv subst context t1 t2 swap
+           unify status test_eq_only metasenv subst context t1 t2 swap
 
        | (C.Meta (n1,(s1,l1 as lc1)),C.Meta (n2,(s2,l2 as lc2))) when n1 = n2 ->
           (try 
@@ -456,8 +456,8 @@ and unify rdb test_eq_only metasenv subst context t1 t2 swap =
              (fun t1 t2 (metasenv, subst, to_restrict, i) -> 
                 try 
                   let metasenv, subst = 
-                   unify rdb (*test_eq_only*) true metasenv subst context
-                    (NCicSubstitution.lift s1 t1) (NCicSubstitution.lift s2 t2)
+                   unify status (*test_eq_only*) true metasenv subst context
+                    (NCicSubstitution.lift status s1 t1) (NCicSubstitution.lift status s2 t2)
                      swap
                   in
                   metasenv, subst, to_restrict, i-1  
@@ -467,7 +467,7 @@ and unify rdb test_eq_only metasenv subst context t1 t2 swap =
            in
            if to_restrict <> [] then
              let metasenv, subst, _, _ = 
-               NCicMetaSubst.restrict metasenv subst n1 to_restrict
+               NCicMetaSubst.restrict status metasenv subst n1 to_restrict
              in
                metasenv, subst
            else metasenv, subst
@@ -476,9 +476,9 @@ and unify rdb test_eq_only metasenv subst context t1 t2 swap =
            | NCicMetaSubst.MetaSubstFailure msg ->
               try 
                 let _,_,term,_ = NCicUtils.lookup_subst n1 subst in
-                let term1 = NCicSubstitution.subst_meta lc1 term in
-                let term2 = NCicSubstitution.subst_meta lc2 term in
-                  unify rdb test_eq_only metasenv subst context term1 term2 swap
+                let term1 = NCicSubstitution.subst_meta status lc1 term in
+                let term2 = NCicSubstitution.subst_meta status lc2 term in
+                  unify status test_eq_only metasenv subst context term1 term2 swap
               with NCicUtils.Subst_not_found _-> raise (UnificationFailure msg))
 
        |  NCic.Appl (NCic.Meta (i,_)::_ as l1),
@@ -486,21 +486,21 @@ and unify rdb test_eq_only metasenv subst context t1 t2 swap =
             (try
               List.fold_left2 
                 (fun (metasenv, subst) t1 t2 ->
-                  unify rdb (*test_eq_only*) true metasenv subst context t1 
+                  unify status (*test_eq_only*) true metasenv subst context t1 
                     t2 swap)
                 (metasenv,subst) l1 l2
             with Invalid_argument _ -> 
-              raise (UnificationFailure (mk_msg metasenv subst context t1 t2)))
+              raise (UnificationFailure (mk_msg status metasenv subst context t1 t2)))
        
        | _, NCic.Meta (n, _) when is_locked n subst && not swap->
            (let (metasenv, subst), i = 
-              match NCicReduction.whd ~subst context t1 with
+              match NCicReduction.whd status ~subst context t1 with
               | NCic.Appl (NCic.Meta (i,l) as meta :: args) ->
                  let metasenv, lambda_Mj =
-                   lambda_intros rdb metasenv subst context (List.length args)
-                    (NCicTypeChecker.typeof ~metasenv ~subst context meta)
+                   lambda_intros status metasenv subst context (List.length args)
+                    (NCicTypeChecker.typeof status ~metasenv ~subst context meta)
                  in
-                   unify rdb test_eq_only metasenv subst context 
+                   unify status test_eq_only metasenv subst context 
                     (C.Meta (i,l)) lambda_Mj false,
                    i
               | NCic.Meta (i,_) -> (metasenv, subst), i
@@ -508,12 +508,12 @@ and unify rdb test_eq_only metasenv subst context t1 t2 swap =
                  raise (UnificationFailure (lazy "Locked term vs non
                   flexible term; probably not saturated enough yet!"))
              in
-              let t1 = NCicReduction.whd ~subst context t1 in
+              let t1 = NCicReduction.whd status ~subst context t1 in
               let j, lj = 
                 match t1 with NCic.Meta (j,l) -> j, l | _ -> assert false
               in
               let metasenv, subst = 
-                instantiate rdb test_eq_only metasenv subst context j lj t2 true
+                instantiate status test_eq_only metasenv subst context j lj t2 true
               in
               (* We need to remove the out_scope_tags to avoid propagation of
                  them that triggers again the ad-hoc case *)
@@ -528,27 +528,27 @@ and unify rdb test_eq_only metasenv subst context t1 t2 swap =
               in
               (try
                 let name, ctx, term, ty = NCicUtils.lookup_subst i subst in
-                let term = eta_reduce subst term in
+                let term = eta_reduce status subst term in
                 let subst = List.filter (fun (j,_) -> j <> i) subst in
                 metasenv, ((i, (name, ctx, term, ty)) :: subst)
               with Not_found -> assert false))
        | NCic.Meta (n, _), _ when is_locked n subst && swap ->
-           unify rdb test_eq_only metasenv subst context t2 t1 false
+           unify status test_eq_only metasenv subst context t2 t1 false
 
        | t, C.Meta (n,lc) when List.mem_assoc n subst -> 
           let _,_,term,_ = NCicUtils.lookup_subst n subst in
-          let term = NCicSubstitution.subst_meta lc term in
-            unify rdb test_eq_only metasenv subst context t term swap
+          let term = NCicSubstitution.subst_meta status lc term in
+            unify status test_eq_only metasenv subst context t term swap
        | C.Meta (n,_), _ when List.mem_assoc n subst -> 
-            unify rdb test_eq_only metasenv subst context t2 t1 (not swap)
+            unify status test_eq_only metasenv subst context t2 t1 (not swap)
 
        | _, NCic.Appl (NCic.Meta (i,l)::args) when List.mem_assoc i subst ->
             let _,_,term,_ = NCicUtils.lookup_subst i subst in
-            let term = NCicSubstitution.subst_meta l term in
-              unify rdb test_eq_only metasenv subst context t1 
-                (mk_appl ~upto:(List.length args) term args) swap
+            let term = NCicSubstitution.subst_meta status l term in
+              unify status test_eq_only metasenv subst context t1 
+                (mk_appl status ~upto:(List.length args) term args) swap
        | NCic.Appl (NCic.Meta (i,_)::_), _ when List.mem_assoc i subst ->
-            unify rdb test_eq_only metasenv subst context t2 t1 (not swap)
+            unify status test_eq_only metasenv subst context t2 t1 (not swap)
 
        | C.Meta (n,_), C.Meta (m,lc') when 
            let _,cc1,_ = NCicUtils.lookup_meta n metasenv in
@@ -557,25 +557,25 @@ and unify rdb test_eq_only metasenv subst context t1 t2 swap =
              let len1 = List.length cc1 in
              let len2 = List.length cc2 in
               len2 < len1 && cc2 = fst (HExtlib.split_nth len2 cc1) ->
-          instantiate rdb test_eq_only metasenv subst context m lc'
-            (NCicReduction.head_beta_reduce ~subst t1) (not swap)
+          instantiate status test_eq_only metasenv subst context m lc'
+            (NCicReduction.head_beta_reduce status ~subst t1) (not swap)
        | C.Meta (n,lc), C.Meta (m,lc') when
           let _,_,tyn = NCicUtils.lookup_meta n metasenv in
           let _,_,tym = NCicUtils.lookup_meta m metasenv in
-          let tyn = NCicSubstitution.subst_meta lc tyn in
-          let tym = NCicSubstitution.subst_meta lc tym in
+          let tyn = NCicSubstitution.subst_meta status lc tyn in
+          let tym = NCicSubstitution.subst_meta status lc tym in
            match tyn,tym with
               NCic.Sort NCic.Type u1, NCic.Sort NCic.Type u2 ->
                NCicEnvironment.universe_lt u1 u2
             | _,_ -> false ->
-          instantiate rdb test_eq_only metasenv subst context m lc'
-            (NCicReduction.head_beta_reduce ~subst t1) (not swap)
+          instantiate status test_eq_only metasenv subst context m lc'
+            (NCicReduction.head_beta_reduce status ~subst t1) (not swap)
        | C.Meta (n,lc), t -> 
-          instantiate rdb test_eq_only metasenv subst context n lc 
-            (NCicReduction.head_beta_reduce ~subst t) swap
+          instantiate status test_eq_only metasenv subst context n lc 
+            (NCicReduction.head_beta_reduce status ~subst t) swap
        | t, C.Meta (n,lc) -> 
-          instantiate rdb test_eq_only metasenv subst context n lc 
-           (NCicReduction.head_beta_reduce ~subst t) (not swap)
+          instantiate status test_eq_only metasenv subst context n lc 
+           (NCicReduction.head_beta_reduce status ~subst t) (not swap)
 
        (* higher order unification case *)
        | NCic.Appl (NCic.Meta (i,l) as meta :: args), _ ->
@@ -588,7 +588,7 @@ and unify rdb test_eq_only metasenv subst context t1 t2 swap =
              match t2 with
              | NCic.Appl (f :: f_args)
                when 
-               List.exists (NCicMetaSubst.is_flexible context ~subst) args ->
+               List.exists (NCicMetaSubst.is_flexible status context ~subst) args ->
                 let mlen = List.length args in
                 let flen = List.length f_args in
                 let min_len = min mlen flen in
@@ -597,7 +597,7 @@ and unify rdb test_eq_only metasenv subst context t1 t2 swap =
                  (try 
                     Some (List.fold_left2 
                       (fun (m, s) t1 t2 -> 
-                        unify rdb test_eq_only m s context t1 t2 swap
+                        unify status test_eq_only m s context t1 t2 swap
                       ) (metasenv,subst)
                         ((NCicUntrusted.mk_appl meta mhe)::margs)
                         ((NCicUntrusted.mk_appl f fhe)::fargs))
@@ -616,30 +616,30 @@ and unify rdb test_eq_only metasenv subst context t1 t2 swap =
                       ?_f[..ti..] =?= t2 --instantiate-->
                       delift [..ti..] t2 *)
                let metasenv, lambda_Mj =
-                 lambda_intros rdb metasenv subst context (List.length args)
-                  (NCicTypeChecker.typeof ~metasenv ~subst context meta)
+                 lambda_intros status metasenv subst context (List.length args)
+                  (NCicTypeChecker.typeof status ~metasenv ~subst context meta)
                in
                let metasenv, subst = 
-                 unify rdb test_eq_only metasenv subst context 
+                 unify status test_eq_only metasenv subst context 
                    (C.Meta (i,l)) lambda_Mj swap
                in
                let metasenv, subst = 
-                 unify rdb test_eq_only metasenv subst context t1 t2 swap
+                 unify status test_eq_only metasenv subst context t1 t2 swap
                in
                (try
                  let name, ctx, term, ty = NCicUtils.lookup_subst i subst in
-                 let term = eta_reduce subst term in
+                 let term = eta_reduce status subst term in
                  let subst = List.filter (fun (j,_) -> j <> i) subst in
                  metasenv, ((i, (name, ctx, term, ty)) :: subst)
                with Not_found -> assert false))
 
        | _, NCic.Appl (NCic.Meta (_,_) :: _) ->
-           unify rdb test_eq_only metasenv subst context t2 t1 (not swap)
+           unify status test_eq_only metasenv subst context t2 t1 (not swap)
 
        (* processing this case here we avoid a useless small delta step *)
        | (C.Appl ((C.Const r1) as _hd1::tl1), C.Appl (C.Const r2::tl2)) 
          when Ref.eq r1 r2 ->
-           let relevance = NCicEnvironment.get_relevance r1 in
+           let relevance = NCicEnvironment.get_relevance status r1 in
            let metasenv, subst, _ = 
              try
                List.fold_left2 
@@ -647,7 +647,7 @@ and unify rdb test_eq_only metasenv subst context t1 t2 swap =
                     let b, relevance = 
                       match relevance with b::tl -> b,tl | _ -> true, [] in
                     let metasenv, subst = 
-                      try unify rdb test_eq_only metasenv subst context t1 t2
+                      try unify status test_eq_only metasenv subst context t1 t2
                             swap
                       with UnificationFailure _ | Uncertain _ when not b ->
                         metasenv, subst
@@ -656,17 +656,17 @@ and unify rdb test_eq_only metasenv subst context t1 t2 swap =
                  (metasenv, subst, relevance) tl1 tl2
              with
                 Invalid_argument _ -> 
-                 raise (Uncertain (mk_msg metasenv subst context t1 t2))
+                 raise (Uncertain (mk_msg status metasenv subst context t1 t2))
               | KeepReducing _ | KeepReducingThis _ -> assert false
            in 
              metasenv, subst
 
        | (C.Match (Ref.Ref (_,Ref.Ind (_,tyno,_)) as ref1,outtype1,term1,pl1),
           C.Match (ref2,outtype2,term2,pl2)) when Ref.eq ref1 ref2 ->
-           let _,_,itl,_,_ = NCicEnvironment.get_checked_indtys ref1 in
+           let _,_,itl,_,_ = NCicEnvironment.get_checked_indtys status ref1 in
            let _,_,ty,_ = List.nth itl tyno in
            let rec remove_prods ~subst context ty = 
-             let ty = NCicReduction.whd ~subst context ty in
+             let ty = NCicReduction.whd status ~subst context ty in
              match ty with
              | C.Sort _ -> ty
              | C.Prod (name,so,ta) -> 
@@ -679,47 +679,47 @@ and unify rdb test_eq_only metasenv subst context t1 t2 swap =
              | _ -> false 
            in
            (* if not (Ref.eq ref1 ref2) then 
-             raise (Uncertain (mk_msg metasenv subst context t1 t2))
+             raise (Uncertain (mk_msg status metasenv subst context t1 t2))
            else*)
              let metasenv, subst = 
-              unify rdb test_eq_only metasenv subst context outtype1 outtype2 swap in
+              unify status test_eq_only metasenv subst context outtype1 outtype2 swap in
              let metasenv, subst = 
-               try unify rdb test_eq_only metasenv subst context term1 term2 swap
+               try unify status test_eq_only metasenv subst context term1 term2 swap
                with UnificationFailure _ | Uncertain _ when is_prop -> 
                  metasenv, subst
              in
              (try
               List.fold_left2 
                (fun (metasenv,subst) t1 t2 -> 
-                  unify rdb test_eq_only metasenv subst context t1 t2 swap)
+                  unify status test_eq_only metasenv subst context t1 t2 swap)
                (metasenv, subst) pl1 pl2
              with Invalid_argument _ -> assert false)
        | (C.Implicit _, _) | (_, C.Implicit _) -> assert false
        | _ when norm1 && norm2 ->
            if (could_reduce t1 || could_reduce t2) then
-            raise (Uncertain (mk_msg metasenv subst context t1 t2))
+            raise (Uncertain (mk_msg status metasenv subst context t1 t2))
            else
-            raise (UnificationFailure (mk_msg metasenv subst context t1 t2))
-       | _ -> raise (KeepReducing (mk_msg metasenv subst context t1 t2))
+            raise (UnificationFailure (mk_msg status metasenv subst context t1 t2))
+       | _ -> raise (KeepReducing (mk_msg status metasenv subst context t1 t2))
      (*D*)  in outside None; rc with exn -> outside (Some exn); raise exn 
     in
     let fo_unif test_eq_only metasenv subst (norm1,t1 as nt1) (norm2,t2 as nt2)=
      try fo_unif test_eq_only metasenv subst nt1 nt2
      with
       UnificationFailure _ | Uncertain _ when not norm1 || not norm2 ->
-       raise (KeepReducing (mk_msg metasenv subst context t1 t2))
+       raise (KeepReducing (mk_msg status metasenv subst context t1 t2))
     in
     let try_hints metasenv subst (_,t1 as mt1) (_,t2 as mt2) (* exc*) =
-      if NCicUntrusted.metas_of_term subst context t1 = [] &&
-         NCicUntrusted.metas_of_term subst context t2 = [] 
+      if NCicUntrusted.metas_of_term status subst context t1 = [] &&
+         NCicUntrusted.metas_of_term status subst context t2 = [] 
       then None 
       else begin
     (*D*) inside 'H'; try let rc =  
      pp(lazy ("\nProblema:\n" ^
-        ppterm ~metasenv ~subst ~context t1 ^ " =?= " ^
-        ppterm ~metasenv ~subst ~context t2));
+        ppterm status ~metasenv ~subst ~context t1 ^ " =?= " ^
+        ppterm status ~metasenv ~subst ~context t2));
       let candidates = 
-        NCicUnifHint.look_for_hint rdb metasenv subst context t1 t2
+        NCicUnifHint.look_for_hint status metasenv subst context t1 t2
       in
       let rec cand_iter = function
         | [] -> None (* raise exc *)
@@ -728,11 +728,11 @@ and unify rdb test_eq_only metasenv subst context t1 t2 swap =
               String.concat "\n"
                 (List.map 
                   (fun (a,b) ->
-                   ppterm ~metasenv ~subst ~context a ^  " =?= " ^
-                   ppterm ~metasenv ~subst ~context b) premises) ^
+                   ppterm status ~metasenv ~subst ~context a ^  " =?= " ^
+                   ppterm status ~metasenv ~subst ~context b) premises) ^
               "\n-------------------------------------------\n"^
-              ppterm ~metasenv ~subst ~context c1 ^  " = " ^
-              ppterm ~metasenv ~subst ~context c2));
+              ppterm status ~metasenv ~subst ~context c1 ^  " = " ^
+              ppterm status ~metasenv ~subst ~context c2));
             try 
     (*D*) inside 'K'; try let rc =  
               let metasenv,subst = 
@@ -742,7 +742,7 @@ and unify rdb test_eq_only metasenv subst context t1 t2 swap =
               let metasenv,subst = 
                 List.fold_left 
                   (fun (metasenv, subst) (x,y) ->
-                     unify rdb test_eq_only metasenv subst context x y false)
+                     unify status test_eq_only metasenv subst context x y false)
                   (metasenv, subst) (List.rev premises)
               in
               pp(lazy("FUNZIONA!"));
@@ -757,8 +757,8 @@ and unify rdb test_eq_only metasenv subst context t1 t2 swap =
       end
     in
     let put_in_whd m1 m2 =
-      NCicReduction.reduce_machine ~delta:max_int ~subst context m1,
-      NCicReduction.reduce_machine ~delta:max_int ~subst context m2
+      NCicReduction.reduce_machine status ~delta:max_int ~subst context m1,
+      NCicReduction.reduce_machine status ~delta:max_int ~subst context m2
     in
     let fo_unif_w_hints test_eq_only metasenv subst (_,t1 as m1) (_,t2 as m2) =
       try fo_unif test_eq_only metasenv subst m1 m2
@@ -770,7 +770,7 @@ and unify rdb test_eq_only metasenv subst context t1 t2 swap =
         in
          match 
            try_hints metasenv subst 
-            (norm1,NCicReduction.unwind t1) (norm2,NCicReduction.unwind t2)
+            (norm1,NCicReduction.unwind status t1) (norm2,NCicReduction.unwind status t2)
          with
           | Some x -> x
           | None -> 
@@ -794,7 +794,7 @@ and unify rdb test_eq_only metasenv subst context t1 t2 swap =
            let (t1,norm1),(t2,norm2) = hm1, hm2 in
            match 
              try_hints metasenv subst 
-              (norm1,NCicReduction.unwind t1) (norm2,NCicReduction.unwind t2)
+              (norm1,NCicReduction.unwind status t1) (norm2,NCicReduction.unwind status t2)
            with
             | Some x -> x, fun x -> x
             | None -> 
@@ -817,30 +817,30 @@ and unify rdb test_eq_only metasenv subst context t1 t2 swap =
     =
      assert (not (norm1 && norm2));
      if norm1 then
-      x1,NCicReduction.reduce_machine ~delta:0 ~subst context m2
+      x1,NCicReduction.reduce_machine status ~delta:0 ~subst context m2
      else if norm2 then
-      NCicReduction.reduce_machine ~delta:0 ~subst context m1,x2
+      NCicReduction.reduce_machine status ~delta:0 ~subst context m1,x2
      else 
       let h1 = height_of t1 in 
       let h2 = height_of t2 in
       let delta = if h1 = h2 then max 0 (h1 -1) else min h1 h2 in
-      NCicReduction.reduce_machine ~delta ~subst context m1,
-      NCicReduction.reduce_machine ~delta ~subst context m2
+      NCicReduction.reduce_machine status ~delta ~subst context m1,
+      NCicReduction.reduce_machine status ~delta ~subst context m2
     in
     let rec unif_machines metasenv subst = 
       function
       | ((k1,e1,t1,s1),norm1 as m1),((k2,e2,t2,s2),norm2 as m2) ->
      (*D*) inside 'M'; try let rc = 
          pp (lazy("UM: " ^
-           ppterm ~metasenv ~subst ~context 
-             (NCicReduction.unwind (k1,e1,t1,s1)) ^
+           ppterm status ~metasenv ~subst ~context 
+             (NCicReduction.unwind status (k1,e1,t1,s1)) ^
            " === " ^ 
-           ppterm ~metasenv ~subst ~context 
-             (NCicReduction.unwind (k2,e2,t2,s2))));
+           ppterm status ~metasenv ~subst ~context 
+             (NCicReduction.unwind status (k2,e2,t2,s2))));
          pp (lazy (string_of_bool norm1 ^ " ?? " ^ string_of_bool norm2));
           let relevance =
             match t1 with
-            | C.Const r -> NCicEnvironment.get_relevance r
+            | C.Const r -> NCicEnvironment.get_relevance status r
             | _ -> [] in
           let unif_from_stack (metasenv, subst) (t1, t2, b) =
               try
@@ -855,15 +855,15 @@ and unify rdb test_eq_only metasenv subst context t1 t2 swap =
             | x1::tl1, x2::tl2, r::tr-> check_stack tl1 tl2 tr ((x1,x2,r)::todo)
             | x1::tl1, x2::tl2, []-> check_stack tl1 tl2 [] ((x1,x2,true)::todo)
             | l1, l2, _ ->
-               NCicReduction.unwind (k1,e1,t1,List.rev l1),
-                NCicReduction.unwind (k2,e2,t2,List.rev l2),
+               NCicReduction.unwind status (k1,e1,t1,List.rev l1),
+                NCicReduction.unwind status (k2,e2,t2,List.rev l2),
                 todo
           in
           let check_stack l1 l2 r =
             match t1, t2 with
             | NCic.Meta _, _ | _, NCic.Meta _ ->
-                (NCicReduction.unwind (k1,e1,t1,s1)),
-                (NCicReduction.unwind (k2,e2,t2,s2)),[]
+                (NCicReduction.unwind status (k1,e1,t1,s1)),
+                (NCicReduction.unwind status (k2,e2,t2,s2)),[]
             | _ -> check_stack l1 l2 r []
           in
         let hh1,hh2,todo =
@@ -881,8 +881,8 @@ and unify rdb test_eq_only metasenv subst context t1 t2 swap =
          | UnificationFailure _ | Uncertain _ when (not (norm1 && norm2))
            -> unif_machines metasenv subst (small_delta_step ~subst m1 m2)
          | UnificationFailure msg
-           when could_reduce (NCicReduction.unwind (fst m1))
-             || could_reduce (NCicReduction.unwind (fst m2))
+           when could_reduce (NCicReduction.unwind status (fst m1))
+             || could_reduce (NCicReduction.unwind status (fst m2))
            -> raise (Uncertain msg)
       (*D*)  in outside None; rc with exn -> outside (Some exn); raise exn 
      in
@@ -899,15 +899,15 @@ and unify rdb test_eq_only metasenv subst context t1 t2 swap =
 
  (*D*)  in outside None; rc with KeepReducing _ -> assert false | exn -> outside (Some exn); raise exn 
 
-and delift_type_wrt_terms rdb metasenv subst context t args =
+and delift_type_wrt_terms status metasenv subst context t args =
   let lc = List.rev args @ mk_irl (List.length context) (List.length args+1) in
   let (metasenv, subst), t =
    try
-    NCicMetaSubst.delift 
+    NCicMetaSubst.delift status
       ~unify:(fun m s c t1 t2 -> 
          let ind = !indent in
          let res = 
-           try Some (unify rdb false m s c t1 t2 false)
+           try Some (unify status false m s c t1 t2 false)
            with UnificationFailure _ | Uncertain _ -> None
          in
          indent := ind; res)
@@ -920,10 +920,10 @@ and delift_type_wrt_terms rdb metasenv subst context t args =
 ;;
 
 
-let unify rdb ?(test_eq_only=false) ?(swap=false) metasenv subst context t1 t2= 
+let unify status ?(test_eq_only=false) ?(swap=false) metasenv subst context t1 t2= 
   indent := "";      
-  unify rdb test_eq_only metasenv subst context t1 t2 swap;;
+  unify status test_eq_only metasenv subst context t1 t2 swap;;
 
-let fix_sorts m s =
-  fix m s true false (UnificationFailure (lazy "no sup"))
+let fix_sorts status m s =
+  fix status m s true false (UnificationFailure (lazy "no sup"))
 ;;

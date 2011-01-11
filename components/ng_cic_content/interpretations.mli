@@ -36,7 +36,7 @@ class type g_status =
     method interp_db: db
   end
 
-class status :
+class virtual status :
   object ('self)
     inherit g_status
     inherit NCicCoercion.status
@@ -74,6 +74,20 @@ val instantiate_appl_pattern:
   term_of_nref : (NReference.reference -> 'term) ->
   (string * 'term) list -> NotationPt.cic_appl_pattern ->
     'term
+
+val nmap_term:
+ #status ->
+  metasenv:NCic.metasenv -> subst:NCic.substitution -> context:NCic.context ->
+  NCic.term ->
+   NotationPt.term *
+   (Content.id, NReference.reference) Hashtbl.t    (* id -> reference *)
+
+val nmap_context:
+ #status ->
+  metasenv:NCic.metasenv -> subst:NCic.substitution ->
+  NCic.context ->
+   NotationPt.term Content.context *
+   (Content.id, NReference.reference) Hashtbl.t    (* id -> reference *)
 
 val nmap_sequent:
  #status -> metasenv:NCic.metasenv -> subst:NCic.substitution ->

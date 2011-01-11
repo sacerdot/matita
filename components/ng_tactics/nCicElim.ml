@@ -25,11 +25,11 @@ let mk_id id =
 
 (*CSC: cut&paste from nCicReduction.split_prods, but does not check that
   the return type is a sort *)
-let rec my_split_prods ~subst context n te =
-  match (n, NCicReduction.whd ~subst context te) with
+let rec my_split_prods status ~subst context n te =
+  match (n, NCicReduction.whd status ~subst context te) with
    | (0, _) -> context,te
    | (n, NCic.Prod (name,so,ta)) ->
-       my_split_prods ~subst ((name,(NCic.Decl so))::context) (n - 1) ta
+       my_split_prods status ~subst ((name,(NCic.Decl so))::context) (n - 1) ta
    | (n, _) when n <= 0 -> context,te
    | (_, _) -> raise (Failure "my_split_prods")
 ;;
@@ -42,15 +42,15 @@ let mk_appl =
   | l -> NotationPt.Appl l
 ;;
 
-let mk_elim uri leftno it (outsort,suffix) pragma =
+let mk_elim status uri leftno it (outsort,suffix) pragma =
  let _,ind_name,ty,cl = it in
  let srec_name = ind_name ^ "_" ^ suffix in
  let rec_name = mk_id srec_name in
  let name_of_k id = mk_id ("H_" ^ id) in
  let p_name = mk_id "Q_" in
- let params,ty = NCicReduction.split_prods ~subst:[] [] leftno ty in
+ let params,ty = NCicReduction.split_prods status ~subst:[] [] leftno ty in
  let params = List.rev_map (function name,_ -> mk_id name) params in
- let args,sort = NCicReduction.split_prods ~subst:[] [] (-1) ty in
+ let args,sort = NCicReduction.split_prods status ~subst:[] [] (-1) ty in
  let args = List.rev_map (function name,_ -> mk_id name) args in
  let rec_arg = mk_id (fresh_name ()) in
  let p_ty =
@@ -72,14 +72,14 @@ let mk_elim uri leftno it (outsort,suffix) pragma =
  let branches =
   List.map
    (function (_,name,ty) ->
-     let _,ty = NCicReduction.split_prods ~subst:[] [] leftno ty in
-     let cargs,ty= my_split_prods ~subst:[] [] (-1) ty in
+     let _,ty = NCicReduction.split_prods status ~subst:[] [] leftno ty in
+     let cargs,ty= my_split_prods status ~subst:[] [] (-1) ty in
      let cargs_and_recursive_args =
       List.rev_map
        (function
            _,NCic.Def _ -> assert false
          | name,NCic.Decl ty ->
-            let context,ty = my_split_prods ~subst:[] [] (-1) ty in
+            let context,ty = my_split_prods status ~subst:[] [] (-1) ty in
              match ty with
               | NCic.Const nref
               | NCic.Appl (NCic.Const nref::_)
@@ -175,10 +175,10 @@ let ast_of_sort s =
    | _ -> assert false
 ;;
 
-let mk_elims (uri,_,_,_,obj) =
+let mk_elims status (uri,_,_,_,obj) =
   match obj with
     NCic.Inductive (true,leftno,[itl],_) ->
-      List.map (fun s -> mk_elim uri leftno itl (ast_of_sort s) (`Elim s))
+      List.map (fun s-> mk_elim status uri leftno itl (ast_of_sort s) (`Elim s))
        (NCic.Prop::
          List.map (fun s -> NCic.Type s) (NCicEnvironment.get_universes ()))
    | _ -> []
@@ -204,12 +204,13 @@ let rec nth_prod projs n ty =
 
 (* this code should be unified with NTermCicContent.nast_of_cic0,
    but the two contexts have different types *)
-let rec pp rels =
- function
+let pp (status: #NCic.status) =
+ let rec pp rels =
+  function
     NCic.Rel i -> List.nth rels (i - 1)
   | NCic.Const _ as t ->
      NotationPt.Ident
-      (NCicPp.ppterm ~metasenv:[] ~subst:[] ~context:[] t,None)
+      (status#ppterm ~metasenv:[] ~subst:[] ~context:[] t,None)
   | NCic.Sort s -> NotationPt.Sort (fst (ast_of_sort s))
   | NCic.Meta _
   | NCic.Implicit _ -> assert false
@@ -227,7 +228,7 @@ let rec pp rels =
     let name = NUri.name_of_uri uri in
     let case_indty = Some (name, None) in
     let constructors, leftno =
-     let _,leftno,tys,_,n = NCicEnvironment.get_checked_indtys r in
+     let _,leftno,tys,_,n = NCicEnvironment.get_checked_indtys status r in
      let _,_,_,cl  = List.nth tys n in
       cl,leftno
     in
@@ -250,9 +251,11 @@ let rec pp rels =
       with Invalid_argument _ -> assert false
     in
      NotationPt.Case (pp rels te, case_indty, Some (pp rels outty), patterns)
+ in
+  pp
 ;;
 
-let mk_projection leftno tyname consname consty (projname,_,_) i =
+let mk_projection status leftno tyname consname consty (projname,_,_) i =
  let argsno = count_prods consty - leftno in
  let rec aux names ty leftno =
   match leftno,ty with
@@ -270,7 +273,7 @@ let mk_projection leftno tyname consname consty (projname,_,_) i =
       List.map
        (fun name -> mk_appl (mk_id name :: List.rev names @ [arg])) projs
       @ names in
-     let outtype = pp rels outtype in
+     let outtype = pp status rels outtype in
      let outtype= NotationPt.Binder (`Lambda, (arg, Some arg_ty), outtype) in
       [arg, Some arg_ty], NotationPt.Case (arg,None,Some outtype,[branch])
    | _,NCic.Prod (name,_,t) ->
@@ -294,11 +297,11 @@ let mk_projection leftno tyname consname consty (projname,_,_) i =
    (`Definition,projname,NotationPt.Implicit `JustOne,Some res,`Projection)
 ;;
 
-let mk_projections (_,_,_,_,obj) =
+let mk_projections status (_,_,_,_,obj) =
  match obj with
     NCic.Inductive
      (true,leftno,[_,tyname,_,[_,consname,consty]],(_,`Record fields))
     ->
-     HExtlib.list_mapi (mk_projection leftno tyname consname consty) fields
+     HExtlib.list_mapi (mk_projection status leftno tyname consname consty) fields
   | _ -> []
 ;;

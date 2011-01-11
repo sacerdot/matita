@@ -44,7 +44,8 @@ let inject_unification_hint =
    ~alias_only status
  =
   if not alias_only then
-   let t = refresh_uri_in_term t in basic_eval_unification_hint (t,n) status
+   let t = refresh_uri_in_term (status :> NCic.status) t in
+    basic_eval_unification_hint (t,n) status
   else
    status
  in
@@ -56,7 +57,7 @@ let eval_unification_hint status t n =
  let metasenv,subst,status,t =
   GrafiteDisambiguate.disambiguate_nterm status None [] [] [] ("",0,t) in
  assert (metasenv=[]);
- let t = NCicUntrusted.apply_subst subst [] t in
+ let t = NCicUntrusted.apply_subst status subst [] t in
  let status = basic_eval_unification_hint (t,n) status in
   NCicLibrary.dump_obj status (inject_unification_hint (t,n))
 ;;
@@ -132,7 +133,7 @@ let basic_eval_input_notation (l1,l2) status =
   GrafiteParser.extend status l1 
    (fun env loc ->
      NotationPt.AttributedTerm
-      (`Loc loc,TermContentPres.instantiate_level2 env l2)) 
+      (`Loc loc,TermContentPres.instantiate_level2 status env l2)) 
 ;;
 
 let inject_input_notation =
@@ -143,9 +144,11 @@ let inject_input_notation =
    if not alias_only then
     let l1 =
      CicNotationParser.refresh_uri_in_checked_l1_pattern
-      ~refresh_uri_in_term ~refresh_uri_in_reference l1 in
+      ~refresh_uri_in_term:(refresh_uri_in_term (status:>NCic.status))
+      ~refresh_uri_in_reference l1 in
     let l2 = NotationUtil.refresh_uri_in_term
-      ~refresh_uri_in_term ~refresh_uri_in_reference l2
+      ~refresh_uri_in_term:(refresh_uri_in_term (status:>NCic.status))
+      ~refresh_uri_in_reference l2
     in
      basic_eval_input_notation (l1,l2) status
    else
@@ -172,9 +175,11 @@ let inject_output_notation =
   if not alias_only then
    let l1 =
     CicNotationParser.refresh_uri_in_checked_l1_pattern
-     ~refresh_uri_in_term ~refresh_uri_in_reference l1 in
+     ~refresh_uri_in_term:(refresh_uri_in_term (status:>NCic.status))
+      ~refresh_uri_in_reference l1 in
    let l2 = NotationUtil.refresh_uri_in_term
-     ~refresh_uri_in_term ~refresh_uri_in_reference l2
+     ~refresh_uri_in_term:(refresh_uri_in_term (status:>NCic.status))
+      ~refresh_uri_in_reference l2
    in
     basic_eval_output_notation (l1,l2) status
   else
@@ -193,6 +198,7 @@ let record_index_obj =
  let aux l ~refresh_uri_in_universe 
    ~refresh_uri_in_term ~refresh_uri_in_reference ~alias_only status
  =
+  let refresh_uri_in_term = refresh_uri_in_term (status:>NCic.status) in
   if not alias_only then
     basic_index_obj
       (List.map 
@@ -248,15 +254,15 @@ let compute_keys status uri height kind =
      if keys <> [] then 
       begin
         HLog.debug ("Indexing:" ^ 
-          NCicPp.ppterm ~metasenv:[] ~subst:[] ~context:[] t);
+          status#ppterm ~metasenv:[] ~subst:[] ~context:[] t);
         HLog.debug ("With keys:" ^ String.concat "\n" (List.map (fun t ->
-          NCicPp.ppterm ~metasenv:[] ~subst:[] ~context:[] t) keys));
+          status#ppterm ~metasenv:[] ~subst:[] ~context:[] t) keys));
         Some (keys,t) 
       end
      else 
       begin
         HLog.debug ("Not indexing:" ^ 
-          NCicPp.ppterm ~metasenv:[] ~subst:[] ~context:[] t);
+          status#ppterm ~metasenv:[] ~subst:[] ~context:[] t);
         None
       end)
     data
@@ -271,8 +277,8 @@ let index_obj_for_auto status (uri, height, _, _, kind) =
 
 let index_eq uri status =
   let eq_status = status#eq_cache in
-  let eq_status1 = NCicParamod.index_obj eq_status uri in
-    status#set_eq_cache eq_status1
+  let eq_status = NCicParamod.index_obj status eq_status uri in
+    status#set_eq_cache eq_status
 ;;
 
 let record_index_eq =
@@ -407,39 +413,39 @@ let subst_metasenv_and_fix_names status =
   let u,h,metasenv, subst,o = status#obj in
   let o = 
     NCicUntrusted.map_obj_kind ~skip_body:true 
-     (NCicUntrusted.apply_subst subst []) o
+     (NCicUntrusted.apply_subst status subst []) o
   in
-   status#set_obj(u,h,NCicUntrusted.apply_subst_metasenv subst metasenv,subst,o)
+   status#set_obj(u,h,NCicUntrusted.apply_subst_metasenv status subst metasenv,subst,o)
 ;;
 
-let is_proof_irrelevant context ty =
+let is_proof_irrelevant status context ty =
   match
-    NCicReduction.whd ~subst:[] context
-     (NCicTypeChecker.typeof ~subst:[] ~metasenv:[] context ty)
+    NCicReduction.whd status ~subst:[] context
+     (NCicTypeChecker.typeof status ~subst:[] ~metasenv:[] context ty)
   with
      NCic.Sort NCic.Prop -> true
    | NCic.Sort _ -> false
    | _ -> assert false
 ;;
 
-let rec relevance_of ?(context=[]) ty =
- match NCicReduction.whd ~subst:[] context ty with
+let rec relevance_of status ?(context=[]) ty =
+ match NCicReduction.whd status ~subst:[] context ty with
     NCic.Prod (n,s,t) ->
-     not (is_proof_irrelevant context s) ::
-      relevance_of ~context:((n,NCic.Decl s)::context) t
+     not (is_proof_irrelevant status context s) ::
+      relevance_of status ~context:((n,NCic.Decl s)::context) t
   | _ -> []
 ;;
 
-let compute_relevance uri =
+let compute_relevance status uri =
  function
     NCic.Constant (_,name,bo,ty,attrs) ->
-     let relevance = relevance_of ty in
+     let relevance = relevance_of status ty in
       NCic.Constant (relevance,name,bo,ty,attrs)
   | NCic.Fixpoint (ind,funs,attrs) ->
      let funs =
        List.map
        (fun (_,name,recno,ty,bo) ->
-         let relevance = relevance_of ty in
+         let relevance = relevance_of status ty in
           relevance,name,recno,ty,bo
         ) funs
      in
@@ -451,13 +457,13 @@ let compute_relevance uri =
      let tys =
        List.map
         (fun (_,name,arity,cons) ->
-         let relevance = relevance_of arity in
+         let relevance = relevance_of status arity in
          let cons =
           List.map
            (fun (_,name,ty) ->
              let dety =
-               NCicTypeChecker.debruijn uri tysno ~subst:[] [] ty in
-             let relevance = relevance_of ~context dety in
+               NCicTypeChecker.debruijn status uri tysno ~subst:[] [] ty in
+             let relevance = relevance_of status ~context dety in
               relevance,name,ty
            ) cons
          in
@@ -483,7 +489,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
      let status, composites =
       NCicCoercDeclaration.eval_ncoercion status name t ty source target in
      let mode = GrafiteAst.WithPreferences in (* MATITA 1.0: fixme *)
-     let aliases = GrafiteDisambiguate.aliases_for_objs composites in
+     let aliases = GrafiteDisambiguate.aliases_for_objs status composites in
       eval_alias status (mode,aliases)
   | GrafiteAst.NQed loc ->
      if status#ng_mode <> `ProofMode then
@@ -496,8 +502,8 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
        else
         let obj_kind =
          NCicUntrusted.map_obj_kind 
-          (NCicUntrusted.apply_subst subst []) obj_kind in
-        let height = NCicTypeChecker.height_of_obj_kind uri [] obj_kind in
+          (NCicUntrusted.apply_subst status subst []) obj_kind in
+        let height = NCicTypeChecker.height_of_obj_kind status uri [] obj_kind in
         (* fix the height inside the object *)
         let rec fix () = function 
           | NCic.Const (NReference.Ref (u,spec)) when NUri.eq u uri -> 
@@ -508,7 +514,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
               | NReference.CoFix _ -> NReference.CoFix height
               | NReference.Ind _ | NReference.Con _
               | NReference.Decl as s -> s))
-          | t -> NCicUtils.map (fun _ () -> ()) () fix t
+          | t -> NCicUtils.map status (fun _ () -> ()) () fix t
         in
         let obj_kind = 
           match obj_kind with
@@ -516,7 +522,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
               NCicUntrusted.map_obj_kind (fix ()) obj_kind 
           | _ -> obj_kind
         in
-        let obj_kind = compute_relevance uri obj_kind in
+        let obj_kind = compute_relevance status uri obj_kind in
         let obj = uri,height,[],[],obj_kind in
         let old_status = status in
         let status = NCicLibrary.add_obj status obj in
@@ -538,14 +544,14 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
 	    index_eq uri status
 	  with _ -> prerr_endline "got an exception"; status
 	in *)
-(*         prerr_endline (NCicPp.ppobj obj); *)
+(*         prerr_endline (status#ppobj obj); *)
         HLog.message ("New object: " ^ NUri.string_of_uri uri);
          (try
-       (*prerr_endline (NCicPp.ppobj obj);*)
-           let boxml = NCicElim.mk_elims obj in
-           let boxml = boxml @ NCicElim.mk_projections obj in
+       (*prerr_endline (status#ppobj obj);*)
+           let boxml = NCicElim.mk_elims status obj in
+           let boxml = boxml @ NCicElim.mk_projections status obj in
            let status = status#set_ng_mode `CommandMode in
-           let xxaliases = GrafiteDisambiguate.aliases_for_objs [uri] in
+           let xxaliases = GrafiteDisambiguate.aliases_for_objs status [uri] in
            let mode = GrafiteAst.WithPreferences in (* MATITA 1.0: fixme *)
            let status = eval_alias status (mode,xxaliases) in
            let status =
@@ -617,7 +623,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
                    NCicCoercDeclaration.
                      basic_eval_and_record_ncoercion_from_t_cpos_arity 
                       status (name,t,cpos,arity) in
-                 let aliases = GrafiteDisambiguate.aliases_for_objs nuris in
+                 let aliases = GrafiteDisambiguate.aliases_for_objs status nuris in
                   eval_alias status (mode,aliases)
                with MultiPassDisambiguator.DisambiguationError _-> 
                  HLog.warn ("error in generating coercion: "^name);
@@ -634,7 +640,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
       raise (GrafiteTypes.Command_error "Not in command mode")
      else
        let tgt_uri_ext, old_ok = 
-         match NCicEnvironment.get_checked_obj src_uri with
+         match NCicEnvironment.get_checked_obj status src_uri with
          | _,_,[],[], (NCic.Inductive _ as ok) -> ".ind", ok
          | _,_,[],[], (NCic.Fixpoint _ as ok) -> ".con", ok
          | _,_,[],[], (NCic.Constant _ as ok) -> ".con", ok
@@ -649,13 +655,13 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
                (try NCic.Const 
                  (NReference.reference_of_spec (List.assoc u map)spec)
                with Not_found -> t)
-           | t -> NCicUtils.map (fun _ _ -> ()) () subst t
+           | t -> NCicUtils.map status (fun _ _ -> ()) () subst t
          in
          NCicUntrusted.map_obj_kind ~skip_body:false (subst ()) old_ok
        in
        let ninitial_stack = Continuationals.Stack.of_nmetasenv [] in
        let status = status#set_obj (tgt_uri,0,[],[],ok) in
-       (*prerr_endline (NCicPp.ppobj (tgt_uri,0,[],[],ok));*)
+       (*prerr_endline (status#ppobj (tgt_uri,0,[],[],ok));*)
        let status = status#set_stack ninitial_stack in
        let status = subst_metasenv_and_fix_names status in
        let status = status#set_ng_mode `ProofMode in
@@ -706,14 +712,14 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
             (text,prefix_len,s) 
       in
       assert (metasenv = []);
-      let sort = NCicReduction.whd ~subst [] sort in
+      let sort = NCicReduction.whd status ~subst [] sort in
       let sort =
        match sort with 
           NCic.Sort s -> s
         | _ ->
            raise (Invalid_argument (Printf.sprintf
             "ninverter: found target %s, which is not a sort"
-             (NCicPp.ppterm ~metasenv ~subst ~context:[] sort))) in
+             (status#ppterm ~metasenv ~subst ~context:[] sort))) in
       let status = status#set_ng_mode `ProofMode in
       let metasenv,subst,status,indty =
        GrafiteDisambiguate.disambiguate_nterm status None [] [] subst
@@ -721,9 +727,9 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
       let indtyno,(_,leftno,tys,_,_) =
        match indty with
           NCic.Const ((NReference.Ref (_,NReference.Ind (_,indtyno,_))) as r) ->
-           indtyno, NCicEnvironment.get_checked_indtys r
+           indtyno, NCicEnvironment.get_checked_indtys status r
         | _ ->
-          prerr_endline ("engine: indty ="  ^ NCicPp.ppterm ~metasenv:[]
+          prerr_endline ("engine: indty ="  ^ status#ppterm ~metasenv:[]
            ~subst:[] ~context:[] indty);
           assert false in
       let it = List.nth tys indtyno in

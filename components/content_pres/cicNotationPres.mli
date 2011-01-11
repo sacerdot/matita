@@ -39,6 +39,7 @@ val box_of_mpres: mathml_markup -> boxml_markup
  * @param ids_to_uris mapping id -> uri for hyperlinking
  * @param prec precedence level *)
 val render:
+ #NCic.status ->
  lookup_uri:(Content.id -> string option) -> ?prec:int -> NotationPt.term ->
   markup
 

@@ -17,6 +17,7 @@ val set_default_sig: unit -> unit
 val get_sig: eq_sig_type -> NCic.term
 
 val mk_proof:
+ #NCic.status ->
   ?demod:bool
   -> NCic.term Terms.bag 
   -> Terms.M.key 

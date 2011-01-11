@@ -31,7 +31,7 @@ exception Command_error of string
 
 val command_error: string -> 'a   (** @raise Command_error *)
 
-class status :
+class virtual status :
  string ->
   object ('self)
    (* Warning: #stack and #obj are meaningful iff #ng_mode is `ProofMode *)

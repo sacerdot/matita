@@ -12,7 +12,6 @@ INTERFACE_FILES =		 \
 	boxPp.mli		 \
 	cicNotationPres.mli	 \
 	content2pres.mli	 \
-	sequent2pres.mli	 \
 	$(NULL)
 IMPLEMENTATION_FILES =		 \
 	$(INTERFACE_FILES:%.mli=%.ml)

@@ -82,15 +82,15 @@ let init_debugging_menu gui =
 *)
     addDebugSeparator ();
     addDebugCheckbox "high level pretty printer" ~init:true
-      (fun mi () -> assert false (* MATITA 1.0 *));
+      (fun mi () -> ApplyTransformation.use_high_level_pretty_printer := mi#active);
     addDebugSeparator ();
-    addDebugItem "always show all disambiguation errors"
-      (fun _ -> MatitaGui.all_disambiguation_passes := true);
-    addDebugItem "prune disambiguation errors"
-      (fun _ -> MatitaGui.all_disambiguation_passes := false);
-    addDebugSeparator ();
+    addDebugCheckbox "prune errors"
+      (fun mi () -> MatitaGui.all_disambiguation_passes := not (mi#active));
+    (*MATITA 1.0: ??? addDebugItem "prune disambiguation errors"
+      (fun _ -> MatitaGui.all_disambiguation_passes := false);*)
     addDebugCheckbox "multiple disambiguation passes" ~init:true
       (fun mi () -> MultiPassDisambiguator.only_one_pass := mi#active);
+    addDebugSeparator ();
     addDebugCheckbox "tactics logging" 
       (fun mi () -> NTacStatus.debug := mi#active);
     addDebugCheckbox "disambiguation/refiner/unification/metasubst logging"

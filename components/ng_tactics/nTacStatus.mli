@@ -49,7 +49,7 @@ class type g_pstatus =
   method obj: NCic.obj
  end
 
-class pstatus :
+class virtual pstatus :
  NCic.obj ->
   object ('self)
    inherit g_pstatus
@@ -127,7 +127,7 @@ class type ['stack] g_status =
   method stack: 'stack
  end
 
-class ['stack] status :
+class virtual ['stack] status :
  NCic.obj -> 'stack ->
   object ('self)
    inherit ['stack] g_status
@@ -136,11 +136,11 @@ class ['stack] status :
    method set_status: 'stack #g_status -> 'self
   end
 
-class type lowtac_status = [unit] status
+class type virtual lowtac_status = [unit] status
 
 type 'status lowtactic = #lowtac_status as 'status -> int -> 'status
 
-class type tac_status = [Continuationals.Stack.t] status
+class type virtual tac_status = [Continuationals.Stack.t] status
 
 val pp_tac_status: #tac_status -> unit
 

@@ -23,10 +23,13 @@
  * http://helm.cs.unibo.it/
  *)
 
-val pp_comment: map_unicode_to_tex:bool -> GrafiteAst.comment -> string
+val pp_comment:
+ #NCic.status -> map_unicode_to_tex:bool -> GrafiteAst.comment -> string
 
-val pp_executable: map_unicode_to_tex:bool -> GrafiteAst.code -> string
+val pp_executable:
+ #NCic.status -> map_unicode_to_tex:bool -> GrafiteAst.code -> string
 
 val pp_alias: GrafiteAst.alias_spec -> string
 
-val pp_statement: GrafiteAst.statement -> map_unicode_to_tex:bool -> string
+val pp_statement:
+ #NCic.status -> GrafiteAst.statement -> map_unicode_to_tex:bool -> string

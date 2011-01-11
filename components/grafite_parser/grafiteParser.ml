@@ -166,7 +166,10 @@ EXTEND
            | N.Implicit _ -> false
            | N.UserInput -> true
            | _ -> raise (Invalid_argument "malformed target parameter list 1")) l
-      | _ -> raise (Invalid_argument ("malformed target parameter list 2\n" ^ NotationPp.pp_term params)) ]
+      | _ ->
+       (*CSC: new NCicPp.status is the best I can do here without changing the
+         result type *)
+       raise (Invalid_argument ("malformed target parameter list 2\n" ^ NotationPp.pp_term (new NCicPp.status) params)) ]
   ];
   direction: [
     [ SYMBOL ">" -> `LeftToRight
@@ -636,10 +639,10 @@ class type g_status =
   method parser_db: db
  end
 
-class status =
+class virtual status =
  object(self)
   inherit CicNotationParser.status ~keywords:[]
-  val mutable db = None
+  val mutable db = None (* mutable only to initialize it :-( *)
   method parser_db = match db with None -> assert false | Some x -> x
   method set_parser_db v = {< db = Some v >}
   method set_parser_status

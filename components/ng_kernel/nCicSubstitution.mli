@@ -11,20 +11,14 @@
 
 (* $Id$ *)
 
-val set_ppterm : (context:NCic.context -> 
-  subst:NCic.substitution -> 
-  metasenv:NCic.metasenv ->
-  ?inside_fix:bool ->
-   NCic.term -> string) -> unit
-
-val lift_from : ?no_implicit:bool -> int -> int -> NCic.term -> NCic.term 
+val lift_from : #NCic.status -> ?no_implicit:bool -> int -> int -> NCic.term -> NCic.term 
 
 (* lift n t                                                              *)
 (*  lifts [t] of [n]                                                     *)
 (*  [from] default 1, lifts only indexes >= [from]                       *)
 (*  NOTE: the opposite function (delift_rels) is defined in CicMetaSubst *)
 (*  since it needs to restrict the metavariables in case of failure      *)
-val lift : ?from:int -> ?no_implicit:bool -> int -> NCic.term -> NCic.term
+val lift : #NCic.status -> ?from:int -> ?no_implicit:bool -> int -> NCic.term -> NCic.term
 
 (* subst t1 t2                                                          *)
 (*  substitutes [t1] for [Rel 1] in [t2]                                *)
@@ -32,7 +26,7 @@ val lift : ?from:int -> ?no_implicit:bool -> int -> NCic.term -> NCic.term
 (*  are generated. WARNING: the substitution can diverge when t2 is not *)
 (*  well typed and avoid_beta_redexes is true.                          *)
 val subst : 
-  ?avoid_beta_redexes:bool -> ?no_implicit:bool -> 
+  #NCic.status -> ?avoid_beta_redexes:bool -> ?no_implicit:bool -> 
   NCic.term -> NCic.term -> NCic.term
 
 (* psubst [avoid] [map_arg] [args] [t]            
@@ -43,7 +37,7 @@ val subst :
  *    the function is ReductionStrategy.from_env_for_unwind when psubst is
  *    used to implement nCicReduction.unwind'                              *)
 val psubst : 
-  ?avoid_beta_redexes:bool -> ?no_implicit:bool ->
+  #NCic.status -> ?avoid_beta_redexes:bool -> ?no_implicit:bool ->
   ('a -> NCic.term) -> 'a list -> NCic.term -> 
     NCic.term
 
@@ -51,5 +45,5 @@ val psubst :
 (*  returns the term [t] where [Rel i] is substituted with [t_i] lifted by n *)
 (*  [t_i] is lifted as usual when it crosses an abstraction                  *)
 (* subst_meta (n, Irl _) t -> lift n t                                        *)
-val subst_meta : NCic.local_context -> NCic.term -> NCic.term
+val subst_meta : #NCic.status -> NCic.local_context -> NCic.term -> NCic.term
 

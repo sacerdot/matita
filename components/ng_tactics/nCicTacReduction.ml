@@ -11,29 +11,29 @@
 
 (* $Id: nCic.ml 9058 2008-10-13 17:42:30Z tassi $ *)
  
-let rec normalize ?(delta=0) ~subst ctx t =
- normalize_machine ~delta ~subst ctx
-  (fst (NCicReduction.reduce_machine ~delta ~subst ctx (0,[],t,[])))
-and normalize_machine ?(delta=0) ~subst ctx (k,e,t,s) =
+let rec normalize status ?(delta=0) ~subst ctx t =
+ normalize_machine status ~delta ~subst ctx
+  (fst (NCicReduction.reduce_machine status ~delta ~subst ctx (0,[],t,[])))
+and normalize_machine status ?(delta=0) ~subst ctx (k,e,t,s) =
  assert (delta=0);
  let t = 
    if k = 0 then t
    else
-     NCicSubstitution.psubst ~avoid_beta_redexes:true  
-       (fun e -> normalize_machine ~delta ~subst ctx (NCicReduction.from_env ~delta e)) e t in
+     NCicSubstitution.psubst status ~avoid_beta_redexes:true  
+       (fun e -> normalize_machine status ~delta ~subst ctx (NCicReduction.from_env ~delta e)) e t in
  let t =
   match t with
      NCic.Meta (n,(s,lc)) ->
       let l = NCicUtils.expand_local_context lc in
-      let l' = List.map (normalize ~delta ~subst ctx) l in
+      let l' = List.map (normalize status ~delta ~subst ctx) l in
        if l = l' then t
        else
         NCic.Meta (n,(s,NCic.Ctx l))
-   | t -> NCicUtils.map (fun h ctx -> h::ctx) ctx (normalize ~delta ~subst) t
+   | t -> NCicUtils.map status (fun h ctx -> h::ctx) ctx (normalize status ~delta ~subst) t
  in
  if s = [] then t 
  else
   NCic.Appl
    (t::
-    (List.map (fun i -> normalize_machine ~delta ~subst ctx (NCicReduction.from_stack ~delta i)) s))
+    (List.map (fun i -> normalize_machine status ~delta ~subst ctx (NCicReduction.from_stack ~delta i)) s))
 ;;

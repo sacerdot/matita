@@ -119,3 +119,38 @@ type obj_kind =
 
  (* the int must be 0 if the object has no body *)
 type obj = NUri.uri * int * metasenv * substitution * obj_kind
+
+(* pretty-printing *)
+class virtual status =
+ object
+  method virtual ppterm: context:context -> subst:substitution ->
+   metasenv:metasenv -> ?margin:int -> ?inside_fix:bool -> term -> string
+
+  method virtual ppcontext: ?sep:string -> subst:substitution ->
+   metasenv:metasenv -> context -> string 
+
+  method virtual ppmetasenv: subst:substitution -> metasenv -> string
+
+  method virtual ppsubst: metasenv:metasenv -> ?use_subst:bool -> substitution -> string
+
+  method virtual ppobj: obj -> string
+ end
+
+(* pretty-printing: same as vstatus, but all methods are concrete         *)
+(* used only to declare concrete instances of subclasses of vstatus class *)
+class type cstatus =
+ object
+  inherit status
+
+  method ppterm: context:context -> subst:substitution ->
+   metasenv:metasenv -> ?margin:int -> ?inside_fix:bool -> term -> string
+
+  method ppcontext: ?sep:string -> subst:substitution ->
+   metasenv:metasenv -> context -> string 
+
+  method ppmetasenv: subst:substitution -> metasenv -> string
+
+  method ppsubst: metasenv:metasenv -> ?use_subst:bool -> substitution -> string
+
+  method ppobj: obj -> string
+ end
