@@ -429,8 +429,8 @@ class gui () =
             toggle_win ~check:main#showCheckMenuItem check#checkWin;
 *)
         [ 
-          GdkKeysyms._Page_Up,   [`CONTROL], main#scriptNotebook#next_page;
-          GdkKeysyms._Page_Down, [`CONTROL], main#scriptNotebook#previous_page
+          GdkKeysyms._Page_Down, [`CONTROL], main#scriptNotebook#next_page;
+          GdkKeysyms._Page_Up,   [`CONTROL], main#scriptNotebook#previous_page
         ];
         (* about win *)
       let parse_txt_file file =
