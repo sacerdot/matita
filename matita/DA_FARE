@@ -9,13 +9,6 @@ Problemi (MATITA 1.0):
   matitaGui: come faccio in uno stato funzionale a settare le interpretazioni?
    dovrei farlo su ogni elemento della history, ma sarebbe troppo costoso
 
-  matita.ml: non posso usare l'high level pretty printer perche' non ho nemmeno
-   uno status dove voglio stampare (e sarebbe comunque troppo basso).
-   Non posso implementare l'up-cast con
-   il solito metodo perche' uso oggetti funzionali. E inoltre ho stati
-   multipli per via del MTI. Di contro, la parte dello stato che si occupa
-   di notazione e' praticamente read-only.
-
 matitac: non entra nelle dir
 matita: due file anonimi stessa base uri
 matita: il pulsante close non si ingrigisce quando non ci sono piu' script
@@ -29,6 +22,7 @@ B) rendere globali le informazioni sull'inclusione :-( (magari iterando sulla
       ricompilandolo e mischio oggetti
    2) A -> C, edito A, torno in cima ad A, apro C, non mi fa editare C
 
+Bug: si chiude un tab ma resta il suo status :-) specie se e' l'ultimo tab
 
 Idea (Enrico):
  - ogni oggetto ha il suo status con il suo env che e' una vista su quella
