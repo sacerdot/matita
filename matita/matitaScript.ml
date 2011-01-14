@@ -247,7 +247,7 @@ let source_view =
     ~insert_spaces_instead_of_tabs:true ~tab_width:2
     ~right_margin_position:80 ~show_right_margin:true
     ~smart_home_end:`AFTER
-    ~packing:parent#add_with_viewport
+    ~packing:parent#add
     () in
 let buffer = source_view#buffer in
 let source_buffer = source_view#source_buffer in
