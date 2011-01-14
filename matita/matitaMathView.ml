@@ -111,16 +111,21 @@ class sequentsViewer ~(notebook:GPack.notebook) ~(cicMathView:cicMathView) () =
         in
         let reparent () =
           scrolledWin <- Some w;
-          match cicMathView#misc#parent with
-          | None -> w#add cicMathView#coerce
-          | Some parent ->
-             let parent =
-              match cicMathView#misc#parent with
-                 None -> assert false
-               | Some p -> GContainer.cast_container p
-             in
-              parent#remove cicMathView#coerce;
-              w#add cicMathView#coerce
+          (match cicMathView#misc#parent with
+            | None -> ()
+            | Some parent ->
+               let parent =
+                match cicMathView#misc#parent with
+                   None -> assert false
+                 | Some p -> GContainer.cast_container p
+               in
+                parent#remove cicMathView#coerce);
+          w#add cicMathView#coerce;
+          ignore (w#vadjustment#set_value
+           (w#vadjustment#upper -. w#vadjustment#page_size));
+          ignore (w#vadjustment#connect#changed (fun _ ->
+            w#vadjustment#set_value
+             (w#vadjustment#upper -. w#vadjustment#page_size)))
         in
         goal2win <- (goal_switch, reparent) :: goal2win;
         w#coerce
