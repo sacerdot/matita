@@ -53,30 +53,34 @@ let mk_elim status uri leftno it (outsort,suffix) pragma =
  let args,sort = NCicReduction.split_prods status ~subst:[] [] (-1) ty in
  let args = List.rev_map (function name,_ -> mk_id name) args in
  let rec_arg = mk_id (fresh_name ()) in
- let p_ty =
+ let mk_prods = 
   List.fold_right
-   (fun name res -> NotationPt.Binder (`Forall,(name,None),res)) args
+   (fun name res -> NotationPt.Binder (`Forall,(name,None),res)) in
+ let p_ty = mk_prods args
    (NotationPt.Binder
     (`Forall,
      (rec_arg,Some (mk_appl (mk_id ind_name :: params @ args))),
      NotationPt.Sort outsort)) in
+ let mk_arrs n = mk_prods (HExtlib.mk_list (mk_id "_") n) in
  let args = args @ [rec_arg] in
  let k_names = List.map (function _,name,_ -> name_of_k name) cl in
+ (*
  let final_params =
   List.map (function name -> name, None) params @
   [p_name,Some p_ty] @
   List.map (function name -> name, None) k_names @
   List.map (function name -> name, None) args in
+ *)
  let cty = mk_appl (p_name :: args) in
  let ty = Some cty in
- let branches =
+ let branches_with_args =
   List.map
    (function (_,name,ty) ->
      let _,ty = NCicReduction.split_prods status ~subst:[] [] leftno ty in
      let cargs,ty= my_split_prods status ~subst:[] [] (-1) ty in
-     let cargs_and_recursive_args =
-      List.rev_map
-       (function
+     let cargs_recargs_nih =
+      List.fold_left
+       (fun (acc,nih) -> function
            _,NCic.Def _ -> assert false
          | name,NCic.Decl ty ->
             let context,ty = my_split_prods status ~subst:[] [] (-1) ty in
@@ -89,7 +93,7 @@ let mk_elim status uri leftno it (outsort,suffix) pragma =
                  ->
                   let abs = List.rev_map (fun id,_ -> mk_id id) context in
                   let name = mk_id name in
-                   name, Some (
+                   (name, Some (
                    List.fold_right
                     (fun id res ->
                       NotationPt.Binder (`Lambda,(id,None),res))
@@ -101,16 +105,29 @@ let mk_elim status uri leftno it (outsort,suffix) pragma =
                       k_names @
                       List.map (fun _ -> NotationPt.Implicit `JustOne)
                        (List.tl args) @
-                      [mk_appl (name::abs)])))
-              | _ -> mk_id name,None
-       ) cargs in
+                      [mk_appl (name::abs)]))))::acc, nih + 1
+              | _ -> (mk_id name,None)::acc,nih
+       ) ([],0) cargs in
+     let cargs_and_recursive_args, nih = cargs_recargs_nih in
      let cargs,recursive_args = List.split cargs_and_recursive_args in
      let recursive_args = HExtlib.filter_map (fun x -> x) recursive_args in
-      NotationPt.Pattern (name,None,List.map (fun x -> x,None) cargs),
-       mk_appl (name_of_k name :: cargs @ recursive_args)
+      (NotationPt.Pattern (name,None,List.map (fun x -> x,None) cargs),
+       mk_appl (name_of_k name :: cargs @ recursive_args)), (name,cargs, nih)
    ) cl
  in
+ let branches, branch_args = List.split branches_with_args in
  let bo = NotationPt.Case (rec_arg,Some (ind_name,None),None,branches) in
+ let final_params =
+  List.map (function name -> name, None) params @
+  [p_name,Some p_ty] @
+  List.map (function name, cargs, nih -> 
+            name_of_k name, 
+            Some (mk_prods cargs (mk_arrs nih 
+             (mk_appl 
+              (p_name::HExtlib.mk_list (NotationPt.Implicit `JustOne)
+               (List.length args - 1) @
+               [mk_appl (mk_id name :: params @ cargs)]))))) branch_args @
+               List.map (function name -> name, None) args in
  let recno = List.length final_params in
  let where = recno - 1 in
  let res =
