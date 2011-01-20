@@ -116,7 +116,7 @@ let mk_elim status uri leftno it (outsort,suffix) pragma =
    ) cl
  in
  let branches, branch_args = List.split branches_with_args in
- let bo = NotationPt.Case (rec_arg,Some (ind_name,None),None,branches) in
+ let bo = NotationPt.Case (rec_arg,Some (ind_name,None),Some p_name,branches) in
  let final_params =
   List.map (function name -> name, None) params @
   [p_name,Some p_ty] @
