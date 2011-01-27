@@ -29,12 +29,14 @@ module Pres = Mpresentation
 
 (** {2 Pretty printing from BoxML to strings} *)
 
+let utf8_string_length s = Utf8.compute_len s 0 (String.length s)
+
 let string_space = " "
-let string_space_len = String.length string_space
-let string_indent = (* string_space *) ""
-let string_indent_len = String.length string_indent
+let string_space_len = utf8_string_length string_space
+let string_indent = (* string_space *) [],""
+let string_indent_len = utf8_string_length (snd string_indent)
 let string_ink = "---------------------------"
-let string_ink_len = String.length string_ink
+let string_ink_len = utf8_string_length string_ink
 
 let contains_attrs contained container =
   List.for_all (fun attr -> List.mem attr container) contained
@@ -42,7 +44,26 @@ let contains_attrs contained container =
 let want_indent = contains_attrs (RenderingAttrs.indent_attributes `BoxML)
 let want_spacing = contains_attrs (RenderingAttrs.spacing_attributes `BoxML)
 
-let indent_string s = string_indent ^ s
+let shift off = List.map (fun (start,stop,v) -> start+off,stop+off,v);;
+
+let (^^) (map1,s1) (map2,s2) = map1 @ (shift (utf8_string_length s1) map2), s1 ^ s2;;
+
+(* CSC: inefficient (quadratic) implementation *)
+let mapped_string_concat sep =
+ let sep_len = utf8_string_length sep in
+ let rec aux off =
+  function
+     [] -> [],""
+   | [map,s] -> shift off map,s
+   | (map,s)::tl ->
+       let map = shift off map in
+       let map2,s2 = aux (off + utf8_string_length s + sep_len) tl in
+        map@map2, s ^ sep ^ s2
+ in
+  aux 0
+;;
+
+let indent_string s = string_indent ^^ s
 let indent_children (size, children) =
   let children' = List.map indent_string children in
   size + string_space_len, children'
@@ -55,15 +76,15 @@ let choose_rendering size (best, other) =
                    X2    X4           X2 X3
                                          X4 *)
 let merge_columns sep cols =
-  let sep_len = String.length sep in
+  let sep_len = utf8_string_length sep in
   let indent = ref 0 in
   let res_rows = ref [] in
   let add_row ~continue row =
     match !res_rows with
     | last :: prev when continue ->
-        res_rows := (String.concat sep [last; row]) :: prev;
-        indent := !indent + String.length last + sep_len
-    | _ -> res_rows := (String.make !indent ' ' ^ row) :: !res_rows;
+        res_rows := (last ^^ ([],sep) ^^ row) :: prev;
+        indent := !indent + utf8_string_length (snd last) + sep_len
+    | _ -> res_rows := (([],String.make !indent ' ') ^^ row) :: !res_rows;
   in
   List.iter
     (fun rows ->
@@ -76,7 +97,7 @@ let merge_columns sep cols =
   List.rev !res_rows
     
 let max_len =
-  List.fold_left (fun max_size s -> max (String.length s) max_size) 0
+  List.fold_left (fun max_size (_,s) -> max (utf8_string_length s) max_size) 0
 
 let render_row available_space spacing children =
   let spacing_bonus = if spacing then string_space_len else 0 in
@@ -92,17 +113,18 @@ let render_row available_space spacing children =
   let rendering = merge_columns sep (List.rev !renderings) in
   max_len rendering, rendering
 
-let fixed_rendering s =
-  let s_len = String.length s in
-  (fun _ -> s_len, [s])
+let fixed_rendering href s =
+  let s_len = utf8_string_length s in
+  let map = match href with None -> [] | Some href -> [0,s_len-1,href] in
+  (fun _ -> s_len, [map,s])
 
 let render_to_strings ~map_unicode_to_tex choose_action size markup =
   let max_size = max_int in
   let rec aux_box =
     function
-    | Box.Text (_, t) -> fixed_rendering t
-    | Box.Space _ -> fixed_rendering string_space
-    | Box.Ink _ -> fixed_rendering string_ink
+    | Box.Text (_, t) -> fixed_rendering None t
+    | Box.Space _ -> fixed_rendering None string_space
+    | Box.Ink _ -> fixed_rendering None string_ink
     | Box.Action (_, []) -> assert false
     | Box.Action (_, l) -> aux_box (choose_action l)
     | Box.Object (_, o) -> aux_mpres o
@@ -186,19 +208,28 @@ let render_to_strings ~map_unicode_to_tex choose_action size markup =
           if !renderings <> [] then end_cluster ();
           max_len !rows, List.rev !rows)
   and aux_mpres =
-    let text s = Pres.Mtext ([], s) in
-    let mrow c = Pres.Mrow ([], c) in
-    let parentesize s = s in
-    function
+   let text s = Pres.Mtext ([], s) in
+   let mrow c = Pres.Mrow ([], c) in
+   let parentesize s = s in
+   function x ->
+    let attrs = Pres.get_attr x in
+    let href =
+     try
+      let _,_,href =
+       List.find (fun (ns,na,value) -> ns = Some "xlink" && na = "href") attrs
+      in
+       Some href
+     with Not_found -> None in
+    match x with
     | Pres.Mi (_, s)
     | Pres.Mn (_, s)
     | Pres.Mtext (_, s)
     | Pres.Ms (_, s)
-    | Pres.Mgliph (_, s) -> fixed_rendering s
+    | Pres.Mgliph (_, s) -> fixed_rendering href s
     | Pres.Mo (_, s) ->
         let s =
           if map_unicode_to_tex then begin
-            if String.length s = 1 && Char.code s.[0] < 128 then
+            if utf8_string_length s = 1 && Char.code s.[0] < 128 then
               s
             else
               match Utf8Macro.tex_of_unicode s with
@@ -207,8 +238,8 @@ let render_to_strings ~map_unicode_to_tex choose_action size markup =
           end else
             s
         in
-        fixed_rendering s
-    | Pres.Mspace _ -> fixed_rendering string_space
+        fixed_rendering href s
+    | Pres.Mspace _ -> fixed_rendering href string_space
     | Pres.Mrow (attrs, children) ->
         let children' = List.map aux_mpres children in
         (fun size -> render_row size false children')
@@ -245,8 +276,5 @@ let render_to_strings ~map_unicode_to_tex choose_action size markup =
   snd (aux_mpres markup size)
 
 let render_to_string ~map_unicode_to_tex choose_action size markup =
- (* CSC: no information about hyperlinks yet *)
- [],
-  String.concat "\n"
-    (render_to_strings ~map_unicode_to_tex choose_action size markup)
-
+ mapped_string_concat "\n"
+  (render_to_strings ~map_unicode_to_tex choose_action size markup)
