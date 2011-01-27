@@ -179,7 +179,14 @@ object (self)
   inherit GSourceView2.source_view obj
 
   method strings_of_selection = (assert false : (paste_kind * string) list)
-  method set_href_callback = (function _ -> () : (string -> unit) option -> unit)
+
+  val mutable href_callback: (string -> unit) option = None
+  method set_href_callback f = href_callback <- f
+
+  val mutable href_statusbar_msg:
+    (GMisc.statusbar_context * Gtk.statusbar_message) option = None
+    (* <statusbar ctxt, statusbar msg> *)
+
   method private set_cic_info = (function _ -> () : unit (*(Cic.conjecture option * (Cic.id, Cic.term) Hashtbl.t *
          (Cic.id, Cic.hypothesis) Hashtbl.t *
          (Cic.id, Cic.id option) Hashtbl.t * ('a, 'b) Hashtbl.t * 'c option)*) option -> unit)
@@ -188,13 +195,45 @@ object (self)
     self#buffer#delete ~start:(self#buffer#get_iter `START)
     ~stop:(self#buffer#get_iter `END);
     self#buffer#insert text;
-    let hyperlink_tag = self#buffer#create_tag [`FOREGROUND "green"] in
+    let all_tag = self#buffer#create_tag [] in
+    self#buffer#apply_tag all_tag ~start:(self#buffer#get_iter `START)
+     ~stop:(self#buffer#get_iter `END);
+    ignore(all_tag#connect#event
+      ~callback:(fun ~origin event pos ->
+        match GdkEvent.get_type event with
+         | `MOTION_NOTIFY -> 
+             Gdk.Window.set_cursor
+              (match self#get_window `TEXT with None -> assert false | Some x -> x)
+              (Gdk.Cursor.create `ARROW);
+             HExtlib.iter_option (fun (ctxt, msg) -> ctxt#remove msg)
+              href_statusbar_msg;
+             false
+         | _ -> false));
      List.iter
       ( fun (start,stop,(href : string)) ->
-         self#buffer#apply_tag hyperlink_tag
-          ~start:(self#buffer#get_iter (`OFFSET start))
-          ~stop:(self#buffer#get_iter (`OFFSET stop))
+         let hyperlink_tag = self#buffer#create_tag [] in
+          self#buffer#apply_tag hyperlink_tag
+           ~start:(self#buffer#get_iter_at_char start)
+           ~stop:(self#buffer#get_iter_at_char (stop+1));
+          ignore(hyperlink_tag#connect#event
+            ~callback:(fun ~origin event pos ->
+              match GdkEvent.get_type event with
+                 `BUTTON_PRESS -> 
+                   (match href_callback with
+                       None -> ()
+                     | Some f -> f href);
+                   true
+               | `MOTION_NOTIFY -> 
+                   Gdk.Window.set_cursor
+                    (match self#get_window `TEXT with None -> assert false | Some x -> x)
+                    (Gdk.Cursor.create `HAND1);
+                   let ctxt = (MatitaMisc.get_gui ())#main#statusBar#new_context ~name:"href" in
+                   let msg = ctxt#push href in
+                   href_statusbar_msg <- Some (ctxt, msg);
+                   false
+               | _ -> false));
       ) hyperlinks
+
   method action_toggle = (fun _ -> assert false : document_element -> bool)
   method remove_selections = (() : unit)
   method set_selection = (fun _ -> () : document_element option -> unit)
