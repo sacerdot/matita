@@ -141,7 +141,7 @@ definition R0 ≝ λT:Type[0].λt:T.t.
   
 definition R1 ≝ eq_rect_Type0.
 
-(* 
+
 definition R2 :
   ∀T0:Type[0].
   ∀a0:T0.
@@ -154,13 +154,13 @@ definition R2 :
   ∀b1: T1 b0 e0.
   ∀e1:R1 ?? T1 a1 ? e0 = b1.
   T2 b0 e0 b1 e1.
-#T0;#a0;#T1;#a1;#T2;#a2;#b0;#e0;#b1;#e1;
-napply (eq_rect_Type0 ????? e1);
-napply (R1 ?? ? ?? e0);
-napply a2;
-nqed.
+#T0 #a0 #T1 #a1 #T2 #a2 #b0 #e0 #b1 #e1 
+@(eq_rect_Type0 ????? e1) 
+@(R1 ?? ? ?? e0) 
+@a2 
+qed.
 
-ndefinition R3 :
+definition R3 :
   ∀T0:Type[0].
   ∀a0:T0.
   ∀T1:∀x0:T0. a0=x0 → Type[0].
@@ -177,13 +177,13 @@ ndefinition R3 :
   ∀b2: T2 b0 e0 b1 e1.
   ∀e2:R2 ???? T2 a2 b0 e0 ? e1 = b2.
   T3 b0 e0 b1 e1 b2 e2.
-#T0;#a0;#T1;#a1;#T2;#a2;#T3;#a3;#b0;#e0;#b1;#e1;#b2;#e2;
-napply (eq_rect_Type0 ????? e2);
-napply (R2 ?? ? ???? e0 ? e1);
-napply a3;
-nqed.
+#T0 #a0 #T1 #a1 #T2 #a2 #T3 #a3 #b0 #e0 #b1 #e1 #b2 #e2 
+@(eq_rect_Type0 ????? e2) 
+@(R2 ?? ? ???? e0 ? e1) 
+@a3 
+qed.
 
-ndefinition R4 :
+definition R4 :
   ∀T0:Type[0].
   ∀a0:T0.
   ∀T1:∀x0:T0. eq T0 a0 x0 → Type[0].
@@ -212,10 +212,11 @@ ndefinition R4 :
   ∀b3: T3 b0 e0 b1 e1 b2 e2.
   ∀e3:eq (T3 …) (R3 T0 a0 T1 a1 T2 a2 T3 a3 b0 e0 b1 e1 b2 e2) b3.
   T4 b0 e0 b1 e1 b2 e2 b3 e3.
-#T0;#a0;#T1;#a1;#T2;#a2;#T3;#a3;#T4;#a4;#b0;#e0;#b1;#e1;#b2;#e2;#b3;#e3;
-napply (eq_rect_Type0 ????? e3);
-napply (R3 ????????? e0 ? e1 ? e2);
-napply a4;
-nqed.
+#T0 #a0 #T1 #a1 #T2 #a2 #T3 #a3 #T4 #a4 #b0 #e0 #b1 #e1 #b2 #e2 #b3 #e3 
+@(eq_rect_Type0 ????? e3) 
+@(R3 ????????? e0 ? e1 ? e2) 
+@a4 
+qed.
 
-naxiom streicherK : ∀T:Type[2].∀t:T.∀P:t = t → Type[2].P (refl ? t) → ∀p.P p. *)
+(* TODO concrete definition by means of proof irrelevance *)
+axiom streicherK : ∀T:Type[1].∀t:T.∀P:t = t → Type[2].P (refl ? t) → ∀p.P p.
