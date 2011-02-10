@@ -12,14 +12,15 @@
 include "arithmetics/nat.ma".
 
 inductive T : Type[0] ≝
-  | Sort: nat → T
-  | Rel: nat → T 
-  | App: T → T → T 
+  | Sort: nat → T     (* starts from 0 *)
+  | Rel: nat → T      (* starts from ... ? *)
+  | App: T → T → T    (* function, argument *)
   | Lambda: T → T → T (* type, body *)
-  | Prod: T → T → T (* type, body *)
-  | D: T →T
+  | Prod: T → T → T   (* type, body *)
+  | D: T → T          (* dummifier *)
 .
 
+(* arguments: k is the depth (starts from 0), p is the height (starts from 0) *)
 let rec lift t k p ≝
   match t with 
     [ Sort n ⇒ Sort n
@@ -227,8 +228,3 @@ lemma subst_lemma: ∀A,B,C.∀k,i.
     ]
   ] 
 qed.
-
-  
-
-
-

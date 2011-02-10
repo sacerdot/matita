@@ -212,11 +212,3 @@ theorem substitution_tj:
    #G1 #D #N #Heq #tjN @dummy /2/ 
   ]
 qed.
- 
-  
- 
-
-
-
-
-
