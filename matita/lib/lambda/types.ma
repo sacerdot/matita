@@ -49,7 +49,9 @@ inductive TJ: list T → T → T → Prop ≝
   | abs: ∀G.∀A,B,b.∀i. 
      TJ (A::G) b B → TJ G (Prod A B) (Sort i) → TJ G (Lambda A b) (Prod A B)
   | conv: ∀G.∀A,B,C.∀i. conv B C →
-     TJ G A B → TJ G B (Sort i) → TJ G A C.
+     TJ G A B → TJ G B (Sort i) → TJ G A C
+  | dummy: ∀G.∀A,B.∀i. 
+     TJ G A B → TJ G B (Sort i) → TJ G (D A) B.
      
 notation "hvbox(G break  ⊢ A : B)" non associative with precedence 50 for @{'TJ $G $A $B}.
 interpretation "type judgement" 'TJ G A B = (TJ G A B).
@@ -204,9 +206,10 @@ theorem substitution_tj:
       [#H (normalize in H) (applyS H) | normalize // ]
     ]
   |#G #P #Q #R #i #convQR #tjP #tjQ #Hind1 #Hind2
-   #G1 #D #N #Heq #tjN (normalize in Hind1 ⊢ %)
-   @(conv …(conv_subst … convQR) ? (Hind2 …)) //
-   @Hind1 //
+   #G1 #D #N #Heq #tjN
+   @(conv …(conv_subst … convQR) ? (Hind2 …)) // @Hind1 //
+  |#G #P #Q #i #tjP #tjQ #Hind1 #Hind2
+   #G1 #D #N #Heq #tjN @dummy /2/ 
   ]
 qed.
  
