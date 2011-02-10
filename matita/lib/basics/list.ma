@@ -10,7 +10,7 @@
       V_______________________________________________________________ *)
 
 include "basics/types.ma".
-include "basics/bool.ma".
+include "arithmetics/nat.ma".
 
 inductive list (A:Type[0]) : Type[0] :=
   | nil: list A
@@ -113,6 +113,21 @@ match l1 with
   [ nil ⇒ nil ?
   | cons a tl ⇒ (map ??(dp ?? a) (g a)) @ dprodl A f tl g
   ].
+
+(**************************** length ******************************)
+
+let rec length (A:Type[0]) (l:list A) on l ≝ 
+  match l with 
+    [ nil ⇒ 0
+    | cons a tl ⇒ S (length A tl)].
+
+notation "|M|" non associative with precedence 60 for @{'norm $M}.
+interpretation "norm" 'norm l = (length ? l).
+
+let rec nth n (A:Type[0]) (l:list A) (d:A)  ≝  
+  match n with
+    [O ⇒ hd A l d
+    |S m ⇒ nth m A (tail A l) d].
 
 (**************************** fold *******************************)
 

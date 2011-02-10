@@ -141,7 +141,7 @@ definition R0 ≝ λT:Type[0].λt:T.t.
   
 definition R1 ≝ eq_rect_Type0.
 
-
+(* useless stuff
 definition R2 :
   ∀T0:Type[0].
   ∀a0:T0.
@@ -216,7 +216,7 @@ definition R4 :
 @(eq_rect_Type0 ????? e3) 
 @(R3 ????????? e0 ? e1 ? e2) 
 @a4 
-qed.
+qed. *)
 
 (* TODO concrete definition by means of proof irrelevance *)
 axiom streicherK : ∀T:Type[1].∀t:T.∀P:t = t → Type[2].P (refl ? t) → ∀p.P p.
