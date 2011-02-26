@@ -12,21 +12,24 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "lambda/types.ma".
+include "lambda/ext.ma".
 
-(* all(P,l) holds when P holds for all members of l *)
-let rec all (P:T→Prop) l on l ≝ match l with 
-   [ nil ⇒ True
-   | cons A D ⇒ P A ∧ all P D
-   ].
+(* saturation conditions on an explicit subset ********************************)
 
-(* Appl F l generalizes App applying F to a list of arguments
- * The head of l is applied first
- *)
-let rec Appl F l on l ≝ match l with 
-   [ nil ⇒ F
-   | cons A D ⇒ Appl (App F A) D  
-   ].
+definition SAT0 ≝ λP. ∀l,n. all P l → P (Appl (Sort n) l).
+
+definition SAT1 ≝ λP. ∀l,i. all P l → P (Appl (Rel i) l).
+
+definition SAT2 ≝ λ(P:?→Prop). ∀F,A,B,l. P B → P A → 
+                  P (Appl F[0:=A] l) → P (Appl (Lambda B F) (A::l)).
+
+theorem SAT0_sort: ∀P,n. SAT0 P → P (Sort n).
+#P #n #H @(H (nil ?) …) //
+qed.
+
+theorem SAT1_rel: ∀P,i. SAT1 P → P (Rel i).
+#P #i #H @(H (nil ?) …) //
+qed.
 
 (* STRONGLY NORMALIZING TERMS *************************************************)
 
@@ -34,13 +37,16 @@ let rec Appl F l on l ≝ match l with
 (* FG: we axiomatize it for now because we dont have reduction yet *)
 axiom SN: T → Prop.
 
-(* axiomatization of SN *******************************************************)
+definition CR1 ≝ λ(P:?→Prop). ∀M. P M → SN M.
 
-axiom sn_sort: ∀l,n. all SN l → SN (Appl (Sort n) l).
+axiom sn_sort: SAT0 SN.
 
-axiom sn_rel: ∀l,i. all SN l → SN (Appl (Rel i) l).
+axiom sn_rel: SAT1 SN.
 
 axiom sn_lambda: ∀B,F. SN B → SN F → SN (Lambda B F).
 
-axiom sn_beta: ∀F,A,B,l. SN B → SN A →
-               SN (Appl F[0:=A] l) → SN (Appl (Lambda B F) (A::l)).
+axiom sn_beta: SAT2 SN.
+
+(* FG: do we need this?
+axiom sn_lift: ∀t,k,p. SN t → SN (lift t p k).
+*)
