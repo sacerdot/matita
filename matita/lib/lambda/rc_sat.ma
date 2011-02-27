@@ -62,13 +62,13 @@ definition rceq: RC → RC → Prop ≝
 
 interpretation
    "extensional equality (reducibility candidate)"
-   'napart C1 C2 = (rceq C1 C2).
+   'Eq C1 C2 = (rceq C1 C2).
 
 definition rceql ≝ λl1,l2. all2 ? rceq l1 l2.
 
 interpretation
    "extensional equality (context of reducibility candidates)"
-   'napart C1 C2 = (rceql C1 C2).
+   'Eq C1 C2 = (rceql C1 C2).
 
 theorem reflexive_rceq: reflexive … rceq.
 /2/ qed.
@@ -88,26 +88,26 @@ qed.
 (* HIDDEN BUG:
  * Without the type specification, this statement has two interpretations
  * but matita does not complain
- *) 
-theorem mem_rceq_trans: ∀(M:T). ∀C1,C2. M ∈ C1 → C1 ≈ C2 → M ∈ C2.
+ *)
+theorem mem_rceq_trans: ∀(M:T). ∀C1,C2. M ∈ C1 → C1 ≅ C2 → M ∈ C2.
 #M #C1 #C2 #H1 #H12 (elim (H12 M)) -H12 /2/
 qed.
 
 (* NOTE: hd_repl and tl_repl are proved essentially by the same script *)
-theorem hd_repl: ∀C1,C2. C1 ≈ C2 → ∀l1,l2. l1 ≈ l2 → hd ? l1 C1 ≈ hd ? l2 C2.
+theorem hd_repl: ∀C1,C2. C1 ≅ C2 → ∀l1,l2. l1 ≅ l2 → hd ? l1 C1 ≅ hd ? l2 C2.
 #C1 #C2 #QC #l1 (elim l1) -l1 [ #l2 #Q >Q // ]
 #hd1 #tl1 #_ #l2 (elim l2) -l2 [ #Q elim Q ]
 #hd2 #tl2 #_ #Q elim Q //
 qed.
 
-theorem tl_repl: ∀l1,l2. l1 ≈ l2 → tail ? l1 ≈ tail ? l2.
+theorem tl_repl: ∀l1,l2. l1 ≅ l2 → tail ? l1 ≅ tail ? l2.
 #l1 (elim l1) -l1 [ #l2 #Q >Q // ]
 #hd1 #tl1 #_ #l2 (elim l2) -l2 [ #Q elim Q ]
 #hd2 #tl2 #_ #Q elim Q //
 qed.
 
-theorem nth_repl: ∀C1,C2. C1 ≈ C2 → ∀i,l1,l2. l1 ≈ l2 →
-                  nth i ? l1 C1 ≈ nth i ? l2 C2.
+theorem nth_repl: ∀C1,C2. C1 ≅ C2 → ∀i,l1,l2. l1 ≅ l2 →
+                  nth i ? l1 C1 ≅ nth i ? l2 C2.
 #C1 #C2 #QC #i (elim i) /3/
 qed.
 
@@ -133,8 +133,8 @@ qed.
 definition depRC: RC → RC → RC ≝ λB,C. mk_RC (dep_mem B C) ….
 /2/ qed.
 
-theorem dep_repl: ∀B1,B2,C1,C2. B1 ≈ B2 → C1 ≈ C2 →
-                  depRC B1 C1 ≈ depRC B2 C2.
+theorem dep_repl: ∀B1,B2,C1,C2. B1 ≅ B2 → C1 ≅ C2 →
+                  depRC B1 C1 ≅ depRC B2 C2.
 #B1 #B2 #C1 #C2 #QB #QC #M @conj #H1 #N #H2
 [ lapply (symmetric_rceq … QB) -QB | lapply (symmetric_rceq … QC) -QC ] /4/
 qed.

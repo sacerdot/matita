@@ -14,6 +14,12 @@
 
 (* NOTATION FOR THE LAMBDA CALCULUS *******************************************)
 
+(* equivalences *)
+
+notation "hvbox(a break ≅ b)" 
+  non associative with precedence 45
+  for @{'Eq $a $b}.
+
 (* lifting, substitution *)
 
 notation "hvbox(M break [ l ])"
