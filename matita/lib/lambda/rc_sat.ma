@@ -93,7 +93,7 @@ theorem mem_rceq_trans: ∀(M:T). ∀C1,C2. M ∈ C1 → C1 ≈ C2 → M ∈ C2.
 #M #C1 #C2 #H1 #H12 (elim (H12 M)) -H12 /2/
 qed.
 
-(* NOTE: hd_repl and tl_repl are proved essentially by the same script *) 
+(* NOTE: hd_repl and tl_repl are proved essentially by the same script *)
 theorem hd_repl: ∀C1,C2. C1 ≈ C2 → ∀l1,l2. l1 ≈ l2 → hd ? l1 C1 ≈ hd ? l2 C2.
 #C1 #C2 #QC #l1 (elim l1) -l1 [ #l2 #Q >Q // ]
 #hd1 #tl1 #_ #l2 (elim l2) -l2 [ #Q elim Q ]
@@ -115,13 +115,20 @@ qed.
 
 definition dep_mem ≝ λB,C,M. ∀N. N ∈ B → App M N ∈ C.
 
-axiom dep_cr1: ∀B,C. CR1 (dep_mem B C).
+theorem dep_cr1: ∀B,C. CR1 (dep_mem B C).
+#B #C #M #Hdep (lapply (Hdep (Sort 0) ?)) /2 by SAT0_sort/ /3/ (**) (* adiacent auto *)
+qed.
 
-axiom dep_sat0: ∀B,C. SAT0 (dep_mem B C).
+theorem dep_sat0: ∀B,C. SAT0 (dep_mem B C).
+/5/ qed.
 
-axiom dep_sat1: ∀B,C. SAT1 (dep_mem B C).
+theorem dep_sat1: ∀B,C. SAT1 (dep_mem B C).
+/5/ qed.
 
-axiom dep_sat2: ∀B,C. SAT2 (dep_mem B C).
+(* NOTE: @sat2 is not needed if append_cons is enabled *)
+theorem dep_sat2: ∀B,C. SAT2 (dep_mem B C).
+#B #C #N #L #M #l #HN #HL #HM #K #HK <appl_append @sat2 /2/
+qed.
 
 definition depRC: RC → RC → RC ≝ λB,C. mk_RC (dep_mem B C) ….
 /2/ qed.

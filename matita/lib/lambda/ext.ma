@@ -13,44 +13,11 @@
 (**************************************************************************)
 
 include "lambda/types.ma".
+include "lambda/lambda_notation.ma".
 
 (* MATTER CONCERNING STRONG NORMALIZATION TO BE PUT ELSEWHERE *****************)
 
-(* from sn.ma *****************************************************************)
-
-(* all(P,l) holds when P holds for all members of l *)
-let rec all (P:T→Prop) l on l ≝ match l with 
-   [ nil ⇒ True
-   | cons A D ⇒ P A ∧ all P D
-   ].
-
-(* all(?,P,l1,l2) holds when P holds for all paired members of l1 and l2 *)
-let rec all2 (A:Type[0]) (P:A→A→Prop) l1 l2 on l1 ≝ match l1 with
-   [ nil          ⇒ l2 = nil ?
-   | cons hd1 tl1 ⇒ match l2 with
-      [ nil          ⇒ False
-      | cons hd2 tl2 ⇒ P hd1 hd2 ∧ all2 A P tl1 tl2
-      ]
-   ].
-
-(* Appl F l generalizes App applying F to a list of arguments
- * The head of l is applied first
- *)
-let rec Appl F l on l ≝ match l with 
-   [ nil ⇒ F
-   | cons A D ⇒ Appl (App F A) D  
-   ].
-
-(* FG: do we need this? 
-definition lift0 ≝ λp,k,M . lift M p k. (**) (* remove definition *)
-
-theorem lift_appl: ∀p,k,l,F. lift (Appl F l) p k = 
-                             Appl (lift F p k) (map … (lift0 p k) l). 
-#p #k #l (elim l) -l /2/ #A #D #IHl #F >IHl //
-qed.
-*)
-
-(* from rc.ma *****************************************************************)
+(* arithmetics ****************************************************************)
 
 theorem arith1: ∀x,y. (S x) ≰ (S y) → x ≰ y.
 #x #y #HS @nmk (elim HS) -HS /3/
@@ -65,9 +32,64 @@ theorem arith3: ∀x,y,z. x ≰ y → x + z ≰ y + z.
 #x #y #z #H @nmk (elim H) -H /3/
 qed.
 
+(* lists **********************************************************************)
+
+(* all(P,l) holds when P holds for all members of l *)
+let rec all (A:Type[0]) (P:A→Prop) l on l ≝ match l with 
+   [ nil        ⇒ True
+   | cons hd tl ⇒ P hd ∧ all A P tl
+   ].
+
+theorem all_append: ∀A,P,l2,l1. all A P l1 → all A P l2 → all A P (l1 @ l2).
+#A #P #l2 #l1 (elim l1) -l1 (normalize) // #hd #tl #IH1 #H (elim H) /3/
+qed.
+
+(* all(?,P,l1,l2) holds when P holds for all paired members of l1 and l2 *)
+let rec all2 (A:Type[0]) (P:A→A→Prop) l1 l2 on l1 ≝ match l1 with
+   [ nil          ⇒ l2 = nil ?
+   | cons hd1 tl1 ⇒ match l2 with
+      [ nil          ⇒ False
+      | cons hd2 tl2 ⇒ P hd1 hd2 ∧ all2 A P tl1 tl2
+      ]
+   ].
+
 theorem length_append: ∀A. ∀(l2,l1:list A). |l1@l2| = |l1| + |l2|.
 #A #l2 #l1 (elim l1) -l1 (normalize) //
 qed.
+
+(* terms **********************************************************************)
+
+(* Appl F l generalizes App applying F to a list of arguments
+ * The head of l is applied first
+ *)
+let rec Appl F l on l ≝ match l with 
+   [ nil ⇒ F
+   | cons A D ⇒ Appl (App F A) D  
+   ].
+
+theorem appl_append: ∀N,l,M. Appl M (l @ [N]) = App (Appl M l) N.
+#N #l (elim l) -l // #hd #tl #IHl #M >IHl //
+qed.
+
+(* FG: not needed for now 
+(* nautral terms *)
+inductive neutral: T → Prop ≝
+   | neutral_sort: ∀n.neutral (Sort n)
+   | neutral_rel: ∀i.neutral (Rel i)
+   | neutral_app: ∀M,N.neutral (App M N)
+.
+*)
+
+(* substitution ***************************************************************)
+
+(* FG: do we need this? 
+definition lift0 ≝ λp,k,M . lift M p k. (**) (* remove definition *)
+
+theorem lift_appl: ∀p,k,l,F. lift (Appl F l) p k = 
+                             Appl (lift F p k) (map … (lift0 p k) l). 
+#p #k #l (elim l) -l /2/ #A #D #IHl #F >IHl //
+qed.
+*)
 
 theorem lift_rel_lt: ∀i,p,k. (S i) ≤ k → lift (Rel i) k p = Rel i.
 #i #p #k #Hik normalize >(le_to_leb_true … Hik) //
@@ -98,9 +120,7 @@ let rec substc M l on l ≝ match l with
    | cons A D ⇒ (lift (substc M[0≝A] D) 0 1)
    ]. 
 
-notation "M [ l ]" non associative with precedence 90 for @{'Substc $M $l}.
-
-interpretation "Substc" 'Substc M l = (substc M l).
+interpretation "Substc" 'Subst1 M l = (substc M l).
 
 (* this is just to test that substitution works as expected
 theorem test1: ∀A,B,C. (App (App (Rel 0) (Rel 1)) (Rel 2))[A::B::C::nil ?] = 
@@ -119,11 +139,3 @@ qed.
 theorem substc_sort: ∀n,l. (Sort n)[l] = Sort n.
 //
 qed.
-(* FG: not needed for now 
-(* nautral terms *)
-inductive neutral: T → Prop ≝
-   | neutral_sort: ∀n.neutral (Sort n)
-   | neutral_rel: ∀i.neutral (Rel i)
-   | neutral_app: ∀M,N.neutral (App M N)
-.
-*)
