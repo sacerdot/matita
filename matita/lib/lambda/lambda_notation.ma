@@ -20,6 +20,10 @@ notation "hvbox(a break ≅ b)"
   non associative with precedence 45
   for @{'Eq $a $b}.
 
+notation "hvbox(a break (≅ ^ term 90 c) b)"
+  non associative with precedence 45
+  for @{'Eq1 $c $a $b}.
+
 (* lifting, substitution *)
 
 notation "hvbox(M break [ l ])"

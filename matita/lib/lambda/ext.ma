@@ -32,6 +32,14 @@ theorem arith3: ∀x,y,z. x ≰ y → x + z ≰ y + z.
 #x #y #z #H @nmk (elim H) -H /3/
 qed.
 
+theorem arith4: ∀x,y. S x ≰ y → x≠y → y < x.
+#x #y #H1 #H2 lapply (not_le_to_lt … H1) -H1 #H1 @not_eq_to_le_to_lt /2/
+qed.
+
+theorem arith5: ∀x,y. x < y → S (y - 1) ≰ x.
+#x #y #H @lt_to_not_le <minus_Sn_m /2/
+qed.
+
 (* lists **********************************************************************)
 
 (* all(P,l) holds when P holds for all members of l *)
@@ -111,31 +119,29 @@ theorem lift_prod: ∀N,M,k,p.
                    lift (Prod N M) k p = Prod (lift N k p) (lift M (k + 1) p).
 // qed.
 
-(* telescopic non-delifting substitution of l in M.
- * [this is the telescoping delifting substitution lifted by |l|]
+theorem subst_app: ∀M,N,k,L. (App M N)[k≝L] = App M[k≝L] N[k≝L].
+// qed.
+
+theorem subst_lambda: ∀N,M,k,L. (Lambda N M)[k≝L] = Lambda N[k≝L] M[k+1≝L].
+// qed.
+
+theorem subst_prod: ∀N,M,k,L. (Prod N M)[k≝L] = Prod N[k≝L] M[k+1≝L].
+// qed.
+
+(* telescopic delifting substitution of l in M.
  * Rel 0 is replaced with the head of l
  *)
-let rec substc M l on l ≝ match l with
-   [ nil ⇒ M
-   | cons A D ⇒ (lift (substc M[0≝A] D) 0 1)
+let rec tsubst M l on l ≝ match l with
+   [ nil      ⇒ M
+   | cons A D ⇒ (tsubst M[0≝A] D)
    ]. 
 
-interpretation "Substc" 'Subst1 M l = (substc M l).
+interpretation "telescopic substitution" 'Subst1 M l = (tsubst M l).
 
-(* this is just to test that substitution works as expected
-theorem test1: ∀A,B,C. (App (App (Rel 0) (Rel 1)) (Rel 2))[A::B::C::nil ?] = 
-                       App (App (lift A 0 1) (lift B 0 2)) (lift C 0 3).
-#A #B #C normalize 
->lift_0 >lift_0 >lift_0
->lift_lift1>lift_lift1>lift_lift1>lift_lift1>lift_lift1>lift_lift1
-normalize
-qed.
-*)
-
-theorem substc_refl: ∀l,t. (lift t 0 (|l|))[l] = (lift t 0 (|l|)).
-#l (elim l) -l (normalize) // #A #D #IHl #t cut (S (|D|) = |D| + 1) // (**) (* eliminate cut *)
+theorem tsubst_refl: ∀l,t. (lift t 0 (|l|))[l] = t.
+#l (elim l) -l (normalize) // #hd #tl #IHl #t cut (S (|tl|) = |tl| + 1) // (**) (* eliminate cut *)
 qed.
 
-theorem substc_sort: ∀n,l. (Sort n)[l] = Sort n.
+theorem tsubst_sort: ∀n,l. (Sort n)[l] = Sort n.
 //
 qed.
