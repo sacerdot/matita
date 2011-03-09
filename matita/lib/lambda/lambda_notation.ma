@@ -30,16 +30,28 @@ notation "hvbox(M break [ l ])"
    non associative with precedence 90
    for @{'Subst1 $M $l}.
 
-(* evaluation, interpretation *)
+(* interpretation *)
 
 notation "hvbox(〚term 90 T〛)"
    non associative with precedence 50
-   for @{'Eval $T}.
+   for @{'IInt $T}.
 
 notation "hvbox(〚term 90 T〛 break _ [term 90 E])"
    non associative with precedence 50
-   for @{'Eval1 $T $E}.
+   for @{'IInt1 $T $E}.
 
 notation "hvbox(〚term 90 T〛 break _ [term 90 E1 break , term 90 E2])"
    non associative with precedence 50
-   for @{'Eval2 $T $E1 $E2}.
+   for @{'IInt2 $T $E1 $E2}.
+
+notation "hvbox(《term 90 T》)"
+   non associative with precedence 50
+   for @{'EInt $T}.
+
+notation "hvbox(《term 90 T》 break _ [term 90 E])"
+   non associative with precedence 50
+   for @{'EInt1 $T $E}.
+
+notation "hvbox(《term 90 T》 break _ [term 90 E1 break , term 90 E2])"
+   non associative with precedence 50
+   for @{'EInt2 $T $E1 $E2}.
