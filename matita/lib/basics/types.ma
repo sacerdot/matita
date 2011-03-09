@@ -57,3 +57,5 @@ inductive option (A:Type[0]) : Type[0] ≝
 (* sigma *)
 inductive Sig (A:Type[0]) (f:A→Type[0]) : Type[0] ≝
   dp: ∀a:A.(f a)→Sig A f.
+  
+interpretation "Sigma" 'sigma x = (Sig ? x).
