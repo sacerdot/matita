@@ -38,7 +38,7 @@ notation "↑ ^ n ( M )" non associative with precedence 40 for @{'Lift O $M}.
 notation "↑ _ k ^ n ( M )" non associative with precedence 40 for @{'Lift $n $k $M}.
 *)
 (* interpretation "Lift" 'Lift n M = (lift M n). *)
-interpretation "Lift" 'Lift n k M = (lift M k n).
+interpretation "Lift" 'Lift n k M = (lift M k n). 
 
 let rec subst t k a ≝ 
   match t with 
@@ -80,14 +80,48 @@ lemma lift_rel1: ∀i.lift (Rel i) 0 1 = Rel (S i).
 #i (change with (lift (Rel i) 0 1 = Rel (1 + i))) //
 qed.
 
-lemma lift_lift: ∀t.∀i,j.j ≤ i  → ∀h,k. 
-  lift (lift t k i) (j+k) h = lift t k (i+h).
+lemma lift_rel_lt : ∀n,k,i. i < k → lift (Rel i) k n = Rel i.
+#n #k #i #ltik change with 
+(if_then_else ? (leb (S i) k) (Rel i) (Rel (i+n)) = Rel i)
+>(le_to_leb_true … ltik) //
+qed.
+
+lemma lift_rel_ge : ∀n,k,i. k ≤ i → lift (Rel i) k n = Rel (i+n).
+#n #k #i #leki change with 
+(if_then_else ? (leb (S i) k) (Rel i) (Rel (i+n)) = Rel (i+n))
+>lt_to_leb_false // @le_S_S // 
+qed.
+
+lemma lift_lift: ∀t.∀m,j.j ≤ m  → ∀n,k. 
+  lift (lift t k m) (j+k) n = lift t k (m+n).
 #t #i #j #h (elim t) normalize // #n #h #k
 @(leb_elim (S n) k) #Hnk normalize
   [>(le_to_leb_true (S n) (j+k) ?) normalize /2/
   |>(lt_to_leb_false (S n+i) (j+k) ?)
      normalize // @le_S_S >(commutative_plus j k)
      @le_plus // @not_lt_to_le /2/
+  ]
+qed.
+
+lemma lift_lift_up: ∀n,m,t,k,i.
+  lift (lift t i m) (m+k+i) n = lift (lift t (k+i) n) i m.
+#n #m #N (elim N)
+  [1,3,4,5,6: normalize //
+  |#p #k #i @(leb_elim i p);
+    [#leip >lift_rel_ge // @(leb_elim (k+i) p);
+      [#lekip >lift_rel_ge; 
+        [>lift_rel_ge // >lift_rel_ge // @(transitive_le … leip) //
+        |>associative_plus >commutative_plus @monotonic_le_plus_l // 
+        ]
+      |#lefalse (cut (p < k+i)) [@not_le_to_lt //] #ltpki
+       >lift_rel_lt; [|>associative_plus >commutative_plus @monotonic_lt_plus_r //] 
+       >lift_rel_lt // >lift_rel_ge // 
+      ]
+    |#lefalse (cut (p < i)) [@not_le_to_lt //] #ltpi 
+     >lift_rel_lt // >lift_rel_lt; [|@(lt_to_le_to_lt … ltpi) //]
+     >lift_rel_lt; [|@(lt_to_le_to_lt … ltpi) //] 
+     >lift_rel_lt //
+    ]
   ]
 qed.
 
@@ -167,6 +201,51 @@ lemma lift_subst_ijk: ∀A,B.∀i,j,k.
      ]
   ]
 qed. 
+
+lemma lift_subst_up: ∀M,N,n,i,j.
+  lift M[i≝N] (i+j) n = (lift M (i+j+1) n)[i≝ (lift N j n)].
+#M (elim M) 
+  [//
+  |#p #N #n #i #j (cases (true_or_false (leb p i)))
+    [#lepi (cases (le_to_or_lt_eq … (leb_true_to_le … lepi)))
+      [#ltpi >(subst_rel1 … ltpi) 
+       (cut (p < i+j)) [@(lt_to_le_to_lt … ltpi) //] #ltpij
+       >(lift_rel_lt … ltpij); >(lift_rel_lt ?? p ?); 
+        [>subst_rel1 // | @(lt_to_le_to_lt … ltpij) //]
+      |#eqpi >eqpi >subst_rel2 >lift_rel_lt;
+        [>subst_rel2 >(plus_n_O (i+j)) 
+         applyS lift_lift_up 
+        |@(le_to_lt_to_lt ? (i+j)) //
+        ]
+      ]
+    |#lefalse (cut (i < p)) [@not_le_to_lt /2/] #ltip
+     (cut (0 < p)) [@(le_to_lt_to_lt … ltip) //] #posp
+     >(subst_rel3 … ltip) (cases (true_or_false (leb (S p) (i+j+1))))
+      [#Htrue (cut (p < i+j+1)) [@(leb_true_to_le … Htrue)] #Hlt
+       >lift_rel_lt; 
+        [>lift_rel_lt // >(subst_rel3 … ltip) // | @lt_plus_to_minus //]
+      |#Hfalse >lift_rel_ge; 
+        [>lift_rel_ge; 
+          [>subst_rel3; [@eq_f /2/ | @(lt_to_le_to_lt … ltip) //]
+          |@not_lt_to_le @(leb_false_to_not_le … Hfalse)
+          ]
+        |@le_plus_to_minus_r @not_lt_to_le 
+         @(leb_false_to_not_le … Hfalse)
+        ]
+      ]
+    ]
+  |#P #Q #HindP #HindQ #N #n #i #j normalize 
+   @eq_f2; [@HindP |@HindQ ]
+  |#P #Q #HindP #HindQ #N #n #i #j normalize 
+   @eq_f2; [@HindP |>associative_plus >(commutative_plus j 1)
+   <associative_plus @HindQ]
+  |#P #Q #HindP #HindQ #N #n #i #j normalize 
+   @eq_f2; [@HindP |>associative_plus >(commutative_plus j 1)
+   <associative_plus @HindQ]
+  |#P #HindP #N #n #i #j normalize 
+   @eq_f @HindP
+  ]
+qed.
 
 theorem delift : ∀A,B.∀i,j,k. i ≤ j → j ≤ i + k → 
   (lift B i (S k)) [j ≝ A] = lift B i k.
