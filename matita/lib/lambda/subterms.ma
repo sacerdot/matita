@@ -128,3 +128,23 @@ theorem Telim: ∀P: T → Prop. (∀M. (∀N. subterm N M → P N) → P M) →
   ]  
 qed.
 
+let rec size M ≝
+match M with
+  [Sort N ⇒ 1
+  |Rel N ⇒ 1
+  |App P Q ⇒ size P + size Q + 1
+  |Lambda P Q ⇒ size P + size Q + 1
+  |Prod P Q ⇒ size P + size Q + 1
+  |D P ⇒ size P + 1
+  ]
+.
+
+axiom pos_size: ∀M. 1 ≤ size M.
+
+theorem Telim_size: ∀P: T → Prop. 
+ (∀M. (∀N. size N < size M → P N) → P M) → ∀M. P M.
+#P #H #M (cut (∀p,N. size N = p → P N))
+  [2: /2/]
+#p @(nat_elim1 p) #m #H1 #N #sizeN @H #N0 #Hlt @(H1 (size N0)) //
+qed.
+
