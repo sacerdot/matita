@@ -4,8 +4,8 @@ nCicDisambiguate.cmi:
 grafiteDisambiguate.cmi: 
 nnumber_notation.cmo: nnumber_notation.cmi 
 nnumber_notation.cmx: nnumber_notation.cmi 
-disambiguateChoices.cmo: disambiguateChoices.cmi 
-disambiguateChoices.cmx: disambiguateChoices.cmi 
+disambiguateChoices.cmo: nnumber_notation.cmi disambiguateChoices.cmi 
+disambiguateChoices.cmx: nnumber_notation.cmx disambiguateChoices.cmi 
 nCicDisambiguate.cmo: nCicDisambiguate.cmi 
 nCicDisambiguate.cmx: nCicDisambiguate.cmi 
 grafiteDisambiguate.cmo: nCicDisambiguate.cmi disambiguateChoices.cmi \
