@@ -44,7 +44,7 @@ qed.
 (* lists **********************************************************************)
 
 lemma length_append: ∀A. ∀(l2,l1:list A). |l1@l2| = |l1| + |l2|.
-#A #l2 #l1 (elim l1) -l1 (normalize) //
+#A #l2 #l1 elim l1 -l1; normalize //
 qed.
 
 (* all(?,P,l) holds when P holds for all members of l *)
@@ -54,11 +54,11 @@ let rec all (A:Type[0]) (P:A→Prop) l on l ≝ match l with
    ].
 
 lemma all_hd: ∀A:Type[0]. ∀P:A→Prop. ∀a. P a → ∀l. all … P l → P (hd … l a).
-#A #P #a #Ha #l elim l -l [ #_ @Ha | #b #l #_ #Hl elim Hl // ]
+#A #P #a #Ha #l elim l -l [ #_ @Ha | #b #l #_ #Hl elim Hl -Hl // ]
 qed.
 
 lemma all_tl: ∀A:Type[0]. ∀P:A→Prop. ∀l. all … P l →  all … P (tail … l).
-#A #P #l elim l -l // #b #l #IH #Hl elim Hl //
+#A #P #l elim l -l // #b #l #IH #Hl elim Hl -Hl //
 qed.
 
 lemma all_nth: ∀A:Type[0]. ∀P:A→Prop. ∀a. P a → ∀i,l. all … P l → P (nth i … l a).
@@ -66,7 +66,7 @@ lemma all_nth: ∀A:Type[0]. ∀P:A→Prop. ∀a. P a → ∀i,l. all … P l �
 qed.
 
 lemma all_append: ∀A,P,l2,l1. all A P l1 → all A P l2 → all A P (l1 @ l2).
-#A #P #l2 #l1 (elim l1) -l1 (normalize) // #hd #tl #IH1 #H (elim H) /3/
+#A #P #l2 #l1 elim l1 -l1; normalize // #hd #tl #IH1 #H elim H -H /3/
 qed.
 
 (* all2(?,P,l1,l2) holds when P holds for all paired members of l1 and l2 *)
@@ -82,21 +82,21 @@ lemma all2_length: ∀A,B:Type[0]. ∀P:A→B→Prop.
                    ∀l1,l2. all2 … P l1 l2 → |l1|=|l2|.
 #A #B #P #l1 elim l1 -l1 [ #l2 #H >H // ]
 #x1 #l1 #IH1 #l2 elim l2 -l2 [ #false elim false ]
-#x2 #l2 #_ #H elim H normalize /3/
+#x2 #l2 #_ #H elim H -H; normalize /3/
 qed. 
 
 lemma all2_hd: ∀A,B:Type[0]. ∀P:A→B→Prop. ∀a,b. P a b →
                ∀l1,l2. all2 … P l1 l2 → P (hd … l1 a) (hd … l2 b).
 #A #B #P #a #b #Hab #l1 elim l1 -l1 [ #l2 #H2 >H2 @Hab ]
 #x1 #l1 #_ #l2 elim l2 -l2 [ #false elim false ]
-#x2 #l2 #_ #H elim H //
+#x2 #l2 #_ #H elim H -H //
 qed.
 
 lemma all2_tl: ∀A,B:Type[0]. ∀P:A→B→Prop.
                ∀l1,l2. all2 … P l1 l2 →  all2 … P (tail … l1) (tail … l2).
 #A #B #P #l1 elim l1 -l1 [ #l2 #H >H // ]
 #x1 #l1 #_ #l2 elim l2 -l2 [ #false elim false ]
-#x2 #l2 #_ #H elim H // 
+#x2 #l2 #_ #H elim H -H // 
 qed.
 
 lemma all2_nth: ∀A,B:Type[0]. ∀P:A→B→Prop. ∀a,b. P a b →
@@ -108,8 +108,14 @@ lemma all2_append: ∀A,B,P,l2,m2. all2 A B P l2 m2 →
                    ∀l1,m1. all2 A B P l1 m1 → all2 A B P (l1 @ l2) (m1 @ m2).
 #A #B #P #l2 #m2 #H2 #l1 (elim l1) -l1 [ #m1 #H >H @H2 ] 
 #x1 #l1 #IH1 #m2 elim m2 -m2 [ #false elim false ]
-#x2 #m2 #_ #H elim H /3/
+#x2 #m2 #_ #H elim H -H /3/
 qed.
+
+lemma all2_symmetric: ∀A. ∀P:A→A→Prop. symmetric … P → symmetric … (all2 … P).
+#A #P #HP #l1 elim l1 -l1 [ #l2 #H >H // ]
+#x1 #l1 #IH1 #l2 elim l2 -l2 [ #false elim false ]
+#x2 #l2 #_ #H elim H -H /3/
+qed.   
 
 (* terms **********************************************************************)
 
@@ -122,7 +128,7 @@ let rec Appl F l on l ≝ match l with
    ].
 
 lemma appl_append: ∀N,l,M. Appl M (l @ [N]) = App (Appl M l) N.
-#N #l (elim l) -l // #hd #tl #IHl #M >IHl //
+#N #l elim l -l // #hd #tl #IHl #M >IHl //
 qed.
 
 (* FG: not needed for now 
@@ -189,9 +195,8 @@ let rec tsubst M l on l ≝ match l with
 interpretation "telescopic substitution" 'Subst1 M l = (tsubst M l).
 
 lemma tsubst_refl: ∀l,t. (lift t 0 (|l|))[l] = t.
-#l (elim l) -l (normalize) // #hd #tl #IHl #t cut (S (|tl|) = |tl| + 1) // (**) (* eliminate cut *)
+#l elim l -l; normalize // #hd #tl #IHl #t cut (S (|tl|) = |tl| + 1) // (**) (* eliminate cut *)
 qed.
 
 lemma tsubst_sort: ∀n,l. (Sort n)[l] = Sort n.
-//
-qed.
+// qed.

@@ -14,7 +14,7 @@
 
 (* NOTATION FOR THE LAMBDA CALCULUS *******************************************)
 
-(* equivalences *)
+(* equivalence, invariance *)
 
 notation "hvbox(a break ≅ b)" 
   non associative with precedence 45
@@ -23,6 +23,14 @@ notation "hvbox(a break ≅ b)"
 notation "hvbox(a break (≅ ^ term 90 c) b)"
   non associative with precedence 45
   for @{'Eq1 $c $a $b}.
+
+notation "hbox(! term 50 a)"
+  non associative with precedence 50
+  for @{'Invariant $a}.
+
+notation "hbox((! ^ term 90 b) term 50 a)"
+  non associative with precedence 50
+  for @{'Invariant1 $a $b}.
 
 (* lifting, substitution *)
 
