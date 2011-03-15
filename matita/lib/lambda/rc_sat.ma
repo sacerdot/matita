@@ -18,11 +18,11 @@ include "lambda/sn.ma".
 
 (* The reducibility candidate (r.c.) ******************************************)
 
-(* We use saturated subsets of strongly normalizing terms
- * (see for instance [Cescutti 2001], but a better citation is required)
- * rather than standard reducibility candidates.
+(* We use saturated subsets of strongly normalizing terms [1]
+ * rather than standard reducibility candidates [2].
  * The benefit is that reduction is not needed to define such subsets.
- * Also, this approach was never tried on a system with dependent types.
+ * [1] Geuvers, H. 1994. A Short and Flexible Proof of Strong Normalization for the Calculus of Constructions.
+ * [2] Barras, B. 1996. Coq en Coq. Rapport de Recherche 3026, INRIA.
  *)
 record RC : Type[0] ≝ {
    mem : T → Prop;
@@ -42,6 +42,7 @@ interpretation "membership (reducibility candidate)" 'mem A R = (mem R A).
 definition snRC: RC ≝ mk_RC SN ….
 /2/ qed.
 
+(*
 (* a generalization of mem on lists *)
 let rec memc E l on l : Prop ≝ match l with
    [ nil ⇒ True
@@ -54,7 +55,7 @@ let rec memc E l on l : Prop ≝ match l with
 interpretation
    "componentwise membership (context of reducibility candidates)"
    'mem l H = (memc H l).
-
+*)
 (* extensional equality of r.c.'s *********************************************)
 
 definition rceq: RC → RC → Prop ≝ 
@@ -80,11 +81,11 @@ qed.
 theorem transitive_rceq: transitive … rceq.
 #x #y #z #Hxy #Hyz #M (elim (Hxy M)) -Hxy (elim (Hyz M)) -Hyz /4/
 qed.
-
+(*
 theorem reflexive_rceql: reflexive … rceql.
 #l (elim l) /2/
 qed.
-
+*)
 (* HIDDEN BUG:
  * Without the type specification, this statement has two interpretations
  * but matita does not complain
@@ -138,3 +139,5 @@ theorem dep_repl: ∀B1,B2,C1,C2. B1 ≅ B2 → C1 ≅ C2 →
 #B1 #B2 #C1 #C2 #QB #QC #M @conj #H1 #N #H2
 [ lapply (symmetric_rceq … QB) -QB | lapply (symmetric_rceq … QC) -QC ] /4/
 qed.
+
+

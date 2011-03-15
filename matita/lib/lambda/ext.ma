@@ -43,6 +43,10 @@ qed.
 
 (* lists **********************************************************************)
 
+lemma length_append: ∀A. ∀(l2,l1:list A). |l1@l2| = |l1| + |l2|.
+#A #l2 #l1 (elim l1) -l1 (normalize) //
+qed.
+
 (* all(?,P,l) holds when P holds for all members of l *)
 let rec all (A:Type[0]) (P:A→Prop) l on l ≝ match l with 
    [ nil        ⇒ True
@@ -66,16 +70,45 @@ lemma all_append: ∀A,P,l2,l1. all A P l1 → all A P l2 → all A P (l1 @ l2).
 qed.
 
 (* all2(?,P,l1,l2) holds when P holds for all paired members of l1 and l2 *)
-let rec all2 (A:Type[0]) (P:A→A→Prop) l1 l2 on l1 ≝ match l1 with
+let rec all2 (A,B:Type[0]) (P:A→B→Prop) l1 l2 on l1 ≝ match l1 with
    [ nil          ⇒ l2 = nil ?
    | cons hd1 tl1 ⇒ match l2 with
       [ nil          ⇒ False
-      | cons hd2 tl2 ⇒ P hd1 hd2 ∧ all2 A P tl1 tl2
+      | cons hd2 tl2 ⇒ P hd1 hd2 ∧ all2 A B P tl1 tl2
       ]
    ].
 
-lemma length_append: ∀A. ∀(l2,l1:list A). |l1@l2| = |l1| + |l2|.
-#A #l2 #l1 (elim l1) -l1 (normalize) //
+lemma all2_length: ∀A,B:Type[0]. ∀P:A→B→Prop. 
+                   ∀l1,l2. all2 … P l1 l2 → |l1|=|l2|.
+#A #B #P #l1 elim l1 -l1 [ #l2 #H >H // ]
+#x1 #l1 #IH1 #l2 elim l2 -l2 [ #false elim false ]
+#x2 #l2 #_ #H elim H normalize /3/
+qed. 
+
+lemma all2_hd: ∀A,B:Type[0]. ∀P:A→B→Prop. ∀a,b. P a b →
+               ∀l1,l2. all2 … P l1 l2 → P (hd … l1 a) (hd … l2 b).
+#A #B #P #a #b #Hab #l1 elim l1 -l1 [ #l2 #H2 >H2 @Hab ]
+#x1 #l1 #_ #l2 elim l2 -l2 [ #false elim false ]
+#x2 #l2 #_ #H elim H //
+qed.
+
+lemma all2_tl: ∀A,B:Type[0]. ∀P:A→B→Prop.
+               ∀l1,l2. all2 … P l1 l2 →  all2 … P (tail … l1) (tail … l2).
+#A #B #P #l1 elim l1 -l1 [ #l2 #H >H // ]
+#x1 #l1 #_ #l2 elim l2 -l2 [ #false elim false ]
+#x2 #l2 #_ #H elim H // 
+qed.
+
+lemma all2_nth: ∀A,B:Type[0]. ∀P:A→B→Prop. ∀a,b. P a b →
+                ∀i,l1,l2. all2 … P l1 l2 → P (nth i … l1 a) (nth i … l2 b).
+#A #B #P #a #b #Hab #i elim i -i [ @all2_hd // | #i #IH #l1 #l2 #H @IH /2/ ]
+qed.
+
+lemma all2_append: ∀A,B,P,l2,m2. all2 A B P l2 m2 →
+                   ∀l1,m1. all2 A B P l1 m1 → all2 A B P (l1 @ l2) (m1 @ m2).
+#A #B #P #l2 #m2 #H2 #l1 (elim l1) -l1 [ #m1 #H >H @H2 ] 
+#x1 #l1 #IH1 #m2 elim m2 -m2 [ #false elim false ]
+#x2 #m2 #_ #H elim H /3/
 qed.
 
 (* terms **********************************************************************)

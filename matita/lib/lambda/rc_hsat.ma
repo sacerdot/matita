@@ -17,10 +17,6 @@ include "lambda/rc_sat.ma".
 (* HIGHER ORDER REDUCIBILITY CANDIDATES ***************************************)
 
 (* An arity is a type of λ→ to be used as carrier for a h.o. r.c. *)
-inductive ARITY: Type[0] ≝
-   | SORT: ARITY
-   | IMPL: ARITY → ARITY → ARITY
-.
 
 (* The type of the higher order r.c.'s having a given carrier.
  * a h.o. r.c is implemented as an inductively defined metalinguistic function
@@ -28,7 +24,7 @@ inductive ARITY: Type[0] ≝
  *)
 let rec HRC P ≝ match P with
    [ SORT     ⇒ RC
-   | IMPL Q P ⇒ HRC Q → HRC P
+   | ABST Q P ⇒ HRC Q → HRC P
    ].
 
 (* The default h.o r.c.
@@ -36,7 +32,7 @@ let rec HRC P ≝ match P with
  *)
 let rec defHRC P ≝ match P return λP. HRC P with
    [ SORT     ⇒ snRC
-   | IMPL Q P ⇒ λ_. defHRC P
+   | ABST Q P ⇒ λ_. defHRC P
    ].
 
 (* extensional equality *******************************************************)
@@ -47,7 +43,7 @@ let rec defHRC P ≝ match P return λP. HRC P with
  *)
 let rec hrceq P ≝ match P return λP. HRC P → HRC P → Prop with
    [ SORT     ⇒ λC1,C2. C1 ≅ C2
-   | IMPL Q P ⇒ λC1,C2. ∀B1,B2. hrceq Q B1 B2 → hrceq P (C1 B1) (C2 B2)
+   | ABST Q P ⇒ λC1,C2. ∀B1,B2. hrceq Q B1 B2 → hrceq P (C1 B1) (C2 B2)
    ].
 
 interpretation
