@@ -87,7 +87,7 @@ and is_symbol_dummy = function
   | Smeta (_, lt, _) -> List.for_all is_symbol_dummy lt
   | Snterm e | Snterml (e, _) -> is_entry_dummy e
   | Slist1 x | Slist0 x -> is_symbol_dummy x
-  | Slist1sep (x,y) | Slist0sep (x,y) -> is_symbol_dummy x && is_symbol_dummy y
+  | Slist1sep (x,y,false) | Slist0sep (x,y,false) -> is_symbol_dummy x && is_symbol_dummy y
   | Sopt x -> is_symbol_dummy x
   | Sself | Snext -> false
   | Stree t -> is_tree_dummy t
@@ -186,7 +186,7 @@ let visit_description desc fmt self =
         let todo = visit_symbol symbol todo is_son in
         Format.fprintf fmt "@]} @ ";
         todo
-    | Slist0sep (symbol,sep) ->
+    | Slist0sep (symbol,sep,false) ->
         Format.fprintf fmt "[@[<hov2> ";
         let todo = visit_symbol symbol todo is_son in
         Format.fprintf fmt "{@[<hov2> ";
@@ -200,7 +200,7 @@ let visit_description desc fmt self =
         let todo = visit_symbol symbol todo is_son in
         Format.fprintf fmt "@]}+ @ ";
         todo 
-    | Slist1sep (symbol,sep) ->
+    | Slist1sep (symbol,sep,false) ->
         let todo = visit_symbol symbol todo is_son  in
         Format.fprintf fmt "{@[<hov2> ";
         let todo = visit_symbol sep todo is_son in
