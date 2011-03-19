@@ -174,14 +174,14 @@ let rec get_ast status ~compiling ~asserted ~include_paths strm =
 
 and eval_from_stream ~compiling ~asserted ~include_paths ?do_heavy_checks status str cb =
  let matita_debug = Helm_registry.get_bool "matita.debug" in
- let rec loop asserted status =
-  let asserted,stop,status = 
+ let rec loop asserted status str =
+  let asserted,stop,status,str = 
    try
      let cont =
        try Some (get_ast status ~compiling ~asserted ~include_paths str)
        with End_of_file -> None in
      match cont with
-     | None -> asserted, true, status
+     | None -> asserted, true, status, str
      | Some (asserted,ast) ->
         cb status ast;
         let new_statuses =
@@ -191,15 +191,25 @@ and eval_from_stream ~compiling ~asserted ~include_paths ?do_heavy_checks status
             [s,None] -> s
           | _::(_,Some (_,value))::_ ->
                 raise (TryingToAdd (lazy (GrafiteAstPp.pp_alias value)))
-          | _ -> assert false
+          | _ -> assert false in
+        (* CSC: complex patch to re-build the lexer since the tokens may
+           have changed. Note: this way we loose look-ahead tokens.
+           Hence the "include" command must be terminated (no look-ahead) *)
+        let str =
+         match ast with
+            (GrafiteAst.Executable
+              (_,GrafiteAst.NCommand (_,GrafiteAst.Include (_,_,_)))) ->
+              GrafiteParser.parsable_statement status
+               (GrafiteParser.strm_of_parsable str)
+          | _ -> str
         in
-         asserted, false, status
+         asserted, false, status, str
    with exn when not matita_debug ->
      raise (EnrichedWithStatus (exn, status))
   in
-  if stop then asserted,status else loop asserted status
+  if stop then asserted,status else loop asserted status str
  in
-  loop asserted status
+  loop asserted status str
 
 and compile ~compiling ~asserted ~include_paths fname =
   if List.mem fname compiling then raise (CircularDependency fname);

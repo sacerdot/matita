@@ -42,15 +42,18 @@ let exc_located_wrapper f =
       raise (HExtlib.Localized 
         (floc,CicNotationParser.Parse_error (Printexc.to_string exn)))
 
-type parsable = Grammar.parsable
+type parsable = Grammar.parsable * Ulexing.lexbuf
 
 let parsable_statement status buf =
  let grammar = CicNotationParser.level2_ast_grammar status in
-  Grammar.parsable grammar (Obj.magic buf)
+List.iter (fun (x,_) -> prerr_endline ("TOK: " ^ x)) (Grammar.tokens grammar "");
+  Grammar.parsable grammar (Obj.magic buf), buf
 
 let parse_statement grafite_parser parsable =
   exc_located_wrapper
-    (fun () -> (Grammar.Entry.parse_parsable (Obj.magic grafite_parser) parsable))
+    (fun () -> (Grammar.Entry.parse_parsable (Obj.magic grafite_parser) (fst parsable)))
+
+let strm_of_parsable (_,buf) = buf
 
 let add_raw_attribute ~text t = N.AttributedTerm (`Raw text, t)
 

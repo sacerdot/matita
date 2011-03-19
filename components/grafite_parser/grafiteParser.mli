@@ -50,3 +50,4 @@ val extend : #status as 'status ->
 type parsable
 val parsable_statement: #status -> Ulexing.lexbuf -> parsable
 val parse_statement: #status -> parsable -> GrafiteAst.statement
+val strm_of_parsable: parsable -> Ulexing.lexbuf
