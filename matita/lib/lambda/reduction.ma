@@ -65,6 +65,21 @@ lemma red_lambda : ∀M,N,P. red (Lambda M N) P →
   ]
 qed.
   
+lemma red_prod : ∀M,N,P. red (Prod M N) P →
+ (∃M1. P = (Prod M1 N) ∧ red M M1) ∨
+ (∃N1. P = (Prod M N1) ∧ red N N1).
+#M #N #P #redMNP (inversion redMNP)
+  [#P1 #M1 #N1 #eqH destruct
+  |2,3: #M1 #N1 #eqH destruct 
+  |4,5,6,7:#Q1 #Q2 #N1 #red1 #_ #eqH destruct
+  |#Q1 #M1 #N1 #red1 #_ #eqH destruct #eqP %1
+   (@(ex_intro … M1)) % //
+  |#Q1 #M1 #N1 #red1 #_ #eqH destruct #eqP %2 
+   (@(ex_intro … N1)) % //
+  |#Q1 #M1 #red1 #_ #eqH destruct
+  ]
+qed.
+
 definition reduct ≝ λn,m. red m n.
 
 definition SN ≝ WF ? reduct.
@@ -159,7 +174,7 @@ qed.
 lemma SH_to_SN: ∀N. SH N → SN N.
 @WF_antimonotonic /2/ qed.
 
-lemma SH_Lambda: ∀N.SN N → ∀M.SN M → SN (Lambda N M).
+lemma SN_Lambda: ∀N.SN N → ∀M.SN M → SN (Lambda N M).
 #N #snN (elim snN) #P #shP #HindP #M #snM 
 (* for M we proceed by induction on SH *)
 (lapply (SN_to_SH ? snM)) #shM (elim shM)
@@ -186,7 +201,14 @@ lemma SH_Lambda: ∀N.SH N → ∀M.SH M → SN (Lambda N M).
   ]
 qed. *)
  
-
+lemma SN_Prod: ∀N.SN N → ∀M.SN M → SN (Prod N M).
+#N #snN (elim snN) #P #shP #HindP #M #snM (elim snM)
+#Q #snQ #HindQ % #a #redH (cases (red_prod … redH))
+  [* #S * #eqa #redPS >eqa @(HindP S ? Q ?) // 
+   % /2/ 
+  |* #S * #eqa #redQS >eqa @(HindQ S) /2/
+  ]
+qed. 
 
 
 
