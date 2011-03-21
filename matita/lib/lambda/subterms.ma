@@ -139,7 +139,7 @@ match M with
   ]
 .
 
-axiom pos_size: ∀M. 1 ≤ size M.
+(* axiom pos_size: ∀M. 1 ≤ size M. *)
 
 theorem Telim_size: ∀P: T → Prop. 
  (∀M. (∀N. size N < size M → P N) → P M) → ∀M. P M.
@@ -148,3 +148,9 @@ theorem Telim_size: ∀P: T → Prop.
 #p @(nat_elim1 p) #m #H1 #N #sizeN @H #N0 #Hlt @(H1 (size N0)) //
 qed.
 
+(* size of subterms *)
+
+lemma size_subterm : ∀N,M. subterm N M → size N < size M.
+#N #M #subH (elim subH) normalize //
+#M1 #N1 #P #sub1 #sub2 #size1 #size2 @(transitive_lt … size1 size2)
+qed.
