@@ -13,9 +13,51 @@ include "basics/relations.ma".
 
 (********** relations **********)
 
+definition subR ≝ λA.λR,S:relation A.(∀a,b. R a b → S a b).
+
+definition inv ≝ λA.λR:relation A.λa,b.R b a.
+
+(* transitive closcure (plus) *)
+
+inductive TC (A:Type[0]) (R:relation A) (a:A): A → Prop ≝
+  |inj: ∀c. R a c → TC A R a c
+  |step : ∀b,c.TC A R a b → R b c → TC A R a c.
+
+theorem trans_TC: ∀A,R,a,b,c. 
+  TC A R a b → TC A R b c → TC A R a c.
+#A #R #a #b #c #Hab #Hbc (elim Hbc) /2/
+qed.
+
+theorem TC_idem: ∀A,R. exteqR … (TC A R) (TC A (TC A R)).
+#A #R #a #b % /2/ #H (elim H) /2/
+qed.
+
+lemma monotonic_TC: ∀A,R,S. subR A R S → subR A (TC A R) (TC A S).
+#A #R #S #subRS #a #b #H (elim H) /3/
+qed.
+
+lemma sub_TC: ∀A,R,S. subR A R (TC A S) → subR A (TC A R) (TC A S).
+#A #R #S #Hsub #a #b #H (elim H) /3/
+qed.
+
+theorem sub_TC_to_eq: ∀A,R,S. subR A R S → subR A S (TC A R) → 
+  exteqR … (TC A R) (TC A S).
+#A #R #S #sub1 #sub2 #a #b % /2/
+qed.
+
+theorem TC_inv: ∀A,R. exteqR ?? (TC A (inv A R)) (inv A (TC A R)).
+#A #R #a #b %
+#H (elim H) /2/ normalize #c #d #H1 #H2 #H3 @(trans_TC … H3) /2/
+qed.
+  
+(* star *)
 inductive star (A:Type[0]) (R:relation A) (a:A): A → Prop ≝
   |inj: ∀b,c.star A R a b → R b c → star A R a c
   |refl: star A R a a.
+
+lemma R_to_star: ∀A,R,a,b. R a b → star A R a b.
+#A #R #a #b /2/
+qed.
 
 theorem trans_star: ∀A,R,a,b,c. 
   star A R a b → star A R b c → star A R a c.
@@ -25,8 +67,6 @@ qed.
 theorem star_star: ∀A,R. exteqR … (star A R) (star A (star A R)).
 #A #R #a #b % /2/ #H (elim H) /2/
 qed.
-
-definition subR ≝ λA.λR,S:relation A.(∀a,b. R a b → S a b).
 
 lemma monotonic_star: ∀A,R,S. subR A R S → subR A (star A R) (star A S).
 #A #R #S #subRS #a #b #H (elim H) /3/
@@ -40,6 +80,22 @@ qed.
 theorem sub_star_to_eq: ∀A,R,S. subR A R S → subR A S (star A R) → 
   exteqR … (star A R) (star A S).
 #A #R #S #sub1 #sub2 #a #b % /2/
+qed.
+
+theorem star_inv: ∀A,R. 
+  exteqR ?? (star A (inv A R)) (inv A (star A R)).
+#A #R #a #b %
+#H (elim H) /2/ normalize #c #d #H1 #H2 #H3 @(trans_star … H3) /2/
+qed.
+
+(* RC and star *)
+
+lemma TC_to_star: ∀A,R,a,b.TC A R a b → star A R a b.
+#R #A #a #b #TCH (elim TCH) /2/
+qed.
+
+lemma star_case: ∀A,R,a,b. star A R a b → a = b ∨ TC A R a b.
+#A #R #a #b #H (elim H) /2/ #c #d #star_ac #Rcd * #H1 %2 /2/.
 qed.
 
 (* equiv -- smallest equivalence relation containing R *)
