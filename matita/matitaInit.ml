@@ -168,7 +168,8 @@ let parse_cmdline init_status =
     let includes = ref [] in
     let default_includes = [ 
       BuildTimeConf.new_stdlib_dir_devel;
-      BuildTimeConf.new_stdlib_dir_installed ; 
+    (* CSC: no installed standard library!
+      BuildTimeConf.new_stdlib_dir_installed ; *)
     ] 
     in
     let absolutize s =
