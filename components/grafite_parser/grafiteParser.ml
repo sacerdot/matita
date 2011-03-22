@@ -46,7 +46,6 @@ type parsable = Grammar.parsable * Ulexing.lexbuf
 
 let parsable_statement status buf =
  let grammar = CicNotationParser.level2_ast_grammar status in
-List.iter (fun (x,_) -> prerr_endline ("TOK: " ^ x)) (Grammar.tokens grammar "");
   Grammar.parsable grammar (Obj.magic buf), buf
 
 let parse_statement grafite_parser parsable =
