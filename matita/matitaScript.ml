@@ -264,21 +264,6 @@ let initial_statuses current baseuri =
    | None -> ());
   status
 in
-let read_include_paths file =
- try 
-   let root, _buri, _fname, _tgt = 
-     Librarian.baseuri_of_script ~include_paths:[] file in 
-   let includes =
-    try
-     Str.split (Str.regexp " ") 
-      (List.assoc "include_paths" (Librarian.load_root_file (root^"/root")))
-    with Not_found -> []
-   in
-   let rc = root :: includes in
-    List.iter (HLog.debug) rc; rc
- with Librarian.NoRootFor _ | Librarian.FileNotFound _ ->
-  []
-in
 let default_buri = "cic:/matita/tests" in
 let default_fname = ".unnamed.ma" in
 object (self)
@@ -822,7 +807,7 @@ object (self)
        let f = Librarian.absolutize file in
         tab_label#set_text (Filename.basename f);
         filename_ <- Some f;
-        include_paths_ <- read_include_paths f;
+        include_paths_ <- MatitaEngine.read_include_paths ~include_paths:[] f;
         self#reset_buffer
 
   method set_star b =

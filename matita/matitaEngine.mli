@@ -52,3 +52,7 @@ val eval_ast :
    (DisambiguateTypes.domain_item * GrafiteAst.alias_spec) option) list
 
 val assert_ng: include_paths:string list -> string -> bool
+
+(* given a path to a ma file inside the include_paths, returns the
+   new include_paths associated to that file *)
+val read_include_paths: include_paths:string list -> string -> string list

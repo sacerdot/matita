@@ -159,6 +159,24 @@ let baseuri_of_script ~include_paths fname =
     raise (Failure ("File not found: "^fname))
 ;;
 
+(* given a path to a ma file inside the include_paths, returns the
+   new include_paths associated to that file *)
+let read_include_paths ~include_paths file =
+ try 
+   let root, _buri, _fname, _tgt = 
+     Librarian.baseuri_of_script ~include_paths:[] file in 
+   let includes =
+    try
+     Str.split (Str.regexp " ") 
+      (List.assoc "include_paths" (Librarian.load_root_file (root^"/root")))
+    with Not_found -> []
+   in
+   let rc = root :: includes in
+    List.iter (HLog.debug) rc; rc
+ with Librarian.NoRootFor _ | Librarian.FileNotFound _ ->
+  []
+;;
+
 let rec get_ast status ~compiling ~asserted ~include_paths strm = 
   match GrafiteParser.parse_statement status strm with
      (GrafiteAst.Executable
@@ -294,10 +312,20 @@ and compile ~compiling ~asserted ~include_paths fname =
       clean_exit baseuri exn
 
 and assert_ng ~already_included ~compiling ~asserted ~include_paths mapath =
- let _,baseuri,fullmapath,_ = Librarian.baseuri_of_script ~include_paths mapath in
+ let root,baseuri,fullmapath,_ =
+  Librarian.baseuri_of_script ~include_paths mapath in
  if List.mem fullmapath asserted then asserted,false
  else
   begin
+   let include_paths =
+    let includes =
+     try
+      Str.split (Str.regexp " ") 
+       (List.assoc "include_paths" (Librarian.load_root_file (root^"/root")))
+     with Not_found -> []
+    in
+     root::includes @
+      Helm_registry.get_list Helm_registry.string "matita.includes" in
    let baseuri = NUri.uri_of_string baseuri in
    let ngtime_of baseuri =
     let ngpath = NCicLibrary.ng_path_of_baseuri baseuri in
@@ -322,6 +350,8 @@ and assert_ng ~already_included ~compiling ~asserted ~include_paths mapath =
             in
              asserted, b || b1
               || let _,baseuri,_,_ =
+                   (*CSC: bug here? include_paths should be empty and
+                          mapath should be absolute *)
                    Librarian.baseuri_of_script ~include_paths mapath in
                  let baseuri = NUri.uri_of_string baseuri in
                   (match ngtime_of baseuri with
