@@ -477,7 +477,7 @@ let compute_relevance status uri =
 let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
   match cmd with
   | GrafiteAst.Include (loc, mode, fname) ->
-	   let _root, baseuri, fullpath, _rrelpath = 
+     let _root, baseuri, fullpath, _rrelpath = 
        Librarian.baseuri_of_script ~include_paths fname in
      let baseuri = NUri.uri_of_string baseuri in
      (* MATITA 1.0: keep WithoutPreferences? *)
