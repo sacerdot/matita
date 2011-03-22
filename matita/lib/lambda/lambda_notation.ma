@@ -34,32 +34,62 @@ notation "hbox((! ^ term 90 b) term 50 a)"
 
 (* lifting, substitution *)
 
-notation "hvbox(M break [ l ])"
+notation "hvbox(↑ [ p break , k ] break t)"
+   non associative with precedence 50
+   for @{'Lift1 $p $k $t}.
+
+notation "hvbox(M break [ / l ])"
    non associative with precedence 90
-   for @{'Subst1 $M $l}.
+   for @{'Subst $M $l}.
 
-(* interpretation *)
+notation "hvbox(M break [ k ≝ N ])" 
+   non associative with precedence 90
+   for @{'Subst1 $M $k $N}.
 
-notation "hvbox(〚term 90 T〛)"
+(* type judgements *)
+
+notation "hvbox(G break  ⊢ A break : B)"
+   non associative with precedence 45
+   for @{'TJ $G $A $B}.
+
+notation "hvbox(G break  ⊢ A break ÷ B)"
+   non associative with precedence 45
+   for @{'TJ0 $G $A $B}.
+
+(* interpretations *)
+
+notation "hvbox(║T║)"
    non associative with precedence 50
    for @{'IInt $T}.
 
-notation "hvbox(〚term 90 T〛 break _ [term 90 E])"
+notation "hvbox(║T║ break _ [E])"
    non associative with precedence 50
    for @{'IInt1 $T $E}.
 
-notation "hvbox(〚term 90 T〛 break _ [term 90 E1 break , term 90 E2])"
+notation "hvbox(║T║ break _ [E1 break , E2])"
    non associative with precedence 50
    for @{'IInt2 $T $E1 $E2}.
 
-notation "hvbox(《term 90 T》)"
+notation "hvbox(〚T〛)"
    non associative with precedence 50
    for @{'EInt $T}.
 
-notation "hvbox(《term 90 T》 break _ [term 90 E])"
+notation "hvbox(〚T〛 break _ [E])"
    non associative with precedence 50
    for @{'EInt1 $T $E}.
 
-notation "hvbox(《term 90 T》 break _ [term 90 E1 break , term 90 E2])"
+notation "hvbox(〚T〛 break _ [E1 break , E2])"
    non associative with precedence 50
    for @{'EInt2 $T $E1 $E2}.
+
+notation "hvbox(《T》)"
+   non associative with precedence 50
+   for @{'XInt $T}.
+
+notation "hvbox(《T》 break _ [E])"
+   non associative with precedence 50
+   for @{'XInt1 $T $E}.
+
+notation "hvbox(《T》 break _ [E1 break , E2])"
+   non associative with precedence 50
+   for @{'XInt2 $T $E1 $E2}.

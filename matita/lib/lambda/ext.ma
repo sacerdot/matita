@@ -12,9 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "lambda/subst.ma".
 include "basics/list.ma".
-include "lambda/lambda_notation.ma".
 
 (* MATTER CONCERNING STRONG NORMALIZATION TO BE PUT ELSEWHERE *****************)
 
@@ -115,88 +113,4 @@ lemma all2_symmetric: ∀A. ∀P:A→A→Prop. symmetric … P → symmetric …
 #A #P #HP #l1 elim l1 -l1 [ #l2 #H >H // ]
 #x1 #l1 #IH1 #l2 elim l2 -l2 [ #false elim false ]
 #x2 #l2 #_ #H elim H -H /3/
-qed.   
-
-(* terms **********************************************************************)
-
-(* Appl F l generalizes App applying F to a list of arguments
- * The head of l is applied first
- *)
-let rec Appl F l on l ≝ match l with 
-   [ nil ⇒ F
-   | cons A D ⇒ Appl (App F A) D  
-   ].
-
-lemma appl_append: ∀N,l,M. Appl M (l @ [N]) = App (Appl M l) N.
-#N #l elim l -l // #hd #tl #IHl #M >IHl //
 qed.
-
-(* FG: not needed for now 
-(* nautral terms *)
-inductive neutral: T → Prop ≝
-   | neutral_sort: ∀n.neutral (Sort n)
-   | neutral_rel: ∀i.neutral (Rel i)
-   | neutral_app: ∀M,N.neutral (App M N)
-.
-*)
-
-(* substitution ***************************************************************)
-
-(* FG: do we need this? 
-definition lift0 ≝ λp,k,M . lift M p k. (**) (* remove definition *)
-
-lemma lift_appl: ∀p,k,l,F. lift (Appl F l) p k = 
-                             Appl (lift F p k) (map … (lift0 p k) l). 
-#p #k #l (elim l) -l /2/ #A #D #IHl #F >IHl //
-qed.
-*)
-
-lemma lift_rel_lt: ∀i,p,k. (S i) ≤ k → lift (Rel i) k p = Rel i.
-#i #p #k #Hik normalize >(le_to_leb_true … Hik) //
-qed.
-
-lemma lift_rel_ge: ∀i,p,k. (S i) ≰ k → lift (Rel i) k p = Rel (i+p).
-#i #p #k #Hik normalize >(lt_to_leb_false (S i) k) /2/
-qed.
-
-lemma lift_app: ∀M,N,k,p.
-                lift (App M N) k p = App (lift M k p) (lift N k p).
-// qed.
-
-lemma lift_lambda: ∀N,M,k,p. lift (Lambda N M) k p = 
-                   Lambda (lift N k p) (lift M (k + 1) p).
-// qed.
-
-lemma lift_prod: ∀N,M,k,p.
-                 lift (Prod N M) k p = Prod (lift N k p) (lift M (k + 1) p).
-// qed.
-
-lemma subst_app: ∀M,N,k,L. (App M N)[k≝L] = App M[k≝L] N[k≝L].
-// qed.
-
-lemma subst_lambda: ∀N,M,k,L. (Lambda N M)[k≝L] = Lambda N[k≝L] M[k+1≝L].
-// qed.
-
-lemma subst_prod: ∀N,M,k,L. (Prod N M)[k≝L] = Prod N[k≝L] M[k+1≝L].
-// qed.
-
-
-axiom lift_subst_lt: ∀A,B,i,j,k. lift (B[j≝A]) (j+k) i =
-                     (lift B (j+k+1) i)[j≝lift A k i].
-
-(* telescopic delifting substitution of l in M.
- * Rel 0 is replaced with the head of l
- *)
-let rec tsubst M l on l ≝ match l with
-   [ nil      ⇒ M
-   | cons A D ⇒ (tsubst M[0≝A] D)
-   ]. 
-
-interpretation "telescopic substitution" 'Subst1 M l = (tsubst M l).
-
-lemma tsubst_refl: ∀l,t. (lift t 0 (|l|))[l] = t.
-#l elim l -l; normalize // #hd #tl #IHl #t cut (S (|tl|) = |tl| + 1) // (**) (* eliminate cut *)
-qed.
-
-lemma tsubst_sort: ∀n,l. (Sort n)[l] = Sort n.
-// qed.

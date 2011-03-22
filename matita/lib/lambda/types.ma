@@ -53,7 +53,6 @@ inductive TJ: list T → T → T → Prop ≝
   | dummy: ∀G.∀A,B.∀i. 
      TJ G A B → TJ G B (Sort i) → TJ G (D A) B.
      
-notation "hvbox(G break  ⊢ A : B)" non associative with precedence 50 for @{'TJ $G $A $B}.
 interpretation "type judgement" 'TJ G A B = (TJ G A B).
 
 (* ninverter TJ_inv2 for TJ (%?%) : Prop. *)
@@ -212,3 +211,10 @@ theorem substitution_tj:
    #G1 #D #N #Heq #tjN @dummy /2/ 
   ]
 qed.
+
+(* weakening lemma: special case *)
+axiom tj_weak_1: ∀G,t,u. G ⊢ t : u → ∀w. w :: G ⊢ lift t 0 1 : lift u 0 1.
+
+
+(* thinning lemma: special case *)
+axiom tj_thin_1: ∀w,G,t,u. w :: G ⊢ lift t 0 1 : lift u 0 1 → G ⊢ t : u.

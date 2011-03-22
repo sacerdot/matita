@@ -9,16 +9,7 @@
      \ /      
       V_______________________________________________________________ *)
 
-include "arithmetics/nat.ma".
-
-inductive T : Type[0] ≝
-  | Sort: nat → T     (* starts from 0 *)
-  | Rel: nat → T      (* starts from ... ? *)
-  | App: T → T → T    (* function, argument *)
-  | Lambda: T → T → T (* type, body *)
-  | Prod: T → T → T   (* type, body *)
-  | D: T → T          (* dummifier *)
-.
+include "lambda/terms.ma".
 
 (* arguments: k is the depth (starts from 0), p is the height (starts from 0) *)
 let rec lift t k p ≝
@@ -56,10 +47,8 @@ ndefinition subst ≝ λa.λt.subst_aux t 0 a.
 notation "M [ N ]" non associative with precedence 90 for @{'Subst $N $M}.
 *)
 
-notation "M [ k := N ]" non associative with precedence 90 for @{'Subst $M $k $N}.
-
 (* interpretation "Subst" 'Subst N M = (subst N M). *)
-interpretation "Subst" 'Subst M k N = (subst M k N).
+interpretation "Subst" 'Subst1 M k N = (subst M k N).
 
 (*** properties of lift and subst ***)
 
