@@ -217,6 +217,3 @@ lemma tj_subst_0: ∀G,v,w. G ⊢ v : w → ∀t,u. w :: G ⊢ t : u →
 #G #v #w #Hv #t #u #Ht 
 lapply (substitution_tj … Ht ? ([]) … Hv) normalize //
 qed.
-
-(* weakening lemma: special case *)
-axiom tj_weak_1: ∀G,t,u. G ⊢ t : u → ∀w. w :: G ⊢ lift t 0 1 : lift u 0 1.
