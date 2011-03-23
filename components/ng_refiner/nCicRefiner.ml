@@ -598,8 +598,8 @@ and try_coercions status
         in
         (*let eq = NCic.Const (NReference.reference_of_string ("cic:/matita/ng/Plogic/equality/eq.ind(1,0,2)")) in
         let eq_refl = NCic.Const (NReference.reference_of_string ("cic:/matita/ng/Plogic/equality/eq.con(0,1,2)")) in*)
-        let eq = NCic.Const (NReference.reference_of_string ("cic:/matita/ng/Plogic/jmeq/jmeq.ind(1,0,2)")) in
-        let eq_refl = NCic.Const (NReference.reference_of_string ("cic:/matita/ng/Plogic/jmeq/jmeq.con(0,1,2)")) in
+        let eq = NCic.Const (NReference.reference_of_string ("cic:/matita/basics/jmeq/jmeq.ind(1,0,2)")) in
+        let eq_refl = NCic.Const (NReference.reference_of_string ("cic:/matita/basics/jmeq/jmeq.con(0,1,2)")) in
         let add_params 
           metasenv subst context cty outty mty m i 
         =
