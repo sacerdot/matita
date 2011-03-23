@@ -32,3 +32,19 @@ let rec Appl F l on l ≝ match l with
 lemma appl_append: ∀N,l,M. Appl M (l @ [N]) = App (Appl M l) N.
 #N #l elim l -l // #hd #tl #IHl #M >IHl //
 qed.
+
+let rec is_dummy t ≝ match t with
+   [ Sort _     ⇒ false
+   | Rel _      ⇒ false
+   | App M _    ⇒ is_dummy M
+   | Lambda _ M ⇒ is_dummy M
+   | Prod _ _   ⇒ false       (* not so sure yet *)
+   | D _        ⇒ true
+   ].
+
+(* nautral terms *)
+inductive neutral: T → Prop ≝
+   | neutral_sort: ∀n.neutral (Sort n)
+   | neutral_rel: ∀i.neutral (Rel i)
+   | neutral_app: ∀M,N.neutral (App M N)
+.

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "lambda/ext.ma".
+include "lambda/ext_lambda.ma".
 
 (* STRONGLY NORMALIZING TERMS *************************************************)
 
@@ -34,12 +34,21 @@ definition SAT1 ≝ λ(P:?->Prop). ∀i,l. SNl l → P (Appl (Rel i) l).
 definition SAT2 ≝ λ(P:?→Prop). ∀N,L,M,l. SN N → SN L → 
                   P (Appl M[0:=L] l) → P (Appl (Lambda N M) (L::l)).
 
-theorem SAT0_sort: ∀P,n. SAT0 P → P (Sort n).
-#P #n #H @(H n (nil ?) …) //
+definition SAT3 ≝ λ(P:?→Prop). ∀N,l1,l2. P (Appl (D (Appl N l1)) l2) → 
+                               P (Appl (D N) (l1@l2)).
+
+definition SAT4 ≝ λ(P:?→Prop). ∀M. P M → P (D M).
+
+lemma SAT0_sort: ∀P,n. SAT0 P → P (Sort n).
+#P #n #HP @(HP n (nil ?) …) //
 qed.
 
-theorem SAT1_rel: ∀P,i. SAT1 P → P (Rel i).
-#P #i #H @(H i (nil ?) …) //
+lemma SAT1_rel: ∀P,i. SAT1 P → P (Rel i).
+#P #i #HP @(HP i (nil ?) …) //
+qed.
+
+lemma SAT3_1: ∀P,N,M. SAT3 P → P (D (App N M)) → P (App (D N) M).
+#P #N #M #HP #H @(HP … ([?]) ([])) @H
 qed.
 
 (* axiomatization *************************************************************)
@@ -50,10 +59,12 @@ axiom sn_rel: SAT1 SN.
 
 axiom sn_beta: SAT2 SN.
 
+axiom sn_dapp: SAT3 SN.
+
+axiom sn_dummy: SAT4 SN.
+
 axiom sn_lambda: ∀N,M. SN N → SN M → SN (Lambda N M).
 
 axiom sn_prod: ∀N,M. SN N → SN M → SN (Prod N M).
-
-axiom sn_dummy: ∀M. SN M → SN (D M).
 
 axiom sn_inv_app_1: ∀M,N. SN (App M N) → SN M.

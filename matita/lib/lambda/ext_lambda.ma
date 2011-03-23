@@ -17,19 +17,10 @@ include "lambda/subst.ma".
 
 (* MATTER CONCERNING STRONG NORMALIZATION TO BE PUT ELSEWHERE *****************)
 
-(* terms **********************************************************************)
-
-(* FG: not needed for now 
-(* nautral terms *)
-inductive neutral: T → Prop ≝
-   | neutral_sort: ∀n.neutral (Sort n)
-   | neutral_rel: ∀i.neutral (Rel i)
-   | neutral_app: ∀M,N.neutral (App M N)
-.
-*)
-
 (* substitution ***************************************************************)
-
+(*
+axiom is_dummy_lift: ∀p,t,k. is_dummy (lift t k p) = is_dummy t.
+*)
 (* FG: do we need this? 
 definition lift0 ≝ λp,k,M . lift M p k. (**) (* remove definition *)
 
