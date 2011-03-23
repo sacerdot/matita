@@ -63,8 +63,22 @@ let clean_exit baseuri exn =
   raise (FailureCompiling (baseuri,exn))
 ;;
 
+let cut prefix s = 
+  let lenp = String.length prefix in
+  let lens = String.length s in
+  assert (lens > lenp);
+  assert (String.sub s 0 lenp = prefix);
+  String.sub s lenp (lens-lenp)
+;;
 
-let pp_times fname rc big_bang big_bang_u big_bang_s = 
+let print_string =
+ let indent = ref 0 in
+ let print_string s = print_string (String.make !indent ' ' ^ s) in
+ fun enter s ->
+  if enter then (print_string s; incr indent) else (decr indent; print_string s)
+;;
+
+let pp_times ss fname rc big_bang big_bang_u big_bang_s = 
   if not (Helm_registry.get_bool "matita.verbose") then
     let { Unix.tms_utime = u ; Unix.tms_stime = s} = Unix.times () in
     let r = Unix.gettimeofday () -. big_bang in
@@ -83,18 +97,10 @@ let pp_times fname rc big_bang big_bang_u big_bang_s =
       in
       Printf.sprintf "%s %s %s" (fmt r) (fmt u) (fmt s)
     in
-    let s = Printf.sprintf "%-4s %s %s" rc times extra in
-    print_endline s;
+    let s = Printf.sprintf "%-4s %s %s\n" rc times extra in
+    print_string false (ss ^ s);
     flush stdout;
     HLog.message ("Compilation of "^Filename.basename fname^": "^rc)
-;;
-
-let cut prefix s = 
-  let lenp = String.length prefix in
-  let lens = String.length s in
-  assert (lens > lenp);
-  assert (String.sub s 0 lenp = prefix);
-  String.sub s lenp (lens-lenp)
 ;;
 
 let activate_extraction baseuri fname =
@@ -244,6 +250,11 @@ and compile ~compiling ~asserted ~include_paths fname =
     Unix.times () 
   in
   let time = Unix.time () in
+  let cc = 
+   let rex = Str.regexp ".*opt$" in
+   if Str.string_match rex Sys.argv.(0) 0 then "matitac.opt"
+   else "matitac" in
+  let s = Printf.sprintf "%s %-35s " cc (cut (root^"/") fname) in
   try
     (* cleanup of previously compiled objects *)
     if (not (Http_getter_storage.is_empty ~local:true baseuri))
@@ -254,13 +265,7 @@ and compile ~compiling ~asserted ~include_paths fname =
     end;
     HLog.message ("compiling " ^ Filename.basename fname ^ " in " ^ baseuri);
     if not (Helm_registry.get_bool "matita.verbose") then
-      (let cc = 
-        let rex = Str.regexp ".*opt$" in
-        if Str.string_match rex Sys.argv.(0) 0 then "matitac.opt"
-        else "matitac" 
-      in
-      let s = Printf.sprintf "%s %-35s " cc (cut (root^"/") fname) in
-      print_string s; flush stdout);
+     (print_string true (s ^ "\n"); flush stdout);
     (* we dalay this error check until we print 'matitac file ' *)
     assert (Http_getter_storage.is_empty ~local:true baseuri);
     (* create dir for XML files *)
@@ -296,7 +301,7 @@ and compile ~compiling ~asserted ~include_paths fname =
      in
      HLog.message 
        (sprintf "execution of %s completed in %s." fname (hou^min^sec));
-     pp_times fname true big_bang big_bang_u big_bang_s;
+     pp_times s fname true big_bang big_bang_u big_bang_s;
      asserted
 (* MATITA 1.0: debbo fare time_travel sulla ng_library?
      LexiconSync.time_travel 
@@ -308,7 +313,7 @@ and compile ~compiling ~asserted ~include_paths fname =
 (* MATITA 1.0: debbo fare time_travel sulla ng_library?
        LexiconSync.time_travel ~present:lexicon ~past:initial_lexicon_status;
  *       *)
-      pp_times fname false big_bang big_bang_u big_bang_s;
+      pp_times s fname false big_bang big_bang_u big_bang_s;
       clean_exit baseuri exn
 
 and assert_ng ~already_included ~compiling ~asserted ~include_paths mapath =
