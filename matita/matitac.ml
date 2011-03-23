@@ -56,8 +56,9 @@ let main_compiler () =
      (try
        ignore (MatitaEngine.assert_ng ~include_paths:[] t); true
       with
-       MatitaEngine.FailureCompiling _ -> false) && b
-     ) true targets
+       MatitaEngine.FailureCompiling (_,exn) ->
+        HLog.error (snd (MatitaExcPp.to_string exn)); false) && b
+   ) true targets
   then 
     (HLog.message "Compilation successful"; 0)
   else
