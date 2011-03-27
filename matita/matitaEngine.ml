@@ -292,7 +292,7 @@ and compile ~compiling ~asserted ~include_paths fname =
       if not (Helm_registry.get_bool "matita.verbose") then (fun _ _ -> ())
       else pp_ast_statement
     in
-    let asserted, times, status =
+    let asserted, status =
      eval_from_stream ~compiling ~asserted ~include_paths status buf print_cb in
     let elapsed = Unix.time () -. time in
      (if Helm_registry.get_bool "matita.moo" then begin
