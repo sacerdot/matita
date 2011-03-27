@@ -277,12 +277,13 @@ module Serializer(D: sig type dumpable_s val get: dumpable_s -> dumpable_status 
   let record_include =
    let aux (baseuri,fname) ~refresh_uri_in_universe:_ ~refresh_uri_in_term:_
    ~refresh_uri_in_reference:_ ~alias_only status =
+     let baseuri = refresh_uri baseuri in
      let alias_only =
       alias_only || List.mem baseuri (get_transitively_included (D.get status))
      in
-      HLog.warn ("include " ^ (if alias_only then "alias " else "") ^ fname);
+      (*HLog.warn ("include " ^ (if alias_only then "alias " else "") ^ fname);*)
       let status = require2 ~baseuri ~alias_only status in
-      HLog.warn ("done: include " ^ (if alias_only then "alias " else "") ^ fname);
+      (*HLog.warn ("done: include " ^ (if alias_only then "alias " else "") ^ fname);*)
       status
    in
     register#run "include" aux
@@ -294,10 +295,7 @@ module Serializer(D: sig type dumpable_s val get: dumpable_s -> dumpable_status 
     if not alias_only then
      let s = D.get status in
       D.set status
-       (s#set_dump
-         {s#dump with
-           includes = baseuri::s#dump.includes;
-           dependencies = fname::s#dump.dependencies})
+       (s#set_dump {s#dump with dependencies = fname::s#dump.dependencies})
     else
      status in
    let status = require2 ~baseuri ~alias_only status in
