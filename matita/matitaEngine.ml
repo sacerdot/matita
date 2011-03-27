@@ -73,9 +73,16 @@ let cut prefix s =
 
 let print_string =
  let indent = ref 0 in
- let print_string s = print_string (String.make !indent ' ' ^ s) in
- fun enter s ->
-  if enter then (print_string s; incr indent) else (decr indent; print_string s)
+ let print_string ~right_justify s =
+  let ss =
+   match right_justify with
+      None -> ""
+    | Some (ss,len_ss) ->
+       String.make (80 - !indent - len_ss - String.length s) ' ' ^ ss
+  in
+   print_string (String.make !indent ' ' ^ s ^ ss) in
+ fun enter ?right_justify s ->
+  if enter then (print_string ~right_justify s; incr indent) else (decr indent; print_string ~right_justify s)
 ;;
 
 let pp_times ss fname rc big_bang big_bang_u big_bang_s = 
@@ -85,8 +92,8 @@ let pp_times ss fname rc big_bang big_bang_u big_bang_s =
     let u = u -. big_bang_u in
     let s = s -. big_bang_s in
     let extra = try Sys.getenv "BENCH_EXTRA_TEXT" with Not_found -> "" in
-    let rc,rcascii = 
-      if rc then "[0;32mOK[0m","Ok" else "[0;31mFAIL[0m","Fail" in
+    let rc = 
+      if rc then "[0;32mOK[0m" else "[0;31mFAIL[0m" in
     let times = 
       let fmt t = 
         let seconds = int_of_float t in
@@ -97,8 +104,8 @@ let pp_times ss fname rc big_bang big_bang_u big_bang_s =
       in
       Printf.sprintf "%s %s %s" (fmt r) (fmt u) (fmt s)
     in
-    let s = Printf.sprintf "%-4s %s %s\n" rc times extra in
-    print_string false (ss ^ s);
+    let s = Printf.sprintf "%-14s %s %s\n" rc times extra in
+    print_string false ~right_justify:(s,31) ss;
     flush stdout;
     HLog.message ("Compilation of "^Filename.basename fname^": "^rc)
 ;;
@@ -222,7 +229,8 @@ and eval_from_stream ~compiling ~asserted ~include_paths ?do_heavy_checks status
         let str =
          match ast with
             (GrafiteAst.Executable
-              (_,GrafiteAst.NCommand (_,GrafiteAst.Include (_,_,_)))) ->
+              (_,GrafiteAst.NCommand
+                (_,(GrafiteAst.Include _ | GrafiteAst.Notation _)))) ->
               GrafiteParser.parsable_statement status
                (GrafiteParser.strm_of_parsable str)
           | _ -> str
@@ -254,7 +262,7 @@ and compile ~compiling ~asserted ~include_paths fname =
    let rex = Str.regexp ".*opt$" in
    if Str.string_match rex Sys.argv.(0) 0 then "matitac.opt"
    else "matitac" in
-  let s = Printf.sprintf "%s %-35s " cc (cut (root^"/") fname) in
+  let s = Printf.sprintf "%s %s" cc (cut (root^"/") fname) in
   try
     (* cleanup of previously compiled objects *)
     if (not (Http_getter_storage.is_empty ~local:true baseuri))
@@ -284,7 +292,7 @@ and compile ~compiling ~asserted ~include_paths fname =
       if not (Helm_registry.get_bool "matita.verbose") then (fun _ _ -> ())
       else pp_ast_statement
     in
-    let asserted, status =
+    let asserted, times, status =
      eval_from_stream ~compiling ~asserted ~include_paths status buf print_cb in
     let elapsed = Unix.time () -. time in
      (if Helm_registry.get_bool "matita.moo" then begin
