@@ -1710,7 +1710,7 @@ let auto_tac ~params:(univ,flags) ?(trace_ref=ref []) status =
   app_counter:= 0;
   let rec up_to x y =
     if x > y then
-      (print(lazy
+      (debug_print(lazy
         ("TIME ELAPSED:"^string_of_float(Unix.gettimeofday()-.initial_time)));
        debug_print(lazy
         ("Applicative nodes:"^string_of_int !app_counter)); 
