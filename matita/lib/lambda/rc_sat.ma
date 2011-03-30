@@ -114,7 +114,7 @@ lemma nth_repl: ∀C1,C2. C1 ≅ C2 → ∀i,l1,l2. l1 ≅ l2 →
 #C1 #C2 #QC #i (elim i) /3/
 qed.
 *)
-(* the r.c for a (dependent) product type. ************************************)
+(* the r.c. for a (dependent) product type. ***********************************)
 
 definition dep_mem ≝ λB,C,M. ∀N. N ∈ B → App M N ∈ C.
 
@@ -149,3 +149,32 @@ lemma dep_repl: ∀B1,B2,C1,C2. B1 ≅ B2 → C1 ≅ C2 →
 #B1 #B2 #C1 #C2 #QB #QC #M @conj #H1 #N #H2
 [ lapply (symmetric_rceq … QB) -QB | lapply (symmetric_rceq … QC) -QC ] /4/
 qed.
+
+(* the union of two r.c.'s. ***************************************************)
+
+definition lor_mem ≝ λB,C,M. M ∈ B ∨ M ∈ C.
+
+lemma lor_cr1: ∀B,C. CR1 (lor_mem B C).
+#B #C #M #Hlor elim Hlor -Hlor #HM /2/
+qed.
+
+lemma lor_sat0: ∀B,C. SAT0 (lor_mem B C).
+/3/ qed.
+
+lemma lor_sat1: ∀B,C. SAT1 (lor_mem B C).
+/3/ qed.
+
+lemma lor_sat2: ∀B,C. SAT2 (lor_mem B C).
+#B #C #N #L #M #l #HN #HL #HM elim HM -HM #HM /3/
+qed.
+
+lemma lor_sat3: ∀B,C. SAT3 (lor_mem B C).
+#B #C #N #l1 #l2 #HN elim HN -HN #HN /3/
+qed.
+
+lemma lor_sat4: ∀B,C. SAT4 (lor_mem B C).
+#B #C #N #HN elim HN -HN #HN /3/
+qed.
+
+definition lorRC: RC → RC → RC ≝ λB,C. mk_RC (lor_mem B C) ….
+/2/ qed.
