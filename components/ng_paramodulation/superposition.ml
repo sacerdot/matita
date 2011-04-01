@@ -109,8 +109,8 @@ module Superposition (B : Orderings.Blob) =
     let visit bag pos ctx id t f =
       let rec aux bag pos ctx id subst = function
       | Terms.Leaf _ as t -> 
-	  let  bag,subst,t,id = f bag t pos ctx id
-	  in assert (subst=[]); bag,t,id
+	  let  bag,subst,t,id = f bag t pos ctx id in
+           assert (subst=[]); bag,t,id
       | Terms.Var i as t ->  
 	  let t= Subst.apply_subst subst t in
 	    bag,t,id
@@ -142,7 +142,16 @@ module Superposition (B : Orderings.Blob) =
           match t with
           | Terms.Node [ Terms.Leaf eq ; ty; l; r ] when B.eq B.eqP eq ->
                let o = Order.compare_terms l r in
-               Terms.Equation (l, r, ty, o)
+               (* CSC: to avoid equations of the form ? -> T that
+                  can always be applied and that lead to type-checking errors *)
+               (match l,r,o with 
+                   Terms.Var _,_,Terms.Gt
+                 | _,Terms.Var _,Terms.Lt -> assert false
+                 | Terms.Var _,_,(Terms.Incomparable | Terms.Invertible) ->
+                    Terms.Equation (l, r, ty, Terms.Lt)
+                 | _, Terms.Var _,(Terms.Incomparable | Terms.Invertible) ->
+                    Terms.Equation (l, r, ty, Terms.Gt)
+                 | _ -> Terms.Equation (l, r, ty, o))
           | t -> Terms.Predicate t
         in
         let bag, uc = 
