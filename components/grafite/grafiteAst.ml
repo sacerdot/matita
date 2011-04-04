@@ -29,34 +29,36 @@ type direction = [ `LeftToRight | `RightToLeft ]
 
 type loc = Stdpp.location
 
-type npattern = 
- NotationPt.term option * (string * NotationPt.term) list * NotationPt.term option
+type nterm = NotationPt.term
 
-type auto_params = NotationPt.term list option * (string*string) list
+type npattern = 
+ nterm option * (string * nterm) list * nterm option
+
+type auto_params = nterm list option * (string*string) list
 
 type ntactic =
-   | NApply of loc * NotationPt.term
-   | NSmartApply of loc * NotationPt.term
-   | NAssert of loc * ((string * [`Decl of NotationPt.term | `Def of NotationPt.term * NotationPt.term]) list * NotationPt.term) list
-   | NCases of loc * NotationPt.term * npattern  
+   | NApply of loc * nterm
+   | NSmartApply of loc * nterm
+   | NAssert of loc * ((string * [`Decl of nterm | `Def of nterm * nterm]) list * nterm) list
+   | NCases of loc * nterm * npattern  
    | NCase1 of loc * string
-   | NChange of loc * npattern * NotationPt.term
+   | NChange of loc * npattern * nterm
    | NClear of loc * string list
-   | NConstructor of loc * int option * NotationPt.term list
-   | NCut of loc * NotationPt.term
-(* | NDiscriminate of loc * NotationPt.term
-   | NSubst of loc * NotationPt.term *)
+   | NConstructor of loc * int option * nterm list
+   | NCut of loc * nterm
+(* | NDiscriminate of loc * nterm
+   | NSubst of loc * nterm *)
    | NDestruct of loc * string list option * string list
-   | NElim of loc * NotationPt.term * npattern  
+   | NElim of loc * nterm * npattern  
    | NGeneralize of loc * npattern
    | NId of loc
    | NIntro of loc * string
    | NIntros of loc * string list
-   | NInversion of loc * NotationPt.term * npattern  
-   | NLApply of loc * NotationPt.term
-   | NLetIn of loc * npattern * NotationPt.term * string
+   | NInversion of loc * nterm * npattern  
+   | NLApply of loc * nterm
+   | NLetIn of loc * npattern * nterm * string
    | NReduce of loc * [ `Normalize of bool | `Whd of bool ] * npattern
-   | NRewrite of loc * direction * NotationPt.term * npattern
+   | NRewrite of loc * direction * nterm * npattern
    | NAuto of loc * auto_params
    | NDot of loc
    | NSemicolon of loc
@@ -75,7 +77,7 @@ type ntactic =
    | NBlock of loc * ntactic list
 
 type nmacro =
-  | NCheck of loc * NotationPt.term
+  | NCheck of loc * nterm
   | Screenshot of loc * string
   | NAutoInteractive of loc * auto_params
   | NIntroGuess of loc
@@ -96,21 +98,21 @@ type inclusion_mode = WithPreferences | WithoutPreferences | OnlyPreferences (* 
 
 type command =
   | Include of loc * inclusion_mode * string (* _,buri,_,path *)
-  | UnificationHint of loc * NotationPt.term * int (* term, precedence *)
-  | NObj of loc * NotationPt.term NotationPt.obj
-  | NDiscriminator of loc * NotationPt.term
-  | NInverter of loc * string * NotationPt.term * bool list option * NotationPt.term option
+  | UnificationHint of loc * nterm * int (* term, precedence *)
+  | NObj of loc * nterm NotationPt.obj
+  | NDiscriminator of loc * nterm
+  | NInverter of loc * string * nterm * bool list option * nterm option
   | NUnivConstraint of loc * NUri.uri * NUri.uri
   | NCopy of loc * string * NUri.uri * (NUri.uri * NUri.uri) list
   | NCoercion of loc * string *
-      NotationPt.term * NotationPt.term *
-      (string * NotationPt.term) * NotationPt.term
+      nterm * nterm *
+      (string * nterm) * nterm
   | NQed of loc
   (* ex lexicon commands *)
   | Alias of loc * alias_spec
       (** parameters, name, type, fields *) 
-  | Notation of loc * direction option * NotationPt.term * Gramext.g_assoc *
-      int * NotationPt.term
+  | Notation of loc * direction option * nterm * Gramext.g_assoc *
+      int * nterm
       (* direction, l1 pattern, associativity, precedence, l2 pattern *)
   | Interpretation of loc *
       string * (string * NotationPt.argument_pattern list) *
