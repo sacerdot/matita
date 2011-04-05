@@ -95,7 +95,12 @@ val nmap_sequent:
    NotationPt.term Content.conjecture *
     (Content.id, NReference.reference) Hashtbl.t    (* id -> reference *)
 
-val nmap_obj:
+val nmap_cobj:
  #status -> NCic.obj ->
   NotationPt.term Content.cobj *
+   (Content.id, NReference.reference) Hashtbl.t    (* id -> reference *)
+
+val nmap_obj:
+ #status -> NCic.obj ->
+  NotationPt.term NotationPt.obj *
    (Content.id, NReference.reference) Hashtbl.t    (* id -> reference *)

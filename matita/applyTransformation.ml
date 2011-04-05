@@ -53,7 +53,7 @@ let ntxt_of_cic_sequent ~metasenv ~subst =
   (fun seq -> (new NCicPp.status)#ppmetasenv ~subst [seq])
 
 let ntxt_of_cic_object ~map_unicode_to_tex =
- to_text Interpretations.nmap_obj Content2pres.nobj2pres ~map_unicode_to_tex
+ to_text Interpretations.nmap_cobj Content2pres.nobj2pres ~map_unicode_to_tex
   (new NCicPp.status)#ppobj
 
 let ntxt_of_cic_term ~metasenv ~subst ~context =

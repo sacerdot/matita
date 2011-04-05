@@ -502,7 +502,7 @@ let build_decl_item seed id n s =
       }
 ;;
 
-let nmap_obj0 status ~idref (uri,_,metasenv,subst,kind) =
+let nmap_cobj0 status ~idref (uri,_,metasenv,subst,kind) =
   let module K = Content in
   let nast_of_cic =
    nast_of_cic1 status ~idref ~output_type:`Term ~metasenv ~subst in
@@ -587,7 +587,7 @@ let with_idrefs foo status obj =
   foo status ~idref:(idref register_ref) obj, ids_to_refs
 ;;
 
-let nmap_obj status = with_idrefs nmap_obj0 status
+let nmap_cobj status = with_idrefs nmap_cobj0 status
 
 let nmap_sequent status ~metasenv ~subst =
  with_idrefs (nmap_sequent0 ~metasenv ~subst) status
@@ -597,3 +597,51 @@ let nmap_term status ~metasenv ~subst ~context =
 
 let nmap_context status ~metasenv ~subst =
  with_idrefs (nmap_context0 ~metasenv ~subst) status
+
+(* FG ***********************************************************************)
+
+let nmap_obj0 status ~idref (_, _, metasenv, subst, kind) =
+   let module N = NotationPt in
+   let nast_of_cic =
+      nast_of_cic1 status ~idref ~output_type:`Term ~metasenv ~subst
+   in
+   let rec mk_captures lno k c u = match lno, u with
+      | 0, _                                -> k, c
+      | _, NCic.Prod (n, w, u) when lno > 0 ->
+         let cap = nast_of_cic ~context:c w, None in
+	 let hyp = n, NCic.Decl w in
+	 mk_captures (pred lno) (cap :: k) (hyp :: c) u
+      | _                                 -> assert false
+   in
+   let build_captures lno = function
+      | []                -> [], []
+      | (_, _, u, _) :: _ -> mk_captures lno [] [] u
+   in
+   let rec eat_prods prods lno t = match prods, lno, t with
+      | _, 0, _                                      -> t
+      | true, _, NCic.Prod (_, _, t) when lno > 0    -> eat_prods prods (pred lno) t
+      | false, _, NCic.Lambda (_, _, t) when lno > 0 -> eat_prods prods (pred lno) t
+      | _                                            -> assert false
+   in
+   let build_constractor lno context (_, n, bo) =
+      let bo = nast_of_cic ~context (eat_prods false lno bo) in      
+      n, bo
+   in
+   let build_inductive is_ind lno context (_, n, ty, cl) =
+      let ty = nast_of_cic ~context (eat_prods true lno ty) in
+      n, is_ind, ty, List.map (build_constractor lno context) cl
+   in
+   match kind with
+      | NCic.Constant (_, n, xbo, ty, (_, flavour, pragma)) ->
+	 let ty = nast_of_cic ~context:[] ty in
+         let xbo = match xbo with 
+	    | Some bo -> Some (nast_of_cic ~context:[] bo)
+	    | None    -> None
+	 in
+	 N.Theorem (flavour, n, ty, xbo, pragma)
+      | NCic.Inductive (is_ind, lno, itl, (_, `Regular)) ->      
+         let captures, context = build_captures lno itl in
+	 N.Inductive (captures, List.map (build_inductive is_ind lno context) itl)
+      | _ -> assert false  (* NCic.Fixpoint (is_rec, ifl, _) -> *)
+
+let nmap_obj status = with_idrefs nmap_obj0 status
