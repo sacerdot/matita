@@ -178,9 +178,9 @@ let pp_ncommand status = function
             map)
   | Include (_,mode,path) -> (* not precise, since path is absolute *)
       if mode = WithPreferences then
-        "include \"" ^ path ^ "\"."
+        "include \"" ^ path ^ "\""
       else
-        "include' \"" ^ path ^ "\"."
+        "include' \"" ^ path ^ "\""
   | Alias (_,s) -> pp_alias s
   | Interpretation (_, dsc, (symbol, arg_patterns), cic_appl_pattern) ->
       pp_interpretation dsc symbol arg_patterns cic_appl_pattern
