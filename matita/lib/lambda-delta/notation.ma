@@ -39,17 +39,17 @@ notation "hvbox( # [ x , break y ] )"
 
 (* substitution *************************************************************)
 
-notation "hvbox( [ d , break e ] ↑ break T1 ≡ break T2 )"
+notation "hvbox( ↑ [ d , break e ] break T1 ≡ break T2 )"
    non associative with precedence 45
    for @{ 'RLift $T1 $d $e $T2 }.
 
-notation "hvbox( [ d , break e ] ← break (term 90 L) / break T1 ≡ break T2 )"
+notation "hvbox( ↓ [ d , break e ] break L1 ≡ break L2 )"
+   non associative with precedence 45
+   for @{ 'RSubst $L1 $d $e $L2 }.
+
+notation "hvbox( L ⊢ break ↓ [ d , break e ] break T1 ≡ break T2 )"
    non associative with precedence 45
    for @{ 'RSubst $L $T1 $d $e $T2 }.
-
-notation "hvbox( [ d , break e ] ↓ break L1 ≡ break L2 )"
-   non associative with precedence 45
-   for @{ 'RThin $L1 $d $e $L2 }.
 
 (* reduction ****************************************************************)
 
