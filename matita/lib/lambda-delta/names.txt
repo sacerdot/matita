@@ -1,0 +1,11 @@
+NAMING CONVENTIONS FOR METAVARIABLES
+
+I,J    : item
+K,L    : local environment
+T,U,V,W: term
+
+d      : relocation depth
+e      : relocation height
+h      : sort hierarchy parameter
+i,j    : local reference position index (de Bruijn's)
+k      : sort index

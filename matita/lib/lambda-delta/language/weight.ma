@@ -1,0 +1,36 @@
+(*
+    ||M||  This file is part of HELM, an Hypertextual, Electronic
+    ||A||  Library of Mathematics, developed at the Computer Science
+    ||T||  Department of the University of Bologna, Italy.
+    ||I||
+    ||T||
+    ||A||  This file is distributed under the terms of the
+    \   /  GNU General Public License Version 2
+     \ /
+      V_______________________________________________________________ *)
+
+include "lambda-delta/language/lenv.ma".
+
+(* WEIGHTS ******************************************************************)
+
+(* the weight of a term *)
+let rec tw T ≝ match T with
+   [ TSort _     ⇒ 1
+   | TLRef _     ⇒ 1
+   | TCon2 _ V T ⇒ tw V + tw T + 1
+   ].
+
+interpretation "weight (term)" 'Weight T = (tw T).
+
+(* the weight of a local environment *)
+let rec lw L ≝ match L with
+   [ LSort       ⇒ 0
+   | LCon2 L _ V ⇒ lw L + #V
+   ].
+
+interpretation "weight (local environment)" 'Weight L = (lw L).
+
+(* the weight of a closure *)
+definition cw ≝ λL,T. #L + #T.
+
+interpretation "weight (closure)" 'Weight L T = (cw L T).
