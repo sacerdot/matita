@@ -117,12 +117,12 @@ let interpretate_term_and_interpretate_term_option (status: #NCic.status)
          NCicUntrusted.NCicHash.add localization_tbl res loc;
        res
     | NotationPt.AttributedTerm (_, term) -> aux ~localize loc context term
+    | NotationPt.Appl 
+        (NotationPt.AttributedTerm (att, inner)::args)->
+        aux ~localize loc context 
+          (NotationPt.AttributedTerm (att,NotationPt.Appl (inner :: args)))
     | NotationPt.Appl (NotationPt.Appl inner :: args) ->
         aux ~localize loc context (NotationPt.Appl (inner @ args))
-    | NotationPt.Appl 
-        (NotationPt.AttributedTerm (att,(NotationPt.Appl inner))::args)->
-        aux ~localize loc context 
-          (NotationPt.AttributedTerm (att,NotationPt.Appl (inner @ args)))
     | NotationPt.Appl (NotationPt.Symbol (symb, i) :: args) ->
         let cic_args = List.map (aux ~localize loc context) args in
         Disambiguate.resolve ~mk_choice ~env (Symbol (symb, i)) (`Args cic_args)
