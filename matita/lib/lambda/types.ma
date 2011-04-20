@@ -27,7 +27,8 @@ substl (A::G) N = (subst_aux A (length T G) N)::(substl G N).
 //; nqed.
 *)
 
-(*
+(*start: ∀G.∀A.∀i.TJ G A (Sort i) → TJ (A::G) (Rel 0) (lift A 0 1)
+  | 
 nlemma length_cons: ∀A.∀G. length T (A::G) = length T G + 1.
 /2/; nqed.*)
 
@@ -49,7 +50,7 @@ inductive TJ: list T → T → T → Prop ≝
   | abs: ∀G.∀A,B,b.∀i. 
      TJ (A::G) b B → TJ G (Prod A B) (Sort i) → TJ G (Lambda A b) (Prod A B)
   | conv: ∀G.∀A,B,C.∀i. conv B C →
-     TJ G A B → TJ G B (Sort i) → TJ G A C
+     TJ G A B → TJ G C (Sort i) → TJ G A C
   | dummy: ∀G.∀A,B.∀i. 
      TJ G A B → TJ G B (Sort i) → TJ G (D A) B.
      
@@ -115,7 +116,7 @@ qed.
 theorem start_lemma2: ∀G.
 Glegal G → ∀n. n < |G| → G ⊢ Rel n: lift (nth n T G (Rel O)) 0 (S n).
 #G #Gleg (cases Gleg) #A #B #tjAB (elim tjAB) /2/
-  [#i #j #axij #p normalize #abs @False_ind @(absurd … abs) // 
+  [#i #j #axij #p normalize #abs @(False_ind) @(absurd … abs) // 
   |#G #A #i #tjA #Hind #m (cases m) /2/
    #p #Hle @start_rel // @Hind @le_S_S_to_le @Hle
   |#G #A #B #C #i #tjAB #tjC #Hind1 #_ #m (cases m)
