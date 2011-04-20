@@ -352,13 +352,29 @@ lemma SN_subst: ∀i,N,M.SN M[i ≝ N] → SN M.
   |#Hcut #M #snM @(Hcut … snM) //
 qed.
 
-lemma SN_APP: ∀P.SN P → ∀N. SN N → ∀M.
+lemma SN_DAPP: ∀N,M. SN (App M N) → SN (App (D M) N).
+cut (∀P. SN P → ∀M,N. P = App M N → SN (App (D M) N)); [|/2/]
+#P #snP (elim snP) #Q #snQ #Hind
+#M #N #eqQ % #A #rA (cases (red_app … rA))
+  [* 
+    [*
+      [* #M1 * #N1 * #eqH destruct
+      |* #M1 * #eqH destruct #eqA >eqA @SN_d % @snQ
+      ]
+    |* #M1 * #eqA #red1 (cases (red_d …red1))
+     #M2 * #eqM1 #r2 >eqA >eqM1 @(Hind (App M2 N)) /2/
+    ]
+  |* #M2 * #eqA >eqA #r2 @(Hind (App M M2)) /2/
+  ]
+qed.
+
+lemma  SN_APP: ∀P.SN P → ∀N. SN N → ∀M.
   SN M[0:=N] → SN (App (Lambda P M) N).
 #P #snP (elim snP) #A #snA #HindA
 #N #snN (elim snN) #B #snB #HindB
-#M #snM1 (cut (SN M)) [@(SN_subst … snM1)] #snM 
-(generalize in match snM1) (elim snM)
-#C #snC #HindC #snC1 % #Q #redQ (cases (red_app … redQ))
+#M #snM1 (cut (SH M)) [@SN_to_SH @(SN_subst … snM1)] #shM 
+(generalize in match snM1) (elim shM)
+#C #shC #HindC #snC1 % #Q #redQ (cases (red_app … redQ))
   [*
     [*
       [* #M2 * #N2 * #eqlam destruct #eqQ //
@@ -367,17 +383,19 @@ lemma SN_APP: ∀P.SN P → ∀N. SN N → ∀M.
     |* #M2 * #eqQ #redlam >eqQ (cases (red_lambda …redlam))
       [*
         [* #M3 * #eqM2 #r2 >eqM2 @HindA // % /2/
-        |* #M3 * #eqM2 #r2 >eqM2 @HindC // 
-         @(SN_step … snC1) /2/
+        |* #M3 * #eqM2 #r2 >eqM2 @HindC; 
+          [%1 // |@(SN_step … snC1) /2/]
         ]
-      |* #M3 * #eqC #eqM2 (* TODO *)
+      |* #M3 * #eqC #eqM2 >eqM2 @SN_DAPP @HindC;
+        [%2 >eqC @inj //
+        |@(SN_subterm … snC1) >eqC normalize //
+        ]
       ]
     ]
   |* #M2 * #eqQ #r2 >eqQ @HindB // @(SN_star … snC1) 
    @red_subst1 //
   ]
-  
- 
+qed.
 
 
 
