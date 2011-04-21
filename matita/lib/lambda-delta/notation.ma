@@ -13,6 +13,14 @@
 
 (* language *****************************************************************)
 
+notation "hvbox( ζ I )"
+ non associative with precedence 45
+ for @{ 'Zeta $I }.
+
+notation "hvbox( θ I )"
+ non associative with precedence 45
+ for @{ 'Theta $I }.
+
 notation "hvbox( ⋆ )"
  non associative with precedence 90
  for @{ 'Star }.

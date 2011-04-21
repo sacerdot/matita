@@ -29,8 +29,12 @@ inductive item2: Type[0] ≝
 
 (* reduction-related categorization *****************************************)
 
+(* binary items entitled for zeta-reduction *)
+definition zable2 ≝ λI. I = Abbr ∨ I = Cast.
+
+interpretation "is entitled for zeta-reduction" 'Zeta I = (zable2 I).
+
 (* binary items entitled for theta reduction *)
 definition thable2 ≝ λI. I = Abbr.
 
-(* binary items entitled for zeta reduction *)
-definition zable2 ≝ λI. I = Abbr ∨ I = Cast.
+interpretation "is entitled for theta-reduction" 'Theta I = (thable2 I).

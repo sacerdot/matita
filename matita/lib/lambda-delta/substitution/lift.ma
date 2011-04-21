@@ -23,3 +23,13 @@ inductive lift: term → nat → nat → term → Prop ≝
 .
 
 interpretation "relocation" 'RLift T1 d e T2 = (lift T1 d e T2).
+
+(* The basic inversion lemmas ***********************************************)
+
+lemma lift_inv_sort2_aux: ∀d,e,T1,T2. ↑[d,e] T1 ≡ T2 → ∀k. T2 = ⋆k → T1 = ⋆k.
+#d #e #T1 #T2 #H elim H -H d e T1 T2 //
+   [ #i #d #e #_ #k #H destruct (***) (* DESTRUCT FAILS *)
+
+lemma lift_inv_sort2: ∀d,e,T1,k. ↑[d,e] T1 ≡ ⋆k → T1 = ⋆k.
+#d #e #T1 #k #H lapply (lift_inv_sort2_aux … H) /2/
+qed.  
