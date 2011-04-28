@@ -29,7 +29,7 @@ notation "hvbox( ⋆ k )"
  non associative with precedence 90
  for @{ 'Star $k }.
 
-notation "hvbox( ♭ (term 90 I) break (term 90 T1) . break T )"
+notation "hvbox( ♭ (term 90 I) break (term 90 T1) . break (term 90 T) )"
  non associative with precedence 90
  for @{ 'SCon $I $T1 $T }.
 
