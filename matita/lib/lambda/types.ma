@@ -34,27 +34,45 @@ nlemma length_cons: ∀A.∀G. length T (A::G) = length T G + 1.
 
 (****************************************************************)
 
+(*
 axiom A: nat → nat → Prop.
 axiom R: nat → nat → nat → Prop.
-axiom conv: T → T → Prop.
+axiom conv: T → T → Prop.*)
 
-inductive TJ: list T → T → T → Prop ≝
-  | ax : ∀i,j. A i j → TJ (nil T) (Sort i) (Sort j)
-  | start: ∀G.∀A.∀i.TJ G A (Sort i) → TJ (A::G) (Rel 0) (lift A 0 1)
+inductive TJ 
+ (S: nat → nat → Prop)
+ (R: nat → nat → nat → Prop)
+ (c: T → T → Prop) : list T → T → T → Prop ≝
+  | ax : ∀i,j. S i j → TJ S R c (nil T) (Sort i) (Sort j)
+  | start: ∀G.∀A.∀i.TJ S R c G A (Sort i) → 
+      TJ S R c (A::G) (Rel 0) (lift A 0 1)
   | weak: ∀G.∀A,B,C.∀i.
-     TJ G A B → TJ G C (Sort i) → TJ (C::G) (lift A 0 1) (lift B 0 1)
+     TJ S R c G A B → TJ S R c G C (Sort i) → 
+       TJ S R c (C::G) (lift A 0 1) (lift B 0 1)
   | prod: ∀G.∀A,B.∀i,j,k. R i j k →
-     TJ G A (Sort i) → TJ (A::G) B (Sort j) → TJ G (Prod A B) (Sort k)
+     TJ S R c G A (Sort i) → TJ S R c (A::G) B (Sort j) → 
+       TJ S R c G (Prod A B) (Sort k)
   | app: ∀G.∀F,A,B,a. 
-     TJ G F (Prod A B) → TJ G a A → TJ G (App F a) (subst B 0 a)
+     TJ S R c G F (Prod A B) → TJ S R c G a A → 
+       TJ S R c G (App F a) (subst B 0 a)
   | abs: ∀G.∀A,B,b.∀i. 
-     TJ (A::G) b B → TJ G (Prod A B) (Sort i) → TJ G (Lambda A b) (Prod A B)
-  | conv: ∀G.∀A,B,C.∀i. conv B C →
-     TJ G A B → TJ G C (Sort i) → TJ G A C
+     TJ S R c (A::G) b B → TJ S R c G (Prod A B) (Sort i) → 
+       TJ S R c G (Lambda A b) (Prod A B)
+  | conv: ∀G.∀A,B,C.∀i. c B C →
+     TJ S R c G A B → TJ S R c G C (Sort i) → TJ S R c G A C
   | dummy: ∀G.∀A,B.∀i. 
-     TJ G A B → TJ G B (Sort i) → TJ G (D A) B.
+     TJ S R c G A B → TJ S R c G B (Sort i) → TJ S R c G (D A) B.
      
-interpretation "type judgement" 'TJ G A B = (TJ G A B).
+interpretation "type judgement" 'TJ G A B = (TJ ? ? ? G A B).
+
+record pts : Type[0] ≝ {
+  s1: nat → nat → Prop;
+  r1: nat → nat → nat → Prop;
+  c1: T → T → Prop
+  }.
+
+check r1.
+definition TJ ≝ λp:pts.c p. 
 
 (* ninverter TJ_inv2 for TJ (%?%) : Prop. *)
 
