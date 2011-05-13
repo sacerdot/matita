@@ -77,7 +77,60 @@ qed.
 
 (* the main properies *******************************************************)
 
-axiom lift_trans_rev: ∀d1,e1,T1,T. ↑[d1,e1] T1 ≡ T →
-                      ∀d2,e2,T2. ↑[d2 + e1, e2] T2 ≡ T →
-                      d1 ≤ d2 →
-                      ∃T0. ↑[d1, e1] T0 ≡ T2 ∧ ↑[d2, e2] T0 ≡ T1.
+theorem lift_trans_rev: ∀d1,e1,T1,T. ↑[d1,e1] T1 ≡ T →
+                        ∀d2,e2,T2. ↑[d2 + e1, e2] T2 ≡ T →
+                        d1 ≤ d2 →
+                        ∃T0. ↑[d1, e1] T0 ≡ T2 ∧ ↑[d2, e2] T0 ≡ T1.
+#d1 #e1 #T1 #T #H elim H -H d1 e1 T1 T
+   [ #k #d1 #e1 #d2 #e2 #T2 #Hk #Hd12
+     lapply (lift_inv_sort2 … Hk) -Hk #Hk destruct -T2 /3/
+   | #i #d1 #e1 #Hid1 #d2 #e2 #T2 #Hi #Hd12
+     lapply (lift_inv_lref2 … Hi) -Hi #H
+     elim H -H #H elim H -H #Hid2 #Hi (**) (* decompose*)
+     destruct -T2
+     [ -Hid2 /5/ (**) (* /4/ *)
+     | elim (lt_false d1 ?)
+       @(le_to_lt_to_lt … Hd12) -Hd12 @(le_to_lt_to_lt … Hid1) -Hid1 /2/
+     ]
+   | #i #d1 #e1 #Hid1 #d2 #e2 #T2 #Hi #Hd12
+     lapply (lift_inv_lref2 … Hi) -Hi #H
+     elim H -H #H elim H -H #Hid2 #Hi (**) (* decompose*)
+     destruct -T2
+     [ -Hd12; lapply (lt_plus_to_lt_l … Hid2) -Hid2 #Hid2 /4/
+     | -Hid1; lapply (arith1 … Hid2) -Hid2 #Hid2
+       @(ex_intro … #(i - e2)) @conj
+       [ >le_plus_minus_comm [ @lift_lref_ge @(transitive_le … Hd12) -Hd12 /2/ | -Hd12 /2/ ]
+       | -Hd12 >(plus_minus_m_m i e2) in ⊢ (? ? ? ? %) /3/
+       ]
+     ]
+   | #I #W1 #W #U1 #U #d1 #e1 #_ #_ #IHW #IHU #d2 #e2 #T2 #H #Hd12
+     lapply (lift_inv_con22 … H) -H #H
+     elim H -H #W2 #H elim H -H #U2 #H elim H -H #H elim H -H #HW2 #HU2 #H (**) (* decompose*)
+     destruct -T2;
+     elim (IHW … HW2 ?) // -IHW HW2 #W0 #H
+     elim H -H #HW2 #HW1 (**) (* decompose*)
+     >plus_plus_comm_23 in HU2 #HU2 elim (IHU … HU2 ?) /2/ -IHU HU2 Hd12 #U0 #H
+     elim H -H #HU2 #HU1 (**) (* decompose*)
+     @(ex_intro … ♭I W0. U0) /3/ (**) (* /4/ *)
+   ]
+qed.
+
+theorem lift_free: ∀d1,e2,T1,T2. ↑[d1, e2] T1 ≡ T2 → ∀d2,e1.
+                                 d1 ≤ d2 → d2 ≤ d1 + e1 → e1 ≤ e2 →
+                                 ∃T. ↑[d1, e1] T1 ≡ T ∧ ↑[d2, e2 - e1] T ≡ T2.
+#d1 #e2 #T1 #T2 #H elim H -H d1 e2 T1 T2
+   [ /3/
+   | #i #d1 #e2 #Hid1 #d2 #e1 #Hd12 #_ #_
+     lapply (lt_to_le_to_lt … Hid1 Hd12) -Hd12 #Hid2 /4/
+   | #i #d1 #e2 #Hid1 #d2 #e1 #_ #Hd21 #He12
+     lapply (transitive_le …(i+e1) Hd21 ?) /2/ -Hd21 #Hd21
+     <(plus_plus_minus_m_m e1 e2 i) //
+     @(ex_intro … #(i+e1)) /3/ (**) (* /4/ *)
+   | #I #V1 #V2 #T1 #T2 #d1 #e2 #_ #_ #IHV #IHT #d2 #e1 #Hd12 #Hd21 #He12
+     elim (IHV … Hd12 Hd21 He12) -IHV #V0 #H
+     elim H -H #HV0a #HV0b (**) (* decompose *)
+     elim (IHT (d2+1) … ? ? He12) /2/ -IHT Hd12 Hd21 He12 #T0 #H
+     elim H -H #HT0a #HT0b (**) (* decompose *)
+     @(ex_intro … ♭I V0.T0) /3/ (**) (* /4/ *)
+   ]
+qed.
