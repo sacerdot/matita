@@ -23,3 +23,13 @@ inductive thin: lenv → nat → nat → lenv → Prop ≝
 .
 
 interpretation "thinning" 'RSubst L1 d e L2 = (thin L1 d e L2).
+
+(* the main properties ******************************************************)
+
+axiom thin_conf_ge: ∀d1,e1,L,L1. ↓[d1,e1] L ≡ L1 →
+                    ∀e2,L2. ↓[0,e2] L ≡ L2 → d1 + e1 ≤ e2 → ↓[0,e2-e1] L1 ≡ L2.
+
+axiom thin_conf_lt: ∀d1,e1,L,L1. ↓[d1,e1] L ≡ L1 →
+                    ∀e2,K2,I,V2. ↓[0,e2] L ≡ K2. ♭I V2 →
+                    e2 < d1 → let d ≝ d1 - e2 - 1 in
+                    ∃K1,V1. ↓[0,e2] L1 ≡ K1. ♭I V1 ∧ ↓[d,e1] K2 ≡ K1 ∧ ↑[d,e1] V1 ≡ V2.
