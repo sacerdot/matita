@@ -39,60 +39,58 @@ axiom A: nat → nat → Prop.
 axiom R: nat → nat → nat → Prop.
 axiom conv: T → T → Prop.*)
 
-inductive TJ 
- (S: nat → nat → Prop)
- (R: nat → nat → nat → Prop)
- (c: T → T → Prop) : list T → T → T → Prop ≝
-  | ax : ∀i,j. S i j → TJ S R c (nil T) (Sort i) (Sort j)
-  | start: ∀G.∀A.∀i.TJ S R c G A (Sort i) → 
-      TJ S R c (A::G) (Rel 0) (lift A 0 1)
-  | weak: ∀G.∀A,B,C.∀i.
-     TJ S R c G A B → TJ S R c G C (Sort i) → 
-       TJ S R c (C::G) (lift A 0 1) (lift B 0 1)
-  | prod: ∀G.∀A,B.∀i,j,k. R i j k →
-     TJ S R c G A (Sort i) → TJ S R c (A::G) B (Sort j) → 
-       TJ S R c G (Prod A B) (Sort k)
-  | app: ∀G.∀F,A,B,a. 
-     TJ S R c G F (Prod A B) → TJ S R c G a A → 
-       TJ S R c G (App F a) (subst B 0 a)
-  | abs: ∀G.∀A,B,b.∀i. 
-     TJ S R c (A::G) b B → TJ S R c G (Prod A B) (Sort i) → 
-       TJ S R c G (Lambda A b) (Prod A B)
-  | conv: ∀G.∀A,B,C.∀i. c B C →
-     TJ S R c G A B → TJ S R c G C (Sort i) → TJ S R c G A C
-  | dummy: ∀G.∀A,B.∀i. 
-     TJ S R c G A B → TJ S R c G B (Sort i) → TJ S R c G (D A) B.
-     
-interpretation "type judgement" 'TJ G A B = (TJ ? ? ? G A B).
-
 record pts : Type[0] ≝ {
-  s1: nat → nat → Prop;
-  r1: nat → nat → nat → Prop;
-  c1: T → T → Prop
+  Ax: nat → nat → Prop;
+  Re: nat → nat → nat → Prop;
+  Co: T → T → Prop
   }.
+  
+inductive TJ (p: pts): list T → T → T → Prop ≝
+  | ax : ∀i,j. Ax p i j → TJ p (nil T) (Sort i) (Sort j)
+  | start: ∀G.∀A.∀i.TJ p G A (Sort i) → 
+      TJ p (A::G) (Rel 0) (lift A 0 1)
+  | weak: ∀G.∀A,B,C.∀i.
+     TJ p G A B → TJ p G C (Sort i) → 
+       TJ p (C::G) (lift A 0 1) (lift B 0 1)
+  | prod: ∀G.∀A,B.∀i,j,k. Re p i j k →
+     TJ p G A (Sort i) → TJ p (A::G) B (Sort j) → 
+       TJ p G (Prod A B) (Sort k)
+  | app: ∀G.∀F,A,B,a. 
+     TJ p G F (Prod A B) → TJ p G a A → 
+       TJ p G (App F a) (subst B 0 a)
+  | abs: ∀G.∀A,B,b.∀i. 
+     TJ p (A::G) b B → TJ p G (Prod A B) (Sort i) → 
+       TJ p G (Lambda A b) (Prod A B)
+  | conv: ∀G.∀A,B,C.∀i. Co p B C →
+     TJ p G A B → TJ p G C (Sort i) → TJ p G A C
+  | dummy: ∀G.∀A,B.∀i. 
+     TJ p G A B → TJ p G B (Sort i) → TJ p G (D A) B.
+     
+interpretation "generic type judgement" 'TJT P G A B = (TJ P G A B).
 
-check r1.
-definition TJ ≝ λp:pts.c p. 
-
+notation "hvbox( G break  ⊢ _{P} A break : B)"
+   non associative with precedence 45
+   for @{'TJT $P $G $A $B}.
+   
 (* ninverter TJ_inv2 for TJ (%?%) : Prop. *)
 
 (**** definitions ****)
 
-inductive Glegal (G: list T) : Prop ≝
-glegalk : ∀A,B. G ⊢ A : B → Glegal G.
+inductive Glegal (P:pts) (G: list T) : Prop ≝
+glegalk : ∀A,B. G ⊢_{P} A : B → Glegal P G.
 
-inductive Gterm (G: list T) (A:T) : Prop ≝
-  | is_term: ∀B.G ⊢ A:B → Gterm G A
-  | is_type: ∀B.G ⊢ B:A → Gterm G A.
+inductive Gterm (P:pts) (G: list T) (A:T) : Prop ≝
+  | is_term: ∀B.G ⊢_{P} A:B → Gterm P G A
+  | is_type: ∀B.G ⊢_{P} B:A → Gterm P G A.
 
-inductive Gtype (G: list T) (A:T) : Prop ≝ 
-gtypek: ∀i.G ⊢ A : Sort i → Gtype G A.
+inductive Gtype (P:pts) (G: list T) (A:T) : Prop ≝ 
+gtypek: ∀i.G ⊢_{P} A : Sort i → Gtype P G A.
 
-inductive Gelement (G:list T) (A:T) : Prop ≝
-gelementk: ∀B.G ⊢ A:B → Gtype G B → Gelement G A.
+inductive Gelement (P:pts) (G:list T) (A:T) : Prop ≝
+gelementk: ∀B.G ⊢_{P} A:B → Gtype P G B → Gelement P G A.
 
-inductive Tlegal (A:T) : Prop ≝ 
-tlegalk: ∀G. Gterm G A → Tlegal A.
+inductive Tlegal (P:pts) (A:T) : Prop ≝ 
+tlegalk: ∀G. Gterm P G A → Tlegal P A.
 
 (*
 ndefinition Glegal ≝ λG: list T.∃A,B:T.TJ G A B .
@@ -113,27 +111,22 @@ subst C A
 #A; #B; #tjAB; nelim tjAB; /2/; (* bello *) nqed.
 *)
 
-theorem start_lemma1: ∀G.∀i,j. 
-A i j → Glegal G → G ⊢ Sort i: Sort j.
-#G #i #j #axij #Gleg (cases Gleg) 
+theorem start_lemma1: ∀P,G,i,j. 
+Ax P i j → Glegal P G → G ⊢_{P} Sort i: Sort j.
+#P #G #i #j #axij #Gleg (cases Gleg) 
 #A #B #tjAB (elim tjAB) /2/
 (* bello *) qed.
 
-theorem start_rel: ∀G.∀A.∀C.∀n,i,q.
-G ⊢ C: Sort q → G ⊢ Rel n: lift A 0 i → (C::G) ⊢ Rel (S n): lift A 0 (S i).
-#G #A #C #n #i #p #tjC #tjn
- (applyS (weak G (Rel n))) //. (* bello *)
- (*
- nrewrite > (plus_n_O i); 
- nrewrite > (plus_n_Sm i O); 
- nrewrite < (lift_lift A 1 i);
- nrewrite > (plus_n_O n);  nrewrite > (plus_n_Sm n O); 
- applyS (weak G (Rel n) (lift A i) C p tjn tjC). *)
+theorem start_rel: ∀P,G,A,C,n,i,q.
+G ⊢_{P} C: Sort q → G ⊢_{P} Rel n: lift A 0 i → 
+ C::G ⊢_{P} Rel (S n): lift A 0 (S i).
+#P #G #A #C #n #i #p #tjC #tjn
+ (applyS (weak P G (Rel n))) //. 
 qed.
   
-theorem start_lemma2: ∀G.
-Glegal G → ∀n. n < |G| → G ⊢ Rel n: lift (nth n T G (Rel O)) 0 (S n).
-#G #Gleg (cases Gleg) #A #B #tjAB (elim tjAB) /2/
+theorem start_lemma2: ∀P,G.
+Glegal P G → ∀n. n < |G| → G ⊢_{P} Rel n: lift (nth n T G (Rel O)) 0 (S n).
+#P #G #Gleg (cases Gleg) #A #B #tjAB (elim tjAB) /2/
   [#i #j #axij #p normalize #abs @(False_ind) @(absurd … abs) // 
   |#G #A #i #tjA #Hind #m (cases m) /2/
    #p #Hle @start_rel // @Hind @le_S_S_to_le @Hle
@@ -142,51 +135,12 @@ Glegal G → ∀n. n < |G| → G ⊢ Rel n: lift (nth n T G (Rel O)) 0 (S n).
   ]
 qed.
 
-(*
-nlet rec TJm G D on D : Prop ≝
-  match D with
-    [ nil ⇒ True
-    | cons A D1 ⇒ TJ G (Rel 0) A ∧ TJm G D1
-    ].
-    
-nlemma tjm1: ∀G,D.∀A. TJm G (A::D) → TJ G (Rel 0) A.
-#G; #D; #A; *; //; nqed.
-
-ntheorem transitivity_tj: ∀D.∀A,B. TJ D A B → 
-  ∀G. Glegal G → TJm G D → TJ G A B.
-#D; #A; #B; #tjAB; nelim tjAB;
-  ##[/2/;
-  ##|/2/;
-  ##|#E; #T; #T0; #T1; #n; #tjT; #tjT1; #H; #H1; #G; #HlegG;
-     #tjGcons; 
-     napply weak;
-*)
-(*
-ntheorem substitution_tj: 
-∀G.∀A,B,N,M.TJ (A::G) M B → TJ G N A →
-  TJ G (subst N M) (subst N B).
-#G;#A;#B;#N;#M;#tjM; 
-  napply (TJ_inv2 (A::G) M B); 
-  ##[nnormalize; /3/;
-  ##|#G; #A; #N; #tjA; #Hind; #Heq;
-     ndestruct;//; 
-  ##|#G; #A; #B; #C; #n; #tjA; #tjC; #Hind1; #Hind2; #Heq;
-     ndestruct;//;
-  ##|nnormalize; #E; #A; #B; #i; #j; #k;
-     #Ax; #tjA; #tjB; #Hind1; #_;
-     #Heq; #HeqB; #tjN; napply (prod ?????? Ax);
-      ##[/2/;
-      ##|nnormalize; napplyS weak;
-
-*)
-
-
-axiom conv_subst: ∀P,Q,N,i.conv P Q → conv P[i := N] Q[i := N].
+axiom conv_subst: ∀T,P,Q,N,i.Co T P Q → Co T P[i := N] Q[i := N].
 
 theorem substitution_tj: 
-∀E.∀A,B,M. E ⊢M:B → ∀G,D.∀N. E = D@A::G → G ⊢ N:A → 
-  ((substl D N)@G) ⊢ M[|D| := N]: B[|D| := N].
-#E #A #B #M #tjMB (elim tjMB)
+∀P,E.∀A,B,M. E ⊢_{P} M:B → ∀G,D.∀N. E = D@A::G → G ⊢_{P} N:A → 
+  ((substl D N)@G) ⊢_{P} M[|D| := N]: B[|D| := N].
+#Pts #E #A #B #M #tjMB (elim tjMB)
   [normalize #i #j #k #G #D #N (cases D) 
     [normalize #isnil destruct
     |#P #L normalize #isnil destruct
@@ -213,7 +167,7 @@ theorem substitution_tj:
     ]
   |#G #P #Q #R #S #tjP #tjS #Hind1 #Hind2
    #G1 #D #N #Heq #tjN (normalize in Hind1 ⊢ %)
-   >(plus_n_O (length ? D)) in ⊢ (? ? ? (? ? % ?))
+   >(plus_n_O (length ? D)) in ⊢ (? ? ? ? (? ? % ?))
    >(subst_lemma R S N ? 0) (applyS app) /2/
   |#G #P #Q #R #i #tjR #tjProd #Hind1 #Hind2
    #G1 #D #N #Heq #tjN normalize
@@ -231,8 +185,8 @@ theorem substitution_tj:
   ]
 qed.
 
-lemma tj_subst_0: ∀G,v,w. G ⊢ v : w → ∀t,u. w :: G ⊢ t : u →
-                  G ⊢ t[0≝v] : u[0≝v].
-#G #v #w #Hv #t #u #Ht 
+lemma tj_subst_0: ∀P,G,v,w. G ⊢_{P} v : w → ∀t,u. w :: G ⊢_{P} t : u →
+                  G ⊢_{P} t[0≝v] : u[0≝v].
+#P #G #v #w #Hv #t #u #Ht 
 lapply (substitution_tj … Ht ? ([]) … Hv) normalize //
 qed.

@@ -12,8 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR THE LAMBDA CALCULUS *******************************************)
-
+(* NOTATION FOR THE LAMBDA CALCULUS *)
 (* equivalence, invariance *)
 
 notation "hvbox(a break ≅ b)" 
