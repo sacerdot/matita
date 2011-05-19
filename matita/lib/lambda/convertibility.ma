@@ -64,7 +64,7 @@ lemma conv_to_deq: ∀M,N. conv M N → red M N ∨ d_eq M N.
   |#P #M1 %2 //
   ]
 qed.
- 
+(* FG: THIS IN NOT COMPLETE
 theorem main1: ∀M,N. CO M N → 
   ∃P,Q. star … red M P ∧ star … red N Q ∧ d_eq P Q.
 #M #N #coMN (elim coMN)
@@ -73,7 +73,7 @@ theorem main1: ∀M,N. CO M N →
     [
   |@(ex_intro … M) @(ex_intro … M) % // % //
   ]
-
+*)
 lemma red_d : ∀M,P. red (D M) P → ∃N. P = D N ∧ red M N.
 #M #P #redMP (inversion redMP)
   [#P1 #M1 #N1 #eqH destruct
@@ -287,7 +287,7 @@ lemma SN_star: ∀M,N. (star … red) N M → SN N → SN M.
 #M #N #rstar (elim rstar) //
 #Q #P #HbQ  #redQP #snNQ #snN @(SN_step …redQP) /2/
 qed. 
-
+(* FG: THIS EXPLODES 
 lemma sub_red: ∀M,N.subterm N M → ∀N1.red N N1 → 
 ∃M1.subterm N1 M1 ∧ red M M1.
 #M #N #subN (elim subN) /4/
@@ -296,7 +296,7 @@ lemma sub_red: ∀M,N.subterm N M → ∀N1.red N N1 →
 #B * #subA #redQ (cases (H2 ? redQ)) #C * #subBC #redSC
 @(ex_intro … C) /3/
 qed.
-
+*)
 axiom sub_star_red: ∀M,N.(star … subterm) N M → ∀N1.red N N1 → 
 ∃M1.subterm N1 M1 ∧ red M M1.
   
