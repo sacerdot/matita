@@ -24,8 +24,6 @@ inductive T : Type[0] ≝
 
 inductive red : T →T → Prop ≝
   | rbeta: ∀P,M,N. red (App (Lambda P M) N) (M[0 ≝ N])
-  | rdapp: ∀M,N. red (App (D M) N) (D (App M N))
-  | rdlam: ∀M,N. red (Lambda M (D N)) (D (Lambda M N))
   | rappl: ∀M,M1,N. red M M1 → red (App M N) (App M1 N)
   | rappr: ∀M,N,N1. red N N1 → red (App M N) (App M N1)
   | rlaml: ∀M,M1,N. red M M1 → red (Lambda M N) (Lambda M1 N)
@@ -41,25 +39,20 @@ qed.
 lemma red_d : ∀M,P. red (D M) P → ∃N. P = D N ∧ red M N.
 #M #P #redMP (inversion redMP)
   [#P1 #M1 #N1 #eqH destruct
-  |#M1 #N1 #eqH destruct
-  |#M1 #N1 #eqH destruct 
-  |4,5,6,7,8,9:#Q1 #Q2 #N1 #red1 #_ #eqH destruct
+  |2,3,4,5,6,7:#Q1 #Q2 #N1 #red1 #_ #eqH destruct
   |#Q1 #M1 #red1 #_ #eqH destruct #eqP @(ex_intro … M1) /2/
   ]
 qed.
 
 lemma red_lambda : ∀M,N,P. red (Lambda M N) P →
  (∃M1. P = (Lambda M1 N) ∧ red M M1) ∨
- (∃N1. P = (Lambda M N1) ∧ red N N1) ∨
- (∃Q. N = D Q ∧ P = D (Lambda M Q)).
+ (∃N1. P = (Lambda M N1) ∧ red N N1).
 #M #N #P #redMNP (inversion redMNP)
   [#P1 #M1 #N1 #eqH destruct
-  |#M1 #N1 #eqH destruct
-  |#M1 #N1 #eqH destruct #eqP %2 (@(ex_intro … N1)) % //
-  |4,5,8,9:#Q1 #Q2 #N1 #red1 #_ #eqH destruct
-  |#Q1 #M1 #N1 #red1 #_ #eqH destruct #eqP %1 %1 
+  |2,3,6,7:#Q1 #Q2 #N1 #red1 #_ #eqH destruct
+  |#Q1 #M1 #N1 #red1 #_ #eqH destruct #eqP %1 
    (@(ex_intro … M1)) % //
-  |#Q1 #M1 #N1 #red1 #_ #eqH destruct #eqP %1 %2 
+  |#Q1 #M1 #N1 #red1 #_ #eqH destruct #eqP %2
    (@(ex_intro … N1)) % //
   |#Q1 #M1 #red1 #_ #eqH destruct
   ]
@@ -70,8 +63,7 @@ lemma red_prod : ∀M,N,P. red (Prod M N) P →
  (∃N1. P = (Prod M N1) ∧ red N N1).
 #M #N #P #redMNP (inversion redMNP)
   [#P1 #M1 #N1 #eqH destruct
-  |2,3: #M1 #N1 #eqH destruct 
-  |4,5,6,7:#Q1 #Q2 #N1 #red1 #_ #eqH destruct
+  |2,3,4,5:#Q1 #Q2 #N1 #red1 #_ #eqH destruct
   |#Q1 #M1 #N1 #red1 #_ #eqH destruct #eqP %1
    (@(ex_intro … M1)) % //
   |#Q1 #M1 #N1 #red1 #_ #eqH destruct #eqP %2 
@@ -82,19 +74,16 @@ qed.
 
 lemma red_app : ∀M,N,P. red (App M N) P →
  (∃M1,N1. M =  (Lambda M1 N1) ∧ P = N1[0:=N]) ∨
- (∃M1. M =  (D M1) ∧ P = D (App M1 N)) ∨
  (∃M1. P = (App M1 N) ∧ red M M1) ∨
  (∃N1. P = (App M N1) ∧ red N N1).
 #M #N #P #redMNP (inversion redMNP)
-  [#P1 #M1 #N1 #eqH destruct #eqP %1 %1 %1
+  [#P1 #M1 #N1 #eqH destruct #eqP %1 %1 
    @(ex_intro … P1) @(ex_intro … M1) % //
-  |#M1 #N1 #eqH destruct #eqP %1 %1 %2 /3/
-  |#M1 #N1 #eqH destruct 
   |#Q1 #M1 #N1 #red1 #_ #eqH destruct #eqP %1 %2
    (@(ex_intro … M1)) % //
   |#Q1 #M1 #N1 #red1 #_ #eqH destruct #eqP %2 
    (@(ex_intro … N1)) % //
-  |6,7,8,9:#Q1 #Q2 #N1 #red1 #_ #eqH destruct
+  |4,5,6,7:#Q1 #Q2 #N1 #red1 #_ #eqH destruct
   |#Q1 #M1 #red1 #_ #eqH destruct
   ]
 qed.
@@ -112,8 +101,7 @@ qed.
 lemma NF_Sort: ∀i. NF (Sort i).
 #i #N % #redN (inversion redN) 
   [1: #P #N #M #H destruct
-  |2,3 :#N #M #H destruct
-  |4,5,6,7,8,9: #N #M #P #_ #_ #H destruct
+  |2,3,4,5,6,7: #N #M #P #_ #_ #H destruct
   |#M #N #_ #_ #H destruct
   ]
 qed.
@@ -121,8 +109,7 @@ qed.
 lemma NF_Rel: ∀i. NF (Rel i).
 #i #N % #redN (inversion redN) 
   [1: #P #N #M #H destruct
-  |2,3 :#N #M #H destruct
-  |4,5,6,7,8,9: #N #M #P #_ #_ #H destruct
+  |2,3,4,5,6,7: #N #M #P #_ #_ #H destruct
   |#M #N #_ #_ #H destruct
   ]
 qed.
@@ -132,22 +119,16 @@ lemma red_subst : ∀N,M,M1,i. red M M1 → red M[i≝N] M1[i≝N].
   [1,2:#j #Hind #M1 #i #r1 @False_ind /2/
   |#P #Q #Hind #M1 #i #r1 (cases (red_app … r1))
     [*
-      [*
-        [* #M2 * #N2 * #eqP #eqM1 >eqP normalize
-         >eqM1 >(plus_n_O i) >(subst_lemma N2) <(plus_n_O i)
-         (cut (i+1 =S i)) [//] #Hcut >Hcut @rbeta
-        |* #M2 * #eqP #eqM1 >eqM1 >eqP normalize @rdapp
-        ]
+      [* #M2 * #N2 * #eqP #eqM1 >eqP normalize
+       >eqM1 >(plus_n_O i) >(subst_lemma N2) <(plus_n_O i)
+       (cut (i+1 =S i)) [//] #Hcut >Hcut @rbeta
       |* #M2 * #eqM1 #rP >eqM1 normalize @rappl @Hind /2/
       ]
     |* #N2 * #eqM1 #rQ >eqM1 normalize @rappr @Hind /2/
     ] 
   |#P #Q #Hind #M1 #i #r1 (cases (red_lambda …r1)) 
-    [*
-      [* #P1 * #eqM1 #redP >eqM1 normalize @rlaml @Hind /2/
-      |* #Q1 * #eqM1 #redP >eqM1 normalize @rlamr @Hind /2/
-      ]
-    |* #M2 * #eqQ #eqM1 >eqM1 >eqQ normalize @rdlam 
+    [* #P1 * #eqM1 #redP >eqM1 normalize @rlaml @Hind /2/
+    |* #Q1 * #eqM1 #redP >eqM1 normalize @rlamr @Hind /2/
     ]
   |#P #Q #Hind #M1 #i #r1 (cases (red_prod …r1))
     [* #P1 * #eqM1 #redP >eqM1 normalize @rprodl @Hind /2/
@@ -314,27 +295,11 @@ lemma SN_Lambda: ∀N.SN N → ∀M.SN M → SN (Lambda N M).
 (* for M we proceed by induction on SH *)
 (lapply (SN_to_SH ? snM)) #shM (elim shM)
 #Q #shQ #HindQ % #a #redH (cases (red_lambda … redH))
-  [* 
-    [* #S * #eqa #redPS >eqa @(HindP S ? Q ?) // 
-     @SH_to_SN % /2/ 
-    |* #S * #eqa #redQS >eqa @(HindQ S) /2/
-    ]
-  |* #S * #eqQ #eqa >eqa @SN_d @(HindQ S) /3/
+  [* #S * #eqa #redPS >eqa @(HindP S ? Q ?) // 
+   @SH_to_SN % /2/ 
+  |* #S * #eqa #redQS >eqa @(HindQ S) /2/
   ]
 qed. 
-
-(*
-lemma SH_Lambda: ∀N.SH N → ∀M.SH M → SN (Lambda N M).
-#N #snN (elim snN) #P #snP #HindP #M #snM (elim snM) 
-#Q #snQ #HindQ % #a #redH (cases (red_lambda … redH))
-  [* 
-    [* #S * #eqa #redPS >eqa @(HindP S ? Q ?) /2/
-     % /2/ 
-    |* #S * #eqa #redQS >eqa @(HindQ S) /2/
-    ]
-  |* #S * #eqQ #eqa >eqa @SN_d @(HindQ S) /3/
-  ]
-qed. *)
  
 lemma SN_Prod: ∀N.SN N → ∀M.SN M → SN (Prod N M).
 #N #snN (elim snN) #P #shP #HindP #M #snM (elim snM)
@@ -352,6 +317,7 @@ lemma SN_subst: ∀i,N,M.SN M[i ≝ N] → SN M.
   |#Hcut #M #snM @(Hcut … snM) //
 qed.
 
+(*
 lemma SN_DAPP: ∀N,M. SN (App M N) → SN (App (D M) N).
 cut (∀P. SN P → ∀M,N. P = App M N → SN (App (D M) N)); [|/2/]
 #P #snP (elim snP) #Q #snQ #Hind
@@ -366,7 +332,7 @@ cut (∀P. SN P → ∀M,N. P = App M N → SN (App (D M) N)); [|/2/]
     ]
   |* #M2 * #eqA >eqA #r2 @(Hind (App M M2)) /2/
   ]
-qed.
+qed. *)
 
 lemma  SN_APP: ∀P.SN P → ∀N. SN N → ∀M.
   SN M[0:=N] → SN (App (Lambda P M) N).
@@ -376,20 +342,11 @@ lemma  SN_APP: ∀P.SN P → ∀N. SN N → ∀M.
 (generalize in match snM1) (elim shM)
 #C #shC #HindC #snC1 % #Q #redQ (cases (red_app … redQ))
   [*
-    [*
-      [* #M2 * #N2 * #eqlam destruct #eqQ //
-      |* #M2 * #eqlam destruct
-      ]
+    [* #M2 * #N2 * #eqlam destruct #eqQ //
     |* #M2 * #eqQ #redlam >eqQ (cases (red_lambda …redlam))
-      [*
-        [* #M3 * #eqM2 #r2 >eqM2 @HindA // % /2/
-        |* #M3 * #eqM2 #r2 >eqM2 @HindC; 
-          [%1 // |@(SN_step … snC1) /2/]
-        ]
-      |* #M3 * #eqC #eqM2 >eqM2 @SN_DAPP @HindC;
-        [%2 >eqC @inj //
-        |@(SN_subterm … snC1) >eqC normalize //
-        ]
+      [* #M3 * #eqM2 #r2 >eqM2 @HindA // % /2/
+      |* #M3 * #eqM2 #r2 >eqM2 @HindC; 
+        [%1 // |@(SN_step … snC1) /2/]
       ]
     ]
   |* #M2 * #eqQ #r2 >eqQ @HindB // @(SN_star … snC1) 
