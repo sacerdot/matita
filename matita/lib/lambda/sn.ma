@@ -34,8 +34,8 @@ definition SAT1 ≝ λ(P:?->Prop). ∀i,l. SNl l → P (Appl (Rel i) l).
 definition SAT2 ≝ λ(P:?→Prop). ∀N,L,M,l. SN N → SN L → 
                   P (Appl M[0:=L] l) → P (Appl (Lambda N M) (L::l)).
 
-definition SAT3 ≝ λ(P:?→Prop). ∀N,l1,l2. P (Appl (D (Appl N l1)) l2) → 
-                               P (Appl (D N) (l1@l2)).
+definition SAT3 ≝ λ(P:?→Prop). ∀M,N,l. P (Appl (D (App M N)) l) → 
+                               P (Appl (D M) (N::l)).
 
 definition SAT4 ≝ λ(P:?→Prop). ∀M. P M → P (D M).
 
@@ -47,8 +47,8 @@ lemma SAT1_rel: ∀P,i. SAT1 P → P (Rel i).
 #P #i #HP @(HP i (nil ?) …) //
 qed.
 
-lemma SAT3_1: ∀P,N,M. SAT3 P → P (D (App N M)) → P (App (D N) M).
-#P #N #M #HP #H @(HP … ([?]) ([])) @H
+lemma SAT3_1: ∀P,M,N. SAT3 P → P (D (App M N)) → P (App (D M) N).
+#P #M #N #HP #H @(HP … ([])) @H
 qed.
 
 (* axiomatization *************************************************************)

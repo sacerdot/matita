@@ -33,6 +33,7 @@ record RC : Type[0] ≝ {
    sat3: SAT3 mem;  (* we add the clusure by rev dapp *)
    sat4: SAT4 mem   (* we add the clusure by dummies *) 
 }.
+
 (* HIDDEN BUG:
  * if SAT0 and SAT1 are expanded,
  * the projections sat0 and sat1 are not generated
@@ -119,7 +120,7 @@ qed.
 definition dep_mem ≝ λB,C,M. ∀N. N ∈ B → App M N ∈ C.
 
 lemma dep_cr1: ∀B,C. CR1 (dep_mem B C).
-#B #C #M #Hdep (lapply (Hdep (Sort 0) ?)) /2 by SAT0_sort/ /3/ (**) (* adiacent auto *)
+#B #C #M #Hdep (lapply (Hdep (Sort 0) ?)) -Hdep /3/ @SAT0_sort //
 qed.
 
 lemma dep_sat0: ∀B,C. SAT0 (dep_mem B C).
@@ -134,7 +135,7 @@ lemma dep_sat2: ∀B,C. SAT2 (dep_mem B C).
 qed.
 
 lemma dep_sat3: ∀B,C. SAT3 (dep_mem B C).
-#B #C #N #l1 #l2 #HN #M #HM <appl_append >associative_append /3/
+#B #C #M #N #l #H #L #HL <appl_append @sat3 /2/
 qed.
 
 lemma dep_sat4: ∀B,C. SAT4 (dep_mem B C).
