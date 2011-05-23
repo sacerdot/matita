@@ -166,12 +166,12 @@ let interpretate_term_and_interpretate_term_option (status: #NCic.status)
                 raise (DisambiguateTypes.Invalid_choice 
                  (lazy (loc, "Syntax error: the left hand side of a "^
                    "branch pattern must be \"_\"")))
-           ) branches
+           ) branches in
+         let indtype_ref =
+          NReference.reference_of_string "cic:/fake_indty.ind(0,0,0)"
          in
-         (*
-          NCic.MutCase (ref, cic_outtype, cic_term,
-            (List.map do_branch branches))
-          *) ignore branches; assert false (* patterns not implemented yet *)
+          NCic.Match (indtype_ref, cic_outtype, cic_term,
+           (List.map do_branch branches))
         else
          let indtype_ref =
           match indty_ident with

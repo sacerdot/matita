@@ -169,6 +169,8 @@ let rec to_string =
      None, "NCicUnification uncertain: " ^ Lazy.force msg
   | DisambiguateChoices.Choice_not_found msg ->
      None, ("Disambiguation choice not found: " ^ Lazy.force msg)
+  | DisambiguateTypes.Invalid_choice msg ->
+     None, ("Invalid choice: " ^ snd (Lazy.force msg))
   | MatitaEngine.EnrichedWithStatus (exn,_) ->
      None, snd(to_string exn)
   | NTacStatus.Error (msg,None) ->
