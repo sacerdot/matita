@@ -804,14 +804,20 @@ and try_coercions status
         in
         metasenv, subst, t, expty (*}}}*)
     | _,_,NCic.LetIn(name,ty,t,bo) -> 
+        let rec mk_fresh_name ctx firstch n =
+          let candidate = (String.make 1 firstch) ^ (string_of_int n) in
+          if (List.for_all (fun (s,_) -> s <> candidate) ctx) then candidate
+          else mk_fresh_name ctx firstch (n+1)
+        in
         pp (lazy "LETIN");
-        let context_bo = (name, NCic.Def (t,ty)) :: context in
+        let name' = mk_fresh_name context 'l' 0 in
+        let context_bo = (name', NCic.Def (t,ty)) :: context in
         let metasenv, subst, bo2, _ = 
           try_coercions status ~localise metasenv subst context_bo
            bo orig_t (NCicSubstitution.lift status 1 infty)
            (NCicSubstitution.lift status 1 expty) perform_unification exc
         in
-        let coerced = NCic.LetIn (name,ty,t,bo2) in
+        let coerced = NCic.LetIn (name',ty,t,bo2) in
         pp (lazy ("LETIN: coerced = " ^ status#ppterm ~metasenv ~subst ~context coerced));
         metasenv, subst, coerced, expty
     | NCic.Prod (nameprod, src, ty),NCic.Prod (_, src2, ty2), _ -> 
