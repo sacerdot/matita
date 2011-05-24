@@ -29,12 +29,12 @@ lemma lift_appl: ∀p,k,l,F. lift (Appl F l) p k =
 #p #k #l (elim l) -l /2/ #A #D #IHl #F >IHl //
 qed.
 *)
-
+(*
 lemma lift_rel_lt: ∀i,p,k. (S i) ≤ k → lift (Rel i) k p = Rel i.
 #i #p #k #Hik normalize >(le_to_leb_true … Hik) //
 qed.
-
-lemma lift_rel_ge: ∀i,p,k. (S i) ≰ k → lift (Rel i) k p = Rel (i+p).
+*)
+lemma lift_rel_not_le: ∀i,p,k. (S i) ≰ k → lift (Rel i) k p = Rel (i+p).
 #i #p #k #Hik normalize >(lt_to_leb_false (S i) k) /2/
 qed.
 
