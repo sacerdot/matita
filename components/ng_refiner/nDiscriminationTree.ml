@@ -71,7 +71,7 @@ let path_string_of t =
     | NCic.Appl (hd::tl) ->
        aux (List.length tl) depth hd @ 
        List.flatten (List.map (aux 0 (depth+1)) tl)
-    | NCic.Lambda _ | NCic.Prod _ -> [Variable]
+    | NCic.Lambda _ -> [Variable]
         (* I think we should CicSubstitution.subst Implicit t *)
     | NCic.LetIn _ -> [Variable] (* z-reduce? *)
     | NCic.Meta _ | NCic.Implicit _ -> assert (arity = 0); [Variable]
@@ -79,7 +79,9 @@ let path_string_of t =
     | NCic.Sort (NCic.Prop) -> assert (arity=0); [Proposition]
     | NCic.Sort _ -> assert (arity=0); [Datatype]
     | NCic.Const (u) -> [Constant (u, arity)]
-    | NCic.Match _ -> [Dead]
+    (* Prod is used for coercions to funclass, ?->?       *)
+    (*  so it should not be unifiable with any other term *)
+    | NCic.Match _ | NCic.Prod _ -> [Dead] 
   in 
   aux 0 0 t
 ;;
