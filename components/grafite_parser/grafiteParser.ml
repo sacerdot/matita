@@ -576,10 +576,12 @@ EXTEND
          G.NUnivConstraint (loc,u1,u2)
     | IDENT "unification"; IDENT "hint"; n = int; t = tactic_term ->
         G.UnificationHint (loc, t, n)
-    | IDENT "coercion"; name = IDENT; SYMBOL ":"; ty = term; 
+    | IDENT "coercion"; name = IDENT;
+        compose = OPT [ IDENT "nocomposites" -> () ];
+        SYMBOL ":"; ty = term; 
         SYMBOL <:unicode<def>>; t = term; "on"; 
         id = [ IDENT | PIDENT ]; SYMBOL ":"; source = term;
-        "to"; target = term; compose = OPT [ IDENT "nocomposites" -> () ]  ->
+        "to"; target = term ->
           let compose = compose = None in
           G.NCoercion(loc,name,compose,t,ty,(id,source),target)     
     | IDENT "record" ; (params,name,ty,fields) = record_spec ->
