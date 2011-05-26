@@ -166,7 +166,7 @@ let rec typeof (status:#NCicCoercion.status)
            | NCicUnification.Uncertain _ 
            | NCicUnification.UnificationFailure _ as exc -> 
              try_coercions status ~localise 
-               metasenv subst context t orig infty expty true exc)
+               metasenv subst context t orig infty (`Type expty) exc)
     | None -> metasenv, subst, t, infty
     (*D*)in outside true; rc with exc -> outside false; raise exc
   in
@@ -463,26 +463,33 @@ and check_type status ~localise metasenv subst context (ty as orig_ty) =
     metasenv, subst, ty
 
 and try_coercions status 
-  ~localise 
-  metasenv subst context t orig_t infty expty perform_unification exc 
+  ~localise metasenv subst context t orig_t infty expty exc 
 =
   let cs_subst = NCicSubstitution.subst status ~avoid_beta_redexes:true in
   try 
-    pp (lazy "WWW: trying coercions -- preliminary unification");
-    let metasenv, subst = 
-      NCicUnification.unify status metasenv subst context infty expty
-    in metasenv, subst, t, expty
+   (match expty with
+       `Type expty ->
+         pp (lazy "WWW: trying coercions -- preliminary unification");
+         let metasenv, subst = 
+           NCicUnification.unify status metasenv subst context infty expty
+         in metasenv, subst, t, expty
+     | _ -> raise (Failure "Special case Prod or Sort"))
   with
   | exn ->
   (* we try with a coercion *)
   let rec first exc = function
   | [] ->   
+     let expty =
+      match expty with
+         `Type expty -> status#ppterm ~metasenv ~subst ~context expty
+       | `Sort -> "[[sort]]"
+       | `Prod -> "[[prod]]" in
       pp (lazy "WWW: no more coercions!");      
       raise (wrap_exc (lazy (localise orig_t, Printf.sprintf
         "The term\n%s\nhas type\n%s\nbut is here used with type\n%s"
         (status#ppterm ~metasenv ~subst ~context t)
         (status#ppterm ~metasenv ~subst ~context infty)
-        (status#ppterm ~metasenv ~subst ~context expty))) exc)
+        expty)) exc)
   | (_,metasenv, newterm, newtype, meta)::tl ->
       try 
           pp (lazy("K=" ^ status#ppterm ~metasenv ~subst ~context newterm));
@@ -494,21 +501,28 @@ and try_coercions status
             status#ppterm ~metasenv ~subst ~context t ^  " === " ^
             status#ppterm ~metasenv ~subst ~context meta ^ "\n"));
         let metasenv, subst = 
-          NCicUnification.unify status metasenv subst context t meta
-        in
-          pp (lazy ( "UNIFICATION in CTX:\n"^ 
-            status#ppcontext ~metasenv ~subst context
-            ^ "\nMENV: " ^
-            status#ppmetasenv metasenv ~subst
-            ^ "\nOF: " ^
-            status#ppterm ~metasenv ~subst ~context newtype ^  " === " ^
-            status#ppterm ~metasenv ~subst ~context expty ^ "\n"));
-        let metasenv, subst = 
-          if perform_unification then
-            NCicUnification.unify status metasenv subst context newtype expty
-          else metasenv, subst
-        in
-        metasenv, subst, newterm, newtype
+          NCicUnification.unify status metasenv subst context t meta in
+        match expty with
+           `Type expty ->
+             pp (lazy ( "UNIFICATION in CTX:\n"^ 
+               status#ppcontext ~metasenv ~subst context
+               ^ "\nMENV: " ^
+               status#ppmetasenv metasenv ~subst
+               ^ "\nOF: " ^
+               status#ppterm ~metasenv ~subst ~context newtype ^  " === " ^
+               status#ppterm ~metasenv ~subst ~context expty ^ "\n"));
+             let metasenv,subst =
+               NCicUnification.unify status metasenv subst context newtype expty
+             in
+              metasenv, subst, newterm, newtype
+         | `Sort ->
+             (match NCicReduction.whd status ~subst context newtype with
+                 NCic.Sort _ -> metasenv,subst,newterm,newtype
+               | _ -> first exc tl)
+         | `Prod ->
+             (match NCicReduction.whd status ~subst context newtype with
+                 NCic.Prod _ -> metasenv,subst,newterm,newtype
+               | _ -> first exc tl)
       with 
       | NCicUnification.UnificationFailure _ -> first exc tl
       | NCicUnification.Uncertain _ as exc -> first exc tl
@@ -517,7 +531,8 @@ and try_coercions status
   try 
     pp (lazy "WWW: trying coercions -- inner check");
     match infty, expty, t with
-    | _,_, NCic.Match (Ref.Ref (_,Ref.Ind (_,tyno,leftno)) as r,outty,m,pl) ->
+    (* `Sort|`Prod + Match not implemented *) 
+    | _,`Type expty, NCic.Match (Ref.Ref (_,Ref.Ind (_,tyno,leftno)) as r,outty,m,pl) ->
         (*{{{*) pp (lazy "CASE");
         (* {{{ helper functions *)
         let get_cl_and_left_p refit outty =
@@ -778,7 +793,7 @@ and try_coercions status
                  ~context ~metasenv ~subst pbo));
                let metasenv, subst, pbo, _ =
                  try_coercions status ~localise menv s context pbo 
-          	 orig_t (*??*) infty_pbo expty_pbo perform_unification exc
+          	 orig_t (*??*) infty_pbo (`Type expty_pbo) exc
                in
                pp 
                  (lazy ("CASE: pbo2: " ^ status#ppterm 
@@ -803,7 +818,7 @@ and try_coercions status
         let t = NCic.Appl (NCic.Match(r,new_outty,m,pl) :: eqs) 
         in
         metasenv, subst, t, expty (*}}}*)
-    | _,_,NCic.LetIn(name,ty,t,bo) -> 
+    | _,`Type expty,NCic.LetIn(name,ty,t,bo) -> 
         let rec mk_fresh_name ctx firstch n =
           let candidate = (String.make 1 firstch) ^ (string_of_int n) in
           if (List.for_all (fun (s,_) -> s <> candidate) ctx) then candidate
@@ -815,12 +830,12 @@ and try_coercions status
         let metasenv, subst, bo2, _ = 
           try_coercions status ~localise metasenv subst context_bo
            bo orig_t (NCicSubstitution.lift status 1 infty)
-           (NCicSubstitution.lift status 1 expty) perform_unification exc
+           (`Type (NCicSubstitution.lift status 1 expty)) exc
         in
         let coerced = NCic.LetIn (name',ty,t,bo2) in
         pp (lazy ("LETIN: coerced = " ^ status#ppterm ~metasenv ~subst ~context coerced));
         metasenv, subst, coerced, expty
-    | NCic.Prod (nameprod, src, ty),NCic.Prod (_, src2, ty2), _ -> 
+    | NCic.Prod (nameprod, src, ty),`Type (NCic.Prod (_, src2, ty2) as expty), _ -> 
         let rec mk_fresh_name ctx firstch n =
           let candidate = (String.make 1 firstch) ^ (string_of_int n) in
           if (List.for_all (fun (s,_) -> s <> candidate) ctx) then candidate
@@ -837,7 +852,7 @@ and try_coercions status
         let metasenv, subst, rel1, _ = 
           try_coercions status ~localise metasenv subst context_src2
            (NCic.Rel 1) orig_t (NCicSubstitution.lift status 1 src2) 
-           (NCicSubstitution.lift status 1 src) perform_unification exc
+           (`Type (NCicSubstitution.lift status 1 src)) exc
         in
         (* covariant part: the result of f(c x); x:src2; (c x):src *)
         let name_t, bo = 
@@ -849,13 +864,23 @@ and try_coercions status
         let ty = cs_subst rel1 (NCicSubstitution.lift_from status 2 1 ty) in
         let metasenv, subst, bo, _ = 
           try_coercions status ~localise metasenv subst context_src2
-            bo orig_t ty ty2 perform_unification exc
+            bo orig_t ty (`Type ty2) exc
         in
         let coerced = NCic.Lambda (name_t,src2, bo) in
         pp (lazy ("LAM: coerced = " ^ status#ppterm ~metasenv ~subst ~context coerced));
         metasenv, subst, coerced, expty (*}}}*)
     | _ -> raise exc
   with exc2 ->    
+  let expty =
+   match expty with
+      `Type expty -> expty
+    | `Sort ->
+        NCic.Sort (NCic.Type 
+         (match NCicEnvironment.get_universes () with
+           | x::_ -> x 
+           | _ -> assert false))
+    | `Prod -> NCic.Prod ("_",NCic.Implicit `Type,NCic.Implicit `Type)
+  in
   pp(lazy("try_coercion " ^ 
     status#ppterm ~metasenv ~subst ~context infty ^ " |---> " ^
     status#ppterm ~metasenv ~subst ~context expty));
@@ -872,10 +897,7 @@ and force_to_sort status metasenv subst context t orig_t localise ty =
       Failure _ -> 
         let ty = NCicReduction.whd status ~subst context ty in
           try_coercions status ~localise metasenv subst context
-            t orig_t ty (NCic.Sort (NCic.Type 
-              (match NCicEnvironment.get_universes () with
-               | x::_ -> x 
-               | _ -> assert false))) false 
+            t orig_t ty `Sort 
              (Uncertain (lazy (localise orig_t, 
              "The type of " ^ status#ppterm ~metasenv ~subst ~context t ^
              " is not a sort: " ^ status#ppterm ~metasenv ~subst ~context ty)))
@@ -1005,8 +1027,7 @@ and eat_prods status ~localise force_ty metasenv subst context expty orig_t orig
           let metasenv, subst, newhead, newheadty = 
             try_coercions status ~localise metasenv subst context
               (NCicUntrusted.mk_appl he (List.rev args_so_far)) orig_he ty
-              (NCic.Prod ("_",NCic.Implicit `Term,NCic.Implicit `Term))
-              false
+              `Prod
               (RefineFailure (lazy (localise orig_he, Printf.sprintf
                ("The term %s is here applied to %d arguments but expects " ^^
                "only %d arguments") (status#ppterm ~metasenv ~subst ~context he)
