@@ -259,11 +259,11 @@ let close_graph name t s d to_s from_d p a status =
 ;;
 
 (* idempotent *)
-let basic_index_ncoercion (name,t,s,d,position,arity) status =
+let basic_index_ncoercion (name,_compose,t,s,d,position,arity) status =
   NCicCoercion.index_coercion status name t s d arity position
 ;;
 
-let basic_eval_ncoercion (name,t,s,d,p,a) status =
+let basic_eval_ncoercion (name,compose,t,s,d,p,a) status =
   let to_s = 
     NCicCoercion.look_for_coercion status [] [] [] skel_dummy s
   in
@@ -271,10 +271,11 @@ let basic_eval_ncoercion (name,t,s,d,p,a) status =
     NCicCoercion.look_for_coercion status [] [] [] d skel_dummy
   in
   let status = NCicCoercion.index_coercion status name t s d a p in
-  let composites = close_graph name t s d to_s from_d p a status in
+  let composites =
+   if compose then close_graph name t s d to_s from_d p a status else [] in
   List.fold_left 
     (fun (uris,infos,st) ((uri,_,_,_,_ as obj),name,t,s,d,p,a) -> 
-      let info = name,t,s,d,p,a in
+      let info = name,compose,t,s,d,p,a in
       let st = NCicLibrary.add_obj st obj in
       let st = basic_index_ncoercion info st in
       uri::uris, info::infos, st)
@@ -282,11 +283,11 @@ let basic_eval_ncoercion (name,t,s,d,p,a) status =
 ;;
 
 let record_ncoercion =
- let aux (name,t,s,d,p,a) ~refresh_uri_in_term =
+ let aux (name,compose,t,s,d,p,a) ~refresh_uri_in_term =
   let t = refresh_uri_in_term t in
   let s = refresh_uri_in_term s in
   let d = refresh_uri_in_term d in
-   basic_index_ncoercion (name,t,s,d,p,a)
+   basic_index_ncoercion (name,compose,t,s,d,p,a)
  in
  let aux_l l ~refresh_uri_in_universe ~refresh_uri_in_term
   ~refresh_uri_in_reference ~alias_only status
@@ -305,17 +306,17 @@ let basic_eval_and_record_ncoercion infos status =
 ;;
 
 let basic_eval_and_record_ncoercion_from_t_cpos_arity 
-      status (name,t,cpos,arity) 
+      status (name,compose,t,cpos,arity) 
 =
   let ty = NCicTypeChecker.typeof status ~subst:[] ~metasenv:[] [] t in
   let src,tgt = src_tgt_of_ty_cpos_arity status ty cpos arity in
   let status, uris =
-   basic_eval_and_record_ncoercion (name,t,src,tgt,cpos,arity) status
+   basic_eval_and_record_ncoercion (name,compose,t,src,tgt,cpos,arity) status
   in
    status,uris
 ;;
 
-let eval_ncoercion (status: #GrafiteTypes.status) name t ty (id,src) tgt = 
+let eval_ncoercion (status: #GrafiteTypes.status) name compose t ty (id,src) tgt = 
  let metasenv,subst,status,ty =
   GrafiteDisambiguate.disambiguate_nterm status None [] [] [] ("",0,ty) in
  assert (metasenv=[]);
@@ -327,7 +328,7 @@ let eval_ncoercion (status: #GrafiteTypes.status) name t ty (id,src) tgt =
  let status, src, tgt, cpos, arity = 
    src_tgt_cpos_arity_of_ty_id_src_tgt status ty id src tgt in
  let status, uris =
-  basic_eval_and_record_ncoercion (name,t,src,tgt,cpos,arity) status
+  basic_eval_and_record_ncoercion (name,compose,t,src,tgt,cpos,arity) status
  in
   status,uris
 ;;

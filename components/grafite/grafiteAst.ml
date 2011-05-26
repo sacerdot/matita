@@ -84,7 +84,7 @@ type nmacro =
 
 (** To be increased each time the command type below changes, used for "safe"
  * marshalling *)
-let magic = 35
+let magic = 36
 
 (* composed magic: term + command magics. No need to change this value *)
 let magic = magic + 10000 * NotationPt.magic
@@ -104,9 +104,7 @@ type command =
   | NInverter of loc * string * nterm * bool list option * nterm option
   | NUnivConstraint of loc * NUri.uri * NUri.uri
   | NCopy of loc * string * NUri.uri * (NUri.uri * NUri.uri) list
-  | NCoercion of loc * string *
-      nterm * nterm *
-      (string * nterm) * nterm
+  | NCoercion of loc * string * bool * nterm * nterm * (string * nterm) * nterm
   | NQed of loc
   (* ex lexicon commands *)
   | Alias of loc * alias_spec

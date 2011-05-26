@@ -181,7 +181,7 @@ let debug c _ = c;;
               List.fold_left
                (fun (i,acc) t ->
                  i+1,
-		       let f = extract status amount vl f in
+                  let f = extract status amount vl f in
                   if i = n then
                    let imp = NCic.Implicit `Term in
                     NCic.Appl (dag::imp::imp::imp(* f *)::imp::imp::

@@ -485,9 +485,10 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
       GrafiteTypes.Serializer.require
        ~alias_only ~baseuri ~fname:fullpath status
   | GrafiteAst.UnificationHint (loc, t, n) -> eval_unification_hint status t n
-  | GrafiteAst.NCoercion (loc, name, t, ty, source, target) ->
+  | GrafiteAst.NCoercion (loc, name, compose, t, ty, source, target) ->
      let status, composites =
-      NCicCoercDeclaration.eval_ncoercion status name t ty source target in
+      NCicCoercDeclaration.eval_ncoercion status name compose t ty source
+       target in
      let mode = GrafiteAst.WithPreferences in (* MATITA 1.0: fixme *)
      let aliases = GrafiteDisambiguate.aliases_for_objs status composites in
       eval_alias status (mode,aliases)
@@ -622,7 +623,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
                  let status, nuris = 
                    NCicCoercDeclaration.
                      basic_eval_and_record_ncoercion_from_t_cpos_arity 
-                      status (name,t,cpos,arity) in
+                      status (name,true,t,cpos,arity) in
                  let aliases = GrafiteDisambiguate.aliases_for_objs status nuris in
                   eval_alias status (mode,aliases)
                with MultiPassDisambiguator.DisambiguationError _-> 

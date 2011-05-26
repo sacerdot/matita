@@ -99,6 +99,8 @@ let outside exc_opt =
     match !times with time1::tl -> times := tl; time1 | [] -> assert false in
    prerr_endline ("}}} " ^ !indent ^ " " ^ string_of_float (time2 -. time1));
    (match exc_opt with
+   | Some (UnificationFailure msg) ->  prerr_endline ("exception raised: NCicUnification.UnificationFailure:" ^ Lazy.force msg)
+   | Some (Uncertain msg) ->  prerr_endline ("exception raised: NCicUnification.Uncertain:" ^ Lazy.force msg)
    | Some e ->  prerr_endline ("exception raised: " ^ Printexc.to_string e)
    | None -> ());
    try

@@ -579,8 +579,9 @@ EXTEND
     | IDENT "coercion"; name = IDENT; SYMBOL ":"; ty = term; 
         SYMBOL <:unicode<def>>; t = term; "on"; 
         id = [ IDENT | PIDENT ]; SYMBOL ":"; source = term;
-        "to"; target = term ->
-          G.NCoercion(loc,name,t,ty,(id,source),target)     
+        "to"; target = term; compose = OPT [ IDENT "nocomposites" -> () ]  ->
+          let compose = compose = None in
+          G.NCoercion(loc,name,compose,t,ty,(id,source),target)     
     | IDENT "record" ; (params,name,ty,fields) = record_spec ->
         G.NObj (loc, N.Record (params,name,ty,fields))
     | IDENT "copy" ; s = IDENT; IDENT "from"; u = URI; "with"; 

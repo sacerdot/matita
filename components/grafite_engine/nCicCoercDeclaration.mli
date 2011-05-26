@@ -10,10 +10,11 @@
       V_______________________________________________________________ *)
 
 
-(* evals a coercion declaration statement: name t ty (id,src) tgt *)
+(* evals a coercion declaration statement: name compose t ty (id,src) tgt *)
 val eval_ncoercion: 
    #GrafiteTypes.status as 'status ->
      string ->
+     bool ->
      NotationPt.term ->
      NotationPt.term ->
      string * NotationPt.term ->
@@ -24,5 +25,5 @@ val eval_ncoercion:
  * the arity in the `:arity>` syntax *)
 val basic_eval_and_record_ncoercion_from_t_cpos_arity: 
    #GrafiteTypes.status as 'status ->
-     string * NCic.term * int * int -> 'status * NUri.uri list
+     string * bool * NCic.term * int * int -> 'status * NUri.uri list
 
