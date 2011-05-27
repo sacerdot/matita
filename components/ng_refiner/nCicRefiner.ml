@@ -139,6 +139,29 @@ let check_allowed_sort_elimination status localise r orig =
     aux
 ;;
 
+(* CSC: temporary thing, waiting for better times *)
+let mk_fresh_name context name =
+try
+ let rex = Str.regexp "[0-9']*$" in
+ let basename = Str.global_replace rex "" in
+ let suffix name =
+  ignore (Str.search_forward rex name 0);
+  let n = Str.matched_string name in
+   if n = "" then 0 else int_of_string n in
+ let name' = basename name in
+ let name' = if name' = "_" then "H" else name' in
+ let last =
+  List.fold_left
+   (fun last (name,_) ->
+     if basename name = name' then
+      max last (suffix name)
+     else
+      last
+   ) (-1) context
+ in
+  name' ^ (if last = -1 then "" else string_of_int (last + 1))
+with exn -> prerr_endline ("XXX" ^ Printexc.to_string exn); assert false
+
 let rec typeof (status:#NCicCoercion.status)
   ?(localise=fun _ -> Stdpp.dummy_loc) 
   metasenv subst context term expty 
@@ -819,13 +842,8 @@ and try_coercions status
         in
         metasenv, subst, t, expty (*}}}*)
     | _,`Type expty,NCic.LetIn(name,ty,t,bo) -> 
-        let rec mk_fresh_name ctx firstch n =
-          let candidate = (String.make 1 firstch) ^ (string_of_int n) in
-          if (List.for_all (fun (s,_) -> s <> candidate) ctx) then candidate
-          else mk_fresh_name ctx firstch (n+1)
-        in
         pp (lazy "LETIN");
-        let name' = mk_fresh_name context 'l' 0 in
+        let name' = mk_fresh_name context name in
         let context_bo = (name', NCic.Def (t,ty)) :: context in
         let metasenv, subst, bo2, _ = 
           try_coercions status ~localise metasenv subst context_bo
@@ -836,17 +854,10 @@ and try_coercions status
         pp (lazy ("LETIN: coerced = " ^ status#ppterm ~metasenv ~subst ~context coerced));
         metasenv, subst, coerced, expty
     | NCic.Prod (nameprod, src, ty),`Type (NCic.Prod (_, src2, ty2) as expty), _ -> 
-        let rec mk_fresh_name ctx firstch n =
-          let candidate = (String.make 1 firstch) ^ (string_of_int n) in
-          if (List.for_all (fun (s,_) -> s <> candidate) ctx) then candidate
-          else mk_fresh_name ctx firstch (n+1)
-        in
         (*{{{*) pp (lazy "LAM");
         pp (lazy ("LAM: t = " ^ status#ppterm ~metasenv ~subst ~context t));
-        let name_con = mk_fresh_name context 'c' 0
-          (*FreshNamesGenerator.mk_fresh_name 
-            ~subst metasenv context ~typ:src2 Cic.Anonymous*)
-        in
+        let namename = match t with NCic.Lambda (n,_,_) -> n | _ -> nameprod in
+        let name_con = mk_fresh_name context namename in
         let context_src2 = ((name_con, NCic.Decl src2) :: context) in
         (* contravariant part: the argument of f:src->ty *)
         let metasenv, subst, rel1, _ = 
