@@ -129,6 +129,10 @@ let rec nth n (A:Type[0]) (l:list A) (d:A)  ≝
     [O ⇒ hd A l d
     |S m ⇒ nth m A (tail A l) d].
 
+lemma nth_nil: ∀A,a,i. nth i A ([]) a = a.
+#A #a #i elim i normalize //
+qed.
+
 (**************************** fold *******************************)
 
 let rec fold (A,B:Type[0]) (op:B → B → B) (b:B) (p:A→bool) (f:A→B) (l:list A) on l :B ≝  
@@ -183,3 +187,32 @@ theorem fold_sum: ∀A,B. ∀I,J:list A.∀nil.∀op:Aop B nil.∀f.
   [>nill //|#a #tl #Hind <assoc //]
 qed.
 
+(********************** lhd and ltl ******************************)
+
+let rec lhd (A:Type[0]) (l:list A) n on n ≝ match n with
+   [ O   ⇒ nil …
+   | S n ⇒ match l with [ nil ⇒ nil … | cons a l ⇒ a :: lhd A l n ]
+   ].
+
+let rec ltl (A:Type[0]) (l:list A) n on n ≝ match n with
+   [ O   ⇒ l
+   | S n ⇒ ltl A (tail … l) n
+   ].
+
+lemma lhd_nil: ∀A,n. lhd A ([]) n = [].
+#A #n elim n //
+qed.
+
+lemma ltl_nil: ∀A,n. ltl A ([]) n = [].
+#A #n elim n normalize //
+qed.
+
+lemma lhd_cons_ltl: ∀A,n,l. lhd A l n @ ltl A l n = l.
+#A #n elim n -n //
+#n #IHn #l elim l normalize //
+qed.
+
+lemma length_ltl: ∀A,n,l. |ltl A l n| = |l| - n.
+#A #n elim n -n /2/
+#n #IHn * normalize /2/
+qed.

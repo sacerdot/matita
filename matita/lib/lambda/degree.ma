@@ -119,6 +119,42 @@ interpretation "degree assignment (type context)" 'IInt1 G L = (Deg L G).
 
 interpretation "degree assignment (type context)" 'IInt G = (Deg (nil ?) G).
 
-lemma Deg_append: ∀L,G,H. ║H @ G║_[L] = ║H║_[║G║_[L]].
+lemma Deg_cons: ∀L,F,t. let H ≝ Deg L F in
+                ║t :: F║_[L] = ║t║_[H] - 1 :: H.
+// qed.
+
+lemma ltl_Deg: ∀L,G. ltl … (║G║_[L]) (|G|) = L.
+#L #G elim G normalize //
+qed.
+
+lemma Deg_Deg: ∀L,G,H. ║H @ G║_[L] = ║H║_[║G║_[L]].
 #L #G #H elim H normalize //
+qed.
+
+interpretation "degree assignment (type context)" 'IIntS1 G L = (lhd ? (Deg L G) (length ? G)).
+
+lemma length_DegHd: ∀L,G. |║G║*_[L]| = |G|.
+#L #G elim G normalize //
+qed.
+
+lemma Deg_decomp: ∀L,G. ║G║*_[L] @ L = ║G║_[L].
+// qed.
+
+lemma append_Deg: ∀L,G,H. ║H @ G║_[L] = ║H║*_[║G║_[L]] @ ║G║_[L].
+// qed.
+
+lemma DegHd_Lift: ∀L,Lp,p. p = |Lp| → 
+                  ∀G. ║Lift G p║*_[Lp @ L] = ║G║*_[L].
+#L #Lp #p #HLp #G elim G //
+#t #G #IH normalize >IH <Deg_decomp /4/
+qed.
+
+lemma Deg_lift_subst: ∀v,w,G. [║v║_[║G║]] = ║[w]║*_[║G║] →
+                      ∀t,k,Gk. k = |Gk| →
+                      ║lift t[k≝v] k 1 :: Lift Gk 1 @ [w] @ G║ =
+                      ║t :: Lift Gk 1 @ [w] @ G║.
+#v #w #G #Hvw #t #k #Gk #HGk
+>Deg_cons >Deg_cons in ⊢ (???%)
+>append_Deg >append_Deg <Hvw -Hvw >DegHd_Lift; [2: //]
+>deg_lift; [2,3: >HGk /2/] <(deg_subst … k) // >HGk /2/
 qed.
