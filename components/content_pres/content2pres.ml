@@ -1061,13 +1061,13 @@ let nconjlist2pres0 term2pres context =
           Con.def_id = def_id ;
           Con.def_term = bo } = d in
       let r = 
-         Box.b_h [Some "helm", "xref", def_id]
+        Box.b_hov [Some "helm", "xref", def_id]
            [ Box.b_object (p_mi []
              (match def_name with
                 None -> "_"
               | Some n -> n)) ; Box.b_space ;
              Box.b_text [] (Utf8Macro.unicode_of_tex "\\def") ;
-             Box.b_space; term2pres bo] in
+             Box.indent (term2pres bo)] in
       aux (r::accum) tl
    | _::_ -> assert false
  in

@@ -143,7 +143,7 @@ let pp_ast0 status t k =
         in
         let match_box =
           hvbox false false [
-           hvbox false true [
+           hvbox false false [
             hvbox false true [keyword "match"; space; break; top_pos (k what)];
             break;
             hvbox false true indty_box;
@@ -210,8 +210,8 @@ let pp_ast0 status t k =
               keyword "let"; space;
               hvbox false true [
                 aux_var var; space;
-                builtin_symbol "\\def"; break; top_pos (k s) ];
-              break; space; keyword "in"; space ];
+                builtin_symbol "\\def"; break; top_pos (k s); space; keyword "in"; space ];
+              ];
             break;
             k t ])
     | Ast.LetRec (rec_kind, funs, where) ->
