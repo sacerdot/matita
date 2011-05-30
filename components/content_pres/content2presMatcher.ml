@@ -105,7 +105,7 @@ struct
               name, (Env.NumType, Env.NumValue s)
           | Ast.Variable (Ast.IdentVar name), (Ast.Ident (s, None)) ->
               name, (Env.StringType, Env.StringValue (Env.Ident s))
-          | _ -> assert false)
+          | _ -> assert false (* activate the DEBUGGING CODE below *))
         pl tl
     with Invalid_argument _ -> assert false
 
@@ -157,7 +157,16 @@ struct
       in
       magichooser candidates
     in
+(* DEBUGGING CODE 
+fun input ->
+let (fst,_)::_ = rows in
+prerr_endline ("RIGA: " ^ NotationPp.pp_term (new NCicPp.status) fst);
+prerr_endline ("CONTRO: " ^ NotationPp.pp_term (new NCicPp.status) input);
+*)
     M.compiler rows' match_cb (fun _ -> None)
+(* DEBUGGING CODE 
+input
+*)
 
   and compile_magic = function
     | Ast.Fold (kind, p_base, names, p_rec) ->
