@@ -236,5 +236,5 @@ let rec to_string =
       loc,
        "********** DISAMBIGUATION ERRORS: **********\n" ^
         explain (aux errorll)
-  | exn -> None, "Uncaught exception: " ^ Printexc.to_string exn
+  | exn -> None, ("Uncaught exception: " ^ Printexc.to_string exn ^ Printexc.get_backtrace ())
 
