@@ -53,16 +53,17 @@ let newmeta,maxmeta =
   (fun () -> !maxmeta)
 ;;
 
-exception NotInTheList;;
+exception NotFound of [`NotInTheList | `NotWellTyped];;
 
 let position to_skip n (shift, lc) =
   match lc with
   | NCic.Irl _ when to_skip > 0 -> assert false  (* unclear to me *)
-  | NCic.Irl len when n <= shift || n > shift + len -> raise NotInTheList
+  | NCic.Irl len when n <= shift || n > shift + len ->
+     raise (NotFound `NotInTheList)
   | NCic.Irl _ -> n - shift
   | NCic.Ctx tl ->
       let rec aux to_skip k = function 
-         | [] -> raise NotInTheList
+         | [] -> raise (NotFound `NotInTheList)
          | _ :: tl when to_skip > 0 -> aux (to_skip - 1) (k+1) tl
          | (NCic.Rel m)::_ when m + shift = n -> k
          | _::tl -> aux to_skip (k+1) tl 
@@ -303,6 +304,7 @@ let int_of_out_scope_tag tag =
 
 
 exception Found;;
+exception TypeNotGood;;
 
 (* INVARIANT: we suppose that t is not another occurrence of Meta(n,_), 
    otherwise the occur check does not make sense in case of unification
@@ -359,7 +361,7 @@ let delift status ~unify metasenv subst context n l t =
           match List.nth context (n-1) with
           | _,NCic.Def (bo,_) -> 
                 (try ms, NCic.Rel ((position in_scope (n-k) l) + k)
-                 with NotInTheList ->
+                 with (NotFound `NotInTheList) ->
                 (* CSC: This bit of reduction hurts performances since it is
                  * possible to  have an exponential explosion of the size of the
                  * proof. required for nat/nth_prime.ma *)
@@ -443,7 +445,7 @@ let delift status ~unify metasenv subst context n l t =
                           let ms, t = aux (context,k,in_scope) ms t in 
                           ms, tbr, t::tl
                         with
-                        | NotInTheList | MetaSubstFailure _ -> ms, j::tbr, tl
+                        | (NotFound `NotInTheList) | MetaSubstFailure _ -> ms, j::tbr, tl
                   in
                   let (metasenv, subst), to_be_r, lc1' = deliftl [] 1 ms lc1 in
                   pp (lazy ("TO BE RESTRICTED: " ^ 
@@ -467,25 +469,71 @@ let delift status ~unify metasenv subst context n l t =
   in
 (*
   prerr_endline (
-    "DELIFTO " ^ NCicPp.ppterm ~metasenv ~subst ~context t ^ " w.r.t. " ^
-    String.concat ", " (List.map (NCicPp.ppterm ~metasenv ~subst ~context) ( 
+    "DELIFTO " ^ status#ppterm ~metasenv ~subst ~context t ^ " w.r.t. " ^
+    status#ppterm ~metasenv ~subst ~context (NCic.Meta(n,l)) ^ " i.e. " ^
+    String.concat ", " (List.map (status#ppterm ~metasenv ~subst ~context) ( 
       let shift, lc = l in
-      (List.map (NCicSubstitution.lift shift) 
+      (List.map (NCicSubstitution.lift status shift) 
         (NCicUtils.expand_local_context lc))
   )));
 *)
-   try aux (context,0,0) (metasenv,subst) t
-   with NotInTheList ->
+   try
+(*assert (try n = -1 or (ignore(NCicUtils.lookup_meta n metasenv); true) with NCicUtils.Meta_not_found _ -> false);*)
+    let ((metasenv,subst),t) as res = aux (context,0,0) (metasenv,subst) t in
+    if (try n <> -1 && (ignore(NCicUtils.lookup_meta n metasenv); false)
+        with NCicUtils.Meta_not_found _ -> true)
+    then
+     let _,context,bo,_ = NCicUtils.lookup_subst n subst in
+      match unify metasenv subst context bo t with
+         None -> raise (NotFound `NotWellTyped)
+       | Some (metasenv,subst) -> (metasenv,subst),t
+    else
+    (try
+      let _,context,ty = NCicUtils.lookup_meta n metasenv in
+      let ty' =
+       match t with
+          NCic.Sort _ -> (* could be algebraic *) NCic.Implicit `Closed
+        | _ -> NCicTypeChecker.typeof status ~subst ~metasenv context t in
+       (match ty,ty' with
+           NCic.Implicit _,_ ->
+            (match ty' with
+                NCic.Sort _ | NCic.Meta _ | NCic.Implicit _ -> res
+              | _ -> raise TypeNotGood)
+         | _,NCic.Implicit _ ->
+            (match ty with
+                NCic.Sort _ | NCic.Meta _ | NCic.Implicit _ -> res
+              | _ -> raise TypeNotGood)
+         | _ ->
+           if
+            NCicReduction.are_convertible status ~metasenv ~subst context ty' ty
+           then
+            res
+           else
+            raise TypeNotGood)
+     with
+        NCicUtils.Meta_not_found _ ->
+         (* Fake metavariable used in NTacStatus and NCicRefiner :-( *)
+         assert (n = -1); res
+      | TypeNotGood
+      | NCicTypeChecker.AssertFailure _
+      | NCicReduction.AssertFailure _
+      | NCicTypeChecker.TypeCheckerFailure _ ->
+         raise (NotFound `NotWellTyped))
+   with NotFound reason ->
       (* This is the case where we fail even first order unification. *)
       (* The reason is that our delift function is weaker than first  *)
       (* order (in the sense of alpha-conversion). See comment above  *)
       (* related to the delift function.                              *)
+      let reason =
+       match reason with
+          `NotInTheList -> "some variable cannot be delifted"
+        | `NotWellTyped -> "the unifier found is not well typed" in
       let msg = (lazy (Printf.sprintf
-        ("Error trying to abstract %s over [%s]: the algorithm only tried to "^^
-        "abstract over bound variables") (status#ppterm ~metasenv ~subst
+        ("Error trying to abstract %s over [%s]: %s")
+        (status#ppterm ~metasenv ~subst
         ~context t) (String.concat "; " (List.map (status#ppterm ~metasenv
         ~subst ~context) (let shift, lc = l in List.map (NCicSubstitution.lift
-        status shift) (NCicUtils.expand_local_context lc))))))
+        status shift) (NCicUtils.expand_local_context lc)))) reason))
       in
       let shift, lc = l in
       let lc = NCicUtils.expand_local_context lc in

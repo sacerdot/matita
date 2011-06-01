@@ -70,7 +70,7 @@ let exp_implicit status ~localise metasenv subst context with_type t =
               ~unify:(fun m s c t1 t2 ->
                 try Some (NCicUnification.unify status m s c t1 t2)
                 with NCicUnification.UnificationFailure _ | NCicUnification.Uncertain _ -> None)
-              metasenv subst context 0 (0,NCic.Irl 0) typ
+              metasenv subst context (-1) (0,NCic.Irl 0) typ
             with
               NCicMetaSubst.MetaSubstFailure _
             | NCicMetaSubst.Uncertain _ ->

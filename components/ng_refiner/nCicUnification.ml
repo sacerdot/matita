@@ -913,7 +913,7 @@ and delift_type_wrt_terms status metasenv subst context t args =
            with UnificationFailure _ | Uncertain _ -> None
          in
          indent := ind; res)
-      metasenv subst context 0 (0,NCic.Ctx lc) t
+      metasenv subst context (-1) (0,NCic.Ctx lc) t
    with
       NCicMetaSubst.MetaSubstFailure _
     | NCicMetaSubst.Uncertain _ -> (metasenv, subst), t

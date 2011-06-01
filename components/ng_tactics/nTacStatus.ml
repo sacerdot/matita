@@ -157,7 +157,7 @@ let relocate status destination (source,t as orig) =
             let u, d, metasenv, subst, o = status#obj in
             pp(lazy("delifting as " ^ 
               status#ppterm ~metasenv ~subst ~context:source 
-               (NCic.Meta (0,lc))));
+               (NCic.Meta (-1,lc))));
             let (metasenv, subst), t =
               NCicMetaSubst.delift status
                  ~unify:(fun m s c t1 t2 -> 
@@ -165,7 +165,7 @@ let relocate status destination (source,t as orig) =
                    with 
                     | NCicUnification.UnificationFailure _ 
                     | NCicUnification.Uncertain _ -> None) 
-               metasenv subst source 0 lc t
+               metasenv subst source (-1) lc t
             in
             let status = status#set_obj (u, d, metasenv, subst, o) in
             status, (ctx,t))
