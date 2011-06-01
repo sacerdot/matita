@@ -28,9 +28,11 @@ val maxmeta: unit -> int
  * the delift function is a term the implicit variable can be substituted with
  * to make the term [t] unifiable with the metavariable occurrence.  In general,
  * the problem is undecidable if we consider equivalence in place of alpha
- * convertibility. Our implementation, though, is even weaker than alpha
+ * convertibility.
+ * The old implementation, though, is even weaker than alpha
  * convertibility, since it replace the term [tk] if and only if [tk] is a Rel
  * (missing all the other cases). Does this matter in practice?
+ * The new experimental implementation, instead, works up to unification.
  * The metavariable index is the index of the metavariable that must not occur
  * in the term (for occur check).
  *)
