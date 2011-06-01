@@ -330,7 +330,9 @@ let alpha_eq (status:#NCic.status) ~test_lambda_source aux test_eq_only metasenv
        (is_prop || aux test_eq_only context term1 term2) &&
        (try List.for_all2 (aux test_eq_only context) pl1 pl2
         with Invalid_argument _ -> false)
-   | (C.Implicit _, _) | (_, C.Implicit _) -> assert false
+   | (C.Implicit _, _) | (_, C.Implicit _) -> true
+     (* CSC: was assert false, but it happens when looking for coercions
+        during pretty printing of terms yet to be refined *)
    | (_,_) -> false
 ;;
 
