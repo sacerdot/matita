@@ -142,6 +142,9 @@ lemma lift_subst_up: ∀M,N,n,i,j.
   ]
 qed.
 
+lemma lift_subst_up_O: ∀v,t,k,p. (lift t (k+1) p)[O≝lift v k p] = lift t[O≝v] k p.
+// qed.
+
 theorem delift : ∀A,B.∀i,j,k. i ≤ j → j ≤ i + k → 
   (lift B i (S k)) [j ≝ A] = lift B i k.
 #A #B (elim B) normalize /2/
@@ -202,3 +205,8 @@ lemma subst_lemma: ∀A,B,C.∀k,i.
     ]
   ] 
 qed.
+
+lemma subst_lemma_comm: ∀A,B,C.∀k,i.
+  (A [i ≝ B]) [i+k ≝ C] = (A [i+k+1 := C]) [i ≝ B [k ≝ C]].
+#A #B #C #k #i >commutative_plus >subst_lemma //
+qed. 

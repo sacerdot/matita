@@ -22,19 +22,19 @@ inductive T : Type[0] ≝
 .
 *)
 
-inductive conv : T →T → Prop ≝
-  | cbeta: ∀P,M,N. conv (App (Lambda P M) N) (M[0 ≝ N])
-  | cappl: ∀M,M1,N. conv M M1 → conv (App M N) (App M1 N)
-  | cappr: ∀M,N,N1. conv N N1 → conv (App M N) (App M N1)
-  | claml: ∀M,M1,N. conv M M1 → conv (Lambda M N) (Lambda M1 N)
-  | clamr: ∀M,N,N1. conv N N1 → conv (Lambda M N) (Lambda M N1)
-  | cprodl: ∀M,M1,N. conv M M1 → conv (Prod M N) (Prod M1 N)
-  | cprodr: ∀M,N,N1. conv N N1 → conv (Prod M N) (Prod M N1)
-  | cd: ∀M,M1. conv (D M) (D M1). 
+inductive conv1 : T →T → Prop ≝
+  | cbeta: ∀P,M,N. conv1 (App (Lambda P M) N) (M[0 ≝ N])
+  | cappl: ∀M,M1,N. conv1 M M1 → conv1 (App M N) (App M1 N)
+  | cappr: ∀M,N,N1. conv1 N N1 → conv1 (App M N) (App M N1)
+  | claml: ∀M,M1,N. conv1 M M1 → conv1 (Lambda M N) (Lambda M1 N)
+  | clamr: ∀M,N,N1. conv1 N N1 → conv1 (Lambda M N) (Lambda M N1)
+  | cprodl: ∀M,M1,N. conv1 M M1 → conv1 (Prod M N) (Prod M1 N)
+  | cprodr: ∀M,N,N1. conv1 N N1 → conv1 (Prod M N) (Prod M N1)
+  | cd: ∀M,M1. conv1 (D M) (D M1). 
 
-definition CO ≝ star … conv.
+definition conv ≝ star … conv1.
 
-lemma red_to_conv: ∀M,N. red M N → conv M N.
+lemma red_to_conv1: ∀M,N. red M N → conv1 M N.
 #M #N #redMN (elim redMN) /2/
 qed.
 
@@ -48,7 +48,7 @@ inductive d_eq : T →T → Prop ≝
   | eprod: ∀M1,M2,N1,N2. d_eq M1 M2 → d_eq N1 N2 → 
       d_eq (Prod M1 N1) (Prod M2 N2).
       
-lemma conv_to_deq: ∀M,N. conv M N → red M N ∨ d_eq M N.
+lemma conv1_to_deq: ∀M,N. conv1 M N → red M N ∨ d_eq M N.
 #M #N #coMN (elim coMN)
   [#P #B #C %1 //
   |#P #M1 #N1 #coPM1 * [#redP %1 /2/ | #eqPM1 %2 /3/]
@@ -61,8 +61,8 @@ lemma conv_to_deq: ∀M,N. conv M N → red M N ∨ d_eq M N.
   ]
 qed.
 
-(* FG: THIS IN NOT COMPLETE
-theorem main1: ∀M,N. CO M N → 
+(* FG: THIS IS NOT COMPLETE
+theorem main1: ∀M,N. conv M N → 
   ∃P,Q. star … red M P ∧ star … red N Q ∧ d_eq P Q.
 #M #N #coMN (elim coMN)
   [#B #C #rMB #convBC * #P1 * #Q1 * * #redMP1 #redBQ1 
