@@ -97,6 +97,10 @@ notation "hvbox(《T》 break _ [E1 break , E2])"
    non associative with precedence 50
    for @{'XInt2 $T $E1 $E2}.
 
-notation "hvbox(𝕂{T} break _ [E])"
+notation "hvbox(𝕂{G})"
    non associative with precedence 50
-   for @{'IK1 $T $E}.
+   for @{'IK $G}.
+
+notation "hvbox(𝕂{T} break _ [G])"
+   non associative with precedence 50
+   for @{'IK $T $G}.

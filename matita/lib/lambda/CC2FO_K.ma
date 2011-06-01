@@ -30,34 +30,34 @@ lemma cons_append_assoc: ∀A,a. ∀l1,l2:list A. (a::l1) @ l2 = a :: (l1 @ l2).
  *     Osborne Handbooks of Logic in Computer Science (2) pp. 117-309
  *)
 
-(* The K interpretation *******************************************************)
+(* The K interpretation of a term *********************************************)
 
 (* the interpretation in the λPω-context G of t (should be λPω-kind or □)
  * as a member of SAT
  *)
-let rec KI G t on t ≝ match t with
+let rec Ki G t on t ≝ match t with
 [ Sort _     ⇒ Sort 0
 | Prod n m   ⇒ 
-    let im ≝ KI (n::G) m in 
-    if_then_else ? (eqb (║n║_[║G║]) 3) (Prod (KI G n) im) im[0≝Sort 0]
+    let im ≝ Ki (n::G) m in 
+    if_then_else ? (eqb (║n║_[║G║]) 3) (Prod (Ki G n) im) im[0≝Sort 0]
 (* this is correct if we want dummy kinds *)
 | D _        ⇒ Sort 0
 (* this is for the substitution lemma *)
 | Rel i      ⇒ Rel i
 (* this is useless but nice: see [1] Definition 5.3.3 *)
-| Lambda n m ⇒ (KI (n::G) m)[0≝Sort 0]
-| App m n    ⇒ KI G m
+| Lambda n m ⇒ (Ki (n::G) m)[0≝Sort 0]
+| App m n    ⇒ Ki G m
 ].
 
-interpretation "CC2FO: K interpretation (term)" 'IK1 t L = (KI L t).
+interpretation "CC2FO: K interpretation (term)" 'IK t L = (Ki L t).
 
 lemma ki_prod_3: ∀n,G. ║n║_[║G║] = 3 → 
-                 ∀m. 𝕂{Prod n m}_[G] = (Prod (KI G n) (𝕂{m}_[n::G])).
+                 ∀m. 𝕂{Prod n m}_[G] = Prod (𝕂{n}_[G]) (𝕂{m}_[n::G]).
 #n #G #H #m normalize >H -H //
 qed.
 
 lemma ki_prod_not_3: ∀n,G. ║n║_[║G║] ≠ 3 →
-                     ∀m. 𝕂{Prod n m}_[G] = 𝕂{m}_[n::G][0≝Sort 0].
+                     ∀m. 𝕂{Prod n m}_[G] =  𝕂{m}_[n::G][0≝Sort 0].
 #n #G #H #m normalize >(not_eq_to_eqb_false … H) -H //
 qed.
 
@@ -139,3 +139,13 @@ lemma ki_subst_0: ∀v,w,G. [║v║_[║G║]] = ║[w]║*_[║G║] →
                   ∀t.  𝕂{t[0≝v]}_[G] = 𝕂{t}_[w::G][0≝𝕂{v}_[G]].
 #v #w #G #Hvw #t @(ki_subst ?????? ([])) //
 qed.
+
+(* The K interpretation of a context ******************************************)
+
+(* the interpretation of a λPω-context G *)
+let rec KI G ≝ match G with
+[ nil      ⇒ nil …
+| cons t F ⇒ if_then_else ? (eqb (║t║_[║F║]) 3) (𝕂{t}_[F] :: KI F) (KI F)
+].
+
+interpretation "CC2FO: K interpretation (context)" 'IK G = (KI G).
