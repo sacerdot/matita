@@ -1510,10 +1510,12 @@ let rec auto_clusters ?(top=false)
     let classes = HExtlib.clusters (deps status) all_goals in
     List.iter 
 	(fun gl ->
-	   if List.length gl > flags.maxwidth then 
-	     (debug_print ~depth (lazy "FAIL GLOBAL WIDTH"); 
-	      raise (Gaveup IntSet.empty))
-	   else ()) classes;
+	   if List.length gl > flags.maxwidth then begin
+	      debug_print ~depth (lazy "FAIL GLOBAL WIDTH"); 
+	      HLog.error (sprintf "global width (%u) exceeded: %u"
+	         flags.maxwidth (List.length gl));
+	      raise (Gaveup IntSet.empty)
+	   end else ()) classes;
     if List.length classes = 1 then
       let flags = 
         {flags with last = (List.length all_goals = 1)} in 
@@ -1595,9 +1597,12 @@ auto_main flags signature cache depth status: unit =
 	else
         let ng = List.length goals in
         (* moved inside auto_clusters *)
-        if ng > flags.maxwidth then 
-          (print ~depth (lazy "FAIL LOCAL WIDTH"); raise (Gaveup IntSet.empty))
-        else if depth = flags.maxdepth then 
+        if ng > flags.maxwidth then begin 
+          debug_print ~depth (lazy "FAIL LOCAL WIDTH");
+	  HLog.error (sprintf "local width (%u) exceeded: %u"
+	     flags.maxwidth ng);
+	  raise (Gaveup IntSet.empty)
+        end else if depth = flags.maxdepth then
 	  raise (Gaveup IntSet.empty)
         else 
         let status = NTactics.branch_tac ~force:true status in
