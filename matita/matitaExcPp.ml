@@ -112,8 +112,9 @@ let compact_disambiguation_errors all_passes errorll =
    choices
 ;;
 
-let rec to_string = 
-  function
+let rec to_string exn =
+ try
+  (match exn with
     HExtlib.Localized (floc,exn) ->
       let _,msg = to_string exn in
       let (x, y) = HExtlib.loc_of_floc floc in
@@ -139,6 +140,8 @@ let rec to_string =
      None, "NRefiner uncertain: " ^ snd (Lazy.force msg)
   | NCicMetaSubst.Uncertain msg ->
      None, "NCicMetaSubst uncertain: " ^ Lazy.force msg
+  | NCicMetaSubst.MetaSubstFailure msg ->
+     None, "NCicMetaSubst failure: " ^ Lazy.force msg
   | NCicTypeChecker.TypeCheckerFailure msg ->
      None, "NTypeChecker failure: " ^ Lazy.force msg
   | NCicTypeChecker.AssertFailure msg ->
@@ -236,5 +239,6 @@ let rec to_string =
       loc,
        "********** DISAMBIGUATION ERRORS: **********\n" ^
         explain (aux errorll)
-  | exn -> None, ("Uncaught exception: " ^ Printexc.to_string exn ^ Printexc.get_backtrace ())
-
+  | exn -> None, ("Uncaught exception: " ^ Printexc.to_string exn ^ Printexc.get_backtrace ()))
+ with exn ->
+  None, ("Exception raised during pretty-printing of an exception: " ^ Printexc.to_string exn ^ Printexc.get_backtrace ())
