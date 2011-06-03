@@ -219,6 +219,57 @@ let rec nth_prod projs n ty =
   | _ -> assert false
 ;;
 
+(* this code should be unified with NTermCicContent.nast_of_cic0,
+   but the two contexts have different types *)
+let pp (status: #NCic.status) =
+ let rec pp rels =
+  function
+    NCic.Rel i -> List.nth rels (i - 1)
+  | NCic.Const _ as t -> NotationPt.NCic t
+  | NCic.Sort s -> NotationPt.Sort (fst (ast_of_sort s))
+  | NCic.Meta _
+  | NCic.Implicit _ -> assert false
+  | NCic.Appl l -> NotationPt.Appl (List.map (pp rels) l)
+  | NCic.Prod (n,s,t) ->
+     let n = mk_id n in
+      NotationPt.Binder (`Pi, (n,Some (pp rels s)), pp (n::rels) t)
+  | NCic.Lambda (n,s,t) ->
+     let n = mk_id n in
+      NotationPt.Binder (`Lambda, (n,Some (pp rels s)), pp (n::rels) t)
+  | NCic.LetIn (n,s,ty,t) ->
+     let n = mk_id n in
+      NotationPt.LetIn ((n, Some (pp rels ty)), pp rels s, pp (n::rels) t)
+  | NCic.Match (NReference.Ref (uri,_) as r,outty,te,patterns) ->
+    let name = NUri.name_of_uri uri in
+    let case_indty = Some (name, None) in
+    let constructors, leftno =
+     let _,leftno,tys,_,n = NCicEnvironment.get_checked_indtys status r in
+     let _,_,_,cl  = List.nth tys n in
+      cl,leftno
+    in
+    let rec eat_branch n rels ty pat =
+      match (ty, pat) with
+      | NCic.Prod (name, s, t), _ when n > 0 ->
+         eat_branch (pred n) rels t pat
+      | NCic.Prod (_, _, t), NCic.Lambda (name, s, t') ->
+          let cv, rhs = eat_branch 0 ((mk_id name)::rels) t t' in
+           (mk_id name, Some (pp rels s)) :: cv, rhs
+      | _, _ -> [], pp rels pat
+    in
+    let patterns =
+      try
+        List.map2
+          (fun (_, name, ty) pat ->
+            let capture_variables,rhs = eat_branch leftno rels ty pat in
+             NotationPt.Pattern (name, None, capture_variables), rhs
+          ) constructors patterns
+      with Invalid_argument _ -> assert false
+    in
+     NotationPt.Case (pp rels te, case_indty, Some (pp rels outty), patterns)
+ in
+  pp
+;;
+
 let mk_projection status leftno tyname consname consty (projname,_,_) i =
  let argsno = count_prods consty - leftno in
  let rec aux names ty leftno =
@@ -232,9 +283,13 @@ let mk_projection status leftno tyname consname consty (projname,_,_) i =
       HExtlib.mk_list underscore i @ [bvar,None] @
        HExtlib.mk_list underscore (argsno - i -1) in
      let branch = NotationPt.Pattern (consname,None,bvars), bvar in
-     let _,outtype = nth_prod [] i ty in
-     let outtype= 
-       NotationPt.Binder (`Lambda, (arg, Some arg_ty), NotationPt.NCic outtype) in
+     let projs,outtype = nth_prod [] i ty in
+     let rels =
+      List.map
+       (fun name -> mk_appl (mk_id name :: List.rev names @ [arg])) projs
+      @ names in
+     let outtype = pp status rels outtype in
+     let outtype= NotationPt.Binder (`Lambda, (arg, Some arg_ty), outtype) in
       [arg, Some arg_ty], NotationPt.Case (arg,None,Some outtype,[branch])
    | _,NCic.Prod (name,_,t) ->
       let name = mk_id name in
