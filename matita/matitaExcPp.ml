@@ -241,4 +241,5 @@ let rec to_string exn =
         explain (aux errorll)
   | exn -> None, ("Uncaught exception: " ^ Printexc.to_string exn ^ Printexc.get_backtrace ()))
  with exn ->
-  None, ("Exception raised during pretty-printing of an exception: " ^ Printexc.to_string exn ^ Printexc.get_backtrace ())
+  None, ("Exception raised during pretty-printing of an exception: " ^
+   snd (to_string exn))
