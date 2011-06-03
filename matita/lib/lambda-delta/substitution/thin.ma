@@ -32,4 +32,4 @@ axiom thin_conf_ge: ∀d1,e1,L,L1. ↓[d1,e1] L ≡ L1 →
 axiom thin_conf_lt: ∀d1,e1,L,L1. ↓[d1,e1] L ≡ L1 →
                     ∀e2,K2,I,V2. ↓[0,e2] L ≡ K2. ♭I V2 →
                     e2 < d1 → let d ≝ d1 - e2 - 1 in
-                    ∃K1,V1. ↓[0,e2] L1 ≡ K1. ♭I V1 ∧ ↓[d,e1] K2 ≡ K1 ∧ ↑[d,e1] V1 ≡ V2.
+                    ∃∃K1,V1. ↓[0,e2] L1 ≡ K1. ♭I V1 & ↓[d,e1] K2 ≡ K1 & ↑[d,e1] V1 ≡ V2.
