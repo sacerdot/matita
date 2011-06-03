@@ -305,6 +305,7 @@ let nast_of_cic0 status
                  [arg] -> idref (k ~context arg)
                | _ -> idref (Ast.Appl (List.map (k ~context) args))))
     | NCic.Match (NReference.Ref (uri,_) as r,outty,te,patterns) ->
+       (try
         let name = NUri.name_of_uri uri in
 (* CSC
         let uri_str = UriManager.string_of_uri uri in
@@ -351,6 +352,12 @@ let nast_of_cic0 status
           | `Term -> Some case_indty
         in
          idref (Ast.Case (k ~context te, indty, Some (k ~context outty), patterns))
+     with
+      NCicEnvironment.ObjectNotFound msg ->
+       idref (Ast.Case(k ~context te,Some ("NOT_FOUND: " ^ Lazy.force msg,None),
+       Some (k ~context outty),
+       (List.map (fun t -> Ast.Pattern ("????", None, []), k ~context t)
+         patterns))))
 ;;
 
 let rec nast_of_cic1 status ~idref ~output_type ~metasenv ~subst ~context term =
