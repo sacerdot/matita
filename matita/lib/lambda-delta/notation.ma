@@ -17,6 +17,10 @@ notation "hvbox( ζ I )"
  non associative with precedence 45
  for @{ 'Zeta $I }.
 
+notation "hvbox( τ I )"
+ non associative with precedence 45
+ for @{ 'Tau $I }.
+
 notation "hvbox( θ I )"
  non associative with precedence 45
  for @{ 'Theta $I }.
@@ -29,13 +33,21 @@ notation "hvbox( ⋆ k )"
  non associative with precedence 90
  for @{ 'Star $k }.
 
-notation "hvbox( ♭ (term 90 I) break (term 90 T1) . break (term 90 T) )"
+notation "hvbox( 𝕚 { I } break (term 90 T1) . break (term 90 T) )"
  non associative with precedence 90
- for @{ 'SCon $I $T1 $T }.
+ for @{ 'SItem $I $T1 $T }.
 
-notation "hvbox( T . break ♭ (term 90 I) break (term 90 T1) )"
+notation "hvbox( 𝕓 { I } break (term 90 T1) . break (term 90 T) )"
+ non associative with precedence 90
+ for @{ 'SBind $I $T1 $T }.
+
+notation "hvbox( 𝕗 { I } break (term 90 T1) . break (term 90 T) )"
+ non associative with precedence 90
+ for @{ 'SFlat $I $T1 $T }.
+
+notation "hvbox( T . break 𝕓 { I } break (term 90 T1) )"
  non associative with precedence 89
- for @{ 'DCon $T $I $T1 }.
+ for @{ 'DBind $T $I $T1 }.
 
 notation "hvbox( # term 90 x )"
  non associative with precedence 90

@@ -15,10 +15,10 @@ include "lambda-delta/language/term.ma".
 
 (* local environments *)
 inductive lenv: Type[0] ≝
-   | LSort: lenv                       (* empty *)
-   | LCon2: lenv → item2 → term → lenv (* binary item construction *)
+| LSort: lenv                       (* empty *)
+| LPair: lenv → bind2 → term → lenv (* binary binding construction *)
 .
 
 interpretation "sort (local environment)" 'Star = LSort.
 
-interpretation "environment construction (binary)" 'DCon L I T = (LCon2 L I T).
+interpretation "environment binding construction (binary)" 'DBind L I T = (LPair L I T).

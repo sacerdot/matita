@@ -15,18 +15,18 @@ include "lambda-delta/language/lenv.ma".
 
 (* the weight of a term *)
 let rec tw T ≝ match T with
-   [ TSort _     ⇒ 1
-   | TLRef _     ⇒ 1
-   | TCon2 _ V T ⇒ tw V + tw T + 1
-   ].
+[ TSort _     ⇒ 1
+| TLRef _     ⇒ 1
+| TPair _ V T ⇒ tw V + tw T + 1
+].
 
 interpretation "weight (term)" 'Weight T = (tw T).
 
 (* the weight of a local environment *)
 let rec lw L ≝ match L with
-   [ LSort       ⇒ 0
-   | LCon2 L _ V ⇒ lw L + #V
-   ].
+[ LSort       ⇒ 0
+| LPair L _ V ⇒ lw L + #V
+].
 
 interpretation "weight (local environment)" 'Weight L = (lw L).
 
