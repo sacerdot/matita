@@ -54,7 +54,7 @@ qed.
 
 lemma divides_to_gcd_aux: ∀p,m,n. O < p → O < n →n ∣ m → 
   gcd_aux p m n = n.
-#p #m #n #posp @(lt_O_n_elim … posp) #l #posn #divnm normalize 
+#p #m #n #posp @(lt_O_n_elim … posp) #l #posn #divnm whd in ⊢ (??%?)
 >divides_to_dividesb_true normalize //
 qed.
 
@@ -69,7 +69,7 @@ qed.
 
 lemma not_divides_to_gcd_aux: ∀p,m,n. 0 < n → n ∤ m → 
   gcd_aux (S p) m n = gcd_aux p n (m \mod n).
-#p #m #n #lenm #divnm normalize >not_divides_to_dividesb_false
+#p #m #n #lenm #divnm whd in ⊢ (??%?) >not_divides_to_dividesb_false
 normalize // qed.
 
 theorem divides_gcd_aux_mn: ∀p,m,n. O < n → n ≤ m → n ≤ p →

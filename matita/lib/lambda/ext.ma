@@ -52,11 +52,11 @@ let rec all (A:Type[0]) (P:A→Prop) l on l ≝ match l with
    ].
 
 lemma all_hd: ∀A:Type[0]. ∀P:A→Prop. ∀a. P a → ∀l. all … P l → P (hd … l a).
-#A #P #a #Ha #l elim l -l [ #_ @Ha | #b #l #_ #Hl elim Hl -Hl // ]
+#A #P #a #Ha #l elim l -l [ #_ @Ha | #b #l #_ #Hl elim Hl -Hl; normalize // ]
 qed.
 
 lemma all_tl: ∀A:Type[0]. ∀P:A→Prop. ∀l. all … P l →  all … P (tail … l).
-#A #P #l elim l -l // #b #l #IH #Hl elim Hl -Hl //
+#A #P #l elim l -l // #b #l #IH #Hl elim Hl -Hl; normalize //
 qed.
 
 lemma all_nth: ∀A:Type[0]. ∀P:A→Prop. ∀a. P a → ∀i,l. all … P l → P (nth i … l a).
@@ -87,14 +87,14 @@ lemma all2_hd: ∀A,B:Type[0]. ∀P:A→B→Prop. ∀a,b. P a b →
                ∀l1,l2. all2 … P l1 l2 → P (hd … l1 a) (hd … l2 b).
 #A #B #P #a #b #Hab #l1 elim l1 -l1 [ #l2 #H2 >H2 @Hab ]
 #x1 #l1 #_ #l2 elim l2 -l2 [ #false elim false ]
-#x2 #l2 #_ #H elim H -H //
+#x2 #l2 #_ #H elim H -H; normalize //
 qed.
 
 lemma all2_tl: ∀A,B:Type[0]. ∀P:A→B→Prop.
                ∀l1,l2. all2 … P l1 l2 →  all2 … P (tail … l1) (tail … l2).
 #A #B #P #l1 elim l1 -l1 [ #l2 #H >H // ]
 #x1 #l1 #_ #l2 elim l2 -l2 [ #false elim false ]
-#x2 #l2 #_ #H elim H -H // 
+#x2 #l2 #_ #H elim H -H; normalize // 
 qed.
 
 lemma all2_nth: ∀A,B:Type[0]. ∀P:A→B→Prop. ∀a,b. P a b →

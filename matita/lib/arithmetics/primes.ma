@@ -361,7 +361,7 @@ qed.
 
 theorem primeb_false_to_not_prime : ∀n:nat.
   primeb n = false → ¬ (prime n).
-#n #H cut ((leb 2 n ∧ (eqb (smallest_factor n) n)) = false) [>H //] 
+#n #H cut ((leb 2 n ∧ (eqb (smallest_factor n) n)) = false) [@H] 
 @leb_elim 
   [#_ #H1 @(not_to_not … (prime_to_smallest_factor … ))
    @eqb_false_to_not_eq @H1
@@ -465,7 +465,7 @@ qed.
 theorem prime_nth_prime : ∀n:nat.prime (nth_prime n).
 #n (cases n) 
   [@primeb_true_to_prime //
-  |#m >nth_primeS @primeb_true_to_prime @f_min_true
+  |#m >nth_primeS @primeb_true_to_prime check f_min_true @(f_min_true primeb)
    @(ex_intro nat ? (smallest_factor (S (nth_prime m)!)))
    % [% // @le_S_S @(transitive_le … (le_smallest_factor_n …))
       <plus_n_Sm @le_plus_n_r

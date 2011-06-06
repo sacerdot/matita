@@ -192,7 +192,7 @@ op (\big[op,nil]_{i<k|p i}(f i)) (\big[op,nil]_{i<k|p i}(g i)) =
 #k #p #B #nil #op #f #g (elim k) [normalize @nill]
 -k #k #Hind (cases (true_or_false (p k))) #H
   [>bigop_Strue // >bigop_Strue // >bigop_Strue //
-   <assoc <assoc in ⊢ (???%) @eq_f >assoc >comm in ⊢ (??(????%?)?) 
+   normalize <assoc <assoc in ⊢ (???%) @eq_f >assoc >comm in ⊢ (??(????%?)?) 
    <assoc @eq_f @Hind
   |>bigop_Sfalse // >bigop_Sfalse // >bigop_Sfalse //
   ]
@@ -209,7 +209,7 @@ lemma bigop_diff: ∀p,B.∀nil.∀op:ACop B nil.∀f:nat → B.∀i,n.
       [>(not_eq_to_eqb_false … (lt_to_not_eq … Hi)) //] #Hcut
      cases (true_or_false (p n)) #pn 
       [>bigop_Strue // >bigop_Strue //
-       >assoc >(comm ?? op (f i) (f n)) <assoc >Hind //
+       normalize >assoc >(comm ?? op (f i) (f n)) <assoc >Hind //
       |>bigop_Sfalse // >bigop_Sfalse // >Hind //  
       ]
     |<Hi >bigop_Strue // @eq_f >bigop_Sfalse  
