@@ -143,11 +143,14 @@ let check_allowed_sort_elimination status localise r orig =
 let mk_fresh_name context name =
 try
  let rex = Str.regexp "[0-9']*$" in
+ let rex2 = Str.regexp "'*$" in
  let basename = Str.global_replace rex "" in
  let suffix name =
   ignore (Str.search_forward rex name 0);
   let n = Str.matched_string name in
-   if n = "" then 0 else int_of_string n in
+  let n = Str.global_replace rex2 "" n in
+   if n = "" then 0 else int_of_string n
+in
  let name' = basename name in
  let name' = if name' = "_" then "H" else name' in
  let last =
