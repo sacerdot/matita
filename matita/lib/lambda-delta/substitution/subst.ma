@@ -9,7 +9,7 @@
      \ /
       V_______________________________________________________________ *)
 
-include "lambda-delta/language/lenv.ma".
+include "lambda-delta/syntax/lenv.ma".
 include "lambda-delta/substitution/lift.ma".
 
 (* TELESCOPIC SUBSTITUTION **************************************************)

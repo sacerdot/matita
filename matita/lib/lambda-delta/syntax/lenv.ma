@@ -9,7 +9,7 @@
      \ /
       V_______________________________________________________________ *)
 
-include "lambda-delta/language/term.ma".
+include "lambda-delta/syntax/term.ma".
 
 (* LOCAL ENVIRONMENTS *******************************************************)
 

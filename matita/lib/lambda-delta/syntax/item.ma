@@ -40,20 +40,3 @@ inductive item2: Type[0] ≝
 coercion item2_of_bind2: ∀I:bind2.item2 ≝ Bind on _I:bind2 to item2.
 
 coercion item2_of_flat2: ∀I:flat2.item2 ≝ Flat on _I:flat2 to item2.
-
-(* reduction-related categorization *****************************************)
-
-(* binding items entitled for zeta-reduction *)
-definition zable ≝ λI. I = Abbr.
-
-interpretation "is entitled for zeta-reduction" 'Zeta I = (zable I).
-
-(* non-binding items entitled for zeta-reduction *)
-definition table ≝ λI. I = Cast.
-
-interpretation "is entitled for tau-reduction" 'Tau I = (table I).
-
-(* binding items entitled for theta-reduction *)
-definition thable ≝ λI. I = Abbr.
-
-interpretation "is entitled for theta-reduction" 'Theta I = (thable I).
