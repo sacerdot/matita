@@ -15,7 +15,6 @@ let rec normalize status ?(delta=0) ~subst ctx t =
  normalize_machine status ~delta ~subst ctx
   (fst (NCicReduction.reduce_machine status ~delta ~subst ctx (0,[],t,[])))
 and normalize_machine status ?(delta=0) ~subst ctx (k,e,t,s) =
- assert (delta=0);
  let t = 
    if k = 0 then t
    else
