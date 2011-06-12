@@ -35,6 +35,72 @@ qed.
 
 (* The basic inversion lemmas ***********************************************)
 
+lemma lift_inv_sort1_aux: ∀d,e,T1,T2. ↑[d,e] T1 ≡ T2 → ∀k. T1 = ⋆k → T2 = ⋆k.
+#d #e #T1 #T2 #H elim H -H d e T1 T2 //
+[ #i #d #e #_ #k #H destruct
+| #I #V1 #V2 #T1 #T2 #d #e #_ #_ #_ #_ #k #H destruct
+| #I #V1 #V2 #T1 #T2 #d #e #_ #_ #_ #_ #k #H destruct
+]
+qed.
+
+lemma lift_inv_sort1: ∀d,e,T2,k. ↑[d,e] ⋆k ≡ T2 → T2 = ⋆k.
+#d #e #T2 #k #H lapply (lift_inv_sort1_aux … H) /2/
+qed.
+
+lemma lift_inv_lref1_aux: ∀d,e,T1,T2. ↑[d,e] T1 ≡ T2 → ∀i. T1 = #i →
+                          (i < d ∧ T2 = #i) ∨ (d ≤ i ∧ T2 = #(i + e)).
+#d #e #T1 #T2 #H elim H -H d e T1 T2
+[ #k #d #e #i #H destruct
+| #j #d #e #Hj #i #Hi destruct /3/
+| #j #d #e #Hj #i #Hi destruct /3/
+| #I #V1 #V2 #T1 #T2 #d #e #_ #_ #_ #_ #i #H destruct
+| #I #V1 #V2 #T1 #T2 #d #e #_ #_ #_ #_ #i #H destruct
+]
+qed.
+
+lemma lift_inv_lref1: ∀d,e,T2,i. ↑[d,e] #i ≡ T2 →
+                      (i < d ∧ T2 = #i) ∨ (d ≤ i ∧ T2 = #(i + e)).
+#d #e #T2 #i #H lapply (lift_inv_lref1_aux … H) /2/
+qed.
+
+lemma lift_inv_bind1_aux: ∀d,e,T1,T2. ↑[d,e] T1 ≡ T2 →
+                          ∀I,V1,U1. T1 = 𝕓{I} V1.U1 →
+                          ∃∃V2,U2. ↑[d,e] V1 ≡ V2 & ↑[d+1,e] U1 ≡ U2 &
+                                   T2 = 𝕓{I} V2. U2.
+#d #e #T1 #T2 #H elim H -H d e T1 T2
+[ #k #d #e #I #V1 #U1 #H destruct
+| #i #d #e #_ #I #V1 #U1 #H destruct
+| #i #d #e #_ #I #V1 #U1 #H destruct
+| #J #W1 #W2 #T1 #T2 #d #e #HW #HT #_ #_ #I #V1 #U1 #H destruct /2 width=5/
+| #J #W1 #W2 #T1 #T2 #d #e #HW #HT #_ #_ #I #V1 #U1 #H destruct
+]
+qed.
+
+lemma lift_inv_bind1: ∀d,e,T2,I,V1,U1. ↑[d,e] 𝕓{I} V1. U1 ≡ T2 →
+                      ∃∃V2,U2. ↑[d,e] V1 ≡ V2 & ↑[d+1,e] U1 ≡ U2 &
+                               T2 = 𝕓{I} V2. U2.
+#d #e #T2 #I #V1 #U1 #H lapply (lift_inv_bind1_aux … H) /2/
+qed.
+
+lemma lift_inv_flat1_aux: ∀d,e,T1,T2. ↑[d,e] T1 ≡ T2 →
+                          ∀I,V1,U1. T1 = 𝕗{I} V1.U1 →
+                          ∃∃V2,U2. ↑[d,e] V1 ≡ V2 & ↑[d,e] U1 ≡ U2 &
+                                   T2 = 𝕗{I} V2. U2.
+#d #e #T1 #T2 #H elim H -H d e T1 T2
+[ #k #d #e #I #V1 #U1 #H destruct
+| #i #d #e #_ #I #V1 #U1 #H destruct
+| #i #d #e #_ #I #V1 #U1 #H destruct
+| #J #W1 #W2 #T1 #T2 #d #e #HW #HT #_ #_ #I #V1 #U1 #H destruct
+| #J #W1 #W2 #T1 #T2 #d #e #HW #HT #_ #_ #I #V1 #U1 #H destruct /2 width=5/
+]
+qed.
+
+lemma lift_inv_flat1: ∀d,e,T2,I,V1,U1. ↑[d,e] 𝕗{I} V1. U1 ≡ T2 →
+                      ∃∃V2,U2. ↑[d,e] V1 ≡ V2 & ↑[d,e] U1 ≡ U2 &
+                               T2 = 𝕗{I} V2. U2.
+#d #e #T2 #I #V1 #U1 #H lapply (lift_inv_flat1_aux … H) /2/
+qed.
+
 lemma lift_inv_sort2_aux: ∀d,e,T1,T2. ↑[d,e] T1 ≡ T2 → ∀k. T2 = ⋆k → T1 = ⋆k.
 #d #e #T1 #T2 #H elim H -H d e T1 T2 //
 [ #i #d #e #_ #k #H destruct
@@ -66,12 +132,12 @@ qed.
 lemma lift_inv_bind2_aux: ∀d,e,T1,T2. ↑[d,e] T1 ≡ T2 →
                           ∀I,V2,U2. T2 = 𝕓{I} V2.U2 →
                           ∃∃V1,U1. ↑[d,e] V1 ≡ V2 & ↑[d+1,e] U1 ≡ U2 &
-                                   T1 = 𝕓{I} V1.U1.
+                                   T1 = 𝕓{I} V1. U1.
 #d #e #T1 #T2 #H elim H -H d e T1 T2
 [ #k #d #e #I #V2 #U2 #H destruct
 | #i #d #e #_ #I #V2 #U2 #H destruct
 | #i #d #e #_ #I #V2 #U2 #H destruct
-| #J #W1 #W2 #T1 #T2 #d #e #HW #HT #_ #_ #I #V2 #U2 #H destruct /2 width = 5/
+| #J #W1 #W2 #T1 #T2 #d #e #HW #HT #_ #_ #I #V2 #U2 #H destruct /2 width=5/
 | #J #W1 #W2 #T1 #T2 #d #e #HW #HT #_ #_ #I #V2 #U2 #H destruct
 ]
 qed.
@@ -85,7 +151,7 @@ qed.
 lemma lift_inv_flat2_aux: ∀d,e,T1,T2. ↑[d,e] T1 ≡ T2 →
                           ∀I,V2,U2. T2 = 𝕗{I} V2.U2 →
                           ∃∃V1,U1. ↑[d,e] V1 ≡ V2 & ↑[d,e] U1 ≡ U2 &
-                                   T1 = 𝕗{I} V1.U1.
+                                   T1 = 𝕗{I} V1. U1.
 #d #e #T1 #T2 #H elim H -H d e T1 T2
 [ #k #d #e #I #V2 #U2 #H destruct
 | #i #d #e #_ #I #V2 #U2 #H destruct
@@ -103,10 +169,10 @@ qed.
 
 (* the main properies *******************************************************)
 
-theorem lift_trans_rev: ∀d1,e1,T1,T. ↑[d1,e1] T1 ≡ T →
-                        ∀d2,e2,T2. ↑[d2 + e1, e2] T2 ≡ T →
-                        d1 ≤ d2 →
-                        ∃∃T0. ↑[d1, e1] T0 ≡ T2 & ↑[d2, e2] T0 ≡ T1.
+theorem lift_conf_rev: ∀d1,e1,T1,T. ↑[d1,e1] T1 ≡ T →
+                       ∀d2,e2,T2. ↑[d2 + e1, e2] T2 ≡ T →
+                       d1 ≤ d2 →
+                       ∃∃T0. ↑[d1, e1] T0 ≡ T2 & ↑[d2, e2] T0 ≡ T1.
 #d1 #e1 #T1 #T #H elim H -H d1 e1 T1 T
 [ #k #d1 #e1 #d2 #e2 #T2 #Hk #Hd12
   lapply (lift_inv_sort2 … Hk) -Hk #Hk destruct -T2 /3/
@@ -154,3 +220,43 @@ theorem lift_free: ∀d1,e2,T1,T2. ↑[d1, e2] T1 ≡ T2 → ∀d2,e1.
   elim (IHT d2 … ? ? He12) /3 width = 5/
 ]
 qed.
+
+theorem lift_trans: ∀d1,e1,T1,T. ↑[d1, e1] T1 ≡ T →
+                    ∀d2,e2,T2. ↑[d2, e2] T ≡ T2 →
+                    d1 ≤ d2 → d2 ≤ d1 + e1 → ↑[d1, e1 + e2] T1 ≡ T2.
+#d1 #e1 #T1 #T #H elim H -d1 e1 T1 T
+[ #k #d1 #e1 #d2 #e2 #T2 #HT2 #_ #_
+  >(lift_inv_sort1 … HT2) -HT2 //
+| #i #d1 #e1 #Hid1 #d2 #e2 #T2 #HT2 #Hd12 #_
+  lapply (lift_inv_lref1 … HT2) -HT2 * * #Hid2 #H destruct -T2
+  [ -Hd12 Hid2 /2/
+  | lapply (le_to_lt_to_lt … d1 Hid2 ?) // -Hid1 Hid2 #Hd21
+    lapply (le_to_lt_to_lt … d1 Hd12 ?) // -Hd12 Hd21 #Hd11
+    elim (lt_false … Hd11)
+  ]
+| #i #d1 #e1 #Hid1 #d2 #e2 #T2 #HT2 #_ #Hd21
+  lapply (lift_inv_lref1 … HT2) -HT2 * * #Hid2 #H destruct -T2
+  [ lapply (lt_to_le_to_lt … (d1+e1) Hid2 ?) // -Hid2 Hd21 #H
+    lapply (lt_plus_to_lt_l … H) -H #H
+    lapply (le_to_lt_to_lt … d1 Hid1 ?) // -Hid1 H #Hd11
+    elim (lt_false … Hd11)
+  | -Hd21 Hid2 /2/
+  ]
+| #I #V1 #V2 #T1 #T2 #d1 #e1 #_ #_ #IHV12 #IHT12 #d2 #e2 #X #HX #Hd12 #Hd21
+  lapply (lift_inv_bind1 … HX) -HX * #V0 #T0 #HV20 #HT20 #HX destruct -X;
+  lapply (IHV12 … HV20 ? ?) // -IHV12 HV20 #HV10
+  lapply (IHT12 … HT20 ? ?) /2/
+| #I #V1 #V2 #T1 #T2 #d1 #e1 #_ #_ #IHV12 #IHT12 #d2 #e2 #X #HX #Hd12 #Hd21
+  lapply (lift_inv_flat1 … HX) -HX * #V0 #T0 #HV20 #HT20 #HX destruct -X;
+  lapply (IHV12 … HV20 ? ?) // -IHV12 HV20 #HV10
+  lapply (IHT12 … HT20 ? ?) /2/
+]
+qed.
+
+axiom lift_trans_le: ∀d1,e1,T1,T. ↑[d1, e1] T1 ≡ T →
+                     ∀d2,e2,T2. ↑[d2, e2] T ≡ T2 → d2 ≤ d1 →
+                     ∃∃T0. ↑[d2, e2] T1 ≡ T0 & ↑[d1 + e2, e1] T0 ≡ T2.
+
+axiom lift_trans_ge: ∀d1,e1,T1,T. ↑[d1, e1] T1 ≡ T →
+                     ∀d2,e2,T2. ↑[d2, e2] T ≡ T2 → d1 + e1 ≤ d2 →
+                     ∃∃T0. ↑[d2 - e1, e2] T1 ≡ T0 & ↑[d1, e1] T0 ≡ T2.
