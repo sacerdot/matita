@@ -22,7 +22,6 @@ lemma plus_plus_comm_23: ∀m,n,p. m + n + p = m + p + n.
 lemma minus_le: ∀m,n. m - n ≤ m.
 /2/ qed.
 
-
 lemma plus_plus_minus_m_m: ∀e1,e2,d. e1 ≤ e2 → d + e1 + (e2 - e1) = d + e2.
 /2/ qed.
 
@@ -45,4 +44,7 @@ lemma arith3: ∀m,n,p. p ≤ m → m + n - (m - p + n) = p.
 /3/ qed.
 
 lemma arith4: ∀h,d,e1,e2. d ≤ e1 + e2 → d + h ≤ e1 + h + e2.
+/2/ qed.
+
+lemma arith5: ∀i,h,d. i + h ≤ d → d - i - h + (i + h) = d.
 /2/ qed.
