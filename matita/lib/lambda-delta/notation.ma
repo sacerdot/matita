@@ -61,6 +61,10 @@ notation "hvbox( L ⊢ break ↓ [ d , break e ] break T1 ≡ break T2 )"
 
 (* reduction ****************************************************************)
 
-notation "hvbox( L ⊢ break T1 ⇒ break T2 )"
+notation "hvbox( T1 ⇒ break T2 )"
+   non associative with precedence 45
+   for @{ 'PR $T1 $T2 }.
+
+notation "hvbox( L ⊢ break (term 90 T1) ⇒ break T2 )"
    non associative with precedence 45
    for @{ 'PR $L $T1 $T2 }.
