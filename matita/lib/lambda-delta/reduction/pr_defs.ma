@@ -9,7 +9,7 @@
      \ /
       V_______________________________________________________________ *)
 
-include "lambda-delta/substitution/thin.ma".
+include "lambda-delta/substitution/thin_defs.ma".
 
 (* SINGLE STEP PARALLEL REDUCTION ON TERMS **********************************)
 

@@ -9,7 +9,7 @@
      \ /
       V_______________________________________________________________ *)
 
-include "lambda-delta/substitution/subst.ma".
+include "lambda-delta/substitution/subst_defs.ma".
 
 (* THINNING *****************************************************************)
 
@@ -42,20 +42,3 @@ lemma thin_inv_skip2: ∀d,e,I,L1,K2,V2. ↓[d, e] L1 ≡ K2. 𝕓{I} V2 → 0 <
                       ∃∃K1,V1. ↓[d - 1, e] K1 ≡ K2 & K1 ⊢ ↓[d - 1, e] V1 ≡ V2 &
                                L1 = K1. 𝕓{I} V1.
 /2/ qed.
-
-(* the main properties ******************************************************)
-
-axiom thin_conf_ge: ∀d1,e1,L,L1. ↓[d1,e1] L ≡ L1 →
-                    ∀e2,L2. ↓[0,e2] L ≡ L2 → d1 + e1 ≤ e2 → ↓[0,e2-e1] L1 ≡ L2.
-
-axiom thin_conf_lt: ∀d1,e1,L,L1. ↓[d1,e1] L ≡ L1 →
-                    ∀e2,K2,I,V2. ↓[0,e2] L ≡ K2. 𝕓{I} V2 →
-                    e2 < d1 → let d ≝ d1 - e2 - 1 in
-                    ∃∃K1,V1. ↓[0,e2] L1 ≡ K1. 𝕓{I} V1 & ↓[d,e1] K2 ≡ K1 & ↑[d,e1] V1 ≡ V2.
-
-axiom thin_trans_le: ∀d1,e1,L1,L. ↓[d1, e1] L1 ≡ L →
-                     ∀e2,L2. ↓[0, e2] L ≡ L2 → e2 ≤ d1 →
-                     ∃∃L0. ↓[0, e2] L1 ≡ L0 & ↓[d1 - e2, e1] L0 ≡ L2.
-
-axiom thin_trans_ge: ∀d1,e1,L1,L. ↓[d1, e1] L1 ≡ L →
-                     ∀e2,L2. ↓[0, e2] L ≡ L2 → d1 ≤ e2 → ↓[0, e1 + e2] L1 ≡ L2.

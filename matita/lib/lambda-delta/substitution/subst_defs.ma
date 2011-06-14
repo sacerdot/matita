@@ -10,7 +10,7 @@
       V_______________________________________________________________ *)
 
 include "lambda-delta/syntax/lenv.ma".
-include "lambda-delta/substitution/lift.ma".
+include "lambda-delta/substitution/lift_defs.ma".
 
 (* TELESCOPIC SUBSTITUTION **************************************************)
 
@@ -32,6 +32,8 @@ inductive subst: lenv → term → nat → nat → term → Prop ≝
 .
 
 interpretation "telescopic substritution" 'RSubst L T1 d e T2 = (subst L T1 d e T2).
+
+(* The basic properties *****************************************************)
 
 lemma subst_lift_inv: ∀d,e,T1,T2. ↑[d,e] T1 ≡ T2 → ∀L. L ⊢ ↓[d,e] T2 ≡ T1.
 #d #e #T1 #T2 #H elim H -H d e T1 T2 /2/
