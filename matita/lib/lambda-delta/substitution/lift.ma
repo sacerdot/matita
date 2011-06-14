@@ -169,6 +169,8 @@ qed.
 
 (* the main properies *******************************************************)
 
+axiom lift_total: ∀d,e,T1. ∃T2. ↑[d,e] T1 ≡ T2.
+
 axiom lift_mono:  ∀d,e,T,U1. ↑[d,e] T ≡ U1 → ∀U2. ↑[d,e] T ≡ U2 → U1 = U2.
 
 theorem lift_conf_rev: ∀d1,e1,T1,T. ↑[d1,e1] T1 ≡ T →

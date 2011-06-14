@@ -17,7 +17,8 @@ include "lambda-delta/substitution/lift.ma".
 inductive subst: lenv → term → nat → nat → term → Prop ≝
 | subst_sort   : ∀L,k,d,e. subst L (⋆k) d e (⋆k)
 | subst_lref_lt: ∀L,i,d,e. i < d → subst L (#i) d e (#i)
-| subst_lref_O : ∀L,V,e. 0 < e → subst (L. 𝕓{Abbr} V) #0 0 e V
+| subst_lref_O : ∀L,V1,V2,e. subst L V1 0 e V2 →
+                 subst (L. 𝕓{Abbr} V1) #0 0 (e + 1) V2
 | subst_lref_S : ∀L,I,V,i,T1,T2,d,e.
                  d ≤ i → i < d + e → subst L #i d e T1 → ↑[d,1] T1 ≡ T2 →
                  subst (L. 𝕓{I} V) #(i + 1) (d + 1) e T2
