@@ -51,8 +51,6 @@ lemma gral: ∀A.∀x,y:A.
  #H @H
 qed.
 
-axiom daemon: False.
-
 lemma jm_to_eq_sigma:
  ∀A,x,y. jmeq A x A y → mk_Sigma A x = mk_Sigma A y.
  #A #x #y #E cases E in ⊢ (???%); %
