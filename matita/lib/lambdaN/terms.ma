@@ -18,7 +18,7 @@ inductive T : Type[0] ≝
   | App: T → T → T    (* function, argument *)
   | Lambda: T → T → T (* type, body *)
   | Prod: T → T → T   (* type, body *)
-  | D: T → T          (* dummifier *)
+  | D: T → T → T      (* dummy term, type *)
 .
 
 (* Appl F l generalizes App applying F to a list of arguments
@@ -30,7 +30,7 @@ let rec Appl F l on l ≝ match l with
    ].
 
 lemma appl_append: ∀N,l,M. Appl M (l @ [N]) = App (Appl M l) N.
-#N #l elim l -l // #hd #tl #IHl #M >IHl //
+#N #l elim l normalize // 
 qed.
 
 (*
@@ -43,9 +43,13 @@ let rec is_dummy t ≝ match t with
    | D _        ⇒ true
    ].
 *)
-(* nautral terms *)
+
+(* neutral terms 
+   secondo me questa definzione non va qui, comunque la
+   estendo al caso dummy *)
 inductive neutral: T → Prop ≝
    | neutral_sort: ∀n.neutral (Sort n)
    | neutral_rel: ∀i.neutral (Rel i)
    | neutral_app: ∀M,N.neutral (App M N)
+   | neutral_dummy: ∀M,N.neutral (D M N)
 .
