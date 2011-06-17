@@ -27,6 +27,11 @@ lemma eq_ind_r :
  ∀A.∀a.∀P: ∀x:A. x = a → Prop. P a (refl A a) → ∀x.∀p:eq ? x a.P x p.
  #A #a #P #p #x0 #p0; @(eq_rect_r ? ? ? p0) //; qed.
 
+lemma eq_rect_Type0_r:
+  ∀A.∀a.∀P: ∀x:A. eq ? x a → Type[0]. P a (refl A a) → ∀x.∀p:eq ? x a.P x p.
+  #A #a #P #H #x #p (generalize in match H) (generalize in match P)
+  cases p; //; qed.
+  
 lemma eq_rect_Type2_r:
   ∀A.∀a.∀P: ∀x:A. eq ? x a → Type[2]. P a (refl A a) → ∀x.∀p:eq ? x a.P x p.
   #A #a #P #H #x #p (generalize in match H) (generalize in match P)
