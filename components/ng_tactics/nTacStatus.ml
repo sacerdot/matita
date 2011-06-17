@@ -397,7 +397,7 @@ let select_term
         let ctx = (n, NCic.Decl s2) :: ctx in
         let status, t = select status ctx t1 t2 in
         status, NCic.Prod (n,s,t)
-    | NCic.Appl l1, NCic.Appl l2 ->
+    | NCic.Appl l1, NCic.Appl l2 when List.length l1 = List.length l2 ->
         let status, l = 
            List.fold_left2
              (fun (status,l) x y -> 
@@ -406,7 +406,8 @@ let select_term
              (status,[]) l1 l2
         in
         status, NCic.Appl (List.rev l)
-    | NCic.Match (_,ot1,t1,pl1), NCic.Match (u,ot2,t2,pl2) ->
+    | NCic.Match (_,ot1,t1,pl1), NCic.Match (u,ot2,t2,pl2)
+      when List.length pl1 = List.length pl2 ->
         let status, t = select status ctx t1 t2 in
         let status, ot = select status ctx ot1 ot2 in
         let status, pl = 
