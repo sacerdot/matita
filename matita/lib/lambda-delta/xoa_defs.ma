@@ -17,13 +17,19 @@
 include "basics/pts.ma".
 
 inductive ex2_1 (A0:Type[0]) (P0,P1:A0→Prop) : Prop ≝
-   | ex2_1_intro: ∀x0. (P0 x0)→(P1 x0)→(ex2_1 ? ? ?)
+   | ex2_1_intro: ∀x0. P0 x0 → P1 x0 → ex2_1 ? ? ?
 .
 
 interpretation "multiple existental quantifier (2, 1)" 'Ex P0 P1 = (ex2_1 ? P0 P1).
 
+inductive ex2_2 (A0,A1:Type[0]) (P0,P1:A0→A1→Prop) : Prop ≝
+   | ex2_2_intro: ∀x0,x1. P0 x0 x1 → P1 x0 x1 → ex2_2 ? ? ? ?
+.
+
+interpretation "multiple existental quantifier (2, 2)" 'Ex P0 P1 = (ex2_2 ? ? P0 P1).
+
 inductive ex3_2 (A0,A1:Type[0]) (P0,P1,P2:A0→A1→Prop) : Prop ≝
-   | ex3_2_intro: ∀x0,x1. (P0 x0 x1)→(P1 x0 x1)→(P2 x0 x1)→(ex3_2 ? ? ? ? ?)
+   | ex3_2_intro: ∀x0,x1. P0 x0 x1 → P1 x0 x1 → P2 x0 x1 → ex3_2 ? ? ? ? ?
 .
 
 interpretation "multiple existental quantifier (3, 2)" 'Ex P0 P1 P2 = (ex3_2 ? ? P0 P1 P2).

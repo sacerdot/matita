@@ -18,21 +18,18 @@ include "lambda-delta/substitution/lift_defs.ma".
 
 (* the main properies *******************************************************)
 
-theorem lift_conf_rev: ∀d1,e1,T1,T. ↑[d1,e1] T1 ≡ T →
-                       ∀d2,e2,T2. ↑[d2 + e1, e2] T2 ≡ T →
-                       d1 ≤ d2 →
-                       ∃∃T0. ↑[d1, e1] T0 ≡ T2 & ↑[d2, e2] T0 ≡ T1.
+theorem lift_div_le: ∀d1,e1,T1,T. ↑[d1, e1] T1 ≡ T →
+                     ∀d2,e2,T2. ↑[d2 + e1, e2] T2 ≡ T →
+                     d1 ≤ d2 →
+                     ∃∃T0. ↑[d1, e1] T0 ≡ T2 & ↑[d2, e2] T0 ≡ T1.
 #d1 #e1 #T1 #T #H elim H -H d1 e1 T1 T
 [ #k #d1 #e1 #d2 #e2 #T2 #Hk #Hd12
   lapply (lift_inv_sort2 … Hk) -Hk #Hk destruct -T2 /3/
 | #i #d1 #e1 #Hid1 #d2 #e2 #T2 #Hi #Hd12
-  lapply (lift_inv_lref2 … Hi) -Hi * * #Hid2 #H destruct -T2
-  [ -Hid2 /4/
-  | elim (lt_false d1 ?)
-    @(le_to_lt_to_lt … Hd12) -Hd12 @(le_to_lt_to_lt … Hid1) -Hid1 /2/
-  ]
+  lapply (lt_to_le_to_lt … Hid1 Hd12) -Hd12 #Hid2
+  lapply (lift_inv_lref2_lt … Hi ?) -Hi /3/
 | #i #d1 #e1 #Hid1 #d2 #e2 #T2 #Hi #Hd12
-  lapply (lift_inv_lref2 … Hi) -Hi * * #Hid2 #H destruct -T2
+  elim (lift_inv_lref2 … Hi) -Hi * #Hid2 #H destruct -T2
   [ -Hd12; lapply (lt_plus_to_lt_l … Hid2) -Hid2 #Hid2 /3/
   | -Hid1; lapply (arith1 … Hid2) -Hid2 #Hid2
     @(ex2_1_intro … #(i - e2))
@@ -70,33 +67,26 @@ theorem lift_free: ∀d1,e2,T1,T2. ↑[d1, e2] T1 ≡ T2 → ∀d2,e1.
 ]
 qed.
 
-theorem lift_trans: ∀d1,e1,T1,T. ↑[d1, e1] T1 ≡ T →
-                    ∀d2,e2,T2. ↑[d2, e2] T ≡ T2 →
-                    d1 ≤ d2 → d2 ≤ d1 + e1 → ↑[d1, e1 + e2] T1 ≡ T2.
+theorem lift_trans_be: ∀d1,e1,T1,T. ↑[d1, e1] T1 ≡ T →
+                       ∀d2,e2,T2. ↑[d2, e2] T ≡ T2 →
+                       d1 ≤ d2 → d2 ≤ d1 + e1 → ↑[d1, e1 + e2] T1 ≡ T2.
 #d1 #e1 #T1 #T #H elim H -d1 e1 T1 T
 [ #k #d1 #e1 #d2 #e2 #T2 #HT2 #_ #_
   >(lift_inv_sort1 … HT2) -HT2 //
 | #i #d1 #e1 #Hid1 #d2 #e2 #T2 #HT2 #Hd12 #_
-  lapply (lift_inv_lref1 … HT2) -HT2 * * #Hid2 #H destruct -T2
-  [ -Hd12 Hid2 /2/
-  | lapply (le_to_lt_to_lt … d1 Hid2 ?) // -Hid1 Hid2 #Hd21
-    lapply (le_to_lt_to_lt … d1 Hd12 ?) // -Hd12 Hd21 #Hd11
-    elim (lt_false … Hd11)
-  ]
+  lapply (lt_to_le_to_lt … Hid1 Hd12) -Hd12 #Hid2
+  lapply (lift_inv_lref1_lt … HT2 Hid2) /2/
 | #i #d1 #e1 #Hid1 #d2 #e2 #T2 #HT2 #_ #Hd21
-  lapply (lift_inv_lref1 … HT2) -HT2 * * #Hid2 #H destruct -T2
-  [ lapply (lt_to_le_to_lt … (d1+e1) Hid2 ?) // -Hid2 Hd21 #H
-    lapply (lt_plus_to_lt_l … H) -H #H
-    lapply (le_to_lt_to_lt … d1 Hid1 ?) // -Hid1 H #Hd11
-    elim (lt_false … Hd11)
-  | -Hd21 Hid2 /2/
+  lapply (lift_inv_lref1_ge … HT2 ?) -HT2
+  [ @(transitive_le … Hd21 ?) -Hd21 /2/
+  | -Hd21 /2/
   ]
 | #I #V1 #V2 #T1 #T2 #d1 #e1 #_ #_ #IHV12 #IHT12 #d2 #e2 #X #HX #Hd12 #Hd21
-  lapply (lift_inv_bind1 … HX) -HX * #V0 #T0 #HV20 #HT20 #HX destruct -X;
+  elim (lift_inv_bind1 … HX) -HX #V0 #T0 #HV20 #HT20 #HX destruct -X;
   lapply (IHV12 … HV20 ? ?) // -IHV12 HV20 #HV10
   lapply (IHT12 … HT20 ? ?) /2/
 | #I #V1 #V2 #T1 #T2 #d1 #e1 #_ #_ #IHV12 #IHT12 #d2 #e2 #X #HX #Hd12 #Hd21
-  lapply (lift_inv_flat1 … HX) -HX * #V0 #T0 #HV20 #HT20 #HX destruct -X;
+  elim (lift_inv_flat1 … HX) -HX #V0 #T0 #HV20 #HT20 #HX destruct -X;
   lapply (IHV12 … HV20 ? ?) // -IHV12 HV20 #HV10
   lapply (IHT12 … HT20 ? ?) /2/
 ]

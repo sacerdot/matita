@@ -30,8 +30,18 @@ lemma le_plus_minus_comm: ∀n,m,p. p ≤ m → (m + n) - p = (m - p) + n.
 >(commutative_plus p) <plus_minus_m_m //
 qed.
 
+lemma lt_or_ge: ∀m,n. m < n ∨ n ≤ m.
+#m #n elim (decidable_lt m n) /3/
+qed.
+
 lemma lt_false: ∀n. n < n → False.
 #n #H lapply (lt_to_not_eq … H) -H #H elim H -H /2/
+qed.
+
+lemma plus_lt_false: ∀m,n. m + n < m → False.
+#m #n #H1 lapply (le_plus_n_r n m) #H2
+lapply (le_to_lt_to_lt … H2 H1) -H2 H1 #H
+elim (lt_false … H)
 qed.
 
 lemma arith1: ∀n,h,m,p. n + h + m ≤ p + h → n + m ≤ p.

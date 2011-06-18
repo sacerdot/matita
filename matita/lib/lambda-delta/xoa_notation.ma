@@ -18,6 +18,10 @@ notation "hvbox(∃∃ ident x0 . term 19 P0 & term 19 P1)"
  non associative with precedence 20
  for @{ 'Ex (λ${ident x0}.$P0) (λ${ident x0}.$P1) }.
 
+notation "hvbox(∃∃ ident x0 , ident x1 . term 19 P0 & term 19 P1)"
+ non associative with precedence 20
+ for @{ 'Ex (λ${ident x0},${ident x1}.$P0) (λ${ident x0},${ident x1}.$P1) }.
+
 notation "hvbox(∃∃ ident x0 , ident x1 . term 19 P0 & term 19 P1 & term 19 P2)"
  non associative with precedence 20
  for @{ 'Ex (λ${ident x0},${ident x1}.$P0) (λ${ident x0},${ident x1}.$P1) (λ${ident x0},${ident x1}.$P2) }.
