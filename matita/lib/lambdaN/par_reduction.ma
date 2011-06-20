@@ -9,7 +9,7 @@
      \ /      
       V_______________________________________________________________ *)
 
-include "lambda/subterms.ma".
+include "lambdaN/subterms.ma".
 
 (*
 inductive T : Type[0] ≝
@@ -18,7 +18,7 @@ inductive T : Type[0] ≝
   | App: T → T → T 
   | Lambda: T → T → T (* type, body *)
   | Prod: T → T → T (* type, body *)
-  | D: T →T
+  | D: T →T →T
 . *)
 
 (*
@@ -46,7 +46,7 @@ qed.*)
 theorem is_lambda_to_exists: ∀M. is_lambda M = true → 
 ∃P,N. M = Lambda P N.
 #M (cases M) normalize 
-  [1,2,6: #n #H destruct|3,5: #P #Q #H destruct
+  [1,2: #n #H destruct|3,5,6: #P #Q #H destruct
   |#P #N #_ @(ex_intro … P) @(ex_intro … N) //
   ]
 qed. 
@@ -60,16 +60,13 @@ inductive pr : T →T → Prop ≝
       pr (Lambda P M) (Lambda P1 M1)
   | prod: ∀P,P1,M,M1. pr P P1 → pr M M1 → 
       pr (Prod P M) (Prod P1 M1)
-  | d: ∀M,M1. pr M M1 → pr (D M) (D M1).
+  | d: ∀M,M1,N,N1. pr M M1 → pr N N1 → pr (D M N) (D M1 N1).
 
 lemma prSort: ∀M,n. pr (Sort n) M → M = Sort n.
 #M #n #prH (inversion prH)
   [#P #M #N #M1 #N1 #_ #_ #_ #_ #H destruct
   |//
-  |#M #M1 #N #N1 #_ #_ #_ #_ #H destruct
-  |#M #M1 #N #N1 #_ #_ #_ #_ #H destruct
-  |#M #M1 #N #N1 #_ #_ #_ #_ #H destruct
-  |#M #N #_ #_ #H destruct
+  |3,4,5,6: #M #M1 #N #N1 #_ #_ #_ #_ #H destruct
   ]
 qed.
 
@@ -77,21 +74,18 @@ lemma prRel: ∀M,n. pr (Rel n) M → M = Rel n.
 #M #n #prH (inversion prH)
   [#P #M #N #M1 #N1 #_ #_ #_ #_ #H destruct
   |//
-  |#M #M1 #N #N1 #_ #_ #_ #_ #H destruct
-  |#M #M1 #N #N1 #_ #_ #_ #_ #H destruct
-  |#M #M1 #N #N1 #_ #_ #_ #_ #H destruct
-  |#M #N #_ #_ #H destruct
+  |3,4,5,6: #M #M1 #N #N1 #_ #_ #_ #_ #H destruct
   ]
 qed.
 
-lemma prD: ∀M,N. pr (D N) M → ∃P.M = D P ∧ pr N P.
-#M #N #prH (inversion prH)  
+lemma prD: ∀M,N,P. pr (D M N) P → 
+  ∃M1,N1.P = D M1 N1 ∧ pr M M1 ∧ pr N N1.
+#M #N #P #prH (inversion prH)  
   [#P #M #N #M1 #N1 #_ #_ #_ #_ #H destruct
-  |#M #eqM #_ @(ex_intro … N) /2/ 
-  |#M #M1 #N #N1 #_ #_ #_ #_ #H destruct
-  |#M #M1 #N #N1 #_ #_ #_ #_ #H destruct
-  |#M #M1 #N #N1 #_ #_ #_ #_ #H destruct
-  |#M1 #N1 #pr #_ #H destruct #eqM @(ex_intro … N1) /2/
+  |#Q #eqQ #_ @(ex_intro … M) @(ex_intro … N) /3/ 
+  |3,4,5: #M #M1 #N #N1 #_ #_ #_ #_ #H destruct
+  |#M1 #M2 #N1 #N2 #pr1 #pr2 #_ #_ #H destruct #eqP 
+   @(ex_intro … M2) @(ex_intro … N2) /3/
   ]
 qed.
 
@@ -103,9 +97,7 @@ lemma prApp_not_lambda:
   |#M1 #eqM1 #_ #_ @(ex_intro … M) @(ex_intro … N) /3/ 
   |#M1 #N1 #M2 #N2 #pr1 #pr2 #_ #_ #H #H1 #_ destruct 
    @(ex_intro … N1) @(ex_intro … N2) /3/ 
-  |#M #M1 #N #N1 #_ #_ #_ #_ #H destruct
-  |#M #M1 #N #N1 #_ #_ #_ #_ #H destruct
-  |#M #N #_ #_ #H destruct
+  |4,5,6: #M #M1 #N #N1 #_ #_ #_ #_ #H destruct
   ]
 qed. 
 
@@ -119,9 +111,7 @@ lemma prApp_lambda:
   |#M1 #eqM1 #_ @(ex_intro … (Lambda Q M)) @(ex_intro … N) /4/ 
   |#M1 #N1 #M2 #N2 #pr1 #pr2 #_ #_ #H destruct #_
    @(ex_intro … N1) @(ex_intro … N2) /4/ 
-  |#M #M1 #N #N1 #_ #_ #_ #_ #H destruct
-  |#M #M1 #N #N1 #_ #_ #_ #_ #H destruct
-  |#M #N #_ #_ #H destruct
+  |4,5,6: #M #M1 #N #N1 #_ #_ #_ #_ #H destruct
   ]
 qed. 
 
@@ -130,11 +120,9 @@ lemma prLambda: ∀M,N,P. pr (Lambda M N) P →
 #M #N #P #prH (inversion prH)
   [#P #M #N #M1 #N1 #_ #_ #_ #_ #H destruct 
   |#Q #eqQ #_ @(ex_intro … M) @(ex_intro … N) /3/
-  |#M #M1 #N #N1 #_ #_ #_ #_ #H destruct
+  |3,5,6: #M #M1 #N #N1 #_ #_ #_ #_ #H destruct
   |#Q #Q1 #S #S1 #pr1 #pr2 #_ #_ #H #H1 destruct 
    @(ex_intro … Q1) @(ex_intro … S1) /3/
-  |#M #M1 #N #N1 #_ #_ #_ #_ #H destruct
-  |#M #N #_ #_ #H destruct
   ]
 qed. 
 
@@ -143,11 +131,9 @@ lemma prProd: ∀M,N,P. pr (Prod M N) P →
 #M #N #P #prH (inversion prH)
   [#P #M #N #M1 #N1 #_ #_ #_ #_ #H destruct 
   |#Q #eqQ #_ @(ex_intro … M) @(ex_intro … N) /3/
-  |#M #M1 #N #N1 #_ #_ #_ #_ #H destruct
-  |#M #M1 #N #N1 #_ #_ #_ #_ #H destruct
+  |3,4,6: #M #M1 #N #N1 #_ #_ #_ #_ #H destruct
   |#Q #Q1 #S #S1 #pr1 #pr2 #_ #_ #H #H1 destruct
    @(ex_intro … Q1) @(ex_intro … S1) /3/
-  |#M #N #_ #_ #H destruct
   ]
 qed.
  
@@ -158,7 +144,7 @@ let rec full M ≝
   | App P Q ⇒ full_app P (full Q)
   | Lambda P Q ⇒ Lambda (full P) (full Q)
   | Prod P Q ⇒ Prod (full P) (full Q)
-  | D P ⇒ D (full P)
+  | D P Q ⇒ D (full P) (full Q)
   ]
 and full_app M N ≝
   match M with 
@@ -167,7 +153,7 @@ and full_app M N ≝
   | App P Q ⇒ App (full_app P (full Q)) N
   | Lambda P Q ⇒ (full Q) [0 ≝ N] 
   | Prod P Q ⇒ App (Prod (full P) (full Q)) N
-  | D P ⇒ App (D (full P)) N
+  | D P Q ⇒ App (D (full P) (full Q)) N
   ]
 . 
 
@@ -183,7 +169,8 @@ lemma pr_lift: ∀N,N1,n. pr N N1 →
    normalize @lam; [@Hind1 |@Hind2]
   |#M1 #N1 #M2 #N2 #pr2 #pr3 #Hind1 #Hind2 #k
    normalize @prod; [@Hind1 |@Hind2]
-  |#M1 #M2 #pr2 #Hind #k normalize @d //
+  |#M1 #N1 #M2 #N2 #pr2 #pr3 #Hind1 #Hind2 #k
+   normalize @d; [@Hind1 |@Hind2]
   ]
 qed.
 
@@ -207,7 +194,7 @@ theorem pr_subst: ∀M,M1,N,N1,n. pr M M1 → pr N N1 →
      #M3 * #N3 * 
       [* * #eqM1 #pr4 #pr5 >eqM1 
        >(plus_n_O n) in ⊢ (??%) >subst_lemma @beta;
-        [<plus_n_Sm <plus_n_O @Hind // >eqQ 
+        [<plus_n_O @Hind // >eqQ 
          @(transitive_lt ? (size (Lambda M2 N2))) normalize //
         |@Hind // normalize // 
         ]
@@ -227,8 +214,9 @@ theorem pr_subst: ∀M,M1,N,N1,n. pr M M1 → pr N N1 →
   |#Q #M #Hind #M1 #N #N1 #n #pr1 #pr2
    (cases (prProd … pr1)) #M2 * #N2 * * #eqM1 #pr3 #pr4 >eqM1
    @prod; [@Hind // normalize // | @Hind // normalize // ]
-  |#Q #Hind #M1 #N #N1 #n #pr1 #pr2 (cases (prD … pr1))
-   #M2 * #eqM1 #pr1 >eqM1 @d @Hind // normalize // 
+  |#Q #M #Hind #M1 #N #N1 #n #pr1 #pr2 
+   (cases (prD … pr1)) #M2 * #N2 * * #eqM1 #pr3 #pr4 >eqM1 
+   @d; [@Hind // normalize // | @Hind // normalize // ] 
   ]
 qed.
  
@@ -239,7 +227,7 @@ lemma pr_full_app: ∀M,N,N1. pr N N1 →
   [#P #Q #Hind1 #Hind2 #N1 #N2 #prN #H @appl // @Hind1 /3/
   |#P #Q #Hind1 #Hind2 #N1 #N2 #prN #H @beta /2/
   |#P #Q #Hind1 #Hind2 #N1 #N2 #prN #H @appl // @prod /2/
-  |#P #Hind #N1 #N2 #prN #H @appl // @d /2/ 
+  |#P #Q #Hind1 #Hind2 #N1 #N2 #prN #H @appl // @d /2/
   ]
 qed.
 
@@ -250,7 +238,7 @@ theorem pr_full: ∀M. pr M (full M).
   |#M1 #N1 #H @pr_full_app /3/
   |#M1 #N1 #H normalize /3/
   |#M1 #N1 #H @prod /2/
-  |#P #H @d /2/
+  |#M1 #N1 #H @d /2/ 
   ]
 qed. 
 
@@ -278,10 +266,10 @@ lemma complete_app: ∀M,N,P.
    cases (prApp_not_lambda … prH ?) // 
    #M2 * #N2 * * #eqQ #pr1 #pr2 >eqQ @appl; 
     [@(subH (Prod P Q)) // |@subH //]
-  |#P #Hind #N1 #N2 #subH #pr1
+  |#P #Q #Hind1 #Hind2 #N1 #N2 #subH #pr1
    cases (prApp_not_lambda … pr1 ?) // 
    #M1 * #N1 * * #eqQ #pr2 #pr3 >eqQ @appl; 
-    [@(subH (D P) M1) // |@subH //]    
+    [@(subH (D P Q) M1) // |@subH //]    
   ]
 qed.
 
@@ -295,8 +283,8 @@ theorem complete: ∀M,N. pr M N → pr N (full M).
    (cases (prLambda …Hpr)) #M1 * #N1 * * #eqN >eqN normalize /3/
   |#P #P1 #Hind #N #Hpr 
    (cases (prProd …Hpr)) #M1 * #N1 * * #eqN >eqN normalize /3/
-  |#N #Hind #P #prH normalize cases (prD … prH) 
-   #Q * #eqP >eqP #prN @d @Hind //
+  |#P #P1 #Hind #N #Hpr
+   (cases (prD …Hpr)) #M1 * #N1 * * #eqN >eqN normalize /3/
   ]
 qed.
 

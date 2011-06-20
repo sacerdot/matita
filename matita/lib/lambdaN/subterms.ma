@@ -19,7 +19,7 @@ inductive subterm : T → T → Prop ≝
   | prodl : ∀M,N. subterm M (Prod M N)
   | prodr : ∀M,N. subterm N (Prod M N)
   | dl : ∀M,N. subterm M (D M N)
-  | dr : ∀M,N. subterm M (D M N)
+  | dr : ∀M,N. subterm N (D M N)
   | sub_trans : ∀M,N,P. subterm M N → subterm N P → subterm M P.
 
 inverter subterm_myinv for subterm (?%).
