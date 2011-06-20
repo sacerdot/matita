@@ -9,7 +9,7 @@
      \ /      
       V_______________________________________________________________ *)
 
-include "lambda/par_reduction.ma".
+include "lambdaN/par_reduction.ma".
 include "basics/star.ma".
 
 (*
@@ -30,17 +30,23 @@ inductive red : T →T → Prop ≝
   | rlamr: ∀M,N,N1. red N N1 → red(Lambda M N) (Lambda M N1)
   | rprodl: ∀M,M1,N. red M M1 → red (Prod M N) (Prod M1 N)
   | rprodr: ∀M,N,N1. red N N1 → red (Prod M N) (Prod M N1)
-  | d: ∀M,M1. red M M1 → red (D M) (D M1).
+  | dl: ∀M,M1,N. red M M1 → red (D M N) (D M1 N)
+  | dr: ∀M,N,N1. red N N1 → red (D M N) (D M N1).
 
 lemma red_to_pr: ∀M,N. red M N → pr M N.
 #M #N #redMN (elim redMN) /2/
 qed.
 
-lemma red_d : ∀M,P. red (D M) P → ∃N. P = D N ∧ red M N.
-#M #P #redMP (inversion redMP)
+lemma red_d : ∀M,N,P. red (D M N) P → 
+  (∃M1. P = D M1 N ∧ red M M1) ∨
+  (∃N1. P = D M N1 ∧ red N N1).
+#M #N #P #redMP (inversion redMP)
   [#P1 #M1 #N1 #eqH destruct
   |2,3,4,5,6,7:#Q1 #Q2 #N1 #red1 #_ #eqH destruct
-  |#Q1 #M1 #red1 #_ #eqH destruct #eqP @(ex_intro … M1) /2/
+  |#Q1 #M1 #N1 #red1 #_ #eqH destruct #eqP 
+   %1 @(ex_intro … M1) /2/
+  |#Q1 #M1 #N1 #red1 #_ #eqH destruct #eqP 
+   %2 @(ex_intro … N1) /2/
   ]
 qed.
 
@@ -49,12 +55,11 @@ lemma red_lambda : ∀M,N,P. red (Lambda M N) P →
  (∃N1. P = (Lambda M N1) ∧ red N N1).
 #M #N #P #redMNP (inversion redMNP)
   [#P1 #M1 #N1 #eqH destruct
-  |2,3,6,7:#Q1 #Q2 #N1 #red1 #_ #eqH destruct
+  |2,3,6,7,8,9:#Q1 #Q2 #N1 #red1 #_ #eqH destruct
   |#Q1 #M1 #N1 #red1 #_ #eqH destruct #eqP %1 
    (@(ex_intro … M1)) % //
   |#Q1 #M1 #N1 #red1 #_ #eqH destruct #eqP %2
    (@(ex_intro … N1)) % //
-  |#Q1 #M1 #red1 #_ #eqH destruct
   ]
 qed.
   
@@ -63,12 +68,11 @@ lemma red_prod : ∀M,N,P. red (Prod M N) P →
  (∃N1. P = (Prod M N1) ∧ red N N1).
 #M #N #P #redMNP (inversion redMNP)
   [#P1 #M1 #N1 #eqH destruct
-  |2,3,4,5:#Q1 #Q2 #N1 #red1 #_ #eqH destruct
+  |2,3,4,5,8,9:#Q1 #Q2 #N1 #red1 #_ #eqH destruct
   |#Q1 #M1 #N1 #red1 #_ #eqH destruct #eqP %1
    (@(ex_intro … M1)) % //
   |#Q1 #M1 #N1 #red1 #_ #eqH destruct #eqP %2 
    (@(ex_intro … N1)) % //
-  |#Q1 #M1 #red1 #_ #eqH destruct
   ]
 qed.
 
@@ -83,8 +87,7 @@ lemma red_app : ∀M,N,P. red (App M N) P →
    (@(ex_intro … M1)) % //
   |#Q1 #M1 #N1 #red1 #_ #eqH destruct #eqP %2 
    (@(ex_intro … N1)) % //
-  |4,5,6,7:#Q1 #Q2 #N1 #red1 #_ #eqH destruct
-  |#Q1 #M1 #red1 #_ #eqH destruct
+  |4,5,6,7,8,9:#Q1 #Q2 #N1 #red1 #_ #eqH destruct
   ]
 qed.
 
@@ -101,16 +104,14 @@ qed.
 lemma NF_Sort: ∀i. NF (Sort i).
 #i #N % #redN (inversion redN) 
   [1: #P #N #M #H destruct
-  |2,3,4,5,6,7: #N #M #P #_ #_ #H destruct
-  |#M #N #_ #_ #H destruct
+  |2,3,4,5,6,7,8,9: #N #M #P #_ #_ #H destruct
   ]
 qed.
 
 lemma NF_Rel: ∀i. NF (Rel i).
 #i #N % #redN (inversion redN) 
   [1: #P #N #M #H destruct
-  |2,3,4,5,6,7: #N #M #P #_ #_ #H destruct
-  |#M #N #_ #_ #H destruct
+  |2,3,4,5,6,7,8,9: #N #M #P #_ #_ #H destruct
   ]
 qed.
 
@@ -134,9 +135,10 @@ lemma red_subst : ∀N,M,M1,i. red M M1 → red M[i≝N] M1[i≝N].
     [* #P1 * #eqM1 #redP >eqM1 normalize @rprodl @Hind /2/
     |* #P1 * #eqM1 #redP >eqM1 normalize @rprodr @Hind /2/
     ]
-  |#P #Hind #M1 #i #r1 (cases (red_d …r1))
-   #P1 * #eqM1 #redP >eqM1 normalize @d @Hind /2/
-  ]
+  |#P #Q #Hind #M1 #i #r1 (cases (red_d …r1))
+    [* #P1 * #eqM1 #redP >eqM1 normalize @dl @Hind /2/
+    |* #P1 * #eqM1 #redP >eqM1 normalize @dr @Hind /2/
+    ]
 qed.
 
 lemma red_lift: ∀N,N1,n. red N N1 → ∀k. red (lift N k n) (lift N1 k n).
@@ -152,7 +154,7 @@ qed.
   
 lemma star_appr: ∀M,N,N1. star … red N N1 →
   star … red (App M N) (App M N1).
-#M #N #N1 #star1 (elim star1) //
+#M #N #N1 #star1 (elim star1) // 
 #B #C #starMB #redBC #H @(inj … H) /2/
 qed.
  
@@ -195,9 +197,21 @@ lemma star_prod: ∀M,M1,N,N1. star … red M M1 → star … red N N1 →
 #M #M1 #N #N1 #redM #redN @(trans_star ??? (Prod M1 N)) /2/
 qed.
 
-lemma star_d: ∀M,M1. star … red M M1 →  
-  star … red (D M) (D M1).
-#M #M1 #redM (elim redM) // #B #C #starMB #redBC #H @(inj … H) /2/
+lemma star_dl: ∀M,M1,N. star … red M M1 → 
+  star … red (D M N) (D M1 N).
+#M #M1 #N #star1 (elim star1) //
+#B #C #starMB #redBC #H @(inj … H) /2/ 
+qed.
+  
+lemma star_dr: ∀M,N,N1. star … red N N1 →
+  star … red (D M N) (D M N1).
+#M #N #N1 #star1 (elim star1) //
+#B #C #starMB #redBC #H @(inj … H) /2/
+qed.
+
+lemma star_d: ∀M,M1,N,N1. star … red M M1 → star … red N N1 → 
+  star … red (D M N) (D M1 N1).
+#M #M1 #N #N1 #redM #redN @(trans_star ??? (D M1 N)) /2/
 qed.
 
 lemma red_subst1 : ∀M,N,N1,i. red N N1 → 
@@ -215,13 +229,17 @@ lemma red_subst1 : ∀M,N,N1,i. red N N1 →
   |#P #Q #Hind1 #Hind2 #M1 #N1 #i #r1 normalize @star_app /2/ 
   |#P #Q #Hind1 #Hind2 #M1 #N1 #i #r1 normalize @star_lam /2/
   |#P #Q #Hind1 #Hind2 #M1 #N1 #i #r1 normalize @star_prod /2/
-  |#P #Hind #M #N #i #r1 normalize @star_d /2/ 
+  |#P #Q #Hind1 #Hind2 #M1 #N1 #i #r1 normalize @star_d /2/
   ]
 qed. 
 
-lemma SN_d : ∀M. SN M → SN (D M). 
-#M #snM (elim snM) #b #H #Hind % #a #redd (cases (red_d … redd))
-#Q * #eqa #redbQ >eqa @Hind //
+lemma SN_d : ∀M. SN M → ∀N. SN N → SN (D M N). 
+#M #snM (elim snM) #b #H #Hind 
+#N #snN (elim snN) #c #H1 #Hind1 % #a #redd 
+(cases (red_d … redd))
+  [* #Q * #eqa #redbQ >eqa @Hind // % /2/
+  |* #Q * #eqa #redbQ >eqa @Hind1 //
+  ]
 qed. 
 
 lemma SN_step: ∀N. SN N → ∀M. reduct M N → SN M.
