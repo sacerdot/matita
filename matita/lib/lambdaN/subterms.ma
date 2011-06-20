@@ -9,7 +9,7 @@
      \ /      
       V_______________________________________________________________ *)
 
-include "lambda/subst.ma".
+include "lambdaN/subst.ma".
 
 inductive subterm : T → T → Prop ≝
   | appl : ∀M,N. subterm M (App M N)
@@ -18,7 +18,8 @@ inductive subterm : T → T → Prop ≝
   | lambdar : ∀M,N. subterm N (Lambda M N)
   | prodl : ∀M,N. subterm M (Prod M N)
   | prodr : ∀M,N. subterm N (Prod M N)
-  | sub_b : ∀M. subterm M (D M)
+  | dl : ∀M,N. subterm M (D M N)
+  | dr : ∀M,N. subterm M (D M N)
   | sub_trans : ∀M,N,P. subterm M N → subterm N P → subterm M P.
 
 inverter subterm_myinv for subterm (?%).
@@ -28,8 +29,7 @@ lemma subapp: ∀S,M,N. subterm S (App M N) →
 #S #M #N #subH (@(subterm_myinv … subH))
   [#M1 #N1 #eqapp destruct /4/
   |#M1 #N1 #eqapp destruct /4/
-  |3,4,5,6: #M1 #N1 #eqapp destruct
-  |#M1 #eqapp destruct
+  |3,4,5,6,7,8: #M1 #N1 #eqapp destruct
   |#M1 #N1 #P #sub1 #sub2 #H1 #H2 #eqapp
    (cases (H2 eqapp))
     [* [* /3/ | #subN1 %1 %2 /2/ ] 
@@ -41,9 +41,8 @@ qed.
 lemma sublam: ∀S,M,N. subterm S (Lambda M N) →
  S = M ∨ S = N ∨ subterm S M ∨ subterm S N. 
 #S #M #N #subH (@(subterm_myinv … subH))
-  [1,2,5,6: #M1 #N1 #eqH destruct
+  [1,2,5,6,7,8: #M1 #N1 #eqH destruct
   |3,4:#M1 #N1 #eqH destruct /4/
-  |#M1 #eqH destruct
   |#M1 #N1 #P #sub1 #sub2 #H1 #H2 #eqH
    (cases (H2 eqH))
     [* [* /3/ | #subN1 %1 %2 /2/ ] 
@@ -55,9 +54,8 @@ qed.
 lemma subprod: ∀S,M,N. subterm S (Prod M N) →
  S = M ∨ S = N ∨ subterm S M ∨ subterm S N. 
 #S #M #N #subH (@(subterm_myinv … subH))
-  [1,2,3,4: #M1 #N1 #eqH destruct
+  [1,2,3,4,7,8: #M1 #N1 #eqH destruct
   |5,6:#M1 #N1 #eqH destruct /4/
-  |#M1 #eqH destruct
   |#M1 #N1 #P #sub1 #sub2 #H1 #H2 #eqH
    (cases (H2 eqH))
     [* [* /3/ | #subN1 %1 %2 /2/ ] 
@@ -66,29 +64,29 @@ lemma subprod: ∀S,M,N. subterm S (Prod M N) →
   ]
 qed.
 
-lemma subd: ∀S,M. subterm S (D M) →
- S = M ∨ subterm S M. 
-#S #M #subH (@(subterm_myinv … subH))
+lemma subd: ∀S,M,N. subterm S (D M N) →
+ S = M ∨ S = N ∨ subterm S M ∨ subterm S N. 
+#S #M #N #subH (@(subterm_myinv … subH))
   [1,2,3,4,5,6: #M1 #N1 #eqH destruct
-  |#M1 #eqH destruct /2/
+  |7,8: #M1 #N1 #eqH destruct /4/
   |#M1 #N1 #P #sub1 #sub2 #_ #H #eqH
-   (cases (H eqH)) /2/
-    #subN1 %2 /2/
+    (cases (H eqH))
+    [* [* /3/ | #subN1 %1 %2 /2/ ] 
+    |#subN1 %2 /2/
+    ]
   ]
 qed.    
 
 lemma subsort: ∀S,n. ¬ subterm S (Sort n).
 #S #n % #subH (@(subterm_myinv … subH))
-  [1,2,3,4,5,6: #M1 #N1 #eqH destruct
-  |#M1 #eqa destruct
+  [1,2,3,4,5,6,7,8: #M1 #N1 #eqH destruct
   |/2/
   ]
 qed.
 
 lemma subrel: ∀S,n. ¬ subterm S (Rel n).
 #S #n % #subH (@(subterm_myinv … subH))
-  [1,2,3,4,5,6: #M1 #N1 #eqH destruct
-  |#M1 #eqa destruct
+  [1,2,3,4,5,6,7,8: #M1 #N1 #eqH destruct
   |/2/
   ]
 qed.
@@ -121,9 +119,10 @@ theorem Telim: ∀P: T → Prop. (∀M. (∀N. subterm N M → P N) → P M) →
     [#N1 #subN1 (cases (subprod … subN1))
       [* [* // | @Hind1 ] | @Hind2 ]]
    #Hcut % /3/   
-  |#M1 * #PM1 #Hind1
-   (cut (∀N.subterm N (D M1) → P N))
-    [#N1 #subN1 (cases (subd … subN1)) /2/]
+  |#M1 #M2 * #PM1 #Hind1 * #PM2 #Hind2 
+   (cut (∀N.subterm N (D M1 M2) → P N))
+    [#N1 #subN1 (cases (subd … subN1))
+      [* [* // | @Hind1 ] | @Hind2 ]]
    #Hcut % /3/  
   ]  
 qed.
@@ -135,7 +134,7 @@ match M with
   |App P Q ⇒ size P + size Q + 1
   |Lambda P Q ⇒ size P + size Q + 1
   |Prod P Q ⇒ size P + size Q + 1
-  |D P ⇒ size P + 1
+  |D P Q ⇒ size P + size Q + 1
   ]
 .
 
