@@ -9,7 +9,7 @@
      \ /      
       V_______________________________________________________________ *)
 
-include "lambda/subst.ma".
+include "lambdaN/subst.ma".
 include "basics/list.ma".
 
 
@@ -64,7 +64,7 @@ inductive TJ (p: pts): list T → T → T → Prop ≝
   | conv: ∀G.∀A,B,C.∀i. Co p B C →
      TJ p G A B → TJ p G C (Sort i) → TJ p G A C
   | dummy: ∀G.∀A,B.∀i. 
-     TJ p G A B → TJ p G B (Sort i) → TJ p G (D A) B.
+     TJ p G A B → TJ p G B (Sort i) → TJ p G (D A B) B.
      
 interpretation "generic type judgement" 'TJT P G A B = (TJ P G A B).
 
@@ -133,7 +133,7 @@ Glegal P G → ∀n. n < |G| → G ⊢_{P} Rel n: lift (nth n T G (Rel O)) 0 (S 
   |#G #A #B #C #i #tjAB #tjC #Hind1 #_ #m (cases m)
      /2/ #p #Hle @start_rel // @Hind1 @le_S_S_to_le @Hle
   ]
-qed.
+qed. 
 
 axiom conv_subst: ∀T,P,Q,N,i.Co T P Q → Co T P[i := N] Q[i := N].
 

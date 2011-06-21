@@ -9,7 +9,7 @@
      \ /      
       V_______________________________________________________________ *)
 
-include "lambda/types.ma".
+include "lambdaN/thinning.ma".
 
 (*
 inductive TJ (p: pts): list T → T → T → Prop ≝
@@ -33,18 +33,6 @@ inductive TJ (p: pts): list T → T → T → Prop ≝
   | dummy: ∀G.∀A,B.∀i. 
      TJ p G A B → TJ p G B (Sort i) → TJ p G (D A) B.
 *)
-
-axiom lambda_lift : ∀A,B,C. lift A 0 1 = Lambda B C →
-∃P,Q. A = Lambda P Q ∧ lift P 0 1  = B ∧ lift Q 1 1 = C.
-
-axiom prod_lift : ∀A,B,C. lift A 0 1 = Prod B C →
-∃P,Q. A = Prod P Q ∧ lift P 0 1  = B ∧ lift Q 1 1 = C.
-
-axiom conv_lift: ∀P,M,N. Co P M N → Co P (lift M 0 1) (lift N 0 1).
- 
-axiom weak_in: ∀P,G,A,B,M,N, i.
- A::G  ⊢_{P} M : N → G ⊢_{P} B : Sort i → 
-   (lift A 0 1)::B::G ⊢_{P}  lift M 1 1 : lift N 1 1.
 
 axiom refl_conv: ∀P,A. Co P A A.
 axiom  sym_conv: ∀P,A,B. Co P A B → Co P B A.
@@ -95,6 +83,24 @@ theorem abs_inv: ∀P,G,M,N. G ⊢ _{P} M : N → ∀A,b.M = Lambda A b →
    @(ex_intro … i) @(ex_intro … B1) % //
    % // @(trans_conv Pts C B … c1) @sym_conv //
   |#G1 #A #B #i #t1 #t2 #_ #_ #A1 #b #eqA destruct
+  ]
+qed.
+
+theorem dummy_inv: ∀P,G,M,N. G ⊢ _{P} M: N → ∀A,B.M = D A B → 
+  Co P N B ∧ G ⊢_{P} A : B. 
+#Pts #G #M #N #t (elim t);
+  [#i #j #Aij #A #b #H destruct
+  |#G1 #P #i #t #_ #A #b #H destruct
+  |#G1 #P #Q #R #i #t1 #t2 #H1 #_ #A #b #Hl
+   cases (dummy_lift … Hl) #A1 * #b1 * * #eqP #eqA #eqb
+   cases (H1 … eqP) #c1 #t3 <eqb %
+    [@(conv_lift … c1) |<eqA @(weak … t3 t2) ]
+  |#G1 #A #B #i #j #k #Rijk #t1 #t2 #_ #_ #A1 #b #H destruct
+  |#G1 #P #A #B #C #t1 #t2 #_ #_ #A1 #b #H destruct
+  |#G1 #P #A #B #i #t1 #t2 #_ #_ #A1 #b #H destruct
+  |#G1 #A #B #C #i #cBC #t1 #t2 #H1 #H2 #A1 #b #eqA
+   cases (H1 … eqA) #c1 #t3 % // @(trans_conv Pts … c1) @sym_conv //
+  |#G1 #A #B #i #t1 #t2 #_ #_ #A1 #b #eqA destruct /2/
   ]
 qed.
    

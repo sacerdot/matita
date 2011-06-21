@@ -9,8 +9,8 @@
      \ /      
       V_______________________________________________________________ *)
 
-include "lambda/reduction.ma".
-include "lambda/inversion.ma". 
+include "lambdaN/reduction.ma".
+include "lambdaN/inversion.ma". 
 
 (*
 inductive T : Type[0] ≝
@@ -32,15 +32,15 @@ inductive red : T →T → Prop ≝
   | rprodr: ∀M,N,N1. red N N1 → red (Prod M N) (Prod M N1)
   | d: ∀M,M1. red M M1 → red (D M) (D M1). *)
   
-lemma lift_D: ∀M,N. lift M 0 1 = D N → 
-  ∃P. N = lift P 0 1 ∧ M = D P.   
-#M (cases M) normalize
-  [#i #N #H destruct
-  |#i #N #H destruct
-  |#A #B #N #H destruct
-  |#A #B #N #H destruct
-  |#A #B #N #H destruct
-  |#A #N #H destruct @(ex_intro … A) /2/
+lemma lift_D: ∀P,M,N. lift P 0 1 = D M N → 
+  ∃M1,N1. M = lift M1 0 1 ∧ N = lift N1 0 1 ∧ P = D M1 N1.   
+#P (cases P) normalize
+  [#i #M #N #H destruct
+  |#i #M #N #H destruct
+  |#A #B #M #N #H destruct
+  |#A #B #M #N #H destruct
+  |#A #B #M #N #H destruct
+  |#A #B #M #N #H destruct @(ex_intro … A) @(ex_intro … B) /3/
   ]
 qed. 
 
@@ -78,26 +78,25 @@ qed.
 axiom red_lift: ∀M,N. red (lift M 0 1) N → 
   ∃P. N = lift P 0 1 ∧ red M P. 
 
-theorem tj_d : ∀P,G,M,N. G ⊢_{P} D M : N → G ⊢_{P} M : N.
-#Pts #G (cut (∀M,N. G ⊢_{Pts} M : N → ∀P. M = D P → G ⊢_{Pts} P : N)) [2: /2/] 
+theorem tj_d : ∀P,G,M,N,N1. G ⊢_{P} D M N1: N → G ⊢_{P} M : N.
+#Pts #G (cut (∀M,N. G ⊢_{Pts} M : N → ∀P,Q. M = D P Q → G ⊢_{Pts} P : N)) [2: /2/] 
 #M #N #t (elim t)
-  [#i #j #Aij #P #H destruct 
-  |#G1 #A #i #t1 #_ #P #H destruct
-  |#G1 #A #B #C #i #t1 #t2 #H1 #H2 #P #H3 
-   cases (lift_D … H3) #P * #eqP #eqA >eqP @(weak … i) /2/
-  |#G1 #A #B #i #j #k #h #t1 #t2 #_ #_ #P  #H destruct
-  |#G1 #A #B #C #D #t1 #t2 #_ #_ #P  #H destruct
-  |#G1 #A #B #C #D #t1 #t2 #_ #_ #P  #H destruct
-  |#G1 #A #B #C #i #ch #t1 #t2 #H #_ #P #H
+  [#i #j #Aij #P #Q #H destruct 
+  |#G1 #A #i #t1 #_ #P #Q #H destruct
+  |#G1 #A #B #C #i #t1 #t2 #H1 #H2 #P #Q #H3 
+   cases (lift_D … H3) #P1 * #Q1 * * #eqP #eqQ #eqA 
+   >eqP @(weak … i) /2/
+  |#G1 #A #B #i #j #k #h #t1 #t2 #_ #_ #P #Q #H destruct
+  |#G1 #A #B #C #D #t1 #t2 #_ #_ #P #Q #H destruct
+  |#G1 #A #B #C #D #t1 #t2 #_ #_ #P #Q #H destruct
+  |#G1 #A #B #C #i #ch #t1 #t2 #H #_ #P #Q #H
    @(conv… ch …t2) /2/
-  |#G1 #A #B #i #t1 #t2 #Hind1 #Hind2 #P #H destruct //
+  |#G1 #A #B #i #t1 #t2 #Hind1 #Hind2 #P #Q #H destruct //
   ]
 qed.
 
 definition red0 ≝ λM,N. M = N ∨ red M N.
 
-axiom conv_lift: ∀P,i,M,N. Co P M N →
-  Co P (lift M 0 i) (lift N 0 i).
 axiom red_to_conv : ∀P,M,N. red M N → Co P M N.
 axiom red0_to_conv : ∀P,M,N. red0 M N → Co P M N.
 axiom conv_prod: ∀P,A,B,M,N. Co P A B → Co P M N → 
@@ -218,8 +217,16 @@ theorem subject_reduction: ∀P,G,M,N. G ⊢_{P} M:N →
   |#G #A #B #i #t1 #t2 #Hind1 #Hind2 #M1 #red0d #G1 #rg
    cases red0d; 
     [#eqM1 <eqM1 @(dummy … i); [@Hind1 /2/ |@Hind2 /2/] 
-    |#redd (cases (red_d … redd)) #Q * #eqM1 #redA >eqM1
-     @(dummy … i);[@Hind1 /2/ |@Hind2 /2/]
+    |#redd (cases (red_d … redd))
+      [* #A1 * #eqM1 #redA >eqM1 
+       @(dummy … i);[@Hind1 /2/ |@Hind2 /2/]
+      |* #B1 * #eqM1 #redB >eqM1 
+       cut (G1 ⊢_{Pts} B: Sort i); [@Hind2 /2/] #sB
+       cut (G1 ⊢_{Pts} B1: Sort i); [@Hind2 /2/] #sB1
+       @(conv … B1 … i) /2/ @(dummy … i) // @(conv … B … i) /2/ 
+       @Hind1 /2/
+      ]
+    ]
   ]
 qed.
 
