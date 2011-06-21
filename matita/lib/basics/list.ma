@@ -211,9 +211,8 @@ lemma lhd_cons_ltl: ∀A,n,l. lhd A l n @ ltl A l n = l.
 #A #n elim n -n //
 #n #IHn #l elim l normalize //
 qed.
-(*
+
 lemma length_ltl: ∀A,n,l. |ltl A l n| = |l| - n.
 #A #n elim n -n /2/
-#n #IHn * normalize /2/
+#n #IHn *; normalize /2/
 qed.
-*)
