@@ -57,8 +57,7 @@ exception NotFound of [`NotInTheList | `NotWellTyped];;
 
 let position to_skip n (shift, lc) =
   match lc with
-  | NCic.Irl _ when to_skip > 0 -> assert false  (* unclear to me *)
-  | NCic.Irl len when n <= shift || n > shift + len ->
+  | NCic.Irl len when n <= shift + to_skip || n > shift + len ->
      raise (NotFound `NotInTheList)
   | NCic.Irl _ -> n - shift
   | NCic.Ctx tl ->
