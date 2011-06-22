@@ -29,9 +29,12 @@ let wrap fname f x =
   with 
   | MultiPassDisambiguator.DisambiguationError _ 
   | NCicRefiner.RefineFailure _ 
+  | NCicRefiner.Uncertain _ 
   | NCicUnification.UnificationFailure _ 
+  | NCicUnification.Uncertain _ 
   | NCicTypeChecker.TypeCheckerFailure _ 
-  | NCicMetaSubst.MetaSubstFailure _ as exn -> fail ~exn (lazy fname)
+  | NCicMetaSubst.MetaSubstFailure _
+  | NCicMetaSubst.Uncertain _ as exn -> fail ~exn (lazy fname)
 ;;
 
 class type g_eq_status =
