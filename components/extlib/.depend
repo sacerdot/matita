@@ -19,8 +19,8 @@ hLog.cmo: hLog.cmi
 hLog.cmx: hLog.cmi 
 trie.cmo: trie.cmi 
 trie.cmx: trie.cmi 
-discrimination_tree.cmo: trie.cmi discrimination_tree.cmi 
-discrimination_tree.cmx: trie.cmx discrimination_tree.cmi 
+discrimination_tree.cmo: trie.cmi hExtlib.cmi discrimination_tree.cmi 
+discrimination_tree.cmx: trie.cmx hExtlib.cmx discrimination_tree.cmi 
 hTopoSort.cmo: hTopoSort.cmi 
 hTopoSort.cmx: hTopoSort.cmi 
 graphvizPp.cmo: graphvizPp.cmi 

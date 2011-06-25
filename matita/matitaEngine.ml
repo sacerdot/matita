@@ -71,15 +71,17 @@ let cut prefix s =
   String.sub s lenp (lens-lenp)
 ;;
 
-let print_string =
+let print_string = 
  let indent = ref 0 in
  let print_string ~right_justify s =
   let ss =
    match right_justify with
       None -> ""
     | Some (ss,len_ss) ->
+       assert (80 - !indent - len_ss - String.length s >= 0);
        String.make (80 - !indent - len_ss - String.length s) ' ' ^ ss
   in
+   assert (!indent >=0);
    print_string (String.make !indent ' ' ^ s ^ ss) in
  fun enter ?right_justify s ->
   if enter then (print_string ~right_justify s; incr indent) else (decr indent; print_string ~right_justify s)

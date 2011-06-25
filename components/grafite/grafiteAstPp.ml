@@ -54,7 +54,7 @@ let pp_tactic_pattern status ~map_unicode_to_tex (what, hyp, goal) =
 let rec pp_ntactic status ~map_unicode_to_tex =
  let pp_tactic_pattern = pp_tactic_pattern ~map_unicode_to_tex in
  function
-  | NApply (_,t) -> "napply " ^ NotationPp.pp_term status t
+  | NApply (_,t) -> "@" ^ NotationPp.pp_term status t
   | NSmartApply (_,t) -> "fixme"
   | NAuto (_,(None,flgs)) ->
       "nautobatch" ^
@@ -169,7 +169,7 @@ let pp_ncommand status = function
   | NUnivConstraint (_) -> "not supported"
   | NCoercion (_) -> "not supported"
   | NObj (_,obj) -> NotationPp.pp_obj (NotationPp.pp_term status) obj
-  | NQed (_) -> "nqed"
+  | NQed (_) -> "qed"
   | NCopy (_,name,uri,map) -> 
       "copy " ^ name ^ " from " ^ NUri.string_of_uri uri ^ " with " ^ 
         String.concat " and " 
