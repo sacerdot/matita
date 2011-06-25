@@ -78,8 +78,8 @@ let print_string =
    match right_justify with
       None -> ""
     | Some (ss,len_ss) ->
-       assert (80 - !indent - len_ss - String.length s >= 0);
-       String.make (80 - !indent - len_ss - String.length s) ' ' ^ ss
+       let i = 80 - !indent - len_ss - String.length s in
+       if i > 0 then String.make i ' ' ^ ss else ss
   in
    assert (!indent >=0);
    print_string (String.make !indent ' ' ^ s ^ ss) in
