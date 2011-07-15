@@ -331,12 +331,14 @@ let check_and_add_obj (status:#NCic.status) ((u,_,_,_,_) as obj) =
   | e ->
      frozen_list := saved_frozen_list;
      let exn = `Exn e in
-     NUri.UriHash.add cache u exn;
      history := (`Obj (u,obj))::!history;
      if saved_frozen_list = [] then
       exn
      else
-      raise (Propagate (u,e))
+      begin
+       NUri.UriHash.add cache u exn;
+       raise (Propagate (u,e))
+      end
 ;;
 
 let get_checked_obj status u =
