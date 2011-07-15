@@ -35,6 +35,7 @@ val get_obj: #NCic.status -> NUri.uri -> NCic.obj (* changes the current timesta
 *)
 
 val time_travel: #status -> unit
+val replace: #status -> unit
 
 val init: unit -> unit
 

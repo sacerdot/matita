@@ -162,6 +162,11 @@ let time_travel0 (sto,ali) =
 
 let time_travel status = time_travel0 status#timestamp;;
 
+let replace status =
+ let sto,ali = status#timestamp in
+  storage := sto; local_aliases := ali
+;;
+
 type obj = string * Obj.t
 (* includes are transitively closed; dependencies are only immediate *)
 type dump =
