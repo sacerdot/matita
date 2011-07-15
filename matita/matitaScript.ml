@@ -256,8 +256,7 @@ let similarsymbols_tag = `NAME similarsymbols_tag_name in
 let initial_statuses current baseuri =
  let status = new MatitaEngine.status baseuri in
  (match current with
-     Some current ->
-      NCicLibrary.time_travel status;
+     Some current -> NCicLibrary.time_travel status;
 (*
       (* MATITA 1.0: there is a known bug in invalidation; temporary fix here *)
       NCicEnvironment.invalidate () *)
@@ -789,6 +788,7 @@ object (self)
     List.iter (fun o -> o status) observers
 
   method activate =
+    NCicLibrary.replace self#status;
     self#notify
 
   method loadFromFile f =
