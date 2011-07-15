@@ -272,7 +272,7 @@ let discriminate_tac ~context cur_eq status =
   pp (lazy (Printf.sprintf "discriminate: equation %s" (name_of_rel ~context cur_eq)));
 
   let dbranch it ~use_jmeq leftno consno =
-    let refl_id = mk_id (if use_jmeq then "refl_jmeq" else "refl") in
+    let refl_id = mk_id (if use_jmeq then "jmrefl" else "refl") in
     pp (lazy (Printf.sprintf "dbranch %d %d" leftno consno));
     let nlist = HExtlib.list_seq 0 (nargs it leftno consno) in
     (* (\forall ...\forall P.\forall DH : ( ... = ... -> P). P) *)
