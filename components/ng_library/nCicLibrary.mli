@@ -29,8 +29,10 @@ val add_constraint:
   #status as 'status -> NCic.universe -> NCic.universe -> 'status
 val aliases_of: NUri.uri -> NReference.reference list
 val resolve: string -> NReference.reference list
+(*
 (* warning: get_obj may raise (NCicEnvironment.ObjectNotFoud l) *)
 val get_obj: #NCic.status -> NUri.uri -> NCic.obj (* changes the current timestamp *)
+*)
 
 val time_travel: #status -> unit
 
