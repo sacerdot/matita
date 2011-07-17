@@ -34,14 +34,18 @@ lemma lt_or_ge: ∀m,n. m < n ∨ n ≤ m.
 #m #n elim (decidable_lt m n) /3/
 qed.
 
-lemma lt_false: ∀n. n < n → False.
-#n #H lapply (lt_to_not_eq … H) -H #H elim H -H /2/
+lemma lt_refl_false: ∀n. n < n → False.
+#n #H elim (lt_to_not_eq … H) -H /2/
+qed.
+
+lemma lt_zero_false: ∀n. n < 0 → False.
+#n #H elim (lt_to_not_le … H) -H /2/
 qed.
 
 lemma plus_lt_false: ∀m,n. m + n < m → False.
 #m #n #H1 lapply (le_plus_n_r n m) #H2
 lapply (le_to_lt_to_lt … H2 H1) -H2 H1 #H
-elim (lt_false … H)
+elim (lt_refl_false … H)
 qed.
 
 lemma arith1: ∀n,h,m,p. n + h + m ≤ p + h → n + m ≤ p.
@@ -57,4 +61,11 @@ lemma arith4: ∀h,d,e1,e2. d ≤ e1 + e2 → d + h ≤ e1 + h + e2.
 /2/ qed.
 
 lemma arith5: ∀i,h,d. i + h ≤ d → d - i - h + (i + h) = d.
+/2/ qed.
+
+lemma arith6: ∀m,n. m < n → n - (n - m - 1) = m + 1.
+#m #n #H >minus_plus <minus_minus //
+qed.
+
+lemma arith7: ∀i,d. i ≤ d → d - i + i = d.
 /2/ qed.

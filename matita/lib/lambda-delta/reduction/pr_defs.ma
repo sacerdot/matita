@@ -44,3 +44,38 @@ lemma pr_refl: ∀T,L. L ⊢ T ⇒ T.
 #T elim T -T //
 #I elim I -I /2/
 qed.
+
+(* The basic inversion lemmas ***********************************************)
+
+lemma pr_inv_lref2_aux: ∀L,T1,T2. L ⊢ T1 ⇒ T2 → ∀i. T2 = #i →
+                        ∨∨           T1 = #i
+                         | ∃∃K,V1,j. j < i & K ⊢ V1 ⇒ #(i-j-1) &
+                                     ↑[O,j] K. 𝕓{Abbr} V1 ≡ L & T1 = #j
+                         | ∃∃V,T,T0. ↑[O,1] T0 ≡ T & L ⊢ T0 ⇒ #i &
+                                     T1 = 𝕓{Abbr} V. T
+                         | ∃∃V,T.    L ⊢ T ⇒ #i & T1 = 𝕗{Cast} V. T.
+#L #T1 #T2 #H elim H -H L T1 T2
+[ #L #k #i #H destruct
+| #L #j #i /2/
+| #L #I #V1 #V2 #T1 #T2 #_ #_ #_ #_ #i #H destruct
+| #L #I #V1 #V2 #T1 #T2 #_ #_ #_ #_ #i #H destruct
+| #L #V1 #V2 #W #T1 #T2 #_ #_ #_ #_ #i #H destruct
+| #L #K #V1 #V2 #V #j #HLK #HV12 #HV2 #_ #i #H destruct -V;
+  elim (lift_inv_lref2 … HV2) -HV2 * #H1 #H2
+  [ elim (lt_zero_false … H1)
+  | destruct -V2 /3 width=7/
+  ]
+| #L #V #V1 #V2 #W1 #W2 #T1 #T2 #_ #_ #_ #_ #_ #_ #_ #i #H destruct
+| #L #V #T #T1 #T2 #HT1 #HT12 #_ #i #H destruct /3 width=6/
+| #L #V #T1 #T2 #HT12 #_ #i #H destruct /3/
+]
+qed.
+
+lemma pr_inv_lref2: ∀L,T1,i. L ⊢ T1 ⇒ #i →
+                    ∨∨           T1 = #i
+                     | ∃∃K,V1,j. j < i & K ⊢ V1 ⇒ #(i-j-1) &
+                                 ↑[O,j] K. 𝕓{Abbr} V1 ≡ L & T1 = #j
+                     | ∃∃V,T,T0. ↑[O,1] T0 ≡ T & L ⊢ T0 ⇒ #i &
+                                 T1 = 𝕓{Abbr} V. T
+                     | ∃∃V,T.    L ⊢ T ⇒ #i & T1 = 𝕗{Cast} V. T.
+/2/ qed.

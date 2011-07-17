@@ -34,3 +34,24 @@ inductive ex3_2 (A0,A1:Type[0]) (P0,P1,P2:A0→A1→Prop) : Prop ≝
 
 interpretation "multiple existental quantifier (3, 2)" 'Ex P0 P1 P2 = (ex3_2 ? ? P0 P1 P2).
 
+inductive ex3_3 (A0,A1,A2:Type[0]) (P0,P1,P2:A0→A1→A2→Prop) : Prop ≝
+   | ex3_3_intro: ∀x0,x1,x2. P0 x0 x1 x2 → P1 x0 x1 x2 → P2 x0 x1 x2 → ex3_3 ? ? ? ? ? ?
+.
+
+interpretation "multiple existental quantifier (3, 3)" 'Ex P0 P1 P2 = (ex3_3 ? ? ? P0 P1 P2).
+
+inductive ex4_3 (A0,A1,A2:Type[0]) (P0,P1,P2,P3:A0→A1→A2→Prop) : Prop ≝
+   | ex4_3_intro: ∀x0,x1,x2. P0 x0 x1 x2 → P1 x0 x1 x2 → P2 x0 x1 x2 → P3 x0 x1 x2 → ex4_3 ? ? ? ? ? ? ?
+.
+
+interpretation "multiple existental quantifier (4, 3)" 'Ex P0 P1 P2 P3 = (ex4_3 ? ? ? P0 P1 P2 P3).
+
+inductive or4 (P0,P1,P2,P3:Prop) : Prop ≝
+   | or4_intro0: P0 → or4 ? ? ? ?
+   | or4_intro1: P1 → or4 ? ? ? ?
+   | or4_intro2: P2 → or4 ? ? ? ?
+   | or4_intro3: P3 → or4 ? ? ? ?
+.
+
+interpretation "multiple disjunction connective (4)" 'Or P0 P1 P2 P3 = (or4 P0 P1 P2 P3).
+

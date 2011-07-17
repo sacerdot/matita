@@ -79,13 +79,13 @@ lemma lift_inv_lref1: ∀d,e,T2,i. ↑[d,e] #i ≡ T2 →
 lemma lift_inv_lref1_lt: ∀d,e,T2,i. ↑[d,e] #i ≡ T2 → i < d → T2 = #i.
 #d #e #T2 #i #H elim (lift_inv_lref1 … H) -H * //
 #Hdi #_ #Hid lapply (le_to_lt_to_lt … Hdi Hid) -Hdi Hid #Hdd
-elim (lt_false … Hdd)
+elim (lt_refl_false … Hdd)
 qed.
 
 lemma lift_inv_lref1_ge: ∀d,e,T2,i. ↑[d,e] #i ≡ T2 → d ≤ i → T2 = #(i + e).
 #d #e #T2 #i #H elim (lift_inv_lref1 … H) -H * //
 #Hid #_ #Hdi lapply (le_to_lt_to_lt … Hdi Hid) -Hdi Hid #Hdd
-elim (lt_false … Hdd)
+elim (lt_refl_false … Hdd)
 qed.
 
 lemma lift_inv_bind1_aux: ∀d,e,T1,T2. ↑[d,e] T1 ≡ T2 →

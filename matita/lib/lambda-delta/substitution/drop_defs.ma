@@ -32,8 +32,8 @@ lemma drop_inv_skip2_aux: ∀d,e,L1,L2. ↑[d, e] L2 ≡ L1 → 0 < d →
                                    ↑[d - 1, e] V2 ≡ V1 & 
                                    L1 = K1. 𝕓{I} V1.
 #d #e #L1 #L2 #H elim H -H d e L1 L2
-[ #L #H elim (lt_false … H)
-| #L1 #L2 #I #V #e #_ #_ #H elim (lt_false … H)
+[ #L #H elim (lt_refl_false … H)
+| #L1 #L2 #I #V #e #_ #_ #H elim (lt_refl_false … H)
 | #L1 #X #Y #V1 #Z #d #e #HL12 #HV12 #_ #_ #I #L2 #V2 #H destruct -X Y Z;
   /2 width=5/
 ]
