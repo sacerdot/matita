@@ -18,10 +18,10 @@ include "lambda-delta/substitution/lift_defs.ma".
 
 (* the main properies *******************************************************)
 
-theorem lift_div_le: ∀d1,e1,T1,T. ↑[d1, e1] T1 ≡ T →
-                     ∀d2,e2,T2. ↑[d2 + e1, e2] T2 ≡ T →
-                     d1 ≤ d2 →
-                     ∃∃T0. ↑[d1, e1] T0 ≡ T2 & ↑[d2, e2] T0 ≡ T1.
+lemma lift_div_le: ∀d1,e1,T1,T. ↑[d1, e1] T1 ≡ T →
+                   ∀d2,e2,T2. ↑[d2 + e1, e2] T2 ≡ T →
+                   d1 ≤ d2 →
+                   ∃∃T0. ↑[d1, e1] T0 ≡ T2 & ↑[d2, e2] T0 ≡ T1.
 #d1 #e1 #T1 #T #H elim H -H d1 e1 T1 T
 [ #k #d1 #e1 #d2 #e2 #T2 #Hk #Hd12
   lapply (lift_inv_sort2 … Hk) -Hk #Hk destruct -T2 /3/
@@ -48,9 +48,9 @@ theorem lift_div_le: ∀d1,e1,T1,T. ↑[d1, e1] T1 ≡ T →
 ]
 qed.
 
-theorem lift_free: ∀d1,e2,T1,T2. ↑[d1, e2] T1 ≡ T2 → ∀d2,e1.
-                                 d1 ≤ d2 → d2 ≤ d1 + e1 → e1 ≤ e2 →
-                                 ∃∃T. ↑[d1, e1] T1 ≡ T & ↑[d2, e2 - e1] T ≡ T2.
+lemma lift_free: ∀d1,e2,T1,T2. ↑[d1, e2] T1 ≡ T2 → ∀d2,e1.
+                               d1 ≤ d2 → d2 ≤ d1 + e1 → e1 ≤ e2 →
+                               ∃∃T. ↑[d1, e1] T1 ≡ T & ↑[d2, e2 - e1] T ≡ T2.
 #d1 #e2 #T1 #T2 #H elim H -H d1 e2 T1 T2
 [ /3/
 | #i #d1 #e2 #Hid1 #d2 #e1 #Hd12 #_ #_
@@ -67,9 +67,9 @@ theorem lift_free: ∀d1,e2,T1,T2. ↑[d1, e2] T1 ≡ T2 → ∀d2,e1.
 ]
 qed.
 
-theorem lift_trans_be: ∀d1,e1,T1,T. ↑[d1, e1] T1 ≡ T →
-                       ∀d2,e2,T2. ↑[d2, e2] T ≡ T2 →
-                       d1 ≤ d2 → d2 ≤ d1 + e1 → ↑[d1, e1 + e2] T1 ≡ T2.
+lemma lift_trans_be: ∀d1,e1,T1,T. ↑[d1, e1] T1 ≡ T →
+                     ∀d2,e2,T2. ↑[d2, e2] T ≡ T2 →
+                     d1 ≤ d2 → d2 ≤ d1 + e1 → ↑[d1, e1 + e2] T1 ≡ T2.
 #d1 #e1 #T1 #T #H elim H -d1 e1 T1 T
 [ #k #d1 #e1 #d2 #e2 #T2 #HT2 #_ #_
   >(lift_inv_sort1 … HT2) -HT2 //
