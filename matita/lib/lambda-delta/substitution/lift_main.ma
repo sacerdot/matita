@@ -70,7 +70,7 @@ qed.
 lemma lift_trans_be: ∀d1,e1,T1,T. ↑[d1, e1] T1 ≡ T →
                      ∀d2,e2,T2. ↑[d2, e2] T ≡ T2 →
                      d1 ≤ d2 → d2 ≤ d1 + e1 → ↑[d1, e1 + e2] T1 ≡ T2.
-#d1 #e1 #T1 #T #H elim H -d1 e1 T1 T
+#d1 #e1 #T1 #T #H elim H -H d1 e1 T1 T
 [ #k #d1 #e1 #d2 #e2 #T2 #HT2 #_ #_
   >(lift_inv_sort1 … HT2) -HT2 //
 | #i #d1 #e1 #Hid1 #d2 #e2 #T2 #HT2 #Hd12 #_
@@ -92,9 +92,29 @@ lemma lift_trans_be: ∀d1,e1,T1,T. ↑[d1, e1] T1 ≡ T →
 ]
 qed.
 
-axiom lift_trans_le: ∀d1,e1,T1,T. ↑[d1, e1] T1 ≡ T →
+lemma lift_trans_le: ∀d1,e1,T1,T. ↑[d1, e1] T1 ≡ T →
                      ∀d2,e2,T2. ↑[d2, e2] T ≡ T2 → d2 ≤ d1 →
                      ∃∃T0. ↑[d2, e2] T1 ≡ T0 & ↑[d1 + e2, e1] T0 ≡ T2.
+#d1 #e1 #T1 #T #H elim H -H d1 e1 T1 T
+[ #k #d1 #e1 #d2 #e2 #X #HX #_
+  >(lift_inv_sort1 … HX) -HX /2/
+| #i #d1 #e1 #Hid1 #d2 #e2 #X #HX #_
+  lapply (lt_to_le_to_lt … (d1+e2) Hid1 ?) // #Hie2
+  elim (lift_inv_lref1 … HX) -HX * #Hid2 #HX destruct -X /4/
+| #i #d1 #e1 #Hid1 #d2 #e2 #X #HX #Hd21
+  lapply (transitive_le … Hd21 Hid1) -Hd21 #Hid2
+  lapply (lift_inv_lref1_ge … HX ?) -HX /2/ #HX destruct -X;
+  >plus_plus_comm_23 /4/
+| #I #V1 #V2 #T1 #T2 #d1 #e1 #_ #_ #IHV12 #IHT12 #d2 #e2 #X #HX #Hd21
+  elim (lift_inv_bind1 … HX) -HX #V0 #T0 #HV20 #HT20 #HX destruct -X;
+  elim (IHV12 … HV20 ?) -IHV12 HV20 //
+  elim (IHT12 … HT20 ?) -IHT12 HT20 /3 width=5/
+| #I #V1 #V2 #T1 #T2 #d1 #e1 #_ #_ #IHV12 #IHT12 #d2 #e2 #X #HX #Hd21
+  elim (lift_inv_flat1 … HX) -HX #V0 #T0 #HV20 #HT20 #HX destruct -X;
+  elim (IHV12 … HV20 ?) -IHV12 HV20 //
+  elim (IHT12 … HT20 ?) -IHT12 HT20 /3 width=5/
+]
+qed.
 
 axiom lift_trans_ge: ∀d1,e1,T1,T. ↑[d1, e1] T1 ≡ T →
                      ∀d2,e2,T2. ↑[d2, e2] T ≡ T2 → d1 + e1 ≤ d2 →
