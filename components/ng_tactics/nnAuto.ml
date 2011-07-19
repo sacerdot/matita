@@ -1512,7 +1512,7 @@ let rec auto_clusters ?(top=false)
 	(fun gl ->
 	   if List.length gl > flags.maxwidth then begin
 	      debug_print ~depth (lazy "FAIL GLOBAL WIDTH"); 
-	      HLog.error (sprintf "global width (%u) exceeded: %u"
+	      HLog.warn (sprintf "global width (%u) exceeded: %u"
 	         flags.maxwidth (List.length gl));
 	      raise (Gaveup IntSet.empty)
 	   end else ()) classes;
@@ -1599,7 +1599,7 @@ auto_main flags signature cache depth status: unit =
         (* moved inside auto_clusters *)
         if ng > flags.maxwidth then begin 
           debug_print ~depth (lazy "FAIL LOCAL WIDTH");
-	  HLog.error (sprintf "local width (%u) exceeded: %u"
+	  HLog.warn (sprintf "local width (%u) exceeded: %u"
 	     flags.maxwidth ng);
 	  raise (Gaveup IntSet.empty)
         end else if depth = flags.maxdepth then

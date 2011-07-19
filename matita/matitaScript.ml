@@ -829,12 +829,12 @@ object (self)
   method private _saveToBackupFile () =
     if buffer#modified then
       begin
-        let f = self#filename in
+        let f = self#filename ^ "~" in
         let oc = open_out f in
         output_string oc (buffer#get_text ~start:buffer#start_iter
                             ~stop:buffer#end_iter ());
         close_out oc;
-        HLog.debug ("backup " ^ f ^ " saved")                    
+        HLog.debug ("backup " ^ f ^ " saved")
       end
   
   method private reset_buffer = 

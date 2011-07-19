@@ -116,6 +116,28 @@ lemma lift_trans_le: ∀d1,e1,T1,T. ↑[d1, e1] T1 ≡ T →
 ]
 qed.
 
-axiom lift_trans_ge: ∀d1,e1,T1,T. ↑[d1, e1] T1 ≡ T →
+lemma lift_trans_ge: ∀d1,e1,T1,T. ↑[d1, e1] T1 ≡ T →
                      ∀d2,e2,T2. ↑[d2, e2] T ≡ T2 → d1 + e1 ≤ d2 →
                      ∃∃T0. ↑[d2 - e1, e2] T1 ≡ T0 & ↑[d1, e1] T0 ≡ T2.
+#d1 #e1 #T1 #T #H elim H -H d1 e1 T1 T
+[ #k #d1 #e1 #d2 #e2 #X #HX #_
+  >(lift_inv_sort1 … HX) -HX /2/
+| #i #d1 #e1 #Hid1 #d2 #e2 #X #HX #Hded
+  lapply (lt_to_le_to_lt … (d1+e1) Hid1 ?) // #Hid1e
+  lapply (lt_to_le_to_lt … (d2-e1) Hid1 ?) /2/ #Hid2e
+  lapply (lt_to_le_to_lt … Hid1e Hded) -Hid1e Hded #Hid2
+  lapply (lift_inv_lref1_lt … HX ?) -HX // #HX destruct -X /3/
+| #i #d1 #e1 #Hid1 #d2 #e2 #X #HX #_
+  elim (lift_inv_lref1 … HX) -HX * #Hied #HX destruct -X;
+  [2: >plus_plus_comm_23] /4/
+| #I #V1 #V2 #T1 #T2 #d1 #e1 #_ #_ #IHV12 #IHT12 #d2 #e2 #X #HX #Hded
+  elim (lift_inv_bind1 … HX) -HX #V0 #T0 #HV20 #HT20 #HX destruct -X;
+  elim (IHV12 … HV20 ?) -IHV12 HV20 //
+  elim (IHT12 … HT20 ?) -IHT12 HT20 /2/ #T
+  <plus_minus /3 width=5/
+| #I #V1 #V2 #T1 #T2 #d1 #e1 #_ #_ #IHV12 #IHT12 #d2 #e2 #X #HX #Hded
+  elim (lift_inv_flat1 … HX) -HX #V0 #T0 #HV20 #HT20 #HX destruct -X;
+  elim (IHV12 … HV20 ?) -IHV12 HV20 //
+  elim (IHT12 … HT20 ?) -IHT12 HT20 /3 width=5/
+]
+qed.
