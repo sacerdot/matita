@@ -26,6 +26,19 @@ interpretation "dropping" 'RLift L2 d e L1 = (drop L1 d e L2).
 
 (* the basic inversion lemmas ***********************************************)
 
+lemma drop_inv_drop1_aux: ∀d,e,L2,L1. ↑[d, e] L2 ≡ L1 → 0 < e → d = 0 →
+                          ∀K,I,V. L1 = K. 𝕓{I} V → ↑[d, e - 1] L2 ≡ K.
+#d #e #L2 #L1 #H elim H -H d e L2 L1
+[ #L #H elim (lt_refl_false … H)
+| #L1 #L2 #I #V #e #HL12 #_ #_ #_ #K #J #W #H destruct -L1 I V //
+| #L1 #L2 #I #V1 #V2 #d #e #_ #_ #_ #_ #H elim (plus_S_eq_O_false … H)
+]
+qed.
+
+lemma drop_inv_drop1: ∀e,L2,K,I,V. ↑[0, e] L2 ≡ K. 𝕓{I} V → 0 < e →
+                                   ↑[0, e - 1] L2 ≡ K.
+/2 width=5/ qed.
+
 lemma drop_inv_skip2_aux: ∀d,e,L1,L2. ↑[d, e] L2 ≡ L1 → 0 < d →
                           ∀I,K2,V2. L2 = K2. 𝕓{I} V2 →
                           ∃∃K1,V1. ↑[d - 1, e] K2 ≡ K1 &

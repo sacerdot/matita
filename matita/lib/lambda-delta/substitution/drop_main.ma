@@ -18,10 +18,21 @@ include "lambda-delta/substitution/drop_defs.ma".
 
 (* the main properties ******************************************************)
 
-axiom drop_conf_ge: ∀d1,e1,L,L1. ↑[d1, e1] L1 ≡ L →
+lemma drop_conf_ge: ∀d1,e1,L,L1. ↑[d1, e1] L1 ≡ L →
                     ∀e2,L2. ↑[0, e2] L2 ≡ L → d1 + e1 ≤ e2 →
                     ↑[0, e2 - e1] L2 ≡ L1.
-      
+#d1 #e1 #L #L1 #H elim H -H d1 e1 L L1
+[ //
+| #L #K #I #V #e #_ #IHLK #e2 #L2 #H #He2
+  lapply (drop_inv_drop1 … H ?) -H /2/ #HL2
+  <minus_plus_comm /3/
+| #L #K #I #V1 #V2 #d #e #_ #_ #IHLK #e2 #L2 #H #Hdee2
+  lapply (transitive_le 1 … Hdee2) // #He2
+  lapply (drop_inv_drop1 … H ?) -H // -He2 #HL2
+  lapply (transitive_le (1+e) … Hdee2) // #Hee2
+  >(plus_minus_m_m (e2-e) 1 ?) [ @drop_drop >minus_minus_comm /3/ | /2/ ]
+]
+qed.
 
 axiom drop_conf_lt: ∀d1,e1,L,L1. ↑[d1, e1] L1 ≡ L →
                     ∀e2,K2,I,V2. ↑[0, e2] K2. 𝕓{I} V2 ≡ L →

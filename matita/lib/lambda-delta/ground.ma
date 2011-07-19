@@ -48,6 +48,22 @@ lapply (le_to_lt_to_lt … H2 H1) -H2 H1 #H
 elim (lt_refl_false … H)
 qed.
 
+lemma le_O_to_eq_O: ∀n. n ≤ 0 → n = 0.
+/2/ qed.
+
+lemma plus_S_eq_O_false: ∀n,m. n + S m = 0 → False.
+#n #m <plus_n_Sm #H destruct
+qed. 
+
+lemma minus_plus_comm: ∀a,b,c. a - b - c = a - (c + b).
+// qed.
+
+lemma minus_minus_comm: ∀a,b,c. a - b - c = a - c - b.
+/3/ qed.
+
+lemma plus_le_minus: ∀a,b,c. a + b ≤ c → a ≤ c - b.
+/2/ qed.
+
 lemma arith1: ∀n,h,m,p. n + h + m ≤ p + h → n + m ≤ p.
 /2/ qed.
 
