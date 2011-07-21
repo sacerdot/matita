@@ -73,5 +73,18 @@ lemma drop_trans_le: ∀d1,e1,L1. ∀L:lenv. ↑[d1, e1] L ≡ L1 →
 ]
 qed.
 
-axiom drop_trans_ge: ∀d1,e1,L1,L. ↑[d1, e1] L ≡ L1 →
+lemma drop_trans_ge: ∀d1,e1,L1,L. ↑[d1, e1] L ≡ L1 →
                      ∀e2,L2. ↑[0, e2] L2 ≡ L → d1 ≤ e2 → ↑[0, e1 + e2] L2 ≡ L1.
+#d1 #e1 #L1 #L #H elim H -H d1 e1 L1 L
+[ //
+| /3/
+| #L1 #L2 #I #V1 #V2 #d #e #H_ #_ #IHL12 #e2 #L #H #Hde2
+  lapply (lt_to_le_to_lt 0 … Hde2) // #He2
+  lapply (lt_to_le_to_lt … (e + e2) He2 ?) // #Hee2
+  lapply (drop_inv_drop1 … H ?) -H // #HL2
+  @drop_drop_lt // >le_plus_minus // @IHL12 /2/ (**) (* explicit constructor *)
+]
+qed.
+
+axiom drop_div: ∀e1,L1. ∀L:lenv. ↑[0, e1] L ≡ L1 → ∀e2,L2. ↑[0, e2] L ≡ L2 →
+                ∃∃L0. ↑[0, e1] L2 ≡ L0 & ↑[e1, e2] L1 ≡ L0.

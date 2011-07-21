@@ -39,6 +39,9 @@ lemma le_plus_minus_comm: ∀n,m,p. p ≤ m → (m + n) - p = (m - p) + n.
 >(commutative_plus p) <plus_minus_m_m //
 qed.
 
+lemma le_plus_minus: ∀a,b,c. c ≤ b → a + b - c = a + (b - c).
+/2/ qed.
+
 lemma minus_le_minus_minus_comm: ∀m,p,n. 
                                  p ≤ m → m - p ≤ n → n + p - m = n - (m - p).
 #m elim m -m
