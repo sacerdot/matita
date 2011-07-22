@@ -38,7 +38,7 @@ interpretation
    "single step parallel reduction (term)"
    'PR L T1 T2 = (pr L T1 T2).
 
-(* The basic properties *****************************************************)
+(* Basic properties *********************************************************)
 
 lemma pr_refl: ∀T,L. L ⊢ T ⇒ T.
 #T elim T -T //
