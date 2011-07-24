@@ -17,7 +17,7 @@ notation "hvbox( ⋆ )"
  non associative with precedence 90
  for @{ 'Star }.
 
-notation "hvbox( ⋆ k )"
+notation "hvbox( ⋆ term 90 k )"
  non associative with precedence 90
  for @{ 'Star $k }.
 
@@ -53,18 +53,18 @@ notation "hvbox( ↑ [ d , break e ] break T1 ≡ break T2 )"
 
 notation "hvbox( ↓ [ d , break e ] break L1 ≡ break L2 )"
    non associative with precedence 45
-   for @{ 'RSubst $L1 $d $e $L2 }.
+   for @{ 'RDrop $L1 $d $e $L2 }.
 
-notation "hvbox( L ⊢ break ↓ [ d , break e ] break T1 ≡ break T2 )"
+notation "hvbox( L ⊢ break (term 90 T1) break [ d , break e ] ≫ break T2 )"
    non associative with precedence 45
-   for @{ 'RSubst $L $T1 $d $e $T2 }.
+   for @{ 'PSubst $L $T1 $d $e $T2 }.
 
 (* reduction ****************************************************************)
 
 notation "hvbox( T1 ⇒ break T2 )"
    non associative with precedence 45
-   for @{ 'PR $T1 $T2 }.
+   for @{ 'PRed $T1 $T2 }.
 
 notation "hvbox( L ⊢ break (term 90 T1) ⇒ break T2 )"
    non associative with precedence 45
-   for @{ 'PR $L $T1 $T2 }.
+   for @{ 'PRed $L $T1 $T2 }.

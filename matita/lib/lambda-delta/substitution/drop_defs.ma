@@ -22,19 +22,19 @@ inductive drop: lenv → nat → nat → lenv → Prop ≝
              drop (L1. 𝕓{I} V1) (d + 1) e (L2. 𝕓{I} V2)
 .
 
-interpretation "dropping" 'RLift L2 d e L1 = (drop L1 d e L2).
+interpretation "dropping" 'RDrop L1 d e L2 = (drop L1 d e L2).
 
 (* Basic properties *********************************************************) 
 
 lemma drop_drop_lt: ∀L1,L2,I,V,e. 
-                    ↑[0, e - 1] L2 ≡ L1 → 0 < e → ↑[0, e] L2 ≡ L1. 𝕓{I} V.
+                    ↓[0, e - 1] L1 ≡ L2 → 0 < e → ↓[0, e] L1. 𝕓{I} V ≡ L2.
 #L1 #L2 #I #V #e #HL12 #He >(plus_minus_m_m e 1) /2/
 qed.
 
 (* Basic inversion lemmas ***************************************************)
 
-lemma drop_inv_refl_aux: ∀d,e,L2,L1. ↑[d, e] L2 ≡ L1 → d = 0 → e = 0 → L1 = L2.
-#d #e #L2 #L1 #H elim H -H d e L2 L1
+lemma drop_inv_refl_aux: ∀d,e,L1,L2. ↓[d, e] L1 ≡ L2 → d = 0 → e = 0 → L1 = L2.
+#d #e #L1 #L2 #H elim H -H d e L1 L2
 [ //
 | #L1 #L2 #I #V #e #_ #_ #_ #H
   elim (plus_S_eq_O_false … H)
@@ -43,35 +43,35 @@ lemma drop_inv_refl_aux: ∀d,e,L2,L1. ↑[d, e] L2 ≡ L1 → d = 0 → e = 0 �
 ]
 qed.
 
-lemma drop_inv_refl: ∀L2,L1. ↑[0, 0] L2 ≡ L1 → L1 = L2.
+lemma drop_inv_refl: ∀L1,L2. ↓[0, 0] L1 ≡ L2 → L1 = L2.
 /2 width=5/ qed.
 
-lemma drop_inv_O1_aux: ∀d,e,L2,L1. ↑[d, e] L2 ≡ L1 → d = 0 →
+lemma drop_inv_O1_aux: ∀d,e,L1,L2. ↓[d, e] L1 ≡ L2 → d = 0 →
                        ∀K,I,V. L1 = K. 𝕓{I} V → 
                        (e = 0 ∧ L2 = K. 𝕓{I} V) ∨
-                       (0 < e ∧ ↑[d, e - 1] L2 ≡ K).
-#d #e #L2 #L1 #H elim H -H d e L2 L1
+                       (0 < e ∧ ↓[d, e - 1] K ≡ L2).
+#d #e #L1 #L2 #H elim H -H d e L1 L2
 [ /3/
 | #L1 #L2 #I #V #e #HL12 #_ #_ #K #J #W #H destruct -L1 I V /3/
 | #L1 #L2 #I #V1 #V2 #d #e #_ #_ #_ #H elim (plus_S_eq_O_false … H)
 ]
 qed.
 
-lemma drop_inv_O1: ∀e,L2,K,I,V. ↑[0, e] L2 ≡ K. 𝕓{I} V →
+lemma drop_inv_O1: ∀e,K,I,V,L2. ↓[0, e] K. 𝕓{I} V ≡ L2 →
                    (e = 0 ∧ L2 = K. 𝕓{I} V) ∨
-                   (0 < e ∧ ↑[0, e - 1] L2 ≡ K).
+                   (0 < e ∧ ↓[0, e - 1] K ≡ L2).
 /2/ qed.
 
-lemma drop_inv_drop1: ∀e,L2,K,I,V.
-                      ↑[0, e] L2 ≡ K. 𝕓{I} V → 0 < e → ↑[0, e - 1] L2 ≡ K.
-#e #L2 #K #I #V #H #He
+lemma drop_inv_drop1: ∀e,K,I,V,L2.
+                      ↓[0, e] K. 𝕓{I} V ≡ L2 → 0 < e → ↓[0, e - 1] K ≡ L2.
+#e #K #I #V #L2 #H #He
 elim (drop_inv_O1 … H) -H * // #H destruct -e;
 elim (lt_refl_false … He)
 qed.
 
-lemma drop_inv_skip2_aux: ∀d,e,L1,L2. ↑[d, e] L2 ≡ L1 → 0 < d →
+lemma drop_inv_skip2_aux: ∀d,e,L1,L2. ↓[d, e] L1 ≡ L2 → 0 < d →
                           ∀I,K2,V2. L2 = K2. 𝕓{I} V2 →
-                          ∃∃K1,V1. ↑[d - 1, e] K2 ≡ K1 &
+                          ∃∃K1,V1. ↓[d - 1, e] K1 ≡ K2 &
                                    ↑[d - 1, e] V2 ≡ V1 & 
                                    L1 = K1. 𝕓{I} V1.
 #d #e #L1 #L2 #H elim H -H d e L1 L2
@@ -82,7 +82,7 @@ lemma drop_inv_skip2_aux: ∀d,e,L1,L2. ↑[d, e] L2 ≡ L1 → 0 < d →
 ]
 qed.
 
-lemma drop_inv_skip2: ∀d,e,I,L1,K2,V2. ↑[d, e] K2. 𝕓{I} V2 ≡ L1 → 0 < d →
-                      ∃∃K1,V1. ↑[d - 1, e] K2 ≡ K1 & ↑[d - 1, e] V2 ≡ V1 &
+lemma drop_inv_skip2: ∀d,e,I,L1,K2,V2. ↓[d, e] L1 ≡ K2. 𝕓{I} V2 → 0 < d →
+                      ∃∃K1,V1. ↓[d - 1, e] K1 ≡ K2 & ↑[d - 1, e] V2 ≡ V1 &
                                L1 = K1. 𝕓{I} V1.
 /2/ qed.

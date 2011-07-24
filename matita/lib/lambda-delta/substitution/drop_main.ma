@@ -18,9 +18,9 @@ include "lambda-delta/substitution/drop_defs.ma".
 
 (* the main properties ******************************************************)
 
-lemma drop_conf_ge: ∀d1,e1,L,L1. ↑[d1, e1] L1 ≡ L →
-                    ∀e2,L2. ↑[0, e2] L2 ≡ L → d1 + e1 ≤ e2 →
-                    ↑[0, e2 - e1] L2 ≡ L1.
+lemma drop_conf_ge: ∀d1,e1,L,L1. ↓[d1, e1] L ≡ L1 →
+                    ∀e2,L2. ↓[0, e2] L ≡ L2 → d1 + e1 ≤ e2 →
+                    ↓[0, e2 - e1] L1 ≡ L2.
 #d1 #e1 #L #L1 #H elim H -H d1 e1 L L1
 [ //
 | #L #K #I #V #e #_ #IHLK #e2 #L2 #H #He2
@@ -34,11 +34,11 @@ lemma drop_conf_ge: ∀d1,e1,L,L1. ↑[d1, e1] L1 ≡ L →
 ]
 qed.
 
-lemma drop_conf_lt: ∀d1,e1,L,L1. ↑[d1, e1] L1 ≡ L →
-                    ∀e2,K2,I,V2. ↑[0, e2] K2. 𝕓{I} V2 ≡ L →
+lemma drop_conf_lt: ∀d1,e1,L,L1. ↓[d1, e1] L ≡ L1 →
+                    ∀e2,K2,I,V2. ↓[0, e2] L ≡ K2. 𝕓{I} V2 →
                     e2 < d1 → let d ≝ d1 - e2 - 1 in
-                    ∃∃K1,V1. ↑[0, e2] K1. 𝕓{I} V1 ≡ L1 & 
-                             ↑[d, e1] K1 ≡ K2 & ↑[d,e1] V1 ≡ V2.
+                    ∃∃K1,V1. ↓[0, e2] L1 ≡ K1. 𝕓{I} V1 &
+                             ↓[d, e1] K2 ≡ K1 & ↑[d, e1] V1 ≡ V2.
 #d1 #e1 #L #L1 #H elim H -H d1 e1 L L1
 [ #L0 #e2 #K2 #I #V2 #_ #H
   elim (lt_zero_false … H)
@@ -53,9 +53,9 @@ lemma drop_conf_lt: ∀d1,e1,L,L1. ↑[d1, e1] L1 ≡ L →
 ]
 qed.
 
-lemma drop_trans_le: ∀d1,e1,L1. ∀L:lenv. ↑[d1, e1] L ≡ L1 →
-                     ∀e2,L2. ↑[0, e2] L2 ≡ L → e2 ≤ d1 →
-                     ∃∃L0. ↑[0, e2] L0 ≡ L1 & ↑[d1 - e2, e1] L2 ≡ L0.
+lemma drop_trans_le: ∀d1,e1,L1,L. ↓[d1, e1] L1 ≡ L →
+                     ∀e2,L2. ↓[0, e2] L ≡ L2 → e2 ≤ d1 →
+                     ∃∃L0. ↓[0, e2] L1 ≡ L0 & ↓[d1 - e2, e1] L0 ≡ L2.
 #d1 #e1 #L1 #L #H elim H -H d1 e1 L1 L
 [ #L #e2 #L2 #HL2 #H
   lapply (le_O_to_eq_O … H) -H #H destruct -e2 /2/
@@ -73,8 +73,8 @@ lemma drop_trans_le: ∀d1,e1,L1. ∀L:lenv. ↑[d1, e1] L ≡ L1 →
 ]
 qed.
 
-lemma drop_trans_ge: ∀d1,e1,L1,L. ↑[d1, e1] L ≡ L1 →
-                     ∀e2,L2. ↑[0, e2] L2 ≡ L → d1 ≤ e2 → ↑[0, e1 + e2] L2 ≡ L1.
+lemma drop_trans_ge: ∀d1,e1,L1,L. ↓[d1, e1] L1 ≡ L →
+                     ∀e2,L2. ↓[0, e2] L ≡ L2 → d1 ≤ e2 → ↓[0, e1 + e2] L1 ≡ L2.
 #d1 #e1 #L1 #L #H elim H -H d1 e1 L1 L
 [ //
 | /3/
@@ -86,5 +86,5 @@ lemma drop_trans_ge: ∀d1,e1,L1,L. ↑[d1, e1] L ≡ L1 →
 ]
 qed.
 
-axiom drop_div: ∀e1,L1. ∀L:lenv. ↑[0, e1] L ≡ L1 → ∀e2,L2. ↑[0, e2] L ≡ L2 →
-                ∃∃L0. ↑[0, e1] L2 ≡ L0 & ↑[e1, e2] L1 ≡ L0.
+axiom drop_div: ∀e1,L1,L. ↓[0, e1] L1 ≡ L → ∀e2,L2. ↓[0, e2] L2 ≡ L →
+                ∃∃L0. ↓[0, e1] L0 ≡ L2 & ↓[e1, e2] L0 ≡ L1.

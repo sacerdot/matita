@@ -16,6 +16,7 @@
  *)
 
 include "lambda-delta/ground.ma".
+include "lambda-delta/notation.ma".
 
 (* BINARY ITEMS *************************************************************)
 

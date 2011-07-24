@@ -12,7 +12,6 @@
 include "basics/list.ma".
 include "lambda-delta/xoa_defs.ma".
 include "lambda-delta/xoa_notation.ma".
-include "lambda-delta/notation.ma".
 
 (* ARITHMETICAL PROPERTIES **************************************************)
 
