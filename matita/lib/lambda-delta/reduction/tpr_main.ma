@@ -12,13 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
+(*
 include "lambda-delta/substitution/lift_fun.ma".
 include "lambda-delta/substitution/lift_main.ma".
 include "lambda-delta/substitution/drop_main.ma".
-include "lambda-delta/reduction/pr_defs.ma".
+*)
+include "lambda-delta/reduction/tpr_defs.ma".
 
-lemma pr_lift: ∀L,T1,T2. L ⊢ T1 ⇒ T2 → ∀d,e,K. ↑[d,e] L ≡ K →
-               ∀U1. ↑[d,e] T1 ≡ U1 → ∀U2. ↑[d,e] T2 ≡ U2 → K ⊢ U1 ⇒ U2.
+axiom tpr_lift: ∀T1,T2. T1 ⇒ T2 →
+                ∀d,e,U1. ↑[d, e] T1 ≡ U1 → ∀U2. ↑[d, e] T2 ≡ U2 → U1 ⇒ U2.
+(*
 #L #T1 #T2 #H elim H -H L T1 T2
 [ #L #k #d #e #K #_ #U1 #HU1 #U2 #HU2
   lapply (lift_mono … HU1 … HU2) -HU1 #H destruct -U1; 
@@ -67,10 +70,11 @@ lemma pr_lift: ∀L,T1,T2. L ⊢ T1 ⇒ T2 → ∀d,e,K. ↑[d,e] L ≡ K →
   @pr_tau /2 width=5/
 ]
 qed.
-
-lemma pr_inv_lift: ∀L,T1,T2. L ⊢ T1 ⇒ T2 →
-                   ∀d,e,K. ↑[d,e] K ≡ L → ∀U1. ↑[d,e] U1 ≡ T1 →
-                   ∃∃U2. ↑[d,e] U2 ≡ T2 & K ⊢ U1 ⇒ U2.
+*)
+axiom tpr_inv_lift: ∀T1,T2. T1 ⇒ T2 →
+                    ∀d,e,U1. ↑[d, e] U1 ≡ T1 →
+                    ∃∃U2. ↑[d, e] U2 ≡ T2 & U1 ⇒ U2.
+(*
 #L #T1 #T2 #H elim H -H L T1 T2
 [ #L #k #d #e #K #_ #U1 #HU1
   lapply (lift_inv_sort2 … HU1) -HU1 #H destruct -U1 /2/
@@ -124,3 +128,4 @@ lemma pr_inv_lift: ∀L,T1,T2. L ⊢ T1 ⇒ T2 →
   elim (IHT12 … HLK … HT01) -IHT12 HLK HT01 /3/
 ]
 qed.
+*)
