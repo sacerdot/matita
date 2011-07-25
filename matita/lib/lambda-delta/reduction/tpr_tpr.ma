@@ -78,7 +78,7 @@ elim (tpr_inv_abst1 … HT2) -HT2 #W1 #T1 #HW21 #HT21 #H destruct -T12;
 elim (IH … HV1 … HV2) -HV1 HV2 // #V #HV12 #HV22
 elim (IH … HT21 … HT1) -HT21 HT1 IH /3 width=5/
 qed.
-
+(*
 lemma tpr_conf_flat_theta:
    ∀V11,V12,T12,V2,V22,W21,W22,T21,T22. (
       ∀T1. #T1 < #V11 + (#W21 + #T21 + 1) + 1 →
@@ -88,10 +88,35 @@ lemma tpr_conf_flat_theta:
    V11 ⇒ V12 → V11 ⇒ V22 → ↑[O,1] V22 ≡ V2 →
    W21 ⇒ W22 → T21 ⇒ T22 →  𝕓{Abbr} W21. T21 ⇒ T12 →
    ∃∃T0. 𝕗{Appl} V12. T12 ⇒ T0 & 𝕓{Abbr} W22. 𝕗{Appl} V2. T22 ⇒T0.
-
+*)
 
 (* Confluence ***************************************************************)
+(*
+lemma tpr_conf_aux:
+   ∀T. (
+      ∀T1. #T1 < #T → ∀T3,T4. T1 ⇒ T3 → T1 ⇒ T4 →
+      ∃∃T0. T3 ⇒ T0 & T4 ⇒ T0
+         ) →
+   ∀U1,T1,T2. U1 ⇒ T1 → U1 ⇒ T2 → U1 = T →
+   ∃∃T0. T1 ⇒ T0 & T2 ⇒ T0.
+#T #IH  #U1 #T1 #T2 * -U1 T1
+[ #k1 #H1 #H2 destruct -T;
+  lapply (tpr_inv_sort1 … H1) -H1
+(* case 1: sort, sort *) 
+  #H1 destruct -T2 //
+| #i1 #H1 #H2 destruct -T;
+  lapply (tpr_inv_lref1 … H1) -H1
+(* case 2: lref, lref *) 
+  #H1 destruct -T2 //
+| #I1 #V11 #V12 #T11 #T12 #HV112 #HT112 #H1 #H2 destruct -T;
+  lapply (tpr_inv_bind1 … H1) -H1
+  [ 
 
+theorem tpr_conf: ∀T,T1,T2. T ⇒ T1 → T ⇒ T2 →
+                 ∃∃T0. T1 ⇒ T0 & T2 ⇒ T0.
+#T @(tw_wf_ind … T) -T /3 width=6/
+qed.
+*)
 lemma tpr_conf_aux:
    ∀T. (
       ∀T1. #T1 < #T → ∀T3,T4. T1 ⇒ T3 → T1 ⇒ T4 →
@@ -193,7 +218,3 @@ lemma tpr_conf_flat_theta:
    W21 ⇒ W22 → T21 ⇒ T22 →  𝕓{Abbr} W21. T21 ⇒ T12 →
    ∃∃T0. 𝕗{Appl} V12. T12 ⇒ T0 & 𝕓{Abbr} W22. 𝕗{Appl} V2. T22 ⇒T0.
 
-theorem tpr_conf: ∀T,T1,T2. T ⇒ T1 → T ⇒ T2 →
-                 ∃∃T0. T1 ⇒ T0 & T2 ⇒ T0.
-#T @(tw_wf_ind … T) -T /3 width=8/
-qed.
