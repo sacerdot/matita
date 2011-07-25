@@ -21,6 +21,12 @@ lemma plus_plus_comm_23: ∀m,n,p. m + n + p = m + p + n.
 lemma minus_plus_comm: ∀a,b,c. a - b - c = a - (c + b).
 // qed.
 
+lemma arith8: ∀a,b. a < a + b + 1.
+// qed.
+
+lemma arith9: ∀a,b,c. c < a + (b + c + 1) + 1.
+// qed.
+
 lemma minus_le: ∀m,n. m - n ≤ m.
 /2/ qed.
 

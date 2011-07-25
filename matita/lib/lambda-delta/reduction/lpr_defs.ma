@@ -24,7 +24,7 @@ inductive lpr: lenv → lenv → Prop ≝
 
 interpretation
   "context-free parallel reduction (environment)"
-  'PR L1 L2 = (lpr L1 L2).
+  'PRed L1 L2 = (lpr L1 L2).
 
 (* Basic inversion lemmas ***************************************************)
 
