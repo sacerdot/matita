@@ -127,6 +127,18 @@ lemma tpr_inv_abst1: ∀V1,T1,U2. 𝕚{Abst} V1. T1 ⇒ U2 →
                      ∃∃V2,T2. V1 ⇒ V2 & T1 ⇒ T2 & U2 = 𝕚{Abst} V2. T2.
 /2/ qed.
 
+lemma tpr_inv_bind1: ∀V1,T1,U2,I. 𝕓{I} V1. T1 ⇒ U2 →
+                     ∨∨ ∃∃V2,T2. V1 ⇒ V2 & T1 ⇒ T2 & U2 = 𝕓{I} V2. T2
+                      | ∃∃V2,T2,T. V1 ⇒ V2 & T1 ⇒ T2 &
+                                   ⋆.  𝕓{Abbr} V2 ⊢ T2 [0, 1] ≫ T &
+                                   U2 = 𝕚{Abbr} V2. T & I = Abbr
+                      | ∃∃T. ↑[0,1] T ≡ T1 & tpr T U2 & I = Abbr.
+#V1 #T1 #U2 * #H
+[ elim (tpr_inv_abbr1 … H) -H * /3 width=7/
+| /3/
+]
+qed.
+
 lemma tpr_inv_appl1_aux: ∀U1,U2. U1 ⇒ U2 → ∀V1,U0. U1 = 𝕚{Appl} V1. U0 →
                          ∨∨ ∃∃V2,T2.            V1 ⇒ V2 & U0 ⇒ T2 &
                                                 U2 = 𝕚{Appl} V2. T2
@@ -183,6 +195,24 @@ lemma tpr_inv_cast1: ∀V1,T1,U2. 𝕚{Cast} V1. T1 ⇒ U2 →
                        (∃∃V2,T2. V1 ⇒ V2 & T1 ⇒ T2 & U2 = 𝕚{Cast} V2. T2)
                      ∨ T1 ⇒ U2.
 /2/ qed.
+
+lemma tpr_inv_flat1: ∀V1,U0,U2,I. 𝕗{I} V1. U0 ⇒ U2 →
+                     ∨∨ ∃∃V2,T2.            V1 ⇒ V2 & U0 ⇒ T2 &
+                                            U2 = 𝕗{I} V2. T2
+                      | ∃∃V2,W,T1,T2.       V1 ⇒ V2 & T1 ⇒ T2 &
+                                            U0 = 𝕚{Abst} W. T1 &
+                                            U2 = 𝕓{Abbr} V2. T2 & I = Appl
+                      | ∃∃V2,V,W1,W2,T1,T2. V1 ⇒ V2 & W1 ⇒ W2 & T1 ⇒ T2 &
+                                            ↑[0,1] V2 ≡ V &
+                                            U0 = 𝕚{Abbr} W1. T1 &
+                                            U2 = 𝕚{Abbr} W2. 𝕚{Appl} V. T2 &
+                                            I = Appl
+                      |                     (U0 ⇒ U2 ∧ I = Cast).
+#V1 #U0 #U2 * #H
+[ elim (tpr_inv_appl1 … H) -H * /3 width=12/
+| elim (tpr_inv_cast1 … H) -H [1: *] /3 width=5/
+]
+qed.
 
 lemma tpr_inv_lref2_aux: ∀T1,T2. T1 ⇒ T2 → ∀i. T2 = #i →
                          ∨∨           T1 = #i

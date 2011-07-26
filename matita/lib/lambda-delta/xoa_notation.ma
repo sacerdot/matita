@@ -22,6 +22,10 @@ notation "hvbox(∃∃ ident x0 , ident x1 break . term 19 P0 break & term 19 P1
  non associative with precedence 20
  for @{ 'Ex (λ${ident x0},${ident x1}.$P0) (λ${ident x0},${ident x1}.$P1) }.
 
+notation "hvbox(∃∃ ident x0 break . term 19 P0 break & term 19 P1 break & term 19 P2)"
+ non associative with precedence 20
+ for @{ 'Ex (λ${ident x0}.$P0) (λ${ident x0}.$P1) (λ${ident x0}.$P2) }.
+
 notation "hvbox(∃∃ ident x0 , ident x1 break . term 19 P0 break & term 19 P1 break & term 19 P2)"
  non associative with precedence 20
  for @{ 'Ex (λ${ident x0},${ident x1}.$P0) (λ${ident x0},${ident x1}.$P1) (λ${ident x0},${ident x1}.$P2) }.
@@ -38,11 +42,27 @@ notation "hvbox(∃∃ ident x0 , ident x1 , ident x2 , ident x3 break . term 19
  non associative with precedence 20
  for @{ 'Ex (λ${ident x0},${ident x1},${ident x2},${ident x3}.$P0) (λ${ident x0},${ident x1},${ident x2},${ident x3}.$P1) (λ${ident x0},${ident x1},${ident x2},${ident x3}.$P2) (λ${ident x0},${ident x1},${ident x2},${ident x3}.$P3) }.
 
+notation "hvbox(∃∃ ident x0 , ident x1 , ident x2 break . term 19 P0 break & term 19 P1 break & term 19 P2 break & term 19 P3 break & term 19 P4)"
+ non associative with precedence 20
+ for @{ 'Ex (λ${ident x0},${ident x1},${ident x2}.$P0) (λ${ident x0},${ident x1},${ident x2}.$P1) (λ${ident x0},${ident x1},${ident x2}.$P2) (λ${ident x0},${ident x1},${ident x2}.$P3) (λ${ident x0},${ident x1},${ident x2}.$P4) }.
+
+notation "hvbox(∃∃ ident x0 , ident x1 , ident x2 , ident x3 break . term 19 P0 break & term 19 P1 break & term 19 P2 break & term 19 P3 break & term 19 P4)"
+ non associative with precedence 20
+ for @{ 'Ex (λ${ident x0},${ident x1},${ident x2},${ident x3}.$P0) (λ${ident x0},${ident x1},${ident x2},${ident x3}.$P1) (λ${ident x0},${ident x1},${ident x2},${ident x3}.$P2) (λ${ident x0},${ident x1},${ident x2},${ident x3}.$P3) (λ${ident x0},${ident x1},${ident x2},${ident x3}.$P4) }.
+
 notation "hvbox(∃∃ ident x0 , ident x1 , ident x2 , ident x3 , ident x4 , ident x5 break . term 19 P0 break & term 19 P1 break & term 19 P2 break & term 19 P3 break & term 19 P4 break & term 19 P5)"
  non associative with precedence 20
  for @{ 'Ex (λ${ident x0},${ident x1},${ident x2},${ident x3},${ident x4},${ident x5}.$P0) (λ${ident x0},${ident x1},${ident x2},${ident x3},${ident x4},${ident x5}.$P1) (λ${ident x0},${ident x1},${ident x2},${ident x3},${ident x4},${ident x5}.$P2) (λ${ident x0},${ident x1},${ident x2},${ident x3},${ident x4},${ident x5}.$P3) (λ${ident x0},${ident x1},${ident x2},${ident x3},${ident x4},${ident x5}.$P4) (λ${ident x0},${ident x1},${ident x2},${ident x3},${ident x4},${ident x5}.$P5) }.
 
-notation "hvbox(∨∨ term 19 P0 break | term 19 P1 break | term 19 P2)"
+notation "hvbox(∃∃ ident x0 , ident x1 , ident x2 , ident x3 , ident x4 , ident x5 break . term 19 P0 break & term 19 P1 break & term 19 P2 break & term 19 P3 break & term 19 P4 break & term 19 P5 break & term 19 P6)"
  non associative with precedence 20
+ for @{ 'Ex (λ${ident x0},${ident x1},${ident x2},${ident x3},${ident x4},${ident x5}.$P0) (λ${ident x0},${ident x1},${ident x2},${ident x3},${ident x4},${ident x5}.$P1) (λ${ident x0},${ident x1},${ident x2},${ident x3},${ident x4},${ident x5}.$P2) (λ${ident x0},${ident x1},${ident x2},${ident x3},${ident x4},${ident x5}.$P3) (λ${ident x0},${ident x1},${ident x2},${ident x3},${ident x4},${ident x5}.$P4) (λ${ident x0},${ident x1},${ident x2},${ident x3},${ident x4},${ident x5}.$P5) (λ${ident x0},${ident x1},${ident x2},${ident x3},${ident x4},${ident x5}.$P6) }.
+
+notation "hvbox(∨∨ term 29 P0 break | term 29 P1 break | term 29 P2)"
+ non associative with precedence 30
  for @{ 'Or $P0 $P1 $P2 }.
+
+notation "hvbox(∨∨ term 29 P0 break | term 29 P1 break | term 29 P2 break | term 29 P3)"
+ non associative with precedence 30
+ for @{ 'Or $P0 $P1 $P2 $P3 }.
 
