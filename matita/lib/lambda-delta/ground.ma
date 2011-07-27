@@ -10,8 +10,6 @@
       V_______________________________________________________________ *)
 
 include "basics/list.ma".
-include "lambda-delta/xoa_defs.ma".
-include "lambda-delta/xoa_notation.ma".
 
 (* ARITHMETICAL PROPERTIES **************************************************)
 

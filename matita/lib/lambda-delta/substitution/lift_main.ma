@@ -16,7 +16,7 @@ include "lambda-delta/substitution/lift_defs.ma".
 
 (* RELOCATION ***************************************************************)
 
-(* the main properies *******************************************************)
+(* Main properies ***********************************************************)
 
 lemma lift_div_le: ∀d1,e1,T1,T. ↑[d1, e1] T1 ≡ T →
                    ∀d2,e2,T2. ↑[d2 + e1, e2] T2 ≡ T →

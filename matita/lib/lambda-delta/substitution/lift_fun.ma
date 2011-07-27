@@ -16,7 +16,7 @@ include "lambda-delta/substitution/lift_defs.ma".
 
 (* RELOCATION ***************************************************************)
 
-(* the functional properties ************************************************)
+(* Functional properties ****************************************************)
 
 lemma lift_total: ∀T1,d,e. ∃T2. ↑[d,e] T1 ≡ T2.
 #T1 elim T1 -T1
