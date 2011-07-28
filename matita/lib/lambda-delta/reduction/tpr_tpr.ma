@@ -136,6 +136,31 @@ elim (tpr_inv_abbr1 … H) -H *
 ]
 qed.
 
+lemma tpr_conf_flat_cast:
+   ∀X2,V0,V1,T0,T1. (
+      ∀X0:term. #X0 < #V0 + # T0 + 1 →
+      ∀X1,X2. X0 ⇒ X1 → X0 ⇒ X2 →
+      ∃∃X. X1 ⇒ X & X2 ⇒ X
+   ) →
+   V0 ⇒ V1 → T0 ⇒ T1 → T0 ⇒ X2 →
+   ∃∃X. 𝕗{Cast} V1. T1 ⇒ X & X2 ⇒ X.
+#X2 #V0 #V1 #T0 #T1 #IH #_ #HT01 #HT02
+elim (IH … HT01 … HT02) -HT01 HT02 IH /3/
+qed.
+
+lemma tpr_conf_beta_beta:
+   ∀W0:term. ∀V0,V1,T0,T1,V2,T2. (
+      ∀X0:term. #X0 < #V0 + (#W0 + #T0 + 1) + 1 →
+      ∀X1,X2. X0 ⇒ X1 → X0 ⇒ X2 →
+      ∃∃X. X1 ⇒ X & X2 ⇒ X
+   ) →
+   V0 ⇒ V1 → V0 ⇒ V2 → T0 ⇒ T1 → T0 ⇒ T2 →
+   ∃∃X. 𝕓{Abbr} V1. T1 ⇒X & 𝕓{Abbr} V2. T2 ⇒ X.
+#W0 #V0 #V1 #T0 #T1 #V2 #T2 #IH #HV01 #HV02 #HT01 #HT02
+elim (IH … HV01 … HV02) -HV01 HV02 //
+elim (IH … HT01 … HT02) -HT01 HT02 IH /3 width=5/
+qed.
+
 (* Confluence ***************************************************************)
 
 lemma tpr_conf_aux:
@@ -179,7 +204,39 @@ lemma tpr_conf_aux:
     @tpr_conf_flat_theta /2 width=11/ (**) (* /3 width=11/ is too slow *)
 (* case 9: flat, tau *)
   | #HT02 #H destruct -I
-    //
+    @tpr_conf_flat_cast /2 width=6/ (**) (* /3 width=6/ is too slow *)
+  ]
+| #V0 #V1 #W0 #T0 #T1 #HV01 #HT01 #H1 #H2 destruct -Y0;
+  elim (tpr_inv_appl1 … H1) -H1 *
+(* case 10: beta, flat (repeated) *)
+  [ #V2 #T2 #HV02 #HT02 #H destruct -X2
+    @ex2_1_comm @tpr_conf_flat_beta /2 width=8/
+(* case 11: beta, beta *)
+  | #V2 #WW0 #TT0 #T2 #HV02 #HT02 #H1 #H2 destruct -W0 T0 X2
+    @tpr_conf_beta_beta /2 width=8/ (**) (* /3 width=8/ is too slow *)
+(* case 12, beta, theta (excluded) *)
+  | #V2 #VV2 #WW0 #W2 #TT0 #T2 #_ #_ #_ #_ #H destruct
+  ]
+| #V0 #V1 #T0 #T1 #TT1 #HV01 #T01 #HTT1 #H1 #H2 destruct -Y0
+  elim (tpr_inv_abbr1 … H1) -H1 *
+(* case 13: delta, bind (repeated) *)
+  [ #V2 #T2 #HV02 #T02 #H destruct -X2
+    @ex2_1_comm @tpr_conf_bind_delta /2 width=9/
+    
+    
+
+lemma tpr_conf_beta_beta:
+   ∀V0,V1,W0,T0,T1,V2,T2. (
+      ∀X0:term. #X0 ≤ #V0 + (#W0 + #T0 + 1) + 1 →
+      ∀X1,X2. X0 ⇒ X1 → X0 ⇒ X2 →
+      ∃∃X. X1 ⇒ X & X2 ⇒ X
+   ) →
+   V0 ⇒ V1 → V0 ⇒ V2 → T0 ⇒ T1 → T0 ⇒ T2 →
+   ∃∃X. 𝕓{Abbr} V1. T1 ⇒X & 𝕓{Abbr} V2. T2 ⇒ X.
+#V0 #V1 #W0 #T0 #T1 #V2 #T2 #IH #HV01 #HV02 #HT01 #HT02 
+
+ 
+
 
 theorem tpr_conf: ∀T0,T1,T2. T0 ⇒ T1 → T0 ⇒ T2 →
                   ∃∃T. T1 ⇒ T & T2 ⇒ T.
