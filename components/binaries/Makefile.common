@@ -1,0 +1,25 @@
+H=@
+
+include ../../../Makefile.defs
+
+DIST=$(EXEC)---$(VERSION)
+DATE=$(shell date +%y%m%d)
+
+OCAMLOPTIONS = -linkpkg -thread -rectypes -package \"$(REQUIRES)\" 
+OCAMLC = $(OCAMLFIND) ocamlc $(OCAMLOPTIONS) 
+OCAMLOPT = $(OCAMLFIND) opt $(OCAMLOPTIONS)
+
+all:
+	@echo "  OCAMLBUILD $(EXEC).native" 
+	$(H)ocamlbuild -ocamlc "$(OCAMLC)" -ocamlopt "$(OCAMLOPT)" $(EXEC).native 
+
+clean:
+	ocamlbuild -clean
+	rm -rf $(DIST) $(DIST).tgz
+
+dist:
+	mkdir -p $(DIST)/Sources
+	cp ReadMe $(DIST)
+	cp *.ml *.mli *.mll *.mly Makefile _tags $(DIST)/Sources
+	cd $(DIST); ln -s Sources/$(EXEC).native $(EXEC)
+	tar -cvzf $(DIST).tgz $(DIST)
