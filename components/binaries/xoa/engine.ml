@@ -30,8 +30,7 @@ let void_iter f n =
 
 let mk_exists ooch noch c v =
    let description = "multiple existental quantifier" in
-   let in_prec = "non associative with precedence 20\n" in
-(*   let out_prec = "right associative with precedence 20\n" in *)
+   let prec = "non associative with precedence 20\n" in
    let name s = P.sprintf "%s%u_%u" s c v in
    let o_name = name "ex" in
    let i_name = "'Ex" in
@@ -81,14 +80,14 @@ let mk_exists ooch noch c v =
    P.fprintf noch "(* %s (%u, %u) *)\n\n" description c v;
 
    P.fprintf noch "notation > \"hvbox(∃∃ %s break . %s)\"\n %s for @{ %s %s }.\n\n"
-      id_list term_conj in_prec i_name (full_seq false);
+      id_list term_conj prec i_name (full_seq false);
 
    P.fprintf noch "notation < \"hvbox(∃∃ %s break . %s)\"\n %s for @{ %s %s }.\n\n"
-      id_list term_conj in_prec i_name (full_seq true)
+      id_list term_conj prec i_name (full_seq true)
 
 let mk_or ooch noch c =
    let description = "multiple disjunction connective" in
-   let in_prec = "non associative with precedence 30\n" in
+   let prec = "non associative with precedence 30\n" in
    let name s = P.sprintf "%s%u" s c in
    let o_name = name "or" in
    let i_name = "'Or" in
@@ -123,10 +122,48 @@ let mk_or ooch noch c =
    P.fprintf noch "(* %s (%u) *)\n\n" description c;
 
    P.fprintf noch "notation \"hvbox(∨∨ %s)\"\n %s for @{ %s %s }.\n\n"
-      term_disj in_prec i_name par_seq
+      term_disj prec i_name par_seq
+
+let mk_and ooch noch c =
+   let description = "multiple conjunction connective" in
+   let prec = "non associative with precedence 35\n" in
+   let name s = P.sprintf "%s%u" s c in
+   let o_name = name "and" in
+   let i_name = "'And" in
+
+   let pre n      = P.sprintf "P%u" (c - n) in   
+   let pre_list   = string_iter "," pre c in
+   let pre_type   = string_iter " → " pre c in   
+   let pre_seq    = string_iter " " pre c in 
+
+   let qm n       = "?" in
+   let qm_pre     = string_iter " " qm c in 
+
+   let term n     = P.sprintf "term 34 P%u" (c - n) in
+   let term_conj  = string_iter " break & " term c in 
+
+   let par n     = P.sprintf "$P%u" (c - n) in 
+   let par_seq   = string_iter " " par c in
+
+   P.fprintf ooch "(* %s (%u) *)\n\n" description c;
+
+   P.fprintf ooch "inductive %s (%s:Prop) : Prop ≝\n" 
+      o_name pre_list;
+   P.fprintf ooch "   | %s_intro: %s → %s %s\n.\n\n"
+      o_name pre_type o_name qm_pre;
+
+   P.fprintf ooch "interpretation \"%s (%u)\" %s %s = (%s %s).\n\n"
+      description c i_name pre_seq o_name pre_seq;
+
+   P.fprintf noch "(* %s (%u) *)\n\n" description c;
+
+   P.fprintf noch "notation \"hvbox(∧∧ %s)\"\n %s for @{ %s %s }.\n\n"
+      term_conj prec i_name par_seq
 
 let generate ooch noch = function
    | A.Exists (c, v) ->
       if c > 0 && v > 0 then mk_exists ooch noch c v
    | A.Or c          ->
       if c > 1 then mk_or ooch noch c
+   | A.And c         ->
+      if c > 1 then mk_and ooch noch c

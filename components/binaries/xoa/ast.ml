@@ -15,7 +15,10 @@ type subarity = int
 
 type directive = Exists of arity * subarity
                | Or of arity
+               | And of arity
 
 let mk_exists c v = Exists (c, v)
 
 let mk_or c = Or c 
+
+let mk_and c = And c 

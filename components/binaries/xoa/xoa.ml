@@ -21,6 +21,9 @@ let unm_ex s =
 let unm_or s =
    Scanf.sscanf s "%u" A.mk_or 
 
+let unm_and s =
+   Scanf.sscanf s "%u" A.mk_and 
+
 let process conf =
    let preamble = L.get_preamble conf in
    let ooch = L.open_out preamble (R.get_string "xoa.objects") in
@@ -28,6 +31,7 @@ let process conf =
    List.iter (L.out_include ooch) (R.get_list R.string "xoa.include");   
    List.iter (E.generate ooch noch) (R.get_list unm_ex "xoa.ex");
    List.iter (E.generate ooch noch) (R.get_list unm_or "xoa.or");
+   List.iter (E.generate ooch noch) (R.get_list unm_and "xoa.and");
    close_out noch; close_out ooch
 
 let _ =
