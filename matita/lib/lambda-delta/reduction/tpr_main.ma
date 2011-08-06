@@ -13,7 +13,6 @@
 (**************************************************************************)
 
 (*
-include "lambda-delta/substitution/lift_fun.ma".
 include "lambda-delta/substitution/lift_main.ma".
 include "lambda-delta/substitution/drop_main.ma".
 *)

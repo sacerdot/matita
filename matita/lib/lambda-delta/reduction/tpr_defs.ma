@@ -9,7 +9,7 @@
      \ /
       V_______________________________________________________________ *)
 
-include "lambda-delta/substitution/ps_defs.ma".
+include "lambda-delta/substitution/pts_defs.ma".
 
 (* CONTEXT-FREE PARALLEL REDUCTION ON TERMS *********************************)
 

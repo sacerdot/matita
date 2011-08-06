@@ -18,6 +18,21 @@ include "lambda-delta/substitution/lift_defs.ma".
 
 (* Main properies ***********************************************************)
 
+lemma lift_inj:  ∀d,e,T1,U. ↑[d,e] T1 ≡ U → ∀T2. ↑[d,e] T2 ≡ U → T1 = T2.
+#d #e #T1 #U #H elim H -H d e T1 U
+[ #k #d #e #X #HX
+  lapply (lift_inv_sort2 … HX) -HX //
+| #i #d #e #Hid #X #HX 
+  lapply (lift_inv_lref2_lt … HX ?) -HX //
+| #i #d #e #Hdi #X #HX 
+  lapply (lift_inv_lref2_ge … HX ?) -HX /2/
+| #I #V1 #V2 #T1 #T2 #d #e #_ #_ #IHV12 #IHT12 #X #HX
+  elim (lift_inv_bind2 … HX) -HX #V #T #HV1 #HT1 #HX destruct -X /3/
+| #I #V1 #V2 #T1 #T2 #d #e #_ #_ #IHV12 #IHT12 #X #HX
+  elim (lift_inv_flat2 … HX) -HX #V #T #HV1 #HT1 #HX destruct -X /3/
+]
+qed.
+
 lemma lift_div_le: ∀d1,e1,T1,T. ↑[d1, e1] T1 ≡ T →
                    ∀d2,e2,T2. ↑[d2 + e1, e2] T2 ≡ T →
                    d1 ≤ d2 →
@@ -57,13 +72,28 @@ lemma lift_free: ∀d1,e2,T1,T2. ↑[d1, e2] T1 ≡ T2 → ∀d2,e1.
   lapply (lt_to_le_to_lt … Hid1 Hd12) -Hd12 #Hid2 /4/
 | #i #d1 #e2 #Hid1 #d2 #e1 #_ #Hd21 #He12
   lapply (transitive_le …(i+e1) Hd21 ?) /2/ -Hd21 #Hd21
-  <(plus_plus_minus_m_m e1 e2 i) /3/
+  <(arith_d1 i e2 e1) // /3/
 | #I #V1 #V2 #T1 #T2 #d1 #e2 #_ #_ #IHV #IHT #d2 #e1 #Hd12 #Hd21 #He12
   elim (IHV … Hd12 Hd21 He12) -IHV #V0 #HV0a #HV0b
   elim (IHT (d2+1) … ? ? He12) /3 width = 5/
 | #I #V1 #V2 #T1 #T2 #d1 #e2 #_ #_ #IHV #IHT #d2 #e1 #Hd12 #Hd21 #He12
   elim (IHV … Hd12 Hd21 He12) -IHV #V0 #HV0a #HV0b
   elim (IHT d2 … ? ? He12) /3 width = 5/
+]
+qed.
+
+lemma lift_mono:  ∀d,e,T,U1. ↑[d,e] T ≡ U1 → ∀U2. ↑[d,e] T ≡ U2 → U1 = U2.
+#d #e #T #U1 #H elim H -H d e T U1
+[ #k #d #e #X #HX
+  lapply (lift_inv_sort1 … HX) -HX //
+| #i #d #e #Hid #X #HX 
+  lapply (lift_inv_lref1_lt … HX ?) -HX //
+| #i #d #e #Hdi #X #HX 
+  lapply (lift_inv_lref1_ge … HX ?) -HX //
+| #I #V1 #V2 #T1 #T2 #d #e #_ #_ #IHV12 #IHT12 #X #HX
+  elim (lift_inv_bind1 … HX) -HX #V #T #HV1 #HT1 #HX destruct -X /3/
+| #I #V1 #V2 #T1 #T2 #d #e #_ #_ #IHV12 #IHT12 #X #HX
+  elim (lift_inv_flat1 … HX) -HX #V #T #HV1 #HT1 #HX destruct -X /3/
 ]
 qed.
 

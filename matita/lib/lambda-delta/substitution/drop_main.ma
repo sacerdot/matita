@@ -16,7 +16,7 @@ include "lambda-delta/substitution/drop_defs.ma".
 
 (* DROPPING *****************************************************************)
 
-(* the main properties ******************************************************)
+(* Main properties **********************************************************)
 
 lemma drop_conf_ge: ∀d1,e1,L,L1. ↓[d1, e1] L ≡ L1 →
                     ∀e2,L2. ↓[0, e2] L ≡ L2 → d1 + e1 ≤ e2 →
@@ -84,6 +84,12 @@ lemma drop_trans_ge: ∀d1,e1,L1,L. ↓[d1, e1] L1 ≡ L →
   lapply (drop_inv_drop1 … H ?) -H // #HL2
   @drop_drop_lt // >le_plus_minus // @IHL12 /2/ (**) (* explicit constructor *)
 ]
+qed.
+
+lemma drop_trans_ge_comm: ∀d1,e1,e2,L1,L2,L.
+                          ↓[d1, e1] L1 ≡ L → ↓[0, e2] L ≡ L2 → d1 ≤ e2 →
+                          ↓[0, e2 + e1] L1 ≡ L2.
+#e1 #e1 #e2 >commutative_plus /2 width=5/
 qed.
 
 axiom drop_div: ∀e1,L1,L. ↓[0, e1] L1 ≡ L → ∀e2,L2. ↓[0, e2] L2 ≡ L →

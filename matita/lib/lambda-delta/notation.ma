@@ -11,7 +11,7 @@
 
 (* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
 
-(* language *****************************************************************)
+(*  *****************************************************************)
 
 notation "hvbox( ⋆ )"
  non associative with precedence 90
@@ -47,6 +47,10 @@ notation "hvbox( # [ x , break y ] )"
 
 (* substitution *************************************************************)
 
+notation "hvbox( T1 break [ d , break e ] ≈ break T2 )"
+   non associative with precedence 45
+   for @{ 'Eq $T1 $d $e $T2 }.
+
 notation "hvbox( ↑ [ d , break e ] break T1 ≡ break T2 )"
    non associative with precedence 45
    for @{ 'RLift $T1 $d $e $T2 }.
@@ -55,7 +59,7 @@ notation "hvbox( ↓ [ d , break e ] break L1 ≡ break L2 )"
    non associative with precedence 45
    for @{ 'RDrop $L1 $d $e $L2 }.
 
-notation "hvbox( L ⊢ break (term 90 T1) break [ d , break e ] ≫ break T2 )"
+notation "hvbox( L ⊢ break term 90 T1 break [ d , break e ] ≫ break T2 )"
    non associative with precedence 45
    for @{ 'PSubst $L $T1 $d $e $T2 }.
 
