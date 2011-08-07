@@ -11,7 +11,7 @@
 
 include "lambda-delta/substitution/lift_weight.ma".
 include "lambda-delta/substitution/pts_pts.ma".
-include "lambda-delta/reduction/tpr_main.ma".
+include "lambda-delta/reduction/tpr_lift.ma".
 include "lambda-delta/reduction/tpr_pts.ma".
 
 (* CONTEXT-FREE PARALLEL REDUCTION ON TERMS *********************************)

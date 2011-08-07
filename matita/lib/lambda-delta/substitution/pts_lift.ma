@@ -9,9 +9,9 @@
      \ /
       V_______________________________________________________________ *)
 
-include "lambda-delta/substitution/lift_main.ma".
-include "lambda-delta/substitution/drop_main.ma".
-include "lambda-delta/substitution/pts_defs.ma".
+include "lambda-delta/substitution/lift_lift.ma".
+include "lambda-delta/substitution/drop_drop.ma".
+include "lambda-delta/substitution/pts.ma".
 
 (* PARTIAL TELESCOPIC SUBSTITUTION ******************************************)
 
@@ -115,7 +115,7 @@ lemma pts_inv_lift1_ge: ∀L,U1,U2,dt,et. L ⊢ U1 [dt, et] ≫ U2 →
   <(arith_h1 ? ? ? e ? ?) in HV1 // #HV1
   lapply (lift_inv_lref2_ge … H … Hdei) -H #H destruct -T1;
   lapply (drop_conf_ge … HLK … HLKV ?) -HLK HLKV L // #HKV
-  elim (lift_free … HV12 d (i - e + 1) ? ? ?) -HV12; [2,3,4: normalize /2/ ] -Hdei >arith_e2 // #V0 #HV10 #HV02
+  elim (lift_split … HV12 d (i - e + 1) ? ? ?) -HV12; [2,3,4: normalize /2/ ] -Hdei >arith_e2 // #V0 #HV10 #HV02
   @ex2_1_intro
   [2: @pts_subst [4: /2/ |6,7,8: // |1,2,3: skip |5: @arith5 // ]  
   |1: skip

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "lambda-delta/reduction/lpr_defs.ma".
+include "lambda-delta/reduction/lpr.ma".
 
 (* CONTEXT-FREE PARALLEL REDUCTION ON TERMS *********************************)
 

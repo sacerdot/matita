@@ -9,7 +9,7 @@
      \ /
       V_______________________________________________________________ *)
 
-include "lambda-delta/substitution/drop_defs.ma".
+include "lambda-delta/substitution/drop.ma".
 
 (* PARTIAL TELESCOPIC SUBSTITUTION ******************************************)
 

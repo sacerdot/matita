@@ -53,6 +53,25 @@ lemma lift_total: ∀T1,d,e. ∃T2. ↑[d,e] T1 ≡ T2.
 ]
 qed.
 
+lemma lift_split: ∀d1,e2,T1,T2. ↑[d1, e2] T1 ≡ T2 → ∀d2,e1.
+                                d1 ≤ d2 → d2 ≤ d1 + e1 → e1 ≤ e2 →
+                                ∃∃T. ↑[d1, e1] T1 ≡ T & ↑[d2, e2 - e1] T ≡ T2.
+#d1 #e2 #T1 #T2 #H elim H -H d1 e2 T1 T2
+[ /3/
+| #i #d1 #e2 #Hid1 #d2 #e1 #Hd12 #_ #_
+  lapply (lt_to_le_to_lt … Hid1 Hd12) -Hd12 #Hid2 /4/
+| #i #d1 #e2 #Hid1 #d2 #e1 #_ #Hd21 #He12
+  lapply (transitive_le …(i+e1) Hd21 ?) /2/ -Hd21 #Hd21
+  <(arith_d1 i e2 e1) // /3/
+| #I #V1 #V2 #T1 #T2 #d1 #e2 #_ #_ #IHV #IHT #d2 #e1 #Hd12 #Hd21 #He12
+  elim (IHV … Hd12 Hd21 He12) -IHV #V0 #HV0a #HV0b
+  elim (IHT (d2+1) … ? ? He12) /3 width = 5/
+| #I #V1 #V2 #T1 #T2 #d1 #e2 #_ #_ #IHV #IHT #d2 #e1 #Hd12 #Hd21 #He12
+  elim (IHV … Hd12 Hd21 He12) -IHV #V0 #HV0a #HV0b
+  elim (IHT d2 … ? ? He12) /3 width = 5/
+]
+qed.
+
 (* Basic inversion lemmas ***************************************************)
 
 lemma lift_inv_refl_aux: ∀d,e,T1,T2. ↑[d, e] T1 ≡ T2 → e = 0 → T1 = T2.

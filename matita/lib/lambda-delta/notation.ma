@@ -11,7 +11,7 @@
 
 (* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
 
-(*  *****************************************************************)
+(* Syntax *******************************************************************)
 
 notation "hvbox( ⋆ )"
  non associative with precedence 90
@@ -36,7 +36,11 @@ notation "hvbox( 𝕗 { I } break (term 90 T1) . break (term 90 T) )"
 notation "hvbox( T . break 𝕓 { I } break (term 90 T1) )"
  non associative with precedence 89
  for @{ 'DBind $T $I $T1 }.
-
+(*
+notation "hvbox( |  L  | )"
+ non associative with precedence 70
+ for @{ 'Length $L }.
+*)
 notation "hvbox( # term 90 x )"
  non associative with precedence 90
  for @{ 'Weight $x }.
@@ -45,7 +49,7 @@ notation "hvbox( # [ x , break y ] )"
  non associative with precedence 90
  for @{ 'Weight $x $y }.
 
-(* substitution *************************************************************)
+(* Substitution *************************************************************)
 
 notation "hvbox( T1 break [ d , break e ] ≈ break T2 )"
    non associative with precedence 45
@@ -63,7 +67,7 @@ notation "hvbox( L ⊢ break term 90 T1 break [ d , break e ] ≫ break T2 )"
    non associative with precedence 45
    for @{ 'PSubst $L $T1 $d $e $T2 }.
 
-(* reduction ****************************************************************)
+(* Reduction ****************************************************************)
 
 notation "hvbox( T1 ⇒ break T2 )"
    non associative with precedence 45

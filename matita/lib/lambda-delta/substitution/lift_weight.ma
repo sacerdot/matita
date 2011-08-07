@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "lambda-delta/syntax/weight.ma".
-include "lambda-delta/substitution/lift_defs.ma".
+include "lambda-delta/substitution/lift.ma".
 
 (* RELOCATION ***************************************************************)
 
