@@ -3,7 +3,7 @@ XOA_DIR = ../../../components/binaries/xoa
 XOA     = xoa.native
 
 CONF    = xoa.conf.xml
-TARGETS = xoa_natation.ma  xoa_defs.ma
+TARGETS = xoa_natation.ma xoa.ma
 
 all: $(TARGETS)
 

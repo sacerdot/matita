@@ -11,13 +11,13 @@
 
 include "lambda-delta/substitution/lift_lift.ma".
 include "lambda-delta/substitution/drop_drop.ma".
-include "lambda-delta/substitution/pts.ma".
+include "lambda-delta/substitution/tps.ma".
 
-(* PARTIAL TELESCOPIC SUBSTITUTION ******************************************)
+(* PARTIAL SUBSTITUTION ON TERMS ********************************************)
 
 (* Relocation properties ****************************************************)
 
-lemma pts_lift_le: ∀K,T1,T2,dt,et. K ⊢ T1 [dt, et] ≫ T2 →
+lemma tps_lift_le: ∀K,T1,T2,dt,et. K ⊢ T1 [dt, et] ≫ T2 →
                    ∀L,U1,U2,d,e. ↓[d, e] L ≡ K →
                    ↑[d, e] T1 ≡ U1 → ↑[d, e] T2 ≡ U2 →
                    dt + et ≤ d →
@@ -33,11 +33,11 @@ lemma pts_lift_le: ∀K,T1,T2,dt,et. K ⊢ T1 [dt, et] ≫ T2 →
   elim (lift_trans_ge … HV12 … HVU2 ?) -HV12 HVU2 V2 // <minus_plus #V2 #HV12 #HVU2
   elim (drop_trans_le … HLK … HKV ?) -HLK HKV K /2/ #X #HLK #H
   elim (drop_inv_skip2 … H ?) -H /2/ -Hid #K #W #HKV #HVW #H destruct -X
-  @pts_subst [4,5,6,8: // |1,2,3: skip | @IHV12 /2 width=6/ ] (**) (* explicit constructor *)
+  @tps_subst [4,5,6,8: // |1,2,3: skip | @IHV12 /2 width=6/ ] (**) (* explicit constructor *)
 | #K #I #V1 #V2 #T1 #T2 #dt #et #_ #_ #IHV12 #IHT12 #L #U1 #U2 #d #e #HLK #H1 #H2 #Hdetd
   elim (lift_inv_bind1 … H1) -H1 #VV1 #TT1 #HVV1 #HTT1 #H1
   elim (lift_inv_bind1 … H2) -H2 #VV2 #TT2 #HVV2 #HTT2 #H2 destruct -U1 U2;
-  @pts_bind [ /2 width=6/ | @IHT12 [3,4,5: /2/ |1,2: skip | /2/ ] ] (**) (* /3 width=6/ is too slow, arith3 needed to avoid crash *)
+  @tps_bind [ /2 width=6/ | @IHT12 [3,4,5: /2/ |1,2: skip | /2/ ] ] (**) (* /3 width=6/ is too slow, arith3 needed to avoid crash *)
 | #K #I #V1 #V2 #T1 #T2 #dt #et #_ #_ #IHV12 #IHT12 #L #U1 #U2 #d #e #HLK #H1 #H2 #Hdetd
   elim (lift_inv_flat1 … H1) -H1 #VV1 #TT1 #HVV1 #HTT1 #H1
   elim (lift_inv_flat1 … H2) -H2 #VV2 #TT2 #HVV2 #HTT2 #H2 destruct -U1 U2;
@@ -45,7 +45,7 @@ lemma pts_lift_le: ∀K,T1,T2,dt,et. K ⊢ T1 [dt, et] ≫ T2 →
 ]
 qed.
 
-lemma pts_lift_ge: ∀K,T1,T2,dt,et. K ⊢ T1 [dt, et] ≫ T2 →
+lemma tps_lift_ge: ∀K,T1,T2,dt,et. K ⊢ T1 [dt, et] ≫ T2 →
                    ∀L,U1,U2,d,e. ↓[d, e] L ≡ K →
                    ↑[d, e] T1 ≡ U1 → ↑[d, e] T2 ≡ U2 →
                    d ≤ dt →
@@ -61,11 +61,11 @@ lemma pts_lift_ge: ∀K,T1,T2,dt,et. K ⊢ T1 [dt, et] ≫ T2 →
   lapply (lift_inv_lref1_ge … H … Hid) -H #H destruct -U1;
   lapply (lift_trans_be … HV12 … HVU2 ? ?) -HV12 HVU2 V2 /2/ >plus_plus_comm_23 #HV1U2
   lapply (drop_trans_ge_comm … HLK … HKV ?) -HLK HKV K // -Hid #HLKV
-  @pts_subst [4,5: /2/ |6,7,8: // |1,2,3: skip ] (**) (* /3 width=8/ is too slow *)
+  @tps_subst [4,5: /2/ |6,7,8: // |1,2,3: skip ] (**) (* /3 width=8/ is too slow *)
 | #K #I #V1 #V2 #T1 #T2 #dt #et #_ #_ #IHV12 #IHT12 #L #U1 #U2 #d #e #HLK #H1 #H2 #Hddt
   elim (lift_inv_bind1 … H1) -H1 #VV1 #TT1 #HVV1 #HTT1 #H1
   elim (lift_inv_bind1 … H2) -H2 #VV2 #TT2 #HVV2 #HTT2 #H2 destruct -U1 U2;
-  @pts_bind [ /2 width=5/ | /3 width=5/ ] (**) (* explicit constructor *)
+  @tps_bind [ /2 width=5/ | /3 width=5/ ] (**) (* explicit constructor *)
 | #K #I #V1 #V2 #T1 #T2 #dt #et #_ #_ #IHV12 #IHT12 #L #U1 #U2 #d #e #HLK #H1 #H2 #Hddt
   elim (lift_inv_flat1 … H1) -H1 #VV1 #TT1 #HVV1 #HTT1 #H1
   elim (lift_inv_flat1 … H2) -H2 #VV2 #TT2 #HVV2 #HTT2 #H2 destruct -U1 U2;
@@ -73,7 +73,7 @@ lemma pts_lift_ge: ∀K,T1,T2,dt,et. K ⊢ T1 [dt, et] ≫ T2 →
 ]
 qed.
 
-lemma pts_inv_lift1_le: ∀L,U1,U2,dt,et. L ⊢ U1 [dt, et] ≫ U2 →
+lemma tps_inv_lift1_le: ∀L,U1,U2,dt,et. L ⊢ U1 [dt, et] ≫ U2 →
                         ∀K,d,e. ↓[d, e] L ≡ K → ∀T1. ↑[d, e] T1 ≡ U1 →
                         dt + et ≤ d →
                         ∃∃T2. K ⊢ T1 [dt, et] ≫ T2 & ↑[d, e] T2 ≡ U2.
@@ -99,7 +99,7 @@ lemma pts_inv_lift1_le: ∀L,U1,U2,dt,et. L ⊢ U1 [dt, et] ≫ U2 →
 ]
 qed.
 
-lemma pts_inv_lift1_ge: ∀L,U1,U2,dt,et. L ⊢ U1 [dt, et] ≫ U2 →
+lemma tps_inv_lift1_ge: ∀L,U1,U2,dt,et. L ⊢ U1 [dt, et] ≫ U2 →
                         ∀K,d,e. ↓[d, e] L ≡ K → ∀T1. ↑[d, e] T1 ≡ U1 →
                         d + e ≤ dt →
                         ∃∃T2. K ⊢ T1 [dt - e, et] ≫ T2 & ↑[d, e] T2 ≡ U2.
@@ -117,7 +117,7 @@ lemma pts_inv_lift1_ge: ∀L,U1,U2,dt,et. L ⊢ U1 [dt, et] ≫ U2 →
   lapply (drop_conf_ge … HLK … HLKV ?) -HLK HLKV L // #HKV
   elim (lift_split … HV12 d (i - e + 1) ? ? ?) -HV12; [2,3,4: normalize /2/ ] -Hdei >arith_e2 // #V0 #HV10 #HV02
   @ex2_1_intro
-  [2: @pts_subst [4: /2/ |6,7,8: // |1,2,3: skip |5: @arith5 // ]  
+  [2: @tps_subst [4: /2/ |6,7,8: // |1,2,3: skip |5: @arith5 // ]  
   |1: skip
   | //
   ] (**) (* explicitc constructors *)
@@ -134,7 +134,7 @@ lemma pts_inv_lift1_ge: ∀L,U1,U2,dt,et. L ⊢ U1 [dt, et] ≫ U2 →
 ]
 qed.
 
-lemma pts_inv_lift1_eq: ∀L,U1,U2,d,e.
+lemma tps_inv_lift1_eq: ∀L,U1,U2,d,e.
                         L ⊢ U1 [d, e] ≫ U2 → ∀T1. ↑[d, e] T1 ≡ U1 → U1 = U2.
 #L #U1 #U2 #d #e #H elim H -H L U1 U2 d e
 [ //

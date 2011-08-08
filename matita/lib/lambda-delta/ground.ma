@@ -74,12 +74,13 @@ lemma le_plus_minus_comm: ∀n,m,p. p ≤ m → m + n - p = m - p + n.
 >(commutative_plus p) <plus_minus_m_m //
 qed.
 
-lemma minus_le_minus_minus_comm: ∀m,p,n. 
-                                 p ≤ m → m - p ≤ n → n + p - m = n - (m - p).
-#m elim m -m
-[ #p #n #H >(le_O_to_eq_O … H) -H //
-| #m #IHm #p elim p -p //
-  #p #_ #n #Hpm <plus_n_Sm @IHm /2/
+lemma minus_le_minus_minus_comm: ∀b,c,a. c ≤ b → a - (b - c) = a + c - b.
+#b elim b -b
+[ #c #a #H >(le_O_to_eq_O … H) -H //
+| #b #IHb #c elim c -c //
+  #c #_ #a #Hcb
+  lapply (le_S_S_to_le … Hcb) -Hcb #Hcb
+  <plus_n_Sm normalize /2/
 ]
 qed.
 

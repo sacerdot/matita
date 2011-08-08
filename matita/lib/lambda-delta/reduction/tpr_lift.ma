@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "lambda-delta/substitution/pts_lift.ma".
+include "lambda-delta/substitution/tps_lift.ma".
 include "lambda-delta/reduction/tpr.ma".
 
 (* Relocation properties ****************************************************)
@@ -41,7 +41,7 @@ lemma tpr_lift: ∀T1,T2. T1 ⇒ T2 →
   elim (lift_inv_bind1 … HX2) -HX2 #W2 #U0 #HVW2 #HTU0 #HX2 destruct -X2;
   elim (lift_total T2 (d + 1) e) #U2 #HTU2
   @tpr_delta
-  [4: @(pts_lift_le … HT2 … HTU2 HTU0 ?) /2/ |1: skip |2: /2/ |3: /2/ ] (**) (*/3. is too slow *)
+  [4: @(tps_lift_le … HT2 … HTU2 HTU0 ?) /2/ |1: skip |2: /2/ |3: /2/ ] (**) (*/3. is too slow *)
 | #V #V1 #V2 #W1 #W2 #T1 #T2 #_ #HV2 #_ #_ #IHV12 #IHW12 #IHT12 #d #e #X1 #HX1 #X2 #HX2
   elim (lift_inv_flat1 … HX1) -HX1 #V0 #X #HV10 #HX #HX1 destruct -X1;
   elim (lift_inv_bind1 … HX) -HX #W0 #T0 #HW0 #HT10 #HX destruct -X;
@@ -81,7 +81,7 @@ lemma tpr_inv_lift: ∀T1,T2. T1 ⇒ T2 →
   elim (lift_inv_bind2 … HX) -HX #W1 #U1 #HWV1 #HUT1 #HX destruct -X;
   elim (IHV12 … HWV1) -IHV12 HWV1 #W2 #HWV2 #HW12
   elim (IHT12 … HUT1) -IHT12 HUT1 #U2 #HUT2 #HU12
-  elim (pts_inv_lift1_le … HT20 … HUT2 ?) -HT20 HUT2 // [3: /2 width=5/ |2: skip ] #U0 #HU20 #HUT0
+  elim (tps_inv_lift1_le … HT20 … HUT2 ?) -HT20 HUT2 // [3: /2 width=5/ |2: skip ] #U0 #HU20 #HUT0
   @ex2_1_intro  [2: /2/ |1: skip |3: /2/ ] (**) (* /3 width=5/ is slow *)
 | #V #V1 #V2 #W1 #W2 #T1 #T2 #_ #HV2 #_ #_ #IHV12 #IHW12 #IHT12 #d #e #X #HX
   elim (lift_inv_flat2 … HX) -HX #V0 #Y #HV01 #HY #HX destruct -X;

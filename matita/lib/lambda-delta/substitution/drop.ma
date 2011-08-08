@@ -110,18 +110,6 @@ lemma drop_drop_lt: ∀L1,L2,I,V,e.
 #L1 #L2 #I #V #e #HL12 #He >(plus_minus_m_m e 1) /2/
 qed.
 
-lemma drop_fwd_drop2: ∀L1,I2,K2,V2,e. ↓[O, e] L1 ≡ K2. 𝕓{I2} V2 →
-                      ↓[O, e + 1] L1 ≡ K2.
-#L1 elim L1 -L1
-[ #I2 #K2 #V2 #e #H lapply (drop_inv_sort1 … H) -H #H destruct
-| #K1 #I1 #V1 #IHL1 #I2 #K2 #V2 #e #H
-  elim (drop_inv_O1 … H) -H * #He #H
-  [ -IHL1; destruct -e K2 I2 V2 /2/
-  | @drop_drop >(plus_minus_m_m e 1) /2/
-  ]
-]
-qed.
-
 lemma drop_leq_drop1: ∀L1,L2,d,e. L1 [d, e] ≈ L2 →
                       ∀I,K1,V,i. ↓[0, i] L1 ≡ K1. 𝕓{I} V →
                       d ≤ i → i < d + e →
@@ -143,5 +131,43 @@ lemma drop_leq_drop1: ∀L1,L2,d,e. L1 [d, e] ≈ L2 →
   lapply (plus_S_le_to_pos … Hdi) #Hi
   lapply (drop_inv_drop1 … H ?) -H // #HLK1
   elim (IHL12 … HLK1 ? ?) -IHL12 HLK1 [2: /2/ |3: /2/ ] -Hdi Hide >arith_g1 // /3/
+]
+qed.
+
+(* Basic forvard lemmas *****************************************************)
+
+lemma drop_fwd_drop2: ∀L1,I2,K2,V2,e. ↓[O, e] L1 ≡ K2. 𝕓{I2} V2 →
+                      ↓[O, e + 1] L1 ≡ K2.
+#L1 elim L1 -L1
+[ #I2 #K2 #V2 #e #H lapply (drop_inv_sort1 … H) -H #H destruct
+| #K1 #I1 #V1 #IHL1 #I2 #K2 #V2 #e #H
+  elim (drop_inv_O1 … H) -H * #He #H
+  [ -IHL1; destruct -e K2 I2 V2 /2/
+  | @drop_drop >(plus_minus_m_m e 1) /2/
+  ]
+]
+qed.
+
+lemma drop_fwd_drop2_length: ∀L1,I2,K2,V2,e. 
+                             ↓[0, e] L1 ≡ K2. 𝕓{I2} V2 → e < |L1|.
+#L1 elim L1 -L1
+[ #I2 #K2 #V2 #e #H lapply (drop_inv_sort1 … H) -H #H destruct
+| #K1 #I1 #V1 #IHL1 #I2 #K2 #V2 #e #H
+  elim (drop_inv_O1 … H) -H * #He #H
+  [ -IHL1; destruct -e K2 I2 V2 //
+  | lapply (IHL1 … H) -IHL1 H #HeK1 whd in ⊢ (? ? %) /2/
+  ]
+]
+qed.
+
+lemma drop_fwd_O1_length: ∀L1,L2,e. ↓[0, e] L1 ≡ L2 → |L2| = |L1| - e.
+#L1 elim L1 -L1
+[ #L2 #e #H >(drop_inv_sort1 … H) -H //
+| #K1 #I1 #V1 #IHL1 #L2 #e #H
+  elim (drop_inv_O1 … H) -H * #He #H
+  [ -IHL1; destruct -e L2 //
+  | lapply (IHL1 … H) -IHL1 H #H >H -H; normalize
+    >minus_le_minus_minus_comm //
+  ]
 ]
 qed.

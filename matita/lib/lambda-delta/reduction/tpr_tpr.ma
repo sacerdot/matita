@@ -10,9 +10,9 @@
       V_______________________________________________________________ *)
 
 include "lambda-delta/substitution/lift_weight.ma".
-include "lambda-delta/substitution/pts_pts.ma".
+include "lambda-delta/substitution/tps_tps.ma".
 include "lambda-delta/reduction/tpr_lift.ma".
-include "lambda-delta/reduction/tpr_pts.ma".
+include "lambda-delta/reduction/tpr_tps.ma".
 
 (* CONTEXT-FREE PARALLEL REDUCTION ON TERMS *********************************)
 
@@ -49,7 +49,7 @@ lemma tpr_conf_bind_delta:
 #V0 #V1 #T0 #T1 #V2 #T2 #T #IH #HV01 #HV02 #HT01 #HT02 #HT2
 elim (IH … HV01 … HV02) -HV01 HV02 // #V #HV1 #HV2
 elim (IH … HT01 … HT02) -HT01 HT02 IH // -V0 T0 #T0 #HT10 #HT20
-elim (tpr_pts_bind … HV2 HT20 … HT2) -HT20 HT2 /3 width=5/
+elim (tpr_tps_bind … HV2 HT20 … HT2) -HT20 HT2 /3 width=5/
 qed.
 
 lemma tpr_conf_bind_zeta:
@@ -117,7 +117,7 @@ elim (tpr_inv_abbr1 … H) -H *
 | -HV2 HVV2 #WW2 #UU2 #UU #HWW2 #HUU02 #HUU2 #H destruct -T1;
   elim (IH … HW02 … HWW2) -HW02 HWW2 // #W #HW02 #HWW2
   elim (IH … HU02 … HUU02) -HU02 HUU02 IH // #U #HU2 #HUUU2
-  elim (tpr_pts_bind … HWW2 HUUU2 … HUU2) -HUU2 HUUU2 #UUU #HUUU2 #HUUU1
+  elim (tpr_tps_bind … HWW2 HUUU2 … HUU2) -HUU2 HUUU2 #UUU #HUUU2 #HUUU1
   @ex2_1_intro
   [2: @tpr_theta [6: @HVV |7: @HWW2 |8: @HUUU2 |1,2,3,4: skip | // ]
   |1:skip
@@ -174,9 +174,9 @@ lemma tpr_conf_delta_delta:
 #V0 #V1 #T0 #T1 #TT1 #V2 #T2 #TT2 #IH #HV01 #HV02 #HT01 #HT02 #HTT1 #HTT2
 elim (IH … HV01 … HV02) -HV01 HV02 // #V #HV1 #HV2
 elim (IH … HT01 … HT02) -HT01 HT02 IH // #T #HT1 #HT2
-elim (tpr_pts_bind … HV1 HT1 … HTT1) -HT1 HTT1 #U1 #TTU1 #HTU1
-elim (tpr_pts_bind … HV2 HT2 … HTT2) -HT2 HTT2 #U2 #TTU2 #HTU2
-elim (pts_conf … HTU1 … HTU2) -HTU1 HTU2 #U #HU1 #HU2
+elim (tpr_tps_bind … HV1 HT1 … HTT1) -HT1 HTT1 #U1 #TTU1 #HTU1
+elim (tpr_tps_bind … HV2 HT2 … HTT2) -HT2 HTT2 #U2 #TTU2 #HTU2
+elim (tps_conf … HTU1 … HTU2) -HTU1 HTU2 #U #HU1 #HU2
 @ex2_1_intro [2,3: @tpr_delta |1: skip ] /width=10/ (**) (* /3 width=10/ is too slow *)
 qed.
 
@@ -191,7 +191,7 @@ lemma tpr_conf_delta_zeta:
    ∃∃X. 𝕓{Abbr} V1. TT1 ⇒ X & X2 ⇒ X.
 #X2 #V0 #V1 #T0 #T1 #TT1 #T2 #IH #_ #HT01 #HTT1 #HTX2 #HTT20
 elim (tpr_inv_lift … HT01 … HTT20) -HT01 #TT2 #HTT21 #HTT2
-lapply (pts_inv_lift1_eq … HTT1 … HTT21) -HTT1 #HTT1 destruct -T1;
+lapply (tps_inv_lift1_eq … HTT1 … HTT21) -HTT1 #HTT1 destruct -T1;
 lapply (tw_lift … HTT20) -HTT20 #HTT20
 elim (IH … HTX2 … HTT2) -HTX2 HTT2 IH /3/
 qed.

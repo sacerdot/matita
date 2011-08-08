@@ -76,7 +76,7 @@ lemma drop_trans_le: ∀d1,e1,L1,L. ↓[d1, e1] L1 ≡ L →
   [ -He2d IHL12 #H1 #H2 destruct -e2 L /3 width=5/
   | -HL12 HV12 #He2 #HL2
     elim (IHL12 … HL2 ?) -IHL12 HL2 L2
-    [ <minus_le_minus_minus_comm /3/ | /2/ ]
+    [ >minus_le_minus_minus_comm // /3/ | /2/ ]
   ]
 ]
 qed.

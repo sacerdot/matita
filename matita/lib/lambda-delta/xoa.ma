@@ -125,11 +125,3 @@ inductive or4 (P0,P1,P2,P3:Prop) : Prop ≝
 
 interpretation "multiple disjunction connective (4)" 'Or P0 P1 P2 P3 = (or4 P0 P1 P2 P3).
 
-(* multiple conjunction connective (3) *)
-
-inductive and3 (P0,P1,P2:Prop) : Prop ≝
-   | and3_intro: P0 → P1 → P2 → and3 ? ? ?
-.
-
-interpretation "multiple conjunction connective (3)" 'And P0 P1 P2 = (and3 P0 P1 P2).
-

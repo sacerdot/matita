@@ -136,9 +136,3 @@ notation "hvbox(∨∨ term 29 P0 break | term 29 P1 break | term 29 P2 break | 
  non associative with precedence 30
  for @{ 'Or $P0 $P1 $P2 $P3 }.
 
-(* multiple conjunction connective (3) *)
-
-notation "hvbox(∧∧ term 34 P0 break & term 34 P1 break & term 34 P2)"
- non associative with precedence 35
- for @{ 'And $P0 $P1 $P2 }.
-

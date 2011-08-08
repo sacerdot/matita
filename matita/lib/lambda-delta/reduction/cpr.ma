@@ -9,7 +9,6 @@
      \ /
       V_______________________________________________________________ *)
 
-include "lambda-delta/syntax/length.ma".
 include "lambda-delta/reduction/tpr.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL REDUCTION ON TERMS ****************************)
@@ -26,7 +25,8 @@ interpretation
 lemma cpr_pr: ∀T1,T2. T1 ⇒ T2 → ∀L. L ⊢ T1 ⇒ T2.
 /2/ qed.
 
-axiom cpr_pts: ∀L,T1,T2,d,e. L ⊢ T1 [d, e] ≫ T2 → L ⊢ T1 ⇒ T2.
+lemma cpr_tps: ∀L,T1,T2,d,e. L ⊢ T1 [d, e] ≫ T2 → L ⊢ T1 ⇒ T2.
+/3 width=5/ qed. 
 
 lemma cpr_refl: ∀L,T. L ⊢ T ⇒ T.
 /2/ qed.
@@ -37,13 +37,12 @@ lemma cpr_flat: ∀I,L,V1,V2,T1,T2.
 #I #L #V1 #V2 #T1 #T2 * #V #HV1 #HV2 * /3 width=5/
 qed.
 
-axiom cpr_delta: ∀L,K,V0,V,i.
-                 ↓[0, i] L ≡ K. 𝕓{Abbr} V0 → ↑[0, i + 1] V0 ≡ V → L ⊢ #i ⇒ V.
-(*
-#L #K #V0 #V #i #HLK #HV0
-@ex2_1_intro [2: // |1: skip ]
-@pts_subst [4,6,7,8: // |1,2,3: skip |5: 
-*)
+lemma cpr_delta: ∀L,K,V1,V2,V,i.
+                 ↓[0, i] L ≡ K. 𝕓{Abbr} V1 → K ⊢ V1 [0, |L| - i - 1] ≫ V2 →
+                 ↑[0, i + 1] V2 ≡ V → L ⊢ #i ⇒ V.
+#L #K #V1 #V2 #V #i #HLK #HV12 #HV2
+@ex2_1_intro [2: // | skip ] /3 width=8/ (**) (* /4/ is too slow *)
+qed.
 
 lemma cpr_cast: ∀L,V,T1,T2.
                 L ⊢ T1 ⇒ T2 → L ⊢ 𝕗{Cast} V. T1 ⇒ T2.

@@ -9,7 +9,7 @@
      \ /
       V_______________________________________________________________ *)
 
-include "lambda-delta/syntax/lenv.ma".
+include "lambda-delta/syntax/length.ma".
 
 (* LOCAL ENVIRONMENT EQUALITY ***********************************************)
 
@@ -37,11 +37,15 @@ lemma leq_sym: ∀L1,L2,d,e. L1 [d, e] ≈ L2 → L2 [d, e] ≈ L1.
 #L1 #L2 #d #e #H elim H -H L1 L2 d e /2/
 qed.
 
-lemma leq_skip_lt: ∀L1,L2,d,e. leq L1 (d - 1) e L2 → 0 < d →
+lemma leq_skip_lt: ∀L1,L2,d,e. L1 [d - 1, e] ≈ L2 → 0 < d →
                    ∀I1,I2,V1,V2. L1. 𝕓{I1} V1 [d, e] ≈ L2. 𝕓{I2} V2.
 
 #L1 #L2 #d #e #HL12 #Hd >(plus_minus_m_m d 1) /2/ 
 qed.
+
+lemma leq_fwd_length: ∀L1,L2,d,e. L1 [d, e] ≈ L2 → |L1| = |L2|.
+#L1 #L2 #d #e #H elim H -H L1 L2 d e; normalize //
+qed.  
 
 (* Basic inversion lemmas ***************************************************)
 
