@@ -9,7 +9,6 @@
      \ /
       V_______________________________________________________________ *)
 
-include "lambda-delta/substitution/lift_lift.ma".
 include "lambda-delta/substitution/drop_drop.ma".
 include "lambda-delta/substitution/tps.ma".
 

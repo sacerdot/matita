@@ -10,6 +10,7 @@
       V_______________________________________________________________ *)
 
 include "arithmetics/nat.ma".
+include "lambda-delta/xoa_props.ma".
 
 (* ARITHMETICAL PROPERTIES **************************************************)
 
@@ -41,6 +42,14 @@ qed.
 lemma lt_or_ge: ∀m,n. m < n ∨ n ≤ m.
 #m #n elim (decidable_lt m n) /3/
 qed.
+
+lemma lt_or_eq_or_gt: ∀m,n. ∨∨ m < n | n = m | n < m.
+#m elim m -m
+[ * /2/
+| #m #IHm * [ /2/ ]
+  #n elim (IHm n) -IHm #H 
+  [ @or3_intro0 | @or3_intro1 destruct | @or3_intro2 ] /2/ (**) (* /3/ is slow *)
+  qed. 
 
 lemma le_to_lt_or_eq: ∀m,n. m ≤ n → m < n ∨ m = n.
 #m #n * -n /3/

@@ -18,7 +18,7 @@ include "lambda-delta/substitution/lift.ma".
 
 (* Main properies ***********************************************************)
 
-lemma lift_inj:  ∀d,e,T1,U. ↑[d,e] T1 ≡ U → ∀T2. ↑[d,e] T2 ≡ U → T1 = T2.
+theorem lift_inj:  ∀d,e,T1,U. ↑[d,e] T1 ≡ U → ∀T2. ↑[d,e] T2 ≡ U → T1 = T2.
 #d #e #T1 #U #H elim H -H d e T1 U
 [ #k #d #e #X #HX
   lapply (lift_inv_sort2 … HX) -HX //
@@ -33,10 +33,10 @@ lemma lift_inj:  ∀d,e,T1,U. ↑[d,e] T1 ≡ U → ∀T2. ↑[d,e] T2 ≡ U →
 ]
 qed.
 
-lemma lift_div_le: ∀d1,e1,T1,T. ↑[d1, e1] T1 ≡ T →
-                   ∀d2,e2,T2. ↑[d2 + e1, e2] T2 ≡ T →
-                   d1 ≤ d2 →
-                   ∃∃T0. ↑[d1, e1] T0 ≡ T2 & ↑[d2, e2] T0 ≡ T1.
+theorem lift_div_le: ∀d1,e1,T1,T. ↑[d1, e1] T1 ≡ T →
+                     ∀d2,e2,T2. ↑[d2 + e1, e2] T2 ≡ T →
+                     d1 ≤ d2 →
+                     ∃∃T0. ↑[d1, e1] T0 ≡ T2 & ↑[d2, e2] T0 ≡ T1.
 #d1 #e1 #T1 #T #H elim H -H d1 e1 T1 T
 [ #k #d1 #e1 #d2 #e2 #T2 #Hk #Hd12
   lapply (lift_inv_sort2 … Hk) -Hk #Hk destruct -T2 /3/
@@ -63,7 +63,7 @@ lemma lift_div_le: ∀d1,e1,T1,T. ↑[d1, e1] T1 ≡ T →
 ]
 qed.
 
-lemma lift_mono:  ∀d,e,T,U1. ↑[d,e] T ≡ U1 → ∀U2. ↑[d,e] T ≡ U2 → U1 = U2.
+theorem lift_mono:  ∀d,e,T,U1. ↑[d,e] T ≡ U1 → ∀U2. ↑[d,e] T ≡ U2 → U1 = U2.
 #d #e #T #U1 #H elim H -H d e T U1
 [ #k #d #e #X #HX
   lapply (lift_inv_sort1 … HX) -HX //
@@ -78,9 +78,9 @@ lemma lift_mono:  ∀d,e,T,U1. ↑[d,e] T ≡ U1 → ∀U2. ↑[d,e] T ≡ U2 �
 ]
 qed.
 
-lemma lift_trans_be: ∀d1,e1,T1,T. ↑[d1, e1] T1 ≡ T →
-                     ∀d2,e2,T2. ↑[d2, e2] T ≡ T2 →
-                     d1 ≤ d2 → d2 ≤ d1 + e1 → ↑[d1, e1 + e2] T1 ≡ T2.
+theorem lift_trans_be: ∀d1,e1,T1,T. ↑[d1, e1] T1 ≡ T →
+                       ∀d2,e2,T2. ↑[d2, e2] T ≡ T2 →
+                       d1 ≤ d2 → d2 ≤ d1 + e1 → ↑[d1, e1 + e2] T1 ≡ T2.
 #d1 #e1 #T1 #T #H elim H -H d1 e1 T1 T
 [ #k #d1 #e1 #d2 #e2 #T2 #HT2 #_ #_
   >(lift_inv_sort1 … HT2) -HT2 //
@@ -103,9 +103,9 @@ lemma lift_trans_be: ∀d1,e1,T1,T. ↑[d1, e1] T1 ≡ T →
 ]
 qed.
 
-lemma lift_trans_le: ∀d1,e1,T1,T. ↑[d1, e1] T1 ≡ T →
-                     ∀d2,e2,T2. ↑[d2, e2] T ≡ T2 → d2 ≤ d1 →
-                     ∃∃T0. ↑[d2, e2] T1 ≡ T0 & ↑[d1 + e2, e1] T0 ≡ T2.
+theorem lift_trans_le: ∀d1,e1,T1,T. ↑[d1, e1] T1 ≡ T →
+                       ∀d2,e2,T2. ↑[d2, e2] T ≡ T2 → d2 ≤ d1 →
+                       ∃∃T0. ↑[d2, e2] T1 ≡ T0 & ↑[d1 + e2, e1] T0 ≡ T2.
 #d1 #e1 #T1 #T #H elim H -H d1 e1 T1 T
 [ #k #d1 #e1 #d2 #e2 #X #HX #_
   >(lift_inv_sort1 … HX) -HX /2/
@@ -127,9 +127,9 @@ lemma lift_trans_le: ∀d1,e1,T1,T. ↑[d1, e1] T1 ≡ T →
 ]
 qed.
 
-lemma lift_trans_ge: ∀d1,e1,T1,T. ↑[d1, e1] T1 ≡ T →
-                     ∀d2,e2,T2. ↑[d2, e2] T ≡ T2 → d1 + e1 ≤ d2 →
-                     ∃∃T0. ↑[d2 - e1, e2] T1 ≡ T0 & ↑[d1, e1] T0 ≡ T2.
+theorem lift_trans_ge: ∀d1,e1,T1,T. ↑[d1, e1] T1 ≡ T →
+                       ∀d2,e2,T2. ↑[d2, e2] T ≡ T2 → d1 + e1 ≤ d2 →
+                       ∃∃T0. ↑[d2 - e1, e2] T1 ≡ T0 & ↑[d1, e1] T0 ≡ T2.
 #d1 #e1 #T1 #T #H elim H -H d1 e1 T1 T
 [ #k #d1 #e1 #d2 #e2 #X #HX #_
   >(lift_inv_sort1 … HX) -HX /2/

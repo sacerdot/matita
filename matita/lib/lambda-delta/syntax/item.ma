@@ -16,7 +16,6 @@
  *)
 
 include "lambda-delta/ground.ma".
-include "lambda-delta/xoa_props.ma".
 include "lambda-delta/notation.ma".
 
 (* BINARY ITEMS *************************************************************)

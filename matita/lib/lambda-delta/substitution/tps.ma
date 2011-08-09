@@ -91,6 +91,29 @@ qed.
 
 (* Basic inversion lemmas ***************************************************)
 
+lemma tps_inv_lref1_aux: ∀L,T1,T2,d,e. L ⊢ T1 [d, e] ≫ T2 → ∀i. T1 = #i →
+                         T2 = #i ∨ 
+                         ∃∃K,V1,V2,i. d ≤ i & i < d + e &
+                                      ↓[O, i] L ≡ K. 𝕓{Abbr} V1 &
+                                      K ⊢ V1 [O, d + e - i - 1] ≫ V2 &
+                                      ↑[O, i + 1] V2 ≡ T2.
+#L #T1 #T2 #d #e * -L T1 T2 d e
+[ #L #k #d #e #i #H destruct
+| /2/
+| #L #K #V1 #V2 #T2 #i #d #e #Hdi #Hide #HLK #HV12 #HVT2 #j #H destruct -i /3 width=9/
+| #L #I #V1 #V2 #T1 #T2 #d #e #_ #_ #i #H destruct
+| #L #I #V1 #V2 #T1 #T2 #d #e #_ #_ #i #H destruct
+]
+qed.
+
+lemma tps_inv_lref1: ∀L,T2,i,d,e. L ⊢ #i [d, e] ≫ T2 →
+                     T2 = #i ∨ 
+                     ∃∃K,V1,V2,i. d ≤ i & i < d + e &
+                                  ↓[O, i] L ≡ K. 𝕓{Abbr} V1 &
+                                  K ⊢ V1 [O, d + e - i - 1] ≫ V2 &
+                                  ↑[O, i + 1] V2 ≡ T2.
+/2/ qed.
+
 lemma tps_inv_bind1_aux: ∀d,e,L,U1,U2. L ⊢ U1 [d, e] ≫ U2 →
                          ∀I,V1,T1. U1 = 𝕓{I} V1. T1 →
                          ∃∃V2,T2. L ⊢ V1 [d, e] ≫ V2 & 

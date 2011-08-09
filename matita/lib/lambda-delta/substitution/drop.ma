@@ -80,6 +80,26 @@ elim (drop_inv_O1 … H) -H * // #H destruct -e;
 elim (lt_refl_false … He)
 qed.
 
+lemma drop_inv_skip1_aux: ∀d,e,L1,L2. ↓[d, e] L1 ≡ L2 → 0 < d →
+                          ∀I,K1,V1. L1 = K1. 𝕓{I} V1 →
+                          ∃∃K2,V2. ↓[d - 1, e] K1 ≡ K2 &
+                                   ↑[d - 1, e] V2 ≡ V1 & 
+                                   L2 = K2. 𝕓{I} V2.
+#d #e #L1 #L2 * -d e L1 L2
+[ #d #e #_ #I #K #V #H destruct
+| #L1 #L2 #I #V #_ #H elim (lt_refl_false … H)
+| #L1 #L2 #I #V #e #_ #H elim (lt_refl_false … H)
+| #X #L2 #Y #Z #V2 #d #e #HL12 #HV12 #_ #I #L1 #V1 #H destruct -X Y Z
+  /2 width=5/
+]
+qed.
+
+lemma drop_inv_skip1: ∀d,e,I,K1,V1,L2. ↓[d, e] K1. 𝕓{I} V1 ≡ L2 → 0 < d →
+                      ∃∃K2,V2. ↓[d - 1, e] K1 ≡ K2 &
+                               ↑[d - 1, e] V2 ≡ V1 & 
+                               L2 = K2. 𝕓{I} V2.
+/2/ qed.
+
 lemma drop_inv_skip2_aux: ∀d,e,L1,L2. ↓[d, e] L1 ≡ L2 → 0 < d →
                           ∀I,K2,V2. L2 = K2. 𝕓{I} V2 →
                           ∃∃K1,V1. ↓[d - 1, e] K1 ≡ K2 &
@@ -89,7 +109,7 @@ lemma drop_inv_skip2_aux: ∀d,e,L1,L2. ↓[d, e] L1 ≡ L2 → 0 < d →
 [ #d #e #_ #I #K #V #H destruct
 | #L1 #L2 #I #V #_ #H elim (lt_refl_false … H)
 | #L1 #L2 #I #V #e #_ #H elim (lt_refl_false … H)
-| #L1 #X #Y #V1 #Z #d #e #HL12 #HV12 #_ #I #L2 #V2 #H destruct -X Y Z;
+| #L1 #X #Y #V1 #Z #d #e #HL12 #HV12 #_ #I #L2 #V2 #H destruct -X Y Z
   /2 width=5/
 ]
 qed.
