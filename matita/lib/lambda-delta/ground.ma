@@ -144,6 +144,9 @@ lemma arith_h1: ∀a1,a2,b,c1. c1 ≤ a1 → c1 ≤ b →
 #a1 #a2 #b #c1 #H1 #H2 <le_plus_minus_comm /2/
 qed.
 
+lemma arith_i2: ∀a,c1,c2. c1 + c2 ≤ a → c1 + c2 + (a - c1 - c2) = a.
+/2/ qed.
+
 lemma arith_z1: ∀a,b,c1. a + c1 - b - c1 = a - b.
 // qed.
 

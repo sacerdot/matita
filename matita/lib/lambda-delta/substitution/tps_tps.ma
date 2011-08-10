@@ -11,9 +11,6 @@
 
 include "lambda-delta/substitution/tps_split.ma".
 
-lemma arith_i2: ∀a,c1,c2. c1 + c2 ≤ a → c1 + c2 + (a - c1 - c2) = a.
-/2/ qed.
-
 (* PARTIAL SUBSTITUTION ON TERMS ********************************************)
 
 (* Main properties **********************************************************)
