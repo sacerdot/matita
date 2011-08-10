@@ -9,7 +9,7 @@
      \ /
       V_______________________________________________________________ *)
 
-include "lambda-delta/substitution/tps_lift.ma".
+include "Basic-2/substitution/tps_lift.ma".
 
 (* PARTIAL SUBSTITUTION ON TERMS ********************************************)
 

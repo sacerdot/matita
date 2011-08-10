@@ -10,7 +10,7 @@
       V_______________________________________________________________ *)
 
 include "arithmetics/nat.ma".
-include "lambda-delta/xoa_props.ma".
+include "Ground-2/xoa_props.ma".
 
 (* ARITHMETICAL PROPERTIES **************************************************)
 

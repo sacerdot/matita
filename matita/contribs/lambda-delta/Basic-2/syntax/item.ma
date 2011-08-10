@@ -15,8 +15,8 @@
  * [ suggested invocation to start formal specifications with ]
  *)
 
-include "lambda-delta/ground.ma".
-include "lambda-delta/notation.ma".
+include "Ground-2/ground.ma".
+include "Basic-2/notation.ma".
 
 (* BINARY ITEMS *************************************************************)
 

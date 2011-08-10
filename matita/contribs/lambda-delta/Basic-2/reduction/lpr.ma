@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "lambda-delta/reduction/tpr.ma".
+include "Basic-2/reduction/tpr.ma".
 
 (* CONTEXT-FREE PARALLEL REDUCTION ON LOCAL ENVIRONMENTS ********************)
 

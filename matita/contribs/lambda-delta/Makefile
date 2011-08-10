@@ -2,8 +2,8 @@ H       = @
 XOA_DIR = ../../../components/binaries/xoa
 XOA     = xoa.native
 
-CONF    = xoa.conf.xml
-TARGETS = xoa_natation.ma xoa.ma
+CONF    = Ground-2/xoa.conf.xml
+TARGETS = Ground-2/xoa_natation.ma Ground-2/xoa.ma
 
 all: $(TARGETS)
 

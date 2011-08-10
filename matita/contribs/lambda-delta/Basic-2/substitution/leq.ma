@@ -9,7 +9,7 @@
      \ /
       V_______________________________________________________________ *)
 
-include "lambda-delta/syntax/length.ma".
+include "Basic-2/syntax/length.ma".
 
 (* LOCAL ENVIRONMENT EQUALITY ***********************************************)
 

@@ -9,8 +9,8 @@
      \ /
       V_______________________________________________________________ *)
 
-include "lambda-delta/substitution/leq.ma".
-include "lambda-delta/substitution/lift.ma".
+include "Basic-2/substitution/leq.ma".
+include "Basic-2/substitution/lift.ma".
 
 (* DROPPING *****************************************************************)
 

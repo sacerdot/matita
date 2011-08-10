@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "lambda-delta/syntax/weight.ma".
-include "lambda-delta/substitution/lift.ma".
+include "Basic-2/syntax/weight.ma".
+include "Basic-2/substitution/lift.ma".
 
 (* RELOCATION ***************************************************************)
 

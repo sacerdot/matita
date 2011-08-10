@@ -9,8 +9,8 @@
      \ /
       V_______________________________________________________________ *)
 
-include "lambda-delta/substitution/drop_drop.ma".
-include "lambda-delta/substitution/tps.ma".
+include "Basic-2/substitution/drop_drop.ma".
+include "Basic-2/substitution/tps.ma".
 
 (* PARTIAL SUBSTITUTION ON TERMS ********************************************)
 

@@ -9,10 +9,10 @@
      \ /
       V_______________________________________________________________ *)
 
-include "lambda-delta/substitution/lift_weight.ma".
-include "lambda-delta/substitution/tps_tps.ma".
-include "lambda-delta/reduction/tpr_lift.ma".
-include "lambda-delta/reduction/tpr_tps.ma".
+include "Basic-2/substitution/lift_weight.ma".
+include "Basic-2/substitution/tps_tps.ma".
+include "Basic-2/reduction/tpr_lift.ma".
+include "Basic-2/reduction/tpr_tps.ma".
 
 (* CONTEXT-FREE PARALLEL REDUCTION ON TERMS *********************************)
 

@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "lambda-delta/substitution/tps_lift.ma".
-include "lambda-delta/reduction/tpr.ma".
+include "Basic-2/substitution/tps_lift.ma".
+include "Basic-2/reduction/tpr.ma".
 
 (* Relocation properties ****************************************************)
 

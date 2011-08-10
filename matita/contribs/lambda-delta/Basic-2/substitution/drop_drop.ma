@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "lambda-delta/substitution/lift_lift.ma".
-include "lambda-delta/substitution/drop.ma".
+include "Basic-2/substitution/lift_lift.ma".
+include "Basic-2/substitution/drop.ma".
 
 (* DROPPING *****************************************************************)
 
