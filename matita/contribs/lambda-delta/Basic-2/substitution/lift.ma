@@ -1,15 +1,18 @@
-(*
-    ||M||  This file is part of HELM, an Hypertextual, Electronic
-    ||A||  Library of Mathematics, developed at the Computer Science
-    ||T||  Department of the University of Bologna, Italy.
-    ||I||
-    ||T||
-    ||A||  This file is distributed under the terms of the
-    \   /  GNU General Public License Version 2
-     \ /
-      V_______________________________________________________________ *)
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
 
-include "Basic-2/syntax/term.ma".
+include "Basic-2/grammar/term_weight.ma".
 
 (* RELOCATION ***************************************************************)
 
@@ -70,6 +73,12 @@ lemma lift_split: ∀d1,e2,T1,T2. ↑[d1, e2] T1 ≡ T2 → ∀d2,e1.
   elim (IHV … Hd12 Hd21 He12) -IHV #V0 #HV0a #HV0b
   elim (IHT d2 … ? ? He12) /3 width = 5/
 ]
+qed.
+
+(* Basic forward lemmas *****************************************************)
+
+lemma tw_lift: ∀d,e,T1,T2. ↑[d, e] T1 ≡ T2 → #T1 = #T2.
+#d #e #T1 #T2 #H elim H -d e T1 T2; normalize //
 qed.
 
 (* Basic inversion lemmas ***************************************************)
