@@ -12,15 +12,30 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic-2/reduction/ltpr.ma".
+include "Basic-2/reduction/tpr.ma".
 
-(* CONTEXT-FREE PARALLEL REDUCTION ON TERMS *********************************)
+(* CONTEXT-FREE PARALLEL REDUCTION ON LOCAL ENVIRONMENTS ********************)
 
-axiom tpr_tps_ltpr: ∀L1,L2. L1 ⇒ L2 → ∀T1,T2. T1 ⇒ T2 →
-                    ∀d,e,U1. L1 ⊢ T1 [d, e] ≫ U1 →
-                    ∃∃U2. U1 ⇒ U2 & L2 ⊢ T2 [d, e] ≫ U2.
+inductive ltpr: lenv → lenv → Prop ≝
+| ltpr_sort: ltpr (⋆) (⋆)
+| ltpr_item: ∀K1,K2,I,V1,V2.
+             ltpr K1 K2 → V1 ⇒ V2 → ltpr (K1. 𝕓{I} V1) (K2. 𝕓{I} V2) (*𝕓*)
+.
 
-lemma tpr_tps_bind: ∀I,V1,V2,T1,T2,U1. V1 ⇒ V2 → T1 ⇒ T2 →
-                    ⋆. 𝕓{I} V1 ⊢ T1 [0, 1] ≫ U1 →
-                    ∃∃U2. U1 ⇒ U2 & ⋆. 𝕓{I} V2 ⊢ T2 [0, 1] ≫ U2.
-/3 width=5/ qed.
+interpretation
+  "context-free parallel reduction (environment)"
+  'PRed L1 L2 = (ltpr L1 L2).
+
+(* Basic inversion lemmas ***************************************************)
+
+lemma ltpr_inv_item1_aux: ∀L1,L2. L1 ⇒ L2 → ∀K1,I,V1. L1 = K1. 𝕓{I} V1 →
+                          ∃∃K2,V2. K1 ⇒ K2 & V1 ⇒ V2 & L2 = K2. 𝕓{I} V2.
+#L1 #L2 * -L1 L2
+[ #K1 #I #V1 #H destruct
+| #K1 #K2 #I #V1 #V2 #HK12 #HV12 #L #J #W #H destruct - K1 I V1 /2 width=5/
+]
+qed.
+
+lemma ltpr_inv_item1: ∀K1,I,V1,L2. K1. 𝕓{I} V1 ⇒ L2 →
+                      ∃∃K2,V2. K1 ⇒ K2 & V1 ⇒ V2 & L2 = K2. 𝕓{I} V2.
+/2/ qed.

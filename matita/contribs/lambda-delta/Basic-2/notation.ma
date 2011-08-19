@@ -79,3 +79,7 @@ notation "hvbox( T1 ⇒ break T2 )"
 notation "hvbox( L ⊢ break (term 90 T1) ⇒ break T2 )"
    non associative with precedence 45
    for @{ 'PRed $L $T1 $T2 }.
+
+notation "hvbox( L1 ⊢ ⇒ break L2 )"
+   non associative with precedence 45
+   for @{ 'CPRed $L1 $L2 }.
