@@ -36,14 +36,13 @@ theorem tps_trans: ∀L,T1,T,d,e. L ⊢ T1 [d, e] ≫ T → ∀T2. L ⊢ T [d, e
 qed.
 *)
 
-axiom tps_conf_subst_subst_lt: ∀L,K1,V1,W1,T1,i1,d,e,T2,K2,V2,W2,i2.
+axiom tps_conf_subst_subst_lt: ∀L,K1,V1,T1,i1,d,e,T2,K2,V2,i2.
    ↓[O, i1] L ≡ K1. 𝕓{Abbr} V1 → ↓[O, i2] L≡ K2. 𝕓{Abbr} V2 →
-   K1 ⊢ V1 [O, d + e - i1 - 1] ≫ W1 → K2 ⊢ V2 [O, d + e - i2 - 1] ≫ W2 →
-   ↑[O, i1 + 1] W1 ≡ T1 → ↑[O, i2 + 1] W2 ≡ T2 → 
+   ↑[O, i1 + 1] V1 ≡ T1 → ↑[O, i2 + 1] V2 ≡ T2 → 
    d ≤ i1 → i1 < d + e → d ≤ i2 → i2 < d + e → i1 < i2 →
    ∃∃T. L ⊢ T1 [d, e] ≫ T & L ⊢ T2 [d, e] ≫ T.  
 (*
-#L #K1 #V1 #W1 #T1 #i1 #d #e #T2 #K2 #V2 #W2 #i2
+#L #K1 #V1 #T1 #i1 #d #e #T2 #K2 #V2 #i2
 #HLK1 #HLK2 #HVW1 #HVW2 #HWT1 #HWT2 #Hdi1 #Hi1de #Hdi2 #Hi2de #Hi12
 *)
 
@@ -52,25 +51,16 @@ theorem tps_conf: ∀L,T0,T1,d,e. L ⊢ T0 [d, e] ≫ T1 → ∀T2. L ⊢ T0 [d,
 #L #T0 #T1 #d #e #H elim H -H L T0 T1 d e
 [ /2/
 | /2/
-| #L #K1 #V1 #W1 #T1 #i1 #d #e #Hdi1 #Hi1de #HLK1 #HVW1 #HWT1 #IHVW1 #T2 #H
+| #L #K1 #V1 #T1 #i1 #d #e #Hdi1 #Hi1de #HLK1 #HVT1 #T2 #H
   elim (tps_inv_lref1 … H) -H
-  [ -IHVW1 #HX destruct -T2
-    @ex2_1_intro [2: // | skip ] /2 width=6/ (**) (* /3 width=9/ is slow *)
-  | * #K2 #V2 #W2 #i2 #Hdi2 #Hi2de #HLK2 #HVW2 #HWT2
+  [ #HX destruct -T2 /4/
+  | * #K2 #V2 #i2 #Hdi2 #Hi2de #HLK2 #HVT2
     elim (lt_or_eq_or_gt i1 i2) #Hi12
-    [ @tps_conf_subst_subst_lt /width=19/
-    | -HVW1; destruct -i2;
-      lapply (transitive_le ? ? (i1 + 1) Hdi2 ?) -Hdi2 // #Hdi2
-      lapply (drop_mono … HLK1 … HLK2) -HLK1 Hdi1 Hi1de #H destruct -V1 K1;
-      elim (IHVW1 … HVW2) -IHVW1 HVW2 #W #HW1 #HW2
-      lapply (drop_fwd_drop2 … HLK2) -HLK2 #HLK2
-      elim (lift_total W 0 (i1 + 1)) #T #HWT
-      lapply (tps_lift_ge … HW1 … HLK2 HWT1 HWT ?) -HW1 HWT1 //
-      lapply (tps_lift_ge … HW2 … HLK2 HWT2 HWT ?) -HW2 HWT2 HLK2 HWT // normalize #HT2 #HT1
-      lapply (tps_weak … HT1 d e ? ?) -HT1 [ >arith_i2 // | // ]
-      lapply (tps_weak … HT2 d e ? ?) -HT2 [ >arith_i2 // | // ]
-      /2/
-    | @ex2_1_comm @tps_conf_subst_subst_lt /width=19/
+    [ @tps_conf_subst_subst_lt /width=15/
+    | -Hdi2 Hi2de; destruct -i2;
+      lapply (drop_mono … HLK1 … HLK2) -HLK1 #H destruct -V1 K1
+      >(lift_mono … HVT1 … HVT2) -HVT1 /2/
+    | @ex2_1_comm @tps_conf_subst_subst_lt /width=15/
     ]
   ]
 | #L #I #V0 #V1 #T0 #T1 #d #e #_ #_ #IHV01 #IHT01 #X #HX

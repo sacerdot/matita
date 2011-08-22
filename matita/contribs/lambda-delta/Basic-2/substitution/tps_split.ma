@@ -23,19 +23,13 @@ lemma tps_split_up: ∀L,T1,T2,d,e. L ⊢ T1 [d, e] ≫ T2 → ∀i. d ≤ i →
 #L #T1 #T2 #d #e #H elim H -L T1 T2 d e
 [ /2/
 | /2/
-| #L #K #V #V1 #V2 #i #d #e #Hdi #Hide #HLK #HV1 #HV12 #IHV12 #j #Hdj #Hjde
-  elim (lt_or_ge i j) #Hij
-  [ -HV1 Hide;
-    lapply (drop_fwd_drop2 … HLK) #HLK'
-    elim (IHV12 (j - i - 1) ? ?) -IHV12; normalize /2/ -Hjde <minus_n_O >arith_b2 // #W1 #HVW1 #HWV1
-    generalize in match HVW1 generalize in match Hij -HVW1 (**) (* rewriting in the premises, rewrites in the goal too *)
-    >(plus_minus_m_m_comm … Hdj) in ⊢ (% → % → ?) -Hdj #Hij' #HVW1
-    elim (lift_total W1 0 (i + 1)) #W2 #HW12
-    lapply (tps_lift_ge … HWV1 … HLK' HW12 HV12 ?) -HWV1 HLK' HV12 // >arith_a2 /3 width=6/
-  | -IHV12 Hdi Hdj;
-    generalize in match HV1 generalize in match Hide -HV1 Hide (**) (* rewriting in the premises, rewrites in the goal too *)
-    >(plus_minus_m_m_comm … Hjde) in ⊢ (% → % → ?) -Hjde #Hide #HV1
-    @ex2_1_intro [2: @tps_lref |1: skip | /2 width=6/ ] (**) (* /3 width=6 is too slow *)
+| #L #K #V #W #i #d #e #Hdi #Hide #HLK #HVW #j #Hdj #Hjde
+  elim (lt_or_ge i j)
+  [ -Hide Hjde;
+    >(plus_minus_m_m_comm j d) in ⊢ (% → ?) // -Hdj /3/
+  | -Hdi Hdj; #Hid
+    generalize in match Hide -Hide (**) (* rewriting in the premises, rewrites in the goal too *)
+    >(plus_minus_m_m_comm … Hjde) in ⊢ (% → ?) -Hjde /4/
   ]
 | #L #I #V1 #V2 #T1 #T2 #d #e #_ #_ #IHV12 #IHT12 #i #Hdi #Hide
   elim (IHV12 i ? ?) -IHV12 // #V #HV1 #HV2
