@@ -170,3 +170,14 @@ qed.
                                         (le d i) -> (lt i (plus d h)) ->
 				        (EX u1 | t1 = (lift (minus (plus d h) (S i)) (S i) u1)).
 *)
+
+lemma tps_inv_lift1_up: ∀L,U1,U2,dt,et. L ⊢ U1 [dt, et] ≫ U2 →
+                        ∀K,d,e. ↓[d, e] L ≡ K → ∀T1. ↑[d, e] T1 ≡ U1 →
+                        d ≤ dt → dt ≤ d + e → d + e ≤ dt + et →
+                        ∃∃T2. K ⊢ T1 [d, dt + et - (d + e)] ≫ T2 & ↑[d, e] T2 ≡ U2.
+#L #U1 #U2 #dt #et #HU12 #K #d #e #HLK #T1 #HTU1 #Hddt #Hdtde #Hdedet
+elim (tps_split_up … HU12 (d + e) ? ?) -HU12 // -Hdedet #U #HU1 #HU2
+lapply (tps_weak … HU1 d e ? ?) -HU1 // <plus_minus_m_m_comm // -Hddt Hdtde #HU1
+lapply (tps_inv_lift1_eq … HU1 … HTU1) -HU1 #HU1 destruct -U1;
+elim (tps_inv_lift1_ge … HU2 … HLK … HTU1 ?) -HU2 HLK HTU1 // <minus_plus_m_m /2/
+qed.
