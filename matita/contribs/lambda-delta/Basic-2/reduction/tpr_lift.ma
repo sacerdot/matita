@@ -21,14 +21,11 @@ lemma tpr_lift: ∀T1,T2. T1 ⇒ T2 →
                 ∀d,e,U1. ↑[d, e] T1 ≡ U1 → ∀U2. ↑[d, e] T2 ≡ U2 → U1 ⇒ U2.
 #T1 #T2 #H elim H -H T1 T2
 [ #k #d #e #U1 #HU1 #U2 #HU2
-  lapply (lift_mono … HU1 … HU2) -HU1 #H destruct -U1; 
+  lapply (lift_mono … HU1 … HU2) -HU1 #H destruct -U1;
   lapply (lift_inv_sort1 … HU2) -HU2 #H destruct -U2 //
 | #i #d #e #U1 #HU1 #U2 #HU2
   lapply (lift_mono … HU1 … HU2) -HU1 #H destruct -U1;
   lapply (lift_inv_lref1 … HU2) * * #Hid #H destruct -U2 //
-| #I #V1 #V2 #T1 #T2 #_ #_ #IHV12 #IHT12 #d #e #X1 #HX1 #X2 #HX2
-  elim (lift_inv_bind1 … HX1) -HX1 #W1 #U1 #HVW1 #HTU1 #HX1 destruct -X1;
-  elim (lift_inv_bind1 … HX2) -HX2 #W2 #U2 #HVW2 #HTU2 #HX2 destruct -X2 /3/
 | #I #V1 #V2 #T1 #T2 #_ #_ #IHV12 #IHT12 #d #e #X1 #HX1 #X2 #HX2
   elim (lift_inv_flat1 … HX1) -HX1 #W1 #U1 #HVW1 #HTU1 #HX1 destruct -X1;
   elim (lift_inv_flat1 … HX2) -HX2 #W2 #U2 #HVW2 #HTU2 #HX2 destruct -X2 /3/
@@ -36,7 +33,7 @@ lemma tpr_lift: ∀T1,T2. T1 ⇒ T2 →
   elim (lift_inv_flat1 … HX1) -HX1 #V0 #X #HV10 #HX #HX1 destruct -X1;
   elim (lift_inv_bind1 … HX) -HX #W0 #T0 #HW0 #HT10 #HX destruct -X;
   elim (lift_inv_bind1 … HX2) -HX2 #V3 #T3 #HV23 #HT23 #HX2 destruct -X2 /3/
-| #V1 #V2 #T1 #T2 #T0 #HV12 #HT12 #HT2 #IHV12 #IHT12 #d #e #X1 #HX1 #X2 #HX2
+| #I #V1 #V2 #T1 #T2 #T0 #HV12 #HT12 #HT2 #IHV12 #IHT12 #d #e #X1 #HX1 #X2 #HX2
   elim (lift_inv_bind1 … HX1) -HX1 #W1 #U1 #HVW1 #HTU1 #HX1 destruct -X1;
   elim (lift_inv_bind1 … HX2) -HX2 #W2 #U0 #HVW2 #HTU0 #HX2 destruct -X2;
   elim (lift_total T2 (d + 1) e) #U2 #HTU2
@@ -65,10 +62,6 @@ lemma tpr_inv_lift: ∀T1,T2. T1 ⇒ T2 →
 | #i #d #e #U1 #HU1
   lapply (lift_inv_lref2 … HU1) -HU1 * * #Hid #H destruct -U1 /3/
 | #I #V1 #V2 #T1 #T2 #_ #_ #IHV12 #IHT12 #d #e #X #HX
-  elim (lift_inv_bind2 … HX) -HX #V0 #T0 #HV01 #HT01 #HX destruct -X;
-  elim (IHV12 … HV01) -IHV12 HV01;
-  elim (IHT12 … HT01) -IHT12 HT01 /3 width=5/
-| #I #V1 #V2 #T1 #T2 #_ #_ #IHV12 #IHT12 #d #e #X #HX
   elim (lift_inv_flat2 … HX) -HX #V0 #T0 #HV01 #HT01 #HX destruct -X;
   elim (IHV12 … HV01) -IHV12 HV01;
   elim (IHT12 … HT01) -IHT12 HT01 /3 width=5/
@@ -77,7 +70,7 @@ lemma tpr_inv_lift: ∀T1,T2. T1 ⇒ T2 →
   elim (lift_inv_bind2 … HY) -HY #W0 #T0 #HW01 #HT01 #HY destruct -Y;
   elim (IHV12 … HV01) -IHV12 HV01;
   elim (IHT12 … HT01) -IHT12 HT01 /3 width=5/
-| #V1 #V2 #T1 #T2 #T0 #_ #_ #HT20 #IHV12 #IHT12 #d #e #X #HX
+| #I #V1 #V2 #T1 #T2 #T0 #_ #_ #HT20 #IHV12 #IHT12 #d #e #X #HX
   elim (lift_inv_bind2 … HX) -HX #W1 #U1 #HWV1 #HUT1 #HX destruct -X;
   elim (IHV12 … HWV1) -IHV12 HWV1 #W2 #HWV2 #HW12
   elim (IHT12 … HUT1) -IHT12 HUT1 #U2 #HUT2 #HU12
@@ -100,3 +93,24 @@ lemma tpr_inv_lift: ∀T1,T2. T1 ⇒ T2 →
   elim (IHT12 … HT01) -IHT12 HT01 /3/
 ]
 qed.
+
+(* Advanced inversion lemmas ************************************************)
+
+lemma tpr_inv_abst1_aux: ∀U1,U2. U1 ⇒ U2 → ∀V1,T1. U1 = 𝕚{Abst} V1. T1 →
+                         ∃∃V2,T2. V1 ⇒ V2 & T1 ⇒ T2 & U2 = 𝕚{Abst} V2. T2.
+#U1 #U2 * -U1 U2
+[ #k #V #T #H destruct
+| #i #V #T #H destruct
+| #I #V1 #V2 #T1 #T2 #_ #_ #V #T #H destruct
+| #V1 #V2 #W #T1 #T2 #_ #_ #V #T #H destruct
+| #I #V1 #V2 #T1 #T2 #T #HV12 #HT12 #HT2 #V0 #T0 #H destruct -I V1 T1;
+  <(tps_inv_refl1 … HT2 ? ? ?) -HT2 T /2 width=5/
+| #V #V1 #V2 #W1 #W2 #T1 #T2 #_ #_ #_ #_ #V0 #T0 #H destruct
+| #V #T #T1 #T2 #_ #_ #V0 #T0 #H destruct
+| #V #T1 #T2 #_ #V0 #T0 #H destruct
+]
+qed.
+
+lemma tpr_inv_abst1: ∀V1,T1,U2. 𝕚{Abst} V1. T1 ⇒ U2 →
+                     ∃∃V2,T2. V1 ⇒ V2 & T1 ⇒ T2 & U2 = 𝕚{Abst} V2. T2.
+/2/ qed.
