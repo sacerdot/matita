@@ -141,7 +141,7 @@ lemma drop_leq_drop1: ∀L1,L2,d,e. L1 [d, e] ≈ L2 →
 #L1 #L2 #d #e #H elim H -H L1 L2 d e
 [ #d #e #I #K1 #V #i #H
   lapply (drop_inv_sort1 … H) -H #H destruct
-| #L1 #L2 #I1 #I2 #V1 #V2 #_ #_ #I #K1 #V #i #_ #_ #H
+| #L1 #L2 #I #K1 #V #i #_ #_ #H
   elim (lt_zero_false … H)
 | #L1 #L2 #I #V #e #HL12 #IHL12 #J #K1 #W #i #H #_ #Hie
   elim (drop_inv_O1 … H) -H * #Hi #HLK1
