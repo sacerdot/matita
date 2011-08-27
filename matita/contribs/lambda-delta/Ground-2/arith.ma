@@ -108,7 +108,7 @@ lemma le_plus_minus: ∀a,b,c. c ≤ b → a + b - c = a + (b - c).
 lemma plus_minus_m_m_comm: ∀n,m. m ≤ n → n = m + (n - m).
 /2/ qed.
 
-theorem minus_plus_m_m_comm: ∀n,m. n = (m + n) - m.
+lemma minus_plus_m_m_comm: ∀n,m. n = (m + n) - m.
 /2/ qed.
 
 lemma arith_a2: ∀a,c1,c2. c1 + c2 ≤ a → a - c1 - c2 + (c1 + c2) = a.

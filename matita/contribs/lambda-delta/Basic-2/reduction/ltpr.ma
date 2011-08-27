@@ -28,8 +28,8 @@ interpretation
 
 (* Basic inversion lemmas ***************************************************)
 
-lemma ltpr_inv_item1_aux: ∀L1,L2. L1 ⇒ L2 → ∀K1,I,V1. L1 = K1. 𝕓{I} V1 →
-                          ∃∃K2,V2. K1 ⇒ K2 & V1 ⇒ V2 & L2 = K2. 𝕓{I} V2.
+fact ltpr_inv_item1_aux: ∀L1,L2. L1 ⇒ L2 → ∀K1,I,V1. L1 = K1. 𝕓{I} V1 →
+                         ∃∃K2,V2. K1 ⇒ K2 & V1 ⇒ V2 & L2 = K2. 𝕓{I} V2.
 #L1 #L2 * -L1 L2
 [ #K1 #I #V1 #H destruct
 | #K1 #K2 #I #V1 #V2 #HK12 #HV12 #L #J #W #H destruct - K1 I V1 /2 width=5/

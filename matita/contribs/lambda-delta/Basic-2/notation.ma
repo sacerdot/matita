@@ -24,27 +24,27 @@ notation "hvbox( ⋆ term 90 k )"
  non associative with precedence 90
  for @{ 'Star $k }.
 
-notation "hvbox( 𝕚 { I } break (term 90 T1) . break (term 90 T) )"
+notation "hvbox( # term 90 k )"
+ non associative with precedence 90
+ for @{ 'LRef $k }.
+
+notation "hvbox( 𝕚 { I } break term 90 T1 . break term 90 T )"
  non associative with precedence 90
  for @{ 'SItem $I $T1 $T }.
 
-notation "hvbox( 𝕓 { I } break (term 90 T1) . break (term 90 T) )"
+notation "hvbox( 𝕓 { I } break term 90 T1 . break term 90 T )"
  non associative with precedence 90
  for @{ 'SBind $I $T1 $T }.
 
-notation "hvbox( 𝕗 { I } break (term 90 T1) . break (term 90 T) )"
+notation "hvbox( 𝕗 { I } break term 90 T1 . break term 90 T )"
  non associative with precedence 90
  for @{ 'SFlat $I $T1 $T }.
 
-notation "hvbox( T . break 𝕓 { I } break (term 90 T1) )"
+notation "hvbox( T . break 𝕓 { I } break term 90 T1 )"
  non associative with precedence 89
  for @{ 'DBind $T $I $T1 }.
-(*
-notation "hvbox( |  L  | )"
- non associative with precedence 70
- for @{ 'Length $L }.
-*)
-notation "hvbox( # term 90 x )"
+
+notation "hvbox( # [ x ] )"
  non associative with precedence 90
  for @{ 'Weight $x }.
 
@@ -52,11 +52,15 @@ notation "hvbox( # [ x , break y ] )"
  non associative with precedence 90
  for @{ 'Weight $x $y }.
 
-(* Substitution *************************************************************)
+notation "hvbox( 𝕊 [ T ] )"
+   non associative with precedence 45
+   for @{ 'Simple $T }.
 
 notation "hvbox( T1 break [ d , break e ] ≈ break T2 )"
    non associative with precedence 45
    for @{ 'Eq $T1 $d $e $T2 }.
+
+(* Substitution *************************************************************)
 
 notation "hvbox( ↑ [ d , break e ] break T1 ≡ break T2 )"
    non associative with precedence 45
@@ -76,7 +80,7 @@ notation "hvbox( T1 ⇒ break T2 )"
    non associative with precedence 45
    for @{ 'PRed $T1 $T2 }.
 
-notation "hvbox( L ⊢ break (term 90 T1) ⇒ break T2 )"
+notation "hvbox( L ⊢ break term 90 T1 ⇒ break T2 )"
    non associative with precedence 45
    for @{ 'PRed $L $T1 $T2 }.
 

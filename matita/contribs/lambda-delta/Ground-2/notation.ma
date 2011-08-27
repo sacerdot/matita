@@ -12,30 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic-2/reduction/cpr.ma".
+(* GENERAL NOTATION USED BY THE FORMAL SYSTEM λδ ****************************)
 
-(* CONTEXT-SENSITIVE PARALLEL REDUCTION ON LOCAL ENVIRONMENTS *************)
+(* Lists ********************************************************************)
 
-inductive lcpr: lenv → lenv → Prop ≝
-| lcpr_sort: lcpr (⋆) (⋆)
-| lcpr_item: ∀K1,K2,I,V1,V2.
-             lcpr K1 K2 → K2 ⊢ V1 ⇒ V2 → lcpr (K1. 𝕓{I} V1) (K2. 𝕓{I} V2) (*𝕓*)
-.
+notation "hvbox( hd break :: tl )"
+  right associative with precedence 47
+  for @{'Cons $hd $tl}.
 
-interpretation
-  "context-sensitive parallel reduction (environment)"
-  'CPRed L1 L2 = (lcpr L1 L2).
-
-(* Basic inversion lemmas ***************************************************)
-
-fact lcpr_inv_item1_aux: ∀L1,L2. L1 ⊢ ⇒ L2 → ∀K1,I,V1. L1 = K1. 𝕓{I} V1 →
-                         ∃∃K2,V2. K1 ⊢ ⇒ K2 & K2 ⊢ V1 ⇒ V2 & L2 = K2. 𝕓{I} V2.
-#L1 #L2 * -L1 L2
-[ #K1 #I #V1 #H destruct
-| #K1 #K2 #I #V1 #V2 #HK12 #HV12 #L #J #W #H destruct - K1 I V1 /2 width=5/
-]
-qed.
-
-lemma lcpr_inv_item1: ∀K1,I,V1,L2. K1. 𝕓{I} V1 ⊢ ⇒ L2 →
-                      ∃∃K2,V2. K1 ⊢ ⇒ K2 & K2 ⊢ V1 ⇒ V2 & L2 = K2. 𝕓{I} V2.
-/2/ qed.
+notation "hvbox( l1 break @ l2)"
+  right associative with precedence 47
+  for @{'Append $l1 $l2 }.

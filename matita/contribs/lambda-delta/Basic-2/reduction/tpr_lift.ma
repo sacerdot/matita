@@ -96,8 +96,8 @@ qed.
 
 (* Advanced inversion lemmas ************************************************)
 
-lemma tpr_inv_abst1_aux: ∀U1,U2. U1 ⇒ U2 → ∀V1,T1. U1 = 𝕚{Abst} V1. T1 →
-                         ∃∃V2,T2. V1 ⇒ V2 & T1 ⇒ T2 & U2 = 𝕚{Abst} V2. T2.
+fact tpr_inv_abst1_aux: ∀U1,U2. U1 ⇒ U2 → ∀V1,T1. U1 = 𝕚{Abst} V1. T1 →
+                        ∃∃V2,T2. V1 ⇒ V2 & T1 ⇒ T2 & U2 = 𝕚{Abst} V2. T2.
 #U1 #U2 * -U1 U2
 [ #k #V #T #H destruct
 | #i #V #T #H destruct

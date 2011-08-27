@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "Basic-2/grammar/cl_shift.ma".
 include "Basic-2/reduction/tpr.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL REDUCTION ON TERMS ****************************)
@@ -63,3 +64,17 @@ lemma cpr_cast: ∀L,V,T1,T2.
 qed.
 
 (* Basic inversion lemmas ***************************************************)
+
+lemma cpr_inv_lsort: ∀T1,T2. ⋆ ⊢ T1 ⇒ T2 → T1 ⇒ T2.
+#T1 #T2 * #T #HT normalize #HT2
+<(tps_inv_refl0 … HT2) -HT2 //
+qed.
+
+(* Basic forward lemmas *****************************************************)
+
+lemma cpr_shift_fwd: ∀L,T1,T2. L ⊢ T1 ⇒ T2 → L @ T1 ⇒ L @ T2.
+#L elim L -L
+[ /2/
+| normalize /3/
+].
+qed.

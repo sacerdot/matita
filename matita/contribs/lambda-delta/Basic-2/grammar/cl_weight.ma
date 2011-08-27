@@ -12,30 +12,20 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic-2/reduction/cpr.ma".
+include "Basic-2/grammar/lenv_weight.ma".
 
-(* CONTEXT-SENSITIVE PARALLEL REDUCTION ON LOCAL ENVIRONMENTS *************)
+(* WEIGHT OF A CLOSURE ******************************************************)
 
-inductive lcpr: lenv → lenv → Prop ≝
-| lcpr_sort: lcpr (⋆) (⋆)
-| lcpr_item: ∀K1,K2,I,V1,V2.
-             lcpr K1 K2 → K2 ⊢ V1 ⇒ V2 → lcpr (K1. 𝕓{I} V1) (K2. 𝕓{I} V2) (*𝕓*)
-.
+definition cw: lenv → term → ? ≝ λL,T. #[L] + #[T].
 
-interpretation
-  "context-sensitive parallel reduction (environment)"
-  'CPRed L1 L2 = (lcpr L1 L2).
+interpretation "weight (closure)" 'Weight L T = (cw L T).
 
-(* Basic inversion lemmas ***************************************************)
+(* Basic properties *********************************************************)
 
-fact lcpr_inv_item1_aux: ∀L1,L2. L1 ⊢ ⇒ L2 → ∀K1,I,V1. L1 = K1. 𝕓{I} V1 →
-                         ∃∃K2,V2. K1 ⊢ ⇒ K2 & K2 ⊢ V1 ⇒ V2 & L2 = K2. 𝕓{I} V2.
-#L1 #L2 * -L1 L2
-[ #K1 #I #V1 #H destruct
-| #K1 #K2 #I #V1 #V2 #HK12 #HV12 #L #J #W #H destruct - K1 I V1 /2 width=5/
-]
+lemma cw_shift: ∀K,I,V,T. #[K. 𝕓{I} V, T] < #[K, 𝕓{I} V. T].
+normalize //
 qed.
 
-lemma lcpr_inv_item1: ∀K1,I,V1,L2. K1. 𝕓{I} V1 ⊢ ⇒ L2 →
-                      ∃∃K2,V2. K1 ⊢ ⇒ K2 & K2 ⊢ V1 ⇒ V2 & L2 = K2. 𝕓{I} V2.
-/2/ qed.
+axiom cw_wf_ind: ∀R:lenv→term→Prop.
+                 (∀L2,T2. (∀L1,T1. #[L1,T1] < #[L2,T2] → R L1 T1) → R L2 T2) →
+                 ∀L,T. R L T.

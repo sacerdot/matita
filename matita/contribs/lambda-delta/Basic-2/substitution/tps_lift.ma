@@ -184,8 +184,8 @@ qed.
 
 (* Advanced inversion lemmas ************************************************)
 
-lemma tps_inv_refl1_aux: ∀L,T1,T2,d,e. L ⊢ T1 [d, e] ≫ T2 → e = 1 →
-                         ∀K,V. ↓[0, d] L ≡ K. 𝕓{Abst} V → T1 = T2.
+fact tps_inv_refl1_aux: ∀L,T1,T2,d,e. L ⊢ T1 [d, e] ≫ T2 → e = 1 →
+                        ∀K,V. ↓[0, d] L ≡ K. 𝕓{Abst} V → T1 = T2.
 #L #T1 #T2 #d #e #H elim H -H L T1 T2 d e
 [ //
 | //

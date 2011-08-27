@@ -1,9 +1,17 @@
 NAMING CONVENTIONS FOR METAVARIABLES
 
+A,B    : arity
+C,D    : candidate of reducibility
+E,F,G  : reserved: future use
 H      : reserved: transient premise
 IH     : reserved: inductive premise
 I,J    : item
 K,L    : local environment
+M,N    : reserved: future use
+O      : reserved: standard library
+P,Q    : reserved: future use
+R      : generic predicate (relation)
+S      : reserved: standard library
 T,U,V,W: term
 X,Y,Z  : reserved: transient objet denoted by a capital letter
 

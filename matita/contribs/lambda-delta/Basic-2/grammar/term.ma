@@ -25,7 +25,7 @@ inductive term: Type[0] ≝
 
 interpretation "sort (term)" 'Star k = (TSort k).
 
-interpretation "local reference (term)" 'Weight i = (TLRef i).
+interpretation "local reference (term)" 'LRef i = (TLRef i).
 
 interpretation "term construction (binary)" 'SItem I T1 T2 = (TPair I T1 T2).
 

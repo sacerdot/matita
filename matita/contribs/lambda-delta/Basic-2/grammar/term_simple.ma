@@ -12,30 +12,27 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic-2/reduction/cpr.ma".
+include "Basic-2/grammar/term.ma".
 
-(* CONTEXT-SENSITIVE PARALLEL REDUCTION ON LOCAL ENVIRONMENTS *************)
+(* SIMPLE (NEUTRAL) TERMS ***************************************************)
 
-inductive lcpr: lenv → lenv → Prop ≝
-| lcpr_sort: lcpr (⋆) (⋆)
-| lcpr_item: ∀K1,K2,I,V1,V2.
-             lcpr K1 K2 → K2 ⊢ V1 ⇒ V2 → lcpr (K1. 𝕓{I} V1) (K2. 𝕓{I} V2) (*𝕓*)
+inductive simple: term → Prop ≝
+   | simple_sort: ∀k. simple (⋆k)
+   | simple_lref: ∀i. simple (#i)
+   | simple_flat: ∀I,V,T. simple (𝕗{I} V. T)
 .
 
-interpretation
-  "context-sensitive parallel reduction (environment)"
-  'CPRed L1 L2 = (lcpr L1 L2).
+interpretation "simple (term)" 'Simple T = (simple T).
 
 (* Basic inversion lemmas ***************************************************)
 
-fact lcpr_inv_item1_aux: ∀L1,L2. L1 ⊢ ⇒ L2 → ∀K1,I,V1. L1 = K1. 𝕓{I} V1 →
-                         ∃∃K2,V2. K1 ⊢ ⇒ K2 & K2 ⊢ V1 ⇒ V2 & L2 = K2. 𝕓{I} V2.
-#L1 #L2 * -L1 L2
-[ #K1 #I #V1 #H destruct
-| #K1 #K2 #I #V1 #V2 #HK12 #HV12 #L #J #W #H destruct - K1 I V1 /2 width=5/
+fact simple_inv_bind_aux: ∀T. 𝕊[T] → ∀J,W,U. T = 𝕓{J} W. U → False.
+#T * -T
+[ #k #J #W #U #H destruct
+| #k #J #W #U #H destruct
+| #I #V #T #J #W #U #H destruct
 ]
 qed.
 
-lemma lcpr_inv_item1: ∀K1,I,V1,L2. K1. 𝕓{I} V1 ⊢ ⇒ L2 →
-                      ∃∃K2,V2. K1 ⊢ ⇒ K2 & K2 ⊢ V1 ⇒ V2 & L2 = K2. 𝕓{I} V2.
-/2/ qed.
+lemma simple_inv_bind: ∀I,V,T. 𝕊[𝕓{I} V. T] → False.
+/2 width=6/ qed.

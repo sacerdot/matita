@@ -20,15 +20,15 @@ include "Basic-2/reduction/tpr_tps.ma".
 
 (* Confluence lemmas ********************************************************)
 
-lemma tpr_conf_sort_sort: ∀k. ∃∃X. ⋆k ⇒ X & ⋆k ⇒ X.
+fact tpr_conf_sort_sort: ∀k. ∃∃X. ⋆k ⇒ X & ⋆k ⇒ X.
 /2/ qed.
 
-lemma tpr_conf_lref_lref: ∀i. ∃∃X. #i ⇒ X & #i ⇒ X.
+fact tpr_conf_lref_lref: ∀i. ∃∃X. #i ⇒ X & #i ⇒ X.
 /2/ qed.
 
-lemma tpr_conf_flat_flat:
+fact tpr_conf_flat_flat:
    ∀I,V0,V1,T0,T1,V2,T2. (
-      ∀X0:term. #X0 < #V0 + #T0 + 1 →
+      ∀X0:term. #[X0] < #[V0] + #[T0] + 1 →
       ∀X1,X2. X0 ⇒ X1 → X0 ⇒ X2 →
       ∃∃X. X1 ⇒ X & X2 ⇒ X
    ) →
@@ -39,9 +39,9 @@ elim (IH … HV01 … HV02) -HV01 HV02 // #V #HV1 #HV2
 elim (IH … HT01 … HT02) -HT01 HT02 /3 width=5/
 qed.
 
-lemma tpr_conf_flat_beta:
+fact tpr_conf_flat_beta:
    ∀V0,V1,T1,V2,W0,U0,T2. (
-      ∀X0:term. #X0 < #V0 + (#W0 + #U0 + 1) + 1 →
+      ∀X0:term. #[X0] < #[V0] + (#[W0] + #[U0] + 1) + 1 →
       ∀X1,X2. X0 ⇒ X1 → X0 ⇒ X2 →
       ∃∃X. X1 ⇒ X & X2 ⇒ X
    ) →
@@ -54,9 +54,9 @@ elim (IH … HV01 … HV02) -HV01 HV02 // #V #HV1 #HV2
 elim (IH … HT02 … HU01) -HT02 HU01 IH /3 width=5/
 qed.
 
-lemma tpr_conf_flat_theta:
+fact tpr_conf_flat_theta:
    ∀V0,V1,T1,V2,V,W0,W2,U0,U2. (
-      ∀X0:term. #X0 < #V0 + (#W0 + #U0 + 1) + 1 →
+      ∀X0:term. #[X0] < #[V0] + (#[W0] + #[U0] + 1) + 1 →
       ∀X1,X2. X0 ⇒ X1 → X0 ⇒ X2 →
       ∃∃X. X1 ⇒ X & X2 ⇒ X
    ) →
@@ -91,9 +91,9 @@ elim (tpr_inv_abbr1 … H) -H *
 ]
 qed.
 
-lemma tpr_conf_flat_cast:
+fact tpr_conf_flat_cast:
    ∀X2,V0,V1,T0,T1. (
-      ∀X0:term. #X0 < #V0 + # T0 + 1 →
+      ∀X0:term. #[X0] < #[V0] + #[T0] + 1 →
       ∀X1,X2. X0 ⇒ X1 → X0 ⇒ X2 →
       ∃∃X. X1 ⇒ X & X2 ⇒ X
    ) →
@@ -103,9 +103,9 @@ lemma tpr_conf_flat_cast:
 elim (IH … HT01 … HT02) -HT01 HT02 IH /3/
 qed.
 
-lemma tpr_conf_beta_beta:
+fact tpr_conf_beta_beta:
    ∀W0:term. ∀V0,V1,T0,T1,V2,T2. (
-      ∀X0:term. #X0 < #V0 + (#W0 + #T0 + 1) + 1 →
+      ∀X0:term. #[X0] < #[V0] + (#[W0] + #[T0] + 1) + 1 →
       ∀X1,X2. X0 ⇒ X1 → X0 ⇒ X2 →
       ∃∃X. X1 ⇒ X & X2 ⇒ X
    ) →
@@ -116,9 +116,9 @@ elim (IH … HV01 … HV02) -HV01 HV02 //
 elim (IH … HT01 … HT02) -HT01 HT02 IH /3 width=5/
 qed.
 
-lemma tpr_conf_delta_delta:
+fact tpr_conf_delta_delta:
    ∀I1,V0,V1,T0,T1,TT1,V2,T2,TT2. (
-      ∀X0:term. #X0 < #V0 +#T0 + 1→
+      ∀X0:term. #[X0] < #[V0] + #[T0] + 1 →
       ∀X1,X2. X0 ⇒ X1 → X0 ⇒ X2 →
       ∃∃X. X1 ⇒ X & X2 ⇒ X
    ) →
@@ -135,9 +135,9 @@ elim (tps_conf … HTU1 … HTU2) -HTU1 HTU2 #U #HU1 #HU2
 @ex2_1_intro [2,3: @tpr_delta |1: skip ] /width=10/ (**) (* /3 width=10/ is too slow *)
 qed.
 
-lemma tpr_conf_delta_zeta:
+fact tpr_conf_delta_zeta:
    ∀X2,V0,V1,T0,T1,TT1,T2. (
-      ∀X0:term. #X0 < #V0 +#T0 + 1→
+      ∀X0:term. #[X0] < #[V0] + #[T0] + 1 →
       ∀X1,X2. X0 ⇒ X1 → X0 ⇒ X2 →
       ∃∃X. X1 ⇒ X & X2 ⇒ X
    ) →
@@ -151,9 +151,9 @@ lapply (tw_lift … HTT20) -HTT20 #HTT20
 elim (IH … HTX2 … HTT2) -HTX2 HTT2 IH /3/
 qed.
 
-lemma tpr_conf_theta_theta:
+fact tpr_conf_theta_theta:
    ∀VV1,V0,V1,W0,W1,T0,T1,V2,VV2,W2,T2. (
-      ∀X0:term. #X0 < #V0 + (#W0 + #T0 + 1) + 1 →
+      ∀X0:term. #[X0] < #[V0] + (#[W0] + #[T0] + 1) + 1 →
       ∀X1,X2. X0 ⇒ X1 → X0 ⇒ X2 →
       ∃∃X. X1 ⇒ X & X2 ⇒ X
    ) →
@@ -170,9 +170,9 @@ lapply (tpr_lift … HV2 … HVV2 … HVV) -HV2 HVV2 HVV #HVV2
 @ex2_1_intro [2,3: @tpr_bind |1:skip ] /2 width=5/ (**) (* /4 width=5/ is too slow *)
 qed.
 
-lemma tpr_conf_zeta_zeta:
+fact tpr_conf_zeta_zeta:
    ∀V0:term. ∀X2,TT0,T0,T1,T2. (
-      ∀X0:term. #X0 < #V0 + #TT0 + 1 →
+      ∀X0:term. #[X0] < #[V0] + #[TT0] + 1 →
       ∀X1,X2. X0 ⇒ X1 → X0 ⇒ X2 →
       ∃∃X. X1 ⇒ X & X2 ⇒ X
    ) →
@@ -185,9 +185,9 @@ lapply (tw_lift … HTT20) -HTT20 #HTT20
 elim (IH … HT01 … HTX2) -HT01 HTX2 IH /2/
 qed.
 
-lemma tpr_conf_tau_tau:
+fact tpr_conf_tau_tau:
    ∀V0,T0:term. ∀X2,T1. (
-      ∀X0:term. #X0 < #V0 + #T0 + 1 →
+      ∀X0:term. #[X0] < #[V0] + #[T0] + 1 →
       ∀X1,X2. X0 ⇒ X1 → X0 ⇒ X2 →
       ∃∃X. X1 ⇒ X & X2 ⇒ X
    ) →
@@ -199,9 +199,10 @@ qed.
 
 (* Confluence ***************************************************************)
 
-lemma tpr_conf_aux:
+fact tpr_conf_aux:
    ∀Y0:term. (
-      ∀X0:term. #X0 < #Y0 → ∀X1,X2. X0 ⇒ X1 → X0 ⇒ X2 →
+      ∀X0:term. #[X0] < #[Y0] →
+      ∀X1,X2. X0 ⇒ X1 → X0 ⇒ X2 →
       ∃∃X. X1 ⇒ X & X2 ⇒ X
          ) →
    ∀X0,X1,X2. X0 ⇒ X1 → X0 ⇒ X2 → X0 = Y0 →

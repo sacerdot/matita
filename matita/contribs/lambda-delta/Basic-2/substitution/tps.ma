@@ -113,11 +113,11 @@ qed.
 
 (* Basic inversion lemmas ***************************************************)
 
-lemma tps_inv_lref1_aux: ∀L,T1,T2,d,e. L ⊢ T1 [d, e] ≫ T2 → ∀i. T1 = #i →
-                         T2 = #i ∨
-                         ∃∃K,V. d ≤ i & i < d + e &
-                                ↓[O, i] L ≡ K. 𝕓{Abbr} V &
-                                ↑[O, i + 1] V ≡ T2.
+fact tps_inv_lref1_aux: ∀L,T1,T2,d,e. L ⊢ T1 [d, e] ≫ T2 → ∀i. T1 = #i →
+                        T2 = #i ∨
+                        ∃∃K,V. d ≤ i & i < d + e &
+                               ↓[O, i] L ≡ K. 𝕓{Abbr} V &
+                               ↑[O, i + 1] V ≡ T2.
 #L #T1 #T2 #d #e * -L T1 T2 d e
 [ #L #k #d #e #i #H destruct
 | /2/
@@ -134,11 +134,11 @@ lemma tps_inv_lref1: ∀L,T2,i,d,e. L ⊢ #i [d, e] ≫ T2 →
                             ↑[O, i + 1] V ≡ T2.
 /2/ qed.
 
-lemma tps_inv_bind1_aux: ∀d,e,L,U1,U2. L ⊢ U1 [d, e] ≫ U2 →
-                         ∀I,V1,T1. U1 = 𝕓{I} V1. T1 →
-                         ∃∃V2,T2. L ⊢ V1 [d, e] ≫ V2 & 
-                                  L. 𝕓{I} V1 ⊢ T1 [d + 1, e] ≫ T2 &
-                                  U2 =  𝕓{I} V2. T2.
+fact tps_inv_bind1_aux: ∀d,e,L,U1,U2. L ⊢ U1 [d, e] ≫ U2 →
+                        ∀I,V1,T1. U1 = 𝕓{I} V1. T1 →
+                        ∃∃V2,T2. L ⊢ V1 [d, e] ≫ V2 & 
+                                 L. 𝕓{I} V1 ⊢ T1 [d + 1, e] ≫ T2 &
+                                 U2 =  𝕓{I} V2. T2.
 #d #e #L #U1 #U2 * -d e L U1 U2
 [ #L #k #d #e #I #V1 #T1 #H destruct
 | #L #i #d #e #I #V1 #T1 #H destruct
@@ -154,10 +154,10 @@ lemma tps_inv_bind1: ∀d,e,L,I,V1,T1,U2. L ⊢ 𝕓{I} V1. T1 [d, e] ≫ U2 →
                               U2 =  𝕓{I} V2. T2.
 /2/ qed.
 
-lemma tps_inv_flat1_aux: ∀d,e,L,U1,U2. L ⊢ U1 [d, e] ≫ U2 →
-                         ∀I,V1,T1. U1 = 𝕗{I} V1. T1 →
-                         ∃∃V2,T2. L ⊢ V1 [d, e] ≫ V2 & L ⊢ T1 [d, e] ≫ T2 &
-                                  U2 =  𝕗{I} V2. T2.
+fact tps_inv_flat1_aux: ∀d,e,L,U1,U2. L ⊢ U1 [d, e] ≫ U2 →
+                        ∀I,V1,T1. U1 = 𝕗{I} V1. T1 →
+                        ∃∃V2,T2. L ⊢ V1 [d, e] ≫ V2 & L ⊢ T1 [d, e] ≫ T2 &
+                                 U2 =  𝕗{I} V2. T2.
 #d #e #L #U1 #U2 * -d e L U1 U2
 [ #L #k #d #e #I #V1 #T1 #H destruct
 | #L #i #d #e #I #V1 #T1 #H destruct
@@ -171,3 +171,18 @@ lemma tps_inv_flat1: ∀d,e,L,I,V1,T1,U2. L ⊢ 𝕗{I} V1. T1 [d, e] ≫ U2 →
                      ∃∃V2,T2. L ⊢ V1 [d, e] ≫ V2 & L ⊢ T1 [d, e] ≫ T2 &
                               U2 =  𝕗{I} V2. T2.
 /2/ qed.
+
+fact tps_inv_refl0_aux: ∀L,T1,T2,d,e. L ⊢ T1 [d, e] ≫ T2 → e = 0 → T1 = T2.
+#L #T1 #T2 #d #e #H elim H -H L T1 T2 d e
+[ //
+| //
+| #L #K #V #W #i #d #e #Hdi #Hide #_ #_ #H destruct -e;
+  lapply (le_to_lt_to_lt … Hdi … Hide) -Hdi Hide <plus_n_O #Hdd
+  elim (lt_refl_false … Hdd)
+| /3/
+| /3/
+]
+qed.
+
+lemma tps_inv_refl0: ∀L,T1,T2,d. L ⊢ T1 [d, 0] ≫ T2 → T1 = T2.
+/2 width=6/ qed.
