@@ -205,7 +205,7 @@ qed.
 
 (* Basic-1: removed theorems 18:
             drop_skip_flat
-	    cimp_flat_sx cimp_flat_dx cimp_bind cimp_getl_conf
+            cimp_flat_sx cimp_flat_dx cimp_bind cimp_getl_conf
             drop_clear drop_clear_O drop_clear_S
             clear_gen_sort clear_gen_bind clear_gen_flat clear_gen_flat_r
             clear_gen_all clear_clear clear_mono clear_trans clear_ctail

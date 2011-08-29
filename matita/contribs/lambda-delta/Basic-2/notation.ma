@@ -28,7 +28,11 @@ notation "hvbox( # term 90 k )"
  non associative with precedence 90
  for @{ 'LRef $k }.
 
-notation "hvbox( 𝕚 { I } break term 90 T1 . break term 90 T )"
+notation "hvbox( 𝕒 { I } )"
+ non associative with precedence 90
+ for @{ 'SItem $I }.
+
+notation "hvbox( 𝕔 { I } break term 90 T1 . break term 90 T )"
  non associative with precedence 90
  for @{ 'SItem $I $T1 $T }.
 
@@ -43,7 +47,11 @@ notation "hvbox( 𝕗 { I } break term 90 T1 . break term 90 T )"
 notation "hvbox( T . break 𝕓 { I } break term 90 T1 )"
  non associative with precedence 89
  for @{ 'DBind $T $I $T1 }.
-
+(*
+notation > "hvbox( T . break 𝕔 { I } break term 90 T1 )"
+ non associative with precedence 89
+ for @{ 'DBind $T $I $T1 }.
+*) (**) (* this breaks all parsing *)
 notation "hvbox( # [ x ] )"
  non associative with precedence 90
  for @{ 'Weight $x }.

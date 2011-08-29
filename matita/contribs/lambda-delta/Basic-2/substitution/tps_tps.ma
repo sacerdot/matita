@@ -22,7 +22,6 @@ theorem tps_conf: ∀L,T0,T1,d,e. L ⊢ T0 [d, e] ≫ T1 → ∀T2. L ⊢ T0 [d,
                   ∃∃T. L ⊢ T1 [d, e] ≫ T & L ⊢ T2 [d, e] ≫ T.
 #L #T0 #T1 #d #e #H elim H -H L T0 T1 d e
 [ /2/
-| /2/
 | #L #K1 #V1 #T1 #i1 #d #e #Hdi1 #Hi1de #HLK1 #HVT1 #T2 #H
   elim (tps_inv_lref1 … H) -H
   [ #HX destruct -T2 /4/
@@ -51,7 +50,6 @@ theorem tps_trans_down: ∀L,T1,T0,d1,e1. L ⊢ T1 [d1, e1] ≫ T0 →
                         ∃∃T. L ⊢ T1 [d2, e2] ≫ T & L ⊢ T [d1, e1] ≫ T2.
 #L #T1 #T0 #d1 #e1 #H elim H -L T1 T0 d1 e1
 [ /2/
-| /2/
 | #L #K #V #W #i1 #d1 #e1 #Hdi1 #Hide1 #HLK #HVW #T2 #d2 #e2 #HWT2 #Hde2d1
   lapply (transitive_le … Hde2d1 Hdi1) -Hde2d1 #Hde2i1
   lapply (tps_weak … HWT2 0 (i1 + 1) ? ?) -HWT2; normalize /2/ -Hde2i1 #HWT2

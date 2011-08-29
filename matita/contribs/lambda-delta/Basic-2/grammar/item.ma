@@ -21,24 +21,30 @@
 include "Ground-2/list.ma".
 include "Basic-2/notation.ma".
 
-(* BINARY ITEMS *************************************************************)
+(* ITEMS ********************************************************************)
+
+(* atomic items *)
+inductive item0: Type[0] ≝
+   | Sort: nat → item0 (* sort: starting at 0 *)
+   | LRef: nat → item0 (* reference by index: starting at 0 *)
+.
 
 (* binary binding items *)
 inductive bind2: Type[0] ≝
-| Abbr: bind2 (* abbreviation *)
-| Abst: bind2 (* abstraction *)
+  | Abbr: bind2 (* abbreviation *)
+  | Abst: bind2 (* abstraction *)
 .
 
 (* binary non-binding items *)
 inductive flat2: Type[0] ≝
-| Appl: flat2 (* application *)
-| Cast: flat2 (* explicit type annotation *)
+  | Appl: flat2 (* application *)
+  | Cast: flat2 (* explicit type annotation *)
 .
 
 (* binary items *)
 inductive item2: Type[0] ≝
-| Bind: bind2 → item2 (* binding item *)
-| Flat: flat2 → item2 (* non-binding item *)
+  | Bind: bind2 → item2 (* binding item *)
+  | Flat: flat2 → item2 (* non-binding item *)
 .
 
 coercion item2_of_bind2: ∀I:bind2.item2 ≝ Bind on _I:bind2 to item2.

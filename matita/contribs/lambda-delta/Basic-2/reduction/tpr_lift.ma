@@ -20,12 +20,11 @@ include "Basic-2/reduction/tpr.ma".
 lemma tpr_lift: ∀T1,T2. T1 ⇒ T2 →
                 ∀d,e,U1. ↑[d, e] T1 ≡ U1 → ∀U2. ↑[d, e] T2 ≡ U2 → U1 ⇒ U2.
 #T1 #T2 #H elim H -H T1 T2
-[ #k #d #e #U1 #HU1 #U2 #HU2
-  lapply (lift_mono … HU1 … HU2) -HU1 #H destruct -U1;
-  lapply (lift_inv_sort1 … HU2) -HU2 #H destruct -U2 //
-| #i #d #e #U1 #HU1 #U2 #HU2
-  lapply (lift_mono … HU1 … HU2) -HU1 #H destruct -U1;
-  lapply (lift_inv_lref1 … HU2) * * #Hid #H destruct -U2 //
+[ * #i #d #e #U1 #HU1 #U2 #HU2
+  lapply (lift_mono … HU1 … HU2) -HU1 #H destruct -U1
+  [ lapply (lift_inv_sort1 … HU2) -HU2 #H destruct -U2 //
+  | lapply (lift_inv_lref1 … HU2) * * #Hid #H destruct -U2 //
+  ]
 | #I #V1 #V2 #T1 #T2 #_ #_ #IHV12 #IHT12 #d #e #X1 #HX1 #X2 #HX2
   elim (lift_inv_flat1 … HX1) -HX1 #W1 #U1 #HVW1 #HTU1 #HX1 destruct -X1;
   elim (lift_inv_flat1 … HX2) -HX2 #W2 #U2 #HVW2 #HTU2 #HX2 destruct -X2 /3/
@@ -57,10 +56,10 @@ lemma tpr_inv_lift: ∀T1,T2. T1 ⇒ T2 →
                     ∀d,e,U1. ↑[d, e] U1 ≡ T1 →
                     ∃∃U2. ↑[d, e] U2 ≡ T2 & U1 ⇒ U2.
 #T1 #T2 #H elim H -H T1 T2
-[ #k #d #e #U1 #HU1
-  lapply (lift_inv_sort2 … HU1) -HU1 #H destruct -U1 /2/
-| #i #d #e #U1 #HU1
-  lapply (lift_inv_lref2 … HU1) -HU1 * * #Hid #H destruct -U1 /3/
+[ * #i #d #e #U1 #HU1
+  [ lapply (lift_inv_sort2 … HU1) -HU1 #H destruct -U1 /2/
+  | lapply (lift_inv_lref2 … HU1) -HU1 * * #Hid #H destruct -U1 /3/
+  ]
 | #I #V1 #V2 #T1 #T2 #_ #_ #IHV12 #IHT12 #d #e #X #HX
   elim (lift_inv_flat2 … HX) -HX #V0 #T0 #HV01 #HT01 #HX destruct -X;
   elim (IHV12 … HV01) -IHV12 HV01;
@@ -96,11 +95,10 @@ qed.
 
 (* Advanced inversion lemmas ************************************************)
 
-fact tpr_inv_abst1_aux: ∀U1,U2. U1 ⇒ U2 → ∀V1,T1. U1 = 𝕚{Abst} V1. T1 →
-                        ∃∃V2,T2. V1 ⇒ V2 & T1 ⇒ T2 & U2 = 𝕚{Abst} V2. T2.
+fact tpr_inv_abst1_aux: ∀U1,U2. U1 ⇒ U2 → ∀V1,T1. U1 = 𝕔{Abst} V1. T1 →
+                        ∃∃V2,T2. V1 ⇒ V2 & T1 ⇒ T2 & U2 = 𝕔{Abst} V2. T2.
 #U1 #U2 * -U1 U2
-[ #k #V #T #H destruct
-| #i #V #T #H destruct
+[ #I #V #T #H destruct
 | #I #V1 #V2 #T1 #T2 #_ #_ #V #T #H destruct
 | #V1 #V2 #W #T1 #T2 #_ #_ #V #T #H destruct
 | #I #V1 #V2 #T1 #T2 #T #HV12 #HT12 #HT2 #V0 #T0 #H destruct -I V1 T1;
@@ -111,6 +109,6 @@ fact tpr_inv_abst1_aux: ∀U1,U2. U1 ⇒ U2 → ∀V1,T1. U1 = 𝕚{Abst} V1. T1
 ]
 qed.
 
-lemma tpr_inv_abst1: ∀V1,T1,U2. 𝕚{Abst} V1. T1 ⇒ U2 →
-                     ∃∃V2,T2. V1 ⇒ V2 & T1 ⇒ T2 & U2 = 𝕚{Abst} V2. T2.
+lemma tpr_inv_abst1: ∀V1,T1,U2. 𝕔{Abst} V1. T1 ⇒ U2 →
+                     ∃∃V2,T2. V1 ⇒ V2 & T1 ⇒ T2 & U2 = 𝕔{Abst} V2. T2.
 /2/ qed.

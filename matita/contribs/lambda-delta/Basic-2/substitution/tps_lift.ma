@@ -25,9 +25,7 @@ lemma tps_lift_le: ∀K,T1,T2,dt,et. K ⊢ T1 [dt, et] ≫ T2 →
                    dt + et ≤ d →
                    L ⊢ U1 [dt, et] ≫ U2.
 #K #T1 #T2 #dt #et #H elim H -H K T1 T2 dt et
-[ #K #k #dt #et #L #U1 #U2 #d #e #_ #H1 #H2 #_
-  >(lift_mono … H1 … H2) -H1 H2 //
-| #K #i #dt #et #L #U1 #U2 #d #e #_ #H1 #H2 #_
+[ #K #I #dt #et #L #U1 #U2 #d #e #_ #H1 #H2 #_
   >(lift_mono … H1 … H2) -H1 H2 //
 | #K #KV #V #W #i #dt #et #Hdti #Hidet #HKV #HVW #L #U1 #U2 #d #e #HLK #H #HVU2 #Hdetd
   lapply (lt_to_le_to_lt … Hidet … Hdetd) -Hdetd #Hid
@@ -53,9 +51,7 @@ lemma tps_lift_ge: ∀K,T1,T2,dt,et. K ⊢ T1 [dt, et] ≫ T2 →
                    d ≤ dt →
                    L ⊢ U1 [dt + e, et] ≫ U2.
 #K #T1 #T2 #dt #et #H elim H -H K T1 T2 dt et
-[ #K #k #dt #et #L #U1 #U2 #d #e #_ #H1 #H2 #_
-  >(lift_mono … H1 … H2) -H1 H2 //
-| #K #i #dt #et #L #U1 #U2 #d #e #_ #H1 #H2 #_
+[ #K #I #dt #et #L #U1 #U2 #d #e #_ #H1 #H2 #_
   >(lift_mono … H1 … H2) -H1 H2 //
 | #K #KV #V #W #i #dt #et #Hdti #Hidet #HKV #HVW #L #U1 #U2 #d #e #HLK #H #HWU2 #Hddt
   lapply (transitive_le … Hddt … Hdti) -Hddt #Hid
@@ -78,10 +74,10 @@ lemma tps_inv_lift1_le: ∀L,U1,U2,dt,et. L ⊢ U1 [dt, et] ≫ U2 →
                         dt + et ≤ d →
                         ∃∃T2. K ⊢ T1 [dt, et] ≫ T2 & ↑[d, e] T2 ≡ U2.
 #L #U1 #U2 #dt #et #H elim H -H L U1 U2 dt et
-[ #L #k #dt #et #K #d #e #_ #T1 #H #_
-  lapply (lift_inv_sort2 … H) -H #H destruct -T1 /2/
-| #L #i #dt #et #K #d #e #_ #T1 #H #_
-  elim (lift_inv_lref2 … H) -H * #Hid #H destruct -T1 /3/
+[ #L * #i #dt #et #K #d #e #_ #T1 #H #_
+  [ lapply (lift_inv_sort2 … H) -H #H destruct -T1 /2/
+  | elim (lift_inv_lref2 … H) -H * #Hid #H destruct -T1 /3/
+  ]
 | #L #KV #V #W #i #dt #et #Hdti #Hidet #HLKV #HVW #K #d #e #HLK #T1 #H #Hdetd
   lapply (lt_to_le_to_lt … Hidet … Hdetd) -Hdetd #Hid
   lapply (lift_inv_lref2_lt … H … Hid) -H #H destruct -T1;
@@ -103,10 +99,10 @@ lemma tps_inv_lift1_ge: ∀L,U1,U2,dt,et. L ⊢ U1 [dt, et] ≫ U2 →
                         d + e ≤ dt →
                         ∃∃T2. K ⊢ T1 [dt - e, et] ≫ T2 & ↑[d, e] T2 ≡ U2.
 #L #U1 #U2 #dt #et #H elim H -H L U1 U2 dt et
-[ #L #k #dt #et #K #d #e #_ #T1 #H #_
-  lapply (lift_inv_sort2 … H) -H #H destruct -T1 /2/
-| #L #i #dt #et #K #d #e #_ #T1 #H #_
-  elim (lift_inv_lref2 … H) -H * #Hid #H destruct -T1 /3/
+[ #L * #i #dt #et #K #d #e #_ #T1 #H #_
+  [ lapply (lift_inv_sort2 … H) -H #H destruct -T1 /2/
+  | elim (lift_inv_lref2 … H) -H * #Hid #H destruct -T1 /3/
+  ]
 | #L #KV #V #W #i #dt #et #Hdti #Hidet #HLKV #HVW #K #d #e #HLK #T1 #H #Hdedt  
   lapply (transitive_le … Hdedt … Hdti) #Hdei
   lapply (plus_le_weak … Hdedt) -Hdedt #Hedt
@@ -136,7 +132,6 @@ lemma tps_inv_lift1_eq: ∀L,U1,U2,d,e.
                         L ⊢ U1 [d, e] ≫ U2 → ∀T1. ↑[d, e] T1 ≡ U1 → U1 = U2.
 #L #U1 #U2 #d #e #H elim H -H L U1 U2 d e
 [ //
-| //
 | #L #K #V #W #i #d #e #Hdi #Hide #_ #_ #T1 #H
   elim (lift_inv_lref2 … H) -H * #H
   [ lapply (le_to_lt_to_lt … Hdi … H) -Hdi H #H
@@ -188,7 +183,6 @@ fact tps_inv_refl1_aux: ∀L,T1,T2,d,e. L ⊢ T1 [d, e] ≫ T2 → e = 1 →
                         ∀K,V. ↓[0, d] L ≡ K. 𝕓{Abst} V → T1 = T2.
 #L #T1 #T2 #d #e #H elim H -H L T1 T2 d e
 [ //
-| //
 | #L #K0 #V0 #W #i #d #e #Hdi #Hide #HLK0 #_ #H destruct -e;
   >(le_to_le_to_eq … Hdi ?) /2/ -d #K #V #HLK
   lapply (drop_mono … HLK0 … HLK) #H destruct

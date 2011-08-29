@@ -38,16 +38,14 @@ qed.
 
 lemma lift_refl: ∀T,d. ↑[d, 0] T ≡ T.
 #T elim T -T
-[ //
-| #i #d elim (lt_or_ge i d) /2/
-| #I elim I -I /2/
+[ * #i // #d elim (lt_or_ge i d) /2/
+| * /2/
 ]
 qed.
 
 lemma lift_total: ∀T1,d,e. ∃T2. ↑[d,e] T1 ≡ T2.
 #T1 elim T1 -T1
-[ /2/
-| #i #d #e elim (lt_or_ge i d) /3/
+[ * #i /2/ #d #e elim (lt_or_ge i d) /3/
 | * #I #V1 #T1 #IHV1 #IHT1 #d #e
   elim (IHV1 d e) -IHV1 #V2 #HV12
   [ elim (IHT1 (d+1) e) -IHT1 /3/

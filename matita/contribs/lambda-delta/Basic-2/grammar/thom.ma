@@ -17,11 +17,10 @@ include "Basic-2/grammar/term_simple.ma".
 (* HOMOMORPHIC TERMS ********************************************************)
 
 inductive thom: term → term → Prop ≝
-   | thom_sort: ∀k. thom (⋆k) (⋆k)
-   | thom_lref: ∀i. thom (#i) (#i)
-   | thom_abst: ∀V1,V2,T1,T2. thom (𝕚{Abst} V1. T1) (𝕚{Abst} V2. T2)
+   | thom_atom: ∀I. thom (𝕒{I}) (𝕒{I})
+   | thom_abst: ∀V1,V2,T1,T2. thom (𝕔{Abst} V1. T1) (𝕔{Abst} V2. T2)
    | thom_appl: ∀V1,V2,T1,T2. thom T1 T2 → 𝕊[T1] → 𝕊[T2] →
-                thom (𝕚{Appl} V1. T1) (𝕚{Appl} V2. T2)
+                thom (𝕔{Appl} V1. T1) (𝕔{Appl} V2. T2)
 .
 
 interpretation "homomorphic (term)" 'napart T1 T2 = (thom T1 T2).

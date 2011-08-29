@@ -17,8 +17,7 @@ include "Basic-2/grammar/term.ma".
 (* SIMPLE (NEUTRAL) TERMS ***************************************************)
 
 inductive simple: term → Prop ≝
-   | simple_sort: ∀k. simple (⋆k)
-   | simple_lref: ∀i. simple (#i)
+   | simple_atom: ∀I. simple (𝕒{I})
    | simple_flat: ∀I,V,T. simple (𝕗{I} V. T)
 .
 
@@ -28,8 +27,7 @@ interpretation "simple (term)" 'Simple T = (simple T).
 
 fact simple_inv_bind_aux: ∀T. 𝕊[T] → ∀J,W,U. T = 𝕓{J} W. U → False.
 #T * -T
-[ #k #J #W #U #H destruct
-| #k #J #W #U #H destruct
+[ #I #J #W #U #H destruct
 | #I #V #T #J #W #U #H destruct
 ]
 qed.

@@ -59,7 +59,7 @@ lemma cpr_delta: ∀L,K,V,W,i.
 qed.
 
 lemma cpr_cast: ∀L,V,T1,T2.
-                L ⊢ T1 ⇒ T2 → L ⊢ 𝕗{Cast} V. T1 ⇒ T2.
+                L ⊢ T1 ⇒ T2 → L ⊢ 𝕔{Cast} V. T1 ⇒ T2.
 #L #V #T1 #T2 * /3/
 qed.
 

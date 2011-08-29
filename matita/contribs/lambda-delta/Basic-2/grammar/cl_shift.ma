@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic-2/grammar/cl_weight.ma".
+include "Basic-2/grammar/lenv.ma".
 
 (* SHIFT OF A CLOSURE *******************************************************)
 
@@ -22,13 +22,3 @@ let rec shift L T on L ≝ match L with
 ].
 
 interpretation "shift (closure)" 'Append L T = (shift L T).
-
-(* Basic properties *********************************************************)
-
-lemma tw_shift: ∀L,T. #[L, T] ≤ #[L @ T].
-#L elim L //
-#K #I #V #IHL #T
-@transitive_le [3: @IHL |2: /2/ | skip ]
-qed.
-
-           

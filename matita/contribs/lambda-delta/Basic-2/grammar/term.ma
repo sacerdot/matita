@@ -18,14 +18,15 @@ include "Basic-2/grammar/item.ma".
 
 (* terms *)
 inductive term: Type[0] ≝
-| TSort: nat → term                 (* sort: starting at 0 *)
-| TLRef: nat → term                 (* reference by index: starting at 0 *)
-| TPair: item2 → term → term → term (* binary item construction *)
+  | TAtom: item0 → term               (* atomic item construction *)
+  | TPair: item2 → term → term → term (* binary item construction *)
 .
 
-interpretation "sort (term)" 'Star k = (TSort k).
+interpretation "sort (term)" 'Star k = (TAtom (Sort k)).
 
-interpretation "local reference (term)" 'LRef i = (TLRef i).
+interpretation "local reference (term)" 'LRef i = (TAtom (LRef i)).
+
+interpretation "term construction (atomic)" 'SItem I = (TAtom I).
 
 interpretation "term construction (binary)" 'SItem I T1 T2 = (TPair I T1 T2).
 
