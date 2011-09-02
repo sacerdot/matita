@@ -12,8 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic-2/substitution/tps_tps.ma".
-include "Basic-2/reduction/tpr_lift.ma".
 include "Basic-2/reduction/tpr_tps.ma".
 
 (* CONTEXT-FREE PARALLEL REDUCTION ON TERMS *********************************)
@@ -128,7 +126,7 @@ elim (IH … HV01 … HV02) -HV01 HV02 // #V #HV1 #HV2
 elim (IH … HT01 … HT02) -HT01 HT02 IH // #T #HT1 #HT2
 elim (tpr_tps_bind … HV1 HT1 … HTT1) -HT1 HTT1 #U1 #TTU1 #HTU1
 elim (tpr_tps_bind … HV2 HT2 … HTT2) -HT2 HTT2 #U2 #TTU2 #HTU2
-elim (tps_conf … HTU1 … HTU2) -HTU1 HTU2 #U #HU1 #HU2
+elim (tps_conf_eq … HTU1 … HTU2) -HTU1 HTU2 #U #HU1 #HU2
 @ex2_1_intro [2,3: @tpr_delta |1: skip ] /width=10/ (**) (* /3 width=10/ is too slow *)
 qed.
 

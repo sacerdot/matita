@@ -108,25 +108,46 @@ qed.
 
 (* Basic inversion lemmas ***************************************************)
 
-fact tps_inv_lref1_aux: ∀L,T1,T2,d,e. L ⊢ T1 [d, e] ≫ T2 → ∀i. T1 = #i →
-                        T2 = #i ∨
-                        ∃∃K,V. d ≤ i & i < d + e &
-                               ↓[O, i] L ≡ K. 𝕓{Abbr} V &
-                               ↑[O, i + 1] V ≡ T2.
+fact tps_inv_atom1_aux: ∀L,T1,T2,d,e. L ⊢ T1 [d, e] ≫ T2 → ∀I. T1 = 𝕒{I} →
+                        T2 = 𝕒{I} ∨
+                        ∃∃K,V,i. d ≤ i & i < d + e &
+                                 ↓[O, i] L ≡ K. 𝕓{Abbr} V &
+                                 ↑[O, i + 1] V ≡ T2 &
+                                 I = LRef i.
 #L #T1 #T2 #d #e * -L T1 T2 d e
-[ #L #I #d #e #i #H destruct -I /2/
-| #L #K #V #T2 #i #d #e #Hdi #Hide #HLK #HVT2 #j #H destruct -i /3/
-| #L #I #V1 #V2 #T1 #T2 #d #e #_ #_ #i #H destruct
-| #L #I #V1 #V2 #T1 #T2 #d #e #_ #_ #i #H destruct
+[ #L #I #d #e #J #H destruct -I /2/
+| #L #K #V #T2 #i #d #e #Hdi #Hide #HLK #HVT2 #I #H destruct -I /3 width=8/
+| #L #I #V1 #V2 #T1 #T2 #d #e #_ #_ #J #H destruct
+| #L #I #V1 #V2 #T1 #T2 #d #e #_ #_ #J #H destruct
 ]
 qed.
 
+lemma tps_inv_atom1: ∀L,T2,I,d,e. L ⊢ 𝕒{I} [d, e] ≫ T2 →
+                     T2 = 𝕒{I} ∨
+                     ∃∃K,V,i. d ≤ i & i < d + e &
+                              ↓[O, i] L ≡ K. 𝕓{Abbr} V &
+                              ↑[O, i + 1] V ≡ T2 &
+                              I = LRef i.
+/2/ qed.
+
+
+(* Basic-1: was: subst1_gen_sort *)
+lemma tps_inv_sort1: ∀L,T2,k,d,e. L ⊢ ⋆k [d, e] ≫ T2 → T2 = ⋆k.
+#L #T2 #k #d #e #H
+elim (tps_inv_atom1 … H) -H //
+* #K #V #i #_ #_ #_ #_ #H destruct
+qed.
+
+(* Basic-1: was: subst1_gen_lref *)
 lemma tps_inv_lref1: ∀L,T2,i,d,e. L ⊢ #i [d, e] ≫ T2 →
                      T2 = #i ∨
                      ∃∃K,V. d ≤ i & i < d + e &
                             ↓[O, i] L ≡ K. 𝕓{Abbr} V &
                             ↑[O, i + 1] V ≡ T2.
-/2/ qed.
+#L #T2 #i #d #e #H
+elim (tps_inv_atom1 … H) -H /2/
+* #K #V #j #Hdj #Hjde #HLK #HVT2 #H destruct -i /3/
+qed.
 
 fact tps_inv_bind1_aux: ∀d,e,L,U1,U2. L ⊢ U1 [d, e] ≫ U2 →
                         ∀I,V1,T1. U1 = 𝕓{I} V1. T1 →
@@ -164,7 +185,7 @@ lemma tps_inv_flat1: ∀d,e,L,I,V1,T1,U2. L ⊢ 𝕗{I} V1. T1 [d, e] ≫ U2 →
                               U2 =  𝕗{I} V2. T2.
 /2/ qed.
 
-fact tps_inv_refl0_aux: ∀L,T1,T2,d,e. L ⊢ T1 [d, e] ≫ T2 → e = 0 → T1 = T2.
+fact tps_inv_refl_O2_aux: ∀L,T1,T2,d,e. L ⊢ T1 [d, e] ≫ T2 → e = 0 → T1 = T2.
 #L #T1 #T2 #d #e #H elim H -H L T1 T2 d e
 [ //
 | #L #K #V #W #i #d #e #Hdi #Hide #_ #_ #H destruct -e;
@@ -175,5 +196,15 @@ fact tps_inv_refl0_aux: ∀L,T1,T2,d,e. L ⊢ T1 [d, e] ≫ T2 → e = 0 → T1 
 ]
 qed.
 
-lemma tps_inv_refl0: ∀L,T1,T2,d. L ⊢ T1 [d, 0] ≫ T2 → T1 = T2.
+lemma tps_inv_refl_O2: ∀L,T1,T2,d. L ⊢ T1 [d, 0] ≫ T2 → T1 = T2.
 /2 width=6/ qed.
+
+(* Basic-1: removed theorems 23:
+            subst0_gen_sort subst0_gen_lref subst0_gen_head subst0_gen_lift_lt
+            subst0_gen_lift_false subst0_gen_lift_ge subst0_refl subst0_trans
+	    subst0_lift_lt subst0_lift_ge subst0_lift_ge_S subst0_lift_ge_s
+            subst0_subst0 subst0_subst0_back subst0_weight_le subst0_weight_lt
+	    subst0_confluence_neq subst0_confluence_eq subst0_tlt_head
+            subst0_confluence_lift subst0_tlt
+            subst1_head subst1_gen_head  
+*)

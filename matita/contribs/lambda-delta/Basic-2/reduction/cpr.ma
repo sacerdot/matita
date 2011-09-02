@@ -67,7 +67,7 @@ qed.
 
 lemma cpr_inv_lsort: ∀T1,T2. ⋆ ⊢ T1 ⇒ T2 → T1 ⇒ T2.
 #T1 #T2 * #T #HT normalize #HT2
-<(tps_inv_refl0 … HT2) -HT2 //
+<(tps_inv_refl_O2 … HT2) -HT2 //
 qed.
 
 (* Basic forward lemmas *****************************************************)

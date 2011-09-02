@@ -185,3 +185,30 @@ lemma tpr_inv_lref2: ∀T1,i. T1 ⇒ #i →
                                   T1 = 𝕔{Abbr} V. T
                       | ∃∃V,T.    T ⇒ #i & T1 = 𝕔{Cast} V. T.
 /2/ qed.
+(*
+pr0/fwd pr0_gen_sort
+pr0/fwd pr0_gen_lref
+pr0/fwd pr0_gen_abst
+pr0/fwd pr0_gen_appl
+pr0/fwd pr0_gen_cast
+pr0/fwd pr0_gen_abbr
+pr0/fwd pr0_gen_void
+pr0/fwd pr0_gen_lift
+pr0/pr0 pr0_confluence__pr0_cong_upsilon_refl
+pr0/pr0 pr0_confluence__pr0_cong_upsilon_cong
+pr0/pr0 pr0_confluence__pr0_cong_upsilon_delta
+pr0/pr0 pr0_confluence__pr0_cong_upsilon_zeta
+pr0/pr0 pr0_confluence__pr0_cong_delta
+pr0/pr0 pr0_confluence__pr0_upsilon_upsilon
+pr0/pr0 pr0_confluence__pr0_delta_delta
+pr0/pr0 pr0_confluence__pr0_delta_tau
+pr0/pr0 pr0_confluence
+pr0/props pr0_lift
+pr0/props pr0_subst0_back
+pr0/props pr0_subst0_fwd
+pr0/props pr0_subst0
+pr0/subst1 pr0_delta1
+pr0/subst1 pr0_subst1_back
+pr0/subst1 pr0_subst1_fwd
+pr0/subst1 pr0_subst1
+*)

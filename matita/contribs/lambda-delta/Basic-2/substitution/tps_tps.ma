@@ -18,30 +18,67 @@ include "Basic-2/substitution/tps_lift.ma".
 
 (* Main properties **********************************************************)
 
-theorem tps_conf: ∀L,T0,T1,d,e. L ⊢ T0 [d, e] ≫ T1 → ∀T2. L ⊢ T0 [d, e] ≫ T2 →
-                  ∃∃T. L ⊢ T1 [d, e] ≫ T & L ⊢ T2 [d, e] ≫ T.
-#L #T0 #T1 #d #e #H elim H -H L T0 T1 d e
+(* Basic-1: was: subst1_confluence_eq *)
+theorem tps_conf_eq: ∀L,T0,T1,d1,e1. L ⊢ T0 [d1, e1] ≫ T1 →
+                     ∀T2,d2,e2. L ⊢ T0 [d2, e2] ≫ T2 →
+                     ∃∃T. L ⊢ T1 [d2, e2] ≫ T & L ⊢ T2 [d1, e1] ≫ T.
+#L #T0 #T1 #d1 #e1 #H elim H -H L T0 T1 d1 e1
 [ /2/
-| #L #K1 #V1 #T1 #i1 #d #e #Hdi1 #Hi1de #HLK1 #HVT1 #T2 #H
+| #L #K1 #V1 #T1 #i0 #d1 #e1 #Hd1 #Hde1 #HLK1 #HVT1 #T2 #d2 #e2 #H
   elim (tps_inv_lref1 … H) -H
   [ #HX destruct -T2 /4/
-  | * #K2 #V2 #_ #_ #HLK2 #HVT2
-    lapply (drop_mono … HLK1 … HLK2) -HLK1 #H destruct -V1 K1
-    >(lift_mono … HVT1 … HVT2) -HVT1 /2/
+  | -Hd1 Hde1 * #K2 #V2 #_ #_ #HLK2 #HVT2
+    lapply (drop_mono … HLK1 … HLK2) -HLK1 HLK2 #H destruct -V1 K1
+    >(lift_mono … HVT1 … HVT2) -HVT1 HVT2 /2/
   ]
-| #L #I #V0 #V1 #T0 #T1 #d #e #_ #_ #IHV01 #IHT01 #X #HX
+| #L #I #V0 #V1 #T0 #T1 #d1 #e1 #_ #_ #IHV01 #IHT01 #X #d2 #e2 #HX
   elim (tps_inv_bind1 … HX) -HX #V2 #T2 #HV02 #HT02 #HX destruct -X;
   elim (IHV01 … HV02) -IHV01 HV02 #V #HV1 #HV2
   elim (IHT01 … HT02) -IHT01 HT02 #T #HT1 #HT2
-  @ex2_1_intro
-  [2: @tps_bind [4: @(tps_leq_repl … HT1) /2/ |2: skip ]
-  |1: skip
-  |3: @tps_bind [2: @(tps_leq_repl … HT2) /2/ ]
-  ] // (**) (* /5/ is too slow *)
-| #L #I #V0 #V1 #T0 #T1 #d #e #_ #_ #IHV01 #IHT01 #X #HX
+  lapply (tps_leq_repl … HT1 (L. 𝕓{I} V1) ?) -HT1 /2/
+  lapply (tps_leq_repl … HT2 (L. 𝕓{I} V2) ?) -HT2 /3 width=5/
+| #L #I #V0 #V1 #T0 #T1 #d1 #e1 #_ #_ #IHV01 #IHT01 #X #d2 #e2 #HX
   elim (tps_inv_flat1 … HX) -HX #V2 #T2 #HV02 #HT02 #HX destruct -X;
   elim (IHV01 … HV02) -IHV01 HV02;
   elim (IHT01 … HT02) -IHT01 HT02 /3 width=5/
+]
+qed.
+
+(* Basic-1: was: subst1_confluence_neq *)
+theorem tps_conf_neq: ∀L1,T0,T1,d1,e1. L1 ⊢ T0 [d1, e1] ≫ T1 →
+                      ∀L2,T2,d2,e2. L2 ⊢ T0 [d2, e2] ≫ T2 →
+                      (d1 + e1 ≤ d2 ∨ d2 + e2 ≤ d1) →
+                      ∃∃T. L2 ⊢ T1 [d2, e2] ≫ T & L1 ⊢ T2 [d1, e1] ≫ T.
+#L1 #T0 #T1 #d1 #e1 #H elim H -H L1 T0 T1 d1 e1
+[ /2/
+| #L1 #K1 #V1 #T1 #i0 #d1 #e1 #Hd1 #Hde1 #HLK1 #HVT1 #L2 #T2 #d2 #e2 #H1 #H2 
+  elim (tps_inv_lref1 … H1) -H1
+  [ #H destruct -T2 /4/
+  | -HLK1 HVT1 * #K2 #V2 #Hd2 #Hde2 #_ #_ elim H2 -H2 #Hded
+    [ -Hd1 Hde2;
+      lapply (transitive_le … Hded Hd2) -Hded Hd2 #H
+      lapply (lt_to_le_to_lt … Hde1 H) -Hde1 H #H
+      elim (lt_refl_false … H)
+    | -Hd2 Hde1;
+      lapply (transitive_le … Hded Hd1) -Hded Hd1 #H
+      lapply (lt_to_le_to_lt … Hde2 H) -Hde2 H #H
+      elim (lt_refl_false … H)
+    ]
+  ]
+| #L1 #I #V0 #V1 #T0 #T1 #d1 #e1 #_ #_ #IHV01 #IHT01 #L2 #X #d2 #e2 #HX #H
+  elim (tps_inv_bind1 … HX) -HX #V2 #T2 #HV02 #HT02 #HX destruct -X;
+  elim (IHV01 … HV02 H) -IHV01 HV02 #V #HV1 #HV2
+  elim (IHT01 … HT02 ?) -IHT01 HT02
+  [ -H #T #HT1 #HT2
+    lapply (tps_leq_repl … HT1 (L2. 𝕓{I} V1) ?) -HT1 /2/
+    lapply (tps_leq_repl … HT2 (L1. 𝕓{I} V2) ?) -HT2 /3 width=5/
+  | -HV1 HV2 >plus_plus_comm_23 >plus_plus_comm_23 in ⊢ (? ? %) elim H -H #H
+    [ @or_introl | @or_intror ] /2 by monotonic_le_plus_l/ (**) (* /3/ is too slow *)
+  ]
+| #L1 #I #V0 #V1 #T0 #T1 #d1 #e1 #_ #_ #IHV01 #IHT01 #L2 #X #d2 #e2 #HX #H
+  elim (tps_inv_flat1 … HX) -HX #V2 #T2 #HV02 #HT02 #HX destruct -X;
+  elim (IHV01 … HV02 H) -IHV01 HV02;
+  elim (IHT01 … HT02 H) -IHT01 HT02 H /3 width=5/
 ]
 qed.
 

@@ -17,7 +17,7 @@ include "Basic-2/grammar/lenv.ma".
 (* SHIFT OF A CLOSURE *******************************************************)
 
 let rec shift L T on L ≝ match L with
-[ LSort       ⇒ T
+[ LAtom       ⇒ T
 | LPair L I V ⇒ shift L (𝕓{I} V. T)
 ].
 

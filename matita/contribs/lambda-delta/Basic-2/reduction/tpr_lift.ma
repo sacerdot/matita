@@ -102,7 +102,7 @@ fact tpr_inv_abst1_aux: ∀U1,U2. U1 ⇒ U2 → ∀V1,T1. U1 = 𝕔{Abst} V1. T1
 | #I #V1 #V2 #T1 #T2 #_ #_ #V #T #H destruct
 | #V1 #V2 #W #T1 #T2 #_ #_ #V #T #H destruct
 | #I #V1 #V2 #T1 #T2 #T #HV12 #HT12 #HT2 #V0 #T0 #H destruct -I V1 T1;
-  <(tps_inv_refl1 … HT2 ? ? ?) -HT2 T /2 width=5/
+  <(tps_inv_refl_SO2 … HT2 ? ? ?) -HT2 T /2 width=5/
 | #V #V1 #V2 #W1 #W2 #T1 #T2 #_ #_ #_ #_ #V0 #T0 #H destruct
 | #V #T #T1 #T2 #_ #_ #V0 #T0 #H destruct
 | #V #T1 #T2 #_ #V0 #T0 #H destruct

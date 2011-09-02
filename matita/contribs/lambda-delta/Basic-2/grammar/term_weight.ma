@@ -28,3 +28,9 @@ interpretation "weight (term)" 'Weight T = (tw T).
 axiom tw_wf_ind: ∀R:term→Prop.
                  (∀T2. (∀T1. #[T1] < #[T2] → R T1) → R T2) →
                  ∀T. R T.
+
+(* Basic-1: removed theorems 11:
+            wadd_le wadd_lt wadd_O weight_le weight_eq weight_add_O
+	    weight_add_S tlt_trans tlt_head_sx tlt_head_dx tlt_wf_ind
+            removed local theorems 1: q_ind
+*)

@@ -17,7 +17,7 @@ include "Basic-2/grammar/lenv.ma".
 (* LENGTH OF A LOCAL ENVIRONMENT ********************************************)
 
 let rec length L ≝ match L with
-[ LSort       ⇒ 0
+[ LAtom       ⇒ 0
 | LPair L _ _ ⇒ length L + 1
 ].
 

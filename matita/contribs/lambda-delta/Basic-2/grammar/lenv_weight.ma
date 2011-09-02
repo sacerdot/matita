@@ -18,8 +18,10 @@ include "Basic-2/grammar/lenv.ma".
 (* WEIGHT OF A LOCAL ENVIRONMENT ********************************************)
 
 let rec lw L ≝ match L with
-[ LSort       ⇒ 0
+[ LAtom       ⇒ 0
 | LPair L _ V ⇒ lw L + #[V]
 ].
 
 interpretation "weight (local environment)" 'Weight L = (lw L).
+
+(* Basic-1: removed theorems 2: clt_cong clt_head *)

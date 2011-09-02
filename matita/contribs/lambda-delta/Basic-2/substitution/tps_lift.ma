@@ -179,8 +179,8 @@ qed.
 
 (* Advanced inversion lemmas ************************************************)
 
-fact tps_inv_refl1_aux: ∀L,T1,T2,d,e. L ⊢ T1 [d, e] ≫ T2 → e = 1 →
-                        ∀K,V. ↓[0, d] L ≡ K. 𝕓{Abst} V → T1 = T2.
+fact tps_inv_refl_SO2_aux: ∀L,T1,T2,d,e. L ⊢ T1 [d, e] ≫ T2 → e = 1 →
+                           ∀K,V. ↓[0, d] L ≡ K. 𝕓{Abst} V → T1 = T2.
 #L #T1 #T2 #d #e #H elim H -H L T1 T2 d e
 [ //
 | #L #K0 #V0 #W #i #d #e #Hdi #Hide #HLK0 #_ #H destruct -e;
@@ -193,6 +193,6 @@ fact tps_inv_refl1_aux: ∀L,T1,T2,d,e. L ⊢ T1 [d, e] ≫ T2 → e = 1 →
 ]
 qed.
 
-lemma tps_inv_refl1: ∀L,T1,T2,d. L ⊢ T1 [d, 1] ≫ T2 →
-                     ∀K,V. ↓[0, d] L ≡ K. 𝕓{Abst} V → T1 = T2.
+lemma tps_inv_refl_SO2: ∀L,T1,T2,d. L ⊢ T1 [d, 1] ≫ T2 →
+                        ∀K,V. ↓[0, d] L ≡ K. 𝕓{Abst} V → T1 = T2.
 /2 width=8/ qed.

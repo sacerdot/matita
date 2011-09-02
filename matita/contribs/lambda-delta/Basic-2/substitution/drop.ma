@@ -203,11 +203,17 @@ lemma drop_fwd_O1_length: ∀L1,L2,e. ↓[0, e] L1 ≡ L2 → |L2| = |L1| - e.
 ]
 qed.
 
-(* Basic-1: removed theorems 18:
+(* Basic-1: removed theorems 49:
             drop_skip_flat
             cimp_flat_sx cimp_flat_dx cimp_bind cimp_getl_conf
             drop_clear drop_clear_O drop_clear_S
             clear_gen_sort clear_gen_bind clear_gen_flat clear_gen_flat_r
-            clear_gen_all clear_clear clear_mono clear_trans clear_ctail
-            clear_cle
+            clear_gen_all clear_clear clear_mono clear_trans clear_ctail clear_cle
+            getl_ctail_clen getl_gen_tail clear_getl_trans getl_clear_trans
+            getl_clear_bind getl_clear_conf getl_dec getl_drop getl_drop_conf_lt
+            getl_drop_conf_ge getl_conf_ge_drop getl_drop_conf_rev
+            drop_getl_trans_lt drop_getl_trans_le drop_getl_trans_ge
+            getl_drop_trans getl_flt getl_gen_all getl_gen_sort getl_gen_O
+            getl_gen_S getl_gen_2 getl_gen_flat getl_gen_bind getl_conf_le
+            getl_trans getl_refl getl_head getl_flat getl_ctail getl_mono
 *)
