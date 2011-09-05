@@ -44,7 +44,8 @@ lemma cpr_bind_dx: ∀I,L,V1,V2,T1,T2. V1 ⇒ V2 → L. 𝕓{I} V2 ⊢ T1 ⇒ T2
                    L ⊢ 𝕓{I} V1. T1 ⇒ 𝕓{I} V2. T2.
 #I #L #V1 #V2 #T1 #T2 #HV12 * #T #HT1 normalize #HT2
 elim (tps_split_up … HT2 1 ? ?) -HT2 // #T0 <minus_n_O #HT0 normalize <minus_plus_m_m #HT02
-lapply (tps_leq_repl … HT0 (⋆. 𝕓{I} V2) ?) -HT0 /2/ #HT0 /3 width=5/
+lapply (tps_leq_repl_dx … HT0 (⋆. 𝕓{I} V2) ?) -HT0 /2/ #HT0
+/3 width=5/
 qed.
 
 (* NOTE: new property *)

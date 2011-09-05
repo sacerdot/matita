@@ -21,7 +21,7 @@ inductive tps: lenv → term → nat → nat → term → Prop ≝
 | tps_subst: ∀L,K,V,W,i,d,e. d ≤ i → i < d + e →
              ↓[0, i] L ≡ K. 𝕓{Abbr} V → ↑[0, i + 1] V ≡ W → tps L (#i) d e W
 | tps_bind : ∀L,I,V1,V2,T1,T2,d,e.
-             tps L V1 d e V2 → tps (L. 𝕓{I} V1) T1 (d + 1) e T2 →
+             tps L V1 d e V2 → tps (L. 𝕓{I} V2) T1 (d + 1) e T2 →
              tps L (𝕓{I} V1. T1) d e (𝕓{I} V2. T2)
 | tps_flat : ∀L,I,V1,V2,T1,T2,d,e.
              tps L V1 d e V2 → tps L T1 d e T2 →
@@ -33,8 +33,8 @@ interpretation "parallel substritution (term)"
 
 (* Basic properties *********************************************************)
 
-lemma tps_leq_repl: ∀L1,T1,T2,d,e. L1 ⊢ T1 [d, e] ≫ T2 →
-                    ∀L2. L1 [d, e] ≈ L2 → L2 ⊢ T1 [d, e] ≫ T2.
+lemma tps_leq_repl_dx: ∀L1,T1,T2,d,e. L1 ⊢ T1 [d, e] ≫ T2 →
+                       ∀L2. L1 [d, e] ≈ L2 → L2 ⊢ T1 [d, e] ≫ T2.
 #L1 #T1 #T2 #d #e #H elim H -H L1 T1 T2 d e
 [ //
 | #L1 #K1 #V #W #i #d #e #Hdi #Hide #HLK1 #HVW #L2 #HL12
@@ -98,8 +98,7 @@ lemma tps_split_up: ∀L,T1,T2,d,e. L ⊢ T1 [d, e] ≫ T2 → ∀i. d ≤ i →
   elim (IHV12 i ? ?) -IHV12 // #V #HV1 #HV2
   elim (IHT12 (i + 1) ? ?) -IHT12 [2: /2 by arith4/ |3: /2/ ] (* just /2/ is too slow *)
   -Hdi Hide >arith_c1 >arith_c1x #T #HT1 #HT2
-  @ex2_1_intro [2,3: @tps_bind | skip ] (**) (* explicit constructors *)
-  [3: @HV1 |4: @HT1 |5: // |1,2: skip | /3 width=5/ ]
+  lapply (tps_leq_repl_dx … HT1 (L. 𝕓{I} V) ?) -HT1 /3 width=5/
 | #L #I #V1 #V2 #T1 #T2 #d #e #_ #_ #IHV12 #IHT12 #i #Hdi #Hide
   elim (IHV12 i ? ?) -IHV12 // elim (IHT12 i ? ?) -IHT12 //
   -Hdi Hide /3 width=5/
@@ -152,7 +151,7 @@ qed.
 fact tps_inv_bind1_aux: ∀d,e,L,U1,U2. L ⊢ U1 [d, e] ≫ U2 →
                         ∀I,V1,T1. U1 = 𝕓{I} V1. T1 →
                         ∃∃V2,T2. L ⊢ V1 [d, e] ≫ V2 & 
-                                 L. 𝕓{I} V1 ⊢ T1 [d + 1, e] ≫ T2 &
+                                 L. 𝕓{I} V2 ⊢ T1 [d + 1, e] ≫ T2 &
                                  U2 =  𝕓{I} V2. T2.
 #d #e #L #U1 #U2 * -d e L U1 U2
 [ #L #k #d #e #I #V1 #T1 #H destruct
@@ -164,7 +163,7 @@ qed.
 
 lemma tps_inv_bind1: ∀d,e,L,I,V1,T1,U2. L ⊢ 𝕓{I} V1. T1 [d, e] ≫ U2 →
                      ∃∃V2,T2. L ⊢ V1 [d, e] ≫ V2 & 
-                              L. 𝕓{I} V1 ⊢ T1 [d + 1, e] ≫ T2 &
+                              L. 𝕓{I} V2 ⊢ T1 [d + 1, e] ≫ T2 &
                               U2 =  𝕓{I} V2. T2.
 /2/ qed.
 
@@ -202,9 +201,9 @@ lemma tps_inv_refl_O2: ∀L,T1,T2,d. L ⊢ T1 [d, 0] ≫ T2 → T1 = T2.
 (* Basic-1: removed theorems 23:
             subst0_gen_sort subst0_gen_lref subst0_gen_head subst0_gen_lift_lt
             subst0_gen_lift_false subst0_gen_lift_ge subst0_refl subst0_trans
-	    subst0_lift_lt subst0_lift_ge subst0_lift_ge_S subst0_lift_ge_s
+	          subst0_lift_lt subst0_lift_ge subst0_lift_ge_S subst0_lift_ge_s
             subst0_subst0 subst0_subst0_back subst0_weight_le subst0_weight_lt
-	    subst0_confluence_neq subst0_confluence_eq subst0_tlt_head
+	          subst0_confluence_neq subst0_confluence_eq subst0_tlt_head
             subst0_confluence_lift subst0_tlt
             subst1_head subst1_gen_head  
 *)

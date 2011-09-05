@@ -85,8 +85,9 @@ lemma tps_inv_lift1_le: ∀L,U1,U2,dt,et. L ⊢ U1 [dt, et] ≫ U2 →
   elim (lift_trans_le … HUV … HVW ?) -HUV HVW V // >arith_a2 // -Hid /3/
 | #L #I #V1 #V2 #U1 #U2 #dt #et #_ #_ #IHV12 #IHU12 #K #d #e #HLK #X #H #Hdetd
   elim (lift_inv_bind2 … H) -H #W1 #T1 #HWV1 #HTU1 #H destruct -X;
-  elim (IHV12 … HLK … HWV1 ?) -IHV12 //
-  elim (IHU12 … HTU1 ?) -IHU12 HTU1 [3: /2/ |4: @drop_skip // |2: skip ] -HLK HWV1 Hdetd /3 width=5/ (**) (* just /3 width=5/ is too slow *)
+  elim (IHV12 … HLK … HWV1 ?) -IHV12 HWV1 // #W2 #HW12 #HWV2
+  elim (IHU12 … HTU1 ?) -IHU12 HTU1 [3: /2/ |4: @drop_skip // |2: skip ] -HLK Hdetd (**) (* /3 width=5/ is too slow *)
+  /3 width=5/
 | #L #I #V1 #V2 #U1 #U2 #dt #et #_ #_ #IHV12 #IHU12 #K #d #e #HLK #X #H #Hdetd
   elim (lift_inv_flat2 … H) -H #W1 #T1 #HWV1 #HTU1 #H destruct -X;
   elim (IHV12 … HLK … HWV1 ?) -IHV12 HWV1 //
@@ -118,7 +119,7 @@ lemma tps_inv_lift1_ge: ∀L,U1,U2,dt,et. L ⊢ U1 [dt, et] ≫ U2 →
 | #L #I #V1 #V2 #U1 #U2 #dt #et #_ #_ #IHV12 #IHU12 #K #d #e #HLK #X #H #Hdetd
   elim (lift_inv_bind2 … H) -H #W1 #T1 #HWV1 #HTU1 #H destruct -X;
   lapply (plus_le_weak … Hdetd) #Hedt
-  elim (IHV12 … HLK … HWV1 ?) -IHV12 // #W2 #HW12 #HWV2
+  elim (IHV12 … HLK … HWV1 ?) -IHV12 HWV1 // #W2 #HW12 #HWV2
   elim (IHU12 … HTU1 ?) -IHU12 HTU1 [4: @drop_skip // |2: skip |3: /2/ ]
   <plus_minus // /3 width=5/
 | #L #I #V1 #V2 #U1 #U2 #dt #et #_ #_ #IHV12 #IHU12 #K #d #e #HLK #X #H #Hdetd
