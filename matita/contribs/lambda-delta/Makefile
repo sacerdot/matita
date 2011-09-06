@@ -54,7 +54,7 @@ stats: $(PACKAGES:%=%.stats)
 	@printf '\e[0m\n'
 	@printf '\e[1;40;31m'
 	@printf '%-8s %6i' Axioms `grep axiom $(MAS) | wc -l`
-	@printf '   %-8s %5i' Comments `grep "(\*[^*]*$$" $(MAS) | wc -l`
+	@printf '   %-8s %5i' Comments `grep "(\*[^*:]*$$" $(MAS) | wc -l`
 	@printf '   %-6s %3i' Marks `grep "(\*\*)" $(MAS) | wc -l`
 	@printf '   %-10s' ''
 	@printf '\e[0m\n'

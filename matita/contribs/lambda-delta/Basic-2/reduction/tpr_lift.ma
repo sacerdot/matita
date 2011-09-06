@@ -17,6 +17,7 @@ include "Basic-2/reduction/tpr.ma".
 
 (* Relocation properties ****************************************************)
 
+(* Basic-1: was: pr0_lift *)
 lemma tpr_lift: ∀T1,T2. T1 ⇒ T2 →
                 ∀d,e,U1. ↑[d, e] T1 ≡ U1 → ∀U2. ↑[d, e] T2 ≡ U2 → U1 ⇒ U2.
 #T1 #T2 #H elim H -H T1 T2
@@ -52,6 +53,7 @@ lemma tpr_lift: ∀T1,T2. T1 ⇒ T2 →
 ]
 qed.
 
+(* Basic-1: was: pr0_gen_lift *)
 lemma tpr_inv_lift: ∀T1,T2. T1 ⇒ T2 →
                     ∀d,e,U1. ↑[d, e] U1 ≡ T1 →
                     ∃∃U2. ↑[d, e] U2 ≡ T2 & U1 ⇒ U2.
@@ -109,6 +111,7 @@ fact tpr_inv_abst1_aux: ∀U1,U2. U1 ⇒ U2 → ∀V1,T1. U1 = 𝕔{Abst} V1. T1
 ]
 qed.
 
+(* Basic-1: was pr0_gen_abst *)
 lemma tpr_inv_abst1: ∀V1,T1,U2. 𝕔{Abst} V1. T1 ⇒ U2 →
                      ∃∃V2,T2. V1 ⇒ V2 & T1 ⇒ T2 & U2 = 𝕔{Abst} V2. T2.
 /2/ qed.

@@ -112,7 +112,7 @@ lemma ltps_drop_conf_le: ∀L0,L1,d1,e1. L0 [d1, e1] ≫ L1 →
 ]
 qed.
 
-lemma ltps_trans_conf_le: ∀L1,L0,d1,e1. L1 [d1, e1] ≫ L0 →
+lemma ltps_drop_trans_le: ∀L1,L0,d1,e1. L1 [d1, e1] ≫ L0 →
                           ∀L2,e2. ↓[0, e2] L0 ≡ L2 → e2 ≤ d1 →
                           ∃∃L. L [d1 - e2, e1] ≫ L2 & ↓[0, e2] L1 ≡ L.
 #L1 #L0 #d1 #e1 #H elim H -H L1 L0 d1 e1

@@ -201,9 +201,9 @@ lemma tps_inv_refl_O2: ∀L,T1,T2,d. L ⊢ T1 [d, 0] ≫ T2 → T1 = T2.
 (* Basic-1: removed theorems 23:
             subst0_gen_sort subst0_gen_lref subst0_gen_head subst0_gen_lift_lt
             subst0_gen_lift_false subst0_gen_lift_ge subst0_refl subst0_trans
-	          subst0_lift_lt subst0_lift_ge subst0_lift_ge_S subst0_lift_ge_s
+            subst0_lift_lt subst0_lift_ge subst0_lift_ge_S subst0_lift_ge_s
             subst0_subst0 subst0_subst0_back subst0_weight_le subst0_weight_lt
-	          subst0_confluence_neq subst0_confluence_eq subst0_tlt_head
+            subst0_confluence_neq subst0_confluence_eq subst0_tlt_head
             subst0_confluence_lift subst0_tlt
             subst1_head subst1_gen_head  
 *)

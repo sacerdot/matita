@@ -252,7 +252,10 @@ pc3/subst1 pc3_gen_cabbr
 pc3/wcpr0 pc3_wcpr0__pc3_wcpr0_t_aux
 pc3/wcpr0 pc3_wcpr0_t
 pc3/wcpr0 pc3_wcpr0
+pr0/fwd pr0_gen_void
 pr0/dec nf0_dec
+pr0/subst1 pr0_subst1_back
+pr0/subst1 pr0_subst1_fwd
 pr1/pr1 pr1_strip
 pr1/pr1 pr1_confluence
 pr1/props pr1_pr0

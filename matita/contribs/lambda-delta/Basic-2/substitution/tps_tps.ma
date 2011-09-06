@@ -83,6 +83,30 @@ theorem tps_conf_neq: ∀L1,T0,T1,d1,e1. L1 ⊢ T0 [d1, e1] ≫ T1 →
 ]
 qed.
 
+(* Note: the constant 1 comes from tps_subst *)
+theorem tps_trans_ge: ∀L,T1,T0,d,e. L ⊢ T1 [d, e] ≫ T0 →
+                      ∀T2. L ⊢ T0 [d, 1] ≫ T2 → 1 ≤ e →
+                      L ⊢ T1 [d, e] ≫ T2.
+#L #T1 #T0 #d #e #H elim H -L T1 T0 d e
+[ #L #I #d #e #T2 #H #He
+  elim (tps_inv_atom1 … H) -H
+  [ #H destruct -T2 //
+  | * #K #V #i #Hd2i #Hide2 #HLK #HVT2 #H destruct -I;
+    lapply (lt_to_le_to_lt … (d + e) Hide2 ?) /2/
+  ]
+| #L #K #V #V2 #i #d #e #Hdi #Hide #HLK #HVW #T2 #HVT2 #He
+  lapply (tps_weak … HVT2 0 (i +1) ? ?) -HVT2 /2/ #HVT2
+  <(tps_inv_lift1_eq … HVT2 … HVW) -HVT2 /2/
+| #L #I #V1 #V0 #T1 #T0 #d #e #_ #_ #IHV10 #IHT10 #X #H #He
+  elim (tps_inv_bind1 … H) -H #V2 #T2 #HV02 #HT02 #H destruct -X;
+  lapply (tps_leq_repl_dx … HT02 (L. 𝕓{I} V0) ?) -HT02 /2/ #HT02
+  lapply (IHT10 … HT02 He) -IHT10 HT02 #HT12
+  lapply (tps_leq_repl_dx … HT12 (L. 𝕓{I} V2) ?) -HT12 /3/
+| #L #I #V1 #V0 #T1 #T0 #d #e #_ #_ #IHV10 #IHT10 #X #H #He
+  elim (tps_inv_flat1 … H) -H #V2 #T2 #HV02 #HT02 #H destruct -X /3/
+]
+qed.
+
 theorem tps_trans_down: ∀L,T1,T0,d1,e1. L ⊢ T1 [d1, e1] ≫ T0 →
                         ∀T2,d2,e2. L ⊢ T0 [d2, e2] ≫ T2 → d2 + e2 ≤ d1 →
                         ∃∃T. L ⊢ T1 [d2, e2] ≫ T & L ⊢ T [d1, e1] ≫ T2.
