@@ -19,6 +19,7 @@ include "Basic-2/substitution/tps.ma".
 
 (* Relocation properties ****************************************************)
 
+(* Basic-1: was: subst1_lift_lt *)
 lemma tps_lift_le: ∀K,T1,T2,dt,et. K ⊢ T1 [dt, et] ≫ T2 →
                    ∀L,U1,U2,d,e. ↓[d, e] L ≡ K →
                    ↑[d, e] T1 ≡ U1 → ↑[d, e] T2 ≡ U2 →
@@ -45,6 +46,7 @@ lemma tps_lift_le: ∀K,T1,T2,dt,et. K ⊢ T1 [dt, et] ≫ T2 →
 ]
 qed.
 
+(* Basic-1: was: subst1_lift_ge *)
 lemma tps_lift_ge: ∀K,T1,T2,dt,et. K ⊢ T1 [dt, et] ≫ T2 →
                    ∀L,U1,U2,d,e. ↓[d, e] L ≡ K →
                    ↑[d, e] T1 ≡ U1 → ↑[d, e] T2 ≡ U2 →
@@ -69,6 +71,7 @@ lemma tps_lift_ge: ∀K,T1,T2,dt,et. K ⊢ T1 [dt, et] ≫ T2 →
 ]
 qed.
 
+(* Basic-1: was: subst1_gen_lift_lt *)
 lemma tps_inv_lift1_le: ∀L,U1,U2,dt,et. L ⊢ U1 [dt, et] ≫ U2 →
                         ∀K,d,e. ↓[d, e] L ≡ K → ∀T1. ↑[d, e] T1 ≡ U1 →
                         dt + et ≤ d →
@@ -95,6 +98,7 @@ lemma tps_inv_lift1_le: ∀L,U1,U2,dt,et. L ⊢ U1 [dt, et] ≫ U2 →
 ]
 qed.
 
+(* Basic-1: was: subst1_gen_lift_ge *)
 lemma tps_inv_lift1_ge: ∀L,U1,U2,dt,et. L ⊢ U1 [dt, et] ≫ U2 →
                         ∀K,d,e. ↓[d, e] L ≡ K → ∀T1. ↑[d, e] T1 ≡ U1 →
                         d + e ≤ dt →
@@ -129,6 +133,7 @@ lemma tps_inv_lift1_ge: ∀L,U1,U2,dt,et. L ⊢ U1 [dt, et] ≫ U2 →
 ]
 qed.
 
+(* Basic-1: was: subst1_gen_lift_eq *)
 lemma tps_inv_lift1_eq: ∀L,U1,U2,d,e.
                         L ⊢ U1 [d, e] ≫ U2 → ∀T1. ↑[d, e] T1 ≡ U1 → U1 = U2.
 #L #U1 #U2 #d #e #H elim H -H L U1 U2 d e
@@ -149,10 +154,6 @@ lemma tps_inv_lift1_eq: ∀L,U1,U2,d,e.
 ]
 qed.
 (*
-      Theorem subst0_gen_lift_ge : (u,t1,x:?; i,h,d:?) (subst0 i u (lift h d t1) x) ->
-                                   (le (plus d h) i) ->
-                                   (EX t2 | x = (lift h d t2) & (subst0 (minus i h) u t1 t2)).
-
       Theorem subst0_gen_lift_rev_ge: (t1,v,u2:?; i,h,d:?) 
                                       (subst0 i v t1 (lift h d u2)) ->
                                       (le (plus d h) i) ->

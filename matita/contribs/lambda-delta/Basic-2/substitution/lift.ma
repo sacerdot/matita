@@ -19,19 +19,19 @@ include "Basic-2/grammar/term_weight.ma".
 (* Basic-1: includes:
             lift_sort lift_lref_lt lift_lref_ge lift_bind lift_flat
 *)
-inductive lift: term → nat → nat → term → Prop ≝
-| lift_sort   : ∀k,d,e. lift (⋆k) d e (⋆k)
-| lift_lref_lt: ∀i,d,e. i < d → lift (#i) d e (#i)
-| lift_lref_ge: ∀i,d,e. d ≤ i → lift (#i) d e (#(i + e))
+inductive lift: nat → nat → relation term ≝
+| lift_sort   : ∀k,d,e. lift d e (⋆k) (⋆k)
+| lift_lref_lt: ∀i,d,e. i < d → lift d e (#i) (#i)
+| lift_lref_ge: ∀i,d,e. d ≤ i → lift d e (#i) (#(i + e))
 | lift_bind   : ∀I,V1,V2,T1,T2,d,e.
-                lift V1 d e V2 → lift T1 (d + 1) e T2 →
-                lift (𝕓{I} V1. T1) d e (𝕓{I} V2. T2)
+                lift d e V1 V2 → lift (d + 1) e T1 T2 →
+                lift d e (𝕓{I} V1. T1) (𝕓{I} V2. T2)
 | lift_flat   : ∀I,V1,V2,T1,T2,d,e.
-                lift V1 d e V2 → lift T1 d e T2 →
-                lift (𝕗{I} V1. T1) d e (𝕗{I} V2. T2)
+                lift d e V1 V2 → lift d e T1 T2 →
+                lift d e (𝕗{I} V1. T1) (𝕗{I} V2. T2)
 .
 
-interpretation "relocation" 'RLift T1 d e T2 = (lift T1 d e T2).
+interpretation "relocation" 'RLift d e T1 T2 = (lift d e T1 T2).
 
 (* Basic properties *********************************************************)
 

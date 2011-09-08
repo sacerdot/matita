@@ -17,7 +17,7 @@ include "Basic-2/substitution/tps.ma".
 (* CONTEXT-FREE PARALLEL REDUCTION ON TERMS *********************************)
 
 (* Basic-1: includes: pr0_delta1 *)
-inductive tpr: term → term → Prop ≝
+inductive tpr: relation term ≝
 | tpr_atom : ∀I. tpr (𝕒{I}) (𝕒{I})
 | tpr_flat : ∀I,V1,V2,T1,T2. tpr V1 V2 → tpr T1 T2 →
              tpr (𝕗{I} V1. T1) (𝕗{I} V2. T2)

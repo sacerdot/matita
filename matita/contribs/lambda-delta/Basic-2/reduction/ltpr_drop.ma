@@ -22,8 +22,7 @@ lemma ltpr_drop_conf: ∀L1,K1,d,e. ↓[d, e] L1 ≡ K1 → ∀L2. L1 ⇒ L2 →
                       ∃∃K2. ↓[d, e] L2 ≡ K2 & K1 ⇒ K2.
 #L1 #K1 #d #e #H elim H -H L1 K1 d e
 [ #d #e #X #H >(ltpr_inv_atom1 … H) -H /2/
-| #L1 #K1 #I #V1 #HLK1 #_ #X #H
-  <(drop_inv_refl … HLK1) -HLK1 K1;
+| #K1 #I #V1 #X #H
   elim (ltpr_inv_pair1 … H) -H #L2 #V2 #HL12 #HV12 #H destruct /3 width=5/
 | #L1 #K1 #I #V1 #e #_ #IHLK1 #X #H
   elim (ltpr_inv_pair1 … H) -H #L2 #V2 #HL12 #HV12 #H destruct -X;
@@ -40,8 +39,7 @@ lemma ltpr_drop_trans: ∀L1,K1,d,e. ↓[d, e] L1 ≡ K1 → ∀K2. K1 ⇒ K2 �
                        ∃∃L2. ↓[d, e] L2 ≡ K2 & L1 ⇒ L2.
 #L1 #K1 #d #e #H elim H -H L1 K1 d e
 [ #d #e #X #H >(ltpr_inv_atom1 … H) -H /2/
-| #L1 #K1 #I #V1 #HLK1 #_ #X #H
-  >(drop_inv_refl … HLK1) -HLK1 L1;
+| #K1 #I #V1 #X #H
   elim (ltpr_inv_pair1 … H) -H #K2 #V2 #HK12 #HV12 #H destruct /3 width=5/
 | #L1 #K1 #I #V1 #e #_ #IHLK1 #K2 #HK12
   elim (IHLK1 … HK12) -IHLK1 HK12 /3 width=5/

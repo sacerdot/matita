@@ -24,9 +24,8 @@ theorem drop_mono: ∀d,e,L,L1. ↓[d, e] L ≡ L1 →
                    ∀L2. ↓[d, e] L ≡ L2 → L1 = L2.
 #d #e #L #L1 #H elim H -H d e L L1
 [ #d #e #L2 #H
-  >(drop_inv_sort1 … H) -H L2 //
-| #K1 #K2 #I #V #HK12 #_ #L2 #HL12
-   <(drop_inv_refl … HK12) -HK12 K2
+  >(drop_inv_atom1 … H) -H L2 //
+| #K #I #V #L2 #HL12
    <(drop_inv_refl … HL12) -HL12 L2 //
 | #L #K #I #V #e #_ #IHLK #L2 #H
   lapply (drop_inv_drop1 … H ?) -H /2/
@@ -43,9 +42,8 @@ theorem drop_conf_ge: ∀d1,e1,L,L1. ↓[d1, e1] L ≡ L1 →
                       ↓[0, e2 - e1] L1 ≡ L2.
 #d1 #e1 #L #L1 #H elim H -H d1 e1 L L1
 [ #d #e #e2 #L2 #H
-  >(drop_inv_sort1 … H) -H L2 //
-| #K1 #K2 #I #V #HK12 #_ #e2 #L2 #H #_ <minus_n_O
-   <(drop_inv_refl … HK12) -HK12 K2 //
+  >(drop_inv_atom1 … H) -H L2 //
+| //
 | #L #K #I #V #e #_ #IHLK #e2 #L2 #H #He2
   lapply (drop_inv_drop1 … H ?) -H /2/ #HL2
   <minus_plus_comm /3/
@@ -65,8 +63,8 @@ theorem drop_conf_lt: ∀d1,e1,L,L1. ↓[d1, e1] L ≡ L1 →
                                ↓[d, e1] K2 ≡ K1 & ↑[d, e1] V1 ≡ V2.
 #d1 #e1 #L #L1 #H elim H -H d1 e1 L L1
 [ #d #e #e2 #K2 #I #V2 #H
-  lapply (drop_inv_sort1 … H) -H #H destruct
-| #L1 #L2 #I #V #_ #_ #e2 #K2 #J #V2 #_ #H
+  lapply (drop_inv_atom1 … H) -H #H destruct
+| #L #I #V #e2 #K2 #J #V2 #_ #H
   elim (lt_zero_false … H)
 | #L1 #L2 #I #V #e #_ #_ #e2 #K2 #J #V2 #_ #H
   elim (lt_zero_false … H)
@@ -85,9 +83,8 @@ theorem drop_trans_le: ∀d1,e1,L1,L. ↓[d1, e1] L1 ≡ L →
                        ∃∃L0. ↓[0, e2] L1 ≡ L0 & ↓[d1 - e2, e1] L0 ≡ L2.
 #d1 #e1 #L1 #L #H elim H -H d1 e1 L1 L
 [ #d #e #e2 #L2 #H
-  >(drop_inv_sort1 … H) -H L2 /2/
-| #K1 #K2 #I #V #HK12 #_ #e2 #L2 #HL2 #H
-  >(drop_inv_refl … HK12) -HK12 K1;
+  >(drop_inv_atom1 … H) -H L2 /2/
+| #K #I #V #e2 #L2 #HL2 #H
   lapply (le_O_to_eq_O … H) -H #H destruct -e2 /2/
 | #L1 #L2 #I #V #e #_ #IHL12 #e2 #L #HL2 #H
   lapply (le_O_to_eq_O … H) -H #H destruct -e2;
@@ -108,9 +105,8 @@ theorem drop_trans_ge: ∀d1,e1,L1,L. ↓[d1, e1] L1 ≡ L →
                        ∀e2,L2. ↓[0, e2] L ≡ L2 → d1 ≤ e2 → ↓[0, e1 + e2] L1 ≡ L2.
 #d1 #e1 #L1 #L #H elim H -H d1 e1 L1 L
 [ #d #e #e2 #L2 #H
-  >(drop_inv_sort1 … H) -H L2 //
-| #K1 #K2 #I #V #HK12 #_ #e2 #L2 #H #_ normalize
-  >(drop_inv_refl … HK12) -HK12 K1 //
+  >(drop_inv_atom1 … H) -H L2 //
+| //
 | /3/
 | #L1 #L2 #I #V1 #V2 #d #e #H_ #_ #IHL12 #e2 #L #H #Hde2
   lapply (lt_to_le_to_lt 0 … Hde2) // #He2

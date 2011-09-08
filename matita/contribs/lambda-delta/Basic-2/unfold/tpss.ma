@@ -12,30 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic-2/reduction/cpr.ma".
+include "Basic-2/substitution/tps.ma".
 
-(* CONTEXT-SENSITIVE PARALLEL REDUCTION ON LOCAL ENVIRONMENTS *************)
+(* PARTIAL UNFOLD ON TERMS **************************************************)
 
-inductive lcpr: relation lenv ≝
-| lcpr_sort: lcpr (⋆) (⋆)
-| lcpr_item: ∀K1,K2,I,V1,V2.
-             lcpr K1 K2 → K2 ⊢ V1 ⇒ V2 → lcpr (K1. 𝕓{I} V1) (K2. 𝕓{I} V2) (*𝕓*)
-.
+definition tpss: nat → nat → lenv → relation term ≝
+                 λd,e,L. TC … (tps d e L).
 
-interpretation
-  "context-sensitive parallel reduction (environment)"
-  'CPRed L1 L2 = (lcpr L1 L2).
+interpretation "partial unfold (term)"
+   'PSubstStar L T1 d e T2 = (tpss d e L T1 T2).
 
-(* Basic inversion lemmas ***************************************************)
+(* Basic properties *********************************************************)
 
-fact lcpr_inv_item1_aux: ∀L1,L2. L1 ⊢ ⇒ L2 → ∀K1,I,V1. L1 = K1. 𝕓{I} V1 →
-                         ∃∃K2,V2. K1 ⊢ ⇒ K2 & K2 ⊢ V1 ⇒ V2 & L2 = K2. 𝕓{I} V2.
-#L1 #L2 * -L1 L2
-[ #K1 #I #V1 #H destruct
-| #K1 #K2 #I #V1 #V2 #HK12 #HV12 #L #J #W #H destruct - K1 I V1 /2 width=5/
-]
-qed.
-
-lemma lcpr_inv_item1: ∀K1,I,V1,L2. K1. 𝕓{I} V1 ⊢ ⇒ L2 →
-                      ∃∃K2,V2. K1 ⊢ ⇒ K2 & K2 ⊢ V1 ⇒ V2 & L2 = K2. 𝕓{I} V2.
-/2/ qed.

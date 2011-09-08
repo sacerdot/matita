@@ -15,6 +15,8 @@
 include "Basic-2/substitution/tps_lift.ma".
 include "Basic-2/reduction/tpr.ma".
 
+(* CONTEXT-FREE PARALLEL REDUCTION ON TERMS *********************************)
+
 (* Relocation properties ****************************************************)
 
 (* Basic-1: was: pr0_lift *)

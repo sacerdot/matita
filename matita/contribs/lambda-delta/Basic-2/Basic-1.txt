@@ -268,32 +268,12 @@ pr2/clen pr2_gen_ctail
 
 # check ######################################################################
 
-pr2/clen pr2_gen_cbind
-pr2/clen pr2_gen_cflat
-pr2/fwd pr2_gen_sort
-pr2/fwd pr2_gen_lref
-pr2/fwd pr2_gen_abst
-pr2/fwd pr2_gen_cast
-pr2/fwd pr2_gen_csort
-pr2/fwd pr2_gen_appl
-pr2/fwd pr2_gen_abbr
 pr2/fwd pr2_gen_void
-pr2/fwd pr2_gen_lift
-pr2/pr2 pr2_confluence__pr2_free_free
-pr2/pr2 pr2_confluence__pr2_free_delta
-pr2/pr2 pr2_confluence__pr2_delta_delta
-pr2/pr2 pr2_confluence
-pr2/props pr2_thin_dx
-pr2/props pr2_head_1
-pr2/props pr2_head_2
-pr2/props clear_pr2_trans
-pr2/props pr2_cflat
 pr2/props pr2_ctail
-pr2/props pr2_change
-pr2/props pr2_lift
-pr2/subst1 pr2_delta1
-pr2/subst1 pr2_subst1
-pr2/subst1 pr2_gen_cabbr
+
+
+# waiting ####################################################################
+
 pr3/fwd pr3_gen_sort
 pr3/fwd pr3_gen_abst
 pr3/fwd pr3_gen_cast
@@ -396,17 +376,7 @@ sty1/props sty1_abbr
 sty1/props sty1_cast2
 subst0/dec dnf_dec2
 subst0/dec dnf_dec
-subst1/fwd subst1_gen_lift_ge
-subst1/fwd subst1_gen_lift_lt
-subst1/fwd subst1_gen_lift_eq
-subst1/props subst1_lift_ge
-subst1/props subst1_lift_lt 
 subst1/props subst1_ex
-subst1/props subst1_lift_S
-subst1/subst1 subst1_subst1
-subst1/subst1 subst1_subst1_back
-subst1/subst1 subst1_trans
-subst1/subst1 subst1_confluence_lift
 subst/fwd subst_sort
 subst/fwd subst_lref_lt
 subst/fwd subst_lref_eq

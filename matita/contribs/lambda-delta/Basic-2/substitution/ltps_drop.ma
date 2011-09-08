@@ -20,7 +20,7 @@ lemma ltps_drop_conf_ge: ∀L0,L1,d1,e1. L0 [d1, e1] ≫ L1 →
                          ∀L2,e2. ↓[0, e2] L0 ≡ L2 →
                          d1 + e1 ≤ e2 → ↓[0, e2] L1 ≡ L2.
 #L0 #L1 #d1 #e1 #H elim H -H L0 L1 d1 e1
-[ #d1 #e1 #L2 #e2 #H >(drop_inv_sort1 … H) -H //
+[ #d1 #e1 #L2 #e2 #H >(drop_inv_atom1 … H) -H //
 | //
 | normalize #K0 #K1 #I #V0 #V1 #e1 #_ #_ #IHK01 #L2 #e2 #H #He12
   lapply (plus_le_weak … He12) #He2
@@ -37,7 +37,7 @@ lemma ltps_drop_trans_ge: ∀L1,L0,d1,e1. L1 [d1, e1] ≫ L0 →
                           ∀L2,e2. ↓[0, e2] L0 ≡ L2 →
                           d1 + e1 ≤ e2 → ↓[0, e2] L1 ≡ L2.
 #L1 #L0 #d1 #e1 #H elim H -H L1 L0 d1 e1
-[ #d1 #e1 #L2 #e2 #H >(drop_inv_sort1 … H) -H //
+[ #d1 #e1 #L2 #e2 #H >(drop_inv_atom1 … H) -H //
 | //
 | normalize #K1 #K0 #I #V1 #V0 #e1 #_ #_ #IHK10 #L2 #e2 #H #He12
   lapply (plus_le_weak … He12) #He2
@@ -54,7 +54,7 @@ lemma ltps_drop_conf_be: ∀L0,L1,d1,e1. L0 [d1, e1] ≫ L1 →
                          ∀L2,e2. ↓[0, e2] L0 ≡ L2 → d1 ≤ e2 → e2 ≤ d1 + e1 →
                          ∃∃L. L2 [0, d1 + e1 - e2] ≫ L & ↓[0, e2] L1 ≡ L.
 #L0 #L1 #d1 #e1 #H elim H -H L0 L1 d1 e1
-[ #d1 #e1 #L2 #e2 #H >(drop_inv_sort1 … H) -H /2/
+[ #d1 #e1 #L2 #e2 #H >(drop_inv_atom1 … H) -H /2/
 | normalize #L #I #V #L2 #e2 #HL2 #_ #He2
   lapply (le_n_O_to_eq … He2) -He2 #H destruct -e2;
   lapply (drop_inv_refl … HL2) -HL2 #H destruct -L2 /2/
@@ -76,7 +76,7 @@ lemma ltps_drop_trans_be: ∀L1,L0,d1,e1. L1 [d1, e1] ≫ L0 →
                           ∀L2,e2. ↓[0, e2] L0 ≡ L2 → d1 ≤ e2 → e2 ≤ d1 + e1 →
                           ∃∃L. L [0, d1 + e1 - e2] ≫ L2 & ↓[0, e2] L1 ≡ L.
 #L1 #L0 #d1 #e1 #H elim H -H L1 L0 d1 e1
-[ #d1 #e1 #L2 #e2 #H >(drop_inv_sort1 … H) -H /2/
+[ #d1 #e1 #L2 #e2 #H >(drop_inv_atom1 … H) -H /2/
 | normalize #L #I #V #L2 #e2 #HL2 #_ #He2
   lapply (le_n_O_to_eq … He2) -He2 #H destruct -e2;
   lapply (drop_inv_refl … HL2) -HL2 #H destruct -L2 /2/
@@ -98,7 +98,7 @@ lemma ltps_drop_conf_le: ∀L0,L1,d1,e1. L0 [d1, e1] ≫ L1 →
                          ∀L2,e2. ↓[0, e2] L0 ≡ L2 → e2 ≤ d1 →
                          ∃∃L. L2 [d1 - e2, e1] ≫ L & ↓[0, e2] L1 ≡ L.
 #L0 #L1 #d1 #e1 #H elim H -H L0 L1 d1 e1
-[ #d1 #e1 #L2 #e2 #H >(drop_inv_sort1 … H) -H /2/
+[ #d1 #e1 #L2 #e2 #H >(drop_inv_atom1 … H) -H /2/
 | /2/
 | normalize #K0 #K1 #I #V0 #V1 #e1 #HK01 #HV01 #_ #L2 #e2 #H #He2
   lapply (le_n_O_to_eq … He2) -He2 #He2 destruct -e2;
@@ -116,7 +116,7 @@ lemma ltps_drop_trans_le: ∀L1,L0,d1,e1. L1 [d1, e1] ≫ L0 →
                           ∀L2,e2. ↓[0, e2] L0 ≡ L2 → e2 ≤ d1 →
                           ∃∃L. L [d1 - e2, e1] ≫ L2 & ↓[0, e2] L1 ≡ L.
 #L1 #L0 #d1 #e1 #H elim H -H L1 L0 d1 e1
-[ #d1 #e1 #L2 #e2 #H >(drop_inv_sort1 … H) -H /2/
+[ #d1 #e1 #L2 #e2 #H >(drop_inv_atom1 … H) -H /2/
 | /2/
 | normalize #K1 #K0 #I #V1 #V0 #e1 #HK10 #HV10 #_ #L2 #e2 #H #He2
   lapply (le_n_O_to_eq … He2) -He2 #He2 destruct -e2;

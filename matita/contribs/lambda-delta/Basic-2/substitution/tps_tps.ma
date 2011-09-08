@@ -84,6 +84,7 @@ theorem tps_conf_neq: ∀L1,T0,T1,d1,e1. L1 ⊢ T0 [d1, e1] ≫ T1 →
 qed.
 
 (* Note: the constant 1 comes from tps_subst *)
+(* Basic-1: was: subst1_trans *)
 theorem tps_trans_ge: ∀L,T1,T0,d,e. L ⊢ T1 [d, e] ≫ T0 →
                       ∀T2. L ⊢ T0 [d, 1] ≫ T2 → 1 ≤ e →
                       L ⊢ T1 [d, e] ≫ T2.

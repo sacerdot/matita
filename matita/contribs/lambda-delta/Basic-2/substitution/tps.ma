@@ -16,20 +16,20 @@ include "Basic-2/substitution/drop.ma".
 
 (* PARALLEL SUBSTITUTION ON TERMS *******************************************)
 
-inductive tps: lenv → term → nat → nat → term → Prop ≝
-| tps_atom : ∀L,I,d,e. tps L (𝕒{I}) d e (𝕒{I})
+inductive tps: nat → nat → lenv → relation term ≝
+| tps_atom : ∀L,I,d,e. tps d e L (𝕒{I}) (𝕒{I})
 | tps_subst: ∀L,K,V,W,i,d,e. d ≤ i → i < d + e →
-             ↓[0, i] L ≡ K. 𝕓{Abbr} V → ↑[0, i + 1] V ≡ W → tps L (#i) d e W
+             ↓[0, i] L ≡ K. 𝕓{Abbr} V → ↑[0, i + 1] V ≡ W → tps d e L (#i) W
 | tps_bind : ∀L,I,V1,V2,T1,T2,d,e.
-             tps L V1 d e V2 → tps (L. 𝕓{I} V2) T1 (d + 1) e T2 →
-             tps L (𝕓{I} V1. T1) d e (𝕓{I} V2. T2)
+             tps d e L V1 V2 → tps (d + 1) e (L. 𝕓{I} V2) T1 T2 →
+             tps d e L (𝕓{I} V1. T1) (𝕓{I} V2. T2)
 | tps_flat : ∀L,I,V1,V2,T1,T2,d,e.
-             tps L V1 d e V2 → tps L T1 d e T2 →
-             tps L (𝕗{I} V1. T1) d e (𝕗{I} V2. T2)
+             tps d e L V1 V2 → tps d e L T1 T2 →
+             tps d e L (𝕗{I} V1. T1) (𝕗{I} V2. T2)
 .
 
 interpretation "parallel substritution (term)"
-   'PSubst L T1 d e T2 = (tps L T1 d e T2).
+   'PSubst L T1 d e T2 = (tps d e L T1 T2).
 
 (* Basic properties *********************************************************)
 
@@ -198,12 +198,12 @@ qed.
 lemma tps_inv_refl_O2: ∀L,T1,T2,d. L ⊢ T1 [d, 0] ≫ T2 → T1 = T2.
 /2 width=6/ qed.
 
-(* Basic-1: removed theorems 23:
+(* Basic-1: removed theorems 25:
             subst0_gen_sort subst0_gen_lref subst0_gen_head subst0_gen_lift_lt
             subst0_gen_lift_false subst0_gen_lift_ge subst0_refl subst0_trans
             subst0_lift_lt subst0_lift_ge subst0_lift_ge_S subst0_lift_ge_s
             subst0_subst0 subst0_subst0_back subst0_weight_le subst0_weight_lt
             subst0_confluence_neq subst0_confluence_eq subst0_tlt_head
             subst0_confluence_lift subst0_tlt
-            subst1_head subst1_gen_head  
+            subst1_head subst1_gen_head subst1_lift_S subst1_confluence_lift 
 *)

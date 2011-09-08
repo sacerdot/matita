@@ -17,19 +17,19 @@ include "Basic-2/substitution/tps.ma".
 (* PARALLEL SUBSTITUTION ON LOCAL ENVIRONMENTS ******************************)
 
 (* Basic-1: includes: csubst1_bind *)
-inductive ltps: lenv → nat → nat → lenv → Prop ≝
-| ltps_atom: ∀d,e. ltps (⋆) d e (⋆)
-| ltps_pair: ∀L,I,V. ltps (L. 𝕓{I} V) 0 0 (L. 𝕓{I} V)
+inductive ltps: nat → nat → relation lenv ≝
+| ltps_atom: ∀d,e. ltps d e (⋆) (⋆)
+| ltps_pair: ∀L,I,V. ltps 0 0 (L. 𝕓{I} V) (L. 𝕓{I} V)
 | ltps_tps2: ∀L1,L2,I,V1,V2,e.
-             ltps L1 0 e L2 → L2 ⊢ V1 [0, e] ≫ V2 →
-             ltps (L1. 𝕓{I} V1) 0 (e + 1) L2. 𝕓{I} V2
+             ltps 0 e L1 L2 → L2 ⊢ V1 [0, e] ≫ V2 →
+             ltps 0 (e + 1) (L1. 𝕓{I} V1) L2. 𝕓{I} V2
 | ltps_tps1: ∀L1,L2,I,V1,V2,d,e.
-             ltps L1 d e L2 → L2 ⊢ V1 [d, e] ≫ V2 →
-             ltps (L1. 𝕓{I} V1) (d + 1) e (L2. 𝕓{I} V2)
+             ltps d e L1 L2 → L2 ⊢ V1 [d, e] ≫ V2 →
+             ltps (d + 1) e (L1. 𝕓{I} V1) (L2. 𝕓{I} V2)
 .
 
 interpretation "parallel substritution (local environment)"
-   'PSubst L1 d e L2 = (ltps L1 d e L2).
+   'PSubst L1 d e L2 = (ltps d e L1 L2).
 
 (* Basic properties *********************************************************)
 
