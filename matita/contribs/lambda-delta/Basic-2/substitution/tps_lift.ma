@@ -17,6 +17,26 @@ include "Basic-2/substitution/tps.ma".
 
 (* PARTIAL SUBSTITUTION ON TERMS ********************************************)
 
+(* Advanced inversion lemmas ************************************************)
+
+fact tps_inv_refl_SO2_aux: ∀L,T1,T2,d,e. L ⊢ T1 [d, e] ≫ T2 → e = 1 →
+                           ∀K,V. ↓[0, d] L ≡ K. 𝕓{Abst} V → T1 = T2.
+#L #T1 #T2 #d #e #H elim H -H L T1 T2 d e
+[ //
+| #L #K0 #V0 #W #i #d #e #Hdi #Hide #HLK0 #_ #H destruct -e;
+  >(le_to_le_to_eq … Hdi ?) /2/ -d #K #V #HLK
+  lapply (drop_mono … HLK0 … HLK) #H destruct
+| #L #I #V1 #V2 #T1 #T2 #d #e #_ #_ #IHV12 #IHT12 #H1 #K #V #HLK
+  >(IHV12 H1 … HLK) -IHV12 >(IHT12 H1 K V) -IHT12 /2/
+| #L #I #V1 #V2 #T1 #T2 #d #e #_ #_ #IHV12 #IHT12 #H1 #K #V #HLK
+  >(IHV12 H1 … HLK) -IHV12 >(IHT12 H1 … HLK) -IHT12 //
+]
+qed.
+
+lemma tps_inv_refl_SO2: ∀L,T1,T2,d. L ⊢ T1 [d, 1] ≫ T2 →
+                        ∀K,V. ↓[0, d] L ≡ K. 𝕓{Abst} V → T1 = T2.
+/2 width=8/ qed.
+
 (* Relocation properties ****************************************************)
 
 (* Basic-1: was: subst1_lift_lt *)
@@ -178,23 +198,3 @@ lapply (tps_weak … HU1 d e ? ?) -HU1 // <plus_minus_m_m_comm // -Hddt Hdtde #H
 lapply (tps_inv_lift1_eq … HU1 … HTU1) -HU1 #HU1 destruct -U1;
 elim (tps_inv_lift1_ge … HU2 … HLK … HTU1 ?) -HU2 HLK HTU1 // <minus_plus_m_m /2/
 qed.
-
-(* Advanced inversion lemmas ************************************************)
-
-fact tps_inv_refl_SO2_aux: ∀L,T1,T2,d,e. L ⊢ T1 [d, e] ≫ T2 → e = 1 →
-                           ∀K,V. ↓[0, d] L ≡ K. 𝕓{Abst} V → T1 = T2.
-#L #T1 #T2 #d #e #H elim H -H L T1 T2 d e
-[ //
-| #L #K0 #V0 #W #i #d #e #Hdi #Hide #HLK0 #_ #H destruct -e;
-  >(le_to_le_to_eq … Hdi ?) /2/ -d #K #V #HLK
-  lapply (drop_mono … HLK0 … HLK) #H destruct
-| #L #I #V1 #V2 #T1 #T2 #d #e #_ #_ #IHV12 #IHT12 #H1 #K #V #HLK
-  >(IHV12 H1 … HLK) -IHV12 >(IHT12 H1 K V) -IHT12 /2/
-| #L #I #V1 #V2 #T1 #T2 #d #e #_ #_ #IHV12 #IHT12 #H1 #K #V #HLK
-  >(IHV12 H1 … HLK) -IHV12 >(IHT12 H1 … HLK) -IHT12 //
-]
-qed.
-
-lemma tps_inv_refl_SO2: ∀L,T1,T2,d. L ⊢ T1 [d, 1] ≫ T2 →
-                        ∀K,V. ↓[0, d] L ≡ K. 𝕓{Abst} V → T1 = T2.
-/2 width=8/ qed.

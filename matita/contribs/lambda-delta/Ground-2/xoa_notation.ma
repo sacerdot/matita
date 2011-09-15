@@ -114,6 +114,16 @@ notation < "hvbox(∃∃ ident x0 , ident x1 , ident x2 , ident x3 break . term 
  non associative with precedence 20
  for @{ 'Ex (λ${ident x0}:$T0.λ${ident x1}:$T1.λ${ident x2}:$T2.λ${ident x3}:$T3.$P0) (λ${ident x0}:$T0.λ${ident x1}:$T1.λ${ident x2}:$T2.λ${ident x3}:$T3.$P1) (λ${ident x0}:$T0.λ${ident x1}:$T1.λ${ident x2}:$T2.λ${ident x3}:$T3.$P2) (λ${ident x0}:$T0.λ${ident x1}:$T1.λ${ident x2}:$T2.λ${ident x3}:$T3.$P3) (λ${ident x0}:$T0.λ${ident x1}:$T1.λ${ident x2}:$T2.λ${ident x3}:$T3.$P4) }.
 
+(* multiple existental quantifier (6, 4) *)
+
+notation > "hvbox(∃∃ ident x0 , ident x1 , ident x2 , ident x3 break . term 19 P0 break & term 19 P1 break & term 19 P2 break & term 19 P3 break & term 19 P4 break & term 19 P5)"
+ non associative with precedence 20
+ for @{ 'Ex (λ${ident x0}.λ${ident x1}.λ${ident x2}.λ${ident x3}.$P0) (λ${ident x0}.λ${ident x1}.λ${ident x2}.λ${ident x3}.$P1) (λ${ident x0}.λ${ident x1}.λ${ident x2}.λ${ident x3}.$P2) (λ${ident x0}.λ${ident x1}.λ${ident x2}.λ${ident x3}.$P3) (λ${ident x0}.λ${ident x1}.λ${ident x2}.λ${ident x3}.$P4) (λ${ident x0}.λ${ident x1}.λ${ident x2}.λ${ident x3}.$P5) }.
+
+notation < "hvbox(∃∃ ident x0 , ident x1 , ident x2 , ident x3 break . term 19 P0 break & term 19 P1 break & term 19 P2 break & term 19 P3 break & term 19 P4 break & term 19 P5)"
+ non associative with precedence 20
+ for @{ 'Ex (λ${ident x0}:$T0.λ${ident x1}:$T1.λ${ident x2}:$T2.λ${ident x3}:$T3.$P0) (λ${ident x0}:$T0.λ${ident x1}:$T1.λ${ident x2}:$T2.λ${ident x3}:$T3.$P1) (λ${ident x0}:$T0.λ${ident x1}:$T1.λ${ident x2}:$T2.λ${ident x3}:$T3.$P2) (λ${ident x0}:$T0.λ${ident x1}:$T1.λ${ident x2}:$T2.λ${ident x3}:$T3.$P3) (λ${ident x0}:$T0.λ${ident x1}:$T1.λ${ident x2}:$T2.λ${ident x3}:$T3.$P4) (λ${ident x0}:$T0.λ${ident x1}:$T1.λ${ident x2}:$T2.λ${ident x3}:$T3.$P5) }.
+
 (* multiple existental quantifier (6, 6) *)
 
 notation > "hvbox(∃∃ ident x0 , ident x1 , ident x2 , ident x3 , ident x4 , ident x5 break . term 19 P0 break & term 19 P1 break & term 19 P2 break & term 19 P3 break & term 19 P4 break & term 19 P5)"

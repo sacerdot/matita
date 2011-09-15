@@ -52,7 +52,7 @@ qed.
 lemma tps_weak: ∀L,T1,T2,d1,e1. L ⊢ T1 [d1, e1] ≫ T2 →
                 ∀d2,e2. d2 ≤ d1 → d1 + e1 ≤ d2 + e2 →
                 L ⊢ T1 [d2, e2] ≫ T2.
-#L #T1 #T #d1 #e1 #H elim H -L T1 T d1 e1
+#L #T1 #T2 #d1 #e1 #H elim H -H L T1 T2 d1 e1
 [ //
 | #L #K #V #W #i #d1 #e1 #Hid1 #Hide1 #HLK #HVW #d2 #e2 #Hd12 #Hde12
   lapply (transitive_le … Hd12 … Hid1) -Hd12 Hid1 #Hid2
@@ -64,7 +64,7 @@ qed.
 
 lemma tps_weak_top: ∀L,T1,T2,d,e.
                     L ⊢ T1 [d, e] ≫ T2 → L ⊢ T1 [d, |L| - d] ≫ T2.
-#L #T1 #T #d #e #H elim H -L T1 T d e
+#L #T1 #T2 #d #e #H elim H -H L T1 T2 d e
 [ //
 | #L #K #V #W #i #d #e #Hdi #_ #HLK #HVW
   lapply (drop_fwd_drop2_length … HLK) #Hi
@@ -77,14 +77,14 @@ qed.
 
 lemma tps_weak_all: ∀L,T1,T2,d,e.
                     L ⊢ T1 [d, e] ≫ T2 → L ⊢ T1 [0, |L|] ≫ T2.
-#L #T1 #T #d #e #HT12
+#L #T1 #T2 #d #e #HT12
 lapply (tps_weak … HT12 0 (d + e) ? ?) -HT12 // #HT12
 lapply (tps_weak_top … HT12) //
 qed.
 
 lemma tps_split_up: ∀L,T1,T2,d,e. L ⊢ T1 [d, e] ≫ T2 → ∀i. d ≤ i → i ≤ d + e →
                     ∃∃T. L ⊢ T1 [d, i - d] ≫ T & L ⊢ T [i, d + e - i] ≫ T2.
-#L #T1 #T2 #d #e #H elim H -L T1 T2 d e
+#L #T1 #T2 #d #e #H elim H -H L T1 T2 d e
 [ /2/
 | #L #K #V #W #i #d #e #Hdi #Hide #HLK #HVW #j #Hdj #Hjde
   elim (lt_or_ge i j)
