@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "Basic-2/grammar/lenv_weight.ma".
 include "Basic-2/grammar/leq.ma".
 include "Basic-2/substitution/lift.ma".
 
@@ -177,7 +178,15 @@ lemma drop_fwd_drop2: ∀L1,I2,K2,V2,e. ↓[O, e] L1 ≡ K2. 𝕓{I2} V2 →
 ]
 qed.
 
-lemma drop_fwd_drop2_length: ∀L1,I2,K2,V2,e. 
+lemma drop_fwd_lw: ∀L1,L2,d,e. ↓[d, e] L1 ≡ L2 → #[L2] ≤ #[L1].
+#L1 #L2 #d #e #H elim H -H L1 L2 d e // normalize
+[ /2/
+| #L1 #L2 #I #V1 #V2 #d #e #_ #HV21 #IHL12
+  >(tw_lift … HV21) -HV21 /2/
+]
+qed. 
+
+lemma drop_fwd_drop2_length: ∀L1,I2,K2,V2,e.
                              ↓[0, e] L1 ≡ K2. 𝕓{I2} V2 → e < |L1|.
 #L1 elim L1 -L1
 [ #I2 #K2 #V2 #e #H lapply (drop_inv_atom1 … H) -H #H destruct

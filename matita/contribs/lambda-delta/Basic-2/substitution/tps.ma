@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "Basic-2/grammar/cl_weight.ma".
 include "Basic-2/substitution/drop.ma".
 
 (* PARALLEL SUBSTITUTION ON TERMS *******************************************)
@@ -197,6 +198,17 @@ qed.
 
 lemma tps_inv_refl_O2: ∀L,T1,T2,d. L ⊢ T1 [d, 0] ≫ T2 → T1 = T2.
 /2 width=6/ qed.
+
+(* Basic forward lemmas *****************************************************)
+
+lemma tps_fwd_tw: ∀L,T1,T2,d,e. L ⊢ T1 [d, e] ≫ T2 → #[T1] ≤ #[T2].
+#L #T1 #T2 #d #e #H elim H normalize -H L T1 T2 d e
+[ //
+| /2/
+| /3 by monotonic_le_plus_l, le_plus/ (**) (* just /3/ is too slow *)
+| /3 by monotonic_le_plus_l, le_plus/ (**) (* just /3/ is too slow *)
+] 
+qed.
 
 (* Basic-1: removed theorems 25:
             subst0_gen_sort subst0_gen_lref subst0_gen_head subst0_gen_lift_lt

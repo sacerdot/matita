@@ -39,12 +39,12 @@ qed.
 
 lemma TC_strip2: ∀A,R1,R2. confluent A R1 R2 →
                  ∀a0,a2. TC … R2 a0 a2 → ∀a1. R1 a0 a1 →
-                 ∃∃a. R1 a2 a & TC … R2 a1 a.
+                 ∃∃a. TC … R2 a1 a & R1 a2 a.
 #A #R1 #R2 #HR12 #a0 #a2 #H elim H -H a2
 [ #a2 #Ha02 #a1 #Ha01
   elim (HR12 … Ha01 … Ha02) -HR12 a0 /3/
 | #a #a2 #_ #Ha2 #IHa0 #a1 #Ha01
-  elim (IHa0 … Ha01) -IHa0 Ha01 a0 #a0 #Ha0 #Ha21
+  elim (IHa0 … Ha01) -IHa0 Ha01 a0 #a0 #Ha10 #Ha0
   elim (HR12 … Ha0 … Ha2) -HR12 a /4/
 ]
 qed.
@@ -60,6 +60,10 @@ lemma TC_confluent: ∀A,R1,R2.
 ]
 qed.
 
+lemma TC_strap: ∀A. ∀R:relation A. ∀a1,a,a2.
+                R a1 a → TC … R a a2 → TC … R a1 a2.
+/3/ qed.
+
 lemma TC_strap1: ∀A,R1,R2. transitive A R1 R2 →
                  ∀a1,a0. TC … R1 a1 a0 → ∀a2. R2 a0 a2 →
                  ∃∃a. R2 a1 a & TC … R1 a a2.
@@ -74,12 +78,12 @@ qed.
 
 lemma TC_strap2: ∀A,R1,R2. transitive A R1 R2 →
                  ∀a0,a2. TC … R2 a0 a2 → ∀a1. R1 a1 a0 →
-                 ∃∃a. R1 a a2 & TC … R2 a1 a.
+                 ∃∃a. TC … R2 a1 a & R1 a a2.
 #A #R1 #R2 #HR12 #a0 #a2 #H elim H -H a2
 [ #a2 #Ha02 #a1 #Ha10
   elim (HR12 … Ha10 … Ha02) -HR12 a0 /3/
 | #a #a2 #_ #Ha02 #IHa #a1 #Ha10
-  elim (IHa … Ha10) -a0 #a0 #Ha0 #Ha10
+  elim (IHa … Ha10) -a0 #a0 #Ha10 #Ha0
   elim (HR12 … Ha0 … Ha02) -HR12 a /4/
 ]
 qed.
@@ -90,7 +94,7 @@ lemma TC_transitive: ∀A,R1,R2.
 [ #a0 #Ha10 #a2 #Ha02
   elim (TC_strap2 … HR12 … Ha02 … Ha10) -HR12 a0 /3/
 | #a #a0 #_ #Ha0 #IHa #a2 #Ha02
-  elim (TC_strap2 … HR12 … Ha02 … Ha0) -HR12 a0 #a0 #Ha02 #Ha0
+  elim (TC_strap2 … HR12 … Ha02 … Ha0) -HR12 a0 #a0 #Ha0 #Ha02
   elim (IHa … Ha0) -a /4/
 ]
 qed.

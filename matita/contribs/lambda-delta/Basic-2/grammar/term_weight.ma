@@ -25,6 +25,12 @@ interpretation "weight (term)" 'Weight T = (tw T).
 
 (* Basic properties *********************************************************)
 
+lemma tw_pos: ∀T. 1 ≤ #[T].
+#T elim T -T /2/ 
+qed.
+
+(* Basic eliminators ********************************************************)
+
 axiom tw_wf_ind: ∀R:term→Prop.
                  (∀T2. (∀T1. #[T1] < #[T2] → R T1) → R T2) →
                  ∀T. R T.

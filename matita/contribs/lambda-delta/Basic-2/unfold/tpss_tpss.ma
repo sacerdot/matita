@@ -19,9 +19,25 @@ include "Basic-2/unfold/tpss_lift.ma".
 
 (* Advanced properties ******************************************************)
 
-lemma tpss_trans_down_strap1: ∀L,T1,T0,d1,e1. L ⊢ T1 [d1, e1] ≫* T0 →
-                              ∀T2,d2,e2. L ⊢ T0 [d2, e2] ≫ T2 → d2 + e2 ≤ d1 →
-                              ∃∃T. L ⊢ T1 [d2, e2] ≫ T & L ⊢ T [d1, e1] ≫* T2.
+lemma tpss_strip_eq: ∀L,T0,T1,d1,e1. L ⊢ T0 [d1, e1] ≫* T1 →
+                     ∀T2,d2,e2. L ⊢ T0 [d2, e2] ≫ T2 →
+                     ∃∃T. L ⊢ T1 [d2, e2] ≫ T & L ⊢ T2 [d1, e1] ≫* T.
+/3/ qed.
+
+lemma tpss_strip_neq: ∀L1,T0,T1,d1,e1. L1 ⊢ T0 [d1, e1] ≫* T1 →
+                      ∀L2,T2,d2,e2. L2 ⊢ T0 [d2, e2] ≫ T2 →
+                      (d1 + e1 ≤ d2 ∨ d2 + e2 ≤ d1) →
+                      ∃∃T. L2 ⊢ T1 [d2, e2] ≫ T & L1 ⊢ T2 [d1, e1] ≫* T.
+/3/ qed.
+
+lemma tpss_strap1_down: ∀L,T1,T0,d1,e1. L ⊢ T1 [d1, e1] ≫* T0 →
+                        ∀T2,d2,e2. L ⊢ T0 [d2, e2] ≫ T2 → d2 + e2 ≤ d1 →
+                        ∃∃T. L ⊢ T1 [d2, e2] ≫ T & L ⊢ T [d1, e1] ≫* T2.
+/3/ qed.
+
+lemma tpss_strap2_down: ∀L,T1,T0,d1,e1. L ⊢ T1 [d1, e1] ≫ T0 →
+                        ∀T2,d2,e2. L ⊢ T0 [d2, e2] ≫* T2 → d2 + e2 ≤ d1 →
+                        ∃∃T. L ⊢ T1 [d2, e2] ≫* T & L ⊢ T [d1, e1] ≫ T2.
 /3/ qed.
 
 lemma tpss_split_up: ∀L,T1,T2,d,e. L ⊢ T1 [d, e] ≫* T2 →
@@ -31,7 +47,7 @@ lemma tpss_split_up: ∀L,T1,T2,d,e. L ⊢ T1 [d, e] ≫* T2 →
 [ /2/
 | #T #T2 #_ #HT12 * #T3 #HT13 #HT3
   elim (tps_split_up … HT12 … Hdi Hide) -HT12 Hide #T0 #HT0 #HT02
-  elim (tpss_trans_down_strap1 … HT3 … HT0 ?) -T [2: <plus_minus_m_m_comm // ]
+  elim (tpss_strap1_down … HT3 … HT0 ?) -T [2: <plus_minus_m_m_comm // ]
   /3 width=7 by ex2_1_intro, step/ (**) (* just /3 width=7/ is too slow *)
 ]
 qed.

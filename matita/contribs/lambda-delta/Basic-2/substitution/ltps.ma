@@ -77,7 +77,7 @@ fact ltps_inv_atom1_aux: ∀d,e,L1,L2.
 ]
 qed.
 
-lemma drop_inv_atom1: ∀d,e,L2. ⋆ [d, e] ≫ L2 → L2 = ⋆.
+lemma ltps_inv_atom1: ∀d,e,L2. ⋆ [d, e] ≫ L2 → L2 = ⋆.
 /2 width=5/ qed.
 
 fact ltps_inv_tps21_aux: ∀d,e,L1,L2. L1 [d, e] ≫ L2 → d = 0 → 0 < e →
@@ -128,7 +128,7 @@ fact ltps_inv_atom2_aux: ∀d,e,L1,L2.
 ]
 qed.
 
-lemma drop_inv_atom2: ∀d,e,L1. L1 [d, e] ≫ ⋆ → L1 = ⋆.
+lemma ltps_inv_atom2: ∀d,e,L1. L1 [d, e] ≫ ⋆ → L1 = ⋆.
 /2 width=5/ qed.
 
 fact ltps_inv_tps22_aux: ∀d,e,L1,L2. L1 [d, e] ≫ L2 → d = 0 → 0 < e →

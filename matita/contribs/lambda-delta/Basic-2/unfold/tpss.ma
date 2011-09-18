@@ -22,13 +22,19 @@ definition tpss: nat → nat → lenv → relation term ≝
 interpretation "partial unfold (term)"
    'PSubstStar L T1 d e T2 = (tpss d e L T1 T2).
 
-(* Basic properties *********************************************************)
+(* Basic eliminators ********************************************************)
 
 lemma tpss_ind: ∀d,e,L,T1. ∀R: term → Prop. R T1 →
-                (∀T,T2. L ⊢ T1 [d, e] ≫* T → L ⊢ T[d, e] ≫ T2 → R T → R T2) →
+                (∀T,T2. L ⊢ T1 [d, e] ≫* T → L ⊢ T [d, e] ≫ T2 → R T → R T2) →
                 ∀T2. L ⊢ T1 [d, e] ≫* T2 → R T2.
 #d #e #L #T1 #R #HT1 #IHT1 #T2 #HT12 @(TC_star_ind … HT1 IHT1 … HT12) //
 qed.
+
+(* Basic properties *********************************************************)
+
+lemma tpss_strap: ∀L,T1,T,T2,d,e. 
+                  L ⊢ T1 [d, e] ≫ T → L ⊢ T [d, e] ≫* T2 → L ⊢ T1 [d, e] ≫* T2. 
+/2/ qed.
 
 lemma tpss_leq_repl_dx: ∀L1,T1,T2,d,e. L1 ⊢ T1 [d, e] ≫* T2 →
                         ∀L2. L1 [d, e] ≈ L2 → L2 ⊢ T1 [d, e] ≫* T2.
