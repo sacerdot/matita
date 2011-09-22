@@ -19,6 +19,12 @@ include "Basic-2/unfold/tpss_lift.ma".
 
 (* Advanced properties ******************************************************)
 
+lemma tpss_tps: ∀L,T1,T2,d. L ⊢ T1 [d, 1] ≫* T2 → L ⊢ T1 [d, 1] ≫ T2.
+#L #T1 #T2 #d #H @(tpss_ind … H) -H T2 //
+#T #T2 #_ #HT2 #IHT1
+lapply (tps_trans_ge … IHT1 … HT2 ?) //
+qed.
+
 lemma tpss_strip_eq: ∀L,T0,T1,d1,e1. L ⊢ T0 [d1, e1] ≫* T1 →
                      ∀T2,d2,e2. L ⊢ T0 [d2, e2] ≫ T2 →
                      ∃∃T. L ⊢ T1 [d2, e2] ≫ T & L ⊢ T2 [d1, e1] ≫* T.

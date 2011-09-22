@@ -91,7 +91,7 @@ lemma tpr_inv_bind1: ∀V1,T1,U2,I. 𝕓{I} V1. T1 ⇒ U2 →
                                  ⋆.  𝕓{I} V2 ⊢ T2 [0, 1] ≫ T &
                                  U2 = 𝕓{I} V2. T
                      ) ∨
-                     ∃∃T. ↑[0,1] T ≡ T1 & tpr T U2 & I = Abbr.
+                     ∃∃T. ↑[0,1] T ≡ T1 & T ⇒ U2 & I = Abbr.
 /2/ qed.
 
 (* Basic-1: was pr0_gen_abbr *)
@@ -100,7 +100,7 @@ lemma tpr_inv_abbr1: ∀V1,T1,U2. 𝕓{Abbr} V1. T1 ⇒ U2 →
                                  ⋆.  𝕓{Abbr} V2 ⊢ T2 [0, 1] ≫ T &
                                  U2 = 𝕓{Abbr} V2. T
                       ) ∨
-                      ∃∃T. ↑[0,1] T ≡ T1 & tpr T U2.
+                      ∃∃T. ↑[0,1] T ≡ T1 & T ⇒ U2.
 #V1 #T1 #U2 #H
 elim (tpr_inv_bind1 … H) -H * /3 width=7/
 qed.
