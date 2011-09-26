@@ -113,12 +113,12 @@ struct
         | _ -> assert false)
       t
 
-  let variable_closure ksucc =
+  let variable_closure ksucc kfail =
     (fun matched_terms constructors terms ->
 (* prerr_endline "variable_closure"; *)
       match terms with
       | hd :: tl -> ksucc (hd :: matched_terms) constructors tl
-      | _ -> assert false)
+      | _ -> kfail () (*CSC: was assert false, but it did happen*))
 
   let success_closure ksucc =
     (fun matched_terms constructors terms ->
@@ -156,7 +156,7 @@ struct
       else
         match horizontal_split t with
         | _, [], _ -> assert false
-        | Variable, t', [] -> variable_closure (aux (vertical_split t'))
+        | Variable, t', [] -> variable_closure (aux (vertical_split t')) fail_k
         | Constructor, t', [] ->
             let tagl =
               List.map
