@@ -268,11 +268,13 @@ let name_of_rel ~context rel =
   List.nth context ((List.length context) - n - 1)
 ;;*)
 
+let mk_sym s = NotationPt.Symbol (s,0);;
+
 let discriminate_tac ~context cur_eq status =
   pp (lazy (Printf.sprintf "discriminate: equation %s" (name_of_rel ~context cur_eq)));
 
   let dbranch it ~use_jmeq leftno consno =
-    let refl_id = mk_id (if use_jmeq then "jmrefl" else "refl") in
+    let refl_id = mk_sym "refl" in
     pp (lazy (Printf.sprintf "dbranch %d %d" leftno consno));
     let nlist = HExtlib.list_seq 0 (nargs it leftno consno) in
     (* (\forall ...\forall P.\forall DH : ( ... = ... -> P). P) *)
@@ -335,9 +337,15 @@ let discriminate_tac ~context cur_eq status =
      let cut_term = mk_prods params (NotationPt.Binder (`Forall, (mk_id "x",
                              Some xyty),
                          NotationPt.Binder (`Forall, (mk_id "y", Some xyty),
-                          NotationPt.Binder (`Forall, (mk_id "e",
-                           Some (mk_appl [mk_id "eq";NotationPt.Implicit `JustOne; mk_id "x"; mk_id "y"])),
-                           mk_appl [discr; mk_id "x"; mk_id "y"(*;mk_id "e"*)])))) in
+                          (if use_jmeq then fun tgt ->
+                           NotationPt.Binder (`Forall, (mk_id "e",
+                            Some (mk_appl
+                             [mk_sym "jmsimeq"; NotationPt.Implicit `JustOne; mk_id "x";
+                                                NotationPt.Implicit `JustOne; mk_id "y"])),tgt)
+                          else fun tgt ->
+                           NotationPt.Binder (`Forall, (mk_id "e",
+                            Some (mk_appl [mk_sym "eq";NotationPt.Implicit `JustOne; mk_id "x"; mk_id "y"])),tgt))
+                          (mk_appl [discr; mk_id "x"; mk_id "y"(*;mk_id "e"*)])))) in
      let status = print_tac (lazy ("cut_term = "^ NotationPp.pp_term status cut_term)) status in
       NTactics.cut_tac ("",0, cut_term)
       status);

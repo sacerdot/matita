@@ -1668,7 +1668,7 @@ auto_main flags signature cache depth status: unit =
            NCicParamod.is_equation status metasenv subst ctx ty in
         (* if the goal is an equality we artificially raise its depth up to
            flags.maxdepth - 1 *)
-        if (not flags.last && is_eq && (depth < (flags.maxdepth -1))) then
+        if (not flags.last && is_eq && (depth < (flags.maxdepth -2))) then
         (* for efficiency reasons, in this case we severely cripple the
            search depth *)
           (debug_print ~depth (lazy ("RAISING DEPTH TO " ^ string_of_int (depth+1)));

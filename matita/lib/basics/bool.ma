@@ -16,10 +16,9 @@ inductive bool: Type[0] ≝
   | true : bool
   | false : bool.
 
-(* destruct does not work *)
 theorem not_eq_true_false : true ≠ false.
-@nmk #Heq change with match true with [true ⇒ False|false ⇒ True]
->Heq // qed.
+@nmk #Heq destruct
+qed.
 
 definition notb : bool → bool ≝
 λ b:bool. match b with [true ⇒ false|false ⇒ true ].

@@ -26,6 +26,8 @@ let mk_id id =
   NotationPt.Ident (id,None)
 ;;
 
+let mk_sym s = NotationPt.Symbol (s,0);;
+
 let rec split_arity status ~subst context te =
   match NCicReduction.whd status ~subst context te with
    | NCic.Prod (name,so,ta) -> 
@@ -46,13 +48,41 @@ let rec mk_prods l t =
   | hd::tl -> NotationPt.Binder (`Forall, (mk_id hd, None), mk_prods tl t)
 ;;
 
-let rec mk_arrows ?(pattern=false) xs ys selection target = 
+let rec leibpatt = function
+  | [] -> NotationPt.UserInput
+  | false::sel -> leibpatt sel
+  | true::sel -> NotationPt.Binder (`Forall, (mk_id "_",
+                     Some (mk_appl [NotationPt.Implicit `JustOne
+                                   ;NotationPt.Implicit `JustOne
+                                   ;NotationPt.Implicit `JustOne
+                                   ;NotationPt.UserInput])),
+                     leibpatt sel);;
+let rec jmeqpatt = function
+  | [] -> NotationPt.UserInput
+  | false::sel -> jmeqpatt sel
+  | true::sel -> NotationPt.Binder (`Forall, (mk_id "_",
+                     Some (mk_appl [NotationPt.Implicit `JustOne
+                                   ;NotationPt.Implicit `JustOne
+                                   ;NotationPt.Implicit `JustOne
+                                   ;NotationPt.UserInput
+                                   ;NotationPt.UserInput])),
+                     jmeqpatt sel);;
+
+let rec mk_arrows ~jmeq xs ys selection target = 
   match selection,xs,ys with
     [],[],[] -> target
-  | false :: l,x::xs,y::ys -> mk_arrows ~pattern xs ys l target
-  | true :: l,x::xs,y::ys  -> 
-     NotationPt.Binder (`Forall, (mk_id "_", Some (mk_appl [if pattern then NotationPt.Implicit `JustOne else mk_id "eq" ; NotationPt.Implicit `JustOne;x;y])),
-                           mk_arrows ~pattern xs ys l target)
+  | false :: l,x::xs,y::ys -> mk_arrows ~jmeq xs ys l target
+  | true :: l,x::xs,y::ys when jmeq ->
+     NotationPt.Binder (`Forall, (mk_id "_",
+       Some (mk_appl [mk_sym "jmsimeq" ; 
+             NotationPt.Implicit `JustOne;x;
+             NotationPt.Implicit `JustOne;y])),
+       mk_arrows ~jmeq xs ys l target)
+  | true :: l,x::xs,y::ys ->
+     NotationPt.Binder (`Forall, (mk_id "_",
+       Some (mk_appl [mk_sym "eq" ; 
+             NotationPt.Implicit `JustOne;x;y])),
+       mk_arrows ~jmeq xs ys l target)
   | _ -> raise (Invalid_argument "ninverter: the selection doesn't match the arity of the specified inductive type")
 ;;
 
@@ -65,7 +95,7 @@ let subst_metasenv_and_fix_names status =
    status#set_obj(u,h,NCicUntrusted.apply_subst_metasenv status subst metasenv,subst,o)
 ;;
 
-let mk_inverter name is_ind it leftno ?selection outsort (status: #NCic.status) baseuri =
+let mk_inverter ~jmeq name is_ind it leftno ?selection outsort (status: #NCic.status) baseuri =
  pp (lazy ("leftno = " ^ string_of_int leftno));
  let _,ind_name,ty,cl = it in
  pp (lazy ("arity: " ^ status#ppterm ~metasenv:[] ~subst:[] ~context:[] ty));
@@ -105,7 +135,7 @@ let mk_inverter name is_ind it leftno ?selection outsort (status: #NCic.status) 
          None -> HExtlib.mk_list true (List.length ys) 
        | Some s -> s
      in
-     let prods = mk_arrows id_rs id_ys selection pred in
+     let prods = mk_arrows ~jmeq id_rs id_ys selection pred in
     
      let hyplist = 
        let rec hypaux k = function
@@ -136,7 +166,7 @@ let mk_inverter name is_ind it leftno ?selection outsort (status: #NCic.status) 
     
      let cut_theorem = 
        let rs = List.map (fun x -> mk_id x) rs in
-         mk_arrows rs rs selection (mk_appl (mk_id "P"::rs)) in
+         mk_arrows ~jmeq rs rs selection (mk_appl (mk_id "P"::rs)) in
     
      let cut = mk_appl [NotationPt.Binder (`Lambda, (mk_id "Hcut", Some cut_theorem),
                         
@@ -145,11 +175,8 @@ NotationPt.Implicit (`Tagged "end"));
      let intros = List.map (fun x -> pp (lazy x); NTactics.intro_tac x) (xs@["P"]@hyplist@["Hterm"]) in
      let where =
       "",0,(None,[],
-       Some (
-        mk_arrows ~pattern:true
-         (HExtlib.mk_list (NotationPt.Implicit `JustOne) (List.length ys))
-         (HExtlib.mk_list NotationPt.UserInput (List.length ys))
-         selection NotationPt.UserInput)) in
+        Some (if jmeq then jmeqpatt selection
+                     else leibpatt selection)) in
      let elim_tac = if is_ind then NTactics.elim_tac else NTactics.cases_tac in
      let status =
       NTactics.block_tac 
@@ -160,7 +187,7 @@ NotationPt.Implicit (`Tagged "end"));
           NTactics.branch_tac;
           NTactics.case_tac "end";
           NTactics.apply_tac ("",0,mk_id "Hcut");
-          NTactics.apply_tac ("",0,mk_id "refl"); 
+          NTactics.apply_tac ("",0,mk_sym "refl"); 
           NTactics.shift_tac;
           elim_tac ~what:("",0,mk_id "Hterm") ~where;
           NTactics.branch_tac ~force:true] @ 
@@ -174,3 +201,8 @@ NotationPt.Implicit (`Tagged "end"));
      status,status#obj
 ;;
 
+let mk_inverter name is_ind it leftno ?selection outsort status baseuri =
+ try mk_inverter ~jmeq:true name is_ind it leftno ?selection outsort status baseuri
+ with NTacStatus.Error _ -> 
+   mk_inverter ~jmeq:false name is_ind it leftno ?selection outsort status baseuri
+;;

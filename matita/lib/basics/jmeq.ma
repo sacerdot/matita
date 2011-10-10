@@ -23,7 +23,18 @@ definition p2: ∀S:Sigma. p1 S.
 qed.
 
 inductive jmeq (A:Type[0]) (x:A) : ∀B:Type[0]. B →Prop ≝
-jmrefl : jmeq A x A x.
+refl_jmeq : jmeq A x A x.
+
+notation < "hvbox(term 46 a break maction (≃) (≃\sub(t,u)) term 46 b)"
+  non associative with precedence 45
+for @{ 'jmsimeq $t $a $u $b }.
+
+notation > "hvbox(n break ≃ m)"
+  non associative with precedence 45
+for @{ 'jmsimeq ? $n ? $m }.
+
+interpretation "john major's equality" 'jmsimeq t x u y = (jmeq t x u y).
+interpretation "john major's reflexivity" 'refl = refl_jmeq.
 
 definition eqProp ≝ λA:Prop.eq A.
 
@@ -79,7 +90,7 @@ definition PP: ∀A:Prop.∀P:A → Type[0]. A → Type[0].
 qed.
 
 lemma E : ∀A.∀x:A.∀P:∀y:A.jmeq A x A y→Type[0].
- PP ? (P x) (jmrefl A x) → ∀y.∀h:jmeq A x A y.PP ? (P y) h.
+ PP ? (P x) (refl_jmeq A x) → ∀y.∀h:jmeq A x A y.PP ? (P y) h.
  #A #a #P #H #b #E letin F ≝ (jm_to_eq_sigma ??? E)
  lapply (G ?? (curry ?? P) ?? F)
   [ normalize //
@@ -87,4 +98,17 @@ lemma E : ∀A.∀x:A.∀P:∀y:A.jmeq A x A y→Type[0].
 qed.
 
 lemma jmeq_elim : ∀A.∀x:A.∀P:∀y:A.jmeq A x A y→Type[0].
- P x (jmrefl A x) → ∀y.∀h:jmeq A x A y.P y h ≝ E.
+ P x (refl_jmeq A x) → ∀y.∀h:jmeq A x A y.P y h ≝ E.
+
+lemma jmeq_to_eq: ∀A:Type[0]. ∀x,y:A. x≃y → x=y.
+ #A #x #y #JMEQ @(jmeq_elim ? x … JMEQ) %
+qed.
+
+coercion jmeq_to_eq: ∀A:Type[0]. ∀x,y:A. ∀p:x≃y.x=y ≝ jmeq_to_eq on _p:?≃? to ?=?.
+
+lemma eq_to_jmeq:
+  ∀A: Type[0].
+  ∀x, y: A.
+    x = y → x ≃ y.
+  //
+qed.

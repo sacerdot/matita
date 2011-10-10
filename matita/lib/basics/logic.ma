@@ -18,6 +18,7 @@ inductive eq (A:Type[1]) (x:A) : A → Prop ≝
     refl: eq A x x. 
     
 interpretation "leibnitz's equality" 'eq t x y = (eq t x y).
+interpretation "leibniz reflexivity" 'refl = refl.
 
 lemma eq_rect_r:
  ∀A.∀a,x.∀p:eq ? x a.∀P: ∀x:A. eq ? x a → Type[2]. P a (refl A a) → P x p.
@@ -227,5 +228,14 @@ definition R4 :
 @a4 
 qed.
 
-(* TODO concrete definition by means of proof irrelevance *)
-axiom streicherK : ∀T:Type[1].∀t:T.∀P:t = t → Type[2].P (refl ? t) → ∀p.P p.
+definition eqProp ≝ λA:Prop.eq A.
+
+(* Example to avoid indexing and the consequential creation of ill typed
+   terms during paramodulation *)
+example lemmaK : ∀A.∀x:A.∀h:x=x. eqProp ? h (refl A x).
+#A #x #h @(refl ? h: eqProp ? ? ?).
+qed.
+
+theorem streicherK : ∀T:Type[1].∀t:T.∀P:t = t → Type[2].P (refl ? t) → ∀p.P p.
+ #T #t #P #H #p >(lemmaK ?? p) @H
+qed.
