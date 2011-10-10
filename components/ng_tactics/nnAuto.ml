@@ -1722,7 +1722,7 @@ auto_main flags signature cache depth status: unit =
               let dty = NCic.Appl [NCic.Implicit (`Typeof depth); ty] in
               mk_cic_term ctx dty 
             in 
-            prerr_endline ("FAILURE : " ^ ppterm status gty);
+            (*prerr_endline ("FAILURE : " ^ ppterm status gty);*)
             add_to_th newfail failures closegty
           else failures in
         debug_print ~depth (lazy "no more candidates");
