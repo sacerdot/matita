@@ -12,7 +12,7 @@
 open Printf
 
 let print ?(depth=0) s = 
-  prerr_endline (String.make depth '\t'^Lazy.force s) 
+  prerr_endline (String.make (2*depth) ' '^Lazy.force s) 
 let noprint ?(depth=0) _ = () 
 let debug_print = noprint
 
@@ -215,7 +215,7 @@ let height_of_goals status =
     (fun open_goal ->
        h := max !h (height_of_goal open_goal status))
      open_goals;
-  debug_print (lazy ("altezza sequente: " ^ string_of_int !h));
+  noprint (lazy ("altezza sequente: " ^ string_of_int !h));
   !h
 ;;
 
@@ -231,21 +231,21 @@ let solve f status eq_cache goal =
   let gty = NCicUntrusted.apply_subst status subst ctx gty in
   let build_status (pt, _, metasenv, subst) =
     try
-      debug_print (lazy ("refining: "^(status#ppterm ctx subst metasenv pt)));
+      noprint (lazy ("refining: "^(status#ppterm ctx subst metasenv pt)));
       let stamp = Unix.gettimeofday () in 
       let metasenv, subst, pt, pty =
 	(* NCicRefiner.typeof status
           (* (status#set_coerc_db NCicCoercion.empty_db) *)
           metasenv subst ctx pt None in
-          print (lazy ("refined: "^(status#ppterm ctx subst metasenv pt)));
-          debug_print (lazy ("synt: "^(status#ppterm ctx subst metasenv pty)));
+          debug_print (lazy ("refined: "^(status#ppterm ctx subst metasenv pt)));
+          noprint (lazy ("synt: "^(status#ppterm ctx subst metasenv pty)));
           let metasenv, subst =
             NCicUnification.unify status metasenv subst ctx gty pty *)
         NCicRefiner.typeof 
           (status#set_coerc_db NCicCoercion.empty_db) 
           metasenv subst ctx pt (Some gty) 
         in 
-          debug_print (lazy (Printf.sprintf "Refined in %fs"
+          noprint (lazy (Printf.sprintf "Refined in %fs"
                      (Unix.gettimeofday() -. stamp))); 
           let status = status#set_obj (n,h,metasenv,subst,o) in
           let metasenv = List.filter (fun j,_ -> j <> goal) metasenv in
@@ -288,7 +288,7 @@ let auto_eq_check eq_cache status =
 ;;
 
 let index_local_equations eq_cache status =
-  debug_print (lazy "indexing equations");
+  noprint (lazy "indexing equations");
   let open_goals = head_goals status#stack in
   let open_goal = List.hd open_goals in
   let ngty = get_goalty status open_goal in
@@ -301,10 +301,10 @@ let index_local_equations eq_cache status =
          try
            let ty = NCicTypeChecker.typeof status [] [] ctx t in
            if is_a_fact status (mk_cic_term ctx ty) then
-             (debug_print(lazy("eq indexing " ^ (status#ppterm ctx [] [] ty)));
+             (noprint(lazy("eq indexing " ^ (status#ppterm ctx [] [] ty)));
               NCicParamod.forward_infer_step eq_cache t ty)
            else 
-             (debug_print (lazy ("not a fact: " ^ (status#ppterm ctx [] [] ty)));
+             (noprint (lazy ("not a fact: " ^ (status#ppterm ctx [] [] ty)));
               eq_cache)
          with 
            | NCicTypeChecker.TypeCheckerFailure _
@@ -447,7 +447,7 @@ let ground_instances status gl =
     List.iter
       (fun i -> 
          let (_, ctx, t, _) = List.assoc i subst in
-           debug_print (lazy (status#ppterm ctx [] [] t));
+           noprint (lazy (status#ppterm ctx [] [] t));
            List.iter 
              (fun (uri,_,_,_,_) as obj -> 
                 NCicEnvironment.invalidate_item (`Obj (uri, obj))) 
@@ -505,15 +505,15 @@ let close status g =
   let elems = IntSet.elements subset in 
   let _, ctx, ty = NCicUtils.lookup_meta g metasenv in
   let ty = NCicUntrusted.apply_subst status subst ctx ty in
-  debug_print (lazy ("metas in " ^ (status#ppterm ctx [] metasenv ty)));
-  debug_print (lazy (String.concat ", " (List.map string_of_int elems)));
+  noprint (lazy ("metas in " ^ (status#ppterm ctx [] metasenv ty)));
+  noprint (lazy (String.concat ", " (List.map string_of_int elems)));
   let submenv = List.filter (fun (x,_) -> IntSet.mem x subset) metasenv in
   let submenv = List.rev (NCicUntrusted.sort_metasenv status subst submenv) in 
 (*  
     let submenv = metasenv in
 *)
   let ty = close_wrt_metasenv status subst ty submenv in
-    debug_print (lazy (status#ppterm ctx [] [] ty));
+    noprint (lazy (status#ppterm ctx [] [] ty));
     ctx,ty
 ;;
 
@@ -575,7 +575,7 @@ let smart_apply t unit_eq status g =
       let _,_,metasenv,subst,_ = status#obj in
       let _,ctx,jty = List.assoc j metasenv in
       let jty = NCicUntrusted.apply_subst status subst ctx jty in
-        debug_print(lazy("goal " ^ (status#ppterm ctx [] [] jty)));
+        noprint(lazy("goal " ^ (status#ppterm ctx [] [] jty)));
         fast_eq_check unit_eq status j
     with
       | NCicEnvironment.ObjectNotFound s as e ->
@@ -712,8 +712,8 @@ let mk_th_cache status gl =
     (fun (status, acc) g ->
        let gty = get_goalty status g in
        let ctx = ctx_of gty in
-       debug_print(lazy("th cache for: "^ppterm status gty));
-       debug_print(lazy("th cache in: "^ppcontext status ctx));
+       noprint(lazy("th cache for: "^ppterm status gty));
+       noprint(lazy("th cache in: "^ppcontext status ctx));
        if List.mem_assq ctx acc then status, acc else
          let idx = InvRelDiscriminationTree.empty in
          let status,_,idx = 
@@ -721,7 +721,7 @@ let mk_th_cache status gl =
              (fun (status, i, idx) _ -> 
                 let t = mk_cic_term ctx (NCic.Rel i) in
                 let status, keys = keys_of_term status t in
-                debug_print(lazy("indexing: "^ppterm status t ^ ": " ^ string_of_int (List.length keys)));
+                noprint(lazy("indexing: "^ppterm status t ^ ": " ^ string_of_int (List.length keys)));
                 let idx =
                   List.fold_left (fun idx k -> 
                     InvRelDiscriminationTree.index idx k t) idx keys
@@ -732,6 +732,14 @@ let mk_th_cache status gl =
          status, (ctx, idx) :: acc)
     (status,[]) gl
 ;;
+
+let all_elements ctx cache =
+  let dummy = mk_cic_term ctx (NCic.Meta (0,(0, (NCic.Irl 0)))) in
+    try
+      let idx = List.assq ctx cache in
+      Ncic_termSet.elements 
+        (InvRelDiscriminationTree.retrieve_unifiables idx dummy)
+    with Not_found -> []
 
 let add_to_th t c ty = 
   let key_c = ctx_of t in
@@ -764,7 +772,7 @@ let rm_from_th t c ty =
 let pp_idx status idx =
    InvRelDiscriminationTree.iter idx
       (fun k set ->
-         debug_print(lazy("K: " ^ NCicInverseRelIndexable.string_of_path k));
+         noprint(lazy("K: " ^ NCicInverseRelIndexable.string_of_path k));
          Ncic_termSet.iter 
            (fun t -> debug_print(lazy("\t"^ppterm status t))) 
            set)
@@ -773,9 +781,9 @@ let pp_idx status idx =
 let pp_th (status: #NTacStatus.pstatus) = 
   List.iter 
     (fun ctx, idx ->
-       debug_print(lazy( "-----------------------------------------------"));
-       debug_print(lazy( (status#ppcontext ~metasenv:[] ~subst:[] ctx)));
-       debug_print(lazy( "||====>  "));
+       noprint(lazy( "-----------------------------------------------"));
+       noprint(lazy( (status#ppcontext ~metasenv:[] ~subst:[] ctx)));
+       noprint(lazy( "||====>  "));
        pp_idx status idx)
 ;;
 
@@ -808,6 +816,7 @@ type flags = {
 type cache =
     {facts : th_cache; (* positive results *)
      under_inspection : cic_term list * th_cache; (* to prune looping *)
+     failures : th_cache; (* to avoid repetitions *)
      unit_eq : NCicParamod.state;
      trace: Ast.term list
     }
@@ -838,8 +847,7 @@ type goal = int * sort (* goal, depth, sort *)
 type fail = goal * cic_term
 type candidate = int * Ast.term (* unique candidate number, candidate *)
 
-exception Gaveup of IntSet.t (* a sublist of unprovable conjunctive
-                                atoms of the input goals *)
+exception Gaveup of th_cache (* failure cache *)
 exception Proved of NTacStatus.tac_status * Ast.term list
 
 (* let close_failures _ c = c;; *)
@@ -849,11 +857,13 @@ exception Proved of NTacStatus.tac_status * Ast.term list
 (* let add_to_cache_and_del_from_orlist_if_green_cut _ _ c _ _ o f _ = c, o, f, false ;; *)
 (* let cache_add_underinspection c _ _ = c;; *)
 
-let init_cache ?(facts=[]) ?(under_inspection=[],[]) 
+let init_cache ?(facts=[]) ?(under_inspection=[],[])
+    ?(failures=[])
     ?(unit_eq=NCicParamod.empty_state) 
     ?(trace=[]) 
     _ = 
     {facts = facts;
+     failures = failures;
      under_inspection = under_inspection;
      unit_eq = unit_eq;
      trace = trace}
@@ -867,10 +877,10 @@ let only signature _context candidate = true
   let height = fast_height_of_term status candidate_ty in
   let rc = signature >= height in
   if rc = false then
-    debug_print (lazy ("Filtro: " ^ status#ppterm ~context:[] ~subst:[]
+    noprint (lazy ("Filtro: " ^ status#ppterm ~context:[] ~subst:[]
           ~metasenv:[] candidate ^ ": " ^ string_of_int height))
   else 
-    debug_print (lazy ("Tengo: " ^ status#ppterm ~context:[] ~subst:[]
+    noprint (lazy ("Tengo: " ^ status#ppterm ~context:[] ~subst:[]
           ~metasenv:[] candidate ^ ": " ^ string_of_int height));
 
   rc *)
@@ -887,7 +897,7 @@ let sort_candidates status ctx candidates =
     let status,t = term_of_cic_term status ct ctx in
     let ty = NCicTypeChecker.typeof status subst metasenv ctx t in
     let res = branch status (mk_cic_term ctx ty) in
-    debug_print (lazy ("branch factor for: " ^ (ppterm status ct) ^ " = " 
+    noprint (lazy ("branch factor for: " ^ (ppterm status ct) ^ " = " 
 		      ^ (string_of_int res)));
       res
   in 
@@ -895,7 +905,7 @@ let sort_candidates status ctx candidates =
   let candidates = 
      List.sort (fun (a,_) (b,_) -> a - b) candidates in 
   let candidates = List.map snd candidates in
-    debug_print (lazy ("candidates =\n" ^ (String.concat "\n" 
+    noprint (lazy ("candidates =\n" ^ (String.concat "\n" 
 	(List.map (NotationPp.pp_term status) candidates))));
     candidates
 
@@ -926,9 +936,9 @@ let try_candidate ?(smart=0) flags depth status eq_cache ctx t =
       let ty = NCicTypeChecker.typeof subst metasenv ctx ct in
       let res = branch status (mk_cic_term ctx ty) in
       if smart=1 && og_no > res then 
-	(print (lazy ("branch factor for: " ^ (ppterm status cict) ^ " = " 
+	(debug_print (lazy ("branch factor for: " ^ (ppterm status cict) ^ " = " 
 		    ^ (string_of_int res) ^ " vs. " ^ (string_of_int og_no)));
-	 print ~depth (lazy "strange application"); None)
+	 debug_print ~depth (lazy "strange application"); None)
       else *)
 	(incr candidate_no;
 	 Some ((!candidate_no,t),status))
@@ -976,14 +986,18 @@ let get_candidates ?(smart=true) depth flags status cache signature gty =
   let _,_,metasenv,subst,_ = status#obj in
   let context = ctx_of gty in
   let _, raw_gty = term_of_cic_term status gty context in
+  debug_print ~depth (lazy ("gty:" ^ NTacStatus.ppterm status gty));
   let raw_weak_gty, weak_gty  =
     if smart then
       match raw_gty with
 	| NCic.Appl _ 
 	| NCic.Const _ 
 	| NCic.Rel _ -> 
-            let weak = perforate_small status subst metasenv context raw_gty in
-              Some weak, Some (mk_cic_term context weak)
+            let raw_weak = 
+              perforate_small status subst metasenv context raw_gty in
+            let weak = mk_cic_term context raw_weak in
+            debug_print ~depth (lazy ("weak_gty:" ^ NTacStatus.ppterm status weak));
+              Some raw_weak, Some (weak)
 	| _ -> None,None
     else None,None
   in
@@ -995,7 +1009,7 @@ let get_candidates ?(smart=true) depth flags status cache signature gty =
 	  let mapf s = 
 	    let to_ast = function 
 	      | NCic.Const r when true (*is_relevant statistics r*) -> Some (Ast.NRef r)
-	      | NCic.Const _ -> None 
+	(*       | NCic.Const _ -> None  *)
 	      | _ -> assert false in
 	      HExtlib.filter_map 
 		to_ast (NDiscriminationTree.TermSet.elements s) in
@@ -1113,7 +1127,7 @@ let applicative_case depth signature status flags gty cache =
 	| NCic.Prod _ -> true, false
 	| _ -> false, NCicParamod.is_equation status metasenv subst context t 
   in
-  debug_print~depth (lazy (string_of_bool is_eq)); 
+  debug_print ~depth (lazy (string_of_bool is_eq)); 
   (* old 
   let candidates, smart_candidates = 
     get_candidates ~smart:(not is_eq) depth 
@@ -1148,10 +1162,12 @@ let applicative_case depth signature status flags gty cache =
   let sm = 0 in 
   let smart_candidates = [] in *)
   let sm = if is_eq then 0 else 2 in
-  let maxd = ((depth + 1) = flags.maxdepth) in 
+ (* wrong: we constraint maxdepth for equality goals to three *)
+ (* let maxdepth = if is_eq then min flags.maxdepth 6 else flags.maxdepth in *)
+  let maxd = (depth + 1 = flags.maxdepth) in 
   let only_one = flags.last && maxd in
-  debug_print (lazy ("only_one: " ^ (string_of_bool only_one))); 
-  debug_print (lazy ("maxd: " ^ (string_of_bool maxd)));
+  debug_print  ~depth (lazy ("only_one: " ^ (string_of_bool only_one))); 
+  debug_print  ~depth (lazy ("maxd: " ^ (string_of_bool maxd)));
   let elems =  
     List.fold_left 
       (fun elems cand ->
@@ -1159,7 +1175,7 @@ let applicative_case depth signature status flags gty cache =
          else 
            if (maxd && not(is_prod) & 
 		 not(is_a_fact_ast status subst metasenv context cand)) 
-           then (debug_print (lazy "pruned: not a fact"); elems)
+           then (debug_print  ~depth (lazy "pruned: not a fact"); elems)
          else
            match try_candidate (~smart:sm) 
              flags depth status cache.unit_eq context cand with
@@ -1176,9 +1192,9 @@ let applicative_case depth signature status flags gty cache =
          else 
            if (maxd && not(is_prod) &&
 		 not(is_a_fact_ast status subst metasenv context cand)) 
-           then (debug_print (lazy "pruned: not a fact"); elems)
+           then (debug_print  ~depth (lazy "pruned: not a fact"); elems)
          else
-           match try_candidate (~smart:1) 
+           match try_candidate (~smart:2) (* was smart:1 *)
              flags depth status cache.unit_eq context cand with
                | None -> elems
                | Some x -> x::elems)
@@ -1190,22 +1206,50 @@ let applicative_case depth signature status flags gty cache =
 exception Found
 ;;
 
+
 (* gty is supposed to be meta-closed *)
-let is_subsumed depth status gty cache =
+let is_subsumed depth filter_depth status gty cache =
   if cache=[] then false else (
   debug_print ~depth (lazy("Subsuming " ^ (ppterm status gty))); 
   let n,h,metasenv,subst,obj = status#obj in
   let ctx = ctx_of gty in
-  let _ , target = term_of_cic_term status gty ctx in
-  let target = NCicSubstitution.lift status 1 target in 
+  let _ , raw_gty = term_of_cic_term status gty ctx in
+  let target = NCicSubstitution.lift status 1 raw_gty in 
+  (* we compute candidates using the perforated type *)
+  let weak_gty  =
+    match target with
+      | NCic.Appl _ 
+      | NCic.Const _ 
+      | NCic.Rel _ -> 
+          let raw_weak = 
+            perforate_small status subst metasenv ctx raw_gty in
+          let weak = mk_cic_term ctx raw_weak in
+          debug_print ~depth (lazy ("weak_gty:" ^ NTacStatus.ppterm status weak));
+          Some (weak)
+      | _ -> None
+  in
   (* candidates must only be searched w.r.t the given context *)
   let candidates = 
     try
     let idx = List.assq ctx cache in
-      Ncic_termSet.elements 
-        (InvRelDiscriminationTree.retrieve_generalizations idx gty)
+    match weak_gty with
+      | Some weak ->
+          Ncic_termSet.elements 
+            (InvRelDiscriminationTree.retrieve_unifiables idx weak)
+      |None -> []
     with Not_found -> []
   in
+  (* this is a dirty trick: the first argument of an application is used
+     to remember at which depth a goal failed *)
+  let filter t = 
+    let ctx = ctx_of t in 
+    let _, src = term_of_cic_term status t ctx in 
+    match src with 
+     | NCic.Appl [NCic.Implicit (`Typeof d); t] 
+       when d <= depth -> Some (mk_cic_term ctx t)
+     | _ -> None in
+  let candidates = 
+    if filter_depth then HExtlib.filter_map filter candidates else candidates in  
   debug_print ~depth
     (lazy ("failure candidates: " ^ string_of_int (List.length candidates)));
     try
@@ -1329,7 +1373,7 @@ let do_something signature flags status g depth gty cache =
   if l0 <> [] then l0, cache
   else
   (* whd *)
-  let l = (*reduce ~whd:true ~depth status g @*) reduce ~whd:true ~depth status g in
+  let l = reduce ~whd:true ~depth status g in
   (* if l <> [] then l,cache else *)
   (* backward aplications *)
   let l1 = 
@@ -1385,9 +1429,9 @@ let sort_tac status =
         let g = head_goals status#stack in
         let sortedg = 
           (List.rev (MS.topological_sort g (deps status))) in
-          debug_print (lazy ("old g = " ^ 
+          noprint (lazy ("old g = " ^ 
             String.concat "," (List.map string_of_int g)));
-          debug_print (lazy ("sorted goals = " ^ 
+          noprint (lazy ("sorted goals = " ^ 
             String.concat "," (List.map string_of_int sortedg)));
           let is_it i = function
             | (_,Continuationals.Stack.Open j ) 
@@ -1493,14 +1537,14 @@ let rec auto_clusters ?(top=false)
     if depth = 0 then raise (Proved (status, cache.trace))
     else 
       let status = NTactics.merge_tac status in
-	let cache =
-	let l,tree = cache.under_inspection in
-	  match l with 
+        let cache =
+        let l,tree = cache.under_inspection in
+  	  match l with 
 	    | [] -> cache (* possible because of intros that cleans the cache *)
 	    | a::tl -> let tree = rm_from_th a tree a in
-	       {cache with under_inspection = tl,tree} 
-	in 
-	 auto_clusters flags signature cache (depth-1) status
+	      {cache with under_inspection = tl,tree} 
+        in 
+         auto_clusters flags signature cache (depth-1) status
   else if List.length goals < 2 then
     auto_main flags signature cache depth status
   else
@@ -1508,32 +1552,34 @@ let rec auto_clusters ?(top=false)
     debug_print ~depth (lazy ("goals = " ^ 
       String.concat "," (List.map string_of_int all_goals)));
     let classes = HExtlib.clusters (deps status) all_goals in
-    List.iter 
-	(fun gl ->
-	   if List.length gl > flags.maxwidth then begin
-	      debug_print ~depth (lazy "FAIL GLOBAL WIDTH"); 
-	      HLog.warn (sprintf "global width (%u) exceeded: %u"
-	         flags.maxwidth (List.length gl));
-	      raise (Gaveup IntSet.empty)
+    (* if any of the classes exceed maxwidth we fail *)
+    List.iter
+      (fun gl ->
+         if List.length gl > flags.maxwidth then 
+           begin
+	     debug_print ~depth (lazy "FAIL GLOBAL WIDTH"); 
+	     HLog.warn (sprintf "global width (%u) exceeded: %u"
+	       flags.maxwidth (List.length gl));
+	     raise (Gaveup cache.failures)
 	   end else ()) classes;
     if List.length classes = 1 then
       let flags = 
         {flags with last = (List.length all_goals = 1)} in 
 	(* no need to cluster *)
-      auto_main flags signature cache depth status 
+        auto_main flags signature cache depth status 
     else
-    let classes = if top then List.rev classes else classes in
+      let classes = if top then List.rev classes else classes in
       debug_print ~depth
         (lazy 
            (String.concat "\n" 
            (List.map
-              (fun l -> 
-                 ("cluster:" ^ String.concat "," (List.map string_of_int l)))
+             (fun l -> 
+               ("cluster:" ^ String.concat "," (List.map string_of_int l)))
            classes)));
-      let status,trace,b = 
+      (* we now process each cluster *)
+      let status,cache,b = 
         List.fold_left
-          (fun (status,trace,b) gl ->
-	     let cache = {cache with trace = trace} in
+          (fun (status,cache,b) gl ->
              let flags = 
                {flags with last = (List.length gl = 1)} in 
              let lold = List.length status#stack in 
@@ -1547,17 +1593,20 @@ let rec auto_clusters ?(top=false)
              with 
                | Proved(status,trace) -> 
 		   let status = NTactics.merge_tac status in
+	           let cache = {cache with trace = trace} in
 		   let lnew = List.length status#stack in 
 		     assert (lold = lnew);
-		   (status,trace,true)
-               | Gaveup _ when top -> (status,trace,b)
+		   (status,cache,true)
+               | Gaveup failures when top ->
+                   let cache = {cache with failures = failures} in
+                   (status,cache,b)
           )
-          (status,cache.trace,false) classes
+          (status,cache,false) classes
       in
       let rec final_merge n s =
 	if n = 0 then s else final_merge (n-1) (NTactics.merge_tac s)
       in let status = final_merge depth status 
-      in if b then raise (Proved(status,trace)) else raise (Gaveup IntSet.empty)
+      in if b then raise (Proved(status,cache.trace)) else raise (Gaveup cache.failures)
 
 and
         
@@ -1601,32 +1650,53 @@ auto_main flags signature cache depth status: unit =
           debug_print ~depth (lazy "FAIL LOCAL WIDTH");
 	  HLog.warn (sprintf "local width (%u) exceeded: %u"
 	     flags.maxwidth ng);
-	  raise (Gaveup IntSet.empty)
+	  raise (Gaveup cache.failures)
         end else if depth = flags.maxdepth then
-	  raise (Gaveup IntSet.empty)
+	  raise (Gaveup cache.failures)
         else 
         let status = NTactics.branch_tac ~force:true status in
         let g,gctx, gty = current_goal status in
         let ctx,ty = close status g in
         let closegty = mk_cic_term ctx ty in
         let status, gty = apply_subst status gctx gty in
-        debug_print ~depth (lazy("Attacking goal " ^ (string_of_int g) ^" : "^ppterm status gty)); 
-        if is_subsumed depth status closegty (snd cache.under_inspection) then 
+        debug_print ~depth (lazy("Attacking goal " ^ 
+          string_of_int g ^ " : "^ppterm status gty));
+        debug_print ~depth (lazy ("current failures: " ^ 
+          string_of_int (List.length (all_elements ctx cache.failures))));
+        let is_eq =
+           let _,_,metasenv,subst,_ = status#obj in
+           NCicParamod.is_equation status metasenv subst ctx ty in
+        (* if the goal is an equality we artificially raise its depth up to
+           flags.maxdepth - 1 *)
+        if (not flags.last && is_eq && (depth < (flags.maxdepth -1))) then
+        (* for efficiency reasons, in this case we severely cripple the
+           search depth *)
+          (debug_print ~depth (lazy ("RAISING DEPTH TO " ^ string_of_int (depth+1)));
+           auto_main flags signature cache (depth+1) status)
+        (* check for loops *)
+        else if is_subsumed depth false status closegty (snd cache.under_inspection) then 
           (debug_print ~depth (lazy "SUBSUMED");
-           raise (Gaveup IntSet.add g IntSet.empty))
+           raise (Gaveup cache.failures))
+        (* check for failures *)
+        else if is_subsumed depth true status closegty cache.failures then 
+          (debug_print ~depth (lazy "ALREADY MET");
+           raise (Gaveup cache.failures))
         else
 	let new_sig = height_of_goal g status in
         if new_sig < signature then 
-	  (debug_print (lazy ("news = " ^ (string_of_int new_sig)));
-	   debug_print (lazy ("olds = " ^ (string_of_int signature)))); 
+	  (debug_print  ~depth (lazy ("news = " ^ (string_of_int new_sig)));
+	   debug_print  ~depth (lazy ("olds = " ^ (string_of_int signature)))); 
         let alternatives, cache = 
           do_something signature flags status g depth gty cache in
         let loop_cache =
-	  let l,tree = cache.under_inspection in
-	  let l,tree = closegty::l, add_to_th closegty tree closegty in
-          {cache with under_inspection = l,tree} in 
-        List.iter 
-          (fun ((_,t),status) ->
+          if flags.last then
+	    let l,tree = cache.under_inspection in
+	    let l,tree = closegty::l, add_to_th closegty tree closegty in
+            {cache with under_inspection = l,tree}
+          else cache in 
+        let failures =
+          List.fold_left  
+          (fun allfailures ((_,t),status) ->
              debug_print ~depth 
 	       (lazy ("(re)considering goal " ^ 
 		       (string_of_int g) ^" : "^ppterm status gty)); 
@@ -1638,13 +1708,25 @@ auto_main flags signature cache depth status: unit =
                then depth, cache 
 	       else depth+1,loop_cache in 
 	     let cache = add_to_trace status ~depth cache t in
+             let cache = {cache with failures = allfailures} in
 	     try
-	       auto_clusters flags signature cache depth status
-	     with Gaveup _ ->
+	       auto_clusters flags signature cache depth status;
+               assert false;
+	     with Gaveup fail ->
 	       debug_print ~depth (lazy "Failed");
-	       ())
-	  alternatives;
-	raise (debug_print(lazy "no more candidates"); Gaveup IntSet.empty)
+	       fail)
+	  cache.failures alternatives in
+        let failures =
+          if flags.last then 
+            let newfail =
+              let dty = NCic.Appl [NCic.Implicit (`Typeof depth); ty] in
+              mk_cic_term ctx dty 
+            in 
+            prerr_endline ("FAILURE : " ^ ppterm status gty);
+            add_to_th newfail failures closegty
+          else failures in
+        debug_print ~depth (lazy "no more candidates");
+	raise (Gaveup failures)
 ;;
 
 let int name l def = 
@@ -1762,3 +1844,23 @@ let auto_tac ~params:(_,flags as params) ?trace_ref =
     fast_eq_check_tac ~params  
   else auto_tac ~params ?trace_ref
 ;;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
