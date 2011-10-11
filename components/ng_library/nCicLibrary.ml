@@ -283,32 +283,31 @@ module Serializer(D: sig type dumpable_s val get: dumpable_s -> dumpable_status 
    let aux (baseuri,fname) ~refresh_uri_in_universe:_ ~refresh_uri_in_term:_
    ~refresh_uri_in_reference:_ ~alias_only status =
      let baseuri = refresh_uri baseuri in
-     let alias_only =
-      alias_only || List.mem baseuri (get_transitively_included (D.get status))
-     in
-      (*HLog.warn ("include " ^ (if alias_only then "alias " else "") ^ fname);*)
+     if not alias_only && List.mem baseuri (get_transitively_included (D.get status)) then status
+     else
+      (HLog.warn ("include " ^ (if alias_only then "alias " else "") ^ fname);
       let status = require2 ~baseuri ~alias_only status in
-      (*HLog.warn ("done: include " ^ (if alias_only then "alias " else "") ^ fname);*)
-      status
+      HLog.warn ("done: include " ^ (if alias_only then "alias " else "") ^ fname);
+      status)
    in
     register#run "include" aux
 
   let require ~baseuri ~fname ~alias_only status =
-   let alias_only =
-    alias_only || List.mem baseuri (get_transitively_included (D.get status)) in
-   let status =
-    if not alias_only then
-     let s = D.get status in
-      D.set status
-       (s#set_dump {s#dump with dependencies = fname::s#dump.dependencies})
-    else
-     status in
-   let status = require2 ~baseuri ~alias_only status in
-   let s = D.get status in
-    D.set status
-     (s#set_dump
-       {s#dump with
-         objs = record_include (baseuri,fname)::s#dump.objs })
+   if not alias_only && List.mem baseuri (get_transitively_included (D.get status)) then status
+   else
+    (let status =
+     if not alias_only then
+      let s = D.get status in
+       D.set status
+        (s#set_dump {s#dump with dependencies = fname::s#dump.dependencies})
+     else
+      status in
+    let status = require2 ~baseuri ~alias_only status in
+    let s = D.get status in
+     D.set status
+      (s#set_dump
+        {s#dump with
+          objs = record_include (baseuri,fname)::s#dump.objs }))
 end
 
 let fetch_obj status uri =
