@@ -12,28 +12,30 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic-2/grammar/lenv_length.ma".
+include "Basic_2/grammar/lenv_length.ma".
 
-(* LOCAL ENVIRONMENT EQUALITY ***********************************************)
+(* LOCAL ENVIRONMENT REFINEMENT FOR SUBSTITUTION ****************************)
 
-inductive leq: nat → nat → relation lenv ≝
-| leq_sort: ∀d,e. leq d e (⋆) (⋆)
-| leq_OO:   ∀L1,L2. leq 0 0 L1 L2
-| leq_eq:   ∀L1,L2,I,V,e. leq 0 e L1 L2 →
-            leq 0 (e + 1) (L1. 𝕓{I} V) (L2.𝕓{I} V)
-| leq_skip: ∀L1,L2,I1,I2,V1,V2,d,e.
-            leq d e L1 L2 → leq (d + 1) e (L1. 𝕓{I1} V1) (L2. 𝕓{I2} V2)
+inductive lsubs: nat → nat → relation lenv ≝
+| lsubs_sort: ∀d,e. lsubs d e (⋆) (⋆)
+| lsubs_OO:   ∀L1,L2. lsubs 0 0 L1 L2
+| lsubs_abbr: ∀L1,L2,V,e. lsubs 0 e L1 L2 →
+              lsubs 0 (e + 1) (L1. 𝕓{Abbr} V) (L2.𝕓{Abbr} V)
+| lsubs_abst: ∀L1,L2,I,V1,V2,e. lsubs 0 e L1 L2 →
+              lsubs 0 (e + 1) (L1. 𝕓{Abst} V1) (L2.𝕓{I} V2)
+| lsubs_skip: ∀L1,L2,I1,I2,V1,V2,d,e.
+              lsubs d e L1 L2 → lsubs (d + 1) e (L1. 𝕓{I1} V1) (L2. 𝕓{I2} V2)
 .
 
-interpretation "local environment equality" 'Eq L1 d e L2 = (leq d e L1 L2).
+interpretation "local environment refinement (substitution)" 'SubEq L1 d e L2 = (lsubs d e L1 L2).
 
-definition leq_repl_dx: ∀S. (lenv → relation S) → Prop ≝ λS,R.
-                        ∀L1,s1,s2. R L1 s1 s2 →
-                        ∀L2,d,e. L1 [d, e]≈ L2 → R L2 s1 s2.
+definition lsubs_conf: ∀S. (lenv → relation S) → Prop ≝ λS,R.
+                       ∀L1,s1,s2. R L1 s1 s2 →
+                       ∀L2,d,e. L1 [d, e] ≼ L2 → R L2 s1 s2.
 
 (* Basic properties *********************************************************)
 
-lemma TC_leq_repl_dx: ∀S,R. leq_repl_dx S R → leq_repl_dx S (λL. (TC … (R L))).
+lemma TC_lsubs_conf: ∀S,R. lsubs_conf S R → lsubs_conf S (λL. (TC … (R L))).
 #S #R #HR #L1 #s1 #s2 #H elim H -H s2
 [ /3 width=5/
 | #s #s2 #_ #Hs2 #IHs1 #L2 #d #e #HL12
@@ -41,19 +43,20 @@ lemma TC_leq_repl_dx: ∀S,R. leq_repl_dx S R → leq_repl_dx S (λL. (TC … (R
 ]
 qed.
 
-lemma leq_refl: ∀d,e,L. L [d, e] ≈ L.
+lemma lsubs_eq: ∀L1,L2,e. L1 [0, e] ≼ L2 → ∀I,V.
+                L1. 𝕓{I} V [0, e + 1] ≼ L2.𝕓{I} V.
+#L1 #L2 #e #HL12 #I #V elim I -I /2/
+qed.
+
+lemma lsubs_refl: ∀d,e,L. L [d, e] ≼ L.
 #d elim d -d
 [ #e elim e -e // #e #IHe #L elim L -L /2/
 | #d #IHd #e #L elim L -L /2/
 ]
 qed.
 
-lemma leq_sym: ∀L1,L2,d,e. L1 [d, e] ≈ L2 → L2 [d, e] ≈ L1.
-#L1 #L2 #d #e #H elim H -H L1 L2 d e /2/
-qed.
-
-lemma leq_skip_lt: ∀L1,L2,d,e. L1 [d - 1, e] ≈ L2 → 0 < d →
-                   ∀I1,I2,V1,V2. L1. 𝕓{I1} V1 [d, e] ≈ L2. 𝕓{I2} V2.
+lemma lsubs_skip_lt: ∀L1,L2,d,e. L1 [d - 1, e] ≼ L2 → 0 < d →
+                     ∀I1,I2,V1,V2. L1. 𝕓{I1} V1 [d, e] ≼ L2. 𝕓{I2} V2.
 
 #L1 #L2 #d #e #HL12 #Hd >(plus_minus_m_m d 1) /2/
 qed.

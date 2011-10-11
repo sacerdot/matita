@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic-2/substitution/ltps_tps.ma".
-include "Basic-2/unfold/tpss_tpss.ma".
+include "Basic_2/substitution/ltps_tps.ma".
+include "Basic_2/unfold/tpss_tpss.ma".
 
 (* PARTIAL UNFOLD ON TERMS **************************************************)
 
@@ -71,15 +71,15 @@ fact ltps_tps_trans_eq_aux: ∀Y1,X2,L1,T2,U2,d,e.
   elim (ltps_inv_tps22 … H ?) -H [2: /2/ ] #K0 #V0 #HK01 #HV01 #H destruct -X;
   lapply (tps_fwd_tw … HV01) #H2
   lapply (transitive_le (#[K1] + #[V0]) … H1) -H1 [ /2/ ] -H2 #H
-  lapply (IH … HV01 … HK01 ? ?) -IH HV01 HK01 [1,3: // |2,4: skip | /2/ | /3 width=6/ ]
+  lapply (IH … HV01 … HK01 ? ?) -IH HV01 HK01 [1,3: // |2,4: skip | normalize /2/ | /3 width=6/ ]
 | #L #I #V1 #V2 #T1 #T2 #d #e #HV12 #HT12 #L0 #HL0 #H1 #H2 destruct -Y1 X2;
-  lapply (tps_leq_repl_dx … HT12 (L. 𝕓{I} V1) ?) -HT12 /2/ #HT12
-  lapply (IH … HV12 … HL0 ? ?) -HV12 [1,3,5: // |2,4: skip ] #HV12
+  lapply (tps_lsubs_conf … HT12 (L. 𝕓{I} V1) ?) -HT12 /2/ #HT12
+  lapply (IH … HV12 … HL0 ? ?) -HV12 [1,3,5: normalize // |2,4: skip ] #HV12
   lapply (IH … HT12 (L0. 𝕓{I} V1) ? ? ?) -IH HT12 [1,3,5: /2/ |2,4: skip | normalize // ] -HL0 #HT12
-  lapply (tpss_leq_repl_dx … HT12 (L0. 𝕓{I} V2) ?) -HT12 /2/
+  lapply (tpss_lsubs_conf … HT12 (L0. 𝕓{I} V2) ?) -HT12 /2/
 | #L #I #V1 #V2 #T1 #T2 #d #e #HV12 #HT12 #L0 #HL0 #H1 #H2 destruct -Y1 X2;
-  lapply (IH … HV12 … HL0 ? ?) -HV12 [1,3,5: // |2,4: skip ]
-  lapply (IH … HT12 … HL0 ? ?) -IH HT12 [1,3,5: // |2,4: skip ] -HL0 /2/
+  lapply (IH … HV12 … HL0 ? ?) -HV12 [1,3,5: normalize // |2,4: skip ]
+  lapply (IH … HT12 … HL0 ? ?) -IH HT12 [1,3,5: normalize // |2,4: skip ] -HL0 /2/
 ]
 qed.
 

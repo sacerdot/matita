@@ -12,13 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic-2/grammar/lenv_weight.ma".
-include "Basic-2/grammar/leq.ma".
-include "Basic-2/substitution/lift.ma".
+include "Basic_2/grammar/lenv_weight.ma".
+include "Basic_2/grammar/lsubs.ma".
+include "Basic_2/substitution/lift.ma".
 
 (* DROPPING *****************************************************************)
 
-(* Basic-1: includes: drop_skip_bind *)
+(* Basic_1: includes: drop_skip_bind *)
 inductive drop: nat → nat → relation lenv ≝
 | drop_atom: ∀d,e. drop d e (⋆) (⋆)
 | drop_pair: ∀L,I,V. drop 0 0 (L. 𝕓{I} V) (L. 𝕓{I} V)
@@ -43,7 +43,7 @@ fact drop_inv_refl_aux: ∀d,e,L1,L2. ↓[d, e] L1 ≡ L2 → d = 0 → e = 0 �
 ]
 qed.
 
-(* Basic-1: was: drop_gen_refl *)
+(* Basic_1: was: drop_gen_refl *)
 lemma drop_inv_refl: ∀L1,L2. ↓[0, 0] L1 ≡ L2 → L1 = L2.
 /2 width=5/ qed.
 
@@ -57,7 +57,7 @@ fact drop_inv_atom1_aux: ∀d,e,L1,L2. ↓[d, e] L1 ≡ L2 → L1 = ⋆ →
 ]
 qed.
 
-(* Basic-1: was: drop_gen_sort *)
+(* Basic_1: was: drop_gen_sort *)
 lemma drop_inv_atom1: ∀d,e,L2. ↓[d, e] ⋆ ≡ L2 → L2 = ⋆.
 /2 width=5/ qed.
 
@@ -78,7 +78,7 @@ lemma drop_inv_O1: ∀e,K,I,V,L2. ↓[0, e] K. 𝕓{I} V ≡ L2 →
                    (0 < e ∧ ↓[0, e - 1] K ≡ L2).
 /2/ qed.
 
-(* Basic-1: was: drop_gen_drop *)
+(* Basic_1: was: drop_gen_drop *)
 lemma drop_inv_drop1: ∀e,K,I,V,L2.
                       ↓[0, e] K. 𝕓{I} V ≡ L2 → 0 < e → ↓[0, e - 1] K ≡ L2.
 #e #K #I #V #L2 #H #He
@@ -100,7 +100,7 @@ fact drop_inv_skip1_aux: ∀d,e,L1,L2. ↓[d, e] L1 ≡ L2 → 0 < d →
 ]
 qed.
 
-(* Basic-1: was: drop_gen_skip_l *)
+(* Basic_1: was: drop_gen_skip_l *)
 lemma drop_inv_skip1: ∀d,e,I,K1,V1,L2. ↓[d, e] K1. 𝕓{I} V1 ≡ L2 → 0 < d →
                       ∃∃K2,V2. ↓[d - 1, e] K1 ≡ K2 &
                                ↑[d - 1, e] V2 ≡ V1 & 
@@ -121,7 +121,7 @@ fact drop_inv_skip2_aux: ∀d,e,L1,L2. ↓[d, e] L1 ≡ L2 → 0 < d →
 ]
 qed.
 
-(* Basic-1: was: drop_gen_skip_r *)
+(* Basic_1: was: drop_gen_skip_r *)
 lemma drop_inv_skip2: ∀d,e,I,L1,K2,V2. ↓[d, e] L1 ≡ K2. 𝕓{I} V2 → 0 < d →
                       ∃∃K1,V1. ↓[d - 1, e] K1 ≡ K2 & ↑[d - 1, e] V2 ≡ V1 &
                                L1 = K1. 𝕓{I} V1.
@@ -129,7 +129,7 @@ lemma drop_inv_skip2: ∀d,e,I,L1,K2,V2. ↓[d, e] L1 ≡ K2. 𝕓{I} V2 → 0 <
 
 (* Basic properties *********************************************************)
 
-(* Basic-1: was by definition: drop_refl *)
+(* Basic_1: was by definition: drop_refl *)
 lemma drop_refl: ∀L. ↓[0, 0] L ≡ L.
 #L elim L -L //
 qed.
@@ -139,24 +139,29 @@ lemma drop_drop_lt: ∀L1,L2,I,V,e.
 #L1 #L2 #I #V #e #HL12 #He >(plus_minus_m_m e 1) /2/
 qed.
 
-lemma drop_leq_drop1: ∀L1,L2,d,e. L1 [d, e] ≈ L2 →
-                      ∀I,K1,V,i. ↓[0, i] L1 ≡ K1. 𝕓{I} V →
-                      d ≤ i → i < d + e →
-                      ∃∃K2. K1 [0, d + e - i - 1] ≈ K2 &
-                            ↓[0, i] L2 ≡ K2. 𝕓{I} V.
+lemma drop_lsubs_drop1_abbr: ∀L1,L2,d,e. L1 [d, e] ≼ L2 →
+                             ∀K1,V,i. ↓[0, i] L1 ≡ K1. 𝕓{Abbr} V →
+                             d ≤ i → i < d + e →
+                             ∃∃K2. K1 [0, d + e - i - 1] ≼ K2 &
+                                   ↓[0, i] L2 ≡ K2. 𝕓{Abbr} V.
 #L1 #L2 #d #e #H elim H -H L1 L2 d e
-[ #d #e #I #K1 #V #i #H
+[ #d #e #K1 #V #i #H
   lapply (drop_inv_atom1 … H) -H #H destruct
-| #L1 #L2 #I #K1 #V #i #_ #_ #H
+| #L1 #L2 #K1 #V #i #_ #_ #H
   elim (lt_zero_false … H)
-| #L1 #L2 #I #V #e #HL12 #IHL12 #J #K1 #W #i #H #_ #Hie
+| #L1 #L2 #V #e #HL12 #IHL12 #K1 #W #i #H #_ #Hie
   elim (drop_inv_O1 … H) -H * #Hi #HLK1
-  [ -IHL12 Hie; destruct -i K1 J W;
+  [ -IHL12 Hie; destruct -i K1 W;
     <minus_n_O <minus_plus_m_m /2/
   | -HL12;
     elim (IHL12 … HLK1 ? ?) -IHL12 HLK1 // [2: /2/ ] -Hie >arith_g1 // /3/
   ]
-| #L1 #L2 #I1 #I2 #V1 #V2 #d #e #_ #IHL12 #I #K1 #V #i #H #Hdi >plus_plus_comm_23 #Hide
+| #L1 #L2 #I #V1 #V2 #e #_ #IHL12 #K1 #W #i #H #_ #Hie
+  elim (drop_inv_O1 … H) -H * #Hi #HLK1
+  [ -IHL12 Hie Hi; destruct
+  | elim (IHL12 … HLK1 ? ?) -IHL12 HLK1 // [2: /2/ ] -Hie >arith_g1 // /3/
+  ]
+| #L1 #L2 #I1 #I2 #V1 #V2 #d #e #_ #IHL12 #K1 #V #i #H #Hdi >plus_plus_comm_23 #Hide
   lapply (plus_S_le_to_pos … Hdi) #Hi
   lapply (drop_inv_drop1 … H ?) -H // #HLK1
   elim (IHL12 … HLK1 ? ?) -IHL12 HLK1 [2: /2/ |3: /2/ ] -Hdi Hide >arith_g1 // /3/
@@ -165,7 +170,7 @@ qed.
 
 (* Basic forvard lemmas *****************************************************)
 
-(* Basic-1: was: drop_S *)
+(* Basic_1: was: drop_S *)
 lemma drop_fwd_drop2: ∀L1,I2,K2,V2,e. ↓[O, e] L1 ≡ K2. 𝕓{I2} V2 →
                       ↓[O, e + 1] L1 ≡ K2.
 #L1 elim L1 -L1
@@ -210,7 +215,7 @@ lemma drop_fwd_O1_length: ∀L1,L2,e. ↓[0, e] L1 ≡ L2 → |L2| = |L1| - e.
 ]
 qed.
 
-(* Basic-1: removed theorems 49:
+(* Basic_1: removed theorems 49:
             drop_skip_flat
             cimp_flat_sx cimp_flat_dx cimp_bind cimp_getl_conf
             drop_clear drop_clear_O drop_clear_S

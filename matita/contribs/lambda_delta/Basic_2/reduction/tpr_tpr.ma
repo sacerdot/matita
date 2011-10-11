@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic-2/reduction/tpr_tps.ma".
+include "Basic_2/reduction/tpr_tpss.ma".
 
 (* CONTEXT-FREE PARALLEL REDUCTION ON TERMS *********************************)
 
@@ -115,7 +115,7 @@ elim (IH … HV01 … HV02) -HV01 HV02 //
 elim (IH … HT01 … HT02) -HT01 HT02 IH /3 width=5/
 qed.
 
-(* Basic-1: was: pr0_cong_delta pr0_delta_delta *)
+(* Basic_1: was: pr0_cong_delta pr0_delta_delta *)
 fact tpr_conf_delta_delta:
    ∀I1,V0,V1,T0,T1,TT1,V2,T2,TT2. (
       ∀X0:term. #[X0] < #[V0] + #[T0] + 1 →
@@ -151,7 +151,7 @@ lapply (tw_lift … HTT20) -HTT20 #HTT20
 elim (IH … HTX2 … HTT2) -HTX2 HTT2 IH /3/
 qed.
 
-(* Basic-1: was: pr0_upsilon_upsilon *)
+(* Basic_1: was: pr0_upsilon_upsilon *)
 fact tpr_conf_theta_theta:
    ∀VV1,V0,V1,W0,W1,T0,T1,V2,VV2,W2,T2. (
       ∀X0:term. #[X0] < #[V0] + (#[W0] + #[T0] + 1) + 1 →
@@ -275,12 +275,12 @@ fact tpr_conf_aux:
     @ex2_1_comm /3 width=6 by tpr_conf_flat_cast/
 (* case 17: tau, tau *)
   | #HT02
-    /2 by tpr_conf_tau_tau/
+    /3 width=5 by tpr_conf_tau_tau/
   ]
 ]
 qed.
 
-(* Basic-1: was: pr0_confluence *)
+(* Basic_1: was: pr0_confluence *)
 theorem tpr_conf: ∀T0:term. ∀T1,T2. T0 ⇒ T1 → T0 ⇒ T2 →
                   ∃∃T. T1 ⇒ T & T2 ⇒ T.
 #T @(tw_wf_ind … T) -T /3 width=6 by tpr_conf_aux/

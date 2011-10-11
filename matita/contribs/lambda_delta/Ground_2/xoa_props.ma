@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Ground-2/xoa_notation.ma".
-include "Ground-2/xoa.ma".
+include "Ground_2/xoa_notation.ma".
+include "Ground_2/xoa.ma".
 
 lemma ex2_1_comm: ∀A0. ∀P0,P1:A0→Prop. (∃∃x0. P0 x0 & P1 x0) → ∃∃x0. P1 x0 & P0 x0.
 #A0 #P0 #P1 * /2/

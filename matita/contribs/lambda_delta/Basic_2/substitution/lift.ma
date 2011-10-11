@@ -12,11 +12,11 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic-2/grammar/term_weight.ma".
+include "Basic_2/grammar/term_weight.ma".
 
 (* RELOCATION ***************************************************************)
 
-(* Basic-1: includes:
+(* Basic_1: includes:
             lift_sort lift_lref_lt lift_lref_ge lift_bind lift_flat
 *)
 inductive lift: nat → nat → relation term ≝
@@ -35,12 +35,12 @@ interpretation "relocation" 'RLift d e T1 T2 = (lift d e T1 T2).
 
 (* Basic properties *********************************************************)
 
-(* Basic-1: was: lift_lref_gt *)
+(* Basic_1: was: lift_lref_gt *)
 lemma lift_lref_ge_minus: ∀d,e,i. d + e ≤ i → ↑[d, e] #(i - e) ≡ #i.
 #d #e #i #H >(plus_minus_m_m i e) in ⊢ (? ? ? ? %) /3/
 qed.
 
-(* Basic-1: was: lift_r *)
+(* Basic_1: was: lift_r *)
 lemma lift_refl: ∀T,d. ↑[d, 0] T ≡ T.
 #T elim T -T
 [ * #i // #d elim (lt_or_ge i d) /2/
@@ -59,7 +59,7 @@ lemma lift_total: ∀T1,d,e. ∃T2. ↑[d,e] T1 ≡ T2.
 ]
 qed.
 
-(* Basic-1: was: lift_free (right to left) *)
+(* Basic_1: was: lift_free (right to left) *)
 lemma lift_split: ∀d1,e2,T1,T2. ↑[d1, e2] T1 ≡ T2 → ∀d2,e1.
                                 d1 ≤ d2 → d2 ≤ d1 + e1 → e1 ≤ e2 →
                                 ∃∃T. ↑[d1, e1] T1 ≡ T & ↑[d2, e2 - e1] T ≡ T2.
@@ -176,7 +176,7 @@ fact lift_inv_sort2_aux: ∀d,e,T1,T2. ↑[d,e] T1 ≡ T2 → ∀k. T2 = ⋆k �
 ]
 qed.
 
-(* Basic-1: was: lift_gen_sort *)
+(* Basic_1: was: lift_gen_sort *)
 lemma lift_inv_sort2: ∀d,e,T1,k. ↑[d,e] T1 ≡ ⋆k → T1 = ⋆k.
 /2 width=5/ qed.
 
@@ -191,21 +191,21 @@ fact lift_inv_lref2_aux: ∀d,e,T1,T2. ↑[d,e] T1 ≡ T2 → ∀i. T2 = #i →
 ]
 qed.
 
-(* Basic-1: was: lift_gen_lref *)
+(* Basic_1: was: lift_gen_lref *)
 lemma lift_inv_lref2: ∀d,e,T1,i. ↑[d,e] T1 ≡ #i →
                       (i < d ∧ T1 = #i) ∨ (d + e ≤ i ∧ T1 = #(i - e)).
 /2/ qed.
 
-(* Basic-1: was: lift_gen_lref_lt *)
+(* Basic_1: was: lift_gen_lref_lt *)
 lemma lift_inv_lref2_lt: ∀d,e,T1,i. ↑[d,e] T1 ≡ #i → i < d → T1 = #i.
 #d #e #T1 #i #H elim (lift_inv_lref2 … H) -H * //
 #Hdi #_ #Hid lapply (le_to_lt_to_lt … Hdi Hid) -Hdi Hid #Hdd
 elim (plus_lt_false … Hdd)
 qed.
 
-(* Basic-1: was: lift_gen_lref_false *)
+(* Basic_1: was: lift_gen_lref_false *)
 
-(* Basic-1: was: lift_gen_lref_ge *)
+(* Basic_1: was: lift_gen_lref_ge *)
 lemma lift_inv_lref2_ge: ∀d,e,T1,i. ↑[d,e] T1 ≡ #i → d + e ≤ i → T1 = #(i - e).
 #d #e #T1 #i #H elim (lift_inv_lref2 … H) -H * //
 #Hid #_ #Hdi lapply (le_to_lt_to_lt … Hdi Hid) -Hdi Hid #Hdd
@@ -225,7 +225,7 @@ fact lift_inv_bind2_aux: ∀d,e,T1,T2. ↑[d,e] T1 ≡ T2 →
 ]
 qed.
 
-(* Basic-1: was: lift_gen_bind *)
+(* Basic_1: was: lift_gen_bind *)
 lemma lift_inv_bind2: ∀d,e,T1,I,V2,U2. ↑[d,e] T1 ≡  𝕓{I} V2. U2 →
                       ∃∃V1,U1. ↑[d,e] V1 ≡ V2 & ↑[d+1,e] U1 ≡ U2 &
                                T1 = 𝕓{I} V1. U1.
@@ -244,13 +244,13 @@ fact lift_inv_flat2_aux: ∀d,e,T1,T2. ↑[d,e] T1 ≡ T2 →
 ]
 qed.
 
-(* Basic-1: was: lift_gen_flat *)
+(* Basic_1: was: lift_gen_flat *)
 lemma lift_inv_flat2: ∀d,e,T1,I,V2,U2. ↑[d,e] T1 ≡  𝕗{I} V2. U2 →
                       ∃∃V1,U1. ↑[d,e] V1 ≡ V2 & ↑[d,e] U1 ≡ U2 &
                                T1 = 𝕗{I} V1. U1.
 /2/ qed.
 
-(* Basic-1: removed theorems 7:
+(* Basic_1: removed theorems 7:
             lift_head lift_gen_head
             lift_weight_map lift_weight lift_weight_add lift_weight_add_O
             lift_tlt_dx

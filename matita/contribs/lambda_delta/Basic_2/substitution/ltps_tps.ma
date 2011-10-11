@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic-2/substitution/tps_lift.ma".
-include "Basic-2/substitution/ltps_drop.ma".
+include "Basic_2/substitution/tps_lift.ma".
+include "Basic_2/substitution/ltps_drop.ma".
 
 (* PARALLEL SUBSTITUTION ON LOCAL ENVIRONMENTS ******************************)
 
@@ -31,7 +31,7 @@ lemma ltps_tps_conf_ge: ∀L0,T2,U2,d2,e2. L0 ⊢ T2 [d2, e2] ≫ U2 →
 ]
 qed.
 
-(* Basic-1: was: subst1_subst1_back *)
+(* Basic_1: was: subst1_subst1_back *)
 lemma ltps_tps_conf: ∀L0,T2,U2,d2,e2. L0 ⊢ T2 [d2, e2] ≫ U2 →
                      ∀L1,d1,e1. L0 [d1, e1] ≫ L1 →
                      ∃∃T. L1 ⊢ T2 [d2, e2] ≫ T &
@@ -78,7 +78,7 @@ lemma ltps_tps_trans_ge: ∀L0,T2,U2,d2,e2. L0 ⊢ T2 [d2, e2] ≫ U2 →
 ]
 qed.
 
-(* Basic-1: was: subst1_subst1 *)
+(* Basic_1: was: subst1_subst1 *)
 lemma ltps_tps_trans: ∀L0,T2,U2,d2,e2. L0 ⊢ T2 [d2, e2] ≫ U2 →
                       ∀L1,d1,e1. L1 [d1, e1] ≫ L0 →
                       ∃∃T. L1 ⊢ T2 [d2, e2] ≫ T &

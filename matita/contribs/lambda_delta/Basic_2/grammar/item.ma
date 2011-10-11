@@ -20,9 +20,9 @@
  * [ suggested invocation to start formal specifications with ]
  *)
 
-include "Ground-2/list.ma".
-include "Ground-2/star.ma".
-include "Basic-2/notation.ma".
+include "Ground_2/list.ma".
+include "Ground_2/star.ma".
+include "Basic_2/notation.ma".
 
 (* ITEMS ********************************************************************)
 
@@ -54,7 +54,7 @@ coercion item2_of_bind2: ∀I:bind2.item2 ≝ Bind on _I:bind2 to item2.
 
 coercion item2_of_flat2: ∀I:flat2.item2 ≝ Flat on _I:flat2 to item2.
 
-(* Basic-1: removed theorems 19:
+(* Basic_1: removed theorems 19:
             s_S s_plus s_plus_sym s_minus minus_s_s s_le s_lt s_inj s_inc
             s_arith0 s_arith1
             r_S r_plus r_plus_sym r_minus r_dis s_r r_arith0 r_arith1

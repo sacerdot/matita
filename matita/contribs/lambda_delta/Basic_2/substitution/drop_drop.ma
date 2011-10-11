@@ -12,14 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic-2/substitution/lift_lift.ma".
-include "Basic-2/substitution/drop.ma".
+include "Basic_2/substitution/lift_lift.ma".
+include "Basic_2/substitution/drop.ma".
 
 (* DROPPING *****************************************************************)
 
 (* Main properties **********************************************************)
 
-(* Basic-1: was: drop_mono *)
+(* Basic_1: was: drop_mono *)
 theorem drop_mono: ∀d,e,L,L1. ↓[d, e] L ≡ L1 →
                    ∀L2. ↓[d, e] L ≡ L2 → L1 = L2.
 #d #e #L #L1 #H elim H -H d e L L1
@@ -36,7 +36,7 @@ theorem drop_mono: ∀d,e,L,L1. ↓[d, e] L ≡ L1 →
 ]
 qed.
 
-(* Basic-1: was: drop_conf_ge *)
+(* Basic_1: was: drop_conf_ge *)
 theorem drop_conf_ge: ∀d1,e1,L,L1. ↓[d1, e1] L ≡ L1 →
                       ∀e2,L2. ↓[0, e2] L ≡ L2 → d1 + e1 ≤ e2 →
                       ↓[0, e2 - e1] L1 ≡ L2.
@@ -55,7 +55,7 @@ theorem drop_conf_ge: ∀d1,e1,L,L1. ↓[d1, e1] L ≡ L1 →
 ]
 qed.
 
-(* Basic-1: was: drop_conf_lt *)
+(* Basic_1: was: drop_conf_lt *)
 theorem drop_conf_lt: ∀d1,e1,L,L1. ↓[d1, e1] L ≡ L1 →
                       ∀e2,K2,I,V2. ↓[0, e2] L ≡ K2. 𝕓{I} V2 →
                       e2 < d1 → let d ≝ d1 - e2 - 1 in
@@ -77,7 +77,7 @@ theorem drop_conf_lt: ∀d1,e1,L,L1. ↓[d1, e1] L ≡ L1 →
 ]
 qed.
 
-(* Basic-1: was: drop_trans_le *)
+(* Basic_1: was: drop_trans_le *)
 theorem drop_trans_le: ∀d1,e1,L1,L. ↓[d1, e1] L1 ≡ L →
                        ∀e2,L2. ↓[0, e2] L ≡ L2 → e2 ≤ d1 →
                        ∃∃L0. ↓[0, e2] L1 ≡ L0 & ↓[d1 - e2, e1] L0 ≡ L2.
@@ -100,7 +100,7 @@ theorem drop_trans_le: ∀d1,e1,L1,L. ↓[d1, e1] L1 ≡ L →
 ]
 qed.
 
-(* Basic-1: was: drop_trans_ge *)
+(* Basic_1: was: drop_trans_ge *)
 theorem drop_trans_ge: ∀d1,e1,L1,L. ↓[d1, e1] L1 ≡ L →
                        ∀e2,L2. ↓[0, e2] L ≡ L2 → d1 ≤ e2 → ↓[0, e1 + e2] L1 ≡ L2.
 #d1 #e1 #L1 #L #H elim H -H d1 e1 L1 L
@@ -122,6 +122,6 @@ theorem drop_trans_ge_comm: ∀d1,e1,e2,L1,L2,L.
 #e1 #e1 #e2 >commutative_plus /2 width=5/
 qed.
 
-(* Basic-1: was: drop_conf_rev *)
+(* Basic_1: was: drop_conf_rev *)
 axiom drop_div: ∀e1,L1,L. ↓[0, e1] L1 ≡ L → ∀e2,L2. ↓[0, e2] L2 ≡ L →
                 ∃∃L0. ↓[0, e1] L0 ≡ L2 & ↓[e1, e2] L0 ≡ L1.

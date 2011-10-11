@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic-2/unfold/ltpss_tpss.ma".
+include "Basic_2/unfold/ltpss_tpss.ma".
 
 (* PARTIAL UNFOLD ON LOCAL ENVIRONMENTS *************************************)
 

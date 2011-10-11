@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic-2/substitution/tps_lift.ma".
-include "Basic-2/unfold/tpss.ma".
+include "Basic_2/substitution/tps_lift.ma".
+include "Basic_2/unfold/tpss.ma".
 
 (* PARTIAL UNFOLD ON TERMS **************************************************)
 

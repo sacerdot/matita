@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic-2/grammar/cl_weight.ma".
-include "Basic-2/substitution/drop.ma".
+include "Basic_2/grammar/cl_weight.ma".
+include "Basic_2/substitution/drop.ma".
 
 (* PARALLEL SUBSTITUTION ON TERMS *******************************************)
 
@@ -34,12 +34,12 @@ interpretation "parallel substritution (term)"
 
 (* Basic properties *********************************************************)
 
-lemma tps_leq_repl_dx: ∀L1,T1,T2,d,e. L1 ⊢ T1 [d, e] ≫ T2 →
-                       ∀L2. L1 [d, e] ≈ L2 → L2 ⊢ T1 [d, e] ≫ T2.
+lemma tps_lsubs_conf: ∀L1,T1,T2,d,e. L1 ⊢ T1 [d, e] ≫ T2 →
+                      ∀L2. L1 [d, e] ≼ L2 → L2 ⊢ T1 [d, e] ≫ T2.
 #L1 #T1 #T2 #d #e #H elim H -H L1 T1 T2 d e
 [ //
 | #L1 #K1 #V #W #i #d #e #Hdi #Hide #HLK1 #HVW #L2 #HL12
-  elim (drop_leq_drop1 … HL12 … HLK1 ? ?) -HL12 HLK1 // /2/
+  elim (drop_lsubs_drop1_abbr … HL12 … HLK1 ? ?) -HL12 HLK1 // /2/
 | /4/
 | /3/
 ]
@@ -99,7 +99,7 @@ lemma tps_split_up: ∀L,T1,T2,d,e. L ⊢ T1 [d, e] ≫ T2 → ∀i. d ≤ i →
   elim (IHV12 i ? ?) -IHV12 // #V #HV1 #HV2
   elim (IHT12 (i + 1) ? ?) -IHT12 [2: /2 by arith4/ |3: /2/ ] (* just /2/ is too slow *)
   -Hdi Hide >arith_c1 >arith_c1x #T #HT1 #HT2
-  lapply (tps_leq_repl_dx … HT1 (L. 𝕓{I} V) ?) -HT1 /3 width=5/
+  lapply (tps_lsubs_conf … HT1 (L. 𝕓{I} V) ?) -HT1 /3 width=5/
 | #L #I #V1 #V2 #T1 #T2 #d #e #_ #_ #IHV12 #IHT12 #i #Hdi #Hide
   elim (IHV12 i ? ?) -IHV12 // elim (IHT12 i ? ?) -IHT12 //
   -Hdi Hide /3 width=5/
@@ -131,14 +131,14 @@ lemma tps_inv_atom1: ∀L,T2,I,d,e. L ⊢ 𝕒{I} [d, e] ≫ T2 →
 /2/ qed.
 
 
-(* Basic-1: was: subst1_gen_sort *)
+(* Basic_1: was: subst1_gen_sort *)
 lemma tps_inv_sort1: ∀L,T2,k,d,e. L ⊢ ⋆k [d, e] ≫ T2 → T2 = ⋆k.
 #L #T2 #k #d #e #H
 elim (tps_inv_atom1 … H) -H //
 * #K #V #i #_ #_ #_ #_ #H destruct
 qed.
 
-(* Basic-1: was: subst1_gen_lref *)
+(* Basic_1: was: subst1_gen_lref *)
 lemma tps_inv_lref1: ∀L,T2,i,d,e. L ⊢ #i [d, e] ≫ T2 →
                      T2 = #i ∨
                      ∃∃K,V. d ≤ i & i < d + e &
@@ -210,7 +210,7 @@ lemma tps_fwd_tw: ∀L,T1,T2,d,e. L ⊢ T1 [d, e] ≫ T2 → #[T1] ≤ #[T2].
 ] 
 qed.
 
-(* Basic-1: removed theorems 25:
+(* Basic_1: removed theorems 25:
             subst0_gen_sort subst0_gen_lref subst0_gen_head subst0_gen_lift_lt
             subst0_gen_lift_false subst0_gen_lift_ge subst0_refl subst0_trans
             subst0_lift_lt subst0_lift_ge subst0_lift_ge_S subst0_lift_ge_s

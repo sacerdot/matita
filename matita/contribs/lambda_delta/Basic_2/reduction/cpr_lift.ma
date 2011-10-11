@@ -12,9 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic-2/unfold/tpss_lift.ma".
-include "Basic-2/reduction/tpr_lift.ma".
-include "Basic-2/reduction/cpr.ma".
+include "Basic_2/unfold/tpss_lift.ma".
+include "Basic_2/reduction/tpr_lift.ma".
+include "Basic_2/reduction/cpr.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL REDUCTION ON TERMS ****************************)
 
@@ -29,7 +29,7 @@ qed.
 
 (* Advanced inversion lemmas ************************************************)
 
-(* Basic-1: was: pr2_gen_lref *)
+(* Basic_1: was: pr2_gen_lref *)
 lemma cpr_inv_lref1: ∀L,T2,i. L ⊢ #i ⇒ T2 →
                      T2 = #i ∨
                      ∃∃K,V1,T1. ↓[0, i] L ≡ K. 𝕓{Abbr} V1 &
@@ -42,14 +42,14 @@ elim (tpss_inv_lref1 … H) -H /2/
 * /3 width=6/
 qed.
 
-(* Basic-1: was: pr2_gen_abst *)
+(* Basic_1: was: pr2_gen_abst *)
 lemma cpr_inv_abst1: ∀V1,T1,U2. 𝕔{Abst} V1. T1 ⇒ U2 →
                      ∃∃V2,T2. V1 ⇒ V2 & T1 ⇒ T2 & U2 = 𝕔{Abst} V2. T2.
 /2/ qed.
 
 (* Relocation properties ****************************************************)
 
-(* Basic-1: was: pr2_lift *)
+(* Basic_1: was: pr2_lift *)
 
-(* Basic-1: was: pr2_gen_lift *)
+(* Basic_1: was: pr2_gen_lift *)
 

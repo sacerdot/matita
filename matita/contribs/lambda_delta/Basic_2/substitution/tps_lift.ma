@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic-2/substitution/drop_drop.ma".
-include "Basic-2/substitution/tps.ma".
+include "Basic_2/substitution/drop_drop.ma".
+include "Basic_2/substitution/tps.ma".
 
 (* PARTIAL SUBSTITUTION ON TERMS ********************************************)
 
@@ -39,7 +39,7 @@ lemma tps_inv_refl_SO2: ∀L,T1,T2,d. L ⊢ T1 [d, 1] ≫ T2 →
 
 (* Relocation properties ****************************************************)
 
-(* Basic-1: was: subst1_lift_lt *)
+(* Basic_1: was: subst1_lift_lt *)
 lemma tps_lift_le: ∀K,T1,T2,dt,et. K ⊢ T1 [dt, et] ≫ T2 →
                    ∀L,U1,U2,d,e. ↓[d, e] L ≡ K →
                    ↑[d, e] T1 ≡ U1 → ↑[d, e] T2 ≡ U2 →
@@ -66,7 +66,7 @@ lemma tps_lift_le: ∀K,T1,T2,dt,et. K ⊢ T1 [dt, et] ≫ T2 →
 ]
 qed.
 
-(* Basic-1: was: subst1_lift_ge *)
+(* Basic_1: was: subst1_lift_ge *)
 lemma tps_lift_ge: ∀K,T1,T2,dt,et. K ⊢ T1 [dt, et] ≫ T2 →
                    ∀L,U1,U2,d,e. ↓[d, e] L ≡ K →
                    ↑[d, e] T1 ≡ U1 → ↑[d, e] T2 ≡ U2 →
@@ -91,7 +91,7 @@ lemma tps_lift_ge: ∀K,T1,T2,dt,et. K ⊢ T1 [dt, et] ≫ T2 →
 ]
 qed.
 
-(* Basic-1: was: subst1_gen_lift_lt *)
+(* Basic_1: was: subst1_gen_lift_lt *)
 lemma tps_inv_lift1_le: ∀L,U1,U2,dt,et. L ⊢ U1 [dt, et] ≫ U2 →
                         ∀K,d,e. ↓[d, e] L ≡ K → ∀T1. ↑[d, e] T1 ≡ U1 →
                         dt + et ≤ d →
@@ -118,7 +118,7 @@ lemma tps_inv_lift1_le: ∀L,U1,U2,dt,et. L ⊢ U1 [dt, et] ≫ U2 →
 ]
 qed.
 
-(* Basic-1: was: subst1_gen_lift_ge *)
+(* Basic_1: was: subst1_gen_lift_ge *)
 lemma tps_inv_lift1_ge: ∀L,U1,U2,dt,et. L ⊢ U1 [dt, et] ≫ U2 →
                         ∀K,d,e. ↓[d, e] L ≡ K → ∀T1. ↑[d, e] T1 ≡ U1 →
                         d + e ≤ dt →
@@ -153,7 +153,7 @@ lemma tps_inv_lift1_ge: ∀L,U1,U2,dt,et. L ⊢ U1 [dt, et] ≫ U2 →
 ]
 qed.
 
-(* Basic-1: was: subst1_gen_lift_eq *)
+(* Basic_1: was: subst1_gen_lift_eq *)
 lemma tps_inv_lift1_eq: ∀L,U1,U2,d,e.
                         L ⊢ U1 [d, e] ≫ U2 → ∀T1. ↑[d, e] T1 ≡ U1 → U1 = U2.
 #L #U1 #U2 #d #e #H elim H -H L U1 U2 d e

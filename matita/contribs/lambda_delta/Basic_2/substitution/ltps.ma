@@ -12,11 +12,11 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic-2/substitution/tps.ma".
+include "Basic_2/substitution/tps.ma".
 
 (* PARALLEL SUBSTITUTION ON LOCAL ENVIRONMENTS ******************************)
 
-(* Basic-1: includes: csubst1_bind *)
+(* Basic_1: includes: csubst1_bind *)
 inductive ltps: nat → nat → relation lenv ≝
 | ltps_atom: ∀d,e. ltps d e (⋆) (⋆)
 | ltps_pair: ∀L,I,V. ltps 0 0 (L. 𝕓{I} V) (L. 𝕓{I} V)
@@ -47,7 +47,7 @@ lemma ltps_tps1_lt: ∀L1,L2,I,V1,V2,d,e.
 >(plus_minus_m_m d 1) /2/
 qed.
 
-(* Basic-1: was by definition: csubst1_refl *)
+(* Basic_1: was by definition: csubst1_refl *)
 lemma ltps_refl: ∀L,d,e. L [d, e] ≫ L.
 #L elim L -L //
 #L #I #V #IHL * /2/ * /2/
@@ -169,7 +169,7 @@ lemma ltps_inv_tps12: ∀L1,K2,I,V2,d,e. L1 [d, e] ≫ K2. 𝕓{I} V2 → 0 < d 
                                   L1 = K1. 𝕓{I} V1.
 /2/ qed.
 
-(* Basic-1: removed theorems 27:
+(* Basic_1: removed theorems 27:
             csubst0_clear_O csubst0_drop_lt csubst0_drop_gt csubst0_drop_eq
             csubst0_clear_O_back csubst0_clear_S csubst0_clear_trans
             csubst0_drop_gt_back csubst0_drop_eq_back csubst0_drop_lt_back

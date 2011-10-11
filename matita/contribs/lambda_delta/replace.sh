@@ -1,8 +1,8 @@
 #!/bin/sh
-for V in `cat Make`; do
-   echo ${V}; sed "s/$1/$2/g" ${V} > ${V}.new
-   if diff ${V} ${V}.new > /dev/null; 
-      then rm -f ${V}.new; else mv -f ${V}.new ${V}; fi
+for MA in `find -name "*.ma"`; do
+   echo ${MA}; sed "s/$1/$2/g" ${MA} > ${MA}.new
+   if diff ${MA} ${MA}.new > /dev/null; 
+      then rm -f ${MA}.new; else mv -f ${MA}.new ${MA}; fi
 done
 
-unset V
+unset MA

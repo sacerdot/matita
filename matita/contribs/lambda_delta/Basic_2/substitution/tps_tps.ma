@@ -12,13 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic-2/substitution/tps_lift.ma".
+include "Basic_2/substitution/tps_lift.ma".
 
 (* PARALLEL SUBSTITUTION ON TERMS *******************************************)
 
 (* Main properties **********************************************************)
 
-(* Basic-1: was: subst1_confluence_eq *)
+(* Basic_1: was: subst1_confluence_eq *)
 theorem tps_conf_eq: ∀L,T0,T1,d1,e1. L ⊢ T0 [d1, e1] ≫ T1 →
                      ∀T2,d2,e2. L ⊢ T0 [d2, e2] ≫ T2 →
                      ∃∃T. L ⊢ T1 [d2, e2] ≫ T & L ⊢ T2 [d1, e1] ≫ T.
@@ -33,11 +33,11 @@ theorem tps_conf_eq: ∀L,T0,T1,d1,e1. L ⊢ T0 [d1, e1] ≫ T1 →
   ]
 | #L #I #V0 #V1 #T0 #T1 #d1 #e1 #_ #_ #IHV01 #IHT01 #X #d2 #e2 #HX
   elim (tps_inv_bind1 … HX) -HX #V2 #T2 #HV02 #HT02 #HX destruct -X;
-  lapply (tps_leq_repl_dx … HT02 (L. 𝕓{I} V1) ?) -HT02 /2/ #HT02  
+  lapply (tps_lsubs_conf … HT02 (L. 𝕓{I} V1) ?) -HT02 /2/ #HT02  
   elim (IHV01 … HV02) -IHV01 HV02 #V #HV1 #HV2
   elim (IHT01 … HT02) -IHT01 HT02 #T #HT1 #HT2
-  lapply (tps_leq_repl_dx … HT1 (L. 𝕓{I} V) ?) -HT1 /2/
-  lapply (tps_leq_repl_dx … HT2 (L. 𝕓{I} V) ?) -HT2 /3 width=5/
+  lapply (tps_lsubs_conf … HT1 (L. 𝕓{I} V) ?) -HT1 /2/
+  lapply (tps_lsubs_conf … HT2 (L. 𝕓{I} V) ?) -HT2 /3 width=5/
 | #L #I #V0 #V1 #T0 #T1 #d1 #e1 #_ #_ #IHV01 #IHT01 #X #d2 #e2 #HX
   elim (tps_inv_flat1 … HX) -HX #V2 #T2 #HV02 #HT02 #HX destruct -X;
   elim (IHV01 … HV02) -IHV01 HV02;
@@ -45,7 +45,7 @@ theorem tps_conf_eq: ∀L,T0,T1,d1,e1. L ⊢ T0 [d1, e1] ≫ T1 →
 ]
 qed.
 
-(* Basic-1: was: subst1_confluence_neq *)
+(* Basic_1: was: subst1_confluence_neq *)
 theorem tps_conf_neq: ∀L1,T0,T1,d1,e1. L1 ⊢ T0 [d1, e1] ≫ T1 →
                       ∀L2,T2,d2,e2. L2 ⊢ T0 [d2, e2] ≫ T2 →
                       (d1 + e1 ≤ d2 ∨ d2 + e2 ≤ d1) →
@@ -71,8 +71,8 @@ theorem tps_conf_neq: ∀L1,T0,T1,d1,e1. L1 ⊢ T0 [d1, e1] ≫ T1 →
   elim (IHV01 … HV02 H) -IHV01 HV02 #V #HV1 #HV2
   elim (IHT01 … HT02 ?) -IHT01 HT02
   [ -H #T #HT1 #HT2
-    lapply (tps_leq_repl_dx … HT1 (L2. 𝕓{I} V) ?) -HT1 /2/
-    lapply (tps_leq_repl_dx … HT2 (L1. 𝕓{I} V) ?) -HT2 /3 width=5/
+    lapply (tps_lsubs_conf … HT1 (L2. 𝕓{I} V) ?) -HT1 /2/
+    lapply (tps_lsubs_conf … HT2 (L1. 𝕓{I} V) ?) -HT2 /3 width=5/
   | -HV1 HV2 >plus_plus_comm_23 >plus_plus_comm_23 in ⊢ (? ? %) elim H -H #H
     [ @or_introl | @or_intror ] /2 by monotonic_le_plus_l/ (**) (* /3/ is too slow *)
   ]
@@ -84,7 +84,7 @@ theorem tps_conf_neq: ∀L1,T0,T1,d1,e1. L1 ⊢ T0 [d1, e1] ≫ T1 →
 qed.
 
 (* Note: the constant 1 comes from tps_subst *)
-(* Basic-1: was: subst1_trans *)
+(* Basic_1: was: subst1_trans *)
 theorem tps_trans_ge: ∀L,T1,T0,d,e. L ⊢ T1 [d, e] ≫ T0 →
                       ∀T2. L ⊢ T0 [d, 1] ≫ T2 → 1 ≤ e →
                       L ⊢ T1 [d, e] ≫ T2.
@@ -100,9 +100,9 @@ theorem tps_trans_ge: ∀L,T1,T0,d,e. L ⊢ T1 [d, e] ≫ T0 →
   <(tps_inv_lift1_eq … HVT2 … HVW) -HVT2 /2/
 | #L #I #V1 #V0 #T1 #T0 #d #e #_ #_ #IHV10 #IHT10 #X #H #He
   elim (tps_inv_bind1 … H) -H #V2 #T2 #HV02 #HT02 #H destruct -X;
-  lapply (tps_leq_repl_dx … HT02 (L. 𝕓{I} V0) ?) -HT02 /2/ #HT02
+  lapply (tps_lsubs_conf … HT02 (L. 𝕓{I} V0) ?) -HT02 /2/ #HT02
   lapply (IHT10 … HT02 He) -IHT10 HT02 #HT12
-  lapply (tps_leq_repl_dx … HT12 (L. 𝕓{I} V2) ?) -HT12 /3/
+  lapply (tps_lsubs_conf … HT12 (L. 𝕓{I} V2) ?) -HT12 /3/
 | #L #I #V1 #V0 #T1 #T0 #d #e #_ #_ #IHV10 #IHT10 #X #H #He
   elim (tps_inv_flat1 … H) -H #V2 #T2 #HV02 #HT02 #H destruct -X /3/
 ]
@@ -119,11 +119,11 @@ theorem tps_trans_down: ∀L,T1,T0,d1,e1. L ⊢ T1 [d1, e1] ≫ T0 →
   <(tps_inv_lift1_eq … HWT2 … HVW) -HWT2 /4/
 | #L #I #V1 #V0 #T1 #T0 #d1 #e1 #_ #_ #IHV10 #IHT10 #X #d2 #e2 #HX #de2d1
   elim (tps_inv_bind1 … HX) -HX #V2 #T2 #HV02 #HT02 #HX destruct -X;
-  lapply (tps_leq_repl_dx … HT02 (L. 𝕓{I} V0) ?) -HT02 /2/ #HT02
+  lapply (tps_lsubs_conf … HT02 (L. 𝕓{I} V0) ?) -HT02 /2/ #HT02
   elim (IHV10 … HV02 ?) -IHV10 HV02 // #V
   elim (IHT10 … HT02 ?) -IHT10 HT02 [2: /2/ ] #T #HT1 #HT2
-  lapply (tps_leq_repl_dx … HT1 (L. 𝕓{I} V) ?) -HT1;
-  lapply (tps_leq_repl_dx … HT2 (L. 𝕓{I} V2) ?) -HT2 /3 width=6/
+  lapply (tps_lsubs_conf … HT1 (L. 𝕓{I} V) ?) -HT1;
+  lapply (tps_lsubs_conf … HT2 (L. 𝕓{I} V2) ?) -HT2 /3 width=6/
 | #L #I #V1 #V0 #T1 #T0 #d1 #e1 #_ #_ #IHV10 #IHT10 #X #d2 #e2 #HX #de2d1
   elim (tps_inv_flat1 … HX) -HX #V2 #T2 #HV02 #HT02 #HX destruct -X;
   elim (IHV10 … HV02 ?) -IHV10 HV02 //

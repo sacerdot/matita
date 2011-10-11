@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic-2/grammar/term_weight.ma".
-include "Basic-2/grammar/lenv.ma".
+include "Basic_2/grammar/term_weight.ma".
+include "Basic_2/grammar/lenv.ma".
 
 (* WEIGHT OF A LOCAL ENVIRONMENT ********************************************)
 
@@ -24,4 +24,4 @@ let rec lw L ≝ match L with
 
 interpretation "weight (local environment)" 'Weight L = (lw L).
 
-(* Basic-1: removed theorems 2: clt_cong clt_head *)
+(* Basic_1: removed theorems 2: clt_cong clt_head *)

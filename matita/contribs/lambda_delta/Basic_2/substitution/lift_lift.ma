@@ -12,13 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic-2/substitution/lift.ma".
+include "Basic_2/substitution/lift.ma".
 
 (* RELOCATION ***************************************************************)
 
 (* Main properies ***********************************************************)
 
-(* Basic-1: was: lift_inj *)
+(* Basic_1: was: lift_inj *)
 theorem lift_inj:  ∀d,e,T1,U. ↑[d,e] T1 ≡ U → ∀T2. ↑[d,e] T2 ≡ U → T1 = T2.
 #d #e #T1 #U #H elim H -H d e T1 U
 [ #k #d #e #X #HX
@@ -34,7 +34,7 @@ theorem lift_inj:  ∀d,e,T1,U. ↑[d,e] T1 ≡ U → ∀T2. ↑[d,e] T2 ≡ U �
 ]
 qed.
 
-(* Basic-1: was: lift_gen_lift *)
+(* Basic_1: was: lift_gen_lift *)
 theorem lift_div_le: ∀d1,e1,T1,T. ↑[d1, e1] T1 ≡ T →
                      ∀d2,e2,T2. ↑[d2 + e1, e2] T2 ≡ T →
                      d1 ≤ d2 →
@@ -80,7 +80,7 @@ theorem lift_mono:  ∀d,e,T,U1. ↑[d,e] T ≡ U1 → ∀U2. ↑[d,e] T ≡ U2 
 ]
 qed.
 
-(* Basic-1: was: lift_free (left to right) *)
+(* Basic_1: was: lift_free (left to right) *)
 theorem lift_trans_be: ∀d1,e1,T1,T. ↑[d1, e1] T1 ≡ T →
                        ∀d2,e2,T2. ↑[d2, e2] T ≡ T2 →
                        d1 ≤ d2 → d2 ≤ d1 + e1 → ↑[d1, e1 + e2] T1 ≡ T2.
@@ -106,7 +106,7 @@ theorem lift_trans_be: ∀d1,e1,T1,T. ↑[d1, e1] T1 ≡ T →
 ]
 qed.
 
-(* Basic-1: was: lift_d (right to left) *)
+(* Basic_1: was: lift_d (right to left) *)
 theorem lift_trans_le: ∀d1,e1,T1,T. ↑[d1, e1] T1 ≡ T →
                        ∀d2,e2,T2. ↑[d2, e2] T ≡ T2 → d2 ≤ d1 →
                        ∃∃T0. ↑[d2, e2] T1 ≡ T0 & ↑[d1 + e2, e1] T0 ≡ T2.
@@ -131,7 +131,7 @@ theorem lift_trans_le: ∀d1,e1,T1,T. ↑[d1, e1] T1 ≡ T →
 ]
 qed.
 
-(* Basic-1: was: lift_d (left to right) *)
+(* Basic_1: was: lift_d (left to right) *)
 theorem lift_trans_ge: ∀d1,e1,T1,T. ↑[d1, e1] T1 ≡ T →
                        ∀d2,e2,T2. ↑[d2, e2] T ≡ T2 → d1 + e1 ≤ d2 →
                        ∃∃T0. ↑[d2 - e1, e2] T1 ≡ T0 & ↑[d1, e1] T0 ≡ T2.

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic-2/substitution/tps.ma".
+include "Basic_2/substitution/tps.ma".
 
 (* PARTIAL UNFOLD ON TERMS **************************************************)
 
@@ -36,8 +36,8 @@ lemma tpss_strap: ∀L,T1,T,T2,d,e.
                   L ⊢ T1 [d, e] ≫ T → L ⊢ T [d, e] ≫* T2 → L ⊢ T1 [d, e] ≫* T2. 
 /2/ qed.
 
-lemma tpss_leq_repl_dx: ∀L1,T1,T2,d,e. L1 ⊢ T1 [d, e] ≫* T2 →
-                        ∀L2. L1 [d, e] ≈ L2 → L2 ⊢ T1 [d, e] ≫* T2.
+lemma tpss_lsubs_conf: ∀L1,T1,T2,d,e. L1 ⊢ T1 [d, e] ≫* T2 →
+                       ∀L2. L1 [d, e] ≼ L2 → L2 ⊢ T1 [d, e] ≫* T2.
 /3/ qed.
 
 lemma tpss_refl: ∀d,e,L,T. L ⊢ T [d, e] ≫* T.
@@ -52,7 +52,7 @@ lemma tpss_bind: ∀L,V1,V2,d,e. L ⊢ V1 [d, e] ≫* V2 →
   | #T #T2 #_ #HT2 #IHT @step /2 width=5/ (**) (* /3 width=5/ is too slow *)
   ]
 | #V #V2 #_ #HV12 #IHV #I #T1 #T2 #HT12
-  lapply (tpss_leq_repl_dx … HT12 (L. 𝕓{I} V) ?) -HT12 /2/ #HT12
+  lapply (tpss_lsubs_conf … HT12 (L. 𝕓{I} V) ?) -HT12 /2/ #HT12
   lapply (IHV … HT12) -IHV HT12 #HT12 @step /2 width=5/ (**) (* /3 width=5/ is too slow *)
 ]
 qed.
@@ -115,7 +115,7 @@ lemma tpss_inv_bind1: ∀d,e,L,I,V1,T1,U2. L ⊢ 𝕓{I} V1. T1 [d, e] ≫* U2 �
 [ /2 width=5/
 | #U #U2 #_ #HU2 * #V #T #HV1 #HT1 #H destruct -U;
   elim (tps_inv_bind1 … HU2) -HU2 #V2 #T2 #HV2 #HT2 #H
-  lapply (tpss_leq_repl_dx … HT1 (L. 𝕓{I} V2) ?) -HT1 /3 width=5/
+  lapply (tpss_lsubs_conf … HT1 (L. 𝕓{I} V2) ?) -HT1 /3 width=5/
 ]
 qed.
 

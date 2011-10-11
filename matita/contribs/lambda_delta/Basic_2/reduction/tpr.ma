@@ -12,11 +12,11 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic-2/substitution/tps.ma".
+include "Basic_2/substitution/tps.ma".
 
 (* CONTEXT-FREE PARALLEL REDUCTION ON TERMS *********************************)
 
-(* Basic-1: includes: pr0_delta1 *)
+(* Basic_1: includes: pr0_delta1 *)
 inductive tpr: relation term ≝
 | tpr_atom : ∀I. tpr (𝕒{I}) (𝕒{I})
 | tpr_flat : ∀I,V1,V2,T1,T2. tpr V1 V2 → tpr T1 T2 →
@@ -45,7 +45,7 @@ lemma tpr_bind: ∀I,V1,V2,T1,T2. V1 ⇒ V2 → T1 ⇒ T2 →
                              𝕓{I} V1. T1 ⇒  𝕓{I} V2. T2.
 /2/ qed.
 
-(* Basic-1: was by definition: pr0_refl *)
+(* Basic_1: was by definition: pr0_refl *)
 lemma tpr_refl: ∀T. T ⇒ T.
 #T elim T -T //
 #I elim I -I /2/
@@ -65,7 +65,7 @@ fact tpr_inv_atom1_aux: ∀U1,U2. U1 ⇒ U2 → ∀I. U1 = 𝕒{I} → U2 = 𝕒
 ]
 qed.
 
-(* Basic-1: was: pr0_gen_sort pr0_gen_lref *)
+(* Basic_1: was: pr0_gen_sort pr0_gen_lref *)
 lemma tpr_inv_atom1: ∀I,U2. 𝕒{I} ⇒ U2 → U2 = 𝕒{I}.
 /2/ qed.
 
@@ -94,7 +94,7 @@ lemma tpr_inv_bind1: ∀V1,T1,U2,I. 𝕓{I} V1. T1 ⇒ U2 →
                      ∃∃T. ↑[0,1] T ≡ T1 & T ⇒ U2 & I = Abbr.
 /2/ qed.
 
-(* Basic-1: was pr0_gen_abbr *)
+(* Basic_1: was pr0_gen_abbr *)
 lemma tpr_inv_abbr1: ∀V1,T1,U2. 𝕓{Abbr} V1. T1 ⇒ U2 →
                      (∃∃V2,T2,T. V1 ⇒ V2 & T1 ⇒ T2 &
                                  ⋆.  𝕓{Abbr} V2 ⊢ T2 [0, 1] ≫ T &
@@ -143,7 +143,7 @@ lemma tpr_inv_flat1: ∀V1,U0,U2,I. 𝕗{I} V1. U0 ⇒ U2 →
                       |                     (U0 ⇒ U2 ∧ I = Cast).
 /2/ qed.
 
-(* Basic-1: was pr0_gen_appl *)
+(* Basic_1: was pr0_gen_appl *)
 lemma tpr_inv_appl1: ∀V1,U0,U2. 𝕔{Appl} V1. U0 ⇒ U2 →
                      ∨∨ ∃∃V2,T2.            V1 ⇒ V2 & U0 ⇒ T2 &
                                             U2 = 𝕔{Appl} V2. T2
@@ -158,7 +158,7 @@ lemma tpr_inv_appl1: ∀V1,U0,U2. 𝕔{Appl} V1. U0 ⇒ U2 →
 elim (tpr_inv_flat1 … H) -H * /3 width=12/ #_ #H destruct
 qed.
 
-(* Basic-1: was: pr0_gen_cast *)
+(* Basic_1: was: pr0_gen_cast *)
 lemma tpr_inv_cast1: ∀V1,T1,U2. 𝕔{Cast} V1. T1 ⇒ U2 →
                        (∃∃V2,T2. V1 ⇒ V2 & T1 ⇒ T2 & U2 = 𝕔{Cast} V2. T2)
                      ∨ T1 ⇒ U2.
@@ -192,7 +192,7 @@ lemma tpr_inv_lref2: ∀T1,i. T1 ⇒ #i →
                       | ∃∃V,T.    T ⇒ #i & T1 = 𝕔{Cast} V. T.
 /2/ qed.
 
-(* Basic-1: removed theorems 3:
+(* Basic_1: removed theorems 3:
             pr0_subst0_back pr0_subst0_fwd pr0_subst0
-   Basic-1: removed local theorems: 1: pr0_delta_tau
+   Basic_1: removed local theorems: 1: pr0_delta_tau
 *)

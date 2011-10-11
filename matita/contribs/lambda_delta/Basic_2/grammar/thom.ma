@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic-2/grammar/term_simple.ma".
+include "Basic_2/grammar/term_simple.ma".
 
 (* HOMOMORPHIC TERMS ********************************************************)
 
@@ -50,7 +50,7 @@ lemma simple_thom_repl_sn: ∀T1,T2. T1 ≈ T2 → 𝕊[T2] → 𝕊[T1].
 (* Basic inversion lemmas ***************************************************)
 
 
-(* Basic-1: removed theorems 7:
+(* Basic_1: removed theorems 7:
             iso_gen_sort iso_gen_lref iso_gen_head iso_refl iso_trans
             iso_flats_lref_bind_false iso_flats_flat_bind_false
 *)

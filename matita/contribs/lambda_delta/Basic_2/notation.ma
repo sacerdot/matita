@@ -64,9 +64,9 @@ notation "hvbox( 𝕊 [ T ] )"
    non associative with precedence 45
    for @{ 'Simple $T }.
 
-notation "hvbox( T1 break [ d , break e ] ≈ break T2 )"
+notation "hvbox( T1 break [ d , break e ] ≼ break T2 )"
    non associative with precedence 45
-   for @{ 'Eq $T1 $d $e $T2 }.
+   for @{ 'SubEq $T1 $d $e $T2 }.
 
 (* Substitution *************************************************************)
 
