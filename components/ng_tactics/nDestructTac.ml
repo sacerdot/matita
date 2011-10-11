@@ -124,7 +124,42 @@ let nargs it nleft consno =
   let _,_,t_k = List.nth cl consno in
   List.length (arg_list nleft t_k) ;;
 
-let default_pattern = "",0,(None,[],Some NotationPt.UserInput);;
+let default_pattern = "",0,(None,[],Some NotationPt.UserInput);; 
+let prod_pattern = 
+  "",0,(None,[],Some NotationPt.Binder 
+    (`Pi, (mk_id "_",Some (NotationPt.Appl
+      [ NotationPt.Implicit `JustOne
+      ; NotationPt.Implicit `JustOne
+      ; NotationPt.UserInput
+      ; NotationPt.Implicit `JustOne ])), 
+  NotationPt.Implicit `JustOne));;
+
+let prod_pattern_jm = 
+  "",0,(None,[],Some NotationPt.Binder 
+    (`Pi, (mk_id "_",Some (NotationPt.Appl
+      [ NotationPt.Implicit `JustOne
+      ; NotationPt.Implicit `JustOne
+      ; NotationPt.UserInput
+      ; NotationPt.Implicit `JustOne
+      ; NotationPt.Implicit `JustOne ])),
+  NotationPt.Implicit `JustOne));;
+
+let hp_pattern n = 
+  "",0,(None,[n, NotationPt.Appl
+      [ NotationPt.Implicit `JustOne
+      ; NotationPt.Implicit `JustOne
+      ; NotationPt.UserInput
+      ; NotationPt.Implicit `JustOne ] ], 
+  None);;
+
+let hp_pattern_jm n = 
+  "",0,(None,[n, NotationPt.Appl
+      [ NotationPt.Implicit `JustOne
+      ; NotationPt.Implicit `JustOne
+      ; NotationPt.UserInput
+      ; NotationPt.Implicit `JustOne
+      ; NotationPt.Implicit `JustOne ] ], 
+  None);;
 
 (* returns the discrimination = injection+contradiction principle *)
 
@@ -351,7 +386,8 @@ let discriminate_tac ~context cur_eq status =
       status);
     NTactics.branch_tac;
     print_tac (lazy "ci sono");
-     NTactics.reduce_tac ~reduction:(`Normalize true) ~where:default_pattern]
+     NTactics.reduce_tac ~reduction:(`Normalize true) ~where:default_pattern 
+    ]
   @ List.map (fun x -> NTactics.intro_tac x) params @
     [NTactics.intro_tac "x";
      NTactics.intro_tac "y";
@@ -366,7 +402,7 @@ let discriminate_tac ~context cur_eq status =
     NTactics.apply_tac ("",0,mk_appl ([mk_id "#discriminate"]@
                                 HExtlib.mk_list (NotationPt.Implicit `JustOne) (List.length params + 2) @
                                 [mk_id eq_name ]));
-    NTactics.reduce_tac ~reduction:(`Normalize true) ~where:default_pattern;
+(*    NTactics.reduce_tac ~reduction:(`Normalize true) ~where:default_pattern; *)
     NTactics.clear_tac ["#discriminate"];
     NTactics.merge_tac; print_tac (lazy "the end of discriminate")] 
   ) status
@@ -416,8 +452,8 @@ let subst_tac ~context ~dir skip cur_eq =
                 [NTactics.clear_tac names_to_gen;
                  NTactics.rewrite_tac ~dir 
                    ~what:("",0,mk_id eq_name) ~where:default_pattern;
-                 NTactics.reduce_tac ~reduction:(`Normalize true)
-                   ~where:default_pattern;
+(*                 NTactics.reduce_tac ~reduction:(`Normalize true)
+                   ~where:default_pattern;*)
                  NTactics.try_tac (NTactics.clear_tac [eq_name])]@
                  (List.map NTactics.intro_tac (List.rev names_to_gen))) status
 ;;
@@ -478,8 +514,9 @@ let clearid_tac ~context skip cur_eq =
 						    NotationPt.Implicit `JustOne;
 						    NotationPt.Implicit `JustOne;
 						    NotationPt.Implicit `JustOne]);
-                 NTactics.reduce_tac ~reduction:(`Normalize true)
-                   ~where:default_pattern] @
+(*                 NTactics.reduce_tac ~reduction:(`Normalize true) 
+                   ~where:default_pattern *)
+                 ] @
                  (let names_to_intro = 
 		    match List.rev names_to_gen with
                     | [] -> []
@@ -509,8 +546,9 @@ let clearid_tac ~context skip cur_eq =
 						    NotationPt.Implicit `JustOne;
 						    NotationPt.Implicit `JustOne;
 						    NotationPt.Implicit `JustOne]);
-                 NTactics.reduce_tac ~reduction:(`Normalize true)
-                   ~where:default_pattern] @
+(*                 NTactics.reduce_tac ~reduction:(`Normalize true)
+                   ~where:default_pattern *)
+                 ] @
                  (let names_to_intro = List.rev names_to_gen in
                   List.map NTactics.intro_tac names_to_intro)) status
     | _ -> assert false
@@ -522,20 +560,20 @@ let get_ctx st goal =
 
 (* = select + classify *)
 let select_eq ctx acc domain status goal =
-  let classify ~subst ctx' l r =
+  let classify ~use_jmeq ~subst ctx' l r =
     (* FIXME: metasenv *)
     if NCicReduction.are_convertible status ~metasenv:[] ~subst ctx' l r 
       then status, `Identity
       else status, (match hd_of_term l, hd_of_term r with
         | NCic.Const (NReference.Ref (_,NReference.Con (_,ki,nleft)) as kref),
           NCic.Const (NReference.Ref (_,NReference.Con (_,kj,_))) -> 
-            if ki != kj then `Discriminate (0,true)
+            if ki != kj then `Discriminate (0,true, use_jmeq)
             else
               let rit = NReference.mk_indty true kref in
               let _,_,its,_,itno = NCicEnvironment.get_checked_indtys status rit in 
               let it = List.nth its itno in
               let newprods = nargs it nleft (ki-1) in
-              `Discriminate (newprods, false) 
+              `Discriminate (newprods, false, use_jmeq) 
         | NCic.Rel j, _  
             when NCicTypeChecker.does_not_occur status ~subst ctx' (j-1) j r
               && l = NCic.Rel j -> `Subst `LeftToRight
@@ -557,12 +595,12 @@ let select_eq ctx acc domain status goal =
            let status, kind = match ty with
            | NCic.Appl [NCic.Const (NReference.Ref (u,_)) ;_;l;r] 
                when NUri.name_of_uri u = "eq" ->
-               classify ~subst:(get_subst status) ctx_ty l r
+               classify ~use_jmeq:false ~subst:(get_subst status) ctx_ty l r
            | NCic.Appl [NCic.Const (NReference.Ref (u,_)) ;lty;l;rty;r]
                when NUri.name_of_uri u = "jmeq" && 
                  NCicReduction.are_convertible status ~metasenv:[] 
                    ~subst:(get_subst status) ctx_ty lty rty
-               -> classify ~subst:(get_subst status) ctx_ty l r
+               -> classify ~use_jmeq:true ~subst:(get_subst status) ctx_ty l r
            | _ -> status, `NonEq 
            in match kind with
               | `Identity ->
@@ -578,7 +616,42 @@ let select_eq ctx acc domain status goal =
   in aux 0
 ;;
 
-let rec destruct_tac0 nprods acc domain skip status goal =
+let tagged_intro_tac curtag name =
+  match curtag with
+  | `Notag -> NTactics.intro_tac name
+  | `Eq use_jmeq ->
+      NTactics.block_tac
+        [ NTactics.intro_tac name 
+        ; NTactics.reduce_tac 
+            ~reduction:(`Whd true) ~where:((if use_jmeq then hp_pattern_jm else hp_pattern) name) ]
+        
+(*        status in
+      distribute_tac (fun s g ->
+        let eq_name,(NCic.Decl s | NCic.Def (s,_)) = List.nth context (cur_eq-1) in
+        let _,ctx' = HExtlib.split_nth cur_eq context in
+        let status, s = NTacStatus.whd status ctx' (mk_cic_term ctx' s) in
+        let status, s = term_of_cic_term status s ctx' in
+        let use_jmeq =
+          match s with
+          | NCic.Appl [_;it;t1;t2] -> false
+          | NCic.Appl [_;it;t1;_;t2] -> true
+          | _ -> assert false in
+      ) status
+    let it, t1, t2, use_jmeq = match s with
+      | NCic.Appl [_;it;t1;t2] -> it,t1,t2,false
+      | NCic.Appl [_;it;t1;_;t2] -> it,t1,t2,true
+      | _ -> assert false in
+           [ NTactics.intro_tac name
+           ; NTactics.reduce_tac ~reduction:(`Whd true) ~where:prod_pattern ]*)
+;;
+
+let rec destruct_tac0 tags acc domain skip status goal =
+  let pptag = function
+    | `Eq false -> "eq"
+    | `Eq true -> "jmeq"
+    | `Notag -> "reg"
+  in
+  let pptags tags = String.concat ", " (List.map pptag tags) in
   let ctx = get_ctx status goal in
   let subst = get_subst status in
   let get_newgoal os ns ogoal =
@@ -590,25 +663,33 @@ let rec destruct_tac0 nprods acc domain skip status goal =
   pp (lazy ("destruct: acc is " ^ String.concat "," acc ));
   match selection, kind with
   | None, _ -> 
-    pp (lazy (Printf.sprintf "destruct: nprods is %d, no selection, context is %s" nprods (status#ppcontext ~metasenv:[] ~subst ctx)));
-      if nprods > 0  then
+    pp (lazy (Printf.sprintf 
+       "destruct: no selection, context is %s, stack is %s" 
+       (status#ppcontext ~metasenv:[] ~subst ctx) (pptags tags)));
+     (match tags with 
+      | [] -> status
+      | curtag::tags' ->
         let fresh = mk_fresh_name ctx 'e' 0 in 
-        let status' = NTactics.exec (NTactics.intro_tac fresh) status goal in
-        destruct_tac0 (nprods-1) acc (fresh::domain) skip status' (get_newgoal status status' goal)
-      else
-        status
-  | Some cur_eq, `Discriminate (newprods,conflict) -> 
-    pp (lazy (Printf.sprintf "destruct: discriminate - nprods is %d, selection is %d, context is %s" nprods cur_eq (status#ppcontext ~metasenv:[] ~subst ctx)));
+        let status' = NTactics.exec (tagged_intro_tac curtag fresh) status goal in
+        destruct_tac0 tags' acc (fresh::domain) skip status' 
+          (get_newgoal status status' goal))
+  | Some cur_eq, `Discriminate (newprods,conflict,use_jmeq) -> 
+    pp (lazy (Printf.sprintf 
+      "destruct: discriminate - nselection is %d, context is %s,stack is %s" 
+       cur_eq (status#ppcontext ~metasenv:[] ~subst ctx) (pptags tags)));
       let status' = NTactics.exec (discriminate_tac ~context:ctx cur_eq) status goal in
       if conflict then status'
       else 
-        destruct_tac0 (nprods+newprods) 
+        let newtags = HExtlib.mk_list (`Eq use_jmeq) newprods in
+        destruct_tac0 (newtags@tags) 
              (name_of_rel ~context:ctx cur_eq::acc) 
              (List.filter (fun x -> x <> name_of_rel ~context:ctx cur_eq) domain)
              skip 
              status' (get_newgoal status status' goal)
   | Some cur_eq, `Subst dir ->
-    pp (lazy (Printf.sprintf "destruct: subst - nprods is %d, selection is %d, context is %s" nprods cur_eq (status#ppcontext ~metasenv:[] ~subst ctx)));
+    pp (lazy (Printf.sprintf 
+      "destruct: subst - selection is %d, context is %s, stack is %s" 
+        cur_eq (status#ppcontext ~metasenv:[] ~subst ctx) (pptags tags)));
     let status' = NTactics.exec (subst_tac ~context:ctx ~dir skip cur_eq) status goal in
       pp (lazy (Printf.sprintf " ctx after subst = %s" (status#ppcontext ~metasenv:[] ~subst (get_ctx status' (get_newgoal status status' goal)))));
     let eq_name,_ = List.nth ctx (cur_eq-1) in
@@ -621,9 +702,11 @@ let rec destruct_tac0 nprods acc domain skip status goal =
     let acc = rm_eq has_cleared acc in
     let skip = rm_eq has_cleared skip in
     let domain = rm_eq has_cleared domain in
-      destruct_tac0 nprods acc domain skip status' newgoal
+      destruct_tac0 tags acc domain skip status' newgoal
  | Some cur_eq, `Identity ->
-    pp (lazy (Printf.sprintf "destruct: identity - nprods is %d, selection is %d, context is %s" nprods cur_eq (status#ppcontext ~metasenv:[] ~subst ctx)));
+    pp (lazy (Printf.sprintf 
+      "destruct: identity - selection is %d, context is %s, stack is %s" 
+        cur_eq (status#ppcontext ~metasenv:[] ~subst ctx) (pptags tags)));
       let eq_name,_ = List.nth ctx (cur_eq-1) in
       let status' = NTactics.exec (clearid_tac ~context:ctx skip cur_eq) status goal in
       let newgoal = get_newgoal status status' goal in
@@ -635,12 +718,16 @@ let rec destruct_tac0 nprods acc domain skip status goal =
       let acc = rm_eq has_cleared acc in
       let skip = rm_eq has_cleared skip in
       let domain = rm_eq has_cleared domain in
-        destruct_tac0 nprods acc domain skip status' newgoal
+        destruct_tac0 tags acc domain skip status' newgoal
   | Some cur_eq, `Cycle -> (* TODO, should never happen *)
-    pp (lazy (Printf.sprintf "destruct: cycle - nprods is %d, selection is %d, context is %s" nprods cur_eq (status#ppcontext ~metasenv:[] ~subst ctx)));
+    pp (lazy (Printf.sprintf 
+      "destruct: cycle - selection is %d, context is %s, stack is %s" 
+        cur_eq (status#ppcontext ~metasenv:[] ~subst ctx) (pptags tags)));
       assert false
   | Some cur_eq, `Blob ->
-    pp (lazy (Printf.sprintf "destruct: blob - nprods is %d, selection is %d, context is %s" nprods cur_eq (status#ppcontext ~metasenv:[] ~subst ctx)));
+    pp (lazy (Printf.sprintf 
+      "destruct: blob - selection is %d, context is %s, stack is %s"
+      cur_eq (status#ppcontext ~metasenv:[] ~subst ctx) (pptags tags)));
       assert false
   | _ -> assert false
 ;;
@@ -653,4 +740,4 @@ let destruct_tac dom skip s =
        | None -> List.map (fun (n,_) -> n) ctx
        | Some l -> l 
      in
-     destruct_tac0 0 [] domain skip s' g) s;;
+     destruct_tac0 [] [] domain skip s' g) s;;
