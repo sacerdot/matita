@@ -62,3 +62,35 @@ lemma lsubs_skip_lt: ∀L1,L2,d,e. L1 [d - 1, e] ≼ L2 → 0 < d →
 qed.
 
 (* Basic inversion lemmas ***************************************************)
+
+(* Basic forward lemmas ***************************************************)
+
+fact lsubs_fwd_length_full1_aux: ∀L1,L2,d,e. L1 [d, e] ≼ L2 →
+                                 d = 0 → e = |L1| → |L1| ≤ |L2|.
+#L1 #L2 #d #e #H elim H -H L1 L2 d e; normalize
+[ //
+| /2/
+| /3/
+| /3/
+| #L1 #L2 #_ #_ #_ #_ #d #e #_ #_ #H
+  elim (plus_S_eq_O_false … H)
+]   
+qed.
+
+lemma lsubs_fwd_length_full1: ∀L1,L2. L1 [0, |L1|] ≼ L2 → |L1| ≤ |L2|.
+/2 width=5/ qed.
+
+fact lsubs_fwd_length_full2_aux: ∀L1,L2,d,e. L1 [d, e] ≼ L2 →
+                                 d = 0 → e = |L2| → |L2| ≤ |L1|.
+#L1 #L2 #d #e #H elim H -H L1 L2 d e; normalize
+[ //
+| /2/
+| /3/
+| /3/
+| #L1 #L2 #_ #_ #_ #_ #d #e #_ #_ #H
+  elim (plus_S_eq_O_false … H)
+]   
+qed.
+
+lemma lsubs_fwd_length_full2: ∀L1,L2. L1 [0, |L2|] ≼ L2 → |L2| ≤ |L1|.
+/2 width=5/ qed.

@@ -50,6 +50,14 @@ lemma cpr_cast: ∀L,V,T1,T2.
 #L #V #T1 #T2 * /3/
 qed.
 
+(* Note: it does not hold replacing |L1| with |L2| *)
+(* Basic_1: was only: pr2_change *)
+lemma cpr_lsubs_conf: ∀L1,T1,T2. L1 ⊢ T1 ⇒ T2 →
+                      ∀L2. L1 [0, |L1|] ≼ L2 → L2 ⊢ T1 ⇒ T2.
+#L1 #T1 #T2 * #T #HT1 #HT2 #L2 #HL12 
+lapply (tpss_lsubs_conf … HT2 … HL12) -HT2 HL12 /3/
+qed.
+
 (* Basic inversion lemmas ***************************************************)
 
 (* Basic_1: was: pr2_gen_csort *)
@@ -85,7 +93,6 @@ qed.
 (*
 pr2/fwd pr2_gen_appl
 pr2/fwd pr2_gen_abbr
-pr2/props pr2_change
 pr2/subst1 pr2_subst1
 pr2/subst1 pr2_gen_cabbr
 *)
