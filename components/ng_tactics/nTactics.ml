@@ -390,7 +390,7 @@ let select0_tac ~where ~job  =
    let status, instance = 
      mk_meta status newgoalctx (`Decl newgoalty) `IsTerm
    in
-   instantiate ~refine:false status goal instance)
+   instantiate ~refine:false status goal instance) 
 ;;
 
 let select_tac ~where:((txt,txtlen,(wanted,hyps,path)) as where) ~job

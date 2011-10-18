@@ -280,6 +280,7 @@ let string_of_pragma = function
   | `Elim _sort -> "Elim _"
   | `Projection -> "Projection"
   | `InversionPrinciple -> "InversionPrinciple"
+  | `DiscriminationPrinciple -> "DiscriminationPrinciple"
   | `Variant -> "Variant"
   | `Local -> "Local"
   | `Regular -> "Regular"

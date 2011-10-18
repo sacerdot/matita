@@ -94,6 +94,7 @@ type def_pragma = (* pragmatic of the object *)
   | `Elim of sort       (* elimination principle; universe is not relevant *)
   | `Projection         (* record projection *)
   | `InversionPrinciple (* inversion principle *)
+  | `DiscriminationPrinciple (* discrimination principle *)
   | `Variant 
   | `Local 
   | `Regular ]            (* Local = hidden technicality *)

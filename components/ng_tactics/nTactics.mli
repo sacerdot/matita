@@ -54,6 +54,7 @@ val rewrite_tac:
   dir:[ `LeftToRight | `RightToLeft ] ->
    what:NTacStatus.tactic_term -> where:NTacStatus.tactic_pattern -> 
     's NTacStatus.tactic
+val generalize0_tac : NotationPt.term list -> 's NTacStatus.tactic
 val generalize_tac : where:NTacStatus.tactic_pattern -> 's NTacStatus.tactic
 val clear_tac : string list -> 's NTacStatus.tactic
 val reduce_tac: 

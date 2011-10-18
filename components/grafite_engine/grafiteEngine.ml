@@ -603,6 +603,57 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
                     List.map (fun s -> NCic.Type s) (NCicEnvironment.get_universes ()))
               | _ -> status
            in
+           let status = match nobj with
+               NCic.Inductive (is_ind,leftno,itl,_) ->
+                 (* first leibniz *)
+                 let status' = List.fold_left
+                   (fun status it ->
+                      let _,ind_name,ty,cl = it in
+                      let status = status#set_ng_mode `ProofMode in
+                      try
+                       (let status,invobj =
+                         NDestructTac.mk_discriminator ~use_jmeq:false
+                          (ind_name ^ "_discr")
+                          it leftno status status#baseuri in
+                       let _,_,menv,_,_ = invobj in
+                        (match menv with
+                             [] -> eval_ncommand ~include_paths opts status
+                                    ("",0,GrafiteAst.NQed Stdpp.dummy_loc)
+                           | _ -> status))
+                       (* XXX *)
+                      with 
+                      | NDestructTac.ConstructorTooBig k -> 
+                          HLog.warn (Printf.sprintf 
+                           "unable to generate leibniz discrimination principle (constructor %s too big)"
+                           k);
+                           let status = status#set_ng_mode `CommandMode in status
+                      | _ -> (*HLog.warn "error in generating discrimination principle"; *)
+                                let status = status#set_ng_mode `CommandMode in
+                                status)
+                  status itl
+                in
+                (* then JMeq *)
+                List.fold_left
+                   (fun status it ->
+                      let _,ind_name,ty,cl = it in
+                      let status = status#set_ng_mode `ProofMode in
+                      try
+                       (let status,invobj =
+                         NDestructTac.mk_discriminator ~use_jmeq:true
+                          (ind_name ^ "_jmdiscr")
+                          it leftno status status#baseuri in
+                       let _,_,menv,_,_ = invobj in
+                        (match menv with
+                             [] -> eval_ncommand ~include_paths opts status
+                                    ("",0,GrafiteAst.NQed Stdpp.dummy_loc)
+                           | _ -> status))
+                       (* XXX *)
+                      with _ -> (*HLog.warn "error in generating discrimination principle"; *)
+                                let status = status#set_ng_mode `CommandMode in
+                                status)
+                  status' itl
+              | _ -> status
+           in
            let coercions =
             match obj with
               _,_,_,_,NCic.Inductive
@@ -684,24 +735,26 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
           [] ->
            eval_ncommand ~include_paths opts status ("",0,GrafiteAst.NQed Stdpp.dummy_loc)
         | _ -> status)
-  | GrafiteAst.NDiscriminator (_,_) -> assert false (*(loc, indty) ->
+  | GrafiteAst.NDiscriminator (loc, indty) ->
       if status#ng_mode <> `CommandMode then
         raise (GrafiteTypes.Command_error "Not in command mode")
       else
         let status = status#set_ng_mode `ProofMode in
         let metasenv,subst,status,indty =
-          GrafiteDisambiguate.disambiguate_nterm None status [] [] [] (text,prefix_len,indty) in
-        let indtyno, (_,_,tys,_,_) = match indty with
-            NCic.Const ((NReference.Ref (_,NReference.Ind (_,indtyno,_))) as r) ->
-              indtyno, NCicEnvironment.get_checked_indtys r
+          GrafiteDisambiguate.disambiguate_nterm status None [] [] [] (text,prefix_len,indty) in
+        let indtyno, (_,_,tys,_,_),leftno = match indty with
+            NCic.Const ((NReference.Ref (_,NReference.Ind (_,indtyno,leftno))) as r) ->
+              indtyno, NCicEnvironment.get_checked_indtys status r, leftno
           | _ -> prerr_endline ("engine: indty expected... (fix this error message)"); assert false in
-        let it = List.nth tys indtyno in
-        let status,obj =  NDestructTac.mk_discriminator it status in
+        let (_,ind_name,_,_ as it) = List.nth tys indtyno in
+        let status,obj =  
+          NDestructTac.mk_discriminator ~use_jmeq:true (ind_name ^ "_jmdiscr")
+           it leftno status status#baseuri in
         let _,_,menv,_,_ = obj in
           (match menv with
                [] -> eval_ncommand ~include_paths opts status ("",0,GrafiteAst.NQed Stdpp.dummy_loc)
              | _ -> prerr_endline ("Discriminator: non empty metasenv");
-                    status, []) *)
+                    status)
   | GrafiteAst.NInverter (loc, name, indty, selection, sort) ->
      if status#ng_mode <> `CommandMode then
       raise (GrafiteTypes.Command_error "Not in command mode")

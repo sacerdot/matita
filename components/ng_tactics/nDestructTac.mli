@@ -13,3 +13,9 @@
 
 val destruct_tac : string list option -> string list -> 's NTacStatus.tactic
 
+val mk_discriminator: (use_jmeq: bool) ->
+  string -> NCic.inductiveType -> int ->  
+  (#NTacStatus.tac_status as 's) -> string -> 's * NCic.obj
+
+exception ConstructorTooBig of string
+

@@ -44,6 +44,8 @@ let mk_id id =
   NotationPt.Ident (id,None)
 ;;
 
+let mk_sym s = NotationPt.Symbol (s,0);;
+
 let rec mk_prods l t =
   match l with
     [] -> t
@@ -70,6 +72,14 @@ let subst_metasenv_and_fix_names status =
   in
    status#set_obj(u,h,NCicUntrusted.apply_subst_metasenv status subst metasenv,subst,o)
 ;;
+
+(* needed to workaround a weakness of the refiner? *)
+let rec generalize0_tac tl s =
+  match tl with
+  | [] -> s
+  | t0::tl0 -> NTactics.generalize0_tac [t0] (generalize0_tac tl0 s)
+;;
+
 
 (* input: nome della variabile riscritta
  * output: lista dei nomi delle variabili il cui tipo dipende dall'input *)
@@ -161,11 +171,18 @@ let hp_pattern_jm n =
       ; NotationPt.Implicit `JustOne ] ], 
   None);;
 
-(* returns the discrimination = injection+contradiction principle *)
+(* creates the discrimination = injection+contradiction principle *)
+exception ConstructorTooBig of string;;
 
-let mk_discriminator it ~use_jmeq nleft xyty status =
-  let _,indname,_,cl = it in
+let mk_discriminator ~use_jmeq name it leftno status baseuri =
+  let itnargs = 
+    let _,_,arity,_ = it in 
+    List.length (arg_list 0 arity) in
+  let _,itname,_,_ = it in
+  let params = List.map (fun x -> "a" ^ string_of_int x) (HExtlib.list_seq 1 (itnargs+1)) in
+  let xyty = mk_appl (List.map mk_id (itname::params)) in
 
+  (* PHASE 1: derive the type of the discriminator (we'll name it "principle") *)
 
   let mk_eq tys ts us es n =
     if use_jmeq then
@@ -192,15 +209,16 @@ let mk_discriminator it ~use_jmeq nleft xyty status =
                         List.nth us n]
 
   in
+    
+  let _,_,_,cl = it in
 
-  let kname it j =
-    let _,_,_,cl = it in
+  let kname (*it*) j =
     let _,name,_ = List.nth cl j in
     name
   in
 
   let branch i j ts us = 
-    let nargs = nargs it nleft i in
+    let nargs = nargs it leftno i in
     let es = List.map (fun x -> mk_id ("e" ^ string_of_int x)) (HExtlib.list_seq 0 nargs) in
     let tys = List.map 
                 (fun x -> iter 
@@ -216,10 +234,10 @@ let mk_discriminator it ~use_jmeq nleft xyty status =
         NotationPt.Binder (`Lambda, (mk_id ("p" ^ string_of_int i), None),
         acc))) (nargs-1)
         (mk_appl [mk_id "eq"; NotationPt.Implicit `JustOne;
-          mk_appl (mk_id (kname it i)::
+          mk_appl (mk_id (kname i)::
            List.map (fun x -> mk_id ("x" ^string_of_int x))
               (HExtlib.list_seq 0 (List.length ts)));
-              mk_appl (mk_id (kname it j)::us)])]
+              mk_appl (mk_id (kname j)::us)])]
     in
     (** NotationPt.Binder (`Lambda, (mk_id "e", 
       Some (mk_appl 
@@ -256,12 +274,12 @@ let mk_discriminator it ~use_jmeq nleft xyty status =
                   None,
                   List.map
                   (fun j -> 
-                     let nargs_kty = nargs it nleft j in
+                     let nargs_kty = nargs it leftno j in
                      let us = iter (fun m acc -> mk_id ("u" ^ (string_of_int m))::acc) 
                                 (nargs_kty - 1) [] in
                      let nones = 
                        iter (fun _ acc -> None::acc) (nargs_kty - 1) [] in
-                     NotationPt.Pattern (kname it j,
+                     NotationPt.Pattern (kname j,
                                             None,
                                             List.combine us nones), 
                                 branch i j ts us)
@@ -272,42 +290,50 @@ let mk_discriminator it ~use_jmeq nleft xyty status =
                  None ,
                  List.map
                    (fun i -> 
-                      let nargs_kty = nargs it nleft i in
+                      let nargs_kty = nargs it leftno i in
+                      if (nargs_kty > 5 && not use_jmeq) then raise (ConstructorTooBig (kname i)); 
                       let ts = iter (fun m acc -> mk_id ("t" ^ (string_of_int m))::acc)
                                  (nargs_kty - 1) [] in
                      let nones = 
                        iter (fun _ acc -> None::acc) (nargs_kty - 1) [] in
-                      NotationPt.Pattern (kname it i,
+                      NotationPt.Pattern (kname i,
                                              None,
                                              List.combine ts nones),
                                 inner i ts)
                    (HExtlib.list_seq 0 (List.length cl))) in
-  let principle = NotationPt.Binder (`Lambda, (mk_id "x", Some xyty),
-                        NotationPt.Binder (`Lambda, (mk_id "y", Some xyty), outer))
+  let principle = 
+    mk_prods params (NotationPt.Binder (`Forall, (mk_id "x",
+                               Some xyty),
+                           NotationPt.Binder (`Forall, (mk_id "y", Some xyty),
+                            (if use_jmeq then
+                             NotationPt.Binder (`Forall, (mk_id "e",
+                              Some (mk_appl
+                               [mk_sym "jmsimeq"; NotationPt.Implicit `JustOne; mk_id "x";
+                                                  NotationPt.Implicit `JustOne; mk_id "y"])),
+                                                  outer)
+                            else 
+                              NotationPt.Binder (`Forall, (mk_id "e",
+                              Some (mk_appl [mk_sym "eq";NotationPt.Implicit `JustOne; mk_id "x"; mk_id "y"])),
+                             outer)))))
   in
   pp (lazy ("discriminator = " ^ (NotationPp.pp_term status principle)));
-  
-  status, principle 
-;;
 
-let hd_of_term = function
-  | NCic.Appl (hd::_) -> hd
-  | t -> t
-;;
+  (* PHASE 2: create the object for the proof of the principle: we'll name it
+   * "theorem" *)
+  let status, theorem =
+   GrafiteDisambiguate.disambiguate_nobj status ~baseuri 
+    (baseuri ^ name ^ ".def",0,
+      NotationPt.Theorem
+       (`Theorem,name,principle,
+         Some (NotationPt.Implicit (`Tagged "inv")),`DiscriminationPrinciple))
+  in 
+  let uri,height,nmenv,nsubst,nobj = theorem in
+  let ninitial_stack = Continuationals.Stack.of_nmetasenv nmenv in
+  let status = status#set_obj theorem in
+  let status = status#set_stack ninitial_stack in
+  let status = subst_metasenv_and_fix_names status in
 
-let name_of_rel ~context rel =
-  let s, _ = List.nth context (rel-1) in s
-;;
-
-(* let lookup_in_ctx ~context n =
-  List.nth context ((List.length context) - n - 1)
-;;*)
-
-let mk_sym s = NotationPt.Symbol (s,0);;
-
-let discriminate_tac ~context cur_eq status =
-  pp (lazy (Printf.sprintf "discriminate: equation %s" (name_of_rel ~context cur_eq)));
-
+  (* PHASE 3: we finally prove the discrimination principle *)
   let dbranch it ~use_jmeq leftno consno =
     let refl_id = mk_sym "refl" in
     pp (lazy (Printf.sprintf "dbranch %d %d" leftno consno));
@@ -323,7 +349,6 @@ let discriminate_tac ~context cur_eq status =
     ] in
   let dbranches it ~use_jmeq leftno =
     pp (lazy (Printf.sprintf "dbranches %d" leftno));
-    let _,_,_,cl = it in
     let nbranches = List.length cl in 
     let branches = iter (fun n acc -> 
       let m = nbranches - n - 1 in
@@ -335,15 +360,49 @@ let discriminate_tac ~context cur_eq status =
          NTactics.branch_tac ~force:false:: branches @ [NTactics.merge_tac]
     else branches
   in
+  let print_tac s status = pp s ; status in 
+
+  let status =
+   NTactics.block_tac (
+    [print_tac (lazy "ci sono");
+     NTactics.reduce_tac ~reduction:(`Normalize true) ~where:default_pattern 
+    ]
+  @ List.map (fun x -> NTactics.intro_tac x) params @
+    [NTactics.intro_tac "x";
+     NTactics.intro_tac "y";
+     NTactics.intro_tac "Deq";
+    print_tac (lazy "ci sono 2");
+     NTactics.rewrite_tac ~dir:`RightToLeft ~what:("",0,mk_id "Deq") ~where:default_pattern;
+     NTactics.cases_tac ~what:("",0,mk_id "x") ~where:default_pattern]
+  @ dbranches it ~use_jmeq leftno) status
+  in status, status#obj
+;;
+
+let hd_of_term = function
+  | NCic.Appl (hd::_) -> hd
+  | t -> t
+;;
+
+let name_of_rel ~context rel =
+  let s, _ = List.nth context (rel-1) in s
+;;
+
+(* let lookup_in_ctx ~context n =
+  List.nth context ((List.length context) - n - 1)
+;;*)
+
+let discriminate_tac ~context cur_eq status =
+  pp (lazy (Printf.sprintf "discriminate: equation %s" (name_of_rel ~context cur_eq)));
+
   
   let eq_name,(NCic.Decl s | NCic.Def (s,_)) = List.nth context (cur_eq-1) in
   let _,ctx' = HExtlib.split_nth cur_eq context in
   let status, s = NTacStatus.whd status ctx' (mk_cic_term ctx' s) in
   let status, s = term_of_cic_term status s ctx' in
-  let status, leftno, it, use_jmeq =
-    let it, t1, t2, use_jmeq = match s with
-      | NCic.Appl [_;it;t1;t2] -> it,t1,t2,false
-      | NCic.Appl [_;it;t1;_;t2] -> it,t1,t2,true
+  let status,it,use_jmeq = 
+    let it,use_jmeq = match s with
+      | NCic.Appl [_;it;_;_] -> it,false
+      | NCic.Appl [_;it;_;_;_] -> it,true
       | _ -> assert false in
     (* XXX: serve? ho già fatto whd *)
     let status, it = whd status ctx' (mk_cic_term ctx' it) in
@@ -355,8 +414,8 @@ let discriminate_tac ~context cur_eq status =
         uri, indtyno, NCicEnvironment.get_checked_indtys status r
       | _ -> pp (lazy ("discriminate: indty ="  ^ status#ppterm
                   ~metasenv:[] ~subst:[] ~context:[] it)) ; assert false in
-    let _,leftno,its,_,_ = its in
-    status, leftno, List.nth its indtyno, use_jmeq
+    let _,_,its,_,_ = its in
+    status,List.nth its indtyno, use_jmeq
   in
   
   let itnargs = 
@@ -364,48 +423,16 @@ let discriminate_tac ~context cur_eq status =
     List.length (arg_list 0 arity) in
   let _,itname,_,_ = it in
   let params = List.map (fun x -> "a" ^ string_of_int x) (HExtlib.list_seq 1 (itnargs+1)) in
-  let xyty = mk_appl (List.map mk_id (itname::params)) in
-  let print_tac s status = pp s ; status in 
-  NTactics.block_tac (
-    [(fun status ->
-     let status, discr = mk_discriminator it ~use_jmeq leftno xyty status in
-     let cut_term = mk_prods params (NotationPt.Binder (`Forall, (mk_id "x",
-                             Some xyty),
-                         NotationPt.Binder (`Forall, (mk_id "y", Some xyty),
-                          (if use_jmeq then fun tgt ->
-                           NotationPt.Binder (`Forall, (mk_id "e",
-                            Some (mk_appl
-                             [mk_sym "jmsimeq"; NotationPt.Implicit `JustOne; mk_id "x";
-                                                NotationPt.Implicit `JustOne; mk_id "y"])),tgt)
-                          else fun tgt ->
-                           NotationPt.Binder (`Forall, (mk_id "e",
-                            Some (mk_appl [mk_sym "eq";NotationPt.Implicit `JustOne; mk_id "x"; mk_id "y"])),tgt))
-                          (mk_appl [discr; mk_id "x"; mk_id "y"(*;mk_id "e"*)])))) in
-     let status = print_tac (lazy ("cut_term = "^ NotationPp.pp_term status cut_term)) status in
-      NTactics.cut_tac ("",0, cut_term)
-      status);
-    NTactics.branch_tac;
-    print_tac (lazy "ci sono");
-     NTactics.reduce_tac ~reduction:(`Normalize true) ~where:default_pattern 
-    ]
-  @ List.map (fun x -> NTactics.intro_tac x) params @
-    [NTactics.intro_tac "x";
-     NTactics.intro_tac "y";
-     NTactics.intro_tac "Deq";
-    print_tac (lazy "ci sono 2");
-     NTactics.rewrite_tac ~dir:`RightToLeft ~what:("",0,mk_id "Deq") ~where:default_pattern;
-     NTactics.cases_tac ~what:("",0,mk_id "x") ~where:default_pattern]
-  @ dbranches it ~use_jmeq leftno @ 
-   [NTactics.shift_tac;
-    print_tac (lazy "ci sono 3");
-    NTactics.intro_tac "#discriminate";
-    NTactics.apply_tac ("",0,mk_appl ([mk_id "#discriminate"]@
+  let principle_name = 
+    if use_jmeq then itname ^ "_jmdiscr"
+    else itname ^ "_discr"
+  in
+  pp (lazy ("apply (" ^ principle_name ^ " " ^
+            (String.concat "" (HExtlib.mk_list "?" (List.length params + 2))) ^
+            " " ^ eq_name ^ ")"));
+  NTactics.apply_tac ("",0,mk_appl ([mk_id principle_name]@
                                 HExtlib.mk_list (NotationPt.Implicit `JustOne) (List.length params + 2) @
-                                [mk_id eq_name ]));
-(*    NTactics.reduce_tac ~reduction:(`Normalize true) ~where:default_pattern; *)
-    NTactics.clear_tac ["#discriminate"];
-    NTactics.merge_tac; print_tac (lazy "the end of discriminate")] 
-  ) status
+                                [mk_id eq_name ])) status
 ;;
 
 let saturate_skip status context skip =
@@ -445,16 +472,22 @@ let subst_tac ~context ~dir skip cur_eq =
     if (List.exists (fun x -> List.mem x skip) names_to_gen)
       then oldstatus
     else 
-    let gen_tac x = 
-      NTactics.generalize_tac 
-      ~where:("",0,(Some (mk_id x),[], Some NotationPt.UserInput)) in
-    NTactics.block_tac ((List.map gen_tac names_to_gen)@
-                [NTactics.clear_tac names_to_gen;
+    let gen_tac x =
+      (fun s -> 
+      let x' = String.concat " " x in
+      let x = List.map mk_id x in
+      (* let s = NTactics.print_tac false ("@generalize " ^ x') s in *)
+      generalize0_tac x s) in
+    NTactics.block_tac (
+                (* (List.map gen_tac names_to_gen)@ *)
+            [gen_tac (List.rev names_to_gen);
+                        NTactics.clear_tac names_to_gen;
                  NTactics.rewrite_tac ~dir 
                    ~what:("",0,mk_id eq_name) ~where:default_pattern;
 (*                 NTactics.reduce_tac ~reduction:(`Normalize true)
                    ~where:default_pattern;*)
-                 NTactics.try_tac (NTactics.clear_tac [eq_name])]@
+                 NTactics.try_tac (NTactics.clear_tac [eq_name]);
+]@
                  (List.map NTactics.intro_tac (List.rev names_to_gen))) status
 ;;
 
@@ -465,93 +498,62 @@ let clearid_tac ~context skip cur_eq =
   let status, s = NTacStatus.whd status ctx' (mk_cic_term ctx' s) in
   let status, s = term_of_cic_term status s ctx' in
   let skip = saturate_skip status context skip in
-  (* 
-  let streicher_id = 
-    match s with
-    | NCic.Appl [_;_;_;_] -> mk_id "streicherK"
-    | NCic.Appl [_;_;_;_;_] -> mk_id "streicherKjmeq"
-    | _ -> assert false
-  in
-  pp (lazy (Printf.sprintf "clearid: equation %s" eq_name));
-    let names_to_gen, _ = 
-      cascade_select_in_ctx ~subst:(get_subst status) context cur_eq in
-    let names_to_gen = names_to_gen @ [eq_name] in
-    let gen_tac x = 
-      NTactics.generalize_tac 
-      ~where:("",0,(Some (mk_id x),[], Some NotationPt.UserInput)) in
-    NTactics.block_tac ((List.map gen_tac names_to_gen)@
-                [NTactics.clear_tac names_to_gen;
-                 NTactics.apply_tac ("",0, mk_appl [streicher_id;
-						    NotationPt.Implicit `JustOne;
-						    NotationPt.Implicit `JustOne;
-						    NotationPt.Implicit `JustOne;
-						    NotationPt.Implicit `JustOne]);
-                 NTactics.reduce_tac ~reduction:(`Normalize true)
-                   ~where:default_pattern] @
-                 (let names_to_intro = 
-		    match List.rev names_to_gen with
-                    | [] -> []
-                    | _::tl -> tl in
-                  List.map NTactics.intro_tac names_to_intro)) status
-*)
 
   pp (lazy (Printf.sprintf "clearid: equation %s" eq_name));
-    match s with
-    | NCic.Appl [_;_;_;_] -> 
-      (* leibniz *)
-  let streicher_id = mk_id "streicherK"
-  in
-    let names_to_gen, _ = 
-      cascade_select_in_ctx status ~subst:(get_subst status) context skip cur_eq in
-    let names_to_gen = names_to_gen @ [eq_name] in
-    let gen_tac x = 
-      NTactics.generalize_tac 
-      ~where:("",0,(Some (mk_id x),[], Some NotationPt.UserInput)) in
-    NTactics.block_tac ((List.map gen_tac names_to_gen)@
-                [NTactics.clear_tac names_to_gen;
-                 NTactics.apply_tac ("",0, mk_appl [streicher_id;
-						    NotationPt.Implicit `JustOne;
-						    NotationPt.Implicit `JustOne;
-						    NotationPt.Implicit `JustOne;
-						    NotationPt.Implicit `JustOne]);
-(*                 NTactics.reduce_tac ~reduction:(`Normalize true) 
-                   ~where:default_pattern *)
-                 ] @
-                 (let names_to_intro = 
-		    match List.rev names_to_gen with
-                    | [] -> []
-                    | _::tl -> tl in
-                  List.map NTactics.intro_tac names_to_intro)) status
-    | NCic.Appl [_;_;_;_;_] -> 
-      (* JMeq *) 
-  let streicher_id = mk_id "streicherK"
-  in
-    let names_to_gen, _ = 
-      cascade_select_in_ctx status ~subst:(get_subst status) context skip cur_eq in
-    let names_to_gen = names_to_gen (* @ [eq_name]*) in
-    let gen_tac x = 
-      NTactics.generalize_tac 
-      ~where:("",0,(Some (mk_id x),[], Some NotationPt.UserInput)) in
-    let gen_eq = NTactics.generalize_tac
-     ~where:("",0,(Some (mk_appl [mk_id "jmeq_to_eq";
-                                  NotationPt.Implicit `JustOne; 
-                                  NotationPt.Implicit `JustOne; 
-                                  NotationPt.Implicit `JustOne; 
-                                  mk_id eq_name]),[], Some NotationPt.UserInput)) in
-    NTactics.block_tac ((List.map gen_tac names_to_gen)@gen_eq::
-                [NTactics.clear_tac names_to_gen;
-                 NTactics.try_tac (NTactics.clear_tac [eq_name]);
-                 NTactics.apply_tac ("",0, mk_appl [streicher_id;
-						    NotationPt.Implicit `JustOne;
-						    NotationPt.Implicit `JustOne;
-						    NotationPt.Implicit `JustOne;
-						    NotationPt.Implicit `JustOne]);
-(*                 NTactics.reduce_tac ~reduction:(`Normalize true)
-                   ~where:default_pattern *)
-                 ] @
-                 (let names_to_intro = List.rev names_to_gen in
-                  List.map NTactics.intro_tac names_to_intro)) status
-    | _ -> assert false
+  let streicher_id = mk_id "streicherK" in
+  let names_to_gen, _ = 
+    cascade_select_in_ctx status ~subst:(get_subst status) context skip cur_eq in
+  let gen_tac x = generalize0_tac (List.map mk_id x) in
+  
+  match s with
+  (* jmeq *)
+  | NCic.Appl [_;_;_;_;_] ->
+      let names_to_gen = List.rev names_to_gen in
+      (*let gen_eq = NTactics.generalize_tac
+       ~where:("",0,(Some (mk_appl [mk_id "jmeq_to_eq";
+                                    NotationPt.Implicit `JustOne; 
+                                    NotationPt.Implicit `JustOne; 
+                                    NotationPt.Implicit `JustOne; 
+                                    mk_id eq_name]),[], Some
+                                    NotationPt.UserInput)) in*)
+      let gen_eq = generalize0_tac 
+                          [mk_appl [mk_id "jmeq_to_eq";
+                                    NotationPt.Implicit `JustOne; 
+                                    NotationPt.Implicit `JustOne; 
+                                    NotationPt.Implicit `JustOne; 
+                                    mk_id eq_name]] in
+      NTactics.block_tac ((gen_tac (List.rev names_to_gen))::gen_eq::
+                  [NTactics.clear_tac names_to_gen;
+                   NTactics.try_tac (NTactics.clear_tac [eq_name]);
+                   NTactics.apply_tac ("",0, mk_appl [streicher_id;
+  						    NotationPt.Implicit `JustOne;
+  						    NotationPt.Implicit `JustOne;
+  						    NotationPt.Implicit `JustOne;
+  						    NotationPt.Implicit `JustOne]);
+                   ] @
+                   (List.map NTactics.intro_tac names_to_gen)) status
+
+    (* leibniz *)
+  | NCic.Appl [_;_;_;_] ->
+      begin
+       let names_to_gen, _ = 
+         cascade_select_in_ctx status ~subst:(get_subst status) context skip cur_eq in
+       let names_to_gen = eq_name :: (List.rev names_to_gen) in
+       NTactics.block_tac ((gen_tac names_to_gen)::
+                   [NTactics.clear_tac names_to_gen;
+                    NTactics.apply_tac ("",0, mk_appl [streicher_id;
+   						    NotationPt.Implicit `JustOne;
+   						    NotationPt.Implicit `JustOne;
+   						    NotationPt.Implicit `JustOne;
+   						    NotationPt.Implicit `JustOne])
+   (*                 NTactics.reduce_tac ~reduction:(`Normalize true) 
+                      ~where:default_pattern *)
+                    ] @
+                    let names_to_intro = List.tl names_to_gen in
+                    (List.map NTactics.intro_tac names_to_intro)) status
+     end
+  | _ -> assert false
+
 ;;
 
 let get_ctx st goal =
