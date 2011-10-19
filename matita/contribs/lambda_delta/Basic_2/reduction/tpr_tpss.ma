@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "Basic_2/unfold/ltpss_ltpss.ma".
-include "Basic_2/reduction/ltpr_drop.ma".
+include "Basic_2/reduction/ltpr_ldrop.ma".
 
 (* CONTEXT-FREE PARALLEL REDUCTION ON TERMS *********************************)
 
@@ -27,7 +27,7 @@ lemma tpr_tps_ltpr: ∀T1,T2. T1 ⇒ T2 →
   elim (tps_inv_atom1 … H) -H
   [ #H destruct -X /2/
   | * #K1 #V1 #i #Hdi #Hide #HLK1 #HVU1 #H #L2 #HL12 destruct -I;
-    elim (ltpr_drop_conf … HLK1 … HL12) -HLK1 HL12 #X #HLK2 #H
+    elim (ltpr_ldrop_conf … HLK1 … HL12) -HLK1 HL12 #X #HLK2 #H
     elim (ltpr_inv_pair1 … H) -H #K2 #V2 #_ #HV12 #H destruct -X;
     elim (lift_total V2 0 (i+1)) #U2 #HVU2
     lapply (tpr_lift … HV12 … HVU1 … HVU2) -HV12 HVU1 #HU12

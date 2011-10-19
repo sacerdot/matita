@@ -23,6 +23,7 @@ inductive lift: nat → nat → relation term ≝
 | lift_sort   : ∀k,d,e. lift d e (⋆k) (⋆k)
 | lift_lref_lt: ∀i,d,e. i < d → lift d e (#i) (#i)
 | lift_lref_ge: ∀i,d,e. d ≤ i → lift d e (#i) (#(i + e))
+| lift_gref   : ∀p,d,e. lift d e (§p) (§p)
 | lift_bind   : ∀I,V1,V2,T1,T2,d,e.
                 lift d e V1 V2 → lift (d + 1) e T1 T2 →
                 lift d e (𝕓{I} V1. T1) (𝕓{I} V2. T2)
@@ -70,6 +71,7 @@ lemma lift_split: ∀d1,e2,T1,T2. ↑[d1, e2] T1 ≡ T2 → ∀d2,e1.
 | #i #d1 #e2 #Hid1 #d2 #e1 #_ #Hd21 #He12
   lapply (transitive_le …(i+e1) Hd21 ?) /2/ -Hd21 #Hd21
   <(arith_d1 i e2 e1) // /3/
+| /3/
 | #I #V1 #V2 #T1 #T2 #d1 #e2 #_ #_ #IHV #IHT #d2 #e1 #Hd12 #Hd21 #He12
   elim (IHV … Hd12 Hd21 He12) -IHV #V0 #HV0a #HV0b
   elim (IHT (d2+1) … ? ? He12) /3 width = 5/
@@ -111,6 +113,7 @@ fact lift_inv_lref1_aux: ∀d,e,T1,T2. ↑[d,e] T1 ≡ T2 → ∀i. T1 = #i →
 [ #k #d #e #i #H destruct
 | #j #d #e #Hj #i #Hi destruct /3/
 | #j #d #e #Hj #i #Hi destruct /3/
+| #p #d #e #i #H destruct
 | #I #V1 #V2 #T1 #T2 #d #e #_ #_ #i #H destruct
 | #I #V1 #V2 #T1 #T2 #d #e #_ #_ #i #H destruct
 ]
@@ -132,6 +135,17 @@ lemma lift_inv_lref1_ge: ∀d,e,T2,i. ↑[d,e] #i ≡ T2 → d ≤ i → T2 = #(
 elim (lt_refl_false … Hdd)
 qed.
 
+fact lift_inv_gref1_aux: ∀d,e,T1,T2. ↑[d,e] T1 ≡ T2 → ∀p. T1 = §p → T2 = §p.
+#d #e #T1 #T2 * -d e T1 T2 //
+[ #i #d #e #_ #k #H destruct
+| #I #V1 #V2 #T1 #T2 #d #e #_ #_ #k #H destruct
+| #I #V1 #V2 #T1 #T2 #d #e #_ #_ #k #H destruct
+]
+qed.
+
+lemma lift_inv_gref1: ∀d,e,T2,p. ↑[d,e] §p ≡ T2 → T2 = §p.
+/2 width=5/ qed.
+
 fact lift_inv_bind1_aux: ∀d,e,T1,T2. ↑[d,e] T1 ≡ T2 →
                          ∀I,V1,U1. T1 = 𝕓{I} V1.U1 →
                          ∃∃V2,U2. ↑[d,e] V1 ≡ V2 & ↑[d+1,e] U1 ≡ U2 &
@@ -140,6 +154,7 @@ fact lift_inv_bind1_aux: ∀d,e,T1,T2. ↑[d,e] T1 ≡ T2 →
 [ #k #d #e #I #V1 #U1 #H destruct
 | #i #d #e #_ #I #V1 #U1 #H destruct
 | #i #d #e #_ #I #V1 #U1 #H destruct
+| #p #d #e #I #V1 #U1 #H destruct
 | #J #W1 #W2 #T1 #T2 #d #e #HW #HT #I #V1 #U1 #H destruct /2 width=5/
 | #J #W1 #W2 #T1 #T2 #d #e #HW #HT #I #V1 #U1 #H destruct
 ]
@@ -158,6 +173,7 @@ fact lift_inv_flat1_aux: ∀d,e,T1,T2. ↑[d,e] T1 ≡ T2 →
 [ #k #d #e #I #V1 #U1 #H destruct
 | #i #d #e #_ #I #V1 #U1 #H destruct
 | #i #d #e #_ #I #V1 #U1 #H destruct
+| #p #d #e #I #V1 #U1 #H destruct
 | #J #W1 #W2 #T1 #T2 #d #e #HW #HT #I #V1 #U1 #H destruct
 | #J #W1 #W2 #T1 #T2 #d #e #HW #HT #I #V1 #U1 #H destruct /2 width=5/
 ]
@@ -186,6 +202,7 @@ fact lift_inv_lref2_aux: ∀d,e,T1,T2. ↑[d,e] T1 ≡ T2 → ∀i. T2 = #i →
 [ #k #d #e #i #H destruct
 | #j #d #e #Hj #i #Hi destruct /3/
 | #j #d #e #Hj #i #Hi destruct <minus_plus_m_m /4/
+| #p #d #e #i #H destruct
 | #I #V1 #V2 #T1 #T2 #d #e #_ #_ #i #H destruct
 | #I #V1 #V2 #T1 #T2 #d #e #_ #_ #i #H destruct
 ]
@@ -212,6 +229,17 @@ lemma lift_inv_lref2_ge: ∀d,e,T1,i. ↑[d,e] T1 ≡ #i → d + e ≤ i → T1 
 elim (plus_lt_false … Hdd)
 qed.
 
+fact lift_inv_gref2_aux: ∀d,e,T1,T2. ↑[d,e] T1 ≡ T2 → ∀p. T2 = §p → T1 = §p.
+#d #e #T1 #T2 * -d e T1 T2 //
+[ #i #d #e #_ #k #H destruct
+| #I #V1 #V2 #T1 #T2 #d #e #_ #_ #k #H destruct
+| #I #V1 #V2 #T1 #T2 #d #e #_ #_ #k #H destruct
+]
+qed.
+
+lemma lift_inv_gref2: ∀d,e,T1,p. ↑[d,e] T1 ≡ §p → T1 = §p.
+/2 width=5/ qed.
+
 fact lift_inv_bind2_aux: ∀d,e,T1,T2. ↑[d,e] T1 ≡ T2 →
                          ∀I,V2,U2. T2 = 𝕓{I} V2.U2 →
                          ∃∃V1,U1. ↑[d,e] V1 ≡ V2 & ↑[d+1,e] U1 ≡ U2 &
@@ -220,6 +248,7 @@ fact lift_inv_bind2_aux: ∀d,e,T1,T2. ↑[d,e] T1 ≡ T2 →
 [ #k #d #e #I #V2 #U2 #H destruct
 | #i #d #e #_ #I #V2 #U2 #H destruct
 | #i #d #e #_ #I #V2 #U2 #H destruct
+| #p #d #e #I #V2 #U2 #H destruct
 | #J #W1 #W2 #T1 #T2 #d #e #HW #HT #I #V2 #U2 #H destruct /2 width=5/
 | #J #W1 #W2 #T1 #T2 #d #e #HW #HT #I #V2 #U2 #H destruct
 ]
@@ -239,6 +268,7 @@ fact lift_inv_flat2_aux: ∀d,e,T1,T2. ↑[d,e] T1 ≡ T2 →
 [ #k #d #e #I #V2 #U2 #H destruct
 | #i #d #e #_ #I #V2 #U2 #H destruct
 | #i #d #e #_ #I #V2 #U2 #H destruct
+| #p #d #e #I #V2 #U2 #H destruct
 | #J #W1 #W2 #T1 #T2 #d #e #HW #HT #I #V2 #U2 #H destruct
 | #J #W1 #W2 #T1 #T2 #d #e #HW #HT #I #V2 #U2 #H destruct /2 width = 5/
 ]

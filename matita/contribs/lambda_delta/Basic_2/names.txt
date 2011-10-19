@@ -20,3 +20,5 @@ e      : relocation height
 h      : sort hierarchy parameter
 i,j    : local reference position index (de Bruijn's)
 k      : sort index
+p,q    : global reference position
+

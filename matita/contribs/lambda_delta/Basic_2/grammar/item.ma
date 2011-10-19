@@ -30,6 +30,7 @@ include "Basic_2/notation.ma".
 inductive item0: Type[0] ≝
    | Sort: nat → item0 (* sort: starting at 0 *)
    | LRef: nat → item0 (* reference by index: starting at 0 *)
+   | GRef: nat → item0 (* reference by position: starting at 0 *)
 .
 
 (* binary binding items *)

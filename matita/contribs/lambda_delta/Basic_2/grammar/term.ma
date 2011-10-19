@@ -26,6 +26,8 @@ interpretation "sort (term)" 'Star k = (TAtom (Sort k)).
 
 interpretation "local reference (term)" 'LRef i = (TAtom (LRef i)).
 
+interpretation "global reference (term)" 'GRef p = (TAtom (GRef p)).
+
 interpretation "term construction (atomic)" 'SItem I = (TAtom I).
 
 interpretation "term construction (binary)" 'SItem I T1 T2 = (TPair I T1 T2).

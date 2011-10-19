@@ -24,9 +24,13 @@ notation "hvbox( ⋆ term 90 k )"
  non associative with precedence 90
  for @{ 'Star $k }.
 
-notation "hvbox( # term 90 k )"
+notation "hvbox( # term 90 i )"
  non associative with precedence 90
- for @{ 'LRef $k }.
+ for @{ 'LRef $i }.
+
+notation "hvbox( § term 90 p )"
+ non associative with precedence 90
+ for @{ 'GRef $p }.
 
 notation "hvbox( 𝕒 { I } )"
  non associative with precedence 90

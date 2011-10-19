@@ -27,6 +27,7 @@ lemma tpr_lift: ∀T1,T2. T1 ⇒ T2 →
   lapply (lift_mono … HU1 … HU2) -HU1 #H destruct -U1
   [ lapply (lift_inv_sort1 … HU2) -HU2 #H destruct -U2 //
   | lapply (lift_inv_lref1 … HU2) * * #Hid #H destruct -U2 //
+  | lapply (lift_inv_gref1 … HU2) -HU2 #H destruct -U2 //
   ]
 | #I #V1 #V2 #T1 #T2 #_ #_ #IHV12 #IHT12 #d #e #X1 #HX1 #X2 #HX2
   elim (lift_inv_flat1 … HX1) -HX1 #W1 #U1 #HVW1 #HTU1 #HX1 destruct -X1;
@@ -63,6 +64,7 @@ lemma tpr_inv_lift: ∀T1,T2. T1 ⇒ T2 →
 [ * #i #d #e #U1 #HU1
   [ lapply (lift_inv_sort2 … HU1) -HU1 #H destruct -U1 /2/
   | lapply (lift_inv_lref2 … HU1) -HU1 * * #Hid #H destruct -U1 /3/
+  | lapply (lift_inv_gref2 … HU1) -HU1 #H destruct -U1 /2/
   ]
 | #I #V1 #V2 #T1 #T2 #_ #_ #IHV12 #IHT12 #d #e #X #HX
   elim (lift_inv_flat2 … HX) -HX #V0 #T0 #HV01 #HT01 #HX destruct -X;

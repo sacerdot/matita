@@ -28,7 +28,7 @@ theorem tps_conf_eq: ∀L,T0,T1,d1,e1. L ⊢ T0 [d1, e1] ≫ T1 →
   elim (tps_inv_lref1 … H) -H
   [ #HX destruct -T2 /4/
   | -Hd1 Hde1 * #K2 #V2 #_ #_ #HLK2 #HVT2
-    lapply (drop_mono … HLK1 … HLK2) -HLK1 HLK2 #H destruct -V1 K1
+    lapply (ldrop_mono … HLK1 … HLK2) -HLK1 HLK2 #H destruct -V1 K1
     >(lift_mono … HVT1 … HVT2) -HVT1 HVT2 /2/
   ]
 | #L #I #V0 #V1 #T0 #T1 #d1 #e1 #_ #_ #IHV01 #IHT01 #X #d2 #e2 #HX

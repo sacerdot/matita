@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "Basic_2/grammar/cl_weight.ma".
-include "Basic_2/substitution/drop.ma".
+include "Basic_2/substitution/ldrop.ma".
 
 (* PARALLEL SUBSTITUTION ON TERMS *******************************************)
 
@@ -39,7 +39,7 @@ lemma tps_lsubs_conf: ∀L1,T1,T2,d,e. L1 ⊢ T1 [d, e] ≫ T2 →
 #L1 #T1 #T2 #d #e #H elim H -H L1 T1 T2 d e
 [ //
 | #L1 #K1 #V #W #i #d #e #Hdi #Hide #HLK1 #HVW #L2 #HL12
-  elim (drop_lsubs_drop1_abbr … HL12 … HLK1 ? ?) -HL12 HLK1 // /2/
+  elim (ldrop_lsubs_ldrop1_abbr … HL12 … HLK1 ? ?) -HL12 HLK1 // /2/
 | /4/
 | /3/
 ]
@@ -68,7 +68,7 @@ lemma tps_weak_top: ∀L,T1,T2,d,e.
 #L #T1 #T2 #d #e #H elim H -H L T1 T2 d e
 [ //
 | #L #K #V #W #i #d #e #Hdi #_ #HLK #HVW
-  lapply (drop_fwd_drop2_length … HLK) #Hi
+  lapply (ldrop_fwd_ldrop2_length … HLK) #Hi
   lapply (le_to_lt_to_lt … Hdi Hi) #Hd
   lapply (plus_minus_m_m_comm (|L|) d ?) /2/
 | normalize /2/

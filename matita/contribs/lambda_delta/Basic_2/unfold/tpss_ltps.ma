@@ -66,8 +66,8 @@ fact ltps_tps_trans_eq_aux: ∀Y1,X2,L1,T2,U2,d,e.
 #L1 #T2 #U2 #d #e * -L1 T2 U2 d e
 [ //
 | #L1 #K1 #V1 #W1 #i #d #e #Hdi #Hide #HLK1 #HVW1 #L0 #HL10 #H1 #H2 destruct -Y1 X2;
-  lapply (drop_fwd_lw … HLK1) normalize #H1
-  elim (ltps_drop_trans_be … HL10 … HLK1 ? ?) -HL10 HLK1 [2,3: /2/ ] #X #H #HLK0
+  lapply (ldrop_fwd_lw … HLK1) normalize #H1
+  elim (ltps_ldrop_trans_be … HL10 … HLK1 ? ?) -HL10 HLK1 [2,3: /2/ ] #X #H #HLK0
   elim (ltps_inv_tps22 … H ?) -H [2: /2/ ] #K0 #V0 #HK01 #HV01 #H destruct -X;
   lapply (tps_fwd_tw … HV01) #H2
   lapply (transitive_le (#[K1] + #[V0]) … H1) -H1 [ /2/ ] -H2 #H

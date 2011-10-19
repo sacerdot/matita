@@ -20,9 +20,9 @@ include "Basic_2/reduction/cpr.ma".
 
 (* Advanced properties ******************************************************)
 
-lemma cpr_delta: ∀L,K,V1,W1,W2,i.
-                 ↓[0, i] L ≡ K. 𝕓{Abbr} V1 → K ⊢ V1 [0, |L| - i - 1] ≫* W1 →
-                 ↑[0, i + 1] W1 ≡ W2 → L ⊢ #i ⇒ W2.
+lemma cpr_cdelta: ∀L,K,V1,W1,W2,i.
+                  ↓[0, i] L ≡ K. 𝕓{Abbr} V1 → K ⊢ V1 [0, |L| - i - 1] ≫* W1 →
+                  ↑[0, i + 1] W1 ≡ W2 → L ⊢ #i ⇒ W2.
 #L #K #V1 #W1 #W2 #i #HLK #HVW1 #HW12
 @ex2_1_intro [2: // | skip | @tpss_subst /2 width=6/ ] (**) (* /4 width=6/ is too slow *)
 qed.
@@ -50,6 +50,29 @@ lemma cpr_inv_abst1: ∀V1,T1,U2. 𝕔{Abst} V1. T1 ⇒ U2 →
 (* Relocation properties ****************************************************)
 
 (* Basic_1: was: pr2_lift *)
+lemma cpr_lift: ∀L,K,d,e. ↓[d, e] L ≡ K →
+                ∀T1,U1. ↑[d, e] T1 ≡ U1 → ∀T2,U2. ↑[d, e] T2 ≡ U2 →
+                K ⊢ T1 ⇒ T2 → L ⊢ U1 ⇒ U2.
+#L #K #d #e #HLK #T1 #U1 #HTU1 #T2 #U2 #HTU2 * #T #HT1 #HT2
+elim (lift_total T d e) #U #HTU 
+lapply (tpr_lift … HT1 … HTU1 … HTU) -T1 #HU1
+elim (lt_or_ge (|K|) d) #HKd
+[ lapply (tpss_lift_le … HT2 … HLK HTU … HTU2) -T2 T HLK [ /2/ | /3/ ]
+| lapply (tpss_lift_be … HT2 … HLK HTU … HTU2) -T2 T HLK // /3/
+]
+qed.
 
 (* Basic_1: was: pr2_gen_lift *)
-
+lemma cpr_inv_lift: ∀L,K,d,e. ↓[d, e] L ≡ K →
+                    ∀T1,U1. ↑[d, e] T1 ≡ U1 → ∀U2. L ⊢ U1 ⇒ U2 →
+                    ∃∃T2. ↑[d, e] T2 ≡ U2 & K ⊢ T1 ⇒ T2.
+#L #K #d #e #HLK #T1 #U1 #HTU1 #U2 * #U #HU1 #HU2
+elim (tpr_inv_lift … HU1 … HTU1) -U1 #T #HTU #T1
+elim (lt_or_ge (|L|) d) #HLd
+[ elim (tpss_inv_lift1_le … HU2 … HLK … HTU ?) -U HLK [ /5/ | /2/ ]
+| elim (lt_or_ge (|L|) (d + e)) #HLde
+  [ elim (tpss_inv_lift1_be_up … HU2 … HLK … HTU ? ?) -U HLK // [ /5/ | /2/ ] 
+  | elim (tpss_inv_lift1_be … HU2 … HLK … HTU ? ?) -U HLK // /5/
+  ]
+]
+qed.

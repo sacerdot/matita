@@ -52,11 +52,10 @@ lemma lt_or_eq_or_gt: ∀m,n. ∨∨ m < n | n = m | n < m.
 | #m #IHm * [ /2/ ]
   #n elim (IHm n) -IHm #H 
   [ @or3_intro0 | @or3_intro1 destruct | @or3_intro2 ] /2/ (**) (* /3/ is slow *)
-  qed. 
+  qed.
 
 lemma le_to_lt_or_eq: ∀m,n. m ≤ n → m < n ∨ m = n.
-#m #n * -n /3/
-qed. 
+/2/ qed. (**) (* REMOVE: this is le_to_or_lt_eq *)
 
 lemma plus_le_weak: ∀m,n,p. m + n ≤ p → n ≤ p.
 /2/ qed.
@@ -65,6 +64,13 @@ lemma plus_lt_false: ∀m,n. m + n < m → False.
 #m #n #H1 lapply (le_plus_n_r n m) #H2
 lapply (le_to_lt_to_lt … H2 H1) -H2 H1 #H
 elim (lt_refl_false … H)
+qed.
+
+lemma le_fwd_plus_plus_ge: ∀m1,m2. m2 ≤ m1 → ∀n1,n2. m1 + n1 ≤ m2 + n2 → n1 ≤ n2.
+#m1 #m2 #H elim H -H m1
+[ /2/
+| #m1 #_ #IHm1 #n1 #n2 #H @IHm1 /2/
+]
 qed.
 
 lemma monotonic_lt_minus_l: ∀p,q,n. n ≤ q → q < p → q - n < p - n.

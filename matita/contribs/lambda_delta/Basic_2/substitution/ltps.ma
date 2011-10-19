@@ -170,9 +170,9 @@ lemma ltps_inv_tps12: ∀L1,K2,I,V2,d,e. L1 [d, e] ≫ K2. 𝕓{I} V2 → 0 < d 
 /2/ qed.
 
 (* Basic_1: removed theorems 27:
-            csubst0_clear_O csubst0_drop_lt csubst0_drop_gt csubst0_drop_eq
+            csubst0_clear_O csubst0_ldrop_lt csubst0_ldrop_gt csubst0_ldrop_eq
             csubst0_clear_O_back csubst0_clear_S csubst0_clear_trans
-            csubst0_drop_gt_back csubst0_drop_eq_back csubst0_drop_lt_back
+            csubst0_ldrop_gt_back csubst0_ldrop_eq_back csubst0_ldrop_lt_back
             csubst0_gen_sort csubst0_gen_head csubst0_getl_ge csubst0_getl_lt
             csubst0_gen_S_bind_2 csubst0_getl_ge_back csubst0_getl_lt_back
             csubst0_snd_bind csubst0_fst_bind csubst0_both_bind
