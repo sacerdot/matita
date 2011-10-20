@@ -14,14 +14,14 @@ include "hints_declaration.ma".
 
 (* propositional equality *)
 
-inductive eq (A:Type[1]) (x:A) : A → Prop ≝
+inductive eq (A:Type[2]) (x:A) : A → Prop ≝
     refl: eq A x x. 
     
 interpretation "leibnitz's equality" 'eq t x y = (eq t x y).
 interpretation "leibniz reflexivity" 'refl = refl.
 
 lemma eq_rect_r:
- ∀A.∀a,x.∀p:eq ? x a.∀P: ∀x:A. eq ? x a → Type[2]. P a (refl A a) → P x p.
+ ∀A.∀a,x.∀p:eq ? x a.∀P: ∀x:A. eq ? x a → Type[3]. P a (refl A a) → P x p.
  #A #a #x #p (cases p) // qed.
 
 lemma eq_ind_r :
@@ -38,13 +38,18 @@ lemma eq_rect_Type2_r:
   #A #a #P #H #x #p (generalize in match H) (generalize in match P)
   cases p; //; qed.
 
-theorem rewrite_l: ∀A:Type[1].∀x.∀P:A → Type[1]. P x → ∀y. x = y → P y.
+lemma eq_rect_Type3_r:
+  ∀A.∀a.∀P: ∀x:A. eq ? x a → Type[3]. P a (refl A a) → ∀x.∀p:eq ? x a.P x p.
+  #A #a #P #H #x #p (generalize in match H) (generalize in match P)
+  cases p; //; qed.
+
+theorem rewrite_l: ∀A:Type[2].∀x.∀P:A → Type[2]. P x → ∀y. x = y → P y.
 #A #x #P #Hx #y #Heq (cases Heq); //; qed.
 
 theorem sym_eq: ∀A.∀x,y:A. x = y → y = x.
 #A #x #y #Heq @(rewrite_l A x (λz.z=x)); //; qed.
 
-theorem rewrite_r: ∀A:Type[1].∀x.∀P:A → Type[1]. P x → ∀y. y = x → P y.
+theorem rewrite_r: ∀A:Type[2].∀x.∀P:A → Type[2]. P x → ∀y. y = x → P y.
 #A #x #P #Hx #y #Heq (cases (sym_eq ? ? ? Heq)); //; qed.
 
 theorem eq_coerc: ∀A,B:Type[0].A→(A=B)→B.
@@ -236,6 +241,6 @@ example lemmaK : ∀A.∀x:A.∀h:x=x. eqProp ? h (refl A x).
 #A #x #h @(refl ? h: eqProp ? ? ?).
 qed.
 
-theorem streicherK : ∀T:Type[1].∀t:T.∀P:t = t → Type[2].P (refl ? t) → ∀p.P p.
- #T #t #P #H #p >(lemmaK ?? p) @H
+theorem streicherK : ∀T:Type[2].∀t:T.∀P:t = t → Type[3].P (refl ? t) → ∀p.P p.
+ #T #t #P #H #p >(lemmaK T t p) @H
 qed.

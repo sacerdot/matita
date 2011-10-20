@@ -11,10 +11,10 @@
 
 include "basics/logic.ma".
 
-inductive Sigma: Type[1] ≝
- mk_Sigma: ∀p1: Type[0]. p1 → Sigma.
+inductive Sigma: Type[2] ≝
+ mk_Sigma: ∀p1: Type[1]. p1 → Sigma.
 
-definition p1: Sigma → Type[0].
+definition p1: Sigma → Type[1].
  #S cases S #Y #_ @Y
 qed.
 
@@ -22,7 +22,7 @@ definition p2: ∀S:Sigma. p1 S.
  #S cases S #Y #x @x
 qed.
 
-inductive jmeq (A:Type[0]) (x:A) : ∀B:Type[0]. B →Prop ≝
+inductive jmeq (A:Type[1]) (x:A) : ∀B:Type[1]. B →Prop ≝
 refl_jmeq : jmeq A x A x.
 
 notation < "hvbox(term 46 a break maction (≃) (≃\sub(t,u)) term 46 b)"
@@ -43,7 +43,7 @@ lemma K : ∀A.∀x:A.∀h:x=x. eqProp ? h (refl A x).
 qed.
 
 definition cast:
- ∀A,B:Type[0].∀E:A=B. A → B.
+ ∀A,B:Type[1].∀E:A=B. A → B.
  #A #B #E cases E #X @X
 qed.
 
@@ -100,14 +100,14 @@ qed.
 lemma jmeq_elim : ∀A.∀x:A.∀P:∀y:A.jmeq A x A y→Type[0].
  P x (refl_jmeq A x) → ∀y.∀h:jmeq A x A y.P y h ≝ E.
 
-lemma jmeq_to_eq: ∀A:Type[0]. ∀x,y:A. x≃y → x=y.
+lemma jmeq_to_eq: ∀A:Type[1]. ∀x,y:A. x≃y → x=y.
  #A #x #y #JMEQ @(jmeq_elim ? x … JMEQ) %
 qed.
 
-coercion jmeq_to_eq: ∀A:Type[0]. ∀x,y:A. ∀p:x≃y.x=y ≝ jmeq_to_eq on _p:?≃? to ?=?.
+coercion jmeq_to_eq: ∀A:Type[1]. ∀x,y:A. ∀p:x≃y.x=y ≝ jmeq_to_eq on _p:?≃? to ?=?.
 
 lemma eq_to_jmeq:
-  ∀A: Type[0].
+  ∀A: Type[1].
   ∀x, y: A.
     x = y → x ≃ y.
   //
