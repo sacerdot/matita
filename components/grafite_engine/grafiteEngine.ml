@@ -492,7 +492,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
      let mode = GrafiteAst.WithPreferences in (* MATITA 1.0: fixme *)
      let aliases = GrafiteDisambiguate.aliases_for_objs status composites in
       eval_alias status (mode,aliases)
-  | GrafiteAst.NQed loc ->
+  | GrafiteAst.NQed (loc,index) ->
      if status#ng_mode <> `ProofMode then
       raise (GrafiteTypes.Command_error "Not in proof mode")
      else
@@ -527,7 +527,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
         let obj = uri,height,[],[],obj_kind in
         let old_status = status in
         let status = NCicLibrary.add_obj status obj in
-        let index_obj =
+        let index_obj = index &&
          match obj_kind with
             NCic.Constant (_,_,_,_,(_,`Example,_))
           | NCic.Fixpoint (_,_,(_,`Example,_)) -> false
@@ -593,7 +593,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
                        let _,_,menv,_,_ = invobj in
                         (match menv with
                              [] -> eval_ncommand ~include_paths opts status
-                                    ("",0,GrafiteAst.NQed Stdpp.dummy_loc)
+                                    ("",0,GrafiteAst.NQed (Stdpp.dummy_loc,false))
                            | _ -> status))
                        (* XXX *)
                       with _ -> (*HLog.warn "error in generating inversion principle"; *)
@@ -618,7 +618,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
                        let _,_,menv,_,_ = invobj in
                         (match menv with
                              [] -> eval_ncommand ~include_paths opts status
-                                    ("",0,GrafiteAst.NQed Stdpp.dummy_loc)
+                                    ("",0,GrafiteAst.NQed(Stdpp.dummy_loc,false))
                            | _ -> status))
                        (* XXX *)
                       with 
@@ -645,7 +645,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
                        let _,_,menv,_,_ = invobj in
                         (match menv with
                              [] -> eval_ncommand ~include_paths opts status
-                                    ("",0,GrafiteAst.NQed Stdpp.dummy_loc)
+                                    ("",0,GrafiteAst.NQed(Stdpp.dummy_loc,false))
                            | _ -> status))
                        (* XXX *)
                       with _ -> (*HLog.warn "error in generating discrimination principle"; *)
@@ -717,7 +717,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
        let status = status#set_stack ninitial_stack in
        let status = subst_metasenv_and_fix_names status in
        let status = status#set_ng_mode `ProofMode in
-       eval_ncommand ~include_paths opts status ("",0,GrafiteAst.NQed Stdpp.dummy_loc)
+       eval_ncommand ~include_paths opts status ("",0,GrafiteAst.NQed(Stdpp.dummy_loc,false))
   | GrafiteAst.NObj (loc,obj) ->
      if status#ng_mode <> `CommandMode then
       raise (GrafiteTypes.Command_error "Not in command mode")
@@ -733,7 +733,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
       let status = status#set_ng_mode `ProofMode in
       (match nmenv with
           [] ->
-           eval_ncommand ~include_paths opts status ("",0,GrafiteAst.NQed Stdpp.dummy_loc)
+           eval_ncommand ~include_paths opts status ("",0,GrafiteAst.NQed(Stdpp.dummy_loc,true))
         | _ -> status)
   | GrafiteAst.NDiscriminator (loc, indty) ->
       if status#ng_mode <> `CommandMode then
@@ -752,7 +752,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
            it leftno status status#baseuri in
         let _,_,menv,_,_ = obj in
           (match menv with
-               [] -> eval_ncommand ~include_paths opts status ("",0,GrafiteAst.NQed Stdpp.dummy_loc)
+               [] -> eval_ncommand ~include_paths opts status ("",0,GrafiteAst.NQed(Stdpp.dummy_loc,false))
              | _ -> prerr_endline ("Discriminator: non empty metasenv");
                     status)
   | GrafiteAst.NInverter (loc, name, indty, selection, sort) ->
@@ -794,7 +794,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
        (match menv with
           [] ->
             eval_ncommand ~include_paths opts status
-             ("",0,GrafiteAst.NQed Stdpp.dummy_loc)
+             ("",0,GrafiteAst.NQed(Stdpp.dummy_loc,false))
         | _ -> assert false)
   | GrafiteAst.NUnivConstraint (loc,u1,u2) ->
       eval_add_constraint status [`Type,u1] [`Type,u2]

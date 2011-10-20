@@ -536,7 +536,10 @@ EXTEND
      ]];
 
   grafite_ncommand: [ [
-      IDENT "qed" -> G.NQed loc
+      IDENT "qed" ;  b = OPT SYMBOL "-" -> 
+      let b = match b with None -> true | Some _ -> false in
+      if not b then prerr_endline "Should not index";
+      G.NQed (loc,b)
     | nflavour = ntheorem_flavour; name = IDENT; SYMBOL ":"; typ = term;
       body = OPT [ SYMBOL <:unicode<def>> (* ≝ *); body = term -> body ] ->
         G.NObj (loc, N.Theorem (nflavour, name, typ, body,`Regular))

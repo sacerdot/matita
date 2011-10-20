@@ -105,7 +105,7 @@ type command =
   | NUnivConstraint of loc * NUri.uri * NUri.uri
   | NCopy of loc * string * NUri.uri * (NUri.uri * NUri.uri) list
   | NCoercion of loc * string * bool * nterm * nterm * (string * nterm) * nterm
-  | NQed of loc
+  | NQed of loc * bool
   (* ex lexicon commands *)
   | Alias of loc * alias_spec
       (** parameters, name, type, fields *) 
