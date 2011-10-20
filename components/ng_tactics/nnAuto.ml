@@ -14,7 +14,7 @@ open Printf
 let print ?(depth=0) s = 
   prerr_endline (String.make (2*depth) ' '^Lazy.force s) 
 let noprint ?(depth=0) _ = () 
-let debug_print = noprint
+let debug_print = print
 
 open Continuationals.Stack
 open NTacStatus
@@ -905,7 +905,7 @@ let sort_candidates status ctx candidates =
   let candidates = 
      List.sort (fun (a,_) (b,_) -> a - b) candidates in 
   let candidates = List.map snd candidates in
-    noprint (lazy ("candidates =\n" ^ (String.concat "\n" 
+    debug_print (lazy ("candidates =\n" ^ (String.concat "\n" 
 	(List.map (NotationPp.pp_term status) candidates))));
     candidates
 
@@ -1393,8 +1393,8 @@ let do_something signature flags status g depth gty cache =
   (* states in l1 have have an empty set of subgoals: no point to sort them *)
   debug_print ~depth 
     (lazy ("alternatives = " ^ (string_of_int (List.length (l1@l@l2)))));
-    (* l1 @ (sort_new_elems (l @ l2)), cache *)
-    l1 @ (List.rev l2) @ l, cache 
+    (* we order alternatives w.r.t the number of subgoals they open *)
+    l1 @ (sort_new_elems l2) @ l, cache 
 ;;
 
 let pp_goal = function
