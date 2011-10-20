@@ -340,7 +340,8 @@ let mk_discriminator ~use_jmeq name it leftno status baseuri =
     let nlist = HExtlib.list_seq 0 (nargs it leftno consno) in
     (* (\forall ...\forall P.\forall DH : ( ... = ... -> P). P) *)
     let params = List.map (fun x -> NTactics.intro_tac ("a" ^ string_of_int x)) nlist in
-        NTactics.reduce_tac ~reduction:(`Normalize true) ~where:default_pattern::
+        (* NTactics.reduce_tac ~reduction:(`Normalize true)
+         * ~where:default_pattern::*)
         params @ [
         NTactics.intro_tac "P";
         NTactics.intro_tac "DH";
@@ -364,8 +365,8 @@ let mk_discriminator ~use_jmeq name it leftno status baseuri =
 
   let status =
    NTactics.block_tac (
-    [print_tac (lazy "ci sono");
-     NTactics.reduce_tac ~reduction:(`Normalize true) ~where:default_pattern 
+    [print_tac (lazy "ci sono") (*;
+     NTactics.reduce_tac ~reduction:(`Normalize true) ~where:default_pattern *)
     ]
   @ List.map (fun x -> NTactics.intro_tac x) params @
     [NTactics.intro_tac "x";
