@@ -291,7 +291,7 @@ theorem divides_smallest_factor_n : ∀n:nat. 0 < n →
 #n #posn (cases (le_to_or_lt_eq … posn)) 
   [#lt1n @mod_O_to_divides [@lt_O_smallest_factor //] 
    >smallest_factor_to_min // @eqb_true_to_eq @f_min_true
-   @(ex_intro … n) % /2/ @eq_to_eqb_true /2/
+   @(ex_intro … n) % /2/ 
   |#H <H //
   ]
 qed.
@@ -465,7 +465,7 @@ qed.
 theorem prime_nth_prime : ∀n:nat.prime (nth_prime n).
 #n (cases n) 
   [@primeb_true_to_prime //
-  |#m >nth_primeS @primeb_true_to_prime check f_min_true @(f_min_true primeb)
+  |#m >nth_primeS @primeb_true_to_prime @(f_min_true primeb)
    @(ex_intro nat ? (smallest_factor (S (nth_prime m)!)))
    % [% // @le_S_S @(transitive_le … (le_smallest_factor_n …))
       <plus_n_Sm @le_plus_n_r
