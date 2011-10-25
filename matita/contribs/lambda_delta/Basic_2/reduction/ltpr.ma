@@ -80,4 +80,10 @@ lemma ltpr_inv_pair2: ∀L1,K2,I,V2. L1 ⇒ K2. 𝕓{I} V2 →
                       ∃∃K1,V1. K1 ⇒ K2 & V1 ⇒ V2 & L1 = K1. 𝕓{I} V1.
 /2/ qed.
 
+(* Basic forward lemmas *****************************************************)
+
+lemma ltpr_fwd_length: ∀L1,L2. L1 ⇒ L2 → |L1| = |L2|.
+#L1 #L2 #H elim H -H L1 L2; normalize //
+qed.
+
 (* Basic_1: removed theorems 2: wcpr0_getl wcpr0_getl_back *)

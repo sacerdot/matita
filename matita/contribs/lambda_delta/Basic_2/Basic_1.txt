@@ -265,12 +265,12 @@ pr1/props pr1_head_2
 pr1/props pr1_comp
 pr1/props pr1_eta
 pr2/clen pr2_gen_ctail
+pr2/subst1 pr2_gen_cabbr
 
 # check ######################################################################
 
 pr2/fwd pr2_gen_void
 pr2/props pr2_ctail
-
 
 # waiting ####################################################################
 

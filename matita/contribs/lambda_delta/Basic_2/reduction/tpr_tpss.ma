@@ -17,6 +17,8 @@ include "Basic_2/reduction/ltpr_ldrop.ma".
 
 (* CONTEXT-FREE PARALLEL REDUCTION ON TERMS *********************************)
 
+(* Unfold properties ********************************************************)
+
 (* Basic_1: was: pr0_subst1 *)
 lemma tpr_tps_ltpr: ∀T1,T2. T1 ⇒ T2 →
                     ∀L1,d,e,U1. L1 ⊢ T1 [d, e] ≫ U1 →
@@ -89,4 +91,4 @@ lemma tpr_tpss_ltpr: ∀L1,L2. L1 ⇒ L2 → ∀T1,T2. T1 ⇒ T2 →
   elim (tpr_tps_ltpr … HUT … HU1 … HL12) -HUT HU1 HL12 #U2 #HU12 #HTU2
   lapply (tpss_trans_eq … HT2 … HTU2) -T /2/
 ]
-qed.  
+qed.

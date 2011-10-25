@@ -93,6 +93,4 @@ qed.
 (*
 pr2/fwd pr2_gen_appl
 pr2/fwd pr2_gen_abbr
-pr2/subst1 pr2_subst1
-pr2/subst1 pr2_gen_cabbr
 *)
