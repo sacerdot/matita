@@ -73,7 +73,7 @@ definition distributive2: ∀A,B:Type[0].∀f:A→B→B.∀g:B→B→B.Prop
 
 lemma injective_compose : ∀A,B,C,f,g.
 injective A B f → injective B C g → injective A C (λx.g (f x)).
-/3/; qed.
+/3/; qed-.
 
 (* extensional equality *)
 

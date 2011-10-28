@@ -1,4 +1,4 @@
-(*
+ (*
     ||M||  This file is part of HELM, an Hypertextual, Electronic        
     ||A||  Library of Mathematics, developed at the Computer Science     
     ||T||  Department of the University of Bologna, Italy.                     
@@ -47,7 +47,7 @@ theorem rewrite_l: ∀A:Type[2].∀x.∀P:A → Type[2]. P x → ∀y. x = y →
 #A #x #P #Hx #y #Heq (cases Heq); //; qed.
 
 theorem sym_eq: ∀A.∀x,y:A. x = y → y = x.
-#A #x #y #Heq @(rewrite_l A x (λz.z=x)); //; qed.
+#A #x #y #Heq @(rewrite_l A x (λz.z=x)) // qed-.
 
 theorem rewrite_r: ∀A:Type[2].∀x.∀P:A → Type[2]. P x → ∀y. y = x → P y.
 #A #x #P #Hx #y #Heq (cases (sym_eq ? ? ? Heq)); //; qed.
@@ -56,7 +56,7 @@ theorem eq_coerc: ∀A,B:Type[0].A→(A=B)→B.
 #A #B #Ha #Heq (elim Heq); //; qed.
 
 theorem trans_eq : ∀A.∀x,y,z:A. x = y → y = z → x = z.
-#A #x #y #z #H1 #H2 >H1; //; qed.
+#A #x #y #z #H1 #H2 >H1; //; qed-.
 
 theorem eq_f: ∀A,B.∀f:A→B.∀x,y:A. x=y → f x = f y.
 #A #B #f #x #y #H >H; //; qed.
