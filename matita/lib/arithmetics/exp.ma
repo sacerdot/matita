@@ -48,8 +48,54 @@ qed.
 
 theorem lt_O_exp: ∀n,m:nat. O < n → O < n^m. 
 #n #m (elim m) normalize // #a #Hind #posn 
-@(le_times 1 ? 1) /2/
-qed.
+@(le_times 1 ? 1) /2/ qed.
+
+(* [applyS monotonic_le_minus_r /2/ 
+
+> (minus_Sn_n ?) 
+[cut (∃x.∃y.∃z.(x - y ≤ x - z) = (1 ≤ n ^a))
+  [@ex_intro
+    [|@ex_intro
+      [|@ex_intro
+        [|     
+@(rewrite_r \Nopf  (S  n \sup a - n \sup a )
+ (\lambda x:\Nopf 
+  .(S  n \sup a - n \sup a \le S  n \sup a -(S ?-?))=(x\le  n \sup a ))
+ (rewrite_r \Nopf  ?
+  (\lambda x:\Nopf 
+   .(S  n \sup a - n \sup a \le x)=(S  n \sup a - n \sup a \le  n \sup a ))
+  ( refl … Type[0]  (S  n \sup a - n \sup a \le  n \sup a ) ) (S ?-(S ?-?))
+  (rewrite_r \Nopf  (?-O) (\lambda x:\Nopf .S ?-(S ?-?)=x)
+   (rewrite_l \Nopf  1 (\lambda x:\Nopf .S ?-x=n ^a -O) (minus_S_S ? O) (S ?-?)
+    (minus_Sn_n ?)) ?
+   (minus_n_O ?))) 1
+ (minus_Sn_n  n \sup a ))  
+         
+@(rewrite_r \Nopf  (S ?-?)
+ (\lambda x:\Nopf 
+  .(S  n \sup a - n \sup a \le S  n \sup a -(S ?-?))=(x\le  n \sup a ))
+ (rewrite_r \Nopf  ?
+  (\lambda x:\Nopf 
+   .(S  n \sup a - n \sup a \le x)=(S  n \sup a - n \sup a \le  n \sup a ))
+  ( refl ??) (S ?-(S ?-?))
+  ?) 1
+ (minus_Sn_n ?))
+  [||
+@(rewrite_r \Nopf  (?-O) (\lambda x:\Nopf .S ?-(S ?-?)=x)
+  ???)
+[|<(minus_Sn_n ?)
+@(rewrite_r \Nopf  (?-O) (\lambda x:\Nopf .S ?-(S ?-?)=x)
+ (rewrite_l \Nopf  1 (\lambda x:\Nopf .S ?-x=?-O) 
+    ? (S ?-?)
+    (minus_Sn_n ?)) ??)
+ 
+@(rewrite_r \Nopf  (?-O) (\lambda x:\Nopf .S ?-(S ?-?)=x)
+   (rewrite_l \Nopf  1 (\lambda x:\Nopf .S ?-x=?-O) (minus_S_S ? O) (S ?-?)
+    (minus_Sn_n ?)) ?
+   (minus_n_O ?)))
+
+applyS monotonic_le_minus_r /2/
+qed. *)
 
 theorem lt_m_exp_nm: ∀n,m:nat. 1 < n → m < n^m.
 #n #m #lt1n (elim m) normalize // 

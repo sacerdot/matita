@@ -255,18 +255,17 @@ smallest_factor n = (min n 2 (λm.(eqb (n \mod m) O))).
 #n #lt1n normalize >lt_to_leb_false //
 qed.
 
-(* it works ! 
-theorem example1 : smallest_factor 3 = 3.
+example example1 : smallest_factor 3 = 3.
 normalize //
 qed.
 
-theorem example2: smallest_factor 4 = 2.
+example example2: smallest_factor 4 = 2.
 normalize //
 qed.
 
-theorem example3 : smallest_factor 7 = 7.
+example example3 : smallest_factor 7 = 7.
 normalize //
-qed. *)
+qed. 
 
 theorem le_SO_smallest_factor: ∀n:nat. 
   n ≤ 1 → smallest_factor n = n.
@@ -339,16 +338,16 @@ definition primeb ≝ λn:nat.
   (leb 2 n) ∧ (eqb (smallest_factor n) n).
 
 (* it works! *)
-theorem example4 : primeb 3 = true.
+example example4 : primeb 3 = true.
 normalize // qed.
 
-theorem example5 : primeb 6 = false.
+example example5 : primeb 6 = false.
 normalize // qed.
 
-theorem example6 : primeb 11 = true.
+example example6 : primeb 11 = true.
 normalize // qed.
 
-theorem example7 : primeb 17 = true.
+example example7 : primeb 17 = true.
 normalize // qed.
 
 theorem primeb_true_to_prime : ∀n:nat.
@@ -446,14 +445,14 @@ lemma nth_primeS: ∀n.nth_prime (S n) =
 // qed.
     
 (* it works *)
-theorem example11 : nth_prime 2 = 5.
+example example11 : nth_prime 2 = 5.
 normalize // qed.
 
-theorem example12: nth_prime 3 = 7.
+example example12: nth_prime 3 = 7.
 normalize //
 qed.
 
-theorem example13 : nth_prime 4 = 11.
+example example13 : nth_prime 4 = 11.
 normalize // qed.
 
 (* done in 13.1369330883s -- qualcosa non va: // lentissimo 

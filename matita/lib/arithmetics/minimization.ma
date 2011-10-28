@@ -230,8 +230,8 @@ lemma min_exists: ∀f.∀t,m. m < t → f m = true →
   [#b #lebm #ismin #eqtb @False_ind @(absurd … lebm) <eqtb
    @lt_to_not_le //
   |#d #Hind #b #lebm #ismin #eqt cases(le_to_or_lt_eq …lebm)
-    [#ltbm >false_min /2/ @Hind // 
-      [#i #H #H1 @ismin /2/ | >eqt normalize //]
+    [#ltbm >false_min /2/ @Hind //
+      [#i #H #H1 @ismin /2/ | >eqt normalize //] 
     |#eqbm >true_min //
     ]
   ]

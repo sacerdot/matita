@@ -153,7 +153,7 @@ theorem mod_S: ∀n,m:nat. O < m → S (n \mod m) < m →
 ((S n) \mod m) = S (n \mod m).
 #n #m #posm #H 
 @(div_mod_spec_to_eq2 (S n) m … (n / m) ? (div_mod_spec_div_mod …))
-// @div_mod_spec_intro// (applyS eq_f) //
+// @div_mod_spec_intro// applyS eq_f // 
 qed.
 
 theorem mod_O_n: ∀n:nat.O \mod n = O.
@@ -177,7 +177,7 @@ theorem or_div_mod: ∀n,q. O < q →
   ((S (n \mod q)<q) ∧ S n = (div n q) * q + S (n\mod q))).
 #n #q #posq 
 (elim (le_to_or_lt_eq ?? (lt_mod_m_m n q posq))) #H
-  [%2 % // (applyS eq_f) //
+  [%2 % // applyS eq_f // 
   |%1 % // /demod/ <H in ⊢(? ? ? (? % ?)) @eq_f//
   ]
 qed.

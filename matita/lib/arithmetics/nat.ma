@@ -1,4 +1,4 @@
-(*
+  (*
     ||M||  This file is part of HELM, an Hypertextual, Electronic        
     ||A||  Library of Mathematics, developed at the Computer Science     
     ||T||  Department of the University of Bologna, Italy.                     
@@ -239,7 +239,7 @@ theorem monotonic_pred: monotonic ? le pred.
 
 theorem le_S_S_to_le: ∀n,m:nat. S n ≤ S m → n ≤ m.
 (* demo *)
-/2/ qed.
+/2/ qed-.
 
 (* this are instances of the le versions 
 theorem lt_S_S_to_lt: ∀n,m. S n < S m → n < m.
@@ -390,7 +390,7 @@ qed. *)
 
 theorem not_eq_to_le_to_lt: ∀n,m. n≠m → n≤m → n<m.
 #n #m #Hneq #Hle cases (le_to_or_lt_eq ?? Hle) //
-#Heq /3/ qed.
+#Heq /3/ qed-.
 (*
 nelim (Hneq Heq) qed. *)
 
@@ -466,7 +466,7 @@ qed.
 theorem le_n_fn: ∀f:nat → nat. 
   increasing f → ∀n:nat. n ≤ f n.
 #f #incr #n (elim n) /2/
-qed.
+qed-.
 
 theorem increasing_to_le: ∀f:nat → nat. 
   increasing f → ∀m:nat.∃i.m ≤ f i.
@@ -517,7 +517,7 @@ theorem le_plus_l: \forall p,n,m:nat. n \le m \to n + p \le m + p
 theorem le_plus: ∀n1,n2,m1,m2:nat. n1 ≤ n2  → m1 ≤ m2 
 → n1 + m1 ≤ n2 + m2.
 #n1 #n2 #m1 #m2 #len #lem @(transitive_le ? (n1+m2))
-/2/ qed.
+/2/ qed-.
 
 theorem le_plus_n :∀n,m:nat. m ≤ n + m.
 /2/ qed. 
@@ -532,13 +532,13 @@ theorem le_plus_n_r :∀n,m:nat. m ≤ m + n.
 /2/ qed.
 
 theorem eq_plus_to_le: ∀n,m,p:nat.n=m+p → m ≤ n.
-// qed.
+// qed-.
 
 theorem le_plus_to_le: ∀a,n,m. a + n ≤ a + m → n ≤ m.
 #a (elim a) normalize /3/ qed. 
 
 theorem le_plus_to_le_r: ∀a,n,m. n + a ≤ m +a → n ≤ m.
-/2/ qed. 
+/2/ qed-. 
 
 (* plus & lt *)
 
@@ -566,7 +566,7 @@ theorem lt_plus_to_lt_l :∀n,p,q:nat. p+n < q+n → p<q.
 /2/ qed.
 
 theorem lt_plus_to_lt_r :∀n,p,q:nat. n+p < n+q → p<q.
-/2/ qed.
+/2/ qed-.
 
 (*
 theorem le_to_lt_to_lt_plus: ∀a,b,c,d:nat.
@@ -615,7 +615,7 @@ theorem le_times_to_le:
   |#n #m #H #lta #le
      @le_S_S @H /2/
   ]
-qed.
+qed-.
 
 (*
 theorem le_S_times_2: ∀n,m.O < m → n ≤ m → S n ≤ 2*m.
@@ -719,7 +719,7 @@ qed.
 
 theorem lt_times_n_to_lt_r: 
 ∀n,p,q:nat. n*p < n*q → p < q.
-/2/ qed.
+/2/ qed-.
 
 (*
 theorem nat_compare_times_l : \forall n,p,q:nat. 
@@ -968,7 +968,7 @@ cases (decidable_le (m+p) n) #Hlt
   [@plus_to_minus @plus_to_minus <associative_plus
    @minus_to_plus //
   |cut (n ≤ m+p) [@(transitive_le … (le_n_Sn …)) @not_le_to_lt //]
-   #H >eq_minus_O /2/ >eq_minus_O // 
+   #H >eq_minus_O /2/ (* >eq_minus_O // *) 
   ]
 qed.
 
@@ -1095,7 +1095,7 @@ lemma le_minr: ∀i,n,m. i ≤ min n m → i ≤ m.
 #i #n #m normalize @leb_elim normalize /2/ qed. 
 
 lemma le_minl: ∀i,n,m. i ≤ min n m → i ≤ n.
-/2/ qed.
+/2/ qed-.
 
 lemma to_min: ∀i,n,m. i ≤ n → i ≤ m → i ≤ min n m.
 #i #n #m #lein #leim normalize (cases (leb n m)) 
@@ -1111,7 +1111,7 @@ lemma le_maxl: ∀i,n,m. max n m ≤ i → n ≤ i.
 #i #n #m normalize @leb_elim normalize /2/ qed. 
 
 lemma le_maxr: ∀i,n,m. max n m ≤ i → m ≤ i.
-/2/ qed.
+/2/ qed-.
 
 lemma to_max: ∀i,n,m. n ≤ i → m ≤ i → max n m ≤ i.
 #i #n #m #leni #lemi normalize (cases (leb n m)) 
