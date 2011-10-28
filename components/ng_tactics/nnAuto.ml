@@ -139,8 +139,8 @@ let is_a_fact_obj s uri =
     | _ -> false
 
 let is_a_fact_ast status subst metasenv ctx cand = 
- debug_print ~depth:0 
-   (lazy ("------- checking " ^ NotationPp.pp_term status cand)); 
+ noprint ~depth:0 
+   (lazy ("checking facts " ^ NotationPp.pp_term status cand)); 
  let status, t = disambiguate status ctx ("",0,cand) None in
  let status,t = term_of_cic_term status t ctx in
  let ty = NCicTypeChecker.typeof status subst metasenv ctx t in
@@ -254,12 +254,12 @@ let solve f status eq_cache goal =
     with 
         NCicRefiner.RefineFailure msg 
       | NCicRefiner.Uncertain msg ->
-          debug_print (lazy ("WARNING: refining in fast_eq_check failed\n" ^
+          noprint (lazy ("WARNING U: refining in fast_eq_check failed\n" ^
                         snd (Lazy.force msg) ^	
 			"\n in the environment\n" ^ 
 			status#ppmetasenv subst metasenv)); None
       | NCicRefiner.AssertFailure msg -> 
-          debug_print (lazy ("WARNING: refining in fast_eq_check failed" ^
+          noprint (lazy ("WARNING F: refining in fast_eq_check failed" ^
                         Lazy.force msg ^
 			"\n in the environment\n" ^ 
 			status#ppmetasenv subst metasenv)); None
@@ -575,19 +575,51 @@ let smart_apply t unit_eq status g =
       let _,_,metasenv,subst,_ = status#obj in
       let _,ctx,jty = List.assoc j metasenv in
       let jty = NCicUntrusted.apply_subst status subst ctx jty in
-        noprint(lazy("goal " ^ (status#ppterm ctx [] [] jty)));
-        fast_eq_check unit_eq status j
+        debug_print(lazy("goal " ^ (status#ppterm ctx [] [] jty)));
+        let res = fast_eq_check unit_eq status j in
+        debug_print(lazy("ritorno da fast_eq_check"));
+        res
     with
       | NCicEnvironment.ObjectNotFound s as e ->
           raise (Error (lazy "eq_coerc non yet defined",Some e))
       | Error _ as e -> debug_print (lazy "error"); raise e
+;;
+
+let compare_statuses ~past ~present =
+ let _,_,past,_,_ = past#obj in 
+ let _,_,present,_,_ = present#obj in 
+ List.map fst (List.filter (fun (i,_) -> not(List.mem_assoc i past)) present),
+ List.map fst (List.filter (fun (i,_) -> not (List.mem_assoc i present)) past)
+;;
+
+(* paramodulation has only an implicit knoweledge of the symmetry of equality;
+   hence it is in trouble in proving (a = b) = (b = a) *) 
+let try_sym tac status g =
+  let sym_eq = Ast.Appl [Ast.Ident("sym_eq",None); Ast.Implicit `Vector] in
+  let _,_,metasenv,subst,_ = status#obj in
+  let _, context, gty = List.assoc g metasenv in
+  let is_eq = 
+    NCicParamod.is_equation status metasenv subst context gty 
+  in
+  if is_eq then
+    try tac status g
+    with Error _ ->
+      let new_status = instantiate_with_ast status g ("",0,sym_eq) in 
+      let go, _ = compare_statuses ~past:status ~present:new_status in
+      assert (List.length go  = 1);
+      let ng = List.hd go in
+      tac new_status ng
+   else tac status g
+;;
 
 let smart_apply_tac t s =
   let unit_eq = index_local_equations s#eq_cache s in   
-  NTactics.distribute_tac (smart_apply t unit_eq) s
+  NTactics.distribute_tac (try_sym (smart_apply t unit_eq)) s 
+  (* NTactics.distribute_tac (smart_apply t unit_eq) s *)
 
 let smart_apply_auto t eq_cache =
-  NTactics.distribute_tac (smart_apply t eq_cache)
+  NTactics.distribute_tac (try_sym (smart_apply t eq_cache)) 
+  (* NTactics.distribute_tac (smart_apply t eq_cache) *)
 
 
 (****************** types **************)
@@ -905,7 +937,7 @@ let sort_candidates status ctx candidates =
   let candidates = 
      List.sort (fun (a,_) (b,_) -> a - b) candidates in 
   let candidates = List.map snd candidates in
-    debug_print (lazy ("candidates =\n" ^ (String.concat "\n" 
+    noprint (lazy ("candidates =\n" ^ (String.concat "\n" 
 	(List.map (NotationPp.pp_term status) candidates))));
     candidates
 
@@ -916,10 +948,11 @@ let try_candidate ?(smart=0) flags depth status eq_cache ctx t =
  try
   debug_print ~depth (lazy ("try " ^ (NotationPp.pp_term status) t));
   let status = 
-    if smart= 0 then NTactics.apply_tac ("",0,t) status 
-    else if smart = 1 then smart_apply_auto ("",0,t) eq_cache status 
+    if smart = 0 then NTactics.apply_tac ("",0,t) status
+    else if smart = 1 then  
+      smart_apply_auto ("",0,t) eq_cache status 
     else (* smart = 2: both *)
-      try NTactics.apply_tac ("",0,t) status 
+      try NTactics.apply_tac ("",0,t) status
       with Error _ -> 
         smart_apply_auto ("",0,t) eq_cache status 
   in
@@ -1128,79 +1161,48 @@ let applicative_case depth signature status flags gty cache =
 	| _ -> false, NCicParamod.is_equation status metasenv subst context t 
   in
   debug_print ~depth (lazy (string_of_bool is_eq)); 
-  (* old 
-  let candidates, smart_candidates = 
-    get_candidates ~smart:(not is_eq) depth 
-      flags status tcache signature gty in 
-    (* if the goal is an equation we avoid to apply unit equalities,
-       since superposition should take care of them; refl is an
-       exception since it prompts for convertibility *)
-  let candidates = 
-    let test x = not (is_a_fact_ast status subst metasenv context x) in
-    if is_eq then 
-      Ast.Ident("refl",None) ::List.filter test candidates 
-    else candidates in *)
   (* new *)
   let candidates, smart_candidates = 
     get_candidates ~smart:true depth 
       flags status tcache signature gty in 
+  let test = is_a_fact_ast status subst metasenv context in
+  let candidates_facts,candidates_other =
     (* if the goal is an equation we avoid to apply unit equalities,
-       since superposition should take care of them; refl is an
-       exception since it prompts for convertibility *)
-  let candidates,smart_candidates = 
-    let test x = not (is_a_fact_ast status subst metasenv context x) in
-    if is_eq then 
-      Ast.Ident("refl",None) ::List.filter test candidates,
-      List.filter test smart_candidates
-    else candidates,smart_candidates in 
-  debug_print ~depth
-    (lazy ("candidates: " ^ string_of_int (List.length candidates)));
-  debug_print ~depth
-    (lazy ("smart candidates: " ^ 
-             string_of_int (List.length smart_candidates)));
- (*
-  let sm = 0 in 
-  let smart_candidates = [] in *)
+     since superposition should take care of them; refl is an
+     exception since it prompts for convertibility *)
+    let l1,l2 = List.partition test candidates in
+    if is_eq then [Ast.Ident("refl",None)],l2 else l1,l2
+  in
+  let smart_candidates_facts, smart_candidates_other =
+    let l1,l2 = List.partition test smart_candidates in
+    if is_eq then [],l2 else l1,l2
+  in
   let sm = if is_eq then 0 else 2 in
- (* wrong: we constraint maxdepth for equality goals to three *)
- (* let maxdepth = if is_eq then min flags.maxdepth 6 else flags.maxdepth in *)
+  let sm1 = if flags.last then 2 else 0 in
   let maxd = (depth + 1 = flags.maxdepth) in 
-  let only_one = flags.last && maxd in
-  debug_print  ~depth (lazy ("only_one: " ^ (string_of_bool only_one))); 
-  debug_print  ~depth (lazy ("maxd: " ^ (string_of_bool maxd)));
-  let elems =  
+  let try_candidates only_one sm acc candidates =
     List.fold_left 
       (fun elems cand ->
          if (only_one && (elems <> [])) then elems 
-         else 
-           if (maxd && not(is_prod) & 
-		 not(is_a_fact_ast status subst metasenv context cand)) 
-           then (debug_print  ~depth (lazy "pruned: not a fact"); elems)
          else
            match try_candidate (~smart:sm) 
              flags depth status cache.unit_eq context cand with
                | None -> elems
                | Some x -> x::elems)
-      [] candidates
-  in
-  let more_elems = 
-    if only_one && elems <> [] then elems 
-    else
-      List.fold_left 
-        (fun elems cand ->
-         if (only_one && (elems <> [])) then elems 
-         else 
-           if (maxd && not(is_prod) &&
-		 not(is_a_fact_ast status subst metasenv context cand)) 
-           then (debug_print  ~depth (lazy "pruned: not a fact"); elems)
-         else
-           match try_candidate (~smart:2) (* was smart:1 *)
-             flags depth status cache.unit_eq context cand with
-               | None -> elems
-               | Some x -> x::elems)
-        [] smart_candidates
-  in
-  elems@more_elems
+      acc candidates
+  in 
+  (* if the goal is the last one we stop at the first fact *)
+  let elems = try_candidates flags.last sm [] candidates_facts in
+  (* now we add smart_facts *)
+  let elems = try_candidates flags.last sm elems smart_candidates_facts in
+  (* if we are at maxdepth and the goal is not a product we are done 
+     similarly, if the goal is the last one and we already found a
+     solution *)
+  if (maxd && not(is_prod)) || (flags.last && elems<>[]) then elems
+  else
+    let elems = try_candidates false 2 elems candidates_other in
+    debug_print ~depth (lazy ("not facts: try smart application"));
+    try_candidates false 2 elems smart_candidates_other
 ;;
 
 exception Found
@@ -1368,7 +1370,22 @@ let reduce ~whd ~depth status g =
     [(!candidate_no,Ast.Ident("__whd",None)),status])
 ;;
 
+let is_meta status gty =
+  let _, ty = term_of_cic_term status gty (ctx_of gty) in
+  match ty with
+  | NCic.Meta _ -> true
+  | _ -> false 
+;;
+
 let do_something signature flags status g depth gty cache =
+  (* if the goal is meta we close it with I:True. This should work
+    thnaks to the toplogical sorting of goals. *)
+  if is_meta status gty then
+    let t = Ast.Ident("I",None) in
+    debug_print (lazy ("using default term" ^ (NotationPp.pp_term status) t));
+    let s = NTactics.apply_tac ("",0,t) status in
+    [(0,t),s], cache
+  else 
   let l0, cache = intros ~depth status cache in
   if l0 <> [] then l0, cache
   else
