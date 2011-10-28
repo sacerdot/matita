@@ -374,12 +374,17 @@ module Superposition (B : Orderings.Blob) =
        bag, maxvar, res
     ;;
     
-    let rewrite_eq ~unify l r ty vl table =
+    (* rewrite_eq check if in table there an equation matching l=r; 
+       used in subsumption and deep_eq. In deep_eq, we need to match 
+       several times times w.r.t. the same table, hence we should refresh 
+       the retrieved clauses, to avoid clashes of variables *)
+
+    let rewrite_eq ~refresh ~unify maxvar l r ty vl table =
       let retrieve = if unify then IDX.DT.retrieve_unifiables
       else IDX.DT.retrieve_generalizations in
       let lcands = retrieve table l in
       let rcands = retrieve table r in
-      let f b c = 
+      let f b c =
         let id, dir, l, r, vl = 
           match c with
             | (d, (id,Terms.Equation (l,r,ty,_),vl,_))-> id, d, l, r, vl
@@ -398,8 +403,12 @@ module Superposition (B : Orderings.Blob) =
         | [] -> None
         | (id2,dir,c,vl1)::tl ->
             try
+              let c,maxvar = if refresh then
+                let maxvar,_,r = Utils.relocate maxvar vl1 [] in
+                Subst.apply_subst r c,maxvar
+                else c,maxvar in 
               let subst = Unif.unification (* (vl@vl1) *) locked_vars c t in
-              Some (id2, dir, subst)
+              Some (id2, dir, subst, maxvar)
             with FoUnif.UnificationFailure _ -> aux tl
       in
         aux (cands1 @ cands2)
@@ -409,9 +418,9 @@ module Superposition (B : Orderings.Blob) =
       match lit with
       | Terms.Predicate _ -> assert false
       | Terms.Equation (l,r,ty,_) -> 
-          match rewrite_eq ~unify l r ty vl table with
+          match rewrite_eq ~refresh:false ~unify maxvar l r ty vl table with
             | None -> None
-            | Some (id2, dir, subst) ->
+            | Some (id2, dir, subst, maxvar) ->
                 let id_t = Terms.Node [ Terms.Leaf B.eqP; ty; r; r ] in
                   build_new_clause bag maxvar (fun _ -> true)
                   Terms.Superposition id_t subst id id2 [2] dir 
@@ -423,38 +432,46 @@ module Superposition (B : Orderings.Blob) =
     (* id refers to a clause proving contextl l = contextr r *)
 
     let rec deep_eq ~unify l r ty pos contextl contextr table acc =
+      (* let _ = prerr_endline ("pos = " ^ String.concat "," 
+            (List.map string_of_int pos)) in *)
       match acc with 
       | None -> None
       | Some(bag,maxvar,(id,lit,vl,p),subst) -> 
           (* prerr_endline ("input subst = "^Pp.pp_substitution subst); *)
+          (* prerr_endline ("l prima =" ^ Pp.pp_foterm l); *)
+          (* prerr_endline ("r prima =" ^ Pp.pp_foterm r); *)
           let l = Subst.apply_subst subst l in 
           let r = Subst.apply_subst subst r in 
+          (* prerr_endline ("l dopo =" ^ Pp.pp_foterm l); *)
+          (* prerr_endline ("r dopo =" ^ Pp.pp_foterm r); *)
             try 
               let subst1 = Unif.unification (* vl *) [] l r in
               let lit = 
                 match lit with Terms.Predicate _ -> assert false
                   | Terms.Equation (l,r,ty,o) -> 
-                     Terms.Equation (FoSubst.apply_subst subst1 l,
-                       FoSubst.apply_subst subst1 r, ty, o)
+                    let l = Subst.apply_subst subst1 l in 
+                    let r = Subst.apply_subst subst1 r in 
+                     Terms.Equation (l, r, ty, o)
               in
                 Some(bag,maxvar,(id,lit,vl,p),Subst.concat subst1 subst)
             with FoUnif.UnificationFailure _ -> 
-              match rewrite_eq ~unify l r ty vl table with
-              | Some (id2, dir, subst1) ->
+              match rewrite_eq ~refresh:true ~unify maxvar l r ty vl table with
+              | Some (id2, dir, subst1, maxvar) ->
 		  (* prerr_endline ("subst1 = "^Pp.pp_substitution subst1);
-		     prerr_endline ("old subst = "^Pp.pp_substitution subst);*)
+		    prerr_endline ("old subst = "^Pp.pp_substitution subst); *)
                   let newsubst = Subst.concat subst1 subst in
                   let id_t = 
                     FoSubst.apply_subst newsubst
                       (Terms.Node[Terms.Leaf B.eqP;ty;contextl r;contextr r]) 
                   in
-                    (match 
+                  (match 
                       build_new_clause_reloc bag maxvar (fun _ -> true)
                         Terms.Superposition id_t 
-                        subst1 id id2 (pos@[2]) dir 
-                    with
+                        subst1 id id2 (pos@[2]) dir  
+                   with
                     | Some ((bag, maxvar), c), r ->
-			(* prerr_endline ("r = "^Pp.pp_substitution r); *)
+                     (* prerr_endline ("creo "^ Pp.pp_unit_clause c); *)
+                     (* prerr_endline ("r = "^Pp.pp_substitution r); *)
 			let newsubst = Subst.flat 
 			  (Subst.concat r subst) in
                         Some(bag,maxvar,c,newsubst)
@@ -645,7 +662,7 @@ module Superposition (B : Orderings.Blob) =
       let bag, clause = 
         if no_demod then bag, clause else demodulate bag clause table 
       in
-      let _ = debug (lazy ("demodulated goal  : " 
+      let _ = debug(lazy ("demodulated goal  : " 
 			     ^ Pp.pp_unit_clause clause))
       in
       if List.exists (are_alpha_eq clause) g_actives then None
@@ -668,12 +685,13 @@ module Superposition (B : Orderings.Blob) =
          | None -> Some (bag,clause)
          | Some (bag,maxvar,cl,subst) -> 
              debug (lazy "Goal subsumed");
+             debug (lazy ("subst in superpos: " ^ Pp.pp_substitution subst));
              raise (Success (bag,maxvar,cl,subst))
 (*
         match is_subsumed ~unify:true bag maxvar clause table with
         | None -> Some (bag, clause)
         | Some ((bag,maxvar),c) -> 
-            prerr_endline "Goal subsumed";
+            debug (lazy "Goal subsumed");
             raise (Success (bag,maxvar,c))
 *)
     ;;

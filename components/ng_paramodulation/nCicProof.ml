@@ -64,7 +64,6 @@ let debug c _ = c;;
       extract t
   ;;
 
-
    let mk_predicate status hole_type amount ft p1 vl =
     let rec aux t p = 
       match p with
@@ -79,10 +78,10 @@ let debug c _ = c;;
                         end)
                           in
               let module Pp = Pp.Pp(NCicBlob) in  
-               prerr_endline ("term: " ^ Pp.pp_foterm ft);
-               prerr_endline ("path: " ^ String.concat "," 
+               (* prerr_endline ("term: " ^ Pp.pp_foterm ft); 
+                  prerr_endline ("path: " ^ String.concat "," 
                  (List.map string_of_int p1));
-               prerr_endline ("leading to: " ^ Pp.pp_foterm t);
+               prerr_endline ("leading to: " ^ Pp.pp_foterm t); *)
                assert false
           | Terms.Node l -> 
               let l = 
@@ -202,6 +201,11 @@ let debug c _ = c;;
      let  module Pp = Pp.Pp(NCicBlob) 
      in
     let module Subst = FoSubst in
+    let compose subst1 subst2 =
+      let s1 = List.map (fun (x,t) -> (x, Subst.apply_subst subst2 t)) subst1 in
+      let s2 = List.filter (fun (m,_) -> not (List.mem_assoc m s1)) subst2
+      in s1 @ s2
+    in
     let position i l = 
       let rec aux = function
        | [] -> assert false
@@ -238,24 +242,7 @@ let debug c _ = c;;
       let lit = Subst.apply_subst subst lit in
         extract status 0 [] lit in
     (* composition of all subst acting on goal *)
-    let res_subst =
-      let rec rsaux ongoal acc = 
-	function
-	  | [] -> acc (* is the final subst for refl *)
-	  | id::tl when ongoal ->
-            let lit,vl,proof = get_literal id in
-	      (match proof with
-		| Terms.Exact _ -> rsaux ongoal acc tl
-		| Terms.Step (_, _, _, _, _, s) ->
-		    rsaux ongoal (s@acc) tl)
-	  | id::tl -> 
-	    (* subst is the the substitution for refl *)
-	    rsaux (id=mp) subst tl
-      in 
-      let r = rsaux false [] steps in
-	(* prerr_endline ("res substitution: " ^ Pp.pp_substitution r);
-           prerr_endline ("\n" ^ "subst: " ^ Pp.pp_substitution subst); *)
-      r
+    let res_subst = subst
     in
     let rec aux ongoal seen = function
       | [] -> NCic.Rel 1
@@ -268,16 +255,17 @@ let debug c _ = c;;
             let refl = 
 	      if demod then NCic.Implicit `Term 
 	      else mk_refl eq_ty in
-             (* prerr_endline ("Reached m point, id=" ^ (string_of_int id));
+              (* prerr_endline ("Reached m point, id=" ^ (string_of_int id));
                 (NCic.LetIn ("clause_" ^ string_of_int id, eq_ty, refl,
                 aux true ((id,([],lit))::seen) (id::tl))) *)
-              NCicSubstitution.subst status
+              let res = NCicSubstitution.subst status
                 ~avoid_beta_redexes:true ~no_implicit:false refl
                 (aux true ((id,([],lit))::seen) (id::tl))
+              in res
           else
           match proof with
           | Terms.Exact _ when tl=[] ->
-              (* prerr_endline ("Exact (tl=[]) for " ^ (string_of_int id));*)
+              (* prerr_endline ("Exact (tl=[]) for " ^ (string_of_int id)); *)
               aux ongoal seen tl
           | Terms.Step _ when tl=[] -> assert false
           | Terms.Exact ft ->
@@ -288,21 +276,27 @@ let debug c _ = c;;
                  close_with_lambdas vl (extract status amount vl ft),
                  aux ongoal 
                    ((id,(List.map (fun x -> Terms.Var x) vl,lit))::seen) tl)
-              *)
-               NCicSubstitution.subst status
+               *)
+               let res = NCicSubstitution.subst status
                  ~avoid_beta_redexes:true ~no_implicit:false
                  (close_with_lambdas vl (extract status amount vl ft))
                  (aux ongoal 
                    ((id,(List.map (fun x -> Terms.Var x) vl,lit))::seen) tl)
+               in res 
           | Terms.Step (_, id1, id2, dir, pos, subst) ->
+              (* prerr_endline (if ongoal then "on goal" else "not on goal");
+                 prerr_endline (Pp.pp_substitution subst); *)
+              (* let subst = if ongoal then res_subst else subst in *)
               let id, id1,(lit,vl,proof) =
                 if ongoal then
 		  let lit,vl,proof = get_literal id1 in
-		  id1,id,(Subst.apply_subst res_subst lit, 
-			  Subst.filter res_subst vl, proof)
+		  id1,id,(Subst.apply_subst res_subst lit,
+                          Subst.filter res_subst vl, proof)
                 else id,id1,(lit,vl,proof) in
               (* free variables remaining in the goal should not
                  be abstracted: we do not want to prove a generalization *)
+              (* prerr_endline ("variables = " ^ String.concat ","
+                (List.map string_of_int vl)); *)
               let vl = if ongoal then [] else vl in 
               let proof_of_id id = 
                 let vars = List.rev (vars_of id seen) in
@@ -314,37 +308,6 @@ let debug c _ = c;;
               in
               let p_id1 = proof_of_id id1 in
               let p_id2 = proof_of_id id2 in
-(*
-              let morphism, l, r =
-                let p = 		
-		  if (ongoal=true) = (dir=Terms.Left2Right) then
-		    p_id2 
-		  else sym p_id2 in
-                let id1_ty = ty_of id1 seen in
-                let id2_ty,l,r = 
-                  match ty_of id2 seen with
-                  | Terms.Node [ _; t; l; r ] -> 
-                      extract status amount vl (Subst.apply_subst subst t),
-                      extract status amount vl (Subst.apply_subst subst l),
-                      extract status amount vl (Subst.apply_subst subst r)
-                  | _ -> assert false
-                in
-                  (*prerr_endline "mk_predicate :";
-                  if ongoal then prerr_endline "ongoal=true"
-                  else prerr_endline "ongoal=false";
-                  prerr_endline ("id=" ^ string_of_int id);
-                  prerr_endline ("id1=" ^ string_of_int id1);
-                  prerr_endline ("id2=" ^ string_of_int id2);
-                  prerr_endline ("Positions :" ^
-                                   (String.concat ", "
-                                      (List.map string_of_int pos)));*)
-                mk_morphism
-                  p amount (Subst.apply_subst subst id1_ty) pos vl,
-                l,r
-              in
-              let rewrite_step = iff1 morphism p_id1
-	      in
-*)
               let pred, hole_type, l, r = 
                 let id1_ty = ty_of id1 seen in
                 let id2_ty,l,r = 
@@ -355,19 +318,9 @@ let debug c _ = c;;
                       extract status amount vl (Subst.apply_subst subst r)
                   | _ -> assert false
                 in
-		  (*
-                  prerr_endline "mk_predicate :";
-                  if ongoal then prerr_endline "ongoal=true"
-                  else prerr_endline "ongoal=false";
-                  prerr_endline ("id=" ^ string_of_int id);
-                  prerr_endline ("id1=" ^ string_of_int id1 
-				 ^": " ^ Pp.pp_foterm id1_ty);
-                  prerr_endline ("id2=" ^ string_of_int id2
-				 ^ ": " ^ NCicPp.ppterm [][][] id2_ty);
-                  prerr_endline ("Positions :" ^
-                                   (String.concat ", "
-                                      (List.map string_of_int pos)));*)
-                mk_predicate status
+                (* let _ = prerr_endline ("body = " ^(Pp.pp_foterm id1_ty)) 
+                   in *)
+		mk_predicate status
                   id2_ty amount (Subst.apply_subst subst id1_ty) pos vl,
                 id2_ty,
                 l,r
