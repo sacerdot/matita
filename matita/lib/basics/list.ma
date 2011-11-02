@@ -72,7 +72,7 @@ ntheorem cons_append_commute:
 //; nqed. *)
 
 theorem append_cons:∀A.∀a:A.∀l,l1.l@(a::l1)=(l@[a])@l1.
-/2/ qed.
+#A #a #l #l1 >associative_append // qed.
 
 theorem nil_append_elim: ∀A.∀l1,l2: list A.∀P:?→?→Prop. 
   l1@l2=[] → P (nil A) (nil A) → P l1 l2.
