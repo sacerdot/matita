@@ -986,12 +986,12 @@ let try_candidate ?(smart=0) flags depth status eq_cache ctx t =
     let res = branch status (mk_cic_term ctx ty) in
     let diff = og_no - old_og_no in
     debug_print (lazy ("expected branching: " ^ (string_of_int res)));
-    debug_print (lazy ("actual: branching" ^ (string_of_int diff))); *)
+    debug_print (lazy ("actual: branching" ^ (string_of_int diff))); 
     (* one goal is closed by the application *)
     if og_no - old_og_no >= res then 
-      (print (lazy ("branch factor for: " ^ (ppterm status cict) ^ " = " 
+      (debug_print (lazy ("branch factor for: " ^ (ppterm status cict) ^ " = " 
 		    ^ (string_of_int res) ^ " vs. " ^ (string_of_int og_no)));
-       print ~depth (lazy "strange application"); None)
+       debug_print ~depth (lazy "strange application"); None)
     else 
       (incr candidate_no; Some ((!candidate_no,t),status))
    with Error (msg,exn) -> debug_print ~depth (lazy "failed"); None
