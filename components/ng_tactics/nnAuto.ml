@@ -944,38 +944,57 @@ let sort_candidates status ctx candidates =
 let sort_new_elems l =
   List.sort (fun (_,s1) (_,s2) -> openg_no s1 - openg_no s2) l
 
+let rec stack_goals level gs = 
+  if level = 0 then []
+  else match gs with 
+    | [] -> assert false
+    | (g,_,_,_)::s -> 
+        let is_open = function
+          | (_,Continuationals.Stack.Open i) -> Some i
+          | (_,Continuationals.Stack.Closed _) -> None
+        in
+	  HExtlib.filter_map is_open g @ stack_goals (level-1) s
+;;
+
+let open_goals level status = stack_goals level status#stack
+;;
+
 let try_candidate ?(smart=0) flags depth status eq_cache ctx t =
- try
-  debug_print ~depth (lazy ("try " ^ (NotationPp.pp_term status) t));
-  let status = 
-    if smart = 0 then NTactics.apply_tac ("",0,t) status
-    else if smart = 1 then  
-      smart_apply_auto ("",0,t) eq_cache status 
-    else (* smart = 2: both *)
-      try NTactics.apply_tac ("",0,t) status
-      with Error _ -> 
+  try
+    let old_og_no = List.length (open_goals (depth+1) status) in
+    debug_print ~depth (lazy ("try " ^ (string_of_int smart) ^ " : "
+      ^ (NotationPp.pp_term status) t));
+    let status = 
+      if smart = 0 then NTactics.apply_tac ("",0,t) status
+      else if smart = 1 then  
         smart_apply_auto ("",0,t) eq_cache status 
-  in
-(*
-  let og_no = openg_no status in 
-    if (* og_no > flags.maxwidth || *)
-      ((depth + 1) = flags.maxdepth && og_no <> 0) then
-        (debug_print ~depth (lazy "pruned immediately"); None)
-    else *)
-      (* useless 
-      let status, cict = disambiguate status ctx ("",0,t) None in
-      let status,ct = term_of_cic_term status cict ctx in
-      let _,_,metasenv,subst,_ = status#obj in
-      let ty = NCicTypeChecker.typeof subst metasenv ctx ct in
-      let res = branch status (mk_cic_term ctx ty) in
-      if smart=1 && og_no > res then 
-	(debug_print (lazy ("branch factor for: " ^ (ppterm status cict) ^ " = " 
+      else (* smart = 2: both *)
+        try NTactics.apply_tac ("",0,t) status
+        with Error _ -> 
+          smart_apply_auto ("",0,t) eq_cache status 
+    in
+    (* we compare the expected branching with the actual one and
+       prune the candidate when the latter is larger. The optimization
+       is meant to rule out stange applications of flexible terms,
+       such as the application of eq_f that always succeeds.  
+       There is some gain but less than expected *)
+    let og_no = List.length (open_goals (depth+1) status) in
+    let status, cict = disambiguate status ctx ("",0,t) None in
+    let status,ct = term_of_cic_term status cict ctx in
+    let _,_,metasenv,subst,_ = status#obj in
+    let ty = NCicTypeChecker.typeof status subst metasenv ctx ct in
+    let res = branch status (mk_cic_term ctx ty) in
+    let diff = og_no - old_og_no in
+    debug_print (lazy ("expected branching: " ^ (string_of_int res)));
+    debug_print (lazy ("actual: branching" ^ (string_of_int diff))); *)
+    (* one goal is closed by the application *)
+    if og_no - old_og_no >= res then 
+      (print (lazy ("branch factor for: " ^ (ppterm status cict) ^ " = " 
 		    ^ (string_of_int res) ^ " vs. " ^ (string_of_int og_no)));
-	 debug_print ~depth (lazy "strange application"); None)
-      else *)
-	(incr candidate_no;
-	 Some ((!candidate_no,t),status))
- with Error (msg,exn) -> debug_print ~depth (lazy "failed"); None
+       print ~depth (lazy "strange application"); None)
+    else 
+      (incr candidate_no; Some ((!candidate_no,t),status))
+   with Error (msg,exn) -> debug_print ~depth (lazy "failed"); None
 ;;
 
 let sort_of status subst metasenv ctx t =
@@ -1148,6 +1167,8 @@ let get_candidates ?(smart=true) flags status cache signature gty =
     | Some l -> l,[]
 ;; *)
 
+
+
 let applicative_case depth signature status flags gty cache =
   app_counter:= !app_counter+1; 
   let _,_,metasenv,subst,_ = status#obj in
@@ -1174,10 +1195,12 @@ let applicative_case depth signature status flags gty cache =
     if is_eq then [Ast.Ident("refl",None)],l2 else l1,l2
   in
   let smart_candidates_facts, smart_candidates_other =
+    if is_prod then [],[] 
+    else 
     let l1,l2 = List.partition test smart_candidates in
     if is_eq then [],l2 else l1,l2
   in
-  let sm = if is_eq then 0 else 2 in
+  let sm = if is_eq || is_prod then 0 else 2 in
   let sm1 = if flags.last then 2 else 0 in
   let maxd = (depth + 1 = flags.maxdepth) in 
   let try_candidates only_one sm acc candidates =
@@ -1513,21 +1536,6 @@ let deep_focus_tac level focus status =
     let f,o,s = slice level status#stack in f@o@s
   in
    status#set_stack gstatus
-;;
-
-let rec stack_goals level gs = 
-  if level = 0 then []
-  else match gs with 
-    | [] -> assert false
-    | (g,_,_,_)::s -> 
-        let is_open = function
-          | (_,Continuationals.Stack.Open i) -> Some i
-          | (_,Continuationals.Stack.Closed _) -> None
-        in
-	  HExtlib.filter_map is_open g @ stack_goals (level-1) s
-;;
-
-let open_goals level status = stack_goals level status#stack
 ;;
 
 let move_to_side level status =
