@@ -231,7 +231,7 @@ let solve f status eq_cache goal =
   let gty = NCicUntrusted.apply_subst status subst ctx gty in
   let build_status (pt, _, metasenv, subst) =
     try
-      noprint (lazy ("refining: "^(status#ppterm ctx subst metasenv pt)));
+      debug_print (lazy ("refining: "^(status#ppterm ctx subst metasenv pt)));
       let stamp = Unix.gettimeofday () in 
       let metasenv, subst, pt, pty =
 	(* NCicRefiner.typeof status
@@ -254,12 +254,12 @@ let solve f status eq_cache goal =
     with 
         NCicRefiner.RefineFailure msg 
       | NCicRefiner.Uncertain msg ->
-          noprint (lazy ("WARNING U: refining in fast_eq_check failed\n" ^
+          debug_print (lazy ("WARNING U: refining in fast_eq_check failed\n" ^
                         snd (Lazy.force msg) ^	
 			"\n in the environment\n" ^ 
 			status#ppmetasenv subst metasenv)); None
       | NCicRefiner.AssertFailure msg -> 
-          noprint (lazy ("WARNING F: refining in fast_eq_check failed" ^
+          debug_print (lazy ("WARNING F: refining in fast_eq_check failed" ^
                         Lazy.force msg ^
 			"\n in the environment\n" ^ 
 			status#ppmetasenv subst metasenv)); None
@@ -288,9 +288,9 @@ let auto_eq_check eq_cache status =
 ;;
 
 let index_local_equations eq_cache status =
-  noprint (lazy "indexing equations");
   let open_goals = head_goals status#stack in
   let open_goal = List.hd open_goals in
+  debug_print (lazy ("indexing equations for " ^ string_of_int open_goal));
   let ngty = get_goalty status open_goal in
   let ctx = apply_subst_context ~fix_projections:true status (ctx_of ngty) in
   let c = ref 0 in
@@ -301,7 +301,7 @@ let index_local_equations eq_cache status =
          try
            let ty = NCicTypeChecker.typeof status [] [] ctx t in
            if is_a_fact status (mk_cic_term ctx ty) then
-             (noprint(lazy("eq indexing " ^ (status#ppterm ctx [] [] ty)));
+             (debug_print(lazy("eq indexing " ^ (status#ppterm ctx [] [] ty)));
               NCicParamod.forward_infer_step eq_cache t ty)
            else 
              (noprint (lazy ("not a fact: " ^ (status#ppterm ctx [] [] ty)));
@@ -1550,6 +1550,12 @@ match status#stack with
       List.for_all (fun i -> IntSet.mem i others) 
 	(HExtlib.filter_map is_open g)
 
+let top_cache ~depth top status cache =
+  if top then
+    let unit_eq = index_local_equations status#eq_cache status in 
+    {cache with unit_eq = unit_eq}
+  else cache
+
 let rec auto_clusters ?(top=false)  
     flags signature cache depth status : unit =
   debug_print ~depth (lazy ("entering auto clusters at depth " ^
@@ -1571,6 +1577,7 @@ let rec auto_clusters ?(top=false)
         in 
          auto_clusters flags signature cache (depth-1) status
   else if List.length goals < 2 then
+    let cache = top_cache ~depth top status cache in
     auto_main flags signature cache depth status
   else
     let all_goals = open_goals (depth+1) status in
@@ -1591,6 +1598,7 @@ let rec auto_clusters ?(top=false)
       let flags = 
         {flags with last = (List.length all_goals = 1)} in 
 	(* no need to cluster *)
+      let cache = top_cache ~depth top status cache in
         auto_main flags signature cache depth status 
     else
       let classes = if top then List.rev classes else classes in
@@ -1611,6 +1619,7 @@ let rec auto_clusters ?(top=false)
 	      debug_print ~depth (lazy ("stack length = " ^ 
 			(string_of_int lold)));
              let fstatus = deep_focus_tac (depth+1) gl status in
+             let cache = top_cache ~depth top fstatus cache in
              try 
                debug_print ~depth (lazy ("focusing on" ^ 
                               String.concat "," (List.map string_of_int gl)));
@@ -1781,8 +1790,8 @@ let auto_tac ~params:(univ,flags) ?(trace_ref=ref []) status =
   let status = (status:> NTacStatus.tac_status) in
   let goals = head_goals status#stack in
   let status, facts = mk_th_cache status goals in
-  let unit_eq = index_local_equations status#eq_cache status in 
-  let cache = init_cache ~facts ~unit_eq () in 
+(*  let unit_eq = index_local_equations status#eq_cache status in *)
+  let cache = init_cache ~facts () in 
 (*   pp_th status facts; *)
 (*
   NDiscriminationTree.DiscriminationTree.iter status#auto_cache (fun p t -> 
