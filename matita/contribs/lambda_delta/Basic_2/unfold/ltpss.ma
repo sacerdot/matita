@@ -52,20 +52,17 @@ lemma ltpss_inv_atom1: ∀d,e,L2. ⋆ [d, e] ≫* L2 → L2 = ⋆.
 #L #L2 #_ #HL2 #IHL destruct -L
 >(ltps_inv_atom1 … HL2) -HL2 //
 qed.
-(*
-fact ltps_inv_atom2_aux: ∀d,e,L1,L2.
-                         L1 [d, e] ≫ L2 → L2 = ⋆ → L1 = ⋆.
-#d #e #L1 #L2 * -d e L1 L2
-[ //
-| #L #I #V #H destruct
-| #L1 #L2 #I #V1 #V2 #e #_ #_ #H destruct
-| #L1 #L2 #I #V1 #V2 #d #e #_ #_ #H destruct
-]
+
+fact ltpss_inv_atom2_aux: ∀d,e,L1,L2.
+                          L1 [d, e] ≫* L2 → L2 = ⋆ → L1 = ⋆.
+#d #e #L1 #L2 #H @(ltpss_ind … H) -L2 //
+#L2 #L #_ #HL2 #IHL2 #H destruct -L;
+lapply (ltps_inv_atom2 … HL2) -HL2 /2/
 qed.
 
-lemma ldrop_inv_atom2: ∀d,e,L1. L1 [d, e] ≫ ⋆ → L1 = ⋆.
+lemma ltpss_inv_atom2: ∀d,e,L1. L1 [d, e] ≫* ⋆ → L1 = ⋆.
 /2 width=5/ qed.
-
+(*
 fact ltps_inv_tps22_aux: ∀d,e,L1,L2. L1 [d, e] ≫ L2 → d = 0 → 0 < e →
                          ∀K2,I,V2. L2 = K2. 𝕓{I} V2 →
                          ∃∃K1,V1. K1 [0, e - 1] ≫ K2 &
@@ -103,5 +100,4 @@ lemma ltps_inv_tps12: ∀L1,K2,I,V2,d,e. L1 [d, e] ≫ K2. 𝕓{I} V2 → 0 < d 
                                   K2 ⊢ V1 [d - 1, e] ≫ V2 &
                                   L1 = K1. 𝕓{I} V1.
 /2/ qed.
-
 *)

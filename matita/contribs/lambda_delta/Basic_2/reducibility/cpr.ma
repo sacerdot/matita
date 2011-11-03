@@ -14,7 +14,7 @@
 
 include "Basic_2/grammar/cl_shift.ma".
 include "Basic_2/unfold/tpss.ma".
-include "Basic_2/reduction/tpr.ma".
+include "Basic_2/reducibility/tpr.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL REDUCTION ON TERMS ****************************)
 

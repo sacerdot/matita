@@ -13,8 +13,8 @@
 (**************************************************************************)
 
 include "Basic_2/unfold/tpss_lift.ma".
-include "Basic_2/reduction/tpr_lift.ma".
-include "Basic_2/reduction/cpr.ma".
+include "Basic_2/reducibility/tpr_lift.ma".
+include "Basic_2/reducibility/cpr.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL REDUCTION ON TERMS ****************************)
 

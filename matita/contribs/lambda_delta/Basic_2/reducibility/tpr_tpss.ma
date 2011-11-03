@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "Basic_2/unfold/ltpss_ltpss.ma".
-include "Basic_2/reduction/ltpr_ldrop.ma".
+include "Basic_2/reducibility/ltpr_ldrop.ma".
 
 (* CONTEXT-FREE PARALLEL REDUCTION ON TERMS *********************************)
 

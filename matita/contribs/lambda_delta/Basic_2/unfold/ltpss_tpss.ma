@@ -143,7 +143,7 @@ qed.
 
 (* Advanced forward lemmas **************************************************)
 
-lemma ltpss_fwd_tpsa21: ∀e,K1,I,V1,L2. 0 < e → K1. 𝕓{I} V1 [0, e] ≫* L2 →
+lemma ltpss_fwd_tpss21: ∀e,K1,I,V1,L2. 0 < e → K1. 𝕓{I} V1 [0, e] ≫* L2 →
                         ∃∃K2,V2. K1 [0, e - 1] ≫* K2 & K1 ⊢ V1 [0, e - 1] ≫* V2 &
                                  L2 = K2. 𝕓{I} V2.
 #e #K1 #I #V1 #L2 #He #H @(ltpss_ind … H) -L2

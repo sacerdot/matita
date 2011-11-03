@@ -69,7 +69,7 @@ theorem lift_div_le: ∀d1,e1,T1,T. ↑[d1, e1] T1 ≡ T →
 ]
 qed.
 
-theorem lift_mono:  ∀d,e,T,U1. ↑[d,e] T ≡ U1 → ∀U2. ↑[d,e] T ≡ U2 → U1 = U2.
+theorem lift_mono: ∀d,e,T,U1. ↑[d,e] T ≡ U1 → ∀U2. ↑[d,e] T ≡ U2 → U1 = U2.
 #d #e #T #U1 #H elim H -H d e T U1
 [ #k #d #e #X #HX
   lapply (lift_inv_sort1 … HX) -HX //
@@ -166,6 +166,6 @@ theorem lift_trans_ge: ∀d1,e1,T1,T. ↑[d1, e1] T1 ≡ T →
 | #I #V1 #V2 #T1 #T2 #d1 #e1 #_ #_ #IHV12 #IHT12 #d2 #e2 #X #HX #Hded
   elim (lift_inv_flat1 … HX) -HX #V0 #T0 #HV20 #HT20 #HX destruct -X;
   elim (IHV12 … HV20 ?) -IHV12 HV20 //
-  elim (IHT12 … HT20 ?) -IHT12 HT20 // /3 width=5/ (**) (* just /3 width=5/ crashes *)
+  elim (IHT12 … HT20 ?) -IHT12 HT20 // /3 width=5/
 ]
 qed.

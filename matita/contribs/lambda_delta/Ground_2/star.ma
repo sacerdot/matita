@@ -107,3 +107,16 @@ lemma TC_star_ind: ∀A,R. reflexive A R → ∀a1. ∀P:A→Prop.
                    ∀a2. TC … R a1 a2 → P a2.
 #A #R #H #a1 #P #Ha1 #IHa1 #a2 #Ha12 elim Ha12 -Ha12 a2 /3/
 qed.
+
+definition NF: ∀A. relation A → relation A → A → Prop ≝
+   λA,R,S,a1. ∀a2. R a1 a2 → S a1 a2.
+
+inductive SN (A) (R,S:relation A): A → Prop ≝
+| SN_intro: ∀a1. (∀a2. R a1 a2 → (S a1 a2 → False) → SN A R S a2) → SN A R S a1
+.
+
+lemma NF_to_SN: ∀A,R,S,a. NF A R S a → SN A R S a.
+#A #R #S #a1 #Ha1
+@SN_intro #a2 #HRa12 #HSa12
+elim (HSa12 ?) -HSa12 /2/
+qed.

@@ -100,7 +100,31 @@ notation "hvbox( L ⊢ break term 90 T1 break [ d , break e ] ≫* break T2 )"
    non associative with precedence 45
    for @{ 'PSubstStar $L $T1 $d $e $T2 }.
 
-(* Reduction ****************************************************************)
+(* Reducibility *************************************************************)
+
+notation "hvbox( ℝ [ T ] )"
+   non associative with precedence 45
+   for @{ 'Reducible $T }.
+
+notation "hvbox( L ⊢ ℝ [ T ] )"
+   non associative with precedence 45
+   for @{ 'Reducible $L $T }.
+
+notation "hvbox( 𝕀 [ T ] )"
+   non associative with precedence 45
+   for @{ 'NotReducible $T }.
+
+notation "hvbox( L ⊢ 𝕀 [ T ] )"
+   non associative with precedence 45
+   for @{ 'NotReducible $L $T }.
+
+notation "hvbox( ℕ [ T ] )"
+   non associative with precedence 45
+   for @{ 'Normal $T }.
+
+notation "hvbox( L ⊢ ℕ [ T ] )"
+   non associative with precedence 45
+   for @{ 'Normal $L $T }.
 
 notation "hvbox( T1 ⇒ break T2 )"
    non associative with precedence 45
@@ -127,3 +151,11 @@ notation "hvbox( L ⊢ break term 90 T1 ⇒* break T2 )"
 notation "hvbox( L1 ⊢ ⇒* break L2 )"
    non associative with precedence 45
    for @{ 'CPRedStar $L1 $L2 }.
+
+notation "hvbox( ⇓ T  )"
+   non associative with precedence 45
+   for @{ 'SN $T }.
+
+notation "hvbox( L ⊢ ⇓ T )"
+   non associative with precedence 45
+   for @{ 'SN $L $T }.

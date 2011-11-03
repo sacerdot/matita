@@ -12,15 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/reduction/tpr_tpss.ma".
-include "Basic_2/reduction/cpr.ma".
+include "Basic_2/reducibility/tpr_tpss.ma".
+include "Basic_2/reducibility/cpr.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL REDUCTION ON TERMS ****************************)
 
 (* Unfold properties ********************************************************)
 
 (* Note: we could invoke tpss_weak_all instead of ltpr_fwd_length *)
-
 (* Basic_1: was only: pr2_subst1 *)
 lemma cpr_tpss_ltpr: ∀L1,L2. L1 ⇒ L2 → ∀T1,T2. L2 ⊢ T1 ⇒ T2 →
                      ∀d,e,U1. L1 ⊢ T1 [d, e] ≫* U1 →

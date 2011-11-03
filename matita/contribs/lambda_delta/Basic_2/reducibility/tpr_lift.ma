@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "Basic_2/substitution/tps_lift.ma".
-include "Basic_2/reduction/tpr.ma".
+include "Basic_2/reducibility/tpr.ma".
 
 (* CONTEXT-FREE PARALLEL REDUCTION ON TERMS *********************************)
 

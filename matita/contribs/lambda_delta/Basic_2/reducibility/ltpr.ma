@@ -12,13 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/reduction/tpr.ma".
+include "Basic_2/reducibility/tpr.ma".
 
 (* CONTEXT-FREE PARALLEL REDUCTION ON LOCAL ENVIRONMENTS ********************)
 
 inductive ltpr: relation lenv ≝
-| ltpr_sort: ltpr (⋆) (⋆)
-| ltpr_item: ∀K1,K2,I,V1,V2.
+| ltpr_stom: ltpr (⋆) (⋆)
+| ltpr_pair: ∀K1,K2,I,V1,V2.
              ltpr K1 K2 → V1 ⇒ V2 → ltpr (K1. 𝕓{I} V1) (K2. 𝕓{I} V2) (*𝕓*)
 .
 
