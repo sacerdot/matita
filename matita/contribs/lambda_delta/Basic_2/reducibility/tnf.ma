@@ -47,7 +47,9 @@ qed.
 
 axiom tnf_inv_abbr: ∀V,T. ℕ[𝕔{Abbr}V.T] → False.
 
-axiom tnf_inv_cast: ∀V,T. ℕ[𝕔{Cast}V.T] → False.
+lemma tnf_inv_cast: ∀V,T. ℕ[𝕔{Cast}V.T] → False.
+#V #T #H lapply (H T ?) -H /2/
+qed.
 
 (* Basic properties *********************************************************)
 

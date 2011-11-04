@@ -41,7 +41,10 @@ interpretation "term flat construction (binary)" 'SFlat I T1 T2 = (TPair (Flat I
 lemma discr_tpair_xy_x: ∀I,T,V. 𝕔{I} V. T = V → False.
 #I #T #V elim V -V
 [ #J #H destruct
-| #J #W #U #IHW #_ #H destruct -I /2/ (**) (* improve context after destruct *)
+| #J #W #U #IHW #_ #H destruct
+(*
+ (generalize in match e1) -e1 >e0 normalize
+*) -I /2/ (**) (* destruct: one quality is not simplified, the destucted equality is not erased *)
 ]
 qed.
 
@@ -49,7 +52,7 @@ qed.
 lemma discr_tpair_xy_y: ∀I,V,T. 𝕔{I} V. T = T → False.
 #I #V #T elim T -T
 [ #J #H destruct
-| #J #W #U #_ #IHU #H destruct -I V /2/ (**) (* improve context after destruct *)
+| #J #W #U #_ #IHU #H destruct -I V /2/ (**) (* destruct: the destucted equality is not erased *)
 ]
 qed.
 
