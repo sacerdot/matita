@@ -384,11 +384,7 @@ subst/fwd subst_lref_gt
 subst/fwd subst_head
 subst/props subst_lift_SO
 subst/props subst_subst0
-T/dec terms_props__bind_dec
 T/dec bind_dec_not
-T/dec terms_props__flat_dec
-T/dec terms_props__kind_dec
-T/dec term_dec
 T/dec binder_dec
 T/dec abst_dec
 tlist/props tslt_wf__q_ind
@@ -400,7 +396,6 @@ T/props not_abbr_abst
 T/props not_void_abst
 T/props not_abbr_void
 T/props not_abst_void
-T/props thead_x_y_y
 T/props tweight_lt
 ty3/arity ty3_arity
 ty3/arity_props ty3_predicative

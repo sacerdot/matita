@@ -17,6 +17,9 @@ include "Ground_2/xoa_props.ma".
 
 (* PROPERTIES of RELATIONS **************************************************)
 
+definition Decidable: Prop → Prop ≝
+   λR. R ∨ (R → False). 
+
 definition confluent: ∀A. ∀R1,R2: relation A. Prop ≝ λA,R1,R2.
                       ∀a0,a1. R1 a0 a1 → ∀a2. R2 a0 a2 →
                       ∃∃a. R2 a1 a & R1 a2 a.

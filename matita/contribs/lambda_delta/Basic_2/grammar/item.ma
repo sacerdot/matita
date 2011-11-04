@@ -21,7 +21,6 @@
  *)
 
 include "Ground_2/list.ma".
-include "Ground_2/star.ma".
 include "Basic_2/notation.ma".
 
 (* ITEMS ********************************************************************)
@@ -54,6 +53,19 @@ inductive item2: Type[0] ≝
 coercion item2_of_bind2: ∀I:bind2.item2 ≝ Bind on _I:bind2 to item2.
 
 coercion item2_of_flat2: ∀I:flat2.item2 ≝ Flat on _I:flat2 to item2.
+
+(* Basic properties *********************************************************)
+
+axiom item0_eq_dec: ∀I1,I2:item0. Decidable (I1 = I2).
+
+(* Basic_1: was: bind_dec *)
+axiom bind2_eq_dec: ∀I1,I2:bind2. Decidable (I1 = I2).
+
+(* Basic_1: was: flat_dec *)
+axiom flat2_eq_dec: ∀I1,I2:flat2. Decidable (I1 = I2).
+
+(* Basic_1: was: kind_dec *)
+axiom item2_eq_dec: ∀I1,I2:item2. Decidable (I1 = I2).
 
 (* Basic_1: removed theorems 19:
             s_S s_plus s_plus_sym s_minus minus_s_s s_le s_lt s_inj s_inc

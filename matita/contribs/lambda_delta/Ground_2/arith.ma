@@ -13,9 +13,13 @@
 (**************************************************************************)
 
 include "arithmetics/nat.ma".
-include "Ground_2/xoa_props.ma".
+include "Ground_2/star.ma".
 
 (* ARITHMETICAL PROPERTIES **************************************************)
+
+axiom eq_nat_dec: ∀n1,n2:nat. Decidable (n1 = n2).
+
+axiom lt_dec: ∀n1,n2. Decidable (n1 < n2).
 
 lemma plus_S_eq_O_false: ∀n,m. n + S m = 0 → False.
 #n #m <plus_n_Sm #H destruct
