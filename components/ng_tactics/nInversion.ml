@@ -110,8 +110,7 @@ let mk_inverter ~jmeq name is_ind it leftno ?selection outsort (status: #NCic.st
  let nparams = List.length args in
 
  (* the default is a dependent inversion *)
- (*let is_dependent = selection = None in*)
- let is_dependent = true in
+ let is_dependent = (selection = None && jmeq) in
 
  pp (lazy ("nparams = " ^ string_of_int nparams));
  if nparams = 0 
