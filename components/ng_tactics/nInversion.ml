@@ -109,6 +109,10 @@ let mk_inverter ~jmeq name is_ind it leftno ?selection outsort (status: #NCic.st
  pp (lazy ("lunghezza args = " ^ string_of_int (List.length args)));(**)
  let nparams = List.length args in
 
+ (* the default is a dependent inversion *)
+ (*let is_dependent = selection = None in*)
+ let is_dependent = true in
+
  pp (lazy ("nparams = " ^ string_of_int nparams));
  if nparams = 0 
    then raise (Failure "inverter: the type must have at least one right parameter") 
@@ -118,24 +122,19 @@ let mk_inverter ~jmeq name is_ind it leftno ?selection outsort (status: #NCic.st
      let ls, rs = HExtlib.split_nth leftno xs in
      pp (lazy ("lunghezza ls = " ^ string_of_int (List.length ls)));
      pp (lazy ("lunghezza rs = " ^ string_of_int (List.length rs)));
-     let ys = List.map (fun n -> "y" ^ (string_of_int n)) (HExtlib.list_seq (leftno+1) (leftno+nparams+1)) in
+
+     (* dependent -> add Hterm to rs *)
+     let rs = if is_dependent then (rs@["Hterm"]) else rs in
     
      let _id_xs = List.map mk_id xs in
-     let id_ls = List.map mk_id ls in
      let id_rs = List.map mk_id rs in
-     let id_ys = List.map mk_id ys in
     
-     (* pseudocode  let t = Lambda y1 ... yr. xs_ = ys_ -> pred *)
     
-     (* check: assuming we have more than one right parameter *) 
-     (* pred := P yr- *)
-     let pred = mk_appl ((mk_id "P")::id_ys) in
-     
-     let selection = match selection with 
-         None -> HExtlib.mk_list true (List.length ys) 
+     let selection = 
+       match selection with 
+         None -> HExtlib.mk_list true (List.length rs) 
        | Some s -> s
      in
-     let prods = mk_arrows ~jmeq id_rs id_ys selection pred in
     
      let hyplist = 
        let rec hypaux k = function
@@ -143,13 +142,13 @@ let mk_inverter ~jmeq name is_ind it leftno ?selection outsort (status: #NCic.st
          | n -> ("H" ^ string_of_int k) :: hypaux (k+1) (n-1)
        in (hypaux 1 ncons)
      in
-     pp (lazy ("lunghezza ys = " ^ string_of_int (List.length ys)));
     
      let outsort, suffix = NCicElim.ast_of_sort outsort in
      let theorem =
       mk_prods xs
-       (NotationPt.Binder (`Forall, (mk_id "P", Some (mk_prods (HExtlib.mk_list "_" (List.length ys)) (NotationPt.Sort outsort))),
-       mk_prods hyplist (NotationPt.Binder (`Forall, (mk_id "Hterm", Some (mk_appl (List.map mk_id (ind_name::xs)))), mk_appl (mk_id "P"::id_rs)))))
+       (NotationPt.Binder (`Forall, (mk_id "Hterm", Some (mk_appl (List.map mk_id (ind_name::xs)))),
+        (NotationPt.Binder (`Forall, (mk_id "P", Some (mk_prods (HExtlib.mk_list "_" (List.length rs)) (NotationPt.Sort outsort))),
+        mk_prods hyplist (mk_appl (mk_id "P"::id_rs))))))
      in
      let status, theorem =
       GrafiteDisambiguate.disambiguate_nobj status ~baseuri 
@@ -172,7 +171,7 @@ let mk_inverter ~jmeq name is_ind it leftno ?selection outsort (status: #NCic.st
                         
 NotationPt.Implicit (`Tagged "end"));
                         NotationPt.Implicit (`Tagged "cut")] in
-     let intros = List.map (fun x -> pp (lazy x); NTactics.intro_tac x) (xs@["P"]@hyplist@["Hterm"]) in
+     let intros = List.map (fun x -> pp (lazy x); NTactics.intro_tac x) (xs@["Hterm";"P"]@hyplist) in
      let where =
       "",0,(None,[],
         Some (if jmeq then jmeqpatt selection
@@ -203,6 +202,6 @@ NotationPt.Implicit (`Tagged "end"));
 
 let mk_inverter name is_ind it leftno ?selection outsort status baseuri =
  try mk_inverter ~jmeq:true name is_ind it leftno ?selection outsort status baseuri
- with NTacStatus.Error _ -> 
+ with NTacStatus.Error (s,_) -> 
    mk_inverter ~jmeq:false name is_ind it leftno ?selection outsort status baseuri
 ;;

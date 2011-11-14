@@ -705,7 +705,7 @@ let inversion_tac ~what:(txt,len,what) ~where =
      in
      let eliminator = 
        let _,_,w = what in
-       Ast.Appl [ Ast.Ident (name,None) ; Ast.Implicit `Vector ; w ]
+       Ast.Appl [ Ast.Ident (name,None) ; Ast.Implicit `Vector ; w ; Ast.Implicit `Vector]
      in
      exact_tac ("",0,eliminator) status) ]) 
 ;;
