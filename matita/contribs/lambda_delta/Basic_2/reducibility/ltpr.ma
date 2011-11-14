@@ -43,7 +43,7 @@ qed.
 
 (* Basic_1: was: wcpr0_gen_sort *)
 lemma ltpr_inv_atom1: ∀L2. ⋆ ⇒ L2 → L2 = ⋆.
-/2/ qed.
+/2/ qed-.
 
 fact ltpr_inv_pair1_aux: ∀L1,L2. L1 ⇒ L2 → ∀K1,I,V1. L1 = K1. 𝕓{I} V1 →
                          ∃∃K2,V2. K1 ⇒ K2 & V1 ⇒ V2 & L2 = K2. 𝕓{I} V2.
@@ -56,7 +56,7 @@ qed.
 (* Basic_1: was: wcpr0_gen_head *)
 lemma ltpr_inv_pair1: ∀K1,I,V1,L2. K1. 𝕓{I} V1 ⇒ L2 →
                       ∃∃K2,V2. K1 ⇒ K2 & V1 ⇒ V2 & L2 = K2. 𝕓{I} V2.
-/2/ qed.
+/2/ qed-.
 
 fact ltpr_inv_atom2_aux: ∀L1,L2. L1 ⇒ L2 → L2 = ⋆ → L1 = ⋆.
 #L1 #L2 * -L1 L2
@@ -66,7 +66,7 @@ fact ltpr_inv_atom2_aux: ∀L1,L2. L1 ⇒ L2 → L2 = ⋆ → L1 = ⋆.
 qed.
 
 lemma ltpr_inv_atom2: ∀L1. L1 ⇒ ⋆ → L1 = ⋆.
-/2/ qed.
+/2/ qed-.
 
 fact ltpr_inv_pair2_aux: ∀L1,L2. L1 ⇒ L2 → ∀K2,I,V2. L2 = K2. 𝕓{I} V2 →
                          ∃∃K1,V1. K1 ⇒ K2 & V1 ⇒ V2 & L1 = K1. 𝕓{I} V1.
@@ -78,12 +78,12 @@ qed.
 
 lemma ltpr_inv_pair2: ∀L1,K2,I,V2. L1 ⇒ K2. 𝕓{I} V2 →
                       ∃∃K1,V1. K1 ⇒ K2 & V1 ⇒ V2 & L1 = K1. 𝕓{I} V1.
-/2/ qed.
+/2/ qed-.
 
 (* Basic forward lemmas *****************************************************)
 
 lemma ltpr_fwd_length: ∀L1,L2. L1 ⇒ L2 → |L1| = |L2|.
 #L1 #L2 #H elim H -H L1 L2; normalize //
-qed.
+qed-.
 
 (* Basic_1: removed theorems 2: wcpr0_getl wcpr0_getl_back *)

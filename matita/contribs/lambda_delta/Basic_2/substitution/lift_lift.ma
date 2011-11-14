@@ -34,7 +34,7 @@ theorem lift_inj:  ∀d,e,T1,U. ↑[d,e] T1 ≡ U → ∀T2. ↑[d,e] T2 ≡ U �
 | #I #V1 #V2 #T1 #T2 #d #e #_ #_ #IHV12 #IHT12 #X #HX
   elim (lift_inv_flat2 … HX) -HX #V #T #HV1 #HT1 #HX destruct -X /3/
 ]
-qed.
+qed-.
 
 (* Basic_1: was: lift_gen_lift *)
 theorem lift_div_le: ∀d1,e1,T1,T. ↑[d1, e1] T1 ≡ T →
@@ -84,7 +84,7 @@ theorem lift_mono: ∀d,e,T,U1. ↑[d,e] T ≡ U1 → ∀U2. ↑[d,e] T ≡ U2 �
 | #I #V1 #V2 #T1 #T2 #d #e #_ #_ #IHV12 #IHT12 #X #HX
   elim (lift_inv_flat1 … HX) -HX #V #T #HV1 #HT1 #HX destruct -X /3/
 ]
-qed.
+qed-.
 
 (* Basic_1: was: lift_free (left to right) *)
 theorem lift_trans_be: ∀d1,e1,T1,T. ↑[d1, e1] T1 ≡ T →

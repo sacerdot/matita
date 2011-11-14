@@ -265,15 +265,9 @@ pr1/props pr1_head_2
 pr1/props pr1_comp
 pr1/props pr1_eta
 pr2/clen pr2_gen_ctail
-pr2/subst1 pr2_gen_cabbr
-
-# check ######################################################################
-
 pr2/fwd pr2_gen_void
 pr2/props pr2_ctail
-
-# waiting ####################################################################
-
+pr2/subst1 pr2_gen_cabbr
 pr3/fwd pr3_gen_sort
 pr3/fwd pr3_gen_abst
 pr3/fwd pr3_gen_cast
@@ -374,9 +368,6 @@ sty1/props sty1_lift
 sty1/props sty1_correct
 sty1/props sty1_abbr
 sty1/props sty1_cast2
-subst0/dec dnf_dec2
-subst0/dec dnf_dec
-subst1/props subst1_ex
 subst/fwd subst_sort
 subst/fwd subst_lref_lt
 subst/fwd subst_lref_eq
@@ -384,7 +375,6 @@ subst/fwd subst_lref_gt
 subst/fwd subst_head
 subst/props subst_lift_SO
 subst/props subst_subst0
-T/dec bind_dec_not
 T/dec binder_dec
 T/dec abst_dec
 tlist/props tslt_wf__q_ind
@@ -392,11 +382,6 @@ tlist/props tslt_wf_ind
 tlist/props theads_tapp
 tlist/props tcons_tapp_ex
 tlist/props tlist_ind_rev
-T/props not_abbr_abst
-T/props not_void_abst
-T/props not_abbr_void
-T/props not_abst_void
-T/props tweight_lt
 ty3/arity ty3_arity
 ty3/arity_props ty3_predicative
 ty3/arity_props ty3_repellent
@@ -461,3 +446,5 @@ wf3/ty3 wf3_pr2_conf
 wf3/ty3 wf3_pr3_conf
 wf3/ty3 wf3_pc3_conf
 wf3/ty3 wf3_ty3_conf
+
+# check ######################################################################

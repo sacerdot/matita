@@ -153,7 +153,7 @@ lemma ltpss_fwd_tpss21: ∀e,K1,I,V1,L2. 0 < e → K1. 𝕓{I} V1 [0, e] ≫* L2
   lapply (ltps_tps_trans_eq … HV2 … HK2) -HV2 #HV2
   lapply (ltpss_tpss_trans_eq … HK1 … HV2) -HV2 #HV2 /3 width=5/
 ]
-qed.
+qed-.
 
 lemma ltpss_fwd_tpss11: ∀d,e,I,K1,V1,L2. 0 < d → K1. 𝕓{I} V1 [d, e] ≫* L2 →
                         ∃∃K2,V2. K1 [d - 1, e] ≫* K2 &
@@ -166,4 +166,4 @@ lemma ltpss_fwd_tpss11: ∀d,e,I,K1,V1,L2. 0 < d → K1. 𝕓{I} V1 [d, e] ≫* 
   lapply (ltps_tps_trans_eq … HV2 … HK2) -HV2 #HV2
   lapply (ltpss_tpss_trans_eq … HK1 … HV2) -HV2 #HV2 /3 width=5/
 ]
-qed.
+qed-.

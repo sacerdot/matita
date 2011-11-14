@@ -32,7 +32,7 @@ lemma tnf_inv_abst: ∀V,T. ℕ[𝕔{Abst}V.T] → ℕ[V] ∧ ℕ[T].
 [ #V2 #HV2 lapply (HVT1 (𝕔{Abst}V2.T1) ?) -HVT1 /2/ -HV2 #H destruct -V1 T1 //
 | #T2 #HT2 lapply (HVT1 (𝕔{Abst}V1.T2) ?) -HVT1 /2/ -HT2 #H destruct -V1 T1 //
 ]
-qed.
+qed-.
 
 lemma tnf_inv_appl: ∀V,T. ℕ[𝕔{Appl}V.T] → ∧∧ ℕ[V] & ℕ[T] & 𝕊[T].
 #V1 #T1 #HVT1 @and3_intro
@@ -43,13 +43,23 @@ lemma tnf_inv_appl: ∀V,T. ℕ[𝕔{Appl}V.T] → ∧∧ ℕ[V] & ℕ[T] & 𝕊
     lapply (H (𝕔{Abbr}W1.𝕔{Appl}V2.U1) ?) -H /2/ -HV12 #H destruct
   | lapply (H (𝕔{Abbr}V1.U1) ?) -H /2/ #H destruct
 ]
-qed.
+qed-.
 
-axiom tnf_inv_abbr: ∀V,T. ℕ[𝕔{Abbr}V.T] → False.
+lemma tnf_inv_abbr: ∀V,T. ℕ[𝕔{Abbr}V.T] → False.
+#V #T #H elim (is_lift_dec T 0 1)
+[ * #U #HTU
+  lapply (H U ?) -H /2 width=3/ #H destruct -U;
+  elim (lift_inv_pair_xy_y … HTU)
+| #HT
+  elim (tps_full (⋆) V T (⋆. 𝕓{Abbr} V) 0 ?) // #T2 #T1 #HT2 #HT12
+  lapply (H (𝕓{Abbr}V.T2) ?) -H /2/ -HT2 #H destruct -T /3 width=2/
+]
+qed.
 
 lemma tnf_inv_cast: ∀V,T. ℕ[𝕔{Cast}V.T] → False.
-#V #T #H lapply (H T ?) -H /2/
-qed.
+#V #T #H lapply (H T ?) -H /2 width=1/ #H
+@(discr_tpair_xy_y … H)
+qed-.
 
 (* Basic properties *********************************************************)
 

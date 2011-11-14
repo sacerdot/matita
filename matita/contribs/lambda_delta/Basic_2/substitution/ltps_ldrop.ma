@@ -17,8 +17,8 @@ include "Basic_2/substitution/ltps.ma".
 (* PARALLEL SUBSTITUTION ON LOCAL ENVIRONMENTS ******************************)
 
 lemma ltps_ldrop_conf_ge: ∀L0,L1,d1,e1. L0 [d1, e1] ≫ L1 →
-                         ∀L2,e2. ↓[0, e2] L0 ≡ L2 →
-                         d1 + e1 ≤ e2 → ↓[0, e2] L1 ≡ L2.
+                          ∀L2,e2. ↓[0, e2] L0 ≡ L2 →
+                          d1 + e1 ≤ e2 → ↓[0, e2] L1 ≡ L2.
 #L0 #L1 #d1 #e1 #H elim H -H L0 L1 d1 e1
 [ #d1 #e1 #L2 #e2 #H >(ldrop_inv_atom1 … H) -H //
 | //
@@ -34,8 +34,8 @@ lemma ltps_ldrop_conf_ge: ∀L0,L1,d1,e1. L0 [d1, e1] ≫ L1 →
 qed.
 
 lemma ltps_ldrop_trans_ge: ∀L1,L0,d1,e1. L1 [d1, e1] ≫ L0 →
-                          ∀L2,e2. ↓[0, e2] L0 ≡ L2 →
-                          d1 + e1 ≤ e2 → ↓[0, e2] L1 ≡ L2.
+                           ∀L2,e2. ↓[0, e2] L0 ≡ L2 →
+                           d1 + e1 ≤ e2 → ↓[0, e2] L1 ≡ L2.
 #L1 #L0 #d1 #e1 #H elim H -H L1 L0 d1 e1
 [ #d1 #e1 #L2 #e2 #H >(ldrop_inv_atom1 … H) -H //
 | //
@@ -51,8 +51,8 @@ lemma ltps_ldrop_trans_ge: ∀L1,L0,d1,e1. L1 [d1, e1] ≫ L0 →
 qed.
 
 lemma ltps_ldrop_conf_be: ∀L0,L1,d1,e1. L0 [d1, e1] ≫ L1 →
-                         ∀L2,e2. ↓[0, e2] L0 ≡ L2 → d1 ≤ e2 → e2 ≤ d1 + e1 →
-                         ∃∃L. L2 [0, d1 + e1 - e2] ≫ L & ↓[0, e2] L1 ≡ L.
+                          ∀L2,e2. ↓[0, e2] L0 ≡ L2 → d1 ≤ e2 → e2 ≤ d1 + e1 →
+                          ∃∃L. L2 [0, d1 + e1 - e2] ≫ L & ↓[0, e2] L1 ≡ L.
 #L0 #L1 #d1 #e1 #H elim H -H L0 L1 d1 e1
 [ #d1 #e1 #L2 #e2 #H >(ldrop_inv_atom1 … H) -H /2/
 | normalize #L #I #V #L2 #e2 #HL2 #_ #He2
@@ -73,8 +73,8 @@ lemma ltps_ldrop_conf_be: ∀L0,L1,d1,e1. L0 [d1, e1] ≫ L1 →
 qed.
 
 lemma ltps_ldrop_trans_be: ∀L1,L0,d1,e1. L1 [d1, e1] ≫ L0 →
-                          ∀L2,e2. ↓[0, e2] L0 ≡ L2 → d1 ≤ e2 → e2 ≤ d1 + e1 →
-                          ∃∃L. L [0, d1 + e1 - e2] ≫ L2 & ↓[0, e2] L1 ≡ L.
+                           ∀L2,e2. ↓[0, e2] L0 ≡ L2 → d1 ≤ e2 → e2 ≤ d1 + e1 →
+                           ∃∃L. L [0, d1 + e1 - e2] ≫ L2 & ↓[0, e2] L1 ≡ L.
 #L1 #L0 #d1 #e1 #H elim H -H L1 L0 d1 e1
 [ #d1 #e1 #L2 #e2 #H >(ldrop_inv_atom1 … H) -H /2/
 | normalize #L #I #V #L2 #e2 #HL2 #_ #He2
@@ -95,8 +95,8 @@ lemma ltps_ldrop_trans_be: ∀L1,L0,d1,e1. L1 [d1, e1] ≫ L0 →
 qed.
 
 lemma ltps_ldrop_conf_le: ∀L0,L1,d1,e1. L0 [d1, e1] ≫ L1 →
-                         ∀L2,e2. ↓[0, e2] L0 ≡ L2 → e2 ≤ d1 →
-                         ∃∃L. L2 [d1 - e2, e1] ≫ L & ↓[0, e2] L1 ≡ L.
+                          ∀L2,e2. ↓[0, e2] L0 ≡ L2 → e2 ≤ d1 →
+                          ∃∃L. L2 [d1 - e2, e1] ≫ L & ↓[0, e2] L1 ≡ L.
 #L0 #L1 #d1 #e1 #H elim H -H L0 L1 d1 e1
 [ #d1 #e1 #L2 #e2 #H >(ldrop_inv_atom1 … H) -H /2/
 | /2/
@@ -113,8 +113,8 @@ lemma ltps_ldrop_conf_le: ∀L0,L1,d1,e1. L0 [d1, e1] ≫ L1 →
 qed.
 
 lemma ltps_ldrop_trans_le: ∀L1,L0,d1,e1. L1 [d1, e1] ≫ L0 →
-                          ∀L2,e2. ↓[0, e2] L0 ≡ L2 → e2 ≤ d1 →
-                          ∃∃L. L [d1 - e2, e1] ≫ L2 & ↓[0, e2] L1 ≡ L.
+                           ∀L2,e2. ↓[0, e2] L0 ≡ L2 → e2 ≤ d1 →
+                           ∃∃L. L [d1 - e2, e1] ≫ L2 & ↓[0, e2] L1 ≡ L.
 #L1 #L0 #d1 #e1 #H elim H -H L1 L0 d1 e1
 [ #d1 #e1 #L2 #e2 #H >(ldrop_inv_atom1 … H) -H /2/
 | /2/

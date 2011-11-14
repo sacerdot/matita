@@ -19,7 +19,7 @@ include "Basic_2/reducibility/ltpr.ma".
 
 (* Basic_1: was: wcpr0_ldrop *)
 lemma ltpr_ldrop_conf: ∀L1,K1,d,e. ↓[d, e] L1 ≡ K1 → ∀L2. L1 ⇒ L2 →
-                      ∃∃K2. ↓[d, e] L2 ≡ K2 & K1 ⇒ K2.
+                       ∃∃K2. ↓[d, e] L2 ≡ K2 & K1 ⇒ K2.
 #L1 #K1 #d #e #H elim H -H L1 K1 d e
 [ #d #e #X #H >(ltpr_inv_atom1 … H) -H /2/
 | #K1 #I #V1 #X #H
@@ -36,7 +36,7 @@ qed.
 
 (* Basic_1: was: wcpr0_ldrop_back *)
 lemma ltpr_ldrop_trans: ∀L1,K1,d,e. ↓[d, e] L1 ≡ K1 → ∀K2. K1 ⇒ K2 →
-                       ∃∃L2. ↓[d, e] L2 ≡ K2 & L1 ⇒ L2.
+                        ∃∃L2. ↓[d, e] L2 ≡ K2 & L1 ⇒ L2.
 #L1 #K1 #d #e #H elim H -H L1 K1 d e
 [ #d #e #X #H >(ltpr_inv_atom1 … H) -H /2/
 | #K1 #I #V1 #X #H

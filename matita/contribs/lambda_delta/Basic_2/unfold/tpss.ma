@@ -28,7 +28,7 @@ lemma tpss_ind: ∀d,e,L,T1. ∀R: term → Prop. R T1 →
                 (∀T,T2. L ⊢ T1 [d, e] ≫* T → L ⊢ T [d, e] ≫ T2 → R T → R T2) →
                 ∀T2. L ⊢ T1 [d, e] ≫* T2 → R T2.
 #d #e #L #T1 #R #HT1 #IHT1 #T2 #HT12 @(TC_star_ind … HT1 IHT1 … HT12) //
-qed.
+qed-.
 
 (* Basic properties *********************************************************)
 
@@ -105,7 +105,7 @@ lemma tpss_inv_sort1: ∀L,T2,k,d,e. L ⊢ ⋆k [d, e] ≫* T2 → T2 = ⋆k.
 | #T #T2 #_ #HT2 #IHT destruct -T
   >(tps_inv_sort1 … HT2) -HT2 //
 ]
-qed.
+qed-.
 
 lemma tpss_inv_bind1: ∀d,e,L,I,V1,T1,U2. L ⊢ 𝕓{I} V1. T1 [d, e] ≫* U2 →
                       ∃∃V2,T2. L ⊢ V1 [d, e] ≫* V2 & 
@@ -117,7 +117,7 @@ lemma tpss_inv_bind1: ∀d,e,L,I,V1,T1,U2. L ⊢ 𝕓{I} V1. T1 [d, e] ≫* U2 �
   elim (tps_inv_bind1 … HU2) -HU2 #V2 #T2 #HV2 #HT2 #H
   lapply (tpss_lsubs_conf … HT1 (L. 𝕓{I} V2) ?) -HT1 /3 width=5/
 ]
-qed.
+qed-.
 
 lemma tpss_inv_flat1: ∀d,e,L,I,V1,T1,U2. L ⊢ 𝕗{I} V1. T1 [d, e] ≫* U2 →
                       ∃∃V2,T2. L ⊢ V1 [d, e] ≫* V2 & L ⊢ T1 [d, e] ≫* T2 &
@@ -127,11 +127,11 @@ lemma tpss_inv_flat1: ∀d,e,L,I,V1,T1,U2. L ⊢ 𝕗{I} V1. T1 [d, e] ≫* U2 �
 | #U #U2 #_ #HU2 * #V #T #HV1 #HT1 #H destruct -U;
   elim (tps_inv_flat1 … HU2) -HU2 /3 width=5/
 ]
-qed.
+qed-.
 
 lemma tpss_inv_refl_O2: ∀L,T1,T2,d. L ⊢ T1 [d, 0] ≫* T2 → T1 = T2.
 #L #T1 #T2 #d #H @(tpss_ind … H) -H T2
 [ //
 | #T #T2 #_ #HT2 #IHT <(tps_inv_refl_O2 … HT2) -HT2 //
 ]
-qed.
+qed-.

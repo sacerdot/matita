@@ -17,13 +17,18 @@ include "Ground_2/star.ma".
 
 (* ARITHMETICAL PROPERTIES **************************************************)
 
+lemma false_lt_to_le: ∀x,y. (x < y → False) → y ≤ x.
+#x #y #H elim (decidable_lt x y) [2: /2 width=1/ ]
+#Hxy elim (H Hxy)
+qed-.
+
 axiom eq_nat_dec: ∀n1,n2:nat. Decidable (n1 = n2).
 
 axiom lt_dec: ∀n1,n2. Decidable (n1 < n2).
 
 lemma plus_S_eq_O_false: ∀n,m. n + S m = 0 → False.
 #n #m <plus_n_Sm #H destruct
-qed.
+qed-.
 
 lemma plus_S_le_to_pos: ∀n,m,p. n + S m ≤ p → 0 < p.
 #n #m #p <plus_n_Sm #H @(lt_to_le_to_lt … H) //
@@ -40,11 +45,11 @@ lemma lt_to_le: ∀a,b. a < b → a ≤ b.
 
 lemma lt_refl_false: ∀n. n < n → False.
 #n #H elim (lt_to_not_eq … H) -H /2/
-qed.
+qed-.
 
 lemma lt_zero_false: ∀n. n < 0 → False.
 #n #H elim (lt_to_not_le … H) -H /2/
-qed.
+qed-.
 
 lemma lt_or_ge: ∀m,n. m < n ∨ n ≤ m.
 #m #n elim (decidable_lt m n) /3/
@@ -56,7 +61,7 @@ lemma lt_or_eq_or_gt: ∀m,n. ∨∨ m < n | n = m | n < m.
 | #m #IHm * [ /2/ ]
   #n elim (IHm n) -IHm #H 
   [ @or3_intro0 | @or3_intro1 destruct | @or3_intro2 ] /2/ (**) (* /3/ is slow *)
-  qed.
+qed.
 
 lemma le_to_lt_or_eq: ∀m,n. m ≤ n → m < n ∨ m = n.
 /2/ qed. (**) (* REMOVE: this is le_to_or_lt_eq *)
@@ -68,7 +73,7 @@ lemma plus_lt_false: ∀m,n. m + n < m → False.
 #m #n #H1 lapply (le_plus_n_r n m) #H2
 lapply (le_to_lt_to_lt … H2 H1) -H2 H1 #H
 elim (lt_refl_false … H)
-qed.
+qed-.
 
 lemma le_fwd_plus_plus_ge: ∀m1,m2. m2 ≤ m1 → ∀n1,n2. m1 + n1 ≤ m2 + n2 → n1 ≤ n2.
 #m1 #m2 #H elim H -H m1

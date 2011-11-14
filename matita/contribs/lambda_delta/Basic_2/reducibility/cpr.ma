@@ -64,14 +64,14 @@ qed.
 lemma cpr_inv_atom: ∀T1,T2. ⋆ ⊢ T1 ⇒ T2 → T1 ⇒ T2.
 #T1 #T2 * #T #HT normalize #HT2
 <(tpss_inv_refl_O2 … HT2) -HT2 //
-qed.
+qed-.
 
 (* Basic_1: was: pr2_gen_sort *)
 lemma cpr_inv_sort1: ∀L,T2,k. L ⊢ ⋆k ⇒ T2 → T2 = ⋆k.
 #L #T2 #k * #X #H
 >(tpr_inv_atom1 … H) -H #H
 >(tpss_inv_sort1 … H) -H //
-qed.
+qed-.
 
 (* Basic_1: was: pr2_gen_cast *)
 lemma cpr_inv_cast1: ∀L,V1,T1,U2. L ⊢ 𝕔{Cast} V1. T1 ⇒ U2 → (
@@ -82,7 +82,7 @@ lemma cpr_inv_cast1: ∀L,V1,T1,U2. L ⊢ 𝕔{Cast} V1. T1 ⇒ U2 → (
 elim (tpr_inv_cast1 … H) -H /3/
 * #V #T #HV1 #HT1 #H destruct -X;
 elim (tpss_inv_flat1 … HU2) -HU2 #V2 #T2 #HV2 #HT2 #H destruct -U2 /4 width=5/
-qed.
+qed-.
 
 (* Basic_1: removed theorems 5: 
             pr2_head_1 pr2_head_2 pr2_cflat pr2_gen_cflat clear_pr2_trans

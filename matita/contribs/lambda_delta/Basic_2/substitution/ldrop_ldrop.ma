@@ -34,7 +34,7 @@ theorem ldrop_mono: ∀d,e,L,L1. ↓[d, e] L ≡ L1 →
   >(lift_inj … HVT1 … HVT2) -HVT1 HVT2
   >(IHLK1 … HLK2) -IHLK1 HLK2 // 
 ]
-qed.
+qed-.
 
 (* Basic_1: was: ldrop_conf_ge *)
 theorem ldrop_conf_ge: ∀d1,e1,L,L1. ↓[d1, e1] L ≡ L1 →

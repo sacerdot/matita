@@ -100,6 +100,10 @@ notation "hvbox( L ⊢ break term 90 T1 break [ d , break e ] ≫* break T2 )"
    non associative with precedence 45
    for @{ 'PSubstStar $L $T1 $d $e $T2 }.
 
+notation "hvbox( L ⊢ break term 90 T1 break [ d , break e ] ≡ break T2 )"
+   non associative with precedence 45
+   for @{ 'TSubst $L $T1 $d $e $T2 }.
+
 (* Reducibility *************************************************************)
 
 notation "hvbox( ℝ [ T ] )"

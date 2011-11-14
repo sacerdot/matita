@@ -54,7 +54,7 @@ lemma tpss_inv_atom1: ∀L,T2,I,d,e. L ⊢ 𝕒{I} [d, e] ≫* T2 →
     @or_intror @(ex6_4_intro … Hdi Hide HLK … HVT2 HI) /2/ (**) (* /4 width=10/ is too slow *)
   ]
 ]
-qed.
+qed-.
 
 lemma tpss_inv_lref1: ∀L,T2,i,d,e. L ⊢ #i [d, e] ≫* T2 →
                       T2 = #i ∨
@@ -65,13 +65,13 @@ lemma tpss_inv_lref1: ∀L,T2,i,d,e. L ⊢ #i [d, e] ≫* T2 →
 #L #T2 #i #d #e #H
 elim (tpss_inv_atom1 … H) -H /2/
 * #K #V1 #V2 #j #Hdj #Hjde #HLK #HV12 #HVT2 #H destruct -i /3 width=6/
-qed.
+qed-.
 
 lemma tpss_inv_refl_SO2: ∀L,T1,T2,d. L ⊢ T1 [d, 1] ≫* T2 →
                          ∀K,V. ↓[0, d] L ≡ K. 𝕓{Abst} V → T1 = T2.
 #L #T1 #T2 #d #H #K #V #HLK @(tpss_ind … H) -H T2 //
 #T #T2 #_ #HT2 #IHT <(tps_inv_refl_SO2 … HT2 … HLK) //
-qed.
+qed-.
 
 (* Relocation properties ****************************************************)
 

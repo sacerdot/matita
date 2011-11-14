@@ -33,4 +33,4 @@ fact simple_inv_bind_aux: ∀T. 𝕊[T] → ∀J,W,U. T = 𝕓{J} W. U → False
 qed.
 
 lemma simple_inv_bind: ∀I,V,T. 𝕊[𝕓{I} V. T] → False.
-/2 width=6/ qed.
+/2 width=6/ qed-.

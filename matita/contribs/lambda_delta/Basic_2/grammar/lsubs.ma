@@ -43,8 +43,8 @@ lemma TC_lsubs_conf: ∀S,R. lsubs_conf S R → lsubs_conf S (λL. (TC … (R L)
 ]
 qed.
 
-lemma lsubs_eq: ∀L1,L2,e. L1 [0, e] ≼ L2 → ∀I,V.
-                L1. 𝕓{I} V [0, e + 1] ≼ L2.𝕓{I} V.
+lemma lsubs_bind_eq: ∀L1,L2,e. L1 [0, e] ≼ L2 → ∀I,V.
+                     L1. 𝕓{I} V [0, e + 1] ≼ L2.𝕓{I} V.
 #L1 #L2 #e #HL12 #I #V elim I -I /2/
 qed.
 
@@ -78,7 +78,7 @@ fact lsubs_fwd_length_full1_aux: ∀L1,L2,d,e. L1 [d, e] ≼ L2 →
 qed.
 
 lemma lsubs_fwd_length_full1: ∀L1,L2. L1 [0, |L1|] ≼ L2 → |L1| ≤ |L2|.
-/2 width=5/ qed.
+/2 width=5/ qed-.
 
 fact lsubs_fwd_length_full2_aux: ∀L1,L2,d,e. L1 [d, e] ≼ L2 →
                                  d = 0 → e = |L2| → |L2| ≤ |L1|.
@@ -93,4 +93,4 @@ fact lsubs_fwd_length_full2_aux: ∀L1,L2,d,e. L1 [d, e] ≼ L2 →
 qed.
 
 lemma lsubs_fwd_length_full2: ∀L1,L2. L1 [0, |L2|] ≼ L2 → |L2| ≤ |L1|.
-/2 width=5/ qed.
+/2 width=5/ qed-.

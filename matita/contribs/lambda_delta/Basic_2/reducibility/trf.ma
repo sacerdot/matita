@@ -54,7 +54,7 @@ fact trf_inv_atom_aux: ∀I,T. ℝ[T] → T =  𝕒{I} → False.
 qed.
 
 lemma trf_inv_atom: ∀I. ℝ[𝕒{I}] → False.
-/2/ qed.
+/2/ qed-.
 
 fact trf_inv_abst_aux: ∀W,U,T. ℝ[T] → T =  𝕔{Abst} W. U → ℝ[W] ∨ ℝ[U].
 #W #U #T * -T
@@ -69,7 +69,7 @@ fact trf_inv_abst_aux: ∀W,U,T. ℝ[T] → T =  𝕔{Abst} W. U → ℝ[W] ∨ 
 qed.
 
 lemma trf_inv_abst: ∀V,T. ℝ[𝕔{Abst}V.T] → ℝ[V] ∨ ℝ[T].
-/2/ qed.
+/2/ qed-.
 
 fact trf_inv_appl_aux: ∀W,U,T. ℝ[T] → T =  𝕔{Appl} W. U →
                        ∨∨ ℝ[W] | ℝ[U] | (𝕊[U] → False).
@@ -86,22 +86,22 @@ fact trf_inv_appl_aux: ∀W,U,T. ℝ[T] → T =  𝕔{Appl} W. U →
 qed.
 
 lemma trf_inv_appl: ∀W,U. ℝ[𝕔{Appl}W.U] → ∨∨ ℝ[W] | ℝ[U] | (𝕊[U] → False).
-/2/ qed.
+/2/ qed-.
 
 lemma tif_inv_abbr: ∀V,T. 𝕀[𝕔{Abbr}V.T] → False.
-/2/ qed.
+/2/ qed-.
 
 lemma tif_inv_abst: ∀V,T. 𝕀[𝕔{Abst}V.T] → 𝕀[V] ∧ 𝕀[T].
-/4/ qed.
+/4/ qed-.
 
 lemma tif_inv_appl: ∀V,T. 𝕀[𝕔{Appl}V.T] → ∧∧ 𝕀[V] & 𝕀[T] & 𝕊[T].
 #V #T #HVT @and3_intro /3/
 generalize in match HVT -HVT; elim T -T //
 * // * #U #T #_ #_ #H elim (H ?) -H /2/
-qed. 
+qed-.
 
 lemma tif_inv_cast: ∀V,T. 𝕀[𝕔{Cast}V.T] → False.
-/2/ qed.
+/2/ qed-.
 
 (* Basic properties *********************************************************)
 

@@ -46,7 +46,7 @@ lemma discr_tpair_xy_x: ∀I,T,V. 𝕔{I} V. T = V → False.
  (generalize in match e1) -e1 >e0 normalize
 *) -I /2/ (**) (* destruct: one quality is not simplified, the destucted equality is not erased *)
 ]
-qed.
+qed-.
 
 (* Basic_1: was: thead_x_y_y *)
 lemma discr_tpair_xy_y: ∀I,V,T. 𝕔{I} V. T = T → False.
@@ -54,9 +54,13 @@ lemma discr_tpair_xy_y: ∀I,V,T. 𝕔{I} V. T = T → False.
 [ #J #H destruct
 | #J #W #U #_ #IHU #H destruct -I V /2/ (**) (* destruct: the destucted equality is not erased *)
 ]
-qed.
+qed-.
 
 (* Basic properties *********************************************************)
 
 (* Basic_1: was: term_dec *)
 axiom term_eq_dec: ∀T1,T2:term. Decidable (T1 = T2).
+
+(* Basic_1: removed theorems 3:
+            not_void_abst not_abbr_void not_abst_void
+*)

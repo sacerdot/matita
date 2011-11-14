@@ -42,10 +42,10 @@ lemma simple_thom_repl_dx: ∀T1,T2. T1 ≈ T2 → 𝕊[T1] → 𝕊[T2].
 #T1 #T2 #H elim H -H T1 T2 //
 #V1 #V2 #T1 #T2 #H
 elim (simple_inv_bind … H)
-qed.
+qed. (**) (* remove from index *)
 
 lemma simple_thom_repl_sn: ∀T1,T2. T1 ≈ T2 → 𝕊[T2] → 𝕊[T1].
-/3/ qed.
+/3/ qed-.
 
 (* Basic inversion lemmas ***************************************************)
 

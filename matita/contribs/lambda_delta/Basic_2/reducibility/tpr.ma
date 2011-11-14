@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "Basic_2/grammar/term_simple.ma".
 include "Basic_2/substitution/tps.ma".
 
 (* CONTEXT-FREE PARALLEL REDUCTION ON TERMS *********************************)
@@ -42,7 +43,7 @@ interpretation
 (* Basic properties *********************************************************)
 
 lemma tpr_bind: ∀I,V1,V2,T1,T2. V1 ⇒ V2 → T1 ⇒ T2 →
-                             𝕓{I} V1. T1 ⇒  𝕓{I} V2. T2.
+                                𝕓{I} V1. T1 ⇒  𝕓{I} V2. T2.
 /2/ qed.
 
 (* Basic_1: was by definition: pr0_refl *)
@@ -67,7 +68,7 @@ qed.
 
 (* Basic_1: was: pr0_gen_sort pr0_gen_lref *)
 lemma tpr_inv_atom1: ∀I,U2. 𝕒{I} ⇒ U2 → U2 = 𝕒{I}.
-/2/ qed.
+/2/ qed-.
 
 fact tpr_inv_bind1_aux: ∀U1,U2. U1 ⇒ U2 → ∀I,V1,T1. U1 = 𝕓{I} V1. T1 →
                         (∃∃V2,T2,T. V1 ⇒ V2 & T1 ⇒ T2 &
@@ -92,7 +93,7 @@ lemma tpr_inv_bind1: ∀V1,T1,U2,I. 𝕓{I} V1. T1 ⇒ U2 →
                                  U2 = 𝕓{I} V2. T
                      ) ∨
                      ∃∃T. ↑[0,1] T ≡ T1 & T ⇒ U2 & I = Abbr.
-/2/ qed.
+/2/ qed-.
 
 (* Basic_1: was pr0_gen_abbr *)
 lemma tpr_inv_abbr1: ∀V1,T1,U2. 𝕓{Abbr} V1. T1 ⇒ U2 →
@@ -103,7 +104,7 @@ lemma tpr_inv_abbr1: ∀V1,T1,U2. 𝕓{Abbr} V1. T1 ⇒ U2 →
                       ∃∃T. ↑[0,1] T ≡ T1 & T ⇒ U2.
 #V1 #T1 #U2 #H
 elim (tpr_inv_bind1 … H) -H * /3 width=7/
-qed.
+qed-.
 
 fact tpr_inv_flat1_aux: ∀U1,U2. U1 ⇒ U2 → ∀I,V1,U0. U1 = 𝕗{I} V1. U0 →
                         ∨∨ ∃∃V2,T2.            V1 ⇒ V2 & U0 ⇒ T2 &
@@ -141,7 +142,7 @@ lemma tpr_inv_flat1: ∀V1,U0,U2,I. 𝕗{I} V1. U0 ⇒ U2 →
                                             U2 = 𝕔{Abbr} W2. 𝕔{Appl} V. T2 &
                                             I = Appl
                       |                     (U0 ⇒ U2 ∧ I = Cast).
-/2/ qed.
+/2/ qed-.
 
 (* Basic_1: was pr0_gen_appl *)
 lemma tpr_inv_appl1: ∀V1,U0,U2. 𝕔{Appl} V1. U0 ⇒ U2 →
@@ -156,7 +157,21 @@ lemma tpr_inv_appl1: ∀V1,U0,U2. 𝕔{Appl} V1. U0 ⇒ U2 →
                                             U2 = 𝕔{Abbr} W2. 𝕔{Appl} V. T2.
 #V1 #U0 #U2 #H
 elim (tpr_inv_flat1 … H) -H * /3 width=12/ #_ #H destruct
-qed.
+qed-.
+
+(* Note: the main property of simple terms *)
+lemma tpr_inv_appl1_simple: ∀V1,T1,U. 𝕔{Appl} V1. T1 ⇒ U → 𝕊[T1] →
+                            ∃∃V2,T2. V1 ⇒ V2 & T1 ⇒ T2 &
+                                     U = 𝕔{Appl} V2. T2.
+#V1 #T1 #U #H #HT1
+elim (tpr_inv_appl1 … H) -H *
+[ /2 width=5/
+| #V2 #W #W1 #W2 #_ #_ #H #_ destruct -T1;
+  elim (simple_inv_bind … HT1)
+| #V2 #V #W1 #W2 #U1 #U2 #_ #_ #_ #_ #H #_ destruct -T1;
+  elim (simple_inv_bind … HT1)
+]
+qed-.
 
 (* Basic_1: was: pr0_gen_cast *)
 lemma tpr_inv_cast1: ∀V1,T1,U2. 𝕔{Cast} V1. T1 ⇒ U2 →
@@ -167,7 +182,7 @@ elim (tpr_inv_flat1 … H) -H * /3 width=5/
 [ #V2 #W #W1 #W2 #_ #_ #_ #_ #H destruct
 | #V2 #W #W1 #W2 #T2 #U1 #_ #_ #_ #_ #_ #_ #H destruct
 ]
-qed.
+qed-.
 
 fact tpr_inv_lref2_aux: ∀T1,T2. T1 ⇒ T2 → ∀i. T2 = #i →
                         ∨∨           T1 = #i
@@ -190,7 +205,7 @@ lemma tpr_inv_lref2: ∀T1,i. T1 ⇒ #i →
                       | ∃∃V,T,T0. ↑[O,1] T0 ≡ T & T0 ⇒ #i &
                                   T1 = 𝕔{Abbr} V. T
                       | ∃∃V,T.    T ⇒ #i & T1 = 𝕔{Cast} V. T.
-/2/ qed.
+/2/ qed-.
 
 (* Basic_1: removed theorems 3:
             pr0_subst0_back pr0_subst0_fwd pr0_subst0

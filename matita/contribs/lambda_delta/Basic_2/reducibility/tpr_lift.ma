@@ -118,4 +118,4 @@ qed.
 (* Basic_1: was pr0_gen_abst *)
 lemma tpr_inv_abst1: ∀V1,T1,U2. 𝕔{Abst} V1. T1 ⇒ U2 →
                      ∃∃V2,T2. V1 ⇒ V2 & T1 ⇒ T2 & U2 = 𝕔{Abst} V2. T2.
-/2/ qed.
+/2/ qed-.

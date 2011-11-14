@@ -39,10 +39,10 @@ qed.
 
 lemma cpr_shift_fwd: ∀L,T1,T2. L ⊢ T1 ⇒ T2 → L @ T1 ⇒ L @ T2.
 #L elim L -L
-[ /2/
-| normalize /3/
+[ #T1 #T2 #HT12 @(cpr_inv_atom … HT12)
+| normalize /3 width=1/
 ].
-qed.
+qed-.
 
 (* Main properties **********************************************************)
 
@@ -55,4 +55,3 @@ elim (tpr_tpss_ltpr ? L … HU1 … HUT1) -U1 // #U1 #HTU1 #HU1
 elim (tpr_tpss_ltpr ? L … HU2 … HUT2) -U2 // #U2 #HTU2 #HU2
 elim (tpss_conf_eq … HU1 … HU2) -U /3 width=5/
 qed.
-

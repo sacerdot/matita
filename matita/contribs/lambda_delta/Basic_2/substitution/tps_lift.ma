@@ -35,7 +35,7 @@ qed.
 
 lemma tps_inv_refl_SO2: ∀L,T1,T2,d. L ⊢ T1 [d, 1] ≫ T2 →
                         ∀K,V. ↓[0, d] L ≡ K. 𝕓{Abst} V → T1 = T2.
-/2 width=8/ qed.
+/2 width=8/ qed-.
 
 (* Relocation properties ****************************************************)
 
@@ -256,7 +256,6 @@ qed.
                                         (le d i) -> (lt i (plus d h)) ->
 				        (EX u1 | t1 = (lift (minus (plus d h) (S i)) (S i) u1)).
 *)
-
 lemma tps_inv_lift1_up: ∀L,U1,U2,dt,et. L ⊢ U1 [dt, et] ≫ U2 →
                         ∀K,d,e. ↓[d, e] L ≡ K → ∀T1. ↑[d, e] T1 ≡ U1 →
                         d ≤ dt → dt ≤ d + e → d + e ≤ dt + et →

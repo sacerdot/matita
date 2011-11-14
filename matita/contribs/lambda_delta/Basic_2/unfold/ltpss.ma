@@ -29,7 +29,7 @@ lemma ltpss_ind: ∀d,e,L1. ∀R: lenv → Prop. R L1 →
                  (∀L,L2. L1 [d, e] ≫* L → L [d, e] ≫ L2 → R L → R L2) →
                  ∀L2. L1 [d, e] ≫* L2 → R L2.
 #d #e #L1 #R #HL1 #IHL1 #L2 #HL12 @(TC_star_ind … HL1 IHL1 … HL12) //
-qed.
+qed-.
 
 (* Basic properties *********************************************************)
 
@@ -45,13 +45,13 @@ lemma ltpss_refl: ∀L,d,e. L [d, e] ≫* L.
 lemma ltpss_inv_refl_O2: ∀d,L1,L2. L1 [d, 0] ≫* L2 → L1 = L2.
 #d #L1 #L2 #H @(ltpss_ind … H) -L2 //
 #L #L2 #_ #HL2 #IHL <(ltps_inv_refl_O2 … HL2) -HL2 //
-qed.
+qed-.
 
 lemma ltpss_inv_atom1: ∀d,e,L2. ⋆ [d, e] ≫* L2 → L2 = ⋆.
 #d #e #L2 #H @(ltpss_ind … H) -L2 //
 #L #L2 #_ #HL2 #IHL destruct -L
 >(ltps_inv_atom1 … HL2) -HL2 //
-qed.
+qed-.
 
 fact ltpss_inv_atom2_aux: ∀d,e,L1,L2.
                           L1 [d, e] ≫* L2 → L2 = ⋆ → L1 = ⋆.
@@ -61,7 +61,7 @@ lapply (ltps_inv_atom2 … HL2) -HL2 /2/
 qed.
 
 lemma ltpss_inv_atom2: ∀d,e,L1. L1 [d, e] ≫* ⋆ → L1 = ⋆.
-/2 width=5/ qed.
+/2 width=5/ qed-.
 (*
 fact ltps_inv_tps22_aux: ∀d,e,L1,L2. L1 [d, e] ≫ L2 → d = 0 → 0 < e →
                          ∀K2,I,V2. L2 = K2. 𝕓{I} V2 →

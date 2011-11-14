@@ -50,6 +50,23 @@ lemma tps_refl: ∀T,L,d,e. L ⊢ T [d, e] ≫ T.
 #I elim I -I /2/
 qed.
 
+(* Basic_1: was: subst1_ex *)
+lemma tps_full: ∀K,V,T1,L,d. ↓[0, d] L ≡ (K. 𝕓{Abbr} V) →
+                ∃∃T2,T. L ⊢ T1 [d, 1] ≫ T2 & ↑[d, 1] T ≡ T2.
+#K #V #T1 elim T1 -T1
+[ * #i #L #d #HLK /2/
+  elim (lt_or_eq_or_gt i d) #Hid [ /3/ |3: /3/ ]
+  destruct -d;
+  elim (lift_total V 0 (i+1)) #W #HVW
+  elim (lift_split … HVW i i ? ? ?) // <minus_plus_m_m_comm /3/
+| * #I #W1 #U1 #IHW1 #IHU1 #L #d #HLK
+  elim (IHW1 … HLK) -IHW1 #W2 #W #HW12 #HW2
+  [ elim (IHU1 (L. 𝕓{I} W2) (d+1) ?) -IHU1 /2/ -HLK /3 width=8/
+  | elim (IHU1 … HLK) -IHU1 HLK /3 width=8/
+  ]
+]
+qed.
+
 lemma tps_weak: ∀L,T1,T2,d1,e1. L ⊢ T1 [d1, e1] ≫ T2 →
                 ∀d2,e2. d2 ≤ d1 → d1 + e1 ≤ d2 + e2 →
                 L ⊢ T1 [d2, e2] ≫ T2.
@@ -128,7 +145,7 @@ lemma tps_inv_atom1: ∀L,T2,I,d,e. L ⊢ 𝕒{I} [d, e] ≫ T2 →
                               ↓[O, i] L ≡ K. 𝕓{Abbr} V &
                               ↑[O, i + 1] V ≡ T2 &
                               I = LRef i.
-/2/ qed.
+/2/ qed-.
 
 
 (* Basic_1: was: subst1_gen_sort *)
@@ -136,7 +153,7 @@ lemma tps_inv_sort1: ∀L,T2,k,d,e. L ⊢ ⋆k [d, e] ≫ T2 → T2 = ⋆k.
 #L #T2 #k #d #e #H
 elim (tps_inv_atom1 … H) -H //
 * #K #V #i #_ #_ #_ #_ #H destruct
-qed.
+qed-.
 
 (* Basic_1: was: subst1_gen_lref *)
 lemma tps_inv_lref1: ∀L,T2,i,d,e. L ⊢ #i [d, e] ≫ T2 →
@@ -147,7 +164,7 @@ lemma tps_inv_lref1: ∀L,T2,i,d,e. L ⊢ #i [d, e] ≫ T2 →
 #L #T2 #i #d #e #H
 elim (tps_inv_atom1 … H) -H /2/
 * #K #V #j #Hdj #Hjde #HLK #HVT2 #H destruct -i /3/
-qed.
+qed-.
 
 fact tps_inv_bind1_aux: ∀d,e,L,U1,U2. L ⊢ U1 [d, e] ≫ U2 →
                         ∀I,V1,T1. U1 = 𝕓{I} V1. T1 →
@@ -166,7 +183,7 @@ lemma tps_inv_bind1: ∀d,e,L,I,V1,T1,U2. L ⊢ 𝕓{I} V1. T1 [d, e] ≫ U2 →
                      ∃∃V2,T2. L ⊢ V1 [d, e] ≫ V2 & 
                               L. 𝕓{I} V2 ⊢ T1 [d + 1, e] ≫ T2 &
                               U2 =  𝕓{I} V2. T2.
-/2/ qed.
+/2/ qed-.
 
 fact tps_inv_flat1_aux: ∀d,e,L,U1,U2. L ⊢ U1 [d, e] ≫ U2 →
                         ∀I,V1,T1. U1 = 𝕗{I} V1. T1 →
@@ -183,7 +200,7 @@ qed.
 lemma tps_inv_flat1: ∀d,e,L,I,V1,T1,U2. L ⊢ 𝕗{I} V1. T1 [d, e] ≫ U2 →
                      ∃∃V2,T2. L ⊢ V1 [d, e] ≫ V2 & L ⊢ T1 [d, e] ≫ T2 &
                               U2 =  𝕗{I} V2. T2.
-/2/ qed.
+/2/ qed-.
 
 fact tps_inv_refl_O2_aux: ∀L,T1,T2,d,e. L ⊢ T1 [d, e] ≫ T2 → e = 0 → T1 = T2.
 #L #T1 #T2 #d #e #H elim H -H L T1 T2 d e
@@ -197,7 +214,7 @@ fact tps_inv_refl_O2_aux: ∀L,T1,T2,d,e. L ⊢ T1 [d, e] ≫ T2 → e = 0 → T
 qed.
 
 lemma tps_inv_refl_O2: ∀L,T1,T2,d. L ⊢ T1 [d, 0] ≫ T2 → T1 = T2.
-/2 width=6/ qed.
+/2 width=6/ qed-.
 
 (* Basic forward lemmas *****************************************************)
 
@@ -208,7 +225,7 @@ lemma tps_fwd_tw: ∀L,T1,T2,d,e. L ⊢ T1 [d, e] ≫ T2 → #[T1] ≤ #[T2].
 | /3 by monotonic_le_plus_l, le_plus/ (**) (* just /3/ is too slow *)
 | /3 by monotonic_le_plus_l, le_plus/ (**) (* just /3/ is too slow *)
 ] 
-qed.
+qed-.
 
 (* Basic_1: removed theorems 25:
             subst0_gen_sort subst0_gen_lref subst0_gen_head subst0_gen_lift_lt
