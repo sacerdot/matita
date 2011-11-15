@@ -987,8 +987,8 @@ let try_candidate ?(smart=0) flags depth status eq_cache ctx t =
     let diff = og_no - old_og_no in
     debug_print (lazy ("expected branching: " ^ (string_of_int res)));
     debug_print (lazy ("actual: branching" ^ (string_of_int diff))); 
-    (* one goal is closed by the application *)
-    if og_no - old_og_no >= res then 
+    (* some flexibility *)
+    if og_no - old_og_no > res then 
       (debug_print (lazy ("branch factor for: " ^ (ppterm status cict) ^ " = " 
 		    ^ (string_of_int res) ^ " vs. " ^ (string_of_int og_no)));
        debug_print ~depth (lazy "strange application"); None)
@@ -1033,12 +1033,21 @@ let get_cands retrieve_for diff empty gty weak_gty =
 ;;
 
 let get_candidates ?(smart=true) depth flags status cache signature gty =
-  let maxd = ((depth + 1) = flags.maxdepth) in 
   let universe = status#auto_cache in
   let _,_,metasenv,subst,_ = status#obj in
   let context = ctx_of gty in
   let _, raw_gty = term_of_cic_term status gty context in
+  let is_prod, is_eq =   
+  let status, t = term_of_cic_term status gty context  in 
+  let t = NCicReduction.whd status subst context t in
+    match t with
+      | NCic.Prod _ -> true, false
+      | _ -> false, NCicParamod.is_equation status metasenv subst context t 
+  in
   debug_print ~depth (lazy ("gty:" ^ NTacStatus.ppterm status gty));
+  let is_eq = 
+    NCicParamod.is_equation status metasenv subst context raw_gty 
+  in
   let raw_weak_gty, weak_gty  =
     if smart then
       match raw_gty with
@@ -1053,26 +1062,24 @@ let get_candidates ?(smart=true) depth flags status cache signature gty =
 	| _ -> None,None
     else None,None
   in
+  (* we now compute global candidates *)
   let global_cands, smart_global_cands =
-    match flags.candidates with
-      | Some l when (not maxd) -> l,[]
-      | Some _ 
-      | None -> 
-	  let mapf s = 
-	    let to_ast = function 
-	      | NCic.Const r when true (*is_relevant statistics r*) -> Some (Ast.NRef r)
-	(*       | NCic.Const _ -> None  *)
-	      | _ -> assert false in
-	      HExtlib.filter_map 
-		to_ast (NDiscriminationTree.TermSet.elements s) in
-	  let g,l = 
-	    get_cands
-	      (NDiscriminationTree.DiscriminationTree.retrieve_unifiables 
-		 universe)
-	      NDiscriminationTree.TermSet.diff 
-	      NDiscriminationTree.TermSet.empty
-	      raw_gty raw_weak_gty in
-	    mapf g, mapf l in
+    let mapf s = 
+      let to_ast = function 
+        | NCic.Const r when true 
+             (*is_relevant statistics r*) -> Some (Ast.NRef r)
+     (* | NCic.Const _ -> None  *)
+	| _ -> assert false in
+	  HExtlib.filter_map 
+	    to_ast (NDiscriminationTree.TermSet.elements s) in
+      let g,l = 
+	get_cands
+	  (NDiscriminationTree.DiscriminationTree.retrieve_unifiables universe)
+	  NDiscriminationTree.TermSet.diff 
+	  NDiscriminationTree.TermSet.empty
+	  raw_gty raw_weak_gty in
+      mapf g, mapf l in
+  (* we now compute local candidates *)
   let local_cands,smart_local_cands = 
     let mapf s = 
       let to_ast t =
@@ -1084,90 +1091,47 @@ let get_candidates ?(smart=true) depth flags status cache signature gty =
 	(fun ty -> search_in_th ty cache)
 	Ncic_termSet.diff  Ncic_termSet.empty gty weak_gty in
       mapf g, mapf l in
-    sort_candidates status context (global_cands@local_cands),
-    sort_candidates status context (smart_global_cands@smart_local_cands)
-;;
-
-(* old version
-let get_candidates ?(smart=true) status cache signature gty =
-  let universe = status#auto_cache in
-  let _,_,metasenv,subst,_ = status#obj in
-  let context = ctx_of gty in
-  let t_ast t = 
-     let _status, t = term_of_cic_term status t context 
-     in Ast.NCic t in
-  let c_ast = function 
-    | NCic.Const r -> Ast.NRef r | _ -> assert false in
-  let _, raw_gty = term_of_cic_term status gty context in
-  let keys = all_keys_of_cic_term metasenv subst context raw_gty in
-  (* we only keep those keys that do not require any intros for now *)
-  let no_intros_keys = snd (List.hd keys) in
-  let cands =
-   NDiscriminationTree.TermSet.fold
-    (fun ty acc ->
-      NDiscriminationTree.TermSet.union acc
-       (NDiscriminationTree.DiscriminationTree.retrieve_unifiables 
-         universe ty)
-    ) no_intros_keys NDiscriminationTree.TermSet.empty in
-(* old code:
-  let cands = NDiscriminationTree.DiscriminationTree.retrieve_unifiables 
-        universe raw_gty in 
-*)
-  let local_cands =
-   NDiscriminationTree.TermSet.fold
-    (fun ty acc ->
-      Ncic_termSet.union acc (search_in_th (mk_cic_term context ty) cache)
-    ) no_intros_keys Ncic_termSet.empty in
-(* old code:
-  let local_cands = search_in_th gty cache in
-*)
-  debug_print (lazy ("candidates for" ^ NTacStatus.ppterm status gty));
-  debug_print (lazy ("local cands = " ^ (string_of_int (List.length (Ncic_termSet.elements local_cands)))));
-  let together global local = 
-    List.map c_ast 
-      (List.filter (only signature context) 
-        (NDiscriminationTree.TermSet.elements global)) @
-      List.map t_ast (Ncic_termSet.elements local) in
-  let candidates = together cands local_cands in 
-  let candidates = sort_candidates status context candidates in
-  let smart_candidates = 
-    if smart then
-      match raw_gty with
-        | NCic.Appl _ 
-        | NCic.Const _ 
-        | NCic.Rel _ -> 
-            let weak_gty = perforate_small status subst metasenv context raw_gty in
-	      (*
-              NCic.Appl (hd:: HExtlib.mk_list(NCic.Meta (0,(0,NCic.Irl 0))) 
-                           (List.length tl)) in *)
-            let more_cands = 
-	      NDiscriminationTree.DiscriminationTree.retrieve_unifiables 
-		universe weak_gty 
-	    in
-            let smart_cands = 
-              NDiscriminationTree.TermSet.diff more_cands cands in
-            let cic_weak_gty = mk_cic_term context weak_gty in
-            let more_local_cands = search_in_th cic_weak_gty cache in
-            let smart_local_cands = 
-              Ncic_termSet.diff more_local_cands local_cands in
-              together smart_cands smart_local_cands 
-              (* together more_cands more_local_cands *) 
-        | _ -> []
-    else [] 
+  (* we now splits candidates in facts or not facts *)
+  let test = is_a_fact_ast status subst metasenv context in
+  let by,given_candidates =
+    match flags.candidates with
+    | Some l -> true, l
+    | None -> false, [] in
+(* we compute candidates to be applied in normal mode, splitted in
+     facts and not facts *)
+  let candidates_facts,candidates_other =
+    let gl1,gl2 = List.partition test global_cands in
+    let ll1,ll2 = List.partition test local_cands in
+    (* if the goal is an equation we avoid to apply unit equalities,
+     since superposition should take care of them; refl is an
+     exception since it prompts for convertibility *)
+    let l1 = if is_eq then [Ast.Ident("refl",None)] else gl1@ll1 in 
+    let l2 = 
+      (* if smart given candidates are applied in smart mode *)
+      if by && smart then ll2
+      else if by then given_candidates@ll2 
+      else gl2@ll2
+    in l1,l2
   in
-  let smart_candidates = sort_candidates status context smart_candidates in
-  (* if smart then smart_candidates, []
-     else candidates, [] *)
-  candidates, smart_candidates
-;; 
-
-let get_candidates ?(smart=true) flags status cache signature gty =
-  match flags.candidates with
-    | None -> get_candidates ~smart status cache signature gty
-    | Some l -> l,[]
-;; *)
-
-
+  (* we now compute candidates to be applied in smart mode, splitted in
+     facts and not facts *) 
+  let smart_candidates_facts, smart_candidates_other =
+    if is_prod || not(smart) then [],[] 
+    else 
+    let sgl1,sgl2 = List.partition test smart_global_cands in
+    let sll1,sll2 = List.partition test smart_local_cands in
+    let l1 = if is_eq then [] else sgl1@sll1 in
+    let l2 = 
+      if by && smart then given_candidates@sll2 
+      else if by then sll2
+      else sgl2@sll2
+    in l1,l2
+  in
+  candidates_facts,
+  smart_candidates_facts,
+  sort_candidates status context (candidates_other),
+  sort_candidates status context (smart_candidates_other)
+;;
 
 let applicative_case depth signature status flags gty cache =
   app_counter:= !app_counter+1; 
@@ -1183,25 +1147,13 @@ let applicative_case depth signature status flags gty cache =
   in
   debug_print ~depth (lazy (string_of_bool is_eq)); 
   (* new *)
-  let candidates, smart_candidates = 
+  let candidates_facts, smart_candidates_facts, 
+      candidates_other, smart_candidates_other = 
     get_candidates ~smart:true depth 
-      flags status tcache signature gty in 
-  let test = is_a_fact_ast status subst metasenv context in
-  let candidates_facts,candidates_other =
-    (* if the goal is an equation we avoid to apply unit equalities,
-     since superposition should take care of them; refl is an
-     exception since it prompts for convertibility *)
-    let l1,l2 = List.partition test candidates in
-    if is_eq then [Ast.Ident("refl",None)],l2 else l1,l2
-  in
-  let smart_candidates_facts, smart_candidates_other =
-    if is_prod then [],[] 
-    else 
-    let l1,l2 = List.partition test smart_candidates in
-    if is_eq then [],l2 else l1,l2
+      flags status tcache signature gty 
   in
   let sm = if is_eq || is_prod then 0 else 2 in
-  let sm1 = if flags.last then 2 else 0 in
+  let sm1 = if flags.last then 2 else 0 in 
   let maxd = (depth + 1 = flags.maxdepth) in 
   let try_candidates only_one sm acc candidates =
     List.fold_left 
