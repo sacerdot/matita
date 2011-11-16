@@ -107,7 +107,7 @@ inductive equiv (A:Type[0]) (R:relation A) : A → A → Prop ≝
   
 theorem trans_equiv: ∀A,R,a,b,c. 
   equiv A R a b → equiv A R b c → equiv A R a c.
-#A #R #a #b #c #Hab #Hbc (inversion Hbc) /2/
+#A #R #a #b #c #Hab #Hbc (elim Hbc) /2/
 qed.
  
 theorem equiv_equiv: ∀A,R. exteqR … (equiv A R) (equiv A (equiv A R)).
