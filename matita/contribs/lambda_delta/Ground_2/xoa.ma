@@ -80,6 +80,14 @@ inductive ex4_4 (A0,A1,A2,A3:Type[0]) (P0,P1,P2,P3:A0→A1→A2→A3→Prop) : P
 
 interpretation "multiple existental quantifier (4, 4)" 'Ex P0 P1 P2 P3 = (ex4_4 ? ? ? ? P0 P1 P2 P3).
 
+(* multiple existental quantifier (5, 2) *)
+
+inductive ex5_2 (A0,A1:Type[0]) (P0,P1,P2,P3,P4:A0→A1→Prop) : Prop ≝
+   | ex5_2_intro: ∀x0,x1. P0 x0 x1 → P1 x0 x1 → P2 x0 x1 → P3 x0 x1 → P4 x0 x1 → ex5_2 ? ? ? ? ? ? ?
+.
+
+interpretation "multiple existental quantifier (5, 2)" 'Ex P0 P1 P2 P3 P4 = (ex5_2 ? ? P0 P1 P2 P3 P4).
+
 (* multiple existental quantifier (5, 3) *)
 
 inductive ex5_3 (A0,A1,A2:Type[0]) (P0,P1,P2,P3,P4:A0→A1→A2→Prop) : Prop ≝

@@ -973,6 +973,9 @@ let try_candidate ?(smart=0) flags depth status eq_cache ctx t =
         with Error _ -> 
           smart_apply_auto ("",0,t) eq_cache status 
     in
+(* FG: this optimization rules out some applications of
+ * lift_bind (from contribs/lambda_delta/Basic_2/substitution/lift.ma)
+ *
     (* we compare the expected branching with the actual one and
        prune the candidate when the latter is larger. The optimization
        is meant to rule out stange applications of flexible terms,
@@ -993,7 +996,7 @@ let try_candidate ?(smart=0) flags depth status eq_cache ctx t =
 		    ^ (string_of_int res) ^ " vs. " ^ (string_of_int og_no)));
        debug_print ~depth (lazy "strange application"); None)
     else 
-      (incr candidate_no; Some ((!candidate_no,t),status))
+*)      (incr candidate_no; Some ((!candidate_no,t),status))
    with Error (msg,exn) -> debug_print ~depth (lazy "failed"); None
 ;;
 

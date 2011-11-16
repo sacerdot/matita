@@ -14,10 +14,10 @@
 
 include "Basic_2/unfold/tpss.ma".
 
-(* SUBSTITUTION ON TERMS ****************************************************)
+(* DELIFT ON TERMS **********************************************************)
 
-definition tsubst: nat → nat → lenv → relation term ≝
+definition delift: nat → nat → lenv → relation term ≝
                    λd,e,L,T1,T2. ∃∃T. L ⊢ T1 [d, e] ≫* T & ↑[d, e] T2 ≡ T.
 
-interpretation "substitution (term)"
-   'TSubst L T1 d e T2 = (tsubst d e L T1 T2).
+interpretation "delift (term)"
+   'TSubst L T1 d e T2 = (delift d e L T1 T2).

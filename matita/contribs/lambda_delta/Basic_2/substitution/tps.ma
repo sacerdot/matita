@@ -220,11 +220,7 @@ lemma tps_inv_refl_O2: ∀L,T1,T2,d. L ⊢ T1 [d, 0] ≫ T2 → T1 = T2.
 
 lemma tps_fwd_tw: ∀L,T1,T2,d,e. L ⊢ T1 [d, e] ≫ T2 → #[T1] ≤ #[T2].
 #L #T1 #T2 #d #e #H elim H normalize -H L T1 T2 d e
-[ //
-| /2/
-| /3 by monotonic_le_plus_l, le_plus/ (**) (* just /3/ is too slow *)
-| /3 by monotonic_le_plus_l, le_plus/ (**) (* just /3/ is too slow *)
-] 
+/3 by monotonic_le_plus_l, le_plus/ (**) (* just /3/ is too slow *)
 qed-.
 
 (* Basic_1: removed theorems 25:
