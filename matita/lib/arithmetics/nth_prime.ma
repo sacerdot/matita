@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+(* To be ported
 include "nat/primes.ma".
 include "nat/lt_arith.ma".
 
@@ -198,4 +199,4 @@ apply le_to_or_lt_eq.assumption.
 apply ex_m_le_n_nth_prime_m.
 simplify.unfold prime in H.elim H.assumption.
 qed.
-
+*)

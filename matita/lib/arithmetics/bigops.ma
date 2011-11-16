@@ -174,7 +174,7 @@ theorem bigop_prod: ∀k1,k2,p1,p2,B.∀nil.∀op:Aop B nil.∀f: nat →nat →
   [>bigop_Strue // >Hind >bigop_sum @same_bigop
    #i #lti @leb_elim // #lei cut (i = n*k2+(i-n*k2)) /2/
    #eqi [|#H] (>eqi in ⊢ (???%))
-     >div_plus_times /2/ >Hp1 >(mod_plus_times …) /2/
+     >div_plus_times /2/ >Hp1 >(mod_plus_times …) /2/ normalize //
   |>bigop_Sfalse // >Hind >(pad_bigop (S n*k2)) // @same_bigop
    #i #lti @leb_elim // #lei cut (i = n*k2+(i-n*k2)) /2/
    #eqi >eqi in ⊢ (???%) >div_plus_times /2/ 

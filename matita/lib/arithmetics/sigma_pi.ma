@@ -9,6 +9,7 @@
      \ /      
       V_______________________________________________________________ *)
 
+(* To be ported
 include "arithmetics/bigops.ma".
 
 definition natAop ≝ mk_Aop nat 0 plus (λa.refl ? a) (λn.sym_eq ??? (plus_n_O n)) 
@@ -744,4 +745,4 @@ apply (iter_p_gen_2_eq A baseA plusA H H1 H2 (\lambda x,y. g x y) (\lambda x,y.y
     |assumption
     ]
   ]
-qed. *)
+qed. *)*)

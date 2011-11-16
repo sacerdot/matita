@@ -89,6 +89,7 @@ theorem lt_O_bc: ∀n,m. m ≤ n → O < bc n m.
   ]
 qed. 
 
+(*
 theorem binomial_law:∀a,b,n.
   (a+b)^n = Σ_{k < S n}((bc n k)*(a^(n-k))*(b^k)).
 #a #b #n (elim n) //
@@ -130,4 +131,4 @@ rewrite < assoc_plus.
 rewrite < sym_plus.
 reflexivity.
 qed. *)
-
+*)
