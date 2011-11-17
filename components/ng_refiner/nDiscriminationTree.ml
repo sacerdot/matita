@@ -65,6 +65,7 @@ let ppelem = function
 let path_string_of t =
   let rec aux arity depth = function
     | NCic.Appl ((NCic.Meta _|NCic.Implicit _)::_) -> [Variable]
+    | NCic.Appl (NCic.Match _::_) -> [Dead]
     | NCic.Appl (NCic.Lambda _ :: _) -> [Variable] (* maybe we should b-reduce *)
     | NCic.Appl [] -> assert false
     | NCic.Appl l when depth > 10 || List.length l > 50 -> [Variable]
