@@ -229,10 +229,8 @@ INSTALL_STUFF = 			\
 	matita.gtkrc 			\
 	matita.lang 			\
 	matita.ma.templ 		\
-	core_notation.moo 		\
 	matita.conf.xml 		\
 	closed.xml 			\
-	gtkmathview.matita.conf.xml 	\
 	AUTHORS 			\
 	LICENSE 			\
 	$(NULL)
@@ -263,8 +261,9 @@ endif
 	$(H)for p in $(INSTALL_PROGRAMS_LINKS_MATITA); do \
 		ln -fs matita $(WHERE)/$$p;\
 	done
-	$(H)cp -a library/ $(WHERE)/ma/standard-library
-	$(H)cp -a nlibrary/ $(WHERE)/ma/new-standard-library
+	$(H)cp -a lib $(WHERE)/ma/standard-library
+	$(H)rm -r $(WHERE)/ma/standard-library/lambda
+	$(H)rm -r $(WHERE)/ma/standard-library/lambdaN
 
 	$(H)touch install_preliminaries.stamp
 
