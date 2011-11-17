@@ -2,13 +2,10 @@ TODO:
 - "ncoercion" statement:
   - simple syntax
   - generation of hints to implement the pullback
-- principles generation:
-  - induction/inversions
 - dependency graphs
 - queries (on the trie?)
 - Tactics:
-  - satuation
-  - destruct
+  - saturation
   - ncut
   - nclearbody
   - nletin che prende il tipo

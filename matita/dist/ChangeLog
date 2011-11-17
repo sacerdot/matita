@@ -3,6 +3,10 @@
 	* new compact syntax for tactics
 	* improved automation
 	* experimental multi tabbed interface
+	* John Major equality and the computation version of the K axiom are
+	  now in the standard library
+	* generation of inversion/destruct principles using either
+	  Leibniz or John Major equalities
 	* several bug fixes
 
 0.5.7 - 15/02/2009 - Pàdoa release
