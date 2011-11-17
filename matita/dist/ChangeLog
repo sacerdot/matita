@@ -1,37 +1,9 @@
-0.5.8 - 02/12/2009 - toward the 1.x series
-	* Complete rewriting of paramodulation code (thanks to Maxime Denes),
-	  that is abstract over the data type embedded in the fisrt order
-	  theory the procedure is able to handle. 
-	  Can be used as a stand-alone prover, and partecipated
-	  to the CASC22 beating many older systems ;-)
-	* new (compact) kernel:
-	  * toplevel fixpoints 
-	  * height (inter object dependency) driven conversion
-	  * compact metavariable representation
-	  * experimental irrelevant arguments handling in convesion
-	    (in the spirit of proof irrelevance)
-	  * explicit predicative universes
-	* new refiner:
-	  * bi-directional type inference
-	  * unification hints
-	  * implicit vector (expands to the right number of implicits)
-	* new basic tactics:
-	  * new type for tactics, with a global view on the ongoing proof
-	  * heavily based on the refiner
-	  * work with terms labelled with their contexts
-	* new auto (prolog like) proof search tactic:
-	  * works on a set of goals
-	  * non uniform context support:
-	    * arbitrary tactics can be called to attack a goal (hardcoded 
-	      at the OCaml level), for now just apply and intro
-	* new installation:
-	  * the standard library (now we have two of them) is not
-	    distributed pre-compiled
-	  * standard library .ma files can be included from everywhere since
-	    they are in a standard path
-	  * including a file of the standard library triggers its compilation
-	    in the user's space
-	* gtksourceview2 based text widget (lablgtk >= 2.14)
+0.95.1 - 17/11/2011 - alpha version for the 1.x series
+	* old kernel, unification, etc. removed
+	* new compact syntax for tactics
+	* improved automation
+	* experimental multi tabbed interface
+	* several bug fixes
 
 0.5.7 - 15/02/2009 - Pàdoa release
 	* are_convertible bug solved, arguments of application where 
