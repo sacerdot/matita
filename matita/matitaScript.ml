@@ -140,10 +140,10 @@ let eval_nmacro include_paths (buffer : GText.buffer) status unparsed_text parse
         try List.assoc "depth" a
         with Not_found -> ""
       in
-      let trace = "/"^(if int_of_string depth > 1 then depth else "")^"/ by " in
+      let trace = "/"^(if int_of_string depth > 1 then depth else "")^" by " in
       let thms = 
         match !trace_ref with
-        | [] -> "{}"
+        | [] -> ""
         | thms -> 
            String.concat ", "  
              (HExtlib.filter_map (function 
@@ -153,7 +153,7 @@ let eval_nmacro include_paths (buffer : GText.buffer) status unparsed_text parse
       in
       let rex = Pcre.regexp ~flags:[`MULTILINE] "\\A([\\n\\t\\r ]*).*\\Z" in
       let nl = Pcre.replace ~rex ~templ:"$1" parsed_text in
-      [s, nl ^ trace ^ thms ^ ";"], "", parsed_text_length
+      [s, nl ^ trace ^ thms ^ "/"], "", parsed_text_length
   | TA.NAutoInteractive (_, (Some _,_)) -> assert false
 
 let rec eval_executable include_paths (buffer : GText.buffer)
