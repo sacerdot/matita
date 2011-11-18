@@ -102,9 +102,6 @@ EXTEND
   constructor: [ [ name = IDENT; SYMBOL ":"; typ = term -> (name, typ) ] ];
   tactic_term: [ [ t = term LEVEL "90" -> t ] ];
   ident_list1: [ [ LPAREN; idents = LIST1 IDENT; RPAREN -> idents ] ];
-  tactic_term_list1: [
-    [ tactic_terms = LIST1 tactic_term SEP SYMBOL "," -> tactic_terms ]
-  ];
   nreduction_kind: [
     [ IDENT "normalize" ; delta = OPT [ IDENT "nodelta" -> () ] ->
        let delta = match delta with None -> true | _ -> false in
@@ -196,9 +193,6 @@ EXTEND
        | Some (`Univ univ) ->
 	         G.NTactic(loc,
             [G.NAuto(loc,(Some univ,["depth",depth]@params))])
-       | Some `EmptyUniv ->
-	         G.NTactic(loc,
-            [G.NAuto(loc,(Some [],["depth",depth]@params))])
        | Some `Trace ->
 	         G.NMacro(loc,
              G.NAutoInteractive (loc, (None,["depth",depth]@params))))
@@ -272,8 +266,7 @@ EXTEND
        | i = auto_fixed_param ; SYMBOL "="; v = [ v = int ->
               string_of_int v | v = IDENT -> v ] -> i,v ]; 
       just = OPT [ IDENT "by"; by = 
-        [ univ = tactic_term_list1 -> `Univ univ
-        | SYMBOL "{"; SYMBOL "}" -> `EmptyUniv
+        [ univ = LIST0 tactic_term SEP SYMBOL "," -> `Univ univ
         | SYMBOL "_" -> `Trace ] -> by ] -> just,params
    ]
 ];
