@@ -131,9 +131,7 @@
  -->
  <sect1 id="command_coercion">
    <title>coercion</title>
-   <para>TODO</para>
-   <!--
-   <para><userinput>coercion u with ariety saturation nocomposites</userinput></para>
+   <para><userinput>coercion nocomposites c : ty ≝ u on s : S to T</userinput></para>
    <para>
      <variablelist>
        <varlistentry>
@@ -141,29 +139,60 @@
          <listitem>
 		 <para>
 			 <emphasis role="bold">coercion</emphasis> 
-			 (&uri; | &term; <emphasis role="bold">with</emphasis>)
-			 [ &nat; [&nat;]] 
-			 [ <emphasis role="bold">nocomposites</emphasis> ]
+			 [ <emphasis role="bold">nocomposites</emphasis> ] &id;
+			 [ :  &term; <emphasis role="bold">≝</emphasis> &term;
+			      <emphasis role="bold">on</emphasis>
+			      &id; : &term;
+			      <emphasis role="bold">to</emphasis> &term; ]
 		 </para>
          </listitem>
        </varlistentry>
        <varlistentry>
          <term>Action:</term>
          <listitem>
-		 <para>Declares <command>u</command> as an implicit coercion.
-		 If the type of <command>u</command> is 	
-		 <command>∀x1:T1. … ∀x(n-1):T(n-1).Tn</command> the coercion target is
-		 <command>T(n - ariety)</command> while its source is 
-		 <command>T(n - ariety - saturation - 1)</command>.
-	    Every time a term <command>x</command>
-            of type source is used with expected type target, Matita
+	    <para>Declares <command>c</command> as an implicit coercion.
+            If only <command>c</command> is given, <command>u</command>
+	    is the constant named by <command>c</command>, 
+	    <command>ty</command> its declared type,
+	    <command>s</command> the name of the last variable abstracted in
+	    in <command>ty</command>, <command>S</command> the type of
+	    this last variable and <command>T</command> the target of
+	    <command>ty</command>. The user can specify all these component to
+	    have full control on how the coercion is indexed.
+	    The type of the body of the coercion <command>u</command> must be
+	    convertible to the declared one <command>ty</command>. Let it be
+	    <command>∀x1:T1. … ∀x(n-1):T(n-1).Tn</command>.
+	    Then <command>s</command> must be one of <command>x1</command> … 
+	    <command>xn</command> (possibly prefixed by <command>_</command>
+	    if the product is non dependent). Let <command>s</command>
+	    be <command>xi</command> in the following. 
+	    Then <command>S</command> must be <command>Ti</command>
+	    where all bound variables are replaced by <command>?</command>,
+	    and <command>T</command> must be <command>Tn</command>
+            where all bound variable are replaced by <command>?</command>.
+	    For example the following command
+	    declares a coercions from vectors of any length to lists of
+	    natural numbers.</para>
+
+            <para><userinput>coercion nocomposites v2l : ∀n:nat.∀v:Vect nat n.
+            List nat ≝ l_of_v on _v : Vect nat ? to List nat</userinput></para>
+
+
+	    <para>Every time a term <command>x</command>
+            of a type that matches <command>S</command>
+	       (<command>Vect nat ?</command> here)	    
+		    is used with an expected 
+		    type that matches <command>T</command>
+		    (<command>List nat</command> here), Matita
             automatically replaces <command>x</command> with
-            <command>(u ? … ? x ? … ?)</command> to avoid a typing error.</para>
-            Note that the number of <command>?</command> added after 
-	    <command>x</command> is saturation.
+            <command>(u ? … ? x ? … ?)</command> to avoid a typing error.
+            Note that the position of <command>x</command> is determined by
+	    <command>s</command>.</para>
+
            <para>Implicit coercions are not displayed to the user:
             <command>(u ? … ? x)</command> is rendered simply
             as <command>x</command>.</para>
+
            <para>When a coercion <command>u</command> is declared
             from source <command>s</command> to target <command>t</command>
             and there is already a coercion <command>u'</command> of
@@ -171,11 +200,13 @@
             a composite implicit coercion is automatically computed
 	    by Matita unless <emphasis role="bold">nocomposites</emphasis> 
 	    is specified.</para>
+
+            <para>Note that <command>Vect nat ?</command> can be replaced with
+	    <command>Vect ? ?</command> to index the coercion is a loose way.</para>
          </listitem>
        </varlistentry>
      </variablelist>
    </para>
-   -->
  </sect1>
  <!--
  <sect1 id="command_default">
@@ -625,7 +656,7 @@ depending on the provided parameters.</para>
        <row>
         <entry/>
         <entry>|</entry>	
-	<entry><emphasis role="bold">definition</emphasis></entry>
+	<entry><emphasis role="bold"> definition</emphasis></entry>
         <entry>Try give a <link linkend="definition">definition</link> flavour
 	</entry>
        </row>
