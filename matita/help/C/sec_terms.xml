@@ -524,13 +524,15 @@
      <command>P</command>. Otherwise an interactive proof is started.</para>
     <para><command>P</command> can be omitted only if the proof is not
      interactive.</para>
+     <!--
     <para>Proving a theorem already proved in the library is an error.
      To provide an alternative name and proof for the same theorem, use
-     <command>variant f: P ≝ p</command>.</para>
+     <command>variant f: P ≝ p</command>.</para>-->
     <para>A warning is raised if the name of the theorem cannot be obtained
       by mangling the name of the constants in its thesis.</para>
     <para>Notice that the command is equivalent to <command>definition f: T ≝ t</command>.</para>
    </sect2>
+   <!--
    <sect2 id="variant">
     <title><emphasis role="bold">variant</emphasis> &id;<emphasis role="bold">:</emphasis> &term; <emphasis role="bold">≝</emphasis> &term;</title>
     <titleabbrev>variant</titleabbrev>
@@ -538,6 +540,12 @@
     <para>Same as <command>theorem f: T ≝ t</command>, but it does not
      complain if the theorem has already been proved. To be used to give
      an alternative name or proof to a theorem.</para>
+   </sect2>-->
+   <sect2 id="corollary">
+    <title><emphasis role="bold">corollary</emphasis> &id;[<emphasis role="bold">:</emphasis> &term;] [<emphasis role="bold">≝</emphasis> &term;]</title>
+    <titleabbrev>corollary</titleabbrev>
+    <para><userinput>corollary f: T ≝ t</userinput></para>
+    <para>Same as <command>theorem f: T ≝ t</command></para>
    </sect2>
    <sect2 id="lemma">
     <title><emphasis role="bold">lemma</emphasis> &id;[<emphasis role="bold">:</emphasis> &term;] [<emphasis role="bold">≝</emphasis> &term;]</title>
@@ -551,11 +559,12 @@
     <para><userinput>fact f: T ≝ t</userinput></para>
     <para>Same as <command>theorem f: T ≝ t</command></para>
    </sect2>
-   <sect2 id="remark">
-    <title><emphasis role="bold">remark</emphasis> &id;[<emphasis role="bold">:</emphasis> &term;] [<emphasis role="bold">≝</emphasis> &term;]</title>
-    <titleabbrev>remark</titleabbrev>
-    <para><userinput>remark f: T ≝ t</userinput></para>
-    <para>Same as <command>theorem f: T ≝ t</command></para>
+   <sect2 id="example">
+    <title><emphasis role="bold">example</emphasis> &id;[<emphasis role="bold">:</emphasis> &term;] [<emphasis role="bold">≝</emphasis> &term;]</title>
+    <titleabbrev>example</titleabbrev>
+    <para><userinput>example f: T ≝ t</userinput></para>
+    <para>Same as <command>theorem f: T ≝ t</command>, but the example
+     is not indexed nor used by automation.</para>
    </sect2>
   </sect1>
 
@@ -564,6 +573,7 @@
    <para>This section documents the syntax of some recurring arguments for
     tactics.</para>
 
+    <!--
     <sect2 id="introsspec">
     <title>intros-spec</title>
     <table frame="topbot" rowsep="0" colsep="0" role="grammar">
@@ -580,6 +590,7 @@
     </table>
         <para>The natural number is the number of new hypotheses to be introduced. The list of identifiers gives the name for the first hypotheses.</para>
     </sect2>
+    -->
 
     <sect2 id="pattern">
     <title>pattern</title>
@@ -590,18 +601,18 @@
        <row>
 	<entry id="grammar.pattern">&pattern;</entry>
 	<entry>::=</entry>
-        <entry><emphasis role="bold">in</emphasis>
+        <entry><emphasis role="bold">{</emphasis>
           [&id;[<emphasis role="bold">:</emphasis> &path;]]…
-          [<emphasis role="bold">⊢</emphasis> &path;]]</entry>
+          [<emphasis role="bold">⊢</emphasis> &path;]]<emphasis role="bold">}</emphasis></entry>
         <entry>simple pattern</entry>
        </row>
        <row>
         <entry/>
         <entry>|</entry>
-        <entry><emphasis role="bold">in match</emphasis> &path;
+        <entry><emphasis role="bold">{match</emphasis> &path;
           [<emphasis role="bold">in</emphasis>
           [&id;[<emphasis role="bold">:</emphasis> &path;]]…
-          [<emphasis role="bold">⊢</emphasis> &path;]]</entry>
+          [<emphasis role="bold">⊢</emphasis> &path;]]<emphasis role="bold">}</emphasis></entry>
         <entry>full pattern</entry>
        </row>
       </tbody>
@@ -657,7 +668,7 @@
     </para>
     <para>A <emphasis>simple pattern</emphasis> extends paths to locate
      subterms in a whole sequent. In particular, the pattern
-     <userinput>in H: p  K: q ⊢ r</userinput> locates at once all the subterms
+     <userinput>{ H: p  K: q ⊢ r }</userinput> locates at once all the subterms
      located by the pattern <userinput>r</userinput> in the conclusion of the
      sequent and by the patterns <userinput>p</userinput> and
      <userinput>q</userinput> in the hypotheses <userinput>H</userinput>
@@ -684,11 +695,11 @@
     <para>A full pattern can always be replaced by a simple pattern,
       often at the cost of increased verbosity or decreased readability.</para>
     <para>Example: the pattern
-      <userinput>⊢ in match x+y in ∀_,_:?.(? ? % ?)</userinput>
+      <userinput>{ match x+y in ⊢ ∀_,_:?.(? ? % ?) }</userinput>
       locates only the first occurrence of <userinput>x+y</userinput>
       in the sequent <userinput>x,y: nat ⊢ ∀z,w:nat. (x+y) * (z+w) =
       z * (x+y) + w * (x+y)</userinput>. The corresponding simple pattern
-      is <userinput>⊢ ∀_,_:?.(? ? (? % ?) ?)</userinput>.
+      is <userinput>{ ⊢ ∀_,_:?.(? ? (? % ?) ?) }</userinput>.
     </para>
     <para>Every tactic that acts on subterms of the selected sequents have
      a pattern argument for uniformity. To automatically generate a simple
@@ -716,27 +727,16 @@
        <row>
 	<entry id="grammar.reduction-kind">&reduction-kind;</entry>
 	<entry>::=</entry>
-        <entry><emphasis role="bold">normalize</emphasis></entry>
-        <entry>Computes the βδιζ-normal form</entry>
+        <entry><emphasis role="bold">normalize</emphasis> [<emphasis role="bold">nodelta</emphasis>]</entry>
+        <entry>Computes the βδιζ-normal form. If <userinput>nodelta</userinput>
+         is specified, δ-expansions are not performed.</entry>
        </row>
        <row>
         <entry/>
         <entry>|</entry>
-        <entry><emphasis role="bold">simplify</emphasis></entry>
-        <entry>Computes a form supposed to be simpler</entry>
-       </row>
-       <row>
-        <entry/>
-        <entry>|</entry>
-        <entry><emphasis role="bold">unfold</emphasis> [&sterm;]</entry>
-        <entry>δ-reduces the constant or variable if specified, or that
-         in head position</entry>
-       </row>
-       <row>
-        <entry/>
-        <entry>|</entry>
-        <entry><emphasis role="bold">whd</emphasis></entry>
-        <entry>Computes the βδιζ-weak-head normal form</entry>
+        <entry><emphasis role="bold">whd</emphasis> [<emphasis role="bold">nodelta</emphasis>]</entry>
+        <entry>Computes the βδιζ-weak-head normal form. If <userinput>nodelta</userinput>
+         is specified, δ-expansions are not performed.</entry>
        </row>
       </tbody>
      </tgroup>
@@ -815,6 +815,7 @@
     </table>
     </sect2>
 
+    <!--
     <sect2 id="justification">
     <title>justification</title>
     <table frame="topbot" rowsep="0" colsep="0" role="grammar">
@@ -837,6 +838,7 @@
      </tgroup>
     </table>
     </sect2>
+    -->
   </sect1>
 
 </chapter>

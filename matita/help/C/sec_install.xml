@@ -288,6 +288,7 @@
 	    </listitem>
 	  </varlistentry>
 
+	  <!--
 	  <varlistentry>
 	    <term>
 	      <application> <ulink type="http"
@@ -300,7 +301,9 @@
 		  library</application></para>
 	    </listitem>
 	  </varlistentry>
+	  -->
 
+          <!--
 	  <varlistentry>
 	    <term>
 	      <application> <ulink type="http"
@@ -311,6 +314,7 @@
 	      <para> OCaml library to write HTTP daemons (and clients) </para>
 	    </listitem>
 	  </varlistentry>
+	  -->
 
 	  <varlistentry>
 	    <term>
@@ -325,6 +329,7 @@
 	    </listitem>
 	  </varlistentry>
 
+	  <!--
 	  <varlistentry>
 	    <term>
 	      <application> <ulink type="http"
@@ -342,6 +347,7 @@
 		OCaml bindings </para>
 	    </listitem>
 	  </varlistentry>
+	  -->
 
 	  <varlistentry>
 	    <term>
@@ -360,6 +366,7 @@
 	    </listitem>
 	  </varlistentry>
 
+          <!--
 	  <varlistentry>
 	    <term> &MYSQL; </term>
 	    <term>
@@ -389,6 +396,7 @@
 	      </para>
 	    </listitem>
 	  </varlistentry>
+	  -->
 
 	  <varlistentry>
 	    <term>
@@ -429,6 +437,7 @@
 
     </sect2>
 
+    <!--
     <sect2 id="database_setup">
       <title>(optional) &MYSQL; setup</title>
 
@@ -464,6 +473,7 @@
       </note>
       
     </sect2>
+    -->
 
     <sect2 id="build_instructions">
       <title>Compiling and installing</title>
@@ -499,9 +509,10 @@
 	    </listitem>
 	  </varlistentry>
 
+          <!--
 	  <varlistentry>
 	    <term>
-	      <userinput>--with-dbhost=<replaceable>host</replaceable></userinput>
+	      <userinput>- - with-dbhost=<replaceable>host</replaceable></userinput>
 	    </term>
 	    <listitem>
 	      <para>
@@ -512,6 +523,7 @@
 	      </para>
 	    </listitem>
 	  </varlistentry>
+	  -->
 
 	  <varlistentry>
 	    <term>
@@ -551,6 +563,7 @@
 	      <para>installs &appname; related tools, standard library and the
 		needed runtime stuff in the proper places on the filesystem.
 	      </para>
+	      <!--
 	      <para>As a part of the installation process the &appname;
 		standard library will be compiled, thus testing that the just
 		built <application>matitac</application> compiler works
@@ -559,7 +572,7 @@
 		indexing the standard library while you are compiling it). See
 		<ulink type="http" url="#database_setup">Database setup</ulink>
 		for instructions on how to set it up.
-	      </para>
+	      </para>-->
 	    </listitem>
 	  </varlistentry>
 
@@ -569,6 +582,7 @@
 
   </sect1>
 
+  <!--
   <sect1 id="matita.conf.xml">
     <title>Configuring &appname;</title>
     <para>
@@ -679,6 +693,7 @@
 	end to which it is attached.
    </para>
   </sect1>
+  -->
 
 </chapter>
 

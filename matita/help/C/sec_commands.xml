@@ -60,7 +60,7 @@
        <varlistentry>
          <term>Synopsis:</term>
          <listitem>
-           <para><emphasis role="bold">check</emphasis> &term;</para>
+           <para><emphasis role="bold">check</emphasis> &sterm;</para>
          </listitem>
        </varlistentry>
        <varlistentry>
@@ -74,6 +74,7 @@
      </variablelist>
    </para>
  </sect1>
+ <!--
  <sect1 id="command_eval">
    <title>eval</title>
    <para><userinput>eval red on t</userinput></para>
@@ -100,6 +101,8 @@
      </variablelist>
    </para>
  </sect1>
+ -->
+ <!--
  <sect1 id="command_prefer_coercion">
    <title>prefer coercion</title>
    <para><userinput>prefer coercion u</userinput></para>
@@ -125,8 +128,11 @@
      </variablelist>
    </para>
  </sect1>
+ -->
  <sect1 id="command_coercion">
    <title>coercion</title>
+   <para>TODO</para>
+   <!--
    <para><userinput>coercion u with ariety saturation nocomposites</userinput></para>
    <para>
      <variablelist>
@@ -169,7 +175,9 @@
        </varlistentry>
      </variablelist>
    </para>
+   -->
  </sect1>
+ <!--
  <sect1 id="command_default">
    <title>default</title>
    <para><userinput>default &quot;s&quot; u<subscript>1</subscript> … u<subscript>n</subscript></userinput></para>
@@ -265,6 +273,8 @@
      </variablelist>
    </para>
  </sect1>
+ -->
+ <!--
  <sect1 id="command_hint">
    <title>hint</title>
    <para><userinput>hint</userinput></para>
@@ -291,6 +301,7 @@
      </variablelist>
    </para>
  </sect1>
+ -->
  <sect1 id="command_include">
    <title>include</title>
    <para><userinput>include &quot;s&quot;</userinput></para>
@@ -323,6 +334,7 @@
      </variablelist>
    </para>
  </sect1>
+ <!--
  <sect1 id="command_include_first">
    <title>include' &quot;s&quot;</title>
    <para><userinput></userinput></para>
@@ -343,6 +355,8 @@
      </variablelist>
    </para>
  </sect1>
+ -->
+ <!--
  <sect1 id="command_whelp">
    <title>whelp</title>
    <para><userinput>whelp locate &quot;s&quot;</userinput></para>
@@ -377,6 +391,7 @@
      </variablelist>
    </para>
  </sect1>
+ -->
  <sect1 id="command_qed">
    <title>qed</title>
    <para><userinput>qed</userinput></para>
@@ -401,7 +416,33 @@
      </variablelist>
    </para>
  </sect1>
+ <sect1 id="command_qed_minus">
+   <title>qed-</title>
+   <para><userinput>qed-</userinput></para>
+   <para>
+     <variablelist>
+       <varlistentry>
+         <term>Synopsis:</term>
+         <listitem>
+           <para><emphasis role="bold">qed-</emphasis>
+           </para>
+         </listitem>
+       </varlistentry>
+       <varlistentry>
+         <term>Action:</term>
+         <listitem>
+           <para>Saves the current interactive theorem or
+            definition without indexing. Therefore automation will ignore
+            it.
+            In order to do this, the set of sequents still to be proved
+            must be empty.</para>
+         </listitem>
+       </varlistentry>
+     </variablelist>
+   </para>
+ </sect1>
  
+ <!--
  <sect1 id="command_inline">
    <title>inline</title>
    <para><userinput>inline &quot;s&quot; params</userinput></para>
@@ -585,4 +626,5 @@ depending on the provided parameters.</para>
     </table>
     </sect2>   
  </sect1>
+ -->
 </chapter>

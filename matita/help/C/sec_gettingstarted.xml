@@ -76,6 +76,7 @@
      &quot;about:proof&quot;.
     </para>
    </sect2>
+   <!--
    <sect2 id="whelp">
     <title>Searching the library</title>
     <para>The query bar of the CIC browser can be used to search the library
@@ -102,7 +103,7 @@
      <title>Searching by instantiation</title>
      <para>     &TODO;</para>
    </sect3>
-   </sect2>
+   </sect2>-->
   </sect1>
   <sect1 id="authoring">
    <title>Authoring</title>

@@ -26,28 +26,33 @@ of the art. In particular:</para>
             <para>An on-line help can be browsed via the Gnome documentation browser.</para>
           </listitem>
           <listitem>
-            <para>Mathematical formulae are rendered in two dimensional notation via MathML and Unicode.</para>
+            <!--<para>Mathematical formulae are rendered in two dimensional notation via MathML and Unicode.</para>-->
+            <para>Mathematical formulae are rendered via Unicode.</para>
           </listitem>
         </itemizedlist>
       </listitem>
+      <!--
       <listitem>
         <para>It integrates advanced browsing and searching procedures.</para>
-      </listitem>
+      </listitem>-->
       <listitem>
         <para>It allows the use of the typical ambiguous mathematical notation by means of a disambiguating parser.</para>
       </listitem>
+      <!--
       <listitem>
         <para>It is compatible with the library of Coq (definitions and proof objects).</para>
       </listitem>
+      -->
     </itemizedlist>
   </sect1>
   <sect1 id="WrtCoq">
     <title>Matita vs Coq</title>
     <para>
       The system shares a common look&amp;feel with the Coq proof assistant
-      and its graphical user interface. The two systems have the same logic,
-      very close proof languages and similar sets of tactics. Moreover,
-      Matita is compatible with the library of Coq.
+      and its graphical user interface. The two systems have variants
+      of the same logic,
+      close proof languages and similar sets of tactics. <!--Moreover,
+      Matita is compatible with the library of Coq.-->
       From the user point of view the main lacking features
       with respect to Coq are:
     </para>
@@ -68,7 +73,7 @@ of the art. In particular:</para>
         <para>several rarely used variants for most of the tactics;</para>
       </listitem>
       <listitem>
-        <para>sections and local variables. To maintain compatibility with the library of Coq, theorems defined inside sections are abstracted by name over the section variables; their instances are explicitly applied to actual arguments by means of explicit named substitutions.</para>
+        <para>sections and local variables. <!--To maintain compatibility with the library of Coq, theorems defined inside sections are abstracted by name over the section variables; their instances are explicitly applied to actual arguments by means of explicit named substitutions.--></para>
       </listitem>
     </itemizedlist>
     <para>
