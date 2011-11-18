@@ -104,7 +104,8 @@ type command =
   | NInverter of loc * string * nterm * bool list option * nterm option
   | NUnivConstraint of loc * NUri.uri * NUri.uri
   | NCopy of loc * string * NUri.uri * (NUri.uri * NUri.uri) list
-  | NCoercion of loc * string * bool * nterm * nterm * (string * nterm) * nterm
+  | NCoercion of loc * string * bool * 
+      (nterm * nterm * (string * nterm) * nterm) option
   | NQed of loc * bool
   (* ex lexicon commands *)
   | Alias of loc * alias_spec

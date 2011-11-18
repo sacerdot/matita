@@ -545,12 +545,12 @@ EXTEND
         G.UnificationHint (loc, t, n)
     | IDENT "coercion"; name = IDENT;
         compose = OPT [ IDENT "nocomposites" -> () ];
-        SYMBOL ":"; ty = term; 
+        spec = OPT [ SYMBOL ":"; ty = term; 
         SYMBOL <:unicode<def>>; t = term; "on"; 
         id = [ IDENT | PIDENT ]; SYMBOL ":"; source = term;
-        "to"; target = term ->
+        "to"; target = term -> t,ty,(id,source),target ] ->
           let compose = compose = None in
-          G.NCoercion(loc,name,compose,t,ty,(id,source),target)     
+          G.NCoercion(loc,name,compose,spec)
     | IDENT "record" ; (params,name,ty,fields) = record_spec ->
         G.NObj (loc, N.Record (params,name,ty,fields))
     | IDENT "copy" ; s = IDENT; IDENT "from"; u = URI; "with"; 
