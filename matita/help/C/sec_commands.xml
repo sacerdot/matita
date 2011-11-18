@@ -469,6 +469,102 @@
      </variablelist>
    </para>
  </sect1>
+ <sect1 id="command_unification_hint">
+   <title>unification hint</title>
+   <para>TODO</para>
+   <!--
+   <para><userinput>coercion u with ariety saturation nocomposites</userinput></para>
+   <para>
+     <variablelist>
+       <varlistentry>
+         <term>Synopsis:</term>
+         <listitem>
+		 <para>
+			 <emphasis role="bold">coercion</emphasis> 
+			 (&uri; | &term; <emphasis role="bold">with</emphasis>)
+			 [ &nat; [&nat;]] 
+			 [ <emphasis role="bold">nocomposites</emphasis> ]
+		 </para>
+         </listitem>
+       </varlistentry>
+       <varlistentry>
+         <term>Action:</term>
+         <listitem>
+		 <para>Declares <command>u</command> as an implicit coercion.
+		 If the type of <command>u</command> is 	
+		 <command>∀x1:T1. … ∀x(n-1):T(n-1).Tn</command> the coercion target is
+		 <command>T(n - ariety)</command> while its source is 
+		 <command>T(n - ariety - saturation - 1)</command>.
+	    Every time a term <command>x</command>
+            of type source is used with expected type target, Matita
+            automatically replaces <command>x</command> with
+            <command>(u ? … ? x ? … ?)</command> to avoid a typing error.</para>
+            Note that the number of <command>?</command> added after 
+	    <command>x</command> is saturation.
+           <para>Implicit coercions are not displayed to the user:
+            <command>(u ? … ? x)</command> is rendered simply
+            as <command>x</command>.</para>
+           <para>When a coercion <command>u</command> is declared
+            from source <command>s</command> to target <command>t</command>
+            and there is already a coercion <command>u'</command> of
+            target <command>s</command> or source <command>t</command>,
+            a composite implicit coercion is automatically computed
+	    by Matita unless <emphasis role="bold">nocomposites</emphasis> 
+	    is specified.</para>
+         </listitem>
+       </varlistentry>
+     </variablelist>
+   </para>
+   -->
+ </sect1>
+ <sect1 id="command_universe_constraints">
+   <title>universe constraint</title>
+   <para>TODO</para>
+   <!--
+   <para><userinput>coercion u with ariety saturation nocomposites</userinput></para>
+   <para>
+     <variablelist>
+       <varlistentry>
+         <term>Synopsis:</term>
+         <listitem>
+		 <para>
+			 <emphasis role="bold">coercion</emphasis> 
+			 (&uri; | &term; <emphasis role="bold">with</emphasis>)
+			 [ &nat; [&nat;]] 
+			 [ <emphasis role="bold">nocomposites</emphasis> ]
+		 </para>
+         </listitem>
+       </varlistentry>
+       <varlistentry>
+         <term>Action:</term>
+         <listitem>
+		 <para>Declares <command>u</command> as an implicit coercion.
+		 If the type of <command>u</command> is 	
+		 <command>∀x1:T1. … ∀x(n-1):T(n-1).Tn</command> the coercion target is
+		 <command>T(n - ariety)</command> while its source is 
+		 <command>T(n - ariety - saturation - 1)</command>.
+	    Every time a term <command>x</command>
+            of type source is used with expected type target, Matita
+            automatically replaces <command>x</command> with
+            <command>(u ? … ? x ? … ?)</command> to avoid a typing error.</para>
+            Note that the number of <command>?</command> added after 
+	    <command>x</command> is saturation.
+           <para>Implicit coercions are not displayed to the user:
+            <command>(u ? … ? x)</command> is rendered simply
+            as <command>x</command>.</para>
+           <para>When a coercion <command>u</command> is declared
+            from source <command>s</command> to target <command>t</command>
+            and there is already a coercion <command>u'</command> of
+            target <command>s</command> or source <command>t</command>,
+            a composite implicit coercion is automatically computed
+	    by Matita unless <emphasis role="bold">nocomposites</emphasis> 
+	    is specified.</para>
+         </listitem>
+       </varlistentry>
+     </variablelist>
+   </para>
+   -->
+ </sect1>
  
  <!--
  <sect1 id="command_inline">
