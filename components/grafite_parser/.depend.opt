@@ -1,9 +1,6 @@
-dependenciesParser.cmi: 
-grafiteParser.cmi: 
-print_grammar.cmi: grafiteParser.cmi 
-dependenciesParser.cmo: dependenciesParser.cmi 
-dependenciesParser.cmx: dependenciesParser.cmi 
-grafiteParser.cmo: grafiteParser.cmi 
-grafiteParser.cmx: grafiteParser.cmi 
-print_grammar.cmo: print_grammar.cmi 
-print_grammar.cmx: print_grammar.cmi 
+grafiteParser.cmi:
+print_grammar.cmi: grafiteParser.cmi
+grafiteParser.cmo: grafiteParser.cmi
+grafiteParser.cmx: grafiteParser.cmi
+print_grammar.cmo: print_grammar.cmi
+print_grammar.cmx: print_grammar.cmi

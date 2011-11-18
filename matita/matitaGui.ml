@@ -128,15 +128,19 @@ class console ~(buffer: GText.buffer) () =
 let clean_current_baseuri status = 
   LibraryClean.clean_baseuris [status#baseuri]
 
-let save_moo status = 
-  let script = MatitaScript.current () in
+let save_moo0 ~do_clean script status = 
   let baseuri = status#baseuri in
   match script#bos, script#eos with
   | true, _ -> ()
   | _, true ->
      GrafiteTypes.Serializer.serialize ~baseuri:(NUri.uri_of_string baseuri)
       status
-  | _ -> clean_current_baseuri status 
+  | _ -> if do_clean then clean_current_baseuri status 
+;;
+
+let save_moo status = 
+ let script = MatitaScript.current () in
+  save_moo0 ~do_clean:true script status
 ;;
     
 let ask_unsaved parent filename =
@@ -415,6 +419,7 @@ class gui () =
     val mutable chosen_file = None
     val mutable _ok_not_exists = false
     val mutable _only_directory = false
+    val mutable current_page = 0
       
     initializer
       let s () = MatitaScript.current () in
@@ -867,6 +872,9 @@ class gui () =
         MatitaMisc.reset_font_size;
       ignore (main#scriptNotebook#connect#switch_page
        (fun page ->
+         let old_script = MatitaScript.at_page current_page in
+         save_moo0 ~do_clean:false old_script old_script#status;
+         current_page <- page;
          let script = MatitaScript.at_page page in
           script#activate;
           main#saveMenuItem#misc#set_sensitive script#has_name))

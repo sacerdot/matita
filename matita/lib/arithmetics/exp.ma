@@ -113,7 +113,7 @@ theorem injective_exp_r: ∀b:nat. 1 < b →
 #b #lt1b @nat_elim2 normalize 
   [#n #H @sym_eq @(exp_to_eq_O b n lt1b) //
   |#n #H @False_ind @(absurd (1 < 1) ? (not_le_Sn_n 1))
-   <H in ⊢ (??%) @(lt_to_le_to_lt ? (1*b)) //
+   <H {⊢ (??%)} @(lt_to_le_to_lt ? (1*b)) //
    @le_times // @lt_O_exp /2/
   |#n #m #Hind #H @eq_f @Hind @(injective_times_l … H) /2/
   ]

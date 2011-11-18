@@ -57,14 +57,14 @@ qed.
 lemma gral: ∀A.∀x,y:A.
  mk_Sigma A x = mk_Sigma A y → x=y.
  #A #x #y #E lapply (tech1 ?? E)
- generalize in ⊢ (??(???%?)? → ?) #E1
- normalize in E1; >(K ?? E1) normalize
+ generalize {⊢ (??(???%?)? → ?)} #E1
+ normalize {E1}; >(K ?? E1) normalize
  #H @H
 qed.
 
 lemma jm_to_eq_sigma:
  ∀A,x,y. jmeq A x A y → mk_Sigma A x = mk_Sigma A y.
- #A #x #y #E cases E in ⊢ (???%); %
+ #A #x #y #E cases E {⊢ (???%)} %
 qed.
 
 definition curry:
@@ -77,7 +77,7 @@ qed.
 lemma G : ∀A.∀x:A.∀P:∀y:A.mk_Sigma A x = mk_Sigma A y →Type[0].
  P x (refl ? (mk_Sigma A x)) → ∀y.∀h:mk_Sigma A x = mk_Sigma A y.
   P y h.
- #A #x #P #H #y #E lapply (gral ??? E) #G generalize in match E;
+ #A #x #P #H #y #E lapply (gral ??? E) #G generalize {match E}
  @(match G
     return λy.λ_. ∀e:mk_Sigma A x = mk_Sigma A y. P y e
    with
@@ -94,7 +94,7 @@ lemma E : ∀A.∀x:A.∀P:∀y:A.jmeq A x A y→Type[0].
  #A #a #P #H #b #E letin F ≝ (jm_to_eq_sigma ??? E)
  lapply (G ?? (curry ?? P) ?? F)
   [ normalize //
-  | #H whd in H; @(H : PP ? (P b) ?) ]
+  | #H whd {H} @(H : PP ? (P b) ?) ]
 qed.
 
 lemma jmeq_elim : ∀A.∀x:A.∀P:∀y:A.jmeq A x A y→Type[0].

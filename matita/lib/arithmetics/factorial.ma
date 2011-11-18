@@ -55,8 +55,8 @@ theorem fact_to_exp1: ∀n.O<n →
    @(transitive_le ? ((2^(pred (2*n))) * n! * n! *(2*(S n))*(2*(S n))))
     [@le_times[@le_times //]//
     (* we generalize to hide the computational content *)
-    |normalize in match ((S n)!) generalize in match (S n)
-     #Sn generalize in match 2 #two //
+    |normalize {match ((S n)!)} generalize {match (S n)}
+     #Sn generalize {match 2} #two //
     ]
   ]
 qed.  
@@ -72,8 +72,8 @@ theorem exp_to_fact1: ∀n.O < n →
 #n #posn #Hind (cut (∀i.2*(S i) = S(S(2*i)))) [//] #H
 cut (2^(2*(S n)) = 2^(2*n)*2*2) [>H //] #H1 >H1
 @(le_to_lt_to_lt ? (2^(2*n)*n!*n!*(2*(S n))*(2*(S n))))
-  [normalize in match ((S n)!) generalize in match (S n) #Sn
-   generalize in match 2 #two //
+  [normalize {match ((S n)!)} generalize {match (S n)} #Sn
+   generalize {match 2} #two //
   |cut ((S(2*(S n)))! = (S(2*n))!*(S(S(2*n)))*(S(S(S(2*n)))))
    [>H //] #H2 >H2 @lt_to_le_to_lt_times
      [@lt_to_le_to_lt_times //|>H // | //]

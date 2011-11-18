@@ -40,7 +40,7 @@ qed.
 
 theorem lt_max_n : ∀f.∀n. O < n → max n f < n.
 #f #n #posn @(lt_O_n_elim ? posn) #m
-normalize (cases (f m)) normalize apply le_S_S //
+normalize (cases (f m)) normalize @le_S_S //
 @le_max_n qed.
 
 theorem le_to_le_max : ∀f.∀n,m.
@@ -122,7 +122,7 @@ qed.
 theorem max_f_g: ∀f,g,n.(∀i. i < n → f i = g i) → 
   max n f = max n g.
 #f #g #n (elim n) //
-#m #Hind #ext normalize >ext normalize in Hind >Hind //
+#m #Hind #ext normalize >ext normalize {Hind} >Hind //
 #i #ltim @ext /2/
 qed.
 

@@ -101,12 +101,6 @@ EXTEND
   GLOBAL: term statement;
   constructor: [ [ name = IDENT; SYMBOL ":"; typ = term -> (name, typ) ] ];
   tactic_term: [ [ t = term LEVEL "90" -> t ] ];
-(* MATITA 1.0
-  new_name: [
-    [ SYMBOL "_" -> None
-    | id = IDENT -> Some id ]
-    ];
-*)
   ident_list1: [ [ LPAREN; idents = LIST1 IDENT; RPAREN -> idents ] ];
   tactic_term_list1: [
     [ tactic_terms = LIST1 tactic_term SEP SYMBOL "," -> tactic_terms ]
@@ -115,7 +109,6 @@ EXTEND
     [ IDENT "normalize" ; delta = OPT [ IDENT "nodelta" -> () ] ->
        let delta = match delta with None -> true | _ -> false in
         `Normalize delta
-    (*| IDENT "unfold"; t = OPT tactic_term -> `Unfold t*)
     | IDENT "whd" ; delta = OPT [ IDENT "nodelta" -> () ] ->
        let delta = match delta with None -> true | _ -> false in
         `Whd delta]
@@ -138,14 +131,15 @@ EXTEND
   ];
   pattern_spec: [
     [ res = OPT [
-       "in";
+       SYMBOL "{";
        wanted_and_sps =
         [ "match" ; wanted = tactic_term ;
           sps = OPT [ "in"; sps = sequent_pattern_spec -> sps ] ->
            Some wanted,sps
         | sps = sequent_pattern_spec ->
            None,Some sps
-        ] ->
+        ];
+       SYMBOL "}" ->
          let wanted,hyp_paths,goal_path =
           match wanted_and_sps with
              wanted,None -> wanted, [], Some N.UserInput
@@ -178,19 +172,8 @@ EXTEND
     | SYMBOL "<" -> `RightToLeft ]
   ];
   int: [ [ num = NUMBER -> int_of_string num ] ];
-(* MATITA 1.0
-  intros_spec: [
-    [ OPT [ IDENT "names" ]; 
-      num = OPT [ num = int -> num ]; 
-      idents = intros_names ->
-        num, idents
-    ]
-  ];
-*)
-(* MATITA 1.0  using: [ [ using = OPT [ IDENT "using"; t = tactic_term -> t ] -> using ]  ]; *)
   ntactic: [
     [ SYMBOL "@"; t = tactic_term -> G.NTactic(loc,[G.NApply (loc, t)])
-    | IDENT "apply"; t = tactic_term -> G.NTactic(loc,[G.NApply (loc, t)])
     | IDENT "applyS"; t = tactic_term -> G.NTactic(loc,[G.NSmartApply(loc, t)])
     | IDENT "assert";
        seqs = LIST0 [
@@ -202,8 +185,6 @@ EXTEND
         SYMBOL <:unicode<vdash>>;
         concl = tactic_term -> (List.rev hyps,concl) ] ->
          G.NTactic(loc,[G.NAssert (loc, seqs)])
-    (*| IDENT "auto"; params = auto_params -> 
-        G.NTactic(loc,[G.NAuto (loc, params)])*)
     | SYMBOL "/"; num = OPT NUMBER ; 
        just_and_params = auto_params; SYMBOL "/" ->
        let just,params = just_and_params in
@@ -221,22 +202,20 @@ EXTEND
        | Some `Trace ->
 	         G.NMacro(loc,
              G.NAutoInteractive (loc, (None,["depth",depth]@params))))
-    | IDENT "intros" -> G.NMacro (loc, G.NIntroGuess loc)
-    | IDENT "check"; t = term -> G.NMacro(loc,G.NCheck (loc,t))
+    | SYMBOL "#"; SYMBOL "#" -> G.NMacro (loc, G.NIntroGuess loc)
+    | IDENT "check"; t = tactic_term -> G.NMacro(loc,G.NCheck (loc,t))
     | IDENT "screenshot"; fname = QSTRING -> 
         G.NMacro(loc,G.Screenshot (loc, fname))
     | IDENT "cases"; what = tactic_term ; where = pattern_spec ->
         G.NTactic(loc,[G.NCases (loc, what, where)])
     | IDENT "change"; what = pattern_spec; "with"; with_what = tactic_term -> 
         G.NTactic(loc,[G.NChange (loc, what, with_what)])
-    | SYMBOL "-"; ids = LIST1 IDENT ->
-        G.NTactic(loc,[G.NClear (loc, ids)])
-    | (*SYMBOL "^"*)PLACEHOLDER; num = OPT NUMBER; 
+    | SYMBOL "-"; id = IDENT ->
+        G.NTactic(loc,[G.NClear (loc, [id])])
+    | PLACEHOLDER; num = OPT NUMBER; 
 	l = OPT [ SYMBOL "{"; l = LIST1 tactic_term; SYMBOL "}" -> l ] -> 
         G.NTactic(loc,[G.NConstructor (loc, (match num with None -> None | Some x -> Some (int_of_string x)),match l with None -> [] | Some l -> l)])
     | IDENT "cut"; t = tactic_term -> G.NTactic(loc,[G.NCut (loc, t)])
-(*  | IDENT "discriminate"; t = tactic_term -> G.NDiscriminate (loc, t)
-    | IDENT "subst"; t = tactic_term -> G.NSubst (loc, t) *)
     | IDENT "destruct"; just = OPT [ dom = ident_list1 -> dom ];
       exclude = OPT [ IDENT "skip"; skip = ident_list1 -> skip ]
         -> let exclude' = match exclude with None -> [] | Some l -> l in
@@ -255,8 +234,6 @@ EXTEND
         G.NTactic(loc,[G.NReduce (loc, kind, p)])
     | dir = direction; what = tactic_term ; where = pattern_spec ->	
         G.NTactic(loc,[G.NRewrite (loc, dir, what, where)])
-    | IDENT "rewrite"; dir = direction; what = tactic_term ; where = pattern_spec ->	
-        G.NTactic(loc,[G.NRewrite (loc, dir, what, where)])
     | IDENT "try"; tac = SELF -> 
         let tac = match tac with G.NTactic(_,[t]) -> t | _ -> assert false in
         G.NTactic(loc,[ G.NTry (loc,tac)])
@@ -272,7 +249,7 @@ EXTEND
     | SYMBOL "#"; ns=IDENT -> G.NTactic(loc,[ G.NIntros (loc,[ns])])
     | SYMBOL "#"; SYMBOL "_" -> G.NTactic(loc,[ G.NIntro (loc,"_")])
     | SYMBOL "*" -> G.NTactic(loc,[ G.NCase1 (loc,"_")])
-    | SYMBOL "*"; n=IDENT -> G.NTactic(loc,[ G.NCase1 (loc,n)])
+    | SYMBOL "*"; "as"; n=IDENT -> G.NTactic(loc,[ G.NCase1 (loc,n)])
     ]
   ];
   auto_fixed_param: [

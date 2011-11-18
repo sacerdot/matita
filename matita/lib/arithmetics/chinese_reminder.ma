@@ -30,7 +30,7 @@ cut (∃c,d.c*n - d*m = 1 ∨ d*m - c*n = 1) [<pnm @eq_minus_gcd]
      <commutative_plus <plus_minus
        [@(eq_times_plus_to_congruent … posm) //
        |applyS monotonic_le_times_r @(transitive_le ? ((a+b*m)*d)) // 
-        applyS monotonic_le_times_r apply (transitive_le … (b*m)) /2/
+        applyS monotonic_le_times_r @(transitive_le … (b*m)) /2/
        ]
     |(* congruent to b *)
      -pnm (cut (d*m = c*n-1))
@@ -118,7 +118,7 @@ theorem mod_cr_pair : ∀m,n,a,b. a < m → b < n → gcd n m = 1 →
 #m #n #a #b #ltam #ltbn #pnm 
 cut (andb (eqb ((cr_pair m n a b) \mod m) a) 
          (eqb ((cr_pair m n a b) \mod n) b) = true)
-  [whd in match (cr_pair m n a b) @f_min_true cases(congruent_ab_lt m n a b ?? pnm)
+  [whd {match (cr_pair m n a b)} @f_min_true cases(congruent_ab_lt m n a b ?? pnm)
     [#x * * #cxa #cxb #ltx @(ex_intro ?? x) % /2/
      >eq_to_eqb_true
       [>eq_to_eqb_true // <(lt_to_eq_mod …ltbn) //

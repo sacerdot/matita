@@ -480,7 +480,7 @@ change with
 (let previous_prime ≝ (nth_prime n) in
  let upper_bound ≝ S previous_prime! in
  S previous_prime ≤ min upper_bound (S previous_prime) primeb)
-apply le_min_l
+@le_min_l
 qed.
 
 theorem lt_SO_nth_prime_n : ∀n:nat. 1 < nth_prime n.

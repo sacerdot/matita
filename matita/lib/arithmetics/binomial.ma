@@ -44,12 +44,12 @@ theorem bc2 : ∀n.
      cut (m-(m-(S c)) = S c) [@plus_to_minus @plus_minus_m_m //] #eqSc     
      lapply (Hind c (le_S_S_to_le … lec)) #Hc
      lapply (Hind (m - (S c)) ?) [@le_plus_to_minus //] >eqSc #Hmc
-     >(plus_minus_m_m m c) in ⊢ (??(??(?%))) [|@le_S_S_to_le //]
+     >(plus_minus_m_m m c) {⊢ (??(??(?%)))} [|@le_S_S_to_le //]
      >commutative_plus >(distributive_times_plus ? (S c))
      @divides_plus
       [>associative_times >(commutative_times (S c))
        <associative_times @divides_times //
-      |<(fact_minus …ltcm) in ⊢ (?(??%)?) 
+      |<(fact_minus …ltcm) {⊢ (?(??%)?)}
        <associative_times @divides_times //
        >commutative_times @Hmc
       ]
@@ -61,18 +61,18 @@ qed.
 theorem bc1: ∀n.∀k. k < n → 
   bc (S n) (S k) = (bc n k) + (bc n (S k)).
 #n #k #ltkn > bceq >(bceq n) >(bceq n (S k))
->(div_times_times ?? (S k)) in ⊢ (???(?%?)) 
+>(div_times_times ?? (S k)) {⊢ (???(?%?))}
   [|>(times_n_O 0) @lt_times // | //]
->associative_times in ⊢ (???(?(??%)?))
->commutative_times in ⊢ (???(?(??(??%))?))
-<associative_times in ⊢ (???(?(??%)?))
->(div_times_times ?? (n - k)) in ⊢ (???(??%))  
+>associative_times {⊢ (???(?(??%)?))}
+>commutative_times {⊢ (???(?(??(??%))?))}
+<associative_times {⊢ (???(?(??%)?))}
+>(div_times_times ?? (n - k)) {⊢ (???(??%))}
   [|>(times_n_O 0) @lt_times // 
    |@(le_plus_to_le_r k ??) <plus_minus_m_m /2/]
->associative_times in ⊢ (???(??(??%)))
+>associative_times {⊢ (???(??(??%)))}
 >fact_minus // <plus_div 
   [<distributive_times_plus
-   >commutative_plus in ⊢ (???%) <plus_n_Sm <plus_minus_m_m [|/2/] @refl
+   >commutative_plus {⊢ (???%)} <plus_n_Sm <plus_minus_m_m [|/2/] @refl
   |<fact_minus // <associative_times @divides_times // @(bc2 n (S k)) //
   |>associative_times >(commutative_times (S k))
    <associative_times @divides_times // @bc2 /2/

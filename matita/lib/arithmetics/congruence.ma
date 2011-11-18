@@ -37,7 +37,7 @@ theorem le_to_mod: ∀n,m:nat. n < m → n = n \mod m.
 qed.
 
 theorem mod_mod : ∀n,p:nat. O<p → n \mod p = (n \mod p) \mod p.
-#n #p #posp >(div_mod (n \mod p) p) in ⊢ (? ? % ?) 
+#n #p #posp >(div_mod (n \mod p) p) {⊢ (? ? % ?) }
 >(eq_div_O ? p) // @lt_mod_m_m //
 qed.
 
@@ -79,8 +79,8 @@ qed.
 theorem congruent_to_divides: ∀n,m,p:nat.O < p → 
   n ≅_{p} m → p ∣ (n - m).
 #n #m #p #posp #congnm @(quotient ? ? ((n / p)-(m / p)))
->commutative_times >(div_mod n p) in ⊢ (??%?)
->(div_mod m p) in ⊢ (??%?) <(commutative_plus (m \mod p))
+>commutative_times >(div_mod n p) {⊢ (??%?)}
+>(div_mod m p) {⊢ (??%?)} <(commutative_plus (m \mod p))
 <congnm <(minus_plus ? (n \mod p)) <minus_plus_m_m //
 qed.
 
