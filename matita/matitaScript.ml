@@ -132,7 +132,7 @@ let eval_nmacro include_paths (buffer : GText.buffer) status unparsed_text parse
       let s = NTactics.intros_tac ~names_ref [] script#status in
       let rex = Pcre.regexp ~flags:[`MULTILINE] "\\A([\\n\\t\\r ]*).*\\Z" in
       let nl = Pcre.replace ~rex ~templ:"$1" parsed_text in
-      [s, nl ^ "#" ^ String.concat " " !names_ref ^ ";"], "", parsed_text_length
+      [s, nl ^ "#" ^ String.concat " #" !names_ref], "", parsed_text_length
   | TA.NAutoInteractive (_loc, (None,a)) -> 
       let trace_ref = ref [] in
       let s = NnAuto.auto_tac ~params:(None,a) ~trace_ref script#status in
