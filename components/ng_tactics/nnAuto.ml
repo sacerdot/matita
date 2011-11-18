@@ -72,8 +72,12 @@ let print_stat status tbl =
   let vcompare (_,v1) (_,v2) =
     Pervasives.compare (relevance v1) (relevance v2) in
   let l = List.sort vcompare l in
+  let short_name r = 
+    Filename.chop_extension 
+      (Filename.basename (NReference.string_of_reference r))
+  in
   let vstring (a,v)=
-      NotationPp.pp_term status (Ast.NCic (NCic.Const a)) ^ ": rel = " ^
+      short_name a ^ ": rel = " ^
       (string_of_float (relevance v)) ^
       "; uses = " ^ (string_of_int !(v.uses)) ^
       "; nom = " ^ (string_of_int !(v.nominations)) in
