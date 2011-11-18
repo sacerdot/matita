@@ -204,21 +204,6 @@ cleantests.opt: $(foreach d,$(TEST_DIRS_OPT),$(d)-cleantests-opt)
 
 # {{{ Distribution stuff
 
-ifeq ($(DISTRIBUTED),yes)
-
-
-dist_library: install_preliminaries 
-	$(H)echo "publish"
-	$(H)cd $(WHERE)/ma/standard-library;(HOME=$(WHERE) USER=builder MATITA_RT_BASE_DIR=$(WHERE) MATITA_FLAGS='$(MATITA_CFLAGS)' $(WHERE)/matitac -system -noinnertypes)
-	$(H)echo "destroy"
-	$(H)cd $(WHERE)/ma/standard-library;(HOME=$(WHERE) USER=builder MATITA_RT_BASE_DIR=$(WHERE) MATITA_FLAGS='$(MATITA_CFLAGS)' $(WHERE)/matitaclean)
-# sqlite3 only
-	$(H)cp $(WHERE)/.matita/matita.db  $(WHERE)/metadata.db || true
-#$(H)rm -rf $(WHERE)/.matita/
-	touch $@
-
-endif
-
 dist_pre: matitaGeneratedGui.ml
 	$(MAKE) -C dist/ dist_pre
 
@@ -261,9 +246,7 @@ endif
 	$(H)for p in $(INSTALL_PROGRAMS_LINKS_MATITA); do \
 		ln -fs matita $(WHERE)/$$p;\
 	done
-	$(H)cp -a lib $(WHERE)/ma/standard-library
-	$(H)rm -r $(WHERE)/ma/standard-library/lambda
-	$(H)rm -r $(WHERE)/ma/standard-library/lambdaN
+	$(H)cp -a lib $(WHERE)/lib
 
 	$(H)touch install_preliminaries.stamp
 

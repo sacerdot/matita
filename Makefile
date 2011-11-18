@@ -56,6 +56,13 @@ CLEAN_ON_DIST = 		\
 	components/license	\
 	matita/TPTP/		\
 	matita/contribs/	\
+	components/binaries/matitaprover/benchmarks/ \
+	matita/library/		\
+	matita/nlibrary/	\
+	matita/scripts/	\
+	matita/tests/	\
+	matita/lib/lambdaN/	\
+	matita/lib/lambda/	\
 	$(NULL)
 EXTRA_DIST = 			\
 	matita/AUTHORS 		\
