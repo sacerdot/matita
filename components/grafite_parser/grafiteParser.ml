@@ -250,13 +250,8 @@ EXTEND
    [ IDENT "demod"
    | IDENT "fast_paramod"
    | IDENT "paramod"
-   | IDENT "depth"
    | IDENT "width"
    | IDENT "size"
-   | IDENT "timeout"
-   | IDENT "library"
-   | IDENT "type"
-   | IDENT "all"
    ]
 ];
   auto_params: [
