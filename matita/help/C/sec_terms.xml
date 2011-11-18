@@ -752,9 +752,20 @@
        <row>
 	<entry id="grammar.autoparams">&autoparams;</entry>
 	<entry>::=</entry>
-        <entry>[&simpleautoparam;]…
+        <entry>[&nat;] [&simpleautoparam;]…
                [<emphasis role="bold">by</emphasis>
-                &term; [,&term;]…]
+                [&sterm;… | <emphasis role="bold">_</emphasis>]]
+        </entry>
+        <entry>The natural number, which defaults to 1, gives a bound to
+        the depth of the search tree. The terms listed is the only
+        knowledge base used by automation together with all indexed factual
+        and equational theorems in the included library. If the list of terms
+        is empty, only equational theorems and facts in the library are
+        used. If the list is omitted, it defaults to all indexed theorems
+        in the library. Finally, if the list is <command>_</command>,
+        the automation command becomes a macro that is expanded in a new
+        automation command where <command>_</command> is replaced with the
+        list of theorems required to prove the sequent.
         </entry>
        </row>
       </tbody>
@@ -767,35 +778,8 @@
        <row>
 	<entry id="grammar.simpleautoparam">&simpleautoparam;</entry>
 	<entry>::=</entry>
-        <entry><emphasis role="bold">depth=&nat;</emphasis></entry>
-        <entry>Give a bound to the depth of the search tree</entry>
-       </row>
-       <row>
-        <entry/>
-        <entry>|</entry>
         <entry><emphasis role="bold">width=&nat;</emphasis></entry>
         <entry>The maximal width of the search tree</entry>
-       </row>
-       <row>
-        <entry/>
-        <entry>|</entry>
-        <entry><emphasis role="bold">library</emphasis></entry>
-        <entry>Search everywhere (not only in included files)</entry>
-       </row>
-       <row>
-        <entry/>
-        <entry>|</entry>
-        <entry><emphasis role="bold">type</emphasis></entry>
-        <entry>Try to close also goals of sort Type, otherwise only goals
-               living in sort Prop are attacked.
-        </entry>
-       </row>
-       <row>
-        <entry/>
-        <entry>|</entry>
-        <entry><emphasis role="bold">paramodulation</emphasis></entry>
-        <entry>Try to close the goal performing unit-equality paramodulation
-        </entry>
        </row>
        <row>
         <entry/>
@@ -806,8 +790,23 @@
        <row>
         <entry/>
         <entry>|</entry>
-        <entry><emphasis role="bold">timeout=&nat;</emphasis></entry>
-        <entry>Timeout in seconds
+        <entry><emphasis role="bold">demod</emphasis></entry>
+        <entry>Simplifies the current sequent using the current set of
+         equations known to automation 
+        </entry>
+       </row>
+       <row>
+        <entry/>
+        <entry>|</entry>
+        <entry><emphasis role="bold">paramod</emphasis></entry>
+        <entry>Try to close the goal performing unit-equality paramodulation
+        </entry>
+       </row>
+       <row>
+        <entry/>
+        <entry>|</entry>
+        <entry><emphasis role="bold">fast_paramod</emphasis></entry>
+        <entry>A bounded version of <command>paramod</command> that is granted to terminate quickly
         </entry>
        </row>
       </tbody>
