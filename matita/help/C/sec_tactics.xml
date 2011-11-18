@@ -167,7 +167,7 @@
       </variablelist>
     </para>
   </sect1>
-  <sect1 id="tac_intro">
+  <sect1 id="macro_intro">
     <title>##</title>
     <titleabbrev>##</titleabbrev>
     <para><userinput>##</userinput></para>

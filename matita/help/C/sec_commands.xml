@@ -326,8 +326,36 @@
             hints (<link linkend="command_alias">aliases</link>).
             On the contrary, theorem and definitions declared in a file can be
            immediately used without including it.</para>
-          <para>The file <command>s</command> is automatically compiled
-	  if it is not compiled yet.
+           <para>The file <command>s</command> is automatically compiled
+	   if it is not compiled yet.
+          </para>
+          <para>
+          If the file <command>s</command> was already included, either
+          directly or recursively, the commands does nothing.
+          </para>
+         </listitem>
+       </varlistentry>
+     </variablelist>
+   </para>
+ </sect1>
+ <sect1 id="command_include_alias">
+   <title>include alias</title>
+   <para><userinput>include alias &quot;s&quot;</userinput></para>
+   <para>
+     <variablelist>
+       <varlistentry>
+         <term>Synopsis:</term>
+         <listitem>
+           <para><emphasis role="bold">include</emphasis> <emphasis role="bold">alias</emphasis> &qstring;</para>
+         </listitem>
+       </varlistentry>
+       <varlistentry>
+         <term>Action:</term>
+         <listitem>
+           <para>Every 
+            <link linkend="interpretation">interpretation</link>
+            declared in the file <command>s</command> is re-declared
+            so to make it the preferred choice for disambiguation.
           </para>
          </listitem>
        </varlistentry>
