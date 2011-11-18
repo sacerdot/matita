@@ -24,7 +24,7 @@ interpretation "partial unfold (term)"
 
 (* Basic eliminators ********************************************************)
 
-lemma tpss_ind: ∀d,e,L,T1. ∀R: term → Prop. R T1 →
+lemma tpss_ind: ∀d,e,L,T1. ∀R:predicate term. R T1 →
                 (∀T,T2. L ⊢ T1 [d, e] ≫* T → L ⊢ T [d, e] ≫ T2 → R T → R T2) →
                 ∀T2. L ⊢ T1 [d, e] ≫* T2 → R T2.
 #d #e #L #T1 #R #HT1 #IHT1 #T2 #HT12 @(TC_star_ind … HT1 IHT1 … HT12) //

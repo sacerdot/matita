@@ -12,35 +12,32 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/grammar/lenv_weight.ma".
-include "Basic_2/grammar/cl_shift.ma".
+include "Basic_2/grammar/term_simple.ma".
 
-(* WEIGHT OF A CLOSURE ******************************************************)
+(* CANDIDATES OF REDUCIBILITY ***********************************************)
 
-definition cw: lenv → term → ? ≝ λL,T. #[L] + #[T].
+(* abstract conditions for candidates *)
 
-interpretation "weight (closure)" 'Weight L T = (cw L T).
+definition CR1: predicate term → predicate term → Prop ≝
+                λRD,RC. ∀T. RC T → RD T.
 
-(* Basic properties *********************************************************)
+definition CR2: relation term → predicate term → Prop ≝
+                λRR,RC. ∀T1,T2. RC T1 → 𝕊[T1] → RR T1 T2 → RC T2.
 
-(* Basic_1: was: flt_wf__q_ind *)
+definition CR3: relation term → predicate term → Prop ≝
+                λRR,RC. ∀T1. (∀T2. RR T1 T2 → RC T2) → 𝕊[T1] → RC T1.
 
-(* Basic_1: was: flt_wf_ind *)
-axiom cw_wf_ind: ∀R:lenv→predicate term.
-                 (∀L2,T2. (∀L1,T1. #[L1,T1] < #[L2,T2] → R L1 T1) → R L2 T2) →
-                 ∀L,T. R L T.
+(* a candidate *)
+record cr (RR:relation term) (RD:predicate term): Type[0] ≝ {
+   in_cr: predicate term;
+   cr1: CR1 RD in_cr;
+   cr2: CR2 RR in_cr;
+   cr3: CR3 RR in_cr
+}.
 
-(* Basic_1: was: flt_shift *)
-lemma cw_shift: ∀K,I,V,T. #[K. 𝕓{I} V, T] < #[K, 𝕔{I} V. T].
-normalize //
-qed.
+interpretation
+   "context-free parallel reduction (term)"
+   'InSubset T R = (in_cr ? ? R T).
 
-lemma tw_shift: ∀L,T. #[L, T] ≤ #[L @ T].
-#L elim L //
-#K #I #V #IHL #T
-@transitive_le [3: @IHL |2: /2/ | skip ]
-qed.
-
-(* Basic_1: removed theorems 6:
-            flt_thead_sx flt_thead_dx flt_arith0 flt_arith1 flt_arith2 flt_trans
-*)
+definition in_fun_cr: ∀RR,RD. ∀D,C:(cr RR RD). predicate term ≝
+                      λRR,RD,D,C,T. ∀V. V ϵ D → 𝕔{Appl}V.T ϵ C.

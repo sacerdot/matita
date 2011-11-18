@@ -17,6 +17,8 @@ include "Ground_2/xoa_props.ma".
 
 (* PROPERTIES of RELATIONS **************************************************)
 
+definition predicate: Type[0] → Type[0] ≝ λA. A → Prop.
+
 definition Decidable: Prop → Prop ≝
    λR. R ∨ (R → False). 
 
@@ -105,16 +107,16 @@ qed.
 lemma TC_reflexive: ∀A,R. reflexive A R → reflexive A (TC … R).
 /2/ qed.
 
-lemma TC_star_ind: ∀A,R. reflexive A R → ∀a1. ∀P:A→Prop.
+lemma TC_star_ind: ∀A,R. reflexive A R → ∀a1. ∀P:predicate A.
                    P a1 → (∀a,a2. TC … R a1 a → R a a2 → P a → P a2) →
                    ∀a2. TC … R a1 a2 → P a2.
 #A #R #H #a1 #P #Ha1 #IHa1 #a2 #Ha12 elim Ha12 -Ha12 a2 /3/
 qed.
 
-definition NF: ∀A. relation A → relation A → A → Prop ≝
+definition NF: ∀A. relation A → relation A → predicate A ≝
    λA,R,S,a1. ∀a2. R a1 a2 → S a1 a2.
 
-inductive SN (A) (R,S:relation A): A → Prop ≝
+inductive SN (A) (R,S:relation A): predicate A ≝
 | SN_intro: ∀a1. (∀a2. R a1 a2 → (S a1 a2 → False) → SN A R S a2) → SN A R S a1
 .
 

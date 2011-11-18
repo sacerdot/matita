@@ -25,7 +25,7 @@ interpretation "partial unfold (local environment)"
 
 (* Basic eliminators ********************************************************)
 
-lemma ltpss_ind: ∀d,e,L1. ∀R: lenv → Prop. R L1 →
+lemma ltpss_ind: ∀d,e,L1. ∀R:predicate lenv. R L1 →
                  (∀L,L2. L1 [d, e] ≫* L → L [d, e] ≫ L2 → R L → R L2) →
                  ∀L2. L1 [d, e] ≫* L2 → R L2.
 #d #e #L1 #R #HL1 #IHL1 #L2 #HL12 @(TC_star_ind … HL1 IHL1 … HL12) //

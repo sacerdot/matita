@@ -18,8 +18,7 @@ include "Basic_2/reducibility/tpr.ma".
 
 (* CONTEXT-FREE NORMAL TERMS ************************************************)
 
-definition tnf: term → Prop ≝
-   NF … tpr (eq …).
+definition tnf: predicate term ≝ NF … tpr (eq …).
 
 interpretation
    "context-free normality (term)"

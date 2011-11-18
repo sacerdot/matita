@@ -17,7 +17,7 @@ include "Basic_2/grammar/term_simple.ma".
 (* CONTEXT-FREE REDUCIBLE AND IRREDUCIBLE TERMS *****************************)
 
 (* reducible terms *)
-inductive trf: term → Prop ≝
+inductive trf: predicate term ≝
 | trf_abst_sn: ∀V,T.   trf V → trf (𝕔{Abst} V. T)
 | trf_abst_dx: ∀V,T.   trf T → trf (𝕔{Abst} V. T)
 | trf_appl_sn: ∀V,T.   trf V → trf (𝕔{Appl} V. T)
@@ -32,8 +32,7 @@ interpretation
    'Reducible T = (trf T).
 
 (* irreducible terms *)
-definition tif: term → Prop ≝
-   λT. ℝ[T] → False.
+definition tif: predicate term ≝ λT. ℝ[T] → False.
 
 interpretation
    "context-free irreducibility (term)"

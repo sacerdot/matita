@@ -16,7 +16,7 @@ include "Basic_2/grammar/term.ma".
 
 (* SIMPLE (NEUTRAL) TERMS ***************************************************)
 
-inductive simple: term → Prop ≝
+inductive simple: predicate term ≝
    | simple_atom: ∀I. simple (𝕒{I})
    | simple_flat: ∀I,V,T. simple (𝕗{I} V. T)
 .

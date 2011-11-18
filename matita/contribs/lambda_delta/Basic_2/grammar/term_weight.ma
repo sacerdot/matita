@@ -32,7 +32,7 @@ qed.
 
 (* Basic eliminators ********************************************************)
 
-axiom tw_wf_ind: ∀R:term→Prop.
+axiom tw_wf_ind: ∀R:predicate term.
                  (∀T2. (∀T1. #[T1] < #[T2] → R T1) → R T2) →
                  ∀T. R T.
 
