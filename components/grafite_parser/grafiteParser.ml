@@ -202,7 +202,7 @@ EXTEND
         G.NMacro(loc,G.Screenshot (loc, fname))
     | IDENT "cases"; what = tactic_term ; where = pattern_spec ->
         G.NTactic(loc,[G.NCases (loc, what, where)])
-    | IDENT "change"; what = pattern_spec; "with"; with_what = tactic_term -> 
+    | IDENT "change";  "with"; with_what = tactic_term; what = pattern_spec -> 
         G.NTactic(loc,[G.NChange (loc, what, with_what)])
     | SYMBOL "-"; id = IDENT ->
         G.NTactic(loc,[G.NClear (loc, [id])])
