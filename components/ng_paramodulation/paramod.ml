@@ -293,14 +293,22 @@ module Paramod (B : Orderings.Blob) = struct
      * new = supright e'' A'' *
      * new'= demod A'' new    *
      * P' = P + new'          *)
-    debug (lazy "Forward infer step...");
+    debug (lazy ("Forward infer step for "^ (Pp.pp_unit_clause current)));
     debug (lazy("Number of actives : " ^ (string_of_int (List.length (fst actives)))));
     noprint (lazy (pp_clauses actives passives));
+    let _ = noprint
+      (lazy 
+	 ("Actives before simplification:" ^ (String.concat ";\n" 
+	    (List.map Pp.pp_unit_clause (fst actives))))) in 
     match Sup.keep_simplified current actives bag maxvar
     with
-      | _,None -> s
+      | _,None -> debug(lazy("None")); s
       | bag,Some (current,actives) ->
     debug (lazy ("simplified to " ^ (Pp.pp_unit_clause current)));
+    let _ = noprint
+      (lazy 
+	 ("Actives after simplification:" ^ (String.concat ";\n" 
+	    (List.map Pp.pp_unit_clause (fst actives))))) in 
     let bag, maxvar, actives, new_clauses = 
       Sup.infer_right bag maxvar current actives 
     in
@@ -490,7 +498,7 @@ module Paramod (B : Orderings.Blob) = struct
 	     remove_passive_goal g_passives g in
 	   let current = snd g in
 	   let _ = 
-	     debug (lazy("Selected goal : " ^ Pp.pp_unit_clause current)) 
+	     debug (lazy("Selected goal gn: " ^ Pp.pp_unit_clause current)) 
 	   in
 	     (* we work both on the original goal and the demodulated one*)
 	   let acc = check_and_infer ~no_demod:false iterno acc current
