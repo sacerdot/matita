@@ -49,7 +49,8 @@ module Index(B : Orderings.Blob) = struct
           | Terms.Node (Terms.Var _::_) ->
 	      assert false *)
           | Terms.Node ([] | [ _ ] ) -> assert false
-          | Terms.Node (Terms.Node _::_) -> assert false	      
+          (* FIXME : if we can have a variable we can also have a term 
+            | Terms.Node (Terms.Node _::_) as t -> assert false	 *)      
           | Terms.Node (hd::tl) ->
               aux (List.length tl) hd @ List.flatten (List.map (aux 0) tl) 
         in 
