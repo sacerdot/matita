@@ -103,11 +103,47 @@ module P = NCicParamod(EmptyC)
 type state = P.state
 let empty_state = P.empty_state
 
-let forward_infer_step s t ty =
+exception NotEmbeddable 
+
+let not_embeddable status subst context ty =
+  let rec aux = function
+    | NCic.Meta _
+    | NCic.Const _
+    | NCic.Rel _
+    | NCic.Sort _ -> ()
+    | NCic.Appl l -> List.iter aux l
+    | t -> 
+        (* cannot embed a blob term containing metas *)
+        if (NCicUntrusted.metas_of_term status subst context t = [])
+        then () 
+        else raise NotEmbeddable
+  in 
+  try aux ty; noprint (lazy ("Embeddable")); false
+  with NotEmbeddable -> debug (lazy ("Not embeddable")); true
+;;
+
+let tooflex (_,l,_,_) =
+  match l with
+    | Terms.Equation (l,r,_,o) ->
+      (match l,r,o with
+       | Terms.Var _, _, (Terms.Incomparable | Terms.Invertible) -> true
+       | _, Terms.Var _,(Terms.Incomparable | Terms.Invertible) -> true
+       | _ -> false)
+    | _ -> false
+;;  
+
+let forward_infer_step status metasenv subst context s t ty =
   let bag = P.bag_of_state s in
+  let not_embed =
+    let sty,_,_ = 
+      NCicMetaSubst.saturate status ~delta:0  metasenv subst context ty 0 in
+      not_embeddable status subst context sty in
+  if not_embed then (debug (lazy "theorem not embeddable"); s)
+  else
   let bag,clause = P.mk_passive bag (t,ty) in
     if Terms.is_eq_clause clause then
-      P.forward_infer_step (P.replace_bag s bag) clause 0
+      if tooflex clause then (print (lazy "pruning tooflex"); s)
+      else P.forward_infer_step (P.replace_bag s bag) clause 0
     else (debug (lazy "not eq"); s)
 ;;
 
@@ -118,14 +154,15 @@ let index_obj status s uri =
   match obj with
     | (_,_,[],[],NCic.Constant(_,_,None,ty,_)) ->
         let nref = NReference.reference_of_spec uri NReference.Decl in
-	forward_infer_step s (NCic.Const nref) ty
+	forward_infer_step status [] [] [] s (NCic.Const nref) ty
     | (_,d,[],[],NCic.Constant(_,_,Some(_),ty,_)) ->
         let nref = NReference.reference_of_spec uri (NReference.Def d) in
-	forward_infer_step s (NCic.Const nref) ty
+	forward_infer_step status [] [] [] s (NCic.Const nref) ty
     | _ -> s
 ;;
 
 let demod status metasenv subst context s goal =
+  if not_embeddable status subst context (snd goal) then [] else
   (* let stamp = Unix.gettimeofday () in *)
   match P.demod s goal with
     | P.Error _ | P.GaveUp | P.Timeout _ -> []
@@ -136,6 +173,7 @@ let demod status metasenv subst context s goal =
 ;;
 
 let paramod status metasenv subst context s goal =
+  if not_embeddable status subst context (snd goal) then [] else
   (* let stamp = Unix.gettimeofday () in *)
   match P.nparamod ~useage:true ~max_steps:max_int 
     ~timeout:(Unix.gettimeofday () +. 300.0) s goal with
@@ -147,6 +185,7 @@ let paramod status metasenv subst context s goal =
 ;;
 
 let fast_eq_check status metasenv subst context s goal =
+  if not_embeddable status subst context (snd goal) then [] else
   (* let stamp = Unix.gettimeofday () in *)
   match P.fast_eq_check s goal with
   | P.Error _ | P.GaveUp | P.Timeout _ -> []

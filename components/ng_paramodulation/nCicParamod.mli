@@ -19,7 +19,9 @@ val nparamod :
 
 type state 
 val empty_state: state
-val forward_infer_step: state -> NCic.term -> NCic.term -> state
+val forward_infer_step: 
+  #NCic.status -> NCic.metasenv -> NCic.substitution -> NCic.context ->
+  state -> NCic.term -> NCic.term -> state
 val index_obj: #NCic.status -> state -> NUri.uri -> state
 val is_equation:
  #NCic.status -> NCic.metasenv -> NCic.substitution -> NCic.context ->
