@@ -54,7 +54,7 @@ qed.
 
 lemma divides_to_gcd_aux: ∀p,m,n. O < p → O < n →n ∣ m → 
   gcd_aux p m n = n.
-#p #m #n #posp @(lt_O_n_elim … posp) #l #posn #divnm whd {⊢ (??%?)}
+#p #m #n #posp @(lt_O_n_elim … posp) #l #posn #divnm whd in ⊢ (??%?);
 >divides_to_dividesb_true normalize //
 qed.
 
@@ -69,7 +69,7 @@ qed.
 
 lemma not_divides_to_gcd_aux: ∀p,m,n. 0 < n → n ∤ m → 
   gcd_aux (S p) m n = gcd_aux p n (m \mod n).
-#p #m #n #lenm #divnm whd {⊢ (??%?)} >not_divides_to_dividesb_false
+#p #m #n #lenm #divnm whd in ⊢ (??%?); >not_divides_to_dividesb_false
 normalize // qed.
 
 theorem divides_gcd_aux_mn: ∀p,m,n. O < n → n ≤ m → n ≤ p →
@@ -182,13 +182,13 @@ theorem eq_minus_gcd_aux: ∀p,m,n.O < n → n ≤ m →  n ≤ p →
       [(* first case *)
        <H @(ex_intro ?? (b+a*(m / n))) @(ex_intro ?? a) %2
        <commutative_plus >distributive_times_plus_r 
-       >(div_mod m n) {⊢(? ? (? % ?) ?)}
+       >(div_mod m n) in ⊢(? ? (? % ?) ?);
        >associative_times <commutative_plus >distributive_times_plus
        <minus_plus <commutative_plus <plus_minus //
       |(* second case *)
         <H @(ex_intro ?? (b+a*(m / n))) @(ex_intro ?? a) %1
         >distributive_times_plus_r
-        >(div_mod m n) {⊢ (? ? (? ? %) ?)}
+        >(div_mod m n) in ⊢ (? ? (? ? %) ?);
         >distributive_times_plus >associative_times
         <minus_plus <commutative_plus <plus_minus //
       ]
@@ -367,7 +367,7 @@ qed.
 theorem gcd_1_to_divides_times_to_divides: ∀p,n,m:nat. O < p →
 gcd p n = 1 → p ∣ (n*m) → p ∣ m.
 #p #m #n #posn #gcd1 * #c #nm
-cases(eq_minus_gcd m p) #a * #b * #H >gcd1 {H} #H 
+cases(eq_minus_gcd m p) #a * #b * #H >gcd1 in H; #H 
   [@(quotient ?? (a*n-c*b)) >distributive_times_minus <associative_times 
    <associative_times <nm >(commutative_times m) >commutative_times
    >associative_times <distributive_times_minus //
@@ -398,7 +398,7 @@ qed.
 
 theorem divides_to_divides_times: ∀p,q,n. prime p  → p ∤ q →
  p ∣ n → q ∣ n → p*q ∣ n.
-#p #q #n #primep #notdivpq #divpn * #b #eqn (>eqn {divpn})
+#p #q #n #primep #notdivpq #divpn * #b #eqn >eqn in divpn;
 #divpn cases(divides_times_to_divides ??? primep divpn) #H
   [@False_ind /2/ 
   |cases H #c #eqb @(quotient ?? c) >eqb <associative_times //

@@ -178,7 +178,7 @@ theorem or_div_mod: ∀n,q. O < q →
 #n #q #posq 
 (elim (le_to_or_lt_eq ?? (lt_mod_m_m n q posq))) #H
   [%2 % // applyS eq_f // 
-  |%1 % // /demod/ <H {⊢(? ? ? (? % ?))} @eq_f//
+  |%1 % // /demod/ <H in ⊢(? ? ? (? % ?)); @eq_f//
   ]
 qed.
 
@@ -210,13 +210,13 @@ definition n_divides \def \lambda n,m:nat.n_divides_aux n n m O. *)
 
 theorem lt_div_S: ∀n,m. O < m → n < S(n / m)*m.
 #n #m #posm (change with (n < m +(n/m)*m))
->(div_mod n m) {⊢ (? % ?)} >commutative_plus 
+>(div_mod n m) in ⊢ (? % ?); >commutative_plus 
 @monotonic_lt_plus_l @lt_mod_m_m // 
 qed.
 
 theorem le_div: ∀n,m. O < n → m/n ≤ m.
 #n #m #posn
->(div_mod m n) {⊢ (? ? %)} @(transitive_le ? (m/n*n)) /2/
+>(div_mod m n) in ⊢ (? ? %); @(transitive_le ? (m/n*n)) /2/
 qed.
 
 theorem le_plus_mod: ∀m,n,q. O < q →
@@ -228,9 +228,9 @@ theorem le_plus_mod: ∀m,n,q. O < q →
      @(div_mod_spec_to_eq2 … (m/q + n/q) ? (div_mod_spec_div_mod … posq)).
      @div_mod_spec_intro
       [@not_le_to_lt //
-      |>(div_mod n q) {⊢ (? ? (? ? %) ?)}
+      |>(div_mod n q) in ⊢ (? ? (? ? %) ?);
        (applyS (eq_f … (λx.plus x (n \mod q))))
-       >(div_mod m q) {⊢ (? ? (? % ?) ?)}
+       >(div_mod m q) in ⊢ (? ? (? % ?) ?);
        (applyS (eq_f … (λx.plus x (m \mod q)))) //
       ]
   ]
@@ -241,10 +241,10 @@ theorem le_plus_div: ∀m,n,q. O < q →
 #m #n #q #posq @(le_times_to_le … posq)
 @(le_plus_to_le_r ((m+n) \mod q))
 (* bruttino *)
->commutative_times {⊢ (? ? %)} <div_mod
->(div_mod m q) {⊢ (? ? (? % ?))} >(div_mod n q) {⊢ (? ? (? ? %))}
->commutative_plus {⊢ (? ? (? % ?))} >associative_plus {⊢ (? ? %)}
-<associative_plus {⊢ (? ? (? ? %))} (applyS monotonic_le_plus_l) /2/
+>commutative_times in ⊢ (? ? %); <div_mod
+>(div_mod m q) in ⊢ (? ? (? % ?)); >(div_mod n q) in ⊢ (? ? (? ? %));
+>commutative_plus in ⊢ (? ? (? % ?)); >associative_plus in ⊢ (? ? %);
+<associative_plus in ⊢ (? ? (? ? %)); (applyS monotonic_le_plus_l) /2/
 qed.
 
 theorem le_times_to_le_div: ∀a,b,c:nat. 

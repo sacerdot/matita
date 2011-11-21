@@ -141,7 +141,7 @@ a ≤ b → b ≤ c →
   op (\big[op,nil]_{i ∈ [b,c[ |p i}(f i)) 
       \big[op,nil]_{i ∈ [a,b[ |p i}(f i).
 #a #b # c #p #B #nil #op #f #leab #lebc 
->(plus_minus_m_m (c-a) (b-a)) {⊢ (??%?)} /2/
+>(plus_minus_m_m (c-a) (b-a)) in ⊢ (??%?); /2/
 >minus_plus >(commutative_plus a) <plus_minus_m_m //
 >bigop_sum (cut (∀i. b -a ≤ i → i+a = i-(b-a)+b))
   [#i #lei >plus_minus // <plus_minus1 
@@ -173,11 +173,11 @@ theorem bigop_prod: ∀k1,k2,p1,p2,B.∀nil.∀op:Aop B nil.∀f: nat →nat →
 #n #Hind cases(true_or_false (p1 n)) #Hp1
   [>bigop_Strue // >Hind >bigop_sum @same_bigop
    #i #lti @leb_elim // #lei cut (i = n*k2+(i-n*k2)) /2/
-   #eqi [|#H] >eqi {⊢ (???%)}
+   #eqi [|#H] >eqi in ⊢ (???%);
      >div_plus_times /2/ >Hp1 >(mod_plus_times …) /2/ normalize //
   |>bigop_Sfalse // >Hind >(pad_bigop (S n*k2)) // @same_bigop
    #i #lti @leb_elim // #lei cut (i = n*k2+(i-n*k2)) /2/
-   #eqi >eqi {⊢ (???%)} >div_plus_times /2/ 
+   #eqi >eqi in ⊢ (???%); >div_plus_times /2/ 
   ]
 qed.
 
@@ -192,7 +192,7 @@ op (\big[op,nil]_{i<k|p i}(f i)) (\big[op,nil]_{i<k|p i}(g i)) =
 #k #p #B #nil #op #f #g (elim k) [normalize @nill]
 -k #k #Hind (cases (true_or_false (p k))) #H
   [>bigop_Strue // >bigop_Strue // >bigop_Strue //
-   normalize <assoc <assoc {⊢ (???%)} @eq_f >assoc >comm {⊢ (??(????%?)?)}
+   normalize <assoc <assoc in ⊢ (???%); @eq_f >assoc >comm in ⊢ (??(????%?)?);
    <assoc @eq_f @Hind
   |>bigop_Sfalse // >bigop_Sfalse // >bigop_Sfalse //
   ]
@@ -263,7 +263,7 @@ theorem bigop_iso: ∀n1,n2,p1,p2,B.∀nil.∀op:ACop B nil.∀f1,f2.
   iso B (mk_range B f1 n1 p1) (mk_range B f2 n2 p2) →
   \big[op,nil]_{i<n1|p1 i}(f1 i) = \big[op,nil]_{i<n2|p2 i}(f2 i).
 #n1 #n2 #p1 #p2 #B #nil #op #f1 #f2 * #h * #k * * #same
-@(le_gen ? n1) #i generalize {match p2} (elim i) 
+@(le_gen ? n1) #i lapply p2 (elim i) 
   [(elim n2) // #m #Hind #p2 #_ #sub1 #sub2
    >bigop_Sfalse 
     [@(Hind ? (le_O_n ?)) [/2/ | @(transitive_sub … (sub_lt …) sub2) //]
@@ -280,7 +280,7 @@ theorem bigop_iso: ∀n1,n2,p1,p2,B.∀nil.∀op:ACop B nil.∀f1,f2.
       |#j #ltj #p2j (cases (sub2 j ltj (andb_true_r …p2j))) * 
        #ltkj #p1kj #eqj % // % // 
        (cases (le_to_or_lt_eq …(le_S_S_to_le …ltkj))) //
-       #eqkj @False_ind generalize {match p2j} @eqb_elim 
+       #eqkj @False_ind lapply p2j @eqb_elim 
        normalize /2/
       ]
     |>bigop_Sfalse // @(Hind ? len) 
@@ -298,7 +298,7 @@ qed.
 record Dop (A:Type[0]) (nil:A): Type[0] ≝
   {sum : ACop A nil; 
    prod: A → A →A;
-   null: ∀a. prod a nil = nil; 
+   null: \forall a. prod a nil = nil; 
    distr: ∀a,b,c:A. prod a (sum b c) = sum (prod a b) (prod a c)
   }.
   

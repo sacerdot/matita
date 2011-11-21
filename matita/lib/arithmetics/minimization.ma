@@ -122,7 +122,7 @@ qed.
 theorem max_f_g: ∀f,g,n.(∀i. i < n → f i = g i) → 
   max n f = max n g.
 #f #g #n (elim n) //
-#m #Hind #ext normalize >ext normalize {Hind} >Hind //
+#m #Hind #ext normalize >ext normalize in Hind; >Hind //
 #i #ltim @ext /2/
 qed.
 

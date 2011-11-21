@@ -118,7 +118,7 @@ theorem mod_cr_pair : ∀m,n,a,b. a < m → b < n → gcd n m = 1 →
 #m #n #a #b #ltam #ltbn #pnm 
 cut (andb (eqb ((cr_pair m n a b) \mod m) a) 
          (eqb ((cr_pair m n a b) \mod n) b) = true)
-  [whd {match (cr_pair m n a b)} @f_min_true cases(congruent_ab_lt m n a b ?? pnm)
+  [whd in match (cr_pair m n a b); @f_min_true cases(congruent_ab_lt m n a b ?? pnm)
     [#x * * #cxa #cxb #ltx @(ex_intro ?? x) % /2/
      >eq_to_eqb_true
       [>eq_to_eqb_true // <(lt_to_eq_mod …ltbn) //
