@@ -636,18 +636,18 @@
        <row>
 	<entry id="grammar.pattern">&pattern;</entry>
 	<entry>::=</entry>
-        <entry><emphasis role="bold">{</emphasis>
+        <entry><emphasis role="bold">in</emphasis>
           [&id;[<emphasis role="bold">:</emphasis> &path;]]…
-          [<emphasis role="bold">⊢</emphasis> &path;]]<emphasis role="bold">}</emphasis></entry>
+          [<emphasis role="bold">⊢</emphasis> &path;]]<emphasis role="bold">;</emphasis></entry>
         <entry>simple pattern</entry>
        </row>
        <row>
         <entry/>
         <entry>|</entry>
-        <entry><emphasis role="bold">{match</emphasis> &path;
+        <entry><emphasis role="bold">in</emphasis> <emphasis role="bold">match</emphasis> &path;
           [<emphasis role="bold">in</emphasis>
           [&id;[<emphasis role="bold">:</emphasis> &path;]]…
-          [<emphasis role="bold">⊢</emphasis> &path;]]<emphasis role="bold">}</emphasis></entry>
+          [<emphasis role="bold">⊢</emphasis> &path;]]<emphasis role="bold">;</emphasis></entry>
         <entry>full pattern</entry>
        </row>
       </tbody>
@@ -655,7 +655,7 @@
     </table>
     <table frame="topbot" rowsep="0" colsep="0" role="grammar">
       <title>path</title>
-      <tgroup cols="4">
+      <tgroup cols="3">
       <tbody>
        <row>
 	<entry id="grammar.path">&path;</entry>

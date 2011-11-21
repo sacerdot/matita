@@ -128,7 +128,7 @@ EXTEND
   ];
   pattern_spec: [
     [ res = OPT [
-       SYMBOL "{";
+       "in" ;
        wanted_and_sps =
         [ "match" ; wanted = tactic_term ;
           sps = OPT [ "in"; sps = sequent_pattern_spec -> sps ] ->
@@ -136,7 +136,7 @@ EXTEND
         | sps = sequent_pattern_spec ->
            None,Some sps
         ];
-       SYMBOL "}" ->
+       SYMBOL ";" ->
          let wanted,hyp_paths,goal_path =
           match wanted_and_sps with
              wanted,None -> wanted, [], Some N.UserInput
