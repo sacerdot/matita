@@ -292,10 +292,11 @@ let auto_eq_check eq_cache status =
 ;;
 
 let index_local_equations eq_cache status =
+  noprint (lazy "indexing equations");
   let open_goals = head_goals status#stack in
   let open_goal = List.hd open_goals in
-  debug_print (lazy ("indexing equations for " ^ string_of_int open_goal));
   let ngty = get_goalty status open_goal in
+  let _,_,metasenv,subst,_ = status#obj in
   let ctx = apply_subst_context ~fix_projections:true status (ctx_of ngty) in
   let c = ref 0 in
   List.fold_left 
@@ -303,12 +304,12 @@ let index_local_equations eq_cache status =
        c:= !c+1;
        let t = NCic.Rel !c in
          try
-           let ty = NCicTypeChecker.typeof status [] [] ctx t in
+           let ty = NCicTypeChecker.typeof status subst metasenv ctx t in
            if is_a_fact status (mk_cic_term ctx ty) then
-             (debug_print(lazy("eq indexing " ^ (status#ppterm ctx [] [] ty)));
-              NCicParamod.forward_infer_step eq_cache t ty)
+             (noprint(lazy("eq indexing " ^ (status#ppterm ctx subst metasenv ty)));
+              NCicParamod.forward_infer_step status metasenv subst ctx eq_cache t ty)
            else 
-             (noprint (lazy ("not a fact: " ^ (status#ppterm ctx [] [] ty)));
+             (noprint (lazy ("not a fact: " ^ (status#ppterm ctx subst metasenv ty)));
               eq_cache)
          with 
            | NCicTypeChecker.TypeCheckerFailure _
@@ -1018,7 +1019,7 @@ let perforate_small status subst metasenv context t =
   let rec aux = function
     | NCic.Appl (hd::tl) ->
 	let map t =
-	  let s = sort_of status subst metasenv context t in
+	    let s = sort_of status subst metasenv context t in
 	    match s with
 	      | NCic.Sort(NCic.Type [`Type,u])
 		  when u=type0 -> NCic.Meta (0,(0,NCic.Irl 0))
@@ -1064,7 +1065,7 @@ let get_candidates ?(smart=true) depth flags status cache signature gty =
             let raw_weak = 
               perforate_small status subst metasenv context raw_gty in
             let weak = mk_cic_term context raw_weak in
-            debug_print ~depth (lazy ("weak_gty:" ^ NTacStatus.ppterm status weak));
+            noprint ~depth (lazy ("weak_gty:" ^ NTacStatus.ppterm status weak));
               Some raw_weak, Some (weak)
 	| _ -> None,None
     else None,None
@@ -1189,7 +1190,6 @@ let applicative_case depth signature status flags gty cache =
 
 exception Found
 ;;
-
 
 (* gty is supposed to be meta-closed *)
 let is_subsumed depth filter_depth status gty cache =
