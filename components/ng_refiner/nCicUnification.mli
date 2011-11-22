@@ -28,6 +28,10 @@ val fix_sorts:
   #NCic.status -> NCic.metasenv -> NCic.substitution -> 
     NCic.term -> NCic.metasenv * NCic.term
 
+(* this should be moved elsewhere *)
+(* The term must be in whd *)
+val could_reduce: NCic.term -> bool
+
 (* delift_type_wrt_terms st m s c t args
  *   lift t (length args) 
  *      [ rel 1 ... rel (len args) / lift (length args) (arg_1 .. arg_n) ]

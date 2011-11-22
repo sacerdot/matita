@@ -66,6 +66,7 @@ let refine_term (status: #NCicCoercion.status) metasenv subst context uri ~use_c
 let refine_obj status metasenv subst _context _uri ~use_coercions obj _ _ugraph
  ~localization_tbl 
 =
+  (*prerr_endline ((sprintf "TEST_INTERPRETATION: %s" (status#ppobj obj)));*)
   assert (metasenv=[]);
   assert (subst=[]);
   let localise t = 

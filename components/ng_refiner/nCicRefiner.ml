@@ -909,12 +909,19 @@ and force_to_sort status metasenv subst context t orig_t localise ty =
       metasenv, subst, t, ty
   with
       Failure _ -> 
+        let msg =
+         (lazy (localise orig_t, 
+           "The type of " ^ status#ppterm ~metasenv ~subst ~context t ^
+           " is not a sort: " ^ status#ppterm ~metasenv ~subst ~context ty)) in
         let ty = NCicReduction.whd status ~subst context ty in
+        let exn =
+         if NCicUnification.could_reduce ty then
+          Uncertain msg
+         else
+          RefineFailure msg
+        in
           try_coercions status ~localise metasenv subst context
-            t orig_t ty `Sort 
-             (Uncertain (lazy (localise orig_t, 
-             "The type of " ^ status#ppterm ~metasenv ~subst ~context t ^
-             " is not a sort: " ^ status#ppterm ~metasenv ~subst ~context ty)))
+            t orig_t ty `Sort exn
 
 and sort_of_prod status localise metasenv subst context orig_s orig_t (name,s)
  t (t1, t2) 

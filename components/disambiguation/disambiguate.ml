@@ -446,9 +446,14 @@ let disambiguate_thing
    let aliases, todo_dom = 
      let rec aux (aliases,acc) = function 
        | [] -> aliases, acc
-       | (Node (_, item,extra) as node) :: tl -> 
+       | (Node (locs, item,extra) as node) :: tl -> 
            let choices = lookup_choices item in
-           if List.length choices <> 1 then aux (aliases, acc@[node]) tl
+           if List.length choices = 0 then
+            (* Quick failure *)
+            raise (NoWellTypedInterpretation (0,[[],[],(lazy (List.hd locs, "No choices for " ^ string_of_domain_item item)),true]))
+           else if List.length choices <> 1 then
+            let aliases,extra = aux (aliases,[]) extra in
+             aux (aliases, acc@[Node (locs,item,extra)]) tl
            else
            let tl = tl @ extra in
            if Environment.mem item aliases then aux (aliases, acc) tl
@@ -456,6 +461,8 @@ let disambiguate_thing
      in
        aux (aliases,[]) todo_dom
    in
+   debug_print
+    (lazy(sprintf "TODO DOM: %s"(string_of_domain todo_dom)));
 
 (*
       (* <benchmark> *)
@@ -538,41 +545,6 @@ in refine_profiler.HExtlib.profile foo ()
                (lazy (List.hd locs,
                  "No choices for " ^ string_of_domain_item item)),
                true]
-(*
-          | [codomain_item] ->
-              (* just one choice. We perform a one-step look-up and
-                 if the next set of choices is also a singleton we
-                 skip this refinement step *)
-              debug_print(lazy (sprintf "%s CHOSEN" (fst codomain_item)));
-              let new_env = Environment.add item codomain_item aliases in
-              let new_diff = (item,codomain_item)::diff in
-              let lookup_in_todo_dom,next_choice_is_single =
-               match remaining_dom with
-                  [] -> None,false
-                | (_,he)::_ ->
-                   let choices = lookup_choices he in
-                    Some choices,List.length choices = 1
-              in
-               if next_choice_is_single then
-                aux new_env new_diff lookup_in_todo_dom remaining_dom
-                 base_univ
-               else
-                 (match test_env new_env remaining_dom base_univ with
-                 | Ok (thing, metasenv),new_univ ->
-                     (match remaining_dom with
-                     | [] ->
-                        [ new_env, new_diff, metasenv, thing, new_univ ], []
-                     | _ ->
-                        aux new_env new_diff lookup_in_todo_dom
-                         remaining_dom new_univ)
-                 | Uncertain (loc,msg),new_univ ->
-                     (match remaining_dom with
-                     | [] -> [], [new_env,new_diff,loc,msg,true]
-                     | _ ->
-                        aux new_env new_diff lookup_in_todo_dom
-                         remaining_dom new_univ)
-                 | Ko (loc,msg),_ -> [], [new_env,new_diff,loc,msg,true])
-*)
           | _::_ ->
               let mark_not_significant failures =
                 List.map
@@ -595,7 +567,7 @@ in refine_profiler.HExtlib.profile foo ()
                     (inner_dom@remaining_dom@rem_dom) base_univ
                  with
                 | Ok (thing, metasenv,subst,new_univ) ->
-(*                     prerr_endline "OK"; *)
+(*prerr_endline ((sprintf "CHOOSED ITEM OK: %s" (string_of_domain_item item)));*)
                     let res = 
                       (match inner_dom with
                       | [] ->
@@ -608,7 +580,7 @@ in refine_profiler.HExtlib.profile foo ()
                     in
                      res @@ filter tl
                 | Uncertain loc_msg ->
-(*                     prerr_endline ("UNCERTAIN"); *)
+(*prerr_endline ((sprintf "CHOOSED ITEM UNCERTAIN: %s" (string_of_domain_item item) ^ snd (Lazy.force loc_msg)));*)
                     let res =
                       (match inner_dom with
                       | [] -> [],[new_env,new_diff,loc_msg],[]
@@ -619,7 +591,7 @@ in refine_profiler.HExtlib.profile foo ()
                     in
                      res @@ filter tl
                 | Ko loc_msg ->
-(*                     prerr_endline "KO"; *)
+(*prerr_endline ((sprintf "CHOOSED ITEM KO: %s" (string_of_domain_item item)));*)
                     let res = [],[],[new_env,new_diff,loc_msg,true] in
                      res @@ filter tl)
            in
