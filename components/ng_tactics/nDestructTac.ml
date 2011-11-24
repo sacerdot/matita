@@ -469,6 +469,11 @@ let subst_tac ~context ~dir skip cur_eq =
       | NCic.Rel var ->
         cascade_select_in_ctx status ~subst:(get_subst status) context skip (var+cur_eq)
       | _ -> cascade_select_in_ctx status ~subst:(get_subst status) context skip cur_eq in
+    let varname = match var with
+      | NCic.Rel var -> 
+          let name,_ = List.nth context var in [name]
+      | _ -> []
+    in      
     let names_to_gen = List.filter (fun n -> n <> eq_name) names_to_gen in
     if (List.exists (fun x -> List.mem x skip) names_to_gen)
       then oldstatus
@@ -487,7 +492,12 @@ let subst_tac ~context ~dir skip cur_eq =
                    ~what:("",0,mk_id eq_name) ~where:default_pattern;
 (*                 NTactics.reduce_tac ~reduction:(`Normalize true)
                    ~where:default_pattern;*)
+                 (* XXX: temo che la clear multipla funzioni bene soltanto se
+                  * gli identificatori sono nell'ordine giusto.
+                  * Per non saper né leggere né scrivere, usiamo due clear
+                  * invece di una *)		   
                  NTactics.try_tac (NTactics.clear_tac [eq_name]);
+		 NTactics.try_tac (NTactics.clear_tac varname);
 ]@
                  (List.map NTactics.intro_tac (List.rev names_to_gen))) status
 ;;
