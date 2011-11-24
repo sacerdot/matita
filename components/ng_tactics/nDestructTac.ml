@@ -471,7 +471,9 @@ let subst_tac ~context ~dir skip cur_eq =
       | _ -> cascade_select_in_ctx status ~subst:(get_subst status) context skip cur_eq in
     let varname = match var with
       | NCic.Rel var -> 
-          let name,_ = List.nth context var in [name]
+          let name,_ = List.nth context var in
+	  HLog.warn (Printf.sprintf "destruct: trying to remove variable: %s" name);
+	  [name]
       | _ -> []
     in      
     let names_to_gen = List.filter (fun n -> n <> eq_name) names_to_gen in
