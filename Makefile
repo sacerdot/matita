@@ -38,7 +38,7 @@ install: install-indep install-arch
 uninstall: $(foreach d,$(SUBDIRS),rec@uninstall@$(d))
 
 rec@%:
-	$(MAKE) -C $(word 2, $(subst @, ,$*)) $(word 1, $(subst @, ,$*)) DESTDIR=$(shell pwd)/$(DESTDIR)
+	$(MAKE) -C $(word 2, $(subst @, ,$*)) $(word 1, $(subst @, ,$*)) DESTDIR=$(DESTDIR)
 
 # {{{ Distribution stuff
 
