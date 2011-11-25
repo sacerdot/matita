@@ -471,7 +471,7 @@ let subst_tac ~context ~dir skip cur_eq =
       | _ -> cascade_select_in_ctx status ~subst:(get_subst status) context skip cur_eq in
     let varname = match var with
       | NCic.Rel var -> 
-          let name,_ = List.nth context var in
+          let name,_ = List.nth context (var+cur_eq-1) in
 	  HLog.warn (Printf.sprintf "destruct: trying to remove variable: %s" name);
 	  [name]
       | _ -> []
@@ -497,7 +497,7 @@ let subst_tac ~context ~dir skip cur_eq =
                  (* XXX: temo che la clear multipla funzioni bene soltanto se
                   * gli identificatori sono nell'ordine giusto.
                   * Per non saper né leggere né scrivere, usiamo due clear
-                  * invece di una *)		   
+                  * invece di una *)
                  NTactics.try_tac (NTactics.clear_tac [eq_name]);
 		 NTactics.try_tac (NTactics.clear_tac varname);
 ]@
