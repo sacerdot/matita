@@ -44,18 +44,18 @@ interpretation
 
 lemma tpr_bind: ∀I,V1,V2,T1,T2. V1 ⇒ V2 → T1 ⇒ T2 →
                                 𝕓{I} V1. T1 ⇒  𝕓{I} V2. T2.
-/2/ qed.
+/2 width=3/ qed.
 
 (* Basic_1: was by definition: pr0_refl *)
 lemma tpr_refl: ∀T. T ⇒ T.
 #T elim T -T //
-#I elim I -I /2/
+#I elim I -I /2 width=1/
 qed.
 
 (* Basic inversion lemmas ***************************************************)
 
 fact tpr_inv_atom1_aux: ∀U1,U2. U1 ⇒ U2 → ∀I. U1 = 𝕒{I} → U2 = 𝕒{I}.
-#U1 #U2 * -U1 U2
+#U1 #U2 * -U1 -U2
 [ //
 | #I #V1 #V2 #T1 #T2 #_ #_ #k #H destruct
 | #V1 #V2 #W #T1 #T2 #_ #_ #k #H destruct
@@ -68,7 +68,7 @@ qed.
 
 (* Basic_1: was: pr0_gen_sort pr0_gen_lref *)
 lemma tpr_inv_atom1: ∀I,U2. 𝕒{I} ⇒ U2 → U2 = 𝕒{I}.
-/2/ qed-.
+/2 width=3/ qed-.
 
 fact tpr_inv_bind1_aux: ∀U1,U2. U1 ⇒ U2 → ∀I,V1,T1. U1 = 𝕓{I} V1. T1 →
                         (∃∃V2,T2,T. V1 ⇒ V2 & T1 ⇒ T2 &
@@ -76,13 +76,13 @@ fact tpr_inv_bind1_aux: ∀U1,U2. U1 ⇒ U2 → ∀I,V1,T1. U1 = 𝕓{I} V1. T1 
                                     U2 = 𝕓{I} V2. T
                         ) ∨
                         ∃∃T. ↑[0,1] T ≡ T1 & T ⇒ U2 & I = Abbr.
-#U1 #U2 * -U1 U2
+#U1 #U2 * -U1 -U2
 [ #J #I #V #T #H destruct
 | #I1 #V1 #V2 #T1 #T2 #_ #_ #I #V #T #H destruct
 | #V1 #V2 #W #T1 #T2 #_ #_ #I #V #T #H destruct
-| #I1 #V1 #V2 #T1 #T2 #T #HV12 #HT12 #HT2 #I0 #V0 #T0 #H destruct -I1 V1 T1 /3 width=7/
+| #I1 #V1 #V2 #T1 #T2 #T #HV12 #HT12 #HT2 #I0 #V0 #T0 #H destruct /3 width=7/
 | #V #V1 #V2 #W1 #W2 #T1 #T2 #_ #_ #_ #_ #I0 #V0 #T0 #H destruct
-| #V #T #T1 #T2 #HT1 #HT12 #I0 #V0 #T0 #H destruct -V T /3/
+| #V #T #T1 #T2 #HT1 #HT12 #I0 #V0 #T0 #H destruct /3 width=3/
 | #V #T1 #T2 #_ #I0 #V0 #T0 #H destruct
 ]
 qed.
@@ -93,7 +93,7 @@ lemma tpr_inv_bind1: ∀V1,T1,U2,I. 𝕓{I} V1. T1 ⇒ U2 →
                                  U2 = 𝕓{I} V2. T
                      ) ∨
                      ∃∃T. ↑[0,1] T ≡ T1 & T ⇒ U2 & I = Abbr.
-/2/ qed-.
+/2 width=3/ qed-.
 
 (* Basic_1: was pr0_gen_abbr *)
 lemma tpr_inv_abbr1: ∀V1,T1,U2. 𝕓{Abbr} V1. T1 ⇒ U2 →
@@ -118,15 +118,14 @@ fact tpr_inv_flat1_aux: ∀U1,U2. U1 ⇒ U2 → ∀I,V1,U0. U1 = 𝕗{I} V1. U0 
                                                U2 = 𝕔{Abbr} W2. 𝕔{Appl} V. T2 &
                                                I = Appl
                          |                     (U0 ⇒ U2 ∧ I = Cast).
-#U1 #U2 * -U1 U2
+#U1 #U2 * -U1 -U2
 [ #I #J #V #T #H destruct
-| #I #V1 #V2 #T1 #T2 #HV12 #HT12 #J #V #T #H destruct -I V1 T1 /3 width=5/
-| #V1 #V2 #W #T1 #T2 #HV12 #HT12 #J #V #T #H destruct -J V1 T /3 width=8/
+| #I #V1 #V2 #T1 #T2 #HV12 #HT12 #J #V #T #H destruct /3 width=5/
+| #V1 #V2 #W #T1 #T2 #HV12 #HT12 #J #V #T #H destruct /3 width=8/
 | #I #V1 #V2 #T1 #T2 #T #_ #_ #_ #J #V0 #T0 #H destruct
-| #V #V1 #V2 #W1 #W2 #T1 #T2 #HV12 #HV2 #HW12 #HT12 #J #V0 #T0 #H
-  destruct -J V1 T0 /3 width=12/
+| #V #V1 #V2 #W1 #W2 #T1 #T2 #HV12 #HV2 #HW12 #HT12 #J #V0 #T0 #H destruct /3 width=12/
 | #V #T #T1 #T2 #_ #_ #J #V0 #T0 #H destruct
-| #V #T1 #T2 #HT12 #J #V0 #T0 #H destruct -J V T1 /3/
+| #V #T1 #T2 #HT12 #J #V0 #T0 #H destruct /3 width=1/
 ]
 qed.
 
@@ -142,7 +141,7 @@ lemma tpr_inv_flat1: ∀V1,U0,U2,I. 𝕗{I} V1. U0 ⇒ U2 →
                                             U2 = 𝕔{Abbr} W2. 𝕔{Appl} V. T2 &
                                             I = Appl
                       |                     (U0 ⇒ U2 ∧ I = Cast).
-/2/ qed-.
+/2 width=3/ qed-.
 
 (* Basic_1: was pr0_gen_appl *)
 lemma tpr_inv_appl1: ∀V1,U0,U2. 𝕔{Appl} V1. U0 ⇒ U2 →
@@ -166,9 +165,9 @@ lemma tpr_inv_appl1_simple: ∀V1,T1,U. 𝕔{Appl} V1. T1 ⇒ U → 𝕊[T1] →
 #V1 #T1 #U #H #HT1
 elim (tpr_inv_appl1 … H) -H *
 [ /2 width=5/
-| #V2 #W #W1 #W2 #_ #_ #H #_ destruct -T1;
+| #V2 #W #W1 #W2 #_ #_ #H #_ destruct
   elim (simple_inv_bind … HT1)
-| #V2 #V #W1 #W2 #U1 #U2 #_ #_ #_ #_ #H #_ destruct -T1;
+| #V2 #V #W1 #W2 #U1 #U2 #_ #_ #_ #_ #H #_ destruct
   elim (simple_inv_bind … HT1)
 ]
 qed-.
@@ -189,14 +188,14 @@ fact tpr_inv_lref2_aux: ∀T1,T2. T1 ⇒ T2 → ∀i. T2 = #i →
                          | ∃∃V,T,T0. ↑[O,1] T0 ≡ T & T0 ⇒ #i &
                                      T1 = 𝕔{Abbr} V. T
                          | ∃∃V,T.    T ⇒ #i & T1 = 𝕔{Cast} V. T.
-#T1 #T2 * -T1 T2
-[ #I #i #H destruct /2/
+#T1 #T2 * -T1 -T2
+[ #I #i #H destruct /2 width=1/
 | #I #V1 #V2 #T1 #T2 #_ #_ #i #H destruct
 | #V1 #V2 #W #T1 #T2 #_ #_ #i #H destruct
 | #I #V1 #V2 #T1 #T2 #T #_ #_ #_ #i #H destruct
 | #V #V1 #V2 #W1 #W2 #T1 #T2 #_ #_ #_ #_ #i #H destruct
 | #V #T #T1 #T2 #HT1 #HT12 #i #H destruct /3 width=6/
-| #V #T1 #T2 #HT12 #i #H destruct /3/
+| #V #T1 #T2 #HT12 #i #H destruct /3 width=4/
 ]
 qed.
 
@@ -205,7 +204,7 @@ lemma tpr_inv_lref2: ∀T1,i. T1 ⇒ #i →
                       | ∃∃V,T,T0. ↑[O,1] T0 ≡ T & T0 ⇒ #i &
                                   T1 = 𝕔{Abbr} V. T
                       | ∃∃V,T.    T ⇒ #i & T1 = 𝕔{Cast} V. T.
-/2/ qed-.
+/2 width=3/ qed-.
 
 (* Basic_1: removed theorems 3:
             pr0_subst0_back pr0_subst0_fwd pr0_subst0

@@ -39,14 +39,14 @@ lemma cpr_inv_lref1: ∀L,T2,i. L ⊢ #i ⇒ T2 →
                                 i < |L|.
 #L #T2 #i * #X #H
 >(tpr_inv_atom1 … H) -H #H
-elim (tpss_inv_lref1 … H) -H /2/
+elim (tpss_inv_lref1 … H) -H /2 width=1/
 * /3 width=6/
 qed-.
 
 (* Basic_1: was: pr2_gen_abst *)
 lemma cpr_inv_abst1: ∀V1,T1,U2. 𝕔{Abst} V1. T1 ⇒ U2 →
                      ∃∃V2,T2. V1 ⇒ V2 & T1 ⇒ T2 & U2 = 𝕔{Abst} V2. T2.
-/2/ qed-.
+/2 width=3/ qed-.
 
 (* Relocation properties ****************************************************)
 
@@ -58,8 +58,8 @@ lemma cpr_lift: ∀L,K,d,e. ↓[d, e] L ≡ K →
 elim (lift_total T d e) #U #HTU 
 lapply (tpr_lift … HT1 … HTU1 … HTU) -T1 #HU1
 elim (lt_or_ge (|K|) d) #HKd
-[ lapply (tpss_lift_le … HT2 … HLK HTU … HTU2) -T2 T HLK [ /2/ | /3/ ]
-| lapply (tpss_lift_be … HT2 … HLK HTU … HTU2) -T2 T HLK // /3/
+[ lapply (tpss_lift_le … HT2 … HLK HTU … HTU2) -T2 -T -HLK [ /2 width=1/ | /3 width=4/ ]
+| lapply (tpss_lift_be … HT2 … HLK HTU … HTU2) -T2 -T -HLK // /3 width=4/
 ]
 qed.
 
@@ -70,10 +70,10 @@ lemma cpr_inv_lift: ∀L,K,d,e. ↓[d, e] L ≡ K →
 #L #K #d #e #HLK #T1 #U1 #HTU1 #U2 * #U #HU1 #HU2
 elim (tpr_inv_lift … HU1 … HTU1) -U1 #T #HTU #T1
 elim (lt_or_ge (|L|) d) #HLd
-[ elim (tpss_inv_lift1_le … HU2 … HLK … HTU ?) -U HLK [ /5/ | /2/ ]
+[ elim (tpss_inv_lift1_le … HU2 … HLK … HTU ?) -U -HLK [ /5 width=4/ | /2 width=1/ ]
 | elim (lt_or_ge (|L|) (d + e)) #HLde
-  [ elim (tpss_inv_lift1_be_up … HU2 … HLK … HTU ? ?) -U HLK // [ /5/ | /2/ ] 
-  | elim (tpss_inv_lift1_be … HU2 … HLK … HTU ? ?) -U HLK // /5/
+  [ elim (tpss_inv_lift1_be_up … HU2 … HLK … HTU ? ?) -U -HLK // [ /5 width=4/ | /2 width=1/ ] 
+  | elim (tpss_inv_lift1_be … HU2 … HLK … HTU ? ?) -U -HLK // /5 width=4/
   ]
 ]
 qed.

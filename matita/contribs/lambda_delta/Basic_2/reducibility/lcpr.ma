@@ -28,7 +28,7 @@ interpretation
 (* Basic properties *********************************************************)
 
 lemma lcpr_refl: ∀L. L ⊢ ⇒ L.
-/2/ qed.
+/2 width=3/ qed.
 
 (* Basic inversion lemmas ***************************************************)
 

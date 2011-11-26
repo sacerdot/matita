@@ -28,30 +28,30 @@ interpretation
 
 lemma tnf_inv_abst: ∀V,T. ℕ[𝕔{Abst}V.T] → ℕ[V] ∧ ℕ[T].
 #V1 #T1 #HVT1 @conj
-[ #V2 #HV2 lapply (HVT1 (𝕔{Abst}V2.T1) ?) -HVT1 /2/ -HV2 #H destruct -V1 T1 //
-| #T2 #HT2 lapply (HVT1 (𝕔{Abst}V1.T2) ?) -HVT1 /2/ -HT2 #H destruct -V1 T1 //
+[ #V2 #HV2 lapply (HVT1 (𝕔{Abst}V2.T1) ?) -HVT1 /2 width=1/ -HV2 #H destruct //
+| #T2 #HT2 lapply (HVT1 (𝕔{Abst}V1.T2) ?) -HVT1 /2 width=1/ -HT2 #H destruct //
 ]
 qed-.
 
 lemma tnf_inv_appl: ∀V,T. ℕ[𝕔{Appl}V.T] → ∧∧ ℕ[V] & ℕ[T] & 𝕊[T].
 #V1 #T1 #HVT1 @and3_intro
-[ #V2 #HV2 lapply (HVT1 (𝕔{Appl}V2.T1) ?) -HVT1 /2/ -HV2 #H destruct -V1 T1 //
-| #T2 #HT2 lapply (HVT1 (𝕔{Appl}V1.T2) ?) -HVT1 /2/ -HT2 #H destruct -V1 T1 //
-| generalize in match HVT1 -HVT1; elim T1 -T1 * // * #W1 #U1 #_ #_ #H
+[ #V2 #HV2 lapply (HVT1 (𝕔{Appl}V2.T1) ?) -HVT1 /2 width=1/ -HV2 #H destruct //
+| #T2 #HT2 lapply (HVT1 (𝕔{Appl}V1.T2) ?) -HVT1 /2 width=1/ -HT2 #H destruct //
+| generalize in match HVT1; -HVT1 elim T1 -T1 * // * #W1 #U1 #_ #_ #H
   [ elim (lift_total V1 0 1) #V2 #HV12
-    lapply (H (𝕔{Abbr}W1.𝕔{Appl}V2.U1) ?) -H /2/ -HV12 #H destruct
-  | lapply (H (𝕔{Abbr}V1.U1) ?) -H /2/ #H destruct
+    lapply (H (𝕔{Abbr}W1.𝕔{Appl}V2.U1) ?) -H /2 width=3/ -HV12 #H destruct
+  | lapply (H (𝕔{Abbr}V1.U1) ?) -H /2 width=1/ #H destruct
 ]
 qed-.
 
 lemma tnf_inv_abbr: ∀V,T. ℕ[𝕔{Abbr}V.T] → False.
 #V #T #H elim (is_lift_dec T 0 1)
 [ * #U #HTU
-  lapply (H U ?) -H /2 width=3/ #H destruct -U;
+  lapply (H U ?) -H /2 width=3/ #H destruct
   elim (lift_inv_pair_xy_y … HTU)
 | #HT
   elim (tps_full (⋆) V T (⋆. 𝕓{Abbr} V) 0 ?) // #T2 #T1 #HT2 #HT12
-  lapply (H (𝕓{Abbr}V.T2) ?) -H /2/ -HT2 #H destruct -T /3 width=2/
+  lapply (H (𝕓{Abbr}V.T2) ?) -H /2 width=3/ -HT2 #H destruct /3 width=2/
 ]
 qed.
 
@@ -63,7 +63,7 @@ qed-.
 (* Basic properties *********************************************************)
 
 lemma tpr_tif_eq: ∀T1,T2. T1 ⇒ T2 →  𝕀[T1] → T1 = T2.
-#T1 #T2 #H elim H -T1 T2
+#T1 #T2 #H elim H -T1 -T2
 [ //
 | * #V1 #V2 #T1 #T2 #_ #_ #IHV1 #IHT1 #H
   [ elim (tif_inv_appl … H) -H #HV1 #HT1 #_
@@ -74,7 +74,7 @@ lemma tpr_tif_eq: ∀T1,T2. T1 ⇒ T2 →  𝕀[T1] → T1 = T2.
   elim (tif_inv_appl … H) -H #_ #_ #H
   elim (simple_inv_bind … H)
 | * #V1 #V2 #T1 #T #T2 #_ #_ #HT2 #IHV1 #IHT1 #H
-  [ -HT2 IHV1 IHT1; elim (tif_inv_abbr … H)
+  [ -HT2 -IHV1 -IHT1 elim (tif_inv_abbr … H)
   | <(tps_inv_refl_SO2 … HT2 ?) -HT2 //
     elim (tif_inv_abst … H) -H #HV1 #HT1
     >IHV1 -IHV1 // -HV1 >IHT1 -IHT1 //
@@ -90,15 +90,15 @@ lemma tpr_tif_eq: ∀T1,T2. T1 ⇒ T2 →  𝕀[T1] → T1 = T2.
 qed.
 
 theorem tif_tnf: ∀T1.  𝕀[T1] → ℕ[T1].
-/2/ qed.
+/2 width=1/ qed.
 
 (* Note: this property is unusual *)
 theorem tnf_trf_false: ∀T1. ℝ[T1] → ℕ[T1] → False.
 #T1 #H elim H -T1
-[ #V #T #_ #IHV #H elim (tnf_inv_abst … H) -H /2/
-| #V #T #_ #IHT #H elim (tnf_inv_abst … H) -H /2/
-| #V #T #_ #IHV #H elim (tnf_inv_appl … H) -H /2/
-| #V #T #_ #IHV #H elim (tnf_inv_appl … H) -H /2/
+[ #V #T #_ #IHV #H elim (tnf_inv_abst … H) -H /2 width=1/
+| #V #T #_ #IHT #H elim (tnf_inv_abst … H) -H /2 width=1/
+| #V #T #_ #IHV #H elim (tnf_inv_appl … H) -H /2 width=1/
+| #V #T #_ #IHV #H elim (tnf_inv_appl … H) -H /2 width=1/
 | #V #T #H elim (tnf_inv_abbr … H)
 | #V #T #H elim (tnf_inv_cast … H)
 | #V #W #T #H elim (tnf_inv_appl … H) -H #_ #_ #H
@@ -107,7 +107,7 @@ theorem tnf_trf_false: ∀T1. ℝ[T1] → ℕ[T1] → False.
 qed.
 
 theorem tnf_tif: ∀T1. ℕ[T1] → 𝕀[T1].
-/2/ qed.
+/2 width=3/ qed.
 
 lemma tnf_abst: ∀V,T. ℕ[V] → ℕ[T] → ℕ[𝕔{Abst}V.T].
 /4 width=1/ qed.

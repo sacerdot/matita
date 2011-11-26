@@ -30,13 +30,13 @@ interpretation
 
 (* Basic_1: was by definition: pr2_free *)
 lemma cpr_pr: ∀T1,T2. T1 ⇒ T2 → ∀L. L ⊢ T1 ⇒ T2.
-/2/ qed.
+/2 width=3/ qed.
 
 lemma cpr_tpss: ∀L,T1,T2,d,e. L ⊢ T1 [d, e] ≫* T2 → L ⊢ T1 ⇒ T2.
 /3 width=5/ qed.
 
 lemma cpr_refl: ∀L,T. L ⊢ T ⇒ T.
-/2/ qed.
+/2 width=1/ qed.
 
 (* Note: new property *)
 (* Basic_1: was only: pr2_thin_dx *) 
@@ -47,7 +47,7 @@ qed.
 
 lemma cpr_cast: ∀L,V,T1,T2.
                 L ⊢ T1 ⇒ T2 → L ⊢ 𝕔{Cast} V. T1 ⇒ T2.
-#L #V #T1 #T2 * /3/
+#L #V #T1 #T2 * /3 width=3/
 qed.
 
 (* Note: it does not hold replacing |L1| with |L2| *)
@@ -55,7 +55,7 @@ qed.
 lemma cpr_lsubs_conf: ∀L1,T1,T2. L1 ⊢ T1 ⇒ T2 →
                       ∀L2. L1 [0, |L1|] ≼ L2 → L2 ⊢ T1 ⇒ T2.
 #L1 #T1 #T2 * #T #HT1 #HT2 #L2 #HL12 
-lapply (tpss_lsubs_conf … HT2 … HL12) -HT2 HL12 /3/
+lapply (tpss_lsubs_conf … HT2 … HL12) -HT2 -HL12 /3 width=4/
 qed.
 
 (* Basic inversion lemmas ***************************************************)
@@ -79,9 +79,9 @@ lemma cpr_inv_cast1: ∀L,V1,T1,U2. L ⊢ 𝕔{Cast} V1. T1 ⇒ U2 → (
                                  U2 = 𝕔{Cast} V2. T2
                      ) ∨ L ⊢ T1 ⇒ U2.
 #L #V1 #T1 #U2 * #X #H #HU2
-elim (tpr_inv_cast1 … H) -H /3/
-* #V #T #HV1 #HT1 #H destruct -X;
-elim (tpss_inv_flat1 … HU2) -HU2 #V2 #T2 #HV2 #HT2 #H destruct -U2 /4 width=5/
+elim (tpr_inv_cast1 … H) -H /3 width=3/
+* #V #T #HV1 #HT1 #H destruct
+elim (tpss_inv_flat1 … HU2) -HU2 #V2 #T2 #HV2 #HT2 #H destruct /4 width=5/
 qed-.
 
 (* Basic_1: removed theorems 5: 
