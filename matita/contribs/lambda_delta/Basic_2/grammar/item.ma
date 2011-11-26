@@ -13,10 +13,10 @@
 (**************************************************************************)
 
 (* THE FORMAL SYSTEM λδ - MATITA SOURCE FILES
- * Specification started: 2011 April 17
  * Confluence of context-sensitive parallel reduction closed: 2011 September 21
  * Confluence of context-free parallel reduction closed: 2011 September 6
- * - Patience on me so that I gain peace and perfection! -
+ * Specification started: 2011 April 17
+ * - Patience on me to gain peace and perfection! -
  * [ suggested invocation to start formal specifications with ]
  *)
 

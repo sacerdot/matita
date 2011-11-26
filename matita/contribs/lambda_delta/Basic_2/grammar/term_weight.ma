@@ -27,7 +27,7 @@ interpretation "weight (term)" 'Weight T = (tw T).
 
 (* Basic_1: was: tweight_lt *)
 lemma tw_pos: ∀T. 1 ≤ #[T].
-#T elim T -T /2/ 
+#T elim T -T //
 qed.
 
 (* Basic eliminators ********************************************************)
@@ -38,6 +38,6 @@ axiom tw_wf_ind: ∀R:predicate term.
 
 (* Basic_1: removed theorems 11:
             wadd_le wadd_lt wadd_O weight_le weight_eq weight_add_O
-	    weight_add_S tlt_trans tlt_head_sx tlt_head_dx tlt_wf_ind
+	          weight_add_S tlt_trans tlt_head_sx tlt_head_dx tlt_wf_ind
             removed local theorems 1: q_ind
 *)
