@@ -1,5 +1,3 @@
-
-
 (**************************************************************************)
 (*       ___                                                              *)
 (*      ||M||                                                             *)
@@ -97,6 +95,9 @@ notation "\sem{term 19 E}" non associative with precedence 75 for @{'in_l $E}.
 interpretation "in_l" 'in_l E = (in_l ? E).
 interpretation "in_l mem" 'mem w l = (in_l ? l w).
 
+lemma rsem_star : ∀S.∀r: re S. \sem{r^*} = \sem{r}^*.
+// qed.
+
 notation "a || b" left associative with precedence 30 for @{'orb $a $b}.
 interpretation "orb" 'orb a b = (orb a b).
 
@@ -122,9 +123,11 @@ interpretation "pcat" 'pc a b = (pc ? a b).
 notation < ".a" non associative with precedence 90 for @{ 'pp $a}.
 notation > "`. term 90 a" non associative with precedence 90 for @{ 'pp $a}.
 interpretation "ppatom" 'pp a = (pp ? a).
+
 (* to get rid of \middot 
 ncoercion pc : ∀S.∀p:pitem S. pitem S → pitem S  ≝ pc on _p : pitem ? to ∀_:?.?.
 *)
+
 interpretation "patom" 'ps a = (ps ? a).
 interpretation "pepsilon" 'epsilon = (pe ?).
 interpretation "pempty" 'empty = (pz ?).
@@ -141,7 +144,6 @@ let rec forget (S: Alpha) (l : pitem S) on l: re S ≝
   
 (* notation < "|term 19 e|" non associative with precedence 70 for @{'forget $e}.*)
 interpretation "forget" 'norm a = (forget ? a).
-
 
 let rec in_pl (S : Alpha) (r : pitem S) on r : word S → Prop ≝ 
 match r with
@@ -180,12 +182,24 @@ lemma sem_cat: ∀S.∀i1,i2:pitem S.
   \sem{i1 · i2} = \sem{i1} · \sem{|i2|} ∪ \sem{i2}.
 // qed.
 
+lemma sem_cat_w: ∀S.∀i1,i2:pitem S.∀w.
+  \sem{i1 · i2} w = ((\sem{i1} · \sem{|i2|}) w ∨ \sem{i2} w).
+// qed.
+
 lemma sem_plus: ∀S.∀i1,i2:pitem S. 
   \sem{i1 + i2} = \sem{i1} ∪ \sem{i2}.
 // qed.
 
+lemma sem_plus_w: ∀S.∀i1,i2:pitem S.∀w. 
+  \sem{i1 + i2} w = (\sem{i1} w ∨ \sem{i2} w).
+// qed.
+
 lemma sem_star : ∀S.∀i:pitem S.
   \sem{i^*} = \sem{i} · \sem{|i|}^*.
+// qed.
+
+lemma sem_star_w : ∀S.∀i:pitem S.∀w.
+  \sem{i^*} w = (∃w1,w2.w1 @ w2 = w ∧ \sem{i} w1 ∧ \sem{|i|}^* w2).
 // qed.
 
 lemma append_eq_nil : ∀S.∀w1,w2:word S. w1 @ w2 = [ ] → w1 = [ ].
@@ -206,7 +220,7 @@ lemma epsilon_to_true : ∀S.∀e:pre S. [ ] ∈ e → \snd e = true.
 qed.
 
 lemma true_to_epsilon : ∀S.∀e:pre S. \snd e = true → [ ] ∈ e.
-#S * #i #b #btrue normalize in btrue >btrue %2 // 
+#S * #i #b #btrue normalize in btrue; >btrue %2 // 
 qed.
 
 definition lo ≝ λS:Alpha.λa,b:pre S.〈\fst a + \fst b,\snd a || \snd b〉.
@@ -219,8 +233,8 @@ lemma lo_def: ∀S.∀i1,i2:pitem S.∀b1,b2. 〈i1,b1〉⊕〈i2,b2〉=〈i1+i2
 definition pre_concat_r ≝ λS:Alpha.λi:pitem S.λe:pre S.
   match e with [ pair i1 b ⇒ 〈i · i1, b〉].
  
-notation "i ▸ e" left associative with precedence 60 for @{'trir $i $e}.
-interpretation "pre_concat_r" 'trir i e = (pre_concat_r ? i e).
+notation "i ◂ e" left associative with precedence 60 for @{'ltrif $i $e}.
+interpretation "pre_concat_r" 'ltrif i e = (pre_concat_r ? i e).
   
 definition eq_f1 ≝ λS.λa,b:word S → Prop.∀w.a w ↔ b w.
 notation "A =1 B" non associative with precedence 45 for @{'eq_f1 $A $B}.
@@ -241,7 +255,7 @@ lemma union_assoc: ∀S.∀A,B,C:word S → Prop.
 qed.   
 
 lemma sem_pre_concat_r : ∀S,i.∀e:pre S.
-  \sem{i ▸ e} =1 \sem{i} · \sem{|\fst e|} ∪ \sem{e}.
+  \sem{i ◂ e} =1 \sem{i} · \sem{|\fst e|} ∪ \sem{e}.
 #S #i * #i1 #b1 cases b1 /2/
 >sem_pre_true >sem_cat >sem_pre_true /2/ 
 qed.
@@ -249,33 +263,49 @@ qed.
 definition lc ≝ λS:Alpha.λbcast:∀S:Alpha.pitem S → pre S.λe1:pre S.λi2:pitem S.
   match e1 with 
   [ pair i1 b1 ⇒ match b1 with 
-    [ true ⇒ (i1 ▸ (bcast ? i2)) 
+    [ true ⇒ (i1 ◂ (bcast ? i2)) 
     | false ⇒ 〈i1 · i2,false〉
     ]
   ].
         
-definition lift ≝ λf:∀S.pitem S →pre S.λS.λe:pre S. 
+definition lift ≝ λS.λf:pitem S →pre S.λe:pre S. 
   match e with 
-  [ pair i b ⇒ 〈\fst (f S i), \snd (f S i) || b〉].
+  [ pair i b ⇒ 〈\fst (f i), \snd (f i) || b〉].
 
-notation < "a ⊙ b" left associative with precedence 60 for @{'lc $op $a $b}.
+notation "a ▸ b" left associative with precedence 60 for @{'lc eclose $a $b}.
 interpretation "lc" 'lc op a b = (lc ? op a b).
-notation > "a ⊙ b" left associative with precedence 60 for @{'lc eclose $a $b}.
 
 definition lk ≝ λS:Alpha.λbcast:∀S:Alpha.∀E:pitem S.pre S.λe:pre S.
   match e with 
   [ pair i1 b1 ⇒
     match b1 with 
     [true ⇒ 〈(\fst (bcast ? i1))^*, true〉
-    |false ⇒ 〈i1^*,true〉
+    |false ⇒ 〈i1^*,false〉
     ]
-  ].
+  ]. 
+
+(*
+lemma oplus_tt : ∀S: Alpha.∀i1,i2:pitem S. 
+  〈i1,true〉 ⊕ 〈i2,true〉  = 〈i1 + i2,true〉.
+// qed.
+
+lemma oplus_tf : ∀S: Alpha.∀i1,i2:pitem S. 
+  〈i1,true〉 ⊕ 〈i2,false〉  = 〈i1 + i2,true〉.
+// qed.
+
+lemma oplus_ft : ∀S: Alpha.∀i1,i2:pitem S. 
+  〈i1,false〉 ⊕ 〈i2,true〉  = 〈i1 + i2,true〉.
+// qed.
+
+lemma oplus_ff : ∀S: Alpha.∀i1,i2:pitem S. 
+  〈i1,false〉 ⊕ 〈i2,false〉  = 〈i1 + i2,false〉.
+// qed. *)
 
 (* notation < "a \sup ⊛" non associative with precedence 90 for @{'lk $op $a}.*)
 interpretation "lk" 'lk op a = (lk ? op a).
-notation > "a^⊛" non associative with precedence 90 for @{'lk eclose $a}.
+notation "a^⊛" non associative with precedence 90 for @{'lk eclose $a}.
 
-notation > "•" non associative with precedence 60 for @{eclose ?}.
+notation "•" non associative with precedence 60 for @{eclose ?}.
 
 let rec eclose (S: Alpha) (i: pitem S) on i : pre S ≝
  match i with
@@ -284,9 +314,8 @@ let rec eclose (S: Alpha) (i: pitem S) on i : pre S ≝
   | ps x ⇒ 〈 `.x, false〉
   | pp x ⇒ 〈 `.x, false 〉
   | po i1 i2 ⇒ •i1 ⊕ •i2
-  | pc i1 i2 ⇒ •i1 ⊙ i2
-  | pk i ⇒ 〈(\fst(•i))^*,true〉].
-  
+  | pc i1 i2 ⇒ •i1 ▸ i2
+  | pk i ⇒ 〈(\fst (•i))^*,true〉].
   
 notation "• x" non associative with precedence 60 for @{'eclose $x}.
 interpretation "eclose" 'eclose x = (eclose ? x).
@@ -296,14 +325,14 @@ lemma eclose_plus: ∀S:Alpha.∀i1,i2:pitem S.
 // qed.
 
 lemma eclose_dot: ∀S:Alpha.∀i1,i2:pitem S.
-  •(i1 · i2) = •i1 ⊙ i2.
+  •(i1 · i2) = •i1 ▸ i2.
 // qed.
 
 lemma eclose_star: ∀S:Alpha.∀i:pitem S.
   •i^* = 〈(\fst(•i))^*,true〉.
 // qed.
 
-definition reclose ≝ lift eclose. 
+definition reclose ≝ λS. lift S (eclose S). 
 interpretation "reclose" 'eclose x = (reclose ? x).
 
 lemma epsilon_or : ∀S:Alpha.∀b1,b2. epsilon S (b1 || b2) =1 ϵ b1 ∪ ϵ b2. 
@@ -318,27 +347,27 @@ nlemma cupC : ∀S. ∀a,b:word S → Prop.a ∪ b = b ∪ a.
 #S a b; napply extP; #w; @; *; nnormalize; /2/; nqed.*)
 
 (* theorem 16: 2 *)
-(*
-lemma oplus_cup : ∀S:Alpha.∀e1,e2:pre S.
-  \sem{e1 ⊕ e2} =1 \sem{e1} ∪ \sem{e2}.
-#S * #i1 #b1  * #i2 #b2 #w %
-[normalize * [* /3/ | cases b1 cases b2 normalize /3/ ]
-|normalize * * /3/ cases b1 cases b2 normalize /3/ *]
-qed. *)
+lemma sem_oplus: ∀S:Alpha.∀e1,e2:pre S.
+  \sem{e1 ⊕ e2} =1 \sem{e1} ∪ \sem{e2}. 
+#S * #i1 #b1 * #i2 #b2 #w %
+  [cases b1 cases b2 normalize /2/ * /3/ * /3/
+  |cases b1 cases b2 normalize /2/ * /3/ * /3/
+  ]
+qed.
 
 lemma odot_true : 
   ∀S.∀i1,i2:pitem S.
-  〈i1,true〉 ⊙ i2 = i1 ▸ (•i2).
+  〈i1,true〉 ▸ i2 = i1 ◂ (•i2).
 // qed.
 
 lemma odot_true_bis : 
   ∀S.∀i1,i2:pitem S.
-  〈i1,true〉 ⊙ i2 = 〈i1 · \fst (•i2), \snd (•i2)〉.
+  〈i1,true〉 ▸ i2 = 〈i1 · \fst (•i2), \snd (•i2)〉.
 #S #i1 #i2 normalize cases (•i2) // qed.
 
 lemma odot_false: 
   ∀S.∀i1,i2:pitem S.
-  〈i1,false〉 ⊙ i2 = 〈i1 · i2, false〉.
+  〈i1,false〉 ▸ i2 = 〈i1 · i2, false〉.
 // qed.
 
 lemma LcatE : ∀S.∀e1,e2:pitem S.
@@ -365,11 +394,10 @@ lemma erase_plus : ∀S.∀i1,i2:pitem S.
 lemma erase_star : ∀S.∀i:pitem S.|i^*| = |i|^*. 
 // qed.
 
-(*
 definition substract := λS.λp,q:word S → Prop.λw.p w ∧ ¬ q w.
 interpretation "substract" 'minus a b = (substract ? a b).
 
-nlemma cup_sub: ∀S.∀a,b:word S → Prop. ¬ (a []) → a ∪ (b - {[]}) = (a ∪ b) - {[]}.
+(* nlemma cup_sub: ∀S.∀a,b:word S → Prop. ¬ (a []) → a ∪ (b - {[]}) = (a ∪ b) - {[]}.
 #S a b c; napply extP; #w; nnormalize; @; *; /4/; *; /4/; nqed.
 
 nlemma sub0 : ∀S.∀a:word S → Prop. a - {} = a.
@@ -402,12 +430,41 @@ axiom union_ext_r: ∀S.∀A,B,C:word S →Prop.
   
 axiom union_comm : ∀S.∀A,B:word S →Prop. 
   A ∪ B =1 B ∪ A.
+
+axiom union_idemp: ∀S.∀A:word S →Prop. 
+  A ∪ A =1 A.
+
+axiom cat_ext_l: ∀S.∀A,B,C:word S →Prop. 
+  A =1 C  → A · B =1 C · B.
+  
+axiom cat_ext_r: ∀S.∀A,B,C:word S →Prop. 
+  B =1 C → A · B =1 A · C.
   
 lemma distr_cat_r: ∀S.∀A,B,C:word S →Prop.
   (A ∪ B) · C =1  A · C ∪ B · C. 
 #S #A #B #C #w %
   [* #w1 * #w2 * * #eqw * /6/ |* * #w1 * #w2 * * /6/] 
 qed.
+
+axiom fix_star: ∀S.∀A:word S → Prop. 
+  A^* =1 A · A^* ∪ { [ ] }.
+
+axiom star_epsilon: ∀S:Alpha.∀A:word S → Prop.
+  A^* ∪ { [ ] } =1 A^*.
+
+lemma sem_eclose_star: ∀S:Alpha.∀i:pitem S.
+  \sem{〈i^*,true〉} =1 \sem{〈i,false〉}·\sem{|i|}^* ∪ { [ ] }.
+/2/ qed.
+
+(*
+lemma sem_eclose_star: ∀S:Alpha.∀i:pitem S.
+  \sem{〈i^*,true〉} =1 \sem{〈i,true〉}·\sem{|i|}^* ∪ { [ ] }.
+/2/ qed.
+
+#S #i #b cases b 
+  [>sem_pre_true >sem_star
+  |/2/
+  ] *)
 
 (* this kind of results are pretty bad for automation;
    better not index them *)
@@ -451,99 +508,90 @@ napply Hw2; nqed.*)
 (* theorem 16: 1 → 3 *)
 lemma odot_dot_aux : ∀S.∀e1:pre S.∀i2:pitem S.
    \sem{•i2} =1  \sem{i2} ∪ \sem{|i2|} →
-   \sem{e1 ⊙ i2} =1  \sem{e1} · \sem{|i2|} ∪ \sem{i2}.
+   \sem{e1 ▸ i2} =1  \sem{e1} · \sem{|i2|} ∪ \sem{i2}.
 #S * #i1 #b1 #i2 cases b1
   [2:#th >odot_false >sem_pre_false >sem_pre_false >sem_cat /2/
   |#H >odot_true >sem_pre_true @(ext_eq_trans … (sem_pre_concat_r …))
-   >erase_bull 
-   @ext_eq_trans
-     [|@(union_ext_r … H)
-     |@ext_eq_trans
-       [|@union_ext_r [|@union_comm ]
-       |@ext_eq_trans (* /3 by eq_ext_sym, union_ext_l/; *)
-         [|@eq_ext_sym @union_assoc
-         |/3/ 
-          (*
-           by eq_ext_sym, union_ext_l;  @union_ext_l /3
-          /3/ ext_eq_trans /2/ 
-            /3 width=5 by eq_ext_sym, union_ext_r/ *)
-         ]
-       ]
-     ]
-   ]
+   >erase_bull @ext_eq_trans [|@(union_ext_r … H)]
+    @ext_eq_trans [|@union_ext_r [|@union_comm ]]
+    @ext_eq_trans [|@eq_ext_sym @union_assoc ] /3/ 
+  ]
 qed.
 
-(* nlemma sub_dot_star : 
-  ∀S.∀X:word S → Prop.∀b. (X - ϵ b) · X^* ∪ {[]} = X^*.
-#S X b; napply extP; #w; @;
-##[ *; ##[##2: nnormalize; #defw; nrewrite < defw; @[]; @; //]
-    *; #w1; *; #w2; *; *; #defw sube; *; #lw; *; #flx cj;
-    @ (w1 :: lw); nrewrite < defw; nrewrite < flx; @; //;
-    @; //; napply (subW … sube);
-##| *; #wl; *; #defw Pwl; nrewrite < defw; nelim wl in Pwl; ##[ #_; @2; //]
-    #w' wl' IH; *; #Pw' IHp; nlapply (IH IHp); *;
-    ##[ *; #w1; *; #w2; *; *; #defwl' H1 H2;
-        @; ncases b in H1; #H1; 
-        ##[##2: nrewrite > (sub0…); @w'; @(w1@w2);
-                nrewrite > (associative_append ? w' w1 w2);
-                nrewrite > defwl'; @; ##[@;//] @(wl'); @; //;
-           ##| ncases w' in Pw';
-               ##[ #ne; @w1; @w2; nrewrite > defwl'; @; //; @; //;
-               ##| #x xs Px; @(x::xs); @(w1@w2); 
-                   nrewrite > (defwl'); @; ##[@; //; @; //; @; nnormalize; #; ndestruct]
-                   @wl'; @; //; ##] ##]
-        ##| #wlnil; nchange in match (flatten ? (w'::wl')) with (w' @ flatten ? wl');
-            nrewrite < (wlnil); nrewrite > (append_nil…); ncases b;
-            ##[ ncases w' in Pw'; /2/; #x xs Pxs; @; @(x::xs); @([]);
-                nrewrite > (append_nil…); @; ##[ @; //;@; //; nnormalize; @; #; ndestruct]
-                @[]; @; //;
-            ##| @; @w'; @[]; nrewrite > (append_nil…); @; ##[##2: @[]; @; //] 
-                @; //; @; //; @; *;##]##]##] 
-nqed. *)
+axiom star_fix : 
+  ∀S.∀X:word S → Prop.(X - {[ ]}) · X^* ∪ {[ ]} =1 X^*.
+  
+axiom sem_fst: ∀S.∀e:pre S. \sem{\fst e} =1 \sem{e}-{[ ]}.
+
+axiom sem_fst_aux: ∀S.∀e:pre S.∀i:pitem S.∀A. 
+ \sem{e} =1 \sem{i} ∪ A → \sem{\fst e} =1 \sem{i} ∪ (A - {[ ]}).
 
 (* theorem 16: 1 *)
-alias symbol "pc" (instance 13) = "cat lang".
-alias symbol "in_pl" (instance 23) = "in_pl".
-alias symbol "in_pl" (instance 5) = "in_pl".
-alias symbol "eclose" (instance 21) = "eclose".
-ntheorem bull_cup : ∀S:Alpha. ∀e:pitem S.  𝐋\p (•e) =  𝐋\p e ∪ 𝐋 |e|.
-#S e; nelim e; //;
-  ##[ #a; napply extP; #w; nnormalize; @; *; /3/ by or_introl, or_intror;
-  ##| #a; napply extP; #w; nnormalize; @; *; /3/ by or_introl; *;
-  ##| #e1 e2 IH1 IH2;  
-      nchange in ⊢ (??(??(%))?) with (•e1 ⊙ 〈e2,false〉);
-      nrewrite > (odot_dot_aux S (•e1) 〈e2,false〉 IH2);
-      nrewrite > (IH1 …); nrewrite > (cup_dotD …);
-      nrewrite > (cupA …); nrewrite > (cupC ?? (𝐋\p ?) …);
-      nchange in match (𝐋\p 〈?,?〉) with (𝐋\p e2 ∪ {}); nrewrite > (cup0 …);
-      nrewrite < (erase_dot …); nrewrite < (cupA …); //;
-  ##| #e1 e2 IH1 IH2;
-      nchange in match (•(?+?)) with (•e1 ⊕ •e2); nrewrite > (oplus_cup …);
-      nrewrite > (IH1 …); nrewrite > (IH2 …); nrewrite > (cupA …);
-      nrewrite > (cupC ? (𝐋\p e2)…);nrewrite < (cupA ??? (𝐋\p e2)…);
-      nrewrite > (cupC ?? (𝐋\p e2)…); nrewrite < (cupA …); 
-      nrewrite < (erase_plus …); //.
-  ##| #e; nletin e' ≝ (\fst (•e)); nletin b' ≝ (\snd (•e)); #IH;
-      nchange in match (𝐋\p ?) with  (𝐋\p 〈e'^*,true〉);
-      nchange in match (𝐋\p ?) with (𝐋\p (e'^* ) ∪ {[ ]});
-      nchange in ⊢ (??(??%?)?) with (𝐋\p e' · 𝐋 |e'|^* );
-      nrewrite > (erase_bull…e);
-      nrewrite > (erase_star …);
-      nrewrite > (?: 𝐋\p e' =  𝐋\p e ∪ (𝐋 |e| - ϵ b')); ##[##2:
-        nchange in IH : (??%?) with (𝐋\p e' ∪ ϵ b'); ncases b' in IH; 
-        ##[ #IH; nrewrite > (cup_sub…); //; nrewrite < IH; 
-            nrewrite < (cup_sub…); //; nrewrite > (subK…); nrewrite > (cup0…);//;
-        ##| nrewrite > (sub0 …); #IH; nrewrite < IH; nrewrite > (cup0 …);//; ##]##]
-      nrewrite > (cup_dotD…); nrewrite > (cupA…); 
-      nrewrite > (?: ((?·?)∪{[]} = 𝐋 |e^*|)); //;
-      nchange in match (𝐋 |e^*|) with ((𝐋 |e|)^* ); napply sub_dot_star;##]
- nqed.
+theorem sem_bull: ∀S:Alpha. ∀e:pitem S.  \sem{•e} =1 \sem{e} ∪ \sem{|e|}.
+#S #e elim e 
+  [#w normalize % [/2/ | * //]
+  |/2/ 
+  |#x normalize #w % [ /2/ | * [@False_ind | //]]
+  |#x normalize #w % [ /2/ | * // ] 
+  |#i1 #i2 #IH1 #IH2 >eclose_dot
+   @ext_eq_trans [|@odot_dot_aux //] >sem_cat 
+   @ext_eq_trans
+     [|@union_ext_l 
+       [|@ext_eq_trans [|@(cat_ext_l … IH1)] @distr_cat_r]]
+   @ext_eq_trans [|@union_assoc]
+   @ext_eq_trans [||@eq_ext_sym @union_assoc]
+   @union_ext_r //
+  |#i1 #i2 #IH1 #IH2 >eclose_plus
+   @ext_eq_trans [|@sem_oplus] >sem_plus >erase_plus 
+   @ext_eq_trans [|@(union_ext_r … IH2)]
+   @ext_eq_trans [|@eq_ext_sym @union_assoc]
+   @ext_eq_trans [||@union_assoc] @union_ext_l
+   @ext_eq_trans [||@eq_ext_sym @union_assoc]
+   @ext_eq_trans [||@union_ext_r [|@union_comm]]
+   @ext_eq_trans [||@union_assoc] /3/
+  |#i #H >sem_pre_true >sem_star >erase_bull >sem_star
+   @ext_eq_trans [|@union_ext_l [|@cat_ext_l [|@sem_fst_aux //]]]
+   @ext_eq_trans [|@union_ext_l [|@distr_cat_r]]
+   @ext_eq_trans [|@union_assoc] @union_ext_r >erase_star @star_fix 
+  ]
+qed.
 
-(* theorem 16: 3 *)      
-nlemma odot_dot: 
-  ∀S.∀e1,e2: pre S.  𝐋\p (e1 ⊙ e2) =  𝐋\p e1 · 𝐋 |\fst e2| ∪ 𝐋\p e2.
-#S e1 e2; napply odot_dot_aux; napply (bull_cup S (\fst e2)); nqed.
+definition lifted_cat ≝ λS:Alpha.λe:pre S. 
+  lift S (lc S eclose e).
 
+notation "e1 ⊙ e2" left associative with precedence 70 for @{'odot $e1 $e2}.
+
+interpretation "lifted cat" 'odot e1 e2 = (lifted_cat ? e1 e2).
+
+lemma sem_odot_true: ∀S:Alpha.∀e1:pre S.∀i. 
+  \sem{e1 ⊙ 〈i,true〉} =1 \sem{e1 ▸ i} ∪ { [ ] }.
+#S #e1 #i 
+cut (e1 ⊙ 〈i,true〉 = 〈\fst (e1 ▸ i), \snd(e1 ▸ i) || true〉) [//]
+#H >H cases (e1 ▸ i) #i1 #b1 cases b1 
+  [>sem_pre_true @ext_eq_trans [||@eq_ext_sym @union_assoc]
+   @union_ext_r /2/ 
+  |/2/
+  ]
+qed.
+
+lemma eq_odot_false: ∀S:Alpha.∀e1:pre S.∀i. 
+  e1 ⊙ 〈i,false〉 = e1 ▸ i.
+#S #e1 #i  
+cut (e1 ⊙ 〈i,false〉 = 〈\fst (e1 ▸ i), \snd(e1 ▸ i) || false〉) [//]
+cases (e1 ▸ i) #i1 #b1 cases b1 #H @H
+qed.
+
+lemma sem_odot: 
+  ∀S.∀e1,e2: pre S. \sem{e1 ⊙ e2} =1 \sem{e1}· \sem{|\fst e2|} ∪ \sem{e2}.
+#S #e1 * #i2 * 
+  [>sem_pre_true 
+   @ext_eq_trans [|@sem_odot_true]
+   @ext_eq_trans [||@union_assoc] @union_ext_l @odot_dot_aux //
+  |>sem_pre_false >eq_odot_false @odot_dot_aux //
+  ]
+qed.
+
+(*
 nlemma dot_star_epsilon : ∀S.∀e:re S.𝐋 e · 𝐋 e^* ∪ {[]} =  𝐋 e^*.
 #S e; napply extP; #w; nnormalize; @;
 ##[ *; ##[##2: #H; nrewrite < H; @[]; /3/] *; #w1; *; #w2; 
@@ -568,30 +616,23 @@ nlemma rcanc_sing : ∀S.∀A,C:word S → Prop.∀b:word S .
 #S A C b nbA defC; nrewrite < defC; napply extP; #w; @;
 ##[ #Aw; /3/| *; *; //; #H nH; ncases nH; #abs; nlapply (abs H); *]
 nqed.
+*)
 
 (* theorem 16: 4 *)      
-nlemma star_dot: ∀S.∀e:pre S. 𝐋\p (e^⊛) = 𝐋\p e · (𝐋 |\fst e|)^*.
-#S p; ncases p; #e b; ncases b;
-##[ nchange in match (〈e,true〉^⊛) with 〈?,?〉;
-    nletin e' ≝ (\fst (•e)); nletin b' ≝ (\snd (•e));
-    nchange in ⊢ (??%?) with (?∪?);
-    nchange in ⊢ (??(??%?)?) with (𝐋\p e' · 𝐋 |e'|^* );
-    nrewrite > (?: 𝐋\p e' = 𝐋\p e ∪ (𝐋 |e| - ϵ b' )); ##[##2:
-      nlapply (bull_cup ? e); #bc;
-      nchange in match (𝐋\p (•e)) in bc with (?∪?);
-      nchange in match b' in bc with b';
-      ncases b' in bc; ##[##2: nrewrite > (cup0…); nrewrite > (sub0…); //]
-      nrewrite > (cup_sub…); ##[napply rcanc_sing] //;##]
-    nrewrite > (cup_dotD…); nrewrite > (cupA…);nrewrite > (erase_bull…);
-    nrewrite > (sub_dot_star…);
-    nchange in match (𝐋\p 〈?,?〉) with (?∪?);
-    nrewrite > (cup_dotD…); nrewrite > (epsilon_dot…); //;    
-##| nwhd in match (〈e,false〉^⊛); nchange in match (𝐋\p 〈?,?〉) with (?∪?);
-    nrewrite > (cup0…);
-    nchange in ⊢ (??%?) with (𝐋\p e · 𝐋 |e|^* );
-    nrewrite < (cup0 ? (𝐋\p e)); //;##]
-nqed.
-
+theorem sem_ostar: ∀S.∀e:pre S. 
+  \sem{e^⊛} =1  \sem{e} · \sem{|\fst e|}^*.
+#S * #i #b cases b
+  [>sem_pre_true >sem_pre_true >sem_star >erase_bull
+   @ext_eq_trans [|@union_ext_l [|@cat_ext_l [|@sem_fst_aux //]]]
+   @ext_eq_trans [|@union_ext_l [|@distr_cat_r]]
+   @ext_eq_trans [||@eq_ext_sym @distr_cat_r]
+   @ext_eq_trans [|@union_assoc] @union_ext_r 
+   @ext_eq_trans [||@eq_ext_sym @epsilon_cat_l] @star_fix 
+  |>sem_pre_false >sem_pre_false >sem_star /2/
+  ]
+qed.
+  
+(*
 nlet rec pre_of_re (S : Alpha) (e : re S) on e : pitem S ≝ 
   match e with 
   [ z ⇒ pz ?
@@ -643,238 +684,6 @@ ntheorem bull_true_epsilon : ∀S.∀e:pitem S. \snd (•e) = true ↔ [ ] ∈ |
     nrewrite > defsnde; #H; 
     nlapply (Pext ??? H [ ] ?); ##[ @2; //] *; //;
 
-STOP
-
-notation > "\move term 90 x term 90 E" 
-non associative with precedence 60 for @{move ? $x $E}.
-nlet rec move (S: Alpha) (x:S) (E: pitem S) on E : pre S ≝
- match E with
-  [ pz ⇒ 〈 ∅, false 〉
-  | pe ⇒ 〈 ϵ, false 〉
-  | ps y ⇒ 〈 `y, false 〉
-  | pp y ⇒ 〈 `y, x == y 〉
-  | po e1 e2 ⇒ \move x e1 ⊕ \move x e2 
-  | pc e1 e2 ⇒ \move x e1 ⊙ \move x e2
-  | pk e ⇒ (\move x e)^⊛ ].
-notation < "\move\shy x\shy E" non associative with precedence 60 for @{'move $x $E}.
-notation > "\move term 90 x term 90 E" non associative with precedence 60 for @{'move $x $E}.
-interpretation "move" 'move x E = (move ? x E).
-
-ndefinition rmove ≝ λS:Alpha.λx:S.λe:pre S. \move x (\fst e).
-interpretation "rmove" 'move x E = (rmove ? x E).
-
-nlemma XXz :  ∀S:Alpha.∀w:word S. w ∈ ∅ → False.
-#S w abs; ninversion abs; #; ndestruct;
-nqed.
-
-
-nlemma XXe :  ∀S:Alpha.∀w:word S. w .∈ ϵ → False.
-#S w abs; ninversion abs; #; ndestruct;
-nqed.
-
-nlemma XXze :  ∀S:Alpha.∀w:word S. w .∈ (∅ · ϵ)  → False.
-#S w abs; ninversion abs; #; ndestruct; /2/ by XXz,XXe;
-nqed.
-
-
-naxiom in_move_cat:
- ∀S.∀w:word S.∀x.∀E1,E2:pitem S. w .∈ \move x (E1 · E2) → 
-   (∃w1.∃w2. w = w1@w2 ∧ w1 .∈ \move x E1 ∧ w2 ∈ .|E2|) ∨ w .∈ \move x E2.
-#S w x e1 e2 H; nchange in H with (w .∈ \move x e1 ⊙ \move x e2);
-ncases e1 in H; ncases e2;
-##[##1: *; ##[*; nnormalize; #; ndestruct] 
-   #H; ninversion H; ##[##1,4,5,6: nnormalize; #; ndestruct]
-   nnormalize; #; ndestruct; ncases (?:False); /2/ by XXz,XXze;
-##|##2: *; ##[*; nnormalize; #; ndestruct] 
-   #H; ninversion H; ##[##1,4,5,6: nnormalize; #; ndestruct]
-   nnormalize; #; ndestruct; ncases (?:False); /2/ by XXz,XXze;
-##| #r; *; ##[ *; nnormalize; #; ndestruct] 
-   #H; ninversion H; ##[##1,4,5,6: nnormalize; #; ndestruct]
-   ##[##2: nnormalize; #; ndestruct; @2; @2; //.##]
-   nnormalize; #; ndestruct; ncases (?:False); /2/ by XXz;
-##| #y; *; ##[ *; nnormalize; #defw defx; ndestruct; @2; @1; /2/ by conj;##]
-   #H; ninversion H; nnormalize; #; ndestruct; 
-   ##[ncases (?:False); /2/ by XXz] /3/ by or_intror;
-##| #r1 r2; *; ##[ *; #defw]
-    ...
-nqed.
-
-ntheorem move_ok:
- ∀S:Alpha.∀E:pre S.∀a,w.w .∈ \move a E ↔ (a :: w) .∈ E. 
-#S E; ncases E; #r b; nelim r;
-##[##1,2: #a w; @; 
-   ##[##1,3: nnormalize; *; ##[##1,3: *; #; ndestruct; ##| #abs; ncases (XXz … abs); ##]
-      #H; ninversion H; #; ndestruct;
-   ##|##*:nnormalize; *; ##[##1,3: *; #; ndestruct; ##| #H1; ncases (XXz … H1); ##]
-       #H; ninversion H; #; ndestruct;##]
-##|#a c w; @; nnormalize; ##[*; ##[*; #; ndestruct; ##] #abs; ninversion abs; #; ndestruct;##]
-   *; ##[##2: #abs; ninversion abs; #; ndestruct; ##] *; #; ndestruct;
-##|#a c w; @; nnormalize; 
-   ##[ *; ##[ *; #defw; nrewrite > defw; #ca; @2;  nrewrite > (eqb_t … ca); @; ##]
-       #H; ninversion H; #; ndestruct;
-   ##| *; ##[ *; #; ndestruct; ##] #H; ninversion H; ##[##2,3,4,5,6: #; ndestruct]
-              #d defw defa; ndestruct; @1; @; //; nrewrite > (eqb_true S d d); //. ##]
-##|#r1 r2 H1 H2 a w; @;
-   ##[ #H; ncases (in_move_cat … H);
-      ##[ *; #w1; *; #w2; *; *; #defw w1m w2m;
-          ncases (H1 a w1); #H1w1; #_; nlapply (H1w1 w1m); #good; 
-          nrewrite > defw; @2; @2 (a::w1); //; ncases good; ##[ *; #; ndestruct] //.
-      ##|
-      ...
-##|
-##|
-##]
-nqed.
-
-
-notation > "x ↦* E" non associative with precedence 60 for @{move_star ? $x $E}.
-nlet rec move_star (S : decidable) w E on w : bool × (pre S) ≝
- match w with
-  [ nil ⇒ E
-  | cons x w' ⇒ w' ↦* (x ↦ \snd E)].
-
-ndefinition in_moves ≝ λS:decidable.λw.λE:bool × (pre S). \fst(w ↦* E).
-
-ncoinductive equiv (S:decidable) : bool × (pre S) → bool × (pre S) → Prop ≝
- mk_equiv:
-  ∀E1,E2: bool × (pre S).
-   \fst E1  = \fst E2 →
-    (∀x. equiv S (x ↦ \snd E1) (x ↦ \snd E2)) →
-     equiv S E1 E2.
-
-ndefinition NAT: decidable.
- @ nat eqb; /2/.
-nqed.
-
-include "hints_declaration.ma".
-
-alias symbol "hint_decl" (instance 1) = "hint_decl_Type1".
-unification hint 0 ≔ ; X ≟ NAT ⊢ carr X ≡ nat.
-
-ninductive unit: Type[0] ≝ I: unit.
-
-nlet corec foo_nop (b: bool):
- equiv ?
-  〈 b, pc ? (ps ? 0) (pk ? (pc ? (ps ? 1) (ps ? 0))) 〉
-  〈 b, pc ? (pk ? (pc ? (ps ? 0) (ps ? 1))) (ps ? 0) 〉 ≝ ?.
- @; //; #x; ncases x
-  [ nnormalize in ⊢ (??%%); napply (foo_nop false)
-  | #y; ncases y
-     [ nnormalize in ⊢ (??%%); napply (foo_nop false)
-     | #w; nnormalize in ⊢ (??%%); napply (foo_nop false) ]##]
-nqed.
-
-(*
-nlet corec foo (a: unit):
- equiv NAT
-  (eclose NAT (pc ? (ps ? 0) (pk ? (pc ? (ps ? 1) (ps ? 0)))))
-  (eclose NAT (pc ? (pk ? (pc ? (ps ? 0) (ps ? 1))) (ps ? 0)))
-≝ ?.
- @;
-  ##[ nnormalize; //
-  ##| #x; ncases x
-       [ nnormalize in ⊢ (??%%);
-         nnormalize in foo: (? → ??%%);
-         @; //; #y; ncases y
-           [ nnormalize in ⊢ (??%%); napply foo_nop
-           | #y; ncases y
-              [ nnormalize in ⊢ (??%%);
-                
-            ##| #z; nnormalize in ⊢ (??%%); napply foo_nop ]##]
-     ##| #y; nnormalize in ⊢ (??%%); napply foo_nop
-  ##]
-nqed.
 *)
 
-ndefinition test1 : pre ? ≝ ❨ `0 | `1 ❩^* `0.
-ndefinition test2 : pre ? ≝ ❨ (`0`1)^* `0 | (`0`1)^* `1 ❩.
-ndefinition test3 : pre ? ≝ (`0 (`0`1)^* `1)^*.
 
-
-nlemma foo: in_moves ? [0;0;1;0;1;1] (ɛ test3) = true.
- nnormalize in match test3;
- nnormalize;
-//;
-nqed.
-
-(**********************************************************)
-
-ninductive der (S: Type[0]) (a: S) : re S → re S → CProp[0] ≝
-   der_z: der S a (z S) (z S)
- | der_e: der S a (e S) (z S)
- | der_s1: der S a (s S a) (e ?)
- | der_s2: ∀b. a ≠ b → der S a (s S b) (z S)
- | der_c1: ∀e1,e2,e1',e2'. in_l S [] e1 → der S a e1 e1' → der S a e2 e2' →
-            der S a (c ? e1 e2) (o ? (c ? e1' e2) e2')
- | der_c2: ∀e1,e2,e1'. Not (in_l S [] e1) → der S a e1 e1' →
-            der S a (c ? e1 e2) (c ? e1' e2)
- | der_o: ∀e1,e2,e1',e2'. der S a e1 e1' → der S a e2 e2' →
-    der S a (o ? e1 e2) (o ? e1' e2').
-
-nlemma eq_rect_CProp0_r:
- ∀A.∀a,x.∀p:eq ? x a.∀P: ∀x:A. eq ? x a → CProp[0]. P a (refl A a) → P x p.
- #A; #a; #x; #p; ncases p; #P; #H; nassumption.
-nqed.
-
-nlemma append1: ∀A.∀a:A.∀l. [a] @ l = a::l. //. nqed.
-
-naxiom in_l1: ∀S,r1,r2,w. in_l S [ ] r1 → in_l S w r2 → in_l S w (c S r1 r2).
-(* #S; #r1; #r2; #w; nelim r1
-  [ #K; ninversion K
-  | #H1; #H2; napply (in_c ? []); //
-  | (* tutti casi assurdi *) *)
-
-ninductive in_l' (S: Type[0]) : word S → re S → CProp[0] ≝
-   in_l_empty1: ∀E.in_l S [] E → in_l' S [] E 
- | in_l_cons: ∀a,w,e,e'. in_l' S w e' → der S a e e' → in_l' S (a::w) e.
-
-ncoinductive eq_re (S: Type[0]) : re S → re S → CProp[0] ≝
-   mk_eq_re: ∀E1,E2.
-    (in_l S [] E1 → in_l S [] E2) →
-    (in_l S [] E2 → in_l S [] E1) →
-    (∀a,E1',E2'. der S a E1 E1' → der S a E2 E2' → eq_re S E1' E2') →
-      eq_re S E1 E2.
-
-(* serve il lemma dopo? *)
-ntheorem eq_re_is_eq: ∀S.∀E1,E2. eq_re S E1 E2 → ∀w. in_l ? w E1 → in_l ? w E2.
- #S; #E1; #E2; #H1; #w; #H2; nelim H2 in E2 H1 ⊢ %
-  [ #r; #K (* ok *)
-  | #a; #w; #R1; #R2; #K1; #K2; #K3; #R3; #K4; @2 R2; //; ncases K4;
-
-(* IL VICEVERSA NON VALE *)
-naxiom in_l_to_in_l: ∀S,w,E. in_l' S w E → in_l S w E.
-(* #S; #w; #E; #H; nelim H
-  [ //
-  | #a; #w'; #r; #r'; #H1; (* e si cade qua sotto! *)
-  ]
-nqed. *)
-
-ntheorem der1: ∀S,a,e,e',w. der S a e e' → in_l S w e' → in_l S (a::w) e.
- #S; #a; #E; #E'; #w; #H; nelim H
-  [##1,2: #H1; ninversion H1
-     [##1,8: #_; #K; (* non va ndestruct K; *) ncases (?:False); (* perche' due goal?*) /2/
-     |##2,9: #X; #Y; #K; ncases (?:False); /2/
-     |##3,10: #x; #y; #z; #w; #a; #b; #c; #d; #e; #K; ncases (?:False); /2/
-     |##4,11: #x; #y; #z; #w; #a; #b; #K; ncases (?:False); /2/
-     |##5,12: #x; #y; #z; #w; #a; #b; #K; ncases (?:False); /2/
-     |##6,13: #x; #y; #K; ncases (?:False); /2/
-     |##7,14: #x; #y; #z; #w; #a; #b; #c; #d; #K; ncases (?:False); /2/]
-##| #H1; ninversion H1
-     [ //
-     | #X; #Y; #K; ncases (?:False); /2/
-     | #x; #y; #z; #w; #a; #b; #c; #d; #e; #K; ncases (?:False); /2/
-     | #x; #y; #z; #w; #a; #b; #K; ncases (?:False); /2/
-     | #x; #y; #z; #w; #a; #b; #K; ncases (?:False); /2/
-     | #x; #y; #K; ncases (?:False); /2/
-     | #x; #y; #z; #w; #a; #b; #c; #d; #K; ncases (?:False); /2/ ]
-##| #H1; #H2; #H3; ninversion H3
-     [ #_; #K; ncases (?:False); /2/
-     | #X; #Y; #K; ncases (?:False); /2/
-     | #x; #y; #z; #w; #a; #b; #c; #d; #e; #K; ncases (?:False); /2/
-     | #x; #y; #z; #w; #a; #b; #K; ncases (?:False); /2/
-     | #x; #y; #z; #w; #a; #b; #K; ncases (?:False); /2/
-     | #x; #y; #K; ncases (?:False); /2/
-     | #x; #y; #z; #w; #a; #b; #c; #d; #K; ncases (?:False); /2/ ]
-##| #r1; #r2; #r1'; #r2'; #H1; #H2; #H3; #H4; #H5; #H6;
-
-lemma
