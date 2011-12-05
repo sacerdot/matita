@@ -153,7 +153,28 @@ inductive ex2 (A:Type[0]) (P,Q:A →Prop) : Prop ≝
 definition iff :=
  λ A,B. (A → B) ∧ (B → A).
 
-interpretation "iff" 'iff a b = (iff a b).  
+interpretation "iff" 'iff a b = (iff a b).
+
+lemma iff_sym: ∀A,B. A ↔ B → B ↔ A.
+#A #B * /3/ qed.
+
+lemma iff_trans:∀A,B,C. A ↔ B → B ↔ C → A ↔ C.
+#A #B #C * #H1 #H2 * #H3 #H4 % /3/ qed.
+
+lemma iff_not: ∀A,B. A ↔ B → ¬A ↔ ¬B.
+#A #B * #H1 #H2 % /3/ qed.
+
+lemma iff_and_l: ∀A,B,C. A ↔ B → C ∧ A ↔ C ∧ B.
+#A #B #C * #H1 #H2 % * /3/ qed.  
+
+lemma iff_and_r: ∀A,B,C. A ↔ B → A ∧ C ↔ B ∧ C.
+#A #B #C * #H1 #H2 % * /3/ qed.  
+
+lemma iff_or_l: ∀A,B,C. A ↔ B → C ∨ A ↔ C ∨ B.
+#A #B #C * #H1 #H2 % * /3/ qed.  
+
+lemma iff_or_r: ∀A,B,C. A ↔ B → A ∨ C ↔ B ∨ C.
+#A #B #C * #H1 #H2 % * /3/ qed.  
 
 (* cose per destruct: da rivedere *) 
 
