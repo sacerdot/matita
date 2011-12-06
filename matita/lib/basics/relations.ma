@@ -77,8 +77,9 @@ injective A B f → injective B C g → injective A C (λx.g (f x)).
 
 (* extensional equality *)
 
+(* moved inside sets.ma
 definition exteqP: ∀A:Type[0].∀P,Q:A→Prop.Prop ≝
-λA.λP,Q.∀a.iff (P a) (Q a).
+λA.λP,Q.∀a.iff (P a) (Q a). *)
 
 definition exteqR: ∀A,B:Type[0].∀R,S:A→B→Prop.Prop ≝
 λA,B.λR,S.∀a.∀b.iff (R a b) (S a b).
@@ -86,11 +87,12 @@ definition exteqR: ∀A,B:Type[0].∀R,S:A→B→Prop.Prop ≝
 definition exteqF: ∀A,B:Type[0].∀f,g:A→B.Prop ≝
 λA,B.λf,g.∀a.f a = g a.
 
+(*
 notation " x \eqP y " non associative with precedence 45 
 for @{'eqP A $x $y}.
 
 interpretation "functional extentional equality" 
-'eqP A x y = (exteqP A x y).
+'eqP A x y = (exteqP A x y). *)
 
 notation "x \eqR y" non associative with precedence 45 
 for @{'eqR ? ? x y}.
