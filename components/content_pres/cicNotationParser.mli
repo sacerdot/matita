@@ -79,6 +79,9 @@ val term : #status -> NotationPt.term Grammar.Entry.e
 val let_defs : #status ->
   (NotationPt.term NotationPt.capture_variable list * NotationPt.term NotationPt.capture_variable * NotationPt.term * int) list
     Grammar.Entry.e
+val let_codefs : #status ->
+  (NotationPt.term NotationPt.capture_variable list * NotationPt.term NotationPt.capture_variable * NotationPt.term * int) list
+    Grammar.Entry.e
 
 val protected_binder_vars : #status ->
   (NotationPt.term list * NotationPt.term option) Grammar.Entry.e

@@ -95,6 +95,7 @@ let mk_parser statement lstatus =
 (*   let grammar = CicNotationParser.level2_ast_grammar lstatus in *)
   let term = CicNotationParser.term lstatus in
   let let_defs = CicNotationParser.let_defs lstatus in
+  let let_codefs = CicNotationParser.let_codefs lstatus in
   let protected_binder_vars = CicNotationParser.protected_binder_vars lstatus in
   (* {{{ parser initialization *)
 EXTEND
@@ -517,7 +518,7 @@ EXTEND
       paramspec = OPT inverter_param_list ; 
       outsort = OPT [ SYMBOL ":" ; outsort = term -> outsort ] -> 
         G.NInverter (loc,name,indty,paramspec,outsort)
-    | LETCOREC ; defs = let_defs -> 
+    | LETCOREC ; defs = let_codefs -> 
         nmk_rec_corec `CoInductive defs loc
     | LETREC ; defs = let_defs -> 
         nmk_rec_corec `Inductive defs loc

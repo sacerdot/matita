@@ -43,6 +43,7 @@ type ('a,'b,'c,'d,'e) grammars = {
   term: 'b Grammar.Entry.e;
   ident: 'e Grammar.Entry.e;
   let_defs: 'c Grammar.Entry.e;
+  let_codefs: 'c Grammar.Entry.e;
   protected_binder_vars: 'd Grammar.Entry.e;
   level2_meta: 'b Grammar.Entry.e;
 }
@@ -208,8 +209,10 @@ let extract_term_production status pattern =
           match magic with
           | Ast.List0 (_, None) -> Gramext.Slist0 s
           | Ast.List1 (_, None) -> Gramext.Slist1 s
-          | Ast.List0 (_, Some l) -> Gramext.Slist0sep (s, gram_of_literal l,false)
-          | Ast.List1 (_, Some l) -> Gramext.Slist1sep (s, gram_of_literal l,false)
+(*          | Ast.List0 (_, Some l) -> Gramext.Slist0sep (s, gram_of_literal l,false)
+          | Ast.List1 (_, Some l) -> Gramext.Slist1sep (s, gram_of_literal l,false)*)
+          | Ast.List0 (_, Some l) -> Gramext.Slist0sep (s, gram_of_literal l)
+          | Ast.List1 (_, Some l) -> Gramext.Slist1sep (s, gram_of_literal l)
           | _ -> assert false
         in
         [ Env (List.map Env.list_declaration p_names),
@@ -556,10 +559,11 @@ END
   let level2_ast = grammars.level2_ast in
   let term = grammars.term in
   let let_defs = grammars.let_defs in
+  let let_codefs = grammars.let_codefs in
   let ident = grammars.ident in
   let protected_binder_vars = grammars.protected_binder_vars in
 EXTEND
-  GLOBAL: level2_ast term let_defs protected_binder_vars ident;
+  GLOBAL: level2_ast term let_defs let_codefs protected_binder_vars ident;
   level2_ast: [ [ p = term -> p ] ];
   sort: [
     [ "Prop" -> `Prop
@@ -688,6 +692,23 @@ EXTEND
         defs
     ]
   ];
+  let_codefs: [
+    [ defs = LIST1 [
+        name = single_arg;
+        args = LIST0 arg;
+        ty = OPT [ SYMBOL ":" ; p = term -> p ];
+        SYMBOL <:unicode<def>> (* ≝ *); body = term ->
+          let args =
+           List.concat
+            (List.map
+             (function (names,ty) -> List.map (function x -> x,ty) names
+             ) args)
+          in
+           args, (name, ty), body, 0
+      ] SEP "and" ->
+        defs
+    ]
+  ];
   binder_vars: [
     [ vars = [ l =
         [ l = LIST1 single_arg SEP SYMBOL "," -> l
@@ -717,12 +738,6 @@ EXTEND
       SYMBOL <:unicode<def>> (* ≝ *);
       p1 = term; "in"; p2 = term ->
         return_term loc (Ast.LetIn (var, p1, p2))
-    | LETCOREC; defs = let_defs; "in";
-      body = term ->
-        return_term loc (Ast.LetRec (`CoInductive, defs, body))
-    | LETREC; defs = let_defs; "in";
-      body = term ->
-        return_term loc (Ast.LetRec (`Inductive, defs, body))
     ]
   ];
   term: LEVEL "20"
@@ -797,6 +812,7 @@ let initial_grammars keywords =
   let term = Grammar.Entry.create level2_ast_grammar "term" in
   let ident = Grammar.Entry.create level2_ast_grammar "ident" in
   let let_defs = Grammar.Entry.create level2_ast_grammar "let_defs" in
+  let let_codefs = Grammar.Entry.create level2_ast_grammar "let_codefs" in
   let protected_binder_vars = 
     Grammar.Entry.create level2_ast_grammar "protected_binder_vars" in
   let level2_meta = Grammar.Entry.create level2_meta_grammar "level2_meta" in
@@ -805,6 +821,7 @@ let initial_grammars keywords =
     term=term;
     ident=ident;
     let_defs=let_defs;
+    let_codefs=let_codefs;
     protected_binder_vars=protected_binder_vars;
     level2_meta=level2_meta;
     level2_ast_grammar=level2_ast_grammar;
@@ -874,6 +891,7 @@ let level2_ast_grammar status =
   status#notation_parser_db.grammars.level2_ast_grammar
 let term status = status#notation_parser_db.grammars.term
 let let_defs status = status#notation_parser_db.grammars.let_defs
+let let_codefs status = status#notation_parser_db.grammars.let_codefs
 let protected_binder_vars status = 
   status#notation_parser_db.grammars.protected_binder_vars
 

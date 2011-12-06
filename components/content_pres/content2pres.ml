@@ -901,8 +901,10 @@ let definition2pres ?recno term2pres d =
   let rno = match recno with None -> -1 (* cofix *) | Some x -> x in
   let ty = d.Content.def_type in
   let module P = NotationPt in
-  let rec split_pi i t = 
-    if i <= 1 then 
+  let rec split_pi i t =
+    (* dummy case for corecursive defs *)
+    if i = ~-1 then [], P.UserInput, t
+    else if i <= 1 then 
       match t with 
       | P.Binder ((`Pi|`Forall),(var,_ as v),t) 
       | P.AttributedTerm (_,P.Binder ((`Pi|`Forall),(var,_ as v),t)) -> 
@@ -930,7 +932,9 @@ let definition2pres ?recno term2pres d =
   B.b_hv [] 
    [B.b_hov (RenderingAttrs.indent_attributes `BoxML)
     ( [B.b_hov (RenderingAttrs.indent_attributes `BoxML) ([ B.b_space; B.b_text [] name ] @ 
-        [B.indent(B.b_hov (RenderingAttrs.indent_attributes `BoxML) (params))])] 
+        if params <> [] then
+           [B.indent(B.b_hov (RenderingAttrs.indent_attributes `BoxML) (params))]
+        else [])] 
       @ [B.b_h [] 
          ((if rno <> -1 then 
            [B.b_kw "on";B.b_space;term2pres rec_param] else [])
