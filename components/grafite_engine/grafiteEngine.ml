@@ -538,7 +538,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
               (match spec with
               | NReference.Def _ -> NReference.Def height
               | NReference.Fix (i,j,_) -> NReference.Fix(i,j,height)
-              | NReference.CoFix _ -> NReference.CoFix height
+              | NReference.CoFix i -> NReference.CoFix i
               | NReference.Ind _ | NReference.Con _
               | NReference.Decl as s -> s))
           | t -> NCicUtils.map status (fun _ () -> ()) () fix t
@@ -605,9 +605,10 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
              ) status boxml in             
            let _,_,_,_,nobj = obj in 
            let status = match nobj with
-               NCic.Inductive (is_ind,leftno,[it],_) ->
-                 let _,ind_name,ty,cl = it in
-                 List.fold_left 
+               NCic.Inductive (is_ind,leftno,itl,_) ->
+                 List.fold_left (fun status it ->      
+                 (let _,ind_name,ty,cl = it in
+                  List.fold_left 
                    (fun status outsort ->
                       let status = status#set_ng_mode `ProofMode in
                       try
@@ -626,7 +627,8 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
                                 let status = status#set_ng_mode `CommandMode in status)
                   status
                   (NCic.Prop::
-                    List.map (fun s -> NCic.Type s) (NCicEnvironment.get_universes ()))
+                    List.map (fun s -> NCic.Type s)
+                    (NCicEnvironment.get_universes ())))) status itl
               | _ -> status
            in
            let status = match nobj with
