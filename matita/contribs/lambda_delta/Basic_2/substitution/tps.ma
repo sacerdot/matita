@@ -58,7 +58,7 @@ lemma tps_full: ∀K,V,T1,L,d. ↓[0, d] L ≡ (K. 𝕓{Abbr} V) →
   elim (lt_or_eq_or_gt i d) #Hid /3 width=4/
   destruct
   elim (lift_total V 0 (i+1)) #W #HVW
-  elim (lift_split … HVW i i ? ? ?) // <minus_plus_m_m_comm /3 width=4/
+  elim (lift_split … HVW i i ? ? ?) // /3 width=4/
 | * #I #W1 #U1 #IHW1 #IHU1 #L #d #HLK
   elim (IHW1 … HLK) -IHW1 #W2 #W #HW12 #HW2
   [ elim (IHU1 (L. 𝕓{I} W2) (d+1) ?) -IHU1 /2 width=1/ -HLK /3 width=8/
@@ -86,8 +86,7 @@ lemma tps_weak_top: ∀L,T1,T2,d,e.
 [ //
 | #L #K #V #W #i #d #e #Hdi #_ #HLK #HVW
   lapply (ldrop_fwd_ldrop2_length … HLK) #Hi
-  lapply (le_to_lt_to_lt … Hdi Hi) #Hd
-  lapply (plus_minus_m_m_comm (|L|) d ?) /2 width=1/ /2 width=4/ 
+  lapply (le_to_lt_to_lt … Hdi Hi) /3 width=4/
 | normalize /2 width=1/
 | /2 width=1/
 ]
@@ -107,15 +106,15 @@ lemma tps_split_up: ∀L,T1,T2,d,e. L ⊢ T1 [d, e] ≫ T2 → ∀i. d ≤ i →
 | #L #K #V #W #i #d #e #Hdi #Hide #HLK #HVW #j #Hdj #Hjde
   elim (lt_or_ge i j)
   [ -Hide -Hjde
-    >(plus_minus_m_m_comm j d) in ⊢ (% → ?); // -Hdj /3 width=4/
+    >(plus_minus_m_m j d) in ⊢ (% → ?); // -Hdj /3 width=4/
   | -Hdi -Hdj #Hid
     generalize in match Hide; -Hide (**) (* rewriting in the premises, rewrites in the goal too *)
-    >(plus_minus_m_m_comm … Hjde) in ⊢ (% → ?); -Hjde /4 width=4/
+    >(plus_minus_m_m … Hjde) in ⊢ (% → ?); -Hjde /4 width=4/
   ]
 | #L #I #V1 #V2 #T1 #T2 #d #e #_ #_ #IHV12 #IHT12 #i #Hdi #Hide
   elim (IHV12 i ? ?) -IHV12 // #V #HV1 #HV2
   elim (IHT12 (i + 1) ? ?) -IHT12 /2 width=1/
-  -Hdi -Hide >arith_c1 >arith_c1x #T #HT1 #HT2
+  -Hdi -Hide >arith_c1x #T #HT1 #HT2
   lapply (tps_lsubs_conf … HT1 (L. 𝕓{I} V) ?) -HT1 /3 width=5/
 | #L #I #V1 #V2 #T1 #T2 #d #e #_ #_ #IHV12 #IHT12 #i #Hdi #Hide
   elim (IHV12 i ? ?) -IHV12 // elim (IHT12 i ? ?) -IHT12 //

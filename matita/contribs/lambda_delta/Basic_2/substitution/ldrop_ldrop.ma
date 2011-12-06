@@ -46,7 +46,7 @@ theorem ldrop_conf_ge: ∀d1,e1,L,L1. ↓[d1, e1] L ≡ L1 →
 | //
 | #L #K #I #V #e #_ #IHLK #e2 #L2 #H #He2
   lapply (ldrop_inv_ldrop1 … H ?) -H /2 width=2/ #HL2
-  <minus_plus_comm /3 width=1/
+  <minus_plus >minus_minus_comm /3 width=1/
 | #L #K #I #V1 #V2 #d #e #_ #_ #IHLK #e2 #L2 #H #Hdee2
   lapply (transitive_le 1 … Hdee2) // #He2
   lapply (ldrop_inv_ldrop1 … H ?) -H // -He2 #HL2
@@ -85,9 +85,9 @@ theorem ldrop_trans_le: ∀d1,e1,L1,L. ↓[d1, e1] L1 ≡ L →
 [ #d #e #e2 #L2 #H
   >(ldrop_inv_atom1 … H) -L2 /2 width=3/
 | #K #I #V #e2 #L2 #HL2 #H
-  lapply (le_O_to_eq_O … H) -H #H destruct /2 width=3/
+  lapply (le_n_O_to_eq … H) -H #H destruct /2 width=3/
 | #L1 #L2 #I #V #e #_ #IHL12 #e2 #L #HL2 #H
-  lapply (le_O_to_eq_O … H) -H #H destruct
+  lapply (le_n_O_to_eq … H) -H #H destruct
   elim (IHL12 … HL2 ?) -IHL12 -HL2 // #L0 #H #HL0
   lapply (ldrop_inv_refl … H) -H #H destruct /3 width=5/
 | #L1 #L2 #I #V1 #V2 #d #e #HL12 #HV12 #IHL12 #e2 #L #H #He2d

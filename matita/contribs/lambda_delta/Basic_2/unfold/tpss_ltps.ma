@@ -67,7 +67,7 @@ fact ltps_tps_trans_eq_aux: ∀Y1,X2,L1,T2,U2,d,e.
 [ //
 | #L1 #K1 #V1 #W1 #i #d #e #Hdi #Hide #HLK1 #HVW1 #L0 #HL10 #H1 #H2 destruct
   lapply (ldrop_fwd_lw … HLK1) normalize #H1
-  elim (ltps_ldrop_trans_be … HL10 … HLK1 ? ?) -HL10 -HLK1 /2 width=1/ #X #H #HLK0
+  elim (ltps_ldrop_trans_be … HL10 … HLK1 ? ?) -HL10 -HLK1 // /2 width=2/ #X #H #HLK0
   elim (ltps_inv_tps22 … H ?) -H /2 width=1/ #K0 #V0 #HK01 #HV01 #H destruct
   lapply (tps_fwd_tw … HV01) #H2
   lapply (transitive_le (#[K1] + #[V0]) … H1) -H1 /2 width=1/ -H2 #H
@@ -75,11 +75,11 @@ fact ltps_tps_trans_eq_aux: ∀Y1,X2,L1,T2,U2,d,e.
   [1,3: // |2,4: skip | normalize /2 width=1/ | /3 width=6/ ]
 | #L #I #V1 #V2 #T1 #T2 #d #e #HV12 #HT12 #L0 #HL0 #H1 #H2 destruct
   lapply (tps_lsubs_conf … HT12 (L. 𝕓{I} V1) ?) -HT12 /2 width=1/ #HT12
-  lapply (IH … HV12 … HL0 ? ?) -HV12 [1,3,5: normalize // |2,4: skip ] #HV12
+  lapply (IH … HV12 … HL0 ? ?) -HV12 [1,3: // |2,4: skip |5: /2 width=2/ ] #HV12
   lapply (IH … HT12 (L0. 𝕓{I} V1) ? ? ?) -IH -HT12 [1,3,5: /2 width=2/ |2,4: skip | normalize // ] -HL0 #HT12
   lapply (tpss_lsubs_conf … HT12 (L0. 𝕓{I} V2) ?) -HT12 /2 width=1/
 | #L #I #V1 #V2 #T1 #T2 #d #e #HV12 #HT12 #L0 #HL0 #H1 #H2 destruct
-  lapply (IH … HV12 … HL0 ? ?) -HV12 [1,3,5: normalize // |2,4: skip ]
+  lapply (IH … HV12 … HL0 ? ?) -HV12 [1,3: // |2,4: skip |5: /2 width=3/ ]
   lapply (IH … HT12 … HL0 ? ?) -IH -HT12 [1,3,5: normalize // |2,4: skip ] -HL0 /2 width=1/
 ]
 qed.

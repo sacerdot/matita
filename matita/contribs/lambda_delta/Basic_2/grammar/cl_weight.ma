@@ -38,7 +38,7 @@ qed.
 lemma tw_shift: ∀L,T. #[L, T] ≤ #[L @ T].
 #L elim L //
 #K #I #V #IHL #T
-@transitive_le [3: @IHL |2: /2 width=1/ | skip ]
+@transitive_le [3: @IHL |2: /2 width=2/ | skip ]
 qed.
 
 (* Basic_1: removed theorems 6:

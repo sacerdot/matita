@@ -53,7 +53,7 @@ lemma tpss_split_up: ∀L,T1,T2,d,e. L ⊢ T1 [d, e] ≫* T2 →
 [ /2 width=3/
 | #T #T2 #_ #HT12 * #T3 #HT13 #HT3
   elim (tps_split_up … HT12 … Hdi Hide) -HT12 -Hide #T0 #HT0 #HT02
-  elim (tpss_strap1_down … HT3 … HT0 ?) -T [2: <plus_minus_m_m_comm // ]
+  elim (tpss_strap1_down … HT3 … HT0 ?) -T [2: >commutative_plus /2 width=1/ ]
   /3 width=7 by ex2_1_intro, step/ (**) (* just /3 width=7/ is too slow *)
 ]
 qed.
@@ -64,7 +64,7 @@ lemma tpss_inv_lift1_up: ∀L,U1,U2,dt,et. L ⊢ U1 [dt, et] ≫* U2 →
                          ∃∃T2. K ⊢ T1 [d, dt + et - (d + e)] ≫* T2 & ↑[d, e] T2 ≡ U2.
 #L #U1 #U2 #dt #et #HU12 #K #d #e #HLK #T1 #HTU1 #Hddt #Hdtde #Hdedet
 elim (tpss_split_up … HU12 (d + e) ? ?) -HU12 // -Hdedet #U #HU1 #HU2
-lapply (tpss_weak … HU1 d e ? ?) -HU1 // <plus_minus_m_m_comm // -Hddt -Hdtde #HU1
+lapply (tpss_weak … HU1 d e ? ?) -HU1 // [ >commutative_plus /2 width=1/ ] -Hddt -Hdtde #HU1
 lapply (tpss_inv_lift1_eq … HU1 … HTU1) -HU1 #HU1 destruct
 elim (tpss_inv_lift1_ge … HU2 … HLK … HTU1 ?) -HU2 -HLK -HTU1 // <minus_plus_m_m /2 width=3/
 qed.

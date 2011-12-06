@@ -43,7 +43,7 @@ lemma discr_tpair_xy_x: ∀I,T,V. 𝕔{I} V. T = V → False.
 [ #J #H destruct
 | #J #W #U #IHW #_ #H destruct
   -H >e0 in e1; normalize (**) (* destruct: one quality is not simplified, the destucted equality is not erased *)
-  /2 width=1/ 
+  /2 width=1/
 ]
 qed-.
 

@@ -152,17 +152,17 @@ lemma ldrop_lsubs_ldrop1_abbr: ∀L1,L2,d,e. L1 [d, e] ≼ L2 →
   [ -IHL12 -Hie destruct
     <minus_n_O <minus_plus_m_m // /2 width=3/
   | -HL12
-    elim (IHL12 … HLK1 ? ?) -IHL12 -HLK1 // /2 width=1/ -Hie >arith_g1 // /3 width=3/
+    elim (IHL12 … HLK1 ? ?) -IHL12 -HLK1 // /2 width=1/ -Hie >minus_minus_comm >arith_b1 // /4 width=3/
   ]
 | #L1 #L2 #I #V1 #V2 #e #_ #IHL12 #K1 #W #i #H #_ #Hie
   elim (ldrop_inv_O1 … H) -H * #Hi #HLK1
   [ -IHL12 -Hie -Hi destruct
-  | elim (IHL12 … HLK1 ? ?) -IHL12 -HLK1 // /2 width=1/ -Hie >arith_g1 // /3 width=3/
+  | elim (IHL12 … HLK1 ? ?) -IHL12 -HLK1 // /2 width=1/ -Hie >minus_minus_comm >arith_b1 // /3 width=3/
   ]
 | #L1 #L2 #I1 #I2 #V1 #V2 #d #e #_ #IHL12 #K1 #V #i #H #Hdi >plus_plus_comm_23 #Hide
-  lapply (plus_S_le_to_pos … Hdi) #Hi
+  elim (le_inv_plus_l … Hdi) #Hdim #Hi
   lapply (ldrop_inv_ldrop1 … H ?) -H // #HLK1
-  elim (IHL12 … HLK1 ? ?) -IHL12 -HLK1 /2 width=1/ -Hdi -Hide >arith_g1 // /3 width=3/
+  elim (IHL12 … HLK1 ? ?) -IHL12 -HLK1 // /2 width=1/ -Hdi -Hide >minus_minus_comm >arith_b1 // /3 width=3/
 ]
 qed.
 

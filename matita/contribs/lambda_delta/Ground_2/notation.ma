@@ -14,18 +14,12 @@
 
 (* GENERAL NOTATION USED BY THE FORMAL SYSTEM λδ ****************************)
 
-(* Subsets ******************************************************************)
-
-notation "hvbox( T ϵ break R )"
-   non associative with precedence 45
-   for @{ 'InSubset $T $R }.
-
 (* Lists ********************************************************************)
 
 notation "hvbox( hd break :: tl )"
   right associative with precedence 47
   for @{'Cons $hd $tl}.
 
-notation "hvbox( l1 break @ l2)"
+notation "hvbox( l1 break @ l2 )"
   right associative with precedence 47
   for @{'Append $l1 $l2 }.

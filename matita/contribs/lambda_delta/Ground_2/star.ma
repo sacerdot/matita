@@ -15,22 +15,19 @@
 include "basics/star.ma".
 include "Ground_2/xoa_props.ma".
 
-(* PROPERTIES of RELATIONS **************************************************)
+(* PROPERTIES OF RELATIONS **************************************************)
 
-definition predicate: Type[0] → Type[0] ≝ λA. A → Prop.
+definition Decidable: Prop → Prop ≝ λR. R ∨ (R → False).
 
-definition Decidable: Prop → Prop ≝
-   λR. R ∨ (R → False). 
+definition confluent2: ∀A. ∀R1,R2: relation A. Prop ≝ λA,R1,R2.
+                       ∀a0,a1. R1 a0 a1 → ∀a2. R2 a0 a2 →
+                       ∃∃a. R2 a1 a & R1 a2 a.
 
-definition confluent: ∀A. ∀R1,R2: relation A. Prop ≝ λA,R1,R2.
-                      ∀a0,a1. R1 a0 a1 → ∀a2. R2 a0 a2 →
-                      ∃∃a. R2 a1 a & R1 a2 a.
+definition transitive2: ∀A. ∀R1,R2: relation A. Prop ≝ λA,R1,R2.
+                        ∀a1,a0. R1 a1 a0 → ∀a2. R2 a0 a2 →
+                        ∃∃a. R2 a1 a & R1 a a2.
 
-definition transitive: ∀A. ∀R1,R2: relation A. Prop ≝ λA,R1,R2.
-                       ∀a1,a0. R1 a1 a0 → ∀a2. R2 a0 a2 →
-                       ∃∃a. R2 a1 a & R1 a a2.
-
-lemma TC_strip1: ∀A,R1,R2. confluent A R1 R2 →
+lemma TC_strip1: ∀A,R1,R2. confluent2 A R1 R2 →
                  ∀a0,a1. TC … R1 a0 a1 → ∀a2. R2 a0 a2 →
                  ∃∃a. R2 a1 a & TC … R1 a2 a.
 #A #R1 #R2 #HR12 #a0 #a1 #H elim H -a1
@@ -42,7 +39,7 @@ lemma TC_strip1: ∀A,R1,R2. confluent A R1 R2 →
 ]
 qed.
 
-lemma TC_strip2: ∀A,R1,R2. confluent A R1 R2 →
+lemma TC_strip2: ∀A,R1,R2. confluent2 A R1 R2 →
                  ∀a0,a2. TC … R2 a0 a2 → ∀a1. R1 a0 a1 →
                  ∃∃a. TC … R2 a1 a & R1 a2 a.
 #A #R1 #R2 #HR12 #a0 #a2 #H elim H -a2
@@ -54,8 +51,8 @@ lemma TC_strip2: ∀A,R1,R2. confluent A R1 R2 →
 ]
 qed.
 
-lemma TC_confluent: ∀A,R1,R2.
-                    confluent A R1 R2 → confluent A (TC … R1) (TC … R2).
+lemma TC_confluent2: ∀A,R1,R2.
+                     confluent2 A R1 R2 → confluent2 A (TC … R1) (TC … R2).
 #A #R1 #R2 #HR12 #a0 #a1 #H elim H -a1
 [ #a1 #Ha01 #a2 #Ha02
   elim (TC_strip2 … HR12 … Ha02 … Ha01) -HR12 -a0 /3 width=3/
@@ -65,11 +62,7 @@ lemma TC_confluent: ∀A,R1,R2.
 ]
 qed.
 
-lemma TC_strap: ∀A. ∀R:relation A. ∀a1,a,a2.
-                R a1 a → TC … R a a2 → TC … R a1 a2.
-/3 width=3/ qed.
-
-lemma TC_strap1: ∀A,R1,R2. transitive A R1 R2 →
+lemma TC_strap1: ∀A,R1,R2. transitive2 A R1 R2 →
                  ∀a1,a0. TC … R1 a1 a0 → ∀a2. R2 a0 a2 →
                  ∃∃a. R2 a1 a & TC … R1 a a2.
 #A #R1 #R2 #HR12 #a1 #a0 #H elim H -a0
@@ -81,7 +74,7 @@ lemma TC_strap1: ∀A,R1,R2. transitive A R1 R2 →
 ]
 qed.
 
-lemma TC_strap2: ∀A,R1,R2. transitive A R1 R2 →
+lemma TC_strap2: ∀A,R1,R2. transitive2 A R1 R2 →
                  ∀a0,a2. TC … R2 a0 a2 → ∀a1. R1 a1 a0 →
                  ∃∃a. TC … R2 a1 a & R1 a a2.
 #A #R1 #R2 #HR12 #a0 #a2 #H elim H -a2
@@ -93,8 +86,8 @@ lemma TC_strap2: ∀A,R1,R2. transitive A R1 R2 →
 ]
 qed.
 
-lemma TC_transitive: ∀A,R1,R2.
-                     transitive A R1 R2 → transitive A (TC … R1) (TC … R2).
+lemma TC_transitive2: ∀A,R1,R2.
+                      transitive2 A R1 R2 → transitive2 A (TC … R1) (TC … R2).
 #A #R1 #R2 #HR12 #a1 #a0 #H elim H -a0
 [ #a0 #Ha10 #a2 #Ha02
   elim (TC_strap2 … HR12 … Ha02 … Ha10) -HR12 -a0 /3 width=3/
@@ -102,15 +95,6 @@ lemma TC_transitive: ∀A,R1,R2.
   elim (TC_strap2 … HR12 … Ha02 … Ha0) -HR12 -a0 #a0 #Ha0 #Ha02
   elim (IHa … Ha0) -a /4 width=3/
 ]
-qed.
-
-lemma TC_reflexive: ∀A,R. reflexive A R → reflexive A (TC … R).
-/2 width=1/ qed.
-
-lemma TC_star_ind: ∀A,R. reflexive A R → ∀a1. ∀P:predicate A.
-                   P a1 → (∀a,a2. TC … R a1 a → R a a2 → P a → P a2) →
-                   ∀a2. TC … R a1 a2 → P a2.
-#A #R #H #a1 #P #Ha1 #IHa1 #a2 #Ha12 elim Ha12 -a2 /3 width=4/
 qed.
 
 definition NF: ∀A. relation A → relation A → predicate A ≝

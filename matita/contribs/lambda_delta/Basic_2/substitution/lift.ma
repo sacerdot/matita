@@ -303,8 +303,8 @@ lemma lift_split: ∀d1,e2,T1,T2. ↑[d1, e2] T1 ≡ T2 →
 | #i #d1 #e2 #Hid1 #d2 #e1 #Hd12 #_ #_
   lapply (lt_to_le_to_lt … Hid1 Hd12) -Hd12 #Hid2 /4 width=3/
 | #i #d1 #e2 #Hid1 #d2 #e1 #_ #Hd21 #He12
-  lapply (transitive_le …(i+e1) Hd21 ?) /2 width=1/ -Hd21 #Hd21
-  <(arith_d1 i e2 e1) // /3 width=3/
+  lapply (transitive_le … (i+e1) Hd21 ?) /2 width=1/ -Hd21 #Hd21
+  >(plus_minus_m_m e2 e1 ?) // /3 width=3/
 | /3 width=3/
 | #I #V1 #V2 #T1 #T2 #d1 #e2 #_ #_ #IHV #IHT #d2 #e1 #Hd12 #Hd21 #He12
   elim (IHV … Hd12 Hd21 He12) -IHV #V0 #HV0a #HV0b

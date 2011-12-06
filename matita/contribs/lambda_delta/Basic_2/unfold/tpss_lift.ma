@@ -30,7 +30,7 @@ lemma tpss_subst: ∀L,K,V,U1,i,d,e.
   lapply (IHU … HU0) -IHU #H
   lapply (ldrop_fwd_ldrop2 … HLK) -HLK #HLK
   lapply (tps_lift_ge … HU1 … HLK HU0 HU12 ?) -HU1 -HLK -HU0 -HU12 // normalize #HU02
-  lapply (tps_weak … HU02 d e ? ?) -HU02 [ >arith_i2 // | /2 width=1/ | /2 width=3/ ]
+  lapply (tps_weak … HU02 d e ? ?) -HU02 [ >minus_plus >commutative_plus /2 width=1/ | /2 width=1/ | /2 width=3/ ]
 ]
 qed.
 

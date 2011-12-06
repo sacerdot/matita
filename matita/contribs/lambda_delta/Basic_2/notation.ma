@@ -32,9 +32,17 @@ notation "hvbox( § term 90 p )"
  non associative with precedence 90
  for @{ 'GRef $p }.
 
+notation "hvbox( 𝕒 )"
+ non associative with precedence 90
+ for @{ 'SItem }.
+
 notation "hvbox( 𝕒 { I } )"
  non associative with precedence 90
  for @{ 'SItem $I }.
+
+notation "hvbox( 𝕔 term 90 T1 . break term 90 T )"
+ non associative with precedence 90
+ for @{ 'SItem $T1 $T }.
 
 notation "hvbox( 𝕔 { I } break term 90 T1 . break term 90 T )"
  non associative with precedence 90
@@ -107,6 +115,12 @@ notation "hvbox( T1 break [ d , break e ] ≡ break T2 )"
 notation "hvbox( L ⊢ break term 90 T1 break [ d , break e ] ≡ break T2 )"
    non associative with precedence 45
    for @{ 'TSubst $L $T1 $d $e $T2 }.
+
+(* Static Typing ************************************************************)
+
+notation "hvbox( L ⊢ break term 90 T ÷ break A )"
+   non associative with precedence 45
+   for @{ 'AtomicArity $L $T $A }.
 
 (* Reducibility *************************************************************)
 
@@ -191,3 +205,19 @@ notation "hvbox( ⇓ T  )"
 notation "hvbox( L ⊢ ⇓ T )"
    non associative with precedence 45
    for @{ 'SN $L $T }.
+
+notation "hvbox( { L, break T } ϵ break 〚 A 〛 )"
+   non associative with precedence 45
+   for @{ 'InEInt $L $T $A }.
+
+notation "hvbox( R ⊢ break { L, break T } ϵ break 〚 A 〛 )"
+   non associative with precedence 45
+   for @{ 'InEInt $R $L $T $A }.
+
+notation "hvbox( T1 ⊑ break T2 )"
+   non associative with precedence 45
+   for @{ 'CrSubEq $T1 $T2 }.
+
+notation "hvbox( T1 break [ R ] ⊑ break T2 )"
+   non associative with precedence 45
+   for @{ 'CrSubEq $T1 $R $T2 }.

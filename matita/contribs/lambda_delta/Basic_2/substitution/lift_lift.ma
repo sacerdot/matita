@@ -50,11 +50,11 @@ theorem lift_div_le: ∀d1,e1,T1,T. ↑[d1, e1] T1 ≡ T →
 | #i #d1 #e1 #Hid1 #d2 #e2 #T2 #Hi #Hd12
   elim (lift_inv_lref2 … Hi) -Hi * #Hid2 #H destruct
   [ -Hd12 lapply (lt_plus_to_lt_l … Hid2) -Hid2 #Hid2 /3 width=3/
-  | -Hid1 lapply (arith1 … Hid2) -Hid2 #Hid2
-    @(ex2_1_intro … #(i - e2))
-    [ >le_plus_minus_comm [ @lift_lref_ge @(transitive_le … Hd12) -Hd12 /2 width=1/ | -Hd12 /2 width=2/ ]
-    | -Hd12 >(plus_minus_m_m i e2) in ⊢ (? ? ? ? %); /2 width=2/ /3 width=1/
-    ]
+  | -Hid1 >plus_plus_comm_23 in Hid2; #H lapply (le_inv_plus_plus_r … H) -H #H
+    elim (le_inv_plus_l … H) -H #Hide2 #He2i
+    lapply (transitive_le … Hd12 Hide2) -Hd12 #Hd12
+    >le_plus_minus_comm // >(plus_minus_m_m i e2) in ⊢ (? ? ? %); // -He2i
+    /4 width=3/
   ]
 | #p #d1 #e1 #d2 #e2 #T2 #Hk #Hd12
   lapply (lift_inv_gref2 … Hk) -Hk #Hk destruct /3 width=3/
@@ -154,8 +154,7 @@ theorem lift_trans_ge: ∀d1,e1,T1,T. ↑[d1, e1] T1 ≡ T →
   lapply (lt_to_le_to_lt … Hid1e Hded) -Hid1e -Hded #Hid2
   lapply (lift_inv_lref1_lt … HX ?) -HX // #HX destruct /3 width=3/
 | #i #d1 #e1 #Hid1 #d2 #e2 #X #HX #_
-  elim (lift_inv_lref1 … HX) -HX * #Hied #HX destruct
-  [ /4 width=3/ | >plus_plus_comm_23 /4 width=3/ ]
+  elim (lift_inv_lref1 … HX) -HX * #Hied #HX destruct /4 width=3/
 | #p #d1 #e1 #d2 #e2 #X #HX #_
   >(lift_inv_gref1 … HX) -HX /2 width=3/
 | #I #V1 #V2 #T1 #T2 #d1 #e1 #_ #_ #IHV12 #IHT12 #d2 #e2 #X #HX #Hded
