@@ -139,3 +139,17 @@ lemma WF_antimonotonic: ∀A,R,S. subR A R S →
 #H #Hind % #c #Rcb @Hind @subRS //
 qed.
 
+(* added from lambda_delta *)
+
+lemma TC_strap: ∀A. ∀R:relation A. ∀a1,a,a2.
+                R a1 a → TC … R a a2 → TC … R a1 a2.
+/3 width=3/ qed.
+
+lemma TC_reflexive: ∀A,R. reflexive A R → reflexive A (TC … R).
+/2 width=1/ qed.
+
+lemma TC_star_ind: ∀A,R. reflexive A R → ∀a1. ∀P:predicate A.
+                   P a1 → (∀a,a2. TC … R a1 a → R a a2 → P a → P a2) →
+                   ∀a2. TC … R a1 a2 → P a2.
+#A #R #H #a1 #P #Ha1 #IHa1 #a2 #Ha12 elim Ha12 -a2 /3 width=4/
+qed.

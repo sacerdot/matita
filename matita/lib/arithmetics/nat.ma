@@ -948,6 +948,11 @@ theorem monotonic_le_minus_r:
 @(transitive_le … (le_plus_minus_m_m ? q)) /2/
 qed.
 
+theorem monotonic_lt_minus_l: ∀p,q,n. n ≤ q → q < p → q - n < p - n.
+#p #q #n #H1 #H2
+@lt_plus_to_minus_r <plus_minus_m_m //
+qed.
+
 theorem eq_minus_O: ∀n,m:nat.
   n ≤ m → n-m = O.
 #n #m #lenm @(le_n_O_elim (n-m)) /2/

@@ -11,6 +11,11 @@
 
 include "basics/logic.ma".
 
+(********** preducates *********)
+
+definition predicate: Type[0] → Type[0]
+≝ λA.A→Prop.
+
 (********** relations **********)
 definition relation : Type[0] → Type[0]
 ≝ λA.A→A→Prop. 
