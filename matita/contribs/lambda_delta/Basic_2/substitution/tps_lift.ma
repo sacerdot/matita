@@ -168,10 +168,11 @@ lemma tps_inv_lift1_be: ∀L,U1,U2,dt,et. L ⊢ U1 [dt, et] ≫ U2 →
     elim (lift_trans_le … HUV … HVW ?) -V // >minus_plus <plus_minus_m_m // -Hid /3 width=4/
   | -Hdti -Hdedet
     lapply (transitive_le … (i - e) Hdtd ?) /2 width=1/ -Hdtd #Hdtie
-    elim (le_inv_plus_l … Hid) #_ #Hei
+    elim (le_inv_plus_l … Hid) #Hdie #Hei
     lapply (ldrop_conf_ge … HLK … HLKV ?) -L // #HKV
-    elim (lift_split … HVW d (i - e + 1) ? ? ?) -HVW [4: // |3: /2 width=1/ |2: /3 width=1/ ] -Hid
-    #V1 #HV1 >plus_minus // <minus_minus // /2 width=1/ /4 width=4/
+    elim (lift_split … HVW d (i - e + 1) ? ? ?) -HVW [4: // |3: /2 width=1/ |2: /3 width=1/ ] -Hid -Hdie
+    #V1 #HV1 >plus_minus // <minus_minus // /2 width=1/ <minus_n_n <plus_n_O #H
+    @ex2_1_intro [3: @H | skip | @tps_subst [3,5,6: // |1,2: skip | >commutative_plus >plus_minus // /2 width=1/ ] ] (**) (* explicit constructor, uses monotonic_lt_minus_l *)
   ]
 | #L #I #V1 #V2 #U1 #U2 #dt #et #_ #_ #IHV12 #IHU12 #K #d #e #HLK #X #H #Hdtd #Hdedet
   elim (lift_inv_bind2 … H) -H #W1 #T1 #HWV1 #HTU1 #H destruct
@@ -199,12 +200,12 @@ lemma tps_inv_lift1_ge: ∀L,U1,U2,dt,et. L ⊢ U1 [dt, et] ≫ U2 →
 | #L #KV #V #W #i #dt #et #Hdti #Hidet #HLKV #HVW #K #d #e #HLK #T1 #H #Hdedt
   lapply (transitive_le … Hdedt … Hdti) #Hdei
   elim (le_inv_plus_l … Hdedt) -Hdedt #_ #Hedt
-  elim (le_inv_plus_l … Hdei) #_ #Hei
+  elim (le_inv_plus_l … Hdei) #Hdie #Hei
   lapply (lift_inv_lref2_ge … H … Hdei) -H #H destruct
   lapply (ldrop_conf_ge … HLK … HLKV ?) -L // #HKV
-  elim (lift_split … HVW d (i - e + 1) ? ? ?) -HVW [4: // |3: /2 width=1/ |2: /3 width=1/ ] -Hdei 
-  #V0 #HV10 >plus_minus // <minus_minus // /2 width=1/ #HV02
-  @ex2_1_intro /3 width=4/ (**) (* explicitc constructors *)
+  elim (lift_split … HVW d (i - e + 1) ? ? ?) -HVW [4: // |3: /2 width=1/ |2: /3 width=1/ ] -Hdei -Hdie 
+  #V0 #HV10 >plus_minus // <minus_minus // /2 width=1/ <minus_n_n <plus_n_O #H
+  @ex2_1_intro [3: @H | skip | @tps_subst [5,6: // |1,2: skip | /2 width=1/ | >plus_minus // /2 width=1/ ] ] (**) (* explicit constructor, uses monotonic_lt_minus_l *)
 | #L #I #V1 #V2 #U1 #U2 #dt #et #_ #_ #IHV12 #IHU12 #K #d #e #HLK #X #H #Hdetd
   elim (lift_inv_bind2 … H) -H #W1 #T1 #HWV1 #HTU1 #H destruct
   elim (le_inv_plus_l … Hdetd) #_ #Hedt

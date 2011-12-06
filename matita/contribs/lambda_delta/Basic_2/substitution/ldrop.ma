@@ -183,7 +183,7 @@ qed-.
 
 lemma ldrop_fwd_lw: ∀L1,L2,d,e. ↓[d, e] L1 ≡ L2 → #[L2] ≤ #[L1].
 #L1 #L2 #d #e #H elim H -L1 -L2 -d -e // normalize
-[ /2 width=1/
+[ /2 width=3/
 | #L1 #L2 #I #V1 #V2 #d #e #_ #HV21 #IHL12
   >(tw_lift … HV21) -HV21 /2 width=1/
 ]
