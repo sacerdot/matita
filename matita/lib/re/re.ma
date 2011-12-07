@@ -13,21 +13,12 @@
 (**************************************************************************)
 
 include "arithmetics/nat.ma".
-include "basics/list.ma".
+include "basics/lists/list.ma".
+include "basics/sets.ma".
 
-interpretation "iff" 'iff a b = (iff a b).  
+definition word ≝ λS:DeqSet.list S.
 
-record Alpha : Type[1] ≝ { carr :> Type[0];
-   eqb: carr → carr → bool;
-   eqb_true: ∀x,y. (eqb x y = true) ↔ (x = y)
-}.
- 
-notation "a == b" non associative with precedence 45 for @{ 'eqb $a $b }.
-interpretation "eqb" 'eqb a b = (eqb ? a b).
-
-definition word ≝ λS:Alpha.list S.
-
-inductive re (S: Alpha) : Type[0] ≝
+inductive re (S: DeqSet) : Type[0] ≝
    z: re S
  | e: re S
  | s: S → re S
@@ -44,7 +35,7 @@ notation "a · b" non associative with precedence 60 for @{ 'pc $a $b}.
 interpretation "cat" 'pc a b = (c ? a b).
 
 (* to get rid of \middot 
-ncoercion c  : ∀S:Alpha.∀p:re S.  re S →  re S   ≝ c  on _p : re ?  to ∀_:?.?.
+ncoercion c  : ∀S:DeqSet.∀p:re S.  re S →  re S   ≝ c  on _p : re ?  to ∀_:?.?.
 *)
 
 notation < "a" non associative with precedence 90 for @{ 'ps $a}.
@@ -54,16 +45,17 @@ interpretation "atom" 'ps a = (s ? a).
 notation "ϵ" non associative with precedence 90 for @{ 'epsilon }.
 interpretation "epsilon" 'epsilon = (e ?).
 
-notation "∅" non associative with precedence 90 for @{ 'empty }.
+notation "`∅" non associative with precedence 90 for @{ 'empty }.
 interpretation "empty" 'empty = (z ?).
 
-let rec flatten (S : Alpha) (l : list (word S)) on l : word S ≝ 
+let rec flatten (S : DeqSet) (l : list (word S)) on l : word S ≝ 
 match l with [ nil ⇒ [ ] | cons w tl ⇒ w @ flatten ? tl ].
 
-let rec conjunct (S : Alpha) (l : list (word S)) (r : word S → Prop) on l: Prop ≝
+let rec conjunct (S : DeqSet) (l : list (word S)) (r : word S → Prop) on l: Prop ≝
 match l with [ nil ⇒ ? | cons w tl ⇒ r w ∧ conjunct ? tl r ]. 
 // qed.
 
+(*
 definition empty_lang ≝ λS.λw:word S.False.
 notation "{}" non associative with precedence 90 for @{'empty_lang}.
 interpretation "empty lang" 'empty_lang = (empty_lang ?).
@@ -73,7 +65,7 @@ definition sing_lang ≝ λS.λx,w:word S.x=w.
 interpretation "sing lang" 'singl x = (sing_lang ? x).
 
 definition union : ∀S,l1,l2,w.Prop ≝ λS.λl1,l2.λw:word S.l1 w ∨ l2 w.
-interpretation "union lang" 'union a b = (union ? a b).
+interpretation "union lang" 'union a b = (union ? a b). *)
 
 definition cat : ∀S,l1,l2,w.Prop ≝ 
   λS.λl1,l2.λw:word S.∃w1,w2.w1 @ w2 = w ∧ l1 w1 ∧ l2 w2.
@@ -82,9 +74,9 @@ interpretation "cat lang" 'pc a b = (cat ? a b).
 definition star ≝ λS.λl.λw:word S.∃lw.flatten ? lw = w ∧ conjunct ? lw l. 
 interpretation "star lang" 'pk l = (star ? l).
 
-let rec in_l (S : Alpha) (r : re S) on r : word S → Prop ≝ 
+let rec in_l (S : DeqSet) (r : re S) on r : word S → Prop ≝ 
 match r with
-[ z ⇒ {}
+[ z ⇒ ∅
 | e ⇒ { [ ] }
 | s x ⇒ { [x] }
 | c r1 r2 ⇒ (in_l ? r1) · (in_l ? r2)
@@ -98,15 +90,7 @@ interpretation "in_l mem" 'mem w l = (in_l ? l w).
 lemma rsem_star : ∀S.∀r: re S. \sem{r^*} = \sem{r}^*.
 // qed.
 
-notation "a || b" left associative with precedence 30 for @{'orb $a $b}.
-interpretation "orb" 'orb a b = (orb a b).
-
-definition if_then_else ≝ λT:Type[0].λe,t,f.match e return λ_.T with [ true ⇒ t | false ⇒ f].
-notation > "'if' term 19 e 'then' term 19 t 'else' term 19 f" non associative with precedence 19 for @{ 'if_then_else $e $t $f }.
-notation < "'if' \nbsp term 19 e \nbsp 'then' \nbsp term 19 t \nbsp 'else' \nbsp term 90 f \nbsp" non associative with precedence 19 for @{ 'if_then_else $e $t $f }.
-interpretation "if_then_else" 'if_then_else e t f = (if_then_else ? e t f).
-
-inductive pitem (S: Alpha) : Type[0] ≝
+inductive pitem (S: DeqSet) : Type[0] ≝
    pz: pitem S
  | pe: pitem S
  | ps: S → pitem S
@@ -132,9 +116,9 @@ interpretation "patom" 'ps a = (ps ? a).
 interpretation "pepsilon" 'epsilon = (pe ?).
 interpretation "pempty" 'empty = (pz ?).
 
-let rec forget (S: Alpha) (l : pitem S) on l: re S ≝
+let rec forget (S: DeqSet) (l : pitem S) on l: re S ≝
  match l with
-  [ pz ⇒ ∅
+  [ pz ⇒ `∅
   | pe ⇒ ϵ
   | ps x ⇒ `x
   | pp x ⇒ `x
@@ -145,11 +129,11 @@ let rec forget (S: Alpha) (l : pitem S) on l: re S ≝
 (* notation < "|term 19 e|" non associative with precedence 70 for @{'forget $e}.*)
 interpretation "forget" 'norm a = (forget ? a).
 
-let rec in_pl (S : Alpha) (r : pitem S) on r : word S → Prop ≝ 
+let rec in_pl (S : DeqSet) (r : pitem S) on r : word S → Prop ≝ 
 match r with
-[ pz ⇒ {}
-| pe ⇒ {}
-| ps _ ⇒ {}
+[ pz ⇒ ∅
+| pe ⇒ ∅
+| ps _ ⇒ ∅
 | pp x ⇒ { [x] }
 | pc r1 r2 ⇒ (in_pl ? r1) · \sem{forget ? r2} ∪ (in_pl ? r2)
 | po r1 r2 ⇒ (in_pl ? r1) ∪ (in_pl ? r2)
@@ -158,13 +142,15 @@ match r with
 interpretation "in_pl" 'in_l E = (in_pl ? E).
 interpretation "in_pl mem" 'mem w l = (in_pl ? l w).
 
-definition epsilon ≝ λS,b.if b then { ([ ] : word S) } else {}.
+(*
+definition epsilon : ∀S:DeqSet.bool → word S → Prop
+≝ λS,b.if b then { ([ ] : word S) } else ∅. 
 
 interpretation "epsilon" 'epsilon = (epsilon ?).
 notation < "ϵ b" non associative with precedence 90 for @{'app_epsilon $b}.
-interpretation "epsilon lang" 'app_epsilon b = (epsilon ? b).
+interpretation "epsilon lang" 'app_epsilon b = (epsilon ? b). *)
 
-definition in_prl ≝ λS : Alpha.λp:pre S. 
+definition in_prl ≝ λS : DeqSet.λp:pre S. 
   if (\snd p) then \sem{\fst p} ∪ { ([ ] : word S) } else \sem{\fst p}.
   
 interpretation "in_prl mem" 'mem w l = (in_prl ? l w).
@@ -205,7 +191,7 @@ lemma sem_star_w : ∀S.∀i:pitem S.∀w.
 lemma append_eq_nil : ∀S.∀w1,w2:word S. w1 @ w2 = [ ] → w1 = [ ].
 #S #w1 #w2 cases w1 // #a #tl normalize #H destruct qed.
 
-lemma not_epsilon_lp : ∀S:Alpha.∀e:pitem S. ¬ ([ ] ∈ e).
+lemma not_epsilon_lp : ∀S:DeqSet.∀e:pitem S. ¬ ([ ] ∈ e).
 #S #e elim e normalize /2/  
   [#r1 #r2 * #n1 #n2 % * /2/ * #w1 * #w2 * * #H 
    >(append_eq_nil …H…) /2/
@@ -223,14 +209,14 @@ lemma true_to_epsilon : ∀S.∀e:pre S. \snd e = true → [ ] ∈ e.
 #S * #i #b #btrue normalize in btrue; >btrue %2 // 
 qed.
 
-definition lo ≝ λS:Alpha.λa,b:pre S.〈\fst a + \fst b,\snd a || \snd b〉.
+definition lo ≝ λS:DeqSet.λa,b:pre S.〈\fst a + \fst b,\snd a ∨ \snd b〉.
 notation "a ⊕ b" left associative with precedence 60 for @{'oplus $a $b}.
 interpretation "oplus" 'oplus a b = (lo ? a b).
 
-lemma lo_def: ∀S.∀i1,i2:pitem S.∀b1,b2. 〈i1,b1〉⊕〈i2,b2〉=〈i1+i2,b1||b2〉.
+lemma lo_def: ∀S.∀i1,i2:pitem S.∀b1,b2. 〈i1,b1〉⊕〈i2,b2〉=〈i1+i2,b1∨b2〉.
 // qed.
 
-definition pre_concat_r ≝ λS:Alpha.λi:pitem S.λe:pre S.
+definition pre_concat_r ≝ λS:DeqSet.λi:pitem S.λe:pre S.
   match e with [ pair i1 b ⇒ 〈i · i1, b〉].
  
 notation "i ◂ e" left associative with precedence 60 for @{'ltrif $i $e}.
@@ -244,15 +230,15 @@ lemma eq_to_ex_eq: ∀S.∀A,B:word S → Prop.
   A = B → A =1 B. 
 #S #A #B #H >H /2/ qed.
 
-lemma ext_eq_trans: ∀S.∀A,B,C:word S → Prop. 
+(* lemma eqP_trans: ∀S.∀A,B,C:word S → Prop. 
   A =1 B → B =1 C → A =1 C. 
 #S #A #B #C #eqAB #eqBC #w cases (eqAB w) cases (eqBC w) /4/
-qed.   
+qed.  
 
 lemma union_assoc: ∀S.∀A,B,C:word S → Prop. 
   A ∪ B ∪ C =1 A ∪ (B ∪ C).
 #S #A #B #C #w % [* [* /3/ | /3/] | * [/3/ | * /3/]
-qed.   
+qed.  *)
 
 lemma sem_pre_concat_r : ∀S,i.∀e:pre S.
   \sem{i ◂ e} =1 \sem{i} · \sem{|\fst e|} ∪ \sem{e}.
@@ -260,7 +246,7 @@ lemma sem_pre_concat_r : ∀S,i.∀e:pre S.
 >sem_pre_true >sem_cat >sem_pre_true /2/ 
 qed.
  
-definition lc ≝ λS:Alpha.λbcast:∀S:Alpha.pitem S → pre S.λe1:pre S.λi2:pitem S.
+definition lc ≝ λS:DeqSet.λbcast:∀S:DeqSet.pitem S → pre S.λe1:pre S.λi2:pitem S.
   match e1 with 
   [ pair i1 b1 ⇒ match b1 with 
     [ true ⇒ (i1 ◂ (bcast ? i2)) 
@@ -270,12 +256,12 @@ definition lc ≝ λS:Alpha.λbcast:∀S:Alpha.pitem S → pre S.λe1:pre S.λi2
         
 definition lift ≝ λS.λf:pitem S →pre S.λe:pre S. 
   match e with 
-  [ pair i b ⇒ 〈\fst (f i), \snd (f i) || b〉].
+  [ pair i b ⇒ 〈\fst (f i), \snd (f i) ∨ b〉].
 
 notation "a ▸ b" left associative with precedence 60 for @{'lc eclose $a $b}.
 interpretation "lc" 'lc op a b = (lc ? op a b).
 
-definition lk ≝ λS:Alpha.λbcast:∀S:Alpha.∀E:pitem S.pre S.λe:pre S.
+definition lk ≝ λS:DeqSet.λbcast:∀S:DeqSet.∀E:pitem S.pre S.λe:pre S.
   match e with 
   [ pair i1 b1 ⇒
     match b1 with 
@@ -285,19 +271,19 @@ definition lk ≝ λS:Alpha.λbcast:∀S:Alpha.∀E:pitem S.pre S.λe:pre S.
   ]. 
 
 (*
-lemma oplus_tt : ∀S: Alpha.∀i1,i2:pitem S. 
+lemma oplus_tt : ∀S: DeqSet.∀i1,i2:pitem S. 
   〈i1,true〉 ⊕ 〈i2,true〉  = 〈i1 + i2,true〉.
 // qed.
 
-lemma oplus_tf : ∀S: Alpha.∀i1,i2:pitem S. 
+lemma oplus_tf : ∀S: DeqSet.∀i1,i2:pitem S. 
   〈i1,true〉 ⊕ 〈i2,false〉  = 〈i1 + i2,true〉.
 // qed.
 
-lemma oplus_ft : ∀S: Alpha.∀i1,i2:pitem S. 
+lemma oplus_ft : ∀S: DeqSet.∀i1,i2:pitem S. 
   〈i1,false〉 ⊕ 〈i2,true〉  = 〈i1 + i2,true〉.
 // qed.
 
-lemma oplus_ff : ∀S: Alpha.∀i1,i2:pitem S. 
+lemma oplus_ff : ∀S: DeqSet.∀i1,i2:pitem S. 
   〈i1,false〉 ⊕ 〈i2,false〉  = 〈i1 + i2,false〉.
 // qed. *)
 
@@ -307,9 +293,9 @@ notation "a^⊛" non associative with precedence 90 for @{'lk eclose $a}.
 
 notation "•" non associative with precedence 60 for @{eclose ?}.
 
-let rec eclose (S: Alpha) (i: pitem S) on i : pre S ≝
+let rec eclose (S: DeqSet) (i: pitem S) on i : pre S ≝
  match i with
-  [ pz ⇒ 〈 ∅, false 〉
+  [ pz ⇒ 〈 `∅, false 〉
   | pe ⇒ 〈 ϵ,  true 〉
   | ps x ⇒ 〈 `.x, false〉
   | pp x ⇒ 〈 `.x, false 〉
@@ -320,24 +306,25 @@ let rec eclose (S: Alpha) (i: pitem S) on i : pre S ≝
 notation "• x" non associative with precedence 60 for @{'eclose $x}.
 interpretation "eclose" 'eclose x = (eclose ? x).
 
-lemma eclose_plus: ∀S:Alpha.∀i1,i2:pitem S.
+lemma eclose_plus: ∀S:DeqSet.∀i1,i2:pitem S.
   •(i1 + i2) = •i1 ⊕ •i2.
 // qed.
 
-lemma eclose_dot: ∀S:Alpha.∀i1,i2:pitem S.
+lemma eclose_dot: ∀S:DeqSet.∀i1,i2:pitem S.
   •(i1 · i2) = •i1 ▸ i2.
 // qed.
 
-lemma eclose_star: ∀S:Alpha.∀i:pitem S.
+lemma eclose_star: ∀S:DeqSet.∀i:pitem S.
   •i^* = 〈(\fst(•i))^*,true〉.
 // qed.
 
 definition reclose ≝ λS. lift S (eclose S). 
 interpretation "reclose" 'eclose x = (reclose ? x).
 
-lemma epsilon_or : ∀S:Alpha.∀b1,b2. epsilon S (b1 || b2) =1 ϵ b1 ∪ ϵ b2. 
+(*
+lemma epsilon_or : ∀S:DeqSet.∀b1,b2. epsilon S (b1 || b2) =1 ϵ b1 ∪ ϵ b2. 
 #S #b1 #b2 #w % cases b1 cases b2 normalize /2/ * /2/ * ;
-qed.
+qed. *)
 
 (*
 lemma cupA : ∀S.∀a,b,c:word S → Prop.a ∪ b ∪ c = a ∪ (b ∪ c).
@@ -347,7 +334,7 @@ nlemma cupC : ∀S. ∀a,b:word S → Prop.a ∪ b = b ∪ a.
 #S a b; napply extP; #w; @; *; nnormalize; /2/; nqed.*)
 
 (* theorem 16: 2 *)
-lemma sem_oplus: ∀S:Alpha.∀e1,e2:pre S.
+lemma sem_oplus: ∀S:DeqSet.∀e1,e2:pre S.
   \sem{e1 ⊕ e2} =1 \sem{e1} ∪ \sem{e2}. 
 #S * #i1 #b1 * #i2 #b2 #w %
   [cases b1 cases b2 normalize /2/ * /3/ * /3/
@@ -419,21 +406,6 @@ lemma erase_bull : ∀S.∀i:pitem S. |\fst (•i)| = |i|.
   ]
 qed.
 
-axiom eq_ext_sym: ∀S.∀A,B:word S →Prop. 
-  A =1 B → B =1 A.
-
-axiom union_ext_l: ∀S.∀A,B,C:word S →Prop. 
-  A =1 C  → A ∪ B =1 C ∪ B.
-  
-axiom union_ext_r: ∀S.∀A,B,C:word S →Prop. 
-  B =1 C → A ∪ B =1 A ∪ C.
-  
-axiom union_comm : ∀S.∀A,B:word S →Prop. 
-  A ∪ B =1 B ∪ A.
-
-axiom union_idemp: ∀S.∀A:word S →Prop. 
-  A ∪ A =1 A.
-
 axiom cat_ext_l: ∀S.∀A,B,C:word S →Prop. 
   A =1 C  → A · B =1 C · B.
   
@@ -449,15 +421,15 @@ qed.
 axiom fix_star: ∀S.∀A:word S → Prop. 
   A^* =1 A · A^* ∪ { [ ] }.
 
-axiom star_epsilon: ∀S:Alpha.∀A:word S → Prop.
+axiom star_epsilon: ∀S:DeqSet.∀A:word S → Prop.
   A^* ∪ { [ ] } =1 A^*.
 
-lemma sem_eclose_star: ∀S:Alpha.∀i:pitem S.
+lemma sem_eclose_star: ∀S:DeqSet.∀i:pitem S.
   \sem{〈i^*,true〉} =1 \sem{〈i,false〉}·\sem{|i|}^* ∪ { [ ] }.
 /2/ qed.
 
 (*
-lemma sem_eclose_star: ∀S:Alpha.∀i:pitem S.
+lemma sem_eclose_star: ∀S:DeqSet.∀i:pitem S.
   \sem{〈i^*,true〉} =1 \sem{〈i,true〉}·\sem{|i|}^* ∪ { [ ] }.
 /2/ qed.
 
@@ -487,7 +459,7 @@ qed-.
 
 lemma distr_cat_r_eps: ∀S.∀A,C:word S →Prop.
   (A ∪ { [ ] }) · C =1  A · C ∪ C. 
-#S #A #C @ext_eq_trans [|@distr_cat_r |@union_ext_r @epsilon_cat_l]
+#S #A #C @eqP_trans [|@distr_cat_r |@eqP_union_l @epsilon_cat_l]
 qed.
 
 (* axiom eplison_cut_l: ∀S.∀A:word S →Prop. 
@@ -511,10 +483,10 @@ lemma odot_dot_aux : ∀S.∀e1:pre S.∀i2:pitem S.
    \sem{e1 ▸ i2} =1  \sem{e1} · \sem{|i2|} ∪ \sem{i2}.
 #S * #i1 #b1 #i2 cases b1
   [2:#th >odot_false >sem_pre_false >sem_pre_false >sem_cat /2/
-  |#H >odot_true >sem_pre_true @(ext_eq_trans … (sem_pre_concat_r …))
-   >erase_bull @ext_eq_trans [|@(union_ext_r … H)]
-    @ext_eq_trans [|@union_ext_r [|@union_comm ]]
-    @ext_eq_trans [|@eq_ext_sym @union_assoc ] /3/ 
+  |#H >odot_true >sem_pre_true @(eqP_trans … (sem_pre_concat_r …))
+   >erase_bull @eqP_trans [|@(eqP_union_l … H)]
+    @eqP_trans [|@eqP_union_l[|@union_comm ]]
+    @eqP_trans [|@eqP_sym @union_assoc ] /3/ 
   ]
 qed.
 
@@ -527,57 +499,57 @@ axiom sem_fst_aux: ∀S.∀e:pre S.∀i:pitem S.∀A.
  \sem{e} =1 \sem{i} ∪ A → \sem{\fst e} =1 \sem{i} ∪ (A - {[ ]}).
 
 (* theorem 16: 1 *)
-theorem sem_bull: ∀S:Alpha. ∀e:pitem S.  \sem{•e} =1 \sem{e} ∪ \sem{|e|}.
+theorem sem_bull: ∀S:DeqSet. ∀e:pitem S.  \sem{•e} =1 \sem{e} ∪ \sem{|e|}.
 #S #e elim e 
   [#w normalize % [/2/ | * //]
   |/2/ 
   |#x normalize #w % [ /2/ | * [@False_ind | //]]
   |#x normalize #w % [ /2/ | * // ] 
   |#i1 #i2 #IH1 #IH2 >eclose_dot
-   @ext_eq_trans [|@odot_dot_aux //] >sem_cat 
-   @ext_eq_trans
-     [|@union_ext_l 
-       [|@ext_eq_trans [|@(cat_ext_l … IH1)] @distr_cat_r]]
-   @ext_eq_trans [|@union_assoc]
-   @ext_eq_trans [||@eq_ext_sym @union_assoc]
-   @union_ext_r //
+   @eqP_trans [|@odot_dot_aux //] >sem_cat 
+   @eqP_trans
+     [|@eqP_union_r
+       [|@eqP_trans [|@(cat_ext_l … IH1)] @distr_cat_r]]
+   @eqP_trans [|@union_assoc]
+   @eqP_trans [||@eqP_sym @union_assoc]
+   @eqP_union_l //
   |#i1 #i2 #IH1 #IH2 >eclose_plus
-   @ext_eq_trans [|@sem_oplus] >sem_plus >erase_plus 
-   @ext_eq_trans [|@(union_ext_r … IH2)]
-   @ext_eq_trans [|@eq_ext_sym @union_assoc]
-   @ext_eq_trans [||@union_assoc] @union_ext_l
-   @ext_eq_trans [||@eq_ext_sym @union_assoc]
-   @ext_eq_trans [||@union_ext_r [|@union_comm]]
-   @ext_eq_trans [||@union_assoc] /3/
+   @eqP_trans [|@sem_oplus] >sem_plus >erase_plus 
+   @eqP_trans [|@(eqP_union_l … IH2)]
+   @eqP_trans [|@eqP_sym @union_assoc]
+   @eqP_trans [||@union_assoc] @eqP_union_r
+   @eqP_trans [||@eqP_sym @union_assoc]
+   @eqP_trans [||@eqP_union_l [|@union_comm]]
+   @eqP_trans [||@union_assoc] /3/
   |#i #H >sem_pre_true >sem_star >erase_bull >sem_star
-   @ext_eq_trans [|@union_ext_l [|@cat_ext_l [|@sem_fst_aux //]]]
-   @ext_eq_trans [|@union_ext_l [|@distr_cat_r]]
-   @ext_eq_trans [|@union_assoc] @union_ext_r >erase_star @star_fix 
+   @eqP_trans [|@eqP_union_r [|@cat_ext_l [|@sem_fst_aux //]]]
+   @eqP_trans [|@eqP_union_r [|@distr_cat_r]]
+   @eqP_trans [|@union_assoc] @eqP_union_l >erase_star @star_fix 
   ]
 qed.
 
-definition lifted_cat ≝ λS:Alpha.λe:pre S. 
+definition lifted_cat ≝ λS:DeqSet.λe:pre S. 
   lift S (lc S eclose e).
 
 notation "e1 ⊙ e2" left associative with precedence 70 for @{'odot $e1 $e2}.
 
 interpretation "lifted cat" 'odot e1 e2 = (lifted_cat ? e1 e2).
 
-lemma sem_odot_true: ∀S:Alpha.∀e1:pre S.∀i. 
+lemma sem_odot_true: ∀S:DeqSet.∀e1:pre S.∀i. 
   \sem{e1 ⊙ 〈i,true〉} =1 \sem{e1 ▸ i} ∪ { [ ] }.
 #S #e1 #i 
-cut (e1 ⊙ 〈i,true〉 = 〈\fst (e1 ▸ i), \snd(e1 ▸ i) || true〉) [//]
+cut (e1 ⊙ 〈i,true〉 = 〈\fst (e1 ▸ i), \snd(e1 ▸ i) ∨ true〉) [//]
 #H >H cases (e1 ▸ i) #i1 #b1 cases b1 
-  [>sem_pre_true @ext_eq_trans [||@eq_ext_sym @union_assoc]
-   @union_ext_r /2/ 
+  [>sem_pre_true @eqP_trans [||@eqP_sym @union_assoc]
+   @eqP_union_l /2/ 
   |/2/
   ]
 qed.
 
-lemma eq_odot_false: ∀S:Alpha.∀e1:pre S.∀i. 
+lemma eq_odot_false: ∀S:DeqSet.∀e1:pre S.∀i. 
   e1 ⊙ 〈i,false〉 = e1 ▸ i.
 #S #e1 #i  
-cut (e1 ⊙ 〈i,false〉 = 〈\fst (e1 ▸ i), \snd(e1 ▸ i) || false〉) [//]
+cut (e1 ⊙ 〈i,false〉 = 〈\fst (e1 ▸ i), \snd(e1 ▸ i) ∨ false〉) [//]
 cases (e1 ▸ i) #i1 #b1 cases b1 #H @H
 qed.
 
@@ -585,8 +557,8 @@ lemma sem_odot:
   ∀S.∀e1,e2: pre S. \sem{e1 ⊙ e2} =1 \sem{e1}· \sem{|\fst e2|} ∪ \sem{e2}.
 #S #e1 * #i2 * 
   [>sem_pre_true 
-   @ext_eq_trans [|@sem_odot_true]
-   @ext_eq_trans [||@union_assoc] @union_ext_l @odot_dot_aux //
+   @eqP_trans [|@sem_odot_true]
+   @eqP_trans [||@union_assoc] @eqP_union_r @odot_dot_aux //
   |>sem_pre_false >eq_odot_false @odot_dot_aux //
   ]
 qed.
@@ -623,17 +595,17 @@ theorem sem_ostar: ∀S.∀e:pre S.
   \sem{e^⊛} =1  \sem{e} · \sem{|\fst e|}^*.
 #S * #i #b cases b
   [>sem_pre_true >sem_pre_true >sem_star >erase_bull
-   @ext_eq_trans [|@union_ext_l [|@cat_ext_l [|@sem_fst_aux //]]]
-   @ext_eq_trans [|@union_ext_l [|@distr_cat_r]]
-   @ext_eq_trans [||@eq_ext_sym @distr_cat_r]
-   @ext_eq_trans [|@union_assoc] @union_ext_r 
-   @ext_eq_trans [||@eq_ext_sym @epsilon_cat_l] @star_fix 
+   @eqP_trans [|@eqP_union_r[|@cat_ext_l [|@sem_fst_aux //]]]
+   @eqP_trans [|@eqP_union_r [|@distr_cat_r]]
+   @eqP_trans [||@eqP_sym @distr_cat_r]
+   @eqP_trans [|@union_assoc] @eqP_union_l
+   @eqP_trans [||@eqP_sym @epsilon_cat_l] @star_fix 
   |>sem_pre_false >sem_pre_false >sem_star /2/
   ]
 qed.
   
 (*
-nlet rec pre_of_re (S : Alpha) (e : re S) on e : pitem S ≝ 
+nlet rec pre_of_re (S : DeqSet) (e : re S) on e : pitem S ≝ 
   match e with 
   [ z ⇒ pz ?
   | e ⇒ pe ?
