@@ -52,8 +52,7 @@ let rec flatten (S : DeqSet) (l : list (word S)) on l : word S ≝
 match l with [ nil ⇒ [ ] | cons w tl ⇒ w @ flatten ? tl ].
 
 let rec conjunct (S : DeqSet) (l : list (word S)) (r : word S → Prop) on l: Prop ≝
-match l with [ nil ⇒ ? | cons w tl ⇒ r w ∧ conjunct ? tl r ]. 
-// qed.
+match l with [ nil ⇒ True | cons w tl ⇒ r w ∧ conjunct ? tl r ]. 
 
 (*
 definition empty_lang ≝ λS.λw:word S.False.
@@ -406,11 +405,17 @@ lemma erase_bull : ∀S.∀i:pitem S. |\fst (•i)| = |i|.
   ]
 qed.
 
-axiom cat_ext_l: ∀S.∀A,B,C:word S →Prop. 
+lemma cat_ext_l: ∀S.∀A,B,C:word S →Prop. 
   A =1 C  → A · B =1 C · B.
+#S #A #B #C #H #w % * #w1 * #w2 * * #eqw #inw1 #inw2
+cases (H w1) /6/ 
+qed.
   
-axiom cat_ext_r: ∀S.∀A,B,C:word S →Prop. 
+lemma cat_ext_r: ∀S.∀A,B,C:word S →Prop. 
   B =1 C → A · B =1 A · C.
+#S #A #B #C #H #w % * #w1 * #w2 * * #eqw #inw1 #inw2
+cases (H w2) /6/ 
+qed.
   
 lemma distr_cat_r: ∀S.∀A,B,C:word S →Prop.
   (A ∪ B) · C =1  A · C ∪ B · C. 
@@ -418,9 +423,41 @@ lemma distr_cat_r: ∀S.∀A,B,C:word S →Prop.
   [* #w1 * #w2 * * #eqw * /6/ |* * #w1 * #w2 * * /6/] 
 qed.
 
-axiom fix_star: ∀S.∀A:word S → Prop. 
+(*
+lemma fix_star_aux: ∀S.∀A:word S → Prop.∀w1,w2.
+  A w1 → A^* w2 → A^* (w1@w2).
+#S #A #w1 #w2 #Aw1 * #l * #H #H1 
+@(ex_intro *)
+ 
+lemma fix_star: ∀S.∀A:word S → Prop. 
   A^* =1 A · A^* ∪ { [ ] }.
-
+#S #A #w %
+  [* #l generalize in match w; -w cases l [normalize #w * /2/]
+   #w1 #tl #w * whd in ⊢ ((??%?)→?); #eqw whd in ⊢ (%→?); *
+   #w1A #cw1 %1 @(ex_intro … w1) @(ex_intro … (flatten S tl))
+   % /2/ whd @(ex_intro … tl) /2/
+  |* [2: normalize #eqw <eqw @(ex_intro … (nil ?)) /2/]
+   (* caso interessante *)
+   cut (∀w1,w2.w=w1@w2 → cat S A A^* w2 → A^* w2) 
+     [2:#H @(H … (nil ?)) //]
+   elim w 
+     [#w1 #w2 #H cases (nil_to_nil … (sym_eq … H)) #_ #H >H #_ 
+      @(ex_intro … (nil ?)) /2/
+     |#a #w1 #Hind * 
+       [#w2 whd in ⊢ ((???%)→?); #eqw2 <eqw2 *
+        #w3 * #w4 cases w3
+         [* * whd in ⊢ ((??%?)→?); #H <H //
+         |#b #w5 * * whd in ⊢ ((??%?)→?); #H destruct
+          #H1 * #l * #H2 #H3 @(ex_intro … ((a::w5)::l)) %      
+          normalize // /2/
+         ]
+       |#b #w2 #w3 whd in ⊢ ((???%)→?); #H destruct #H1
+        @(Hind … w2) //
+       ]
+     ]
+   ]
+qed.
+      
 axiom star_epsilon: ∀S:DeqSet.∀A:word S → Prop.
   A^* ∪ { [ ] } =1 A^*.
 

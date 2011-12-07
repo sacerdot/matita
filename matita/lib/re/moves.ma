@@ -14,7 +14,7 @@
 
 include "re/re.ma".
 
-let rec move (S: Alpha) (x:S) (E: pitem S) on E : pre S ≝
+let rec move (S: DeqSet) (x:S) (E: pitem S) on E : pre S ≝
  match E with
   [ pz ⇒ 〈 ∅, false 〉
   | pe ⇒ 〈 ϵ, false 〉
@@ -24,15 +24,15 @@ let rec move (S: Alpha) (x:S) (E: pitem S) on E : pre S ≝
   | pc e1 e2 ⇒ (move ? x e1) ⊙ (move ? x e2)
   | pk e ⇒ (move ? x e)^⊛ ].
   
-lemma move_plus: ∀S:Alpha.∀x:S.∀i1,i2:pitem S.
+lemma move_plus: ∀S:DeqSet.∀x:S.∀i1,i2:pitem S.
   move S x (i1 + i2) = (move ? x i1) ⊕ (move ? x i2).
 // qed.
 
-lemma move_cat: ∀S:Alpha.∀x:S.∀i1,i2:pitem S.
+lemma move_cat: ∀S:DeqSet.∀x:S.∀i1,i2:pitem S.
   move S x (i1 · i2) = (move ? x i1) ⊙ (move ? x i2).
 // qed.
 
-lemma move_star: ∀S:Alpha.∀x:S.∀i:pitem S.
+lemma move_star: ∀S:DeqSet.∀x:S.∀i:pitem S.
   move S x i^* = (move ? x i)^⊛.
 // qed.
 
@@ -42,9 +42,9 @@ lemma fst_eq : ∀A,B.∀a:A.∀b:B. \fst 〈a,b〉 = a.
 lemma snd_eq : ∀A,B.∀a:A.∀b:B. \snd 〈a,b〉 = b.
 // qed.
 
-definition pmove ≝ λS:Alpha.λx:S.λe:pre S. move ? x (\fst e).
+definition pmove ≝ λS:DeqSet.λx:S.λe:pre S. move ? x (\fst e).
 
-lemma pmove_def : ∀S:Alpha.∀x:S.∀i:pitem S.∀b. 
+lemma pmove_def : ∀S:DeqSet.∀x:S.∀i:pitem S.∀b. 
   pmove ? x 〈i,b〉 = move ? x i.
 // qed.
 
@@ -53,7 +53,7 @@ lemma eq_to_eq_hd: ∀A.∀l1,l2:list A.∀a,b.
 #A #l1 #l2 #a #b #H destruct //
 qed. 
 
-axiom same_kernel: ∀S:Alpha.∀a:S.∀i:pitem S.
+axiom same_kernel: ∀S:DeqSet.∀a:S.∀i:pitem S.
   |\fst (move ? a i)| = |i|.
 (* #S #a #i elim i //
   [#i1 #i2 >move_cat
@@ -61,14 +61,10 @@ axiom same_kernel: ∀S:Alpha.∀a:S.∀i:pitem S.
    cases (move S a i2) #i21 #b2 >fst_eq #IH2 
    normalize *)
 
-axiom iff_trans:∀A,B,C. A ↔ B → B ↔ C → A ↔ C.
-axiom iff_or_l: ∀A,B,C. A ↔ B → C ∨ A ↔ C ∨ B.
-axiom iff_or_r: ∀A,B,C. A ↔ B → A ∨ C ↔ B ∨ C.
-
 axiom epsilon_in_star: ∀S.∀A:word S → Prop. A^* [ ].
 
 theorem move_ok:
- ∀S:Alpha.∀a:S.∀i:pitem S.∀w: word S. 
+ ∀S:DeqSet.∀a:S.∀i:pitem S.∀w: word S. 
    \sem{move ? a i} w ↔ \sem{i} (a::w).
 #S #a #i elim i 
   [normalize /2/
@@ -111,35 +107,31 @@ theorem move_ok:
 qed.
     
 notation > "x ↦* E" non associative with precedence 60 for @{moves ? $x $E}.
-let rec moves (S : Alpha) w e on w : pre S ≝
+let rec moves (S : DeqSet) w e on w : pre S ≝
  match w with
   [ nil ⇒ e
   | cons x w' ⇒ w' ↦* (move S x (\fst e))].
 
-lemma moves_empty: ∀S:Alpha.∀e:pre S. 
+lemma moves_empty: ∀S:DeqSet.∀e:pre S. 
   moves ? [ ] e = e.
 // qed.
 
-lemma moves_cons: ∀S:Alpha.∀a:S.∀w.∀e:pre S. 
+lemma moves_cons: ∀S:DeqSet.∀a:S.∀w.∀e:pre S. 
   moves ? (a::w)  e = moves ? w (move S a (\fst e)).
 // qed.
 
-lemma not_epsilon_sem: ∀S:Alpha.∀a:S.∀w: word S. ∀e:pre S. 
+lemma not_epsilon_sem: ∀S:DeqSet.∀a:S.∀w: word S. ∀e:pre S. 
   iff ((a::w) ∈ e) ((a::w) ∈ \fst e).
 #S #a #w * #i #b >fst_eq cases b normalize 
   [% /2/ * // #H destruct |% normalize /2/]
 qed.
 
-lemma same_kernel_moves: ∀S:Alpha.∀w.∀e:pre S.
+lemma same_kernel_moves: ∀S:DeqSet.∀w.∀e:pre S.
   |\fst (moves ? w e)| = |\fst e|.
 #S #w elim w //
 qed.
 
-axiom iff_not: ∀A,B. (iff A B) →(iff (¬A) (¬B)).
-
-axiom iff_sym: ∀A,B. (iff A B) →(iff B A).
-    
-theorem decidable_sem: ∀S:Alpha.∀w: word S. ∀e:pre S. 
+theorem decidable_sem: ∀S:DeqSet.∀w: word S. ∀e:pre S. 
    (\snd (moves ? w e) = true)  ↔ \sem{e} w.
 #S #w elim w 
  [* #i #b >moves_empty cases b % /2/
@@ -153,7 +145,7 @@ lemma not_true_to_false: ∀b.b≠true → b =false.
 #b * cases b // #H @False_ind /2/ 
 qed. 
 
-theorem equiv_sem: ∀S:Alpha.∀e1,e2:pre S. 
+theorem equiv_sem: ∀S:DeqSet.∀e1,e2:pre S. 
   iff (\sem{e1} =1 \sem{e2}) (∀w.\snd (moves ? w e1) = \snd (moves ? w e2)).
 #S #e1 #e2 % 
 [#same_sem #w 
@@ -167,9 +159,9 @@ qed.
 axiom moves_left : ∀S,a,w,e. 
   moves S (w@[a]) e = move S a (\fst (moves S w e)). 
 
-definition in_moves ≝ λS:Alpha.λw.λe:pre S. \snd(w ↦* e).
+definition in_moves ≝ λS:DeqSet.λw.λe:pre S. \snd(w ↦* e).
 
-coinductive equiv (S:Alpha) : pre S → pre S → Prop ≝
+coinductive equiv (S:DeqSet) : pre S → pre S → Prop ≝
  mk_equiv:
   ∀e1,e2: pre S.
    \snd e1  = \snd e2 →
@@ -186,7 +178,7 @@ lemma beqb_ok: ∀b1,b2. iff (beqb b1 b2 = true) (b1 = b2).
 #b1 #b2 cases b1 cases b2 normalize /2/
 qed.
 
-definition Bin ≝ mk_Alpha bool beqb beqb_ok. 
+definition Bin ≝ mk_DeqSet bool beqb beqb_ok. 
 
 let rec beqitem S (i1,i2: pitem S) on i1 ≝ 
   match i1 with
@@ -206,59 +198,17 @@ let rec beqitem S (i1,i2: pitem S) on i1 ≝
 axiom beqitem_ok: ∀S,i1,i2. iff (beqitem S i1 i2 = true) (i1 = i2). 
 
 definition BinItem ≝ 
-  mk_Alpha (pitem Bin) (beqitem Bin) (beqitem_ok Bin).
+  mk_DeqSet (pitem Bin) (beqitem Bin) (beqitem_ok Bin).
 
-definition beqpre ≝ λS:Alpha.λe1,e2:pre S. 
+definition beqpre ≝ λS:DeqSet.λe1,e2:pre S. 
   beqitem S (\fst e1) (\fst e2) ∧ beqb (\snd e1) (\snd e2).
   
-definition beqpairs ≝ λS:Alpha.λp1,p2:(pre S)×(pre S). 
+definition beqpairs ≝ λS:DeqSet.λp1,p2:(pre S)×(pre S). 
   beqpre S (\fst p1) (\fst p2) ∧ beqpre S (\snd p1) (\snd p2).
   
 axiom beqpairs_ok: ∀S,p1,p2. iff (beqpairs S p1 p2 = true) (p1 = p2). 
 
-definition space ≝ λS.mk_Alpha ((pre S)×(pre S)) (beqpairs S) (beqpairs_ok S).
-
-let rec memb (S:Alpha) (x:S) (l: list S) on l  ≝
-  match l with
-  [ nil ⇒ false
-  | cons a tl ⇒ (a == x) || memb S x tl
-  ].
-  
-lemma memb_hd: ∀S,a,l. memb S a (a::l) = true.
-#S #a #l normalize >(proj2 … (eqb_true S …) (refl S a)) //
-qed.
-
-lemma memb_cons: ∀S,a,b,l. 
-  memb S a l = true → memb S a (b::l) = true.
-#S #a #b #l normalize cases (b==a) normalize // 
-qed.
-
-lemma memb_append: ∀S,a,l1,l2. 
-memb S a (l1@l2) = true →
-  memb S a l1= true ∨ memb S a l2 = true.
-#S #a #l1 elim l1 normalize [/2/] #b #tl #Hind
-#l2 cases (b==a) normalize /2/ 
-qed. 
-
-lemma memb_append_l1: ∀S,a,l1,l2. 
- memb S a l1= true → memb S a (l1@l2) = true.
-#S #a #l1 elim l1 normalize
-  [normalize #le #abs @False_ind /2/
-  |#b #tl #Hind #l2 cases (b==a) normalize /2/ 
-  ]
-qed. 
-
-lemma memb_append_l2: ∀S,a,l1,l2. 
- memb S a l2= true → memb S a (l1@l2) = true.
-#S #a #l1 elim l1 normalize //
-#b #tl #Hind #l2 cases (b==a) normalize /2/ 
-qed. 
-
-let rec uniqueb (S:Alpha) l on l : bool ≝
-  match l with 
-  [ nil ⇒ true
-  | cons a tl ⇒ notb (memb S a tl) ∧ uniqueb S tl
-  ].
+definition space ≝ λS.mk_DeqSet ((pre S)×(pre S)) (beqpairs S) (beqpairs_ok S).
 
 definition sons ≝ λp:space Bin. 
   [〈move Bin true (\fst (\fst p)), move Bin true (\fst (\snd p))〉;
@@ -276,21 +226,6 @@ let rec test_sons (l:list (space Bin)) ≝
   | cons hd tl ⇒ 
     beqb (\snd (\fst hd)) (\snd (\snd hd)) ∧ test_sons tl
   ]. *)
-
-let rec unique_append (S:Alpha) (l1,l2: list S) on l1 ≝
-  match l1 with
-  [ nil ⇒ l2
-  | cons a tl ⇒ 
-     let r ≝ unique_append S tl l2 in
-     if (memb S a r) then r else a::r
-  ].
-
-lemma unique_append_unique: ∀S,l1,l2. uniqueb S l2 = true →
-  uniqueb S (unique_append S l1 l2) = true.
-#S #l1 elim l1 normalize // #a #tl #Hind #l2 #uniquel2
-cases (true_or_false … (memb S a (unique_append S tl l2))) 
-#H >H normalize [@Hind //] >H normalize @Hind //
-qed.
 
 let rec bisim (n:nat) (frontier,visited: list (space Bin)) ≝
   match n with 
@@ -358,37 +293,15 @@ uniqueb ? frontier = true ∧
    (∃a. move ? a (\fst (\fst p1)) = \fst p ∧ 
         move ? a (\fst (\snd p1)) = \snd p)).
 
-definition orb_true_r1: ∀b1,b2:bool. 
-  b1 = true → (b1 ∨ b2) = true.
-#b1 #b2 #H >H // qed.
-
-definition orb_true_r2: ∀b1,b2:bool. 
-  b2 = true → (b1 ∨ b2) = true.
-#b1 #b2 #H >H cases b1 // qed.
-
-definition orb_true_l: ∀b1,b2:bool. 
-  (b1 ∨ b2) = true → (b1 = true) ∨ (b2 = true).
-* normalize /2/ qed.
-
-definition andb_true_l1: ∀b1,b2:bool. 
-  (b1 ∧ b2) = true → (b1 = true).
-#b1 #b2 cases b1 normalize //.
-qed.
-
-definition andb_true_l2: ∀b1,b2:bool. 
-  (b1 ∧ b2) = true → (b2 = true).
-#b1 #b2 cases b1 cases b2 normalize //.
-qed.
-
-definition andb_true_l: ∀b1,b2:bool. 
+(* lemma andb_true: ∀b1,b2:bool. 
   (b1 ∧ b2) = true → (b1 = true) ∧ (b2 = true).
 #b1 #b2 cases b1 normalize #H [>H /2/ |@False_ind /2/].
 qed.
 
-definition andb_true_r: ∀b1,b2:bool. 
+lemma andb_true_r: ∀b1,b2:bool. 
   (b1 = true) ∧ (b2 = true) → (b1 ∧ b2) = true.
 #b1 #b2 cases b1 normalize * // 
-qed.
+qed. *)
 
 lemma notb_eq_true_l: ∀b. notb b = true → b = false.
 #b cases b normalize //
@@ -407,22 +320,6 @@ lemma notb_eq_false_r:∀b. b = true → notb b = false.
 qed.
 
 
-axiom filter_true: ∀S,f,a,l. 
-  memb S a (filter S f l) = true → f a = true.
-(*
-#S #f #a #l elim l [normalize #H @False_ind /2/]
-#b #tl #Hind normalize cases (f b) normalize *)
-
-axiom memb_filter_memb: ∀S,f,a,l. 
-  memb S a (filter S f l) = true → memb S a l = true.
-  
-axiom unique_append_elim: ∀S:Alpha.∀P: S → Prop.∀l1,l2. 
-(∀x. memb S x l1 = true → P x) → (∀x. memb S x l2 = true → P x) →
-∀x. memb S x (unique_append S l1 l2) = true → P x. 
-
-axiom not_memb_to_not_eq: ∀S,a,b,l. 
- memb S a l = false → memb S b l = true → a==b = false.
-
 include "arithmetics/exp.ma".
 
 let rec pos S (i:re S) on i ≝ 
@@ -435,57 +332,6 @@ let rec pos S (i:re S) on i ≝
   | k i ⇒ pos S i
   ].
 
-definition sublist ≝ 
-  λS,l1,l2.∀a. memb S a l1 = true → memb S a l2 = true.
-
-lemma memb_exists: ∀S,a,l.memb S a l = true → 
-  ∃l1,l2.l=l1@(a::l2).
-#S #a #l elim l [normalize #abs @False_ind /2/]
-#b #tl #Hind #H cases (orb_true_l … H)
-  [#eqba @(ex_intro … (nil S)) @(ex_intro … tl)
-   >(proj1 … (eqb_true …) eqba) //
-  |#mem_tl cases (Hind mem_tl) #l1 * #l2 #eqtl
-   @(ex_intro … (b::l1)) @(ex_intro … l2) >eqtl //
-  ]
-qed.
-
-lemma length_append: ∀A.∀l1,l2:list A. 
-  |l1@l2| = |l1|+|l2|.
-#A #l1 elim l1 // normalize /2/
-qed.
-
-lemma sublist_length: ∀S,l1,l2. 
- uniqueb S l1 = true → sublist S l1 l2 → |l1| ≤ |l2|.
-#S #l1 elim l1 // 
-#a #tl #Hind #l2 #unique #sub
-cut (∃l3,l4.l2=l3@(a::l4)) [@memb_exists @sub //]
-* #l3 * #l4 #eql2 >eql2 >length_append normalize 
-applyS le_S_S <length_append @Hind [@(andb_true_l2 … unique)]
->eql2 in sub; #sub #x #membx 
-cases (memb_append … (sub x (orb_true_r2 … membx)))
-  [#membxl3 @memb_append_l1 //
-  |#membxal4 cases (orb_true_l … membxal4)
-    [#eqax @False_ind cases (andb_true_l … unique)
-     >(proj1 … (eqb_true …) eqax) >membx normalize /2/
-    |#membxl4 @memb_append_l2 //
-    ]
-  ]
-qed.
-
-axiom memb_filter: ∀S,f,l,x. memb S x (filter ? f l) = true → 
-memb S x l = true ∧ (f x = true).
-
-axiom memb_filter_l: ∀S,f,l,x. memb S x l = true → (f x = true) →
-memb S x (filter ? f l) = true.
-
-axiom sublist_unique_append_l1: 
-  ∀S,l1,l2. sublist S l1 (unique_append S l1 l2).
-  
-axiom sublist_unique_append_l2: 
-  ∀S,l1,l2. sublist S l2 (unique_append S l1 l2).
-
-definition compose ≝ λA,B,C.λf:A→B→C.λl1,l2.
-    foldr ?? (λi,acc.(map ?? (f i) l2)@acc) [ ] l1.
   
 let rec pitem_enum S (i:re S) on i ≝
   match i with
@@ -496,13 +342,6 @@ let rec pitem_enum S (i:re S) on i ≝
   | c i1 i2 ⇒ compose ??? (pc S) (pitem_enum S i1) (pitem_enum S i2)
   | k i ⇒ map ?? (pk S) (pitem_enum S i)
   ].
-
-axiom memb_compose: ∀S1,S2,S3,op,a1,a2,l1,l2.   
-  memb S1 a1 l1 = true → memb S2 a2 l2 = true →
-  memb S3 (op a1 a2) (compose S1 S2 S3 op l1 l2) = true.
-(* #S #op #a1 #a2 #l1 elim l1 [normalize //]
-#x #tl #Hind #l2 elim l2 [#_ normalize #abs @False_ind /2/]
-#y #tl2 #Hind2 #membx #memby normalize *)
 
 axiom pitem_enum_complete: ∀i: pitem Bin.
   memb BinItem i (pitem_enum ? (forget ? i)) = true.
@@ -556,7 +395,7 @@ lemma bisim_ok1: ∀e1,e2:pre Bin.\sem{e1}=1\sem{e2} →
          [#eqp <(proj1 … (eqb_true (space Bin) ? p1) eqp) % // 
          |#visited_p1 @(vinv … visited_p1)
          ]
-       |whd % [@unique_append_unique @(andb_true_l2 … u_frontier)]
+       |whd % [@unique_append_unique @(andb_true_r … u_frontier)]
         @unique_append_elim #q #H
          [% 
            [@notb_eq_true_l @(filter_true … H) 
