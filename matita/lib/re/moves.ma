@@ -13,10 +13,11 @@
 (**************************************************************************)
 
 include "re/re.ma".
+include "basics/lists/listb.ma".
 
 let rec move (S: DeqSet) (x:S) (E: pitem S) on E : pre S ≝
  match E with
-  [ pz ⇒ 〈 ∅, false 〉
+  [ pz ⇒ 〈 `∅, false 〉
   | pe ⇒ 〈 ϵ, false 〉
   | ps y ⇒ 〈 `y, false 〉
   | pp y ⇒ 〈 `y, x == y 〉
@@ -36,12 +37,6 @@ lemma move_star: ∀S:DeqSet.∀x:S.∀i:pitem S.
   move S x i^* = (move ? x i)^⊛.
 // qed.
 
-lemma fst_eq : ∀A,B.∀a:A.∀b:B. \fst 〈a,b〉 = a.
-// qed.
-
-lemma snd_eq : ∀A,B.∀a:A.∀b:B. \snd 〈a,b〉 = b.
-// qed.
-
 definition pmove ≝ λS:DeqSet.λx:S.λe:pre S. move ? x (\fst e).
 
 lemma pmove_def : ∀S:DeqSet.∀x:S.∀i:pitem S.∀b. 
@@ -53,15 +48,13 @@ lemma eq_to_eq_hd: ∀A.∀l1,l2:list A.∀a,b.
 #A #l1 #l2 #a #b #H destruct //
 qed. 
 
-axiom same_kernel: ∀S:DeqSet.∀a:S.∀i:pitem S.
+lemma same_kernel: ∀S:DeqSet.∀a:S.∀i:pitem S.
   |\fst (move ? a i)| = |i|.
-(* #S #a #i elim i //
-  [#i1 #i2 >move_cat
-   cases (move S a i1) #i11 #b1 >fst_eq #IH1 
-   cases (move S a i2) #i21 #b2 >fst_eq #IH2 
-   normalize *)
-
-axiom epsilon_in_star: ∀S.∀A:word S → Prop. A^* [ ].
+#S #a #i elim i //
+  [#i1 #i2 >move_cat #H1 #H2 whd in ⊢ (???%); <H1 <H2 //
+  |#i1 #i2 >move_plus #H1 #H2 whd in ⊢ (???%); <H1 <H2 //
+  ]
+qed.
 
 theorem move_ok:
  ∀S:DeqSet.∀a:S.∀i:pitem S.∀w: word S. 
@@ -320,7 +313,7 @@ lemma notb_eq_false_r:∀b. b = true → notb b = false.
 qed.
 
 
-include "arithmetics/exp.ma".
+(* include "arithmetics/exp.ma". *)
 
 let rec pos S (i:re S) on i ≝ 
   match i with
@@ -390,7 +383,7 @@ lemma bisim_ok1: ∀e1,e2:pre Bin.\sem{e1}=1\sem{e2} →
       @(proj2 … (beqb_ok … )) @(proj1 … (equiv_sem … )) @same 
      |#ptest >(bisim_step_true … ptest) @HI -HI
        [<plus_n_Sm //
-       |% [@andb_true_r % [@notb_eq_false_l // | // ]]
+       |% [whd in ⊢ (??%?); >Hp whd in ⊢ (??%?); //]
         #p1 #H (cases (orb_true_l … H))
          [#eqp <(proj1 … (eqb_true (space Bin) ? p1) eqp) % // 
          |#visited_p1 @(vinv … visited_p1)
@@ -405,7 +398,7 @@ lemma bisim_ok1: ∀e1,e2:pre Bin.\sem{e1}=1\sem{e2} →
          |cases (finv q ?) [|@memb_cons //]
           #nvq * #p1 * #Hp1 #reach %
            [cut ((p==q) = false) [|#Hpq whd in ⊢ (??%?); >Hpq @nvq]
-            cases (andb_true_l … u_frontier) #notp #_ 
+            cases (andb_true … u_frontier) #notp #_ 
             @(not_memb_to_not_eq … H) @notb_eq_true_l @notp 
            |cases (proj2 … (finv q ?)) 
              [#p1 *  #Hp1 #reach @(ex_intro … p1) % // @memb_cons //
@@ -453,8 +446,8 @@ lemma reachable_bisim:
        cases (true_or_false … (memb (space Bin) xa (x::visited)))
         [#membxa @memb_append_l2 //
         |#membxa @memb_append_l1 @sublist_unique_append_l1 @memb_filter_l
-          [whd in ⊢ (??(??%%)?); cases a [@memb_hd |@memb_cons @memb_hd]
-          |>membxa //
+          [>membxa //
+          |whd in ⊢ (??(??%%)?); cases a [@memb_hd |@memb_cons @memb_hd]
           ]
         ]
       |#H1 letin xa ≝ 〈move Bin a (\fst (\fst x)), move Bin a (\fst (\snd x))〉
@@ -508,8 +501,6 @@ definition exp4 ≝ move Bin true (\fst (•exp2)).
 definition exp5 ≝ move Bin false (\fst (•exp1)).
 definition exp6 ≝ move Bin false (\fst (•exp2)).
 
-example comp1 : bequiv 15 (•exp1) (•exp2) [ ] = false .
-normalize //
-qed.
+
 
 
