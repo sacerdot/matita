@@ -42,6 +42,12 @@ theorem eq_pair_fst_snd: ∀A,B.∀p:A × B.
   p = 〈 \fst p, \snd p 〉.
 #A #B #p (cases p) // qed.
 
+lemma fst_eq : ∀A,B.∀a:A.∀b:B. \fst 〈a,b〉 = a.
+// qed.
+
+lemma snd_eq : ∀A,B.∀a:A.∀b:B. \snd 〈a,b〉 = b.
+// qed.
+
 (* sum *)
 inductive Sum (A,B:Type[0]) : Type[0] ≝
   inl : A → Sum A B
