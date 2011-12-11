@@ -28,7 +28,7 @@ inductive ldrop: nat → nat → relation lenv ≝
               ldrop (d + 1) e (L1. 𝕓{I} V1) (L2. 𝕓{I} V2)
 .
 
-interpretation "ldropping" 'RDrop d e L1 L2 = (ldrop d e L1 L2).
+interpretation "local slicing" 'RDrop d e L1 L2 = (ldrop d e L1 L2).
 
 (* Basic inversion lemmas ***************************************************)
 
@@ -36,10 +36,8 @@ fact ldrop_inv_refl_aux: ∀d,e,L1,L2. ↓[d, e] L1 ≡ L2 → d = 0 → e = 0 �
 #d #e #L1 #L2 * -d -e -L1 -L2
 [ //
 | //
-| #L1 #L2 #I #V #e #_ #_ #H
-  elim (plus_S_eq_O_false … H)
-| #L1 #L2 #I #V1 #V2 #d #e #_ #_ #H
-  elim (plus_S_eq_O_false … H)
+| #L1 #L2 #I #V #e #_ #_ >commutative_plus normalize #H destruct
+| #L1 #L2 #I #V1 #V2 #d #e #_ #_ >commutative_plus normalize #H destruct
 ]
 qed.
 
@@ -69,7 +67,7 @@ fact ldrop_inv_O1_aux: ∀d,e,L1,L2. ↓[d, e] L1 ≡ L2 → d = 0 →
 [ #d #e #_ #K #I #V #H destruct
 | #L #I #V #_ #K #J #W #HX destruct /3 width=1/
 | #L1 #L2 #I #V #e #HL12 #_ #K #J #W #H destruct /3 width=1/
-| #L1 #L2 #I #V1 #V2 #d #e #_ #_ #H elim (plus_S_eq_O_false … H)
+| #L1 #L2 #I #V1 #V2 #d #e #_ #_ >commutative_plus normalize #H destruct
 ]
 qed.
 

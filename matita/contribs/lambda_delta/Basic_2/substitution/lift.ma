@@ -164,7 +164,8 @@ lemma lift_inv_lref2: ∀d,e,T1,i. ↑[d,e] T1 ≡ #i →
 lemma lift_inv_lref2_lt: ∀d,e,T1,i. ↑[d,e] T1 ≡ #i → i < d → T1 = #i.
 #d #e #T1 #i #H elim (lift_inv_lref2 … H) -H * //
 #Hdi #_ #Hid lapply (le_to_lt_to_lt … Hdi Hid) -Hdi -Hid #Hdd
-elim (plus_lt_false … Hdd)
+elim (lt_inv_plus_l … Hdd) -Hdd #Hdd
+elim (lt_refl_false … Hdd)
 qed-.
 
 (* Basic_1: was: lift_gen_lref_false *)
@@ -180,7 +181,8 @@ qed-.
 lemma lift_inv_lref2_ge: ∀d,e,T1,i. ↑[d,e] T1 ≡ #i → d + e ≤ i → T1 = #(i - e).
 #d #e #T1 #i #H elim (lift_inv_lref2 … H) -H * //
 #Hid #_ #Hdi lapply (le_to_lt_to_lt … Hdi Hid) -Hdi -Hid #Hdd
-elim (plus_lt_false … Hdd)
+elim (lt_inv_plus_l … Hdd) -Hdd #Hdd
+elim (lt_refl_false … Hdd)
 qed-.
 
 fact lift_inv_gref2_aux: ∀d,e,T1,T2. ↑[d,e] T1 ≡ T2 → ∀p. T2 = §p → T1 = §p.

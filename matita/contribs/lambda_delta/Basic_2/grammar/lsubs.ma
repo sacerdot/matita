@@ -74,8 +74,7 @@ fact lsubs_fwd_length_full1_aux: ∀L1,L2,d,e. L1 [d, e] ≼ L2 →
 | /2 width=1/
 | /3 width=1/
 | /3 width=1/
-| #L1 #L2 #_ #_ #_ #_ #d #e #_ #_ #H
-  elim (plus_S_eq_O_false … H)
+| #L1 #L2 #_ #_ #_ #_ #d #e #_ #_ >commutative_plus normalize #H destruct
 ]
 qed.
 
@@ -89,8 +88,7 @@ fact lsubs_fwd_length_full2_aux: ∀L1,L2,d,e. L1 [d, e] ≼ L2 →
 | /2 width=1/
 | /3 width=1/
 | /3 width=1/
-| #L1 #L2 #_ #_ #_ #_ #d #e #_ #_ #H
-  elim (plus_S_eq_O_false … H)
+| #L1 #L2 #_ #_ #_ #_ #d #e #_ #_ >commutative_plus normalize #H destruct
 ]
 qed.
 

@@ -86,6 +86,10 @@ notation "hvbox( ↑ [ d , break e ] break T1 ≡ break T2 )"
    non associative with precedence 45
    for @{ 'RLift $d $e $T1 $T2 }.
 
+notation "hvbox( ↓ [ e ] break L1 ≡ break L2 )"
+   non associative with precedence 45
+   for @{ 'RDrop $e $L1 $L2 }.
+
 notation "hvbox( ↓ [ d , break e ] break L1 ≡ break L2 )"
    non associative with precedence 45
    for @{ 'RDrop $d $e $L1 $L2 }.

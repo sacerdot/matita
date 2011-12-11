@@ -57,8 +57,7 @@ qed.
 
 fact ltps_inv_refl_O2_aux: ∀d,e,L1,L2. L1 [d, e] ≫ L2 → e = 0 → L1 = L2.
 #d #e #L1 #L2 #H elim H -d -e -L1 -L2 //
-[ #L1 #L2 #I #V1 #V2 #e #_ #_ #_ #H
-  elim (plus_S_eq_O_false … H)
+[ #L1 #L2 #I #V1 #V2 #e #_ #_ #_ >commutative_plus normalize #H destruct
 | #L1 #L2 #I #V1 #V2 #d #e #_ #HV12 #IHL12 #He destruct
   >(IHL12 ?) -IHL12 // >(tps_inv_refl_O2 … HV12) //
 ]
@@ -89,7 +88,7 @@ fact ltps_inv_tps21_aux: ∀d,e,L1,L2. L1 [d, e] ≫ L2 → d = 0 → 0 < e →
 [ #d #e #_ #_ #K1 #I #V1 #H destruct
 | #L1 #I #V #_ #H elim (lt_refl_false … H)
 | #L1 #L2 #I #V1 #V2 #e #HL12 #HV12 #_ #_ #K1 #J #W1 #H destruct /2 width=5/
-| #L1 #L2 #I #V1 #V2 #d #e #_ #_ #H elim (plus_S_eq_O_false … H)
+| #L1 #L2 #I #V1 #V2 #d #e #_ #_ >commutative_plus normalize #H destruct
 ]
 qed.
 
@@ -139,7 +138,7 @@ fact ltps_inv_tps22_aux: ∀d,e,L1,L2. L1 [d, e] ≫ L2 → d = 0 → 0 < e →
 [ #d #e #_ #_ #K1 #I #V1 #H destruct
 | #L1 #I #V #_ #H elim (lt_refl_false … H)
 | #L1 #L2 #I #V1 #V2 #e #HL12 #HV12 #_ #_ #K2 #J #W2 #H destruct /2 width=5/
-| #L1 #L2 #I #V1 #V2 #d #e #_ #_ #H elim (plus_S_eq_O_false … H)
+| #L1 #L2 #I #V1 #V2 #d #e #_ #_ >commutative_plus normalize #H destruct
 ]
 qed.
 
