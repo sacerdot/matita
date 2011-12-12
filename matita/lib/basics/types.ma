@@ -109,7 +109,7 @@ for @{ match $t return λ${ident x}.$eq $T $x $t → $U with [ mk_Prod (${fresh 
 
 notation > "hvbox('let' 〈ident w,ident x,ident y,ident z〉 ≝ t 'in' s)"
  with precedence 10
-for @{ match $t with [ mk_Prod ${fresh wx} ${fresh yz} ⇒ match ${fresh wx} with [ mk_Prod ${ident w} ${ident x} ⇒ match ${fresh yz} with [ pair ${ident y} ${ident z} ⇒ $s ] ] ] }.
+for @{ match $t with [ mk_Prod ${fresh wx} ${fresh yz} ⇒ match ${fresh wx} with [ mk_Prod ${ident w} ${ident x} ⇒ match ${fresh yz} with [ mk_Prod ${ident y} ${ident z} ⇒ $s ] ] ] }.
 
 notation > "hvbox('let' 〈ident x,ident y,ident z〉 ≝ t 'in' s)"
  with precedence 10
