@@ -95,7 +95,7 @@ let rec foldr (A,B:Type[0]) (f:A → B → B) (b:B) (l:list A) on l :B ≝
  
 definition filter ≝ 
   λT.λp:T → bool.
-  foldr T (list T) (λx,l0.if_then_else ? (p x) (x::l0) l0) (nil T).
+  foldr T (list T) (λx,l0.if p x then x::l0 else l0) (nil T).
 
 (* compose f [a1;...;an] [b1;...;bm] = 
   [f a1 b1; ... ;f an b1; ... ;f a1 bm; f an bm] *)
@@ -150,8 +150,9 @@ qed.
 let rec fold (A,B:Type[0]) (op:B → B → B) (b:B) (p:A→bool) (f:A→B) (l:list A) on l :B ≝  
  match l with 
   [ nil ⇒ b 
-  | cons a l ⇒ if_then_else ? (p a) (op (f a) (fold A B op b p f l))
-      (fold A B op b p f l)].
+  | cons a l ⇒
+     if p a then op (f a) (fold A B op b p f l)
+     else fold A B op b p f l].
       
 notation "\fold  [ op , nil ]_{ ident i ∈ l | p} f"
   with precedence 80

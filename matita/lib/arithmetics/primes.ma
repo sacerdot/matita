@@ -247,8 +247,7 @@ qed.
 
 (* smallest factor *)
 definition smallest_factor : nat → nat ≝
-λn:nat. if_then_else ? (leb n 1) n
-  (min n 2 (λm.(eqb (n \mod m) O))).
+λn:nat. if leb n 1 then n else min n 2 (λm.(eqb (n \mod m) O)).
 
 theorem smallest_factor_to_min : ∀n. 1 < n → 
 smallest_factor n = (min n 2 (λm.(eqb (n \mod m) O))).

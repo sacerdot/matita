@@ -700,10 +700,10 @@ theorem lt_to_leb_false: ∀n,m. m < n → leb n m = false.
 
 (* min e max *)
 definition min: nat →nat →nat ≝
-λn.λm. if_then_else ? (leb n m) n m.
+λn.λm. if leb n m then n else m.
 
 definition max: nat →nat →nat ≝
-λn.λm. if_then_else ? (leb n m) m n.
+λn.λm. if leb n m then m else n.
 
 lemma commutative_min: commutative ? min.
 #n #m normalize @leb_elim 

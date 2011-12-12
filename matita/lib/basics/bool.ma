@@ -76,11 +76,16 @@ lemma orb_true_l: ∀b1,b2:bool.
   (b1 ∨ b2) = true → (b1 = true) ∨ (b2 = true).
 * normalize /2/ qed.
 
-definition if_then_else: ∀A:Type[0]. bool → A → A → A ≝ 
-λA.λb.λ P,Q:A. match b with [ true ⇒ P | false  ⇒ Q].
+definition xorb : bool → bool → bool ≝
+λb1,b2:bool.
+ match b1 with
+  [ true ⇒  match b2 with [ true ⇒ false | false ⇒ true ]
+  | false ⇒  match b2 with [ true ⇒ true | false ⇒ false ]].
 
-notation "'if' term 19 e 'then' term 19 t 'else' term 19 f" non associative with precedence 19 for @{ 'if_then_else $e $t $f }.
-interpretation "if_then_else" 'if_then_else e t f = (if_then_else ? e t f).
+notation > "'if' term 19 e 'then' term 19 t 'else' term 19 f" non associative with precedence 19
+ for @{ match $e in bool with [ true ⇒ $t | false ⇒ $f]  }.
+notation < "hvbox('if' \nbsp term 19 e \nbsp break 'then' \nbsp term 19 t \nbsp break 'else' \nbsp term 48 f \nbsp)" non associative with precedence 19
+ for @{ match $e with [ true ⇒ $t | false ⇒ $f]  }.
 
 theorem bool_to_decidable_eq: 
   ∀b1,b2:bool. decidable (b1=b2).

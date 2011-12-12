@@ -99,7 +99,7 @@ qed.
 
 theorem pad_bigop: ∀k,n,p,B,nil,op.∀f:nat→B. n ≤ k → 
 \big[op,nil]_{i < n | p i}(f i)
-  = \big[op,nil]_{i < k | if_then_else ? (leb n i) false (p i)}(f i).
+  = \big[op,nil]_{i < k | if leb n i then false else p i}(f i).
 #k #n #p #B #nil #op #f #lenk (elim lenk) 
   [@same_bigop #i #lti // >(not_le_to_leb_false …) /2/
   |#j #leup #Hind >bigop_Sfalse >(le_to_leb_true … leup) // 
@@ -114,8 +114,8 @@ record Aop (A:Type[0]) (nil:A) : Type[0] ≝
 
 theorem bigop_sum: ∀k1,k2,p1,p2,B.∀nil.∀op:Aop B nil.∀f,g:nat→B.
 op (\big[op,nil]_{i<k1|p1 i}(f i)) \big[op,nil]_{i<k2|p2 i}(g i) =
-      \big[op,nil]_{i<k1+k2|if_then_else ? (leb k2 i) (p1 (i-k2)) (p2 i)}
-        (if_then_else ? (leb k2 i) (f (i-k2)) (g i)).
+      \big[op,nil]_{i<k1+k2|if leb k2 i then p1 (i-k2) else p2 i}
+        (if leb k2 i then f (i-k2) else g i).
 #k1 #k2 #p1 #p2 #B #nil #op #f #g (elim k1)
   [normalize >nill @same_bigop #i #lti 
    >(lt_to_leb_false … lti) normalize /2/
@@ -174,7 +174,7 @@ theorem bigop_prod: ∀k1,k2,p1,p2,B.∀nil.∀op:Aop B nil.∀f: nat →nat →
   [>bigop_Strue // >Hind >bigop_sum @same_bigop
    #i #lti @leb_elim // #lei cut (i = n*k2+(i-n*k2)) /2/
    #eqi [|#H] >eqi in ⊢ (???%);
-     >div_plus_times /2/ >Hp1 >(mod_plus_times …) /2/ normalize //
+     >div_plus_times /2/ >Hp1 >(mod_plus_times …) /2/
   |>bigop_Sfalse // >Hind >(pad_bigop (S n*k2)) // @same_bigop
    #i #lti @leb_elim // #lei cut (i = n*k2+(i-n*k2)) /2/
    #eqi >eqi in ⊢ (???%); >div_plus_times /2/ 

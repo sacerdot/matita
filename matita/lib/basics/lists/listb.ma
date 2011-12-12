@@ -105,7 +105,7 @@ let rec unique_append (S:DeqSet) (l1,l2: list S) on l1 ≝
   [ nil ⇒ l2
   | cons a tl ⇒ 
      let r ≝ unique_append S tl l2 in
-     if (memb S a r) then r else a::r
+     if memb S a r then r else a::r
   ].
 
 axiom unique_append_elim: ∀S:DeqSet.∀P: S → Prop.∀l1,l2. 
