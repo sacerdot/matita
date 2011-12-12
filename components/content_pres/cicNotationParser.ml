@@ -209,10 +209,8 @@ let extract_term_production status pattern =
           match magic with
           | Ast.List0 (_, None) -> Gramext.Slist0 s
           | Ast.List1 (_, None) -> Gramext.Slist1 s
-(*          | Ast.List0 (_, Some l) -> Gramext.Slist0sep (s, gram_of_literal l,false)
-          | Ast.List1 (_, Some l) -> Gramext.Slist1sep (s, gram_of_literal l,false)*)
-          | Ast.List0 (_, Some l) -> Gramext.Slist0sep (s, gram_of_literal l)
-          | Ast.List1 (_, Some l) -> Gramext.Slist1sep (s, gram_of_literal l)
+          | Ast.List0 (_, Some l) -> Gramext.Slist0sep (s, gram_of_literal l,false)
+          | Ast.List1 (_, Some l) -> Gramext.Slist1sep (s, gram_of_literal l,false)
           | _ -> assert false
         in
         [ Env (List.map Env.list_declaration p_names),
