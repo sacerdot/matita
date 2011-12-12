@@ -439,9 +439,9 @@ let rec nth_prime n ≝ match n with
     min upper_bound (S previous_prime) primeb].
 
 lemma nth_primeS: ∀n.nth_prime (S n) = 
-  let previous_prime ≝ nth_prime n in
+   (let previous_prime ≝ nth_prime n in
     let upper_bound ≝ S previous_prime! in
-    min upper_bound (S previous_prime) primeb.
+    min upper_bound (S previous_prime) primeb).
 // qed.
     
 (* it works *)
