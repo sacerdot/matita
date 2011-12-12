@@ -131,8 +131,17 @@ lemma breakup_pair : ∀A,B,C:Type[0].∀x. ∀R:C → Prop. ∀P:A → B → C.
 #A #B #C *; normalize /2/
 qed.
 
-(* Is this necessary?
-axiom pair_elim'':
+lemma pair_elim:
+  ∀A,B,C: Type[0].
+  ∀T: A → B → C.
+  ∀p.
+  ∀P: A×B → C → Prop.
+    (∀lft, rgt. p = 〈lft,rgt〉 → P 〈lft,rgt〉 (T lft rgt)) →
+      P p (let 〈lft, rgt〉 ≝ p in T lft rgt).
+ #A #B #C #T * /2/
+qed.
+
+lemma pair_elim2:
   ∀A,B,C,C': Type[0].
   ∀T: A → B → C.
   ∀T': A → B → C'.
@@ -140,7 +149,8 @@ axiom pair_elim'':
   ∀P: A×B → C → C' → Prop.
     (∀lft, rgt. p = 〈lft,rgt〉 → P 〈lft,rgt〉 (T lft rgt) (T' lft rgt)) →
       P p (let 〈lft, rgt〉 ≝ p in T lft rgt) (let 〈lft, rgt〉 ≝ p in T' lft rgt).
-*)
+ #A #B #C #C' #T #T' * /2/
+qed.
 
 (* Useful for avoiding destruct's full normalization. *)
 lemma pair_eq1: ∀A,B. ∀a1,a2:A. ∀b1,b2:B. 〈a1,b1〉 = 〈a2,b2〉 → a1 = a2.
