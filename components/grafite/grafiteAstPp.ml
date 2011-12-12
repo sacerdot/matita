@@ -168,8 +168,11 @@ let pp_ncommand status = function
   | NInverter (_,_,_,_,_)
   | NUnivConstraint (_) -> "not supported"
   | NCoercion (_) -> "not supported"
-  | NObj (_,obj) -> NotationPp.pp_obj (NotationPp.pp_term status) obj
-  | NQed (_) -> "qed"
+  | NObj (_,obj,index) -> 
+      (if not index then "-" else "") ^ 
+        NotationPp.pp_obj (NotationPp.pp_term status) obj
+  | NQed (_,true) -> "qed"
+  | NQed (_,false) -> "qed-"
   | NCopy (_,name,uri,map) -> 
       "copy " ^ name ^ " from " ^ NUri.string_of_uri uri ^ " with " ^ 
         String.concat " and " 

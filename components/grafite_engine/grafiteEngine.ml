@@ -587,7 +587,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
                try
                 let nstatus =
                  eval_ncommand ~include_paths opts status
-                  ("",0,GrafiteAst.NObj (HExtlib.dummy_floc,boxml))
+                  ("",0,GrafiteAst.NObj (HExtlib.dummy_floc,boxml,true))
                 in
                 if nstatus#ng_mode <> `CommandMode then
                   begin
@@ -746,7 +746,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
        let status = subst_metasenv_and_fix_names status in
        let status = status#set_ng_mode `ProofMode in
        eval_ncommand ~include_paths opts status ("",0,GrafiteAst.NQed(Stdpp.dummy_loc,false))
-  | GrafiteAst.NObj (loc,obj) ->
+  | GrafiteAst.NObj (loc,obj,index) ->
      if status#ng_mode <> `CommandMode then
       raise (GrafiteTypes.Command_error "Not in command mode")
      else
@@ -761,7 +761,8 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
       let status = status#set_ng_mode `ProofMode in
       (match nmenv with
           [] ->
-           eval_ncommand ~include_paths opts status ("",0,GrafiteAst.NQed(Stdpp.dummy_loc,true))
+           eval_ncommand ~include_paths opts status
+             ("",0,GrafiteAst.NQed(Stdpp.dummy_loc,index))
         | _ -> status)
   | GrafiteAst.NDiscriminator (loc, indty) ->
       if status#ng_mode <> `CommandMode then

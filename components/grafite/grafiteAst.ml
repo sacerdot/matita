@@ -99,7 +99,7 @@ type inclusion_mode = WithPreferences | WithoutPreferences | OnlyPreferences (* 
 type command =
   | Include of loc * inclusion_mode * string (* _,buri,_,path *)
   | UnificationHint of loc * nterm * int (* term, precedence *)
-  | NObj of loc * nterm NotationPt.obj
+  | NObj of loc * nterm NotationPt.obj * bool
   | NDiscriminator of loc * nterm
   | NInverter of loc * string * nterm * bool list option * nterm option
   | NUnivConstraint of loc * NUri.uri * NUri.uri
