@@ -149,17 +149,21 @@ theorem equiv_sem: ∀S:DeqSet.∀e1,e2:pre S.
 |#H #w1 @iff_trans [||@decidable_sem] <H @iff_sym @decidable_sem]
 qed.
 
-axiom moves_left : ∀S,a,w,e. 
+lemma moves_left : ∀S,a,w,e. 
   moves S (w@[a]) e = move S a (\fst (moves S w e)). 
+#S #a #w elim w // #x #tl #Hind #e >moves_cons >moves_cons //
+qed.
 
 definition in_moves ≝ λS:DeqSet.λw.λe:pre S. \snd(w ↦* e).
 
+(*
 coinductive equiv (S:DeqSet) : pre S → pre S → Prop ≝
  mk_equiv:
   ∀e1,e2: pre S.
    \snd e1  = \snd e2 →
     (∀x. equiv S (move ? x (\fst e1)) (move ? x (\fst e2))) →
      equiv S e1 e2.
+*)
 
 definition beqb ≝ λb1,b2.
   match b1 with
@@ -190,8 +194,8 @@ let rec beqitem S (i1,i2: pitem S) on i1 ≝
 
 axiom beqitem_ok: ∀S,i1,i2. iff (beqitem S i1 i2 = true) (i1 = i2). 
 
-definition BinItem ≝ 
-  mk_DeqSet (pitem Bin) (beqitem Bin) (beqitem_ok Bin).
+definition DeqItem ≝ λS.
+  mk_DeqSet (pitem S) (beqitem S) (beqitem_ok S).
 
 definition beqpre ≝ λS:DeqSet.λe1,e2:pre S. 
   beqitem S (\fst e1) (\fst e2) ∧ beqb (\snd e1) (\snd e2).
@@ -203,24 +207,22 @@ axiom beqpairs_ok: ∀S,p1,p2. iff (beqpairs S p1 p2 = true) (p1 = p2).
 
 definition space ≝ λS.mk_DeqSet ((pre S)×(pre S)) (beqpairs S) (beqpairs_ok S).
 
-definition sons ≝ λp:space Bin. 
-  [〈move Bin true (\fst (\fst p)), move Bin true (\fst (\snd p))〉;
-   〈move Bin false (\fst (\fst p)), move Bin false (\fst (\snd p))〉
-  ].
+(* (sons S l p) computes all sons of p relative to characters in l *)
 
-axiom memb_sons: ∀p,q. memb (space Bin) p (sons q) = true →
+definition sons ≝ λS:DeqSet.λl:list S.λp:space S. 
+ map ?? (λa.〈move S a (\fst (\fst p)),move S a (\fst (\snd p))〉) l.
+
+lemma memb_sons: ∀S,l,p,q. memb (space S) p (sons S l q) = true →
   ∃a.(move ? a (\fst (\fst q)) = \fst p ∧
       move ? a (\fst (\snd q)) = \snd p).
+#S #l elim l [#p #q normalize in ⊢ (%→?); #abs @False_ind /2/] 
+#a #tl #Hind #p #q #H cases (orb_true_l … H) -H
+  [#H @(ex_intro … a) <(proj1 … (eqb_true …)H) /2/
+  |#H @Hind @H
+  ]
+qed.
 
-(*
-let rec test_sons (l:list (space Bin)) ≝ 
-  match l with 
-  [ nil ⇒  true
-  | cons hd tl ⇒ 
-    beqb (\snd (\fst hd)) (\snd (\snd hd)) ∧ test_sons tl
-  ]. *)
-
-let rec bisim (n:nat) (frontier,visited: list (space Bin)) ≝
+let rec bisim S l n (frontier,visited: list (space S)) on n ≝
   match n with 
   [ O ⇒ 〈false,visited〉 (* assert false *)
   | S m ⇒ 
@@ -228,14 +230,14 @@ let rec bisim (n:nat) (frontier,visited: list (space Bin)) ≝
     [ nil ⇒ 〈true,visited〉
     | cons hd tl ⇒
       if beqb (\snd (\fst hd)) (\snd (\snd hd)) then
-        bisim m (unique_append ? (filter ? (λx.notb (memb ? x (hd::visited))) 
-        (sons hd)) tl) (hd::visited)
+        bisim S l m (unique_append ? (filter ? (λx.notb (memb ? x (hd::visited))) 
+        (sons S l hd)) tl) (hd::visited)
       else 〈false,visited〉
     ]
   ].
   
-lemma unfold_bisim: ∀n.∀frontier,visited: list (space Bin).
-  bisim n frontier visited =
+lemma unfold_bisim: ∀S,l,n.∀frontier,visited: list (space S).
+  bisim S l n frontier visited =
   match n with 
   [ O ⇒ 〈false,visited〉 (* assert false *)
   | S m ⇒ 
@@ -243,42 +245,44 @@ lemma unfold_bisim: ∀n.∀frontier,visited: list (space Bin).
     [ nil ⇒ 〈true,visited〉
     | cons hd tl ⇒
       if beqb (\snd (\fst hd)) (\snd (\snd hd)) then
-        bisim m (unique_append ? (filter ? (λx.notb(memb ? x (hd::visited))) (sons hd)) tl) (hd::visited)
+        bisim S l m (unique_append ? (filter ? (λx.notb(memb ? x (hd::visited))) 
+          (sons S l hd)) tl) (hd::visited)
       else 〈false,visited〉
     ]
   ].
-#n cases n // qed.
+#S #l #n cases n // qed.
   
-lemma bisim_never: ∀frontier,visited: list (space Bin).
-  bisim O frontier visited = 〈false,visited〉.
+lemma bisim_never: ∀S,l.∀frontier,visited: list (space S).
+  bisim S l O frontier visited = 〈false,visited〉.
 #frontier #visited >unfold_bisim // 
 qed.
 
-lemma bisim_end: ∀m.∀visited: list (space Bin).
-  bisim (S m) [] visited = 〈true,visited〉.
+lemma bisim_end: ∀Sig,l,m.∀visited: list (space Sig).
+  bisim Sig l (S m) [] visited = 〈true,visited〉.
 #n #visisted >unfold_bisim // 
 qed.
 
-lemma bisim_step_true: ∀m.∀p.∀frontier,visited: list (space Bin).
+lemma bisim_step_true: ∀Sig,l,m.∀p.∀frontier,visited: list (space Sig).
 beqb (\snd (\fst p)) (\snd (\snd p)) = true →
-  bisim (S m) (p::frontier) visited = 
-  bisim m (unique_append ? (filter ? (λx.notb(memb (space Bin) x (p::visited))) (sons p)) frontier) (p::visited).
-#m #p #frontier #visited #test >unfold_bisim normalize nodelta >test // 
+  bisim Sig l (S m) (p::frontier) visited = 
+  bisim Sig l m (unique_append ? (filter ? (λx.notb(memb (space Sig) x (p::visited))) 
+    (sons Sig l p)) frontier) (p::visited).
+#Sig #l #m #p #frontier #visited #test >unfold_bisim normalize nodelta >test // 
 qed.
 
-lemma bisim_step_false: ∀m.∀p.∀frontier,visited: list (space Bin).
+lemma bisim_step_false: ∀Sig,l,m.∀p.∀frontier,visited: list (space Sig).
 beqb (\snd (\fst p)) (\snd (\snd p)) = false →
-  bisim (S m) (p::frontier) visited = 〈false,visited〉.
-#m #p #frontier #visited #test >unfold_bisim normalize nodelta >test // 
+  bisim Sig l (S m) (p::frontier) visited = 〈false,visited〉.
+#Sig #l #m #p #frontier #visited #test >unfold_bisim normalize nodelta >test // 
 qed.
  
-definition visited_inv ≝ λe1,e2:pre Bin.λvisited: list (space Bin).
+definition visited_inv ≝ λS.λe1,e2:pre S.λvisited: list (space S).
 uniqueb ? visited = true ∧  
   ∀p. memb ? p visited = true → 
-   (∃w.(moves Bin w e1 = \fst p) ∧ (moves Bin w e2 = \snd p)) ∧ 
+   (∃w.(moves S w e1 = \fst p) ∧ (moves S w e2 = \snd p)) ∧ 
    (beqb (\snd (\fst p)) (\snd (\snd p)) = true).
   
-definition frontier_inv ≝ λfrontier,visited: list (space Bin).
+definition frontier_inv ≝ λS.λfrontier,visited: list (space S).
 uniqueb ? frontier = true ∧ 
 ∀p. memb ? p frontier = true →  
   memb ? p visited = false ∧
@@ -312,7 +316,6 @@ lemma notb_eq_false_r:∀b. b = true → notb b = false.
 #b cases b normalize //
 qed.
 
-
 (* include "arithmetics/exp.ma". *)
 
 let rec pos S (i:re S) on i ≝ 
@@ -336,8 +339,8 @@ let rec pitem_enum S (i:re S) on i ≝
   | k i ⇒ map ?? (pk S) (pitem_enum S i)
   ].
 
-axiom pitem_enum_complete: ∀i: pitem Bin.
-  memb BinItem i (pitem_enum ? (forget ? i)) = true.
+(* axiom pitem_enum_complete: ∀S:DeqSet.∀i: pitem S.
+  memb ((pitem S)×(pitem S)) i (pitem_enum ? (forget ? i)) = true. *)
 (*
 #i elim i
   [//
@@ -358,12 +361,12 @@ definition space_enum ≝ λS.λi1,i2:re S.
 axiom space_enum_complete : ∀S.∀e1,e2: pre S.
   memb (space S) 〈e1,e2〉 (space_enum S (|\fst e1|) (|\fst e2|)) = true.
    
-lemma bisim_ok1: ∀e1,e2:pre Bin.\sem{e1}=1\sem{e2} → 
- ∀n.∀frontier,visited:list (space Bin).
- |space_enum Bin (|\fst e1|) (|\fst e2|)| < n + |visited|→
- visited_inv e1 e2 visited →  frontier_inv frontier visited →
- \fst (bisim n frontier visited) = true.
-#e1 #e2 #same #n elim n 
+lemma bisim_ok1: ∀S.∀e1,e2:pre S.\sem{e1}=1\sem{e2} → 
+ ∀l,n.∀frontier,visited:list (space S).
+ |space_enum S (|\fst e1|) (|\fst e2|)| < n + |visited|→
+ visited_inv S e1 e2 visited →  frontier_inv S frontier visited →
+ \fst (bisim S l n frontier visited) = true.
+#Sig #e1 #e2 #same #l #n elim n 
   [#frontier #visited #abs * #unique #H @False_ind @(absurd … abs)
    @le_to_not_lt @sublist_length // * #e11 #e21 #membp 
    cut ((|\fst e11| = |\fst e1|) ∧ (|\fst e21| = |\fst e2|))
@@ -374,7 +377,7 @@ lemma bisim_ok1: ∀e1,e2:pre Bin.\sem{e1}=1\sem{e2} →
    #p #front_tl #visited #Hn * #u_visited #vinv * #u_frontier #finv
    cases (finv p (memb_hd …)) #Hp * #p2 * #visited_p2
    * #a * #movea1 #movea2 
-   cut (∃w.(moves Bin w e1 = \fst p) ∧ (moves Bin w e2 = \snd p))
+   cut (∃w.(moves Sig w e1 = \fst p) ∧ (moves Sig w e2 = \snd p))
      [cases (vinv … visited_p2) -vinv * #w1 * #mw1 #mw2 #_
       @(ex_intro … (w1@[a])) /2/] 
    -movea2 -movea1 -a -visited_p2 -p2 #reachp
@@ -385,7 +388,7 @@ lemma bisim_ok1: ∀e1,e2:pre Bin.\sem{e1}=1\sem{e2} →
        [<plus_n_Sm //
        |% [whd in ⊢ (??%?); >Hp whd in ⊢ (??%?); //]
         #p1 #H (cases (orb_true_l … H))
-         [#eqp <(proj1 … (eqb_true (space Bin) ? p1) eqp) % // 
+         [#eqp <(proj1 … (eqb_true (space Sig) ? p1) eqp) % // 
          |#visited_p1 @(vinv … visited_p1)
          ]
        |whd % [@unique_append_unique @(andb_true_r … u_frontier)]
@@ -411,47 +414,64 @@ lemma bisim_ok1: ∀e1,e2:pre Bin.\sem{e1}=1\sem{e2} →
   ]
 qed.
 
-definition all_true ≝ λl.∀p. memb (space Bin) p l = true → 
+definition all_true ≝ λS.λl.∀p. memb (space S) p l = true → 
   (beqb (\snd (\fst p)) (\snd (\snd p)) = true).
 
-definition sub_sons ≝ λl1,l2.∀x,a. 
-memb (space Bin) x l1 = true → 
-  memb (space Bin) 〈move ? a (\fst (\fst x)), move ? a (\fst (\snd x))〉 l2 = true.
+definition sub_sons ≝ λS,l,l1,l2.∀x,a. 
+memb (space S) x l1 = true → memb S a l = true →
+  memb (space S) 〈move ? a (\fst (\fst x)), move ? a (\fst (\snd x))〉 l2 = true.
 
 lemma reachable_bisim: 
- ∀n.∀frontier,visited,visited_res:list (space Bin).
- all_true visited →
- sub_sons visited (frontier@visited) →
- bisim n frontier visited = 〈true,visited_res〉 → 
-  (sub_sons visited_res visited_res ∧ 
+ ∀S,l,n.∀frontier,visited,visited_res:list (space S).
+ all_true S visited →
+ sub_sons S l visited (frontier@visited) →
+ bisim S l n frontier visited = 〈true,visited_res〉 → 
+  (sub_sons S l visited_res visited_res ∧ 
    sublist ? visited visited_res ∧
-   all_true visited_res).
-#n elim n
+   all_true S visited_res).
+#S #l #n elim n
   [#fron #vis #vis_res #_ #_ >bisim_never #H destruct
   |#m #Hind * 
-    [-Hind #vis #vis_res #allv #H normalize in  ⊢ (%→?);
+    [(* case empty frontier *)
+     -Hind #vis #vis_res #allv #H normalize in  ⊢ (%→?);
      #H1 destruct % // % // #p /2/ 
     |#hd cases (true_or_false (beqb (\snd (\fst hd)) (\snd (\snd hd))))
-      [|#H #tl #vis #vis_res #allv >(bisim_step_false … H) #_ #H1 destruct]
+      [|(* case head of the frontier is non ok (absurd) *)
+       #H #tl #vis #vis_res #allv >(bisim_step_false … H) #_ #H1 destruct]
+     (* frontier = hd:: tl and hd is ok *)
      #H #tl #visited #visited_res #allv >(bisim_step_true … H)
-     cut (all_true (hd::visited)) 
+     (* new_visited = hd::visited are all ok *)
+     cut (all_true S (hd::visited)) 
       [#p #H cases (orb_true_l … H) 
         [#eqp <(proj1 … (eqb_true …) eqp) // |@allv]]
+     (* we now exploit the induction hypothesis *)
      #allh #subH #bisim cases (Hind … allh … bisim) -Hind
-      [* #H1 #H2 #H3 % // % // #p #H4 @H2 @memb_cons //]  
-     #x #a #membx
+      [* #H1 #H2 #H3 % // % // #p #H4 @H2 @memb_cons //]
+     (* the only thing left to prove is the sub_sons invariant *)  
+     #x #a #membx #memba
      cases (orb_true_l … membx)
-      [#eqhdx >(proj1 … (eqb_true …) eqhdx)
-       letin xa ≝ 〈move Bin a (\fst (\fst x)), move Bin a (\fst (\snd x))〉
-       cases (true_or_false … (memb (space Bin) xa (x::visited)))
-        [#membxa @memb_append_l2 //
-        |#membxa @memb_append_l1 @sublist_unique_append_l1 @memb_filter_l
+      [(* case x = hd *) 
+       #eqhdx >(proj1 … (eqb_true …) eqhdx)
+       (* xa is the son of x w.r.t. a; we must distinguish the case xa 
+        was already visited form the case xa is new *)
+       letin xa ≝ 〈move S a (\fst (\fst x)), move S a (\fst (\snd x))〉
+       cases (true_or_false … (memb (space S) xa (x::visited)))
+        [(* xa visited - trivial *) #membxa @memb_append_l2 //
+        |(* xa new *) #membxa @memb_append_l1 @sublist_unique_append_l1 @memb_filter_l
           [>membxa //
-          |whd in ⊢ (??(??%%)?); cases a [@memb_hd |@memb_cons @memb_hd]
+          |(* this can be probably improved *)
+           generalize in match memba; -memba elim l
+            [whd in ⊢ (??%?→?); #abs @False_ind /2/
+            |#b #others #Hind #memba cases (orb_true_l … memba) #H
+              [>(proj1 … (eqb_true …) H) @memb_hd
+              |@memb_cons @Hind //
+              ]
+            ]
           ]
         ]
-      |#H1 letin xa ≝ 〈move Bin a (\fst (\fst x)), move Bin a (\fst (\snd x))〉
-       cases (memb_append … (subH x a H1))  
+      |(* case x in visited *)
+       #H1 letin xa ≝ 〈move S a (\fst (\fst x)), move S a (\fst (\snd x))〉
+       cases (memb_append … (subH x a H1 memba))  
         [#H2 (cases (orb_true_l … H2)) 
           [#H3 @memb_append_l2 >(proj1 … (eqb_true …) H3) @memb_hd
           |#H3 @memb_append_l1 @sublist_unique_append_l2 @H3
@@ -461,33 +481,152 @@ lemma reachable_bisim:
       ]
     ]
   ]
-qed.       
+qed.
 
-axiom bisim_char: ∀e1,e2:pre Bin.
-(∀w.(beqb (\snd (moves ? w e1)) (\snd (moves ? w e2))) = true) → 
+(* pit state *)
+let rec blank_item (S: DeqSet) (i: re S) on i :pitem S ≝
+ match i with
+  [ z ⇒ `∅
+  | e ⇒ ϵ
+  | s y ⇒ `y
+  | o e1 e2 ⇒ (blank_item S e1) + (blank_item S e2) 
+  | c e1 e2 ⇒ (blank_item S e1) · (blank_item S e2)
+  | k e ⇒ (blank_item S e)^* ].
+ 
+definition pit_pre ≝ λS.λi.〈blank_item S (|i|), false〉. 
+
+let rec occur (S: DeqSet) (i: re S) on i ≝  
+  match i with
+  [ z ⇒ [ ]
+  | e ⇒ [ ]
+  | s y ⇒ [y]
+  | o e1 e2 ⇒ unique_append ? (occur S e1) (occur S e2) 
+  | c e1 e2 ⇒ unique_append ? (occur S e1) (occur S e2) 
+  | k e ⇒ occur S e].
+  
+axiom memb_single: ∀S,a,x. memb S a [x] = true → a = x.
+
+axiom tech: ∀b. b ≠ true → b = false.
+axiom tech2: ∀b. b = false → b ≠ true.
+
+lemma not_occur_to_pit: ∀S,a.∀i:pitem S. memb S a (occur S (|i|)) = false →
+  move S a i  = pit_pre S i.
+#S #a #i elim i //
+  [#x cases (true_or_false (a==x)) 
+    [#H >(proj1 …(eqb_true …) H) whd in ⊢ ((??%?)→?); 
+     >(proj2 …(eqb_true …) (refl …)) whd in ⊢ ((??%?)→?); #abs @False_ind /2/
+    |#H normalize >H //
+    ]
+  |#i1 #i2 #Hind1 #Hind2 #H >move_cat >Hind1 [2:@tech 
+   @(not_to_not … (tech2 … H)) #H1 @sublist_unique_append_l1 //]
+   >Hind2 [2:@tech @(not_to_not … (tech2 … H)) #H1 @sublist_unique_append_l2 //]
+   //
+  |#i1 #i2 #Hind1 #Hind2 #H >move_plus >Hind1 [2:@tech 
+   @(not_to_not … (tech2 … H)) #H1 @sublist_unique_append_l1 //]
+   >Hind2 [2:@tech @(not_to_not … (tech2 … H)) #H1 @sublist_unique_append_l2 //]
+   //
+  |#i #Hind #H >move_star >Hind // @H
+  ]
+qed.
+
+lemma move_pit: ∀S,a,i. move S a (\fst (pit_pre S i)) = pit_pre S i.
+#S #a #i elim i //
+  [#i1 #i2 #Hind1 #Hind2 >move_cat >Hind1 >Hind2 // 
+  |#i1 #i2 #Hind1 #Hind2 >move_plus >Hind1 >Hind2 // 
+  |#i #Hind >move_star >Hind //
+  ]
+qed. 
+
+lemma moves_pit: ∀S,w,i. moves S w (pit_pre S i) = pit_pre S i.
+#S #w #i elim w // #a #tl >moves_cons // 
+qed. 
+ 
+lemma to_pit: ∀S,w,e. ¬ sublist S w (occur S (|\fst e|)) →
+ moves S w e = pit_pre S (\fst e).
+#S #w elim w
+  [(* orribile *)
+   #e * #H @False_ind @H normalize #a #abs @False_ind /2/
+  |#a #tl #Hind #e #H cases (true_or_false (memb S a (occur S (|\fst e|))))
+    [#Htrue >moves_cons whd in ⊢ (???%); <(same_kernel … a) 
+     @Hind >same_kernel @(not_to_not … H) #H1 #b #memb cases (orb_true_l … memb)
+      [#H2 <(proj1 … (eqb_true …) H2) // |#H2 @H1 //]
+    |#Hfalse >moves_cons >not_occur_to_pit //
+    ]
+  ]
+qed.
+    
+definition occ ≝ λS.λe1,e2:pre S. 
+  unique_append ? (occur S (|\fst e1|)) (occur S (|\fst e2|)).
+
+(* definition occS ≝ λS:DeqSet.λoccur.
+  PSig S (λx.memb S x occur = true). *)
+
+lemma occ_enough: ∀S.∀e1,e2:pre S.
+(∀w.(sublist S w (occ S e1 e2))→
+ (beqb (\snd (moves S w e1)) (\snd (moves ? w e2))) = true) \to
+∀w.(beqb (\snd (moves S w e1)) (\snd (moves ? w e2))) = true.
+#S #e1 #e2 #H #w
+cut (sublist S w (occ S e1 e2) ∨ ¬(sublist S w (occ S e1 e2)))
+[elim w 
+  [%1 #a normalize in ⊢ (%→?); #abs @False_ind /2/
+  |#a #tl * #subtl 
+    [cases (true_or_false (memb S a (occ S e1 e2))) #memba
+      [%1 whd #x #membx cases (orb_true_l … membx)
+        [#eqax <(proj1 … (eqb_true …) eqax) //
+        |@subtl
+        ]
+      |%2 @(not_to_not … (tech2 … memba)) #H1 @H1 @memb_hd
+      ]
+    |%2 @(not_to_not … subtl) #H1 #x #H2 @H1 @memb_cons //
+    ] 
+  ]
+|* [@H] 
+ #H >to_pit 
+  [2: @(not_to_not … H) #H1 #a #memba  @sublist_unique_append_l1 @H1 //]
+ >to_pit
+  [2: @(not_to_not … H) #H1 #a #memba  @sublist_unique_append_l2 @H1 //]
+ //
+]
+qed.
+
+lemma bisim_char: ∀S.∀e1,e2:pre S.
+(∀w.(beqb (\snd (moves S w e1)) (\snd (moves ? w e2))) = true) → 
 \sem{e1}=1\sem{e2}.
+#S #e1 #e2 #H @(proj2 … (equiv_sem …)) #w @(proj1 …(beqb_ok …)) @H
+qed.
 
-lemma bisim_ok2: ∀e1,e2:pre Bin.
- (beqb (\snd e1) (\snd e2) = true) →
- ∀n.∀frontier:list (space Bin).
- sub_sons [〈e1,e2〉] (frontier@[〈e1,e2〉]) →
- \fst (bisim n frontier [〈e1,e2〉]) = true → \sem{e1}=1\sem{e2}.
-#e1 #e2 #Hnil #n #frontier #init #bisim_true
-letin visited_res ≝ (\snd (bisim n frontier [〈e1,e2〉]))
-cut (bisim n frontier [〈e1,e2〉] = 〈true,visited_res〉)
+lemma bisim_ok2: ∀S.∀e1,e2:pre S.
+ (beqb (\snd e1) (\snd e2) = true) → ∀n.
+ \fst (bisim S (occ S e1 e2) n (sons S (occ S e1 e2) 〈e1,e2〉) [〈e1,e2〉]) = true → 
+   \sem{e1}=1\sem{e2}.
+#S #e1 #e2 #Hnil #n 
+letin rsig ≝ (occ S e1 e2)
+letin frontier ≝ (sons S rsig 〈e1,e2〉)
+letin visited_res ≝ (\snd (bisim S rsig n frontier [〈e1,e2〉])) 
+#bisim_true
+cut (bisim S rsig n frontier [〈e1,e2〉] = 〈true,visited_res〉)
   [<bisim_true <eq_pair_fst_snd //] #H
-cut (all_true [〈e1,e2〉]) 
+cut (all_true S [〈e1,e2〉]) 
   [#p #Hp cases (orb_true_l … Hp) 
     [#eqp <(proj1 … (eqb_true …) eqp) // 
     | whd in ⊢ ((??%?)→?); #abs @False_ind /2/
     ]] #allH 
+cut (sub_sons S rsig [〈e1,e2〉] (frontier@[〈e1,e2〉]))
+  [#x #a #H1 cases (orb_true_l … H1) 
+    [#eqx <(proj1 … (eqb_true …) eqx) #H2 @memb_append_l1 
+     whd in ⊢ (??(???%)?); @(memb_map … H2)
+    |whd in ⊢ ((??%?)→?); #abs @False_ind /2/
+    ]
+  ] #init
 cases (reachable_bisim … allH init … H) * #H1 #H2 #H3
-cut (∀w,p.memb (space Bin) p visited_res = true → 
-  memb (space Bin) 〈moves ? w (\fst p), moves ? w (\snd p)〉 visited_res = true)
-  [#w elim w [* //] 
-   #a #w1 #Hind * #e11 #e21 #visp >fst_eq >snd_eq >moves_cons >moves_cons 
-   @(Hind 〈?,?〉) @(H1 〈?,?〉) //] #all_reach
-@bisim_char #w @(H3 〈?,?〉) @(all_reach w 〈?,?〉) @H2 //
+cut (∀w.sublist ? w (occ S e1 e2)→∀p.memb (space S) p visited_res = true → 
+  memb (space S) 〈moves ? w (\fst p), moves ? w (\snd p)〉 visited_res = true)
+  [#w elim w [//] 
+   #a #w1 #Hind #Hsub * #e11 #e21 #visp >fst_eq >snd_eq >moves_cons >moves_cons 
+   @(Hind ? 〈?,?〉) [#x #H4 @Hsub @memb_cons //] 
+   @(H1 〈?,?〉) // @Hsub @memb_hd] #all_reach
+@bisim_char @occ_enough
+#w #Hsub @(H3 〈?,?〉) @(all_reach w Hsub 〈?,?〉) @H2 //
 qed.
   
 definition tt ≝ ps Bin true.
