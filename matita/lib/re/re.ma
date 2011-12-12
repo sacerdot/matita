@@ -218,7 +218,7 @@ lemma lo_def: ∀S.∀i1,i2:pitem S.∀b1,b2. 〈i1,b1〉⊕〈i2,b2〉=〈i1+i2
 // qed.
 
 definition pre_concat_r ≝ λS:DeqSet.λi:pitem S.λe:pre S.
-  match e with [ pair i1 b ⇒ 〈i · i1, b〉].
+  match e with [ mk_Prod i1 b ⇒ 〈i · i1, b〉].
  
 notation "i ◂ e" left associative with precedence 60 for @{'ltrif $i $e}.
 interpretation "pre_concat_r" 'ltrif i e = (pre_concat_r ? i e).
@@ -239,7 +239,7 @@ qed.
  
 definition lc ≝ λS:DeqSet.λbcast:∀S:DeqSet.pitem S → pre S.λe1:pre S.λi2:pitem S.
   match e1 with 
-  [ pair i1 b1 ⇒ match b1 with 
+  [ mk_Prod i1 b1 ⇒ match b1 with 
     [ true ⇒ (i1 ◂ (bcast ? i2)) 
     | false ⇒ 〈i1 · i2,false〉
     ]
@@ -247,14 +247,14 @@ definition lc ≝ λS:DeqSet.λbcast:∀S:DeqSet.pitem S → pre S.λe1:pre S.λ
         
 definition lift ≝ λS.λf:pitem S →pre S.λe:pre S. 
   match e with 
-  [ pair i b ⇒ 〈\fst (f i), \snd (f i) ∨ b〉].
+  [ mk_Prod i b ⇒ 〈\fst (f i), \snd (f i) ∨ b〉].
 
 notation "a ▸ b" left associative with precedence 60 for @{'lc eclose $a $b}.
 interpretation "lc" 'lc op a b = (lc ? op a b).
 
 definition lk ≝ λS:DeqSet.λbcast:∀S:DeqSet.∀E:pitem S.pre S.λe:pre S.
   match e with 
-  [ pair i1 b1 ⇒
+  [ mk_Prod i1 b1 ⇒
     match b1 with 
     [true ⇒ 〈(\fst (bcast ? i1))^*, true〉
     |false ⇒ 〈i1^*,false〉
@@ -553,7 +553,7 @@ qed.
   
 lemma erase_odot:∀S.∀e1,e2:pre S.
   |\fst (e1 ⊙ e2)| = |\fst e1| · (|\fst e2|).
-#S * #i1 * * #i2 #b2 // >odot_true_b >fst_eq >fst_eq >fst_eq // 
+#S * #i1 * * #i2 #b2 // >odot_true_b // 
 qed.
 
 lemma ostar_true: ∀S.∀i:pitem S.

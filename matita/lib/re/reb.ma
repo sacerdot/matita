@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "arithmetics/nat.ma".
-include "basics/list.ma".
+include "basics/lists/list.ma".
 
 interpretation "iff" 'iff a b = (iff a b).  
 

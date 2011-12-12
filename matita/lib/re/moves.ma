@@ -115,7 +115,7 @@ lemma moves_cons: ∀S:DeqSet.∀a:S.∀w.∀e:pre S.
 
 lemma not_epsilon_sem: ∀S:DeqSet.∀a:S.∀w: word S. ∀e:pre S. 
   iff ((a::w) ∈ e) ((a::w) ∈ \fst e).
-#S #a #w * #i #b >fst_eq cases b normalize 
+#S #a #w * #i #b cases b normalize 
   [% /2/ * // #H destruct |% normalize /2/]
 qed.
 
@@ -371,7 +371,7 @@ lemma bisim_ok1: ∀S.∀e1,e2:pre S.\sem{e1}=1\sem{e2} →
    @le_to_not_lt @sublist_length // * #e11 #e21 #membp 
    cut ((|\fst e11| = |\fst e1|) ∧ (|\fst e21| = |\fst e2|))
    [|* #H1 #H2 <H1 <H2 @space_enum_complete]
-   cases (H … membp) * #w * >fst_eq >snd_eq #we1 #we2 #_
+   cases (H … membp) * #w * #we1 #we2 #_
    <we1 <we2 % //    
   |#m #HI * [#visited #vinv #finv >bisim_end //]
    #p #front_tl #visited #Hn * #u_visited #vinv * #u_frontier #finv
@@ -622,7 +622,7 @@ cases (reachable_bisim … allH init … H) * #H1 #H2 #H3
 cut (∀w.sublist ? w (occ S e1 e2)→∀p.memb (space S) p visited_res = true → 
   memb (space S) 〈moves ? w (\fst p), moves ? w (\snd p)〉 visited_res = true)
   [#w elim w [//] 
-   #a #w1 #Hind #Hsub * #e11 #e21 #visp >fst_eq >snd_eq >moves_cons >moves_cons 
+   #a #w1 #Hind #Hsub * #e11 #e21 #visp >moves_cons >moves_cons 
    @(Hind ? 〈?,?〉) [#x #H4 @Hsub @memb_cons //] 
    @(H1 〈?,?〉) // @Hsub @memb_hd] #all_reach
 @bisim_char @occ_enough

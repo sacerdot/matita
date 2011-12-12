@@ -18,18 +18,14 @@ inductive void : Type[0] ≝.
 inductive unit : Type[0] ≝ it: unit.
 
 (* Prod *)
-inductive Prod (A,B:Type[0]) : Type[0] ≝
-pair : A → B → Prod A B.
+record Prod (A,B:Type[0]) : Type[0] ≝ {
+   fst: A
+ ; snd: B
+ }.
 
-interpretation "Pair construction" 'pair x y = (pair ? ? x y).
+interpretation "Pair construction" 'pair x y = (mk_Prod ? ? x y).
 
 interpretation "Product" 'product x y = (Prod x y).
-
-definition fst ≝ λA,B.λp:A × B.
-  match p with [pair a b ⇒ a]. 
-
-definition snd ≝ λA,B.λp:A × B.
-  match p with [pair a b ⇒ b].
 
 interpretation "pair pi1" 'pi1 = (fst ? ?).
 interpretation "pair pi2" 'pi2 = (snd ? ?).
