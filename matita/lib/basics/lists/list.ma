@@ -117,7 +117,7 @@ theorem eq_map : ∀A,B,f,g,l. (∀x.f x = g x) → map A B f l = map A B g l.
 let rec dprodl (A:Type[0]) (f:A→Type[0]) (l1:list A) (g:(∀a:A.list (f a))) on l1 ≝
 match l1 with
   [ nil ⇒ nil ?
-  | cons a tl ⇒ (map ??(dp ?? a) (g a)) @ dprodl A f tl g
+  | cons a tl ⇒ (map ??(mk_Sig ?? a) (g a)) @ dprodl A f tl g
   ].
 
 (**************************** length ******************************)

@@ -29,11 +29,44 @@ inductive option (A:Type[0]) : Type[0] ≝
    None : option A
  | Some : A → option A.
 
+definition option_map : ∀A,B:Type[0]. (A → B) → option A → option B ≝
+λA,B,f,o. match o with [ None ⇒ None B | Some a ⇒ Some B (f a) ].
+
+lemma option_map_none : ∀A,B,f,x.
+  option_map A B f x = None B → x = None A.
+#A #B #f * [ // | #a #E whd in E:(??%?); destruct ]
+qed.
+
+lemma option_map_some : ∀A,B,f,x,v.
+  option_map A B f x = Some B v → ∃y. x = Some ? y ∧ f y = v.
+#A #B #f *
+[ #v normalize #E destruct
+| #y #v normalize #E %{y} destruct % //
+] qed.
+
+definition option_map_def : ∀A,B:Type[0]. (A → B) → B → option A → B ≝
+λA,B,f,d,o. match o with [ None ⇒ d | Some a ⇒ f a ].
+
+lemma refute_none_by_refl : ∀A,B:Type[0]. ∀P:A → B. ∀Q:B → Type[0]. ∀x:option A. ∀H:x = None ? → False.
+  (∀v. x = Some ? v → Q (P v)) →
+  Q (match x return λy.x = y → ? with [ Some v ⇒ λ_. P v | None ⇒ λE. match H E in False with [ ] ] (refl ? x)).
+#A #B #P #Q *
+[ #H cases (H (refl ??))
+| #a #H #p normalize @p @refl
+] qed.
+
 (* sigma *)
-inductive Sig (A:Type[0]) (f:A→Type[0]) : Type[0] ≝
-  dp: ∀a:A.(f a)→Sig A f.
+record Sig (A:Type[0]) (f:A→Type[0]) : Type[0] ≝ {
+    pi1: A
+  ; pi2: f pi1
+  }.
   
 interpretation "Sigma" 'sigma x = (Sig ? x).
+
+notation "hvbox(« term 19 a, break term 19 b»)" 
+with precedence 90 for @{ 'dp $a $b }.
+
+interpretation "mk_Sig" 'dp x y = (mk_Sig ?? x y).
 
 (* Prod *)
 
