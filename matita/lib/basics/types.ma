@@ -123,6 +123,12 @@ notation > "hvbox('let' 〈ident x,ident y〉 'as' ident E ≝ t 'in' s)"
 for @{ match $t return λx.x = $t → ? with [ mk_Prod ${ident x} ${ident y} ⇒
         λ${ident E}.$s ] (refl ? $t) }.
 
+(* Prop sigma *)
+record PSig (A:Type[0]) (P:A→Prop) : Type[0] ≝
+  {elem:>A; eproof: P elem}.
+  
+interpretation "subset type" 'sigma x = (PSig ? x).
+
 notation < "hvbox('let' \nbsp hvbox(〈ident x,ident y〉 \nbsp 'as'\nbsp ident E\nbsp ≝ break t \nbsp 'in' \nbsp) break s)"
  with precedence 10
 for @{ match $t return λ${ident k}:$X.$eq $T $k $t → ? with [ mk_Prod (${ident x}:$U) (${ident y}:$W) ⇒
