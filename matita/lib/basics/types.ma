@@ -56,7 +56,7 @@ lemma refute_none_by_refl : ∀A,B:Type[0]. ∀P:A → B. ∀Q:B → Type[0]. �
 ] qed.
 
 (* sigma *)
-record Sig (A:Type[0]) (f:A→Type[0]) : Type[0] ≝ {
+record Sig (A:Type[0]) (f:A→Prop) : Type[0] ≝ {
     pi1: A
   ; pi2: f pi1
   }.
@@ -122,12 +122,6 @@ notation > "hvbox('let' 〈ident x,ident y〉 'as' ident E ≝ t 'in' s)"
  with precedence 10
 for @{ match $t return λx.x = $t → ? with [ mk_Prod ${ident x} ${ident y} ⇒
         λ${ident E}.$s ] (refl ? $t) }.
-
-(* Prop sigma *)
-record PSig (A:Type[0]) (P:A→Prop) : Type[0] ≝
-  {elem:>A; eproof: P elem}.
-  
-interpretation "subset type" 'sigma x = (PSig ? x).
 
 notation < "hvbox('let' \nbsp hvbox(〈ident x,ident y〉 \nbsp 'as'\nbsp ident E\nbsp ≝ break t \nbsp 'in' \nbsp) break s)"
  with precedence 10
