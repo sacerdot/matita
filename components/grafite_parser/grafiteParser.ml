@@ -501,7 +501,7 @@ EXTEND
           loc,path,G.WithoutPreferences
      ]];
 
-  index: [[ b = OPT SYMBOL "-" -> match b with None -> false | _ -> true ]];
+  index: [[ b = OPT SYMBOL "-" -> match b with None -> true | _ -> false ]];
 
   grafite_ncommand: [ [
       IDENT "qed" ;  i = index -> G.NQed (loc,i)
@@ -513,7 +513,7 @@ EXTEND
         G.NObj (loc, 
           N.Theorem(nflavour, name, N.Implicit `JustOne, Some body,`Regular),
           true)
-    | i = index; IDENT "axiom"; name = IDENT; SYMBOL ":"; typ = term ->
+    | IDENT "axiom"; i = index; name = IDENT; SYMBOL ":"; typ = term ->
         G.NObj (loc, N.Theorem (`Axiom, name, typ, None, `Regular),i)
     | IDENT "discriminator" ; indty = tactic_term -> G.NDiscriminator (loc,indty)
     | IDENT "inverter"; name = IDENT; IDENT "for" ; indty = tactic_term ;
