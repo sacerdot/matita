@@ -85,10 +85,17 @@ theorem nil_to_nil:  ∀A.∀l1,l2:list A.
 #A #l1 #l2 #isnil @(nil_append_elim A l1 l2) /2/
 qed.
 
-(* iterators *)
+(**************************** iterators ******************************)
 
 let rec map (A,B:Type[0]) (f: A → B) (l:list A) on l: list B ≝
  match l with [ nil ⇒ nil ? | cons x tl ⇒ f x :: (map A B f tl)].
+
+lemma map_append : ∀A,B,f,l1,l2.
+  (map A B f l1) @ (map A B f l2) = map A B f (l1@l2).
+#A #B #f #l1 elim l1
+[ #l2 @refl
+| #h #t #IH #l2 normalize //
+] qed.
   
 let rec foldr (A,B:Type[0]) (f:A → B → B) (b:B) (l:list A) on l :B ≝  
  match l with [ nil ⇒ b | cons a l ⇒ f a (foldr A B f b l)].
@@ -143,6 +150,102 @@ let rec nth n (A:Type[0]) (l:list A) (d:A)  ≝
 
 lemma nth_nil: ∀A,a,i. nth i A ([]) a = a.
 #A #a #i elim i normalize //
+qed.
+
+(****************************** nth_opt ********************************)
+let rec nth_opt (A:Type[0]) (n:nat) (l:list A) on l : option A ≝
+match l with
+[ nil ⇒ None ?
+| cons h t ⇒ match n with [ O ⇒ Some ? h | S m ⇒ nth_opt A m t ]
+].
+
+(**************************** All *******************************)
+
+let rec All (A:Type[0]) (P:A → Prop) (l:list A) on l : Prop ≝
+match l with
+[ nil ⇒ True
+| cons h t ⇒ P h ∧ All A P t
+].
+
+lemma All_mp : ∀A,P,Q. (∀a.P a → Q a) → ∀l. All A P l → All A Q l.
+#A #P #Q #H #l elim l normalize //
+#h #t #IH * /3/
+qed.
+
+lemma All_nth : ∀A,P,n,l.
+  All A P l →
+  ∀a.
+  nth_opt A n l = Some A a →
+  P a.
+#A #P #n elim n
+[ * [ #_ #a #E whd in E:(??%?); destruct
+    | #hd #tl * #H #_ #a #E whd in E:(??%?); destruct @H
+    ]
+| #m #IH *
+  [ #_ #a #E whd in E:(??%?); destruct
+  | #hd #tl * #_ whd in ⊢ (? → ∀_.??%? → ?); @IH
+  ]
+] qed.
+
+(**************************** Exists *******************************)
+
+let rec Exists (A:Type[0]) (P:A → Prop) (l:list A) on l : Prop ≝
+match l with
+[ nil ⇒ False
+| cons h t ⇒ (P h) ∨ (Exists A P t)
+].
+
+lemma Exists_append : ∀A,P,l1,l2.
+  Exists A P (l1 @ l2) → Exists A P l1 ∨ Exists A P l2.
+#A #P #l1 elim l1
+[ normalize /2/
+| #h #t #IH #l2 *
+  [ #H /3/
+  | #H cases (IH l2 H) /3/
+  ]
+] qed.
+
+lemma Exists_append_l : ∀A,P,l1,l2.
+  Exists A P l1 → Exists A P (l1@l2).
+#A #P #l1 #l2 elim l1
+[ *
+| #h #t #IH *
+  [ #H %1 @H
+  | #H %2 @IH @H
+  ]
+] qed.
+
+lemma Exists_append_r : ∀A,P,l1,l2.
+  Exists A P l2 → Exists A P (l1@l2).
+#A #P #l1 #l2 elim l1
+[ #H @H
+| #h #t #IH #H %2 @IH @H
+] qed.
+
+lemma Exists_add : ∀A,P,l1,x,l2. Exists A P (l1@l2) → Exists A P (l1@x::l2).
+#A #P #l1 #x #l2 elim l1
+[ normalize #H %2 @H
+| #h #t #IH normalize * [ #H %1 @H | #H %2 @IH @H ]
+qed.
+
+lemma Exists_mid : ∀A,P,l1,x,l2. P x → Exists A P (l1@x::l2).
+#A #P #l1 #x #l2 #H elim l1
+[ %1 @H
+| #h #t #IH %2 @IH
+] qed.
+
+lemma Exists_map : ∀A,B,P,Q,f,l.
+Exists A P l →
+(∀a.P a → Q (f a)) →
+Exists B Q (map A B f l).
+#A #B #P #Q #f #l elim l //
+#h #t #IH * [ #H #F %1 @F @H | #H #F %2 @IH [ @H | @F ] ] qed.
+
+lemma Exists_All : ∀A,P,Q,l.
+  Exists A P l →
+  All A Q l →
+  ∃x. P x ∧ Q x.
+#A #P #Q #l elim l [ * | #hd #tl #IH * [ #H1 * #H2 #_ %{hd} /2/ | #H1 * #_ #H2 @IH // ]
 qed.
 
 (**************************** fold *******************************)
@@ -229,3 +332,32 @@ lemma length_ltl: ∀A,n,l. |ltl A l n| = |l| - n.
 #A #n elim n -n /2/
 #n #IHn *; normalize /2/
 qed.
+
+(********************** find ******************************)
+let rec find (A,B:Type[0]) (f:A → option B) (l:list A) on l : option B ≝
+match l with
+[ nil ⇒ None B
+| cons h t ⇒
+    match f h with
+    [ None ⇒ find A B f t
+    | Some b ⇒ Some B b
+    ]
+].
+
+(********************** position_of ******************************)
+let rec position_of_aux (A:Type[0]) (found: A → bool) (l:list A) (acc:nat) on l : option nat ≝
+match l with
+[ nil ⇒ None ?
+| cons h t ⇒
+   match found h with [true ⇒ Some … acc | false ⇒ position_of_aux … found t (S acc)]].
+
+definition position_of: ∀A:Type[0]. (A → bool) → list A → option nat ≝
+ λA,found,l. position_of_aux A found l 0.
+
+
+(********************** make_list ******************************)
+let rec make_list (A:Type[0]) (a:A) (n:nat) on n : list A ≝
+match n with
+[ O ⇒ [ ]
+| S m ⇒ a::(make_list A a m)
+].

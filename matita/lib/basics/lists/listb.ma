@@ -192,5 +192,16 @@ memb S x (filter ? f l) = true.
   ]
 qed. 
 
+(********************* exists *****************)
 
+let rec exists (A:Type[0]) (p:A → bool) (l:list A) on l : bool ≝
+match l with
+[ nil ⇒ false
+| cons h t ⇒ orb (p h) (exists A p t)
+].
 
+lemma Exists_exists : ∀A,P,l.
+  Exists A P l →
+  ∃x. P x.
+#A #P #l elim l [ * | #hd #tl #IH * [ #H %{hd} @H | @IH ]
+qed.
