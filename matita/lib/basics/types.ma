@@ -55,6 +55,19 @@ lemma refute_none_by_refl : ∀A,B:Type[0]. ∀P:A → B. ∀Q:B → Type[0]. �
 | #a #H #p normalize @p @refl
 ] qed.
 
+(* dependent pair *)
+record DPair (A:Type[0]) (f:A→Type[0]) : Type[0] ≝ {
+    dpi1: A
+  ; dpi2: f dpi1
+  }.
+
+interpretation "DPair" 'sigma x = (DPair ? x).
+
+notation "hvbox(« term 19 a, break term 19 b»)" 
+with precedence 90 for @{ 'dp $a $b }.
+
+interpretation "mk_DPair" 'dp x y = (mk_DPair ?? x y).
+
 (* sigma *)
 record Sig (A:Type[0]) (f:A→Prop) : Type[0] ≝ {
     pi1: A
@@ -62,9 +75,6 @@ record Sig (A:Type[0]) (f:A→Prop) : Type[0] ≝ {
   }.
   
 interpretation "Sigma" 'sigma x = (Sig ? x).
-
-notation "hvbox(« term 19 a, break term 19 b»)" 
-with precedence 90 for @{ 'dp $a $b }.
 
 interpretation "mk_Sig" 'dp x y = (mk_Sig ?? x y).
 
