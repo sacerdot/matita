@@ -304,6 +304,7 @@ lemma notb_eq_true_l: ∀b. notb b = true → b = false.
 #b cases b normalize //
 qed.
 
+(*
 lemma notb_eq_true_r: ∀b. b = false → notb b = true.
 #b cases b normalize //
 qed.
@@ -314,7 +315,7 @@ qed.
 
 lemma notb_eq_false_r:∀b. b = true → notb b = false.
 #b cases b normalize //
-qed.
+qed. *)
 
 (* include "arithmetics/exp.ma". *)
 
