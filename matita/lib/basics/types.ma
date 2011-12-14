@@ -214,3 +214,10 @@ lemma pair_destruct_2:
  ∀A,B.∀a:A.∀b:B.∀c. 〈a,b〉 = c → b = \snd c.
  #A #B #a #b *; /2/
 qed.
+
+lemma coerc_pair_sigma:
+ ∀A,B,P. ∀p:A × B. P (\snd p) → A × (Σx:B.P x).
+#A #B #P * #a #b #p % [@a | /2/]
+qed.
+coercion coerc_pair_sigma:∀A,B,P. ∀p:A × B. P (\snd p) → A × (Σx:B.P x)
+≝ coerc_pair_sigma on p: (? × ?) to (? × (Sig ??)). 
