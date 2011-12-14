@@ -52,6 +52,37 @@ notation > "\Sigma list1 ident x sep , opt (: T). term 19 Px"
           @{ ${ fold right @{$Px} rec acc @{'sigma (λ${ident x}.$acc)} } }
        }.
 
+notation "hvbox(« term 19 a, break term 19 b»)" 
+with precedence 90 for @{ 'dp $a $b }.
+
+(* dependent pairs (i.e. Sigma with predicate in Type[0])  ********************)
+
+notation < "hvbox(𝚺 ident i : ty break . p)"
+ left associative with precedence 20
+for @{'dpair (\lambda ${ident i} : $ty. $p) }.
+
+notation < "hvbox(𝚺 ident i break . p)"
+ with precedence 20
+for @{'dpair (\lambda ${ident i}. $p) }.
+
+(*
+notation < "hvbox(𝚺 ident i opt (: ty) break . p)"
+  right associative with precedence 20
+for @{ 'dpair ${default
+  @{\lambda ${ident i} : $ty. $p}
+  @{\lambda ${ident i} . $p}}}.
+*)
+
+notation > "𝚺 list1 ident x sep , opt (: T). term 19 Px"
+  with precedence 20
+  for ${ default
+          @{ ${ fold right @{$Px} rec acc @{'dpair (λ${ident x}:$T.$acc)} } }
+          @{ ${ fold right @{$Px} rec acc @{'dpair (λ${ident x}.$acc)} } }
+       }.
+
+notation "hvbox(❬ term 19 a, break term 19 b❭)" 
+with precedence 90 for @{ 'mk_DPair $a $b }.
+
 (* equality, conguence ******************************************************)
 
 notation > "hvbox(a break = b)" 

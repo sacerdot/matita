@@ -61,12 +61,9 @@ record DPair (A:Type[0]) (f:A→Type[0]) : Type[0] ≝ {
   ; dpi2: f dpi1
   }.
 
-interpretation "DPair" 'sigma x = (DPair ? x).
+interpretation "DPair" 'dpair x = (DPair ? x).
 
-notation "hvbox(« term 19 a, break term 19 b»)" 
-with precedence 90 for @{ 'dp $a $b }.
-
-interpretation "mk_DPair" 'dp x y = (mk_DPair ?? x y).
+interpretation "mk_DPair" 'mk_DPair x y = (mk_DPair ?? x y).
 
 (* sigma *)
 record Sig (A:Type[0]) (f:A→Prop) : Type[0] ≝ {

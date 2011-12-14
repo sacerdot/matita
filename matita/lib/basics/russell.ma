@@ -12,5 +12,5 @@
 include "basics/jmeq.ma".
 include "basics/types.ma".
 
-coercion inject nocomposites: ∀A.∀P:A → Prop.∀a.∀p:P a.Σx:A.P x ≝ λA,P,a,p. mk_Sig … a p on a:? to Σx:?.?.
-coercion eject nocomposites: ∀A.∀P:A → Prop.∀c:Σx:A.P x.A ≝ λA,P,c. pi1 … c on _c:Σx:?.? to ?.
+coercion inject nocomposites: ∀A.∀P:A → Prop.∀a.∀p:P a.Sig A P ≝ mk_Sig on a:? to Sig ??.
+coercion eject nocomposites: ∀A.∀P:A → Prop.∀c:Sig A P.A ≝ pi1 on _c:Sig ?? to ?.
