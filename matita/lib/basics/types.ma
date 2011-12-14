@@ -57,7 +57,7 @@ lemma refute_none_by_refl : ∀A,B:Type[0]. ∀P:A → B. ∀Q:B → Type[0]. �
 
 (* dependent pair *)
 record DPair (A:Type[0]) (f:A→Type[0]) : Type[0] ≝ {
-    dpi1: A
+    dpi1:> A
   ; dpi2: f dpi1
   }.
 
@@ -74,6 +74,10 @@ record Sig (A:Type[0]) (f:A→Prop) : Type[0] ≝ {
 interpretation "Sigma" 'sigma x = (Sig ? x).
 
 interpretation "mk_Sig" 'dp x y = (mk_Sig ?? x y).
+
+lemma sub_pi2 : ∀A.∀P,P':A → Prop. (∀x.P x → P' x) → ∀x:Σx:A.P x. P' (pi1 … x).
+#A #P #P' #H1 * #x #H2 @H1 @H2
+qed.
 
 (* Prod *)
 
