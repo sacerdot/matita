@@ -17,6 +17,7 @@
 include "arithmetics/nat.ma".
 include "basics/lists/list.ma".
 include "basics/sets.ma".
+include "basics/deqsets.ma".
 
 definition word ≝ λS:DeqSet.list S.
 
@@ -58,6 +59,24 @@ lemma distr_cat_r: ∀S.∀A,B,C:word S →Prop.
   [* #w1 * #w2 * * #eqw * /6/ |* * #w1 * #w2 * * /6/] 
 qed.
 
+(* derivative *)
+
+definition deriv ≝ λS.λA:word S → Prop.λa,w. A (a::w).
+
+lemma deriv_middot: ∀S,A,B,a. ¬ A ϵ → 
+  deriv S (A·B) a =1 (deriv S A a) · B.
+#S #A #B #a #noteps #w normalize %
+  [* #w1 cases w1 
+    [* #w2 * * #_ #Aeps @False_ind /2/
+    |#b #w2 * #w3 * * whd in ⊢ ((??%?)→?); #H destruct
+     #H #H1 @(ex_intro … w2) @(ex_intro … w3) % // % //
+    ]
+  |* #w1 * #w2 * * #H #H1 #H2 @(ex_intro … (a::w1))
+   @(ex_intro … w2) % // % normalize //
+  ]
+qed. 
+
+(* star properties *)
 lemma espilon_in_star: ∀S.∀A:word S → Prop.
   A^* ϵ.
 #S #A @(ex_intro … [ ]) normalize /2/
