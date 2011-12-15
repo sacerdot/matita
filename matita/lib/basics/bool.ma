@@ -95,23 +95,3 @@ theorem true_or_false:
 ∀b:bool. b = true ∨ b = false.
 #b (cases b) /2/ qed.
 
-
-(****** DeqSet: a set with a decidbale equality ******)
-
-record DeqSet : Type[1] ≝ { carr :> Type[0];
-   eqb: carr → carr → bool;
-   eqb_true: ∀x,y. (eqb x y = true) ↔ (x = y)
-}.
-
-notation "a == b" non associative with precedence 45 for @{ 'eqb $a $b }.
-interpretation "eqb" 'eqb a b = (eqb ? a b).
-
-
-(****** EnumSet: a DeqSet with an enumeration function  ******
-
-record EnumSet : Type[1] ≝ { carr :> DeqSet;
-   enum: carr 
-   eqb_true: ∀x,y. (eqb x y = true) ↔ (x = y)
-}.
-
-*)
