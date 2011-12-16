@@ -306,7 +306,7 @@ let index_local_equations eq_cache status =
          try
            let ty = NCicTypeChecker.typeof status subst metasenv ctx t in
            if is_a_fact status (mk_cic_term ctx ty) then
-             (noprint(lazy("eq indexing " ^ (status#ppterm ctx subst metasenv ty)));
+             (debug_print(lazy("eq indexing " ^ (status#ppterm ctx subst metasenv ty)));
               NCicParamod.forward_infer_step status metasenv subst ctx eq_cache t ty)
            else 
              (noprint (lazy ("not a fact: " ^ (status#ppterm ctx subst metasenv ty)));
@@ -1040,7 +1040,7 @@ let get_cands retrieve_for diff empty gty weak_gty =
             cands, diff more_cands cands
 ;;
 
-let get_candidates ?(smart=true) depth flags status cache signature gty =
+let get_candidates ?(smart=true) ~pfailed depth flags status cache signature gty =
   let universe = status#auto_cache in
   let _,_,metasenv,subst,_ = status#obj in
   let context = ctx_of gty in
@@ -1110,10 +1110,11 @@ let get_candidates ?(smart=true) depth flags status cache signature gty =
   let candidates_facts,candidates_other =
     let gl1,gl2 = List.partition test global_cands in
     let ll1,ll2 = List.partition test local_cands in
-    (* if the goal is an equation we avoid to apply unit equalities,
-     since superposition should take care of them; refl is an
+    (* if the goal is an equation and paramodulation did not fail
+     we avoid to apply unit equalities; refl is an
      exception since it prompts for convertibility *)
-    let l1 = if is_eq then [Ast.Ident("refl",None)] else gl1@ll1 in 
+    let l1 = if is_eq && (not pfailed) 
+      then [Ast.Ident("refl",None)] else gl1@ll1 in 
     let l2 = 
       (* if smart given candidates are applied in smart mode *)
       if by && smart then ll2
@@ -1141,7 +1142,7 @@ let get_candidates ?(smart=true) depth flags status cache signature gty =
   sort_candidates status context (smart_candidates_other)
 ;;
 
-let applicative_case depth signature status flags gty cache =
+let applicative_case ~pfailed depth signature status flags gty cache =
   app_counter:= !app_counter+1; 
   let _,_,metasenv,subst,_ = status#obj in
   let context = ctx_of gty in
@@ -1157,7 +1158,7 @@ let applicative_case depth signature status flags gty cache =
   (* new *)
   let candidates_facts, smart_candidates_facts, 
       candidates_other, smart_candidates_other = 
-    get_candidates ~smart:true depth 
+    get_candidates ~smart:true ~pfailed depth 
       flags status tcache signature gty 
   in
   let sm = if is_eq || is_prod then 0 else 2 in
@@ -1361,7 +1362,7 @@ let is_meta status gty =
 
 let do_something signature flags status g depth gty cache =
   (* if the goal is meta we close it with I:True. This should work
-    thnaks to the toplogical sorting of goals. *)
+    thanks to the toplogical sorting of goals. *)
   if is_meta status gty then
     let t = Ast.Ident("I",None) in
     debug_print (lazy ("using default term" ^ (NotationPp.pp_term status) t));
@@ -1384,7 +1385,7 @@ let do_something signature flags status g depth gty cache =
   in
   let l2 = 
     if ((l1 <> []) && flags.last) then [] else
-    applicative_case depth signature status flags gty cache 
+    applicative_case ~pfailed:(l1=[]) depth signature status flags gty cache 
   in
   (* statistics *)
   List.iter 
