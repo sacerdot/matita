@@ -225,3 +225,14 @@ notation "hvbox( T1 ⊑ break T2 )"
 notation "hvbox( T1 break [ R ] ⊑ break T2 )"
    non associative with precedence 45
    for @{ 'CrSubEq $T1 $R $T2 }.
+
+(* Functional ***************************************************************)
+
+notation "hvbox( ↟ [ d , break e ] break T )"
+   non associative with precedence 80
+   for @{ 'Lift $d $e $T }.
+
+notation "hvbox( ↡ [ d ← break V ] break T )"
+   non associative with precedence 80
+   for @{ 'Subst $V $d $T }.
+

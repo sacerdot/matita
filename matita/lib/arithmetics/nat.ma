@@ -1,4 +1,4 @@
-  (*
+(*
     ||M||  This file is part of HELM, an Hypertextual, Electronic        
     ||A||  Library of Mathematics, developed at the Computer Science     
     ||T||  Department of the University of Bologna, Italy.                     
@@ -184,6 +184,9 @@ theorem minus_Sn_n: ∀n:nat. S 0 = (S n)-n.
 theorem eq_minus_S_pred: ∀n,m. n - (S m) = pred(n -m).
 @nat_elim2 normalize // qed.
 
+lemma plus_plus_comm_23: ∀x,y,z. x + y + z = x + z + y.
+// qed.
+
 (* Negated equalities *******************************************************)
 
 theorem not_eq_O_S : ∀n:nat. 0 ≠ S n.
@@ -368,6 +371,10 @@ theorem lt_plus_to_minus_r: ∀a,b,c. a + b < c → a < c - b.
 #a #b #c #H @le_plus_to_minus_r //
 qed.
 
+theorem lt_S_S_to_lt: ∀n,m:nat. S n < S m → n < m.
+(* demo *)
+/2/ qed-.
+
 (* not le, lt *)
 
 theorem not_le_Sn_O: ∀ n:nat. S n ≰ 0.
@@ -426,6 +433,16 @@ theorem increasing_to_le2: ∀f:nat → nat. increasing f →
     ]
   ]
 qed.
+
+lemma le_inv_plus_l: ∀x,y,z. x + y ≤ z → x ≤ z - y ∧ y ≤ z.
+/3 width=2/ qed-.
+
+lemma lt_inv_plus_l: ∀x,y,z. x + y < z → x < z ∧ y < z - x.
+/3 width=2/ qed-.
+
+lemma lt_or_ge: ∀m,n. m < n ∨ n ≤ m.
+#m #n elim (decidable_lt m n) /2 width=1/ /3 width=1/
+qed-.
 
 (* More general conclusion **************************************************)
 
@@ -519,6 +536,9 @@ pred n - pred m = n - m.
 #n #m #posn #posm @(lt_O_n_elim n posn) @(lt_O_n_elim m posm) //.
 qed.
 
+theorem plus_minus_commutative: ∀x,y,z. z ≤ y → x + (y - z) = x + y - z.
+/2 by plus_minus/ qed.
+
 (* More atomic conclusion ***************************************************)
 
 (* le *)
@@ -560,6 +580,9 @@ theorem increasing_to_le: ∀f:nat → nat.
 #f #incr #m (elim m) /2/#n * #a #lenfa
 @(ex_intro ?? (S a)) /2/
 qed.
+
+lemma le_plus_compatible: ∀x1,x2,y1,y2. x1 ≤ y1 → x2 ≤ y2 → x1 + x2 ≤ y1 + y2.
+/3 by le_minus_to_plus, monotonic_le_plus_r, transitive_le/ qed.
 
 (* lt *)
 
@@ -630,7 +653,25 @@ theorem minus_minus: ∀n,m,p:nat. p ≤ m → m ≤ n →
 <commutative_plus <plus_minus_m_m //
 qed.
 
+lemma minus_minus_comm: ∀a,b,c. a - b - c = a - c - b.
+/3 by monotonic_le_minus_l, le_to_le_to_eq/ qed.
+
+lemma minus_le_minus_minus_comm: ∀b,c,a. c ≤ b → a - (b - c) = a + c - b.
+#b #c #a #H >(plus_minus_m_m b c) in ⊢ (? ? ?%); //
+qed.
+
+(* Stilll more atomic conclusion ********************************************)
+
+(* le *)
+
+lemma le_fwd_plus_plus_ge: ∀m1,m2. m2 ≤ m1 → ∀n1,n2. m1 + n1 ≤ m2 + n2 → n1 ≤ n2.
+#m1 #m2 #H #n1 #n2 >commutative_plus
+#H elim (le_inv_plus_l … H) -H >commutative_plus <minus_le_minus_minus_comm //
+#H #_ @(transitive_le … H) /2 width=1/
+qed-. 
+
 (*********************** boolean arithmetics ********************) 
+
 include "basics/bool.ma".
 
 let rec eqb n m ≝ 

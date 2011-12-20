@@ -165,6 +165,12 @@ elim (tps_inv_atom1 … H) -H /2 width=1/
 * #K #V #j #Hdj #Hjde #HLK #HVT2 #H destruct /3 width=4/
 qed-.
 
+lemma tps_inv_gref1: ∀L,T2,p,d,e. L ⊢ §p [d, e] ≫ T2 → T2 = §p.
+#L #T2 #p #d #e #H
+elim (tps_inv_atom1 … H) -H //
+* #K #V #i #_ #_ #_ #_ #H destruct
+qed-.
+
 fact tps_inv_bind1_aux: ∀d,e,L,U1,U2. L ⊢ U1 [d, e] ≫ U2 →
                         ∀I,V1,T1. U1 = 𝕓{I} V1. T1 →
                         ∃∃V2,T2. L ⊢ V1 [d, e] ≫ V2 & 

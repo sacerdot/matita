@@ -36,11 +36,11 @@ interpretation "relocation" 'RLift d e T1 T2 = (lift d e T1 T2).
 
 (* Basic inversion lemmas ***************************************************)
 
-fact lift_inv_refl_aux: ∀d,e,T1,T2. ↑[d, e] T1 ≡ T2 → e = 0 → T1 = T2.
+fact lift_inv_refl_O2_aux: ∀d,e,T1,T2. ↑[d, e] T1 ≡ T2 → e = 0 → T1 = T2.
 #d #e #T1 #T2 #H elim H -d -e -T1 -T2 // /3 width=1/
 qed.
 
-lemma lift_inv_refl: ∀d,T1,T2. ↑[d, 0] T1 ≡ T2 → T1 = T2.
+lemma lift_inv_refl_O2: ∀d,T1,T2. ↑[d, 0] T1 ≡ T2 → T1 = T2.
 /2 width=4/ qed-.
 
 fact lift_inv_sort1_aux: ∀d,e,T1,T2. ↑[d,e] T1 ≡ T2 → ∀k. T1 = ⋆k → T2 = ⋆k.
@@ -276,6 +276,9 @@ qed-.
 lemma lift_lref_ge_minus: ∀d,e,i. d + e ≤ i → ↑[d, e] #(i - e) ≡ #i.
 #d #e #i #H >(plus_minus_m_m i e) in ⊢ (? ? ? ? %); /2 width=2/ /3 width=2/
 qed.
+
+lemma lift_lref_ge_minus_eq: ∀d,e,i,j. d + e ≤ i → j = i - e → ↑[d, e] #j ≡ #i.
+/2 width=1/ qed-.
 
 (* Basic_1: was: lift_r *)
 lemma lift_refl: ∀T,d. ↑[d, 0] T ≡ T.

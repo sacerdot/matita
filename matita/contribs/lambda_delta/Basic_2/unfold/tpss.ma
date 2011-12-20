@@ -107,6 +107,15 @@ lemma tpss_inv_sort1: ∀L,T2,k,d,e. L ⊢ ⋆k [d, e] ≫* T2 → T2 = ⋆k.
 ]
 qed-.
 
+(* Note: this can be derived from tpss_inv_atom1 *)
+lemma tpss_inv_gref1: ∀L,T2,p,d,e. L ⊢ §p [d, e] ≫* T2 → T2 = §p.
+#L #T2 #p #d #e #H @(tpss_ind … H) -T2
+[ //
+| #T #T2 #_ #HT2 #IHT destruct
+  >(tps_inv_gref1 … HT2) -HT2 //
+]
+qed-.
+
 lemma tpss_inv_bind1: ∀d,e,L,I,V1,T1,U2. L ⊢ 𝕓{I} V1. T1 [d, e] ≫* U2 →
                       ∃∃V2,T2. L ⊢ V1 [d, e] ≫* V2 & 
                                L. 𝕓{I} V2 ⊢ T1 [d + 1, e] ≫* T2 &
