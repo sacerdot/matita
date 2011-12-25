@@ -17,15 +17,15 @@ include "Basic_2/substitution/ldrop.ma".
 (* GLOBAL ENVIRONMENT SLICING ***********************************************)
 
 inductive gdrop (e:nat) (G1:lenv) : predicate lenv ≝
-| gdrop_lt: ∀G2. e < |G1| → ↓[0, |G1| - (e + 1)] G1 ≡ G2 → gdrop e G1 G2
+| gdrop_lt: ∀G2. e < |G1| → ⇓[0, |G1| - (e + 1)] G1 ≡ G2 → gdrop e G1 G2
 | gdrop_ge: |G1| ≤ e → gdrop e G1 (⋆)
 .
 
-interpretation "global slicing" 'RDrop e G1 G2 = (gdrop e G1 G2).
+interpretation "global slicing" 'RGDrop e G1 G2 = (gdrop e G1 G2).
 
 (* basic inversion lemmas ***************************************************)
-
-fact gdrop_inv_atom2_aux: ∀G1,G2,e. ↓[e] G1 ≡ G2 → G2 = ⋆ → |G1| ≤ e.
+(*
+fact gdrop_inv_atom2_aux: ∀G1,G2,e. ⇓[e] G1 ≡ G2 → G2 = ⋆ → |G1| ≤ e.
 #G1 #G2 #e * -G2 //
 #G2 #He #HG12 #H destruct
 lapply (ldrop_fwd_O1_length … HG12) -HG12
@@ -33,11 +33,12 @@ lapply (ldrop_fwd_O1_length … HG12) -HG12
 >(commutative_plus e) normalize #H destruct
 qed.
 
-lemma gdrop_inv_atom2: ∀G1,e. ↓[e] G1 ≡ ⋆ → |G1| ≤ e.
+lemma gdrop_inv_atom2: ∀G1,e. ⇓[e] G1 ≡ ⋆ → |G1| ≤ e.
 /2 width=3/ qed-.
 
-lemma gdrop_inv_ge: ∀G1,G2,e. ↓[e] G1 ≡ G2 → |G1| ≤ e → G2 = ⋆.
+lemma gdrop_inv_ge: ∀G1,G2,e. ⇓[e] G1 ≡ G2 → |G1| ≤ e → G2 = ⋆.
 #G1 #G2 #e * // #G2 #H1 #_ #H2
 lapply (lt_to_le_to_lt … H1 H2) -H1 -H2 #He
 elim (lt_refl_false … He)
 qed-.
+*)

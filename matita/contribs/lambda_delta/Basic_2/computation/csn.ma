@@ -13,6 +13,7 @@
 (**************************************************************************)
 
 include "Basic_2/reducibility/cpr.ma".
+include "Basic_2/computation/acp.ma".
 
 (* CONTEXT-SENSITIVE STRONGLY NORMALIZING TERMS *****************************)
 
@@ -21,3 +22,7 @@ definition csn: lenv → predicate term ≝ λL. SN … (cpr L) (eq …).
 interpretation
    "context-sensitive strong normalization (term)"
    'SN L T = (csn L T). 
+
+(* Basic properties *********************************************************)
+
+axiom csn_acp: acp cpr (eq …) (csn …).

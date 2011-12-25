@@ -59,7 +59,7 @@ fact tpr_conf_flat_theta:
       ∀X1,X2. X0 ⇒ X1 → X0 ⇒ X2 →
       ∃∃X. X1 ⇒ X & X2 ⇒ X
    ) →
-   V0 ⇒ V1 → V0 ⇒ V2 → ↑[O,1] V2 ≡ V →
+   V0 ⇒ V1 → V0 ⇒ V2 → ⇑[O,1] V2 ≡ V →
    W0 ⇒ W2 → U0 ⇒ U2 →  𝕔{Abbr} W0. U0 ⇒ T1 →
    ∃∃X. 𝕔{Appl} V1. T1 ⇒ X & 𝕔{Abbr} W2. 𝕔{Appl} V. U2 ⇒ X.
 #V0 #V1 #T1 #V2 #V #W0 #W2 #U0 #U2 #IH #HV01 #HV02 #HV2 #HW02 #HU02 #H
@@ -142,7 +142,7 @@ fact tpr_conf_delta_zeta:
       ∃∃X. X1 ⇒ X & X2 ⇒ X
    ) →
    V0 ⇒ V1 → T0 ⇒ T1 → ⋆. 𝕓{Abbr} V1 ⊢ T1 [O,1] ≫ TT1 →
-   T2 ⇒ X2 → ↑[O, 1] T2 ≡ T0 →
+   T2 ⇒ X2 → ⇑[O, 1] T2 ≡ T0 →
    ∃∃X. 𝕓{Abbr} V1. TT1 ⇒ X & X2 ⇒ X.
 #X2 #V0 #V1 #T0 #T1 #TT1 #T2 #IH #_ #HT01 #HTT1 #HTX2 #HTT20
 elim (tpr_inv_lift … HT01 … HTT20) -HT01 #TT2 #HTT21 #HTT2
@@ -159,7 +159,7 @@ fact tpr_conf_theta_theta:
       ∃∃X. X1 ⇒ X & X2 ⇒ X
    ) →
    V0 ⇒ V1 → V0 ⇒ V2 → W0 ⇒ W1 → W0 ⇒ W2 → T0 ⇒ T1 → T0 ⇒ T2 →
-   ↑[O, 1] V1 ≡ VV1 → ↑[O, 1] V2 ≡ VV2 →
+   ⇑[O, 1] V1 ≡ VV1 → ⇑[O, 1] V2 ≡ VV2 →
    ∃∃X. 𝕔{Abbr} W1. 𝕔{Appl} VV1. T1 ⇒ X & 𝕔{Abbr} W2. 𝕔{Appl} VV2. T2 ⇒ X.
 #VV1 #V0 #V1 #W0 #W1 #T0 #T1 #V2 #VV2 #W2 #T2 #IH #HV01 #HV02 #HW01 #HW02 #HT01 #HT02 #HVV1 #HVV2
 elim (IH … HV01 … HV02) -HV01 -HV02 /2 width=1/ #V #HV1 #HV2
@@ -178,7 +178,7 @@ fact tpr_conf_zeta_zeta:
       ∃∃X. X1 ⇒ X & X2 ⇒ X
    ) →
    T0 ⇒ T1 → T2 ⇒ X2 →
-   ↑[O, 1] T0 ≡ TT0 → ↑[O, 1] T2 ≡ TT0 →
+   ⇑[O, 1] T0 ≡ TT0 → ⇑[O, 1] T2 ≡ TT0 →
    ∃∃X. T1 ⇒ X & X2 ⇒ X.
 #V0 #X2 #TT0 #T0 #T1 #T2 #IH #HT01 #HTX2 #HTT0 #HTT20
 lapply (lift_inj … HTT0 … HTT20) -HTT0 #H destruct

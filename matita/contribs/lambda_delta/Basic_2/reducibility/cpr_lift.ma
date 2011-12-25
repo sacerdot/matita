@@ -21,8 +21,8 @@ include "Basic_2/reducibility/cpr.ma".
 (* Advanced properties ******************************************************)
 
 lemma cpr_cdelta: ∀L,K,V1,W1,W2,i.
-                  ↓[0, i] L ≡ K. 𝕓{Abbr} V1 → K ⊢ V1 [0, |L| - i - 1] ≫* W1 →
-                  ↑[0, i + 1] W1 ≡ W2 → L ⊢ #i ⇒ W2.
+                  ⇓[0, i] L ≡ K. 𝕓{Abbr} V1 → K ⊢ V1 [0, |L| - i - 1] ≫* W1 →
+                  ⇑[0, i + 1] W1 ≡ W2 → L ⊢ #i ⇒ W2.
 #L #K #V1 #W1 #W2 #i #HLK #HVW1 #HW12
 lapply (ldrop_fwd_ldrop2_length … HLK) #Hi
 @ex2_1_intro [2: // | skip | @tpss_subst /width=6/ ] (**) (* /3 width=6/ is too slow *)
@@ -33,9 +33,9 @@ qed.
 (* Basic_1: was: pr2_gen_lref *)
 lemma cpr_inv_lref1: ∀L,T2,i. L ⊢ #i ⇒ T2 →
                      T2 = #i ∨
-                     ∃∃K,V1,T1. ↓[0, i] L ≡ K. 𝕓{Abbr} V1 &
+                     ∃∃K,V1,T1. ⇓[0, i] L ≡ K. 𝕓{Abbr} V1 &
                                 K ⊢ V1 [0, |L| - i - 1] ≫* T1 &
-                                ↑[0, i + 1] T1 ≡ T2 &
+                                ⇑[0, i + 1] T1 ≡ T2 &
                                 i < |L|.
 #L #T2 #i * #X #H
 >(tpr_inv_atom1 … H) -H #H
@@ -51,8 +51,8 @@ lemma cpr_inv_abst1: ∀V1,T1,U2. 𝕔{Abst} V1. T1 ⇒ U2 →
 (* Relocation properties ****************************************************)
 
 (* Basic_1: was: pr2_lift *)
-lemma cpr_lift: ∀L,K,d,e. ↓[d, e] L ≡ K →
-                ∀T1,U1. ↑[d, e] T1 ≡ U1 → ∀T2,U2. ↑[d, e] T2 ≡ U2 →
+lemma cpr_lift: ∀L,K,d,e. ⇓[d, e] L ≡ K →
+                ∀T1,U1. ⇑[d, e] T1 ≡ U1 → ∀T2,U2. ⇑[d, e] T2 ≡ U2 →
                 K ⊢ T1 ⇒ T2 → L ⊢ U1 ⇒ U2.
 #L #K #d #e #HLK #T1 #U1 #HTU1 #T2 #U2 #HTU2 * #T #HT1 #HT2
 elim (lift_total T d e) #U #HTU 
@@ -64,9 +64,9 @@ elim (lt_or_ge (|K|) d) #HKd
 qed.
 
 (* Basic_1: was: pr2_gen_lift *)
-lemma cpr_inv_lift: ∀L,K,d,e. ↓[d, e] L ≡ K →
-                    ∀T1,U1. ↑[d, e] T1 ≡ U1 → ∀U2. L ⊢ U1 ⇒ U2 →
-                    ∃∃T2. ↑[d, e] T2 ≡ U2 & K ⊢ T1 ⇒ T2.
+lemma cpr_inv_lift: ∀L,K,d,e. ⇓[d, e] L ≡ K →
+                    ∀T1,U1. ⇑[d, e] T1 ≡ U1 → ∀U2. L ⊢ U1 ⇒ U2 →
+                    ∃∃T2. ⇑[d, e] T2 ≡ U2 & K ⊢ T1 ⇒ T2.
 #L #K #d #e #HLK #T1 #U1 #HTU1 #U2 * #U #HU1 #HU2
 elim (tpr_inv_lift … HU1 … HTU1) -U1 #T #HTU #T1
 elim (lt_or_ge (|L|) d) #HLd

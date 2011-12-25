@@ -12,17 +12,22 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/static/aaa.ma".
-include "Basic_2/computation/csn_cr.ma".
-include "Basic_2/computation/lsubcs.ma".
+include "Basic_2/substitution/ldrop.ma".
 
-(* CONTEXT-SENSITIVE STRONGLY NORMALIZING TERMS *****************************)
+(* ABSTRACT COMPUTATION PROPERTIES ******************************************)
 
-(* Main propertis ***********************************************************)
+definition CP1 ≝ λRR:lenv→relation term. λRS:relation term.
+                 ∀L,k. NF … (RR L) RS (⋆k).
 
-axiom snc_aarity_csubcs: ∀L1,T,A. L1 ⊢ T ÷ A → ∀L2. L2 ⊑ L1 → {L2, T} ϵ 〚A〛.
+definition CP2 ≝ λRR:lenv→relation term. λRS:relation term.
+                 ∀L,K,W,i. ⇓[0,i] L ≡ K. 𝕓{Abst} W → NF … (RR L) RS (#i).
 
-lemma snc_aarity: ∀L,T,A. L ⊢ T ÷ A → {L, T} ϵ 〚A〛.
-/2 width=3/ qed.
+definition CP3 ≝ λRR:lenv→relation term. λRP:lenv→predicate term.
+                 ∀L,V,k. RP L (𝕔{Appl}⋆k.V) → RP L V.
 
-axiom csn_arity: ∀L,T,A. L ⊢ T ÷ A → L ⊢ ⇓ T.
+(* requirements for abstract computation properties *)
+record acp (RR:lenv->relation term) (RS:relation term) (RP:lenv→predicate term) : Prop ≝
+{ cp1: CP1 RR RS;
+  cp2: CP2 RR RS;
+  cp3: CP3 RR RP
+}.

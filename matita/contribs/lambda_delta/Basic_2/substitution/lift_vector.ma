@@ -12,18 +12,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* GENERAL NOTATION USED BY THE FORMAL SYSTEM λδ ****************************)
+include "Basic_2/grammar/term_vector.ma".
+include "Basic_2/substitution/lift.ma".
 
-(* Lists ********************************************************************)
+(* RELOCATION ***************************************************************)
 
-notation "hvbox( ◊ )"
-  non associative with precedence 90
-  for @{'Nil}.
+inductive liftv (d,e:nat) : relation (list term) ≝
+| liftv_nil : liftv d e ◊ ◊
+| liftv_cons: ∀T1s,T2s,T1,T2.
+              ⇑[d, e] T1 ≡ T2 → liftv d e T1s T2s →
+              liftv d e (T1 :: T1s) (T2 :: T2s)
+.
 
-notation "hvbox( hd break :: tl )"
-  right associative with precedence 47
-  for @{'Cons $hd $tl}.
+interpretation "relocation (vector)" 'RLift d e T1s T2s = (liftv d e T1s T2s).
 
-notation "hvbox( l1 break @ l2 )"
-  right associative with precedence 47
-  for @{'Append $l1 $l2 }.

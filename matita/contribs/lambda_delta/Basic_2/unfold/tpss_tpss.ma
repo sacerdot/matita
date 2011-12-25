@@ -59,9 +59,9 @@ lemma tpss_split_up: ∀L,T1,T2,d,e. L ⊢ T1 [d, e] ≫* T2 →
 qed.
 
 lemma tpss_inv_lift1_up: ∀L,U1,U2,dt,et. L ⊢ U1 [dt, et] ≫* U2 →
-                         ∀K,d,e. ↓[d, e] L ≡ K → ∀T1. ↑[d, e] T1 ≡ U1 →
+                         ∀K,d,e. ⇓[d, e] L ≡ K → ∀T1. ⇑[d, e] T1 ≡ U1 →
                          d ≤ dt → dt ≤ d + e → d + e ≤ dt + et →
-                         ∃∃T2. K ⊢ T1 [d, dt + et - (d + e)] ≫* T2 & ↑[d, e] T2 ≡ U2.
+                         ∃∃T2. K ⊢ T1 [d, dt + et - (d + e)] ≫* T2 & ⇑[d, e] T2 ≡ U2.
 #L #U1 #U2 #dt #et #HU12 #K #d #e #HLK #T1 #HTU1 #Hddt #Hdtde #Hdedet
 elim (tpss_split_up … HU12 (d + e) ? ?) -HU12 // -Hdedet #U #HU1 #HU2
 lapply (tpss_weak … HU1 d e ? ?) -HU1 // [ >commutative_plus /2 width=1/ ] -Hddt -Hdtde #HU1

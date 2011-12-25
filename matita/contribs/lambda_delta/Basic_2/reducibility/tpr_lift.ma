@@ -21,7 +21,7 @@ include "Basic_2/reducibility/tpr.ma".
 
 (* Basic_1: was: pr0_lift *)
 lemma tpr_lift: ∀T1,T2. T1 ⇒ T2 →
-                ∀d,e,U1. ↑[d, e] T1 ≡ U1 → ∀U2. ↑[d, e] T2 ≡ U2 → U1 ⇒ U2.
+                ∀d,e,U1. ⇑[d, e] T1 ≡ U1 → ∀U2. ⇑[d, e] T2 ≡ U2 → U1 ⇒ U2.
 #T1 #T2 #H elim H -T1 -T2
 [ * #i #d #e #U1 #HU1 #U2 #HU2
   lapply (lift_mono … HU1 … HU2) -HU1 #H destruct
@@ -58,8 +58,8 @@ qed.
 
 (* Basic_1: was: pr0_gen_lift *)
 lemma tpr_inv_lift: ∀T1,T2. T1 ⇒ T2 →
-                    ∀d,e,U1. ↑[d, e] U1 ≡ T1 →
-                    ∃∃U2. ↑[d, e] U2 ≡ T2 & U1 ⇒ U2.
+                    ∀d,e,U1. ⇑[d, e] U1 ≡ T1 →
+                    ∃∃U2. ⇑[d, e] U2 ≡ T2 & U1 ⇒ U2.
 #T1 #T2 #H elim H -T1 -T2
 [ * #i #d #e #U1 #HU1
   [ lapply (lift_inv_sort2 … HU1) -HU1 #H destruct /2 width=3/

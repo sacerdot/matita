@@ -25,10 +25,8 @@ interpretation "nil (list)" 'Nil = (nil ?).
 
 interpretation "cons (list)" 'Cons hd tl = (cons ? hd tl).
 
-let rec append A (l1: list A) l2 on l1 ≝ 
-  match l1 with
-  [ nil        ⇒  l2
-  | cons hd tl ⇒  hd :: append A tl l2
+let rec all A (R:predicate A) (l:list A) on l ≝
+  match l with
+  [ nil        ⇒ True
+  | cons hd tl ⇒ R hd ∧ all A R tl
   ].
-
-interpretation "append (list)" 'Append l1 l2 = (append ? l1 l2).

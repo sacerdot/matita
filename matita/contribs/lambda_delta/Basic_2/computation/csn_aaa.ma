@@ -12,20 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/computation/lsubc.ma".
-include "Basic_2/computation/csn.ma".
+include "Basic_2/computation/acp_aaa.ma".
+include "Basic_2/computation/csn_cr.ma".
 
-(* LOCAL ENVIRONMENT REFINEMENT FOR STRONG NORMALIZATION ********************)
+(* CONTEXT-SENSITIVE STRONGLY NORMALIZING TERMS *****************************)
 
-definition lsubcs: relation lenv ≝ lsubc csn.
+(* Main properties **********************************************************)
 
-interpretation
-  "local environment refinement (strong normalization)"
-  'CrSubEq L1 L2 = (lsubcs L1 L2).
-
-(* Basic properties *********************************************************)
-
-lemma lsubcs_refl: ∀L. L ⊑ L.
-// qed.
-
-(* Basic inversion lemmas ***************************************************)
+theorem csn_aaa: ∀L,T,A. L ⊢ T ÷ A → L ⊢ ⇓ T.
+#L #T #A #H
+@(acp_aaa … csn_acp csn_acr … H)
+qed. 

@@ -33,7 +33,7 @@ interpretation "functional relocation" 'Lift d e T = (flift d e T).
 
 (* Main properties **********************************************************)
 
-theorem flift_lift: ∀T,d,e. ↑[d, e] T ≡ ↟[d, e] T.
+theorem flift_lift: ∀T,d,e. ⇑[d, e] T ≡ ↑[d, e] T.
 #T elim T -T
 [ * #i #d #e //
   elim (lt_or_eq_or_gt i d) #Hid normalize 
@@ -47,7 +47,7 @@ qed.
 
 (* Main inversion properties ************************************************)
 
-theorem flift_inv_lift: ∀d,e,T1,T2. ↑[d, e] T1 ≡ T2 → ↟[d, e] T1 = T2.
+theorem flift_inv_lift: ∀d,e,T1,T2. ⇑[d, e] T1 ≡ T2 → ↑[d, e] T1 = T2.
 #d #e #T1 #T2 #H elim H -d -e -T1 -T2 normalize //
 [ #i #d #e #Hid >(tri_lt ?????? Hid) //
 | #i #d #e #Hid
@@ -60,7 +60,7 @@ qed-.
 
 (* Derived properties *******************************************************)
 
-lemma flift_join: ∀e1,e2,T. ↑[e1, e2] ↟[0, e1] T ≡ ↟[0, e1 + e2] T.
+lemma flift_join: ∀e1,e2,T. ⇑[e1, e2] ↑[0, e1] T ≡ ↑[0, e1 + e2] T.
 #e1 #e2 #T
 lapply (flift_lift T 0 (e1+e2)) #H
 elim (lift_split … H e1 e1 ? ? ?) -H // #U #H

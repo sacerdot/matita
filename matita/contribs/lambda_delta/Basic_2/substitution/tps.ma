@@ -20,7 +20,7 @@ include "Basic_2/substitution/ldrop.ma".
 inductive tps: nat → nat → lenv → relation term ≝
 | tps_atom : ∀L,I,d,e. tps d e L (𝕒{I}) (𝕒{I})
 | tps_subst: ∀L,K,V,W,i,d,e. d ≤ i → i < d + e →
-             ↓[0, i] L ≡ K. 𝕓{Abbr} V → ↑[0, i + 1] V ≡ W → tps d e L (#i) W
+             ⇓[0, i] L ≡ K. 𝕓{Abbr} V → ⇑[0, i + 1] V ≡ W → tps d e L (#i) W
 | tps_bind : ∀L,I,V1,V2,T1,T2,d,e.
              tps d e L V1 V2 → tps (d + 1) e (L. 𝕓{I} V2) T1 T2 →
              tps d e L (𝕓{I} V1. T1) (𝕓{I} V2. T2)
@@ -51,8 +51,8 @@ lemma tps_refl: ∀T,L,d,e. L ⊢ T [d, e] ≫ T.
 qed.
 
 (* Basic_1: was: subst1_ex *)
-lemma tps_full: ∀K,V,T1,L,d. ↓[0, d] L ≡ (K. 𝕓{Abbr} V) →
-                ∃∃T2,T. L ⊢ T1 [d, 1] ≫ T2 & ↑[d, 1] T ≡ T2.
+lemma tps_full: ∀K,V,T1,L,d. ⇓[0, d] L ≡ (K. 𝕓{Abbr} V) →
+                ∃∃T2,T. L ⊢ T1 [d, 1] ≫ T2 & ⇑[d, 1] T ≡ T2.
 #K #V #T1 elim T1 -T1
 [ * #i #L #d #HLK /2 width=4/
   elim (lt_or_eq_or_gt i d) #Hid /3 width=4/
@@ -127,8 +127,8 @@ qed.
 fact tps_inv_atom1_aux: ∀L,T1,T2,d,e. L ⊢ T1 [d, e] ≫ T2 → ∀I. T1 = 𝕒{I} →
                         T2 = 𝕒{I} ∨
                         ∃∃K,V,i. d ≤ i & i < d + e &
-                                 ↓[O, i] L ≡ K. 𝕓{Abbr} V &
-                                 ↑[O, i + 1] V ≡ T2 &
+                                 ⇓[O, i] L ≡ K. 𝕓{Abbr} V &
+                                 ⇑[O, i + 1] V ≡ T2 &
                                  I = LRef i.
 #L #T1 #T2 #d #e * -L -T1 -T2 -d -e
 [ #L #I #d #e #J #H destruct /2 width=1/
@@ -141,8 +141,8 @@ qed.
 lemma tps_inv_atom1: ∀L,T2,I,d,e. L ⊢ 𝕒{I} [d, e] ≫ T2 →
                      T2 = 𝕒{I} ∨
                      ∃∃K,V,i. d ≤ i & i < d + e &
-                              ↓[O, i] L ≡ K. 𝕓{Abbr} V &
-                              ↑[O, i + 1] V ≡ T2 &
+                              ⇓[O, i] L ≡ K. 𝕓{Abbr} V &
+                              ⇑[O, i + 1] V ≡ T2 &
                               I = LRef i.
 /2 width=3/ qed-.
 
@@ -158,8 +158,8 @@ qed-.
 lemma tps_inv_lref1: ∀L,T2,i,d,e. L ⊢ #i [d, e] ≫ T2 →
                      T2 = #i ∨
                      ∃∃K,V. d ≤ i & i < d + e &
-                            ↓[O, i] L ≡ K. 𝕓{Abbr} V &
-                            ↑[O, i + 1] V ≡ T2.
+                            ⇓[O, i] L ≡ K. 𝕓{Abbr} V &
+                            ⇑[O, i + 1] V ≡ T2.
 #L #T2 #i #d #e #H
 elim (tps_inv_atom1 … H) -H /2 width=1/
 * #K #V #j #Hdj #Hjde #HLK #HVT2 #H destruct /3 width=4/

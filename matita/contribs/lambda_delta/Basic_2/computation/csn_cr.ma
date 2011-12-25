@@ -17,9 +17,6 @@ include "Basic_2/computation/csn.ma".
 
 (* CONTEXT-SENSITIVE STRONGLY NORMALIZING TERMS *****************************)
 
-(* the candidate of reducibility associated to an atomic arity *)
-definition snc: aarity → lenv → predicate term ≝ acr csn.
+(* Advanced properties ******************************************************)
 
-interpretation
-   "candidate of reducibility (contex-sensitive strong normalization)"
-   'InEInt L T A = (snc A L T).
+axiom csn_acr: acr cpr (eq …) (csn …) (λL,T. L ⊢ ⇓ T).

@@ -56,6 +56,10 @@ notation "hvbox( 𝕗 { I } break term 90 T1 . break term 90 T )"
  non associative with precedence 90
  for @{ 'SFlat $I $T1 $T }.
 
+notation "hvbox( Ⓐ term 90 T1 . break term 90 T )"
+ non associative with precedence 90
+ for @{ 'ApplV $T1 $T }.
+
 notation "hvbox( T . break 𝕓 { I } break term 90 T1 )"
  non associative with precedence 89
  for @{ 'DBind $T $I $T1 }.
@@ -82,17 +86,13 @@ notation "hvbox( T1 break [ d , break e ] ≼ break T2 )"
 
 (* Substitution *************************************************************)
 
-notation "hvbox( ↑ [ d , break e ] break T1 ≡ break T2 )"
+notation "hvbox( ⇑ [ d , break e ] break T1 ≡ break T2 )"
    non associative with precedence 45
    for @{ 'RLift $d $e $T1 $T2 }.
 
-notation "hvbox( ↓ [ e ] break L1 ≡ break L2 )"
+notation "hvbox( ⇓ [ d , break e ] break L1 ≡ break L2 )"
    non associative with precedence 45
-   for @{ 'RDrop $e $L1 $L2 }.
-
-notation "hvbox( ↓ [ d , break e ] break L1 ≡ break L2 )"
-   non associative with precedence 45
-   for @{ 'RDrop $d $e $L1 $L2 }.
+   for @{ 'RLDrop $d $e $L1 $L2 }.
 
 notation "hvbox( T1 break [ d , break e ] ≫ break T2 )"
    non associative with precedence 45
@@ -103,6 +103,14 @@ notation "hvbox( L ⊢ break term 90 T1 break [ d , break e ] ≫ break T2 )"
    for @{ 'PSubst $L $T1 $d $e $T2 }.
 
 (* Unfold *******************************************************************)
+
+notation "hvbox( ⇑ [ e ] break T1 ≡ break T2 )"
+   non associative with precedence 45
+   for @{ 'RLift $e $T1 $T2 }.
+
+notation "hvbox( ⇓ [ e ] break L1 ≡ break L2 )"
+   non associative with precedence 45
+   for @{ 'RLDrop $e $L1 $L2 }.
 
 notation "hvbox( T1 break [ d , break e ] ≫* break T2 )"
    non associative with precedence 45
@@ -214,7 +222,7 @@ notation "hvbox( { L, break T } ϵ break 〚 A 〛 )"
    non associative with precedence 45
    for @{ 'InEInt $L $T $A }.
 
-notation "hvbox( R ⊢ break { L, break T } ϵ break 〚 A 〛 )"
+notation "hvbox( { L, break T } break [ R ] ϵ break 〚 A 〛 )"
    non associative with precedence 45
    for @{ 'InEInt $R $L $T $A }.
 
@@ -228,11 +236,11 @@ notation "hvbox( T1 break [ R ] ⊑ break T2 )"
 
 (* Functional ***************************************************************)
 
-notation "hvbox( ↟ [ d , break e ] break T )"
+notation "hvbox( ↑ [ d , break e ] break T )"
    non associative with precedence 80
    for @{ 'Lift $d $e $T }.
 
-notation "hvbox( ↡ [ d ← break V ] break T )"
+notation "hvbox( ↓ [ d ← break V ] break T )"
    non associative with precedence 80
    for @{ 'Subst $V $d $T }.
 

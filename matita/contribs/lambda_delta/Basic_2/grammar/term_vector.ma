@@ -12,18 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* GENERAL NOTATION USED BY THE FORMAL SYSTEM λδ ****************************)
+include "Basic_2/grammar/term.ma".
 
-(* Lists ********************************************************************)
+(* TERMS ********************************************************************)
 
-notation "hvbox( ◊ )"
-  non associative with precedence 90
-  for @{'Nil}.
+let rec applv Vs T on Vs ≝
+  match Vs with
+  [ nil        ⇒ T
+  | cons hd tl ⇒  𝕔{Appl} hd. (applv tl T)
+  ].
 
-notation "hvbox( hd break :: tl )"
-  right associative with precedence 47
-  for @{'Cons $hd $tl}.
-
-notation "hvbox( l1 break @ l2 )"
-  right associative with precedence 47
-  for @{'Append $l1 $l2 }.
+interpretation "application construction (vector)" 'ApplV Vs T = (applv Vs T).
