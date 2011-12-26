@@ -21,7 +21,7 @@ include "Basic_2/computation/lsubc.ma".
 
 axiom aacr_aaa_csubc: ∀RR,RS,RP. acp RR RS RP → acr RR RS RP (λL,T. RP L T) →
                         ∀L1,T,A. L1 ⊢ T ÷ A →
-                        ∀L2. L2 [RP] ⊑ L1 → {L2, T} [RP] ϵ 〚A〛.
+                        ∀L2. L2 [RP] ⊑ L1 → ⦃L2, T⦄ [RP] ϵ 〚A〛.
 (*
 #RR #RS #RP #H1RP #H2RP #L1 #T #A #H elim H -L1 -T -A
 [ #L #k #L2 #HL2

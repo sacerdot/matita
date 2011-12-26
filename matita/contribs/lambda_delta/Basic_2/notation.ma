@@ -218,17 +218,9 @@ notation "hvbox( L ⊢ ⇓ T )"
    non associative with precedence 45
    for @{ 'SN $L $T }.
 
-notation "hvbox( { L, break T } ϵ break 〚 A 〛 )"
-   non associative with precedence 45
-   for @{ 'InEInt $L $T $A }.
-
-notation "hvbox( { L, break T } break [ R ] ϵ break 〚 A 〛 )"
+notation "hvbox( ⦃ L, break T ⦄ break [ R ] ϵ break 〚 A 〛 )"
    non associative with precedence 45
    for @{ 'InEInt $R $L $T $A }.
-
-notation "hvbox( T1 ⊑ break T2 )"
-   non associative with precedence 45
-   for @{ 'CrSubEq $T1 $T2 }.
 
 notation "hvbox( T1 break [ R ] ⊑ break T2 )"
    non associative with precedence 45
@@ -237,10 +229,10 @@ notation "hvbox( T1 break [ R ] ⊑ break T2 )"
 (* Functional ***************************************************************)
 
 notation "hvbox( ↑ [ d , break e ] break T )"
-   non associative with precedence 80
+   non associative with precedence 55
    for @{ 'Lift $d $e $T }.
 
-notation "hvbox( ↓ [ d ← break V ] break T )"
-   non associative with precedence 80
+notation "hvbox( [ d ← break V ] break T )"
+   non associative with precedence 55
    for @{ 'Subst $V $d $T }.
 

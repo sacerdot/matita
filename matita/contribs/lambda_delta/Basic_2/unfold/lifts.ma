@@ -12,15 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Ground_2/list.ma".
-include "Basic_2/grammar/term.ma".
+include "Basic_2/substitution/lift_vector.ma".
 
-(* TERMS ********************************************************************)
+(* GENERIC RELOCATION *******************************************************)
 
-let rec applv Vs T on Vs ≝
-  match Vs with
-  [ nil        ⇒ T
-  | cons hd tl ⇒  𝕔{Appl} hd. (applv tl T)
-  ].
+inductive lifts: list2 nat nat → relation term ≝
+| lifts_nil : ∀T. lifts ⟠ T T
+| lifts_cons: ∀T1,T,T2,des,d,e.
+              ⇑[d,e] T1 ≡ T → lifts des T T2 → lifts ({d, e} :: des) T1 T2
+.
 
-interpretation "application construction (vector)" 'ApplV Vs T = (applv Vs T).
+interpretation "generic relocation" 'RLift des T1 T2 = (lifts des T1 T2).

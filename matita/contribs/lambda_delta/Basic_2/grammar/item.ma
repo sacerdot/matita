@@ -20,7 +20,7 @@
  * [ suggested invocation to start formal specifications with ]
  *)
 
-include "Ground_2/list.ma".
+include "Ground_2/arith.ma".
 include "Basic_2/notation.ma".
 
 (* ITEMS ********************************************************************)

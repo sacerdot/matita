@@ -12,15 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Ground_2/list.ma".
-include "Basic_2/grammar/term.ma".
+include "Basic_2/substitution/ldrop.ma".
+include "Basic_2/unfold/lifts.ma".
 
-(* TERMS ********************************************************************)
+(* GENERIC LOCAL ENVIRONMENT SLICING ****************************************)
 
-let rec applv Vs T on Vs ≝
-  match Vs with
-  [ nil        ⇒ T
-  | cons hd tl ⇒  𝕔{Appl} hd. (applv tl T)
-  ].
+inductive ldrops: list2 nat nat → relation lenv ≝
+| ldrops_nil : ∀L. ldrops ⟠ L L
+| ldrops_cons: ∀L1,L,L2,des,d,e.
+               ⇓[d,e] L1 ≡ L → ldrops des L L2 → ldrops ({d, e} :: des) L1 L2
+.
 
-interpretation "application construction (vector)" 'ApplV Vs T = (applv Vs T).
+interpretation "generic local environment slicing"
+   'RDrop des T1 T2 = (ldrops des T1 T2).

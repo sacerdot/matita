@@ -88,11 +88,11 @@ axiom aacr_acr: ∀RR,RS,RP. acp RR RS RP → acr RR RS RP (λL,T. RP L T) →
   @(s7 … IHA … HL21) [2: @HA [2: 
 ]
 qed.
-*)  
+*)
 lemma aacr_abst: ∀RR,RS,RP. acp RR RS RP → acr RR RS RP (λL,T. RP L T) →
-                 ∀L,W,T,A,B. RP L W → 
-                 (∀V. {L, V} [RP] ϵ 〚B〛 → {L. 𝕓{Abbr}V, T} [RP] ϵ 〚A〛) →
-                 {L, 𝕓{Abst}W. T} [RP] ϵ 〚𝕔B. A〛.
+                 ∀L,W,T,A,B. RP L W →
+                 (∀V. ⦃L, V⦄ [RP] ϵ 〚B〛 → ⦃L. 𝕓{Abbr}V, T⦄ [RP] ϵ 〚A〛) →
+                              ⦃L, 𝕓{Abst}W. T⦄ [RP] ϵ 〚𝕔B. A〛.
 #RR #RS #RP #H1RP #H2RP #L #W #T #A #B #HW #HA #V #HB
 lapply (aacr_acr … H1RP H2RP A) #HCA
 lapply (aacr_acr … H1RP H2RP B) #HCB

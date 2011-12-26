@@ -20,10 +20,18 @@ notation "hvbox( ◊ )"
   non associative with precedence 90
   for @{'Nil}.
 
-notation "hvbox( hd break :: tl )"
+notation "hvbox( hd :: break tl )"
   right associative with precedence 47
   for @{'Cons $hd $tl}.
 
-notation "hvbox( l1 break @ l2 )"
+notation "hvbox( l1 @ break l2 )"
   right associative with precedence 47
   for @{'Append $l1 $l2 }.
+
+notation "hvbox( ⟠ )"
+  non associative with precedence 90
+  for @{'Nil2}.
+
+notation "hvbox( { hd1 , break hd2 } :: break tl )"
+  non associative with precedence 45
+  for @{'Cons $hd1 $hd2 $tl}.
