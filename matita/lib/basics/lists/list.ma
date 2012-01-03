@@ -65,12 +65,6 @@ theorem associative_append:
  ∀A.associative (list A) (append A).
 #A #l1 #l2 #l3 (elim l1) normalize // qed.
 
-(* deleterio per auto 
-ntheorem cons_append_commute:
-  ∀A:Type.∀l1,l2:list A.∀a:A.
-    a :: (l1 @ l2) = (a :: l1) @ l2.
-//; nqed. *)
-
 theorem append_cons:∀A.∀a:A.∀l,l1.l@(a::l1)=(l@[a])@l1.
 #A #a #l #l1 >associative_append // qed.
 
@@ -120,6 +114,46 @@ lemma filter_false : ∀A,l,a,p. p a = false →
 
 theorem eq_map : ∀A,B,f,g,l. (∀x.f x = g x) → map A B f l = map A B g l.
 #A #B #f #g #l #eqfg (elim l) normalize // qed.
+
+(**************************** reverse *****************************)
+let rec rev_append S (l1,l2:list S) on l1 ≝
+  match l1 with 
+  [ nil ⇒ l2
+  | cons a tl ⇒ rev_append S tl (a::l2)
+  ]
+.
+
+definition reverse ≝λS.λl.rev_append S l [].
+
+lemma reverse_single : ∀S,a. reverse S [a] = [a]. 
+// qed.
+
+lemma rev_append_def : ∀S,l1,l2. 
+  rev_append S l1 l2 = (reverse S l1) @ l2 .
+#S #l1 elim l1 normalize // 
+qed.
+
+lemma reverse_cons : ∀S,a,l. reverse S (a::l) = (reverse S l)@[a].
+#S #a #l whd in ⊢ (??%?); // 
+qed.
+
+lemma reverse_append: ∀S,l1,l2. 
+  reverse S (l1 @ l2) = (reverse S l2)@(reverse S l1).
+#S #l1 elim l1 [normalize // | #a #tl #Hind #l2 >reverse_cons
+>reverse_cons // qed.
+
+lemma reverse_reverse : ∀S,l. reverse S (reverse S l) = l.
+#S #l elim l // #a #tl #Hind >reverse_cons >reverse_append 
+normalize // qed.
+
+(* an elimination principle for lists working on the tail;
+useful for strings *)
+lemma list_elim_left: ∀S.∀P:list S → Prop. P (nil S) →
+(∀a.∀tl.P tl → P (tl@[a])) → ∀l. P l.
+#S #P #Pnil #Pstep #l <(reverse_reverse … l) 
+generalize in match (reverse S l); #l elim l //
+#a #tl #H >reverse_cons @Pstep //
+qed.
 
 (**************************** length ******************************)
 
