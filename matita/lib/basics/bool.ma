@@ -37,6 +37,14 @@ theorem notb_notb: ∀b:bool. notb (notb b) = b.
 theorem injective_notb: injective bool bool notb.
 #b1 #b2 #H // qed.
 
+theorem noteq_to_eqnot: ∀b1,b2. b1 ≠ b2 → b1 = notb b2.
+* * // #H @False_ind /2/
+qed.
+
+theorem eqnot_to_noteq: ∀b1,b2. b1 = notb b2 → b1 ≠ b2.
+* * normalize // #_ @(not_to_not … not_eq_true_false) //
+qed.
+
 definition andb : bool → bool → bool ≝
 λb1,b2:bool. match b1 with [ true ⇒ b2 | false ⇒ false ].
 
@@ -94,4 +102,5 @@ theorem bool_to_decidable_eq:
 theorem true_or_false:
 ∀b:bool. b = true ∨ b = false.
 #b (cases b) /2/ qed.
+
 
