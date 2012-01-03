@@ -53,6 +53,10 @@ lemma cat_ext_r: ∀S.∀A,B,C:word S →Prop.
 cases (H w2) /6/ 
 qed.
   
+lemma cat_empty_l: ∀S.∀A:word S→Prop. ∅ · A =1 ∅.
+#S #A #w % [|*] * #w1 * #w2 * * #_ *
+qed.
+
 lemma distr_cat_r: ∀S.∀A,B,C:word S →Prop.
   (A ∪ B) · C =1  A · C ∪ B · C. 
 #S #A #B #C #w %
