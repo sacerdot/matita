@@ -74,6 +74,11 @@ lemma eqP_substract_l: ∀U.∀A,B,C:U →Prop.
 #U #A #B #C #eqBC #a @iff_and_l /2/ qed.
 
 (* set equalities *)
+lemma union_empty_r: ∀U.∀A:U→Prop. 
+  A ∪ ∅ =1 A.
+#U #A #w % [* // normalize #abs @False_ind /2/ | /2/]
+qed.
+
 lemma union_comm : ∀U.∀A,B:U →Prop. 
   A ∪ B =1 B ∪ A.
 #U #A #B #a % * /2/ qed. 
