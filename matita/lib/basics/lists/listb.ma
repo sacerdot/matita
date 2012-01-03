@@ -21,7 +21,7 @@ include "basics/deqsets.ma".
 let rec memb (S:DeqSet) (x:S) (l: list S) on l  ≝
   match l with
   [ nil ⇒ false
-  | cons a tl ⇒ (a == x) ∨ memb S x tl
+  | cons a tl ⇒ (x == a) ∨ memb S x tl
   ].
 
 notation < "\memb x l" non associative with precedence 90 for @{'memb $x $l}.
@@ -33,36 +33,40 @@ qed.
 
 lemma memb_cons: ∀S,a,b,l. 
   memb S a l = true → memb S a (b::l) = true.
-#S #a #b #l normalize cases (b==a) normalize // 
+#S #a #b #l normalize cases (a==b) normalize // 
+qed.
+
+lemma memb_single: ∀S,a,x. memb S a [x] = true → a = x.
+#S #a #x normalize cases (true_or_false … (a==x)) #H
+  [#_ >(\P H) // |>H normalize #abs @False_ind /2/]
 qed.
 
 lemma memb_append: ∀S,a,l1,l2. 
 memb S a (l1@l2) = true →
   memb S a l1= true ∨ memb S a l2 = true.
 #S #a #l1 elim l1 normalize [#l2 #H %2 //] 
-#b #tl #Hind #l2 cases (b==a) normalize /2/ 
+#b #tl #Hind #l2 cases (a==b) normalize /2/ 
 qed. 
 
 lemma memb_append_l1: ∀S,a,l1,l2. 
  memb S a l1= true → memb S a (l1@l2) = true.
 #S #a #l1 elim l1 normalize
   [normalize #le #abs @False_ind /2/
-  |#b #tl #Hind #l2 cases (b==a) normalize /2/ 
+  |#b #tl #Hind #l2 cases (a==b) normalize /2/ 
   ]
 qed. 
 
 lemma memb_append_l2: ∀S,a,l1,l2. 
  memb S a l2= true → memb S a (l1@l2) = true.
 #S #a #l1 elim l1 normalize //
-#b #tl #Hind #l2 cases (b==a) normalize /2/ 
+#b #tl #Hind #l2 cases (a==b) normalize /2/ 
 qed. 
 
 lemma memb_exists: ∀S,a,l.memb S a l = true → 
   ∃l1,l2.l=l1@(a::l2).
 #S #a #l elim l [normalize #abs @False_ind /2/]
 #b #tl #Hind #H cases (orb_true_l … H)
-  [#eqba @(ex_intro … (nil S)) @(ex_intro … tl)
-   >(proj1 … (eqb_true …) eqba) //
+  [#eqba @(ex_intro … (nil S)) @(ex_intro … tl) >(\P eqba) //
   |#mem_tl cases (Hind mem_tl) #l1 * #l2 #eqtl
    @(ex_intro … (b::l1)) @(ex_intro … l2) >eqtl //
   ]
@@ -71,16 +75,15 @@ qed.
 lemma not_memb_to_not_eq: ∀S,a,b,l. 
  memb S a l = false → memb S b l = true → a==b = false.
 #S #a #b #l cases (true_or_false (a==b)) // 
-#eqab >(proj1 … (eqb_true …) eqab) #H >H #abs @False_ind /2/
+#eqab >(\P eqab) #H >H #abs @False_ind /2/
 qed. 
  
 lemma memb_map: ∀S1,S2,f,a,l. memb S1 a l= true → 
   memb S2 (f a) (map … f l) = true.
 #S1 #S2 #f #a #l elim l normalize [//]
-#x #tl #memba cases (true_or_false (x==a))
-  [#eqx >eqx >(proj1 … (eqb_true …) eqx) 
-   >(proj2 … (eqb_true …) (refl … (f a))) normalize //
-  |#eqx >eqx cases (f x==f a) normalize /2/
+#x #tl #memba cases (true_or_false (a==x))
+  [#eqx >eqx >(\P eqx) >(\b (refl … (f x))) normalize //
+  |#eqx >eqx cases (f a==f x) normalize /2/
   ]
 qed.
 
@@ -89,7 +92,7 @@ lemma memb_compose: ∀S1,S2,S3,op,a1,a2,l1,l2.
   memb S3 (op a1 a2) (compose S1 S2 S3 op l1 l2) = true.
 #S1 #S2 #S3 #op #a1 #a2 #l1 elim l1 [normalize //]
 #x #tl #Hind #l2 #memba1 #memba2 cases (orb_true_l … memba1)
-  [#eqa1 >(proj1 … (eqb_true …) eqa1) @memb_append_l1 @memb_map // 
+  [#eqa1 >(\P eqa1) @memb_append_l1 @memb_map // 
   |#membtl @memb_append_l2 @Hind //
   ]
 qed.
@@ -138,9 +141,8 @@ applyS le_S_S <length_append @Hind [@(andb_true_r … unique)]
 cases (memb_append … (sub x (orb_true_r2 … membx)))
   [#membxl3 @memb_append_l1 //
   |#membxal4 cases (orb_true_l … membxal4)
-    [#eqax @False_ind lapply (andb_true_l … unique)
-     >(proj1 … (eqb_true …) eqax) >membx normalize /2/
-    |#membxl4 @memb_append_l2 //
+    [#eqxa @False_ind lapply (andb_true_l … unique)
+     <(\P eqxa) >membx normalize /2/ |#membxl4 @memb_append_l2 //
     ]
   ]
 qed.
@@ -149,11 +151,11 @@ lemma sublist_unique_append_l1:
   ∀S,l1,l2. sublist S l1 (unique_append S l1 l2).
 #S #l1 elim l1 normalize [#l2 #S #abs @False_ind /2/]
 #x #tl #Hind #l2 #a 
-normalize cases (true_or_false … (x==a)) #eqxa >eqxa 
-[>(proj1 … (eqb_true …) eqxa) cases (true_or_false (memb S a (unique_append S tl l2)))
-  [#H >H normalize // | #H >H normalize >(proj2 … (eqb_true …) (refl … a)) //]
+normalize cases (true_or_false … (a==x)) #eqax >eqax 
+[<(\P eqax) cases (true_or_false (memb S a (unique_append S tl l2)))
+  [#H >H normalize // | #H >H normalize >(\b (refl … a)) //]
 |cases (memb S x (unique_append S tl l2)) normalize 
-  [/2/ |>eqxa normalize /2/]
+  [/2/ |>eqax normalize /2/]
 ]
 qed.
 
@@ -161,7 +163,22 @@ lemma sublist_unique_append_l2:
   ∀S,l1,l2. sublist S l2 (unique_append S l1 l2).
 #S #l1 elim l1 [normalize //] #x #tl #Hind normalize 
 #l2 #a cases (memb S x (unique_append S tl l2)) normalize
-[@Hind | cases (x==a) normalize // @Hind]
+[@Hind | cases (a==x) normalize // @Hind]
+qed.
+
+lemma decidable_sublist:∀S,l1,l2. 
+  (sublist S l1 l2) ∨ ¬(sublist S l1 l2).
+#S #l1 #l2 elim l1 
+  [%1 #a normalize in ⊢ (%→?); #abs @False_ind /2/
+  |#a #tl * #subtl 
+    [cases (true_or_false (memb S a l2)) #memba
+      [%1 whd #x #membx cases (orb_true_l … membx)
+        [#eqax >(\P eqax) // |@subtl]
+      |%2 @(not_to_not … (eqnot_to_noteq … true memba)) #H1 @H1 @memb_hd
+      ]
+    |%2 @(not_to_not … subtl) #H1 #x #H2 @H1 @memb_cons //
+    ] 
+  ]
 qed.
 
 (********************* filtering *****************)
@@ -171,15 +188,15 @@ lemma filter_true: ∀S,f,a,l.
 #S #f #a #l elim l [normalize #H @False_ind /2/]
 #b #tl #Hind cases (true_or_false (f b)) #H
 normalize >H normalize [2:@Hind]
-cases (true_or_false (b==a)) #eqab
-  [#_ <(proj1 … (eqb_true …) eqab) // | >eqab normalize @Hind]
+cases (true_or_false (a==b)) #eqab
+  [#_ >(\P eqab) // | >eqab normalize @Hind]
 qed. 
   
 lemma memb_filter_memb: ∀S,f,a,l. 
   memb S a (filter S f l) = true → memb S a l = true.
 #S #f #a #l elim l [normalize //]
 #b #tl #Hind normalize (cases (f b)) normalize 
-cases (b==a) normalize // @Hind
+cases (a==b) normalize // @Hind
 qed.
   
 lemma memb_filter: ∀S,f,l,x. memb S x (filter ? f l) = true → 
@@ -189,10 +206,9 @@ memb S x l = true ∧ (f x = true).
 lemma memb_filter_l: ∀S,f,x,l. (f x = true) → memb S x l = true →
 memb S x (filter ? f l) = true.
 #S #f #x #l #fx elim l normalize //
-#b #tl #Hind cases (true_or_false (b==x)) #eqbx
-  [>(proj1 … (eqb_true … ) eqbx) >(proj2 … (eqb_true …) (refl … x))
-   >fx normalize >(proj2 … (eqb_true …) (refl … x)) normalize //
-  |>eqbx cases (f b) normalize [>eqbx normalize @Hind| @Hind]
+#b #tl #Hind cases (true_or_false (x==b)) #eqxb
+  [<(\P eqxb) >(\b (refl … x)) >fx normalize >(\b (refl … x)) normalize //
+  |>eqxb cases (f b) normalize [>eqxb normalize @Hind| @Hind]
   ]
 qed. 
 
