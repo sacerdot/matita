@@ -20,8 +20,20 @@ include "Basic_2/unfold/lifts.ma".
 inductive ldrops: list2 nat nat → relation lenv ≝
 | ldrops_nil : ∀L. ldrops ⟠ L L
 | ldrops_cons: ∀L1,L,L2,des,d,e.
-               ⇓[d,e] L1 ≡ L → ldrops des L L2 → ldrops ({d, e} :: des) L1 L2
+               ldrops des L1 L → ⇓[d,e] L ≡ L2 → ldrops ({d, e} :: des) L1 L2
 .
 
 interpretation "generic local environment slicing"
-   'RDrop des T1 T2 = (ldrops des T1 T2).
+   'RLDrop des T1 T2 = (ldrops des T1 T2).
+
+(* Basic properties *********************************************************)
+
+lemma ldrops_skip: ∀L1,L2,des. ⇓[des] L1 ≡ L2 → ∀V1,V2. ⇑[des] V2 ≡ V1 →
+                   ∀I. ⇓[ss des] L1. 𝕓{I} V1 ≡ L2. 𝕓{I} V2.
+#L1 #L2 #des #H elim H -L1 -L2 -des
+[ #L #V1 #V2 #HV12 #I
+  >(lifts_inv_nil … HV12) -HV12 //
+| #L1 #L #L2 #des #d #e #_ #HL2 #IHL #V1 #V2 #H #I
+  elim (lifts_inv_cons … H) -H /3 width=5/
+].
+qed.

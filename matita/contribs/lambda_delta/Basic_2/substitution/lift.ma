@@ -13,6 +13,7 @@
 (**************************************************************************)
 
 include "Basic_2/grammar/term_weight.ma".
+include "Basic_2/grammar/term_simple.ma".
 
 (* RELOCATION ***************************************************************)
 
@@ -269,6 +270,18 @@ qed-.
 lemma tw_lift: ∀d,e,T1,T2. ⇑[d, e] T1 ≡ T2 → #[T1] = #[T2].
 #d #e #T1 #T2 #H elim H -d -e -T1 -T2 normalize //
 qed-.
+
+lemma lift_simple_dx: ∀d,e,T1,T2. ⇑[d, e] T1 ≡ T2 → 𝕊[T1] → 𝕊[T2].
+#d #e #T1 #T2 #H elim H -d -e -T1 -T2 //
+#I #V1 #V2 #T1 #T2 #d #e #_ #_ #_ #_ #H
+elim (simple_inv_bind … H)
+qed-.
+
+lemma lift_simple_sn: ∀d,e,T1,T2. ⇑[d, e] T1 ≡ T2 → 𝕊[T2] → 𝕊[T1].
+#d #e #T1 #T2 #H elim H -d -e -T1 -T2 //
+#I #V1 #V2 #T1 #T2 #d #e #_ #_ #_ #_ #H
+elim (simple_inv_bind … H)
+qed-. 
 
 (* Basic properties *********************************************************)
 

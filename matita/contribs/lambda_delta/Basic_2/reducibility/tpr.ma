@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/grammar/term_simple.ma".
 include "Basic_2/substitution/tps.ma".
 
 (* CONTEXT-FREE PARALLEL REDUCTION ON TERMS *********************************)

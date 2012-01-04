@@ -37,3 +37,11 @@ inductive list2 (A1,A2:Type[0]) : Type[0] :=
 interpretation "nil (list of pairs)" 'Nil2 = (nil2 ? ?). (**) (* 'Nil causes unification error in aacr_abst *)
 
 interpretation "cons (list of pairs)" 'Cons hd1 hd2 tl = (cons2 ? ? hd1 hd2 tl).
+
+let rec append2 (A1,A2:Type[0]) (l1,l2:list2 A1 A2) on l1 ≝ match l1 with
+[ nil2           ⇒ l2
+| cons2 a1 a2 tl ⇒ {a1, a2} :: append2 A1 A2 tl l2
+].
+
+interpretation "append (list of pairs)"
+   'Append l1 l2 = (append2 ? ? l1 l2).

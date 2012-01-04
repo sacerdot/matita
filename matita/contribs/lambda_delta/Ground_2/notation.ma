@@ -33,5 +33,5 @@ notation "hvbox( ⟠ )"
   for @{'Nil2}.
 
 notation "hvbox( { hd1 , break hd2 } :: break tl )"
-  non associative with precedence 45
+  non associative with precedence 47
   for @{'Cons $hd1 $hd2 $tl}.
