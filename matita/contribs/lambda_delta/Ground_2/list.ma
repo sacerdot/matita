@@ -45,3 +45,11 @@ let rec append2 (A1,A2:Type[0]) (l1,l2:list2 A1 A2) on l1 ≝ match l1 with
 
 interpretation "append (list of pairs)"
    'Append l1 l2 = (append2 ? ? l1 l2).
+
+let rec length2 (A1,A2:Type[0]) (l:list2 A1 A2) on l ≝ match l with
+[ nil2        ⇒ 0
+| cons2 _ _ l ⇒ length2 A1 A2 l + 1
+].
+
+interpretation "length (list of pairs)"
+   'card l = (length2 ? ? l).

@@ -2,16 +2,17 @@ NAMING CONVENTIONS FOR METAVARIABLES
 
 A,B    : arity
 C,D    : candidate of reducibility
-E,F,G  : reserved: future use
+E,F    : RTM environment
+G      : global environment 
 H      : reserved: transient premise
 IH     : reserved: inductive premise
 I,J    : item
 K,L    : local environment
 M,N    : reserved: future use
-O      : reserved: standard library
+O      : 
 P,Q    : reserved: future use
 R      : generic predicate (relation)
-S      : reserved: standard library
+S      : RTM stack
 T,U,V,W: term
 X,Y,Z  : reserved: transient objet denoted by a capital letter
 
@@ -21,4 +22,4 @@ h      : sort hierarchy parameter
 i,j    : local reference position index (de Bruijn's)
 k      : sort index
 p,q    : global reference position
-
+t,u    : local reference position level (de Bruijn's)

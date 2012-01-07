@@ -132,6 +132,9 @@ theorem assoc_plus1: ∀a,b,c. c + (b + a) = b + c + a.
 theorem injective_plus_r: ∀n:nat.injective nat nat (λm.n+m).
 #n (elim n) normalize /3/ qed.
 
+theorem injective_plus_l: ∀n:nat.injective nat nat (λm.m+n). 
+/2/ qed.
+
 theorem not_eq_S: ∀n,m:nat. n ≠ m → S n ≠ S m.
 /2/ qed.
 

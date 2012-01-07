@@ -68,6 +68,10 @@ notation > "hvbox( T . break 𝕔 { I } break term 90 T1 )"
  non associative with precedence 89
  for @{ 'DBind $T $I $T1 }.
 *) (**) (* this breaks all parsing *)
+notation "hvbox( T . break ④ { I } break { T1 , break T2 , break T3 } )"
+ non associative with precedence 47
+ for @{ 'DBind $T $I $T1 $T2 $T3 }.
+
 notation "hvbox( # [ x ] )"
  non associative with precedence 90
  for @{ 'Weight $x }.
