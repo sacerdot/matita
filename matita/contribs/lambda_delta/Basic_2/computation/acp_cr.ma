@@ -32,18 +32,18 @@ definition S3 ≝ λRP,C:lenv→predicate term.
                 ∀L,Vs,V,T,W. C L (ⒶVs. 𝕔{Abbr}V. T) → RP L W → C L (ⒶVs. 𝕔{Appl}V. 𝕔{Abst}W. T).
 
 definition S5 ≝ λRP,C:lenv→predicate term.
-                ∀L,V1s,V2s. ⇑[0, 1] V1s ≡ V2s →
+                ∀L,V1s,V2s. ⇧[0, 1] V1s ≡ V2s →
                 ∀V,T. C (L. 𝕓{Abbr}V) (ⒶV2s. T) → RP L V → C L (ⒶV1s. 𝕔{Abbr}V. T).
 
 definition S6 ≝ λRP,C:lenv→predicate term.
                 ∀L,Vs,T,W. C L (ⒶVs. T) → RP L W → C L (ⒶVs. 𝕔{Cast}W. T).
 
 definition S7 ≝ λC:lenv→predicate term. ∀L1,L2,T1,T2,d,e.
-                C L1 T1 → ⇓[d, e] L2 ≡ L1 → ⇑[d, e] T1 ≡ T2 → C L2 T2.
+                C L1 T1 → ⇩[d, e] L2 ≡ L1 → ⇧[d, e] T1 ≡ T2 → C L2 T2.
 
 definition S7s ≝ λC:lenv→predicate term.
-                 ∀L1,L2,des. ⇓[des] L2 ≡ L1 →
-                 ∀T1,T2. ⇑[des] T1 ≡ T2 → C L1 T1 → C L2 T2.
+                 ∀L1,L2,des. ⇩*[des] L2 ≡ L1 →
+                 ∀T1,T2. ⇧*[des] T1 ≡ T2 → C L1 T1 → C L2 T2.
 
 (* properties of the abstract candidate of reducibility *)
 record acr (RR:lenv->relation term) (RS:relation term) (RP,C:lenv→predicate term) : Prop ≝
@@ -59,7 +59,7 @@ record acr (RR:lenv->relation term) (RS:relation term) (RP,C:lenv→predicate te
 let rec aacr (RP:lenv→predicate term) (A:aarity) (L:lenv) on A: predicate term ≝
 λT. match A with
 [ AAtom     ⇒ RP L T
-| APair B A ⇒ ∀L0,V0,T0,des. aacr RP B L0 V0 → ⇓[des] L0 ≡ L → ⇑[des] T ≡ T0 →
+| APair B A ⇒ ∀L0,V0,T0,des. aacr RP B L0 V0 → ⇩*[des] L0 ≡ L → ⇧*[des] T ≡ T0 →
               aacr RP A L0 (𝕔{Appl} V0. T0)
 ].
 
@@ -79,7 +79,7 @@ lemma acr_lifts: ∀C. S7 C → S7s C.
 qed.
 
 lemma rp_lifts: ∀RR,RS,RP. acr RR RS RP (λL,T. RP L T) →
-                ∀des,L0,L,V,V0. ⇓[des] L0 ≡ L → ⇑[des] V ≡ V0 →
+                ∀des,L0,L,V,V0. ⇩*[des] L0 ≡ L → ⇧*[des] V ≡ V0 →
                 RP L V → RP L0 V0.
 #RR #RS #RP #HRP #des #L0 #L #V #V0 #HL0 #HV0 #HV 
 @acr_lifts /width=6/
@@ -87,7 +87,7 @@ lemma rp_lifts: ∀RR,RS,RP. acr RR RS RP (λL,T. RP L T) →
 qed.
 
 lemma rp_liftsv_all: ∀RR,RS,RP. acr RR RS RP (λL,T. RP L T) →
-                     ∀des,L0,L,Vs,V0s. ⇑[des] Vs ≡ V0s →  ⇓[des] L0 ≡ L →
+                     ∀des,L0,L,Vs,V0s. ⇧*[des] Vs ≡ V0s →  ⇩*[des] L0 ≡ L →
                      all … (RP L) Vs → all … (RP L0) V0s.
 #RR #RS #RP #HRP #des #L0 #L #Vs #V0s #H elim H -Vs -V0s normalize //
 #T1s #T2s #T1 #T2 #HT12 #_ #IHT2s #HL0 * #HT1 #HT1s
@@ -134,7 +134,7 @@ qed.
 *)
 lemma aacr_abst: ∀RR,RS,RP. acp RR RS RP → acr RR RS RP (λL,T. RP L T) →
                  ∀L,W,T,A,B. RP L W → (
-                    ∀L0,V0,T0,des. ⇓[des] L0 ≡ L → ⇑[ss des] T ≡ T0 →
+                    ∀L0,V0,T0,des. ⇩*[des] L0 ≡ L → ⇧*[ss des] T ≡ T0 →
                                    ⦃L0, V0⦄ [RP] ϵ 〚B〛→ ⦃L0. 𝕓{Abbr} V0, T0⦄ [RP] ϵ 〚A〛
                  ) →
                  ⦃L, 𝕓{Abst} W. T⦄ [RP] ϵ 〚𝕔 B. A〛.

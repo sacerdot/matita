@@ -31,7 +31,7 @@ qed-.
 
 (* Basic properties *********************************************************)
 
-lemma tpr_thom: ∀T1,T2. T1 ⇒ T2 → T1 ≈ T1 → T1 ≈ T2.
+lemma tpr_thom: ∀T1,T2. T1 ➡ T2 → T1 ≈ T1 → T1 ≈ T2.
 #T1 #T2 #H elim H -T1 -T2 //
 [ #I #V1 #V2 #T1 #T2 #_ #_ #_ #IHT12 #H
   elim (thom_inv_flat1 … H) -H #W2 #U2 #HT1U2 #HT1 #_ #H1 #H2 destruct

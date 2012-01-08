@@ -20,10 +20,10 @@ include "Basic_2/reducibility/ltpr_ldrop.ma".
 (* Unfold properties ********************************************************)
 
 (* Basic_1: was: pr0_subst1 *)
-lemma tpr_tps_ltpr: ∀T1,T2. T1 ⇒ T2 →
-                    ∀L1,d,e,U1. L1 ⊢ T1 [d, e] ≫ U1 →
-                    ∀L2. L1 ⇒ L2 →
-                    ∃∃U2. U1 ⇒ U2 & L2 ⊢ T2 [d, e] ≫* U2.
+lemma tpr_tps_ltpr: ∀T1,T2. T1 ➡ T2 →
+                    ∀L1,d,e,U1. L1 ⊢ T1 [d, e] ▶ U1 →
+                    ∀L2. L1 ➡ L2 →
+                    ∃∃U2. U1 ➡ U2 & L2 ⊢ T2 [d, e] ▶* U2.
 #T1 #T2 #H elim H -T1 -T2
 [ #I #L1 #d #e #X #H
   elim (tps_inv_atom1 … H) -H
@@ -75,16 +75,16 @@ lemma tpr_tps_ltpr: ∀T1,T2. T1 ⇒ T2 →
 ]
 qed.
 
-lemma tpr_tps_bind: ∀I,V1,V2,T1,T2,U1. V1 ⇒ V2 → T1 ⇒ T2 →
-                    ⋆. 𝕓{I} V1 ⊢ T1 [0, 1] ≫ U1 →
-                    ∃∃U2. U1 ⇒ U2 & ⋆. 𝕓{I} V2 ⊢ T2 [0, 1] ≫ U2.
+lemma tpr_tps_bind: ∀I,V1,V2,T1,T2,U1. V1 ➡ V2 → T1 ➡ T2 →
+                    ⋆. 𝕓{I} V1 ⊢ T1 [0, 1] ▶ U1 →
+                    ∃∃U2. U1 ➡ U2 & ⋆. 𝕓{I} V2 ⊢ T2 [0, 1] ▶ U2.
 #I #V1 #V2 #T1 #T2 #U1 #HV12 #HT12 #HTU1
 elim (tpr_tps_ltpr … HT12 … HTU1 (⋆. 𝕓{I} V2) ?) -T1 /2 width=1/ /3 width=3/
 qed.
 
-lemma tpr_tpss_ltpr: ∀L1,L2. L1 ⇒ L2 → ∀T1,T2. T1 ⇒ T2 →
-                     ∀d,e,U1. L1 ⊢ T1 [d, e] ≫* U1 →
-                     ∃∃U2. U1 ⇒ U2 & L2 ⊢ T2 [d, e] ≫* U2.
+lemma tpr_tpss_ltpr: ∀L1,L2. L1 ➡ L2 → ∀T1,T2. T1 ➡ T2 →
+                     ∀d,e,U1. L1 ⊢ T1 [d, e] ▶* U1 →
+                     ∃∃U2. U1 ➡ U2 & L2 ⊢ T2 [d, e] ▶* U2.
 #L1 #L2 #HL12 #T1 #T2 #HT12 #d #e #U1 #HTU1 @(tpss_ind … HTU1) -U1
 [ /2 width=3/
 | -HT12 #U #U1 #_ #HU1 * #T #HUT #HT2

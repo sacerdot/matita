@@ -62,7 +62,7 @@ qed-.
 
 (* Basic properties *********************************************************)
 
-lemma tpr_tif_eq: ∀T1,T2. T1 ⇒ T2 →  𝕀[T1] → T1 = T2.
+lemma tpr_tif_eq: ∀T1,T2. T1 ➡ T2 →  𝕀[T1] → T1 = T2.
 #T1 #T2 #H elim H -T1 -T2
 [ //
 | * #V1 #V2 #T1 #T2 #_ #_ #IHV1 #IHT1 #H

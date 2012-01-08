@@ -20,7 +20,7 @@ include "Basic_2/substitution/lift.ma".
 inductive liftv (d,e:nat) : relation (list term) ≝
 | liftv_nil : liftv d e ◊ ◊
 | liftv_cons: ∀T1s,T2s,T1,T2.
-              ⇑[d, e] T1 ≡ T2 → liftv d e T1s T2s →
+              ⇧[d, e] T1 ≡ T2 → liftv d e T1s T2s →
               liftv d e (T1 :: T1s) (T2 :: T2s)
 .
 
@@ -28,7 +28,7 @@ interpretation "relocation (vector)" 'RLift d e T1s T2s = (liftv d e T1s T2s).
 
 (* Basic properties *********************************************************)
 
-lemma liftv_total: ∀d,e. ∀T1s:list term. ∃T2s. ⇑[d, e] T1s ≡ T2s.
+lemma liftv_total: ∀d,e. ∀T1s:list term. ∃T2s. ⇧[d, e] T1s ≡ T2s.
 #d #e #T1s elim T1s -T1s
 [ /2 width=2/
 | #T1 #T1s * #T2s #HT12s

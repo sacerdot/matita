@@ -19,7 +19,7 @@ include "Basic_2/computation/csn_cr.ma".
 
 (* Main properties **********************************************************)
 
-theorem csn_aaa: ∀L,T,A. L ⊢ T ÷ A → L ⊢ ⇓ T.
+theorem csn_aaa: ∀L,T,A. L ⊢ T ÷ A → L ⊢ ⬇* T.
 #L #T #A #H
 @(acp_aaa … csn_acp csn_acr … H)
 qed. 

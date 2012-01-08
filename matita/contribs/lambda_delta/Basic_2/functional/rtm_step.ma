@@ -52,3 +52,6 @@ inductive rtm_step: relation rtm ≝
               rtm_step (mk_rtm G u E S (𝕔{Abbr} V. T))
                        (mk_rtm G u (E. ④{Abbr} {u, E, V}) S T)
 .
+
+interpretation "sequential reduction (RTM)"
+   'SRed O1 O2 = (rtm_step O1 O2).

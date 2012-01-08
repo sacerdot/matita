@@ -20,16 +20,16 @@ include "Basic_2/unfold/tpss_tpss.ma".
 (* Properties concerning parallel substitution on local environments ********)
 
 lemma ltps_tpss_conf_ge: ∀L0,L1,T2,U2,d1,e1,d2,e2.
-                         d1 + e1 ≤ d2 → L0 [d1, e1] ≫ L1 →
-                         L0 ⊢ T2 [d2, e2] ≫* U2 → L1 ⊢ T2 [d2, e2] ≫* U2.
+                         d1 + e1 ≤ d2 → L0 [d1, e1] ▶ L1 →
+                         L0 ⊢ T2 [d2, e2] ▶* U2 → L1 ⊢ T2 [d2, e2] ▶* U2.
 #L0 #L1 #T2 #U2 #d1 #e1 #d2 #e2 #Hde1d2 #HL01 #H @(tpss_ind … H) -U2 //
 #U #U2 #_ #HU2 #IHU
 lapply (ltps_tps_conf_ge … HU2 … HL01 ?) -HU2 -HL01 // /2 width=3/
 qed.
 
 lemma ltps_tpss_conf: ∀L0,L1,T2,U2,d1,e1,d2,e2.
-                      L0 [d1, e1] ≫ L1 → L0 ⊢ T2 [d2, e2] ≫* U2 →
-                      ∃∃T. L1 ⊢ T2 [d2, e2] ≫* T & L1 ⊢ U2 [d1, e1] ≫* T.
+                      L0 [d1, e1] ▶ L1 → L0 ⊢ T2 [d2, e2] ▶* U2 →
+                      ∃∃T. L1 ⊢ T2 [d2, e2] ▶* T & L1 ⊢ U2 [d1, e1] ▶* T.
 #L0 #L1 #T2 #U2 #d1 #e1 #d2 #e2 #HL01 #H @(tpss_ind … H) -U2
 [ /3 width=3/
 | #U #U2 #_ #HU2 * #T #HT2 #HUT
@@ -40,16 +40,16 @@ lemma ltps_tpss_conf: ∀L0,L1,T2,U2,d1,e1,d2,e2.
 qed.
 
 lemma ltps_tpss_trans_ge: ∀L0,L1,T2,U2,d1,e1,d2,e2.
-                          d1 + e1 ≤ d2 → L1 [d1, e1] ≫ L0 →
-                          L0 ⊢ T2 [d2, e2] ≫* U2 → L1 ⊢ T2 [d2, e2] ≫* U2.
+                          d1 + e1 ≤ d2 → L1 [d1, e1] ▶ L0 →
+                          L0 ⊢ T2 [d2, e2] ▶* U2 → L1 ⊢ T2 [d2, e2] ▶* U2.
 #L0 #L1 #T2 #U2 #d1 #e1 #d2 #e2 #Hde1d2 #HL10 #H @(tpss_ind … H) -U2 //
 #U #U2 #_ #HU2 #IHU
 lapply (ltps_tps_trans_ge … HU2 … HL10 ?) -HU2 -HL10 // /2 width=3/
 qed.
 
 lemma ltps_tpss_trans_down: ∀L0,L1,T2,U2,d1,e1,d2,e2. d2 + e2 ≤ d1 →
-                            L1 [d1, e1] ≫ L0 → L0 ⊢ T2 [d2, e2] ≫* U2 →
-                            ∃∃T. L1 ⊢ T2 [d2, e2] ≫* T & L0 ⊢ T [d1, e1] ≫* U2.
+                            L1 [d1, e1] ▶ L0 → L0 ⊢ T2 [d2, e2] ▶* U2 →
+                            ∃∃T. L1 ⊢ T2 [d2, e2] ▶* T & L0 ⊢ T [d1, e1] ▶* U2.
 #L0 #L1 #T2 #U2 #d1 #e1 #d2 #e2 #Hde2d1 #HL10 #H @(tpss_ind … H) -U2
 [ /3 width=3/
 | #U #U2 #_ #HU2 * #T #HT2 #HTU
@@ -60,8 +60,8 @@ lemma ltps_tpss_trans_down: ∀L0,L1,T2,U2,d1,e1,d2,e2. d2 + e2 ≤ d1 →
 qed.
 
 fact ltps_tps_trans_eq_aux: ∀Y1,X2,L1,T2,U2,d,e.
-                            L1 ⊢ T2 [d, e] ≫ U2 → ∀L0. L0 [d, e] ≫ L1 →
-                            Y1 = L1 → X2 = T2 → L0 ⊢ T2 [d, e] ≫* U2.
+                            L1 ⊢ T2 [d, e] ▶ U2 → ∀L0. L0 [d, e] ▶ L1 →
+                            Y1 = L1 → X2 = T2 → L0 ⊢ T2 [d, e] ▶* U2.
 #Y1 #X2 @(cw_wf_ind … Y1 X2) -Y1 -X2 #Y1 #X2 #IH
 #L1 #T2 #U2 #d #e * -L1 -T2 -U2 -d -e
 [ //
@@ -84,12 +84,12 @@ fact ltps_tps_trans_eq_aux: ∀Y1,X2,L1,T2,U2,d,e.
 ]
 qed.
 
-lemma ltps_tps_trans_eq: ∀L1,T2,U2,d,e. L1 ⊢ T2 [d, e] ≫ U2 →
-                         ∀L0. L0 [d, e] ≫ L1 → L0 ⊢ T2 [d, e] ≫* U2.
+lemma ltps_tps_trans_eq: ∀L1,T2,U2,d,e. L1 ⊢ T2 [d, e] ▶ U2 →
+                         ∀L0. L0 [d, e] ▶ L1 → L0 ⊢ T2 [d, e] ▶* U2.
 /2 width=5/ qed.
 
-lemma ltps_tpss_trans_eq: ∀L0,L1,T2,U2,d,e. L0 [d, e] ≫ L1 →
-                          L1 ⊢ T2 [d, e] ≫* U2 → L0 ⊢ T2 [d, e] ≫* U2.
+lemma ltps_tpss_trans_eq: ∀L0,L1,T2,U2,d,e. L0 [d, e] ▶ L1 →
+                          L1 ⊢ T2 [d, e] ▶* U2 → L0 ⊢ T2 [d, e] ▶* U2.
 #L0 #L1 #T2 #U2 #d #e #HL01 #H @(tpss_ind … H) -U2 //
 #U #U2 #_ #HU2 #IHU @(tpss_trans_eq … IHU) /2 width=3/
 qed.

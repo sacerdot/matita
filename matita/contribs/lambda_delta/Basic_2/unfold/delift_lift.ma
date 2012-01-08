@@ -31,9 +31,9 @@ qed-.
 
 lemma delift_fwd_lref1_be: ∀L,U2,d,e,i. L ⊢ #i [d, e] ≡ U2 →
                            d ≤ i → i < d + e →
-                           ∃∃K,V1,V2. ⇓[0, i] L ≡ K. 𝕓{Abbr} V1 &
+                           ∃∃K,V1,V2. ⇩[0, i] L ≡ K. 𝕓{Abbr} V1 &
                                       K ⊢ V1 [0, d + e - i - 1] ≡ V2 &
-                                      ⇑[0, d] V2 ≡ U2.
+                                      ⇧[0, d] V2 ≡ U2.
 #L #U2 #d #e #i * #U #HU #HU2 #Hdi #Hide
 elim (tpss_inv_lref1 … HU) -HU
 [ #H destruct elim (lift_inv_lref2_be … HU2 ? ?) //

@@ -90,37 +90,41 @@ notation "hvbox( T1 break [ d , break e ] ≼ break T2 )"
 
 (* Substitution *************************************************************)
 
-notation "hvbox( ⇑ [ d , break e ] break T1 ≡ break T2 )"
+notation "hvbox( ⇧ [ d , break e ] break T1 ≡ break T2 )"
    non associative with precedence 45
    for @{ 'RLift $d $e $T1 $T2 }.
 
-notation "hvbox( ⇓ [ d , break e ] break L1 ≡ break L2 )"
+notation "hvbox( ⇩ [ e ] break L1 ≡ break L2 )"
    non associative with precedence 45
-   for @{ 'RLDrop $d $e $L1 $L2 }.
+   for @{ 'RDrop $e $L1 $L2 }.
 
-notation "hvbox( T1 break [ d , break e ] ≫ break T2 )"
+notation "hvbox( ⇩ [ d , break e ] break L1 ≡ break L2 )"
+   non associative with precedence 45
+   for @{ 'RDrop $d $e $L1 $L2 }.
+
+notation "hvbox( T1 break [ d , break e ] ▶ break T2 )"
    non associative with precedence 45
    for @{ 'PSubst $T1 $d $e $T2 }.
 
-notation "hvbox( L ⊢ break term 90 T1 break [ d , break e ] ≫ break T2 )"
+notation "hvbox( L ⊢ break term 90 T1 break [ d , break e ] ▶ break T2 )"
    non associative with precedence 45
    for @{ 'PSubst $L $T1 $d $e $T2 }.
 
 (* Unfold *******************************************************************)
 
-notation "hvbox( ⇑ [ e ] break T1 ≡ break T2 )"
+notation "hvbox( ⇧ * [ e ] break T1 ≡ break T2 )"
    non associative with precedence 45
-   for @{ 'RLift $e $T1 $T2 }.
+   for @{ 'RLiftStar $e $T1 $T2 }.
 
-notation "hvbox( ⇓ [ e ] break L1 ≡ break L2 )"
+notation "hvbox( ⇩ * [ e ] break L1 ≡ break L2 )"
    non associative with precedence 45
-   for @{ 'RLDrop $e $L1 $L2 }.
+   for @{ 'RDropStar $e $L1 $L2 }.
 
-notation "hvbox( T1 break [ d , break e ] ≫* break T2 )"
+notation "hvbox( T1 break [ d , break e ] ▶* break T2 )"
    non associative with precedence 45
    for @{ 'PSubstStar $T1 $d $e $T2 }.
 
-notation "hvbox( L ⊢ break term 90 T1 break [ d , break e ] ≫* break T2 )"
+notation "hvbox( L ⊢ break term 90 T1 break [ d , break e ] ▶* break T2 )"
    non associative with precedence 45
    for @{ 'PSubstStar $L $T1 $d $e $T2 }.
 
@@ -188,37 +192,37 @@ notation "hvbox( L ⊢ 𝕎ℍℕ [ T ] )"
    non associative with precedence 45
    for @{ 'WHdNormal $L $T }.
 
-notation "hvbox( T1 ⇒ break T2 )"
+notation "hvbox( T1 ➡ break T2 )"
    non associative with precedence 45
    for @{ 'PRed $T1 $T2 }.
 
-notation "hvbox( L ⊢ break term 90 T1 ⇒ break T2 )"
+notation "hvbox( L ⊢ break term 90 T1 ➡ break T2 )"
    non associative with precedence 45
    for @{ 'PRed $L $T1 $T2 }.
 
-notation "hvbox( L1 ⊢ ⇒ break L2 )"
+notation "hvbox( L1 ⊢ ➡ break L2 )"
    non associative with precedence 45
    for @{ 'CPRed $L1 $L2 }.
 
 (* Computation **************************************************************)
 
-notation "hvbox( T1 ⇒* break T2 )"
+notation "hvbox( T1 ➡* break T2 )"
    non associative with precedence 45
    for @{ 'PRedStar $T1 $T2 }.
 
-notation "hvbox( L ⊢ break term 90 T1 ⇒* break T2 )"
+notation "hvbox( L ⊢ break term 90 T1 ➡* break T2 )"
    non associative with precedence 45
    for @{ 'PRedStar $L $T1 $T2 }.
 
-notation "hvbox( L1 ⊢ ⇒* break L2 )"
+notation "hvbox( L1 ⊢ ➡* break L2 )"
    non associative with precedence 45
    for @{ 'CPRedStar $L1 $L2 }.
 
-notation "hvbox( ⇓ T  )"
+notation "hvbox( ⬇ * T  )"
    non associative with precedence 45
    for @{ 'SN $T }.
 
-notation "hvbox( L ⊢ ⇓ T )"
+notation "hvbox( L ⊢ ⬇ * T )"
    non associative with precedence 45
    for @{ 'SN $L $T }.
 
@@ -240,3 +244,6 @@ notation "hvbox( [ d ← break V ] break T )"
    non associative with precedence 55
    for @{ 'Subst $V $d $T }.
 
+notation "hvbox( T1 ⇨ break T2 )"
+   non associative with precedence 45
+   for @{ 'SRed $T1 $T2 }.

@@ -18,7 +18,7 @@ include "Basic_2/reducibility/ltpr.ma".
 (* CONTEXT-SENSITIVE PARALLEL REDUCTION ON LOCAL ENVIRONMENTS *************)
 
 definition lcpr: relation lenv ≝
-   λL1,L2. ∃∃L. L1 ⇒ L & L [0, |L|] ≫* L2
+   λL1,L2. ∃∃L. L1 ➡ L & L [0, |L|] ▶* L2
 .
 
 interpretation
@@ -27,11 +27,11 @@ interpretation
 
 (* Basic properties *********************************************************)
 
-lemma lcpr_refl: ∀L. L ⊢ ⇒ L.
+lemma lcpr_refl: ∀L. L ⊢ ➡ L.
 /2 width=3/ qed.
 
 (* Basic inversion lemmas ***************************************************)
 
-lemma lcpr_inv_atom1: ∀L2. ⋆ ⊢ ⇒ L2 → L2 = ⋆.
+lemma lcpr_inv_atom1: ∀L2. ⋆ ⊢ ➡ L2 → L2 = ⋆.
 #L2 * #L #HL >(ltpr_inv_atom1 … HL) -HL #HL2 >(ltpss_inv_atom1 … HL2) -HL2 //
 qed-.

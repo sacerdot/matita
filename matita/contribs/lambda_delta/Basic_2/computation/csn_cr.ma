@@ -19,4 +19,4 @@ include "Basic_2/computation/csn.ma".
 
 (* Advanced properties ******************************************************)
 
-axiom csn_acr: acr cpr (eq …) (csn …) (λL,T. L ⊢ ⇓ T).
+axiom csn_acr: acr cpr (eq …) (csn …) (λL,T. L ⊢ ⬇* T).

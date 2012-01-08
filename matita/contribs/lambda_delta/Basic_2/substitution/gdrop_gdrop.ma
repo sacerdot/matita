@@ -18,7 +18,7 @@ include "Basic_2/substitution/gdrop.ma".
 
 (* Main properties **********************************************************)
 
-theorem gdrop_mono: ∀G,G1,e. ⇓[e] G ≡ G1 → ∀G2. ⇓[e] G ≡ G2 → G1 = G2.
+theorem gdrop_mono: ∀G,G1,e. ⇩[e] G ≡ G1 → ∀G2. ⇩[e] G ≡ G2 → G1 = G2.
 #G #G1 #e #H elim H -G -G1
 [ #G #He #G2 #H
   >(gdrop_inv_gt … H He) -H -He //
@@ -29,7 +29,7 @@ theorem gdrop_mono: ∀G,G1,e. ⇓[e] G ≡ G1 → ∀G2. ⇓[e] G ≡ G2 → G1
 ]
 qed-.
 
-lemma gdrop_dec: ∀G1,G2,e. Decidable (⇓[e] G1 ≡ G2).
+lemma gdrop_dec: ∀G1,G2,e. Decidable (⇩[e] G1 ≡ G2).
 #G1 #G2 #e
 elim (gdrop_total e G1) #G #HG1
 elim (genv_eq_dec G G2) #HG2

@@ -19,9 +19,9 @@ include "Basic_2/substitution/tps_lift.ma".
 (* Main properties **********************************************************)
 
 (* Basic_1: was: subst1_confluence_eq *)
-theorem tps_conf_eq: ∀L,T0,T1,d1,e1. L ⊢ T0 [d1, e1] ≫ T1 →
-                     ∀T2,d2,e2. L ⊢ T0 [d2, e2] ≫ T2 →
-                     ∃∃T. L ⊢ T1 [d2, e2] ≫ T & L ⊢ T2 [d1, e1] ≫ T.
+theorem tps_conf_eq: ∀L,T0,T1,d1,e1. L ⊢ T0 [d1, e1] ▶ T1 →
+                     ∀T2,d2,e2. L ⊢ T0 [d2, e2] ▶ T2 →
+                     ∃∃T. L ⊢ T1 [d2, e2] ▶ T & L ⊢ T2 [d1, e1] ▶ T.
 #L #T0 #T1 #d1 #e1 #H elim H -L -T0 -T1 -d1 -e1
 [ /2 width=3/
 | #L #K1 #V1 #T1 #i0 #d1 #e1 #Hd1 #Hde1 #HLK1 #HVT1 #T2 #d2 #e2 #H
@@ -46,10 +46,10 @@ theorem tps_conf_eq: ∀L,T0,T1,d1,e1. L ⊢ T0 [d1, e1] ≫ T1 →
 qed.
 
 (* Basic_1: was: subst1_confluence_neq *)
-theorem tps_conf_neq: ∀L1,T0,T1,d1,e1. L1 ⊢ T0 [d1, e1] ≫ T1 →
-                      ∀L2,T2,d2,e2. L2 ⊢ T0 [d2, e2] ≫ T2 →
+theorem tps_conf_neq: ∀L1,T0,T1,d1,e1. L1 ⊢ T0 [d1, e1] ▶ T1 →
+                      ∀L2,T2,d2,e2. L2 ⊢ T0 [d2, e2] ▶ T2 →
                       (d1 + e1 ≤ d2 ∨ d2 + e2 ≤ d1) →
-                      ∃∃T. L2 ⊢ T1 [d2, e2] ≫ T & L1 ⊢ T2 [d1, e1] ≫ T.
+                      ∃∃T. L2 ⊢ T1 [d2, e2] ▶ T & L1 ⊢ T2 [d1, e1] ▶ T.
 #L1 #T0 #T1 #d1 #e1 #H elim H -L1 -T0 -T1 -d1 -e1
 [ /2 width=3/
 | #L1 #K1 #V1 #T1 #i0 #d1 #e1 #Hd1 #Hde1 #HLK1 #HVT1 #L2 #T2 #d2 #e2 #H1 #H2
@@ -85,9 +85,9 @@ qed.
 
 (* Note: the constant 1 comes from tps_subst *)
 (* Basic_1: was: subst1_trans *)
-theorem tps_trans_ge: ∀L,T1,T0,d,e. L ⊢ T1 [d, e] ≫ T0 →
-                      ∀T2. L ⊢ T0 [d, 1] ≫ T2 → 1 ≤ e →
-                      L ⊢ T1 [d, e] ≫ T2.
+theorem tps_trans_ge: ∀L,T1,T0,d,e. L ⊢ T1 [d, e] ▶ T0 →
+                      ∀T2. L ⊢ T0 [d, 1] ▶ T2 → 1 ≤ e →
+                      L ⊢ T1 [d, e] ▶ T2.
 #L #T1 #T0 #d #e #H elim H -L -T1 -T0 -d -e
 [ #L #I #d #e #T2 #H #He
   elim (tps_inv_atom1 … H) -H
@@ -108,9 +108,9 @@ theorem tps_trans_ge: ∀L,T1,T0,d,e. L ⊢ T1 [d, e] ≫ T0 →
 ]
 qed.
 
-theorem tps_trans_down: ∀L,T1,T0,d1,e1. L ⊢ T1 [d1, e1] ≫ T0 →
-                        ∀T2,d2,e2. L ⊢ T0 [d2, e2] ≫ T2 → d2 + e2 ≤ d1 →
-                        ∃∃T. L ⊢ T1 [d2, e2] ≫ T & L ⊢ T [d1, e1] ≫ T2.
+theorem tps_trans_down: ∀L,T1,T0,d1,e1. L ⊢ T1 [d1, e1] ▶ T0 →
+                        ∀T2,d2,e2. L ⊢ T0 [d2, e2] ▶ T2 → d2 + e2 ≤ d1 →
+                        ∃∃T. L ⊢ T1 [d2, e2] ▶ T & L ⊢ T [d1, e1] ▶ T2.
 #L #T1 #T0 #d1 #e1 #H elim H -L -T1 -T0 -d1 -e1
 [ /2 width=3/
 | #L #K #V #W #i1 #d1 #e1 #Hdi1 #Hide1 #HLK #HVW #T2 #d2 #e2 #HWT2 #Hde2d1

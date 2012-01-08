@@ -20,8 +20,8 @@ include "Basic_2/reducibility/tpr.ma".
 (* Relocation properties ****************************************************)
 
 (* Basic_1: was: pr0_lift *)
-lemma tpr_lift: ∀T1,T2. T1 ⇒ T2 →
-                ∀d,e,U1. ⇑[d, e] T1 ≡ U1 → ∀U2. ⇑[d, e] T2 ≡ U2 → U1 ⇒ U2.
+lemma tpr_lift: ∀T1,T2. T1 ➡ T2 →
+                ∀d,e,U1. ⇧[d, e] T1 ≡ U1 → ∀U2. ⇧[d, e] T2 ≡ U2 → U1 ➡ U2.
 #T1 #T2 #H elim H -T1 -T2
 [ * #i #d #e #U1 #HU1 #U2 #HU2
   lapply (lift_mono … HU1 … HU2) -HU1 #H destruct
@@ -57,9 +57,9 @@ lemma tpr_lift: ∀T1,T2. T1 ⇒ T2 →
 qed.
 
 (* Basic_1: was: pr0_gen_lift *)
-lemma tpr_inv_lift: ∀T1,T2. T1 ⇒ T2 →
-                    ∀d,e,U1. ⇑[d, e] U1 ≡ T1 →
-                    ∃∃U2. ⇑[d, e] U2 ≡ T2 & U1 ⇒ U2.
+lemma tpr_inv_lift: ∀T1,T2. T1 ➡ T2 →
+                    ∀d,e,U1. ⇧[d, e] U1 ≡ T1 →
+                    ∃∃U2. ⇧[d, e] U2 ≡ T2 & U1 ➡ U2.
 #T1 #T2 #H elim H -T1 -T2
 [ * #i #d #e #U1 #HU1
   [ lapply (lift_inv_sort2 … HU1) -HU1 #H destruct /2 width=3/
@@ -101,8 +101,8 @@ qed.
 
 (* Advanced inversion lemmas ************************************************)
 
-fact tpr_inv_abst1_aux: ∀U1,U2. U1 ⇒ U2 → ∀V1,T1. U1 = 𝕔{Abst} V1. T1 →
-                        ∃∃V2,T2. V1 ⇒ V2 & T1 ⇒ T2 & U2 = 𝕔{Abst} V2. T2.
+fact tpr_inv_abst1_aux: ∀U1,U2. U1 ➡ U2 → ∀V1,T1. U1 = 𝕔{Abst} V1. T1 →
+                        ∃∃V2,T2. V1 ➡ V2 & T1 ➡ T2 & U2 = 𝕔{Abst} V2. T2.
 #U1 #U2 * -U1 -U2
 [ #I #V #T #H destruct
 | #I #V1 #V2 #T1 #T2 #_ #_ #V #T #H destruct
@@ -116,6 +116,6 @@ fact tpr_inv_abst1_aux: ∀U1,U2. U1 ⇒ U2 → ∀V1,T1. U1 = 𝕔{Abst} V1. T1
 qed.
 
 (* Basic_1: was pr0_gen_abst *)
-lemma tpr_inv_abst1: ∀V1,T1,U2. 𝕔{Abst} V1. T1 ⇒ U2 →
-                     ∃∃V2,T2. V1 ⇒ V2 & T1 ⇒ T2 & U2 = 𝕔{Abst} V2. T2.
+lemma tpr_inv_abst1: ∀V1,T1,U2. 𝕔{Abst} V1. T1 ➡ U2 →
+                     ∃∃V2,T2. V1 ➡ V2 & T1 ➡ T2 & U2 = 𝕔{Abst} V2. T2.
 /2 width=3/ qed-.

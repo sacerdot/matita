@@ -23,11 +23,11 @@ inductive gdrop (e:nat): relation genv ≝
 .
 
 interpretation "global slicing" 
-   'RLDrop e G1 G2 = (gdrop e G1 G2).
+   'RDrop e G1 G2 = (gdrop e G1 G2).
 
 (* basic inversion lemmas ***************************************************)
 
-lemma gdrop_inv_gt: ∀G1,G2,e. ⇓[e] G1 ≡ G2 → |G1| ≤ e → G2 = ⋆.
+lemma gdrop_inv_gt: ∀G1,G2,e. ⇩[e] G1 ≡ G2 → |G1| ≤ e → G2 = ⋆.
 #G1 #G2 #e * -G1 -G2 //
 [ #G #H >H -H >commutative_plus #H
   lapply (le_plus_to_le_r … 0 H) -H #H
@@ -39,7 +39,7 @@ lemma gdrop_inv_gt: ∀G1,G2,e. ⇓[e] G1 ≡ G2 → |G1| ≤ e → G2 = ⋆.
 ]
 qed-.
 
-lemma gdrop_inv_eq: ∀G1,G2,e. ⇓[e] G1 ≡ G2 → |G1| = e + 1 → G1 = G2.
+lemma gdrop_inv_eq: ∀G1,G2,e. ⇩[e] G1 ≡ G2 → |G1| = e + 1 → G1 = G2.
 #G1 #G2 #e * -G1 -G2 //
 [ #G #H1 #H2 >H2 in H1; -H2 >commutative_plus #H
   lapply (le_plus_to_le_r … 0 H) -H #H
@@ -50,8 +50,8 @@ lemma gdrop_inv_eq: ∀G1,G2,e. ⇓[e] G1 ≡ G2 → |G1| = e + 1 → G1 = G2.
 ]
 qed-.
 
-fact gdrop_inv_lt_aux: ∀I,G,G1,G2,V,e. ⇓[e] G ≡ G2 → G = G1. 𝕓{I} V →
-                       e < |G1| → ⇓[e] G1 ≡ G2.
+fact gdrop_inv_lt_aux: ∀I,G,G1,G2,V,e. ⇩[e] G ≡ G2 → G = G1. 𝕓{I} V →
+                       e < |G1| → ⇩[e] G1 ≡ G2.
 #I #G #G1 #G2 #V #e * -G -G2
 [ #G #H1 #H destruct #H2
   lapply (le_to_lt_to_lt … H1 H2) -H1 -H2 normalize in ⊢ (? % ? → ?); >commutative_plus #H
@@ -64,12 +64,12 @@ fact gdrop_inv_lt_aux: ∀I,G,G1,G2,V,e. ⇓[e] G ≡ G2 → G = G1. 𝕓{I} V �
 qed.
 
 lemma gdrop_inv_lt: ∀I,G1,G2,V,e.
-                    ⇓[e] G1. 𝕓{I} V ≡ G2 → e < |G1| → ⇓[e] G1 ≡ G2.
+                    ⇩[e] G1. 𝕓{I} V ≡ G2 → e < |G1| → ⇩[e] G1 ≡ G2.
 /2 width=5/ qed-.
 
 (* Basic properties *********************************************************)
 
-lemma gdrop_total: ∀e,G1. ∃G2. ⇓[e] G1 ≡ G2.
+lemma gdrop_total: ∀e,G1. ∃G2. ⇩[e] G1 ≡ G2.
 #e #G1 elim G1 -G1 /3 width=2/
 #I #V #G1 * #G2 #HG12
 elim (lt_or_eq_or_gt e (|G1|)) #He

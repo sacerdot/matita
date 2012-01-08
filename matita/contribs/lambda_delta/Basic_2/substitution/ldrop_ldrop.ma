@@ -20,8 +20,8 @@ include "Basic_2/substitution/ldrop.ma".
 (* Main properties **********************************************************)
 
 (* Basic_1: was: ldrop_mono *)
-theorem ldrop_mono: ∀d,e,L,L1. ⇓[d, e] L ≡ L1 →
-                    ∀L2. ⇓[d, e] L ≡ L2 → L1 = L2.
+theorem ldrop_mono: ∀d,e,L,L1. ⇩[d, e] L ≡ L1 →
+                    ∀L2. ⇩[d, e] L ≡ L2 → L1 = L2.
 #d #e #L #L1 #H elim H -d -e -L -L1
 [ #d #e #L2 #H
   >(ldrop_inv_atom1 … H) -L2 //
@@ -37,9 +37,9 @@ theorem ldrop_mono: ∀d,e,L,L1. ⇓[d, e] L ≡ L1 →
 qed-.
 
 (* Basic_1: was: ldrop_conf_ge *)
-theorem ldrop_conf_ge: ∀d1,e1,L,L1. ⇓[d1, e1] L ≡ L1 →
-                       ∀e2,L2. ⇓[0, e2] L ≡ L2 → d1 + e1 ≤ e2 →
-                       ⇓[0, e2 - e1] L1 ≡ L2.
+theorem ldrop_conf_ge: ∀d1,e1,L,L1. ⇩[d1, e1] L ≡ L1 →
+                       ∀e2,L2. ⇩[0, e2] L ≡ L2 → d1 + e1 ≤ e2 →
+                       ⇩[0, e2 - e1] L1 ≡ L2.
 #d1 #e1 #L #L1 #H elim H -d1 -e1 -L -L1
 [ #d #e #e2 #L2 #H
   >(ldrop_inv_atom1 … H) -L2 //
@@ -56,11 +56,11 @@ theorem ldrop_conf_ge: ∀d1,e1,L,L1. ⇓[d1, e1] L ≡ L1 →
 qed.
 
 (* Basic_1: was: ldrop_conf_lt *)
-theorem ldrop_conf_lt: ∀d1,e1,L,L1. ⇓[d1, e1] L ≡ L1 →
-                       ∀e2,K2,I,V2. ⇓[0, e2] L ≡ K2. 𝕓{I} V2 →
+theorem ldrop_conf_lt: ∀d1,e1,L,L1. ⇩[d1, e1] L ≡ L1 →
+                       ∀e2,K2,I,V2. ⇩[0, e2] L ≡ K2. 𝕓{I} V2 →
                        e2 < d1 → let d ≝ d1 - e2 - 1 in
-                       ∃∃K1,V1. ⇓[0, e2] L1 ≡ K1. 𝕓{I} V1 &
-                                ⇓[d, e1] K2 ≡ K1 & ⇑[d, e1] V1 ≡ V2.
+                       ∃∃K1,V1. ⇩[0, e2] L1 ≡ K1. 𝕓{I} V1 &
+                                ⇩[d, e1] K2 ≡ K1 & ⇧[d, e1] V1 ≡ V2.
 #d1 #e1 #L #L1 #H elim H -d1 -e1 -L -L1
 [ #d #e #e2 #K2 #I #V2 #H
   lapply (ldrop_inv_atom1 … H) -H #H destruct
@@ -78,9 +78,9 @@ theorem ldrop_conf_lt: ∀d1,e1,L,L1. ⇓[d1, e1] L ≡ L1 →
 qed.
 
 (* Basic_1: was: ldrop_trans_le *)
-theorem ldrop_trans_le: ∀d1,e1,L1,L. ⇓[d1, e1] L1 ≡ L →
-                        ∀e2,L2. ⇓[0, e2] L ≡ L2 → e2 ≤ d1 →
-                        ∃∃L0. ⇓[0, e2] L1 ≡ L0 & ⇓[d1 - e2, e1] L0 ≡ L2.
+theorem ldrop_trans_le: ∀d1,e1,L1,L. ⇩[d1, e1] L1 ≡ L →
+                        ∀e2,L2. ⇩[0, e2] L ≡ L2 → e2 ≤ d1 →
+                        ∃∃L0. ⇩[0, e2] L1 ≡ L0 & ⇩[d1 - e2, e1] L0 ≡ L2.
 #d1 #e1 #L1 #L #H elim H -d1 -e1 -L1 -L
 [ #d #e #e2 #L2 #H
   >(ldrop_inv_atom1 … H) -L2 /2 width=3/
@@ -100,8 +100,8 @@ theorem ldrop_trans_le: ∀d1,e1,L1,L. ⇓[d1, e1] L1 ≡ L →
 qed.
 
 (* Basic_1: was: ldrop_trans_ge *)
-theorem ldrop_trans_ge: ∀d1,e1,L1,L. ⇓[d1, e1] L1 ≡ L →
-                        ∀e2,L2. ⇓[0, e2] L ≡ L2 → d1 ≤ e2 → ⇓[0, e1 + e2] L1 ≡ L2.
+theorem ldrop_trans_ge: ∀d1,e1,L1,L. ⇩[d1, e1] L1 ≡ L →
+                        ∀e2,L2. ⇩[0, e2] L ≡ L2 → d1 ≤ e2 → ⇩[0, e1 + e2] L1 ≡ L2.
 #d1 #e1 #L1 #L #H elim H -d1 -e1 -L1 -L
 [ #d #e #e2 #L2 #H
   >(ldrop_inv_atom1 … H) -H -L2 //
@@ -116,11 +116,11 @@ theorem ldrop_trans_ge: ∀d1,e1,L1,L. ⇓[d1, e1] L1 ≡ L →
 qed.
 
 theorem ldrop_trans_ge_comm: ∀d1,e1,e2,L1,L2,L.
-                             ⇓[d1, e1] L1 ≡ L → ⇓[0, e2] L ≡ L2 → d1 ≤ e2 →
-                             ⇓[0, e2 + e1] L1 ≡ L2.
+                             ⇩[d1, e1] L1 ≡ L → ⇩[0, e2] L ≡ L2 → d1 ≤ e2 →
+                             ⇩[0, e2 + e1] L1 ≡ L2.
 #e1 #e1 #e2 >commutative_plus /2 width=5/
 qed.
 
 (* Basic_1: was: ldrop_conf_rev *)
-axiom ldrop_div: ∀e1,L1,L. ⇓[0, e1] L1 ≡ L → ∀e2,L2. ⇓[0, e2] L2 ≡ L →
-                 ∃∃L0. ⇓[0, e1] L0 ≡ L2 & ⇓[e1, e2] L0 ≡ L1.
+axiom ldrop_div: ∀e1,L1,L. ⇩[0, e1] L1 ≡ L → ∀e2,L2. ⇩[0, e2] L2 ≡ L →
+                 ∃∃L0. ⇩[0, e1] L0 ≡ L2 & ⇩[e1, e2] L0 ≡ L1.
