@@ -30,7 +30,7 @@ val fix_sorts:
 
 (* this should be moved elsewhere *)
 (* The term must be in whd *)
-val could_reduce: NCic.term -> bool
+val could_reduce: #NCicCoercion.status -> subst:NCic.substitution -> NCic.context -> NCic.term -> bool
 
 (* delift_type_wrt_terms st m s c t args
  *   lift t (length args) 

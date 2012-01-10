@@ -134,13 +134,15 @@ let rec mk_irl stop base =
 ;;
 
 (* the argument must be a term in whd *)
-let rec could_reduce =
+let rec could_reduce status ~subst context =
  function
   | C.Meta _ -> true
   | C.Appl (C.Const (Ref.Ref (_,Ref.Fix (_,recno,_)))::args)
-     when List.length args > recno -> could_reduce (List.nth args recno)
-  | C.Match (_,_,arg,_) -> could_reduce arg
-  | C.Appl (he::_) -> could_reduce he
+     when List.length args > recno ->
+      let t = NCicReduction.whd status ~subst context (List.nth args recno) in
+        could_reduce status subst context t
+  | C.Match (_,_,arg,_) -> could_reduce status ~subst context arg
+  | C.Appl (he::_) -> could_reduce status ~subst context he
   | C.Sort _ | C.Rel _ | C.Prod _ | C.Lambda _ | C.Const _ -> false
   | C.Appl [] | C.LetIn _ | C.Implicit _ -> assert false
 ;;
@@ -722,7 +724,7 @@ and fo_unif0 during_delift status swap test_eq_only metasenv subst context (norm
          with Invalid_argument _ -> assert false)
    | (C.Implicit _, _) | (_, C.Implicit _) -> assert false
    | _ when norm1 && norm2 ->
-       if (could_reduce t1 || could_reduce t2) then
+       if (could_reduce status ~subst context t1 || could_reduce status ~subst context t2) then
         raise (Uncertain (mk_msg status metasenv subst context t1 t2))
        else
         raise (UnificationFailure (mk_msg status metasenv subst context t1 t2))
@@ -886,8 +888,8 @@ and unify status test_eq_only metasenv subst context t1 t2 swap =
          | UnificationFailure _ | Uncertain _ when (not (norm1 && norm2))
            -> unif_machines metasenv subst (small_delta_step ~subst m1 m2)
          | UnificationFailure msg
-           when could_reduce (NCicReduction.unwind status (fst m1))
-             || could_reduce (NCicReduction.unwind status (fst m2))
+           when could_reduce status ~subst context (NCicReduction.unwind status (fst m1))
+             || could_reduce status ~subst context (NCicReduction.unwind status (fst m2))
            -> raise (Uncertain msg)
       (*D*)  in outside None; rc with exn -> outside (Some exn); raise exn 
      in
