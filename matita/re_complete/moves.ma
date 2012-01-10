@@ -1,19 +1,5 @@
-(**************************************************************************)
-(*       ___                                                              *)
-(*      ||M||                                                             *)
-(*      ||A||       A project by Andrea Asperti                           *)
-(*      ||T||                                                             *)
-(*      ||I||       Developers:                                           *)
-(*      ||T||         The HELM team.                                      *)
-(*      ||A||         http://helm.cs.unibo.it                             *)
-(*      \   /                                                             *)
-(*       \ /        This file is distributed under the terms of the       *)
-(*        v         GNU General Public License Version 2                  *)
-(*                                                                        *)
-(**************************************************************************)
-
-include "re/re.ma".
-include "basics/lists/listb.ma".
+include "re.ma".
+include "basics/listb.ma".
 
 let rec move (S: DeqSet) (x:S) (E: pitem S) on E : pre S ≝
  match E with
@@ -51,8 +37,8 @@ qed.
 lemma same_kernel: ∀S:DeqSet.∀a:S.∀i:pitem S.
   |\fst (move ? a i)| = |i|.
 #S #a #i elim i //
-  [#i1 #i2 >move_cat #H1 #H2 whd in ⊢ (???%); <H1 <H2 //
-  |#i1 #i2 >move_plus #H1 #H2 whd in ⊢ (???%); <H1 <H2 //
+  [#i1 #i2 #H1 #H2 >move_cat >erase_odot //
+  |#i1 #i2 #H1 #H2 >move_plus whd in ⊢ (??%%); // 
   ]
 qed.
 
@@ -122,10 +108,6 @@ theorem decidable_sem: ∀S:DeqSet.∀w: word S. ∀e:pre S.
  ]
 qed.
 
-(* lemma not_true_to_false: ∀b.b≠true → b =false.
-#b * cases b // #H @False_ind /2/ 
-qed. *)
-
 (************************ pit state ***************************)
 definition pit_pre ≝ λS.λi.〈blank S (|i|), false〉. 
 
@@ -161,7 +143,7 @@ lemma move_pit: ∀S,a,i. move S a (\fst (pit_pre S i)) = pit_pre S i.
 qed. 
 
 lemma moves_pit: ∀S,w,i. moves S w (pit_pre S i) = pit_pre S i.
-#S #w #i elim w // #a #tl >moves_cons // 
+#S #w #i elim w // 
 qed. 
  
 lemma to_pit: ∀S,w,e. ¬ sublist S w (occur S (|\fst e|)) →
@@ -472,17 +454,15 @@ theorem euqiv_sem : ∀Sig.∀e1,e2:re Sig.
   ]
 qed.
 
-definition eqbnat ≝ λn,m:nat. eqb n m.
-
 lemma eqbnat_true : ∀n,m. eqbnat n m = true ↔ n = m.
-#n #m % [@eqb_true_to_eq | @eq_to_eqb_true]
+#n #m % [@eqbnat_true_to_eq | @eq_to_eqbnat_true]
 qed.
 
 definition DeqNat ≝ mk_DeqSet nat eqbnat eqbnat_true.
 
-definition a ≝ s DeqNat 0.
-definition b ≝ s DeqNat 1.
-definition c ≝ s DeqNat 2.
+definition a ≝ s DeqNat O.
+definition b ≝ s DeqNat (S O).
+definition c ≝ s DeqNat (S (S O)).
 
 definition exp1 ≝ ((a·b)^*·a).
 definition exp2 ≝ a·(b·a)^*.
@@ -497,11 +477,8 @@ definition exp9 ≝ (a·a·a + a·a·a·a·a)^*.
 example ex1 : \fst (equiv ? (exp8+exp9) exp9) = true.
 normalize // qed.
 
-definition exp10 ≝ a·a·a·a·a·a·a·a·a·a·a·a·(a^* ).
-definition exp11 ≝ (a·a·a·a·a + a·a·a·a·a·a·a)^*.
 
-example ex2 : \fst (equiv ? (exp10+exp11) exp10) = true.
-normalize // qed.
+
 
 
 
