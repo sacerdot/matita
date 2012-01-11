@@ -915,7 +915,7 @@ and force_to_sort status metasenv subst context t orig_t localise ty =
            " is not a sort: " ^ status#ppterm ~metasenv ~subst ~context ty)) in
         let ty = NCicReduction.whd status ~subst context ty in
         let exn =
-         if NCicUnification.could_reduce ty then
+         if NCicUnification.could_reduce status ~subst context ty then
           Uncertain msg
          else
           RefineFailure msg
