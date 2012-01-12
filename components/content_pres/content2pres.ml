@@ -1051,13 +1051,14 @@ let nconjlist2pres0 term2pres context =
           Con.dec_id = dec_id ;
           Con.dec_type = ty } = d in
       let r = 
-        Box.b_h [Some "helm", "xref", dec_id] 
-          [ Box.b_object (p_mi []
-            (match dec_name with
-               None -> "_"
-             | Some n -> n)) ;
-            Box.b_space; Box.b_text [] ":"; Box.b_space;
-            term2pres ty] in
+        Box.b_hv [Some "helm", "xref", dec_id] 
+          [ Box.b_h []
+            [ Box.b_object (p_mi []
+               (match dec_name with
+                  None -> "_"
+               | Some n -> n)) ;
+              Box.b_space; Box.b_text [] ":"; ];
+	      Box.indent (term2pres ty)] in
       aux (r::accum) tl
   | (Some (`Definition d))::tl ->
       let
