@@ -21,9 +21,6 @@ axiom lsubc_ldrops_trans: ∀RP,L1,L2. L1 [RP] ⊑ L2 → ∀K2,des. ⇩[des] L2
 axiom ldrops_lsubc_trans: ∀RP,L1,K1,des. ⇩*[des] L1 ≡ K1 → ∀K2. K1 [RP] ⊑ K2 →
                           ∃∃L2. L1 [RP] ⊑ L2 & ⇩*[des] L2 ≡ K2.
 
-axiom lifts_trans: ∀T1,T,des1. ⇧*[des1] T1 ≡ T → ∀T2:term. ∀des2. ⇧*[des2] T ≡ T2 →
-                   ⇧*[des1 @ des2] T1 ≡ T2.
-
 axiom ldrops_trans: ∀L1,L,des1. ⇩*[des1] L1 ≡ L → ∀L2,des2. ⇩*[des2] L ≡ L2 →
                     ⇩*[des2 @ des1] L1 ≡ L2.
 

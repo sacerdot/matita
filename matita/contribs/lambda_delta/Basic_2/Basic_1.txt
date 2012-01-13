@@ -154,9 +154,6 @@ lift1/fwd lift1_cons_tail
 lift1/fwd lifts1_flat
 lift1/fwd lifts1_nil
 lift1/fwd lifts1_cons
-lift1/props lift1_lift1
-lift1/props lift1_xhg
-lift1/props lifts1_xhg
 lift1/props lift1_free
 lift/props thead_x_lift_y_y
 lift/props lifts_tapp

@@ -34,7 +34,7 @@ inductive list2 (A1,A2:Type[0]) : Type[0] :=
   | nil2 : list2 A1 A2
   | cons2: A1 → A2 → list2 A1 A2 → list2 A1 A2.
 
-interpretation "nil (list of pairs)" 'Nil2 = (nil2 ? ?). (**) (* 'Nil causes unification error in aacr_abst *)
+interpretation "nil (list of pairs)" 'Nil2 = (nil2 ? ?).
 
 interpretation "cons (list of pairs)" 'Cons hd1 hd2 tl = (cons2 ? ? hd1 hd2 tl).
 

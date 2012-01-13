@@ -19,7 +19,7 @@ include "Basic_2/substitution/lift.ma".
 (* Main properies ***********************************************************)
 
 (* Basic_1: was: lift_inj *)
-theorem lift_inj:  ∀d,e,T1,U. ⇧[d,e] T1 ≡ U → ∀T2. ⇧[d,e] T2 ≡ U → T1 = T2.
+theorem lift_inj: ∀d,e,T1,U. ⇧[d,e] T1 ≡ U → ∀T2. ⇧[d,e] T2 ≡ U → T1 = T2.
 #d #e #T1 #U #H elim H -d -e -T1 -U
 [ #k #d #e #X #HX
   lapply (lift_inv_sort2 … HX) -HX //

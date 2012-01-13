@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "Basic_2/grammar/aarity.ma".
-include "Basic_2/unfold/lifts_vector.ma".
+include "Basic_2/unfold/lifts_lifts_vector.ma".
 include "Basic_2/computation/acp.ma".
 
 (* ABSTRACT COMPUTATION PROPERTIES ******************************************)
@@ -94,13 +94,12 @@ lemma rp_liftsv_all: ∀RR,RS,RP. acr RR RS RP (λL,T. RP L T) →
 @conj /2 width=1/ /2 width=6 by rp_lifts/
 qed.
 
-axiom aacr_acr: ∀RR,RS,RP. acp RR RS RP → acr RR RS RP (λL,T. RP L T) →
+lemma aacr_acr: ∀RR,RS,RP. acp RR RS RP → acr RR RS RP (λL,T. RP L T) →
                 ∀A. acr RR RS RP (aacr RP A).
-(*
 #RR #RS #RP #H1RP #H2RP #A elim A -A normalize //
 #B #A #IHB #IHA @mk_acr normalize
 [ #L #T #H
-  lapply (H ? (⋆0) ? ⟠ ? ? ?) -H 
+  lapply (H ? (⋆0) ? ⟠ ? ? ?) -H
   [1,3: // |2,4: skip
   | @(s2 … IHB … ◊) // /2 width=2/
   | #H @(cp3 … H1RP … 0) @(s1 … IHA) //
@@ -123,26 +122,28 @@ axiom aacr_acr: ∀RR,RS,RP. acp RR RS RP → acr RR RS RP (λL,T. RP L T) →
   @(HA … (ss des)) /2 width=1/
   [ @(s7 … IHB … HB … HV120) /2 width=1/
   | @liftsv_applv //
+    elim (liftsv_liftv_trans_le … HV10s … HV120s) -V10s #V10s #HV10s #HV120s
+    >(liftv_mono … HV12s … HV10s) -V1s //
   ]
 | #L #Vs #T #W #HA #HW #L0 #V0 #X #des #HB #HL0 #H
   elim (lifts_inv_applv1 … H) -H #V0s #Y #HV0s #HY #H destruct
   elim (lifts_inv_flat1 … HY) -HY #W0 #T0 #HW0 #HT0 #H destruct
-  @(s6 … IHA … (V0 :: V0s)) /2 width=6 by rp_lifts/ /3 width=4/ 
+  @(s6 … IHA … (V0 :: V0s)) /2 width=6 by rp_lifts/ /3 width=4/
 | /3 width=7/
 ]
 qed.
-*)
+
 lemma aacr_abst: ∀RR,RS,RP. acp RR RS RP → acr RR RS RP (λL,T. RP L T) →
                  ∀L,W,T,A,B. RP L W → (
                     ∀L0,V0,T0,des. ⇩*[des] L0 ≡ L → ⇧*[ss des] T ≡ T0 →
-                                   ⦃L0, V0⦄ [RP] ϵ 〚B〛→ ⦃L0. 𝕓{Abbr} V0, T0⦄ [RP] ϵ 〚A〛
+                                   ⦃L0, V0⦄ [RP] ϵ 〚B〛 → ⦃L0. 𝕓{Abbr} V0, T0⦄ [RP] ϵ 〚A〛
                  ) →
                  ⦃L, 𝕓{Abst} W. T⦄ [RP] ϵ 〚𝕔 B. A〛.
 #RR #RS #RP #H1RP #H2RP #L #W #T #A #B #HW #HA #L0 #V0 #X #des #HB #HL0 #H
 lapply (aacr_acr … H1RP H2RP A) #HCA
 lapply (aacr_acr … H1RP H2RP B) #HCB
 elim (lifts_inv_bind1 … H) -H #W0 #T0 #HW0 #HT0 #H destruct
-lapply (s1 … HCB) -HCB #HCB 
+lapply (s1 … HCB) -HCB #HCB
 @(s3 … HCA … ◊) /2 width=6 by rp_lifts/
 @(s5 … HCA … ◊ ◊) // /2 width=1/ /2 width=3/
 qed.
