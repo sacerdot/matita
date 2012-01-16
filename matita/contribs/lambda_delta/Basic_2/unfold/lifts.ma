@@ -12,15 +12,10 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/grammar/term_vector.ma".
 include "Basic_2/substitution/lift.ma".
+include "Basic_2/unfold/gr2.ma".
 
-(* GENERIC RELOCATION *******************************************************)
-
-let rec ss (des:list2 nat nat) ≝ match des with
-[ nil2          ⇒ ⟠
-| cons2 d e des ⇒ {d + 1, e} :: ss des
-].
+(* GENERIC TERM RELOCATION **************************************************)
 
 inductive lifts: list2 nat nat → relation term ≝
 | lifts_nil : ∀T. lifts ⟠ T T
@@ -28,7 +23,7 @@ inductive lifts: list2 nat nat → relation term ≝
               ⇧[d,e] T1 ≡ T → lifts des T T2 → lifts ({d, e} :: des) T1 T2
 .
 
-interpretation "generic relocation"
+interpretation "generic relocation (term)"
    'RLiftStar des T1 T2 = (lifts des T1 T2).
 
 (* Basic inversion lemmas ***************************************************)
@@ -54,8 +49,40 @@ lemma lifts_inv_cons: ∀T1,T2,d,e,des. ⇧*[{d, e} :: des] T1 ≡ T2 →
                       ∃∃T. ⇧[d, e] T1 ≡ T & ⇧*[des] T ≡ T2.
 /2 width=3/ qed-.
 
+(* Basic_1: was: lift1_sort *)
+lemma lifts_inv_sort1: ∀T2,k,des. ⇧*[des] ⋆k ≡ T2 → T2 = ⋆k.
+#T2 #k #des elim des -des
+[ #H <(lifts_inv_nil … H) -H //
+| #d #e #des #IH #H
+  elim (lifts_inv_cons … H) -H #X #H
+  >(lift_inv_sort1 … H) -H /2 width=1/
+]
+qed-.
+
+(* Basic_1: was: lift1_lref *)
+lemma lifts_inv_lref1: ∀T2,des,i1. ⇧*[des] #i1 ≡ T2 →
+                       ∃∃i2. @[i1] des ≡ i2 & T2 = #i2.
+#T2 #des elim des -des
+[ #i1 #H <(lifts_inv_nil … H) -H /2 width=3/
+| #d #e #des #IH #i1 #H
+  elim (lifts_inv_cons … H) -H #X #H1 #H2
+  elim (lift_inv_lref1 … H1) -H1 * #Hdi1 #H destruct
+  elim (IH … H2) -IH -H2 /3 width=3/
+]
+qed-.
+
+lemma lifts_inv_gref1: ∀T2,p,des. ⇧*[des] §p ≡ T2 → T2 = §p.
+#T2 #p #des elim des -des
+[ #H <(lifts_inv_nil … H) -H //
+| #d #e #des #IH #H
+  elim (lifts_inv_cons … H) -H #X #H
+  >(lift_inv_gref1 … H) -H /2 width=1/
+]
+qed-.
+
+(* Basic_1: was: lift1_bind *)
 lemma lifts_inv_bind1: ∀I,T2,des,V1,U1. ⇧*[des] 𝕓{I} V1. U1 ≡ T2 →
-                       ∃∃V2,U2. ⇧*[des] V1 ≡ V2 & ⇧*[ss des] U1 ≡ U2 &
+                       ∃∃V2,U2. ⇧*[des] V1 ≡ V2 & ⇧*[des + 1] U1 ≡ U2 &
                                 T2 = 𝕓{I} V2. U2.
 #I #T2 #des elim des -des
 [ #V1 #U1 #H
@@ -68,6 +95,7 @@ lemma lifts_inv_bind1: ∀I,T2,des,V1,U1. ⇧*[des] 𝕓{I} V1. U1 ≡ T2 →
 ]
 qed-.
 
+(* Basic_1: was: lift1_flat *)
 lemma lifts_inv_flat1: ∀I,T2,des,V1,U1. ⇧*[des] 𝕗{I} V1. U1 ≡ T2 →
                        ∃∃V2,U2. ⇧*[des] V1 ≡ V2 & ⇧*[des] U1 ≡ U2 &
                                 T2 = 𝕗{I} V2. U2.
@@ -95,7 +123,7 @@ qed-.
 (* Basic properties *********************************************************)
 
 lemma lifts_bind: ∀I,T2,V1,V2,des. ⇧*[des] V1 ≡ V2 →
-                  ∀T1. ⇧*[ss des] T1 ≡ T2 →
+                  ∀T1. ⇧*[des + 1] T1 ≡ T2 →
                   ⇧*[des] 𝕓{I} V1. T1 ≡ 𝕓{I} V2. T2.
 #I #T2 #V1 #V2 #des #H elim H -V1 -V2 -des
 [ #V #T1 #H >(lifts_inv_nil … H) -H //

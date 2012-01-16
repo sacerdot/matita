@@ -112,6 +112,14 @@ notation "hvbox( L ⊢ break term 90 T1 break [ d , break e ] ▶ break T2 )"
 
 (* Unfold *******************************************************************)
 
+notation "hvbox( @ [ T1 ] break f ≡ break T2 )"
+   non associative with precedence 45
+   for @{ 'RAt $T1 $f $T2 }.
+
+notation "hvbox( T1 ▭ break T2 ≡ break T )"
+   non associative with precedence 45
+   for @{ 'RMinus $T1 $T2 $T }.
+
 notation "hvbox( ⇧ * [ e ] break T1 ≡ break T2 )"
    non associative with precedence 45
    for @{ 'RLiftStar $e $T1 $T2 }.

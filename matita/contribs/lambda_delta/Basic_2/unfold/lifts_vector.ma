@@ -15,7 +15,7 @@
 include "Basic_2/substitution/lift_vector.ma".
 include "Basic_2/unfold/lifts.ma".
 
-(* GENERIC RELOCATION *******************************************************)
+(* GENERIC TERM VECTOR RELOCATION *******************************************)
 
 inductive liftsv (des:list2 nat nat) : relation (list term) ≝
 | liftsv_nil : liftsv des ◊ ◊

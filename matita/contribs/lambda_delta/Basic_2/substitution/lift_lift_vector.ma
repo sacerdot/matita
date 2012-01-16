@@ -15,7 +15,7 @@
 include "Basic_2/substitution/lift_lift.ma".
 include "Basic_2/substitution/lift_vector.ma".
 
-(* RELOCATION ***************************************************************)
+(* BASIC TERM VECTOR RELOCATION *********************************************)
 
 (* Main properies ***********************************************************)
 

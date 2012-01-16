@@ -74,6 +74,9 @@ csuba/getl csuba_getl_abst
 csuba/getl csuba_getl_abst_rev
 csuba/getl csuba_getl_abbr_rev
 csuba/props csuba_refl
+
+# check #############################################################
+
 csubc/arity csubc_arity_conf
 csubc/arity csubc_arity_trans
 csubc/clear csubc_clear_conf
@@ -89,6 +92,9 @@ csubc/fwd csubc_gen_sort_r
 csubc/fwd csubc_gen_head_r
 csubc/getl csubc_getl_conf
 csubc/props csubc_refl
+
+# waiting ####################################################################
+
 csubt/clear csubt_clear_conf
 csubt/csuba csubt_csuba
 csubt/drop csubt_drop_flat
@@ -114,10 +120,8 @@ csubv/props csubv_bind_same
 csubv/props csubv_refl
 drop1/fwd drop1_gen_pnil
 drop1/fwd drop1_gen_pcons
-drop1/getl drop1_getl_trans
 drop1/props drop1_skip_bind
 drop1/props drop1_cons_tail
-drop1/props drop1_trans
 drop/props drop_ctail
 ex0/props aplus_gz_le
 ex0/props aplus_gz_ge
@@ -146,10 +150,6 @@ leq/props leq_sym
 leq/props leq_trans
 leq/props leq_ahead_false_1
 leq/props leq_ahead_false_2
-lift1/fwd lift1_sort
-lift1/fwd lift1_lref
-lift1/fwd lift1_bind
-lift1/fwd lift1_flat
 lift1/fwd lift1_cons_tail
 lift1/fwd lifts1_flat
 lift1/fwd lifts1_nil

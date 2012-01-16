@@ -29,7 +29,7 @@ interpretation "generic local environment slicing"
 (* Basic properties *********************************************************)
 
 lemma ldrops_skip: ∀L1,L2,des. ⇩*[des] L1 ≡ L2 → ∀V1,V2. ⇧*[des] V2 ≡ V1 →
-                   ∀I. ⇩*[ss des] L1. 𝕓{I} V1 ≡ L2. 𝕓{I} V2.
+                   ∀I. ⇩*[des + 1] L1. 𝕓{I} V1 ≡ L2. 𝕓{I} V2.
 #L1 #L2 #des #H elim H -L1 -L2 -des
 [ #L #V1 #V2 #HV12 #I
   >(lifts_inv_nil … HV12) -HV12 //
@@ -37,3 +37,14 @@ lemma ldrops_skip: ∀L1,L2,des. ⇩*[des] L1 ≡ L2 → ∀V1,V2. ⇧*[des] V2 
   elim (lifts_inv_cons … H) -H /3 width=5/
 ].
 qed.
+
+(* Basic_1: removed theorems 1: drop1_getl_trans
+*)
+(*
+lemma ldrops_inv_skip2: ∀des2,L1,I,K2,V2. ⇩*[des2] L1 ≡ K2. 𝕓{I} V2 →
+                        ∀des,i. des ▭ i ≡ des2 →
+                        ∃∃K1,V1,des1. des ▭ (i + 1) ≡ des1 &
+                                      ⇩*[des1] K1 ≡ K2 &
+                                      ⇧*[des1] V2 ≡ V1 &
+                                      L1 = K1. 𝕓{I} V1.
+*)

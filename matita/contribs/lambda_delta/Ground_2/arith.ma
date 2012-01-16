@@ -17,7 +17,7 @@ include "Ground_2/star.ma".
 
 (* ARITHMETICAL PROPERTIES **************************************************)
 
-(* equations ****************************************************************)
+(* Equations ****************************************************************)
 
 lemma le_plus_minus: ∀m,n,p. p ≤ n → m + n - p = m + (n - p).
 /2 by plus_minus/ qed.
@@ -69,4 +69,8 @@ qed-.
 (*
 lemma pippo: ∀x,y,z. x < z → y < z - x → x + y < z.
 /3 width=2/
+
+lemma le_or_ge: ∀m,n. m ≤ n ∨ n ≤ m.
+#m #n elim (lt_or_ge m n) /2 width=1/ /3 width=2/
+qed-.
 *)

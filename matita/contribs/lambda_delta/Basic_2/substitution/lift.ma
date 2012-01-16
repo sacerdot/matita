@@ -15,7 +15,7 @@
 include "Basic_2/grammar/term_weight.ma".
 include "Basic_2/grammar/term_simple.ma".
 
-(* RELOCATION ***************************************************************)
+(* BASIC TERM RELOCATION ****************************************************)
 
 (* Basic_1: includes:
             lift_sort lift_lref_lt lift_lref_ge lift_bind lift_flat

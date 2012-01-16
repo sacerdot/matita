@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "Basic_2/grammar/aarity.ma".
-include "Basic_2/unfold/lifts_lifts_vector.ma".
+include "Basic_2/unfold/lifts_lift_vector.ma".
 include "Basic_2/computation/acp.ma".
 
 (* ABSTRACT COMPUTATION PROPERTIES ******************************************)
@@ -119,7 +119,7 @@ lemma aacr_acr: ∀RR,RS,RP. acp RR RS RP → acr RR RS RP (λL,T. RP L T) →
   elim (lift_total V10 0 1) #V20 #HV120
   elim (liftv_total 0 1 V10s) #V20s #HV120s
   @(s5 … IHA … (V10 :: V10s) (V20 :: V20s)) /2 width=1/ /2 width=6 by rp_lifts/
-  @(HA … (ss des)) /2 width=1/
+  @(HA … (des + 1)) /2 width=1/
   [ @(s7 … IHB … HB … HV120) /2 width=1/
   | @liftsv_applv //
     elim (liftsv_liftv_trans_le … HV10s … HV120s) -V10s #V10s #HV10s #HV120s
@@ -135,7 +135,7 @@ qed.
 
 lemma aacr_abst: ∀RR,RS,RP. acp RR RS RP → acr RR RS RP (λL,T. RP L T) →
                  ∀L,W,T,A,B. RP L W → (
-                    ∀L0,V0,T0,des. ⇩*[des] L0 ≡ L → ⇧*[ss des] T ≡ T0 →
+                    ∀L0,V0,T0,des. ⇩*[des] L0 ≡ L → ⇧*[des + 1] T ≡ T0 →
                                    ⦃L0, V0⦄ [RP] ϵ 〚B〛 → ⦃L0. 𝕓{Abbr} V0, T0⦄ [RP] ϵ 〚A〛
                  ) →
                  ⦃L, 𝕓{Abst} W. T⦄ [RP] ϵ 〚𝕔 B. A〛.

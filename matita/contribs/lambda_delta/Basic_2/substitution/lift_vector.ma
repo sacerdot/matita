@@ -15,7 +15,7 @@
 include "Basic_2/grammar/term_vector.ma".
 include "Basic_2/substitution/lift.ma".
 
-(* RELOCATION ***************************************************************)
+(* BASIC TERM VECTOR RELOCATION *********************************************)
 
 inductive liftv (d,e:nat) : relation (list term) ≝
 | liftv_nil : liftv d e ◊ ◊
