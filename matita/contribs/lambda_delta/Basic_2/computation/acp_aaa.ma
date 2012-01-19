@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "Basic_2/unfold/gr2_gr2.ma".
 include "Basic_2/unfold/lifts_lifts.ma".
 include "Basic_2/unfold/ldrops_ldrops.ma".
 include "Basic_2/static/aaa.ma".
@@ -39,17 +40,36 @@ axiom aacr_aaa_csubc_lifts: ∀RR,RS,RP.
   >(lifts_inv_sort1 … H) -H
   lapply (aacr_acr … H1RP H2RP 𝕒) #HAtom
   @(s2 … HAtom … ◊) // /2 width=2/
-| * #L #K #V #B #i #HLK #_ #IHB #L0 #des #HL0 #X #H #L2 #HL20
-  elim (lifts_inv_lref1 … H) -H #i0 #Hi0 #H destruct
-  elim (ldrops_ldrop_trans … HL0 … HLK) -L #L #des1 #i1 #HL0 #HLK #Hi1 #Hdes1 
-
-  elim (lsubc_ldrop_trans … HL20 … HL0) -L0 #L0 #HL20 #HL0 
-  [
-  | lapply (aacr_acr … H1RP H2RP B) #HB
-    @(s2 … HB … ◊) //
-    @(cp2 … H1RP)
+| #I #L1 #K1 #V1 #B #i #HLK1 #_ #IHB #L0 #des #HL01 #X #H #L2 #HL20
+  lapply (aacr_acr … H1RP H2RP B) #HB
+  elim (lifts_inv_lref1 … H) -H #i1 #Hi1 #H destruct
+  lapply (ldrop_fwd_ldrop2 … HLK1) #HK1b
+  elim (ldrops_ldrop_trans … HL01 … HLK1) #X #des1 #i0 #HL0 #H #Hi0 #Hdes1
+  >(at_mono … Hi1 … Hi0) -i1
+  elim (ldrops_inv_skip2 … Hdes1 … H) -des1 #K0 #V0 #des0 #Hdes0 #HK01 #HV10 #H destruct
+  elim (lsubc_ldrop_trans … HL20 … HL0) -HL0 #X #HLK2 #H
+  elim (lift_total V0 0 (i0 +1)) #V #HV0
+  elim (lsubc_inv_pair2 … H) -H *
+  [ #K2 #HK20 #H destruct
+    generalize in match HLK2; generalize in match I; -HLK2 -I * #HLK2
+    [ @(s4 … HB … ◊ … HV0 HLK2)
+      @(IHB … HL20) [2: /2 width=6/ | skip ] 
+      | skip 
+      ]
+(⇧*[des0]V1≡V0) → (⇧[O,i0+1]V0≡V) → (@[i]des≡i0) → (des+1▭i+1≡des0+1) →
+⇧*[{O,i+1}::des]V1≡V) 
+    
+      Theorem lift1_free: (hds:?; i:?; t:?)
+                          (lift1 hds (lift (S i) (0) t)) =
+                          (lift (S (trans hds i)) (0) (lift1 (ptrans hds i) t)).
+    
+    
+    
+    
+    | @(s2 … HB … ◊) // /2 width=3/
+    ]
+  | #K2 #V2 #A2 #HV2 #HV0 #HK20 #H1 #H2 destruct 
   ]
-
 | #L #V #T #B #A #_ #_ #IHB #IHA #L0 #des #HL0 #X #H #L2 #HL20
   elim (lifts_inv_bind1 … H) -H #V0 #T0 #HV0 #HT0 #H destruct
   lapply (aacr_acr … H1RP H2RP A) #HA
@@ -64,7 +84,7 @@ axiom aacr_aaa_csubc_lifts: ∀RR,RS,RP.
   | #L3 #V3 #T3 #des3 #HL32 #HT03 #HB
     elim (lifts_total des3 W0) #W2 #HW02
     elim (ldrops_lsubc_trans … HL32 … HL02) -L2 #L2 #HL32 #HL20
-    @(IHA (L2. 𝕓{Abst} W2) … (ss des @ ss des3))
+    @(IHA (L2. 𝕓{Abst} W2) … (des + 1 @ des3 + 1))
     /2 width=3/ /3 width=5/ /4 width=6/
   ]
 | #L #V #T #B #A #_ #_ #IHB #IHA #L0 #des #HL0 #X #H #L2 #HL20

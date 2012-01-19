@@ -31,6 +31,10 @@ definition S2 ≝ λRR:lenv→relation term. λRS:relation term. λRP,C:lenv→p
 definition S3 ≝ λRP,C:lenv→predicate term.
                 ∀L,Vs,V,T,W. C L (ⒶVs. 𝕔{Abbr}V. T) → RP L W → C L (ⒶVs. 𝕔{Appl}V. 𝕔{Abst}W. T).
 
+definition S4 ≝ λRP,C:lenv→predicate term. ∀L,K,Vs,V1,V2,i.
+                C L (ⒶVs. V2) → ⇧[0, i + 1] V1 ≡ V2 →
+                ⇩[0, i] L ≡ K. 𝕓{Abbr} V1 → C L (Ⓐ Vs. #i).
+
 definition S5 ≝ λRP,C:lenv→predicate term.
                 ∀L,V1s,V2s. ⇧[0, 1] V1s ≡ V2s →
                 ∀V,T. C (L. 𝕓{Abbr}V) (ⒶV2s. T) → RP L V → C L (ⒶV1s. 𝕔{Abbr}V. T).
@@ -50,6 +54,7 @@ record acr (RR:lenv->relation term) (RS:relation term) (RP,C:lenv→predicate te
 { s1: S1 RP C;
   s2: S2 RR RS RP C;
   s3: S3 RP C;
+  s4: S4 RP C;
   s5: S5 RP C;
   s6: S6 RP C;
   s7: S7 C
@@ -94,8 +99,9 @@ lemma rp_liftsv_all: ∀RR,RS,RP. acr RR RS RP (λL,T. RP L T) →
 @conj /2 width=1/ /2 width=6 by rp_lifts/
 qed.
 
-lemma aacr_acr: ∀RR,RS,RP. acp RR RS RP → acr RR RS RP (λL,T. RP L T) →
+axiom aacr_acr: ∀RR,RS,RP. acp RR RS RP → acr RR RS RP (λL,T. RP L T) →
                 ∀A. acr RR RS RP (aacr RP A).
+(*
 #RR #RS #RP #H1RP #H2RP #A elim A -A normalize //
 #B #A #IHB #IHA @mk_acr normalize
 [ #L #T #H
@@ -132,7 +138,7 @@ lemma aacr_acr: ∀RR,RS,RP. acp RR RS RP → acr RR RS RP (λL,T. RP L T) →
 | /3 width=7/
 ]
 qed.
-
+*)
 lemma aacr_abst: ∀RR,RS,RP. acp RR RS RP → acr RR RS RP (λL,T. RP L T) →
                  ∀L,W,T,A,B. RP L W → (
                     ∀L0,V0,T0,des. ⇩*[des] L0 ≡ L → ⇧*[des + 1] T ≡ T0 →
