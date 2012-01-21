@@ -12,26 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/substitution/lift_lift.ma".
-include "Basic_2/unfold/lifts.ma".
+include "Basic_2/static/lsuba.ma".
+include "Basic_2/computation/acp_aaa.ma".
 
-(* GENERIC TERM RELOCATION **************************************************)
+(* LOCAL ENVIRONMENT REFINEMENT FOR ABSTRACT CANDIDATES OF REDUCIBILITY *****)
 
-(* Properties concerning basic term relocation ******************************)
+(* properties concerning lenv refinement for atomic arity assignment ********)
 
-(* Basic_1: was: lift1_xhg *)
-lemma lifts_lift_trans_le: ∀T1,T,des. ⇧*[des] T1 ≡ T → ∀T2. ⇧[0, 1] T ≡ T2 →
-                           ∃∃T0. ⇧[0, 1] T1 ≡ T0 & ⇧*[des + 1] T0 ≡ T2.
-#T1 #T #des #H elim H -T1 -T -des
-[ /2 width=3/
-| #T1 #T3 #T #des #d #e #HT13 #_ #IHT13 #T2 #HT2
-  elim (IHT13 … HT2) -T #T #HT3 #HT2
-  elim (lift_trans_le … HT13 … HT3 ?) -T3 // /3 width=5/
-]
-qed-.
-
-(* Basic_1: was: lift1_free (right to left) *)
-axiom lifts_lift_trans: ∀T1,T0,des0. ⇧*[des0] T1 ≡ T0 →
-                        ∀T2,i0. ⇧[O, i0 + 1] T0 ≡ T2 →
-                        ∀des,i. @[i] des ≡ i0 → des + 1 ▭ i + 1 ≡ des0 + 1 →
-                        ∃∃T. ⇧[0, i + 1] T1 ≡ T & ⇧*[des] T ≡ T2.
+lemma lsubc_lsuba: ∀RR,RS,RP. acp RR RS RP → acr RR RS RP (λL,T. RP L T) →
+                   ∀L1,L2. L1 ÷⊑ L2 → L1 [RP] ⊑ L2.
+#RR #RS #RP #H1RP #H2RP #L1 #L2 #H elim H -L1 -L2
+// /2 width=1/ /3 width=4/
+qed.

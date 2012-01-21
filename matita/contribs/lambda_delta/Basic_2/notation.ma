@@ -150,6 +150,10 @@ notation "hvbox( L ⊢ break term 90 T ÷ break A )"
    non associative with precedence 45
    for @{ 'AtomicArity $L $T $A }.
 
+notation "hvbox( T1 ÷ ⊑ break T2 )"
+   non associative with precedence 45
+   for @{ 'CrSubEqA $T1 $T2 }.
+
 (* Reducibility *************************************************************)
 
 notation "hvbox( ℝ [ T ] )"
