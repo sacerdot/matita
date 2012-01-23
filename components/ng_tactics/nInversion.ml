@@ -110,10 +110,10 @@ let mk_inverter ~jmeq name is_ind it leftno ?selection outsort (status: #NCic.st
  let nparams = List.length args in
 
  (* the default is a dependent inversion *)
- let is_dependent = (selection = None && jmeq) in
+ let is_dependent = (selection = None && (jmeq || nparams = 0)) in
 
  pp (lazy ("nparams = " ^ string_of_int nparams));
- if nparams = 0 
+ if (nparams = 0 && not is_dependent)
    then raise (Failure "inverter: the type must have at least one right parameter") 
    else 
      let xs = List.map (fun n -> "x" ^ (string_of_int n)) (HExtlib.list_seq 1 (leftno+nparams+1)) in
@@ -175,7 +175,11 @@ NotationPt.Implicit (`Tagged "end"));
       "",0,(None,[],
         Some (if jmeq then jmeqpatt selection
                      else leibpatt selection)) in
-     let elim_tac = if is_ind then NTactics.elim_tac else NTactics.cases_tac in
+     (* let elim_tac = if is_ind then NTactics.elim_tac else NTactics.cases_tac in *)
+     let elim_tac ~what ~where s =
+       try NTactics.elim_tac ~what ~where s 
+       with NTacStatus.Error _ -> NTactics.cases_tac ~what ~where s
+     in
      let status =
       NTactics.block_tac 
        (NTactics.branch_tac ::
