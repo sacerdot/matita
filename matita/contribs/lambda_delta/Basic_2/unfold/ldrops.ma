@@ -50,11 +50,11 @@ lemma ldrops_inv_cons: ∀L1,L2,d,e,des. ⇩*[{d, e} :: des] L1 ≡ L2 →
 /2 width=3/ qed-.
 
 lemma ldrops_inv_skip2: ∀I,des,i,des2. des ▭ i ≡ des2 →
-                        ∀L1,K2,V2. ⇩*[des2] L1 ≡ K2. 𝕓{I} V2 →
+                        ∀L1,K2,V2. ⇩*[des2] L1 ≡ K2. ⓑ{I} V2 →
                         ∃∃K1,V1,des1. des + 1 ▭ i + 1 ≡ des1 + 1 &
                                       ⇩*[des1] K1 ≡ K2 &
                                       ⇧*[des1] V2 ≡ V1 &
-                                      L1 = K1. 𝕓{I} V1.
+                                      L1 = K1. ⓑ{I} V1.
 #I #des #i #des2 #H elim H -des -i -des2
 [ #i #L1 #K2 #V2 #H
   >(ldrops_inv_nil … H) -L1 /2 width=7/
@@ -73,7 +73,7 @@ qed-.
 (* Basic properties *********************************************************)
 
 lemma ldrops_skip: ∀L1,L2,des. ⇩*[des] L1 ≡ L2 → ∀V1,V2. ⇧*[des] V2 ≡ V1 →
-                   ∀I. ⇩*[des + 1] L1. 𝕓{I} V1 ≡ L2. 𝕓{I} V2.
+                   ∀I. ⇩*[des + 1] L1. ⓑ{I} V1 ≡ L2. ⓑ{I} V2.
 #L1 #L2 #des #H elim H -L1 -L2 -des
 [ #L #V1 #V2 #HV12 #I
   >(lifts_inv_nil … HV12) -HV12 //

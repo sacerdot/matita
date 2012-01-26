@@ -30,15 +30,15 @@ lemma delift_lsubs_conf: ∀L1,T1,T2,d,e. L1 ⊢ T1 [d, e] ≡ T2 →
 qed.
 
 lemma delift_bind: ∀I,L,V1,V2,T1,T2,d,e.
-                   L ⊢ V1 [d, e] ≡ V2 → L. 𝕓{I} V2 ⊢ T1 [d+1, e] ≡ T2 →
-                   L ⊢ 𝕓{I} V1. T1 [d, e] ≡ 𝕓{I} V2. T2.
+                   L ⊢ V1 [d, e] ≡ V2 → L. ⓑ{I} V2 ⊢ T1 [d+1, e] ≡ T2 →
+                   L ⊢ ⓑ{I} V1. T1 [d, e] ≡ ⓑ{I} V2. T2.
 #I #L #V1 #V2 #T1 #T2 #d #e * #V #HV1 #HV2 * #T #HT1 #HT2
-lapply (tpss_lsubs_conf … HT1 (L. 𝕓{I} V) ?) -HT1 /2 width=1/ /3 width=5/
+lapply (tpss_lsubs_conf … HT1 (L. ⓑ{I} V) ?) -HT1 /2 width=1/ /3 width=5/
 qed.
 
 lemma delift_flat: ∀I,L,V1,V2,T1,T2,d,e.
                    L ⊢ V1 [d, e] ≡ V2 → L ⊢ T1 [d, e] ≡ T2 →
-                   L ⊢ 𝕗{I} V1. T1 [d, e] ≡ 𝕗{I} V2. T2.
+                   L ⊢ ⓕ{I} V1. T1 [d, e] ≡ ⓕ{I} V2. T2.
 #I #L #V1 #V2 #T1 #T2 #d #e * #V #HV1 #HV2 * /3 width=5/
 qed.
 
@@ -56,20 +56,20 @@ lemma delift_fwd_gref1: ∀L,U2,d,e,p. L ⊢ §p [d, e] ≡ U2 → U2 = §p.
 >(lift_inv_gref2 … HU2) -HU2 //
 qed-.
 
-lemma delift_fwd_bind1: ∀I,L,V1,T1,U2,d,e. L ⊢ 𝕓{I} V1. T1 [d, e] ≡ U2 →
+lemma delift_fwd_bind1: ∀I,L,V1,T1,U2,d,e. L ⊢ ⓑ{I} V1. T1 [d, e] ≡ U2 →
                         ∃∃V2,T2. L ⊢ V1 [d, e] ≡ V2 &
-                                 L. 𝕓{I} V2 ⊢ T1 [d+1, e] ≡ T2 &
-                                 U2 = 𝕓{I} V2. T2.
+                                 L. ⓑ{I} V2 ⊢ T1 [d+1, e] ≡ T2 &
+                                 U2 = ⓑ{I} V2. T2.
 #I #L #V1 #T1 #U2 #d #e * #U #HU #HU2
 elim (tpss_inv_bind1 … HU) -HU #V #T #HV1 #HT1 #X destruct
 elim (lift_inv_bind2 … HU2) -HU2 #V2 #T2 #HV2 #HT2
-lapply (tpss_lsubs_conf … HT1 (L. 𝕓{I} V2) ?) -HT1 /2 width=1/ /3 width=5/
+lapply (tpss_lsubs_conf … HT1 (L. ⓑ{I} V2) ?) -HT1 /2 width=1/ /3 width=5/
 qed-.
 
-lemma delift_fwd_flat1: ∀I,L,V1,T1,U2,d,e. L ⊢ 𝕗{I} V1. T1 [d, e] ≡ U2 →
+lemma delift_fwd_flat1: ∀I,L,V1,T1,U2,d,e. L ⊢ ⓕ{I} V1. T1 [d, e] ≡ U2 →
                         ∃∃V2,T2. L ⊢ V1 [d, e] ≡ V2 &
                                  L ⊢ T1 [d, e] ≡ T2 &
-                                 U2 = 𝕗{I} V2. T2.
+                                 U2 = ⓕ{I} V2. T2.
 #I #L #V1 #T1 #U2 #d #e * #U #HU #HU2
 elim (tpss_inv_flat1 … HU) -HU #V #T #HV1 #HT1 #X destruct
 elim (lift_inv_flat2 … HU2) -HU2 /3 width=5/

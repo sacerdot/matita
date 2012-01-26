@@ -19,7 +19,7 @@ include "Basic_2/grammar/genv.ma".
 inductive gdrop (e:nat): relation genv ≝
 | gdrop_gt: ∀G. |G| ≤ e → gdrop e G (⋆)
 | gdrop_eq: ∀G. |G| = e + 1 → gdrop e G G
-| gdrop_lt: ∀I,G1,G2,V. e < |G1| → gdrop e G1 G2 → gdrop e (G1. 𝕓{I} V) G2
+| gdrop_lt: ∀I,G1,G2,V. e < |G1| → gdrop e G1 G2 → gdrop e (G1. ⓑ{I} V) G2
 .
 
 interpretation "global slicing" 
@@ -50,7 +50,7 @@ lemma gdrop_inv_eq: ∀G1,G2,e. ⇩[e] G1 ≡ G2 → |G1| = e + 1 → G1 = G2.
 ]
 qed-.
 
-fact gdrop_inv_lt_aux: ∀I,G,G1,G2,V,e. ⇩[e] G ≡ G2 → G = G1. 𝕓{I} V →
+fact gdrop_inv_lt_aux: ∀I,G,G1,G2,V,e. ⇩[e] G ≡ G2 → G = G1. ⓑ{I} V →
                        e < |G1| → ⇩[e] G1 ≡ G2.
 #I #G #G1 #G2 #V #e * -G -G2
 [ #G #H1 #H destruct #H2
@@ -64,7 +64,7 @@ fact gdrop_inv_lt_aux: ∀I,G,G1,G2,V,e. ⇩[e] G ≡ G2 → G = G1. 𝕓{I} V �
 qed.
 
 lemma gdrop_inv_lt: ∀I,G1,G2,V,e.
-                    ⇩[e] G1. 𝕓{I} V ≡ G2 → e < |G1| → ⇩[e] G1 ≡ G2.
+                    ⇩[e] G1. ⓑ{I} V ≡ G2 → e < |G1| → ⇩[e] G1 ≡ G2.
 /2 width=5/ qed-.
 
 (* Basic properties *********************************************************)

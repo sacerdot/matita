@@ -23,8 +23,17 @@ definition genv ≝ list2 bind2 term.
 interpretation "sort (global environment)"
    'Star = (nil2 bind2 term).
 
+interpretation "environment construction (binary)"
+   'DxItem2 L I T = (cons2 bind2 term I T L).
+
 interpretation "environment binding construction (binary)"
-   'DBind L I T = (cons2 bind2 term I T L).
+   'DxBind2 L I T = (cons2 bind2 term I T L).
+
+interpretation "abbreviation (global environment)"
+   'DxAbbr L T = (cons2 bind2 term Abbr T L).
+
+interpretation "abstraction (global environment)"
+   'DxAbst L T = (cons2 bind2 term Abst T L).
 
 (* Basic properties *********************************************************)
 

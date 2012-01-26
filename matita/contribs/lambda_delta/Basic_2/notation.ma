@@ -16,6 +16,14 @@
 
 (* Grammar ******************************************************************)
 
+notation "hvbox( ⓪ )"
+ non associative with precedence 90
+ for @{ 'Item0 }.
+
+notation "hvbox( ⓪ { I } )"
+ non associative with precedence 90
+ for @{ 'Item0 $I }.
+
 notation "hvbox( ⋆ )"
  non associative with precedence 90
  for @{ 'Star }.
@@ -32,45 +40,61 @@ notation "hvbox( § term 90 p )"
  non associative with precedence 90
  for @{ 'GRef $p }.
 
-notation "hvbox( 𝕒 )"
+notation "hvbox( ② term 90 T1 . break term 90 T )"
  non associative with precedence 90
- for @{ 'SItem }.
+ for @{ 'SnItem2 $T1 $T }.
 
-notation "hvbox( 𝕒 { I } )"
+notation "hvbox( ② { I } break term 90 T1 . break term 90 T )"
  non associative with precedence 90
- for @{ 'SItem $I }.
+ for @{ 'SnItem2 $I $T1 $T }.
 
-notation "hvbox( 𝕔 term 90 T1 . break term 90 T )"
+notation "hvbox( ⓑ { I } break term 90 T1 . break term 90 T )"
  non associative with precedence 90
- for @{ 'SItem $T1 $T }.
+ for @{ 'SnBind2 $I $T1 $T }.
 
-notation "hvbox( 𝕔 { I } break term 90 T1 . break term 90 T )"
+notation "hvbox( ⓕ { I } break term 90 T1 . break term 90 T )"
  non associative with precedence 90
- for @{ 'SItem $I $T1 $T }.
+ for @{ 'SnFlat2 $I $T1 $T }.
 
-notation "hvbox( 𝕓 { I } break term 90 T1 . break term 90 T )"
+notation "hvbox( ⓓ  term 90 T1 . break term 90 T2 )"
  non associative with precedence 90
- for @{ 'SBind $I $T1 $T }.
+ for @{ 'SnAbbr $T1 $T2 }.
 
-notation "hvbox( 𝕗 { I } break term 90 T1 . break term 90 T )"
+notation "hvbox( ⓛ  term 90 T1 . break term 90 T2 )"
  non associative with precedence 90
- for @{ 'SFlat $I $T1 $T }.
+ for @{ 'SnAbst $T1 $T2 }.
+
+notation "hvbox( ⓐ  term 90 T1 . break term 90 T2 )"
+ non associative with precedence 90
+ for @{ 'SnAppl $T1 $T2 }.
+
+notation "hvbox( ⓣ  term 90 T1 . break term 90 T2 )"
+ non associative with precedence 90
+ for @{ 'SnCast $T1 $T2 }.
 
 notation "hvbox( Ⓐ term 90 T1 . break term 90 T )"
  non associative with precedence 90
- for @{ 'ApplV $T1 $T }.
+ for @{ 'SnApplV $T1 $T }.
 
-notation "hvbox( T . break 𝕓 { I } break term 90 T1 )"
+notation > "hvbox( T . break ②{ I } break term 47 T1 )"
+ non associative with precedence 46
+ for @{ 'DxBind2 $T $I $T1 }.
+
+notation "hvbox( T . break ⓑ { I } break term 90 T1 )"
  non associative with precedence 89
- for @{ 'DBind $T $I $T1 }.
-(*
-notation > "hvbox( T . break 𝕔 { I } break term 90 T1 )"
- non associative with precedence 89
- for @{ 'DBind $T $I $T1 }.
-*) (**) (* this breaks all parsing *)
+ for @{ 'DxBind2 $T $I $T1 }.
+
+notation "hvbox( T1 . break ⓓ T2 )"
+ left associative with precedence 48
+ for @{ 'DxAbbr $T1 $T2 }.
+
+notation "hvbox( T1 . break ⓛ T2 )"
+ left associative with precedence 49
+ for @{ 'DxAbst $T1 $T2 }.
+
 notation "hvbox( T . break ④ { I } break { T1 , break T2 , break T3 } )"
  non associative with precedence 47
- for @{ 'DBind $T $I $T1 $T2 $T3 }.
+ for @{ 'DxItem4 $T $I $T1 $T2 $T3 }.
 
 notation "hvbox( # [ x ] )"
  non associative with precedence 90

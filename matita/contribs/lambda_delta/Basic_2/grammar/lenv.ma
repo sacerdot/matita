@@ -22,6 +22,17 @@ inductive lenv: Type[0] ≝
 | LPair: lenv → bind2 → term → lenv (* binary binding construction *)
 .
 
-interpretation "sort (local environment)" 'Star = LAtom.
+interpretation "sort (local environment)"
+   'Star = LAtom.
 
-interpretation "environment binding construction (binary)" 'DBind L I T = (LPair L I T).
+interpretation "environment construction (binary)"
+   'DxItem2 L I T = (LPair L I T).
+
+interpretation "environment binding construction (binary)"
+   'DxBind2 L I T = (LPair L I T).
+
+interpretation "abbreviation (local environment)"
+   'DxAbbr L T = (LPair L Abbr T).
+
+interpretation "abstraction (local environment)"
+   'DxAbst L T = (LPair L Abst T).

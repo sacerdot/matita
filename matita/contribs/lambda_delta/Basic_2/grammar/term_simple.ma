@@ -17,20 +17,20 @@ include "Basic_2/grammar/term.ma".
 (* SIMPLE (NEUTRAL) TERMS ***************************************************)
 
 inductive simple: predicate term ≝
-   | simple_atom: ∀I. simple (𝕒{I})
-   | simple_flat: ∀I,V,T. simple (𝕗{I} V. T)
+   | simple_atom: ∀I. simple (⓪{I})
+   | simple_flat: ∀I,V,T. simple (ⓕ{I} V. T)
 .
 
 interpretation "simple (term)" 'Simple T = (simple T).
 
 (* Basic inversion lemmas ***************************************************)
 
-fact simple_inv_bind_aux: ∀T. 𝕊[T] → ∀J,W,U. T = 𝕓{J} W. U → False.
+fact simple_inv_bind_aux: ∀T. 𝕊[T] → ∀J,W,U. T = ⓑ{J} W. U → False.
 #T * -T
 [ #I #J #W #U #H destruct
 | #I #V #T #J #W #U #H destruct
 ]
 qed.
 
-lemma simple_inv_bind: ∀I,V,T. 𝕊[𝕓{I} V. T] → False.
+lemma simple_inv_bind: ∀I,V,T. 𝕊[ⓑ{I} V. T] → False.
 /2 width=6/ qed-.

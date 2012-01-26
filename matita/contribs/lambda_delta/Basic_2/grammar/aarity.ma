@@ -12,6 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
+(* THE FORMAL SYSTEM λδ - MATITA SOURCE FILES
+ * Confluence of context-sensitive parallel reduction closed: 2011 September 21
+ * Confluence of context-free parallel reduction closed: 2011 September 6
+ * Specification started: 2011 April 17
+ * - Patience on me to gain peace and perfection! -
+ * [ suggested invocation to start formal specifications with ]
+ *)
+
 include "Ground_2/star.ma".
 include "Basic_2/notation.ma".
 
@@ -22,13 +30,15 @@ inductive aarity: Type[0] ≝
   | APair: aarity → aarity → aarity (* binary aarity construction *)
 .
 
-interpretation "aarity construction (atomic)" 'SItem = AAtom.
+interpretation "aarity construction (atomic)"
+   'Item0 = AAtom.
 
-interpretation "aarity construction (binary)" 'SItem A1 A2 = (APair A1 A2).
+interpretation "aarity construction (binary)"
+   'SnItem2 A1 A2 = (APair A1 A2).
 
 (* Basic inversion lemmas ***************************************************)
 
-lemma discr_apair_xy_x: ∀A,B. 𝕔 B. A = B → False.
+lemma discr_apair_xy_x: ∀A,B. ②B. A = B → False.
 #A #B elim B -B
 [ #H destruct
 | #Y #X #IHY #_ #H destruct
@@ -37,7 +47,7 @@ lemma discr_apair_xy_x: ∀A,B. 𝕔 B. A = B → False.
 ]
 qed-.
 
-lemma discr_tpair_xy_y: ∀B,A. 𝕔 B. A = A → False.
+lemma discr_tpair_xy_y: ∀B,A. ②B. A = A → False.
 #B #A elim A -A
 [ #H destruct
 | #Y #X #_ #IHX #H destruct

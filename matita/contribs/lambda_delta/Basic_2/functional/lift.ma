@@ -24,8 +24,8 @@ let rec flift d e U on U ≝ match U with
   | GRef _ ⇒ U
   ]
 | TPair I V T ⇒ match I with
-  [ Bind I ⇒ 𝕓{I} (flift d e V). (flift (d+1) e T)
-  | Flat I ⇒ 𝕗{I} (flift d e V). (flift d e T)
+  [ Bind2 I ⇒ ⓑ{I} (flift d e V). (flift (d+1) e T)
+  | Flat2 I ⇒ ⓕ{I} (flift d e V). (flift d e T)
   ]
 ].
 

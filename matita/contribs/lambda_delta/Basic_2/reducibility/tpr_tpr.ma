@@ -18,7 +18,7 @@ include "Basic_2/reducibility/tpr_tpss.ma".
 
 (* Confluence lemmas ********************************************************)
 
-fact tpr_conf_atom_atom: ∀I. ∃∃X. 𝕒{I} ➡ X & 𝕒{I} ➡ X.
+fact tpr_conf_atom_atom: ∀I. ∃∃X. ⓪{I} ➡ X & ⓪{I} ➡ X.
 /2 width=3/ qed.
 
 fact tpr_conf_flat_flat:
@@ -28,7 +28,7 @@ fact tpr_conf_flat_flat:
       ∃∃X. X1 ➡ X & X2 ➡ X
    ) →
    V0 ➡ V1 → V0 ➡ V2 → T0 ➡ T1 → T0 ➡ T2 →
-   ∃∃T0. 𝕗{I} V1. T1 ➡ T0 & 𝕗{I} V2. T2 ➡ T0.
+   ∃∃T0. ⓕ{I} V1. T1 ➡ T0 & ⓕ{I} V2. T2 ➡ T0.
 #I #V0 #V1 #T0 #T1 #V2 #T2 #IH #HV01 #HV02 #HT01 #HT02
 elim (IH … HV01 … HV02) -HV01 -HV02 // #V #HV1 #HV2
 elim (IH … HT01 … HT02) -HT01 -HT02 -IH // /3 width=5/
@@ -41,8 +41,8 @@ fact tpr_conf_flat_beta:
       ∃∃X. X1 ➡ X & X2 ➡ X
    ) →
    V0 ➡ V1 → V0 ➡ V2 →
-   U0 ➡ T2 → 𝕔{Abst} W0. U0 ➡ T1 →
-   ∃∃X. 𝕔{Appl} V1. T1 ➡ X & 𝕔{Abbr} V2. T2 ➡ X.
+   U0 ➡ T2 → ⓛW0. U0 ➡ T1 →
+   ∃∃X. ⓐV1. T1 ➡ X & ⓓV2. T2 ➡ X.
 #V0 #V1 #T1 #V2 #W0 #U0 #T2 #IH #HV01 #HV02 #HT02 #H
 elim (tpr_inv_abst1 … H) -H #W1 #U1 #HW01 #HU01 #H destruct
 elim (IH … HV01 … HV02) -HV01 -HV02 /2 width=1/ #V #HV1 #HV2
@@ -60,8 +60,8 @@ fact tpr_conf_flat_theta:
       ∃∃X. X1 ➡ X & X2 ➡ X
    ) →
    V0 ➡ V1 → V0 ➡ V2 → ⇧[O,1] V2 ≡ V →
-   W0 ➡ W2 → U0 ➡ U2 →  𝕔{Abbr} W0. U0 ➡ T1 →
-   ∃∃X. 𝕔{Appl} V1. T1 ➡ X & 𝕔{Abbr} W2. 𝕔{Appl} V. U2 ➡ X.
+   W0 ➡ W2 → U0 ➡ U2 →  ⓓW0. U0 ➡ T1 →
+   ∃∃X. ⓐV1. T1 ➡ X & ⓓW2. ⓐV. U2 ➡ X.
 #V0 #V1 #T1 #V2 #V #W0 #W2 #U0 #U2 #IH #HV01 #HV02 #HV2 #HW02 #HU02 #H
 elim (IH … HV01 … HV02) -HV01 -HV02 /2 width=1/ #VV #HVV1 #HVV2
 elim (lift_total VV 0 1) #VVV #HVV
@@ -97,7 +97,7 @@ fact tpr_conf_flat_cast:
       ∃∃X. X1 ➡ X & X2 ➡ X
    ) →
    V0 ➡ V1 → T0 ➡ T1 → T0 ➡ X2 →
-   ∃∃X. 𝕔{Cast} V1. T1 ➡ X & X2 ➡ X.
+   ∃∃X. ⓣV1. T1 ➡ X & X2 ➡ X.
 #X2 #V0 #V1 #T0 #T1 #IH #_ #HT01 #HT02
 elim (IH … HT01 … HT02) -HT01 -HT02 -IH // /3 width=3/
 qed.
@@ -109,7 +109,7 @@ fact tpr_conf_beta_beta:
       ∃∃X. X1 ➡ X & X2 ➡ X
    ) →
    V0 ➡ V1 → V0 ➡ V2 → T0 ➡ T1 → T0 ➡ T2 →
-   ∃∃X. 𝕔{Abbr} V1. T1 ➡X & 𝕔{Abbr} V2. T2 ➡ X.
+   ∃∃X. ⓓV1. T1 ➡X & ⓓV2. T2 ➡ X.
 #W0 #V0 #V1 #T0 #T1 #V2 #T2 #IH #HV01 #HV02 #HT01 #HT02
 elim (IH … HV01 … HV02) -HV01 -HV02 /2 width=1/
 elim (IH … HT01 … HT02) -HT01 -HT02 -IH /2 width=1/ /3 width=5/
@@ -123,9 +123,9 @@ fact tpr_conf_delta_delta:
       ∃∃X. X1 ➡ X & X2 ➡ X
    ) →
    V0 ➡ V1 → V0 ➡ V2 → T0 ➡ T1 → T0 ➡ T2 →
-   ⋆. 𝕓{I1} V1 ⊢ T1 [O, 1] ▶ TT1 →
-   ⋆. 𝕓{I1} V2 ⊢ T2 [O, 1] ▶ TT2 →
-   ∃∃X. 𝕓{I1} V1. TT1 ➡ X & 𝕓{I1} V2. TT2 ➡ X.
+   ⋆. ⓑ{I1} V1 ⊢ T1 [O, 1] ▶ TT1 →
+   ⋆. ⓑ{I1} V2 ⊢ T2 [O, 1] ▶ TT2 →
+   ∃∃X. ⓑ{I1} V1. TT1 ➡ X & ⓑ{I1} V2. TT2 ➡ X.
 #I1 #V0 #V1 #T0 #T1 #TT1 #V2 #T2 #TT2 #IH #HV01 #HV02 #HT01 #HT02 #HTT1 #HTT2
 elim (IH … HV01 … HV02) -HV01 -HV02 // #V #HV1 #HV2
 elim (IH … HT01 … HT02) -HT01 -HT02 -IH // #T #HT1 #HT2
@@ -141,9 +141,9 @@ fact tpr_conf_delta_zeta:
       ∀X1,X2. X0 ➡ X1 → X0 ➡ X2 →
       ∃∃X. X1 ➡ X & X2 ➡ X
    ) →
-   V0 ➡ V1 → T0 ➡ T1 → ⋆. 𝕓{Abbr} V1 ⊢ T1 [O,1] ▶ TT1 →
+   V0 ➡ V1 → T0 ➡ T1 → ⋆. ⓓV1 ⊢ T1 [O,1] ▶ TT1 →
    T2 ➡ X2 → ⇧[O, 1] T2 ≡ T0 →
-   ∃∃X. 𝕓{Abbr} V1. TT1 ➡ X & X2 ➡ X.
+   ∃∃X. ⓓV1. TT1 ➡ X & X2 ➡ X.
 #X2 #V0 #V1 #T0 #T1 #TT1 #T2 #IH #_ #HT01 #HTT1 #HTX2 #HTT20
 elim (tpr_inv_lift … HT01 … HTT20) -HT01 #TT2 #HTT21 #HTT2
 lapply (tps_inv_lift1_eq … HTT1 … HTT21) -HTT1 #HTT1 destruct
@@ -160,7 +160,7 @@ fact tpr_conf_theta_theta:
    ) →
    V0 ➡ V1 → V0 ➡ V2 → W0 ➡ W1 → W0 ➡ W2 → T0 ➡ T1 → T0 ➡ T2 →
    ⇧[O, 1] V1 ≡ VV1 → ⇧[O, 1] V2 ≡ VV2 →
-   ∃∃X. 𝕔{Abbr} W1. 𝕔{Appl} VV1. T1 ➡ X & 𝕔{Abbr} W2. 𝕔{Appl} VV2. T2 ➡ X.
+   ∃∃X. ⓓW1. ⓐVV1. T1 ➡ X & ⓓW2. ⓐVV2. T2 ➡ X.
 #VV1 #V0 #V1 #W0 #W1 #T0 #T1 #V2 #VV2 #W2 #T2 #IH #HV01 #HV02 #HW01 #HW02 #HT01 #HT02 #HVV1 #HVV2
 elim (IH … HV01 … HV02) -HV01 -HV02 /2 width=1/ #V #HV1 #HV2
 elim (IH … HW01 … HW02) -HW01 -HW02 /2 width=1/ #W #HW1 #HW2

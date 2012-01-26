@@ -81,9 +81,9 @@ lemma lifts_inv_gref1: ∀T2,p,des. ⇧*[des] §p ≡ T2 → T2 = §p.
 qed-.
 
 (* Basic_1: was: lift1_bind *)
-lemma lifts_inv_bind1: ∀I,T2,des,V1,U1. ⇧*[des] 𝕓{I} V1. U1 ≡ T2 →
+lemma lifts_inv_bind1: ∀I,T2,des,V1,U1. ⇧*[des] ⓑ{I} V1. U1 ≡ T2 →
                        ∃∃V2,U2. ⇧*[des] V1 ≡ V2 & ⇧*[des + 1] U1 ≡ U2 &
-                                T2 = 𝕓{I} V2. U2.
+                                T2 = ⓑ{I} V2. U2.
 #I #T2 #des elim des -des
 [ #V1 #U1 #H
   <(lifts_inv_nil … H) -H /2 width=5/
@@ -96,9 +96,9 @@ lemma lifts_inv_bind1: ∀I,T2,des,V1,U1. ⇧*[des] 𝕓{I} V1. U1 ≡ T2 →
 qed-.
 
 (* Basic_1: was: lift1_flat *)
-lemma lifts_inv_flat1: ∀I,T2,des,V1,U1. ⇧*[des] 𝕗{I} V1. U1 ≡ T2 →
+lemma lifts_inv_flat1: ∀I,T2,des,V1,U1. ⇧*[des] ⓕ{I} V1. U1 ≡ T2 →
                        ∃∃V2,U2. ⇧*[des] V1 ≡ V2 & ⇧*[des] U1 ≡ U2 &
-                                T2 = 𝕗{I} V2. U2.
+                                T2 = ⓕ{I} V2. U2.
 #I #T2 #des elim des -des
 [ #V1 #U1 #H
   <(lifts_inv_nil … H) -H /2 width=5/
@@ -124,7 +124,7 @@ qed-.
 
 lemma lifts_bind: ∀I,T2,V1,V2,des. ⇧*[des] V1 ≡ V2 →
                   ∀T1. ⇧*[des + 1] T1 ≡ T2 →
-                  ⇧*[des] 𝕓{I} V1. T1 ≡ 𝕓{I} V2. T2.
+                  ⇧*[des] ⓑ{I} V1. T1 ≡ ⓑ{I} V2. T2.
 #I #T2 #V1 #V2 #des #H elim H -V1 -V2 -des
 [ #V #T1 #H >(lifts_inv_nil … H) -H //
 | #V1 #V #V2 #des #d #e #HV1 #_ #IHV #T1 #H
@@ -134,7 +134,7 @@ qed.
 
 lemma lifts_flat: ∀I,T2,V1,V2,des. ⇧*[des] V1 ≡ V2 →
                   ∀T1. ⇧*[des] T1 ≡ T2 →
-                  ⇧*[des] 𝕗{I} V1. T1 ≡ 𝕗{I} V2. T2.
+                  ⇧*[des] ⓕ{I} V1. T1 ≡ ⓕ{I} V2. T2.
 #I #T2 #V1 #V2 #des #H elim H -V1 -V2 -des
 [ #V #T1 #H >(lifts_inv_nil … H) -H //
 | #V1 #V #V2 #des #d #e #HV1 #_ #IHV #T1 #H

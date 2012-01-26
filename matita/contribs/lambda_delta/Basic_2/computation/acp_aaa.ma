@@ -12,22 +12,11 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/unfold/gr2_gr2.ma".
 include "Basic_2/unfold/lifts_lifts.ma".
 include "Basic_2/unfold/ldrops_ldrops.ma".
-include "Basic_2/computation/lsubc.ma".
-
-(* NOTE: The constant (0) can not be generalized *)
-axiom lsubc_ldrop_trans: ∀RP,L1,L2. L1 [RP] ⊑ L2 → ∀K2,e. ⇩[0, e] L2 ≡ K2 →
-                         ∃∃K1. ⇩[0, e] L1 ≡ K1 & K1 [RP] ⊑ K2.
-
-axiom ldrops_lsubc_trans: ∀RP,L1,K1,des. ⇩*[des] L1 ≡ K1 → ∀K2. K1 [RP] ⊑ K2 →
-                          ∃∃L2. L1 [RP] ⊑ L2 & ⇩*[des] L2 ≡ K2.
-
-axiom aaa_mono: ∀L,T,A1. L ⊢ T ÷ A1 → ∀A2. L ⊢ T ÷ A2 → A1 = A2.
-
-axiom aaa_lifts: ∀L1,L2,T1,T2,A,des.
-                 L1 ⊢ T1 ÷ A → ⇩*[des] L2 ≡ L1 → ⇧*[des] T1 ≡ T2 → L2 ⊢ T2 ÷ A.
+include "Basic_2/static/aaa_lifts.ma".
+include "Basic_2/static/aaa_aaa.ma".
+include "Basic_2/computation/lsubc_ldrops.ma".
 
 (* ABSTRACT COMPUTATION PROPERTIES ******************************************)
 
@@ -41,7 +30,7 @@ theorem aacr_aaa_csubc_lifts: ∀RR,RS,RP.
 #RR #RS #RP #H1RP #H2RP #L1 #T #A #H elim H -L1 -T -A
 [ #L #k #L0 #des #HL0 #X #H #L2 #HL20
   >(lifts_inv_sort1 … H) -H
-  lapply (aacr_acr … H1RP H2RP 𝕒) #HAtom
+  lapply (aacr_acr … H1RP H2RP ⓪) #HAtom
   @(s2 … HAtom … ◊) // /2 width=2/
 | #I #L1 #K1 #V1 #B #i #HLK1 #HKV1B #IHB #L0 #des #HL01 #X #H #L2 #HL20
   lapply (aacr_acr … H1RP H2RP B) #HB
@@ -50,7 +39,7 @@ theorem aacr_aaa_csubc_lifts: ∀RR,RS,RP.
   elim (ldrops_ldrop_trans … HL01 … HLK1) #X #des1 #i0 #HL0 #H #Hi0 #Hdes1
   >(at_mono … Hi1 … Hi0) -i1
   elim (ldrops_inv_skip2 … Hdes1 … H) -des1 #K0 #V0 #des0 #Hdes0 #HK01 #HV10 #H destruct
-  elim (lsubc_ldrop_trans … HL20 … HL0) -HL0 #X #HLK2 #H
+  elim (lsubc_ldrop_O1_trans … HL20 … HL0) -HL0 #X #HLK2 #H
   elim (lsubc_inv_pair2 … H) -H *
   [ #K2 #HK20 #H destruct
     generalize in match HLK2; generalize in match I; -HLK2 -I * #HLK2
@@ -62,7 +51,7 @@ theorem aacr_aaa_csubc_lifts: ∀RR,RS,RP.
   | -HLK1 -IHB -HL01 -HL20 -HK1b -Hi0 -Hdes0
     #K2 #V2 #A2 #HKV2A #HKV0A #_ #H1 #H2 destruct
     lapply (ldrop_fwd_ldrop2 … HLK2) #HLK2b
-    lapply (aaa_lifts … HKV1B HK01 HV10) -HKV1B -HK01 -HV10 #HKV0B
+    lapply (aaa_lifts … HK01 … HV10 HKV1B) -HKV1B -HK01 -HV10 #HKV0B
     >(aaa_mono … HKV0A … HKV0B) in HKV2A; -HKV0A -HKV0B #HKV2B
     elim (lift_total V2 0 (i0 +1)) #V #HV2
     @(s4 … HB … ◊ … HV2 HLK2)
@@ -82,9 +71,9 @@ theorem aacr_aaa_csubc_lifts: ∀RR,RS,RP.
   | -IHB
     #L3 #V3 #T3 #des3 #HL32 #HT03 #HB
     elim (lifts_total des3 W0) #W2 #HW02
-    elim (ldrops_lsubc_trans … HL32 … HL02) -L2 #L2 #HL32 #HL20
-    lapply (aaa_lifts ? L2 ? W2 ? (des @ des3) HLWB ? ?) -HLWB /2 width=3/ #HLW2B
-    @(IHA (L2. 𝕓{Abst} W2) … (des + 1 @ des3 + 1)) -IHA
+    elim (ldrops_lsubc_trans … H1RP H2RP … HL32 … HL02) -L2 #L2 #HL32 #HL20
+    lapply (aaa_lifts … L2 W2 … (des @ des3) … HLWB) -HLWB /2 width=3/ #HLW2B
+    @(IHA (L2. ⓛW2) … (des + 1 @ des3 + 1)) -IHA
     /2 width=3/ /3 width=5/
   ]
 | #L #V #T #B #A #_ #_ #IHB #IHA #L0 #des #HL0 #X #H #L2 #HL20

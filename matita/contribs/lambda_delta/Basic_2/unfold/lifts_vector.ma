@@ -35,8 +35,8 @@ axiom lifts_inv_applv1: ∀V1s,U1,T2,des. ⇧*[des] Ⓐ V1s. U1 ≡ T2 →
 
 (* Basic properties *********************************************************)
 
-lemma liftsv_applv: ∀V1s,V2s,des. ⇧*[des] V1s ≡ V2s →
-                    ∀T1,T2. ⇧*[des] T1 ≡ T2 →
-                    ⇧*[des] Ⓐ V1s. T1 ≡ Ⓐ V2s. T2.
+lemma lifts_applv: ∀V1s,V2s,des. ⇧*[des] V1s ≡ V2s →
+                   ∀T1,T2. ⇧*[des] T1 ≡ T2 →
+                   ⇧*[des] Ⓐ V1s. T1 ≡ Ⓐ V2s. T2.
 #V1s #V2s #des #H elim H -V1s -V2s // /3 width=1/
 qed.

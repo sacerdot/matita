@@ -13,7 +13,9 @@
 (**************************************************************************)
 
 include "Basic_2/grammar/aarity.ma".
+include "Basic_2/unfold/gr2_gr2.ma".
 include "Basic_2/unfold/lifts_lift_vector.ma".
+include "Basic_2/unfold/ldrops_ldrop.ma".
 include "Basic_2/computation/acp.ma".
 
 (* ABSTRACT COMPUTATION PROPERTIES ******************************************)
@@ -29,18 +31,18 @@ definition S2 ≝ λRR:lenv→relation term. λRS:relation term. λRP,C:lenv→p
 
 (* Note: this is Tait's ii *)
 definition S3 ≝ λRP,C:lenv→predicate term.
-                ∀L,Vs,V,T,W. C L (ⒶVs. 𝕔{Abbr}V. T) → RP L W → C L (ⒶVs. 𝕔{Appl}V. 𝕔{Abst}W. T).
+                ∀L,Vs,V,T,W. C L (ⒶVs. ⓓV. T) → RP L W → C L (ⒶVs. ⓐV. ⓛW. T).
 
 definition S4 ≝ λRP,C:lenv→predicate term. ∀L,K,Vs,V1,V2,i.
                 C L (ⒶVs. V2) → ⇧[0, i + 1] V1 ≡ V2 →
-                ⇩[0, i] L ≡ K. 𝕓{Abbr} V1 → C L (Ⓐ Vs. #i).
+                ⇩[0, i] L ≡ K. ⓓV1 → C L (Ⓐ Vs. #i).
 
 definition S5 ≝ λRP,C:lenv→predicate term.
                 ∀L,V1s,V2s. ⇧[0, 1] V1s ≡ V2s →
-                ∀V,T. C (L. 𝕓{Abbr}V) (ⒶV2s. T) → RP L V → C L (ⒶV1s. 𝕔{Abbr}V. T).
+                ∀V,T. C (L. ⓓV) (ⒶV2s. T) → RP L V → C L (ⒶV1s. ⓓV. T).
 
 definition S6 ≝ λRP,C:lenv→predicate term.
-                ∀L,Vs,T,W. C L (ⒶVs. T) → RP L W → C L (ⒶVs. 𝕔{Cast}W. T).
+                ∀L,Vs,T,W. C L (ⒶVs. T) → RP L W → C L (ⒶVs. ⓣW. T).
 
 definition S7 ≝ λC:lenv→predicate term. ∀L1,L2,T1,T2,d,e.
                 C L1 T1 → ⇩[d, e] L2 ≡ L1 → ⇧[d, e] T1 ≡ T2 → C L2 T2.
@@ -65,7 +67,7 @@ let rec aacr (RP:lenv→predicate term) (A:aarity) (L:lenv) on A: predicate term
 λT. match A with
 [ AAtom     ⇒ RP L T
 | APair B A ⇒ ∀L0,V0,T0,des. aacr RP B L0 V0 → ⇩*[des] L0 ≡ L → ⇧*[des] T ≡ T0 →
-              aacr RP A L0 (𝕔{Appl} V0. T0)
+              aacr RP A L0 (ⓐV0. T0)
 ].
 
 interpretation
@@ -99,9 +101,8 @@ lemma rp_liftsv_all: ∀RR,RS,RP. acr RR RS RP (λL,T. RP L T) →
 @conj /2 width=1/ /2 width=6 by rp_lifts/
 qed.
 
-axiom aacr_acr: ∀RR,RS,RP. acp RR RS RP → acr RR RS RP (λL,T. RP L T) →
+lemma aacr_acr: ∀RR,RS,RP. acp RR RS RP → acr RR RS RP (λL,T. RP L T) →
                 ∀A. acr RR RS RP (aacr RP A).
-(*
 #RR #RS #RP #H1RP #H2RP #A elim A -A normalize //
 #B #A #IHB #IHA @mk_acr normalize
 [ #L #T #H
@@ -119,6 +120,16 @@ axiom aacr_acr: ∀RR,RS,RP. acp RR RS RP → acr RR RS RP (λL,T. RP L T) →
   elim (lifts_inv_flat1 … HY) -HY #U0 #X #HU0 #HX #H destruct
   elim (lifts_inv_bind1 … HX) -HX #W0 #T0 #HW0 #HT0 #H destruct
   @(s3 … IHA … (V0 :: V0s)) /2 width=6 by rp_lifts/ /4 width=5/
+| #L #K #Vs #V1 #V2 #i #HA #HV12 #HLK #L0 #V0 #X #des #HB #HL0 #H
+  elim (lifts_inv_applv1 … H) -H #V0s #Y #HV0s #HY #H destruct
+  elim (lifts_inv_lref1 … HY) -HY #i0 #Hi0 #H destruct
+  elim (ldrops_ldrop_trans … HL0 … HLK) #X #des0 #i1 #HL02 #H #Hi1 #Hdes0
+  >(at_mono … Hi1 … Hi0) in HL02; -i1 #HL02
+  elim (ldrops_inv_skip2 … Hdes0 … H) -H -des0 #L2 #W1 #des0 #Hdes0 #HLK #HVW1 #H destruct
+  elim (lift_total W1 0 (i0 + 1)) #W2 #HW12
+  elim (lifts_lift_trans … HVW1 … HW12 … Hdes0) // -Hdes0 -Hi0 #V3 #HV13 #HVW2
+  >(lift_mono … HV13 … HV12) in HVW2; -V3 #HVW2
+  @(s4 … IHA … (V0 :: V0s) … HW12 HL02) /3 width=4/
 | #L #V1s #V2s #HV12s #V #T #HA #HV #L0 #V10 #X #des #HB #HL0 #H
   elim (lifts_inv_applv1 … H) -H #V10s #Y #HV10s #HY #H destruct
   elim (lifts_inv_bind1 … HY) -HY #V0 #T0 #HV0 #HT0 #H destruct
@@ -127,7 +138,7 @@ axiom aacr_acr: ∀RR,RS,RP. acp RR RS RP → acr RR RS RP (λL,T. RP L T) →
   @(s5 … IHA … (V10 :: V10s) (V20 :: V20s)) /2 width=1/ /2 width=6 by rp_lifts/
   @(HA … (des + 1)) /2 width=1/
   [ @(s7 … IHB … HB … HV120) /2 width=1/
-  | @liftsv_applv //
+  | @lifts_applv //
     elim (liftsv_liftv_trans_le … HV10s … HV120s) -V10s #V10s #HV10s #HV120s
     >(liftv_mono … HV12s … HV10s) -V1s //
   ]
@@ -138,13 +149,13 @@ axiom aacr_acr: ∀RR,RS,RP. acp RR RS RP → acr RR RS RP (λL,T. RP L T) →
 | /3 width=7/
 ]
 qed.
-*)
+
 lemma aacr_abst: ∀RR,RS,RP. acp RR RS RP → acr RR RS RP (λL,T. RP L T) →
                  ∀L,W,T,A,B. RP L W → (
                     ∀L0,V0,T0,des. ⇩*[des] L0 ≡ L → ⇧*[des + 1] T ≡ T0 →
-                                   ⦃L0, V0⦄ [RP] ϵ 〚B〛 → ⦃L0. 𝕓{Abbr} V0, T0⦄ [RP] ϵ 〚A〛
+                                   ⦃L0, V0⦄ [RP] ϵ 〚B〛 → ⦃L0. ⓓV0, T0⦄ [RP] ϵ 〚A〛
                  ) →
-                 ⦃L, 𝕓{Abst} W. T⦄ [RP] ϵ 〚𝕔 B. A〛.
+                 ⦃L, ⓛW. T⦄ [RP] ϵ 〚②B. A〛.
 #RR #RS #RP #H1RP #H2RP #L #W #T #A #B #HW #HA #L0 #V0 #X #des #HB #HL0 #H
 lapply (aacr_acr … H1RP H2RP A) #HCA
 lapply (aacr_acr … H1RP H2RP B) #HCB

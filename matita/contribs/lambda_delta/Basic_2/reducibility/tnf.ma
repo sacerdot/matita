@@ -26,36 +26,36 @@ interpretation
 
 (* Basic inversion lemmas ***************************************************)
 
-lemma tnf_inv_abst: ∀V,T. ℕ[𝕔{Abst}V.T] → ℕ[V] ∧ ℕ[T].
+lemma tnf_inv_abst: ∀V,T. ℕ[ⓛV.T] → ℕ[V] ∧ ℕ[T].
 #V1 #T1 #HVT1 @conj
-[ #V2 #HV2 lapply (HVT1 (𝕔{Abst}V2.T1) ?) -HVT1 /2 width=1/ -HV2 #H destruct //
-| #T2 #HT2 lapply (HVT1 (𝕔{Abst}V1.T2) ?) -HVT1 /2 width=1/ -HT2 #H destruct //
+[ #V2 #HV2 lapply (HVT1 (ⓛV2.T1) ?) -HVT1 /2 width=1/ -HV2 #H destruct //
+| #T2 #HT2 lapply (HVT1 (ⓛV1.T2) ?) -HVT1 /2 width=1/ -HT2 #H destruct //
 ]
 qed-.
 
-lemma tnf_inv_appl: ∀V,T. ℕ[𝕔{Appl}V.T] → ∧∧ ℕ[V] & ℕ[T] & 𝕊[T].
+lemma tnf_inv_appl: ∀V,T. ℕ[ⓐV.T] → ∧∧ ℕ[V] & ℕ[T] & 𝕊[T].
 #V1 #T1 #HVT1 @and3_intro
-[ #V2 #HV2 lapply (HVT1 (𝕔{Appl}V2.T1) ?) -HVT1 /2 width=1/ -HV2 #H destruct //
-| #T2 #HT2 lapply (HVT1 (𝕔{Appl}V1.T2) ?) -HVT1 /2 width=1/ -HT2 #H destruct //
+[ #V2 #HV2 lapply (HVT1 (ⓐV2.T1) ?) -HVT1 /2 width=1/ -HV2 #H destruct //
+| #T2 #HT2 lapply (HVT1 (ⓐV1.T2) ?) -HVT1 /2 width=1/ -HT2 #H destruct //
 | generalize in match HVT1; -HVT1 elim T1 -T1 * // * #W1 #U1 #_ #_ #H
   [ elim (lift_total V1 0 1) #V2 #HV12
-    lapply (H (𝕔{Abbr}W1.𝕔{Appl}V2.U1) ?) -H /2 width=3/ -HV12 #H destruct
-  | lapply (H (𝕔{Abbr}V1.U1) ?) -H /2 width=1/ #H destruct
+    lapply (H (ⓓW1.ⓐV2.U1) ?) -H /2 width=3/ -HV12 #H destruct
+  | lapply (H (ⓓV1.U1) ?) -H /2 width=1/ #H destruct
 ]
 qed-.
 
-lemma tnf_inv_abbr: ∀V,T. ℕ[𝕔{Abbr}V.T] → False.
+lemma tnf_inv_abbr: ∀V,T. ℕ[ⓓV.T] → False.
 #V #T #H elim (is_lift_dec T 0 1)
 [ * #U #HTU
   lapply (H U ?) -H /2 width=3/ #H destruct
   elim (lift_inv_pair_xy_y … HTU)
 | #HT
-  elim (tps_full (⋆) V T (⋆. 𝕓{Abbr} V) 0 ?) // #T2 #T1 #HT2 #HT12
-  lapply (H (𝕓{Abbr}V.T2) ?) -H /2 width=3/ -HT2 #H destruct /3 width=2/
+  elim (tps_full (⋆) V T (⋆. ⓓV) 0 ?) // #T2 #T1 #HT2 #HT12
+  lapply (H (ⓓV.T2) ?) -H /2 width=3/ -HT2 #H destruct /3 width=2/
 ]
 qed.
 
-lemma tnf_inv_cast: ∀V,T. ℕ[𝕔{Cast}V.T] → False.
+lemma tnf_inv_cast: ∀V,T. ℕ[ⓣV.T] → False.
 #V #T #H lapply (H T ?) -H /2 width=1/ #H
 @(discr_tpair_xy_y … H)
 qed-.
@@ -109,8 +109,8 @@ qed.
 theorem tnf_tif: ∀T1. ℕ[T1] → 𝕀[T1].
 /2 width=3/ qed.
 
-lemma tnf_abst: ∀V,T. ℕ[V] → ℕ[T] → ℕ[𝕔{Abst}V.T].
+lemma tnf_abst: ∀V,T. ℕ[V] → ℕ[T] → ℕ[ⓛV.T].
 /4 width=1/ qed.
 
-lemma tnf_appl: ∀V,T. ℕ[V] → ℕ[T] → 𝕊[T] → ℕ[𝕔{Appl}V.T].
+lemma tnf_appl: ∀V,T. ℕ[V] → ℕ[T] → 𝕊[T] → ℕ[ⓐV.T].
 /4 width=1/ qed.

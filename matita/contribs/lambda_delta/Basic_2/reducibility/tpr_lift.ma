@@ -101,8 +101,8 @@ qed.
 
 (* Advanced inversion lemmas ************************************************)
 
-fact tpr_inv_abst1_aux: ∀U1,U2. U1 ➡ U2 → ∀V1,T1. U1 = 𝕔{Abst} V1. T1 →
-                        ∃∃V2,T2. V1 ➡ V2 & T1 ➡ T2 & U2 = 𝕔{Abst} V2. T2.
+fact tpr_inv_abst1_aux: ∀U1,U2. U1 ➡ U2 → ∀V1,T1. U1 = ⓛV1. T1 →
+                        ∃∃V2,T2. V1 ➡ V2 & T1 ➡ T2 & U2 = ⓛV2. T2.
 #U1 #U2 * -U1 -U2
 [ #I #V #T #H destruct
 | #I #V1 #V2 #T1 #T2 #_ #_ #V #T #H destruct
@@ -116,6 +116,6 @@ fact tpr_inv_abst1_aux: ∀U1,U2. U1 ➡ U2 → ∀V1,T1. U1 = 𝕔{Abst} V1. T1
 qed.
 
 (* Basic_1: was pr0_gen_abst *)
-lemma tpr_inv_abst1: ∀V1,T1,U2. 𝕔{Abst} V1. T1 ➡ U2 →
-                     ∃∃V2,T2. V1 ➡ V2 & T1 ➡ T2 & U2 = 𝕔{Abst} V2. T2.
+lemma tpr_inv_abst1: ∀V1,T1,U2. ⓛV1. T1 ➡ U2 →
+                     ∃∃V2,T2. V1 ➡ V2 & T1 ➡ T2 & U2 = ⓛV2. T2.
 /2 width=3/ qed-.

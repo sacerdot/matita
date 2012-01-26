@@ -26,8 +26,8 @@ inductive xenv: Type[0] ≝
 interpretation "atom (ext. local environment)"
    'Star = XAtom.
 
-interpretation "environment binding construction (quad)"
-   'DBind L I u K V = (XQuad L I u K V).
+interpretation "environment construction (quad)"
+   'DxItem4 L I u K V = (XQuad L I u K V).
 
 (* machine stack *)
 definition stack: Type[0] ≝ list2 xenv term.

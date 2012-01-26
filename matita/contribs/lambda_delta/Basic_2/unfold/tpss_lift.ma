@@ -21,7 +21,7 @@ include "Basic_2/unfold/tpss.ma".
 
 lemma tpss_subst: ∀L,K,V,U1,i,d,e.
                   d ≤ i → i < d + e →
-                  ⇩[0, i] L ≡ K. 𝕓{Abbr} V → K ⊢ V [0, d + e - i - 1] ▶* U1 →
+                  ⇩[0, i] L ≡ K. ⓓV → K ⊢ V [0, d + e - i - 1] ▶* U1 →
                   ∀U2. ⇧[0, i + 1] U1 ≡ U2 → L ⊢ #i [d, e] ▶* U2.
 #L #K #V #U1 #i #d #e #Hdi #Hide #HLK #H @(tpss_ind … H) -U1
 [ /3 width=4/
@@ -36,10 +36,10 @@ qed.
 
 (* Advanced inverion lemmas *************************************************)
 
-lemma tpss_inv_atom1: ∀L,T2,I,d,e. L ⊢ 𝕒{I} [d, e] ▶* T2 →
-                      T2 = 𝕒{I} ∨
+lemma tpss_inv_atom1: ∀L,T2,I,d,e. L ⊢ ⓪{I} [d, e] ▶* T2 →
+                      T2 = ⓪{I} ∨
                       ∃∃K,V1,V2,i. d ≤ i & i < d + e &
-                                   ⇩[O, i] L ≡ K. 𝕓{Abbr} V1 &
+                                   ⇩[O, i] L ≡ K. ⓓV1 &
                                    K ⊢ V1 [0, d + e - i - 1] ▶* V2 &
                                    ⇧[O, i + 1] V2 ≡ T2 &
                                    I = LRef i.
@@ -59,7 +59,7 @@ qed-.
 lemma tpss_inv_lref1: ∀L,T2,i,d,e. L ⊢ #i [d, e] ▶* T2 →
                       T2 = #i ∨
                       ∃∃K,V1,V2. d ≤ i & i < d + e &
-                                 ⇩[O, i] L ≡ K. 𝕓{Abbr} V1 &
+                                 ⇩[O, i] L ≡ K. ⓓV1 &
                                  K ⊢ V1 [0, d + e - i - 1] ▶* V2 &
                                  ⇧[O, i + 1] V2 ≡ T2.
 #L #T2 #i #d #e #H
@@ -68,7 +68,7 @@ elim (tpss_inv_atom1 … H) -H /2 width=1/
 qed-.
 
 lemma tpss_inv_refl_SO2: ∀L,T1,T2,d. L ⊢ T1 [d, 1] ▶* T2 →
-                         ∀K,V. ⇩[0, d] L ≡ K. 𝕓{Abst} V → T1 = T2.
+                         ∀K,V. ⇩[0, d] L ≡ K. ⓛV → T1 = T2.
 #L #T1 #T2 #d #H #K #V #HLK @(tpss_ind … H) -T2 //
 #T #T2 #_ #HT2 #IHT <(tps_inv_refl_SO2 … HT2 … HLK) //
 qed-.

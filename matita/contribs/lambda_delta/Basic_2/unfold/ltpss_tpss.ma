@@ -105,7 +105,7 @@ lemma ltpss_tps_conf: ∀L1,T1,T2,d,e. L1 ⊢ T1 [d, e] ▶ T2 →
 
 lemma ltpss_tps2: ∀L1,L2,I,e.
                   L1 [0, e] ▶* L2 → ∀V1,V2. L2 ⊢ V1 [0, e] ▶ V2 →
-                  L1. 𝕓{I} V1 [0, e + 1] ▶* L2. 𝕓{I} V2.
+                  L1. ⓑ{I} V1 [0, e + 1] ▶* L2. ⓑ{I} V2.
 #L1 #L2 #I #e #H @(ltpss_ind … H) -L2
 [ /3 width=1/
 | #L #L2 #_ #HL2 #IHL #V1 #V2 #HV12
@@ -117,14 +117,14 @@ qed.
 
 lemma ltpss_tps2_lt: ∀L1,L2,I,V1,V2,e.
                      L1 [0, e - 1] ▶* L2 → L2 ⊢ V1 [0, e - 1] ▶ V2 →
-                     0 < e → L1. 𝕓{I} V1 [0, e] ▶* L2. 𝕓{I} V2.
+                     0 < e → L1. ⓑ{I} V1 [0, e] ▶* L2. ⓑ{I} V2.
 #L1 #L2 #I #V1 #V2 #e #HL12 #HV12 #He
 >(plus_minus_m_m e 1) // /2 width=1/
 qed.
 
 lemma ltpss_tps1: ∀L1,L2,I,d,e. L1 [d, e] ▶* L2 →
                   ∀V1,V2. L2 ⊢ V1 [d, e] ▶ V2 →
-                  L1. 𝕓{I} V1 [d + 1, e] ▶* L2. 𝕓{I} V2.
+                  L1. ⓑ{I} V1 [d + 1, e] ▶* L2. ⓑ{I} V2.
 #L1 #L2 #I #d #e #H @(ltpss_ind … H) -L2
 [ /3 width=1/
 | #L #L2 #_ #HL2 #IHL #V1 #V2 #HV12
@@ -136,16 +136,16 @@ qed.
 
 lemma ltpss_tps1_lt: ∀L1,L2,I,V1,V2,d,e.
                      L1 [d - 1, e] ▶* L2 → L2 ⊢ V1 [d - 1, e] ▶ V2 →
-                     0 < d → L1. 𝕓{I} V1 [d, e] ▶* L2. 𝕓{I} V2.
+                     0 < d → L1. ⓑ{I} V1 [d, e] ▶* L2. ⓑ{I} V2.
 #L1 #L2 #I #V1 #V2 #d #e #HL12 #HV12 #Hd
 >(plus_minus_m_m d 1) // /2 width=1/
 qed.
 
 (* Advanced forward lemmas **************************************************)
 
-lemma ltpss_fwd_tpss21: ∀e,K1,I,V1,L2. 0 < e → K1. 𝕓{I} V1 [0, e] ▶* L2 →
+lemma ltpss_fwd_tpss21: ∀e,K1,I,V1,L2. 0 < e → K1. ⓑ{I} V1 [0, e] ▶* L2 →
                         ∃∃K2,V2. K1 [0, e - 1] ▶* K2 & K1 ⊢ V1 [0, e - 1] ▶* V2 &
-                                 L2 = K2. 𝕓{I} V2.
+                                 L2 = K2. ⓑ{I} V2.
 #e #K1 #I #V1 #L2 #He #H @(ltpss_ind … H) -L2
 [ /2 width=5/
 | #L #L2 #_ #HL2 * #K #V #HK1 #HV1 #H destruct
@@ -155,10 +155,10 @@ lemma ltpss_fwd_tpss21: ∀e,K1,I,V1,L2. 0 < e → K1. 𝕓{I} V1 [0, e] ▶* L2
 ]
 qed-.
 
-lemma ltpss_fwd_tpss11: ∀d,e,I,K1,V1,L2. 0 < d → K1. 𝕓{I} V1 [d, e] ▶* L2 →
+lemma ltpss_fwd_tpss11: ∀d,e,I,K1,V1,L2. 0 < d → K1. ⓑ{I} V1 [d, e] ▶* L2 →
                         ∃∃K2,V2. K1 [d - 1, e] ▶* K2 &
                                  K1 ⊢ V1 [d - 1, e] ▶* V2 &
-                                 L2 = K2. 𝕓{I} V2.
+                                 L2 = K2. ⓑ{I} V2.
 #d #e #K1 #I #V1 #L2 #Hd #H @(ltpss_ind … H) -L2
 [ /2 width=5/
 | #L #L2 #_ #HL2 * #K #V #HK1 #HV1 #H destruct

@@ -31,7 +31,7 @@ axiom cw_wf_ind: ∀R:lenv→predicate term.
                  ∀L,T. R L T.
 
 (* Basic_1: was: flt_shift *)
-lemma cw_shift: ∀K,I,V,T. #[K. 𝕓{I} V, T] < #[K, 𝕔{I} V. T].
+lemma cw_shift: ∀K,I,V,T. #[K. ⓑ{I} V, T] < #[K, ②{I} V. T].
 normalize //
 qed.
 

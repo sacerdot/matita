@@ -28,28 +28,28 @@ inductive rtm_step: relation rtm ≝
               rtm_step (mk_rtm G u (E. ④{Abst} {t, F, V}) S (#0))
                        (mk_rtm G u F S V)
 | rtm_gdrop : ∀G,I,V,u,E,S,p. p < |G| →
-              rtm_step (mk_rtm (G. 𝕓{I} V) u E S (§p))
+              rtm_step (mk_rtm (G. ⓑ{I} V) u E S (§p))
                        (mk_rtm G u E S (§p))
 | rtm_gdelta: ∀G,V,u,E,S,p. p = |G| →
-              rtm_step (mk_rtm (G. 𝕓{Abbr} V) u E S (§p))
+              rtm_step (mk_rtm (G. ⓓV) u E S (§p))
                        (mk_rtm G u E S V)
 | rtm_gtype : ∀G,V,u,E,S,p. p = |G| →
-              rtm_step (mk_rtm (G. 𝕓{Abst} V) u E S (§p))
+              rtm_step (mk_rtm (G. ⓛV) u E S (§p))
                        (mk_rtm G u E S V)
 | rtm_tau   : ∀G,u,E,S,W,T.
-              rtm_step (mk_rtm G u E S (𝕔{Cast} W. T))
+              rtm_step (mk_rtm G u E S (ⓣW. T))
                        (mk_rtm G u E S T)
 | rtm_appl  : ∀G,u,E,S,V,T.
-              rtm_step (mk_rtm G u E S (𝕔{Appl} V. T))
+              rtm_step (mk_rtm G u E S (ⓐV. T))
                        (mk_rtm G u E ({E, V} :: S) T)
 | rtm_beta  : ∀G,u,E,F,V,S,W,T.
-              rtm_step (mk_rtm G u E ({F, V} :: S) (𝕔{Abst} W. T))
+              rtm_step (mk_rtm G u E ({F, V} :: S) (ⓛW. T))
                        (mk_rtm G u (E. ④{Abbr} {u, F, V}) S T)
 | rtm_push  : ∀G,u,E,W,T.
-              rtm_step (mk_rtm G u E ⟠ (𝕔{Abst} W. T))
+              rtm_step (mk_rtm G u E ⟠ (ⓛW. T))
                        (mk_rtm G (u + 1) (E. ④{Abst} {u, E, W}) ⟠ T)
 | rtm_theta : ∀G,u,E,S,V,T.
-              rtm_step (mk_rtm G u E S (𝕔{Abbr} V. T))
+              rtm_step (mk_rtm G u E S (ⓓV. T))
                        (mk_rtm G u (E. ④{Abbr} {u, E, V}) S T)
 .
 

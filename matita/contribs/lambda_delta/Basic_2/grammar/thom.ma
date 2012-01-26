@@ -17,10 +17,10 @@ include "Basic_2/grammar/term_simple.ma".
 (* HOMOMORPHIC TERMS ********************************************************)
 
 inductive thom: relation term ≝
-   | thom_atom: ∀I. thom (𝕒{I}) (𝕒{I})
-   | thom_abst: ∀V1,V2,T1,T2. thom (𝕔{Abst} V1. T1) (𝕔{Abst} V2. T2)
+   | thom_atom: ∀I. thom (⓪{I}) (⓪{I})
+   | thom_abst: ∀V1,V2,T1,T2. thom (ⓛV1. T1) (ⓛV2. T2)
    | thom_appl: ∀V1,V2,T1,T2. thom T1 T2 → 𝕊[T1] → 𝕊[T2] →
-                thom (𝕔{Appl} V1. T1) (𝕔{Appl} V2. T2)
+                thom (ⓐV1. T1) (ⓐV2. T2)
 .
 
 interpretation "homomorphic (term)" 'napart T1 T2 = (thom T1 T2).
@@ -49,8 +49,8 @@ lemma simple_thom_repl_sn: ∀T1,T2. T1 ≈ T2 → 𝕊[T2] → 𝕊[T1].
 
 (* Basic inversion lemmas ***************************************************)
 
-fact thom_inv_bind1_aux: ∀T1,T2. T1 ≈ T2 → ∀I,W1,U1. T1 = 𝕓{I}W1.U1 →
-                         ∃∃W2,U2. I = Abst & T2 = 𝕔{Abst} W2. U2.
+fact thom_inv_bind1_aux: ∀T1,T2. T1 ≈ T2 → ∀I,W1,U1. T1 = ⓑ{I}W1.U1 →
+                         ∃∃W2,U2. I = Abst & T2 = ⓛW2. U2.
 #T1 #T2 * -T1 -T2
 [ #J #I #W1 #U1 #H destruct
 | #V1 #V2 #T1 #T2 #I #W1 #U1 #H destruct /2 width=3/
@@ -58,13 +58,13 @@ fact thom_inv_bind1_aux: ∀T1,T2. T1 ≈ T2 → ∀I,W1,U1. T1 = 𝕓{I}W1.U1 �
 ]
 qed.
 
-lemma thom_inv_bind1: ∀I,W1,U1,T2. 𝕓{I}W1.U1 ≈ T2 →
-                      ∃∃W2,U2. I = Abst & T2 = 𝕔{Abst} W2. U2.
+lemma thom_inv_bind1: ∀I,W1,U1,T2. ⓑ{I}W1.U1 ≈ T2 →
+                      ∃∃W2,U2. I = Abst & T2 = ⓛW2. U2.
 /2 width=5/ qed-.
 
-fact thom_inv_flat1_aux: ∀T1,T2. T1 ≈ T2 → ∀I,W1,U1. T1 = 𝕗{I}W1.U1 →
+fact thom_inv_flat1_aux: ∀T1,T2. T1 ≈ T2 → ∀I,W1,U1. T1 = ⓕ{I}W1.U1 →
                          ∃∃W2,U2. U1 ≈ U2 & 𝕊[U1] & 𝕊[U2] &
-                                  I = Appl & T2 = 𝕔{Appl} W2. U2.
+                                  I = Appl & T2 = ⓐW2. U2.
 #T1 #T2 * -T1 -T2
 [ #J #I #W1 #U1 #H destruct
 | #V1 #V2 #T1 #T2 #I #W1 #U1 #H destruct
@@ -72,9 +72,9 @@ fact thom_inv_flat1_aux: ∀T1,T2. T1 ≈ T2 → ∀I,W1,U1. T1 = 𝕗{I}W1.U1 �
 ]
 qed.
 
-lemma thom_inv_flat1: ∀I,W1,U1,T2. 𝕗{I}W1.U1 ≈ T2 →
+lemma thom_inv_flat1: ∀I,W1,U1,T2. ⓕ{I}W1.U1 ≈ T2 →
                       ∃∃W2,U2. U1 ≈ U2 & 𝕊[U1] & 𝕊[U2] &
-                               I = Appl & T2 = 𝕔{Appl} W2. U2.
+                               I = Appl & T2 = ⓐW2. U2.
 /2 width=4/ qed-.
 
 (* Basic_1: removed theorems 7:

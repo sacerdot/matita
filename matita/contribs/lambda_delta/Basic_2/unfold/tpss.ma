@@ -44,22 +44,22 @@ lemma tpss_refl: ∀d,e,L,T. L ⊢ T [d, e] ▶* T.
 /2 width=1/ qed.
 
 lemma tpss_bind: ∀L,V1,V2,d,e. L ⊢ V1 [d, e] ▶* V2 →
-                 ∀I,T1,T2. L. 𝕓{I} V2 ⊢ T1 [d + 1, e] ▶* T2 →
-                 L ⊢ 𝕓{I} V1. T1 [d, e] ▶* 𝕓{I} V2. T2.
+                 ∀I,T1,T2. L. ⓑ{I} V2 ⊢ T1 [d + 1, e] ▶* T2 →
+                 L ⊢ ⓑ{I} V1. T1 [d, e] ▶* ⓑ{I} V2. T2.
 #L #V1 #V2 #d #e #HV12 elim HV12 -V2
 [ #V2 #HV12 #I #T1 #T2 #HT12 elim HT12 -T2
   [ /3 width=5/
   | #T #T2 #_ #HT2 #IHT @step /2 width=5/ (**) (* /3 width=5/ is too slow *)
   ]
 | #V #V2 #_ #HV12 #IHV #I #T1 #T2 #HT12
-  lapply (tpss_lsubs_conf … HT12 (L. 𝕓{I} V) ?) -HT12 /2 width=1/ #HT12
+  lapply (tpss_lsubs_conf … HT12 (L. ⓑ{I} V) ?) -HT12 /2 width=1/ #HT12
   lapply (IHV … HT12) -IHV -HT12 #HT12 @step /2 width=5/ (**) (* /3 width=5/ is too slow *)
 ]
 qed.
 
 lemma tpss_flat: ∀L,I,V1,V2,T1,T2,d,e.
                  L ⊢ V1 [d, e] ▶ * V2 → L ⊢ T1 [d, e] ▶* T2 →
-                 L ⊢ 𝕗{I} V1. T1 [d, e] ▶* 𝕗{I} V2. T2.
+                 L ⊢ ⓕ{I} V1. T1 [d, e] ▶* ⓕ{I} V2. T2.
 #L #I #V1 #V2 #T1 #T2 #d #e #HV12 elim HV12 -V2
 [ #V2 #HV12 #HT12 elim HT12 -T2
   [ /3 width=1/
@@ -116,21 +116,21 @@ lemma tpss_inv_gref1: ∀L,T2,p,d,e. L ⊢ §p [d, e] ▶* T2 → T2 = §p.
 ]
 qed-.
 
-lemma tpss_inv_bind1: ∀d,e,L,I,V1,T1,U2. L ⊢ 𝕓{I} V1. T1 [d, e] ▶* U2 →
+lemma tpss_inv_bind1: ∀d,e,L,I,V1,T1,U2. L ⊢ ⓑ{I} V1. T1 [d, e] ▶* U2 →
                       ∃∃V2,T2. L ⊢ V1 [d, e] ▶* V2 & 
-                               L. 𝕓{I} V2 ⊢ T1 [d + 1, e] ▶* T2 &
-                               U2 =  𝕓{I} V2. T2.
+                               L. ⓑ{I} V2 ⊢ T1 [d + 1, e] ▶* T2 &
+                               U2 =  ⓑ{I} V2. T2.
 #d #e #L #I #V1 #T1 #U2 #H @(tpss_ind … H) -U2
 [ /2 width=5/
 | #U #U2 #_ #HU2 * #V #T #HV1 #HT1 #H destruct
   elim (tps_inv_bind1 … HU2) -HU2 #V2 #T2 #HV2 #HT2 #H
-  lapply (tpss_lsubs_conf … HT1 (L. 𝕓{I} V2) ?) -HT1 /2 width=1/ /3 width=5/
+  lapply (tpss_lsubs_conf … HT1 (L. ⓑ{I} V2) ?) -HT1 /2 width=1/ /3 width=5/
 ]
 qed-.
 
-lemma tpss_inv_flat1: ∀d,e,L,I,V1,T1,U2. L ⊢ 𝕗{I} V1. T1 [d, e] ▶* U2 →
+lemma tpss_inv_flat1: ∀d,e,L,I,V1,T1,U2. L ⊢ ⓕ{I} V1. T1 [d, e] ▶* U2 →
                       ∃∃V2,T2. L ⊢ V1 [d, e] ▶* V2 & L ⊢ T1 [d, e] ▶* T2 &
-                               U2 =  𝕗{I} V2. T2.
+                               U2 =  ⓕ{I} V2. T2.
 #d #e #L #I #V1 #T1 #U2 #H @(tpss_ind … H) -U2
 [ /2 width=5/
 | #U #U2 #_ #HU2 * #V #T #HV1 #HT1 #H destruct

@@ -18,13 +18,13 @@ include "Basic_2/grammar/term_simple.ma".
 
 (* reducible terms *)
 inductive trf: predicate term ≝
-| trf_abst_sn: ∀V,T.   trf V → trf (𝕔{Abst} V. T)
-| trf_abst_dx: ∀V,T.   trf T → trf (𝕔{Abst} V. T)
-| trf_appl_sn: ∀V,T.   trf V → trf (𝕔{Appl} V. T)
-| trf_appl_dx: ∀V,T.   trf T → trf (𝕔{Appl} V. T)
-| trf_abbr   : ∀V,T.           trf (𝕔{Abbr} V. T)
-| trf_cast   : ∀V,T.           trf (𝕔{Cast} V. T)
-| trf_beta   : ∀V,W,T. trf (𝕔{Appl} V. 𝕔{Abst} W. T)
+| trf_abst_sn: ∀V,T.   trf V → trf (ⓛV. T)
+| trf_abst_dx: ∀V,T.   trf T → trf (ⓛV. T)
+| trf_appl_sn: ∀V,T.   trf V → trf (ⓐV. T)
+| trf_appl_dx: ∀V,T.   trf T → trf (ⓐV. T)
+| trf_abbr   : ∀V,T.           trf (ⓓV. T)
+| trf_cast   : ∀V,T.           trf (ⓣV. T)
+| trf_beta   : ∀V,W,T. trf (ⓐV. ⓛW. T)
 .
 
 interpretation
@@ -40,7 +40,7 @@ interpretation
 
 (* Basic inversion lemmas ***************************************************)
 
-fact trf_inv_atom_aux: ∀I,T. ℝ[T] → T =  𝕒{I} → False.
+fact trf_inv_atom_aux: ∀I,T. ℝ[T] → T =  ⓪{I} → False.
 #I #T * -T
 [ #V #T #_ #H destruct
 | #V #T #_ #H destruct
@@ -52,10 +52,10 @@ fact trf_inv_atom_aux: ∀I,T. ℝ[T] → T =  𝕒{I} → False.
 ]
 qed.
 
-lemma trf_inv_atom: ∀I. ℝ[𝕒{I}] → False.
+lemma trf_inv_atom: ∀I. ℝ[⓪{I}] → False.
 /2 width=4/ qed-.
 
-fact trf_inv_abst_aux: ∀W,U,T. ℝ[T] → T =  𝕔{Abst} W. U → ℝ[W] ∨ ℝ[U].
+fact trf_inv_abst_aux: ∀W,U,T. ℝ[T] → T =  ⓛW. U → ℝ[W] ∨ ℝ[U].
 #W #U #T * -T
 [ #V #T #HV #H destruct /2 width=1/
 | #V #T #HT #H destruct /2 width=1/
@@ -67,10 +67,10 @@ fact trf_inv_abst_aux: ∀W,U,T. ℝ[T] → T =  𝕔{Abst} W. U → ℝ[W] ∨ 
 ]
 qed.
 
-lemma trf_inv_abst: ∀V,T. ℝ[𝕔{Abst}V.T] → ℝ[V] ∨ ℝ[T].
+lemma trf_inv_abst: ∀V,T. ℝ[ⓛV.T] → ℝ[V] ∨ ℝ[T].
 /2 width=3/ qed-.
 
-fact trf_inv_appl_aux: ∀W,U,T. ℝ[T] → T =  𝕔{Appl} W. U →
+fact trf_inv_appl_aux: ∀W,U,T. ℝ[T] → T =  ⓐW. U →
                        ∨∨ ℝ[W] | ℝ[U] | (𝕊[U] → False).
 #W #U #T * -T
 [ #V #T #_ #H destruct
@@ -84,35 +84,35 @@ fact trf_inv_appl_aux: ∀W,U,T. ℝ[T] → T =  𝕔{Appl} W. U →
 ]
 qed.
 
-lemma trf_inv_appl: ∀W,U. ℝ[𝕔{Appl}W.U] → ∨∨ ℝ[W] | ℝ[U] | (𝕊[U] → False).
+lemma trf_inv_appl: ∀W,U. ℝ[ⓐW.U] → ∨∨ ℝ[W] | ℝ[U] | (𝕊[U] → False).
 /2 width=3/ qed-.
 
-lemma tif_inv_abbr: ∀V,T. 𝕀[𝕔{Abbr}V.T] → False.
+lemma tif_inv_abbr: ∀V,T. 𝕀[ⓓV.T] → False.
 /2 width=1/ qed-.
 
-lemma tif_inv_abst: ∀V,T. 𝕀[𝕔{Abst}V.T] → 𝕀[V] ∧ 𝕀[T].
+lemma tif_inv_abst: ∀V,T. 𝕀[ⓛV.T] → 𝕀[V] ∧ 𝕀[T].
 /4 width=1/ qed-.
 
-lemma tif_inv_appl: ∀V,T. 𝕀[𝕔{Appl}V.T] → ∧∧ 𝕀[V] & 𝕀[T] & 𝕊[T].
+lemma tif_inv_appl: ∀V,T. 𝕀[ⓐV.T] → ∧∧ 𝕀[V] & 𝕀[T] & 𝕊[T].
 #V #T #HVT @and3_intro /3 width=1/
 generalize in match HVT; -HVT elim T -T //
 * // * #U #T #_ #_ #H elim (H ?) -H /2 width=1/
 qed-.
 
-lemma tif_inv_cast: ∀V,T. 𝕀[𝕔{Cast}V.T] → False.
+lemma tif_inv_cast: ∀V,T. 𝕀[ⓣV.T] → False.
 /2 width=1/ qed-.
 
 (* Basic properties *********************************************************)
 
-lemma tif_atom: ∀I. 𝕀[𝕒{I}].
+lemma tif_atom: ∀I. 𝕀[⓪{I}].
 /2 width=4/ qed.
 
-lemma tif_abst: ∀V,T. 𝕀[V] →  𝕀[T] →  𝕀[𝕔 {Abst}V.T].
+lemma tif_abst: ∀V,T. 𝕀[V] →  𝕀[T] →  𝕀[ⓛV.T].
 #V #T #HV #HT #H
 elim (trf_inv_abst … H) -H /2 width=1/
 qed.
 
-lemma tif_appl: ∀V,T. 𝕀[V] →  𝕀[T] →  𝕊[T] → 𝕀[𝕔{Appl}V.T].
+lemma tif_appl: ∀V,T. 𝕀[V] →  𝕀[T] →  𝕊[T] → 𝕀[ⓐV.T].
 #V #T #HV #HT #S #H
 elim (trf_inv_appl … H) -H /2 width=1/
 qed.

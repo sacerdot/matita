@@ -41,12 +41,12 @@ lemma cpr_refl: ∀L,T. L ⊢ T ➡ T.
 (* Note: new property *)
 (* Basic_1: was only: pr2_thin_dx *) 
 lemma cpr_flat: ∀I,L,V1,V2,T1,T2.
-                L ⊢ V1 ➡ V2 → L ⊢ T1 ➡ T2 → L ⊢ 𝕗{I} V1. T1 ➡ 𝕗{I} V2. T2.
+                L ⊢ V1 ➡ V2 → L ⊢ T1 ➡ T2 → L ⊢ ⓕ{I} V1. T1 ➡ ⓕ{I} V2. T2.
 #I #L #V1 #V2 #T1 #T2 * #V #HV1 #HV2 * /3 width=5/
 qed.
 
 lemma cpr_cast: ∀L,V,T1,T2.
-                L ⊢ T1 ➡ T2 → L ⊢ 𝕔{Cast} V. T1 ➡ T2.
+                L ⊢ T1 ➡ T2 → L ⊢ ⓣV. T1 ➡ T2.
 #L #V #T1 #T2 * /3 width=3/
 qed.
 
@@ -74,9 +74,9 @@ lemma cpr_inv_sort1: ∀L,T2,k. L ⊢ ⋆k ➡ T2 → T2 = ⋆k.
 qed-.
 
 (* Basic_1: was: pr2_gen_cast *)
-lemma cpr_inv_cast1: ∀L,V1,T1,U2. L ⊢ 𝕔{Cast} V1. T1 ➡ U2 → (
+lemma cpr_inv_cast1: ∀L,V1,T1,U2. L ⊢ ⓣV1. T1 ➡ U2 → (
                         ∃∃V2,T2. L ⊢ V1 ➡ V2 & L ⊢ T1 ➡ T2 &
-                                 U2 = 𝕔{Cast} V2. T2
+                                 U2 = ⓣV2. T2
                      ) ∨ L ⊢ T1 ➡ U2.
 #L #V1 #T1 #U2 * #X #H #HU2
 elim (tpr_inv_cast1 … H) -H /3 width=3/

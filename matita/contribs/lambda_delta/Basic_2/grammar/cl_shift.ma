@@ -18,7 +18,7 @@ include "Basic_2/grammar/lenv.ma".
 
 let rec shift L T on L ≝ match L with
 [ LAtom       ⇒ T
-| LPair L I V ⇒ shift L (𝕓{I} V. T)
+| LPair L I V ⇒ shift L (ⓑ{I} V. T)
 ].
 
 interpretation "shift (closure)" 'Append L T = (shift L T).

@@ -23,3 +23,17 @@ i,j    : local reference position index (de Bruijn's)
 k      : sort index
 p,q    : global reference position
 t,u    : local reference position level (de Bruijn's)
+
+NAMING CONVENTIONS FOR CONSTRUCTORS
+
+0: atomic
+2: binary
+
+A: application to vector
+
+a: application
+b: binder
+d: abbreviation
+f: flat
+l: abstraction
+t: native type annotation

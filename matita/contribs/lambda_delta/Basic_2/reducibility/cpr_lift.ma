@@ -21,7 +21,7 @@ include "Basic_2/reducibility/cpr.ma".
 (* Advanced properties ******************************************************)
 
 lemma cpr_cdelta: ∀L,K,V1,W1,W2,i.
-                  ⇩[0, i] L ≡ K. 𝕓{Abbr} V1 → K ⊢ V1 [0, |L| - i - 1] ▶* W1 →
+                  ⇩[0, i] L ≡ K. ⓓV1 → K ⊢ V1 [0, |L| - i - 1] ▶* W1 →
                   ⇧[0, i + 1] W1 ≡ W2 → L ⊢ #i ➡ W2.
 #L #K #V1 #W1 #W2 #i #HLK #HVW1 #HW12
 lapply (ldrop_fwd_ldrop2_length … HLK) #Hi
@@ -33,7 +33,7 @@ qed.
 (* Basic_1: was: pr2_gen_lref *)
 lemma cpr_inv_lref1: ∀L,T2,i. L ⊢ #i ➡ T2 →
                      T2 = #i ∨
-                     ∃∃K,V1,T1. ⇩[0, i] L ≡ K. 𝕓{Abbr} V1 &
+                     ∃∃K,V1,T1. ⇩[0, i] L ≡ K. ⓓV1 &
                                 K ⊢ V1 [0, |L| - i - 1] ▶* T1 &
                                 ⇧[0, i + 1] T1 ≡ T2 &
                                 i < |L|.
@@ -44,8 +44,8 @@ elim (tpss_inv_lref1 … H) -H /2 width=1/
 qed-.
 
 (* Basic_1: was: pr2_gen_abst *)
-lemma cpr_inv_abst1: ∀V1,T1,U2. 𝕔{Abst} V1. T1 ➡ U2 →
-                     ∃∃V2,T2. V1 ➡ V2 & T1 ➡ T2 & U2 = 𝕔{Abst} V2. T2.
+lemma cpr_inv_abst1: ∀V1,T1,U2. ⓛV1. T1 ➡ U2 →
+                     ∃∃V2,T2. V1 ➡ V2 & T1 ➡ T2 & U2 = ⓛV2. T2.
 /2 width=3/ qed-.
 
 (* Relocation properties ****************************************************)

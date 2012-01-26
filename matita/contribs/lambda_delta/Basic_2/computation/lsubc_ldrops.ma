@@ -12,16 +12,21 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Ground_2/list.ma".
-include "Basic_2/grammar/term.ma".
+include "Basic_2/computation/lsubc_ldrop.ma".
 
-(* TERMS ********************************************************************)
+(* LOCAL ENVIRONMENT REFINEMENT FOR ABSTRACT CANDIDATES OF REDUCIBILITY *****)
 
-let rec applv Vs T on Vs ≝
-  match Vs with
-  [ nil        ⇒ T
-  | cons hd tl ⇒  ⓐhd. (applv tl T)
-  ].
+(* Properties concerning generic local environment slicing ******************)
 
-interpretation "application o vevtor (term)"
-   'SnApplV Vs T = (applv Vs T).
+(* Basic_1: was: csubc_drop1_conf_rev *)
+lemma ldrops_lsubc_trans: ∀RR,RS,RP.
+                          acp RR RS RP → acr RR RS RP (λL,T. RP L T) →
+                          ∀L1,K1,des. ⇩*[des] L1 ≡ K1 → ∀K2. K1 [RP] ⊑ K2 →
+                          ∃∃L2. L1 [RP] ⊑ L2 & ⇩*[des] L2 ≡ K2.
+#RR #RS #RP #Hacp #Hacr #L1 #K1 #des #H elim H -L1 -K1 -des
+[ /2 width=3/
+| #L1 #L #K1 #des #d #e #_ #HLK1 #IHL #K2 #HK12
+  elim (ldrop_lsubc_trans … Hacp Hacr … HLK1 … HK12) -Hacp -Hacr -K1 #K #HLK #HK2
+  elim (IHL … HLK) -IHL -HLK /3 width=5/
+]
+qed-.

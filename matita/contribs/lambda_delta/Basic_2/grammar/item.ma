@@ -12,14 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* THE FORMAL SYSTEM λδ - MATITA SOURCE FILES
- * Confluence of context-sensitive parallel reduction closed: 2011 September 21
- * Confluence of context-free parallel reduction closed: 2011 September 6
- * Specification started: 2011 April 17
- * - Patience on me to gain peace and perfection! -
- * [ suggested invocation to start formal specifications with ]
- *)
-
 include "Ground_2/arith.ma".
 include "Basic_2/notation.ma".
 
@@ -46,13 +38,13 @@ inductive flat2: Type[0] ≝
 
 (* binary items *)
 inductive item2: Type[0] ≝
-  | Bind: bind2 → item2 (* binding item *)
-  | Flat: flat2 → item2 (* non-binding item *)
+  | Bind2: bind2 → item2 (* binding item *)
+  | Flat2: flat2 → item2 (* non-binding item *)
 .
 
-coercion item2_of_bind2: ∀I:bind2.item2 ≝ Bind on _I:bind2 to item2.
+coercion item2_of_bind2: ∀I:bind2.item2 ≝ Bind2 on _I:bind2 to item2.
 
-coercion item2_of_flat2: ∀I:flat2.item2 ≝ Flat on _I:flat2 to item2.
+coercion item2_of_flat2: ∀I:flat2.item2 ≝ Flat2 on _I:flat2 to item2.
 
 (* Basic properties *********************************************************)
 

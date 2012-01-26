@@ -20,10 +20,10 @@ definition CP1 ≝ λRR:lenv→relation term. λRS:relation term.
                  ∀L,k. NF … (RR L) RS (⋆k).
 
 definition CP2 ≝ λRR:lenv→relation term. λRS:relation term.
-                 ∀L,K,W,i. ⇩[0,i] L ≡ K. 𝕓{Abst} W → NF … (RR L) RS (#i).
+                 ∀L,K,W,i. ⇩[0,i] L ≡ K. ⓛW → NF … (RR L) RS (#i).
 
 definition CP3 ≝ λRR:lenv→relation term. λRP:lenv→predicate term.
-                 ∀L,V,k. RP L (𝕔{Appl}⋆k.V) → RP L V.
+                 ∀L,V,k. RP L (ⓐ⋆k.V) → RP L V.
 
 definition CP4 ≝ λRR:lenv→relation term. λRS:relation term.
                  ∀L0,L,T,T0,d,e. NF … (RR L) RS T → 
