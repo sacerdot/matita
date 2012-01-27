@@ -127,7 +127,7 @@ lemma aacr_acr: ∀RR,RS,RP. acp RR RS RP → acr RR RS RP (λL,T. RP L T) →
   >(at_mono … Hi1 … Hi0) in HL02; -i1 #HL02
   elim (ldrops_inv_skip2 … Hdes0 … H) -H -des0 #L2 #W1 #des0 #Hdes0 #HLK #HVW1 #H destruct
   elim (lift_total W1 0 (i0 + 1)) #W2 #HW12
-  elim (lifts_lift_trans … HVW1 … HW12 … Hdes0) // -Hdes0 -Hi0 #V3 #HV13 #HVW2
+  elim (lifts_lift_trans  … Hdes0 … HVW1 … HW12) // -Hdes0 -Hi0 #V3 #HV13 #HVW2
   >(lift_mono … HV13 … HV12) in HVW2; -V3 #HVW2
   @(s4 … IHA … (V0 :: V0s) … HW12 HL02) /3 width=4/
 | #L #V1s #V2s #HV12s #V #T #HA #HV #L0 #V10 #X #des #HB #HL0 #H

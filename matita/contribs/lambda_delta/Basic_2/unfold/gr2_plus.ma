@@ -16,14 +16,25 @@ include "Basic_2/unfold/gr2.ma".
 
 (* GENERIC RELOCATION WITH PAIRS ********************************************)
 
-(* Main properties **********************************************************)
+let rec pluss (des:list2 nat nat) (i:nat) on des ≝ match des with
+[ nil2          ⇒ ⟠
+| cons2 d e des ⇒ {d + i, e} :: pluss des i
+].
 
-theorem at_mono: ∀des,i,i1. @[i] des ≡ i1 → ∀i2. @[i] des ≡ i2 → i1 = i2.
-#des #i #i1 #H elim H -des -i -i1
-[ #i #x #H <(at_inv_nil … H) -x //
-| #des #d #e #i #i1 #Hid #_ #IHi1 #x #H
-  lapply (at_inv_cons_lt … H Hid) -H -Hid /2 width=1/
-| #des #d #e #i #i1 #Hdi #_ #IHi1 #x #H
-  lapply (at_inv_cons_ge … H Hdi) -H -Hdi /2 width=1/
+interpretation "plus (generic relocation with pairs)"
+   'plus x y = (pluss x y).
+
+(* Basic inversion lemmas ***************************************************)
+
+lemma pluss_inv_nil2: ∀i,des. des + i = ⟠ → des = ⟠.
+#i * // normalize
+#d #e #des #H destruct
+qed.
+
+lemma pluss_inv_cons2: ∀i,d,e,des2,des. des + i = {d, e} :: des2 →
+                       ∃∃des1. des1 + i = des2 & des = {d - i, e} :: des1.
+#i #d #e #des2 * normalize
+[ #H destruct
+| #d1 #e1 #des1 #H destruct /2 width=3/ 
 ]
 qed-.

@@ -44,7 +44,7 @@ theorem aacr_aaa_csubc_lifts: ∀RR,RS,RP.
   [ #K2 #HK20 #H destruct
     generalize in match HLK2; generalize in match I; -HLK2 -I * #HLK2
     [ elim (lift_total V0 0 (i0 +1)) #V #HV0
-      elim (lifts_lift_trans … HV10 … HV0 … Hi0 Hdes0) -HV10 #V2 #HV12 #HV2
+      elim (lifts_lift_trans  … Hi0 … Hdes0 … HV10 … HV0) -HV10 #V2 #HV12 #HV2
       @(s4 … HB … ◊ … HV0 HLK2) /3 width=7/ (* uses IHB HL20 V2 HV0 *)
     | @(s2 … HB … ◊) // /2 width=3/
     ]

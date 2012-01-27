@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "Basic_2/substitution/lift.ma".
-include "Basic_2/unfold/gr2.ma".
+include "Basic_2/unfold/gr2_plus.ma".
 
 (* GENERIC TERM RELOCATION **************************************************)
 

@@ -29,9 +29,18 @@ interpretation "generic relocation (vector)"
 
 (* Basic inversion lemmas ***************************************************)
 
-axiom lifts_inv_applv1: ∀V1s,U1,T2,des. ⇧*[des] Ⓐ V1s. U1 ≡ T2 →
+lemma lifts_inv_applv1: ∀V1s,U1,T2,des. ⇧*[des] Ⓐ V1s. U1 ≡ T2 →
                         ∃∃V2s,U2. ⇧*[des] V1s ≡ V2s & ⇧*[des] U1 ≡ U2 &
                                   T2 = Ⓐ V2s. U2.
+#V1s elim V1s -V1s normalize
+[ #T1 #T2 #des #HT12
+  @(ex3_2_intro) [3,4: // |1,2: skip | // ] (**) (* explicit constructor *)
+| #V1 #V1s #IHV1s #T1 #X #des #H
+  elim (lifts_inv_flat1 … H) -H #V2 #Y #HV12 #HY #H destruct
+  elim (IHV1s … HY) -IHV1s -HY #V2s #T2 #HV12s #HT12 #H destruct
+  @(ex3_2_intro) [4: // |3: /2 width=2/ |1,2: skip | // ] (**) (* explicit constructor *)
+]
+qed-.
 
 (* Basic properties *********************************************************)
 

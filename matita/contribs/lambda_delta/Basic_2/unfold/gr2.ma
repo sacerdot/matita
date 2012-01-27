@@ -16,14 +16,6 @@ include "Basic_2/grammar/term_vector.ma".
 
 (* GENERIC RELOCATION WITH PAIRS ********************************************)
 
-let rec pluss (des:list2 nat nat) (i:nat) on des ≝ match des with
-[ nil2          ⇒ ⟠
-| cons2 d e des ⇒ {d + i, e} :: pluss des i
-].
-
-interpretation "plus (generic relocation with pairs)"
-   'plus x y = (pluss x y).
-
 inductive at: list2 nat nat → relation nat ≝
 | at_nil: ∀i. at ⟠ i i
 | at_lt : ∀des,d,e,i1,i2. i1 < d →
@@ -35,13 +27,47 @@ inductive at: list2 nat nat → relation nat ≝
 interpretation "application (generic relocation with pairs)"
    'RAt i1 des i2 = (at des i1 i2).
 
-inductive minuss: nat → relation (list2 nat nat) ≝
-| minuss_nil: ∀i. minuss i ⟠ ⟠ 
-| minuss_lt : ∀des1,des2,d,e,i. i < d → minuss i des1 des2 →
-              minuss i ({d, e} :: des1) ({d - i, e} :: des2)
-| minuss_ge : ∀des1,des2,d,e,i. d ≤ i → minuss (e + i) des1 des2 →
-              minuss i ({d, e} :: des1) des2
-.
+(* Basic inversion lemmas ***************************************************)
 
-interpretation "minus (generic relocation with pairs)"
-   'RMinus des1 i des2 = (minuss i des1 des2).
+fact at_inv_nil_aux: ∀des,i1,i2. @[i1] des ≡ i2 → des = ⟠ → i1 = i2.
+#des #i1 #i2 * -des -i1 -i2
+[ //
+| #des #d #e #i1 #i2 #_ #_ #H destruct
+| #des #d #e #i1 #i2 #_ #_ #H destruct
+]
+qed.
+
+lemma at_inv_nil: ∀i1,i2. @[i1] ⟠ ≡ i2 → i1 = i2.
+/2 width=3/ qed-.
+
+fact at_inv_cons_aux: ∀des,i1,i2. @[i1] des ≡ i2 →
+                      ∀d,e,des0. des = {d, e} :: des0 →
+                      i1 < d ∧ @[i1] des0 ≡ i2 ∨
+                      d ≤ i1 ∧ @[i1 + e] des0 ≡ i2.
+#des #i1 #i2 * -des -i1 -i2
+[ #i #d #e #des #H destruct
+| #des1 #d1 #e1 #i1 #i2 #Hid1 #Hi12 #d2 #e2 #des2 #H destruct /3 width=1/
+| #des1 #d1 #e1 #i1 #i2 #Hdi1 #Hi12 #d2 #e2 #des2 #H destruct /3 width=1/
+]
+qed.
+
+lemma at_inv_cons: ∀des,d,e,i1,i2. @[i1] {d, e} :: des ≡ i2 →
+                   i1 < d ∧ @[i1] des ≡ i2 ∨
+                   d ≤ i1 ∧ @[i1 + e] des ≡ i2.
+/2 width=3/ qed-.
+
+lemma at_inv_cons_lt: ∀des,d,e,i1,i2. @[i1] {d, e} :: des ≡ i2 →
+                      i1 < d → @[i1] des ≡ i2.
+#des #d #e #i1 #e2 #H
+elim (at_inv_cons … H) -H * // #Hdi1 #_ #Hi1d
+lapply (le_to_lt_to_lt … Hdi1 Hi1d) -Hdi1 -Hi1d #Hd
+elim (lt_refl_false … Hd)
+qed-.
+
+lemma at_inv_cons_ge: ∀des,d,e,i1,i2. @[i1] {d, e} :: des ≡ i2 →
+                      d ≤ i1 → @[i1 + e] des ≡ i2.
+#des #d #e #i1 #e2 #H
+elim (at_inv_cons … H) -H * // #Hi1d #_ #Hdi1
+lapply (le_to_lt_to_lt … Hdi1 Hi1d) -Hdi1 -Hi1d #Hd
+elim (lt_refl_false … Hd)
+qed-.

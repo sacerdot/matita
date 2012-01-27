@@ -13,6 +13,7 @@
 (**************************************************************************)
 
 (* THE FORMAL SYSTEM λδ - MATITA SOURCE FILES
+ * Support for abstract candidates of reducibility closed: 2012 January 27
  * Confluence of context-sensitive parallel reduction closed: 2011 September 21
  * Confluence of context-free parallel reduction closed: 2011 September 6
  * Specification started: 2011 April 17
