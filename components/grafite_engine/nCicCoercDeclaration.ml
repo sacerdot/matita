@@ -140,10 +140,13 @@ let src_tgt_cpos_arity_of_ty_id_src_tgt status ty id src tgt =
             let src = cleanup_skel status () src in
             status, src, cpos
            with 
-           | NCicUnification.UnificationFailure _
-           | NCicUnification.Uncertain _
-           | MultiPassDisambiguator.DisambiguationError _ ->
-               raise (GrafiteTypes.Command_error "bad source pattern"))
+           | NCicUnification.UnificationFailure msg
+           | NCicUnification.Uncertain msg ->
+               raise (GrafiteTypes.Command_error ("bad source pattern: " ^ 
+Lazy.force msg))
+            | MultiPassDisambiguator.DisambiguationError _ ->
+               raise (GrafiteTypes.Command_error ("bad source pattern: 
+disambiguation error")))
       | _ -> assert false
     in
       aux 0 [] ty
