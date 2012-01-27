@@ -260,18 +260,20 @@ and restrict status metasenv subst i (restrictions as orig) =
 ;;
 
 let rec is_flexible status context ~subst = function 
-  | NCic.Meta (i,_) ->
+  | NCic.Meta (i,lc) ->
+       (try 
+          let _,_,t,_ = NCicUtils.lookup_subst i subst in
+          let t = NCicSubstitution.subst_meta status lc t in
+          is_flexible status context ~subst t
+        with NCicUtils.Subst_not_found _ -> true)
+  | NCic.Appl (NCic.Meta (i,lc) :: args)-> 
       (try 
-        let _,_,t,_ = List.assoc i subst in
-        is_flexible status context ~subst t
-      with Not_found -> true)
-  | NCic.Appl (NCic.Meta (i,_) :: args)-> 
-      (try 
-        let _,_,t,_ = List.assoc i subst in
+        let _,_,t,_ = NCicUtils.lookup_subst i subst in
+        let t = NCicSubstitution.subst_meta status lc t in
         is_flexible status context ~subst 
           (NCicReduction.head_beta_reduce status ~delta:max_int 
             (NCic.Appl (t :: args)))
-      with Not_found -> true)
+      with NCicUtils.Subst_not_found _ -> true)
    (* this is a cheap whd, it only performs zeta-reduction.
     * 
     * it works when the **omissis** disambiguation algorithm
