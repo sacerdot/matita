@@ -20,7 +20,7 @@ include "Basic_2/unfold/lifts.ma".
 
 (* Properties concerning basic term relocation ******************************)
 
-(* Basic_1: was: lift1_xhg *)
+(* Basic_1: was: lift1_xhg (right to left) *)
 lemma lifts_lift_trans_le: ∀T1,T,des. ⇧*[des] T1 ≡ T → ∀T2. ⇧[0, 1] T ≡ T2 →
                            ∃∃T0. ⇧[0, 1] T1 ≡ T0 & ⇧*[des + 1] T0 ≡ T2.
 #T1 #T #des #H elim H -T1 -T -des
@@ -45,7 +45,7 @@ lemma lifts_lift_trans: ∀des,i,i0. @[i] des ≡ i0 →
   >(lifts_inv_nil … H) -T1 /2 width=3/
 | #d #e #des #IHdes #i #i0 #H1 #des0 #H2 #T1 #T0 #HT10 #T2 #HT02
   elim (at_inv_cons … H1) -H1 * #Hid #Hi0
-  [ elim (minuss_inv_cons1_lt … H2 ?) -H2 [2: /2 width=1/ ] #des1 #Hdes1 <plus_minus // <minus_plus <plus_minus_m_m /2 width=1/ #H
+  [ elim (minuss_inv_cons1_lt … H2 ?) -H2 [2: /2 width=1/ ] #des1 #Hdes1 <minus_le_minus_minus_comm // <minus_plus_m_m #H
     elim (pluss_inv_cons2 … H) -H #des2 #H1 #H2 destruct
     elim (lifts_inv_cons … HT10) -HT10 #T >minus_plus #HT1 #HT0
     elim (IHdes … Hi0 … Hdes1 … HT0 … HT02) -IHdes -Hi0 -Hdes1 -T0 #T0 #HT0 #HT02

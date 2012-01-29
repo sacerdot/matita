@@ -102,16 +102,7 @@ csubv/getl csubv_getl_conf
 csubv/getl csubv_getl_conf_void
 csubv/props csubv_bind_same
 csubv/props csubv_refl
-
-# check #############################################################
-
-drop1/fwd drop1_gen_pnil
-drop1/fwd drop1_gen_pcons
-drop1/props drop1_skip_bind
 drop1/props drop1_cons_tail
-
-# waiting ####################################################################
-
 drop/props drop_ctail
 ex0/props aplus_gz_le
 ex0/props aplus_gz_ge
@@ -141,12 +132,18 @@ leq/props leq_trans
 leq/props leq_ahead_false_1
 leq/props leq_ahead_false_2
 lift1/fwd lift1_cons_tail
+
+# check #############################################################
+
 lift1/fwd lifts1_flat
 lift1/fwd lifts1_nil
 lift1/fwd lifts1_cons
 lift1/props lift1_free
 lift/props thead_x_lift_y_y
 lift/props lifts_tapp
+
+# waiting ####################################################################
+
 lift/props lifts_inj
 llt/props lweight_repl
 llt/props llt_repl
@@ -240,6 +237,9 @@ pc3/wcpr0 pc3_wcpr0__pc3_wcpr0_t_aux
 pc3/wcpr0 pc3_wcpr0_t
 pc3/wcpr0 pc3_wcpr0
 pr0/fwd pr0_gen_void
+
+# check #############################################################
+
 pr0/dec nf0_dec
 pr0/subst1 pr0_subst1_back
 pr0/subst1 pr0_subst1_fwd

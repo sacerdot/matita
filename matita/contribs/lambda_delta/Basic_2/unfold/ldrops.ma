@@ -34,6 +34,7 @@ fact ldrops_inv_nil_aux: ∀L1,L2,des. ⇩*[des] L1 ≡ L2 → des = ⟠ → L1 
 #L1 #L #L2 #d #e #des #_ #_ #H destruct
 qed.
 
+(* Basic_1: was: drop1_gen_pnil *)
 lemma ldrops_inv_nil: ∀L1,L2. ⇩*[⟠] L1 ≡ L2 → L1 = L2.
 /2 width=3/ qed-.
 
@@ -46,6 +47,7 @@ fact ldrops_inv_cons_aux: ∀L1,L2,des. ⇩*[des] L1 ≡ L2 →
   /2 width=3/
 qed.
 
+(* Basic_1: was: drop1_gen_pcons *)
 lemma ldrops_inv_cons: ∀L1,L2,d,e,des. ⇩*[{d, e} :: des] L1 ≡ L2 →
                        ∃∃L. ⇩*[des] L1 ≡ L & ⇩[d, e] L ≡ L2.
 /2 width=3/ qed-.
@@ -73,6 +75,7 @@ qed-.
 
 (* Basic properties *********************************************************)
 
+(* Basic_1: was: drop1_skip_bind *)
 lemma ldrops_skip: ∀L1,L2,des. ⇩*[des] L1 ≡ L2 → ∀V1,V2. ⇧*[des] V2 ≡ V1 →
                    ∀I. ⇩*[des + 1] L1. ⓑ{I} V1 ≡ L2. ⓑ{I} V2.
 #L1 #L2 #des #H elim H -L1 -L2 -des
