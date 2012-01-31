@@ -145,10 +145,10 @@ for @{ match $t return λx.x = $t → ? with [ mk_Prod ${fresh xy} ${ident z} �
        match ${fresh xy} return λx. ? = $t → ? with [ mk_Prod ${ident x} ${ident y} ⇒
         λ${ident E}.$s ] ] (refl ? $t) }.
 
-notation < "hvbox('let' \nbsp hvbox(〈ident x,ident y,ident z〉 \nbsp'as'\nbsp ident E\nbsp ≝ break t \nbsp 'in' \nbsp) break s)"
+notation < "hvbox('let' \nbsp hvbox(〈ident x,ident y,ident z〉 \nbsp 'as' \nbsp ident E\nbsp ≝ break t \nbsp 'in' \nbsp) break s)"
  with precedence 10
-for @{ match $t return λ${ident x}.$eq $T $x $t → $U with [ mk_Prod (${fresh xy}:$V) (${ident z}:$Z) ⇒
-       match ${fresh xy} return λ${ident y}. $eq $R $r $t → ? with [ mk_Prod (${ident x}:$L) (${ident y}:$I) ⇒
+for @{ match $t return λ${ident k}:$X.$eq $T $k $t → $U with [ mk_Prod (${ident xy}:$V) (${ident z}:$Z) ⇒
+       match $xy return λ${ident a}. $eq $R $r $t → ? with [ mk_Prod (${ident x}:$L) (${ident y}:$I) ⇒
         λ${ident E}:$J.$s ] ] ($refl $A $t) }.
 
 notation > "hvbox('let' 〈ident w,ident x,ident y,ident z〉 ≝ t 'in' s)"
