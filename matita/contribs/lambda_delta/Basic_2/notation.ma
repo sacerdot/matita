@@ -104,7 +104,7 @@ notation "hvbox( # [ x , break y ] )"
  non associative with precedence 90
  for @{ 'Weight $x $y }.
 
-notation "hvbox( 𝕊 [ T ] )"
+notation "hvbox( 𝐒 [ T ] )"
    non associative with precedence 45
    for @{ 'Simple $T }.
 
@@ -113,6 +113,18 @@ notation "hvbox( T1 break [ d , break e ] ≼ break T2 )"
    for @{ 'SubEq $T1 $d $e $T2 }.
 
 (* Substitution *************************************************************)
+
+notation "hvbox( L ⊢ break [ d , break e ] break 𝐑 [ T ] )"
+   non associative with precedence 45
+   for @{ 'Reducible $L $d $e $T }.
+
+notation "hvbox( L ⊢ break [ d , break e ] break 𝐈 [ T ] )"
+   non associative with precedence 45
+   for @{ 'NotReducible $L $d $e $T }.
+
+notation "hvbox( L ⊢ break [ d , break e ] break 𝐍 [ T ] )"
+   non associative with precedence 45
+   for @{ 'Normal $L $d $e $T }.
 
 notation "hvbox( ⇧ [ d , break e ] break T1 ≡ break T2 )"
    non associative with precedence 45
@@ -180,51 +192,51 @@ notation "hvbox( T1 ÷ ⊑ break T2 )"
 
 (* Reducibility *************************************************************)
 
-notation "hvbox( ℝ [ T ] )"
+notation "hvbox( 𝐑 [ T ] )"
    non associative with precedence 45
    for @{ 'Reducible $T }.
 
-notation "hvbox( L ⊢ ℝ [ T ] )"
+notation "hvbox( L ⊢ break 𝐑 [ T ] )"
    non associative with precedence 45
    for @{ 'Reducible $L $T }.
 
-notation "hvbox( 𝕀 [ T ] )"
+notation "hvbox( 𝐈 [ T ] )"
    non associative with precedence 45
    for @{ 'NotReducible $T }.
 
-notation "hvbox( L ⊢ 𝕀 [ T ] )"
+notation "hvbox( L ⊢ break 𝐈 [ T ] )"
    non associative with precedence 45
    for @{ 'NotReducible $L $T }.
 
-notation "hvbox( ℕ [ T ] )"
+notation "hvbox( 𝐍 [ T ] )"
    non associative with precedence 45
    for @{ 'Normal $T }.
 
-notation "hvbox( L ⊢ ℕ [ T ] )"
+notation "hvbox( L ⊢ break 𝐍 [ T ] )"
    non associative with precedence 45
    for @{ 'Normal $L $T }.
 
-notation "hvbox( 𝕎ℍℝ [ T ] )"
+notation "hvbox( 𝐖𝐇𝐑 [ T ] )"
    non associative with precedence 45
    for @{ 'WHdReducible $T }.
 
-notation "hvbox( L ⊢ 𝕎ℍℝ [ T ] )"
+notation "hvbox( L ⊢ break 𝐖𝐇𝐑 [ T ] )"
    non associative with precedence 45
    for @{ 'WHdReducible $L $T }.
 
-notation "hvbox( 𝕎ℍ𝕀 [ T ] )"
+notation "hvbox( 𝐖𝐇𝐈 [ T ] )"
    non associative with precedence 45
    for @{ 'NotWHdReducible $T }.
 
-notation "hvbox( L ⊢ 𝕎ℍ𝕀 [ T ] )"
+notation "hvbox( L ⊢ break 𝐖𝐇𝐈 [ T ] )"
    non associative with precedence 45
    for @{ 'NotWHdReducible $L $T }.
 
-notation "hvbox( 𝕎ℍℕ [ T ] )"
+notation "hvbox( 𝐖𝐇𝐍 [ T ] )"
    non associative with precedence 45
    for @{ 'WHdNormal $T }.
 
-notation "hvbox( L ⊢ 𝕎ℍℕ [ T ] )"
+notation "hvbox( L ⊢ break 𝐖𝐇𝐍 [ T ] )"
    non associative with precedence 45
    for @{ 'WHdNormal $L $T }.
 

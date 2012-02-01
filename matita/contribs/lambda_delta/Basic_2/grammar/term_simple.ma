@@ -25,12 +25,12 @@ interpretation "simple (term)" 'Simple T = (simple T).
 
 (* Basic inversion lemmas ***************************************************)
 
-fact simple_inv_bind_aux: ∀T. 𝕊[T] → ∀J,W,U. T = ⓑ{J} W. U → False.
+fact simple_inv_bind_aux: ∀T. 𝐒[T] → ∀J,W,U. T = ⓑ{J} W. U → False.
 #T * -T
 [ #I #J #W #U #H destruct
 | #I #V #T #J #W #U #H destruct
 ]
 qed.
 
-lemma simple_inv_bind: ∀I,V,T. 𝕊[ⓑ{I} V. T] → False.
+lemma simple_inv_bind: ∀I,V,T. 𝐒[ⓑ{I} V. T] → False.
 /2 width=6/ qed-.

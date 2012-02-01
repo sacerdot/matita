@@ -24,14 +24,14 @@ interpretation
 
 (* Basic inversion lemmas ***************************************************)
 
-lemma tnf_inv_abst: ∀V,T. ℕ[ⓛV.T] → ℕ[V] ∧ ℕ[T].
+lemma tnf_inv_abst: ∀V,T. 𝐍[ⓛV.T] → 𝐍[V] ∧ 𝐍[T].
 #V1 #T1 #HVT1 @conj
 [ #V2 #HV2 lapply (HVT1 (ⓛV2.T1) ?) -HVT1 /2 width=1/ -HV2 #H destruct //
 | #T2 #HT2 lapply (HVT1 (ⓛV1.T2) ?) -HVT1 /2 width=1/ -HT2 #H destruct //
 ]
 qed-.
 
-lemma tnf_inv_appl: ∀V,T. ℕ[ⓐV.T] → ∧∧ ℕ[V] & ℕ[T] & 𝕊[T].
+lemma tnf_inv_appl: ∀V,T. 𝐍[ⓐV.T] → ∧∧ 𝐍[V] & 𝐍[T] & 𝐒[T].
 #V1 #T1 #HVT1 @and3_intro
 [ #V2 #HV2 lapply (HVT1 (ⓐV2.T1) ?) -HVT1 /2 width=1/ -HV2 #H destruct //
 | #T2 #HT2 lapply (HVT1 (ⓐV1.T2) ?) -HVT1 /2 width=1/ -HT2 #H destruct //
@@ -42,7 +42,7 @@ lemma tnf_inv_appl: ∀V,T. ℕ[ⓐV.T] → ∧∧ ℕ[V] & ℕ[T] & 𝕊[T].
 ]
 qed-.
 
-lemma tnf_inv_abbr: ∀V,T. ℕ[ⓓV.T] → False.
+lemma tnf_inv_abbr: ∀V,T. 𝐍[ⓓV.T] → False.
 #V #T #H elim (is_lift_dec T 0 1)
 [ * #U #HTU
   lapply (H U ?) -H /2 width=3/ #H destruct
@@ -53,7 +53,7 @@ lemma tnf_inv_abbr: ∀V,T. ℕ[ⓓV.T] → False.
 ]
 qed.
 
-lemma tnf_inv_cast: ∀V,T. ℕ[ⓣV.T] → False.
+lemma tnf_inv_cast: ∀V,T. 𝐍[ⓣV.T] → False.
 #V #T #H lapply (H T ?) -H /2 width=1/ #H
 @(discr_tpair_xy_y … H)
 qed-.
