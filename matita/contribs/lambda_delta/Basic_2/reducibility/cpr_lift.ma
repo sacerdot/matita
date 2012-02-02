@@ -48,6 +48,46 @@ lemma cpr_inv_abst1: ∀V1,T1,U2. ⓛV1. T1 ➡ U2 →
                      ∃∃V2,T2. V1 ➡ V2 & T1 ➡ T2 & U2 = ⓛV2. T2.
 /2 width=3/ qed-.
 
+(* Basic_1: was pr2_gen_appl *)
+lemma cpr_inv_appl1: ∀L,V1,U0,U2. L ⊢ ⓐV1. U0 ➡ U2 →
+                     ∨∨ ∃∃V2,T2.            L ⊢ V1 ➡ V2 & L ⊢ U0 ➡ T2 &
+                                            U2 = ⓐV2. T2
+                      | ∃∃V2,W,T1,T2.       L ⊢ V1 ➡ V2 & L. ⓓV2 ⊢ T1 ➡ T2 &
+                                            U0 = ⓛW. T1 &
+                                            U2 = ⓓV2. T2
+                      | ∃∃V2,V,W1,W2,T1,T2. L ⊢ V1 ➡ V2 & L ⊢ W1 ➡ W2 & L. ⓓW2 ⊢ T1 ➡ T2 &
+                                            ⇧[0,1] V2 ≡ V &
+                                            U0 = ⓓW1. T1 &
+                                            U2 = ⓓW2. ⓐV. T2.
+#L #V1 #U0 #Y * #X #H1 #H2
+elim (tpr_inv_appl1 … H1) -H1 *
+[ #V #U #HV1 #HU0 #H destruct
+  elim (tpss_inv_flat1 … H2) -H2 #V2 #U2 #HV2 #HU2 #H destruct /4 width=5/
+| #V #W #T0 #T #HV1 #HT0 #H #H1 destruct
+  elim (tpss_inv_bind1 … H2) -H2 #V2 #T2 #HV2 #HT2 #H destruct
+  lapply (tpss_weak … HT2 0 (|L|+1) ? ?) -HT2 // /4 width=8/
+| #V0 #V #W #W0 #T #T0 #HV10 #HW0 #HT0 #HV0 #H #H1 destruct
+  elim (tpss_inv_bind1 … H2) -H2 #W2 #X #HW02 #HX #HY destruct
+  elim (tpss_inv_flat1 … HX) -HX #V2 #T2 #HV2 #HT2 #H destruct
+  elim (tpss_inv_lift1_ge … HV2 … HV0 ?) -V // [3: /2 width=1/ |2: skip ] #V <minus_plus_m_m
+  lapply (tpss_weak … HT2 0 (|L|+1) ? ?) -HT2 // /4 width=12/
+]
+qed-.
+
+(* Note: the main property of simple terms *)
+lemma cpr_inv_appl1_simple: ∀L,V1,T1,U. L ⊢ ⓐV1. T1 ➡ U → 𝐒[T1] →
+                            ∃∃V2,T2. L ⊢ V1 ➡ V2 & L ⊢ T1 ➡ T2 &
+                                     U = ⓐV2. T2.
+#L #V1 #T1 #U #H #HT1
+elim (cpr_inv_appl1 … H) -H *
+[ /2 width=5/
+| #V2 #W #W1 #W2 #_ #_ #H #_ destruct
+  elim (simple_inv_bind … HT1)
+| #V2 #V #W1 #W2 #U1 #U2 #_ #_ #_ #_ #H #_ destruct
+  elim (simple_inv_bind … HT1)
+]
+qed-.
+
 (* Relocation properties ****************************************************)
 
 (* Basic_1: was: pr2_lift *)

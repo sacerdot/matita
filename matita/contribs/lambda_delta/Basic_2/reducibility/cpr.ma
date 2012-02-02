@@ -89,8 +89,3 @@ qed-.
    Basic_1: removed local theorems 3:
             pr2_free_free pr2_free_delta pr2_delta_delta
 *)
-
-(*
-pr2/fwd pr2_gen_appl
-pr2/fwd pr2_gen_abbr
-*)
