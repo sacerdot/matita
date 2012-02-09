@@ -53,6 +53,18 @@ lemma ltps_refl: ∀L,d,e. L [d, e] ▶ L.
 #L #I #V #IHL * /2 width=1/ * /2 width=1/
 qed.
 
+lemma ltps_weak_all: ∀L1,L2,d,e. L1 [d, e] ▶ L2 → L1 [0, |L2|] ▶ L2.
+#L1 #L2 #d #e #H elim H -L1 -L2 -d -e
+// /3 width=2/ /3 width=3/
+qed.
+
+(* Basic forward lemmas *****************************************************)
+
+lemma ltps_fwd_length: ∀L1,L2,d,e. L1 [d, e] ▶ L2 → |L1| = |L2|.
+#L1 #L2 #d #e #H elim H -L1 -L2 -d -e
+normalize //
+qed-.
+
 (* Basic inversion lemmas ***************************************************)
 
 fact ltps_inv_refl_O2_aux: ∀d,e,L1,L2. L1 [d, e] ▶ L2 → e = 0 → L1 = L2.

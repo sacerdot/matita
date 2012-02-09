@@ -12,11 +12,22 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/computation/acp_cr.ma".
-include "Basic_2/computation/csn_lift.ma".
+include "Basic_2/reducibility/cpr.ma".
 
-(* CONTEXT-SENSITIVE STRONGLY NORMALIZING TERMS *****************************)
+(* CONTEXT-SENSITIVE NORMAL TERMS *******************************************)
 
-(* Advanced properties ******************************************************)
+definition cnf: lenv → predicate term ≝ λL. NF … (cpr L) (eq …).
 
-axiom csn_acr: acr cpr (eq …) (csn …) (λL,T. L ⊢ ⬇* T).
+interpretation
+   "context-sensitive normality (term)"
+   'Normal L T = (cnf L T). 
+
+(* Basic properties *********************************************************)
+
+(* Basic_1: was: nf2_sort *)
+lemma cnf_sort: ∀L,k. L ⊢ 𝐍[⋆k].
+#L #k #X #H
+>(cpr_inv_sort1 … H) //
+qed.
+
+(* Basic_1: removed theorems 1: nf2_abst_shift *)

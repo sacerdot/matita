@@ -12,11 +12,27 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/computation/acp_cr.ma".
-include "Basic_2/computation/csn_lift.ma".
+include "Basic_2/reducibility/cpr_cpr.ma".
+include "Basic_2/computation/cprs_lcpr.ma".
 
-(* CONTEXT-SENSITIVE STRONGLY NORMALIZING TERMS *****************************)
+(* CONTEXT-SENSITIVE PARALLEL COMPUTATION ON TERMS **************************)
+
+(* Main propertis ***********************************************************)
+
+(* Basic_1: was: pr3_t *)
+theorem cprs_trans: ∀L,T1,T. L ⊢ T1 ➡* T → ∀T2. L ⊢ T ➡* T2 → L ⊢ T1 ➡* T2.
+/2 width=3/ qed.
+
+(* Basic_1: was: pr3_confluence *)
+theorem cprs_conf: ∀L,T1,T. L ⊢ T ➡* T1 → ∀T2. L ⊢ T ➡* T2 →
+                   ∃∃T0. L ⊢ T1 ➡* T0 & L ⊢ T2 ➡* T0.
+/3 width=3/ qed.
 
 (* Advanced properties ******************************************************)
 
-axiom csn_acr: acr cpr (eq …) (csn …) (λL,T. L ⊢ ⬇* T).
+(* Basic_1: was only: pr3_pr2_pr3_t *)
+lemma lcpr_cprs_trans: ∀L1,L2. L1 ⊢ ➡ L2 →
+                       ∀T1,T2. L2 ⊢ T1 ➡* T2 → L1 ⊢ T1 ➡* T2.
+#L1 #L2 #HL12 #T1 #T2 #H @(cprs_ind … H) -T2 //
+#T #T2 #_ #HT2 #IHT2 /3 width=5/
+qed.

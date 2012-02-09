@@ -27,7 +27,7 @@ definition CP3 ≝ λRR:lenv→relation term. λRP:lenv→predicate term.
 
 definition CP4 ≝ λRR:lenv→relation term. λRS:relation term.
                  ∀L0,L,T,T0,d,e. NF … (RR L) RS T → 
-                 ⇩[d,e] L0 ≡ L → ⇧[d, e] T ≡ T0 → NF … (RR L0) RS T0.
+                 ⇩[d, e] L0 ≡ L → ⇧[d, e] T ≡ T0 → NF … (RR L0) RS T0.
 
 definition CP4s ≝ λRR:lenv→relation term. λRS:relation term.
                   ∀L0,L,des. ⇩*[des] L0 ≡ L →
@@ -44,6 +44,7 @@ record acp (RR:lenv->relation term) (RS:relation term) (RP:lenv→predicate term
 
 (* Basic properties *********************************************************)
 
+(* Basic_1: was: nf2_lift1 *)
 lemma acp_lifts: ∀RR,RS. CP4 RR RS → CP4s RR RS.
 #RR #RS #HRR #L1 #L2 #des #H elim H -L1 -L2 -des
 [ #L #T1 #T2 #H #HT1

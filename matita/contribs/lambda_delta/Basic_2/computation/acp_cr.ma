@@ -44,8 +44,8 @@ definition S5 ≝ λRP,C:lenv→predicate term.
 definition S6 ≝ λRP,C:lenv→predicate term.
                 ∀L,Vs,T,W. C L (ⒶVs. T) → RP L W → C L (ⒶVs. ⓣW. T).
 
-definition S7 ≝ λC:lenv→predicate term. ∀L1,L2,T1,T2,d,e.
-                C L1 T1 → ⇩[d, e] L2 ≡ L1 → ⇧[d, e] T1 ≡ T2 → C L2 T2.
+definition S7 ≝ λC:lenv→predicate term. ∀L2,L1,T1,d,e.
+                C L1 T1 → ∀T2. ⇩[d, e] L2 ≡ L1 → ⇧[d, e] T1 ≡ T2 → C L2 T2.
 
 definition S7s ≝ λC:lenv→predicate term.
                  ∀L1,L2,des. ⇩*[des] L2 ≡ L1 →
@@ -76,6 +76,7 @@ interpretation
 
 (* Basic properties *********************************************************)
 
+(* Basic_1: was: sc3_lift1 *)
 lemma acr_lifts: ∀C. S7 C → S7s C.
 #C #HC #L1 #L2 #des #H elim H -L1 -L2 -des
 [ #L #T1 #T2 #H #HT1
@@ -93,14 +94,18 @@ lemma rp_lifts: ∀RR,RS,RP. acr RR RS RP (λL,T. RP L T) →
 @(s7 … HRP)
 qed.
 
+(* Basic_1: was only: sns3_lifts1 *)
 lemma rp_liftsv_all: ∀RR,RS,RP. acr RR RS RP (λL,T. RP L T) →
-                     ∀des,L0,L,Vs,V0s. ⇧*[des] Vs ≡ V0s →  ⇩*[des] L0 ≡ L →
+                     ∀des,L0,L,Vs,V0s. ⇧*[des] Vs ≡ V0s → ⇩*[des] L0 ≡ L →
                      all … (RP L) Vs → all … (RP L0) V0s.
 #RR #RS #RP #HRP #des #L0 #L #Vs #V0s #H elim H -Vs -V0s normalize //
 #T1s #T2s #T1 #T2 #HT12 #_ #IHT2s #HL0 * #HT1 #HT1s
 @conj /2 width=1/ /2 width=6 by rp_lifts/
 qed.
 
+(* Basic_1: was: 
+   sc3_sn3 sc3_abst sc3_appl sc3_abbr sc3_bind sc3_cast sc3_lift
+*) 
 lemma aacr_acr: ∀RR,RS,RP. acp RR RS RP → acr RR RS RP (λL,T. RP L T) →
                 ∀A. acr RR RS RP (aacr RP A).
 #RR #RS #RP #H1RP #H2RP #A elim A -A normalize //
@@ -164,3 +169,6 @@ lapply (s1 … HCB) -HCB #HCB
 @(s3 … HCA … ◊) /2 width=6 by rp_lifts/
 @(s5 … HCA … ◊ ◊) // /2 width=1/ /2 width=3/
 qed.
+
+(* Basic_1: removed theorems 2: sc3_arity_gen sc3_repl *)
+(* Basic_1: removed local theorems 1: sc3_sn3_abst *)

@@ -44,9 +44,13 @@ elim (tpss_inv_lref1 … H) -H /2 width=1/
 qed-.
 
 (* Basic_1: was: pr2_gen_abst *)
-lemma cpr_inv_abst1: ∀V1,T1,U2. ⓛV1. T1 ➡ U2 →
-                     ∃∃V2,T2. V1 ➡ V2 & T1 ➡ T2 & U2 = ⓛV2. T2.
-/2 width=3/ qed-.
+lemma cpr_inv_abst1: ∀L,V1,T1,U2. L ⊢ ⓛV1. T1 ➡ U2 → ∀I,W.
+                     ∃∃V2,T2. L ⊢ V1 ➡ V2 & L. ⓑ{I} W ⊢ T1 ➡ T2 & U2 = ⓛV2. T2.
+#L #V1 #T1 #Y * #X #H1 #H2 #I #W
+elim (tpr_inv_abst1 … H1) -H1 #V #T #HV1 #HT1 #H destruct
+elim (tpss_inv_bind1 … H2) -H2 #V2 #T2 #HV2 #HT2 #H destruct
+lapply (tpss_lsubs_conf … HT2 (L. ⓑ{I} W) ?) -HT2 /2 width=1/ /4 width=5/
+qed-.
 
 (* Basic_1: was pr2_gen_appl *)
 lemma cpr_inv_appl1: ∀L,V1,U0,U2. L ⊢ ⓐV1. U0 ➡ U2 →

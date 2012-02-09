@@ -40,6 +40,20 @@ lemma ltpss_strap: ∀L1,L,L2,d,e.
 lemma ltpss_refl: ∀L,d,e. L [d, e] ▶* L.
 /2 width=1/ qed.
 
+lemma ltpss_weak_all: ∀L1,L2,d,e. L1 [d, e] ▶* L2 → L1 [0, |L2|] ▶* L2.
+#L1 #L2 #d #e #H @(ltpss_ind … H) -L2 //
+#L #L2 #_ #HL2
+>(ltps_fwd_length … HL2) /3 width=5/
+qed.
+
+(* Basic forward lemmas *****************************************************)
+
+lemma ltpss_fwd_length: ∀L1,L2,d,e. L1 [d, e] ▶* L2 → |L1| = |L2|.
+#L1 #L2 #d #e #H @(ltpss_ind … H) -L2 //
+#L #L2 #_ #HL2 #IHL12 >IHL12 -IHL12
+/2 width=3 by ltps_fwd_length/
+qed-.
+
 (* Basic inversion lemmas ***************************************************)
 
 lemma ltpss_inv_refl_O2: ∀d,L1,L2. L1 [d, 0] ▶* L2 → L1 = L2.

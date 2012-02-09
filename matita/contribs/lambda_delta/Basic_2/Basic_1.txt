@@ -157,6 +157,7 @@ next_plus/props next_plus_next
 next_plus/props next_plus_lt
 nf2/arity arity_nf2_inv_all
 nf2/dec nf2_dec
+
 nf2/fwd nf2_gen_lref
 nf2/fwd nf2_gen_abst
 nf2/fwd nf2_gen_cast
@@ -164,20 +165,15 @@ nf2/fwd nf2_gen_beta
 nf2/fwd nf2_gen_flat
 nf2/fwd nf2_gen__nf2_gen_aux
 nf2/fwd nf2_gen_abbr
+
 nf2/fwd nf2_gen_void
 nf2/iso nf2_iso_appls_lref
-nf2/lift1 nf2_lift1
 nf2/pr3 nf2_pr3_unfold
 nf2/pr3 nf2_pr3_confluence
-nf2/props nf2_sort
-nf2/props nf2_csort_lref
-nf2/props nf2_abst
-nf2/props nf2_abst_shift
+
 nf2/props nfs2_tapp
 nf2/props nf2_appls_lref
-nf2/props nf2_appl_lref
-nf2/props nf2_lref_abst
-nf2/props nf2_lift
+
 pc1/props pc1_pr0_r
 pc1/props pc1_pr0_x
 pc1/props pc1_refl
@@ -255,6 +251,7 @@ pr2/clen pr2_gen_ctail
 pr2/fwd pr2_gen_void
 pr2/props pr2_ctail
 pr2/subst1 pr2_gen_cabbr
+
 pr3/fwd pr3_gen_sort
 pr3/fwd pr3_gen_abst
 pr3/fwd pr3_gen_cast
@@ -273,57 +270,26 @@ pr3/iso pr3_iso_beta
 pr3/iso pr3_iso_appls_beta
 pr3/pr1 pr3_pr1
 pr3/pr3 pr3_strip
-pr3/pr3 pr3_confluence
-pr3/props clear_pr3_trans
-pr3/props pr3_pr2
-pr3/props pr3_t
 pr3/props pr3_thin_dx
 pr3/props pr3_head_1
 pr3/props pr3_head_2
 pr3/props pr3_head_21
 pr3/props pr3_head_12
-pr3/props pr3_cflat
 pr3/props pr3_flat
-pr3/props pr3_pr0_pr2_t
-pr3/props pr3_pr2_pr2_t
-pr3/props pr3_pr2_pr3_t
 pr3/props pr3_pr3_pr3_t
 pr3/props pr3_lift
 pr3/props pr3_eta
 pr3/subst1 pr3_subst1
 pr3/subst1 pr3_gen_cabbr
 pr3/wcpr0 pr3_wcpr0_t
-sc3/arity sc3_arity_csubc
-sc3/arity sc3_arity
-sc3/props sc3_arity_gen
-sc3/props sc3_repl
-sc3/props sc3_lift
-sc3/props sc3_lift1
-sc3/props sc3_abbr
-sc3/props sc3_cast
-sc3/props sc3_props__sc3_sn3_abst
-sc3/props sc3_sn3
-sc3/props sc3_abst
-sc3/props sc3_bind
-sc3/props sc3_appl
-sn3/fwd sn3_gen_bind
-sn3/fwd sn3_gen_flat
-sn3/fwd sn3_gen_head
-sn3/fwd sn3_gen_cflat
-sn3/fwd sn3_gen_lift
-sn3/lift1 sns3_lifts1
-sn3/nf2 sn3_nf2
 sn3/nf2 nf2_sn3
 sn3/props sn3_pr3_trans
-sn3/props sn3_pr2_intro
-sn3/props sn3_cast
-sn3/props sn3_cflat
+sn3/props sn3_cpr3_trans
+
 sn3/props sn3_shift
 sn3/props sn3_change
 sn3/props sn3_gen_def
 sn3/props sn3_cdelta
-sn3/props sn3_cpr3_trans
-sn3/props sn3_bind
 sn3/props sn3_beta
 sn3/props sn3_appl_lref
 sn3/props sn3_appl_abbr
@@ -336,10 +302,10 @@ sn3/props sn3_appls_lref
 sn3/props sn3_appls_cast
 sn3/props sn3_appls_bind
 sn3/props sn3_appls_beta
-sn3/props sn3_lift
 sn3/props sn3_abbr
 sn3/props sn3_appls_abbr
 sn3/props sns3_lifts
+
 sty0/fwd sty0_gen_sort
 sty0/fwd sty0_gen_lref
 sty0/fwd sty0_gen_bind

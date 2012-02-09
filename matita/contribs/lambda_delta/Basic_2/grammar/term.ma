@@ -55,6 +55,11 @@ interpretation "application (term)"
 interpretation "native type annotation (term)"
    'SnCast T1 T2 = (TPair (Flat2 Cast) T1 T2).
 
+(* Basic properties *********************************************************)
+
+(* Basic_1: was: term_dec *)
+axiom term_eq_dec: ∀T1,T2:term. Decidable (T1 = T2).
+
 (* Basic inversion lemmas ***************************************************)
 
 lemma discr_tpair_xy_x: ∀I,T,V. ②{I} V. T = V → False.
@@ -76,10 +81,13 @@ lemma discr_tpair_xy_y: ∀I,V,T. ②{I} V. T = T → False.
 ]
 qed-.
 
-(* Basic properties *********************************************************)
-
-(* Basic_1: was: term_dec *)
-axiom term_eq_dec: ∀T1,T2:term. Decidable (T1 = T2).
+lemma eq_false_inv_tpair: ∀I,V1,T1,V2,T2.
+                          (②{I} V1. T1 = ②{I} V2. T2 → False) →
+                          (V1 = V2 → False) ∨ (V1 = V2 ∧ (T1 = T2 → False)).
+#I #V1 #T1 #V2 #T2 #H
+elim (term_eq_dec V1 V2) /3 width=1/ #HV12 destruct
+@or_intror @conj // #HT12 destruct /2 width=1/ 
+qed-.
 
 (* Basic_1: removed theorems 3:
             not_void_abst not_abbr_void not_abst_void

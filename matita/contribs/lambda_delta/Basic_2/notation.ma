@@ -108,6 +108,10 @@ notation "hvbox( 𝐒 [ T ] )"
    non associative with precedence 45
    for @{ 'Simple $T }.
 
+notation "hvbox( L ⊢ break term 90 T1 ≈ break T2 )"
+   non associative with precedence 45
+   for @{ 'Hom $L $T1 $T2 }.
+
 notation "hvbox( T1 break [ d , break e ] ≼ break T2 )"
    non associative with precedence 45
    for @{ 'SubEq $T1 $d $e $T2 }.

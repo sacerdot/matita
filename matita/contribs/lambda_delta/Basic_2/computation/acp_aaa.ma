@@ -22,6 +22,7 @@ include "Basic_2/computation/lsubc_ldrops.ma".
 
 (* Main propertis ***********************************************************)
 
+(* Basic_1: was: sc3_arity_csubc *)
 theorem aacr_aaa_csubc_lifts: ∀RR,RS,RP.
                               acp RR RS RP → acr RR RS RP (λL,T. RP L T) →
                               ∀L1,T,A. L1 ⊢ T ÷ A → ∀L0,des. ⇩*[des] L0 ≡ L1 →
@@ -87,6 +88,7 @@ theorem aacr_aaa_csubc_lifts: ∀RR,RS,RP.
 ]
 qed.
 
+(* Basic_1: was: sc3_arity *)
 lemma aacr_aaa: ∀RR,RS,RP. acp RR RS RP → acr RR RS RP (λL,T. RP L T) →
                 ∀L,T,A. L ⊢ T ÷ A → ⦃L, T⦄ [RP] ϵ 〚A〛.
 /2 width=8/ qed.
