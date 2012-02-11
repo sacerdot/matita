@@ -31,6 +31,10 @@ lemma cprs_ind: ∀L,T1. ∀R:predicate term. R T1 →
 #L #T1 #R #HT1 #IHT1 #T2 #HT12 @(TC_star_ind … HT1 IHT1 … HT12) //
 qed-.
 
+axiom cprs_ind_dx: ∀L,T2. ∀R:predicate term. R T2 →
+                   (∀T1,T. L ⊢ T1 ➡ T → L ⊢ T ➡* T2 → R T → R T1) →
+                   ∀T1. L ⊢ T1 ➡* T2 → R T1.
+
 (* Basic properties *********************************************************)
 
 (* Basic_1: was: pr3_refl *)

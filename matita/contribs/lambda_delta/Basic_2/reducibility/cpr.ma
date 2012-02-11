@@ -28,6 +28,9 @@ interpretation
 
 (* Basic properties *********************************************************)
 
+lemma cpr_intro: ∀L,T1,T,T2,d,e. T1 ➡ T → L ⊢ T [d, e] ▶* T2 → L ⊢ T1 ➡ T2.
+/4 width=3/ qed-.
+
 (* Basic_1: was by definition: pr2_free *)
 lemma cpr_pr: ∀T1,T2. T1 ➡ T2 → ∀L. L ⊢ T1 ➡ T2.
 /2 width=3/ qed.
@@ -71,6 +74,26 @@ lemma cpr_inv_sort1: ∀L,T2,k. L ⊢ ⋆k ➡ T2 → T2 = ⋆k.
 #L #T2 #k * #X #H
 >(tpr_inv_atom1 … H) -H #H
 >(tpss_inv_sort1 … H) -H //
+qed-.
+
+(* Basic_1: was pr2_gen_abbr *)
+lemma cpr_inv_abbr1: ∀L,V1,T1,U2. L ⊢ ⓓV1. T1 ➡ U2 →
+                     (∃∃V,V2,T2. V1 ➡ V & L ⊢ V [O, |L|] ▶* V2 &
+                                 L. ⓓV ⊢ T1 ➡ T2 &
+                                 U2 = ⓓV2. T2
+                      ) ∨
+                      ∃∃T. ⇧[0,1] T ≡ T1 & L ⊢ T ➡ U2.
+#L #V1 #T1 #Y * #X #H1 #H2
+elim (tpr_inv_abbr1 … H1) -H1 *
+[ #V #T0 #T #HV1 #HT10 #HT0 #H destruct
+  elim (tpss_inv_bind1 … H2) -H2 #V2 #T2 #HV2 #HT2 #H destruct
+  lapply (tps_lsubs_conf … HT0 (L. ⓓV) ?) -HT0 /2 width=1/ #HT0
+  lapply (tps_weak_all … HT0) -HT0 #HT0
+  lapply (tpss_lsubs_conf … HT2 (L. ⓓV) ?) -HT2 /2 width=1/ #HT2
+  lapply (tpss_weak_all … HT2) -HT2 #HT2
+  lapply (tpss_strap … HT0 HT2) -T /4 width=7/
+| /4 width=5/
+]
 qed-.
 
 (* Basic_1: was: pr2_gen_cast *)

@@ -12,16 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/unfold/ltpss_tpss.ma".
+include "Basic_2/unfold/ltpss_ltpss.ma".
 include "Basic_2/reducibility/cpr.ma".
+include "Basic_2/reducibility/lcpr.ma".
 
-(* CONTEXT-SENSITIVE PARALLEL REDUCTION ON TERMS ****************************)
+(* CONTEXT-SENSITIVE PARALLEL REDUCTION ON LOCAL ENVIRONMENTS *************)
 
-(* Properties concerning partial unfold on local environments ***************)
+(* Advanced properties ****************************************************)
 
-lemma ltpss_cpr_trans: ∀L1,L2,d,e. L1 [d, e] ▶* L2 →
-                       ∀T1,T2. L2 ⊢ T1 ➡ T2 → L1 ⊢ T1 ➡ T2.
-#L1 #L2 #d #e #HL12 #T1 #T2 *
-lapply (ltpss_weak_all … HL12)
-<(ltpss_fwd_length … HL12) -HL12 /3 width=5/
+lemma lcpr_pair: ∀L1,L2. L1 ⊢ ➡ L2 → ∀V1,V2. L2 ⊢ V1 ➡ V2 →
+                 ∀I. L1. ⓑ{I} V1 ⊢ ➡ L2. ⓑ{I} V2.
+#L1 #L2 * #L #HL1 #HL2 #V1 #V2 *
+<(ltpss_fwd_length … HL2) /4 width=5/
 qed.

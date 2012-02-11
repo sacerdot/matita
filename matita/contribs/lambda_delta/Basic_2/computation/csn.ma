@@ -56,11 +56,6 @@ elim (term_eq_dec T1 T2) #HT12
 | -HT1 -HT2 /3 width=4/
 qed.
 
-axiom tpss_csn_trans: ∀L,T2. L ⊢ ⬇* T2 → ∀T1,d,e. L ⊢ T1 [d, e] ▶* T2 → L ⊢ ⬇* T1.
-(*
-#L #T2 #H @(csn_ind … H) -T2 #T2 #HT2 #IHT2 #T1 #d #e #HT12
-@csn_intro #T #HLT1 #HT1  
-*)
 (* Basic_1: was: sn3_cast *)
 lemma csn_cast: ∀L,W. L ⊢ ⬇* W → ∀T. L ⊢ ⬇* T → L ⊢ ⬇* ⓣW. T.
 #L #W #HW elim HW -W #W #_ #IHW #T #HT @(csn_ind … HT) -T #T #HT #IHT
