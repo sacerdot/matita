@@ -290,7 +290,6 @@ sn3/props sn3_shift
 sn3/props sn3_change
 sn3/props sn3_gen_def
 sn3/props sn3_cdelta
-sn3/props sn3_beta
 sn3/props sn3_appl_lref
 sn3/props sn3_appl_abbr
 sn3/props sn3_appl_cast
@@ -302,7 +301,6 @@ sn3/props sn3_appls_lref
 sn3/props sn3_appls_cast
 sn3/props sn3_appls_bind
 sn3/props sn3_appls_beta
-sn3/props sn3_abbr
 sn3/props sn3_appls_abbr
 sn3/props sns3_lifts
 

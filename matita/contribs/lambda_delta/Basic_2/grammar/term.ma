@@ -89,6 +89,21 @@ elim (term_eq_dec V1 V2) /3 width=1/ #HV12 destruct
 @or_intror @conj // #HT12 destruct /2 width=1/ 
 qed-.
 
+lemma eq_false_inv_beta: ∀V1,V2,W1,W2,T1,T2.
+                         (ⓐV1. ⓛW1. T1 = ⓐV2. ⓛW2 .T2 →False) →
+                         (W1 = W2 → False) ∨
+                         (W1 = W2 ∧ (ⓓV1. T1 = ⓓV2. T2 → False)).
+#V1 #V2 #W1 #W2 #T1 #T2 #H
+elim (eq_false_inv_tpair … H) -H
+[ #HV12 elim (term_eq_dec W1 W2) /3 width=1/
+  #H destruct @or_intror @conj // #H destruct /2 width=1/
+| * #H1 #H2 destruct
+  elim (eq_false_inv_tpair … H2) -H2 /3 width=1/
+  * #H #HT12 destruct
+  @or_intror @conj // #H destruct /2 width=1/
+]
+qed.
+
 (* Basic_1: removed theorems 3:
             not_void_abst not_abbr_void not_abst_void
 *)

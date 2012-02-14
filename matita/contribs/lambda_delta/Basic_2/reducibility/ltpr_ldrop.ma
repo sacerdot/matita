@@ -17,7 +17,7 @@ include "Basic_2/reducibility/ltpr.ma".
 
 (* CONTEXT-FREE PARALLEL REDUCTION ON LOCAL ENVIRONMENTS ********************)
 
-(* Basic_1: was: wcpr0_ldrop *)
+(* Basic_1: was: wcpr0_drop *)
 lemma ltpr_ldrop_conf: ∀L1,K1,d,e. ⇩[d, e] L1 ≡ K1 → ∀L2. L1 ➡ L2 →
                        ∃∃K2. ⇩[d, e] L2 ≡ K2 & K1 ➡ K2.
 #L1 #K1 #d #e #H elim H -L1 -K1 -d -e
@@ -34,7 +34,7 @@ lemma ltpr_ldrop_conf: ∀L1,K1,d,e. ⇩[d, e] L1 ≡ K1 → ∀L2. L1 ➡ L2 �
 ]
 qed.
 
-(* Basic_1: was: wcpr0_ldrop_back *)
+(* Basic_1: was: wcpr0_drop_back *)
 lemma ldrop_ltpr_trans: ∀L1,K1,d,e. ⇩[d, e] L1 ≡ K1 → ∀K2. K1 ➡ K2 →
                         ∃∃L2. ⇩[d, e] L2 ≡ K2 & L1 ➡ L2.
 #L1 #K1 #d #e #H elim H -L1 -K1 -d -e

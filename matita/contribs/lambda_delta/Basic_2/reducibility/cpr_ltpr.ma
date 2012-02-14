@@ -17,7 +17,7 @@ include "Basic_2/reducibility/cpr.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL REDUCTION ON TERMS ****************************)
 
-(* Unfold properties ********************************************************)
+(* Properties concerning parallel unfold on terms ***************************)
 
 (* Note: we could invoke tpss_weak_all instead of ltpr_fwd_length *)
 (* Basic_1: was only: pr2_subst1 *)

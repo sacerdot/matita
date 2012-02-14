@@ -21,7 +21,7 @@ include "Basic_2/reducibility/cpr.ma".
 
 lemma cpr_bind_sn: ∀I,L,V1,V2,T1,T2. L ⊢ V1 ➡ V2 → T1 ➡ T2 →
                    L ⊢ ⓑ{I} V1. T1 ➡ ⓑ{I} V2. T2.
-#I #L #V1 #V2 #T1 #T2 * #V #HV1 #HV2 #HT12 
+#I #L #V1 #V2 #T1 #T2 * #V #HV1 #HV2 #HT12
 @ex2_1_intro [2: @(tpr_delta … HV1 HT12) | skip ] /2 width=3/ (* /3 width=5/ is too slow *)
 qed.
 
@@ -33,6 +33,13 @@ elim (tpss_split_up … HT2 1 ? ?) -HT2 // #T0 <minus_n_O #HT0 normalize <minus_
 lapply (tpss_lsubs_conf … HT0 (⋆. ⓑ{I} V2) ?) -HT0 /2 width=1/ #HT0
 lapply (tpss_tps … HT0) -HT0 #HT0
 @ex2_1_intro [2: @(tpr_delta … HV12 HT1 HT0) | skip | /2 width=1/ ] (**) (* /3 width=5/ is too slow *)
+qed.
+
+
+(* Basic_1: was only: pr2_head_1 *) 
+lemma cpr_pair_sn: ∀I,L,V1,V2,T1,T2. L ⊢ V1 ➡ V2 → T1 ➡ T2 →
+                   L ⊢ ②{I} V1. T1 ➡ ②{I} V2. T2.
+* /2 width=1/ /3 width=1/
 qed.
 
 (* Advanced forward lemmas **************************************************)

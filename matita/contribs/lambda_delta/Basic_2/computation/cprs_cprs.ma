@@ -36,3 +36,9 @@ lemma lcpr_cprs_trans: ∀L1,L2. L1 ⊢ ➡ L2 →
 #L1 #L2 #HL12 #T1 #T2 #H @(cprs_ind … H) -T2 //
 #T #T2 #_ #HT2 #IHT2 /3 width=5/
 qed.
+
+lemma cpr_abbr: ∀L,V1,V2. L ⊢ V1 ➡ V2 → ∀T1,T2. L. ⓓV1 ⊢ T1 ➡ T2 →
+                L ⊢ ⓓV1. T1 ➡* ⓓV2. T2.
+#L #V1 #V2 #HV12 #T1 #T2 #HT12
+@(cprs_strap2 … (ⓓV1.T2)) /2 width=1/ /3 width=1/
+qed.

@@ -72,19 +72,14 @@ qed.
 
 (* Basic forward lemmas *****************************************************)
 
-fact csn_fwd_flat2_aux: ∀L,U. L ⊢ ⬇* U → ∀I,V,T. U = ⓕ{I} V. T → L ⊢ ⬇* T.
+fact csn_fwd_flat_dx_aux: ∀L,U. L ⊢ ⬇* U → ∀I,V,T. U = ⓕ{I} V. T → L ⊢ ⬇* T.
 #L #U #H elim H -H #U0 #_ #IH #I #V #T #H destruct
 @csn_intro #T2 #HLT2 #HT2
 @(IH (ⓕ{I} V. T2)) -IH // /2 width=1/ -HLT2 #H destruct /2 width=1/
 qed.
 
 (* Basic_1: was: sn3_gen_flat *)
-lemma csn_fwd_flat2: ∀I,L,V,T. L ⊢ ⬇* ⓕ{I} V. T → L ⊢ ⬇* T.
+lemma csn_fwd_flat_dx: ∀I,L,V,T. L ⊢ ⬇* ⓕ{I} V. T → L ⊢ ⬇* T.
 /2 width=5/ qed-.
-
-(*
-sn3/fwd sn3_gen_bind
-sn3/fwd sn3_gen_head
-*)
 
 (* Basic_1: removed theorems 3: sn3_gen_cflat sn3_cflat sn3_bind *)

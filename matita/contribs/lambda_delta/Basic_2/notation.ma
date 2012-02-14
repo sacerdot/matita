@@ -278,6 +278,10 @@ notation "hvbox( L ⊢ ⬇ * T )"
    non associative with precedence 45
    for @{ 'SN $L $T }.
 
+notation "hvbox( L ⊢ ⬇ * * T )"
+   non associative with precedence 45
+   for @{ 'SNStar $L $T }.
+
 notation "hvbox( ⦃ L, break T ⦄ break [ R ] ϵ break 〚 A 〛 )"
    non associative with precedence 45
    for @{ 'InEInt $R $L $T $A }.

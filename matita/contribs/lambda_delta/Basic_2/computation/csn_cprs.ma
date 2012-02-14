@@ -25,10 +25,6 @@ interpretation
    "context-sensitive strong normalization (term)"
    'SNStar L T = (csns L T).
 
-notation "hvbox( L ⊢ ⬇ * * T )"
-   non associative with precedence 45
-   for @{ 'SNStar $L $T }.
-
 (* Basic eliminators ********************************************************)
 
 lemma csns_ind: ∀L. ∀R:predicate term.

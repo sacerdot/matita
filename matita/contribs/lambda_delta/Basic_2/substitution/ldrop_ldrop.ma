@@ -19,7 +19,7 @@ include "Basic_2/substitution/ldrop.ma".
 
 (* Main properties **********************************************************)
 
-(* Basic_1: was: ldrop_mono *)
+(* Basic_1: was: drop_mono *)
 theorem ldrop_mono: ∀d,e,L,L1. ⇩[d, e] L ≡ L1 →
                     ∀L2. ⇩[d, e] L ≡ L2 → L1 = L2.
 #d #e #L #L1 #H elim H -d -e -L -L1
@@ -36,7 +36,7 @@ theorem ldrop_mono: ∀d,e,L,L1. ⇩[d, e] L ≡ L1 →
 ]
 qed-.
 
-(* Basic_1: was: ldrop_conf_ge *)
+(* Basic_1: was: drop_conf_ge *)
 theorem ldrop_conf_ge: ∀d1,e1,L,L1. ⇩[d1, e1] L ≡ L1 →
                        ∀e2,L2. ⇩[0, e2] L ≡ L2 → d1 + e1 ≤ e2 →
                        ⇩[0, e2 - e1] L1 ≡ L2.
@@ -55,7 +55,7 @@ theorem ldrop_conf_ge: ∀d1,e1,L,L1. ⇩[d1, e1] L ≡ L1 →
 ]
 qed.
 
-(* Basic_1: was: ldrop_conf_lt *)
+(* Basic_1: was: drop_conf_lt *)
 theorem ldrop_conf_lt: ∀d1,e1,L,L1. ⇩[d1, e1] L ≡ L1 →
                        ∀e2,K2,I,V2. ⇩[0, e2] L ≡ K2. ⓑ{I} V2 →
                        e2 < d1 → let d ≝ d1 - e2 - 1 in
@@ -77,7 +77,7 @@ theorem ldrop_conf_lt: ∀d1,e1,L,L1. ⇩[d1, e1] L ≡ L1 →
 ]
 qed.
 
-(* Basic_1: was: ldrop_trans_le *)
+(* Basic_1: was: drop_trans_le *)
 theorem ldrop_trans_le: ∀d1,e1,L1,L. ⇩[d1, e1] L1 ≡ L →
                         ∀e2,L2. ⇩[0, e2] L ≡ L2 → e2 ≤ d1 →
                         ∃∃L0. ⇩[0, e2] L1 ≡ L0 & ⇩[d1 - e2, e1] L0 ≡ L2.
@@ -99,7 +99,7 @@ theorem ldrop_trans_le: ∀d1,e1,L1,L. ⇩[d1, e1] L1 ≡ L →
 ]
 qed.
 
-(* Basic_1: was: ldrop_trans_ge *)
+(* Basic_1: was: drop_trans_ge *)
 theorem ldrop_trans_ge: ∀d1,e1,L1,L. ⇩[d1, e1] L1 ≡ L →
                         ∀e2,L2. ⇩[0, e2] L ≡ L2 → d1 ≤ e2 → ⇩[0, e1 + e2] L1 ≡ L2.
 #d1 #e1 #L1 #L #H elim H -d1 -e1 -L1 -L
@@ -121,6 +121,6 @@ theorem ldrop_trans_ge_comm: ∀d1,e1,e2,L1,L2,L.
 #e1 #e1 #e2 >commutative_plus /2 width=5/
 qed.
 
-(* Basic_1: was: ldrop_conf_rev *)
+(* Basic_1: was: drop_conf_rev *)
 axiom ldrop_div: ∀e1,L1,L. ⇩[0, e1] L1 ≡ L → ∀e2,L2. ⇩[0, e2] L2 ≡ L →
                  ∃∃L0. ⇩[0, e1] L0 ≡ L2 & ⇩[e1, e2] L0 ≡ L1.
