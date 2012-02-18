@@ -56,4 +56,11 @@ lemma cprs_lsubs_conf: ∀L1,T1,T2. L1 ⊢ T1 ➡* T2 →
 /3 width=3/
 qed.
 
+lemma cprs_flat_dx: ∀I,L,V1,V2. L ⊢ V1 ➡ V2 → ∀T1,T2. L ⊢ T1 ➡* T2 →
+                    L ⊢ ⓕ{I} V1. T1 ➡* ⓕ{I} V2. T2.
+#I #L #V1 #V2 #HV12 #T1 #T2 #HT12 @(cprs_ind … HT12) -T2 /3 width=1/
+#T #T2 #_ #HT2 #IHT2
+@(cprs_strap1 … IHT2) -IHT2 /2 width=1/
+qed.
+
 (* Basic_1: removed theorems 2: clear_pr3_trans pr3_cflat *)

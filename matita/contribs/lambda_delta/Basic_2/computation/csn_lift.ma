@@ -77,3 +77,24 @@ elim (eq_false_inv_tpair … H2) -H2
 | -HLW0 * #H destruct /3 width=1/
 ]
 qed.
+(*
+axiom eq_false_inv_tpair_dx: ∀I,V1,T1,V2,T2.
+                             (②{I} V1. T1 = ②{I} V2. T2 → False) →
+                             (T1 = T2 → False) ∨ (T1 = T2 ∧ (V1 = V2 → False)).
+                             
+#I #V1 #T1 #V2 #T2 #H
+elim (term_eq_dec V1 V2) /3 width=1/ #HV12 destruct
+@or_intror @conj // #HT12 destruct /2 width=1/ 
+qed-.
+
+lemma csn_appl_simple: ∀L,T. L ⊢ ⬇* T → 𝐒[T] → ∀V. L ⊢ ⬇* V → L ⊢ ⬇* ⓐV. T.
+#L #T #H elim H -T #T #_ #IHT #HT #V #H @(csn_ind … H) -V #V #HV #IHV 
+@csn_intro #X #H1 #H2
+elim (cpr_inv_appl1_simple … H1 ?) // -H1
+#V0 #T0 #HLV0 #HLT0 #H destruct
+elim (eq_false_inv_tpair_dx … H2) -H2
+[ -IHV #HT0 @IHT -IHT // -HLT0 /2 width=1/ -HT0 /2 width=3/   
+| -HV -HT -IHT -HLT0 * #H #HV0 destruct /3 width=1/
+]
+qed.
+*)

@@ -30,4 +30,7 @@ lemma cnf_sort: ∀L,k. L ⊢ 𝐍[⋆k].
 >(cpr_inv_sort1 … H) //
 qed.
 
+axiom cnf_dec: ∀L,T1. L ⊢ 𝐍[T1] ∨
+               ∃∃T2. L ⊢ T1 ➡ T2 & (T1 = T2 → False).
+
 (* Basic_1: removed theorems 1: nf2_abst_shift *)

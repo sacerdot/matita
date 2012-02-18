@@ -38,6 +38,7 @@ qed-.
 
 (* Basic properties *********************************************************)
 
+(* Basic_1: was: sn3_intro *)
 lemma csns_intro: ∀L,T1.
                   (∀T2. L ⊢ T1 ➡* T2 → (T1 = T2 → False) → L ⊢ ⬇** T2) → L ⊢ ⬇** T1.
 #L #T1 #H
@@ -48,6 +49,7 @@ fact csns_intro_aux: ∀L,T1.
                      (∀T,T2. L ⊢ T ➡* T2 → T1 = T → (T1 = T2 → False) → L ⊢ ⬇** T2) → L ⊢ ⬇** T1.
 /4 width=3/ qed-.
 
+(* Basic_1: was: sn3_pr3_trans (old version) *)
 lemma csns_cprs_trans: ∀L,T1. L ⊢ ⬇** T1 → ∀T2. L ⊢ T1 ➡* T2 → L ⊢ ⬇** T2.
 #L #T1 #H elim H -T1 #T1 #HT1 #IHT1 #T2 #HLT12
 @csns_intro #T #HLT2 #HT2
@@ -56,6 +58,7 @@ elim (term_eq_dec T1 T2) #HT12
 | -HT1 -HT2 /3 width=4/
 qed.
 
+(* Basic_1: was: sn3_pr2_intro (old version) *)
 lemma csns_intro_cpr: ∀L,T1.
                       (∀T2. L ⊢ T1 ➡ T2 → (T1 = T2 → False) → L ⊢ ⬇** T2) →
                       L ⊢ ⬇** T1.
@@ -81,8 +84,20 @@ theorem csns_csn: ∀L,T. L ⊢ ⬇** T → L ⊢ ⬇* T.
 #L #T #H @(csns_ind … H) -T /4 width=1/
 qed.
 
+(* Basic_1: was: sn3_pr3_trans *)
 lemma csn_cprs_trans: ∀L,T1. L ⊢ ⬇* T1 → ∀T2. L ⊢ T1 ➡* T2 → L ⊢ ⬇* T2.
 /4 width=3/ qed.
+
+(* Basic_1: was: nf2_sn3 *)
+lemma csn_cwn: ∀L,T1. L ⊢ ⬇* T1 →
+               ∃∃T2. L ⊢ T1 ➡* T2 & L ⊢ 𝐍[T2].
+#L #T1 #H elim H -T1 #T1 #_ #IHT1
+elim (cnf_dec L T1)
+[ -IHT1 /2 width=3/
+| * #T2 #HLT12 #HT12
+  elim (IHT1 T2 ? ?) -IHT1 // /2 width=1/ -HT12 /3 width=3/
+]
+qed.
 
 (* Main eliminators *********************************************************)
 

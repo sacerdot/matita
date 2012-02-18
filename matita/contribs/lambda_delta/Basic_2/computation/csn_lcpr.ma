@@ -73,3 +73,47 @@ qed.
 lemma csn_appl_beta: ∀L,W. L ⊢ ⬇* W → ∀V,T. L ⊢ ⬇* (ⓓV. T) → (**)
                      L ⊢ ⬇* ⓐV. ⓛW. T.
 /2 width=3/ qed.
+
+fact csn_appl_theta_aux: ∀L,U. L ⊢ ⬇* U → ∀V1,V2. ⇧[0, 1] V1 ≡ V2 →
+                         ∀V,T. U = ⓓV. ⓐV2. T → L ⊢ ⬇* ⓐV1. ⓓV. T.
+#L #X #H @(csn_ind_cprs … H) -X #X #HVT #IHVT #V1 #V2 #HV12 #V #T #H destruct
+lapply (csn_fwd_pair_sn … HVT) #HV
+lapply (csn_fwd_bind_dx … HVT) -HVT #HVT
+@csn_intro #X #HL #H
+elim (cpr_inv_appl1 … HL) -HL *
+[ -HV #V0 #Y #HLV10 #HL #H0 destruct
+  elim (cpr_inv_abbr1 … HL) -HL *
+  [ #V3 #V4 #T3 #HV3 #HLV34 #HLT3 #H0 destruct
+    lapply (cpr_intro … HV3 HLV34) -HLV34 #HLV34
+    elim (lift_total V0 0 1) #V5 #HV05
+    elim (term_eq_dec (ⓓV.ⓐV2.T) (ⓓV4.ⓐV5.T3))
+    [ -IHVT #H0 destruct
+      elim (eq_false_inv_tpair … H) -H
+      [ -HLV10 -HLV34 -HV3 -HLT3 -HVT
+        >(lift_inj … HV12 … HV05) -V5
+        #H elim (H ?) //
+      | * #_ #H elim (H ?) //
+      ]
+    | -H -HVT #H
+      lapply (cpr_lift (L. ⓓV) … HV12 … HV05 HLV10) -HLV10 -HV12 /2 width=1/ #HV25
+      lapply (ltpr_cpr_trans (L. ⓓV) … HLT3) /2 width=1/ -HLT3 #HLT3
+      @(IHVT … H … HV05) -IHVT // -H -HV05 /3 width=1/
+    ]
+  | -H -IHVT #T0 #HT0 #HLT0
+    @(csn_cpr_trans … (ⓐV1.T0)) /2 width=1/ -V0 -Y
+    @(csn_inv_lift … 0 1 HVT) /2 width=1/
+  ]
+| -HV -HV12 -HVT -IHVT -H #V0 #W0 #T0 #T1 #_ #_ #H destruct
+| -IHVT -H #V0 #V3 #W0 #W1 #T0 #T1 #HLV10 #HLW01 #HLT01 #HV03 #H1 #H2 destruct
+  lapply (cpr_lift (L. ⓓW0) … HV12 … HV03 HLV10) -HLV10 -HV12 -HV03 /2 width=1/ #HLV23
+  lapply (lcpr_cpr_trans (L. ⓓW0) … HLT01) -HLT01 /2 width=1/ #HLT01
+  @csn_abbr /2 width=3/ -HV
+  @(csn_lcpr_conf (L. ⓓW0)) /2 width=1/ -W1
+  @(csn_cprs_trans … HVT) -HVT /2 width=1/
+]
+qed.
+
+(* Basic_1: was: sn3_appl_bind *)
+lemma csn_appl_theta: ∀V1,V2. ⇧[0, 1] V1 ≡ V2 →
+                      ∀L,V,T. L ⊢ ⬇* ⓓV. ⓐV2. T → L ⊢ ⬇* ⓐV1. ⓓV. T.
+/2 width=5/ qed.

@@ -282,8 +282,6 @@ pr3/props pr3_eta
 pr3/subst1 pr3_subst1
 pr3/subst1 pr3_gen_cabbr
 pr3/wcpr0 pr3_wcpr0_t
-sn3/nf2 nf2_sn3
-sn3/props sn3_pr3_trans
 sn3/props sn3_cpr3_trans
 
 sn3/props sn3_shift
@@ -293,7 +291,6 @@ sn3/props sn3_cdelta
 sn3/props sn3_appl_lref
 sn3/props sn3_appl_abbr
 sn3/props sn3_appl_cast
-sn3/props sn3_appl_bind
 sn3/props sn3_appl_appl
 sn3/props sn3_appl_beta
 sn3/props sn3_appl_appls
