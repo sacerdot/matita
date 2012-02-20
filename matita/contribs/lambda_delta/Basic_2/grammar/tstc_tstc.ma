@@ -12,28 +12,21 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/computation/acp_cr.ma".
-include "Basic_2/computation/csn_lcpr.ma".
-include "Basic_2/computation/csn_vector.ma".
+include "Basic_2/grammar/tstc.ma".
 
-(* CONTEXT-SENSITIVE STRONGLY NORMALIZING TERMS *****************************)
+(* SAME TOP TERM CONSTRUCTOR ************************************************)
 
-(* Advanced properties ******************************************************)
-(*
-lemma csn_applv_theta: ∀L,V1s,V2s. ⇧[0, 1] V1s ≡ V2s →
-                       ∀V,T. L ⊢ ⬇* ⓓV. ⒶV2s. T → L ⊢ ⬇* V → L ⊢ ⬇* ⒶV1s. ⓓV. T.
-#L #V1s #V2s * -V1s -V2s /2 width=1/
-#V1s #V2s #V1 #V2 #HV12 * -V1s -V2s /2 width=3/
-#V1s #V2s #W1 #W2 #HW12 #HV12s #V #T #H #HV
-lapply (csn_appl_theta … HV12 … H) -H -HV12 #H
-lapply (csn_fwd_pair_sn … H) #HV1
-@csn_appl_simple // #X #H1 #H2
-whd in ⊢ (? ? %);
-*)
-(*
-lemma csn_S5: ∀L,V1s,V2s. ⇧[0, 1] V1s ≡ V2s →
-              ∀V,T. L. ⓓV ⊢ ⬇* ⒶV2s. T → L ⊢ ⬇* V → L ⊢ ⬇* ⒶV1s. ⓓV. T.
-#L #V1s #V2s #H elim H -V1s -V2s /2 width=1/
-*)
+(* Main properties **********************************************************)
 
-axiom csn_acr: acr cpr (eq …) (csn …) (λL,T. L ⊢ ⬇* T).
+(* Basic_1: was: iso_trans *)
+theorem tstc_trans: ∀T1,T. T1 ≃ T → ∀T2. T ≃ T2 → T1 ≃ T2.
+#T1 #T * -T1 -T //
+#I #V1 #V #T1 #T #X #H
+elim (tstc_inv_pair1 … H) -H #V2 #T2 #H destruct //
+qed.
+
+theorem tstc_canc_sn: ∀T,T1. T ≃ T1 → ∀T2. T ≃ T2 → T1 ≃ T2.
+/3 width=3/ qed.
+
+theorem tstc_canc_dx: ∀T1,T. T1 ≃ T → ∀T2. T2 ≃ T → T1 ≃ T2.
+/3 width=3/ qed.

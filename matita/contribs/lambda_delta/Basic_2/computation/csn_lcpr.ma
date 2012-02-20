@@ -35,7 +35,7 @@ elim (cpr_inv_abbr1 … H1) -H1 *
 [ #V0 #V1 #T1 #HLV0 #HLV01 #HLT1 #H destruct
   lapply (cpr_intro … HLV0 HLV01) -HLV01 #HLV1
   lapply (ltpr_cpr_trans (L. ⓓV) … HLT1) /2 width=1/ -V0 #HLT1
-  elim (eq_false_inv_tpair … H2) -H2
+  elim (eq_false_inv_tpair_sn … H2) -H2
   [ #HV1 @IHV // /2 width=1/ -HV1
     @(csn_lcpr_conf (L. ⓓV)) /2 width=1/ -HLV1 /2 width=3/
   | -IHV -HLV1 * #H destruct /3 width=1/
@@ -88,7 +88,7 @@ elim (cpr_inv_appl1 … HL) -HL *
     elim (lift_total V0 0 1) #V5 #HV05
     elim (term_eq_dec (ⓓV.ⓐV2.T) (ⓓV4.ⓐV5.T3))
     [ -IHVT #H0 destruct
-      elim (eq_false_inv_tpair … H) -H
+      elim (eq_false_inv_tpair_sn … H) -H
       [ -HLV10 -HLV34 -HV3 -HLT3 -HVT
         >(lift_inj … HV12 … HV05) -V5
         #H elim (H ?) //

@@ -12,28 +12,25 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/computation/acp_cr.ma".
-include "Basic_2/computation/csn_lcpr.ma".
-include "Basic_2/computation/csn_vector.ma".
+include "Basic_2/grammar/tstc.ma".
+include "Basic_2/reducibility/cpr_lift.ma".
+include "Basic_2/reducibility/lcpr_cpr.ma".
+include "Basic_2/computation/cprs_cprs.ma".
 
-(* CONTEXT-SENSITIVE STRONGLY NORMALIZING TERMS *****************************)
+(* CONTEXT-SENSITIVE PARALLEL COMPUTATION ON TERMS **************************)
 
-(* Advanced properties ******************************************************)
-(*
-lemma csn_applv_theta: ∀L,V1s,V2s. ⇧[0, 1] V1s ≡ V2s →
-                       ∀V,T. L ⊢ ⬇* ⓓV. ⒶV2s. T → L ⊢ ⬇* V → L ⊢ ⬇* ⒶV1s. ⓓV. T.
-#L #V1s #V2s * -V1s -V2s /2 width=1/
-#V1s #V2s #V1 #V2 #HV12 * -V1s -V2s /2 width=3/
-#V1s #V2s #W1 #W2 #HW12 #HV12s #V #T #H #HV
-lapply (csn_appl_theta … HV12 … H) -H -HV12 #H
-lapply (csn_fwd_pair_sn … H) #HV1
-@csn_appl_simple // #X #H1 #H2
-whd in ⊢ (? ? %);
-*)
-(*
-lemma csn_S5: ∀L,V1s,V2s. ⇧[0, 1] V1s ≡ V2s →
-              ∀V,T. L. ⓓV ⊢ ⬇* ⒶV2s. T → L ⊢ ⬇* V → L ⊢ ⬇* ⒶV1s. ⓓV. T.
-#L #V1s #V2s #H elim H -V1s -V2s /2 width=1/
-*)
+(* Forward lemmas involving same top term constructor ***********************)
 
-axiom csn_acr: acr cpr (eq …) (csn …) (λL,T. L ⊢ ⬇* T).
+lemma cpr_fwd_theta: ∀L,V1,V,T,U. L ⊢ ⓐV1. ⓓV. T ➡ U →
+                     ∀V2. ⇧[0, 1] V1 ≡ V2 → ⓐV1. ⓓV. T ≃ U ∨
+                     L ⊢ ⓓV. ⓐV2. T ➡* U.
+#L #V1 #V #T #U #H #V2 #HV12
+elim (cpr_inv_appl1 … H) -H *
+[ -HV12 #V0 #X #_ #_ #H destruct /2 width=1/
+| -HV12 #V0 #W #T1 #T2 #_ #_ #H destruct
+| #V0 #V3 #W1 #W2 #T1 #T2 #HV10 #HW12 #HT12 #HV03 #H1 #H2 destruct
+  lapply (cpr_lift (L.ⓓW1) … HV12 … HV03 … HV10) -V0 -HV12 /2 width=1/ #HV23
+  lapply (lcpr_cpr_trans (L. ⓓW1) … HT12) -HT12 /2 width=1/ #HT12
+  /4 width=1/
+]
+qed-.

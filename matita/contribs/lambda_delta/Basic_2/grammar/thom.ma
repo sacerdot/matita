@@ -76,8 +76,3 @@ lemma thom_inv_flat1: ∀I,W1,U1,T2. ⓕ{I}W1.U1 ≈ T2 →
                       ∃∃W2,U2. U1 ≈ U2 & 𝐒[U1] & 𝐒[U2] &
                                I = Appl & T2 = ⓐW2. U2.
 /2 width=4/ qed-.
-
-(* Basic_1: removed theorems 7:
-            iso_gen_sort iso_gen_lref iso_gen_head iso_refl iso_trans
-            iso_flats_lref_bind_false iso_flats_flat_bind_false
-*)

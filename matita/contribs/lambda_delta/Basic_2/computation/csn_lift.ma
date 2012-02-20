@@ -72,29 +72,39 @@ lemma csn_abst: ∀L,W. L ⊢ ⬇* W → ∀I,V,T. L. ⓑ{I} V ⊢ ⬇* T → L 
 @csn_intro #X #H1 #H2
 elim (cpr_inv_abst1 … H1 I V) -H1
 #W0 #T0 #HLW0 #HLT0 #H destruct
-elim (eq_false_inv_tpair … H2) -H2
+elim (eq_false_inv_tpair_sn … H2) -H2
 [ /3 width=5/
 | -HLW0 * #H destruct /3 width=1/
 ]
 qed.
-(*
-axiom eq_false_inv_tpair_dx: ∀I,V1,T1,V2,T2.
-                             (②{I} V1. T1 = ②{I} V2. T2 → False) →
-                             (T1 = T2 → False) ∨ (T1 = T2 ∧ (V1 = V2 → False)).
-                             
-#I #V1 #T1 #V2 #T2 #H
-elim (term_eq_dec V1 V2) /3 width=1/ #HV12 destruct
-@or_intror @conj // #HT12 destruct /2 width=1/ 
-qed-.
 
-lemma csn_appl_simple: ∀L,T. L ⊢ ⬇* T → 𝐒[T] → ∀V. L ⊢ ⬇* V → L ⊢ ⬇* ⓐV. T.
-#L #T #H elim H -T #T #_ #IHT #HT #V #H @(csn_ind … H) -V #V #HV #IHV 
+(* Basic_1: was only: sn3_appl_appl *)
+lemma csn_appl_simple: ∀L,V. L ⊢ ⬇* V → ∀T1.
+                       (∀T2. L ⊢ T1 ➡ T2 → (T1 = T2 → False) → L ⊢ ⬇* ⓐV. T2) →
+                       𝐒[T1] → L ⊢ ⬇* ⓐV. T1.
+#L #V #H @(csn_ind … H) -V #V #_ #IHV #T1 #IHT1 #HT1
 @csn_intro #X #H1 #H2
 elim (cpr_inv_appl1_simple … H1 ?) // -H1
-#V0 #T0 #HLV0 #HLT0 #H destruct
+#V0 #T0 #HLV0 #HLT10 #H destruct
 elim (eq_false_inv_tpair_dx … H2) -H2
-[ -IHV #HT0 @IHT -IHT // -HLT0 /2 width=1/ -HT0 /2 width=3/   
-| -HV -HT -IHT -HLT0 * #H #HV0 destruct /3 width=1/
+[ -IHV -HT1 #HT10
+  @(csn_cpr_trans … (ⓐV.T0)) /2 width=1/ -HLV0
+  @IHT1 -IHT1 // /2 width=1/
+| -HLT10 * #H #HV0 destruct
+  @IHV -IHV // -HT1 /2 width=1/ -HV0
+  #T2 #HLT02 #HT02 
+  @(csn_cpr_trans … (ⓐV.T2)) /2 width=1/ -HLV0
+  @IHT1 -IHT1 // -HLT02 /2 width=1/
 ]
 qed.
-*)
+
+(* Basic_1: was only: sn3_appl_appls *)
+lemma csn_appl_appls_simple: ∀L,V. L ⊢ ⬇* V → ∀Vs,T1.
+                             (∀T2. L ⊢ ⒶVs.T1 ➡ T2 → (ⒶVs.T1 = T2 → False) → L ⊢ ⬇* ⓐV. T2) →
+                             𝐒[T1] → L ⊢ ⬇* ⓐV. ⒶVs. T1.
+#L #V #HV #Vs elim Vs -Vs
+[ @csn_appl_simple //
+| #V0 #Vs #_ #T1 #HT1 #_
+  @csn_appl_simple // -HV @HT1
+]
+qed.
