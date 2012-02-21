@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/grammar/term.ma".
+include "Basic_2/grammar/term_simple.ma".
 
 (* SAME TOP TERM CONSTRUCTOR ************************************************)
 
@@ -22,17 +22,6 @@ inductive tstc: relation term ≝
 .
 
 interpretation "same top constructor (term)" 'Iso T1 T2 = (tstc T1 T2).
-
-(* Basic properties *********************************************************)
-
-(* Basic_1: was: iso_refl *)
-lemma tstc_refl: ∀T. T ≃ T.
-#T elim T -T //
-qed.
-
-lemma tstc_sym: ∀T1,T2. T1 ≃ T2 → T2 ≃ T1.
-#T1 #T2 #H elim H -T1 -T2 //
-qed.
 
 (* Basic inversion lemmas ***************************************************)
 
@@ -77,6 +66,47 @@ qed.
 lemma tstc_inv_pair2: ∀I,T1,W2,U2. T1 ≃ ②{I}W2.U2 →
                       ∃∃W1,U1. T1 = ②{I}W1. U1.
 /2 width=5/ qed-.
+
+(* Basic properties *********************************************************)
+
+(* Basic_1: was: iso_refl *)
+lemma tstc_refl: ∀T. T ≃ T.
+#T elim T -T //
+qed.
+
+lemma tstc_sym: ∀T1,T2. T1 ≃ T2 → T2 ≃ T1.
+#T1 #T2 #H elim H -T1 -T2 //
+qed.
+
+lemma tstc_dec: ∀T1,T2. Decidable (T1 ≃ T2).
+* #I1 [2: #V1 #T1 ] * #I2 [2,4: #V2 #T2 ]
+[ elim (item2_eq_dec I1 I2) #HI12
+  [ destruct /2 width=1/
+  | @or_intror #H
+    elim (tstc_inv_pair1 … H) -H #V #T #H destruct /2 width=1/
+  ]
+| @or_intror #H
+  lapply (tstc_inv_atom1 … H) -H #H destruct
+| @or_intror #H
+  lapply (tstc_inv_atom2 … H) -H #H destruct
+| elim (item0_eq_dec I1 I2) #HI12
+  [ destruct /2 width=1/
+  | @or_intror #H
+    lapply (tstc_inv_atom2 … H) -H #H destruct /2 width=1/
+  ]
+]
+qed.
+
+axiom simple_inv_pair: ∀I,V,T.  𝐒[②{I}V.T] → ∃J. I = Flat2 J.
+
+lemma simple_tstc_repl_dx: ∀T1,T2. T1 ≃ T2 → 𝐒[T1] → 𝐒[T2].
+#T1 #T2 * -T1 -T2 //
+#I #V1 #V2 #T1 #T2 #H
+elim (simple_inv_pair … H) -H #J #H destruct //
+qed. (**) (* remove from index *)
+
+lemma simple_tstc_repl_sn: ∀T1,T2. T1 ≃ T2 → 𝐒[T2] → 𝐒[T1].
+/3 width=3/ qed-.
 
 (* Basic_1: removed theorems 2:
             iso_flats_lref_bind_false iso_flats_flat_bind_false

@@ -20,6 +20,20 @@ include "Basic_2/computation/csn_vector.ma".
 
 (* Advanced properties ******************************************************)
 (*
+
+(* Basic_1: was only: sn3_appl_appls *)
+lemma csn_appl_appls_simple_tstc: ∀L,Vs,V,T1. L ⊢ ⬇* V → L ⊢ ⬇* T1 →
+                                  (∀T2. L ⊢ ⒶVs.T1 ➡* T2 → (ⒶVs.T1 ≃ T2 → False) → L ⊢ ⬇* ⓐV. T2) →
+                                  𝐒[T1] → L ⊢ ⬇* ⓐV. ⒶVs. T1.
+#L *
+[ #V #T1 #HV
+  @csn_appl_simple_tstc //
+| #V0 #Vs #V #T1 #HV #H1T1 #H2T1 #H3T1
+  @csn_appl_simple_tstc // -HV
+  [ @H2T1
+]
+qed.
+
 lemma csn_applv_theta: ∀L,V1s,V2s. ⇧[0, 1] V1s ≡ V2s →
                        ∀V,T. L ⊢ ⬇* ⓓV. ⒶV2s. T → L ⊢ ⬇* V → L ⊢ ⬇* ⒶV1s. ⓓV. T.
 #L #V1s #V2s * -V1s -V2s /2 width=1/

@@ -12,12 +12,12 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/grammar/thom.ma".
+include "Basic_2/grammar/tshf.ma".
 include "Basic_2/reducibility/tpr.ma".
 
 (* CONTEXT-FREE WEAK HEAD NORMAL TERMS **************************************)
 
-definition twhnf: predicate term ≝ NF … tpr thom.
+definition twhnf: predicate term ≝ NF … tpr tshf.
 
 interpretation
    "context-free weak head normality (term)"
@@ -25,32 +25,32 @@ interpretation
 
 (* Basic inversion lemmas ***************************************************)
 
-lemma twhnf_inv_thom: ∀T. 𝐖𝐇𝐍[T] → T ≈ T.
+lemma twhnf_inv_tshf: ∀T. 𝐖𝐇𝐍[T] → T ≈ T.
 normalize /2 width=1/
 qed-.
 
 (* Basic properties *********************************************************)
 
-lemma tpr_thom: ∀T1,T2. T1 ➡ T2 → T1 ≈ T1 → T1 ≈ T2.
+lemma tpr_tshf: ∀T1,T2. T1 ➡ T2 → T1 ≈ T1 → T1 ≈ T2.
 #T1 #T2 #H elim H -T1 -T2 //
 [ #I #V1 #V2 #T1 #T2 #_ #_ #_ #IHT12 #H
-  elim (thom_inv_flat1 … H) -H #W2 #U2 #HT1U2 #HT1 #_ #H1 #H2 destruct
+  elim (tshf_inv_flat1 … H) -H #W2 #U2 #HT1U2 #HT1 #_ #H1 #H2 destruct
   lapply (IHT12 HT1U2) -IHT12 -HT1U2 #HUT2
-  lapply (simple_thom_repl_dx … HUT2 HT1) /2 width=1/
+  lapply (simple_tshf_repl_dx … HUT2 HT1) /2 width=1/
 | #V1 #V2 #W #T1 #T2 #_ #_ #_ #_ #H
-  elim (thom_inv_flat1 … H) -H #W2 #U2 #_ #H
+  elim (tshf_inv_flat1 … H) -H #W2 #U2 #_ #H
   elim (simple_inv_bind … H)
 | #I #V1 #V2 #T1 #T #T2 #_ #_ #_ #_ #_ #H
-  elim (thom_inv_bind1 … H) -H #W2 #U2 #H destruct //
+  elim (tshf_inv_bind1 … H) -H #W2 #U2 #H destruct //
 | #V2 #V1 #V #W1 #W2 #T1 #T2 #_ #_ #_ #_ #_ #_ #_ #H
-  elim (thom_inv_flat1 … H) -H #U1 #U2 #_ #H
+  elim (tshf_inv_flat1 … H) -H #U1 #U2 #_ #H
   elim (simple_inv_bind … H)
 | #V #T #T1 #T2 #_ #_ #_ #H
-  elim (thom_inv_bind1 … H) -H #W2 #U2 #H destruct
+  elim (tshf_inv_bind1 … H) -H #W2 #U2 #H destruct
 | #V #T1 #T2 #_ #_ #H
-  elim (thom_inv_flat1 … H) -H #W2 #U2 #_ #_ #_ #H destruct
+  elim (tshf_inv_flat1 … H) -H #W2 #U2 #_ #_ #_ #H destruct
 ]
 qed.
 
-lemma twhnf_thom: ∀T. T ≈ T → 𝐖𝐇𝐍[T].
+lemma twhnf_tshf: ∀T. T ≈ T → 𝐖𝐇𝐍[T].
 /2 width=1/ qed.

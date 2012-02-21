@@ -78,7 +78,6 @@ elim (eq_false_inv_tpair_sn … H2) -H2
 ]
 qed.
 
-(* Basic_1: was only: sn3_appl_appl *)
 lemma csn_appl_simple: ∀L,V. L ⊢ ⬇* V → ∀T1.
                        (∀T2. L ⊢ T1 ➡ T2 → (T1 = T2 → False) → L ⊢ ⬇* ⓐV. T2) →
                        𝐒[T1] → L ⊢ ⬇* ⓐV. T1.
@@ -92,19 +91,8 @@ elim (eq_false_inv_tpair_dx … H2) -H2
   @IHT1 -IHT1 // /2 width=1/
 | -HLT10 * #H #HV0 destruct
   @IHV -IHV // -HT1 /2 width=1/ -HV0
-  #T2 #HLT02 #HT02 
+  #T2 #HLT02 #HT02
   @(csn_cpr_trans … (ⓐV.T2)) /2 width=1/ -HLV0
   @IHT1 -IHT1 // -HLT02 /2 width=1/
-]
-qed.
-
-(* Basic_1: was only: sn3_appl_appls *)
-lemma csn_appl_appls_simple: ∀L,V. L ⊢ ⬇* V → ∀Vs,T1.
-                             (∀T2. L ⊢ ⒶVs.T1 ➡ T2 → (ⒶVs.T1 = T2 → False) → L ⊢ ⬇* ⓐV. T2) →
-                             𝐒[T1] → L ⊢ ⬇* ⓐV. ⒶVs. T1.
-#L #V #HV #Vs elim Vs -Vs
-[ @csn_appl_simple //
-| #V0 #Vs #_ #T1 #HT1 #_
-  @csn_appl_simple // -HV @HT1
 ]
 qed.
