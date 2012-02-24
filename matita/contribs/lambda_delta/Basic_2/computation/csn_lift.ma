@@ -43,15 +43,6 @@ qed.
 
 (* Advanced properties ******************************************************)
 
-lemma csn_acp: acp cpr (eq …) (csn …).
-@mk_acp
-[ /2 width=1/
-| /2 width=3/
-| /2 width=5/
-| @cnf_lift
-]
-qed.
-
 (* Basic_1: was: sn3_abbr *)
 lemma csn_lref_abbr: ∀L,K,V,i. ⇩[0, i] L ≡ K. ⓓV → K ⊢ ⬇* V → L ⊢ ⬇* #i.
 #L #K #V #i #HLK #HV
@@ -94,5 +85,16 @@ elim (eq_false_inv_tpair_dx … H2) -H2
   #T2 #HLT02 #HT02
   @(csn_cpr_trans … (ⓐV.T2)) /2 width=1/ -HLV0
   @IHT1 -IHT1 // -HLT02 /2 width=1/
+]
+qed.
+
+(* Main properties **********************************************************)
+
+theorem csn_acp: acp cpr (eq …) (csn …).
+@mk_acp
+[ /2 width=1/
+| /2 width=3/
+| /2 width=5/
+| @cnf_lift
 ]
 qed.

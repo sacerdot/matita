@@ -12,14 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/computation/acp_aaa.ma".
-include "Basic_2/computation/csn_lcpr_vector.ma".
+(* NOTATION FOR THE "functional" COMPONENT ********************************)
 
-(* CONTEXT-SENSITIVE STRONGLY NORMALIZING TERMS *****************************)
+notation "hvbox( ↑ [ d , break e ] break T )"
+   non associative with precedence 55
+   for @{ 'Lift $d $e $T }.
 
-(* Properties concerning atomic arity assignment ****************************)
+notation "hvbox( [ d ← break V ] break T )"
+   non associative with precedence 55
+   for @{ 'Subst $V $d $T }.
 
-lemma csn_aaa: ∀L,T,A. L ⊢ T ÷ A → L ⊢ ⬇* T.
-#L #T #A #H
-@(acp_aaa … csn_acp csn_acr … H)
-qed. 
+notation "hvbox( T1 ⇨ break T2 )"
+   non associative with precedence 45
+   for @{ 'SRed $T1 $T2 }.

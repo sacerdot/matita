@@ -294,16 +294,14 @@ notation "hvbox( T1 break [ R ] ⊑ break T2 )"
    non associative with precedence 45
    for @{ 'CrSubEq $T1 $R $T2 }.
 
-(* Functional ***************************************************************)
+(* Conversion ***************************************************************)
 
-notation "hvbox( ↑ [ d , break e ] break T )"
-   non associative with precedence 55
-   for @{ 'Lift $d $e $T }.
-
-notation "hvbox( [ d ← break V ] break T )"
-   non associative with precedence 55
-   for @{ 'Subst $V $d $T }.
-
-notation "hvbox( T1 ⇨ break T2 )"
+notation "hvbox( L ⊢ break term 90 T1 ⬌ break T2 )"
    non associative with precedence 45
-   for @{ 'SRed $T1 $T2 }.
+   for @{ 'PConv $L $T1 $T2 }.
+
+(* Congruence ***************************************************************)
+
+notation "hvbox( L ⊢ break term 90 T1 ⬌* break T2 )"
+   non associative with precedence 45
+   for @{ 'PConvStar $L $T1 $T2 }.

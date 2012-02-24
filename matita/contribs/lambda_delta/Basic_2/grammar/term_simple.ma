@@ -34,3 +34,8 @@ qed.
 
 lemma simple_inv_bind: ∀I,V,T. 𝐒[ⓑ{I} V. T] → False.
 /2 width=6/ qed-.
+
+lemma simple_inv_pair: ∀I,V,T.  𝐒[②{I}V.T] → ∃J. I = Flat2 J.
+* /2 width=2/ #I #V #T #H
+elim (simple_inv_bind … H)
+qed-.

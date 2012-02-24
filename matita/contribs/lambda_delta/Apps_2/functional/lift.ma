@@ -14,6 +14,7 @@
 
 include "Ground_2/tri.ma".
 include "Basic_2/substitution/lift.ma".
+include "Apps_2/functional/notation.ma".
 
 (* RELOCATION ***************************************************************)
 

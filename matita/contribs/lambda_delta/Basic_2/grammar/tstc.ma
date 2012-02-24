@@ -97,8 +97,6 @@ lemma tstc_dec: ∀T1,T2. Decidable (T1 ≃ T2).
 ]
 qed.
 
-axiom simple_inv_pair: ∀I,V,T.  𝐒[②{I}V.T] → ∃J. I = Flat2 J.
-
 lemma simple_tstc_repl_dx: ∀T1,T2. T1 ≃ T2 → 𝐒[T1] → 𝐒[T2].
 #T1 #T2 * -T1 -T2 //
 #I #V1 #V2 #T1 #T2 #H

@@ -13,14 +13,14 @@
 (**************************************************************************)
 
 include "Basic_2/computation/acp_cr.ma".
+include "Basic_2/computation/cprs_tstc_vector.ma".
 include "Basic_2/computation/csn_lcpr.ma".
 include "Basic_2/computation/csn_vector.ma".
 
-(* CONTEXT-SENSITIVE STRONGLY NORMALIZING TERMS *****************************)
+(* CONTEXT-SENSITIVE STRONGLY NORMALIZING TERM VECTORS **********************)
 
 (* Advanced properties ******************************************************)
 (*
-
 (* Basic_1: was only: sn3_appl_appls *)
 lemma csn_appl_appls_simple_tstc: ∀L,Vs,V,T1. L ⊢ ⬇* V → L ⊢ ⬇* T1 →
                                   (∀T2. L ⊢ ⒶVs.T1 ➡* T2 → (ⒶVs.T1 ≃ T2 → False) → L ⊢ ⬇* ⓐV. T2) →
@@ -33,21 +33,35 @@ lemma csn_appl_appls_simple_tstc: ∀L,Vs,V,T1. L ⊢ ⬇* V → L ⊢ ⬇* T1 �
   [ @H2T1
 ]
 qed.
-
+*)
 lemma csn_applv_theta: ∀L,V1s,V2s. ⇧[0, 1] V1s ≡ V2s →
                        ∀V,T. L ⊢ ⬇* ⓓV. ⒶV2s. T → L ⊢ ⬇* V → L ⊢ ⬇* ⒶV1s. ⓓV. T.
 #L #V1s #V2s * -V1s -V2s /2 width=1/
-#V1s #V2s #V1 #V2 #HV12 * -V1s -V2s /2 width=3/
-#V1s #V2s #W1 #W2 #HW12 #HV12s #V #T #H #HV
-lapply (csn_appl_theta … HV12 … H) -H -HV12 #H
-lapply (csn_fwd_pair_sn … H) #HV1
-@csn_appl_simple // #X #H1 #H2
-whd in ⊢ (? ? %);
-*)
+#V1s #V2s #V1 #V2 #HV12 #H 
+generalize in match HV12; -HV12 generalize in match V2; -V2 generalize in match V1; -V1
+elim H -V1s -V2s /2 width=3/
+#V1s #V2s #V1 #V2 #HV12 #HV12s #IHV12s #W1 #W2 #HW12 #V #T #H #HV
+lapply (csn_appl_theta … HW12 … H) -H -HW12 #H
+lapply (csn_fwd_pair_sn … H) #HW1
+lapply (csn_fwd_flat_dx … H) #H1
+@csn_appl_simple_tstc // -HW1 /2 width=3/ -IHV12s -HV -H1 #X #H1 #H2
+elim (cprs_fwd_theta_vector … (V2::V2s) … H1) -H1 /2 width=1/ -HV12s -HV12
+[ -H #H elim (H2 ?) -H2 //
+| -H2 #H1 @(csn_cprs_trans … H) -H /2 width=1/
+]
+qed.
 (*
-lemma csn_S5: ∀L,V1s,V2s. ⇧[0, 1] V1s ≡ V2s →
-              ∀V,T. L. ⓓV ⊢ ⬇* ⒶV2s. T → L ⊢ ⬇* V → L ⊢ ⬇* ⒶV1s. ⓓV. T.
-#L #V1s #V2s #H elim H -V1s -V2s /2 width=1/
+theorem csn_acr: acr cpr (eq …) (csn …) (λL,T. L ⊢ ⬇* T).
+@mk_acr //
+[
+|
+|
+| #L #V1 #V2 #HV12 #V #T #H #HVT
+  @(csn_applv_theta … HV12) -HV12 //
+  @(csn_abbr) //
+|
+| @csn_lift 
+]
+qed.
 *)
-
 axiom csn_acr: acr cpr (eq …) (csn …) (λL,T. L ⊢ ⬇* T).

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/functional/rtm.ma".
+include "Apps_2/functional/rtm.ma".
 
 (* REDUCTION AND TYPE MACHINE ***********************************************)
 

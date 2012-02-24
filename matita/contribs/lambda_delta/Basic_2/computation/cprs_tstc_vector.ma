@@ -12,14 +12,23 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/computation/acp_aaa.ma".
-include "Basic_2/computation/csn_lcpr_vector.ma".
+include "Basic_2/substitution/lift_vector.ma".
+include "Basic_2/computation/cprs_tstc.ma".
 
-(* CONTEXT-SENSITIVE STRONGLY NORMALIZING TERMS *****************************)
+(* CONTEXT-SENSITIVE PARALLEL COMPUTATION ON TERMS **************************)
 
-(* Properties concerning atomic arity assignment ****************************)
+(* Vector form of forward lemmas involving same top term constructor ********)
 
-lemma csn_aaa: ∀L,T,A. L ⊢ T ÷ A → L ⊢ ⬇* T.
-#L #T #A #H
-@(acp_aaa … csn_acp csn_acr … H)
-qed. 
+lemma cpr_fwd_theta_vector: ∀L,V1s,V2s. ⇧[0, 1] V1s ≡ V2s →
+                            ∀V,T,U. L ⊢ ⒶV1s. ⓓV. T ➡ U →
+                            ⒶV1s. ⓓV. T ≃ U ∨ L ⊢ ⓓV. ⒶV2s. T ➡* U.
+#L #V1s #V2s * -V1s -V2s /3 width=1/
+#V1s #V2s #V1a #V2a #HV12a * -V1s -V2s /2 width=1 by cpr_fwd_theta/ -HV12a
+#V1s #V2s #V1b #V2b #_ #_ #V #U #T #H
+elim (cpr_inv_appl1_simple … H ?) -H //
+#V0 #T0 #_ #_ #H destruct /2 width=1/
+qed-.
+
+axiom cprs_fwd_theta_vector: ∀L,V1s,V2s. ⇧[0, 1] V1s ≡ V2s →
+                            ∀V,T,U. L ⊢ ⒶV1s. ⓓV. T ➡* U →
+                            ⒶV1s. ⓓV. T ≃ U ∨ L ⊢ ⓓV. ⒶV2s. T ➡* U.
