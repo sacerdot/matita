@@ -35,7 +35,6 @@ lapply (tpss_tps … HT0) -HT0 #HT0
 @ex2_1_intro [2: @(tpr_delta … HV12 HT1 HT0) | skip | /2 width=1/ ] (**) (* /3 width=5/ is too slow *)
 qed.
 
-
 (* Basic_1: was only: pr2_head_1 *) 
 lemma cpr_pair_sn: ∀I,L,V1,V2,T1,T2. L ⊢ V1 ➡ V2 → T1 ➡ T2 →
                    L ⊢ ②{I} V1. T1 ➡ ②{I} V2. T2.

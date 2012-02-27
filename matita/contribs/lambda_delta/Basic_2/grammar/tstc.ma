@@ -105,7 +105,3 @@ qed. (**) (* remove from index *)
 
 lemma simple_tstc_repl_sn: ∀T1,T2. T1 ≃ T2 → 𝐒[T2] → 𝐒[T1].
 /3 width=3/ qed-.
-
-(* Basic_1: removed theorems 2:
-            iso_flats_lref_bind_false iso_flats_flat_bind_false
-*)

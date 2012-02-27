@@ -13,7 +13,6 @@
 (**************************************************************************)
 
 include "Basic_2/grammar/tstc_tstc.ma".
-include "Basic_2/reducibility/lcpr_cpr.ma".
 include "Basic_2/computation/cprs_cprs.ma".
 include "Basic_2/computation/csn_lift.ma".
 include "Basic_2/computation/csn_cpr.ma".

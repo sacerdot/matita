@@ -13,13 +13,26 @@
 (**************************************************************************)
 
 include "Basic_2/grammar/tstc.ma".
+(*
 include "Basic_2/reducibility/cpr_lift.ma".
 include "Basic_2/reducibility/lcpr_cpr.ma".
+*)
 include "Basic_2/computation/cprs_cprs.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL COMPUTATION ON TERMS **************************)
 
 (* Forward lemmas involving same top term constructor ***********************)
+(*
+lemma cpr_fwd_beta: ∀L,V,W,T,U. L ⊢ ⓐV. ⓛW. T ➡ U →
+                    ⓐV. ⓛW. T ≃ U ∨ L ⊢ ⓓV. T ➡* U.
+#L #V #W #T #U #H
+elim (cpr_inv_appl1 … H) -H *
+[ #V0 #X #_ #_ #H destruct /2 width=1/
+| #V0 #W0 #T1 #T2 #HV0 #HT12 #H1 #H2 destruct
+  lapply (lcpr_cpr_trans (L. ⓓV) … HT12) -HT12 /2 width=1/ /3 width=1/
+| #V1 #V2 #W1 #W2 #T1 #T2 #_ #_ #_ #_ #H destruct
+]
+qed-.
 
 lemma cpr_fwd_theta: ∀L,V1,V,T,U. L ⊢ ⓐV1. ⓓV. T ➡ U →
                      ∀V2. ⇧[0, 1] V1 ≡ V2 → ⓐV1. ⓓV. T ≃ U ∨
@@ -33,4 +46,11 @@ elim (cpr_inv_appl1 … H) -H *
   lapply (lcpr_cpr_trans (L. ⓓW1) … HT12) -HT12 /2 width=1/ #HT12
   /4 width=1/
 ]
+qed-.
+*)
+lemma cprs_fwd_tau: ∀L,W,T,U. L ⊢ ⓣW. T ➡* U →
+                    ⓣW. T ≃ U ∨ L ⊢ T ➡* U.
+#L #W #T #U #H
+elim (cprs_inv_cast1 … H) -H /2 width=1/ *
+#W0 #T0 #_ #_ #H destruct /2 width=1/
 qed-.
