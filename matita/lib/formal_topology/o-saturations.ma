@@ -14,10 +14,10 @@
 
 include "formal_topology/o-algebra.ma".
 
-definition is_o_saturation: ∀C:OA. C ⇒_1 C → CProp1 ≝
+definition is_o_saturation: ∀C:OA. C ⇒_1 C → CProp[1] ≝
  λC:OA.λA:C ⇒_1 C.∀U,V. (U ≤ A V) =_1 (A U ≤ A V).
 
-definition is_o_reduction: ∀C:OA. C ⇒_1 C → CProp1 ≝
+definition is_o_reduction: ∀C:OA. C ⇒_1 C → CProp[1] ≝
  λC:OA.λJ:C ⇒_1 C.∀U,V. (J U ≤ V) =_1 (J U ≤ J V).
 
 theorem o_saturation_expansive: ∀C,A. is_o_saturation C A → ∀U. U ≤ A U.

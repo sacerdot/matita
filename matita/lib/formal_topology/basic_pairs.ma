@@ -15,14 +15,14 @@
 include "formal_topology/relations.ma".
 include "formal_topology/notation.ma".
 
-record basic_pair: Type1 ≝ { 
+record basic_pair: Type[1] ≝ { 
    concr: REL; form: REL; rel: concr ⇒_\r1 form
 }.
 
 interpretation "basic pair relation" 'Vdash2 x y c = (fun21 ??? (rel c) x y).
 interpretation "basic pair relation (non applied)" 'Vdash c = (rel c).
 
-record relation_pair (BP1,BP2: basic_pair): Type1 ≝ { 
+record relation_pair (BP1,BP2: basic_pair): Type[1] ≝ { 
    concr_rel: (concr BP1) ⇒_\r1 (concr BP2); form_rel: (form BP1) ⇒_\r1 (form BP2);
    commute: comp1 REL ??? concr_rel (rel ?) =_1 form_rel ∘ ⊩
  }.

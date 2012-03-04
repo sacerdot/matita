@@ -15,7 +15,7 @@
 include "formal_topology/o-algebra.ma".
 include "formal_topology/notation.ma".
 
-record Obasic_pair: Type2 ≝ { 
+record Obasic_pair: Type[2] ≝ { 
    Oconcr: OA; Oform: OA; Orel: arrows2 ? Oconcr Oform
 }.
 
@@ -23,7 +23,7 @@ record Obasic_pair: Type2 ≝ {
 interpretation "o-basic pair relation indexed" 'Vdash2 x y c = (Orel c x y).
 interpretation "o-basic pair relation (non applied)" 'Vdash c = (Orel c).
 
-record Orelation_pair (BP1,BP2: Obasic_pair): Type2 ≝ { 
+record Orelation_pair (BP1,BP2: Obasic_pair): Type[2] ≝ { 
    Oconcr_rel: (Oconcr BP1) ⇒_\o2 (Oconcr BP2); Oform_rel: (Oform BP1) ⇒_\o2 (Oform BP2);
    Ocommute: ⊩ ∘ Oconcr_rel =_2 Oform_rel ∘ ⊩
 }.

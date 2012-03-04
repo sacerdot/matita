@@ -15,7 +15,7 @@
 include "formal_topology/categories.ma".
 include "formal_topology/notation.ma".
 
-record Fo (C1,C2:CAT2) (F:arrows3 CAT2 C1 C2) : Type2 ≝ {
+record Fo (C1,C2:CAT2) (F:arrows3 CAT2 C1 C2) : Type[2] ≝ {
   F2: C2;
   F1: C1;
   FP: map_objs2 ?? F F1 =_\ID F2
@@ -36,7 +36,7 @@ intros 5; cases X; cases Y; clear X Y;
 cases H; cases H1; intros; assumption;
 qed.           
 
-record Fm_c (C1,C2:CAT2) (F:arrows3 CAT2 C1 C2) (X,Y:Fo ?? F) : Type2 ≝ {
+record Fm_c (C1,C2:CAT2) (F:arrows3 CAT2 C1 C2) (X,Y:Fo ?? F) : Type[2] ≝ {
   Fm2: arrows2 C2 (F2 ??? X) (F2 ??? Y);
   Fm1: arrows2 C1 (F1 ??? X) (F1 ??? Y);
   FmP: REW ?? F X Y (map_arrows2 ?? F ?? Fm1) = Fm2

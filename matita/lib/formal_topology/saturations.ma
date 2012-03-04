@@ -14,10 +14,10 @@
 
 include "formal_topology/relations.ma".
 
-definition is_saturation: ∀C:REL. Ω^C ⇒_1 Ω^C → CProp1 ≝
+definition is_saturation: ∀C:REL. Ω^C ⇒_1 Ω^C → CProp[1] ≝
  λC:REL.λA:Ω^C ⇒_1 Ω^C. ∀U,V. (U ⊆ A V) =_1 (A U ⊆ A V).
 
-definition is_reduction: ∀C:REL. Ω^C ⇒_1 Ω^C → CProp1 ≝
+definition is_reduction: ∀C:REL. Ω^C ⇒_1 Ω^C → CProp[1] ≝
  λC:REL.λJ: Ω^C ⇒_1 Ω^C. ∀U,V. (J U ⊆ V) =_1 (J U ⊆ J V).
 
 theorem saturation_expansive: ∀C,A. is_saturation C A → ∀U. U ⊆ A U.

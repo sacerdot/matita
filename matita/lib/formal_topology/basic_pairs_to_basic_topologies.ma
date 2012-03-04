@@ -42,7 +42,7 @@ qed.
 
 alias symbol "compose" (instance 3) = "category1 composition".
 alias symbol "compose" (instance 3) = "category1 composition".
-record functor1 (C1: category1) (C2: category1) : Type2 ≝
+record functor1 (C1: category1) (C2: category1) : Type[2] ≝
  { map_objs1:1> C1 → C2;
    map_arrows1: ∀S,T. unary_morphism1 (arrows1 ? S T) (arrows1 ? (map_objs1 S) (map_objs1 T));
    respects_id1: ∀o:C1. map_arrows1 ?? (id1 ? o) =_1 id1 ? (map_objs1 o);

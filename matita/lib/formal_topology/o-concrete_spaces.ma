@@ -25,7 +25,7 @@ lemma down_p : ∀S:SET1.∀I:SET.∀u:S ⇒_1 S.∀c:arrows2 SET1 I S.∀a:I.�
 intros; apply (†(†e));
 qed.
 
-record Oconcrete_space : Type2 ≝
+record Oconcrete_space : Type[2] ≝
  { Obp:> OBP;
    (*distr : is_distributive (form bp);*)
    Odownarrow: unary_morphism1 (Oform Obp) (Oform Obp);
@@ -54,7 +54,7 @@ qed.
 
 interpretation "concrete_space binary ↓" 'fintersects a b = (fun21 ? ? ? (Obinary_downarrow ?) a b).
 
-record Oconvergent_relation_pair (CS1,CS2: Oconcrete_space) : Type2 ≝
+record Oconvergent_relation_pair (CS1,CS2: Oconcrete_space) : Type[2] ≝
  { Orp:> arrows2 ? CS1 CS2;
    Orespects_converges:
     ∀b,c. eq1 ? (Orp\sub\c⎻ (Ext⎽CS2 (b ↓ c))) (Ext⎽CS1 (Orp\sub\f⎻ b ↓ Orp\sub\f⎻ c));

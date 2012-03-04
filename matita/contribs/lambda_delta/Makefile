@@ -25,15 +25,6 @@ stats: $(PACKAGES:%=%.stats)
 
 %.stats: CHARS = $(shell cat $(MAS) | wc -c)
 
-%.stats: C1 = $(shell grep "inductive \|record " $(MAS) | wc -l)
-%.stats: C2 = $(shell grep "definition \|let rec " $(MAS) | wc -l)
-%.stats: C3 = $(shell grep "inductive \|record \|definition \|let rec " $(MAS) | wc -l)
-%.stats: P1 = $(shell grep "theorem " $(MAS) | wc -l)
-%.stats: P2 = $(shell grep "lemma " $(MAS) | wc -l)
-%.stats: P3 = $(shell grep "lemma \|theorem " $(MAS) | wc -l)
-
-%.stats: TBL = ld_$*_sum
-
 %.stats:
 	@printf '\x1B[1;40;37m'
 	@printf '%-15s %-42s' 'Statistics for:' $*	
@@ -67,22 +58,39 @@ stats: $(PACKAGES:%=%.stats)
 	@printf '   %-6s %3i' Marks `grep "(\*\*)" $(MAS) | wc -l`
 	@printf '   %-10s' ''
 	@printf '\x1B[0m\n'
-	@printf 'name "$(TBL)"\n\n'                      > $*/$(TBL).tbl
-	@printf 'table {\n'                             >> $*/$(TBL).tbl
-	@printf '   class "grey" [ "category"\n'        >> $*/$(TBL).tbl
-	@printf '      [ "objects" * ]\n'               >> $*/$(TBL).tbl
-	@printf '   ]\n'                                >> $*/$(TBL).tbl
-	@printf '   class "green" [ "propositions"\n'   >> $*/$(TBL).tbl
-	@printf '      [ "theorems" "$(P1)" * ]\n'      >> $*/$(TBL).tbl
-	@printf '      [ "lemmas"   "$(P2)" * ]\n'      >> $*/$(TBL).tbl
-	@printf '      [ "total"    "$(P3)" * ]\n'      >> $*/$(TBL).tbl
-	@printf '   ]\n'                                >> $*/$(TBL).tbl
-	@printf '   class "yellow" [ "concepts"\n'      >> $*/$(TBL).tbl
-	@printf '      [ "declared" "$(C1)" * ]\n'      >> $*/$(TBL).tbl
-	@printf '      [ "defined"  "$(C2)" * ]\n'      >> $*/$(TBL).tbl
-	@printf '      [ "total"    "$(C3)" * ]\n'      >> $*/$(TBL).tbl
-	@printf '   ]\n'                                >> $*/$(TBL).tbl
-	@printf '}\n\n'                                 >> $*/$(TBL).tbl
-	@printf 'class "component" { 0 }\n\n'           >> $*/$(TBL).tbl
-	@printf 'class "plane" { 1 } { 3 } { 5 } \n\n'  >> $*/$(TBL).tbl
-	@printf 'class "number" { 2 } { 4 } { 6 } \n\n' >> $*/$(TBL).tbl
+
+# sum ########################################################################
+
+tbls: $(PACKAGES:%=etc/ld_%_sum.tbl)
+
+etc/ld_%_sum.tbl: MAS = $(shell find $* -name "*.ma")
+
+%.tbl: C1 = $(shell grep "inductive \|record " $(MAS) | wc -l)
+%.tbl: C2 = $(shell grep "definition \|let rec " $(MAS) | wc -l)
+%.tbl: C3 = $(shell grep "inductive \|record \|definition \|let rec " $(MAS) | wc -l)
+%.tbl: P1 = $(shell grep "theorem " $(MAS) | wc -l)
+%.tbl: P2 = $(shell grep "lemma " $(MAS) | wc -l)
+%.tbl: P3 = $(shell grep "lemma \|theorem " $(MAS) | wc -l)
+
+etc/ld_%_sum.tbl: $(MAS)
+	@mkdir -p etc
+	@printf 'Summary for: $*\n'
+	@printf 'name "$(basename $(@F))"\n\n'         >  $@
+	@printf 'table {\n'                            >> $@
+	@printf '   class "grey" [ "category"\n'       >> $@
+	@printf '      [ "objects" * ]\n'              >> $@
+	@printf '   ]\n'                               >> $@
+	@printf '   class "green" [ "propositions"\n'  >> $@
+	@printf '      [ "theorems" "$(P1)" * ]\n'     >> $@
+	@printf '      [ "lemmas"   "$(P2)" * ]\n'     >> $@
+	@printf '      [ "total"    "$(P3)" * ]\n'     >> $@
+	@printf '   ]\n'                               >> $@
+	@printf '   class "yellow" [ "concepts"\n'     >> $@
+	@printf '      [ "declared" "$(C1)" * ]\n'     >> $@
+	@printf '      [ "defined"  "$(C2)" * ]\n'     >> $@
+	@printf '      [ "total"    "$(C3)" * ]\n'     >> $@
+	@printf '   ]\n'                               >> $@
+	@printf '}\n\n'                                >> $@
+	@printf 'class "component" { 0 }\n\n'          >> $@
+	@printf 'class "plane" { 1 } { 3 } { 5 }\n\n'  >> $@
+	@printf 'class "number" { 2 } { 4 } { 6 }\n\n' >> $@

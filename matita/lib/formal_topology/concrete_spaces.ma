@@ -16,13 +16,13 @@ include "formal_topology/basic_pairs.ma".
 
 (* carr1 e' necessario perche' ci sega via la coercion per gli oggetti di REL!
    (confondendola con la coercion per gli oggetti di SET
-record concrete_space : Type1 ≝
+record concrete_space : Type[1] ≝
  { bp:> BP;
    converges: ∀a: carr1 (concr bp).∀U,V: carr1 (form bp). a ⊩ U → a ⊩ V → a ⊩ (U ↓ V);
    all_covered: ∀x: carr1 (concr bp). x ⊩ form bp
  }.
 
-record convergent_relation_pair (CS1,CS2: concrete_space) : Type1 ≝
+record convergent_relation_pair (CS1,CS2: concrete_space) : Type[1] ≝
  { rp:> arrows1 ? CS1 CS2;
    respects_converges:
     ∀b,c.

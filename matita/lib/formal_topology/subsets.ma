@@ -14,12 +14,12 @@
 
 include "formal_topology/categories.ma".
 
-record powerset_carrier (A: objs1 SET) : Type1 ≝ { mem_operator: A ⇒_1 CPROP }.
+record powerset_carrier (A: objs1 SET) : Type[1] ≝ { mem_operator: A ⇒_1 CPROP }.
 interpretation "powerset low" 'powerset A = (powerset_carrier A).
 notation "hvbox(a break ∈. b)" non associative with precedence 45 for @{ 'mem_low $a $b }.
 interpretation "memlow" 'mem_low a S = (fun11 ?? (mem_operator ? S) a).
 
-definition subseteq_operator: ∀A: objs1 SET. Ω^A → Ω^A → CProp0 ≝
+definition subseteq_operator: ∀A: objs1 SET. Ω^A → Ω^A → CProp[0] ≝
  λA:objs1 SET.λU,V.∀a:A. a ∈. U → a ∈. V.
 
 theorem transitive_subseteq_operator: ∀A. transitive2 ? (subseteq_operator A).
@@ -87,7 +87,7 @@ qed.
 definition overlaps: ∀A. Ω^A × Ω^A ⇒_1 CPROP.
  intros;
  constructor 1;
-  [ apply (λA:objs1 SET.λU,V:Ω^A.(exT2 ? (λx:A.x ∈ U) (λx:A.x ∈ V) : CProp0))
+  [ apply (λA:objs1 SET.λU,V:Ω^A.(exT2 ? (λx:A.x ∈ U) (λx:A.x ∈ V) : CProp[0]))
   | intros;
     constructor 1; intro; cases e2; exists; [1,4: apply w]
      [ apply (. #‡e^-1); assumption

@@ -14,7 +14,7 @@
 
 include "formal_topology/subsets.ma".
 
-record binary_relation (A,B: SET) : Type1 ≝
+record binary_relation (A,B: SET) : Type[1] ≝
  { satisfy:> binary_morphism1 A B CPROP }.
 
 notation < "hvbox (x \nbsp \natur term 90 r \nbsp y)"  with precedence 45 for @{'satisfy $r $x $y}.

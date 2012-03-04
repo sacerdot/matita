@@ -15,14 +15,14 @@
 include "formal_topology/o-algebra.ma".
 include "formal_topology/o-saturations.ma".
 
-record Obasic_topology: Type2 ≝ { 
+record Obasic_topology: Type[2] ≝ { 
    Ocarrbt:> OA;
    oA: Ocarrbt ⇒_2 Ocarrbt; oJ: Ocarrbt ⇒_2 Ocarrbt;
    oA_is_saturation: is_o_saturation ? oA; oJ_is_reduction: is_o_reduction ? oJ;
    Ocompatibility: ∀U,V. (oA U >< oJ V) =_1 (U >< oJ V)
  }.
 
-record Ocontinuous_relation (S,T: Obasic_topology) : Type2 ≝ { 
+record Ocontinuous_relation (S,T: Obasic_topology) : Type[2] ≝ { 
    Ocont_rel:> arrows2 OA S T;
    Oreduced: ∀U:S. U = oJ ? U → Ocont_rel U =_1 oJ ? (Ocont_rel U);
    Osaturated: ∀U:S. U = oA ? U → Ocont_rel⎻* U =_1 oA ? (Ocont_rel⎻* U)

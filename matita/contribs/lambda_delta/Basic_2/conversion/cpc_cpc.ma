@@ -12,11 +12,12 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basics/core_notation.ma".
+include "Basic_2/conversion/cpc.ma".
 
-universe constraint Type[0] < Type[1].
-universe constraint Type[1] < Type[2].
-universe constraint Type[2] < Type[3].
-universe constraint Type[3] < Type[4].
-universe constraint Type[4] < Type[5].
-universe constraint Type[5] < Type[6].
+(* CONTEXT-SENSITIVE PARALLEL CONVERSION ON TERMS ***************************)
+
+(* Main properties **********************************************************)
+
+theorem cpc_conf: ∀L,T0,T1,T2. L ⊢ T0 ⬌ T1 → L ⊢ T0 ⬌ T2 →
+                  ∃∃T. L ⊢ T1 ⬌ T & L ⊢ T2 ⬌ T.
+/3 width=3/ qed.

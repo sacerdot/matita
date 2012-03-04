@@ -96,7 +96,7 @@ qed.
 notation < "F x" left associative with precedence 60 for @{'map_arrows $F $x}.
 interpretation "map arrows 2" 'map_arrows F x = (fun12 ? ? (map_arrows2 ? ? F ? ?) x).
 
-definition preserve_sup : ∀S,T.∀ f:Ω^S ⇒_1 Ω^T. CProp1.
+definition preserve_sup : ∀S,T.∀ f:Ω^S ⇒_1 Ω^T. CProp[1].
 intros (S T f); apply (∀X:Ω \sup S. (f X) =_1 ?);
 constructor 1; constructor 1;
 [ intro y; alias symbol "singl" = "singleton". alias symbol "and" = "and_morphism".

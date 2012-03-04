@@ -14,7 +14,7 @@
 
 include "formal_topology/categories.ma".
 
-inductive bool : Type0 := true : bool | false : bool.
+inductive bool : Type[0] := true : bool | false : bool.
 
 lemma BOOL : objs1 SET.
 constructor 1; [apply bool] constructor 1;
@@ -63,7 +63,7 @@ notation > "⋁ p" non associative with precedence 45 for @{oa_join ? $p}.
 notation > "⋀ p" non associative with precedence 45 for @{oa_meet ? $p}.
 notation > "𝟙" non associative with precedence 90 for @{oa_one}. 
 notation > "𝟘" non associative with precedence 90 for @{oa_zero}. 
-record OAlgebra : Type2 := {
+record OAlgebra : Type[2] := {
   oa_P :> SET1;
   oa_leq : oa_P × oa_P ⇒_1 CPROP;
   oa_overlap: oa_P × oa_P ⇒_1 CPROP;
@@ -137,7 +137,7 @@ qed.
 interpretation "o-algebra binary meet" 'and a b = 
   (fun21 ??? (binary_meet ?) a b).
 
-prefer coercion Type1_OF_OAlgebra.
+prefer coercion Type[1]_OF_OAlgebra.
 
 definition binary_join : ∀O:OAlgebra. O × O ⇒_1 O.
 intros; split;
@@ -176,7 +176,7 @@ interpretation "o-algebra join" 'oa_join f =
 interpretation "o-algebra join with explicit function" 'oa_join_mk f = 
   (fun12 ?? (oa_join ??) (mk_unary_morphism ?? f ?)).
 
-record ORelation (P,Q : OAlgebra) : Type2 ≝ {
+record ORelation (P,Q : OAlgebra) : Type[2] ≝ {
   or_f_ : P ⇒_2 Q;
   or_f_minus_star_ : P ⇒_2 Q;
   or_f_star_ : Q ⇒_2 P;

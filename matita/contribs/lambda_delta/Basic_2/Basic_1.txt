@@ -184,6 +184,7 @@ pc1/props pc1_head_2
 pc1/props pc1_t
 pc1/props pc1_pr0_u2
 pc1/props pc1_head
+
 pc3/dec pc3_dec
 pc3/dec pc3_abst_dec
 pc3/fsubst0 pc3_pr2_fsubst0
@@ -205,13 +206,11 @@ pc3/left pc3_ind_left
 pc3/nf2 pc3_nf2
 pc3/nf2 pc3_nf2_unfold
 pc3/pc1 pc3_pc1
-pc3/props clear_pc3_trans
 pc3/props pc3_pr2_r
 pc3/props pc3_pr2_x
 pc3/props pc3_pr3_r
 pc3/props pc3_pr3_x
 pc3/props pc3_pr3_t
-pc3/props pc3_refl
 pc3/props pc3_s
 pc3/props pc3_thin_dx
 pc3/props pc3_head_1

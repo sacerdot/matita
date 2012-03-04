@@ -15,7 +15,7 @@
 include "formal_topology/relations.ma".
 include "formal_topology/saturations.ma".
 
-record basic_topology: Type1 ≝
+record basic_topology: Type[1] ≝
  { carrbt:> REL;
    A: Ω^carrbt ⇒_1 Ω^carrbt;
    J: Ω^carrbt ⇒_1 Ω^carrbt;
@@ -24,7 +24,7 @@ record basic_topology: Type1 ≝
    compatibility: ∀U,V. (A U ≬ J V) =_1 (U ≬ J V)
  }.
 
-record continuous_relation (S,T: basic_topology) : Type1 ≝
+record continuous_relation (S,T: basic_topology) : Type[1] ≝
  { cont_rel:> S ⇒_\r1 T;
    reduced: ∀U. U =_1 J ? U → image_coercion ?? cont_rel U =_1 J ? (image_coercion ?? cont_rel U);
    saturated: ∀U. U =_1 A ? U → (cont_rel)⎻* U = _1A ? ((cont_rel)⎻* U)
