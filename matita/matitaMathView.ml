@@ -201,7 +201,10 @@ class sequentsViewer ~(notebook:GPack.notebook) ~(cicMathView:cicMathView) () =
             let w =
              new GBin.scrolled_window
               (Gobject.try_cast p#as_widget "GtkScrolledWindow") in
-            w#hadjustment#set_value 0.0;
+            (* The double change upper/lower is to trigger the emission of
+               changed :-( *)
+            w#hadjustment#set_value w#hadjustment#upper;
+            w#hadjustment#set_value w#hadjustment#lower;
             w#vadjustment#set_value
              (w#vadjustment#upper -. w#vadjustment#page_size));
       with Not_found -> assert false)
