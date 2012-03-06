@@ -107,8 +107,7 @@ class sequentsViewer ~(notebook:GPack.notebook) ~(cicMathView:cicMathView) () =
       let win goal_switch =
         let w =
           GBin.scrolled_window ~hpolicy:`AUTOMATIC ~vpolicy:`ALWAYS
-            ~shadow_type:`IN ~show:true ()
-        in
+            ~shadow_type:`IN ~show:true () in
         let reparent () =
           scrolledWin <- Some w;
           (match cicMathView#misc#parent with
@@ -120,12 +119,7 @@ class sequentsViewer ~(notebook:GPack.notebook) ~(cicMathView:cicMathView) () =
                  | Some p -> GContainer.cast_container p
                in
                 parent#remove cicMathView#coerce);
-          w#add cicMathView#coerce;
-          ignore (w#vadjustment#set_value
-           (w#vadjustment#upper -. w#vadjustment#page_size));
-          ignore (w#vadjustment#connect#changed (fun _ ->
-            w#vadjustment#set_value
-             (w#vadjustment#upper -. w#vadjustment#page_size)))
+          w#add cicMathView#coerce
         in
         goal2win <- (goal_switch, reparent) :: goal2win;
         w#coerce
@@ -196,7 +190,20 @@ class sequentsViewer ~(notebook:GPack.notebook) ~(cicMathView:cicMathView) () =
           cicMathView#load_root ~root);
       (try
         cicMathView#set_selection None;
-        List.assoc goal_switch goal2win ()
+        List.assoc goal_switch goal2win ();
+        (match cicMathView#misc#parent with
+           None -> assert false
+         | Some p ->
+            (* The text widget dinamycally inserts the text in a separate
+               thread. We need to wait for it to terminate before we can
+               move the scrollbar to the end *)
+            while Glib.Main.pending()do ignore(Glib.Main.iteration false); done;
+            let w =
+             new GBin.scrolled_window
+              (Gobject.try_cast p#as_widget "GtkScrolledWindow") in
+            w#hadjustment#set_value 0.0;
+            w#vadjustment#set_value
+             (w#vadjustment#upper -. w#vadjustment#page_size));
       with Not_found -> assert false)
 
     method goto_sequent: 'status. #ApplyTransformation.status as 'status -> int -> unit
@@ -210,7 +217,6 @@ class sequentsViewer ~(notebook:GPack.notebook) ~(cicMathView:cicMathView) () =
       in
       notebook#goto_page page;
       self#render_page status ~page ~goal_switch
-
   end
 
 let blank_uri = BuildTimeConf.blank_uri
