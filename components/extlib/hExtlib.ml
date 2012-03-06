@@ -437,6 +437,7 @@ let mkdir path =
           Unix.mkdir path 0o755; chmod 0o2775 path 
         with 
         | Unix.Unix_error (Unix.EEXIST,_,_) -> ()
+        | Unix.Unix_error (Unix.EISDIR,_,_) -> () (* work-around for a bug in FreeBSD *)
         | Unix.Unix_error (e,_,_) -> 
             raise 
               (Failure 
