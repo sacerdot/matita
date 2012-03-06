@@ -32,13 +32,13 @@ let exc_located_wrapper f =
   try
     f ()
   with
-  | Stdpp.Exc_located (_, End_of_file) -> raise End_of_file
-  | Stdpp.Exc_located (floc, Stream.Error msg) ->
+  | Ploc.Exc (_, End_of_file) -> raise End_of_file
+  | Ploc.Exc (floc, Stream.Error msg) ->
       raise (HExtlib.Localized (floc,CicNotationParser.Parse_error msg))
-  | Stdpp.Exc_located (floc, HExtlib.Localized(_,exn)) ->
+  | Ploc.Exc (floc, HExtlib.Localized(_,exn)) ->
       raise (HExtlib.Localized 
         (floc,CicNotationParser.Parse_error (Printexc.to_string exn)))
-  | Stdpp.Exc_located (floc, exn) ->
+  | Ploc.Exc (floc, exn) ->
       raise (HExtlib.Localized 
         (floc,CicNotationParser.Parse_error (Printexc.to_string exn)))
 
