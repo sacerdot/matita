@@ -192,9 +192,7 @@ object (self)
          (Cic.id, Cic.id option) Hashtbl.t * ('a, 'b) Hashtbl.t * 'c option)*) option -> unit)
   (* dal widget di Luca *)
   method load_root ~root:(hyperlinks,text) =
-    self#buffer#delete ~start:(self#buffer#get_iter `START)
-    ~stop:(self#buffer#get_iter `END);
-    self#buffer#insert text;
+    self#buffer#set_text text;
     let all_tag = self#buffer#create_tag [] in
     self#buffer#apply_tag all_tag ~start:(self#buffer#get_iter `START)
      ~stop:(self#buffer#get_iter `END);
