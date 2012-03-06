@@ -209,30 +209,40 @@ object (self)
               href_statusbar_msg;
              false
          | _ -> false));
+     let hyperlink_tag = self#buffer#create_tag [] in
+     ignore(hyperlink_tag#connect#event
+       ~callback:(fun ~origin event pos ->
+         let offset = (new GText.iter pos)#offset in
+         let _,_,href =
+          try
+           List.find
+            (fun (start,stop,href) -> start <= offset && offset <= stop
+            ) hyperlinks
+          with
+           Not_found -> assert false
+         in
+         match GdkEvent.get_type event with
+            `BUTTON_PRESS -> 
+              (match href_callback with
+                  None -> ()
+                | Some f -> f href);
+              true
+          | `MOTION_NOTIFY -> 
+              Gdk.Window.set_cursor
+               (match self#get_window `TEXT with None -> assert false | Some x -> x)
+               (Gdk.Cursor.create `HAND1);
+              let ctxt = (MatitaMisc.get_gui ())#main#statusBar#new_context ~name:"href" in
+              let msg = ctxt#push href in
+              href_statusbar_msg <- Some (ctxt, msg);
+              false
+          | _ -> false));
      List.iter
       ( fun (start,stop,(href : string)) ->
-         let hyperlink_tag = self#buffer#create_tag [] in
           self#buffer#apply_tag hyperlink_tag
            ~start:(self#buffer#get_iter_at_char start)
            ~stop:(self#buffer#get_iter_at_char (stop+1));
-          ignore(hyperlink_tag#connect#event
-            ~callback:(fun ~origin event pos ->
-              match GdkEvent.get_type event with
-                 `BUTTON_PRESS -> 
-                   (match href_callback with
-                       None -> ()
-                     | Some f -> f href);
-                   true
-               | `MOTION_NOTIFY -> 
-                   Gdk.Window.set_cursor
-                    (match self#get_window `TEXT with None -> assert false | Some x -> x)
-                    (Gdk.Cursor.create `HAND1);
-                   let ctxt = (MatitaMisc.get_gui ())#main#statusBar#new_context ~name:"href" in
-                   let msg = ctxt#push href in
-                   href_statusbar_msg <- Some (ctxt, msg);
-                   false
-               | _ -> false));
       ) hyperlinks
+
 
   method action_toggle = (fun _ -> assert false : document_element -> bool)
   method remove_selections = (() : unit)
