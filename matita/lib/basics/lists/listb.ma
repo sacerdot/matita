@@ -115,9 +115,21 @@ let rec unique_append (S:DeqSet) (l1,l2: list S) on l1 ≝
      if memb S a r then r else a::r
   ].
 
-axiom unique_append_elim: ∀S:DeqSet.∀P: S → Prop.∀l1,l2. 
+lemma memb_unique_append: ∀S,a,l1,l2. 
+memb S a (unique_append S l1 l2) = true →
+  memb S a l1= true ∨ memb S a l2 = true.
+#S #a #l1 elim l1 normalize [#l2 #H %2 //] 
+#b #tl #Hind #l2 cases (true_or_false … (a==b)) #Hab >Hab normalize /2/
+cases (memb S b (unique_append S tl l2)) normalize 
+  [@Hind | >Hab normalize @Hind]   
+qed. 
+
+lemma unique_append_elim: ∀S:DeqSet.∀P: S → Prop.∀l1,l2. 
 (∀x. memb S x l1 = true → P x) → (∀x. memb S x l2 = true → P x) →
 ∀x. memb S x (unique_append S l1 l2) = true → P x. 
+#S #P #l1 #l2 #Hl1 #Hl2 #x #membx cases (memb_unique_append … membx)
+/2/ 
+qed.
 
 lemma unique_append_unique: ∀S,l1,l2. uniqueb S l2 = true →
   uniqueb S (unique_append S l1 l2) = true.
