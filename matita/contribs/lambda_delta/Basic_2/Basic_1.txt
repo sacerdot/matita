@@ -254,7 +254,6 @@ pr2/subst1 pr2_gen_cabbr
 pr3/fwd pr3_gen_abst
 pr3/fwd pr3_gen_lref
 pr3/fwd pr3_gen_void
-pr3/fwd pr3_gen_abbr
 pr3/fwd pr3_gen_appl
 pr3/fwd pr3_gen_bind
 pr3/iso pr3_iso_appls_abbr
@@ -271,11 +270,9 @@ pr3/props pr3_head_2
 pr3/props pr3_head_21
 pr3/props pr3_head_12
 pr3/props pr3_flat
-pr3/props pr3_pr3_pr3_t
 pr3/props pr3_eta
 pr3/subst1 pr3_subst1
 pr3/subst1 pr3_gen_cabbr
-pr3/wcpr0 pr3_wcpr0_t
 sn3/props sn3_cpr3_trans
 
 sn3/props sn3_shift

@@ -82,7 +82,7 @@ lemma cprs_flat: ∀I,L,T1,T2. L ⊢ T1 ➡* T2 → ∀V1,V2. L ⊢ V1 ➡* V2 �
 @(cprs_trans … IHV1) -IHV1 /2 width=1/ 
 qed.
 
-(* Basic_1: was only: pr3_pr2_pr3_t *)
+(* Basic_1: was only: pr3_pr2_pr3_t pr3_wcpr0_t *)
 lemma lcpr_cprs_trans: ∀L1,L2. L1 ⊢ ➡ L2 →
                        ∀T1,T2. L2 ⊢ T1 ➡* T2 → L1 ⊢ T1 ➡* T2.
 #L1 #L2 #HL12 #T1 #T2 #H @(cprs_ind … H) -T2 //

@@ -42,9 +42,9 @@ inductive item2: Type[0] ≝
   | Flat2: flat2 → item2 (* non-binding item *)
 .
 
-coercion item2_of_bind2: ∀I:bind2.item2 ≝ Bind2 on _I:bind2 to item2.
+coercion Bind2.
 
-coercion item2_of_flat2: ∀I:flat2.item2 ≝ Flat2 on _I:flat2 to item2.
+coercion Flat2.
 
 (* Basic properties *********************************************************)
 

@@ -65,6 +65,7 @@ tbls: $(PACKAGES:%=etc/ld_%_sum.tbl)
 
 etc/ld_%_sum.tbl: MAS = $(shell find $* -name "*.ma")
 
+%.tbl: V1 = $(shell ls $(MAS) | wc -l)
 %.tbl: C1 = $(shell grep "inductive \|record " $(MAS) | wc -l)
 %.tbl: C2 = $(shell grep "definition \|let rec " $(MAS) | wc -l)
 %.tbl: C3 = $(shell grep "inductive \|record \|definition \|let rec " $(MAS) | wc -l)
@@ -80,6 +81,10 @@ etc/ld_%_sum.tbl: $(MAS)
 	@printf '   class "grey" [ "category"\n'       >> $@
 	@printf '      [ "objects" * ]\n'              >> $@
 	@printf '   ]\n'                               >> $@
+	@printf '   class "cyan" [ "volume"\n'         >> $@
+	@printf '      [ "files" "$(V1)" * ]\n'        >> $@
+	@printf '      [ 4 ]\n'                        >> $@
+	@printf '   ]\n'                               >> $@	
 	@printf '   class "green" [ "propositions"\n'  >> $@
 	@printf '      [ "theorems" "$(P1)" * ]\n'     >> $@
 	@printf '      [ "lemmas"   "$(P2)" * ]\n'     >> $@

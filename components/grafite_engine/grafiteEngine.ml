@@ -495,19 +495,26 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
        let ty = NCicTypeChecker.typeof status [] [] [] t in
        let source, target =
          let clean = function
-         | NCic.Appl (NCic.Const _ as r :: l) -> 
-             NotationPt.Appl (NotationPt.NCic r ::
-               List.map (fun _ -> NotationPt.Implicit `JustOne)l)
-         | NCic.Const _ as r -> NotationPt.NCic r
-         | _ -> assert false in
+           | NCic.Appl (NCic.Const _ as r :: l) -> 
+               NotationPt.Appl (NotationPt.NCic r ::
+                 List.map (fun _ -> NotationPt.Implicit `JustOne)l)
+           | NCic.Const _ as r -> NotationPt.NCic r
+           | NCic.Sort _ as r -> NotationPt.NCic r (* FG: missing case *)
+	   | _ -> assert false
+	 in
          let rec aux = function
-         | NCic.Prod (_,_, (NCic.Prod _ as rest)) -> aux rest
-         | NCic.Prod (name, src, tgt) -> (name, clean src), clean tgt
-         | _ -> assert false in aux ty in
-       status, o_t, NotationPt.NCic ty, source, target in
+           | NCic.Prod (_,_, (NCic.Prod _ as rest)) -> aux rest
+           | NCic.Prod (name, src, tgt) -> (name, clean src), clean tgt
+           | _ -> assert false
+	 in
+	 aux ty
+       in
+       status, o_t, NotationPt.NCic ty, source, target
+     in
      let status, composites =
       NCicCoercDeclaration.eval_ncoercion status name compose t ty source
-       target in
+       target
+     in
      let mode = GrafiteAst.WithPreferences in (* MATITA 1.0: fixme *)
      let aliases = GrafiteDisambiguate.aliases_for_objs status composites in
       eval_alias status (mode,aliases)

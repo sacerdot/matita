@@ -199,7 +199,6 @@ notation > "B ⇒_1. C" right associative with precedence 72 for @{'arrows1_SETl
 notation > "B ⇒_2 C" right associative with precedence 72 for @{'arrows2_SET1 $B $C}.
 notation > "B ⇒_2. C" right associative with precedence 72 for @{'arrows2_SET1low $B $C}.
 
-notation "A × term 74 B ⇒ term 19 C" non associative with precedence 72 for @{'binary_morphism0 $A $B $C}.
 notation "A × term 74 B ⇒\sub 1 term 19 C" non associative with precedence 72 for @{'binary_morphism1 $A $B $C}.
 notation "A × term 74 B ⇒\sub 2 term 19 C" non associative with precedence 72 for @{'binary_morphism2 $A $B $C}.
 notation "A × term 74 B ⇒\sub 3 term 19 C" non associative with precedence 72 for @{'binary_morphism3 $A $B $C}.
@@ -231,10 +230,10 @@ definition CPROP: setoid1.
   [ @CProp[0]
   | @mk_equivalence_relation1
      [ @Iff
-     | #H1 @mk_Iff #H3 #H5 assumption
-     | #H7 #H8 #i cases i #H14 #H15 @mk_Iff assumption
-     | #H17 #H18 #H19 #i1 #i cases i cases i1 #f #f1 #f2 #f3 @mk_Iff
-       [ #x1 @(f2 (f x1)) | #z1 @(f1 (f3 z1))]]]
+     | #x @mk_Iff #x1 assumption
+     | #x #y #i cases i #f #f1 @mk_Iff assumption
+     | #x #y #z #i1 #i cases i cases i1 #f #f1 #f2 #f3 @mk_Iff #x1
+       [ @(f2 (f x1)) | @(f1 (f3 x1))]]]
 qed.
 
 definition CProp0_of_CPROP: carr1 CPROP → CProp[0] ≝ λx.x.
@@ -242,16 +241,16 @@ coercion CProp0_of_CPROP.
 
 alias symbol "eq" = "setoid1 eq".
 definition fi': ∀A,B:CPROP. A = B → B → A.
- intros; @(fi ?? e); assumption.
+ #A #B #e #b @(fi ?? e) assumption.
 qed.
 
 notation ". r" with precedence 50 for @{'fi $r}.
 interpretation "fi" 'fi r = (fi' ?? r).
 
 definition and_morphism: binary_morphism1 CPROP CPROP CPROP.
- constructor 1;
+ @mk_binary_morphism1
   [ @And
-  | intros; split; intro; cases a1; split;
+  | #a #a' #b #b' #e #e1 @mk_Iff #a1 cases a1 #a2 #b1 @Conj
      [ @(if ?? e a2)
      | @(if ?? e1 b1)
      | @(fi ?? e a2)
@@ -261,38 +260,40 @@ qed.
 interpretation "and_morphism" 'and a b = (fun21 ??? and_morphism a b).
 
 definition or_morphism: binary_morphism1 CPROP CPROP CPROP.
- constructor 1;
+ @mk_binary_morphism1
   [ @Or
-  | intros; split; intro; cases o; [1,3:left |2,4: right]
+  | #a #a' #b #b' #e #e1 @mk_Iff #o cases o #a1 [1,3: @Left |2,4: @Right]
      [ @(if ?? e a1)
      | @(fi ?? e a1)
-     | @(if ?? e1 b1)
-     | @(fi ?? e1 b1)]]
+     | @(if ?? e1 a1)
+     | @(fi ?? e1 a1)]]
 qed.
 
 interpretation "or_morphism" 'or a b = (fun21 ??? or_morphism a b).
 
 definition if_morphism: binary_morphism1 CPROP CPROP CPROP.
- constructor 1;
+ @mk_binary_morphism1
   [ @(λA,B. A → B)
-  | intros; split; intros;
-     [ @(if ?? e1); @f; @(fi ?? e); assumption
-     | @(fi ?? e1); @f; @(if ?? e); assumption]]
+  | #a #a' #b #b' #e #e1 @mk_Iff #f #a1
+     [ @(if ?? e1) @f @(fi ?? e) assumption
+     | @(fi ?? e1) @f @(if ?? e) assumption]]
 qed.
-
+(*
 notation > "hvbox(a break ∘ b)" left associative with precedence 55 for @{ comp ??? $a $b }.
+*)
 record category : Type[1] ≝ { 
    objs:> Type[0];
    arrows: objs → objs → setoid;
    id: ∀o:objs. arrows o o;
    comp: ∀o1,o2,o3. (arrows o1 o2) × (arrows o2 o3) ⇒ (arrows o1 o3);
    comp_assoc: ∀o1,o2,o3,o4.∀a12:arrows o1 ?.∀a23:arrows o2 ?.∀a34:arrows o3 o4.
-     (a12 ∘ a23) ∘ a34 =_0 a12 ∘ (a23 ∘ a34);
-   id_neutral_left : ∀o1,o2. ∀a: arrows o1 o2. (id o1) ∘ a =_0 a;
-   id_neutral_right: ∀o1,o2. ∀a: arrows o1 o2. a ∘ (id o2) =_0 a
+   comp o1 o3 o4 (comp o1 o2 o3 a12 a23) a34 =_0 comp o1 o2 o4 a12 (comp o2 o3 o4 a23 a34);
+   id_neutral_left : ∀o1,o2. ∀a: arrows o1 o2. comp ??? (id o1) a =_0 a;
+   id_neutral_right: ∀o1,o2. ∀a: arrows o1 o2. comp ??? a (id o2) =_0 a
 }.
+(*
 notation "hvbox(a break ∘ b)" left associative with precedence 55 for @{ 'compose $a $b }.
-
+*)
 record category1 : Type[2] ≝
  { objs1:> Type[1];
    arrows1: objs1 → objs1 → setoid1;
@@ -336,19 +337,18 @@ interpretation "category composition" 'compose x y = (fun2 ??? (comp ????) y x).
 interpretation "category assoc" 'assoc = (comp_assoc ????????).
 
 definition category2_of_category1: category1 → category2.
- intro;
- constructor 1;
-  [ @(objs1 c);
-  | intros; @(setoid2_of_setoid1 (arrows1 c o o1));
-  | @(id1 c);
-  | intros;
-    constructor 1;
-     [ intros; @(comp1 c o1 o2 o3 c1 c2);
-     | intros; unfold setoid2_of_setoid1 in e e1 a a' b b'; simplify in e e1 a a' b b'; 
-       change with ((b∘a) =_1 (b'∘a')); @(e‡e1); ]
-  | intros; simplify; whd in a12 a23 a34; whd; @rule (ASSOC);
-  | intros; simplify; whd in a; whd; @id_neutral_right1;
-  | intros; simplify; whd in a; whd; @id_neutral_left1; ]
+ #c
+ @mk_category2
+  [ @(objs1 c)
+  | #o #o1 @(setoid2_of_setoid1 (arrows1 c o o1))
+  | @(id1 c)
+  | #o1 #o2 #o3
+    @mk_binary_morphism2
+     [ #c1 #c2 @(comp1 c o1 o2 o3 c1 c2)
+     | #a #a' #b #b' #e #e1 @(e‡e1) ]
+  | #o1 #o2 #o3 #o4 #a12 #a23 #a34 @comp_assoc1
+  | #o1 #o2 #a @id_neutral_right1
+  | #o1 #o2 #a @id_neutral_left1 ]
 qed.
 (*coercion category2_of_category1.*)
 
@@ -365,11 +365,11 @@ notation "F\sub⇒ x" left associative with precedence 60 for @{'map_arrows2 $F 
 interpretation "map_arrows2" 'map_arrows2 F x = (fun12 ?? (map_arrows2 ?? F ??) x).
 
 definition functor2_setoid: category2 → category2 → setoid3.
- intros (C1 C2);
- constructor 1;
-  [ @(functor2 C1 C2);
-  | constructor 1;
-     [ intros (f g);
+ #C1 #C2
+ @mk_setoid3
+  [ @(functor2 C1 C2)
+  | @mk_equivalence_relation3
+     [ #f #g
        @(∀c:C1. cic:/matita/logic/equality/eq.ind#xpointer(1/1) ? (f c) (g c));
      | simplify; intros; @cic:/matita/logic/equality/eq.ind#xpointer(1/1/1);
      | simplify; intros; @cic:/matita/logic/equality/sym_eq.con; @H;
