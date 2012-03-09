@@ -205,6 +205,7 @@ class sequentsViewer ~(notebook:GPack.notebook) ~(cicMathView:cicMathView) () =
                changed :-( *)
             w#hadjustment#set_value w#hadjustment#upper;
             w#hadjustment#set_value w#hadjustment#lower;
+            w#vadjustment#set_value w#vadjustment#lower;
             w#vadjustment#set_value
              (w#vadjustment#upper -. w#vadjustment#page_size));
       with Not_found -> assert false)
