@@ -12,9 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Ground_2/tri.ma".
-include "Basic_2/substitution/lift.ma".
-include "Apps_2/functional/notation.ma".
+include "ground_2/tri.ma".
+include "basic_2/substitution/lift.ma".
+include "apps_2/functional/notation.ma".
 
 (* RELOCATION ***************************************************************)
 

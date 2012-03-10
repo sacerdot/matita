@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/unfold/ldrops_ldrop.ma".
+include "basic_2/unfold/ldrops_ldrop.ma".
 
 (* GENERIC LOCAL ENVIRONMENT SLICING ****************************************)
 

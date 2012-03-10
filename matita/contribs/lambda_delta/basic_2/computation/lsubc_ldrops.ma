@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/computation/lsubc_ldrop.ma".
+include "basic_2/computation/lsubc_ldrop.ma".
 
 (* LOCAL ENVIRONMENT REFINEMENT FOR ABSTRACT CANDIDATES OF REDUCIBILITY *****)
 

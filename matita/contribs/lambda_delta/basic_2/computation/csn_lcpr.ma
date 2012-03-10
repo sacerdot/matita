@@ -12,11 +12,11 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/grammar/tstc_tstc.ma".
-include "Basic_2/computation/cprs_cprs.ma".
-include "Basic_2/computation/csn_lift.ma".
-include "Basic_2/computation/csn_cpr.ma".
-include "Basic_2/computation/csn_cprs.ma".
+include "basic_2/grammar/tstc_tstc.ma".
+include "basic_2/computation/cprs_cprs.ma".
+include "basic_2/computation/csn_lift.ma".
+include "basic_2/computation/csn_cpr.ma".
+include "basic_2/computation/csn_cprs.ma".
 
 (* CONTEXT-SENSITIVE STRONGLY NORMALIZING TERMS *****************************)
 

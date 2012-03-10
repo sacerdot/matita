@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/static/aaa_aaa.ma".
-include "Basic_2/static/lsuba_ldrop.ma".
+include "basic_2/static/aaa_aaa.ma".
+include "basic_2/static/lsuba_ldrop.ma".
 
 (* LOCAL ENVIRONMENT REFINEMENT FOR ATOMIC ARITY ASSIGNMENT *****************)
 

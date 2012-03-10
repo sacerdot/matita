@@ -12,9 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/grammar/tstc_vector.ma".
-include "Basic_2/substitution/lift_vector.ma".
-include "Basic_2/computation/cprs_tstc.ma".
+include "basic_2/grammar/tstc_vector.ma".
+include "basic_2/substitution/lift_vector.ma".
+include "basic_2/computation/cprs_tstc.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL COMPUTATION ON TERMS **************************)
 

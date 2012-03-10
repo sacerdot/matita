@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/static/aaa.ma".
-include "Basic_2/computation/acp_cr.ma".
+include "basic_2/static/aaa.ma".
+include "basic_2/computation/acp_cr.ma".
 
 (* LOCAL ENVIRONMENT REFINEMENT FOR ABSTRACT CANDIDATES OF REDUCIBILITY *****)
 

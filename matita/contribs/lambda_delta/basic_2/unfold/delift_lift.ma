@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/unfold/tpss_lift.ma".
-include "Basic_2/unfold/delift.ma".
+include "basic_2/unfold/tpss_lift.ma".
+include "basic_2/unfold/delift.ma".
 
 (* DELIFT ON TERMS **********************************************************)
 

@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/reducibility/tpr_tpr.ma".
-include "Basic_2/reducibility/cpr.ma".
+include "basic_2/reducibility/tpr_tpr.ma".
+include "basic_2/reducibility/cpr.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL REDUCTION ON TERMS ****************************)
 

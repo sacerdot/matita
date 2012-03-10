@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/computation/lcprs_cprs.ma".
+include "basic_2/computation/lcprs_cprs.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL COMPUTATION ON LOCAL ENVIRONMENTS *************)
 

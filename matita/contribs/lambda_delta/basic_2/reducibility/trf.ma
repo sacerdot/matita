@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/grammar/term_simple.ma".
+include "basic_2/grammar/term_simple.ma".
 
 (* CONTEXT-FREE REDUCIBLE TERMS *********************************************)
 

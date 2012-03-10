@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/grammar/term_weight.ma".
-include "Basic_2/grammar/term_simple.ma".
+include "basic_2/grammar/term_weight.ma".
+include "basic_2/grammar/term_simple.ma".
 
 (* BASIC TERM RELOCATION ****************************************************)
 

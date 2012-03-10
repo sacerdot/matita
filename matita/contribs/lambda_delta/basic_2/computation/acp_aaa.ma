@@ -12,11 +12,11 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/unfold/lifts_lifts.ma".
-include "Basic_2/unfold/ldrops_ldrops.ma".
-include "Basic_2/static/aaa_lifts.ma".
-include "Basic_2/static/aaa_aaa.ma".
-include "Basic_2/computation/lsubc_ldrops.ma".
+include "basic_2/unfold/lifts_lifts.ma".
+include "basic_2/unfold/ldrops_ldrops.ma".
+include "basic_2/static/aaa_lifts.ma".
+include "basic_2/static/aaa_aaa.ma".
+include "basic_2/computation/lsubc_ldrops.ma".
 
 (* ABSTRACT COMPUTATION PROPERTIES ******************************************)
 

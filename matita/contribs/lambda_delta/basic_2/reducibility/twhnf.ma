@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/grammar/tshf.ma".
-include "Basic_2/reducibility/tpr.ma".
+include "basic_2/grammar/tshf.ma".
+include "basic_2/reducibility/tpr.ma".
 
 (* CONTEXT-FREE WEAK HEAD NORMAL TERMS **************************************)
 

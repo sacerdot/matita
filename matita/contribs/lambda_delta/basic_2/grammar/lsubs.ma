@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/grammar/lenv_length.ma".
+include "basic_2/grammar/lenv_length.ma".
 
 (* LOCAL ENVIRONMENT REFINEMENT FOR SUBSTITUTION ****************************)
 

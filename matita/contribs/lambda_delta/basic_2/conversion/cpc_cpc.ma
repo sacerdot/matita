@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/conversion/cpc.ma".
+include "basic_2/conversion/cpc.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL CONVERSION ON TERMS ***************************)
 

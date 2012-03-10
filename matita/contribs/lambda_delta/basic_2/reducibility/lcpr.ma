@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/unfold/ltpss.ma".
-include "Basic_2/reducibility/ltpr.ma".
+include "basic_2/unfold/ltpss.ma".
+include "basic_2/reducibility/ltpr.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL REDUCTION ON LOCAL ENVIRONMENTS *************)
 

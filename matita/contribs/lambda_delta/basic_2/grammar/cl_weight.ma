@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/grammar/lenv_weight.ma".
-include "Basic_2/grammar/cl_shift.ma".
+include "basic_2/grammar/lenv_weight.ma".
+include "basic_2/grammar/cl_shift.ma".
 
 (* WEIGHT OF A CLOSURE ******************************************************)
 

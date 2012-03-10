@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/computation/cprs_cprs.ma".
-include "Basic_2/computation/lcprs_lcprs.ma".
+include "basic_2/computation/cprs_cprs.ma".
+include "basic_2/computation/lcprs_lcprs.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL COMPUTATION ON TERMS **************************)
 

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/unfold/gr2.ma".
+include "basic_2/unfold/gr2.ma".
 
 (* GENERIC RELOCATION WITH PAIRS ********************************************)
 

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/static/lsuba_aaa.ma".
+include "basic_2/static/lsuba_aaa.ma".
 
 (* LOCAL ENVIRONMENT REFINEMENT FOR ATOMIC ARITY ASSIGNMENT *****************)
 

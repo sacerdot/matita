@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/substitution/gdrop.ma".
+include "basic_2/substitution/gdrop.ma".
 
 (* GLOBAL ENVIRONMENT SLICING ***********************************************)
 

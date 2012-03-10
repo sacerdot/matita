@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/computation/cprs.ma".
-include "Basic_2/computation/csn.ma".
+include "basic_2/computation/cprs.ma".
+include "basic_2/computation/csn.ma".
 
 (* CONTEXT-SENSITIVE STRONGLY NORMALIZING TERMS *****************************)
 

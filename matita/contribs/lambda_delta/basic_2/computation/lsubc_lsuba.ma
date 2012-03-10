@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/static/lsuba.ma".
-include "Basic_2/computation/acp_aaa.ma".
+include "basic_2/static/lsuba.ma".
+include "basic_2/computation/acp_aaa.ma".
 
 (* LOCAL ENVIRONMENT REFINEMENT FOR ABSTRACT CANDIDATES OF REDUCIBILITY *****)
 

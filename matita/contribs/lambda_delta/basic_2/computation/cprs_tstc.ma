@@ -12,12 +12,12 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/grammar/tstc.ma".
+include "basic_2/grammar/tstc.ma".
 (*
-include "Basic_2/reducibility/cpr_lift.ma".
-include "Basic_2/reducibility/lcpr_cpr.ma".
+include "basic_2/reducibility/cpr_lift.ma".
+include "basic_2/reducibility/lcpr_cpr.ma".
 *)
-include "Basic_2/computation/cprs_cprs.ma".
+include "basic_2/computation/cprs_cprs.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL COMPUTATION ON TERMS **************************)
 

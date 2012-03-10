@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/grammar/genv.ma".
+include "basic_2/grammar/genv.ma".
 
 (* GLOBAL ENVIRONMENT SLICING ***********************************************)
 

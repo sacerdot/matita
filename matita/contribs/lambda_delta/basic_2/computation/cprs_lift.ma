@@ -12,10 +12,21 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/reducibility/cpr_lift.ma".
-include "Basic_2/computation/cprs.ma".
+include "basic_2/reducibility/cpr_lift.ma".
+include "basic_2/computation/cprs.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL COMPUTATION ON TERMS **************************)
+
+(* Advanced inversion lemmas ************************************************)
+
+(* Basic_1: was: pr3_gen_abst *)
+lemma cprs_inv_abst1: ∀I,W,L,V1,T1,U2. L ⊢ ⓛV1. T1 ➡* U2 →
+                      ∃∃V2,T2. L ⊢ V1 ➡* V2 & L. ⓑ{I} W ⊢ T1 ➡* T2 &
+                               U2 = ⓛV2. T2.
+#I #W #L #V1 #T1 #U2 #H @(cprs_ind … H) -U2 /2 width=5/
+#U #U2 #_ #HU2 * #V #T #HV1 #HT1 #H destruct
+elim (cpr_inv_abst1 … HU2 I W) -HU2 #V2 #T2 #HV2 #HT2 #H destruct  /3 width=5/
+qed-.
 
 (* Relocation properties ****************************************************)
 
@@ -40,3 +51,4 @@ lemma cprs_inv_lift: ∀L,K,d,e. ⇩[d, e] L ≡ K →
 -HTU1 #U #U2 #_ #HU2 * #T #HTU #HT1
 elim (cpr_inv_lift … HLK … HTU … HU2) -U -HLK /3 width=5/
 qed.
+

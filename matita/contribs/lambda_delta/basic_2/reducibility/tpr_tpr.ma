@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/reducibility/tpr_tpss.ma".
+include "basic_2/reducibility/tpr_tpss.ma".
 
 (* CONTEXT-FREE PARALLEL REDUCTION ON TERMS *********************************)
 

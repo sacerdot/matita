@@ -21,8 +21,8 @@
  * [ suggested invocation to start formal specifications with ]
  *)
 
-include "Ground_2/star.ma".
-include "Basic_2/notation.ma".
+include "ground_2/star.ma".
+include "basic_2/notation.ma".
 
 (* ATOMIC ARITY *************************************************************)
 

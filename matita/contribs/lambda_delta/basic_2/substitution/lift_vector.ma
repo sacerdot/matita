@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/grammar/term_vector.ma".
-include "Basic_2/substitution/lift.ma".
+include "basic_2/grammar/term_vector.ma".
+include "basic_2/substitution/lift.ma".
 
 (* BASIC TERM VECTOR RELOCATION *********************************************)
 

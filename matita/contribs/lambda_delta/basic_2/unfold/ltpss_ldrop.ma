@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/substitution/ltps_ldrop.ma".
-include "Basic_2/unfold/ltpss.ma".
+include "basic_2/substitution/ltps_ldrop.ma".
+include "basic_2/unfold/ltpss.ma".
 
 (* PARTIAL UNFOLD ON LOCAL ENVIRONMENTS *************************************)
 

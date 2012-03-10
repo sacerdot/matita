@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Ground_2/list.ma".
-include "Basic_2/grammar/term.ma".
+include "ground_2/list.ma".
+include "basic_2/grammar/term.ma".
 
 (* GLOBAL ENVIRONMENTS ******************************************************)
 

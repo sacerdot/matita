@@ -12,10 +12,10 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/computation/acp_cr.ma".
-include "Basic_2/computation/cprs_tstc_vector.ma".
-include "Basic_2/computation/csn_lcpr.ma".
-include "Basic_2/computation/csn_vector.ma".
+include "basic_2/computation/acp_cr.ma".
+include "basic_2/computation/cprs_tstc_vector.ma".
+include "basic_2/computation/csn_lcpr.ma".
+include "basic_2/computation/csn_vector.ma".
 
 (* CONTEXT-SENSITIVE STRONGLY NORMALIZING TERM VECTORS **********************)
 

@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/substitution/ldrop_ldrop.ma".
-include "Basic_2/substitution/tps.ma".
+include "basic_2/substitution/ldrop_ldrop.ma".
+include "basic_2/substitution/tps.ma".
 
 (* PARTIAL SUBSTITUTION ON TERMS ********************************************)
 

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/grammar/term_vector.ma".
+include "basic_2/grammar/term_vector.ma".
 
 (* GENERIC RELOCATION WITH PAIRS ********************************************)
 

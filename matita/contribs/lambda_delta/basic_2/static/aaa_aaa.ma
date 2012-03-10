@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/substitution/ldrop_ldrop.ma".
-include "Basic_2/static/aaa.ma".
+include "basic_2/substitution/ldrop_ldrop.ma".
+include "basic_2/static/aaa.ma".
 
 (* ATONIC ARITY ASSIGNMENT ON TERMS *****************************************)
 

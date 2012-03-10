@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/grammar/tstc.ma".
+include "basic_2/grammar/tstc.ma".
 
 (* SAME TOP TERM CONSTRUCTOR ************************************************)
 

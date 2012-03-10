@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "arithmetics/nat.ma".
-include "Ground_2/star.ma".
+include "ground_2/star.ma".
 
 (* ARITHMETICAL PROPERTIES **************************************************)
 

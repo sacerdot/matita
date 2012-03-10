@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/grammar/term_weight.ma".
-include "Basic_2/grammar/lenv.ma".
+include "basic_2/grammar/term_weight.ma".
+include "basic_2/grammar/lenv.ma".
 
 (* WEIGHT OF A LOCAL ENVIRONMENT ********************************************)
 

@@ -12,9 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/reducibility/cnf_lift.ma".
-include "Basic_2/computation/acp.ma".
-include "Basic_2/computation/csn.ma".
+include "basic_2/reducibility/cnf_lift.ma".
+include "basic_2/computation/acp.ma".
+include "basic_2/computation/csn.ma".
 
 (* CONTEXT-SENSITIVE STRONGLY NORMALIZING TERMS *****************************)
 

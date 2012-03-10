@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/substitution/ltps.ma".
+include "basic_2/substitution/ltps.ma".
 
 (* PARALLEL SUBSTITUTION ON LOCAL ENVIRONMENTS ******************************)
 

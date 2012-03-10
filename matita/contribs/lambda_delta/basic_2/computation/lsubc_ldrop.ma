@@ -12,9 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/static/aaa_lift.ma".
-include "Basic_2/computation/acp_cr.ma".
-include "Basic_2/computation/lsubc.ma".
+include "basic_2/static/aaa_lift.ma".
+include "basic_2/computation/acp_cr.ma".
+include "basic_2/computation/lsubc.ma".
 
 (* LOCAL ENVIRONMENT REFINEMENT FOR ABSTRACT CANDIDATES OF REDUCIBILITY *****)
 

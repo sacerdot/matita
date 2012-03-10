@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/unfold/ltpss_ltpss.ma".
-include "Basic_2/reducibility/ltpr_ldrop.ma".
+include "basic_2/unfold/ltpss_ltpss.ma".
+include "basic_2/reducibility/ltpr_ldrop.ma".
 
 (* CONTEXT-FREE PARALLEL REDUCTION ON TERMS *********************************)
 

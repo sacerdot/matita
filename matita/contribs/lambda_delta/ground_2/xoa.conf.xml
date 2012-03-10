@@ -10,7 +10,7 @@
 -->
   </section>
   <section name="xoa">
-    <key name="output_dir">contribs/lambda_delta/Ground_2/</key>
+    <key name="output_dir">contribs/lambda_delta/ground_2/</key>
     <key name="objects">xoa</key>
     <key name="notations">xoa_notation</key>
     <key name="include">basics/pts.ma</key>

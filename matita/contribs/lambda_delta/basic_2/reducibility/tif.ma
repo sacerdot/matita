@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/reducibility/trf.ma".
+include "basic_2/reducibility/trf.ma".
 
 (* CONTEXT-FREE IRREDUCIBLE TERMS *******************************************)
 

@@ -12,9 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/substitution/tps_lift.ma".
-include "Basic_2/reducibility/tif.ma".
-include "Basic_2/reducibility/tnf.ma".
+include "basic_2/substitution/tps_lift.ma".
+include "basic_2/reducibility/tif.ma".
+include "basic_2/reducibility/tnf.ma".
 
 (* CONTEXT-FREE NORMAL TERMS ************************************************)
 

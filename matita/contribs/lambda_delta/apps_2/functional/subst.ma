@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/unfold/delift_lift.ma".
-include "Apps_2/functional/lift.ma".
+include "basic_2/unfold/delift_lift.ma".
+include "apps_2/functional/lift.ma".
 
 (* CORE SUBSTITUTION ********************************************************)
 

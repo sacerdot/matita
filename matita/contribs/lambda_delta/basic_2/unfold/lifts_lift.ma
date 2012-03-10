@@ -12,9 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/substitution/lift_lift.ma".
-include "Basic_2/unfold/gr2_minus.ma".
-include "Basic_2/unfold/lifts.ma".
+include "basic_2/substitution/lift_lift.ma".
+include "basic_2/unfold/gr2_minus.ma".
+include "basic_2/unfold/lifts.ma".
 
 (* GENERIC TERM RELOCATION **************************************************)
 

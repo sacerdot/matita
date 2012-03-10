@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/reducibility/cpr_lift.ma".
-include "Basic_2/reducibility/cnf.ma".
+include "basic_2/reducibility/cpr_lift.ma".
+include "basic_2/reducibility/cnf.ma".
 
 (* CONTEXT-SENSITIVE NORMAL TERMS *******************************************)
 

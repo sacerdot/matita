@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/grammar/term_vector.ma".
-include "Basic_2/computation/csn.ma".
+include "basic_2/grammar/term_vector.ma".
+include "basic_2/computation/csn.ma".
 
 (* CONTEXT-SENSITIVE STRONGLY NORMALIZING TERM VECTORS **********************)
 
@@ -39,7 +39,7 @@ qed.
 lemma csnv_inv_cons: ∀L,T,Ts. L ⊢ ⬇* T :: Ts → L ⊢ ⬇* T ∧ L ⊢ ⬇* Ts.
 /2 width=3/ qed-.
 
-include "Basic_2/computation/csn_cpr.ma".
+include "basic_2/computation/csn_cpr.ma".
 
 lemma csn_fwd_applv: ∀L,T,Vs. L ⊢ ⬇* Ⓐ Vs. T → L ⊢ ⬇* Vs ∧ L ⊢ ⬇* T.
 #L #T #Vs elim Vs -Vs /2 width=1/

@@ -12,9 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/reducibility/lcpr_cpr.ma".
-include "Basic_2/computation/cprs.ma".
-include "Basic_2/computation/lcprs.ma".
+include "basic_2/reducibility/lcpr_cpr.ma".
+include "basic_2/computation/cprs.ma".
+include "basic_2/computation/lcprs.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL COMPUTATION ON LOCAL ENVIRONMENTS *************)
 

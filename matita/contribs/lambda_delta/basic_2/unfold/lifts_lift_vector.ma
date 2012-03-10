@@ -12,9 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/substitution/lift_lift_vector.ma".
-include "Basic_2/unfold/lifts_lift.ma".
-include "Basic_2/unfold/lifts_vector.ma".
+include "basic_2/substitution/lift_lift_vector.ma".
+include "basic_2/unfold/lifts_lift.ma".
+include "basic_2/unfold/lifts_vector.ma".
 
 (* GENERIC RELOCATION *******************************************************)
 

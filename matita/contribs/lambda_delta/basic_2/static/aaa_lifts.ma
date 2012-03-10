@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/unfold/ldrops.ma".
-include "Basic_2/static/aaa_lift.ma".
+include "basic_2/unfold/ldrops.ma".
+include "basic_2/static/aaa_lift.ma".
 
 (* ATONIC ARITY ASSIGNMENT ON TERMS *****************************************)
 

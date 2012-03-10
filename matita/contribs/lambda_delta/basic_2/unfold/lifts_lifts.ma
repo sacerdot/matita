@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/unfold/lifts_lift.ma".
+include "basic_2/unfold/lifts_lift.ma".
 
 (* GENERIC RELOCATION *******************************************************)
 

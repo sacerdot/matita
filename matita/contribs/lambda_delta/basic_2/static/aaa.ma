@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/grammar/aarity.ma".
-include "Basic_2/substitution/ldrop.ma".
+include "basic_2/grammar/aarity.ma".
+include "basic_2/substitution/ldrop.ma".
 
 (* ATONIC ARITY ASSIGNMENT ON TERMS *****************************************)
 

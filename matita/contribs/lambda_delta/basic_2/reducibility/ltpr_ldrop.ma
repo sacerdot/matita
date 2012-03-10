@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/reducibility/tpr_lift.ma".
-include "Basic_2/reducibility/ltpr.ma".
+include "basic_2/reducibility/tpr_lift.ma".
+include "basic_2/reducibility/ltpr.ma".
 
 (* CONTEXT-FREE PARALLEL REDUCTION ON LOCAL ENVIRONMENTS ********************)
 

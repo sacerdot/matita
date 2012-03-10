@@ -12,10 +12,10 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/reducibility/ltpr_tps.ma".
-include "Basic_2/reducibility/cpr_ltpss.ma".
-include "Basic_2/reducibility/lcpr.ma".
-include "Basic_2/computation/cprs.ma".
+include "basic_2/reducibility/ltpr_tps.ma".
+include "basic_2/reducibility/cpr_ltpss.ma".
+include "basic_2/reducibility/lcpr.ma".
+include "basic_2/computation/cprs.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL COMPUTATION ON TERMS **************************)
 

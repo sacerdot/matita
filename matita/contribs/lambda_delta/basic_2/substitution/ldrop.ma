@@ -12,9 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/grammar/lenv_weight.ma".
-include "Basic_2/grammar/lsubs.ma".
-include "Basic_2/substitution/lift.ma".
+include "basic_2/grammar/lenv_weight.ma".
+include "basic_2/grammar/lsubs.ma".
+include "basic_2/substitution/lift.ma".
 
 (* LOCAL ENVIRONMENT SLICING ************************************************)
 

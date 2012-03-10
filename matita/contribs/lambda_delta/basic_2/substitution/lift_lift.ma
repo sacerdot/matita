@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/substitution/lift.ma".
+include "basic_2/substitution/lift.ma".
 
 (* BASIC TERM RELOCATION ****************************************************)
 

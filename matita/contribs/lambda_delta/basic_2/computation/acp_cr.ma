@@ -12,11 +12,11 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/grammar/aarity.ma".
-include "Basic_2/unfold/gr2_gr2.ma".
-include "Basic_2/unfold/lifts_lift_vector.ma".
-include "Basic_2/unfold/ldrops_ldrop.ma".
-include "Basic_2/computation/acp.ma".
+include "basic_2/grammar/aarity.ma".
+include "basic_2/unfold/gr2_gr2.ma".
+include "basic_2/unfold/lifts_lift_vector.ma".
+include "basic_2/unfold/ldrops_ldrop.ma".
+include "basic_2/computation/acp.ma".
 
 (* ABSTRACT COMPUTATION PROPERTIES ******************************************)
 

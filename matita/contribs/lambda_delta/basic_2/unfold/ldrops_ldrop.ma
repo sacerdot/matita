@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Basic_2/substitution/ldrop_ldrop.ma".
-include "Basic_2/unfold/ldrops.ma".
+include "basic_2/substitution/ldrop_ldrop.ma".
+include "basic_2/unfold/ldrops.ma".
 
 (* GENERIC LOCAL ENVIRONMENT SLICING ****************************************)
 

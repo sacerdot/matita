@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Ground_2/arith.ma".
-include "Basic_2/notation.ma".
+include "ground_2/arith.ma".
+include "basic_2/notation.ma".
 
 (* ITEMS ********************************************************************)
 

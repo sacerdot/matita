@@ -2,10 +2,10 @@ H       = @
 XOA_DIR = ../../../components/binaries/xoa
 XOA     = xoa.native
 
-CONF    = Ground_2/xoa.conf.xml
-TARGETS = Ground_2/xoa_natation.ma Ground_2/xoa.ma
+CONF    = ground_2/xoa.conf.xml
+TARGETS = ground_2/xoa_natation.ma ground_2/xoa.ma
 
-PACKAGES = Ground_2 Basic_2 Apps_2
+PACKAGES = ground_2 basic_2 apps_2
 
 all:
 
