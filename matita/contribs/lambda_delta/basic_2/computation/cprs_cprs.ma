@@ -75,11 +75,19 @@ theorem cprs_conf: ∀L,T1,T. L ⊢ T ➡* T1 → ∀T2. L ⊢ T ➡* T2 →
 theorem cprs_trans: ∀L,T1,T. L ⊢ T1 ➡* T → ∀T2. L ⊢ T ➡* T2 → L ⊢ T1 ➡* T2.
 /2 width=3/ qed.
 
+(* Basic_1: was: pr3_flat *)
 lemma cprs_flat: ∀I,L,T1,T2. L ⊢ T1 ➡* T2 → ∀V1,V2. L ⊢ V1 ➡* V2 →
                  L ⊢ ⓕ{I} V1. T1 ➡* ⓕ{I} V2. T2.
 #I #L #T1 #T2 #HT12 #V1 #V2 #HV12 @(cprs_ind … HV12) -V2 /2 width=1/
 #V #V2 #_ #HV2 #IHV1
 @(cprs_trans … IHV1) -IHV1 /2 width=1/ 
+qed.
+
+lemma cprs_abbr: ∀L,V1,T1,T2. L. ⓓV1 ⊢ T1 ➡* T2 → ∀V2. L ⊢ V1 ➡* V2 →
+                 L ⊢ ⓓV1. T1 ➡* ⓓV2. T2.
+#L #V1 #T1 #T2 #HT12 #V2 #HV12 @(cprs_ind … HV12) -V2 /2 width=1/
+#V #V2 #_ #HV2 #IHV1
+@(cprs_trans … IHV1) -IHV1 /2 width=1/
 qed.
 
 (* Basic_1: was only: pr3_pr2_pr3_t pr3_wcpr0_t *)

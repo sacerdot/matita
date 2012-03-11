@@ -13,41 +13,60 @@
 (**************************************************************************)
 
 include "basic_2/grammar/tstc.ma".
-(*
-include "basic_2/reducibility/cpr_lift.ma".
-include "basic_2/reducibility/lcpr_cpr.ma".
-*)
-include "basic_2/computation/cprs_cprs.ma".
+include "basic_2/computation/cprs_lift.ma".
+include "basic_2/computation/cprs_lcprs.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL COMPUTATION ON TERMS **************************)
 
 (* Forward lemmas involving same top term constructor ***********************)
-(*
-lemma cpr_fwd_beta: ∀L,V,W,T,U. L ⊢ ⓐV. ⓛW. T ➡ U →
-                    ⓐV. ⓛW. T ≃ U ∨ L ⊢ ⓓV. T ➡* U.
+
+(* Basic_1: was: pr3_iso_beta *)
+lemma cprs_fwd_beta: ∀L,V,W,T,U. L ⊢ ⓐV. ⓛW. T ➡* U →
+                     ⓐV. ⓛW. T ≃ U ∨ L ⊢ ⓓV. T ➡* U.
 #L #V #W #T #U #H
-elim (cpr_inv_appl1 … H) -H *
-[ #V0 #X #_ #_ #H destruct /2 width=1/
-| #V0 #W0 #T1 #T2 #HV0 #HT12 #H1 #H2 destruct
-  lapply (lcpr_cpr_trans (L. ⓓV) … HT12) -HT12 /2 width=1/ /3 width=1/
-| #V1 #V2 #W1 #W2 #T1 #T2 #_ #_ #_ #_ #H destruct
+elim (cprs_inv_appl1 … H) -H *
+[ #V0 #T0 #_ #_ #H destruct /2 width=1/
+| #V0 #W0 #T0 #HV0 #HT0 #HU
+  elim (cprs_inv_abst1 Abbr V … HT0) -HT0 #W1 #T1 #_ #HT1 #H destruct -W1
+  @or_intror -W
+  @(cprs_trans … HU) -U /2 width=1/ (**) (* explicit constructor *)
+| #V1 #V2 #V0 #T1 #_ #_ #HT1 #_
+  elim (cprs_inv_abst1 Abbr V … HT1) -HT1 #W2 #T2 #_ #_ #H destruct
 ]
 qed-.
 
-lemma cpr_fwd_theta: ∀L,V1,V,T,U. L ⊢ ⓐV1. ⓓV. T ➡ U →
-                     ∀V2. ⇧[0, 1] V1 ≡ V2 → ⓐV1. ⓓV. T ≃ U ∨
-                     L ⊢ ⓓV. ⓐV2. T ➡* U.
+lemma cprs_fwd_theta: ∀L,V1,V,T,U. L ⊢ ⓐV1. ⓓV. T ➡* U →
+                      ∀V2. ⇧[0, 1] V1 ≡ V2 → ⓐV1. ⓓV. T ≃ U ∨
+                      L ⊢ ⓓV. ⓐV2. T ➡* U.
 #L #V1 #V #T #U #H #V2 #HV12
-elim (cpr_inv_appl1 … H) -H *
-[ -HV12 #V0 #X #_ #_ #H destruct /2 width=1/
-| -HV12 #V0 #W #T1 #T2 #_ #_ #H destruct
-| #V0 #V3 #W1 #W2 #T1 #T2 #HV10 #HW12 #HT12 #HV03 #H1 #H2 destruct
-  lapply (cpr_lift (L.ⓓW1) … HV12 … HV03 … HV10) -V0 -HV12 /2 width=1/ #HV23
-  lapply (lcpr_cpr_trans (L. ⓓW1) … HT12) -HT12 /2 width=1/ #HT12
-  /4 width=1/
+elim (cprs_inv_appl1 … H) -H *
+[ -HV12 #V0 #T0 #_ #_ #H destruct /2 width=1/
+| #V0 #W #T0 #HV10 #HT0 #HU
+  elim (cprs_inv_abbr1 … HT0) -HT0 *
+  [ #V3 #T3 #_ #_ #H destruct
+  | #X #H #HT2
+    elim (lift_inv_bind1 … H) -H #W2 #T2 #HW2 #HT02 #H destruct
+    @or_intror @(cprs_trans … HU) -U (**) (* explicit constructor *)
+    @(cprs_trans … (ⓓV.ⓐV2.ⓛW2.T2)) [ /3 width=1/ ] -T
+    @(cprs_strap2 … (ⓐV1.ⓛW.T0)) [ /5 width=3/ ] -V -V2 -W2 -T2
+    @(cprs_strap2 … (ⓓV1.T0)) [ /3 width=1/ ] -W /2 width=1/
+  ]
+| #V3 #V4 #V0 #T0 #HV13 #HV34 #HT0 #HU
+  @or_intror @(cprs_trans … HU) -U (**) (* explicit constructor *)
+  elim (cprs_inv_abbr1 … HT0) -HT0 *
+  [ #V5 #T5 #HV5 #HT5 #H destruct
+    lapply (cprs_lift (L.ⓓV) … HV12 … HV13 … HV34) -V1 -V3 /2 width=1/
+    /3 width=1/
+  | #X #H #HT1
+    elim (lift_inv_bind1 … H) -H #V5 #T5 #HV05 #HT05 #H destruct
+    lapply (cprs_lift (L.ⓓV0) … HV12 … HV13 … HV34) -V3 /2 width=1/ #HV24
+    @(cprs_trans … (ⓓV.ⓐV2.ⓓV5.T5)) [ /3 width=1/ ] -T
+    @(cprs_strap2 … (ⓐV1.ⓓV0.T0)) [ /5 width=3/ ] -V -V5 -T5
+    @(cprs_strap2 … (ⓓV0.ⓐV2.T0)) [ /3 width=3/ ] -V1 /3 width=9/
+  ]
 ]
 qed-.
-*)
+
 lemma cprs_fwd_tau: ∀L,W,T,U. L ⊢ ⓣW. T ➡* U →
                     ⓣW. T ≃ U ∨ L ⊢ T ➡* U.
 #L #W #T #U #H

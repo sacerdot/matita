@@ -32,7 +32,7 @@ lemma cpr_intro: ∀L,T1,T,T2,d,e. T1 ➡ T → L ⊢ T [d, e] ▶* T2 → L ⊢
 /4 width=3/ qed-.
 
 (* Basic_1: was by definition: pr2_free *)
-lemma cpr_pr: ∀T1,T2. T1 ➡ T2 → ∀L. L ⊢ T1 ➡ T2.
+lemma cpr_tpr: ∀T1,T2. T1 ➡ T2 → ∀L. L ⊢ T1 ➡ T2.
 /2 width=3/ qed.
 
 lemma cpr_tpss: ∀L,T1,T2,d,e. L ⊢ T1 [d, e] ▶* T2 → L ⊢ T1 ➡ T2.

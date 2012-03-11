@@ -82,4 +82,7 @@ elim (cpr_inv_cast1 … HU2) -HU2 /3 width=3/ *
 #W2 #T2 #HW2 #HT2 #H destruct /4 width=5/
 qed-.
 
-(* Basic_1: removed theorems 2: clear_pr3_trans pr3_cflat *)
+(* Basic_1: removed theorems 5:
+   clear_pr3_trans pr3_cflat
+   pr3_iso_appl_bind pr3_iso_appls_appl_bind pr3_iso_appls_bind
+*)
