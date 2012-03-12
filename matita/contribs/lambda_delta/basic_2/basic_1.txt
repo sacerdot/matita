@@ -254,8 +254,6 @@ pr2/subst1 pr2_gen_cabbr
 pr3/fwd pr3_gen_lref
 pr3/fwd pr3_gen_void
 pr3/fwd pr3_gen_bind
-pr3/iso pr3_iso_appls_abbr
-pr3/iso pr3_iso_appls_beta
 pr3/pr1 pr3_pr1
 pr3/pr3 pr3_strip
 pr3/props pr3_thin_dx
@@ -274,14 +272,8 @@ sn3/props sn3_gen_def
 sn3/props sn3_cdelta
 sn3/props sn3_appl_lref
 sn3/props sn3_appl_abbr
-sn3/props sn3_appl_cast
-sn3/props sn3_appl_beta
 sn3/props sn3_appl_appls
 sn3/props sn3_appls_lref
-sn3/props sn3_appls_cast
-sn3/props sn3_appls_bind
-sn3/props sn3_appls_beta
-sn3/props sn3_appls_abbr
 sn3/props sns3_lifts
 
 sty0/fwd sty0_gen_sort

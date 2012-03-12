@@ -34,6 +34,25 @@ lemma csn_appl_appls_simple_tstc: ∀L,Vs,V,T1. L ⊢ ⬇* V → L ⊢ ⬇* T1 �
 ]
 qed.
 *)
+(* Basic_1: was: sn3_appls_beta *)
+lemma csn_applv_beta: ∀L,W. L ⊢ ⬇* W →
+                      ∀Vs,V,T. L ⊢ ⬇* ⒶVs.ⓓV.T →
+                      L ⊢ ⬇* ⒶVs. ⓐV.ⓛW. T.
+#L #W #HW #Vs elim Vs -Vs /2 width=1/ -HW
+#V0 #Vs #IHV #V #T #H1T
+lapply (csn_fwd_pair_sn … H1T) #HV0
+lapply (csn_fwd_flat_dx … H1T) #H2T
+@csn_appl_simple_tstc // -HV0 /2 width=1/ -IHV -H2T
+[ #X #H #H0
+  elim (cprs_fwd_beta_vector … H) -H #H
+  [ -H1T elim (H0 ?) -H0 //
+  | -H0 @(csn_cprs_trans … H1T) -H1T /2 width=1/
+  ]
+| -H1T elim Vs -Vs //
+]
+qed.
+
+(* Basic_1: was: sn3_appls_abbr *) 
 lemma csn_applv_theta: ∀L,V1s,V2s. ⇧[0, 1] V1s ≡ V2s →
                        ∀V,T. L ⊢ ⬇* ⓓV. ⒶV2s. T → L ⊢ ⬇* V →
                        L ⊢ ⬇* ⒶV1s. ⓓV. T.
@@ -52,6 +71,7 @@ elim (cprs_fwd_theta_vector … (V2::V2s) … H1) -H1 /2 width=1/ -HV12s -HV12
 ]
 qed.
 
+(* Basic_1: was: sn3_appls_cast *)
 lemma csn_applv_tau: ∀L,W. L ⊢ ⬇* W →
                      ∀Vs,T. L ⊢ ⬇* ⒶVs. T →
                      L ⊢ ⬇* ⒶVs. ⓣW. T.
@@ -72,7 +92,7 @@ qed.
 theorem csn_acr: acr cpr (eq …) (csn …) (λL,T. L ⊢ ⬇* T).
 @mk_acr //
 [
-|
+| /2 width=1/
 |
 | #L #V1 #V2 #HV12 #V #T #H #HVT
   @(csn_applv_theta … HV12) -HV12 //

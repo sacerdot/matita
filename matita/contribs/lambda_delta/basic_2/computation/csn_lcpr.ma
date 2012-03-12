@@ -113,7 +113,6 @@ elim (cpr_inv_appl1 … HL) -HL *
 ]
 qed.
 
-(* Basic_1: was: sn3_appl_bind *)
 lemma csn_appl_theta: ∀V1,V2. ⇧[0, 1] V1 ≡ V2 →
                       ∀L,V,T. L ⊢ ⬇* ⓓV. ⓐV2. T → L ⊢ ⬇* ⓐV1. ⓓV. T.
 /2 width=5/ qed.
