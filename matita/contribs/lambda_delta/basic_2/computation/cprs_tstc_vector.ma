@@ -44,6 +44,31 @@ elim (cprs_inv_appl1 … H) -H *
 ]
 qed-.
 
+lemma cprs_fwd_delta_vector: ∀L,K,V1,i. ⇩[0, i] L ≡ K. ⓓV1 →
+                             ∀V2. ⇧[0, i + 1] V1 ≡ V2 →
+                             ∀Vs,U. L ⊢ ⒶVs.#i ➡* U →
+                             ⒶVs.#i ≃ U ∨ L ⊢ ⒶVs.V2 ➡* U.
+#L #K #V1 #i #HLK #V2 #HV12 #Vs elim Vs -Vs /2 width=4 by cprs_fwd_delta/
+#V #Vs #IHVs #U #H -K -V1
+elim (cprs_inv_appl1 … H) -H *
+[ -IHVs #V0 #T0 #_ #_ #H destruct /2 width=1/
+| #V0 #W0 #T0 #HV0 #HT0 #HU
+  elim (IHVs … HT0) -IHVs -HT0 #HT0
+  [ elim (tstc_inv_bind_appls_simple … HT0 ?) //
+  | @or_intror -i (**) (* explicit constructor *)
+    @(cprs_trans … HU) -U
+    @(cprs_strap1 … (ⓐV0.ⓛW0.T0)) [ /2 width=1/ ] -V -V2 -Vs /3 width=1/
+  ]
+| #V0 #V1 #V3 #T0 #HV0 #HV01 #HT0 #HU
+  elim (IHVs … HT0) -IHVs -HT0 #HT0
+  [ elim (tstc_inv_bind_appls_simple … HT0 ?) //
+  | @or_intror -i (**) (* explicit constructor *)
+    @(cprs_trans … HU) -U
+    @(cprs_strap1 … (ⓐV0.ⓓV3.T0)) [ /2 width=1/ ] -V -V2 -Vs /3 width=3/
+  ]
+]
+qed-.
+
 (* Basic_1: was: pr3_iso_appls_abbr *)
 lemma cprs_fwd_theta_vector: ∀L,V1s,V2s. ⇧[0, 1] V1s ≡ V2s →
                              ∀V,T,U. L ⊢ ⒶV1s. ⓓV. T ➡* U →

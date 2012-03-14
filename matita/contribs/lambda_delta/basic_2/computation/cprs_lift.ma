@@ -19,6 +19,25 @@ include "basic_2/computation/cprs.ma".
 
 (* Advanced inversion lemmas ************************************************)
 
+(* Basic_1: was: pr3_gen_lref *)
+lemma cprs_inv_lref1: ∀L,T2,i. L ⊢ #i ➡* T2 →
+                      T2 = #i ∨
+                      ∃∃K,V1,T1. ⇩[0, i] L ≡ K. ⓓV1 &
+                                 K ⊢ V1 ➡* T1 &
+                                 ⇧[0, i + 1] T1 ≡ T2 &
+                                 i < |L|.
+#L #T2 #i #H @(cprs_ind … H) -T2 /2 width=1/
+#T #T2 #_ #HT2 *
+[ #H destruct
+  elim (cpr_inv_lref1 … HT2) -HT2 /2 width=1/
+  * #K #V1 #T1 #HLK #HVT1 #HT12 #Hi
+  @or_intror @(ex4_3_intro … HLK … HT12) // /3 width=3/ (**) (* explicit constructors *)
+| * #K #V1 #T1 #HLK #HVT1 #HT1 #Hi
+  lapply (ldrop_fwd_ldrop2 … HLK) #H0LK
+  elim (cpr_inv_lift … H0LK … HT1 … HT2) -H0LK -T /4 width=6/
+]
+qed-.
+
 (* Basic_1: was: pr3_gen_abst *)
 lemma cprs_inv_abst1: ∀I,W,L,V1,T1,U2. L ⊢ ⓛV1. T1 ➡* U2 →
                       ∃∃V2,T2. L ⊢ V1 ➡* V2 & L. ⓑ{I} W ⊢ T1 ➡* T2 &

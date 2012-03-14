@@ -52,6 +52,27 @@ lapply (csn_fwd_flat_dx … H1T) #H2T
 ]
 qed.
 
+lemma csn_applv_delta: ∀L,K,V1,i. ⇩[0, i] L ≡ K. ⓓV1 →
+                       ∀V2. ⇧[0, i + 1] V1 ≡ V2 →
+                       ∀Vs.L ⊢ ⬇* (ⒶVs. V2) → L ⊢ ⬇* (ⒶVs. #i).
+#L #K #V1 #i #HLK #V2 #HV12 #Vs elim Vs -Vs
+[ #H
+  lapply (ldrop_fwd_ldrop2 … HLK) #HLK0
+  lapply (csn_inv_lift … H … HLK0 HV12) -V2 -HLK0 /2 width=4/
+| #V #Vs #IHV #H1T
+  lapply (csn_fwd_pair_sn … H1T) #HV
+  lapply (csn_fwd_flat_dx … H1T) #H2T
+  @csn_appl_simple_tstc // -HV /2 width=1/ -IHV -H2T
+  [ #X #H #H0
+    elim (cprs_fwd_delta_vector … HLK … HV12 … H) -HLK -HV12 -H #H
+    [ -H1T elim (H0 ?) -H0 //
+    | -H0 @(csn_cprs_trans … H1T) -H1T /2 width=1/
+    ]
+  | -L -K -V -V1 -V2 elim Vs -Vs //
+  ]
+]
+qed.
+
 (* Basic_1: was: sn3_appls_abbr *) 
 lemma csn_applv_theta: ∀L,V1s,V2s. ⇧[0, 1] V1s ≡ V2s →
                        ∀V,T. L ⊢ ⬇* ⓓV. ⒶV2s. T → L ⊢ ⬇* V →
@@ -93,7 +114,7 @@ theorem csn_acr: acr cpr (eq …) (csn …) (λL,T. L ⊢ ⬇* T).
 @mk_acr //
 [
 | /2 width=1/
-|
+| /2 width=6/
 | #L #V1 #V2 #HV12 #V #T #H #HVT
   @(csn_applv_theta … HV12) -HV12 //
   @(csn_abbr) //

@@ -35,6 +35,18 @@ elim (cprs_inv_appl1 … H) -H *
 ]
 qed-.
 
+(* Note: probably this is an inversion lemma *)
+lemma cprs_fwd_delta: ∀L,K,V1,i. ⇩[0, i] L ≡ K. ⓓV1 →
+                      ∀V2. ⇧[0, i + 1] V1 ≡ V2 →
+                      ∀U. L ⊢ #i ➡* U →
+                      #i ≃ U ∨ L ⊢ V2 ➡* U.
+#L #K #V1 #i #HLK #V2 #HV12 #U #H
+elim (cprs_inv_lref1 … H) -H /2 width=1/
+* #K0 #V0 #U0 #HLK0 #HVU0 #HU0 #_
+lapply (ldrop_mono … HLK0 … HLK) -HLK0 #H destruct
+lapply (ldrop_fwd_ldrop2 … HLK) -HLK /3 width=9/
+qed-.
+
 lemma cprs_fwd_theta: ∀L,V1,V,T,U. L ⊢ ⓐV1. ⓓV. T ➡* U →
                       ∀V2. ⇧[0, 1] V1 ≡ V2 → ⓐV1. ⓓV. T ≃ U ∨
                       L ⊢ ⓓV. ⓐV2. T ➡* U.

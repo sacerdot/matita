@@ -250,11 +250,9 @@ pr2/clen pr2_gen_ctail
 pr2/fwd pr2_gen_void
 pr2/props pr2_ctail
 pr2/subst1 pr2_gen_cabbr
-
-pr3/fwd pr3_gen_lref
 pr3/fwd pr3_gen_void
-pr3/fwd pr3_gen_bind
 pr3/pr1 pr3_pr1
+
 pr3/pr3 pr3_strip
 pr3/props pr3_thin_dx
 pr3/props pr3_head_1
@@ -270,8 +268,6 @@ sn3/props sn3_shift
 sn3/props sn3_change
 sn3/props sn3_gen_def
 sn3/props sn3_cdelta
-sn3/props sn3_appl_lref
-sn3/props sn3_appl_abbr
 sn3/props sn3_appl_appls
 sn3/props sn3_appls_lref
 sn3/props sns3_lifts
