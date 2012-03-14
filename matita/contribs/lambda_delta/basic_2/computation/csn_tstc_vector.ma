@@ -20,20 +20,21 @@ include "basic_2/computation/csn_vector.ma".
 (* CONTEXT-SENSITIVE STRONGLY NORMALIZING TERM VECTORS **********************)
 
 (* Advanced properties ******************************************************)
-(*
-(* Basic_1: was only: sn3_appl_appls *)
-lemma csn_appl_appls_simple_tstc: ∀L,Vs,V,T1. L ⊢ ⬇* V → L ⊢ ⬇* T1 →
-                                  (∀T2. L ⊢ ⒶVs.T1 ➡* T2 → (ⒶVs.T1 ≃ T2 → False) → L ⊢ ⬇* ⓐV. T2) →
-                                  𝐒[T1] → L ⊢ ⬇* ⓐV. ⒶVs. T1.
-#L *
-[ #V #T1 #HV
-  @csn_appl_simple_tstc //
-| #V0 #Vs #V #T1 #HV #H1T1 #H2T1 #H3T1
-  @csn_appl_simple_tstc // -HV
-  [ @H2T1
+
+(* Basic_1: was only: sn3_appls_lref *)
+lemma csn_applv_cnf: ∀L,T. 𝐒[T] → L ⊢ 𝐍[T] → 
+                     ∀Vs. L ⊢ ⬇* Vs → L ⊢ ⬇* ⒶVs.T.
+#L #T #H1T #H2T #Vs elim Vs -Vs [ #_ @(csn_cnf … H2T) ] (**) (* /2 width=1/ does not work *)
+#V #Vs #IHV #H
+elim (csnv_inv_cons … H) -H #HV #HVs
+@csn_appl_simple_tstc // -HV /2 width=1/ -IHV -HVs
+[ #X #H #H0
+  lapply (cprs_fwd_cnf_vector … H) -H // -H1T -H2T #H
+  elim (H0 ?) -H0 //
+| -L -V elim Vs -Vs //
 ]
 qed.
-*)
+
 (* Basic_1: was: sn3_appls_beta *)
 lemma csn_applv_beta: ∀L,W. L ⊢ ⬇* W →
                       ∀Vs,V,T. L ⊢ ⬇* ⒶVs.ⓓV.T →
@@ -109,10 +110,10 @@ lapply (csn_fwd_flat_dx … H1T) #H2T
 | -H1T elim Vs -Vs //
 ]
 qed.
-(*
+
 theorem csn_acr: acr cpr (eq …) (csn …) (λL,T. L ⊢ ⬇* T).
 @mk_acr //
-[
+[ /3 width=1/
 | /2 width=1/
 | /2 width=6/
 | #L #V1 #V2 #HV12 #V #T #H #HVT
@@ -122,5 +123,3 @@ theorem csn_acr: acr cpr (eq …) (csn …) (λL,T. L ⊢ ⬇* T).
 | @csn_lift
 ]
 qed.
-*)
-axiom csn_acr: acr cpr (eq …) (csn …) (λL,T. L ⊢ ⬇* T).

@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/computation/acp_aaa.ma".
-include "basic_2/computation/csn_lcpr_vector.ma".
+include "basic_2/computation/csn_tstc_vector.ma".
 
 (* CONTEXT-SENSITIVE STRONGLY NORMALIZING TERMS *****************************)
 

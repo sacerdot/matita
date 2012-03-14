@@ -26,6 +26,13 @@ interpretation
    "context-sensitive strong normalization (term vector)"
    'SN L Ts = (csnv L Ts).
 
+(* Basic properties *********************************************************)
+
+lemma all_csnv: ∀L,Vs. all … (csn L) Vs → L ⊢ ⬇* Vs.
+#L #Vs elim Vs -Vs //
+#V #Vs #IHVs * /3 width=1/ 
+qed.
+
 (* Basic inversion lemmas ***************************************************)
 
 fact csnv_inv_cons_aux: ∀L,Ts. L ⊢ ⬇* Ts → ∀U,Us. Ts = U :: Us →

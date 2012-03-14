@@ -20,6 +20,11 @@ include "basic_2/computation/cprs_lcprs.ma".
 
 (* Forward lemmas involving same top term constructor ***********************)
 
+lemma cprs_fwd_cnf: ∀L,T. L ⊢ 𝐍[T] → ∀U. L ⊢ T ➡* U → T ≃ U.
+#L #T #HT #U #H
+>(cprs_inv_cnf1 … H HT) -L -T //
+qed-.
+
 (* Basic_1: was: pr3_iso_beta *)
 lemma cprs_fwd_beta: ∀L,V,W,T,U. L ⊢ ⓐV. ⓛW. T ➡* U →
                      ⓐV. ⓛW. T ≃ U ∨ L ⊢ ⓓV. T ➡* U.

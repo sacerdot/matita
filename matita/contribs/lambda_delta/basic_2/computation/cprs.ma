@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reducibility/cpr.ma".
+include "basic_2/reducibility/cnf.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL COMPUTATION ON TERMS **************************)
 
@@ -80,6 +80,12 @@ lemma cprs_inv_cast1: ∀L,W1,T1,U2. L ⊢ ⓣW1.T1 ➡* U2 → L ⊢ T1 ➡* U2
 #W #T #HW1 #HT1 #H destruct
 elim (cpr_inv_cast1 … HU2) -HU2 /3 width=3/ *
 #W2 #T2 #HW2 #HT2 #H destruct /4 width=5/
+qed-.
+
+lemma cprs_inv_cnf1: ∀L,T,U. L ⊢ T ➡* U → L ⊢ 𝐍[T] → T = U.
+#L #T #U #H @(cprs_ind_dx … H) -T //
+#T0 #T #H1T0 #_ #IHT #H2T0
+lapply (H2T0 … H1T0) -H1T0 #H destruct /2 width=1/
 qed-.
 
 (* Basic_1: removed theorems 6:
