@@ -62,7 +62,7 @@ stats: $(PACKAGES:%=%.stats)
 # summary ####################################################################
 
 define SUMMARY_TEMPLATE
-  TBL_$(1) := $(1)/ld_$(1)_sum.tbl  
+  TBL_$(1) := $(1)/$(1)_sum.tbl  
   MAS_$(1) := $$(shell find $(1) -name "*.ma")
   TBLS     += $$(TBL_$(1))
 
