@@ -153,3 +153,41 @@ lemma TC_star_ind: ∀A,R. reflexive A R → ∀a1. ∀P:predicate A.
                    ∀a2. TC … R a1 a2 → P a2.
 #A #R #H #a1 #P #Ha1 #IHa1 #a2 #Ha12 elim Ha12 -a2 /3 width=4/
 qed.
+
+inductive TC_dx (A:Type[0]) (R:relation A): A → A → Prop ≝
+  |inj_dx: ∀a,c. R a c → TC_dx A R a c
+  |step_dx : ∀a,b,c. R a b → TC_dx A R b c → TC_dx A R a c.
+
+lemma TC_dx_strap: ∀A. ∀R: relation A.
+                   ∀a,b,c. TC_dx A R a b → R b c → TC_dx A R a c.
+#A #R #a #b #c #Hab elim Hab -a -b /3 width=3/
+qed.
+
+lemma TC_to_TC_dx: ∀A. ∀R: relation A.
+                   ∀a1,a2. TC … R a1 a2 → TC_dx … R a1 a2.
+#A #R #a1 #a2 #Ha12 elim Ha12 -a2 /2 width=3/
+qed.
+
+lemma TC_dx_to_TC: ∀A. ∀R: relation A.
+                   ∀a1,a2. TC_dx … R a1 a2 → TC … R a1 a2.
+#A #R #a1 #a2 #Ha12 elim Ha12 -a1 -a2 /2 width=3/
+qed.
+
+fact TC_star_ind_dx_aux: ∀A,R. reflexive A R →
+                         ∀a2. ∀P:predicate A. P a2 →
+                         (∀a1,a. R a1 a → TC … R a a2 → P a → P a1) →
+                         ∀a1,a. TC … R a1 a → a = a2 → P a1.
+#A #R #HR #a2 #P #Ha2 #H #a1 #a #Ha1
+elim (TC_to_TC_dx ???? Ha1) -a1 -a
+[ #a #c #Hac #H destruct /3 width=4/
+| #a #b #c #Hab #Hbc #IH #H destruct /3 width=4/
+]
+qed-.
+
+lemma TC_star_ind_dx: ∀A,R. reflexive A R →
+                      ∀a2. ∀P:predicate A. P a2 →
+                      (∀a1,a. R a1 a → TC … R a a2 → P a → P a1) →
+                      ∀a1. TC … R a1 a2 → P a1.
+#A #R #HR #a2 #P #Ha2 #H #a1 #Ha12
+@(TC_star_ind_dx_aux … HR … Ha2 H … Ha12) //
+qed-.

@@ -28,11 +28,9 @@ lemma csn_applv_cnf: ∀L,T. 𝐒[T] → L ⊢ 𝐍[T] →
 #V #Vs #IHV #H
 elim (csnv_inv_cons … H) -H #HV #HVs
 @csn_appl_simple_tstc // -HV /2 width=1/ -IHV -HVs
-[ #X #H #H0
-  lapply (cprs_fwd_cnf_vector … H) -H // -H1T -H2T #H
-  elim (H0 ?) -H0 //
-| -L -V elim Vs -Vs //
-]
+#X #H #H0
+lapply (cprs_fwd_cnf_vector … H) -H // -H1T -H2T #H
+elim (H0 ?) -H0 //
 qed.
 
 (* Basic_1: was: sn3_appls_beta *)
@@ -44,12 +42,10 @@ lemma csn_applv_beta: ∀L,W. L ⊢ ⬇* W →
 lapply (csn_fwd_pair_sn … H1T) #HV0
 lapply (csn_fwd_flat_dx … H1T) #H2T
 @csn_appl_simple_tstc // -HV0 /2 width=1/ -IHV -H2T
-[ #X #H #H0
-  elim (cprs_fwd_beta_vector … H) -H #H
-  [ -H1T elim (H0 ?) -H0 //
-  | -H0 @(csn_cprs_trans … H1T) -H1T /2 width=1/
-  ]
-| -H1T elim Vs -Vs //
+#X #H #H0
+elim (cprs_fwd_beta_vector … H) -H #H
+[ -H1T elim (H0 ?) -H0 //
+| -H0 @(csn_cprs_trans … H1T) -H1T /2 width=1/
 ]
 qed.
 
@@ -64,12 +60,10 @@ lemma csn_applv_delta: ∀L,K,V1,i. ⇩[0, i] L ≡ K. ⓓV1 →
   lapply (csn_fwd_pair_sn … H1T) #HV
   lapply (csn_fwd_flat_dx … H1T) #H2T
   @csn_appl_simple_tstc // -HV /2 width=1/ -IHV -H2T
-  [ #X #H #H0
-    elim (cprs_fwd_delta_vector … HLK … HV12 … H) -HLK -HV12 -H #H
-    [ -H1T elim (H0 ?) -H0 //
-    | -H0 @(csn_cprs_trans … H1T) -H1T /2 width=1/
-    ]
-  | -L -K -V -V1 -V2 elim Vs -Vs //
+  #X #H #H0
+  elim (cprs_fwd_delta_vector … HLK … HV12 … H) -HLK -HV12 -H #H
+  [ -H1T elim (H0 ?) -H0 //
+  | -H0 @(csn_cprs_trans … H1T) -H1T /2 width=1/
   ]
 ]
 qed.
@@ -102,12 +96,10 @@ lemma csn_applv_tau: ∀L,W. L ⊢ ⬇* W →
 lapply (csn_fwd_pair_sn … H1T) #HV
 lapply (csn_fwd_flat_dx … H1T) #H2T
 @csn_appl_simple_tstc // -HV /2 width=1/ -IHV -H2T
-[ #X #H #H0
-  elim (cprs_fwd_tau_vector … H) -H #H
-  [ -H1T elim (H0 ?) -H0 //
-  | -H0 @(csn_cprs_trans … H1T) -H1T /2 width=1/
-  ]
-| -H1T elim Vs -Vs //
+#X #H #H0
+elim (cprs_fwd_tau_vector … H) -H #H
+[ -H1T elim (H0 ?) -H0 //
+| -H0 @(csn_cprs_trans … H1T) -H1T /2 width=1/
 ]
 qed.
 

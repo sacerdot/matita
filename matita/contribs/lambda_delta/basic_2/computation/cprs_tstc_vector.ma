@@ -20,6 +20,7 @@ include "basic_2/computation/cprs_tstc.ma".
 
 (* Vector form of forward lemmas involving same top term constructor ********)
 
+(* Basic_1: was just: nf2_iso_appls_lref *)
 lemma cprs_fwd_cnf_vector: ∀L,T.  𝐒[T] → L ⊢ 𝐍[T] → ∀Vs,U. L ⊢ ⒶVs.T ➡* U → ⒶVs.T ≃ U.
 #L #T #H1T #H2T #Vs elim Vs -Vs [ @(cprs_fwd_cnf … H2T) ] (**) (* /2 width=3 by cprs_fwd_cnf/ does not work *)
 #V #Vs #IHVs #U #H

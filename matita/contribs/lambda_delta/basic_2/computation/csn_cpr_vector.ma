@@ -12,22 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/list.ma".
-include "basic_2/grammar/term_simple.ma".
+include "basic_2/computation/csn_cpr.ma".
+include "basic_2/computation/csn_vector.ma".
 
-(* TERMS ********************************************************************)
+(* Advanced forward lemmas **************************************************)
 
-let rec applv Vs T on Vs ≝
-  match Vs with
-  [ nil        ⇒ T
-  | cons hd tl ⇒  ⓐhd. (applv tl T)
-  ].
-
-interpretation "application o vevtor (term)"
-   'SnApplV Vs T = (applv Vs T).
-
-(* properties concerning simple terms ***************************************)
-
-lemma applv_simple: ∀T,Vs.  𝐒[T] -> 𝐒[ⒶVs.T].
-#T * //
-qed.
+lemma csn_fwd_applv: ∀L,T,Vs. L ⊢ ⬇* Ⓐ Vs. T → L ⊢ ⬇* Vs ∧ L ⊢ ⬇* T.
+#L #T #Vs elim Vs -Vs /2 width=1/
+#V #Vs #IHVs #HVs
+lapply (csn_fwd_pair_sn … HVs) #HV
+lapply (csn_fwd_flat_dx … HVs) -HVs #HVs
+elim (IHVs HVs) -IHVs -HVs /3 width=1/
+qed-.
