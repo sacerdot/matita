@@ -12,26 +12,21 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reducibility/cpr.ma".
+include "basic_2/reducibility/cpr_ltpr.ma".
+include "basic_2/computation/cprs.ma".
 
-(* CONTEXT-SENSITIVE NORMAL TERMS *******************************************)
+(* CONTEXT-SENSITIVE PARALLEL COMPUTATION ON TERMS **************************)
 
-definition cnf: lenv → predicate term ≝ λL. NF … (cpr L) (eq …).
+(* Properties concerning parallel unfold on terms ***************************)
 
-interpretation
-   "context-sensitive normality (term)"
-   'Normal L T = (cnf L T). 
-
-(* Basic properties *********************************************************)
-
-(* Basic_1: was: nf2_sort *)
-lemma cnf_sort: ∀L,k. L ⊢ 𝐍[⋆k].
-#L #k #X #H
->(cpr_inv_sort1 … H) //
+(* Basic_1: was only: pr3_subst1 *)
+lemma cprs_tpss_ltpr: ∀L1,T1,U1,d,e. L1 ⊢ T1 [d, e] ▶* U1 →
+                      ∀L2. L1 ➡ L2 → ∀T2. L2 ⊢ T1 ➡* T2 →
+                      ∃∃U2. L2 ⊢ U1 ➡* U2 & L2 ⊢ T2 [d, e] ▶* U2.
+#L1 #T1 #U1 #d #e #HTU1 #L2 #HL12 #T2 #HT12 elim HT12 -T2
+[ #T2 #HT12
+  elim (cpr_tpss_ltpr … HL12 … HT12 … HTU1) -L1 -T1 /3 width=3/
+| #T #T2 #_ #HT2 * #U #HU1 #HTU
+  elim (cpr_tpss_ltpr … HT2 … HTU) -L1 -T // /3 width=3/
+]
 qed.
-
-(* Basic_1: was: nf2_dec *)
-axiom cnf_dec: ∀L,T1. L ⊢ 𝐍[T1] ∨
-               ∃∃T2. L ⊢ T1 ➡ T2 & (T1 = T2 → False).
-
-(* Basic_1: removed theorems 1: nf2_abst_shift *)

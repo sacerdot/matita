@@ -47,9 +47,6 @@ asucc/fwd asucc_gen_head
 cnt/props cnt_lift
 C/props clt_wf__q_ind
 C/props clt_wf_ind
-C/props chead_ctail
-C/props clt_thead (ctail)
-C/props c_tail_ind
 csuba/arity csuba_arity
 csuba/arity csuba_arity_rev
 csuba/arity arity_appls_appl
@@ -103,7 +100,6 @@ csubv/getl csubv_getl_conf_void
 csubv/props csubv_bind_same
 csubv/props csubv_refl
 drop1/props drop1_cons_tail
-drop/props drop_ctail
 ex0/props aplus_gz_le
 ex0/props aplus_gz_ge
 ex0/props next_plus_gz
@@ -132,18 +128,10 @@ leq/props leq_trans
 leq/props leq_ahead_false_1
 leq/props leq_ahead_false_2
 lift1/fwd lift1_cons_tail
-
-# check #############################################################
-
-lift1/fwd lifts1_flat
 lift1/fwd lifts1_nil
 lift1/fwd lifts1_cons
-lift1/props lift1_free
 lift/props thead_x_lift_y_y
 lift/props lifts_tapp
-
-# waiting ####################################################################
-
 lift/props lifts_inj
 llt/props lweight_repl
 llt/props llt_repl
@@ -156,8 +144,6 @@ next_plus/props next_plus_assoc
 next_plus/props next_plus_next
 next_plus/props next_plus_lt
 nf2/arity arity_nf2_inv_all
-nf2/dec nf2_dec
-
 nf2/fwd nf2_gen_lref
 nf2/fwd nf2_gen_abst
 nf2/fwd nf2_gen_cast
@@ -165,15 +151,9 @@ nf2/fwd nf2_gen_beta
 nf2/fwd nf2_gen_flat
 nf2/fwd nf2_gen__nf2_gen_aux
 nf2/fwd nf2_gen_abbr
-
 nf2/fwd nf2_gen_void
-nf2/iso nf2_iso_appls_lref
-nf2/pr3 nf2_pr3_unfold
-nf2/pr3 nf2_pr3_confluence
-
 nf2/props nfs2_tapp
 nf2/props nf2_appls_lref
-
 pc1/props pc1_pr0_r
 pc1/props pc1_pr0_x
 pc1/props pc1_refl
@@ -184,7 +164,6 @@ pc1/props pc1_head_2
 pc1/props pc1_t
 pc1/props pc1_pr0_u2
 pc1/props pc1_head
-
 pc3/dec pc3_dec
 pc3/dec pc3_abst_dec
 pc3/fsubst0 pc3_pr2_fsubst0
@@ -232,9 +211,6 @@ pc3/wcpr0 pc3_wcpr0__pc3_wcpr0_t_aux
 pc3/wcpr0 pc3_wcpr0_t
 pc3/wcpr0 pc3_wcpr0
 pr0/fwd pr0_gen_void
-
-# check #############################################################
-
 pr0/dec nf0_dec
 pr0/subst1 pr0_subst1_back
 pr0/subst1 pr0_subst1_fwd
@@ -246,30 +222,13 @@ pr1/props pr1_head_1
 pr1/props pr1_head_2
 pr1/props pr1_comp
 pr1/props pr1_eta
-pr2/clen pr2_gen_ctail
 pr2/fwd pr2_gen_void
-pr2/props pr2_ctail
 pr2/subst1 pr2_gen_cabbr
 pr3/fwd pr3_gen_void
 pr3/pr1 pr3_pr1
-
-pr3/pr3 pr3_strip
-pr3/props pr3_thin_dx
-pr3/props pr3_head_1
-pr3/props pr3_head_2
-pr3/props pr3_head_21
-pr3/props pr3_head_12
 pr3/props pr3_eta
-pr3/subst1 pr3_subst1
 pr3/subst1 pr3_gen_cabbr
-sn3/props sn3_cpr3_trans
-
-sn3/props sn3_shift
-sn3/props sn3_change
-sn3/props sn3_gen_def
-sn3/props sn3_cdelta
 sn3/props sns3_lifts
-
 sty0/fwd sty0_gen_sort
 sty0/fwd sty0_gen_lref
 sty0/fwd sty0_gen_bind

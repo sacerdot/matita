@@ -1,9 +1,13 @@
-H       = @
-XOA_DIR = ../../../components/binaries/xoa
-XOA     = xoa.native
+H        = @
+XOA_DIR  = ../../../components/binaries/xoa
+XOA      = xoa.native
 
-CONF    = ground_2/xoa.conf.xml
-TARGETS = ground_2/xoa_natation.ma ground_2/xoa.ma
+CONF     = ground_2/xoa.conf.xml
+TARGETS  = ground_2/xoa_natation.ma ground_2/xoa.ma
+
+ORIG     = . ./orig.sh 
+
+ORIGS    = basic_2/basic_1.orig
 
 PACKAGES = ground_2 basic_2 apps_2
 
@@ -16,6 +20,12 @@ xoa: $(TARGETS)
 $(TARGETS): $(CONF)
 	@echo "  EXEC $(XOA) $(CONF)"
 	$(H)MATITA_RT_BASE_DIR=../.. $(XOA_DIR)/$(XOA) $(CONF)
+
+# orig #######################################################################
+
+orig: $(ORIGS)
+	@echo "  ORIG basic_2"
+	$(H)$(ORIG) basic_2 < $(ORIGS)
 
 # stats ######################################################################
 

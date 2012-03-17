@@ -40,6 +40,11 @@ lemma cpr_abbr2: ∀L,V1,V2. L ⊢ V1 ➡ V2 → ∀T1,T2. L. ⓓV2 ⊢ T1 ➡ T
 lapply (lcpr_cpr_trans (L. ⓓV1) … HT12) /2 width=1/
 qed.
 
+(* Basic_1: was: pr3_strip *)
+lemma cprs_strip: ∀L,T1,T. L ⊢ T ➡* T1 → ∀T2. L ⊢ T ➡ T2 →
+                  ∃∃T0. L ⊢ T1 ➡ T0 & L ⊢ T2 ➡* T0.
+/3 width=3/ qed.
+
 (* Advanced inversion lemmas ************************************************)
 
 (* Basic_1: was pr3_gen_appl *)

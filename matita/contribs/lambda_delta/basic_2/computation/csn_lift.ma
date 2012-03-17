@@ -88,6 +88,17 @@ elim (eq_false_inv_tpair_dx … H2) -H2
 ]
 qed.
 
+(* Advanced inversion lemmas ************************************************)
+
+(* Basic_1: was: sn3_gen_def *)
+lemma csn_inv_lref_abbr: ∀L,K,V,i. ⇩[0, i] L ≡ K. ⓓV → L ⊢ ⬇* #i → K ⊢ ⬇* V.
+#L #K #V #i #HLK #Hi
+elim (lift_total V 0 (i+1)) #V0 #HV0
+lapply (ldrop_fwd_ldrop2 … HLK) #H0LK
+@(csn_inv_lift … H0LK … HV0) -H0LK
+@(csn_cpr_trans … Hi) -Hi /2 width=6/
+qed-.
+
 (* Main properties **********************************************************)
 
 theorem csn_acp: acp cpr (eq …) (csn …).

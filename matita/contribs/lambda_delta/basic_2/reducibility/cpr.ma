@@ -107,8 +107,9 @@ elim (tpr_inv_cast1 … H) -H /3 width=3/
 elim (tpss_inv_flat1 … HU2) -HU2 #V2 #T2 #HV2 #HT2 #H destruct /4 width=5/
 qed-.
 
-(* Basic_1: removed theorems 4: 
+(* Basic_1: removed theorems 6: 
             pr2_head_2 pr2_cflat pr2_gen_cflat clear_pr2_trans
+	    pr2_gen_ctail pr2_ctail
    Basic_1: removed local theorems 3:
             pr2_free_free pr2_free_delta pr2_delta_delta
 *)

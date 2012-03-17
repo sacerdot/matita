@@ -12,26 +12,24 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reducibility/cpr.ma".
+include "basic_2/computation/cprs.ma".
+include "basic_2/computation/csn.ma".
 
-(* CONTEXT-SENSITIVE NORMAL TERMS *******************************************)
+(* CONTEXT-SENSITIVE PARALLEL EVALUATION ON TERMS **************************)
 
-definition cnf: lenv → predicate term ≝ λL. NF … (cpr L) (eq …).
+definition cpe: lenv → relation term ≝
+                λL,T1,T2. L ⊢ T1 ➡* T2 ∧ L ⊢ 𝐍[T2].
 
-interpretation
-   "context-sensitive normality (term)"
-   'Normal L T = (cnf L T). 
+interpretation "context-sensitive parallel evaluation (term)"
+   'PEval L T1 T2 = (cpe L T1 T2).
 
-(* Basic properties *********************************************************)
+(* Basic_properties *********************************************************)
 
-(* Basic_1: was: nf2_sort *)
-lemma cnf_sort: ∀L,k. L ⊢ 𝐍[⋆k].
-#L #k #X #H
->(cpr_inv_sort1 … H) //
+(* Basic_1: was: nf2_sn3 *)
+lemma cpe_csn: ∀L,T1. L ⊢ ⬇* T1 → ∃T2. L ⊢ T1 ➡* 𝐍[T2].
+#L #T1 #H @(csn_ind … H) -T1
+#T1 #_ #IHT1
+elim (cnf_dec L T1) /3 width=3/
+* #T #H1T1 #H2T1
+elim (IHT1 … H1T1 H2T1) -IHT1 -H2T1 #T2 * /4 width=3/
 qed.
-
-(* Basic_1: was: nf2_dec *)
-axiom cnf_dec: ∀L,T1. L ⊢ 𝐍[T1] ∨
-               ∃∃T2. L ⊢ T1 ➡ T2 & (T1 = T2 → False).
-
-(* Basic_1: removed theorems 1: nf2_abst_shift *)

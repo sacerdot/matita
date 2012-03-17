@@ -60,6 +60,7 @@ lemma cprs_lsubs_conf: ∀L1,T1,T2. L1 ⊢ T1 ➡* T2 →
 /3 width=3/
 qed.
 
+(* Basic_1: was only: pr3_thin_dx *)
 lemma cprs_flat_dx: ∀I,L,V1,V2. L ⊢ V1 ➡ V2 → ∀T1,T2. L ⊢ T1 ➡* T2 →
                     L ⊢ ⓕ{I} V1. T1 ➡* ⓕ{I} V2. T2.
 #I #L #V1 #V2 #HV12 #T1 #T2 #HT12 @(cprs_ind … HT12) -T2 /3 width=1/
@@ -86,13 +87,15 @@ elim (cpr_inv_cast1 … HU2) -HU2 /3 width=3/ *
 #W2 #T2 #HW2 #HT2 #H destruct /4 width=5/
 qed-.
 
+(* Basic_1: was: nf2_pr3_unfold *)
 lemma cprs_inv_cnf1: ∀L,T,U. L ⊢ T ➡* U → L ⊢ 𝐍[T] → T = U.
 #L #T #U #H @(cprs_ind_dx … H) -T //
 #T0 #T #H1T0 #_ #IHT #H2T0
 lapply (H2T0 … H1T0) -H1T0 #H destruct /2 width=1/
 qed-.
 
-(* Basic_1: removed theorems 6:
+(* Basic_1: removed theorems 10:
    clear_pr3_trans pr3_cflat pr3_gen_bind
+   pr3_head_1 pr3_head_2 pr3_head_21 pr3_head_12
    pr3_iso_appl_bind pr3_iso_appls_appl_bind pr3_iso_appls_bind
 *)

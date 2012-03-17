@@ -88,17 +88,6 @@ qed.
 lemma csn_cprs_trans: ∀L,T1. L ⊢ ⬇* T1 → ∀T2. L ⊢ T1 ➡* T2 → L ⊢ ⬇* T2.
 /4 width=3/ qed.
 
-(* Basic_1: was: nf2_sn3 *)
-lemma csn_cwn: ∀L,T1. L ⊢ ⬇* T1 →
-               ∃∃T2. L ⊢ T1 ➡* T2 & L ⊢ 𝐍[T2].
-#L #T1 #H elim H -T1 #T1 #_ #IHT1
-elim (cnf_dec L T1)
-[ -IHT1 /2 width=3/
-| * #T2 #HLT12 #HT12
-  elim (IHT1 T2 ? ?) -IHT1 // /2 width=1/ -HT12 /3 width=3/
-]
-qed.
-
 (* Main eliminators *********************************************************)
 
 lemma csn_ind_cprs: ∀L. ∀R:predicate term.

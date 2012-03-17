@@ -36,3 +36,5 @@ interpretation "abbreviation (local environment)"
 
 interpretation "abstraction (local environment)"
    'DxAbst L T = (LPair L Abst T).
+
+(* Basic_1: removed theorems 2: chead_ctail c_tail_ind *)

@@ -211,8 +211,8 @@ lemma ldrop_fwd_O1_length: ∀L1,L2,e. ⇩[0, e] L1 ≡ L2 → |L2| = |L1| - e.
 ]
 qed-.
 
-(* Basic_1: removed theorems 49:
-            drop_skip_flat
+(* Basic_1: removed theorems 50:
+            drop_ctail drop_skip_flat 
             cimp_flat_sx cimp_flat_dx cimp_bind cimp_getl_conf
             drop_clear drop_clear_O drop_clear_S
             clear_gen_sort clear_gen_bind clear_gen_flat clear_gen_flat_r

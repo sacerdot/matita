@@ -24,4 +24,5 @@ let rec lw L ≝ match L with
 
 interpretation "weight (local environment)" 'Weight L = (lw L).
 
-(* Basic_1: removed theorems 2: clt_cong clt_head *)
+(* Basic_1: removed theorems 2: clt_cong clt_head clt_thead *)
+(* Basic_1: note: clt_thead should be renamed clt_ctail *)

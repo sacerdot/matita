@@ -82,8 +82,9 @@ qed.
 lemma csn_fwd_flat_dx: ∀I,L,V,T. L ⊢ ⬇* ⓕ{I} V. T → L ⊢ ⬇* T.
 /2 width=5/ qed-.
 
-(* Basic_1: removed theorems 10:
-            sn3_gen_cflat sn3_cflat
+(* Basic_1: removed theorems 14:
+            sn3_cdelta
+	    sn3_gen_cflat sn3_cflat sn3_cpr3_trans sn3_shift sn3_change
 	    sn3_appl_cast sn3_appl_beta sn3_appl_lref sn3_appl_abbr
 	    sn3_appl_appls sn3_bind sn3_appl_bind sn3_appls_bind
 *)
