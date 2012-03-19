@@ -11,7 +11,7 @@
 
 include "basics/logic.ma".
 
-(********** preducates *********)
+(********** predicates *********)
 
 definition predicate: Type[0] → Type[0]
 ≝ λA.A→Prop.
@@ -19,6 +19,9 @@ definition predicate: Type[0] → Type[0]
 (********** relations **********)
 definition relation : Type[0] → Type[0]
 ≝ λA.A→A→Prop. 
+
+definition relation2 : Type[0] → Type[0] → Type[0]
+≝ λA,B.A→B→Prop.
 
 definition reflexive: ∀A.∀R :relation A.Prop
 ≝ λA.λR.∀x:A.R x x.
