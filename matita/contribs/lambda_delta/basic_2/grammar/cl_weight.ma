@@ -41,6 +41,22 @@ lemma tw_shift: ∀L,T. #[L, T] ≤ #[L @ T].
 @transitive_le [3: @IHL |2: /2 width=2/ | skip ]
 qed.
 
+lemma cw_tpair_sn: ∀I,L,V,T. #[L, V] < #[L, ②{I}V.T].
+#I #L #V #T normalize in ⊢ (? % %); //
+qed.
+
+lemma cw_tpair_dx: ∀I,L,V,T. #[L, T] < #[L, ②{I}V.T].
+#I #L #V #T normalize in ⊢ (? % %); //
+qed.
+
+lemma cw_tpair_dx_sn: ∀I1,I2,L,V1,V2,T. #[L, V2] < #[L, ②{I1}V1.②{I2}V2.T].
+#I1 #I2 #L #V1 #V2 #T normalize in ⊢ (? % %); /2 width=1/
+qed.
+
+lemma cw_tpair_dx_sn_shift: ∀I1,I2,L,V1,V2,T. #[L.ⓑ{I2}V2, T] < #[L, ②{I1}V1.②{I2}V2.T].
+#I1 #I2 #L #V1 #V2 #T normalize in ⊢ (? % %); /2 width=1/
+qed.
+
 (* Basic_1: removed theorems 6:
             flt_thead_sx flt_thead_dx flt_arith0 flt_arith1 flt_arith2 flt_trans
 *)

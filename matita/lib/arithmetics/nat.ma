@@ -374,6 +374,9 @@ theorem lt_plus_to_minus_r: ∀a,b,c. a + b < c → a < c - b.
 #a #b #c #H @le_plus_to_minus_r //
 qed.
 
+lemma lt_plus_Sn_r: ∀a,x,n. a < a + x + (S n).
+/2 width=1/ qed.
+
 theorem lt_S_S_to_lt: ∀n,m:nat. S n < S m → n < m.
 (* demo *)
 /2/ qed-.
@@ -780,4 +783,3 @@ lemma le_maxr: ∀i,n,m. max n m ≤ i → m ≤ i.
 lemma to_max: ∀i,n,m. n ≤ i → m ≤ i → max n m ≤ i.
 #i #n #m #leni #lemi normalize (cases (leb n m)) 
 normalize // qed.
-
