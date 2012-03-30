@@ -70,4 +70,3 @@ lemma cprs_inv_lift: ∀L,K,d,e. ⇩[d, e] L ≡ K →
 -HTU1 #U #U2 #_ #HU2 * #T #HTU #HT1
 elim (cpr_inv_lift … HLK … HTU … HU2) -U -HLK /3 width=5/
 qed.
-

@@ -12,9 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reducibility/ltpr_ldrop.ma".
 include "basic_2/static/aaa_ltps.ma".
 include "basic_2/static/lsuba_aaa.ma".
+include "basic_2/reducibility/ltpr_ldrop.ma".
 
 (* CONTEXT-FREE PARALLEL REDUCTION ON LOCAL ENVIRONMENTS ********************)
 

@@ -21,8 +21,8 @@ include "basic_2/computation/cprs_lcpr.ma".
 
 (* Advanced properties ******************************************************)
 
-lemma cprs_abbr_dx: ∀L,V1,V2. L ⊢ V1 ➡ V2 → ∀T1,T2. L. ⓓV1 ⊢ T1 ➡* T2 →
-                    L ⊢ ⓓV1. T1 ➡* ⓓV2. T2.
+lemma cprs_abbr1_dx: ∀L,V1,V2. L ⊢ V1 ➡ V2 → ∀T1,T2. L. ⓓV1 ⊢ T1 ➡* T2 →
+                     L ⊢ ⓓV1. T1 ➡* ⓓV2. T2.
 #L #V1 #V2 #HV12 #T1 #T2 #HT12 @(cprs_ind_dx … HT12) -T1
 [ /3 width=5/
 | #T1 #T #HT1 #_ #IHT1
@@ -30,8 +30,8 @@ lemma cprs_abbr_dx: ∀L,V1,V2. L ⊢ V1 ➡ V2 → ∀T1,T2. L. ⓓV1 ⊢ T1 �
 ]
 qed.
 
-lemma cpr_abbr: ∀L,V1,V2. L ⊢ V1 ➡ V2 → ∀T1,T2. L. ⓓV1 ⊢ T1 ➡ T2 →
-                L ⊢ ⓓV1. T1 ➡* ⓓV2. T2.
+lemma cpr_abbr1: ∀L,V1,V2. L ⊢ V1 ➡ V2 → ∀T1,T2. L. ⓓV1 ⊢ T1 ➡ T2 →
+                 L ⊢ ⓓV1. T1 ➡* ⓓV2. T2.
 /3 width=1/ qed.
 
 lemma cpr_abbr2: ∀L,V1,V2. L ⊢ V1 ➡ V2 → ∀T1,T2. L. ⓓV2 ⊢ T1 ➡ T2 →
@@ -88,11 +88,29 @@ lemma cprs_flat: ∀I,L,T1,T2. L ⊢ T1 ➡* T2 → ∀V1,V2. L ⊢ V1 ➡* V2 �
 @(cprs_trans … IHV1) -IHV1 /2 width=1/ 
 qed.
 
-lemma cprs_abbr: ∀L,V1,T1,T2. L. ⓓV1 ⊢ T1 ➡* T2 → ∀V2. L ⊢ V1 ➡* V2 →
-                 L ⊢ ⓓV1. T1 ➡* ⓓV2. T2.
+lemma cprs_abbr1: ∀L,V1,T1,T2. L. ⓓV1 ⊢ T1 ➡* T2 → ∀V2. L ⊢ V1 ➡* V2 →
+                  L ⊢ ⓓV1. T1 ➡* ⓓV2. T2.
 #L #V1 #T1 #T2 #HT12 #V2 #HV12 @(cprs_ind … HV12) -V2 /2 width=1/
 #V #V2 #_ #HV2 #IHV1
 @(cprs_trans … IHV1) -IHV1 /2 width=1/
+qed.
+
+lemma cprs_abbr2_dx: ∀L,V1,V2. L ⊢ V1 ➡ V2 → ∀T1,T2. L. ⓓV2 ⊢ T1 ➡* T2 →
+                     L ⊢ ⓓV1. T1 ➡* ⓓV2. T2.
+#L #V1 #V2 #HV12 #T1 #T2 #HT12 @(cprs_ind_dx … HT12) -T1
+[ /2 width=1/
+| #T1 #T #HT1 #_ #IHT1
+  lapply (lcpr_cpr_trans (L. ⓓV1) … HT1) -HT1 /2 width=1/ #HT1
+  @(cprs_trans … IHT1) -IHT1 /2 width=1/
+]
+qed.
+
+lemma cprs_abbr2: ∀L,V1,V2. L ⊢ V1 ➡* V2 → ∀T1,T2. L. ⓓV2 ⊢ T1 ➡* T2 →
+                  L ⊢ ⓓV1. T1 ➡* ⓓV2. T2.
+#L #V1 #V2 #HV12 @(cprs_ind … HV12) -V2 /2 width=1/
+#V #V2 #_ #HV2 #IHV1 #T1 #T2 #HT12
+lapply (IHV1 T1 T1 ?) -IHV1 // #HV1
+@(cprs_trans … HV1) -HV1 /2 width=1/
 qed.
 
 (* Basic_1: was only: pr3_pr2_pr3_t pr3_wcpr0_t *)
