@@ -24,5 +24,16 @@ let rec lw L ≝ match L with
 
 interpretation "weight (local environment)" 'Weight L = (lw L).
 
+(* Basic properties *********************************************************)
+
+lemma lw_pair: ∀I,L,V. #[L] < #[(L.ⓑ{I}V)].
+/3 width=1/ qed.
+
+(* Basic eliminators ********************************************************)
+
+axiom lw_wf_ind: ∀R:predicate lenv.
+                 (∀L2. (∀L1. #[L1] < #[L2] → R L1) → R L2) →
+                 ∀L. R L.
+
 (* Basic_1: removed theorems 2: clt_cong clt_head clt_thead *)
 (* Basic_1: note: clt_thead should be renamed clt_ctail *)

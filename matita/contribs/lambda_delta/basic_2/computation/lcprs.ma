@@ -27,7 +27,15 @@ interpretation
 lemma lcprs_ind: ∀L1. ∀R:predicate lenv. R L1 →
                  (∀L,L2. L1 ⊢ ➡* L → L ⊢ ➡ L2 → R L → R L2) →
                  ∀L2. L1 ⊢ ➡* L2 → R L2.
-#L1 #R #HL1 #IHL1 #L2 #HL12 @(TC_star_ind … HL1 IHL1 … HL12) //
+#L1 #R #HL1 #IHL1 #L2 #HL12
+@(TC_star_ind … HL1 IHL1 … HL12) //
+qed-.
+
+lemma lcprs_ind_dx: ∀L2. ∀R:predicate lenv. R L2 →
+                    (∀L1,L. L1 ⊢ ➡ L → L ⊢ ➡* L2 → R L → R L1) →
+                    ∀L1. L1 ⊢ ➡* L2 → R L1.
+#L2 #R #HL2 #IHL2 #L1 #HL12
+@(TC_star_ind_dx … HL2 IHL2 … HL12) //
 qed-.
 
 (* Basic properties *********************************************************)

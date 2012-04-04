@@ -11,28 +11,40 @@
 (*        v         GNU General Public License Version 2                  *)
 (*                                                                        *)
 (**************************************************************************)
-(*
-include "basic_2/reducibility/lcpr_lcpr.ma".
-*)
-include "basic_2/computation/lcprs_cprs.ma".
 
-(* CONTEXT-SENSITIVE PARALLEL COMPUTATION ON LOCAL ENVIRONMENTS *************)
+include "basic_2/computation/lcprs_lcprs.ma".
+include "basic_2/conversion/lcpc_lcpc.ma".
+include "basic_2/equivalence/lcpcs_lcprs.ma".
+
+(* CONTEXT-SENSITIVE PARALLEL EQUIVALENCE ON LOCAL ENVIRONMENTS *************)
+
+(* Advanced inversion lemmas ************************************************)
+
+lemma lcpcs_inv_lcprs: ∀L1,L2. L1 ⊢ ⬌* L2 →
+                       ∃∃L. L1 ⊢ ➡* L & L2 ⊢ ➡* L.
+#L1 #L2 #H @(lcpcs_ind … H) -L2
+[ /3 width=3/
+| #L #L2 #_ #HL2 * #L0 #HL10 elim HL2 -HL2 #HL2 #HL0
+  [ elim (lcprs_strip … HL0 … HL2) -L #L #HL0 #HL2
+    lapply (lcprs_strap1 … HL10 … HL0) -L0 /2 width=3/
+  | lapply (lcprs_strap2 … HL2 … HL0) -L /2 width=3/
+  ]
+]
+qed-.
 
 (* Advanced properties ******************************************************)
 
-axiom lcprs_strip: ∀L,L1. L ⊢ ➡* L1 → ∀L2. L ⊢ ➡ L2 →
-                   ∃∃L0. L1 ⊢ ➡ L0 & L2 ⊢ ➡* L0.
-(*
+lemma lcpcs_strip: ∀L,L1. L ⊢ ⬌* L1 → ∀L2. L ⊢ ⬌ L2 →
+                   ∃∃L0. L1 ⊢ ⬌ L0 & L2 ⊢ ⬌* L0.
 /3 width=3/ qed.
-*)
+
 (* Main properties **********************************************************)
 
-theorem lcprs_trans: ∀L1,L. L1 ⊢ ➡* L → ∀L2. L ⊢ ➡* L2 → L1 ⊢ ➡* L2.
+theorem lcpcs_trans: ∀L1,L. L1 ⊢ ⬌* L → ∀L2. L ⊢ ⬌* L2 → L1 ⊢ ⬌* L2.
 /2 width=3/ qed.
 
-lemma lcprs_pair: ∀L1,L2. L1 ⊢ ➡* L2 → ∀V1,V2. L2 ⊢ V1 ➡* V2 →
-                  ∀I. L1. ⓑ{I} V1 ⊢ ➡* L2. ⓑ{I} V2.
-#L1 #L2 #H @(lcprs_ind … H) -L2 /2 width=1/
-#L #L2 #_ #HL2 #IHL1 #V1 #V2 #HV12 #I
-@(lcprs_trans … (L.ⓑ{I}V1)) /2 width=1/
-qed.
+theorem lcpcs_canc_sn: ∀L,L1,L2. L ⊢ ⬌* L1 → L ⊢ ⬌* L2 → L1 ⊢ ⬌* L2.
+/3 width=3/ qed.
+
+theorem lcpcs_canc_dx: ∀L,L1,L2. L1 ⊢ ⬌* L → L2 ⊢ ⬌* L → L1 ⊢ ⬌* L2.
+/3 width=3/ qed.

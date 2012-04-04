@@ -21,6 +21,14 @@ include "basic_2/computation/cprs_lcpr.ma".
 
 (* Advanced properties ******************************************************)
 
+lemma cprs_abst_dx: ∀L,V1,V2. L ⊢ V1 ➡ V2 → ∀V,T1,T2.
+                    L.ⓛV ⊢ T1 ➡* T2 → L ⊢ ⓛV1. T1 ➡* ⓛV2. T2.
+#L #V1 #V2 #HV12 #V #T1 #T2 #HT12 @(cprs_ind … HT12) -T2
+[ /3 width=2/
+| /3 width=6 by cprs_strap1, cpr_abst/ (**) (* /3 width=6/ is too slow *)
+]
+qed.
+
 lemma cprs_abbr1_dx: ∀L,V1,V2. L ⊢ V1 ➡ V2 → ∀T1,T2. L. ⓓV1 ⊢ T1 ➡* T2 →
                      L ⊢ ⓓV1. T1 ➡* ⓓV2. T2.
 #L #V1 #V2 #HV12 #T1 #T2 #HT12 @(cprs_ind_dx … HT12) -T1
@@ -86,6 +94,15 @@ lemma cprs_flat: ∀I,L,T1,T2. L ⊢ T1 ➡* T2 → ∀V1,V2. L ⊢ V1 ➡* V2 �
 #I #L #T1 #T2 #HT12 #V1 #V2 #HV12 @(cprs_ind … HV12) -V2 /2 width=1/
 #V #V2 #_ #HV2 #IHV1
 @(cprs_trans … IHV1) -IHV1 /2 width=1/ 
+qed.
+
+lemma cprs_abst: ∀L,V1,V2. L ⊢ V1 ➡* V2 → ∀V,T1,T2.
+                 L.ⓛV ⊢ T1 ➡* T2 → L ⊢ ⓛV1. T1 ➡* ⓛV2. T2.
+#L #V1 #V2 #HV12 #V #T1 #T2 #HT12 @(cprs_ind … HV12) -V2
+[ lapply (cprs_lsubs_conf … HT12 (L.ⓛV1) ?) -HT12 /2 width=2/
+| #V0 #V2 #_ #HV02 #IHV01
+  @(cprs_trans … IHV01) -V1 /2 width=2/
+]
 qed.
 
 lemma cprs_abbr1: ∀L,V1,T1,T2. L. ⓓV1 ⊢ T1 ➡* T2 → ∀V2. L ⊢ V1 ➡* V2 →

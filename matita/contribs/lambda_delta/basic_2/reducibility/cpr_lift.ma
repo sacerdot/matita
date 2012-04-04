@@ -28,6 +28,15 @@ lapply (ldrop_fwd_ldrop2_length … HLK) #Hi
 @ex2_1_intro [2: // | skip | @tpss_subst /width=6/ ] (**) (* /3 width=6/ is too slow *)
 qed.
 
+lemma cpr_abst: ∀L,V1,V2. L ⊢ V1 ➡ V2 → ∀V,T1,T2.
+                L.ⓛV ⊢ T1 ➡ T2 → L ⊢ ⓛV1. T1 ➡ ⓛV2. T2.
+#L #V1 #V2 * #V0 #HV10 #HV02 #V #T1 #T2 * #T0 #HT10 #HT02
+lapply (tpss_inv_S2 … HT02 L V ?) -HT02 // #HT02
+@(ex2_1_intro … (ⓛV0.T0)) /2 width=1/ -V1 -T1 (**) (* explicit constructors *)
+@tpss_bind // -V0
+@(tpss_lsubs_conf (L.ⓛV)) // -T0 -T2 /2 width=1/
+qed.
+
 (* Advanced inversion lemmas ************************************************)
 
 (* Basic_1: was: pr2_gen_lref *)

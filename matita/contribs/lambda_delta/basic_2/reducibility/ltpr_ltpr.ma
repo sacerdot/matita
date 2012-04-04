@@ -11,28 +11,19 @@
 (*        v         GNU General Public License Version 2                  *)
 (*                                                                        *)
 (**************************************************************************)
-(*
-include "basic_2/reducibility/lcpr_lcpr.ma".
-*)
-include "basic_2/computation/lcprs_cprs.ma".
 
-(* CONTEXT-SENSITIVE PARALLEL COMPUTATION ON LOCAL ENVIRONMENTS *************)
+include "basic_2/reducibility/tpr_tpr.ma".
+include "basic_2/reducibility/ltpr.ma".
 
-(* Advanced properties ******************************************************)
+(* CONTEXT-FREE PARALLEL REDUCTION ON LOCAL ENVIRONMENTS ********************)
 
-axiom lcprs_strip: ∀L,L1. L ⊢ ➡* L1 → ∀L2. L ⊢ ➡ L2 →
-                   ∃∃L0. L1 ⊢ ➡ L0 & L2 ⊢ ➡* L0.
-(*
-/3 width=3/ qed.
-*)
 (* Main properties **********************************************************)
 
-theorem lcprs_trans: ∀L1,L. L1 ⊢ ➡* L → ∀L2. L ⊢ ➡* L2 → L1 ⊢ ➡* L2.
-/2 width=3/ qed.
-
-lemma lcprs_pair: ∀L1,L2. L1 ⊢ ➡* L2 → ∀V1,V2. L2 ⊢ V1 ➡* V2 →
-                  ∀I. L1. ⓑ{I} V1 ⊢ ➡* L2. ⓑ{I} V2.
-#L1 #L2 #H @(lcprs_ind … H) -L2 /2 width=1/
-#L #L2 #_ #HL2 #IHL1 #V1 #V2 #HV12 #I
-@(lcprs_trans … (L.ⓑ{I}V1)) /2 width=1/
+theorem ltpr_conf: ∀L0:lenv. ∀L1. L0 ➡ L1 → ∀L2. L0 ➡ L2 →
+                   ∃∃L. L1 ➡ L & L2 ➡ L.
+#L0 #L1 #H elim H -L0 -L1 /2 width=3/
+#K0 #K1 #I #V0 #V1 #_ #HV01 #IHK01 #L2 #H
+elim (ltpr_inv_pair1 … H) -H #K2 #V2 #HK02 #HV02 #H destruct
+elim (IHK01 … HK02) -K0 #K #HK1 #HK2
+elim (tpr_conf … HV01 HV02) -V0 /3 width=5/
 qed.

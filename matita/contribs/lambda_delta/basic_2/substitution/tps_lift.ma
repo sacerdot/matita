@@ -19,23 +19,32 @@ include "basic_2/substitution/tps.ma".
 
 (* Advanced inversion lemmas ************************************************)
 
-fact tps_inv_refl_SO2_aux: ∀L,T1,T2,d,e. L ⊢ T1 [d, e] ▶ T2 → e = 1 →
-                           ∀K,V. ⇩[0, d] L ≡ K. ⓛV → T1 = T2.
-#L #T1 #T2 #d #e #H elim H -L -T1 -T2 -d -e
+fact tps_inv_S2_aux: ∀L,T1,T2,d,e1. L ⊢ T1 [d, e1] ▶ T2 → ∀e2. e1 = e2 + 1 → 
+                     ∀K,V. ⇩[0, d] L ≡ K. ⓛV → L ⊢ T1 [d + 1, e2] ▶ T2.
+#L #T1 #T2 #d #e1 #H elim H -L -T1 -T2 -d -e1
 [ //
-| #L #K0 #V0 #W #i #d #e #Hdi #Hide #HLK0 #_ #H destruct
-  >(le_to_le_to_eq … Hdi ?) /2 width=1/ -d #K #V #HLK
-  lapply (ldrop_mono … HLK0 … HLK) #H destruct
-| #L #I #V1 #V2 #T1 #T2 #d #e #_ #_ #IHV12 #IHT12 #H1 #K #V #HLK
-  >(IHV12 H1 … HLK) -IHV12 >(IHT12 H1 K V) -IHT12 // /2 width=1/
-| #L #I #V1 #V2 #T1 #T2 #d #e #_ #_ #IHV12 #IHT12 #H1 #K #V #HLK
-  >(IHV12 H1 … HLK) -IHV12 >(IHT12 H1 … HLK) -IHT12 //
+| #L #K0 #V0 #W #i #d #e1 #Hdi #Hide1 #HLK0 #HV0 #e2 #He12 #K #V #HLK destruct
+  elim (lt_or_ge i (d+1)) #HiSd
+  [ -Hide1 -HV0
+    lapply (le_to_le_to_eq … Hdi ?) /2 width=1/ #H destruct
+    lapply (ldrop_mono … HLK0 … HLK) #H destruct
+  | -V -Hdi /2 width=4/
+  ]
+| /4 width=3/
+| /3 width=3/
 ]
 qed.
 
+lemma tps_inv_S2: ∀L,T1,T2,d,e. L ⊢ T1 [d, e + 1] ▶ T2 →
+                  ∀K,V. ⇩[0, d] L ≡ K. ⓛV → L ⊢ T1 [d + 1, e] ▶ T2.
+/2 width=3/ qed-.
+
 lemma tps_inv_refl_SO2: ∀L,T1,T2,d. L ⊢ T1 [d, 1] ▶ T2 →
                         ∀K,V. ⇩[0, d] L ≡ K. ⓛV → T1 = T2.
-/2 width=8/ qed-.
+#L #T1 #T2 #d #HT12 #K #V #HLK
+lapply (tps_inv_S2 … T1 T2 … 0 … HLK) -K // -HT12 #HT12
+lapply (tps_inv_refl_O2 … HT12) -HT12 //
+qed-.
 
 (* Relocation properties ****************************************************)
 

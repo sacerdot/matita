@@ -31,6 +31,12 @@ lemma ltpss_ind: ∀d,e,L1. ∀R:predicate lenv. R L1 →
 #d #e #L1 #R #HL1 #IHL1 #L2 #HL12 @(TC_star_ind … HL1 IHL1 … HL12) //
 qed-.
 
+lemma ltpss_ind_dx: ∀d,e,L2. ∀R:predicate lenv. R L2 →
+                    (∀L1,L. L1 [d, e] ▶ L → L [d, e] ▶* L2 → R L → R L1) →
+                    ∀L1. L1 [d, e] ▶* L2 → R L1.
+#d #e #L2 #R #HL2 #IHL2 #L1 #HL12 @(TC_star_ind_dx … HL2 IHL2 … HL12) //
+qed-.
+
 (* Basic properties *********************************************************)
 
 lemma ltpss_strap: ∀L1,L,L2,d,e.

@@ -67,6 +67,13 @@ elim (tpss_inv_atom1 … H) -H /2 width=1/
 * #K #V1 #V2 #j #Hdj #Hjde #HLK #HV12 #HVT2 #H destruct /3 width=6/
 qed-.
 
+lemma tpss_inv_S2: ∀L,T1,T2,d,e. L ⊢ T1 [d, e + 1] ▶* T2 →
+                   ∀K,V. ⇩[0, d] L ≡ K. ⓛV → L ⊢ T1 [d + 1, e] ▶* T2.
+#L #T1 #T2 #d #e #H #K #V #HLK @(tpss_ind … H) -T2 //
+#T #T2 #_ #HT2 #IHT
+lapply (tps_inv_S2 … HT2 … HLK) -HT2 -HLK /2 width=3/
+qed-.
+
 lemma tpss_inv_refl_SO2: ∀L,T1,T2,d. L ⊢ T1 [d, 1] ▶* T2 →
                          ∀K,V. ⇩[0, d] L ≡ K. ⓛV → T1 = T2.
 #L #T1 #T2 #d #H #K #V #HLK @(tpss_ind … H) -T2 //

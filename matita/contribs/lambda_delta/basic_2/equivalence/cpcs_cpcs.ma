@@ -76,7 +76,7 @@ elim (cprs_inv_lift … HLK … HTU2 … HU2) -L -U2 #X #HXU
 >(lift_inj … HXU … HTU) -X -U -d -e /2 width=3/
 qed-.
 
-(* advanced properties ******************************************************)
+(* Advanced properties ******************************************************)
 
 (* Basic_1: was only: pc3_thin_dx *)
 lemma cpcs_flat: ∀L,V1,V2. L ⊢ V1 ⬌* V2 → ∀T1,T2. L ⊢ T1 ⬌* T2 →
@@ -84,6 +84,14 @@ lemma cpcs_flat: ∀L,V1,V2. L ⊢ V1 ⬌* V2 → ∀T1,T2. L ⊢ T1 ⬌* T2 →
 #L #V1 #V2 #HV12 #T1 #T2 #HT12 #I
 elim (cpcs_inv_cprs … HV12) -HV12 #V #HV1 #HV2
 elim (cpcs_inv_cprs … HT12) -HT12 /3 width=5 by cprs_flat, cprs_div/ (**) (* /3 width=5/ is too slow *)
+qed.
+
+lemma cpcs_abst: ∀L,V1,V2. L ⊢ V1 ⬌* V2 →
+                 ∀V,T1,T2. L.ⓛV ⊢ T1 ⬌* T2 → L ⊢ ⓛV1. T1 ⬌* ⓛV2. T2.
+#L #V1 #V2 #HV12 #V #T1 #T2 #HT12
+elim (cpcs_inv_cprs … HV12) -HV12
+elim (cpcs_inv_cprs … HT12) -HT12
+/3 width=6 by cprs_div, cprs_abst/ (**) (* /3 width=6/ is a bit slow *)
 qed.
 
 lemma cpcs_abbr_dx: ∀L,V,T1,T2. L.ⓓV ⊢ T1 ⬌* T2 → L ⊢ ⓓV. T1 ⬌* ⓓV. T2.
@@ -96,7 +104,7 @@ lemma cpcs_abbr_sn: ∀L,V1,V2,T. L ⊢ V1 ⬌* V2 → L ⊢ ⓓV1. T ⬌* ⓓV2
 elim (cpcs_inv_cprs … HV12) -HV12 /3 width=5 by cprs_div, cprs_abbr1/ (**) (* /3 width=5/ is a bit slow *)
 qed.
 
-(* Basic_1: was: pc3_gen_lift *)
+(* Basic_1: was: pc3_lift *)
 lemma cpcs_lift: ∀L,K,d,e. ⇩[d, e] L ≡ K →
                  ∀T1,U1. ⇧[d, e] T1 ≡ U1 → ∀T2,U2. ⇧[d, e] T2 ≡ U2 →
                  K ⊢ T1 ⬌* T2 → L ⊢ U1 ⬌* U2.
