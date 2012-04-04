@@ -16,6 +16,13 @@ include "basics/lists/list.ma".
 include "basics/sets.ma".
 include "basics/deqsets.ma".
 
+(********* isnilb *********)
+let rec isnilb A (l: list A) on l ≝
+match l with
+[ nil ⇒ true
+| cons hd tl ⇒ false
+].
+
 (********* search *********)
 
 let rec memb (S:DeqSet) (x:S) (l: list S) on l  ≝

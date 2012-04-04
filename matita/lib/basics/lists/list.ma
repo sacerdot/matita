@@ -31,12 +31,12 @@ notation "hvbox(l1 break @ l2)"
 interpretation "nil" 'nil = (nil ?).
 interpretation "cons" 'cons hd tl = (cons ? hd tl).
 
-definition not_nil: ∀A:Type[0].list A → Prop ≝
+definition is_nil: ∀A:Type[0].list A → Prop ≝
  λA.λl.match l with [ nil ⇒ True | cons hd tl ⇒ False ].
 
 theorem nil_cons:
   ∀A:Type[0].∀l:list A.∀a:A. a::l ≠ [].
-  #A #l #a @nmk #Heq (change with (not_nil ? (a::l))) >Heq //
+  #A #l #a @nmk #Heq (change with (is_nil ? (a::l))) >Heq //
 qed.
 
 (*
@@ -165,9 +165,17 @@ let rec length (A:Type[0]) (l:list A) on l ≝
 notation "|M|" non associative with precedence 60 for @{'norm $M}.
 interpretation "norm" 'norm l = (length ? l).
 
+lemma length_tail: ∀A,l. length ? (tail A l) = pred (length ? l).
+#A #l elim l // 
+qed.
+
 lemma length_append: ∀A.∀l1,l2:list A. 
   |l1@l2| = |l1|+|l2|.
 #A #l1 elim l1 // normalize /2/
+qed.
+
+lemma length_map: ∀A,B,l.∀f:A→B. length ? (map ?? f l) = length ? l.
+#A #B #l #f elim l // #a #tl #Hind normalize //
 qed.
 
 (****************************** nth ********************************)

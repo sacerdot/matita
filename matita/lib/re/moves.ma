@@ -15,6 +15,19 @@
 include "re/re.ma".
 include "basics/lists/listb.ma".
 
+(* 
+Moves
+
+We now define the move operation, that corresponds to the advancement of the 
+state in response to the processing of an input character a. The intuition is 
+clear: we have to look at points inside $e$ preceding the given character a,
+let the point traverse the character, and broadcast it. All other points must 
+be removed.
+
+We can give a particularly elegant definition in terms of the
+lifted operators of the previous section:
+*)
+
 let rec move (S: DeqSet) (x:S) (E: pitem S) on E : pre S ≝
  match E with
   [ pz ⇒ 〈 `∅, false 〉
@@ -67,10 +80,25 @@ theorem move_ok:
     [>(\P H) % [* // #bot @False_ind //| #H1 destruct /2/]
     |% [@False_ind |#H1 cases (\Pf H) #H2 @H2 destruct //]
     ]
-  |#i1 #i2 #HI1 #HI2 #w >move_cat
-   @iff_trans[|@sem_odot] >same_kernel >sem_cat_w
-   @iff_trans[||@(iff_or_l … (HI2 w))] @iff_or_r 
+  |#i1 #i2 #HI1 #HI2 #w 
+   (* lhs = w∈\sem{move S a (i1·i2)} *)
+   >move_cat
+   (* lhs = w∈\sem{move S a i1}⊙\sem{move S a i2} *)
+   @iff_trans[|@sem_odot] >same_kernel 
+   (* lhs = w∈\sem{move S a i1}·\sem{|i2|} ∨ a∈\sem{move S a i2} *)
+   (* now we work on the rhs, that is
+      rhs = a::w1∈\sem{i1·i2} *)
+   >sem_cat_w
+   (* rhs = a::w1∈\sem{i1}\sem{|i2|} ∨ a::w∈\sem{i2} *)
+   @iff_trans[||@(iff_or_l … (HI2 w))] 
+   (* rhs = a::w1∈\sem{i1}\sem{|i2|} ∨ w∈\sem{move S a i2} *)
+   @iff_or_r 
+   check deriv_middot 
+   (* we are left to prove that 
+     w∈\sem{move S a i1}·\sem{|i2|} ↔ a::w∈\sem{i1}\sem{|i2|}
+     we use deriv_middot on the rhs *)
    @iff_trans[||@iff_sym @deriv_middot //]
+   (* w∈\sem{move S a i1}·\sem{|i2|} ↔ w∈(deriv S \sem{i1} a) · \sem{|i2|} *)
    @cat_ext_l @HI1
   |#i1 #i2 #HI1 #HI2 #w >(sem_plus S i1 i2) >move_plus >sem_plus_w 
    @iff_trans[|@sem_oplus] 
@@ -117,14 +145,11 @@ theorem decidable_sem: ∀S:DeqSet.∀w: word S. ∀e:pre S.
 #S #w elim w 
  [* #i #b >moves_empty cases b % /2/
  |#a #w1 #Hind #e >moves_cons
+ check not_epsilon_sem
   @iff_trans [||@iff_sym @not_epsilon_sem]
   @iff_trans [||@move_ok] @Hind
  ]
 qed.
-
-(* lemma not_true_to_false: ∀b.b≠true → b =false.
-#b * cases b // #H @False_ind /2/ 
-qed. *)
 
 (************************ pit state ***************************)
 definition pit_pre ≝ λS.λi.〈blank S (|i|), false〉. 
@@ -180,7 +205,11 @@ qed.
 (* bisimulation *)
 definition cofinal ≝ λS.λp:(pre S)×(pre S). 
   \snd (\fst p) = \snd (\snd p).
-  
+
+(* As a corollary of decidable_sem, we have that two expressions
+e1 and e2 are equivalent iff for any word w the states reachable 
+through w are cofinal. *)
+
 theorem equiv_sem: ∀S:DeqSet.∀e1,e2:pre S. 
   \sem{e1} =1 \sem{e2} ↔ ∀w.cofinal ? 〈moves ? w e1,moves ? w e2〉.
 #S #e1 #e2 % 
@@ -191,6 +220,11 @@ theorem equiv_sem: ∀S:DeqSet.∀e1,e2:pre S.
   @iff_trans [|@same_sem] @iff_sym @decidable_sem
 |#H #w1 @iff_trans [||@decidable_sem] <H @iff_sym @decidable_sem]
 qed.
+
+(* This does not directly imply decidability: we have no bound over the
+length of w; moreover, so far, we made no assumption over the cardinality 
+of S. Instead of requiring S to be finite, we may restrict the analysis
+to characters occurring in the given pres. *)
 
 definition occ ≝ λS.λe1,e2:pre S. 
   unique_append ? (occur S (|\fst e1|)) (occur S (|\fst e2|)).
@@ -205,11 +239,22 @@ cases (decidable_sublist S w (occ S e1 e2)) [@H] -H #H
  //
 qed.
 
+(* The following is a stronger version of equiv_sem, relative to characters
+occurring the given regular expressions. *)
+
 lemma equiv_sem_occ: ∀S.∀e1,e2:pre S.
 (∀w.(sublist S w (occ S e1 e2))→ cofinal ? 〈moves ? w e1,moves ? w e2〉)
 → \sem{e1}=1\sem{e2}.
 #S #e1 #e2 #H @(proj2 … (equiv_sem …)) @occ_enough #w @H 
 qed.
+
+(* 
+We say that a list of pairs of pres is a bisimulation if it is closed
+w.r.t. moves, and all its members are cofinal.
+*)
+
+(* the sons of p w.r.t a list of symbols l are all states reachable from p 
+with a move in l *)
 
 definition sons ≝ λS:DeqSet.λl:list S.λp:(pre S)×(pre S). 
  map ?? (λa.〈move S a (\fst (\fst p)),move S a (\fst (\snd p))〉) l.
@@ -225,6 +270,8 @@ qed.
 definition is_bisim ≝ λS:DeqSet.λl:list ?.λalpha:list S.
   ∀p:(pre S)×(pre S). memb ? p l = true → cofinal ? p ∧ (sublist ? (sons ? alpha p) l).
 
+(* Using lemma equiv_sem_occ it is easy to prove the following result: *)
+
 lemma bisim_to_sem: ∀S:DeqSet.∀l:list ?.∀e1,e2: pre S. 
   is_bisim S l (occ S e1 e2) → memb ? 〈e1,e2〉 l = true → \sem{e1}=1\sem{e2}.
 #S #l #e1 #e2 #Hbisim #Hmemb @equiv_sem_occ 
@@ -237,7 +284,31 @@ lapply Hsub @(list_elim_left … w) [//]
   ]
 qed.
 
-(* the algorithm *)
+(* This is already an interesting result: checking if l is a bisimulation 
+is decidable, hence we could generate l with some untrusted piece of code 
+and then run a (boolean version of) is_bisim to check that it is actually 
+a bisimulation. 
+However, in order to prove that equivalence of regular expressions
+is decidable we must prove that we can always effectively build such a list 
+(or find a counterexample).
+The idea is that the list we are interested in is just the set of 
+all pair of pres reachable from the initial pair via some
+sequence of moves. 
+
+The algorithm for computing reachable nodes in graph is a very 
+traditional one. We split nodes in two disjoint lists: a list of 
+visited nodes and a frontier, composed by all nodes connected
+to a node in visited but not visited already. At each step we select a node 
+a from the frontier, compute its sons, add a to the set of 
+visited nodes and the (not already visited) sons to the frontier. 
+
+Instead of fist computing reachable nodes and then performing the 
+bisimilarity test we can directly integrate it in the algorithm:
+the set of visited nodes is closed by construction w.r.t. reachability,
+so we have just to check cofinality for any node we add to visited.
+
+Here is the extremely simple algorithm: *)
+
 let rec bisim S l n (frontier,visited: list ?) on n ≝
   match n with 
   [ O ⇒ 〈false,visited〉 (* assert false *)
@@ -267,7 +338,15 @@ lemma unfold_bisim: ∀S,l,n.∀frontier,visited: list ?.
     ]
   ].
 #S #l #n cases n // qed.
-  
+
+(* The integer n is an upper bound to the number of recursive call, 
+equal to the dimension of the graph. It returns a pair composed
+by a boolean and a the set of visited nodes; the boolean is true
+if and only if all visited nodes are cofinal. 
+
+The following results explicitly state the behaviour of bisim is the general
+case and in some relevant instances *)
+ 
 lemma bisim_never: ∀S,l.∀frontier,visited: list ?.
   bisim S l O frontier visited = 〈false,visited〉.
 #frontier #visited >unfold_bisim // 
@@ -295,6 +374,9 @@ qed.
 lemma notb_eq_true_l: ∀b. notb b = true → b = false.
 #b cases b normalize //
 qed.
+
+(* In order to prove termination of bisim we must be able to effectively 
+enumerate all possible pres: *)
 
 let rec pitem_enum S (i:re S) on i ≝
   match i with
@@ -332,6 +414,11 @@ lemma space_enum_complete : ∀S.∀e1,e2: pre S.
   memb ? 〈e1,e2〉 (space_enum S (|\fst e1|) (|\fst e2|)) = true.
 #S #e1 #e2 @(memb_compose … (λi,b.〈i,b〉))
 // qed.
+
+(* We are ready to prove that bisim is correct; we use the invariant 
+that at each call of bisim the two lists visited and frontier only contain 
+nodes reachable from \langle e_1,e_2\rangle, hence it is absurd to suppose 
+to meet a pair which is not cofinal. *)
 
 definition all_reachable ≝ λS.λe1,e2:pre S.λl: list ?.
 uniqueb ? l = true ∧ 
@@ -390,6 +477,10 @@ definition all_true ≝ λS.λl.∀p:(pre S) × (pre S). memb ? p l = true →
 
 definition sub_sons ≝ λS,l,l1,l2.∀x:(pre S) × (pre S). 
 memb ? x l1 = true → sublist ? (sons ? l x) l2. 
+
+(* For completeness, we use the invariant that all the nodes in visited are cofinal, 
+and the sons of visited are either in visited or in the frontier; since
+at the end frontier is empty, visited is hence a bisimulation. *)
 
 lemma bisim_complete: 
  ∀S,l,n.∀frontier,visited,visited_res:list ?.
@@ -488,6 +579,25 @@ definition exp1 ≝ ((a·b)^*·a).
 definition exp2 ≝ a·(b·a)^*.
 definition exp4 ≝ (b·a)^*.
 
+definition exp5 ≝ (a·(a·(a·b)^*·b)^*·b)^*.
+
+example 
+  moves1: \snd (moves DeqNat [0;1;0] (•(blank ? exp2))) = true.
+normalize // 
+qed.
+
+example 
+  moves2: \snd (moves DeqNat [0;1;0;0;0] (•(blank ? exp2))) = false.
+normalize // qed.
+
+example 
+  moves3: \snd (moves DeqNat [0;0;0;1;0;1;1;0;1;1] (•(blank ? exp5))) = true.
+normalize // qed.
+
+example 
+  moves4: \snd (moves DeqNat [0;0;0;1;0;1;1;0;1;1;1;0] (•(blank ? exp5))) = false.
+normalize // qed.
+
 definition exp6 ≝ a·(a ·a ·b^* + b^* ).
 definition exp7 ≝ a · a^* · b^*.
 
@@ -506,3 +616,4 @@ normalize // qed.
 
 
 
+\v
