@@ -19,122 +19,82 @@ include "basic_2/unfold/ltpss_tpss.ma".
 
 (* Advanced properties ******************************************************)
 
+lemma ltpss_tpss_conf: ∀L0,T2,U2,d2,e2. L0 ⊢ T2 [d2, e2] ▶* U2 →
+                       ∀L1,d1,e1. L0 [d1, e1] ▶* L1 →
+                       ∃∃T. L1 ⊢ T2 [d2, e2] ▶* T &
+                            L1 ⊢ U2 [d1, e1] ▶* T.
+#L0 #T2 #U2 #d2 #e2 #H #L1 #d1 #e1 #HL01 @(tpss_ind … H) -U2 /2 width=3/
+#U #U2 #_ #HU2 * #X2 #HTX2 #HUX2
+elim (ltpss_tps_conf … HU2 … HL01) -L0 #X1 #HUX1 #HU2X1
+elim (tpss_strip_eq … HUX2 … HUX1) -U #X #HX2 #HX1
+lapply (tpss_trans_eq … HU2X1 … HX1) -X1 /3 width=3/
+qed.
+
+lemma ltpss_tpss_trans_down: ∀L0,L1,T2,U2,d1,e1,d2,e2. d2 + e2 ≤ d1 →
+                             L1 [d1, e1] ▶* L0 → L0 ⊢ T2 [d2, e2] ▶* U2 →
+                             ∃∃T. L1 ⊢ T2 [d2, e2] ▶* T & L0 ⊢ T [d1, e1] ▶* U2.
+#L0 #L1 #T2 #U2 #d1 #e1 #d2 #e2 #Hde2d1 #HL10 #H @(tpss_ind … H) -U2
+[ /2 width=3/
+| #U #U2 #_ #HU2 * #T #HT2 #HTU
+  elim (tpss_strap1_down … HTU … HU2 ?) -U // #U #HTU #HU2
+  elim (ltpss_tps_trans … HTU … HL10) -HTU -HL10 #X #HTX #HXU
+  lapply (tpss_trans_eq … HXU HU2) -U /3 width=3/
+]
+qed.
+
 (* Main properties **********************************************************)
 
-theorem ltpss_trans_eq: ∀L1,L,L2,d,e.
-                        L1 [d, e] ▶* L → L [d, e] ▶* L2 → L1 [d, e] ▶* L2. 
-/2 width=3/ qed.
-
-lemma ltpss_tpss2: ∀L1,L2,I,V1,V2,e.
-                   L1 [0, e] ▶* L2 → L2 ⊢ V1 [0, e] ▶* V2 →
-                   L1. ⓑ{I} V1 [0, e + 1] ▶* L2. ⓑ{I} V2.
-#L1 #L2 #I #V1 #V2 #e #HL12 #H @(tpss_ind … H) -V2
-[ /2 width=1/
-| #V #V2 #_ #HV2 #IHV @(ltpss_trans_eq … IHV) /2 width=1/
-]
-qed.
-
-lemma ltpss_tpss2_lt: ∀L1,L2,I,V1,V2,e.
-                      L1 [0, e - 1] ▶* L2 → L2 ⊢ V1 [0, e - 1] ▶* V2 →
-                      0 < e → L1. ⓑ{I} V1 [0, e] ▶* L2. ⓑ{I} V2.
-#L1 #L2 #I #V1 #V2 #e #HL12 #HV12 #He
->(plus_minus_m_m e 1) // /2 width=1/
-qed.
-
-lemma ltpss_tpss1: ∀L1,L2,I,V1,V2,d,e.
-                   L1 [d, e] ▶* L2 → L2 ⊢ V1 [d, e] ▶* V2 →
-                   L1. ⓑ{I} V1 [d + 1, e] ▶* L2. ⓑ{I} V2.
-#L1 #L2 #I #V1 #V2 #d #e #HL12 #H @(tpss_ind … H) -V2
-[ /2 width=1/
-| #V #V2 #_ #HV2 #IHV @(ltpss_trans_eq … IHV) /2 width=1/
-]
-qed.
-
-lemma ltpss_tpss1_lt: ∀L1,L2,I,V1,V2,d,e.
-                      L1 [d - 1, e] ▶* L2 → L2 ⊢ V1 [d - 1, e] ▶* V2 →
-                      0 < d → L1. ⓑ{I} V1 [d, e] ▶* L2. ⓑ{I} V2.
-#L1 #L2 #I #V1 #V2 #d #e #HL12 #HV12 #Hd
->(plus_minus_m_m d 1) // /2 width=1/
-qed.
-
-fact ltps_conf_aux: ∀K,K1,L1,d1,e1. K1 [d1, e1] ▶ L1 →
-                    ∀K2,L2,d2,e2. K2 [d2, e2] ▶ L2 → K1 = K → K2 = K →
-                    ∃∃L. L1 [d2, e2] ▶* L & L2 [d1, e1] ▶* L.
+fact ltpss_conf_aux: ∀K,K1,L1,d1,e1. K1 [d1, e1] ▶* L1 →
+                     ∀K2,L2,d2,e2. K2 [d2, e2] ▶* L2 → K1 = K → K2 = K →
+                     ∃∃L. L1 [d2, e2] ▶* L & L2 [d1, e1] ▶* L.
 #K @(lw_wf_ind … K) -K #K #IH #K1 #L1 #d1 #e1 * -K1 -L1 -d1 -e1
-[ -IH /3 width=3/
+[ -IH /2 width=3/
 | -IH #K1 #I1 #V1 #K2 #L2 #d2 #e2 * -K2 -L2 -d2 -e2
   [ /2 width=3/
   | #K2 #I2 #V2 #H1 #H2 destruct /2 width=3/
-  | #K2 #L2 #I2 #W2 #V2 #e2 #HKL2 #HWV2 #H1 #H2 destruct /4 width=3/
-  | #K2 #L2 #I2 #W2 #V2 #d2 #e2 #HKL2 #HWV2 #H1 #H2 destruct /4 width=3/
+  | #K2 #L2 #I2 #W2 #V2 #e2 #HKL2 #HWV2 #H1 #H2 destruct /3 width=3/
+  | #K2 #L2 #I2 #W2 #V2 #d2 #e2 #HKL2 #HWV2 #H1 #H2 destruct /3 width=3/
   ]
 | #K1 #L1 #I1 #W1 #V1 #e1 #HKL1 #HWV1 #K2 #L2 #d2 #e2 * -K2 -L2 -d2 -e2
   [ -IH #d2 #e2 #H1 #H2 destruct
-  | -IH #K2 #I2 #V2 #H1 #H2 destruct
-    @ex2_1_intro [2,3: @inj ] /3 width=5/ (**) (* /4 width=5/ is too slow *)
+  | -IH #K2 #I2 #V2 #H1 #H2 destruct /3 width=5/
   | #K2 #L2 #I2 #W2 #V2 #e2 #HKL2 #HWV2 #H1 #H2 destruct
     elim (IH … HKL1 … HKL2 ? ?) -IH [2,4: // |3: skip |5: /2 width=1/ ] -K1 #L #HL1 #HL2
-    elim (ltpss_tps_conf … HWV1 … HL1) #U1 #HWU1 #HVU1
-    elim (ltpss_tps_conf … HWV2 … HL2) #U2 #HWU2 #HVU2
+    elim (ltpss_tpss_conf … HWV1 … HL1) #U1 #HWU1 #HVU1
+    elim (ltpss_tpss_conf … HWV2 … HL2) #U2 #HWU2 #HVU2
     elim (tpss_conf_eq … HWU1 … HWU2) -W1 #W #HU1W #HU2W
-    @(ex2_1_intro … (L.ⓑ{I1}W)) (**) (* explicit constructor *)
-    [ @(ltpss_trans_eq … (L1.ⓑ{I1}U1)) /2 width=1/
-    | @(ltpss_trans_eq … (L2.ⓑ{I1}U2)) /2 width=1/
-    ]
+    lapply (tpss_trans_eq … HVU1 HU1W) -U1
+    lapply (tpss_trans_eq … HVU2 HU2W) -U2 /3 width=5/
   | #K2 #L2 #I2 #W2 #V2 #d2 #e2 #HKL2 #HWV2 #H1 #H2 destruct
     elim (IH … HKL1 … HKL2 ? ?) -IH [2,4: // |3: skip |5: /2 width=1/ ] -K1 #L #HL1 #HL2
-    elim (ltpss_tps_conf … HWV1 … HL1) #U1 #HWU1 #HVU1
-    elim (ltpss_tps_conf … HWV2 … HL2) #U2 #HWU2 #HVU2
+    elim (ltpss_tpss_conf … HWV1 … HL1) #U1 #HWU1 #HVU1
+    elim (ltpss_tpss_conf … HWV2 … HL2) #U2 #HWU2 #HVU2
     elim (tpss_conf_eq … HWU1 … HWU2) -W1 #W #HU1W #HU2W
-    @(ex2_1_intro … (L.ⓑ{I1}W)) (**) (* explicit constructor *)
-    [ @(ltpss_trans_eq … (L1.ⓑ{I1}U1)) /2 width=1/
-    | @(ltpss_trans_eq … (L2.ⓑ{I1}U2)) /2 width=1/
-    ]
+    lapply (tpss_trans_eq … HVU1 HU1W) -U1
+    lapply (tpss_trans_eq … HVU2 HU2W) -U2 /3 width=5/
   ]
 | #K1 #L1 #I1 #W1 #V1 #d1 #e1 #HKL1 #HWV1 #K2 #L2 #d2 #e2 * -K2 -L2 -d2 -e2
   [ -IH #d2 #e2 #H1 #H2 destruct
-  | -IH #K2 #I2 #V2 #H1 #H2 destruct
-    @ex2_1_intro [2,3: @inj ] /3 width=5/ (**) (* /4 width=5/ is too slow *)
+  | -IH #K2 #I2 #V2 #H1 #H2 destruct /3 width=5/
   | #K2 #L2 #I2 #W2 #V2 #e2 #HKL2 #HWV2 #H1 #H2 destruct
     elim (IH … HKL1 … HKL2 ? ?) -IH [2,4: // |3: skip |5: /2 width=1/ ] -K1 #L #HL1 #HL2
-    elim (ltpss_tps_conf … HWV1 … HL1) #U1 #HWU1 #HVU1
-    elim (ltpss_tps_conf … HWV2 … HL2) #U2 #HWU2 #HVU2
+    elim (ltpss_tpss_conf … HWV1 … HL1) #U1 #HWU1 #HVU1
+    elim (ltpss_tpss_conf … HWV2 … HL2) #U2 #HWU2 #HVU2
     elim (tpss_conf_eq … HWU1 … HWU2) -W1 #W #HU1W #HU2W
-    @(ex2_1_intro … (L.ⓑ{I1}W)) (**) (* explicit constructor *)
-    [ @(ltpss_trans_eq … (L1.ⓑ{I1}U1)) /2 width=1/
-    | @(ltpss_trans_eq … (L2.ⓑ{I1}U2)) /2 width=1/
-    ]
+    lapply (tpss_trans_eq … HVU1 HU1W) -U1
+    lapply (tpss_trans_eq … HVU2 HU2W) -U2 /3 width=5/
   | #K2 #L2 #I2 #W2 #V2 #d2 #e2 #HKL2 #HWV2 #H1 #H2 destruct
     elim (IH … HKL1 … HKL2 ? ?) -IH [2,4: // |3: skip |5: /2 width=1/ ] -K1 #L #HL1 #HL2
-    elim (ltpss_tps_conf … HWV1 … HL1) #U1 #HWU1 #HVU1
-    elim (ltpss_tps_conf … HWV2 … HL2) #U2 #HWU2 #HVU2
+    elim (ltpss_tpss_conf … HWV1 … HL1) #U1 #HWU1 #HVU1
+    elim (ltpss_tpss_conf … HWV2 … HL2) #U2 #HWU2 #HVU2
     elim (tpss_conf_eq … HWU1 … HWU2) -W1 #W #HU1W #HU2W
-    @(ex2_1_intro … (L.ⓑ{I1}W)) (**) (* explicit constructor *)
-    [ @(ltpss_trans_eq … (L1.ⓑ{I1}U1)) /2 width=1/
-    | @(ltpss_trans_eq … (L2.ⓑ{I1}U2)) /2 width=1/
-    ]
+    lapply (tpss_trans_eq … HVU1 HU1W) -U1
+    lapply (tpss_trans_eq … HVU2 HU2W) -U2 /3 width=5/
   ]
 ]
 qed.
 
-lemma ltps_conf: ∀L0,L1,d1,e1. L0 [d1, e1] ▶ L1 →
-                 ∀L2,d2,e2. L0 [d2, e2] ▶ L2 →
-                 ∃∃L. L1 [d2, e2] ▶* L & L2 [d1, e1] ▶* L.
-/2 width=7/ qed.
-
-axiom ltpss_conf: ∀L0,L1,d1,e1. L0 [d1, e1] ▶* L1 →
+lemma ltpss_conf: ∀L0,L1,d1,e1. L0 [d1, e1] ▶* L1 →
                   ∀L2,d2,e2. L0 [d2, e2] ▶* L2 →
                   ∃∃L. L1 [d2, e2] ▶* L & L2 [d1, e1] ▶* L.
-(*
-fact ltpss_conf_aux: ∀K1,L1,d1,e1. K1 [d1, e1] ▶* L1 →
-                     ∀K2,L2,d2,e2. K2 [d2, e2] ▶* L2 → K1 = K2 →
-                     ∃∃L. L1 [d2, e2] ▶* L & L2 [d1, e1] ▶* L.
-#K1 #L1 #d1 #e1 #H @(ltpss_ind_dx … H) -K1 /2 width=3/
-#X1 #K1 #HXK1 #HKL1 #IHKL1 #K2 #L2 #d2 #e2 #H @(ltpss_ind_dx … H) -K2
-[ -IHKL1 #H destruct
-  lapply (ltpss_strap … HXK1 HKL1) -K1 /2 width=3/
-| #X2 #K2 #HXK2 #HKL2 #_ #H destruct
-  elim (ltps_conf … HXK1 … HXK2) -X2 #K #HK1 #HK2
-  elim (IHKL1 … HK1 ?) // -K1 #L #HL1 #HKL
-  @(ex2_1_intro … K) //
-*)
+/2 width=7/ qed.

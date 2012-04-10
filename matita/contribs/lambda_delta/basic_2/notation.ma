@@ -150,10 +150,6 @@ notation "hvbox( L ⊢ break ⌘ [ T ] ≡ break k )"
    non associative with precedence 45
    for @{ 'ICM $L $T $k }.
 
-notation "hvbox( T1 break [ d , break e ] ▶ break T2 )"
-   non associative with precedence 45
-   for @{ 'PSubst $T1 $d $e $T2 }.
-
 notation "hvbox( L ⊢ break term 90 T1 break [ d , break e ] ▶ break T2 )"
    non associative with precedence 45
    for @{ 'PSubst $L $T1 $d $e $T2 }.
@@ -183,6 +179,14 @@ notation "hvbox( T1 break [ d , break e ] ▶* break T2 )"
 notation "hvbox( L ⊢ break term 90 T1 break [ d , break e ] ▶* break T2 )"
    non associative with precedence 45
    for @{ 'PSubstStar $L $T1 $d $e $T2 }.
+
+notation "hvbox( L ⊢ break term 90 T1 break [ d , break e ] ▶▶* break T2 )"
+   non associative with precedence 45
+   for @{ 'PSubstStarAlt $L $T1 $d $e $T2 }.
+
+notation "hvbox( T1 break [ d , break e ] ▶** break T2 )"
+   non associative with precedence 45
+   for @{ 'PSubstStars $T1 $d $e $T2 }.
 
 notation "hvbox( T1 break [ d , break e ] ≡ break T2 )"
    non associative with precedence 45
