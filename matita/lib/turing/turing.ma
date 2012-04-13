@@ -101,3 +101,27 @@ definition ComputeB ≝ λsig.λM:TM sig.λf:(list sig) → bool.
 ∀l.∃i.∃c.
   loop ? i (step sig M) (stop sig M) (init sig M l) = Some ? c ∧
   (isnilb ? (out ?? c) = false).
+
+(* alternative approach.
+We define the notion of computation. The notion must be constructive,
+since we want to define functions over it, like lenght and size 
+
+Perche' serve Type[2] se sposto a e b a destra? *)
+
+inductive cmove (A:Type[0]) (f:A→A) (p:A →bool) (a,b:A): Type[0] ≝
+  mk_move: p a = false → b = f a → cmove A f p a b.
+  
+inductive cstar (A:Type[0]) (M:A→A→Type[0]) : A →A → Type[0] ≝
+| empty : ∀a. cstar A M a a
+| more : ∀a,b,c. M a b → cstar A M b c → cstar A M a c.
+
+definition computation ≝ λsig.λM:TM sig.
+  cstar ? (cmove ? (step sig M) (stop sig M)).
+
+definition Compute_expl ≝ λsig.λM:TM sig.λf:(list sig) → (list sig).
+  ∀l.∃c.computation sig M (init sig M l) c → 
+   (stop sig M c = true) ∧ out ?? c = f l.
+
+definition ComputeB_expl ≝ λsig.λM:TM sig.λf:(list sig) → bool.
+  ∀l.∃c.computation sig M (init sig M l) c → 
+   (stop sig M c = true) ∧ (isnilb ? (out ?? c) = false).
