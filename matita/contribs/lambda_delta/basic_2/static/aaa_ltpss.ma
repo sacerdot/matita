@@ -12,23 +12,65 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/unfold/ltpss.ma".
-include "basic_2/static/aaa_ltps.ma".
+include "basic_2/unfold/tpss_tpss.ma".
+include "basic_2/unfold/ltpss_ldrop.ma".
+include "basic_2/static/aaa_lift.ma".
 
 (* ATONIC ARITY ASSIGNMENT ON TERMS *****************************************)
 
 (* Properties about parallel unfold *****************************************)
 
-lemma aaa_ltpss_conf: ∀L1,T,A. L1 ⊢ T ÷ A → ∀L2,d,e. L1 [d, e] ▶* L2 → L2 ⊢ T ÷ A.
-#L1 #T #A #HT #L2 #d #e #HL12
-@(TC_Conf3 … (λL,A. L ⊢ T ÷ A) … HT ? HL12) /2 width=5/
-qed.
-
-lemma aaa_tpss_conf: ∀L,T1,A. L ⊢ T1 ÷ A → ∀T2,d,e. L ⊢ T1 [d, e] ▶* T2 → L ⊢ T2 ÷ A.
-#L #T1 #A #HT1 #T2 #d #e #HT12
-@(TC_Conf3 … HT1 ? HT12) /2 width=5/
-qed.
-
+(* Note: lemma 500 *)
 lemma aaa_ltpss_tpss_conf: ∀L1,T1,A. L1 ⊢ T1 ÷ A → ∀L2,d,e. L1 [d, e] ▶* L2 →
                            ∀T2. L2 ⊢ T1 [d, e] ▶* T2 → L2 ⊢ T2 ÷ A.
-/3 width=5/ qed.
+#L1 #T1 #A #H elim H -L1 -T1 -A
+[ #L1 #k #L2 #d #e #_ #T2 #H
+  >(tpss_inv_sort1 … H) -H //
+| #I #L1 #K1 #V1 #B #i #HLK1 #_ #IHV1 #L2 #d #e #HL12 #T2 #H
+  elim (tpss_inv_lref1 … H) -H
+  [ #H destruct
+    elim (lt_or_ge i d) #Hdi
+    [ elim (ltpss_ldrop_conf_le … HL12 … HLK1 ?) -L1 /2 width=2/ #X #H #HLK2
+      elim (ltpss_inv_tpss11 … H ?) -H /2 width=1/ -Hdi #K2 #V2 #HK12 #HV12 #H destruct
+      /3 width=8/
+    | elim (lt_or_ge i (d + e)) #Hide
+      [ elim (ltpss_ldrop_conf_be … HL12 … HLK1 ? ?) -L1 // /2 width=2/ #X #H #HLK2
+        elim (ltpss_inv_tpss21 … H ?) -H /2 width=1/ -Hdi -Hide #K2 #V2 #HK12 #HV12 #H destruct
+        /3 width=8/
+      | -Hdi
+        lapply (ltpss_ldrop_conf_ge … HL12 … HLK1 ?) -L1 // -Hide /3 width=8/
+      ]
+    ]
+  | * #K2 #V2 #W2 #Hdi #Hide #HLK2 #HVW2 #HWT2
+    elim (ltpss_ldrop_conf_be … HL12 … HLK1 ? ?) -L1 // /2 width=2/ #X #H #HL2K0
+    elim (ltpss_inv_tpss21 … H ?) -H /2 width=1/ -Hdi -Hide #K0 #V0 #HK12 #HV12 #H destruct
+    lapply (ldrop_mono … HL2K0 … HLK2) -HL2K0 #H destruct
+    lapply (ldrop_fwd_ldrop2 … HLK2) -HLK2 #HLK2
+    lapply (tpss_trans_eq … HV12 HVW2) -V2 /3 width=7/
+  ]
+| #L1 #V1 #T1 #B #A #_ #_ #IHV1 #IHT1 #L2 #d #e #HL12 #X #H
+  elim (tpss_inv_bind1 … H) -H #V2 #T2 #HV12 #HT12 #H destruct /4 width=4/
+| #L1 #V1 #T1 #B #A #_ #_ #IHV1 #IHT1 #L2 #d #e #HL12 #X #H
+  elim (tpss_inv_bind1 … H) -H #V2 #T2 #HV12 #HT12 #H destruct /4 width=4/
+| #L1 #V1 #T1 #B #A #_ #_ #IHV1 #IHT1 #L2 #d #e #HL12 #X #H
+  elim (tpss_inv_flat1 … H) -H #V2 #T2 #HV12 #HT12 #H destruct /3 width=4/
+| #L1 #V1 #T1 #A #_ #_ #IHV1 #IHT1 #L2 #d #e #HL12 #X #H
+  elim (tpss_inv_flat1 … H) -H #V2 #T2 #HV12 #HT12 #H destruct /3 width=4/
+]
+qed.
+
+lemma aaa_ltpss_tps_conf: ∀L1,T1,A. L1 ⊢ T1 ÷ A → ∀L2,d,e. L1 [d, e] ▶* L2 →
+                          ∀T2. L2 ⊢ T1 [d, e] ▶ T2 → L2 ⊢ T2 ÷ A.
+/3 width=7/ qed.
+
+lemma aaa_ltpss_conf: ∀L1,T,A. L1 ⊢ T ÷ A →
+                      ∀L2,d,e. L1 [d, e] ▶* L2 → L2 ⊢ T ÷ A.
+/2 width=7/ qed.
+
+lemma aaa_tpss_conf: ∀L,T1,A. L ⊢ T1 ÷ A →
+                     ∀T2,d,e. L ⊢ T1 [d, e] ▶* T2 → L ⊢ T2 ÷ A.
+/2 width=7/ qed.
+
+lemma aaa_tps_conf: ∀L,T1,A. L ⊢ T1 ÷ A →
+                    ∀T2,d,e. L ⊢ T1 [d, e] ▶ T2 → L ⊢ T2 ÷ A.
+/2 width=7/ qed.

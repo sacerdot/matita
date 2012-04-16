@@ -12,16 +12,23 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/unfold/ltpsss_ltpsss.ma".
-include "basic_2/reducibility/cpr.ma".
-include "basic_2/reducibility/lcpr.ma".
+include "basic_2/unfold/ltpsss.ma".
+include "basic_2/static/aaa_ltpss.ma".
 
-(* CONTEXT-SENSITIVE PARALLEL REDUCTION ON LOCAL ENVIRONMENTS *************)
+(* ATONIC ARITY ASSIGNMENT ON TERMS *****************************************)
 
-(* Advanced properties ****************************************************)
+(* Properties about iterated parallel unfold ********************************)
 
-lemma lcpr_pair: ∀L1,L2. L1 ⊢ ➡ L2 → ∀V1,V2. L2 ⊢ V1 ➡ V2 →
-                 ∀I. L1. ⓑ{I} V1 ⊢ ➡ L2. ⓑ{I} V2.
-#L1 #L2 * #L #HL1 #HL2 #V1 #V2 *
-<(ltpsss_fwd_length … HL2) /4 width=5/
+lemma aaa_ltpsss_conf: ∀L1,T,A. L1 ⊢ T ÷ A →
+                       ∀L2,d,e. L1 [d, e] ▶** L2 → L2 ⊢ T ÷ A.
+#L1 #T #A #HT #L2 #d #e #HL12
+@(TC_Conf3 … (λL,A. L ⊢ T ÷ A) … HT ? HL12) /2 width=5/
 qed.
+
+lemma aaa_ltpsss_tpss_conf: ∀L1,T1,A. L1 ⊢ T1 ÷ A → ∀L2,d,e. L1 [d, e] ▶** L2 →
+                            ∀T2. L2 ⊢ T1 [d, e] ▶* T2 → L2 ⊢ T2 ÷ A.
+/3 width=5/ qed.
+
+lemma aaa_ltpsss_tps_conf: ∀L1,T1,A. L1 ⊢ T1 ÷ A → ∀L2,d,e. L1 [d, e] ▶** L2 →
+                           ∀T2. L2 ⊢ T1 [d, e] ▶ T2 → L2 ⊢ T2 ÷ A.
+/3 width=5/ qed.

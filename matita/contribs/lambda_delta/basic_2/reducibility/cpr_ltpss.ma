@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/unfold/ltpss_tpss.ma".
+include "basic_2/unfold/ltpss_ltpss.ma".
 include "basic_2/reducibility/cpr.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL REDUCTION ON TERMS ****************************)

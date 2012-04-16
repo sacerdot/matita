@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/reducibility/ltpr_tps.ma".
-include "basic_2/reducibility/cpr_ltpss.ma".
+include "basic_2/reducibility/cpr_ltpsss.ma".
 include "basic_2/reducibility/lcpr.ma".
 include "basic_2/computation/cprs.ma".
 

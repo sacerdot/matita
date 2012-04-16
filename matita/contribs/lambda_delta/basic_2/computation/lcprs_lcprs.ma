@@ -11,21 +11,23 @@
 (*        v         GNU General Public License Version 2                  *)
 (*                                                                        *)
 (**************************************************************************)
-(*
+
 include "basic_2/reducibility/lcpr_lcpr.ma".
-*)
 include "basic_2/computation/lcprs_cprs.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL COMPUTATION ON LOCAL ENVIRONMENTS *************)
 
 (* Advanced properties ******************************************************)
 
-axiom lcprs_strip: ∀L,L1. L ⊢ ➡* L1 → ∀L2. L ⊢ ➡ L2 →
+lemma lcprs_strip: ∀L,L1. L ⊢ ➡* L1 → ∀L2. L ⊢ ➡ L2 →
                    ∃∃L0. L1 ⊢ ➡ L0 & L2 ⊢ ➡* L0.
-(*
 /3 width=3/ qed.
-*)
+
 (* Main properties **********************************************************)
+
+theorem lcprs_conf: ∀L,L1. L ⊢ ➡* L1 → ∀L2. L ⊢ ➡* L2 →
+                    ∃∃L0. L1 ⊢ ➡* L0 & L2 ⊢ ➡* L0.
+/3 width=3/ qed.
 
 theorem lcprs_trans: ∀L1,L. L1 ⊢ ➡* L → ∀L2. L ⊢ ➡* L2 → L1 ⊢ ➡* L2.
 /2 width=3/ qed.

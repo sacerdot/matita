@@ -33,6 +33,16 @@ interpretation "parallel unfold (local environment)"
 
 (* Basic properties *********************************************************)
 
+lemma ltpss_tps2: ∀L1,L2,I,V1,V2,e.
+                  L1 [0, e] ▶* L2 → L2 ⊢ V1 [0, e] ▶ V2 →
+                  L1. ⓑ{I} V1 [0, e + 1] ▶* L2. ⓑ{I} V2.
+/3 width=1/ qed.
+
+lemma ltpss_tps1: ∀L1,L2,I,V1,V2,d,e.
+                  L1 [d, e] ▶* L2 → L2 ⊢ V1 [d, e] ▶ V2 →
+                  L1. ⓑ{I} V1 [d + 1, e] ▶* L2. ⓑ{I} V2.
+/3 width=1/ qed.
+
 lemma ltpss_tpss2_lt: ∀L1,L2,I,V1,V2,e.
                       L1 [0, e - 1] ▶* L2 → L2 ⊢ V1 [0, e - 1] ▶* V2 →
                       0 < e → L1. ⓑ{I} V1 [0, e] ▶* L2. ⓑ{I} V2.
@@ -46,6 +56,16 @@ lemma ltpss_tpss1_lt: ∀L1,L2,I,V1,V2,d,e.
 #L1 #L2 #I #V1 #V2 #d #e #HL12 #HV12 #Hd
 >(plus_minus_m_m d 1) /2 width=1/
 qed.
+
+lemma ltpss_tps2_lt: ∀L1,L2,I,V1,V2,e.
+                     L1 [0, e - 1] ▶* L2 → L2 ⊢ V1 [0, e - 1] ▶ V2 →
+                     0 < e → L1. ⓑ{I} V1 [0, e] ▶* L2. ⓑ{I} V2.
+/3 width=1/ qed.
+
+lemma ltpss_tps1_lt: ∀L1,L2,I,V1,V2,d,e.
+                     L1 [d - 1, e] ▶* L2 → L2 ⊢ V1 [d - 1, e] ▶ V2 →
+                     0 < d → L1. ⓑ{I} V1 [d, e] ▶* L2. ⓑ{I} V2.
+/3 width=1/ qed.
 
 (* Basic_1: was by definition: csubst1_refl *)
 lemma ltpss_refl: ∀L,d,e. L [d, e] ▶* L.

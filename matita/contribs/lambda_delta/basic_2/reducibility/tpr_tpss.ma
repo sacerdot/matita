@@ -52,8 +52,7 @@ lemma tpr_tps_ltpr: ∀T1,T2. T1 ➡ T2 →
   elim (tpss_strip_neq … HTT2 … HTU2 ?) -T2 /2 width=1/ #T2 #HTT2 #HUT2
   lapply (tps_lsubs_conf … HTT2 (L2. ⓑ{I} V2) ?) -HTT2 /2 width=1/ #HTT2
   elim (ltpss_tps_conf … HTT2 (L2. ⓑ{I} VV2) (d + 1) e ?) -HTT2 /2 width=1/ #W2 #HTTW2 #HTW2
-  lapply (tpss_lsubs_conf … HTTW2 (⋆. ⓑ{I} VV2) ?) -HTTW2 /2 width=1/ #HTTW2
-  lapply (tpss_tps … HTTW2) -HTTW2 #HTTW2
+  lapply (tps_lsubs_conf … HTTW2 (⋆. ⓑ{I} VV2) ?) -HTTW2 /2 width=1/ #HTTW2
   lapply (tpss_lsubs_conf … HTW2 (L2. ⓑ{I} VV2) ?) -HTW2 /2 width=1/ #HTW2
   lapply (tpss_trans_eq … HUT2 … HTW2) -T2 /3 width=5/
 | #V #V1 #V2 #W1 #W2 #T1 #T2 #_ #HV2 #_ #_ #IHV12 #IHW12 #IHT12 #L1 #d #e #X #H #L2 #HL12
