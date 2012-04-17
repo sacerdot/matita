@@ -73,8 +73,6 @@
   <!ENTITY enriched_term "<emphasis><link linkend='grammar.enriched_term'>enriched_term</link></emphasis>">
 ]>
 
-<?yelp:chunk-depth 3?>
-
 <book id="matita_manual" lang="en">
 
   <title>&app; V&appversion; User Manual (rev. &manrevision;)</title>
