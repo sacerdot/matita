@@ -12,12 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/arith.ma".
+include "basic_2/unfold/ltpsss_ltpsss.ma".
+include "basic_2/reducibility/cpr.ma".
+include "basic_2/reducibility/lcpr.ma".
 
-(* SORT HIERARCHY ***********************************************************)
+(* CONTEXT-SENSITIVE PARALLEL REDUCTION ON LOCAL ENVIRONMENTS *************)
 
-(* sort hierarchy specification *)
-record sh: Type[0] ≝ {
-   next: nat → nat;        (* next sort in the hierarchy *)
-   next_lt: ∀k. k < next k (* strict monotonicity condition *)
-}.
+(* Advanced properties ****************************************************)
+
+lemma lcpr_pair: ∀L1,L2. L1 ⊢ ➡ L2 → ∀V1,V2. L2 ⊢ V1 ➡ V2 →
+                 ∀I. L1. ⓑ{I} V1 ⊢ ➡ L2. ⓑ{I} V2.
+#L1 #L2 * #L #HL1 #HL2 #V1 #V2 *
+<(ltpsss_fwd_length … HL2) /4 width=5/
+qed.

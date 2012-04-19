@@ -184,10 +184,6 @@ notation "hvbox( L ⊢ break term 90 T1 break [ d , break e ] ▶▶* break T2 )
    non associative with precedence 45
    for @{ 'PSubstStarAlt $L $T1 $d $e $T2 }.
 
-notation "hvbox( T1 break [ d , break e ] ▶** break T2 )"
-   non associative with precedence 45
-   for @{ 'PSubstStars $T1 $d $e $T2 }.
-
 notation "hvbox( T1 break [ d , break e ] ≡ break T2 )"
    non associative with precedence 45
    for @{ 'TSubst $T1 $d $e $T2 }.
@@ -325,3 +321,13 @@ notation "hvbox( L ⊢ break term 90 T1 ⬌* break T2 )"
 notation "hvbox( T1 ⊢ ⬌* break T2 )"
    non associative with precedence 45
    for @{ 'CPConvStar $T1 $T2 }.
+
+(* Native typing ************************************************************)
+
+notation "hvbox( ⦃ h , break L ⦄ ⊢ break term 90 T1 : break T2 )"
+   non associative with precedence 45
+   for @{ 'NativeType $h $L $T1 $T2 }.
+
+notation "hvbox( h ⊢ break term 90 L1 : ⊑ break L2 )"
+   non associative with precedence 45
+   for @{ 'CrSubEqN $h $L1 $L2 }.

@@ -69,7 +69,7 @@ theorem lift_div_le: ∀d1,e1,T1,T. ⇧[d1, e1] T1 ≡ T →
 ]
 qed.
 
-(* Note: apparently this was missing in Basic_1 *)
+(* Note: apparently this was missing in basic_1 *)
 theorem lift_div_be: ∀d1,e1,T1,T. ⇧[d1, e1] T1 ≡ T →
                      ∀e,e2,T2. ⇧[d1 + e, e2] T2 ≡ T →
                      e ≤ e1 → e1 ≤ e + e2 →

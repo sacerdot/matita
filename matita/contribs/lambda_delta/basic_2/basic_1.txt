@@ -242,11 +242,7 @@ ty3/dec ty3_inference
 ty3/fsubst0 ty3_fsubst0
 ty3/fsubst0 ty3_csubst0
 ty3/fsubst0 ty3_subst0
-ty3/fwd ty3_gen_sort
-ty3/fwd ty3_gen_lref
-ty3/fwd ty3_gen_bind
 ty3/fwd ty3_gen_appl
-ty3/fwd ty3_gen_cast
 ty3/fwd tys3_gen_nil
 ty3/fwd tys3_gen_cons
 ty3/fwd_nf2 ty3_gen_appl_nf2
@@ -271,12 +267,8 @@ ty3/pr3_props ty3_tred
 ty3/pr3_props ty3_sconv_pc3
 ty3/pr3_props ty3_sred_back
 ty3/pr3_props ty3_sconv
-ty3/props ty3_lift
-ty3/props ty3_correct
 ty3/props ty3_unique
 ty3/props ty3_gen_abst_abst
-ty3/props ty3_typecheck
-ty3/props ty3_getl_subst0
 ty3/sty0 ty3_sty0
 ty3/subst1 ty3_gen_cabbr
 ty3/subst1 ty3_gen_cvoid

@@ -12,12 +12,10 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/arith.ma".
+(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
 
-(* SORT HIERARCHY ***********************************************************)
+(* Unfold *******************************************************************)
 
-(* sort hierarchy specification *)
-record sh: Type[0] ≝ {
-   next: nat → nat;        (* next sort in the hierarchy *)
-   next_lt: ∀k. k < next k (* strict monotonicity condition *)
-}.
+notation "hvbox( T1 break [ d , break e ] ▶** break T2 )"
+   non associative with precedence 45
+   for @{ 'PSubstStars $T1 $d $e $T2 }.

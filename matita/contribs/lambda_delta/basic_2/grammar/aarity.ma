@@ -12,13 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* THE FORMAL SYSTEM λδ - MATITA SOURCE FILES
- * Support for abstract candidates of reducibility closed: 2012 January 27
- * Confluence of context-sensitive parallel reduction closed: 2011 September 21
- * Confluence of context-free parallel reduction closed: 2011 September 6
- * Specification started: 2011 April 17
+(* THE FORMAL SYSTEM λδ: MATITA SOURCE FILES
  * - Patience on me to gain peace and perfection! -
  * [ suggested invocation to start formal specifications with ]
+ * Context-sensitive subject equivalence for atomic arity assignment: 2012 April 16
+ * Context-sensitive strong normalization for simply typed terms: 2012 March 15
+ * Support for abstract candidates of reducibility closed: 2012 January 27
+ * Confluence for context-sensitive parallel reduction: 2011 September 21
+ * Confluence for context-free parallel reduction: 2011 September 6
+ * Specification starts: 2011 April 17
  *)
 
 include "ground_2/star.ma".
