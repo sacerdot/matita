@@ -192,7 +192,7 @@ notation "hvbox( L ⊢ break term 90 T1 break [ d , break e ] ≡ break T2 )"
    non associative with precedence 45
    for @{ 'TSubst $L $T1 $d $e $T2 }.
 
-(* Static Typing ************************************************************)
+(* Static typing ************************************************************)
 
 notation "hvbox( L ⊢ break term 90 T ÷ break A )"
    non associative with precedence 45
@@ -201,6 +201,16 @@ notation "hvbox( L ⊢ break term 90 T ÷ break A )"
 notation "hvbox( T1 ÷ ⊑ break T2 )"
    non associative with precedence 45
    for @{ 'CrSubEqA $T1 $T2 }.
+
+notation "hvbox( ⦃ h , break L ⦄ ⊢ break term 90 T1 • break T2 )"
+   non associative with precedence 45
+   for @{ 'StaticType $h $L $T1 $T2 }.
+
+(* Unwind *******************************************************************)
+
+notation "hvbox( ⦃ h , break L ⦄ ⊢ break term 90 T1 •* break T2 )"
+   non associative with precedence 45
+   for @{ 'StaticTypeStar $h $L $T1 $T2 }.
 
 (* Reducibility *************************************************************)
 
@@ -322,7 +332,7 @@ notation "hvbox( T1 ⊢ ⬌* break T2 )"
    non associative with precedence 45
    for @{ 'CPConvStar $T1 $T2 }.
 
-(* Native typing ************************************************************)
+(* Dynamic typing ***********************************************************)
 
 notation "hvbox( ⦃ h , break L ⦄ ⊢ break term 90 T1 : break T2 )"
    non associative with precedence 45

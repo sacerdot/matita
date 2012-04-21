@@ -13,14 +13,14 @@
 (**************************************************************************)
 
 include "basic_2/equivalence/cpcs_cpcs.ma".
-include "basic_2/native/nta.ma".
+include "basic_2/dynamic/nta.ma".
 
 (* NATIVE TYPE ASSIGNMENT ON TERMS ******************************************)
 
 (* Advanced inversion lemmas ************************************************)
 
-fact nta_inv_sort_aux: ∀h,L,T,U. ⦃h, L⦄ ⊢ T : U → ∀k0. T = ⋆k0 →
-                       L ⊢ ⋆(next h k0) ⬌* U.
+fact nta_inv_sort1_aux: ∀h,L,T,U. ⦃h, L⦄ ⊢ T : U → ∀k0. T = ⋆k0 →
+                        L ⊢ ⋆(next h k0) ⬌* U.
 #h #L #T #U #H elim H -L -T -U
 [ #L #k #k0 #H destruct //
 | #L #K #V #W #U #i #_ #_ #_ #_ #k0 #H destruct
@@ -36,16 +36,16 @@ fact nta_inv_sort_aux: ∀h,L,T,U. ⦃h, L⦄ ⊢ T : U → ∀k0. T = ⋆k0 →
 qed.
 
 (* Basic_1: was: ty3_gen_sort *)
-lemma nta_inv_sort: ∀h,L,U,k. ⦃h, L⦄ ⊢ ⋆k : U → L ⊢ ⋆(next h k) ⬌* U.
+lemma nta_inv_sort1: ∀h,L,U,k. ⦃h, L⦄ ⊢ ⋆k : U → L ⊢ ⋆(next h k) ⬌* U.
 /2 width=3/ qed-.
 
-fact nta_inv_lref_aux: ∀h,L,T,U. ⦃h, L⦄ ⊢ T : U → ∀j. T = #j →
-                       (∃∃K,V,W,U0. ⇩[0, j] L ≡ K. ⓓV & ⦃h, K⦄ ⊢ V : W &
-                                    ⇧[0, j + 1] W ≡ U0 & L ⊢ U0 ⬌* U
-                       ) ∨
-                       (∃∃K,W,V,U0. ⇩[0, j] L ≡ K. ⓛW & ⦃h, K⦄ ⊢ W : V &
-                                    ⇧[0, j + 1] W ≡ U0 & L ⊢ U0 ⬌* U
-                       ).
+fact nta_inv_lref1_aux: ∀h,L,T,U. ⦃h, L⦄ ⊢ T : U → ∀j. T = #j →
+                        (∃∃K,V,W,U0. ⇩[0, j] L ≡ K. ⓓV & ⦃h, K⦄ ⊢ V : W &
+                                     ⇧[0, j + 1] W ≡ U0 & L ⊢ U0 ⬌* U
+                        ) ∨
+                        (∃∃K,W,V,U0. ⇩[0, j] L ≡ K. ⓛW & ⦃h, K⦄ ⊢ W : V &
+                                     ⇧[0, j + 1] W ≡ U0 & L ⊢ U0 ⬌* U
+                        ).
 #h #L #T #U #H elim H -L -T -U
 [ #L #k #j #H destruct
 | #L #K #V #W #U #i #HLK #HVW #HWU #_ #j #H destruct /3 width=8/
@@ -61,18 +61,18 @@ fact nta_inv_lref_aux: ∀h,L,T,U. ⦃h, L⦄ ⊢ T : U → ∀j. T = #j →
 qed.
 
 (* Basic_1: was ty3_gen_lref *)
-lemma nta_inv_lref: ∀h,L,U,i. ⦃h, L⦄ ⊢ #i : U →
-                    (∃∃K,V,W,U0. ⇩[0, i] L ≡ K. ⓓV & ⦃h, K⦄ ⊢ V : W &
-                                 ⇧[0, i + 1] W ≡ U0 & L ⊢ U0 ⬌* U
-                    ) ∨
-                    (∃∃K,W,V,U0. ⇩[0, i] L ≡ K. ⓛW & ⦃h, K⦄ ⊢ W : V &
-                                 ⇧[0, i + 1] W ≡ U0 & L ⊢ U0 ⬌* U
-                    ).
+lemma nta_inv_lref1: ∀h,L,U,i. ⦃h, L⦄ ⊢ #i : U →
+                     (∃∃K,V,W,U0. ⇩[0, i] L ≡ K. ⓓV & ⦃h, K⦄ ⊢ V : W &
+                                  ⇧[0, i + 1] W ≡ U0 & L ⊢ U0 ⬌* U
+                     ) ∨
+                     (∃∃K,W,V,U0. ⇩[0, i] L ≡ K. ⓛW & ⦃h, K⦄ ⊢ W : V &
+                                  ⇧[0, i + 1] W ≡ U0 & L ⊢ U0 ⬌* U
+                     ).
 /2 width=3/ qed-.
 
-fact nta_inv_bind_aux: ∀h,L,T,U. ⦃h, L⦄ ⊢ T : U → ∀J,X,Y. T = ⓑ{J}Y.X →
-                       ∃∃Z1,Z2. ⦃h, L⦄ ⊢ Y : Z1 & ⦃h, L.ⓑ{J}Y⦄ ⊢ X : Z2 &
-                                L ⊢ ⓑ{J}Y.Z2 ⬌* U.
+fact nta_inv_bind1_aux: ∀h,L,T,U. ⦃h, L⦄ ⊢ T : U → ∀J,X,Y. T = ⓑ{J}Y.X →
+                        ∃∃Z1,Z2. ⦃h, L⦄ ⊢ Y : Z1 & ⦃h, L.ⓑ{J}Y⦄ ⊢ X : Z2 &
+                                 L ⊢ ⓑ{J}Y.Z2 ⬌* U.
 #h #L #T #U #H elim H -L -T -U
 [ #L #k #J #X #Y #H destruct
 | #L #K #V #W #U #i #_ #_ #_ #_ #J #X #Y #H destruct
@@ -88,13 +88,13 @@ fact nta_inv_bind_aux: ∀h,L,T,U. ⦃h, L⦄ ⊢ T : U → ∀J,X,Y. T = ⓑ{J}
 qed.
 
 (* Basic_1: was: ty3_gen_bind *)
-lemma nta_inv_bind: ∀h,J,L,Y,X,U. ⦃h, L⦄ ⊢ ⓑ{J}Y.X : U →
-                    ∃∃Z1,Z2. ⦃h, L⦄ ⊢ Y : Z1 & ⦃h, L.ⓑ{J}Y⦄ ⊢ X : Z2 &
-                             L ⊢ ⓑ{J}Y.Z2 ⬌* U.
+lemma nta_inv_bind1: ∀h,J,L,Y,X,U. ⦃h, L⦄ ⊢ ⓑ{J}Y.X : U →
+                     ∃∃Z1,Z2. ⦃h, L⦄ ⊢ Y : Z1 & ⦃h, L.ⓑ{J}Y⦄ ⊢ X : Z2 &
+                              L ⊢ ⓑ{J}Y.Z2 ⬌* U.
 /2 width=3/ qed-.                            
 
-fact nta_inv_cast_aux: ∀h,L,T,U. ⦃h, L⦄ ⊢ T : U → ∀X,Y. T = ⓣY.X →
-                    ⦃h, L⦄ ⊢ X : Y ∧ L ⊢ Y ⬌* U.
+fact nta_inv_cast1_aux: ∀h,L,T,U. ⦃h, L⦄ ⊢ T : U → ∀X,Y. T = ⓣY.X →
+                     ⦃h, L⦄ ⊢ X : Y ∧ L ⊢ Y ⬌* U.
 #h #L #T #U #H elim H -L -T -U
 [ #L #k #X #Y #H destruct
 | #L #K #V #W #U #i #_ #_ #_ #_ #X #Y #H destruct
@@ -110,7 +110,7 @@ fact nta_inv_cast_aux: ∀h,L,T,U. ⦃h, L⦄ ⊢ T : U → ∀X,Y. T = ⓣY.X �
 qed.
 
 (* Basic_1: was: ty3_gen_cast *)
-lemma nta_inv_cast: ∀h,L,X,Y,U. ⦃h, L⦄ ⊢ ⓣY.X : U →  ⦃h, L⦄ ⊢ X : Y ∧ L ⊢ Y ⬌* U.
+lemma nta_inv_cast1: ∀h,L,X,Y,U. ⦃h, L⦄ ⊢ ⓣY.X : U →  ⦃h, L⦄ ⊢ X : Y ∧ L ⊢ Y ⬌* U.
 /2 width=3/ qed-.
 
 (* Properties on relocation *************************************************)
@@ -197,5 +197,5 @@ lemma nta_appl_old: ∀h,L,V,W,T,U. ⦃h, L⦄ ⊢ V : W → ⦃h, L⦄ ⊢ T : 
                     ⦃h, L⦄ ⊢ ⓐV.T : ⓐV.ⓛW.U.
 #h #L #V #W #T #U #HVW #HTU
 elim (nta_fwd_correct … HTU) #X #H
-elim (nta_inv_bind … H) -H #V0 #T0 #HWV0 #HUT0 #_ -X /3 width=2/
+elim (nta_inv_bind1 … H) -H #V0 #T0 #HWV0 #HUT0 #_ -X /3 width=2/
 qed.

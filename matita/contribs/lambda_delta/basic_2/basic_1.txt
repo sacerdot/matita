@@ -204,13 +204,6 @@ pr3/pr1 pr3_pr1
 pr3/props pr3_eta
 pr3/subst1 pr3_gen_cabbr
 sn3/props sns3_lifts
-sty0/fwd sty0_gen_sort
-sty0/fwd sty0_gen_lref
-sty0/fwd sty0_gen_bind
-sty0/fwd sty0_gen_appl
-sty0/fwd sty0_gen_cast
-sty0/props sty0_lift
-sty0/props sty0_correct
 sty1/cnt sty1_cnt
 sty1/props sty1_trans
 sty1/props sty1_bind

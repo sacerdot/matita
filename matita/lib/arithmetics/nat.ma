@@ -666,6 +666,9 @@ lemma minus_le_minus_minus_comm: ∀b,c,a. c ≤ b → a - (b - c) = a + c - b.
 #b #c #a #H >(plus_minus_m_m b c) in ⊢ (? ? ?%); //
 qed.
 
+lemma minus_minus_m_m: ∀m,n. n ≤ m → m - (m - n) = n.
+/2 width=1/ qed.
+
 (* Stilll more atomic conclusion ********************************************)
 
 (* le *)
