@@ -120,16 +120,6 @@ match s with
 | qsink ⇒ 〈qsink,〈c,N〉〉 ]
 
   
-
-
-
-
-
-
-
-
-
-
 (*
 ==============================
 MACCHINA PER COPIA NUOVO STATO IN CURRENT
@@ -148,7 +138,7 @@ Output:
 
 STATO 0:
   \forall x. x/*x/L --> 1
-
+  
 STATO 1:
   [01,|]/L --> 1
   #/L --> 2
@@ -182,8 +172,54 @@ STATO 8:
 
 STATO 9:
   stato finale
+*)
+match s with
+ [ q0 ⇒ match c with
+   [ bit x ⇒ 〈q1,〈mark x,L〉〉
+   | _ ⇒ 〈qsink,〈c,N〉〉 ]
+ | q1 ⇒ match c with
+   [ bit x ⇒ 〈q1,〈c,L〉〉
+   | comma ⇒ 〈q1,〈c,L〉〉
+   | bar ⇒ 〈q1,〈c,L〉〉
+   | grid ⇒ 〈q2,〈c,R〉〉
+   | _ ⇒ 〈qsink,〈c,N〉〉 ]
+ | q2 ⇒ match c with
+   [ bit x ⇒ 〈q2,〈c,L〉〉
+   | grid ⇒ 〈q3,〈c,R〉〉 
+   | _ ⇒ 〈qsink,〈c,N〉〉 ]
+ | q3 ⇒ match c with
+   [ bit x ⇒ 〈q4,〈mark x,R〉〉
+   | grid ⇒ 〈q8,〈c,R〉〉
+   | _ ⇒ 〈qsink,〈c,N〉〉 ]
+ | q4 ⇒ match c with
+   [ bit x ⇒ 〈q4,〈c,R〉〉
+   | comma ⇒ 〈q4,〈c,R〉〉
+   | bar ⇒ 〈q4,〈c,R〉〉
+   | grid ⇒ 〈q4,〈c,R〉〉
+   | mark x ⇒ 〈q5 x,〈bit x,R〉〉 ]
+ | q5 x ⇒ match c with
+   [ grid ⇒ 〈q6 x,〈c,R〉〉
+   | bit y ⇒ 〈q7 x,〈mark y,L〉〉
+   | _ ⇒ 〈qsink,〈c,N〉〉 ]
+ | q6 x ⇒ match c with
+   [ bit D ⇒ 〈q7 x,〈mark D,L〉〉
+   | _ ⇒ 〈qsink,〈c,N〉〉 ]
+ | q7 x ⇒ match c with
+   [ bit y ⇒ 〈q7 x,〈c,L〉〉
+   | comma ⇒ 〈q7 x,〈c,L〉〉
+   | bar ⇒ 〈q7 x,〈c,L〉〉
+   | grid ⇒ 〈q7 x,〈c,L〉〉
+   | mark y ⇒ 〈q3,〈bit x,R〉〉 ]
+ | q8 ⇒ match c with
+   [ bit y ⇒ 〈q8,〈c,R〉〉
+   | comma ⇒ 〈q8,〈c,R〉〉
+   | bar ⇒ 〈q8,〈c,R〉〉
+   | grid ⇒ 〈q8,〈c,R〉〉
+   | mark D ⇒ 〈q9,〈bit D,L〉〉 ]
+ | q9 ⇒ ? (* successo *)
+ ]
 
-
+(*
 ==================================
 MACCHINE PER SPOSTARE LA "TESTINA"
 ================================
@@ -242,8 +278,20 @@ STATO 3:
 
 STATO 4:
   stato finale
+*)
 
+match s with
+ [ q0 ⇒ match c with
+   [ bit x ⇒ 〈q1 x,〈c,L〉〉
+   | _ ⇒ 〈qsink,〈c,N〉〉 ]
+ | q1 x ⇒ match c with
+   [ grid ⇒ 〈q3,〈bit x,R〉〉
+   | _ ⇒ 〈q2 c,〈bit x,R〉〉 ]
+ | q2 d ⇒ 〈q0,〈d,L〉〉
+ | q3 ⇒ 〈q4,〈grid,L〉〉
+ | q4 ⇒ (* finale *) ].
 
+(*
 MACCHINA B
 ----------
 Sposta il carattere binario su cui si trova la testina oltre il primo # alla sua destra.
@@ -274,8 +322,20 @@ STATO 3:
 
 STATO 4:
   stato finale
+*)
 
+match s with
+[ q0 ⇒ match c with
+  [ bit x ⇒ 〈q1 x,〈c,R〉〉
+  | _ ⇒ 〈qsink,〈c,N〉〉]
+| q1 x ⇒ match c with
+  [ grid ⇒ 〈q3,〈bit x,L〉〉
+  | _ ⇒ 〈q2 c,〈bit x,L〉〉 ]
+| q2 d ⇒ 〈q0,〈d,R〉〉
+| q3 ⇒ 〈q4,〈grid,L〉〉 
+| q4 ⇒ (* finale *) ].
 
+(*
 MACCHINA C
 ----------
 Sposta il carattere binario su cui si trova la testina appena prima del primo # alla sua destra.
@@ -304,3 +364,13 @@ STATO 3:
   stato finale
 
 *)
+
+match s with 
+[ q0 ⇒ match c with
+  [ bit x ⇒ 〈q1 x,〈c,R〉〉
+  | _ ⇒ 〈qsink,〈c,N〉〉 ]
+| q1 x ⇒ match c with
+  [ grid ⇒ 〈q3,〈grid,L〉〉
+  | _ ⇒ 〈q2 c,〈bit x,L〉〉
+| q2 d ⇒ 〈q0,〈c,R〉〉
+| q3 ⇒ (* finale *) ].
