@@ -1,10 +1,5 @@
 include "turing/turing.ma".
 
-axiom Q : FinSet.
-axiom q0 : Q. axiom q1 : Q. axiom q2 : Q. axiom q3 : Q. axiom q4 : Q. axiom q5 : Q. 
-axiom q6 : Q. axiom q7 : Q. axiom q8 : Q. axiom q9 : Q. axiom q10 : Q. axiom q11 : Q. 
-axiom q12 : Q. axiom q13 : Q. axiom q14 : Q. axiom q15 : Q. axiom q16 : Q.
-
 (* 
 Simboli:
 0 1 *0 *1 # | ,
@@ -81,43 +76,59 @@ STATO 9:
 
 *)
 
+inductive alpha_uni : Type[0] ≝ 
+| bit : bool → alpha_uni
+| mark : bool → alpha_uni
+| grid : alpha_uni | bar : alpha_uni | comma : alpha_uni.
+
+inductive Qmatch : Type[0] ≝
+| qm0 : Qmatch | qm1 : Qmatch | qm2 : bool → Qmatch | qm3 : bool → Qmatch
+| qm4 : Qmatch | qm5 : Qmatch | qm6 : Qmatch | qm7 : Qmatch 
+| qm8 : Qmatch | qm9 : Qmatch 
+| qmsuccess : Qmatch | qmfailure : Qmatch | qmsink : Qmatch.
+
+definition bool_eqb ≝ λb1,b2:bool.¬ (xorb b1 b2).
+
+definition tmatch ≝ λs,c.
 match s with
-[ q0 ⇒ match c with
-  [ grid ⇒ 〈q1,〈#,R〉〉
-  | _ ⇒ 〈qsink,〈c,N〉〉 ]
-| q1 ⇒ match c with
-  [ mark x ⇒ 〈q2 x,〈bit x,R〉〉
-  | _ ⇒ 〈q1,〈c,L〉〉 ]
-| q2 x ⇒ match c with
-  [ bit y ⇒ 〈q3 x,〈mark y,R〉〉
-  | grid ⇒ 〈q3 x,〈grid,R〉〉
-  | _ ⇒ 〈qsink,〈c,N〉〉 ]
-| q3 x ⇒ match c with
+[ qm0 ⇒ match c with
+  [ grid ⇒ 〈qm1,〈grid,R〉〉
+  | _ ⇒ 〈qmsink,〈c,N〉〉 ]
+| qm1 ⇒ match c with
+  [ mark x ⇒ 〈qm2 x,〈bit x,R〉〉
+  | _ ⇒ 〈qm1,〈c,L〉〉 ]
+| qm2 x ⇒ match c with
+  [ bit y ⇒ 〈qm3 x,〈mark y,R〉〉
+  | grid ⇒ 〈qm3 x,〈grid,R〉〉
+  | _ ⇒ 〈qmsink,〈c,N〉〉 ]
+| qm3 x ⇒ match c with
   [ mark y ⇒ match bool_eqb x y with
-    [ true ⇒ 〈q4,〈bit y,R〉〉
-    | false ⇒ 〈q5,〈bit y,R〉〉 ]
-  | _ ⇒ 〈q3 x,〈c,R〉〉 ]
-| q4 ⇒ match c with
-  [ comma ⇒ 〈qSuccess,〈comma,R〉〉
-  | bit x ⇒ 〈q1,〈mark x,L〉〉
-  | _ ⇒ 〈qsink,〈c,N〉〉 ]
-| q5 ⇒ match c with
-  | bar ⇒ 〈q6,〈bar,R〉〉
-  | _ ⇒ 〈q5,〈c,R〉〉
-| q6 ⇒ match c with 
-  [ bit x ⇒ 〈q7,〈mark x,L〉〉
-  | _ ⇒ 〈qsink,〈c,N〉〉 ]
-| q7 ⇒ match c with
-  [ grid ⇒ 〈q8,〈grid,L〉〉
-  | _ ⇒ 〈q7,〈c,L〉〉 ]
-| q8 ⇒ match c with
-  [ grid ⇒ 〈q9,〈grid,R〉〉 
-  | mark x ⇒ 〈q8,〈bit x,L〉〉 
-  | _ ⇒ 〈q8,〈c,L〉〉 ]
-| q9 ⇒ match c with
-  [ bit x ⇒ 〈qFailure,〈mark x,L〉〉 
-  | _ ⇒ 〈qsink,〈c,N〉〉 ]
-| qsink ⇒ 〈qsink,〈c,N〉〉 ]
+    [ true ⇒ 〈qm4,〈bit y,R〉〉
+    | false ⇒ 〈qm5,〈bit y,R〉〉 ]
+  | _ ⇒ 〈qm3 x,〈c,R〉〉 ]
+| qm4 ⇒ match c with
+  [ comma ⇒ 〈qmsuccess,〈comma,R〉〉
+  | bit x ⇒ 〈qm1,〈mark x,L〉〉
+  | _ ⇒ 〈qmsink,〈c,N〉〉 ]
+| qm5 ⇒ match c with
+  [ bar ⇒ 〈qm6,〈bar,R〉〉
+  | _ ⇒ 〈qm5,〈c,R〉〉 ]
+| qm6 ⇒ match c with 
+  [ bit x ⇒ 〈qm7,〈mark x,L〉〉
+  | _ ⇒ 〈qmsink,〈c,N〉〉 ]
+| qm7 ⇒ match c with
+  [ grid ⇒ 〈qm8,〈grid,L〉〉
+  | _ ⇒ 〈qm7,〈c,L〉〉 ]
+| qm8 ⇒ match c with
+  [ grid ⇒ 〈qm9,〈grid,R〉〉 
+  | mark x ⇒ 〈qm8,〈bit x,L〉〉 
+  | _ ⇒ 〈qm8,〈c,L〉〉 ]
+| qm9 ⇒ match c with
+  [ bit x ⇒ 〈qmfailure,〈mark x,L〉〉 
+  | _ ⇒ 〈qmsink,〈c,N〉〉 ]
+| qmsink ⇒ 〈qmsink,〈c,N〉〉 
+| qmsuccess ⇒ 〈qmsuccess,〈c,N〉〉
+| qmfailure ⇒ 〈qmfailure,〈c,N〉〉].
 
   
 (*
@@ -217,7 +228,7 @@ match s with
    | grid ⇒ 〈q8,〈c,R〉〉
    | mark D ⇒ 〈q9,〈bit D,L〉〉 ]
  | q9 ⇒ ? (* successo *)
- ]
+ ].
 
 (*
 ==================================
