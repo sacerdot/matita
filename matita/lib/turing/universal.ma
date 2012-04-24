@@ -1,3 +1,10 @@
+include "turing/turing.ma".
+
+axiom Q : FinSet.
+axiom q0 : Q. axiom q1 : Q. axiom q2 : Q. axiom q3 : Q. axiom q4 : Q. axiom q5 : Q. 
+axiom q6 : Q. axiom q7 : Q. axiom q8 : Q. axiom q9 : Q. axiom q10 : Q. axiom q11 : Q. 
+axiom q12 : Q. axiom q13 : Q. axiom q14 : Q. axiom q15 : Q. axiom q16 : Q.
+
 (* 
 Simboli:
 0 1 *0 *1 # | ,
@@ -24,9 +31,9 @@ Input:
 
 Output:
 
- ls # current # ... | input , output , D | ... # rs  (rimuove le marcature)
-    ^
- SUCCESS
+ ls # current # ... | input , output , D | ... # rs  (rimuove le marcature e si sposta sull'output)
+                              ^
+                           SUCCESS
 
       *                                    *
  ls # current # ... | input , output , D | ... # rs (sposta la marcatura alla tupla successiva)
@@ -35,14 +42,14 @@ Output:
 
 STATO 0:
   #/R --> 1
-
+  
 STATO 1:
   \forall c != *z. c/L --> 1
   \forall x. *x/x/R --> 2(x)
 
 STATO 2(x):
-  \forall y. y/*y/R --> 2
-  #/R --> 2
+  \forall y. y/*y/R --> 3(x)
+  #/R --> 3(x)
 
 STATO 3(x):
   \forall y.\forall c != *y. c/R --> 3(x)
@@ -62,7 +69,7 @@ STATO 6:
 
 STATO 7:
   \forall c != #. c/L --> 7
-  #/L
+  #/L -→ 8
 
 STATO 8:
   \forall c != #. c/L --> 8
@@ -72,7 +79,58 @@ STATO 8:
 STATO 9:
   \forall x. x/*x/L --> FAILURE
 
+*)
 
+match s with
+[ q0 ⇒ match c with
+  [ grid ⇒ 〈q1,〈#,R〉〉
+  | _ ⇒ 〈qsink,〈c,N〉〉 ]
+| q1 ⇒ match c with
+  [ mark x ⇒ 〈q2 x,〈bit x,R〉〉
+  | _ ⇒ 〈q1,〈c,L〉〉 ]
+| q2 x ⇒ match c with
+  [ bit y ⇒ 〈q3 x,〈mark y,R〉〉
+  | grid ⇒ 〈q3 x,〈grid,R〉〉
+  | _ ⇒ 〈qsink,〈c,N〉〉 ]
+| q3 x ⇒ match c with
+  [ mark y ⇒ match bool_eqb x y with
+    [ true ⇒ 〈q4,〈bit y,R〉〉
+    | false ⇒ 〈q5,〈bit y,R〉〉 ]
+  | _ ⇒ 〈q3 x,〈c,R〉〉 ]
+| q4 ⇒ match c with
+  [ comma ⇒ 〈qSuccess,〈comma,R〉〉
+  | bit x ⇒ 〈q1,〈mark x,L〉〉
+  | _ ⇒ 〈qsink,〈c,N〉〉 ]
+| q5 ⇒ match c with
+  | bar ⇒ 〈q6,〈bar,R〉〉
+  | _ ⇒ 〈q5,〈c,R〉〉
+| q6 ⇒ match c with 
+  [ bit x ⇒ 〈q7,〈mark x,L〉〉
+  | _ ⇒ 〈qsink,〈c,N〉〉 ]
+| q7 ⇒ match c with
+  [ grid ⇒ 〈q8,〈grid,L〉〉
+  | _ ⇒ 〈q7,〈c,L〉〉 ]
+| q8 ⇒ match c with
+  [ grid ⇒ 〈q9,〈grid,R〉〉 
+  | mark x ⇒ 〈q8,〈bit x,L〉〉 
+  | _ ⇒ 〈q8,〈c,L〉〉 ]
+| q9 ⇒ match c with
+  [ bit x ⇒ 〈qFailure,〈mark x,L〉〉 
+  | _ ⇒ 〈qsink,〈c,N〉〉 ]
+| qsink ⇒ 〈qsink,〈c,N〉〉 ]
+
+  
+
+
+
+
+
+
+
+
+
+
+(*
 ==============================
 MACCHINA PER COPIA NUOVO STATO IN CURRENT
 ==============================
