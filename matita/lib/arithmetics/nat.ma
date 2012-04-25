@@ -452,6 +452,10 @@ qed-.
 
 (* More general conclusion **************************************************)
 
+theorem nat_ind_plus: ∀R:predicate nat.
+                      R 0 → (∀n. R n → R (n + 1)) → ∀n. R n.
+/3 width=1 by nat_ind/ qed-.
+
 theorem lt_O_n_elim: ∀n:nat. 0 < n → 
   ∀P:nat → Prop.(∀m:nat.P (S m)) → P n.
 #n (elim n) // #abs @False_ind /2/ @absurd

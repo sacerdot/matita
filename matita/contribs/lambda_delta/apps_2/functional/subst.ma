@@ -52,21 +52,21 @@ theorem fsubst_inv_delift: ∀K,V,T1,L,T2,d. ⇩[0, d] L ≡ K. ⓓV →
                            L ⊢ T1 [d, 1] ≡ T2 → [d ← V] T1 = T2.
 #K #V #T1 elim T1 -T1
 [ * #i #L #T2 #d #HLK #H
-  [ -HLK >(delift_fwd_sort1 … H) -H //
+  [ -HLK >(delift_inv_sort1 … H) -H //
   | elim (lt_or_eq_or_gt i d) #Hid normalize
-    [ -HLK >(delift_fwd_lref1_lt … H) -H // /2 width=1/
+    [ -HLK >(delift_inv_lref1_lt … H) -H // /2 width=1/
     | destruct
-      elim (delift_fwd_lref1_be … H ? ?) -H // #K0 #V0 #V2 #HLK0
+      elim (delift_inv_lref1_be … H ? ?) -H // #K0 #V0 #V2 #HLK0
       lapply (ldrop_mono … HLK0 … HLK) -HLK0 -HLK #H >minus_plus <minus_n_n #HV2 #HVT2 destruct
       >(delift_inv_refl_O2 … HV2) -V >(flift_inv_lift … HVT2) -V2 //
-    | -HLK >(delift_fwd_lref1_ge … H) -H // /2 width=1/
+    | -HLK >(delift_inv_lref1_ge … H) -H // /2 width=1/
     ]
-  | -HLK >(delift_fwd_gref1 … H) -H //
+  | -HLK >(delift_inv_gref1 … H) -H //
   ]
 | * #I #V1 #T1 #IHV1 #IHT1 #L #X #d #HLK #H
-  [ elim (delift_fwd_bind1 … H) -H #V2 #T2 #HV12 #HT12 #H destruct
+  [ elim (delift_inv_bind1 … H) -H #V2 #T2 #HV12 #HT12 #H destruct
     <(IHV1 … HV12) -IHV1 -HV12 // <(IHT1 … HT12) -IHT1 -HT12 // /2 width=1/
-  | elim (delift_fwd_flat1 … H) -H #V2 #T2 #HV12 #HT12 #H destruct
+  | elim (delift_inv_flat1 … H) -H #V2 #T2 #HV12 #HT12 #H destruct
     <(IHV1 … HV12) -IHV1 -HV12 // <(IHT1 … HT12) -IHT1 -HT12 //
   ]
 ]

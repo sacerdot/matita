@@ -38,7 +38,7 @@ theorem sta_mono: ∀h,L,T,U1. ⦃h, L⦄ ⊢ T • U1 →
   elim (sta_inv_bind1 … H) -H #U2 #HTU2 #H destruct /3 width=1/
 | #L #V #T #U1 #_ #IHTU1 #X #H
   elim (sta_inv_appl1 … H) -H #U2 #HTU2 #H destruct /3 width=1/
-| #L #T #U1 #_ #_ #U2 #H
-  elim (sta_inv_cast1 … H) -H //
+| #L #W #T #U1 #_ #IHTU1 #U2 #H
+  lapply (sta_inv_cast1 … H) -H /2 width=1/
 ]
 qed-.

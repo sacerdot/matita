@@ -135,6 +135,15 @@ lemma ldrop_ldrop_lt: ∀L1,L2,I,V,e.
 #L1 #L2 #I #V #e #HL12 #He >(plus_minus_m_m e 1) // /2 width=1/
 qed.
 
+lemma ldrop_O1: ∀L,i. i < |L| → ∃∃I,K,V. ⇩[0, i] L ≡ K.ⓑ{I}V.
+#L elim L -L
+[ #i #H elim (lt_zero_false … H)
+| #L #I #V #IHL #i @(nat_ind_plus … i) -i /2 width=4/ #i #_ #H
+  lapply (lt_plus_to_lt_l … H) -H #Hi
+  elim (IHL i ?) // /3 width=4/
+]
+qed.   
+
 lemma ldrop_lsubs_ldrop1_abbr: ∀L1,L2,d,e. L1 [d, e] ≼ L2 →
                                ∀K1,V,i. ⇩[0, i] L1 ≡ K1. ⓓV →
                                d ≤ i → i < d + e →
@@ -187,7 +196,7 @@ lemma ldrop_fwd_lw: ∀L1,L2,d,e. ⇩[d, e] L1 ≡ L2 → #[L2] ≤ #[L1].
 ]
 qed-. 
 
-lemma ldrop_pair2_fwd_fw: ∀I,L,K,V,d,e. ⇩[d, e] L ≡ K. ⓑ{I} V →
+lemma ldrop_pair2_fwd_cw: ∀I,L,K,V,d,e. ⇩[d, e] L ≡ K. ⓑ{I} V →
                           ∀T. #[K, V] < #[L, T].
 #I #L #K #V #d #e #H #T
 lapply (ldrop_fwd_lw … H) -H #H

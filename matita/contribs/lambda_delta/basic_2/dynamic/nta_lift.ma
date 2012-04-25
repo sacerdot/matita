@@ -26,7 +26,7 @@ fact nta_inv_sort1_aux: ∀h,L,T,U. ⦃h, L⦄ ⊢ T : U → ∀k0. T = ⋆k0 �
 | #L #K #V #W #U #i #_ #_ #_ #_ #k0 #H destruct
 | #L #K #W #V #U #i #_ #_ #_ #_ #k0 #H destruct
 | #I #L #V #W #T #U #_ #_ #_ #_ #k0 #H destruct
-| #L #V #W #U #T1 #T2 #_ #_ #_ #_ #_ #_ #k0 #H destruct
+| #L #V #W #T #U #_ #_ #_ #_ #k0 #H destruct
 | #L #V #W #T #U #_ #_ #_ #_ #k0 #H destruct
 | #L #T #U #_ #_ #k0 #H destruct
 | #L #T #U1 #U2 #V2 #_ #HU12 #_ #IHTU1 #_ #k0 #H destruct
@@ -51,7 +51,7 @@ fact nta_inv_lref1_aux: ∀h,L,T,U. ⦃h, L⦄ ⊢ T : U → ∀j. T = #j →
 | #L #K #V #W #U #i #HLK #HVW #HWU #_ #j #H destruct /3 width=8/
 | #L #K #W #V #U #i #HLK #HWV #HWU #_ #j #H destruct /3 width=8/
 | #I #L #V #W #T #U #_ #_ #_ #_ #j #H destruct
-| #L #V #W #U #T1 #T2 #_ #_ #_ #_ #_ #_ #j #H destruct
+| #L #V #W #T #U #_ #_ #_ #_ #j #H destruct
 | #L #V #W #T #U #_ #_ #_ #_ #j #H destruct
 | #L #T #U #_ #_ #j #H destruct
 | #L #T #U1 #U2 #V2 #_ #HU12 #_ #IHTU1 #_ #j #H destruct
@@ -78,7 +78,7 @@ fact nta_inv_bind1_aux: ∀h,L,T,U. ⦃h, L⦄ ⊢ T : U → ∀J,X,Y. T = ⓑ{J
 | #L #K #V #W #U #i #_ #_ #_ #_ #J #X #Y #H destruct
 | #L #K #W #V #U #i #_ #_ #_ #_ #J #X #Y #H destruct
 | #I #L #V #W #T #U #HVW #HTU #_ #_ #J #X #Y #H destruct /2 width=3/
-| #L #V #W #U #T1 #T2 #_ #_ #_ #_ #_ #_ #J #X #Y #H destruct
+| #L #V #W #T #U #_ #_ #_ #_ #J #X #Y #H destruct
 | #L #V #W #T #U #_ #_ #_ #_ #J #X #Y #H destruct
 | #L #T #U #_ #_ #J #X #Y #H destruct
 | #L #T #U1 #U2 #V2 #_ #HU12 #_ #IHTU1 #_ #J #X #Y #H destruct
@@ -100,7 +100,7 @@ fact nta_inv_cast1_aux: ∀h,L,T,U. ⦃h, L⦄ ⊢ T : U → ∀X,Y. T = ⓣY.X 
 | #L #K #V #W #U #i #_ #_ #_ #_ #X #Y #H destruct
 | #L #K #W #V #U #i #_ #_ #_ #_ #X #Y #H destruct
 | #I #L #V #W #T #U #_ #_ #_ #_ #X #Y #H destruct
-| #L #V #W #U #T1 #T2 #_ #_ #_ #_ #_ #_ #X #Y #H destruct
+| #L #V #W #T #U #_ #_ #_ #_ #X #Y #H destruct
 | #L #V #W #T #U #_ #_ #_ #_ #X #Y #H destruct
 | #L #T #U #HTU #_ #X #Y #H destruct /2 width=1/
 | #L #T #U1 #U2 #V2 #_ #HU12 #_ #IHTU1 #_ #X #Y #H destruct
@@ -146,15 +146,13 @@ lemma nta_lift: ∀h,L1,T1,U1. ⦃h, L1⦄ ⊢ T1 : U1 → ∀L2,d,e. ⇩[d, e] 
   elim (lift_inv_bind1 … H2) -H2 #X #U2 #H1 #HU12 #H2 destruct
   lapply (lift_mono … H1 … HV12) -H1 #H destruct
   elim (lift_total W1 d e) /4 width=6/
-| #L1 #V1 #W1 #U1 #T11 #T12 #_ #_ #_ #IHVW1 #IHWU1 #IHT112 #L2 #d #e #HL21 #X1 #H1 #X2 #H2
+| #L1 #V1 #W1 #T1 #U1 #_ #_ #IHVW1 #IHTU1 #L2 #d #e #HL21 #X1 #H1 #X2 #H2
   elim (lift_inv_flat1 … H1) -H1 #V2 #X #HV12 #H1 #H destruct
-  elim (lift_inv_bind1 … H1) -H1 #W2 #T12 #HW12 #HT112 #H destruct
-  elim (lift_inv_flat1 … H2) -H2 #X0 #X #H0 #H2 #H destruct
-  elim (lift_inv_bind1 … H2) -H2 #Y0 #T22 #H2 #HT122 #H destruct
-  lapply (lift_mono … H0 … HV12) -H0 #H destruct
-  lapply (lift_mono … H2 … HW12) -H2 #H destruct
-  elim (lift_total U1 d e) #U2 #HU12
-  @nta_appl [2,3: /2 width=5/ | skip | /3 width=5/ ] (**) (* explicit constructor, /4 width=6/ is too slow *)
+  elim (lift_inv_bind1 … H1) -H1 #W2 #T2 #HW12 #HT12 #H destruct
+  elim (lift_inv_flat1 … H2) -H2 #Y2 #X #HY #H2 #H destruct
+  elim (lift_inv_bind1 … H2) -H2 #X2 #U2 #HX #HU12 #H destruct
+  lapply (lift_mono … HY … HV12) -HY #H destruct
+  lapply (lift_mono … HX … HW12) -HX #H destruct /4 width=6/
 | #L1 #V1 #W1 #T1 #U1 #_ #_ #IHTU1 #IHUW1 #L2 #d #e #HL21 #X1 #H1 #X2 #H2
   elim (lift_inv_flat1 … H1) -H1 #V2 #T2 #HV12 #HT12 #H destruct
   elim (lift_inv_flat1 … H2) -H2 #X #U2 #H1 #HU12 #H2 destruct
@@ -183,7 +181,8 @@ lemma nta_fwd_correct: ∀h,L,T,U. ⦃h, L⦄ ⊢ T : U → ∃T0. ⦃h, L⦄ �
   lapply (ldrop_fwd_ldrop2 … HLK) -HLK #HLK
   elim (lift_total V 0 (i+1)) /3 width=10/
 | #I #L #V #W #T #U #HVW #_ #_ * /3 width=2/
-| #L #V #W #U #T1 #T2 #HVW #HWU #_ #_ #_ * /3 width=2/
+| #L #V #W #T #U #HVW #_ #_ * #X #H
+  elim (nta_inv_bind1 … H) -H /4 width=2/
 | #L #V #W #T #U #_ #HUW * #T0 #HUT0 /3 width=2/
 | #L #T #U #_ * /2 width=2/
 | /2 width=2/
@@ -197,5 +196,5 @@ lemma nta_appl_old: ∀h,L,V,W,T,U. ⦃h, L⦄ ⊢ V : W → ⦃h, L⦄ ⊢ T : 
                     ⦃h, L⦄ ⊢ ⓐV.T : ⓐV.ⓛW.U.
 #h #L #V #W #T #U #HVW #HTU
 elim (nta_fwd_correct … HTU) #X #H
-elim (nta_inv_bind1 … H) -H #V0 #T0 #HWV0 #HUT0 #_ -X /3 width=2/
+elim (nta_inv_bind1 … H) -H /4 width=2/
 qed.

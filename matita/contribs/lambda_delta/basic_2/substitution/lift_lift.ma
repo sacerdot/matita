@@ -198,3 +198,12 @@ theorem lift_trans_ge: ∀d1,e1,T1,T. ⇧[d1, e1] T1 ≡ T →
   elim (IHT12 … HT20 ?) -IHT12 -HT20 // /3 width=5/
 ]
 qed.
+
+(* Advanced properties ******************************************************)
+
+lemma lift_conf_le: ∀T,T1,d. ⇧[O, d] T ≡ T1 → ∀T2,e. ⇧[O, d + e] T ≡ T2 →
+                    ⇧[d, e] T1 ≡ T2.
+#T #T1 #d #HT1 #T2 #e #HT2
+elim (lift_split … HT2 d d ? ? ?) -HT2 // #X #H
+>(lift_mono … H … HT1) -T //
+qed.

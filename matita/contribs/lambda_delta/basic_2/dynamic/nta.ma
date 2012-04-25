@@ -25,8 +25,8 @@ inductive nta (h:sh): lenv → relation term ≝
             ⇧[0, i + 1] W ≡ U → nta h L (#i) U
 | nta_bind: ∀I,L,V,W,T,U. nta h L V W → nta h (L. ⓑ{I} V) T U →
             nta h L (ⓑ{I}V.T) (ⓑ{I}V.U)
-| nta_appl: ∀L,V,W,U,T1,T2. nta h L V W → nta h L W U → nta h (L.ⓛW) T1 T2 →
-            nta h L (ⓐV.ⓛW.T1) (ⓐV.ⓛW.T2)
+| nta_appl: ∀L,V,W,T,U. nta h L V W → nta h L (ⓛW.T) (ⓛW.U) →
+            nta h L (ⓐV.ⓛW.T) (ⓐV.ⓛW.U)
 | nta_pure: ∀L,V,W,T,U. nta h L T U → nta h L (ⓐV.U) W →
             nta h L (ⓐV.T) (ⓐV.U)
 | nta_cast: ∀L,T,U. nta h L T U → nta h L (ⓣU. T) U

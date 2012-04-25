@@ -53,9 +53,8 @@ lemma sta_lift: ∀h,L1,T1,U1. ⦃h, L1⦄ ⊢ T1 • U1 → ∀L2,d,e. ⇩[d, e
   elim (lift_inv_flat1 … H1) -H1 #V2 #T2 #HV12 #HT12 #H destruct
   elim (lift_inv_flat1 … H2) -H2 #X #U2 #H1 #HU12 #H2 destruct
   lapply (lift_mono … H1 … HV12) -H1 #H destruct /4 width=5/
-| #L1 #T1 #U1 #_ #IHTU1 #L2 #d #e #HL21 #X #H #U2 #HU12
-  elim (lift_inv_flat1 … H) -H #X2 #T2 #HUX2 #HT12 #H destruct
-  lapply (lift_mono … HUX2 … HU12) -HUX2 #H destruct /3 width=5/
+| #L1 #W1 #T1 #U1 #_ #IHTU1 #L2 #d #e #HL21 #X #H #U2 #HU12
+  elim (lift_inv_flat1 … H) -H #W2 #T2 #_ #HT12 #H destruct /3 width=5/
 ]
 qed.
 
@@ -96,10 +95,9 @@ lemma sta_inv_lift: ∀h,L2,T2,U2. ⦃h, L2⦄ ⊢ T2 • U2 → ∀L1,d,e. ⇩[
 | #L2 #V2 #T2 #U2 #_ #IHTU2 #L1 #d #e #HL21 #X #H
   elim (lift_inv_flat2 … H) -H #V1 #T1 #HV12 #HT12 #H destruct
   elim (IHTU2 … HL21 … HT12) -L2 -HT12 /3 width=5/
-| #L2 #T2 #U2 #_ #IHTU2 #L1 #d #e #HL21 #X #H
-  elim (lift_inv_flat2 … H) -H #U1 #T1 #HU12 #HT12 #H destruct
-  elim (IHTU2 … HL21 … HT12) -L2 -HT12 #U0 #HTU0 #HU02
-  lapply (lift_inj … HU02 … HU12) -HU02 #H destruct /3 width=3/
+| #L2 #W2 #T2 #U2 #_ #IHTU2 #L1 #d #e #HL21 #X #H
+  elim (lift_inv_flat2 … H) -H #W1 #T1 #_ #HT12 #H destruct
+  elim (IHTU2 … HL21 … HT12) -L2 -HT12 /3 width=3/
 ]
 qed.  
 
@@ -117,6 +115,6 @@ lemma sta_fwd_correct: ∀h,L,T,U. ⦃h, L⦄ ⊢ T • U → ∃T0. ⦃h, L⦄ 
   elim (lift_total V 0 (i+1)) /3 width=10/
 | #I #L #V #T #U #_ * /3 width=2/
 | #L #V #T #U #_ * #T0 #HUT0 /3 width=2/
-| #L #T #U #_ * /2 width=2/
+| #L #W #T #U #_ * /2 width=2/
 ]
 qed-.

@@ -27,7 +27,7 @@ inductive sta (h:sh): lenv → relation term ≝
             sta h L (ⓑ{I}V.T) (ⓑ{I}V.U)
 | sta_appl: ∀L,V,T,U. sta h L T U →
             sta h L (ⓐV.T) (ⓐV.U)
-| sta_cast: ∀L,T,U. sta h L T U → sta h L (ⓣU. T) U
+| sta_cast: ∀L,W,T,U. sta h L T U → sta h L (ⓣW. T) U
 .
 
 interpretation "static type assignment (term)"
@@ -43,7 +43,7 @@ fact sta_inv_sort1_aux: ∀h,L,T,U. ⦃h, L⦄ ⊢ T • U → ∀k0. T = ⋆k0 
 | #L #K #W #V #U #i #_ #_ #_ #k0 #H destruct
 | #I #L #V #T #U #_ #k0 #H destruct
 | #L #V #T #U #_ #k0 #H destruct
-| #L #T #U #_ #k0 #H destruct
+| #L #W #T #U #_ #k0 #H destruct
 qed.
 
 (* Basic_1: was: sty0_gen_sort *)
@@ -63,7 +63,7 @@ fact sta_inv_lref1_aux: ∀h,L,T,U. ⦃h, L⦄ ⊢ T • U → ∀j. T = #j →
 | #L #K #W #V #U #i #HLK #HWV #HWU #j #H destruct /3 width=6/
 | #I #L #V #T #U #_ #j #H destruct
 | #L #V #T #U #_ #j #H destruct
-| #L #T #U #_ #j #H destruct
+| #L #W #T #U #_ #j #H destruct
 ]
 qed.
 
@@ -85,7 +85,7 @@ fact sta_inv_bind1_aux: ∀h,L,T,U. ⦃h, L⦄ ⊢ T • U → ∀J,X,Y. T = ⓑ
 | #L #K #W #V #U #i #_ #_ #_ #J #X #Y #H destruct
 | #I #L #V #T #U #HTU #J #X #Y #H destruct /2 width=3/
 | #L #V #T #U #_ #J #X #Y #H destruct
-| #L #T #U #_ #J #X #Y #H destruct
+| #L #W #T #U #_ #J #X #Y #H destruct
 ]
 qed.
 
@@ -102,7 +102,7 @@ fact sta_inv_appl1_aux: ∀h,L,T,U. ⦃h, L⦄ ⊢ T • U → ∀X,Y. T = ⓐY.
 | #L #K #W #V #U #i #_ #_ #_ #X #Y #H destruct
 | #I #L #V #T #U #_ #X #Y #H destruct
 | #L #V #T #U #HTU #X #Y #H destruct /2 width=3/
-| #L #T #U #_ #X #Y #H destruct
+| #L #W #T #U #_ #X #Y #H destruct
 ]
 qed.
 
@@ -112,17 +112,17 @@ lemma sta_inv_appl1: ∀h,L,Y,X,U. ⦃h, L⦄ ⊢ ⓐY.X • U →
 /2 width=3/ qed-.
 
 fact sta_inv_cast1_aux: ∀h,L,T,U. ⦃h, L⦄ ⊢ T • U → ∀X,Y. T = ⓣY.X →
-                     ⦃h, L⦄ ⊢ X • Y ∧ U = Y.
+                     ⦃h, L⦄ ⊢ X • U.
 #h #L #T #U * -L -T -U
 [ #L #k #X #Y #H destruct
 | #L #K #V #W #U #i #_ #_ #_ #X #Y #H destruct
 | #L #K #W #V #U #i #_ #_ #_ #X #Y #H destruct
 | #I #L #V #T #U #_ #X #Y #H destruct
 | #L #V #T #U #_ #X #Y #H destruct
-| #L #T #U #HTU #X #Y #H destruct /2 width=1/
+| #L #W #T #U #HTU #X #Y #H destruct //
 ]
 qed.
 
 (* Basic_1: was: sty0_gen_cast *)
-lemma sta_inv_cast1: ∀h,L,X,Y,U. ⦃h, L⦄ ⊢ ⓣY.X • U →  ⦃h, L⦄ ⊢ X • Y ∧ U = Y.
-/2 width=3/ qed-.
+lemma sta_inv_cast1: ∀h,L,X,Y,U. ⦃h, L⦄ ⊢ ⓣY.X • U →  ⦃h, L⦄ ⊢ X • U.
+/2 width=4/ qed-.

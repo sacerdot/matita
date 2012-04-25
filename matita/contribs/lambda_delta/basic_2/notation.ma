@@ -192,6 +192,14 @@ notation "hvbox( L ⊢ break term 90 T1 break [ d , break e ] ≡ break T2 )"
    non associative with precedence 45
    for @{ 'TSubst $L $T1 $d $e $T2 }.
 
+notation "hvbox( T1 break [ d , break e ] ≡≡ break term 46 T2 )"
+   non associative with precedence 45
+   for @{ 'TSubstAlt $T1 $d $e $T2 }.
+
+notation "hvbox( L ⊢ break term 90 T1 break [ d , break e ] ≡≡ break term 46 T2 )"
+   non associative with precedence 45
+   for @{ 'TSubstAlt $L $T1 $d $e $T2 }.
+
 (* Static typing ************************************************************)
 
 notation "hvbox( L ⊢ break term 90 T ÷ break A )"
