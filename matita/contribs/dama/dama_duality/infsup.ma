@@ -25,19 +25,19 @@ definition strong_sup ≝
 
 definition increasing ≝ λO:excess.λa:sequence O.∀n:nat.a n ≤ a (S n).
 
-notation < "x \nbsp 'is_upper_bound' \nbsp s" non associative with precedence 50 for @{'upper_bound $_ $s $x}.
-notation < "x \nbsp 'is_lower_bound' \nbsp s" non associative with precedence 50 for @{'lower_bound $_ $s $x}.
-notation < "s \nbsp 'is_increasing'"          non associative with precedence 50 for @{'increasing $_ $s}.
-notation < "s \nbsp 'is_decreasing'"          non associative with precedence 50 for @{'decreasing $_ $s}.
-notation < "x \nbsp 'is_strong_sup' \nbsp s"  non associative with precedence 50 for @{'strong_sup $_ $s $x}.
-notation < "x \nbsp 'is_strong_inf' \nbsp s"  non associative with precedence 50 for @{'strong_inf $_ $s $x}.
+notation < "x \nbsp 'is_upper_bound' \nbsp s" non associative with precedence 55 for @{'upper_bound $_ $s $x}.
+notation < "x \nbsp 'is_lower_bound' \nbsp s" non associative with precedence 55 for @{'lower_bound $_ $s $x}.
+notation < "s \nbsp 'is_increasing'"          non associative with precedence 55 for @{'increasing $_ $s}.
+notation < "s \nbsp 'is_decreasing'"          non associative with precedence 55 for @{'decreasing $_ $s}.
+notation < "x \nbsp 'is_strong_sup' \nbsp s"  non associative with precedence 55 for @{'strong_sup $_ $s $x}.
+notation < "x \nbsp 'is_strong_inf' \nbsp s"  non associative with precedence 55 for @{'strong_inf $_ $s $x}.
 
-notation > "x 'is_upper_bound' s 'in' e" non associative with precedence 50 for @{'upper_bound $e $s $x}.
-notation > "x 'is_lower_bound' s 'in' e" non associative with precedence 50 for @{'lower_bound $e $s $x}.
-notation > "s 'is_increasing' 'in' e"    non associative with precedence 50 for @{'increasing $e $s}.
-notation > "s 'is_decreasing' 'in' e"    non associative with precedence 50 for @{'decreasing $e $s}.
-notation > "x 'is_strong_sup' s 'in' e"  non associative with precedence 50 for @{'strong_sup $e $s $x}.
-notation > "x 'is_strong_inf' s 'in' e"  non associative with precedence 50 for @{'strong_inf $e $s $x}.
+notation > "x 'is_upper_bound' s 'in' e" non associative with precedence 55 for @{'upper_bound $e $s $x}.
+notation > "x 'is_lower_bound' s 'in' e" non associative with precedence 55 for @{'lower_bound $e $s $x}.
+notation > "s 'is_increasing' 'in' e"    non associative with precedence 55 for @{'increasing $e $s}.
+notation > "s 'is_decreasing' 'in' e"    non associative with precedence 55 for @{'decreasing $e $s}.
+notation > "x 'is_strong_sup' s 'in' e"  non associative with precedence 55 for @{'strong_sup $e $s $x}.
+notation > "x 'is_strong_inf' s 'in' e"  non associative with precedence 55 for @{'strong_inf $e $s $x}.
 
 interpretation "Excess upper bound" 'upper_bound e s x = (upper_bound e s x).
 interpretation "Excess lower bound" 'lower_bound e s x = (upper_bound (dual_exc e) s x).

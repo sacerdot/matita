@@ -20,7 +20,7 @@ nlet rec length (A:Type) (l:list A) on l ≝
     [ nil ⇒ 0
     | cons a tl ⇒ S (length A tl)].
 
-notation "|M|" non associative with precedence 60 for @{'norm $M}.
+notation "|M|" non associative with precedence 65 for @{'norm $M}.
 interpretation "norm" 'norm l = (length ? l).
 
 nlet rec nth n (A:Type) (l:list A) (d:A)  ≝  

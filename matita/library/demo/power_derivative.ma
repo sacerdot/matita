@@ -213,11 +213,11 @@ interpretation "Rderivative" 'derivative f = (derivative f).
  *  Any file that includes this one can not use 'x' as an identifier
  *)  
 notation "hvbox('X' \sup n)"
-  non associative with precedence 60
+  non associative with precedence 65
 for @{ 'monomio $n }.
 
 notation "hvbox('X')"
-  non associative with precedence 60
+  non associative with precedence 65
 for @{ 'monomio 1 }.
 
 interpretation "Rmonomio" 'monomio n = (monomio n).

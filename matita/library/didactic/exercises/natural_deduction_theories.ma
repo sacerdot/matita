@@ -197,8 +197,8 @@ interpretation "=" 'my_eq x y = (eq x y).
 interpretation "S" 'my_S x = (S x).
 interpretation "O" 'my_O = O.
 
-notation "x + y" non associative with precedence 50 for @{'my_plus $x $y}.
-notation "x * y" non associative with precedence 55 for @{'my_mult $x $y}.
+notation "x + y" non associative with precedence 55 for @{'my_plus $x $y}.
+notation "x * y" non associative with precedence 60 for @{'my_mult $x $y}.
 notation "x = y" non associative with precedence 45 for @{'my_eq $x $y}.
 notation > "'S' x" non associative with precedence 40 for @{'my_S $x}.
 notation < "'S'  x" non associative with precedence 40 for @{'my_S $x}.

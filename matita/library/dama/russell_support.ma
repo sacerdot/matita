@@ -17,7 +17,7 @@ include "logic/cprop_connectives.ma".
 
 definition hide ≝ λT:Type.λx:T.x.
 
-notation < "\blacksquare" non associative with precedence 50 for @{'hide}.
+notation < "\blacksquare" non associative with precedence 55 for @{'hide}.
 interpretation "hide" 'hide = (hide ? ?).
 interpretation "hide2" 'hide = (hide ? ? ?).
 

@@ -32,7 +32,7 @@ interpretation "real plus" 'plus x y = (Rplus x y).
 interpretation "real opp" 'uminus x = (Ropp x). 
 
 notation "hvbox(a break · b)"
-  right associative with precedence 55
+  right associative with precedence 60
 for @{ 'mult $a $b }.
 
 interpretation "real mult" 'mult x y = (Rmult x y).

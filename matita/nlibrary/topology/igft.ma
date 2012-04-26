@@ -781,7 +781,7 @@ D*)
 
 ndefinition coverage : ∀A:Ax.∀U:Ω^A.Ω^A ≝ λA,U.{ a | a ◃ U }.
 
-notation "◃U" non associative with precedence 55 for @{ 'coverage $U }.
+notation "◃U" non associative with precedence 60 for @{ 'coverage $U }.
 
 interpretation "coverage cover" 'coverage U = (coverage ? U).
 
@@ -826,7 +826,7 @@ the biggest solution for such equation.
 
 D*) 
 
-notation "⋉F" non associative with precedence 55
+notation "⋉F" non associative with precedence 60
 for @{ 'fished $F }.
 
 ndefinition fished : ∀A:Ax.∀F:Ω^A.Ω^A ≝ λA,F.{ a | a ⋉ F }.
@@ -1039,8 +1039,8 @@ ninductive Ord (A : nAx) : Type[0] ≝
  | oL : ∀a:A.∀i.∀f:𝐃 a i → Ord A. Ord A.
 
 notation "0" non associative with precedence 90 for @{ 'oO }.
-notation "x+1" non associative with precedence 50 for @{'oS $x }.
-notation "Λ term 90 f" non associative with precedence 50 for @{ 'oL $f }.
+notation "x+1" non associative with precedence 55 for @{'oS $x }.
+notation "Λ term 90 f" non associative with precedence 55 for @{ 'oL $f }.
 
 interpretation "ordinals Zero" 'oO = (oO ?).
 interpretation "ordinals Succ" 'oS x = (oS ? x).
@@ -1068,8 +1068,8 @@ nlet rec famU (A : nAx) (U : Ω^A) (x : Ord A) on x : Ω^A ≝
   | oS y ⇒ let U_n ≝ famU A U y in U_n ∪ { x | ∃i.𝐈𝐦[𝐝 x i] ⊆ U_n} 
   | oL a i f ⇒ { x | ∃j.x ∈ famU A U (f j) } ].
   
-notation < "term 90 U \sub (term 90 x)" non associative with precedence 50 for @{ 'famU $U $x }.
-notation > "U ⎽ term 90 x" non associative with precedence 50 for @{ 'famU $U $x }.
+notation < "term 90 U \sub (term 90 x)" non associative with precedence 55 for @{ 'famU $U $x }.
+notation > "U ⎽ term 90 x" non associative with precedence 55 for @{ 'famU $U $x }.
 
 interpretation "famU" 'famU U x = (famU ? U x).
 

@@ -71,9 +71,9 @@ notation "hvbox(e ⊢ break ta ⊴  break tb)"
 interpretation "Fsub subtype judgement" 'subjudg e ta tb = (JSubtype e ta tb).
 
 notation > "hvbox(\Forall S.T)" 
-  non associative with precedence 60 for @{ 'forall $S $T}.
+  non associative with precedence 65 for @{ 'forall $S $T}.
 notation < "hvbox('All' \sub S. break T)" 
-  non associative with precedence 60 for @{ 'forall $S $T}.
+  non associative with precedence 65 for @{ 'forall $S $T}.
 interpretation "universal type" 'forall S T = (Forall S T).
   
 notation "#x" with precedence 79 for @{'tvar $x}.
@@ -83,11 +83,11 @@ notation "⊤" with precedence 90 for @{'toptype}.
 interpretation "toptype" 'toptype = Top.
 
 notation "hvbox(s break ⇛ t)"
-  right associative with precedence 55 for @{ 'arrow $s $t }.
+  right associative with precedence 60 for @{ 'arrow $s $t }.
 interpretation "arrow type" 'arrow S T = (Arrow S T).
 
 notation "hvbox(⊴ T)"
-  non associative with precedence 60 for @{ 'subtypebound $T }.
+  non associative with precedence 65 for @{ 'subtypebound $T }.
 interpretation "subtyping bound" 'subtypebound T = (mk_bound true T).  
 
 (****** PROOFS ********)

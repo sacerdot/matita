@@ -23,18 +23,18 @@ notation "hvbox(a break (≅ ^ term 90 c) b)"
   non associative with precedence 45
   for @{'Eq1 $c $a $b}.
 
-notation "hbox(! term 50 a)"
-  non associative with precedence 50
+notation "hbox(! term 55 a)"
+  non associative with precedence 55
   for @{'Invariant $a}.
 
-notation "hbox((! ^ term 90 b) term 50 a)"
-  non associative with precedence 50
+notation "hbox((! ^ term 90 b) term 55 a)"
+  non associative with precedence 55
   for @{'Invariant1 $a $b}.
 
 (* lifting, substitution *)
 
 notation "hvbox(↑ [ p break , k ] break t)"
-   non associative with precedence 50
+   non associative with precedence 55
    for @{'Lift1 $p $k $t}.
 
 notation "hvbox(M break [ / l ])"
@@ -58,49 +58,49 @@ notation "hvbox(G break  ⊢ A break ÷ B)"
 (* interpretations *)
 
 notation "hvbox(║T║)"
-   non associative with precedence 50
+   non associative with precedence 55
    for @{'IInt $T}.
 
 notation "hvbox(║T║ break _ [E])"
-   non associative with precedence 50
+   non associative with precedence 55
    for @{'IInt1 $T $E}.
 
 notation "hvbox(║T║ break _ [E1 break , E2])"
-   non associative with precedence 50
+   non associative with precedence 55
    for @{'IInt2 $T $E1 $E2}.
 
 notation "hvbox(║T║ * break _ [E])"
-   non associative with precedence 50
+   non associative with precedence 55
    for @{'IIntS1 $T $E}.
 
 notation "hvbox(〚T〛)"
-   non associative with precedence 50
+   non associative with precedence 55
    for @{'EInt $T}.
 
 notation "hvbox(〚T〛 break _ [E])"
-   non associative with precedence 50
+   non associative with precedence 55
    for @{'EInt1 $T $E}.
 
 notation "hvbox(〚T〛 break _ [E1 break , E2])"
-   non associative with precedence 50
+   non associative with precedence 55
    for @{'EInt2 $T $E1 $E2}.
 
 notation "hvbox(《T》)"
-   non associative with precedence 50
+   non associative with precedence 55
    for @{'XInt $T}.
 
 notation "hvbox(《T》 break _ [E])"
-   non associative with precedence 50
+   non associative with precedence 55
    for @{'XInt1 $T $E}.
 
 notation "hvbox(《T》 break _ [E1 break , E2])"
-   non associative with precedence 50
+   non associative with precedence 55
    for @{'XInt2 $T $E1 $E2}.
 
 notation "hvbox(𝕂{G})"
-   non associative with precedence 50
+   non associative with precedence 55
    for @{'IK $G}.
 
 notation "hvbox(𝕂{T} break _ [G])"
-   non associative with precedence 50
+   non associative with precedence 55
    for @{'IK $T $G}.

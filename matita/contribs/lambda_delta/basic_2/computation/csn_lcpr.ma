@@ -70,7 +70,7 @@ elim (cpr_inv_appl1 … H) -H *
 qed.
 
 (* Basic_1: was: sn3_beta *)
-lemma csn_appl_beta: ∀L,W. L ⊢ ⬇* W → ∀V,T. L ⊢ ⬇* (ⓓV. T) → (**)
+lemma csn_appl_beta: ∀L,W. L ⊢ ⬇* W → ∀V,T. L ⊢ ⬇* ⓓV. T →
                      L ⊢ ⬇* ⓐV. ⓛW. T.
 /2 width=3/ qed.
 

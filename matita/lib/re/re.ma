@@ -342,7 +342,7 @@ then, we just have •(i1+i2) = •(i1)⊕ •(i2).
 *)
 
 definition lo ≝ λS:DeqSet.λa,b:pre S.〈\fst a + \fst b,\snd a ∨ \snd b〉.
-notation "a ⊕ b" left associative with precedence 60 for @{'oplus $a $b}.
+notation "a ⊕ b" left associative with precedence 65 for @{'oplus $a $b}.
 interpretation "oplus" 'oplus a b = (lo ? a b).
 
 lemma lo_def: ∀S.∀i1,i2:pitem S.∀b1,b2. 〈i1,b1〉⊕〈i2,b2〉=〈i1+i2,b1∨b2〉.
@@ -368,7 +368,7 @@ Let us come to the formalized definitions:
 definition pre_concat_r ≝ λS:DeqSet.λi:pitem S.λe:pre S.
   match e with [ mk_Prod i1 b ⇒ 〈i · i1, b〉].
  
-notation "i ◃ e" left associative with precedence 60 for @{'lhd $i $e}.
+notation "i ◃ e" left associative with precedence 65 for @{'lhd $i $e}.
 interpretation "pre_concat_r" 'lhd i e = (pre_concat_r ? i e).
 
 (* The behaviour of ◃ is summarized by the following, easy lemma: *)
@@ -397,10 +397,10 @@ definition pre_concat_l ≝ λS:DeqSet.λbcast:∀S:DeqSet.pitem S → pre S.λe
     ]
   ].
 
-notation "a ▹ b" left associative with precedence 60 for @{'tril eclose $a $b}.
+notation "a ▹ b" left associative with precedence 65 for @{'tril eclose $a $b}.
 interpretation "item-pre concat" 'tril op a b = (pre_concat_l ? op a b).
 
-notation "•" non associative with precedence 60 for @{eclose ?}.
+notation "•" non associative with precedence 65 for @{eclose ?}.
 
 (* We are ready to give the formal definition of the broadcasting operation. *)
 
@@ -414,7 +414,7 @@ let rec eclose (S: DeqSet) (i: pitem S) on i : pre S ≝
   | pc i1 i2 ⇒ •i1 ▹ i2
   | pk i ⇒ 〈(\fst (•i))^*,true〉].
   
-notation "• x" non associative with precedence 60 for @{'eclose $x}.
+notation "• x" non associative with precedence 65 for @{'eclose $x}.
 interpretation "eclose" 'eclose x = (eclose ? x).
 
 (* Here are a few simple properties of ▹ and •(-) *)

@@ -144,7 +144,7 @@ interpretation "Fsub names to LN env encoding" 'encode G = (encodeenv G).
 notation < "| T |" with precedence 25 for @{'abs $T}.
 interpretation "Fsub named type length" 'abs T = (nt_len T).
 interpretation "list length" 'abs l = (length ? l).
-notation < "〈a,b〉 · T" with precedence 60 for @{'swap $a $b $T}.
+notation < "〈a,b〉 · T" with precedence 65 for @{'swap $a $b $T}.
 interpretation "natural swap" 'swap a b n = (swap a b n).
 interpretation "Fsub name swap in a named type" 'swap a b T = (swap_NTyp a b T).
 interpretation "Fsub name swap in a LN type" 'swap a b T = (swap_Typ a b T).

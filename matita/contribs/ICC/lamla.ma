@@ -52,7 +52,7 @@ notation "𝟛" non associative with precedence 90 for @{ 'three }.
 interpretation "three" 'three = (Var (S (S (S O)))).  
 notation "𝟜" non associative with precedence 90 for @{ 'four }.
 interpretation "four" 'four = (Var (S (S (S (S O))))).  
-notation < "a ­b" left associative with precedence 60 for @{ 'appl $a $b }.  
+notation < "a ­b" left associative with precedence 65 for @{ 'appl $a $b }.  
 interpretation "appl" 'appl a b = (Appl a b).
   
 let rec lift (from:nat) (amount:nat) (what:PT) on what : PT ≝ 

@@ -97,7 +97,7 @@ notation > "a ^ *" non associative with precedence 75 for @{ 'pk $a}.
 interpretation "star" 'pk a = (k ? a).
 interpretation "or" 'plus a b = (o ? a b).
            
-notation "a · b" non associative with precedence 60 for @{ 'pc $a $b}.
+notation "a · b" non associative with precedence 65 for @{ 'pc $a $b}.
 interpretation "cat" 'pc a b = (c ? a b).
 
 (* to get rid of \middot *)
@@ -629,7 +629,7 @@ nlemma not_epsilon_lp : ∀S:Alpha.∀e:pitem S. ¬ ([ ] ∈ (𝐋\p e)).
 nqed.
 
 ndefinition lo ≝ λS:Alpha.λa,b:pre S.〈\fst a + \fst b,\snd a || \snd b〉.
-notation "a ⊕ b" left associative with precedence 60 for @{'oplus $a $b}.
+notation "a ⊕ b" left associative with precedence 65 for @{'oplus $a $b}.
 interpretation "oplus" 'oplus a b = (lo ? a b).
 
 ndefinition lc ≝ λS:Alpha.λbcast:∀S:Alpha.∀E:pitem S.pre S.λa,b:pre S.
@@ -638,9 +638,9 @@ ndefinition lc ≝ λS:Alpha.λbcast:∀S:Alpha.∀E:pitem S.pre S.λa,b:pre S.
    [ false ⇒ 〈e1 · \fst b, \snd b〉 
    | true ⇒ 〈e1 · \fst (bcast ? (\fst b)),\snd b || \snd (bcast ? (\fst b))〉]].
    
-notation < "a ⊙ b" left associative with precedence 60 for @{'lc $op $a $b}.
+notation < "a ⊙ b" left associative with precedence 65 for @{'lc $op $a $b}.
 interpretation "lc" 'lc op a b = (lc ? op a b).
-notation > "a ⊙ b" left associative with precedence 60 for @{'lc eclose $a $b}.
+notation > "a ⊙ b" left associative with precedence 65 for @{'lc eclose $a $b}.
 
 ndefinition lk ≝ λS:Alpha.λbcast:∀S:Alpha.∀E:pitem S.pre S.λa:pre S.
    match a with [ mk_pair e1 b1 ⇒
@@ -652,7 +652,7 @@ notation < "a \sup ⊛" non associative with precedence 90 for @{'lk $op $a}.
 interpretation "lk" 'lk op a = (lk ? op a).
 notation > "a ^ ⊛" non associative with precedence 75 for @{'lk eclose $a}.
 
-notation > "•" non associative with precedence 60 for @{eclose ?}.
+notation > "•" non associative with precedence 65 for @{eclose ?}.
 nlet rec eclose (S: Alpha) (E: pitem S) on E : pre S ≝
  match E with
   [ pz ⇒ 〈 0, false 〉
@@ -662,9 +662,9 @@ nlet rec eclose (S: Alpha) (E: pitem S) on E : pre S ≝
   | po E1 E2 ⇒ •E1 ⊕ •E2
   | pc E1 E2 ⇒ •E1 ⊙ 〈 E2, false 〉 
   | pk E ⇒ 〈(\fst (•E))^*,true〉].
-notation < "• x" non associative with precedence 60 for @{'eclose $x}.
+notation < "• x" non associative with precedence 65 for @{'eclose $x}.
 interpretation "eclose" 'eclose x = (eclose ? x).
-notation > "• x" non associative with precedence 60 for @{'eclose $x}.
+notation > "• x" non associative with precedence 65 for @{'eclose $x}.
 
 ndefinition reclose ≝ λS:Alpha.λp:pre S.let p' ≝ •\fst p in 〈\fst p',\snd p || \snd p'〉.
 interpretation "reclose" 'eclose x = (reclose ? x).
@@ -983,7 +983,7 @@ ntheorem bull_true_epsilon : ∀S.∀e:pitem S. \snd (•e) = true ↔ [ ] ∈ .
 STOP
 
 notation > "\move term 90 x term 90 E" 
-non associative with precedence 60 for @{move ? $x $E}.
+non associative with precedence 65 for @{move ? $x $E}.
 nlet rec move (S: Alpha) (x:S) (E: pitem S) on E : pre S ≝
  match E with
   [ pz ⇒ 〈 ∅, false 〉
@@ -993,8 +993,8 @@ nlet rec move (S: Alpha) (x:S) (E: pitem S) on E : pre S ≝
   | po e1 e2 ⇒ \move x e1 ⊕ \move x e2 
   | pc e1 e2 ⇒ \move x e1 ⊙ \move x e2
   | pk e ⇒ (\move x e)^⊛ ].
-notation < "\move\shy x\shy E" non associative with precedence 60 for @{'move $x $E}.
-notation > "\move term 90 x term 90 E" non associative with precedence 60 for @{'move $x $E}.
+notation < "\move\shy x\shy E" non associative with precedence 65 for @{'move $x $E}.
+notation > "\move term 90 x term 90 E" non associative with precedence 65 for @{'move $x $E}.
 interpretation "move" 'move x E = (move ? x E).
 
 ndefinition rmove ≝ λS:Alpha.λx:S.λe:pre S. \move x (\fst e).
@@ -1064,7 +1064,7 @@ ntheorem move_ok:
 nqed.
 
 
-notation > "x ↦* E" non associative with precedence 60 for @{move_star ? $x $E}.
+notation > "x ↦* E" non associative with precedence 65 for @{move_star ? $x $E}.
 nlet rec move_star (S : decidable) w E on w : bool × (pre S) ≝
  match w with
   [ nil ⇒ E

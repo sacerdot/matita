@@ -33,7 +33,7 @@ definition invert_bs_relation ≝
   λC:bishop_set.λU:C squareB → Prop.
     λx:C squareB. U 〈\snd x,\fst x〉.
       
-notation > "\inv" with precedence 60 for @{ 'invert_symbol  }.
+notation > "\inv" with precedence 65 for @{ 'invert_symbol  }.
 interpretation "relation invertion" 'invert a = (invert_bs_relation ? a).
 interpretation "relation invertion" 'invert_symbol = (invert_bs_relation ?).
 interpretation "relation invertion" 'invert_appl a x = (invert_bs_relation ? a x).

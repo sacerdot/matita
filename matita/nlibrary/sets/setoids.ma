@@ -41,9 +41,9 @@ notation > "hvbox(a break =_0 b)" non associative with precedence 45
 for @{ eq_rel ? (eq0 ?) $a $b }.
 
 interpretation "setoid symmetry" 'invert r = (sym ???? r).
-notation ".= r" with precedence 50 for @{'trans $r}.
+notation ".= r" with precedence 55 for @{'trans $r}.
 interpretation "trans" 'trans r = (trans ????? r).
-notation > ".=_0 r" with precedence 50 for @{'trans_x0 $r}.
+notation > ".=_0 r" with precedence 55 for @{'trans_x0 $r}.
 interpretation "trans_x0" 'trans_x0 r = (trans ????? r).
 
 nrecord unary_morphism (A,B: setoid) : Type[0] ≝ { 

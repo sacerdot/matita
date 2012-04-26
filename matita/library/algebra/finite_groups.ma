@@ -41,7 +41,7 @@ record finite_enumerable_SemiGroup : Type≝
 interpretation "Finite_enumerable representation" 'repr S i =
  (repr S (is_finite_enumerable S) i).
 
-notation "hvbox(\iota e)" with precedence 60
+notation "hvbox(\iota e)" with precedence 65
 for @{ 'index_of_finite_enumerable_semigroup $e }.
 
 interpretation "Index_of_finite_enumerable representation"

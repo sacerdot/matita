@@ -1,8 +1,8 @@
 
 record powerset (A : Type) : Type := { content : A → CProp }.
 
-notation > "Ω ^ A" non associative with precedence 50 for @{'P $A}.
-notation "Ω \sup A" non associative with precedence 50 for @{'P $A}.
+notation > "Ω ^ A" non associative with precedence 55 for @{'P $A}.
+notation "Ω \sup A" non associative with precedence 55 for @{'P $A}.
 interpretation "Powerset" 'P A = (powerset A).
 
 record AxiomSet : Type := {
@@ -30,7 +30,7 @@ interpretation "C a i" 'C2 a i = (C_ ? a i).
 definition in_subset :=
   λA:AxiomSet.λa∈A.λU:Ω^A.content A U a.
   
-notation "hvbox(a break εU)" non associative with precedence 50 for 
+notation "hvbox(a break εU)" non associative with precedence 55 for 
 @{'in_subset $a $U}.
 interpretation "In subset" 'in_subset a U = (in_subset ? a U).
 

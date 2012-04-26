@@ -61,7 +61,7 @@ record apartness : Type ≝ {
   ap_cotransitive: cotransitive ? ap_apart
 }.
 
-notation "hvbox(a break # b)" non associative with precedence 50 for @{ 'apart $a $b}.
+notation "hvbox(a break # b)" non associative with precedence 55 for @{ 'apart $a $b}.
 interpretation "apartness" 'apart x y = (ap_apart ? x y).
 
 definition apartness_of_excess_base: excess_base → apartness.
@@ -125,7 +125,7 @@ qed.
 
 definition eq ≝ λA:apartness.λa,b:A. ¬ (a # b).
 
-notation "hvbox(a break ≈ b)" non associative with precedence 50 for @{ 'napart $a $b}.    
+notation "hvbox(a break ≈ b)" non associative with precedence 55 for @{ 'napart $a $b}.    
 interpretation "Apartness alikeness" 'napart a b = (eq ? a b). 
 interpretation "Excess alikeness" 'napart a b = (eq (excess_base_OF_excess1 ?) a b). 
 interpretation "Excess (dual) alikeness" 'napart a b = (eq (excess_base_OF_excess ?) a b). 
@@ -152,7 +152,7 @@ qed.
 lemma eq_trans:∀E:apartness.∀x,z,y:E.x ≈ y → y ≈ z → x ≈ z ≝ 
   λE,x,y,z.eq_trans_ E x z y.
 
-notation > "'Eq'≈" non associative with precedence 50 for @{'eqrewrite}.
+notation > "'Eq'≈" non associative with precedence 55 for @{'eqrewrite}.
 interpretation "eq_rew" 'eqrewrite = (eq_trans ? ? ?).
 
 alias id "antisymmetric" = "cic:/matita/constructive_higher_order_relations/antisymmetric.con".
@@ -196,9 +196,9 @@ intros (E z y x Exy Lxz); apply (le_transitive ???? Lxz);
 intro Xyz; apply Exy; apply exc2ap; left; assumption;
 qed.
 
-notation > "'Le'≪" non associative with precedence 50 for @{'lerewritel}.
+notation > "'Le'≪" non associative with precedence 55 for @{'lerewritel}.
 interpretation "le_rewl" 'lerewritel = (le_rewl ? ? ?).
-notation > "'Le'≫" non associative with precedence 50 for @{'lerewriter}.
+notation > "'Le'≫" non associative with precedence 55 for @{'lerewriter}.
 interpretation "le_rewr" 'lerewriter = (le_rewr ? ? ?).
 
 lemma ap_rewl: ∀A:apartness.∀x,z,y:A. x ≈ y → y # z → x # z.
@@ -211,9 +211,9 @@ intros (A x z y Exy Azy); apply ap_symmetric; apply (ap_rewl ???? Exy);
 apply ap_symmetric; assumption;
 qed.
 
-notation > "'Ap'≪" non associative with precedence 50 for @{'aprewritel}.
+notation > "'Ap'≪" non associative with precedence 55 for @{'aprewritel}.
 interpretation "ap_rewl" 'aprewritel = (ap_rewl ? ? ?).
-notation > "'Ap'≫" non associative with precedence 50 for @{'aprewriter}.
+notation > "'Ap'≫" non associative with precedence 55 for @{'aprewriter}.
 interpretation "ap_rewr" 'aprewriter = (ap_rewr ? ? ?).
 
 alias symbol "napart" = "Apartness alikeness".
@@ -227,9 +227,9 @@ intros (A x z y Exy Azy); elim (exc_cotransitive ???x Azy); [assumption]
 elim (Exy); apply exc2ap; left; assumption;
 qed.
 
-notation > "'Ex'≪" non associative with precedence 50 for @{'excessrewritel}.
+notation > "'Ex'≪" non associative with precedence 55 for @{'excessrewritel}.
 interpretation "exc_rewl" 'excessrewritel = (exc_rewl ? ? ?).
-notation > "'Ex'≫" non associative with precedence 50 for @{'excessrewriter}.
+notation > "'Ex'≫" non associative with precedence 55 for @{'excessrewriter}.
 interpretation "exc_rewr" 'excessrewriter = (exc_rewr ? ? ?).
 
 lemma lt_rewr: ∀A:excess.∀x,z,y:A. x ≈ y → z < y → z < x.
@@ -242,9 +242,9 @@ intros (A x y z E H); split; elim H;
 [apply (Le≪ ? (eq_sym ??? E));| apply (Ap≪ ? E);] assumption;
 qed.
 
-notation > "'Lt'≪" non associative with precedence 50 for @{'ltrewritel}.
+notation > "'Lt'≪" non associative with precedence 55 for @{'ltrewritel}.
 interpretation "lt_rewl" 'ltrewritel = (lt_rewl ? ? ?).
-notation > "'Lt'≫" non associative with precedence 50 for @{'ltrewriter}.
+notation > "'Lt'≫" non associative with precedence 55 for @{'ltrewriter}.
 interpretation "lt_rewr" 'ltrewriter = (lt_rewr ? ? ?).
 
 lemma lt_le_transitive: ∀A:excess.∀x,y,z:A.x < y → y ≤ z → x < z.

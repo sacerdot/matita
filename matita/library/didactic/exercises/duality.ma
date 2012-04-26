@@ -219,7 +219,7 @@ let rec negate (F: Formula) on F : Formula ≝
 *)
 definition equiv ≝ λF1,F2. ∀v.[[ F1 ]]v = [[ F2 ]]v.
 notation "hvbox(a \nbsp break mstyle color #0000ff (≡) \nbsp b)"  non associative with precedence 45 for @{ 'equivF $a $b }.
-notation > "a ≡ b" non associative with precedence 50 for @{ equiv $a $b }.
+notation > "a ≡ b" non associative with precedence 55 for @{ equiv $a $b }.
 interpretation "equivalence for Formulas" 'equivF a b = (equiv a b).
 lemma equiv_rewrite : ∀F1,F2,F3. F1 ≡ F2 → F1 ≡ F3 → F2 ≡ F3. intros; intro; rewrite < H; rewrite < H1; reflexivity. qed.
 lemma equiv_sym : ∀a,b.a ≡ b → b ≡ a. intros 4;symmetry;apply H;qed.

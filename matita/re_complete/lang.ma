@@ -10,7 +10,7 @@ interpretation "epsilon" 'epsilon = (nil ?).
 (* concatenation *)
 definition cat : ∀S,l1,l2,w.Prop ≝ 
   λS.λl1,l2.λw:word S.∃w1,w2.w1 @ w2 = w ∧ l1 w1 ∧ l2 w2.
-notation "a · b" non associative with precedence 60 for @{ 'middot $a $b}.
+notation "a · b" non associative with precedence 65 for @{ 'middot $a $b}.
 interpretation "cat lang" 'middot a b = (cat ? a b).
 
 let rec flatten (S : DeqSet) (l : list (word S)) on l : word S ≝ 

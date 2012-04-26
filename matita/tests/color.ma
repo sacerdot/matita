@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 notation < "mstyle mathsize big color #ff0000 background #0000ff scriptsizemultiplier 0.8 (x)" 
- non associative with precedence 50 for @{'red $x}.
+ non associative with precedence 55 for @{'red $x}.
 
 definition red : ∀X:Type.∀t:X.X ≝ λT.λt.t.
 interpretation "red" 'red x = (red _ x).

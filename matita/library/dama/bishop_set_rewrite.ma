@@ -19,7 +19,7 @@ coercion eq_sym.
 lemma eq_trans:∀E:bishop_set.∀x,z,y:E.x ≈ y → y ≈ z → x ≈ z ≝ 
   λE,x,y,z.eq_trans_ E x z y.
 
-notation > "'Eq'≈" non associative with precedence 50 
+notation > "'Eq'≈" non associative with precedence 55 
   for @{'eqrewrite}.
   
 interpretation "eq_rew" 'eqrewrite = (eq_trans ? ? ?).
@@ -34,9 +34,9 @@ intros (E z y x Exy Lxz); apply (le_transitive ??? Lxz);
 intro Xyz; apply Exy; left; assumption;
 qed.
 
-notation > "'Le'≪" non associative with precedence 50 for @{'lerewritel}.
+notation > "'Le'≪" non associative with precedence 55 for @{'lerewritel}.
 interpretation "le_rewl" 'lerewritel = (le_rewl ? ? ?).
-notation > "'Le'≫" non associative with precedence 50 for @{'lerewriter}.
+notation > "'Le'≫" non associative with precedence 55 for @{'lerewriter}.
 interpretation "le_rewr" 'lerewriter = (le_rewr ? ? ?).
 
 lemma ap_rewl: ∀A:bishop_set.∀x,z,y:A. x ≈ y → y # z → x # z.
@@ -49,9 +49,9 @@ intros (A x z y Exy Azy); apply bs_symmetric; apply (ap_rewl ???? Exy);
 apply bs_symmetric; assumption;
 qed.
 
-notation > "'Ap'≪" non associative with precedence 50 for @{'aprewritel}.
+notation > "'Ap'≪" non associative with precedence 55 for @{'aprewritel}.
 interpretation "ap_rewl" 'aprewritel = (ap_rewl ? ? ?).
-notation > "'Ap'≫" non associative with precedence 50 for @{'aprewriter}.
+notation > "'Ap'≫" non associative with precedence 55 for @{'aprewriter}.
 interpretation "ap_rewr" 'aprewriter = (ap_rewr ? ? ?).
 
 lemma exc_rewl: ∀A:ordered_set.∀x,z,y:A. x ≈ y → y ≰ z → x ≰ z.
@@ -64,9 +64,9 @@ intros (A x z y Exy Azy); cases (exc_cotransitive ??x Azy); [assumption]
 cases (Exy); left; assumption;
 qed.
 
-notation > "'Ex'≪" non associative with precedence 50 for @{'ordered_setrewritel}.
+notation > "'Ex'≪" non associative with precedence 55 for @{'ordered_setrewritel}.
 interpretation "exc_rewl" 'ordered_setrewritel = (exc_rewl ? ? ?).
-notation > "'Ex'≫" non associative with precedence 50 for @{'ordered_setrewriter}.
+notation > "'Ex'≫" non associative with precedence 55 for @{'ordered_setrewriter}.
 interpretation "exc_rewr" 'ordered_setrewriter = (exc_rewr ? ? ?).
 
 (*
@@ -80,8 +80,8 @@ intros (A x y z E H); split; cases H;
 [apply (Le≪ ? (eq_sym ??? E));| apply (Ap≪ ? E);] assumption;
 qed.
 
-notation > "'Lt'≪" non associative with precedence 50 for @{'ltrewritel}.
+notation > "'Lt'≪" non associative with precedence 55 for @{'ltrewritel}.
 interpretation "lt_rewl" 'ltrewritel = (lt_rewl ? ? ?).
-notation > "'Lt'≫" non associative with precedence 50 for @{'ltrewriter}.
+notation > "'Lt'≫" non associative with precedence 55 for @{'ltrewriter}.
 interpretation "lt_rewr" 'ltrewriter = (lt_rewr ? ? ?).
 *)

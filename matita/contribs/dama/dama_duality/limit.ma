@@ -22,10 +22,10 @@ definition limsup ≝
     (∀k.(alpha k) is_strong_sup (shift ? xn k) in E) ∧ 
      x is_strong_inf alpha in E.     
 
-notation < "x \nbsp 'is_limsup' \nbsp s" non associative with precedence 50 for @{'limsup $_ $s $x}.
-notation < "x \nbsp 'is_liminf' \nbsp s" non associative with precedence 50 for @{'liminf $_ $s $x}.
-notation > "x 'is_limsup' s 'in' e" non associative with precedence 50 for @{'limsup $e $s $x}.
-notation > "x 'is_liminf' s 'in' e" non associative with precedence 50 for @{'liminf $e $s $x}.
+notation < "x \nbsp 'is_limsup' \nbsp s" non associative with precedence 55 for @{'limsup $_ $s $x}.
+notation < "x \nbsp 'is_liminf' \nbsp s" non associative with precedence 55 for @{'liminf $_ $s $x}.
+notation > "x 'is_limsup' s 'in' e" non associative with precedence 55 for @{'limsup $e $s $x}.
+notation > "x 'is_liminf' s 'in' e" non associative with precedence 55 for @{'liminf $e $s $x}.
 
 interpretation "Excess limsup" 'limsup e s x = (limsup e s x).
 interpretation "Excess liminf" 'liminf e s x = (limsup (dual_exc e) s x).
@@ -34,8 +34,8 @@ interpretation "Excess liminf" 'liminf e s x = (limsup (dual_exc e) s x).
 definition lim ≝ 
   λE:excess.λxn:sequence E.λx:E. x is_limsup xn in E ∧ x is_liminf xn in E.
 
-notation < "x \nbsp 'is_lim' \nbsp s" non associative with precedence 50 for @{'lim $_ $s $x}.
-notation > "x 'is_lim' s 'in' e" non associative with precedence 50 for @{'lim $e $s $x}.
+notation < "x \nbsp 'is_lim' \nbsp s" non associative with precedence 55 for @{'lim $_ $s $x}.
+notation > "x 'is_lim' s 'in' e" non associative with precedence 55 for @{'lim $e $s $x}.
 interpretation "Excess lim" 'lim e s x = (lim e s x).
 
 lemma sup_decreasing:

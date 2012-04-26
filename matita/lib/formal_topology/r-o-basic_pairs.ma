@@ -93,7 +93,7 @@ lemma curry: ∀A,B,C.(A × B ⇒_1 C) → A → (B ⇒_1 C).
   | intros; apply (#‡e); ]
 qed.
 
-notation < "F x" left associative with precedence 60 for @{'map_arrows $F $x}.
+notation < "F x" left associative with precedence 65 for @{'map_arrows $F $x}.
 interpretation "map arrows 2" 'map_arrows F x = (fun12 ? ? (map_arrows2 ? ? F ? ?) x).
 
 definition preserve_sup : ∀S,T.∀ f:Ω^S ⇒_1 Ω^T. CProp[1].

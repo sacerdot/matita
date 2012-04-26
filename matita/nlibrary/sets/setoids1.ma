@@ -61,7 +61,7 @@ for @{ eq_rel1 ? (eq1 ?) $a $b }.
 
 interpretation "setoid1 symmetry" 'invert r = (sym1 ???? r).
 interpretation "setoid symmetry" 'invert r = (sym ???? r).
-notation ".=_1 r" with precedence 50 for @{'trans_x1 $r}.
+notation ".=_1 r" with precedence 55 for @{'trans_x1 $r}.
 interpretation "trans1" 'trans r = (trans1 ????? r).
 interpretation "trans" 'trans r = (trans ????? r).
 interpretation "trans1_x1" 'trans_x1 r = (trans1 ????? r).

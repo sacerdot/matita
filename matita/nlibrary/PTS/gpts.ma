@@ -52,7 +52,7 @@ ninductive TJ: list T → T → T → Prop ≝
   | conv: ∀G.∀A,B,C.∀i. conv B C →
      TJ G A B → TJ G B (Sort i) → TJ G A C.
      
-notation "hvbox(G break  ⊢ A : B)" non associative with precedence 50 for @{'TJ $G $A $B}.
+notation "hvbox(G break  ⊢ A : B)" non associative with precedence 55 for @{'TJ $G $A $B}.
 interpretation "type judgement" 'TJ G A B = (TJ G A B).
 
 (* ninverter TJ_inv2 for TJ (%?%) : Prop. *)

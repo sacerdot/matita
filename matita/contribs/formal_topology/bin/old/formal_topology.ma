@@ -19,7 +19,7 @@ axiom S: Type.
 
 axiom leq: S → S → Prop.
 
-notation "hvbox(A break ⊆ B)" with precedence 59
+notation "hvbox(A break ⊆ B)" with precedence 64
 for @{ 'subseteq $A $B}.
 
 interpretation "Subseteq" 'subseteq A B = (leq A B).

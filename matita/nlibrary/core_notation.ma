@@ -144,23 +144,23 @@ notation "hvbox(a break \ndivides b)"
 for @{ 'ndivides $a $b }.
 
 notation "hvbox(a break + b)" 
-  left associative with precedence 50
+  left associative with precedence 55
 for @{ 'plus $a $b }.
 
 notation "hvbox(a break - b)" 
-  left associative with precedence 50
+  left associative with precedence 55
 for @{ 'minus $a $b }.
 
 notation "hvbox(a break * b)" 
-  left associative with precedence 55
+  left associative with precedence 60
 for @{ 'times $a $b }.
 
 notation "hvbox(a break \middot b)" 
-  left associative with precedence 55
+  left associative with precedence 60
   for @{ 'middot $a $b }.
 
 notation "hvbox(a break \mod b)" 
-  left associative with precedence 55
+  left associative with precedence 60
 for @{ 'module $a $b }.
 
 notation < "a \frac b" 
@@ -168,14 +168,14 @@ notation < "a \frac b"
 for @{ 'divide $a $b }.
 
 notation "a \over b" 
-  left associative with precedence 55
+  left associative with precedence 60
 for @{ 'divide $a $b }.
 
 notation "hvbox(a break / b)" 
-  left associative with precedence 55
+  left associative with precedence 60
 for @{ 'divide $a $b }.
 
-notation "- term 60 a" with precedence 60 
+notation "- term 65 a" with precedence 65 
 for @{ 'uminus $a }.
 
 notation "a !"
@@ -183,7 +183,7 @@ notation "a !"
 for @{ 'fact $a }.
 
 notation "\sqrt a" 
-  non associative with precedence 60
+  non associative with precedence 65
 for @{ 'sqrt $a }.
 
 notation "hvbox(a break \lor b)" 
@@ -233,10 +233,10 @@ for @{ 'overlaps $a $b }. (* \between *)
 notation "hvbox(a break ⊆ b)" non associative with precedence 45
 for @{ 'subseteq $a $b }. (* \subseteq *)
 
-notation "hvbox(a break ∩ b)" left associative with precedence 55
+notation "hvbox(a break ∩ b)" left associative with precedence 60
 for @{ 'intersects $a $b }. (* \cap *)
 
-notation "hvbox(a break ∪ b)" left associative with precedence 50
+notation "hvbox(a break ∪ b)" left associative with precedence 55
 for @{ 'union $a $b }. (* \cup *)
 
 notation "hvbox({ term 19 a })" with precedence 90 for @{ 'singl $a}.
@@ -248,17 +248,17 @@ notation "hvbox(a break # b)" non associative with precedence 45
   for @{ 'apart $a $b}.
     
 notation "hvbox(a break \circ b)" 
-  left associative with precedence 55
+  left associative with precedence 60
 for @{ 'compose $a $b }.
 
-notation < "↓ \ensp a" with precedence 55 for @{ 'downarrow $a }.
-notation > "↓ a" with precedence 55 for @{ 'downarrow $a }.
+notation < "↓ \ensp a" with precedence 60 for @{ 'downarrow $a }.
+notation > "↓ a" with precedence 60 for @{ 'downarrow $a }.
 
-notation "hvbox(U break ↓ V)" non associative with precedence 55 for @{ 'fintersects $U $V }.
+notation "hvbox(U break ↓ V)" non associative with precedence 60 for @{ 'fintersects $U $V }.
 
-notation "↑a" with precedence 55 for @{ 'uparrow $a }.
+notation "↑a" with precedence 60 for @{ 'uparrow $a }.
 
-notation "hvbox(a break ↑ b)" with precedence 55 for @{ 'funion $a $b }.
+notation "hvbox(a break ↑ b)" with precedence 60 for @{ 'funion $a $b }.
 
 notation < "term 76 a \sup term 90 b" non associative with precedence 75 for @{ 'exp $a $b}.
 notation > "a \sup term 90 b" non associative with precedence 75 for @{ 'exp $a $b}.
@@ -280,8 +280,8 @@ notation "\ee" with precedence 90 for @{ 'neutral }. (* ⅇ *)
 notation > "x ⊩ y" with precedence 45 for @{'Vdash2 $x $y ?}.
 notation > "x ⊩⎽ term 90 c y" with precedence 45 for @{'Vdash2 $x $y $c}.
 notation "x (⊩ \sub term 90 c) y" with precedence 45 for @{'Vdash2 $x $y $c}.
-notation > "⊩ " with precedence 60 for @{'Vdash ?}.
-notation "(⊩ \sub term 90 c) " with precedence 60 for @{'Vdash $c}.
+notation > "⊩ " with precedence 65 for @{'Vdash ?}.
+notation "(⊩ \sub term 90 c) " with precedence 65 for @{'Vdash $c}.
 
 notation < "maction (mstyle color #ff0000 (­…­)) (t)" 
 non associative with precedence 90 for @{'hide $t}.

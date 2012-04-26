@@ -84,7 +84,7 @@ interpretation "setoid1 eq" 'eq t x y = (eq_rel1 ? (eq1 t) x y).
 interpretation "setoid eq" 'eq t x y = (eq_rel ? (eq t) x y).
 interpretation "setoid1 symmetry" 'invert r = (sym1 ???? r).
 interpretation "setoid symmetry" 'invert r = (sym ???? r).
-notation ".= r" with precedence 50 for @{'trans $r}.
+notation ".= r" with precedence 55 for @{'trans $r}.
 interpretation "trans1" 'trans r = (trans1 ????? r).
 interpretation "trans" 'trans r = (trans ????? r).
 
@@ -127,7 +127,7 @@ definition if': ∀A,B:CPROP. A = B → A → B.
  intros; apply (if ?? H); assumption.
 qed.
 
-notation ". r" with precedence 50 for @{'if $r}.
+notation ". r" with precedence 55 for @{'if $r}.
 interpretation "if" 'if r = (if' ?? r).
 
 definition and_morphism: binary_morphism1 CPROP CPROP CPROP.

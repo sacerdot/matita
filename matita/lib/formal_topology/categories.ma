@@ -128,7 +128,7 @@ interpretation "setoid3 symmetry" 'invert r = (sym3 ???? r).
 interpretation "setoid2 symmetry" 'invert r = (sym2 ???? r).
 interpretation "setoid1 symmetry" 'invert r = (sym1 ???? r).
 interpretation "setoid symmetry" 'invert r = (sym ???? r).
-notation ".= r" with precedence 50 for @{'trans $r}.
+notation ".= r" with precedence 55 for @{'trans $r}.
 interpretation "trans3" 'trans r = (trans3 ????? r).
 interpretation "trans2" 'trans r = (trans2 ????? r).
 interpretation "trans1" 'trans r = (trans1 ????? r).
@@ -244,7 +244,7 @@ definition fi': ∀A,B:CPROP. A = B → B → A.
  #A #B #e #b @(fi ?? e) assumption.
 qed.
 
-notation ". r" with precedence 50 for @{'fi $r}.
+notation ". r" with precedence 55 for @{'fi $r}.
 interpretation "fi" 'fi r = (fi' ?? r).
 
 definition and_morphism: binary_morphism1 CPROP CPROP CPROP.
@@ -279,7 +279,7 @@ definition if_morphism: binary_morphism1 CPROP CPROP CPROP.
      | @(fi ?? e1) @f @(if ?? e) assumption]]
 qed.
 (*
-notation > "hvbox(a break ∘ b)" left associative with precedence 55 for @{ comp ??? $a $b }.
+notation > "hvbox(a break ∘ b)" left associative with precedence 60 for @{ comp ??? $a $b }.
 *)
 record category : Type[1] ≝ { 
    objs:> Type[0];
@@ -292,7 +292,7 @@ record category : Type[1] ≝ {
    id_neutral_right: ∀o1,o2. ∀a: arrows o1 o2. comp ??? a (id o2) =_0 a
 }.
 (*
-notation "hvbox(a break ∘ b)" left associative with precedence 55 for @{ 'compose $a $b }.
+notation "hvbox(a break ∘ b)" left associative with precedence 60 for @{ 'compose $a $b }.
 *)
 record category1 : Type[2] ≝
  { objs1:> Type[1];
@@ -360,8 +360,8 @@ record functor2 (C1: category2) (C2: category2) : Type[3] ≝
      ∀o1,o2,o3.∀f1:arrows2 ? o1 o2.∀f2:arrows2 ? o2 o3.
      map_arrows2 ?? (f2 ∘ f1) = map_arrows2 ?? f2 ∘ map_arrows2 ?? f1}.
 
-notation > "F⎽⇒ x" left associative with precedence 60 for @{'map_arrows2 $F $x}.
-notation "F\sub⇒ x" left associative with precedence 60 for @{'map_arrows2 $F $x}.
+notation > "F⎽⇒ x" left associative with precedence 65 for @{'map_arrows2 $F $x}.
+notation "F\sub⇒ x" left associative with precedence 65 for @{'map_arrows2 $F $x}.
 interpretation "map_arrows2" 'map_arrows2 F x = (fun12 ?? (map_arrows2 ?? F ??) x).
 
 definition functor2_setoid: category2 → category2 → setoid3.

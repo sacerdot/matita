@@ -164,16 +164,16 @@ definition big_union: ∀A:SET.∀I:SET.(I ⇒_2 Ω^A) ⇒_2 Ω^A.
 qed.
 
 notation < "hovbox(mstyle scriptlevel 1 scriptsizemultiplier 1.7 (⋃) \below (\emsp) term 90 p)" 
-non associative with precedence 50 for @{ 'bigcup $p }.
+non associative with precedence 55 for @{ 'bigcup $p }.
 notation < "hovbox(mstyle scriptlevel 1 scriptsizemultiplier 1.7 (⋃) \below (ident i ∈  I) break term 90 p)" 
-non associative with precedence 50 for @{ 'bigcup_mk (λ${ident i}:$I.$p) }.
-notation > "hovbox(⋃ f)" non associative with precedence 60 for @{ 'bigcup $f }.
+non associative with precedence 55 for @{ 'bigcup_mk (λ${ident i}:$I.$p) }.
+notation > "hovbox(⋃ f)" non associative with precedence 65 for @{ 'bigcup $f }.
 
 notation < "hovbox(mstyle scriptlevel 1 scriptsizemultiplier 1.7 (⋂) \below (\emsp) term 90 p)" 
-non associative with precedence 50 for @{ 'bigcap $p }.
+non associative with precedence 55 for @{ 'bigcap $p }.
 notation < "hovbox(mstyle scriptlevel 1 scriptsizemultiplier 1.7 (⋂) \below (ident i ∈  I) break term 90 p)" 
-non associative with precedence 50 for @{ 'bigcap_mk (λ${ident i}:$I.$p) }.
-notation > "hovbox(⋂ f)" non associative with precedence 60 for @{ 'bigcap $f }.
+non associative with precedence 55 for @{ 'bigcap_mk (λ${ident i}:$I.$p) }.
+notation > "hovbox(⋂ f)" non associative with precedence 65 for @{ 'bigcap $f }.
 
 interpretation "bigcup" 'bigcup f = (fun12 ?? (big_union ??) f).
 interpretation "bigcap" 'bigcap f = (fun12 ?? (big_intersects ??) f).

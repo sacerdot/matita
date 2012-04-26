@@ -196,6 +196,6 @@ cases (?:False);
 [ apply (q_lt_corefl ? H)| cases (q_lt_le_incompat ?? (q_neg_gt ?) (q_lt_to_le ?? H))]
 qed.
 
-notation < "x \blacksquare" non associative with precedence 50 for @{'unpos $x}.
+notation < "x \blacksquare" non associative with precedence 55 for @{'unpos $x}.
 interpretation "hide unpos proof" 'unpos x = (unpos x ?).
 

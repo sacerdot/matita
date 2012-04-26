@@ -35,7 +35,7 @@ axiom one_right: ∀A:S. A 1 = A.
 axiom eps: S.
 axiom eps_idempotent: eps = eps eps.
 
-notation "hvbox(A break ⊆ B)" with precedence 59
+notation "hvbox(A break ⊆ B)" with precedence 64
 for @{ 'subseteq $A $B}.
 
 interpretation "Subseteq" 'subseteq A B = (eq ? A (comp eps B)).

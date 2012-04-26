@@ -70,7 +70,7 @@ notation "\big  [ op , nil ]_{ ident j ∈ [a,b[ } f"
 for @{'bigop ($b-$a) $op $nil (λ${ident j}.((λ${ident j}.true) (${ident j}+$a)))
   (λ${ident j}.((λ${ident j}.$f)(${ident j}+$a)))}.  
  
-(* notation "\big  [ op , nil ]_{( term 50) a ≤ ident j < b | p } f"
+(* notation "\big  [ op , nil ]_{( term 55) a ≤ ident j < b | p } f"
   with precedence 80
 for @{\big[$op,$nil]_{${ident j} < ($b-$a) | ((λ${ident j}.$p) (${ident j}+$a))}((λ${ident j}.$f)(${ident j}+$a))}.
 *)

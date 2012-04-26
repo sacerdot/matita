@@ -21,11 +21,11 @@ record Fo (C1,C2:CAT2) (F:arrows3 CAT2 C1 C2) : Type[2] ≝ {
   FP: map_objs2 ?? F F1 =_\ID F2
 }.
 
-notation "ℱ\sub 1 x" non associative with precedence 60 for @{'F1 $x}.
+notation "ℱ\sub 1 x" non associative with precedence 65 for @{'F1 $x}.
 notation > "ℱ_1" non associative with precedence 90 for @{F1 ???}.
 interpretation "F1" 'F1 x = (F1 ??? x). 
 
-notation "ℱ\sub 2 x" non associative with precedence 60 for @{'F2 $x}.
+notation "ℱ\sub 2 x" non associative with precedence 65 for @{'F2 $x}.
 notation > "ℱ_2" non associative with precedence 90 for @{F2 ???}.
 interpretation "F2" 'F2 x = (F2 ??? x). 
 
@@ -42,11 +42,11 @@ record Fm_c (C1,C2:CAT2) (F:arrows3 CAT2 C1 C2) (X,Y:Fo ?? F) : Type[2] ≝ {
   FmP: REW ?? F X Y (map_arrows2 ?? F ?? Fm1) = Fm2
 }.
 
-notation "ℳ\sub 1 x" non associative with precedence 60 for @{'Fm1 $x}.
+notation "ℳ\sub 1 x" non associative with precedence 65 for @{'Fm1 $x}.
 notation > "ℳ_1" non associative with precedence 90 for @{Fm1 ?????}.
 interpretation "Fm1" 'Fm1 x = (Fm1 ????? x). 
 
-notation "ℳ\sub 2 x" non associative with precedence 60 for @{'Fm2 $x}.
+notation "ℳ\sub 2 x" non associative with precedence 65 for @{'Fm2 $x}.
 notation > "ℳ_2" non associative with precedence 90 for @{Fm2 ?????}.
 interpretation "Fm2" 'Fm2 x = (Fm2 ????? x). 
 

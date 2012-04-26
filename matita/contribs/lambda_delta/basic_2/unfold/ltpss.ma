@@ -22,7 +22,7 @@ inductive ltpss: nat → nat → relation lenv ≝
 | ltpss_pair : ∀L,I,V. ltpss 0 0 (L. ⓑ{I} V) (L. ⓑ{I} V)
 | ltpss_tpss2: ∀L1,L2,I,V1,V2,e.
                ltpss 0 e L1 L2 → L2 ⊢ V1 [0, e] ▶* V2 →
-               ltpss 0 (e + 1) (L1. ⓑ{I} V1) L2. ⓑ{I} V2
+               ltpss 0 (e + 1) (L1. ⓑ{I} V1) (L2. ⓑ{I} V2)
 | ltpss_tpss1: ∀L1,L2,I,V1,V2,d,e.
                ltpss d e L1 L2 → L2 ⊢ V1 [d, e] ▶* V2 →
                ltpss (d + 1) e (L1. ⓑ{I} V1) (L2. ⓑ{I} V2)

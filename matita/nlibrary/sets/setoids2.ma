@@ -49,7 +49,7 @@ for @{ eq_rel2 ? (eq2 ?) $a $b }.
 interpretation "setoid2 symmetry" 'invert r = (sym2 ???? r).
 interpretation "setoid1 symmetry" 'invert r = (sym1 ???? r).
 interpretation "setoid symmetry" 'invert r = (sym ???? r).
-notation ".= r" with precedence 50 for @{'trans $r}.
+notation ".= r" with precedence 55 for @{'trans $r}.
 interpretation "trans2" 'trans r = (trans2 ????? r).
 interpretation "trans1" 'trans r = (trans1 ????? r).
 interpretation "trans" 'trans r = (trans ????? r).

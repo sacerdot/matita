@@ -48,7 +48,7 @@ notation > "a ^ *" non associative with precedence 90 for @{ 'pk $a}.
 interpretation "star" 'pk a = (k ? a).
 interpretation "or" 'plus a b = (o ? a b).
            
-notation "a · b" non associative with precedence 60 for @{ 'pc $a $b}.
+notation "a · b" non associative with precedence 65 for @{ 'pc $a $b}.
 interpretation "cat" 'pc a b = (c ? a b).
 
 (* to get rid of \middot 
@@ -134,7 +134,7 @@ interpretation "patom" 'ps a = (ps ? a).
 interpretation "pepsilon" 'epsilon = (pe ?).
 interpretation "pempty" 'empty = (pz ?).
 
-notation > "| e |" non associative with precedence 65 for @{forget ? $e}.
+notation > "| e |" non associative with precedence 66 for @{forget ? $e}.
 let rec forget (S: Alpha) (l : pitem S) on l: re S ≝
  match l with
   [ pz ⇒ ∅
@@ -195,7 +195,7 @@ lemma true_to_epsilon : ∀S.∀e:pre S. \snd e = true → [ ] ∈ e.
 qed.
 
 definition lo ≝ λS:Alpha.λa,b:pre S.〈\fst a + \fst b,\snd a || \snd b〉.
-notation "a ⊕ b" left associative with precedence 60 for @{'oplus $a $b}.
+notation "a ⊕ b" left associative with precedence 65 for @{'oplus $a $b}.
 interpretation "oplus" 'oplus a b = (lo ? a b).
 
 lemma lo_def: ∀S.∀i1,i2:pitem S.∀b1,b2. 〈i1,b1〉⊕〈i2,b2〉=〈i1+i2,b1||b2〉.
@@ -216,9 +216,9 @@ definition lift ≝ λf:∀S.pitem S →pre S.λS.λe:pre S.
   match e with 
   [ pair i b ⇒ 〈\fst (f S i), \snd (f S i) || b〉].
 
-notation < "a ⊙ b" left associative with precedence 60 for @{'lc $op $a $b}.
+notation < "a ⊙ b" left associative with precedence 65 for @{'lc $op $a $b}.
 interpretation "lc" 'lc op a b = (lc ? op a b).
-notation > "a ⊙ b" left associative with precedence 60 for @{'lc (lift eclose) $a $b}.
+notation > "a ⊙ b" left associative with precedence 65 for @{'lc (lift eclose) $a $b}.
 
 definition lk ≝ λS:Alpha.λbcast:∀S:Alpha.∀E:pitem S.pre S.λe:pre S.
   match e with 
@@ -234,7 +234,7 @@ interpretation "lk" 'lk op a = (lk ? op a).
 notation > "a^⊛" non associative with precedence 90 for @{'lk eclose $a}.
 
 
-notation > "•" non associative with precedence 60 for @{eclose ?}.
+notation > "•" non associative with precedence 65 for @{eclose ?}.
 let rec eclose (S: Alpha) (i: pitem S) on i : pre S ≝
  match i with
   [ pz ⇒ 〈 ∅, false 〉
@@ -245,9 +245,9 @@ let rec eclose (S: Alpha) (i: pitem S) on i : pre S ≝
   | pc E1 E2 ⇒ •E1 ⊙ 〈E2,false〉
   | pk E ⇒ 〈(\fst(•E))^*,true〉].
   
-notation < "• x" non associative with precedence 60 for @{'eclose $x}.
+notation < "• x" non associative with precedence 65 for @{'eclose $x}.
 interpretation "eclose" 'eclose x = (eclose ? x).
-notation > "• x" non associative with precedence 60 for @{'eclose $x}.
+notation > "• x" non associative with precedence 65 for @{'eclose $x}.
 
 definition reclose ≝ lift eclose.
 interpretation "reclose" 'eclose x = (reclose ? x).
@@ -545,7 +545,7 @@ ntheorem bull_true_epsilon : ∀S.∀e:pitem S. \snd (•e) = true ↔ [ ] ∈ |
 STOP
 
 notation > "\move term 90 x term 90 E" 
-non associative with precedence 60 for @{move ? $x $E}.
+non associative with precedence 65 for @{move ? $x $E}.
 nlet rec move (S: Alpha) (x:S) (E: pitem S) on E : pre S ≝
  match E with
   [ pz ⇒ 〈 ∅, false 〉
@@ -555,8 +555,8 @@ nlet rec move (S: Alpha) (x:S) (E: pitem S) on E : pre S ≝
   | po e1 e2 ⇒ \move x e1 ⊕ \move x e2 
   | pc e1 e2 ⇒ \move x e1 ⊙ \move x e2
   | pk e ⇒ (\move x e)^⊛ ].
-notation < "\move\shy x\shy E" non associative with precedence 60 for @{'move $x $E}.
-notation > "\move term 90 x term 90 E" non associative with precedence 60 for @{'move $x $E}.
+notation < "\move\shy x\shy E" non associative with precedence 65 for @{'move $x $E}.
+notation > "\move term 90 x term 90 E" non associative with precedence 65 for @{'move $x $E}.
 interpretation "move" 'move x E = (move ? x E).
 
 ndefinition rmove ≝ λS:Alpha.λx:S.λe:pre S. \move x (\fst e).
@@ -626,7 +626,7 @@ ntheorem move_ok:
 nqed.
 
 
-notation > "x ↦* E" non associative with precedence 60 for @{move_star ? $x $E}.
+notation > "x ↦* E" non associative with precedence 65 for @{move_star ? $x $E}.
 nlet rec move_star (S : decidable) w E on w : bool × (pre S) ≝
  match w with
   [ nil ⇒ E

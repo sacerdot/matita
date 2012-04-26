@@ -151,7 +151,7 @@ let rec length (A:Type[0]) (l:list A) on l ≝
     [ nil ⇒ O
     | cons a tl ⇒ S (length A tl)].
 
-notation "|M|" non associative with precedence 60 for @{'norm $M}.
+notation "|M|" non associative with precedence 65 for @{'norm $M}.
 interpretation "norm" 'norm l = (length ? l).
 
 lemma length_append: ∀A.∀l1,l2:list A. 

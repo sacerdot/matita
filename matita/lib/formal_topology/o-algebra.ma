@@ -100,11 +100,11 @@ for @{ 'overlap $a $b}.
 interpretation "o-algebra overlap" 'overlap a b = (fun21 ??? (oa_overlap ?) a b).
 
 notation < "hovbox(mstyle scriptlevel 1 scriptsizemultiplier 1.7 (∧) \below (\emsp) \nbsp term 90 p)" 
-non associative with precedence 50 for @{ 'oa_meet $p }.
+non associative with precedence 55 for @{ 'oa_meet $p }.
 notation < "hovbox(mstyle scriptlevel 1 scriptsizemultiplier 1.7 (∧) \below (ident i ∈  I) break term 90 p)" 
-non associative with precedence 50 for @{ 'oa_meet_mk (λ${ident i}:$I.$p) }.
+non associative with precedence 55 for @{ 'oa_meet_mk (λ${ident i}:$I.$p) }.
 
-notation > "hovbox(∧ f)" non associative with precedence 60
+notation > "hovbox(∧ f)" non associative with precedence 65
 for @{ 'oa_meet $f }.
 interpretation "o-algebra meet" 'oa_meet f = 
   (fun12 ?? (oa_meet ??) f).
@@ -112,11 +112,11 @@ interpretation "o-algebra meet with explicit function" 'oa_meet_mk f =
   (fun12 ?? (oa_meet ??) (mk_unary_morphism1 ?? f ?)).
 
 notation < "hovbox(mstyle scriptlevel 1 scriptsizemultiplier 1.7 (∨) \below (\emsp) \nbsp term 90 p)" 
-non associative with precedence 50 for @{ 'oa_join $p }.
+non associative with precedence 55 for @{ 'oa_join $p }.
 notation < "hovbox(mstyle scriptlevel 1 scriptsizemultiplier 1.7 (∨) \below (ident i ∈  I) break term 90 p)" 
-non associative with precedence 50 for @{ 'oa_join_mk (λ${ident i}:$I.$p) }.
+non associative with precedence 55 for @{ 'oa_join_mk (λ${ident i}:$I.$p) }.
 
-notation > "hovbox(∨ f)" non associative with precedence 60
+notation > "hovbox(∨ f)" non associative with precedence 65
 for @{ 'oa_join $f }.
 interpretation "o-algebra join" 'oa_join f = 
   (fun12 ?? (oa_join ??) f).
@@ -166,7 +166,7 @@ non associative with precedence 49 for @{ 'oa_join_mk (λ${ident i}:$I.$p) }.
 notation < "hovbox(a ∨ b)" left associative with precedence 49
 for @{ 'oa_join_mk (λ${ident i}:$_.match $i with [ true ⇒ $a | false ⇒ $b ]) }.
 
-notation > "hovbox(∨ f)" non associative with precedence 59
+notation > "hovbox(∨ f)" non associative with precedence 64
 for @{ 'oa_join $f }.
 notation > "hovbox(a ∨ b)" left associative with precedence 49
 for @{ 'oa_join (mk_unary_morphism BOOL ? (λx__:bool.match x__ with [ true ⇒ $a | false ⇒ $b ]) (IF_THEN_ELSE_p ? $a $b)) }.

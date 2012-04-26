@@ -68,7 +68,7 @@ theorem move_ok:
   ]
 qed.
     
-notation > "x ↦* E" non associative with precedence 60 for @{moves ? $x $E}.
+notation > "x ↦* E" non associative with precedence 65 for @{moves ? $x $E}.
 let rec moves (S : DeqSet) w e on w : pre S ≝
  match w with
   [ nil ⇒ e

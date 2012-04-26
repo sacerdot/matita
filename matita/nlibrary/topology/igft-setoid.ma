@@ -25,7 +25,7 @@ nrecord category : Type[2] ≝
    id_neutral_right: ∀o1,o2. ∀a: arrows o1 o2. comp ??? a (id o2) = a
  }.
 
-notation "hvbox(A break ⇒ B)" right associative with precedence 50 for @{ 'arrows $A $B }.
+notation "hvbox(A break ⇒ B)" right associative with precedence 55 for @{ 'arrows $A $B }.
 interpretation "arrows" 'arrows A B = (unary_morphism A B).
 
 notation > "𝐈𝐝 term 90 A" non associative with precedence 90 for @{ 'id $A }.
@@ -162,8 +162,8 @@ ninductive Ord (A : nAx) : Type[0] ≝
  | oL : ∀a:A.∀i.∀f:𝐃 a i → Ord A. Ord A.
 
 notation "0" non associative with precedence 90 for @{ 'oO }.
-notation "Λ term 90 f" non associative with precedence 50 for @{ 'oL $f }.
-notation "x+1" non associative with precedence 50 for @{'oS $x }.
+notation "Λ term 90 f" non associative with precedence 55 for @{ 'oL $f }.
+notation "x+1" non associative with precedence 55 for @{'oS $x }.
 
 interpretation "ordinals Zero" 'oO = (oO ?).
 interpretation "ordinals Lambda" 'oL f = (oL ? ? ? f).
@@ -194,8 +194,8 @@ nlet rec famU (A : nAx) (U : 𝛀^A) (x : Ord A) on x : 𝛀^A ≝
                   
 (*    
   
-notation < "term 90 U \sub (term 90 x)" non associative with precedence 50 for @{ 'famU $U $x }.
-notation > "U ⎽ term 90 x" non associative with precedence 50 for @{ 'famU $U $x }.
+notation < "term 90 U \sub (term 90 x)" non associative with precedence 55 for @{ 'famU $U $x }.
+notation > "U ⎽ term 90 x" non associative with precedence 55 for @{ 'famU $U $x }.
 
 interpretation "famU" 'famU U x = (famU ? U x).
 

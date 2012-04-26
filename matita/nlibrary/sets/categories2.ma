@@ -32,7 +32,7 @@ nrecord category : Type[2] ≝
  }.
 *)
 
-notation "hvbox(A break ⇒ B)" right associative with precedence 50 for @{ 'arrows $A $B }.
+notation "hvbox(A break ⇒ B)" right associative with precedence 55 for @{ 'arrows $A $B }.
 interpretation "arrows1" 'arrows A B = (unary_morphism1 A B).
 interpretation "arrows" 'arrows A B = (unary_morphism A B).
 

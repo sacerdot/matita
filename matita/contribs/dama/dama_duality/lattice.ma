@@ -23,7 +23,7 @@ record semi_lattice_base : Type ≝ {
   sl_strong_extop: ∀x.strong_ext ? (sl_op x)  
 }.
 
-notation "a \cross b" left associative with precedence 50 for @{ 'op $a $b }.
+notation "a \cross b" left associative with precedence 55 for @{ 'op $a $b }.
 interpretation "semi lattice base operation" 'op a b = (sl_op ? a b).
 
 lemma excess_of_semi_lattice_base: semi_lattice_base → excess.
@@ -182,7 +182,7 @@ qed.
 
 definition hole ≝ λT:Type.λx:T.x.
 
-notation < "\ldots" non associative with precedence 50 for @{'hole}.
+notation < "\ldots" non associative with precedence 55 for @{'hole}.
 interpretation "hole" 'hole = (hole ? ?).
 
 (* SL(E,M,H2-5(#),H67(≰)) → E' → c E = c E' → H67'(≰') → SL(E,M,p2-5,H67') *)
@@ -423,20 +423,20 @@ record lattice : Type ≝ {
   absorbmj: ∀f,g:latt_carr. (f ∧ (f ∨ g)) ≈ f
 }.
 
-notation "'meet'"        non associative with precedence 50 for @{'meet}.
-notation "'meet_refl'"   non associative with precedence 50 for @{'meet_refl}.
-notation "'meet_comm'"   non associative with precedence 50 for @{'meet_comm}.
-notation "'meet_assoc'"  non associative with precedence 50 for @{'meet_assoc}.
-notation "'strong_extm'" non associative with precedence 50 for @{'strong_extm}.
-notation "'le_to_eqm'"   non associative with precedence 50 for @{'le_to_eqm}.
-notation "'lem'"         non associative with precedence 50 for @{'lem}.
-notation "'join'"        non associative with precedence 50 for @{'join}.
-notation "'join_refl'"   non associative with precedence 50 for @{'join_refl}.
-notation "'join_comm'"   non associative with precedence 50 for @{'join_comm}.
-notation "'join_assoc'"  non associative with precedence 50 for @{'join_assoc}.
-notation "'strong_extj'" non associative with precedence 50 for @{'strong_extj}.
-notation "'le_to_eqj'"   non associative with precedence 50 for @{'le_to_eqj}.
-notation "'lej'"         non associative with precedence 50 for @{'lej}.
+notation "'meet'"        non associative with precedence 55 for @{'meet}.
+notation "'meet_refl'"   non associative with precedence 55 for @{'meet_refl}.
+notation "'meet_comm'"   non associative with precedence 55 for @{'meet_comm}.
+notation "'meet_assoc'"  non associative with precedence 55 for @{'meet_assoc}.
+notation "'strong_extm'" non associative with precedence 55 for @{'strong_extm}.
+notation "'le_to_eqm'"   non associative with precedence 55 for @{'le_to_eqm}.
+notation "'lem'"         non associative with precedence 55 for @{'lem}.
+notation "'join'"        non associative with precedence 55 for @{'join}.
+notation "'join_refl'"   non associative with precedence 55 for @{'join_refl}.
+notation "'join_comm'"   non associative with precedence 55 for @{'join_comm}.
+notation "'join_assoc'"  non associative with precedence 55 for @{'join_assoc}.
+notation "'strong_extj'" non associative with precedence 55 for @{'strong_extj}.
+notation "'le_to_eqj'"   non associative with precedence 55 for @{'le_to_eqj}.
+notation "'lej'"         non associative with precedence 55 for @{'lej}.
 
 interpretation "Lattice meet"        'meet        = (sl_meet (latt_mcarr ?)).
 interpretation "Lattice meet_refl"   'meet_refl   = (sl_meet_refl (latt_mcarr ?)).
@@ -453,10 +453,10 @@ interpretation "Lattice strong_extm" 'strong_extj = (sl_strong_extm (latt_jcarr 
 interpretation "Lattice le_to_eqj"   'le_to_eqj   = (sl_le_to_eqm (latt_jcarr ?)).
 interpretation "Lattice lej"         'lej         = (sl_lem (latt_jcarr ?)).
 
-notation "'feq_jl'" non associative with precedence 50 for @{'feq_jl}.
-notation "'feq_jr'" non associative with precedence 50 for @{'feq_jr}.
-notation "'feq_ml'" non associative with precedence 50 for @{'feq_ml}.
-notation "'feq_mr'" non associative with precedence 50 for @{'feq_mr}.
+notation "'feq_jl'" non associative with precedence 55 for @{'feq_jl}.
+notation "'feq_jr'" non associative with precedence 55 for @{'feq_jr}.
+notation "'feq_ml'" non associative with precedence 55 for @{'feq_ml}.
+notation "'feq_mr'" non associative with precedence 55 for @{'feq_mr}.
 interpretation "Lattice feq_jl" 'feq_jl = (sl_feq_ml (latt_jcarr ?)).
 interpretation "Lattice feq_jr" 'feq_jr = (sl_feq_mr (latt_jcarr ?)).
 interpretation "Lattice feq_ml" 'feq_ml = (sl_feq_ml (latt_mcarr ?)).

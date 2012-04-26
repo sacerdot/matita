@@ -298,7 +298,7 @@ notation > "t [ term 90 a / term 90 b]" non associative with precedence 90 for @
 interpretation "Substitution for Formula" 'substitution b a t = (subst b a t).
 definition equiv ≝ λF1,F2. ∀v.[[ F1 ]]v = [[ F2 ]]v.
 notation "hvbox(a \nbsp break mstyle color #0000ff (≡) \nbsp b)"  non associative with precedence 45 for @{ 'equivF $a $b }.
-notation > "a ≡ b" non associative with precedence 50 for @{ equiv $a $b }.
+notation > "a ≡ b" non associative with precedence 55 for @{ equiv $a $b }.
 interpretation "equivalence for Formulas" 'equivF a b = (equiv a b).
 
 (* Test 2

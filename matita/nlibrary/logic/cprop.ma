@@ -39,7 +39,7 @@ ndefinition fi': ∀A,B:CPROP. A = B → B → A.
  #A; #B; #H; napply (fi … H); nassumption.
 nqed.
 
-notation ". r" with precedence 50 for @{'fi $r}.
+notation ". r" with precedence 55 for @{'fi $r}.
 interpretation "fi" 'fi r = (fi' ?? r).
 
 ndefinition and_morphism: unary_morphism1 CPROP (unary_morphism1_setoid1 CPROP CPROP).
@@ -227,7 +227,7 @@ nqed.
    - x1...xn are bound in E and P, H is bound in P
    - H is an identifier that will have the type of E in P
    - P is the proof that the two existentially quantified predicates are equal*)
-notation > "∑ list1 ident x sep , . term 56 E / ident nE ; term 19 H" with precedence 20 
+notation > "∑ list1 ident x sep , . term 61 E / ident nE ; term 19 H" with precedence 20 
 for @{ 'Sig_gen 
   ${ fold right @{ 'End }  rec acc @{ ('Next (λ${ident x}.${ident x}) $acc) } }
   ${ fold right @{ $E }              rec acc @{ λ${ident x}.$acc } } 

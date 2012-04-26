@@ -108,9 +108,9 @@ notation "mstyle color #007f00 (hvbox(e ⊢ break t))"
 interpretation "Fsub WF type judgement" 'wftjudg e t = (WFType e t).
 
 notation > "\Forall S.T" 
-  non associative with precedence 60 for @{ 'forall $S $T}.
+  non associative with precedence 65 for @{ 'forall $S $T}.
 notation < "hvbox(⊓ \sub S. break T)" 
-  non associative with precedence 60 for @{ 'forall $S $T}.
+  non associative with precedence 65 for @{ 'forall $S $T}.
 interpretation "universal type" 'forall S T = (Forall S T).
   
 notation "#x" with precedence 79 for @{'tvar $x}.
@@ -123,7 +123,7 @@ notation "⊤" with precedence 90 for @{'toptype}.
 interpretation "toptype" 'toptype = Top.
 
 notation "hvbox(s break ⇛ t)"
-  right associative with precedence 55 for @{ 'arrow $s $t }.
+  right associative with precedence 60 for @{ 'arrow $s $t }.
 interpretation "arrow type" 'arrow S T = (Arrow S T).
   
 notation "hvbox(S [#n ↦ T])"
@@ -131,7 +131,7 @@ notation "hvbox(S [#n ↦ T])"
 interpretation "subst bound var" 'substvar S T n = (subst_type_nat S T n).  
 
 notation "hvbox(!X ⊴ T)"
-  non associative with precedence 60 for @{ 'subtypebound $X $T }.
+  non associative with precedence 65 for @{ 'subtypebound $X $T }.
 interpretation "subtyping bound" 'subtypebound X T = (mk_bound true X T).  
 
 (****** PROOFS ********)

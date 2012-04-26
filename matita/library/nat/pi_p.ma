@@ -29,28 +29,28 @@ notation < "(mstyle scriptlevel 1 scriptsizemultiplier 1.7(Π) ­
             (p
             \atop 
             (ident i < n)) f" 
-non associative with precedence 60 for 
+non associative with precedence 65 for 
 @{ 'product $n (λ${ident i}:$xx1.$p) (λ${ident i}:$xx2.$f) }.
 
 notation < "(mstyle scriptlevel 1 scriptsizemultiplier 1.7(Π) ­
              ) 
             \below 
             ((ident i < n)) f" 
-non associative with precedence 60 for 
+non associative with precedence 65 for 
 @{ 'product $n (λ_:$xx1.$xx3) (λ${ident i}:$xx2.$f) }.
 
 interpretation "big product" 'product n p f = (pi_p n p f).
 
 notation > "'Pi' (ident x) < n | p . term 46 f"
-non associative with precedence 60
+non associative with precedence 65
 for @{ 'product $n (λ${ident x}.$p) (λ${ident x}.$f) }. 
 
 notation > "'Pi' (ident x) ≤ n | p . term 46 f"
-non associative with precedence 60
+non associative with precedence 65
 for @{ 'product (S $n) (λ${ident x}.$p) (λ${ident x}.$f) }. 
 
 notation > "'Pi' (ident x) < n . term 46 f"
-non associative with precedence 60
+non associative with precedence 65
 for @{ 'product $n (λ_.true) (λ${ident x}.$f) }. 
 *)
 

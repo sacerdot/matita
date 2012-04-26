@@ -22,12 +22,12 @@ definition set   ≝   λX:Type.X → Prop.
 
 definition member_of : ∀X.set X → X → Prop≝ λX.λA:set X.λx.A x.
 
-notation "hvbox(x break ∈ A)" with precedence 60
+notation "hvbox(x break ∈ A)" with precedence 65
 for @{ 'member_of $x $A }.
 
 interpretation "Member of" 'member_of x A = (mk_member_of ? A x).
  
-notation "hvbox(x break ∉ A)" with precedence 60
+notation "hvbox(x break ∉ A)" with precedence 65
 for @{ 'not_member_of $x $A }.
 
 interpretation "Not member of" 'not_member_of x A = (Not (member_of ? A x)).
@@ -40,7 +40,7 @@ interpretation "Emptyset" 'emptyset = (emptyset ?).
 
 definition subset: ∀X. set X → set X → Prop≝ λX.λA,B:set X.∀x. x ∈ A → x ∈ B.
 
-notation "hvbox(A break ⊆ B)" with precedence 60
+notation "hvbox(A break ⊆ B)" with precedence 65
 for @{ 'subset $A $B }.
 
 interpretation "Subset" 'subset A B = (subset ? A B).
@@ -55,7 +55,7 @@ interpretation "Intersection" 'intersection A B = (intersection ? A B).
  
 definition union: ∀X. set X → set X → set X ≝ λX.λA,B:set X.λx. x ∈ A ∨ x ∈ B.
 
-notation "hvbox(A break ∪ B)" with precedence 65
+notation "hvbox(A break ∪ B)" with precedence 66
 for @{ 'union $A $B }.
 
 interpretation "Union" 'union A B = (union ? A B).
@@ -72,7 +72,7 @@ interpretation "nth" 'nth A i = (nth ? A i).
 definition countable_union: ∀X. seq (set X) → set X ≝ 
  λX.λA:seq (set X).λx.∃j.x ∈ A \sub j.
 
-notation "∪ \sub (ident i opt (: ty)) B" with precedence 65
+notation "∪ \sub (ident i opt (: ty)) B" with precedence 66
 for @{ 'big_union ${default @{(λ${ident i}:$ty.$B)} @{(λ${ident i}.$B)}}}.
 
 interpretation "countable_union" 'big_union η.t = (countable_union ? t).  

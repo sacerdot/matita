@@ -21,7 +21,7 @@ include "basic_2/computation/lsubc.ma".
 (* Properties concerning basic local environment slicing ********************)
 
 (* Basic_1: was: csubc_drop_conf_O *)
-(* Note: the constant (0) can not be generalized *)
+(* Note: the constant 0 can not be generalized *)
 lemma lsubc_ldrop_O1_trans: ∀RP,L1,L2. L1 [RP] ⊑ L2 → ∀K2,e. ⇩[0, e] L2 ≡ K2 →
                             ∃∃K1. ⇩[0, e] L1 ≡ K1 & K1 [RP] ⊑ K2.
 #RP #L1 #L2 #H elim H -L1 -L2

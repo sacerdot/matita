@@ -22,6 +22,6 @@ definition tends0 ≝
 definition d2s ≝ 
   λR.λms:metric_space R.λs:sequence ms.λk.λn. δ (s n) k.
 
-notation "s ⇝ x" non associative with precedence 50 for @{'tends $s $x}.
+notation "s ⇝ x" non associative with precedence 55 for @{'tends $s $x}.
 interpretation "tends to" 'tends s x = (tends0 ? (d2s ? ? s x)).
 
