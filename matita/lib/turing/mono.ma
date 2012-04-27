@@ -141,13 +141,80 @@ definition Rlink ≝ λsig.λM1,M2.λc1,c2.
   
 interpretation "relation composition" 'compose R1 R2 = (Rcomp ? R1 R2).
 
+definition lift_confL ≝ 
+  λsig,M1,M2,c.match c with
+  [ mk_config s t ⇒ mk_config ? (seq sig M1 M2) (inl … s) t ].
+definition lift_confR ≝ 
+  λsig,M1,M2,c.match c with
+  [ mk_config s t ⇒ mk_config ? (seq sig M1 M2) (inr … s) t ].
+  
+definition halt_liftL ≝ 
+  λsig.λM1,M2:TM sig.λs:FinSum (states ? M1) (states ? M2).
+  match s with
+  [ inl s1 ⇒ halt sig M1 s1
+  | inr _ ⇒ false ].  
+
+axiom loop_dec : ∀A,k1,k2,f,p,q,a1,a2,a3.
+  loop A k1 f p a1 = Some ? a2 → 
+    loop A k2 f q a2 = Some ? a3 → 
+      loop A (k1+k2) f q a1 = Some ? a3.
+      
+lemma p_halt_liftL : ∀sig,M1,M2,c.
+  halt sig M1 (cstate … c) =
+     halt_liftL sig M1 M2 (cstate … (lift_confL … c)).
+#sig #M1 #M2 #c cases c #s #t %
+qed.
+
+lemma trans_liftL : ∀sig,M1,M2,s,a,news,move.
+  halt ? M1 s = false → 
+  trans sig M1 〈s,a〉 = 〈news,move〉 → 
+  trans sig (seq sig M1 M2) 〈inl … s,a〉 = 〈inl … news,move〉.
+#sig (*#M1*) * #Q1 #T1 #init1 #halt1 #M2 #s #a #news #move
+#Hhalt #Htrans whd in ⊢ (??%?); >Hhalt >Htrans %
+qed.
+
+lemma config_eq : 
+  ∀sig,M,c1,c2.
+  cstate sig M c1 = cstate sig M c2 → 
+  ctape sig M c1 = ctape sig M c2 →  c1 = c2.
+#sig #M1 * #s1 #t1 * #s2 #t2 //
+qed.
+
+lemma step_lift_confL : ∀sig,M1,M2,c0.
+ step sig (seq sig M1 M2) (lift_confL sig M1 M2 c0) =
+ lift_confL sig M1 M2 (step sig M1 c0).
+#sig #M1 (* * #Q1 #T1 #init1 #halt1 *) #M2 * #s * #lt *
+[ whd in ⊢ (???(????%)); whd in ⊢ (??(???%)?);
+  whd in ⊢ (??%?); whd in ⊢ (???%);
+  change with (mk_config ????) in ⊢ (???%);
+
+lemma loop_liftL : ∀sig,k,M1,M2,c1,c2.
+  loop ? k (step sig M1) (λc.halt sig M1 (cstate ?? c)) c1 = Some ? c2 →
+    loop ? k (step sig (seq sig M1 M2)) 
+      (λc.halt_liftL sig M1 M2 (cstate ?? c)) (lift_confL … c1) = 
+    Some ? (lift_confL … c2).
+#sig #k #M1 #M2 #c1 #c2 generalize in match c1;
+elim k
+[#c0 normalize in ⊢ (??%? → ?); #Hfalse destruct (Hfalse)
+|#k0 #IH #c0 whd in ⊢ (??%? → ??%?);
+ lapply (refl ? (halt ?? (cstate sig M1 c0))) 
+ cases (halt ?? (cstate sig M1 c0)) in ⊢ (???% → ?); #Hc0 >Hc0
+ [ >(?: halt_liftL ??? (cstate sig (seq ? M1 M2) (lift_confL … c0)) = true)
+   [ whd in ⊢ (??%? → ??%?); #Hc2 destruct (Hc2) %
+   | // ]
+ | >(?: halt_liftL ??? (cstate sig (seq ? M1 M2) (lift_confL … c0)) = false)
+   [whd in ⊢ (??%? → ??%?); #Hc2 <(IH ? Hc2) @eq_f
+   | // ]
+
 theorem sem_seq: ∀sig,M1,M2,R1,R2.
   Realize sig M1 R1 → Realize sig M2 R2 → 
     Realize sig (seq sig M1 M2) (R1 ∘ R2).
 #sig #M1 #M2 #R1 #R2 #HR1 #HR2 #t 
 cases (HR1 t) #k1 * #outc1 * #Hloop1 #HM1
 cases (HR2 (ctape sig M1 outc1)) #k2 * #outc2 * #Hloop2 #HM2
-@(ex_intro … (S(k1+k2))) @
+@(ex_intro … (S(k1+k2))) @(ex_intro … (lift_confR … outc2))
+%
+[@(loop_dec ????????? Hloop1)
 
 
 
