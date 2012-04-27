@@ -145,6 +145,30 @@ cases (true_or_false … (memb S a (unique_append S tl l2)))
 #H >H normalize [@Hind //] >H normalize @Hind //
 qed.
 
+lemma memb_map_inj: ∀A,B:DeqSet.∀f:A→B.∀l,a. injective A B f → 
+  memb ? (f a) (map ?? f l) = true → memb ? a l = true.
+#A #B #f #l #a #injf elim l
+  [normalize //
+  |#a1 #tl #Hind #Ha cases (orb_true_l … Ha)
+    [#eqf @orb_true_r1 @(\b ?)  >(injf … (\P eqf)) //
+    |#membtl @orb_true_r2 /2/
+    ]
+  ]
+qed.
+
+lemma unique_map_inj: ∀A,B:DeqSet.∀f:A→B.∀l. injective A B f → 
+  uniqueb A l = true → uniqueb B (map ?? f l) = true .
+#A #B #f #l #injf elim l 
+  [normalize //
+  |#a #tl #Hind #Htl @true_to_andb_true
+    [@sym_eq @noteq_to_eqnot @sym_not_eq 
+     @(not_to_not ?? (memb_map_inj … injf …) )
+     <(andb_true_l ?? Htl) /2/
+    |@Hind @(andb_true_r ?? Htl)
+    ]
+  ]
+qed.
+
 (******************* sublist *******************)
 definition sublist ≝ 
   λS,l1,l2.∀a. memb S a l1 = true → memb S a l2 = true.

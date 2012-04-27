@@ -263,10 +263,10 @@ definition eqProp ≝ λA:Prop.eq A.
 
 (* Example to avoid indexing and the consequential creation of ill typed
    terms during paramodulation *)
-example lemmaK : ∀A.∀x:A.∀h:x=x. eqProp ? h (refl A x).
+lemma lemmaK : ∀A.∀x:A.∀h:x=x. eqProp ? h (refl A x).
 #A #x #h @(refl ? h: eqProp ? ? ?).
-qed.
+qed-.
 
 theorem streicherK : ∀T:Type[2].∀t:T.∀P:t = t → Type[3].P (refl ? t) → ∀p.P p.
  #T #t #P #H #p >(lemmaK T t p) @H
-qed.
+qed-.

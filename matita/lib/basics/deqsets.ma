@@ -100,4 +100,47 @@ unification hint  0 ≔ T1,T2,p1,p2;
 
 example hint2: ∀b1,b2. 
   〈b1,true〉==〈false,b2〉=true → 〈b1,true〉=〈false,b2〉.
-#b1 #b2 #H @(\P H).
+#b1 #b2 #H @(\P H)
+qed.
+
+(* sum *)
+definition eq_sum ≝
+  λA,B:DeqSet.λp1,p2:A+B.
+  match p1 with
+  [ inl a1 ⇒ match p2 with
+    [ inl a2 ⇒ a1 == a2 | inr b2 ⇒ false ]
+  | inr b1 ⇒ match p2 with 
+    [ inl a2 ⇒ false | inr b2 ⇒ b1 == b2 ]
+  ].
+
+lemma eq_sum_true: ∀A,B:DeqSet.∀p1,p2:A+B.
+  eq_sum A B p1 p2 = true ↔ p1 = p2.
+#A #B * 
+  [#a1 * 
+    [#a2 normalize % 
+      [#eqa >(\P eqa) // | #H destruct @(\b ?) //]
+    |#b2 normalize % #H destruct 
+    ]
+  |#b1 *
+    [#a2 normalize % #H destruct
+    |#b2 normalize %
+      [#eqb >(\P eqb) // | #H destruct @(\b ?) //]
+    ]
+  ]
+qed.
+
+definition DeqSum ≝ λA,B:DeqSet.
+  mk_DeqSet (A+B) (eq_sum A B) (eq_sum_true A B).
+  
+unification hint  0 ≔ C1,C2; 
+    T1 ≟ carr C1,
+    T2 ≟ carr C2,
+    X ≟ DeqSum C1 C2
+(* ---------------------------------------- *) ⊢ 
+    T1+T2 ≡ carr X.
+
+unification hint  0 ≔ T1,T2,p1,p2; 
+    X ≟ DeqSum T1 T2
+(* ---------------------------------------- *) ⊢ 
+    eq_sum T1 T2 p1 p2 ≡ eqb X p1 p2.
+

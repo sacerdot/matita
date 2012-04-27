@@ -54,6 +54,10 @@ theorem andb_elim: ∀ b1,b2:bool. ∀ P:bool → Prop.
 match b1 with [ true ⇒ P b2 | false ⇒ P false] → P (b1 ∧ b2).
 #b1 #b2 #P (elim b1) normalize // qed.
 
+theorem true_to_andb_true: ∀b1,b2. b1 = true → b2 = true → (b1 ∧ b2) = true.
+#b1 cases b1 normalize //
+qed.
+
 theorem andb_true_l: ∀ b1,b2. (b1 ∧ b2) = true → b1 = true.
 #b1 (cases b1) normalize // qed.
 
