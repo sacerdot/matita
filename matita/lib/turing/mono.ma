@@ -63,6 +63,26 @@ let rec loop (A:Type[0]) n (f:A→A) p a on n ≝
   | S m ⇒ if p a then (Some ? a) else loop A m f p (f a)
   ].
 
+axiom loop_incr : ∀A,f,p,k1,k2,a1,a2. 
+  loop A k1 f p a1 = Some ? a2 → 
+    loop A (k2+k1) f p a1 = Some ? a2.
+   
+lemma loop_split : ∀A,f,p,q.(∀b. p b = false → q b = false) →
+ ∀k1,k2,a1,a2,a3. 
+   loop A k1 f p a1 = Some ? a2 → 
+     loop A k2 f q a2 = Some ? a3 →
+       loop A (k1+k2) f q a1 = Some ? a3.
+#Sig #f #p #q #Hpq #k1 elim k1 
+  [normalize #k2 #a1 #a2 #a3 #H destruct
+  |#k1' #Hind #k2 #a1 #a2 #a3 normalize in ⊢ (%→?→?);
+   cases (true_or_false (p a1)) #pa1 >pa1 normalize in ⊢ (%→?);
+   [#eqa1a2 destruct #H @loop_incr //
+   |normalize >(Hpq … pa1) normalize 
+    #H1 #H2 @(Hind … H2) //
+   ]
+ ]
+qed.
+
 definition initc ≝ λsig.λM:TM sig.λt.
   mk_config sig M (start sig M) t.
 
