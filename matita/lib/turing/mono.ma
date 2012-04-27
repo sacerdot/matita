@@ -66,9 +66,16 @@ let rec loop (A:Type[0]) n (f:A→A) p a on n ≝
 axiom loop_incr : ∀A,f,p,k1,k2,a1,a2. 
   loop A k1 f p a1 = Some ? a2 → 
     loop A (k2+k1) f p a1 = Some ? a2.
-   
+
+axiom loop_split : ∀A,f,p,q.(∀b. p b = false → q b = false) →
+ ∀k1,k2,a1,a2,a3,a4.
+   loop A k1 f p a1 = Some ? a2 → f a2 = a3 → 
+     loop A k2 f q a3 = Some ? a4 →
+       loop A (k1+k2) f q a1 = Some ? a4.
+
+(*
 lemma loop_split : ∀A,f,p,q.(∀b. p b = false → q b = false) →
- ∀k1,k2,a1,a2,a3. 
+ ∀k1,k2,a1,a2,a3.
    loop A k1 f p a1 = Some ? a2 → 
      loop A k2 f q a2 = Some ? a3 →
        loop A (k1+k2) f q a1 = Some ? a3.
@@ -82,6 +89,7 @@ lemma loop_split : ∀A,f,p,q.(∀b. p b = false → q b = false) →
    ]
  ]
 qed.
+*)
 
 definition initc ≝ λsig.λM:TM sig.λt.
   mk_config sig M (start sig M) t.
@@ -152,7 +160,7 @@ definition halt_liftL ≝
   λsig.λM1,M2:TM sig.λs:FinSum (states ? M1) (states ? M2).
   match s with
   [ inl s1 ⇒ halt sig M1 s1
-  | inr _ ⇒ false ].  
+  | inr _ ⇒ true ]. (* should be vacuous in all cases we use halt_liftL *)
 
 axiom loop_dec : ∀A,k1,k2,f,p,q,a1,a2,a3.
   loop A k1 f p a1 = Some ? a2 → 
@@ -181,12 +189,19 @@ lemma config_eq :
 qed.
 
 lemma step_lift_confL : ∀sig,M1,M2,c0.
+ halt ? M1 (cstate ?? c0) = false → 
  step sig (seq sig M1 M2) (lift_confL sig M1 M2 c0) =
  lift_confL sig M1 M2 (step sig M1 c0).
-#sig #M1 (* * #Q1 #T1 #init1 #halt1 *) #M2 * #s * #lt *
-[ whd in ⊢ (???(????%)); whd in ⊢ (??(???%)?);
-  whd in ⊢ (??%?); whd in ⊢ (???%);
-  change with (mk_config ????) in ⊢ (???%);
+#sig #M1 (* * #Q1 #T1 #init1 #halt1 *) #M2 * #s * #lt
+#rs #Hhalt
+whd in ⊢ (???(????%));whd in ⊢ (???%);
+lapply (refl ? (trans ?? 〈s,option_hd sig rs〉))
+cases (trans ?? 〈s,option_hd sig rs〉) in ⊢ (???% → %);
+#s0 #m0 #Heq whd in ⊢ (???%);
+whd in ⊢ (??(???%)?); whd in ⊢ (??%?);
+>(trans_liftL … Heq)
+[% | //]
+qed.
 
 lemma loop_liftL : ∀sig,k,M1,M2,c1,c2.
   loop ? k (step sig M1) (λc.halt sig M1 (cstate ?? c)) c1 = Some ? c2 →
@@ -204,20 +219,49 @@ elim k
    | // ]
  | >(?: halt_liftL ??? (cstate sig (seq ? M1 M2) (lift_confL … c0)) = false)
    [whd in ⊢ (??%? → ??%?); #Hc2 <(IH ? Hc2) @eq_f
+    @step_lift_confL //
    | // ]
+qed.
 
+axiom loop_liftR : ∀sig,k,M1,M2,c1,c2.
+  loop ? k (step sig M2) (λc.halt sig M2 (cstate ?? c)) c1 = Some ? c2 →
+    loop ? k (step sig (seq sig M1 M2)) 
+      (λc.halt sig (seq sig M1 M2) (cstate ?? c)) (lift_confR … c1) = 
+    Some ? (lift_confR … c2).
+    
+axiom loop_Some : 
+  ∀A,k,f,p,a,b.loop A k f p a = Some ? b → p b = true.
+
+lemma trans_liftL_true : ∀sig,M1,M2,s,a.
+  halt ? M1 s = true → 
+  trans sig (seq sig M1 M2) 〈inl … s,a〉 = 〈inr … (start ? M2),None ?〉.
+#sig #M1 #M2 #s #a
+#Hhalt whd in ⊢ (??%?); >Hhalt %
+qed.
+  
 theorem sem_seq: ∀sig,M1,M2,R1,R2.
   Realize sig M1 R1 → Realize sig M2 R2 → 
     Realize sig (seq sig M1 M2) (R1 ∘ R2).
 #sig #M1 #M2 #R1 #R2 #HR1 #HR2 #t 
 cases (HR1 t) #k1 * #outc1 * #Hloop1 #HM1
 cases (HR2 (ctape sig M1 outc1)) #k2 * #outc2 * #Hloop2 #HM2
-@(ex_intro … (S(k1+k2))) @(ex_intro … (lift_confR … outc2))
+@(ex_intro … (k1+k2)) @(ex_intro … (lift_confR … outc2))
 %
-[@(loop_dec ????????? Hloop1)
-
-
-
+[@(loop_split ??????????? (loop_liftL … Hloop1))
+ [* *
+   [ #sl #tl whd in ⊢ (??%? → ?); #Hl %
+   | #sr #tr whd in ⊢ (??%? → ?); #Hr destruct (Hr) ]
+ |
+ |4:@(loop_liftR … Hloop2) 
+ |whd in ⊢ (??(???%)?);whd in ⊢ (??%?);
+  generalize in match Hloop1; cases outc1 #sc1 #tc1 #Hloop10 
+  >(trans_liftL_true sig M1 M2 ??) 
+  [ whd in ⊢ (??%?); whd in ⊢ (???%);
+    @config_eq //
+  | @(loop_Some ?????? Hloop10) ]
+ ]
+| STOP! (* ... *)
+]
 
 definition empty_tapes ≝ λsig.λn.
 mk_Vector ? n (make_list (tape sig) (mk_tape sig [] []) n) ?.
