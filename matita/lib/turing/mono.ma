@@ -62,16 +62,35 @@ let rec loop (A:Type[0]) n (f:A→A) p a on n ≝
   [ O ⇒ None ?
   | S m ⇒ if p a then (Some ? a) else loop A m f p (f a)
   ].
-
-axiom loop_incr : ∀A,f,p,k1,k2,a1,a2. 
+  
+lemma loop_incr : ∀A,f,p,k1,k2,a1,a2. 
   loop A k1 f p a1 = Some ? a2 → 
     loop A (k2+k1) f p a1 = Some ? a2.
+#A #f #p #k1 #k2 #a1 #a2 generalize in match a1; elim k1
+[normalize #a0 #Hfalse destruct
+|#k1' #IH #a0 <plus_n_Sm whd in ⊢ (??%? → ??%?);
+ cases (true_or_false (p a0)) #Hpa0 >Hpa0 whd in ⊢ (??%? → ??%?); // @IH
+]
+qed.
 
-axiom loop_split : ∀A,f,p,q.(∀b. p b = false → q b = false) →
+lemma loop_split : ∀A,f,p,q.(∀b. p b = false → q b = false) →
  ∀k1,k2,a1,a2,a3,a4.
-   loop A k1 f p a1 = Some ? a2 → f a2 = a3 → 
-     loop A k2 f q a3 = Some ? a4 →
-       loop A (k1+k2) f q a1 = Some ? a4.
+   loop A k1 f p a1 = Some ? a2 → 
+     f a2 = a3 → q a2 = false → 
+       loop A k2 f q a3 = Some ? a4 →
+         loop A (k1+k2) f q a1 = Some ? a4.
+#Sig #f #p #q #Hpq #k1 elim k1 
+  [normalize #k2 #a1 #a2 #a3 #a4 #H destruct
+  |#k1' #Hind #k2 #a1 #a2 #a3 #a4 normalize in ⊢ (%→?);
+   cases (true_or_false (p a1)) #pa1 >pa1 normalize in ⊢ (%→?);
+   [#eqa1a2 destruct #eqa2a3 #Hqa2 #H
+    whd in ⊢ (??(??%???)?); >plus_n_Sm @loop_incr
+    whd in ⊢ (??%?); >Hqa2 >eqa2a3 @H
+   |normalize >(Hpq … pa1) normalize 
+    #H1 #H2 #H3 @(Hind … H2) //
+   ]
+ ]
+qed.
 
 (*
 lemma loop_split : ∀A,f,p,q.(∀b. p b = false → q b = false) →
@@ -162,10 +181,11 @@ definition halt_liftL ≝
   [ inl s1 ⇒ halt sig M1 s1
   | inr _ ⇒ true ]. (* should be vacuous in all cases we use halt_liftL *)
 
-axiom loop_dec : ∀A,k1,k2,f,p,q,a1,a2,a3.
-  loop A k1 f p a1 = Some ? a2 → 
-    loop A k2 f q a2 = Some ? a3 → 
-      loop A (k1+k2) f q a1 = Some ? a3.
+definition halt_liftR ≝ 
+  λsig.λM1,M2:TM sig.λs:FinSum (states ? M1) (states ? M2).
+  match s with
+  [ inl _ ⇒ false 
+  | inr s2 ⇒ halt sig M2 s2 ].
       
 lemma p_halt_liftL : ∀sig,M1,M2,c.
   halt sig M1 (cstate … c) =
@@ -223,14 +243,35 @@ elim k
    | // ]
 qed.
 
-axiom loop_liftR : ∀sig,k,M1,M2,c1,c2.
+STOP!
+
+lemma loop_liftR : ∀sig,k,M1,M2,c1,c2.
   loop ? k (step sig M2) (λc.halt sig M2 (cstate ?? c)) c1 = Some ? c2 →
     loop ? k (step sig (seq sig M1 M2)) 
       (λc.halt sig (seq sig M1 M2) (cstate ?? c)) (lift_confR … c1) = 
     Some ? (lift_confR … c2).
+#sig #k #M1 #M2 #c1 #c2
+elim k
+[normalize in ⊢ (??%? → ?); #Hfalse destruct (Hfalse)
+|#k0 #IH whd in ⊢ (??%? → ??%?);
+ lapply (refl ? (halt ?? (cstate sig M2 c1))) 
+ cases (halt ?? (cstate sig M2 c1)) in ⊢ (???% → ?); #Hc0 >Hc0
+ [ >(?: halt ?? (cstate sig (seq ? M1 M2) (lift_confR … c1)) = true)
+   [ whd in ⊢ (??%? → ??%?); #Hc2 destruct (Hc2)
+   | (* ... *) ]
+ | >(?: halt ?? (cstate sig (seq ? M1 M2) (lift_confR … c1)) = false)
+   [whd in ⊢ (??%? → ??%?); #Hc2 <IH
+     [@eq_f (* @step_lift_confR // *)
+     | 
+   | // ]
+qed. *)
     
-axiom loop_Some : 
+lemma loop_Some : 
   ∀A,k,f,p,a,b.loop A k f p a = Some ? b → p b = true.
+#A #k #f #p #a #b elim k
+[normalize #Hfalse destruct
+|#k0 #IH whd in ⊢ (??%? → ?); cases (p a)
+ [ normalize #H1 destruct
 
 lemma trans_liftL_true : ∀sig,M1,M2,s,a.
   halt ? M1 s = true → 
@@ -238,7 +279,17 @@ lemma trans_liftL_true : ∀sig,M1,M2,s,a.
 #sig #M1 #M2 #s #a
 #Hhalt whd in ⊢ (??%?); >Hhalt %
 qed.
+
+lemma eq_ctape_lift_conf_L : ∀sig,M1,M2,outc.
+  ctape sig (seq sig M1 M2) (lift_confL … outc) = ctape … outc.
+#sig #M1 #M2 #outc cases outc #s #t %
+qed.
   
+lemma eq_ctape_lift_conf_R : ∀sig,M1,M2,outc.
+  ctape sig (seq sig M1 M2) (lift_confR … outc) = ctape … outc.
+#sig #M1 #M2 #outc cases outc #s #t %
+qed.
+
 theorem sem_seq: ∀sig,M1,M2,R1,R2.
   Realize sig M1 R1 → Realize sig M2 R2 → 
     Realize sig (seq sig M1 M2) (R1 ∘ R2).
@@ -251,8 +302,8 @@ cases (HR2 (ctape sig M1 outc1)) #k2 * #outc2 * #Hloop2 #HM2
  [* *
    [ #sl #tl whd in ⊢ (??%? → ?); #Hl %
    | #sr #tr whd in ⊢ (??%? → ?); #Hr destruct (Hr) ]
- |
- |4:@(loop_liftR … Hloop2) 
+ ||4:cases outc1 #s1 #t1 %
+ |5:@(loop_liftR … Hloop2) 
  |whd in ⊢ (??(???%)?);whd in ⊢ (??%?);
   generalize in match Hloop1; cases outc1 #sc1 #tc1 #Hloop10 
   >(trans_liftL_true sig M1 M2 ??) 
@@ -260,8 +311,10 @@ cases (HR2 (ctape sig M1 outc1)) #k2 * #outc2 * #Hloop2 #HM2
     @config_eq //
   | @(loop_Some ?????? Hloop10) ]
  ]
-| STOP! (* ... *)
+| @(ex_intro … (ctape ? (seq sig M1 M2) (lift_confL … outc1)))
+  % //
 ]
+qed.
 
 definition empty_tapes ≝ λsig.λn.
 mk_Vector ? n (make_list (tape sig) (mk_tape sig [] []) n) ?.
