@@ -118,6 +118,13 @@ definition Realize ≝ λsig.λM:TM sig.λR:relation (tape sig).
   loop ? i (step sig M) (λc.halt sig M (cstate ?? c)) (initc sig M t) = Some ? outc ∧
   R t (ctape ?? outc).
 
+
+definition accRealize ≝ λsig.λM:TM sig.λacc:states sig M.λRtrue,Rfalse:relation (tape sig).
+∀t.∃i.∃outc.
+  loop ? i (step sig M) (λc.halt sig M (cstate ?? c)) (initc sig M t) = Some ? outc ∧
+  (cstate ?? outc = acc → Rtrue t (ctape ?? outc)) ∧ 
+  (cstate ?? outc ≠ acc → Rfalse t (ctape ?? outc)).
+
 (* Compositions *)
 
 definition seq_trans ≝ λsig. λM1,M2 : TM sig. 

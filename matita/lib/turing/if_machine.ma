@@ -41,10 +41,9 @@ definition ifTM ≝ λsig. λcondM,thenM,elseM : TM sig.
         [ inl s2 ⇒ halt sig thenM s2
         | inr s3 ⇒ halt sig elseM s3 ]]). 
 
-theorem sem_seq: ∀sig,M1,M2,M3,P,R2,R3,q1,q2.
-  Frealize sig M1 P → Realize sig M2 R2 → Realize sig M3 R3 → 
-    Realize sig (ifTN sig M1 M2 M2) 
-      λt1.t2. (P t1 q1 t11 → R2 t11 t2) ∨ (P t1 q2 t12 → R3 t12 t2).
+theorem sem_if: ∀sig,M1,M2,M3,Rtrue,Rfalse,R2,R3,acc.
+  accRealize sig M1 acc Rtrue Rfalse → Realize sig M2 R2 → Realize sig M3 R3 → 
+    Realize sig (ifTM sig M1 M2 M3 acc) (λt1,t2. (Rtrue ∘ R2) t1 t2 ∨ (Rfalse ∘ R3) t1 t2).
 
 (* We do not distinuish an input tape *)
 
