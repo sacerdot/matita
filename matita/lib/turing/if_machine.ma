@@ -44,7 +44,29 @@ definition ifTM ≝ λsig. λcondM,thenM,elseM : TM sig.
 theorem sem_if: ∀sig,M1,M2,M3,Rtrue,Rfalse,R2,R3,acc.
   accRealize sig M1 acc Rtrue Rfalse → Realize sig M2 R2 → Realize sig M3 R3 → 
     Realize sig (ifTM sig M1 M2 M3 acc) (λt1,t2. (Rtrue ∘ R2) t1 t2 ∨ (Rfalse ∘ R3) t1 t2).
-
+#sig #M1 #M2 #M3 #Rtrue #Rfalse #R2 #R3 #acc #HaccR #HR2 #HR3 #t 
+cases (HaccR t) #k1 * #outc1 * * #Hloop1 #HMtrue #HMfalse 
+cases (true_or_false (cstate ?? outc1 == acc)) #Hacc
+  [cases (HR2 (ctape sig ? outc1)) #k2 * #outc2 * #Hloop2 #HM2
+   @(ex_intro … (k1+k2)) @(ex_intro … (lift_confR … (lift_confL … outc2)))
+%
+[@(loop_split ??????????? (loop_liftL … Hloop1))
+ [* *
+   [ #sl #tl whd in ⊢ (??%? → ?); #Hl %
+   | #sr #tr whd in ⊢ (??%? → ?); #Hr destruct (Hr) ]
+ ||4:cases outc1 #s1 #t1 %
+ |5:@(loop_liftR … Hloop2) 
+ |whd in ⊢ (??(???%)?);whd in ⊢ (??%?);
+  generalize in match Hloop1; cases outc1 #sc1 #tc1 #Hloop10 
+  >(trans_liftL_true sig M1 M2 ??) 
+  [ whd in ⊢ (??%?); whd in ⊢ (???%);
+    @config_eq //
+  | @(loop_Some ?????? Hloop10) ]
+ ]
+| @(ex_intro … (ctape ? (seq sig M1 M2) (lift_confL … outc1)))
+  % //
+]
+qed.
 (* We do not distinuish an input tape *)
 
 record TM (sig:FinSet): Type[1] ≝ 
