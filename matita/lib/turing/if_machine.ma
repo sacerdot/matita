@@ -39,7 +39,9 @@ definition ifTM ≝ λsig. λcondM,thenM,elseM : TM sig.
       [ inl _ ⇒ false 
       | inr s' ⇒ match s' with 
         [ inl s2 ⇒ halt sig thenM s2
-        | inr s3 ⇒ halt sig elseM s3 ]]). 
+        | inr s3 ⇒ halt sig elseM s3 ]]).
+        
+axiom daemon : ∀X:Prop.X. 
 
 theorem sem_if: ∀sig,M1,M2,M3,Rtrue,Rfalse,R2,R3,acc.
   accRealize sig M1 acc Rtrue Rfalse → Realize sig M2 R2 → Realize sig M3 R3 → 
@@ -49,20 +51,40 @@ cases (HaccR t) #k1 * #outc1 * * #Hloop1 #HMtrue #HMfalse
 cases (true_or_false (cstate ?? outc1 == acc)) #Hacc
   [cases (HR2 (ctape sig ? outc1)) #k2 * #outc2 * #Hloop2 #HM2
    @(ex_intro … (k1+k2)) @(ex_intro … (lift_confR … (lift_confL … outc2)))
-%
-[@(loop_split ??????????? (loop_liftL … Hloop1))
- [* *
-   [ #sl #tl whd in ⊢ (??%? → ?); #Hl %
-   | #sr #tr whd in ⊢ (??%? → ?); #Hr destruct (Hr) ]
- ||4:cases outc1 #s1 #t1 %
- |5:@(loop_liftR … Hloop2) 
- |whd in ⊢ (??(???%)?);whd in ⊢ (??%?);
-  generalize in match Hloop1; cases outc1 #sc1 #tc1 #Hloop10 
-  >(trans_liftL_true sig M1 M2 ??) 
-  [ whd in ⊢ (??%?); whd in ⊢ (???%);
-    @config_eq //
-  | @(loop_Some ?????? Hloop10) ]
- ]
+   %
+   [@(loop_split ??????????? 
+    (loop_lift ??? 
+      (lift_confL sig (states ? M1) (FinSum (states ? M2) (states ? M3)))
+      (step sig M1) (step sig (ifTM sig M1 M2 M3 acc)) 
+      (λc.halt sig M1 (cstate … c)) 
+      (λc.halt_liftL ?? (halt sig M1) (cstate … c)) 
+      … Hloop1))
+     [* *
+       [ #sl #tl whd in ⊢ (??%? → ?); #Hl %
+       | #sr #tr whd in ⊢ (??%? → ?); #Hr destruct (Hr) ]
+     || #c0 #Hhalt @daemon  (* <step_lift_confL // *)
+     | #x <p_halt_liftL %
+     |6:cases outc1 #s1 #t1 %
+     |7:@(loop_lift … (initc ?? (ctape … outc1)) … Hloop2) 
+       [ * #s2 #t2 %
+       | #c0 #Hhalt @daemon (* <step_lift_confR // *) ]
+     |whd in ⊢ (??(???%)?);whd in ⊢ (??%?);
+      generalize in match Hloop1; cases outc1 #sc1 #tc1 #Hloop10 
+      >(trans_liftL_true sig M1 M2 ??) 
+       [ whd in ⊢ (??%?); whd in ⊢ (???%);
+         @config_eq whd in ⊢ (???%); //
+       | @(loop_Some ?????? Hloop10) ]       
+     ||4:cases outc1 #s1 #t1 %
+     |5:
+         
+         @(loop_liftR … Hloop2) 
+         |whd in ⊢ (??(???%)?);whd in ⊢ (??%?);
+          generalize in match Hloop1; cases outc1 #sc1 #tc1 #Hloop10 
+          >(trans_liftL_true sig M1 M2 ??) 
+           [ whd in ⊢ (??%?); whd in ⊢ (???%);
+             @config_eq //
+           | @(loop_Some ?????? Hloop10) ]
+           ]
 | @(ex_intro … (ctape ? (seq sig M1 M2) (lift_confL … outc1)))
   % //
 ]
