@@ -9,18 +9,42 @@
      \ /   GNU General Public License Version 2   
       V_____________________________________________________________*)
 
-include "basics/vectors.ma".
-(* include "basics/relations.ma". *)
+include "turing/mono.ma".
 
-record tape (sig:FinSet): Type[0] ≝ 
-{ left : list sig;
-  right: list sig
-}.
+definition if_trans ≝ λsig. λM1,M2,M3 : TM sig. λq:states sig M1.
+λp. let 〈s,a〉 ≝ p in
+  match s with 
+  [ inl s1 ⇒ 
+      if halt sig M1 s1 then
+        if s1==q then 〈inr … (inl … (start sig M2)), None ?〉
+        else 〈inr … (inr … (start sig M3)), None ?〉
+      else let 〈news1,m〉 ≝ trans sig M1 〈s1,a〉 in
+       〈inl … news1,m〉
+  | inr s' ⇒ 
+      match s' with
+      [ inl s2 ⇒ let 〈news2,m〉 ≝ trans sig M2 〈s2,a〉 in
+         〈inr … (inl … news2),m〉
+      | inr s3 ⇒ let 〈news3,m〉 ≝ trans sig M3 〈s3,a〉 in
+         〈inr … (inr … news3),m〉
+      ]
+  ]. 
+ 
+definition ifTM ≝ λsig. λcondM,thenM,elseM : TM sig.
+  λqacc: states sig condM.
+  mk_TM sig 
+    (FinSum (states sig condM) (FinSum (states sig thenM) (states sig elseM)))
+    (if_trans sig condM thenM elseM qacc)
+    (inl … (start sig condM))
+    (λs.match s with
+      [ inl _ ⇒ false 
+      | inr s' ⇒ match s' with 
+        [ inl s2 ⇒ halt sig thenM s2
+        | inr s3 ⇒ halt sig elseM s3 ]]). 
 
-inductive move : Type[0] ≝
-| L : move 
-| R : move
-.
+theorem sem_seq: ∀sig,M1,M2,M3,P,R2,R3,q1,q2.
+  Frealize sig M1 P → Realize sig M2 R2 → Realize sig M3 R3 → 
+    Realize sig (ifTN sig M1 M2 M2) 
+      λt1.t2. (P t1 q1 t11 → R2 t11 t2) ∨ (P t1 q2 t12 → R3 t12 t2).
 
 (* We do not distinuish an input tape *)
 
@@ -201,34 +225,11 @@ lemma trans_liftL : ∀sig,M1,M2,s,a,news,move.
 #Hhalt #Htrans whd in ⊢ (??%?); >Hhalt >Htrans %
 qed.
 
-lemma trans_liftR : ∀sig,M1,M2,s,a,news,move.
-  halt ? M2 s = false → 
-  trans sig M2 〈s,a〉 = 〈news,move〉 → 
-  trans sig (seq sig M1 M2) 〈inr … s,a〉 = 〈inr … news,move〉.
-#sig #M1 * #Q2 #T2 #init2 #halt2 #s #a #news #move
-#Hhalt #Htrans whd in ⊢ (??%?); >Hhalt >Htrans %
-qed.
-
 lemma config_eq : 
   ∀sig,M,c1,c2.
   cstate sig M c1 = cstate sig M c2 → 
   ctape sig M c1 = ctape sig M c2 →  c1 = c2.
 #sig #M1 * #s1 #t1 * #s2 #t2 //
-qed.
-
-lemma step_lift_confR : ∀sig,M1,M2,c0.
- halt ? M2 (cstate ?? c0) = false → 
- step sig (seq sig M1 M2) (lift_confR sig M1 M2 c0) =
- lift_confR sig M1 M2 (step sig M2 c0).
-#sig #M1 (* * #Q1 #T1 #init1 #halt1 *) #M2 * #s * #lt
-#rs #Hhalt
-whd in ⊢ (???(????%));whd in ⊢ (???%);
-lapply (refl ? (trans ?? 〈s,option_hd sig rs〉))
-cases (trans ?? 〈s,option_hd sig rs〉) in ⊢ (???% → %);
-#s0 #m0 #Heq whd in ⊢ (???%);
-whd in ⊢ (??(???%)?); whd in ⊢ (??%?);
->(trans_liftR … Heq)
-[% | //]
 qed.
 
 lemma step_lift_confL : ∀sig,M1,M2,c0.
@@ -266,37 +267,35 @@ elim k
    | // ]
 qed.
 
+STOP!
+
 lemma loop_liftR : ∀sig,k,M1,M2,c1,c2.
   loop ? k (step sig M2) (λc.halt sig M2 (cstate ?? c)) c1 = Some ? c2 →
     loop ? k (step sig (seq sig M1 M2)) 
       (λc.halt sig (seq sig M1 M2) (cstate ?? c)) (lift_confR … c1) = 
     Some ? (lift_confR … c2).
-#sig #k #M1 #M2 #c1 #c2 generalize in match c1;
+#sig #k #M1 #M2 #c1 #c2
 elim k
-[#c0 normalize in ⊢ (??%? → ?); #Hfalse destruct (Hfalse)
-|#k0 #IH #c0 whd in ⊢ (??%? → ??%?);
- lapply (refl ? (halt ?? (cstate sig M2 c0))) 
- cases (halt ?? (cstate sig M2 c0)) in ⊢ (???% → ?); #Hc0 >Hc0
- [ >(?: halt ?? (cstate sig (seq ? M1 M2) (lift_confR … c0)) = true)
-   [ whd in ⊢ (??%? → ??%?); #Hc2 destruct (Hc2) %
-   | <Hc0 cases c0 // ]
- | >(?: halt ?? (cstate sig (seq ? M1 M2) (lift_confR … c0)) = false)
-   [whd in ⊢ (??%? → ??%?); #Hc2 <(IH ? Hc2) @eq_f
-    @step_lift_confR //
-   | <Hc0 cases c0 // ]
- ]
-qed.  
+[normalize in ⊢ (??%? → ?); #Hfalse destruct (Hfalse)
+|#k0 #IH whd in ⊢ (??%? → ??%?);
+ lapply (refl ? (halt ?? (cstate sig M2 c1))) 
+ cases (halt ?? (cstate sig M2 c1)) in ⊢ (???% → ?); #Hc0 >Hc0
+ [ >(?: halt ?? (cstate sig (seq ? M1 M2) (lift_confR … c1)) = true)
+   [ whd in ⊢ (??%? → ??%?); #Hc2 destruct (Hc2)
+   | (* ... *) ]
+ | >(?: halt ?? (cstate sig (seq ? M1 M2) (lift_confR … c1)) = false)
+   [whd in ⊢ (??%? → ??%?); #Hc2 <IH
+     [@eq_f (* @step_lift_confR // *)
+     | 
+   | // ]
+qed. *)
     
 lemma loop_Some : 
   ∀A,k,f,p,a,b.loop A k f p a = Some ? b → p b = true.
-#A #k #f #p elim k 
-[#a #b normalize #Hfalse destruct
-|#k0 #IH #a #b whd in ⊢ (??%? → ?); cases (true_or_false (p a)) #Hpa
- [ >Hpa normalize #H1 destruct //
- | >Hpa normalize @IH
- ]
-]
-qed. 
+#A #k #f #p #a #b elim k
+[normalize #Hfalse destruct
+|#k0 #IH whd in ⊢ (??%? → ?); cases (p a)
+ [ normalize #H1 destruct
 
 lemma trans_liftL_true : ∀sig,M1,M2,s,a.
   halt ? M1 s = true → 
@@ -341,3 +340,65 @@ cases (HR2 (ctape sig M1 outc1)) #k2 * #outc2 * #Hloop2 #HM2
 ]
 qed.
 
+(* boolean machines: machines with two distinguished halting states *)
+
+
+
+(* old stuff *)
+definition empty_tapes ≝ λsig.λn.
+mk_Vector ? n (make_list (tape sig) (mk_tape sig [] []) n) ?.
+elim n // normalize //
+qed.
+
+definition init ≝ λsig.λM:TM sig.λi:(list sig).
+  mk_config ??
+    (start sig M)
+    (vec_cons ? (mk_tape sig [] i) ? (empty_tapes sig (tapes_no sig M)))
+    [ ].
+
+definition stop ≝ λsig.λM:TM sig.λc:config sig M.
+  halt sig M (state sig M c).
+
+let rec loop (A:Type[0]) n (f:A→A) p a on n ≝
+  match n with 
+  [ O ⇒ None ?
+  | S m ⇒ if p a then (Some ? a) else loop A m f p (f a)
+  ].
+
+(* Compute ? M f states that f is computed by M *)
+definition Compute ≝ λsig.λM:TM sig.λf:(list sig) → (list sig).
+∀l.∃i.∃c.
+  loop ? i (step sig M) (stop sig M) (init sig M l) = Some ? c ∧
+  out ?? c = f l.
+
+(* for decision problems, we accept a string if on termination
+output is not empty *)
+
+definition ComputeB ≝ λsig.λM:TM sig.λf:(list sig) → bool.
+∀l.∃i.∃c.
+  loop ? i (step sig M) (stop sig M) (init sig M l) = Some ? c ∧
+  (isnilb ? (out ?? c) = false).
+
+(* alternative approach.
+We define the notion of computation. The notion must be constructive,
+since we want to define functions over it, like lenght and size 
+
+Perche' serve Type[2] se sposto a e b a destra? *)
+
+inductive cmove (A:Type[0]) (f:A→A) (p:A →bool) (a,b:A): Type[0] ≝
+  mk_move: p a = false → b = f a → cmove A f p a b.
+  
+inductive cstar (A:Type[0]) (M:A→A→Type[0]) : A →A → Type[0] ≝
+| empty : ∀a. cstar A M a a
+| more : ∀a,b,c. M a b → cstar A M b c → cstar A M a c.
+
+definition computation ≝ λsig.λM:TM sig.
+  cstar ? (cmove ? (step sig M) (stop sig M)).
+
+definition Compute_expl ≝ λsig.λM:TM sig.λf:(list sig) → (list sig).
+  ∀l.∃c.computation sig M (init sig M l) c → 
+   (stop sig M c = true) ∧ out ?? c = f l.
+
+definition ComputeB_expl ≝ λsig.λM:TM sig.λf:(list sig) → bool.
+  ∀l.∃c.computation sig M (init sig M l) c → 
+   (stop sig M c = true) ∧ (isnilb ? (out ?? c) = false).
