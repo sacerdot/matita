@@ -118,6 +118,27 @@ definition Realize ≝ λsig.λM:TM sig.λR:relation (tape sig).
   loop ? i (step sig M) (λc.halt sig M (cstate ?? c)) (initc sig M t) = Some ? outc ∧
   R t (ctape ?? outc).
 
+definition WRealize ≝ λsig.λM:TM sig.λR:relation (tape sig).
+∀t,i,outc.
+  loop ? i (step sig M) (λc.halt sig M (cstate ?? c)) (initc sig M t) = Some ? outc → 
+  R t (ctape ?? outc).
+  
+lemma loop_eq : ∀sig,f,q,i,j,a,x,y. 
+  loop sig i f q a = Some ? x → loop sig j f q a = Some ? y → x = y.
+#sig #f #q #i #j @(nat_elim2 … i j)
+[ #n #a #x #y normalize #Hfalse destruct (Hfalse)
+| #n #a #x #y #H1 normalize #Hfalse destruct (Hfalse)
+| #n1 #n2 #IH #a #x #y normalize cases (q a) normalize
+  [ #H1 #H2 destruct %
+  | /2/ ]
+]
+qed.
+
+theorem Realize_to_WRealize : ∀sig,M,R.Realize sig M R → WRealize sig M R.
+#sig #M #R #H1 #inc #i #outc #Hloop
+cases (H1 inc) #k * #outc1 * #Hloop1 #HR
+>(loop_eq … Hloop Hloop1) //
+qed.
 
 definition accRealize ≝ λsig.λM:TM sig.λacc:states sig M.λRtrue,Rfalse:relation (tape sig).
 ∀t.∃i.∃outc.
