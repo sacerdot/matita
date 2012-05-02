@@ -73,7 +73,7 @@ lemma loop_incr : ∀A,f,p,k1,k2,a1,a2.
 ]
 qed.
 
-lemma loop_split : ∀A,f,p,q.(∀b. p b = false → q b = false) →
+lemma loop_merge : ∀A,f,p,q.(∀b. p b = false → q b = false) →
  ∀k1,k2,a1,a2,a3,a4.
    loop A k1 f p a1 = Some ? a2 → 
      f a2 = a3 → q a2 = false → 
@@ -90,6 +90,30 @@ lemma loop_split : ∀A,f,p,q.(∀b. p b = false → q b = false) →
     #H1 #H2 #H3 @(Hind … H2) //
    ]
  ]
+qed.
+
+lemma loop_split : ∀A,f,p,q.(∀b. q b = true → p b = true) →
+ ∀k,a1,a2.
+   loop A k f q a1 = Some ? a2 → 
+   ∃k1,a3.
+    loop A k1 f p a1 = Some ? a3 ∧ 
+      loop A (S(k-k1)) f q a3 = Some ? a2.
+#A #f #p #q #Hpq #k elim k
+  [#a1 #a2 normalize #Heq destruct
+  |#i #Hind #a1 #a2 normalize 
+   cases (true_or_false (q a1)) #Hqa1 >Hqa1 normalize
+    [ #Ha1a2 destruct
+     @(ex_intro … 1) @(ex_intro … a2) % 
+       [normalize >(Hpq …Hqa1) // |>Hqa1 //]
+    |#Hloop cases (true_or_false (p a1)) #Hpa1 
+       [@(ex_intro … 1) @(ex_intro … a1) % 
+         [normalize >Hpa1 // |>Hqa1 <Hloop normalize //]
+       |cases (Hind …Hloop) #k2 * #a3 * #Hloop1 #Hloop2
+        @(ex_intro … (S k2)) @(ex_intro … a3) %
+         [normalize >Hpa1 normalize // | @Hloop2 ]
+       ]
+    ]
+  ]
 qed.
 
 (*
@@ -367,7 +391,7 @@ cases (HR1 t) #k1 * #outc1 * #Hloop1 #HM1
 cases (HR2 (ctape sig (states ? M1) outc1)) #k2 * #outc2 * #Hloop2 #HM2
 @(ex_intro … (k1+k2)) @(ex_intro … (lift_confR … outc2))
 %
-[@(loop_split ??????????? 
+[@(loop_merge ??????????? 
    (loop_lift ??? (lift_confL sig (states sig M1) (states sig M2))
    (step sig M1) (step sig (seq sig M1 M2)) 
    (λc.halt sig M1 (cstate … c)) 
