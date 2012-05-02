@@ -54,6 +54,23 @@ qed.
 
 axiom tech1: ∀A.∀R1,R2:relation A. 
   ∀a,b. (R1 ∘ ((star ? R1) ∘ R2)) a b → ((star ? R1) ∘ R2) a b.
+  
+lemma halt_while_acc : 
+  ∀sig,M,acc.halt sig (whileTM sig M acc) acc = false.
+#sig #M #acc normalize >(\b ?) //
+cases (halt sig M acc) %
+qed.
+
+lemma step_while_acc :
+ ∀sig,M,acc,c.cstate ?? c = acc → 
+   step sig (whileTM sig M acc) c = initc … (ctape ?? c).
+#sig #M #acc * #s #t #Hs normalize >(\b Hs) %
+qed.
+
+lemma loop_p_true : 
+  ∀A,k,f,p,a.p a = true → loop A (S k) f p a = Some ? a.
+#A #k #f #p #a #Ha normalize >Ha %
+qed.
 
 theorem sem_while: ∀sig,M,acc,Rtrue,Rfalse.
   halt sig M acc = true →
@@ -64,72 +81,49 @@ generalize in match t;
 @(nat_elim1 … i) #m #Hind #intape #outc #Hloop
 cases (loop_split ?? (λc. halt sig M (cstate ?? c)) ????? Hloop)
   [#k1 * #outc1 * #Hloop1 #Hloop2
-   cases (HaccR intape) #k * #outcM * * #HloopM #HMtrue #HMfalse 
-   cases (true_or_false (cstate ?? outc1 == acc)) #Hacc
-    [@tech1 @(ex_intro … (ctape ?? outc1)) %
-      [ (* @HMtrue @(\P Hacc) *)
-      |@(Hind (m-k1)) [|
-      | 
-    
-    @(ex_intro … outc) %
-    |@(ex_intro … k) @(ex_intro … outc) %
-      [@(loop_lift_acc ?? k (λc.c) … Hloop)
-        [@(λc. (cstate ?? c) == acc)
-        |* #q #a #eqacc >(\P eqacc) //
-        |#c #eqacc normalize >eqacc normalize 
-         cases (halt sig M ?) normalize //
-        |* #s #a #halts whd in ⊢ (??%?); 
-         whd in ⊢ (???%); >while_trans_false 
-        [ % | @(not_to_not … not_eq_true_false) #eqs
-         <Hacctrue <eqs //
-        ]
-      |@Hacc
-      ]
-    |@(ex_intro … t) % // @HMfalse @(\Pf Hacc)
-    ]
-  ]
-qed.       
-  
-  [cases (HR2 (ctape sig ? outc1)) #k2 * #outc2 * #Hloop2 #HM2
-   @(ex_intro … (k1+k2)) @(ex_intro … (lift_confR … (lift_confL … outc2)))
-   %
-   [@(loop_split ??????????? 
-    (loop_lift ??? 
-      (lift_confL sig (states ? M1) (FinSum (states ? M2) (states ? M3)))
-      (step sig M1) (step sig (ifTM sig M1 M2 M3 acc)) 
-      (λc.halt sig M1 (cstate … c)) 
-      (λc.halt_liftL ?? (halt sig M1) (cstate … c)) 
-      … Hloop1))
-     [* *
-       [ #sl #tl whd in ⊢ (??%? → ?); #Hl %
-       | #sr #tr whd in ⊢ (??%? → ?); #Hr destruct (Hr) ]
-     || #c0 #Hhalt @daemon  (* <step_lift_confL // *)
-     | #x <p_halt_liftL %
-     |6:cases outc1 #s1 #t1 %
-     |7:@(loop_lift … (initc ?? (ctape … outc1)) … Hloop2) 
-       [ * #s2 #t2 %
-       | #c0 #Hhalt @daemon (* <step_lift_confR // *) ]
-     |whd in ⊢ (??(???%)?);whd in ⊢ (??%?);
-      generalize in match Hloop1; cases outc1 #sc1 #tc1 #Hloop10 
-      >(trans_liftL_true sig M1 M2 ??) 
-       [ whd in ⊢ (??%?); whd in ⊢ (???%);
-         @config_eq whd in ⊢ (???%); //
-       | @(loop_Some ?????? Hloop10) ]       
-     ||4:cases outc1 #s1 #t1 %
-     |5:
-         
-         @(loop_liftR … Hloop2) 
-         |whd in ⊢ (??(???%)?);whd in ⊢ (??%?);
-          generalize in match Hloop1; cases outc1 #sc1 #tc1 #Hloop10 
-          >(trans_liftL_true sig M1 M2 ??) 
-           [ whd in ⊢ (??%?); whd in ⊢ (???%);
-             @config_eq //
-           | @(loop_Some ?????? Hloop10) ]
+   cases (HaccR intape) #k * #outcM * * #HloopM #HMtrue #HMfalse
+   cut (outcM = outc1)
+   [ @(loop_eq … k … Hloop1) 
+     @(loop_lift ?? k (λc.c) ? 
+                (step ? (whileTM ? M acc)) ? 
+                (λc.halt sig M (cstate ?? c)) ?? 
+                ?? HloopM)
+     [ #x %
+     | * #s #t #Hx whd in ⊢ (??%%); >while_trans_false
+       [%
+       |% #Hfalse <Hfalse in Hacctrue; >Hx #H0 destruct ]
+     ]
+  | #HoutcM1 cases (true_or_false (cstate ?? outc1 == acc)) #Hacc
+      [@tech1 @(ex_intro … (ctape ?? outc1)) %
+        [ <HoutcM1 @HMtrue >HoutcM1 @(\P Hacc)
+        |@(Hind (m-k1)) 
+          [ cases m in Hloop;
+            [normalize #H destruct (H) ]
+             #m' #_ cases k1 in Hloop1;
+             [normalize #H destruct (H) ]
+             #k1' #_ normalize /2/
+           | <Hloop2 whd in ⊢ (???%);
+             >(\P Hacc) >halt_while_acc whd in ⊢ (???%);
+             normalize in match (halt ?? acc);
+             >step_while_acc // @(\P Hacc)
            ]
-| @(ex_intro … (ctape ? (seq sig M1 M2) (lift_confL … outc1)))
-  % //
-]
+         ]
+      |@(ex_intro … intape) % //
+       cut (Some ? outc1 = Some ? outc)
+       [ <Hloop1 <Hloop2 >loop_p_true in ⊢ (???%); //
+         normalize >(loop_Some ?????? Hloop1) >Hacc %
+       | #Houtc1c destruct @HMfalse @(\Pf Hacc)
+       ]
+     ]
+   ]
+ | * #s0 #t0 normalize cases (s0 == acc) normalize
+   [ cases (halt sig M s0) normalize #Hfalse destruct
+   | cases (halt sig M s0) normalize //
+   ]
+ ]
 qed.
+(*
+
 (* We do not distinuish an input tape *)
 
 record TM (sig:FinSet): Type[1] ≝ 
@@ -486,3 +480,4 @@ definition Compute_expl ≝ λsig.λM:TM sig.λf:(list sig) → (list sig).
 definition ComputeB_expl ≝ λsig.λM:TM sig.λf:(list sig) → bool.
   ∀l.∃c.computation sig M (init sig M l) c → 
    (stop sig M c = true) ∧ (isnilb ? (out ?? c) = false).
+*)
