@@ -52,22 +52,34 @@ generalize in match c1; elim k
  ]
 qed.
 
+axiom tech1: ∀A.∀R1,R2:relation A. 
+  ∀a,b. (R1 ∘ ((star ? R1) ∘ R2)) a b → ((star ? R1) ∘ R2) a b.
+
 theorem sem_while: ∀sig,M,acc,Rtrue,Rfalse.
   halt sig M acc = true →
   accRealize sig M acc Rtrue Rfalse → 
-    Realize sig (whileTM sig M acc) ((star ? Rtrue) ∘ Rfalse).
-#sig #M #acc #Rtrue #Rfalse #Hacctrue #HaccR #t 
-cases (HaccR t) #k * #outc * * #Hloop #HMtrue #HMfalse 
-cases (true_or_false (cstate ?? outc == acc)) #Hacc
-  [
-  |@(ex_intro … k) @(ex_intro … outc) %
-    [@(loop_lift_acc ?? k (λc.c) … Hloop)
-      [@(λc. (cstate ?? c) == acc)
-      |* #q #a #eqacc >(\P eqacc) //
-      |#c #eqacc normalize >eqacc normalize 
-       cases (halt sig M ?) normalize //
-      |* #s #a #halts whd in ⊢ (??%?); 
-       whd in ⊢ (???%); >while_trans_false 
+    WRealize sig (whileTM sig M acc) ((star ? Rtrue) ∘ Rfalse).
+#sig #M #acc #Rtrue #Rfalse #Hacctrue #HaccR #t #i
+generalize in match t;
+@(nat_elim1 … i) #m #Hind #intape #outc #Hloop
+cases (loop_split ?? (λc. halt sig M (cstate ?? c)) ????? Hloop)
+  [#k1 * #outc1 * #Hloop1 #Hloop2
+   cases (HaccR intape) #k * #outcM * * #HloopM #HMtrue #HMfalse 
+   cases (true_or_false (cstate ?? outc1 == acc)) #Hacc
+    [@tech1 @(ex_intro … (ctape ?? outc1)) %
+      [ (* @HMtrue @(\P Hacc) *)
+      |@(Hind (m-k1)) [|
+      | 
+    
+    @(ex_intro … outc) %
+    |@(ex_intro … k) @(ex_intro … outc) %
+      [@(loop_lift_acc ?? k (λc.c) … Hloop)
+        [@(λc. (cstate ?? c) == acc)
+        |* #q #a #eqacc >(\P eqacc) //
+        |#c #eqacc normalize >eqacc normalize 
+         cases (halt sig M ?) normalize //
+        |* #s #a #halts whd in ⊢ (??%?); 
+         whd in ⊢ (???%); >while_trans_false 
         [ % | @(not_to_not … not_eq_true_false) #eqs
          <Hacctrue <eqs //
         ]
