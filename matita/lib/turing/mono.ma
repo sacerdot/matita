@@ -12,14 +12,43 @@
 include "basics/vectors.ma".
 (* include "basics/relations.ma". *)
 
+(*
 record tape (sig:FinSet): Type[0] ≝ 
-{ left : list sig;
-  right: list sig
+{ left : list (option sig);
+  right: list (option sig)
 }.
+*)
+
+inductive tape (sig:FinSet) : Type[0] ≝ 
+| niltape : tape sig
+| leftof  : sig → list sig → tape sig
+| rightof : sig → list sig → tape sig
+| midtape : list sig → sig → list sig → tape sig.
+
+definition left ≝ 
+ λsig.λt:tape sig.match t with
+ [ niltape ⇒ [] 
+ | leftof _ _ ⇒ [] 
+ | rightof s l ⇒ s::l
+ | midtape l _ _ ⇒ l ].
+
+definition right ≝ 
+ λsig.λt:tape sig.match t with
+ [ niltape ⇒ [] 
+ | leftof s r ⇒ s::r 
+ | rightof _ _ ⇒ []
+ | midtape _ _ r ⇒ r ].
+ 
+ 
+definition current ≝ 
+ λsig.λt:tape sig.match t with
+ [ midtape _ c _ ⇒ Some ? c
+ | _ ⇒ None ? ].
 
 inductive move : Type[0] ≝
 | L : move 
 | R : move
+| N : move
 .
 
 (* We do not distinuish an input tape *)
@@ -36,24 +65,78 @@ record config (sig,states:FinSet): Type[0] ≝
   ctape: tape sig
 }.
 
-definition option_hd ≝ λA.λl:list A.
+(* definition option_hd ≝ λA.λl:list (option A).
   match l with
   [nil ⇒ None ?
-  |cons a _ ⇒ Some ? a
+  |cons a _ ⇒ a
   ].
+  *)
+
+(*definition tape_write ≝ λsig.λt:tape sig.λs:sig.
+  <left ? t) s (right ? t).
+  [ None ⇒ t
+  | Some s' ⇒ midtape ? (left ? t) s' (right ? t) ].*)
+  
+definition tape_move_left ≝ λsig:FinSet.λlt:list sig.λc:sig.λrt:list sig.
+  match lt with
+  [ nil ⇒ leftof sig c rt
+  | cons c0 lt0 ⇒ midtape sig lt0 c0 (c::rt) ].
+  
+definition tape_move_right ≝ λsig:FinSet.λlt:list sig.λc:sig.λrt:list sig.
+  match rt with
+  [ nil ⇒ rightof sig c lt
+  | cons c0 rt0 ⇒ midtape sig (c::lt) c0 rt0 ].
 
 definition tape_move ≝ λsig.λt: tape sig.λm:option (sig × move).
-  match m with 
+  match m with
   [ None ⇒ t
-  | Some m1 ⇒ 
-    match \snd m1 with
-    [ R ⇒ mk_tape sig ((\fst m1)::(left ? t)) (tail ? (right ? t))
-    | L ⇒ mk_tape sig (tail ? (left ? t)) ((\fst m1)::(right ? t))
-    ]
-  ].
-
+  | Some m' ⇒ 
+    let 〈s,m1〉 ≝ m' in 
+    match m1 with
+      [ R ⇒ tape_move_right ? (left ? t) s (right ? t)
+      | L ⇒ tape_move_left ? (left ? t) s (right ? t)
+      | N ⇒ midtape ? (left ? t) s (right ? t)
+      ] ].
+(*
+  (None,[]) → □
+  (None,a::[]) → □
+  (None,a::b::rs) → None::b::rs
+  (Some a,[]) → [Some a]
+  (Some a,b::rs) → Some a::rs
+  *)
+(*
+definition option_cons ≝ λA.λa:option A.λl.
+  match a with
+  [ None ⇒ match l with
+    [ nil ⇒ []
+    | cons _ _ ⇒ a::l ]
+  | Some _ ⇒ a::l ].
+  
+(* definition tape_update := λsig.λt: tape sig.λs:option sig.
+  let newright ≝ 
+    match right ? t with
+    [ nil ⇒ match s with
+      [ None ⇒ [] 
+      | Some a ⇒ [Some ? a] ]
+    | cons b rs ⇒ match s with
+      [ None ⇒ match rs with
+        [ nil ⇒ [] 
+        | cons _ _ ⇒ None ?::rs ]
+      | Some a ⇒ Some ? a::rs ] ]
+  in mk_tape ? (left ? t) newright. *)
+  
+definition tape_move ≝ λsig.λt:tape sig.λm:option sig × move.
+  let 〈s,m1〉 ≝ m in match m1 with
+    [ R ⇒ mk_tape sig (option_cons ? s (left ? t)) (tail ? (right ? t))
+    | L ⇒ mk_tape sig (tail ? (left ? t)) 
+           (option_cons ? (option_hd ? (left ? t))
+             (option_cons ? s (tail ? (right ? t))))
+    | N ⇒ mk_tape sig (left ? t) (option_cons ? s (tail ? (right ? t)))
+    ].
+*)
+  
 definition step ≝ λsig.λM:TM sig.λc:config sig (states sig M).
-  let current_char ≝ option_hd ? (right ? (ctape ?? c)) in
+  let current_char ≝ current ? (ctape ?? c) in
   let 〈news,mv〉 ≝ trans sig M 〈cstate ?? c,current_char〉 in
   mk_config ?? news (tape_move sig (ctape ?? c) mv).
   
@@ -273,30 +356,34 @@ lemma step_lift_confR : ∀sig,M1,M2,c0.
  halt ? M2 (cstate ?? c0) = false → 
  step sig (seq sig M1 M2) (lift_confR sig (states ? M1) (states ? M2) c0) =
  lift_confR sig (states ? M1) (states ? M2) (step sig M2 c0).
-#sig #M1 (* * #Q1 #T1 #init1 #halt1 *) #M2 * #s * #lt
-#rs #Hhalt
-whd in ⊢ (???(????%));whd in ⊢ (???%);
-lapply (refl ? (trans ?? 〈s,option_hd sig rs〉))
-cases (trans ?? 〈s,option_hd sig rs〉) in ⊢ (???% → %);
-#s0 #m0 #Heq whd in ⊢ (???%);
-whd in ⊢ (??(???%)?); whd in ⊢ (??%?);
->(trans_liftR … Heq)
-[% | //]
+#sig #M1 (* * #Q1 #T1 #init1 #halt1 *) #M2 * #s #t
+  lapply (refl ? (trans ?? 〈s,current sig t〉))
+  cases (trans ?? 〈s,current sig t〉) in ⊢ (???% → %);
+  #s0 #m0 cases t
+  [ #Heq #Hhalt
+  | 2,3: #s1 #l1 #Heq #Hhalt 
+  |#ls #s1 #rs #Heq #Hhalt ]
+  whd in ⊢ (???(????%)); >Heq
+  whd in ⊢ (???%);
+  whd in ⊢ (??(???%)?); whd in ⊢ (??%?);
+  >(trans_liftR … Heq) //
 qed.
 
 lemma step_lift_confL : ∀sig,M1,M2,c0.
  halt ? M1 (cstate ?? c0) = false → 
  step sig (seq sig M1 M2) (lift_confL sig (states ? M1) (states ? M2) c0) =
  lift_confL sig ?? (step sig M1 c0).
-#sig #M1 (* * #Q1 #T1 #init1 #halt1 *) #M2 * #s * #lt
-#rs #Hhalt
-whd in ⊢ (???(????%));whd in ⊢ (???%);
-lapply (refl ? (trans ?? 〈s,option_hd sig rs〉))
-cases (trans ?? 〈s,option_hd sig rs〉) in ⊢ (???% → %);
-#s0 #m0 #Heq whd in ⊢ (???%);
-whd in ⊢ (??(???%)?); whd in ⊢ (??%?);
->(trans_liftL … Heq)
-[% | //]
+#sig #M1 (* * #Q1 #T1 #init1 #halt1 *) #M2 * #s #t
+  lapply (refl ? (trans ?? 〈s,current sig t〉))
+  cases (trans ?? 〈s,current sig t〉) in ⊢ (???% → %);
+  #s0 #m0 cases t
+  [ #Heq #Hhalt
+  | 2,3: #s1 #l1 #Heq #Hhalt 
+  |#ls #s1 #rs #Heq #Hhalt ]
+  whd in ⊢ (???(????%)); >Heq
+  whd in ⊢ (???%);
+  whd in ⊢ (??(???%)?); whd in ⊢ (??%?);
+  >(trans_liftL … Heq) //
 qed.
 
 lemma loop_lift : ∀A,B,k,lift,f,g,h,hlift,c1,c2.

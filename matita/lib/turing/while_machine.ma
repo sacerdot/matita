@@ -9,8 +9,8 @@
      \ /   GNU General Public License Version 2   
       V_____________________________________________________________*)
 
-include "turing/mono.ma".
 include "basics/star.ma".
+include "turing/mono.ma".
 
 definition while_trans ≝ λsig. λM : TM sig. λq:states sig M. λp.
   let 〈s,a〉 ≝ p in
@@ -24,7 +24,7 @@ definition whileTM ≝ λsig. λM : TM sig. λqacc: states ? M.
     (start sig M)
     (λs.halt sig M s ∧ ¬ s==qacc).
     
-axiom daemon : ∀X:Prop.X.
+(* axiom daemon : ∀X:Prop.X. *)
 
 lemma while_trans_false : ∀sig,M,q,p.
   \fst p ≠ q → trans sig (whileTM sig M q) p = trans sig M p.
@@ -122,7 +122,207 @@ cases (loop_split ?? (λc. halt sig M (cstate ?? c)) ????? Hloop)
    ]
  ]
 qed.
-(*
+
+(* inductive move_states : Type[0] ≝ 
+| start : move_states
+| q1 : move_states
+| q2 : move_states
+| q3 : move_states
+| qacc : move_states
+| qfail : move_states.
+
+definition 
+*)
+
+definition mystates : FinSet → FinSet ≝ λalpha:FinSet.FinProd (initN 5) alpha.
+
+definition move_char ≝ 
+ λalpha:FinSet.λsep:alpha.
+ mk_TM alpha (mystates alpha)
+ (λp.let 〈q,a〉 ≝ p in
+  let 〈q',b〉 ≝ q in
+  match a with 
+  [ None ⇒ 〈〈4,sep〉,None ?〉 
+  | Some a' ⇒ 
+  match q' with
+  [ O ⇒ (* qinit *)
+    match a' == sep with
+    [ true ⇒ 〈〈4,sep〉,None ?〉
+    | false ⇒ 〈〈1,a'〉,Some ? 〈a',L〉〉 ]
+  | S q' ⇒ match q' with
+    [ O ⇒ (* q1 *)
+      〈〈2,a'〉,Some ? 〈b,R〉〉
+    | S q' ⇒ match q' with
+      [ O ⇒ (* q2 *)
+        〈〈3,sep〉,Some ? 〈b,R〉〉
+      | S q' ⇒ match q' with
+        [ O ⇒ (* qacc *)
+          〈〈3,sep〉,None ?〉
+        | S q' ⇒ (* qfail *)
+          〈〈4,sep〉,None ?〉 ] ] ] ] ])
+  〈0,sep〉
+  (λq.let 〈q',a〉 ≝ q in q' == 3 ∨ q' == 4).
+
+definition mk_tape : 
+  ∀sig:FinSet.list sig → option sig → list sig → tape sig ≝ 
+  λsig,lt,c,rt.match c with
+  [ Some c' ⇒ midtape sig lt c' rt
+  | None ⇒ match lt with 
+    [ nil ⇒ match rt with
+      [ nil ⇒ niltape ?
+      | cons r0 rs0 ⇒ leftof ? r0 rs0 ]
+    | cons l0 ls0 ⇒ rightof ? l0 ls0 ] ].
+    
+lemma cmove_q0_q1 : 
+  ∀alpha:FinSet.∀sep,a,ls,a0,rs.
+  a0 == sep = false → 
+  step alpha (move_char alpha sep)
+    (mk_config ?? 〈0,a〉 (mk_tape … ls (Some ? a0) rs)) =
+  mk_config alpha (states ? (move_char alpha sep)) 〈1,a0〉
+    (tape_move_left alpha ls a0 rs).
+#alpha #sep #a *
+[ #a0 #rs #Ha0 whd in ⊢ (??%?); 
+  normalize in match (trans ???); >Ha0 %
+| #a1 #ls #a0 #rs #Ha0 whd in ⊢ (??%?);
+  normalize in match (trans ???); >Ha0 %
+]
+qed.
+    
+lemma cmove_q1_q2 :
+  ∀alpha:FinSet.∀sep,a,ls,a0,rs.
+  step alpha (move_char alpha sep) 
+    (mk_config ?? 〈1,a〉 (mk_tape … ls (Some ? a0) rs)) = 
+  mk_config alpha (states ? (move_char alpha sep)) 〈2,a0〉 
+    (tape_move_right alpha ls a rs).
+#alpha #sep #a #ls #a0 * //
+qed.
+
+lemma cmove_q2_q3 :
+  ∀alpha:FinSet.∀sep,a,ls,a0,rs.
+  step alpha (move_char alpha sep) 
+    (mk_config ?? 〈2,a〉 (mk_tape … ls (Some ? a0) rs)) = 
+  mk_config alpha (states ? (move_char alpha sep)) 〈3,sep〉 
+    (tape_move_right alpha ls a rs).
+#alpha #sep #a #ls #a0 * //
+qed.
+
+definition option_hd ≝ 
+  λA.λl:list A. match l with
+  [ nil ⇒ None ?
+  | cons a _ ⇒ Some ? a ].
+
+definition Rmove_char_true ≝ 
+  λalpha,sep,t1,t2.
+   ∀a,b,ls,rs. b ≠ sep → 
+    t1 = midtape alpha (a::ls) b rs → 
+    t2 = mk_tape alpha (a::b::ls) (option_hd ? rs) (tail ? rs).
+
+definition Rmove_char_false ≝ 
+  λalpha,sep,t1,t2.
+    (current alpha t1 = None alpha → t2 = t1) ∧
+    (current alpha t1 = Some alpha sep → t2 = t1).
+    
+lemma loop_S_true : 
+  ∀A,n,f,p,a.  p a = true → 
+  loop A (S n) f p a = Some ? a. /2/
+qed.
+
+lemma loop_S_false : 
+  ∀A,n,f,p,a.  p a = false → 
+  loop A (S n) f p a = loop A n f p (f a).
+normalize #A #n #f #p #a #Hpa >Hpa %
+qed.
+
+notation < "𝐅" non associative with precedence 90 
+ for @{'bigF}.
+notation < "𝐃" non associative with precedence 90 
+ for @{'bigD}.
+ 
+interpretation "FinSet" 'bigF = (mk_FinSet ???).
+interpretation "DeqSet" 'bigD = (mk_DeqSet ???).
+
+lemma trans_init_sep: 
+  ∀alpha,sep,x.
+  trans ? (move_char alpha sep) 〈〈0,x〉,Some ? sep〉 = 〈〈4,sep〉,None ?〉.
+#alpha #sep #x normalize >(\b ?) //
+qed.
+ 
+lemma trans_init_not_sep: 
+  ∀alpha,sep,x,y.y == sep = false → 
+  trans ? (move_char alpha sep) 〈〈0,x〉,Some ? y〉 = 〈〈1,y〉,Some ? 〈y,L〉〉.
+#alpha #sep #x #y #H1 normalize >H1 //
+qed.
+
+lemma sem_move_char :
+  ∀alpha,sep.
+  accRealize alpha (move_char alpha sep) 
+    〈3,sep〉 (Rmove_char_true alpha sep) (Rmove_char_false alpha sep).
+#alpha #sep *
+[@(ex_intro ?? 2)  
+  @(ex_intro … (mk_config ?? 〈4,sep〉 (niltape ?)))
+  % [% [whd in ⊢ (??%?);% |#Hfalse destruct ] |#H1 whd % #_ % ]
+|#l0 #lt0 @(ex_intro ?? 2)  
+  @(ex_intro … (mk_config ?? 〈4,sep〉 (leftof ? l0 lt0)))
+  % [% [whd in ⊢ (??%?);% |#Hfalse destruct ] |#H1 whd % #_ % ]
+|#r0 #rt0 @(ex_intro ?? 2)  
+  @(ex_intro … (mk_config ?? 〈4,sep〉 (rightof ? r0 rt0)))
+  % [% [whd in ⊢ (??%?);% |#Hfalse destruct ] |#H1 whd % #_ % ]
+| #lt #c #rt cases (true_or_false (c == sep)) #Hc
+  [ @(ex_intro ?? 2) 
+    @(ex_intro ?? (mk_config ?? 〈4,sep〉 (midtape ? lt c rt)))
+    % 
+    [% 
+      [ >(\P Hc) >loop_S_false //
+       >loop_S_true 
+       [ @eq_f whd in ⊢ (??%?); >trans_init_sep %
+       |>(\P Hc) whd in ⊢(??(???(???%))?);
+         >trans_init_sep % ]
+     | #Hfalse destruct
+     ]
+    |#_ % #_ % ]
+  | @(ex_intro ?? 4)
+    cases lt
+    [ @ex_intro
+      [|%
+        [ %
+          [ >loop_S_false //
+            >cmove_q0_q1 //
+          | normalize in ⊢ (%→?); #Hfalse destruct (Hfalse)
+          ]
+        | normalize in ⊢ (%→?); #_ %
+          [ normalize in ⊢ (%→?); #Hfalse destruct (Hfalse)
+          | normalize in ⊢ (%→?); #Hfalse destruct (Hfalse)
+            @False_ind @(absurd ?? (\Pf Hc)) %
+          ]
+        ]
+      ]
+    | #l0 #lt @ex_intro
+      [| %
+       [ %
+         [ >loop_S_false //
+           >cmove_q0_q1 //
+         | #_ #a #b #ls #rs #Hb #Htape
+           destruct (Htape)
+           >cmove_q1_q2
+           >cmove_q2_q3
+           cases rs normalize //
+         ]
+       | normalize in ⊢ (% → ?); * #Hfalse
+         @False_ind /2/
+       ]
+     ]
+   ]
+ ]
+]
+qed.
+
+definition R_while_cmove :
+  λalpha,sep,t1,t2.
+   ∀a,b,ls,rs. b ≠ sep → memb ? sep rs = false → 
+    t1 = midtape alpha (a::ls) b (rs@sep::rs') → 
+    t2 = midtape alpha (a::rev ? rs@b::ls) sep rs'.
+
+(* (*
 
 (* We do not distinuish an input tape *)
 
