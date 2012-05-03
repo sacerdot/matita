@@ -505,13 +505,14 @@ and try_coercions status
   (* we try with a coercion *)
   let rec first exc = function
   | [] ->   
-     let expty =
-      match expty with
-         `Type expty -> status#ppterm ~metasenv ~subst ~context expty
-       | `Sort -> "[[sort]]"
-       | `Prod -> "[[prod]]" in
       pp (lazy "WWW: no more coercions!");      
-      raise (wrap_exc (lazy (localise orig_t, Printf.sprintf
+      raise (wrap_exc (lazy
+       let expty =
+        match expty with
+           `Type expty -> status#ppterm ~metasenv ~subst ~context expty
+         | `Sort -> "[[sort]]"
+         | `Prod -> "[[prod]]" in
+         (localise orig_t, Printf.sprintf
         "The term\n%s\nhas type\n%s\nbut is here used with type\n%s"
         (status#ppterm ~metasenv ~subst ~context t)
         (status#ppterm ~metasenv ~subst ~context infty)
