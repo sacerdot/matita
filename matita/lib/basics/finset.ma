@@ -19,18 +19,52 @@ record FinSet : Type[1] ≝
   enum_unique: uniqueb FinSetcarr enum = true
 }.
 
+(* bool *)
+lemma bool_enum_unique: uniqueb ? [true;false] = true.
+// qed.
+
+definition BoolFS ≝ mk_FinSet DeqBool [true;false] bool_enum_unique.
+
+unification hint  0 ≔ ; 
+    X ≟ BoolFS
+(* ---------------------------------------- *) ⊢ 
+    bool ≡ FinSetcarr X.
+
+(* nat segment *)
+
+lemma eqbnat_true : ∀n,m. eqb n m = true ↔ n = m.
+#n #m % [@eqb_true_to_eq | @eq_to_eqb_true]
+qed.
+
+definition DeqNat ≝ mk_DeqSet nat eqb eqbnat_true.
+
+let rec enumn n ≝ 
+  match n with [ O ⇒ [ ] | S p ⇒ p::enumn p ].
+
+lemma memb_enumn: ∀m,n. n ≤ m →  (¬ (memb DeqNat m (enumn n))) = true.
+#m #n elim n // #n1 #Hind #ltm  @sym_eq @noteq_to_eqnot @sym_not_eq
+% #H cases (orb_true_l … H)
+  [#H1 @(absurd … (\P H1)) @sym_not_eq /2/ 
+  |<(notb_notb (memb …)) >Hind normalize /2/
+  ]
+qed.
+  
+lemma enumn_unique: ∀n. uniqueb DeqNat (enumn n) = true.
+#n elim n // #m #Hind @true_to_andb_true /2/ 
+qed.
+
+definition initN ≝ λn.mk_FinSet DeqNat (enumn n) (enumn_unique n).
+
+example tipa: ∀n.∃x: initN (S n). x = n.
+#n @(ex_intro … n) // qed.
+
+(* sum *)
 definition enum_sum ≝ λA,B:DeqSet.λl1.λl2.
   (map ?? (inl A B) l1) @ (map ?? (inr A B) l2).
   
 lemma enumAB_def : ∀A,B:FinSet.∀l1,l2. enum_sum A B l1 l2 = 
   (map ?? (inl A B) l1) @ (map ?? (inr A B) l2).
 // qed.
-
-axiom unique_map_inj: ∀A,B:DeqSet.∀f:A→B.∀l. injective A B f → 
-  uniqueb A l = true → uniqueb B (map ?? f l) = true .
-
-axiom memb_map_inj: ∀A,B:DeqSet.∀f:A→B.∀l,a. injective A B f → 
-  memb ? (f a) (map ?? f l) = true → memb ? a l = true.
 
 lemma enumAB_unique: ∀A,B:DeqSet.∀l1,l2. 
   uniqueb A l1 = true → uniqueb B l2 = true → 
