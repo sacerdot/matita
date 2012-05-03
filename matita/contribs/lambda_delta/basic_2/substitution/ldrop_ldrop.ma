@@ -55,25 +55,64 @@ theorem ldrop_conf_ge: ∀d1,e1,L,L1. ⇩[d1, e1] L ≡ L1 →
 ]
 qed.
 
-(* Basic_1: was: drop_conf_lt *)
-theorem ldrop_conf_lt: ∀d1,e1,L,L1. ⇩[d1, e1] L ≡ L1 →
-                       ∀e2,K2,I,V2. ⇩[0, e2] L ≡ K2. ⓑ{I} V2 →
-                       e2 < d1 → let d ≝ d1 - e2 - 1 in
-                       ∃∃K1,V1. ⇩[0, e2] L1 ≡ K1. ⓑ{I} V1 &
-                                ⇩[d, e1] K2 ≡ K1 & ⇧[d, e1] V1 ≡ V2.
-#d1 #e1 #L #L1 #H elim H -d1 -e1 -L -L1
-[ #d #e #e2 #K2 #I #V2 #H
-  lapply (ldrop_inv_atom1 … H) -H #H destruct
-| #L #I #V #e2 #K2 #J #V2 #_ #H
-  elim (lt_zero_false … H)
-| #L1 #L2 #I #V #e #_ #_ #e2 #K2 #J #V2 #_ #H
-  elim (lt_zero_false … H)
-| #L1 #L2 #I #V1 #V2 #d #e #HL12 #HV12 #IHL12 #e2 #K2 #J #V #H #He2d
-  elim (ldrop_inv_O1 … H) -H *
-  [ -IHL12 -He2d #H1 #H2 destruct /2 width=5/
-  | -HL12 -HV12 #He #HLK
-    elim (IHL12 … HLK ?) -IHL12 -HLK [ <minus_minus /3 width=5/ | /2 width=1/ ] (**) (* a bit slow *)
+(* Note: apparently this was missing in basic_1 *)
+theorem ldrop_conf_be: ∀L0,L1,d1,e1. ⇩[d1, e1] L0 ≡ L1 →
+                       ∀L2,e2. ⇩[0, e2] L0 ≡ L2 → d1 ≤ e2 → e2 ≤ d1 + e1 →
+                       ∃∃L. ⇩[0, d1 + e1 - e2] L2 ≡ L & ⇩[0, d1] L1 ≡ L.
+#L0 #L1 #d1 #e1 #H elim H -L0 -L1 -d1 -e1
+[ #d1 #e1 #L2 #e2 #H >(ldrop_inv_atom1 … H) -H /2 width=3/
+| normalize #L #I #V #L2 #e2 #HL2 #_ #He2
+  lapply (le_n_O_to_eq … He2) -He2 #H destruct
+  lapply (ldrop_inv_refl … HL2) -HL2 #H destruct /2 width=3/
+| normalize #L0 #K0 #I #V1 #e1 #HLK0 #IHLK0 #L2 #e2 #H #_ #He21
+  lapply (ldrop_inv_O1 … H) -H * * #He2 #HL20
+  [ -IHLK0 -He21 destruct <minus_n_O /3 width=3/
+  | -HLK0 <minus_le_minus_minus_comm //
+    elim (IHLK0 … HL20 ? ?) -L0 // /2 width=1/ /2 width=3/
   ]
+| #L0 #K0 #I #V0 #V1 #d1 #e1 >plus_plus_comm_23 #_ #_ #IHLK0 #L2 #e2 #H #Hd1e2 #He2de1
+  elim (le_inv_plus_l … Hd1e2) #_ #He2
+  <minus_le_minus_minus_comm //
+  lapply (ldrop_inv_ldrop1 … H ?) -H // #HL02
+  elim (IHLK0 … HL02 ? ?) -L0 /2 width=1/ /3 width=3/
+]
+qed.
+
+(* Note: apparently this was missing in basic_1 *)
+theorem ldrop_conf_le: ∀L0,L1,d1,e1. ⇩[d1, e1] L0 ≡ L1 →
+                       ∀L2,e2. ⇩[0, e2] L0 ≡ L2 → e2 ≤ d1 → 
+                       ∃∃L. ⇩[0, e2] L1 ≡ L & ⇩[d1 - e2, e1] L2 ≡ L.
+#L0 #L1 #d1 #e1 #H elim H -L0 -L1 -d1 -e1
+[ #d1 #e1 #L2 #e2 #H
+  lapply (ldrop_inv_atom1 … H) -H #H destruct /2 width=3/
+| #K0 #I #V0 #L2 #e2 #H1 #H2
+  lapply (le_n_O_to_eq … H2) -H2 #H destruct
+  lapply (ldrop_inv_pair1 … H1) -H1 #H destruct /2 width=3/
+| #K0 #K1 #I #V0 #e1 #HK01 #_ #L2 #e2 #H1 #H2
+  lapply (le_n_O_to_eq … H2) -H2 #H destruct
+  lapply (ldrop_inv_pair1 … H1) -H1 #H destruct /3 width=3/
+| #K0 #K1 #I #V0 #V1 #d1 #e1 #HK01 #HV10 #IHK01 #L2 #e2 #H #He2d1
+  elim (ldrop_inv_O1 … H) -H *
+  [ -IHK01 -He2d1 #H1 #H2 destruct /3 width=5/
+  | -HK01 -HV10 #He2 #HK0L2
+    elim (IHK01 … HK0L2 ?) -IHK01 -HK0L2 /2 width=1/ >minus_le_minus_minus_comm // /3 width=3/
+  ]
+]
+qed.
+
+(* Basic_1: was: drop_trans_ge *)
+theorem ldrop_trans_ge: ∀d1,e1,L1,L. ⇩[d1, e1] L1 ≡ L →
+                        ∀e2,L2. ⇩[0, e2] L ≡ L2 → d1 ≤ e2 → ⇩[0, e1 + e2] L1 ≡ L2.
+#d1 #e1 #L1 #L #H elim H -d1 -e1 -L1 -L
+[ #d #e #e2 #L2 #H
+  >(ldrop_inv_atom1 … H) -H -L2 //
+| //
+| /3 width=1/
+| #L1 #L2 #I #V1 #V2 #d #e #H_ #_ #IHL12 #e2 #L #H #Hde2
+  lapply (lt_to_le_to_lt 0 … Hde2) // #He2
+  lapply (lt_to_le_to_lt … (e + e2) He2 ?) // #Hee2
+  lapply (ldrop_inv_ldrop1 … H ?) -H // #HL2
+  @ldrop_ldrop_lt // >le_plus_minus // @IHL12 /2 width=1/ (**) (* explicit constructor *)
 ]
 qed.
 
@@ -99,28 +138,23 @@ theorem ldrop_trans_le: ∀d1,e1,L1,L. ⇩[d1, e1] L1 ≡ L →
 ]
 qed.
 
-(* Basic_1: was: drop_trans_ge *)
-theorem ldrop_trans_ge: ∀d1,e1,L1,L. ⇩[d1, e1] L1 ≡ L →
-                        ∀e2,L2. ⇩[0, e2] L ≡ L2 → d1 ≤ e2 → ⇩[0, e1 + e2] L1 ≡ L2.
-#d1 #e1 #L1 #L #H elim H -d1 -e1 -L1 -L
-[ #d #e #e2 #L2 #H
-  >(ldrop_inv_atom1 … H) -H -L2 //
-| //
-| /3 width=1/
-| #L1 #L2 #I #V1 #V2 #d #e #H_ #_ #IHL12 #e2 #L #H #Hde2
-  lapply (lt_to_le_to_lt 0 … Hde2) // #He2
-  lapply (lt_to_le_to_lt … (e + e2) He2 ?) // #Hee2
-  lapply (ldrop_inv_ldrop1 … H ?) -H // #HL2
-  @ldrop_ldrop_lt // >le_plus_minus // @IHL12 /2 width=1/ (**) (* explicit constructor *)
-]
-qed.
-
-theorem ldrop_trans_ge_comm: ∀d1,e1,e2,L1,L2,L.
-                             ⇩[d1, e1] L1 ≡ L → ⇩[0, e2] L ≡ L2 → d1 ≤ e2 →
-                             ⇩[0, e2 + e1] L1 ≡ L2.
-#e1 #e1 #e2 >commutative_plus /2 width=5/
-qed.
-
 (* Basic_1: was: drop_conf_rev *)
 axiom ldrop_div: ∀e1,L1,L. ⇩[0, e1] L1 ≡ L → ∀e2,L2. ⇩[0, e2] L2 ≡ L →
                  ∃∃L0. ⇩[0, e1] L0 ≡ L2 & ⇩[e1, e2] L0 ≡ L1.
+
+(* Basic_1: was: drop_conf_lt *)
+lemma ldrop_conf_lt: ∀d1,e1,L,L1. ⇩[d1, e1] L ≡ L1 →
+                     ∀e2,K2,I,V2. ⇩[0, e2] L ≡ K2. ⓑ{I} V2 →
+                     e2 < d1 → let d ≝ d1 - e2 - 1 in
+                     ∃∃K1,V1. ⇩[0, e2] L1 ≡ K1. ⓑ{I} V1 &
+                              ⇩[d, e1] K2 ≡ K1 & ⇧[d, e1] V1 ≡ V2.
+#d1 #e1 #L #L1 #H1 #e2 #K2 #I #V2 #H2 #He2d1
+elim (ldrop_conf_le … H1 … H2 ?) -L [2: /2 width=2/] #K #HL1K #HK2
+elim (ldrop_inv_skip1 … HK2 ?) -HK2 [2: /2 width=1/] #K1 #V1 #HK21 #HV12 #H destruct /2 width=5/
+qed.
+
+lemma ldrop_trans_ge_comm: ∀d1,e1,e2,L1,L2,L.
+                           ⇩[d1, e1] L1 ≡ L → ⇩[0, e2] L ≡ L2 → d1 ≤ e2 →
+                           ⇩[0, e2 + e1] L1 ≡ L2.
+#e1 #e1 #e2 >commutative_plus /2 width=5/
+qed.

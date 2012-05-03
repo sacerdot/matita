@@ -73,6 +73,25 @@ lemma ltpss_refl: ∀L,d,e. L [d, e] ▶* L.
 #L #I #V #IHL * /2 width=1/ * /2 width=1/
 qed.
 
+lemma ltpss_weak: ∀L1,L2,d1,e1. L1 [d1, e1] ▶* L2 →
+                  ∀d2,e2. d2 ≤ d1 → d1 + e1 ≤ d2 + e2 → L1 [d2, e2] ▶* L2.
+#L1 #L2 #d1 #e1 #H elim H -L1 -L2 -d1 -e1 //
+[ #L1 #L2 #I #V1 #V2 #e1 #_ #HV12 #IHL12 #d2 #e2 #Hd2 #Hde2
+  lapply (le_n_O_to_eq … Hd2) #H destruct normalize in Hde2;
+  lapply (lt_to_le_to_lt 0 … Hde2) // #He2
+  lapply (le_plus_to_minus_r … Hde2) -Hde2 /3 width=5/
+| #L1 #L2 #I #V1 #V2 #d1 #e1 #_ #HV12 #IHL12 #d2 #e2 #Hd21 #Hde12
+  >plus_plus_comm_23 in Hde12; #Hde12
+  elim (le_to_or_lt_eq 0 d2 ?) // #H destruct
+  [ lapply (le_plus_to_minus_r … Hde12) -Hde12 <plus_minus // #Hde12
+    lapply (le_plus_to_minus … Hd21) -Hd21 #Hd21 /3 width=5/
+  | -Hd21 normalize in Hde12;
+    lapply (lt_to_le_to_lt 0 … Hde12) // #He2
+    lapply (le_plus_to_minus_r … Hde12) -Hde12 /3 width=5/
+  ]
+]
+qed.  
+
 lemma ltpss_weak_all: ∀L1,L2,d,e. L1 [d, e] ▶* L2 → L1 [0, |L2|] ▶* L2.
 #L1 #L2 #d #e #H elim H -L1 -L2 -d -e
 // /3 width=2/ /3 width=3/

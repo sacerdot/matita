@@ -14,9 +14,9 @@
 
 include "basic_2/unfold/delift_lift.ma".
 
-(* DELIFT ON TERMS **********************************************************)
+(* INVERSE TERM RELOCATION  *************************************************)
 
-(* alternative definition of delift *)
+(* alternative definition of inverse relocation *)
 inductive delifta: nat → nat → lenv → relation term ≝
 | delifta_sort   : ∀L,d,e,k. delifta d e L (⋆k) (⋆k)
 | delifta_lref_lt: ∀L,d,e,i. i < d → delifta d e L (#i) (#i)
@@ -33,7 +33,7 @@ inductive delifta: nat → nat → lenv → relation term ≝
                    delifta d e L (ⓕ{I} V1. T1) (ⓕ{I} V2. T2)
 .
 
-interpretation "delift (term) alternative"
+interpretation "inverse relocation (term) alternative"
    'TSubstAlt L T1 d e T2 = (delifta d e L T1 T2).
 
 (* Basic properties *********************************************************)

@@ -76,6 +76,12 @@ lemma ldrop_inv_O1: ∀e,K,I,V,L2. ⇩[0, e] K. ⓑ{I} V ≡ L2 →
                     (0 < e ∧ ⇩[0, e - 1] K ≡ L2).
 /2 width=3/ qed-.
 
+lemma ldrop_inv_pair1: ∀K,I,V,L2. ⇩[0, 0] K. ⓑ{I} V ≡ L2 → L2 = K. ⓑ{I} V.
+#K #I #V #L2 #H
+elim (ldrop_inv_O1 … H) -H * // #H destruct
+elim (lt_refl_false … H)
+qed-.
+
 (* Basic_1: was: drop_gen_drop *)
 lemma ldrop_inv_ldrop1: ∀e,K,I,V,L2.
                         ⇩[0, e] K. ⓑ{I} V ≡ L2 → 0 < e → ⇩[0, e - 1] K ≡ L2.

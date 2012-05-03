@@ -14,15 +14,19 @@
 
 include "basic_2/unfold/tpss.ma".
 
-(* DELIFT ON TERMS **********************************************************)
+(* INVERSE TERM RELOCATION  *************************************************)
 
 definition delift: nat → nat → lenv → relation term ≝
                    λd,e,L,T1,T2. ∃∃T. L ⊢ T1 [d, e] ▶* T & ⇧[d, e] T2 ≡ T.
 
-interpretation "delift (term)"
+interpretation "inverse relocation (term)"
    'TSubst L T1 d e T2 = (delift d e L T1 T2).
 
 (* Basic properties *********************************************************)
+
+lemma lift_delift: ∀T1,T2,d,e. ⇧[d, e] T1 ≡ T2 →
+                   ∀L. L ⊢ T2 [d, e] ≡ T1.
+/2 width=3/ qed.
 
 lemma delift_refl_O2: ∀L,T,d. L ⊢ T [d, 0] ≡ T.
 /2 width=3/ qed.

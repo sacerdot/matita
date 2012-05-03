@@ -15,7 +15,7 @@
 include "basic_2/unfold/tpss_lift.ma".
 include "basic_2/unfold/delift.ma".
 
-(* DELIFT ON TERMS **********************************************************)
+(* INVERSE TERM RELOCATION  *************************************************)
 
 (* Advanced properties ******************************************************)
 
@@ -81,3 +81,37 @@ elim (lt_or_ge i d) #Hdi
   ]
 ]
 qed-.
+
+(* Relocation properties ****************************************************)
+
+lemma delift_lift_le: ∀K,T1,T2,dt,et. K ⊢ T1 [dt, et] ≡ T2 →
+                      ∀L,U1,d,e. dt + et ≤ d → ⇩[d, e] L ≡ K →
+                      ⇧[d, e] T1 ≡ U1 → ∀U2. ⇧[d - et, e] T2 ≡ U2 →
+                      L ⊢ U1 [dt, et] ≡ U2.
+#K #T1 #T2 #dt #et * #T #HT1 #HT2 #L #U1 #d #e #Hdetd #HLK #HTU1 #U2 #HTU2
+elim (lift_total T d e) #U #HTU
+lapply (tpss_lift_le … HT1 … HLK HTU1 … HTU) -T1 -HLK // #HU1
+elim (lift_trans_ge … HT2 … HTU ?) -T // -Hdetd #T #HT2 #HTU
+>(lift_mono … HTU2 … HT2) -T2 /2 width=3/
+qed.
+
+lemma delift_lift_be: ∀K,T1,T2,dt,et. K ⊢ T1 [dt, et] ≡ T2 →
+                      ∀L,U1,d,e. dt ≤ d → d ≤ dt + et →
+                      ⇩[d, e] L ≡ K → ⇧[d, e] T1 ≡ U1 →
+                      L ⊢ U1 [dt, et + e] ≡ T2.
+#K #T1 #T2 #dt #et * #T #HT1 #HT2 #L #U1 #d #e #Hdtd #Hddet #HLK #HTU1
+elim (lift_total T d e) #U #HTU
+lapply (tpss_lift_be … HT1 … HLK HTU1 … HTU) -T1 -HLK // #HU1
+lapply (lift_trans_be … HT2 … HTU ? ?) -T // -Hdtd -Hddet /2 width=3/
+qed.
+
+lemma delift_lift_ge: ∀K,T1,T2,dt,et. K ⊢ T1 [dt, et] ≡ T2 →
+                      ∀L,U1,d,e. d ≤ dt → ⇩[d, e] L ≡ K →
+                      ⇧[d, e] T1 ≡ U1 → ∀U2. ⇧[d, e] T2 ≡ U2 →
+                      L ⊢ U1 [dt + e, et] ≡ U2.
+#K #T1 #T2 #dt #et * #T #HT1 #HT2 #L #U1 #d #e #Hddt #HLK #HTU1 #U2 #HTU2
+elim (lift_total T d e) #U #HTU
+lapply (tpss_lift_ge … HT1 … HLK HTU1 … HTU) -T1 -HLK // #HU1
+elim (lift_trans_le … HT2 … HTU ?) -T // -Hddt #T #HT2 #HTU
+>(lift_mono … HTU2 … HT2) -T2 /2 width=3/
+qed.

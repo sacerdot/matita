@@ -12,26 +12,22 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/unfold/ltpss.ma".
+include "basic_2/unfold/ltpss_ltpss.ma".
+include "basic_2/unfold/delift.ma".
 
-(* LOCAL ENVIRONMENT THINNING ***********************************************)
+(* INVERSE TERM RELOCATION  *************************************************)
 
-definition thin: nat → nat → relation lenv ≝
-                 λd,e,L1,L2. ∃∃L. L1 [d, e] ▶* L & ⇩[d, e] L ≡ L2.
+(* Properties on partial unfold on local environments ***********************)
 
-interpretation "thinning (local environment)"
-   'TSubst L1 d e L2 = (thin d e L1 L2).
+lemma delift_ltpss_conf_eq: ∀L,T1,T2,d,e. L ⊢ T1 [d, e] ≡ T2 →
+                            ∀K. L [d, e] ▶* K → K ⊢ T1 [d, e] ≡ T2.
+#L #T1 #T2 #d #e * #T #HT1 #HT2 #K #HLK
+elim (ltpss_tpss_conf … HT1 … HLK) -L #T0 #HT10 #HT0
+lapply (tpss_inv_lift1_eq … HT0 … HT2) -HT0 #H destruct /2 width=3/
+qed.
 
-(* Basic properties *********************************************************)
-
-lemma ldrop_thin: ∀L1,L2,d,e. ⇩[d, e] L1 ≡ L2 → L1 [d, e] ≡ L2.
-/2 width=3/ qed.
-
-(* Basic inversion lemmas ***************************************************)
-
-lemma thin_inv_thin1: ∀I,K1,V1,L2,e. K1. ⓑ{I} V1 [0, e] ≡ L2 → 0 < e →
-                      K1 [0, e - 1] ≡ L2.
-#I #K1 #V1 #L2 #e * #X #HK1 #HL2 #e
-elim (ltpss_inv_tpss21 … HK1 ?) -HK1 // #K #V #HK1 #_ #H destruct
-lapply (ldrop_inv_ldrop1 … HL2 ?) -HL2 // /2 width=3/
-qed-.
+lemma ltpss_delift_trans_eq: ∀L,K,d,e. L [d, e] ▶* K →
+                             ∀T1,T2. K ⊢ T1 [d, e] ≡ T2 → L ⊢ T1 [d, e] ≡ T2.
+#L #K #d #e #HLK #T1 #T2 * #T #HT1 #HT2 
+lapply (ltpss_tpss_trans_eq … HT1 … HLK) -K /2 width=3/
+qed.
