@@ -23,10 +23,10 @@ record FinSet : Type[1] ≝
 lemma bool_enum_unique: uniqueb ? [true;false] = true.
 // qed.
 
-definition BoolFS ≝ mk_FinSet DeqBool [true;false] bool_enum_unique.
+definition FinBool ≝ mk_FinSet DeqBool [true;false] bool_enum_unique.
 
 unification hint  0 ≔ ; 
-    X ≟ BoolFS
+    X ≟ FinBool
 (* ---------------------------------------- *) ⊢ 
     bool ≡ FinSetcarr X.
 
@@ -57,6 +57,10 @@ definition initN ≝ λn.mk_FinSet DeqNat (enumn n) (enumn_unique n).
 
 example tipa: ∀n.∃x: initN (S n). x = n.
 #n @(ex_intro … n) // qed.
+
+example inject : ∃f: initN 2 → initN 4. injective ?? f.
+@(ex_intro … S) // 
+qed.
 
 (* sum *)
 definition enum_sum ≝ λA,B:DeqSet.λl1.λl2.
@@ -101,39 +105,24 @@ unification hint  0 ≔ C1,C2;
 (* ---------------------------------------- *) ⊢ 
     T1+T2 ≡ FinSetcarr X.
 
+(* prod *)
 
-(*
-unification hint  0 ≔ ; 
-    X ≟ mk_DeqSet bool beqb beqb_true
-(* ---------------------------------------- *) ⊢ 
-    bool ≡ carr X.
-    
-unification hint  0 ≔ b1,b2:bool; 
-    X ≟ mk_DeqSet bool beqb beqb_true
-(* ---------------------------------------- *) ⊢ 
-    beqb b1 b2 ≡ eqb X b1 b2.
-    
-example exhint: ∀b:bool. (b == false) = true → b = false. 
-#b #H @(\P H).
-qed.
-
-(* pairs *)
-definition eq_pairs ≝
-  λA,B:DeqSet.λp1,p2:A×B.(\fst p1 == \fst p2) ∧ (\snd p1 == \snd p2).
-
-lemma eq_pairs_true: ∀A,B:DeqSet.∀p1,p2:A×B.
-  eq_pairs A B p1 p2 = true ↔ p1 = p2.
-#A #B * #a1 #b1 * #a2 #b2 %
-  [#H cases (andb_true …H) #eqa #eqb >(\P eqa) >(\P eqb) //
-  |#H destruct normalize >(\b (refl … a2)) >(\b (refl … b2)) //
-  ]
-qed.
-
-definition DeqProd ≝ λA,B:DeqSet.
-  mk_DeqSet (A×B) (eq_pairs A B) (eq_pairs_true A B).
+definition enum_prod ≝ λA,B:DeqSet.λl1.λl2.
+  compose ??? (mk_Prod A B) l1 l2.
   
+axiom enum_prod_unique: ∀A,B,l1,l2. 
+  uniqueb A l1 = true → uniqueb B l2 = true →
+  uniqueb ? (enum_prod A B l1 l2) = true.
 
-example hint2: ∀b1,b2. 
-  〈b1,true〉==〈false,b2〉=true → 〈b1,true〉=〈false,b2〉.
-#b1 #b2 #H @(\P H).
-*)
+definition FinProd ≝ 
+λA,B:FinSet.mk_FinSet (DeqProd A B)
+  (enum_prod A B (enum A) (enum B)) 
+  (enum_prod_unique A B (enum A) (enum B) (enum_unique A) (enum_unique B) ).
+
+unification hint  0 ≔ C1,C2; 
+    T1 ≟ FinSetcarr C1,
+    T2 ≟ FinSetcarr C2,
+    X ≟ FinProd C1 C2
+(* ---------------------------------------- *) ⊢ 
+    T1×T2 ≡ FinSetcarr X.
+
