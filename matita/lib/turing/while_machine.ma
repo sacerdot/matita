@@ -219,8 +219,8 @@ definition Rmove_char_true ≝
 
 definition Rmove_char_false ≝ 
   λalpha,sep,t1,t2.
-    (current alpha t1 = None alpha → t2 = t1) ∧
-    (current alpha t1 = Some alpha sep → t2 = t1).
+    left ? t1 ≠ [] → current alpha t1 ≠ None alpha → 
+      current alpha t1 = Some alpha sep ∧ t2 = t1.
     
 lemma loop_S_true : 
   ∀A,n,f,p,a.  p a = true → 
@@ -260,13 +260,13 @@ lemma sem_move_char :
 #alpha #sep *
 [@(ex_intro ?? 2)  
   @(ex_intro … (mk_config ?? 〈4,sep〉 (niltape ?)))
-  % [% [whd in ⊢ (??%?);% |#Hfalse destruct ] |#H1 whd % #_ % ]
+  % [% [whd in ⊢ (??%?);% |#Hfalse destruct ] |#H1 #H2 @False_ind @(absurd ?? H2) %]
 |#l0 #lt0 @(ex_intro ?? 2)  
   @(ex_intro … (mk_config ?? 〈4,sep〉 (leftof ? l0 lt0)))
-  % [% [whd in ⊢ (??%?);% |#Hfalse destruct ] |#H1 whd % #_ % ]
+  % [% [whd in ⊢ (??%?);% |#Hfalse destruct ] |#H1 #H2 @False_ind @(absurd ?? H2) %]
 |#r0 #rt0 @(ex_intro ?? 2)  
   @(ex_intro … (mk_config ?? 〈4,sep〉 (rightof ? r0 rt0)))
-  % [% [whd in ⊢ (??%?);% |#Hfalse destruct ] |#H1 whd % #_ % ]
+  % [% [whd in ⊢ (??%?);% |#Hfalse destruct ] |#H1 #H2 #H3 @False_ind @(absurd ?? H3) %]
 | #lt #c #rt cases (true_or_false (c == sep)) #Hc
   [ @(ex_intro ?? 2) 
     @(ex_intro ?? (mk_config ?? 〈4,sep〉 (midtape ? lt c rt)))
@@ -279,7 +279,7 @@ lemma sem_move_char :
          >trans_init_sep % ]
      | #Hfalse destruct
      ]
-    |#_ % #_ % ]
+    |#_ #H1 #H2 % // normalize >(\P Hc) % ]
   | @(ex_intro ?? 4)
     cases lt
     [ @ex_intro
@@ -289,11 +289,7 @@ lemma sem_move_char :
             >cmove_q0_q1 //
           | normalize in ⊢ (%→?); #Hfalse destruct (Hfalse)
           ]
-        | normalize in ⊢ (%→?); #_ %
-          [ normalize in ⊢ (%→?); #Hfalse destruct (Hfalse)
-          | normalize in ⊢ (%→?); #Hfalse destruct (Hfalse)
-            @False_ind @(absurd ?? (\Pf Hc)) %
-          ]
+        | normalize in ⊢ (%→?); #_ #H1 @False_ind @(absurd ?? H1) %
         ]
       ]
     | #l0 #lt @ex_intro
@@ -316,11 +312,72 @@ lemma sem_move_char :
 ]
 qed.
 
-definition R_while_cmove :
+definition R_while_cmove ≝ 
   λalpha,sep,t1,t2.
-   ∀a,b,ls,rs. b ≠ sep → memb ? sep rs = false → 
+   ∀a,b,ls,rs,rs'. b ≠ sep → memb ? sep rs = false → 
     t1 = midtape alpha (a::ls) b (rs@sep::rs') → 
-    t2 = midtape alpha (a::rev ? rs@b::ls) sep rs'.
+    t2 = midtape alpha (a::reverse ? rs@b::ls) sep rs'.
+    
+lemma star_cases : 
+  ∀A,R,x,y.star A R x y → x = y ∨ ∃z.R x z ∧ star A R z y.
+#A #R #x #y #Hstar elim Hstar
+[ #b #c #Hleft #Hright *
+  [ #H1 %2 @(ex_intro ?? c) % //
+  | * #x0 * #H1 #H2 %2 @(ex_intro ?? x0) % /2/ ]
+| /2/ ]
+qed.
+
+axiom star_ind_r : 
+  ∀A:Type[0].∀R:relation A.∀Q:A → A → Prop.
+  (∀a.Q a a) → 
+  (∀a,b,c.R a b → star A R b c → Q b c → Q a c) → 
+  ∀x,y.star A R x y → Q x y.
+(* #A #R #Q #H1 #H2 #x #y #H0 elim H0
+[ #b #c #Hleft #Hright #IH
+  cases (star_cases ???? Hleft)
+  [ #Hx @H2 //
+  | * #z * #H3 #H4 @(H2 … H3) /2/
+[
+|
+generalize in match (λb.H2 x b y); elim H0
+[#b #c #Hleft #Hright #H2' #H3 @H3
+ @(H3 b)
+ elim H0
+[ #b #c #Hleft #Hright #IH //
+| *)
+
+lemma sem_move_char :
+  ∀alpha,sep.
+  WRealize alpha (whileTM alpha (move_char alpha sep) 〈3,sep〉)
+    (R_while_cmove alpha sep).
+#alpha #sep #inc #i #outc #Hloop
+lapply (sem_while … (sem_move_char alpha sep) inc i outc Hloop) [%]
+* #t1 * #Hstar @(star_ind_r ??????? Hstar)
+[ #a whd in ⊢ (% → ?); #H1 #a #b #ls #rs #rs' #Hb #Hrs #Hinc
+  >Hinc in H1; normalize in ⊢ (% → ?); #H1
+  cases (H1 ??)
+  [ #Hfalse @False_ind @(absurd ?? Hb) destruct %
+  |% #H2 destruct (H2)
+  |% #H2 destruct ]
+| #a #b #c #Hstar1 #HRtrue #IH #HRfalse 
+  lapply (IH HRfalse) -IH whd in ⊢ (%→%); #IH
+  #a0 #b0 #ls #rs #rs' #Hb0 #Hrs #Ha
+  whd in Hstar1;
+  lapply (Hstar1 … Hb0 Ha) #Hb
+  @(IH … Hb0 Hrs) >Hb whd in HRfalse;
+  [
+  inc Rtrue* b Rtrue c Rfalse outc
+
+|
+]
+qed.
+  
+   #H1 
+  #a #b #ls #rs #rs #Hb #Hrs #Hinc
+  >Hinc in H2;whd in ⊢ ((??%? → ?) → ?);
+
+lapply (H inc i outc Hloop) *
+
 
 (* (*
 
