@@ -274,8 +274,8 @@ lemma sem_star_w : ∀S.∀i:pitem S.∀w.
 (* Below are a few, simple, semantic properties of items. In particular:
 - not_epsilon_item : ∀S:DeqSet.∀i:pitem S. ¬ (\sem{i} ϵ).
 - epsilon_pre : ∀S.∀e:pre S. (\sem{i} ϵ) ↔ (\snd e = true).
-- minus_eps_item: ∀S.∀i:pitem S. \sem{i} =1 \sem{i}-{[ ]}.
-- minus_eps_pre: ∀S.∀e:pre S. \sem{\fst e} =1 \sem{e}-{[ ]}.
+- minus_eps_item: ∀S.∀i:pitem S. \sem{i} ≐ \sem{i}-{[ ]}.
+- minus_eps_pre: ∀S.∀e:pre S. \sem{\fst e} ≐ \sem{e}-{[ ]}.
 The first property is proved by a simple induction on $i$; the other
 results are easy corollaries. We need an auxiliary lemma first. *)
 
@@ -299,14 +299,14 @@ lemma true_to_epsilon : ∀S.∀e:pre S. \snd e = true → ϵ ∈ e.
 #S * #i #b #btrue normalize in btrue; >btrue %2 // 
 qed.
 
-lemma minus_eps_item: ∀S.∀i:pitem S. \sem{i} =1 \sem{i}-{[ ]}.
+lemma minus_eps_item: ∀S.∀i:pitem S. \sem{i} ≐ \sem{i}-{[ ]}.
 #S #i #w % 
   [#H whd % // normalize @(not_to_not … (not_epsilon_lp …i)) //
   |* //
   ]
 qed.
 
-lemma minus_eps_pre: ∀S.∀e:pre S. \sem{\fst e} =1 \sem{e}-{[ ]}.
+lemma minus_eps_pre: ∀S.∀e:pre S. \sem{\fst e} ≐ \sem{e}-{[ ]}.
 #S * #i * 
   [>sem_pre_true normalize in ⊢ (??%?); #w % 
     [/3/ | * * // #H1 #H2 @False_ind @(absurd …H1 H2)]
@@ -374,11 +374,11 @@ interpretation "pre_concat_r" 'lhd i e = (pre_concat_r ? i e).
 (* The behaviour of ◃ is summarized by the following, easy lemma: *)
 
 lemma eq_to_ex_eq: ∀S.∀A,B:word S → Prop. 
-  A = B → A =1 B. 
+  A = B → A ≐ B. 
 #S #A #B #H >H /2/ qed.
 
 lemma sem_pre_concat_r : ∀S,i.∀e:pre S.
-  \sem{i ◃ e} =1 \sem{i} · \sem{|\fst e|} ∪ \sem{e}.
+  \sem{i ◃ e} ≐ \sem{i} · \sem{|\fst e|} ∪ \sem{e}.
 #S #i * #i1 #b1 cases b1 [2: @eq_to_ex_eq //] 
 >sem_pre_true >sem_cat >sem_pre_true /2/ 
 qed.
@@ -471,14 +471,14 @@ qed.
 
 (* We are now ready to state the main semantic properties of ⊕, ◃ and •(-):
 
-sem_oplus:     \sem{e1 ⊕ e2} =1 \sem{e1} ∪ \sem{e2} 
-sem_pcl:       \sem{e1 ▹ i2} =1  \sem{e1} · \sem{|i2|} ∪ \sem{i2}
-sem_bullet     \sem{•i} =1 \sem{i} ∪ \sem{|i|}
+sem_oplus:     \sem{e1 ⊕ e2} ≐ \sem{e1} ∪ \sem{e2} 
+sem_pcl:       \sem{e1 ▹ i2} ≐  \sem{e1} · \sem{|i2|} ∪ \sem{i2}
+sem_bullet     \sem{•i} ≐ \sem{i} ∪ \sem{|i|}
 
 The proof of sem_oplus is straightforward. *)
 
 lemma sem_oplus: ∀S:DeqSet.∀e1,e2:pre S.
-  \sem{e1 ⊕ e2} =1 \sem{e1} ∪ \sem{e2}. 
+  \sem{e1 ⊕ e2} ≐ \sem{e1} ∪ \sem{e2}. 
 #S * #i1 #b1 * #i2 #b2 #w %
   [cases b1 cases b2 normalize /2/ * /3/ * /3/
   |cases b1 cases b2 normalize /2/ * /3/ * /3/
@@ -489,8 +489,8 @@ qed.
 auxiliary lemma, that assumes sem_bullet:
 
 sem_pcl_aux: 
-   \sem{•i2} =1  \sem{i2} ∪ \sem{|i2|} →
-   \sem{e1 ▹ i2} =1  \sem{e1} · \sem{|i2|} ∪ \sem{i2}.
+   \sem{•i2} ≐  \sem{i2} ∪ \sem{|i2|} →
+   \sem{e1 ▹ i2} ≐  \sem{e1} · \sem{|i2|} ∪ \sem{i2}.
 
 Then, using the previous result, we prove sem_bullet by induction 
 on i. Finally, sem_pcl_aux and sem_bullet give sem_pcl. *)
@@ -500,8 +500,8 @@ lemma LcatE : ∀S.∀e1,e2:pitem S.
 // qed.
 
 lemma odot_dot_aux : ∀S.∀e1:pre S.∀i2:pitem S.
-   \sem{•i2} =1  \sem{i2} ∪ \sem{|i2|} →
-   \sem{e1 ▹ i2} =1  \sem{e1} · \sem{|i2|} ∪ \sem{i2}.
+   \sem{•i2} ≐  \sem{i2} ∪ \sem{|i2|} →
+   \sem{e1 ▹ i2} ≐  \sem{e1} · \sem{|i2|} ∪ \sem{i2}.
 #S * #i1 #b1 #i2 cases b1
   [2:#th >odot_false >sem_pre_false >sem_pre_false >sem_cat /2/
   |#H >odot_true >sem_pre_true @(eqP_trans … (sem_pre_concat_r …))
@@ -512,7 +512,7 @@ lemma odot_dot_aux : ∀S.∀e1:pre S.∀i2:pitem S.
 qed.
   
 lemma minus_eps_pre_aux: ∀S.∀e:pre S.∀i:pitem S.∀A. 
- \sem{e} =1 \sem{i} ∪ A → \sem{\fst e} =1 \sem{i} ∪ (A - {[ ]}).
+ \sem{e} ≐ \sem{i} ∪ A → \sem{\fst e} ≐ \sem{i} ∪ (A - {[ ]}).
 #S #e #i #A #seme
 @eqP_trans [|@minus_eps_pre]
 @eqP_trans [||@eqP_union_r [|@eqP_sym @minus_eps_item]]
@@ -520,7 +520,7 @@ lemma minus_eps_pre_aux: ∀S.∀e:pre S.∀i:pitem S.∀A.
 @eqP_substract_r //
 qed.
 
-theorem sem_bull: ∀S:DeqSet. ∀i:pitem S.  \sem{•i} =1 \sem{i} ∪ \sem{|i|}.
+theorem sem_bull: ∀S:DeqSet. ∀i:pitem S.  \sem{•i} ≐ \sem{i} ∪ \sem{|i|}.
 #S #e elim e 
   [#w normalize % [/2/ | * //]
   |/2/ 
@@ -583,7 +583,7 @@ lemma forget_blank: ∀S.∀e:re S.|blank S e| = e.
 #S #e elim e normalize //
 qed.
 
-lemma sem_blank: ∀S.∀e:re S.\sem{blank S e} =1 ∅.
+lemma sem_blank: ∀S.∀e:re S.\sem{blank S e} ≐ ∅.
 #S #e elim e 
   [1,2:@eq_to_ex_eq // 
   |#s @eq_to_ex_eq //
@@ -600,7 +600,7 @@ lemma sem_blank: ∀S.∀e:re S.\sem{blank S e} =1 ∅.
 qed.
    
 theorem re_embedding: ∀S.∀e:re S. 
-  \sem{•(blank S e)} =1 \sem{e}.
+  \sem{•(blank S e)} ≐ \sem{e}.
 #S #e @eqP_trans [|@sem_bull] >forget_blank 
 @eqP_trans [|@eqP_union_r [|@sem_blank]]
 @eqP_trans [|@union_comm] @union_empty_r.
@@ -663,7 +663,7 @@ lemma erase_ostar: ∀S.∀e:pre S.
 #S * #i * // qed.
 
 lemma sem_odot_true: ∀S:DeqSet.∀e1:pre S.∀i. 
-  \sem{e1 ⊙ 〈i,true〉} =1 \sem{e1 ▹ i} ∪ { [ ] }.
+  \sem{e1 ⊙ 〈i,true〉} ≐ \sem{e1 ▹ i} ∪ { [ ] }.
 #S #e1 #i 
 cut (e1 ⊙ 〈i,true〉 = 〈\fst (e1 ▹ i), \snd(e1 ▹ i) ∨ true〉) [//]
 #H >H cases (e1 ▹ i) #i1 #b1 cases b1 
@@ -684,7 +684,7 @@ qed.
 of ⊙ and ⊛. *)
 
 lemma sem_odot: 
-  ∀S.∀e1,e2: pre S. \sem{e1 ⊙ e2} =1 \sem{e1}· \sem{|\fst e2|} ∪ \sem{e2}.
+  ∀S.∀e1,e2: pre S. \sem{e1 ⊙ e2} ≐ \sem{e1}· \sem{|\fst e2|} ∪ \sem{e2}.
 #S #e1 * #i2 * 
   [>sem_pre_true 
    @eqP_trans [|@sem_odot_true]
@@ -694,7 +694,7 @@ lemma sem_odot:
 qed.
       
 theorem sem_ostar: ∀S.∀e:pre S. 
-  \sem{e^⊛} =1  \sem{e} · \sem{|\fst e|}^*.
+  \sem{e^⊛} ≐  \sem{e} · \sem{|\fst e|}^*.
 #S * #i #b cases b
   [(* lhs = \sem{〈i,true〉^⊛} *)
    >sem_pre_true (* >sem_pre_true *) 

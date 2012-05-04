@@ -97,7 +97,7 @@ definition xorb : bool → bool → bool ≝
 notation > "'if' term 46 e 'then' term 46 t 'else' term 46 f" non associative with precedence 46
  for @{ match $e in bool with [ true ⇒ $t | false ⇒ $f]  }.
 notation < "hvbox('if' \nbsp term 46 e \nbsp break 'then' \nbsp term 46 t \nbsp break 'else' \nbsp term 49 f \nbsp)" non associative with precedence 46
- for @{ match $e with [ true ⇒ $t | false ⇒ $f]  }.
+ for @{ match $e return $T with [ true ⇒ $t | false ⇒ $f]  }.
 
 theorem bool_to_decidable_eq: 
   ∀b1,b2:bool. decidable (b1=b2).

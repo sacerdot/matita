@@ -38,81 +38,81 @@ interpretation "subset" 'subseteq a b = (subset ? a b).
 
 (* extensional equality *)
 definition eqP ≝ λA:Type[0].λP,Q:A → Prop.∀a:A.P a ↔ Q a.
-notation "A =1 B" non associative with precedence 45 for @{'eqP $A $B}.
+notation "A ≐ B" non associative with precedence 45 for @{'eqP $A $B}.
 interpretation "extensional equality" 'eqP a b = (eqP ? a b).
 
 lemma eqP_sym: ∀U.∀A,B:U →Prop. 
-  A =1 B → B =1 A.
+  A ≐ B → B ≐ A.
 #U #A #B #eqAB #a @iff_sym @eqAB qed.
  
 lemma eqP_trans: ∀U.∀A,B,C:U →Prop. 
-  A =1 B → B =1 C → A =1 C.
+  A ≐ B → B ≐ C → A ≐ C.
 #U #A #B #C #eqAB #eqBC #a @iff_trans // qed.
 
 lemma eqP_union_r: ∀U.∀A,B,C:U →Prop. 
-  A =1 C  → A ∪ B =1 C ∪ B.
+  A ≐ C  → A ∪ B ≐ C ∪ B.
 #U #A #B #C #eqAB #a @iff_or_r @eqAB qed.
   
 lemma eqP_union_l: ∀U.∀A,B,C:U →Prop. 
-  B =1 C  → A ∪ B =1 A ∪ C.
+  B ≐ C  → A ∪ B ≐ A ∪ C.
 #U #A #B #C #eqBC #a @iff_or_l @eqBC qed.
   
 lemma eqP_intersect_r: ∀U.∀A,B,C:U →Prop. 
-  A =1 C  → A ∩ B =1 C ∩ B.
+  A ≐ C  → A ∩ B ≐ C ∩ B.
 #U #A #B #C #eqAB #a @iff_and_r @eqAB qed.
   
 lemma eqP_intersect_l: ∀U.∀A,B,C:U →Prop. 
-  B =1 C  → A ∩ B =1 A ∩ C.
+  B ≐ C  → A ∩ B ≐ A ∩ C.
 #U #A #B #C #eqBC #a @iff_and_l @eqBC qed.
 
 lemma eqP_substract_r: ∀U.∀A,B,C:U →Prop. 
-  A =1 C  → A - B =1 C - B.
+  A ≐ C  → A - B ≐ C - B.
 #U #A #B #C #eqAB #a @iff_and_r @eqAB qed.
   
 lemma eqP_substract_l: ∀U.∀A,B,C:U →Prop. 
-  B =1 C  → A - B =1 A - C.
+  B ≐ C  → A - B ≐ A - C.
 #U #A #B #C #eqBC #a @iff_and_l /2/ qed.
 
 (* set equalities *)
 lemma union_empty_r: ∀U.∀A:U→Prop. 
-  A ∪ ∅ =1 A.
+  A ∪ ∅ ≐ A.
 #U #A #w % [* // normalize #abs @False_ind /2/ | /2/]
 qed.
 
 lemma union_comm : ∀U.∀A,B:U →Prop. 
-  A ∪ B =1 B ∪ A.
+  A ∪ B ≐ B ∪ A.
 #U #A #B #a % * /2/ qed. 
 
 lemma union_assoc: ∀U.∀A,B,C:U → Prop. 
-  A ∪ B ∪ C =1 A ∪ (B ∪ C).
+  A ∪ B ∪ C ≐ A ∪ (B ∪ C).
 #S #A #B #C #w % [* [* /3/ | /3/] | * [/3/ | * /3/]
 qed.   
 
 lemma cap_comm : ∀U.∀A,B:U →Prop. 
-  A ∩ B =1 B ∩ A.
+  A ∩ B ≐ B ∩ A.
 #U #A #B #a % * /2/ qed. 
 
 lemma union_idemp: ∀U.∀A:U →Prop. 
-  A ∪ A =1 A.
+  A ∪ A ≐ A.
 #U #A #a % [* // | /2/] qed. 
 
 lemma cap_idemp: ∀U.∀A:U →Prop. 
-  A ∩ A =1 A.
+  A ∩ A ≐ A.
 #U #A #a % [* // | /2/] qed. 
 
 (*distributivities *)
 
 lemma distribute_intersect : ∀U.∀A,B,C:U→Prop. 
-  (A ∪ B) ∩ C =1 (A ∩ C) ∪ (B ∩ C).
+  (A ∪ B) ∩ C ≐ (A ∩ C) ∪ (B ∩ C).
 #U #A #B #C #w % [* * /3/ | * * /3/] 
 qed.
   
 lemma distribute_substract : ∀U.∀A,B,C:U→Prop. 
-  (A ∪ B) - C =1 (A - C) ∪ (B - C).
+  (A ∪ B) - C ≐ (A - C) ∪ (B - C).
 #U #A #B #C #w % [* * /3/ | * * /3/] 
 qed.
 
 (* substraction *)
-lemma substract_def:∀U.∀A,B:U→Prop. A-B =1 A ∩ ¬B.
+lemma substract_def:∀U.∀A,B:U→Prop. A-B ≐ A ∩ ¬B.
 #U #A #B #w normalize /2/
 qed.

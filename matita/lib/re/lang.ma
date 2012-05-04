@@ -42,23 +42,23 @@ notation "a ^ *" non associative with precedence 90 for @{ 'star $a}.
 interpretation "star lang" 'star l = (star ? l).
 
 lemma cat_ext_l: ∀S.∀A,B,C:word S →Prop. 
-  A =1 C  → A · B =1 C · B.
+  A ≐ C  → A · B ≐ C · B.
 #S #A #B #C #H #w % * #w1 * #w2 * * #eqw #inw1 #inw2
 cases (H w1) /6/ 
 qed.
 
 lemma cat_ext_r: ∀S.∀A,B,C:word S →Prop. 
-  B =1 C → A · B =1 A · C.
+  B ≐ C → A · B ≐ A · C.
 #S #A #B #C #H #w % * #w1 * #w2 * * #eqw #inw1 #inw2
 cases (H w2) /6/ 
 qed.
   
-lemma cat_empty_l: ∀S.∀A:word S→Prop. ∅ · A =1 ∅.
+lemma cat_empty_l: ∀S.∀A:word S→Prop. ∅ · A ≐ ∅.
 #S #A #w % [|*] * #w1 * #w2 * * #_ *
 qed.
 
 lemma distr_cat_r: ∀S.∀A,B,C:word S →Prop.
-  (A ∪ B) · C =1  A · C ∪ B · C. 
+  (A ∪ B) · C ≐  A · C ∪ B · C. 
 #S #A #B #C #w %
   [* #w1 * #w2 * * #eqw * /6/ |* * #w1 * #w2 * * /6/] 
 qed.
@@ -68,7 +68,7 @@ qed.
 definition deriv ≝ λS.λA:word S → Prop.λa,w. A (a::w).
 
 lemma deriv_middot: ∀S,A,B,a. ¬ A ϵ → 
-  deriv S (A·B) a =1 (deriv S A a) · B.
+  deriv S (A·B) a ≐ (deriv S A a) · B.
 #S #A #B #a #noteps #w normalize %
   [* #w1 cases w1 
     [* #w2 * * #_ #Aeps @False_ind /2/
@@ -93,7 +93,7 @@ lemma cat_to_star:∀S.∀A:word S → Prop.
 qed.
 
 lemma fix_star: ∀S.∀A:word S → Prop. 
-  A^* =1 A · A^* ∪ {ϵ}.
+  A^* ≐ A · A^* ∪ {ϵ}.
 #S #A #w %
   [* #l generalize in match w; -w cases l [normalize #w * /2/]
    #w1 #tl #w * whd in ⊢ ((??%?)→?); #eqw whd in ⊢ (%→?); *
@@ -105,7 +105,7 @@ lemma fix_star: ∀S.∀A:word S → Prop.
 qed.
 
 lemma star_fix_eps : ∀S.∀A:word S → Prop.
-  A^* =1 (A - {ϵ}) · A^* ∪ {ϵ}.  
+  A^* ≐ (A - {ϵ}) · A^* ∪ {ϵ}.  
 #S #A #w %
   [* #l elim l 
     [* whd in ⊢ ((??%?)→?); #eqw #_ %2 <eqw // 
@@ -122,12 +122,12 @@ lemma star_fix_eps : ∀S.∀A:word S → Prop.
 qed. 
      
 lemma star_epsilon: ∀S:DeqSet.∀A:word S → Prop.
-  A^* ∪ {ϵ} =1 A^*.
+  A^* ∪ {ϵ} ≐ A^*.
 #S #A #w % /2/ * // 
 qed.
   
 lemma epsilon_cat_r: ∀S.∀A:word S →Prop.
-   A · {ϵ} =1  A. 
+   A · {ϵ} ≐  A. 
 #S #A #w %
   [* #w1 * #w2 * * #eqw #inw1 normalize #eqw2 <eqw //
   |#inA @(ex_intro … w) @(ex_intro … [ ]) /3/
@@ -135,7 +135,7 @@ lemma epsilon_cat_r: ∀S.∀A:word S →Prop.
 qed.
 
 lemma epsilon_cat_l: ∀S.∀A:word S →Prop.
-   {ϵ} · A =1  A. 
+   {ϵ} · A ≐  A. 
 #S #A #w %
   [* #w1 * #w2 * * #eqw normalize #eqw2 <eqw <eqw2 //
   |#inA @(ex_intro … ϵ) @(ex_intro … w) /3/
@@ -143,7 +143,7 @@ lemma epsilon_cat_l: ∀S.∀A:word S →Prop.
 qed.
 
 lemma distr_cat_r_eps: ∀S.∀A,C:word S →Prop.
-  (A ∪ {ϵ}) · C =1  A · C ∪ C. 
+  (A ∪ {ϵ}) · C ≐  A · C ∪ C. 
 #S #A #C @eqP_trans [|@distr_cat_r |@eqP_union_l @epsilon_cat_l]
 qed.
 

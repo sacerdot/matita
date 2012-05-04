@@ -253,11 +253,11 @@ definition reclose ≝ lift eclose.
 interpretation "reclose" 'eclose x = (reclose ? x).
 
 definition eq_f1 ≝ λS.λa,b:word S → Prop.∀w.a w ↔ b w.
-notation "A =1 B" non associative with precedence 45 for @{'eq_f1 $A $B}.
+notation "A ≐ B" non associative with precedence 45 for @{'eq_f1 $A $B}.
 interpretation "eq f1" 'eq_f1 a b = (eq_f1 ? a b).
 
 (*
-lemma epsilon_or : ∀S:Alpha.∀b1,b2. ϵ(b1 || b2) =1 ϵ b1 ∪ ϵ b2. 
+lemma epsilon_or : ∀S:Alpha.∀b1,b2. ϵ(b1 || b2) ≐ ϵ b1 ∪ ϵ b2. 
 ##[##2: napply S]
 #S b1 b2; ncases b1; ncases b2; napply extP; #w; nnormalize; @; /2/; *; //; *;
 nqed.
@@ -269,7 +269,7 @@ nlemma cupC : ∀S. ∀a,b:word S → Prop.a ∪ b = b ∪ a.
 #S a b; napply extP; #w; @; *; nnormalize; /2/; nqed.*)
 
 (* theorem 16: 2 *)
-lemma oplus_cup : ∀S:Alpha.∀e1,e2:pre S.\sem{e1 ⊕ e2} =1 \sem{e1} ∪ \sem{e2}.
+lemma oplus_cup : ∀S:Alpha.∀e1,e2:pre S.\sem{e1 ⊕ e2} ≐ \sem{e1} ∪ \sem{e2}.
 #S * #i1 #b1  * #i2 #b2 >lo_def normalize in ⊢ (?%?);
 
 #w cases b1 cases b2 normalize % #w r1; ncases r1; #e1 b1 r2; ncases r2; #e2 b2;

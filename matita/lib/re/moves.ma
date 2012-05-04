@@ -211,7 +211,7 @@ e1 and e2 are equivalent iff for any word w the states reachable
 through w are cofinal. *)
 
 theorem equiv_sem: ∀S:DeqSet.∀e1,e2:pre S. 
-  \sem{e1} =1 \sem{e2} ↔ ∀w.cofinal ? 〈moves ? w e1,moves ? w e2〉.
+  \sem{e1} ≐ \sem{e2} ↔ ∀w.cofinal ? 〈moves ? w e1,moves ? w e2〉.
 #S #e1 #e2 % 
 [#same_sem #w 
   cut (∀b1,b2. iff (b1 = true) (b2 = true) → (b1 = b2)) 
@@ -244,7 +244,7 @@ occurring the given regular expressions. *)
 
 lemma equiv_sem_occ: ∀S.∀e1,e2:pre S.
 (∀w.(sublist S w (occ S e1 e2))→ cofinal ? 〈moves ? w e1,moves ? w e2〉)
-→ \sem{e1}=1\sem{e2}.
+→ \sem{e1}≐\sem{e2}.
 #S #e1 #e2 #H @(proj2 … (equiv_sem …)) @occ_enough #w @H 
 qed.
 
@@ -273,7 +273,7 @@ definition is_bisim ≝ λS:DeqSet.λl:list ?.λalpha:list S.
 (* Using lemma equiv_sem_occ it is easy to prove the following result: *)
 
 lemma bisim_to_sem: ∀S:DeqSet.∀l:list ?.∀e1,e2: pre S. 
-  is_bisim S l (occ S e1 e2) → memb ? 〈e1,e2〉 l = true → \sem{e1}=1\sem{e2}.
+  is_bisim S l (occ S e1 e2) → memb ? 〈e1,e2〉 l = true → \sem{e1}≐\sem{e2}.
 #S #l #e1 #e2 #Hbisim #Hmemb @equiv_sem_occ 
 #w #Hsub @(proj1 … (Hbisim 〈moves S w e1,moves S w e2〉 ?))
 lapply Hsub @(list_elim_left … w) [//]
@@ -428,7 +428,7 @@ uniqueb ? l = true ∧
 definition disjoint ≝ λS:DeqSet.λl1,l2.
   ∀p:S. memb S p l1 = true →  memb S p l2 = false.
         
-lemma bisim_correct: ∀S.∀e1,e2:pre S.\sem{e1}=1\sem{e2} → 
+lemma bisim_correct: ∀S.∀e1,e2:pre S.\sem{e1}≐\sem{e2} → 
  ∀l,n.∀frontier,visited:list ((pre S)×(pre S)).
  |space_enum S (|\fst e1|) (|\fst e2|)| < n + |visited|→
  all_reachable S e1 e2 visited →  
@@ -544,7 +544,7 @@ definition equiv ≝ λSig.λre1,re2:re Sig.
   (bisim ? sig n [〈e1,e2〉] []).
 
 theorem euqiv_sem : ∀Sig.∀e1,e2:re Sig.
-   \fst (equiv ? e1 e2) = true ↔ \sem{e1} =1 \sem{e2}.
+   \fst (equiv ? e1 e2) = true ↔ \sem{e1} ≐ \sem{e2}.
 #Sig #re1 #re2 %
   [#H @eqP_trans [|@eqP_sym @re_embedding] @eqP_trans [||@re_embedding]
    cut (equiv ? re1 re2 = 〈true,\snd (equiv ? re1 re2)〉)
@@ -612,8 +612,3 @@ definition exp11 ≝ (a·a·a·a·a + a·a·a·a·a·a·a)^*.
 
 example ex2 : \fst (equiv ? (exp10+exp11) exp10) = true.
 normalize // qed.
-
-
-
-
-\v
