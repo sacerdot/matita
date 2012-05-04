@@ -44,6 +44,16 @@ definition current ≝
  λsig.λt:tape sig.match t with
  [ midtape _ c _ ⇒ Some ? c
  | _ ⇒ None ? ].
+ 
+definition mk_tape : 
+  ∀sig:FinSet.list sig → option sig → list sig → tape sig ≝ 
+  λsig,lt,c,rt.match c with
+  [ Some c' ⇒ midtape sig lt c' rt
+  | None ⇒ match lt with 
+    [ nil ⇒ match rt with
+      [ nil ⇒ niltape ?
+      | cons r0 rs0 ⇒ leftof ? r0 rs0 ]
+    | cons l0 ls0 ⇒ rightof ? l0 ls0 ] ].
 
 inductive move : Type[0] ≝
 | L : move 

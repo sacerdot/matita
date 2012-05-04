@@ -19,6 +19,10 @@ record FinSet : Type[1] ≝
   enum_unique: uniqueb FinSetcarr enum = true
 }.
 
+notation < "𝐅" non associative with precedence 90 
+ for @{'bigF}.
+interpretation "FinSet" 'bigF = (mk_FinSet ???).
+
 (* bool *)
 lemma bool_enum_unique: uniqueb ? [true;false] = true.
 // qed.

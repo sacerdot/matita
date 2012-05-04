@@ -28,6 +28,10 @@ notation "\P H" non associative with precedence 90
 notation "\b H" non associative with precedence 90 
   for @{(proj2 … (eqb_true ???) $H)}. 
   
+notation < "𝐃" non associative with precedence 90 
+ for @{'bigD}.
+interpretation "DeqSet" 'bigD = (mk_DeqSet ???).
+  
 lemma eqb_false: ∀S:DeqSet.∀a,b:S. 
   (eqb ? a b) = false ↔ a ≠ b.
 #S #a #b % #H 

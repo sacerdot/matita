@@ -88,6 +88,34 @@ theorem star_inv: ∀A,R.
 #H (elim H) /2/ normalize #c #d #H1 #H2 #H3 @(trans_star … H3) /2/
 qed.
 
+lemma star_decomp_l : 
+  ∀A,R,x,y.star A R x y → x = y ∨ ∃z.R x z ∧ star A R z y.
+#A #R #x #y #Hstar elim Hstar
+[ #b #c #Hleft #Hright *
+  [ #H1 %2 @(ex_intro ?? c) % //
+  | * #x0 * #H1 #H2 %2 @(ex_intro ?? x0) % /2/ ]
+| /2/ ]
+qed.
+
+axiom star_ind_l : 
+  ∀A:Type[0].∀R:relation A.∀Q:A → A → Prop.
+  (∀a.Q a a) → 
+  (∀a,b,c.R a b → star A R b c → Q b c → Q a c) → 
+  ∀x,y.star A R x y → Q x y.
+(* #A #R #Q #H1 #H2 #x #y #H0 elim H0
+[ #b #c #Hleft #Hright #IH
+  cases (star_decomp_l ???? Hleft)
+  [ #Hx @H2 //
+  | * #z * #H3 #H4 @(H2 … H3) /2/
+[
+|
+generalize in match (λb.H2 x b y); elim H0
+[#b #c #Hleft #Hright #H2' #H3 @H3
+ @(H3 b)
+ elim H0
+[ #b #c #Hleft #Hright #IH //
+| *)
+
 (* RC and star *)
 
 lemma TC_to_star: ∀A,R,a,b.TC A R a b → star A R a b.

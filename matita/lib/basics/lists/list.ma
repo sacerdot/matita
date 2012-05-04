@@ -55,6 +55,11 @@ definition hd ≝ λA.λl: list A.λd:A.
 
 definition tail ≝  λA.λl: list A.
   match l with [ nil ⇒  [] | cons hd tl ⇒  tl].
+  
+definition option_hd ≝ 
+  λA.λl:list A. match l with
+  [ nil ⇒ None ?
+  | cons a _ ⇒ Some ? a ].
 
 interpretation "append" 'append l1 l2 = (append ? l1 l2).
 
