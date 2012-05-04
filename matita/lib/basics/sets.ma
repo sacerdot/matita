@@ -38,6 +38,7 @@ interpretation "subset" 'subseteq a b = (subset ? a b).
 
 (* extensional equality *)
 definition eqP ≝ λA:Type[0].λP,Q:A → Prop.∀a:A.P a ↔ Q a.
+(* ≐ is typed as \doteq *)
 notation "A ≐ B" non associative with precedence 45 for @{'eqP $A $B}.
 interpretation "extensional equality" 'eqP a b = (eqP ? a b).
 
