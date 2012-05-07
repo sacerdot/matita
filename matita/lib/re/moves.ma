@@ -30,10 +30,10 @@ lifted operators of the previous section:
 
 let rec move (S: DeqSet) (x:S) (E: pitem S) on E : pre S ≝
  match E with
-  [ pz ⇒ 〈 `∅, false 〉
-  | pe ⇒ 〈 ϵ, false 〉
-  | ps y ⇒ 〈 `y, false 〉
-  | pp y ⇒ 〈 `y, x == y 〉
+  [ pz ⇒ 〈 pz ?, false 〉
+  | pe ⇒ 〈 pe ? , false 〉
+  | ps y ⇒ 〈 ps ? y, false 〉
+  | pp y ⇒ 〈 ps ? y, x == y 〉
   | po e1 e2 ⇒ (move ? x e1) ⊕ (move ? x e2) 
   | pc e1 e2 ⇒ (move ? x e1) ⊙ (move ? x e2)
   | pk e ⇒ (move ? x e)^⊛ ].
@@ -610,5 +610,75 @@ normalize // qed.
 definition exp10 ≝ a·a·a·a·a·a·a·a·a·a·a·a·(a^* ).
 definition exp11 ≝ (a·a·a·a·a + a·a·a·a·a·a·a)^*.
 
-example ex2 : \fst (equiv ? (exp10+exp11) exp10) = true.
+example ex2 : \fst (equiv ? (exp10+exp11) exp11) = false.
+normalize // qed.
+
+definition exp12 ≝
+  (a·a·a·a·a·a·a·a)·(a·a·a·a·a·a·a·a)·(a·a·a·a·a·a·a·a)·(a^* ).
+  
+example ex3 : \fst (equiv ? (exp12+exp11) exp11) = true.
+normalize // qed.
+
+let rec raw (n:nat) ≝
+  match n with
+  [ O ⇒ a
+  | S p ⇒ a · (raw p)
+  ].
+
+let rec alln (n:nat) ≝
+  match n with
+  [O ⇒ ϵ
+  |S m ⇒ raw m + alln m
+  ].
+
+definition testA ≝ λx,y,z,b.
+  let e1 ≝ raw x in
+  let e2 ≝ raw y in
+  let e3 ≝ (raw z) · a^* in
+  let e4 ≝ (e1 + e2)^* in
+  \fst (equiv ? (e3+e4) e4) = b.
+  
+example ex4 : testA 2 4 7 true.
+normalize // qed.
+
+example ex5 : testA 3 4 10 false.
+normalize // qed.
+
+example ex6 : testA 3 4 11 true.
+normalize // qed.
+
+example ex7 : testA 4 5 18 false.
+normalize // qed.
+
+example ex8 : testA 4 5 19 true.
+normalize // qed.
+
+example ex9 : testA 4 6 22 false.
+normalize // qed.
+
+example ex10 : testA 4 6 23 true.
+normalize // qed.
+
+definition testB ≝ λn,b.
+  \fst (equiv ? ((alln n)·((raw n)^* )) a^* ) = b.
+
+example ex11 : testB 6 true.
+normalize // qed.
+
+example ex12 : testB 8 true.
+normalize // qed.
+
+example ex13 : testB 10 true.
+normalize // qed.
+
+example ex14 : testB 12 true.
+normalize // qed.
+
+example ex15 : testB 14 true.
+normalize // qed.
+
+example ex16 : testB 16 true.
+normalize // qed.
+
+example ex17 : testB 18 true.
 normalize // qed.
