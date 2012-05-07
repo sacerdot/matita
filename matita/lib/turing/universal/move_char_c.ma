@@ -229,3 +229,29 @@ lapply (sem_while … (sem_mcc_step alpha sep) inc i outc Hloop) [%]
     ]
   ]
 qed.
+
+lemma terminate_move_char_c :
+  ∀alpha,sep.∀t,b,a,ls,rs. t = midtape alpha (a::ls) b rs →  
+  (b = sep ∨ memb ? sep rs = true) → Terminate alpha (move_char_c alpha sep) t.
+#alpha #sep #t #b #a #ls #rs #Ht #Hsep
+@(terminate_while … (sem_mcc_step alpha sep))
+  [%
+  |generalize in match Hsep; -Hsep
+   generalize in match Ht; -Ht
+   generalize in match ls; -ls
+   generalize in match a; -a
+   generalize in match b; -b
+   generalize in match t; -t
+   elim rs 
+    [#t #b #a #ls #Ht #Hsep % #tinit 
+     whd in ⊢ (%→?); #H @False_ind
+     cases (H … Ht) #Hb #_ cases Hb #eqb @eqb 
+     cases Hsep // whd in ⊢ ((??%?)→?); #abs destruct
+    |#r0 #rs0 #Hind #t #b #a #ls #Ht #Hsep % #tinit
+     whd in ⊢ (%→?); #H 
+     cases (H … Ht) #Hbsep #Htinit
+     @(Hind … Htinit) cases Hsep 
+      [#Hb @False_ind /2/ | #Hmemb cases (orb_true_l … Hmemb)
+        [#eqsep %1 >(\P eqsep) // | #H %2 //]
+  ]
+qed.

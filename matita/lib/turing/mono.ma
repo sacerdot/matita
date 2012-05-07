@@ -239,7 +239,16 @@ definition WRealize ≝ λsig.λM:TM sig.λR:relation (tape sig).
 ∀t,i,outc.
   loop ? i (step sig M) (λc.halt sig M (cstate ?? c)) (initc sig M t) = Some ? outc → 
   R t (ctape ?? outc).
-  
+
+definition Terminate ≝ λsig.λM:TM sig.λt. ∃i,outc.
+  loop ? i (step sig M) (λc.halt sig M (cstate ?? c)) (initc sig M t) = Some ? outc.
+
+lemma WRealize_to_Realize : ∀sig.∀M: TM sig.∀R.
+  (∀t.Terminate sig M t) → WRealize sig M R → Realize sig M R.
+#sig #M #R #HT #HW #t cases (HT … t) #i * #outc #Hloop 
+@(ex_intro … i) @(ex_intro … outc) % // @(HW … i) //
+qed.
+
 lemma loop_eq : ∀sig,f,q,i,j,a,x,y. 
   loop sig i f q a = Some ? x → loop sig j f q a = Some ? y → x = y.
 #sig #f #q #i #j @(nat_elim2 … i j)

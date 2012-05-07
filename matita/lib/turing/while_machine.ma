@@ -61,6 +61,12 @@ lemma halt_while_acc :
 cases (halt sig M acc) %
 qed.
 
+lemma halt_while_not_acc : 
+  ∀sig,M,acc,s.s == acc = false → halt sig (whileTM sig M acc) s = halt sig M s.
+#sig #M #acc #s #neqs normalize >neqs 
+cases (halt sig M s) %
+qed.
+
 lemma step_while_acc :
  ∀sig,M,acc,c.cstate ?? c = acc → 
    step sig (whileTM sig M acc) c = initc … (ctape ?? c).
@@ -123,6 +129,50 @@ cases (loop_split ?? (λc. halt sig M (cstate ?? c)) ????? Hloop)
  ]
 qed.
 
+theorem terminate_while: ∀sig,M,acc,Rtrue,Rfalse,t.
+  halt sig M acc = true →
+  accRealize sig M acc Rtrue Rfalse → 
+  WF ? (inv … Rtrue) t → Terminate sig (whileTM sig M acc) t.
+#sig #M #acc #Rtrue #Rfalse #t #Hacctrue #HM #HWF elim HWF
+#t1 #H #Hind cases (HM … t1) #i * #outc * * #Hloop
+#Htrue #Hfalse cases (true_or_false (cstate … outc == acc)) #Hcase
+  [cases (Hind ? (Htrue … (\P Hcase))) #iwhile * #outcfinal
+   #Hloopwhile @(ex_intro … (i+iwhile)) 
+   @(ex_intro … outcfinal) @(loop_merge … outc … Hloopwhile)
+    [@(λc.halt sig M (cstate … c))
+    |* #s0 #t0 normalize cases (s0 == acc) normalize
+     [ cases (halt sig M s0) // 
+     | cases (halt sig M s0) normalize //
+     ]
+    |@(loop_lift ?? i (λc.c) ? 
+                (step ? (whileTM ? M acc)) ? 
+                (λc.halt sig M (cstate ?? c)) ?? 
+                ?? Hloop)
+     [ #x %
+     | * #s #t #Hx whd in ⊢ (??%%); >while_trans_false
+       [%
+       |% #Hfalse <Hfalse in Hacctrue; >Hx #H0 destruct ]
+     ]
+   |@step_while_acc @(\P Hcase)
+   |>(\P Hcase) @halt_while_acc
+   ]
+ |@(ex_intro … i) @(ex_intro … outc)
+  @(loop_lift_acc ?? i (λc.c) ?????? (λc.cstate ?? c == acc) ???? Hloop)
+   [#x #Hx >(\P Hx) //
+   |#x @halt_while_not_acc
+   |#x #H whd in ⊢ (??%%); >while_trans_false [%]
+    % #eqx >eqx in H; >Hacctrue #H destruct
+   |@Hcase
+   ]
+ ]
+qed.
+
+(*
+axiom terminate_while: ∀sig,M,acc,Rtrue,Rfalse,t.
+  halt sig M acc = true →
+  accRealize sig M acc Rtrue Rfalse → 
+  ∃t1. Rfalse t t1 → Terminate sig (whileTM sig M acc) t.
+*)
 
 (* (*
 
