@@ -97,24 +97,46 @@ lemma star_decomp_l :
 | /2/ ]
 qed.
 
-axiom star_ind_l : 
+(* right associative version of star *)
+inductive starl (A:Type[0]) (R:relation A) : A → A → Prop ≝
+  |injl: ∀a,b,c.R a b → starl A R b c → starl A R a c
+  |refll: ∀a.starl A R a a.
+ 
+lemma starl_comp : ∀A,R,a,b,c.
+  starl A R a b → R b c → starl A R a c.
+#A #R #a #b #c #Hstar elim Hstar 
+  [#a1 #b1 #c1 #Rab #sbc #Hind #a1 @(injl … Rab) @Hind //
+  |#a1 #Rac @(injl … Rac) //
+  ]
+qed.
+
+lemma star_compl : ∀A,R,a,b,c.
+  R a b → star A R b c → star A R a c.
+#A #R #a #b #c #Rab #Hstar elim Hstar 
+  [#b1 #c1 #sbb1 #Rb1c1 #Hind @(inj … Rb1c1) @Hind
+  |@(inj … Rab) //
+  ]
+qed.
+
+lemma star_to_starl: ∀A,R,a,b.star A R a b → starl A R a b.
+#A #R #a #b #Hs elim Hs //
+#d #c #sad #Rdc #sad @(starl_comp … Rdc) //
+qed.
+
+lemma starl_to_star: ∀A,R,a,b.starl A R a b → star A R a b.
+#A #R #a #b #Hs elim Hs // -Hs -b -a
+#a #b #c #Rab #sbc #sbc @(star_compl … Rab) //
+qed.
+
+lemma star_ind_l : 
   ∀A:Type[0].∀R:relation A.∀Q:A → A → Prop.
   (∀a.Q a a) → 
   (∀a,b,c.R a b → star A R b c → Q b c → Q a c) → 
-  ∀x,y.star A R x y → Q x y.
-(* #A #R #Q #H1 #H2 #x #y #H0 elim H0
-[ #b #c #Hleft #Hright #IH
-  cases (star_decomp_l ???? Hleft)
-  [ #Hx @H2 //
-  | * #z * #H3 #H4 @(H2 … H3) /2/
-[
-|
-generalize in match (λb.H2 x b y); elim H0
-[#b #c #Hleft #Hright #H2' #H3 @H3
- @(H3 b)
- elim H0
-[ #b #c #Hleft #Hright #IH //
-| *)
+  ∀a,b.star A R a b → Q a b.
+#A #R #Q #H1 #H2 #a #b #H0 
+elim (star_to_starl ???? H0) // -H0 -b -a 
+#a #b #c #Rab #slbc @H2 // @starl_to_star //
+qed.  
 
 (* RC and star *)
 
