@@ -156,6 +156,18 @@ let rec loop (A:Type[0]) n (f:A→A) p a on n ≝
   | S m ⇒ if p a then (Some ? a) else loop A m f p (f a)
   ].
   
+lemma loop_S_true : 
+  ∀A,n,f,p,a.  p a = true → 
+  loop A (S n) f p a = Some ? a.
+#A #n #f #p #a #pa normalize >pa //
+qed.
+
+lemma loop_S_false : 
+  ∀A,n,f,p,a.  p a = false → 
+  loop A (S n) f p a = loop A n f p (f a).
+normalize #A #n #f #p #a #Hpa >Hpa %
+qed.  
+  
 lemma loop_incr : ∀A,f,p,k1,k2,a1,a2. 
   loop A k1 f p a1 = Some ? a2 → 
     loop A (k2+k1) f p a1 = Some ? a2.

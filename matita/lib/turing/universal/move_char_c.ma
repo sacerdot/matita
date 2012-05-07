@@ -107,24 +107,13 @@ definition Rmcc_step_false ≝
     left ? t1 ≠ [] →  current alpha t1 ≠ None alpha → 
       current alpha t1 = Some alpha sep ∧ t2 = t1.
     
-lemma loop_S_true : 
-  ∀A,n,f,p,a.  p a = true → 
-  loop A (S n) f p a = Some ? a. /2/
-qed.
-
-lemma loop_S_false : 
-  ∀A,n,f,p,a.  p a = false → 
-  loop A (S n) f p a = loop A n f p (f a).
-normalize #A #n #f #p #a #Hpa >Hpa %
-qed.
-
-lemma trans_init_sep: 
+lemma mcc_trans_init_sep: 
   ∀alpha,sep,x.
   trans ? (mcc_step alpha sep) 〈〈0,x〉,Some ? sep〉 = 〈〈4,sep〉,None ?〉.
 #alpha #sep #x normalize >(\b ?) //
 qed.
  
-lemma trans_init_not_sep: 
+lemma mcc_trans_init_not_sep: 
   ∀alpha,sep,x,y.y == sep = false → 
   trans ? (mcc_step alpha sep) 〈〈0,x〉,Some ? y〉 = 〈〈1,y〉,Some ? 〈y,L〉〉.
 #alpha #sep #x #y #H1 normalize >H1 //
@@ -149,8 +138,8 @@ lemma sem_mcc_step :
     @(ex_intro ?? (mk_config ?? 〈4,sep〉 (midtape ? lt c rt)))
     % [ % 
         [ >(\P Hc) >loop_S_false // >loop_S_true 
-         [ @eq_f whd in ⊢ (??%?); >trans_init_sep %
-         |>(\P Hc) whd in ⊢(??(???(???%))?); >trans_init_sep % ]
+         [ @eq_f whd in ⊢ (??%?); >mcc_trans_init_sep %
+         |>(\P Hc) whd in ⊢(??(???(???%))?); >mcc_trans_init_sep % ]
         |   #Hfalse destruct ]
       |#_ #H1 #H2 % // normalize >(\P Hc) % ]
   | @(ex_intro ?? 4) cases lt
@@ -185,7 +174,7 @@ definition R_move_char_c ≝
      b ≠ sep → memb ? sep rs1 = false → 
      t2 = midtape alpha (a::reverse ? rs1@b::ls) sep rs2).
     
-lemma sem_while_move_char :
+lemma sem_move_char_c :
   ∀alpha,sep.
   WRealize alpha (move_char_c alpha sep) (R_move_char_c alpha sep).
 #alpha #sep #inc #i #outc #Hloop
