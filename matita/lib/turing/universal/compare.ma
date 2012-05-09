@@ -428,9 +428,10 @@ definition R_mark_next_tuple ≝
     (* c non può essere un separatore ... speriamo *)
     t1 = midtape ? ls c (rs1@grid::rs2) → 
     memb ? grid rs1 = false → bar_or_grid c = false → 
-    (∃rs3,rs4,d,b.rs1 = rs3 @ bar :: 〈d,b〉:: rs4 ∧
+    (∃rs3,rs4,d,b.rs1 = rs3 @ bar :: rs4 ∧
       memb ? bar rs3 = false ∧ 
-      t2 = midtape ? (bar::reverse ? rs3@c::ls) 〈d,true〉 (rs4@grid::rs2))
+      Some ? 〈d,b〉 = option_hd ? (rs4@grid::rs2) ∧
+      t2 = midtape ? (bar::reverse ? rs3@c::ls) 〈d,true〉 (tail ? (rs4@grid::rs2)))
     ∨
     (memb ? bar rs1 = false ∧ 
      t2 = midtape ? (reverse ? rs1@c::ls) grid rs2).
@@ -438,7 +439,7 @@ definition R_mark_next_tuple ≝
 axiom tech_split :
   ∀A:DeqSet.∀f,l.
    (∀x.memb A x l = true → f x = false) ∨
-   (∃l1,c,l2.f c = true ∧ l = l1@c::l2).
+   (∃l1,c,l2.f c = true ∧ l = l1@c::l2 ∧ ∀x.memb ? x l1 = true → f c = false).
 (*#A #f #l elim l
 [ % #x normalize #Hfalse *)
      
@@ -458,8 +459,8 @@ lapply (sem_seq ? (adv_to_mark_r ? bar_or_grid)
    [ * #Hfalse >Hfalse in Hc; #Htf destruct (Htf)
    | * #_ #Hta cases (tech_split ? is_bar rs1)
      [ #H1 lapply (Hta rs1 grid rs2 (refl ??) ? ?)
-       [ @daemon
-       | @daemon
+       [ (* Hrs1, H1 *) @daemon
+       | (* bar_or_grid grid = true *) @daemon
        | -Hta #Hta cases Hright
          [ * #tb * whd in ⊢ (%→?); #Hcurrent
            @False_ind cases(Hcurrent grid ?)
@@ -474,8 +475,36 @@ lapply (sem_seq ? (adv_to_mark_r ? bar_or_grid)
            | >Hta % ]
          ]
        ]
-    | STOP
-    ]
-  ]
+    | * #rs3 * #c0 * #rs4 * * #Hc0 #Hsplit #Hrs3
+      % @(ex_intro ?? rs3) @(ex_intro ?? rs4)
+     lapply (Hta rs3 c0 (rs4@grid::rs2) ???)
+     [ #x #Hrs3' (* Hrs1, Hrs3, Hsplit *) @daemon
+     | (* bar → bar_or_grid *) @daemon
+     | >Hsplit >associative_append % ] -Hta #Hta
+       cases Hright
+       [ * #tb * whd in ⊢ (%→?); #Hta'
+         whd in ⊢ (%→?); #Htb
+         cases (Hta' c0 ?)
+         [ #_ #Htb' >Htb' in Htb; #Htb
+           generalize in match Hsplit; -Hsplit
+           cases rs4 in Hta;
+           [ >(eq_pair_fst_snd … grid)
+             #Hta #Hsplit >(Htb … Hta)
+             >(?:c0 = bar)
+             [ @(ex_intro ?? (\fst grid)) @(ex_intro ?? (\snd grid))
+               % [ % [ % [ (* Hsplit *) @daemon |(*Hrs3*) @daemon ] | % ] | % ] 
+                     | (* Hc0 *) @daemon ]
+           | #r5 #rs5 >(eq_pair_fst_snd … r5)
+             #Hta #Hsplit >(Htb … Hta)
+             >(?:c0 = bar)
+             [ @(ex_intro ?? (\fst r5)) @(ex_intro ?? (\snd r5))
+               % [ % [ % [ (* Hc0, Hsplit *) @daemon | (*Hrs3*) @daemon ] | % ]
+                     | % ] | (* Hc0 *) @daemon ] ] | >Hta % ]
+             | * #tb * whd in ⊢ (%→?); #Hta'
+               whd in ⊢ (%→?); #Htb
+               cases (Hta' c0 ?)
+               [ #Hfalse @False_ind >Hfalse in Hc0;
+                 #Hc0 destruct (Hc0)
+               | >Hta % ]
+]]]]
 qed.
-
