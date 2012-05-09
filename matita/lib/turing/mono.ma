@@ -284,6 +284,25 @@ definition accRealize ≝ λsig.λM:TM sig.λacc:states sig M.λRtrue,Rfalse:rel
   (cstate ?? outc = acc → Rtrue t (ctape ?? outc)) ∧ 
   (cstate ?? outc ≠ acc → Rfalse t (ctape ?? outc)).
 
+(* NO OPERATION
+
+  t1 = t2
+  *)
+  
+definition nop_states ≝ initN 1.
+
+definition nop ≝ 
+  λalpha:FinSet.mk_TM alpha nop_states
+  (λp.let 〈q,a〉 ≝ p in 〈q,None ?〉)
+  O (λ_.true).
+  
+definition R_nop ≝ λalpha.λt1,t2:tape alpha.t2 = t1.
+
+lemma sem_nop :
+  ∀alpha.Realize alpha (nop alpha) (R_nop alpha).
+#alpha #intape @(ex_intro ?? 1) @ex_intro [| % normalize % ]
+qed.
+
 (* Compositions *)
 
 definition seq_trans ≝ λsig. λM1,M2 : TM sig. 

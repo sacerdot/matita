@@ -16,6 +16,7 @@
 
 include "turing/while_machine.ma".
 include "turing/if_machine.ma".
+include "turing/universal/tests.ma".
 
 (* ADVANCE TO MARK (right)
 
@@ -579,27 +580,6 @@ qed.
    l0 x* a l1 x0* a0 l2   (f(x0) == false)
               ^
 *)
-
-include "turing/universal/tests.ma".
-
-(* NO OPERATION
-
-  t1 = t2
-  *)
-  
-definition nop_states ≝ initN 1.
-
-definition nop ≝ 
-  λalpha:FinSet.mk_TM alpha nop_states
-  (λp.let 〈q,a〉 ≝ p in 〈q,None ?〉)
-  O (λ_.true).
-  
-definition R_nop ≝ λalpha.λt1,t2:tape alpha.t2 = t1.
-
-lemma sem_nop :
-  ∀alpha.Realize alpha (nop alpha) (R_nop alpha).
-#alpha #intape @(ex_intro ?? 1) @ex_intro [| % normalize % ]
-qed.
 
 definition match_and_adv ≝ 
   λalpha,f.ifTM ? (test_char ? f)
