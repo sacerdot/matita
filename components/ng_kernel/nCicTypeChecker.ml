@@ -698,15 +698,16 @@ and eat_prods status ~subst ~metasenv context he ty_he args_with_ty =
           if R.are_convertible status ~metasenv ~subst context ty_arg s then
             aux (S.subst status ~avoid_beta_redexes:true arg t) tl
           else
+           let indent s = "   " ^ (Str.global_replace (Str.regexp "\n") "\n   " s) in
             raise 
               (TypeCheckerFailure 
                 (lazy (Printf.sprintf
-                  ("Appl: wrong application of %s: the argument %s has type"^^
+                  ("Appl: wrong application of\n%s\nThe argument\n%s\nhas type"^^
                    "\n%s\nbut it should have type \n%s\nContext:\n%s\n")
-                  (status#ppterm ~subst ~metasenv ~context he)
-                  (status#ppterm ~subst ~metasenv ~context arg)
-                  (status#ppterm ~subst ~metasenv ~context ty_arg)
-                  (status#ppterm ~subst ~metasenv ~context s)
+                  (indent (status#ppterm ~subst ~metasenv ~context he))
+                  (indent (status#ppterm ~subst ~metasenv ~context arg))
+                  (indent (status#ppterm ~subst ~metasenv ~context ty_arg))
+                  (indent (status#ppterm ~subst ~metasenv ~context s))
                   (status#ppcontext ~subst ~metasenv context))))
        | _ ->
           raise 

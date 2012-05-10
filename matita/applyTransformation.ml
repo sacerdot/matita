@@ -76,23 +76,23 @@ class status =
   inherit Interpretations.status
   inherit TermContentPres.status
   method ppterm ~context ~subst ~metasenv ?margin ?inside_fix t =
-   snd (ntxt_of_cic_term ~map_unicode_to_tex:true 80 self ~metasenv ~subst
+   snd (ntxt_of_cic_term ~map_unicode_to_tex:false 80 self ~metasenv ~subst
     ~context t)
 
   method ppcontext ?sep ~subst ~metasenv context =
-   snd (ntxt_of_cic_context ~map_unicode_to_tex:true 80 self ~metasenv ~subst
+   snd (ntxt_of_cic_context ~map_unicode_to_tex:false 80 self ~metasenv ~subst
     context)
 
   method ppsubst ~metasenv ?use_subst subst =
-   snd (ntxt_of_cic_subst ~map_unicode_to_tex:true 80 self ~metasenv ?use_subst
+   snd (ntxt_of_cic_subst ~map_unicode_to_tex:false 80 self ~metasenv ?use_subst
     subst)
 
   method ppmetasenv ~subst metasenv =
    String.concat "\n"
     (List.map
-      (fun m -> snd (ntxt_of_cic_sequent ~map_unicode_to_tex:true 80 self
+      (fun m -> snd (ntxt_of_cic_sequent ~map_unicode_to_tex:false 80 self
         ~metasenv ~subst m)) metasenv)
 
   method ppobj obj =
-   snd (ntxt_of_cic_object ~map_unicode_to_tex:true 80 self obj)
+   snd (ntxt_of_cic_object ~map_unicode_to_tex:false 80 self obj)
  end

@@ -515,6 +515,11 @@ let delift status ~unify metasenv subst context n l t =
         NCicUtils.Meta_not_found _ ->
          (* Fake metavariable used in NTacStatus and NCicRefiner :-( *)
          assert (n = -1); res
+      | NCicTypeChecker.TypeCheckerFailure msg ->
+         HLog.error "----------- Problem with Dependent Types ----------";
+         HLog.error (Lazy.force msg) ;
+         HLog.error "---------------------------------------------------";
+         raise (NotFound `NotWellTyped)
       | TypeNotGood
       | NCicTypeChecker.AssertFailure _
       | NCicReduction.AssertFailure _
