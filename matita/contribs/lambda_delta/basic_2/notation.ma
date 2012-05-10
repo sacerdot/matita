@@ -346,6 +346,10 @@ notation "hvbox( ⦃ h , break L ⦄ ⊢ break term 46 T1 : break term 46 T2 )"
    non associative with precedence 45
    for @{ 'NativeType $h $L $T1 $T2 }.
 
+notation "hvbox( ⦃ h , break L ⦄ ⊢ break term 46 T1 :: break term 46 T2 )"
+   non associative with precedence 45
+   for @{ 'NativeTypeAlt $h $L $T1 $T2 }.
+
 notation "hvbox( h ⊢ break term 46 L1 : ⊑ break term 46 L2 )"
    non associative with precedence 45
    for @{ 'CrSubEqN $h $L1 $L2 }.

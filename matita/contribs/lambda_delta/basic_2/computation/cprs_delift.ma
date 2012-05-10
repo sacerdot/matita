@@ -12,26 +12,19 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* GENERAL NOTATION USED BY THE FORMAL SYSTEM λδ ****************************)
+include "basic_2/reducibility/cpr_delift.ma".
+include "basic_2/computation/cprs.ma".
 
-(* Lists ********************************************************************)
+(* CONTEXT-SENSITIVE PARALLEL COMPUTATION ON TERMS **************************)
 
-notation "hvbox( ◊ )"
-  non associative with precedence 90
-  for @{'Nil}.
+(* Properties on inverse basic term relocation ******************************)
 
-notation "hvbox( hd @ break tl )"
-  right associative with precedence 47
-  for @{'Cons $hd $tl}.
-
-notation "hvbox( l1 @@ break l2 )"
-  right associative with precedence 47
-  for @{'Append $l1 $l2 }.
-
-notation "hvbox( ⟠ )"
-  non associative with precedence 90
-  for @{'Nil2}.
-
-notation "hvbox( { hd1 , break hd2 } @ break tl )"
-  non associative with precedence 47
-  for @{'Cons $hd1 $hd2 $tl}.
+(* Basic_1: was only: pr3_gen_cabbr *)
+lemma thin_cprs_delift_conf: ∀L,U1,U2. L ⊢ U1 ➡* U2 →
+                             ∀K,d,e. L [d, e] ≡ K → ∀T1. L ⊢ U1 [d, e] ≡ T1 →
+                             ∃∃T2. K ⊢ T1 ➡* T2 & L ⊢ U2 [d, e] ≡ T2.
+#L #U1 #U2 #H @(cprs_ind … H) -U2 /2 width=3/
+#U #U2 #_ #HU2 #IHU1 #K #d #e #HLK #T1 #HTU1
+elim (IHU1 … HLK … HTU1) -U1 #T #HT1 #HUT
+elim (thin_cpr_delift_conf … HU2 … HLK … HUT) -U -HLK /3 width=3/
+qed.

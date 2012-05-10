@@ -81,7 +81,7 @@ lapply (csn_appl_theta … HW12 … H) -H -HW12 #H
 lapply (csn_fwd_pair_sn … H) #HW1
 lapply (csn_fwd_flat_dx … H) #H1
 @csn_appl_simple_tstc // -HW1 /2 width=3/ -IHV12s -HV -H1 #X #H1 #H2
-elim (cprs_fwd_theta_vector … (V2::V2s) … H1) -H1 /2 width=1/ -HV12s -HV12
+elim (cprs_fwd_theta_vector … (V2@V2s) … H1) -H1 /2 width=1/ -HV12s -HV12
 [ -H #H elim (H2 ?) -H2 //
 | -H2 #H1 @(csn_cprs_trans … H) -H /2 width=1/
 ]

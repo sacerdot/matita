@@ -43,7 +43,7 @@ qed.
 
 (* Advanced forward lemmas **************************************************)
 
-lemma cpr_shift_fwd: ∀L,T1,T2. L ⊢ T1 ➡ T2 → L @ T1 ➡ L @ T2.
+lemma cpr_shift_fwd: ∀L,T1,T2. L ⊢ T1 ➡ T2 → L @@ T1 ➡ L @@ T2.
 #L elim L -L
 [ #T1 #T2 #HT12 @(cpr_inv_atom … HT12)
 | normalize /3 width=1/

@@ -12,26 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* GENERAL NOTATION USED BY THE FORMAL SYSTEM λδ ****************************)
+include "basic_2/unfold/delift.ma".
+include "basic_2/reducibility/tpr_tpss.ma".
 
-(* Lists ********************************************************************)
+(* CONTEXT-FREE PARALLEL REDUCTION ON TERMS *********************************)
 
-notation "hvbox( ◊ )"
-  non associative with precedence 90
-  for @{'Nil}.
+(* Properties on inverse basic term relocation ******************************)
 
-notation "hvbox( hd @ break tl )"
-  right associative with precedence 47
-  for @{'Cons $hd $tl}.
-
-notation "hvbox( l1 @@ break l2 )"
-  right associative with precedence 47
-  for @{'Append $l1 $l2 }.
-
-notation "hvbox( ⟠ )"
-  non associative with precedence 90
-  for @{'Nil2}.
-
-notation "hvbox( { hd1 , break hd2 } @ break tl )"
-  non associative with precedence 47
-  for @{'Cons $hd1 $hd2 $tl}.
+lemma tpr_delift_conf: ∀U1,U2. U1 ➡ U2 → ∀L,T1,d,e. L ⊢ U1 [d, e] ≡ T1 →
+                       ∃∃T2. T1 ➡ T2 & L ⊢ U2 [d, e] ≡ T2.
+#U1 #U2 #HU12 #L #T1 #d #e * #W1 #HUW1 #HTW1
+elim (tpr_tpss_conf … HU12 … HUW1) -U1 #U1 #HWU1 #HU21
+elim (tpr_inv_lift … HWU1 … HTW1) -W1 /3 width=5/
+qed. 

@@ -18,7 +18,7 @@ include "basic_2/unfold/gr2.ma".
 
 let rec pluss (des:list2 nat nat) (i:nat) on des ≝ match des with
 [ nil2          ⇒ ⟠
-| cons2 d e des ⇒ {d + i, e} :: pluss des i
+| cons2 d e des ⇒ {d + i, e} @ pluss des i
 ].
 
 interpretation "plus (generic relocation with pairs)"
@@ -31,8 +31,8 @@ lemma pluss_inv_nil2: ∀i,des. des + i = ⟠ → des = ⟠.
 #d #e #des #H destruct
 qed.
 
-lemma pluss_inv_cons2: ∀i,d,e,des2,des. des + i = {d, e} :: des2 →
-                       ∃∃des1. des1 + i = des2 & des = {d - i, e} :: des1.
+lemma pluss_inv_cons2: ∀i,d,e,des2,des. des + i = {d, e} @ des2 →
+                       ∃∃des1. des1 + i = des2 & des = {d - i, e} @ des1.
 #i #d #e #des2 * normalize
 [ #H destruct
 | #d1 #e1 #des1 #H destruct /2 width=3/ 

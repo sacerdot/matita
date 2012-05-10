@@ -14,12 +14,12 @@
 
 include "basic_2/unfold/ltpss.ma".
 
-(* LOCAL ENVIRONMENT THINNING ***********************************************)
+(* BASIC LOCAL ENVIRONMENT THINNING *****************************************)
 
 definition thin: nat → nat → relation lenv ≝
                  λd,e,L1,L2. ∃∃L. L1 [d, e] ▶* L & ⇩[d, e] L ≡ L2.
 
-interpretation "thinning (local environment)"
+interpretation "basic thinning (local environment)"
    'TSubst L1 d e L2 = (thin d e L1 L2).
 
 (* Basic properties *********************************************************)

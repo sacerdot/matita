@@ -12,14 +12,26 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/unfold/lifts_lift.ma".
+include "basic_2/unfold/thin_delift.ma".
+include "basic_2/reducibility/tpr_delift.ma".
+include "basic_2/reducibility/cpr.ma".
 
-(* GENERIC RELOCATION *******************************************************)
+(* CONTEXT-SENSITIVE PARALLEL REDUCTION ON TERMS ****************************)
 
-(* Main properties **********************************************************)
+(* Properties on inverse basic term relocation ******************************)
 
-(* Basic_1: was: lift1_lift1 (left to right) *)
-theorem lifts_trans: ∀T1,T,des1. ⇧*[des1] T1 ≡ T → ∀T2:term. ∀des2. ⇧*[des2] T ≡ T2 →
-                     ⇧*[des1 @@ des2] T1 ≡ T2.
-#T1 #T #des1 #H elim H -T1 -T -des1 // /3 width=3/
+(* Basic_1: was only: pr2_gen_cabbr *)
+lemma thin_cpr_delift_conf: ∀L,U1,U2. L ⊢ U1 ➡ U2 →
+                            ∀K,d,e. L [d, e] ≡ K → ∀T1. L ⊢ U1 [d, e] ≡ T1 →
+                            ∃∃T2. K ⊢ T1 ➡ T2 & L ⊢ U2 [d, e] ≡ T2.
+#L #U1 #U2 * #U #HU1 #HU2 #K #d #e #HLK #T1 #HTU1
+elim (tpr_delift_conf … HU1 … HTU1) -U1 #T #HT1 #HUT
+elim (le_or_ge (|L|) d) #Hd
+[ elim (thin_delift_tpss_conf_le … HU2 … HUT … HLK ?)
+| elim (le_or_ge (|L|) (d+e)) #Hde
+  [ elim (thin_delift_tpss_conf_le_up … HU2 … HUT … HLK ? ? ?)
+  | elim (thin_delift_tpss_conf_be … HU2 … HUT … HLK ? ?)
+  ]
+] -U -HLK // -Hd [2,3: -Hde] #T2 #HT2
+lapply (cpr_intro … HT1 HT2) -T /2 width=3/
 qed.

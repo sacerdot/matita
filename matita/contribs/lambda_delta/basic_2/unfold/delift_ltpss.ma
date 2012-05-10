@@ -15,7 +15,7 @@
 include "basic_2/unfold/ltpss_ltpss.ma".
 include "basic_2/unfold/delift.ma".
 
-(* INVERSE TERM RELOCATION  *************************************************)
+(* INVERSE BASIC TERM RELOCATION  *******************************************)
 
 (* Properties on partial unfold on local environments ***********************)
 

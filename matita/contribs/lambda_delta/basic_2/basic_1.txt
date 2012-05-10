@@ -180,7 +180,6 @@ pc3/props pc3_pr2_pr2_t
 pc3/props pc3_pr2_pr3_t
 pc3/props pc3_pr3_pc3_t
 pc3/props pc3_eta
-pc3/subst1 pc3_gen_cabbr
 pc3/wcpr0 pc3_wcpr0__pc3_wcpr0_t_aux
 pc3/wcpr0 pc3_wcpr0_t
 pc3/wcpr0 pc3_wcpr0
@@ -198,11 +197,9 @@ pr1/props pr1_head_2
 pr1/props pr1_comp
 pr1/props pr1_eta
 pr2/fwd pr2_gen_void
-pr2/subst1 pr2_gen_cabbr
 pr3/fwd pr3_gen_void
 pr3/pr1 pr3_pr1
 pr3/props pr3_eta
-pr3/subst1 pr3_gen_cabbr
 sn3/props sns3_lifts
 sty1/cnt sty1_cnt
 sty1/props sty1_trans
@@ -260,7 +257,6 @@ ty3/pr3_props ty3_tred
 ty3/pr3_props ty3_sconv_pc3
 ty3/pr3_props ty3_sred_back
 ty3/pr3_props ty3_sconv
-ty3/props ty3_unique
 ty3/props ty3_gen_abst_abst
 ty3/sty0 ty3_sty0
 ty3/subst1 ty3_gen_cabbr

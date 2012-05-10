@@ -35,7 +35,7 @@ lemma cw_shift: ∀K,I,V,T. #[K. ⓑ{I} V, T] < #[K, ②{I} V. T].
 normalize //
 qed.
 
-lemma tw_shift: ∀L,T. #[L, T] ≤ #[L @ T].
+lemma tw_shift: ∀L,T. #[L, T] ≤ #[L @@ T].
 #L elim L //
 #K #I #V #IHL #T
 @transitive_le [3: @IHL |2: /2 width=2/ | skip ]

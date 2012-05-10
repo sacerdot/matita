@@ -91,3 +91,8 @@ lemma tpr_tpss_ltpr: ∀L1,L2. L1 ➡ L2 → ∀T1,T2. T1 ➡ T2 →
   lapply (tpss_trans_eq … HT2 … HTU2) -T /2 width=3/
 ]
 qed.
+
+lemma tpr_tpss_conf: ∀T1,T2. T1 ➡ T2 →
+                     ∀L,U1,d,e. L ⊢ T1 [d, e] ▶* U1 →
+                     ∃∃U2. U1 ➡ U2 & L ⊢ T2 [d, e] ▶* U2.
+/2 width=5/ qed. 

@@ -15,7 +15,7 @@
 include "basic_2/unfold/tpss_lift.ma".
 include "basic_2/unfold/delift.ma".
 
-(* INVERSE TERM RELOCATION  *************************************************)
+(* INVERSE BASIC TERM RELOCATION  *******************************************)
 
 (* Advanced properties ******************************************************)
 
@@ -28,7 +28,7 @@ lapply (lift_trans_be … HV2 … HVU ? ?) -HV2 // >minus_plus <plus_minus_m_m
 /2 width=1/ /3 width=6/
 qed.
  
-(* Advanced forward lemmas **************************************************)
+(* Advanced inversion lemmas ************************************************)
 
 lemma delift_inv_lref1_lt: ∀L,U2,i,d,e. L ⊢ #i [d, e] ≡ U2 → i < d → U2 = #i.
 #L #U2 #i #d #e * #U #HU #HU2 #Hid
@@ -82,7 +82,7 @@ elim (lt_or_ge i d) #Hdi
 ]
 qed-.
 
-(* Relocation properties ****************************************************)
+(* Properties on basic term relocation **************************************)
 
 lemma delift_lift_le: ∀K,T1,T2,dt,et. K ⊢ T1 [dt, et] ≡ T2 →
                       ∀L,U1,d,e. dt + et ≤ d → ⇩[d, e] L ≡ K →

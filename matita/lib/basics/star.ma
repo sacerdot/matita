@@ -223,23 +223,35 @@ lemma TC_dx_to_TC: ∀A. ∀R: relation A.
 #A #R #a1 #a2 #Ha12 elim Ha12 -a1 -a2 /2 width=3/
 qed.
 
-fact TC_star_ind_dx_aux: ∀A,R. reflexive A R →
-                         ∀a2. ∀P:predicate A. P a2 →
-                         (∀a1,a. R a1 a → TC … R a a2 → P a → P a1) →
-                         ∀a1,a. TC … R a1 a → a = a2 → P a1.
-#A #R #HR #a2 #P #Ha2 #H #a1 #a #Ha1
+fact TC_ind_dx_aux: ∀A,R,a2. ∀P:predicate A.
+                    (∀a1. R a1 a2 → P a1) →
+                    (∀a1,a. R a1 a → TC … R a a2 → P a → P a1) →
+                    ∀a1,a. TC … R a1 a → a = a2 → P a1.
+#A #R #a2 #P #H1 #H2 #a1 #a #Ha1
 elim (TC_to_TC_dx ???? Ha1) -a1 -a
-[ #a #c #Hac #H destruct /3 width=4/
+[ #a #c #Hac #H destruct /2 width=1/
 | #a #b #c #Hab #Hbc #IH #H destruct /3 width=4/
 ]
 qed-.
+
+lemma TC_ind_dx: ∀A,R,a2. ∀P:predicate A.
+                 (∀a1. R a1 a2 → P a1) →
+                 (∀a1,a. R a1 a → TC … R a a2 → P a → P a1) →
+                 ∀a1. TC … R a1 a2 → P a1.
+#A #R #a2 #P #H1 #H2 #a1 #Ha12
+@(TC_ind_dx_aux … H1 H2 … Ha12) //
+qed-.
+
+lemma TC_symmetric: ∀A,R. symmetric A R → symmetric A (TC … R).
+#A #R #HR #x #y #H @(TC_ind_dx ??????? H) -x /3 width=1/ /3 width=3/
+qed.
 
 lemma TC_star_ind_dx: ∀A,R. reflexive A R →
                       ∀a2. ∀P:predicate A. P a2 →
                       (∀a1,a. R a1 a → TC … R a a2 → P a → P a1) →
                       ∀a1. TC … R a1 a2 → P a1.
 #A #R #HR #a2 #P #Ha2 #H #a1 #Ha12
-@(TC_star_ind_dx_aux … HR … Ha2 H … Ha12) //
+@(TC_ind_dx … P ? H … Ha12) /3 width=4/
 qed-.
 
 definition Conf3: ∀A,B. relation2 A B → relation A → Prop ≝ λA,B,S,R.

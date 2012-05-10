@@ -20,7 +20,7 @@ include "basic_2/unfold/gr2_plus.ma".
 inductive lifts: list2 nat nat → relation term ≝
 | lifts_nil : ∀T. lifts ⟠ T T
 | lifts_cons: ∀T1,T,T2,des,d,e.
-              ⇧[d,e] T1 ≡ T → lifts des T T2 → lifts ({d, e} :: des) T1 T2
+              ⇧[d,e] T1 ≡ T → lifts des T T2 → lifts ({d, e} @ des) T1 T2
 .
 
 interpretation "generic relocation (term)"
@@ -37,7 +37,7 @@ lemma lifts_inv_nil: ∀T1,T2. ⇧*[⟠] T1 ≡ T2 → T1 = T2.
 /2 width=3/ qed-.
 
 fact lifts_inv_cons_aux: ∀T1,T2,des. ⇧*[des] T1 ≡ T2 →
-                         ∀d,e,tl. des = {d, e} :: tl →
+                         ∀d,e,tl. des = {d, e} @ tl →
                          ∃∃T. ⇧[d, e] T1 ≡ T & ⇧*[tl] T ≡ T2.
 #T1 #T2 #des * -T1 -T2 -des
 [ #T #d #e #tl #H destruct
@@ -45,7 +45,7 @@ fact lifts_inv_cons_aux: ∀T1,T2,des. ⇧*[des] T1 ≡ T2 →
   /2 width=3/
 qed.
 
-lemma lifts_inv_cons: ∀T1,T2,d,e,des. ⇧*[{d, e} :: des] T1 ≡ T2 →
+lemma lifts_inv_cons: ∀T1,T2,d,e,des. ⇧*[{d, e} @ des] T1 ≡ T2 →
                       ∃∃T. ⇧[d, e] T1 ≡ T & ⇧*[des] T ≡ T2.
 /2 width=3/ qed-.
 

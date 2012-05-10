@@ -43,6 +43,9 @@ qed-.
 lemma cpcs_refl: ∀L,T. L ⊢ T ⬌* T.
 /2 width=1/ qed.
 
+lemma cpcs_sym: ∀L,T1,T2. L ⊢ T1 ⬌* T2 → L ⊢ T2 ⬌* T1.
+/3 width=1/ qed.
+
 lemma cpcs_strap1: ∀L,T1,T,T2. L ⊢ T1 ⬌* T → L ⊢ T ⬌ T2 → L ⊢ T1 ⬌* T2.
 /2 width=3/ qed.
 

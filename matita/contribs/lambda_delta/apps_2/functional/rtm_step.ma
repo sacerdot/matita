@@ -41,9 +41,9 @@ inductive rtm_step: relation rtm ≝
                        (mk_rtm G u E S T)
 | rtm_appl  : ∀G,u,E,S,V,T.
               rtm_step (mk_rtm G u E S (ⓐV. T))
-                       (mk_rtm G u E ({E, V} :: S) T)
+                       (mk_rtm G u E ({E, V} @ S) T)
 | rtm_beta  : ∀G,u,E,F,V,S,W,T.
-              rtm_step (mk_rtm G u E ({F, V} :: S) (ⓛW. T))
+              rtm_step (mk_rtm G u E ({F, V} @ S) (ⓛW. T))
                        (mk_rtm G u (E. ④{Abbr} {u, F, V}) S T)
 | rtm_push  : ∀G,u,E,W,T.
               rtm_step (mk_rtm G u E ⟠ (ⓛW. T))

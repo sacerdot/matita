@@ -14,12 +14,12 @@
 
 include "basic_2/unfold/tpss.ma".
 
-(* INVERSE TERM RELOCATION  *************************************************)
+(* INVERSE BASIC TERM RELOCATION  *******************************************)
 
 definition delift: nat → nat → lenv → relation term ≝
                    λd,e,L,T1,T2. ∃∃T. L ⊢ T1 [d, e] ▶* T & ⇧[d, e] T2 ≡ T.
 
-interpretation "inverse relocation (term)"
+interpretation "inverse basic relocation (term)"
    'TSubst L T1 d e T2 = (delift d e L T1 T2).
 
 (* Basic properties *********************************************************)

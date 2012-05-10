@@ -20,6 +20,6 @@ include "basic_2/unfold/ldrops_ldrop.ma".
 
 (* Basic_1: was: drop1_trans *)
 theorem ldrops_trans: ∀L,L2,des2. ⇩*[des2] L ≡ L2 → ∀L1,des1. ⇩*[des1] L1 ≡ L →
-                      ⇩*[des2 @ des1] L1 ≡ L2.
+                      ⇩*[des2 @@ des1] L1 ≡ L2.
 #L #L2 #des2 #H elim H -L -L2 -des2 // /3 width=3/
 qed.

@@ -21,7 +21,7 @@ include "basic_2/unfold/lifts.ma".
 inductive ldrops: list2 nat nat → relation lenv ≝
 | ldrops_nil : ∀L. ldrops ⟠ L L
 | ldrops_cons: ∀L1,L,L2,des,d,e.
-               ldrops des L1 L → ⇩[d,e] L ≡ L2 → ldrops ({d, e} :: des) L1 L2
+               ldrops des L1 L → ⇩[d,e] L ≡ L2 → ldrops ({d, e} @ des) L1 L2
 .
 
 interpretation "generic local environment slicing"
@@ -39,7 +39,7 @@ lemma ldrops_inv_nil: ∀L1,L2. ⇩*[⟠] L1 ≡ L2 → L1 = L2.
 /2 width=3/ qed-.
 
 fact ldrops_inv_cons_aux: ∀L1,L2,des. ⇩*[des] L1 ≡ L2 →
-                          ∀d,e,tl. des = {d, e} :: tl →
+                          ∀d,e,tl. des = {d, e} @ tl →
                           ∃∃L. ⇩*[tl] L1 ≡ L & ⇩[d, e] L ≡ L2.
 #L1 #L2 #des * -L1 -L2 -des
 [ #L #d #e #tl #H destruct
@@ -48,7 +48,7 @@ fact ldrops_inv_cons_aux: ∀L1,L2,des. ⇩*[des] L1 ≡ L2 →
 qed.
 
 (* Basic_1: was: drop1_gen_pcons *)
-lemma ldrops_inv_cons: ∀L1,L2,d,e,des. ⇩*[{d, e} :: des] L1 ≡ L2 →
+lemma ldrops_inv_cons: ∀L1,L2,d,e,des. ⇩*[{d, e} @ des] L1 ≡ L2 →
                        ∃∃L. ⇩*[des] L1 ≡ L & ⇩[d, e] L ≡ L2.
 /2 width=3/ qed-.
 

@@ -15,7 +15,7 @@
 include "basic_2/unfold/tpss_tpss.ma".
 include "basic_2/unfold/delift.ma".
 
-(* INVERSE TERM RELOCATION  *************************************************)
+(* INVERSE BASIC TERM RELOCATION  *******************************************)
 
 (* Main properties **********************************************************)
 

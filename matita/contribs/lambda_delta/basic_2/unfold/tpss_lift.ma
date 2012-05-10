@@ -50,7 +50,7 @@ lemma tpss_inv_atom1: ∀L,T2,I,d,e. L ⊢ ⓪{I} [d, e] ▶* T2 →
     elim (tps_inv_atom1 … HT2) -HT2 [ /2 width=1/ | * /3 width=10/ ]
   | * #K #V1 #V #i #Hdi #Hide #HLK #HV1 #HVT #HI
     lapply (ldrop_fwd_ldrop2 … HLK) #H
-    elim (tps_inv_lift1_up … HT2 … H … HVT ? ? ?) normalize -HT2 -H -HVT [2,3,4: /2 width=1/ ] #V2 <minus_plus #HV2 #HVT2
+    elim (tps_inv_lift1_ge_up … HT2 … H … HVT ? ? ?) normalize -HT2 -H -HVT [2,3,4: /2 width=1/ ] #V2 <minus_plus #HV2 #HVT2
     @or_intror @(ex6_4_intro … Hdi Hide HLK … HVT2 HI) /2 width=3/ (**) (* /4 width=10/ is too slow *)
   ]
 ]
@@ -161,6 +161,18 @@ lemma tpss_inv_lift1_eq: ∀L,U1,U2,d,e.
 <(tps_inv_lift1_eq … HU2 … HTU1) -HU2 -HTU1 //
 qed.
 
+lemma tpss_inv_lift1_ge_up: ∀L,U1,U2,dt,et. L ⊢ U1 [dt, et] ▶* U2 →
+                            ∀K,d,e. ⇩[d, e] L ≡ K → ∀T1. ⇧[d, e] T1 ≡ U1 →
+                            d ≤ dt → dt ≤ d + e → d + e ≤ dt + et →
+                            ∃∃T2. K ⊢ T1 [d, dt + et - (d + e)] ▶* T2 &
+                                 ⇧[d, e] T2 ≡ U2.
+#L #U1 #U2 #dt #et #H #K #d #e #HLK #T1 #HTU1 #Hddt #Hdtde #Hdedet @(tpss_ind … H) -U2
+[ /2 width=3/
+| -HTU1 #U #U2 #_ #HU2 * #T #HT1 #HTU
+  elim (tps_inv_lift1_ge_up … HU2 … HLK … HTU ? ? ?) -HU2 -HLK -HTU // /3 width=3/
+]
+qed.
+
 lemma tpss_inv_lift1_be_up: ∀L,U1,U2,dt,et. L ⊢ U1 [dt, et] ▶* U2 →
                             ∀K,d,e. ⇩[d, e] L ≡ K → ∀T1. ⇧[d, e] T1 ≡ U1 →
                             dt ≤ d → dt + et ≤ d + e →
@@ -169,5 +181,16 @@ lemma tpss_inv_lift1_be_up: ∀L,U1,U2,dt,et. L ⊢ U1 [dt, et] ▶* U2 →
 [ /2 width=3/
 | -HTU1 #U #U2 #_ #HU2 * #T #HT1 #HTU
   elim (tps_inv_lift1_be_up … HU2 … HLK … HTU ? ?) -HU2 -HLK -HTU // /3 width=3/
+]
+qed.
+
+lemma tpss_inv_lift1_le_up: ∀L,U1,U2,dt,et. L ⊢ U1 [dt, et] ▶* U2 →
+                            ∀K,d,e. ⇩[d, e] L ≡ K → ∀T1. ⇧[d, e] T1 ≡ U1 →
+                            dt ≤ d → d ≤ dt + et → dt + et ≤ d + e →
+                            ∃∃T2. K ⊢ T1 [dt, d - dt] ▶* T2 & ⇧[d, e] T2 ≡ U2.
+#L #U1 #U2 #dt #et #H #K #d #e #HLK #T1 #HTU1 #Hdtd #Hddet #Hdetde @(tpss_ind … H) -U2
+[ /2 width=3/
+| -HTU1 #U #U2 #_ #HU2 * #T #HT1 #HTU
+  elim (tps_inv_lift1_le_up … HU2 … HLK … HTU ? ? ?) -HU2 -HLK -HTU // /3 width=3/
 ]
 qed.

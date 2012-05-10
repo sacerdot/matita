@@ -21,7 +21,7 @@ inductive liftsv (des:list2 nat nat) : relation (list term) ≝
 | liftsv_nil : liftsv des ◊ ◊
 | liftsv_cons: ∀T1s,T2s,T1,T2.
                ⇧*[des] T1 ≡ T2 → liftsv des T1s T2s →
-               liftsv des (T1 :: T1s) (T2 :: T2s)
+               liftsv des (T1 @ T1s) (T2 @ T2s)
 .
 
 interpretation "generic relocation (vector)"

@@ -26,5 +26,5 @@ interpretation
 
 (* Basic inversion lemmas ***************************************************)
 
-lemma csnv_inv_cons: ∀L,T,Ts. L ⊢ ⬇* T :: Ts → L ⊢ ⬇* T ∧ L ⊢ ⬇* Ts.
+lemma csnv_inv_cons: ∀L,T,Ts. L ⊢ ⬇* T @ Ts → L ⊢ ⬇* T ∧ L ⊢ ⬇* Ts.
 normalize // qed-.

@@ -450,6 +450,10 @@ lemma lt_or_ge: ∀m,n. m < n ∨ n ≤ m.
 #m #n elim (decidable_lt m n) /2 width=1/ /3 width=1/
 qed-.
 
+lemma le_or_ge: ∀m,n. m ≤ n ∨ n ≤ m.
+#m #n elim (decidable_le m n) /2 width=1/ /4 width=2/
+qed-.
+
 (* More general conclusion **************************************************)
 
 theorem nat_ind_plus: ∀R:predicate nat.

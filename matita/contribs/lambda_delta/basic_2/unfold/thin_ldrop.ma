@@ -16,7 +16,7 @@ include "basic_2/substitution/ldrop_ldrop.ma".
 include "basic_2/unfold/ltpss_ldrop.ma".
 include "basic_2/unfold/thin.ma".
 
-(* LOCAL ENVIRONMENT THINNING ***********************************************)
+(* BASIC LOCAL ENVIRONMENT THINNING *****************************************)
 
 (* Properties on local environment slicing **********************************)
 
