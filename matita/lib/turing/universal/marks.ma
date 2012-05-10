@@ -832,7 +832,7 @@ RIFIUTO: c ≠ d
 definition R_compare :=
   λt1,t2.
   ∀ls,c,rs.t1 = midtape (FinProd … FSUnialpha FinBool) ls c rs → 
-  (c = 〈grid,true〉 → t2 = midtape ? ls 〈grid,false〉 rs) ∧
+  (∀c'.is_bit c' = false → c = 〈c',true〉 → t2 = midtape ? ls 〈c',false〉 rs) ∧
   (∀c'. c = 〈c',false〉 → t2 = t1) ∧
   ∀b,b0,bs,b0s,l1,l2.
   |bs| = |b0s| → 
@@ -841,7 +841,7 @@ definition R_compare :=
   (∀c.memb ? c bs = true → is_marked ? c = false) → 
   (∀c.memb ? c b0s = true → is_marked ? c = false) → 
   (∀c.memb ? c l1 = true → is_marked ? c = false) → 
-  c = 〈b,true〉 → 
+  c = 〈b,true〉 → is_bit b = true → 
   rs = bs@〈grid,false〉::l1@〈b0,true〉::b0s@〈comma,false〉::l2 → 
   (〈b,true〉::bs = 〈b0,true〉::b0s ∧
    ∀l3,c.〈b0,false〉::b0s = l3@[〈c,false〉] → 
@@ -890,7 +890,7 @@ lapply (sem_while ?????? sem_comp_step t i outc Hloop) [%]
 -Hloop * #t1 * #Hstar @(star_ind_l ??????? Hstar)
 [ #tapea whd in ⊢ (%→?); #Hsem #ls #c #rs #Htapea %
   [ %
-    [ #Hc lapply (Hsem … Htapea) -Hsem * >Hc
+    [ #c' #Hc' #Hc lapply (Hsem … Htapea) -Hsem * >Hc
       whd in ⊢ (??%?→?); #Hfalse destruct (Hfalse)
     | #c' #Hc lapply (Hsem … Htapea) -Hsem * #_
       #Htrue @Htrue ]
@@ -899,56 +899,47 @@ lapply (sem_while ?????? sem_comp_step t i outc Hloop) [%]
   ]
 | #tapea #tapeb #tapec #Hleft #Hright #IH #Htapec lapply (IH Htapec) -IH #IH
   whd in Hleft; #ls #c #rs #Htapea cases (Hleft … Htapea) -Hleft
-  #c' * #Hc destruct (Hc) *
-  [ * #Hc' STOP cases tapeb
-    [
-  
-   @(list_cases_2 … Hlen)
-    [ #Hbs #Hb0s destruct (Hbs Hb0s)
-      cases (Htapeb grid l1 b0 comma l2 (refl ??) ?) -Htapeb
-      [ * #Hb0c #Htapeb % %
-        [ >Hb0c %
-        | #l3 #c0 #Hl3 whd in Htapec; 
-        
-  
-   %
-  [ %
-    [ #Hc destruct (Hc)
-  #b #b0 #bs #b0s #l1 #l2 #Hlen #Hbs1 #Hb0s1 #Hbs2 #Hb0s2 #Hl1
-  #Htapea cases (Hleft … Htapea) -Hleft
-  #c * #Hc destruct (Hc) *
-  [ * #Hc #Htapeb @(list_cases_2 … Hlen)
-    [ #Hbs #Hb0s destruct (Hbs Hb0s)
-      cases (Htapeb grid l1 b0 comma l2 (refl ??) ?) -Htapeb
-      [ * #Hb0c #Htapeb % %
-        [ >Hb0c %
-        | #l3 #c0 #Hl3 whd in Htapec; 
-        
-       
-                =midtape (FinProd FSUnialpha FinBool) l0 〈b,true〉
-                 (bs@〈grid,false〉::l1@〈b0,true〉::b0s@〈comma,false〉::l2)
-          cases (IH … Htapeb)
-          
-  
-   #Hc
-  lapply (IH HRfalse) -IH #IH
-  #ls #c #rs #Htapea %2
-  cases Hleft #ls0 * #a0 * #rs0 * * #Htapea' #Htest #Htapeb
-  
-  >Htapea' in Htapea; #Htapea destruct (Htapea) % // *
-  [ #b #rs2 #Hrs >Hrs in Htapeb; #Htapeb #Htestb #_
-    cases (IH … Htapeb)
-    [ * #_ #Houtc >Houtc >Htapeb %
-    | * #Hfalse >Hfalse in Htestb; #Htestb destruct (Htestb) ]
-  | #r1 #rs1 #b #rs2 #Hrs >Hrs in Htapeb; #Htapeb #Htestb #Hmemb
-    cases (IH … Htapeb)
-    [ * #Hfalse >(Hmemb …) in Hfalse;
-      [ #Hft destruct (Hft)
-      | @memb_hd ]
-    | * #Htestr1 #H1 >reverse_cons >associative_append
-      @H1 // #x #Hx @Hmemb @memb_cons //
+  #c' * #Hc destruct (Hc) cases (true_or_false (c' == grid)) #Hc'
+  [ #Hleft %
+    [ %
+      [ #c'' #Hc'' #Heq destruct (Heq) whd in IH; cases Hleft
+        [ * >Hc'' whd in ⊢ (??%?→?); #Hfalse destruct (Hfalse)
+        | * #_ #Htapeb cases (IH … Htapeb) -IH * #_ #IH #_ >IH
+          [ <(\P Hc') @Htapeb
+          | %
+          |]
+        ]
+      | #c0 #Hfalse destruct (Hfalse)
+      ]
+    |#b #b0 #bs #b0s #l1 #l2 #Hlen #Hbs1 #Hb0s1 #Hbs2 #Hb0s2 #Hl1
+     #Heq destruct (Heq) >(\P Hc') whd in ⊢ (??%?→?); #Hfalse destruct (Hfalse)
     ]
-  ]
+  | #Hleft %
+    [ %
+      [ #c'' #Hc'' #Heq destruct (Heq) whd in IH; cases Hleft
+        [ * >Hc'' whd in ⊢ (??%?→?); #Hfalse destruct (Hfalse)
+        | * #_ #Htapeb cases (IH … Htapeb) -IH * #_ #IH #_ >IH
+          [ @Htapeb
+          | %
+          |]
+        ]
+      | #c0 #Hfalse destruct (Hfalse)
+      ]
+    |#b #b0 #bs #b0s #l1 #l2 #Hlen #Hbs1 #Hb0s1 #Hbs2 #Hb0s2 #Hl1
+     #Heq whd in IH; destruct (Heq) #H1 #Hrs cases Hleft -Hleft
+     [| * >H1 #Hfalse destruct (Hfalse) ]
+     * #_ #Hleft @(list_cases_2 … Hlen)
+     [ #Hbs #Hb0s generalize in match Hrs; >Hbs in ⊢ (%→?); >Hb0s in ⊢ (%→?);
+       -Hrs #Hrs normalize in Hrs; 
+       cases (Hleft ????? Hrs ?)
+       [ * #Heqb #Htapeb cases (IH … Htapeb) -IH * #IH #_ #_
+        % %
+        [ >Heqb >Hbs >Hb0s %
+        | #l3 #c0 #Hyp >Hbs >Hb0s 
+         cases (IH b b0 bs l1 l2 Hlen ?????
+     
+     >(\P Hc') whd in ⊢ (??%?→?); #Hfalse destruct (Hfalse)
+    ]
 qed.
                    
 
