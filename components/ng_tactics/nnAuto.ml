@@ -267,6 +267,7 @@ let solve f status eq_cache goal =
                         Lazy.force msg ^
 			"\n in the environment\n" ^ 
 			status#ppmetasenv subst metasenv)); None
+      | Sys.Break as e -> raise e
       | _ -> None
     in
     HExtlib.filter_map build_status
@@ -436,7 +437,9 @@ let close_metasenv status metasenv subst =
            (* prerr_endline (status#ppterm ctx [] [] iterm); *)
            let s_entry = i, ([], ctx, iterm, ty)
            in s_entry::subst,okind::objs
-         with _ -> assert false)
+         with
+            Sys.Break as e -> raise e
+          | _ -> assert false)
       (subst,[]) metasenv
 ;;
 
