@@ -58,6 +58,14 @@ axiom tdaemon : ∀X:Type[0].X.
 axiom sem_if: ∀sig,M1,M2,M3,Rtrue,Rfalse,R2,R3,acc.
   accRealize sig M1 acc Rtrue Rfalse → Realize sig M2 R2 → Realize sig M3 R3 → 
     Realize sig (ifTM sig M1 M2 M3 acc) (λt1,t2. (Rtrue ∘ R2) t1 t2 ∨ (Rfalse ∘ R3) t1 t2).
+    
+axiom acc_sem_if: ∀sig,M1,M2,M3,Rtrue,Rfalse,R2,R3,acc.
+  accRealize sig M1 acc Rtrue Rfalse → Realize sig M2 R2 → Realize sig M3 R3 → 
+    accRealize sig 
+     (ifTM sig M1 (single_finalTM … M2) M3 acc) 
+     (inr … (inl … (inr … 0)))
+     (Rtrue ∘ R2) 
+     (Rfalse ∘ R3).
 (*    
 #sig #M1 #M2 #M3 #Rtrue #Rfalse #R2 #R3 #acc #HaccR #HR2 #HR3 #t 
 cases (HaccR t) #k1 * #outc1 * * #Hloop1 #HMtrue #HMfalse 
