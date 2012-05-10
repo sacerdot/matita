@@ -202,13 +202,21 @@ notation "hvbox( L ⊢ break term 46 T1 break [ d , break e ] ≡≡ break term 
 
 (* Static typing ************************************************************)
 
-notation "hvbox( L ⊢ break term 46 T ÷ break term 46 A )"
+notation "hvbox( L ⊢ break term 46 T ⁝ break term 46 A )"
    non associative with precedence 45
    for @{ 'AtomicArity $L $T $A }.
 
-notation "hvbox( T1 ÷ ⊑ break term 46 T2 )"
+notation "hvbox( T1 ⁝ ⊑ break term 46 T2 )"
    non associative with precedence 45
    for @{ 'CrSubEqA $T1 $T2 }.
+
+notation "hvbox( L ⊢ break term 46 T ÷ break term 46 A )"
+   non associative with precedence 45
+   for @{ 'BinaryArity $L $T $A }.
+
+notation "hvbox( T1 ÷ ⊑ break term 46 T2 )"
+   non associative with precedence 45
+   for @{ 'CrSubEqB $T1 $T2 }.
 
 notation "hvbox( ⦃ h , break L ⦄ ⊢ break term 46 T1 • break term 46 T2 )"
    non associative with precedence 45
@@ -308,9 +316,9 @@ notation "hvbox( L ⊢ ⬇ * term 46 T )"
    non associative with precedence 45
    for @{ 'SN $L $T }.
 
-notation "hvbox( L ⊢ ⬇ * * term 46 T )"
+notation "hvbox( L ⊢ ⬇ ⬇ * term 46 T )"
    non associative with precedence 45
-   for @{ 'SNStar $L $T }.
+   for @{ 'SNAlt $L $T }.
 
 notation "hvbox( ⦃ L, break T ⦄ break [ R ] ϵ break 〚 A 〛 )"
    non associative with precedence 45

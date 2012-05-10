@@ -33,7 +33,7 @@ interpretation "atomic arity assignment (term)"
 
 (* Basic inversion lemmas ***************************************************)
 
-fact aaa_inv_sort_aux: ∀L,T,A. L ⊢ T ÷ A → ∀k. T = ⋆k → A = ⓪.
+fact aaa_inv_sort_aux: ∀L,T,A. L ⊢ T ⁝ A → ∀k. T = ⋆k → A = ⓪.
 #L #T #A * -L -T -A
 [ //
 | #I #L #K #V #B #i #_ #_ #k #H destruct
@@ -44,11 +44,11 @@ fact aaa_inv_sort_aux: ∀L,T,A. L ⊢ T ÷ A → ∀k. T = ⋆k → A = ⓪.
 ]
 qed.
 
-lemma aaa_inv_sort: ∀L,A,k. L ⊢ ⋆k ÷ A → A = ⓪.
+lemma aaa_inv_sort: ∀L,A,k. L ⊢ ⋆k ⁝ A → A = ⓪.
 /2 width=5/ qed-.
 
-fact aaa_inv_lref_aux: ∀L,T,A. L ⊢ T ÷ A → ∀i. T = #i →
-                       ∃∃I,K,V. ⇩[0, i] L ≡ K. ⓑ{I} V & K ⊢ V ÷ A.
+fact aaa_inv_lref_aux: ∀L,T,A. L ⊢ T ⁝ A → ∀i. T = #i →
+                       ∃∃I,K,V. ⇩[0, i] L ≡ K. ⓑ{I} V & K ⊢ V ⁝ A.
 #L #T #A * -L -T -A
 [ #L #k #i #H destruct
 | #I #L #K #V #B #j #HLK #HB #i #H destruct /2 width=5/
@@ -59,12 +59,12 @@ fact aaa_inv_lref_aux: ∀L,T,A. L ⊢ T ÷ A → ∀i. T = #i →
 ]
 qed.
 
-lemma aaa_inv_lref: ∀L,A,i. L ⊢ #i ÷ A →
-                    ∃∃I,K,V. ⇩[0, i] L ≡ K. ⓑ{I} V & K ⊢ V ÷ A.
+lemma aaa_inv_lref: ∀L,A,i. L ⊢ #i ⁝ A →
+                    ∃∃I,K,V. ⇩[0, i] L ≡ K. ⓑ{I} V & K ⊢ V ⁝ A.
 /2 width=3/ qed-.
 
-fact aaa_inv_abbr_aux: ∀L,T,A. L ⊢ T ÷ A → ∀W,U. T = ⓓW. U →
-                       ∃∃B. L ⊢ W ÷ B & L. ⓓW ⊢ U ÷ A.
+fact aaa_inv_abbr_aux: ∀L,T,A. L ⊢ T ⁝ A → ∀W,U. T = ⓓW. U →
+                       ∃∃B. L ⊢ W ⁝ B & L. ⓓW ⊢ U ⁝ A.
 #L #T #A * -L -T -A
 [ #L #k #W #U #H destruct
 | #I #L #K #V #B #i #_ #_ #W #U #H destruct
@@ -75,12 +75,12 @@ fact aaa_inv_abbr_aux: ∀L,T,A. L ⊢ T ÷ A → ∀W,U. T = ⓓW. U →
 ]
 qed.
 
-lemma aaa_inv_abbr: ∀L,V,T,A. L ⊢ ⓓV. T ÷ A →
-                    ∃∃B. L ⊢ V ÷ B & L. ⓓV ⊢ T ÷ A.
+lemma aaa_inv_abbr: ∀L,V,T,A. L ⊢ ⓓV. T ⁝ A →
+                    ∃∃B. L ⊢ V ⁝ B & L. ⓓV ⊢ T ⁝ A.
 /2 width=3/ qed-.
 
-fact aaa_inv_abst_aux: ∀L,T,A. L ⊢ T ÷ A → ∀W,U. T = ⓛW. U →
-                       ∃∃B1,B2. L ⊢ W ÷ B1 & L. ⓛW ⊢ U ÷ B2 & A = ②B1. B2.
+fact aaa_inv_abst_aux: ∀L,T,A. L ⊢ T ⁝ A → ∀W,U. T = ⓛW. U →
+                       ∃∃B1,B2. L ⊢ W ⁝ B1 & L. ⓛW ⊢ U ⁝ B2 & A = ②B1. B2.
 #L #T #A * -L -T -A
 [ #L #k #W #U #H destruct
 | #I #L #K #V #B #i #_ #_ #W #U #H destruct
@@ -91,12 +91,12 @@ fact aaa_inv_abst_aux: ∀L,T,A. L ⊢ T ÷ A → ∀W,U. T = ⓛW. U →
 ]
 qed.
 
-lemma aaa_inv_abst: ∀L,W,T,A. L ⊢ ⓛW. T ÷ A →
-                    ∃∃B1,B2. L ⊢ W ÷ B1 & L. ⓛW ⊢ T ÷ B2 & A = ②B1. B2.
+lemma aaa_inv_abst: ∀L,W,T,A. L ⊢ ⓛW. T ⁝ A →
+                    ∃∃B1,B2. L ⊢ W ⁝ B1 & L. ⓛW ⊢ T ⁝ B2 & A = ②B1. B2.
 /2 width=3/ qed-.
 
-fact aaa_inv_appl_aux: ∀L,T,A. L ⊢ T ÷ A → ∀W,U. T = ⓐW. U →
-                       ∃∃B. L ⊢ W ÷ B & L ⊢ U ÷ ②B. A.
+fact aaa_inv_appl_aux: ∀L,T,A. L ⊢ T ⁝ A → ∀W,U. T = ⓐW. U →
+                       ∃∃B. L ⊢ W ⁝ B & L ⊢ U ⁝ ②B. A.
 #L #T #A * -L -T -A
 [ #L #k #W #U #H destruct
 | #I #L #K #V #B #i #_ #_ #W #U #H destruct
@@ -107,12 +107,12 @@ fact aaa_inv_appl_aux: ∀L,T,A. L ⊢ T ÷ A → ∀W,U. T = ⓐW. U →
 ]
 qed.
 
-lemma aaa_inv_appl: ∀L,V,T,A. L ⊢ ⓐV. T ÷ A →
-                    ∃∃B. L ⊢ V ÷ B & L ⊢ T ÷ ②B. A.
+lemma aaa_inv_appl: ∀L,V,T,A. L ⊢ ⓐV. T ⁝ A →
+                    ∃∃B. L ⊢ V ⁝ B & L ⊢ T ⁝ ②B. A.
 /2 width=3/ qed-.
 
-fact aaa_inv_cast_aux: ∀L,T,A. L ⊢ T ÷ A → ∀W,U. T = ⓣW. U →
-                       L ⊢ W ÷ A ∧ L ⊢ U ÷ A.
+fact aaa_inv_cast_aux: ∀L,T,A. L ⊢ T ⁝ A → ∀W,U. T = ⓣW. U →
+                       L ⊢ W ⁝ A ∧ L ⊢ U ⁝ A.
 #L #T #A * -L -T -A
 [ #L #k #W #U #H destruct
 | #I #L #K #V #B #i #_ #_ #W #U #H destruct
@@ -123,6 +123,6 @@ fact aaa_inv_cast_aux: ∀L,T,A. L ⊢ T ÷ A → ∀W,U. T = ⓣW. U →
 ]
 qed.
 
-lemma aaa_inv_cast: ∀L,W,T,A. L ⊢ ⓣW. T ÷ A →
-                    L ⊢ W ÷ A ∧ L ⊢ T ÷ A.
+lemma aaa_inv_cast: ∀L,W,T,A. L ⊢ ⓣW. T ⁝ A →
+                    L ⊢ W ⁝ A ∧ L ⊢ T ⁝ A.
 /2 width=3/ qed-.

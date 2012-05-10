@@ -20,8 +20,8 @@ include "basic_2/reducibility/ltpr_ldrop.ma".
 
 (* Properties about atomic arity assignment on terms ************************)
 
-fact aaa_ltpr_tpr_conf_aux: ∀L,T,L1,T1,A. L1 ⊢ T1 ÷ A → L = L1 → T = T1 →
-                            ∀L2. L1 ➡ L2 → ∀T2. T1 ➡ T2 → L2 ⊢ T2 ÷ A.
+fact aaa_ltpr_tpr_conf_aux: ∀L,T,L1,T1,A. L1 ⊢ T1 ⁝ A → L = L1 → T = T1 →
+                            ∀L2. L1 ➡ L2 → ∀T2. T1 ➡ T2 → L2 ⊢ T2 ⁝ A.
 #L #T @(cw_wf_ind … L T) -L -T #L #T #IH
 #L1 #T1 #A * -L1 -T1 -A
 [ -IH #L1 #k #H1 #H2 #L2 #_ #T2 #H destruct
@@ -77,12 +77,12 @@ fact aaa_ltpr_tpr_conf_aux: ∀L,T,L1,T1,A. L1 ⊢ T1 ÷ A → L = L1 → T = T1
 ]
 qed.
 
-lemma aaa_ltpr_tpr_conf: ∀L1,T1,A. L1 ⊢ T1 ÷ A → ∀L2. L1 ➡ L2 →
-                         ∀T2. T1 ➡ T2 → L2 ⊢ T2 ÷ A.
+lemma aaa_ltpr_tpr_conf: ∀L1,T1,A. L1 ⊢ T1 ⁝ A → ∀L2. L1 ➡ L2 →
+                         ∀T2. T1 ➡ T2 → L2 ⊢ T2 ⁝ A.
 /2 width=9/ qed.
 
-lemma aaa_ltpr_conf: ∀L1,T,A. L1 ⊢ T ÷ A → ∀L2. L1 ➡ L2 → L2 ⊢ T ÷ A.
+lemma aaa_ltpr_conf: ∀L1,T,A. L1 ⊢ T ⁝ A → ∀L2. L1 ➡ L2 → L2 ⊢ T ⁝ A.
 /2 width=5/ qed.
 
-lemma aaa_tpr_conf: ∀L,T1,A. L ⊢ T1 ÷ A → ∀T2. T1 ➡ T2 → L ⊢ T2 ÷ A.
+lemma aaa_tpr_conf: ∀L,T1,A. L ⊢ T1 ⁝ A → ∀T2. T1 ➡ T2 → L ⊢ T2 ⁝ A.
 /2 width=5/ qed.

@@ -19,7 +19,7 @@ include "basic_2/static/aaa.ma".
 inductive lsuba: relation lenv ≝
 | lsuba_atom: lsuba (⋆) (⋆)
 | lsuba_pair: ∀I,L1,L2,V. lsuba L1 L2 → lsuba (L1. ⓑ{I} V) (L2. ⓑ{I} V)
-| lsuba_abbr: ∀L1,L2,V,W,A. L1 ⊢ V ÷ A → L2 ⊢ W ÷ A → 
+| lsuba_abbr: ∀L1,L2,V,W,A. L1 ⊢ V ⁝ A → L2 ⊢ W ⁝ A → 
               lsuba L1 L2 → lsuba (L1. ⓓV) (L2. ⓛW)
 .
 
@@ -29,7 +29,7 @@ interpretation
 
 (* Basic inversion lemmas ***************************************************)
 
-fact lsuba_inv_atom1_aux: ∀L1,L2. L1 ÷⊑ L2 → L1 = ⋆ → L2 = ⋆.
+fact lsuba_inv_atom1_aux: ∀L1,L2. L1 ⁝⊑ L2 → L1 = ⋆ → L2 = ⋆.
 #L1 #L2 * -L1 -L2
 [ //
 | #I #L1 #L2 #V #_ #H destruct
@@ -37,12 +37,12 @@ fact lsuba_inv_atom1_aux: ∀L1,L2. L1 ÷⊑ L2 → L1 = ⋆ → L2 = ⋆.
 ]
 qed.
 
-lemma lsuba_inv_atom1: ∀L2. ⋆ ÷⊑ L2 → L2 = ⋆.
+lemma lsuba_inv_atom1: ∀L2. ⋆ ⁝⊑ L2 → L2 = ⋆.
 /2 width=3/ qed-.
 
-fact lsuba_inv_pair1_aux: ∀L1,L2. L1 ÷⊑ L2 → ∀I,K1,V. L1 = K1. ⓑ{I} V →
-                          (∃∃K2. K1 ÷⊑ K2 & L2 = K2. ⓑ{I} V) ∨
-                          ∃∃K2,W,A. K1 ⊢ V ÷ A & K2 ⊢ W ÷ A & K1 ÷⊑ K2 &
+fact lsuba_inv_pair1_aux: ∀L1,L2. L1 ⁝⊑ L2 → ∀I,K1,V. L1 = K1. ⓑ{I} V →
+                          (∃∃K2. K1 ⁝⊑ K2 & L2 = K2. ⓑ{I} V) ∨
+                          ∃∃K2,W,A. K1 ⊢ V ⁝ A & K2 ⊢ W ⁝ A & K1 ⁝⊑ K2 &
                                     L2 = K2. ⓛW & I = Abbr.
 #L1 #L2 * -L1 -L2
 [ #I #K1 #V #H destruct
@@ -51,13 +51,13 @@ fact lsuba_inv_pair1_aux: ∀L1,L2. L1 ÷⊑ L2 → ∀I,K1,V. L1 = K1. ⓑ{I} V
 ]
 qed.
 
-lemma lsuba_inv_pair1: ∀I,K1,L2,V. K1. ⓑ{I} V ÷⊑ L2 →
-                       (∃∃K2. K1 ÷⊑ K2 & L2 = K2. ⓑ{I} V) ∨
-                       ∃∃K2,W,A. K1 ⊢ V ÷ A & K2 ⊢ W ÷ A & K1 ÷⊑ K2 &
+lemma lsuba_inv_pair1: ∀I,K1,L2,V. K1. ⓑ{I} V ⁝⊑ L2 →
+                       (∃∃K2. K1 ⁝⊑ K2 & L2 = K2. ⓑ{I} V) ∨
+                       ∃∃K2,W,A. K1 ⊢ V ⁝ A & K2 ⊢ W ⁝ A & K1 ⁝⊑ K2 &
                                  L2 = K2. ⓛW & I = Abbr.
 /2 width=3/ qed-.
 
-fact lsuba_inv_atom2_aux: ∀L1,L2. L1 ÷⊑ L2 → L2 = ⋆ → L1 = ⋆.
+fact lsuba_inv_atom2_aux: ∀L1,L2. L1 ⁝⊑ L2 → L2 = ⋆ → L1 = ⋆.
 #L1 #L2 * -L1 -L2
 [ //
 | #I #L1 #L2 #V #_ #H destruct
@@ -65,12 +65,12 @@ fact lsuba_inv_atom2_aux: ∀L1,L2. L1 ÷⊑ L2 → L2 = ⋆ → L1 = ⋆.
 ]
 qed.
 
-lemma lsubc_inv_atom2: ∀L1. L1 ÷⊑ ⋆ → L1 = ⋆.
+lemma lsubc_inv_atom2: ∀L1. L1 ⁝⊑ ⋆ → L1 = ⋆.
 /2 width=3/ qed-.
 
-fact lsuba_inv_pair2_aux: ∀L1,L2. L1 ÷⊑ L2 → ∀I,K2,W. L2 = K2. ⓑ{I} W →
-                          (∃∃K1. K1 ÷⊑ K2 & L1 = K1. ⓑ{I} W) ∨
-                          ∃∃K1,V,A. K1 ⊢ V ÷ A & K2 ⊢ W ÷ A & K1 ÷⊑ K2 &
+fact lsuba_inv_pair2_aux: ∀L1,L2. L1 ⁝⊑ L2 → ∀I,K2,W. L2 = K2. ⓑ{I} W →
+                          (∃∃K1. K1 ⁝⊑ K2 & L1 = K1. ⓑ{I} W) ∨
+                          ∃∃K1,V,A. K1 ⊢ V ⁝ A & K2 ⊢ W ⁝ A & K1 ⁝⊑ K2 &
                                     L1 = K1. ⓓV & I = Abst.
 #L1 #L2 * -L1 -L2
 [ #I #K2 #W #H destruct
@@ -79,14 +79,14 @@ fact lsuba_inv_pair2_aux: ∀L1,L2. L1 ÷⊑ L2 → ∀I,K2,W. L2 = K2. ⓑ{I} W
 ]
 qed.
 
-lemma lsuba_inv_pair2: ∀I,L1,K2,W. L1 ÷⊑ K2. ⓑ{I} W →
-                       (∃∃K1. K1 ÷⊑ K2 & L1 = K1. ⓑ{I} W) ∨
-                       ∃∃K1,V,A. K1 ⊢ V ÷ A & K2 ⊢ W ÷ A & K1 ÷⊑ K2 &
+lemma lsuba_inv_pair2: ∀I,L1,K2,W. L1 ⁝⊑ K2. ⓑ{I} W →
+                       (∃∃K1. K1 ⁝⊑ K2 & L1 = K1. ⓑ{I} W) ∨
+                       ∃∃K1,V,A. K1 ⊢ V ⁝ A & K2 ⊢ W ⁝ A & K1 ⁝⊑ K2 &
                                  L1 = K1. ⓓV & I = Abst.
 /2 width=3/ qed-.
 
 (* Basic properties *********************************************************)
 
-lemma lsuba_refl: ∀L. L ÷⊑ L.
+lemma lsuba_refl: ∀L. L ⁝⊑ L.
 #L elim L -L // /2 width=1/
 qed.

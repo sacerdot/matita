@@ -19,7 +19,7 @@ include "basic_2/static/lsuba_ldrop.ma".
 
 (* Properties concerning atomic arity assignment ****************************)
 
-lemma lsuba_aaa_conf: ∀L1,V,A. L1 ⊢ V ÷ A → ∀L2. L1 ÷⊑ L2 → L2 ⊢ V ÷ A.
+lemma lsuba_aaa_conf: ∀L1,V,A. L1 ⊢ V ⁝ A → ∀L2. L1 ⁝⊑ L2 → L2 ⊢ V ⁝ A.
 #L1 #V #A #H elim H -L1 -V -A
 [ //
 | #I #L1 #K1 #V1 #B #i #HLK1 #HV1B #IHV1 #L2 #HL12
@@ -36,7 +36,7 @@ lemma lsuba_aaa_conf: ∀L1,V,A. L1 ⊢ V ÷ A → ∀L2. L1 ÷⊑ L2 → L2 ⊢
 ]
 qed.
 
-lemma lsuba_aaa_trans: ∀L2,V,A. L2 ⊢ V ÷ A → ∀L1. L1 ÷⊑ L2 → L1 ⊢ V ÷ A.
+lemma lsuba_aaa_trans: ∀L2,V,A. L2 ⊢ V ⁝ A → ∀L1. L1 ⁝⊑ L2 → L1 ⊢ V ⁝ A.
 #L2 #V #A #H elim H -L2 -V -A
 [ //
 | #I #L2 #K2 #V2 #B #i #HLK2 #HV2B #IHV2 #L1 #HL12

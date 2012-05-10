@@ -25,7 +25,7 @@ include "basic_2/computation/lsubc_ldrops.ma".
 (* Basic_1: was: sc3_arity_csubc *)
 theorem aacr_aaa_csubc_lifts: ∀RR,RS,RP.
                               acp RR RS RP → acr RR RS RP (λL,T. RP L T) →
-                              ∀L1,T,A. L1 ⊢ T ÷ A → ∀L0,des. ⇩*[des] L0 ≡ L1 →
+                              ∀L1,T,A. L1 ⊢ T ⁝ A → ∀L0,des. ⇩*[des] L0 ≡ L1 →
                               ∀T0. ⇧*[des] T ≡ T0 → ∀L2. L2 [RP] ⊑ L0 →
                               ⦃L2, T0⦄ [RP] ϵ 〚A〛.
 #RR #RS #RP #H1RP #H2RP #L1 #T #A #H elim H -L1 -T -A
@@ -90,11 +90,11 @@ qed.
 
 (* Basic_1: was: sc3_arity *)
 lemma aacr_aaa: ∀RR,RS,RP. acp RR RS RP → acr RR RS RP (λL,T. RP L T) →
-                ∀L,T,A. L ⊢ T ÷ A → ⦃L, T⦄ [RP] ϵ 〚A〛.
+                ∀L,T,A. L ⊢ T ⁝ A → ⦃L, T⦄ [RP] ϵ 〚A〛.
 /2 width=8/ qed.
 
 lemma acp_aaa: ∀RR,RS,RP. acp RR RS RP → acr RR RS RP (λL,T. RP L T) →
-               ∀L,T,A. L ⊢ T ÷ A → RP L T.
+               ∀L,T,A. L ⊢ T ⁝ A → RP L T.
 #RR #RS #RP #H1RP #H2RP #L #T #A #HT
 lapply (aacr_acr … H1RP H2RP A) #HA
 @(s1 … HA) /2 width=4/

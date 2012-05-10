@@ -18,7 +18,7 @@ include "basic_2/static/lsuba_aaa.ma".
 
 (* Main properties **********************************************************)
 
-theorem lsuba_trans: ∀L1,L. L1 ÷⊑ L → ∀L2. L ÷⊑ L2 → L1 ÷⊑ L2.
+theorem lsuba_trans: ∀L1,L. L1 ⁝⊑ L → ∀L2. L ⁝⊑ L2 → L1 ⁝⊑ L2.
 #L1 #L #H elim H -L1 -L
 [ #X #H >(lsuba_inv_atom1 … H) -H //
 | #I #L1 #L #V #HL1 #IHL1 #X #H

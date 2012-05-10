@@ -20,7 +20,7 @@ include "basic_2/static/aaa_lift.ma".
 (* Properties concerning generic relocation *********************************)
 
 lemma aaa_lifts: ∀L1,L2,T2,A,des. ⇩*[des] L2 ≡ L1 → ∀T1. ⇧*[des] T1 ≡ T2 →
-                                  L1 ⊢ T1 ÷ A →  L2 ⊢ T2 ÷ A.
+                                  L1 ⊢ T1 ⁝ A →  L2 ⊢ T2 ⁝ A.
 #L1 #L2 #T2 #A #des #H elim H -L1 -L2 -des
 [ #L #T1 #H #HT1
   <(lifts_inv_nil … H) -H //

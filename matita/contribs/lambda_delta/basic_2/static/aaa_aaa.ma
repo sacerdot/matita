@@ -19,7 +19,7 @@ include "basic_2/static/aaa.ma".
 
 (* Main properties **********************************************************)
 
-theorem aaa_mono: ∀L,T,A1. L ⊢ T ÷ A1 → ∀A2. L ⊢ T ÷ A2 → A1 = A2.
+theorem aaa_mono: ∀L,T,A1. L ⊢ T ⁝ A1 → ∀A2. L ⊢ T ⁝ A2 → A1 = A2.
 #L #T #A1 #H elim H -L -T -A1
 [ #L #k #A2 #H
   >(aaa_inv_sort … H) -H //

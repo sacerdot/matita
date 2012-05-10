@@ -20,8 +20,8 @@ include "basic_2/static/lsuba.ma".
 
 (* Note: the constant 0 cannot be generalized *)
 
-lemma lsuba_ldrop_O1_conf: ∀L1,L2. L1 ÷⊑ L2 → ∀K1,e. ⇩[0, e] L1 ≡ K1 →
-                           ∃∃K2. K1 ÷⊑ K2 & ⇩[0, e] L2 ≡ K2.
+lemma lsuba_ldrop_O1_conf: ∀L1,L2. L1 ⁝⊑ L2 → ∀K1,e. ⇩[0, e] L1 ≡ K1 →
+                           ∃∃K2. K1 ⁝⊑ K2 & ⇩[0, e] L2 ≡ K2.
 #L1 #L2 #H elim H -L1 -L2
 [ /2 width=3/
 | #I #L1 #L2 #V #_ #IHL12 #K1 #e #H
@@ -41,8 +41,8 @@ lemma lsuba_ldrop_O1_conf: ∀L1,L2. L1 ÷⊑ L2 → ∀K1,e. ⇩[0, e] L1 ≡ K
 ]
 qed-.
 
-lemma lsuba_ldrop_O1_trans: ∀L1,L2. L1 ÷⊑ L2 → ∀K2,e. ⇩[0, e] L2 ≡ K2 →
-                            ∃∃K1. K1 ÷⊑ K2 & ⇩[0, e] L1 ≡ K1.
+lemma lsuba_ldrop_O1_trans: ∀L1,L2. L1 ⁝⊑ L2 → ∀K2,e. ⇩[0, e] L2 ≡ K2 →
+                            ∃∃K1. K1 ⁝⊑ K2 & ⇩[0, e] L1 ≡ K1.
 #L1 #L2 #H elim H -L1 -L2
 [ /2 width=3/
 | #I #L1 #L2 #V #_ #IHL12 #K2 #e #H
