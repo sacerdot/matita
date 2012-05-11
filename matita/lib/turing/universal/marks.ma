@@ -844,9 +844,8 @@ definition R_compare :=
   c = 〈b,true〉 → is_bit b = true → 
   rs = bs@〈grid,false〉::l1@〈b0,true〉::b0s@〈comma,false〉::l2 → 
   (〈b,true〉::bs = 〈b0,true〉::b0s ∧
-   ∀l3,c.〈b0,false〉::b0s = l3@[〈c,false〉] → 
    t2 = midtape ? (reverse ? bs@〈b,false〉::ls)
-          〈grid,false〉 (l1@l3@〈c,true〉::〈comma,false〉::l2)) ∨
+          〈grid,false〉 (l1@〈b0,false〉::b0s@〈comma,true〉::l2)) ∨
   (∃la,c',d',lb,lc.c' ≠ d' ∧
     〈b,false〉::bs = la@〈c',false〉::lb ∧
     〈b0,false〉::b0s = la@〈d',false〉::lc ∧
@@ -888,54 +887,52 @@ lemma wsem_compare : WRealize ? compare R_compare.
 #t #i #outc #Hloop
 lapply (sem_while ?????? sem_comp_step t i outc Hloop) [%]
 -Hloop * #t1 * #Hstar @(star_ind_l ??????? Hstar)
-[ #tapea whd in ⊢ (%→?); #Hsem #ls #c #rs #Htapea %
+[ #tapea whd in ⊢ (%→?); #Rfalse #ls #c #rs #Htapea %
   [ %
-    [ #c' #Hc' #Hc lapply (Hsem … Htapea) -Hsem * >Hc
+    [ #c' #Hc' #Hc lapply (Rfalse … Htapea) -Rfalse * >Hc
       whd in ⊢ (??%?→?); #Hfalse destruct (Hfalse)
-    | #c' #Hc lapply (Hsem … Htapea) -Hsem * #_
+    | #c' #Hc lapply (Rfalse … Htapea) -Rfalse * #_
       #Htrue @Htrue ]
   | #b #b0 #bs #b0s #l1 #l2 #Hlen #Hbs1 #Hb0s1 #Hbs2 #Hb0s2 #Hl1 #Hc
-    cases (Hsem … Htapea) -Hsem >Hc whd in ⊢ (??%?→?);#Hfalse destruct (Hfalse)
+    cases (Rfalse … Htapea) -Rfalse >Hc whd in ⊢ (??%?→?);#Hfalse destruct (Hfalse)
   ]
-| #tapea #tapeb #tapec #Hleft #Hright #IH #Htapec lapply (IH Htapec) -IH #IH
+| #tapea #tapeb #tapec #Hleft #Hright #IH #Htapec lapply (IH Htapec) -Htapec -IH #IH
   whd in Hleft; #ls #c #rs #Htapea cases (Hleft … Htapea) -Hleft
-  #c' * #Hc destruct (Hc) cases (true_or_false (c' == grid)) #Hc'
-  [ #Hleft %
-    [ %
-      [ #c'' #Hc'' #Heq destruct (Heq) whd in IH; cases Hleft
-        [ * >Hc'' whd in ⊢ (??%?→?); #Hfalse destruct (Hfalse)
-        | * #_ #Htapeb cases (IH … Htapeb) -IH * #_ #IH #_ >IH
-          [ <(\P Hc') @Htapeb
-          | %
-          |]
+  #c' * #Hc >Hc cases (true_or_false (is_bit c')) #Hc'
+  [2: * 
+    [ * >Hc' #H @False_ind destruct (H)
+    | * #_ #Htapeb cases (IH … Htapeb) * #_ #H #_ %
+      [% 
+        [#c1 #Hc1 #Heqc destruct (Heqc) <Htapeb @(H c1) %
+        |#c1 #Hfalse destruct (Hfalse)
         ]
-      | #c0 #Hfalse destruct (Hfalse)
+      |#b #b0 #bs #b0s #l1 #l2 #_ #_ #_ #_ #_ #_
+       #Heq destruct (Heq) >Hc' #Hfalse @False_ind destruct (Hfalse)
       ]
-    |#b #b0 #bs #b0s #l1 #l2 #Hlen #Hbs1 #Hb0s1 #Hbs2 #Hb0s2 #Hl1
-     #Heq destruct (Heq) >(\P Hc') whd in ⊢ (??%?→?); #Hfalse destruct (Hfalse)
     ]
-  | #Hleft %
+ |#Hleft %
     [ %
-      [ #c'' #Hc'' #Heq destruct (Heq) whd in IH; cases Hleft
-        [ * >Hc'' whd in ⊢ (??%?→?); #Hfalse destruct (Hfalse)
-        | * #_ #Htapeb cases (IH … Htapeb) -IH * #_ #IH #_ >IH
-          [ @Htapeb
-          | %
-          |]
-        ]
+      [ #c'' #Hc'' #Heq destruct (Heq) >Hc'' in Hc'; #H destruct (H) 
       | #c0 #Hfalse destruct (Hfalse)
       ]
     |#b #b0 #bs #b0s #l1 #l2 #Hlen #Hbs1 #Hb0s1 #Hbs2 #Hb0s2 #Hl1
-     #Heq whd in IH; destruct (Heq) #H1 #Hrs cases Hleft -Hleft
-     [| * >H1 #Hfalse destruct (Hfalse) ]
-     * #_ #Hleft @(list_cases_2 … Hlen)
-     [ #Hbs #Hb0s generalize in match Hrs; >Hbs in ⊢ (%→?); >Hb0s in ⊢ (%→?);
-       -Hrs #Hrs normalize in Hrs; 
-       cases (Hleft ????? Hrs ?)
-       [ * #Heqb #Htapeb cases (IH … Htapeb) -IH * #IH #_ #_
-        % %
-        [ >Heqb >Hbs >Hb0s %
-        | #l3 #c0 #Hyp >Hbs >Hb0s 
+     #Heq destruct (Heq) #_ #Hrs cases Hleft -Hleft
+      [2: * >Hc' #Hfalse @False_ind destruct ] * #_
+       @(list_cases_2 … Hlen)
+       [ #Hbs #Hb0s generalize in match Hrs; >Hbs in ⊢ (%→?); >Hb0s in ⊢ (%→?);
+       -Hrs #Hrs normalize in Hrs; #Hleft cases (Hleft ????? Hrs ?) -Hleft
+         [ * #Heqb #Htapeb cases (IH … Htapeb) -IH * #IH #_ #IH1
+          % %
+            [ >Heqb >Hbs >Hb0s %
+            | >Hbs >Hb0s @IH %
+            ] 
+          |* #Hneqb #Htapeb %2
+           @(ex_intro … [ ]) @(ex_intro … b)
+           @(ex_intro … b0) @(ex_intro … [ ]) 
+           @(ex_intro … [ ]) %
+            [ % [ % [@sym_not_eq //| >Hbs %] | >Hb0s %]
+            |
+          #l3 #c0 #Hyp >Hbs >Hb0s 
          cases (IH b b0 bs l1 l2 Hlen ?????
      
      >(\P Hc') whd in ⊢ (??%?→?); #Hfalse destruct (Hfalse)
