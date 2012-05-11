@@ -921,25 +921,81 @@ lapply (sem_while ?????? sem_comp_step t i outc Hloop) [%]
        @(list_cases_2 … Hlen)
        [ #Hbs #Hb0s generalize in match Hrs; >Hbs in ⊢ (%→?); >Hb0s in ⊢ (%→?);
        -Hrs #Hrs normalize in Hrs; #Hleft cases (Hleft ????? Hrs ?) -Hleft
-         [ * #Heqb #Htapeb cases (IH … Htapeb) -IH * #IH #_ #IH1
+         [ * #Heqb #Htapeb cases (IH … Htapeb) -IH * #IH #_ #_
           % %
             [ >Heqb >Hbs >Hb0s %
             | >Hbs >Hb0s @IH %
             ] 
-          |* #Hneqb #Htapeb %2
-           @(ex_intro … [ ]) @(ex_intro … b)
-           @(ex_intro … b0) @(ex_intro … [ ]) 
-           @(ex_intro … [ ]) %
+         |* #Hneqb #Htapeb %2
+          @(ex_intro … [ ]) @(ex_intro … b)
+          @(ex_intro … b0) @(ex_intro … [ ]) 
+          @(ex_intro … [ ]) %
             [ % [ % [@sym_not_eq //| >Hbs %] | >Hb0s %]
-            |
-          #l3 #c0 #Hyp >Hbs >Hb0s 
-         cases (IH b b0 bs l1 l2 Hlen ?????
-     
-     >(\P Hc') whd in ⊢ (??%?→?); #Hfalse destruct (Hfalse)
-    ]
-qed.
-                   
-
+            | cases (IH … Htapeb) -IH * #_ #IH #_ >(IH ? (refl ??))
+              @Htapeb
+            ]
+         | @Hl1 ]
+      | * #b' #bitb' * #b0' #bitb0' #bs' #b0s' #Hbs #Hb0s 
+        generalize in match Hrs; >Hbs in ⊢ (%→?); >Hb0s in ⊢ (%→?);
+        cut (is_bit b' = true ∧ is_bit b0' = true ∧ 
+             bitb' = false ∧ bitb0' = false)
+        [ % [ % [ % [ >Hbs in Hbs1; #Hbs1 @(Hbs1 〈b',bitb'〉) @memb_hd
+            | >Hb0s in Hb0s1; #Hb0s1 @(Hb0s1 〈b0',bitb0'〉) @memb_hd ]
+            | >Hbs in Hbs2; #Hbs2 @(Hbs2 〈b',bitb'〉) @memb_hd ]
+            | >Hb0s in Hb0s2; #Hb0s2 @(Hb0s2 〈b0',bitb0'〉) @memb_hd ]
+        | * * * #Ha #Hb #Hc #Hd >Hc >Hd
+          #Hrs #Hleft 
+          cases (Hleft b' (bs'@〈grid,false〉::l1) b0 b0' 
+                         (b0s'@〈comma,false〉::l2) ??) -Hleft
+          [ 3: >Hrs normalize @eq_f >associative_append %
+          | * #Hb0 #Htapeb cases (IH …Htapeb) -IH * #_ #_ #IH
+            cases (IH b' b0' bs' b0s' (l1@[〈b0,false〉]) l2 ??????? Ha ?) -IH
+            [ * #Heq #Houtc % %
+              [ >Hb0 @eq_f >Hbs in Heq; >Hb0s in ⊢ (%→?); #Heq
+                destruct (Heq) >Hb0s >Hc >Hd %
+              | >Houtc >Hbs >Hb0s >Hc >Hd >reverse_cons >associative_append
+                >associative_append %
+              ]
+            | * #la * #c' * #d' * #lb * #lc * * * #H1 #H2 #H3 #H4 %2
+              @(ex_intro … (〈b,false〉::la)) @(ex_intro … c') @(ex_intro … d')
+              @(ex_intro … lb) @(ex_intro … lc)
+              % [ % [ % // >Hbs >Hc >H2 % | >Hb0s >Hd >H3 >Hb0 % ] 
+                | >H4 >Hbs >Hb0s >Hc >Hd >Hb0 >reverse_append
+                  >reverse_cons >reverse_cons
+                  >associative_append >associative_append
+                  >associative_append >associative_append %
+                ]
+            | generalize in match Hlen; >Hbs >Hb0s
+              normalize #Hlen destruct (Hlen) @e0
+            | #c0 #Hc0 @Hbs1 >Hbs @memb_cons // 
+            | #c0 #Hc0 @Hb0s1 >Hb0s @memb_cons // 
+            | #c0 #Hc0 @Hbs2 >Hbs @memb_cons // 
+            | #c0 #Hc0 @Hb0s2 >Hb0s @memb_cons // 
+            | #c0 #Hc0 cases (memb_append … Hc0) 
+              [ @Hl1 | #Hc0' >(memb_single … Hc0') % ]
+            | %
+            | >associative_append >associative_append % ]
+         | * #Hneq #Htapeb %2
+            @(ex_intro … []) @(ex_intro … b) @(ex_intro … b0)
+            @(ex_intro … bs) @(ex_intro … b0s) %
+           [ % // % // @sym_not_eq // 
+           | >Hbs >Hb0s >Hc >Hd >reverse_cons >associative_append
+             >reverse_append in Htapeb; >reverse_cons
+             >associative_append >associative_append
+             #Htapeb <Htapeb
+             cases (IH … Htapeb) -Htapeb -IH * #_ #IH #_ @(IH ? (refl ??))
+           ]
+         | #c1 #Hc1 cases (memb_append … Hc1) #Hyp
+           [ @Hbs2 >Hbs @memb_cons @Hyp
+           | cases (orb_true_l … Hyp)
+             [ #Hyp2 >(\P Hyp2) %
+             | @Hl1
+             ]
+           ]
+         ]
+]]]]]
+qed.       
+           
 
 (*
 l0 x* a l1 x0* a0 l2 ------> l0 x a* l1 x0 a0* l2
