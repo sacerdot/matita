@@ -47,32 +47,25 @@ if current (* x *) = #
    marks the first character after the first bar (rightwards)
  *)
  
-check unialpha
-
-axiom is_bar : FinProd … myalpha FinBool → bool.
-axiom is_grid : FinProd … myalpha FinBool → bool.
-definition bar_or_grid ≝ λc.is_bar c ∨ is_grid c.
-axiom bar : FinProd … myalpha FinBool.
-axiom grid : FinProd … myalpha FinBool.
+definition bar_or_grid ≝ λc:STape.is_bar (\fst c) ∨ is_grid (\fst c).
 
 definition mark_next_tuple ≝ 
   seq ? (adv_to_mark_r ? bar_or_grid)
-     (ifTM ? (test_char ? is_bar)
-       (move_r_and_mark ?) (nop ?) 1).
+     (ifTM ? (test_char ? (λc:STape.is_bar (\fst c)))
+       (move_right_and_mark ?) (nop ?) 1).
 
 definition R_mark_next_tuple ≝ 
   λt1,t2.
     ∀ls,c,rs1,rs2.
     (* c non può essere un separatore ... speriamo *)
-    t1 = midtape ? ls c (rs1@grid::rs2) → 
-    memb ? grid rs1 = false → bar_or_grid c = false → 
-    (∃rs3,rs4,d,b.rs1 = rs3 @ bar :: rs4 ∧
-      memb ? bar rs3 = false ∧ 
-      Some ? 〈d,b〉 = option_hd ? (rs4@grid::rs2) ∧
-      t2 = midtape ? (bar::reverse ? rs3@c::ls) 〈d,true〉 (tail ? (rs4@grid::rs2)))
+    t1 = midtape ? ls c (rs1@〈grid,false〉::rs2) → 
+    only_bits rs1 → bar_or_grid c = false → 
+    (∃rs3,rs4,d,b.rs1 = rs3 @ 〈bar,false〉 :: rs4 ∧
+      Some ? 〈d,b〉 = option_hd ? (rs4@〈grid,false〉::rs2) ∧
+      t2 = midtape ? (bar::reverse ? rs3@c::ls) 〈d,true〉 (tail ? (rs4@〈grid,false〉::rs2)))
     ∨
     (memb ? bar rs1 = false ∧ 
-     t2 = midtape ? (reverse ? rs1@c::ls) grid rs2).
+     t2 = midtape ? (reverse ? rs1@c::ls) 〈grid,false〉 rs2).
      
 axiom tech_split :
   ∀A:DeqSet.∀f,l.
