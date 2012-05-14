@@ -971,3 +971,4 @@ lapply (sem_while ?????? sem_comp_step t i outc Hloop) [%]
 ]]]]]
 qed.       
            
+axiom sem_compare : Realize ? compare R_compare.

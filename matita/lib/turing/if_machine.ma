@@ -59,6 +59,20 @@ axiom sem_if: ∀sig,M1,M2,M3,Rtrue,Rfalse,R2,R3,acc.
   accRealize sig M1 acc Rtrue Rfalse → Realize sig M2 R2 → Realize sig M3 R3 → 
     Realize sig (ifTM sig M1 M2 M3 acc) (λt1,t2. (Rtrue ∘ R2) t1 t2 ∨ (Rfalse ∘ R3) t1 t2).
     
+lemma sem_if_app: ∀sig,M1,M2,M3,Rtrue,Rfalse,R2,R3,R4,acc.
+  accRealize sig M1 acc Rtrue Rfalse → Realize sig M2 R2 → Realize sig M3 R3 → 
+    (∀t1,t2,t3. (Rtrue t1 t3 ∧ R2 t3 t2) ∨ (Rfalse t1 t3 ∧ R3 t3 t2) → R4 t1 t2) →  
+    Realize sig 
+     (ifTM sig M1 M2 M3 acc) R4.
+#sig #M1 #M2 #M3 #Rtrue #Rfalse #R2 #R3 #R4 #acc
+#HRacc #HRtrue #HRfalse #Hsub
+#t cases (sem_if … HRacc HRtrue HRfalse t)
+#k * #outc * #Hloop #Houtc @(ex_intro … k) @(ex_intro … outc)
+% [@Hloop] cases Houtc
+  [* #t3 * #Hleft #Hright @(Hsub … t3) %1 /2/
+  |* #t3 * #Hleft #Hright @(Hsub … t3) %2 /2/ ]
+qed.
+
 axiom acc_sem_if: ∀sig,M1,M2,M3,Rtrue,Rfalse,R2,R3,acc.
   accRealize sig M1 acc Rtrue Rfalse → Realize sig M2 R2 → Realize sig M3 R3 → 
     accRealize sig 
@@ -66,6 +80,24 @@ axiom acc_sem_if: ∀sig,M1,M2,M3,Rtrue,Rfalse,R2,R3,acc.
      (inr … (inl … (inr … 0)))
      (Rtrue ∘ R2) 
      (Rfalse ∘ R3).
+     
+lemma acc_sem_if_app: ∀sig,M1,M2,M3,Rtrue,Rfalse,R2,R3,R4,R5,acc.
+  accRealize sig M1 acc Rtrue Rfalse → Realize sig M2 R2 → Realize sig M3 R3 → 
+    (∀t1,t2,t3. Rtrue t1 t3 → R2 t3 t2 → R4 t1 t2) → 
+    (∀t1,t2,t3. Rfalse t1 t3 → R3 t3 t2 → R5 t1 t2) → 
+    accRealize sig 
+     (ifTM sig M1 (single_finalTM … M2) M3 acc) 
+     (inr … (inl … (inr … 0)))
+     R4 R5.    
+#sig #M1 #M2 #M3 #Rtrue #Rfalse #R2 #R3 #R4 #R5 #acc
+#HRacc #HRtrue #HRfalse #Hsub1 #Hsub2 
+#t cases (acc_sem_if … HRacc HRtrue HRfalse t)
+#k * #outc * * #Hloop #Houtc1 #Houtc2 @(ex_intro … k) @(ex_intro … outc)
+% [% [@Hloop
+     |#H cases (Houtc1 H) #t3 * #Hleft #Hright @Hsub1 // ]
+  |#H cases (Houtc2 H) #t3 * #Hleft #Hright @Hsub2 // ]
+qed.
+
 (*    
 #sig #M1 #M2 #M3 #Rtrue #Rfalse #R2 #R3 #acc #HaccR #HR2 #HR3 #t 
 cases (HaccR t) #k1 * #outc1 * * #Hloop1 #HMtrue #HMfalse 
