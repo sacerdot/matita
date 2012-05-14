@@ -286,7 +286,7 @@ lemma sem_match_tuple_step:
  #eqlen #Htable #Htapea1 cases (Htapea 〈c,true〉 ?) >Htapea1 [2:%]
  #notgridc -Htapea -Htapea1 -tapea #Htapeb  
  cases (Hcompare … Htapeb) -Hcompare -Htapeb * #_ #_ #Hcompare 
- cases (Hcompare c c1 l1 l3 (l2@[〈bar,false〉]) (l4@〈grid,false〉::rs) eqlen … (refl …) Hc ?)  
+ cases (Hcompare c c1 l1 l3 (l2@[〈bar,false〉]) (l4@〈grid,false〉::rs) eqlen Hl1 … (refl …) Hc ?)  
  -Hcompare 
    [* #Htemp destruct (Htemp) #Htapec %1 % [%]
     >Htapec in Hor; -Htapec *
@@ -312,37 +312,29 @@ lemma sem_match_tuple_step:
       ] #Hd'
     >Htapec in Hor; -Htapec *
      [* #taped * whd in ⊢ (%→?); #H @False_ind
-      cases (H … (refl …)) >Hd' #Htemp destruct (Htemp)
+      cases (H … (refl …)) >(bit_not_grid ? Hd') #Htemp destruct (Htemp)
      |* #taped * whd in ⊢ (%→?); #H cases (H … (refl …)) -H #_
       #Htaped * #tapee * whd in ⊢ (%→?); #Htapee  
       <(associative_append ? lc (〈comma,false〉::l4)) in Htaped; #Htaped
-      lapply (Htapee … Htaped ???) -Htaped -Htapee 
-       [whd in ⊢ (??%?); >(bit_not_grid … Hd') >(bit_not_bar … Hd') %
-       |#x #Hx cases (memb_append … Hx) 
-         [-Hx #Hx @bit_not_grid @Hl3 cases la in H3; normalize 
-           [#H3 destruct (H3) @Hx | #y #tl #H3 destruct (H3) 
-            @memb_append_l2 @memb_cons @Hx ]
-         |-Hx #Hx @(no_grids_in_table … Htable) 
-          @memb_cons @memb_append_l2 @Hx
-         ]
-       |@daemon (* TODO *)
-       |* 
-         [* #rs3 * * (* we proceed by cases on rs4 *) 
-           [* #d * #b * * * #Heq1 #Hnobars
-            whd in ⊢ ((???%)→?); #Htemp destruct (Htemp)
-            #Htapee * 
-             [* #tapef * whd in ⊢ (%→?); >Htapee -Htapee #Htapef 
-              cases (Htapef … (refl …)) -Htapef #_ #Htapef >Htapef -Htapef
-              whd in ⊢ (%→?); #H lapply (H … ???? (refl …)) #Htapeout
-              %1 %
-              [ //| @daemon]
-              | >Htapeout %
-              ]
+      cases (Htapee … Htaped ???) -Htaped -Htapee 
+       [* #rs3 * * (* we proceed by cases on rs4 *) 
+         [(* rs4 is empty *)
+          * #d * #b * * * #Heq1 #Hnobars
+          whd in ⊢ ((???%)→?); #Htemp destruct (Htemp)
+          #Htapee * 
+           [* #tapef * whd in ⊢ (%→?); >Htapee -Htapee #Htapef 
+            cases (Htapef … (refl …)) -Htapef #_ #Htapef >Htapef -Htapef
+            whd in ⊢ (%→?); #H lapply (H … ???? (refl …)) #Htapeout
+            %2 % 
+             [% [@Hnoteq |@daemon]
+             |>Htapeout %
+             ]
            |* #tapef * whd in ⊢ (%→?); >Htapee -Htapee #Htapef
             cases (Htapef … (refl …)) whd in ⊢ ((??%?)→?); #Htemp destruct (Htemp)
            ]
-         |* #d2 #b2 #rs3' * #d  * #b * * * #Heq1 #Hnobars
-          cut (is_grid d2 = false) [@daemon (* ??? *)] #Hd2
+         |(* rs4 not empty *)
+          * #d2 #b2 #rs3' * #d  * #b * * * #Heq1 #Hnobars
+          cut (is_grid d2 = false) [@daemon (* no grids in table *)] #Hd2
           whd in ⊢ ((???%)→?); #Htemp destruct (Htemp) #Htapee >Htapee -Htapee *
            [* #tapef * whd in ⊢ (%→?); #Htapef 
             cases (Htapef … (refl …)) >Hd2 #Htemp destruct (Htemp) 
@@ -359,11 +351,20 @@ lemma sem_match_tuple_step:
               [whd in ⊢ (??(??%??)?); @eq_f3 [2:%|3: %]
                >associative_append 
                generalize in match (〈c',true〉::reverse ? la@〈grid,false〉::ls); #l
-               whd in ⊢ (???(???%)); >associative_append >associative_append 
-               % 
-              |@daemon 
-              |@daemon
-              |@daemon
+               whd in ⊢ (???(???%)); >associative_append >associative_append % 
+              |>reverse_cons @Hoption
+              |cases la in H2; 
+                [normalize in ⊢ (%→?); #Htemp destruct (Htemp) 
+                 @injective_notb @notgridc
+                |#x #tl normalize in ⊢ (%→?); #Htemp destruct (Htemp)
+                 @bit_not_grid @(Hl1 〈c',false〉) @memb_append_l2 @memb_hd
+                ]
+              |cut (only_bits (la@(〈c',false〉::lb)))
+                [<H2 whd #c0 #Hmemb cases (orb_true_l … Hmemb)
+                  [#eqc0 >(\P eqc0) @Hc |@Hl1]
+                |#Hl1' #x #Hx @bit_not_grid @Hl1'
+                 @memb_append_l1 @daemon
+                ]
               |@daemon
               |@daemon
               ]
@@ -375,8 +376,8 @@ lemma sem_match_tuple_step:
           whd in ⊢ (%→?); #Htapeout %2
           >(Htapeout … (refl …)) %
            [ % 
-             [ @daemon 
-             | @daemon
+             [ @Hnoteq 
+             | whd #x #Hx @Hnobars @memb_append_l2 @memb_cons //
              ]
            | %
            ] 
@@ -384,30 +385,25 @@ lemma sem_match_tuple_step:
           cases (Htapef … (refl …)) -Htapef 
           whd in ⊢ ((??%?)→?); #Htemp destruct (Htemp) 
          ]
-       |
-           
-           
-      
-      
-   
-  
-  ????? (refl …) Hc ?) -Hcompare 
- #Hcompare 
-  is_bit c = true → only_bits l1 → no_grids l2 → is_bit c1 = true →
-  only_bits l3 → n = |l2| → |l2| = |l3| →
-  table_TM (S n) (〈c1,true〉::l3@〈comma,false〉::l4) →#x
+       |@daemon (* no marks in table *)
+       |(* no grids in table *)
+        #x #Hx cases (memb_append … Hx) 
+         [-Hx #Hx @bit_not_grid @Hl3 cases la in H3; normalize 
+           [#H3 destruct (H3) @Hx | #y #tl #H3 destruct (H3) 
+            @memb_append_l2 @memb_cons @Hx ]
+         |-Hx #Hx @(no_grids_in_table … Htable) 
+          @memb_cons @memb_append_l2 @Hx
+         ]
+       |whd in ⊢ (??%?); >(bit_not_grid … Hd') >(bit_not_bar … Hd') %
+       ]
+     ]
+   |@Hl3
+   |@daemon
+   |@daemon
+   |@daemon
+   |>associative_append %
+   ]
+ ]
+qed.
 
-  #intape
-cases 
-  (acc_sem_if … (sem_test_char ? (λc:STape.¬ is_grid (\fst c))) 
-    (sem_seq … sem_compare
-      (sem_if … (sem_test_char ? (λc:STape.is_grid (\fst c)))
-        (sem_nop …)
-        (sem_seq … sem_mark_next_tuple 
-           (sem_if … (sem_test_char ? (λc:STape.is_grid (\fst c)))
-             (sem_mark ?) (sem_seq … (sem_move_l …) (sem_init_current …))))))
-    (sem_nop ?) intape)
-#k * #outc * * #Hloop #H1 #H2
-@(ex_intro ?? k) @(ex_intro ?? outc) %
-[ % [@Hloop ] ] -Hloop
   
