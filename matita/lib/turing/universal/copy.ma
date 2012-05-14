@@ -14,86 +14,105 @@
 
 *)
 
-include "turing/universal/marks.ma".
+include "turing/universal/tuples.ma".
 
-definition STape ≝ FinProd … FSUnialpha FinBool.
+definition write_states ≝ initN 2.
 
-definition only_bits ≝ λl.
-  ∀c.memb STape c l = true → is_bit (\fst c) = true.
+definition write ≝ λalpha,c.
+  mk_TM alpha write_states
+  (λp.let 〈q,a〉 ≝ p in
+    match q with 
+    [ O ⇒ 〈1,Some ? 〈c,N〉〉
+    | S _ ⇒ 〈1,None ?〉 ])
+  O (λx.x == 1).
   
-definition no_grids ≝ λl.
-  ∀c.memb STape c l = true → is_grid (\fst c) = false.
+definition R_write ≝ λalpha,c,t1,t2.
+  ∀ls,x,rs.t1 = midtape alpha ls x rs → t2 = midtape alpha ls c rs.
+  
+axiom sem_write : ∀alpha,c.Realize ? (write alpha c) (R_write alpha c).
 
-definition no_bars ≝ λl.
-  ∀c.memb STape c l = true → is_bar (\fst c) = false.
+definition copy_step_subcase ≝
+  λalpha,c,elseM.ifTM ? (test_char ? (λx.x == 〈c,true〉))
+    (seq (FinProd alpha FinBool) (adv_mark_r …)
+      (seq ? (move_l …)
+        (seq ? (adv_to_mark_l … (is_marked alpha))
+          (seq ? (write ? 〈c,false〉)
+            (seq ? (move_r …)
+              (seq ? (mark …)
+                (seq ? (move_r …) (adv_to_mark_r … (is_marked alpha)))))))))
+    elseM tc_true.
 
-definition no_marks ≝ λl.
-  ∀c.memb STape c l = true → is_marked ? c = false.
+definition R_copy_step_subcase ≝ 
+  λalpha,c,RelseM,t1,t2.
+    ∀ls,x,rs.t1 = midtape (FinProd … alpha FinBool) ls 〈x,true〉 rs → 
+    (x = c ∧
+     ∀a,l1,x0,a0,l2,l3. (∀c.memb ? c l1 = true → is_marked ? c = false) → 
+     ls = l1@〈a0,false〉::〈x0,true〉::l2 → 
+     rs = 〈a,false〉::l3 → 
+     t2 = midtape ? (〈x,false〉::l1@〈a0,true〉::〈x,false〉::l2) 〈a,true〉 l3) ∨
+    (x ≠ c ∧ RelseM t1 t2).
+    
+axiom sem_copy_step_subcase : 
+  ∀alpha,c,elseM,RelseM.
+  Realize ? (copy_step_subcase alpha c elseM) (R_copy_step_subcase alpha c RelseM).
+    
+(*
+if current = 0,tt
+   then advance_mark_r;
+        move_l;
+        advance_to_mark_l;
+        write(0,ff)
+        move_r;
+        mark;
+        move_r;
+        advance_to_mark_r;
+else if current = 1,tt
+   then advance_mark_r;
+        move_l;
+        advance_to_mark_l;
+        write(1,ff)
+        move_r;
+        mark;
+        move_r;
+        advance_to_mark_r;
+else nop
+*)
 
-lemma bit_not_grid: ∀d. is_bit d = true → is_grid d = false.
-* // normalize #H destruct
-qed.
+definition copy_step ≝
+  ifTM ? (test_char STape (λc.is_bit (\fst c)))
+  (single_finalTM ? (copy_step_subcase FSUnialpha (bit false)
+    (copy_step_subcase FSUnialpha (bit true) (nop ?))))
+  (nop ?)
+  tc_true.
+  
+definition R_copy_step_true ≝ 
+  λt1,t2.
+    ∀ls,c,rs.t1 = midtape (FinProd … FSUnialpha FinBool) ls 〈c,true〉 rs → 
+    ∃x. c = bit x ∧
+    (∀a,l1,c0,a0,l2,l3. (∀y.memb ? y l1 = true → is_marked ? y = false) → 
+     ls = l1@〈a0,false〉::〈c0,true〉::l2 → 
+     rs = 〈a,false〉::l3 → 
+     t2 = midtape STape (〈bit x,false〉::l1@〈a0,true〉::〈bit x,false〉::l2) 〈a,true〉 l3).
 
-lemma bit_not_bar: ∀d. is_bit d = true → is_bar d = false.
-* // normalize #H destruct
-qed.
+definition R_copy_step_false ≝ 
+  λt1,t2.
+   ∀ls,c,rs.t1 = midtape (FinProd … FSUnialpha FinBool) ls c rs → 
+   is_bit (\fst c) = false ∧ t2 = t1.
 
-(* by definition, a tuple is not marked *)
-definition tuple_TM : nat → list STape → Prop ≝ 
- λn,t.∃qin,qout,mv.
- no_marks t ∧
- only_bits qin ∧ only_bits qout ∧ only_bits mv ∧
- |qin| = n ∧ |qout| = n (* ∧ |mv| = ? *) ∧ 
- t = qin@〈comma,false〉::qout@〈comma,false〉::mv.
- 
-inductive table_TM : nat → list STape → Prop ≝ 
-| ttm_nil  : ∀n.table_TM n [] 
-| ttm_cons : ∀n,t1,T.tuple_TM n t1 → table_TM n T → table_TM n (t1@〈bar,false〉::T).
+axiom sem_comp_step : 
+  accRealize ? copy_step (inr … (inl … (inr … 0))) R_copy_step_true R_copy_step_false.
+   
+definition copy ≝ whileTM ? copy_step (inr … (inl … (inr … 0))).
 
-lemma no_grids_in_table: ∀n.∀l.table_TM n l → no_grids l.
-#n #l #t elim t   
-  [normalize #n #x #H destruct
-  |#m #t1 #t2 * #qin * #qout * #mv * * * * * * 
-   #Hmarks #Hqin #Hqout #Hmv  #_ #_ #Heq #Ht2 #Hind
-   whd >Heq #x #membx 
-   cases (memb_append … membx) -membx #membx
-    [cases (memb_append … membx) -membx #membx
-      [@bit_not_grid @Hqin // 
-      |cases (orb_true_l … membx) -membx #membx
-        [>(\P membx) //
-        |cases (memb_append … membx) -membx #membx
-          [@bit_not_grid @Hqout //
-          |cases (orb_true_l … membx) -membx #membx
-            [>(\P membx) //
-            |@bit_not_grid @Hmv //
-            ]
-          ]
-        ]
-      ]
-    |cases (orb_true_l … membx) -membx #membx
-      [>(\P membx) //
-      |@Hind //
-      ]
-    ]
-  ]
-qed.
+definition R_copy ≝ λt1,t2.
+  ∀ls,c,rs.t1 = midtape ? ls 〈c,true〉 rs → 
+  (∀l1,d,l2,l3,l4.
+   〈c,false〉::rs = l1@〈d,false〉::l2 → only_bits l1 → is_bit d = false → 
+   ls = l3@l4@〈c0,true〉::l5 → |l4| = |l1@[〈d,false〉]|
+  
+  
 
-lemma no_marks_in_table: ∀n.∀l.table_TM n l → no_marks l.
-#n #l #t elim t   
-  [normalize #n #x #H destruct
-  |#m #t1 #t2 * #qin * #qout * #mv * * * * * * 
-   #Hmarks #_ #_ #_ #_ #_ #_ #Ht2 #Hind
-   #x #Hx cases (memb_append … Hx) -Hx #Hx
-    [@Hmarks //
-    |cases (orb_true_l … Hx) -Hx #Hx
-      [>(\P Hx) //
-      |@Hind //
-      ]
-    ]
-  ]
-qed.      
-          
-
+axiom no_grids_in_table: ∀n.∀l.table_TM n l → no_grids l.
 (*
 l0 x* a l1 x0* a0 l2 ------> l0 x a* l1 x0 a0* l2
    ^                               ^
@@ -270,9 +289,9 @@ definition match_tuple_step ≝
 
 definition R_match_tuple_step_true ≝ λt1,t2.
   ∀ls,c,l1,l2,c1,l3,l4,rs,n.
-  is_bit c = true → only_bits l1 → no_marks l1 (* → no_grids l2 *) → is_bit c1 = true →
+  is_bit c = true → only_bits l1 → no_grids l2 → is_bit c1 = true →
   only_bits l3 → n = |l1| → |l1| = |l3| →
-  table_TM (S n) (l2@〈bar,false〉::〈c1,false〉::l3@〈comma,false〉::l4) → 
+  table_TM (S n) (〈c1,true〉::l3@〈comma,false〉::l4) → 
   t1 = midtape STape (〈grid,false〉::ls) 〈c,true〉 
          (l1@〈grid,false〉::l2@〈bar,false〉::〈c1,true〉::l3@〈comma,false〉::l4@〈grid,false〉::rs) → 
   (* facciamo match *)
@@ -310,6 +329,14 @@ lemma some_option_hd: ∀A.∀l:list A.∀a.∃b.
 #A #l #a cases l normalize /2/
 qed.
 
+lemma bit_not_grid: ∀d. is_bit d = true → is_grid d = false.
+* // normalize #H destruct
+qed.
+
+lemma bit_not_bar: ∀d. is_bit d = true → is_bar d = false.
+* // normalize #H destruct
+qed.
+
 axiom sem_match_tuple_step: 
     accRealize ? match_tuple_step (inr … (inl … (inr … 0))) 
     R_match_tuple_step_true R_match_tuple_step_false.
@@ -327,11 +354,11 @@ axiom sem_match_tuple_step:
     [@injective_notb @Hgrid | <Heq @H1]
 |#tapea #tapeout #tapeb whd in ⊢ (%→?); #Htapea
  * #tapec * #Hcompare #Hor 
- #ls #c #l1 #l2 #c1 #l3 #l4 #rs #n #Hc #Hl1bars #Hl1marks #Hc1 #Hl3 #eqn
+ #ls #c #l1 #l2 #c1 #l3 #l4 #rs #n #Hc #Hl1 #Hl2 #Hc1 #Hl3 #eqn
  #eqlen #Htable #Htapea1 cases (Htapea 〈c,true〉 ?) >Htapea1 [2:%]
  #notgridc -Htapea -Htapea1 -tapea #Htapeb  
  cases (Hcompare … Htapeb) -Hcompare -Htapeb * #_ #_ #Hcompare 
- cases (Hcompare c c1 l1 l3 (l2@[〈bar,false〉]) (l4@〈grid,false〉::rs) eqlen Hl1bars Hl3 Hl1marks … (refl …) Hc ?)  
+ cases (Hcompare c c1 l1 l3 (l2@[〈bar,false〉]) (l4@〈grid,false〉::rs) eqlen … (refl …) Hc ?)  
  -Hcompare 
    [* #Htemp destruct (Htemp) #Htapec %1 % [%]
     >Htapec in Hor; -Htapec *
@@ -357,29 +384,37 @@ axiom sem_match_tuple_step:
       ] #Hd'
     >Htapec in Hor; -Htapec *
      [* #taped * whd in ⊢ (%→?); #H @False_ind
-      cases (H … (refl …)) >(bit_not_grid ? Hd') #Htemp destruct (Htemp)
+      cases (H … (refl …)) >Hd' #Htemp destruct (Htemp)
      |* #taped * whd in ⊢ (%→?); #H cases (H … (refl …)) -H #_
       #Htaped * #tapee * whd in ⊢ (%→?); #Htapee  
       <(associative_append ? lc (〈comma,false〉::l4)) in Htaped; #Htaped
-      cases (Htapee … Htaped ???) -Htaped -Htapee 
-       [* #rs3 * * (* we proceed by cases on rs4 *) 
-         [(* rs4 is empty *)
-          * #d * #b * * * #Heq1 #Hnobars
-          whd in ⊢ ((???%)→?); #Htemp destruct (Htemp)
-          #Htapee * 
-           [* #tapef * whd in ⊢ (%→?); >Htapee -Htapee #Htapef 
-            cases (Htapef … (refl …)) -Htapef #_ #Htapef >Htapef -Htapef
-            whd in ⊢ (%→?); #H lapply (H … ???? (refl …)) #Htapeout
-            %2 % 
-             [% [@Hnoteq |@daemon]
-             |>Htapeout %
-             ]
+      lapply (Htapee … Htaped ???) -Htaped -Htapee 
+       [whd in ⊢ (??%?); >(bit_not_grid … Hd') >(bit_not_bar … Hd') %
+       |#x #Hx cases (memb_append … Hx) 
+         [-Hx #Hx @bit_not_grid @Hl3 cases la in H3; normalize 
+           [#H3 destruct (H3) @Hx | #y #tl #H3 destruct (H3) 
+            @memb_append_l2 @memb_cons @Hx ]
+         |-Hx #Hx @(no_grids_in_table … Htable) 
+          @memb_cons @memb_append_l2 @Hx
+         ]
+       |@daemon (* TODO *)
+       |* 
+         [* #rs3 * * (* we proceed by cases on rs4 *) 
+           [* #d * #b * * * #Heq1 #Hnobars
+            whd in ⊢ ((???%)→?); #Htemp destruct (Htemp)
+            #Htapee * 
+             [* #tapef * whd in ⊢ (%→?); >Htapee -Htapee #Htapef 
+              cases (Htapef … (refl …)) -Htapef #_ #Htapef >Htapef -Htapef
+              whd in ⊢ (%→?); #H lapply (H … ???? (refl …)) #Htapeout
+              %1 %
+              [ //| @daemon]
+              | >Htapeout %
+              ]
            |* #tapef * whd in ⊢ (%→?); >Htapee -Htapee #Htapef
             cases (Htapef … (refl …)) whd in ⊢ ((??%?)→?); #Htemp destruct (Htemp)
            ]
-         |(* rs4 not empty *)
-          * #d2 #b2 #rs3' * #d  * #b * * * #Heq1 #Hnobars
-          cut (is_grid d2 = false) [@daemon (* no grids in table *)] #Hd2
+         |* #d2 #b2 #rs3' * #d  * #b * * * #Heq1 #Hnobars
+          cut (is_grid d2 = false) [@daemon (* ??? *)] #Hd2
           whd in ⊢ ((???%)→?); #Htemp destruct (Htemp) #Htapee >Htapee -Htapee *
            [* #tapef * whd in ⊢ (%→?); #Htapef 
             cases (Htapef … (refl …)) >Hd2 #Htemp destruct (Htemp) 
@@ -396,20 +431,11 @@ axiom sem_match_tuple_step:
               [whd in ⊢ (??(??%??)?); @eq_f3 [2:%|3: %]
                >associative_append 
                generalize in match (〈c',true〉::reverse ? la@〈grid,false〉::ls); #l
-               whd in ⊢ (???(???%)); >associative_append >associative_append % 
-              |>reverse_cons @Hoption
-              |cases la in H2; 
-                [normalize in ⊢ (%→?); #Htemp destruct (Htemp) 
-                 @injective_notb @notgridc
-                |#x #tl normalize in ⊢ (%→?); #Htemp destruct (Htemp)
-                 @bit_not_grid @(Hl1bars 〈c',false〉) @memb_append_l2 @memb_hd
-                ]
-              |cut (only_bits (la@(〈c',false〉::lb)))
-                [<H2 whd #c0 #Hmemb cases (orb_true_l … Hmemb)
-                  [#eqc0 >(\P eqc0) @Hc |@Hl1bars]
-                |#Hl1' #x #Hx @bit_not_grid @Hl1'
-                 @memb_append_l1 @daemon
-                ]
+               whd in ⊢ (???(???%)); >associative_append >associative_append 
+               % 
+              |@daemon 
+              |@daemon
+              |@daemon
               |@daemon
               |@daemon
               ]
@@ -421,8 +447,8 @@ axiom sem_match_tuple_step:
           whd in ⊢ (%→?); #Htapeout %2
           >(Htapeout … (refl …)) %
            [ % 
-             [ @Hnoteq 
-             | whd #x #Hx @Hnobars @memb_append_l2 @memb_cons //
+             [ @daemon 
+             | @daemon
              ]
            | %
            ] 
@@ -430,26 +456,32 @@ axiom sem_match_tuple_step:
           cases (Htapef … (refl …)) -Htapef 
           whd in ⊢ ((??%?)→?); #Htemp destruct (Htemp) 
          ]
-       |@daemon (* no marks in table *)
-       |(* no grids in table *)
-        #x #Hx cases (memb_append … Hx) 
-         [-Hx #Hx @bit_not_grid @Hl3 cases la in H3; normalize 
-           [#H3 destruct (H3) @Hx | #y #tl #H3 destruct (H3) 
-            @memb_append_l2 @memb_cons @Hx ]
-         |-Hx #Hx @(no_grids_in_table … Htable) 
-          @memb_append_l2 @memb_cons @memb_cons @memb_append_l2 @Hx
-         ]
-       |whd in ⊢ (??%?); >(bit_not_grid … Hd') >(bit_not_bar … Hd') %
-       ]
-     ]
-   |(* no marks in l3 *) 
-    @daemon
-   |(* no marks in l2@[〈bar,false〉] *) @daemon
-   |>associative_append %
-   ]
- ]
-qed.
+       |
+           
+           
+      
+      
+   
+  
+  ????? (refl …) Hc ?) -Hcompare 
+ #Hcompare 
+  is_bit c = true → only_bits l1 → no_grids l2 → is_bit c1 = true →
+  only_bits l3 → n = |l2| → |l2| = |l3| →
+  table_TM (S n) (〈c1,true〉::l3@〈comma,false〉::l4) →#x
 
+  #intape
+cases 
+  (acc_sem_if … (sem_test_char ? (λc:STape.¬ is_grid (\fst c))) 
+    (sem_seq … sem_compare
+      (sem_if … (sem_test_char ? (λc:STape.is_grid (\fst c)))
+        (sem_nop …)
+        (sem_seq … sem_mark_next_tuple 
+           (sem_if … (sem_test_char ? (λc:STape.is_grid (\fst c)))
+             (sem_mark ?) (sem_seq … (sem_move_l …) (sem_init_current …))))))
+    (sem_nop ?) intape)
+#k * #outc * * #Hloop #H1 #H2
+@(ex_intro ?? k) @(ex_intro ?? outc) %
+[ % [@Hloop ] ] -Hloop
   *)
 
 (* 
