@@ -29,18 +29,71 @@ definition no_bars ≝ λl.
 
 definition no_marks ≝ λl.
   ∀c.memb STape c l = true → is_marked ? c = false.
-  
+
+lemma bit_not_grid: ∀d. is_bit d = true → is_grid d = false.
+* // normalize #H destruct
+qed.
+
+lemma bit_not_bar: ∀d. is_bit d = true → is_bar d = false.
+* // normalize #H destruct
+qed.
+
+(* by definition, a tuple is not marked *)
 definition tuple_TM : nat → list STape → Prop ≝ 
- λn,t.∃qin,qout,mv,b1,b2.
+ λn,t.∃qin,qout,mv.
+ no_marks t ∧
  only_bits qin ∧ only_bits qout ∧ only_bits mv ∧
  |qin| = n ∧ |qout| = n (* ∧ |mv| = ? *) ∧ 
- t = qin@〈comma,b1〉::qout@〈comma,b2〉::mv.
+ t = qin@〈comma,false〉::qout@〈comma,false〉::mv.
  
 inductive table_TM : nat → list STape → Prop ≝ 
 | ttm_nil  : ∀n.table_TM n [] 
-| ttm_cons : ∀n,t1,T,b.tuple_TM n t1 → table_TM n T → table_TM n (t1@〈bar,b〉::T).
+| ttm_cons : ∀n,t1,T.tuple_TM n t1 → table_TM n T → table_TM n (t1@〈bar,false〉::T).
 
-axiom no_grids_in_table: ∀n.∀l.table_TM n l → no_grids l.
+lemma no_grids_in_table: ∀n.∀l.table_TM n l → no_grids l.
+#n #l #t elim t   
+  [normalize #n #x #H destruct
+  |#m #t1 #t2 * #qin * #qout * #mv * * * * * * 
+   #Hmarks #Hqin #Hqout #Hmv  #_ #_ #Heq #Ht2 #Hind
+   whd >Heq #x #membx 
+   cases (memb_append … membx) -membx #membx
+    [cases (memb_append … membx) -membx #membx
+      [@bit_not_grid @Hqin // 
+      |cases (orb_true_l … membx) -membx #membx
+        [>(\P membx) //
+        |cases (memb_append … membx) -membx #membx
+          [@bit_not_grid @Hqout //
+          |cases (orb_true_l … membx) -membx #membx
+            [>(\P membx) //
+            |@bit_not_grid @Hmv //
+            ]
+          ]
+        ]
+      ]
+    |cases (orb_true_l … membx) -membx #membx
+      [>(\P membx) //
+      |@Hind //
+      ]
+    ]
+  ]
+qed.
+
+lemma no_marks_in_table: ∀n.∀l.table_TM n l → no_marks l.
+#n #l #t elim t   
+  [normalize #n #x #H destruct
+  |#m #t1 #t2 * #qin * #qout * #mv * * * * * * 
+   #Hmarks #_ #_ #_ #_ #_ #_ #Ht2 #Hind
+   #x #Hx cases (memb_append … Hx) -Hx #Hx
+    [@Hmarks //
+    |cases (orb_true_l … Hx) -Hx #Hx
+      [>(\P Hx) //
+      |@Hind //
+      ]
+    ]
+  ]
+qed.      
+          
+
 (*
 l0 x* a l1 x0* a0 l2 ------> l0 x a* l1 x0 a0* l2
    ^                               ^
@@ -217,9 +270,9 @@ definition match_tuple_step ≝
 
 definition R_match_tuple_step_true ≝ λt1,t2.
   ∀ls,c,l1,l2,c1,l3,l4,rs,n.
-  is_bit c = true → only_bits l1 → no_grids l2 → is_bit c1 = true →
+  is_bit c = true → only_bits l1 → no_marks l1 (* → no_grids l2 *) → is_bit c1 = true →
   only_bits l3 → n = |l1| → |l1| = |l3| →
-  table_TM (S n) (〈c1,true〉::l3@〈comma,false〉::l4) → 
+  table_TM (S n) (l2@〈bar,false〉::〈c1,false〉::l3@〈comma,false〉::l4) → 
   t1 = midtape STape (〈grid,false〉::ls) 〈c,true〉 
          (l1@〈grid,false〉::l2@〈bar,false〉::〈c1,true〉::l3@〈comma,false〉::l4@〈grid,false〉::rs) → 
   (* facciamo match *)
@@ -257,14 +310,6 @@ lemma some_option_hd: ∀A.∀l:list A.∀a.∃b.
 #A #l #a cases l normalize /2/
 qed.
 
-lemma bit_not_grid: ∀d. is_bit d = true → is_grid d = false.
-* // normalize #H destruct
-qed.
-
-lemma bit_not_bar: ∀d. is_bit d = true → is_bar d = false.
-* // normalize #H destruct
-qed.
-
 lemma sem_match_tuple_step: 
     accRealize ? match_tuple_step (inr … (inl … (inr … 0))) 
     R_match_tuple_step_true R_match_tuple_step_false.
@@ -282,11 +327,11 @@ lemma sem_match_tuple_step:
     [@injective_notb @Hgrid | <Heq @H1]
 |#tapea #tapeout #tapeb whd in ⊢ (%→?); #Htapea
  * #tapec * #Hcompare #Hor 
- #ls #c #l1 #l2 #c1 #l3 #l4 #rs #n #Hc #Hl1 #Hl2 #Hc1 #Hl3 #eqn
+ #ls #c #l1 #l2 #c1 #l3 #l4 #rs #n #Hc #Hl1bars #Hl1marks #Hc1 #Hl3 #eqn
  #eqlen #Htable #Htapea1 cases (Htapea 〈c,true〉 ?) >Htapea1 [2:%]
  #notgridc -Htapea -Htapea1 -tapea #Htapeb  
  cases (Hcompare … Htapeb) -Hcompare -Htapeb * #_ #_ #Hcompare 
- cases (Hcompare c c1 l1 l3 (l2@[〈bar,false〉]) (l4@〈grid,false〉::rs) eqlen Hl1 … (refl …) Hc ?)  
+ cases (Hcompare c c1 l1 l3 (l2@[〈bar,false〉]) (l4@〈grid,false〉::rs) eqlen Hl1bars Hl3 Hl1marks … (refl …) Hc ?)  
  -Hcompare 
    [* #Htemp destruct (Htemp) #Htapec %1 % [%]
     >Htapec in Hor; -Htapec *
@@ -357,11 +402,11 @@ lemma sem_match_tuple_step:
                 [normalize in ⊢ (%→?); #Htemp destruct (Htemp) 
                  @injective_notb @notgridc
                 |#x #tl normalize in ⊢ (%→?); #Htemp destruct (Htemp)
-                 @bit_not_grid @(Hl1 〈c',false〉) @memb_append_l2 @memb_hd
+                 @bit_not_grid @(Hl1bars 〈c',false〉) @memb_append_l2 @memb_hd
                 ]
               |cut (only_bits (la@(〈c',false〉::lb)))
                 [<H2 whd #c0 #Hmemb cases (orb_true_l … Hmemb)
-                  [#eqc0 >(\P eqc0) @Hc |@Hl1]
+                  [#eqc0 >(\P eqc0) @Hc |@Hl1bars]
                 |#Hl1' #x #Hx @bit_not_grid @Hl1'
                  @memb_append_l1 @daemon
                 ]
@@ -392,15 +437,14 @@ lemma sem_match_tuple_step:
            [#H3 destruct (H3) @Hx | #y #tl #H3 destruct (H3) 
             @memb_append_l2 @memb_cons @Hx ]
          |-Hx #Hx @(no_grids_in_table … Htable) 
-          @memb_cons @memb_append_l2 @Hx
+          @memb_append_l2 @memb_cons @memb_cons @memb_append_l2 @Hx
          ]
        |whd in ⊢ (??%?); >(bit_not_grid … Hd') >(bit_not_bar … Hd') %
        ]
      ]
-   |@Hl3
-   |@daemon
-   |@daemon
-   |@daemon
+   |(* no marks in l3 *) 
+    @daemon
+   |(* no marks in l2@[〈bar,false〉] *) @daemon
    |>associative_append %
    ]
  ]
