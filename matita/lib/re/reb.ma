@@ -500,7 +500,7 @@ nlet rec pre_of_re (S : Alpha) (e : re S) on e : pitem S ≝
   | o e1 e2 ⇒ po ? (pre_of_re ? e1) (pre_of_re ? e2)
   | k e1 ⇒ pk ? (pre_of_re ? e1)].
 
-nlemma notFalse : ¬False. @; //; nqed.
+nlemma notFalse : ¬⊥. @; //; nqed.
 
 nlemma dot0 : ∀S.∀A:word S → Prop. {} · A = {}.
 #S A; nnormalize; napply extP; #w; @; ##[##2: *]
@@ -562,16 +562,16 @@ interpretation "move" 'move x E = (move ? x E).
 ndefinition rmove ≝ λS:Alpha.λx:S.λe:pre S. \move x (\fst e).
 interpretation "rmove" 'move x E = (rmove ? x E).
 
-nlemma XXz :  ∀S:Alpha.∀w:word S. w ∈ ∅ → False.
+nlemma XXz :  ∀S:Alpha.∀w:word S. w ∈ ∅ → ⊥.
 #S w abs; ninversion abs; #; ndestruct;
 nqed.
 
 
-nlemma XXe :  ∀S:Alpha.∀w:word S. w .∈ ϵ → False.
+nlemma XXe :  ∀S:Alpha.∀w:word S. w .∈ ϵ → ⊥.
 #S w abs; ninversion abs; #; ndestruct;
 nqed.
 
-nlemma XXze :  ∀S:Alpha.∀w:word S. w .∈ (∅ · ϵ)  → False.
+nlemma XXze :  ∀S:Alpha.∀w:word S. w .∈ (∅ · ϵ)  → ⊥.
 #S w abs; ninversion abs; #; ndestruct; /2/ by XXz,XXe;
 nqed.
 
@@ -583,17 +583,17 @@ naxiom in_move_cat:
 ncases e1 in H; ncases e2;
 ##[##1: *; ##[*; nnormalize; #; ndestruct] 
    #H; ninversion H; ##[##1,4,5,6: nnormalize; #; ndestruct]
-   nnormalize; #; ndestruct; ncases (?:False); /2/ by XXz,XXze;
+   nnormalize; #; ndestruct; ncases (?:⊥); /2/ by XXz,XXze;
 ##|##2: *; ##[*; nnormalize; #; ndestruct] 
    #H; ninversion H; ##[##1,4,5,6: nnormalize; #; ndestruct]
-   nnormalize; #; ndestruct; ncases (?:False); /2/ by XXz,XXze;
+   nnormalize; #; ndestruct; ncases (?:⊥); /2/ by XXz,XXze;
 ##| #r; *; ##[ *; nnormalize; #; ndestruct] 
    #H; ninversion H; ##[##1,4,5,6: nnormalize; #; ndestruct]
    ##[##2: nnormalize; #; ndestruct; @2; @2; //.##]
-   nnormalize; #; ndestruct; ncases (?:False); /2/ by XXz;
+   nnormalize; #; ndestruct; ncases (?:⊥); /2/ by XXz;
 ##| #y; *; ##[ *; nnormalize; #defw defx; ndestruct; @2; @1; /2/ by conj;##]
    #H; ninversion H; nnormalize; #; ndestruct; 
-   ##[ncases (?:False); /2/ by XXz] /3/ by or_intror;
+   ##[ncases (?:⊥); /2/ by XXz] /3/ by or_intror;
 ##| #r1 r2; *; ##[ *; #defw]
     ...
 nqed.
@@ -751,28 +751,28 @@ nqed. *)
 ntheorem der1: ∀S,a,e,e',w. der S a e e' → in_l S w e' → in_l S (a::w) e.
  #S; #a; #E; #E'; #w; #H; nelim H
   [##1,2: #H1; ninversion H1
-     [##1,8: #_; #K; (* non va ndestruct K; *) ncases (?:False); (* perche' due goal?*) /2/
-     |##2,9: #X; #Y; #K; ncases (?:False); /2/
-     |##3,10: #x; #y; #z; #w; #a; #b; #c; #d; #e; #K; ncases (?:False); /2/
-     |##4,11: #x; #y; #z; #w; #a; #b; #K; ncases (?:False); /2/
-     |##5,12: #x; #y; #z; #w; #a; #b; #K; ncases (?:False); /2/
-     |##6,13: #x; #y; #K; ncases (?:False); /2/
-     |##7,14: #x; #y; #z; #w; #a; #b; #c; #d; #K; ncases (?:False); /2/]
+     [##1,8: #_; #K; (* non va ndestruct K; *) ncases (?:⊥); (* perche' due goal?*) /2/
+     |##2,9: #X; #Y; #K; ncases (?:⊥); /2/
+     |##3,10: #x; #y; #z; #w; #a; #b; #c; #d; #e; #K; ncases (?:⊥); /2/
+     |##4,11: #x; #y; #z; #w; #a; #b; #K; ncases (?:⊥); /2/
+     |##5,12: #x; #y; #z; #w; #a; #b; #K; ncases (?:⊥); /2/
+     |##6,13: #x; #y; #K; ncases (?:⊥); /2/
+     |##7,14: #x; #y; #z; #w; #a; #b; #c; #d; #K; ncases (?:⊥); /2/]
 ##| #H1; ninversion H1
      [ //
-     | #X; #Y; #K; ncases (?:False); /2/
-     | #x; #y; #z; #w; #a; #b; #c; #d; #e; #K; ncases (?:False); /2/
-     | #x; #y; #z; #w; #a; #b; #K; ncases (?:False); /2/
-     | #x; #y; #z; #w; #a; #b; #K; ncases (?:False); /2/
-     | #x; #y; #K; ncases (?:False); /2/
-     | #x; #y; #z; #w; #a; #b; #c; #d; #K; ncases (?:False); /2/ ]
+     | #X; #Y; #K; ncases (?:⊥); /2/
+     | #x; #y; #z; #w; #a; #b; #c; #d; #e; #K; ncases (?:⊥); /2/
+     | #x; #y; #z; #w; #a; #b; #K; ncases (?:⊥); /2/
+     | #x; #y; #z; #w; #a; #b; #K; ncases (?:⊥); /2/
+     | #x; #y; #K; ncases (?:⊥); /2/
+     | #x; #y; #z; #w; #a; #b; #c; #d; #K; ncases (?:⊥); /2/ ]
 ##| #H1; #H2; #H3; ninversion H3
-     [ #_; #K; ncases (?:False); /2/
-     | #X; #Y; #K; ncases (?:False); /2/
-     | #x; #y; #z; #w; #a; #b; #c; #d; #e; #K; ncases (?:False); /2/
-     | #x; #y; #z; #w; #a; #b; #K; ncases (?:False); /2/
-     | #x; #y; #z; #w; #a; #b; #K; ncases (?:False); /2/
-     | #x; #y; #K; ncases (?:False); /2/
-     | #x; #y; #z; #w; #a; #b; #c; #d; #K; ncases (?:False); /2/ ]
+     [ #_; #K; ncases (?:⊥); /2/
+     | #X; #Y; #K; ncases (?:⊥); /2/
+     | #x; #y; #z; #w; #a; #b; #c; #d; #e; #K; ncases (?:⊥); /2/
+     | #x; #y; #z; #w; #a; #b; #K; ncases (?:⊥); /2/
+     | #x; #y; #z; #w; #a; #b; #K; ncases (?:⊥); /2/
+     | #x; #y; #K; ncases (?:⊥); /2/
+     | #x; #y; #z; #w; #a; #b; #c; #d; #K; ncases (?:⊥); /2/ ]
 ##| #r1; #r2; #r1'; #r2'; #H1; #H2; #H3; #H4; #H5; #H6;
 

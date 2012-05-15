@@ -47,7 +47,7 @@ lemma option_map_some : ∀A,B,f,x,v.
 definition option_map_def : ∀A,B:Type[0]. (A → B) → B → option A → B ≝
 λA,B,f,d,o. match o with [ None ⇒ d | Some a ⇒ f a ].
 
-lemma refute_none_by_refl : ∀A,B:Type[0]. ∀P:A → B. ∀Q:B → Type[0]. ∀x:option A. ∀H:x = None ? → False.
+lemma refute_none_by_refl : ∀A,B:Type[0]. ∀P:A → B. ∀Q:B → Type[0]. ∀x:option A. ∀H:x = None ? → ⊥.
   (∀v. x = Some ? v → Q (P v)) →
   Q (match x return λy.x = y → ? with [ Some v ⇒ λ_. P v | None ⇒ λE. match H E in False with [ ] ] (refl ? x)).
 #A #B #P #Q *

@@ -13,7 +13,7 @@ include "basics/logic.ma".
 
 (**** a subset of A is just an object of type A→Prop ****)
 
-definition empty_set ≝ λA:Type[0].λa:A.False.
+definition empty_set ≝ λA:Type[0].λa:A.⊥.
 notation "\emptyv" non associative with precedence 90 for @{'empty_set}.
 interpretation "empty set" 'empty_set = (empty_set ?).
 

@@ -32,7 +32,7 @@ interpretation "nil" 'nil = (nil ?).
 interpretation "cons" 'cons hd tl = (cons ? hd tl).
 
 definition is_nil: ∀A:Type[0].list A → Prop ≝
- λA.λl.match l with [ nil ⇒ True | cons hd tl ⇒ False ].
+ λA.λl.match l with [ nil ⇒ ⊤ | cons hd tl ⇒ ⊥ ].
 
 theorem nil_cons:
   ∀A:Type[0].∀l:list A.∀a:A. a::l ≠ [].
@@ -232,7 +232,7 @@ lemma All_nth : ∀A,P,n,l.
 
 let rec Exists (A:Type[0]) (P:A → Prop) (l:list A) on l : Prop ≝
 match l with
-[ nil ⇒ False
+[ nil ⇒ ⊥
 | cons h t ⇒ (P h) ∨ (Exists A P t)
 ].
 

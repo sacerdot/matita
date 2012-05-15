@@ -115,7 +115,7 @@ interpretation "'arrows2_REL" 'arrows2_REL A B = (arrows2 (category2_of_category
 
 
 definition full_subset: ∀s:REL. Ω^s.
- apply (λs.{x | True});
+ apply (λs.{x | ⊤});
  intros; simplify; split; intro; assumption.
 qed.
 
@@ -315,8 +315,6 @@ theorem ext_comp:
      [2: cases f] assumption]
 qed.
 *)
-
-axiom daemon : False.
 
 theorem extS_singleton:
  ∀o1,o2.∀a.∀x.extS o1 o2 a {(x)} = ext o1 o2 a x. 

@@ -18,7 +18,7 @@ inductive bool : Type[0] := true : bool | false : bool.
 
 lemma BOOL : objs1 SET.
 constructor 1; [apply bool] constructor 1;
-[ intros (x y); apply (match x with [ true ⇒ match y with [ true ⇒ True | _ ⇒ False] | false ⇒ match y with [ true ⇒ False | false ⇒ True ]]);
+[ intros (x y); apply (match x with [ true ⇒ match y with [ true ⇒ ⊤ | _ ⇒ ⊥] | false ⇒ match y with [ true ⇒ ⊥ | false ⇒ ⊤ ]]);
 | whd; simplify; intros; cases x; apply I;
 | whd; simplify; intros 2; cases x; cases y; simplify; intros; assumption;
 | whd; simplify; intros 3; cases x; cases y; cases z; simplify; intros; 
