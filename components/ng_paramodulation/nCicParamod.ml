@@ -126,8 +126,8 @@ let tooflex (_,l,_,_) =
   match l with
     | Terms.Equation (l,r,_,o) ->
       (match l,r,o with
-       | Terms.Var _, _, (Terms.Incomparable | Terms.Invertible) -> true
-       | _, Terms.Var _,(Terms.Incomparable | Terms.Invertible) -> true
+       | (Terms.Var _ | Terms.Node (Terms.Var _::_)), _, (Terms.Incomparable | Terms.Invertible) -> true
+       | _, (Terms.Var _ | Terms.Node (Terms.Var _::_)),(Terms.Incomparable | Terms.Invertible) -> true
        | _ -> false)
     | _ -> false
 ;;  
@@ -143,7 +143,8 @@ let forward_infer_step status metasenv subst context s t ty =
   let bag,clause = P.mk_passive bag (t,ty) in
     if Terms.is_eq_clause clause then
       if tooflex clause then (print (lazy "pruning tooflex"); s)
-      else P.forward_infer_step (P.replace_bag s bag) clause 0
+      else
+       P.forward_infer_step (P.replace_bag s bag) clause 0
     else (debug (lazy "not eq"); s)
 ;;
 
