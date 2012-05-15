@@ -311,6 +311,12 @@ lemma some_option_hd: ∀A.∀l:list A.∀a.∃b.
 #A #l #a cases l normalize /2/
 qed.
 
+axiom tech_split2 : ∀A,l1,l2,l3,l4,x. 
+  memb A x l1 = false → memb ? x l3 = false → 
+  l1@x::l2 = l3@x::l4 → l1 = l3 ∧ l2 = l4.
+  
+axiom injective_append : ∀A,l.injective … (λx.append A x l).
+
 lemma sem_match_tuple_step: 
     accRealize ? match_tuple_step (inr … (inl … (inr … 0))) 
     R_match_tuple_step_true R_match_tuple_step_false.
@@ -423,28 +429,54 @@ lemma sem_match_tuple_step:
                >reverse_reverse
                #Htapeout % [@Hnoteq]
                @(ex_intro … d2)
-               cut (∃rs31,rs32.rs3 = rs31@〈comma,false〉::rs32) 
-               [@daemon] * #rs31 * #rs32 #Hrs3
+               cut (∃rs32.rs3 = lc@〈comma,false〉::rs32) 
+               [ (*cases (tech_split STape (λc.c == 〈bar,false〉) l4)
+                 [
+                 | * #l41 * * #cbar #bfalse * #l42 * * #Hbar #Hl4 #Hl41
+                   @(ex_intro ?? l41) >Hl4 in Heq1; #Heq1
+               
+               cut (sublist … lc l3)
+                 [ #x #Hx cases la in H3;
+                   [ normalize #H3 destruct (H3) @Hx
+                   | #p #la' normalize #Hla' destruct (Hla')
+                     @memb_append_l2 @memb_cons @Hx ] ] #Hsublist*)
+               @daemon]
+               * #rs32 #Hrs3
                (* cut 
                (〈c1,false〉::l3@〈comma,false〉::l4= la@〈d',false〉::rs3@〈bar,false〉::〈d2,b2〉::rs3')
                [@daemon] #Hcut *)
+               cut (l4=rs32@〈bar,false〉::〈d2,b2〉::rs3')
+               [ >Hrs3 in Heq1; @daemon ] #Hl4
                @(ex_intro … rs32) @(ex_intro … rs3') %
-                 [>Hrs3 in Heq1; @daemon
+                 [(* by showing b2 = false: @Hl4 *) @daemon
                  |>Htapeout @eq_f2
                    [@daemon
-                   |<associative_append <associative_append 
-                    <associative_append <associative_append <associative_append
-                    <associative_append >(associative_append …la) <H2 
-                    normalize in ⊢ (??%?);
-                    >associative_append >associative_append 
+                   |(*>Hrs3 *)>append_cons
+                    > (?:l1@〈grid,false〉::l2@〈bar,false〉::〈c1,false〉::l3@〈comma,false〉::rs32@〈bar,false〉::〈d2,true〉::rs3'@〈grid,false〉::rs
+                        = (l1@〈grid,false〉::l2@〈bar,false〉::〈c1,false〉::l3@〈comma,false〉::rs32@[〈bar,false〉])@〈d2,true〉::rs3'@〈grid,false〉::rs)
+                    [|>associative_append normalize 
+                      >associative_append normalize
+                      >associative_append normalize
+                      >associative_append normalize
+                       % ]
+                    @eq_f2 [|%]
+                    @(injective_append … (〈d2,b2〉::rs3'))
+                    >(?:(la@[〈c',false〉])@((((lb@[〈grid,false〉])@l2@[〈bar,false〉])@la)@[〈d',false〉])@rs3
+                       =((la@〈c',false〉::lb)@([〈grid,false〉]@l2@[〈bar,false〉]@la@[〈d',false〉]@rs3)))
+                    [|>associative_append >associative_append 
+                      >associative_append >associative_append >associative_append
+                      >associative_append >associative_append % ]
+                    <H2 normalize (* <Hrs3 *)
                     >associative_append >associative_append >associative_append
-                    >associative_append normalize @eq_f @eq_f @eq_f @eq_f 
-                    cut (true = b2) [@daemon] #Hcut >Hcut 
-                    cut (∀A,l1,l2,l3. l1 = l2 → l1@l3 =
-                    <Heq1 >(associative_append …la)  
-                    cut (true = b2
-                   
-               
+                    @eq_f normalize @eq_f >associative_append
+                    >associative_append @eq_f normalize @eq_f
+                    >(append_cons ? 〈d',false〉) >associative_append
+                    <Heq1 >Hl4 <associative_append <append_cons
+                    <H3
+                    >associative_append normalize
+                    >associative_append normalize %
+                   ]
+                 ]
               ]
            ]
          ]
