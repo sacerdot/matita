@@ -93,7 +93,8 @@ lemma no_marks_in_table: ∀n.∀l.table_TM n l → no_marks l.
   ]
 qed.      
           
-
+axiom last_of_table: ∀n,l,b.¬ table_TM n (l@[〈bar,b〉]).
+   
 (*
 l0 x* a l1 x0* a0 l2 ------> l0 x a* l1 x0 a0* l2
    ^                               ^
@@ -282,11 +283,11 @@ definition R_match_tuple_step_true ≝ λt1,t2.
   ∨
   (* non facciamo match e marchiamo la prossima tupla *)
   ((〈c,false〉::l1 ≠ 〈c1,false〉::l3 ∧
-   ∃c2,l5,l6,l7.l4 = l5@〈bar,false〉::〈c2,false〉::l6@〈comma,false〉::l7 ∧
+   ∃c2,l5,l6.l4 = l5@〈bar,false〉::〈c2,false〉::l6 ∧
    (* condizioni su l5 l6 l7 *)
    t2 = midtape STape (〈grid,false〉::ls) 〈c,true〉 
-         (l1@〈grid,false〉::l2@〈bar,false〉::〈c1,true〉::l3@〈comma,false〉::
-          l5@〈bar,false〉::〈c2,true〉::l6@〈comma,false〉::l7))
+         (l1@〈grid,false〉::l2@〈bar,false〉::〈c1,false〉::l3@〈comma,false〉::
+          l5@〈bar,false〉::〈c2,true〉::l6@〈grid,false〉::rs))
   ∨  
   (* non facciamo match e non c'è una prossima tupla:
      non specifichiamo condizioni sul nastro di output, perché
@@ -310,10 +311,10 @@ lemma some_option_hd: ∀A.∀l:list A.∀a.∃b.
 #A #l #a cases l normalize /2/
 qed.
 
-axiom sem_match_tuple_step: 
+lemma sem_match_tuple_step: 
     accRealize ? match_tuple_step (inr … (inl … (inr … 0))) 
     R_match_tuple_step_true R_match_tuple_step_false.
-(* @(acc_sem_if_app … (sem_test_char ? (λc:STape.¬ is_grid (\fst c))) …
+@(acc_sem_if_app … (sem_test_char ? (λc:STape.¬ is_grid (\fst c))) …
   (sem_seq … sem_compare
     (sem_if … (sem_test_char ? (λc:STape.is_grid (\fst c)))
       (sem_nop …)
@@ -363,33 +364,37 @@ axiom sem_match_tuple_step:
       <(associative_append ? lc (〈comma,false〉::l4)) in Htaped; #Htaped
       cases (Htapee … Htaped ???) -Htaped -Htapee 
        [* #rs3 * * (* we proceed by cases on rs4 *) 
-         [(* rs4 is empty *)
-          * #d * #b * * * #Heq1 #Hnobars
-          whd in ⊢ ((???%)→?); #Htemp destruct (Htemp)
-          #Htapee * 
-           [* #tapef * whd in ⊢ (%→?); >Htapee -Htapee #Htapef 
-            cases (Htapef … (refl …)) -Htapef #_ #Htapef >Htapef -Htapef
-            whd in ⊢ (%→?); #H lapply (H … ???? (refl …)) #Htapeout
-            %2 % 
-             [% [@Hnoteq |@daemon]
-             |>Htapeout %
-             ]
-           |* #tapef * whd in ⊢ (%→?); >Htapee -Htapee #Htapef
-            cases (Htapef … (refl …)) whd in ⊢ ((??%?)→?); #Htemp destruct (Htemp)
-           ]
+         [(* rs4 is empty : the case is absurd since the tape
+            cannot end with a bar *)
+          * #d * #b * * * #Heq1 @False_ind 
+          cut (∀A,l1,l2.∀a:A. a::l1@l2=(a::l1)@l2) [//] #Hcut 
+          >Hcut in Htable; >H3 >associative_append
+          normalize >Heq1 >Hcut <associative_append >Hcut 
+          <associative_append #Htable @(absurd … Htable) 
+          @last_of_table    
          |(* rs4 not empty *)
           * #d2 #b2 #rs3' * #d  * #b * * * #Heq1 #Hnobars
-          cut (is_grid d2 = false) [@daemon (* no grids in table *)] #Hd2
+          cut (is_grid d2 = false) 
+          [@(no_grids_in_table … Htable … 〈d2,b2〉)
+           @daemon (* no grids in table *)] #Hd2
           whd in ⊢ ((???%)→?); #Htemp destruct (Htemp) #Htapee >Htapee -Htapee *
-           [* #tapef * whd in ⊢ (%→?); #Htapef 
+           [(* we know current is not grid *)
+            * #tapef * whd in ⊢ (%→?); #Htapef 
             cases (Htapef … (refl …)) >Hd2 #Htemp destruct (Htemp) 
            |* #tapef * whd in ⊢ (%→?); #Htapef 
             cases (Htapef … (refl …)) #_ -Htapef #Htapef
-            * #tapeg >Htapef -Htapef * whd in ⊢ (%→?); 
+            * #tapeg >Htapef -Htapef * 
+            (* move_l *)
+            whd in ⊢ (%→?); 
             #H lapply (H … (refl …)) whd in ⊢ (???%→?); -H  #Htapeg
-            >Htapeg -Htapeg whd in ⊢ (%→?); #Htapeout
+            >Htapeg -Htapeg
+            (* init_current *)
+             whd in ⊢ (%→?); #Htapeout
             %1 cases (some_option_hd ? (reverse ? (reverse ? la)) 〈c',true〉)
             * #c00 #b00 #Hoption
+             (* cut 
+            ((reverse ? rs3 @〈d',false〉::reverse ? la@reverse ? (l2@[〈bar,false〉])@(〈grid,false〉::reverse ? lb))
+             = *) 
             lapply 
              (Htapeout (reverse ? rs3 @〈d',false〉::reverse ? la@reverse ? (l2@[〈bar,false〉])@(〈grid,false〉::reverse ? lb))
              c' (reverse ? la) false ls bar (〈d2,true〉::rs3'@〈grid,false〉::rs) c00 b00 ?????) -Htapeout
@@ -411,7 +416,35 @@ axiom sem_match_tuple_step:
                  @memb_append_l1 @daemon
                 ]
               |@daemon
-              |@daemon
+              |>reverse_append >reverse_cons >reverse_reverse
+               >reverse_append >reverse_reverse
+               >reverse_cons >reverse_append >reverse_reverse
+               >reverse_append >reverse_cons >reverse_reverse
+               >reverse_reverse
+               #Htapeout % [@Hnoteq]
+               @(ex_intro … d2)
+               cut (∃rs31,rs32.rs3 = rs31@〈comma,false〉::rs32) 
+               [@daemon] * #rs31 * #rs32 #Hrs3
+               (* cut 
+               (〈c1,false〉::l3@〈comma,false〉::l4= la@〈d',false〉::rs3@〈bar,false〉::〈d2,b2〉::rs3')
+               [@daemon] #Hcut *)
+               @(ex_intro … rs32) @(ex_intro … rs3') %
+                 [>Hrs3 in Heq1; @daemon
+                 |>Htapeout @eq_f2
+                   [@daemon
+                   |<associative_append <associative_append 
+                    <associative_append <associative_append <associative_append
+                    <associative_append >(associative_append …la) <H2 
+                    normalize in ⊢ (??%?);
+                    >associative_append >associative_append 
+                    >associative_append >associative_append >associative_append
+                    >associative_append normalize @eq_f @eq_f @eq_f @eq_f 
+                    cut (true = b2) [@daemon] #Hcut >Hcut 
+                    cut (∀A,l1,l2,l3. l1 = l2 → l1@l3 =
+                    <Heq1 >(associative_append …la)  
+                    cut (true = b2
+                   
+               
               ]
            ]
          ]
@@ -430,27 +463,29 @@ axiom sem_match_tuple_step:
           cases (Htapef … (refl …)) -Htapef 
           whd in ⊢ ((??%?)→?); #Htemp destruct (Htemp) 
          ]
-       |@daemon (* no marks in table *)
+       |(* no marks in table *)
+        #x #membx @(no_marks_in_table … Htable) 
+        @memb_append_l2 @memb_cons 
+        cut (∀A,l1,l2.∀a:A. a::l1@l2=(a::l1)@l2) [//] #Hcut >Hcut
+        >H3 >associative_append @memb_append_l2 @memb_cons @membx
        |(* no grids in table *)
-        #x #Hx cases (memb_append … Hx) 
-         [-Hx #Hx @bit_not_grid @Hl3 cases la in H3; normalize 
-           [#H3 destruct (H3) @Hx | #y #tl #H3 destruct (H3) 
-            @memb_append_l2 @memb_cons @Hx ]
-         |-Hx #Hx @(no_grids_in_table … Htable) 
-          @memb_append_l2 @memb_cons @memb_cons @memb_append_l2 @Hx
-         ]
+        #x #membx @(no_grids_in_table … Htable) 
+        @memb_append_l2 @memb_cons 
+        cut (∀A,l1,l2.∀a:A. a::l1@l2=(a::l1)@l2) [//] #Hcut >Hcut
+        >H3 >associative_append @memb_append_l2 @memb_cons @membx
        |whd in ⊢ (??%?); >(bit_not_grid … Hd') >(bit_not_bar … Hd') %
        ]
      ]
-   |(* no marks in l3 *) 
-    @daemon
-   |(* no marks in l2@[〈bar,false〉] *) @daemon
+   |#x #membx @(no_marks_in_table … Htable) 
+    @memb_append_l2 @memb_cons @memb_cons @memb_append_l1 @membx 
+   |#x #membx @(no_marks_in_table … Htable) 
+    cases (memb_append … membx) -membx #membx
+     [@memb_append_l1 @membx | @memb_append_l2 >(memb_single … membx) @memb_hd]
    |>associative_append %
    ]
  ]
 qed.
 
-  *)
 
 (* 
   MATCH TUPLE
