@@ -142,7 +142,7 @@ let forward_infer_step status metasenv subst context s t ty =
   else
   let bag,clause = P.mk_passive bag (t,ty) in
     if Terms.is_eq_clause clause then
-      if tooflex clause then (print (lazy "pruning tooflex"); s)
+      if tooflex clause then (debug (lazy "pruning tooflex"); s)
       else
        P.forward_infer_step (P.replace_bag s bag) clause 0
     else (debug (lazy "not eq"); s)
