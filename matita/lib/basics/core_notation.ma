@@ -316,6 +316,3 @@ notation "(⊩ \sub term 90 c) " with precedence 65 for @{'Vdash $c}.
 
 notation < "maction (mstyle color #ff0000 (­…­)) (t)" 
 non associative with precedence 90 for @{'hide $t}.
-
-notation "⊤" non associative with precedence 90 for @{'true}.
-notation "⊥" non associative with precedence 90 for @{'false}.

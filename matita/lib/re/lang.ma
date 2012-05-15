@@ -34,7 +34,7 @@ let rec flatten (S : DeqSet) (l : list (word S)) on l : word S ≝
 match l with [ nil ⇒ [ ] | cons w tl ⇒ w @ flatten ? tl ].
 
 let rec conjunct (S : DeqSet) (l : list (word S)) (r : word S → Prop) on l: Prop ≝
-match l with [ nil ⇒ ⊤ | cons w tl ⇒ r w ∧ conjunct ? tl r ]. 
+match l with [ nil ⇒ True | cons w tl ⇒ r w ∧ conjunct ? tl r ]. 
 
 (* kleene's star *)
 definition star ≝ λS.λl.λw:word S.∃lw.flatten ? lw = w ∧ conjunct ? lw l. 

@@ -22,9 +22,9 @@ definition POW': objs1 SET → OAlgebra.
   | apply overlaps;
   | apply big_intersects;
   | apply big_union;
-  | apply ({x | ⊤});
+  | apply ({x | True});
     simplify; intros; apply (refl1 ? (eq1 CPROP));
-  | apply ({x | ⊥});
+  | apply ({x | False});
     simplify; intros; apply (refl1 ? (eq1 CPROP));
   | intros; whd; intros; assumption
   | intros; whd; split; assumption

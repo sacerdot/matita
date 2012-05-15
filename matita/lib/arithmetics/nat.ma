@@ -27,7 +27,7 @@ definition pred ≝
  λn. match n with [ O ⇒ O | S p ⇒ p].
 
 definition not_zero: nat → Prop ≝
- λn: nat. match n with [ O ⇒ ⊥ | (S p) ⇒ ⊤ ].
+ λn: nat. match n with [ O ⇒ False | (S p) ⇒ True ].
 
 (* order relations *)
 

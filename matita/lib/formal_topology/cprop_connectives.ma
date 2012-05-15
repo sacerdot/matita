@@ -16,13 +16,6 @@ include "basics/pts.ma".
 
 inductive False: CProp[0] ≝.
 
-interpretation "constructive logical false" 'false = False.
-
-inductive True: CProp[0] ≝  
-I : True.
-
-interpretation "constructive logical true" 'true = True.
-
 inductive Or (A,B:CProp[0]) : CProp[0] ≝
  | Left : A → Or A B
  | Right : B → Or A B.
@@ -138,7 +131,7 @@ inductive exT2 (A:Type[0]) (P,Q:A→CProp[0]) : CProp[0] ≝
   ex_introT2: ∀w:A. P w → Q w → exT2 A P Q.
 
 
-definition Not : CProp[0] → CProp[0] ≝ λx:CProp[0].x → ⊥.
+definition Not : CProp[0] → CProp[0] ≝ λx:CProp[0].x → False.
 
 interpretation "constructive not" 'not x = (Not x).
   

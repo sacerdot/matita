@@ -91,21 +91,17 @@ unification hint 0 ≔ T,a,b;
 inductive True: Prop ≝  
 I : True.
 
-interpretation "logical true" 'true = True.
-
 inductive False: Prop ≝ .
 
-interpretation "logical false" 'false = False.
-
 (* ndefinition Not: Prop → Prop ≝
-λA. A → ⊥. *)
+λA. A → False. *)
 
 inductive Not (A:Prop): Prop ≝
-nmk: (A → ⊥) → Not A.
+nmk: (A → False) → Not A.
 
 interpretation "logical not" 'not x = (Not x).
 
-theorem absurd : ∀A:Prop. A → ¬A → ⊥.
+theorem absurd : ∀A:Prop. A → ¬A → False.
 #A #H #Hn (elim Hn); /2/; qed.
 
 (*

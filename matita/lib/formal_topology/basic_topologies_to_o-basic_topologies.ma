@@ -29,7 +29,7 @@ definition o_continuous_relation_of_continuous_relation:
   [ apply (orelation_of_relation ?? c) | apply (reduced ?? c) | apply (saturated ?? c) ]
 qed.
 
-axiom daemon: ⊥. (*FG: alla faccia del costruttivismo *)
+axiom daemon: False.
 
 lemma o_continuous_relation_of_continuous_relation_morphism :
   ∀S,T:category2_of_category1 BTop.
