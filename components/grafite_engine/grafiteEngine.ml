@@ -62,7 +62,7 @@ let eval_unification_hint status t n =
   NCicLibrary.dump_obj status (inject_unification_hint (t,n))
 ;;
 
-let basic_index_obj l status =
+let basic_index_obj l (status:#NCic.status) =
   status#set_auto_cache 
     (List.fold_left
       (fun t (ks,v) -> 
@@ -560,6 +560,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
         let obj = uri,height,[],[],obj_kind in
         let old_status = status in
         let status = NCicLibrary.add_obj status obj in
+       (try
         let index_obj = index &&
          match obj_kind with
             NCic.Constant (_,_,_,_,(_,`Example,_))
@@ -570,7 +571,9 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
          if index_obj then
           let status = index_obj_for_auto status obj in
            (try index_eq_for_auto status uri
-           with _ -> status)
+           with
+              Sys.Break as exn -> raise exn
+            | _ -> status)
          else
           status in
 (*
@@ -580,7 +583,6 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
 	in *)
 (*         prerr_endline (status#ppobj obj); *)
         HLog.message ("New object: " ^ NUri.string_of_uri uri);
-         (try
        (*prerr_endline (status#ppobj obj);*)
            let boxml = NCicElim.mk_elims status obj in
            let boxml = boxml @ NCicElim.mk_projections status obj in
