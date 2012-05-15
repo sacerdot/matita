@@ -186,7 +186,7 @@ let does_not_occur status ~subst context n nn t =
     | C.Rel m when m <= k || m > nn+k -> ()
     | C.Rel m ->
         (try match List.nth context (m-1-k) with
-          | _,C.Def (bo,_) -> aux (n-m) () bo
+          | _,C.Def (bo,_) -> aux 0 () (S.lift status (m-k) bo)
           | _ -> ()
          with Failure _ -> assert false)
     | C.Meta (_,(_,(C.Irl 0 | C.Ctx []))) -> (* closed meta *) ()
