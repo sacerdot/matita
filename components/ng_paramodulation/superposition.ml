@@ -145,11 +145,13 @@ module Superposition (B : Orderings.Blob) =
                (* CSC: to avoid equations of the form ? -> T that
                   can always be applied and that lead to type-checking errors *)
                (match l,r,o with 
-                   Terms.Var _,_,Terms.Gt
-                 | _,Terms.Var _,Terms.Lt -> assert false
-                 | Terms.Var _,_,(Terms.Incomparable | Terms.Invertible) ->
+(*
+                   (Terms.Var _ | Terms.Node (Terms.Var _ ::_)),_,Terms.Gt
+                 | _,(Terms.Var _ | Terms.Node (Terms.Var _ ::_)),Terms.Lt -> assert false
+*)
+                 | (Terms.Var _ | Terms.Node (Terms.Var _ ::_)),_,(Terms.Incomparable | Terms.Invertible) ->
                     Terms.Equation (l, r, ty, Terms.Lt)
-                 | _, Terms.Var _,(Terms.Incomparable | Terms.Invertible) ->
+                 | _, (Terms.Var _ | Terms.Node (Terms.Var _ ::_)),(Terms.Incomparable | Terms.Invertible) ->
                     Terms.Equation (l, r, ty, Terms.Gt)
                  | _ -> Terms.Equation (l, r, ty, o))
           | t -> Terms.Predicate t
