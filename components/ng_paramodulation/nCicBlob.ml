@@ -45,8 +45,10 @@ with type t = NCic.term and type input = NCic.term = struct
 
   type t = NCic.term
 
-  let eq x y = x = y;;
-    (* NCicReduction.alpha_eq C.metasenv C.subst C.context x y;; *)
+  let eq x y =
+   (* CSC: NCicPp.status is the best I can put here *)
+   x = y ||
+   NCicReduction.alpha_eq (new NCicPp.status) C.metasenv C.subst C.context x y;;
 
   let height_of_ref = function
     | NReference.Def h -> h
@@ -79,9 +81,7 @@ with type t = NCic.term and type input = NCic.term = struct
   ;;
   
   let compare x y = 
-    (* CSC: NCicPp.status is the best I can put here *)
-    if NCicReduction.alpha_eq (new NCicPp.status) [] [] [] x y  then 0 
-    (* if x = y  then 0 *)
+    if eq x y then 0
     else compare x y
   ;;
 
