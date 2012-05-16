@@ -62,7 +62,7 @@ axiom term_eq_dec: ∀T1,T2:term. Decidable (T1 = T2).
 
 (* Basic inversion lemmas ***************************************************)
 
-lemma discr_tpair_xy_x: ∀I,T,V. ②{I} V. T = V → False.
+lemma discr_tpair_xy_x: ∀I,T,V. ②{I} V. T = V → ⊥.
 #I #T #V elim V -V
 [ #J #H destruct
 | #J #W #U #IHW #_ #H destruct
@@ -72,7 +72,7 @@ lemma discr_tpair_xy_x: ∀I,T,V. ②{I} V. T = V → False.
 qed-.
 
 (* Basic_1: was: thead_x_y_y *)
-lemma discr_tpair_xy_y: ∀I,V,T. ②{I} V. T = T → False.
+lemma discr_tpair_xy_y: ∀I,V,T. ②{I} V. T = T → ⊥.
 #I #V #T elim T -T
 [ #J #H destruct
 | #J #W #U #_ #IHU #H destruct
@@ -82,25 +82,25 @@ lemma discr_tpair_xy_y: ∀I,V,T. ②{I} V. T = T → False.
 qed-.
 
 lemma eq_false_inv_tpair_sn: ∀I,V1,T1,V2,T2.
-                             (②{I} V1. T1 = ②{I} V2. T2 → False) →
-                             (V1 = V2 → False) ∨ (V1 = V2 ∧ (T1 = T2 → False)).
+                             (②{I} V1. T1 = ②{I} V2. T2 → ⊥) →
+                             (V1 = V2 → ⊥) ∨ (V1 = V2 ∧ (T1 = T2 → ⊥)).
 #I #V1 #T1 #V2 #T2 #H
 elim (term_eq_dec V1 V2) /3 width=1/ #HV12 destruct
 @or_intror @conj // #HT12 destruct /2 width=1/ 
 qed-.
 
 lemma eq_false_inv_tpair_dx: ∀I,V1,T1,V2,T2.
-                             (②{I} V1. T1 = ②{I} V2. T2 → False) →
-                             (T1 = T2 → False) ∨ (T1 = T2 ∧ (V1 = V2 → False)).
+                             (②{I} V1. T1 = ②{I} V2. T2 → ⊥) →
+                             (T1 = T2 → ⊥) ∨ (T1 = T2 ∧ (V1 = V2 → ⊥)).
 #I #V1 #T1 #V2 #T2 #H
 elim (term_eq_dec T1 T2) /3 width=1/ #HT12 destruct
 @or_intror @conj // #HT12 destruct /2 width=1/
 qed-.
 
 lemma eq_false_inv_beta: ∀V1,V2,W1,W2,T1,T2.
-                         (ⓐV1. ⓛW1. T1 = ⓐV2. ⓛW2 .T2 →False) →
-                         (W1 = W2 → False) ∨
-                         (W1 = W2 ∧ (ⓓV1. T1 = ⓓV2. T2 → False)).
+                         (ⓐV1. ⓛW1. T1 = ⓐV2. ⓛW2 .T2 →⊥) →
+                         (W1 = W2 → ⊥) ∨
+                         (W1 = W2 ∧ (ⓓV1. T1 = ⓓV2. T2 → ⊥)).
 #V1 #V2 #W1 #W2 #T1 #T2 #H
 elim (eq_false_inv_tpair_sn … H) -H
 [ #HV12 elim (term_eq_dec W1 W2) /3 width=1/

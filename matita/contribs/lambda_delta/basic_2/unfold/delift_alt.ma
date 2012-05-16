@@ -39,7 +39,7 @@ interpretation "inverse basic relocation (term) alternative"
 (* Basic properties *********************************************************)
 
 lemma delifta_lsubs_conf: ∀L1,T1,T2,d,e. L1 ⊢ T1 [d, e] ≡≡ T2 →
-                          ∀L2. L1 [d, e] ≼ L2 → L2 ⊢ T1 [d, e] ≡≡ T2.
+                          ∀L2. L1 ≼ [d, e] L2 → L2 ⊢ T1 [d, e] ≡≡ T2.
 #L1 #T1 #T2 #d #e #H elim H -L1 -T1 -T2 -d -e // /2 width=1/
 [ #L1 #K1 #V1 #V2 #W2 #i #d #e #Hdi #Hide #HLK1 #_ #HVW2 #IHV12 #L2 #HL12
   elim (ldrop_lsubs_ldrop1_abbr … HL12 … HLK1 ? ?) -HL12 -HLK1 // /3 width=6/

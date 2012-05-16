@@ -39,14 +39,14 @@ qed.
 lemma cnf_abst: ∀I,L,V,W,T. L ⊢ 𝐍[W] → L. ⓑ{I} V ⊢ 𝐍[T] → L ⊢ 𝐍[ⓛW.T].
 #I #L #V #W #T #HW #HT #X #H
 elim (cpr_inv_abst1 … H I V) -H #W0 #T0 #HW0 #HT0 #H destruct
->(HW … HW0) -W >(HT … HT0) -T //
+>(HW … HW0) -W0 >(HT … HT0) -T0 //
 qed.
 
 (* Basic_1: was only: nf2_appl_lref *)
 lemma cnf_appl_simple: ∀L,V,T. L ⊢ 𝐍[V] → L ⊢ 𝐍[T] → 𝐒[T] → L ⊢ 𝐍[ⓐV.T].
 #L #V #T #HV #HT #HS #X #H
 elim (cpr_inv_appl1_simple … H ?) -H // #V0 #T0 #HV0 #HT0 #H destruct
->(HV … HV0) -V >(HT … HT0) -T //
+>(HV … HV0) -V0 >(HT … HT0) -T0 //
 qed.
 
 (* Relocation properties ****************************************************)
@@ -56,6 +56,6 @@ lemma cnf_lift: ∀L0,L,T,T0,d,e.
                 L ⊢ 𝐍[T] → ⇩[d, e] L0 ≡ L → ⇧[d, e] T ≡ T0 → L0 ⊢ 𝐍[T0].
 #L0 #L #T #T0 #d #e #HLT #HL0 #HT0 #X #H
 elim (cpr_inv_lift … HL0 … HT0 … H) -L0 #T1 #HT10 #HT1
->(HLT … HT1) in HT0; -L #HT0
+<(HLT … HT1) in HT0; -L #HT0
 >(lift_mono … HT10 … HT0) -T1 -X //
 qed.

@@ -20,9 +20,9 @@ include "basic_2/computation/cprs.ma".
 (* Properties concerning parallel unfold on terms ***************************)
 
 (* Basic_1: was only: pr3_subst1 *)
-lemma cprs_tpss_ltpr: ∀L1,T1,U1,d,e. L1 ⊢ T1 [d, e] ▶* U1 →
+lemma cprs_tpss_ltpr: ∀L1,T1,U1,d,e. L1 ⊢ T1 ▶* [d, e] U1 →
                       ∀L2. L1 ➡ L2 → ∀T2. L2 ⊢ T1 ➡* T2 →
-                      ∃∃U2. L2 ⊢ U1 ➡* U2 & L2 ⊢ T2 [d, e] ▶* U2.
+                      ∃∃U2. L2 ⊢ U1 ➡* U2 & L2 ⊢ T2 ▶* [d, e] U2.
 #L1 #T1 #U1 #d #e #HTU1 #L2 #HL12 #T2 #HT12 elim HT12 -T2
 [ #T2 #HT12
   elim (cpr_tpss_ltpr … HL12 … HT12 … HTU1) -L1 -T1 /3 width=3/

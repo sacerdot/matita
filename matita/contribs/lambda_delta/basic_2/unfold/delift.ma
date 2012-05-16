@@ -17,7 +17,7 @@ include "basic_2/unfold/tpss.ma".
 (* INVERSE BASIC TERM RELOCATION  *******************************************)
 
 definition delift: nat → nat → lenv → relation term ≝
-                   λd,e,L,T1,T2. ∃∃T. L ⊢ T1 [d, e] ▶* T & ⇧[d, e] T2 ≡ T.
+                   λd,e,L,T1,T2. ∃∃T. L ⊢ T1 ▶* [d, e] T & ⇧[d, e] T2 ≡ T.
 
 interpretation "inverse basic relocation (term)"
    'TSubst L T1 d e T2 = (delift d e L T1 T2).
@@ -32,7 +32,7 @@ lemma delift_refl_O2: ∀L,T,d. L ⊢ T [d, 0] ≡ T.
 /2 width=3/ qed.
 
 lemma delift_lsubs_conf: ∀L1,T1,T2,d,e. L1 ⊢ T1 [d, e] ≡ T2 →
-                         ∀L2. L1 [d, e] ≼ L2 → L2 ⊢ T1 [d, e] ≡ T2.
+                         ∀L2. L1 ≼ [d, e] L2 → L2 ⊢ T1 [d, e] ≡ T2.
 #L1 #T1 #T2 #d #e * /3 width=3/
 qed.
 

@@ -123,8 +123,8 @@ fact tpr_conf_delta_delta:
       ∃∃X. X1 ➡ X & X2 ➡ X
    ) →
    V0 ➡ V1 → V0 ➡ V2 → T0 ➡ T1 → T0 ➡ T2 →
-   ⋆. ⓑ{I1} V1 ⊢ T1 [O, 1] ▶ TT1 →
-   ⋆. ⓑ{I1} V2 ⊢ T2 [O, 1] ▶ TT2 →
+   ⋆. ⓑ{I1} V1 ⊢ T1 ▶ [O, 1] TT1 →
+   ⋆. ⓑ{I1} V2 ⊢ T2 ▶ [O, 1] TT2 →
    ∃∃X. ⓑ{I1} V1. TT1 ➡ X & ⓑ{I1} V2. TT2 ➡ X.
 #I1 #V0 #V1 #T0 #T1 #TT1 #V2 #T2 #TT2 #IH #HV01 #HV02 #HT01 #HT02 #HTT1 #HTT2
 elim (IH … HV01 … HV02) -HV01 -HV02 // #V #HV1 #HV2
@@ -141,7 +141,7 @@ fact tpr_conf_delta_zeta:
       ∀X1,X2. X0 ➡ X1 → X0 ➡ X2 →
       ∃∃X. X1 ➡ X & X2 ➡ X
    ) →
-   V0 ➡ V1 → T0 ➡ T1 → ⋆. ⓓV1 ⊢ T1 [O,1] ▶ TT1 →
+   V0 ➡ V1 → T0 ➡ T1 → ⋆. ⓓV1 ⊢ T1 ▶ [O,1] TT1 →
    T2 ➡ X2 → ⇧[O, 1] T2 ≡ T0 →
    ∃∃X. ⓓV1. TT1 ➡ X & X2 ➡ X.
 #X2 #V0 #V1 #T0 #T1 #TT1 #T2 #IH #_ #HT01 #HTT1 #HTX2 #HTT20

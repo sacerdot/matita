@@ -171,7 +171,7 @@ qed-.
 
 (* Basic_1: was: lift_gen_lref_false *)
 lemma lift_inv_lref2_be: ∀d,e,T1,i. ⇧[d,e] T1 ≡ #i →
-                         d ≤ i → i < d + e → False.
+                         d ≤ i → i < d + e → ⊥.
 #d #e #T1 #i #H elim (lift_inv_lref2 … H) -H *
 [ #H1 #_ #H2 #_ | #H2 #_ #_ #H1 ]
 lapply (le_to_lt_to_lt … H2 H1) -H2 -H1 #H
@@ -237,7 +237,7 @@ lemma lift_inv_flat2: ∀d,e,T1,I,V2,U2. ⇧[d,e] T1 ≡  ⓕ{I} V2. U2 →
                                T1 = ⓕ{I} V1. U1.
 /2 width=3/ qed-.
 
-lemma lift_inv_pair_xy_x: ∀d,e,I,V,T. ⇧[d, e] ②{I} V. T ≡ V → False.
+lemma lift_inv_pair_xy_x: ∀d,e,I,V,T. ⇧[d, e] ②{I} V. T ≡ V → ⊥.
 #d #e #J #V elim V -V
 [ * #i #T #H
   [ lapply (lift_inv_sort2 … H) -H #H destruct
@@ -251,7 +251,7 @@ lemma lift_inv_pair_xy_x: ∀d,e,I,V,T. ⇧[d, e] ②{I} V. T ≡ V → False.
 ]
 qed-.
 
-lemma lift_inv_pair_xy_y: ∀I,T,V,d,e. ⇧[d, e] ②{I} V. T ≡ T → False.
+lemma lift_inv_pair_xy_y: ∀I,T,V,d,e. ⇧[d, e] ②{I} V. T ≡ T → ⊥.
 #J #T elim T -T
 [ * #i #V #d #e #H
   [ lapply (lift_inv_sort2 … H) -H #H destruct

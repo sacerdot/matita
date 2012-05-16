@@ -13,8 +13,8 @@
 (**************************************************************************)
 
 include "basic_2/grammar/cl_weight.ma".
-include "basic_2/grammar/lsubs.ma".
 include "basic_2/substitution/lift.ma".
+include "basic_2/substitution/lsubs.ma".
 
 (* LOCAL ENVIRONMENT SLICING ************************************************)
 
@@ -150,10 +150,10 @@ lemma ldrop_O1: ∀L,i. i < |L| → ∃∃I,K,V. ⇩[0, i] L ≡ K.ⓑ{I}V.
 ]
 qed.   
 
-lemma ldrop_lsubs_ldrop1_abbr: ∀L1,L2,d,e. L1 [d, e] ≼ L2 →
+lemma ldrop_lsubs_ldrop1_abbr: ∀L1,L2,d,e. L1 ≼ [d, e] L2 →
                                ∀K1,V,i. ⇩[0, i] L1 ≡ K1. ⓓV →
                                d ≤ i → i < d + e →
-                               ∃∃K2. K1 [0, d + e - i - 1] ≼ K2 &
+                               ∃∃K2. K1 ≼ [0, d + e - i - 1] K2 &
                                      ⇩[0, i] L2 ≡ K2. ⓓV.
 #L1 #L2 #d #e #H elim H -L1 -L2 -d -e
 [ #d #e #K1 #V #i #H

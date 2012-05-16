@@ -18,9 +18,9 @@ include "basic_2/unfold/ltpss_ldrop.ma".
 
 (* Properties concerning partial substitution on terms **********************)
 
-lemma ltpss_tps_conf_ge: ∀L0,T2,U2,d2,e2. L0 ⊢ T2 [d2, e2] ▶ U2 →
-                         ∀L1,d1,e1. L0 [d1, e1] ▶* L1 → d1 + e1 ≤ d2 →
-                         L1 ⊢ T2 [d2, e2] ▶ U2.
+lemma ltpss_tps_conf_ge: ∀L0,T2,U2,d2,e2. L0 ⊢ T2 ▶ [d2, e2] U2 →
+                         ∀L1,d1,e1. L0 ▶* [d1, e1] L1 → d1 + e1 ≤ d2 →
+                         L1 ⊢ T2 ▶ [d2, e2] U2.
 #L0 #T2 #U2 #d2 #e2 #H elim H -L0 -T2 -U2 -d2 -e2
 [ //
 | #L0 #K0 #V0 #W0 #i2 #d2 #e2 #Hdi2 #Hide2 #HLK0 #HVW0 #L1 #d1 #e1 #HL01 #Hde1d2
@@ -32,9 +32,9 @@ lemma ltpss_tps_conf_ge: ∀L0,T2,U2,d2,e2. L0 ⊢ T2 [d2, e2] ▶ U2 →
 ]
 qed.
 
-lemma ltpss_tps_trans_ge: ∀L0,T2,U2,d2,e2. L0 ⊢ T2 [d2, e2] ▶ U2 →
-                          ∀L1,d1,e1. L1 [d1, e1] ▶* L0 → d1 + e1 ≤ d2 →
-                          L1 ⊢ T2 [d2, e2] ▶ U2.
+lemma ltpss_tps_trans_ge: ∀L0,T2,U2,d2,e2. L0 ⊢ T2 ▶ [d2, e2] U2 →
+                          ∀L1,d1,e1. L1 ▶* [d1, e1] L0 → d1 + e1 ≤ d2 →
+                          L1 ⊢ T2 ▶ [d2, e2] U2.
 #L0 #T2 #U2 #d2 #e2 #H elim H -L0 -T2 -U2 -d2 -e2
 [ //
 | #L0 #K0 #V0 #W0 #i2 #d2 #e2 #Hdi2 #Hide2 #HLK0 #HVW0 #L1 #d1 #e1 #HL10 #Hde1d2

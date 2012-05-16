@@ -27,7 +27,7 @@ lemma csn_lift: ∀L2,L1,T1,d,e. L1 ⊢ ⬇* T1 →
 @csn_intro #T #HLT2 #HT2
 elim (cpr_inv_lift … HL21 … HT12 … HLT2) -HLT2 #T0 #HT0 #HLT10
 @(IHT1 … HLT10) // -L1 -L2 #H destruct
->(lift_mono … HT0 … HT12) in HT2; -T0 /2 width=1/
+>(lift_mono … HT0 … HT12) in HT2; -T1 /2 width=1/
 qed.
 
 (* Basic_1: was: sn3_gen_lift *)
@@ -38,7 +38,7 @@ lemma csn_inv_lift: ∀L2,L1,T1,d,e. L1 ⊢ ⬇* T1 →
 elim (lift_total T d e) #T0 #HT0
 lapply (cpr_lift … HL12 … HT21 … HT0 HLT2) -HLT2 #HLT10
 @(IHT1 … HLT10) // -L1 -L2 #H destruct
->(lift_inj … HT0 … HT21) in HT2; -T0 /2 width=1/
+>(lift_inj … HT0 … HT21) in HT2; -T1 /2 width=1/
 qed.
 
 (* Advanced properties ******************************************************)
@@ -70,7 +70,7 @@ elim (eq_false_inv_tpair_sn … H2) -H2
 qed.
 
 lemma csn_appl_simple: ∀L,V. L ⊢ ⬇* V → ∀T1.
-                       (∀T2. L ⊢ T1 ➡ T2 → (T1 = T2 → False) → L ⊢ ⬇* ⓐV. T2) →
+                       (∀T2. L ⊢ T1 ➡ T2 → (T1 = T2 → ⊥) → L ⊢ ⬇* ⓐV. T2) →
                        𝐒[T1] → L ⊢ ⬇* ⓐV. T1.
 #L #V #H @(csn_ind … H) -V #V #_ #IHV #T1 #IHT1 #HT1
 @csn_intro #X #H1 #H2

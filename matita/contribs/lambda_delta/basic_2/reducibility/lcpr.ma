@@ -18,7 +18,7 @@ include "basic_2/reducibility/ltpr.ma".
 (* CONTEXT-SENSITIVE PARALLEL REDUCTION ON LOCAL ENVIRONMENTS *************)
 
 definition lcpr: relation lenv ≝
-   λL1,L2. ∃∃L. L1 ➡ L & L [0, |L|] ▶* L2
+   λL1,L2. ∃∃L. L1 ➡ L & L ▶* [0, |L|] L2
 .
 
 interpretation

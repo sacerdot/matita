@@ -20,10 +20,10 @@ include "basic_2/unfold/ltpss_tpss.ma".
 
 (* Advanced properties ******************************************************)
 
-lemma ltpss_tpss_conf: ∀L0,T2,U2,d2,e2. L0 ⊢ T2 [d2, e2] ▶* U2 →
-                       ∀L1,d1,e1. L0 [d1, e1] ▶* L1 →
-                       ∃∃T. L1 ⊢ T2 [d2, e2] ▶* T &
-                            L1 ⊢ U2 [d1, e1] ▶* T.
+lemma ltpss_tpss_conf: ∀L0,T2,U2,d2,e2. L0 ⊢ T2 ▶* [d2, e2] U2 →
+                       ∀L1,d1,e1. L0 ▶* [d1, e1] L1 →
+                       ∃∃T. L1 ⊢ T2 ▶* [d2, e2] T &
+                            L1 ⊢ U2 ▶* [d1, e1] T.
 #L0 #T2 #U2 #d2 #e2 #H #L1 #d1 #e1 #HL01 @(tpss_ind … H) -U2 /2 width=3/
 #U #U2 #_ #HU2 * #X2 #HTX2 #HUX2
 elim (ltpss_tps_conf … HU2 … HL01) -L0 #X1 #HUX1 #HU2X1
@@ -32,8 +32,8 @@ lapply (tpss_trans_eq … HU2X1 … HX1) -X1 /3 width=3/
 qed.
 
 lemma ltpss_tpss_trans_down: ∀L0,L1,T2,U2,d1,e1,d2,e2. d2 + e2 ≤ d1 →
-                             L1 [d1, e1] ▶* L0 → L0 ⊢ T2 [d2, e2] ▶* U2 →
-                             ∃∃T. L1 ⊢ T2 [d2, e2] ▶* T & L0 ⊢ T [d1, e1] ▶* U2.
+                             L1 ▶* [d1, e1] L0 → L0 ⊢ T2 ▶* [d2, e2] U2 →
+                             ∃∃T. L1 ⊢ T2 ▶* [d2, e2] T & L0 ⊢ T ▶* [d1, e1] U2.
 #L0 #L1 #T2 #U2 #d1 #e1 #d2 #e2 #Hde2d1 #HL10 #H @(tpss_ind … H) -U2
 [ /2 width=3/
 | #U #U2 #_ #HU2 * #T #HT2 #HTU
@@ -44,8 +44,8 @@ lemma ltpss_tpss_trans_down: ∀L0,L1,T2,U2,d1,e1,d2,e2. d2 + e2 ≤ d1 →
 qed.
 
 fact ltpss_tpss_trans_eq_aux: ∀Y1,X2,L1,T2,U2,d,e.
-                              L1 ⊢ T2 [d, e] ▶* U2 → ∀L0. L0 [d, e] ▶* L1 →
-                              Y1 = L1 → X2 = T2 → L0 ⊢ T2 [d, e] ▶* U2.
+                              L1 ⊢ T2 ▶* [d, e] U2 → ∀L0. L0 ▶* [d, e] L1 →
+                              Y1 = L1 → X2 = T2 → L0 ⊢ T2 ▶* [d, e] U2.
 #Y1 #X2 @(cw_wf_ind … Y1 X2) -Y1 -X2 #Y1 #X2 #IH
 #L1 #T2 #U2 #d #e #H @(tpss_ind_alt … H) -L1 -T2 -U2 -d -e
 [ //
@@ -69,19 +69,19 @@ fact ltpss_tpss_trans_eq_aux: ∀Y1,X2,L1,T2,U2,d,e.
 ]
 qed.
 
-lemma ltpss_tpss_trans_eq: ∀L1,T2,U2,d,e. L1 ⊢ T2 [d, e] ▶* U2 →
-                           ∀L0. L0 [d, e] ▶* L1 → L0 ⊢ T2 [d, e] ▶* U2.
+lemma ltpss_tpss_trans_eq: ∀L1,T2,U2,d,e. L1 ⊢ T2 ▶* [d, e] U2 →
+                           ∀L0. L0 ▶* [d, e] L1 → L0 ⊢ T2 ▶* [d, e] U2.
 /2 width=5/ qed.
 
-lemma ltpss_tps_trans_eq: ∀L0,L1,T2,U2,d,e. L0 [d, e] ▶* L1 →
-                          L1 ⊢ T2 [d, e] ▶ U2 → L0 ⊢ T2 [d, e] ▶* U2.
+lemma ltpss_tps_trans_eq: ∀L0,L1,T2,U2,d,e. L0 ▶* [d, e] L1 →
+                          L1 ⊢ T2 ▶ [d, e] U2 → L0 ⊢ T2 ▶* [d, e] U2.
 /3 width=3/ qed.
 
 (* Main properties **********************************************************)
 
-fact ltpss_conf_aux: ∀K,K1,L1,d1,e1. K1 [d1, e1] ▶* L1 →
-                     ∀K2,L2,d2,e2. K2 [d2, e2] ▶* L2 → K1 = K → K2 = K →
-                     ∃∃L. L1 [d2, e2] ▶* L & L2 [d1, e1] ▶* L.
+fact ltpss_conf_aux: ∀K,K1,L1,d1,e1. K1 ▶* [d1, e1] L1 →
+                     ∀K2,L2,d2,e2. K2 ▶* [d2, e2] L2 → K1 = K → K2 = K →
+                     ∃∃L. L1 ▶* [d2, e2] L & L2 ▶* [d1, e1] L.
 #K @(lw_wf_ind … K) -K #K #IH #K1 #L1 #d1 #e1 * -K1 -L1 -d1 -e1
 [ -IH /2 width=3/
 | -IH #K1 #I1 #V1 #K2 #L2 #d2 #e2 * -K2 -L2 -d2 -e2
@@ -129,7 +129,7 @@ fact ltpss_conf_aux: ∀K,K1,L1,d1,e1. K1 [d1, e1] ▶* L1 →
 ]
 qed.
 
-lemma ltpss_conf: ∀L0,L1,d1,e1. L0 [d1, e1] ▶* L1 →
-                  ∀L2,d2,e2. L0 [d2, e2] ▶* L2 →
-                  ∃∃L. L1 [d2, e2] ▶* L & L2 [d1, e1] ▶* L.
+lemma ltpss_conf: ∀L0,L1,d1,e1. L0 ▶* [d1, e1] L1 →
+                  ∀L2,d2,e2. L0 ▶* [d2, e2] L2 →
+                  ∃∃L. L1 ▶* [d2, e2] L & L2 ▶* [d1, e1] L.
 /2 width=7/ qed.

@@ -18,7 +18,7 @@ include "ground_2/notation.ma".
 
 (* PROPERTIES OF RELATIONS **************************************************)
 
-definition Decidable: Prop → Prop ≝ λR. R ∨ (R → False).
+definition Decidable: Prop → Prop ≝ λR. R ∨ (R → ⊥).
 
 definition confluent2: ∀A. ∀R1,R2: relation A. Prop ≝ λA,R1,R2.
                        ∀a0,a1. R1 a0 a1 → ∀a2. R2 a0 a2 →
@@ -99,10 +99,10 @@ lemma TC_transitive2: ∀A,R1,R2.
 qed.
 
 definition NF: ∀A. relation A → relation A → predicate A ≝
-   λA,R,S,a1. ∀a2. R a1 a2 → S a1 a2.
+   λA,R,S,a1. ∀a2. R a1 a2 → S a2 a1.
 
 inductive SN (A) (R,S:relation A): predicate A ≝
-| SN_intro: ∀a1. (∀a2. R a1 a2 → (S a1 a2 → False) → SN A R S a2) → SN A R S a1
+| SN_intro: ∀a1. (∀a2. R a1 a2 → (S a2 a1 → ⊥) → SN A R S a2) → SN A R S a1
 .
 
 lemma NF_to_SN: ∀A,R,S,a. NF A R S a → SN A R S a.

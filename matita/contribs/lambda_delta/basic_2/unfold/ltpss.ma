@@ -21,10 +21,10 @@ inductive ltpss: nat → nat → relation lenv ≝
 | ltpss_atom : ∀d,e. ltpss d e (⋆) (⋆)
 | ltpss_pair : ∀L,I,V. ltpss 0 0 (L. ⓑ{I} V) (L. ⓑ{I} V)
 | ltpss_tpss2: ∀L1,L2,I,V1,V2,e.
-               ltpss 0 e L1 L2 → L2 ⊢ V1 [0, e] ▶* V2 →
+               ltpss 0 e L1 L2 → L2 ⊢ V1 ▶* [0, e] V2 →
                ltpss 0 (e + 1) (L1. ⓑ{I} V1) (L2. ⓑ{I} V2)
 | ltpss_tpss1: ∀L1,L2,I,V1,V2,d,e.
-               ltpss d e L1 L2 → L2 ⊢ V1 [d, e] ▶* V2 →
+               ltpss d e L1 L2 → L2 ⊢ V1 ▶* [d, e] V2 →
                ltpss (d + 1) e (L1. ⓑ{I} V1) (L2. ⓑ{I} V2)
 .
 
@@ -34,47 +34,47 @@ interpretation "parallel unfold (local environment)"
 (* Basic properties *********************************************************)
 
 lemma ltpss_tps2: ∀L1,L2,I,V1,V2,e.
-                  L1 [0, e] ▶* L2 → L2 ⊢ V1 [0, e] ▶ V2 →
-                  L1. ⓑ{I} V1 [0, e + 1] ▶* L2. ⓑ{I} V2.
+                  L1 ▶* [0, e] L2 → L2 ⊢ V1 ▶ [0, e] V2 →
+                  L1. ⓑ{I} V1 ▶* [0, e + 1] L2. ⓑ{I} V2.
 /3 width=1/ qed.
 
 lemma ltpss_tps1: ∀L1,L2,I,V1,V2,d,e.
-                  L1 [d, e] ▶* L2 → L2 ⊢ V1 [d, e] ▶ V2 →
-                  L1. ⓑ{I} V1 [d + 1, e] ▶* L2. ⓑ{I} V2.
+                  L1 ▶* [d, e] L2 → L2 ⊢ V1 ▶ [d, e] V2 →
+                  L1. ⓑ{I} V1 ▶* [d + 1, e] L2. ⓑ{I} V2.
 /3 width=1/ qed.
 
 lemma ltpss_tpss2_lt: ∀L1,L2,I,V1,V2,e.
-                      L1 [0, e - 1] ▶* L2 → L2 ⊢ V1 [0, e - 1] ▶* V2 →
-                      0 < e → L1. ⓑ{I} V1 [0, e] ▶* L2. ⓑ{I} V2.
+                      L1 ▶* [0, e - 1] L2 → L2 ⊢ V1 ▶* [0, e - 1] V2 →
+                      0 < e → L1. ⓑ{I} V1 ▶* [0, e] L2. ⓑ{I} V2.
 #L1 #L2 #I #V1 #V2 #e #HL12 #HV12 #He
 >(plus_minus_m_m e 1) /2 width=1/
 qed.
 
 lemma ltpss_tpss1_lt: ∀L1,L2,I,V1,V2,d,e.
-                      L1 [d - 1, e] ▶* L2 → L2 ⊢ V1 [d - 1, e] ▶* V2 →
-                      0 < d → L1. ⓑ{I} V1 [d, e] ▶* L2. ⓑ{I} V2.
+                      L1 ▶* [d - 1, e] L2 → L2 ⊢ V1 ▶* [d - 1, e] V2 →
+                      0 < d → L1. ⓑ{I} V1 ▶* [d, e] L2. ⓑ{I} V2.
 #L1 #L2 #I #V1 #V2 #d #e #HL12 #HV12 #Hd
 >(plus_minus_m_m d 1) /2 width=1/
 qed.
 
 lemma ltpss_tps2_lt: ∀L1,L2,I,V1,V2,e.
-                     L1 [0, e - 1] ▶* L2 → L2 ⊢ V1 [0, e - 1] ▶ V2 →
-                     0 < e → L1. ⓑ{I} V1 [0, e] ▶* L2. ⓑ{I} V2.
+                     L1 ▶* [0, e - 1] L2 → L2 ⊢ V1 ▶ [0, e - 1] V2 →
+                     0 < e → L1. ⓑ{I} V1 ▶* [0, e] L2. ⓑ{I} V2.
 /3 width=1/ qed.
 
 lemma ltpss_tps1_lt: ∀L1,L2,I,V1,V2,d,e.
-                     L1 [d - 1, e] ▶* L2 → L2 ⊢ V1 [d - 1, e] ▶ V2 →
-                     0 < d → L1. ⓑ{I} V1 [d, e] ▶* L2. ⓑ{I} V2.
+                     L1 ▶* [d - 1, e] L2 → L2 ⊢ V1 ▶ [d - 1, e] V2 →
+                     0 < d → L1. ⓑ{I} V1 ▶* [d, e] L2. ⓑ{I} V2.
 /3 width=1/ qed.
 
 (* Basic_1: was by definition: csubst1_refl *)
-lemma ltpss_refl: ∀L,d,e. L [d, e] ▶* L.
+lemma ltpss_refl: ∀L,d,e. L ▶* [d, e] L.
 #L elim L -L //
 #L #I #V #IHL * /2 width=1/ * /2 width=1/
 qed.
 
-lemma ltpss_weak: ∀L1,L2,d1,e1. L1 [d1, e1] ▶* L2 →
-                  ∀d2,e2. d2 ≤ d1 → d1 + e1 ≤ d2 + e2 → L1 [d2, e2] ▶* L2.
+lemma ltpss_weak: ∀L1,L2,d1,e1. L1 ▶* [d1, e1] L2 →
+                  ∀d2,e2. d2 ≤ d1 → d1 + e1 ≤ d2 + e2 → L1 ▶* [d2, e2] L2.
 #L1 #L2 #d1 #e1 #H elim H -L1 -L2 -d1 -e1 //
 [ #L1 #L2 #I #V1 #V2 #e1 #_ #HV12 #IHL12 #d2 #e2 #Hd2 #Hde2
   lapply (le_n_O_to_eq … Hd2) #H destruct normalize in Hde2;
@@ -92,21 +92,21 @@ lemma ltpss_weak: ∀L1,L2,d1,e1. L1 [d1, e1] ▶* L2 →
 ]
 qed.  
 
-lemma ltpss_weak_all: ∀L1,L2,d,e. L1 [d, e] ▶* L2 → L1 [0, |L2|] ▶* L2.
+lemma ltpss_weak_all: ∀L1,L2,d,e. L1 ▶* [d, e] L2 → L1 ▶* [0, |L2|] L2.
 #L1 #L2 #d #e #H elim H -L1 -L2 -d -e
 // /3 width=2/ /3 width=3/
 qed.
 
 (* Basic forward lemmas *****************************************************)
 
-lemma ltpss_fwd_length: ∀L1,L2,d,e. L1 [d, e] ▶* L2 → |L1| = |L2|.
+lemma ltpss_fwd_length: ∀L1,L2,d,e. L1 ▶* [d, e] L2 → |L1| = |L2|.
 #L1 #L2 #d #e #H elim H -L1 -L2 -d -e
 normalize //
 qed-.
 
 (* Basic inversion lemmas ***************************************************)
 
-fact ltpss_inv_refl_O2_aux: ∀d,e,L1,L2. L1 [d, e] ▶* L2 → e = 0 → L1 = L2.
+fact ltpss_inv_refl_O2_aux: ∀d,e,L1,L2. L1 ▶* [d, e] L2 → e = 0 → L1 = L2.
 #d #e #L1 #L2 #H elim H -d -e -L1 -L2 //
 [ #L1 #L2 #I #V1 #V2 #e #_ #_ #_ >commutative_plus normalize #H destruct
 | #L1 #L2 #I #V1 #V2 #d #e #_ #HV12 #IHL12 #He destruct
@@ -114,11 +114,11 @@ fact ltpss_inv_refl_O2_aux: ∀d,e,L1,L2. L1 [d, e] ▶* L2 → e = 0 → L1 = L
 ]
 qed.
 
-lemma ltpss_inv_refl_O2: ∀d,L1,L2. L1 [d, 0] ▶* L2 → L1 = L2.
+lemma ltpss_inv_refl_O2: ∀d,L1,L2. L1 ▶* [d, 0] L2 → L1 = L2.
 /2 width=4/ qed-.
 
 fact ltpss_inv_atom1_aux: ∀d,e,L1,L2.
-                          L1 [d, e] ▶* L2 → L1 = ⋆ → L2 = ⋆.
+                          L1 ▶* [d, e] L2 → L1 = ⋆ → L2 = ⋆.
 #d #e #L1 #L2 * -d -e -L1 -L2
 [ //
 | #L #I #V #H destruct
@@ -127,13 +127,13 @@ fact ltpss_inv_atom1_aux: ∀d,e,L1,L2.
 ]
 qed.
 
-lemma ltpss_inv_atom1: ∀d,e,L2. ⋆ [d, e] ▶* L2 → L2 = ⋆.
+lemma ltpss_inv_atom1: ∀d,e,L2. ⋆ ▶* [d, e] L2 → L2 = ⋆.
 /2 width=5/ qed-.
 
-fact ltpss_inv_tpss21_aux: ∀d,e,L1,L2. L1 [d, e] ▶* L2 → d = 0 → 0 < e →
+fact ltpss_inv_tpss21_aux: ∀d,e,L1,L2. L1 ▶* [d, e] L2 → d = 0 → 0 < e →
                            ∀K1,I,V1. L1 = K1. ⓑ{I} V1 →
-                           ∃∃K2,V2. K1 [0, e - 1] ▶* K2 &
-                                    K2 ⊢ V1 [0, e - 1] ▶* V2 &
+                           ∃∃K2,V2. K1 ▶* [0, e - 1] K2 &
+                                    K2 ⊢ V1 ▶* [0, e - 1] V2 &
                                     L2 = K2. ⓑ{I} V2.
 #d #e #L1 #L2 * -d -e -L1 -L2
 [ #d #e #_ #_ #K1 #I #V1 #H destruct
@@ -143,15 +143,16 @@ fact ltpss_inv_tpss21_aux: ∀d,e,L1,L2. L1 [d, e] ▶* L2 → d = 0 → 0 < e �
 ]
 qed.
 
-lemma ltpss_inv_tpss21: ∀e,K1,I,V1,L2. K1. ⓑ{I} V1 [0, e] ▶* L2 → 0 < e →
-                        ∃∃K2,V2. K1 [0, e - 1] ▶* K2 & K2 ⊢ V1 [0, e - 1] ▶* V2 &
+lemma ltpss_inv_tpss21: ∀e,K1,I,V1,L2. K1. ⓑ{I} V1 ▶* [0, e] L2 → 0 < e →
+                        ∃∃K2,V2. K1 ▶* [0, e - 1] K2 &
+                                 K2 ⊢ V1 ▶* [0, e - 1] V2 &
                                  L2 = K2. ⓑ{I} V2.
 /2 width=5/ qed-.
 
-fact ltpss_inv_tpss11_aux: ∀d,e,L1,L2. L1 [d, e] ▶* L2 → 0 < d →
+fact ltpss_inv_tpss11_aux: ∀d,e,L1,L2. L1 ▶* [d, e] L2 → 0 < d →
                            ∀I,K1,V1. L1 = K1. ⓑ{I} V1 →
-                           ∃∃K2,V2. K1 [d - 1, e] ▶* K2 &
-                                    K2 ⊢ V1 [d - 1, e] ▶* V2 &
+                           ∃∃K2,V2. K1 ▶* [d - 1, e] K2 &
+                                    K2 ⊢ V1 ▶* [d - 1, e] V2 &
                                     L2 = K2. ⓑ{I} V2.
 #d #e #L1 #L2 * -d -e -L1 -L2
 [ #d #e #_ #I #K1 #V1 #H destruct
@@ -161,14 +162,14 @@ fact ltpss_inv_tpss11_aux: ∀d,e,L1,L2. L1 [d, e] ▶* L2 → 0 < d →
 ]
 qed.
 
-lemma ltpss_inv_tpss11: ∀d,e,I,K1,V1,L2. K1. ⓑ{I} V1 [d, e] ▶* L2 → 0 < d →
-                        ∃∃K2,V2. K1 [d - 1, e] ▶* K2 &
-                                 K2 ⊢ V1 [d - 1, e] ▶* V2 &
+lemma ltpss_inv_tpss11: ∀d,e,I,K1,V1,L2. K1. ⓑ{I} V1 ▶* [d, e] L2 → 0 < d →
+                        ∃∃K2,V2. K1 ▶* [d - 1, e] K2 &
+                                 K2 ⊢ V1 ▶* [d - 1, e] V2 &
                                  L2 = K2. ⓑ{I} V2.
 /2 width=3/ qed-.
 
 fact ltpss_inv_atom2_aux: ∀d,e,L1,L2.
-                          L1 [d, e] ▶* L2 → L2 = ⋆ → L1 = ⋆.
+                          L1 ▶* [d, e] L2 → L2 = ⋆ → L1 = ⋆.
 #d #e #L1 #L2 * -d -e -L1 -L2
 [ //
 | #L #I #V #H destruct
@@ -177,13 +178,13 @@ fact ltpss_inv_atom2_aux: ∀d,e,L1,L2.
 ]
 qed.
 
-lemma ltpss_inv_atom2: ∀d,e,L1. L1 [d, e] ▶* ⋆ → L1 = ⋆.
+lemma ltpss_inv_atom2: ∀d,e,L1. L1 ▶* [d, e] ⋆ → L1 = ⋆.
 /2 width=5/ qed-.
 
-fact ltpss_inv_tpss22_aux: ∀d,e,L1,L2. L1 [d, e] ▶* L2 → d = 0 → 0 < e →
+fact ltpss_inv_tpss22_aux: ∀d,e,L1,L2. L1 ▶* [d, e] L2 → d = 0 → 0 < e →
                            ∀K2,I,V2. L2 = K2. ⓑ{I} V2 →
-                           ∃∃K1,V1. K1 [0, e - 1] ▶* K2 &
-                                    K2 ⊢ V1 [0, e - 1] ▶* V2 &
+                           ∃∃K1,V1. K1 ▶* [0, e - 1] K2 &
+                                    K2 ⊢ V1 ▶* [0, e - 1] V2 &
                                     L1 = K1. ⓑ{I} V1.
 #d #e #L1 #L2 * -d -e -L1 -L2
 [ #d #e #_ #_ #K1 #I #V1 #H destruct
@@ -193,16 +194,17 @@ fact ltpss_inv_tpss22_aux: ∀d,e,L1,L2. L1 [d, e] ▶* L2 → d = 0 → 0 < e �
 ]
 qed.
 
-lemma ltpss_inv_tpss22: ∀e,L1,K2,I,V2. L1 [0, e] ▶* K2. ⓑ{I} V2 → 0 < e →
-                        ∃∃K1,V1. K1 [0, e - 1] ▶* K2 & K2 ⊢ V1 [0, e - 1] ▶* V2 &
+lemma ltpss_inv_tpss22: ∀e,L1,K2,I,V2. L1 ▶* [0, e] K2. ⓑ{I} V2 → 0 < e →
+                        ∃∃K1,V1. K1 ▶* [0, e - 1] K2 &
+                                 K2 ⊢ V1 ▶* [0, e - 1] V2 &
                                  L1 = K1. ⓑ{I} V1.
 /2 width=5/ qed-.
 
-fact ltpss_inv_tpss12_aux: ∀d,e,L1,L2. L1 [d, e] ▶* L2 → 0 < d →
+fact ltpss_inv_tpss12_aux: ∀d,e,L1,L2. L1 ▶* [d, e] L2 → 0 < d →
                            ∀I,K2,V2. L2 = K2. ⓑ{I} V2 →
-                           ∃∃K1,V1. K1 [d - 1, e] ▶* K2 &
-                                    K2 ⊢ V1 [d - 1, e] ▶* V2 &
-                                  L1 = K1. ⓑ{I} V1.
+                           ∃∃K1,V1. K1 ▶* [d - 1, e] K2 &
+                                    K2 ⊢ V1 ▶* [d - 1, e] V2 &
+                                    L1 = K1. ⓑ{I} V1.
 #d #e #L1 #L2 * -d -e -L1 -L2
 [ #d #e #_ #I #K2 #V2 #H destruct
 | #L #I #V #H elim (lt_refl_false … H)
@@ -211,9 +213,9 @@ fact ltpss_inv_tpss12_aux: ∀d,e,L1,L2. L1 [d, e] ▶* L2 → 0 < d →
 ]
 qed.
 
-lemma ltpss_inv_tpss12: ∀L1,K2,I,V2,d,e. L1 [d, e] ▶* K2. ⓑ{I} V2 → 0 < d →
-                        ∃∃K1,V1. K1 [d - 1, e] ▶* K2 &
-                                 K2 ⊢ V1 [d - 1, e] ▶* V2 &
+lemma ltpss_inv_tpss12: ∀L1,K2,I,V2,d,e. L1 ▶* [d, e] K2. ⓑ{I} V2 → 0 < d →
+                        ∃∃K1,V1. K1 ▶* [d - 1, e] K2 &
+                                 K2 ⊢ V1 ▶* [d - 1, e] V2 &
                                  L1 = K1. ⓑ{I} V1.
 /2 width=3/ qed-.
 

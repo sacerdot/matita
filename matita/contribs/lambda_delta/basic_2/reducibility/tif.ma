@@ -16,14 +16,14 @@ include "basic_2/reducibility/trf.ma".
 
 (* CONTEXT-FREE IRREDUCIBLE TERMS *******************************************)
 
-definition tif: predicate term ≝ λT. 𝐑[T] → False.
+definition tif: predicate term ≝ λT. 𝐑[T] → ⊥.
 
 interpretation "context-free irreducibility (term)"
    'NotReducible T = (tif T).
 
 (* Basic inversion lemmas ***************************************************)
 
-lemma tif_inv_abbr: ∀V,T. 𝐈[ⓓV.T] → False.
+lemma tif_inv_abbr: ∀V,T. 𝐈[ⓓV.T] → ⊥.
 /2 width=1/ qed-.
 
 lemma tif_inv_abst: ∀V,T. 𝐈[ⓛV.T] → 𝐈[V] ∧ 𝐈[T].
@@ -35,7 +35,7 @@ generalize in match HVT; -HVT elim T -T //
 * // * #U #T #_ #_ #H elim (H ?) -H /2 width=1/
 qed-.
 
-lemma tif_inv_cast: ∀V,T. 𝐈[ⓣV.T] → False.
+lemma tif_inv_cast: ∀V,T. 𝐈[ⓣV.T] → ⊥.
 /2 width=1/ qed-.
 
 (* Basic properties *********************************************************)

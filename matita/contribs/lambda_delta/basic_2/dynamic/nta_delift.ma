@@ -12,21 +12,23 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/unfold/delift_lift.ma".
-include "basic_2/unfold/thin_ldrop.ma".
+include "basic_2/substitution/lsubs_sfr.ma".
+include "basic_2/unfold/delift.ma".
+include "basic_2/unfold/thin.ma".
+(*
 include "basic_2/equivalence/cpcs_delift.ma".
-include "basic_2/dynamic/nta_nta.ma".
+*)
+include "basic_2/dynamic/nta.ma".
 
 (* NATIVE TYPE ASSIGNMENT ON TERMS ******************************************)
 
 (* Properties on reverse basic term relocation ******************************)
 
 (* Basic_1: was only: ty3_gen_cabbr *)
-axiom thin_nta_delift_conf: ∀h,L1,T1,X1. ⦃h, L1⦄ ⊢ T1 : X1 →
-                            ∀L2,d,e. L1 [d, e] ≡ L2 →
-                            ∀T2. L1 ⊢ T1 [d, e] ≡ T2 →
-                            ∃∃U1,U2. ⦃h, L2⦄ ⊢ T2 : U2 & L1 ⊢ U1 [d, e] ≡ U2 &
-                                     L1 ⊢ U1 ⬌* X1.
+axiom thin_nta_delift_conf: ∀h,L1,T1,U1. ⦃h, L1⦄ ⊢ T1 : U1 →
+                            ∀L2,d,e. ≼ [d, e] L1 → L1 [d, e] ≡ L2 →
+                            ∃∃T2,U2. ⦃h, L2⦄ ⊢ T2 : U2 &
+                                     L1 ⊢ T1 [d, e] ≡ T2 & L1 ⊢ U1 [d, e] ≡ U2.
 (*
 #h #L1 #T1 #U1 #H @(nta_ind_alt … H) -L1 -T1 -U1
 [ #L1 #k #L2 #d #e #HL12 #X #H
@@ -51,13 +53,19 @@ axiom thin_nta_delift_conf: ∀h,L1,T1,X1. ⦃h, L1⦄ ⊢ T1 : X1 →
 |
 |
 |
-| #L1 #V1 #W1 #T1 #U1 #_ #_ #IHTU1 #IHVW1 #L2 #d #e #HL12 #X #H
+| #L1 #V1 #Y1 #T1 #X1 #_ #_ #IHTX1 #IHXY1 #L2 #d #e #HL12 #X #H
   elim (delift_inv_flat1 … H) -H #V2 #T2 #HV12 #HT12 #H destruct
-(*  
-  elim (IHTU1 … HL12 … HT12) -T1 #U2 #HTU2 #HU12
-  elim (IHVW1 … HL12 (ⓐV2.U2) ?) -IHVW1 -HL12
+  elim (IHTX1 … HL12 … HT12) -T1 #U1 #U2 #HTU2 #HU12 #HUX1
+(*
+  elim (IHXY1 … HL12 (ⓐV2.U2) ?) -IHXY1 -HL12
+*)  
+  @(ex3_2_intro … (ⓐV1.U1) (ⓐV2.U2)) 
+  [2: /2 width=1/ |3: /2 width=1/ ]  -HV12 -HU12 -HUX1
+  @(nta_pure … HTU2) -HTU2
+  
   [ /3 width=5/ | /2 width=1/ ]
 *)
+(*
 | #L1 #T1 #X1 #Y1 #_ #_ #IHTX1 #IHXY1 #L2 #d #e #HL12 #X #H
   elim (delift_inv_flat1 … H) -H #X2 #T2 #HX12 #HT12 #H destruct
   elim (IHTX1 … HL12 … HT12) -T1 #U1 #U2 #HTU2 #HU12 #HUX1
@@ -68,17 +76,13 @@ axiom thin_nta_delift_conf: ∀h,L1,T1,X1. ⦃h, L1⦄ ⊢ T1 : X1 →
   lapply (cpcs_trans … HUX211 … HX112) -X11 /2 width=5/
 ]
 *)
-lemma nta_inv_lift1_delift: ∀h,L1,T1,X. ⦃h, L1⦄ ⊢ T1 : X →
-                            ∀L2,d,e. ⇩[d, e] L1 ≡ L2 → ∀T2. ⇧[d, e] T2 ≡ T1 →
-                            ∃∃U1,U2. ⦃h, L2⦄ ⊢ T2 : U2 & L1 ⊢ U1 [d, e] ≡ U2 &
-                                     L1 ⊢ U1 ⬌* X.
-/3 width=3/ qed-.
-
-lemma nta_inv_lift1: ∀h,L1,T1,X. ⦃h, L1⦄ ⊢ T1 : X →
+axiom nta_inv_lift1: ∀h,L1,T1,X. ⦃h, L1⦄ ⊢ T1 : X →
                      ∀L2,d,e. ⇩[d, e] L1 ≡ L2 → ∀T2. ⇧[d, e] T2 ≡ T1 →
                      ∃∃U1,U2. ⦃h, L2⦄ ⊢ T2 : U2 & ⇧[d, e] U2 ≡ U1 &
                               L1 ⊢ U1 ⬌* X.
+(*
 #h #L1 #T1 #X #H #L2 #d #e #HL12 #T2 #HT21
 elim (nta_inv_lift1_delift … H … HL12 … HT21) -T1 -HL12 #U1 #U2 #HTU2 * #U #HU1 #HU2 #HU1X
 lapply (cpcs_cpr_conf … U … HU1X) -HU1X /2 width=3/ -U1 /2 width=5/
 qed-.
+*)

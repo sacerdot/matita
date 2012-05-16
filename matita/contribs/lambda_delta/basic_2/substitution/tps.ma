@@ -34,8 +34,8 @@ interpretation "parallel substritution (term)"
 
 (* Basic properties *********************************************************)
 
-lemma tps_lsubs_conf: ∀L1,T1,T2,d,e. L1 ⊢ T1 [d, e] ▶ T2 →
-                      ∀L2. L1 [d, e] ≼ L2 → L2 ⊢ T1 [d, e] ▶ T2.
+lemma tps_lsubs_conf: ∀L1,T1,T2,d,e. L1 ⊢ T1 ▶ [d, e] T2 →
+                      ∀L2. L1 ≼ [d, e] L2 → L2 ⊢ T1 ▶ [d, e] T2.
 #L1 #T1 #T2 #d #e #H elim H -L1 -T1 -T2 -d -e
 [ //
 | #L1 #K1 #V #W #i #d #e #Hdi #Hide #HLK1 #HVW #L2 #HL12
@@ -45,14 +45,14 @@ lemma tps_lsubs_conf: ∀L1,T1,T2,d,e. L1 ⊢ T1 [d, e] ▶ T2 →
 ]
 qed.
 
-lemma tps_refl: ∀T,L,d,e. L ⊢ T [d, e] ▶ T.
+lemma tps_refl: ∀T,L,d,e. L ⊢ T ▶ [d, e] T.
 #T elim T -T //
 #I elim I -I /2 width=1/
 qed.
 
 (* Basic_1: was: subst1_ex *)
 lemma tps_full: ∀K,V,T1,L,d. ⇩[0, d] L ≡ (K. ⓓV) →
-                ∃∃T2,T. L ⊢ T1 [d, 1] ▶ T2 & ⇧[d, 1] T ≡ T2.
+                ∃∃T2,T. L ⊢ T1 ▶ [d, 1] T2 & ⇧[d, 1] T ≡ T2.
 #K #V #T1 elim T1 -T1
 [ * #i #L #d #HLK /2 width=4/
   elim (lt_or_eq_or_gt i d) #Hid /3 width=4/
@@ -67,9 +67,9 @@ lemma tps_full: ∀K,V,T1,L,d. ⇩[0, d] L ≡ (K. ⓓV) →
 ]
 qed.
 
-lemma tps_weak: ∀L,T1,T2,d1,e1. L ⊢ T1 [d1, e1] ▶ T2 →
+lemma tps_weak: ∀L,T1,T2,d1,e1. L ⊢ T1 ▶ [d1, e1] T2 →
                 ∀d2,e2. d2 ≤ d1 → d1 + e1 ≤ d2 + e2 →
-                L ⊢ T1 [d2, e2] ▶ T2.
+                L ⊢ T1 ▶ [d2, e2] T2.
 #L #T1 #T2 #d1 #e1 #H elim H -L -T1 -T2 -d1 -e1
 [ //
 | #L #K #V #W #i #d1 #e1 #Hid1 #Hide1 #HLK #HVW #d2 #e2 #Hd12 #Hde12
@@ -81,7 +81,7 @@ lemma tps_weak: ∀L,T1,T2,d1,e1. L ⊢ T1 [d1, e1] ▶ T2 →
 qed.
 
 lemma tps_weak_top: ∀L,T1,T2,d,e.
-                    L ⊢ T1 [d, e] ▶ T2 → L ⊢ T1 [d, |L| - d] ▶ T2.
+                    L ⊢ T1 ▶ [d, e] T2 → L ⊢ T1 ▶ [d, |L| - d] T2.
 #L #T1 #T2 #d #e #H elim H -L -T1 -T2 -d -e
 [ //
 | #L #K #V #W #i #d #e #Hdi #_ #HLK #HVW
@@ -93,14 +93,14 @@ lemma tps_weak_top: ∀L,T1,T2,d,e.
 qed.
 
 lemma tps_weak_all: ∀L,T1,T2,d,e.
-                    L ⊢ T1 [d, e] ▶ T2 → L ⊢ T1 [0, |L|] ▶ T2.
+                    L ⊢ T1 ▶ [d, e] T2 → L ⊢ T1 ▶ [0, |L|] T2.
 #L #T1 #T2 #d #e #HT12
 lapply (tps_weak … HT12 0 (d + e) ? ?) -HT12 // #HT12
 lapply (tps_weak_top … HT12) //
 qed.
 
-lemma tps_split_up: ∀L,T1,T2,d,e. L ⊢ T1 [d, e] ▶ T2 → ∀i. d ≤ i → i ≤ d + e →
-                    ∃∃T. L ⊢ T1 [d, i - d] ▶ T & L ⊢ T [i, d + e - i] ▶ T2.
+lemma tps_split_up: ∀L,T1,T2,d,e. L ⊢ T1 ▶ [d, e] T2 → ∀i. d ≤ i → i ≤ d + e →
+                    ∃∃T. L ⊢ T1 ▶ [d, i - d] T & L ⊢ T ▶ [i, d + e - i] T2.
 #L #T1 #T2 #d #e #H elim H -L -T1 -T2 -d -e
 [ /2 width=3/
 | #L #K #V #W #i #d #e #Hdi #Hide #HLK #HVW #j #Hdj #Hjde
@@ -124,7 +124,7 @@ qed.
 
 (* Basic inversion lemmas ***************************************************)
 
-fact tps_inv_atom1_aux: ∀L,T1,T2,d,e. L ⊢ T1 [d, e] ▶ T2 → ∀I. T1 = ⓪{I} →
+fact tps_inv_atom1_aux: ∀L,T1,T2,d,e. L ⊢ T1 ▶ [d, e] T2 → ∀I. T1 = ⓪{I} →
                         T2 = ⓪{I} ∨
                         ∃∃K,V,i. d ≤ i & i < d + e &
                                  ⇩[O, i] L ≡ K. ⓓV &
@@ -138,7 +138,7 @@ fact tps_inv_atom1_aux: ∀L,T1,T2,d,e. L ⊢ T1 [d, e] ▶ T2 → ∀I. T1 = �
 ]
 qed.
 
-lemma tps_inv_atom1: ∀L,T2,I,d,e. L ⊢ ⓪{I} [d, e] ▶ T2 →
+lemma tps_inv_atom1: ∀L,T2,I,d,e. L ⊢ ⓪{I} ▶ [d, e] T2 →
                      T2 = ⓪{I} ∨
                      ∃∃K,V,i. d ≤ i & i < d + e &
                               ⇩[O, i] L ≡ K. ⓓV &
@@ -148,14 +148,14 @@ lemma tps_inv_atom1: ∀L,T2,I,d,e. L ⊢ ⓪{I} [d, e] ▶ T2 →
 
 
 (* Basic_1: was: subst1_gen_sort *)
-lemma tps_inv_sort1: ∀L,T2,k,d,e. L ⊢ ⋆k [d, e] ▶ T2 → T2 = ⋆k.
+lemma tps_inv_sort1: ∀L,T2,k,d,e. L ⊢ ⋆k ▶ [d, e] T2 → T2 = ⋆k.
 #L #T2 #k #d #e #H
 elim (tps_inv_atom1 … H) -H //
 * #K #V #i #_ #_ #_ #_ #H destruct
 qed-.
 
 (* Basic_1: was: subst1_gen_lref *)
-lemma tps_inv_lref1: ∀L,T2,i,d,e. L ⊢ #i [d, e] ▶ T2 →
+lemma tps_inv_lref1: ∀L,T2,i,d,e. L ⊢ #i ▶ [d, e] T2 →
                      T2 = #i ∨
                      ∃∃K,V. d ≤ i & i < d + e &
                             ⇩[O, i] L ≡ K. ⓓV &
@@ -165,16 +165,16 @@ elim (tps_inv_atom1 … H) -H /2 width=1/
 * #K #V #j #Hdj #Hjde #HLK #HVT2 #H destruct /3 width=4/
 qed-.
 
-lemma tps_inv_gref1: ∀L,T2,p,d,e. L ⊢ §p [d, e] ▶ T2 → T2 = §p.
+lemma tps_inv_gref1: ∀L,T2,p,d,e. L ⊢ §p ▶ [d, e] T2 → T2 = §p.
 #L #T2 #p #d #e #H
 elim (tps_inv_atom1 … H) -H //
 * #K #V #i #_ #_ #_ #_ #H destruct
 qed-.
 
-fact tps_inv_bind1_aux: ∀d,e,L,U1,U2. L ⊢ U1 [d, e] ▶ U2 →
+fact tps_inv_bind1_aux: ∀d,e,L,U1,U2. L ⊢ U1 ▶ [d, e] U2 →
                         ∀I,V1,T1. U1 = ⓑ{I} V1. T1 →
-                        ∃∃V2,T2. L ⊢ V1 [d, e] ▶ V2 & 
-                                 L. ⓑ{I} V2 ⊢ T1 [d + 1, e] ▶ T2 &
+                        ∃∃V2,T2. L ⊢ V1 ▶ [d, e] V2 & 
+                                 L. ⓑ{I} V2 ⊢ T1 ▶ [d + 1, e] T2 &
                                  U2 =  ⓑ{I} V2. T2.
 #d #e #L #U1 #U2 * -d -e -L -U1 -U2
 [ #L #k #d #e #I #V1 #T1 #H destruct
@@ -184,15 +184,15 @@ fact tps_inv_bind1_aux: ∀d,e,L,U1,U2. L ⊢ U1 [d, e] ▶ U2 →
 ]
 qed.
 
-lemma tps_inv_bind1: ∀d,e,L,I,V1,T1,U2. L ⊢ ⓑ{I} V1. T1 [d, e] ▶ U2 →
-                     ∃∃V2,T2. L ⊢ V1 [d, e] ▶ V2 & 
-                              L. ⓑ{I} V2 ⊢ T1 [d + 1, e] ▶ T2 &
+lemma tps_inv_bind1: ∀d,e,L,I,V1,T1,U2. L ⊢ ⓑ{I} V1. T1 ▶ [d, e] U2 →
+                     ∃∃V2,T2. L ⊢ V1 ▶ [d, e] V2 & 
+                              L. ⓑ{I} V2 ⊢ T1 ▶ [d + 1, e] T2 &
                               U2 =  ⓑ{I} V2. T2.
 /2 width=3/ qed-.
 
-fact tps_inv_flat1_aux: ∀d,e,L,U1,U2. L ⊢ U1 [d, e] ▶ U2 →
+fact tps_inv_flat1_aux: ∀d,e,L,U1,U2. L ⊢ U1 ▶ [d, e] U2 →
                         ∀I,V1,T1. U1 = ⓕ{I} V1. T1 →
-                        ∃∃V2,T2. L ⊢ V1 [d, e] ▶ V2 & L ⊢ T1 [d, e] ▶ T2 &
+                        ∃∃V2,T2. L ⊢ V1 ▶ [d, e] V2 & L ⊢ T1 ▶ [d, e] T2 &
                                  U2 =  ⓕ{I} V2. T2.
 #d #e #L #U1 #U2 * -d -e -L -U1 -U2
 [ #L #k #d #e #I #V1 #T1 #H destruct
@@ -202,12 +202,12 @@ fact tps_inv_flat1_aux: ∀d,e,L,U1,U2. L ⊢ U1 [d, e] ▶ U2 →
 ]
 qed.
 
-lemma tps_inv_flat1: ∀d,e,L,I,V1,T1,U2. L ⊢ ⓕ{I} V1. T1 [d, e] ▶ U2 →
-                     ∃∃V2,T2. L ⊢ V1 [d, e] ▶ V2 & L ⊢ T1 [d, e] ▶ T2 &
+lemma tps_inv_flat1: ∀d,e,L,I,V1,T1,U2. L ⊢ ⓕ{I} V1. T1 ▶ [d, e] U2 →
+                     ∃∃V2,T2. L ⊢ V1 ▶ [d, e] V2 & L ⊢ T1 ▶ [d, e] T2 &
                               U2 =  ⓕ{I} V2. T2.
 /2 width=3/ qed-.
 
-fact tps_inv_refl_O2_aux: ∀L,T1,T2,d,e. L ⊢ T1 [d, e] ▶ T2 → e = 0 → T1 = T2.
+fact tps_inv_refl_O2_aux: ∀L,T1,T2,d,e. L ⊢ T1 ▶ [d, e] T2 → e = 0 → T1 = T2.
 #L #T1 #T2 #d #e #H elim H -L -T1 -T2 -d -e
 [ //
 | #L #K #V #W #i #d #e #Hdi #Hide #_ #_ #H destruct
@@ -218,12 +218,12 @@ fact tps_inv_refl_O2_aux: ∀L,T1,T2,d,e. L ⊢ T1 [d, e] ▶ T2 → e = 0 → T
 ]
 qed.
 
-lemma tps_inv_refl_O2: ∀L,T1,T2,d. L ⊢ T1 [d, 0] ▶ T2 → T1 = T2.
+lemma tps_inv_refl_O2: ∀L,T1,T2,d. L ⊢ T1 ▶ [d, 0] T2 → T1 = T2.
 /2 width=6/ qed-.
 
 (* Basic forward lemmas *****************************************************)
 
-lemma tps_fwd_tw: ∀L,T1,T2,d,e. L ⊢ T1 [d, e] ▶ T2 → #[T1] ≤ #[T2].
+lemma tps_fwd_tw: ∀L,T1,T2,d,e. L ⊢ T1 ▶ [d, e] T2 → #[T1] ≤ #[T2].
 #L #T1 #T2 #d #e #H elim H -L -T1 -T2 -d -e normalize
 /3 by monotonic_le_plus_l, le_plus/ (**) (* just /3 width=1/ is too slow *)
 qed-.

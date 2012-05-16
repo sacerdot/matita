@@ -21,8 +21,8 @@ include "basic_2/static/aaa_lift.ma".
 (* Properties about parallel unfold *****************************************)
 
 (* Note: lemma 500 *)
-lemma aaa_ltpss_tpss_conf: ∀L1,T1,A. L1 ⊢ T1 ⁝ A → ∀L2,d,e. L1 [d, e] ▶* L2 →
-                           ∀T2. L2 ⊢ T1 [d, e] ▶* T2 → L2 ⊢ T2 ⁝ A.
+lemma aaa_ltpss_tpss_conf: ∀L1,T1,A. L1 ⊢ T1 ⁝ A → ∀L2,d,e. L1 ▶* [d, e] L2 →
+                           ∀T2. L2 ⊢ T1 ▶* [d, e] T2 → L2 ⊢ T2 ⁝ A.
 #L1 #T1 #A #H elim H -L1 -T1 -A
 [ #L1 #k #L2 #d #e #_ #T2 #H
   >(tpss_inv_sort1 … H) -H //
@@ -59,18 +59,18 @@ lemma aaa_ltpss_tpss_conf: ∀L1,T1,A. L1 ⊢ T1 ⁝ A → ∀L2,d,e. L1 [d, e] 
 ]
 qed.
 
-lemma aaa_ltpss_tps_conf: ∀L1,T1,A. L1 ⊢ T1 ⁝ A → ∀L2,d,e. L1 [d, e] ▶* L2 →
-                          ∀T2. L2 ⊢ T1 [d, e] ▶ T2 → L2 ⊢ T2 ⁝ A.
+lemma aaa_ltpss_tps_conf: ∀L1,T1,A. L1 ⊢ T1 ⁝ A → ∀L2,d,e. L1 ▶* [d, e] L2 →
+                          ∀T2. L2 ⊢ T1 ▶ [d, e] T2 → L2 ⊢ T2 ⁝ A.
 /3 width=7/ qed.
 
 lemma aaa_ltpss_conf: ∀L1,T,A. L1 ⊢ T ⁝ A →
-                      ∀L2,d,e. L1 [d, e] ▶* L2 → L2 ⊢ T ⁝ A.
+                      ∀L2,d,e. L1 ▶* [d, e] L2 → L2 ⊢ T ⁝ A.
 /2 width=7/ qed.
 
 lemma aaa_tpss_conf: ∀L,T1,A. L ⊢ T1 ⁝ A →
-                     ∀T2,d,e. L ⊢ T1 [d, e] ▶* T2 → L ⊢ T2 ⁝ A.
+                     ∀T2,d,e. L ⊢ T1 ▶* [d, e] T2 → L ⊢ T2 ⁝ A.
 /2 width=7/ qed.
 
 lemma aaa_tps_conf: ∀L,T1,A. L ⊢ T1 ⁝ A →
-                    ∀T2,d,e. L ⊢ T1 [d, e] ▶ T2 → L ⊢ T2 ⁝ A.
+                    ∀T2,d,e. L ⊢ T1 ▶ [d, e] T2 → L ⊢ T2 ⁝ A.
 /2 width=7/ qed.

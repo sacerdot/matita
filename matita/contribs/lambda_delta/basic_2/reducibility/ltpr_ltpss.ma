@@ -18,8 +18,8 @@ include "basic_2/reducibility/tpr_tpss.ma".
 
 (* Properties concerning parallel unfold on local environments **************)
 
-lemma ltpr_ltpss_conf: ∀L1,K1,d,e. L1 [d, e] ▶* K1 → ∀L2. L1 ➡ L2 →
-                       ∃∃K2. L2 [d, e] ▶* K2 & K1 ➡ K2.
+lemma ltpr_ltpss_conf: ∀L1,K1,d,e. L1 ▶* [d, e] K1 → ∀L2. L1 ➡ L2 →
+                       ∃∃K2. L2 ▶* [d, e] K2 & K1 ➡ K2.
 #L1 #K1 #d #e #H elim H -L1 -K1 -d -e
 [ /2 width=3/
 | #L1 #I #V1 #X #H

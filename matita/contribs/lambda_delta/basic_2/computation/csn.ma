@@ -27,7 +27,7 @@ interpretation
 
 lemma csn_ind: ∀L. ∀R:predicate term.
                (∀T1. L ⊢ ⬇* T1 →
-                     (∀T2. L ⊢ T1 ➡ T2 → (T1 = T2 → False) → R T2) →
+                     (∀T2. L ⊢ T1 ➡ T2 → (T1 = T2 → ⊥) → R T2) →
                      R T1
                ) →
                ∀T. L ⊢ ⬇* T → R T.
@@ -39,10 +39,8 @@ qed-.
 
 (* Basic_1: was: sn3_pr2_intro *)
 lemma csn_intro: ∀L,T1.
-                 (∀T2. L ⊢ T1 ➡ T2 → (T1 = T2 → False) → L ⊢ ⬇* T2) → L ⊢ ⬇* T1.
-#L #T1 #H
-@(SN_intro … H)
-qed.
+                 (∀T2. L ⊢ T1 ➡ T2 → (T1 = T2 → ⊥) → L ⊢ ⬇* T2) → L ⊢ ⬇* T1.
+/4 width=1/ qed.
 
 (* Basic_1: was: sn3_nf2 *)
 lemma csn_cnf: ∀L,T. L ⊢ 𝐍[T] → L ⊢ ⬇* T.
@@ -84,7 +82,7 @@ lemma csn_fwd_flat_dx: ∀I,L,V,T. L ⊢ ⬇* ⓕ{I} V. T → L ⊢ ⬇* T.
 
 (* Basic_1: removed theorems 14:
             sn3_cdelta
-	    sn3_gen_cflat sn3_cflat sn3_cpr3_trans sn3_shift sn3_change
-	    sn3_appl_cast sn3_appl_beta sn3_appl_lref sn3_appl_abbr
-	    sn3_appl_appls sn3_bind sn3_appl_bind sn3_appls_bind
+            sn3_gen_cflat sn3_cflat sn3_cpr3_trans sn3_shift sn3_change
+            sn3_appl_cast sn3_appl_beta sn3_appl_lref sn3_appl_abbr
+            sn3_appl_appls sn3_bind sn3_appl_bind sn3_appls_bind
 *)

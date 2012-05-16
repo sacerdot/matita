@@ -32,6 +32,6 @@ qed.
 
 (* Basic_1: was: nf2_dec *)
 axiom cnf_dec: ∀L,T1. L ⊢ 𝐍[T1] ∨
-               ∃∃T2. L ⊢ T1 ➡ T2 & (T1 = T2 → False).
+               ∃∃T2. L ⊢ T1 ➡ T2 & (T1 = T2 → ⊥).
 
 (* Basic_1: removed theorems 1: nf2_abst_shift *)

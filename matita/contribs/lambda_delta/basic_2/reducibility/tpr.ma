@@ -24,7 +24,7 @@ inductive tpr: relation term ≝
 | tpr_beta : ∀V1,V2,W,T1,T2.
              tpr V1 V2 → tpr T1 T2 → tpr (ⓐV1. ⓛW. T1) (ⓓV2. T2)
 | tpr_delta: ∀I,V1,V2,T1,T2,T.
-             tpr V1 V2 → tpr T1 T2 → ⋆. ⓑ{I} V2 ⊢ T2 [0, 1] ▶ T →
+             tpr V1 V2 → tpr T1 T2 → ⋆. ⓑ{I} V2 ⊢ T2 ▶ [0, 1] T →
              tpr (ⓑ{I} V1. T1) (ⓑ{I} V2. T)
 | tpr_theta: ∀V,V1,V2,W1,W2,T1,T2.
              tpr V1 V2 → ⇧[0,1] V2 ≡ V → tpr W1 W2 → tpr T1 T2 →
@@ -39,8 +39,7 @@ interpretation
 
 (* Basic properties *********************************************************)
 
-lemma tpr_bind: ∀I,V1,V2,T1,T2. V1 ➡ V2 → T1 ➡ T2 →
-                                ⓑ{I} V1. T1 ➡  ⓑ{I} V2. T2.
+lemma tpr_bind: ∀I,V1,V2,T1,T2. V1 ➡ V2 → T1 ➡ T2 → ⓑ{I} V1. T1 ➡  ⓑ{I} V2. T2.
 /2 width=3/ qed.
 
 (* Basic_1: was by definition: pr0_refl *)
@@ -69,7 +68,7 @@ lemma tpr_inv_atom1: ∀I,U2. ⓪{I} ➡ U2 → U2 = ⓪{I}.
 
 fact tpr_inv_bind1_aux: ∀U1,U2. U1 ➡ U2 → ∀I,V1,T1. U1 = ⓑ{I} V1. T1 →
                         (∃∃V2,T2,T. V1 ➡ V2 & T1 ➡ T2 &
-                                    ⋆.  ⓑ{I} V2 ⊢ T2 [0, 1] ▶ T &
+                                    ⋆.  ⓑ{I} V2 ⊢ T2 ▶ [0, 1] T &
                                     U2 = ⓑ{I} V2. T
                         ) ∨
                         ∃∃T. ⇧[0,1] T ≡ T1 & T ➡ U2 & I = Abbr.
@@ -86,7 +85,7 @@ qed.
 
 lemma tpr_inv_bind1: ∀V1,T1,U2,I. ⓑ{I} V1. T1 ➡ U2 →
                      (∃∃V2,T2,T. V1 ➡ V2 & T1 ➡ T2 &
-                                 ⋆.  ⓑ{I} V2 ⊢ T2 [0, 1] ▶ T &
+                                 ⋆.  ⓑ{I} V2 ⊢ T2 ▶ [0, 1] T &
                                  U2 = ⓑ{I} V2. T
                      ) ∨
                      ∃∃T. ⇧[0,1] T ≡ T1 & T ➡ U2 & I = Abbr.
@@ -95,7 +94,7 @@ lemma tpr_inv_bind1: ∀V1,T1,U2,I. ⓑ{I} V1. T1 ➡ U2 →
 (* Basic_1: was pr0_gen_abbr *)
 lemma tpr_inv_abbr1: ∀V1,T1,U2. ⓓV1. T1 ➡ U2 →
                      (∃∃V2,T2,T. V1 ➡ V2 & T1 ➡ T2 &
-                                 ⋆.  ⓓV2 ⊢ T2 [0, 1] ▶ T &
+                                 ⋆.  ⓓV2 ⊢ T2 ▶ [0, 1] T &
                                  U2 = ⓓV2. T
                       ) ∨
                       ∃∃T. ⇧[0,1] T ≡ T1 & T ➡ U2.

@@ -56,7 +56,7 @@ lemma cprs_strap2: ∀L,T1,T,T2.
 
 (* Note: it does not hold replacing |L1| with |L2| *)
 lemma cprs_lsubs_conf: ∀L1,T1,T2. L1 ⊢ T1 ➡* T2 →
-                       ∀L2. L1 [0, |L1|] ≼ L2 → L2 ⊢ T1 ➡* T2.
+                       ∀L2. L1 ≼ [0, |L1|] L2 → L2 ⊢ T1 ➡* T2.
 /3 width=3/
 qed.
 

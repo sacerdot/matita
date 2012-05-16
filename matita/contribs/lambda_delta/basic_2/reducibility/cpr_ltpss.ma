@@ -19,7 +19,7 @@ include "basic_2/reducibility/cpr.ma".
 
 (* Properties concerning partial unfold on local environments ***************)
 
-lemma ltpss_cpr_trans: ∀L1,L2,d,e. L1 [d, e] ▶* L2 →
+lemma ltpss_cpr_trans: ∀L1,L2,d,e. L1 ▶* [d, e] L2 →
                        ∀T1,T2. L2 ⊢ T1 ➡ T2 → L1 ⊢ T1 ➡ T2.
 #L1 #L2 #d #e #HL12 #T1 #T2 *
 lapply (ltpss_weak_all … HL12)

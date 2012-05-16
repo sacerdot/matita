@@ -20,7 +20,7 @@ include "basic_2/reducibility/tpr.ma".
 
 (* Basic_1: includes: pr2_delta1 *)
 definition cpr: lenv → relation term ≝
-   λL,T1,T2. ∃∃T. T1 ➡ T & L ⊢ T [0, |L|] ▶* T2.
+   λL,T1,T2. ∃∃T. T1 ➡ T & L ⊢ T ▶* [0, |L|] T2.
 
 interpretation
    "context-sensitive parallel reduction (term)"
@@ -28,14 +28,14 @@ interpretation
 
 (* Basic properties *********************************************************)
 
-lemma cpr_intro: ∀L,T1,T,T2,d,e. T1 ➡ T → L ⊢ T [d, e] ▶* T2 → L ⊢ T1 ➡ T2.
+lemma cpr_intro: ∀L,T1,T,T2,d,e. T1 ➡ T → L ⊢ T ▶* [d, e] T2 → L ⊢ T1 ➡ T2.
 /4 width=3/ qed-.
 
 (* Basic_1: was by definition: pr2_free *)
 lemma cpr_tpr: ∀T1,T2. T1 ➡ T2 → ∀L. L ⊢ T1 ➡ T2.
 /2 width=3/ qed.
 
-lemma cpr_tpss: ∀L,T1,T2,d,e. L ⊢ T1 [d, e] ▶* T2 → L ⊢ T1 ➡ T2.
+lemma cpr_tpss: ∀L,T1,T2,d,e. L ⊢ T1 ▶* [d, e] T2 → L ⊢ T1 ➡ T2.
 /3 width=5/ qed.
 
 lemma cpr_refl: ∀L,T. L ⊢ T ➡ T.
@@ -56,7 +56,7 @@ qed.
 (* Note: it does not hold replacing |L1| with |L2| *)
 (* Basic_1: was only: pr2_change *)
 lemma cpr_lsubs_conf: ∀L1,T1,T2. L1 ⊢ T1 ➡ T2 →
-                      ∀L2. L1 [0, |L1|] ≼ L2 → L2 ⊢ T1 ➡ T2.
+                      ∀L2. L1 ≼ [0, |L1|] L2 → L2 ⊢ T1 ➡ T2.
 #L1 #T1 #T2 * #T #HT1 #HT2 #L2 #HL12 
 lapply (tpss_lsubs_conf … HT2 … HL12) -HT2 -HL12 /3 width=4/
 qed.
@@ -78,7 +78,7 @@ qed-.
 
 (* Basic_1: was pr2_gen_abbr *)
 lemma cpr_inv_abbr1: ∀L,V1,T1,U2. L ⊢ ⓓV1. T1 ➡ U2 →
-                     (∃∃V,V2,T2. V1 ➡ V & L ⊢ V [O, |L|] ▶* V2 &
+                     (∃∃V,V2,T2. V1 ➡ V & L ⊢ V ▶* [O, |L|] V2 &
                                  L. ⓓV ⊢ T1 ➡ T2 &
                                  U2 = ⓓV2. T2
                       ) ∨

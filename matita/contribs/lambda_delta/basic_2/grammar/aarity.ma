@@ -41,7 +41,7 @@ interpretation "aarity construction (binary)"
 
 (* Basic inversion lemmas ***************************************************)
 
-lemma discr_apair_xy_x: ∀A,B. ②B. A = B → False.
+lemma discr_apair_xy_x: ∀A,B. ②B. A = B → ⊥.
 #A #B elim B -B
 [ #H destruct
 | #Y #X #IHY #_ #H destruct
@@ -50,7 +50,7 @@ lemma discr_apair_xy_x: ∀A,B. ②B. A = B → False.
 ]
 qed-.
 
-lemma discr_tpair_xy_y: ∀B,A. ②B. A = A → False.
+lemma discr_tpair_xy_y: ∀B,A. ②B. A = A → ⊥.
 #B #A elim A -A
 [ #H destruct
 | #Y #X #_ #IHX #H destruct

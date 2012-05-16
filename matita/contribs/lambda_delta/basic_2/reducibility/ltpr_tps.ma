@@ -18,8 +18,8 @@ include "basic_2/reducibility/ltpr_ldrop.ma".
 
 (* Properties concerning parallel substitution on terms *********************)
 
-lemma ltpr_tps_trans: ∀L2,T1,T2,d,e. L2 ⊢ T1 [d, e] ▶ T2 → ∀L1. L1 ➡ L2 →
-                      ∃∃T. L1 ⊢ T1 [d, e] ▶ T & T ➡ T2.
+lemma ltpr_tps_trans: ∀L2,T1,T2,d,e. L2 ⊢ T1 ▶ [d, e] T2 → ∀L1. L1 ➡ L2 →
+                      ∃∃T. L1 ⊢ T1 ▶ [d, e] T & T ➡ T2.
 #L2 #T1 #T2 #d #e #H elim H -L2 -T1 -T2 -d -e
 [ /2 width=3/
 | #L2 #K2 #V2 #W2 #i #d #e #Hdi #Hide #HLK2 #HVW2 #L1 #HL12
@@ -36,8 +36,8 @@ lemma ltpr_tps_trans: ∀L2,T1,T2,d,e. L2 ⊢ T1 [d, e] ▶ T2 → ∀L1. L1 ➡
 ]
 qed.
 
-lemma ltpr_tps_conf: ∀L1,T1,T2,d,e. L1 ⊢ T1 [d, e] ▶ T2 → ∀L2. L1 ➡ L2 →
-                     ∃∃T. L2 ⊢ T1 [d, e] ▶ T & T2 ➡ T.
+lemma ltpr_tps_conf: ∀L1,T1,T2,d,e. L1 ⊢ T1 ▶ [d, e] T2 → ∀L2. L1 ➡ L2 →
+                     ∃∃T. L2 ⊢ T1 ▶ [d, e] T & T2 ➡ T.
 #L1 #T1 #T2 #d #e #H elim H -L1 -T1 -T2 -d -e
 [ /2 width=3/
 | #L1 #K1 #V1 #W1 #i #d #e #Hdi #Hide #HLK1 #HVW1 #L2 #HL12

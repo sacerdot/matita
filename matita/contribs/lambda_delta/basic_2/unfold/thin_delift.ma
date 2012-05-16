@@ -41,10 +41,10 @@ lapply (tpss_inv_refl_O2 … H1) -H1 #H destruct
 lapply (lift_mono … H2 … HV2) -H2 #H destruct /3 width=5/
 qed.
 
-lemma thin_delift_tpss_conf_le: ∀L,U1,U2,d,e. L ⊢ U1 [d, e] ▶* U2 →
+lemma thin_delift_tpss_conf_le: ∀L,U1,U2,d,e. L ⊢ U1 ▶* [d, e] U2 →
                                 ∀T1,dd,ee. L ⊢ U1 [dd, ee] ≡ T1 →
                                 ∀K. L [dd, ee] ≡ K → d + e ≤ dd →
-                                ∃∃T2. K ⊢ T1 [d, e] ▶* T2 &
+                                ∃∃T2. K ⊢ T1 ▶* [d, e] T2 &
                                       L ⊢ U2 [dd, ee] ≡ T2.
 #L #U1 #U2 #d #e #HU12 #T1 #dd #ee #HUT1 #K * #Y #HLY #HYK #Hdedd
 lapply (delift_ltpss_conf_eq … HUT1 … HLY) -HUT1 #HUT1
@@ -54,18 +54,18 @@ lapply (tpss_delift_trans_eq … HU2 … HUT) -U #HU2T
 lapply (ltpss_delift_trans_eq … HLY … HU2T) -Y /2 width=3/
 qed.
 
-lemma thin_delift_tps_conf_le: ∀L,U1,U2,d,e. L ⊢ U1 [d, e] ▶ U2 →
+lemma thin_delift_tps_conf_le: ∀L,U1,U2,d,e. L ⊢ U1 ▶ [d, e] U2 →
                                ∀T1,dd,ee. L ⊢ U1 [dd, ee] ≡ T1 →
                                ∀K. L [dd, ee] ≡ K → d + e ≤ dd →
-                               ∃∃T2. K ⊢ T1 [d, e] ▶* T2 &
+                               ∃∃T2. K ⊢ T1 ▶* [d, e] T2 &
                                      L ⊢ U2 [dd, ee] ≡ T2.
 /3 width=3/ qed.
 
-lemma thin_delift_tpss_conf_le_up: ∀L,U1,U2,d,e. L ⊢ U1 [d, e] ▶* U2 →
+lemma thin_delift_tpss_conf_le_up: ∀L,U1,U2,d,e. L ⊢ U1 ▶* [d, e] U2 →
                                    ∀T1,dd,ee. L ⊢ U1 [dd, ee] ≡ T1 →
                                    ∀K. L [dd, ee] ≡ K →
                                    d ≤ dd → dd ≤ d + e → d + e ≤ dd + ee →
-                                   ∃∃T2. K ⊢ T1 [d, dd - d] ▶* T2 &
+                                   ∃∃T2. K ⊢ T1 ▶* [d, dd - d] T2 &
                                          L ⊢ U2 [dd, ee] ≡ T2.
 #L #U1 #U2 #d #e #HU12 #T1 #dd #ee #HUT1 #K * #Y #HLY #HYK #Hdd #Hdde #Hddee
 lapply (delift_ltpss_conf_eq … HUT1 … HLY) -HUT1 #HUT1
@@ -75,18 +75,18 @@ lapply (tpss_delift_trans_eq … HU2 … HUT) -U #HU2T
 lapply (ltpss_delift_trans_eq … HLY … HU2T) -Y /2 width=3/
 qed.
 
-lemma thin_delift_tps_conf_le_up: ∀L,U1,U2,d,e. L ⊢ U1 [d, e] ▶ U2 →
+lemma thin_delift_tps_conf_le_up: ∀L,U1,U2,d,e. L ⊢ U1 ▶ [d, e] U2 →
                                   ∀T1,dd,ee. L ⊢ U1 [dd, ee] ≡ T1 →
                                   ∀K. L [dd, ee] ≡ K →
                                   d ≤ dd → dd ≤ d + e → d + e ≤ dd + ee →
-                                  ∃∃T2. K ⊢ T1 [d, dd - d] ▶* T2 &
+                                  ∃∃T2. K ⊢ T1 ▶* [d, dd - d] T2 &
                                         L ⊢ U2 [dd, ee] ≡ T2.
 /3 width=6 by thin_delift_tpss_conf_le_up, tpss_strap/ qed. (**) (* too slow without trace *)
 
-lemma thin_delift_tpss_conf_be: ∀L,U1,U2,d,e. L ⊢ U1 [d, e] ▶* U2 →
+lemma thin_delift_tpss_conf_be: ∀L,U1,U2,d,e. L ⊢ U1 ▶* [d, e] U2 →
                                 ∀T1,dd,ee. L ⊢ U1 [dd, ee] ≡ T1 →
                                 ∀K. L [dd, ee] ≡ K → d ≤ dd → dd + ee ≤ d + e →
-                                ∃∃T2. K ⊢ T1 [d, e - ee] ▶* T2 &
+                                ∃∃T2. K ⊢ T1 ▶* [d, e - ee] T2 &
                                       L ⊢ U2 [dd, ee] ≡ T2.
 #L #U1 #U2 #d #e #HU12 #T1 #dd #ee #HUT1 #K * #Y #HLY #HYK #Hdd #Hddee
 lapply (delift_ltpss_conf_eq … HUT1 … HLY) -HUT1 #HUT1
@@ -96,9 +96,9 @@ lapply (tpss_delift_trans_eq … HU2 … HUT) -U #HU2T
 lapply (ltpss_delift_trans_eq … HLY … HU2T) -Y /2 width=3/
 qed.
 
-lemma thin_delift_tps_conf_be: ∀L,U1,U2,d,e. L ⊢ U1 [d, e] ▶ U2 →
+lemma thin_delift_tps_conf_be: ∀L,U1,U2,d,e. L ⊢ U1 ▶ [d, e] U2 →
                                ∀T1,dd,ee. L ⊢ U1 [dd, ee] ≡ T1 →
                                ∀K. L [dd, ee] ≡ K → d ≤ dd → dd + ee ≤ d + e →
-                               ∃∃T2. K ⊢ T1 [d, e - ee] ▶* T2 &
+                               ∃∃T2. K ⊢ T1 ▶* [d, e - ee] T2 &
                                      L ⊢ U2 [dd, ee] ≡ T2.
 /3 width=3/ qed.

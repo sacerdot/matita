@@ -14,9 +14,19 @@
 
 (* GENERAL NOTATION USED BY THE FORMAL SYSTEM λδ ****************************)
 
+(* Logic ********************************************************************)
+
+notation "⊥"
+  non associative with precedence 90
+  for @{'false}.
+
+notation "⊤"
+  non associative with precedence 90
+  for @{'true}.
+
 (* Lists ********************************************************************)
 
-notation "hvbox( ◊ )"
+notation "◊"
   non associative with precedence 90
   for @{'Nil}.
 
@@ -28,7 +38,7 @@ notation "hvbox( l1 @@ break l2 )"
   right associative with precedence 47
   for @{'Append $l1 $l2 }.
 
-notation "hvbox( ⟠ )"
+notation "⟠"
   non associative with precedence 90
   for @{'Nil2}.
 

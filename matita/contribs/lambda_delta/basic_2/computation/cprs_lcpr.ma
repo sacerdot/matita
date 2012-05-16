@@ -21,8 +21,8 @@ include "basic_2/computation/cprs.ma".
 
 (* Properties concerning context-sensitive parallel reduction on lenv's *****)
 
-lemma ltpr_tpss_trans: ∀L1,L2. L1 ➡ L2 → ∀T1,T2,d,e. L2 ⊢ T1 [d, e] ▶* T2 →
-                       ∃∃T. L1 ⊢ T1 [d, e] ▶* T & L1 ⊢ T ➡* T2.
+lemma ltpr_tpss_trans: ∀L1,L2. L1 ➡ L2 → ∀T1,T2,d,e. L2 ⊢ T1 ▶* [d, e] T2 →
+                       ∃∃T. L1 ⊢ T1 ▶* [d, e] T & L1 ⊢ T ➡* T2.
 #L1 #L2 #HL12 #T1 #T2 #d #e #H @(tpss_ind … H) -T2
 [ /2 width=3/
 | #T #T2 #_ #HT2 * #T0 #HT10 #HT0

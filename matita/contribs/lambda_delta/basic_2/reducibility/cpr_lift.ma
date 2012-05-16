@@ -21,7 +21,7 @@ include "basic_2/reducibility/cpr.ma".
 (* Advanced properties ******************************************************)
 
 lemma cpr_cdelta: ∀L,K,V1,W1,W2,i.
-                  ⇩[0, i] L ≡ K. ⓓV1 → K ⊢ V1 [0, |L| - i - 1] ▶* W1 →
+                  ⇩[0, i] L ≡ K. ⓓV1 → K ⊢ V1 ▶* [0, |L| - i - 1] W1 →
                   ⇧[0, i + 1] W1 ≡ W2 → L ⊢ #i ➡ W2.
 #L #K #V1 #W1 #W2 #i #HLK #HVW1 #HW12
 lapply (ldrop_fwd_ldrop2_length … HLK) #Hi
@@ -43,7 +43,7 @@ qed.
 lemma cpr_inv_lref1: ∀L,T2,i. L ⊢ #i ➡ T2 →
                      T2 = #i ∨
                      ∃∃K,V1,T1. ⇩[0, i] L ≡ K. ⓓV1 &
-                                K ⊢ V1 [0, |L| - i - 1] ▶* T1 &
+                                K ⊢ V1 ▶* [0, |L| - i - 1] T1 &
                                 ⇧[0, i + 1] T1 ≡ T2 &
                                 i < |L|.
 #L #T2 #i * #X #H

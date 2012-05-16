@@ -53,15 +53,15 @@ lemma lt_or_eq_or_gt: ∀m,n. ∨∨ m < n | n = m | n < m.
 #m #Hm * #H /2 width=1/ /3 width=1/
 qed-.
 
-lemma lt_refl_false: ∀n. n < n → False.
+lemma lt_refl_false: ∀n. n < n → ⊥.
 #n #H elim (lt_to_not_eq … H) -H /2 width=1/
 qed-.
 
-lemma lt_zero_false: ∀n. n < 0 → False.
+lemma lt_zero_false: ∀n. n < 0 → ⊥.
 #n #H elim (lt_to_not_le … H) -H /2 width=1/
 qed-.
 
-lemma false_lt_to_le: ∀x,y. (x < y → False) → y ≤ x.
+lemma false_lt_to_le: ∀x,y. (x < y → ⊥) → y ≤ x.
 #x #y #H elim (decidable_lt x y) /2 width=1/
 #Hxy elim (H Hxy)
 qed-.

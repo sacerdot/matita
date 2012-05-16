@@ -21,7 +21,7 @@ include "basic_2/grammar/tstc.ma".
 
 (* Basic_1: was only: iso_flats_lref_bind_false iso_flats_flat_bind_false *)
 lemma tstc_inv_bind_appls_simple: ∀I,Vs,V2,T1,T2. ⒶVs.T1 ≃ ⓑ{I} V2. T2 →
-                                  𝐒[T1] → False.
+                                  𝐒[T1] → ⊥.
 #I #Vs #V2 #T1 #T2 #H
 elim (tstc_inv_pair2 … H) -H #V0 #T0
 elim Vs -Vs normalize

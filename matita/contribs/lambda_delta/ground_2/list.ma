@@ -26,7 +26,7 @@ interpretation "cons (list)" 'Cons hd tl = (cons ? hd tl).
 
 let rec all A (R:predicate A) (l:list A) on l ≝
   match l with
-  [ nil        ⇒ True
+  [ nil        ⇒ ⊤
   | cons hd tl ⇒ R hd ∧ all A R tl
   ].
 

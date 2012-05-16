@@ -42,7 +42,7 @@ lemma tnf_inv_appl: ∀V,T. 𝐍[ⓐV.T] → ∧∧ 𝐍[V] & 𝐍[T] & 𝐒[T].
 ]
 qed-.
 
-lemma tnf_inv_abbr: ∀V,T. 𝐍[ⓓV.T] → False.
+lemma tnf_inv_abbr: ∀V,T. 𝐍[ⓓV.T] → ⊥.
 #V #T #H elim (is_lift_dec T 0 1)
 [ * #U #HTU
   lapply (H U ?) -H /2 width=3/ #H destruct
@@ -53,7 +53,7 @@ lemma tnf_inv_abbr: ∀V,T. 𝐍[ⓓV.T] → False.
 ]
 qed.
 
-lemma tnf_inv_cast: ∀V,T. 𝐍[ⓣV.T] → False.
+lemma tnf_inv_cast: ∀V,T. 𝐍[ⓣV.T] → ⊥.
 #V #T #H lapply (H T ?) -H /2 width=1/ #H
-@(discr_tpair_xy_y … H)
+@discr_tpair_xy_y //
 qed-.

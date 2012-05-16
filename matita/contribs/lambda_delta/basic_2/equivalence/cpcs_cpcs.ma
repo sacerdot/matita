@@ -42,7 +42,7 @@ lapply (cprs_inv_sort1 … H2) -L #H destruct //
 qed-.
 
 (* Basic_1: was: pc3_gen_sort_abst *)
-lemma cpcs_inv_sort_abst: ∀L,W,T,k. L ⊢ ⋆k ⬌* ⓛW.T → False.
+lemma cpcs_inv_sort_abst: ∀L,W,T,k. L ⊢ ⋆k ⬌* ⓛW.T → ⊥.
 #L #W #T #k #H
 elim (cpcs_inv_cprs … H) -H #X #H1
 >(cprs_inv_sort1 … H1) -X #H2

@@ -25,27 +25,27 @@ interpretation "partial unfold (term)"
 (* Basic eliminators ********************************************************)
 
 lemma tpss_ind: ∀d,e,L,T1. ∀R:predicate term. R T1 →
-                (∀T,T2. L ⊢ T1 [d, e] ▶* T → L ⊢ T [d, e] ▶ T2 → R T → R T2) →
-                ∀T2. L ⊢ T1 [d, e] ▶* T2 → R T2.
+                (∀T,T2. L ⊢ T1 ▶* [d, e] T → L ⊢ T ▶ [d, e] T2 → R T → R T2) →
+                ∀T2. L ⊢ T1 ▶* [d, e] T2 → R T2.
 #d #e #L #T1 #R #HT1 #IHT1 #T2 #HT12 @(TC_star_ind … HT1 IHT1 … HT12) //
 qed-.
 
 (* Basic properties *********************************************************)
 
-lemma tpss_strap: ∀L,T1,T,T2,d,e. 
-                  L ⊢ T1 [d, e] ▶ T → L ⊢ T [d, e] ▶* T2 → L ⊢ T1 [d, e] ▶* T2. 
+lemma tpss_strap: ∀L,T1,T,T2,d,e.
+                  L ⊢ T1 ▶ [d, e] T → L ⊢ T ▶* [d, e] T2 → L ⊢ T1 ▶* [d, e] T2. 
 /2 width=3/ qed.
 
-lemma tpss_lsubs_conf: ∀L1,T1,T2,d,e. L1 ⊢ T1 [d, e] ▶* T2 →
-                       ∀L2. L1 [d, e] ≼ L2 → L2 ⊢ T1 [d, e] ▶* T2.
+lemma tpss_lsubs_conf: ∀L1,T1,T2,d,e. L1 ⊢ T1 ▶* [d, e] T2 →
+                       ∀L2. L1 ≼ [d, e] L2 → L2 ⊢ T1 ▶* [d, e] T2.
 /3 width=3/ qed.
 
-lemma tpss_refl: ∀d,e,L,T. L ⊢ T [d, e] ▶* T.
+lemma tpss_refl: ∀d,e,L,T. L ⊢ T ▶* [d, e] T.
 /2 width=1/ qed.
 
-lemma tpss_bind: ∀L,V1,V2,d,e. L ⊢ V1 [d, e] ▶* V2 →
-                 ∀I,T1,T2. L. ⓑ{I} V2 ⊢ T1 [d + 1, e] ▶* T2 →
-                 L ⊢ ⓑ{I} V1. T1 [d, e] ▶* ⓑ{I} V2. T2.
+lemma tpss_bind: ∀L,V1,V2,d,e. L ⊢ V1 ▶* [d, e] V2 →
+                 ∀I,T1,T2. L. ⓑ{I} V2 ⊢ T1 ▶* [d + 1, e] T2 →
+                 L ⊢ ⓑ{I} V1. T1 ▶* [d, e] ⓑ{I} V2. T2.
 #L #V1 #V2 #d #e #HV12 elim HV12 -V2
 [ #V2 #HV12 #I #T1 #T2 #HT12 elim HT12 -T2
   [ /3 width=5/
@@ -58,8 +58,8 @@ lemma tpss_bind: ∀L,V1,V2,d,e. L ⊢ V1 [d, e] ▶* V2 →
 qed.
 
 lemma tpss_flat: ∀L,I,V1,V2,T1,T2,d,e.
-                 L ⊢ V1 [d, e] ▶ * V2 → L ⊢ T1 [d, e] ▶* T2 →
-                 L ⊢ ⓕ{I} V1. T1 [d, e] ▶* ⓕ{I} V2. T2.
+                 L ⊢ V1 ▶* [d, e] V2 → L ⊢ T1 ▶* [d, e] T2 →
+                 L ⊢ ⓕ{I} V1. T1 ▶* [d, e] ⓕ{I} V2. T2.
 #L #I #V1 #V2 #T1 #T2 #d #e #HV12 elim HV12 -V2
 [ #V2 #HV12 #HT12 elim HT12 -T2
   [ /3 width=1/
@@ -70,9 +70,9 @@ lemma tpss_flat: ∀L,I,V1,V2,T1,T2,d,e.
 ]
 qed.
 
-lemma tpss_weak: ∀L,T1,T2,d1,e1. L ⊢ T1 [d1, e1] ▶* T2 →
+lemma tpss_weak: ∀L,T1,T2,d1,e1. L ⊢ T1 ▶* [d1, e1] T2 →
                  ∀d2,e2. d2 ≤ d1 → d1 + e1 ≤ d2 + e2 →
-                 L ⊢ T1 [d2, e2] ▶* T2.
+                 L ⊢ T1 ▶* [d2, e2] T2.
 #L #T1 #T2 #d1 #e1 #H #d1 #d2 #Hd21 #Hde12 @(tpss_ind … H) -T2
 [ //
 | #T #T2 #_ #HT12 #IHT
@@ -81,7 +81,7 @@ lemma tpss_weak: ∀L,T1,T2,d1,e1. L ⊢ T1 [d1, e1] ▶* T2 →
 qed.
 
 lemma tpss_weak_top: ∀L,T1,T2,d,e.
-                     L ⊢ T1 [d, e] ▶* T2 → L ⊢ T1 [d, |L| - d] ▶* T2.
+                     L ⊢ T1 ▶* [d, e] T2 → L ⊢ T1 ▶* [d, |L| - d] T2.
 #L #T1 #T2 #d #e #H @(tpss_ind … H) -T2
 [ //
 | #T #T2 #_ #HT12 #IHT
@@ -90,7 +90,7 @@ lemma tpss_weak_top: ∀L,T1,T2,d,e.
 qed.
 
 lemma tpss_weak_all: ∀L,T1,T2,d,e.
-                     L ⊢ T1 [d, e] ▶* T2 → L ⊢ T1 [0, |L|] ▶* T2.
+                     L ⊢ T1 ▶* [d, e] T2 → L ⊢ T1 ▶* [0, |L|] T2.
 #L #T1 #T2 #d #e #HT12
 lapply (tpss_weak … HT12 0 (d + e) ? ?) -HT12 // #HT12
 lapply (tpss_weak_top … HT12) //
@@ -99,7 +99,7 @@ qed.
 (* Basic inversion lemmas ***************************************************)
 
 (* Note: this can be derived from tpss_inv_atom1 *)
-lemma tpss_inv_sort1: ∀L,T2,k,d,e. L ⊢ ⋆k [d, e] ▶* T2 → T2 = ⋆k.
+lemma tpss_inv_sort1: ∀L,T2,k,d,e. L ⊢ ⋆k ▶* [d, e] T2 → T2 = ⋆k.
 #L #T2 #k #d #e #H @(tpss_ind … H) -T2
 [ //
 | #T #T2 #_ #HT2 #IHT destruct
@@ -108,7 +108,7 @@ lemma tpss_inv_sort1: ∀L,T2,k,d,e. L ⊢ ⋆k [d, e] ▶* T2 → T2 = ⋆k.
 qed-.
 
 (* Note: this can be derived from tpss_inv_atom1 *)
-lemma tpss_inv_gref1: ∀L,T2,p,d,e. L ⊢ §p [d, e] ▶* T2 → T2 = §p.
+lemma tpss_inv_gref1: ∀L,T2,p,d,e. L ⊢ §p ▶* [d, e] T2 → T2 = §p.
 #L #T2 #p #d #e #H @(tpss_ind … H) -T2
 [ //
 | #T #T2 #_ #HT2 #IHT destruct
@@ -116,9 +116,9 @@ lemma tpss_inv_gref1: ∀L,T2,p,d,e. L ⊢ §p [d, e] ▶* T2 → T2 = §p.
 ]
 qed-.
 
-lemma tpss_inv_bind1: ∀d,e,L,I,V1,T1,U2. L ⊢ ⓑ{I} V1. T1 [d, e] ▶* U2 →
-                      ∃∃V2,T2. L ⊢ V1 [d, e] ▶* V2 & 
-                               L. ⓑ{I} V2 ⊢ T1 [d + 1, e] ▶* T2 &
+lemma tpss_inv_bind1: ∀d,e,L,I,V1,T1,U2. L ⊢ ⓑ{I} V1. T1 ▶* [d, e] U2 →
+                      ∃∃V2,T2. L ⊢ V1 ▶* [d, e] V2 & 
+                               L. ⓑ{I} V2 ⊢ T1 ▶* [d + 1, e] T2 &
                                U2 =  ⓑ{I} V2. T2.
 #d #e #L #I #V1 #T1 #U2 #H @(tpss_ind … H) -U2
 [ /2 width=5/
@@ -128,8 +128,8 @@ lemma tpss_inv_bind1: ∀d,e,L,I,V1,T1,U2. L ⊢ ⓑ{I} V1. T1 [d, e] ▶* U2 �
 ]
 qed-.
 
-lemma tpss_inv_flat1: ∀d,e,L,I,V1,T1,U2. L ⊢ ⓕ{I} V1. T1 [d, e] ▶* U2 →
-                      ∃∃V2,T2. L ⊢ V1 [d, e] ▶* V2 & L ⊢ T1 [d, e] ▶* T2 &
+lemma tpss_inv_flat1: ∀d,e,L,I,V1,T1,U2. L ⊢ ⓕ{I} V1. T1 ▶* [d, e] U2 →
+                      ∃∃V2,T2. L ⊢ V1 ▶* [d, e] V2 & L ⊢ T1 ▶* [d, e] T2 &
                                U2 =  ⓕ{I} V2. T2.
 #d #e #L #I #V1 #T1 #U2 #H @(tpss_ind … H) -U2
 [ /2 width=5/
@@ -138,7 +138,7 @@ lemma tpss_inv_flat1: ∀d,e,L,I,V1,T1,U2. L ⊢ ⓕ{I} V1. T1 [d, e] ▶* U2 �
 ]
 qed-.
 
-lemma tpss_inv_refl_O2: ∀L,T1,T2,d. L ⊢ T1 [d, 0] ▶* T2 → T1 = T2.
+lemma tpss_inv_refl_O2: ∀L,T1,T2,d. L ⊢ T1 ▶* [d, 0] T2 → T1 = T2.
 #L #T1 #T2 #d #H @(tpss_ind … H) -T2
 [ //
 | #T #T2 #_ #HT2 #IHT <(tps_inv_refl_O2 … HT2) -HT2 //
@@ -147,7 +147,7 @@ qed-.
 
 (* Basic forward lemmas *****************************************************)
 
-lemma tpss_fwd_tw: ∀L,T1,T2,d,e. L ⊢ T1 [d, e] ▶* T2 → #[T1] ≤ #[T2].
+lemma tpss_fwd_tw: ∀L,T1,T2,d,e. L ⊢ T1 ▶* [d, e] T2 → #[T1] ≤ #[T2].
 #L #T1 #T2 #d #e #H @(tpss_ind … H) -T2 //
 #T #T2 #_ #HT2 #IHT1
 lapply (tps_fwd_tw … HT2) -HT2 #HT2
