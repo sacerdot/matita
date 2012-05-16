@@ -363,10 +363,16 @@ module LPO (B : Terms.Blob) = struct
   let compute_unit_clause_weight = compute_unit_clause_weight;;
   let compute_goal_weight = compute_goal_weight;;
 
+  (*CSC: beware! Imperative cache! *)
+  let cache = ref [];;
+
   let rec lpo_le s t = 
     eq_foterm s t || lpo_lt s t 
   
   and lpo_lt s t =
+    try List.assoc (s,t) !cache
+    with
+    Not_found -> let res =
     match s,t with
       | _, Terms.Var _ -> false
       | Terms.Var i,_ ->
@@ -399,13 +405,18 @@ module LPO (B : Terms.Blob) = struct
                 compare_args tl1 tl2
             | _ -> assert false
            end
+   in
+    cache := ((s,t),res)::!cache; res
   ;;
 
   let lpo s t =
+    let res =
     if eq_foterm s t then XEQ
     else if lpo_lt s t then XLT
     else if lpo_lt t s then XGT
     else XINCOMPARABLE
+    in
+     cache := []; res
   ;;
     
 
