@@ -380,9 +380,16 @@ lemma sem_match_tuple_step:
           @last_of_table    
          |(* rs4 not empty *)
           * #d2 #b2 #rs3' * #d  * #b * * * #Heq1 #Hnobars
+          cut (memb STape 〈d2,b2〉 (l2@〈bar,false〉::〈c1,false〉::l3@〈comma,false〉::l4) = true)
+            [@memb_append_l2 @memb_cons
+             cut (∀A,l1,l2.∀a:A. a::l1@l2=(a::l1)@l2) [//] #Hcut
+             >Hcut >H3 >associative_append @memb_append_l2 
+             @memb_cons >Heq1 @memb_append_l2 @memb_cons @memb_hd] #d2intable
           cut (is_grid d2 = false) 
-          [@(no_grids_in_table … Htable … 〈d2,b2〉)
-           @daemon (* no grids in table *)] #Hd2
+            [@(no_grids_in_table … Htable … 〈d2,b2〉 d2intable)] #Hd2
+          cut (b2 = false) 
+            [@(no_marks_in_table … Htable … 〈d2,b2〉 d2intable)] #Hb2 
+          >Hb2 in Heq1; #Heq1 -Hb2 -b2
           whd in ⊢ ((???%)→?); #Htemp destruct (Htemp) #Htapee >Htapee -Htapee *
            [(* we know current is not grid *)
             * #tapef * whd in ⊢ (%→?); #Htapef 
@@ -398,9 +405,6 @@ lemma sem_match_tuple_step:
              whd in ⊢ (%→?); #Htapeout
             %1 cases (some_option_hd ? (reverse ? (reverse ? la)) 〈c',true〉)
             * #c00 #b00 #Hoption
-             (* cut 
-            ((reverse ? rs3 @〈d',false〉::reverse ? la@reverse ? (l2@[〈bar,false〉])@(〈grid,false〉::reverse ? lb))
-             = *) 
             lapply 
              (Htapeout (reverse ? rs3 @〈d',false〉::reverse ? la@reverse ? (l2@[〈bar,false〉])@(〈grid,false〉::reverse ? lb))
              c' (reverse ? la) false ls bar (〈d2,true〉::rs3'@〈grid,false〉::rs) c00 b00 ?????) -Htapeout
@@ -445,10 +449,10 @@ lemma sem_match_tuple_step:
                (* cut 
                (〈c1,false〉::l3@〈comma,false〉::l4= la@〈d',false〉::rs3@〈bar,false〉::〈d2,b2〉::rs3')
                [@daemon] #Hcut *)
-               cut (l4=rs32@〈bar,false〉::〈d2,b2〉::rs3')
+               cut (l4=rs32@〈bar,false〉::〈d2,false〉::rs3')
                [ >Hrs3 in Heq1; @daemon ] #Hl4
                @(ex_intro … rs32) @(ex_intro … rs3') %
-                 [(* by showing b2 = false: @Hl4 *) @daemon
+                 [@Hl4
                  |>Htapeout @eq_f2
                    [@daemon
                    |(*>Hrs3 *)>append_cons
@@ -460,7 +464,7 @@ lemma sem_match_tuple_step:
                       >associative_append normalize
                        % ]
                     @eq_f2 [|%]
-                    @(injective_append … (〈d2,b2〉::rs3'))
+                    @(injective_append … (〈d2,false〉::rs3'))
                     >(?:(la@[〈c',false〉])@((((lb@[〈grid,false〉])@l2@[〈bar,false〉])@la)@[〈d',false〉])@rs3
                        =((la@〈c',false〉::lb)@([〈grid,false〉]@l2@[〈bar,false〉]@la@[〈d',false〉]@rs3)))
                     [|>associative_append >associative_append 
