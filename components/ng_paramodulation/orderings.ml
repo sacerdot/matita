@@ -376,6 +376,8 @@ module LPO (B : Terms.Blob) = struct
       | Terms.Leaf _, Terms.Node _  -> true (* we assume unary constants 
                             are smaller than constants with higher arity *)
       | Terms.Node _, Terms.Leaf _ -> false
+      | Terms.Node [],_
+      | _,Terms.Node [] -> assert false
       | Terms.Node (hd1::tl1), Terms.Node (hd2::tl2) ->
           if List.exists (lpo_le s) tl2 then true
           else
@@ -395,84 +397,17 @@ module LPO (B : Terms.Blob) = struct
                     else false
                 in 
                 compare_args tl1 tl2
+            | _ -> assert false
            end
   ;;
 
-  let new_lpo s t =
+  let lpo s t =
     if eq_foterm s t then XEQ
     else if lpo_lt s t then XLT
     else if lpo_lt t s then XGT
     else XINCOMPARABLE
   ;;
     
-
-  let rec lpo s t =
-    match s,t with
-      | s, t when eq_foterm s t ->
-          XEQ
-      | Terms.Var _, Terms.Var _ ->
-          XINCOMPARABLE
-      | _, Terms.Var i ->
-          if (List.mem i (Terms.vars_of_term s)) then XGT
-          else XINCOMPARABLE
-      | Terms.Var i,_ ->
-          if (List.mem i (Terms.vars_of_term t)) then XLT
-          else XINCOMPARABLE
-      | Terms.Node (hd1::tl1), Terms.Node (hd2::tl2) ->
-          let rec ge_subterm t ol = function
-            | [] -> (false, ol)
-            | x::tl ->
-                let res = lpo x t in
-                match res with
-                  | XGT | XEQ -> (true,res::ol)
-                  | o -> ge_subterm t (o::ol) tl
-          in
-          let (res, l_ol) = ge_subterm t [] tl1 in
-            if res then XGT
-            else let (res, r_ol) = ge_subterm s [] tl2 in
-              if res then XLT
-              else begin
-                let rec check_subterms t = function
-                  | _,[] -> true
-                  | o::ol,_::tl ->
-                      if o = XLT then check_subterms t (ol,tl)
-                      else false
-                  | [], x::tl ->
-                      if lpo x t = XLT then check_subterms t ([],tl)
-                      else false
-                in
-                match aux_ordering B.compare hd1 hd2 with
-                  | XGT -> if check_subterms s (r_ol,tl2) then XGT
-                    else XINCOMPARABLE
-                  | XLT -> if check_subterms t (l_ol,tl1) then XLT
-                    else XINCOMPARABLE
-                  | XEQ -> 
-                     (try
-                      let lex = List.fold_left2
-                        (fun acc si ti -> if acc = XEQ then lpo si ti else acc)
-                        XEQ tl1 tl2
-                      in
-                 (match lex with
-                    | XGT ->
-                        if List.for_all (fun x -> lpo s x = XGT) tl2 then XGT
-                      else XINCOMPARABLE
-                    | XLT ->
-                        if List.for_all (fun x -> lpo x t = XLT) tl1 then XLT
-                      else XINCOMPARABLE
-                    | o -> o)   
-                      with Invalid_argument _ -> (* assert false *)
-                              XINCOMPARABLE)
-              | XINCOMPARABLE -> XINCOMPARABLE
-              | _ -> assert false
-          end
-      | _,_ -> aux_ordering B.compare s t
-            
-  ;;
-  
-  let lpo s t = new_lpo s t 
-(* 
-      if res = lpo s t then res
-      else assert false *)
 
   let compare_terms = compare_terms lpo;;
 
