@@ -363,6 +363,49 @@ module LPO (B : Terms.Blob) = struct
   let compute_unit_clause_weight = compute_unit_clause_weight;;
   let compute_goal_weight = compute_goal_weight;;
 
+  let rec lpo_le s t = 
+    eq_foterm s t || lpo_lt s t 
+  
+  and lpo_lt s t =
+    match s,t with
+      | _, Terms.Var _ -> false
+      | Terms.Var i,_ ->
+          if (List.mem i (Terms.vars_of_term t)) then true
+          else false
+      | Terms.Leaf a, Terms.Leaf b -> B.compare a b < 0
+      | Terms.Leaf _, Terms.Node _  -> true (* we assume unary constants 
+                            are smaller than constants with higher arity *)
+      | Terms.Node _, Terms.Leaf _ -> false
+      | Terms.Node (hd1::tl1), Terms.Node (hd2::tl2) ->
+          if List.exists (lpo_le s) tl2 then true
+          else
+          begin 
+            match aux_ordering B.compare hd1 hd2 with
+            | XINCOMPARABLE 
+            | XGT -> false
+            | XLT -> List.for_all (fun x -> lpo_lt x t) tl1
+            | XEQ -> 
+                let rec compare_args l1 l2 =
+                match l1,l2 with
+                | [],_ 
+                | _,[] -> false
+                | a1::tl1,a2::tl2 -> 
+                    if eq_foterm a1 a2 then compare_args tl1 tl2
+                    else if lpo_lt a1 a2 then List.for_all (fun x -> lpo_lt x t) tl1
+                    else false
+                in 
+                compare_args tl1 tl2
+           end
+  ;;
+
+  let new_lpo s t =
+    if eq_foterm s t then XEQ
+    else if lpo_lt s t then XLT
+    else if lpo_lt t s then XGT
+    else XINCOMPARABLE
+  ;;
+    
+
   let rec lpo s t =
     match s,t with
       | s, t when eq_foterm s t ->
@@ -425,6 +468,11 @@ module LPO (B : Terms.Blob) = struct
       | _,_ -> aux_ordering B.compare s t
             
   ;;
+  
+  let lpo s t = new_lpo s t 
+(* 
+      if res = lpo s t then res
+      else assert false *)
 
   let compare_terms = compare_terms lpo;;
 
