@@ -61,6 +61,7 @@ qed.
 
 definition DeqBool ≝ mk_DeqSet bool beqb beqb_true.
 
+alias symbol "hint_decl" (instance 1) = "hint_decl_Type1".
 unification hint  0 ≔ ; 
     X ≟ mk_DeqSet bool beqb beqb_true
 (* ---------------------------------------- *) ⊢ 
