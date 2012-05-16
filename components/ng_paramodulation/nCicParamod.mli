@@ -22,7 +22,8 @@ val empty_state: state
 val forward_infer_step: 
   #NCic.status -> NCic.metasenv -> NCic.substitution -> NCic.context ->
   state -> NCic.term -> NCic.term -> state
-val index_obj: #NCic.status -> state -> NUri.uri -> state
+val index_obj:
+ #NCic.status -> state -> NUri.uri -> state * NCic.term Terms.unit_clause option
 val is_equation:
  #NCic.status -> NCic.metasenv -> NCic.substitution -> NCic.context ->
   NCic.term -> bool

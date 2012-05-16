@@ -132,20 +132,24 @@ let tooflex (_,l,_,_) =
     | _ -> false
 ;;  
 
-let forward_infer_step status metasenv subst context s t ty =
+let forward_infer_step0 status metasenv subst context s t ty =
   let bag = P.bag_of_state s in
   let not_embed =
     let sty,_,_ = 
       NCicMetaSubst.saturate status ~delta:0  metasenv subst context ty 0 in
       not_embeddable status subst context sty in
-  if not_embed then (debug (lazy "theorem not embeddable"); s)
+  if not_embed then (debug (lazy "theorem not embeddable"); s,None)
   else
   let bag,clause = P.mk_passive bag (t,ty) in
     if Terms.is_eq_clause clause then
-      if tooflex clause then (debug (lazy "pruning tooflex"); s)
+      if tooflex clause then (debug (lazy "pruning tooflex"); s,None)
       else
-       P.forward_infer_step (P.replace_bag s bag) clause 0
-    else (debug (lazy "not eq"); s)
+       P.forward_infer_step (P.replace_bag s bag) clause 0, Some clause
+    else (debug (lazy "not eq"); s,None)
+;;
+
+let forward_infer_step status metasenv subst context s t ty =
+ fst (forward_infer_step0 status metasenv subst context s t ty)
 ;;
 
 let index_obj status s uri =
@@ -155,11 +159,11 @@ let index_obj status s uri =
   match obj with
     | (_,_,[],[],NCic.Constant(_,_,None,ty,_)) ->
         let nref = NReference.reference_of_spec uri NReference.Decl in
-	forward_infer_step status [] [] [] s (NCic.Const nref) ty
+	forward_infer_step0 status [] [] [] s (NCic.Const nref) ty
     | (_,d,[],[],NCic.Constant(_,_,Some(_),ty,_)) ->
         let nref = NReference.reference_of_spec uri (NReference.Def d) in
-	forward_infer_step status [] [] [] s (NCic.Const nref) ty
-    | _ -> s
+	forward_infer_step0 status [] [] [] s (NCic.Const nref) ty
+    | _ -> s,None
 ;;
 
 let demod status metasenv subst context s goal =
